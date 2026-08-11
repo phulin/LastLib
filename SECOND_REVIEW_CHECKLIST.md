@@ -63,7 +63,7 @@ any resulting corrections.
 - [x] 037. Jacobians and (H^1) of Curves
 - [x] 038. Abelian Schemes, Isogenies, and Polarizations
 - [x] 039. Néron Models and Component Groups
-- [ ] 040. Semistable Abelian Varieties and Monodromy
+- [x] 040. Semistable Abelian Varieties and Monodromy
 - [x] 041. Integral Correspondences on Curves and Jacobians
 - [x] 042. Descent and Weak Mordell–Weil for Abelian Varieties
 - [ ] 043. Heights and the Mordell–Weil Theorem

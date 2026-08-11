@@ -48,8 +48,11 @@
 9. [Potential semistable reduction](#9-potential-semistable-reduction)
    - [Semistability under isogeny](#91-semistability-under-isogeny)
    - [Producing a Jacobian cover](#92-producing-a-jacobian-cover)
-   - [The semistable reduction theorem](#93-the-semistable-reduction-theorem)
-   - [How much extension is being asserted](#94-how-much-extension-is-being-asserted)
+   - [Semistable construction after separable base change](#93-semistable-construction-after-separable-base-change)
+   - [Stable contraction, uniqueness, and descent](#94-stable-contraction-uniqueness-and-descent)
+   - [Compatibility with Jacobians](#95-compatibility-with-jacobians)
+   - [The semistable reduction theorem](#96-the-semistable-reduction-theorem)
+   - [How much extension is being asserted](#97-how-much-extension-is-being-asserted)
 10. [Galois criteria for reduction](#10-galois-criteria-for-reduction)
     - [The semistable reduction criterion](#101-the-semistable-reduction-criterion)
     - [The good reduction criterion](#102-the-good-reduction-criterion)
@@ -181,7 +184,9 @@ Here $B$ has good reduction, $T$ is a torus of rank $t$, and $Y$ is a full perio
 
 Third, Neron models supply the canonical smooth integral group, its identity component, its finite etale component group $\Phi_A$, and functorial extension of homomorphisms. For Jacobians, the prior graph theorem identifies the torus with graph homology and the component group with a weighted graph discriminant. The present book proves the corresponding lattice presentation for every semistable abelian variety.
 
-We also use ordinary facts about abelian varieties already available in the preceding geometric foundation: duality and the Poincare bundle, Weil pairings, polarizations, quotients by finite subgroup schemes, Poincare complete reducibility, Bertini for sufficiently ample linear systems, and semistable reduction of proper smooth curves after finite separable extension. Whenever one of these facts bears the weight of a central argument, the needed form is restated and its application is proved.
+We also use ordinary facts from the preceding geometric foundation: duality and the Poincare bundle, Weil pairings, polarizations, quotients by finite subgroup schemes, and Bertini for sufficiently ample linear systems. When one of these facts bears the weight of a central argument, the needed form is restated and its application is proved.
+
+One further theorem is deeper than those interfaces and cannot be hidden inside them: stable reduction for curves. Chapter 9 proves the exact trait-level form needed here. Starting with a regular marked model, it prepares a strict normal-crossings boundary, performs a finite separable saturated base change that makes the vertical divisor reduced, and contracts the unstable rational components. The resulting stable model is canonical, its descent action is controlled by uniqueness, and its relative Picard model is semiabelian. Thus the later potential-semistability argument does not assume existence of a semistable curve model from the graph or Picard calculations, which begin only after such a model exists.
 
 ### 1.4 The shape of the answer
 
@@ -742,7 +747,7 @@ $$
 
 and wild inertia acts trivially.
 
-**Proof.** Triviality on $T_\ell T$ and $T_\ell B$ follows from their smooth extension over the strict henselization; exactness of (3.8) gives triviality on $T_\ell E$. The quotient $Y\otimes\mathbf Z_\ell$ is constant under inertia. Formula (5.4) proves (5.5). Its image lies in $W_{-2}$, on which inertia is trivial, so applying $\rho_\ell(\sigma)-1$ again gives zero. Finally $t_\ell$ kills wild inertia. $\square$
+**Proof.** Over the strict henselization, the Raynaud extension is the generic fiber of a semiabelian scheme $\mathcal E$. Since $\ell$ is invertible on the base, every $\mathcal E[\ell^n]$ is finite etale. A finite etale cover of a strictly henselian local scheme is constant, so inertia fixes $E[\ell^n]$ and hence all of $T_\ell E$. This is stronger than merely knowing that inertia is trivial on the two graded pieces $T_\ell T$ and $T_\ell B$: an extension of two trivial representations need not itself be trivial. The quotient $Y\otimes\mathbf Z_\ell$ is constant under inertia. Formula (5.4) now proves (5.5). Its image lies in $W_{-2}$, on which inertia is trivial, so applying $\rho_\ell(\sigma)-1$ again gives zero. Finally $t_\ell$ kills wild inertia. $\square$
 
 This proof locates the unipotence exactly. It is not an abstract consequence of a matrix theorem: it is the Kummer class of the valuation of the periods.
 
@@ -877,14 +882,14 @@ The last equality is often the fastest way to read toric rank from a Tate repres
 
 ### 6.4 Polarizations and adjointness
 
-Let $e_\ell:T_\ell A\times T_\ell A^\vee\to\mathbf Z_\ell(1)$ be the perfect Tate-module pairing. Galois equivariance and (6.3) imply
+Let $e_\ell:T_\ell A\times T_\ell A^\vee\to\mathbf Z_\ell(1)$ be the perfect Tate-module pairing. For $\sigma\in I_K$, the target $\mathbf Z_\ell(1)$ is fixed because prime-to-$p$ roots of unity are unramified. Galois equivariance and (6.3) therefore imply
 
 $$
 e_\ell(N_Av,w)+e_\ell(v,N_{A^\vee}w)=0
 \tag{6.13}
 $$
 
-after the twists are contracted correctly. To prove it, substitute $1+tN$ in both variables of the equality
+after the twists are contracted correctly. To prove it, substitute $1+tN$ in both variables of the inertial equality
 
 $$
 e_\ell(\rho(\sigma)v,\rho^\vee(\sigma)w)=e_\ell(v,w).
@@ -1243,26 +1248,49 @@ The existence of a field over which $A$ is semistable is central: it will imply 
 
 **Proposition 9.1.** If $A$ and $C$ are isogenous abelian varieties over $K$, then $A$ has semistable reduction if and only if $C$ does.
 
-**Proof strategy.** A finite quotient changes the integral lattices of a Raynaud datum but cannot create a unipotent direction. We make this precise on the analytic covering.
+**Proof strategy.** Rather than quotienting analytic point sets, which would lose connected finite subgroup schemes, we compare the canonical Neron fibers and their prime-to-$p$ Tate modules. These two comparisons determine all three reduction ranks.
 
-Suppose $A$ is semistable and let $f:A\to C$ be an isogeny with finite kernel $H$. Pull $H$ back through $E\to A^{\mathrm{an}}$. Its inverse image $\widetilde H$ is a finite union of cosets of $Y$, hence a discrete finitely generated abelian group. Let $F$ be its finite torsion subgroup. Then $Y'=\widetilde H/F$ is a lattice containing the image of $Y$ with finite index, and
-
-$$
-C^{\mathrm{an}}\simeq(E/F)/Y'.
-$$
-
-It remains to verify that $E/F$ is again a Raynaud extension. Choose $n$ killing $F$. The subgroup $F$ lies in the $n$-torsion of the integral semiabelian extension. Its schematic closure is finite because it lies in the finite locally free group $[n]^{-1}(0)$, and it is flat because schematic closure from the generic fiber is torsion-free over a DVR. The finite flat quotient is smooth and semiabelian: fiberwise, the quotient of the maximal torus by the toric part of $F$ is a torus, and the proper quotient by the remaining finite subgroup is an abelian scheme. Thus its analytic generic fiber yields
+Let $f:A\to C$ be an isogeny and choose a quasi-inverse $h:C\to A$ with
 
 $$
-0\to T'\to E'\to B'\to0,
+hf=[n]_A,
 \qquad
-0\to Y'\to E'\to C^{\mathrm{an}}\to0,
+fh=[n]_C
 \tag{9.1}
 $$
 
-with $B'$ of good reduction, $T'$ a torus, and $Y'$ a full lattice. Fullness is unchanged by finite-index enlargement and finite torus quotient. The polarization of $C$ pulls back to a polarization of $A$; conversely, norming a sufficiently high tensor power of an ample bundle on $A$ along $f$ supplies positive descent data for (9.1). Raynaud uniformization therefore shows that $C$ is semistable. This argument also covers isogenies divisible by $p$: finite flat quotient geometry, not a count of geometric kernel points, prevents a unipotent part from appearing.
+for some $n>0$. Both maps extend uniquely to Neron models. After passing to $\bar k$, write the Chevalley sequences of their connected special fibers as
 
-The reverse implication follows from a quasi-inverse isogeny $g:C\to A$ with $gf=[n]$ and the same argument applied to $g$. $\square$
+$$
+0\to L_A\to\mathcal A_{\bar k}^0\to B_A\to0,
+\qquad
+0\to L_C\to\mathcal C_{\bar k}^0\to B_C\to0.
+$$
+
+A homomorphism from a smooth connected affine group to an abelian variety is zero. The special-fiber map induced by $f$ therefore carries $L_A$ into $L_C$ and induces a homomorphism $\bar f:B_A\to B_C$; similarly $h$ induces $\bar h:B_C\to B_A$. Equations (9.1) descend to
+
+$$
+\bar h\bar f=[n]_{B_A},
+\qquad
+\bar f\bar h=[n]_{B_C}.
+$$
+
+Multiplication by $n$ on an abelian variety is finite and surjective. Hence $\bar f$ and $\bar h$ are isogenies and
+
+$$
+a(A)=\dim B_A=\dim B_C=a(C). \tag{9.2}
+$$
+
+For every $\ell\ne p$, the rational map $V_\ell(f)$ is an isomorphism of $G_K$-representations. The fixed-part formula (4.4) now gives
+
+$$
+2a(A)+t(A)
+=\dim(V_\ell A)^{I_K}
+=\dim(V_\ell C)^{I_K}
+=2a(C)+t(C).
+$$
+
+Together with (9.2), this proves $t(A)=t(C)$. Finally $g=a+t+u$ and $\dim A=\dim C$, so $u(A)=u(C)$. Thus one connected Neron fiber has zero unipotent radical exactly when the other does. This proves the proposition for every isogeny, including inseparable and residue-characteristic-primary ones. $\square$
 
 Products are semistable exactly when their factors are. One direction follows by taking products of the connected Neron fibers. Conversely, the unipotent radical of
 
@@ -1275,7 +1303,7 @@ is $U_A\times U_C$; if the product is semistable, both factors vanish.
 
 ### 9.2 Producing a Jacobian cover
 
-Semistable reduction is already available for curves, so the remaining geometric task is to connect an arbitrary abelian variety to a curve without losing it up to isogeny. A sufficiently ample curve inside the abelian variety provides exactly that connection through its Jacobian.
+The curve theorem proved in Sections 9.3-9.4 will supply semistable reduction for Jacobians. Before proving it, we construct the other half of the bridge: a curve whose Jacobian contains the given abelian variety up to isogeny. A sufficiently ample curve inside the abelian variety provides exactly that connection.
 
 **Lemma 9.2.** After a finite separable extension of $K$, every abelian variety $A/K$ is an isogeny factor of the Jacobian of a smooth proper geometrically connected curve.
 
@@ -1285,13 +1313,20 @@ $$
 C=H_1\cap\cdots\cap H_{g-1}\subset A
 $$
 
-is a smooth geometrically connected curve through the origin and has the selected tangent lines. If an invariant differential on $A$ vanishes on $C$, it vanishes on all those tangent vectors. Their translates span the tangent space, so the differential is zero. Hence restriction of invariant differentials to $C$ is injective.
+is a smooth geometrically connected curve through the origin and has the selected tangent lines. Adjunction and $\omega_A\simeq\mathcal O_A$ give
+
+$$
+\omega_C\simeq
+\mathcal O_A(H_1+\cdots+H_{g-1})|_C,
+$$
+
+which has positive degree; hence $g(C)\geq2$. If an invariant differential on $A$ vanishes on $C$, it vanishes on all those tangent vectors. Their translates span the tangent space, so the differential is zero. Hence restriction of invariant differentials to $C$ is injective.
 
 The inclusion $i:C\to A$, based at the origin, induces by the Albanese property a homomorphism
 
 $$
 f:J(C)\longrightarrow A.
-\tag{9.2}
+\tag{9.3}
 $$
 
 The dual of its tangent map is restriction
@@ -1302,33 +1337,253 @@ $$
 
 which is injective by construction. Hence $df$ is surjective. The image of a homomorphism of abelian varieties is an abelian subvariety whose tangent space contains the image of $df$; it therefore has dimension $g$ and equals $A$. Thus $f$ is surjective with connected-kernel identity component $D$.
 
-Choose polarizations. The Rosati adjoint $f^\dagger:A\to J(C)$ is defined up to a positive integer denominator; multiplying clears that denominator. The composite $ff^\dagger$ is an isogeny of $A$: its kernel is finite because its polarized quadratic form is positive on every nonzero tangent direction. It follows that $f^\dagger(A)\cap D$ is finite and dimensions add. Therefore
+For completeness, the required isogeny splitting follows directly from a polarization. Let $i:D\hookrightarrow J(C)$ and choose a polarization $\lambda$ of $J(C)$. Its pullback
 
 $$
-f^\dagger(A)\times D\longrightarrow J(C)
+\lambda_D=i^\vee\lambda i:D\longrightarrow D^\vee
 $$
 
-is an isogeny. The first factor is isogenous to $A$, proving the lemma. $\square$
+is a polarization and therefore an isogeny. Choose a quasi-inverse $s:D^\vee\to D$ with $s\lambda_D=[n]_D$, and put
+
+$$
+r=s i^\vee\lambda:J(C)\longrightarrow D.
+$$
+
+Then $ri=[n]_D$. If $D'=(\ker r)^0$, the intersection $D\cap D'$ lies in $D[n]$ and is finite. Moreover $r$ is surjective, so $\dim D'=\dim J(C)-\dim D=\dim A$. Addition therefore gives an isogeny
+
+$$
+D\times D'\longrightarrow J(C).
+$$
+
+The identity component of the kernel of $f|_{D'}$ lies in $D\cap D'$, so that kernel is finite. Its image therefore has dimension $\dim A$ and is all of $A$; hence $f|_{D'}:D'\to A$ is an isogeny. Thus $A$ is an isogeny factor of $J(C)$. $\square$
 
 The argument is included to show that the reduction theorem for curves genuinely reaches arbitrary dimension rather than only Jacobians given in advance.
 
-### 9.3 The semistable reduction theorem
+### 9.3 Semistable construction after separable base change
 
-The two preceding ingredients now fit together: Jacobians inherit semistable reduction from curves, and isogeny factors inherit it from Jacobians. This is the geometric source of every later quasi-unipotence statement.
+The missing existence theorem is a theorem about relative curves over a trait. We prove it here in the form required for the Jacobian argument. The proof has two distinct stages. First one makes the vertical divisor reduced and nodal by a finite separable base change followed by normalization. Then one removes the rational components that are artifacts of the chosen regular model.
 
-**Theorem 9.3 (potential semistable reduction).** Every abelian variety over a complete discretely valued field acquires semistable reduction after a finite separable extension.
+A marked curve $(C;P_1,\ldots,P_n)$ is called **stabilizing** when the $P_i$ are distinct geometric points and
 
-**Proof.** Apply Lemma 9.2 after a finite separable extension, obtaining a smooth proper curve $C$ whose Jacobian has $A$ as an isogeny factor. The semistable model theorem for curves gives a further finite separable extension $L/K$ over which $C$ has semistable reduction. The identity component of the Neron model of $J(C)_L$ is the generalized Jacobian of the nodal special fiber. It is an extension of the product of the Jacobians of the normalized components by the graph torus. Hence $J(C)_L$ is semistable.
+$$
+2g(C)-2+n>0. \tag{9.4}
+$$
 
-By Poincare complete reducibility, $J(C)_L$ is isogenous to $A_L\times D_L$ for an abelian variety $D$. Proposition 9.1 makes the product semistable. The product criterion then makes $A_L$ semistable. All extensions used were finite and separable. $\square$
+For the application below, no markings are needed in genus at least two and one marking is used in genus one. Markings are not cosmetic in genus one: they remove translations and make the log dualizing line positive.
 
-This proof deliberately separates the deep geometric input from the group-theoretic consequences. The only stable-reduction input is the theorem for curves. General abelian varieties enter through a Jacobian cover and isogeny stability.
+**Lemma 9.3 (separable saturation of a prepared model).** Let $R$ be a complete discrete valuation ring and let $\mathcal X/R$ be a regular proper flat model of a smooth geometrically connected curve. Suppose that the reduced special fiber together with finitely many disjoint horizontal sections is a strict normal-crossings divisor. Then, after a finite separable extension $L/K$, normalization of the base change followed by normalized monomial modifications has a proper flat model $\mathcal Y/R_L$ with the following properties:
 
-### 9.4 How much extension is being asserted
+1. the generic fiber is $C_L$;
+2. the special fiber is geometrically reduced and nodal;
+3. the transformed sections are disjoint, lie in the smooth locus, and meet the special fiber transversely;
+4. for a uniformizer $\varpi$ of $R_L$, every completed local ring at a geometric node has the form
+   $$
+   \widehat{R_L^{\mathrm{sh}}}[[x,y]]/(xy-u\varpi^d),
+   \qquad u\in(\widehat{R_L^{\mathrm{sh}}})^\times,
+   \quad d\geq1. \tag{9.5}
+   $$
+5. by subdividing every height-one segment, $\mathcal Y$ may be chosen regular; then all the node thicknesses in (9.5) are one.
 
-The theorem does not claim semistability over the original field, nor does it claim that a chosen extension is minimal or Galois. Taking a finite Galois closure preserves semistability after further extension, so one may assume the semistable field is Galois whenever descent actions are studied.
+All field extensions in the construction may be chosen finite and separable.
 
-Once semistability has been reached, every further finite extension preserves it and preserves toric rank. A ramified extension scales integral monodromy by its ramification index; an unramified extension may split the torus or components without changing their geometric ranks.
+**Proof.** Write the special fiber as
+
+$$
+\mathcal X_k=\sum_{v}m_vE_v.
+$$
+
+There are only finitely many components and double points. Let $e$ be divisible by every $m_v$. A totally ramified separable extension of ramification index $e$ exists. If $\operatorname{char}K$ does not divide $e$, the Eisenstein polynomial $T^e-\pi$ is separable; for a root $\varpi_1$ one has $\pi=\varpi_1^e$. If $\operatorname{char}K=p$ divides $e$, use
+
+$$
+T^e+\pi T-\pi. \tag{9.6}
+$$
+
+This polynomial is Eisenstein, its derivative is $\pi$, and for a root $\varpi_1$ one has
+
+$$
+\pi=\frac{\varpi_1^e}{1-\varpi_1}.
+$$
+
+Thus in either case the extension is separable and $\pi$ is a unit times $\varpi_1^e$. Denote it by $K_1/K$.
+
+We now calculate the normalization. At a geometric point of the prepared boundary, at most two vertical components meet. Because $\mathcal X$ is regular and the boundary has strict normal crossings, its completed local equation is
+
+$$
+\pi=u x_1^{m_1}\cdots x_r^{m_r},
+\qquad r\in\{1,2\},\quad u\in\widehat{\mathcal O}_{\mathcal X,x}^{\times}. \tag{9.7}
+$$
+
+A marked section, when present, is an additional transverse parameter and does not occur in the right side. After base change, (9.7) and $\pi=u'\varpi_1^e$ define a monomial algebra up to units. Normalizing this algebra is the same as saturating the monoid obtained from
+
+$$
+m_1[x_1]+\cdots+m_r[x_r]=e[\varpi_1]. \tag{9.8}
+$$
+
+This assertion can be checked directly: a monomial whose positive multiple lies in the algebra is integral by a monic equation, while every integral monomial has exponent in the saturation by applying the divisorial valuations of the coordinate branches. Units change coefficients but not the saturated exponent lattice. Finite torsion in the groupification of (9.8) contributes only a finite coefficient algebra. Take its reduced normalization componentwise; possible inseparability of its residue fields is handled by the finite residue preparation below and does not change any ray height.
+
+Along the ray above $E_i$, the primitive generator has height
+
+$$
+\frac{m_i}{\gcd(m_i,e)}=1 \tag{9.9}
+$$
+
+over the new base. Hence $\varpi_1$ cuts every normalized component with multiplicity one. For $r=1$ the saturated chart is regular along the generic point of its reduced special component; the remaining geometric-regularity issue for that component is handled by the residue preparation below. For $r=2$ its cone has two primitive boundary rays, both of height one. If their lattice determinant is $d$, choose a lattice coordinate along the height-one slice. The completed saturated monoid algebra has generators $X,Y,\varpi_1$ and the single relation
+
+$$
+XY=u\varpi_1^d. \tag{9.10}
+$$
+
+Indeed, the two end generators differ by $d$ primitive steps along that slice; their product is therefore the $d$th power of the height generator, up to a unit. Conversely (9.10) is normal, its two vertical valuations are primitive of height one, and it has exactly the saturated exponent monoid, so the map is an isomorphism. Replacing $X$ by $u^{-1}X$ removes the unit after strict henselization. This proves (9.5) and shows that the special fiber is nodal even when the total space is singular for $d>1$.
+
+If a saturated cone must be subdivided to separate residue branches, subdivide its height-one segment at its lattice points. Consecutive rays have determinant one, so the corresponding normalized blowups are regular monomial charts and every new vertical ray still has height one. These normalized blowups are projective and glue because they are defined by the monomial ideals of the boundary. They do not make the mistake of arbitrarily blowing up a reduced node, which could introduce a multiple exceptional component.
+
+After this saturation the special fiber is reduced, but its components and branches need not yet be geometrically regular or split. There are only finitely many normalized component function fields and branch residue fields. A finite residue extension makes their constant fields split and their normalizations geometrically regular. This residue extension may be inseparable; it can nevertheless be realized by a finite separable extension of $K_1$. If $\bar a$ has to acquire a $p^r$-th root, choose a lift $a$ and, in equal characteristic $p$, adjoin a root of
+
+$$
+T^{p^r}-a-\varpi_1 T.
+$$
+
+Its reduction is $T^{p^r}-\bar a$ and its derivative is $-\varpi_1$, so the field extension is separable. In mixed characteristic choose the coefficient of $\varpi_1T$ outside the finite zero set of the discriminant; the reduction is the same and the polynomial is separable. Ordinary finite separable residue extensions lift by separable lifts of primitive polynomials. Repeating for the finite list gives a finite separable extension $L/K_1$ with the required residue field. Choose a uniformizer $\varpi$ of $R_L$.
+
+Normalize once more after this last base change. Every vertical multiplicity before it is one. Applying the ray calculation (9.9) with $m_i=1$ shows that arbitrary further ramification keeps it one, while a node (9.10) simply acquires thickness multiplied by the new ramification index. Consequently the final $r=1$ charts have geometrically smooth components and the $r=2$ charts have separated geometric branches. The geometric special fiber is reduced and nodal. The same calculation with the horizontal parameter shows that the marked sections remain disjoint and transverse. Retaining the two-ray cones gives (9.5); subdividing each final height-one segment at every lattice point gives the regular refinement asserted in item 5.
+
+Normalization is finite because $R$ is excellent; the monomial modifications are projective; and the result is torsion-free over $R_L$, hence flat. Properness is preserved throughout. The generic fiber is unchanged because $C$ is geometrically connected and therefore remains integral after every finite separable extension. Finally, Stein factorization has finite factor
+
+$$
+\operatorname{Spec}f_*\mathcal O_{\mathcal Y}
+\longrightarrow\operatorname{Spec}R_L.
+$$
+
+Its generic algebra is $H^0(C_L,\mathcal O)=L$, so normality of $R_L$ makes the finite factor the base itself. The same argument after every finite unramified extension proves that the special fiber is geometrically connected. This proves all the assertions. $\square$
+
+The lemma begins with a prepared boundary, so we must explain why that hypothesis costs nothing. Start with the regular proper model supplied by surface resolution. Resolve the reduced vertical divisor and the closures of the marked points as a pair. Each blowup is centered at a closed boundary defect: a singular point of a component, a nontransverse intersection, a collision of markings, or a marking through a node. Embedded resolution on a regular surface terminates by the same multiplicity--tangent--conductor invariant used for surface resolution. We have therefore reached the strict normal-crossings hypothesis of Lemma 9.3 without changing the generic marked curve; its proof performs the additional finite residue preparation needed for geometric components and branches.
+
+For a stabilizing marked curve, use the regular refinement in assertion 5. It can contain rational tails, but the whole fiber cannot be a rational component with fewer than two special points. Any remaining rational component having only one special point and no marking meets the rest of a reduced fiber once. Since the whole fiber has intersection zero with that component, the component has self-intersection $-1$. Relative contraction removes it to a regular point. Repeating terminates and preserves the reduced nodal property. The resulting model is semistable: every rational component now has at least two incident branches or markings.
+
+**Theorem 9.4 (stable reduction for curves).** Let $C/K$ be a smooth proper geometrically connected curve.
+
+- If $g(C)\geq2$, there is a finite separable extension $L/K$ over which $C_L$ has a stable model.
+- If $g(C)=1$, after a finite separable extension choose one point $P\in C(L)$; the pointed curve $(C_L;P)$ has a stable model, and its underlying curve is semistable.
+- If $g(C)=0$, after a finite separable extension $C$ is $\mathbf P^1$ and has good reduction.
+
+More generally, every stabilizing marked curve acquires a stable marked model after a finite separable extension.
+
+**Proof.** A smooth variety has closed points with finite separable residue fields, so after a finite separable extension the required markings are rational and disjoint. Prepare a regular marked model and apply Lemma 9.3. Contract rational tails with fewer than two special points as above. On the resulting semistable marked model put
+
+$$
+\mathcal L=\omega_{\mathcal Y/R_L}
+\Bigl(\sum_iP_i\Bigr).
+$$
+
+For a normalized component $Y_v$ of the special fiber,
+
+$$
+\deg(\mathcal L|_{Y_v})=2g_v-2+n_v, \tag{9.11}
+$$
+
+where $n_v$ counts branch points and markings. Semistability makes this degree nonnegative. It is zero precisely on a genus-zero component with two special points. The global inequality (9.4) rules out an entire degree-zero fiber.
+
+For a sufficiently divisible $m$, sections of $\mathcal L^m$ generate on every positive-degree component and separate every length-two subscheme there. This follows from duality and the componentwise degree bound: after subtracting such a subscheme, the dual line bundle has negative degree on the maximal connected union on which a putative section could be nonzero. On a degree-zero rational component the restriction is trivial, and the two branch values force a section to be constant. The same is true along a maximal chain of such components. Consequently the relative section algebra
+
+$$
+\bigoplus_{q\geq0}f_*\mathcal L^{mq}
+$$
+
+is generated in finite degree, commutes with base change after increasing $m$, and its relative Proj contracts exactly the maximal degree-zero chains. This is an isomorphism on the generic fiber. Eliminating a chain replaces it by one node; if its consecutive thicknesses are $d_1,\ldots,d_s$, the local equations eliminate successively to
+
+$$
+xy=u\varpi^{d_1+\cdots+d_s}. \tag{9.12}
+$$
+
+Thus the contracted family is still nodal. Formula (9.11) is now positive on every component, so the marked dualizing line is relatively ample and the output is stable.
+
+For $g\geq2$, take no markings. For $g=1$, take one marking. After forgetting that marking, no rational component can be a one-branch tail: stability would require two further special points, but there is only one marking in total. Hence the underlying genus-one model is semistable. In genus zero, a smooth proper geometrically connected curve acquires a rational point after a finite separable extension and is then $\mathbf P^1$, whose standard model is smooth. $\square$
+
+### 9.4 Stable contraction, uniqueness, and descent
+
+The stable model is more than one output of the construction. It is the canonical endpoint, and this controls every later finite descent action.
+
+**Proposition 9.5 (uniqueness and finite descent).** A stable marked model over a discrete valuation ring is unique up to a unique isomorphism inducing the given identity on the generic fiber. Its formation commutes with finite scalar extension. A model initially constructed over an algebraic extension descends to a finite extension. If that finite extension is made Galois over a field of definition of the marked pair, its Galois group acts semilinearly on the stable model and on its dual graph.
+
+**Proof.** Let $\mathcal C_1$ and $\mathcal C_2$ be two stable marked models of the same generic curve. Take the closure of the generic graph in $\mathcal C_1\times_R\mathcal C_2$, normalize it, and resolve the finitely many vertical indeterminacies. At a node use the saturated height-one monomial modifications of Lemma 9.3, not an arbitrary point blowup: resolving a thick node then expands it into a reduced chain of two-pointed rational components. After contracting any rational tails introduced over smooth points, one obtains a common semistable marked model $\mathcal Z$ mapping to both $\mathcal C_i$.
+
+Apply the log-canonical contraction of Theorem 9.4 to $\mathcal Z$. A component is contracted exactly when its log dualizing degree is zero. Both maps $\mathcal Z\to\mathcal C_i$ contract exactly those components, because the log dualizing line on $\mathcal C_i$ is ample and its pullback has degree zero precisely on the exceptional bridge chains. Hence
+
+$$
+\mathcal C_1\simeq
+\operatorname{Proj}_R\bigoplus_{q\geq0}
+f_*\left[
+\omega_{\mathcal Z/R}\Bigl(\sum P_i\Bigr)
+\right]^{mq}
+\simeq\mathcal C_2. \tag{9.13}
+$$
+
+The isomorphism is unique because the generic fiber is schematically dense in a flat separated model. This also proves compatibility with finite base change: base-change the stable model; it remains nodal and its log dualizing line remains ample, so uniqueness identifies it with the stable model obtained by running the construction after extension.
+
+Every step in Lemma 9.3 uses finitely many equations, components, normalized blowups, and sections. It therefore already occurs over a finite extension. Alternatively, if a model is first produced over an algebraic extension, finite presentation descends the scheme, markings, and generic identification to a finite subextension; after enlarging once, nodality and ampleness descend as well. The two pullbacks over a further finite extension are identified by the uniqueness just proved, and uniqueness forces the cocycle. Effective projective descent, using a power of the ample log dualizing line, gives the claimed finite field of definition.
+
+Finally suppose $L/K$ is Galois, the labeled marked pair is defined over $K$, and stable reduction holds over $L$. For $\gamma\in\operatorname{Gal}(L/K)$, the conjugate $\gamma^*\mathcal C$ is another stable model of the same marked curve over $L$. The generic descent isomorphism extends uniquely, and the resulting maps satisfy the group law by uniqueness. They act on components, branches, markings, and thicknesses. This semilinear action is the finite descent datum used later. It does not assert that the stable model descends to $R$: for a ramified extension, a semilinear group action is weaker than descent data over the non-etale overlap $R_L\otimes_RR_L$, and the quotient can have a nonnodal special fiber. Thus uniqueness controls descent without falsely implying stable reduction over the original field. $\square$
+
+### 9.5 Compatibility with Jacobians
+
+Stable reduction is useful here because its Picard geometry is exactly semiabelian, and this assertion must be compatible with the contractions made above.
+
+**Proposition 9.6 (Jacobian of a semistable curve).** Let $C/L$ have a semistable model supplied by Theorem 9.4, and let $J=\operatorname{Jac}(C)$. Then $J$ has semistable reduction. If $\Gamma$ is the geometric dual graph and $\widetilde C_v$ are the normalized components, the identity component of its smooth separated Picard model fits into
+
+$$
+0\longrightarrow T_\Gamma
+\longrightarrow\mathcal J_{k_L^s}^0
+\longrightarrow\prod_v\operatorname{Jac}(\widetilde C_v)
+\longrightarrow0, \tag{9.14}
+$$
+
+with
+$$
+X^*(T_\Gamma)=H_1(\Gamma,\mathbf Z). \tag{9.15}
+$$
+
+The construction, the canonical principal polarization, and the weighted cycle pairing commute with finite extension and with the Galois action of Proposition 9.5.
+
+**Proof.** Resolve every thick node $xy=u\varpi^d$ into its chain of $d$ unit-thickness edges. This gives a regular semistable model without changing the generic curve. Its relative total-degree-zero Picard object is smooth but may be nonseparated because vertical divisors are generically trivial. Quotient by the schematic closure of the generic identity. The resulting group $\mathcal J$ is smooth and separated and has the extension property for maps from smooth $R_L$-schemes; hence it is the Neron model of $J$.
+
+On the special fiber, normalization of line bundles gives (9.14). A degree-zero line bundle consists of degree-zero line bundles on the $\widetilde C_v$ and one gluing scalar at each node, modulo rescaling on each component. The gluing torus is therefore the cokernel of
+
+$$
+(\mathbf G_m)^V\longrightarrow(\mathbf G_m)^E,
+$$
+
+and its character sequence is the cellular chain complex of $\Gamma$, proving (9.15). The right side of (9.14) is an abelian variety and the left side is a torus, so $\mathcal J^0_{k_L^s}$ is semiabelian. Descent from $k_L^s$ gives a semiabelian identity component over the residue field, which is precisely semistable reduction of $J$.
+
+It remains to check that stabilization did not change this model. Pullback along the contraction is an isomorphism on connected degree-zero Picard groups: a degree-zero bundle on a contracted rational tree or chain is trivial on every component, and its descent is uniquely determined by the gluing at the surviving endpoint branches. In graph terms, contracting a rational tail deletes a genus-zero vertex attached by a bridge; it changes neither component Jacobians nor $H_1(\Gamma,\mathbf Z)$. Contracting a chain of two-pointed rational components replaces a subdivision by one edge. Cycles have the same coefficient on every segment, and (9.12) adds their thicknesses, so
+
+$$
+\sum_{j=1}^s d_jc_ec'_e
+=(d_1+\cdots+d_s)c_ec'_e. \tag{9.16}
+$$
+
+Thus the graph torus, the Raynaud period lattice, and its weighted pairing are unchanged; so is the weighted cokernel presenting the component group. The principal polarization is the determinant-of-cohomology polarization and is functorial for these Picard identifications. Every construction used normalization, contraction, and line-bundle gluing canonically, so finite base change and the semilinear Galois action preserve it. $\square$
+
+### 9.6 The semistable reduction theorem
+
+The preceding results now fit together without an external existence input: a Jacobian cover reaches an arbitrary abelian variety, Theorem 9.4 constructs the required curve model, Proposition 9.6 makes its Jacobian semistable, and Proposition 9.1 passes semistability through isogenies.
+
+**Theorem 9.7 (potential semistable reduction).** Every abelian variety over a complete discretely valued field acquires semistable reduction after a finite separable extension.
+
+**Proof.** Apply Lemma 9.2 after a finite separable extension. It gives a smooth proper curve $C$ and abelian subvarieties $D,D'\subseteq J(C)$ such that
+
+$$
+D\times D'\longrightarrow J(C)
+$$
+
+is an isogeny and $D'\to A$ is an isogeny. By Theorem 9.4, after a further finite separable extension $L/K$ the curve $C_L$ has a semistable model. Proposition 9.6 makes $J(C)_L$ semistable. Proposition 9.1 then makes $D_L\times D'_L$ semistable, the product criterion makes $D'_L$ semistable, and Proposition 9.1 once more makes $A_L$ semistable. Every extension used in Lemma 9.2 and Theorem 9.4 is finite and separable. $\square$
+
+The proof produces geometric data, not an auxiliary-prime-dependent field. One finite extension $L/K$ works simultaneously for every $T_\ell A$ with $\ell\ne p$. This fact will be used in the finite-level criterion, the monodromy theorem, the Weil--Deligne construction, and the proof that Swan conductors are independent of $\ell$.
+
+### 9.7 How much extension is being asserted
+
+The theorem does not claim semistability over the original field, nor does it claim that a chosen extension is minimal or Galois. Taking a finite Galois closure preserves the nodal model after base change and preserves semistability of its Jacobian, so one may assume the semistable field is Galois whenever finite descent actions are studied. For the curves used in Lemma 9.2, the unmarked genus-at-least-two curve, or the genus-one curve marked by its origin, is already defined over the current base field. Proposition 9.5 therefore supplies the canonical action on its stable model, and Proposition 9.6 supplies the compatible action on its Picard and Raynaud data.
+
+Once semistability has been reached, every further finite extension preserves it and preserves toric rank. A ramified extension scales integral monodromy and node thicknesses by its ramification index; an unramified extension may split the torus, components, or nodes without changing their geometric ranks.
 
 The theorem also does not say that good reduction is potentially attained. A Tate curve remains toric after every finite extension. Potential good reduction is the special case in which the toric rank after semistable extension is zero.
 
@@ -1349,26 +1604,46 @@ We now prove that semistability can be detected on one prime-to-$p$ Tate module.
    (\rho_\ell(\sigma)-1)^2=0.
    $$
 
+The proof uses one elementary monotonicity property of Neron fibers. If $L/K$ is finite and $a_K,a_L$ denote the abelian ranks before and after base change, then
+
+$$
+a_L\geq a_K. \tag{10.1}
+$$
+
+Indeed, after strict henselization the canonical comparison morphism
+
+$$
+\mathcal A\times_RR_L\longrightarrow\mathcal A_L
+$$
+
+has affine connected kernel on special identity components. This can be seen directly from Neron smoothening: after taking a common smooth group model, the comparison is factored into group dilatations, and the kernel introduced by a dilatation is a subgroup of the vector group normal to its center. Successive kernels are therefore affine. If $G$ is the image of the old identity component in the new one, quotienting the old component by that affine kernel preserves its abelian quotient up to isogeny. The map $G\to\mathcal A_{L,\bar k}^0$ then sends the affine radical of $G$ into the affine radical of the target. Its induced map on abelian quotients has finite kernel: the inverse image of that kernel lies in an affine group, whereas a positive-dimensional abelian variety is not affine. Thus the old abelian quotient is isogenous to an abelian subvariety of the new one, proving (10.1).
+
 **Proof.** If $A$ is semistable, Theorem 5.2 gives condition 3, which implies 2.
 
-Assume condition 2. By Theorem 9.3 choose a finite Galois extension $L/K$ over which $A$ is semistable. The descent group acts on the Raynaud data over $L$. The action on each graded piece in (1.5) factors through a finite group: on the character and period lattices it is an integral finite-order action, and on the good-reduction part its inertia descent action is finite.
-
-For $\sigma\in I_K$, the semisimple part of $\rho_\ell(\sigma)$ is exactly this finite graded action; the remaining part is the Kummer unipotent shear from periods. A finite-order matrix over characteristic zero that is also unipotent is the identity, because its minimal polynomial divides both $X^m-1$, which is separable, and a power of $X-1$. Hence the finite descent action is trivial on every graded piece.
-
-We use the semistable descent lemma: a semistable Raynaud model over a finite Galois extension descends to semistable reduction over the base if the finite inertial action on all three graded pieces of its one-motive is trivial. Here is the geometric proof. Choose a rational polyhedral decomposition for the toric formal charts and refine the finitely many Galois translates to obtain an invariant decomposition. The intrinsic descent action on $A_L$ then acts on the associated Raynaud formal model. On the identity chart it preserves
+Assume condition 2. By Theorem 9.7 choose a finite Galois extension $L/K$ over which $A$ is semistable. Put $V=V_\ell A$. Since $I_L$ is normal in $I_K$, the space $V^{I_L}$ is stable under $I_K$, and the induced action factors through the finite group $I_K/I_L$. Every element of this finite action is also unipotent by condition 2. A finite-order unipotent matrix in characteristic zero is the identity, because its minimal polynomial divides both a separable polynomial $X^m-1$ and a power of $X-1$. Hence
 
 $$
-0\longrightarrow\mathfrak T\longrightarrow\mathfrak E
-\longrightarrow\mathfrak B\longrightarrow0.
+V^{I_K}=V^{I_L}. \tag{10.2}
 $$
 
-Triviality on $X$, $T_\ell B$, and $Y$ makes its finite action trivial respectively on the special torus, the special abelian quotient, and the group of chart translations. Faithfulness of the prime-to-$p$ Tate module for homomorphisms of abelian varieties is used in the middle assertion. An automorphism of the semiabelian special fiber that is the identity on its torus and abelian quotient is itself the identity: its difference from the identity would factor through a homomorphism from the proper abelian quotient to the affine torus, and such a homomorphism is zero.
+Apply the fixed-part formula (4.5) over both fields. Over $L$ the variety is semistable, so $u_L=0$ and
 
-Form the normalized quotient of the invariant formal model and smoothen it along the identity. On completed Hopf algebras, the preceding trivial action leaves the multiplicative character parameters and the formally smooth abelian parameters unchanged; ramification changes their coefficients but introduces no primitive additive parameter. Consequently the smooth identity special fiber of the quotient is still the extension of the descended abelian variety by the descended torus. The period translations descend because their finite action is trivial, and their positive pairing descends with them. The generic fiber of the quotient is the given $A/K$, so uniqueness of the Neron model identifies its smooth identity group with $\mathcal A^0$. It has no unipotent radical, proving semistable reduction. This proves the descent lemma without assuming the criterion under proof.
+$$
+t_K+2u_K
+=\operatorname{codim}V^{I_K}
+=\operatorname{codim}V^{I_L}
+=t_L. \tag{10.3}
+$$
 
-This proves 2 implies 1. Once 1 holds, condition 3 follows, completing the equivalence. The argument is independent of the chosen semistable field because Raynaud data are canonical after common extension. $\square$
+Monotonicity (10.1) and $g=a+t+u$ give
 
-The descent paragraph is where unipotence does geometric work. Merely knowing that each eigenvalue is a root of unity would give potential semistability, not semistability over $K$.
+$$
+t_L=g-a_L\leq g-a_K=t_K+u_K. \tag{10.4}
+$$
+
+Combining (10.3) and (10.4) yields $u_K=0$. Thus $A$ is semistable over $K$, proving 2 implies 1. Once 1 holds, Theorem 5.2 gives condition 3. This completes the equivalence. $\square$
+
+The equality of fixed spaces is where unipotence does geometric work: it prevents a finite descent action from removing additional invariant vectors. The abelian-rank inequality then rules out a hidden unipotent radical on the original Neron fiber. The only existence step is Theorem 9.7, whose field is geometric and independent of $\ell$; after semistability is recovered, Theorem 5.2 proves the criterion simultaneously for every auxiliary prime.
 
 ### 10.2 The good reduction criterion
 
@@ -1409,7 +1684,15 @@ $$
 
 for odd $\ell$, again impossible. Every finite-order element has a prime-order power, proving the claim. For $\ell=2$, starting with $r\ge2$ makes the same binomial estimate work. $\square$
 
-Suppose inertia acts trivially on $A[\ell]$ for $\ell\ge3$ or on $A[4]$ for $\ell=2$. Potential semistable reduction makes every inertial matrix a product of a finite semisimple part and a unipotent part. The finite semisimple part belongs to the compact closure of the cyclic group generated by the original integral matrix, so it preserves the Tate lattice and has the same congruence to the identity. Lemma 10.3 kills it. Therefore inertia acts unipotently and $A$ is semistable by Theorem 10.1.
+**Corollary 10.4 (finite-level semistable test).** If inertia acts trivially on $A[\ell]$ for $\ell\ge3$, or on $A[4]$ for $\ell=2$, then $A$ has semistable reduction.
+
+**Proof.** Let $g=\rho_\ell(\sigma)$ be an inertial matrix. It lies respectively in $1+\ell M_n(\mathbf Z_\ell)$ or $1+4M_n(\mathbf Z_2)$, where the matrix logarithm and exponential converge and are inverse. Choose once and for all the geometric Galois semistable field $L/K$ supplied by Theorem 9.7, and let $m$ be the exponent of the finite group $I_K/I_L$. Then $\sigma^m\in I_L$, so $g^m=\rho_\ell(\sigma^m)$ is unipotent by Theorem 5.2. Since powers of one matrix commute,
+
+$$
+\log(g^m)=m\log(g).
+$$
+
+The logarithm of a unipotent matrix is nilpotent: after writing $g^m=1+N$ with $N$ nilpotent, its logarithm is the finite polynomial $N-N^2/2+\cdots$. Hence $\log(g)$ is nilpotent, and $g=\exp(\log g)$ is unipotent. Thus every inertial matrix is unipotent and $A$ is semistable by Theorem 10.1. Lemma 10.3 is the finite-order endpoint of the same logarithmic argument. $\square$
 
 This is a **semistable**, not a good-reduction, test. A Tate curve can have its finite semisimple inertia killed while retaining a nonzero unipotent shear at higher $\ell$-power levels. To force good reduction one needs triviality on the whole Tate module, or an additional argument that the monodromy map vanishes.
 
@@ -1442,13 +1725,13 @@ $$
 
 In particular, $I_K$ acts quasi-unipotently on $T_\ell A$ and $V_\ell A$.
 
-**Proof.** By Theorem 9.3 choose a finite separable extension $L/K$ over which $A$ is semistable, and replace it by a finite Galois extension. Put $I'=I_L$. The semistable inertia formula over $L$ gives
+**Proof.** By Theorem 9.7 choose a finite separable extension $L/K$ over which $A$ is semistable, and replace it by a finite Galois extension. Put $I'=I_L$. The semistable inertia formula over $L$ gives
 
 $$
 \rho_\ell(\sigma)=1+t_{\ell,L}(\sigma)N_{A_L}
 $$
 
-with $N_{A_L}^2=0$, proving (11.1). Since $I_L$ has finite index in $I_K$, it is open. $\square$
+with $N_{A_L}^2=0$, proving (11.1). Since $I_L$ has finite index in $I_K$, it is open. The construction of $L$ in Chapter 9 is geometric, so the same subgroup $I_L$ works for every $\ell\ne p$. $\square$
 
 This proof is abelian-specific and geometric. Potential semistable reduction supplies the open subgroup, and Kummer theory of the periods supplies the exponent two. No general cohomological monodromy theorem is being assumed.
 
@@ -1506,14 +1789,47 @@ r(w)Nr(w)^{-1}=|w|N.
 \tag{11.5}
 $$
 
-Here $r|_{I_K}$ has finite image and $N^2=0$. To construct it, pass to a semistable extension, choose a scalar coordinate on the tame character, and set on an open inertial subgroup
+Here $r|_{I_K}$ has finite image and $N^2=0$. Choose the common finite Galois semistable field of Theorem 9.7 and a scalar coordinate
+
+$$
+t_\ell:I_K\longrightarrow\mathbf Q_\ell
+$$
+
+on the tame character. On $I_L$ there is a unique ordinary operator $N$ such that
+
+$$
+\rho_\ell(\sigma)=\exp(t_\ell(\sigma)N).
+$$
+
+Normality of $I_L$ and uniqueness of the logarithm imply
+
+$$
+\rho_\ell(\tau)N\rho_\ell(\tau)^{-1}=N
+\qquad(\tau\in I_K). \tag{11.6}
+$$
+
+Define on all of inertia
 
 $$
 r(\sigma)=\rho_\ell(\sigma)
 \exp(-t_\ell(\sigma)N).
 $$
 
-The two factors cancel there, so $r$ has finite inertial image. Extend over $W_K$ using Frobenius; conjugation of the tame character gives the relation in (11.5). Changing the scalar coordinate conjugates the presentation in the usual way but not its isomorphism class.
+Equation (11.6) and additivity of $t_\ell$ show directly that $r(\sigma\tau)=r(\sigma)r(\tau)$. It is trivial on $I_L$, so its inertial image is finite. Put $r(F)=\rho_\ell(F)$. For geometric Frobenius,
+
+$$
+t_\ell(F\sigma F^{-1})=q^{-1}t_\ell(\sigma),
+\qquad
+\rho_\ell(F)N\rho_\ell(F)^{-1}=q^{-1}N. \tag{11.7}
+$$
+
+The first identity is the conjugation rule on tame roots and the second is the twisted equivariance (6.4). They show that the definitions on $I_K$ and $F$ respect the semidirect-product presentation of $W_K$. Thus they extend uniquely to a representation $r$ of $W_K$, and (11.6)-(11.7) give
+
+$$
+r(w)Nr(w)^{-1}=|w|N.
+$$
+
+Since $N_{A_L}^2=0$, also $N^2=0$. Rescaling the chosen coordinate on $\mathbf Q_\ell(1)$ rescales the displayed scalar $N$ inversely and gives the usual equivalent Weil--Deligne presentation; the underlying twisted operator is canonical.
 
 For semistable reduction over $K$, $r$ is unramified and all inertia is carried by $N$. For potentially good reduction, $N=0$ after a finite extension and all inertial information is finite. In general both occur. Arithmetic Frobenius replaces $F$ by $F^{-1}$ and reverses the norm convention; formula (11.5) is stated with geometric Frobenius to fix the sign and scalar once and for all.
 
@@ -1642,24 +1958,30 @@ The terms $t$ and $u$ are geometric and independent of $\ell$. The Swan term is 
 
 **Proposition 12.2.** For an abelian variety over a field with perfect residue field, $\operatorname{Sw}_K(V_\ell A)$ and $f_K(A)$ are independent of $\ell\ne p$.
 
-**Proof strategy.** Pass to a finite Galois extension $L/K$ where $A$ is semistable. Wild inertia acts through a finite $p$-group $H$ on the Raynaud one-motive over $L$. For $h\in H$, the trace on $V_\ell A$ is the sum of traces on the three rational graded pieces
+**Proof.** Choose the finite Galois semistable field $L/K$ constructed in Theorem 9.7. It is geometric and therefore independent of $\ell$. Semistable inertia over $L$ is tame, so $P_L=P_K\cap G_L$ acts trivially. Wild inertia consequently acts through the single finite $p$-group
+
+$$
+H=P_K/P_L, \tag{12.10}
+$$
+
+again independent of $\ell$. The canonical Galois action on the Raynaud datum over $L$ preserves its weight filtration. For $h\in H$, additivity of trace in a stable filtration writes the trace on $V_\ell A$ as the sum of traces on
 
 $$
 X^\vee\otimes\mathbf Q_\ell(1),
 \qquad V_\ell B,
 \qquad Y\otimes\mathbf Q_\ell.
-\tag{12.10}
+\tag{12.11}
 $$
 
-The lattice traces are integral and independent of $\ell$. The trace of a finite-order automorphism $h$ on $V_\ell B$ is independent of $\ell$: its characteristic polynomial is recovered from the degrees
+The lattice traces are integral and independent of $\ell$; the cyclotomic twist is trivial on wild inertia. Since $h$ lies in inertia, it acts trivially on the geometric residue field and hence induces an honest finite-order automorphism of $B_{\bar k}$. Its characteristic polynomial on $V_\ell B$ is recovered from the geometric integers
 
 $$
-\deg(n-h)=\det(n-h\mid V_\ell B)
+\deg(n-h)=\det(n-h\mid V_\ell B) \tag{12.12}
 $$
 
-for sufficiently many integers $n$, and those degrees are geometric integers independent of $\ell$. Hence the character of $H$ on $V_\ell A$ is independent of $\ell$.
+for all sufficiently large integers $n$: then $n-h$ is an isogeny, and (12.12) is the usual degree formula on a Tate module. A monic polynomial of degree $2\dim B$ is determined by its values at $2\dim B+1$ integers, so its coefficients and in particular $\operatorname{Tr}(h\mid V_\ell B)$ are independent of $\ell$. Hence the character of $H$ on $V_\ell A$ is independent of $\ell$.
 
-For every ramification subgroup $H^u$, averaging its character gives
+For $u>0$, let $H^u$ be the image of the upper ramification group $G_K^u$ in the fixed quotient $H$. Averaging its character gives
 
 $$
 \dim(V_\ell A)^{H^u}
@@ -1672,7 +1994,7 @@ Products give direct sums of Tate representations and products of connected Nero
 
 $$
 f_K(A\times C)=f_K(A)+f_K(C).
-\tag{12.11}
+\tag{12.13}
 $$
 
 An isogeny induces an isomorphism $V_\ell A\simeq V_\ell C$ for every $\ell$ after tensoring with $\mathbf Q_\ell$, even when $\ell$ divides the isogeny degree. Hence
@@ -1681,7 +2003,7 @@ $$
 f_K(A)=f_K(C),
 \qquad
 \operatorname{Sw}_K(A)=\operatorname{Sw}_K(C).
-\tag{12.12}
+\tag{12.14}
 $$
 
 The conductor is therefore an isogeny invariant, while the component group is not. This contrast is one of the main reasons to keep the rational monodromy operator separate from its integral lattice map.
@@ -1897,24 +2219,58 @@ $$
 \tag{14.4}
 $$
 
-There is then an exact sequence
+There are two natural maps, with opposite variance, and they must not be confused. The canonical Neron base-change morphism induces
+
+$$
+i_e:\Phi_A(k^s)\longrightarrow\Phi_{A_L}(k^s),
+\qquad
+[x]\longmapsto[ex].
+\tag{14.5}
+$$
+
+It is injective, and its cokernel is $X^\vee/eX^\vee$:
+
+$$
+0\longrightarrow\Phi_A(k^s)
+\xrightarrow{i_e}\Phi_{A_L}(k^s)
+\longrightarrow X^\vee/eX^\vee\longrightarrow0.
+\tag{14.6}
+$$
+
+Reduction modulo the larger lattice $\nu_A(Y)$ defines a different map in the reverse direction,
+
+$$
+\pi_e:\Phi_{A_L}(k^s)\longrightarrow\Phi_A(k^s),
+\qquad [x]\longmapsto[x].
+$$
+
+It gives the exact sequence
 
 $$
 0\longrightarrow \nu_A(Y)/e\nu_A(Y)
 \longrightarrow X^\vee/e\nu_A(Y)
-\longrightarrow X^\vee/\nu_A(Y)
+\xrightarrow{\pi_e}X^\vee/\nu_A(Y)
 \longrightarrow0.
-\tag{14.5}
+\tag{14.7}
 $$
 
-The first term is canonically $Y/eY$ through the injective map $\nu_A$. Consequently
+The first term is canonically $Y/eY$ through the injective map $\nu_A$. The two maps satisfy
+
+$$
+\pi_ei_e=[e]\quad\text{on }\Phi_A(k^s),
+\qquad
+i_e\pi_e=[e]\quad\text{on }\Phi_{A_L}(k^s).
+\tag{14.8}
+$$
+
+Thus (14.7) is a contraction sequence, not the component map attached to the canonical base-change morphism. Consequently
 
 $$
 |\Phi_{A_L}(k^s)|=e^t|\Phi_A(k^s)|
-\tag{14.6}
+\tag{14.9}
 $$
 
-when the geometric lattices do not otherwise change. Sequence (14.5), rather than only (14.6), records how old invariant factors are enlarged.
+when the geometric lattices do not otherwise change. The pair of sequences (14.6) and (14.7), rather than only the order formula, records both how old classes embed and how the enlarged group contracts back.
 
 If $A$ is not semistable over $K$, base change can remove a unipotent radical, change the finite inertial type, and reduce the Swan conductor. No formula involving only the old values of $(a,t,u)$ and the ramification index determines the new conductor.
 
@@ -1922,11 +2278,11 @@ If $A$ is not semistable over $K$, base change can remove a unipotent radical, c
 
 The main statements are safe under the following boundaries.
 
-**Valuation and residue field.** Completeness and discreteness are used for uniformization and normalized integral lengths. Classical upper ramification and Swan formulas are stated when finite residue extensions are separable; perfection of $k$ guarantees this. Finite $k$ is required only for a distinguished Frobenius and the Weil--Deligne formulation.
+**Valuation and residue field.** Completeness and discreteness are used for uniformization and normalized integral lengths. Completeness also makes the valuation ring excellent, which gives finite normalization and surface resolution in the stable-reduction construction. Lemma 9.3 allows arbitrary residue characteristic and realizes any required finite inseparable residue preparation inside a finite separable extension of $K$. Classical upper ramification and Swan formulas are stated when finite residue extensions are separable; perfection of $k$ guarantees this. Finite $k$ is required only for a distinguished Frobenius and the Weil--Deligne formulation.
 
 **The auxiliary prime.** Every Tate-module, fixed-part, and Kummer statement assumes $\ell\ne p$. At $\ell=p$, formal and connected finite group schemes require a different theory.
 
-**Semistability.** The three-step Raynaud filtration, square-zero formula over all inertia, integral monodromy pairing, and component presentation (8.3) require semistable reduction over the field in question. For an arbitrary abelian variety they apply only after a finite semistable extension, with finite descent retained.
+**Semistability.** The three-step Raynaud filtration, square-zero formula over all inertia, integral monodromy pairing, and component presentation (8.3) require semistable reduction over the field in question. Theorem 9.7 constructs a finite separable semistable extension for every abelian variety, through the in-book stable-reduction proof for curves. Before restriction to that field, the finite descent action must be retained.
 
 **Splitting.** Coordinate formulas use split tori over $K^{\mathrm{nr}}$. Over $K$, $X$ and $Y$ are residue-Galois lattices. Geometric component groups carry that action; their $k$-points are invariants, not automatically the whole group.
 
@@ -2030,7 +2386,7 @@ Semistable degeneration of an abelian variety is controlled by two lattices arou
 
 Inertia is then explicit. Roots of unit parts of periods are unramified, while roots of their valuations are governed by the tame character. The resulting monodromy operator lowers the filtration by two, has square zero, and has rank equal to the toric rank. Its integral source is the monodromy pairing between the toric character lattices of $A$ and $A^\vee$. The cokernels of that pairing and its transpose are the two component groups, and elementary lattice duality makes their pairing perfect. Polarizations convert the nonsymmetric dual pairing into a symmetric positive form; semistable Jacobians recover the weighted cycle pairing of their reduction graphs.
 
-Every abelian variety becomes semistable after a finite separable extension: a sufficiently ample curve makes it an isogeny factor of a Jacobian, semistable reduction of the curve makes that Jacobian semistable, and semistability survives isogeny factors. This geometric theorem yields quasi-unipotence of every prime-to-residue-characteristic Tate module, with Jordan blocks of size at most two. It also turns unipotent inertia into a criterion for semistable reduction and trivial inertia into the good reduction criterion.
+Every abelian variety becomes semistable after a finite separable extension. The curve theorem used here was constructed explicitly: prepare a regular normal-crossings marked model, saturate its vertical monoids after a finite separable base change, contract rational tails and log-canonical degree-zero chains, and use uniqueness to control finite descent. The separated Picard quotient identifies the resulting Jacobian fiber as semiabelian and proves invariance under stabilization. A sufficiently ample curve then makes the original abelian variety an isogeny factor of that Jacobian, and semistability survives isogeny factors. This one geometric field yields quasi-unipotence of every prime-to-residue-characteristic Tate module, with Jordan blocks of size at most two. It also turns unipotent inertia into a criterion for semistable reduction and trivial inertia into the good reduction criterion.
 
 Finally, the Neron fixed-part theorem identifies inertia invariants with the prime-to-residue-characteristic Tate module of the connected special fiber. The abelian and toric layers contribute rank $2a+t$, the unipotent layer contributes none, and ramification theory supplies the remaining wild depth. The conductor formula
 
