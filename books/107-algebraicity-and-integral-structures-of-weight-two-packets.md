@@ -52,7 +52,7 @@
     - [The dual eigensystem](#102-the-dual-eigensystem)
     - [Period products from a perfect pairing](#103-period-products-from-a-perfect-pairing)
     - [Complex conjugation and the two signs](#104-complex-conjugation-and-the-two-signs)
-11. [The $mathrm{GL}_2$ weight-two packet](#11-the-mathrmgl_2-weight-two-packet)
+11. [The $\mathrm{GL}_2$ weight-two packet](#11-the-mathrmgl_2-weight-two-packet)
     - [From a normalized newform to a packet](#111-from-a-normalized-newform-to-a-packet)
     - [Strong multiplicity one after conjugation](#112-strong-multiplicity-one-after-conjugation)
     - [Ramified components and newvectors](#113-ramified-components-and-newvectors)
@@ -81,11 +81,11 @@ A weight-two eigenform first appears analytically, as a vector in a complex auto
 
 The central problem of this book is to construct and compare them without suppressing choices. A complex eigensystem has a **field of rationality**. A representation may require a larger **field of definition**. A one-dimensional newvector space has lattices, but usually no distinguished generator. A period is a scalar only after two bases have been chosen; intrinsically it is a class modulo algebraic rescaling. Finally, an embedding $E\hookrightarrow\mathbf C$ acts on algebraic coefficients, whereas a transcendental period is not thereby endowed with an action of every automorphism of $\mathbf C$.
 
-Weight two is the meeting point. Its algebraic normalization makes the good Hecke polynomial integral, while its cohomological realization has Hodge types $(1,0)$ and $(0,1)$. Degree-one comparison therefore supplies exactly two rational directions, customarily distinguished by complex conjugation, and a holomorphic line to be compared with them.
+Weight two is the meeting point in every realization that genuinely occurs in degree one. Its algebraic normalization makes the good Hecke polynomial compatible with an integral Hecke action, while a degree-one realization has Hodge types $(1,0)$ and $(0,1)$. In multiplicity one, comparison then supplies exactly two Betti sign directions and a holomorphic line to be compared with them. This statement is deliberately conditional: over a totally real field of degree $d>1$, the Hilbert modular realization is normally in degree $d$ and has $2^d$ archimedean sign lines, as Book 92 explains. Nothing below turns that higher-degree realization into degree one.
 
 ### 1.2 Standing conventions and algebraic normalization
 
-Let $F$ be a number field. For the global $\mathrm{GL}_2$ statements we consider an irreducible cuspidal automorphic representation
+Let $F$ be a totally real field. For the global $\mathrm{GL}_2$ statements we consider an irreducible cuspidal automorphic representation
 
 $$
 \pi=\pi_\infty\otimes\pi_f
@@ -107,36 +107,45 @@ $$
 
 This convention is fixed throughout. Unitary Satake parameters introduce powers of $q_v^{1/2}$ and are useful analytically, but arbitrary coefficient automorphisms do not act coherently on an unrecorded choice of square root. Algebraicity and conjugation will therefore always refer to (1.2).
 
-Let $A$ be a number field over which the central character, algebraic weight, and a fixed-level automorphic module are defined. Write $\mathcal O_A$ for its ring of integers. An **integral Hecke module** is a finite torsion-free $\mathcal O_A$-module $M$ preserved by the chosen commuting operators. Its acting algebra is
+Let $K$ be a number field held fixed in a chosen arithmetic model, and write $R=\mathcal O_K$. A **rational Hecke module** is a finite-dimensional $K$-space $V$ preserved by the chosen commuting operators. Its faithful acting algebra is the image
 
 $$
-\mathbb T=\mathcal O_A[T_v,S_v,S_v^{-1}:v\notin\Sigma]\big/\operatorname{Ann}(M)
-\subseteq\operatorname{End}_{\mathcal O_A}(M). \tag{1.3}
+B=K[T_v,S_v,S_v^{-1}:v\notin\Sigma]\big/\operatorname{Ann}(V)
+\subseteq\operatorname{End}_K(V). \tag{1.3}
 $$
 
-Only the image algebra is used. This makes $M$ faithful and prevents irrelevant abstract characters from being mistaken for eigensystems that occur.
+An **integral Hecke module** is, in addition, a finite torsion-free $R$-module $M\subset V$ spanning $V$ and preserved by all these operators. Its acting order is
+
+$$
+\mathbb T=R[T_v,S_v,S_v^{-1}:v\notin\Sigma]\big/\operatorname{Ann}(M)
+\subseteq\operatorname{End}_R(M), \tag{1.4}
+$$
+
+and $B=\mathbb T\otimes_RK$. Only image algebras are used. This makes the modules faithful and prevents irrelevant abstract characters from being mistaken for eigensystems that occur.
+
+There are two coefficient-field conventions that must not be mixed. The constructions relative to $K$ produce only $K$-embeddings of a residue field. The absolute field of rationality uses all $\mathbf Q$-embeddings. To obtain the latter from a model initially defined over a field $A$, one either descends the whole arithmetic space to $\mathbf Q$ or takes restriction of scalars together with all conjugate coefficient data. In the holomorphic $\mathrm{GL}_2$ setting, the conjugation-compatible $q$-expansion structures assumed in Book 92 provide precisely those conjugate spaces. Merely viewing one fixed-nebentype complex space in isolation does not.
 
 ### 1.3 Packets, representatives, and realizations
 
-A **good Hecke eigensystem** is an $A$-algebra homomorphism
+A **good Hecke eigensystem** is a $K$-algebra homomorphism
 
 $$
-\lambda:\mathbb T_A=\mathbb T\otimes_{\mathcal O_A}A\longrightarrow\overline{\mathbf Q}.
+\lambda:B\longrightarrow\overline{\mathbf Q}.
 $$
 
 Its Hecke field is
 
 $$
-E_\lambda=A\bigl(\lambda(T_v),\lambda(S_v):v\notin\Sigma\bigr). \tag{1.4}
+E_\lambda=K\bigl(\lambda(T_v),\lambda(S_v):v\notin\Sigma\bigr). \tag{1.5}
 $$
 
-The **algebraic packet** $[\lambda]$ is the set of conjugate characters $\iota\circ\lambda$ as $\iota$ ranges through $A$-embeddings of $E_\lambda$ into $\mathbf C$, with repetitions removed. Equivalently, it is the closed point of $\operatorname{Spec}(\mathbb T_A)$ determined by the kernel of $\lambda$, together with all of its geometric points.
+Here and below $K$ acts through the fixed embedding $K\hookrightarrow\overline{\mathbf Q}$. The **relative algebraic packet** $[\lambda]_K$ is the set of conjugate characters $\iota\circ\lambda$ as $\iota$ ranges through $K$-embeddings of $E_\lambda$ into $\mathbf C$, with repetitions removed. Equivalently, it is the closed point of $\operatorname{Spec}(B)$ determined by the kernel of $\lambda$, together with all of its geometric points. We abbreviate it to $[\lambda]$ when the base is clear. When $K=\mathbf Q$, it is the absolute algebraic packet.
 
-This use of “packet” is deliberately algebraic. For $\mathrm{GL}_2$, strong multiplicity one turns each member into a unique cuspidal automorphic representation. For a finite quaternionic Hecke module, the good eigensystem can initially identify only a near-equivalence block; extra ramified data or a separate determination theorem is needed to single out one constituent. A **realization** of $[\lambda]$ means a Hecke module—automorphic, Betti, de Rham, or integral—in which its eigensystem occurs. The book compares realizations but never identifies them merely because their dimensions agree.
+This use of “packet” is deliberately algebraic. For a conjugation-compatible $\mathrm{GL}_2$ automorphic module, strong multiplicity one turns each member into a unique cuspidal automorphic representation. For a finite quaternionic Hecke module, the good eigensystem can initially identify only a near-equivalence block; extra ramified data or a separate determination theorem is needed to single out one constituent. A **realization** of $[\lambda]$ means a Hecke module—automorphic, Betti, de Rham, or integral—in which its eigensystem occurs. The book compares realizations but never identifies them merely because their dimensions agree.
 
 ### 1.4 The logical architecture
 
-The construction proceeds in four stages. First, finite integral linear algebra gives algebraic integers, number fields, conjugate characters, and saturated eigenlattices. Second, strong multiplicity one converts good $\mathrm{GL}_2$ Hecke data into global representations and therefore controls even the ramified local factors. Third, degree-one comparison turns a rational Hodge structure carrying the same Hecke action into period classes. Fourth, pairings and integral structures show exactly how duality, signs, coefficient primes, and embeddings interact.
+The construction proceeds in four stages. First, finite rational linear algebra gives number fields and conjugate characters; a stable integral lattice then gives algebraic integers and saturated eigenlattices. Second, strong multiplicity one converts good $\mathrm{GL}_2$ Hecke data into global representations and therefore controls even the ramified local factors. Third, degree-one comparison turns a rational Hodge structure carrying the same Hecke action into period classes. Fourth, pairings and integral structures show exactly how duality, signs, coefficient primes, and embeddings interact.
 
 The difficult points are negative as well as positive. Reduction modulo a prime is not flat. Generic projectors can have denominators. A field of rationality need not descend a whole representation. Oldspaces can have dimension greater than one even though the global representation occurs once. These are not peripheral cautions: they determine the correct form of every integral statement below.
 
@@ -144,7 +153,9 @@ The difficult points are negative as well as positive. Reduction modulo a prime 
 
 ### 2.1 The integral source of algebraicity
 
-The algebraicity of weight-two Hecke data does not come from spectral theory alone. It comes from an independently constructed finite module over a number ring. For definite quaternionic forms this is the integral module and faithful image algebra of Book 91; for cohomological $\mathrm{GL}_2$ forms it is the number-field fixed-level structure recalled in Book 92. Once that source exists, the main finiteness statement is elementary but powerful.
+The algebraicity of weight-two Hecke data does not come from spectral theory alone. It comes from an independently constructed rational arithmetic module. The number-field fixed-level structure assumed in Book 92 supplies such a rational module for holomorphic cohomological $\mathrm{GL}_2$ forms. It does **not** by itself supply a common stable lattice for every Hecke operator; Book 92 explicitly leaves integral models and the $q$-expansion principle as separate arithmetic inputs. For definite quaternionic forms, by contrast, the integral class module and faithful image algebra of Book 91 do supply the lattice.
+
+At the rational level, the image $B\subseteq\operatorname{End}_K(V)$ is automatically finite-dimensional over $K$, so its characters have algebraic values. Once an integral source $M$ is also given, the following stronger order statement yields integrality.
 
 **Proposition 2.1 (finite Hecke order).** Let $R$ be the ring of integers of a number field and let $M$ be a finite torsion-free $R$-module. If $\mathbb T\subseteq\operatorname{End}_R(M)$ is the $R$-algebra generated by any commuting family of endomorphisms, then $\mathbb T$ is a finite torsion-free $R$-module. Hence $\mathbb T\otimes_RK$ is a finite-dimensional commutative $K$-algebra, where $K=\operatorname{Frac}(R)$.
 
@@ -176,10 +187,10 @@ The primitive idempotent $e_i$ of (2.1) isolates the $i$th characteristic-zero b
 
 ### 2.3 Reduced generic fibers and simultaneous eigenspaces
 
-Let $V=M\otimes_RK$. Suppose $\mathbb T_K$ is reduced. For a character $\lambda:\mathbb T_K\to E$, define
+Let $V$ be a rational Hecke module and suppose its acting algebra $B$ is reduced. For a character $\lambda:B\to E$, define
 
 $$
-V_\lambda=\{x\in V\otimes_KE:t x=\lambda(t)x\text{ for every }t\in\mathbb T\}. \tag{2.3}
+V_\lambda=\{x\in V\otimes_KE:b x=\lambda(b)x\text{ for every }b\in B\}. \tag{2.3}
 $$
 
 Equation (2.2) gives a canonical decomposition
@@ -202,17 +213,17 @@ Consequently a packet with unfixed central character records both $T_v$ and $S_v
 
 ### 3.1 The Hecke field is a number field
 
-Let $\lambda:\mathbb T_K\to\mathbf C$ be an occurring character. Since $\mathbb T_K$ is finite-dimensional, its image $E_\lambda$ is a finite extension of $K$. Thus (1.4), although written using infinitely many good places, is a number field.
+Let $\lambda:B\to\mathbf C$ be an occurring character. Since $B$ is finite-dimensional, its image $E_\lambda$ is a finite extension of $K$. Thus (1.5), although written using infinitely many good places, is a number field. This argument needs the rational arithmetic module $V$, but not yet an integral lattice.
 
-**Theorem 3.1 (algebraicity and finiteness).** Every value $\lambda(t)$ with $t\in\mathbb T$ is algebraic over $K$. The field $E_\lambda=\lambda(\mathbb T_K)$ is finite over $K$, and
+**Theorem 3.1 (algebraicity and finiteness).** Every value $\lambda(b)$ with $b\in B$ is algebraic over $K$. The field $E_\lambda=\lambda(B)$ is finite over $K$, and
 
 $$
-[E_\lambda:K]\leq\dim_K\mathbb T_K. \tag{3.1}
+[E_\lambda:K]\leq\dim_KB. \tag{3.1}
 $$
 
-**Proof.** Multiplication by $t$ on the finite-dimensional space $\mathbb T_K$ has a monic characteristic polynomial in $K[X]$. Applying $\lambda$ to the Cayley--Hamilton identity shows that $\lambda(t)$ is a root. The image is a quotient of the finite-dimensional $K$-vector space $\mathbb T_K$, so it is finite-dimensional. As the image of a unital homomorphism into a field it is a domain, hence a field. The dimension bound follows. $\square$
+**Proof.** Multiplication by $b$ on the finite-dimensional space $B$ has a monic characteristic polynomial in $K[X]$. Applying $\lambda$ to the Cayley--Hamilton identity shows that $\lambda(b)$ is a root. The image is a quotient of the finite-dimensional $K$-vector space $B$, so it is finite-dimensional. As the image of a unital homomorphism into a field it is a domain, hence a field. The dimension bound follows. $\square$
 
-For a cohomological normalized newform $f$, the theorem identifies the usual Hecke field with
+For a cohomological normalized newform $f$, the theorem identifies the Hecke field relative to $K$ with
 
 $$
 E_f=K(a_v(f),\omega_v(\varpi_v):v\notin\Sigma), \tag{3.2}
@@ -224,47 +235,60 @@ in the raw normalization. Strong multiplicity one says that this good-place char
 
 Although all good places are useful for recognizing a representation, only finitely many are needed to generate the acting algebra and its field of values.
 
-**Proposition 3.2.** There is a finite set $S\subseteq\{v:v\notin\Sigma\}$ such that the images of $T_v,S_v^{\pm1}$ for $v\in S$ generate $\mathbb T$ as an $R$-algebra. Consequently
+**Proposition 3.2.** There is a finite set $S\subseteq\{v:v\notin\Sigma\}$ such that the images of $T_v,S_v^{\pm1}$ for $v\in S$ generate $B$ as a $K$-algebra. If an integral module $M$ is present, a possibly larger finite set generates $\mathbb T$ as an $R$-algebra. Consequently
 
 $$
 E_\lambda=K(\lambda(T_v),\lambda(S_v):v\in S). \tag{3.3}
 $$
 
-**Proof.** The subalgebras generated by finite subsets of the displayed operators form an increasing union equal to $\mathbb T$. Since $\mathbb T$ is a finite $R$-module, it is Noetherian as an $R$-module. The increasing chain obtained by adjoining the operators one at a time stabilizes. At that point finitely many operators generate the full algebra. Applying $\lambda$ proves (3.3). $\square$
+**Proof.** Enumerate the good operators. The $K$-subalgebras generated by the first $n$ form an increasing chain of $K$-subspaces of the finite-dimensional space $B$, so the chain stabilizes. This proves the rational assertion. When $M$ exists, Proposition 2.1 makes $\mathbb T$ a Noetherian $R$-module; the same ascending-chain argument with $R$-subalgebras proves the integral assertion. Applying $\lambda$ proves (3.3). $\square$
 
 This statement is not an effective bound on the primes in $S$. It says that the algebraic packet is finite data even though its most natural label is an infinite Hecke sequence.
 
 ### 3.3 Field of rationality versus field of definition
 
-For a finite automorphic representation $\pi_f$ with algebraic infinity type, define its rationality field, when the displayed fixed field is algebraic of finite degree, by
+The residue field $E_\lambda$ in (1.5) is relative to the chosen base $K$. If $K$ was enlarged merely to write matrices, it need not be the intrinsic rationality field. Define instead the **absolute Hecke field**
+
+$$
+E_\pi^{\mathrm{abs}}
+=\mathbf Q(t_v,s_v:v\notin\Sigma), \tag{3.4}
+$$
+
+Both coefficients are retained in this absolute field. Fixing a central character lets trace eigenvalues alone recognize representations inside that fixed-character family, but it does not remove the central-character values from the intrinsic absolute rationality field. Under the conjugation-compatible arithmetic structure of Book 92, define the rationality field of $\pi_f$ by
 
 $$
 \mathbf Q(\pi_f)
-=\mathbf C^{\{\sigma\in\operatorname{Aut}(\mathbf C):{}^\sigma\!\pi_f\simeq\pi_f\}}. \tag{3.4}
+=\mathbf C^{\{\sigma\in\operatorname{Aut}(\mathbf C):{}^\sigma\!\pi_f\simeq\pi_f\}}. \tag{3.5}
 $$
 
-Here ${}^\sigma\!\pi_f$ means scalar conjugation of an algebraic model when one is available. A field of definition is a subfield $L\subset\mathbf C$ carrying an $L$-vector space and group action whose scalar extension is $\pi_f$. These notions agree for a one-dimensional eigencharacter, but not automatically for an irreducible representation: a nontrivial central division algebra can obstruct descent to its center.
+Here ${}^\sigma\!\pi_f$ is constructed by conjugating the arithmetic eigensystem, not by applying $\sigma$ to an arbitrary analytic representation model. A field of definition is a subfield $L\subset\mathbf C$ carrying an $L$-vector space and group action whose scalar extension is $\pi_f$. A one-dimensional eigencharacter is defined over its value field, but an irreducible representation need not descend to its rationality field: a nontrivial central division algebra can obstruct descent to its center.
 
-For $\mathrm{GL}_2$, the good algebraic Hecke polynomials determine $\pi$ by strong multiplicity one. Hence the stabilizer of their full system equals the stabilizer of the isomorphism class, and the fixed field is the Hecke field. Indeed, every automorphism fixing all polynomial coefficients fixes the isomorphism class by strong multiplicity one. Conversely, an isomorphism $\pi_f^\sigma\simeq\pi_f$ identifies every unramified spherical character and therefore fixes all coefficients generating $E_\lambda$. The two stabilizers are equal. This conclusion concerns the isomorphism class. It does not furnish a model of every local factor over that field.
+For $\mathrm{GL}_2$, the good algebraic Hecke polynomials determine $\pi$ by strong multiplicity one. Hence the stabilizer of their full system equals the stabilizer of the isomorphism class, and
+
+$$
+\mathbf Q(\pi_f)=E_\pi^{\mathrm{abs}}. \tag{3.6}
+$$
+
+Indeed, every automorphism fixing all polynomial coefficients fixes the isomorphism class by strong multiplicity one. Conversely, an isomorphism ${}^\sigma\!\pi_f\simeq\pi_f$ identifies every unramified spherical character and therefore fixes all coefficients generating $E_\pi^{\mathrm{abs}}$. The two stabilizers are equal, and the fixed field of the pointwise stabilizer of a number field inside $\mathbf C$ is that number field. If the relative module is over $K$, then $E_\lambda=K E_\pi^{\mathrm{abs}}$ provided its scalar field is included in the acting algebra. This conclusion concerns the isomorphism class; it does not furnish a model of every local factor over either field.
 
 ### 3.4 A descent theorem for an eigenline
 
 The minimal newvector is the setting in which descent is elementary and exact.
 
-**Theorem 3.3 (eigenline descent).** Let $B$ be a commutative $K$-algebra acting on a finite-dimensional $K$-space $V$, let $\lambda:B\to E$ be a character into a finite extension, and suppose
+**Theorem 3.3 (eigenline descent).** Let $B$ be a finite-dimensional commutative $K$-algebra acting on a finite-dimensional $K$-space $V$, let $\lambda:B\twoheadrightarrow E$ be a character whose image is the finite extension $E/K$, and suppose
 
 $$
 \dim_E V_\lambda=1.
 $$
 
-Then $V_\lambda$ is an $E$-defined line. For every embedding $\iota:E\hookrightarrow\mathbf C$,
+Then $V_\lambda$ is an $E$-defined line. For every $K$-embedding $\iota:E\hookrightarrow\mathbf C$,
 
 $$
 V_\lambda\otimes_{E,\iota}\mathbf C
-\cong V_{\iota\lambda}\subset V\otimes_K\mathbf C. \tag{3.5}
+\cong V_{\iota\lambda}\subset V\otimes_K\mathbf C. \tag{3.7}
 $$
 
-**Proof.** The equations $(b-\lambda(b))x=0$ defining $V_\lambda$ have coefficients in $E$. Their common kernel is therefore an $E$-subspace. Base extension along the flat map $E\to\mathbf C$ commutes with finite kernels, giving (3.5). The assumed dimension makes the kernel a line. $\square$
+**Proof.** The equations $(b-\lambda(b))x=0$ defining $V_\lambda$ have coefficients in $E$. Since $B$ is finite-dimensional, finitely many equations suffice. Their common kernel is therefore an $E$-subspace. Base extension along the flat map $E\to\mathbf C$ commutes with this finite kernel, giving (3.7). The assumed dimension makes the kernel a line. $\square$
 
 The theorem descends the eigenline because it is defined by linear equations. It does not descend the entire smooth representation generated by that line unless the group action and all required intertwiners are also known to descend.
 
@@ -288,22 +312,23 @@ The infinity type is not conjugated by applying $\sigma$ to analytic functions. 
 
 ### 4.2 Conjugating an eigensystem
 
-**Theorem 4.1 (existence of conjugates).** Let $M_K$ be a finite Hecke module defined over $K$ and let $\lambda:\mathbb T_K\to E$ occur in $M_K\otimes_KE$. For every $K$-embedding $\iota:E\hookrightarrow\mathbf C$, the character $\iota\lambda$ occurs in $M_K\otimes_K\mathbf C$, with the same geometric multiplicity.
+**Theorem 4.1 (existence of relative conjugates).** Let $V$ be a finite Hecke module defined over $K$, let its acting algebra $B$ be reduced, and let $\lambda:B\twoheadrightarrow E$ be an occurring character whose image is $E$. For every $K$-embedding $\iota:E\hookrightarrow\mathbf C$, the character $\iota\lambda$ occurs in $V\otimes_K\mathbf C$, with the same geometric multiplicity.
 
 **Proof strategy.** Use the primitive field factor of the reduced Hecke algebra, rather than conjugating a chosen complex vector with no rational coordinates.
 
-**Proof.** Let $\mathfrak p=\ker\lambda$. The factor $\mathbb T_K/\mathfrak p$ is $E$. The $\mathfrak p$-component of $M_K$ is an $E$-space $W$. After tensoring $E$ with $\mathbf C$,
+**Proof.** Let $\mathfrak p=\ker\lambda$. The factor $B/\mathfrak p$ is $E$. The $\mathfrak p$-component of $V$ is an $E$-space $W$. After tensoring with $\mathbf C$ over $K$,
 
 $$
 W\otimes_K\mathbf C
-\cong\bigoplus_{\iota:E\hookrightarrow\mathbf C}W\otimes_{E,\iota}\mathbf C.
+\cong\bigoplus_{\substack{\iota:E\hookrightarrow\mathbf C\\ \iota|_K=\mathrm{id}}}
+W\otimes_{E,\iota}\mathbf C.
 $$
 
 On the $\iota$th summand, $t$ acts as $\iota(\lambda(t))$. Every summand has dimension $\dim_EW$, proving occurrence and equality of multiplicities. $\square$
 
 ### 4.3 The finite orbit and its stabilizer
 
-The embeddings of $E_\lambda$ give exactly $[E_\lambda:K]$ distinct characters: if two embeddings agree on every $\lambda(t)$, they agree on the field generated by those values. Thus the packet orbit is finite and transitive under the embeddings of a normal closure.
+The $K$-embeddings of $E_\lambda$ give exactly $[E_\lambda:K]$ distinct characters: if two embeddings agree on every $\lambda(t)$, they agree on the field generated by those values. Thus the relative packet orbit is finite and transitive under the embeddings of a normal closure. For the absolute orbit one first uses a $\mathbf Q$-model, as explained in Section 1.2; a module over an auxiliary $K$ cannot by itself produce embeddings that move $K$.
 
 Let $L/K$ be a normal closure of $E_\lambda$. Then $\operatorname{Gal}(L/K)$ acts on the characters by
 
@@ -315,11 +340,11 @@ The stabilizer is $\operatorname{Gal}(L/E_\lambda)$, so orbit--stabilizer recove
 
 ### 4.4 Conjugation of automorphic representations
 
-For a cohomological $\mathrm{GL}_2$ eigensystem, Theorem 4.1 constructs a conjugate eigenform and hence a cuspidal representation $\pi^\iota$. At every $v\notin\Sigma$,
+For a cohomological $\mathrm{GL}_2$ eigensystem in a conjugation-compatible arithmetic module, Theorem 4.1 constructs a conjugate eigenform and hence a cuspidal representation $\pi^\iota$. Here $\iota$ is a $K$-embedding in the relative setting and an arbitrary coefficient embedding when the module has first been placed over $\mathbf Q$. At every $v\notin\Sigma$,
 
 $$
 P_v(\pi^\iota;X)=
-1+\iota(-t_v)X+q_v\iota(s_v)X^2
+1-\iota(t_v)X+q_v\iota(s_v)X^2
 =\iota(P_v(\pi;X)), \tag{4.4}
 $$
 
@@ -374,14 +399,14 @@ Replacing $f_\lambda$ by $cf_\lambda$ replaces $\mathfrak a_\lambda$ by $c^{-1}\
 
 ### 5.4 Denominators of projectors
 
-Let $e_\lambda\in\mathbb T_E$ be the primitive idempotent isolating $\lambda$. Although $e_\lambda M_E=V_\lambda$, the element $e_\lambda$ may not preserve $M_E$. Define its denominator ideal by
+Let $e_\lambda\in\mathbb T_E$ be the primitive idempotent isolating $\lambda$. Then $e_\lambda(V_E)=V_\lambda$, and $e_\lambda(M_E)$ is a full lattice in $V_\lambda$, but it need not be contained in $M_E$. Define its denominator ideal by
 
 $$
 \mathfrak d(e_\lambda)=
 \{a\in\mathcal O_E:ae_\lambda(M_E)\subseteq M_E\}. \tag{5.3}
 $$
 
-This is a nonzero ideal: write $e_\lambda$ in an $\mathcal O_E$-basis of $\operatorname{End}(M_E)$ and clear denominators. It is the unit ideal exactly when the generic packet is an integral direct summand under this projector.
+This is a nonzero ideal: $\operatorname{End}_{\mathcal O_E}(M_E)$ is a full projective lattice in $\operatorname{End}_E(V_E)$, so a nonzero element of $\mathcal O_E$ carries $e_\lambda$ into that lattice. Equivalently, cover $\operatorname{Spec}\mathcal O_E$ by finitely many opens on which $M_E$ is free and clear the finitely many matrix denominators. It is the unit ideal exactly when the generic packet is an integral direct summand under this projector.
 
 **Example.** In the order
 
@@ -389,7 +414,7 @@ $$
 A_n=\{(x,y)\in\mathcal O_E^2:x\equiv y\pmod{\varpi^n}\},
 $$
 
-the generic projector $(1,0)$ becomes integral only after multiplication by $\varpi^n$. The two characteristic-zero characters are distinct but meet modulo $\varpi^n$. This simple calculation explains why one must distinguish the saturated intersection lattice from the image of a rational projector.
+the generic projector $(1,0)$ becomes integral only after multiplication by $\varpi^n$: one has $a(1,0)\in A_n$ exactly when $a\in(\varpi^n)$. More explicitly, $A_n$ is free on $1=(1,1)$ and $\epsilon=(\varpi^n,0)$, with relation $\epsilon^2=\varpi^n\epsilon$. Thus for $n>0$ its special fiber is $k[\bar\epsilon]/(\bar\epsilon^2)$, while its two generic projections are distinct. The calculation both exhibits the congruence and explains why one must distinguish the saturated intersection lattice from the image of a rational projector.
 
 ## 6. The integral packet and coefficient extension
 
@@ -420,10 +445,11 @@ $$
 
 Thus $\mathbb T\otimes_RR'$ is exactly the algebra generated by the base-changed operators. Finite extensions of number fields and localizations at nonzero primes are flat, so characteristic-zero packet formation commutes with both.
 
-For a normal field $L$ containing every embedding of $E$, the packet factor splits:
+For a normal field $L$ containing the images of every $K$-embedding of $E$, the packet factor splits:
 
 $$
-E\otimes_KL\cong\prod_{\iota:E\hookrightarrow L}L. \tag{6.4}
+E\otimes_KL
+\cong\prod_{\substack{\iota:E\hookrightarrow L\\ \iota|_K=\mathrm{id}}}L. \tag{6.4}
 $$
 
 The corresponding idempotents decompose its generic realization into the $\iota\lambda$-components. Equation (6.4) is the exact algebra behind compatibility with coefficient embeddings.
@@ -443,7 +469,7 @@ If $\mathfrak d(e_\lambda)$ is prime to $\Lambda$, the projector is integral aft
 The direct-summand assertion has a useful elementary proof. Choose $a\in\mathfrak d(e_\lambda)$ that is a unit at $\Lambda$. Then $ae_\lambda$ preserves the localized ambient lattice, and multiplication by $a^{-1}$ shows that $e_\lambda$ itself preserves it. Hence
 
 $$
-M_\Lambda=e_\lambda M_\Lambda\oplus(1-e_\lambda)M_\Lambda. \tag{6.7}
+M_\Lambda=e_\lambda M_\Lambda\oplus(1-e_\lambda)M_\Lambda. \tag{6.6}
 $$
 
 The first summand has generic fiber $V_\lambda$ and is saturated, so it equals $L_{\lambda,\Lambda}$. Conversely, if the generic decomposition is induced by an integral idempotent, that idempotent has unit denominator at $\Lambda$. Thus the support of $\mathfrak d(e_\lambda)$ is exactly the set of coefficient primes at which this particular generic projector fails to extend integrally.
@@ -457,7 +483,7 @@ Reduction modulo $\Lambda$ is not flat. The map
 $$
 \mathbb T\otimes\mathbf F_\Lambda
 \longrightarrow
-\operatorname{End}_{\mathbf F_\Lambda}(M\otimes\mathbf F_\Lambda) \tag{6.6}
+\operatorname{End}_{\mathbf F_\Lambda}(M\otimes\mathbf F_\Lambda) \tag{6.7}
 $$
 
 can have a kernel if the inclusion of $\mathbb T$ in the endomorphism module is not saturated. Moreover, two distinct characters $\lambda_1,\lambda_2$ can have the same reduction.
@@ -479,25 +505,25 @@ with $H^{1,0}(X)=H^0(X,\Omega_X^1)$. Holomorphic differentials transform with th
 
 We isolate the exact input instead of assuming that every automorphic module is already geometric.
 
-**Definition 7.1 (weight-two cohomological realization).** A cohomological realization of an algebraic packet $[\lambda]$ over a number field $K\subset\mathbf C$ consists of:
+**Definition 7.1 (degree-one weight-two realization).** Fix an embedding $j:K\hookrightarrow\mathbf C$. A degree-one cohomological realization of an algebraic packet $[\lambda]_K$ consists of:
 
 1. a finite-dimensional $K$-space $H_{\mathrm{dR}}$ with a two-step filtration
    $$0\subset F^1H_{\mathrm{dR}}\subset H_{\mathrm{dR}};$$
-2. a finite-dimensional $\mathbf Q$-space $H_B$ with an involution $c$;
-3. commuting Hecke actions defined over their indicated fields;
+2. a finite-dimensional $K$-space $H_B$ with a $K$-linear involution $c$;
+3. commuting $K$-linear Hecke actions that preserve $F^1$, commute with $c$, and have the same character on corresponding factors;
 4. a Hecke-equivariant comparison isomorphism
    $$
-   I:H_B\otimes_\mathbf Q\mathbf C
+   I:H_B\otimes_{K,j}\mathbf C
    \xrightarrow{\sim}
-   H_{\mathrm{dR}}\otimes_K\mathbf C; \tag{7.2}
+   H_{\mathrm{dR}}\otimes_{K,j}\mathbf C; \tag{7.2}
    $$
-5. on the packet factor, Hodge types $(1,0)$ and $(0,1)$ with equal multiplicity.
+5. on the packet factor, a Hodge decomposition of types $(1,0)$ and $(0,1)$, with $F^1=H^{1,0}$, such that the transported $\mathbf C$-linear involution $IcI^{-1}$ exchanges $H^{1,0}$ and $H^{0,1}$.
 
-For a smooth proper curve with Hecke correspondences, all five properties follow from the Betti--de Rham comparison and correspondence compatibility of Book 27. In a smooth proper family, the de Rham bundle, its Hodge filtration, arbitrary base change, pairing, and Gauss--Manin connection are supplied by Book 52. More generally, Definition 7.1 is the exact amount of degree-one structure used below.
+For a smooth proper curve, Book 27 supplies the Betti--de Rham comparison, its Hodge decomposition, and compatibility with Hecke correspondences. Its rational Betti space can be tensored with $K$. A real model, or a specified descent datum identifying the complex curve with its conjugate, supplies the involution in items 2 and 5; an arbitrary curve over a nonreal subfield of $\mathbf C$ does not automatically carry such a self-involution. In a smooth proper family, Book 52 supplies the de Rham bundle, its Hodge filtration, arbitrary base change, pairing, and Gauss--Manin connection. Thus each item above is genuine prior geometry or an explicit hypothesis, rather than a consequence of the adjective “automorphic.”
 
 ### 7.2 A rational Hodge--Hecke module
 
-Let $E=E_\lambda$ and fix an embedding $\iota:E\hookrightarrow\mathbf C$. The $\iota$-component of the packet is cut out by the equations
+Let $E=E_\lambda$ and fix a $K$-embedding $\iota:E\hookrightarrow\mathbf C$ extending $j$. The $\iota$-component of the packet is cut out by the equations
 
 $$
 (T_v-\iota(t_v))x=(S_v-\iota(s_v))x=0. \tag{7.3}
@@ -511,7 +537,7 @@ $$
 \dim_\mathbf C F^1H_{\mathrm{dR},\iota}=1. \tag{7.4}
 $$
 
-Its complex conjugate Hodge line has type $(0,1)$. The underlying $E$-module $H_E$ has rank two, because the sum over the $[E:K]$ embeddings has total dimension $2[E:K]$. No choice of one embedding is rational over $K$; the whole orbit is.
+The involution carries its Hodge line isomorphically onto a line of type $(0,1)$. Let $H_E$ denote the field-factor module before choosing an embedding. It has rank two over $E$: after scalar extension to a normal closure, its $[E:K]$ embedding components all have dimension two. No one embedding component is rational over $K$; the whole relative orbit is.
 
 The restriction of scalars
 
@@ -519,7 +545,7 @@ $$
 \operatorname{Res}_{E/K}H_E \tag{7.5}
 $$
 
-is therefore the correct rational packet object. After tensoring with $\mathbf C$ it separates into all coefficient embeddings. This construction prevents a frequent mistake: one conjugate eigenline by itself need not be defined over $K$, even though the direct sum of its conjugates is.
+is therefore the correct rational packet object. After tensoring with $\mathbf C$ it separates into all allowed coefficient embeddings. This construction prevents a frequent mistake: one conjugate eigenline by itself need not be defined over $K$, even though the direct sum of its conjugates is.
 
 ### 7.3 The packet summand and its Hodge line
 
@@ -552,15 +578,15 @@ H_B=H_B^+\oplus H_B^-,
 \qquad H_B^\pm=\ker(c\mp1). \tag{7.8}
 $$
 
-For a rank-two weight-two packet, each sign component has rank one over $E$ after passing to the packet coefficient field. The Hodge line is not equal to either sign line: complex conjugation interchanges types $(1,0)$ and $(0,1)$, while it fixes or negates the Betti sign vectors.
+For a rank-two degree-one packet satisfying Definition 7.1, each sign component has rank one over $E$. Indeed, if $0\ne u\in H^{1,0}$, then $c(u)\in H^{0,1}$ and the vectors $u+c(u)$ and $u-c(u)$ are nonzero vectors of signs $+$ and $-$ respectively. They span the two-dimensional space.
 
-This transversality can be checked directly. If a nonzero holomorphic class lay in a real sign line, its complex conjugate would be a scalar multiple of itself and would also have type $(0,1)$. Since (7.1) is a direct sum, the class would be zero, a contradiction. Thus projection of the Hodge line onto each sign line is nonzero. Those two nonzero projections produce the two periods.
+The same calculation proves transversality. If a nonzero holomorphic class lay in a sign line, applying $c$ would leave it in that line up to sign while moving it into $H^{0,1}$. Since the Hodge decomposition is direct, this is impossible. Thus projection of the Hodge line onto each sign line is nonzero. Those two nonzero projections produce the two periods. This conclusion uses item 5 of Definition 7.1; it is false for a bare involution unrelated to the Hodge structure.
 
 ## 8. Comparison isomorphisms and period lines
 
 ### 8.1 The comparison datum
 
-Fix an embedding $j:K\hookrightarrow\mathbf C$. For a smooth proper curve $X/K$, the comparison theorem of Book 27 identifies integration of algebraic differential classes over singular cycles with the map
+Fix an embedding $j:K\hookrightarrow\mathbf C$. For a smooth proper curve $X/K$, Book 27 constructs the de Rham-to-Betti comparison by integration. We use its inverse and write
 
 $$
 I_j:H^1_B(X_j(\mathbf C),\mathbf Q)\otimes\mathbf C
@@ -574,15 +600,15 @@ There is no canonical map $H_B\to H_{\mathrm{dR}}$ before tensoring with $\mathb
 
 ### 8.2 Periods as comparison scalars
 
-Let $H_{E,B}$ be the rank-two $E$-packet in Betti cohomology, with rank-one sign spaces $H_{E,B}^\pm$. Let $F^1H_{E,\mathrm{dR}}$ be its rank-one de Rham Hodge line. For an embedding $\iota:E\hookrightarrow\mathbf C$, choose nonzero vectors
+Let $H_{E,B}$ be the rank-two $E$-packet in Betti cohomology, with rank-one sign spaces $H_{E,B}^\pm$. Let $F^1H_{E,\mathrm{dR}}$ be its rank-one de Rham Hodge line. Choose $E$-rational bases
 
 $$
-b_\iota^\pm\in H_{E,B}^\pm\otimes_{E,\iota}\mathbf C,
+b^\pm\in H_{E,B}^\pm,
 \qquad
-\omega_\iota\in F^1H_{E,\mathrm{dR}}\otimes_{E,\iota}\mathbf C. \tag{8.2}
+\omega\in F^1H_{E,\mathrm{dR}}. \tag{8.2}
 $$
 
-Transport $\omega_\iota$ to Betti cohomology through $I^{-1}$. Since both sign projections are nonzero, there are unique $\Omega_\iota^\pm\in\mathbf C^\times$ such that
+For a $K$-embedding $\iota:E\hookrightarrow\mathbf C$, let $b_\iota^\pm$ and $\omega_\iota$ denote their scalar extensions. Transport $\omega_\iota$ to Betti cohomology through $I^{-1}$. Since both sign projections are nonzero, there are unique $\Omega_\iota^\pm\in\mathbf C^\times$ such that
 
 $$
 I^{-1}(\omega_\iota)
@@ -590,7 +616,7 @@ I^{-1}(\omega_\iota)
 +\Omega_\iota^-b_\iota^-. \tag{8.3}
 $$
 
-These are the **signed periods** of the chosen bases. Formula (8.3), rather than a bare integral symbol, records what a period compares: one holomorphic algebraic line with two rational topological lines.
+These are the **signed periods** of the chosen $E$-bases. Requiring the bases to be $E$-rational is essential: arbitrary nonzero complex vectors could rescale the alleged periods by arbitrary elements of $\mathbf C^\times$ and would destroy the quotient invariant below. Formula (8.3), rather than a bare integral symbol, records what a period compares: one holomorphic algebraic line with two rational topological lines.
 
 In the classical modular-form normalization, $\omega_f=2\pi i f(z)\,dz$ is algebraic as a differential once the algebraic model is fixed, and evaluation on cycles gives integrals of $2\pi i f(z)\,dz$. If $f(z)=\sum_{n\ge1}a_ne^{2\pi inz}$, the factor $2\pi i$ is forced by $dq/q=2\pi i\,dz$; omitting it changes which de Rham class is algebraic.
 
@@ -610,7 +636,7 @@ $$
 
 is canonical once the three $E$-lines and comparison map are fixed.
 
-**Proposition 8.1 (well-defined signed period class).** Under the rank-one hypotheses above, (8.5) is independent of all $E$-bases. It is functorial under a Hecke-equivariant isomorphism of cohomological realizations defined over $E$.
+**Proposition 8.1 (well-defined signed period class).** Under the rank-one hypotheses above, (8.5) is independent of all $E$-bases. It is functorial under an isomorphism of cohomological realizations defined over $E$, meaning an isomorphism that respects the Hecke action, filtration, involution, and comparison map.
 
 **Proof.** Every change of basis in a one-dimensional $E$-space is multiplication by an element of $E^\times$, so (8.4) changes the scalar by an element of $\iota(E)^\times$. A Hecke-equivariant $E$-isomorphism changes each chosen basis by such a scalar and commutes with comparison; hence it preserves the quotient class. $\square$
 
@@ -640,9 +666,9 @@ $$
 \mathcal L_{\mathrm{dR},\iota},\mathcal L_{B,\iota}^\pm), \tag{8.8}
 $$
 
-considered relative to its $E$-rational source and target lines. Choosing bases turns (8.8) into $\Omega_\iota^\pm$ or its inverse according to the direction convention. The quotient class removes that harmless variance. The line formulation is preferable when the coefficient ideal class is nontrivial, because then neither rational line has a global integral generator.
+considered relative to its $E$-rational source and target lines. With the direction in (8.7), choosing the bases in (8.2) turns (8.8) into $\Omega_\iota^\pm$. The quotient class removes algebraic changes of those bases. The line formulation is preferable when the coefficient ideal class is nontrivial, because then neither rational line need have a global integral generator.
 
-For a curve the nonvanishing of (8.7) is a Hodge-theoretic fact, not a normalization assumption. If the plus projection vanished, the holomorphic class would lie in the minus line. Applying the geometric involution would negate it. On the other hand, the involution carries type $(1,0)$ to type $(0,1)$ in the real geometric situation. A nonzero class cannot lie in both types because the Hodge decomposition is direct. The same argument applies to the minus projection. Analytically, positivity of
+For a curve with the real structure required in Definition 7.1, the nonvanishing of (8.7) is a Hodge-theoretic fact, not a normalization assumption. If the plus projection vanished, the holomorphic class would lie in the minus line. Applying the geometric involution would negate it while carrying it from type $(1,0)$ to type $(0,1)$. A nonzero class cannot lie in both types because the Hodge decomposition is direct. The same argument applies to the minus projection. Analytically, positivity of
 
 $$
 i\int_X\omega\wedge\overline\omega>0 \tag{8.9}
@@ -650,7 +676,7 @@ $$
 
 gives the same conclusion: if all periods in one sign direction vanished, the Riemann bilinear relation would force the positive norm to vanish.
 
-For a modular curve one may see the two signs on modular symbols. An oriented path from one cusp to another defines a relative homology class, and the involution induced by reflection decomposes it into plus and minus parts. Integration sends the path to
+In a supplied modular-curve realization, one may see the two signs on modular symbols. An oriented path from one cusp to another defines a relative homology class, and the involution induced by reflection decomposes it into plus and minus parts. Integration sends the path to
 
 $$
 \int_\alpha^\beta 2\pi i f(z)\,dz. \tag{8.10}
@@ -664,7 +690,7 @@ $$
 
 Therefore the integration functional is Hecke equivariant. Once the relevant eigenspaces are lines, (8.11) forces every such integral in a fixed sign to be an algebraic multiple of one nonzero period. This is the operational content of the signed period theorem.
 
-If integral lattices are fixed, one may restrict allowable basis changes to units after localization. Then the valuation of the period lattice relative to an integral comparison becomes meaningful, although the complex number itself remains defined only up to an algebraic unit.
+If integral lattices are fixed, one may restrict allowable basis changes to units after localization. The resulting complex period is then well defined modulo $\iota(\mathcal O_{E,\Lambda}^\times)$. This does **not** give a canonical $\Lambda$-adic valuation of a transcendental complex period: only algebraic transition factors, lattice indices, and projector denominators carry such valuations without an additional comparison into a valued field.
 
 ### 8.4 Determinant periods in higher multiplicity
 
@@ -676,10 +702,10 @@ I:W_B\otimes_{E,\iota}\mathbf C
 W_{\mathrm{dR}}\otimes_{E,\iota}\mathbf C.
 $$
 
-Taking top exterior powers produces an isomorphism of lines. Its scalar in chosen $E$-bases has a well-defined class
+To retain the direction used for signed periods, take the top exterior power of $I^{-1}$. Its scalar in chosen $E$-bases has a well-defined class
 
 $$
-\Delta_\iota(I)\in\mathbf C^\times/\iota(E)^\times. \tag{8.12}
+\Delta_\iota(I^{-1})\in\mathbf C^\times/\iota(E)^\times. \tag{8.12}
 $$
 
 **Proposition 8.2.** The class (8.12) is independent of bases and is multiplicative in exact sequences preserved by $I$.
@@ -697,28 +723,44 @@ For a smooth proper complex curve, $H^1_B(X,\mathbf Z)$ is free and the cup-prod
 Assume now that both lattices are given and stable under the integral Hecke order. Intersecting their scalar extensions with the packet subspaces gives
 
 $$
-L_{B,\lambda}=H_{B,\mathbf Z}\otimes\mathcal O_E\cap H_{E,B},
+L_{B,\lambda}=(H_{B,\mathbf Z}\otimes_{\mathbf Z}\mathcal O_E)\cap H_{E,B},
 \qquad
-L_{\mathrm{dR},\lambda}=H_{\mathrm{dR},\mathcal O}\otimes\mathcal O_E\cap H_{E,\mathrm{dR}}. \tag{9.1}
+L_{\mathrm{dR},\lambda}=(H_{\mathrm{dR},\mathcal O}\otimes_R\mathcal O_E)\cap H_{E,\mathrm{dR}}. \tag{9.1}
 $$
 
 By Proposition 5.2 these are saturated projective lattices. Their Hodge and sign intersections are rank-one projective modules in the multiplicity-one case. They need not be globally free over $\mathcal O_E$.
+
+There is a separate integral sign-splitting issue. Suppose $c$ preserves $L_{B,\lambda}$, and put $L_{B,\lambda}^\pm=L_{B,\lambda}\cap H_{E,B}^\pm$. Then
+
+$$
+2L_{B,\lambda}
+\subseteq L_{B,\lambda}^+\oplus L_{B,\lambda}^-
+\subseteq L_{B,\lambda}. \tag{9.2}
+$$
+
+The first inclusion follows from $2x=(x+cx)+(x-cx)$. Away from primes above $2$, the idempotents $(1\pm c)/2$ are integral and both inclusions become equality after localization. At a prime above $2$, the middle lattice can have nontrivial finite index in the full Betti lattice. Rank-one sign lines therefore do not by themselves provide an integral Betti basis at every coefficient prime.
 
 The comparison map does not usually carry one integral lattice onto the other: it is defined over $\mathbf C$, and the defect is the period matrix. This failure is expected, not an integrality defect in either realization.
 
 ### 9.2 The period matrix of a packet
 
-Choose local bases of the two lattices at a coefficient prime $\Lambda$. Relative to a de Rham basis and a Betti basis, comparison has a matrix
+Choose a local de Rham basis at $\Lambda$ whose first vector generates the Hodge intersection, choose generators of the two localized sign lattices, and extend them along $\iota:E\hookrightarrow\mathbf C$. Relative to the de Rham basis and the sign generators, the map $I^{-1}$ has a matrix
 
 $$
 \mathcal P_{\iota}=
 \begin{pmatrix}
 \Omega_\iota^+&*\\
 \Omega_\iota^-&*
-\end{pmatrix}, \tag{9.2}
+\end{pmatrix}. \tag{9.3}
 $$
 
-where the first column represents the holomorphic line and the second a complementary de Rham line. Changing integral bases left- and right-multiplies $\mathcal P_\iota$ by matrices over $\mathcal O_{E,\Lambda}$ with unit determinant. Hence the determinant is well defined modulo $\iota(\mathcal O_{E,\Lambda}^\times)$, while its entries depend on the complement.
+The first column represents the holomorphic line and the second a complementary de Rham line. Changing the adapted de Rham basis or either sign generator changes the determinant only by $\iota(\mathcal O_{E,\Lambda}^\times)$, while the individual entries depend on the complement. If the sign splitting is integral, the two sign generators are a Betti lattice basis and $\mathcal P_\iota$ is an integral-lattice period matrix. Otherwise it is the period matrix relative to the finite-index sign sublattice; comparison with a basis of the full Betti lattice introduces precisely the elementary divisors of
+
+$$
+L_{B,\lambda}/(L_{B,\lambda}^+\oplus L_{B,\lambda}^-).
+$$
+
+Under the stability hypothesis of Section 9.1 this quotient is supported above $2$, and it must not be absorbed into a claimed period unit.
 
 For a genus-$g$ curve, the full period matrix is obtained by integrating a basis of holomorphic forms over a symplectic basis of $H_1$. Its normalized form $(I_g\ \tau)$ has $\tau$ symmetric with positive definite imaginary part. On a packet factor, the same positivity ensures the two signed projections in (8.3) are nonzero.
 
@@ -728,17 +770,17 @@ Let $L$ be a normal closure of $E/K$. The algebraic packet module over $L$ decom
 
 $$
 H_E\otimes_KL
-\cong\bigoplus_{\iota:E\hookrightarrow L}H_\iota. \tag{9.3}
+\cong\bigoplus_{\substack{\iota:E\hookrightarrow L\\ \iota|_K=\mathrm{id}}}H_\iota. \tag{9.4}
 $$
 
-Every Hecke operator acts on $H_\iota$ through the conjugate character $\iota\lambda$, and the Hodge filtration, sign decomposition, pairings, and integral intersections commute with this scalar extension. Therefore the family
+Every Hecke operator acts on $H_\iota$ through the conjugate character $\iota\lambda$, and the Hodge filtration, sign decomposition, and pairings commute with this field extension. Each projective $\mathcal O_E$-lattice also has a well-defined base change along $\iota:\mathcal O_E\to\mathcal O_L$. However, the direct-sum decomposition (9.4) need not descend to a direct-sum decomposition over $\mathcal O_L$: the embedding idempotents can have denominators at primes dividing the discriminant or the packet-projector ideal. Integral splitting is asserted only after those denominators are inverted. Therefore the family
 
 $$
 \bigl(H_\iota,F^1H_\iota,H_\iota^+,H_\iota^-,
-[\Omega_\iota^+],[\Omega_\iota^-]\bigr)_\iota \tag{9.4}
+[\Omega_\iota^+],[\Omega_\iota^-]\bigr)_\iota \tag{9.5}
 $$
 
-is compatible with coefficient embeddings in the precise algebraic sense: the same $E$-linear construction, base-changed along every embedding, produces every member.
+is compatible with relative coefficient embeddings in the precise algebraic sense: the same $E$-linear construction, base-changed along every $K$-embedding, produces every member. For the absolute package with $K=\mathbf Q$, these are all coefficient embeddings.
 
 If $\sigma\in\operatorname{Gal}(L/K)$, it permutes the algebraic summands by $H_\iota\mapsto H_{\sigma\iota}$ and sends Hecke eigenvalues accordingly. This is a statement about the algebraic spaces. The comparison maps for the chosen complex embeddings then supply the corresponding period classes separately.
 
@@ -752,7 +794,7 @@ $$
 
 for every $\sigma\in\operatorname{Aut}(\mathbf C)$. Without extra motivic descent data, this formula is not meaningful as a theorem. Betti cohomology depends on the complex topology associated with an embedding, and a wild automorphism of $\mathbf C$ is not a continuous map of that topology. Moreover, $\Omega_\iota^\pm$ is defined only modulo $\iota(E)^\times$.
 
-What has been proved is both weaker and correct: algebraic conjugation carries the de Rham eigensystem and its algebraic lattice to the conjugate eigensystem, while comparison at each embedding yields a period line. Complex conjugation is exceptional because it is a continuous involution of the complex points and genuinely acts on Betti cohomology; its consequences are proved in Chapter 10.
+What has been proved is both weaker and correct: algebraic conjugation carries the de Rham eigensystem and its algebraic lattice to the conjugate eigensystem, while comparison at each embedding yields a period line. In a realization equipped with the real structure of Definition 7.1, complex conjugation is exceptional because it is a continuous involution of the complex points and genuinely acts on Betti cohomology; its consequences are proved in Chapter 10.
 
 ## 10. Pairings, dual packets, and polarizations
 
@@ -779,7 +821,7 @@ $$
 =\mu(t^*)\langle x,y\rangle. \tag{10.3}
 $$
 
-Thus the pairing is zero unless $\mu(t^*)=\lambda(t)$ for all $t$. Perfectness pairs the $\lambda$-space with the unique adjoint character
+Thus the pairing is zero unless $\mu(t^*)=\lambda(t)$ for all $t$. In the reduced semisimple generic setting, where the modules are direct sums of their character spaces, perfectness pairs the $\lambda$-space with the unique adjoint character
 
 $$
 \lambda^\vee(t)=\lambda(t^*). \tag{10.4}
@@ -807,14 +849,14 @@ $$
 \langle b^+,b^+\rangle=\langle b^-,b^-\rangle=0. \tag{10.6}
 $$
 
-Let $\omega$ span $F^1$ and let $\eta$ be a complementary de Rham vector. Write their Betti coordinates as columns of a matrix $\mathcal P$. Compatibility of the alternating pairings gives
+Let $\omega$ span $F^1$ and let $\eta$ be a complementary de Rham vector. Write their Betti coordinates under $I^{-1}$ as columns of a matrix $\mathcal P$. In the unnormalized algebraic de Rham convention fixed by Book 27, compatibility of cup products and top traces gives the exact identity
 
 $$
-\langle\omega,\eta\rangle_{\mathrm{dR}}
-=\det(\mathcal P)\,\delta, \tag{10.7}
+\det(\mathcal P)\,\delta
+=2\pi i\,\langle\omega,\eta\rangle_{\mathrm{dR}}. \tag{10.7}
 $$
 
-up to the fixed trace normalization. Thus the determinant period is controlled by the ratio of an algebraic de Rham pairing and an algebraic Betti pairing. If the comparison convention identifies the de Rham trace with $(2\pi i)^{-1}$ times the Betti trace, the corresponding power of $2\pi i$ appears in (10.7). The exponent is not optional; it is fixed by the degree and Tate-twist convention.
+Indeed, the alternating Betti pairing of the two coordinate columns is $\det(\mathcal P)\delta$, while Book 27 proves that it is $2\pi i$ times the algebraic de Rham cup--trace pairing. Thus the determinant period is controlled by the ratio of two algebraic pairings with the displayed factor $2\pi i$. For an abstract comparison datum using a different top-trace convention, (10.7) must be replaced by the explicitly declared comparison multiplier; pairing compatibility alone does not license suppressing it.
 
 Equation (10.7) does not generally determine $\Omega^+\Omega^-$, because the second column depends on $\eta$. With a polarized conjugate choice $\eta=\overline\omega$, it yields a relation between the determinant, the Petersson-type norm, and the signed periods. This relation is well defined only modulo $E^\times$, exactly as expected.
 
@@ -841,7 +883,14 @@ $$
 =\overline{\Omega^+}b^++\overline{\Omega^-}b^- . \tag{10.10}
 $$
 
-Geometric hypotheses can relate $c(\omega)$ to $\kappa(\omega)$, and then (10.9)--(10.10) give the customary normalization in which one signed period is real and the other purely imaginary, after allowed algebraic rescaling. Neither formula alone permits bars and the minus sign to be combined.
+Geometric hypotheses can relate the two operations. For example, if the chosen real structure gives
+
+$$
+c\bigl(I^{-1}(\omega)\bigr)
+=\kappa\bigl(I^{-1}(\omega)\bigr), \tag{10.11}
+$$
+
+then comparison of (10.9) and (10.10) gives $\overline{\Omega^+}=\Omega^+$ and $\overline{\Omega^-}=-\Omega^-$. Thus the plus period is real and the minus period is purely imaginary in those bases. If the geometric relation includes algebraic basis factors, the same conclusion holds only after the corresponding allowed algebraic rescaling. Neither (10.9) nor (10.10) alone permits bars and the minus sign to be combined.
 
 One cannot always impose those reality conditions simultaneously over a non-totally-real coefficient field. The invariant statements are (10.9)--(10.10), together with the classes in $\mathbf C^\times/\iota(E)^\times$. Positivity of the polarization controls the sign of the associated Hermitian form, not a canonical sign of either period scalar.
 
@@ -849,7 +898,7 @@ One cannot always impose those reality conditions simultaneously over a non-tota
 
 ### 11.1 From a normalized newform to a packet
 
-Let $\pi$ be an irreducible cuspidal automorphic representation of $\mathrm{GL}_2(\mathbf A_F)$ of parallel weight two, finite conductor $\mathfrak n$, and finite-order central character $\omega$ compatible with the infinity type. The algebraic and cohomological weight conventions are those fixed in Book 92. At every finite place choose the standard $K_1$ subgroup. The strong multiplicity-one and global newform package of Book 106 gives
+Let $F$ be totally real and let $\pi$ be an irreducible cuspidal automorphic representation of $\mathrm{GL}_2(\mathbf A_F)$ of parallel weight two, finite conductor $\mathfrak n$, and finite-order central character $\omega$ compatible with the infinity type. The algebraic and cohomological weight conventions are those fixed in Book 92. At every finite place choose the standard $K_1$ subgroup. The strong multiplicity-one and global newform package of Book 106 gives
 
 $$
 \dim_\mathbf C\pi_f^{K_1(\mathfrak n)}=1. \tag{11.1}
@@ -857,7 +906,9 @@ $$
 
 Choose the Whittaker normalization in the algebraic convention, so the first nonzero global Whittaker coefficient is $1$. The resulting vector $f$ is a simultaneous eigenvector for the good Hecke algebra. Let $t_v(f),s_v(f)$ be its eigenvalues and define $E_f$ by (3.2).
 
-The existence of a number-field fixed-level model and its stable lattice is the arithmetic input. Chapters 2 and 5 then prove, rather than assume, that $E_f$ is a number field and that the raw eigenvalues are algebraic integers. The normalized vector belongs to the $E_f$-eigenline by Theorem 3.3. Its coefficient normalization chooses an $E_f$-basis of that line, while the intersection with the ambient integral module defines a possibly nonprincipal fractional ideal relative to this basis.
+The arithmetic input has two distinct layers. The conjugation-compatible number-field fixed-level model assumed in Book 92 is enough for Chapter 3 to prove that the relative Hecke field is a number field and for Chapter 4 to produce relative conjugates. To conclude that the raw eigenvalues are algebraic integers and to form the intersection lattice, one must additionally be given a common Hecke-stable lattice; that integral input is not proved in Book 92. Under this extra hypothesis, Chapter 5 proves integrality. The normalized vector belongs to the $E_f$-eigenline by Theorem 3.3. Its coefficient normalization chooses an $E_f$-basis of that line, while the intersection with the ambient integral module defines a possibly nonprincipal fractional ideal relative to this basis.
+
+All statements may be read relative to a coefficient base $K$, in which case only $K$-embeddings of $E_f$ occur. For the full coefficient orbit, take the restriction-of-scalars package of the conjugate $q$-expansion spaces over $\mathbf Q$; then $E_f$ denotes the absolute field (3.4), including the central-character values, and the embeddings below are all $\mathbf Q$-embeddings. This extra sentence is not cosmetic: a single space with one fixed nonrational nebentype is not stable under embeddings that move that nebentype.
 
 It is useful to separate three one-dimensional objects:
 
@@ -873,7 +924,7 @@ They become isomorphic after scalar extension, but they carry different informat
 
 ### 11.2 Strong multiplicity one after conjugation
 
-For each embedding $\iota:E_f\hookrightarrow\mathbf C$, Theorem 4.1 produces a weight-two eigenform $f^\iota$ with
+For each allowed embedding $\iota:E_f\hookrightarrow\mathbf C$—a $K$-embedding in the relative setting and every embedding in the absolute setting—Theorem 4.1 produces a weight-two eigenform $f^\iota$ with
 
 $$
 t_v(f^\iota)=\iota(t_v(f)),
@@ -901,7 +952,14 @@ $$
 
 and hence determines every ramified $\pi_v^\iota$. This is global determination, not an assertion that a wild automorphism can be applied entrywise to an arbitrary analytic model of $\pi_v$.
 
-The conductor of $\pi^\iota$ equals that of $\pi$. One proof uses the finite-level algebraic model: $f^\iota$ occurs at level $\mathfrak n$, so its conductor divides $\mathfrak n$. Extend $\iota$ to an automorphism of a normal closure of $E_f$ and apply the inverse automorphism to the conjugate fixed-level model. This recovers $f$ at the conjugate conductor level and gives the reverse divisibility. Therefore
+The conductor of $\pi^\iota$ equals that of $\pi$, provided the arithmetic module used here is the full fixed-weight cuspidal space at the minimal level $K_1(\mathfrak n)$. Indeed, strong multiplicity one and newvector uniqueness make the original good eigenspace in that full module one dimensional. Theorem 4.1 preserves its dimension under coefficient conjugation. Since $f^\iota$ occurs at level $\mathfrak n$, its conductor $\mathfrak m$ divides $\mathfrak n$. If the divisibility were strict at some place, the local newvector dimension formula of Book 106 would give
+
+$$
+\dim (\pi_f^\iota)^{K_1(\mathfrak n)}
+=\prod_{v<\infty}\bigl(v(\mathfrak n)-v(\mathfrak m)+1\bigr)>1.
+$$
+
+All these oldvectors have the same good eigensystem, contradicting the preserved one-dimensional eigenspace. Therefore
 
 $$
 \mathfrak c(\pi^\iota)=\mathfrak c(\pi). \tag{11.5}
@@ -918,7 +976,7 @@ where $m_v=v(\mathfrak m)$ and $n_v=v(\mathfrak n)$, and factors with $m_v=n_v=0
 
 ### 11.4 Compatibility with every coefficient embedding
 
-Collect the conjugates into the restriction-of-scalars packet
+Collect the relative conjugates into the restriction-of-scalars packet
 
 $$
 \Pi_f^{\mathrm{new}}
@@ -929,18 +987,19 @@ After extension to $\mathbf C$ it decomposes canonically as
 
 $$
 \Pi_f^{\mathrm{new}}\otimes_K\mathbf C
-\cong\bigoplus_{\iota:E_f\hookrightarrow\mathbf C}\mathbf C f^\iota. \tag{11.8}
+\cong\bigoplus_{\substack{\iota:E_f\hookrightarrow\mathbf C\\ \iota|_K=\mathrm{id}}}
+\mathbf C f^\iota. \tag{11.8}
 $$
 
 The Hecke operator $T_v$ acts on the right by the diagonal matrix with entries $\iota(t_v)$; similarly for $S_v$. The characteristic polynomial on the packet is
 
 $$
-\prod_{\iota:E_f\hookrightarrow\mathbf C}
+\prod_{\substack{\iota:E_f\hookrightarrow\mathbf C\\ \iota|_K=\mathrm{id}}}
 \bigl(X-\iota(t_v)\bigr)
 =\operatorname{N}_{E_f/K}(X-t_v)\in K[X]. \tag{11.9}
 $$
 
-If $t_v$ is integral, this polynomial lies in the appropriate integer ring. Formula (11.9) is a concrete expression of compatibility with coefficient embeddings: all complex eigenlines are the scalar components of one rational module, not an unrelated list of forms.
+If $t_v$ is integral over $R$, this polynomial lies in $R[X]$. Formula (11.9) is a concrete expression of compatibility with relative coefficient embeddings: all complex eigenlines are the scalar components of one rational module, not an unrelated list of forms. With $K=\mathbf Q$ and the absolute package described in Section 11.1, it covers every coefficient embedding.
 
 If a degree-one realization is given, (11.8) is compatible with its Hodge filtration, Betti signs, and period classes. No choice of a preferred complex embedding is built into the rational packet.
 
@@ -957,16 +1016,16 @@ $$
 
 where the $\Gamma_i$ are finite stabilizer groups of double-coset representatives. Choose an integer ring over which $W$ and the central character are defined and take the corresponding torsion-free integral submodule. Raw Brandt operators are finite sums of integral weight matrices, so they preserve this lattice.
 
-Therefore Chapters 2--6 apply without analytic convergence issues. The acting Brandt algebra is finite over the coefficient ring, its eigenvalues are algebraic integers, every eigensystem has a number field, conjugate eigensystems occur, and their intersection lattices are saturated. This is a particularly transparent source of integral packets.
+Therefore Chapters 2--6 apply without analytic convergence issues. The acting Brandt algebra is finite over the coefficient ring, its eigenvalues are algebraic integers, every eigensystem has a number field, all allowed conjugate eigensystems occur, and their intersection lattices are saturated. This is a particularly transparent source of integral packets.
 
 ### 12.2 Conjugate near-equivalence blocks
 
-An occurring good character $\lambda$ determines a finite near-equivalence block: every constituent in the block has the same unramified local factors outside $\Sigma$. Applying an embedding $\iota:E_\lambda\hookrightarrow\mathbf C$ produces the conjugate block with good polynomial coefficients $\iota(t_v),\iota(s_v)$.
+An occurring good character $\lambda$ determines a finite near-equivalence block: every constituent in the block has the same unramified local factors outside $\Sigma$. Applying an allowed embedding $\iota:E_\lambda\hookrightarrow\mathbf C$ produces the conjugate block with good polynomial coefficients $\iota(t_v),\iota(s_v)$.
 
 The point requiring care is that unit multiplicity in the global quaternionic spectrum does not by itself make a good Hecke block one dimensional. Several inequivalent constituents can be nearly equivalent, and one constituent can have a multidimensional $U$-fixed space. Thus the algebraic object canonically conjugated by the finite module is
 
 $$
-M[\lambda]\otimes_{E_\lambda,\iota}\mathbf C, \tag{12.2}
+M[\lambda]\otimes_{\mathcal O_\lambda,\iota}\mathbf C, \tag{12.2}
 $$
 
 not an unnamed constituent chosen from its spectral decomposition.
@@ -975,9 +1034,9 @@ not an unnamed constituent chosen from its spectral decomposition.
 
 There are two sufficient routes from a block to a constituent. First, enlarge the commuting algebra by ramified operators or type projectors until the joint eigenspace is a line and the corresponding spectral constituent is unique. Second, use an independent global determination theorem whose hypotheses identify near-equivalence classes.
 
-**Proposition 12.1 (conjugation with isolating data).** Suppose a commutative Hecke algebra $\mathbb T^{\mathrm{full}}$, defined over a number field, contains the good Brandt algebra and acts on (12.1). Assume the joint $\lambda^{\mathrm{full}}$-eigenspace is one dimensional and belongs to a unique irreducible automorphic constituent $\pi$. Then every coefficient embedding produces a one-dimensional conjugate eigenspace belonging to a unique conjugate constituent $\pi^\iota$.
+**Proposition 12.1 (conjugation with isolating data).** Suppose a commutative Hecke algebra $\mathbb T^{\mathrm{full}}$, defined over a number field, contains the good Brandt algebra and acts semisimply on (12.1), compatibly with its direct-sum spectral decomposition. Assume the joint $\lambda^{\mathrm{full}}$-eigenspace is one dimensional. Then every allowed coefficient embedding produces a one-dimensional conjugate eigenspace belonging to a unique conjugate constituent $\pi^\iota$.
 
-**Proof.** Theorem 4.1 preserves the dimension of the joint eigenspace under scalar extension. The spectral decomposition of the finite module is algebraic for the chosen commuting action, so a nonzero conjugate line lies in at least one constituent. If two constituents contained it, the line would not isolate a unique spectral summand, contradicting the stated uniqueness hypothesis applied to the conjugate full character; equivalently, include in $\mathbb T^{\mathrm{full}}$ the idempotent or type data that distinguishes them. $\square$
+**Proof.** Theorem 4.1 preserves the dimension of the joint eigenspace under scalar extension. Because the full commuting action preserves the direct-sum spectral decomposition, that eigenspace is the direct sum of its intersections with the irreducible constituents. A one-dimensional eigenspace can have a nonzero intersection with exactly one summand. The same argument applies after every allowed embedding, so the conjugate line lies in a unique constituent. $\square$
 
 The hypothesis is substantive. Good-place eigenvalues alone should not be silently promoted to a canonical quaternionic representation.
 
@@ -997,7 +1056,7 @@ If the mass pairing is integral and perfect after localization, the dual lattice
 
 ### 13.1 A rational packet
 
-Suppose a normalized weight-two newform has $t_v\in\mathbf Z$ and a rational central character at all good places. Then $E_f=\mathbf Q$ and its algebraic packet has one member. This does not make its signed periods rational. Rather,
+Suppose a normalized weight-two newform has $t_v\in\mathbf Z$ and a rational central character at all good places. Then $E_f=\mathbf Q$ and its algebraic packet has one member. If it is supplied with the degree-one realization of Definition 7.1, rational Hecke data still do not make its signed periods rational. Rather,
 
 $$
 [\Omega_f^\pm]\in\mathbf C^\times/\mathbf Q^\times. \tag{13.1}
@@ -1009,7 +1068,7 @@ For an elliptic curve realization, the two Betti sign directions correspond to t
 
 ### 13.2 A quadratic packet
 
-Let $E=\mathbf Q(\sqrt d)$ and suppose one good operator has eigenvalue $a+b\sqrt d$ with $b\ne0$. The two embeddings give eigenvalues
+Let $E=\mathbf Q(\sqrt d)$ and suppose one good operator has eigenvalue $a+b\sqrt d$ with $a,b\in\mathbf Q$ and $b\ne0$. The two embeddings give eigenvalues
 
 $$
 a+b\sqrt d,
@@ -1024,7 +1083,7 @@ $$
 
 If the eigenvalue is an algebraic integer, (13.3) is integral. Over $\mathbf C$ the rational packet splits into its two eigenlines; over $\mathbf Q$ neither line need exist separately.
 
-The two embeddings also give two pairs of signed period classes
+If the packet has a degree-one realization, the two embeddings also give two pairs of signed period classes
 
 $$
 ([\Omega_1^+],[\Omega_1^-]),
@@ -1067,25 +1126,25 @@ We now collect the results in the form used by subsequent arithmetic constructio
 Then:
 
 1. $E/K$ is finite, every $\lambda(T_v)$ and $\lambda(S_v)$ is integral over $R$, and finitely many good operators generate both the acting algebra and $E$.
-2. Every embedding $\iota:E\hookrightarrow\mathbf C$ produces an occurring conjugate eigensystem $\iota\lambda$ with the same multiplicity. Their direct sum is the complex scalar extension of one restriction-of-scalars packet over $K$.
+2. Every $K$-embedding $\iota:E\hookrightarrow\mathbf C$ produces an occurring conjugate eigensystem $\iota\lambda$ with the same multiplicity. Their direct sum is the complex scalar extension of one restriction-of-scalars packet over $K$. If $K=\mathbf Q$, these are all coefficient embeddings; otherwise no embedding moving $K$ is asserted without a conjugation-compatible family of base modules.
 3. For any $E$-eigenspace $V_\lambda$, the intersection
    $$
    L_\lambda=V_\lambda\cap(M\otimes_R\mathcal O_E)
    $$
    is a saturated projective $\mathcal O_E$-lattice of rank $\dim_EV_\lambda$. If the dimension is one, it is a projective rank-one module and becomes free over every $\mathcal O_{E,\Lambda}$.
 4. The generic packet projector can have a nontrivial denominator ideal. Away from that ideal the packet lattice is an integral direct summand; at primes dividing it, distinct characteristic-zero packets may be congruent.
-5. If $\lambda$ comes from a parallel-weight-two cuspidal $\mathrm{GL}_2$ newform, then each conjugate good system belongs to a unique global cuspidal representation $\pi^\iota$. Its conductor equals that of $\pi$, its finite newvector line is one dimensional, and all ramified local factors are uniquely determined by the global representation.
+5. If the generic module is a conjugation-compatible fixed-weight cuspidal $\mathrm{GL}_2$ module and $\lambda$ comes from a parallel-weight-two newform, then each allowed conjugate good system belongs to a unique global cuspidal representation $\pi^\iota$. If, moreover, $M\otimes_RK$ is the full such module at the original minimal level, its conductor equals that of $\pi$, its finite newvector line is one dimensional, and all ramified local factors are uniquely determined by the global representation.
 6. For a quaternionic finite module, conjugation canonically produces the conjugate good near-equivalence block. A unique conjugate constituent follows only when additional isolating data or a determination theorem is supplied.
-7. Suppose in addition that the packet has a degree-one cohomological realization with rank-one Hodge and Betti sign lines. Then for every $\iota:E\hookrightarrow\mathbf C$ there are nonzero signed period classes
+7. Suppose in addition that the packet has a degree-one cohomological realization satisfying Definition 7.1, with rank-one Hodge and Betti sign lines. Then for every allowed $\iota:E\hookrightarrow\mathbf C$ there are nonzero signed period classes
    $$
    [\Omega_\iota^\pm]\in\mathbf C^\times/\iota(E)^\times.
    $$
-   They are independent of $E$-bases, compatible with Hecke-equivariant comparison, and arise for all embeddings from one $E$-linear packet. In multiplicity $m$, the corresponding canonical invariant is a determinant period in $\mathbf C^\times/\iota(E)^\times$.
-8. If perfect Hecke-adjoint pairings and integral lattices are present, dual packet lattices are given by integral duals away from projector denominators, and comparison identifies determinant period products with the ratio of de Rham and Betti pairings, including the fixed power of $2\pi i$ required by the trace convention.
+   They are independent of $E$-bases, compatible with Hecke-equivariant comparison, and arise for all allowed embeddings from one $E$-linear packet. In multiplicity $m$, the corresponding canonical invariant is a determinant period in $\mathbf C^\times/\iota(E)^\times$.
+8. If perfect Hecke-adjoint pairings and integral lattices are present, dual packet lattices are given by integral duals away from projector denominators. For a curve comparison in the convention of Book 27, a self-paired rank-two packet satisfies the exact determinant identity $\det(\mathcal P)\delta=2\pi i\langle\omega,\eta\rangle_{\mathrm{dR}}$ of (10.7).
 
 **Proof.** Assertion 1 is Theorems 3.1 and 5.1 together with Proposition 3.2. Assertion 2 is Theorem 4.1 and the splitting (6.4). Assertion 3 is Proposition 5.2 and the structure of projective modules over a Dedekind domain. Assertion 4 follows from the denominator ideal (5.3) and the crossing-order example, with localization giving the direct summand away from its support.
 
-For assertion 5, conjugate occurrence follows from the number-field automorphic module. Equality of conjugated raw Hecke polynomials gives equality of unramified local factors, so Theorem 11.1 gives uniqueness. The conductor equality is (11.5), and newvector theory gives the one-dimensional minimal line. Assertion 6 is the content of Chapter 12.
+For assertion 5, conjugate occurrence follows from the number-field automorphic module. Equality of conjugated raw Hecke polynomials gives equality of unramified local factors, so Theorem 11.1 gives uniqueness. Under the stated full-minimal-level hypothesis, preservation of eigenspace dimension and the oldvector formula prove the conductor equality (11.5); newvector theory gives the one-dimensional minimal line. Assertion 6 is the content of Chapter 12.
 
 For assertion 7, Hecke-equivariance of comparison identifies packet factors. Hodge decomposition and the sign involution make both projections of the Hodge line nonzero, yielding (8.3); Proposition 8.1 gives basis independence. Proposition 8.2 proves the higher-multiplicity statement. Finally, equations (10.2)--(10.7) prove assertion 8. $\square$
 
@@ -1095,11 +1154,11 @@ The proof can be read as the following exact chain:
 
 $$
 \begin{array}{c}
-\text{finite integral Hecke module}\\
+\text{finite rational Hecke module}\\
 \Downarrow\\
+\text{number field }E\text{ and its allowed embedding components}\\
+\Downarrow\quad(\text{stable integral lattice})\\
 \text{finite Hecke order and integral eigenvalues}\\
-\Downarrow\\
-\text{number field }E\text{ and all embedding components}\\
 \Downarrow\\
 \text{saturated packet lattices and denominator ideals}\\
 \Downarrow\quad(\mathrm{GL}_2\text{ strong multiplicity one})\\
@@ -1109,7 +1168,7 @@ $$
 \end{array} \tag{14.1}
 $$
 
-Every downward arrow has hypotheses. Without an integral source, complex finite-dimensionality does not prove arithmetic algebraicity. Without reducedness, characters do not give a direct-sum generic decomposition. Without strong multiplicity one, a good block need not name one constituent. Without a degree-one realization, an automorphic eigenline does not by itself have Betti periods.
+Every downward arrow has hypotheses. Complex spectral finite-dimensionality alone does not prove arithmetic algebraicity; a number-field rational module is the first input. Without a stable integral lattice, algebraicity does not imply integrality or produce packet lattices. Without reducedness, characters do not give a direct-sum generic decomposition. Without strong multiplicity one, a good block need not name one constituent. Without a degree-one realization, an automorphic eigenline does not by itself have Betti periods.
 
 ### 14.3 Hypothesis and normalization ledger
 
@@ -1119,17 +1178,19 @@ The following ledger fixes the boundaries of the theorem.
 - The Hecke algebra is the faithful image on the selected module. Commutativity refers to the specified good operators, not to an arbitrary full local Hecke algebra.
 - Reducedness is a characteristic-zero assertion. It follows from simultaneous diagonalization in the self-adjoint settings used here, but is otherwise a stated hypothesis.
 - Raw polynomials are $1-t_vX+q_vs_vX^2$. Central-character values are retained unless fixed in advance.
-- Galois conjugation acts on algebraic coefficients and algebraic coefficient systems. It is not defined by conjugating arbitrary analytic models or transcendental period representatives.
+- Relative Galois conjugation fixes the coefficient base $K$. All coefficient embeddings are present only for a $\mathbf Q$-model or a restriction-of-scalars family containing the conjugate coefficient data. Galois conjugation is not defined by conjugating arbitrary analytic models or transcendental period representatives.
+- The number-field model assumed for holomorphic $\mathrm{GL}_2$ forms proves algebraicity but not integrality. Every $\mathrm{GL}_2$ lattice or algebraic-integer assertion additionally assumes a common stable integral lattice.
 - The $\mathrm{GL}_2$ uniqueness statement assumes cuspidality and equality outside a finite set. No density-only variant is used.
 - A quaternionic good packet is a near-equivalence block until isolating data is specified.
-- Scalar signed periods require rank-one Hodge and sign pieces. Higher multiplicity uses determinant periods.
+- Scalar signed periods require a degree-one realization whose involution exchanges the two Hodge types, as well as rank-one Hodge and sign pieces. Higher multiplicity uses determinant periods. Parallel weight two over a totally real field of degree $d>1$ is normally cohomological in degree $d$ with $2^d$ signs and is not covered by the degree-one period theorem unless a separate degree-one realization is supplied.
 - Integral packet projectors exist only away from their denominator ideals. Reduction at a congruence prime may merge branches.
-- Betti--de Rham comparison for curves is compatible with pullback, trace, cup products, and finite correspondences. The $2\pi i$ normalization in degree two or for $dq/q$ is retained.
+- Even when complex conjugation preserves the Betti lattice, its sign projectors need not be integral above $2$. The sign sublattices split the full Betti lattice away from $2$; at primes above $2$, the finite index in (9.2) must be retained.
+- Betti--de Rham comparison for curves is compatible with pullback, trace, cup products, and finite correspondences. With $I$ oriented from Betti to de Rham, its inverse is integration, and the exact pairing factor is the $2\pi i$ displayed in (10.7). Integral embedding idempotents are used only away from their discriminant and projector denominators.
 
 ### 14.4 Conclusion
 
-A weight-two packet is not merely a sequence of complex numbers. It is a closed arithmetic Hecke point with a finite residue field, an orbit of embedding components, a family of integral lattices, and—when degree-one cohomology realizes it—a pair of comparison lines. The finite Hecke order creates the arithmetic point. Galois conjugation separates its geometric components. Strong multiplicity one turns the $\mathrm{GL}_2$ components into unique global representations, while quaternionic modules honestly retain near-equivalence until further data isolate a constituent.
+A weight-two packet is not merely a sequence of complex numbers. It is a closed arithmetic Hecke point with a finite residue field and an orbit of allowed embedding components; a stable integral model adds a family of lattices, and a degree-one cohomological realization adds a pair of comparison lines. The rational Hecke algebra creates the arithmetic point, while an integral Hecke order controls its integral closure. Galois conjugation separates its geometric components. Strong multiplicity one turns the $\mathrm{GL}_2$ components into unique global representations, while quaternionic modules honestly retain near-equivalence until further data isolate a constituent.
 
 The integral and transcendental parts meet without being confused. Saturated intersections give packet lattices even when generic projectors have denominators. Periods measure the mismatch between de Rham and Betti rational structures, and therefore live naturally modulo algebraic rescaling. Coefficient embeddings permute the algebraic eigenspaces and their lattices; comparison supplies a period class at each embedding, while only genuine complex conjugation acts topologically on those periods.
 
-The resulting package is stable under coefficient extension, localization, duality, and conjugation. It records exactly what later arithmetic arguments may use: algebraic integral Hecke polynomials, rationality fields, conjugate automorphic packets, local coefficient lattices, signed or determinant period classes, and the hypotheses under which these objects correspond.
+The resulting package is stable under the coefficient extensions, localizations, dualities, and conjugations allowed by its hypotheses. It records exactly what later arithmetic arguments may use: algebraic Hecke polynomials from rational modules, integral Hecke polynomials and local lattices when a stable integral module is supplied, intrinsic rationality fields, conjugate automorphic packets, signed or determinant period classes in genuine degree-one realizations, and the hypotheses under which these objects correspond.
