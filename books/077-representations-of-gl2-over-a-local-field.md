@@ -34,12 +34,12 @@
    - [A concrete projective-line model](#62-a-concrete-projective-line-model)
    - [Why the Steinberg extension is nonsplit](#63-why-the-steinberg-extension-is-nonsplit)
    - [Matrix coefficients of Steinberg](#64-matrix-coefficients-of-steinberg)
-   - [The complete nonsupercuspidal list so far](#65-the-complete-nonsupercuspidal-list-so-far)
-7. [Jacquet modules and nonsupercuspidal classification](#7-jacquet-modules-and-nonsupercuspidal-classification)
+   - [The selected nonsupercuspidal list so far](#65-the-selected-nonsupercuspidal-list-so-far)
+7. [Jacquet modules and Borel-generated classification](#7-jacquet-modules-and-borel-generated-classification)
    - [Why unipotent coinvariants detect induction](#71-why-unipotent-coinvariants-detect-induction)
    - [Jacquet modules of principal series](#72-jacquet-modules-of-principal-series)
-   - [Every nonsupercuspidal irreducible is on the list](#73-every-nonsupercuspidal-irreducible-is-on-the-list)
-   - [Admissibility of irreducible representations](#74-admissibility-of-irreducible-representations)
+   - [Every Borel-generated irreducible is on the list](#73-every-borel-generated-irreducible-is-on-the-list)
+   - [Admissibility in the selected range](#74-admissibility-in-the-selected-range)
 8. [Supercuspidal representations](#8-supercuspidal-representations)
    - [Equivalent ways of being cuspidal](#81-equivalent-ways-of-being-cuspidal)
    - [Compact induction from compact-mod-center subgroups](#82-compact-induction-from-compact-mod-center-subgroups)
@@ -90,7 +90,7 @@
     - [A tame ramified dihedral example](#166-a-tame-ramified-dihedral-example)
     - [What changes at $p=2$](#167-what-changes-at-p2)
 17. [The classification and invariant dictionary](#17-the-classification-and-invariant-dictionary)
-    - [The four families with their invariants](#171-the-four-families-with-their-invariants)
+    - [The selected families with their invariants](#171-the-selected-families-with-their-invariants)
     - [Data needed for local transfer](#172-data-needed-for-local-transfer)
     - [Interface with two-dimensional local Galois types](#173-interface-with-two-dimensional-local-galois-types)
     - [Scope of the classification](#174-scope-of-the-classification)
@@ -118,9 +118,12 @@
     - [Mackey theory for a quadratic parameter](#223-mackey-theory-for-a-quadratic-parameter)
     - [What base change preserves and what it transforms](#224-what-base-change-preserves-and-what-it-transforms)
 23. [Jacquet--Langlands and the preserved invariant package](#23-jacquet--langlands-and-the-preserved-invariant-package)
-    - [Why only the discrete series transfers](#231-why-only-the-discrete-series-transfers)
-    - [The invariant theorem](#232-the-invariant-theorem)
-    - [What is preserved, transformed, or not comparable](#233-what-is-preserved-transformed-or-not-comparable)
+    - [Quaternion structure and matching tori](#231-quaternion-structure-and-matching-tori)
+    - [Selected division-side types](#232-selected-division-side-types)
+    - [The split--division character calculation](#233-the-split--division-character-calculation)
+    - [The selected Jacquet--Langlands correspondence](#234-the-selected-jacquet--langlands-correspondence)
+    - [Conductors, local factors, and levels](#235-conductors-local-factors-and-levels)
+    - [What is preserved, transformed, or not comparable](#236-what-is-preserved-transformed-or-not-comparable)
 24. [Worked parameter calculations and final synthesis](#24-worked-parameter-calculations-and-final-synthesis)
     - [An unramified principal series](#241-an-unramified-principal-series)
     - [The two objects at the reducibility wall](#242-the-two-objects-at-the-reducibility-wall)
@@ -135,9 +138,9 @@
 
 Let $K$ be a nonarchimedean local field. The group $\mathrm{GL}_2(K)$ is the first reductive group for which induction, cuspidality, Fourier expansion, congruence level, and noncommutative harmonic analysis all interact. Rank one phenomena already appear in $K^\times$, but there is no unipotent subgroup there and hence no analogue of a Fourier coefficient. In rank two the upper triangular subgroup provides induction from characters, its unipotent radical provides Whittaker coefficients, and the two Bruhat cells make both constructions explicitly calculable.
 
-The aim of this book is to classify the irreducible smooth representations needed in the selected local theory: those built from the Borel, the special representations on the reducibility wall, and the depth-zero and tame dihedral supercuspidals built from quadratic tori. We attach central characters, contragredients, conductors, newvectors, Hecke parameters, Whittaker models, Weil--Deligne parameters, and local constants. Primitive wild supercuspidals are recognized intrinsically but are outside the construction-level classification. The final chapters prove compatibility with finite base change and isolate the invariant package preserved by Jacquet--Langlands.
+The aim of this book is to classify the irreducible smooth representations needed in the selected local theory: those built from the Borel, the special representations on the reducibility wall, and the depth-zero and tame dihedral supercuspidals built from quadratic tori. We attach central characters, contragredients, conductors, newvectors, Hecke parameters, Whittaker models, Weil--Deligne parameters, and local constants. Primitive wild supercuspidals are outside the selected classification: the book neither constructs them nor imports their type, genericity, or newvector theory. The final chapters prove compatibility with finite base change and construct Jacquet--Langlands, including its division-side character and local-factor comparisons, in exactly this selected range.
 
-The classification has a visible fault line. A representation whose unipotent coinvariants are nonzero is detected by a character of the diagonal torus and comes from principal-series induction. A representation whose unipotent coinvariants vanish is supercuspidal; its matrix coefficients are compact modulo the center and it must be constructed by different means. Much of the book explains why these apparently different criteria agree.
+The selected classification has a visible fault line. A representation whose Jacquet module has a character quotient is detected by the diagonal torus and comes from principal-series induction. The constructed quadratic types have zero unipotent coinvariants, compact-mod-center coefficients, and must be built by different means. Much of the book explains why these criteria separate the selected families.
 
 ### 1.2 Standing conventions
 
@@ -173,14 +176,14 @@ There are three normalizations whose separation is essential. Induction is norma
 
 ### 1.3 The classification in advance
 
-Every irreducible smooth representation of $G$ is admissible and has a central character. Up to isomorphism it lies in exactly one of the following families:
+The selected irreducible representations treated in this book lie in exactly one of the following families:
 
 1. a one-dimensional representation $\mu\circ\det$;
 2. an irreducible principal series $I(\chi_1,\chi_2)$ with $\chi_1\chi_2^{-1}\ne\nu^{\pm1}$;
 3. a special representation $\operatorname{St}\otimes(\mu\circ\det)$;
-4. a supercuspidal representation.
+4. a depth-zero or tame dihedral supercuspidal representation $\pi(L,\theta)$.
 
-The first three families are the nonsupercuspidal representations. This statement is simple to memorize but not yet explanatory. Why the exceptional ratios are exactly $\nu$ and $\nu^{-1}$, why a one-dimensional representation and a Steinberg representation occur together, and why nothing else can arise from the Borel will be proved rather than assumed. The supercuspidal family is described intrinsically and through the depth-zero and tame compact-induction constructions needed downstream. In residue characteristic two, and for the deepest wild representations more generally, we do not claim a construction-by-construction classification; the invariant theory developed here applies to them nonetheless.
+The first three families are generated from the Borel. This statement is simple to memorize but not yet explanatory. Why the exceptional ratios are exactly $\nu$ and $\nu^{-1}$, why a one-dimensional representation and a Steinberg representation occur together, and why nothing else can arise once the Jacquet module has a character quotient will be proved rather than assumed. The selected supercuspidal family is constructed from depth-zero and tame quadratic types. Primitive wild representations, including the additional ramified quadratic constructions required in residue characteristic two, remain outside every theorem that needs an explicit type, genericity, a conductor, or a parameter.
 
 ## 2. The geometry of $\mathrm{GL}_2(K)$
 
@@ -331,7 +334,7 @@ $$
 
 The quotient $L/\varpi L$ has $q+1$ lines, so every vertex has $q+1$ neighbors. The group $G$ acts transitively on vertices, the stabilizer of $[\mathcal O^2]$ is $Z\mathcal K$, and the stabilizer of the oriented edge from $[\mathcal O^2]$ toward $[\mathcal Oe_1+\varpi\mathcal Oe_2]$ is $Z\mathcal I$.
 
-This tree translates several later statements into elementary geometry. Cartan distance is the integer $m$ in $\operatorname{diag}(\varpi^m,1)$. A spherical function is radial about a vertex. An Iwahori-fixed vector remembers an oriented edge. The Steinberg representation measures alternating boundary data and therefore assigns the sign eigenvalue $-1$ to reflection across an edge. Supercuspidal coefficients have bounded support in the tree after the center has been divided out.
+This tree translates several later statements into elementary geometry. Cartan distance is the integer $m$ in $\operatorname{diag}(\varpi^m,1)$. A spherical function is radial about a vertex. An Iwahori-fixed vector remembers an oriented edge. The Steinberg representation measures alternating boundary data and therefore assigns the sign eigenvalue $-1$ to reflection across an edge. Coefficients of the selected compactly induced supercuspidals have bounded support in the tree after the center has been divided out.
 
 The tree also warns against a common false inference. Although the quotient graph has one distance coordinate, $G$ itself is not compact modulo $\mathcal K$: scalar powers move in the determinant direction. Compactness modulo the center removes that direction and leaves bounded tree distance, exactly as Cartan decomposition states.
 
@@ -701,11 +704,11 @@ Let $v_{\mathcal I}$ span $\operatorname{St}^{\mathcal I}$ and let $\lambda_{\ma
 
 The distinction matters for local transfer. Steinberg belongs to the discrete-series side because its coefficients are square-integrable modulo the center after a unitary twist, even though they are not compactly supported there. Supercuspidals satisfy the stronger compact-support condition. Square-integrability will be used by the transfer theory; the present book needs only this explicit rank-one observation.
 
-### 6.5 The complete nonsupercuspidal list so far
+### 6.5 The selected nonsupercuspidal list so far
 
 We have produced one-dimensional representations, irreducible principal series, and special representations. What remains is to prove completeness: any irreducible representation visible to the Borel must occur in this list. The right invariant for visibility is the Jacquet module, because it removes the unipotent direction without discarding the torus action.
 
-## 7. Jacquet modules and nonsupercuspidal classification
+## 7. Jacquet modules and Borel-generated classification
 
 ### 7.1 Why unipotent coinvariants detect induction
 
@@ -762,17 +765,15 @@ $$
 
 The order depends on our choice of upper Borel. Replacing $B$ by the opposite Borel exchanges the entries.
 
-### 7.3 Every nonsupercuspidal irreducible is on the list
+### 7.3 Every Borel-generated irreducible is on the list
 
 Call an irreducible smooth representation **supercuspidal** if $r_N(\pi)=0$. For $G=\mathrm{GL}_2(K)$ there is only one proper parabolic up to conjugacy, so no additional Jacquet modules need be tested.
 
-**Theorem 7.2 (nonsupercuspidal classification).** If $\pi$ is irreducible and $r_N(\pi)\ne0$, then $\pi$ is a one-dimensional representation, an irreducible principal series, or a special representation.
+**Theorem 7.2 (Borel-generated classification).** Let $\pi$ be irreducible. If $r_N(\pi)$ has a character quotient, then $\pi$ is a one-dimensional representation, an irreducible principal series, or a special representation.
 
-**Proof strategy.** Extract a character quotient from the nonzero Jacquet module, use the right adjunction to embed $\pi$ in a principal series, and then use the complete length calculation of Chapter 5.
+**Proof strategy.** Use the stated character quotient and right adjunction to embed $\pi$ in a principal series, and then use the complete length calculation of Chapter 5.
 
-**Proof.** A rank-one consequence of Bruhat decomposition is that the Jacquet module of a finitely generated smooth $G$-representation is finitely generated as a smooth $T$-representation. Here $\pi$ is cyclic. Concretely, writing $G=B\sqcup BwB$ shows that, modulo $N$-differences, the images of the closed-cell and open-cell translates of one generator give a finite set of $T$-generators. Hence the nonzero module $r_N(\pi)$ has an irreducible quotient. Smooth irreducible representations of the abelian group $T$ are characters under the standing coefficient hypotheses, so write this quotient as $\chi_1\boxtimes\chi_2$.
-
-The displayed right adjunction now gives a nonzero map
+**Proof.** Write the character quotient as $\chi_1\boxtimes\chi_2$. The displayed right adjunction gives a nonzero map
 
 $$
 \pi\longrightarrow I(\chi_1,\chi_2).
@@ -780,35 +781,30 @@ $$
 
 It is injective because $\pi$ is irreducible. If the principal series is irreducible, the map is an isomorphism. If it is reducible, Theorem 5.1 says its only irreducible subquotients are $\mu\circ\det$ and $\operatorname{St}\otimes\mu$. Thus $\pi$ is on the stated list. Using the opposite adjunction instead gives the equivalent quotient formulation, with the inducing characters exchanged. $\square$
 
-The theorem is not a black-box classification. Its content is divided between two transparent mechanisms: Jacquet adjunction forces induction, and the two Bruhat cells force length at most two with exactly computed exceptional ratios.
+The character-quotient hypothesis is essential. Bruhat decomposition computes the Jacquet module of a principal series, but it does not by itself prove that the Jacquet module of an arbitrary cyclic smooth representation is finitely generated over $T$. Book 78 deliberately leaves that stronger assertion outside its rank-one proof. Thus the theorem classifies exactly the Borel-generated spectrum established by the dependency chain, without silently promoting a conditional result to a classification of primitive wild representations.
 
-### 7.4 Admissibility of irreducible representations
+### 7.4 Admissibility in the selected range
 
-The general language of Book 76 separated irreducibility from admissibility. For $G$ they come together.
+The general language of Book 76 separated irreducibility from admissibility. In the selected range each construction supplies the missing finiteness, but the proof is different for induction and compact induction.
 
-**Theorem 7.3.** Every irreducible smooth $E$-representation of $G$ is admissible. Over the standing algebraically closed coefficient field it has a central character.
+**Theorem 7.3.** Every irreducible principal series, determinant character, special representation, depth-zero supercuspidal, and tame dihedral supercuspidal constructed in this book is admissible and has a central character.
 
-**Proof strategy.** Nonsupercuspidals are subquotients of admissible principal series. In the cuspidal case, the rank-one finiteness lemma says that an infinite tail in a compact-open fixed space produces a nonzero boundary class, hence a nonzero Jacquet module. The lattice tree makes this lemma a finite double-coset calculation.
+**Proof strategy.** Principal series are admissible by the compact picture, and exactness of compact-open invariants passes admissibility to their constituents. For a compact induction, Mackey decomposition identifies a fixed space with a direct sum indexed by inducing double cosets; the type calculations in Chapter 8 show that only finitely many summands survive at each level.
 
-**Proof.** First, the smooth Schur argument applies to an irreducible representation of this second-countable group over the standing uncountable algebraically closed field: an irreducible smooth representation is cyclic and hence countably dimensional, so every central operator is scalar. Thus $Z$ acts through a smooth central character.
+**Proof.** Principal-series admissibility was proved from the finite compact-picture double-coset set, and exactness of compact-open invariants passes it to the determinant and special constituents. Their displayed construction also gives their central characters.
 
-Principal-series admissibility was proved from finite compact-picture double cosets, and exactness of compact-open invariants passes it to subquotients. Suppose now that $r_N(\pi)=0$. Replace a chosen compact open $C$ by a normal principal congruence subgroup contained in it. A nonzero $C$-fixed vector generates $\pi$, so compact Frobenius reciprocity presents $\pi$ as a quotient of $\mathrm{c\text{-}Ind}_C^G\mathbf1$.
-
-We use the rank-one finiteness lemma. After fixing the central character, grade $C\backslash G/C$ by the distance $m$ of the corresponding lattice vertices. Every fixed ball contains only finitely many double cosets. On the horosphere of distance $m$, average first over
+For a selected supercuspidal $\pi=\mathrm{c\text{-}Ind}_J^G\Lambda$, let $C$ be compact open. Mackey decomposition gives
 
 $$
-N\cap\mathcal K
-\quad\text{and then over}\quad
-a_m(N\cap\mathcal K)a_m^{-1},
-\qquad
-a_m=\begin{pmatrix}\varpi^m&0\\0&1\end{pmatrix}.
+\pi^C\cong
+\bigoplus_{JgC\in J\backslash G/C}
+\operatorname{Hom}_{J\cap gCg^{-1}}(\Lambda,\mathbf1).
+\tag{7.1}
 $$
 
-For $m$ deeper than the level of $C$, the first average identifies values on each residue branch and the second compares that common value with the preceding horosphere. The only part not expressed by the preceding horosphere is the stable value along a ray. Changing the ray by an upper-unipotent element changes that stable value by an $N$-difference, so these stable values are exactly the image in $V_N$. Thus, in any quotient $V$ of the compact induction, either the images of all sufficiently distant spheres are generated by a fixed finite ball, or $V_N\ne0$. This is the tree form of the rank-one finiteness lemma.
+The depth-zero calculation of Section 8.3 and the lattice-chain calculation of Section 8.4 prove that the summand vanishes once the Cartan distance of $JgC$ is sufficiently large. A bounded Cartan ball contains only finitely many double cosets, and every surviving Hom space is finite dimensional because $\Lambda$ is. Hence (7.1) is finite dimensional. The scalar action specified in the inducing datum supplies the central character. $\square$
 
-Apply it to $V=\pi$. The second alternative is excluded by $r_N(\pi)=0$. Hence $\pi^C$ is spanned by the images of finitely many $C$-double cosets in a fixed ball and is finite dimensional. Since the original compact open contains such a $C$, its fixed space is a subspace of $\pi^C$ and is finite dimensional as well. This proves admissibility. $\square$
-
-This theorem closes a logical loop. All cuspidality criteria in Chapter 8 may now be stated for every irreducible smooth representation, not merely for a separately assumed admissible subclass.
+Nothing here asserts admissibility for a primitive wild representation whose type has not been constructed. That general theorem is true in the full representation theory of reductive $p$-adic groups, but it is neither an output of Book 76 nor proved by the two-cell calculation in Book 78, so it is not used below.
 
 ## 8. Supercuspidal representations
 
@@ -816,7 +812,7 @@ This theorem closes a logical loop. All cuspidality criteria in Chapter 8 may no
 
 The vanishing definition is algebraically efficient, but other forms reveal geometry and analysis.
 
-**Theorem 8.1 (cuspidality criteria).** Let $\pi$ be an irreducible admissible representation of $G$ with central character. The following are equivalent:
+**Theorem 8.1 (cuspidality criteria in the selected range).** Let $\pi$ be a selected infinite-dimensional irreducible admissible representation of $G$ with central character. The following are equivalent:
 
 1. $r_N(\pi)=0$;
 2. $\pi$ is not a subquotient of any principal series;
@@ -827,7 +823,7 @@ Such a representation is called supercuspidal.
 
 **Proof strategy.** The equivalence of the first two is Jacquet adjunction. For the support criterion, use Cartan decomposition: failure of compactness modulo $Z$ means that a coefficient remains nonzero along an unbounded sequence $\operatorname{diag}(\varpi^m,1)$. Averaging on sufficiently deep unipotent subgroups turns that persistent tail into a nonzero Jacquet class. Conversely a nonzero Jacquet class creates such a tail.
 
-**Proof.** Theorem 7.2 proves that $r_N(\pi)\ne0$ exactly when $\pi$ is a principal-series subquotient, giving (1)$\Leftrightarrow$(2).
+**Proof.** For the selected Borel-generated representations, Proposition 7.1 and the exceptional exact sequences give a nonzero Jacquet module. The compact-support calculation for the selected compact inductions gives zero Jacquet module. This proves (1)$\Leftrightarrow$(2) within the stated range.
 
 Fix $v$ and $\lambda$ stabilized by compact opens. Cartan decomposition reduces support modulo $Z$ to the integers $m\ge0$. For large $m$, conjugation by $a_m=\operatorname{diag}(\varpi^m,1)$ sends a fixed compact subgroup of $N$ into the stabilizer of $v$. If the Jacquet module is zero, $v$ is a finite sum of differences $n(x)u-u$; averaging the coefficient over a sufficiently large compact piece of $N$ then makes its value at $a_m$ vanish. Hence coefficients have bounded Cartan support.
 
@@ -853,15 +849,22 @@ I_g(\Lambda)=
 \qquad J^g=g^{-1}Jg.
 $$
 
-**Theorem 8.2 (intertwining criterion).** Suppose $J/Z$ is compact, $\Lambda$ is finite dimensional and irreducible, and
+**Theorem 8.2 (compact-induction criterion).** Suppose $J/Z$ is compact, $\Lambda$ is finite dimensional and irreducible,
 
 $$
-I_g(\Lambda)=0\qquad\text{for every }g\notin J.
+I_g(\Lambda)=0\qquad\text{for every }g\notin J,
+$$
+
+every nonzero $G$-subrepresentation of $\mathrm{c\text{-}Ind}_J^G\Lambda$ contains a nonzero function supported on the identity coset $J$, and, for every compact open $C\subseteq G$, only finitely many double cosets $JgC$ satisfy
+
+$$
+\operatorname{Hom}_{J\cap gCg^{-1}}(\Lambda,\mathbf1)\ne0.
+\tag{8.1}
 $$
 
 Then $\mathrm{c\text{-}Ind}_J^G\Lambda$ is irreducible, admissible, and supercuspidal.
 
-**Proof strategy.** Mackey decomposition identifies endomorphisms with the direct sum of the intertwining spaces. The hypothesis leaves only the identity coset. A support-minimization argument upgrades scalar endomorphisms to irreducibility in this compact-induction setting; this extra argument is essential because scalar endomorphisms alone do not imply irreducibility in an arbitrary category.
+**Proof strategy.** Mackey decomposition identifies endomorphisms with the direct sum of the intertwining spaces. The first hypothesis computes the endomorphism algebra, the support-reduction hypothesis proves irreducibility, and the separate condition (8.1) makes every compact-open fixed space a finite direct sum. These are logically different conclusions and require different hypotheses.
 
 **Proof.** Mackey theory gives
 
@@ -870,9 +873,9 @@ $$
 \cong\bigoplus_{JgJ\in J\backslash G/J}I_g(\Lambda).
 $$
 
-Only $J$ survives, and Schur's lemma gives $E$. If a nonzero subrepresentation is chosen, take a vector in it with the smallest number of $J$-cosets in its support. Translating and applying a matrix coefficient projector for the compact quotient of a stabilizer isolates one coset unless a second coset intertwines $\Lambda$. The hypothesis excludes that possibility, so the subrepresentation contains a function supported on $J$. Its $G$-translates generate the whole compact induction. Hence the representation is irreducible.
+Only $J$ survives, and Schur's lemma gives $E$. Let $V$ be a nonzero subrepresentation. By support reduction, $V$ contains a nonzero function supported on $J$. Such functions form one copy of the irreducible $J$-representation $\Lambda$, so the $J$-span of that function contains the whole identity-coset copy. Its $G$-translates generate the compact induction, and hence $V$ is the whole representation.
 
-Theorem 7.3 now gives admissibility; compactness of $J/Z$ alone would not have done so before irreducibility was known. A coefficient of two compactly supported inducing functions is supported in a finite union of products of their supports, hence in a compact set modulo $Z$. Theorem 8.1 therefore gives supercuspidality. $\square$
+For a compact open $C$, Mackey decomposition gives the fixed-space formula (7.1). Condition (8.1) leaves finitely many summands, each finite dimensional, and therefore proves admissibility. A coefficient of two compactly supported inducing functions is supported in a finite union of products of their supports, hence in a compact set modulo $Z$. The support implication in Theorem 8.1 therefore gives supercuspidality. $\square$
 
 The condition is sufficient, not necessary in this literal form for every inducing datum. A representation may be irreducibly compactly induced from data whose intertwining algebra is nontrivial but acts through a simple module. The clean criterion is exactly what the depth-zero and tame constructions below are designed to satisfy.
 
@@ -894,7 +897,11 @@ $$
 
 **Proof strategy.** Cartan decomposition reduces possible intertwiners to $\operatorname{diag}(\varpi^m,1)$. For $m>0$, the intersection of $\mathcal K$ with its conjugate maps modulo $\mathfrak p$ into a proper parabolic subgroup. Intertwining would therefore give a nonzero unipotent coinvariant of the finite cuspidal representation $\sigma$, which is impossible.
 
-**Proof.** Let $g$ intertwine $\Lambda$. After multiplying by $J$ on both sides, Cartan decomposition lets us take $g=a_m=\operatorname{diag}(\varpi^m,1)$ with $m\ge0$. If $m>0$, $\mathcal K\cap\mathcal K^{a_m}$ contains a subgroup whose reduction is the upper unipotent group of $\mathrm{GL}_2(k)$ on one side and whose conjugate acts as the corresponding opposite filtration on the other. A nonzero intertwiner would descend to a nonzero map through the unipotent coinvariants of $\sigma$. Finite-group cuspidality says those coinvariants vanish. Hence $m=0$ and $g\in J$. Theorem 8.2 applies. Conversely, a depth-zero supercuspidal contains vectors fixed by $\mathcal K(1)$; the resulting representation of $\mathrm{GL}_2(k)$ cannot have a parabolic constituent, for that would give a nonzero $N$-Jacquet module upstairs. An irreducible cuspidal summand and compact Frobenius reciprocity recover the displayed induction. $\square$
+**Proof.** Let $g$ intertwine $\Lambda$. After multiplying by $J$ on both sides, Cartan decomposition lets us take $g=a_m=\operatorname{diag}(\varpi^m,1)$ with $m\ge0$. If $m>0$, $\mathcal K\cap\mathcal K^{a_m}$ contains a subgroup whose reduction is the upper unipotent group of $\mathrm{GL}_2(k)$ on one side and whose conjugate acts as the corresponding opposite filtration on the other. A nonzero intertwiner would descend to a nonzero map through the unipotent coinvariants of $\sigma$. Finite-group cuspidality says those coinvariants vanish. Hence $m=0$ and $g\in J$.
+
+For support reduction, take a nonzero vector in a subrepresentation with the fewest inducing cosets in its support and then choose a coset of maximal Cartan radius. Averaging against a matrix coefficient of the finite cuspidal representation on the unipotent quotient at that outermost vertex kills every other outer branch. Cuspidality makes the surviving projection nonzero. If more than the identity coset remained, its stabilizer would give precisely an intertwiner at positive radius, which the preceding paragraph excluded. Translation therefore produces a nonzero identity-coset vector.
+
+For fixed compact open $C$, choose a principal congruence subgroup contained in $C$. If the Cartan radius of $JgC$ is larger than its level plus one, the same intersection contains a nontrivial finite upper or lower unipotent subgroup, and $\sigma$ has no invariants there. Thus only finitely many radii, and finitely many double cosets at each radius, contribute to (8.1). Theorem 8.2 applies. Conversely, a selected depth-zero supercuspidal contains vectors fixed by $\mathcal K(1)$; the resulting representation of $\mathrm{GL}_2(k)$ cannot have a parabolic constituent, for that would give a nonzero $N$-Jacquet module upstairs. An irreducible cuspidal summand and compact Frobenius reciprocity recover the displayed induction. $\square$
 
 Finite cuspidal representations of $\mathrm{GL}_2(k)$ may be parametrized by regular characters $\bar\theta:k_2^\times\to E^\times$, where $k_2/k$ is quadratic and regular means $\bar\theta^q\ne\bar\theta$. Inflating a lift $\theta$ to the units of the unramified quadratic extension $L/K$ connects this construction with the admissible-pair language below.
 
@@ -921,17 +928,19 @@ $$
 \pi(L,\theta)=\mathrm{c\text{-}Ind}_J^G\Lambda_\theta.
 $$
 
-**Theorem 8.4 (tame construction).** If $L/K$ is tamely ramified or unramified and $(L/K,\theta)$ is admissible, then $\pi(L,\theta)$ is irreducible supercuspidal. Two such representations are isomorphic exactly when their pairs are carried to one another by a $K$-isomorphism of the quadratic extensions, allowing the nontrivial Galois conjugation of $\theta$. A norm twist is not an additional isomorphism relation: it changes the representation by the corresponding determinant twist. Every essentially tame supercuspidal representation of $G$ arises from such a pair.
+**Theorem 8.4 (tame construction).** If $L/K$ is tamely ramified or unramified and $(L/K,\theta)$ is admissible, then $\pi(L,\theta)$ is irreducible supercuspidal. Two such representations are isomorphic exactly when their pairs are carried to one another by a $K$-isomorphism of the quadratic extensions, allowing the nontrivial Galois conjugation of $\theta$. A norm twist is not an additional isomorphism relation: it changes the representation by the corresponding determinant twist. Conversely, every irreducible supercuspidal containing a regular depth-zero nonsplit-torus type or a positive-depth tame quadratic type arises from such a pair.
 
 **Proof strategy.** The alternating commutator pairing makes the Heisenberg representation irreducible. An element of $G$ intertwining it must preserve the associated lattice chain and the embedded torus; admissibility then reduces the normalizer to $L^\times$ and its Galois element, the latter accounting only for $\theta\sim\theta^\tau$. Thus the intertwining is precisely $J$, and Theorem 8.2 applies.
 
 **Proof.** On the finite quotient of adjacent filtration groups, the commutator pairing is nondegenerate after its center is divided out. Induction from a maximal isotropic subgroup therefore gives the unique Heisenberg representation with the prescribed central character. The torus action preserves the pairing and extends this representation to $\Lambda_\theta$.
 
-Suppose $g\in G$ intertwines $\Lambda_\theta$. Comparing the smallest filtration groups on which the defining character is nontrivial forces $g$ to preserve their lattice chain. Comparing the resulting trace-zero characters then forces $g$ to normalize the embedded quadratic algebra $L$. Its normalizer is generated by $L^\times$ and an element inducing $\tau$. The second possibility intertwines $\theta$ with $\theta^\tau$ and is excluded inside one inducing datum by admissibility. Hence the self-intertwining of $\Lambda_\theta$ is exactly $J$, so Theorem 8.2 proves irreducibility and supercuspidality.
+Suppose $g\in G$ intertwines $\Lambda_\theta$. Comparing the smallest filtration groups on which the defining character is nontrivial forces $g$ to preserve their lattice chain. Comparing the resulting trace-zero characters then forces $g$ to normalize the embedded quadratic algebra $L$. Its normalizer is generated by $L^\times$ and an element inducing $\tau$. The second possibility intertwines $\theta$ with $\theta^\tau$ and is excluded inside one inducing datum by admissibility. Hence the self-intertwining of $\Lambda_\theta$ is exactly $J$.
 
-If two compact inductions are isomorphic, Mackey theory supplies an element intertwining their inducing representations. The same filtration argument conjugates one embedded quadratic field to the other, and restriction to the torus identifies the characters up to $\tau$. The converse follows by conjugating the inducing data. Finally, an essentially tame positive-depth supercuspidal has a minimal compact type whose first noncentral filtration character has a quadratic field as its centralizer; tameness makes that field separable of the stated kind, and the preceding Heisenberg construction recovers the type. Depth zero was handled in Theorem 8.3. This proves the exhaustion assertion within the essentially tame range. $\square$
+The same lattice calculation proves the two further hypotheses of Theorem 8.2, neither of which follows from the intertwining equality alone. For support reduction, choose a nonzero vector of minimal inducing support and an outermost lattice-chain coset. Fourier projection against the defining character on the last nontrivial quotient removes the other outer branches. If the projected vector retained a second coset, its stabilizer would intertwine the leading character across two lattice chains, contradicting the normalizer calculation. Iteration produces a nonzero identity-coset vector. For fixed-level finiteness, sufficiently distant Cartan translates make $J\cap gCg^{-1}$ meet the last nontrivial lattice-chain quotient in a direction on which the defining character is nontrivial, so the Hom space in (8.1) vanishes. Only a bounded set of Cartan radii survives, with finitely many double cosets at each radius. Theorem 8.2 now proves irreducibility, admissibility, and supercuspidality.
 
-The construction is deliberately described at the level needed later: its torus character, central character, contragredient, twists, and conductor are all explicit. A full enumeration of wild simple types, especially in residue characteristic two, requires additional strata and extension choices. We do not claim that enumeration. Nevertheless every wild supercuspidal is generic, has a unique newvector, a conductor, a contragredient, and compact-mod-center coefficients, so the invariant dictionary and the statement of local transfer do not depend on having listed its inducing data.
+If two compact inductions are isomorphic, Mackey theory supplies an element intertwining their inducing representations. The same filtration argument conjugates one embedded quadratic field to the other, and restriction to the torus identifies the characters up to $\tau$. The converse follows by conjugating the inducing data. Finally, a representation containing one of the types named in the theorem has a minimal compact type whose first noncentral filtration character has the displayed quadratic field as its centralizer; the preceding Heisenberg construction recovers that type. Depth zero was handled in Theorem 8.3. This proves the qualified exhaustion assertion. $\square$
+
+The construction is deliberately described at the level needed later: its torus character, central character, contragredient, twists, and conductor are all explicit. A full enumeration of wild simple types, especially in residue characteristic two, requires additional strata and extension choices. We do not claim that enumeration or import the genericity and newvector theorems for those omitted representations.
 
 To make the filtration choice less mysterious, consider the unramified quadratic case. After an integral embedding $\mathcal O_L\subset M_2(\mathcal O)$, put
 
@@ -974,9 +983,7 @@ These formulas follow already on the compact inducing representation and then fr
 
 Suppose now that the residue characteristic is two, or that the depth is beyond the essentially tame range. The internal construction may require a simple stratum $[\mathfrak A,n,0,\beta]$, a character on a filtration subgroup determined by $\beta$, a Heisenberg extension, and a choice of extension to its normalizer. Different strata can encode the same representation, so listing raw data without an equivalence theorem would not be a classification.
 
-The intrinsic classification statement does not fail. A wild irreducible representation with zero Jacquet module is supercuspidal, and Theorem 8.1 recognizes it without a type. Its compact-mod-center coefficients imply admissibility. The Whittaker argument of Chapter 11 applies without a tame hypothesis. The Kirillov proof of Chapter 13 assigns a finite conductor and a unique newvector. Contragredience and twisting preserve supercuspidality. These results are sufficient to place a wild representation on the discrete-series side and to formulate preservation of central character, conductor, and twists under a later correspondence.
-
-What is not supplied here is an explicit bijection between all wild supercuspidals and equivalence classes of compact inducing data. Any downstream claim requiring the internal type of a wild representation must therefore add that theory; a claim involving only the invariants just listed may use this book directly.
+The definition still makes sense: an irreducible representation with zero Jacquet module is called supercuspidal. What is not supplied here is an explicit bijection between wild supercuspidals and compact inducing data, a proof that every such representation is admissible or generic, or its newvector theorem. Those facts require the omitted wild type theory or a general admissibility-and-genericity theorem not present in the dependency chain. No downstream claim in this book uses them.
 
 ## 9. Spherical representations and Satake parameters
 
@@ -984,7 +991,7 @@ What is not supplied here is an explicit bijection between all wild supercuspida
 
 A representation is **spherical** if it has a nonzero $\mathcal K$-fixed vector. Among irreducible representations, sphericality is extremely restrictive.
 
-**Theorem 9.1.** If $\pi$ is irreducible and spherical, then $\dim\pi^{\mathcal K}=1$. Moreover $\pi$ is the unique spherical irreducible subquotient of $I(\chi_1,\chi_2)$ for an unordered pair of unramified characters.
+**Theorem 9.1.** If $\pi$ is a selected irreducible spherical representation, then $\dim\pi^{\mathcal K}=1$. Moreover $\pi$ is the unique spherical irreducible subquotient of $I(\chi_1,\chi_2)$ for an unordered pair of unramified characters.
 
 **Proof strategy.** The spherical Hecke algebra is commutative and generated by one noncentral double coset together with the central scalar cosets. A simultaneous eigencharacter reconstructs a quotient of an unramified principal series. The calculation of Chapter 5 shows that only one constituent can be spherical at a reducibility point.
 
@@ -1045,7 +1052,9 @@ The half-modulus in $\mathcal S$ matches the half-modulus in induction. If both 
 
 ### 9.4 Frobenius language without ambiguity
 
-The parameters above are values of characters at the chosen uniformizer. Books 2 and 5 fix the arithmetic reciprocity convention: local reciprocity sends $\varpi$ to **arithmetic Frobenius**. Consequently the corresponding unramified one-dimensional Galois characters have arithmetic-Frobenius eigenvalues $\alpha$ and $\beta$. Their geometric-Frobenius eigenvalues are $\alpha^{-1}$ and $\beta^{-1}$. Under the alternative geometric reciprocity normalization the roles reverse.
+The parameters above are values of characters at the chosen uniformizer. Books 2 and 5 fix arithmetic reciprocity: a uniformizer maps to **arithmetic Frobenius**. With that identification, the corresponding unramified one-dimensional Galois characters have arithmetic-Frobenius eigenvalues $\alpha$ and $\beta$, and geometric-Frobenius eigenvalues $\alpha^{-1}$ and $\beta^{-1}$.
+
+The parameter chapters will follow Books 80 and 81 instead. There we invert the arithmetic reciprocity map and use geometric reciprocity, so the Weil character denoted by the same multiplicative character $\chi$ satisfies $\chi(\Phi)=\chi(\varpi)$ for geometric Frobenius $\Phi$. Thus the geometric-convention Weil characters used from Chapter 19 onward are obtained through a different identification; they are not the arithmetic-convention Galois characters of the preceding paragraph with their Frobenius eigenvalues left unchanged.
 
 Thus the phrase “the Satake parameters are the Frobenius eigenvalues” is incomplete on its own. The invariant representation-theoretic statement is the polynomial $P_\pi(X)$ defined from $\chi_i(\varpi)$. Later comparison theorems must state whether their Galois polynomial uses arithmetic or geometric Frobenius and insert inverses if necessary.
 
@@ -1101,7 +1110,7 @@ $$
 
 The constant line acts by $T_s=q$. Hence the two roots of the quadratic relation have direct geometric meanings: $q$ is the trivial constituent, while $-1$ is the Steinberg constituent. Under an unramified determinant twist, the finite reflection eigenvalue remains $-1$ and the translation eigenvalue is multiplied by the appropriate value of the twist on $\varpi$.
 
-No supercuspidal representation has an Iwahori-fixed vector. Indeed the Iwahori-Hecke module would produce a subquotient of an unramified principal series, contradicting vanishing of the Jacquet module. Thus an irreducible Iwahori-spherical representation is an unramified principal-series constituent or an unramified Steinberg twist.
+No selected supercuspidal representation has an Iwahori-fixed vector. Indeed its Iwahori-Hecke module would produce a subquotient of an unramified principal series, contradicting the zero Jacquet module already proved for the selected compact inductions. Thus a selected irreducible Iwahori-spherical representation is an unramified principal-series constituent or an unramified Steinberg twist.
 
 ### 10.3 From $\mathcal K_0$ to $\mathcal K_1$
 
@@ -1165,9 +1174,9 @@ $$
 \dim\operatorname{Hom}_N(\pi,\psi)\le1.
 $$
 
-Every infinite-dimensional irreducible representation is generic. The one-dimensional representations are precisely the irreducible nongeneric ones.
+Every infinite-dimensional representation in the selected principal, special, depth-zero, or tame dihedral classes is generic. The selected one-dimensional representations are nongeneric.
 
-**Proof strategy.** Uniqueness uses the open Bruhat cell: two Whittaker functionals give two distributions on $N\backslash G$ with the same equivariance, and inversion exchanges the two sides. On the open cell finite-level Fourier uniqueness leaves one scalar; the closed cell cannot support a nontrivial $\psi$-equivariant distribution. Existence is explicit for principal series and Steinberg. For a supercuspidal, a rank-one Fourier lemma says that vanishing of ordinary $N$-coinvariants forces a nonzero twisted $N$-coinvariant.
+**Proof strategy.** Uniqueness uses the open Bruhat cell: two Whittaker functionals give two distributions on $N\backslash G$ with the same equivariance, and inversion exchanges the two sides. On the open cell finite-level Fourier uniqueness leaves one scalar; the closed cell cannot support a nontrivial $\psi$-equivariant distribution. Existence is explicit for principal series and Steinberg, and finite Fourier projection on the inducing type proves it for the selected supercuspidals.
 
 **Proof.** For uniqueness, pair a putative left $(N,\psi)$-equivariant distribution with its transpose under $g\mapsto wg^{-1}w^{-1}$. Bruhat decomposition reduces the comparison to $BwB$, parametrized by one additive coordinate. Fourier inversion says an additive distribution with prescribed nontrivial character is determined by one value. On the closed cell, the stabilizer contains $N$, on which the prescribed character is nontrivial, so the distribution vanishes. Hence the Hom space has dimension at most one.
 
@@ -1179,14 +1188,17 @@ $$
 
 on compactly supported open-cell vectors is nonzero and extends algebraically to the whole representation. It descends to the Steinberg constituent and vanishes on the one-dimensional constituent.
 
-For completeness, the rank-one Fourier lemma is applied to the twisted coinvariants
+For a depth-zero type, restriction to the finite upper-unipotent group contains every nontrivial additive character with multiplicity one; Fourier projection produces a nonzero functional and extension by zero from the identity inducing coset gives the required functional on the compact induction. For a positive-depth tame type, the last nontrivial lattice quotient carries the Heisenberg representation of Section 8.4. Choosing a polarization containing the upper-nilpotent line produces the required one-dimensional $\psi$-eigenspace. The compact-induction formula
 
 $$
-V_{N,\psi_a}
-=V/\langle\pi(n(x))v-\psi(ax)v:x\in K,\ v\in V\rangle.
+\lambda(f)=
+\sum_{n\in(N\cap J)\backslash N}
+\ell(f(n))\psi(-n)
 $$
 
-Fixing a vector by $n(\mathfrak p^m)$ and enlarging to $n(\mathfrak p^{-r})$ reduces each stage to Fourier decomposition on the finite additive group $\mathfrak p^{-r}/\mathfrak p^m$. The transition maps between stages carry a nontrivial character orbit either to the next nontrivial orbit or to the boundary term represented by ordinary $N$-coinvariants. If every $V_{N,\psi_a}$ with $a\ne0$ vanished, these finite Fourier decompositions would therefore leave a nonzero stable boundary class in $V_N$, unless $N$ acted trivially. In the latter case the normal closure of $N$ and $\bar N$ is $\mathrm{SL}_2(K)$, so an irreducible $\pi$ would be a determinant character. Thus an infinite-dimensional representation with $V_N=0$ has $V_{N,\psi_a}\ne0$ for some $a\ne0$. Conjugation by $\operatorname{diag}(a,1)$ identifies this quotient with $V_{N,\psi}$. A nonzero linear functional on it is a Whittaker functional. This proves existence for supercuspidals without assuming compact-induction data. $\square$
+has only finitely many nonzero terms for each $f$ and satisfies $\lambda(\pi(n_0)f)=\psi(n_0)\lambda(f)$. A function supported on $J$ shows that it is nonzero. These are exactly the genericity calculations proved for the selected types in Book 79. $\square$
+
+A finite Fourier decomposition at each compact $N$-orbit does not by itself prove genericity for an arbitrary primitive wild representation: a nonzero-frequency quotient need not survive the direct limit. Book 78 marks this boundary explicitly, and the present theorem does not cross it.
 
 ### 11.3 The Whittaker model
 
@@ -1343,7 +1355,7 @@ This necessary compatibility is often useful when a prescribed central character
 
 The newvector theorem rests on a concrete rank-one calculation.
 
-**Lemma 13.1 (Kirillov filtration).** Let $\pi$ be infinite dimensional, irreducible, and generic, and take $n(\psi)=0$. Suppose $\pi^{\mathcal K_1(\mathfrak p^m)}$ is nonzero for at least one $m$, and let $n_0$ be the least such integer. Then
+**Lemma 13.1 (selected oldform filtration).** Let $\pi$ be an infinite-dimensional representation in the selected principal, special, depth-zero, or tame dihedral classes, and take $n(\psi)=0$. Suppose $\pi^{\mathcal K_1(\mathfrak p^m)}$ is nonzero for at least one $m$, and let $n_0$ be the least such integer. Then
 
 $$
 \dim \pi^{\mathcal K_1(\mathfrak p^m)}=
@@ -1362,23 +1374,53 @@ $$
 
 form a basis of $\pi^{\mathcal K_1(\mathfrak p^m)}$.
 
-**Proof strategy.** Translate invariance under the three elementary pieces of $\mathcal K_1$ into support, unit-invariance, and Fourier-transform conditions on a Kirillov function. These conditions leave an interval of valuation shells. The first nonempty interval defines $n_0$; increasing the level lengthens it by exactly one shell.
+**Proof strategy.** Compute the fixed lines directly in each selected construction. Principal-series double cosets leave an interval bounded by the two character conductors; exactness separates the special constituent at the reducibility wall. For a tame quadratic type, Mackey decomposition leaves an interval shifted by the trace-dual defect. The Kirillov coordinate identifies the surviving lines with successive valuation shells.
 
-**Proof.** Let $\phi$ be the Kirillov function of $v$. Invariance under $n(b)$ for $b\in\mathcal O$ gives
-
-$$
-\psi(by)\phi(y)=\phi(y)\quad\text{for all }b\in\mathcal O,
-$$
-
-so $\phi(y)=0$ unless $y\in\mathcal O$. Invariance under $\operatorname{diag}(u,1)$ for $u\in\mathcal O^\times$ makes $\phi$ constant, with the appropriate central-character adjustment already trivial here, on each valuation shell $\varpi^r\mathcal O^\times$. Finally the lower-unipotent elements
+**Proof.** First let $\pi=I(\chi_1,\chi_2)$ be irreducible and put $r_i=a(\chi_i)$. In the compact picture the double cosets
 
 $$
-\bar n(c)=w n(-c)w^{-1},\qquad c\in\mathfrak p^m,
+(B\cap\mathcal K)\backslash\mathcal K/
+\mathcal K_1(\mathfrak p^m)
 $$
 
-impose the corresponding upper-support bound on the Weyl transform of $\phi$. Fourier duality turns this into a lower bound on the shell index of $\phi$, shifted by a constant depending only on $\pi$ and $\psi$.
+are indexed by integers $j=0,\ldots,m$, measuring the relative position of a primitive row. On the stabilizer of the $j$th representative, covariance tests $\chi_1$ on $1+\mathfrak p^j$ and $\chi_2$ on $1+\mathfrak p^{m-j}$. A value on that coset is therefore free precisely when
 
-Thus the invariant space is represented by functions constant on the integer shells in one interval. For $m<n_0$ the interval is empty by definition. At the first nonempty value $n_0$ the two support bounds meet in one shell, and each increase of $m$ adds one shell. This proves the dimension formula.
+$$
+r_1\le j\le m-r_2.
+\tag{13.1}
+$$
+
+The allowed cosets have disjoint support. Hence the fixed-space dimension is
+
+$$
+\max\{0,m-r_1-r_2+1\}.
+\tag{13.2}
+$$
+
+Thus $n_0=r_1+r_2$, and each higher level adds exactly one endpoint coset.
+
+The same calculation applies to the two reducible inductions. Compact-open invariants are exact. If $\mu$ is ramified, the determinant constituent $\mu\circ\det$ has no $\mathcal K_1$-fixed vectors, so the special constituent inherits all the fixed lines and begins at $2a(\mu)$. If $\mu$ is unramified, the determinant constituent contributes one line at every level; subtracting it from the $m+1$ lines of the induced representation leaves dimension zero at $m=0$ and dimension $m$ for $m\ge1$. This is the formula with $n_0=1$.
+
+Now let $\pi=\pi(L,\theta)$ be selected supercuspidal. Mackey decomposition gives
+
+$$
+\pi^{\mathcal K_1(\mathfrak p^m)}
+\cong
+\bigoplus_{Jg\mathcal K_1}
+\operatorname{Hom}_{J\cap g\mathcal K_1g^{-1}}
+(\Lambda_\theta,\mathbf1).
+\tag{13.3}
+$$
+
+The lattice-chain intersection calculation of Book 79 compares the upper and lower root lattices through the trace annihilator. Before
+
+$$
+n_0=v_K(\mathfrak d_{L/K})+f(L/K)a_L(\theta)
+$$
+
+one intersection contains a unit layer on which the type character is nontrivial, so every summand vanishes. At level $m\ge n_0$, exactly the $m-n_0+1$ consecutive Cartan positions survive. At each position the intersection is a polarization of the finite Heisenberg quotient, whose fixed space is one dimensional. This proves the dimension formula for the selected supercuspidals.
+
+In the Whittaker model the surviving principal or type cosets restrict to consecutive valuation shells. At the first level there is one shell and hence one vector $v_0$. Increasing the level exposes one new shell at a time. This is the Kirillov interpretation of the three direct calculations, not an assumption that an arbitrary shell function is fixed.
 
 It remains to identify the displayed basis. If $a_j=\operatorname{diag}(\varpi^{-j},1)$ and $k\in\mathcal K_1(\mathfrak p^m)$, then
 
@@ -1387,13 +1429,13 @@ a_j^{-1}ka_j\in\mathcal K_1(\mathfrak p^{n_0})
 \quad\text{whenever }0\le j\le m-n_0.
 $$
 
-Indeed the upper-right entry gains $j$ powers of $\varpi$, the lower-left loses $j$ but remains in $\mathfrak p^{m-j}\subseteq\mathfrak p^{n_0}$, and the lower-right congruence remains strong enough. Hence each $v_j$ is fixed. Their Kirillov functions begin on distinct valuation shells, so they are linearly independent; the dimension count makes them a basis. $\square$
+Indeed the upper-right entry gains $j$ powers of $\varpi$, the lower-left loses $j$ but remains in $\mathfrak p^{m-j}\subseteq\mathfrak p^{n_0}$, and the lower-right congruence remains strong enough. Hence each $v_j$ is fixed. Their Kirillov functions occupy distinct newly exposed endpoint shells, so they are linearly independent; the dimension count makes them a basis. $\square$
 
 This proof is genuinely rank two. The one-dimensional valuation line in $K^\times$ makes the interval grow by one. For higher rank, oldform dimensions are governed by a multidimensional cone and require more elaborate combinatorics.
 
 ### 13.3 Existence, uniqueness, and oldvector growth
 
-**Theorem 13.2 (local newvector theorem).** Every infinite-dimensional irreducible smooth representation $\pi$ of $G$ has a finite conductor exponent. At the minimal level,
+**Theorem 13.2 (selected local newvector theorem).** Every infinite-dimensional irreducible representation $\pi$ in the selected principal, special, depth-zero, or tame dihedral classes has a finite conductor exponent. At the minimal level,
 
 $$
 \dim\pi^{\mathcal K_1(\mathfrak p^{a(\pi)})}=1.
@@ -1565,7 +1607,7 @@ $$
 \pi(L,\theta)^\vee\cong\pi(L,\theta^{-1}).
 $$
 
-For an arbitrary supercuspidal, the contragredient is again supercuspidal with the same conductor. Compact-mod-center support is preserved under inversion, and $\mathcal K_1$-fixed spaces dualize at each level.
+For a selected supercuspidal, the displayed formula shows directly that the contragredient is again selected supercuspidal with the same conductor. Compact-mod-center support is preserved under inversion, and the conductor formula for $\theta^{-1}$ equals that for $\theta$.
 
 ### 14.2 The invariant principal-series pairing
 
@@ -1652,7 +1694,7 @@ $$
 
 and if $\mu$ is ramified it is $1$. An algebraically normalized automorphic representation is often twisted by $\nu^{-1/2}$; that shifts $s$ and removes the visible $1/2$. Many apparent discrepancies in Steinberg Euler factors are only this twist.
 
-For a supercuspidal representation of $\mathrm{GL}_2(K)$, the standard local factor is $1$. The richer information is carried by its conductor, central character, and epsilon factor; Chapter 21 constructs the latter and proves its compatibility with quadratic induction. No division-algebra representation is used in defining anything in this chapter.
+For a selected depth-zero or tame dihedral supercuspidal representation of $\mathrm{GL}_2(K)$, the standard local factor is $1$. The richer information is carried by its conductor, central character, and epsilon factor; Chapter 21 constructs the latter and proves its compatibility with quadratic induction. No division-algebra representation is used in defining anything in this chapter.
 
 ## 16. Worked examples over $\mathbf Q_p$
 
@@ -1759,11 +1801,11 @@ $$
 \Delta(L/K)+f(L/K)a_L(\theta),
 $$
 
-but constructing the matching representation and identifying the correct rectified character require wild type data not developed here. This is exactly the scope boundary of Section 8.6, not an exception to the intrinsic classification or newvector theorem.
+but constructing the matching representation and identifying the correct rectified character require wild type data not developed here. This is exactly the scope boundary of Section 8.6; neither the selected classification nor the selected newvector theorem includes this case.
 
 ## 17. The classification and invariant dictionary
 
-### 17.1 The four families with their invariants
+### 17.1 The selected families with their invariants
 
 For quick downstream use, the irreducible representations and their basic data are:
 
@@ -1772,30 +1814,30 @@ For quick downstream use, the irreducible representations and their basic data a
 | $\mu\circ\det$ | always irreducible, nongeneric | $\mu^2$ | epsilon-conductor $2a(\mu)$; $\mathcal K_1$-fixed only when $\mu$ is unramified | $\mu^{-1}\circ\det$ |
 | $I(\chi_1,\chi_2)$ | $\chi_1\chi_2^{-1}\ne\nu^{\pm1}$ | $\chi_1\chi_2$ | $a(\chi_1)+a(\chi_2)$ | $I(\chi_1^{-1},\chi_2^{-1})$ |
 | $\operatorname{St}\otimes\mu$ | generic special | $\mu^2$ | $1$ if $a(\mu)=0$, else $2a(\mu)$ | $\operatorname{St}\otimes\mu^{-1}$ |
-| supercuspidal $\pi$ | $r_N(\pi)=0$ | $\omega_\pi$ | unique at $a(\pi)$ | supercuspidal, central character $\omega_\pi^{-1}$ |
+| $\pi(L,\theta)$ | selected depth-zero or tame admissible pair | $\theta|_{K^\times}$ | unique at $a(\pi)$ | $\pi(L,\theta^{-1})$ |
 
-For $m\ge a(\pi)$ and every infinite-dimensional row,
+For $m\ge a(\pi)$ and every selected infinite-dimensional row,
 
 $$
 \dim\pi^{\mathcal K_1(\mathfrak p^m)}=m-a(\pi)+1.
 $$
 
-A representation is spherical precisely when it is the spherical constituent of an unramified principal series; its hyperspecial fixed space is one-dimensional. It is Iwahori-spherical precisely when it is an unramified principal-series constituent or an unramified Steinberg twist. Every infinite-dimensional irreducible representation is generic, and supercuspidality is equivalent to compact support of coefficients modulo the center.
+A selected representation is spherical precisely when it is the spherical constituent of an unramified principal series; its hyperspecial fixed space is one-dimensional. It is Iwahori-spherical precisely when it is an unramified principal-series constituent or an unramified Steinberg twist. Every selected infinite-dimensional representation is generic, and for the selected compact inductions supercuspidality is equivalent to compact support of coefficients modulo the center.
 
 ### 17.2 Data needed for local transfer
 
-The discrete-series side of $G$ consists of special representations and supercuspidals. These are the representations that will be eligible for comparison with representations of a quaternion division group. The following data are now defined without reference to that group:
+The selected discrete-series side of $G$ consists of special representations and the constructed depth-zero and tame dihedral supercuspidals. These are the representations considered in the later parameter comparison. The following data are now defined without reference to a quaternion division group:
 
 - the central character $\omega_\pi$ on $K^\times$;
 - determinant twisting $\pi\mapsto\pi\otimes\chi$;
 - the contragredient $\pi^\vee$;
 - the conductor exponent $a(\pi)$ and newvector line;
-- compact support of coefficients modulo $Z$ for supercuspidals;
+- compact support of coefficients modulo $Z$ for the selected supercuspidals;
 - special versus supercuspidal type;
 - Satake parameters and a Hecke polynomial in the spherical case;
 - tame admissible-pair data $(L/K,\theta)$ where available.
 
-At this representation-side stage no correspondence has yet been asserted, and no division-algebra representation was used to define these invariants. Chapters 19--23 now construct the selected parameter matching, prove its compatibility properties, and formulate the Jacquet--Langlands invariant package.
+At this representation-side stage no correspondence has yet been asserted, and no division-algebra representation was used to define these invariants. Chapters 19--23 now construct the selected parameter matching, prove its compatibility properties, construct the matching quaternionic types, and prove the Jacquet--Langlands invariant package.
 
 ### 17.3 Interface with two-dimensional local Galois types
 
@@ -1823,9 +1865,9 @@ is designed precisely to match induction of local parameters. The depth-zero val
 
 ### 17.4 Scope of the classification
 
-The classification into four families is complete: “supercuspidal” is an intrinsic fourth family. The construction-level classification in this book is intentionally narrower. It completely treats depth zero and the essentially tame quadratic cases needed for downstream examples and transfer invariants. It does not enumerate every wild supercuspidal by simple strata or types, especially in residue characteristic two.
+The selected classification is complete: it treats the Borel-generated representations and the depth-zero and tame quadratic supercuspidals needed downstream. It does not claim that every nonzero Jacquet module has a character quotient, enumerate primitive wild supercuspidals by simple strata, or attach Whittaker and newvector data to omitted wild representations. In particular, ramified quadratic type constructions in residue characteristic two remain outside the selected correspondence.
 
-This boundary loses none of the formal data required to formulate local Jacquet--Langlands or local-global compatibility. For every wild supercuspidal, the vanishing Jacquet module, compact-mod-center criterion, central character, twist, contragredient, Whittaker model, conductor, and unique newvector remain available. A later theorem may characterize its transfer by characters and these invariants without first choosing an explicit compact-induction label.
+This is an interface boundary, not a suggestion that primitive wild representations do not exist. A later book may add general admissibility and genericity, wild types, and their transfer. None of those later results is used to prove a statement here.
 
 ### 17.5 Why characteristic zero is visible
 
@@ -1839,9 +1881,9 @@ Thus every classification, conductor, and one-dimensionality theorem in this boo
 
 The representation theory of $\mathrm{GL}_2(K)$ is governed by two geometries. The projective line has two Bruhat cells, and this makes normalized induction from the Borel almost completely explicit. The lattice tree has one Cartan distance, and this turns support modulo the center, congruence level, and Hecke action into one-dimensional calculations. Their intersection explains the exceptional reducibility ratios $|\cdot|^{\pm1}$ and fixes the exact placement of the character and Steinberg constituents.
 
-The Jacquet module draws the classification boundary. If it is nonzero, adjunction forces the representation into a principal series, whose two-cell filtration leaves only irreducible principal series, characters, and special representations. If it vanishes, matrix coefficients become compact modulo the center. Compact induction from a compact-mod-center subgroup then supplies supercuspidals, with the depth-zero and tame admissible-pair cases concrete enough to calculate all relevant invariants.
+The Jacquet module draws the selected classification boundary. If it has a character quotient, adjunction forces the representation into a principal series, whose two-cell filtration leaves only irreducible principal series, characters, and special representations. The constructed depth-zero and tame types instead have zero Jacquet module and compact-mod-center coefficients. These two mechanisms cover exactly the selected range, not the omitted primitive wild spectrum.
 
-Whittaker uniqueness gives every infinite-dimensional irreducible representation a canonical functional model. The Kirillov coordinate reduces that model to functions on $K^\times$; congruence invariance becomes an interval of valuation shells. From that elementary picture come the existence and uniqueness of the newvector, the exact oldvector growth formula, and the conductor calculations for principal, special, and constructed supercuspidal representations.
+Whittaker uniqueness, together with the separate existence calculations for the selected families, gives every selected infinite-dimensional representation a canonical functional model. The Kirillov coordinate reduces that model to functions on $K^\times$; congruence invariance becomes an interval of valuation shells. From that elementary picture come the existence and uniqueness of the newvector, the exact oldvector growth formula, and the conductor calculations for principal, special, and constructed supercuspidal representations.
 
 The preceding dictionary is coherent rather than merely classificatory. Central character records scalar action, contragredience inverts it, twisting changes both inducing characters together, the conductor identifies minimal integral level, and the spherical Hecke polynomial records two unramified roots. We now prove that these are not merely analogous to Galois-theoretic data: in the selected range they are the invariants of a precise Weil--Deligne parameter.
 
@@ -1853,7 +1895,7 @@ The group-theoretic classification answers the question “from which geometric 
 
 This chapter develops only the two-dimensional objects needed here. The general theory, including the local monodromy theorem and the construction of epsilon factors for arbitrary finite-inertia representations, was established in Book 80. We recall every definition and specialize every formula, so that no normalization is hidden.
 
-Fix a separable closure $\overline K$. Let $W_K$ be the inverse image of the infinite cyclic subgroup generated by geometric Frobenius in the absolute Galois group. There is an exact sequence
+Fix a separable closure $\overline K$. Under the quotient map $G_K\to G_K/I_K$, let $W_K$ be the inverse image of the ordinary infinite cyclic subgroup generated by geometric Frobenius. There is an exact sequence
 
 $$
 1\longrightarrow I_K\longrightarrow W_K
@@ -1867,14 +1909,14 @@ $$
 |w|=q^{-\nu_K(w)}.
 $$
 
-Local reciprocity is normalized throughout by
+For Chapters 19--24, invert the arithmetic reciprocity map of Books 2 and 5 and denote the resulting geometric reciprocity map by $\operatorname{rec}_K$. Thus
 
 $$
 \operatorname{rec}_K(\varpi)=\Phi.
 \tag{19.1}
 $$
 
-Thus a smooth character of $K^\times$ and its corresponding Weil character have the same value on $\varpi$ and $\Phi$. Arithmetic Frobenius would invert every displayed unramified root; (19.1) prevents that inversion from being performed silently.
+Thus a smooth character of $K^\times$ and its corresponding Weil character have the same value on $\varpi$ and $\Phi$. This is the deliberate convention change announced in Section 9.4 and used in Books 80 and 81. Returning to the earlier arithmetic reciprocity identification would invert every displayed unramified root.
 
 ### 19.2 The definition and the monodromy relation
 
@@ -2239,9 +2281,14 @@ Characters of equal depth can cancel on their last nontrivial unit quotient. For
 
 ### 21.2 Rank-one Fourier constants
 
-Local constants originate in the one-dimensional Fourier equation. From this point coefficients are complex. Let $\psi:K\to\mathbf C^\times$ be nontrivial, and define its conductor exponent by
+Local constants originate in the one-dimensional Fourier equation. From this point coefficients are complex. Let $\psi:K\to\mathbf C^\times$ be nontrivial, and define its conductor exponent by the requirement that
 
-Thus $\mathfrak p^{-n(\psi)}$ is the largest fractional ideal on which $\psi$ is trivial; equivalently, $\psi$ is trivial on $\mathfrak p^{-n(\psi)}$ and nontrivial on $\mathfrak p^{-n(\psi)-1}$.
+$$
+\mathfrak p^{-n(\psi)}
+\text{ is the largest fractional ideal on which $\psi$ is trivial}.
+$$
+
+Equivalently, $\psi$ is trivial on $\mathfrak p^{-n(\psi)}$ and nontrivial on $\mathfrak p^{-n(\psi)-1}$. The qualification by fractional ideals matters because the additive kernel itself need not be an $\mathcal O$-submodule.
 
 Use the self-dual additive Haar measure for $\psi$ and give $\mathcal O^\times$ multiplicative volume one. For a Schwartz--Bruhat function $\Phi$ and a quasicharacter $\chi$, set
 
@@ -2689,77 +2736,561 @@ Norm transitivity proves this directly in the principal and special formulas, wh
 
 ## 23. Jacquet--Langlands and the preserved invariant package
 
-### 23.1 Why only the discrete series transfers
+### 23.1 Quaternion structure and matching tori
 
-Let $D_K$ be the quaternion division algebra over $K$, write $D_K^\times$ for its multiplicative group, and write $\operatorname{Nrd}:D_K^\times\to K^\times$ for the reduced norm. The quotient $D_K^\times/K^\times$ is compact. It has no proper parabolic subgroup and hence no principal series. This immediately predicts the domain of local Jacquet--Langlands: the essentially square-integrable representations of $G$, namely special representations and supercuspidals.
-
-The purpose of this chapter is not to reconstruct the representation theory of $D_K^\times$. It is to isolate, with proofs, the invariant statement that Book 77 must hand to later transfer arguments. In the selected range, local Jacquet--Langlands is characterized by the regular-elliptic character identity
+The formal quaternionic interface of Book 76 deliberately stopped before the local-algebra and representation-theoretic calculations needed for transfer. We now supply them in the selected range. Let $K_2/K$ be the unramified quadratic extension, let $\sigma$ be its nontrivial automorphism, and choose the following concrete model:
 
 $$
-\Theta_\pi(g)=-\Theta_{\operatorname{JL}(\pi)}(g_D)
+D_K=K_2\oplus K_2\Pi,
+\qquad
+\Pi^2=\varpi,
+\qquad
+\Pi a=\sigma(a)\Pi.
 \tag{23.1}
 $$
 
-for matching regular elliptic elements, where $g$ and $g_D$ have the same reduced characteristic polynomial. The minus sign is $(-1)^{2-1}$. Equivalently in the selected range, the two representations carry the same two-dimensional Weil--Deligne parameter. The equivalence is proved by the explicit character formulas for special and tame dihedral types: (23.1) recovers the same torus character orbit and the same special-versus-supercuspidal shape.
-
-Thus the selected transfer has the form
+For $x=a+b\Pi$, the canonical involution and reduced norm are
 
 $$
-\operatorname{St}\otimes\mu
-\longleftrightarrow
-\mu\circ\operatorname{Nrd},
+\overline x=\sigma(a)-b\Pi,
+\qquad
+\operatorname{Nrd}(x)
+=a\sigma(a)-\varpi b\sigma(b).
 \tag{23.2}
+$$
+
+This algebra is a division algebra. Indeed, if the last expression vanished with $b\ne0$, then
+
+$$
+v_K(N_{K_2/K}(a))
+=1+v_K(N_{K_2/K}(b)),
+$$
+
+but the left side is even and the right side is odd. If $b=0$, vanishing forces $a=0$. Thus every nonzero element has nonzero reduced norm and hence an inverse. The same parity prevents cancellation between the two terms of (23.2), so
+
+$$
+v_K(\operatorname{Nrd}(a+b\Pi))
+=\min\{2v_{K_2}(a),1+2v_{K_2}(b)\}.
+$$
+
+It follows directly that the maximal order, radical, and residue field are
+
+$$
+\mathcal O_D=\mathcal O_{K_2}\oplus\mathcal O_{K_2}\Pi,
+\qquad
+\mathfrak P_D=\Pi\mathcal O_D,
+\qquad
+\mathcal O_D/\mathfrak P_D\simeq k_2.
+\tag{23.3}
+$$
+
+Put
+
+$$
+v_D(x)=v_K(\operatorname{Nrd}(x)),
+\qquad
+U_D^r=1+\mathfrak P_D^r\quad(r\ge1).
+\tag{23.4}
+$$
+
+Then $v_D(\Pi)=1$, while $v_D(z)=2v_K(z)$ for $z\in K^\times$. The quotient $D_K^\times/K^\times$ is compact, as proved in Book 76; (23.3) also exhibits it as the union of the two compact images of $\mathcal O_D^\times$ and $\Pi\mathcal O_D^\times$.
+
+We henceforth use $D_K$ for this standard quaternionic inner form. This explicit choice is enough for every construction and character comparison below; no classification theorem for arbitrary central simple algebras is being inserted as an unstated input.
+
+We also need the embedding statement left open in Book 76.
+
+**Lemma 23.1 (selected quadratic tori embed).** Every tame separable quadratic extension $L/K$ embeds in $D_K$. Any two embeddings are conjugate by $D_K^\times$. For $x\in L^\times$ one has
+
+$$
+\operatorname{Trd}(x)=\operatorname{Tr}_{L/K}(x),
+\qquad
+\operatorname{Nrd}(x)=N_{L/K}(x).
+\tag{23.5}
+$$
+
+Consequently every regular elliptic conjugacy class in the selected range has a unique matching class in $D_K^\times$, characterized by equality of reduced characteristic polynomials.
+
+**Proof strategy.** The unramified field is already visible in (23.1). A tame ramified quadratic extension is generated by a square root of a unit times $\varpi$, and the unit can be obtained as a norm from $K_2$.
+
+**Proof.** The unramified case is the displayed copy of $K_2$. Suppose $L/K$ is ramified and tame. Then the residue characteristic is odd and
+
+$$
+L=K(\sqrt{u\varpi})
+$$
+
+for some $u\in\mathcal O^\times$. The norm $\mathcal O_{K_2}^\times\to\mathcal O^\times$ is surjective: it is surjective on residue fields, and successive lifting across principal-unit quotients is surjective because the residue trace $k_2\to k$ is. Choose $b\in\mathcal O_{K_2}^\times$ with $N_{K_2/K}(b)=u$. Then
+
+$$
+(b\Pi)^2=b\sigma(b)\varpi=u\varpi,
+$$
+
+so $\sqrt{u\varpi}\mapsto b\Pi$ gives the required embedding. Formula (23.5) follows by restricting (23.2). If two embeddings are given, choose a generator of $L$. Its two images have the same reduced trace and norm, hence the same reduced characteristic polynomial. The quaternionic conjugacy calculation of Book 76 then conjugates one image to the other. The same calculation proves uniqueness of a matching class. $\square$
+
+Split regular polynomials do not occur in $D_K$: a root would generate a subalgebra with a zero divisor. This is why principal series and determinant characters have no division-side transfer. In the selected spectrum, the transfer domain is precisely the special and tame dihedral discrete-series rows.
+
+### 23.2 Selected division-side types
+
+Characters give the division-side special row immediately. For a smooth character $\mu$ of $K^\times$, put
+
+$$
+\rho_D^{\mathrm{sp}}(\mu)=\mu\circ\operatorname{Nrd}.
+\tag{23.6}
+$$
+
+Its central character is $\mu^2$ because $\operatorname{Nrd}(z)=z^2$ on the center. The dihedral row requires an actual type construction.
+
+Let $(L/K,\theta)$ be a tame admissible pair and set
+
+$$
+\vartheta=\theta\Delta_{L/K,\theta},
+\tag{23.7}
+$$
+
+where $\Delta_{L/K,\theta}$ is the rectifier of Section 20.2. The same direct type character $\vartheta$ is used on the split and division sides. This point is essential: using $\theta$ directly would miss the quadratic factor in the central character on both sides.
+
+At depth zero, $L/K$ is unramified and $\vartheta$ is trivial on $U_L^1$. Put
+
+$$
+J_D=K^\times\mathcal O_D^\times.
+$$
+
+There is a character $\Lambda^D_\vartheta$ of $J_D$ whose restriction to $\mathcal O_D^\times$ is the inflation of the residue character $\overline\vartheta:k_2^\times\to\mathbf C^\times$ and whose restriction to $K^\times$ is $\vartheta|_{K^\times}$. The two prescriptions agree on $\mathcal O^\times$. Define
+
+$$
+\rho_D(L,\theta)
+=\operatorname{Ind}_{J_D}^{D_K^\times}\Lambda^D_\vartheta.
+\tag{23.8}
+$$
+
+The subgroup has index two. Conjugation by $\Pi$ changes $\overline\vartheta$ to $\overline\vartheta^q$, so regularity and elementary Clifford theory show that (23.8) is irreducible of dimension two.
+
+For positive depth, use the conductor-zero additive character fixed in Chapter 11, first remove a norm twist as in the minimal-twist decomposition of Chapter 8, and assume that $\theta$ is minimal. Put $m=a_L(\theta)-1$. The rectifier has smaller conductor and therefore does not alter the leading character. Choose $\beta\in L$ so that, for $x\in\mathfrak p_L^{\lfloor m/2\rfloor+1}$,
+
+$$
+\vartheta(1+x)
+=\psi\bigl(\operatorname{Tr}_{L/K}(\beta x)\bigr).
+\tag{23.9}
+$$
+
+Trace duality gives
+
+$$
+v_L(\beta)=-a_L(\theta)-d(L/K).
+$$
+
+Minimality says that the leading class of $\beta$ is not scalar; hence $K[\beta]=L$. Put $n=-v_D(\beta)$ and define
+
+$$
+H_D^1=U_L^1U_D^{\lfloor n/2\rfloor+1},
+\qquad
+J_D^1=U_L^1U_D^{\lfloor(n+1)/2\rfloor},
+\qquad
+J_D=L^\times J_D^1.
+\tag{23.10}
+$$
+
+On $H_D^1$ set
+
+$$
+\xi_\beta(u(1+x))
+=\vartheta(u)\psi(\operatorname{Trd}(\beta x)).
+\tag{23.11}
+$$
+
+The two expressions agree on the intersection by (23.9), and the omitted product terms lie beyond the conductor, so (23.11) is a well-defined character. The commutator pairing
+
+$$
+(\overline x,\overline y)
+\longmapsto\xi_\beta([x,y])
+\tag{23.12}
+$$
+
+on $J_D^1/H_D^1$ is nondegenerate. Indeed, expansion of the commutator turns its radical into the graded centralizer of $\beta$ under the reduced-trace pairing. The centralizer of a noncentral element of a quaternion algebra is $L$, and the $L$-part has already been divided out by $U_L^1$. The finite Heisenberg argument therefore gives a unique irreducible representation $\eta_\beta^D$ of $J_D^1$ containing $\xi_\beta$.
+
+Extend $\eta_\beta^D$ to $J_D$. The normalization is the same finite one used for the split tame type: realize the Heisenberg representation from a maximal isotropic subgroup, choose determinant-one averaging intertwiners on the prime-to-residue-character cyclic orbits, fix the remaining central sign, and then prescribe the torus character $\vartheta$. The quotient that acts on the finite symplectic space is
+
+$$
+L^\times/K^\times U_L^1,
+$$
+
+which is cyclic of order $q+1$ in the unramified case and of order two in the tamely ramified case. Thus its projective action linearizes and the prescription determines an irreducible extension $\Lambda^D_\vartheta$. Set
+
+$$
+\rho_D(L,\theta)
+=\operatorname{Ind}_{J_D}^{D_K^\times}\Lambda^D_\vartheta.
+\tag{23.13}
+$$
+
+This induction is finite dimensional because $D_K^\times/K^\times$ is compact.
+
+**Theorem 23.2 (division-side tame induction).** The representation (23.8) or (23.13), according to its depth, is irreducible and is not a reduced-norm character. It is independent of the embedding and the auxiliary choices, and
+
+$$
+\rho_D(L,\theta)\simeq\rho_D(L',\theta')
+$$
+
+if and only if the admissible pairs are $K$-isomorphic. Moreover
+
+$$
+\omega_{\rho_D(L,\theta)}
+=\theta|_{K^\times}\omega_{L/K},
+\tag{23.14}
+$$
+
+$$
+\rho_D(L,\theta)\otimes(\chi\circ\operatorname{Nrd})
+\simeq
+\rho_D\bigl(L,\theta(\chi\circ N_{L/K})\bigr),
+\tag{23.15}
 $$
 
 and
 
 $$
-\operatorname{AI}_{L/K}(\theta)
-\longleftrightarrow
-\rho_{D}(L,\theta),
-\tag{23.3}
+\rho_D(L,\theta)^\vee
+\simeq\rho_D(L,\theta^{-1}).
+\tag{23.16}
 $$
 
-where $\rho_D(L,\theta)$ denotes the quaternionic tame dihedral representation with parameter $\operatorname{Ind}_{W_L}^{W_K}\theta$. Primitive wild packets are outside the present scope.
+**Proof strategy.** The decisive calculation is exact intertwining of the simple character and its Heisenberg enlargement. Compactness modulo the center then turns the endomorphism calculation into irreducibility without a hidden admissibility assumption.
 
-The equivalence between (23.1) and the displayed parameter matching can be checked directly in these two rows. On a regular elliptic element, the Steinberg character is the negative of the character $\mu\circ\operatorname{Nrd}$ after reduced characteristic polynomials are matched; twisting multiplies both values by $\mu$ of their common determinant. In the dihedral row, the compact-induction character formula has one contribution for each of the two embeddings of $L$ into the ambient algebra. The two contributions are exchanged by $\tau$ and recover the orbit $\{\theta,\theta^\tau\}$. The split and division groups have opposite rank sign, producing the minus sign in (23.1). Away from conjugacy classes meeting the inducing torus, both compact-induction characters vanish. Thus the regular-elliptic identity determines exactly the same quadratic field and character orbit, hence the same induced parameter. This is the selected, construction-level proof of the equivalence used below.
+**Proof.** At depth zero, $J_D$ is normal of index two and the two conjugate characters on $J_D$ are distinct. Clifford theory proves irreducibility and shows that an isomorphism recovers the Frobenius orbit of the residue character and the central scalar. This proves the theorem in that case, including the assertion that the two-dimensional representation is not a character.
 
-### 23.2 The invariant theorem
+Now suppose the depth is positive. Let $h\in D_K^\times$ intertwine the type. Comparing (23.11) on the common deep unit subgroup places
 
-**Theorem 23.1 (Jacquet--Langlands invariant package).** Let $\pi$ be a selected discrete-series representation of $G$ and let $\rho=\operatorname{JL}(\pi)$. Then:
+$$
+h^{-1}\beta h-\beta
+$$
 
-1. $\omega_\rho=\omega_\pi$;
-2. $\operatorname{JL}(\pi\otimes(\chi\circ\det))
-   =\rho\otimes(\chi\circ\operatorname{Nrd})$;
-3. $\operatorname{JL}(\pi^\vee)=\rho^\vee$;
-4. $a(\rho)=a(\pi)$ when both conductors are defined through their common Weil--Deligne parameter;
-5. for every nontrivial $\psi$,
+in the appropriate trace-dual radical. On the first nonzero graded quotient, $h$ therefore normalizes the centralizer of the leading class of $\beta$, namely $L$. Multiplying by an element of $L^\times$ removes that graded part. Repeating the argument moves $h$ through the successive radical layers. At the middle layer, nondegeneracy of (23.12) excludes every remaining class outside $J_D^1$. Hence
 
-   $$
-   L(s,\rho)=L(s,\pi),
-   \qquad
-   \epsilon(s,\rho,\psi)=\epsilon(s,\pi,\psi),
-   $$
+$$
+I_{D_K^\times}(\Lambda^D_\vartheta)=J_D.
+\tag{23.17}
+$$
 
-   and therefore their gamma factors and root numbers agree.
+Mackey theory now gives a one-dimensional endomorphism algebra. After dividing out the scalar central action, the representation is a smooth projective representation of the compact group $D_K^\times/K^\times$ and hence factors through a finite quotient. Averaging makes the corresponding finite-dimensional representation semisimple. A semisimple representation with scalar endomorphism algebra is irreducible.
 
-**Proof strategy.** Use the common parameter. Each listed operation or invariant is intrinsic on that parameter, so equality is forced rather than checked case by case. Then verify that the two explicit selected rows really have the asserted common parameter.
+The same first-graded-layer argument applied to an intertwiner between two types conjugates their quadratic fields and identifies their torus characters up to the nontrivial field automorphism. This proves the equivalence assertion. Regularity makes the two torus characters distinct on the first noncentral layer, whereas a reduced-norm character is scalar there, so the resulting representation is not a character. Lemma 23.1 removes dependence on the chosen embedding, while the uniqueness of the Heisenberg representation and normalized extension removes the other choices. Finally $\vartheta|_{K^\times}=\theta|_{K^\times}\omega_{L/K}$ gives (23.14); reduced norm restricts to $N_{L/K}$, and the rectifier identities (20.5) give (23.15) and (23.16). A nonminimal pair is defined by (23.15) from a minimal one, and the same equivalence argument makes this independent of the minimal-twist decomposition. $\square$
 
-**Proof.** Put $D=\operatorname{rec}_2(\pi)$. Character matching for (23.2) assigns $\operatorname{Sp}_2(\mu)$ to both sides; character matching for (23.3) assigns $\operatorname{Ind}_{W_L}^{W_K}\theta$ to both sides. Thus $D$ is also the parameter of $\rho$.
+No claim has been made about primitive wild types or ramified quadratic types in residue characteristic two. The division-side construction has exactly the same tame boundary as the split construction.
 
-The central character is $\det D$, proving (1). Twisting by $\chi$ tensors $D$ with the corresponding Weil character, and dualizing replaces $D$ by $D^\vee$, proving (2) and (3). The Artin--monodromy conductor (19.6), Euler determinant (19.9), and epsilon factor (21.8) depend only on $D$, proving (4) and (5). $\square$
+### 23.3 The split--division character calculation
 
-The conductor statement needs its stated normalization. A congruence “level” on $D_K^\times$ is indexed by the filtration of a maximal order and need not equal the $\mathcal K_1$ index on $G$ without a shift. What is preserved is the Artin--monodromy conductor and hence the exponent in the epsilon factor. Likewise a newvector is not transported as a vector: the two representations live on different groups. What transfers is the integer controlling the first distinguished level after each side's conventions are translated to the common parameter.
+The construction alone does not prove Jacquet--Langlands. The missing statement is the sign in the regular-elliptic character identity, including elements close to the center where more than two compact-induction cosets can contribute.
 
-### 23.3 What is preserved, transformed, or not comparable
+For an admissible representation, write $\Theta$ for the locally constant function representing its distribution character on the regular set. On $D_K^\times$ this is the ordinary trace because the selected representations are finite dimensional. Matching elements $g\in G$ and $g_D\in D_K^\times$ have the same reduced characteristic polynomial.
+
+**Lemma 23.3 (paired tame-type trace calculation).** Let $(L/K,\theta)$ be a tame admissible pair. For every pair of matching regular elements,
+
+$$
+\Theta_{\operatorname{AI}_{L/K}(\theta)}(g)
+=-\operatorname{tr}\rho_D(L,\theta)(g_D).
+\tag{23.18}
+$$
+
+**Proof strategy.** Apply the compact-induction character formula on both sides at a common finite level. The split calculation is indexed by lattice chains in $K^2$ fixed to that level; the division calculation is indexed by the two valuation orientations in $D_K$. Interior split chains cancel in pairs. The terminal finite Fourier sum is hyperbolic on $M_2(K)$ and anisotropic on $D_K$, and their normalized Gauss sums are $1$ and $-1$.
+
+**Proof.** Fix a sufficiently small regular neighborhood of $g$ on which its centralizer and all contributing compact-induction double cosets are constant. Book 76's character formula and the fixed-subtree argument of Chapter 8 express the split character as the finite sum
+
+$$
+S_{M_2}(g)
+=\sum_{\substack{z\in J\backslash G/C_G(g)\\
+zgz^{-1}\in J}}
+\operatorname{tr}\Lambda_\vartheta(zgz^{-1}).
+\tag{23.19}
+$$
+
+The same formula for (23.8) or (23.13) gives a finite sum $S_D(g_D)$ with $J_D$, $D_K^\times$, and $\Lambda^D_\vartheta$. Equality of characteristic polynomials identifies the two centralizer fields and their norm and trace filtrations.
+
+At depth zero, filter the $g$-fixed subtree by distance from its central segment. At a scalar interior vertex, the $q-1$ transverse directions have nontrivial-unipotent reduction. The scalar contribution is $(q-1)\overline\vartheta(z)$, while the sum of the transverse contributions is
+
+$$
+(q-1)(-\overline\vartheta(z)).
+$$
+
+Thus removal of an outer shell does not change the total. Repeating this removal reduces the finite tree to its terminal vertex or edge; its two orientations are the two cosets of $K^\times\mathcal O_D^\times$ in $D_K^\times$. If the original reduction is elliptic regular, there was only the terminal vertex to begin with, and the two formulas are visibly
+
+$$
+S_{M_2}(g)
+=-\overline\vartheta(t)-\overline\vartheta(t^q),
+\qquad
+S_D(g_D)
+=\overline\vartheta(t)+\overline\vartheta(t^q).
+\tag{23.20}
+$$
+
+If the reduction is scalar, the shell removal just described performs the required telescoping; its terminal values are again the right side of (23.20). Thus the calculation includes regular elements arbitrarily close to the center rather than assuming that only two torus cosets contribute.
+
+At positive depth, use the radical filtration in (23.10) and its split analogue. Conjugates entering the next radical layer are parametrized by its additive quotient: replacing a representative by $(1+x)z$ changes the simple-character trace by
+
+$$
+\psi\bigl(\operatorname{Trd}(\beta[x,y])\bigr)
+$$
+
+for the corresponding graded displacement $y$. Thus the sum over all representatives in that fiber is the finite Fourier transform of the commutator pairing (23.12). If $y$ is not in the graded centralizer, nondegeneracy makes the displayed character nontrivial and the whole fiber sums to zero. If $y$ is centralizing, its $L$-part is absorbed into the torus coset and the calculation descends to the next layer. This gives an explicit pairing of every nonterminal split and division contribution.
+
+The only unpaired layer is the first two-dimensional complement to the graded centralizer. After a common nonzero scalar and compatible coordinates, reduced norm is the hyperbolic form $(u,v)\mapsto uv$ on the split complement and the anisotropic form $z\mapsto N_{k_2/k}(z)$ on the division complement. For any nontrivial additive character $\overline\psi$ of $k$,
+
+$$
+q^{-1}\sum_{u,v\in k}\overline\psi(uv)=1,
+\qquad
+q^{-1}\sum_{z\in k_2}\overline\psi(N_{k_2/k}(z))=-1.
+\tag{23.21}
+$$
+
+The first equality follows by summing over $v$. For the second, the zero norm has one preimage and every nonzero norm has $q+1$ preimages, so the sum is
+
+$$
+1+(q+1)\sum_{a\in k^\times}\overline\psi(a)=-q.
+$$
+
+This argument is valid in residue characteristic two as well. It is precisely the relative sign between the two Heisenberg traces. The determinant-one normalization of the averaging intertwiners removes projective scalar ambiguity, and using the common character $\vartheta$ removes torus scalar ambiguity. All earlier layers occur in identical Fourier-orthogonality pairs. Consequently
+
+$$
+S_{M_2}(g)+S_D(g_D)=0.
+$$
+
+If the element is closer to the center, the first Fourier layer can be scalar. The zero-term alternative above then descends one layer and repeats; termination is guaranteed by regularity. Hence the argument covers every regular elliptic neighborhood for a minimal pair. A norm twist multiplies the two character values by $\chi(\det g)$ and $\chi(\operatorname{Nrd}(g_D))$, which are equal on matching elements. The minimal-twist decomposition therefore proves the formula for every tame admissible pair. Equations (23.19) and its division analogue prove (23.18). $\square$
+
+The special row has an independent and simpler sign calculation.
+
+**Proposition 23.4 (the special character identity).** If $g$ and $g_D$ match and are regular, then
+
+$$
+\Theta_{\operatorname{St}\otimes\mu}(g)
+=-\operatorname{tr}(\mu\circ\operatorname{Nrd})(g_D).
+\tag{23.22}
+$$
+
+**Proof.** In the projective-line realization, the unnormalized induction of the trivial character is $C^\infty(\mathbf P^1(K))$. A regular elliptic element has no $K$-rational eigenline. On a sufficiently small regular neighborhood its action kernel therefore has no diagonal fixed point, so the induced character is zero there. Removing the constant subrepresentation gives
+
+$$
+\Theta_{\operatorname{St}}(g)=-1.
+$$
+
+Twisting multiplies this value by $\mu(\det g)$. Matching gives $\det g=\operatorname{Nrd}(g_D)$, which proves (23.22). $\square$
+
+The minus sign has now been calculated in both selected rows; it has not been imported from a later transfer theorem.
+
+### 23.4 The selected Jacquet--Langlands correspondence
+
+Let the selected spectrum of $D_K^\times$ consist of the reduced-norm characters (23.6) and the tame dihedral representations (23.8), (23.13). Define
+
+$$
+\boxed{
+\begin{aligned}
+\operatorname{JL}(\operatorname{St}\otimes\mu)
+&=\mu\circ\operatorname{Nrd},\\
+\operatorname{JL}(\operatorname{AI}_{L/K}(\theta))
+&=\rho_D(L,\theta).
+\end{aligned}}
+\tag{23.23}
+$$
+
+This definition follows the constructions, not a parameter label.
+
+**Theorem 23.5 (selected local Jacquet--Langlands).** The map (23.23) is a bijection from the selected discrete-series representations of $G$ to the selected irreducible representations of $D_K^\times$. It is characterized by
+
+$$
+\boxed{
+\Theta_\pi(g)
+=-\Theta_{\operatorname{JL}(\pi)}(g_D)}
+\tag{23.24}
+$$
+
+on matching regular elliptic elements. If one now defines the division-side parameter on the constructed representations by
+
+$$
+\operatorname{rec}_D(\mu\circ\operatorname{Nrd})
+=\operatorname{Sp}_2(\mu),
+\tag{23.25}
+$$
+
+$$
+\operatorname{rec}_D(\rho_D(L,\theta))
+=\operatorname{Ind}_{W_L}^{W_K}\theta,
+\tag{23.26}
+$$
+
+then
+
+$$
+\operatorname{rec}_D(\operatorname{JL}(\pi))
+=\operatorname{rec}_2(\pi).
+\tag{23.27}
+$$
+
+**Proof.** Irreducibility, equivalence of tame pairs, and disjointness from reduced-norm characters were proved in Theorem 23.2. Thus the two rows of (23.23) are bijections onto the selected division-side classes. Proposition 23.4 and Lemma 23.3 prove (23.24).
+
+It remains to justify the word “characterized.” Suppose two selected division-side representations have the same trace on the regular set. That set is dense: its complement is the center $K^\times$, which has empty interior in the four-dimensional $K$-space $D_K$. The representations are finite dimensional and smooth, so their trace functions are locally constant. Their traces consequently agree on all of $D_K^\times$. Evaluation at the identity gives equal dimensions, and evaluation at central elements then gives equal central characters. After that common central action is divided out, both representations are smooth projective representations of the compact group $D_K^\times/K^\times$ and factor through a common finite quotient with the same multiplier. The corresponding finite twisted group algebra is semisimple, and independence of its irreducible characters shows that the representations are isomorphic. Thus (23.24) determines the image of every selected split representation and characterizes (23.23) without a hidden reconstruction theorem.
+
+Finally (23.25)--(23.26) are well defined by Theorem 23.2 and the pair-equivalence proved on the split side, and comparison with (20.3), (20.7) gives (23.27). The character theorem was proved before these parameter labels were assigned, so this last step is not circular. $\square$
+
+Primitive wild supercuspidals are excluded from both the domain and the asserted division-side range. The theorem is complete for the catalog's special, depth-zero, and tame dihedral classes and makes no exhaustivity assertion beyond them.
+
+### 23.5 Conductors, local factors, and levels
+
+It remains to prove that the division-side analytic invariants in the catalog are the ones predicted by (23.25)--(23.26), rather than declaring this by definition. From this point coefficients are complex. For a matrix coefficient $f$ of a selected representation $\rho$ of $D_K^\times$ and $\Phi\in C_c^\infty(D_K)$, use the normalized coefficient integral
+
+$$
+Z_D(s,\Phi,f)
+=\int_{D_K^\times}
+\Phi(x)f(x)|\operatorname{Nrd}(x)|^{s+1/2}\,d^\times x.
+\tag{23.28}
+$$
+
+The ordinary additive Fourier transform on the four-dimensional space $D_K$ uses the self-dual measure for
+
+$$
+(x,y)\longmapsto\psi(\operatorname{Trd}(xy)).
+$$
+
+The standard inner-form functional equation uses the normalized operator
+
+$$
+\mathcal F_D\Phi(y)
+=-\int_{D_K}\Phi(x)
+\psi(\operatorname{Trd}(xy))\,dx.
+\tag{23.28a}
+$$
+
+The sign is the anisotropic rank-two Hasse sign. It is forced already by the special row: with conductor-zero $\psi$, the trace-dual lattice of $\mathcal O_D$ is $\mathfrak P_D^{-1}$. The quotient $\mathfrak P_D^{-1}/\mathcal O_D$ has $q^2$ elements, so a self-dual measure gives $\operatorname{vol}(\mathcal O_D)=q^{-1}$ and hence
+
+$$
+\mathcal F_D\mathbf1_{\mathcal O_D}
+=-q^{-1}\mathbf1_{\mathfrak P_D^{-1}}.
+$$
+
+Without the displayed minus sign, the trivial representation of $D_K^\times$ would have endpoint constant $+q^{1/2-s}$ instead of the Steinberg constant $-q^{1/2-s}$. Thus (23.28a) fixes the normalization from a direct lattice calculation, not from a parameter label.
+
+Shell decomposition in $v_D$ makes every integral a rational function of $q^{-s}$. Smoothness of the finite-dimensional coefficient space reduces the unit calculations to a finite quotient, so the resulting fractional ideal in the principal ring $\mathbf C[q^s,q^{-s}]$ is finitely generated and hence principal. Its normalized generator is $L_D(s,\rho)$.
+
+The functional-equation scalar is also a consequence of the construction rather than an extra assumption. Under left and right multiplication by $D_K^\times$, the open orbit in the additive space $D_K$ is $D_K^\times$ itself. Frobenius reciprocity and Schur's lemma make the space of bilinear forms with the equivariance of (23.28) one dimensional. The operator $\mathcal F_D$ exchanges that equivariance with the contragredient one. Thus, first in a convergence half-plane and then as a rational identity, if $\check f(x)=f(x^{-1})$ there is a scalar $\gamma_D(s,\rho,\psi)$ satisfying
+
+$$
+Z_D(1-s,\mathcal F_D\Phi,\check f)
+=\gamma_D(s,\rho,\psi)Z_D(s,\Phi,f).
+$$
+
+Define $\epsilon_D$ by
+
+$$
+\gamma_D(s,\rho,\psi)
+=\epsilon_D(s,\rho,\psi)
+\frac{L_D(1-s,\rho^\vee)}{L_D(s,\rho)}.
+$$
+
+**Theorem 23.6 (division local-factor calculation).** For every smooth $\mu$ and every tame admissible pair $(L/K,\theta)$,
+
+$$
+L_D(s,\mu\circ\operatorname{Nrd})
+=L(s+1/2,\mu),
+\tag{23.29}
+$$
+
+$$
+\epsilon_D(s,\mu\circ\operatorname{Nrd},\psi)
+=\epsilon(s,\operatorname{Sp}_2(\mu),\psi),
+\tag{23.30}
+$$
+
+and
+
+$$
+L_D(s,\rho_D(L,\theta))=1,
+\tag{23.31}
+$$
+
+$$
+\epsilon_D(s,\rho_D(L,\theta),\psi)
+=\lambda(L/K,\psi)
+\epsilon_L(s,\theta,\psi\circ\operatorname{Tr}_{L/K}).
+\tag{23.32}
+$$
+
+Consequently, if the conductor is the exponent of $q^{-(s-1/2)}$ after the additive-character shift is removed, then
+
+$$
+a_D(\mu\circ\operatorname{Nrd})
+=\begin{cases}
+1,&a(\mu)=0,\\
+2a(\mu),&a(\mu)>0,
+\end{cases}
+\tag{23.33}
+$$
+
+and
+
+$$
+a_D(\rho_D(L,\theta))
+=f(L/K)\bigl(a_L(\theta)+d(L/K)\bigr).
+\tag{23.34}
+$$
+
+**Proof strategy.** For a reduced-norm character, sum (23.28) over the valuation shells of $D_K$. For a dihedral type, insert a matrix coefficient supported on $J_D$, use a Heisenberg polarization, and reduce the four-dimensional Fourier transform to the one-dimensional Fourier transform over $L$.
+
+**Proof.** Choose $b_0\in\mathcal O_{K_2}^\times$ with $N_{K_2/K}(b_0)=-1$ and put $\Pi_D=b_0\Pi$. Then $\operatorname{Nrd}(\Pi_D)=\varpi$. Write
+
+$$
+D_K^\times=\coprod_{m\in\mathbf Z}\Pi_D^m\mathcal O_D^\times.
+$$
+
+For $\mu\circ\operatorname{Nrd}$, unit averaging removes every ramified Euler tail. If $\mu$ is unramified, the surviving shell sum is the geometric series with root $\mu(\varpi)q^{-1/2}$, proving (23.29). The trace-dual of $\mathfrak P_D^r$ is the corresponding opposite radical power. Fourier reversal of the shell interval leaves one endpoint when $\mu$ is unramified; the sign in (23.28a) makes its scalar
+
+$$
+-\mu(\varpi)q^{1/2-s}
+$$
+
+when $n(\psi)=0$. If $\mu$ is ramified, the two boundary unit sums are the rank-one Gauss sums for $\mu\nu^{1/2}$ and $\mu\nu^{-1/2}$. These are exactly the unramified and ramified cases of the monodromy formula in Section 21.4. Changing variables in additive Fourier transform replaces $\psi$ by $\psi_b$ and multiplies both sides by $\mu(b)^2|b|^{2s-1}$, so (23.30) holds for every nontrivial $\psi$.
+
+At depth zero, take a coefficient in the two-coset induced model (23.8). Averaging over $\mathcal O_D^\times/U_D^1\simeq k_2^\times$ is zero by regularity, so the zeta ideal has no Euler denominator. Fourier transform of the two coset coefficients is the finite-field norm Gauss sum in (23.21). After the normalization sign in (23.28a), it is the rank-one Tate sum for $\theta$ over the unramified field $L$; the measure quotient is $\lambda(L/K,\psi)=1$ when $n(\psi)=0$. This proves (23.31)--(23.32) at depth zero.
+
+At positive depth, choose a coefficient of $\Lambda^D_\vartheta$ and extend it by zero to the inducing cosets. Frobenius reciprocity reduces (23.28) to $J_D$. On $H_D^1$, formula (23.11) turns additive Fourier transform into the finite Heisenberg transform. Choosing a maximal isotropic subgroup cancels the complementary variables in pairs and leaves the transform on the field $L$ with additive character $\psi_L=\psi\circ\operatorname{Tr}_{L/K}$ and multiplicative character $\theta$. Regularity makes the unit average zero, so there is no Euler denominator and (23.31) follows. The rank-one functional equation over $L$ supplies $\epsilon_L(s,\theta,\psi_L)$. Comparing the self-dual measure on $L$ with the one induced from the reduced-trace pairing supplies the quadratic Gauss quotient $\lambda(L/K,\psi)$. The anisotropic finite transform contributes the sign $-1$ calculated in (23.21), and the normalization sign in (23.28a) cancels it. The common rectifier in (23.7) removes the remaining torus Gauss scalar, leaving exactly $\lambda(L/K,\psi)$ and proving (23.32) for a minimal pair and conductor-zero $\psi$. If $\theta=\theta_0(\chi\circ N_{L/K})$, multiplying the coefficient by $\chi\circ\operatorname{Nrd}$ inserts precisely the same norm twist in the remaining Tate sum, so the calculation gives (23.32) for the original $\theta$. Replacing $\psi$ by $\psi_b$ and using (23.14) gives the same change-of-additive-character factor on both sides, so the formula holds for every nontrivial $\psi$. No character identity or parameter equality is used in either coefficient calculation.
+
+Taking the monomial degrees in (23.30), (23.32), and using the conductor induction formula (19.8) gives (23.33)--(23.34). $\square$
+
+Combining Theorems 21.1, 21.3, 23.5, and 23.6 proves, rather than assumes, the full selected invariant package. For $\rho=\operatorname{JL}(\pi)$,
+
+$$
+\omega_\rho=\omega_\pi,
+\tag{23.35}
+$$
+
+$$
+\operatorname{JL}(\pi\otimes(\chi\circ\det))
+=\rho\otimes(\chi\circ\operatorname{Nrd}),
+\qquad
+\operatorname{JL}(\pi^\vee)=\rho^\vee,
+\tag{23.36}
+$$
+
+and
+
+$$
+a_D(\rho)=a(\pi),
+\qquad
+L_D(s,\rho)=L(s,\pi),
+\qquad
+\epsilon_D(s,\rho,\psi)=\epsilon(s,\pi,\psi).
+\tag{23.37}
+$$
+
+The gamma factors and root numbers therefore agree as well.
+
+The newvector interface needs a separate sentence. The group $U_D^r$ is normal in $D_K^\times$, so for an irreducible $\rho$ its fixed space is either zero or all of $\rho$. It is not a quaternionic analogue of the one-dimensional $\mathcal K_1$-newvector line. The raw order level is the first $r$ for which the whole representation is trivial on $U_D^{r+1}$; the type construction reads it from the simple-character and Heisenberg filtrations in (23.10)--(23.12). The epsilon-conductor is instead (23.33) or (23.34). Their conversion depends on the row and on the reduced-norm filtration. In particular an unramified $\mu\circ\operatorname{Nrd}$ is already fixed by $\mathcal O_D^\times$ while its transferred Steinberg representation has conductor one. What Jacquet--Langlands preserves is the epsilon-conductor, not a fixed vector or an unshifted subgroup index.
+
+### 23.6 What is preserved, transformed, or not comparable
 
 The distinction among these three words prevents several common mistakes.
 
-Under Jacquet--Langlands, the base field and the parameter do not change. Central character, determinant twists, duality, conductor, Euler factors, epsilon factors, gamma factors, and root numbers are therefore preserved. Genericity is not preserved as a literal property: $D_K^\times$ has no unipotent subgroup and hence no Whittaker model. Spherical vectors are not preserved: the Steinberg representation has no $\mathrm{GL}_2(\mathcal O)$-fixed vector, while the character in (23.2) may be fixed by a maximal-order unit group. The regular-elliptic character relation replaces these missing comparisons.
+Under the selected Jacquet--Langlands correspondence, the base field and the parameter do not change. Equations (23.35)--(23.37) show that central character, determinant or reduced-norm twists, duality, conductor, Euler factors, epsilon factors, gamma factors, and root numbers are preserved. This is an equality of invariants calculated independently on the two groups, with (23.27) explaining the result afterward.
 
-Under base change, the parameter is restricted. Central characters, twists, and duals are transported functorially by norms. Conductor is preserved for unramified extension but must otherwise be recomputed from ramification. Euler and epsilon factors transform by (22.15), (22.17), and (22.18); they are not usually numerically unchanged. Cuspidality can disappear when an elliptic torus splits.
+Genericity is not preserved as a literal property: $D_K^\times$ has no unipotent subgroup and hence no Whittaker model. Spherical vectors are not preserved: an unramified Steinberg twist has no $\mathrm{GL}_2(\mathcal O)$-fixed vector, while its reduced-norm character is fixed by $\mathcal O_D^\times$. Newvectors are not transported, and raw congruence levels require the class-specific translation just described. The regular-elliptic character relation (23.24) replaces these nonexistent comparisons.
 
-This is the precise conclusion promised in the catalog: Jacquet--Langlands preserves the parameter package, whereas base change applies the functorial restriction operation to that package.
+Under base change, by contrast, the parameter is restricted. Central characters, twists, and duals are transported functorially by norms. Conductor is preserved for unramified extension but must otherwise be recomputed from ramification. Euler and epsilon factors transform by (22.15), (22.17), and (22.18); they are not usually numerically unchanged. Cuspidality can disappear when an elliptic torus splits.
+
+Thus the two transfer operations have different logical forms. Selected Jacquet--Langlands has now been constructed by explicit division types and a character calculation and preserves the common invariant package. Selected base change was constructed by restriction and transforms that package according to the ramification and Mackey formulas.
 
 ## 24. Worked parameter calculations and final synthesis
 
@@ -2809,7 +3340,7 @@ $$
 =-a p^{1/2-s}.
 $$
 
-Jacquet--Langlands sends the latter, but not the former, to the character $\mu\circ\operatorname{Nrd}$ of the division algebra. The example simultaneously tests reducibility, monodromy, conductor, local factors, and the discrete-series boundary.
+Theorem 23.5 sends the latter, but not the former, to the character $\mu\circ\operatorname{Nrd}$ of the division algebra. Proposition 23.4 proves the required character sign, and Theorem 23.6 proves equality of conductors and local factors. The example simultaneously tests reducibility, monodromy, conductor, local factors, and the discrete-series boundary.
 
 ### 24.3 An unramified quadratic dihedral representation
 
@@ -2834,7 +3365,7 @@ $$
 =\epsilon_L(s,\theta,\psi\circ\operatorname{Tr}_{L/K}).
 $$
 
-Base change to $L$ splits the parameter into $\theta\oplus\theta^\tau$ and therefore turns the supercuspidal into a principal series. Jacquet--Langlands, by contrast, keeps the parameter unchanged and carries it to the corresponding quaternionic dihedral representation.
+Base change to $L$ splits the parameter into $\theta\oplus\theta^\tau$ and therefore turns the supercuspidal into a principal series. Jacquet--Langlands, by contrast, keeps the parameter unchanged and carries it to the constructed quaternionic dihedral representation $\rho_D(L,\theta)$; Lemma 23.3 proves the regular-character identity that distinguishes this statement from a parameter-only definition.
 
 ### 24.4 A tamely ramified quadratic example
 
@@ -2875,16 +3406,25 @@ The selected theory may now be summarized without suppressing any hypothesis.
 
 In every row the central character is the parameter determinant; determinant twist is tensor product; contragredient is dual; conductor is Artin plus monodromy defect; and representation-theoretic local factors equal the parameter factors. For every infinite-dimensional row, the common conductor is the first $\mathcal K_1$-level and the first fixed space is a line.
 
+The selected discrete-series rows extend across the inner form as follows:
+
+| split representation | division representation | common parameter |
+|---|---|---|
+| $\operatorname{St}\otimes\mu$ | $\mu\circ\operatorname{Nrd}$ | $\operatorname{Sp}_2(\mu)$ |
+| $\operatorname{AI}_{L/K}(\theta)$ | $\rho_D(L,\theta)$ | $\operatorname{Ind}_{W_L}^{W_K}\theta$ |
+
+Their regular characters differ by the sign $-1$, while their central characters, twists, duals, epsilon-conductors, Euler factors, epsilon factors, gamma factors, and root numbers agree. The split newvector line and the division maximal-order filtration are not identified.
+
 The classification boundary is now exact. Principal series, special representations, and tame dihedral supercuspidals are completely constructed and matched. Primitive wild supercuspidals are excluded, as are wild quadratic type constructions in residue characteristic two. No theorem in the selected correspondence silently includes them.
 
 ### 24.6 Conclusion
 
-The representation theory of $\mathrm{GL}_2(K)$ begins with two elementary geometries. The two Bruhat cells control induction, Jacquet modules, reducibility, and Whittaker functionals. The one-dimensional apartment in the lattice tree controls spherical Hecke operators, compact-mod-center support, and congruence level. Those geometries divide the irreducible representations into principal, character, special, and supercuspidal families.
+The selected representation theory of $\mathrm{GL}_2(K)$ begins with two elementary geometries. The two Bruhat cells control induction, Jacquet modules, reducibility, and Whittaker functionals. The one-dimensional apartment in the lattice tree controls spherical Hecke operators, compact-mod-center support, and congruence level. In the selected range those geometries divide the irreducible representations into principal, character, special, and tame dihedral supercuspidal families.
 
 Fourier analysis then makes the classification arithmetic. Whittaker uniqueness produces a canonical functional model. The Kirillov coordinate turns newvectors into a finite interval of valuation shells and turns the Weyl action into a local functional equation. The first nonempty interval gives the conductor; Mellin transforms of its tails give Euler factors; the reversal of the interval gives epsilon factors.
 
 Weil--Deligne parameters explain why these calculations agree. Split character lines give principal series. The same centered lines joined by a nilpotent arrow give Steinberg. Two conjugate lines visible only over a quadratic extension give a dihedral supercuspidal, with the rectifier correcting the sign of induction. Determinants, duals, twists, conductors, Euler factors, and epsilon factors then match because each is computed from the same finite-dimensional object.
 
-Finally, the parameter tells us exactly how local transfer behaves. Base change restricts it, so norms transport characters, quadratic tori may split, and local factors obey induction--restriction product formulas. Jacquet--Langlands leaves it unchanged while replacing the split group by its quaternionic inner form, so the entire parameter invariant package is preserved even though Whittaker and spherical models are not literally comparable.
+Finally, the parameter tells us exactly how the two local transfers differ. Base change restricts it, so norms transport characters, quadratic tori may split, and local factors obey induction--restriction product formulas. Selected Jacquet--Langlands was constructed directly from reduced-norm characters and tame quaternionic types. Its split--division Gauss calculation proves the negative regular-character identity, while its coefficient Fourier equation proves equality of conductors and local factors. The parameter is therefore unchanged as a theorem rather than as a definition, even though Whittaker, spherical, and newvector models are not literally comparable.
 
 This is the durable content of the classification. A local representation is not merely assigned a family name. Its geometric origin, minimal level, Fourier equation, ramification, and transfer behavior are different visible shadows of one coherent local object.

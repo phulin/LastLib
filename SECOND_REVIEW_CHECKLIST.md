@@ -100,7 +100,7 @@ any resulting corrections.
 - [ ] 074. Patching Modules and Rings
 - [ ] 075. The Abstract (R=T) Argument
 - [x] 076. Smooth Representations of (p)-adic Groups
-- [ ] 077. Representations of (GL_2(K))
+- [x] 077. Representations of (GL_2(K))
 - [x] 078. Parabolic Induction, Jacquet Modules, and Whittaker Models for GL₂
 - [x] 079. Dihedral Supercuspidals, Types, and Newvectors for GL₂
 - [x] 080. Weil–Deligne Representations and Local Constants
