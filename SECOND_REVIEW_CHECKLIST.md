@@ -94,7 +94,7 @@ any resulting corrections.
 - [ ] 068. Global Deformation Problems
 - [x] 069. Complete Local Algebra for Deformation Theory
 - [x] 070. Depth, Complete Intersections, and Fitting Ideals
-- [ ] 071. Numerical Criteria for (R=T)
+- [x] 071. Numerical Criteria for (R=T)
 - [ ] 072. Taylor–Wiles Primes
 - [ ] 073. Taylor–Wiles Systems
 - [ ] 074. Patching Modules and Rings
