@@ -188,7 +188,27 @@ $$
 k_p=\frac{24}{d_p}. \tag{2.1}
 $$
 
-This is the smallest positive even integer $k$ for which $24\mid k(p-1)$. Indeed, divisibility requires $24/d_p\mid k$, and $24/d_p$ is even because $d_p\mid12$.
+This is the smallest positive even integer $k$ for which $24\mid k(p-1)$. The two requirements must be kept separate. If
+
+$$
+g_p=\gcd(p-1,24),
+$$
+
+then divisibility alone says $24/g_p\mid k$, while removal of the quadratic eta character requires $2\mid k$. Hence the least admissible exponent is
+
+$$
+\operatorname{lcm}\left(2,\frac{24}{g_p}\right).
+$$
+
+This equals $24/d_p$. To check the only nontrivial primary part, write $a=v_2(p-1)\geq1$. The combined conditions require
+
+$$
+v_2(k)\geq\max\{1,3-a\}
+=3-\min\{a,2\}
+=v_2(24/d_p).
+$$
+
+At $3$ both expressions have valuation $1-\min\{v_3(p-1),1\}$, and no other prime occurs. This also explains, for example, why divisibility at $p=17$ permits $k=3$ but trivial character first occurs at $k=6$.
 
 Define
 
@@ -213,7 +233,42 @@ $$
 \qquad \varepsilon(\gamma)^{24}=1.
 $$
 
-If $\gamma\in\Gamma_0(p)$, comparison of the transformations at $z$ and $pz$ shows that the weight factors in the ratio cancel. The remaining multiplier is killed when $k(p-1)$ is divisible by $24$. The possible quadratic character from the chosen square root is killed when $k$ is even. Both conditions hold for $k=k_p$. Thus (2.2) is invariant under $\Gamma_0(p)$ and has rational Fourier expansion.
+We use the transformation law in its specialized eta-quotient form. For exponents $r_1,r_p$ with $r_1+r_p=0$, the product
+
+$$
+f(z)=\eta(z)^{r_1}\eta(pz)^{r_p}
+$$
+
+has weight zero. Applying the displayed transformation law to a matrix of $\Gamma_0(p)$ and to the conjugate matrix governing $pz$ shows that its root-of-unity multiplier is trivial provided
+
+$$
+r_1+pr_p\equiv0\pmod{24},
+\qquad
+pr_1+r_p\equiv0\pmod{24}.
+$$
+
+The two congruences are the transformations at the two cusps; after they hold, the only remaining multiplier is the quadratic character associated with
+
+$$
+p^{r_p}.
+$$
+
+This specialized criterion follows directly by collecting the two powers of $cz+d$, which cancel because the weight is zero, and then collecting the two Dedekind multipliers modulo $24$. It is important that both cusp congruences and the residual character are retained.
+
+For $r_1=-k_p$ and $r_p=k_p$, both congruences reduce to
+
+$$
+k_p(p-1)\equiv0\pmod{24}.
+$$
+
+Moreover $k_p$ is even, so $p^{k_p}$ is a rational square and the quadratic character is trivial. Thus (2.2) is invariant under $\Gamma_0(p)$. Its expansion
+
+$$
+u_p(q)=q^{n_p}
+\prod_{m\geq1}\left(\frac{1-q^{pm}}{1-q^m}\right)^{k_p}
+$$
+
+has rational coefficients, so the invariant function descends to the rational coarse curve.
 
 Eta has no zero on the upper half-plane, so $u_p$ has neither zero nor pole there. Its only possible zeros and poles are at the two cusps. Therefore it is a rational modular unit on the compact coarse curve. $\square$
 
@@ -970,7 +1025,27 @@ $$
 \longrightarrow0. \tag{8.8}
 $$
 
-Its order is $a^{\operatorname{rank}X}n_p$. The specialization of the original cusp class maps to a lift of $\delta$, but it need not generate the enlarged component group. Thus (5.6) is a statement over the unramified level-prime base, not a claim stable under arbitrary ramification.
+Its order is $a^{\operatorname{rank}X}n_p$. The surjection in (8.8) is the contraction map coming from the inclusions
+
+$$
+aqX\subset qX\subset X^\vee.
+$$
+
+It must not be confused with the map on components induced by canonical Néron base change. In the lattice presentations, that map is the injection
+
+$$
+i_a:X^\vee/qX\longrightarrow X^\vee/aqX,
+\qquad [x]\longmapsto[ax]. \tag{8.9}
+$$
+
+Indeed, if $ax\in aqX$, then $x\in qX$, so $i_a$ is injective; its cokernel is $X^\vee/aX^\vee$. Specialization commutes with canonical Néron base change. Consequently the original cusp class specializes after extension to $i_a(\delta)$, and contraction sends this class to $a\delta$, not to $\delta$:
+
+$$
+\Phi_{p,a}\longrightarrow\Phi_p,
+\qquad i_a(\delta)\longmapsto a\delta. \tag{8.10}
+$$
+
+The base-changed cusp class need not generate the enlarged component group. Thus (5.6) is a statement over the unramified level-prime base, not a claim stable under arbitrary ramification.
 
 ## 9. The auxiliary multiplicative subgroup
 
@@ -1016,9 +1091,22 @@ is the diagonalizable group whose character group is $D/H$.
 
 If $y$ lies over a ramification point and $d$ fixes $y$, the natural action on the fiber of a pullback line bundle is trivial. Hence $\chi(d)=1$. Thus $\chi$ kills every inertia group and factors through $D/H$.
 
-Conversely, give the trivial line bundle on $Y$ the $D$-linearization defined by a character of $D/H$. Stabilizers act trivially on fibers, so ordinary finite descent through the ramified coarse quotient produces a line bundle $L_\chi$ on $X$ whose pullback is trivial. Tensor product corresponds to multiplication of characters. Changing the upstairs trivialization changes no character because it changes all comparisons by the same scalar.
+Conversely, give the trivial line bundle on $Y$ the $D$-linearization defined by a character of $D/H$. We explain why the condition on inertia is exactly what makes descent through a ramification point effective. In completed local coordinates one has a tame quotient
 
-This identifies geometric points of the kernel with $\operatorname{Hom}(D/H,\bar K^\times)$, compatibly with base change and Galois action. That is precisely the diagonalizable group $D(D/H)$. $\square$
+$$
+\bar K[[u]]\subset\bar K[[t]],
+\qquad u=t^e,
+$$
+
+with inertia acting by $t\mapsto\zeta t$. If inertia acts trivially on the chosen basis of the trivial line, that basis is invariant and descends to a free rank-one module over $\bar K[[u]]$; pulling it back recovers the original basis. If the fiber character is nontrivial, every invariant local section acquires a positive power of $t$, and the pullback of the invariant module fails to generate at the ramification point. Thus precisely the characters trivial on inertia give descent data for a line bundle on the coarse quotient. Away from ramification the cover is a torsor and ordinary finite étale descent applies. These local descents agree on the punctured neighborhoods, so finite flat descent produces a line bundle $L_\chi$ on $X$ whose pullback is trivial.
+
+Tensor product corresponds to multiplication of characters. Changing the upstairs trivialization changes all comparisons by the same scalar and hence changes no character. The constructions are inverse, so
+
+$$
+\ker(f^*)(\bar K)=\operatorname{Hom}(D/H,\bar K^\times). \tag{9.4}
+$$
+
+Finally, $f_*f^*=[\deg f]$ on $J_X$, so the kernel is contained in $J_X[\deg f]$ and is finite. In characteristic zero it is finite étale. The construction is Galois equivariant: Galois acts on a character through its values in roots of unity. Hence the geometric-point identification, with its Galois action, identifies the kernel group scheme with the diagonalizable group having character group $D/H$. $\square$
 
 The lemma does not say that every kernel of pullback is constant. Its Galois action is the cyclotomic action on character values, which is the hallmark of multiplicative type.
 
@@ -1030,7 +1118,7 @@ We justify each clause. At a nonelliptic point, the only automorphisms are the c
 
 At a $j=0$ point, use an automorphism whose effective order is three. Its polynomial on $E[p]$ splits precisely when a primitive cube root of unity lies in $\mathbf F_p$, equivalently $p\equiv1\pmod3$. A fixed eigenline then has inertia of order three. These inertia subgroups lie in the cyclic deck group $\Delta$, so if both occur they generate the unique subgroup of order six.
 
-At a cusp, the Tate description gives the same width for $\Gamma_1(p)$ and $\Gamma_0(p)$ after a generator above the fixed cusp type has been chosen. The deck transformations permute the cusps above it rather than fixing a branch parameter nontrivially. Thus the compactified cover has no new deck inertia at the cusps. This is why (9.4) contains only the elliptic factors.
+At a cusp, the Tate description gives the same width for $\Gamma_1(p)$ and $\Gamma_0(p)$ after a generator above the fixed cusp type has been chosen. The deck transformations permute the cusps above it rather than fixing a branch parameter nontrivially. Thus the compactified cover has no new deck inertia at the cusps. This is why (9.5) contains only the elliptic factors.
 
 Since $\Delta$ is cyclic, the subgroup $H$ generated by these inertia groups has order
 
@@ -1041,20 +1129,20 @@ $$
 2,&p\equiv5\pmod{12},\\
 3,&p\equiv7\pmod{12},\\
 1,&p\equiv11\pmod{12}.
-\end{cases} \tag{9.4}
+\end{cases} \tag{9.5}
 $$
 
 Equivalently,
 
 $$
-\#H=\frac{d_p}{2}. \tag{9.5}
+\#H=\frac{d_p}{2}. \tag{9.6}
 $$
 
 Therefore
 
 $$
 \#(\Delta/H)
-=\frac{(p-1)/2}{d_p/2}=n_p. \tag{9.6}
+=\frac{(p-1)/2}{d_p/2}=n_p. \tag{9.7}
 $$
 
 Lemma 9.1 proves:
@@ -1062,35 +1150,35 @@ Lemma 9.1 proves:
 **Theorem 9.2.** For $p\geq5$, $\Sigma_p$ is a diagonalizable cyclic group scheme of order $n_p$. More canonically,
 
 $$
-\Sigma_p=D(\Delta/H), \tag{9.7}
+\Sigma_p=D(\Delta/H), \tag{9.8}
 $$
 
 and after choosing a generator of the cyclic group $\Delta/H$ one obtains a noncanonical isomorphism
 
 $$
-\Sigma_p\simeq\mu_{n_p}. \tag{9.8}
+\Sigma_p\simeq\mu_{n_p}. \tag{9.9}
 $$
 
-The word “noncanonical” matters: replacing a generator by its $a$th power changes (9.8) by the automorphism $\zeta\mapsto\zeta^a$.
+The word “noncanonical” matters: replacing a generator by its $a$th power changes (9.9) by the automorphism $\zeta\mapsto\zeta^a$.
 
 ### 9.4 Its Hecke action and the precise boundary
 
-Prime-to-$p$ Hecke correspondences lift equivariantly through the generator cover (9.1). On a character line, pullback followed by norm sums the $\ell+1$ cyclic $\ell$-isogeny branches. Each branch preserves the $p$-level deck character. Hence
+Prime-to-$p$ Hecke correspondences lift equivariantly through the generator cover (9.1). The two maps in the lifted correspondence commute with $\Delta$: an $\ell$-isogeny transports the chosen generator of the $p$-subgroup, and multiplication of that generator by $a\in\Delta$ commutes with transport because $\ell\ne p$. Start with the trivial line upstairs carrying descent character $\chi$. Pullback retains $\chi$ on every branch. Norm tensors the fibers over the $\ell+1$ branches, so its descent character is $\chi^{\ell+1}$. Under the additive group law of the kernel, this is multiplication by $1+\ell$. Hence
 
 $$
-T_\ell|_{\Sigma_p}=[1+\ell]\qquad(\ell\ne p). \tag{9.9}
+T_\ell|_{\Sigma_p}=[1+\ell]\qquad(\ell\ne p). \tag{9.10}
 $$
 
 Fricke conjugates a diamond deck transformation to its inverse. It therefore sends a descent character $\chi$ to $\chi^{-1}$ and acts as $[-1]$ on $\Sigma_p$. Using $U_p=-w_p$ gives
 
 $$
-U_p|_{\Sigma_p}=[1]. \tag{9.10}
+U_p|_{\Sigma_p}=[1]. \tag{9.11}
 $$
 
 Thus
 
 $$
-I\Sigma_p=0. \tag{9.11}
+I\Sigma_p=0. \tag{9.12}
 $$
 
 This is the auxiliary multiplicative subgroup package used later: multiplicative type, cyclic order $n_p$, and Eisenstein Hecke action. We make no assertion here about the scheme-theoretic intersection $C_p\cap\Sigma_p$, the image of $\Sigma_p$ in the level-prime component group, or a classification of every multiplicative-type subgroup of $J_0(p)$. Those require additional finite-flat and intersection arguments and are deliberately outside the present scope.
@@ -1236,7 +1324,7 @@ let $c=[0]-[\infty]\in J_0(p)(\mathbf Q)$, and let $I$ be the ideal (1.2) in the
 
    for each supersingular class, with exceptional lengths $2$ at $j=1728$ and $3$ at $j=0$ when those classes are supersingular.
 
-3. The weighted mass and exceptional product are
+3. For $p\geq5$, the weighted mass and exceptional product are
 
    $$
    \sum_E\frac1{e(E)}=\frac{p-1}{12},
@@ -1244,7 +1332,7 @@ let $c=[0]-[\infty]\in J_0(p)(\mathbf Q)$, and let $I$ be the ideal (1.2) in the
    \prod_Ee(E)=\frac{12}{\gcd(p-1,12)}.
    $$
 
-4. The geometric component group is cyclic of order $n_p$. If $\delta$ is the difference of the two principal component vertices, then
+4. For $p\geq5$, the geometric component group is cyclic of order $n_p$. If $\delta$ is the difference of the two principal component vertices, then
 
    $$
    \Phi_p(\overline{\mathbf F}_p)=\langle\delta\rangle,
@@ -1253,7 +1341,7 @@ let $c=[0]-[\infty]\in J_0(p)(\mathbf Q)$, and let $I$ be the ideal (1.2) in the
    =\frac{12}{p-1}\pmod{\mathbf Z}.
    $$
 
-5. The cusps reduce to opposite principal components and
+5. For $p\geq5$, the cusps reduce to opposite principal components and
 
    $$
    \operatorname{sp}_p(c)=\delta.
@@ -1273,14 +1361,19 @@ let $c=[0]-[\infty]\in J_0(p)(\mathbf Q)$, and let $I$ be the ideal (1.2) in the
    \qquad w_pc=-c,
    $$
 
-   and the identical formulas hold for $\delta$.
+   For $p\geq5$, the identical formulas hold for $\delta$.
 
-7. There are canonical $\mathbb T$-module isomorphisms, once the sign of $c$ is fixed,
+7. There are canonical $\mathbb T$-module isomorphisms
 
    $$
    \mathbb T/I\xrightarrow{\sim}C_p
-   \xrightarrow{\sim}\Phi_p(\mathbf F_p),
-   \qquad1\longmapsto c\longmapsto\delta.
+   \xrightarrow{\sim}\Phi_p(\mathbf F_p).
+   $$
+
+   For $p\geq5$, fixing the sign of $c$ fixes these isomorphisms by
+
+   $$
+   1\longmapsto c\longmapsto\delta.
    $$
 
 8. For $p\geq5$, the auxiliary Shimura kernel
@@ -1301,7 +1394,7 @@ Every imported ingredient has a precise role.
 
 Book 12 supplies the weighted cycle lattice, its monodromy pairing, the discriminant presentation of the component group, specialization of horizontal divisors, subdivision invariance, and adjunction for correspondences. Its hypotheses apply after passing from the tame stable coarse model to a regular semistable resolution.
 
-Book 39 identifies the separated Picard quotient with the Néron model, identifies the graph discriminant with the Néron component group, proves functorial extension of endomorphisms, and supplies the component specialization map. Here the base is the henselian localization of $\mathbf Z_p$, the generic object is an abelian variety, and the curve model is regular after resolution.
+Book 39 identifies the separated Picard quotient with the Néron model, identifies the graph discriminant with the Néron component group, proves functorial extension of endomorphisms, and supplies the component specialization map. It also distinguishes the canonical ramified base-change injection from the contraction surjection in (8.8)--(8.10). Here the base is the henselian localization of $\mathbf Z_p$, the generic object is an abelian variety, and the curve model is regular after resolution.
 
 Book 121 supplies the modular-Jacobian variance, the two-branch Deligne--Rapoport geometry, the coarse-node thickness rule, the integral Hecke action on the Néron model, Hecke equivariance of specialization, and monodromy adjunction. We use its level-prime statements only for a prime occurring once in cyclic level and retain all exceptional lengths.
 
