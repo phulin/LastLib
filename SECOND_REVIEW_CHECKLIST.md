@@ -175,7 +175,7 @@ any resulting corrections.
 - [x] 149. Genus-Two Curves, Jacobians, and Abel–Jacobi Geometry
 - [x] 150. Mumford Representations and Exact Genus-Two Jacobian Arithmetic
 - [x] 151. Explicit Two-Descent on Genus-Two Jacobians
-- [ ] 152. Mordell–Weil Sieves for Hyperelliptic Curves
+- [x] 152. Mordell–Weil Sieves for Hyperelliptic Curves
 - [ ] 153. Semistable Isogeny Characters and Frey Residual Representations
 - [ ] 154. The Frey Curve and Fermat’s Last Theorem
 - [ ] 155. Minimal Modularity Lifting

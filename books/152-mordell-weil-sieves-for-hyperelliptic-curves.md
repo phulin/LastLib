@@ -219,7 +219,8 @@ is the full space $H^0(C,\Omega_C^1)$. At any point some regular
 differential is nonzero: otherwise that point would be a base point of the
 canonical system, while Riemann--Roch applied to $K_C-P$ gives
 $h^0(K_C-P)=g-1<h^0(K_C)$. Thus the differential of $j$ is nonzero. A proper
-injective unramified morphism from a smooth curve is a closed immersion.
+geometrically injective unramified morphism is radicial and proper, hence a
+closed immersion.
 $\square$
 
 The elementary first paragraph is the part used at the end of a sieve. Once
@@ -381,25 +382,38 @@ homomorphism.
 
 ### 3.3 Several primes and one intersection
 
-It is often cleaner to combine the reductions into
+Separate prime conditions forget that all reductions must come from the
+same element of one global coset. To retain that information, combine the
+reductions into
 
 $$
 \rho_{\mathcal P}:G\longrightarrow
 \prod_{p\in\mathcal P}J(\mathbf F_p), \tag{3.3}
 $$
 
-and put $X_{\mathcal P}=\prod_pX_p$. Then a class $a\in G/NG$ survives
-exactly when
+and put $X_{\mathcal P}=\prod_pX_p$. Define the **joint survivor set** by
 
 $$
+S^{\mathrm{joint}}_N(\mathcal P)=
+\left\{a\in G/NG:
 (\rho_{\mathcal P}(a)+N\rho_{\mathcal P}(G))
-\cap X_{\mathcal P}\ne\varnothing. \tag{3.4}
+\cap X_{\mathcal P}\ne\varnothing\right\}. \tag{3.4}
 $$
 
-The product formulation shows why intersections can be strong. A candidate
-may have an acceptable reduction at each prime, but the acceptable choices
-must arise from one global coefficient vector modulo $N$. Independent
-reduction matrices couple the local choices.
+Following one rational point at all primes with one representative proves
+
+$$
+\pi_N(j(C(\mathbf Q)))\subseteq
+S^{\mathrm{joint}}_N(\mathcal P)
+\subseteq S_N(\mathcal P). \tag{3.4a}
+$$
+
+The second inclusion follows by projection to each factor. It can be strict:
+membership in every $S_{p,N}$ may be witnessed by different elements of the
+global coset, whereas (3.4) requires one element whose reductions work
+simultaneously. This is why the product formulation can be stronger than the
+plain intersection in Theorem 3.1. Independent reduction matrices couple
+the local choices through one global coefficient vector.
 
 For a cyclic group $G=\langle T\rangle$ of order $m$, every class is $nT$.
 If $N$ is divisible by $m$, then $NG=0$ and the sieve tests the actual class,
@@ -524,8 +538,12 @@ proceed through small factors, discarding branches as soon as they fail a
 prime. The proof remains exhaustive because (4.3) partitions, rather than
 samples, every parent. Eventually two distinct box elements are separated:
 for their nonzero difference $D$, choose a modulus not dividing all free
-coordinates and, if $D$ is torsion, divisible by its order. Taking a common
-multiple for the finitely many differences proves termination.
+coordinates and, if $D$ is torsion, divisible by the exponent of the whole
+torsion subgroup. The latter choice makes the torsion projection of the
+multiple subgroup zero. Divisibility merely by the order of $D$ would not
+suffice: in $\mathbf Z/4\mathbf Z$, the element of order two lies in twice
+the group. Taking a common multiple for the finitely many differences proves
+termination.
 
 ### 4.4 Separating known points
 
@@ -588,11 +606,13 @@ not the full local condition.
 
 To recover the full image, cover $C(\mathbf Q_p)$ by residue disks. Choose a
 local parameter $t$ in each disk and expand the Abel map in the formal group.
-There is a depth $e$ such that congruence modulo $p^e$ forces equality modulo
-$NJ(\mathbf Q_p)$: the formal logarithm turns the assertion into the
-containment $p^e\mathbf Z_p^g\subseteq N\mathbf Z_p^g$. Enumerating the
-finitely many parameter classes modulo $p^e$ therefore gives the complete
-local image.
+After passing to a sufficiently deep formal neighborhood, the formal
+logarithm is an isomorphism onto a full $\mathbf Z_p$-lattice. There is then
+a depth $e$ such that congruence modulo $p^e$ forces equality modulo
+$NJ(\mathbf Q_p)$: on that lattice the assertion is the containment
+$p^e\mathbf Z_p^g\subseteq N\mathbf Z_p^g$, after a fixed choice of basis.
+Enumerating the finitely many parameter classes modulo the resulting depth
+therefore gives the complete local image.
 
 At $p=2$, one must also retain enough unit precision for square decisions;
 at an odd $p\mid N$, valuation and residue data together with the formal
@@ -683,9 +703,20 @@ finite index.
 ### 6.2 Prime-by-prime saturation
 
 Two-descent controls the prime two. If the images of $\Gamma$ span
-$J(\mathbf Q)/2J(\mathbf Q)$ and $\Gamma$ contains $J(\mathbf Q)[2]$, then
-$\Gamma$ is two-saturated. Indeed, if $2P=Q\in\Gamma$, surjectivity of the
-image gives $Q=2R$ for some $R\in\Gamma$; then $P-R\in J(\mathbf Q)[2]$.
+$J(\mathbf Q)/2J(\mathbf Q)$, then $\Gamma$ is two-saturated. Indeed,
+surjectivity says
+
+$$
+J(\mathbf Q)=\Gamma+2J(\mathbf Q). \tag{6.1a}
+$$
+
+Because $\Gamma$ has finite index, the finite quotient
+$A=J(\mathbf Q)/\Gamma$ therefore satisfies $A=2A$. Multiplication by two on
+a finite group is then bijective, so $A[2]=0$. If $2P\in\Gamma$, the class
+of $P$ in $A$ has order dividing two and must vanish; hence $P\in\Gamma$.
+Containing the known rational two-torsion remains necessary when one wants
+$\Gamma$ to be the full Mordell--Weil group, but it is not the step that
+proves this saturation criterion.
 
 For an odd prime $\ell$, reduction gives a similarly finite test. It is not
 enough that one generator have nonzero reduction. One must test the kernel
@@ -701,7 +732,7 @@ $p_1,\ldots,p_s$ be good primes, none equal to $\ell$. If
 $$
 \ker\left(
 \Gamma/\ell\Gamma\longrightarrow
-\prod_{i=1}^sJ(\mathbf F_{p_i})/ell J(\mathbf F_{p_i})
+\prod_{i=1}^sJ(\mathbf F_{p_i})/\ell J(\mathbf F_{p_i})
 \right)=0, \tag{6.2}
 $$
 
@@ -752,12 +783,13 @@ $J(\mathbf Q)$, exact generators, their relations, and the proof that no
 additional rank or torsion exists.
 
 The logical provenance matters. Finite generation comes from the
-Mordell--Weil theorem of Book 43. Exact polynomial arithmetic, specialization,
-finite-field groups, and torsion bounds come from Book 150 under its pointed
-quintic hypotheses. The rank and torsion computations for the two present
-curves are the completed descents of Book 151. This book uses those results;
-it does not infer either Mordell--Weil group from the point set it aims to
-prove.
+Mordell--Weil theorem of Book 43. Book 147 supplies the marked modular curve
+models and the interpretation of their boundary values. Exact polynomial
+arithmetic, specialization, finite-field groups, and torsion bounds come from
+Book 150 under its pointed quintic hypotheses. The rank and torsion
+computations for the two present curves are the completed descents of Book
+151. This book uses those results; it does not infer either Mordell--Weil
+group from the point set it aims to prove.
 
 If the global result comes from descent, the ledger also distinguishes the
 following assertions:
@@ -801,7 +833,7 @@ an independent Frobenius order.
 At stage $k$, a coset ledger contains:
 
 $$
-N_k,qquad \mathcal A_k\subseteq\Gamma/N_k\Gamma,
+N_k,\qquad \mathcal A_k\subseteq\Gamma/N_k\Gamma,
 \qquad\mathcal P_k, \tag{7.2}
 $$
 
@@ -836,8 +868,9 @@ been proved:
 2. $\Gamma=J(\mathbf Q)$ is given exactly, or every coset of a certified
    finite-index $\Gamma$ is included;
 3. every local constraint used in a finite coset ledger is complete;
-4. the retained union contains, inside a proved global search region, only
-   the exact Abel classes of a finite known set $K\subseteq C(\mathbf Q)$.
+4. a proved global search region contains $j(C(\mathbf Q))$, and the
+   intersection of the retained union with that region consists only of the
+   exact Abel classes of a finite known set $K\subseteq C(\mathbf Q)$.
 
 Then $C(\mathbf Q)=K$.
 
@@ -955,8 +988,11 @@ $$
 
 there is a nonzero regular differential $\omega$ annihilating the closure of
 $J(\mathbf Q)$. Its integral along the Abel image vanishes at every rational
-point. On each residue disk this integral is a convergent power series, and
-its zeros can be bounded from its first nonzero coefficient.
+point. On each residue disk this integral is a convergent power series. Its
+zero count is controlled by the valuations of its coefficients, through the
+nonarchimedean Newton polygon or Strassmann's theorem; merely locating the
+first formally nonzero coefficient without a valuation comparison is not a
+zero bound.
 
 The dimension count is exact: annihilating differentials form the orthogonal
 complement of the logarithmic Mordell--Weil span. When $r<g$ it is nonzero.
@@ -1004,7 +1040,8 @@ merely a preliminary to Chabauty.
 
 ### 10.1 The curve and its Jacobian
 
-Consider the smooth projective curve whose affine model is
+Book 147 derives, by reversible changes from the order-thirteen Tate normal
+form, the smooth projective modular curve whose affine model is
 
 $$
 y^2+(x^3+x^2+1)y=x^2+x. \tag{10.1}
@@ -1056,8 +1093,11 @@ $$
 $$
 
 where the affine coordinates in (10.6) are those of (10.1). Direct
-substitution proves that they lie on the curve. We will prove there are no
-others.
+substitution proves that they lie on the curve. The same Tate-normal-form
+derivation in Book 147 identifies these six points, including the two
+branches at infinity, as precisely the six rational outward cusps. That
+identification uses no rational-point classification. We will prove there
+are no other rational points.
 
 ### 10.2 A good reduction at seventeen
 
@@ -1095,7 +1135,7 @@ polynomials in $X$. Subtracting the pair of $(0,7)$ from that of $(0,10)$
 gives
 
 $$
-\bar T=[X^2,,10+6X]. \tag{10.9}
+\bar T=[X^2,10+6X]. \tag{10.9}
 $$
 
 Exact Cantor addition gives $19\bar T=0$, and the following nineteen reduced
@@ -1249,9 +1289,9 @@ inclusion from right to left. Sections 11.1--11.2 prove the reverse
 inclusion. $\square$
 
 These six points are the rational cusps on $X_1(13)$. The modular
-interpretation identifies them as boundary points; the arithmetic proof of
-(11.3) itself used only the smooth curve, its Jacobian, and the exhaustive
-finite sieve.
+interpretation and the boundary identification are the Tate-normal-form
+calculation of Book 147; the arithmetic proof of (11.3) itself used only the
+smooth curve, its Jacobian, and the exhaustive finite sieve.
 
 ## 12. The mixed-seven curve
 
@@ -1391,20 +1431,41 @@ twelve classes.
 
 ### 13.2 Cuspidal and degenerate meaning
 
-The mixed-seven curve arises as the auxiliary parameter curve for the
-mixed-seven configuration. In that parameter problem, $t=0$, $t=1$, and the
-point at infinity are precisely boundary values: the intended nondegenerate
-configuration breaks down, or the corresponding moduli point is cuspidal.
-Theorem 13.1 therefore has the required arithmetic consequence:
+We recall the exact handoff proved in Book 147, since its direction is part
+of the conclusion. A point of order seven puts an elliptic curve in Tate
+normal form with
+
+$$
+b=t^3-t^2,\qquad c=t^2-t. \tag{13.2a}
+$$
+
+If the curve also has full rational two-torsion, the cubic of two-torsion
+$x$-coordinates splits. Its discriminant is therefore a square, and direct
+substitution in that discriminant gives
+
+$$
+16t^7(t-1)^7(t^3-8t^2+5t+1). \tag{13.2b}
+$$
+
+For $t\ne0,1$, division of a square root by $4t^3(t-1)^3$ produces a
+rational point on $C_7$. Hence a nondegenerate mixed-seven configuration
+would produce a rational point of $C_7$ outside
+$\{\infty,(0,0),(1,0)\}$. The values $t=0$ and $t=1$ make the Tate normal
+form degenerate, while $\infty$ is its boundary parameter. Theorem 13.1
+therefore has the required arithmetic consequence:
 
 $$
 \text{every rational mixed-seven point is cuspidal or degenerate}. \tag{13.2}
 $$
 
 This conclusion has two parts which should not be conflated. The curve
-calculation proves that only the three parameter values occur. The moduli
-interpretation identifies those three already displayed boundary values as
-cuspidal or degenerate. No smooth noncuspidal rational point remains.
+calculation proves that only the three parameter values occur. The prior
+Tate-normal-form calculation identifies those values as degenerate or
+boundary and proves that every forbidden configuration maps to a different
+curve point. The converse is neither used nor true in general: square
+discriminant does not force the two-torsion cubic to split. Thus no
+nondegenerate mixed-seven configuration remains, without silently
+strengthening the necessary implication to an equivalence.
 
 ### 13.3 A certificate with no hidden search
 
@@ -1446,14 +1507,17 @@ The main constructions and their exact hypotheses are summarized below.
 | reduction saturation criterion | good primes away from $\ell$, full rational $\ell$-torsion contained in the subgroup |
 | singleton terminal sieve | complete finite Mordell--Weil group and a modulus annihilating it |
 
-Book 43 supplies finite generation and the height-lattice language. Book 150
-supplies unique pointed Mumford representatives, exact addition, finite-field
-enumeration, specialization, and torsion injection under the hypotheses used
-here. Book 151 supplies true two-descent, local completeness, saturation
-criteria, and the exact groups (10.5) and (12.4). The $X_1(13)$ special-fiber
-change of variables produces the monic quintic (10.8) before any pointed
-Mumford result is invoked. The mixed-seven equation already satisfies every
-pointed quintic hypothesis.
+Book 43 supplies finite generation and the height-lattice language. Book 147
+derives the two marked curve models from their modular parameter problems,
+identifies the six rational $X_1(13)$ cusps, and proves the one-way
+mixed-seven implication used in Section 13.2. Book 150 supplies unique
+pointed Mumford representatives, exact addition, finite-field enumeration,
+specialization, and torsion injection under the hypotheses used here. Book
+151 supplies true two-descent, local completeness, saturation criteria, and
+the exact groups (10.5) and (12.4). The $X_1(13)$ special-fiber change of
+variables produces the monic quintic (10.8) before any pointed Mumford result
+is invoked. The mixed-seven equation already satisfies every pointed quintic
+hypothesis.
 
 No later arithmetic theorem is needed for either rational-point
 determination. In particular, the conclusions are not consequences of a
@@ -1471,16 +1535,19 @@ class, and let $j:C\hookrightarrow J$ be the associated Abel map. Suppose:
    $J(\mathbf Q)/\Gamma$;
 3. at each chosen place, the complete image of the curve in the relevant
    finite quotient of the Jacobian is known;
-4. a finite coset refinement terminates with singleton classes, a complete
-   height region, or proved unique local points.
+4. every retained branch is accounted for by a known point: it is either the
+   singleton Abel class of that point, meets a proved global height region
+   only in that class, or is paired with a local argument proving that point
+   unique in the corresponding residue family.
 
 Then the retained known points are exactly $C(\mathbf Q)$.
 
 **Proof.** Include every Mordell--Weil coset at the initial stage. The
 commuting Abel-reduction square shows that each rational point satisfies
 every local condition. Lemma 4.1 and Proposition 4.2 preserve it through
-every refinement. The terminal hypothesis identifies its Abel class with
-that of a known point. Proposition 2.1 identifies the points themselves.
+every refinement. The accounted terminal branch identifies its Abel class
+with that of a known point, either directly or inside the proved global or
+local terminal region. Proposition 2.1 identifies the points themselves.
 $\square$
 
 Applied to (10.1), the full group is cyclic of order $19$, reduction at
