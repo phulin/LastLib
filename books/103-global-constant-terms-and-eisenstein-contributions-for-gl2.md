@@ -51,7 +51,7 @@
    - [Incomplete data on the Borel quotient](#101-incomplete-data-on-the-borel-quotient)
    - [Mellin inversion along height](#102-mellin-inversion-along-height)
    - [Moving the contour](#103-moving-the-contour)
-   - [The elementary Maass--Selberg identity](#104-the-elementary-maass-selberg-identity)
+   - [The elementary Maass--Selberg identity](#104-the-elementary-maass--selberg-identity)
 11. [Classification of the noncuspidal contributions](#11-classification-of-the-noncuspidal-contributions)
    - [The constant-term channel](#111-the-constant-term-channel)
    - [Continuous and residual terms](#112-continuous-and-residual-terms)
@@ -193,6 +193,17 @@ for the completed Hecke function with the local factors and archimedean gamma fa
 We prove absolute convergence for $\operatorname{Re}(s)>1/2$, continuation across the closed strip $0\leq\operatorname{Re}(s)\leq1/2$, the reflection equation, regularity on the imaginary axis, and the residues crossed in moving from the convergence chamber to that axis. This is the required range for classifying the continuous and residual terms entering later cuspidal trace kernels.
 
 We do not construct a general spectral measure for the full automorphic quotient. We also do not seek optimal bounds in arbitrary vertical strips, a many-parabolic truncation theory, or higher-rank residual classifications. None of those is needed for the rank-one annihilation theorem.
+
+The proof inputs are equally bounded. The preceding adelic harmonic analysis supplies
+self-dual Fourier transform, Poisson summation, Tate integrals, completed Hecke functions, and
+their functional equations. Reduction theory supplies finite-volume central quotients, reduced
+cusp charts, high-cusp uniqueness, constant-term averaging, and the closed discrete cuspidal
+subspace. The local coefficient examples in Chapter 12 use only the already established
+rank-one facts that supercuspidals have compact-mod-center coefficients and zero Jacquet module,
+and that real discrete-series coefficients are square-integrable with their explicit radial
+exponents. Continuation, residue classification, pseudo-Eisenstein exhaustion, and global
+noncuspidal annihilation are proved here; no later trace formula or global Plancherel theorem is
+used.
 
 The main conclusions will be these:
 
@@ -388,15 +399,20 @@ $$
 
 is therefore invariant under the local or global group action. This is why $\operatorname{Re}(s)=0$ is the continuous spectral axis.
 
-The reflected representation is $I(w\chi,-s)$. If $f_s\in I(\chi,s)$ and $h_{-\bar s}\in I(w\bar\chi,-\bar s)$, then
+There are two operations here, and they should not be conflated. The Hermitian dual of
+$I(\chi,s)$ is obtained by conjugating the characters and the parameter. The Weyl operator,
+on the other hand, maps $I(\chi,s)$ to $I(w\chi,-s)$. On the unitary axis both source and
+target carry their own compact-picture inner products
 
 $$
-\langle f_s,h_{-\bar s}\rangle_K
-=\int_K f_s(k)\overline{h_{-\bar s}(k)}\,dk
+\langle f,h\rangle_K=\int_K f(k)\overline{h(k)}\,dk.
 \tag{3.6}
 $$
 
-is invariant. On the imaginary axis this identifies the reflected family with the contragredient. The adjoint relation for intertwining operators will be proved against this pairing.
+Thus an adjoint of the Weyl operator is a map in the reverse direction
+$I(w\chi,-it)\to I(\chi,it)$; it is not an identification of the reflected datum with the
+contragredient datum. This typing distinction is what makes the later formula
+$M(\chi,it)^*=M(w\chi,-it)$ meaningful.
 
 ## 4. Rank-one Eisenstein series in the convergence chamber
 
@@ -831,7 +847,7 @@ R(\chi,s)=\rho(\chi,s)^{-1}M(\chi,s).
 \tag{7.5}
 $$
 
-The fixed factor $\mathcal A(\mu)^{-1/2}$ is absorbed into the finite correction in (7.3). On every fixed finite-level, finite-type space, $R(\chi,s)$ is meromorphic in the required half-plane and holomorphic on the imaginary axis. The rank-one composition identity is
+The fixed factor $\mathcal A(\mu)^{-1/2}$ is absorbed into the finite correction in (7.3). On every fixed finite-level, finite-type space, $R(\chi,s)$ is meromorphic in the required half-plane and holomorphic on the imaginary axis. The rank-one composition identity for the global, self-dually measured operator is
 
 $$
 M(w\chi,-s)M(\chi,s)=\operatorname{id}
@@ -854,7 +870,13 @@ $$
 
 This identity uses the same local normalization at every place.
 
-One proof of (7.6) begins in a region where the two successive integrals can be regularized by inserting compact cutoffs, performs the two rank-one changes of variables, and observes that the open-cell contributions collapse to the identity distribution. A cleaner proof in the present range uses the Eisenstein functional equation proved in Chapter 8: compare the two constant terms of the same continued Eisenstein series and use independence of the two height exponents away from $s=0$. Meromorphic continuation then fills the exceptional point.
+The word *global* is essential. A raw local intertwining integral generally composes to a
+nontrivial scalar. In the global product, the different, conductor, and ramified local
+corrections combine with the functional equation of $\Lambda$; under the self-dual measure
+ledger their product is exactly the scalar needed for (7.6). A clean proof in the present
+range uses the Eisenstein functional equation proved in Chapter 8: compare the two constant
+terms of the same continued Eisenstein series and use independence of the two height exponents
+away from $s=0$. Meromorphic continuation then fills the exceptional point.
 
 ### 7.4 A normalization audit
 
@@ -884,7 +906,7 @@ $$
 
 Only finitely many summands are nonzero at each $g$, and high-cusp uniqueness makes the sum a single term sufficiently far out. A smooth cutoff may replace the characteristic function; the meromorphic conclusions are independent of that choice.
 
-For $\operatorname{Re}(s)>1/2$, insert (5.5). The growing part of $E$ is cancelled in every cusp, while nonconstant unipotent Fourier modes retain oscillation. Repeated integration by parts on the compact unipotent quotient, together with the balanced cusp expansion, gives for every $A>0$
+For $\operatorname{Re}(s)>1/2$, insert (5.5). The growing part of $E$ is cancelled in every cusp, while nonconstant unipotent Fourier modes retain oscillation. For every $A>0$, repeated integration by parts on the compact unipotent quotient, together with the balanced cusp expansion, gives
 
 $$
 |D\Lambda^YE(g,f_s)|
@@ -892,9 +914,19 @@ $$
 \tag{8.2}
 $$
 
-for $s$ in a compact subset $\Omega$ avoiding poles. The proof is the same transverse Fourier argument that gives rapid decrease for cusp forms: the zero mode has been explicitly removed, and every remaining frequency is magnified by height.
+when $\Omega$ is a compact subset of the convergence chamber. Here is the estimate rather than
+an analogy: after finite level is fixed, the unipotent fiber is a real torus with a fixed dual
+lattice. Its zero Fourier coefficient is exactly the term subtracted in (8.1). Applying a
+transverse invariant derivative $m$ times multiplies the coefficient of a nonzero dual-lattice
+point by a quantity bounded below by $cH^{m/[F:\mathbf Q]}$. Uniform bounds for the same
+derivatives of the absolutely convergent series therefore give $H^{-m/[F:\mathbf Q]}$ decay.
+Choose $m>A[F:\mathbf Q]$; compactness of the remaining cusp coordinates gives (8.2).
 
-Consequently $\Lambda^YE(g,f_s)$ is square-integrable and depends holomorphically on $s$ wherever $M(\chi,s)f_s$ does. The untruncated series is recovered by adding back two explicitly meromorphic height powers. Thus continuation of the intertwining operator is sufficient to continue the Eisenstein series.
+Consequently $\Lambda^YE(g,f_s)$ is square-integrable and holomorphic in the convergence
+chamber. After the direct continuation below has been constructed, the same argument on compact
+parameter sets avoiding its poles extends (8.2) there. The untruncated series is recovered by
+adding back two explicitly meromorphic height powers. This order avoids using continuation to
+prove itself.
 
 There is a direct construction that proves this assertion without circularity and also identifies the poles. For $\Phi\in\mathcal S(\mathbf A^2)$ put
 
@@ -925,7 +957,28 @@ $$
 
 which is $s\mapsto-s$.
 
-Every finite-level, finite-type standard section is a finite sum of sections of the form (8.3). Locally, choose a test function supported in a small neighborhood of the orbit $(0,1)K_v$ and prescribe its Mellin transform in the scalar variable; compact-open partitions at finite places and a compact-type partition of unity at infinity span the compact picture. Taking restricted tensor products and expanding a finite tensor sum gives the global assertion. Therefore the theta argument continues all sections used in this book.
+We now justify that these sections suffice. Fix a parameter $s_*$ and a finite-dimensional
+compact-picture space. Locally, the map
+
+$$
+(t,k)\longmapsto (0,t)k
+$$
+
+parametrizes the nonzero row-vector orbit, modulo the compact stabilizer already present in the
+compact picture. Choose a compactly supported radial function whose Mellin transform is nonzero
+near $s_*$, and multiply it by a prescribed compact-picture vector pulled back along this map.
+Averaging over the compact stabilizer makes the definition independent of the chosen
+representative. Compact-open partitions at finite places and a compact-type partition of unity
+at infinity show that finitely many such functions span the chosen compact-picture space. Their
+Mellin transforms form a holomorphic matrix invertible after shrinking the neighborhood of
+$s_*$. Its holomorphic inverse expresses every flat section there as a finite holomorphic linear
+combination of sections (8.3).
+
+Taking restricted tensor products leaves the spherical tail unchanged, and expanding the
+finitely many exceptional factors gives the global statement. Since $s_*$ was arbitrary, these
+local continuations glue by uniqueness on the original convergence chamber. Thus the theta
+argument continues every finite-level, finite-type standard section used in this book; no
+unproved global surjectivity of a single Schwartz function is being assumed.
 
 ### 8.2 Meromorphic continuation to the closed right half-plane
 
@@ -1007,7 +1060,23 @@ $$
 
 Hence the normalized global intertwining operator is unitary on every fixed finite-level, finite-type compact-picture space.
 
-The unnormalized operator is not unitary in general. Its scalar $\rho(\chi,it)$ has the modulus dictated by the chosen completion, and the finite correction compensates it. Calling $M(\chi,it)$ unitary without specifying the normalization would be false.
+For unitary $\mu$, complex conjugation and the symmetric functional equation give
+
+$$
+|\Xi(2it,\mu)|=|\Xi(1+2it,\mu)|,
+$$
+
+so $|\rho(\chi,it)|=1$. Consequently the global unnormalized operator is unitary as well:
+
+$$
+M(\chi,it)^*=M(w\chi,-it)=M(\chi,it)^{-1}.
+\tag{8.9}
+$$
+
+This is a global statement. Individual raw local intertwining integrals need not be unitary;
+their normalizing scalars and the finite global correction are indispensable. The earlier
+claim is therefore not that normalization creates global unitarity, but that it makes the Weyl
+composition and the local-to-global scalar bookkeeping transparent.
 
 ## 9. Poles and residues
 
@@ -1068,14 +1137,20 @@ $$
 \tag{9.6}
 $$
 
-It is also left $N(\mathbf A)$-invariant. Hence it is a scalar multiple of
+The determinant character
 
 $$
 g\longmapsto\eta(\det g).
 \tag{9.7}
 $$
 
-The difference between $\mathcal R_f$ and that scalar multiple has zero constant term. On the other hand, the theta residue in (8.4) comes entirely from the zero orbit and is visibly (9.7); no nonzero-vector term has a pole. Therefore the difference is zero.
+has exactly this covariance, but covariance alone does **not** prove one-dimensionality:
+$I(w\chi,-s_0)$ is a reducible induced representation containing many sections with the same
+left $N$-invariance. The decisive input is the theta continuation. In (8.4), every
+nonzero-vector integral is holomorphic at $s_0$ after the small-module term has been transformed.
+The entire residue comes from the transformed zero vector, which is independent of the
+projective direction and equals a scalar multiple of (9.7). Therefore no vector in the other
+constituent can occur in the residue.
 
 **Theorem 9.1.** Every nonzero residue in the required half-plane has the form
 
@@ -1226,15 +1301,48 @@ $$
 
 If a denominator vanishes, the corresponding quotient is interpreted by its limit. The definition of $\langle\ ,\ \rangle_{\mathrm{cpt}}$ is what makes (10.7) exact for the measure ledger of Chapter 1.
 
-**Proof strategy.** Unfold the inner product of truncated series, split the rational Bruhat decomposition into two cells, and integrate the four pairings of the two constant-term exponents over $0<H<Y$ with measure $dH/H$. Boundary terms from the compact core cancel with the subtracted high-cusp terms. Each exponential integral is
+**Proof strategy.** Unfold one Eisenstein sum in the inner product of truncated series and
+split the remaining rational terms into the two Bruhat cells. On the portion below height $Y$
+the two closed-cell contributions are the original sections; on the portion above $Y$ the
+subtractions in (8.1) replace them by their reflected terms. The open-cell integral is exactly
+$M(s)$, so the four surviving pairings are the four displayed in (10.7). The compact core
+appears twice with opposite signs and cancels. The nonconstant Fourier modes are absolutely
+integrable by (8.2); translating their unfolded domains pairs each such term with the identical
+term carrying the opposite truncation sign. Thus no unrecorded boundary integral remains.
+
+The quotient density is $H^{-2}dH$, while each pair of normalized inducing exponents contributes
+one factor $H$. The radial integrals are therefore
 
 $$
 \int^Y H^{a}\frac{dH}{H}=\frac{Y^a}{a},
 $$
 
-which gives (10.7). The rapidly decreasing nonconstant terms cancel in pairs after unfolding. This proves the identity in a joint convergence region; meromorphic continuation proves it everywhere both sides are defined.
+which gives (10.7). This proves the identity in a joint convergence region. Both sides are
+meromorphic finite-type pairings, so continuation proves it everywhere both sides are defined.
 
-On the imaginary axis, taking the appropriate diagonal limit shows that the coefficient of $\log Y$ is positive and that the scattering operator must be unitary. Thus (10.7) gives an independent proof of (8.8). It also shows why individual Eisenstein series are not in $L^2$: their truncated norm grows linearly in $\log Y$.
+On the imaginary axis, take $s'=s$ after first keeping the parameters distinct. The apparent
+singular quotients combine into their derivatives, and the coefficient of $\log Y$ is the sum
+of the compact-picture norm and the norm after scattering. Positivity together with (7.7)
+forces preservation of the compact-picture norm, giving an independent proof of (8.8). It also
+shows why individual Eisenstein series are not in $L^2$: their truncated norm grows linearly in
+$\log Y$.
+
+For later use, apply (10.7) to two rapidly decreasing packets, integrate in both spectral
+parameters, and let $Y\to\infty$. Fourier inversion makes the terms with distinct parameters
+orthogonal; the two terms related by $t\leftrightarrow-t$ combine through the unitary operator
+$R(\chi,it)$. If the packet coefficients are written in the Weyl-symmetric form
+
+$$
+a_{w\chi}(-t)=R(\chi,it)a_\chi(t),
+\tag{10.8}
+$$
+
+the resulting norm is a positive integral of compact-picture norms, with only the harmless
+factor two coming from the Weyl redundancy. Pairing the contour identity (10.6) with a residual
+character and unfolding shows that its value is exactly the residue term already displayed in
+(10.6); hence the remaining unitary-axis packet is orthogonal to that character. This proves,
+without invoking a general Plancherel theorem, both continuous--residual orthogonality and the
+orthogonality of disjoint unitary spectral packets used in Chapter 11.
 
 ## 11. Classification of the noncuspidal contributions
 
@@ -1310,7 +1418,9 @@ $$
 f(zg)=\omega_k(z)^{-1}f(g)
 $$
 
-is an admissible test function if it is compactly supported modulo $Z_k$ when $k$ is nonarchimedean, or rapidly decreasing modulo $Z_k$ with all invariant derivatives when $k$ is archimedean. It is called strongly cuspidal if
+is an admissible test function if it is compactly supported modulo $Z_k$ when $k$ is
+nonarchimedean, or belongs to the invariant Harish--Chandra Schwartz space modulo $Z_k$ when
+$k$ is archimedean. It is called strongly cuspidal if
 
 $$
 \int_{N_k}f(x^{-1}tny)\,dn=0
@@ -1319,14 +1429,23 @@ $$
 
 for every $x,y\in G_k$ and $t\in T_k$. Absolute convergence is part of the condition at infinity.
 
-This two-sided formulation is tailored to operators. Let $I_k(\xi)$ be any smoothly induced representation from a quasicharacter of $T_k$ in a region where the integral model is defined. In the compact picture, the kernel of $I_k(\xi)(f)$ between compact-picture points $x$ and $y$ is obtained by Iwasawa integration:
+This two-sided formulation is tailored to operators. Let $I_k(\xi)$ be normalized induction
+from a quasicharacter $\xi$ of $T_k$, with central character $\omega_k$, at a parameter where
+convolution by $f$ is defined. In the compact picture, Iwasawa integration in the order $tnk$
+gives the kernel between compact-picture points $x$ and $y$:
 
 $$
 K_f(x,y)
-=\int_{T_k}\xi(t)\delta_B(t)^{1/2}
+=\int_{Z_k\backslash T_k}\xi(t)\delta_B(t)^{1/2}
 \left(\int_{N_k}f(x^{-1}tny)\,dn\right)dt.
 \tag{12.2}
 $$
+
+The quotient by $Z_k$ is necessary: the two central transformation laws make the integrand
+descend, whereas an integral over all of $T_k$ would contain an infinite central factor. The
+power $\delta_B^{1/2}$ is also exact. In the coordinates $tnk$, the Jacobian from moving $t$
+past $n$ cancels the $\delta_B^{-1}$ in the usual $ntk$ Iwasawa formula, leaving the
+half-density of normalized induction.
 
 Thus (12.1) implies
 
@@ -1335,7 +1454,14 @@ I_k(\xi)(f)=0
 \tag{12.3}
 $$
 
-for every induced representation for which the formula initially converges, and then for all quasicharacters by meromorphic continuation. This is operator-level annihilation, stronger than vanishing of a trace.
+whenever the convolution operator is defined. If $f$ is compactly supported modulo the center,
+fixed compact-type matrix entries are entire Laurent or Mellin transforms of compactly
+supported data, so (12.3) holds for every quasicharacter. For an archimedean Schwartz function,
+the assertion needed here is on the unitary principal axis, where the Schwartz algebra acts
+continuously on tempered induction and Fubini is valid. One must not identify that honest
+tempered operator with a regularized operator on every nonunitary principal series: at a
+reducibility point the latter can contain the very discrete series from which $f$ was formed.
+This distinction will matter in Chapter 13.
 
 ### 12.2 Nonarchimedean supercuspidal coefficients
 
@@ -1346,13 +1472,18 @@ c(g)=\lambda(\sigma(g)u).
 \tag{12.4}
 $$
 
-It is compactly supported modulo the center. Its unipotent averages vanish. Indeed, for fixed $x,y,t$, the functional
+It is compactly supported modulo the center. Its unipotent averages vanish. Indeed, for fixed
+$x,y,t$, integration is over a compact subset of $N_k$. Put
+$u'=\sigma(y)u$ and $\lambda'=\lambda\circ\sigma(x^{-1}t)$. The integral becomes
 
 $$
-u\longmapsto\int_{N_k}lambda(\sigma(x^{-1}tny)u)\,dn
+\int_{N_k}\lambda'(\sigma(n)u')\,dn.
 $$
 
-factors through the $N_k$-coinvariants of $\sigma$. Supercuspidality is equivalent to vanishing of the Jacquet quotient for every proper parabolic, so the functional is zero. Compact-mod-center support makes the integral finite. Translates of a coefficient are again coefficients, proving (12.1).
+It is invariant under replacing $u'$ by $\sigma(n_0)u'$ and therefore factors through the $N_k$-coinvariants
+of $\sigma$. The local rank-one theory proves that a supercuspidal representation has zero
+Jacquet quotient. Hence the functional is zero. Left and right translates of a coefficient are
+again coefficients, proving (12.1) with all its quantifiers.
 
 After adjusting by the central character and taking a finite linear combination of coefficients, one obtains a nonzero strongly cuspidal test function with any desired sufficiently small compact-open invariance carried by $\sigma$. Such functions are the most robust finite-place choice: they kill the induced representation itself, not just its character distribution.
 
@@ -1360,11 +1491,43 @@ The hypothesis “supercuspidal” cannot be weakened to “irreducible.” A pr
 
 ### 12.3 Archimedean discrete-series coefficients
 
-Let $k=\mathbf R$ and let $D$ be a discrete-series representation of $\mathrm{GL}_2(\mathbf R)$ with central character $\omega_k^{-1}$. Its compact-finite matrix coefficients are square-integrable modulo the center and lie in the rapidly decreasing invariant Schwartz class. Their constant terms along a proper parabolic vanish.
+Let $k=\mathbf R$ and let $D$ be a discrete-series representation of
+$\mathrm{GL}_2(\mathbf R)$ with central character $\omega_k^{-1}$. Its compact-finite matrix
+coefficients are square-integrable modulo the center and belong to the invariant
+Harish--Chandra Schwartz space. They are strongly cuspidal.
 
-To prove this, average a coefficient along $N_k$ and pair against a compactly supported character on $T_k$. Unfolding identifies the result with an intertwining pairing from $D$ to a principal series. Square-integrability and the orthogonality of discrete and continuously induced matrix coefficients force that pairing to vanish. Equivalently, the constant-term asymptotic of a discrete-series coefficient has no real split exponent. Left and right translates remain coefficients, so (12.1) follows.
+Here is the rank-one proof of the last assertion. For a compact-finite coefficient $c$, the
+integral
 
-The same argument applies to a finite linear combination chosen as a discrete-series pseudo-coefficient. At a complex place $\mathrm{GL}_2(\mathbf C)$ has no discrete series modulo center, so this construction is unavailable. One then uses a nonarchimedean strongly cuspidal place if operator-level annihilation is required.
+$$
+c_N(g)=\int_{N_k}c(n g)\,dn
+$$
+
+converges absolutely by the explicit discrete-series coefficient estimates. Compact finiteness
+and the Casimir equation make $c_N(a(r)k)$ a finite sum of exponential-polynomial functions of
+$\log r$; these are obtained by inserting the two compact-weight ladders into the rank-one
+radial differential equation. A nonzero term has one of the boundary exponents of the
+principal series with the same infinitesimal character. Multiplied by the Iwasawa density, its
+square has a nonintegrable tail. Since $c$ is square-integrable modulo the center, Fubini and
+Cauchy--Schwarz on finite truncations force every such coefficient to vanish. Thus $c_N=0$.
+
+The same estimate applies to all invariant derivatives. Approximate arbitrary smooth vectors
+by compact-finite vectors in the smooth topology; the uniform Schwartz bounds pass the
+unipotent integral to the limit. Left and right translates of a matrix coefficient are smooth
+coefficients of the same representation, so applying the result to
+$n\mapsto c(x^{-1}tny)$ proves (12.1).
+
+The same argument applies to a finite linear combination of such coefficients. In particular,
+after multiplication by the formal degree, a conjugate diagonal coefficient is the usual
+rank-one projector on $D$ and is still strongly cuspidal. This does not contradict its nonzero
+action on $D$: the vanishing statement (12.3) is being used on unitary principal series, while
+$D$ occurs inside a principal series only at a nonunitary reducibility parameter where
+convolution by this noncompact Schwartz coefficient is not the same operation as formal
+meromorphic regularization.
+
+At a complex place $\mathrm{GL}_2(\mathbf C)$ has no discrete series modulo center, so this
+construction is unavailable. One then uses a nonarchimedean supercuspidal coefficient if a
+strongly cuspidal place is required.
 
 Limits of discrete series require care: their coefficients lie at the square-integrability boundary and need not satisfy the same integrable constant-term statement without an additional cancellation. They are not silently included.
 
@@ -1379,17 +1542,25 @@ f^{B}(t)
 \tag{12.5}
 $$
 
-Iwasawa integration and the compact-picture trace give
+The product $\xi(t)f^B(t)$ descends to $Z_k\backslash T_k$ for inducing data of central
+character $\omega_k$. Iwasawa integration and the compact-picture trace give
 
 $$
 \operatorname{tr}I_k(\xi)(f)
-=\int_{T_k}\xi(t)f^B(t)\,dt.
+=\int_{Z_k\backslash T_k}\xi(t)f^B(t)\,dt.
 \tag{12.6}
 $$
 
-Hence $f^B=0$ kills the trace of every induced representation. It also kills every one-dimensional character trace, by applying Iwasawa integration to $g\mapsto f(g)\eta(\det g)$.
+Hence $f^B=0$ kills the trace of every induced representation for which the operator is
+defined. It also kills every one-dimensional character trace. Indeed, average
+$g\mapsto f(g)\eta(\det g)$ over conjugation by $K_k$, apply Iwasawa integration in $tnk$
+coordinates, and obtain the Mellin integral of $f^B$ against $t\mapsto\eta(\det t)$.
 
-Strong cuspidality implies $f^B=0$, but the converse need not hold: averaging over $K_k$ can cancel a nonzero operator kernel. Later arguments that require only a trace distribution may use (12.5). The theorem in Chapter 13 uses the stronger condition and therefore proves actual operator vanishing on the noncuspidal span.
+Strong cuspidality implies $f^B=0$, but the converse need not hold: averaging over $K_k$ can
+cancel a nonzero operator kernel. Formula (12.5) is sufficient for an ordinary induced-character
+trace or a one-dimensional residual trace. It is not sufficient for a regularized expression
+with a scattering operator beside $I_k(\xi)(f)$. The theorem in Chapter 13 uses the stronger
+condition and therefore proves actual operator vanishing on the noncuspidal span.
 
 ## 13. Annihilation of every noncuspidal contribution
 
@@ -1403,6 +1574,9 @@ f=\bigotimes_vf_v
 $$
 
 be a smooth factorizable test function on $Z(\mathbf A)\backslash G(\mathbf A)$ with the inverse central transformation needed to act on $L^2_\omega$. Assume that at one place $v_0$, the factor $f_{v_0}$ is strongly cuspidal. At almost every finite place take the normalized maximal-compact idempotent.
+Here “idempotent” means the central-character extension supported on $Z_vK_v$, normalized to
+act as the identity on the unramified $K_v$-fixed line; the ordinary characteristic function of
+$K_v$ alone would not have the required central transformation.
 
 For a factorizable induced representation,
 
@@ -1412,20 +1586,24 @@ I(\chi,s)(f)
 \tag{13.2}
 $$
 
-The $v_0$ factor is zero by (12.3), so
+On the unitary axis the $v_0$ factor is zero by (12.3), so
 
 $$
 I(\chi,s)(f)=0
 \tag{13.3}
 $$
 
-for every inducing datum and every $s$, first where the integral models converge and then meromorphically everywhere.
+for every unitary inducing datum and $s=it$. If $f_{v_0}$ is compactly supported modulo the
+center, the same identity holds as a meromorphic finite-type operator family for every $s$.
+For an archimedean Schwartz coefficient we make no such off-axis identification; the unitary
+axis is exactly what the continuous automorphic spectrum requires.
 
 This factorization is why one cuspidal place suffices. No compatibility among the other local factors is needed beyond the ordinary restricted-product and central-character conditions.
 
 ### 13.2 Vanishing on Eisenstein series and wave packets
 
-Right convolution commutes with the rational-line sum in the convergence chamber:
+Suppose first that the strongly cuspidal factor is compactly supported modulo the center. Right
+convolution then commutes with the rational-line sum in the convergence chamber:
 
 $$
 R(f)E(g,f_s)
@@ -1442,7 +1620,15 @@ $$
 
 throughout the required strip.
 
-Let $W(g)=\int_{\mathbf R}E(g,f_{it})a(t)\,dt$ be a wave packet with rapidly decreasing $a$. Polynomial vertical bounds permit Fubini, and (13.5) gives
+For an archimedean Schwartz coefficient, begin instead on the unitary axis after truncation.
+The Harish--Chandra Schwartz estimates, the polynomial vertical bounds of Chapter 8, and the
+rapid decrease of the packet coefficient justify convolution with a wave packet and Fubini.
+Applying the factored unitary operator (13.3) inside the packet gives zero. This route does not
+claim a pointwise convolution of the non-square-integrable family in the absolute-convergence
+chamber.
+
+Let $W(g)=\int_{\mathbf R}E(g,f_{it})a(t)\,dt$ be a wave packet with rapidly decreasing $a$.
+Polynomial vertical bounds permit Fubini, and either of the preceding arguments gives
 
 $$
 R(f)W=0.
@@ -1453,32 +1639,62 @@ Thus every continuous contribution in Theorem 11.1 is annihilated as a vector, n
 
 ### 13.3 Vanishing on residues
 
-There are two proofs. First, take residues in (13.5): bounded convolution commutes with the finite Laurent coefficient, giving
+When the strongly cuspidal factor is compactly supported modulo the center, take residues in
+(13.5): bounded convolution commutes with the finite Laurent coefficient, giving
 
 $$
 R(f)\operatorname*{Res}_{s=s_0}E(g,f_s)=0.
 \tag{13.7}
 $$
 
-Second, the residual character $\eta\circ\det$ is a quotient of the reducible induced representation at $s_0$. Since the local factor at $v_0$ acts by zero on the whole induced representation, it acts by zero on every quotient. Both arguments show that no hidden residue survives after the continuous family has vanished.
+There is a proof valid for both finite and archimedean strongly cuspidal factors. On the residual
+line, convolution is multiplication by
 
-If only the weaker condition $f_{v_0}^B=0$ is assumed, equations (12.6) and (9.8) still show that the residual trace is zero, though the residual vector need not be annihilated as an operator.
+$$
+\prod_v\int_{Z_v\backslash G_v}f_v(g_v)\eta_v(\det g_v)\,dg_v.
+\tag{13.8}
+$$
+
+At a compact-mod-center place these are ordinary quotient integrals. For an archimedean
+Harish--Chandra Schwartz coefficient, (13.8) means the compact-picture Schwartz-algebra action:
+average over $K_{v_0}$ and $N_{v_0}$ first and then take the outer torus Mellin integral. This
+order is essential at the lowest discrete-series weight, where the absolute group integral of a
+matrix coefficient need not converge. The inner average is $f_{v_0}^B=0$, so the local scalar
+is zero before any outer integration. Thus the residual operator itself is zero. This direct
+proof is necessary for an archimedean Schwartz coefficient, because it does not pass through a
+regularized nonunitary principal-series operator.
+
+If only the weaker condition $f_{v_0}^B=0$ is assumed, (13.8) still shows that every residual
+line is annihilated: on a one-dimensional representation trace zero and operator zero are the
+same assertion. What is lost is operator vanishing on the continuous induced representations.
 
 ### 13.4 The cuspidal-test theorem
 
 **Theorem 13.1.** Let $F$ be a number field and $\omega$ a unitary idele class character. Let $f=\otimes_vf_v$ be a factorizable smooth test function of the compatible central character. Suppose one local factor is strongly cuspidal in the sense of (12.1). Then:
 
-1. $R(f)$ acts by zero on every rank-one induced representation with central character $\omega$;
-2. $R(f)$ annihilates every Eisenstein series in the required meromorphic family;
-3. $R(f)$ annihilates every unitary Eisenstein wave packet;
-4. $R(f)$ annihilates every residual character $\eta\circ\det$ with $\eta^2=\omega$;
-5. consequently $R(f)$ vanishes on the full noncuspidal closed subspace generated by the pseudo-Eisenstein series of Theorem 11.1.
+1. $R(f)$ acts by zero on every unitary rank-one induced representation with central character
+   $\omega$;
+2. $R(f)$ annihilates every unitary Eisenstein wave packet;
+3. $R(f)$ annihilates every residual character $\eta\circ\det$ with $\eta^2=\omega$;
+4. consequently $R(f)$ vanishes on the full noncuspidal closed subspace generated by the
+   pseudo-Eisenstein series of Theorem 11.1.
 
-**Proof.** Local kernel formula (12.2) proves the first assertion. Restricted tensor factorization gives (13.3), and convolution through the Eisenstein sum gives the second. Integration gives the third, residues give the fourth, and the closed-span classification gives the fifth. $\square$
+If the strongly cuspidal factor is compactly supported modulo the center, $R(f)$ additionally
+annihilates every Eisenstein series in the entire required meromorphic family.
 
-**Corollary 13.2.** Under the weaker hypothesis $f_{v_0}^B=0$, every continuous and residual noncuspidal trace distribution in the required range evaluates to zero on $f$.
+**Proof.** Local kernel formula (12.2) on the unitary axis proves the first assertion. Restricted
+tensor factorization gives (13.3), and integration inside genuine $L^2$ wave packets gives the
+second. Formula (13.8) gives the third, and the closed-span classification gives the fourth.
+For a compact-mod-center factor, convolution through the Eisenstein sum and meromorphic
+continuation give the final additional assertion. $\square$
 
-This is the exact form needed when a later argument compares traces rather than operators. The stronger theorem remains preferable because it makes all interchanges with residues automatic.
+**Corollary 13.2.** Under the weaker hypothesis $f_{v_0}^B=0$, the ordinary character trace of
+every unitary induced representation and the operator on every residual character vanish.
+
+This weaker statement must not be substituted into a regularized continuous trace containing a
+scattering operator next to $I(\chi,it)(f)$: trace zero for the last factor does not force the
+trace of its product with another operator to vanish. Strong cuspidality is preferable because
+it makes the induced operator itself zero.
 
 ## 14. Consequences, failure modes, and final synthesis
 
@@ -1509,6 +1725,11 @@ Several plausible shortcuts fail.
 **Using total integral zero as a cuspidal test.** This removes at most one character. Strong cuspidality removes the entire induced channel.
 
 **Checking only induced traces when operator vanishing is needed.** The averaged transform (12.5) controls traces; the two-sided condition (12.1) controls operators.
+
+**Regularizing an archimedean coefficient off the unitary axis.** A discrete-series coefficient
+acts honestly on tempered principal series, but at a nonunitary reducibility point a formal
+continuation need not agree with convolution on a discrete constituent. The continuous spectrum
+is killed on the unitary axis, and determinant residues are killed directly by (13.8).
 
 **Invoking finite volume to justify unitary Eisenstein integrals.** Individual unitary Eisenstein series are not square-integrable. Rapidly decreasing wave packets and truncation provide the correct objects.
 
@@ -1556,4 +1777,11 @@ Self-dual adelic measure makes that operator a genuine product of local integral
 
 Pseudo-Eisenstein series then give the precise noncuspidal classification needed here. Mellin inversion expresses their compact height profiles as unitary Eisenstein wave packets, and contour motion adds only the one-dimensional residues. This is the whole constant-term channel in rank one.
 
-Finally, a strongly cuspidal local test function has zero kernel on every parabolically induced representation. One such factor in a global tensor product therefore kills every Eisenstein series, every wave packet, and every residue. The continuous and residual terms disappear for a local reason whose global force comes from factorization. What remains is the discrete cuspidal contribution, isolated without constructing a general spectral decomposition of the full automorphic quotient.
+Finally, a strongly cuspidal local test function has zero kernel on every unitary parabolically
+induced representation. One such factor in a global tensor product therefore kills every
+unitary Eisenstein wave packet, while its parabolic transform kills every determinant residue.
+If the factor is compactly supported modulo the center, the same zero continues through the
+whole required meromorphic family. The continuous and residual terms disappear for a local
+reason whose global force comes from factorization. What remains is the discrete cuspidal
+contribution, isolated without constructing a general spectral decomposition of the full
+automorphic quotient.
