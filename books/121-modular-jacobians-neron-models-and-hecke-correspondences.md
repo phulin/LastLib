@@ -17,7 +17,7 @@
   - [3.2 The action on divisor classes](#32-the-action-on-divisor-classes)
   - [3.3 Diamond and Atkin--Lehner operators](#33-diamond-and-atkin--lehner-operators)
   - [3.4 Composition, transpose, and Hecke relations](#34-composition-transpose-and-hecke-relations)
-- [4. The integral Hecke action on Néron models](#4-the-integral-hecke-action-on-neron-models)
+- [4. The integral Hecke action on Néron models](#4-the-integral-hecke-action-on-néron-models)
   - [4.1 Canonical extension](#41-canonical-extension)
   - [4.2 A global integral Hecke algebra](#42-a-global-integral-hecke-algebra)
   - [4.3 Connected fibers, components, and cotangent lattices](#43-connected-fibers-components-and-cotangent-lattices)
@@ -37,7 +37,7 @@
   - [7.2 The quadratic polynomial](#72-the-quadratic-polynomial)
   - [7.3 Tate modules and Frobenius](#73-tate-modules-and-frobenius)
   - [7.4 Quotients and Galois extraction](#74-quotients-and-galois-extraction)
-- [8. Néron models at a prime in the level](#8-neron-models-at-a-prime-in-the-level)
+- [8. Néron models at a prime in the level](#8-néron-models-at-a-prime-in-the-level)
   - [8.1 The Deligne--Rapoport curve as a Picard model](#81-the-deligne--rapoport-curve-as-a-picard-model)
   - [8.2 The connected special fiber](#82-the-connected-special-fiber)
   - [8.3 The component group of the fine model](#83-the-component-group-of-the-fine-model)
@@ -100,7 +100,7 @@ $$
 F_p^2-T_pF_p+p\langle p\rangle=0.
 $$
 
-This is not merely a relation after tensoring with a field. It is an equality of homomorphisms of an abelian variety in characteristic $p$, hence acts on every finite subgroup scheme and every prime-to-$p$ Tate lattice. That integrality is what makes the relation useful both for Mazur-style specialization arguments and for extracting Galois representations from Hecke eigensystems.
+This is not merely a relation after tensoring with a field. It is an equality of homomorphisms of an abelian variety in characteristic $p$, hence restricts to every subgroup scheme stable under the operators and acts on every prime-to-$p$ Tate lattice. That integrality is what makes the relation useful both for Mazur-style specialization arguments and for extracting Galois representations from Hecke eigensystems.
 
 ### 1.2 The three integral layers
 
@@ -221,13 +221,19 @@ $$
 
 is initial among maps from $(X,c)$ to pointed abelian varieties. Explicitly, if $f:X\to A$ satisfies $f(c)=0$, there is a unique homomorphism $f_*:J\to A$ such that $f=f_*j_c$.
 
-The proof explains why the Jacobian is also an Albanese. Pullback of algebraically trivial line bundles gives $f^*:A^\vee\to J$. Dualizing and composing with $\lambda_X$ gives
+The proof explains why the Jacobian is also an Albanese. Pullback of algebraically trivial line bundles gives $f^*:A^\vee\to J$. With the convention $j_c(x)=\mathcal O_X(x-c)$, the canonical theta polarization satisfies
 
 $$
-f_*=(f^*)^\vee\lambda_X:J\longrightarrow A.
+j_c^*\lambda_X=[-1]_J.
 $$
 
-The Poincaré bundle and the see-saw principle show that $f_*j_c=f$. Uniqueness follows from generation by $j_c(X)$.
+Dualizing and composing with $\lambda_X$ therefore gives
+
+$$
+f_*=-\,(f^*)^\vee\lambda_X:J\longrightarrow A.
+$$
+
+The Poincaré bundle and the see-saw principle show that this minus sign cancels the one in $j_c^*\lambda_X$, so $f_*j_c=f$. Uniqueness follows from generation by $j_c(X)$.
 
 If $X$ has no rational cusp, the correct target of a canonical map is the degree-one Picard torsor:
 
@@ -544,14 +550,14 @@ $$
 \mathcal X\xleftarrow{a}\mathcal H\xrightarrow{b}\mathcal X.
 $$
 
-Move $P$ and $c$ away from the finitely many bad points of the resolved maps. Then the Néron extension satisfies
+The sections $P$ and $c$ are fixed, so one should not literally move them. Instead use the moving lemma on the regular surface to replace the generic-fiber divisor $P-c$ by a linearly equivalent degree-zero divisor $A$ whose horizontal closure meets properly the finitely many vertical strata on which the resolved maps are not finite. Write that closure as $\overline A$. Cartier pullback and proper cycle pushforward are then defined, and the Néron extension satisfies
 
 $$
 \mathcal T\,\mathfrak j_c(P)
-=\left[b_*a^*(P-c)\right]. \tag{5.3}
+=\left[b_*a^*\overline A\right]. \tag{5.3}
 $$
 
-The brackets mean the class in the separated Picard quotient. To prove (5.3), calculate on the generic fiber using pullback and norm. The closure of the generic pullback can differ from $a^*(P-c)$ by a vertical divisor, and proper pushforward can introduce another vertical divisor. Both lie in the schematic closure of the generic identity and vanish in the separated quotient. Thus the resolved formula gives the canonical Néron extension.
+The brackets mean the class in the separated Picard quotient. To prove (5.3), calculate on the generic fiber using pullback and norm. The horizontal closure of the generic pullback can differ from $a^*\overline A$ by a vertical divisor, and proper pushforward can introduce another vertical divisor. Both lie in the schematic closure of the generic identity and vanish in the separated quotient. Since $[A]=[P-c]$ on the generic Jacobian, the resolved formula gives the canonical Néron extension. If the horizontal closure of $P-c$ already meets those vertical strata properly, one may of course take $A=P-c$.
 
 Formula (5.3) remains valid after replacing $P$ by a horizontal degree-zero divisor. It is often the most efficient route from a modular description of a Hecke orbit to a component-group calculation.
 
@@ -590,7 +596,7 @@ If $C_T$ is linearly equivalent to $d_Tc$, then the correction vanishes and the 
 
 ### 5.4 Components detected by points
 
-Pass to a strict henselian base and write the reduced semistable special fiber as $\bigcup_{v\in V}Y_v$. If sections $P$ and $c$ specialize to smooth points of $Y_v$ and $Y_{v_0}$, then
+Pass to a strict henselian base and suppose the regular model has reduced semistable special fiber $\bigcup_{v\in V}Y_v$. Its nodes then have unit thickness. If sections $P$ and $c$ specialize to smooth points of $Y_v$ and $Y_{v_0}$, then
 
 $$
 c_J([P-c])=[e_v-e_{v_0}]
@@ -739,7 +745,7 @@ $$
 
 Every construction is equivariant for the finite change-of-level group. The equality of special correspondence cycles therefore descends before applying the Picard functor. Applying pull--norm on the descended curve gives the equality on the stack and on the coarse Jacobian. This argument does not require pullback from the coarse Jacobian to the fine Jacobian to be faithful. $\square$
 
-The theorem is integral in two senses. No denominator occurs, and the equality holds as homomorphisms of abelian varieties, not merely on rational cohomology. It consequently remains true after applying any functorial finite subgroup scheme, Tate module away from $p$, cotangent space, or quotient by a Hecke-stable abelian subvariety.
+The theorem is integral in two senses. No denominator occurs, and the equality holds as homomorphisms of abelian varieties, not merely on rational cohomology. It consequently remains true on every finite subgroup scheme stable under the displayed operators, on every Tate module away from $p$, on the cotangent space, and on every quotient by a Hecke-stable abelian subvariety.
 
 ### 7.2 The quadratic polynomial
 
@@ -976,13 +982,23 @@ $$
 \mathscr H_k=\sum_a n_aH_a.
 $$
 
-Let $M_X$ and $M_H$ be the vertical intersection matrices. Define $D_a$ by the degrees with which $H_a$ dominates $X_i$ under $a$, and define $E_b$ by
+Let $M_X$ and $M_H$ be the vertical intersection matrices. Each projection $f\in\{a,b\}$ has two different integral matrices, and both are needed. Define its component-degree matrix $D_f$ by
 
 $$
-b^*X_i=\sum_a(E_b)_{ai}H_a. \tag{9.2}
+(D_f)_{ai}=
+\begin{cases}
+[K(H_a):K(X_i)],&H_a\text{ dominates }X_i\text{ under }f,\\
+0,&\text{otherwise},
+\end{cases}
 $$
 
-Then pullback on special multidegrees is $D_a$, while pushforward of horizontal intersection vectors is $E_b^t$. The component map is
+including the residue-field degree. Define its vertical pullback matrix $E_f$ by
+
+$$
+f^*X_i=\sum_a(E_f)_{ai}H_a. \tag{9.2}
+$$
+
+The coefficient in $E_f$ is a valuation ramification multiplicity and can be nonzero even when $H_a$ is contracted to a point of $X_i$. Pullback on special multidegrees is $D_a$, while pushforward of horizontal intersection vectors is $E_b^t$. The component map is therefore
 
 $$
 \Phi(T)=[E_b^tD_a] \tag{9.3}
@@ -994,7 +1010,7 @@ $$
 \{d:\sum m_id_i=0\}/M_X\mathbf Z^{I_X}.
 $$
 
-The compatibility that makes (9.3) well defined is
+The compatibilities that make (9.3) well defined are
 
 $$
 D_aM_X=M_HE_a,\qquad
@@ -1072,7 +1088,7 @@ $$
 
 and permuting coordinates changes this vector by an element of $A_{r-1}$. Interchanging the two vertices reverses every oriented edge and contributes the sign $-1$.
 
-For a weighted coarse graph, edge permutation must preserve lengths to define an isometry. The vertex swap still contributes a sign, but a nontrivial action on the weighted discriminant can remain if duality permutes unequal-length Galois orbits only after base extension. The safe statement is that $w_q$ acts by the negative of the induced edge permutation; (9.9) is the exact fine unit-edge specialization.
+For a weighted coarse graph, an actual automorphism can permute only edges of matching lengths. The vertex swap still contributes a sign, while the resulting length-preserving edge permutation can act nontrivially on the weighted discriminant. The safe statement is that $w_q$ acts by the negative of the induced edge permutation; (9.9) is the exact fine unit-edge specialization.
 
 ### 9.4 Adjoints, ideals, and saturation
 
@@ -1091,7 +1107,7 @@ $$
 \qquad x,y\in X_G^\vee. \tag{9.11}
 $$
 
-It is well defined because changing $x$ by $qz$ changes the value by the integer $y(z)$. It is perfect: if $q^{-1}x$ pairs integrally with every $y\in X_G^\vee$, then $q^{-1}x$ lies in the double dual $X_G$, so $x\in qX_G$.
+It is well defined in both variables. Changing $x$ by $qz$ changes the value by the integer $y(z)$, while changing $y$ by $qw$ changes it by $x(w)$, using symmetry of $q$. It is perfect: if $q^{-1}x$ pairs integrally with every $y\in X_G^\vee$, then $q^{-1}x$ lies in the double dual $X_G$, so $x\in qX_G$.
 
 Equation (9.7) descends to
 
@@ -1122,16 +1138,16 @@ The component group is only the cokernel of the graph pairing; monodromy remembe
 
 ### 10.1 Why the graph pairing is monodromy
 
-Let $R$ now be strictly henselian, with residue characteristic $p$, and let $\mathscr X/R$ be a regular semistable curve. Write $G$ for its geometric dual graph and
-
-$$
-X=H_1(G,\mathbf Z).
-$$
-
-At a node $e$, choose an étale local equation
+Let $R$ now be strictly henselian, with residue characteristic $p$, and let $C/K$ be a smooth proper curve admitting a proper flat split nodal model $\mathscr X/R$. At a node $e$, choose an étale local equation
 
 $$
 x_ey_e=u_e\pi^{n_e}. \tag{10.1}
+$$
+
+When $n_e>1$ the displayed nodal model is not regular. Its minimal regular resolution replaces $e$ by a chain of $n_e$ unit nodes. All constructions below may be made on that resolution and compressed back to the length-$n_e$ edge; this is why the weighted and regular descriptions agree. Write $G$ for the resulting metrized dual graph and
+
+$$
+X=H_1(G,\mathbf Z).
 $$
 
 The integer $n_e$ measures how many times a loop crossing the node winds around the punctured annulus in a smoothing. For cycles $a=(a_e)$ and $b=(b_e)$, these local winding contributions add to
@@ -1172,23 +1188,44 @@ $$
 
 Here $X^\vee=X_*(T)$ because $X=X^*(T)$, so (10.4) is the Tate module of the graph torus.
 
-**Construction and proof.** Normalize the special curve and mark the two branches above every node. A degree-zero line bundle on the nodal fiber is a tuple of component line bundles plus edge gluing scalars, modulo vertex rescaling. Taking $\ell^m$th roots gives the exact connected part
+**Construction and proof.** We give the integral construction, since a rank count alone would not exclude a hidden finite quotient. Normalize the special curve and mark the two branches above every node. A degree-zero line bundle on the nodal fiber is a tuple of component line bundles plus edge gluing scalars, modulo vertex rescaling. Multiplication by $\ell^m$ is finite étale and surjective on the graph torus and on every $J(Y_v)$. Applying the snake lemma to
+
+$$
+0\longrightarrow T\longrightarrow\mathcal J_k^0
+\longrightarrow B\longrightarrow0
+$$
+
+therefore gives the exact connected part
 
 $$
 0\to T[\ell^m]\to\mathcal J_k^0[\ell^m]
 \to B[\ell^m]\to0
 $$
 
-in the prime-to-$p$ étale topology. Passing to inverse limits gives (10.4) below (10.5).
+in the prime-to-$p$ étale topology. Since $X^*(T)=X$, one has
 
-The generic curve has, in addition, vanishing cycles that measure how a divisor can cross the nodes before specializing. The normalization exact sequence for the constant sheaf $\mathbf Z/\ell^m\mathbf Z$ gives a boundary term
+$$
+T[\ell^m]\simeq
+X^\vee\otimes\mu_{\ell^m}.
+$$
+
+In the Kummer description of $J[\ell^m](\overline K)$, these gluing and normalized-component classes form a canonical submodule $W_{-1,m}$: specialization identifies its filtration with the displayed special semiabelian torsion sequence. Passing to inverse limits gives the first two graded pieces (10.4)--(10.5).
+
+The generic curve has, in addition, vanishing cycles that measure how a divisor can cross the nodes before specializing. To see them without importing a general monodromy theorem, cover the regular resolution by neighborhoods of the normalized components and by the punctured node annuli. Apply the Kummer sequence
+
+$$
+1\longrightarrow\mu_{\ell^m}\longrightarrow\mathbf G_m
+\xrightarrow{\ell^m}\mathbf G_m\longrightarrow1.
+$$
+
+On a normalized component it gives its Jacobian $\ell^m$-torsion. On a node annulus, a gluing unit gives the toric term above. The remaining Čech boundary records an integer on every oriented edge; changing a trivialization on a component adds a graph coboundary, and the condition that the boundary vanish at each component says that the edge vector is a cycle. The normalization sequence for the constant sheaf therefore gives the quotient
 
 $$
 H_1(G,\mathbf Z/\ell^m\mathbf Z)
 =X/\ell^mX.
 $$
 
-Equivalently, cut the smoothing along all node annuli. Cohomology of the normalized pieces supplies $B[\ell^m]$, the circle in each annulus supplies one edge generator, and the condition that boundaries cancel at every component is exactly the graph-cycle condition. Duality for the curve places this term above the component and torus terms. Taking inverse limits gives (10.6).
+Equivalently, cut the smoothing along all node annuli. Cohomology of the normalized pieces supplies $B[\ell^m]$; the two Kummer directions on the annuli pair by evaluation, placing $X^\vee\otimes\mu_{\ell^m}$ below and $X/\ell^mX$ above. The residue pairing on the normalization and the evaluation pairing $X^\vee\times X\to\mathbf Z$ make this finite filtration self-dual, so there is no further graded term. The construction is compatible as $m$ varies. Taking inverse limits gives (10.6).
 
 The ranks check the construction. If $g_v$ are the component genera and $b_1=\operatorname{rank}X$, then
 
@@ -1229,7 +1266,7 @@ $$
 \qquad N^2=0. \tag{10.9}
 $$
 
-**Proof.** Choose a lift of a graph cycle $a$ to an $\ell^m$-division class on the generic Jacobian. On the normalization pieces it can be chosen inertia invariant, because the pieces and their prime-to-$p$ torsion are unramified over the strict henselian base. The only change under inertia occurs in the chosen roots of the node smoothing parameters. At node $e$, equation (10.1) contributes
+**Proof.** Choose a lift of a graph cycle $a$ to an $\ell^m$-division class on the generic Jacobian using the Kummer--Čech description above. Its data on the normalized components can be chosen inertia invariant: those components and their prime-to-$p$ torsion live over the separably closed residue field. The only possible change is in the chosen roots of the node smoothing parameters. Every unit of the strict henselian ring has an $\ell^m$th root, by Hensel's lemma, so the unit $u_e$ contributes no Kummer class. The factor $\pi^{n_e}$ contributes
 
 $$
 t_\ell(\sigma)n_ea_e
@@ -1242,9 +1279,9 @@ t_\ell(\sigma)\sum_en_ea_eb_e
 =t_\ell(\sigma)q(a,b).
 $$
 
-Thus the difference $\sigma(v)-v$ lies in the toric graded piece and is $t_\ell(\sigma)q(a)$. Classes from the torus and normalized-component Jacobians are invariant, so applying the difference a second time gives zero. This proves (10.8)--(10.9) modulo every $\ell^m$ and hence on the inverse limit. $\square$
+Thus the difference $\sigma(v)-v$ lies in the toric graded piece and is $t_\ell(\sigma)q(a)$. Inertia is trivial on the toric and normalized-component graded pieces over the strict henselian base, so applying $\sigma-1$ a second time gives zero. The formula also shows that wild inertia acts trivially, because $t_\ell$ factors through tame inertia. It proves (10.8)--(10.9) modulo every $\ell^m$ and hence on the inverse limit. $\square$
 
-The formula is independent of the chosen local coordinates: replacing $x_e$ or $y_e$ by a unit changes the Kummer class by an unramified unit and does not alter tame inertia. Reversing an edge changes both $a_e$ and $b_e$ by a sign, leaving $q$ unchanged.
+The formula is independent of the chosen local coordinates: replacing $x_e$ or $y_e$ by a unit changes the smoothing parameter by a unit, and that unit has compatible $\ell^m$th roots over the strict henselian ring. It therefore contributes no inertia character. Reversing an edge changes both $a_e$ and $b_e$ by a sign, leaving $q$ unchanged.
 
 Good reduction is the case $X=0$, so $N=0$ and inertia is trivial. A unit loop has nonzero $X$ and nonzero monodromy even though its component group can be trivial. This again shows that $\Phi_J$ alone does not determine reduction.
 
@@ -1373,13 +1410,19 @@ is the differential realization of the geometric correspondence.
 
 Because $S_2$ is a finite projective lattice, coefficientwise integrality at every cusp recognizes the integral operator. If two endomorphisms of $S_2$ agree after inverting a prime and have the same integral q-expansions, their difference has zero expansions and is zero.
 
-Only finitely many coefficients are needed. If a connected component has stack degree $\mu$, a weight-two form is determined by coefficients through
+Only finitely many coefficients are needed, but the bound must be normalized by the chosen cusp rather than by an undefined stack degree. On an integral geometric component $X$ and at a cusp $c$, put
 
 $$
-\left\lfloor\frac{\mu}{6}\right\rfloor
+\mu_{X,c}=\frac{12\deg_X\lambda}{\deg_XD_c}.
 $$
 
-in a genuine cusp uniformizer. Applying this bound to the images of a basis of $S_2$ proves equality of endomorphisms from finitely many coefficients. This is a verification method, not a replacement for the geometric construction: the correspondence and Néron extension explain why the operator acts on every other integral layer as well.
+Then a weight-two form is determined by the coefficients of orders zero through
+
+$$
+\left\lfloor\frac{\mu_{X,c}}6\right\rfloor
+$$
+
+in a genuine cusp uniformizer. One must choose a cusp on every connected component, or impose an all-cusp collection of jets whose weighted degree is greater than $2\deg_X\lambda$ on each component. Applying this bound to the images of a basis of $S_2$ proves equality of endomorphisms from finitely many coefficients. This is a verification method, not a replacement for the geometric construction: the correspondence and Néron extension explain why the operator acts on every other integral layer as well.
 
 ## 12. Exact calculations
 
@@ -1484,7 +1527,21 @@ $$
 |\Phi_{J_{K'}}|=e^{r-1}|\Phi_J|.
 $$
 
-The sequence need not split. Hecke operators preserve it because they commute with the scaled monodromy map.
+The sequence need not split. Its surjection is the contraction map
+
+$$
+X^\vee/eqX\longrightarrow X^\vee/qX,
+\qquad[z]\longmapsto[z].
+$$
+
+It is not the component map of the canonical Néron base-change morphism. That map goes in the opposite direction and is
+
+$$
+X^\vee/qX\longrightarrow X^\vee/eqX,
+\qquad[z]\longmapsto[ez].
+$$
+
+It is injective with cokernel $X^\vee/eX^\vee$. The two maps compose to multiplication by $e$ in either order. Hecke operators commute with both maps because they commute with the scaled monodromy pairing and with canonical Néron base change.
 
 ### 12.4 A specialization calculation with cusps
 
@@ -1564,7 +1621,7 @@ We collect the exact result established in this book.
    \Phi_J(k^s)\simeq\mathbf Z/r\mathbf Z.
    $$
 
-   Coarse stabilizers replace unit edges by their exact lengths and $\Phi_J=X_G^\vee/qX_G$.
+   A tame coarse stabilizer replaces a unit edge by its exact length and $\Phi_J=X_G^\vee/qX_G$. At a wild coarse point the actual invariant ring and its regular resolution, rather than a stabilizer-order shortcut, determine the intersection lattice.
 7. Hecke correspondences act on graph cycles by harmonic pull--push, transpose is adjoint for $q$, and the dual transpose map induces the component action. On the fine unit-edge component group, $w_q$ acts by $-1$.
 8. For $\ell\ne q$, the Tate module at a semistable level prime has graded pieces
 
@@ -1577,7 +1634,7 @@ We collect the exact result established in this book.
    and tame inertia is $1+t_\ell N$, with $N^2=0$ and outer graded map $q:X\to X^\vee$. This monodromy filtration is Hecke stable.
 9. The cotangent lattice of the Néron model is the lattice of regular dualizing differentials on a regular modular model. At good level it is the integral weight-two cusp-form lattice and the Hecke action agrees with the q-expansion operator. At a level prime, the dualizing lattice remains canonical without assuming an unproved Hodge-line extension.
 
-**Proof.** Items 1--2 are Sections 4 and 9. Item 3 is Section 5. Items 4--5 are Sections 6--7. Item 6 is Section 8. Item 7 is Section 9. Items 8 and 9 are Sections 10 and 11. Every use of a fine cover descends because the constructions are equivariant and can be checked faithfully flatly; every coarse calculation retains stabilizer lengths and residue descent. $\square$
+**Proof.** Items 1--2 are Sections 4 and 9. Item 3 is Section 5. Items 4--5 are Sections 6--7. Item 6 is Section 8. Item 7 is Section 9. Items 8 and 9 are Sections 10 and 11. Every use of a fine cover descends because the constructions are equivariant and can be checked faithfully flatly. Tame coarse calculations retain stabilizer lengths and residue descent; wild coarse calculations use the resolved invariant ring as required in Section 13.1. $\square$
 
 ## 14. Conclusion
 
