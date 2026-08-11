@@ -49,7 +49,7 @@ any resulting corrections.
 - [x] 023. Étale Duality and Trace Maps in Low Dimension
 - [x] 024. Nearby Cycles and Monodromy in Dimensions One and Two
 - [x] 025. Lefschetz Trace Formulas for Curves and Surfaces
-- [ ] 026. Weights, Hard Lefschetz, and Weil Bounds in Low Dimension
+- [x] 026. Weights, Hard Lefschetz, and Weil Bounds in Low Dimension
 - [x] 027. Betti, de Rham, and Étale Comparison for Curves
 - [x] 028. fppf Cohomology and Kummer Theory
 - [x] 029. Continuous Cohomology of Profinite Groups
