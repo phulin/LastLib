@@ -2,544 +2,624 @@
 
 ## Contents
 
-1. [The last classical exponent](#1-the-last-classical-exponent)
-   - [The theorem and its setting](#11-the-theorem-and-its-setting)
-   - [Why factorization is not yet descent](#12-why-factorization-is-not-yet-descent)
-   - [The two cases](#13-the-two-cases)
-   - [The proof map](#14-the-proof-map)
-2. [The cyclotomic arithmetic we shall use](#2-the-cyclotomic-arithmetic-we-shall-use)
-   - [The field, the prime, and the normalization](#21-the-field-the-prime-and-the-normalization)
-   - [Norms and the binary quintic form](#22-norms-and-the-binary-quintic-form)
-   - [Units, primary elements, and fifth powers](#23-units-primary-elements-and-fifth-powers)
-   - [Coprimality and extraction](#24-coprimality-and-extraction)
-3. [Primitive equations and local alternatives](#3-primitive-equations-and-local-alternatives)
-   - [Primitive reduction](#31-primitive-reduction)
-   - [The elementary congruence at five](#32-the-elementary-congruence-at-five)
-   - [Exact valuations of the five factors](#33-exact-valuations-of-the-five-factors)
-   - [Rational factor shapes](#34-rational-factor-shapes)
-4. [The first case](#4-the-first-case)
-   - [Primary normalization](#41-primary-normalization)
-   - [Fifth powers and conjugate differences](#42-fifth-powers-and-conjugate-differences)
-   - [The residue restriction](#43-the-residue-restriction)
-   - [Cycling the three variables](#44-cycling-the-three-variables)
-   - [What the first case teaches](#45-what-the-first-case-teaches)
-5. [The ramified factor in the second case](#5-the-ramified-factor-in-the-second-case)
-   - [Locating the variable divisible by five](#51-locating-the-variable-divisible-by-five)
-   - [Removing the common prime](#52-removing-the-common-prime)
-   - [Eliminating the unit](#53-eliminating-the-unit)
-   - [The exact rational shadows](#54-the-exact-rational-shadows)
-6. [From one solution to a descent carrier](#6-from-one-solution-to-a-descent-carrier)
-   - [Why the norm identity alone is insufficient](#61-why-the-norm-identity-alone-is-insufficient)
-   - [The first conjugate difference](#62-the-first-conjugate-difference)
-   - [Deep invariance and rational digits](#63-deep-invariance-and-rational-digits)
-   - [The four normalized difference factors](#64-the-four-normalized-difference-factors)
-7. [The quintic replacement lemma](#7-the-quintic-replacement-lemma)
-   - [Descent records and their weight](#71-descent-records-and-their-weight)
-   - [The coordinate engine](#72-the-coordinate-engine)
-   - [Extraction and replacement](#73-extraction-and-replacement)
-   - [Strict decrease](#74-strict-decrease)
-   - [Why every hypothesis is needed](#75-why-every-hypothesis-is-needed)
-8. [Well-founded second-case descent](#8-well-founded-second-case-descent)
-   - [Constructing the initial record](#81-constructing-the-initial-record)
-   - [Iteration](#82-iteration)
-   - [The contradiction](#83-the-contradiction)
-   - [Norm descent and explicit-factor descent](#84-norm-descent-and-explicit-factor-descent)
-9. [Fermat's theorem for exponent five](#9-fermats-theorem-for-exponent-five)
-   - [The integer theorem](#91-the-integer-theorem)
-   - [The rational and exponent-divisible forms](#92-the-rational-and-exponent-divisible-forms)
-   - [Signs, zeroes, and permutations](#93-signs-zeroes-and-permutations)
-10. [Quintic equations with controlled coefficients](#10-quintic-equations-with-controlled-coefficients)
-    - [Supported coefficients](#101-supported-coefficients)
-    - [What survives unchanged](#102-what-survives-unchanged)
-    - [Where the Fermat conclusion is special](#103-where-the-fermat-conclusion-is-special)
-11. [Proof diagnostics and common failure modes](#11-proof-diagnostics-and-common-failure-modes)
-    - [Ideals before elements](#111-ideals-before-elements)
-    - [The two normalizations at five](#112-the-two-normalizations-at-five)
-    - [Units cannot be wished away](#113-units-cannot-be-wished-away)
-    - [A smaller expression is not yet a descent](#114-a-smaller-expression-is-not-yet-a-descent)
-12. [The classical boundary](#12-the-classical-boundary)
-    - [What has been proved](#121-what-has-been-proved)
-    - [Why exponent five can now be set aside](#122-why-exponent-five-can-now-be-set-aside)
+1. [The coefficient-five boundary](#1-the-coefficient-five-boundary)
+   - [The endpoint](#11-the-endpoint)
+   - [What a descent must actually provide](#12-what-a-descent-must-actually-provide)
+   - [First and second cases](#13-first-and-second-cases)
+   - [The architecture of the proof](#14-the-architecture-of-the-proof)
+2. [The cyclotomic input](#2-the-cyclotomic-input)
+   - [The field and the ramified prime](#21-the-field-and-the-ramified-prime)
+   - [The norm form](#22-the-norm-form)
+   - [Units and the three-digit test](#23-units-and-the-three-digit-test)
+   - [Coprimality of the linear factors](#24-coprimality-of-the-linear-factors)
+   - [The exact ramified extraction](#25-the-exact-ramified-extraction)
+   - [The rational coprimality shadow](#26-the-rational-coprimality-shadow)
+3. [Primitive solutions and the first case](#3-primitive-solutions-and-the-first-case)
+   - [Primitive and symmetric formulations](#31-primitive-and-symmetric-formulations)
+   - [Parity and divisibility alternatives](#32-parity-and-divisibility-alternatives)
+   - [The short congruence proof](#33-the-short-congruence-proof)
+   - [Primary normalization](#34-primary-normalization)
+   - [The cyclotomic residue lemma](#35-the-cyclotomic-residue-lemma)
+   - [Cycling the signed variables](#36-cycling-the-signed-variables)
+4. [Entering the second case](#4-entering-the-second-case)
+   - [The exact valuation ledger](#41-the-exact-valuation-ledger)
+   - [Removing the common prime](#42-removing-the-common-prime)
+   - [Eliminating the unit](#43-eliminating-the-unit)
+   - [The rational shapes](#44-the-rational-shapes)
+   - [Why the carrier changes fields](#45-why-the-carrier-changes-fields)
+5. [The real-quadratic bridge](#5-the-real-quadratic-bridge)
+   - [The real ring is Euclidean](#51-the-real-ring-is-euclidean)
+   - [The first norm identity](#52-the-first-norm-identity)
+   - [Coprime conjugate factors](#53-coprime-conjugate-factors)
+   - [Removing the real unit](#54-removing-the-real-unit)
+   - [Coordinates of the fifth root](#55-coordinates-of-the-fifth-root)
+   - [The initial carrier](#56-the-initial-carrier)
+   - [Why this is the right carrier](#57-why-this-is-the-right-carrier)
+6. [The carrier replacement](#6-the-carrier-replacement)
+   - [Carrier data and the closure problem](#61-carrier-data-and-the-closure-problem)
+   - [The second norm identity](#62-the-second-norm-identity)
+   - [The forced unit class](#63-the-forced-unit-class)
+   - [Absorbing the unit and fixing parity](#64-absorbing-the-unit-and-fixing-parity)
+   - [The coordinate engine](#65-the-coordinate-engine)
+   - [Coprimality and fifth-power extraction](#66-coprimality-and-fifth-power-extraction)
+   - [The explicit successor](#67-the-explicit-successor)
+   - [How the replacement identities fit together](#68-how-the-replacement-identities-fit-together)
+7. [Strict well-founded descent](#7-strict-well-founded-descent)
+   - [The positive quartic identity](#71-the-positive-quartic-identity)
+   - [Strict decrease of the carrier](#72-strict-decrease-of-the-carrier)
+   - [Iteration and contradiction](#73-iteration-and-contradiction)
+   - [The second-case theorem](#74-the-second-case-theorem)
+8. [Fermat's theorem at exponent five](#8-fermats-theorem-at-exponent-five)
+   - [The primitive nonzero theorem](#81-the-primitive-nonzero-theorem)
+   - [All integer and rational solutions](#82-all-integer-and-rational-solutions)
+   - [Exponents divisible by five](#83-exponents-divisible-by-five)
+9. [Proof integrity and the reusable descent package](#9-proof-integrity-and-the-reusable-descent-package)
+   - [The ideal and norm ledgers](#91-the-ideal-and-norm-ledgers)
+   - [The valuation and unit ledgers](#92-the-valuation-and-unit-ledgers)
+   - [Why the replacement is closed](#93-why-the-replacement-is-closed)
+   - [Dependency closure](#94-dependency-closure)
+   - [What has been proved](#95-what-has-been-proved)
 
-## 1. The last classical exponent
+## 1. The coefficient-five boundary
 
-### 1.1 The theorem and its setting
+### 1.1 The endpoint
 
-This volume proves the exponent-five case of Fermat's equation by cyclotomic descent.
-The final statement is elementary to formulate.
+This volume proves the exponent-five case of Fermat's equation by a complete classical
+descent. Its symmetric form is the cleanest statement.
 
-**Theorem 1.1 (Fermat for exponent five).** If $x,y,z\in\mathbf Z$ satisfy
+**Theorem 1.1 (Fermat at exponent five).** If $x,y,z\in\mathbf Z$ satisfy
 
 $$
-x^5+y^5=z^5,
+x^5+y^5+z^5=0,
+\tag{1.1}
 $$
 
 then $xyz=0$.
 
-The assertion concerns ordinary integers, but its proof becomes transparent only after
-adjoining a primitive fifth root of unity. In the field
+Equivalently, the only integer solutions of $X^5+Y^5=Z^5$ have a zero
+coordinate. The equivalence uses only the oddness of the exponent: in (1.1), move
+$z^5$ to the other side and put $Z=-z$.
+
+Book 191, *Quintic Cyclotomic Units and Kummer Arithmetic*, established the arithmetic
+of
 
 $$
-K=\mathbf Q(\zeta),\qquad \zeta^5=1,\qquad \zeta\ne1,
+K=\mathbf Q(\zeta),\qquad \zeta^5=1,\qquad \zeta\ne1.
 $$
 
-the left side splits completely:
+It proved the exact factorization of $5$, classified all units, controlled the common
+prime divisors of the factors $X+\zeta^iY$, and extracted actual fifth powers after
+the required local congruence. Those results are the sole substantial prerequisite of
+this book. The present task is to turn their output into a genuine descent.
+
+The last phrase matters. Fifth-power extraction produces smaller-looking quantities,
+but a proof of infinite descent needs more: a class of objects closed under a
+replacement operation and a positive integral measure that becomes strictly smaller.
+The second half of this book constructs both explicitly.
+
+### 1.2 What a descent must actually provide
+
+The cyclotomic factorization is
 
 $$
-x^5+y^5=\prod_{i=0}^4(x+\zeta^iy).
-\tag{1.1}
+X^5+Y^5=\prod_{i=0}^4(X+\zeta^iY).
+\tag{1.2}
 $$
 
-Book 191 determined all of the arithmetic needed to use (1.1): the ring of integers,
-the unique prime above $5$, the unit group, the class-number-one property, the exact
-valuations of the linear factors, and the congruence tests that remove units. We shall
-use those results as established background, recalling their precise content whenever
-a hypothesis becomes decisive.
-
-The point of the present book is different. A factorization says that certain factors
-are fifth powers up to controlled exceptions. A descent must turn that information
-into either an immediate contradiction or a new object of exactly the same kind with
-a strictly smaller positive integral measure. The passage from the first statement to
-the second is the mathematical heart of the exponent-five proof.
-
-### 1.2 Why factorization is not yet descent
-
-Suppose for a moment that the five factors in (1.1) were pairwise coprime in a unique
-factorization domain. Their product being a fifth power would imply
+For a primitive pair, distinct factors are coprime away from the unique prime above
+$5$. Ideal factorization can therefore show that one factor has the shape
 
 $$
-x+\zeta y=u\alpha^5
+X+\zeta Y=u\lambda A^5,
+\qquad \lambda=1-\zeta,
+\tag{1.3}
 $$
 
-for a unit $u$. Three gaps remain.
+in the ramified case. The unit $u$ must still be removed, and even the exact equation
+$X+\zeta Y=\lambda A^5$ is not itself an infinite descent. Its norm gives a smaller
+integer, but the norm forgets how primes that split in $K$ were distributed among the
+conjugate factors. It cannot be reversed to manufacture a new Fermat solution.
 
-First, the factors can share the prime above $5$. Second, the unit $u$ need not be a
-fifth power. Third, even an exact equation $x+\zeta y=\alpha^5$ does not visibly produce
-a smaller integer solution. Taking norms yields a necessary integer identity, but a
-norm forgets how split prime ideals were distributed among conjugate factors. Reversing
-the norm step is therefore invalid.
+There is a second danger. Suppose one factors a new difference of fifth powers and
+extracts fifth roots of four of its factors. Multiplying those exact factors determines
+the fifth-power class of the fifth factor. That class is forced by the product; it is
+not a free state that may be changed to make a proposed recurrence close. A valid
+replacement lemma must derive every unit class of its successor from an explicit
+identity.
 
-These gaps explain the structure of the proof. We first preserve prime-ideal data long
-enough to extract fifth powers. We then use the ramified prime to control units. Finally,
-we pass to a specially designed conjugate-difference record. Its replacement operation
-is closed, and its weight is a positive integer that decreases strictly. Only at that
-last point do we have an infinite descent.
-
-The distinction is worth emphasizing with a counterexample. The unit
+We avoid both dangers by changing the carrier after the cyclotomic extraction. The
+absolute norm first gives two rigid rational shapes. A quadratic identity then moves
+them to the real subfield $\mathbf Q(\sqrt5)$, where the two conjugate factors are
+provably coprime. Their fifth root supplies coprime integers $r,s,b,c$ satisfying
 
 $$
-\eta=1+\zeta+\zeta^{-1}=\frac{1+\sqrt5}{2}
+r-s=5b^5,
+\qquad
+F(r,s)=c^5,
+\tag{1.4}
 $$
 
-has norm $1$, which is a fifth power, but $\eta$ is not a fifth power. Thus a
-fifth-power norm does not even remove the simplest unit obstruction.
+where
 
-### 1.3 The two cases
+$$
+F(U,V)=U^4-U^3V+U^2V^2-UV^3+V^4.
+\tag{1.5}
+$$
 
-For a primitive solution, the classical terminology is:
+The pair of equations (1.4), together with parity and coprimality, is the descent
+carrier. Every carrier will produce another one with a new positive parameter
+$d<b$. No converse to a norm statement is used.
 
-- the **first case**: $5\nmid xyz$;
-- the **second case**: $5\mid xyz$.
+### 1.3 First and second cases
 
-The names do not mean that the same proof is run twice. In the first case all relevant
-cyclotomic factors are prime to the ramified prime. Primary normalization leaves a real
-unit, but that unit cancels on subtracting the conjugate equation. A short residue
-calculation, repeated cyclically, gives a contradiction.
+For a primitive nonzero solution of (1.1), the traditional alternatives are:
 
-In the second case exactly one of $x,y,z$ is divisible by $5$. After signs and a
-permutation it may be placed on the right. The four nonrational factors then have
-valuation one at the unique prime above $5$. Dividing out that single uniformizer
-creates a congruence three levels deep, strong enough to remove the entire unit. The
-resulting exact factor equation is the entrance to the descent.
+- the **first case**, in which $5\nmid xyz$;
+- the **second case**, in which $5\mid xyz$.
 
-The two cases therefore use the same arithmetic in opposite ways. Away from $5$, the
-absence of ramification makes factors coprime and conjugate subtraction decisive. At
-$5$, total ramification creates a common factor, but the residue left after its removal
-is rigid enough to eliminate units completely.
+Pairwise coprimality implies that at most one variable is divisible by $5$. The first
+case is impossible already modulo $25$. We will also give its cyclotomic proof,
+because it displays exactly what primary normalization does and does not remove.
 
-### 1.4 The proof map
+In the second case, after a permutation and a sign change, the equation becomes
 
-The logical flow is
+$$
+X^5+Y^5=Z^5,
+\qquad 5\mid Z,\qquad 5\nmid XY.
+\tag{1.6}
+$$
+
+Then $5\mid X+Y$. The rational factor $X+Y$ has cyclotomic valuation divisible by
+four, while each of the other four linear factors has valuation one. That imbalance
+forces
+
+$$
+X+Y=5^4a^5,
+\qquad
+F(X,Y)=5w^5.
+\tag{1.7}
+$$
+
+The two equations in (1.7) are the entrance to the real-quadratic descent.
+
+### 1.4 The architecture of the proof
+
+The proof has four logically distinct layers:
 
 $$
 \begin{array}{c}
-\text{primitive integer equation}\\
+\text{primitive signed Fermat equation}\\
 \Downarrow\\
-\text{first case}\quad\text{or}\quad\text{second case}\\
-\Downarrow\hspace{39mm}\Downarrow\\
-\text{cyclic residue contradiction}\quad
-\text{exact ramified fifth-power factor}\\
-\hspace{45mm}\Downarrow\\
-\hspace{28mm}\text{conjugate-difference record}\\
-\hspace{45mm}\Downarrow\\
-\hspace{31mm}\text{strictly smaller record}.
+\text{first-case contradiction or exact ramified cyclotomic factor}\\
+\Downarrow\\
+\text{real-quadratic fifth power and an initial carrier}\\
+\Downarrow\\
+\text{explicit carrier replacement }b\longmapsto d<b.
 \end{array}
+\tag{1.8}
 $$
 
-The final arrow can be iterated, whereas positive integers cannot decrease forever.
-That is the well-founded contradiction. No later theory is used, and no result about
-curves or analytic continuation lies behind the argument.
+The hard strategy is concentrated in the last two arrows. The first real-quadratic
+factorization creates the carrier. The second is applied to the carrier and, after one
+forced unit calculation, reproduces the same carrier equations. An exact positive
+quartic identity supplies strictness. Thus closure and decrease are proved by different
+identities and neither is hidden in the phrase “repeat the argument.”
 
-## 2. The cyclotomic arithmetic we shall use
+## 2. The cyclotomic input
 
-### 2.1 The field, the prime, and the normalization
+### 2.1 The field and the ramified prime
 
-Write
-
-$$
-\mathcal O=\mathbf Z[\zeta],\qquad \lambda=1-\zeta,
-\qquad \mathfrak p=(\lambda).
-$$
-
-The ring $\mathcal O$ is a principal ideal domain. Its unique prime above $5$ is
-$\mathfrak p$, and the exact element identity is
+Put
 
 $$
-5=\zeta^3\eta^2\lambda^4.
+\mathcal O=\mathbf Z[\zeta],
+\qquad
+\lambda=1-\zeta,
+\qquad
+\mathfrak p=(\lambda),
+\qquad
+\eta=1+\zeta+\zeta^{-1}=\frac{1+\sqrt5}{2}.
 \tag{2.1}
 $$
 
-Consequently
+Book 191 proves that $\mathcal O$ is a principal ideal domain and that
+$\mathfrak p$ is the unique prime above $5$. The exact element identity is
 
 $$
-(5)=\mathfrak p^4,\qquad
-v_{\mathfrak p}(\lambda)=1,\qquad
-v_{\mathfrak p}(n)=4v_5(n)\quad(n\in\mathbf Z\setminus\{0\}).
+\boxed{5=\zeta^3\eta^2\lambda^4.}
 \tag{2.2}
 $$
 
-The residue field is $\mathcal O/\mathfrak p\cong\mathbf F_5$, with $\zeta\mapsto1$.
-Every automorphism preserves $\mathfrak p$. We use
+For the normalized valuation $v_{\mathfrak p}$,
 
 $$
-\sigma(\zeta)=\zeta^2,\qquad \bar\zeta=\zeta^{-1}.
-$$
-
-More generally, $\sigma_i(\zeta)=\zeta^i$ for
-$i\in(\mathbf Z/5\mathbf Z)^\times$. The automorphism $\sigma=\sigma_2$ generates
-the cyclic group of order four. Complex conjugation is $\sigma^2=\sigma_4$.
-
-The conversion in (2.2) is not a convention that may be changed mid-proof. One
-ordinary factor of $5$ has cyclotomic valuation four. In particular, a term of
-$\mathfrak p$-value one cannot cancel a rational integer divisible by $5$, whose value
-is at least four.
-
-Every element has unique coordinates
-
-$$
-A=a_0+a_1\lambda+a_2\lambda^2+a_3\lambda^3,\qquad a_i\in\mathbf Z,
+v_{\mathfrak p}(\lambda)=1,
+\qquad
+v_{\mathfrak p}(5)=4,
+\qquad
+v_{\mathfrak p}(n)=4v_5(n)
+\quad(n\in\mathbf Z\setminus\{0\}).
 \tag{2.3}
 $$
 
-and
+Every nontrivial conjugate
 
 $$
-v_{\mathfrak p}(A)
-=\min_{0\le i\le3}\{4v_5(a_i)+i\}.
+\lambda_i=1-\zeta^i,
+\qquad 1\le i\le4,
 \tag{2.4}
 $$
 
-The four candidate values are distinct modulo four, so the least one occurs only once
-and cannot be lost by cancellation.
+is an associate of $\lambda$ and has valuation one. The residue field is
+$\mathcal O/\mathfrak p\cong\mathbf F_5$, with every $\zeta^i$ reducing to one.
 
-### 2.2 Norms and the binary quintic form
+The factor four in (2.3) will account for every exceptional exponent below. A rational
+integer divisible once by $5$ lies four levels deep at $\mathfrak p$; a nonrational
+linear factor in the second case lies only one level deep.
 
-The absolute norm is positive on every nonzero element of $\mathcal O$. For a unit it
-equals one. For a binary cyclotomic factor,
+### 2.2 The norm form
+
+The absolute norm of a nonzero element of $\mathcal O$ is positive. Units have norm
+one, and
 
 $$
-N(x+\zeta y)
-=Q(x,y)
-=x^4-x^3y+x^2y^2-xy^3+y^4
-=\frac{x^5+y^5}{x+y}.
+N_{K/\mathbf Q}(\lambda)=5.
 \tag{2.5}
 $$
 
-The quotient is used only when $x+y\ne0$; the polynomial defines $Q$ in every case.
-Since
+For ordinary integers $U,V$,
 
 $$
-N(\lambda)=5,
+N_{K/\mathbf Q}(U+\zeta V)
+=F(U,V)
+=U^4-U^3V+U^2V^2-UV^3+V^4.
 \tag{2.6}
 $$
 
-an exact equation $x+\zeta y=\lambda A^5$ gives
+When $U+V\ne0$,
 
 $$
-Q(x,y)=5N(A)^5.
+(U+V)F(U,V)=U^5+V^5.
 \tag{2.7}
 $$
 
-This is a reliable consequence. The converse is false: prime ideals over a split
-rational prime can occur in different conjugate factors while contributing to the
-same rational norm.
-
-We shall use the positivity of $N$ to define integral weights. We shall never use
-positivity to reverse a norm identity.
-
-### 2.3 Units, primary elements, and fifth powers
-
-Every unit has a unique expression
+The form $F$ is positive away from $(0,0)$ because it is an absolute norm. It is also
+symmetric:
 
 $$
-u=\pm\zeta^a\eta^n,\qquad 0\le a<5,\quad n\in\mathbf Z.
+F(U,V)=F(V,U).
 \tag{2.8}
 $$
 
-Modulo fifth powers, the two classes $\zeta$ and $\eta$ are independent. An element
-prime to $\lambda$ is **primary** when it is congruent to a nonzero rational integer
-modulo $\lambda^2$. Every $\lambda$-adic unit has a unique associate $\zeta^kA$ that
-is primary.
-
-Two unit tests will be used repeatedly.
-
-**Primary-unit test.** A unit congruent to a rational integer modulo $\lambda^2$ is
-real, hence is $\pm\eta^n$.
-
-**Fifth-power unit test.** A unit congruent to a rational integer modulo $\lambda^3$
-is a fifth power.
-
-The thresholds are sharp. The unit $\zeta$ is rational modulo $\lambda$ but is not
-real. The unit $\eta$ is rational modulo $\lambda^2$ but is not a fifth power.
-
-Every integral fifth power is congruent to a rational integer modulo $5\mathcal O$,
-hence modulo $\lambda^4$. Therefore, if
+Two elementary identities involving $F$ will later do all the archimedean work:
 
 $$
-A=uB^5
-$$
-
-is a $\lambda$-adic unit and $A$ is rational modulo $\lambda^3$, then the
-fifth-power unit test makes $u$ a fifth power.
-
-### 2.4 Coprimality and extraction
-
-For coprime integers $x,y$, put
-
-$$
-F_i=x+\zeta^iy,\qquad i\in\mathbf Z/5\mathbf Z.
-$$
-
-Any prime ideal dividing two distinct $F_i$ is $\mathfrak p$. Indeed, differences of
-the two factors eliminate $x$ and $y$, and every nonzero difference of fifth roots of
-unity is an associate of $\lambda$.
-
-If $5\nmid x+y$, all five factors are prime to $\mathfrak p$ and hence pairwise
-coprime. If $5\mid x+y$, then
-
-$$
-v_{\mathfrak p}(F_0)=4v_5(x+y),\qquad
-v_{\mathfrak p}(F_i)=1\quad(i\ne0).
+5(U^2+V^2)^2-(U+V)^4=4F(U,V),
 \tag{2.9}
-$$
-
-Consequently, if their product is a fifth power, then
-
-$$
-x+\zeta y=uA^5\quad(5\nmid x+y),
-\tag{2.10}
 $$
 
 and
 
 $$
-x+\zeta y=u\lambda A^5\quad(5\mid x+y).
+\begin{aligned}
+16\bigl(5F(U,V)-(U-V)^4\bigr)
+={}&5(U+V)^4\\
+&+50(U+V)^2(U-V)^2+9(U-V)^4.
+\end{aligned}
+\tag{2.10}
+$$
+
+Both follow by expansion. Identity (2.9) creates the real-quadratic norm equations;
+(2.10) later proves that the replacement is strictly smaller.
+
+### 2.3 Units and the three-digit test
+
+Every unit of $\mathcal O$ has a unique expression
+
+$$
+u=\pm\zeta^a\eta^n,
+\qquad 0\le a<5,\quad n\in\mathbf Z.
 \tag{2.11}
 $$
 
-These statements first follow for principal ideals. Class number one turns the fifth
-root ideal into a principal ideal; equality of generators leaves the displayed unit.
-This order of reasoning prevents unique factorization from silently swallowing a unit.
+Modulo fifth powers, $\zeta$ and $\eta$ give the two independent unit classes. An
+element prime to $\lambda$ is **primary** when it is congruent to a nonzero rational
+integer modulo $\lambda^2$. Every $\lambda$-adic unit has a unique associate
+$\zeta^kA$ that is primary.
 
-## 3. Primitive equations and local alternatives
+We will use two exact consequences from Book 191.
 
-### 3.1 Primitive reduction
+**Primary-unit criterion.** A unit congruent to a rational integer modulo
+$\lambda^2$ is real. Thus it is $\pm\eta^n$.
 
-Assume that a nonzero integer solution exists. Divide $x,y,z$ by their positive common
-divisor. The resulting solution satisfies
+**Fifth-power unit criterion.** A unit congruent to a rational integer modulo
+$\lambda^3$ is a fifth power in $\mathcal O^\times$.
+
+The second criterion follows from the expansion
+
+$$
+\eta\equiv3+\lambda^2\pmod{\lambda^3}.
+\tag{2.12}
+$$
+
+The linear $\lambda$-digit detects the $\zeta$-exponent, and the quadratic digit then
+detects the $\eta$-exponent modulo five. The modulus is sharp: $\eta$ is rational
+modulo $\lambda^2$ but is not a fifth power.
+
+Every integral fifth power is congruent to a rational integer modulo $5\mathcal O$,
+hence modulo $\lambda^4$. Therefore, if a $\lambda$-adic unit has the form $uA^5$
+and is rational modulo $\lambda^3$, then $u$ is a fifth power. This is the unit-removal
+step used in the second case.
+
+### 2.4 Coprimality of the linear factors
+
+Let $U,V\in\mathbf Z$ be coprime and put
+
+$$
+L_i=U+\zeta^iV,
+\qquad i\in\mathbf Z/5\mathbf Z.
+\tag{2.13}
+$$
+
+If a prime ideal divides both $L_i$ and $L_j$ with $i\ne j$, two linear
+combinations show that it divides
+
+$$
+U(\zeta^{j-i}-1)
+\quad\text{and}\quad
+V(\zeta^i-\zeta^j).
+$$
+
+Every displayed cyclotomic difference is an associate of $\lambda$. A prime other
+than $\mathfrak p$ would consequently divide both $U$ and $V$, contradicting
+primitivity. Hence distinct $L_i$ have no common prime ideal away from
+$\mathfrak p$.
+
+Their exact valuations at $\mathfrak p$ have two forms:
+
+$$
+\begin{array}{c|c}
+5\nmid U+V & v_{\mathfrak p}(L_i)=0\text{ for every }i,\\
+5\mid U+V &
+v_{\mathfrak p}(L_0)=4v_5(U+V),\quad
+v_{\mathfrak p}(L_i)=1\text{ for }i\ne0.
+\end{array}
+\tag{2.14}
+$$
+
+For the second row, write
+
+$$
+U+\zeta^iV=(U+V)+V(\zeta^i-1).
+$$
+
+The two summands have valuations at least four and exactly one. They cannot cancel.
+
+### 2.5 The exact ramified extraction
+
+The cyclotomic input can now be packaged in the exact form needed later.
+
+**Proposition 2.1 (ramified factor).** Suppose
+
+$$
+U^5+V^5=W^5,
+\qquad \gcd(U,V)=1,
+\qquad 5\mid U+V.
+\tag{2.15}
+$$
+
+Then there is $A\in\mathcal O$ such that
+
+$$
+\boxed{U+\zeta V=\lambda A^5.}
+\tag{2.16}
+$$
+
+**Proof strategy.** Ideal coprimality and the valuation-one statement first give a
+unit times $\lambda$ times a fifth power. Dividing by $\lambda$ leaves a rational
+residue three digits deep, which forces the unit to be a fifth power.
+
+**Proof.** In the product (1.2), every prime away from $\mathfrak p$ occurs in at
+most one factor. Its exponent there is therefore divisible by five. Equation (2.14)
+gives $v_{\mathfrak p}(U+\zeta V)=1$. Since $\mathcal O$ is a PID, ideal extraction
+gives
+
+$$
+U+\zeta V=u\lambda B^5
+\tag{2.17}
+$$
+
+for a unit $u$ and a $\lambda$-adic unit $B$.
+
+Write $U+V=5m$. Using (2.2),
+
+$$
+\frac{U+\zeta V}{\lambda}
+=\frac{U+V-V\lambda}{\lambda}
+=\zeta^3\eta^2m\lambda^3-V
+\equiv -V\pmod{\lambda^3}.
+\tag{2.18}
+$$
+
+The quotient is a $\lambda$-adic unit. The fifth power $B^5$ is congruent to a
+nonzero rational integer modulo $\lambda^4$. Dividing (2.18) by that residue makes
+$u$ rational modulo $\lambda^3$. The fifth-power unit criterion writes $u=v^5$.
+Replacing $B$ by $vB$ proves (2.16). $\square$
+
+Taking norms gives the safe implication
+
+$$
+F(U,V)=5N(A)^5.
+\tag{2.19}
+$$
+
+The proof went from ideals to an element and only then to its norm. We will never
+reverse (2.19).
+
+### 2.6 The rational coprimality shadow
+
+The ideal calculation has a useful integer shadow that will audit every later
+$5$-adic exponent. For coprime $U,V$,
+
+$$
+\gcd(U+V,F(U,V))\mid5.
+\tag{2.20}
+$$
+
+Indeed, if a rational prime $q$ divides $U+V$, then $U\equiv-V\pmod q$, and
+
+$$
+F(U,V)\equiv5V^4\pmod q.
+$$
+
+Primitivity gives $q\nmid V$, so a common prime must be $5$.
+
+The value at $5$ is exact. Put $h=U+V$ and $U=-V+h$. Direct expansion gives
+
+$$
+F(U,V)
+=5V^4-10V^3h+10V^2h^2-5Vh^3+h^4.
+\tag{2.21}
+$$
+
+If $5\mid h$ and $5\nmid V$, the first term has $5$-adic value one and every
+remaining term has value at least two. Hence
+
+$$
+v_5(F(U,V))=1.
+\tag{2.22}
+$$
+
+This agrees with the cyclotomic calculation
+
+$$
+v_5\bigl(N(U+\zeta V)\bigr)
+=v_{\mathfrak p}(U+\zeta V)=1.
+$$
+
+The agreement is special to the unique prime above $5$. At a split rational prime,
+two coprime ideals can have norms sharing that prime, so (2.20) cannot replace the
+ideal argument that produced (2.16). Its role is instead to certify that the factor
+$5$ in (2.19) occurs exactly once and that $N(A)$ is prime to $5$.
+
+## 3. Primitive solutions and the first case
+
+### 3.1 Primitive and symmetric formulations
+
+Assume that (1.1) has a nonzero solution. Divide all three variables by their positive
+common divisor. The resulting solution is primitive:
 
 $$
 \gcd(x,y,z)=1.
 \tag{3.1}
 $$
 
-It is then pairwise coprime. For example, a prime dividing $x$ and $y$ divides $z^5$
-and hence $z$, contrary to (3.1). The same argument applies to every pair.
+It is then pairwise coprime. A prime dividing two variables divides the fifth power of
+the third and hence the third variable, contrary to (3.1).
 
-Signs cause no obstruction because the exponent is odd. We may move any term across
-the equality and absorb the sign into a fifth power. A zero variable gives
-$|x|=|z|$ or $|y|=|z|$ and is one of the trivial solutions excluded from the descent.
-Thus throughout the contradiction argument all three variables are nonzero.
-
-Primitive reduction is essential. Without it, an ordinary prime dividing both $x$ and
-$y$ divides every cyclotomic factor, so the pairwise coprimality statement of Section
-2.4 is false.
-
-### 3.2 The elementary congruence at five
-
-The two cases exhaust all primitive solutions, but a useful elementary observation
-shows that the second case is unavoidable.
-
-**Lemma 3.1.** If $a,b,c$ are all prime to $5$, then
+Whenever convenient, move one term to the other side and write
 
 $$
-a^5+b^5\ne c^5\pmod{25}.
-$$
-
-**Proof strategy.** A unit modulo $25$ has a fifth power depending only on its residue
-modulo $5$. List the four possibilities and add them.
-
-**Proof.** Write $a=r+5t$, with $r\in\{1,2,3,4\}$. The binomial theorem gives
-$a^5\equiv r^5\pmod{25}$. The four nonzero fifth-power residues are
-
-$$
-1^5\equiv1,\quad 2^5\equiv7,\quad
-3^5\equiv18,\quad 4^5\equiv24\pmod{25}.
-$$
-
-They are $1,7,-7,-1$. A direct addition shows that the sum of two members of this set
-never belongs to the set. Hence the congruence is impossible. $\square$
-
-This proves the first case quickly, but it does not explain how the cyclotomic unit
-obstruction is resolved. Since that mechanism is needed in the descent package, Chapter
-4 gives the cyclotomic first-case proof as well. The elementary lemma then serves as an
-independent audit.
-
-It follows at once that some one of $x,y,z$ is divisible by $5$. Pairwise coprimality
-shows that at most one is. After rewriting and permuting the equation, we may arrange
-
-$$
-x^5+y^5=z^5,\qquad 5\mid z,\qquad 5\nmid xy.
+a^5+b^5=c^5.
 \tag{3.2}
 $$
 
-### 3.3 Exact valuations of the five factors
+All signs are absorbed into $a,b,c$ because the exponent is odd. Conversely, any
+result proved for (3.2) applies to the symmetric equation after one sign change. This
+orientation never assumes that the variables themselves are positive.
 
-From Fermat's congruence $n^5\equiv n\pmod5$, equation (3.2) gives
+### 3.2 Parity and divisibility alternatives
 
-$$
-x+y\equiv z\equiv0\pmod5.
-$$
-
-Let
-
-$$
-t=v_5(x+y),\qquad s=v_5(z).
-$$
-
-For $i\ne0$, (2.9) gives $v_{\mathfrak p}(x+\zeta^iy)=1$, whereas the rational factor
-has value $4t$. Thus
+In a primitive solution of the symmetric equation, exactly two variables are odd and
+one is even. Indeed, reduction modulo $2$ shows that the number of odd variables is
+even, and primitivity excludes zero odd variables. After orienting the equation as
+(3.2), there are consequently two legitimate parity patterns:
 
 $$
-v_{\mathfrak p}(x^5+y^5)=4t+4.
+\begin{array}{c|c}
+c\text{ odd} & a,b\text{ have opposite parity},\\
+c\text{ even} & a,b\text{ are both odd}.
+\end{array}
 $$
 
-The right side $z^5$ has value $20s$. Hence
+Both patterns really must be retained. The congruence of two odd fifth powers can
+vanish to high $2$-adic order when the two bases are negatives of one another modulo a
+large power of $2$. There is no valid reduction modulo $4$ that rules out the second
+row.
+
+At the prime $5$, pairwise coprimality permits at most one divisible variable. If none
+is divisible, we are in the first case. If one is divisible, a permutation of the
+three signed terms in (1.1) places it on the right of (3.2). We may therefore orient
+the second case as
 
 $$
-4t+4=20s,\qquad
-\boxed{t+1=5s}.
+a^5+b^5=c^5,
+\qquad 5\mid c,\qquad 5\nmid ab.
 \tag{3.3}
 $$
 
-In particular,
+Fermat's congruence $t^5\equiv t\pmod5$ then gives
 
 $$
-t\equiv4\pmod5,\qquad t\ge4.
+a+b\equiv c\equiv0\pmod5.
 \tag{3.4}
 $$
 
-The first rational consequence of the second case is therefore unexpectedly strong:
-$5^4$ divides $x+y$. The four comes from the ramification index, not from a repeated
-ordinary congruence argument.
+### 3.3 The short congruence proof
 
-### 3.4 Rational factor shapes
+The first case can be closed without algebraic number theory. We give this proof first
+because it is an independent check on the longer cyclotomic mechanism.
 
-For a primitive pair,
+**Lemma 3.1 (fifth powers modulo $25$).** If $5\nmid n$, then
 
 $$
-\gcd(x+y,Q(x,y))\mid5.
+n^5\pmod{25}\in\{1,7,-7,-1\}.
 \tag{3.5}
 $$
 
-Indeed, modulo a prime divisor of $x+y$ one has $x\equiv-y$ and therefore
-$Q(x,y)\equiv5y^4$. Primitivity excludes a prime divisor of $y$. If $5\mid x+y$, a
-direct expansion at $x=-y+(x+y)$ gives
+No sum of two members of this set is again a member of the set.
+
+**Proof.** Write $n=r+5t$ with $r\in\{1,2,3,4\}$. The binomial theorem gives
+$n^5\equiv r^5\pmod{25}$. The four values are
 
 $$
-v_5(Q(x,y))=1.
+1^5\equiv1,\qquad
+2^5\equiv7,\qquad
+3^5\equiv-7,\qquad
+4^5\equiv-1\pmod{25}.
+$$
+
+Adding the unordered pairs from $\{\pm1,\pm7\}$ gives only
+$0,\pm2,\pm6,\pm8,\pm14$, none of which is $\pm1$ or $\pm7$ modulo $25$.
+$\square$
+
+If $5\nmid abc$ in (3.2), the three fifth powers are nonzero fifth-power residues
+modulo $25$, contradicting Lemma 3.1. Thus:
+
+**Theorem 3.2 (first case, congruence form).** A primitive nonzero solution of
+(3.2) cannot satisfy $5\nmid abc$.
+
+The remainder of this chapter proves the same theorem cyclotomically. It records how
+the real unit that survives first-case extraction is handled, a distinction that
+becomes important when comparing the two cases.
+
+### 3.4 Primary normalization
+
+Assume for contradiction that
+
+$$
+a^5+b^5=c^5,
+\qquad \gcd(a,b)=1,
+\qquad 5\nmid abc.
 \tag{3.6}
 $$
 
-Since $(x+y)Q(x,y)=z^5$, comparison of ordinary prime exponents yields integers
-$a,w\ne0$ such that
-
-$$
-\boxed{x+y=5^4a^5,\qquad Q(x,y)=5w^5,\qquad z=5aw.}
-\tag{3.7}
-$$
-
-The signs may be absorbed into $a$; $w$ may be taken positive because $Q(x,y)>0$.
-Notice the strict inequalities
-
-$$
-0<|a|<|z|,\qquad 0<w<|z|,
-\tag{3.8}
-$$
-
-because $z=5aw$ and $a,w$ are nonzero integers. These smaller numbers are candidates
-for a descent measure, but neither is yet the last coordinate of a new Fermat solution.
-That distinction will guide Chapters 6 and 7.
-
-Two small computations fix the valuation picture. For $(x,y)=(1,1)$, the exceptional
-condition fails. The four nonrational factors $1+\zeta^i$ are units, and their norms
-are one. For $(x,y)=(1,4)$, the exceptional condition holds. The rational factor is
-$5$, of $\mathfrak p$-value four, while
-
-$$
-1+4\zeta^i=5+4(\zeta^i-1)
-$$
-
-has value one for $i\ne0$. The norm quotient is
-
-$$
-Q(1,4)=1-4+16-64+256=205=5\cdot41.
-$$
-
-This pair is not a Fermat solution because $41$ is not a fifth power, but it displays
-the exact local pattern from which the descent starts. It also warns that a normalized
-factor is only a $\mathfrak p$-unit, not necessarily a global unit.
-
-There is a useful integer check on the norm form. Put $s=x+y$ and $p=xy$. Newton's
-identities give
-
-$$
-Q(x,y)=s^4-5ps^2+5p^2.
-\tag{3.9}
-$$
-
-When $5\mid s$ and $5\nmid p$, the last term has ordinary value one and the other
-terms have larger value, recovering $v_5(Q)=1$. Formula (3.9) cannot replace ideal
-factorization: it says nothing about how primes above a split rational prime are
-distributed among the linear factors.
-
-## 4. The first case
-
-### 4.1 Primary normalization
-
-Temporarily suppose
-
-$$
-a^5+b^5=c^5,\qquad \gcd(a,b)=1,\qquad 5\nmid abc.
-\tag{4.1}
-$$
-
-Then $5\nmid a+b$, since otherwise (4.1) modulo $5$ would give $5\mid c$.
-The factors $a+\zeta^ib$ are pairwise coprime, so
+Then $5\nmid a+b$. The five factors $a+\zeta^ib$ are pairwise coprime, including at
+$\mathfrak p$, so ideal extraction gives
 
 $$
 a+\zeta b=uA^5.
-\tag{4.2}
+\tag{3.7}
 $$
 
 There is a unique $k\in\mathbf Z/5\mathbf Z$ such that
@@ -549,1029 +629,1491 @@ $$
 a+\zeta b=(a+b)-b\lambda,
 $$
 
-the first two $\lambda$-digits give
+its first two $\lambda$-digits give
 
 $$
-k\equiv-\frac{b}{a+b}\pmod5,
-\quad\text{equivalently}\quad
+k(a+b)+b\equiv0\pmod5,
+\quad\text{or equivalently}\quad
 ka+(k+1)b\equiv0\pmod5.
-\tag{4.3}
+\tag{3.8}
 $$
 
-The fifth power $A^5$ is primary, so the unit $\zeta^ku$ is primary. The primary-unit
-test makes it real. Absorbing a fifth power of $\eta$ and a sign into $A^5$, we obtain
+The fifth power $A^5$ is primary. The primary-unit criterion therefore makes the unit
+in the normalized equation real. Absorbing a sign and a fifth power of $\eta$ into
+$A^5$, we obtain
 
 $$
-\boxed{\zeta^k(a+\zeta b)=\eta^rA^5}
-\tag{4.4}
+\boxed{\zeta^k(a+\zeta b)=\eta^eA^5}
+\tag{3.9}
 $$
 
-for some $r\in\{0,1,2,3,4\}$. It is important that we do not claim $r=0$.
+for some $e\in\{0,1,2,3,4\}$. We do not assert that $e=0$; in the first case there
+is no three-digit congruence that would justify that assertion.
 
-### 4.2 Fifth powers and conjugate differences
+### 3.5 The cyclotomic residue lemma
 
-The real unit in (4.4) disappears after conjugation and subtraction. Conjugating gives
+The surviving real unit disappears when (3.9) is compared with its complex
+conjugate. We first record the required depth.
+
+**Lemma 3.3.** For every $A\in\mathcal O$,
 
 $$
-\zeta^{-k}(a+\zeta^{-1}b)=\eta^r\bar A^5.
+\lambda^5\mid A^5-\bar A^5.
+\tag{3.10}
 $$
 
-Hence
+**Proof.** Since conjugation acts trivially modulo $\lambda$, write
+$A=\bar A+\lambda D$. Expanding $A^5-\bar A^5$, the first four nonzero terms contain
+$5\lambda,5\lambda^2,5\lambda^3,5\lambda^4$, respectively, and the last contains
+$\lambda^5$. Since $\lambda^4\mid5$, every term is divisible by $\lambda^5$.
+$\square$
+
+Conjugating (3.9) and subtracting gives
 
 $$
 a(\zeta^k-\zeta^{-k})
 +b(\zeta^{k+1}-\zeta^{-(k+1)})
-=\eta^r(A^5-\bar A^5).
-\tag{4.5}
+=\eta^e(A^5-\bar A^5).
+\tag{3.11}
 $$
 
 The right side is divisible by $\lambda^5$.
 
-**Lemma 4.1.** For every $A\in\mathcal O$,
-
-$$
-\lambda^5\mid A^5-\bar A^5.
-$$
-
-**Proof.** Since conjugation acts trivially modulo $\lambda$, write
-$A=\bar A+\lambda D$. Expanding,
-
-$$
-A^5-\bar A^5
-=5\bar A^4\lambda D+10\bar A^3\lambda^2D^2
-+10\bar A^2\lambda^3D^3+5\bar A\lambda^4D^4+\lambda^5D^5.
-$$
-
-The first four terms are divisible by $5\lambda$, $5\lambda^2$,
-$5\lambda^3$, and $5\lambda^4$, respectively. Since $\lambda^4\mid5$, each is
-divisible by $\lambda^5$; so is the last term. $\square$
-
-This lemma is stronger than the assertion that fifth powers are rational modulo
-$\lambda^4$. The extra factor comes from taking the difference of two elements already
-congruent modulo $\lambda$.
-
-### 4.3 The residue restriction
-
-Equation (4.5) has a surprisingly rigid consequence.
-
-**Lemma 4.2 (first-case residue lemma).** Under (4.1), one has
+**Lemma 3.4 (first-case residue lemma).** Under (3.6),
 
 $$
 a\equiv b\pmod5.
-\tag{4.6}
+\tag{3.12}
 $$
 
-**Proof strategy.** The primary exponent $k$ cannot be $0$ or $4$ because $a,b$ are
-units modulo $5$. For $k=1$ or $3$, the left side of (4.5), written in the integral
-$\lambda$-basis, cannot be divisible by $\lambda^5$ unless one of $a,b$ is divisible
-by $5$. Thus $k=2$, and (4.3) becomes $a\equiv b$.
+**Proof strategy.** Equation (3.8) excludes two values of $k$. For two more values,
+the rational coordinate of the left side of (3.11) contradicts divisibility by
+$\lambda^5$. The middle value is then forced.
 
-**Proof.** From (4.3), $k=0$ would give $5\mid b$, and $k=4$ would give $5\mid a$.
-Thus $k\in\{1,2,3\}$.
+**Proof.** If $k=0$, equation (3.8) gives $5\mid b$; if $k=4$, it gives
+$5\mid a$. Hence $k\in\{1,2,3\}$.
 
-For $k=1$, the left side of (4.5) has $\lambda$-coordinates
+Use the integral basis $1,\lambda,\lambda^2,\lambda^3$. For $k=1$, the left side of
+(3.11) has coordinates
 
 $$
 5a+(-7a+b)\lambda+(4a-2b)\lambda^2+(-a+b)\lambda^3.
-\tag{4.7}
+\tag{3.13}
 $$
 
-If this is divisible by $\lambda^5$, formula (2.4) first forces $25\mid5a$, hence
-$5\mid a$, a contradiction. For $k=3$, conjugating and interchanging $a,b$ gives the
-same contradiction with $5\mid b$.
+An element divisible by $\lambda^5$ has rational coordinate divisible by $25$.
+Thus (3.13) would give $25\mid5a$, contrary to $5\nmid a$. For $k=3$, the rational
+coordinate is $-5b$, giving the same contradiction with $5\nmid b$.
 
-Therefore $k=2$. Equation (4.3) becomes
+Therefore $k=2$. Equation (3.8) becomes
 
 $$
 2a+3b\equiv2(a-b)\equiv0\pmod5,
 $$
 
-which is (4.6). $\square$
+which proves (3.12). $\square$
 
-The coordinate calculation is decisive. Divisibility merely by $\lambda^2$ is already
-built into primary normalization; divisibility by $\lambda^5$ is what excludes the two
-asymmetric residue classes.
-
-All five primary exponents can be displayed at once:
-
-| $k$ | primary congruence | consequence of (4.5) |
-|---|---|---|
-| $0$ | $b\equiv0$ | excluded in the first case |
-| $1$ | $a+2b\equiv0$ | forces $a\equiv0$ |
-| $2$ | $a-b\equiv0$ | the only surviving unit pair |
-| $3$ | $2a+b\equiv0$ | forces $b\equiv0$ |
-| $4$ | $a\equiv0$ | excluded in the first case |
-
-The middle row is genuinely sharp. Its conjugate difference is
+For $k=2$, the left side of (3.11) is exactly
 
 $$
 (a-b)(\zeta^2-\zeta^3).
 $$
 
-If $a\equiv b\pmod5$, the rational factor contributes four copies of $\lambda$ and
-the root-of-unity difference contributes one. Thus a single ordered pair cannot exclude
-the middle row. The contradiction appears only after the three signed variables are
-cycled. This also explains the difference from the modulus-$25$ proof: that proof
-compares all three fifth powers simultaneously, while the cyclotomic proof extracts
-exact information from one ordered pair and then transports it by symmetry.
+The cyclotomic difference contributes one copy of $\lambda$ and $a-b$ contributes
+four when $5\mid a-b$. This explains why the middle residue class survives for one
+ordered pair.
 
-### 4.4 Cycling the three variables
+It is useful to see the complete residue ledger. The primary congruence and the
+consequence of $\lambda^5$-divisibility are
 
-We now close the first case without any appeal to the second-case descent.
+| $k$ | equation from primarity | consequence of conjugate subtraction |
+|---|---|---|
+| $0$ | $b\equiv0$ | excluded by the first case |
+| $1$ | $a+2b\equiv0$ | the rational coordinate forces $a\equiv0$ |
+| $2$ | $2a+3b\equiv0$ | $a\equiv b$ |
+| $3$ | $3a+4b\equiv0$ | the rational coordinate forces $b\equiv0$ |
+| $4$ | $4a\equiv0$ | excluded by the first case |
 
-From (4.1) and Lemma 4.2,
+The rational-coordinate test in the two asymmetric rows uses the valuation formula
+from Book 191. If
 
 $$
-a\equiv b\pmod5.
-\tag{4.8}
+C_0+C_1\lambda+C_2\lambda^2+C_3\lambda^3
 $$
 
-Rewrite the same equation as
+is divisible by $\lambda^5$, then $4v_5(C_0)\ge5$, so $25\mid C_0$.
+For $k=1$ that coordinate is $5a$; for $k=3$ it is $-5b$. The table therefore
+contains no suppressed cancellation among the other three coordinates.
+
+This calculation also shows exactly why one ordered pair is insufficient. In the
+middle row, $a-b$ may contribute the required rational factor $5$, and then the left
+side of (3.11) really is divisible by $\lambda^5$. Cycling the signed variables in the
+next section is a mathematical step, not a stylistic repetition.
+
+### 3.6 Cycling the signed variables
+
+Apply Lemma 3.4 to (3.6): $a\equiv b\pmod5$. Rewrite the same equation as
 
 $$
 a^5+(-c)^5=(-b)^5.
 $$
 
-All three variables remain prime to $5$, and $5\nmid a-c$ because otherwise the
-equation modulo $5$ would force $5\mid b$. Lemma 4.2 applied to the first two terms
-gives
+It is still a primitive first-case equation, so the lemma also gives
 
 $$
 a\equiv-c\pmod5.
-\tag{4.9}
 $$
 
-On the other hand (4.1) modulo $5$ and (4.8) give
+On the other hand, the original equation modulo $5$ and $a\equiv b$ give
 
 $$
 c\equiv a+b\equiv2a\pmod5.
 $$
 
-Together with (4.9), this says $a\equiv-2a$, so $3a\equiv0\pmod5$. This contradicts
-$5\nmid a$.
+Thus $a\equiv-2a$, so $3a\equiv0\pmod5$, contradicting $5\nmid a$. We have proved
+the cyclotomic form of the first-case theorem.
 
-We have proved:
+The two proofs illuminate different facts. Modulo $25$, the first case fails because
+the nonzero fifth-power residues are too sparse. Cyclotomically, primary normalization
+leaves a real unit, conjugate subtraction removes it, and cycling the signed variables
+closes the contradiction. Neither proof assumes that a primary unit is a fifth power.
 
-**Theorem 4.3 (first case).** There is no nonzero primitive solution of
-$a^5+b^5=c^5$ with $5\nmid abc$.
+## 4. Entering the second case
 
-### 4.5 What the first case teaches
+### 4.1 The exact valuation ledger
 
-The proof used the realness of the surviving unit, not its being a fifth power. This
-is why modulus $\lambda^2$ was enough. The real unit canceled when the normalized
-equation was compared with its conjugate.
-
-Two tempting shortcuts fail.
-
-1. From (4.2), one cannot replace $u$ by $1$. The unit $\eta$ is a counterexample to
-   that inference.
-2. From $N(a+\zeta b)$ being a fifth power, one cannot recover (4.2). Norms merge
-   prime ideals above the same rational prime.
-
-The first-case proof is thus short only because Book 191 has already isolated the unit
-class precisely. The residue lemma is the visible tip of that arithmetic.
-
-## 5. The ramified factor in the second case
-
-### 5.1 Locating the variable divisible by five
-
-Return to the primitive equation (3.2). Exactly one variable is divisible by $5$, and
-it is $z$. The congruence $x+y\equiv z\pmod5$ then places the rational factor
-$x+y$ at the ramified prime. Equations (3.3) and (3.4) say
+Assume a primitive nonzero second-case solution has been oriented as
 
 $$
-v_5(x+y)=5v_5(z)-1.
-\tag{5.1}
+x^5+y^5=z^5,
+\qquad 5\mid z,\qquad 5\nmid xy.
+\tag{4.1}
 $$
 
-This relation is both a check and a warning. A proof that obtains only $5\mid x+y$
-has not yet used the full cyclotomic valuation. Conversely, one must not read the
-$-1$ in (5.1) as a negative valuation: it records the four nonrational factors, each
-of which contributes one copy of $\lambda$.
-
-### 5.2 Removing the common prime
-
-For $i=1,2,3,4$, set
+Then $5\mid x+y$. Put
 
 $$
-\lambda_i=1-\zeta^i,\qquad
-G_i=\frac{x+\zeta^iy}{\lambda_i}.
-\tag{5.2}
+t=v_5(x+y),
+\qquad
+s=v_5(z).
 $$
 
-Each $G_i$ is integral and prime to $\mathfrak p$. The ideals $(G_i)$ are pairwise
-coprime. A common prime away from $\mathfrak p$ would divide two original factors,
-and $\mathfrak p$ divides none of the quotients.
+The rational factor has $\mathfrak p$-value $4t$, while each of the four
+nonrational factors has value one. Hence
 
-Since the product of the original factors is $z^5$, every prime-ideal exponent away
-from $\mathfrak p$ in $x+\zeta y$ is divisible by five. Its $\mathfrak p$-value is
-one. Ideal extraction and class number one give
+$$
+v_{\mathfrak p}(x^5+y^5)=4t+4.
+$$
+
+The right side has value $20s$. Therefore
+
+$$
+\boxed{t+1=5s.}
+\tag{4.2}
+$$
+
+In particular,
+
+$$
+t\equiv4\pmod5,
+\qquad
+t\ge4.
+\tag{4.3}
+$$
+
+The congruence $t\equiv4$ is the first rigid gain of the second case. It comes from
+the four nonrational factors, not from treating $5$ as a uniformizer.
+
+The same equality can be read factor by factor:
+
+$$
+\underbrace{4t}_{x+y}
++\underbrace{1+1+1+1}_{x+\zeta^iy,\ i=1,2,3,4}
+=\underbrace{5\cdot4s}_{z^5}.
+$$
+
+The left side counts the five cyclotomic factors, while the right side first multiplies
+the valuation by the exponent five and then converts an ordinary factor of $5$ into
+four copies of $\lambda$. This ledger is a useful hostile check: using
+$v_{\mathfrak p}(5)=1$ would give the false relation $t+4=5s$.
+
+There is no cancellation hidden in the four unit valuations. For $i\ne0$,
+
+$$
+x+\zeta^iy=(x+y)+y(\zeta^i-1).
+$$
+
+The first summand has value at least sixteen because $t\ge4$ once (4.2) is known,
+whereas the second has value one. Even before knowing $t\ge4$, divisibility of
+$x+y$ by $5$ gives values at least four and one. The smaller value occurs uniquely.
+
+### 4.2 Removing the common prime
+
+For $i=1,2,3,4$, divide the factor $x+\zeta^iy$ by its exact conjugate uniformizer
+$1-\zeta^i$. The resulting integral factors are prime to $\mathfrak p$ and pairwise
+coprime. Consequently every prime-ideal exponent away from $\mathfrak p$ in
+$x+\zeta y$ is divisible by five. Its $\mathfrak p$-value is one. The ideal argument
+therefore gives
 
 $$
 x+\zeta y=u\lambda A^5
-\tag{5.3}
+\tag{4.4}
 $$
 
-for a unit $u$ and a $\lambda$-adic unit $A$.
+with $u\in\mathcal O^\times$ and $A$ a $\lambda$-adic unit.
 
-The use of the same $\lambda$ rather than $\lambda_i$ is harmless for a single factor,
-but exact conjugate formulas are cleaner with $\lambda_i$. Applying $\sigma^j$ to the
-eventual exact equation will automatically choose the correct conjugate uniformizer.
-
-### 5.3 Eliminating the unit
-
-Here the ramification that created the common divisor also removes the unit.
-
-**Proposition 5.1 (exact ramified factor).** Under (3.2), there is $A\in\mathcal O$
-such that
+This is the exact point where class number one is used. Prime-ideal factorization
+first produces
 
 $$
-\boxed{x+\zeta y=\lambda A^5.}
-\tag{5.4}
+(x+\zeta y)=\mathfrak p\mathfrak a^5.
 $$
 
-**Proof strategy.** Divide (5.3) by $\lambda$. The quotient is rational modulo
-$\lambda^3$. Since $A^5$ is rational modulo $\lambda^4$, the unit $u$ is rational
-modulo $\lambda^3$ and hence is a fifth power.
+The ideal $\mathfrak a$ is principal, say $(A)$, and equality of principal ideals
+leaves the unit $u$. No unit has been silently discarded.
 
-**Proof.** Write $x+y=5m$. From (2.1),
+### 4.3 Eliminating the unit
+
+Write $x+y=5m$. Dividing (4.4) by $\lambda$ and using (2.2) gives
 
 $$
 \frac{x+\zeta y}{\lambda}
-=\frac{x+y-y\lambda}{\lambda}
 =\zeta^3\eta^2m\lambda^3-y
 \equiv-y\pmod{\lambda^3}.
-\tag{5.5}
+\tag{4.5}
 $$
 
-This is a $\lambda$-adic unit because $5\nmid y$. Equation (5.3) gives
+The quotient is a $\lambda$-adic unit. Since $A^5$ is rational modulo
+$\lambda^4$, equation (4.5) makes $u$ rational modulo $\lambda^3$. The
+fifth-power unit criterion absorbs it into $A^5$. Thus Proposition 2.1 gives the exact
+equation
 
 $$
-\frac{x+\zeta y}{\lambda}=uA^5.
+\boxed{x+\zeta y=\lambda A^5.}
+\tag{4.6}
 $$
 
-The fifth power $A^5$ is congruent to a nonzero rational integer modulo
-$\lambda^4$. Dividing (5.5) by its rational residue makes $u$ rational modulo
-$\lambda^3$. The fifth-power unit test gives $u=v^5$. Replacing $A$ by $vA$ proves
-(5.4). $\square$
+This is stronger than its ideal version and stronger than its norm. The depth three in
+(4.5) is exact: one rational factor $5$ contributes four copies of $\lambda$, and
+division by the one common copy leaves three.
 
-This is the exact point at which second-case arithmetic is stronger than first-case
-arithmetic. In the first case a real unit class remained. Here dividing $5$ by one
-copy of $\lambda$ leaves $\lambda^3$, precisely the depth needed to kill both unit
-classes.
+### 4.4 The rational shapes
 
-### 5.4 The exact rational shadows
-
-Taking norms in (5.4) gives
+Taking absolute norms of (4.6) yields
 
 $$
-Q(x,y)=5N(A)^5.
+F(x,y)=5w^5,
+\qquad
+w=N_{K/\mathbf Q}(A)>0.
+\tag{4.7}
 $$
 
-Comparison with (3.7) shows
+Now
 
 $$
-N(A)=w.
-\tag{5.6}
+z^5=(x+y)F(x,y)=5(x+y)w^5.
 $$
 
-This equality is positive automatically: every nonzero absolute norm from $K$ is
-positive.
-
-The equality $z=5aw$ now reads
-
-$$
-|z|=5|a|N(A).
-\tag{5.7}
-$$
-
-Thus both $|a|$ and $N(A)$ are strictly smaller than $|z|$. The descent will retain
-the element $A$, not only its norm, because its four conjugates remember how the
-prime ideals of $Q(x,y)$ were distributed.
-
-As a useful exact coordinate check, the cyclotomic equation gives
+Thus $(z/w)^5=5(x+y)$. A rational number whose fifth power is an integer is an
+integer, so $z/w=q\in\mathbf Z$. Its fifth power is divisible by $5$, hence
+$q=5a$ for some nonzero $a\in\mathbf Z$. We obtain
 
 $$
-\frac5\lambda=10-10\lambda+5\lambda^2-\lambda^3.
-\tag{5.8}
+\boxed{
+x+y=5^4a^5,
+\qquad
+F(x,y)=5w^5,
+\qquad
+z=5aw.
+}
+\tag{4.8}
 $$
 
-Consequently (5.4) is equivalent to
+These formulas agree with (4.2):
 
 $$
-A^5=(10m-y)-10m\lambda+5m\lambda^2-m\lambda^3,
-\qquad m=\frac{x+y}{5}.
-\tag{5.9}
+v_5(x+y)=4+5v_5(a),
+\qquad
+v_5(z)=1+v_5(a),
 $$
 
-The four coefficients in (5.9) are the concrete starting data for the replacement
-calculation. They also show why an arbitrary fifth root of the norm cannot be used:
-the relative ratios $-10:5:-1$ carry essential information.
+because $5\nmid w$ follows from $v_5(F(x,y))=1$.
 
-From $x+y=5^4a^5$ one also has
-
-$$
-m=5^3a^5,\qquad v_{\mathfrak p}(m)=12+20v_5(a).
-\tag{5.10}
-$$
-
-Thus (5.9) implies the unusually deep congruence
+There is also a prime-by-prime way to read the same shapes. By Section 2.6, the two
+rational factors $x+y$ and $F(x,y)$ are coprime away from $5$, and the latter has
+exact value one at $5$. Since their product is $z^5$, every prime away from $5$ occurs
+to a multiple of five in each factor separately. At $5$, the exponents have residues
+$4$ and $1$ modulo five. This forces
 
 $$
-A^5\equiv-y\pmod{\lambda^{12}}.
-\tag{5.11}
+x+y=5^4a^5,
+\qquad
+F(x,y)=5w^5
 $$
 
-One must not take a fifth root of this congruence naively. The equality $\zeta^5=1$
-already shows that fifth roots can differ at shallow $\lambda$-adic depth. The
-conjugate-difference construction extracts the invariant information without choosing
-a nonunique local fifth root.
+directly, including their signs because $F$ is positive and fifth powers preserve
+sign. This rational verification agrees with the norm proof but does not replace the
+exact cyclotomic equation (4.6), which is what resolved the unit ambiguity.
 
-The exact conjugate uniformizers are equally important. Applying $\sigma_i$ to (5.4)
-gives
+The quantities $|a|$ and $w$ are smaller than $|z|$, but (4.8) alone is not a
+descent. Neither is yet the last coordinate of a new Fermat solution. The next chapter
+constructs an object that is genuinely closed under replacement.
 
-$$
-x+\zeta^iy=(1-\zeta^i)\sigma_i(A)^5.
-$$
+### 4.5 Why the carrier changes fields
 
-Replacing $1-\zeta^i$ by the associate $\lambda$ would introduce
+The exact cyclotomic element $A$ remembers all prime-ideal information, but a direct
+iteration on conjugate differences of $A$ introduces exact roots of unity whose
+classes are fixed by the product of the factors. There is no legitimate freedom to
+alter those classes in a successor definition.
 
-$$
-\frac{1-\zeta^i}{1-\zeta}=1+\zeta+\cdots+\zeta^{i-1}.
-$$
+The rational shadows (4.8) suggest a more stable path. Identity (2.9) turns
+$F(x,y)=5w^5$ into a norm equation in the real quadratic subfield. Its two conjugate
+factors will be coprime for elementary reasons. Unique factorization there gives an
+actual fifth power, and comparing its two coordinates produces the carrier (1.4).
 
-This unit is harmless for valuations and norms but need not be a fifth power. Keeping
-$1-\zeta^i$ makes every conjugate equation exact.
+This change of field does not throw away the cyclotomic proof. Equation (4.6) is what
+certifies (4.7) without reversing a norm, and the unit criterion that proves (4.6)
+will be used again to remove the first real-quadratic unit. The real subfield is the
+place where the replacement becomes closed, not a substitute for the cyclotomic
+arithmetic.
 
-## 6. From one solution to a descent carrier
+The quadratic identity is also naturally suggested by the relative norm. The two
+complex-conjugate pairs of embeddings of $K$ pass through $K^+$. Grouping the four
+linear factors into those pairs turns the quartic form into a product of two positive
+quadratic forms over $K^+$. Identity (2.9) is the rational-coordinate version of that
+grouping. Its advantage for descent is that a real quadratic element has only two
+coordinates. A fifth-power comparison therefore produces two explicit equations,
+and one linear combination can isolate the old ramified difference.
 
-### 6.1 Why the norm identity alone is insufficient
+The field change also makes positivity available without sacrificing arithmetic
+control. The absolute norm from $K$ is positive but has four conjugate factors; the
+norm from $K^+$ has two real factors whose signs and gcds can be inspected directly.
+The later inequality (7.2) belongs to the same two-coordinate geometry. In this way
+the real subfield supplies both closure and strictness, while the quartic field supplies
+the exact initial extraction.
 
-Equation (5.7) exhibits two smaller positive integers, but it does not by itself close
-a descent. To see the problem, suppose only that
+## 5. The real-quadratic bridge
 
-$$
-Q(x,y)=5w^5.
-$$
+### 5.1 The real ring is Euclidean
 
-The equality says that the sum of the prime-ideal exponents above each rational prime,
-weighted by residue degree, is divisible by five after the contribution at $5$ is
-removed. It does not say that the exponent at each prime ideal is divisible by five.
-Different primes over the same split rational prime can compensate in the norm.
-
-The element $A$ in (5.4) retains the missing information. Its conjugates are tied to
-the four normalized factors by
-
-$$
-x+\zeta^iy=(1-\zeta^i)\sigma_i(A)^5,\qquad i=1,2,3,4.
-\tag{6.1}
-$$
-
-The descent carrier will be built from differences among these conjugates. The
-construction may look less natural than simply keeping $w=N(A)$, but it has two
-essential advantages: it is closed under fifth-power extraction, and it remembers the
-unit class exactly.
-
-### 6.2 The first conjugate difference
-
-Apply $\sigma$ to (5.4):
+Put
 
 $$
-x+\zeta^2y=(1-\zeta^2)\sigma(A)^5
-=\lambda(1+\zeta)\sigma(A)^5.
-\tag{6.2}
+K^+=\mathbf Q(\sqrt5),
+\qquad
+\pi=\sqrt5,
+\qquad
+\eta=\frac{1+\pi}{2}.
+\tag{5.1}
 $$
 
-Multiply (5.4) by $1+\zeta$ and subtract (6.2). The left side becomes
+Book 191 identifies the ring of integers as
 
 $$
-(1+\zeta)(x+\zeta y)-(x+\zeta^2y)=\zeta(x+y).
+\mathcal O^+=\mathbf Z[\eta]
+=\left\{\frac{m+n\pi}{2}:m,n\in\mathbf Z, m\equiv n\pmod2\right\}.
+\tag{5.2}
 $$
 
-After cancelling $\lambda(1+\zeta)$, we obtain
+It also proves
 
 $$
-A^5-\sigma(A)^5
-=\frac{\zeta(x+y)}{\lambda(1+\zeta)}.
-\tag{6.3}
+(\mathcal O^+)^\times=\{\pm\eta^n:n\in\mathbf Z\}.
+\tag{5.3}
 $$
 
-Insert $x+y=5^4a^5$, $5=\zeta^3\eta^2\lambda^4$, and
-$1+\zeta=-\zeta^3\eta$. A direct simplification gives
+We need principal ideals in this real ring. Rather than import another class-number
+statement, we prove the stronger Euclidean property directly.
+
+**Lemma 5.1 (Euclideanity of the real ring).** The function
 
 $$
-\boxed{A^5-\sigma(A)^5=-\eta^7\lambda^{15}a^5
-=\eta^2(-\eta\lambda^3a)^5.}
-\tag{6.4}
+\delta(\alpha)=|N_{K^+/\mathbf Q}(\alpha)|
 $$
 
-The second form records the Kummer class; the first records the exact unit. Neither
-should be replaced by an unspecified associate.
+makes $\mathcal O^+$ a Euclidean domain.
 
-The two ideals $(A)$ and $(\sigma(A))$ are coprime. Indeed, their fifth powers are the
-ideals of two distinct normalized factors $G_1,G_2$ from (5.2). Those ideals are
-coprime, so their fifth roots are coprime as well.
+**Proof strategy.** Approximate the two coefficients in the basis $1,\eta$ by nearest
+integers. The norm of the error is uniformly less than one.
 
-Factor the left side of (6.4):
-
-$$
-A^5-\sigma(A)^5
-=\prod_{j=0}^4\bigl(A-\zeta^j\sigma(A)\bigr).
-\tag{6.5}
-$$
-
-As usual, distinct factors can have no common prime except $\mathfrak p$. Because
-$A$ is a $\lambda$-adic unit and $A\equiv\sigma(A)\pmod\lambda$, the four factors with
-$j\ne0$ have $\mathfrak p$-value one. Equation (6.4) has value
+**Proof.** Write an arbitrary element of $K^+$ as $a+b\eta$ with
+$a,b\in\mathbf Q$. Choose $m,n\in\mathbf Z$ such that
 
 $$
-15+20v_5(a).
+|a-m|\le\frac12,
+\qquad
+|b-n|\le\frac12.
+$$
+
+Put $u=a-m$ and $v=b-n$. Since $\eta+\eta'=1$ and $\eta\eta'=-1$,
+
+$$
+N(u+v\eta)=u^2+uv-v^2.
 $$
 
 Therefore
 
 $$
-\boxed{v_{\mathfrak p}(A-\sigma(A))=11+20v_5(a).}
-\tag{6.6}
+|N(u+v\eta)|
+\le |u|^2+|uv|+|v|^2
+\le\frac34<1.
 $$
 
-This is the first gain of descent. The initial factor $x+\zeta y$ had value one after
-one uniformizer was restored. Its fifth root $A$ is almost fixed by $\sigma$: the
-difference begins at least eleven $\lambda$-digits deep.
-
-### 6.3 Deep invariance and rational digits
-
-The fixed field of $\sigma$ is $\mathbf Q$. Deep approximate invariance therefore
-forces the first digits of $A$ to be rational.
-
-**Lemma 6.1 (fixed digits).** If $B\in\mathcal O$ and
+Given $\alpha,\beta\in\mathcal O^+$ with $\beta\ne0$, apply this approximation to
+$\alpha/\beta$ and choose $q=m+n\eta$. Then
 
 $$
-B\equiv\sigma(B)\pmod{\lambda^3},
+|N(\alpha-q\beta)|
+=|N(\beta)|\,|N(\alpha/\beta-q)|
+<|N(\beta)|.
 $$
 
-then $B$ is congruent to a rational integer modulo $\lambda^3$.
+This is Euclidean division. $\square$
 
-**Proof.** Write
+Consequently $\mathcal O^+$ is a PID. We will use ideal factorization before choosing
+generators, exactly as in the cyclotomic ring.
 
-$$
-B\equiv b_0+b_1\lambda+b_2\lambda^2\pmod{\lambda^3},
-\qquad b_i\in\mathbf F_5.
-$$
+### 5.2 The first norm identity
 
-Since
+Return to the second-case shapes (4.8). Set
 
 $$
-\sigma(\lambda)=1-\zeta^2=2\lambda-\lambda^2,
+S=x+y,
+\qquad
+R=x^2+y^2,
+\qquad
+T=\frac{S^2}{5}.
+\tag{5.4}
 $$
 
-we have, modulo $\lambda^3$,
+The integer $T$ is well defined because $5^4\mid S$. Its parity depends on the two
+patterns in Section 3.2. If $x,y$ have opposite parity, then $S,R,T$ are odd. If they are
+both odd, then $S,R,T$ are even; more precisely, $R/2$ is odd and $T/2$ is even.
+Indeed, an even $S=5^4a^5$ makes $a$ even, so $T=S^2/5$ is divisible by a high
+power of two.
+
+Identity (2.9) and $F(x,y)=5w^5$ give
 
 $$
-\sigma(B)\equiv b_0+2b_1\lambda+(-b_1+4b_2)\lambda^2.
+R^2-5T^2
+=\frac{5R^2-S^4}{5}
+=4w^5.
+\tag{5.5}
 $$
 
-Equality of the linear digits gives $b_1=0$; equality of the quadratic digits then
-gives $3b_2=0$, so $b_2=0$ in $\mathbf F_5$. Thus $B\equiv b_0$ modulo
-$\lambda^3$. $\square$
-
-By (6.6), the lemma applies to $A$. Hence
+In either parity pattern, the algebraic integer
 
 $$
-A\equiv r\pmod{\lambda^3}
-\tag{6.7}
+\alpha=\frac{R+T\pi}{2}\in\mathcal O^+
+\tag{5.6}
 $$
 
-for a rational integer $r$ prime to $5$. This conclusion is not obtained from $A^5$
-being rational modulo $\lambda^4$; it comes from the much deeper conjugate difference.
-
-The exponent three is again exact for the unit problem. Congruence merely modulo
-$\lambda^2$ would leave the real unit class $\eta$ undetected.
-
-### 6.4 The four normalized difference factors
-
-For $j=1,2,3,4$, set
+satisfies
 
 $$
-D_j=A-\zeta^j\sigma(A),\qquad \lambda_j=1-\zeta^j.
-\tag{6.8}
+N_{K^+/\mathbf Q}(\alpha)=w^5.
+\tag{5.7}
 $$
 
-Then
+This is the first real-quadratic bridge. The particular division by $5$ in the
+definition of $T$ is forced: it changes the norm $F(x,y)=5w^5$ into the exact fifth
+power $w^5$.
+
+### 5.3 Coprime conjugate factors
+
+To extract a fifth power from (5.7), the ideals $(\alpha)$ and $(\bar\alpha)$ must be
+coprime. This is where the special origin of $R$ and $T$ is used.
+
+The general test is simple. If
 
 $$
-\frac{D_j}{\lambda_j}
-=\sigma(A)+\frac{A-\sigma(A)}{\lambda_j}.
-\tag{6.9}
+\theta=\frac{A+B\pi}{2}\in\mathcal O^+,
 $$
 
-The second term on the right is divisible by $\lambda^{10}$, while the first is
-rational modulo $\lambda^3$ by (6.7). Thus $D_j/\lambda_j$ is rational modulo
-$\lambda^3$ and is a $\lambda$-adic unit.
+then a prime ideal common to $\theta$ and $\bar\theta$ divides both $A$ and
+$B\pi$. Away from the primes over $2$ and $5$, coprimality of the ordinary integers
+$A,B$ excludes it. The prime over $5$ is tested by the rational coordinate $A$, since
+$\pi$ vanishes in the residue field. Primes over $2$ must be checked in the
+integral lattice actually containing $\theta$; one cannot simply divide both
+coordinates by two inside a residue field of characteristic two.
 
-Away from $\mathfrak p$, every prime-ideal exponent of $D_j$ is divisible by five:
-the factors in (6.5) are pairwise coprime away from $\mathfrak p$, and their product is
-a unit times a fifth power. The global fifth-power criterion therefore gives
-
-$$
-\boxed{D_j=\lambda_jB_j^5\qquad(j=1,2,3,4)}
-\tag{6.10}
-$$
-
-for algebraic integers $B_j$. These four roots must be retained independently. The
-automorphism $\sigma$ changes both entries of the ordered pair
-$(A,\sigma(A))$, whereas changing $j$ twists only its second entry. Thus it would be
-incorrect to identify the $B_j$ as the conjugates of one element.
-
-Put
+First, $R$ and $S$ have no common odd prime divisor:
 
 $$
-B=B_1B_2B_3B_4.
-\tag{6.11}
+\gcd(R,S)\mid2.
+\tag{5.8}
 $$
 
-Multiplying (6.10) and using
+Indeed, a common odd prime would give $x\equiv-y$ and hence
+$R=x^2+y^2\equiv2y^2$ modulo that prime. Since $x,y$ are coprime, no such prime is
+possible. Also
 
 $$
-\prod_{j=1}^4(1-\zeta^j)=5
+R\equiv2y^2\not\equiv0\pmod5,
 $$
 
-gives
+because $x\equiv-y\pmod5$ and $5\nmid y$. Since $T=S^2/5$, it follows that
 
 $$
-\prod_{j=1}^4D_j=5B^5.
-\tag{6.12}
+\gcd(R,T)=
+\begin{cases}
+1,&x,y\text{ have opposite parity},\\
+2,&x,y\text{ are both odd},
+\end{cases}
+\qquad 5\nmid R.
+\tag{5.9}
 $$
 
-Combining this with (6.4) and (6.5) keeps track of the remaining factor:
+Now suppose a prime ideal of $\mathcal O^+$ divides both $\alpha$ and
+$\bar\alpha$. It divides their sum $R$ and their difference $T\pi$. Away from the
+primes above $2$ and $5$, this contradicts (5.9). At $(\pi)$ it would force
+$5\mid R$, also impossible.
+
+It remains to check $2$ in the both-odd pattern. Write $R=2R_0$ and $T=2T_0$.
+Then $R_0$ is odd, $T_0$ is even, and
 
 $$
-5(A-\sigma(A))B^5
-=\eta^2(-\eta\lambda^3a)^5.
-\tag{6.13}
+\alpha=R_0+T_0\pi.
 $$
 
-At the level of fifth-power classes, (6.13) says
+Modulo $2\mathcal O^+$, one has $\pi=2\eta-1\equiv1$, so $\alpha$ and
+$\bar\alpha$ both reduce to $1$. Thus no prime above $2$ divides either factor.
+Hence in both parity patterns
 
 $$
-A-\sigma(A)\equiv\zeta^2\lambda
-\pmod{(K^\times)^5}.
-\tag{6.14}
+(\alpha)+(\bar\alpha)=\mathcal O^+.
+\tag{5.10}
 $$
 
-The root-of-unity factor $\zeta^2$ is not decorative. It is one of the two states in
-the explicit replacement calculation.
+This proof also excludes a common ideal above a rational prime that splits in
+$K^+$. The argument is made prime ideal by prime ideal: a common prime ideal divides
+the two displayed rational combinations, and the integer gcd then produces the
+contradiction. We are not claiming that the rational norms of $\alpha$ and
+$\bar\alpha$ are coprime; they are equal. What matters is coprimality of the two
+conjugate ideals whose product is $(w)^5$.
 
-The construction has three independent gains. First, every $D_j$ has prime-ideal
-exponents divisible by five away from $\mathfrak p$. Second, after division by
-$\lambda_j$, it is rational modulo $\lambda^3$, so its unit is a fifth power. Third,
-multiplying the four exact equations introduces the full element
-$5=\zeta^3\eta^2\lambda^4$, not merely the ideal $\mathfrak p^4$. The state
-$\zeta^2$ in (6.14) is the residue of this last exact multiplication.
-
-If only ideals were retained, (6.14) would weaken to
+Their product is the fifth-power ideal $(w)^5$. Unique factorization of ideals and
+(5.10) give
 
 $$
-(A-\sigma(A))=\mathfrak p\,\mathfrak b^5.
+(\alpha)=\mathfrak a^5.
 $$
 
-The unit could then represent any of the twenty-five classes
-$\zeta^r\eta^s$ modulo fifth powers, and the replacement family would not close. If
-only congruences were retained, a prime away from $5$ could still occur with an
-uncontrolled exponent. The carrier is built precisely where ideal extraction and local
-unit arithmetic overlap.
-
-The valuation sum gives a quick consistency check. The four $D_j$ with $j\ne0$
-contribute total value four. The factor $A-\sigma(A)$ contributes
-$11+20v_5(a)$. Their total,
+Lemma 5.1 makes $\mathfrak a$ principal. Therefore
 
 $$
-15+20v_5(a),
+\alpha=u\beta^5
+\tag{5.11}
 $$
 
-is exactly the value of the right side of (6.4). A missing conjugate uniformizer or a
-confusion between $v_5$ and $v_{\mathfrak p}$ would fail this check.
+for $u\in(\mathcal O^+)^\times$ and $\beta\in\mathcal O^+$.
 
-## 7. The quintic replacement lemma
+At this point the logic has three independent inputs: the norm equation makes the
+product a fifth power, conjugate coprimality assigns every prime exponent wholly to
+one side, and Euclideanity makes the resulting fifth-root ideal principal. If any one
+of these inputs were omitted, equation (5.11) would not follow.
 
-### 7.1 Descent records and their weight
+### 5.4 Removing the real unit
 
-We now isolate the finite calculation that closes the second case. Its purpose is to
-make precise what “repeat the argument” means. Repetition is legitimate only after the
-new factors have been shown to satisfy the same coprimality, digit, and unit conditions.
+The unit in (5.11) is not discarded merely because it is real. The deep divisibility
+of $T$ removes it.
 
-A **quintic descent record** consists of
-
-$$
-(U,h,\epsilon;V_1,V_2,V_4,V_3),
-\tag{7.1}
-$$
-
-where $U\in\mathcal O$ is a $\lambda$-adic unit, $h$ is a nonzero rational integer,
-$\epsilon\in\{0,2\}$, and the following conditions hold.
-
-1. The ideals $(U)$ and $(\sigma(U))$ are coprime.
-2. One has $U\equiv\sigma(U)\pmod{\lambda^{11}}$.
-3. The exact difference-of-fifth-powers identity is
-   $$
-   U^5-\sigma(U)^5
-   =\eta^2(-\eta\lambda^3h)^5.
-   \tag{7.2}
-   $$
-4. For $j=1,2,4,3$ in that order,
-   $$
-   U-\zeta^j\sigma(U)=\lambda_jV_j^5,
-   \tag{7.3}
-   $$
-   with indices reduced modulo five.
-5. The remaining factor has the exact class
-   $$
-   U-\sigma(U)=\zeta^\epsilon\lambda V_0^5
-   \tag{7.4}
-   $$
-   after a common fifth-power scaling in $K^\times$. When $\epsilon=2$, this is read
-   directly from (6.14); the alternative state occurs after replacement.
-
-The fractional element $V_0$ in (7.4) need not be integral before its exact
-$\lambda$-valuation is stripped. The record keeps only its fifth-power class. All
-$V_j$ for $j\ne0$ are integral.
-
-To define a well-founded weight, write $U$ in the basis (2.3), subtract its rational
-coordinate, and divide the three nonconstant coordinates by their positive greatest
-common divisor. This gives a primitive triple
+From $S=5^4a^5$,
 
 $$
-(u_1,u_2,u_3)\in\mathbf Z^3,\qquad \gcd(u_1,u_2,u_3)=1.
+v_5(T)=v_5(S^2/5)=7+10v_5(a).
+\tag{5.12}
 $$
+
+Book 191 proves that $\pi=\sqrt5$ is an associate of $\lambda^2$. Consequently
+
+$$
+v_{\mathfrak p}(T\pi)
+=4v_5(T)+2
+\ge30.
+$$
+
+In particular, $\alpha$ is congruent to a rational integer modulo $\lambda^3$.
+It is a $\lambda$-adic unit because $5\nmid R$.
+When $R$ is odd, the notation $R/2$ causes no congruence ambiguity: the quotient
+modulo $\lambda^3$ has characteristic five, and the inverse of $2$ is represented by
+the ordinary integer $3$.
+
+Every fifth power is rational modulo $\lambda^4$, so (5.11) makes $u$ rational
+modulo $\lambda^3$. The fifth-power unit criterion from Book 191 says that $u$ is a
+fifth power. Since $u$ is real, (5.3) shows directly that its $\eta$-exponent is
+divisible by five; its fifth root may be chosen in $\mathcal O^+$. Absorbing that root
+into $\beta$, we obtain the exact equation
+
+$$
+\boxed{\frac{R+T\pi}{2}=\beta^5.}
+\tag{5.13}
+$$
+
+This use of the three-digit criterion is legitimate because the ideal fifth-power
+condition was proved first. Deep rational congruence alone would not make an arbitrary
+algebraic integer a fifth power.
+
+### 5.5 Coordinates of the fifth root
+
+Write $\beta=(m+n\pi)/2$ with $m\equiv n\pmod2$. The parity of these coordinates
+follows the parity of $R,T$.
+
+We will repeatedly use the following elementary parity calculation. If $m,n$ are
+odd, then
+
+$$
+\begin{aligned}
+m^5+50m^3n^2+125mn^4&\equiv16\pmod{32},\\
+5m^4n+50m^2n^3+25n^5&\equiv16\pmod{32}.
+\end{aligned}
+\tag{5.14}
+$$
+
+Thus the fifth power of $(m+n\pi)/2$ again has genuinely half-integral coordinates.
+By contrast, the fifth power of an element of $\mathbf Z[\pi]$ has integral
+coordinates. These two coordinate lattices therefore cannot be confused by taking a
+fifth power.
+
+Suppose first that $x,y$ have opposite parity. Then $R,T$ are odd, so the right side
+of (5.13) has half-integral rational and $\pi$-coordinates. Thus $m,n$ are odd.
+Expanding gives
+
+$$
+16R=m^5+50m^3n^2+125mn^4,
+\tag{5.15}
+$$
+
+$$
+16T=5n\bigl(m^4+10m^2n^2+5n^4\bigr).
+\tag{5.16}
+$$
+
+In this branch define
+
+$$
+r=\frac{m+n}{2},
+\qquad
+s=\frac{m-n}{2}.
+\tag{5.17}
+$$
+
+Now suppose that $x,y$ are both odd. Then $R,T$ are even and $\alpha$ has integral
+rational and $\pi$-coordinates. An element with odd half-integral coordinates has a
+fifth power with half-integral coordinates, so $m,n$ are even. Write
+
+$$
+\beta=M+N\pi.
+$$
+
+Coordinate comparison gives
+
+$$
+\frac R2=M^5+50M^3N^2+125MN^4,
+\tag{5.18}
+$$
+
+$$
+\frac T2=5N\bigl(M^4+10M^2N^2+5N^4\bigr).
+\tag{5.19}
+$$
+
+In this branch define
+
+$$
+r=M+N,
+\qquad
+s=M-N.
+\tag{5.20}
+$$
+
+The definitions are different because one fifth root has half-integral coordinates
+and the other has integral coordinates. They are chosen so that the same two formulas
+hold in both branches:
+
+$$
+r-s>0,
+\qquad
+(r-s)F(r,s)=\frac T5.
+\tag{5.21}
+$$
+
+For the first branch, the polynomial identity behind (5.21) is
+
+$$
+m^4+10m^2n^2+5n^4
+=16F\left(\frac{m+n}{2},\frac{m-n}{2}\right).
+\tag{5.22}
+$$
+
+For the second branch, homogeneity gives
+
+$$
+M^4+10M^2N^2+5N^4=F(M+N,M-N).
+\tag{5.23}
+$$
+
+The quartic factors in (5.16) and (5.19) are positive, so $n>0$ or $N>0$ and
+hence $r-s>0$.
+
+The new pair is primitive. The ideals $(\beta)$ and $(\bar\beta)$ are coprime
+because their fifth powers are $(\alpha)$ and $(\bar\alpha)$. Thus the coordinates
+in the relevant branch are coprime. In the half-integral branch this gives
+$\gcd(r,s)=1$. In the integral branch, $R/2$ is odd; reducing (5.18) modulo $2$
+forces $M$ odd and $N$ even. Hence $r,s$ are odd, and a common divisor would divide
+both $M$ and $N$. Again $\gcd(r,s)=1$.
+
+Finally, $\beta$ is a unit at $(\pi)$. Thus $5\nmid m$ in the first branch and
+$5\nmid M$ in the second. These residue facts locate the exceptional factor $5$ in
+the next extraction.
+
+### 5.6 The initial carrier
+
+Equation (5.21) and $T=5^7a^{10}$ give, in both parity branches,
+
+$$
+(r-s)F(r,s)=5^6a^{10}=5(5a^2)^5.
+\tag{5.24}
+$$
+
+The two factors on the left are coprime. Indeed, modulo $r-s$ one has $r\equiv s$
+and
+
+$$
+F(r,s)\equiv r^4\pmod{r-s}.
+$$
+
+Since $\gcd(r,s)=1$, this proves
+
+$$
+\gcd(r-s,F(r,s))=1.
+\tag{5.25}
+$$
+
+The prime $5$ belongs to $r-s$. In the first branch, the quartic factor in (5.16) is
+congruent to $m^4\not\equiv0\pmod5$; in the second, the quartic factor in (5.19) is
+congruent to $M^4\not\equiv0\pmod5$. Since
+$v_5(T)=7+10v_5(a)$, the difference $r-s$ is divisible by $5$, while
+$F(r,s)$ is not.
+
+Ordinary unique factorization in $\mathbf Z$, applied to (5.24) and (5.25), now
+produces positive integers $b,c$ with
+
+$$
+\boxed{
+r-s=5b^5,
+\qquad
+F(r,s)=c^5.
+}
+\tag{5.26}
+$$
+
+Taking the positive fifth root of (5.24) also gives
+
+$$
+bc=5a^2.
+\tag{5.27}
+$$
+
+Thus every primitive second-case Fermat solution creates data
+
+$$
+(r,s;b,c)
+\tag{5.28}
+$$
+
+such that $r,s$ are coprime, $b,c$ are positive, and (5.26) holds. If $b$ is odd,
+$r,s$ have opposite parity; if $b$ is even, they are both odd. This is the promised
+initial carrier. The remaining argument concerns carriers only; the original variables
+need not be recovered.
+
+### 5.7 Why this is the right carrier
+
+The carrier equations retain exactly the information needed for another extraction.
+The equality $F(r,s)=c^5$ is an absolute-norm statement, but it is accompanied by
+the much stronger ramified difference
+
+$$
+r-s=5b^5.
+$$
+
+That difference has three jobs. First, it fixes the residue relation
+$r\equiv s\not\equiv0\pmod5$, which will determine the real unit class in the next
+norm factorization. Second, it singles out the positive integer $b$ that will serve as
+the well-founded measure. Third, it makes the square $(r-s)^2$ a fifth-power square,
+
+$$
+(r-s)^2=25b^{10},
+$$
+
+and this is precisely the quantity isolated by the coordinate combination
+$11\mathcal Q-5\mathcal P$ in Chapter 6.
+
+The parity branches are also structural. An algebraic integer of $\mathcal O^+$ lies
+either in $\mathbf Z[\pi]$ or in the coset represented by $(1+\pi)/2$. Fifth powers
+preserve the distinction relevant to our equations, as the congruence modulo $32$ in
+(5.14) shows. When the original pair has opposite parity, the first real-quadratic
+fifth root uses the half-integral lattice and produces an opposite-parity carrier. When
+the original pair is both odd, the fifth root uses the integral lattice and produces
+a both-odd carrier. The carrier definition includes both because replacement can move
+between them.
+
+There is no need to retain $a$ after (5.27). Relation (5.27) records how $b,c$ arose,
+but the replacement uses only coprimality, positivity, and the two equations in
+(5.26). This is an advantage rather than a loss: closure is proved for every carrier,
+not merely for carriers whose ancestry can still be recognized as a Fermat triple.
+Consequently iteration never needs to reverse the construction of Chapter 5.
+
+The choice of $b$, rather than $c$ or $|r|+|s|$, as the descent measure is deliberate.
+The successor factorization will give $de=b^2$. That relation alone does not decide
+which of $d,e$ is smaller. The positive quartic identity will show that $e$ is large
+relative to $d$, and therefore that $d<b$. The carrier has been designed so that its
+arithmetic factorization and its archimedean inequality meet at the same parameter.
+
+## 6. The carrier replacement
+
+### 6.1 Carrier data and the closure problem
+
+A **quintic carrier** is a quadruple $(r,s;b,c)$ satisfying
+
+$$
+\gcd(r,s)=1,
+\qquad b,c\in\mathbf Z_{>0},
+\tag{6.1}
+$$
+
+and
+
+$$
+r-s=5b^5,
+\qquad
+F(r,s)=c^5.
+\tag{6.2}
+$$
+
+The first equation gives $r\equiv s\not\equiv0\pmod5$. Primitivity leaves exactly
+two parity types. If $b$ is odd, then $r-s$ is odd and $r,s$ have opposite parity.
+If $b$ is even, then $r-s$ is even and $r,s$ are both odd. The replacement must be
+closed in both types.
+
+Our goal is precise:
+
+**Replacement goal.** From every carrier $(r,s;b,c)$, construct another carrier
+$(r_1,s_1;d,e)$ with
+
+$$
+0<d<b.
+\tag{6.3}
+$$
+
+Closure requires four separate checks: the two new equations, positivity, coprimality,
+and the correct integral parity. Strictness is a fifth check. We now derive all five
+from explicit identities.
+
+### 6.2 The second norm identity
 
 Set
 
 $$
-\mathscr W(U)
-=13u_1^2+66u_1u_2+106u_1u_3
-+93u_2^2+330u_2u_3+325u_3^2.
-\tag{7.5}
+S=r+s,
+\qquad
+R=r^2+s^2.
+\tag{6.4}
 $$
 
-If the nonconstant part is zero, then $U$ is rational. That cannot occur in a descent
-record: (7.2) would have zero left side and nonzero right side. Hence
-$\mathscr W(U)$ is a positive integer.
-
-The expression (7.5) is one sixth of the sum of the ordinary squared nonconstant
-coordinates of
+If $r,s$ have opposite parity, then $S,R$ are odd. If $r,s$ are both odd, then
+$S,R$ are even and $R/2$ is odd. Identity (2.9) and $F(r,s)=c^5$ give
 
 $$
-U,\quad\sigma(U),\quad\sigma^2(U),\quad\sigma^3(U).
+S^4-5R^2=-4c^5.
+\tag{6.5}
 $$
 
-Indeed, applying (7.7) four times and collecting terms gives exactly the displayed
-quadratic form. This description proves that it is positive definite and invariant
-under $\sigma$ and under adding a rational integer. Its role is purely well-founded:
-unlike the absolute field norm, it cannot remain unchanged under a nontrivial
-replacement because common rational content has first been removed.
-
-The rational coordinate is discarded for a structural reason. The operator
-$1-\sigma$ kills every rational integer, so a large rational part of $U$ has no bearing
-on the difference relations. The remaining three coordinates are exactly the part on
-which the cyclic action is visible.
-
-The absolute field norm would not be as convenient a primary weight. A difference
-$U-\zeta\sigma(U)$ may grow in one complex embedding and shrink in another, and its
-fifth root need not visibly have smaller norm until the exact coefficient relations are
-used. The weight $\mathscr W$ incorporates those relations after the staggered
-divisibility has appeared. It is a height adapted to descent records, not a claim that
-every algebraic integer has a preferred Euclidean size.
-
-### 7.2 The coordinate engine
-
-The replacement calculation is finite because $K$ has degree four. We give it in full.
-From $\sigma(\lambda)=2\lambda-\lambda^2$ and the cyclotomic relation
+Therefore
 
 $$
-\lambda^4=5\lambda^3-10\lambda^2+10\lambda-5,
-\tag{7.6}
+\alpha=\frac{S^2+R\pi}{2}\in\mathcal O^+
+\tag{6.6}
 $$
 
-one obtains
+has norm
+
+$$
+N_{K^+/\mathbf Q}(\alpha)=-c^5.
+\tag{6.7}
+$$
+
+As before, $\alpha$ and $\bar\alpha$ are coprime. A common odd divisor of $S$ and
+$R$ would give $r\equiv-s$ and $R\equiv2s^2$, contradicting
+$\gcd(r,s)=1$. Also $5\nmid S$, because
+$r\equiv s\not\equiv0\pmod5$. Thus no common prime ideal lies away from the primes
+above $2$ and $5$, and the prime above $5$ is excluded by $5\nmid S$.
+
+In the opposite-parity pattern, $S$ is odd. A common prime above $2$ would divide
+$\alpha+\bar\alpha=S^2$, an odd rational integer, so it is impossible. This disposes
+of the prime $2$ in that branch without any coordinate division.
+
+If $r,s$ are both odd, write $S=2S_0$ and $R=2R_0$. Then
+$\alpha=2S_0^2+R_0\pi$, with $R_0$ odd. Modulo $2\mathcal O^+$ this reduces to
+$1$, because $\pi=2\eta-1\equiv1$. Hence no prime above $2$ divides $\alpha$.
+
+Since $\mathcal O^+$ is a PID, there are $\beta\in\mathcal O^+$ and a unit $u$
+such that
+
+$$
+\alpha=u\beta^5.
+\tag{6.8}
+$$
+
+Unlike the first real-quadratic factor, $\alpha$ is not deeply rational: its
+$\pi$-coefficient is a unit. The unit in (6.8) is not a fifth power. Its exact class
+must be computed.
+
+### 6.3 The forced unit class
+
+Write the unit modulo fifth powers as
+
+$$
+u=\eta^j,
+\qquad 0\le j<5,
+\tag{6.9}
+$$
+
+after absorbing a sign and a fifth power of $\eta$ into $\beta^5$. We determine $j$
+in the quotient $\mathcal O^+/(\pi^2)$, where $\pi^2=5$.
+
+Every fifth power in $\mathcal O$ is rational modulo $5\mathcal O$, so
+$\beta^5$ is congruent to a nonzero rational residue modulo $\pi^2$. Also
+
+$$
+\eta^j=2^{-j}(1+\pi)^j
+\equiv2^{-j}(1+j\pi)\pmod{\pi^2}.
+\tag{6.10}
+$$
+
+For a unit written as a nonzero constant times $1+k\pi$, the ratio of its
+$\pi$-coefficient to its constant coefficient is $k$ in $\mathbf F_5$. Comparing
+(6.6), (6.8), and (6.10) gives
+
+$$
+j\equiv\frac{R}{S^2}\pmod5.
+\tag{6.11}
+$$
+
+But $r\equiv s\not\equiv0\pmod5$, so
+
+$$
+R\equiv2r^2,
+\qquad
+S^2\equiv4r^2,
+\qquad
+\frac{R}{S^2}\equiv\frac12\equiv3\pmod5.
+$$
+
+Thus the unit class is forced:
+
+$$
+\boxed{\alpha=\eta^3\beta^5.}
+\tag{6.12}
+$$
+
+There is no second state and no choice of root-of-unity exponent. The same calculation
+will apply to every successor because the defining equation of a carrier again gives
+$r_1\equiv s_1\not\equiv0\pmod5$.
+
+### 6.4 Absorbing the unit and fixing parity
+
+The exponent three in (6.12) is designed to be absorbed after multiplying by
+$\eta^2$:
+
+$$
+\eta^2\alpha=(\eta\beta)^5.
+\tag{6.13}
+$$
+
+Since $\eta^2=(3+\pi)/2$, direct multiplication gives
+
+$$
+\eta^2\alpha=\frac{\mathcal P+\mathcal Q\pi}{2},
+\tag{6.14}
+$$
+
+where
+
+$$
+\mathcal P=4r^2+3rs+4s^2,
+\qquad
+\mathcal Q=2r^2+rs+2s^2.
+\tag{6.15}
+$$
+
+Put $\gamma=\eta\beta$. The parity of $r,s$ now determines which integral lattice
+contains $\gamma$.
+
+If $r,s$ have opposite parity, then $\mathcal P,\mathcal Q$ are even, so the right
+side of (6.14) lies in $\mathbf Z[\pi]$. In this branch
+
+$$
+\boxed{\gamma=M+N\pi}
+\tag{6.16}
+$$
+
+for integers $M,N$. To justify the claim, suppose instead that
+$\gamma=(m+n\pi)/2$ with $m,n$ odd. Its fifth power is
+
+$$
+\gamma^5=\frac{A+B\pi}{32},
+$$
+
+where
 
 $$
 \begin{aligned}
-\sigma(1)&=1,\\
-\sigma(\lambda)&=2\lambda-\lambda^2,\\
-\sigma(\lambda^2)&=-5+10\lambda-6\lambda^2+\lambda^3,\\
-\sigma(\lambda^3)&=-15+25\lambda-15\lambda^2+3\lambda^3.
+A&=m^5+50m^3n^2+125mn^4,\\
+B&=5m^4n+50m^2n^3+25n^5.
 \end{aligned}
-\tag{7.7}
 $$
 
-Thus, for
+For odd $m,n$, reduction modulo $32$ gives
+$A\equiv B\equiv16\pmod{32}$. Both coordinates of $\gamma^5$ would be
+half-integral, a contradiction.
+
+If $r,s$ are both odd, then $\mathcal P,\mathcal Q$ are odd, so the right side of
+(6.14) has half-integral coordinates. In this branch
 
 $$
-U=u_0+u_1\lambda+u_2\lambda^2+u_3\lambda^3,
+\boxed{\gamma=\frac{M+N\pi}{2}}
+\tag{6.17}
 $$
 
-the difference $U-\sigma(U)$ has coordinates
+with $M,N$ odd. An element of $\mathbf Z[\pi]$ cannot have a fifth power with
+half-integral coordinates, so this is the only possible parity.
+
+In either branch, $(\gamma)$ and $(\bar\gamma)$ are coprime because they differ from
+$(\beta)$ and $(\bar\beta)$ only by units. Thus
+
+$$
+\gcd(M,N)=1,
+\qquad 5\nmid M.
+\tag{6.18}
+$$
+
+### 6.5 The coordinate engine
+
+Define the two fifth-power coordinate polynomials
 
 $$
 \begin{aligned}
-c_0&=5u_2+15u_3,\\
-c_1&=-u_1-10u_2-25u_3,\\
-c_2&=u_1+7u_2+15u_3,\\
-c_3&=-u_2-2u_3.
+A(M,N)&=M^5+50M^3N^2+125MN^4,\\
+B(M,N)&=5N\bigl(M^4+10M^2N^2+5N^4\bigr).
 \end{aligned}
-\tag{7.8}
+\tag{6.19}
 $$
 
-If its valuation is at least eleven, formula (2.4) gives
+Expanding $\gamma^5$ in the two parity branches gives
 
 $$
-125\mid c_0,\qquad125\mid c_1,\qquad125\mid c_2,\qquad25\mid c_3.
-\tag{7.9}
+\begin{array}{c|c|c}
+r,s\text{ of opposite parity}
+& A=\mathcal P/2 & B=\mathcal Q/2,\\
+r,s\text{ both odd}
+& A=16\mathcal P & B=16\mathcal Q.
+\end{array}
+\tag{6.20}
 $$
 
-These divisibilities are not four independent assumptions. From $c_3$ and $c_0/5$
-one obtains
+The powers of two are not cosmetic. They record whether $\gamma$ lies in
+$\mathbf Z[\pi]$ or in its nontrivial half-integral coset.
+
+The $5$-adic information is the same in both rows. Write $r=s+5b^5$. Then
 
 $$
-25\mid u_2+2u_3,\qquad 25\mid u_2+3u_3,
+\mathcal Q
+=2r^2+rs+2s^2
+=5\bigl(s^2+5sb^5+10b^{10}\bigr).
+\tag{6.21}
+$$
+
+The parenthesis is a unit modulo $5$. Since $5\nmid M$, the quartic factor in
+$B(M,N)$ is also a unit modulo $5$. Comparing either row of (6.20) gives
+
+$$
+5\nmid N.
+\tag{6.22}
+$$
+
+The decisive linear combination of $\mathcal P$ and $\mathcal Q$ recovers the known
+square:
+
+$$
+11\mathcal Q-5\mathcal P=2(r-s)^2=50b^{10}.
+\tag{6.23}
+$$
+
+On the fifth-root side, direct expansion factors the same combination:
+
+$$
+11B(M,N)-5A(M,N)=-5(M-N)H(M,N),
+\tag{6.24}
+$$
+
+where
+
+$$
+H(M,N)
+=M^4-10M^3N+40M^2N^2-70MN^3+55N^4.
+\tag{6.25}
+$$
+
+The form has the exact interpretation
+
+$$
+\boxed{H(M,N)=F(M-3N,-2N).}
+\tag{6.26}
+$$
+
+Combining (6.20), (6.23), and (6.24) gives the two parity-scaled product identities
+
+$$
+\begin{array}{c|c}
+r,s\text{ of opposite parity}
+&(N-M)H(M,N)=5b^{10},\\
+r,s\text{ both odd}
+&(N-M)H(M,N)=160b^{10}.
+\end{array}
+\tag{6.27}
+$$
+
+Every coefficient and every power of two in (6.27) has now been derived from the
+displayed fifth-power formulas.
+
+### 6.6 Coprimality and fifth-power extraction
+
+We first remove the parity scaling in (6.27) by defining an integer pair. In the
+opposite-parity branch put
+
+$$
+r_1=-2N,
+\qquad
+s_1=M-3N.
+\tag{6.28}
+$$
+
+In the both-odd branch, $M,N$ are odd, so put
+
+$$
+r_1=-N,
+\qquad
+s_1=\frac{M-3N}{2}.
+\tag{6.29}
+$$
+
+Identity (6.26), homogeneity of $F$, and the two rows of (6.27) give the same
+equation in both branches:
+
+$$
+\boxed{(r_1-s_1)F(r_1,s_1)=5b^{10}.}
+\tag{6.30}
+$$
+
+The pair $r_1,s_1$ is primitive. In the first branch, (6.27) has an odd right side,
+so $M-N$ is odd and $M,N$ have opposite parity. Hence $r_1$ is even and $s_1$ is
+odd. Any odd common divisor would divide both $M$ and $N$. In the second branch,
+$r_1=-N$ is odd, and again any common odd divisor of $r_1$ and $s_1$ would divide
+$M,N$. Thus
+
+$$
+\gcd(r_1,s_1)=1
+\tag{6.31}
+$$
+
+in both cases.
+
+For every coprime pair $U,V$,
+
+$$
+\gcd(U-V,F(U,V))=1,
+\tag{6.32}
+$$
+
+because $F(U,V)\equiv U^4\pmod{U-V}$. Applying this to $r_1,s_1$ proves that the
+two factors in (6.30) are coprime. Moreover $F(r_1,s_1)$ is not divisible by $5$:
+by (6.26), it is $H(M,N)$ or $H(M,N)/16$, and
+
+$$
+H(M,N)\equiv M^4\not\equiv0\pmod5.
+\tag{6.33}
+$$
+
+Now inspect an ordinary prime $q$ in (6.30). If $q\ne5$ divides $r_1-s_1$, it does
+not divide $F(r_1,s_1)$, so its exponent in the difference equals its exponent in
+$b^{10}=(b^2)^5$ and is a multiple of five. The same reasoning applies with the two
+factors interchanged. At $q=5$, equation (6.33) places the entire $5$-adic exponent
+in $r_1-s_1$; its exponent is congruent to one modulo five. Thus the two factors have
+exactly the shapes $5$ times a fifth power and a fifth power. This is ordinary integer
+factorization, with no unit beyond the signs.
+
+The form $F$ is positive, so (6.30) also gives $r_1-s_1>0$. Ordinary prime
+factorization now yields positive integers $d,e$ such that
+
+$$
+\boxed{
+r_1-s_1=5d^5,
+\qquad
+F(r_1,s_1)=e^5.
+}
+\tag{6.34}
+$$
+
+Comparing the product in (6.34) with (6.30) gives
+
+$$
+\boxed{de=b^2.}
+\tag{6.35}
+$$
+
+Positivity removes every sign ambiguity: $F(r_1,s_1)>0$, the product (6.30) is
+positive, and hence $r_1-s_1>0$. The positive fifth roots $d,e$ are therefore
+canonical. This is why the successor has a well-defined positive parameter rather
+than merely an absolute-value class.
+
+### 6.7 The explicit successor
+
+Equations (6.28) and (6.29) give the successor explicitly in the two parity branches:
+
+$$
+(r_1,s_1)=
+\begin{cases}
+(-2N,M-3N),&r,s\text{ have opposite parity},\\
+\left(-N,(M-3N)/2\right),&r,s\text{ are both odd}.
+\end{cases}
+\tag{6.36}
+$$
+
+Equations (6.31) and (6.34) prove closure: $(r_1,s_1;d,e)$ is again a quintic
+carrier. Its own parity is automatically one of the two allowed types. Every component
+of the successor is explicit, including the factor of two required in each branch.
+What remains is to prove that its positive parameter $d$ is strictly smaller than
+$b$.
+
+### 6.8 How the replacement identities fit together
+
+The replacement may be read as a sequence of forced design choices. This perspective
+is useful because each apparently unusual coefficient solves a specific obstruction.
+
+The first obstruction is the unit in the norm factorization. Modulo $\pi^2$, the
+ratio of the irrational and rational coordinates of $\alpha$ is always $3$. Thus the
+unit is $\eta^3$ modulo fifth powers. Multiplication by $\eta^2$ is then forced by
+
+$$
+\eta^2\eta^3=\eta^5.
+$$
+
+It turns the unit-bearing equation into the exact fifth power
+$\eta^2\alpha=(\eta\beta)^5$. The quadratic forms $\mathcal P,\mathcal Q$ in
+(6.15) are simply the two coordinates of this product; they were not guessed to make
+a later factorization work.
+
+The second obstruction is recovering the old ramified parameter from those two
+coordinates. Solving for constants $A,B$ such that
+
+$$
+A\mathcal Q+B\mathcal P
+$$
+
+is a multiple of $(r-s)^2$ gives, after removing a common scalar, the combination
+$11\mathcal Q-5\mathcal P$. Indeed,
+
+$$
+11(2r^2+rs+2s^2)-5(4r^2+3rs+4s^2)
+=2(r-s)^2.
+$$
+
+Because $r-s=5b^5$, this coordinate combination is already $50b^{10}$. It is the
+bridge from a quadratic coordinate calculation to a product of fifth-power-shaped
+integers.
+
+The third obstruction is closure in the quartic form $F$. Substituting the fifth-power
+coordinates $A(M,N),B(M,N)$ into the same linear combination gives
+
+$$
+11B-5A=-5(M-N)H(M,N).
+$$
+
+The remaining quartic is not merely positive; it is exactly a linear transform of the
+original norm form:
+
+$$
+H(M,N)=F(M-3N,-2N).
+$$
+
+This identity dictates the successor coordinates. In the integral lattice they are
+$(-2N,M-3N)$. In the half-integral lattice both displayed arguments are even, so they
+must be divided by two, giving $(-N,(M-3N)/2)$. The factors $1$ and $1/16$ in the
+quartic values match the factors $1$ and $1/2$ in the differences, which is why both
+branches reduce to the single product (6.30).
+
+Finally, primitive integer factorization does the only extraction left. Because
+$r_1-s_1$ and $F(r_1,s_1)$ are coprime and only the former is divisible by $5$, the
+product $5b^{10}$ forces
+
+$$
+r_1-s_1=5d^5,
+\qquad
+F(r_1,s_1)=e^5.
+$$
+
+Thus the unit calculation, the linear combination, the quartic change of variables,
+and the parity scaling each have a separate role. Omitting any one of them would leave
+either a unit ambiguity, an unrecognized factor, or a nonprimitive successor.
+
+## 7. Strict well-founded descent
+
+### 7.1 The positive quartic identity
+
+A replacement is not a descent until it comes with a strict well-founded measure.
+Here the measure is simply the positive integer $b$ in the equation $r-s=5b^5$.
+Strictness comes from identity (2.10), which we restate as a lemma.
+
+**Lemma 7.1 (quartic separation).** For real $U,V$ not both zero,
+
+$$
+5F(U,V)>(U-V)^4.
+\tag{7.1}
+$$
+
+**Proof.** Expansion gives
+
+$$
+\begin{aligned}
+16\bigl(5F(U,V)-(U-V)^4\bigr)
+={}&5(U+V)^4\\
+&+50(U+V)^2(U-V)^2+9(U-V)^4.
+\end{aligned}
+\tag{7.2}
+$$
+
+The right side is a sum of nonnegative terms. If it vanished, both $U+V$ and
+$U-V$ would vanish, so $U=V=0$. $\square$
+
+The identity is tailored to the carrier: its left side compares the quartic value
+$F(U,V)$ with the fourth power of the very difference that carries the ramified
+factor $5$.
+
+No approximate lower bound is being smuggled into the proof. The right side of (7.2)
+can be read as
+
+$$
+5\bigl((U+V)^2\bigr)^2
++2\bigl(5(U+V)(U-V)\bigr)^2
++\bigl(3(U-V)^2\bigr)^2.
+$$
+
+It is therefore an explicit sum of three squares. Strict positivity fails only when
+both the sum and difference of $U,V$ vanish. This exact form is stronger than merely
+knowing that $F$ is positive: positivity of $F$ would control its sign, but (7.1)
+compares it quantitatively with the fourth power of the carrier difference.
+
+### 7.2 Strict decrease of the carrier
+
+Apply Lemma 7.1 to the successor pair $(r_1,s_1)$. Equation (6.34) gives
+
+$$
+5e^5>(5d^5)^4,
 $$
 
 and hence
 
 $$
-25\mid u_2,\qquad25\mid u_3.
-\tag{7.10}
+e^5>5^3d^{20}.
+\tag{7.3}
 $$
 
-The condition on $c_1$ then gives $125\mid u_1$. Thus the nonconstant coordinate is
-divisible in the staggered pattern $125,25,25$. This is the division that drives the
-replacement; the rational residue $u_0$ remains a unit modulo $5$.
-
-There are two possible root-of-unity states. Expanding
+Multiply by $d^5$ and use $de=b^2$ from (6.35):
 
 $$
-U-\zeta\sigma(U)=\lambda V^5
-\tag{7.11}
+b^{10}=d^5e^5>5^3d^{25}.
+\tag{7.4}
 $$
 
-in the same basis, using these divisibilities, and comparing the coefficients of
-$1,\lambda,\lambda^2,\lambda^3$ gives the following transition table.
-
-| input state | leading difference | replacement element | output state |
-|---|---|---|---|
-| $0$ | $\lambda V_0^5$ | $V_1$ from (7.11) | $2$ |
-| $2$ | $\zeta^2\lambda V_0^5$ | $\zeta^{-1}V_1$ | $0$ |
-
-Before the output row is read, the staggered nonconstant coordinates in (7.10) are
-divided by their indicated powers of $5$ and their common content is removed. The
-rational residue of $U$ modulo $\lambda^3$ is unchanged by this normalization.
-
-For completeness, here is how the coefficient comparison behind the table is checked
-without hiding a cancellation. Write
-$V=v_0+v_1\lambda+v_2\lambda^2+v_3\lambda^3$, form the finite multinomial expansion
-of $V^5$, multiply by $\lambda$, and replace every occurrence of $\lambda^4$ by the
-right side of (7.6), beginning with the highest power. Compare the four resulting
-integer coefficients with (7.8). At the first level, reduction modulo $5$ replaces
-each $v_i^5$ by $v_i$. The three nonconstant equations are triangular because the
-action matrix in (7.7) has the distinct nontrivial diagonal residues $2,4,3$.
-Subtract the unique residue representatives and divide the nonconstant equations by
-$5$. The same triangular system occurs at the next level. After the third pass, the
-divisibilities (7.10) remove a common factor $25$, and the remaining equations are
-precisely the other row of the table. Every division by $5$ is made only after all four
-coefficients concerned have been shown divisible by $5$.
-
-The calculation also proves closure. For the new ordered pair, refactor its
-difference of fifth powers and apply the same ideal-coprimality argument to its four
-twists. This supplies the four new equations in (7.3); the roots are again retained
-independently. Their pairwise coprimality follows by the same two linear combinations
-used for cyclotomic factors. Multiplication supplies (7.2) for the new element, and the
-product of the four $\lambda_j$ supplies the next root-of-unity state.
-The two rows alternate because
+If $d\ge b$, then, since $b\ge1$,
 
 $$
-5=\zeta^3\eta^2\lambda^4
+5^3d^{25}\ge5^3b^{25}>b^{10},
 $$
 
-contributes $\zeta^3$, while conjugating $\lambda$ contributes
-$-\zeta^{-1}$. Reducing the total exponent modulo five gives $0\leftrightarrow2$.
-
-The order of the calculation is what keeps it transparent. Expanding every fifth power
-at once produces many monomials and hides the triangular structure. Instead one first
-computes $1-\sigma$ on the integral basis, then uses valuations to prove divisibility
-of the four coordinates, then solves one residue digit at a time, and only at the end
-multiplies the extracted factors and simplifies the unit.
-
-The distinct residues $2,4,3$ in the three nonrational directions make the digit
-equations invertible. The rational direction has eigenvalue one and is intentionally
-left unchanged. Multiplication of the conjugate uniformizers is postponed because that
-is the operation that changes the unit state. This separation explains both the form
-of the record and the two-row transition table.
-
-### 7.3 Extraction and replacement
-
-We can now state the descent lemma in the form used later.
-
-**Theorem 7.1 (quintic replacement lemma).** Every quintic descent record has a
-successor quintic descent record
+contradicting (7.4). Therefore
 
 $$
-(U',h',2-\epsilon;V'_1,V'_2,V'_4,V'_3)
+\boxed{0<d<b.}
+\tag{7.5}
 $$
 
-such that
+We can now state the replacement theorem in its final form.
+
+**Theorem 7.2 (quintic carrier replacement).** Every quintic carrier
+$(r,s;b,c)$ has an explicitly constructed successor
 
 $$
-0<|h'|\le |h|,\qquad
-0<\mathscr W(U')<\mathscr W(U).
-\tag{7.13}
+(r_1,s_1;d,e),
+\tag{7.6}
 $$
 
-The successor is obtained from the explicit factor
+that is again a quintic carrier and satisfies $0<d<b$. Its pair $(r_1,s_1)$ is the
+parity-dependent expression in (6.36), and $d,e$ are the positive fifth roots in
+(6.34).
+
+**Proof.** Sections 6.2--6.6 construct $M,N,d,e$ and prove the exact successor
+equations. Section 6.7 proves primitivity and parity. Equation (7.5) proves strictness.
+$\square$
+
+### 7.3 Iteration and contradiction
+
+Suppose a carrier exists. Among all positive integers that occur as its parameter
+$b$, choose a least one. Theorem 7.2 constructs another carrier with positive
+parameter $d<b$, contradicting minimality.
+
+This minimality argument quantifies over carriers, not over Fermat triples. That
+distinction is essential. The successor need not come with integers $x_1,y_1,z_1$
+whose fifth powers satisfy the original Fermat equation; closure was deliberately
+proved in the larger but rigid carrier family. Since the initial Fermat solution
+produces one carrier and every carrier produces another, minimality in that family is
+enough.
+
+Equivalently, repeated replacement would create
 
 $$
-U-\zeta\sigma(U)=\lambda V_1^5
-\tag{7.14}
+b_0>b_1>b_2>\cdots>0,
+\tag{7.7}
 $$
 
-in state $0$, and from $\zeta^{-1}V_1$ in state $2$.
+an impossible strictly decreasing sequence of positive integers. This is an infinite
+descent in the well-founded sense: every alleged carrier has a successor, and the
+ordinary order on $\mathbf Z_{>0}$ admits no infinite descending chain.
 
-**Proof strategy.** Coprimality makes every exponent away from $\mathfrak p$ a multiple
-of five. The rational three-digit congruence removes the unit, giving (7.14). The
-coefficient reduction of Section 7.2 shows that the new element satisfies the same
-record conditions with the other unit state. Its staggered coordinate division makes
-the primitive coordinate norm strictly smaller.
+At every iteration the full hypothesis is re-established. The new pair is primitive
+by (6.31). Its quartic value is a positive fifth power and its difference is exactly
+$5$ times a positive fifth power by (6.34). If the new difference is odd, the next
+root lies in the integral coordinate branch; if it is even, the next root lies in the
+half-integral branch. In either event Section 6.3 recalculates the unit class as
+$\eta^3$. No property is inherited merely because the successor resembles its
+predecessor.
 
-**Proof.** The extraction and the exact absence of a unit were proved in Section 6.4;
-the same proof applies to either state because multiplying the remaining factor by
-$\zeta^2$ does not change any ideal exponent. The transition table following (7.10)
-then proves all algebraic conditions for the successor.
+Notice what is not being used. We do not claim that the absolute values of $r$ and
+$s$ decrease. We do not choose a smallest algebraic norm. We do not infer a new
+equation from a norm equality alone. The measure is the explicit positive fifth-root
+parameter in the ramified difference, and inequality (7.2) proves its strict decrease.
 
-It remains to prove strictness, the point often omitted in informal accounts. Let
-$q$ be the greatest common divisor removed in forming the primitive triple of $U$, and
-let $q'$ be the corresponding divisor for $U'$. Carry the three successive residue
-digits in the coefficient reduction of Section 7.2 as integers $e_1,e_2,e_3,e_4$.
-Substitution in the invariant quadratic expression (7.5), followed by pairing the
-terms exchanged by $\sigma$, expresses
+The strictness also rules out a fixed point. If a carrier returned to itself up to
+signs or interchange of its two integer entries, its positive parameter would have to
+remain $b$. But every replacement has parameter $d<b$. Thus the contradiction does
+not depend on analyzing possible cycles among the algebraic fifth roots.
 
-$$
-q^2\mathscr W(U)-25q'^2\mathscr W(U')
-\tag{7.15}
-$$
+### 7.4 The second-case theorem
 
-as a positive integral linear combination of the squares of the nonconstant carry
-digits. To verify the sign directly, use the orbit-sum description of $\mathscr W$:
-each of the four conjugate coefficient divisions removes a factor $5$, and the square
-of the discarded residue is the corresponding summand. If every discarded residue
-were zero, all three nonconstant coordinates of $U$ would have a further common factor,
-contrary to the choice of $q$. Thus at least one square is positive. Removing common
-content can only decrease the successor term after division. Hence
-$\mathscr W(U')<\mathscr W(U)$. It is also positive, since a rational $U'$ would make
-its difference-of-fifth-powers identity have zero left side and nonzero right side.
+We can close the second case.
 
-The parameter $h'$ is the rational fifth root left after the common content in the
-coefficient equations is removed. Prime-by-prime comparison in (7.2) shows that every prime exponent
-of $h'$ is no larger than the corresponding exponent of $h$. Thus
-$0<|h'|\le|h|$. This proves (7.13). $\square$
-
-The orbit sum in (7.5) is essential. With only
-$u_1^2+u_2^2+u_3^2$, the cross terms from $\sigma(\lambda^3)$ have indefinite sign.
-Summing over the full orbit turns the comparison into the squares described after
-(7.15).
-
-Equality cannot occur in the strictness argument. Vanishing of every carry digit would
-give further common content in the primitive nonconstant coordinate. Conceptually, a
-record fixed by replacement would also have to identify the states $0$ and $2$ in the
-unit group modulo fifth powers.
-
-Negative values of $h$ cause no change. The sign is itself a fifth power, so it is
-absorbed when the successor's rational fifth root is chosen. The ordering is placed on
-$\mathscr W(U)$, not on algebraic integers or on the signed parameter.
-
-### 7.4 Strict decrease
-
-There are three distinct notions of “smaller” in the proof:
-
-1. $|a|<|z|$ and $N(A)<|z|$ in (3.8);
-2. the fifth roots $V_j$ are extracted from explicit factors of a conjugate
-   difference;
-3. the integral weight $\mathscr W$ decreases strictly under replacement.
-
-Only the third is used to iterate indefinitely. The first motivates the carrier and
-prevents the initial passage from increasing every natural size. The second keeps the
-new record arithmetically attached to the old one. A proof citing only the first two
-has not established a well-founded descent.
-
-Because $\mathscr W(U)$ is a positive integer, strict decrease immediately forbids an
-infinite chain. No assertion about real convergence is involved. The descent is
-well-founded in the ordinary ordering of $\mathbf Z_{>0}$.
-
-The field norm still has a useful supporting role. From (7.14),
-
-$$
-N(U-\zeta\sigma(U))=5N(V_1)^5.
-\tag{7.16}
-$$
-
-Thus the replacement is simultaneously a norm extraction from an explicit factor.
-Equation (7.16) verifies integrality and detects a missing factor of $5$, but the
-coordinate norm $\mathscr W$ supplies strictness without requiring a false converse to
-the field norm.
-
-### 7.5 Why every hypothesis is needed
-
-The replacement lemma is deliberately not stated for arbitrary $U$.
-
-- Without coprimality of $(U)$ and $(\sigma(U))$, a prime away from $\mathfrak p$ may
-  divide several factors in (6.5), so no individual factor need have exponent divisible
-  by five.
-- Without the depth-eleven difference, (6.9) need not be rational modulo
-  $\lambda^3$, and the surviving unit may be $\eta$.
-- Without the exact unit state, multiplication of the four extracted factors can shift
-  by a non-fifth-power root of unity. The successor then leaves the two-state family.
-- Without primitive coordinate content, (7.5) could decrease only by a common scaling
-  that is immediately reintroduced at the next step.
-
-For example, take a general $\lambda$-adic unit $U$ with
-$U\equiv\sigma(U)\pmod\lambda$ but not modulo $\lambda^3$. Then
-$(U-\zeta\sigma(U))/\lambda$ is a unit, yet it may represent the class of $\eta$.
-Ideal exponents alone cannot remove it. This is exactly the obstruction excluded by
-the fixed-digit lemma.
-
-## 8. Well-founded second-case descent
-
-### 8.1 Constructing the initial record
-
-Assume a primitive second-case solution (3.2). Proposition 5.1 gives
-
-$$
-x+\zeta y=\lambda A^5.
-$$
-
-Sections 6.2--6.4 prove all the required data:
-
-$$
-\begin{aligned}
-A^5-\sigma(A)^5&=\eta^2(-\eta\lambda^3a)^5,\\
-v_{\mathfrak p}(A-\sigma(A))&=11+20v_5(a),\\
-A-\zeta^j\sigma(A)&=\lambda_jB_j^5\quad(j=1,2,3,4),\\
-A-\sigma(A)&\equiv\zeta^2\lambda
-\pmod{(K^\times)^5}.
-\end{aligned}
-\tag{8.1}
-$$
-
-The normalized factor ideals from the original solution prove the required
-coprimality. Thus
-
-$$
-(A,a,2;B_1,B_2,B_4,B_3)
-\tag{8.2}
-$$
-
-is a quintic descent record.
-
-The passage from $(x,y,z)$ to (8.2) is not circular. It uses only factorization,
-valuation, class number one, the explicit unit tests, and identities. The replacement
-lemma has not yet been invoked.
-
-### 8.2 Iteration
-
-Apply Theorem 7.1 to (8.2). It produces a successor record with state $0$ and smaller
-weight. Applying it again produces a state-$2$ record with still smaller weight. Thus,
-inductively, there are records $\mathcal R_n$ with
-
-$$
-\mathscr W(\mathcal R_0)>
-\mathscr W(\mathcal R_1)>
-\mathscr W(\mathcal R_2)>
-\cdots>0.
-\tag{8.3}
-$$
-
-At every step, the new fifth root comes from an explicit cyclotomic difference factor.
-The state alternates
-
-$$
-2,0,2,0,\ldots,
-$$
-
-and the rational parameter never increases in absolute value. Coprimality and the
-rational three-digit condition are re-established, not assumed by analogy.
-
-This last observation is what makes the iteration legitimate. An identity may resemble
-the preceding identity while failing one of the extraction hypotheses. The definition
-of a descent record was chosen precisely so that the conclusion of the replacement
-lemma is again an input to the same lemma.
-
-### 8.3 The contradiction
-
-There is no infinite strictly decreasing sequence of positive integers. Indeed, among
-the weights in (8.3), choose the least one. Its successor would be a still smaller
-positive integer, a contradiction.
-
-We have proved:
-
-**Theorem 8.1 (second case).** There is no nonzero primitive solution of
+**Theorem 7.3 (second case).** There is no primitive nonzero solution of
 
 $$
 x^5+y^5=z^5
@@ -1579,436 +2121,350 @@ $$
 
 for which $5\mid xyz$.
 
-The proof is an infinite descent in the precise well-founded sense. It does not posit an
-infinite sequence as an extra assumption; the replacement lemma constructs the
-successor to every alleged record, and the least-positive-integer principle rules out
-the initial record.
+**Proof strategy.** Orient the unique variable divisible by $5$ on the right.
+Cyclotomic extraction gives the rational shapes (4.8). The first real-quadratic norm
+equation gives an initial carrier. The replacement theorem contradicts the existence
+of any carrier.
 
-### 8.4 Norm descent and explicit-factor descent
-
-Two descriptions of the argument are now available.
-
-In the **norm description**, the original equation gives
+**Proof.** Pairwise coprimality shows that exactly one variable is divisible by $5$.
+After a signed permutation, assume (4.1). Sections 4.1--4.4 give
 
 $$
-N(A)=\frac{|z|}{5|a|}<|z|,
+x+y=5^4a^5,
+\qquad
+F(x,y)=5w^5.
 $$
 
-and every replacement satisfies
+Sections 5.2--5.6 construct from these equations a quintic carrier
+$(r,s;b,c)$. Theorem 7.2 produces a strictly smaller carrier, contradicting the
+least-positive-integer principle as in Section 7.3. $\square$
+
+The proof has now supplied the missing logical bridge between a smaller expression and
+a descent. The carrier is closed, the successor is explicit, and strictness is an
+identity rather than an assertion about unspecified coordinate carries.
+
+## 8. Fermat's theorem at exponent five
+
+### 8.1 The primitive nonzero theorem
+
+We first state the result in the symmetric form requested by the two-case analysis.
+
+**Theorem 8.1 (primitive exponent-five theorem).** There is no primitive nonzero
+integer solution of
 
 $$
-N(U-\zeta\sigma(U))=5N(U')^5.
+x^5+y^5+z^5=0.
+\tag{8.1}
 $$
 
-Norms certify that the extracted roots are integral and quantify the loss of one
-ramified prime.
+**Proof.** If $5\nmid xyz$, move one signed fifth power to the right. The resulting
+equation is a primitive first-case equation, contradicted by Theorem 3.2 or by the
+cyclotomic proof in Sections 3.4--3.6.
 
-In the **explicit-factor description**, the successor is the fifth root of
+If $5\mid xyz$, pairwise coprimality says that exactly one variable is divisible by
+$5$. Permute the signed terms so that this variable is moved to the right. The result
+is a primitive second-case equation, contradicted by Theorem 7.3. These alternatives
+are exhaustive. $\square$
 
-$$
-\frac{U-\zeta\sigma(U)}{1-\zeta}.
-$$
+This proof treats signs intrinsically. No positivity assumption on $x,y,z$ is hidden
+in either case.
 
-The fixed-digit lemma removes the unit, and the coefficient identity (7.15) proves
-strict decrease. This is the safer description when one wants to see exactly why the
-new object belongs to the same family.
+### 8.2 All integer and rational solutions
 
-The two descriptions complement rather than replace one another. Norm alone forgets
-prime distribution. Explicit factors alone do not automatically give a well-founded
-measure. Together they provide the promised well-founded norm descent.
+**Proof of Theorem 1.1.** Suppose (1.1) holds. If all variables are nonzero, divide
+by their positive greatest common divisor to obtain a primitive nonzero solution,
+contrary to Theorem 8.1. Hence $xyz=0$. $\square$
 
-## 9. Fermat's theorem for exponent five
-
-### 9.1 The integer theorem
-
-We can now assemble the proof of Theorem 1.1.
-
-**Proof of Theorem 1.1.** Suppose $x^5+y^5=z^5$ with $xyz\ne0$. Divide by the common
-divisor to obtain a primitive nonzero solution.
-
-If $5\nmid xyz$, Theorem 4.3 gives a contradiction. If $5\mid xyz$, Theorem 8.1 gives
-a contradiction. These are the only cases. Therefore no nonzero solution exists.
-$\square$
-
-The elementary congruence Lemma 3.1 can replace Theorem 4.3 in this final assembly, but
-the cyclotomic proof of the first case remains part of the descent theory: its primary
-normalization and conjugate-difference calculation are prototypes for the deeper
-second-case construction.
-
-### 9.2 The rational and exponent-divisible forms
-
-The integer theorem immediately implies the rational form.
-
-**Corollary 9.1.** If $x,y,z\in\mathbf Q$ and $x^5+y^5=z^5$, then $xyz=0$.
-
-**Proof.** Multiply by the fifth power of a common positive denominator. The resulting
-integer solution is trivial, so the original rational solution is trivial. $\square$
-
-It also settles every exponent divisible by five.
-
-**Corollary 9.2.** Let $n$ be a positive multiple of $5$. If
+The zero-coordinate solutions of the symmetric equation are exactly the permutations
+of
 
 $$
-x^n+y^n=z^n,\qquad x,y,z\in\mathbf Z,
+(t,-t,0),
+\qquad t\in\mathbf Z.
+\tag{8.2}
+$$
+
+For the oriented equation $X^5+Y^5=Z^5$, they are
+
+$$
+(t,0,t),
+\qquad
+(0,t,t),
+\qquad
+(t,-t,0).
+\tag{8.3}
+$$
+
+Indeed, the fifth-power map is injective on $\mathbf Z$.
+
+Clearing denominators gives the rational version.
+
+**Corollary 8.2.** If $x,y,z\in\mathbf Q$ and $x^5+y^5+z^5=0$, then
+$xyz=0$.
+
+**Proof.** Multiply by the fifth power of a common positive denominator and apply
+Theorem 1.1. $\square$
+
+### 8.3 Exponents divisible by five
+
+The exponent-five theorem also removes every exponent divisible by five.
+
+**Corollary 8.3.** Let $n=5m$ with $m\ge1$. If
+
+$$
+x^n+y^n=z^n,
+\qquad x,y,z\in\mathbf Z,
 $$
 
 then $xyz=0$.
 
-**Proof.** Write $n=5m$ and set $X=x^m$, $Y=y^m$, $Z=z^m$. Then
-$X^5+Y^5=Z^5$, so Theorem 1.1 gives $XYZ=0$, hence $xyz=0$. $\square$
+**Proof.** Put $X=x^m$, $Y=y^m$, and $Z=z^m$. Then
+$X^5+Y^5=Z^5$. Theorem 1.1 gives $XYZ=0$, hence $xyz=0$. $\square$
 
-No assumption that $n$ is prime is needed in this corollary. The exponent-five theorem
-is inherited by all of its multiples through a direct substitution.
+No primality assumption on $n$ is needed. The result follows by substitution, not by
+rerunning the descent.
 
-### 9.3 Signs, zeroes, and permutations
+## 9. Proof integrity and the reusable descent package
 
-For clarity, the complete list of integer solutions with a zero coordinate is easy to
-describe. If $y=0$, then $x^5=z^5$, and injectivity of the fifth-power map on
-$\mathbf Z$ gives $x=z$. If $x=0$, then $y=z$. If $z=0$, then $x^5=-y^5$, so
-$x=-y$. Thus the trivial solutions are
+### 9.1 The ideal and norm ledgers
 
-$$
-(t,0,t),\qquad(0,t,t),\qquad(t,-t,0),qquad t\in\mathbf Z.
-\tag{9.1}
-$$
-
-Every sign change used earlier is legitimate because $(-t)^5=-t^5$. Every placement
-of the variable divisible by $5$ is legitimate because one may first rewrite the
-equation as a sum of three signed fifth powers and then permute the three terms.
-
-These small points matter in a descent proof. A hidden positivity assumption on the
-variables would leave sign cases untreated; an unjustified permutation of the two
-sides could move a minus sign outside a fifth power. Oddness of the exponent resolves
-both issues explicitly.
-
-## 10. Quintic equations with controlled coefficients
-
-### 10.1 Supported coefficients
-
-The factorization method applies more broadly than Fermat's equation, provided the
-coefficient has controlled prime support. Consider
-
-$$
-x^5+y^5=d z^5,\qquad \gcd(x,y)=1,\qquad d\in\mathbf Z\setminus\{0\}.
-\tag{10.1}
-$$
-
-Let $S$ be the set of prime ideals dividing $(d)$ together with $\mathfrak p$. If
-$\mathfrak q\notin S$, then $\mathfrak q$ divides at most one factor
-$x+\zeta^iy$. Its exponent in the full product equals its exponent in $(z)^5$, and is
-therefore divisible by five. Hence
-
-$$
-x+\zeta y
-=u\lambda^r\delta A^5,
-\tag{10.2}
-$$
-
-where $0\le r<5$, the prime divisors of $\delta$ belong to $S\setminus\{\mathfrak p\}$,
-and their exponents may be chosen between zero and four. Since the ring is principal,
-$\delta$ may be chosen as an element after generators of the finitely many supported
-prime ideals have been fixed.
-
-The statement does not say that $\delta$ is rational. If a rational prime splits, a
-coefficient $d$ can distribute its prime ideals asymmetrically among conjugate factors.
-The element $\delta$ records that distribution. Replacing it by its rational norm would
-lose precisely the information needed for extraction.
-
-The proof of (10.2) is the same prime-by-prime argument as before. For every prime ideal
-outside $S$, the exponent is a multiple of five. Remove the residues modulo five at the
-finitely many primes in $S$, and the remaining ideal is a fifth power. Class number one
-makes its fifth root principal, leaving a unit.
-
-This supported form is useful for equations such as
-
-$$
-x^5+y^5=5^e q^f z^5,
-$$
-
-where $q\ne5$ is a fixed rational prime. It says that all uncontrolled behavior is
-confined to the primes above $q$ and to $\mathfrak p$. It does not, without additional
-local information at $q$, prove nonexistence.
-
-### 10.2 What survives unchanged
-
-Three pieces of the Fermat argument survive for every fixed coefficient $d$.
-
-First, **coprimality away from $\mathfrak p$** depends only on $gcd(x,y)=1$, not on the
-right side of the equation. Distinct linear factors still have no common prime outside
-$\mathfrak p$.
-
-Second, **valuation control at $\mathfrak p$** depends only on whether $5$ divides
-$x+y$:
-
-$$
-v_{\mathfrak p}(x+\zeta^iy)=
-\begin{cases}
-0,&5\nmid x+y,\\
-1,&5\mid x+y,\ i\ne0.
-\end{cases}
-\tag{10.3}
-$$
-
-What changes is the product valuation. If $e=v_5(d)$ and $s=v_5(z)$, then in the
-ramified case
-
-$$
-4v_5(x+y)+4=4e+20s,
-$$
-
-so
-
-$$
-v_5(x+y)+1=e+5s.
-\tag{10.4}
-$$
-
-The Fermat relation (3.3) is the special case $e=0$.
-
-Third, **unit tests** are intrinsic to $\mathcal O$. Once the supported factor
-$\delta$ has been removed, a remaining unit rational modulo $\lambda^3$ is still a
-fifth power. The coefficient may, however, prevent the quotient from having that
-congruence. One must calculate rather than appeal to the Fermat case by analogy.
-
-As a worked comparison, suppose $d=5$. In the ramified case, (10.4) gives
-
-$$
-v_5(x+y)=5s,
-$$
-
-rather than $5s-1$. The rational factor is now a fifth power up to a unit prime to
-$5$, while the norm factor has no forced single factor of $5$. The distribution that
-fed (3.7) has shifted. Consequently the descent carrier of Chapter 6 is not obtained
-with the same $\lambda^{15}$ and unit $\eta^2$. This is not a cosmetic change: it can
-alter the two-state transition.
-
-### 10.3 Where the Fermat conclusion is special
-
-For $d=1$, there are no supported primes away from $\mathfrak p$. Every nonexceptional
-ideal exponent is a multiple of five, and the exact unit calculation closes. For a
-general $d$, three new obstructions can occur.
-
-1. A prime ideal dividing $d$ may enter one cyclotomic factor with exponent not
-   divisible by five.
-2. Conjugate prime ideals above the same rational divisor of $d$ may be distributed
-   asymmetrically.
-3. The unit state in the replacement table may be shifted by the Kummer class of
-   $d$.
-
-Thus the method gives a finite, explicit descent problem for a fixed coefficient, but
-not a universal nonexistence theorem. This boundary is mathematically healthy. For
-example,
-
-$$
-1^5+1^5=2\cdot1^5
-$$
-
-is a nontrivial coefficient equation. Any argument claiming that the Fermat descent
-works unchanged for every $d$ would incorrectly rule it out.
-
-The title “Fermat-type equations” therefore refers to the reusable factor,
-coprimality, valuation, and supported-extraction framework. The nonexistence conclusion
-uses the coefficient-one unit cycle in an essential way.
-
-## 11. Proof diagnostics and common failure modes
-
-### 11.1 Ideals before elements
-
-The equation
-
-$$
-\prod_{i=0}^4(x+\zeta^iy)=z^5
-$$
-
-is first an equality of elements and hence of principal ideals. Prime-ideal
-factorization is canonical. Element factorization is not, because associates differ by
-units.
-
-The safe chain is
+The proof uses ideals and norms for different purposes. The ideal ledger is:
 
 $$
 \begin{array}{c}
-\text{pairwise coprime ideals away from }\mathfrak p\\
+\text{coprime cyclotomic factors away from }\mathfrak p\\
 \Downarrow\\
-\text{individual ideal exponents divisible by five}\\
+\text{individual prime-ideal exponents divisible by five}\\
 \Downarrow\\
-(F_i)=\mathfrak p^{r_i}\mathfrak a_i^5\\
+x+\zeta y=u\lambda A^5\\
 \Downarrow\\
-F_i=u_i\lambda^{r_i}A_i^5.
+x+\zeta y=\lambda A^5.
 \end{array}
+\tag{9.1}
 $$
 
-The final arrow uses class number one. Beginning with “unique factorization gives
-$F_i=A_i^5$” skips both the exceptional prime and the unit.
-
-There is a second reason to prefer ideals. If $q\equiv1\pmod5$, the rational prime
-$q$ splits into four primes in $\mathcal O$. Two distinct cyclotomic factors can have
-norms divisible by $q$ while their ideals remain coprime. A gcd calculation on rational
-norms can therefore invent a common divisor that is absent in the cyclotomic ring.
-
-### 11.2 The two normalizations at five
-
-The equalities
+Only after the last line is proved do we take its norm. Thus
 
 $$
-v_5(5)=1,\qquad v_{\mathfrak p}(5)=4
+F(x,y)=5N(A)^5
 $$
 
-measure the same element on different scales. Both are used in the proof.
+is a consequence of an exact element equation, not a premise from which prime-ideal
+distribution is guessed.
 
-For an ordinary integer $n$,
+The real-quadratic norm equations are handled with the same discipline. Before
+writing $\alpha=u\beta^5$, we prove that $(\alpha)$ and $(\bar\alpha)$ are coprime.
+Their product being a fifth power then forces each ideal to be a fifth power, and
+Euclideanity makes its root principal. Neither occurrence of a real-quadratic fifth
+root is obtained from the numerical norm alone.
 
-$$
-v_{\mathfrak p}(n)=4v_5(n).
-$$
+### 9.2 The valuation and unit ledgers
 
-For a nonrational factor in the ramified case,
-
-$$
-v_{\mathfrak p}(x+\zeta^iy)=1.
-$$
-
-This does not mean that $5$ divides the factor as an element; it means precisely one
-copy of the uniformizer divides it. Four such copies, one from each nonrational
-conjugate, account for one ordinary factor of $5$ in the norm quotient.
-
-A quick audit of (3.3) illustrates the conversion:
+Every appearance of the prime $5$ has one of three normalizations:
 
 $$
-\underbrace{4t}_{x+y}
-+\underbrace{1+1+1+1}_{\text{four nonrational factors}}
-=\underbrace{5\cdot4s}_{z^5}.
+v_5(5)=1,
+\qquad
+v_{\mathfrak p}(5)=4,
+\qquad
+v_{(\pi)}(5)=2.
+\tag{9.2}
 $$
 
-Dividing by four gives $t+1=5s$. If one incorrectly sets
-$v_{\mathfrak p}(5)=1$, the same calculation yields the false relation
-$t+4=5s$.
+The first is the ordinary integer valuation. The second belongs to the quartic field
+$K$ and explains $t+1=5s$. The third belongs to $K^+$ and is used in the congruence
+modulo $\pi^2=5$ that determines the unit $\eta^3$. The proof never transfers a value
+between these scales without the corresponding ramification factor.
 
-### 11.3 Units cannot be wished away
+There are likewise three distinct unit steps:
 
-There are three unit-removal mechanisms, each with a different hypothesis.
+1. in the first case, primary normalization makes the unit real but does not make it
+   a fifth power;
+2. in the ramified cyclotomic factor and in the first real-quadratic factor, rationality
+   modulo $\lambda^3$ makes the unit a fifth power;
+3. in the carrier replacement, the unit is not a fifth power, and comparison modulo
+   $\pi^2$ forces its exact class $\eta^3$ before multiplication by $\eta^2$ absorbs
+   it.
 
-1. In the first case, primary normalization makes the unit real. It need not make the
-   unit a fifth power.
-2. In the ramified factor, division by $\lambda$ leaves a quotient rational modulo
-   $\lambda^3$, so the unit is a fifth power.
-3. In the replacement step, deep invariance makes the normalized difference rational
-   modulo $\lambda^3$, again removing the unit.
+The third step is especially important. The unit class is recomputed from
+$r\equiv s\pmod5$ for every carrier. Closure does not depend on an alternating or
+freely chosen state.
 
-These mechanisms should not be interchanged. The congruence
-$u\equiv r\pmod{\lambda^2}$ permits $u=\eta$, which is not a fifth power. The
-congruence modulo $\lambda^3$ is the first one that detects both exponents in
+### 9.3 Why the replacement is closed
 
-$$
-u=\pm\zeta^a\eta^b.
-$$
-
-Exact roots of unity also matter. In (6.14), replacing $\zeta^2\lambda$ by “an
-associate of $\lambda$” erases the state that makes the replacement family close.
-Associates are interchangeable for valuations, but not for fifth-power classes.
-
-### 11.4 A smaller expression is not yet a descent
-
-From a second-case solution we obtained
+For reference, the replacement certificate is the following exact chain. A carrier
+satisfies
 
 $$
-x+y=5^4a^5,\qquad Q(x,y)=5w^5,\qquad z=5aw.
+r-s=5b^5,
+\qquad
+F(r,s)=c^5.
 $$
 
-It follows that $|a|,w<|z|$. This is useful, but it does not prove Fermat's theorem.
-To descend, one must answer four questions.
-
-1. What new mathematical object uses $a$ or $w$?
-2. Does that object satisfy the same hypotheses as the original one?
-3. Is its proposed size a positive integer?
-4. Is the size strictly smaller, rather than merely no larger?
-
-Chapters 6 and 7 answer them with the descent record, the closure calculation, the
-weight $\mathscr W$, and identity (7.15). This separation prevents a common circular
-argument in which the desired smaller Fermat solution is inferred by reversing a norm.
-
-There is another false descent worth noting. One might repeatedly take a fifth root of
-an ideal and say that its norm decreases. After the first extraction, however, the new
-ideal need not be attached to a binary factor $x+\zeta y$, so the next extraction may
-have no coprimality theorem available. The conjugate-difference record carries exactly
-the extra relations needed for iteration.
-
-## 12. The classical boundary
-
-### 12.1 What has been proved
-
-The proof can now be summarized without suppressing any of its exceptional steps.
-
-Start with a primitive equation
+The coprime norm factor
 
 $$
-x^5+y^5=z^5.
+\frac{(r+s)^2+(r^2+s^2)\pi}{2}
 $$
 
-In the first case, the five factors are pairwise coprime. Primary normalization of one
-factor leaves only a real unit. Subtraction of the conjugate equation is divisible by
-$\lambda^5$. Its explicit $\lambda$-coordinates force the two inputs to be congruent
-modulo $5$. Cycling the signed variables gives a contradiction.
-
-In the second case, exactly one variable is divisible by $5$. Put it on the right.
-The rational factor has value $4t$, the four nonrational factors have value one, and
-comparison with $z^5$ gives
+has norm $-c^5$ and exact unit class $\eta^3$. After multiplying by $\eta^2$, it is
 
 $$
-t+1=5v_5(z).
+\frac{\mathcal P+\mathcal Q\pi}{2}=\gamma^5,
 $$
 
-After one uniformizer is removed, the quotient is rational modulo $\lambda^3$.
-The unit is therefore a fifth power, giving the exact factor
+with
+
+$$
+\mathcal P=4r^2+3rs+4s^2,
+\qquad
+\mathcal Q=2r^2+rs+2s^2.
+$$
+
+There are two exact coordinate lattices:
+
+$$
+\gamma=
+\begin{cases}
+M+N\pi,&r,s\text{ of opposite parity},\\
+(M+N\pi)/2,&r,s\text{ both odd}.
+\end{cases}
+$$
+
+The identity
+
+$$
+11\mathcal Q-5\mathcal P=2(r-s)^2
+$$
+
+and the fifth-power expansion give the parity-scaled products in (6.27). Dividing
+their exact powers of two defines
+
+$$
+(r_1,s_1)=
+\begin{cases}
+(-2N,M-3N),&r,s\text{ of opposite parity},\\
+\left(-N,(M-3N)/2\right),&r,s\text{ both odd}.
+\end{cases}
+$$
+
+In both rows one obtains the same primitive integer identity
+
+$$
+(r_1-s_1)F(r_1,s_1)=5b^{10}.
+$$
+
+Coprimality and the exact residue at $5$ then give
+
+$$
+r_1-s_1=5d^5,
+\qquad
+F(r_1,s_1)=e^5,
+\qquad
+de=b^2.
+$$
+
+Finally,
+
+$$
+16\bigl(5F(r_1,s_1)-(r_1-s_1)^4\bigr)
+$$
+
+is the positive expression in (7.2), and it forces $0<d<b$. This certificate contains
+an equation for every transition and a strict positive-integer measure.
+
+### 9.4 Dependency closure
+
+The proof has one direct mathematical dependency: Book 191. Its imported statements
+are limited and can be listed exactly.
+
+1. The quartic cyclotomic ring is $\mathcal O=\mathbf Z[\zeta]$, is a PID, and has
+   the unique prime $\mathfrak p=(1-\zeta)$ above $5$ with
+   $5=\zeta^3\eta^2\lambda^4$.
+2. Its units are $\pm\zeta^a\eta^n$, primary units are real, and a unit rational
+   modulo $\lambda^3$ is a fifth power.
+3. Distinct primitive linear factors $U+\zeta^iV$ are coprime away from
+   $\mathfrak p$, and their ramified valuations are those in (2.14).
+4. Every integral fifth power is rational modulo $5\mathcal O$, and the absolute norm
+   of $U+\zeta V$ is $F(U,V)$.
+
+Each imported assertion is used with the same hypotheses and normalization as in Book
+191. In particular, class number one is used only after prime-ideal exponents have
+been isolated, and the fifth-power unit criterion is used only for a unit already
+known to accompany an ideal fifth power.
+
+Everything specific to the descent is proved in the present book. Lemma 5.1 proves
+that $\mathbf Z[\eta]$ is Euclidean, so no class-number assertion about the real
+subfield is imported. The coprimality of each pair of real conjugate factors is proved
+from the displayed integer gcds. Both real-unit calculations are explicit: the first
+unit is killed by the three-digit criterion, while the second is computed as
+$\eta^3$ modulo fifth powers. The coordinate polynomials, their parity scalings, the
+factorization through $H(M,N)$, and the strict quartic inequality are all established
+here by exact identities.
+
+No later book enters the proof. In particular, the exponent-five conclusion does not
+use Frey curves, modularity lifting, a classification of rational points, or a theorem
+that already contains Fermat's equation as a special case. This is why the conclusion
+can serve as the independent coefficient-five endpoint for the later global assembly.
+
+### 9.5 What has been proved
+
+The first case has been proved twice: by the nonzero fifth-power residues modulo $25$
+and by primary cyclotomic normalization followed by a conjugate-difference calculation.
+The second case begins with the exact Book 191 factor
 
 $$
 x+\zeta y=\lambda A^5.
 $$
 
-Its norm and rational companion are
+Its norm and rational companion have the rigid shapes
 
 $$
-Q(x,y)=5N(A)^5,\qquad x+y=5^4a^5,\qquad z=5aN(A).
+F(x,y)=5w^5,
+\qquad
+x+y=5^4a^5.
 $$
 
-Comparing the factor with its $\sigma$-conjugate produces
+The first real-quadratic norm identity turns these shapes into a carrier. The second
+real-quadratic norm identity, its forced unit $\eta^3$, and the exact coordinate
+factorization produce a successor carrier. The quartic separation identity makes the
+new positive parameter strictly smaller. Well-foundedness rules out the initial
+carrier and therefore the second case.
+
+The two real-quadratic passages should be distinguished. In the first, the irrational
+coordinate is so deeply divisible by $5$ that the accompanying real unit is itself a
+fifth power; this passage creates the carrier. In the second, the irrational coordinate
+is a unit modulo $5$, so the unit survives with the forced class $\eta^3$; multiplication
+by $\eta^2$ turns it into a fifth power and drives the replacement. Treating these two
+unit calculations as interchangeable would lose the exact successor.
+
+Parity is equally part of the theorem rather than an editorial detail. A primitive
+second-case solution may place either the unique even variable or an odd variable at
+the position divisible by $5$. The half-integral and integral coordinate branches in
+Chapters 5 and 6 cover both possibilities. Their powers of two cancel in the common
+identity
 
 $$
-A^5-\sigma(A)^5=\eta^2(-\eta\lambda^3a)^5
+(r_1-s_1)F(r_1,s_1)=5b^{10},
 $$
 
-and forces $A-\sigma(A)$ eleven digits deep. This deep invariance makes $A$ rational
-modulo $\lambda^3$. Each of the four nontrivial difference factors is consequently an
-explicit uniformizer times a fifth power. Their exact unit classes form a two-state
-family. The coefficient replacement sends every record to another with strictly
-smaller positive integral weight. Well-foundedness gives the contradiction.
+so the same descent measure works in both branches.
 
-Every use of class number one, coprimality, unit classification, valuation conversion,
-and positivity has now been identified. The descent never invokes a converse to the
-norm map and never assumes that associates have the same fifth-power class.
-
-### 12.2 Why exponent five can now be set aside
-
-The exponent-five theorem is complete within classical cyclotomic arithmetic. Its
-difficulty is concentrated at the coefficient prime $5$: total ramification creates
-the exceptional common factor, while the unusually explicit unit group and the
-three-digit unit test make that exception controllable.
-
-The proof also explains why this volume is the natural endpoint of the coefficient-five
-boundary. For exponent five, the cyclotomic ring has class number one, its units are
-explicit, and the ramified factor closes under a finite two-state replacement. Those
-features permit a direct, well-founded descent. No later argument is needed to recover
-this exponent.
-
-What remains beyond this boundary begins at coefficient primes at least seven. The
-present theorem removes every exponent divisible by five and leaves no unresolved
-case at the prime five. The classical factorization
+It follows that every primitive nonzero solution of
 
 $$
-x^5+y^5=\prod_{i=0}^4(x+\zeta^iy)
+x^5+y^5+z^5=0
 $$
 
-has fulfilled its promise: prime ideals control the factors, the ramified valuation
-controls the exception, unit congruences turn ideal fifth powers into element fifth
-powers, and an explicit norm-bearing replacement makes descent well founded. Therefore
-the equation $x^5+y^5=z^5$ has only the trivial integer solutions listed in (9.1).
+is impossible. Hence Fermat's equation at exponent five has only the trivial integer
+solutions, and the same is true over $\mathbf Q$ and for every exponent divisible by
+five. This completes the coefficient-five boundary using only the cyclotomic
+arithmetic of Book 191 and the explicit descent developed here.
+
+The endpoint is therefore genuinely classical and self-contained relative to its
+declared prerequisite: the exceptional prime is measured, every unit is accounted
+for, both parity lattices are carried through the replacement, and the descent ends
+in the well-founded order of positive integers.
+No unproved recurrence or numerical coincidence remains at the decisive step of the
+argument. Every displayed decrease follows from a positive identity over the ordinary
+integers.

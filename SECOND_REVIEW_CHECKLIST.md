@@ -205,7 +205,7 @@ any resulting corrections.
 - [x] 179. Odlyzko Bounds and Fontaine’s Argument
 - [ ] 180. Hardly Ramified (3)-adic Representations
 - [x] 181. Schoof's Finite-Flat Category over ℤ[1/2]
-- [x] 182. Local Conditions for Hardly-Ramified Minimal Deformations
+- [ ] 182. Local Conditions for Hardly-Ramified Minimal Deformations
 - [ ] 183. Supported Galois Cohomology and Selmer Calculations
 - [ ] 184. Relation Obstructions and Poitou–Tate Corrections
 - [ ] 185. Finite Image and the Balanced Minimal-Lift Argument
@@ -215,6 +215,6 @@ any resulting corrections.
 - [ ] 189. Compatible Systems over the Base Field
 - [ ] 190. The Fixed-Three Integral Local Theory
 - [x] 191. Quintic Cyclotomic Units and Kummer Arithmetic
-- [ ] 192. Cyclotomic Descent for Quintic Fermat-Type Equations
+- [x] 192. Cyclotomic Descent for Quintic Fermat-Type Equations
 - [x] 193. The Chebotarev Density Theorem
 - [ ] 194. Frey-Special Modularity Admissibility and the Minimal Lift

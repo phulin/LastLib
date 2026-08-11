@@ -194,8 +194,8 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 127. Quaternionic PEL Functors and Representability
 - [x] 128. Uniformization, Components, and Hecke Descent for Shimura Curves
 - [x] 129. Unitary Shimura Surfaces and the Modèles Étranges Construction
-- [x] 130. Good Integral Models of Shimura Curves and Surfaces
-- [x] 131. Semistable Models and Monodromy of Shimura Varieties
+- [ ] 130. Good Integral Models of Shimura Curves and Surfaces
+- [ ] 131. Semistable Models and Monodromy of Shimura Varieties
 - [x] 132. Automorphic Decomposition of Shimura-Curve H¹
 - [x] 133. Automorphic Decomposition of Unitary-Surface H²
 - [x] 134. Galois Representations from Weight-Two Shimura Cohomology
@@ -204,7 +204,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 137. Compatible Coefficient Systems and Purity
 - [x] 138. Canonical Galois Lattices and Finite-Flat Quotients
 - [x] 139. Modular Curves (X_0(N)) and (X_1(N))
-- [x] 140. Jacobians of Modular Curves
+- [ ] 140. Jacobians of Modular Curves
 - [x] 141. The Eisenstein Ideal
 - [x] 142. Eisenstein Series, Congruences, and the Eisenstein Ideal
 - [x] 143. Cuspidal Divisors and Specialization on Modular Jacobians
@@ -229,7 +229,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 162. Dickson Classification and Adequate Residual Image
 - [x] 163. The Minimal Totally-Real Deformation–Hecke Problem
 - [x] 164. Minimal Patching and R=T over Totally Real Fields
-- [x] 165. One-Prime Type Complexes and Component Support
+- [ ] 165. One-Prime Type Complexes and Component Support
 - [x] 166. One-Prime Nonminimal Patching and R=T
 - [x] 167. Hilbert Irreducibility and Arithmetic Approximation
 - [x] 168. Moret–Bailly’s Theorem
@@ -238,23 +238,24 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 171. Galois and Solvable Refinements of Arithmetic Approximation
 - [x] 172. Hilbert–Blumenthal Moduli and Two-Prime Level Covers
 - [x] 173. Local Geometry of Hilbert–Blumenthal Moduli
-- [x] 174. Auxiliary Dihedral Data and Residual Potential Modularity
+- [ ] 174. Auxiliary Dihedral Data and Residual Potential Modularity
 - [x] 175. Compatible Systems of Galois Representations
 - [x] 176. Brauer Induction and Descent of Automorphy
-- [x] 177. Changing the Prime
+- [ ] 177. Changing the Prime
 - [x] 178. Discriminants of Galois Representations
 - [x] 179. Odlyzko Bounds and Fontaine’s Argument
-- [x] 180. Hardly Ramified (3)-adic Representations
+- [ ] 180. Hardly Ramified (3)-adic Representations
 - [x] 181. Schoof's Finite-Flat Category over ℤ[1/2]
-- [x] 182. Local Conditions for Hardly-Ramified Minimal Deformations
-- [x] 183. Supported Galois Cohomology and Selmer Calculations
-- [x] 184. Relation Obstructions and Poitou–Tate Corrections
-- [x] 185. Finite Image and the Balanced Minimal-Lift Argument
-- [x] 186. Potential Automorphy and Galois Refinement of a Chosen Lift
+- [ ] 182. Local Conditions for Hardly-Ramified Minimal Deformations
+- [ ] 183. Supported Galois Cohomology and Selmer Calculations
+- [ ] 184. Relation Obstructions and Poitou–Tate Corrections
+- [ ] 185. Finite Image and the Balanced Minimal-Lift Argument
+- [ ] 186. Potential Automorphy and Galois Refinement of a Chosen Lift
 - [x] 187. Brauer Induction for Automorphy Families
 - [x] 188. Brauer Characters and Effectivity of Compatible Families
 - [x] 189. Compatible Systems over the Base Field
-- [x] 190. The Fixed-Three Integral Local Theory
+- [ ] 190. The Fixed-Three Integral Local Theory
 - [x] 191. Quintic Cyclotomic Units and Kummer Arithmetic
 - [x] 192. Cyclotomic Descent for Quintic Fermat-Type Equations
 - [x] 193. The Chebotarev Density Theorem
+- [ ] 194. Frey-Special Modularity Admissibility and the Minimal Lift
