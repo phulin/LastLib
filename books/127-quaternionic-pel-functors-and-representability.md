@@ -47,7 +47,7 @@
   - [10.2 Why the algebraic space is a scheme](#102-why-the-algebraic-space-is-a-scheme)
   - [10.3 The representability theorem](#103-the-representability-theorem)
 - [11. Infinitesimal deformation theory](#11-infinitesimal-deformation-theory)
-  - [11.1 The Hodge-lifting theorem](#111-the-hodge-lifting-theorem)
+  - [11.1 The characteristic-zero Hodge chart](#111-the-characteristic-zero-hodge-chart)
   - [11.2 Linearizing the PEL conditions](#112-linearizing-the-pel-conditions)
   - [11.3 The local-model diagram](#113-the-local-model-diagram)
   - [11.4 Cotangent complexes and obstruction groups](#114-cotangent-complexes-and-obstruction-groups)
@@ -134,21 +134,38 @@ such that:
 
 The fourth condition is the PEL condition. It excludes a mere Hodge-type embedding whose image requires higher tensors. The quaternionic trace construction, a split-corestriction construction when its central kernel has been treated, or its prescribed central modification supplies the realizations used here. We never claim that every quaternionic Shimura datum admits this exact PEL description. All representability theorems below begin with Definition 1.1.
 
+There are two outcomes to keep distinct. If $G_{\mathscr D}=G$, the realization is **direct** and
+the fine PEL scheme is a model of the original Shimura variety. If $G_{\mathscr D}$ is a
+nontrivial central modification with the same adjoint datum, its fine PEL scheme is instead a
+finite central cover from which the original Shimura variety is recovered by the effective
+finite quotient constructed in Book 126. The universal abelian family lives on the PEL cover and
+descends through that quotient only under the inertia criterion of Section 13.4.
+
 This qualification is mathematically productive. It tells us that the tensors to be spread out are exactly an algebra action and an alternating pairing. It also makes the deformation space a homogeneous space for the group we intend, rather than for an accidentally larger centralizer.
 
 ## 2. The fixed quaternionic PEL datum
 
 ### 2.1 Rational tensors and the similitude group
 
-Fix a quaternionic PEL realization $\mathscr D$. Put
+Fix a quaternionic PEL realization $\mathscr D$. First put
 
 $$
-G_{\mathscr D}(R)=
+\widetilde G_{\mathscr D}(R)=
 \left\{g\in\operatorname{GL}_{D\otimes R}(V\otimes R):
 \psi(gx,gy)=\nu(g)\psi(x,y),\ \nu(g)\in R^\times\right\}
 $$
 
-for every $\mathbf Q$-algebra $R$. Perfectness of $\psi$ makes the multiplier $\nu(g)$ unique. By hypothesis, the relevant connected component of this group has the quaternionic adjoint datum fixed in the preceding book.
+for every $\mathbf Q$-algebra $R$, and let
+
+$$
+G_{\mathscr D}=\widetilde G_{\mathscr D}^{\circ}.
+$$
+
+Perfectness of $\psi$ makes the multiplier $\nu(g)$ unique. By hypothesis,
+$G_{\mathscr D}$ is the connected central modification carrying the quaternionic adjoint datum
+fixed in the preceding book. Keeping the identity component in the notation is important:
+$\widetilde G_{\mathscr D}$ can have extra components, whereas a Shimura datum in the convention
+of Book 126 starts with a connected reductive group.
 
 There are two commuting actions hidden in this formula. The prescribed algebra $D$ acts on the left and will become endomorphisms of the universal abelian scheme. The group $G_{\mathscr D}$ is formed by automorphisms commuting with that action. Confusing these sides reverses multiplication in the moduli problem.
 
@@ -237,7 +254,10 @@ P_{\mathscr D}(T;X_1,\ldots,X_m)
 =\det\left(T-\sum_{i=1}^mX_i e_i\mid W_h\right).                 \tag{2.1}
 $$
 
-Its coefficients are invariant under precisely the Galois stabilizer of the Hodge cocharacter class and therefore lie in $E$. After enlarging $S_{\mathrm{bad}}$, they lie in $R$. A change of the basis $(e_i)$ merely makes an invertible integral substitution in the variables, so the equality of determinant laws defined by (2.1) is intrinsic.
+Its coefficients are invariant under the Galois stabilizer of the Hodge cocharacter class and
+therefore lie in $E$. After enlarging $S_{\mathrm{bad}}$, they lie in $R$. A change of the basis
+$(e_i)$ merely makes an invertible integral substitution in the variables, so the equality of
+determinant laws defined by (2.1) is intrinsic.
 
 For a quaternion algebra split at exactly one real embedding $\tau_0$, the noncentral Hodge cocharacter occurs only at that label. The reflex field is the embedded copy $\tau_0(F)$. The other real factors influence the representation and positivity but contribute no tangent direction. This separation between abelian dimension $g$ and moduli dimension one is the central numerical feature of the construction.
 
@@ -297,10 +317,21 @@ $$
 such that for one unit $u\in(\mathbf Z/N\mathbf Z)^\times$ fixed by the chosen component,
 
 $$
-e_N^\lambda(\eta_Nx,\eta_Ny)=\zeta_N^{,u(c\psi)(x,y)}.          \tag{3.4}
+   e_N^\lambda(\eta_Nx,\eta_Ny)=
+   \zeta_N^{\,u\,(c\psi)(x,y)}.                                  \tag{3.4}
 $$
 
-Here $e_N^\lambda=e_N(\,cdot\,,\lambda\,\cdot\,)$ is the Weil pairing obtained from the Poincare biextension. Because $N$ is prime to $\deg\lambda$, it is perfect. Allowing all $u$ gives the similitude level; fixing $u=1$ gives symplectic level.
+Here $(c\psi)(x,y)$ is reduced modulo $N$, the exponent is interpreted in
+$\mathbf Z/N\mathbf Z$, and
+
+$$
+e_N^\lambda(x,y)=e_N(x,\lambda y)
+$$
+
+is the Weil pairing obtained from the Poincare biextension. Because $N$ is prime to
+$\deg\lambda$, it is perfect. Allowing the multiplier $u$ to vary gives similitude level;
+fixing $u=1$ gives symplectic level. If a connected component fixes some other multiplier, that
+value is part of the component datum rather than an unquantified choice in the definition.
 
 The cyclotomic choice is only a framing device. Intrinsically, one records an isomorphism between the multiplier line of $c\psi$ modulo $N$ and $\mu_N$. A general prime-to-$S_{\mathrm{bad}}$ level $K$ is a $K$-orbit of compatible trivializations on the prime-to-bad Tate module. For finite-presentation moduli, it is enough to choose a normal principal congruence subgroup $K(N)\subset K$ and descend the full level-$N$ cover by the finite group $K/K(N)$.
 
@@ -455,7 +486,11 @@ The proof works for a $K$-orbit level by first refining to a principal level and
 
 ### 6.3 The stack theorem
 
-Write $\mathscr Q_K$ for this stack. Its formation commutes with base change $R'\to R$ provided every piece of the datum is base changed, including the determinant polynomial and multiplier line. There is a universal PEL object over the stack in the tautological sense: over a map $S\to\mathscr Q_K$, its pullback is the object classified by that map.
+Write $\mathscr Q_K$ for this stack. Its formation commutes with a change of coefficient
+ring $R\to R'$ provided every piece of the datum is base changed, including the determinant
+polynomial and multiplier line. There is a universal PEL object over the stack in the
+tautological sense: over a map $S\to\mathscr Q_K$, its pullback is the object classified by
+that map.
 
 This statement is stronger than saying that isomorphism classes form an fppf sheaf and weaker than scheme representability. It retains automorphisms. The next three chapters respectively prove that the automorphisms form a finite scheme, show how level kills them, and construct a finite-presentation atlas.
 
@@ -514,13 +549,27 @@ The familiar threshold $N\geq3$ comes from an integral linear algebra fact.
 
 **Lemma 8.1 (torsion congruence lemma).** Let $M$ be a finite free $\mathbf Z$-module and let $u\in\operatorname{GL}(M)$ have finite order. If $u\equiv1\pmod N$ for an integer $N\geq3$, then $u=1$. The same conclusion holds for a finite free $\mathbf Z_\ell$-module when $u\equiv1\pmod{\ell^a}$ and either $\ell$ is odd or $\ell=2$ and $a\geq2$.
 
-**Proof.** It is enough to treat a prime power $p^a\mid N$ with either $p$ odd or $p=2$ and $a\geq2$. Write $u=1+p^aX$ in $\operatorname{End}(M\otimes\mathbf Z_p)$. If $u$ has prime order $q$ after replacing it by a suitable power, then
+**Proof.** It is enough to treat a prime power $p^a\mid N$ with either $p$ odd or $p=2$ and
+$a\geq2$. If $u\ne1$, replace it by a nonidentity power of prime order $q$. Choose the largest
+$p$-adic depth $s\geq a$ for which
 
 $$
-0=u^q-1=qp^aX+\binom q2p^{2a}X^2+\cdots .                          \tag{8.1}
+u=1+p^sX,
+\qquad X\not\equiv0\pmod p.
 $$
 
-If $q\ne p$, division by $p^a$ and reduction modulo $p$ gives $qX\equiv0$, so $X$ is divisible by $p$. Repeating makes $X=0$. If $q=p$, equation (8.1) shows that $u^p$ is congruent to $1$ at strictly greater $p$-adic depth; comparing the first nonzero depth in $u^p=1$ again forces $X$ to be divisible by $p$. For $p=2$, starting at depth at least two ensures that every term after $2^{a+1}X$ has larger valuation. Infinite divisibility in the finite free $\mathbf Z_p$-module gives $X=0$. A finite-order element has a power of prime order unless it is already the identity, so the result follows. $\square$
+The binomial expansion gives
+
+$$
+0=u^q-1=qp^sX+\binom q2p^{2s}X^2+\cdots .                          \tag{8.1}
+$$
+
+If $q\ne p$, divide by $p^s$ and reduce modulo $p$. Every term after the first vanishes, leaving
+$qX\equiv0\pmod p$, a contradiction. If $q=p$ is odd, divide by $p^{s+1}$: all later terms
+have strictly larger $p$-adic valuation, so reduction again gives $X\equiv0\pmod p$. If
+$p=q=2$, equation (8.1) has just the two terms $2^{s+1}X+2^{2s}X^2$; because $s\geq2$, the
+second has strictly larger valuation and gives the same contradiction. Thus no nonidentity
+torsion element occurs in the stated congruence subgroup. $\square$
 
 The lemma fails at level two: $-1\equiv1\pmod2$. This is not an artificial counterexample. The inversion automorphism preserves every polarization and every endomorphism action centralizing it.
 
@@ -599,7 +648,21 @@ The relative Hilbert scheme for the fixed polynomial contains a universal projec
 - The universal determinant equality (4.2) is closed.
 - Full level is finite etale over the locus without level.
 
-The boundedness assertion for endomorphisms deserves explanation. With a polarization fixed, the Rosati form is positive definite on the endomorphism lattice. The algebra generators satisfy prescribed algebraic equations and have adjoints prescribed by $*$. Their Rosati norms are consequently bounded in terms of the fixed representation. Only finitely many graph Hilbert polynomials occur. Thus the parameter space does not become an infinite disjoint union of unbounded endomorphism choices.
+The boundedness assertion for endomorphisms deserves explanation. With a polarization fixed,
+the Rosati quadratic form
+
+$$
+q(f)=\operatorname{Tr}(f^\dagger f)
+$$
+
+is positive definite on the endomorphism lattice. For a prescribed generator $e_i$, Rosati
+compatibility gives $\iota(e_i)^\dagger=\iota(e_i^*)$. The element $e_i^*e_i$ satisfies a fixed
+integral polynomial, so on a rational Tate module of fixed rank the trace of
+$\iota(e_i^*e_i)$ belongs to a finite set of possible sums of its roots. Thus
+$q(\iota(e_i))$ is uniformly bounded, and only finitely many integral endomorphisms can occur in
+that positive-definite ball. Their graphs have only finitely many Hilbert polynomials. Applying
+this to the finite chosen generating set prevents the parameter space from becoming an infinite
+disjoint union of unbounded endomorphism choices.
 
 Let $H$ be the resulting locally closed parameter scheme of framed PEL objects. The group $\operatorname{GL}_r$ acts by changing the frame. The universal family on the Hilbert scheme restricts to a universal framed PEL object on $H$.
 
@@ -670,56 +733,108 @@ The theorem does not assert that $Q_K$ is connected. It can contain several open
 
 ## 11. Infinitesimal deformation theory
 
-### 11.1 The Hodge-lifting theorem
+### 11.1 The characteristic-zero Hodge chart
 
-Representability tells us that the moduli space exists; deformation theory determines its local geometry. Let $S_0\hookrightarrow S$ be a square-zero closed immersion defined by a quasi-coherent ideal $I$, and let $A_0/S_0$ be an abelian scheme. We use de Rham homology, the dual of first de Rham cohomology. Its Hodge sequence is
+Representability tells us that the moduli space exists; its local geometry still has to be
+identified. We use de Rham homology, the dual of first de Rham cohomology. For an abelian scheme
+$A/S$ its Hodge sequence is
 
 $$
-0\longrightarrow\omega_{A_0^\vee}
-\longrightarrow H_{1,\mathrm{dR}}(A_0/S_0)
-\longrightarrow\operatorname{Lie}(A_0)
+0\longrightarrow\omega_{A^\vee}
+\longrightarrow H_{1,\mathrm{dR}}(A/S)
+\longrightarrow\operatorname{Lie}(A)
 \longrightarrow0.                                                   \tag{11.1}
 $$
 
-Write $H_0=H_{1,\mathrm{dR}}(A_0/S_0)$ and $F_0=\omega_{A_0^\vee}$. A polarization supplies a perfect alternating form on $H_0$ after the primes dividing its degree have been removed. The order action on $A_0$ acts covariantly on homology; our adjoint convention makes $F_0$ an $\mathcal O$-stable isotropic subbundle. The quotient $H_0/F_0=\operatorname{Lie}(A_0)$ is exactly where the determinant law belongs.
+Write $H=H_{1,\mathrm{dR}}(A/S)$ and $F=\omega_{A^\vee}$. Over $E$ the
+polarization degree is invertible, so the polarization gives a perfect alternating form on $H$,
+with its multiplier line understood. The order acts covariantly on homology, $F$ is
+$\mathcal O$-stable and isotropic, and the quotient
+$H/F=\operatorname{Lie}(A)$ is exactly where the determinant law belongs.
 
-The deformation result needed here is the following precise form.
+A full Grothendieck--Messing theorem over ramified integral bases would require crystalline
+machinery not present in the dependency row of this book. It is also unnecessary for the generic
+curve. The PEL-exact analytic algebraization already proved in Book 126 gives the following exact
+characteristic-zero replacement.
 
-**Theorem 11.1 (Hodge lifting).** Assume $S$ is an $E$-scheme, so every residue characteristic is zero. There is a finite locally free module $H$ on $S$, uniquely functorial up to canonical isomorphism, lifting $H_0$, such that deformations of $A_0$ to an abelian scheme over $S$ are equivalent to locally direct-summand lifts
-
-$$
-F\subset H,
-\qquad F\otimes_{\mathcal O_S}\mathcal O_{S_0}=F_0,               \tag{11.2}
-$$
-
-of rank $g$. Under this equivalence:
-
-1. an endomorphism of $A_0$ lifts exactly when $F$ is stable under its induced action on $H$;
-2. a polarization lifts exactly when $F$ is totally isotropic for the lifted alternating form;
-3. prime-to-characteristic level lifts uniquely;
-4. the action on $\operatorname{Lie}(A)$ is the action on $H/F$ in the homology-dual convention, so its determinant law is read on that quotient.
-
-**Proof strategy.** The nontrivial point is that an abelian scheme is reconstructed from its Hodge subbundle, not merely that every deformation produces one. We recall the construction in enough detail to expose the hypotheses.
-
-**Proof.** The universal vector extension of $A_0$ is an extension
+**Theorem 11.1 (characteristic-zero Hodge chart).** Let $x$ be a geometric closed point of
+$Q_{K,E}$, let $F_x\subset H_x$ be its Hodge subspace, and choose a
+$D$-linear symplectic-similitude frame $H_x\simeq V\otimes_E\overline E$. Let
+$M_{\mathscr D}$ be the flag scheme of $\mathcal O$-stable Lagrangian direct summands satisfying
+the determinant law and the component condition selected by $h$. Then there is an isomorphism
 
 $$
-0\longrightarrow\mathbf V(\omega_{A_0^\vee})
-\longrightarrow E(A_0)\longrightarrow A_0
-\longrightarrow0                                                      \tag{11.3}
+\widehat{\mathcal O}_{Q_{K,\overline E},x}
+\simeq
+\widehat{\mathcal O}_{M_{\mathscr D,\overline E},F_x}.           \tag{11.2}
 $$
 
-where $\mathbf V(\omega_{A_0^\vee})$ denotes the vector group whose Lie algebra is $\omega_{A_0^\vee}$. The extension is universal for extensions by vector groups, and its Lie algebra is canonically $H_0$. The universal-extension deformation lemma says that deformations of $A_0$ across a divided-power square-zero thickening are equivalent to direct-summand lifts of $F_0$ inside the evaluation $H$ of this Lie-algebra crystal. We verify the lemma here. Choose smooth affine charts of (11.3). Their algebras lift across $I$; on double intersections two lifts differ by a derivation with values in $I$, and on triple intersections the discrepancy is additive. Universality of (11.3) identifies the derivation sheaf with $\operatorname{Hom}(F_0,H_0/F_0)\otimes I$. A lift of $F_0$ is a local graph in precisely this Hom sheaf. Subtracting those graphs from the overlap derivations makes the lifted charts satisfy the cocycle, and they glue to a lifted universal extension with its distinguished vector subgroup. The universal property then reconstructs its abelian quotient and hence a lift of $A_0$. Conversely a lifted abelian scheme supplies its universal extension and the subbundle $\omega_{A^\vee}\subset H$. These operations undo one another because morphisms of abelian schemes and of their universal extensions are rigid.
+After extension to $\mathbf C$, it may be chosen from the locally flat marking of homology and
+the period map. With that choice, the infinitesimal Hodge direction is the direction in which the
+framed filtration moves. In particular, for a local Artinian $\overline E$-algebra $C$ with
+residue field $\overline E$, continuous local maps from the rings in (11.2) to $C$ describe
+$\mathcal O$-stable Lagrangian direct-summand lifts
 
-In characteristic zero, the square-zero ideal has the canonical divided powers $\gamma_1(x)=x$ and $\gamma_n(x)=0$ for $n\geq2$, so the lemma applies. This also proves that $H$ is independent of all chart choices: two evaluations agree on overlaps by the universal property and hence glue uniquely.
+$$
+F_C\subset V\otimes_E C,
+\qquad F_C\otimes_C\overline E=F_x,                               \tag{11.3}
+$$
 
-An endomorphism acts on the universal extension. It preserves the quotient construction precisely when it preserves the selected subbundle $F$, proving the first assertion. A polarization identifies the universal extension with its dual and gives the alternating form on its Lie algebra. The lifted quotient is dual to itself through the lifted homomorphism precisely when its defining subbundle is isotropic. Positivity is unchanged by a nilpotent thickening because the geometric fibers are unchanged. This proves the second assertion. Finite etale schemes have unique lifts across nilpotent thickenings, proving the third. Finally, sequence (11.1) identifies the tangent quotient and proves the determinant assertion. $\square$
+which satisfy the determinant and component conditions. The level has a unique lift. The action
+on the tangent space of the abelian scheme is the action on
+$(V\otimes_EC)/F_C$, in accordance with the homology convention.
 
-The direct-summand qualification in (11.2) is essential. A rank condition on fibers alone can leave torsion in $H/F$ and fail to produce a smooth abelian scheme. Characteristic zero is also being used: it keeps the acting semisimple algebra separable and all finite level etale. At excluded integral primes the same statement requires a more delicate crystalline or display-theoretic formulation.
+**Proof strategy.** The substantive input is the two-sided PEL-exact uniformization of Book 126:
+it proves both that every point of the analytic quotient gives the stated PEL abelian variety and
+that every such PEL Hodge structure comes from the chosen quaternionic domain. Locally the period
+domain is an open subset of its compact dual $M_{\mathscr D}(\mathbf C)$. We compare completed
+local rings and then use the representing property.
+
+**Proof.** Let $x_0$ be the closed point below $x$. Its residue field is a finite extension of
+$E$. Choose an embedding of its algebraic closure into $\mathbf C$. Book 126 identifies the
+analytification of the selected PEL component with
+
+$$
+\Gamma\backslash X^+,
+$$
+
+where $\Gamma$ is the relevant arithmetic group. The fine-level hypothesis makes the stabilizer
+of the chosen point trivial. Proper discontinuity therefore gives a sufficiently small analytic
+neighborhood $U\subset X^+$ which maps biholomorphically to a neighborhood of the induced
+complex point in $Q_{K,E}(\mathbf C)$.
+
+Under the PEL realization, a point of $X^+$ is exactly a $D$-stable polarized Hodge filtration
+of the prescribed determinant type. Positivity is an open analytic condition in the compact
+dual, so the period map identifies $X^+$ locally with an analytic open subset of
+$M_{\mathscr D}(\mathbf C)$. Hence the analytic local rings of $Q_{K,E}(\mathbf C)$ at $x$ and
+of $M_{\mathscr D}(\mathbf C)$ at $F_x$ have isomorphic completions.
+
+We recall exactly what the analytic comparison implies algebraically. If a finite-type
+$\mathbf C$-scheme is presented near a point by
+$\mathbf C[z_1,\ldots,z_n]/I$, its analytic local ring is obtained from convergent power series,
+while both the algebraic and analytic maximal-ideal completions are
+
+$$
+\mathbf C[[z_1,\ldots,z_n]]/I\mathbf C[[z_1,\ldots,z_n]].
+$$
+
+Thus analytification does not change the completed local ring. The analytic open immersion shows
+that $Q_{K,\mathbf C}$ and $M_{\mathscr D,\mathbf C}$ are smooth of the same dimension at the
+corresponding points. Smoothness and relative dimension descend through the faithfully flat
+extension $\overline E\to\mathbf C$. Both completed local rings over $\overline E$ are therefore
+power-series rings in the same number of variables, which proves (11.2). The period construction
+over $\mathbf C$ identifies their tangent directions with the stated algebra, isotropy,
+determinant, and component conditions. Finally, prime-to-characteristic level is finite etale,
+and finite etale objects lift uniquely across nilpotent thickenings. $\square$
+
+The direct-summand condition in (11.3) is essential: a fiberwise rank condition can leave torsion
+in the quotient. The theorem is deliberately a characteristic-zero theorem about the generic
+PEL scheme. It proves every infinitesimal assertion used below without claiming an integral
+Hodge-lifting theorem at the excluded primes.
 
 ### 11.2 Linearizing the PEL conditions
 
-Fix a geometric point $x=(A,\iota,\lambda,\eta)$ of $Q_K$ and write
+Fix a geometric point $x=(A,\iota,\lambda,\eta)$ of $Q_{K,E}$ and write
 
 $$
 H=H_{1,\mathrm{dR}}(A/k),\qquad F=\omega_{A^\vee},\qquad
@@ -768,7 +883,12 @@ $$
 
 which are Lagrangian, satisfy the determinant law on the corresponding quotient, and lie in the component selected by $h$. It is a closed and open subscheme of a closed subscheme of the Lagrangian Grassmannian.
 
-Because $D\otimes E$ is semisimple, every geometric point with the prescribed multiplicities is conjugate to the Hodge filtration $F_h$ under $G_{\mathscr D}$. The PEL realizability condition is used here: it says the full stabilizer of the algebra and pairing is the chosen group. The stabilizer of $F_h$ is the parabolic $P_\mu$ attached to the Hodge cocharacter. Hence
+Because $D\otimes E$ is semisimple, the determinant law fixes the multiplicities of all simple
+constituents. The component condition then puts every geometric filtration under consideration
+in the orbit of $F_h$. The PEL realizability hypothesis identifies the connected stabilizer of
+the algebra and pairing with $G_{\mathscr D}$, so this is precisely the
+$G_{\mathscr D,\overline E}$-orbit. The stabilizer of $F_h$ is the parabolic $P_\mu$ attached to
+the Hodge cocharacter. Hence
 
 $$
 M_{\mathscr D,\overline E}\simeq
@@ -777,7 +897,8 @@ $$
 
 This proves that the generic local model is smooth and projective. It also proves that (11.6) has constant rank: its kernel is the tangent space of the orbit.
 
-There is a geometric version of (11.7). Let $\widetilde Q_K$ classify a PEL object together with a $D$-linear symplectic frame
+There is a geometric version of (11.7). Let $\widetilde Q_{K,E}$ classify a generic-fiber PEL
+object together with a $D$-linear symplectic-similitude frame in the component selected above,
 
 $$
 \beta:H_{1,\mathrm{dR}}(A/S)\xrightarrow{\sim}V\otimes\mathcal O_S.
@@ -786,17 +907,41 @@ $$
 Then the two maps
 
 $$
-Q_K\xleftarrow{\ \pi\ }\widetilde Q_K
+Q_{K,E}\xleftarrow{\ \pi\ }\widetilde Q_{K,E}
 \xrightarrow{\ \varphi\ }M_{\mathscr D}                         \tag{11.8}
 $$
 
-send a frame respectively to its underlying object and to the framed Hodge filtration. The map $\pi$ is a torsor under the smooth group $G_{\mathscr D}$. Theorem 11.1 says that $\varphi$ is formally smooth: a lift of the filtration produces a lift of the PEL object, and a frame lifts because a smooth torsor lifts locally. Since all spaces are of finite presentation, formal smoothness is smoothness.
+send a frame respectively to its underlying object and to the framed Hodge filtration. The map
+$\pi$ is a torsor under the smooth group $G_{\mathscr D}$. To analyze $\varphi$, extend to
+$\mathbf C$ and use the marked analytic neighborhood in the proof of Theorem 11.1. There the
+diagram is locally the action map
 
-Thus $Q_K$ and $M_{\mathscr D}$ have the same completed local singularities up to formally smooth variables. This is the local-model principle in the exact generic form needed here.
+$$
+X^+\times G_{\mathscr D}(\mathbf C)
+\longrightarrow M_{\mathscr D}(\mathbf C),
+\qquad (F,g)\longmapsto gF.
+$$
+
+The inclusion $X^+\hookrightarrow M_{\mathscr D}(\mathbf C)$ is analytically open, so the
+differential is surjective and the action map is smooth of relative dimension
+$\dim G_{\mathscr D}$. Algebraic and analytic smoothness agree for finite-type complex schemes,
+and smoothness with its relative dimension descends through $\mathbf C/E$. Hence $\varphi$ is
+smooth of relative dimension $\dim G_{\mathscr D}$.
+
+The two arrows in (11.8) therefore add the same number of formally smooth variables. In
+particular, $Q_{K,E}$ and $M_{\mathscr D}$ have isomorphic completed local singularity types,
+and
+
+$$
+\dim Q_{K,E}=\dim M_{\mathscr D}.                                 \tag{11.9}
+$$
+
+This is the local-model principle in the exact generic form needed here.
 
 ### 11.4 Cotangent complexes and obstruction groups
 
-At a point of an integral determinant locus, one may present the linearized constraints by vector bundles
+Whenever an integral determinant locus is locally a complete intersection and its linearized
+constraints admit a two-term presentation, write that presentation as vector bundles
 
 $$
 \mathcal E\xrightarrow{\alpha}\mathcal F.
@@ -804,16 +949,19 @@ $$
 
 The dual of the relative cotangent complex is represented in degrees $0,1$ by $[\mathcal E\to\mathcal F]$. Its zeroth cohomology is the tangent bundle and its first cohomology is the primary obstruction sheaf. Smoothness requires surjectivity of $\alpha$, not merely the expected fiber dimension.
 
-On the generic fiber, (11.7) and (11.8) show that $\alpha$ is locally split surjective. Therefore
+This description is conditional: without the lci hypothesis, further negative-degree cotangent
+homology may occur. On the generic fiber, (11.7), (11.8), and the smoothness criterion show that
+$\alpha$ is locally split surjective. Therefore
 
 $$
-L_{Q_K/E}\simeq\Omega^1_{Q_K/E}[0]                                \tag{11.9}
+L_{Q_{K,E}/E}\simeq\Omega^1_{Q_{K,E}/E}[0]                        \tag{11.10}
 $$
 
 with $\Omega^1$ locally free, and every square-zero PEL deformation is unobstructed. The relative dimension is
 
 $$
-\dim Q_K/E=\dim G_{\mathscr D}/P_\mu.                              \tag{11.10}
+\dim Q_{K,E}/E=\dim M_{\mathscr D}
+=\dim G_{\mathscr D,\overline E}/P_\mu.                          \tag{11.11}
 $$
 
 At a bad integral prime, failure of semisimplicity can make $H^1$ of the tangent complex nonzero; failure of a regular sequence can add cotangent homology below degree $-1$; failure of flatness can invalidate fiberwise base change. These are distinct failures. A determinant line records their Jacobian minors but does not by itself repair any of them.
@@ -868,7 +1016,10 @@ This computation also detects an incorrectly formulated moduli problem. If one u
 
 **Theorem 12.1.** The generic fiber $Q_{K,E}$ of the fine quaternionic PEL scheme is smooth of pure relative dimension one over $E$.
 
-**Proof.** By (12.1), the geometric generic local model is $\mathbf P^1$ and is smooth of dimension one. In the local-model diagram (11.8), both arrows are smooth and $\pi$ has fibers of constant dimension $\dim G_{\mathscr D}$. Smoothness descends through the smooth surjective map $\pi$, while relative dimensions in (11.8) give
+**Proof.** By (12.1), the geometric generic local model is $\mathbf P^1$ and is smooth of
+dimension one. In the local-model diagram (11.8), $\pi$ is smooth surjective of relative
+dimension $\dim G_{\mathscr D}$, and $\varphi$ is smooth of the same relative dimension by
+Section 11.3. Smoothness descends through $\pi$, while the relative-dimension formula gives
 
 $$
 \dim Q_{K,E}=\dim M_{\mathscr D}=1.
@@ -894,7 +1045,13 @@ $$
 \mathcal L^{\otimes2}\otimes(\det\mathcal U)^{-1}.               \tag{12.3}
 $$
 
-The Hodge-lifting equivalence identifies the relative tangent sheaf of the fine curve with $\operatorname{Hom}(\mathcal L,\mathcal U/\mathcal L)$; dualizing gives (12.3) intrinsically on the curve. The determinant of the active rank-two piece is the multiplier line $\mathcal M$ fixed by the polarization level convention. Thus, with the homology convention used here,
+On the frame torsor $\widetilde Q_{K,E}$, the differential of the period morphism in (11.8)
+and the characteristic-zero Hodge chart identify the horizontal tangent direction with
+$\operatorname{Hom}(\mathcal L,\mathcal U/\mathcal L)$. The identification is equivariant for
+change of symplectic-similitude frame. Dualizing (12.2), using (12.3), and applying faithfully
+flat descent along $\pi$ therefore gives an intrinsic line-bundle isomorphism on the fine curve.
+The perfect active alternating form has values in the multiplier line $\mathcal M$, so exterior
+product gives $\det\mathcal U\simeq\mathcal M$. Thus, with the homology convention used here,
 
 $$
 \Omega^1_{Q_{K,E}/E}
@@ -1047,7 +1204,8 @@ not merely the top exterior power of possibly non-locally-free differentials. Ex
 
 ### 14.4 Functoriality under base change
 
-For every morphism $R'\to R$ compatible with the spread-out datum, there is a canonical map
+For every ring homomorphism $R\to R'$ compatible with the spread-out datum, there is a canonical
+map
 
 $$
 Q_K\times_RR'\longrightarrow Q_{K,R'}.
@@ -1061,31 +1219,69 @@ Under it, the universal family, action, polarization, level, Hodge bundle, and c
 
 ### 15.1 Comparison with the canonical model
 
-The preceding book constructed the canonical model $S_K/E$ of the quaternionic Shimura datum from its polarized symplectic algebraization. The same algebraization uses the endomorphism, adjoint, determinant, and level tensors fixed here. At neat PEL level, it therefore gives a morphism
+Let $S_K^{\mathscr D}/E$ be the canonical model constructed in Book 126 for the connected
+PEL-exact datum $(G_{\mathscr D},X_{\mathscr D})$ at the level matching $K$. Its symplectic
+algebraization uses exactly the endomorphism, adjoint, determinant, polarization, and level
+tensors fixed here. At neat PEL level it therefore gives a morphism
 
 $$
-Q_{K,E}\longrightarrow S_K.                                       \tag{15.1}
+Q_{K,E}\longrightarrow S_K^{\mathscr D}.                           \tag{15.1}
 $$
 
 on the union of components belonging to the chosen lattice genus.
 
 **Proposition 15.1.** On that union of components, (15.1) is an isomorphism.
 
-**Proof.** Over $\mathbf C$, a PEL object gives the polarized weight-one Hodge structure of the fixed datum, while the level identifies its rational homology with $V$ up to $K$. The symplectic algebraization theorem identifies these points with the corresponding algebraic locus in $S_K(\mathbf C)$. Thus (15.1) is bijective on the dense characteristic-zero moduli locus and induces the same function field on every selected component.
+**Proof.** Over $\mathbf C$, a PEL object gives the polarized weight-one Hodge structure of the
+fixed datum, while the level identifies its rational homology with $V$ up to $K$. Conversely,
+the two-sided PEL-exact algebraization theorem of Book 126 recovers from every point of the
+selected analytic quotient an abelian variety with exactly the action, adjoint, determinant,
+polarization, and level data imposed here. It follows that (15.1) identifies the analytic
+uniformizations and induces the same function field on every selected component.
 
-Both sides are normal: $Q_{K,E}$ is smooth by Theorem 12.1, and $S_K$ was constructed by normalization. The map is finite because both are finite over the same fine Siegel moduli locus. A finite birational morphism to a normal scheme is an isomorphism. $\square$
+We still have to justify that no nonfinite modification is hidden in this comparison. Let
+$\mathcal A$ be the fine Siegel moduli scheme used in Section 10.2. The forgetful map
+$Q_{K,E}\to\mathcal A_E$ is finite by that section. Book 126's direct PEL algebraization gives
+a compatible finite map $S_K^{\mathscr D}\to\mathcal A_E$. Since $\mathcal A_E$ is separated,
+the graph map
 
-This comparison uses the prior symplectic algebraization, not the detailed adelic uniformization and component analysis developed later. Its role is to identify the already represented PEL locus with the already descended canonical variety.
+$$
+Q_{K,E}\longrightarrow Q_{K,E}\times_{\mathcal A_E}S_K^{\mathscr D}
+$$
+
+is a closed immersion; the projection of the fiber product to $S_K^{\mathscr D}$ is finite.
+Hence (15.1) is finite. It is birational on each selected component by the uniformization
+comparison. Both sides
+are normal: the source is smooth by Theorem 12.1, and Book 126 constructs
+$S_K^{\mathscr D}$ by normalization. A finite birational morphism to a normal scheme is an
+isomorphism. $\square$
+
+If the realization is direct, $G_{\mathscr D}=G$ and Proposition 15.1 identifies the fine PEL
+scheme with the canonical model $S_K$ of the original datum. For a nontrivial central
+modification, Book 126 instead supplies, after choosing compatible levels, a finite map
+
+$$
+S_{K^{\mathscr D}}^{\mathscr D}\longrightarrow S_K              \tag{15.2}
+$$
+
+obtained by the effective finite central quotient. It need not be an isomorphism: the center can
+change the component set even though the adjoint domain is unchanged. Likewise, the universal
+abelian family on the source of (15.2) descends only when the effective quotient action is free
+on the full PEL object. This is exactly the distinction established in Sections 13.3--13.4.
 
 ### 15.2 Selecting the required components
 
 The moduli functor can contain several open-and-closed pieces. Polarization type, the genus of the prime-to-bad lattice, the multiplier component, and orientation data are locally constant. Fixing their values selects an open-and-closed subscheme
 
 $$
-Q_K^{\mathrm{req}}\subset Q_K.                                    \tag{15.2}
+Q_K^{\mathrm{req}}\subset Q_K.                                    \tag{15.3}
 $$
 
 No connectedness assertion is hidden here. A single geometric connected component can require a finite abelian extension of the reflex field, while the union stable under reflex-field Galois action is defined over $E$. The canonical model at level $K$ is that stable union. Later component formulas identify the individual pieces adelically.
+
+Here “the canonical model” means the model for $(G_{\mathscr D},X_{\mathscr D})$. In the direct
+case it is the required model for $(G,X)$. In the central-modification case, the required model
+for $(G,X)$ is the corresponding finite quotient (15.2) of the stable union.
 
 The universal abelian scheme restricts to $Q_K^{\mathrm{req}}$. If a geometric component descends only after extending $E$, the restriction of the universal family descends over the same field because the fine moduli interpretation is preserved by the component idempotent.
 
@@ -1093,9 +1289,16 @@ The universal abelian scheme restricts to $Q_K^{\mathrm{req}}$. If a geometric c
 
 Assume the quaternion algebra is a division algebra and split at exactly one real place. The adjoint arithmetic quotient has no cusps: a rational parabolic would give a proper right ideal in $B$, impossible in a division algebra. The complex analytic Shimura curve is therefore compact.
 
-By Proposition 15.1, $Q_K^{\mathrm{req}}(\mathbf C)$ is the analytification of the corresponding canonical curve. A quasi-projective complex curve with compact analytification is proper: embed it in a projective curve, and any missing boundary point would produce a noncompact punctured analytic neighborhood. Hence the canonical curve is projective over $E$ by descent of properness.
+By Proposition 15.1, $Q_K^{\mathrm{req}}(\mathbf C)$ is the analytification of the corresponding
+PEL canonical curve. A quasi-projective complex curve with compact analytification is proper:
+embed it in a projective curve, and any missing boundary point would produce a noncompact
+punctured analytic neighborhood. Hence the PEL canonical curve is projective over $E$ by descent
+of properness. Its finite central quotient, when one is required, is projective as well.
 
-**Corollary 15.2.** In the division, one-split-real-place case, every neat required component is a smooth projective curve over its field of definition and carries the universal quaternionic PEL abelian scheme.
+**Corollary 15.2.** In the division, one-split-real-place case, every neat required PEL component
+is a smooth projective curve over its field of definition and carries the universal quaternionic
+PEL abelian scheme. The corresponding finite central quotient is a projective quaternionic curve;
+it carries the descended universal family exactly when its effective action is free.
 
 If $B=M_2(F)$, rational parabolics exist and cusps occur. The open PEL moduli scheme is then not proper; a compactification requires degenerating abelian objects and lies outside the present quaternionic division case.
 
@@ -1137,7 +1340,9 @@ in the sense of Definition 1.1. Fix a $*$-stable order, a compatible lattice, a 
 1. PEL objects form an fpqc algebraic stack $\mathscr Q_K$ of finite presentation with finite unramified separated diagonal.
 2. A normal principal level $K(N)$ with $N\geq3$ kills all automorphisms. More generally, a neat level detecting the center does so.
 3. At such a fine level, the moduli sheaf is represented by a quasi-projective scheme $Q_K$ carrying a universal abelian scheme with universal $\mathcal O$-action, polarization, determinant condition, and level.
-4. The characteristic-zero local model is $G_E/P_\mu$. Hence $Q_{K,E}$ is smooth of dimension $\dim G/P_\mu$.
+4. The characteristic-zero local model is the $E$-flag scheme $M_{\mathscr D}$, whose geometric
+   fiber is $G_{\mathscr D,\overline E}/P_\mu$. Hence $Q_{K,E}$ is smooth of dimension
+   $\dim(G_{\mathscr D,\overline E}/P_\mu)$.
 5. If the quaternion algebra is split at exactly one real place, that dimension is one and the active local model is $\mathbf P^1$.
 6. If $K'\triangleleft K$ is fine, then
 
@@ -1146,9 +1351,16 @@ in the sense of Definition 1.1. Fix a $*$-stable order, a compatible lattice, a 
    $$
 
    for the effective finite level group $\Delta$. Its finite quotient is the coarse scheme. The universal family descends to the quotient precisely when the target level has trivial inertia.
-7. On the required component union, the generic fine PEL scheme is the canonical quaternionic Shimura curve over the reflex field. In the division case it is smooth and projective.
+7. On the required component union, the generic fine PEL scheme is the canonical model of the
+   PEL-exact datum $(G_{\mathscr D},X_{\mathscr D})$. In the direct case this is the canonical
+   model of $(G,X)$; in the central-modification case the latter is its effective finite central
+   quotient. In the division case the PEL curve and its finite quotient are projective.
 
-**Proof.** Effective descent is Theorem 6.1. The diagonal is Theorem 7.2. Automorphism killing is Theorem 8.2 and Corollary 8.3. The framed atlas and scheme representability are Theorems 9.1 and 10.1. The Hodge-lifting theorem and local-model diagram give statements 4 and 5. Chapter 13 proves the quotient assertions, and Chapter 15 proves the comparison and properness statements. $\square$
+**Proof.** Effective descent is Theorem 6.1. The diagonal is Theorem 7.2. Automorphism killing is
+Theorem 8.2 and Corollary 8.3. The framed atlas and scheme representability are Theorems 9.1 and
+10.1. The characteristic-zero Hodge chart and local-model diagram give statements 4 and 5.
+Chapter 13 proves the quotient assertions, and Chapter 15 proves the comparison and properness
+statements. $\square$
 
 ### 16.2 Hypothesis ledger
 
@@ -1165,7 +1377,7 @@ The theorem is safe to reuse only if its hypotheses travel with it.
 | scheme rather than stack | trivial inertia and the finite map to fine Siegel moduli | a finite-diagonal stack can still have stabilizers |
 | generic smoothness | characteristic zero, semisimple $D$, and the selected $G/P_\mu$ component | the determinant local model can be nonflat or nonreduced |
 | curve dimension | exactly one noncentral rank-one Hodge factor | abelian dimension does not determine moduli dimension |
-| universal family on a quotient | free level action | stabilizers obstruct descent to the coarse space |
+| universal family on a level or central quotient | free effective action on the full PEL object | stabilizers obstruct descent to the coarse space |
 | projectivity | quaternion division datum, hence no rational parabolic | split data have cusps |
 
 Three normalization checks are especially important. The action $\iota$ and the group controlling level lie on commuting sides. The Rosati equation reverses multiplication through $*$. The determinant polynomial is evaluated on the Lie quotient dictated by the fixed homology convention. Changing any one of these conventions requires changing all associated formulas, not merely renaming a symbol.
@@ -1176,4 +1388,14 @@ The quaternionic curve has now acquired an intrinsic moduli meaning. Starting fr
 
 Its local geometry is governed by one transparent operation: lift the Hodge filtration. Endomorphisms demand equivariance, polarization demands isotropy, and the determinant law fixes multiplicities. In characteristic zero these conditions form the homogeneous local model $G/P_\mu$. For a quaternion algebra split at exactly one real place, only one rank-two line moves, so the local model is $\mathbf P^1$ and the fine moduli scheme is a smooth curve. Its cotangent line is the square of the active Hodge line corrected by the similitude multiplier.
 
-The universal abelian scheme belongs to the fine curve and, more generally, to the moduli stack. Finite quotient stacks recover arbitrary level while retaining stabilizers; coarse schemes forget them and therefore need not carry the family. On the required component union, the generic fine scheme agrees with the canonical quaternionic model over the reflex field, and division of the quaternion algebra makes it projective. The output is thus the exact geometric package promised at the outset: correctly typed quaternionic PEL functors, determinant and polarization conditions, cofinal fine covers, representability, smooth curve geometry, and universal abelian families, with the bad-prime integral questions left at their proper boundary.
+The universal abelian scheme belongs to the fine PEL curve and, more generally, to the moduli
+stack. Finite quotient stacks recover arbitrary level while retaining stabilizers; coarse schemes
+forget them and therefore need not carry the family. On the required component union, the generic
+fine scheme is the canonical model of its PEL-exact datum over the reflex field. It agrees with
+the original quaternionic canonical model in the direct case and finitely covers it in the
+central-modification case. Division of the quaternion algebra makes the PEL curve and its finite
+quotient projective. The output is thus the exact geometric package promised at the outset:
+correctly typed quaternionic PEL functors, determinant and polarization conditions, cofinal fine
+covers, representability, smooth curve geometry, and universal abelian families on precisely the
+fine spaces where inertia permits them, with the bad-prime integral questions left at their
+proper boundary.
