@@ -101,7 +101,7 @@ any resulting corrections.
 - [ ] 075. The Abstract (R=T) Argument
 - [x] 076. Smooth Representations of (p)-adic Groups
 - [ ] 077. Representations of (GL_2(K))
-- [ ] 078. Parabolic Induction, Jacquet Modules, and Whittaker Models for GL₂
+- [x] 078. Parabolic Induction, Jacquet Modules, and Whittaker Models for GL₂
 - [ ] 079. Dihedral Supercuspidals, Types, and Newvectors for GL₂
 - [ ] 080. Weil–Deligne Representations and Local Constants
 - [ ] 081. Local Langlands in the Principal, Special, and Dihedral Cases

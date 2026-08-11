@@ -186,7 +186,7 @@ Whenever $X=q^{-s}$, a rational function of $q^{-s}$ means an element of $\mathb
 
 The principal series will be treated in both conventions. The rank-one geometric lemma will compute its Jacquet module. Exactness and adjunction will explain why these modules govern subrepresentations and quotients. A shell-by-shell construction of the standard intertwiner will locate the reducibility points $|\cdot|^{\pm1}$ in normalized coordinates and $1,|\cdot|^2$ in unnormalized coordinates.
 
-Whittaker uniqueness will be reduced to a distribution statement on the two Bruhat cells. The Jacquet integral will give existence for principal series and the special constituent; the rank-one Fourier argument will identify the one-dimensional representations as the obstruction to genericity. The Kirillov model will then turn the action of $B$ into translations and dilations on $F^\times$ and turn the Jacquet module into asymptotic data at zero.
+Whittaker uniqueness will be reduced to a distribution statement on the two Bruhat cells. The Jacquet integral will give existence for principal series and the special constituent; within the spectrum generated from the Borel, the rank-one Fourier argument will identify the one-dimensional representations as the obstruction to genericity. The Kirillov model will then turn the action of $B$ into translations and dilations on $F^\times$ and turn the Jacquet module into asymptotic data at zero.
 
 Finally, spherical Whittaker functions and local zeta integrals will be calculated with the measures just fixed. The one-dimensional functional equation will be proved first. Two applications of it will give the principal-series functional equation, including the special representation at the reducibility boundary. No unexplained local constant will be smuggled into the notation: every gamma factor will either be defined by a displayed functional equation or reduced to an explicit Tate gamma factor.
 
@@ -377,7 +377,13 @@ $$
 (B\cap K)\backslash K/K'.
 $$
 
-This set is finite because $K$ is compact and $K'$ is open. Each value lies in a one-dimensional inducing space and must satisfy only finite compatibility relations. Hence the fixed space is finite-dimensional. Every compact open subgroup of $G$ is contained, after conjugation and finite intersection, in a compact open subgroup for which the same argument applies. $\square$
+This set is finite because $K$ is compact and $K'$ is open. Each value lies in a one-dimensional inducing space and must satisfy only finite compatibility relations. Hence the fixed space is finite-dimensional.
+
+Now let $H\subseteq G$ be any compact open subgroup. The orbit of the standard
+lattice under $H$ is compact in the discrete set of lattices, hence finite. The
+sum of those finitely many lattices is an $H$-stable lattice. After a change of
+basis, $H$ is therefore contained in $K$. The preceding argument applies with
+$K'=H$, and conjugation does not change the fixed-space dimension. $\square$
 
 ### 3.3 Admissibility, central character, and twisting
 
@@ -584,7 +590,29 @@ $$
 
 **Proof strategy.** Apply coinvariants to the two-cell filtration and use the two calculations above.
 
-**Proof.** Coinvariants are right exact, so the closed-cell quotient remains a quotient after taking $N$-coinvariants. The kernel is the image of the open-cell coinvariants. Section 4.2 shows that the latter is one-dimensional, and Section 4.3 computes both $T$-actions. There are no further Bruhat cells and hence no further subquotients. Twisting the entire module by $\delta_B^{-1/2}$ removes the common half-modulus. $\square$
+**Proof.** We first record the exactness needed at this point, rather than use the
+general theorem of Chapter 5 before it has been proved. Write
+
+$$
+N_m=n(\varpi^{-m}\mathcal O),\qquad m\geq0.
+$$
+
+Each $N_m$ is compact. Averaging identifies $N_m$-invariants with
+$N_m$-coinvariants and makes the latter functor exact. Since $N=\bigcup_mN_m$,
+the $N$-coinvariant functor is the filtered colimit of these exact functors and is
+therefore exact on vector spaces. Applying it to the two-cell sequence gives
+
+$$
+0\longrightarrow (I_{\mathrm{open}})_N
+\longrightarrow I_N
+\longrightarrow (I_{\mathrm{closed}})_N
+\longrightarrow0.
+$$
+
+Section 4.2 shows that the first term is one-dimensional, and Section 4.3
+computes the $T$-characters on both outer terms. There are no further Bruhat
+cells and hence no further subquotients. Twisting the entire sequence by
+$\delta_B^{-1/2}$ removes the common half-modulus. $\square$
 
 For unnormalized induction, substitute
 
@@ -641,10 +669,12 @@ Their duals are the corresponding equivariant functionals:
 
 $$
 \operatorname{Hom}_\mathbf C(V_{N,\psi_a},\mathbf C)
-\cong\operatorname{Hom}_N(V,\psi_a^{-1})
+\cong\operatorname{Hom}_N(V,\psi_a)
 $$
 
-with the inverse depending on whether the quotient relation is written with $\psi_a$ or $\psi_a^{-1}$. In the Whittaker chapters we define functionals directly to keep this sign visible.
+for the displayed relation $n(x)v-\psi_a(x)v$. Had the relation been written with
+$\psi_a^{-1}$, the character on the right would also be inverted. In the
+Whittaker chapters we define functionals directly to keep this sign visible.
 
 Ordinary coinvariants are stable under all of $T$. A fixed nontrivial twisted quotient is stable only under the subgroup of $T$ preserving its character; general torus conjugation moves $\psi_a$ through the orbit of nonzero frequencies. Since every nonzero additive character of $F$ is $\psi_a$ for a unique $a\in F^\times$, there are exactly two torus orbits of frequencies: zero and nonzero.
 
@@ -742,15 +772,14 @@ $$
 
 This is the stated isomorphism. $\square$
 
-Using smooth contragredients and Proposition 3.2 gives the opposite orientation, under the usual admissibility hypotheses:
-
-$$
-\operatorname{Hom}_G(i_B^G\sigma,V)
-\cong
-\operatorname{Hom}_T(\sigma,r_{\bar N}(V)).
-$$
-
-The formula is best remembered by geometry: a map into sections over $B\backslash G$ evaluates at the closed cell and therefore uses $N$; a map out of those sections is detected at the opposite cell and therefore uses $\bar N$.
+There is also a second-adjointness theorem relating maps *out of* normalized
+induction to the opposite Jacquet module. It requires the canonical pairing
+between opposite Jacquet modules; it does not follow merely by writing down a
+smooth contragredient. We neither assume nor use that theorem here. In the
+concrete principal-series calculations below, maps out of an induced
+representation are instead supplied by the explicitly constructed standard
+intertwiner. This keeps the only adjunction used in proofs equal to the one just
+proved.
 
 ### 5.5 Consequences for principal series
 
@@ -768,9 +797,19 @@ $$
 V\longrightarrow I(\chi_1,\chi_2).
 $$
 
-It is injective by irreducibility. Thus Jacquet modules do not merely record an invariant; they force a representation into a principal series. In rank one, once the reducible principal series have been analyzed, this observation classifies every irreducible representation with nonzero Jacquet module.
+It is injective by irreducibility. Thus Jacquet modules do not merely record an
+invariant; a character quotient forces a representation into a principal
+series. Once the reducible principal series have been analyzed, this classifies
+every irreducible representation whose nonzero Jacquet module has such a
+quotient. No finite-generation assertion for an arbitrary Jacquet module is
+being assumed.
 
-The zero Jacquet module is therefore the dividing line between representations built from the Borel and cuspidal representations. Whittaker theory cuts across that division: principal, special, and cuspidal infinite-dimensional irreducibles are all generic, while determinant characters are not.
+The zero Jacquet module is therefore the dividing line between representations
+built from the Borel and cuspidal representations. Principal and special
+representations are proved generic here, while determinant characters are not.
+Generic cuspidal representations enter the Kirillov theory below only under the
+explicit genericity hypothesis; their construction is not inferred from Jacquet
+exactness.
 
 ## 6. Standard intertwining operators
 
@@ -873,7 +912,12 @@ $$
 M(\chi_2,\chi_1)M(\chi_1,\chi_2)
 $$
 
-is a $G$-endomorphism of $I(\chi_1,\chi_2)$. On a fixed finite-level space its matrix entries are rational in $z$, and in a generic chamber the boundary calculation shows that the endomorphism space is one-dimensional. Hence the composite is scalar as a rational family. On the spherical line its scalar is
+is a $G$-endomorphism of $I(\chi_1,\chi_2)$. On a fixed finite-level space its
+matrix entries are rational in $z$. When the two Jacquet exponents are distinct,
+Theorems 4.1 and 5.2 identify the endomorphism space with the one-dimensional
+Hom space from $r_N(I)$ to the inducing character. Since those parameters are
+Zariski dense in the one-variable family, the composite is scalar as a rational
+family. On the spherical line its scalar is
 
 $$
 c(\eta)c(\eta^{-1}).
@@ -909,34 +953,52 @@ This example is a general warning. Meromorphic normalizing factors are coordinat
 
 The two Bruhat cells do not alone bound the length of a principal series. The decisive fact is that only two dilation exponents allow open-cell data to meet the closed boundary in a $G$-stable way.
 
-We isolate the elementary calculation. Let $\mathcal S=C_c^\infty(F)$. A translation-invariant functional on $\mathcal S$ is a scalar multiple of
+We isolate the elementary calculation. Let $\mathcal S=C_c^\infty(F)$. A
+translation-invariant functional on $\mathcal S$ is a scalar multiple of
 
 $$
 \Phi\longmapsto\int_F\Phi(x)\,dx.
 $$
 
-Indeed translation coinvariants are one-dimensional by Section 4.2. A functional invariant under translations after Fourier transform is a scalar multiple of evaluation at zero of the Fourier transform, which is the same integral. The second boundary behavior comes from evaluation of the original function at the missing point after inversion $x\mapsto x^{-1}$; its dilation exponent differs by the Jacobian $|x|^{-2}$ of inversion.
+Indeed translation coinvariants are one-dimensional by Section 4.2. Fourier
+transform gives the complementary statement: away from the zero-frequency line,
+translations and dilations act transitively on the nonzero characters. Thus, at
+any fixed compact-open level, a stable subspace of the open-cell model is
+determined by whether it contains the zero-frequency line and whether it contains
+the nonzero-frequency summand. Refining the level preserves these two choices.
 
-More concretely, take a vector whose open-cell coordinate is $\mathbf1_{\mathcal O}$. Translate by
+The Weyl element glues these choices to the missing point. To see the two possible
+gluing exponents without suppressing a Jacobian, take the characteristic function
+$\mathbf1_{\mathcal O}$ and translate it by
 
 $$
 a_m=\begin{pmatrix}\varpi^m&0\\0&1\end{pmatrix}.
 $$
 
-Dilation of $x$ contributes $q^{-m}$ to an integral, while normalized covariance contributes
+Dilation of $x$ contributes $q^{-m}$ to its integral, while normalized covariance
+contributes
 
 $$
 q^{m/2}(\chi_1\chi_2^{-1})(\varpi)^m.
 $$
 
-Passing through the opposite boundary gives the reciprocal family. A nonzero relation compatible for every $m$ can persist only when one of the two total dilation ratios is $1$. Therefore
+After inversion $x\mapsto x^{-1}$, the Jacobian $|x|^{-2}$ reverses the
+dilation and gives the other boundary line. Put
 
 $$
-(\chi_1\chi_2^{-1})(\varpi)=q^{-1}
-\quad\text{or}\quad q.
+z=(\chi_1\chi_2^{-1})(\varpi).
 $$
 
-Compatibility with unit dilations also forces $\chi_1\chi_2^{-1}$ to be unramified. Hence the only possibilities are
+On successive shells the two boundary coefficients consequently have ratios
+$qz$ and $q^{-1}z$. A coefficient can persist through every refinement only if
+one of these ratios is $1$. Thus
+
+$$
+z=q^{-1}\quad\text{or}\quad z=q.
+$$
+
+Compatibility with unit dilations forces $\chi_1\chi_2^{-1}$ to be trivial on
+$\mathcal O^\times$. Hence the only possibilities are
 
 $$
 \chi_1\chi_2^{-1}=\nu
@@ -944,7 +1006,23 @@ $$
 \nu^{-1}.
 $$
 
-The same finite-level calculation shows that the compatible boundary-functional space is one-dimensional at each endpoint and zero elsewhere. It follows that a principal series has no proper subrepresentation away from the endpoints and has length at most two at them.
+Here is the submodule conclusion contained in this computation. Choose a common
+level $U\subseteq\mathcal O$ for a nonzero vector and decompose its open-cell
+coordinate on the finite additive quotient into the zero-frequency line and the
+sum of the nonzero-frequency lines. Translations isolate the individual Fourier
+lines, and diagonal conjugation moves every nonzero line to every other one after
+the level is refined. Consequently a nonzero proper $G$-submodule must omit
+exactly one of the two boundary lines just calculated. Weyl stability says that
+the omitted line must persist under all refinements, so one of $qz$ and
+$q^{-1}z$ must equal $1$. Conversely, at either equality the compatible line is
+obtained by the integral boundary functional in one Weyl ordering and its
+inverted counterpart in the other. The compatible line is one-dimensional.
+
+This proves the **boundary submodule lemma**: away from $z=q^{\pm1}$ the
+principal series has no nonzero proper submodule; at either endpoint it has a
+unique proper irreducible submodule and a unique irreducible quotient. In
+particular its length is two there. Notice that the conclusion comes from the
+Fourier decomposition plus Weyl gluing, not merely from counting Bruhat cells.
 
 ### 7.2 The reducibility theorem
 
@@ -1122,21 +1200,68 @@ Changing $\psi$ to $\psi_a(x)=\psi(ax)$ transports the model by $t(a,1)$. Hence 
 
 Uniqueness rests on the following concrete form of the Gelfand--Kazhdan argument.
 
-**Lemma 8.1 (rank-one distribution lemma).** Let $D$ be a distribution on $G$ satisfying
+Put
 
 $$
-D(L_{n(x)}R_{n(y)}f)=\psi(x)\psi(y)^{-1}D(f)
+\tau(g)=j\,{}^tg\,j,
+\qquad
+j=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
 $$
 
-for all test functions $f$ and $x,y\in F$. Then $D$ is determined by its restriction to the open Bruhat cell. On that cell the space of such distributions is at most one-dimensional after imposing invariance under the transpose-inverse symmetry that fixes irreducible characters. No nonzero such distribution is supported on the closed cell.
+This is an anti-involution and $\tau(n(x))=n(x)$.
 
-**Proof strategy.** The closed cell has a stabilizer on which the prescribed character is nontrivial. On the open cell, left and right $N$-actions become translations in two affine coordinates tied by the Bruhat relation; finite Fourier transform leaves one scalar.
+**Lemma 8.1 (rank-one distribution lemma).** Let $D$ be a distribution on $G$
+satisfying, for one fixed sign $\varepsilon\in\{1,-1\}$,
 
-**Proof.** If a point lies in $B$, its stabilizer under the left-right action of $N\times N$ contains a subgroup on which $(x,y)\mapsto\psi(x-y)$ is nontrivial. Averaging a test function over a sufficiently large finite additive quotient then multiplies a putative distribution both by $1$ and by the sum of a nontrivial character, which is zero. Hence a distribution with the stated equivariance cannot be supported on $B$.
+$$
+D(L_{n(x)}R_{n(y)}f)
+=\psi(\varepsilon x)\psi(\varepsilon y)D(f).
+$$
 
-On $BwB$, write a compactly supported test function at a common level in the coordinates $n(u)wt(a,d)n(v)$. Modulo the torus covariance relevant to a fixed central character, the left and right $N$-actions translate $u$ and $v$. At finite level this becomes a function on a product of finite additive groups. The $(\psi,\psi^{-1})$-isotypic subspace of its dual is one-dimensional by finite Fourier inversion. Passing to finer levels preserves that line. The transpose-inverse map exchanges the two coordinates and identifies the two possible orientations, so one scalar determines the distribution. $\square$
+Then
 
-The lemma is deliberately stated at the level needed here. Its decisive inputs are visible: two cells, no twisted distribution on the closed cell, and one Fourier line on the open cell.
+$$
+D(f\circ\tau)=D(f).
+$$
+
+The assertion is invariance, not one-dimensionality of the full distribution
+space; the torus variables leave many such distributions.
+
+**Proof strategy.** On the open cell the anti-involution exchanges the two
+unipotent coordinates and fixes the torus coordinates. On the closed cell,
+stabilizer orthogonality removes every orbit except the locus fixed by the
+anti-involution.
+
+**Proof.** Every point of the open cell has a unique expression
+
+$$
+n(u)t(a,d)w n(v).
+$$
+
+A direct matrix multiplication gives
+
+$$
+\tau\bigl(n(u)t(a,d)w n(v)\bigr)
+=n(v)t(a,d)w n(u).
+$$
+
+At a common compact-open level, Fourier projection in $u$ and $v$ says that the
+prescribed equivariance extracts the tensor product of the
+$\psi^\varepsilon$-line in the two additive variables. Exchanging the variables
+fixes that tensor product. The remaining distribution in $(a,d)$ is untouched,
+so the restriction of $D$ to the open cell is $\tau$-invariant.
+
+On the closed cell, represent an $N\times N$-orbit by $t(a,d)$. Its stabilizer
+contains the pairs with $x+(a/d)y=0$. Unless $a=d$, the character
+$\psi(\varepsilon x)\psi(\varepsilon y)$ is nontrivial on a sufficiently large
+finite quotient of this stabilizer, and averaging forces the corresponding
+distribution to vanish. When $a=d$, the orbit lies in $ZN$ and is fixed pointwise
+by $\tau$. Thus the closed-cell part is also invariant. The two-cell filtration
+then proves the assertion on all of $G$. $\square$
+
+The lemma is deliberately stated at the level needed here. Its decisive inputs
+are visible: two cells, stabilizer orthogonality on the closed cell, and equal
+Fourier characters in the two open-cell coordinates.
 
 ### 8.4 Uniqueness
 
@@ -1146,11 +1271,33 @@ $$
 \dim\operatorname{Hom}_N(\pi,\psi)\le1.
 $$
 
-**Proof strategy.** Use the finite-level multiplicity-one criterion attached to Lemma 8.1. Two independent functionals would give two independent equivariant matrix-coefficient distributions, contradicting the one-dimensional open-cell Fourier line.
+**Proof strategy.** Apply the distributional multiplicity-one criterion to the
+anti-involution in Lemma 8.1.
 
-**Proof.** Choose a compact open subgroup at which the vectors and functionals used below are fixed and on which the relevant restriction of $\psi$ is trivial. Admissibility makes that fixed space finite-dimensional, so its pairing with the corresponding fixed space in $\pi^\vee$ is perfect. If $\lambda_1,\lambda_2$ were independent Whittaker functionals, choose finite-level vectors that separate them. Averaging their matrix coefficients on the left and right against $\psi$ and $\psi^{-1}$ produces two distributions with the equivariance of Lemma 8.1. They remain independent because the chosen finite-level pairing matrix has rank two.
+**Proof.** We include the distributional criterion so that no duality assertion
+is hidden. Let $H$ be a closed subgroup, let $\chi$ be a character, and let
+$\tau$ be an anti-involution fixing $H$ and $\chi$. Suppose every distribution
+that is $(\chi,\chi)$-equivariant under left and right $H$-translation is
+$\tau$-invariant. Then every irreducible admissible representation $V$ satisfies
 
-Transpose-inverse exchanges the two averaging operations. Lemma 8.1 says that the closed-cell part is zero and that the open-cell Fourier-isotypic line is one-dimensional. Hence the two distributions must be proportional, contradicting their construction. Passing to a smaller compact-open subgroup if necessary does not change the argument, so the conclusion holds on the full smooth representation. $\square$
+$$
+\dim\operatorname{Hom}_H(V,\chi)\leq1.
+$$
+
+To prove the criterion, regularize an $H$-equivariant functional on both sides by
+convolution with a test function bi-invariant under a sufficiently small compact
+open subgroup $K$. The result is a matrix coefficient on the finite-dimensional
+space $V^K$, and changing $K$ to a smaller common level does not change it.
+Given two $H$-equivariant functionals, their two regularized coefficient kernels
+differ by applying $\tau$. The assumed invariance makes the corresponding
+finite-level operators commute with every integrated $G$-operator. Their union
+therefore gives a $G$-endomorphism of $V$. Schur's lemma makes it scalar, so the
+two functionals are proportional. This proves the criterion.
+
+Apply it with $H=N$, $\chi=\psi$, and the anti-involution of Lemma 8.1. That
+lemma supplies exactly the required invariance for the two possible signs
+created by left and right regularization. Hence the Whittaker-functional space
+has dimension at most one. $\square$
 
 Uniqueness makes the Whittaker model canonical up to one scalar. It does not choose that scalar. Normalizations such as $W(1)=1$ are meaningful only after a vector with nonzero value at $1$ has been specified.
 
@@ -1175,33 +1322,46 @@ $$
 
 The minus sign in $\psi(-x)$ is therefore forced by right translation.
 
-Open-cell vectors generate every principal series under $G$, and the finite-level Fourier formula extends uniquely to the full induced representation, either by translating compactly supported vectors or by the same rational shell continuation used for intertwiners. It is nonzero because one may choose $\Phi_f$ with nonzero Fourier transform at $1$. Hence every irreducible principal series is generic.
+Open-cell vectors generate every principal series under $G$. Equivalently, the
+integral extends directly by stabilization: local constancy of $f$ at the closed
+cell makes its restriction to every sufficiently distant shell constant on
+cosets on which $x\mapsto\psi(-x)$ is nontrivial, so the integral over that shell
+is zero by finite character orthogonality. Thus the integrals over expanding
+balls are eventually constant; no value is assigned to a divergent integral.
+The functional is nonzero because one may choose $\Phi_f$ with nonzero Fourier
+transform at $1$. Hence every irreducible principal series is generic.
 
 At a reducibility point, the functional vanishes on the determinant constituent: $N$ acts trivially there, whereas $\psi$ is nontrivial. Exactness and the two exceptional sequences show that it descends to or restricts to $\operatorname{St}\otimes\mu$. Thus every special representation is generic, and the character constituent is not.
 
 ### 8.6 Genericity and its boundary
 
-For later use, it is helpful to know the full rank-one boundary.
+The results proved so far determine genericity throughout the spectrum generated
+from the Borel.
 
-**Theorem 8.3.** Every infinite-dimensional irreducible admissible representation of $G$ is generic. The irreducible nongeneric representations are precisely the determinant characters $\mu\circ\det$.
+**Theorem 8.3.** Let $V$ be an irreducible admissible representation for which
+$r_N(V)$ has a character quotient $\chi_1\boxtimes\chi_2$. Then $V$ is an
+irreducible principal series, a special representation, or a determinant
+character. It is nongeneric exactly in the last case.
 
-**Proof strategy.** Principal and special representations were handled explicitly. If the ordinary Jacquet module vanishes, finite Fourier decomposition along expanding compact subgroups of $N$ forces a nonzero twisted quotient unless $N$ acts trivially.
-
-**Proof.** Let $V$ be irreducible. If $r_N(V)\ne0$, Jacquet adjunction embeds $V$ in a principal series. The reducibility theorem then places it among an irreducible principal series, a special representation, or a determinant character, and the preceding section decides genericity.
-
-Here is the finiteness hidden in that first sentence. The representation $V$ is cyclic. Bruhat decomposition shows that, modulo $N$-differences, the closed-cell and open-cell translates of one cyclic generator give finitely many $T$-generators for $r_N(V)$. A common compact open subgroup $U\subseteq T$ fixes those generators. Since $T$ is abelian, it fixes all their $T$-translates, so the whole module factors through $T/U$. This quotient is a finitely generated abelian group up to a finite group, and its complex group algebra is a finitely generated commutative algebra. A nonzero finitely generated module over it has a simple quotient, and the complex Nullstellensatz makes that quotient one-dimensional. Thus it is a character $\chi_1\boxtimes\chi_2$, and Theorem 5.2 supplies the claimed embedding.
-
-Suppose $r_N(V)=0$. Fix a vector under $n(\mathfrak p^m)$ and consider its orbit under $n(\varpi^{-r}\mathcal O)$ for increasing $r$. Each finite quotient
+**Proof.** The character quotient and Theorem 5.2 give a nonzero map
 
 $$
-\varpi^{-r}\mathcal O/\mathfrak p^m
+V\longrightarrow I(\chi_1,\chi_2).
 $$
 
-has a complete Fourier decomposition. If every nonzero-frequency quotient vanished in the direct limit, only the zero-frequency summands could survive. Their direct limit is exactly $V_N$, assumed zero. Hence some nonzero $\psi_a$-coinvariant is nonzero. Conjugation by $t(a,1)$ transports it to the $\psi$-coinvariant, producing a Whittaker functional.
+Irreducibility makes it injective. The boundary submodule lemma of Section 7.1
+says that an irreducible subrepresentation of a principal series is either the
+whole irreducible principal series or the unique exceptional submodule. The two
+exceptional submodules are a special representation in one ordering and a
+determinant character in the other. Section 8.5 proves that the first two cases
+are generic and that a determinant character is not. $\square$
 
-The only escape would be that $N$ acts trivially. Applying the same argument after Weyl conjugation makes $\bar N$ act trivially. These groups generate $\mathrm{SL}_2(F)$, so an irreducible representation then factors through the determinant and is one-dimensional. $\square$
-
-The theorem uses admissibility for uniqueness but only smooth finite Fourier decompositions for the existence mechanism. It should not be exported unchanged to coefficient characteristic equal to the residue characteristic, where those finite decompositions need not be semisimple.
+No assertion about representations with $r_N(V)=0$ is needed for the present
+book. Their construction and the existence of Whittaker functionals require
+additional group-specific input; a finite Fourier decomposition of each compact
+$N$-orbit by itself does not prove that a nonzero-frequency quotient survives a
+direct limit. All Kirillov-model statements below therefore retain genericity as
+an explicit hypothesis.
 
 ## 9. The Kirillov model
 
@@ -1226,9 +1386,26 @@ $$
 \mathcal K(\pi,\psi).
 $$
 
-It is locally constant because $W_v$ is smooth. It determines the entire Whittaker function: the big cell consists of elements $n(x)a(y)z w n(u)$, and Whittaker equivariance, central character, and the Weyl action recover values there; the complement is controlled by local constancy. Equivalently, the kernel of $v\mapsto\phi_v$ is stable under $N$ and $T$, and also under $w$ by the Bruhat relations, hence under $G$. Irreducibility and nonzero genericity make the map injective.
+It is locally constant because $W_v$ is smooth. The claim that it determines the
+entire Whittaker function is equivalent to injectivity of $v\mapsto\phi_v$; the
+mirabolic cyclicity argument in the next paragraph proves that claim.
 
-The injectivity deserves a proof because the diagonal is a small subset of $G$. Let $\lambda$ denote the Whittaker functional and consider its translates in the smooth dual. At any fixed compact-open level, finite Fourier inversion on a sufficiently large quotient of $N$ expresses the Weyl translate $w\lambda$ as a finite linear combination of translates $a(y)n(x)\lambda$. The possible closed-cell error would be a nonzero $\psi$-equivariant distribution supported on $B$, which Lemma 8.1 rules out. Hence the span of the $P$-translates of $\lambda$ is stable under $w$, and therefore under $G$. It is nonzero, so irreducibility of the smooth dual makes it all of $V^\vee$. If $\phi_v(y)=\lambda(\pi(a(y))v)$ vanishes for every $y$, then upper-unipotent equivariance makes every $P$-translate of $\lambda$ vanish on $v$; consequently every smooth functional vanishes on $v$, and $v=0$.
+The injectivity deserves a proof because the diagonal is a small subset of $G$.
+Let $\lambda$ denote the Whittaker functional and let $L$ be the span of its
+$P$-translates in the algebraic dual of $V$. At any fixed compact-open level,
+finite Fourier inversion on a sufficiently large quotient of $N$ expresses the
+Weyl translate $w\lambda$ as a finite linear combination of translates
+$a(y)n(x)\lambda$. This is the mirabolic cyclicity calculation: on the open cell
+it is exactly the equal-character Fourier line in Lemma 8.1, while the only
+relevant closed-cell term lies on $ZN$ and is already a $P$-translate. Passing
+to finer levels preserves the identity. Hence $L$ is stable under $w$, and
+therefore under $G$.
+
+The annihilator $L^\perp\subseteq V$ is now a $G$-subrepresentation. It is
+proper because $\lambda\ne0$, so irreducibility gives $L^\perp=0$. If
+$\phi_v(y)=\lambda(\pi(a(y))v)$ vanishes for every $y$, upper-unipotent
+equivariance makes every $P$-translate of $\lambda$ vanish on $v$. Thus
+$v\in L^\perp=0$, proving injectivity.
 
 The Kirillov model is therefore a model of the representation, not merely a collection of coefficients. Its advantage is that two of the three basic actions become elementary formulas.
 
@@ -1290,11 +1467,14 @@ $$
 **Proof.** Choose $v$ with $W_v(1)\ne0$ after translating if necessary. Smoothness gives an integer $m$ such that $v$ is fixed by $n(\mathfrak p^m)$. Average $v$ over a larger compact subgroup $n(\varpi^{-r}\mathcal O)$ against a finite additive character. On the Kirillov side this multiplies $\phi_v(y)$ by the finite Fourier sum
 
 $$
-\int_{\varpi^{-r}\mathcal O/\mathfrak p^m}
-\psi(x(y-y_0))\,dx,
+\int_{\varpi^{-r}\mathcal O}\psi(x(y-y_0))\,dx
+=q^r\mathbf1_{y_0+\varpi^r\mathcal O}(y),
 $$
 
-which is zero unless $y$ lies in a prescribed compact-open coset about $y_0$. Choosing $r,m$ appropriately and normalizing gives the characteristic function of a sufficiently small coset on which $\phi_v$ is nonzero.
+where $y_0$ is chosen in a compact-open neighborhood on which $\phi_v$ is a
+nonzero constant. Choosing $r$ so that
+$y_0+\varpi^r\mathcal O$ lies in that neighborhood and normalizing therefore
+gives its characteristic function.
 
 Conjugation by $a(F^\times)$ moves that coset to any desired valuation shell and any desired center. Averaging under a finite quotient of $\mathcal O^\times$ projects to each unit-character component. Characteristic functions of compact-open subsets span $C_c^\infty(F^\times)$, proving the inclusion. $\square$
 
@@ -1304,23 +1484,67 @@ The infinite-dimensional hypothesis is necessary. A determinant character has no
 
 The relation between ordinary and twisted coinvariants becomes especially transparent near $y=0$. If $\phi(y)$ is evaluated for $y$ of very large positive valuation, then $\psi(by)=1$ for every $b$ in a fixed compact set. Thus sufficiently deep values become insensitive to a growing part of $N$. Their eventual behavior descends to the ordinary Jacquet module.
 
-**Theorem 9.2 (asymptotic quotient).** There is a natural $T$-equivariant map from the Kirillov model modulo compactly supported functions to a finite-length module controlled by $r_N(\pi)$. For an irreducible generic representation of $G$ it is an isomorphism onto the space of its eventual Jacquet exponents. In particular:
-
-1. if $r_N(\pi)=0$, then $\mathcal K(\pi,\psi)=C_c^\infty(F^\times)$;
-2. each character in $r_N(\pi)$ contributes one character-exponential tail as $y\to0$;
-3. a nonsemisimple repeated exponent may contribute a valuation polynomial multiplying that character-exponential.
-
-**Proof strategy.** Quotient out functions supported away from zero, then use $n(b)$-invariance at sufficiently small $y$ to pass to ordinary coinvariants. Conversely lift a Jacquet class and stabilize it under a compact part of $N$; its diagonal translates give the tail.
-
-**Proof.** Let $\phi=\phi_v$. Modulo $C_c^\infty(F^\times)$, changing $v$ by $n(b)u-u$ changes
+**Theorem 9.2 (asymptotic quotient).** Let $\pi$ be infinite-dimensional,
+irreducible, admissible, and generic. Give
 
 $$
-\phi_v(y)
+\mathcal K(\pi,\psi)/C_c^\infty(F^\times)
 $$
 
-by $(\psi(by)-1)\phi_u(y)$, which vanishes for all sufficiently small $y$. Hence the eventual germ depends only on the class of $v$ in $V_N$. The normalized torus action introduces the factor $|y|^{1/2}$ when a Jacquet character is written as a function of the first diagonal coordinate. This gives the forward map.
+the normalized $T$-action obtained by multiplying its inherited action by
+$\delta_B^{-1/2}$. Then the map $v\mapsto\phi_v$ induces a natural isomorphism
 
-Conversely choose a lift of a Jacquet vector fixed by a compact open subgroup of $T$. By definition its $N$-differences span a relation that vanishes after passing far enough toward zero. Smoothness makes that vanishing uniform on a sufficiently deep tail. The resulting Kirillov function has the prescribed eventual character behavior. Generalized eigenvectors give powers of $v(y)$ in exactly the same way that a Jordan block gives polynomial times exponential solutions to a recurrence. $\square$
+$$
+r_N(\pi)\xrightarrow{\ \sim\ }
+\mathcal K(\pi,\psi)/C_c^\infty(F^\times).
+$$
+
+Consequently $r_N(\pi)=0$ exactly when
+$\mathcal K(\pi,\psi)=C_c^\infty(F^\times)$. When $r_N(\pi)$ has finite length,
+each of its characters contributes a character-exponential tail as $y\to0$,
+and a nonsemisimple repeated character contributes a polynomial in $v(y)$ times
+that tail.
+
+**Proof strategy.** Passing to germs at zero kills precisely the $N$-differences.
+Theorem 9.1 identifies the functions with zero germ as the compactly supported
+core.
+
+**Proof.** If $u\in V$, then
+
+$$
+\phi_{\pi(n(b))u-u}(y)=(\psi(by)-1)\phi_u(y),
+$$
+
+which vanishes for all sufficiently small $y$. Thus $v\mapsto[\phi_v]$ factors
+through $V_N$: smoothness under some $n(\mathfrak p^m)$ also bounds the support
+toward $|y|=\infty$, so this difference is compactly supported. Surjectivity onto
+the displayed quotient is immediate from the definition of the Kirillov model.
+
+It is also injective. Suppose $\phi_v$ is compactly supported. Cover its support
+by finitely many compact-open sets $C_i$ and choose $b_i\in F$ so that
+$\psi(b_i y)-1$ is nonzero and constant on $C_i$. After subdividing, write
+$\phi_v=\sum_i\phi_i$ with $\phi_i$ supported on $C_i$. By Theorem 9.1,
+
+$$
+\theta_i(y)=\frac{\phi_i(y)}{\psi(b_i y)-1}
+$$
+
+belongs to the Kirillov model. Hence each $\phi_i$ is the Kirillov function of
+an $N$-difference. Injectivity of the Whittaker model then makes $v$ a sum of
+$N$-differences, so its class in $V_N$ is zero.
+
+The formula of Section 9.2 shows that the inherited action of $t(a,d)$ on a
+germ is $\omega(d)\phi(ya/d)$. Multiplication by $|a/d|^{-1/2}$ therefore makes
+the isomorphism exactly $T$-equivariant for $r_N$. If a Jacquet character is
+$\chi_1\boxtimes\chi_2$, setting $d=1$ gives
+
+$$
+\phi(yc)=|c|^{1/2}\chi_1(c)\phi(y)
+$$
+
+on the eventual germ. This is the asserted character-exponential tail.
+Generalized eigenspaces give powers of $v(y)$ by the elementary finite-difference
+formula for a Jordan block. $\square$
 
 The theorem is an asymptotic statement at $0$, not at both ends. Smooth Whittaker functions vanish for $v(y)$ sufficiently negative after a suitable level condition, while central translates can prevent compact support on $G$ itself.
 
@@ -1512,7 +1736,7 @@ one obtains
 
 $$
 A_{m+1}=(\alpha+\beta)A_m-\alpha\beta A_{m-1},
-\qquad A_{-1}=0,quad A_0=1.
+\qquad A_{-1}=0,\quad A_0=1.
 $$
 
 The characteristic polynomial is
@@ -1633,9 +1857,27 @@ $$
 
 **Proof strategy.** Both sides define homogeneous distributions on $F$. Away from zero, such a distribution is determined by its value on one unit coset. Fourier transform exchanges the two homogeneities. Shell rationality then extends the equality to all $s$.
 
-**Proof.** In a common convergence region, the left side is a distribution in $\Phi$. Under $\Phi(x)\mapsto\Phi(ax)$, a change of variables shows that it transforms by the same scalar as the right side. On $F^\times$, a distribution with this homogeneity is determined by its restriction to $\mathcal O^\times$, and unit-character projection makes that space one-dimensional. A possible distribution supported at $0$ is ruled out for generic $s$ by its incompatible dilation character. Hence the two distributions are proportional.
+**Proof.** First take $\Phi$ supported in $F^\times$. Then
+$Z(s,\chi,\Phi)$ is a finite Laurent polynomial for every $s$, while the left
+side converges for $\operatorname{Re}(s)$ sufficiently negative. Under
+$\Phi(x)\mapsto\Phi(ax)$, a change of variables shows that the two sides have
+the same homogeneity. On $F^\times$, a distribution with this homogeneity is
+determined by its value on one sufficiently small unit coset: multiplicative
+translation reaches every other coset, and unit-character projection leaves one
+line. The two distributions are therefore proportional on functions supported
+away from zero.
 
-Choose $\Phi$ for which the right side is nonzero; the proportionality scalar is unique and rational by Proposition 12.1. Equality in one convergence region implies equality as rational functions of $q^{-s}$. $\square$
+Their difference on $\mathcal S(F)$ is supported at $0$. A distribution on the
+locally constant test functions supported at one point is a scalar multiple of
+evaluation at that point. Its dilation character is trivial, whereas the
+displayed homogeneous character depends on $s$; the two are incompatible for
+all but a discrete set of values of $q^{-s}$. Thus the difference is zero for
+generic $s$ in the convergence half-plane.
+
+Choose $\Phi$ for which the right side is nonzero. Proposition 12.1 makes the
+proportionality scalar a rational function of $q^{-s}$. The identity just proved
+for generic $s$ therefore extends across the exceptional values as an identity
+of rational functions. This also proves uniqueness. $\square$
 
 Define
 
@@ -1725,7 +1967,9 @@ This formula assumes that each Fourier transform uses the self-dual measure for 
 
 ### 13.1 The half-power in the integral
 
-Let $\pi$ be an irreducible generic representation with Whittaker model $\mathcal W(\pi,\psi)$, and let $\xi$ be a smooth character of $F^\times$. Define
+Let $\pi$ be an irreducible admissible generic representation with finite-length
+$r_N(\pi)$ and Whittaker model $\mathcal W(\pi,\psi)$, and let $\xi$ be a smooth
+character of $F^\times$. Define
 
 $$
 Z(s,W,\xi)
@@ -1736,13 +1980,18 @@ $$
 
 For $\operatorname{Re}(s)$ sufficiently large, the integral converges. The upper end is controlled by the support of a smooth Whittaker function at fixed level; the lower end is controlled by the finite list of Jacquet exponents.
 
+The upper support assertion is elementary. If $v$ is fixed by
+$n(\mathfrak p^m)$ and $\phi_v(y)\ne0$, then
+$\psi(by)=1$ for every $b\in\mathfrak p^m$ by the formula of Section 9.2. Hence
+$v(y)\geq-m$, so the Kirillov function vanishes toward $|y|=\infty$.
+
 The exponent $s-1/2$ is forced by normalized induction. A principal-series tail is $|y|^{1/2}\chi_i(y)$, so multiplying by $|y|^{s-1/2}$ produces the ordinary Tate exponent $|y|^s$. With $|y|^s$ instead, every Euler factor would be shifted by $1/2$.
 
 Twisting the representation by $\xi\circ\det$ has the same effect as inserting $\xi$ in the integral. Thus the notation $Z(s,W,\xi)$ is naturally associated with $\pi\otimes\xi$.
 
 ### 13.2 Rationality and the zeta ideal
 
-**Theorem 13.1.** Every $Z(s,W,\xi)$ is rational in $q^{-s}$. As $W$ varies, these integrals generate a principal fractional ideal of $\mathbf C[q^s,q^{-s}]$. It has a unique generator with constant term $1$, denoted
+**Theorem 13.1.** Every $Z(s,W,\xi)$ is rational in $q^{-s}$. As $W$ varies, these integrals generate a principal fractional ideal of $\mathbf C[q^s,q^{-s}]$. It has a unique generator of the form $P(q^{-s})^{-1}$ with $P(0)=1$, denoted
 
 $$
 L(s,\pi\otimes\xi).
@@ -1752,7 +2001,17 @@ $$
 
 **Proof.** Write $\phi(y)=W(a(y))$ and decompose $F^\times$ into shells. By Theorem 9.2, modulo a compactly supported function, $\phi$ is a finite sum of character-exponential tails, possibly multiplied by a polynomial in $v(y)$. Mellin transforming a compactly supported function gives a Laurent polynomial. Mellin transforming a tail gives a rational function with denominator a power of $1-cq^{-s}$.
 
-The set of all integrals is stable under multiplication by $q^{\pm s}$ because translating $W$ by $a(\varpi^{\mp1})$ shifts the valuation index. It is therefore a fractional ideal in the principal ideal domain $\mathbf C[q^s,q^{-s}]$. Scaling its generator by a monomial and a constant makes it a polynomial reciprocal with constant term $1$, uniquely. $\square$
+The set of all integrals is stable under multiplication by $q^{\pm s}$ because translating $W$ by $a(\varpi^{\mp1})$ shifts the valuation index. It is therefore a fractional ideal in the principal ideal domain $\mathbf C[q^s,q^{-s}]$. The Kirillov core supplies the function
+
+$$
+\phi(y)=\xi(y)^{-1}\mathbf1_{\mathcal O^\times}(y),
+$$
+
+whose integral is $1$, so the ideal contains the Laurent ring. On the other
+hand, the finitely many Jacquet tails give a common denominator
+$D(q^{-s})$ with $D(0)=1$. Thus the ideal lies between the Laurent ring and
+$D^{-1}$ times that ring. Its generator is consequently the reciprocal of a
+divisor of $D$, uniquely normalized to have constant term $1$. $\square$
 
 The definition uses only the representation, its Whittaker model, and the measure normalization. It does not require a parameter or a Frobenius convention.
 
@@ -1831,7 +2090,8 @@ The central character enters implicitly in moving scalar matrices through $W$. U
 
 ### 14.2 The local functional equation
 
-**Theorem 14.1 (Whittaker local functional equation).** There is a unique rational function
+**Theorem 14.1 (Whittaker local functional equation).** Let $\pi$ be irreducible,
+admissible, and generic, with finite-length $r_N(\pi)$. There is a unique rational function
 
 $$
 \gamma(s,\pi\otimes\xi,\psi)\in\mathbf C(q^{-s})^\times
@@ -1844,11 +2104,41 @@ Z(1-s,\widetilde W,\xi^{-1})
 =\gamma(s,\pi\otimes\xi,\psi)Z(s,W,\xi).
 $$
 
-**Proof strategy.** Both sides are Mellin functionals on the Kirillov model with the same covariance under dilation. Conjugation by the Weyl element exchanges them. Whittaker uniqueness makes the space of such functionals one-dimensional; rationality extends the equality.
+**Proof strategy.** Both sides are homogeneous Mellin functionals on the Kirillov
+model. Such a functional is unique for generic $s$; rationality then extends the
+identity through the exceptional values.
 
-**Proof.** In a common convergence region, both expressions are linear functionals of $W$. Right translation by $a(c)$ multiplies the first and second by the same scalar after $y\mapsto yc$ and the replacement $s\leftrightarrow1-s$. Upper-unipotent covariance is transported to lower-unipotent covariance by $j,{}^tg^{-1}$.
+**Proof.** On $C_c^\infty(F^\times)$, a functional satisfying
 
-At a fixed compact-open level these properties reduce to a finite Fourier-equivariance problem. The same open-cell argument as Whittaker uniqueness shows that its solution space is one-dimensional. Hence the two functionals are proportional. Chapter 13 makes both sides rational in $q^{-s}$, so equality in a convergence region extends rationally. A Whittaker function with nonzero zeta integral proves uniqueness of the scalar. $\square$
+$$
+\Lambda(\pi(a(c))\phi)
+=\xi(c)^{-1}|c|^{1/2-s}\Lambda(\phi)
+$$
+
+is a scalar multiple of
+$\int_{F^\times}\phi(y)\xi(y)|y|^{s-1/2}d^\times y$: its value on one compact
+unit coset determines its values on all multiplicative translates, and unit
+character projection leaves one line. By Theorem 9.2, the quotient of the
+Kirillov model by this compact core is the finite-length module $r_N(\pi)$.
+A second homogeneous functional can occur on that quotient only when its
+character agrees with one of the finitely many Jacquet exponents, which is a
+finite set of values of $q^{-s}$. Thus the homogeneous-functional space is
+one-dimensional for generic $s$.
+
+The right side of the proposed equation has the displayed homogeneity by
+$y\mapsto yc$. Directly,
+
+$$
+j\,{}^ta(y)^{-1}a(c)=j\,{}^ta(y/c)^{-1}.
+$$
+
+Thus replacing $W$ by its right translate under $a(c)$ replaces the diagonal
+argument of $\widetilde W$ by $y/c$. The change of variables $y=cu$ gives the
+same homogeneity on the transformed $1-s$ side. Hence the two functionals are
+proportional for generic $s$.
+Chapter 13 makes both sides rational in $q^{-s}$, so the proportionality extends
+as a rational identity. A compact Kirillov function with nonzero Mellin integral
+proves uniqueness of the scalar. $\square$
 
 Define
 
@@ -1863,7 +2153,7 @@ In the cases calculated below, this is a monomial in $q^{-s}$. Systematic conduc
 
 ### 14.3 Principal-series factorization
 
-**Theorem 14.2.** For a generic principal series,
+**Theorem 14.2.** For an irreducible principal series,
 
 $$
 \gamma(s,I(\chi_1,\chi_2)\otimes\xi,\psi)
@@ -1923,7 +2213,13 @@ $$
 (\chi_1,\chi_2)=(\mu\nu^{1/2},\mu\nu^{-1/2})
 $$
 
-in the ordering where Steinberg is a subrepresentation. The Whittaker functional vanishes on the nongeneric determinant constituent in the opposite exact sequence, so the principal-series functional equation specializes to the special constituent. Hence
+in the ordering where Steinberg is a subrepresentation. The identity of Theorem
+14.2 is an identity of rational families away from the reducibility point and
+therefore has a well-defined specialization after the scalar cancellation
+described in Chapter 6. The Whittaker functional vanishes on the determinant
+subrepresentation in the opposite exact sequence and restricts nontrivially to
+the special subrepresentation in this ordering. Consequently the specialized
+functional equation belongs to the special constituent, and
 
 $$
 \gamma(s,\operatorname{St}\otimes\mu,\psi)
