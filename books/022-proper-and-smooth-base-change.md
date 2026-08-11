@@ -127,7 +127,7 @@ The invertibility hypothesis plays different roles in different results. The for
 
 The narrative culminates in four assertions.
 
-**Constructibility.** If $f:X\to S$ is separated and of finite type, $S$ is excellent noetherian, $N$ is invertible on $S$, and $K\in D^b_c(X,\Lambda)$, then $Rf_*K$ has constructible cohomology and is locally bounded above. If the relative dimension is at most $d$, a uniform bound depending on $d$ and the amplitude of $K$ is available.
+**Constructibility.** If $f:X\to S$ is separated and of finite type, $S$ is excellent noetherian, $N$ is invertible on $S$, and $K\in D^b_c(X,\Lambda)$, then $Rf_*K$ has constructible cohomology and is locally bounded. If $f$ is proper of relative dimension at most $d$ and $K$ has amplitude $[a,b]$, the bound is $[a,b+2d]$. For a nonproper map, boundary cohomology contributes to the bound; relative fiber dimension alone does not control the amplitude of $Rf_*$.
 
 **Proper base change.** If $f:X\to S$ is proper, with $S$ noetherian, and $K\in D^b_c(X,\Lambda)$ with $N$ invertible on $S$, then for every $g:S'\to S$ the canonical map
 
@@ -141,7 +141,7 @@ $$
 (R^qf_*K)_{\bar s}\cong H^q(X_{\bar s},K|_{X_{\bar s}}).
 $$
 
-**Smooth base change.** In the displayed square, if $g$ is smooth and $f$ is separated of finite type between excellent noetherian schemes, then the same comparison is an isomorphism for bounded constructible prime-to-residue-characteristic coefficients. Properness of $f$ is not required.
+**Smooth base change.** In the displayed square, if $g$ is smooth, $S$ and $S'$ are excellent noetherian, and $f$ is separated of finite type, then the same comparison is an isomorphism for bounded constructible prime-to-residue-characteristic coefficients. Properness of $f$ is not required.
 
 **Smooth local acyclicity.** If $f:X\to S$ is smooth and $K$ is lisse with finite stalks killed by an integer invertible on $S$, then $f$ is universally locally acyclic relative to $K$. If $f$ is also proper, each $R^qf_*K$ is lisse, commutes with arbitrary change of base, and its specialization maps are isomorphisms.
 
@@ -266,23 +266,25 @@ No corresponding assertion is made when $N$ is not invertible. In characteristic
 
 ### 3.3 Constructibility of direct images
 
-**Relative constructibility theorem.** Let $S$ be excellent and noetherian, let $f:X\to S$ be separated and of finite type, and let $K\in D^b_c(X,\Lambda)$, where $N\Lambda=0$ and $N$ is invertible on $S$. Then every $R^qf_*K$ is constructible. On a quasi-compact $S$, only finitely many $q$ occur.
+**Relative constructibility theorem.** Let $S$ be excellent and noetherian, let $f:X\to S$ be separated and of finite type, and let $K\in D^b_c(X,\Lambda)$, where $N\Lambda=0$ and $N$ is invertible on $S$. Then every $R^qf_*K$ is constructible, and the direct image is locally bounded. On each finite-dimensional quasi-compact open of $S$, only finitely many $q$ occur.
 
-**Proof strategy.** Truncation reduces to a constructible sheaf. A finite filtration reduces that sheaf to $j_!\mathcal L$ for a lisse finite sheaf on a locally closed stratum. Replacing the stratum by a finite étale cover reduces $\mathcal L$ to a constant finite module, with finite-group descent recovering the original coefficient. Compactify the resulting separated finite-type morphism. The proper part is controlled by the strict-local theorem of Chapter 5; the boundary is supported on a smaller-dimensional closed subset and is handled by noetherian induction. Generic smoothness after a finite stratification and the local-acyclicity calculation of Chapter 8 show that on a dense open subset of each base component the higher direct images are lisse. Removing that open decreases the base.
+**Proof strategy.** Truncation reduces to a constructible sheaf, and the support filtration reduces that sheaf to $j_!\mathcal L$ for a lisse finite sheaf on a locally closed stratum. A finite étale cover trivializes $\mathcal L$, but one must retain its finite descent datum: finite-group cohomology is not truncated merely because the geometric fibers have bounded dimension. The finite presentation complexes in the strict-local lemma of Section 5.1 retain the descent operators and their relations in the relevant bounded range.
 
-Excellence ensures that normalization in the finite cover is finite and that the compactifications and regular alterations of the relevant low-dimensional strata remain noetherian and finite type. Proper base change identifies stalks of the compactified contribution with finite geometric-fiber cohomology. The boundary triangle
+Compactify the resulting separated finite-type morphism. The proper term is controlled by the strict-local theorem of Chapter 5. The cone comparing extension by zero and ordinary direct image is supported on the boundary. After a finite stratification, its strict-local terms are the finite tame-inertia complexes described in Section 4.2; intersections of boundary strata lower support dimension. Noetherian induction therefore gives constructibility of the boundary term and of the original direct image. On a dense open in each base component, the finite presentation matrices have constant rank, so their cohomology sheaves are lisse. Removing that open lowers the support on the base.
+
+Excellence ensures that normalization in the finite covers is finite and that all schemes introduced by compactification and stratification remain noetherian and finite type. The strict-local theorem identifies stalks of the compactified contribution with finite geometric-fiber cohomology. The boundary triangle
 
 $$
 j_!j^*K\longrightarrow K\longrightarrow i_*i^*K\longrightarrow
 $$
 
-separates the dense open from a closed subset. Each step either replaces the coefficient by a constant one after finite descent or lowers the support dimension. Induction terminates and produces a finite lisse stratification. $\square$
+separates the dense open from a closed subset. Each step either records a finite descent presentation on the same stratum or lowers support dimension. Induction terminates and produces a finite lisse stratification. This proof uses the strict-local and constructibility assertions in the simultaneous order spelled out in Section 5.3; it does not use smooth local acyclicity, which is proved only afterward. $\square$
 
-There is no circularity. The strict-local proper statement is proved first for elementary coefficients by the geometric argument below. Constructibility then passes from those cases to bounded constructible complexes and packages the result globally.
+There is no circularity. The strict-local proper statement is proved directly from finite étale presentations and support induction, without assuming relative constructibility. Relative constructibility then packages those local presentations into finite lisse stratifications.
 
 ### 3.4 Uniform amplitude and complexes
 
-Let the geometric fibers of $f$ have dimension at most $d$, and let $K$ have cohomology only in $[a,b]$. The hypercohomology spectral sequence
+Suppose first that $f$ is proper, its geometric fibers have dimension at most $d$, and $K$ has cohomology only in $[a,b]$. The hypercohomology spectral sequence
 
 $$
 R^p f_*\mathcal H^q(K)\Longrightarrow R^{p+q}f_*K
@@ -294,7 +296,7 @@ $$
 R^m f_*K=0\qquad(m\notin[a,b+2d]).
 $$
 
-For smooth affine curves the upper addition can be reduced to $1$. Uniformity in the exponent $n$ of $\Lambda_n$ is crucial: it permits finite totalizations and derived inverse limits to be interchanged.
+For the cohomology of a geometric smooth affine curve, the upper addition is $1$. This does not give the same bound for $Rf_*$ of an arbitrary nonproper relative curve: for an open immersion, tame boundary inertia can already create $R^1j_*$ although the relative fibers have dimension zero. In the nonproper case, compactification gives a finite local bound depending also on the boundary stratification. Uniformity in the exponent $n$ of $\Lambda_n$ is crucial: it permits finite totalizations and derived inverse limits to be interchanged.
 
 Constructibility is stable under cones, truncations, and pullback. Consequently it is enough to prove a comparison on sheaves and check that the class of complexes for which it holds is triangulated. The finite filtration by cohomology sheaves then reconstructs every $K\in D^b_c$.
 
@@ -322,7 +324,7 @@ $$
 j_!j^*K\longrightarrow K\longrightarrow i_*i^*K\longrightarrow
 $$
 
-reduces $P(Z,K)$ to the lisse term on $U$ and a term with smaller support. A finite étale cover $v:V\to U$ trivializes the lisse sheaf. After passing to a Galois closure with group $G$, the original object is recovered from the constant coefficient upstairs by the Čech nerve, equivalently by finite-group descent. The bar resolution need not be bounded when $|G|$ is not invertible in $\Lambda$; in a fixed geometric cohomological range, uniform dimension bounds permit the required finite truncation. Thus the difficult case is a constant finite coefficient on a normal connected stratum.
+reduces $P(Z,K)$ to the lisse term on $U$ and a term with smaller support. A finite étale cover $v:V\to U$ trivializes the lisse sheaf. After passing to a Galois closure with group $G$, the original object is recovered from the constant coefficient upstairs together with its descent operators. The bar resolution need not be bounded when $|G|$ is not invertible in $\Lambda$, so it is not used as a vanishing argument. Instead the finite presentation complexes of Section 5.1 retain the finitely many operators and relations required in each cohomological degree. Thus the difficult geometric case is a constant finite coefficient on a normal connected stratum, while descent remains visible in the matrices.
 
 This is constructible dévissage. It is more precise than working stratum by stratum: extension by zero records how strata attach, while the localization triangle carries the connecting morphisms between their cohomology. Ignoring these morphisms may preserve dimensions but loses the derived comparison.
 
@@ -336,7 +338,9 @@ $$
 X\xrightarrow{j}\overline X\xrightarrow{\bar f}S
 $$
 
-with $j$ an open immersion and $\bar f$ proper. This does not assert that $\overline X$ is smooth or that its boundary is a divisor. Those improvements require shrinking, stratifying, and, in the low-dimensional applications, normalization and controlled alteration.
+with $j$ an open immersion and $\bar f$ proper. This does not assert that $\overline X$ is smooth or that its boundary is a divisor. In the low-dimensional applications, smoothness and normal crossings are imposed as explicit hypotheses when they are needed.
+
+We recall the part of compactification used in the proof. Over an affine noetherian base, choose finitely many affine opens of $X$, place each in an affine space, and take its projective closure. Separation makes the graphs of the identifications on overlaps closed. Adjoin those graphs one at a time and replace the accumulated closure by the closure of the common open. Noetherian induction on the complements terminates and produces a proper scheme containing $X$ as a dense open. The construction is compatible with restriction on the base, so the affine compactifications glue. This is the compactification lemma for separated finite-type morphisms; no regularity of the resulting boundary is part of the lemma.
 
 Let $i:D=\overline X\setminus X\hookrightarrow\overline X$. Then
 
@@ -346,7 +350,13 @@ Rf_*K=R\bar f_*Rj_*K,
 Rf_!K=R\bar f_*j_!K.
 $$
 
-The cone of $j_!K\to Rj_*K$ is supported on $D$. Proper base change handles the compactified map, while the difference between ordinary and compactly supported cohomology is a boundary problem. When $D$ is a normal-crossings divisor, its local pieces are products of punctured strict henselian traits. Prime-to-characteristic inertia is procyclic in each branch, so its cohomology is bounded and constructible. Intersections of components lower dimension.
+The cone of $j_!K\to Rj_*K$ is supported on $D$. The strict-local proper theorem handles the compactified map, while the difference between ordinary and compactly supported cohomology is a boundary problem. No resolution of $D$ is needed for the general theorem. Normalize one dense boundary stratum at a time, trivialize its lisse coefficient by finite étale descent, and remove its branch and nonnormal loci. At the generic point of a codimension-one branch the local calculation is the punctured strict henselian trait
+
+$$
+M\xrightarrow{\tau-1}M.
+$$
+
+This display uses a chosen tame generator; intrinsically the degree-one term transforms with the inverse cyclotomic twist. Wild inertia has pro-order prime to the order of $M$, so taking its invariants is exact. Higher intersections, branch loci, and nonnormal loci have smaller support and are handled by noetherian induction. In the normal-crossings cases used for open curves and PEL surfaces this procedure is simply the familiar one- or two-variable tame-inertia complex.
 
 Compactification is essential in constructibility and smooth base change, where $f$ need not be proper. It also explains counterexamples: a nonproper family can change because its boundary changes.
 
@@ -366,7 +376,7 @@ For a base of larger dimension, choose a chain of immediate specializations and 
 
 Three measures decrease. Constructible dévissage lowers the dimension of coefficient support. Compactification moves failure to a boundary of smaller dimension. Trait reduction replaces a specialization by a one-dimensional local problem. Finite étale descent changes none of these measures but trivializes monodromy after a finite step.
 
-In the required low-dimensional range, normalization resolves the zero-dimensional defects of curves, and a normal-crossings alteration of a surface gives boundary components and crossings of dimensions one and zero. Every descent totalization is uniformly bounded in each cohomological degree. Thus neither an infinite geometric process nor a convergence assumption is concealed.
+In the required low-dimensional range, normalization separates the zero-dimensional defects of curves, while the PEL surfaces enter with a normal-crossings compactification as an explicit hypothesis. Every presentation complex is finite in each fixed cohomological range, and Book 21 supplies a uniform cohomological bound. Thus neither an infinite geometric process nor an unproved alteration theorem is concealed.
 
 ## 5. The strict-local proper theorem
 
@@ -378,49 +388,59 @@ $$
 R\Gamma(X,K)\xrightarrow{\sim}R\Gamma(X_s,K_s).
 $$
 
-**Proof strategy.** A constructible filtration and finite étale descent reduce to constant coefficients on a proper normal stratum. Properness lets us replace closures by normalizations; complements have smaller dimension. Induct on relative dimension. In dimension zero, proper and quasi-finite means finite. Finite algebras over a strictly henselian local ring split according to closed-fiber points, and direct image is exact.
+The proof rests on the following finite-presentation form of the proper-neighborhood argument.
 
-In positive dimension choose, after a finite cover and projective modification, a relative pencil. Exceptional and branch loci have smaller dimension. The new relative-curve contribution is treated in Section 5.2; the base of the pencil and exceptional pieces are treated inductively. Proper cohomological descent along the modification is computed by its augmented Čech nerve. Away from the exceptional locus the nerve is split, while over that locus dimension falls. Uniform bounds make the totalization finite in every degree. This proves constant coefficients and hence, by the initial dévissage and truncation triangles, every bounded constructible complex. $\square$
+**Proper-neighborhood lemma.** Let $(S,s)$ be as in the theorem, let $Y\to S$ be proper, and let $\mathcal F$ be a constructible finite $\Lambda$-sheaf on $Y$. For every $r\geq0$ there is a bounded complex $P_r$ of finite $\Lambda$-modules and compatible maps
 
-Properness forces specializations in $X$ to meet the closed fiber, strict henselianity removes residue-field descent, and the prime-to-characteristic local calculation shows that filling normal-crossings strata creates the same cohomology on the total space and closed fiber.
+$$
+P_r\longrightarrow R\Gamma(Y,\mathcal F),
+\qquad
+P_r\longrightarrow R\Gamma(Y_s,\mathcal F_s)
+$$
+
+which induce isomorphisms in degrees at most $r$ and injections in degree $r+1$; under these identifications, restriction is the identity of $P_r$.
+
+**Proof of the lemma.** We first explain the neighborhood principle. A finite collection of étale neighborhoods of points of $Y_s$ lifts to étale neighborhoods in $Y$: write each morphism locally in standard étale form and lift its finitely many coefficients. The images of the lifts contain $Y_s$. Their complement is closed in $Y$, and its image in $S$ is closed because $Y$ is proper. That image does not contain $s$, so it is empty: every nonempty closed subset of the spectrum of a local ring contains the closed point. Hence the lifted neighborhoods cover all of $Y$. The same argument applies after any finite fiber product and therefore lifts a finite truncated hypercover. A finite list of equalities between coefficient sections also lifts after refinement, because equality of sheaf sections is detected on stalks.
+
+Now fix a degree $q\leq r$. A class of $H^q(Y_s,\mathcal F_s)$ is represented on an étale hypercover truncated in simplicial degree $q+1$. Properness of $Y_s$ and constructibility of $\mathcal F_s$ let us choose finitely many quasi-compact objects and finitely many coefficient sections at every occurring level. Lift this finite hypercover, its sections, and the cocycle identities by the neighborhood principle. The lifted cocycle gives a class on $Y$ restricting to the original class. This proves surjectivity.
+
+For injectivity, let a class on $Y$ restrict to zero on $Y_s$. Represent it on a finite hypercover through degree $q+1$. Vanishing on the fiber is witnessed, after a finite refinement, by a finite cochain and finitely many homotopy identities. Lift that refinement, cochain, and those identities by the same principle. They exhibit the original class as a coboundary on $Y$. Thus restriction is injective.
+
+To package all degrees through $r$ at once, take the union of the finitely many lifted data and totalize their truncated Čech complexes. Filter $\mathcal F$ by extensions by zero from connected locally closed strata; on each stratum a finite étale cover trivializes the coefficient, and its finitely many descent operators enter the same total complex. Kernels and cokernels off the chosen stratum have smaller support and are appended by the localization sequence and noetherian induction. The resulting bounded finite complex is $P_r$. Keeping one additional simplicial degree gives the injection in degree $r+1$ and makes the construction compatible as $r$ grows. No unbounded finite-group resolution is used. $\square$
+
+Apply the lemma to every cohomology sheaf of $K$ and totalize the finitely many resulting complexes. Given a degree $q$, choose $r$ beyond $q$ and beyond the amplitude of the finite truncation spectral sequence. Restriction is then an isomorphism in degree $q$. This holds for every $q$, so the restriction morphism is a quasi-isomorphism and gives the displayed derived isomorphism. $\square$
+
+This argument explains all three hypotheses. Properness turns a neighborhood of the closed fiber into a neighborhood of the whole space. Strict henselianity removes residue-field descent and makes finite étale closed-fiber pieces split when needed. Constructibility makes every coefficient, covering, and descent relation finite enough to enter one presentation complex. No semistable reduction, resolution, or later comparison theorem is used.
 
 ### 5.2 The curve calculation
 
-Let $T$ be a strict henselian trait and let $C\to T$ be a proper relative curve. Normalize $C$ and separate the singular and nonflat loci; these are finite over $T$ or supported in the closed fiber. Finite pieces satisfy comparison directly. After a finite extension of traits and a modification, the remaining curve is semistable: étale-locally at a node it has equation
+The preceding proof is general, but a nodal curve displays its local matrix concretely. Let $T$ be a strict henselian trait and let $C\to T$ be a proper semistable relative curve. Étale-locally at a node the equation is
 
 $$
 xy=\pi.
 $$
 
-Cover the semistable curve by the smooth locus and small node neighborhoods. On a smooth neighborhood, a constant prime-to-characteristic sheaf is locally acyclic by Chapter 8. At a node, remove the node. The punctured neighborhood has tame fundamental group generated by one loop, and after choosing a tame generator its cohomology with a finite module $M$ is represented by
+Cover the curve by the smooth locus and small node neighborhoods. On a smooth neighborhood, the affine-space calculation of Section 7.2 gives the local presentation directly; this does not appeal to Chapter 8. At a node, remove the node. The punctured neighborhood has tame fundamental group generated by one loop, and after choosing a tame generator its cohomology with a finite module $M$ is represented by
 
 $$
 M\xrightarrow{\tau-1}M.
 $$
 
-For constant $M$, the differential is zero; intrinsically the degree-one term carries the inverse cyclotomic twist suppressed by the chosen generator. The two branches in the special fiber contribute the same incidence map as the annulus in the generic fiber; it is the edge map of the dual graph. Thus the node contribution agrees on total space and special fiber. Mayer--Vietoris glues the pieces. Descent from the finite trait extension and localization for normalization and exceptional components return the result for $C$.
+For constant $M$, the differential is zero; intrinsically the degree-one term carries the inverse cyclotomic twist suppressed by the chosen generator. The two branches in the special fiber contribute the same incidence map as the punctured node in the total space; it is the edge map of the dual graph. Thus the two finite presentation complexes agree. Mayer--Vietoris glues the pieces. Normalization adds only finite maps and closed-point terms, already covered by the dimension-zero case.
 
 This explains why smoothness is not needed for proper base change. A nodal fiber may have different cohomology from a nearby smooth fiber, but the direct-image stalk at the nodal point still equals the cohomology of the nodal fiber. Proper base change identifies stalks with fibers; it does not make stalks locally constant.
 
 ### 5.3 Higher relative dimension
 
-After a projective modification, a sufficiently general relative projection gives a fibration $h$ whose generic fibers have dimension one less. The locus where it fails to be flat, where singularities exceed normal crossings, or where coefficients cease to be constant has smaller support. Over the good locus, Leray reads
+The proper-neighborhood lemma avoids resolution in higher dimension. For completeness, its induction can be organized by a relative projection on each irreducible affine stratum. Purely inseparable changes do not alter the étale site. After making that harmless reduction and deleting a smaller closed subset, a separating transcendence basis gives an elementary curve fibration $h$ over a stratum of dimension one less. The finite presentation of Book 21 for such a fibration retains the tame boundary operators and gives
 
 $$
 R\Gamma(Y,Rh_*\Lambda)\simeq R\Gamma(X,\Lambda).
 $$
 
-The curve calculation controls $Rh_*\Lambda$ under restriction to the closed fiber. Its cohomology sheaves are constructible by the lower-relative-dimension case of the same induction; on each stratum the induction hypothesis applies to the lower-dimensional base. Thus constructibility and strict-local comparison are proved simultaneously, ordered first by relative dimension and then by support dimension. This removes a possible circularity between Chapters 3 and 5. The Leray spectral sequence has finitely many rows, so comparison on its $E_2$-page gives comparison on the abutment.
+The curve presentation controls $Rh_*\Lambda$ under restriction to the closed fiber. Its cohomology sheaves are constructible by the same finite matrices; on each stratum the support induction applies to the lower-dimensional base. Thus constructibility and strict-local comparison are proved simultaneously, ordered first by the dimension of the stratum and then by support dimension. The Leray spectral sequence has finitely many rows, so comparison on its $E_2$-page gives comparison on the abutment.
 
-To remove the modification, form the augmented Čech nerve $X_\bullet\to X$. Proper descent gives
-
-$$
-R\Gamma(X,K)\simeq\operatorname{Tot}R\Gamma(X_\bullet,K).
-$$
-
-Over the isomorphism locus the augmentation is split. Every failure is supported over the exceptional locus, already covered by induction. This closes the dimension step.
-
-Only relative dimensions one, two, and smooth abelian families are required later. The pencil argument records why the theorem is structural rather than a list of low-dimensional coincidences.
+The complement deleted to obtain the elementary fibration has smaller support and is reattached by localization. This closes the dimension step without a projective modification or an appeal to proper cohomological descent. Only relative dimensions one, two, and smooth abelian families are used in the applications, but the finite-presentation induction is dimension-independent.
 
 ### 5.4 Complexes and constructible coefficients
 
@@ -446,6 +466,8 @@ g^*Rf_*K\xrightarrow{\sim}Rf'_*g'^*K.
 $$
 
 **Proof.** Test on a geometric point $\bar s'\to S'$ with image $\bar s\to S$. The stalk on the left is $R\Gamma(X_{(\bar s)},K)$. The strict-local theorem identifies it with $R\Gamma(X_{\bar s},K_{\bar s})$. The fibers $X'_{\bar s'}$ and $X_{\bar s}$ differ only by extension between separably closed fields, which leaves finite prime-to-characteristic cohomology unchanged. Applying the strict-local theorem to $f'$ identifies the result with the stalk on the right. Tracing adjunctions shows that this is the stalk of the canonical map. $\square$
+
+Here the last application is first made when $S'$ is noetherian. For general $S'$, work on an affine neighborhood of $\bar s'$. The square, the chosen finite étale neighborhoods, and every finite stage of the presentation complex descend to a finitely generated $S$-algebra. Continuity of constructible torsion cohomology then identifies the stalk with the filtered colimit of the noetherian comparisons. Thus no noetherian hypothesis on the changing base is hidden in “every.”
 
 For a sheaf $\mathcal F$,
 
@@ -492,7 +514,7 @@ $$
 R^a h_*R^b f_*K\Longrightarrow R^{a+b}(h\circ f)_*K.
 $$
 
-For proper $p:X\to S$ and a bounded finite-Tor-amplitude $L$ on $S$, the projection formula
+For proper $p:X\to S$ and a perfect constructible complex $L$ on $S$, the projection formula
 
 $$
 Rp_*(K\otimes^Lp^*L)\simeq Rp_*K\otimes^LL
@@ -569,7 +591,7 @@ $$
 \mathbf A^r_S\longrightarrow S.
 $$
 
-Factor that projection into affine-line projections. It is enough to handle one new parameter. Compactify $f$ and use proper base change on the compactification. The possible discrepancy is supported at the boundary. Constructible dévissage and the normal-crossings calculation reduce that boundary to a punctured strict henselian trait. Its cohomology is the two-term tame inertia complex, unchanged after adjoining a smooth parameter. The localization triangle now proves the theorem.
+Factor that projection into affine-line projections. It is enough to handle one new parameter. Compactify $f$ and use proper base change on the compactification. The possible discrepancy is the failure of $Rj_*K$ to commute with the new parameter and is supported at the boundary. Filter that boundary by normal strata. At a generic codimension-one point the strict-local term is the two-term tame-inertia complex; adjoining a polynomial parameter leaves both its inertia group and its finite presentation matrix unchanged. Branch, nonnormal, and higher-codimension loci have smaller support. Noetherian induction and the localization triangle prove the theorem. This is the boundary induction of Section 4.2 with the smooth parameter carried through every matrix.
 
 This proof exhibits every assumption. Separation and finite type give compactification. Excellence makes normalization and constructibility finite. Smoothness gives an étale-local affine-space model. Invertibility of $N$ makes the punctured-trait calculation tame. If $g$ is arbitrary and $f$ nonproper, the theorem is false.
 
@@ -587,7 +609,7 @@ $$
 Rp_*M\simeq M.
 $$
 
-For $r=1$, compactify to $\mathbf P^1_A$. Proper base change computes its cohomology from the closed geometric fiber. The localization sequence for infinity and purity for a smooth divisor cancel the degree-two point class, leaving only $M$ in degree zero. Products and induction give $r>1$.
+For $r=1$, compactify to $\mathbf P^1_A$. Proper base change computes its cohomology from the closed geometric fiber. On that fiber, the affine-curve presentation of Book 21 has $2g+r-1=0$ generators for $\mathbf A^1$: the prime-to-residue-characteristic cohomology of a constant finite module is $M$ in degree zero and zero above. The boundary presentation at infinity is unchanged over $A$, so the localization triangles on $\mathbf P^1_A$ and its closed fiber identify and give the same answer over $A$. Products and induction give $r>1$.
 
 A smooth morphism $u:U\to S$ is, around every point, étale over affine space. Étale pullback preserves the calculation, and descent glues it. For a lisse $\mathcal L$, pass to a finite étale neighborhood on which it is constant. Thus sufficiently small strict neighborhoods have no relative cohomology beyond degree zero.
 
@@ -632,7 +654,18 @@ For the identity $X=S$ and a lisse sheaf, the map is an isomorphism because the 
 
 **Smooth local-acyclicity theorem.** Let $f:X\to S$ be smooth of finite presentation. Let $\mathcal L$ be a lisse finite $\Lambda$-sheaf, with $N\Lambda=0$ and $N$ invertible on $S$. Then $f$ is universally locally acyclic relative to $\mathcal L$.
 
-**Proof.** Work étale-locally on source and base. Trivialize $\mathcal L$ by a finite étale cover. A smooth morphism is étale-locally a projection from affine space, so reduce to $\mathbf A^r_S\to S$ with constant coefficients. Strict localization at a source point and its image identifies the nearby tube with a strict localization of affine space over a separably closed field. Section 7.2 gives $\Lambda$ in degree zero and zero above. The stalk map is an isomorphism.
+**Proof.** Work étale-locally on source and base. Trivialize $\mathcal L$ by a finite étale cover. A smooth morphism is étale-locally a projection from affine space, so reduce to $\mathbf A^r_S\to S$ with constant coefficients.
+
+If $\bar x$ lies over $\bar s$ and $\bar t$ is a geometric generization in $S_{(\bar s)}$, the smooth-tube calculation is
+
+$$
+R\Gamma\left(
+(\mathbf A^r_S)_{(\bar x)}\times_{S_{(\bar s)}}\bar t,
+\Lambda
+\right)\simeq\Lambda.
+$$
+
+To prove it, choose coordinates centered at the image of $\bar x$ after an étale extension. Successively compactify each coordinate line. Proper base change identifies the projective-line term, while the unique boundary section has the same tame-inertia presentation before and after generization. The two localization triangles cancel that boundary term and leave the constant degree-zero class. Induction on $r$ gives the formula. The map from the stalk is the unit class and hence is the displayed isomorphism.
 
 After arbitrary base change, the morphism remains smooth, the coefficient remains lisse, and the same calculation applies. Finite étale descent returns the original coefficient. $\square$
 
@@ -667,7 +700,7 @@ $$
 \operatorname{sp}_{\bar t/\bar s}.
 $$
 
-They commute with cup products, pullback, and proper pushforward because they arise at the derived-sheaf level. Without local acyclicity they need not be invertible, but they still exist.
+They commute with cup products and pullback because they arise at the derived-sheaf level. They also commute with finite étale trace maps, which Book 21 constructed by summing sheets. Pushforward for a general proper correspondence requires the trace and purity formalism of Book 23 and is not used here. Without local acyclicity the specialization maps need not be invertible, but they still exist.
 
 ### 9.2 The smooth proper theorem
 
@@ -679,6 +712,8 @@ They commute with cup products, pullback, and proper pushforward because they ar
 4. every specialization map is an isomorphism.
 
 **Proof.** Proper base change identifies stalks with geometric-fiber cohomology and proves arbitrary base change. Absolute finiteness makes stalks finite. Smooth local acyclicity makes every generization map an isomorphism. Refine a constructibility stratification; adjacent strata then carry local systems with invertible transport and glue to a lisse sheaf. Fiber dimension supplies vanishing. $\square$
+
+For clarity, the gluing step uses this lissity criterion: a constructible finite sheaf on a locally noetherian scheme is lisse if, on every strict localization, all maps from the closed geometric stalk to geometric generizations are isomorphisms. Trivialize on the finitely many strata meeting one strict localization. The assumed maps identify their finite stalks and descent operators; after one common pointed étale neighborhood these finitely many identifications glue the stratumwise trivializations. Thus the sheaf is lisse near every geometric point.
 
 On connected $S$, the ranks of fiber cohomology are constant. There is canonical transport along an étale path, not a canonical simultaneous trivialization. Monodromy records the obstruction to such a trivialization.
 
@@ -694,7 +729,7 @@ $$
 
 Transport along a path is the specialization isomorphism; a loop gives monodromy. For $S=\operatorname{Spec}k$, this is the absolute Galois action.
 
-If a smooth proper family extends over a henselian discrete valuation ring and $\ell$ is invertible there, the generic-fiber representation is unramified. Indeed, the lisse direct image extends across the closed point, so inertia acts trivially. Frobenius on the special fiber matches unramified Frobenius on the generic fiber, with the chosen arithmetic or geometric normalization.
+If a smooth proper family extends over a henselian discrete valuation ring and $\ell$ is invertible there, the generic-fiber representation is unramified. Indeed, the lisse direct image extends across the closed point, so inertia acts trivially. With the left descent action fixed in Book 21, arithmetic Frobenius on the special fiber matches arithmetic unramified Frobenius on the generic fiber. Geometric Frobenius is the inverse on both sides.
 
 The converse is not asserted. An unramified cohomology representation need not construct a smooth proper model; cohomology can miss geometric singularities.
 
@@ -709,19 +744,19 @@ $$
 \simeq\mathcal F_n.
 $$
 
-Book 21 defined continuous direct image using the normalized tower $(Rf_*\mathcal F_n)_n$. Three facts transport base change:
+Book 21 defined continuous direct image by applying $Rf_*$ levelwise and then normalizing the resulting tower. Three facts permit an ordinary $R\varprojlim$ realization and its stalkwise interpretation:
 
 1. finite-level comparison is an isomorphism for every $n$;
 2. cohomological amplitude is bounded independently of $n$;
 3. each fixed-degree tower is Mittag--Leffler.
 
-Proper or smooth base change supplies the first, geometric dimension the second, and finiteness the third. Images in each finite target stabilize. Cohomology transition maps need not be surjective.
+Proper or smooth base change supplies the first. Proper geometric dimension supplies the second; in the nonproper smooth-horizontal case one uses the uniform bound from the chosen compactification and boundary stratification. Finiteness supplies the third. Images in each finite target stabilize, although cohomology transition maps need not be surjective.
 
-The three facts let one commute geometric stalks, finite totalizations, and $R\varprojlim$. They also show that the direct-image tower remains normalized, since derived reduction can be checked on geometric-fiber complexes.
+The three facts let one commute geometric stalks, finite totalizations, and $R\varprojlim$. Normalization is part of the definition of continuous direct image; it must not be inferred merely from degreewise Mittag--Leffler.
 
 ### 10.2 Integral and rational base change
 
-**Adic proper base change.** Let $f:X\to S$ be proper in the noetherian prime-to-$\ell$ setting, and let $\mathcal F$ be bounded normalized constructible with uniform amplitude and finite-level stalk generators. Then
+**Adic proper base change.** Let $f:X\to S$ be proper in the noetherian prime-to-$\ell$ setting, and let $\mathcal F$ be a bounded normalized constructible system on a common finite stratification. Then
 
 $$
 g^*Rf_{*,\mathrm{cont}}\mathcal F
@@ -731,9 +766,11 @@ $$
 
 for every $g:S'\to S$.
 
-**Proof.** Finite proper base change gives the comparison modulo $\ell^n$. Apply $R\varprojlim_n$. Uniform amplitude puts every cone in a common finite range, and Mittag--Leffler kills the possible first-derived-limit obstruction on stalk cohomology. The inverse limit of the zero cones is zero. Normalization identifies the result with continuous direct image. $\square$
+Both pullbacks in this display are normalized adic pullbacks; they are not pullbacks of an ordinary inverse-limit sheaf.
 
-The same proof gives adic smooth base change when $g$ is smooth. Rationalize only afterward:
+**Proof.** Finite proper base change gives an isomorphism at every level, compatibly with transition maps. It is therefore an isomorphism of systems; applying normalization gives the displayed isomorphism in the adic category. To realize it by ordinary $R\varprojlim$, proper dimension gives a bound independent of $n$, and finite geometric stalk cohomology makes every fixed-degree tower Mittag--Leffler. Book 21 then identifies normalization with the $R\varprojlim$ realization and permits stalkwise interpretation. $\square$
+
+The same proof gives adic smooth base change when $g$ is smooth, under the bounded common-stratification hypotheses of Section 10.1. Rationalize only afterward:
 
 $$
 Rf_{*,\mathrm{cont}}\mathcal F
@@ -755,7 +792,7 @@ $$
 
 For smooth proper $f$ and a lisse system, every finite-level map is an isomorphism, hence so are the integral and rational limits. The map is continuous for the $\ell$-adic topology.
 
-Each $R^qf_{*,\mathrm{cont}}\mathcal F$ is then a lisse $\mathbf Z_\ell$-sheaf with finitely generated stalk. It is finite free if fiber cohomology has no $\ell$-torsion. Freeness must be checked; lissity alone does not imply it.
+Each $R^qf_{*,\mathrm{cont}}\mathcal F$ is then a lisse adic system with finitely generated $\mathbf Z_\ell$-stalk. The stalk is finite free if its fiber cohomology has no $\ell$-torsion. Freeness must be checked; lissity alone does not imply it.
 
 ### 10.4 The derived-limit warning
 
@@ -806,7 +843,7 @@ Base change transports this sequence. If fiber groups are free, Tor vanishes and
 
 ### 11.2 Projection formula and Leray
 
-For proper $f:X\to Y$ and finite-Tor-amplitude $L$ on $Y$,
+For proper $f:X\to Y$ and a perfect constructible complex $L$ on $Y$,
 
 $$
 Rf_*(K\otimes^Lf^*L)\simeq Rf_*K\otimes^LL.
@@ -824,17 +861,17 @@ is functorial under base change; the differentials correspond, not just the limi
 
 ### 11.3 Correspondences and change of base
 
-For a correspondence over $S$,
+For a finite étale correspondence over $S$,
 
 $$
 X\xleftarrow{p}Z\xrightarrow{q}X,
 $$
 
-with $q$ proper and the necessary coefficient morphism, pullback followed by proper pushforward acts on $Rf_*K$. Proper base change for $q$ and functoriality of $p^*$ show that this action commutes with every base change on $S$.
+with $q$ finite étale and the necessary coefficient identification, pullback followed by the finite étale trace acts on $Rf_*K$. Base change for $q$, compatibility of the sheet-summing trace, and functoriality of $p^*$ show that this action commutes with every base change on $S$.
 
-Specialization therefore commutes with algebraic endomorphisms, isogenies, and proper prime-to-level correspondences. The assertion passes modulo every $\ell^n$ to the adic limit.
+Specialization therefore commutes with pullback by algebraic endomorphisms and isogenies, and with finite étale prime-to-level correspondences. The assertion passes modulo every $\ell^n$ to the adic limit.
 
-A nonproper $q$ needs compact support. A correspondence on an open PEL space may also fail to extend across a chosen compactification. The comparison theorem proves compatibility once the proper geometric correspondence exists; it does not construct that extension.
+A nonfinite proper $q$ needs a trace map, and a nonproper $q$ needs compact support. Those constructions belong to Book 23. A correspondence on an open PEL space may also fail to extend across a chosen compactification. The comparison theorem proves compatibility for the finite étale traces available here; it does not construct a boundary extension.
 
 ## 12. Relative curves
 
@@ -851,6 +888,28 @@ R^2f_*\Lambda_n\simeq\Lambda_n(-1),
 $$
 
 and $R^qf_*\Lambda_n=0$ for $q>2$. The first statement follows from geometric connectedness. Fiberwise Kummer theory and the $\ell^n$-torsion of the Jacobian give the middle rank. The last identification uses the class of a geometric point and its transformation under change of field; the twist records that transformation.
+
+Here is a proof of the fiber calculation that does not use the later duality theorem. Over a separably closed field choose a point $x$ and put $U=C\setminus\{x\}$. The affine-curve presentation in Book 21 gives a free prime-to-characteristic cochain model with $2g$ degree-one generators. Thus
+
+$$
+H^0(U,\Lambda_n)=\Lambda_n,\qquad
+H^1(U,\Lambda_n)=\Lambda_n^{2g},\qquad
+H^q(U,\Lambda_n)=0\quad(q>1).
+$$
+
+The local term at $x$ follows directly from Kummer theory on the strict henselian discrete valuation ring. A unit has zero valuation, a uniformizer has valuation one, and adjoining an $\ell^n$th root of a unit is étale. The valuation boundary therefore identifies cohomology with support as
+
+$$
+R\Gamma_x(C,\Lambda_n)\simeq\Lambda_n(-1)[-2].
+$$
+
+In the localization sequence, the residue from $H^1(U,\Lambda_n)$ is zero: the loop around the sole puncture is the product of the $g$ commutators in the curve presentation and hence vanishes after abelianization. Consequently restriction identifies $H^1(C,\Lambda_n)$ with $H^1(U,\Lambda_n)$, and the support generator identifies
+
+$$
+H^2(C,\Lambda_n)\simeq\Lambda_n(-1).
+$$
+
+Changing $x$ changes the local generator by the degree of the resulting zero-cycle, so the degree-one fundamental class and the displayed twisted identification are canonical. This proves the asserted ranks and twist before any perfect-pairing statement.
 
 These fiberwise identifications globalize because the direct images are lisse and proper base change detects maps on geometric stalks. Passing through the tower gives
 
@@ -870,7 +929,7 @@ R^1f_*\mathbf Z_\ell
 \longrightarrow\mathbf Z_\ell(-1)
 $$
 
-is alternating and is transported by every specialization. Perfectness of this pairing belongs to the duality package of Book 23; here we need only its construction and comparison compatibility.
+is alternating and is transported by every specialization. Alternation, including for $\ell=2$, follows from the one-relator curve presentation: the attaching relation is a product of commutators, so the diagonal coefficients of the degree-two cup matrix vanish. Perfectness of this pairing belongs to the duality package of Book 23; here we need only its construction and comparison compatibility.
 
 If $S$ is the spectrum of a henselian discrete valuation ring and $C$ is smooth proper over $S$, then
 
@@ -970,7 +1029,33 @@ R^1f_*\Lambda_n
 (A[\ell^n],\Lambda_n).
 $$
 
-To prove it globally, construct the pairing fiberwise from the Kummer torsors defined by torsion points. Proper base change identifies both stalks with their geometric versions, where the standard abelian-variety calculation is an isomorphism. A morphism between constructible sheaves that is an isomorphism at every geometric stalk is an isomorphism.
+We record the absolute calculation. Let $A$ be an abelian variety over a separably closed field. Every connected pointed finite étale cover $Y\to A$ admits a unique abelian-variety structure making the map an isogeny: translations lift after a choice above the identity, and the two possible lifts of addition agree along the identity and hence everywhere by the rigidity of maps from a proper connected variety to a finite étale scheme. The same argument gives inverses and associativity. Consequently the tower $[\ell^r]:A\to A$ is cofinal among connected étale covers of $\ell$-power degree.
+
+Book 15 proved $\deg[\ell^r]=\ell^{2gr}$ without a cohomology calculation. Since $[\ell^r]$ is étale here,
+
+$$
+A[\ell^r]\cong(\mathbf Z/\ell^r\mathbf Z)^{2g}
+$$
+
+after a choice of basis. We need one further fact about the inverse tower. For $q>0$, pullback by $[\ell^r]$ kills $H^q(A,\Lambda_n)$ once $rq\geq n$. Here is the cubical proof. Translation by a geometric point acts trivially on cohomology: the map from the connected variety $A$ to the finite set of automorphisms of $H^q(A,\Lambda_n)$ is locally constant and is the identity at the origin. Compute a class on an étale Čech hypercover and apply the alternating difference operator in the $q+1$ variables of $A^{q+1}$. The cosimplicial identities make that difference a coboundary; this is the cohomological theorem of the $(q+1)$-cube. Expanding $[m]$ as the sum of $m$ copies in each of the remaining $q$ difference variables gives
+
+$$
+[m]^*\alpha=m^q\alpha
+$$
+
+modulo coboundaries. For $m=\ell^r$ this is zero modulo $\ell^n$ when $rq\geq n$.
+
+It follows that the inverse multiplication tower is acyclic above degree zero with finite $\ell$-primary coefficients: every positive-degree class dies after pullback to a sufficiently high stage. Its Cartan--Leray complex therefore identifies $R\Gamma(A,\Lambda_n)$ with continuous cochains of $T_\ell A\cong\mathbf Z_\ell^{2g}$ acting trivially on $\Lambda_n$. The Koszul resolution for the commuting topological generators gives
+
+$$
+H^i(A,\Lambda_n)\cong
+\bigwedge\nolimits^i
+\operatorname{Hom}_{\Lambda_n}(A[\ell^n],\Lambda_n),
+$$
+
+and identifies wedge product with cup product. The result is independent of the chosen basis because both sides transform functorially under automorphisms of the torsion tower.
+
+Proper base change identifies the two sides of the degree-one formula on every geometric stalk. The character construction is functorial in the abelian scheme, so these fiberwise maps glue. A morphism between constructible sheaves that is an isomorphism at every geometric stalk is an isomorphism.
 
 Passing to the inverse limit gives
 
@@ -985,7 +1070,7 @@ Thus the cohomological and torsion constructions of the lisse rank-$2g$ sheaf ag
 
 ### 13.2 Exterior powers and arbitrary base change
 
-On every geometric fiber, constant-coefficient cohomology is the exterior algebra on degree one. The cup-product maps
+The absolute calculation of Section 13.1 says on every geometric fiber that constant-coefficient cohomology is the exterior algebra on degree one. The cup-product maps
 
 $$
 \bigwedge\nolimits^i R^1f_*\Lambda_n
@@ -1030,7 +1115,14 @@ dual to $T_\ell u$. If $\deg u$ is prime to $\ell$, its kernel has no $\ell$-pri
 
 Every endomorphism of $A$ acts on $R^1$ and hence on all exterior powers. Proper base change and Section 11.3 show that these actions commute with specialization. An idempotent in an endomorphism algebra cuts out a direct summand whenever its denominator is invertible in the coefficient ring. If the denominator is divisible by $\ell$, a rational summand need not have an integral direct complement.
 
-A polarization supplies a Weil pairing on $T_\ell A$ with values in $\mathbf Z_\ell(1)$. Dualizing yields the usual alternating form on degree-one cohomology with its Tate twist. Because the polarization is defined over $S$, the form is invariant under monodromy and all specialization isomorphisms are symplectic. This compatibility, rather than only constancy of ranks, is what makes the result useful in arithmetic families.
+A polarization $\lambda:A\to A^\vee$ supplies an alternating Weil form on $T_\ell A$ with values in $\mathbf Z_\ell(1)$. If $\deg\lambda$ is prime to $\ell$, its inverse dualizes to a perfect alternating form
+
+$$
+R^1f_*\mathbf Z_\ell\otimes R^1f_*\mathbf Z_\ell
+\longrightarrow\mathbf Z_\ell(-1).
+$$
+
+For an arbitrary polarization the same construction is a rational perfect form and an integral form only after multiplying by a sufficient power of $\ell$; it need not be unimodular on the integral lattice. Because the polarization is defined over $S$, the form is invariant under monodromy, and all specialization isomorphisms preserve it. This compatibility, rather than only constancy of ranks, is what makes the result useful in arithmetic families.
 
 Over a henselian trait of residue characteristic different from $\ell$, an abelian scheme has unramified $T_\ell A$ and unramified cohomology in all degrees. The statement uses the existence of the abelian scheme over the trait. A generic abelian variety with semistable but non-good reduction is not covered; its nontrivial inertia belongs to the monodromy theory developed later.
 
@@ -1090,7 +1182,7 @@ $$
 R^qm_*\mathcal L_n
 $$
 
-on $B$, arbitrary base change, and invertible specialization. If the fibers are surfaces, the cohomology lies in $[0,4]$. Passing through the coefficient tower gives the integral and rational statements. Every correspondence proper over both factors acts compatibly.
+on $B$, arbitrary base change, and invertible specialization. If the fibers are surfaces, the cohomology lies in $[0,4]$. Passing through the coefficient tower gives the integral and rational statements. Pullbacks by endomorphisms and finite étale correspondences with their sheet-summing traces act compatibly. General proper-correspondence traces are not asserted in this book.
 
 Now suppose $M$ is nonproper with compactification $j:M\hookrightarrow\bar M$ and relative normal-crossings boundary $i:D\hookrightarrow\bar M$. Compactly supported cohomology is governed by
 
@@ -1125,15 +1217,15 @@ is preserved by specialization whenever both maps in the defining arrow are iden
 
 Let $B$ be a henselian trait with residue characteristic prime to $\ell$. Assume the selected PEL family, its universal abelian scheme, its endomorphisms, polarization, level away from the residue characteristic, and—when needed—its compactified boundary pair all extend smoothly over $B$.
 
-For the universal abelian family, specialization gives
+For a geometric specialization of points $\bar x_s\rightsquigarrow\bar x_\eta$ in $M$, the universal abelian family gives
 
 $$
-H^q(\mathcal A_{\bar s},\mathbf Z_\ell)
+H^q(\mathcal A_{\bar x_s},\mathbf Z_\ell)
 \xrightarrow{\sim}
-H^q(\mathcal A_{\bar\eta},\mathbf Z_\ell)
+H^q(\mathcal A_{\bar x_\eta},\mathbf Z_\ell)
 $$
 
-and respects the exterior algebra, polarization, endomorphism algebra, and prime-to-$\ell$ correspondences. For a proper PEL parameter space, the same holds for $H^q(M_{\bar s},\mathcal L)$ and $H^q(M_{\bar\eta},\mathcal L)$. For a nonproper space it holds for compact support under properness of $\bar M$, and for ordinary cohomology only with the boundary control of Section 14.3.
+and respects the exterior algebra, polarization, endomorphism algebra, and prime-to-$\ell$ correspondences. This is a statement about fibers of $\mathcal A\to M$, not yet about the cohomology of the nonproper total space $\mathcal A\to B$. For a proper PEL parameter space, the same holds for $H^q(M_{\bar s},\mathcal L)$ and $H^q(M_{\bar\eta},\mathcal L)$, and Leray then gives the corresponding total-space statement. For a nonproper space it holds for compact support under properness of $\bar M$, and for ordinary cohomology only with the boundary control of Section 14.3.
 
 Consequently the generic Galois representations obtained from these good models are unramified and their Frobenius actions can be computed on the special fiber. This is a transport theorem. It neither proves purity nor evaluates a Frobenius trace; those require the trace formula and weight theory of later books.
 
@@ -1184,7 +1276,7 @@ The following checklist packages the results without blurring their hypotheses.
 
 **Adic package.** The finite-level statements pass to a normalized $\mathbf Z_\ell$-system when amplitude is uniform and finite cohomology gives Mittag--Leffler. Rationalization takes place after derived inverse limit.
 
-**Functorial package.** Cup products, external products, projection formulas, Leray filtrations, and proper correspondences commute with base change and specialization. Tor terms must be retained unless coefficient cohomology is free.
+**Functorial package.** Cup products, external products, projection formulas, Leray filtrations, pullbacks by endomorphisms, and finite étale traces commute with base change and specialization. Tor terms must be retained unless coefficient cohomology is free.
 
 ### 15.2 The chain of reductions
 
@@ -1216,6 +1308,6 @@ Base change turns fiberwise cohomology into a geometric object on the base. Prop
 
 The theorem remains informative when smoothness fails. A nodal curve still satisfies proper base change, so its special cohomology is the correct stalk; the failure of specialization to be invertible precisely records degeneration. It also remains informative when properness fails, provided a boundary is supplied: compactification and the boundary triangle show exactly which classes may enter from infinity.
 
-For relative curves this yields constant genus cohomology and unramified good-reduction representations. For abelian schemes it globalizes the Tate module and the entire exterior cohomology algebra. For selected PEL families it transports endomorphisms, polarizations, coefficient systems, and proper correspondences across good fibers while keeping the open-boundary caveat visible.
+For relative curves this yields constant genus cohomology and unramified good-reduction representations. For abelian schemes it globalizes the Tate module and the entire exterior cohomology algebra. For selected PEL families it transports endomorphisms, polarizations, coefficient systems, and finite étale prime-to-level correspondences across good fibers while keeping the open-boundary caveat visible.
 
 The final lesson is a discipline of hypotheses. Coefficient invertibility controls tame local geometry. Excellence and noetherianity make dévissage finite. Properness controls global fibers. Smoothness controls local tubes. Geometric points detect the comparison. Uniform finite-level bounds justify the adic limit. Once each condition is placed where it is actually used, proper and smooth base change become not isolated miracles but a coherent transport mechanism for arithmetic geometry.

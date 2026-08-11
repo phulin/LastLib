@@ -45,7 +45,7 @@ any resulting corrections.
 - [x] 019. Finite Étale Covers and Fundamental Groups
 - [ ] 020. Étale Sheaves and Cohomology on Curves
 - [x] 021. Derived Étale and ℓ-adic Cohomology
-- [ ] 022. Proper and Smooth Base Change
+- [x] 022. Proper and Smooth Base Change
 - [ ] 023. Étale Duality and Trace Maps in Low Dimension
 - [ ] 024. Nearby Cycles and Monodromy in Dimensions One and Two
 - [ ] 025. Lefschetz Trace Formulas for Curves and Surfaces
