@@ -249,7 +249,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 182. Local Conditions for Hardly-Ramified Minimal Deformations
 - [x] 183. Supported Galois Cohomology and Selmer Calculations
 - [x] 184. Relation Obstructions and Poitou–Tate Corrections
-- [ ] 185. Finite Image and the Balanced Minimal-Lift Argument
+- [x] 185. Finite Image and the Balanced Minimal-Lift Argument
 - [ ] 186. Potential Automorphy and Galois Refinement of a Chosen Lift
 - [ ] 187. Brauer Induction for Automorphy Families
 - [ ] 188. Brauer Characters and Effectivity of Compatible Families
