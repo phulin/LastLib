@@ -180,7 +180,7 @@ any resulting corrections.
 - [ ] 154. The Frey Curve and Fermat’s Last Theorem
 - [ ] 155. Minimal Modularity Lifting
 - [ ] 156. Nonminimal Modularity Lifting
-- [ ] 157. Integral Local Types and Type Lattices
+- [x] 157. Integral Local Types and Type Lattices
 - [ ] 158. Ihara Theory and Saturated Degeneracy Maps on Shimura Curves
 - [ ] 159. Integral Level Change and Jacquet–Langlands Comparison
 - [ ] 160. Deep-Level Quaternionic Modules and Diamond Actions

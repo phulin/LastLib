@@ -132,7 +132,7 @@ $$
 Accordingly, a unipotent tame representation written $\rho(t)=1+N$ satisfies
 
 $$
-FNF^{-1}=QN,qquad F=\rho(\phi).
+FNF^{-1}=QN,\qquad F=\rho(\phi).
 \tag{1.3}
 $$
 
@@ -142,14 +142,14 @@ This convention agrees with the conductor formulas of the preceding local repres
 
 The compact types treated here are exactly the types required at the fixed nonminimal prime:
 
-- principal types arising from two finite characters of $\mathcal O_F^\times$, with the detailed integral deformation chart given in the tame conductor-one case;
+- principal types arising from two finite characters of $\mathcal O_F^\times$, with the explicit deformation chart restricted to the tame conductor-one case;
 - twists of the Steinberg type by a unit-valued smooth character;
 - depth-zero dihedral types from a regular character of $k_{F_2}^\times$, where $F_2/F$ is unramified quadratic;
 - positive-depth types from a tame quadratic admissible pair.
 
 The positive-depth construction includes ramified quadratic extensions only when they are tame. In residue characteristic two this excludes ramified quadratic extensions. More generally, a primitive wild supercuspidal whose leading stratum is not produced by a quadratic field character is outside the theorem. This exclusion is structural: the Heisenberg group, its torus extension, and its intertwining calculation would require data not present in the selected pair.
 
-At the coefficient prime, the relevant integral notion is different. When $\ell>2$ and the local field is absolutely unramified with perfect residue field, the established integral Fontaine--Laffaille equivalence identifies height-two objects of Hodge type $(0,1)$ with stable lattices all of whose finite quotients are finite flat. We use that result only to keep the two local conditions in one coherent global datum. It does not construct a compact type at the coefficient prime, and the compact type lattices constructed here do not prove finite flatness.
+At the coefficient prime, the relevant integral notion is different. When $\ell>2$ and the local field is absolutely unramified with perfect residue field, the established integral Fontaine--Laffaille equivalence identifies height-two strongly divisible objects of Hodge type $(0,1)$ with stable lattices all of whose finite quotients are finite flat **and whose attached divided filtered objects have that Hodge type**. We use that result only to keep the two local conditions in one coherent global datum. It does not construct a compact type at the coefficient prime, and the compact type lattices constructed here do not prove finite flatness.
 
 ### 1.4 The route through the book
 
@@ -176,11 +176,11 @@ $$
 or
 
 $$
-r=\operatorname{Ind}_{W_L}^{W_F}\theta,\quad N=0,
+r=\operatorname{Ind}_{W_L}^{W_F}\xi,\quad N=0,
 \tag{2.3}
 $$
 
-where $L/F$ is separable quadratic and $\theta\ne\theta^s$ for the nontrivial $s\in\operatorname{Gal}(L/F)$. The corresponding smooth irreducible representations are, respectively, an irreducible principal series, a twist of Steinberg, and a selected dihedral supercuspidal. At the reducibility wall the same semisimple pair of Weil characters also gives a one-dimensional determinant character when $N=0$; nonzero $N$ distinguishes Steinberg.
+where $L/F$ is separable quadratic and $\xi\ne\xi^s$ for the nontrivial $s\in\operatorname{Gal}(L/F)$. The corresponding smooth irreducible representations are, respectively, an irreducible principal series, a twist of Steinberg, and a selected dihedral supercuspidal. At the reducibility wall the same semisimple pair of Weil characters also gives a one-dimensional determinant character when $N=0$; nonzero $N$ distinguishes Steinberg.
 
 The **inertial label** is the restriction $r|_{I_F}$ together with the information of whether the selected component has $N=0$ or $N\ne0$ when the inertia restriction is scalar. An inertial semisimplification alone cannot make this distinction. Nor can it remember an ordering of two characters that become equal modulo $\lambda$.
 
@@ -203,8 +203,8 @@ $$
 and
 
 $$
-a_F(\operatorname{Ind}_{W_L}^{W_F}\theta)
-=f(L/F)\bigl(a_L(\theta)+d(L/F)\bigr).
+a_F(\operatorname{Ind}_{W_L}^{W_F}\xi)
+=f(L/F)\bigl(a_L(\xi)+d(L/F)\bigr).
 \tag{2.6}
 $$
 
@@ -231,26 +231,50 @@ The proof pattern will be the same in every family. Construction gives the forwa
 
 ### 2.3 Principal, special, and dihedral labels
 
-For a tame principal label choose characters
+For a principal label choose finite smooth characters
 
 $$
-\theta_1,\theta_2:k_F^\times\longrightarrow E^\times.
+\theta_1,\theta_2:\mathcal O_F^\times\longrightarrow E^\times.
 $$
 
-Inflate them to $\mathcal O_F^\times$. The unordered pair gives the characteristic-zero inertial class. When deformation components or congruences are involved we retain the ordered pair. If $\theta_1\ne\theta_2$, the principal type is the finite induction from the Iwahori. If the characters are equal, the scalar $K$-character and the finite Steinberg twist are two different compact types associated with the two sides of the monodromy boundary.
+The unordered pair gives the characteristic-zero inertial class. When deformation components or congruences are involved we retain the ordered pair. If $\theta_2\theta_1^{-1}$ has conductor $n\geq1$, the principal type is induced from $K_0(\mathfrak p_F^n)$; at $n=1$ this is the familiar finite induction from the Iwahori. If the characters are equal, the minimal compact type is the scalar $K$-character. At Iwahori level the permutation lattice also contains the finite Steinberg quotient, displaying the two sides of the monodromy boundary.
 
 For a special label choose a smooth unit-valued character $\mu:F^\times\to E^\times$. Its compact information is $\mu|_{\mathcal O_F^\times}$, while $\mu(\varpi_F)$ records the unramified twist and the sign of a chosen Frobenius branch. The Steinberg type is the finite Steinberg representation of $\mathrm{GL}_2(k_F)$, inflated to $K$ and twisted by $\mu\circ\det$.
 
 In the scalar case this $K$-representation is a coefficient model, not by itself an exact detector of monodromy: it also occurs in the $K(1)$-fixed part of an unramified principal series. Exact special detection uses the Iwahori-new quotient and its Hecke sign, as constructed in Section 5.3. Thus the special datum is an enhanced type rather than a bare irreducible $K$-representation.
 
-For a dihedral label choose a tame admissible pair $(L/F,\theta)$. Admissibility means that $\theta$ does not factor through $N_{L/F}$; at positive depth its first noncentral term must generate $L$. Replacing $\theta$ by $\theta^s$ does not change the pair. A norm twist
+For a dihedral Weil--Deligne label choose a tame admissible pair $(L/F,\xi)$. Admissibility means that $\xi$ does not factor through $N_{L/F}$; at positive depth its first noncentral term must generate $L$. Replacing $\xi$ by $\xi^s$ does not change the pair. The selected local correspondence uses the rectified compact character
 
 $$
-\theta\longmapsto\theta(\chi\circ N_{L/F})
+\vartheta=\xi\Delta_{L/F,\xi},
 \tag{2.8}
 $$
 
-corresponds to twisting the resulting $G$-representation by $\chi\circ\det$. The compact type is built from the residue torus at depth zero and from a simple character plus a finite Heisenberg representation at positive depth.
+where the tame rectifier satisfies
+
+$$
+\Delta_{L/F,\xi}|_{F^\times}=\omega_{L/F},\qquad
+\Delta_{L/F,\xi^{-1}}=\Delta_{L/F,\xi}^{-1}.
+\tag{2.9}
+$$
+
+The type is constructed from $\vartheta$, while its Weil--Deligne label is $\operatorname{Ind}_{W_L}^{W_F}\xi$. This distinction is forced by determinants:
+
+$$
+\vartheta|_{F^\times}
+=\xi|_{F^\times}\omega_{L/F}
+=\det\operatorname{Ind}_{W_L}^{W_F}\xi.
+\tag{2.10}
+$$
+
+A norm twist
+
+$$
+\xi\longmapsto\xi(\chi\circ N_{L/F})
+\tag{2.11}
+$$
+
+corresponds to twisting the resulting $G$-representation by $\chi\circ\det$; the rectifier is unchanged under this operation. The compact type is built from $\vartheta$ on the residue torus at depth zero and from its simple character plus a finite Heisenberg representation at positive depth.
 
 ### 2.4 Twists, conductors, and central characters
 
@@ -258,12 +282,12 @@ Every integral construction must commute with unit-valued twists. If $\xi:F^\tim
 
 $$
 \sigma_R\longmapsto\sigma_R\otimes_R R(\xi\circ\det)
-\tag{2.9}
+\tag{2.12}
 $$
 
 preserves finite freeness, duality, and reduction. Its companion is twisted by $\xi^{-1}\circ\det$.
 
-The central character of a principal type is $(\theta_1\theta_2)|_{\mathcal O_F^\times}$. The central character of the Steinberg twist is $\mu^2|_{\mathcal O_F^\times}$. For the direct dihedral type it is $\theta|_{F^\times}$, with the rectifying character inserted when one passes to the normalized local correspondence. These identities follow by evaluating scalar matrices in the inducing data. They are necessary compatibility tests but not complete invariants: principal labels $(\theta,\theta^{-1})$ all have trivial compact central character, and special and scalar types can share the same inertial central character.
+The central character of a principal type is $(\theta_1\theta_2)|_{\mathcal O_F^\times}$. The central character of the Steinberg twist is $\mu^2|_{\mathcal O_F^\times}$. For the compact-mod-center extension of a dihedral type it is $\vartheta|_{F^\times}=\xi|_{F^\times}\omega_{L/F}$, exactly the determinant of the normalized Weil parameter; the $K$-type sees its restriction to $\mathcal O_F^\times$. These identities follow by evaluating scalar matrices in the inducing data. They are necessary compatibility tests but not complete invariants: principal labels $(\theta,\theta^{-1})$ all have trivial compact central character, and special and scalar types can share the same inertial central character.
 
 ## 3. Integral representation theory of finite level
 
@@ -403,20 +427,58 @@ Reduction $R\to\kappa$ is not flat, so invariants and saturated images need not 
 
 ### 4.1 The finite flag variety
 
-Let $\theta_1,\theta_2:k_F^\times\to R^\times$ and inflate them to $\mathcal O_F^\times$. Define a character of the Iwahori by
+Let $\theta_1,\theta_2:\mathcal O_F^\times\to R^\times$ be finite smooth characters, put
 
 $$
-\vartheta_{12}
-\begin{pmatrix}a&b\\c&d\end{pmatrix}
-=\theta_1(\bar a)\theta_2(\bar d).
+\beta=\theta_2\theta_1^{-1},
+$$
+
+and suppose that $\beta$ has conductor $n\geq1$. Set
+
+$$
+J_n=K_0(\mathfrak p_F^n)
+=\left\{
+\begin{pmatrix}a&b\\c&d\end{pmatrix}\in K:c\in\mathfrak p_F^n
+\right\}.
+$$
+
+Define
+
+$$
+\vartheta_{12,n}(g)
+=\theta_1(\det g)\beta(d),
+\qquad
+g=\begin{pmatrix}a&b\\c&d\end{pmatrix}\in J_n.
 \tag{4.1}
 $$
 
-This is a homomorphism because $c\in\mathfrak p_F$ and reduction makes the diagonal entries of a product multiply independently. It is trivial on the pro-$p$ radical of $I$.
+This is a homomorphism. Indeed, the lower-right entry of $gg'$ is
+$dd'+cb'=dd'(1+cb'/(dd'))$, and the last factor belongs to
+$1+\mathfrak p_F^n$, where $\beta$ is trivial. The determinant factor
+is multiplicative. On a scalar $zI_2$ the value is
+$\theta_1(z)^2\beta(z)=\theta_1(z)\theta_2(z)$, so the central
+character is correct.
 
-The coset space $I\backslash K$ is the projective line $\mathbf P^1(k_F)$ and has $Q+1$ elements. Thus all of the integral questions are finite. The Weyl element exchanges the two characters and the two Bruhat cells. This is the compact shadow of normalized parabolic induction.
+The coset space
 
-For characters of higher conductor one uses the corresponding compact open subgroup and its finite quotient. The lattice arguments of this chapter remain unchanged. The tame case is singled out because it is the fixed conductor-two principal condition used below and because its deformation equations can be written with one tame generator.
+$$
+X_n=J_n\backslash K\simeq\mathbf P^1(\mathcal O_F/\mathfrak p_F^n)
+$$
+
+is finite of cardinality $Q^{n-1}(Q+1)$. At $n=1$, $J_1=I$, and if
+the two characters are tame then (4.1) becomes
+
+$$
+\vartheta_{12,1}
+\begin{pmatrix}a&b\\c&d\end{pmatrix}
+=\theta_1(\bar a)\theta_2(\bar d).
+$$
+
+Thus the projective line over the residue field is the first member of
+a finite flag tower. The higher levels are the actual compact opens
+needed for general principal characters. The tame level $n=1$ is
+singled out later only because its deformation equations can be written
+using one tame generator.
 
 ### 4.2 Construction of the lattice
 
@@ -424,29 +486,33 @@ Define
 
 $$
 \sigma_R(\theta_1,\theta_2)
-=\operatorname{Ind}_I^K R(\vartheta_{12}).
+=\operatorname{Ind}_{J_n}^K R(\vartheta_{12,n}).
 \tag{4.2}
 $$
 
-It is free of rank $Q+1$. Its generic fiber is the familiar principal $K$-type. Its reduction is not an abstract semisimplification but the concrete module
+It is free of rank $Q^{n-1}(Q+1)$. Its generic fiber is the principal
+$K$-type attached to the inertial pair. Its reduction is not an abstract
+semisimplification but the concrete module
 
 $$
 \sigma_R(\theta_1,\theta_2)\otimes_R\kappa
 \simeq
-\operatorname{Ind}_{B(k_F)}^{\mathrm{GL}_2(k_F)}
-(\bar\theta_1\boxtimes\bar\theta_2),
+\operatorname{Ind}_{J_n}^K\kappa(\overline\vartheta_{12,n}).
 \tag{4.3}
 $$
 
-inflated to $K$. This exact formula is valid whether or not the right side is semisimple.
+At $n=1$ this is the inflation of
+$\operatorname{Ind}_{B(k_F)}^{\mathrm{GL}_2(k_F)}
+(\bar\theta_1\boxtimes\bar\theta_2)$. Formula (4.3) is valid whether
+or not the right side is semisimple.
 
-**Proposition 4.1.** The lattice (4.2) is stable, finite free, compatible with every coefficient change, and generated by any function supported on $I$ whose value at $1$ is $1$.
+**Proposition 4.1.** The lattice (4.2) is stable, finite free, compatible with every coefficient change, and generated by any function supported on $J_n$ whose value at $1$ is $1$.
 
-**Proof.** Stability is built into right translation on the induced model. Choose representatives of $I\backslash K$; evaluation on them identifies the lattice with $R^{Q+1}$. Formula (3.3) proves coefficient compatibility. The function supported on $I$ is carried by right translates to the analogous basis functions on all cosets, so it generates. $\square$
+**Proof.** Stability is built into right translation on the induced model. Choose representatives of $J_n\backslash K$; evaluation on them identifies the lattice with $R^{Q^{n-1}(Q+1)}$. Formula (3.3) proves coefficient compatibility. The function supported on $J_n$ is carried by right translates to the analogous basis functions on all cosets, so it generates. $\square$
 
 ### 4.3 The type-detection theorem
 
-Assume first that $\theta_1\ne\theta_2$. Let $\mathfrak C(\theta_1,\theta_2)$ be the inertial class of irreducible principal series $i_B^G(\chi_1\boxtimes\chi_2)$ with $\chi_i|_{\mathcal O_F^\times}=\theta_i$, allowing unramified twists of the two inducing characters.
+Assume that $\theta_1\ne\theta_2$, and retain $n=a(\theta_2\theta_1^{-1})$. Let $\mathfrak C(\theta_1,\theta_2)$ be the inertial class of irreducible principal series $i_B^G(\chi_1\boxtimes\chi_2)$ with $\chi_i|_{\mathcal O_F^\times}=\theta_i$, allowing independent unramified changes of the two inducing characters.
 
 **Theorem 4.2 (principal detection).** In the selected characteristic-zero range,
 
@@ -457,20 +523,53 @@ $$
 
 for $\pi\in\mathfrak C(\theta_1,\theta_2)$, and the Hom space is zero for a selected irreducible representation with a different inertial label.
 
-**Proof strategy.** Restrict a principal series to $K$, use Iwasawa decomposition, and then use the two Bruhat cells to recover the unordered character pair. Supercuspidal and special alternatives are excluded by their exact minimal intertwining data.
+**Proof strategy.** Twist away $\theta_1$, identify the required
+$J_n$-eigenline with the minimal newvector line, and then use the
+double-coset stabilizer calculation to recover the ratio character.
+Supercuspidal and special alternatives are excluded by their exact
+minimal intertwining data.
 
-**Proof.** In the compact picture of $i_B^G(\chi_1\boxtimes\chi_2)$, the standard function supported on the Iwahori Bruhat cell transforms under $I$ by $\vartheta_{12}$. Its $K$-span is a quotient of (4.2), so Frobenius reciprocity gives a nonzero map from the type. The multiplicity is the dimension of the $\vartheta_{12}$-eigenspace for $I$. The two-cell calculation gives one such eigenline when the two characters are distinct.
+**Proof.** Twist the principal series by $\chi_1^{-1}\circ\det$. Its
+two inducing characters now have unit restrictions $1$ and
+$\beta=\theta_2\theta_1^{-1}$. The conductor calculation for principal
+series gives minimal level $n$, and the compact double-coset calculation
+at $K_0(\mathfrak p_F^n)$ gives a unique line on which
+$\begin{psmallmatrix}a&b\\c&d\end{psmallmatrix}$ acts by $\beta(d)$.
+Twisting back changes this character to (4.1). Frobenius reciprocity
+therefore gives a nonzero $K$-map from (4.2), and uniqueness of the
+minimal line gives multiplicity one.
 
-Conversely, a nonzero map supplies a nonzero $I$-eigenvector. The Jacquet calculation for the selected classification recovers the two torus characters from that eigenvector; the Weyl cell allows only their interchange. A special representation with scalar inertial semisimplification cannot contain this regular character, and exact intertwining of a selected dihedral type is confined to its quadratic compact-mod-center subgroup. Thus the representation is in the asserted principal class. The same two-cell calculation proves multiplicity one. $\square$
+Conversely, a nonzero map supplies a $J_n$-eigenvector with character
+(4.1). Twist away $\theta_1$ again. On the stabilizer of each compact
+double coset, the lower-right unit groups occur with depths $j$ and
+$n-j$. Compatibility with $\beta$ is possible at the minimal endpoint
+only when the two inducing unit characters have ratio $\beta$; the Weyl
+endpoint replaces $\beta$ by $\beta^{-1}$ and merely interchanges the
+pair. This is the same stabilizer calculation that proves the
+principal conductor and uniqueness of its newvector. A special
+representation has scalar inertial semisimplification, while the exact
+intertwining group of a selected dihedral type is its quadratic
+compact-mod-center subgroup. Neither can contain this non-scalar
+minimal principal character. The representation is therefore in the
+asserted principal class, and the endpoint calculation again gives
+multiplicity one. $\square$
+
+The same exact-intertwining calculation applied to (4.2) itself gives
+$\operatorname{End}_{E[K]}(\sigma_E)=E$: only the identity double
+coset survives. Since the action factors through a finite quotient and
+characteristic zero is semisimple, $\sigma_E$ is absolutely
+irreducible after the standing coefficient enlargement.
 
 The theorem concerns characteristic-zero occurrence. After reduction, the Hom space can grow because compact invariants cease to be exact. Chapter 8 records the safe replacement.
 
 ### 4.4 Scalar and ordered boundary cases
 
-If $\theta_1=\theta_2=\theta$, then
+If $\theta_1=\theta_2=\theta$, the minimal principal type is the
+rank-one character $R(\theta\circ\det)$. At Iwahori level, however,
+the natural incidence lattice is
 
 $$
-\sigma_R(\theta,\theta)
+\operatorname{Ind}_I^KR(\theta\circ\det)
 \simeq R(\theta\circ\det)\otimes_R R[\mathbf P^1(k_F)].
 \tag{4.4}
 $$
@@ -485,16 +584,22 @@ The companion of (4.2) is
 
 $$
 \sigma_R(\theta_1,\theta_2)^\#
-\simeq
-\sigma_R(\theta_1^{-1},\theta_2^{-1}).
+\simeq\operatorname{Ind}_{J_n}^K
+R(\vartheta_{12,n}^{-1}).
 \tag{4.5}
 $$
+
+The right side is exactly the principal lattice attached to the
+ordered inverse label $(\theta_1^{-1},\theta_2^{-1})$, because its
+ratio character is $\beta^{-1}$. Weyl conjugation instead exchanges
+the two entries; that is a separate symmetry of the generic inertial
+class.
 
 The pairing is the finite coset sum
 
 $$
 \langle f,g\rangle
-=\sum_{x\in I\backslash K}f(x)g(x).
+=\sum_{x\in J_n\backslash K}f(x)g(x).
 \tag{4.6}
 $$
 
@@ -610,20 +715,22 @@ After a ramified scalar twist, the same definition uses the corresponding charac
 
 Let $\pi=\operatorname{St}_G\otimes(\mu\circ\det)$, where $\operatorname{St}_G$ is the smooth Steinberg representation of $G$. Its restriction to $K$ contains the inflation of the finite Steinberg representation with multiplicity one, but that occurrence alone is not exclusive to $\pi$.
 
-**Theorem 5.2 (enhanced special detection).** In the selected characteristic-zero class with scalar compact character $\mu|_{\mathcal O_F^\times}$, one has
+**Theorem 5.2 (enhanced special detection).** In the selected characteristic-zero range with scalar compact character $\mu|_{\mathcal O_F^\times}$, one has
 
 $$
 \dim_E\pi^I_{\mathrm{new}}=1
 \tag{5.9}
 $$
 
-for a special twist, while the Iwahori-new quotient is zero for a determinant character and for an irreducible unramified principal series. Consequently the nonzero new line, together with its Hecke eigenvalue, detects the special twist and its unramified sign.
+for a special twist, while the corresponding twisted Iwahori-new quotient is zero for a determinant character, an irreducible principal series with the same scalar inertia, and every selected dihedral supercuspidal. Consequently the nonzero new line, together with its Hecke eigenvalue, detects the special twist and its unramified sign.
 
 **Proof strategy.** Compute invariants at the two vertices and their common edge in the Bruhat tree. The old vertex lines fill the edge space for an unramified principal series, whereas Steinberg has an edge line and no vertex line.
 
 **Proof.** The projective-line model of $\operatorname{St}_G$ has no $K$-fixed vector: a $K$-invariant locally constant function on $\mathbf P^1(F)$ is constant, hence zero modulo constants. It has a one-dimensional $I$-fixed space because $I$ has two orbits and quotienting by constants removes one dimension. The same statements hold for $K'$. Therefore its old subspace is zero and (5.9) follows.
 
-A determinant character has one-dimensional invariant spaces at both vertices and at the edge, so the edge line is old. An irreducible unramified principal series has a two-dimensional $I$-fixed space. Its $K$-fixed and $K'$-fixed lines are distinct: if they coincided, the vector would be fixed by the group generated by the adjacent vertex stabilizers, hence by $G$ modulo its center, forcing a one-dimensional constituent. The two lines therefore span $V^I$, and the new quotient vanishes.
+A determinant character has one-dimensional invariant spaces at both vertices and at the edge, so the edge line is old. After twisting away $\mu\circ\det$, an irreducible principal series in this scalar inertial class is unramified and has a two-dimensional $I$-fixed space. Its $K$-fixed and $K'$-fixed lines are distinct: if they coincided, the vector would be fixed by the group generated by the adjacent vertex stabilizers, hence by $G$ modulo its center, forcing a one-dimensional constituent. The two lines therefore span $V^I$, and the new quotient vanishes.
+
+A selected dihedral supercuspidal has no such twisted Iwahori eigenspace. Indeed a nonzero eigenspace, after the same determinant twist, would give a nonzero module for the Iwahori Hecke algebra and hence a subquotient generated from the Borel, whereas the exact compact-induction calculation for the selected dihedral type gives zero Jacquet module. Thus the new quotient is zero there as well.
 
 The finite Steinberg $K$-type occurs in the $K(1)$-fixed module of that principal series, so bare occurrence would not prove the theorem. Newness removes exactly this old occurrence. On the surviving special line the Iwahori Hecke algebra acts through its sign character; the remaining normalized operator records $\mu(\varpi_F)$. This recovers the special twist up to precisely the recorded branch. $\square$
 
@@ -656,7 +763,7 @@ This example proves three general lessons. Generic self-duality need not give in
 
 ### 6.1 The nonsplit residue torus
 
-Let $F_2/F$ be the unramified quadratic extension. Its residue field is $k_2$ with $|k_2|=Q^2$. Choose an embedding
+Let $F_2/F$ be the unramified quadratic extension. Its residue field is $k_2$ with $|k_2|=Q^2$. Let $(F_2/F,\xi)$ be a depth-zero Weil--Deligne pair and put $\vartheta=\xi\Delta_{F_2/F,\xi}$. The rectifier is unramified here, so $\xi$ and $\vartheta$ have the same restriction to $\mathcal O_{F_2}^\times$. Choose an embedding
 
 $$
 k_2^\times\hookrightarrow\mathrm{GL}_2(k_F)
@@ -668,7 +775,7 @@ $$
 \eta:k_2^\times\to R^\times
 $$
 
-is **regular** when $\eta^Q\ne\eta$. Equivalently, it does not factor through the norm $k_2^\times\to k_F^\times$. The pair $\{\eta,\eta^Q\}$ is intrinsic; changing the $k_F$-basis conjugates the torus, and the nontrivial Galois automorphism exchanges the two characters.
+is obtained from $\vartheta|_{\mathcal O_{F_2}^\times}$ and is **regular** when $\eta^Q\ne\eta$. Equivalently, it does not factor through the norm $k_2^\times\to k_F^\times$. The pair $\{\eta,\eta^Q\}$ is intrinsic; changing the $k_F$-basis conjugates the torus, and the nontrivial Galois automorphism exchanges the two characters.
 
 The finite cuspidal representation $\rho_E(\eta)$ of $\mathrm{GL}_2(k_F)$ has dimension $Q-1$. The preceding local theory constructs it by a finite Deligne--Lusztig-style function model and proves
 
@@ -681,7 +788,7 @@ with no other identifications among regular labels. We now isolate an integral m
 
 ### 6.2 An integral cuspidal model
 
-The finite cuspidal construction gives an $E$-space of functions with orbit-sum relations and an explicit action of $\mathrm{GL}_2(k_F)$. Choose an $E$-basis and let $L_0$ be its $R$-span. Define the orbit lattice
+The preceding finite-field construction realizes the cuspidal representation as a minimal left ideal in the primitive block cut out by its explicit character table. We do not form a quotient of torus-induced functions by an orbit-sum relation; that tempting model has the wrong dimension. Choose an $E$-basis of the resulting minimal left ideal and let $L_0$ be its $R$-span. Define the orbit lattice
 
 $$
 \rho_R(\eta)
@@ -692,31 +799,33 @@ $$
 
 It is finite, stable, and spans the cuspidal representation. It is torsion free as a submodule of an $E$-space, hence finite free over $R$. This construction does not divide by the order of the nonsplit torus; it therefore remains valid when $\ell$ divides $Q-1$ or $Q+1$. The choice is not claimed canonical. Its dual, however, is a definite companion once the primary lattice is fixed.
 
-**Theorem 6.1 (integral depth-zero seed).** The module $\rho_R(\eta)$ is a finite free $R[\mathrm{GL}_2(k_F)]$-lattice of rank $Q-1$. It spans $\rho_E(\eta)$, commutes with coefficient extension and reduction, and satisfies
+**Theorem 6.1 (integral depth-zero seed).** The module $\rho_R^+(\eta):=\rho_R(\eta)$ is a finite free $R[\mathrm{GL}_2(k_F)]$-lattice of rank $Q-1$ and spans $\rho_E(\eta)$. Once this primary lattice is chosen, define its inverse-label companion by
 
 $$
-\rho_R(\eta)^\#\simeq\rho_R(\eta^{-1}).
+\rho_R^-(\eta^{-1})=\rho_R^+(\eta)^\#.
 \tag{6.3}
 $$
 
-**Proof.** Stability, finite freeness, and the generic fiber were proved in the orbit-lattice construction; the rank is the characteristic-zero dimension. Tensoring a chosen finite free action matrix gives its coefficient extension and its reduction.
+Both lattices have explicit coefficient extensions and reductions, and evaluation pairs them perfectly.
 
-The finite cuspidal character table shows that the contragredient of $\rho_E(\eta)$ is $\rho_E(\eta^{-1})$. Define the inverse-label integral model to be $\rho_R(\eta)^\#$ under this identification. Evaluation is then a perfect invariant pairing by construction and gives (6.3). If an independently chosen orbit lattice is used for the inverse label, the two inverse-label lattices are commensurable; a primitive saturated intertwiner compares them, uniquely up to $R^\times$. $\square$
+**Proof.** Stability, finite freeness, and the generic fiber were proved in the orbit-lattice construction; the rank is the characteristic-zero dimension. Tensoring its chosen finite free action matrices defines its coefficient extension and reduction. This is a base-change convention for the chosen lattice, not a claim that repeating the noncanonical orbit construction over a larger coefficient field selects the same lattice.
+
+The finite cuspidal character table shows that the contragredient of $\rho_E(\eta)$ is $\rho_E(\eta^{-1})$. Thus the generic fiber of the dual in (6.3) has the asserted inverse label, and evaluation is a perfect invariant pairing by construction. If an independently chosen orbit lattice is used for the inverse label, it is merely commensurable with $\rho_R^-(\eta^{-1})$; no integral isomorphism is asserted without an additional unit-index calculation. $\square$
 
 The proof does not say that $\rho_R(\eta)\otimes\kappa$ is irreducible. That assertion requires a banality hypothesis recorded later.
 
 ### 6.3 Inflation, compact induction, and detection
 
-Inflate $\rho_R(\eta)$ through $K\twoheadrightarrow\mathrm{GL}_2(k_F)$ and write
+Inflate $\rho_R^+(\eta)$ through $K\twoheadrightarrow\mathrm{GL}_2(k_F)$ and write
 
 $$
-\sigma_{0,R}(\eta)=\operatorname{Inf}\rho_R(\eta).
+\sigma_{0,R}^+(\eta)=\operatorname{Inf}\rho_R^+(\eta).
 \tag{6.4}
 $$
 
-Extend the corresponding depth-zero inducing representation from $K$ to $F^\times K$ using a unit-valued central character compatible with $\eta|_{k_F^\times}$, and compactly induce to $G$. The resulting generic representation is the depth-zero dihedral supercuspidal attached to the unramified admissible pair.
+Extend the corresponding depth-zero inducing representation from $K$ to $F^\times K$ using the central character $\vartheta|_{F^\times}$, including the unramified rectifier value, and compactly induce to $G$. The resulting generic representation has normalized parameter $\operatorname{Ind}_{W_{F_2}}^{W_F}\xi$.
 
-**Theorem 6.2 (depth-zero detection).** Among selected characteristic-zero irreducibles, $\sigma_{0,E}(\eta)$ occurs precisely in the unramified depth-zero dihedral class labelled by $\{\eta,\eta^Q\}$, and it occurs with multiplicity one.
+**Theorem 6.2 (depth-zero detection).** Among selected characteristic-zero irreducibles, $\sigma_{0,E}(\eta)$ occurs precisely in the unramified depth-zero dihedral class whose rectified compact character restricts on the residue torus to $\{\eta,\eta^Q\}$, and it occurs with multiplicity one. With the central extension just fixed, its normalized Weil--Deligne label is $\operatorname{Ind}_{W_{F_2}}^{W_F}\xi$.
 
 **Proof.** Construction gives a nonzero map from the inflated finite cuspidal representation into the compact induction. By Frobenius reciprocity, its self-intertwining contributions are indexed by double cosets of $F^\times K$ in $G$. The depth-zero intertwining theorem says that a nonzero contribution forces the two associated vertices in the lattice tree to coincide; hence only the identity coset contributes. Within $K$, the finite cuspidal character table recovers the regular torus orbit $\{\eta,\eta^Q\}$. This proves multiplicity one and uniqueness of the label.
 
@@ -724,28 +833,33 @@ A principal or special representation has nonzero Jacquet module, whereas the fi
 
 ### 6.4 Duality and conjugation
 
-Equations (6.1) and (6.3) give
+Equations (6.1) and (6.3) give, on the specified integral models,
 
 $$
-\sigma_{0,R}(\eta)^\#
-\simeq\sigma_{0,R}(\eta^{-1})
-\simeq\sigma_{0,R}(\eta^{-Q}).
+\sigma_{0,R}^+(\eta)^\#
+=\sigma_{0,R}^-(\eta^{-1}).
 \tag{6.5}
 $$
 
-The first is the companion relation; the second is Galois conjugation of the inverse label. A self-dual generic fiber occurs when $\eta^{-1}$ belongs to the orbit $\{\eta,\eta^Q\}$. Even then the chosen lattice is identified with its companion only after an integral intertwiner has been normalized primitively. The evaluation pairing identifies the chosen inverse-label model with the full dual; comparison with any independently chosen self-dual model is unique up to $R^\times$ by Lemma 3.3.
+The generic inverse label is also represented by $\eta^{-Q}$. A self-dual generic fiber occurs when $\eta^{-1}$ belongs to the orbit $\{\eta,\eta^Q\}$. Even then the primary lattice is not identified with its companion unless an integral intertwiner has unit determinant. Evaluation identifies the specified companion with the full dual; an independently chosen self-dual orbit lattice may differ by a genuine integral index.
 
 ## 7. Positive-depth tame dihedral lattices
 
 ### 7.1 Simple characters and the finite Heisenberg quotient
 
-Let $L/F$ be tame quadratic and embedded in $A=M_2(F)$. Let $\theta:L^\times\to E^\times$ be a minimal positive-depth admissible character with unit values. The lattice chain $\mathfrak p_L^i$ determines hereditary orders $\mathfrak A\supset\mathfrak P$ in $A$ and compact groups
+Let $L/F$ be tame quadratic and embedded in $A=M_2(F)$. Let $\xi:L^\times\to E^\times$ be a minimal positive-depth Weil--Deligne character and put
+
+$$
+\vartheta=\xi\Delta_{L/F,\xi}.
+$$
+
+We assume that the compact values of $\vartheta$ lie in $R^\times$; an unramified norm twist, invisible to the compact type, may be used to arrange the chosen normalization. The lattice chain $\mathfrak p_L^i$ determines hereditary orders $\mathfrak A\supset\mathfrak P$ in $A$ and compact groups
 
 $$
 H^1\subset J^1\subset J^0\subset K
 $$
 
-after conjugating the chain into standard position. The preceding tame type construction attaches to the first noncentral term of $\theta$ a simple character
+after conjugating the chain into standard position. The preceding tame type construction attaches to the first noncentral term of the rectified character $\vartheta$ a simple character
 
 $$
 \psi_\beta:H^1\longrightarrow R^\times.
@@ -783,47 +897,65 @@ The assertion would be false with no prime separation: in residue characteristic
 
 ### 7.3 Extension by the tame torus
 
-The group $J^0/J^1$ is a finite toric group of order prime to $p$. The admissible character $\theta$ prescribes its action and the action of $L^\times\cap J^0$. Over $E$, the Heisenberg representation extends to a representation $\Lambda_E(\theta)$ of $J^0$. Initially the extension operators are determined only up to scalars.
+The group $J^0/J^1$ is a finite toric group of order prime to $p$. The rectified character $\vartheta$ prescribes its action and the action of $L^\times\cap J^0$. Over $E$, the Heisenberg representation extends to a representation $\Lambda_E(\vartheta)$ of $J^0$. Initially the extension operators are determined only up to scalars.
 
-**Lemma 7.2 (integral torus extension).** After a finite extension of $E$, the extension operators can be scaled so that they preserve a finite free lattice $\Lambda_R(\theta)$ containing $\eta_R$. Any two primitive stable choices are commensurable, and their saturated intertwining line is unique up to $R^\times$.
+**Lemma 7.2 (integral torus extension).** After a finite extension of $E$, the extension operators can be scaled so that they preserve a finite free lattice $\Lambda_R^+(\vartheta)$ containing $\eta_R$. Any two primitive stable choices are commensurable, and their saturated intertwining line is unique up to $R^\times$.
 
-**Proof.** The quotient $J^0/J^1$ is finite. Start with the lattice generated by the orbit of $\eta_R$ under finitely many chosen extension operators. It is finite and spans $\Lambda_E(\theta)$. Each group element has finite order modulo the unit-valued central character, so Lemma 3.1 shows that its eigenvalues are units; the generated module is stable under inverses. Removing torsion gives a finite free stable lattice.
+**Proof.** The quotient $J^0/J^1$ is finite. Start with the lattice generated by the orbit of $\eta_R$ under representatives of that finite quotient and their inverses. It is finite, stable, and spans $\Lambda_E(\vartheta)$; unit-valued central scalars do not enlarge it by denominators. As a torsion-free finite module inside an $E$-space, it is free over $R$.
 
 If $\Lambda$ and $\Lambda'$ are two choices, their common generic identity is a one-dimensional intertwining space by exact intertwining of the tame type. Intersect that line with $\operatorname{Hom}_R(\Lambda,\Lambda')$ and saturate. Lemma 3.3 gives a primitive map unique up to a unit. $\square$
 
-The construction retains the extension class selected by the tame admissible-pair normalization. At positive depth it is not legitimate to specify only $\theta$ on the torus and suppress a possible projective extension ambiguity before that normalization has been fixed.
+The construction retains the extension class selected by the rectified tame-pair normalization. At positive depth it is not legitimate to specify only $\xi$ on the Weil torus and suppress either the rectifier or the projective extension ambiguity.
 
 ### 7.4 Maximal compact types
 
 Define the positive-depth $K$-type
 
 $$
-\sigma_R(L,\theta)
-=\operatorname{Ind}_{J^0}^{K}\Lambda_R(\theta).
+\sigma_R^+(L,\xi)
+=\operatorname{Ind}_{J^0}^{K}\Lambda_R^+(\vartheta).
 \tag{7.4}
 $$
 
-It is finite free because $J^0$ has finite index in $K$. Its companion is
+It is finite free because $J^0$ has finite index in $K$. Define its companion to be
 
 $$
-\sigma_R(L,\theta)^\#
-\simeq\sigma_R(L,\theta^{-1}),
+\sigma_R^-(L,\xi^{-1})
+=\sigma_R^+(L,\xi)^\#.
 \tag{7.5}
 $$
 
-where the inverse label includes the dual normalized extension class. The perfect pairing is again a finite coset sum.
+Its generic label is $\xi^{-1}$ because $\Delta_{L/F,\xi^{-1}}=\Delta_{L/F,\xi}^{-1}$, so the inverse rectified character is $\vartheta^{-1}$. The perfect pairing is again a finite coset sum. An independently chosen primary lattice for $\xi^{-1}$ is not silently identified with this companion.
 
-**Theorem 7.3 (positive-depth detection).** In the selected characteristic-zero range, $\sigma_E(L,\theta)$ occurs with multiplicity one precisely in the tame dihedral inertial class of $(L,\theta)$, modulo Galois conjugation and unramified norm twist.
+This also constructs the type for a nonminimal positive-depth admissible pair. The minimal-twist theorem supplies
 
-**Proof strategy.** Reduce occurrence to intertwining of $\Lambda_E(\theta)$ and use the leading simple character to recover the quadratic centralizer.
+$$
+\xi=\xi_0(\chi\circ N_{L/F})
+$$
 
-**Proof.** Occurrence in the compact induction attached to $(L,\theta)$ is immediate from Frobenius reciprocity. Mackey decomposition expresses its multiplicity as a sum over $J^0\backslash K/J^0$ of intertwining spaces. Exact intertwining of the simple character forces an intertwiner to normalize the quadratic lattice chain and then to lie in $J^0$ after the allowed torus action has been accounted for. Thus only the identity double coset contributes and the multiplicity is one.
+with $\xi_0$ minimal. Use (7.4) when $\xi_0$ still has positive depth, and use the inflated depth-zero seed of Chapter 6 when $L/F$ is unramified and $\xi_0$ has depth zero. Denote either chosen minimal primary lattice by $\sigma_R^+(L,\xi_0)$. Since the rectifier is unchanged by a norm twist, put
 
-Conversely, occurrence in a selected irreducible supplies an intertwiner of the simple character. Its commutator pairing recovers the centralizer $L$, and its torus action recovers $\{\theta,\theta^s\}$ up to a norm character trivial on the compact part. The selected classification then identifies the representation as the corresponding tame dihedral supercuspidal. $\square$
+$$
+\sigma_R^+(L,\xi)
+=\sigma_R^+(L,\xi_0)\otimes_RR(\chi\circ\det|_K),
+\tag{7.6}
+$$
+
+after enlarging coefficients so that the compact values of $\chi$ are units. The unramified value of $\chi$ belongs only to the compact-mod-center extension. Define the companion by duality, so it is the twist of the $\xi_0^{-1}$ companion by $\chi^{-1}\circ\det$. A different minimal-twist decomposition gives the same generic type by the tame equivalence theorem, but it need not select the identical integral lattice. The chosen decomposition is therefore part of the primary-lattice convention; the resulting choices are commensurable, and the specified dual remains exact.
+
+**Theorem 7.3 (positive-depth detection).** In the selected characteristic-zero range, $\sigma_E^+(L,\xi)$ occurs with multiplicity one precisely in the tame dihedral inertial class with normalized Weil--Deligne label $(L,\xi)$, modulo Galois conjugation and unramified norm twist.
+
+**Proof strategy.** Reduce occurrence to intertwining of $\Lambda_E(\vartheta)$ and use the leading simple character to recover the quadratic centralizer.
+
+**Proof.** Assume first that $\xi$ is minimal. Occurrence in the compact induction attached to the direct pair $(L,\vartheta)$ is immediate from Frobenius reciprocity. Mackey decomposition expresses its multiplicity as a sum over $J^0\backslash K/J^0$ of intertwining spaces. Exact intertwining of the simple character forces an intertwiner to normalize the quadratic lattice chain and then to lie in $J^0$ after the allowed torus action has been accounted for. Thus only the identity double coset contributes and the multiplicity is one.
+
+Conversely, occurrence in a selected irreducible supplies an intertwiner of the simple character. Its commutator pairing recovers the centralizer $L$, and its torus action recovers $\{\vartheta,\vartheta^s\}$ up to a norm character trivial on the compact part. Undoing the uniquely normalized tame rectifier recovers $\{\xi,\xi^s\}$ with the same ambiguity. The selected correspondence then identifies the normalized parameter as $\operatorname{Ind}_{W_L}^{W_F}\xi$.
+
+For a nonminimal pair, twist (7.6) and the candidate representation by $\chi^{-1}\circ\det$. The minimal case applies to $\xi_0$, and twisting back preserves both occurrence multiplicity and the stated inertial ambiguity. $\square$
 
 ### 7.5 The primitive-wild boundary
 
-Nothing in the preceding proof classifies primitive wild types. For such a representation, the first noncentral stratum need not have a quadratic field as centralizer. Even when a wild quadratic field occurs in residue characteristic two, the lattice-chain jumps and extension operators depend on the different and on additional choices. The finite Heisenberg quotient may still exist, but formulas (7.1)--(7.5) are not determined by a tame admissible pair.
+Nothing in the preceding proof classifies primitive wild types. For such a representation, the first noncentral stratum need not have a quadratic field as centralizer. Even when a wild quadratic field occurs in residue characteristic two, the lattice-chain jumps and extension operators depend on the different and on additional choices. The finite Heisenberg quotient may still exist, but formulas (7.1)--(7.6) are not determined by a tame admissible pair.
 
 It follows that this book makes no integral reduction, companion, multiplicity, or deformation-component claim for primitive wild supercuspidals. An abstract stable lattice exists in any finite-dimensional compact type, but existence alone does not supply the label, the perfect comparison, or the exact local deformation condition required here.
 
@@ -870,13 +1002,15 @@ $$
 e_H=|H|^{-1}\sum_{h\in H}h
 $$
 
-is defined over $R$ for every subgroup $H\subset\Gamma$. It is an idempotent whose image is the invariant module, so invariants commute with tensor products. Maschke's argument makes both $E[\Gamma]$ and $\kappa[\Gamma]$ semisimple. Because $R$ and $\kappa$ are splitting and $|\Gamma|$ is a unit, the primitive central idempotents are integral and reduce bijectively; hence an irreducible block remains irreducible. $\square$
+is defined over $R$ for every subgroup $H\subset\Gamma$. It is an idempotent whose image is the invariant module, so invariants commute with tensor products. Maschke's argument makes both $E[\Gamma]$ and $\kappa[\Gamma]$ semisimple.
+
+For the last assertion, let $L$ be a stable lattice in an absolutely irreducible $E$-representation $V$. The reduction $L/\lambda L$ is semisimple. Its Brauer character on every element of $\Gamma$ is the reduction of the ordinary character of $V$, because every element has order prime to $\ell$ and its eigenvalues are roots of unity in $R^\times$. Over splitting fields with $\ell\nmid|\Gamma|$, the ordinary and Brauer irreducible-character tables coincide under this reduction. Linear independence of irreducible characters therefore forces $L/\lambda L$ to have exactly the one irreducible constituent corresponding to $V$, with multiplicity one. Hence it is absolutely irreducible. $\square$
 
 This theorem is deliberately datum dependent. The order of a convenient large quotient can contain irrelevant factors, while a smaller quotient controlling a particular type may still be banal. Conversely, $\ell\ne p$ alone is not enough: $\ell$ may divide $Q-1$ or $Q+1$.
 
 ### 8.3 Principal congruences
 
-Formula (4.3) gives the complete safe statement for principal reduction. If $\bar\theta_1\ne\bar\theta_2$ and the controlling quotient is banal, the reduction is irreducible. If $\bar\theta_1=\bar\theta_2=\bar\theta$, then
+Formula (4.3) gives the complete safe statement for principal reduction at every conductor: it is the explicit induction from $J_n$ and no semisimplicity is implicit. Under banality it is irreducible. In the tame level-one congruence case $\bar\theta_1=\bar\theta_2=\bar\theta$, it specializes to
 
 $$
 0\longrightarrow
@@ -890,7 +1024,7 @@ $$
 \tag{8.4}
 $$
 
-Here the middle term depends only on the reduced characters as a $K$-module, even though the two distinct lifts determine different characteristic-zero components. Sequence (8.4) is the reduction of the permutation-module sequence and is exact because every term is obtained from finite free lattices.
+Here the middle term depends only on the reduced characters as a $K$-module, even though the two distinct lifts determine different characteristic-zero components. Sequence (8.4) is the reduction of the level-one permutation-module sequence and is exact because its integral quotient is free. At higher conductor one retains (4.3); there is no assertion that its modular extension structure is still a two-step scalar--Steinberg sequence.
 
 The extension in (8.4) need not split. It splits when $Q+1$ is a unit in $\kappa$ by projecting onto constants with normalized averaging. When $\ell\mid Q+1$, such a projection is unavailable. Thus a congruent principal type must be selected by its lattice or by an enhanced line condition, not by the semisimplified reduction alone.
 
@@ -920,7 +1054,7 @@ This is precisely why the primary Steinberg lattice and its companion must both 
 
 ### 8.5 Dihedral reduction and honest limitations
 
-For depth-zero and positive-depth dihedral types, reduction commutes with every finite induction and with the Heisenberg construction. Under banality, Theorem 8.1 preserves irreducibility and multiplicity one. Outside banality the reduced type can acquire additional subquotients or self-extensions, especially when $\ell$ divides a torus order or a normalizer index.
+For depth-zero and positive-depth dihedral types, reduction commutes with every finite induction and with the Heisenberg construction. Under banality, Theorem 8.1 preserves irreducibility. If a finite free ambient module also factors through the same banal quotient, the invariant-projector argument makes Hom commute with reduction, so a characteristic-zero multiplicity-one line reduces to a multiplicity-one line. Outside banality the reduced type can acquire additional subquotients or self-extensions, especially when $\ell$ divides a torus order or a normalizer index.
 
 Two robust facts remain:
 
@@ -958,7 +1092,14 @@ $$
 \tag{9.3}
 $$
 
-The pairing need not be perfect before saturation. A scalar index can remain even though the generic multiplicity spaces are dual lines.
+Explicitly, for $f:\sigma_R\to M$ and $g:\sigma_R^\#\to M'$, choose a basis $e_i$ of $\sigma_R$ with dual basis $e_i^\#$ and set
+
+$$
+\langle f,g\rangle_{\mathrm{mult}}
+=\sum_i\langle f(e_i),g(e_i^\#)\rangle_{M,M'}.
+$$
+
+This is the contraction with the identity tensor in $\sigma_R\otimes\sigma_R^\#$, so it is independent of the basis. Its $K$-invariance follows from invariance of both pairings. The multiplicity pairing need not be perfect. A scalar index can remain even though the generic multiplicity spaces are dual lines.
 
 ### 9.2 Evaluation and saturation
 
@@ -979,9 +1120,9 @@ M[\sigma]^{\mathrm{sat}}
 \tag{9.5}
 $$
 
-**Proposition 9.1.** The quotient $M/M[\sigma]^{\mathrm{sat}}$ is torsion free. If the generic multiplicity is one and $\sigma_E$ is absolutely irreducible, then the saturated multiplicity line is unique up to a unit, and (9.5) is independent of all scalar normalizations of a characteristic-zero projector.
+**Proposition 9.1.** The quotient $M/M[\sigma]^{\mathrm{sat}}$ is torsion free. If the generic multiplicity is one and $\sigma_E$ is absolutely irreducible, then $\mathcal M_\sigma(M)$ is a free rank-one module whenever it is nonzero, its primitive generator is unique up to a unit, and (9.5) is independent of all scalar normalizations of a characteristic-zero projector.
 
-**Proof.** The first assertion is the intersection argument of Section 3.4. Under multiplicity one, the generic Hom space is a line. Its intersection with the finite free Hom module, followed by saturation, is a primitive rank-one module by Lemma 3.3. Scaling a rational projector changes only the preliminary sublattice in the same generic image, not the intersection (9.5). $\square$
+**Proof.** The first assertion is the intersection argument of Section 3.4. Because both actions factor through a finite quotient, $\mathcal M_\sigma(M)$ is the kernel of finitely many equivariance maps from $\operatorname{Hom}_R(\sigma_R,M)$ to another finite free module. Its quotient is the image of that combined map and is torsion free, so the kernel is saturated and finite free. Flat localization identifies its generic fiber with $\operatorname{Hom}_{E[K]}(\sigma_E,M_E)$. Under multiplicity one a nonzero multiplicity module therefore has rank one and a primitive generator unique up to a unit. Absolute irreducibility makes every nonzero generic map $\sigma_E\to M_E$ injective, so all generators have the same generic type image. Scaling a rational projector changes only a preliminary lattice inside that image, not the intersection (9.5). $\square$
 
 Saturation does not prove that a geometrically defined evaluation map has torsion-free cokernel before saturation, nor that it commutes with every nonflat base change. Those are additional exactness statements. What it does provide is the canonical integral lattice inside a known generic type summand.
 
@@ -990,12 +1131,12 @@ Saturation does not prove that a geometrically defined evaluation map has torsio
 Suppose $M$ and $M'$ are perfectly paired. Take saturated primary and companion images. Their annihilators are saturated, and the ambient pairing induces a pairing
 
 $$
-M[\sigma]^{\mathrm{sat}}	imes
-M'[\sigma^\#]^{\mathrm{sat}}longrightarrow R.
+M[\sigma]^{\mathrm{sat}}\times
+M'[\sigma^\#]^{\mathrm{sat}}\longrightarrow R.
 \tag{9.6}
 $$
 
-If the induced generic pairing is nonzero and both multiplicity spaces are lines, its determinant is an element $c\in R$, well defined up to $R^\times$. The pairing is perfect exactly when $c$ is a unit. In general $v_R(c)$ measures a genuine congruence index; it cannot be removed by separately rescaling the two lattices without changing primitivity.
+If the induced generic multiplicity pairing (9.3) is nonzero and both multiplicity spaces are lines, primitive generators identify it with multiplication by an element $c\in R$, well defined up to $R^\times$. The multiplicity pairing is perfect exactly when $c$ is a unit. In general $v_R(c)$ measures a genuine congruence index; it cannot be removed by separately rescaling the two primitive generators.
 
 For principal and dihedral types, the companion label is obtained by inverting the inducing character. For Steinberg, the quotient lattice pairs with the augmentation lattice. These are the adjoint objects that must accompany any primary type selection.
 
@@ -1039,12 +1180,13 @@ $$
 Here $\theta_i:I_F\to R^\times$ are fixed finite characters satisfying
 
 $$
-\theta_i^Q=\theta_i,qquad
+\theta_i(\phi h\phi^{-1})=\theta_i(h)
+\quad(h\in I_F),\qquad
 \theta_1\theta_2=\delta|_{I_F}.
 \tag{10.3}
 $$
 
-The first equation is not decorative: it is exactly what permits a one-dimensional inertial character to extend across Frobenius. In a basis adapted to the two lines,
+On the displayed tame generator, the first equation reads $\theta_i(t^Q)=\theta_i(t)$. Its full form is not decorative: it is exactly what permits a one-dimensional inertial character, including any already fixed wild part, to extend across Frobenius. In a basis adapted to the two lines,
 
 $$
 \rho_A(t)=
@@ -1077,7 +1219,7 @@ $$
 
 inside $\kappa[H]$. Their integral lifts are defined by the same formula, because $|H|$ is a unit. Hence every deformation with this fixed inertia has canonical direct summands $L_{1,A}$ and $L_{2,A}$; the enhancement adds no extra choice.
 
-**Theorem 10.1 (clean principal chart).** Assume $\ell>2$, (10.3), and (10.5), and fix the determinant. The framed ordered principal deformation ring is formally smooth of relative dimension three:
+**Theorem 10.1 (clean principal chart).** Assume $\ell>2$, (10.3), and (10.5), fix the determinant, and assume that the residual representation has the displayed ordered principal shape. After choosing one $R$-valued reference lift, the framed ordered principal deformation ring is noncanonically formally smooth of relative dimension three:
 
 $$
 R^{\square,\mathrm{ps}(\theta_1,\theta_2),\delta}
@@ -1087,7 +1229,7 @@ $$
 
 **Proof strategy.** One coordinate changes the ratio of the two unramified Frobenius eigenvalues, and two coordinates move the ordered transverse lines inside the fixed frame.
 
-**Proof.** Since the idempotents lift uniquely, choose the two lifted lines first. The completed big cell of ordered transverse line pairs through the residual pair is formally smooth of dimension two: one graph coordinate moves each line, and transversality is open. In the adapted basis, inertia is fixed. Frobenius has diagonal entries $a,b$ with fixed product. Choose a lift $a_0$ of the first residual eigenvalue. Then
+**Proof.** Since the idempotents lift uniquely, choose the two lifted lines first. The completed big cell of ordered transverse line pairs through the residual pair is formally smooth of dimension two: one graph coordinate moves each line, and transversality is open. In the adapted basis, inertia is fixed. Frobenius has diagonal entries $a,b$ with fixed product. Let $a_0$ be the first Frobenius eigenvalue of the reference lift. Then
 
 $$
 a=a_0(1+u),\qquad b=\delta(\phi)a^{-1}
@@ -1108,7 +1250,7 @@ $$
 
 Inertia no longer supplies idempotents. Suppose instead that residual Frobenius has two distinct eigenvalues and fix their ordering. Hensel factorization of its characteristic polynomial gives two unique Frobenius-stable lines over every Artinian lift. We impose the two inertia characters on those lines literally. The same diagonal calculation as in Theorem 10.1 applies.
 
-**Theorem 10.2 (congruence-tame chart).** Under the distinct residual Frobenius hypothesis, the line-enhanced fixed-character functor is represented and formally smooth of relative dimension three over $R$, with presentation (10.6). If $\Delta$ is a finite $\ell$-group quotient of tame inertia on which the $Q$-power action is trivial, and the first character is allowed to be the tautological character of $\Delta$ while the second is forced by the determinant, then the completed local ring is
+**Theorem 10.2 (congruence-tame chart).** Under the distinct residual Frobenius hypothesis and after choosing a compatible $R$-valued reference lift, the line-enhanced fixed-character functor is represented and is noncanonically formally smooth of relative dimension three over $R$, with presentation (10.6). If $\Delta$ is a finite $\ell$-group quotient of tame inertia on which the $Q$-power action is trivial, and the first character is allowed to be the tautological character of $\Delta$ while the second is forced by the determinant, then the completed local ring is
 
 $$
 R[\Delta][[u,y,z]],
@@ -1119,7 +1261,7 @@ completed at the chosen residual character.
 
 **Proof.** Distinct residual Frobenius eigenvalues have unit difference, so the two spectral idempotents are polynomials in Frobenius with unit denominator. They lift uniquely and give the lines. On them, the chosen inertia characters and Frobenius scalars have the form (10.4); the determinant leaves one scalar parameter and the frame leaves two position parameters. This proves the fixed-character statement.
 
-For the universal statement, the group algebra represents characters of $\Delta$. The $Q$-power relation is trivial on $\Delta$, so the tautological character satisfies (10.3). The same construction is therefore formally smooth relative to $R[\Delta]$. Conversely, a represented deformation recovers its tautological character, ordered lines, and the three coordinates. $\square$
+For the universal statement, the group algebra represents characters of $\Delta$: a local homomorphism sends each group basis element to the corresponding unit-valued character value. The $Q$-power relation is trivial on $\Delta$, so the tautological character satisfies (10.3). The same construction is therefore formally smooth relative to the completion of $R[\Delta]$ at the selected residual character. Conversely, a represented deformation recovers its tautological character, ordered lines, and the three coordinates. $\square$
 
 The generic fiber of $R[\Delta]$ is a product of character fields. These components meet in the special fiber because all $\ell$-power characters reduce to the same character. A characteristic-zero central idempotent separates them only after dividing by $|\Delta|$. The line-enhanced ring and the lattice (4.2) retain the chosen component without that division.
 
@@ -1128,7 +1270,7 @@ The generic fiber of $R[\Delta]$ is a product of character fields. These compone
 On the generic fiber of the ordered principal ring, the Weil--Deligne representation is
 
 $$
-\chi_1\oplus\chi_2,qquad N=0,
+\chi_1\oplus\chi_2,\qquad N=0,
 $$
 
 with $\chi_i|_{I_F}=\theta_i$. Its conductor is constant and equals
@@ -1149,10 +1291,10 @@ Ordering is extra integral data. The Weyl element identifies the two ordered gen
 A scalar inertial semisimplification does not distinguish unramified representations from Steinberg representations. Monodromy supplies the missing coordinate. After a fixed scalar twist, write
 
 $$
-\rho_A(t)=1+N,qquad N^2=0,
+\rho_A(t)=1+N.
 $$
 
-and $F=\rho_A(\phi)$. The tame relation is equivalent to
+Require $\operatorname{tr}N=\det N=0$. Cayley--Hamilton then gives $N^2=0$ over every coefficient algebra. With $F=\rho_A(\phi)$, the tame relation is equivalent to
 
 $$
 FNF^{-1}=QN,
@@ -1162,8 +1304,8 @@ $$
 because $(1+N)^Q=1+QN$. Define the **unipotent incidence functor** by the closed equations
 
 $$
-N^2=0,qquad \operatorname{tr}N=\det N=0,qquad
-FNF^{-1}=QN,qquad \det F=\delta(\phi),
+\operatorname{tr}N=\det N=0,\qquad
+FNF^{-1}=QN,\qquad \det F=\delta(\phi),
 \tag{11.2}
 $$
 
@@ -1179,8 +1321,8 @@ Matrix and projective-line coordinates show directly that this enhanced functor 
 To see why no uniform smoothness statement is possible, put
 
 $$
-F=(1+\epsilon X)\bar F,qquad
-N=\bar N+\epsilon Y,qquad \epsilon^2=0.
+F=(1+\epsilon X)\bar F,\qquad
+N=\bar N+\epsilon Y,\qquad \epsilon^2=0.
 $$
 
 Linearization gives
@@ -1234,18 +1376,22 @@ Q\not\equiv1\pmod\ell.
 \tag{11.9}
 $$
 
-Local Kummer theory gives
+The required cohomology calculation can be made directly from the tame presentation. For every Artinian coefficient algebra $A$ one has
 
 $$
-H^1(F,R(1))
-\simeq\widehat{F^\times}_{\ell}\otimes_{\mathbf Z_\ell}R
-\simeq R.
+H^1(F,A(1))\simeq A.
 \tag{11.10}
 $$
 
-Indeed $F^\times=\varpi_F^{\mathbf Z}\times\mathcal O_F^\times$; the pro-$p$ principal units have trivial pro-$\ell$ completion, and (11.9) removes an $\ell$-part from $k_F^\times$. The uniformizer contributes one copy of $\mathbf Z_\ell$.
+Indeed wild inertia has pro-$p$ image and has no positive cohomology on the finite $\ell$-primary module $A(1)$. On the tame $\ell$-quotient, inertia acts trivially on $A(1)$ and arithmetic Frobenius acts by $Q$. A cocycle is determined by
 
-**Theorem 11.1 (clean special chart).** Under (11.6)--(11.9), the framed enhanced special ring is
+$$
+x=c(t),\qquad y=c(\phi).
+$$
+
+The relation $\phi t\phi^{-1}=t^Q$ imposes no further condition: both sides give $Qx$. A coboundary leaves $x$ unchanged and replaces $y$ by $y+(Q-1)a$. Since $Q-1$ is a unit under (11.9), there is a unique representative with $y=0$, while $x$ is arbitrary. This proves (11.10), functorially in $A$. Under Kummer theory $x$ is the uniformizer direction; the same conclusion follows from $F^\times=\varpi_F^{\mathbf Z}\times\mathcal O_F^\times$, because the principal units are pro-$p$ and $\ell\nmid Q-1$ removes the residue-unit direction.
+
+**Theorem 11.1 (clean special chart).** Under (11.6)--(11.9), and relative to the split residual extension with its chosen ordered line, the framed enhanced special ring is
 
 $$
 R^{\square,\mathrm{sp},\delta}
@@ -1255,13 +1401,15 @@ $$
 
 The coordinate $m$ is the extension, or monodromy, coordinate. The divisor $m=0$ is the unramified intersection, and $m\ne0$ on the generic fiber is the Steinberg locus.
 
-**Proof.** Distinct residual roots lift the chosen line uniquely. With diagonal characters fixed, extension classes are $H^1(F,R(1))$ and lift freely across small coefficient extensions by (11.10); this supplies $m$. Strict changes of frame modulo the scalar stabilizer contribute two independent coboundary directions, denoted $y,z$. The construction from $(m,y,z)$ and the recovery of the coordinates are inverse. $\square$
+**Proof.** Distinct residual roots give a unique lift of each generalized eigenspace by Hensel factorization of the Frobenius characteristic polynomial. In the resulting ordered basis, the two diagonal characters are fixed and (11.10) identifies the extension class with one element $m\in\mathfrak m_A$, since the residual extension is split. This is represented by $R[[m]]$.
+
+To return to the fixed frame, write the ordered line pair in the completed big cell of $\mathbf P^1\times\mathbf P^1$ through the residual pair. The two graph coordinates $y,z\in\mathfrak m_A$ determine the pair uniquely, and transversality is automatic in this formal neighborhood. Conjugating the triangular representation in the adapted basis by the corresponding big-cell matrix constructs a framed deformation. Conversely, its two eigenlines recover $y,z$, and its tame cocycle recovers $m$. These constructions are inverse and functorial in $A$, proving (11.11). $\square$
 
 Nonzero monodromy is open on the generic fiber, not a closed Artinian deformation condition when $\bar N=0$. The represented closed condition is the entire chart (11.11), including its unramified divisor.
 
 ### 11.3 Nonzero monodromy and the open Steinberg locus
 
-If $\bar N\ne0$, its image equals its kernel and gives a unique residual line. Every lift remains rank one because one matrix entry is already a unit multiple of the residual primitive entry. Nonvanishing is then preserved under all coefficient quotients.
+If $\bar N\ne0$, its image equals its kernel and gives a unique residual line. Every lift remains rank one because one matrix entry is already a unit lift of a nonzero residual entry. Nonvanishing is then preserved under all coefficient quotients.
 
 Fixing the unramified Steinberg character gives the shape
 
@@ -1274,7 +1422,11 @@ $$
 \tag{11.12}
 $$
 
-When $Q\not\equiv1\pmod\ell$, diagonal strict conjugation normalizes the primitive tame extension, and upper-triangular strict conjugation removes the remaining Frobenius coboundary. Thus the unframed condition is rigid. The framed fixed-determinant ring is formally smooth of relative dimension three, all three variables being framing directions.
+**Proposition 11.2 (minimal nonzero-monodromy chart).** Assume $Q\not\equiv1\pmod\ell$ and fix the two diagonal characters in (11.12). The unframed deformation functor with nonzero residual monodromy has one point over every Artinian coefficient algebra up to strict equivalence. Its framed fixed-determinant ring is formally smooth of relative dimension three.
+
+**Proof.** In the tame cocycle calculation above, the inertia value $x=c(t)$ is a unit because its reduction is nonzero. A strict diagonal conjugation rescales it by an arbitrary unit congruent to $1$, so it has a unique normalization lifting the fixed residual value. The Frobenius value $y=c(\phi)$ is a coboundary because $Q-1$ is a unit; a strict upper-triangular conjugation removes it. Thus the unframed lift is unique.
+
+Its centralizer is the scalar subgroup: an endomorphism commuting with both distinct diagonal characters and the nonzero extension must have equal diagonal entries and zero off-diagonal entry. The orbit of the representation in the fixed frame is therefore the formal quotient $\widehat{\mathrm{GL}}_2/\widehat{\mathbf G}_m$, which is smooth of dimension $4-1=3$. These three orbit coordinates give the framed ring $R[[x_1,x_2,x_3]]$. $\square$
 
 This minimal nonzero-monodromy condition and the level-raising chart solve different problems. The former has nonzero residual monodromy and is closed under coefficient quotients. The latter begins with unramified residual data and must include the monodromy-zero divisor.
 
@@ -1301,7 +1453,7 @@ compatible with the determinant and with Frobenius conjugation. We first prove t
 
 **Lemma 12.1 (infinitesimal rigidity).** Every lift of $\bar\tau$ to an Artinian local $R$-algebra is strictly conjugate to $\tau$, and the conjugating element is unique modulo the centralizer of $\tau(H)$.
 
-**Proof.** For a square-zero extension $A'\twoheadrightarrow A$ with kernel $J$, the difference between two lifts is a $1$-cocycle of $H$ with values in $J\otimes\operatorname{ad}\bar\tau$. Averaging a cocycle over $H$ gives a contracting homotopy because $|H|$ is a unit. Hence $H^1(H,J\otimes\operatorname{ad}\bar\tau)=0$, so the lifts are conjugate. The ambiguity consists exactly of $H$-invariant endomorphisms, the Lie algebra of the centralizer. Induction on the length of the Artinian ring proves the result. $\square$
+**Proof.** For a square-zero extension $A'\twoheadrightarrow A$ with kernel $J$, the difference between two lifts is a $1$-cocycle of $H$ with values in $J\otimes\operatorname{ad}\bar\tau$. Averaging a cocycle over $H$ gives a contracting homotopy because $|H|$ is a unit. Hence $H^1(H,J\otimes\operatorname{ad}\bar\tau)=0$, so the lifts are conjugate. Two conjugating elements differ by an element centralizing the lifted action; infinitesimally its ambiguity is $(J\otimes\operatorname{ad}\bar\tau)^H$, the Lie algebra of the centralizer. Induction through square-zero quotients proves both assertions over every Artinian coefficient algebra. $\square$
 
 Thus a fixed prime-to-$\ell$ inertial representation has no infinitesimal inertia parameter. Only its position in the frame and its Frobenius intertwiner can vary.
 
@@ -1310,7 +1462,7 @@ Thus a fixed prime-to-$\ell$ inertial representation has no infinitesimal inerti
 For an unramified quadratic dihedral label, restriction to inertia has two characters
 
 $$
-\vartheta,\qquad\vartheta^Q,
+\xi,\qquad\xi^Q,
 \tag{12.2}
 $$
 
@@ -1318,7 +1470,7 @@ and Frobenius exchanges their lines. In an adapted basis,
 
 $$
 \tau(t)=
-\begin{pmatrix}\vartheta(t)&0\\0&\vartheta^Q(t)\end{pmatrix},
+\begin{pmatrix}\xi(t)&0\\0&\xi^Q(t)\end{pmatrix},
 \qquad
 F=\begin{pmatrix}0&a\\b&0\end{pmatrix}.
 \tag{12.3}
@@ -1328,15 +1480,21 @@ The tame relation is immediate, and the fixed determinant gives $-ab=\delta(\phi
 
 For a ramified tame quadratic pair the inertia description contains the quadratic permutation and a deeper simple character rather than just (12.2). Nevertheless, its finite image and normalized Frobenius intertwiner are fixed by the type. When their order is prime to $\ell$, Lemma 12.1 applies verbatim.
 
-**Proposition 12.2 (label recovery).** In the clean dihedral case, the fixed inertial representation together with the Frobenius intertwiner recovers the tame admissible pair up to $F$-isomorphism, Galois conjugation, and unramified norm twist.
+**Proposition 12.2 (label recovery).** In the clean dihedral case, the fixed Weil inertial representation together with the Frobenius intertwiner recovers the tame parameter pair $(L,\xi)$ up to $F$-isomorphism, Galois conjugation, and unramified norm twist. The compact type is then recovered from the rectified character $\vartheta=\xi\Delta_{L/F,\xi}$.
 
-**Proof.** In the unramified case, the two inertia characters recover the regular orbit $\{\vartheta,\vartheta^Q\}$, and the fact that Frobenius exchanges them recovers the nonsplit unramified quadratic torus. At positive depth, the last nontrivial inertia layer carries the commutator form whose centralizer is $L$; its character recovers the leading term of $\theta$. The fixed torus extension recovers the remaining compact part of $\theta$. A character invisible on the compact part is unramified and enters through a norm twist. These are exactly the equivalences of the tame pair. $\square$
+**Proof.** In the unramified case, the two inertia characters recover the regular orbit $\{\xi,\xi^Q\}$, and the fact that Frobenius exchanges them recovers the nonsplit unramified quadratic torus. At positive depth, the last nontrivial inertia layer carries the commutator form whose centralizer is $L$; its character recovers the leading term of $\xi$. The fixed torus extension recovers the remaining compact part. A character invisible on the compact part is unramified and enters through a norm twist. These are exactly the equivalences of the parameter pair. The rectifier is a functorial function of that pair in the selected correspondence, so it then recovers the direct compact character and hence the type. $\square$
 
 ### 12.3 Smoothness in the clean case
 
 Let $C$ be the centralizer in $\mathrm{GL}_2$ of $\tau(H)$. Fix one Frobenius intertwiner $F_0$. Every other intertwiner is $cF_0$ with $c\in C$. Moving the copy of $\tau$ in the fixed frame contributes the conjugacy orbit $\mathrm{GL}_2/C$.
 
-**Theorem 12.3 (fixed finite-type chart).** Assume $\ell>2$, $|H|$ is prime to $\ell$, and a compatible integral Frobenius intertwiner exists. Then the framed fixed-determinant deformation ring is formally smooth of relative dimension three.
+Because $|H|$ is invertible, the $H$-module is semisimple over every infinitesimal lift. Its centralizer is the unit group of a product of matrix endomorphism algebras on the isotypic summands, hence is smooth. Thus both the centralizer torsor and the conjugacy orbit used below are legitimate smooth formal schemes.
+
+**Theorem 12.3 (fixed finite-type chart).** Assume $\ell>2$, $|H|$ is prime to $\ell$, and fix a compatible integral reference pair $(\tau,F_0)$ whose determinant is $\delta$. For the residual representation obtained from this pair, the framed deformation functor with this fixed finite inertia type and determinant is noncanonically represented by
+
+$$
+R[[x_1,x_2,x_3]].
+$$
 
 **Proof strategy.** Rigidity identifies the functor with a conjugacy orbit times a centralizer torsor; fixing determinant removes one smooth scalar direction.
 
@@ -1376,7 +1534,7 @@ where:
 2. $\sigma_{v,R}^+$ is the primary principal, Steinberg, or tame dihedral type lattice;
 3. $\sigma_{v,R}^-=(\sigma_{v,R}^+)^\#$ is its explicit companion;
 4. $\mathcal R_v$ is the represented framed fixed-determinant deformation condition;
-5. $\mathcal C_v$ is the named generic component or line-enhanced chart;
+5. $\mathcal C_v$ is the named generic component or line-enhanced chart, together with its monodromy stratification when the chart contains a boundary divisor;
 6. $\mathfrak o_v$ records an ordering, special line, Iwahori-new quotient, or Frobenius sign when it is not intrinsic.
 
 The datum is **clean** if the applicable smoothness theorem above holds, the primary and companion are perfectly paired, and any sign separation additionally required satisfies $Q_v\not\equiv\pm1\pmod\ell$. It is **congruence controlled** if a line-enhanced ring and saturated type lattice are specified even though an averaging projector is not integral.
@@ -1388,12 +1546,12 @@ The conductor follows from the datum; it does not define it. Two components can 
 Let $w\mid\ell$. Here compact type theory at a prime $v\nmid\ell$ is not the relevant integral classification. Under the precise hypotheses
 
 $$
-\ell>2,qquad
+\ell>2,\qquad
 F_w=W(k)[1/\ell],\qquad k\text{ perfect},
 \tag{13.2}
 $$
 
-the established integral Fontaine--Laffaille theorem gives an anti-equivalence between height-two strongly divisible lattices of Hodge type $(0,1)$ and rank-two stable coefficient lattices whose every open-ideal quotient has a finite-flat model. It preserves duality, determinant, stable lines, unramified base change, and compatible quotients.
+the established integral Fontaine--Laffaille theorem gives an anti-equivalence between height-two strongly divisible lattices of Hodge type $(0,1)$ and rank-two stable coefficient lattices whose every open-ideal quotient has a finite-flat model of the attached divided-filtered type. It preserves duality, stable lines, unramified base change, and compatible quotients. When the lattice carries an actual perfect alternating pairing, duality transports that pairing and hence its determinant character; determinant preservation is not asserted from Hodge type alone.
 
 The exact phrase “every open-ideal quotient” matters. A rational representation with Hodge--Tate weights $0$ and $1$ does not select a stable integral lattice, and finite flatness at one torsion level does not construct compatible models at all levels. The prior finite-flat theory also distinguishes schematic closure in a fixed ambient group from classification of all integral models.
 
@@ -1410,19 +1568,19 @@ Neither row implies the other. The first depends on the unramified-base and weig
 
 We can now state the local matching assertion without confusing generic and integral information.
 
-**Theorem 13.1 (familywise compatibility).** Let $\mathfrak D_v$ be one of the controlled data constructed above. For every characteristic-zero point $x$ of its named generic component, the selected local correspondence attaches an irreducible smooth representation $\pi_x$ satisfying the associated detection condition: primary-type occurrence in the principal and dihedral cases, and a nonzero sign-selected Iwahori-new line in the special case. Conversely, within the selected principal, special, and tame dihedral range, that detection condition forces the Weil--Deligne parameter to have label $\tau_v$, up to the ordering or unramified twist explicitly retained in $\mathfrak o_v$.
+**Theorem 13.1 (familywise compatibility).** Let $\mathfrak D_v$ be one of the controlled data constructed above. For every characteristic-zero point $x$ of its associated generic locus, the selected local correspondence attaches an irreducible smooth representation $\pi_x$ satisfying the associated detection condition: primary-type occurrence in the principal and dihedral cases, and a nonzero sign-selected Iwahori-new line on the nonzero-monodromy locus of the special chart. Conversely, within the selected principal, special, and tame dihedral range, that detection condition forces the Weil--Deligne parameter to have label $\tau_v$, up to the ordering or unramified twist explicitly retained in $\mathfrak o_v$. The monodromy-zero divisor in the closure of a special chart is a recorded boundary, not part of its Steinberg detection locus.
 
-**Proof.** For an ordered principal datum, equations (10.2)--(10.4) give the split parameter with inertia $\theta_1\oplus\theta_2$ and $N=0$. The selected local correspondence gives the corresponding principal series, and Theorem 4.2 gives occurrence and recovery.
+**Proof.** For the non-scalar ordered principal data included in the theorem, equations (10.2)--(10.4) give the split parameter with inertia $\theta_1\oplus\theta_2$ and $N=0$. The selected local correspondence gives the corresponding irreducible principal series, and Theorem 4.2 gives occurrence and recovery. A scalar split chart must instead retain its reducibility stratification from Section 4.4; it is not silently inserted into this non-scalar assertion.
 
 For the special chart, a point with $m\ne0$ has rank-one monodromy and fixed scalar inertial character. It therefore corresponds to the Steinberg twist with the recorded unramified branch; Theorem 5.2 detects it through the sign-selected new line. The divisor $m=0$ is not relabelled Steinberg, because its monodromy vanishes.
 
-For a clean dihedral datum, Proposition 12.2 recovers the tame admissible pair from inertia and Frobenius. Theorems 6.2 and 7.3 give occurrence and the converse. These three cases exhaust the selected range and preserve the stated unramified-twist ambiguities. $\square$
+For a clean dihedral datum, Proposition 12.2 first recovers the Weil parameter pair $(L,\xi)$ from inertia and Frobenius, then applies the selected tame rectifier to recover the compact character $\vartheta=\xi\Delta_{L/F,\xi}$. Theorems 6.2 and 7.3 give occurrence and the converse for the resulting compact type. These three cases exhaust the selected range and preserve the stated unramified-twist ambiguities. $\square$
 
 The theorem is characteristic zero. The integral content is that the primary and companion lattices exist, reduce explicitly, and define saturated selection maps without requiring a nonintegral projector. It does not assert that every abstract ambient module contains the selected type; nonvanishing is a separate global input.
 
 ### 13.4 Change of coefficients and ground field
 
-Finite extension of the coefficient DVR preserves every controlled datum. The type and companion tensor by (3.9)--(3.10), the pairing stays perfect, and the defining deformation equations base change. A primitive multiplicity line remains primitive under flat coefficient extension.
+Finite extension of the coefficient DVR preserves every controlled datum once the chosen primary lattice is base-changed by convention. The type and its specified companion tensor by (3.9)--(3.10), the pairing stays perfect, and the defining deformation equations base change. This does not claim that rerunning a noncanonical orbit-lattice construction over the larger field selects the same lattice. A primitive multiplicity line remains primitive under flat coefficient extension.
 
 Reduction to a quotient coefficient ring preserves the explicit type action and the line-enhanced deformation equations. It need not preserve the dimension of invariants. In the nonbanal case one therefore reduces the lattice and its evaluation map, not a rational idempotent.
 
@@ -1438,30 +1596,30 @@ The constructions can now be assembled into the precise package promised by the 
 
 **Theorem 14.1 (integral local types and type lattices).** Let $F$ be a nonarchimedean local field of residue characteristic $p$, let $R$ be the ring of integers in a finite extension of $\mathbf Q_\ell$, and assume $p\ne\ell$. Enlarge the coefficient field so that all selected character values occur in $R^\times$. Then:
 
-1. For every regular tame principal label $(\theta_1,\theta_2)$, the induced module
+1. For every non-scalar principal label $(\theta_1,\theta_2)$, put $n=a(\theta_2\theta_1^{-1})$. The induced module
 
    $$
    \sigma_R(\theta_1,\theta_2)
-   =\operatorname{Ind}_I^KR(\theta_1\boxtimes\theta_2)
+   =\operatorname{Ind}_{J_n}^KR(\vartheta_{12,n})
    $$
 
-   is finite free, detects the selected principal inertial class in characteristic zero, and has companion obtained by inverting both characters.
+   is finite free, detects the selected principal inertial class in characteristic zero, and has companion obtained by inverting both characters. At tame level $n=1$ it is the usual Iwahori induction; for a scalar label the minimal principal type is the rank-one determinant character, while the Iwahori incidence module also records the scalar--Steinberg boundary.
 
 2. The primary Steinberg lattice is the projective-line quotient $R[X]/R\mathbf1_X$. Its companion is the augmentation kernel. Their pairing is perfect over $R$, including when $\ell\mid Q+1$, and their reductions have the opposite extension orientations (8.5)--(8.6).
 
-3. A regular depth-zero quadratic character produces a finite free cuspidal lattice, and every positive-depth tame admissible pair produces a finite free maximal compact type through the integral Heisenberg construction. These types detect exactly the selected dihedral classes. Their companions have inverse admissible labels.
+3. A regular depth-zero quadratic parameter character produces a finite free cuspidal lattice, and every selected positive-depth tame admissible pair produces a finite free maximal compact type from its minimal seed and the determinant twist (7.6). A positive-depth minimal seed uses the integral Heisenberg construction; an unramified depth-zero minimal seed uses Chapter 6. The normalized Weil character $\xi$ is first changed to the direct compact character $\vartheta=\xi\Delta_{L/F,\xi}$; these types then detect exactly the selected dihedral classes. Once a primary lattice is fixed, its defined dual companion has inverse admissible label. No independently chosen inverse-label orbit lattice is identified with that companion.
 
-4. All primary and companion constructions commute with finite coefficient extension and with reduction as explicit modules. Under the datum-specific banality hypothesis, reduction preserves semisimplicity, irreducibility, invariants, and multiplicity one. Without banality, only the explicit reduction and perfect companion pairing are asserted.
+4. All specified primary and companion constructions commute with finite coefficient extension and with reduction as explicit modules. Under the datum-specific banality hypothesis, reduction preserves semisimplicity, irreducibility, and invariants; it also preserves multiplicity one when the ambient module factors through the same banal quotient. Without banality, only the explicit reduction and perfect companion pairing are asserted.
 
 5. In a finite free ambient module, intersection with the generic type summand gives a canonical saturated type-selected lattice. Under generic multiplicity one its primitive multiplicity line is unique up to a coefficient unit. A character idempotent may replace this construction only when its denominator is a unit.
 
-6. For $\ell>2$, the clean ordered principal, special, and prime-to-$\ell$ fixed finite-type conditions are represented by the matrix-and-line problems of Chapters 10--12. Their framed fixed-determinant rings are formally smooth of relative dimension three under the stated residual regularity hypotheses. Congruence-tame principal characters are represented by the enhanced chart over $R[\Delta]$ without averaging.
+6. For $\ell>2$, the clean non-scalar ordered principal, split-residual enhanced special, nonzero-residual-monodromy special, and prime-to-$\ell$ fixed finite-type conditions are represented by the matrix-and-line problems of Chapters 10--12. After the stated compatible reference lifts and residual regularity hypotheses are fixed, their framed fixed-determinant rings are noncanonically formally smooth of relative dimension three. Non-scalar congruence-tame principal components are represented by the enhanced chart over the completed local factor of $R[\Delta]$ without averaging; a scalar component retains the boundary stratification of Section 4.4.
 
-7. A controlled fixed nonminimal datum consists of the inertial and monodromy label, primary lattice, adjoint companion, named deformation condition and component, and every required ordering, newness condition, or sign. Its characteristic-zero points match the representations selected by the associated enhanced type datum. Conductor is a consequence of this datum, not a substitute for it.
+7. A controlled fixed nonminimal datum consists of the inertial and monodromy label, primary lattice, adjoint companion, named deformation condition and component or stratified chart, and every required ordering, newness condition, or sign. Its associated characteristic-zero locus matches the representations selected by the enhanced type datum; a monodromy-zero boundary divisor is retained but is not relabelled Steinberg. Conductor is a consequence of this datum, not a substitute for it.
 
 8. Primitive wild supercuspidal types, ramified quadratic types in residue characteristic two, and general congruent dihedral component calculations are excluded. No assertion about their lattices, reduction multiplicities, or deformation smoothness follows from this theorem.
 
-**Proof.** Parts 1--3 are Theorems 4.2, 5.2, 6.1--6.2, and 7.3 together with the perfect pairings (4.6), (5.6), and (7.5). Part 4 is Chapter 8 and the finite free base-change results of Chapter 3. Part 5 is Proposition 9.1 and Lemma 3.3. Part 6 is Theorems 10.1--10.2, 11.1, and 12.3. Part 7 is Definition (13.1) and Theorem 13.1. Part 8 is the boundary proved in Sections 7.5 and 12.4. $\square$
+**Proof.** Parts 1--3 are Theorems 4.2, 5.2, 6.1--6.2, and 7.3 together with the perfect pairings (4.6), (5.6), and (7.5). Part 4 is Chapter 8 and the finite free base-change results of Chapter 3. Part 5 is Proposition 9.1 and Lemma 3.3. Part 6 is Theorems 10.1--10.2 and 11.1, Proposition 11.2, and Theorem 12.3. Part 7 is Definition (13.1) and Theorem 13.1, including the rectifier reconciliation of Proposition 12.2. Part 8 is the boundary proved in Sections 7.5 and 12.4. $\square$
 
 ### 14.2 Hypothesis and failure ledger
 
@@ -1471,7 +1629,8 @@ Every hypothesis in the main theorem has a visible job.
 |---|---|---|
 | $p\ne\ell$ | $p$-group Fourier scalars are units | Heisenberg and additive Fourier models need not stay semisimple or primitive |
 | unit-valued characters | stable action in both directions | a nonunit scalar and its inverse cannot preserve a finite lattice |
-| regular principal characters | minimal principal detection | the scalar permutation module splits into scalar and Steinberg pieces |
+| non-scalar ratio character of conductor $n$ | minimal $J_n$ principal detection | the scalar case has only a rank-one minimal type, while its Iwahori incidence module also meets the Steinberg boundary |
+| normalized tame rectifier | agreement of compact central character with the Weil determinant | the parameter character and direct compact character are misidentified |
 | tame admissible quadratic pair | quadratic centralizer and exact intertwining | primitive wild strata require additional data |
 | prime-to-$\ell$ finite inertia | averaging rigidity | inertia deformations and component crossings can appear |
 | distinct residual lines or roots | unique integral ordering | the coarse flag-forgetting space can be singular |
