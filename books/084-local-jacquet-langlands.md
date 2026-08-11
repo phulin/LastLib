@@ -93,7 +93,7 @@
 
 ### 1.1 Two inner forms and one discrete spectrum
 
-Let $F$ be a nonarchimedean local field and let $D$ be the quaternion division algebra over $F$. We compare
+Let $F$ be a nonarchimedean local field of characteristic zero and let $D$ be the quaternion division algebra over $F$. We compare
 
 $$
 G=\operatorname{GL}_2(F)
@@ -107,7 +107,7 @@ Local Jacquet--Langlands says that the part of the split representation theory w
 
 In degree two, that common geometry is concrete. A separable irreducible quadratic polynomial determines one regular elliptic conjugacy class in $G$ and one in $G'$. The two centralizers are copies of the same quadratic torus, and their Weyl discriminants agree. The representation-theoretic problem is to prove that the selected characters on those classes differ by exactly one sign.
 
-This volume carries out that problem for the range required later: Steinberg twists and the supercuspidals constructed from tame admissible quadratic pairs. The split and division representations themselves, including their types and individual character formulas, are established background. The work here is the two-sided comparison: every regular class contribution is paired, including the extra terms near the center; the sign is fixed; and all conductor, factor, and integral-type normalizations are shown to agree.
+This volume carries out that problem for the range required later: Steinberg twists and the supercuspidals constructed from tame admissible quadratic pairs. The prior split theory constructs the supercuspidals, proves their exact compact-induction character algorithm, conductors, local factors, and newvectors. The prior division theory constructs the quaternionic types, proves its finite induced-character algorithm, conductors, and integral lattices. The Weil--Deligne theory supplies conductor and local-constant formulas for the parameters. The work here is the genuinely two-sided comparison: every regular class contribution is paired, including the extra terms near the center; the sign is fixed; and all conductor, analytic-factor, and integral-type normalizations are shown to agree. No later local-transfer theorem is used as an input.
 
 ### 1.2 Standing conventions
 
@@ -163,7 +163,7 @@ $$
 
 for an arbitrary smooth character $\mu:F^\times\to\mathbf C^\times$.
 
-The dihedral family begins with a separable quadratic extension $E/F$ and a smooth character $\theta:E^\times\to\mathbf C^\times$. Let $\sigma$ be the nontrivial $F$-automorphism of $E$. The pair is required to be tame admissible: $\theta\ne\theta^\sigma$, and if $\theta/\theta^\sigma$ is trivial on $U_E^1$, then $E/F$ is unramified. This includes every separable quadratic extension when $p\ne2$ and includes the unramified quadratic extension in every residue characteristic.
+The dihedral family begins with a separable quadratic extension $E/F$ and a smooth character $\theta:E^\times\to\mathbf C^\times$. Let $\sigma$ be the nontrivial $F$-automorphism of $E$. The pair is required to be tame admissible: $\theta\ne\theta^\sigma$, and if $\theta/\theta^\sigma$ is trivial on $U_E^1$, then $E/F$ is unramified. This includes every quadratic extension when $p\ne2$ and includes the unramified quadratic extension in every residue characteristic. Characteristic zero is retained because the division-side type construction on which this comparison rests was proved under that hypothesis; residue characteristic two is still allowed in the stated unramified range.
 
 The theorem does not include a ramified dyadic positive-depth construction or a primitive wild packet. Those representations require strata and extension data not present in a tame quadratic character. It would be mathematically false to infer them from the calculations below. Nor does the theorem include principal series or one-dimensional representations of $G$: they are not essentially square-integrable and have no irreducible division-side partners.
 
@@ -309,9 +309,9 @@ The last equality is the reason determinant twists and reduced-norm twists corre
 
 ### 2.5 The separability boundary
 
-In characteristic two, a quaternion division algebra may contain a purely inseparable quadratic field. An element generating it has an inseparable minimal polynomial and is not regular semisimple over a separable closure. Such an element lies on the discriminant-zero locus and is not part of (2.4). Likewise a scalar matrix and a nontrivial Jordan block can have the same repeated polynomial on the split side but are not conjugate.
+Because $F$ has characteristic zero, every quadratic field extension is separable. The remaining boundary is the repeated-root locus. A scalar matrix and a nontrivial Jordan block can have the same polynomial $(X-z)^2$ on the split side but are not conjugate, while the division algebra contains no nontrivial unipotent element with that polynomial. Thus characteristic polynomials parametrize corresponding classes only when the polynomial is irreducible and separable.
 
-The selected packet constructions use separable quadratic extensions, and their character identity is asserted on the separable regular locus. This locus is open and dense in the relevant groups. Distribution characters are determined by their regular restrictions, so excluding inseparable and repeated-root classes creates no ambiguity in the selected correspondence. It merely prevents a false extension of regular orbital formulas to a singular locus where the conjugation Jacobian vanishes.
+On $D^\times$, every noncentral element has irreducible quadratic minimal polynomial and is regular. Hence the common locus is $D^\times\setminus F^\times$ on the division side and the regular elliptic locus on the split side. It is open and dense. Distribution characters are determined by their regular restrictions, so excluding the repeated-root locus creates no ambiguity. It prevents a false extension of orbital formulas to the singular center, where the conjugation Jacobian vanishes and the two corresponding representations usually have different dimensions.
 
 ## 3. Discriminants, measures, and orbital comparison
 
@@ -446,7 +446,7 @@ $$
 \tag{3.10}
 $$
 
-Conversely, choose matching functions supported in arbitrarily small regular class neighborhoods. Local constancy of the regular characters turns (3.10) back into the pointwise identity. Thus the pointwise and distributional forms of selected transfer are equivalent once the measure ledger is fixed.
+The converse requires an existence theorem for matching functions with prescribed small orbital support; that is a separate orbital-integral problem and is not assumed here. What we shall prove is the stronger pointwise character identity directly. It implies (3.10) for every pair of functions already known to satisfy (3.8), which is exactly the interface needed by a later test-function transfer theorem.
 
 ## 4. Characters and the special correspondence
 
@@ -486,7 +486,7 @@ $$
 
 be normalized induction from the upper Borel. The induced model is built from functions on $G/B\simeq\mathbf P^1(F)$. At a finite compact-open level, the trace of a regular element is a weighted count of fixed cosets. A fixed point is precisely an $F$-rational eigenline.
 
-An elliptic regular matrix has no such eigenline. Hence
+More precisely, the induced-character formula is a sum over $B\backslash G$ fixed by $g$, with one term for each conjugate of $g$ lying in $B$. Such a conjugate exists exactly when $g$ preserves an $F$-line. The formula is locally finite on the regular set and represents the distribution character, so it is legitimate even though the full induced space is infinite dimensional. An elliptic regular matrix has no $F$-eigenline. Hence
 
 $$
 \Theta_{I(\chi_1,\chi_2)}(g)=0
@@ -623,16 +623,27 @@ $$
 
 where $\omega_{E/F}$ is the quadratic character with kernel $N_{E/F}(E^\times)$.
 
-The tame rectifier $\Delta_{E/F}$ reconciles these descriptions. Put
+The character-dependent tame rectifier $\Delta_{E/F,\theta}$ reconciles these descriptions. Put
 
 $$
-\theta^\natural=\theta\Delta_{E/F},
+\theta^\natural=\theta\Delta_{E/F,\theta},
 \qquad
-\Delta_{E/F}|_{F^\times}=\omega_{E/F}.
+\Delta_{E/F,\theta}|_{F^\times}=\omega_{E/F}.
 \tag{5.4}
 $$
 
-It is unramified for an unramified quadratic extension and has the minimal tame depth in the ramified case. In the selected range it does not change the conductor. The split and division types used below are the induction-normalized types attached to $\theta^\natural$, while the common Weil parameter is labelled by $\theta$.
+It is unramified for an unramified quadratic extension. In the tamely ramified case it can depend on $\theta$: its normalized finite Gauss sum fixes the extension phase, and suppressing that dependence can reverse a positive-depth trace. Its conductor is at most one, whereas ramified admissibility forces $a_E(\theta)\ge2$, so it does not change the conductor in the selected range. The identities proved in the split and division type theories are
+
+$$
+\Delta_{E/F,\theta^\sigma}=\Delta_{E/F,\theta}^\sigma,
+\qquad
+\Delta_{E/F,\theta(\chi\circ N_{E/F})}=\Delta_{E/F,\theta},
+\qquad
+\Delta_{E/F,\theta^{-1}}=\Delta_{E/F,\theta}^{-1}.
+\tag{5.4a}
+$$
+
+They are the exact inputs needed for equivalence, twisting, and contragredience. The split and division types used below are the induction-normalized types attached to $\theta^\natural$, while the common Weil parameter is labelled by $\theta$.
 
 Consequently both representation central characters are
 
@@ -641,7 +652,7 @@ $$
 \tag{5.5}
 $$
 
-The rectifier is not optional decoration. Without it, the central character, the determinant of the parameter, and the finite Fourier phase would fail to agree simultaneously.
+The rectifier is not optional decoration. Without it, the central character, the determinant of the parameter, and the finite Fourier phase would fail to agree simultaneously. Nor may it be replaced in the ramified case by a character depending only on $E/F$.
 
 ### 5.4 The two compact-mod-center types
 
@@ -713,21 +724,7 @@ $$
 \tag{6.2}
 $$
 
-We recall why the sign occurs. Regard $V=k_2$ as a two-dimensional $k$-space and let $T=k_2^\times$ act by multiplication. On any finite model containing the regular representation of $T$, projection to the $\bar\theta$-isotypic part is effected by
-
-$$
-e_{\bar\theta}
-=\frac1{|T|}\sum_{t\in T}\bar\theta(t)^{-1}[t].
-$$
-
-Regularity makes the $\bar\theta$- and $\bar\theta^q$-summands distinct. Choose a nontrivial additive character $\psi_k$ and use the perfect pairing
-
-$$
-(u,v)\longmapsto
-\psi_k\bigl(\operatorname{Tr}_{k_2/k}(uv^q)\bigr)
-$$
-
-to define finite Fourier transform. It exchanges the two Bruhat cells in the induced finite model. For an elliptic multiplication operator $x$, every off-diagonal translation term lies in a nontrivial additive-character orbit and sums to zero. The only stationary torus terms are the two embeddings $x$ and $x^q$. In the ambient two-cell representation they carry the weights $\bar\theta(x)$ and $\bar\theta(x^q)$; the cuspidal quotient is the alternating cell contribution, so its trace is their negative sum. The free $T$-orbit size cancels the denominator in $e_{\bar\theta}$, leaving no factor involving $q-1$. This proves (6.2), rather than merely predicting its sign.
+Formula (6.2) is a proved input from the finite cuspidal construction on the split side, not a guessed Deligne--Lusztig sign. That construction computes the full four-row character table: scalar, nontrivial unipotent, split regular, and elliptic regular. In its finite Fourier proof, all nonstationary translations cancel by additive-character orthogonality; the two stationary torus embeddings contribute $\bar\theta(x)$ and $\bar\theta(x^q)$, and passage to the cuspidal block contributes one alternating sign. Formula (6.1), by contrast, is the ordinary trace of an index-two induction and has a plus sign. Thus the already proved one-sided character formulas give the desired relative sign without importing a transfer theorem.
 
 This finite calculation is basis independent. Replacing the embedding of $k_2$ conjugates the multiplication operator, while replacing $x$ by $x^q$ exchanges the two displayed summands.
 
@@ -750,9 +747,11 @@ where $e$ is the common torus coordinate. The rectifier is trivial on the residu
 
 ### 6.3 All regular classes in the packet
 
-The preceding calculation begins on a type-regular unit set, but the packet identity is required on every matching regular class. At depth zero this extension can be checked directly. Modulo the center, $D^\times$ has two valuation classes. The inducing subgroup $E^\times U_D^1$ is the even class, and the other class is obtained by the normalizer element. The split compact-induction formula has the same two valuation configurations.
+The preceding calculation begins on a type-regular unit set, but the packet identity is required on every matching regular class. Central scaling makes a regular elliptic element integral, but it need not give regular elliptic reduction: elements arbitrarily close to a scalar have scalar reduction. The missing annuli require an argument.
 
-For a regular class, either its conjugates miss both inducing supports, in which case both characters vanish, or central scaling places it in the unit calculation of Section 6.2. The two normalizer embeddings then give exactly the two terms of (6.3). Hence
+Use the exact compact-induction formula on the split side. A regular elliptic element fixes a finite subtree in the lattice tree. Filter that subtree inward from its outer boundary. The one-sided depth-zero character table shows what happens when one outer shell is removed. At a nonterminal vertex with scalar reduction $z$, the scalar row contributes $(q-1)\bar\theta(z)$. The $q-1$ transverse directions have nontrivial unipotent reduction, and the unipotent row contributes $-\bar\theta(z)$ in each direction. Their total is therefore the negative scalar contribution. Removing the shell changes neither the total split trace nor its proposed negative division trace.
+
+The fixed subtree is finite: an unbounded fixed subtree would contain a ray, whose end would be an $F$-rational eigenline, contradicting ellipticity. Repeating the cancellation reaches a terminal vertex or terminal edge. The two terminal orientations are the two valuation configurations in the index-two division model. At the terminal piece the reduction is regular elliptic, so (6.1)--(6.3) apply. The telescoped split trace is therefore the negative of the complete division trace. Hence
 
 $$
 \Theta_{\pi(E,\theta)}(g)
@@ -760,7 +759,7 @@ $$
 \tag{6.4}
 $$
 
-for every matching regular pair in the depth-zero packet.
+for every matching regular pair in the depth-zero packet, including the scalar-reduction annuli. This proof is why local constancy alone is not enough: its neighborhoods shrink toward the singular center, whereas the finite shell cancellation controls every intervening annulus.
 
 ### 6.4 Why regularity cannot be omitted
 
@@ -831,7 +830,7 @@ $$
 \tag{7.4}
 $$
 
-Use reduced trace when $A=D$. After quotienting by the common radical and inserting the fixed tame rectifier, the normalized split and division Fourier traces differ by $-1$.
+Use reduced trace when $A=D$. After quotienting by the common radical and inserting the character-dependent tame rectifier, the normalized split and division Fourier traces differ by $-1$.
 
 **Proof.** Choose $j$ in the complement with
 
@@ -852,13 +851,29 @@ $$
 (u,v)\longmapsto u\sigma(v)-v\sigma(u).
 $$
 
-Changing $c$ to $c'$ changes the normalized finite Fourier index by
+Trace-dual coordinates reduce the complementary nondegenerate quotient to a two-dimensional $k$-space. The split quadratic phase is hyperbolic, while the division phase is anisotropic. For every nontrivial additive character $\bar\psi$ of $k$, their normalized sums are
+
+$$
+q^{-1}\sum_{u,v\in k}\bar\psi(uv)=1,
+\qquad
+q^{-1}\sum_{z\in k_2}\bar\psi(N_{k_2/k}z)=-1.
+\tag{7.4a}
+$$
+
+The first equality follows by summing over $v$: only $u=0$ survives. For the second, zero has one preimage under the norm and every $a\in k^\times$ has $q+1$ preimages, so the unnormalized sum is
+
+$$
+1+(q+1)\sum_{a\in k^\times}\bar\psi(a)
+=1-(q+1)=-q.
+$$
+
+Thus changing $c$ to $c'$ changes the normalized finite Fourier index by
 
 $$
 \omega_{E/F}(c'/c)=-1.
 $$
 
-A different choice of $j$, additive coordinate, or polarization multiplies both indices by the same norm-class factor. The remaining one-dimensional torus phase is precisely the phase removed by the rectifier in (5.4). Thus the quotient of the two intrinsic traces is exactly $-1$. $\square$
+A different choice of $j$, additive coordinate, or polarization multiplies both indices by the same norm-class factor. The direct torus extensions contribute one further one-dimensional Gauss phase. By its defining normalized Gauss-sum property, $\Delta_{E/F,\theta}$ removes that phase on both sides. Thus no unrecorded root of unity remains and the quotient of the two intrinsic traces is exactly $-1$. $\square$
 
 Tameness is used in reducing every relevant lattice quotient to this nondegenerate trace form. In a wild ramified quadratic extension the trace-dual jumps and extension operators can contain extra data; Lemma 7.1 makes no claim there.
 
@@ -904,7 +919,7 @@ $$
 
 with $(H,J,\Lambda)$ equal to either split or division data. A two-term formula used arbitrarily close to the center would therefore be false.
 
-We now pair the additional terms. Filter conjugate embeddings by the largest depth $r$ through which they agree with the fixed embedding of $E$. The $r$th shell is a finite affine space over the residue field. Matching trace and norm identify the affine parameters on the two sides. Conjugation by the next unit quotient acts transitively on each fiber, and the stabilizer is the radical of the commutator form.
+We now pair the additional terms. Let $\mathcal X_r$ and $\mathcal X'_r$ be the conjugate embeddings that agree with the fixed torus embedding through depth $r$ but not through depth $r+1$. The first discrepancy is a class in a quotient of the complement to $E$. The characteristic-polynomial equations say that its trace is zero and its norm is fixed; because the two elements match, these equations give the same affine parameter space on the split and division sides. Conjugation by the next unit quotient acts transitively on each fiber. Linearizing this action shows that its stabilizer is precisely the radical of the commutator form: a stabilizing class commutes with the leading coefficient $\beta$, hence lies in the already removed field direction.
 
 The sum over one shell has the form
 
@@ -915,7 +930,7 @@ $$
 \tag{7.8}
 $$
 
-Nonstationary affine fibers sum to zero by additive-character orthogonality. On stationary fibers, the quotient form in (7.8) is exactly the form of Lemma 7.1. The common torus lattice gives equal radical sizes, while the nondegenerate quotient sums differ by $-1$. Hence the entire $r$th split shell is the negative of the division shell.
+Nonstationary affine fibers sum to zero by additive-character orthogonality. On stationary fibers, the quotient form in (7.8) is exactly the complementary form of Lemma 7.1. At the closest-to-central shells the radical can grow, but it grows only in the common torus direction. The trace-dual $E$-lattices therefore give the same radical cardinality on both sides, while the nondegenerate quotient sums differ by $-1$. Hence the entire $r$th split shell is the negative of the division shell.
 
 There are only finitely many shells. Smoothness makes sufficiently deep unit conjugations act trivially, and regularity stops the filtration before the scalar locus. Summing (7.8) over all $r$ extends (7.6) to every matching regular pair.
 
@@ -1005,11 +1020,9 @@ Notice what proves surjectivity: the codomain was defined by the selected divisi
 
 Suppose $\rho'\in\mathcal D_{G'}$ has the character prescribed by a fixed $\pi\in\mathcal D_G$ on every matching regular class. If $\pi$ is special, equations (4.4)--(4.5) show that $\rho'$ agrees with a reduced-norm character on the dense regular locus. Equality of finite-dimensional characters then gives the same norm character.
 
-Suppose $\pi=\pi(E,\theta)$. At depth zero, restriction to regular elements of $k_2^\times$ gives the symmetric sum $\bar\theta+\bar\theta^q$. The common central character supplies the restriction on $k^\times$. Orthogonality on the finite cyclic group $k_2^\times$ then recovers the unordered orbit $\{\bar\theta,\bar\theta^q\}$.
+For a uniform proof, let $\pi'=\operatorname{JL}_{\mathrm{sel}}(\pi)$ be the companion already constructed. Then $\Theta_{\rho'}=\Theta_{\pi'}$ on $D^\times\setminus F^\times$. This set is dense: the center is a one-dimensional $F$-subspace of the four-dimensional algebra $D$ and has empty interior. Both representations are finite dimensional and smooth, so their ordinary trace functions are locally constant on all of $D^\times$. Equality on the dense regular set therefore extends to the center and to the identity; in particular, the dimensions and central characters agree.
 
-At positive depth, the first nonconstant unit layer of the character recovers the conjugacy orbit of $\beta$, hence its centralizer $E$. On a sufficiently fine finite quotient $C$ of $E^\times$, divide the type-regular character by its nonzero, already recovered Heisenberg factor. The result is $\theta+\theta^\sigma$. Its inner product with a character $\xi$ of $C$ is one exactly for $\xi=\theta$ or $\theta^\sigma$ and zero otherwise. Thus the pair is recovered up to equivalence.
-
-This proves uniqueness inside the selected codomain. It does not claim that a few numerical invariants exclude an arbitrary primitive wild representation; that stronger assertion is neither needed nor established.
+Choose a principal-unit group acting trivially on both representations and divide by the common scalar central action. The two representations then factor through one finite central extension of a finite quotient of the compact group $D^\times/F^\times$. Its characteristic-zero group algebra is semisimple. Irreducible characters are linearly independent there, so equality of trace functions implies $\rho'\simeq\pi'$. This proves uniqueness inside the selected codomain without dividing by a Heisenberg trace that might vanish on a particular class. It does not claim that a few numerical invariants exclude an arbitrary primitive wild representation; that stronger assertion is neither needed nor established.
 
 ## 9. Structural compatibilities
 
@@ -1141,7 +1154,7 @@ $$
 =1+\operatorname{Trd}(x)+\operatorname{Nrd}(x).
 $$
 
-If $x\in\mathfrak P_D^{2m-1}$ or $\mathfrak P_D^{2m}$, the first possible scalar trace lies in $\mathfrak p^m$. On the associated graded quotient it fills $\mathfrak p^m/\mathfrak p^{m+1}$ because $\operatorname{Tr}_{k_2/k}$ is surjective; the norm term is deeper. Successive lifting through the complete unit filtration proves that the image is all of $U_F^m$. Thus the division norm character first becomes trivial at the unit depth corresponding to exponent $2m$. On the split side the exceptional induced model has two inducing characters of conductor $m$, and the newvector theorem gives exponent $2m$ for the Steinberg constituent.
+If $x\in\mathfrak P_D^{2m-1}$ or $\mathfrak P_D^{2m}$, the first possible scalar trace lies in $\mathfrak p^m$. On the associated graded quotient it fills $\mathfrak p^m/\mathfrak p^{m+1}$ because $\operatorname{Tr}_{k_2/k}$ is surjective; the norm term is deeper. Successive lifting through the complete unit filtration proves that the image is all of $U_F^m$. Thus the division norm character first becomes trivial on $U_D^{2m-1}$. Its normalized division level is $2m-2$, so the transfer-facing conductor, defined as that level plus two, is $2m$. On the split side the exceptional induced model has two inducing characters of conductor $m$, and the newvector theorem gives exponent $2m$ for the Steinberg constituent.
 
 If $\mu$ is unramified, the norm character is already trivial on $\mathcal O_D^\times$, while the Steinberg twist has an Iwahori line and no hyperspecial line. The transfer-facing value one records this monodromy boundary. Hence
 
@@ -1210,7 +1223,38 @@ Thus the common parameter is compatible independently with both the central-char
 
 ### 10.5 Euler and epsilon factors
 
-Define the selected local factors from the common data (10.6)--(10.7), using the conventions of Chapter 1. Equality across transfer is then the precise statement that both representation constructions carry the same selected parameter label.
+The common data (10.6)--(10.7) predict the factors, but preservation would be circular if the division factors were merely declared to be the parameter factors. On the split side the earlier Whittaker functional equations calculate the factors independently. On $D^\times$, take a matrix coefficient $c$ and $\Phi_D\in C_c^\infty(D)$ and form
+
+$$
+Z_D(s,\Phi_D,c)
+=\int_{D^\times}\Phi_D(x)c(x)
+|\operatorname{Nrd}(x)|^{s+1/2}\,d^\times x.
+\tag{10.9a}
+$$
+
+Use the self-dual additive measure for $(x,y)\mapsto\psi(\operatorname{Trd}(xy))$ and the degree-two anisotropic Fourier normalization
+
+$$
+\mathcal F_D\Phi_D(y)
+=-\int_D\Phi_D(x)\psi(\operatorname{Trd}(xy))\,dx.
+\tag{10.9b}
+$$
+
+The minus sign is the Hasse sign of the nonsplit degree-two algebra. The functional equation for (10.9a), obtained by finite Fourier transform on sufficiently deep lattice quotients and passage to the limit, defines the analytic division-side $L$- and epsilon factors. We now compare these independent factors with (10.6)--(10.7).
+
+**Proposition 10.1 (division functional equation in the selected range).** For a selected irreducible $\pi'$ and its contragredient, the integrals (10.9a) span fractional ideals generated by rational functions of $q^{-s}$. With (10.9b), Fourier transform carries the normalized integral for $\pi'$ to that for $(\pi')^\vee$ multiplied by one scalar rational function. After removing the Euler generators, that scalar is the epsilon factor calculated below.
+
+**Proof strategy.** Reduce both the test function and the matrix coefficient to finite quotients of the maximal-order filtration. Fourier transform there is an ordinary finite transform. Trace-duality exchanges the two endpoint lattices, while Schur orthogonality makes the resulting scalar independent of the chosen matrix coefficient.
+
+**Proof.** Smoothness and finite dimensionality give $r$ such that $U_D^r$ acts trivially on $\pi'$. Subdivide $D^\times$ into cosets of $U_D^r$ and valuation shells. On every compact valuation interval, (10.9a) is a finite matrix sum. Only the shells approaching zero can form a tail. Multiplication by a prime element translates that tail by one shell, while its square is central; hence the tail satisfies a degree-at-most-two recurrence. The integral is therefore rational in $q^{-s}$.
+
+Reduced-trace duality gives
+
+$$
+(\mathfrak P_D^m)^\perp=\mathfrak P_D^{-m-1}.
+$$
+
+Thus (10.9b) sends a characteristic function of a coset of $\mathfrak P_D^m$ to an explicit character times the characteristic function of its annihilator. Such coset functions span the test space. On the finite quotients between the two lattices, applying Fourier transform twice is reflection, with the anisotropic Hasse scalar removed by the minus sign in (10.9b). Pair the resulting finite operator with matrix coefficients of $\pi'$ and $(\pi')^\vee$. Finite-group Schur orthogonality shows that the proportionality operator is scalar on the irreducible isotypic block and hence is independent of the chosen coefficient. Passing compatibly through deeper quotients proves the functional equation for every test function. Removing the geometric shell recurrences gives the Euler generators; the remaining scalar is a monomial times a finite Gauss sum, which is the epsilon factor. $\square$
 
 For a special packet,
 
@@ -1241,6 +1285,8 @@ $$
 \tag{10.11}
 $$
 
+These formulas also follow directly from (10.9a). Decomposing $D^\times$ into reduced-norm valuation shells gives the geometric series in (10.9) when $\mu$ is unramified; unit averaging kills that series when $\mu$ is ramified. Fourier reversal leaves one boundary shell in the unramified case, and the sign in (10.9b) makes its contribution (10.10). In the ramified case the two boundary unit sums are precisely the rank-one Gauss sums for $\mu|\cdot|^{1/2}$ and $\mu|\cdot|^{-1/2}$, giving (10.11). Thus the special division integral, the split Whittaker calculation, and the centered special block agree.
+
 For a dihedral packet, the inertia-invariant space of the irreducible two-dimensional induction is zero. Otherwise it would contain an unramified subrepresentation, contradicting irreducibility. Hence
 
 $$
@@ -1259,7 +1305,11 @@ $$
 \tag{10.13}
 $$
 
-The lambda factor is generally nontrivial for ramified $E/F$ and cannot be dropped. Its monomial exponent, together with the different shift in the conductor of $\psi_E$, is precisely (10.8). Therefore transfer preserves $L$-, epsilon-, and gamma factors with every normalization visible.
+The lambda factor is generally nontrivial for ramified $E/F$ and cannot be dropped. Its monomial exponent, together with the different shift in the conductor of $\psi_E$, is precisely (10.8). This is the parameter-side formula that the independent division integral must reproduce.
+
+It remains to verify that (10.13) is also the factor produced by (10.9a) for $\pi'(E,\theta)$. Choose a matrix coefficient supported on the inducing subgroup $J'$. Frobenius reciprocity reduces the integral to $J'$. On the simple-character subgroup, additive Fourier transform is the finite Heisenberg transform from Lemma 7.1. A maximal isotropic polarization cancels the variables complementary to $E$ in pairs. What remains is the rank-one Tate integral over $E^\times$ for $\theta$ and $\psi_E$. Comparison of the two self-dual measures contributes exactly $\lambda(E/F,\psi)$; the anisotropic sign in (10.9b) and the complementary Fourier index $-1$ cancel. Hence the division functional equation gives (10.13), not merely a factor assigned by the parameter label.
+
+Regularity makes the remaining unit average zero, so its Euler factor is one. This agrees with the parameter argument in (10.12) and with the split Kirillov calculation. We have therefore proved equality of the independently constructed split, division, and Weil--Deligne $L$- and epsilon factors. Equality of gamma factors follows from their definition in terms of $L$, epsilon, and the dual parameter.
 
 ### 10.6 Changes of additive character and measure
 
@@ -1361,9 +1411,9 @@ The exact sequence (4.3) and the fixed-point calculation are integral. Therefore
 
 At depth zero, the inducing characters are unit valued, so they preserve rank-one lattices. Finite induction gives stable lattices in both finite types.
 
-At positive depth, the simple character has $p$-power-order values. Since $\ell\ne p$, those values are units. Choose a maximal isotropic subgroup in the finite Heisenberg quotient and extend the simple character over it. Induction produces a finite free $R$-module. Its generic fiber is the irreducible Heisenberg representation. The averaging denominators in the finite Heisenberg construction are powers of $p$ and hence are units in $R$; the intertwining argument therefore remains valid over the chosen coefficient ring.
+At positive depth, the simple character has $p$-power-order values. Since $\ell\ne p$, those values are units. Choose a maximal isotropic subgroup in the finite Heisenberg quotient and extend the simple character over it. Finite induction produces a finite free $R$-module whose generic fiber is the irreducible Heisenberg representation.
 
-The tame torus extension operators may be scaled once so that they preserve these lattices. We obtain finite free type lattices
+Extending across the tame torus requires more care than scaling one operator: several projective extension operators must preserve one lattice simultaneously. Remove the unit-valued central scalar, choose any full lattice in the finite-dimensional extension space, and take the sum of its translates under representatives of the finite quotient through which the remaining action factors. This orbit sum is full, stable, finitely generated, and torsion free, hence finite free over the DVR $R$. It introduces no averaging denominator and proves existence even at nonbanal primes. We obtain finite free type lattices
 
 $$
 \Lambda_R\subset\Lambda_{\theta^\natural},
@@ -1380,21 +1430,19 @@ $$
 
 is finite free because the relevant coset set is finite modulo the central action. On the split side the full compact induction need not be finite over $R$, but every compact-open fixed module used to form the newvector is finite free.
 
-The Fourier sums in Lemma 7.1 are finite sums of integral roots of unity multiplied by powers of $q$. They therefore lie in $R$, although the sums themselves need not be units. The characteristic-zero comparison carries the chosen type lattices into commensurable lattices; saturation in the next section removes any scalar divisibility and preserves the label of the multiplicity spaces.
+The Fourier sums in Lemma 7.1 are finite sums of integral roots of unity multiplied by powers of $q$. They therefore lie in $R$, although the sums themselves need not be units. The characteristic-zero comparison identifies the labels of the one-dimensional multiplicity spaces; it does not give a canonical linear map between representations of different groups. Saturation in the next section removes the scalar ambiguity after an identification of those two lines is chosen.
 
 ### 12.4 Saturated multiplicity lines
 
-Let $M_R$ be the finite free fixed module in which the split type or newvector line occurs. Intersect the one-dimensional $L$-multiplicity space with $M_R$ and saturate:
+Let $M_R$ be the finite free fixed module in which the split type or newvector line $\mathcal L_L$ occurs. Its integral line is the saturated intersection
 
 $$
-\mathcal L_R
-=\{m\in M_R:\text{some nonzero }a\in R
-\text{ has }am\text{ in the intersection}\}.
+\mathcal L_R=M_R\cap\mathcal L_L.
 $$
 
-Then $M_R/\mathcal L_R$ is torsion free, so $\mathcal L_R$ is a rank-one direct summand. The same construction gives a division multiplicity line $\mathcal L'_R$.
+Indeed, if $a m\in\mathcal L_R$ for nonzero $a\in R$ and $m\in M_R$, then $m\in\mathcal L_L$ because $\mathcal L_L$ is an $L$-subspace; hence $m\in\mathcal L_R$. Thus $M_R/\mathcal L_R$ is torsion free, so $\mathcal L_R$ is a rank-one direct summand. The same construction gives a division multiplicity line $\mathcal L'_R$.
 
-The characteristic-zero transfer comparison maps one multiplicity space to the other. Multiplying the map by one element of $L^\times$ makes a primitive generator map to a primitive generator. Any two such normalizations differ by $R^\times$. Thus there is a well-defined correspondence
+The character comparison identifies the two lines by their common selected label but supplies no preferred bases. Choose any nonzero $L$-linear identification between them. Multiplying it by one element of $L^\times$ makes a primitive generator map to a primitive generator. Any two such primitive normalizations differ by $R^\times$. Thus there is a well-defined correspondence
 
 $$
 \mathcal L_R\longleftrightarrow\mathcal L'_R
@@ -1426,11 +1474,18 @@ The split newvector lattice pairs perfectly with the contragredient newvector la
 
 ### 12.6 Reduction and the nonbanal boundary
 
-Stable lattices and their reductions always exist under the unit-valued and $\ell\ne p$ hypotheses. Irreducibility and multiplicity one after reduction require more. Assume that $\ell$ does not divide the orders of the finite tame quotients, stabilizers, and coset permutation groups controlling the selected type. Then averaging remains exact, the reduced intertwining calculation is unchanged, and the two reduced multiplicity lines remain one dimensional. The perfect pairing remains nondegenerate.
+Stable lattices and their reductions always exist under the unit-valued and $\ell\ne p$ hypotheses. Irreducibility and multiplicity one after reduction require more. A uniform sufficient banal condition for every selected quadratic type here is
+
+$$
+\ell\nmid q(q-1)(q+1).
+\tag{12.4}
+$$
+
+Indeed, the congruence and Heisenberg quotients are $p$-groups, while the remaining depth-zero, torus-normalizer, stabilizer, and coset factors divide products of $q-1$ and $q+1$. Under (12.4) every relevant finite averaging idempotent is defined over $R$, the reduced intertwining calculation is unchanged, and the two reduced multiplicity lines remain one dimensional. The perfect pairing remains nondegenerate. More economically, one may replace (12.4) by the exact requirement that $\ell$ divide none of the finitely many controlling quotient orders for the chosen type; (12.4) is the packet-uniform hypothesis used here.
 
 If $\ell$ divides $q+1$, two distinct depth-zero characters of $k_2^\times$ can become congruent to their Frobenius conjugates. The reduced index-two induction may split or acquire new endomorphisms. At positive depth the Heisenberg quotient is a $p$-group and causes no problem when $\ell\ne p$, but its tame normalizer can have order divisible by $q-1$ or $q+1$. Projectors to tame eigenspaces may then cease to be exact.
 
-The correct conclusion has two layers. Finite free stable lattices, saturated selected lines, and perfect contragredient pairings hold for integral labels with $\ell\ne p$. Preservation of irreducibility and multiplicity under reduction additionally requires the stated banal hypotheses.
+The correct conclusion has two layers. Finite free stable lattices, saturated selected lines, and perfect contragredient pairings hold for integral labels with $\ell\ne p$. Preservation of irreducibility and multiplicity under reduction additionally requires (12.4), or the equivalent type-by-type nondivisibility condition just stated.
 
 ## 13. Worked packets and boundary tests
 
@@ -1575,7 +1630,7 @@ The construction is governed by the following linked choices:
 | Frobenius | geometric |
 | reciprocity | $\operatorname{rec}_F(\varpi)=\Phi$ |
 | special block | centered $\operatorname{Sp}_2$ |
-| quadratic type label | $\theta^\natural=\theta\Delta_{E/F}$ |
+| quadratic type label | $\theta^\natural=\theta\Delta_{E/F,\theta}$ |
 | additive conductor | $n(\psi)=0$ for kernel $\mathcal O$ |
 | epsilon measure | self-dual for $\psi$ |
 | torus measure | $\operatorname{vol}(\mathcal O_E^\times)=1$ |
@@ -1604,7 +1659,7 @@ Every row respects twisting. In the special column replace $\mu$ by $\mu\chi$. I
 
 ### 15.2 Main theorem
 
-**Theorem 15.1 (local Jacquet--Langlands in the selected range).** Let $F$ be a nonarchimedean local field and let $D/F$ be the quaternion division algebra. There is a unique bijection
+**Theorem 15.1 (local Jacquet--Langlands in the selected range).** Let $F$ be a nonarchimedean local field of characteristic zero and let $D/F$ be the quaternion division algebra. There is a unique bijection
 
 $$
 \operatorname{JL}_{\mathrm{sel}}:

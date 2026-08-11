@@ -107,7 +107,7 @@ any resulting corrections.
 - [x] 081. Local Langlands in the Principal, Special, and Dihedral Cases
 - [x] 082. Representations of Quaternion Division Algebras
 - [x] 083. Characters and Dihedral Types on Quaternion Division Algebras
-- [ ] 084. Local Jacquet–Langlands
+- [x] 084. Local Jacquet–Langlands
 - [x] 085. Local Jacquet–Langlands for Special and Dihedral Packets
 - [ ] 086. Cyclic Base Change: Local Theory
 - [x] 087. Quaternion Algebras over Number Fields
