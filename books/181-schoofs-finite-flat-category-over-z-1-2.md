@@ -168,7 +168,7 @@ The development culminates in four assertions.
    \longrightarrow G^{\mathrm c}\longrightarrow0,
    $$
    where $G^{\mathrm m}$ is of multiplicative type and $G^{\mathrm c}$ is constant.
-4. Let $A$ be a finite quotient of $\mathbf Z_3$, let $W$ be free of rank two over $A$, and suppose its Galois action is modeled by an object of $\mathcal S$ and has determinant $\chi_3$. Then
+4. Let $A$ be a finite local quotient of the ring of integers in a finite extension of $\mathbf Q_3$, let $W$ be free of rank two over $A$, and suppose its Galois action, including the $A$-action, is modeled by an object of $\mathcal S$ and has determinant $\chi_3$. Then
    $$
    \operatorname{tr}\rho(g)=1+\chi_3(g)
    \qquad(g\in G_{\mathbf Q}).
@@ -201,7 +201,7 @@ for its finite-dimensional commutative Hopf algebra over $\mathbf Q$.
 
 For every odd prime $q\ne3$, unramifiedness gives a unique finite etale group $G_q/\mathbf Z_q$ with generic fiber $G_{\mathbf Q_q}$. Its coordinate ring $B_q\subset B\otimes\mathbf Q_q$ is a finite free Hopf order. At $q=3$, choose the supplied finite-flat model and call its coordinate order $B_3$. This order need not be etale.
 
-Only finitely many of these local orders differ from an evident integral lattice. To make that statement precise, choose any $R$-lattice $L_0\subset B$ containing $1$ and spanning $B$. After multiplying finitely many generators by one odd integer, all Hopf structure maps carry $L_0$ into the required tensor lattices away from finitely many primes. At every remaining prime use $B_q$. Thus the local data are restricted rather than an uncontrolled infinite intersection.
+Only finitely many of these local orders differ from one global order. Here is the required spreading argument. Choose a $\mathbf Q$-basis of $B$ containing $1$ and write the multiplication, coproduct, counit, and antipode in that basis. After inverting one odd integer $N$, all their structure constants are integral. The free $R[1/N]$-module on that basis is then directly a Hopf algebra $B^{(N)}$ with generic fiber $B$. After increasing $N$ once more, its trace discriminant is a unit, so $B^{(N)}$ is finite etale. For every odd $q\nmid N$, both $B^{(N)}\otimes\mathbf Z_q$ and $B_q$ are finite etale models of the same generic group; henselian uniqueness identifies them. At the finitely many primes dividing $N$, and at $3$ if necessary, retain the prescribed $B_q$. Thus the family of local orders satisfies the restrictedness hypothesis of Lemma 2.1; the intersection below is not an uncontrolled infinite intersection.
 
 ### 2.3 Intersection of lattices
 
@@ -263,7 +263,7 @@ This proof also shows that a coefficient action glues. An endomorphism of the ra
 
 ### 2.5 Uniqueness and exceptional cases
 
-The theorem gives uniqueness relative to the local orders: an $R$-lattice is the intersection of its height-one localizations. It does not say that a generic module has only one finite-flat model at $3$. The constant and multiplicative models already show otherwise after a field extension containing the relevant roots of unity.
+The theorem gives uniqueness relative to the local orders: an $R$-lattice is the intersection of its height-one localizations. It does not say that a generic module has only one finite-flat model over an arbitrary ramified $3$-adic base. After a ramified extension containing the relevant roots of unity, constant and multiplicative-type models can have isomorphic generic fibers while retaining different special fibers. Over the unramified base $\mathbf Z_3$, order-three models are more rigid; the precise dichotomy used later is proved in §6.5.
 
 Three hypotheses are essential. If the base had dimension greater than one, torsion-free would not imply locally free. If the module were ramified at an odd $q\ne3$, there would be no finite etale order at that prime. If one specified only a model after a ramified extension of $\mathbf Q_3$, descent of the generic module would not descend the Hopf lattice. The gluing theorem uses an actual model over $\mathbf Z_3$.
 
@@ -499,7 +499,7 @@ F=\mathbf Q
 F=K:=\mathbf Q(\zeta_3).
 $$
 
-**Proof strategy.** Remove ramification at $2$ by the structure of tame abelian extensions of $\mathbf Q_2$, remove positive wild depth at $3$ by Herbrand theory, and then use inertia and Minkowski's bound to limit the global degree.
+**Proof strategy.** Remove ramification at $2$ by the structure of tame abelian extensions of $\mathbf Q_2$, remove positive wild depth at $3$ by Hasse--Arf integrality in upper numbering, and then use inertia and Minkowski's bound to limit the global degree.
 
 **Proof.** In an abelian tame extension of a local field with residue field $\mathbf F_q$, the ramification index divides $q-1$. Indeed, if $\pi_L$ is a uniformizer, the tame character
 
@@ -511,13 +511,13 @@ $$
 
 is injective. Commutation with residue Frobenius sends a tame generator to its $q$th power and, in an abelian group, fixes it; hence its order divides $q-1$. For $\mathbf Q_2$, $q-1=1$. Thus every abelian quotient is unramified at $2$.
 
-At $3$, the finite-flat bound puts every positive upper break below or at $1/2$. Herbrand's theorem for abelian extensions says that upper breaks are integers. Hence there is no positive break. The extension is at most tame at $3$, and the same tame-character argument makes the inertia order divide $3-1=2$.
+At $3$, the finite-flat bound puts every positive upper break below or at $1/2$. The Hasse--Arf theorem says that the upper breaks of an abelian extension are integers. Hence there is no positive break. The extension is at most tame at $3$, and the same tame-character argument makes the inertia order divide $3-1=2$.
 
 Let $I$ be the inertia subgroup at $3$. It has order at most two. The fixed field $F^I$ is unramified at every finite prime. If it were nontrivial, its relative discriminant over $\mathbf Q$ would be the unit ideal, so its absolute root discriminant would be $1$, contradicting Minkowski's bound. Thus $F^I=\mathbf Q$ and $[F:\mathbf Q]=|I|\le2$.
 
 If the degree is two, its discriminant is a fundamental quadratic discriminant supported only at $3$. A squarefree presentation $\mathbf Q(\sqrt d)$ has discriminant $d$ when $d\equiv1\pmod4$ and $4d$ otherwise. Avoiding the prime $2$ leaves only $d=-3$, so $F=\mathbf Q(\sqrt{-3})=\mathbf Q(\zeta_3)$. $\square$
 
-The Herbrand step is indispensable. A nonabelian finite-flat field can have a fractional upper break at $3$; only after passing to an abelian quotient does integrality force it away.
+The upper-numbering step is indispensable. Herbrand's quotient theorem passes the finite-flat cutoff to the abelian quotient, and Hasse--Arf then makes its breaks integral. A nonabelian finite-flat field can have a fractional upper break at $3$; only after passing to an abelian quotient does integrality force it away.
 
 ### 5.3 Arithmetic of $\mathbf Q(\zeta_3)$
 
@@ -648,7 +648,13 @@ The action is faithful by definition of its cutout field.
 
 Chapter 4 gives $|G|\le33$. Every group of order at most thirty-three is solvable.
 
-Here is a proof suited to the exact range. Groups of prime-power order are solvable because their centers are nontrivial and induction applies to the central quotient. For a mixed order at most $33$, a Sylow subgroup for the largest prime is normal except possibly at orders $12$, $24$, and $30$. At order $12$, the Sylow $3$-subgroup is normal or the four Sylow $3$-subgroups give a homomorphism to $S_4$ whose image is contained in the solvable group $A_4$. At order $24$, the same action has solvable image in $S_4$ and kernel of smaller order. At order $30$, if neither a Sylow $5$-subgroup nor a Sylow $3$-subgroup were normal, there would be six Sylow $5$-subgroups and ten Sylow $3$-subgroups. Their nonidentity elements are disjoint, giving $6\cdot4+10\cdot2=44$ nonidentity elements in a group of order $30$, a contradiction. A normal Sylow subgroup or a nontrivial action kernel reduces the assertion to smaller groups, so induction proves solvability in every case.
+Here is a proof suited to the exact range. Groups of prime-power order are solvable because their centers are nontrivial and induction applies to the central quotient. For a mixed order at most $33$, the Sylow congruences show that the Sylow subgroup for the largest prime is normal except possibly at orders $12$, $24$, and $30$: the only possible orders are
+
+$$
+6,10,12,14,15,18,20,21,22,24,26,28,30,33,
+$$
+
+and the assertion is immediate from $n_p\equiv1\pmod p$ and $n_p\mid |G|/p$ outside those three exceptions. At order $12$ or $24$, the Sylow $3$-subgroup is either normal or there are four such subgroups. In the latter case conjugation on them gives a homomorphism to $S_4$. Its image is solvable, and its kernel, being of smaller order, is solvable by induction. At order $30$, if neither a Sylow $5$-subgroup nor a Sylow $3$-subgroup were normal, there would be six Sylow $5$-subgroups and ten Sylow $3$-subgroups. Their nonidentity elements are disjoint, giving $6\cdot4+10\cdot2=44$ nonidentity elements in a group of order $30$, a contradiction. A normal Sylow subgroup has solvable prime-power kernel and smaller solvable quotient. This completes the induction.
 
 If $G$ were nontrivial and perfect, its derived series would never reach the identity, contradicting solvability. Thus a nontrivial $G$ has nontrivial abelianization.
 
@@ -668,7 +674,7 @@ unless $G$ is already trivial.
 
 We claim that $H$ is a $3$-group. Suppose a prime $r\ne3$ divides $H^{\mathrm{ab}}$. Choose a quotient $H\twoheadrightarrow C_r$. Its kernel need not be normal in $G$, so intersect it with its conjugate under a lift of the nontrivial element of $G/H$. The resulting subgroup is normal in $G$ and gives a nontrivial elementary abelian $r$-extension $E/K$ which is Galois over $\mathbf Q$.
 
-At the prime over $2$, the residue field of $K$ is $\mathbf F_4$. In a tame abelian local extension the ramification index divides $4-1=3$. Hence the $r$-extension is unramified there because $r\ne3$. At $\lambda$, a prime-to-$3$ quotient is at most tamely ramified. Proposition 5.3 excludes the resulting elementary abelian $r$-extension. This contradiction proves that $H^{\mathrm{ab}}$ is a $3$-group.
+The polynomial $X^2+X+1$ of $\zeta$ remains irreducible modulo $2$, so $2$ is inert in $K$ and the residue field at its unique prime is $\mathbf F_4$. In a tame abelian local extension the ramification index divides $4-1=3$. Hence the $r$-extension is unramified there because $r\ne3$. At $\lambda$, a prime-to-$3$ quotient is at most tamely ramified. Proposition 5.3 excludes the resulting elementary abelian $r$-extension. This contradiction proves that $H^{\mathrm{ab}}$ is a $3$-group.
 
 If $H\ne1$, solvability makes $H^{\mathrm{ab}}$ nontrivial. Since $|H|\le16$, only the orders $3$, $6$, $9$, $12$, and $15$ need attention. A group of order $6$ is cyclic or isomorphic to $S_3$, so its abelianization is not a nontrivial $3$-group. Every group of order $15$ is cyclic: the Sylow $5$-subgroup is normal, and the conjugation map from a Sylow $3$-subgroup to its automorphism group of order four is trivial. Thus order $15$ is also impossible.
 
@@ -710,7 +716,13 @@ $$
 \quad\text{or}\quad(1,0).
 $$
 
-The first is etale and the second is of multiplicative type. The generic characters distinguish them: the globally trivial character has the constant model $C$, while $\overline\chi_3$ has the model $M$. The finite etale models at every other odd prime are already unique, and Hopf-order gluing identifies the global object.
+The first is etale and the second is of multiplicative type. The valuation alone does not discard possible unramified unit twists, so one more argument is required. In the etale case, henselian finite-etale descent says that the integral model is uniquely determined by its unramified generic character. The globally trivial character therefore has the constant model $C$. In the multiplicative case, Cartier duality turns the group into an etale order-three group whose generic character is
+
+$$
+\overline\chi_3\,\overline\chi_3^{-1}=1.
+$$
+
+Its dual is therefore constant, so the original group is $M$. The finite etale models at every other odd prime are already unique, and Hopf-order gluing identifies the global object. This argument uses both the Oort--Tate endpoint dichotomy and the generic character; the valuation pair by itself would not identify a twisted endpoint.
 
 We have proved the central classification.
 
@@ -1016,7 +1028,7 @@ At the prime over $2$, the class of the rational unit $2$ is a uniformizer rathe
 
 ### 8.4 Higher Kummer levels
 
-For $n\ge1$, an extension
+For $n\ge1$, consider an extension
 
 $$
 0\to\mu_{3^n}\to E\to
@@ -1024,7 +1036,23 @@ $$
 \tag{8.3}
 $$
 
-is obtained from a Kummer class $q\in R^\times/R^{\times3^n}$. Compatibility under multiplication by $3$ sends the class modulo $3^{n+1}$ to its reduction modulo $3^n$. By (8.1), a compatible system is an element
+which is killed by $3^n$. Pulling back over $1\in\underline{\mathbf Z/3^n\mathbf Z}(R)$ gives a $\mu_{3^n}$-torsor. Conversely, repeated contracted products of such a torsor give the fibers over all residue classes, and the group law is the carry law of §7.4 with $3$ replaced by $3^n$. The contracted $3^n$th power needs a trivialization. Two trivializations differ by $\mu_{3^n}(R)$, which is trivial because $R\subset\mathbf Q$ contains no nontrivial $3$-power root of unity. Thus pullback over $1$ gives a bijection
+
+$$
+\operatorname{Ext}^1_{[3^n]=0}
+\left(\underline{\mathbf Z/3^n\mathbf Z},\mu_{3^n}\right)
+\simeq H^1(R,\mu_{3^n})
+\simeq R^\times/R^{\times3^n}.
+\tag{8.3a}
+$$
+
+The killed-by-$3^n$ qualification is automatic for the levels of a $3$-divisible extension. Indeed, multiplication by $3^n$ on the middle term factors through a morphism from the constant quotient to the multiplicative subgroup. Such a morphism is zero: on generic fibers the image of $1$ would be a rational $3$-power root of unity, and $\mathbf Q$ has no nontrivial one of any order. Hence every finite level in the all-level application is represented by a Kummer class
+
+$$
+q\in R^\times/R^{\times3^n}.
+$$
+
+Compatibility under multiplication by $3$ sends the class modulo $3^{n+1}$ to its reduction modulo $3^n$. By (8.1), a compatible system is an element
 
 $$
 a\in\varprojlim_n\mathbf Z/3^n\mathbf Z=\mathbf Z_3,
@@ -1032,7 +1060,7 @@ $$
 
 and its level-$n$ parameter is $2^{a_n}$, where $a_n$ is the image of $a$ modulo $3^n$.
 
-No additional class appears at infinite level. The sign is uniquely divisible by odd powers, the Picard group is zero, and the inverse system in (8.1) has surjective transition maps, so there is no inverse-limit obstruction.
+No additional class appears at infinite level. The sign is uniquely divisible by odd powers, the Picard group is zero, and the inverse system in (8.1) has surjective transition maps, so there is no inverse-limit obstruction. Equation (8.3a) proves both surjectivity and injectivity of the parameter: it is not merely a construction of some examples.
 
 ### 8.5 The one-motive model
 
@@ -1123,7 +1151,7 @@ $$
 \tag{9.1}
 $$
 
-This subgroup is independent of the chosen sorted series. Indeed, any morphism from a multiplicative-type object to a constant object is zero. After passing to $\mathbf Z_3$, the special fiber of the source is connected and that of the target is etale, so the map is the identity section on the special fiber; faithfulness and the rigidity of the endpoint models make it zero. Therefore every multiplicative subgroup of $G$ maps trivially to $G^{\mathrm c}$ and lies in $G^{\mathrm m}$. Hence $G^{\mathrm m}$ is the unique maximal multiplicative subgroup. Dually, $G^{\mathrm c}$ is the unique maximal constant quotient.
+This subgroup is independent of the chosen sorted series. Indeed, any morphism from a multiplicative-type object to a constant object is zero. After base change to $\mathbf Z_3$, it factors through the maximal etale quotient of its source. The source has connected special fiber, so that quotient is trivial; hence the localized morphism is zero. Its generic fiber is consequently zero, and faithfulness of the global generic-fiber functor makes the original morphism zero. Therefore every multiplicative subgroup of $G$ maps trivially to $G^{\mathrm c}$ and lies in $G^{\mathrm m}$. Hence $G^{\mathrm m}$ is the unique maximal multiplicative subgroup. Dually, $G^{\mathrm c}$ is the unique maximal constant quotient.
 
 **Theorem 9.2 (multiplicative--constant filtration).** Every object of $\mathcal S$ has the canonical exact sequence (9.1). Formation of this sequence is functorial for morphisms in $\mathcal S$ and compatible with Cartier duality, which exchanges the filtration with its quotient-dual filtration.
 
@@ -1297,13 +1325,27 @@ $$
 N=\varprojlim_nN_n
 $$
 
-embeds as the closed $\mathbf Z_3$-submodule
+embeds in $T$. To identify it without hiding a completion, first form the ordinary algebraic submodule
 
 $$
-N=\sum_g(\rho(g)-1)T
+N^{\mathrm{alg}}=\sum_g(\rho(g)-1)T.
 $$
 
-of $T$. Passing (10.4) through the inverse limit gives
+Because $T$ is a noetherian $\mathbf Z_3$-module, finitely many augmentation images generate $N^{\mathrm{alg}}$. It is therefore finitely generated and $3$-adically closed. Its image in $T_n$ is exactly $N_n$: one inclusion is immediate, while every generator of $N_n$ is the reduction of the corresponding generator upstairs. Completeness and separatedness now give
+
+$$
+N^{\mathrm{alg}}
+\simeq\varprojlim_n N^{\mathrm{alg}}/(N^{\mathrm{alg}}\cap3^nT)
+=\varprojlim_nN_n.
+$$
+
+We henceforth write this common submodule as
+
+$$
+N=\sum_g(\rho(g)-1)T.
+$$
+
+Passing (10.4) through the inverse limit gives
 
 $$
 (\rho(h)-\chi_3(h))(\rho(g)-1)=0
@@ -1369,7 +1411,27 @@ $$
 0\to G_n\to G_{n+m}\xrightarrow{3^n}G_m\to0
 $$
 
-and $|G_n|=3^{2n}$. It defines a $3$-divisible group $G$ of height two over $R$. Applying the canonical filtration at every level and using maximality makes the multiplicative subgroups compatible. Their heights are one because the residual level has one $M$-factor and one $C$-factor. Passing to the fppf colimit gives
+and suppose that $V(G_n)$ is free of rank two over $\mathbf Z/3^n\mathbf Z$, with compatible coefficient action and determinant $\chi_3$. In particular, $|G_n|=3^{2n}$. The system defines a $3$-divisible group $G$ of height two over $R$. Applying the canonical filtration at every level and using functoriality makes the multiplicative subgroups compatible.
+
+We spell out the height assertion, since unrelated levelwise filtrations would not suffice. Multiplication by $3^n$ sends $G_{n+m}^{\mathrm m}$ into $G_m^{\mathrm m}$ by functoriality. The induced map is faithfully flat. To see this, its generic cokernel is simultaneously a quotient of a multiplicative-type group and a subgroup of the constant group $G_m/G_m^{\mathrm m}$; it must vanish because every morphism from a multiplicative-type object to a constant object vanishes. Its kernel is the maximal multiplicative subgroup of $G_n$, hence $G_n^{\mathrm m}$. Thus
+
+$$
+0\longrightarrow G_n^{\mathrm m}\longrightarrow
+G_{n+m}^{\mathrm m}\xrightarrow{3^n}G_m^{\mathrm m}
+\longrightarrow0
+$$
+
+is exact, and the constant quotients satisfy the parallel exact sequence.
+
+At level one, the determinant argument of §10.5 gives exactly one $M$-factor and one $C$-factor. Exact divisibility and rank multiplicativity now give inductively
+
+$$
+|G_n^{\mathrm m}|=3^n,
+\qquad
+|G_n/G_n^{\mathrm m}|=3^n.
+$$
+
+The two compatible systems therefore have height one. Passing to the fppf colimit gives
 
 $$
 0\longrightarrow\mu_{3^\infty}
@@ -1378,7 +1440,7 @@ $$
 \tag{11.5}
 $$
 
-The extension classes form the inverse limit (8.1), hence are parameterized by $a\in\mathbf Z_3$. The value $a=0$ gives the split divisible group. The value $a=1$ gives the one-motive extension attached to $2$, and general $a$ is its $3$-adic Baer multiple. Thus the all-level devissage classifies not only the rational constituents but also the single integral extension direction allowed by the category.
+After choosing compatible identifications of the height-one ends with $\mu_{3^\infty}$ and $\mathbf Q_3/\mathbf Z_3$, the framed extension classes form the inverse limit (8.1), hence are parameterized by $a\in\mathbf Z_3$. Changing generators of an end changes this coordinate by the corresponding $3$-adic unit, so the coordinate is not intrinsic to an unframed middle group. The value $a=0$ gives the split divisible group. With the standard generators, $a=1$ gives the one-motive extension attached to $2$, and general $a$ is its $3$-adic Baer multiple. Thus the all-level devissage classifies not only the rational constituents but also the single integral extension direction allowed by the category.
 
 ## 12. Examples and boundary cases
 
@@ -1452,7 +1514,7 @@ $$
 
 and the explicit discriminant lower bound forces every exponent-three cutout field to have degree at most thirty-three. Cubic inertia sharpens the ceiling to $3^{3/2}2^{2/3}$ and the degree to twenty; that refinement removes the sole $A_4$ commutator case left by the broad estimate.
 
-That finite arena makes the simple-factor classification possible. Herbrand integrality removes positive abelian depth at $3$; the tame-character calculation removes abelian ramification at $2$ over the rationals; the explicit ray calculation over $\mathbf Q(\zeta_3)$ has no prime-to-three quotient. Solvability and the fixed-point lemma for normal $3$-groups then leave exactly the constant group $C$ and the multiplicative group $M$.
+That finite arena makes the simple-factor classification possible. Herbrand quotient compatibility and Hasse--Arf integrality remove positive abelian depth at $3$; the tame-character calculation removes abelian ramification at $2$ over the rationals; the explicit ray calculation over $\mathbf Q(\zeta_3)$ has no prime-to-three quotient. Solvability and the fixed-point lemma for normal $3$-groups then leave exactly the constant group $C$ and the multiplicative group $M$.
 
 The extension table supplies the finer answer that semisimplification alone misses. Same-type factors build constant groups and their multiplicative duals. The reverse mixed extension vanishes, so every filtration can be sorted. The forward mixed extension is one-dimensional and generated by the Kummer class of $2$, so the sorted filtration need not split. Through all levels that class becomes a single $\mathbf Z_3$-parameter.
 
