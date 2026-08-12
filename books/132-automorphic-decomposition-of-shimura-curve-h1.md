@@ -52,11 +52,13 @@
   - [10.2 Old level and the multiplicity module](#102-old-level-and-the-multiplicity-module)
   - [10.3 The double-centralizer extraction](#103-the-double-centralizer-extraction)
   - [10.4 Independence of auxiliary splitting data](#104-independence-of-auxiliary-splitting-data)
+  - [10.5 The polarized double-centralizer](#105-the-polarized-double-centralizer)
 - [11. Hodge, de Rham, and Galois realizations](#11-hodge-de-rham-and-galois-realizations)
   - [11.1 Weight-one Hodge structures](#111-weight-one-hodge-structures)
   - [11.2 De Rham blocks](#112-de-rham-blocks)
   - [11.3 Etale blocks and continuous Galois action](#113-etale-blocks-and-continuous-galois-action)
   - [11.4 Duality on an isolated constituent](#114-duality-on-an-isolated-constituent)
+  - [11.5 Component covariance and the determinant line](#115-component-covariance-and-the-determinant-line)
 - [12. Good primes and Frobenius](#12-good-primes-and-frobenius)
   - [12.1 The good-prime hypotheses](#121-the-good-prime-hypotheses)
   - [12.2 The geometric Frobenius polynomial](#122-the-geometric-frobenius-polynomial)
@@ -173,9 +175,9 @@ No normalized Satake square root occurs in (1.2).
 
 ### 1.4 What is proved, and what is not
 
-We prove a Hecke-equivariant automorphic decomposition of constant-coefficient $H^1$, including the precise fixed-level and archimedean multiplicities. We descend the decomposition to rational blocks, identify their coefficient fields, transport them to de Rham and etale cohomology, and isolate a two-dimensional Galois-stable multiplicity space from each simple weight-two Hecke block. At a good prime, geometric Frobenius on that space satisfies the specialization of (1.2). Identifying this annihilating polynomial with the characteristic polynomial needs one further argument unless Frobenius is known to be nonscalar.
+We prove a Hecke-equivariant automorphic decomposition of constant-coefficient $H^1$, including the precise fixed-level and archimedean multiplicities. We descend the decomposition to rational blocks, identify their coefficient fields, transport them to de Rham and etale cohomology, and isolate a two-dimensional Galois-stable multiplicity space from each simple weight-two Hecke block. For the basic group $\operatorname{Res}_{F/\mathbf Q}B^\times$, the contragredient is the canonical finite reduced-norm twist. Its component multiplier is defined after a normal fine refinement, and a pull--trace construction returns the resulting form to the original level. The compact automorphic mass pairing is then symmetric and perfect on the complete finite-level module, including all oldvectors. Factoring the Jacobian polarization through these data gives an alternating self-pairing on the rank-two factor with its exact Tate and central-component twist. Consequently the determinant is known independently, and at a good prime the specialization of (1.2) is the characteristic polynomial even when Frobenius is scalar.
 
-Several nearby statements are deliberately not folded into this theorem. We do not assert irreducibility or semisimplicity of the resulting Galois representation, determine its determinant at every Galois element, or prove local--global compatibility at bad places. We do not construct residual representations or canonical integral direct summands. Those require additional arguments.
+Several nearby statements are deliberately not folded into this theorem. We do not assert irreducibility or semisimplicity of the resulting Galois representation or prove local--global compatibility at bad places. We do not construct residual representations or canonical integral direct summands. For a connected central modification, equality of adjoint data alone does not produce the character identifying a packet with its contragredient; the polarized conclusion is asserted there only under the explicit hypothesis (10.8) on the actual abelian quotient. The determinant identity is a characteristic-zero consequence of the Poincare form and the descended self-transpose return correspondence; perfect integral reduction of the resulting form still requires its discriminant and all projector, component, level-return, and Morita denominators to be units.
 
 The phrase **parallel weight two** will first refer intrinsically to a representation of $B^\times(\mathbf A_F)$: minimal weight-two discrete series at the unique split real place and trivial algebraic type on the compact adjoint group at every ramified real place, with the compatible scalar central character. Local Jacquet--Langlands identifies the latter compact type with weight two. When a global split transfer is already supplied under the exact hypotheses of global Jacquet--Langlands, the same phrase agrees with parallel weight two on $\operatorname{GL}_2(\mathbf A_F)$. We do not use a theorem proved only for a totally definite algebra to manufacture a transfer for an arbitrary one-split-place algebra.
 
@@ -346,7 +348,7 @@ $$
 C_K\xleftarrow{s}Z\xrightarrow{t}C_K,
 $$
 
-it acts on $J_K$ by $t_*s^*$ and on cohomology by the same pull--trace formula. The Kummer isomorphism (3.4) intertwines the two actions. Thus the lattice
+with $t$ the source leg and $s$ the target leg, it acts on $J_K$ by $s_*t^*$ and on cohomology by the same pull--trace formula. The Kummer isomorphism (3.4) intertwines the two actions. Thus the lattice
 
 $$
 \Lambda_\ell=H^1_{\mathrm{et}}(C_{K,\bar E},\mathbf Z_\ell) \tag{3.6}
@@ -379,6 +381,22 @@ $$
 $$
 
 For the adelic correspondence, $T(a)^t=T(a^{-1})$, with any central similitude factor already included in the chosen double-coset convention. The same adjunction is Rosati adjunction on $J_K$.
+
+This statement is integral and componentwise. On
+
+$$
+\Lambda_\ell=H^1_{\mathrm{et}}(C_{K,\bar E},\mathbf Z_\ell)
+$$
+
+the cup--trace form is perfect with values in $\mathbf Z_\ell(-1)$, and the summands belonging to distinct geometric connected components are orthogonal. It is the Weil pairing transported from the product principal polarization on the component Jacobians. Thus no degree, Haar-volume, or similitude scalar may be inserted into (3.9). A central factor appears only when the inverse double coset is rewritten using the chosen generators. In particular, at a split hyperspecial place,
+
+$$
+T_v^t=S_v^{-1}T_v,
+\qquad
+S_v^t=S_v^{-1}.
+$$
+
+These are identities before a central character is specialized. They are the geometric source of every central twist in the packet pairing below.
 
 ### 3.4 Galois descent
 
@@ -624,6 +642,15 @@ The finite adelic action on $\Pi_f^K$ in (6.3) is convolution with characteristi
 
 The same argument gives adjunction. Inversion is the adjoint of right convolution under the automorphic $L^2$ pairing, and transpose is the adjoint of pull--push under Poincare duality. Both send $a$ to $a^{-1}$, so the analytic and geometric adjoint operations agree.
 
+The agreement includes the form itself, not only its adjoints. On differential forms the Betti Poincare pairing is
+
+$$
+(\alpha,\beta)\longmapsto
+\int_{C_K(\mathbf C)}\alpha\wedge\beta.
+$$
+
+For a packet $\Pi$, this first pairs its automorphic realization with the contragredient realization. If a finite-order character twist through the actual abelian quotient identifies those two packets and is trivial on $\nu(K)$, multiplication by that character turns the mass pairing into a bilinear form on one finite-level module. Its finite/component factor is symmetric: it is an integral, or a finite component-weighted sum, of a pointwise product. The exterior factor in degree one is alternating. Pullback and trace commute with the calculation. Section 10.5 will first make the twisting operator at a sufficiently fine level and then return it to an arbitrary level; no same-level preservation is being assumed here.
+
 ## 7. The archimedean weight-two calculation
 
 Formula (6.3) becomes a classification only after computing its real cohomology. Since there is exactly one noncompact rank-one factor, the calculation is short enough to make explicit.
@@ -676,6 +703,8 @@ Under local real Jacquet--Langlands, the trivial compact algebraic type correspo
 - the connected real center acts trivially in the unitary constant-coefficient normalization, while any remaining finite scalar action is compatible with the rational center and the selected component data.
 
 This definition is intrinsic to the quaternionic representation and makes no unsupported global transfer assertion.
+
+The last clause also fixes the archimedean part of any contragredient character used below. The connected positive center is already killed in the relative complex. At the active place the negative scalar $-1$ is rotation through $\pi$, so the weight-two types $2$ and $-2$ both give the value $1$; at a compact real place the adjoint type is trivial. For the basic group, the central character $\omega_\Pi$ is consequently trivial at infinity and the reduced-norm twist in (10.8) is finite order. For a central modification, the same conclusion is included in the explicit hypothesis on $\kappa_\Pi$; it is not inferred from equality of adjoint groups. In either case the descended component character is even at every real place of $E$.
 
 ### 7.4 Exclusion of all other constituents
 
@@ -940,7 +969,161 @@ W_{\Pi,B}\otimes_LL'
 \simeq W_{\Pi,B}'
 $$
 
-and similarly in etale cohomology. Over the center field before splitting, the invariant object is a module for the opposite division algebra; choosing a splitting converts it into the two-dimensional vector space (10.4). The theorem therefore distinguishes the rational block, which is canonical, from a split rank-two realization, which is canonical up to coefficient extension and isomorphism.
+and similarly in etale cohomology. Over the center field before splitting, the invariant object is a Morita module for the opposite division algebra. After splitting, one chooses an absolutely simple matrix module and applies (10.4); one does not simply regard the scalar extension of an unsplit simple module as absolutely simple, since it can acquire a matrix multiplicity. The automorphic multiplicity calculation then gives dimension two for the resulting absolute Hom factor. The theorem therefore distinguishes the rational block, which is canonical, from a split rank-two realization, which is canonical up to coefficient extension and isomorphism.
+
+### 10.5 The polarized double-centralizer
+
+The adjoint block is not an unrelated packet. Put $T=G^{\mathrm{ab}}$ and let $\nu:G\to T$ be the actual abelian quotient. For the basic group every contributing packet has a canonical finite-order character $\kappa_\Pi$ such that
+
+$$
+\Pi^\dagger=\Pi^\vee\simeq
+\Pi\otimes(\kappa_\Pi^{-1}\circ\nu). \tag{10.8}
+$$
+
+For $G=\operatorname{Res}_{F/\mathbf Q}B^\times$, $T=\operatorname{Res}_{F/\mathbf Q}\mathbf G_m$, $\nu=\operatorname{Nrd}$, and $\kappa_\Pi$ is the unitary central character $\omega_\Pi$ viewed as a character of the norm target. If $g\mapsto\bar g$ is canonical quaternion conjugation, then $g\mapsto\bar g^{-1}=g/\operatorname{Nrd}(g)$ is the automorphism which, after a splitting, is inner-conjugate to transpose-inverse. The standard contragredient identity therefore descends and gives $\Pi^\vee\simeq\Pi\otimes(\omega_\Pi^{-1}\circ\operatorname{Nrd})$. Section 7.3 makes this twist finite order and trivial at infinity. For a connected central modification, the conclusions of this section instead require (10.8), with a finite-order automorphic character $\kappa_\Pi$ of the relevant adelic quotient of $T$, trivial at infinity, as an additional packet hypothesis. The common adjoint datum does not by itself supply that character, and reduced norm must not be substituted for $\nu$.
+
+There is an important level qualification. Multiplication by $\kappa_\Pi^{-1}\circ\nu$ preserves $K$-invariants only when that character is trivial on $K$. This need not follow from $\Pi_f^K\ne0$. Choose therefore a normal fine subgroup
+
+$$
+K^\circ\subset K\cap\ker(\kappa_\Pi\circ\nu). \tag{10.9}
+$$
+
+Take the full inverse image of the selected component union at this level. The packet remains present at $K^\circ$. On the finite component set
+
+$$
+\Delta_{K^\circ}
+=T(\mathbf Q)^\dagger\backslash
+\nu(G(\mathbf A_f))/\nu(K^\circ)
+$$
+
+the character $\kappa_\Pi$ is well defined. After adjoining its values, define the algebraic component multiplier
+
+$$
+M_{\kappa^{-1}}\bigm|_{H^1(C_t,L)}
+=\kappa_\Pi(t)^{-1}\operatorname{id}
+\qquad(t\in\Delta_{K^\circ}). \tag{10.10}
+$$
+
+It is an $L$-linear combination of the identity correspondences on the open-and-closed geometric components. It is defined over the finite component-splitting field, not asserted to be an $E$-rational correspondence. The point of (10.10) is its descent covariance.
+
+First, right convolution and (10.10) give
+
+$$
+T(a)M_{\kappa^{-1}}
+=\kappa_\Pi(\nu(a))^{-1}
+M_{\kappa^{-1}}T(a). \tag{10.11}
+$$
+
+Thus $M_{\kappa^{-1}}$ carries the $\Pi$ block to the $\Pi^\dagger$ block, exactly as in (10.8). Second, distinct component summands are orthogonal for Poincare duality, so
+
+$$
+M_{\kappa^{-1}}^t=M_{\kappa^{-1}}. \tag{10.12}
+$$
+
+Finally, let $r_{(G,X)}$ be the reflex reciprocity morphism and define
+
+$$
+\eta_\Pi(\operatorname{Art}_E(s))
+=\kappa_\Pi(r_{(G,X)}(s_f))^{-1}, \tag{10.13}
+$$
+
+using the positive-at-infinity representative required by component reciprocity. If $\sigma=\operatorname{Art}_E(s)$, left Galois translation and (10.10) give the exact covariance
+
+$$
+\sigma M_{\kappa^{-1}}
+=\eta_\Pi(\sigma)^{-1}M_{\kappa^{-1}}\sigma. \tag{10.14}
+$$
+
+The principal and level ambiguities in (10.13) vanish in the component quotient. For the basic group, at a good place $u$ corresponding to $v$, the reciprocity morphism sends a positive arithmetic-Frobenius uniformizer to the class of $\varpi_v=\operatorname{Nrd}(\operatorname{diag}(\varpi_v,1))$. Here $\kappa_\Pi=\omega_\Pi$, while $S_v$ is right translation by $\varpi_v I$ and hence acts by $s_v(\Pi)=\omega_\Pi(\varpi_v)$. Thus
+
+$$
+\eta_\Pi(\operatorname{Frob}^{\mathrm{arith}}_u)
+=s_v(\Pi)^{-1},
+\qquad
+\eta_\Pi(\Phi_u)=s_v(\Pi), \tag{10.15}
+$$
+
+where $\Phi_u$ is geometric Frobenius. This is the central/component correction; it is not a Tate twist. For a central modification, (10.15) is asserted only when the same equality has been checked in its actual abelian quotient and for its chosen central generator. Equality of adjoint data with the basic group does not imply that local normalization.
+
+Let $\Omega$ be the alternating Poincare pairing. On the $\Pi$ block at level $K^\circ$ put
+
+$$
+\Psi^\circ(x,y)
+=\Omega(x,M_{\kappa^{-1}}y). \tag{10.16}
+$$
+
+Equations (10.12) and the alternation of $\Omega$ show that $\Psi^\circ$ is alternating. Equations (3.7) and (10.14) say exactly that
+
+$$
+\Psi^\circ(\sigma x,\sigma y)
+=\chi_\ell(\sigma)^{-1}\eta_\Pi(\sigma)
+\Psi^\circ(x,y),
+$$
+
+so it is a Galois-equivariant pairing with target $L_\lambda(-1)\otimes\eta_\Pi$. Under the double-centralizer factorization
+
+$$
+H^1[\Pi]_{K^\circ}\simeq
+P_\Pi^\circ\otimes W_\Pi,
+$$
+
+the automorphic calculation of Section 6.4 factors (10.16) as
+
+$$
+\Psi^\circ=b_{P,\Pi}^\circ\otimes\psi_\Pi. \tag{10.17}
+$$
+
+The finite form $b_{P,\Pi}^\circ$ is symmetric: after the component multiplier is inserted, its mass formula is a component-weighted integral of $f_1(g)f_2(g)$, unchanged when the two finite vectors are interchanged. It is nonzero by the nondegeneracy of the mass pairing between the $\Pi$ and $\Pi^\vee$ factors. Its adjoint rule carries the split simple image algebra to itself, so its radical is a submodule of the simple module $P_\Pi^\circ$; it is therefore zero or all of $P_\Pi^\circ$. Nonzero thus means perfect. Since (10.16) is perfect, $\psi_\Pi$ is also perfect, and its alternation follows from the symmetry of $b_{P,\Pi}^\circ$. This uses the whole oldspace $P_\Pi^\circ$, not a newvector, and remains valid when its dimension is greater than one and its Hecke algebra is noncommutative.
+
+The adjoint on this symmetric finite form is exact. Equations (3.9) and (10.11) give
+
+$$
+b_{P,\Pi}^\circ(T(a)p,q)
+=\kappa_\Pi(\nu(a))
+b_{P,\Pi}^\circ(p,T(a^{-1})q).
+$$
+
+At a split hyperspecial place satisfying the local central normalization in (10.15), $T_v^t=S_v^{-1}T_v$ and $\kappa_\Pi(\nu(a_v))=s_v(\Pi)$, so $T_v$ becomes self-adjoint after specialization, while $S_v$ and its inverse remain visible before specialization. The returned form below has the conjugate adjoint transported by $S$; no commutative or self-adjoint level algebra is assumed.
+
+The construction returns to the original, arbitrary level without assuming that the twist preserves $K$. Let $q:C_{K^\circ}\to C_K$ be the level map. On the split packet factors, $q^*$ is
+
+$$
+i\otimes1:P_\Pi^K\otimes W_\Pi
+\longrightarrow P_\Pi^\circ\otimes W_\Pi. \tag{10.18}
+$$
+
+Over a characteristic-zero field, a nondegenerate symmetric form has a nondegenerate subspace of every dimension at most $\dim P_\Pi^\circ$: diagonalize the form and span the required number of nonisotropic basis vectors. The split simple Hecke image on $P_\Pi^\circ$ is its full matrix algebra, so its unit group is $\operatorname{GL}(P_\Pi^\circ)$. It acts transitively on subspaces of a fixed dimension. Hence an invertible $U$ in that image can be chosen with $Ui(P_\Pi^K)$ equal to a nondegenerate subspace. Set $S=Uq^*$. Then
+
+$$
+b_{P,\Pi}^K(p,q)
+=b_{P,\Pi}^\circ(Ui(p),Ui(q)) \tag{10.19}
+$$
+
+is a perfect symmetric form on the complete finite module at level $K$, and
+
+$$
+R_{\Pi,K}=S^tM_{\kappa^{-1}}S \tag{10.20}
+$$
+
+is an actual coefficient-valued finite-level return correspondence. Because $S$ is built from descended level maps and Hecke correspondences, it commutes with $G_E$. Equations (10.12) and (10.14) therefore give
+
+$$
+R_{\Pi,K}^t=R_{\Pi,K},
+\qquad
+\sigma R_{\Pi,K}
+=\eta_\Pi(\sigma)^{-1}R_{\Pi,K}\sigma.
+$$
+
+Pull--trace adjunction gives
+
+$$
+\Omega_K(x,R_{\Pi,K}y)
+=b_{P,\Pi}^K\otimes\psi_\Pi. \tag{10.21}
+$$
+
+Thus a perfect alternating rank-two pairing with the same multiplier is obtained at every old level. The returned finite form and return correspondence depend on $K^\circ$ and $U$, and need not change only by a scalar. The rank-two alternating forms themselves do differ by a scalar, because $\bigwedge^2W_\Pi^\vee$ is one-dimensional. Therefore the Galois multiplier, essential self-duality, and determinant are independent of these choices.
+
+There is no hidden Schur-index assumption. If a rational simple factor is $M_n(D)$ over its center, the invariant object before splitting is the corresponding Morita module with its adjoint involution. The mass calculation makes that involution orthogonal after algebraic closure. Choose one finite field $L$ containing the values of $\kappa_\Pi$, splitting the relevant simple factors at both levels, and containing the coefficients of $U$ and the return operator. Only then choose the simple matrix modules and the rank-two Hom factor. Enlarging $L$ base-changes the resulting rank-two representation, multiplier, and determinant, and changing the split models changes them only up to isomorphism. The particular return operator need not descend to the unsplit center, and no scalar-valued form or rank-two vector space is claimed there.
 
 ## 11. Hodge, de Rham, and Galois realizations
 
@@ -959,7 +1142,7 @@ $$
 
 Complex conjugation carries the $(1,0)$ line at $\iota$ to the $(0,1)$ line at the conjugate coefficient embedding and conjugate packet. It exchanges the two lines inside one split packet only when that packet and coefficient embedding are themselves stable under conjugation. Neither line is usually defined over the Hecke field by itself. The rank-two coefficient-field Hodge object is the split realization; the genuinely rational object is the whole algebraic-conjugacy-orbit block.
 
-The alternating Poincare pairing pairs the $\Pi$ block with the adjoint block $\Pi^\dagger$. A polarization-compatible Morita datum transports this pairing to the two-dimensional multiplicity factor. Its symmetry type cannot be read from self-adjointness of the packet alone: the form chosen on the simple finite Hecke module can itself be symmetric or alternating, and the product of its sign with the sign on the multiplicity factor must be alternating. We therefore assert an unconditional perfect pairing with the adjoint factor and assert an alternating self-pairing only when a compatible symmetric pairing on $P_\Pi$ has been supplied.
+The alternating Poincare pairing pairs the $\Pi$ block with the adjoint block $\Pi^\dagger$. Under the packet hypothesis stated in Section 10.5, that section constructs the actual component twist at a fine refinement, proves its Galois covariance, and returns it to the chosen level. The compact mass factor gives a Poincare-compatible symmetric form on the complete finite Hecke module, while the exterior factor on the two relative-cohomology lines is alternating. This remains true at old level; all oldvectors lie in the symmetric module $P_\Pi$.
 
 ### 11.2 De Rham blocks
 
@@ -993,9 +1176,11 @@ $$
 
 Continuity is inherited from the finite-dimensional subquotient of $H^1_{\mathrm{et}}$: the ambient action preserves a lattice and is continuous, and the Hom construction is formed inside a finite-dimensional coefficient space.
 
-At this stage (11.3) is a cohomological constituent. Its dimension, coefficient field, commuting Hecke action, good-prime quadratic Frobenius relation, and duality are known. Irreducibility, global semisimplicity, determinant identification, the unconditional good-prime characteristic polynomial, and bad-place local parameters are not consequences of the decomposition alone.
+At this stage (11.3) is a cohomological constituent. Its dimension, coefficient field, commuting Hecke action, good-prime quadratic Frobenius relation, and adjoint duality are known. For the basic group, or for a packet of a central modification satisfying (10.8), Section 10.5 also supplies the polarized determinant datum. Irreducibility, global semisimplicity, and bad-place local parameters are not consequences of the decomposition. The determinant will be deduced from that polarized datum; the scalar-Frobenius characteristic polynomial additionally requires the local normalization (10.15). Neither is inferred from two-dimensionality alone.
 
 ### 11.4 Duality on an isolated constituent
+
+For the self-pairing statements in Sections 11.4--11.5, assume either that $G$ is the basic group or that the packet of the central modification satisfies the explicit essential-self-duality hypothesis (10.8). Without it, equations (11.4)--(11.5) below are the complete duality conclusion.
 
 Let $\Pi^\dagger$ denote the packet on which inverse double cosets act as adjoints. Restricting (3.7) and using (10.5) produces a perfect pairing
 
@@ -1011,11 +1196,53 @@ W_{\Pi,\ell}^\vee
 \simeq W_{\Pi^\dagger,\ell}(1). \tag{11.5}
 $$
 
-If $\Pi\simeq\Pi^\dagger$ and a polarization-compatible symmetric pairing on $P_{\Pi,\lambda}$ identifies the two finite Hecke modules, then (11.4) induces an alternating form on the two-dimensional multiplicity space. Under this additional datum, choosing a basis of $L_\lambda(-1)$ makes Galois act by symplectic similitudes with inverse-cyclotomic multiplier in the conventions of Section 1.3. Without it, (11.4) remains the canonical statement: it pairs $W_{\Pi,\ell}$ with the distinct adjoint factor and does not manufacture a self-pairing.
+The component multiplier and return correspondence of Section 10.5 identify the adjoint multiplicity factor by
+
+$$
+W_{\Pi^\dagger,\ell}
+\simeq W_{\Pi,\ell}\otimes\eta_\Pi^{-1}. \tag{11.6}
+$$
+
+Factoring (10.21) through the symmetric finite-module form therefore gives a perfect alternating pairing
+
+$$
+\psi_\Pi:
+W_{\Pi,\ell}\times W_{\Pi,\ell}
+\longrightarrow L_\lambda(-1)\otimes\eta_\Pi. \tag{11.7}
+$$
+
+Under the preceding packet hypothesis, this is an unconditional characteristic-zero statement at arbitrary old level. It does not assert that (11.7) is perfect on a preferred integral rank-two lattice.
+
+### 11.5 Component covariance and the determinant line
+
+The Galois character in (11.7) is the finite character (10.13), not a relabeling of the Tate twist. The pairing gives the exact essential self-duality
+
+$$
+W_{\Pi,\ell}^\vee
+\simeq
+W_{\Pi,\ell}(1)\otimes\eta_\Pi^{-1}. \tag{11.8}
+$$
+
+For a two-dimensional vector space, every nonzero alternating form is a determinant form. Hence a Galois-equivariant alternating pairing with one-dimensional target $M$ has multiplier $\det W$. Since $L_\lambda(-1)\otimes\eta_\Pi$ has character $\chi_\ell^{-1}\eta_\Pi$, (11.7) gives
+
+$$
+\boxed{
+\det\rho_{\Pi,\lambda}
+=\chi_\ell^{-1}\eta_\Pi.} \tag{11.9}
+$$
+
+This identity holds on every element of $G_E$ and is independent of semisimplicity. At a good place, (10.15) and $\chi_\ell(\Phi_u)=q_u^{-1}$ give
+
+$$
+\det(\Phi_u\mid W_{\Pi,\ell})
+=q_us_v(\Pi). \tag{11.10}
+$$
+
+In the equal-residue-field range of Chapter 12, $q_u=q_v$. At a real place, Section 7.3 gives $\eta_\Pi(c)=1$, so (11.9) has determinant $-1$ on complex conjugation, as the two Hodge lines require.
 
 ## 12. Good primes and Frobenius
 
-At a good finite place, the integral moduli problem compares the Hecke correspondence with Frobenius and Verschiebung. The resulting operator identity holds on the full cohomology and restricts to the two-dimensional constituent. An extra nonscalarity or trace-and-determinant input is needed to identify it unconditionally with the characteristic polynomial.
+At a good finite place, the integral moduli problem compares the Hecke correspondence with Frobenius and Verschiebung. The resulting operator identity holds on the full cohomology and restricts to the two-dimensional constituent. Two-dimensionality alone does not identify its characteristic polynomial in the scalar case; under the polarized packet hypothesis and the local normalization (10.15), the independent determinant (11.10) does.
 
 ### 12.1 The good-prime hypotheses
 
@@ -1080,9 +1307,7 @@ $$
 G_v^2-t_v(\Pi)G_v+q_vs_v(\Pi)=0. \tag{12.2}
 $$
 
-The polynomial in (12.2) is monic of degree two, but two-dimensionality alone does **not** make it the characteristic polynomial. If $G_v$ is scalar with value $c$, then every polynomial vanishing at $c$ annihilates it, while its characteristic polynomial is $(X-c)^2$. Thus the inference “degree-two annihilator plus dimension two implies characteristic polynomial” is false without an additional non-scalar or trace-and-determinant input.
-
-The exact linear-algebra statement is the following.
+The polynomial in (12.2) is monic of degree two, but two-dimensionality alone does **not** make it the characteristic polynomial. If $G_v$ is scalar with value $c$, then every polynomial vanishing at $c$ annihilates it, while its characteristic polynomial is $(X-c)^2$. A nonscalar hypothesis or the independent determinant theorem is therefore logically necessary.
 
 **Proposition 12.1.** Put
 
@@ -1090,17 +1315,21 @@ $$
 Q_v(X)=X^2-t_v(\Pi)X+q_vs_v(\Pi).
 $$
 
-Then $Q_v(G_v)=0$. If $G_v$ is not scalar on $W_{\Pi,\ell}$, then
+Then $Q_v(G_v)=0$. If $G_v$ is nonscalar, or if the polarized packet hypothesis of Section 11.4 and the local normalization (10.15) hold, then
 
 $$
 \det(X-G_v\mid W_{\Pi,\ell})=Q_v(X). \tag{12.3}
 $$
 
-If $G_v=c$ is scalar, then its characteristic polynomial is $(X-c)^2$ and the operator relation says only $Q_v(c)=0$; equality in (12.3) holds exactly when $Q_v=(X-c)^2$.
+**Proof.** Equation (12.2) gives the first assertion. If $G_v$ is nonscalar, its minimal polynomial has degree two, divides $Q_v$, and therefore equals both $Q_v$ and the characteristic polynomial. In the polarized case, Cayley--Hamilton gives
 
-**Proof.** The first assertion is (12.2). If $G_v$ is nonscalar, its minimal polynomial cannot have degree one. It divides the degree-two polynomial $Q_v$, hence equals $Q_v$. The characteristic polynomial has degree two and is divisible by the minimal polynomial, so it too equals $Q_v$. The scalar case is immediate. $\square$
+$$
+G_v^2-\operatorname{Tr}(G_v)G_v+\det(G_v)I=0.
+$$
 
-The coefficients of the annihilating polynomial are independent of the auxiliary prime in the precise sense that they are the algebraic Hecke eigenvalues in $L_\Pi$, embedded into $L_\lambda$. Turning them into the unconditional characteristic polynomial requires a separate non-scalar or trace-and-determinant theorem; no compatible-system or bad-prime assertion is made here.
+By (11.10), $\det(G_v)=q_vs_v$. Subtracting (12.2) gives $(\operatorname{Tr}(G_v)-t_v)G_v=0$. Frobenius is invertible, so $\operatorname{Tr}(G_v)=t_v$, proving (12.3). This also covers $G_v=cI$: it forces $2c=t_v$ and $c^2=q_vs_v$, hence $Q_v=(X-c)^2$. $\square$
+
+The coefficients are independent of the auxiliary prime in the precise sense that they are the algebraic Hecke eigenvalues in $L_\Pi$, embedded into $L_\lambda$. No compatible-system or bad-prime assertion is made here. Without the packet hypothesis and covariance of Section 10.5, only the quadratic annihilator and the nonscalar inference survive.
 
 ### 12.4 Arithmetic Frobenius and the covariant Tate module
 
@@ -1157,16 +1386,20 @@ where the intersection is taken inside $\Lambda_\ell\otimes_{\mathbf Z_\ell}L_\l
 
 At old level, extracting a rank-two lattice from the multiplicity space also requires an integral Morita theory for the local Hecke module. The rational Hom construction (10.6) does not by itself prove that an integral rank-two Hom module is free, saturated, or canonical. Those are additional integral theorems.
 
+The same distinction applies to the polarized pairing under the packet hypothesis of Section 11.4. Equation (11.7) is perfect over $L_\lambda$, and the determinant identity (11.9) therefore holds on every stable lattice after taking determinants. Perfect reduction of the form is stronger. Every denominator or lattice index contributed by the component multiplier, the fine-cover pull--trace maps, the coefficients of $U$ and $R_{\Pi,K}$, and integral Morita evaluation must be a unit at $\lambda$; the Gram discriminant of (10.19) must also be a unit. If one of these quantities is a nonunit, the rational form may reduce degenerately even though the determinant character still reduces on any stable rank-two lattice.
+
 ### 13.3 Coarse-level denominators
 
 At coarse level, rational descent from a neat cover divides by the effective deck-group order. If $\ell$ divides that order, integral invariants need not be exact. Thus even before packet projectors are applied, the coarse lattice can differ from the invariant lattice on a fine cover by torsion.
 
-There are therefore two independent sources of denominators:
+There are therefore four logically independent sources of denominators:
 
 1. level descent and stabilizer orders;
-2. separation of congruent Hecke packets.
+2. separation of congruent Hecke packets;
+3. splitting the Hecke order and performing integral Morita evaluation;
+4. the component-twist return construction and the discriminant of its finite-module form.
 
-Avoiding the first does not avoid the second. Working at fine level removes inertia but does not make all Hecke eigenvalue differences $\ell$-adic units.
+Avoiding one does not avoid the others. Working at fine level removes inertia but does not make Hecke eigenvalue differences, Morita indices, return coefficients, or pairing discriminants $\ell$-adic units.
 
 ### 13.4 What compactness removes
 
@@ -1187,7 +1420,7 @@ H^1[\Pi]\simeq
 \mathbf C\eta^+\oplus\mathbf C\eta^-.
 $$
 
-The first line is holomorphic and the second antiholomorphic. Complex conjugation identifies them only after also conjugating the finite eigenpacket; if the packet is conjugation-stable, they are conjugate inside the same block. Over the Hecke field completion the corresponding etale space is two-dimensional. At a good place $v$, geometric Frobenius is annihilated by $X^2-t_v(\Pi)X+q_vs_v(\Pi)$. If it is nonscalar, these coefficients are its trace and determinant; the scalar case requires an additional argument.
+The first line is holomorphic and the second antiholomorphic. Complex conjugation identifies them only after also conjugating the finite eigenpacket; if the packet is conjugation-stable, they are conjugate inside the same block. Over the Hecke field completion the corresponding etale space is two-dimensional. For the basic group, or under (10.8) for a central modification, the polarized component twist gives determinant $\chi_\ell^{-1}\eta_\Pi$. Hence at a good place $v$ satisfying (10.15), including when Frobenius is scalar, its characteristic polynomial is $X^2-t_v(\Pi)X+q_vs_v(\Pi)$.
 
 No basis of this two-dimensional space is canonical. A normalized holomorphic eigenform chooses a vector in the complex Hodge line, not a Galois-stable line in etale cohomology.
 
@@ -1210,6 +1443,8 @@ $$
 
 The three oldvectors lie in $P_\Pi$. Galois acts on $W_\Pi$ because it commutes with the Hecke algebra. Choosing one oldvector gives a copy of $W_\Pi$ only after a noncanonical splitting; the Hom construction recovers it invariantly.
 
+Assume the packet has the contragredient character of (10.8). After a fine refinement on which that character is trivial on the level, the weighted mass form is perfect and symmetric on the whole oldspace. The return construction (10.18)--(10.21) transports a perfect symmetric form to this three-dimensional $P_\Pi$ and leaves a perfect alternating form on $W_\Pi$. Thus oldvectors change neither the determinant character nor, at a good place satisfying (10.15), the scalar-Frobenius conclusion.
+
 ### 14.3 A component-permuting central operator
 
 Let $S_v$ be central and suppose its class in the component quotient is nontrivial. On the disjoint union of all labels in one orbit, $S_v$ acts as a cyclic permutation, possibly multiplied by a scalar on an automorphic central-character line. On a single label it is not an endomorphism at all.
@@ -1221,6 +1456,8 @@ G_v^2-t_vG_v+q_vs_v=0.
 $$
 
 Replacing $S_v$ by $1$ before fixing the central character would erase both the component motion and the nebentype.
+
+With the reciprocity normalization (10.13), the same scalar satisfies $\eta_\Pi(\Phi_u)=s_v$ for geometric Frobenius. The alternating rank-two target is therefore $L_\lambda(-1)\otimes\eta_\Pi$, whose Frobenius scalar is $q_vs_v$. This is the independent determinant used to handle a scalar $G_v$.
 
 ### 14.4 Four normalization failures
 
@@ -1240,7 +1477,7 @@ We finish by collecting the geometric, automorphic, rational, and arithmetic str
 
 ### 15.1 Complete statement
 
-**Theorem 15.1 (automorphic decomposition of Shimura-curve $H^1$).** Let $F$ be totally real, let $B/F$ be a quaternion division algebra split at exactly one real place, and let $(G,X)$ be the basic quaternionic Shimura datum or a specified connected central modification with a genuine PEL realization. Let $K\subset G(\mathbf A_f)$ be fine, and let $C_K/E$ be a smooth projective Galois-stable union of selected components which is a full orbit under the finite Hecke and component-routing algebra used in the decomposition. Then:
+**Theorem 15.1 (automorphic decomposition of Shimura-curve $H^1$).** Let $F$ be totally real, let $B/F$ be a quaternion division algebra split at exactly one real place, and let $(G,X)$ be the basic quaternionic Shimura datum or a specified connected central modification with a genuine PEL realization. Let $K\subset G(\mathbf A_f)$ be any compact open, and let $C_K/E$ be the smooth projective coarse canonical curve attached to a Galois-stable union of selected components which is a full orbit under the finite Hecke and component-routing algebra used in the decomposition. At non-neat level, all characteristic-zero statements are obtained from a normal neat cover as in Section 2.4. Then:
 
 1. The complex cohomology has the Hecke-equivariant decomposition
 
@@ -1276,7 +1513,24 @@ We finish by collecting the geometric, automorphic, rational, and arithmetic str
    (P_{\Pi,\lambda},e_\Pi H^1_{\mathrm{et}}(C_{K,\bar E},L_\lambda)).
    $$
 
-5. Poincare duality pairs $W_{\Pi,\ell}$ perfectly with $W_{\Pi^\dagger,\ell}$ into $L_\lambda(-1)$.
+5. Suppose $G$ is the basic group, or, for a connected central modification, suppose that the packet has a finite-order automorphic character $\kappa_\Pi$ on the actual abelian quotient, trivial at infinity, satisfying (10.8). Let $\eta_\Pi$ be its reflex-reciprocity character (10.13). The component multiplier on a normal fine refinement, followed by the return construction (10.18)--(10.21), supplies a Poincare-compatible perfect symmetric form on the complete finite module $P_{\Pi,\lambda}$ and a perfect alternating pairing
+
+   $$
+   W_{\Pi,\ell}\times W_{\Pi,\ell}
+   \longrightarrow L_\lambda(-1)\otimes\eta_\Pi.
+   $$
+
+   Consequently
+
+   $$
+   W_{\Pi,\ell}^\vee
+   \simeq W_{\Pi,\ell}(1)\otimes\eta_\Pi^{-1},
+   \qquad
+   \det\rho_{\Pi,\lambda}
+   =\chi_\ell^{-1}\eta_\Pi.
+   $$
+
+   This includes nonminimal old level and rational blocks with nontrivial Schur algebra, after the stated finite splitting field is chosen.
 
 6. At corresponding places $u$ of $E$ and $v$ of $F$, with equal residue fields, satisfying every unramified PEL, self-dual polarization, hyperspecial level, smooth determinant-model, rank-one incidence, $\mu$-ordinary-density, component-extension, and fine-or-tame hypothesis of Section 12.1, and with $v\nmid\ell$, the representation is unramified and geometric Frobenius is annihilated by
 
@@ -1284,9 +1538,13 @@ We finish by collecting the geometric, automorphic, rational, and arithmetic str
    X^2-t_v(\Pi)X+q_vs_v(\Pi).
    $$
 
-7. The natural lattice $H^1_{\mathrm{et}}(C_{K,\bar E},\mathbf Z_\ell)$ is Galois and Hecke stable. After coefficient extension, a packet defines the saturated $\mathcal O_{L_\lambda}$-lattice (13.2) in its rational block, but no integral direct-sum decomposition is asserted unless all level-descent, projector, and Morita denominators are $\ell$-adic units.
+   Under the hypothesis of assertion 5 and the central-generator reciprocity normalization (10.15), this polynomial is its characteristic polynomial, including when Frobenius is scalar.
 
-At arbitrary level the rational conclusions follow from a normal fine cover and invariants under the effective deck group. Integral conclusions retain the stabilizer-order qualification. For a proper component union preserved only by a smaller Hecke algebra, the rational block and comparison conclusions remain valid after applying its component projector, but assertions 1--2 are grouped by the component-character families which that projector mixes; the individual-$\Pi$ formula requires a separating component-character idempotent.
+7. The natural lattice $H^1_{\mathrm{et}}(C_{K,\bar E},\mathbf Z_\ell)$ is Galois and Hecke stable. After coefficient extension, a packet defines the saturated $\mathcal O_{L_\lambda}$-lattice (13.2) in its rational block. No integral direct-sum, rank-two Morita factor, or perfect integral self-pairing is asserted unless all level-descent, projector, splitting-order, evaluation, component-return, and pairing-discriminant denominators are $\ell$-adic units.
+
+At arbitrary level the rational conclusions, including assertion 5 when its packet hypothesis holds, follow from a normal fine cover and the pull--trace return construction. Integral conclusions retain every denominator qualification above. For a proper component union preserved only by a smaller Hecke algebra, the rational block and comparison conclusions remain valid after applying its component projector, but assertions 1--2 are grouped by the component-character families which that projector mixes; the individual-$\Pi$ formula, determinant, and scalar-Frobenius conclusion require a separating component-character idempotent.
+
+Assertion 5 is exactly the **curve determinant datum** used in Book 134, Section 6.3, and retained in Book 135, Sections 3.3 and 7.1: it supplies the actual component twist with (10.14), the symmetric perfect finite-module form at the stated level, and their compatibility with Poincare polarization. Together with the central-generator normalization required in assertion 6, it supplies the scalar-Frobenius clause; no additional determinant datum is required for the compact quaternionic curve packets satisfying this theorem. This interface does not manufacture such a datum for a different curve carrier lacking the component and return construction above.
 
 ### 15.2 Proof
 
@@ -1296,9 +1554,11 @@ The quaternionic PEL and canonical-model packages give the smooth projective cur
 
 Compactness gives the discrete automorphic spectrum. Quaternionic automorphic theory gives restricted tensor factorization, fixed-level finiteness, and multiplicity one by the character-clean trace argument. The direct proof of Matsushima's formula in Chapter 6 identifies $H^1$ with finite-level vectors tensored with relative Lie algebra cohomology after the positive split center is removed. The rank-one classification and cohomology theorem recalled in Chapter 7 compute that cohomology: it is two-dimensional exactly for the parallel-weight-two type and zero for characters and all other types. This proves assertions 1 and 2.
 
-Transpose correspondences make the finite complex Hecke image adjoint stable. The radical argument in Section 9.2 proves semisimplicity, yielding rational central idempotents. The double-centralizer calculation then proves the rank-two factorization and assertion 3. Comparison isomorphisms commute with all correspondences, and canonical descent makes their images Galois stable. Applying $\operatorname{Hom}_{A}(P_\Pi,-)$ proves assertion 4. Restricting the Tate-twisted Poincare pairing proves assertion 5.
+Transpose correspondences make the finite complex Hecke image adjoint stable. The radical argument in Section 9.2 proves semisimplicity, yielding rational central idempotents. The double-centralizer calculation then proves the rank-two factorization and assertion 3. Comparison isomorphisms commute with all correspondences, and canonical descent makes their images Galois stable. Applying $\operatorname{Hom}_{A}(P_\Pi,-)$ proves assertion 4.
 
-At a good prime, smooth proper base change gives unramifiedness and transfers the special-fiber correspondence relation to generic cohomology. Restricting the quadratic operator identity to the two-dimensional constituent proves assertion 6. Proposition 12.1 records the exact additional condition under which the relation is its characteristic polynomial. Finally, integral curve cohomology is finite free and stable under integral correspondences. Intersecting the coefficient-extended lattice with the rational packet subspace gives (13.2), while Sections 13.2--13.3 explain why direct splitting needs extra unit hypotheses. This proves assertion 7 and the coarse-level clause. $\square$
+For assertion 5, canonical quaternion conjugation gives (10.8) for the basic group; for a central modification it is the stated packet hypothesis. Refine the level until the resulting character twist is level trivial. Multiplication by the character on the open-and-closed component summands is self-transpose and has the reciprocity covariance (10.14). The weighted compact mass form is symmetric and nondegenerate on the entire finite oldspace, so factoring the alternating Jacobian polarization leaves the perfect alternating form (11.7) on the rank-two factor. At the original level, a full-matrix Hecke return map embeds its finite module as a nondegenerate subspace; pull--trace adjunction returns a pairing with the same rank-two factor and multiplier. All relevant Schur algebras are split before this matrix argument. The two-dimensional determinant identity then gives (11.9).
+
+At a good prime, smooth proper base change gives unramifiedness and transfers the special-fiber correspondence relation to generic cohomology. Restriction gives the quadratic annihilator. Under assertion 5 and (10.15), its constant term agrees with the independent determinant (11.10), and Proposition 12.1 then proves the characteristic polynomial even for scalar Frobenius. Without that polarized input, only the annihilator, and the nonscalar characteristic-polynomial inference, is asserted. Finally, integral curve cohomology is finite free and stable under integral correspondences. Intersecting the coefficient-extended lattice with the rational packet subspace gives (13.2), while Sections 13.2--13.3 retain every denominator obstructing a direct splitting or perfect integral pairing. This proves assertions 6--7 and the coarse-level clause. $\square$
 
 ### 15.3 Hypothesis and dependency ledger
 
@@ -1308,6 +1568,7 @@ At a good prime, smooth proper base change gives unramifiedness and transfers th
 | componentwise Galois and Hecke action | selected union stable under reciprocity and Hecke routing | a correspondence maps between different curves or Galois permutes the component |
 | algebraic Hecke span | exact intersection level and translated-then-forgotten second leg | right translation has the wrong target and the double coset is mislabeled |
 | pull--push on $H^1$ and Jacobians | smooth proper curves; finite legs; constant coefficients | traces or norms can be undefined or need boundary data |
+| perfect alternating geometric pairing | componentwise curve trace and the product principal polarization on component Jacobians | degrees or volume factors can corrupt adjunction and the Tate twist |
 | integral etale lattice | $\ell$ invertible and smooth proper curve | torsion and derived-limit corrections can occur in other settings |
 | complex automorphic decomposition | compact quotient, fixed level, harmonic theory | continuous and boundary spectra must be added in the split case |
 | multiplicity one | quaternion division algebra and the character-clean two-place trace and Bessel argument | compactness alone gives only finite multiplicity; the additive transposition kernel cannot see the occurrence space |
@@ -1315,14 +1576,23 @@ At a good prime, smooth proper base change gives unramifiedness and transfers th
 | rational packet projector | full finite adjoint-stable Hecke image | the away-from-bad commutative algebra can group near-equivalent packets |
 | a vector-space rank-two factor | finite coefficient extension splitting the simple Hecke algebra | a Schur division algebra can remain over the rationality field |
 | Galois stability | Hecke correspondences descended to $E$ | invariant eigenvalues do not descend an operator |
+| descended adjoint twist | canonical quaternion-conjugation identity for the basic group, or hypothesis (10.8) for a central modification; normal fine refinement inside the character kernel; component reciprocity | common adjoint data do not produce the twist, multiplication by it need not preserve the original level, and equality of central eigenvalues gives no covariance |
+| symmetric finite-module form at old level | weighted compact mass pairing at the refinement; full split Hecke image and pull--trace return | an arbitrary Morita pairing can have the wrong sign or be degenerate on the returned oldspace |
+| determinant and essential self-duality | component covariance, symmetric finite-module form, and alternating Jacobian polarization | adjoint duality alone does not identify the determinant line |
 | good Frobenius relation | every residue-field, unramified PEL, self-dual polarization, hyperspecial, determinant-model, incidence-model, $\mu$-ordinary-density, component, fineness, and $v\nmid\ell$ hypothesis of Section 12.1 | a level-prime $U_v$, bad local model, contracted branch, or residue-field mismatch has no displayed quadratic relation |
-| identification with the characteristic polynomial | nonscalar Frobenius, or an independent trace-and-determinant theorem | a scalar operator can satisfy a different quadratic polynomial |
+| good characteristic polynomial, including scalar Frobenius | quadratic relation plus the independently proved determinant | a degree-two annihilator alone need not be the characteristic polynomial of a scalar operator |
 | rational comparison with a split packet | global Jacquet--Langlands only in its exact selected range | local matching alone does not globalize an automorphic representation |
-| integral direct summand | deck-group order and every projector and Morita denominator prime to $\ell$ | congruent packets or inertia can meet in the integral lattice |
+| integral direct summand and perfect pairing | deck-group order and every projector, order, Morita, return, and discriminant denominator prime to $\ell$ | congruent packets or inertia can meet, and a rational perfect form can reduce degenerately |
 
-The direct prerequisites close the argument as follows. Book 20 supplies continuous etale $H^1$, Poincare duality, the Tate-twist and Frobenius conventions, and Galois-equivariant pull--trace for smooth proper curves with $\ell$ invertible. Book 27 supplies Betti--de Rham--etale comparison and compatibility with rational correspondences for curves over a field embedded in $\mathbf C$. Book 37 supplies the Jacobian, the covariant Tate module, Kummer comparison, and transpose--Rosati compatibility. Book 93 applies because $B$ is a division quaternion algebra; it supplies the discrete restricted tensor decomposition and quaternionic multiplicity one, by its character-clean trace proof, without requiring total definiteness. Book 94 is invoked only for a selected global transfer satisfying that book's totally real, totally definite, and local packet hypotheses; it is not used to transfer the one-split-place representation in general. Book 99 supplies the full $\operatorname{GL}_2(\mathbf R)$ discrete-series classification in the required infinitesimal-character range, the split-center convention, and the two-line constant-coefficient relative-cohomology calculation. These are substantial proof inputs, not consequences of tangent-weight counting alone.
+The exact direct dependency row is
 
-Book 122 supplies the common geometric--adelic Hecke action, including the declaration that the translated leg is the source, and the good-prime operator relation under the complete list reproduced in Section 12.1. Book 126 supplies the one-split-place Shimura datum, reflex field, canonical model, and component reciprocity. Book 127 supplies the genuine PEL functor, fine representability, dimension-one local model, and projectivity in the division case. Book 128 supplies complex uniformization, exact component labels, fine/coarse descent, the two underlying finite maps, component routing, the span-level convolution and transpose relations, and canonical descent. Its displayed $p_{2*}p_1^*$ convention is not used to name the right double coset: Book 122's later orientation audit shows that the right-convolution action for those same maps is $(p_1)_*p_2^*$. No later cohomological extraction theorem is used in the proof.
+$$
+\boxed{132\mid 20,\ 27,\ 37,\ 93,\ 94,\ 99,\ 122,\ 126,\ 127,\ 128.}
+$$
+
+The direct prerequisites close the argument as follows. Book 20 supplies continuous etale $H^1$, componentwise Poincare duality, the Tate-twist and Frobenius conventions, and Galois-equivariant pull--trace for smooth proper curves with $\ell$ invertible. Book 27 supplies Betti--de Rham--etale comparison and compatibility with rational correspondences for curves over a field embedded in $\mathbf C$. Book 37 supplies the Jacobian, its canonical principal polarization, the covariant Tate module, Kummer comparison, Weil--cup compatibility, and transpose--Rosati compatibility. Book 93 applies because $B$ is a division quaternion algebra; it supplies the discrete restricted tensor decomposition, quaternionic multiplicity one, finite norm twists, the precise warning that a twist preserves level only after refinement, contragredient finite modules, and the compact mass pairing. Book 94 is invoked only for a selected global transfer satisfying that book's totally real, totally definite, and local packet hypotheses; it is not used to transfer the one-split-place representation in general. Book 99 supplies the full $\operatorname{GL}_2(\mathbf R)$ discrete-series classification in the required infinitesimal-character range, the split-center convention, and the two-line constant-coefficient relative-cohomology calculation. These are substantial proof inputs, not consequences of tangent-weight counting alone.
+
+Book 122 supplies the common geometric--adelic Hecke action, exact inverse-double-coset adjoints and central factors, and the good-prime operator relation under the complete list reproduced in Section 12.1. Book 126 supplies the one-split-place Shimura datum, reflex field, canonical model, actual abelian quotient, positive-at-infinity reflex reciprocity, and its action on components. Book 127 supplies the genuine PEL functor, fine representability, dimension-one local model, and projectivity in the division case. Book 128 supplies complex uniformization, exact component labels, normal fine/coarse level maps, the two underlying finite maps, component routing, span-level convolution and transpose, and canonical descent. Its displayed $p_{2*}p_1^*$ convention is not used to name the right double coset: Book 122's later orientation audit shows that the right-convolution action for those same maps is $(p_1)_*p_2^*$. The component multiplier, return operator, polarized Morita factorization, determinant, and scalar-Frobenius upgrade are proved here. No later cohomological extraction theorem is used.
 
 ### 15.4 Conclusion
 
@@ -1334,10 +1604,16 @@ $$
 
 Geometrically, the same finite adelic double cosets are algebraic correspondences. Their pull--push action agrees with unnormalized right convolution, their transpose is inversion, and their component routing is governed by the actual abelian quotient. Canonical descent makes those operators commute with arithmetic Galois. The Jacobian and Kummer theory supply the integral lattice, while comparison identifies its Betti, de Rham, and etale forms.
 
-Rationality requires one last distinction. A Hecke eigensystem, a simple finite Hecke module, and its two-dimensional cohomological multiplicity space are not the same object. The finite adjoint-stable Hecke image separates rational blocks; a splitting field resolves any Schur obstruction; and the double-centralizer Hom space extracts the intrinsic rank-two constituent even at old level. Its Hodge types are $(1,0)$ and $(0,1)$, its dual carries the visible Tate twist, and at a genuinely good place geometric Frobenius satisfies
+Rationality requires one last distinction. A Hecke eigensystem, a simple finite Hecke module, and its two-dimensional cohomological multiplicity space are not the same object. The finite adjoint-stable Hecke image separates rational blocks; a splitting field resolves any Schur obstruction; and the double-centralizer Hom space extracts the intrinsic rank-two constituent even at old level. For the basic group, or for a central-modification packet satisfying (10.8), a fine-level component multiplier and its pull--trace return supply the missing polarized datum at every level. The finite oldspace form is symmetric, the rank-two form is alternating with target $L_\lambda(-1)\otimes\eta_\Pi$, and
+
+$$
+\det\rho_{\Pi,\lambda}=\chi_\ell^{-1}\eta_\Pi.
+$$
+
+Therefore, at a genuinely good place satisfying (10.15), the characteristic polynomial of geometric Frobenius, including in the scalar case, is
 
 $$
 X^2-t_vX+q_vs_v.
 $$
 
-The integral lattice remembers what rational semisimplicity forgets. Projector and coarse-level denominators can join congruent packets modulo $\ell$, so saturation is unconditional while direct splitting is not. Compactness removes cusps, not congruences, components, or oldvectors. With those boundaries explicit, constant-coefficient $H^1$ gives the promised automorphic realization of every quaternionic parallel-weight-two packet occurring on the curve and isolates its two-dimensional arithmetic constituent without suppressing multiplicity, coefficient fields, twists, or level geometry.
+The integral lattice remembers what rational semisimplicity forgets. Projector, coarse-level, Morita, return-map, and pairing-discriminant denominators can join packets or destroy perfect reduction, so saturation is unconditional, while the rational determinant requires the polarized packet hypothesis and direct integral splitting and perfect integral self-duality require the stated unit conditions. Compactness removes cusps, not congruences, components, or oldvectors. With those boundaries explicit, constant-coefficient $H^1$ gives the promised automorphic realization of every quaternionic parallel-weight-two packet occurring on the curve and isolates its two-dimensional arithmetic constituent without suppressing multiplicity, coefficient fields, twists, or level geometry.
