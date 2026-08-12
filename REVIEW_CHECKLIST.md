@@ -205,10 +205,10 @@ dependency spine is not closed.
 | 175 | One-Prime Nonminimal Patching and R=T | [x] | [x] | [x] | — |
 | 176 | Nonminimal Modularity Lifting | [x] | [x] | [x] | — |
 | 177 | Potential Modularity of Two-Dimensional Representations | [x] | [x] | [x] | — |
-| 178 | Auxiliary Dihedral Data and Residual Potential Modularity | [ ] | [ ] | — | — |
+| 178 | Auxiliary Dihedral Data and Residual Potential Modularity | [x] | [x] | [x] | — |
 | 179 | Compatible Systems of Galois Representations | [x] | [x] | — | — |
-| 180 | Brauer Induction and Descent of Automorphy | [x] | [ ] | — | — |
-| 181 | Finite Image and the Balanced Minimal-Lift Argument | [ ] | [ ] | — | — |
+| 180 | Brauer Induction and Descent of Automorphy | [x] | [x] | [x] | — |
+| 181 | Finite Image and the Balanced Minimal-Lift Argument | [x] | [x] | [x] | — |
 | 182 | Potential Automorphy and Galois Refinement of a Chosen Lift | [ ] | [ ] | — | — |
 | 183 | Brauer Induction for Automorphy Families | [x] | [ ] | — | — |
 | 184 | Brauer Characters and Effectivity of Compatible Families | [x] | [ ] | — | — |

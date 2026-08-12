@@ -148,7 +148,8 @@ $(\mathrm{Seed}_{\mathrm{SP}})$. Then:
    of $\bar\rho$ after residue-field extension, absolutely irreducible over its fraction field,
    with determinant $\chi_\ell$, unramified outside $\{2,\ell\}$,
    coefficient-linearly finite flat at $\ell$, and with the selected dyadic line, sign,
-   nonzero rank-one monodromy, and conductor exponent one.
+   primitive rank-one monodromy (its reduction is the specified nonzero $\bar N$), and
+   conductor exponent one.
 
 The residual restriction to $G_{\mathbf Q(\zeta_\ell)}$ is absolutely irreducible by
 Proposition 2.1, and the same is therefore true after the residue-field extension in (1.4).
@@ -432,7 +433,7 @@ $$
 
 so $c$ is a continuous $1$-cocycle in $M$. Strict conjugation by
 $I+\epsilon X$ changes $c$ by the coboundary
-$g\mapsto X-ar\rho(g)X\bar\rho(g)^{-1}$. The dyadic restriction must lie in
+$g\mapsto X-\bar\rho(g)X\bar\rho(g)^{-1}$. The dyadic restriction must lie in
 $L_2=0$, while the coefficient-prime restriction must lie in $L_\ell$. Taking cocycles modulo
 coboundaries gives exactly (2.16). In particular, the scalar summand of
 $\operatorname{ad}\bar\rho$ never enters: fixing the determinant places the calculation in
@@ -597,7 +598,7 @@ $$
 Taking alternating dimensions in the specialized Poitou--Tate sequence therefore gives
 
 $$
-2-igl(h^0(\mathbf Q_\ell,M')+2\bigr)
+2-\bigl(h^0(\mathbf Q_\ell,M')+2\bigr)
 +h^0(\mathbf Q_\ell,M')=0.
 $$
 
@@ -703,12 +704,26 @@ $$
 
 For completeness, suppose $0\ne\lambda\in\mathcal R^*$ mapped to zero. Effectiveness of the
 complete obstruction would lift the universal deformation through the corresponding
-one-dimensional relation extension $B_\lambda\twoheadrightarrow R$. Representability would
-then give a section $R\to B_\lambda$. The kernel $I_\lambda\simeq k$ is killed by the maximal
-ideal, while minimality of the variables says
-$J\subseteq\varpi P+\mathfrak n^2$. In $B_\lambda$ this places
-$I_\lambda$ inside the image of the section, contradicting the direct decomposition
-$B_\lambda=R\oplus I_\lambda$ induced by that section. Hence (3.9) is injective. It does not
+one-dimensional relation extension $q_\lambda:B_\lambda\twoheadrightarrow R$.
+Representability would then give a section $s:R\to B_\lambda$ with
+$q_\lambda\circ s=\operatorname{id}_R$. If $I_\lambda=\ker q_\lambda\simeq k$, then
+
+$$
+B_\lambda=s(R)\oplus I_\lambda
+$$
+
+as $\mathcal O$-modules. Since
+$\mathfrak m_{B_\lambda}I_\lambda=I_\lambda^2=0$, both
+$\varpi B_\lambda$ and $\mathfrak m_{B_\lambda}^2$ lie in $s(R)$. On the other hand,
+minimality of the variables says $J\subseteq\varpi P+\mathfrak n^2$, whose image gives
+
+$$
+I_\lambda\subseteq
+\varpi B_\lambda+\mathfrak m_{B_\lambda}^2
+\subseteq s(R).
+$$
+
+This contradicts $s(R)\cap I_\lambda=0$. Hence (3.9) is injective. It does not
 assert that every supported obstruction is a relation; dualizing gives a quotient of the dual
 Selmer group onto the conormal space, not an injection in the reverse direction.
 
@@ -788,11 +803,25 @@ properties.
    compatibility; and specialization of the named Hecke and diamond actions onto the full
    faithful minimal Hecke image.
 
+This is one existential hypothesis, not a construction. No field $F$, restricted ring, or
+automorphic module satisfying these clauses is asserted to exist until a witness for the whole
+package has been supplied.
+
 Complete splitting is used for more than notation. It identifies every completion at a place
 above $2$ or $\ell$ with the local field for which Books 164--166 computed the condition. Thus
 restriction retains the nonzero monodromy matrix, intrinsic line, sign, and selected finite-flat
 model without a ramified-base-change descent problem. The two irreducibility clauses put the
 restricted representation in the Schur and adequate range used by the minimal theorem.
+
+Book 173 writes the named-special equation using geometric Frobenius. With
+$\Phi_w=F_w^{-1}$, item 2 becomes
+
+$$
+\Phi_wN_w\Phi_w^{-1}=2^{-1}N_w,
+$$
+
+so its local condition is exactly the arithmetic-Frobenius condition above, not a different
+component.
 
 The final two items are intentionally long. None may be shortened to “residually automorphic,”
 “Ihara holds,” or “the Hecke algebra has the expected support.” Those phrases are conclusions
@@ -811,9 +840,11 @@ $$
 and this common ring is a nonzero finite free $\mathcal O$-algebra and a relative complete
 intersection.
 
-**Proof.** Item 1 gives the total oddness, global Schur condition, cyclotomic absolute
-irreducibility, and coefficient range required by Book 173, Theorem 1.1. Complete splitting at
-$\ell$ makes the coefficient-prime extensions unramified, and item 2 supplies precisely its
+**Proof.** The standing oddness of $\bar\rho$ makes its restriction to the totally real field
+$F$ totally odd. Item 1 gives the global Schur and cyclotomic absolute-irreducibility
+hypotheses, while the standing bound $\ell\geq7$ gives the coefficient range required by Book
+173, Theorem 1.1. Complete splitting at $\ell$ makes the coefficient-prime extensions
+unramified, and item 2 supplies precisely its
 clean finite-flat and named minimal-special local conditions. Item 3 is its exact residual
 automorphy hypothesis. Item 4 reproduces, rather than anticipates, all of its integral patching
 and Hecke-valued Galois hypotheses. The theorem therefore applies to the same represented ring
@@ -831,6 +862,13 @@ $$
 will enter the descent argument. We use the stronger established theorem because it is the
 available source of (4.2). No reduced-finiteness or reduced-support assertion is manufactured
 inside this book.
+
+Book 164's forward-looking ledger called the anticipated extra input $(\mathrm{RF})$. In the
+present formulation there is no second restricted-finiteness hypothesis: the sole new
+arithmetic hypothesis is $(\mathrm{Seed}_{\mathrm{SP}})$, and Proposition 4.1 derives the
+stronger whole-ring statement (4.2) from it. Finiteness only of
+$(R_F^{\mathrm{SP}})_{\mathrm{red}}/\varpi$ would not suffice, because the universal
+restricted representation is defined over the possibly nonreduced represented ring.
 
 There is an important distinction in that last sentence. Generic reducedness is one of the
 automorphic hypotheses used by Book 173 to assemble a Hecke-valued Galois representation and
@@ -853,18 +891,27 @@ rather than a representation on some neighboring local component.
 Hypothesis $(\mathrm{Seed}_{\mathrm{SP}})$ is not known for the Frey datum from the preceding
 books. The obstruction appears before any commutative algebra in Chapters 5--9.
 
-The integral level comparison of Book 139 is conditional on the abelian Ihara vanishing
+The attempted level-change construction uses Book 139 only through the finite family of
+constant-coefficient abelian Ihara vanishings
 
 $$
-\left(H^1_{\mathrm{nc}}(\Gamma^v,k)^\Delta\right)_{\mathfrak m}=0
+({\rm AIH}_{\mathscr F}):\qquad
+\left(H^1_{\mathrm{nc}}(\Gamma_D^v,k)^{\Delta_D}\right)_{\mathfrak m_D}=0
+\qquad(D\in\mathscr F_v(Q)),
 \tag{4.3}
 $$
 
-at the relevant non-Eisenstein localization. Its tree calculation and strong approximation do
-not prove (4.3). Book 140 retains that hypothesis. Book 174's core support theorem instead uses
-$({\rm TIC})$, $({\rm TIH})$, and $({\rm SUP})$; its abelian-Ihara and primitive-residue
-hypotheses enter only the corrected constant-row residue and filtration. None of these distinct
-conditions can be erased by changing terminology.
+where $D$ ranges over every actual constant-coefficient vertex, edge, permutation, and
+adjoint-companion curve in the flag diagram, with its spectator and auxiliary levels. Book
+139's tree calculation and strong approximation do not prove (4.3), and Book 140 retains the
+family wherever it uses the constant rows. This is the first unresolved constant-row input on
+the declared seed-construction routes; it is not the hypothesis of Book 174's core support
+theorem. Within its standing clean datum, that theorem instead assumes $({\rm TIC}_v)$,
+$({\rm TIH}_{\mathscr F})$, and the five-clause $({\rm SUP}_v)$ datum. Its
+$({\rm AIH}_{\mathscr F})$ and
+$({\rm PRI}_{\rm type})$ hypotheses enter only when the corrected constant-row residue and
+normalization filtration of Chapter 6 are invoked. None of these distinct conditions implies
+the others.
 
 The intervening algebraic and automorphic tools do not close this existence gap. Book 151
 proves finite-level diamond-module statements once a clean torsor and saturated integral maps
@@ -881,11 +928,22 @@ place used here, $q_v=2$, the residual inertia is nontrivial unipotent, and the 
 ring is the rigid ring $\mathcal O$. Thus Book 175 neither constructs nor compares
 $R_F^{\mathrm{SP}}$.
 
-Book 177's potential-modularity construction consequently remains conditional. Its first
-unproved input in proof order is (4.3); even after that vanishing, the simultaneous
-multi-place cleanability, product-support, and rational-curve realization needed for the exact
-carrier still have to be proved. Therefore no prior theorem constructs item 3 together with
-item 4 of $(\mathrm{Seed}_{\mathrm{SP}})$. This is the first irreducible arithmetic gap.
+Book 176 likewise proves only named one-prime and finite-set implications after their
+automorphic-localization, type, support, reciprocity, ray, augmentation, and, in the finite-set
+case, mixed-cube hypotheses have been supplied. It does not construct those hypotheses for the
+restricted Frey datum.
+
+Books 177 and 178 give two conditional potential-modularity routes. On their declared routes,
+(4.3) is the earliest explicitly retained unresolved constant-row input wherever that row is
+used. Even if it is supplied, the independent type-incidence, type-Ihara, automorphic
+localization, support, reciprocity, augmentation, and actual multi-place cleanability
+obligations remain. Book 177 proves the compact curve carrier and extracts its rational
+rank-two family once the lifting step succeeds, so curve-carrier existence is not an
+additional gap here. Book 178 likewise keeps its selected scalar localization and
+post-specialization cleanability conditional. Therefore
+no prior theorem constructs item 3 together with item 4 of
+$(\mathrm{Seed}_{\mathrm{SP}})$. This absence of an exact clean Frey-SP carrier is the first
+irreducible arithmetic gap.
 
 ## 5. Finite image of the universal scalar fibre
 
@@ -1406,12 +1464,14 @@ $$
 \tag{10.3}
 $$
 
-The reduction of $N'$ is $\bar N\otimes_kk'\ne0$. Therefore $N'$ is nonzero and has rank one;
-its kernel and image are the same direct-summand line. The quotient Frobenius value is the
-selected $s\in\{1,-1\}$. Thus the lift retains the full SP record, not merely conductor one:
+The reduction of $N'$ is $\bar N\otimes_kk'\ne0$. Thus one entry of $N'$ is a unit: the
+monodromy is primitive on the chosen lattice, not merely nonzero after inverting the
+uniformizer. It follows that $N'$ has rank one and that its kernel and image are the same
+direct-summand line. The quotient Frobenius value is the selected $s\in\{1,-1\}$. Thus the
+lift retains the full SP record, not merely conductor one:
 
 $$
-N'\ne0,
+N'\bmod\mathfrak m_{\mathcal O'}=\bar N\otimes_kk'\ne0,
 \qquad
 \ker N'=\operatorname{im}N',
 \qquad
@@ -1470,7 +1530,7 @@ datum (2.5)--(2.6) with $\bar N\ne0$. Thus it satisfies every residual and local
 of Chapters 2--3 after setting
 
 $$
-\ell=p,qquad k=\mathbf F_p,qquad \mathcal O=\mathbf Z_p
+\ell=p,\qquad k=\mathbf F_p,\qquad \mathcal O=\mathbf Z_p
 \tag{11.2}
 $$
 
@@ -1549,7 +1609,7 @@ Selmer, and automorphic analysis.
 The mathematically direct row for the reusable conditional theorem is
 
 $$
-\boxed{181\mid 57,62,64,173,141,164,165,166.}
+\boxed{181\mid 57,62,64,141,164,165,166,173.}
 \tag{12.1}
 $$
 
@@ -1572,13 +1632,17 @@ The FLT specialization in Section 11.1 additionally uses Book 163, so the exact
 manuscript-wide repository row is
 
 $$
-181\mid57,62,64,173,141,163,164,165,166.
+181\mid57,62,64,141,163,164,165,166,173.
 \tag{12.2}
 $$
 
-The repository dependency table records this manuscript-wide row. Books 175 and 177 are
-diagnostic audits rather than proof inputs. The normalization proof in Chapter 9 is included
-directly, so no unlisted excellence or normalization theorem is imported.
+The repository dependency table records this manuscript-wide row. Books 174--180 are boundary
+and diagnostic audits rather than proof inputs to the conditional implication: Books 174--176
+give conditional nonminimal infrastructure, Books 177--178 do not prove that their
+potential-modularity input records are inhabited for every Frey target, and Books 179--180
+organize or descend systems only after the required automorphic data exist. The normalization
+proof in Chapter 9 is included directly, so no unlisted excellence or normalization theorem is
+imported.
 
 ### 12.2 Consumer audit
 
@@ -1617,10 +1681,13 @@ SP component.
 That statement would imply $(\mathrm{Seed}_{\mathrm{SP}})$ and hence Theorem 1.1. It is not a
 theorem of the current dependency closure.
 
-Book 177's conditional potential-modularity construction first fails at the abelian Ihara
-vanishing retained in its Section 10.4. Even if that vanishing were supplied, its multi-place
-cleanability, product support, and exact carrier obligations would remain. Independently, the
-comparison of Book 175 is for a different scalar local problem and cannot be applied to the
+On the declared routes of Books 177--178, the first unresolved constant-row input is the finite
+family (4.3), not a hypothesis silently built into Book 174's core support theorem. If a route
+does not invoke those constant rows, its independent type, localization, support, reciprocity,
+and augmentation hypotheses are still unproved for the target. Even after (4.3), the actual
+multi-place cleanability, mixed comparison, and product support obligations remain. The compact
+curve carrier is available after a successful lifting step and is not listed as a blocker.
+Independently, Book 175 treats a different scalar local problem and cannot be applied to the
 nonzero-monodromy dyadic SP ring. Thus the exact clean automorphic datum required by Book 173
 has no proved prior construction.
 

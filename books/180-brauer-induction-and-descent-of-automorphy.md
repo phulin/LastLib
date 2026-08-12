@@ -142,6 +142,12 @@ groups are finite dimensional and continuous; a Grothendieck group below is the 
 continuous irreducible semisimple classes, not the Grothendieck group of all possibly
 nonsemisimple continuous representations.
 
+Every $H^1$ or $H^2$ below is the cohomology of the displayed finite quotient with its
+displayed coefficient action, so continuity of cochains is automatic. The Clifford quotient
+$I/N$ acts trivially on the scalar group $k^\times$, whereas the coefficient-descent group
+$\operatorname{Gal}(k'/k)$ acts naturally on $(k')^\times$. These two coefficient actions are
+part of the distinction between the two obstructions.
+
 Induction from an open subgroup is unnormalized finite induction. On $\mathrm{GL}_d$,
 automorphic twisting by a Hecke character acts through the determinant, so the central character
 is multiplied by the $d$-th power of the twisting character (the square in rank two). Unless a
@@ -722,7 +728,9 @@ $$
 
 Assume also that $r|_{G_{F_D}}$ is absolutely irreducible and that strong multiplicity one
 and compatibility of Galois realization with base change hold in the selected packet range.
-Then
+Assume in addition that the algebraic good Hecke polynomials of the two packets have been placed
+in one common number field and that $\lambda_0$ is induced by a fixed injective embedding of
+that field. Then
 
 $$
 \boxed{\operatorname{BC}_{F_D/F_H}(\pi_H)\simeq\pi_D.}
@@ -918,38 +926,44 @@ by $G/I$, from multiplicity over the invariant block, controlled by $I/N$.
 ### 5.3 The projective multiplicity representation
 
 Assume now that $T$ is invariant under $I$, which is automatic by the definition of $I$.
-Choose representatives $s(q)$ for $q\in I/N$ and choose an intertwiner
-$P_{s(q)}:T\to T$ satisfying
+Choose representatives $s(q)$ for $q\in I/N$, with $s(1)=1$, and choose intertwiners
+$P_{s(q)}:T\to T$, with $P_{s(1)}=1$, satisfying
 
 $$
-P_gT(n)P_g^{-1}=T(gng^{-1})
+P_{s(q)}T(n)P_{s(q)}^{-1}=T(s(q)ns(q)^{-1})
 \qquad(n\in N),
 \tag{5.8}
 $$
 
-Put $P_{s(q)n}=P_{s(q)}T(n)$. This fixes the interaction with $N$; changing the section
-only changes the scalar normalization below. The intertwiner attached to a quotient element is
-unique up to a scalar. Consequently
+Put $P_{s(q)n}=P_{s(q)}T(n)$. This fixes the interaction with $N$. For
+$q,r\in I/N$, write the right-section defect as
 
 $$
-P_gP_h=\alpha(g,h)P_{gh}
+\begin{aligned}
+s(q)s(r)&=s(qr)\nu(q,r),\qquad \nu(q,r)\in N,\\
+P_{s(q)}P_{s(r)}
+&=\alpha(q,r)P_{s(qr)}T(\nu(q,r)).
+\end{aligned}
 \tag{5.9}
 $$
 
-for a scalar $\alpha(g,h)\in k^\times$. Associativity gives
+The second equality holds for a unique scalar $\alpha(q,r)\in k^\times$, because both sides
+implement conjugation by $s(q)s(r)$ on $T(N)$. Equivalently, the extension of the $P$'s above
+satisfies $P_gP_h=\alpha(\bar g,\bar h)P_{gh}$ for arbitrary $g,h\in I$, where bars denote
+classes in $I/N$. Associativity gives
 
 $$
-\alpha(g,h)\alpha(gh,t)
-=\alpha(h,t)\alpha(g,ht).
+\alpha(q,r)\alpha(qr,t)
+=\alpha(r,t)\alpha(q,rt).
 \tag{5.10}
 $$
 
-The chosen section makes the displayed factor set a two-cocycle on $I/N$.
-Replacing $P_g$ by $b(g)P_g$ replaces $\alpha$ by
+Thus $\alpha$ is a normalized two-cocycle on $I/N$, with the trivial action on
+$k^\times$. Replacing $P_{s(q)}$ by $b(q)P_{s(q)}$ replaces $\alpha$ by
 
 $$
-\alpha'(g,h)=
-\frac{b(g)b(h)}{b(gh)}\alpha(g,h).
+\alpha'(q,r)=
+\frac{b(q)b(r)}{b(qr)}\alpha(q,r).
 \tag{5.11}
 $$
 
@@ -973,11 +987,11 @@ Evaluation gives an $N$-equivariant isomorphism $T\otimes W\simeq U$. To make ev
 $I$-equivariant, $W$ must carry a projective action with inverse factor set:
 
 $$
-Q_gQ_h=\alpha(g,h)^{-1}Q_{gh}.
+Q_qQ_r=\alpha(q,r)^{-1}Q_{qr}.
 \tag{5.14}
 $$
 
-Then $P_g\otimes Q_g$ is an honest action on $T\otimes W$. In particular,
+Then $P_g\otimes Q_{\bar g}$ is an honest action on $T\otimes W$. In particular,
 
 $$
 e=\dim W.
@@ -991,7 +1005,7 @@ Equivalently, $W$ is a module for the twisted group algebra
 $k^{\alpha^{-1}}[I/N]$. The multiplication in this algebra is
 
 $$
-[u_g][u_h]=\alpha(g,h)^{-1}[u_{gh}].
+[u_q][u_r]=\alpha(q,r)^{-1}[u_{qr}].
 \tag{5.16}
 $$
 
