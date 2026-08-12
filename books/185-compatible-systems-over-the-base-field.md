@@ -71,9 +71,11 @@ The preceding two books begin with one representation over the ground field and 
 packet only after restriction to a controlled totally real Galois extension. Book 183 replaces
 the unavailable nonsolvable descent by a finite array over elementary fixed fields. It then
 forms, for each coefficient embedding, a signed sum of actual induced representations. Book
-184 proves that the signed class has norm one and positive dimension two. Consequently it is
-represented by one actual absolutely irreducible rank-two representation over an algebraically
-closed nonarchimedean field.
+184 proves, under its explicit coefficient-two hypothesis $(\mathrm{AI}_2)$, that the signed
+class has norm one and positive dimension two at every coefficient embedding. Consequently it
+is represented by one actual absolutely irreducible rank-two representation over an
+algebraically closed nonarchimedean field. Without $(\mathrm{AI}_2)$, this effectivity statement
+is available only away from coefficient residue characteristic two.
 
 That conclusion is pointwise effectivity. It is not yet the standard object called a compatible
 system. A compatible system is indexed by the finite places of one number field. Its member at
@@ -132,8 +134,9 @@ the primes $2$ and $\ell$ split completely in $M$, and $\rho|_{G_M}$ is absolute
 irreducible. The selected top packet over $M$ realizes this restriction at one distinguished
 coefficient embedding. This controlled SP top datum is an explicit hypothesis of the present
 assembly theorem. The current Book 182 does not construct it unconditionally: that book isolates
-a missing controlled residual automorphic seed. Thus the arguments below prove the rational
-assembly once the datum has been supplied; they do not close that upstream arithmetic gap.
+a missing controlled exact SP residual seed and the bridge-readiness data needed to carry the
+chosen lift to the controlled top. Thus the arguments below prove the rational assembly once
+the datum has been supplied; they do not close those upstream arithmetic gaps.
 
 For every elementary subgroup $H\leq\Gamma$, put
 
@@ -175,6 +178,25 @@ representations. It does not assert that every group-theoretic prime-cyclic towe
 automorphically admissible. Equation (1.7) is an imported proved theorem; this book neither
 reconstructs it nor replaces it by an automatic solvable-descent claim.
 
+Book 184's all-place effectivity theorem has one further hypothesis that is not contained in
+the controlled SP top datum. Write $q(\tau)$ for the residue characteristic of the
+nonarchimedean target of $\tau$. We retain explicitly the hypothesis
+
+$$
+\boxed{
+r_{1,\tau}:G_M\longrightarrow\operatorname{GL}_2(\Omega_\tau)
+\text{ is absolutely irreducible whenever }q(\tau)=2.}
+\tag{\mathrm{AI}_2}
+$$
+
+This is a rational characteristic-zero hypothesis about the coefficient-two realization of the
+top packet. Book 183 does not prove it: its prime-to-coefficient SP pair proves the required
+irreducibility only when $q(\tau)\ne2$. Under $(\mathrm{AI}_2)$, Book 184 proves effectivity at
+every embedding. Without it, Book 184 and the construction below apply only at places of
+residue characteristic different from two and do not produce an all-finite-place compatible
+system. Thus $(\mathrm{AI}_2)$ is a standing hypothesis whenever this book says ``every
+coefficient place.''
+
 Fix for the moment an integral Brauer relation
 
 $$
@@ -185,11 +207,11 @@ $$
 $$
 
 where every $H_i$ is elementary, every $\theta_i$ is a finite-order linear character, and
-$n_i\in\mathbf Z$. Book 183 forms the signed induced class. Book 184 proves that, at every
-coefficient embedding $\tau$, it is represented by an actual continuous absolutely irreducible
-two-dimensional representation (1.1). It also proves relation-independence after scalar
-extension, common good Frobenius polynomials, the cyclotomic determinant, exact local
-characteristic-zero cancellation, and recovery of $\rho$ at $\tau_0$.
+$n_i\in\mathbf Z$. Book 183 forms the signed induced class. Under $(\mathrm{AI}_2)$, Book 184
+proves that, at every coefficient embedding $\tau$, it is represented by an actual continuous
+absolutely irreducible two-dimensional representation (1.1). It also proves
+relation-independence after scalar extension, common good Frobenius polynomials, the cyclotomic
+determinant, exact local characteristic-zero cancellation, and recovery of $\rho$ at $\tau_0$.
 
 No family over $\mathbf Q$ is included in this input. No stable lattice is included either.
 The objects to be assembled are exactly the effective embedding-indexed isomorphism classes
@@ -197,9 +219,10 @@ The objects to be assembled are exactly the effective embedding-indexed isomorph
 
 ### 1.3 The theorem to be proved
 
-The endpoint can now be stated informally. We shall construct a finite Galois number field
-$E$, a distinguished place $\lambda_0\mid\ell$, and, for every finite place $\lambda$ of $E$,
-an absolutely irreducible continuous representation
+Under the standing controlled-datum and $(\mathrm{AI}_2)$ hypotheses, the endpoint can now be
+stated informally. We shall construct a finite Galois number field $E$, a distinguished place
+$\lambda_0\mid\ell$, and, for every finite place $\lambda$ of $E$, an absolutely irreducible
+continuous representation
 
 $$
 r_\lambda:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(E_\lambda).
@@ -349,9 +372,11 @@ r_{H,\lambda}:G_{F_H}\longrightarrow\operatorname{GL}_2(E_\lambda)
 $$
 
 whose scalar extension under an embedding inducing $\lambda$ is $r_{H,\tau}$. These are
-continuous semisimple representations. They are absolutely irreducible: Book 184 proves this
-from the cuspidality of $\pi_H$, the rank-one Galois--Hecke dictionary for a hypothetical
-decomposition, and strong multiplicity one.
+continuous semisimple representations. Under the standing $(\mathrm{AI}_2)$ hypothesis they
+are absolutely irreducible. More precisely, Book 184, Proposition 5.1 proves this from the
+nonzero SP monodromy when $q_\lambda\ne2$, and from $(\mathrm{AI}_2)$ together with top-field
+restriction when $q_\lambda=2$. Cuspidality and good Frobenius polynomials alone are not used as
+a proof of Galois irreducibility.
 
 If $D\leq H$ are elementary, equation (1.7) becomes, after scalar extension,
 
@@ -463,7 +488,8 @@ agreement over $G_M$. Such an inference would lose a quotient character of $D_x$
 
 Nor do we declare every prime-cyclic subgroup chain to be an admissible automorphic transfer
 chain. Elementary nilpotence supplies a group-theoretic chain, but arithmetic admissibility is
-separate. The unconditional semisimple overlap theorem of Book 183 is what closes the interface.
+separate. Book 183's proved tower-independent semisimple overlap theorem is what closes the
+interface, relative throughout to the conditional controlled SP top datum.
 
 ### 2.5 Why no base-field family has been assumed
 
@@ -1001,7 +1027,7 @@ commute because they act on different coordinates of the finite packet ledger.
 
 ### 7.1 The algebraic quadratic polynomial
 
-Let $S_0$ be the common finite exceptional set in the Book-187 packet array. It contains $2$,
+Let $S_0$ be the common finite exceptional set in the Book 183 packet array. It contains $2$,
 $\ell$, every rational prime ramified in $M$, and the finitely many packet and character
 exceptions. For $p\notin S_0$, Book 183 computes the local cyclic blocks of each induced term.
 If $w\mid p$ is a place of $F_{H_i}$, $f_w=f(w/p)$, and
@@ -1318,12 +1344,18 @@ At a good $v\notin S_0$, the pair $D_v$ is unramified, has $N=0$, and its Froben
 polynomial is $P_v$. If $v$ lies in the finite auxiliary set and the distinguished member is
 available there away from its coefficient characteristic, (8.6) can compare $D_v$ with the
 actual local pair of $\rho$. In particular, whenever that local representation is unramified,
-$D_v$ is unramified and the auxiliary prime can be removed from the weak exceptional set.
+$D_v$ is unramified and the auxiliary prime is certified absent from the common support. Its
+Frobenius characteristic polynomial is then a common
+$X^2-a_vX+v\in E[X]$ by (7.10) and (8.6). Removing it also from the exceptional set used for
+the pure compatible-polynomial ledger requires the
+weight-one purity of that polynomial to be in the proved packet local-purity range or to be
+separately certified; unramifiedness alone does not prove purity.
 
 This shrinking is made prime by prime and only with the stated local comparison. It is not a
-formal consequence of a signed conductor sum. The permanent weak exceptional set is therefore
-the set left after these certified removals; denoting it by $S$ avoids claiming a smaller set
-than the local packet input proves.
+formal consequence of a signed conductor sum. Let $S$ be $S_0$ with only those auxiliary primes
+removed for which the common unramified polynomial and its weight-one purity have both been
+certified. The common support ledger may be smaller than $S$, but this convention avoids
+claiming a pure polynomial outside the range proved by the packet input.
 
 ### 8.4 The common special pair
 
@@ -1494,8 +1526,9 @@ We can now collect the construction without reference to a chosen Brauer present
 
 **Theorem 9.1 (coefficient-descended compatible system over the base field).** Let
 (1.2)--(1.8) be the controlled SP packet-array datum of Book 183, and let Book 184's
-embedding-indexed effectivity theorem be applied to its integral Brauer classes. Assume no
-base-field compatible family as part of the input.
+embedding-indexed effectivity theorem be applied to its integral Brauer classes. Assume
+$(\mathrm{AI}_2)$ as stated in Section 1.2, and assume no base-field compatible family as part
+of the input.
 
 Then there are a finite Galois number field $E$, a place $\lambda_0\mid\ell$, a finite set
 $S$ of rational primes, and representations
@@ -1565,8 +1598,9 @@ with the following properties.
    \tag{9.6}
    $$
 
-   An auxiliary prime is removed from $S$ whenever this comparison identifies $D_v$ as
-   unramified. No place outside the proved range is inserted by a density argument.
+   This comparison can certify an auxiliary prime absent from the common support. It is removed
+   from $S$ only when its common unramified Frobenius polynomial and weight-one purity are also
+   certified. No place outside the proved range is inserted by a density argument.
 9. **The SP place.** The place $2$ lies in the range of clause 8. The pair $D_2=(r_2,N_2)$
    has trivial finite inertia,
 
@@ -1595,6 +1629,11 @@ with the following properties.
 The collection (9.1), together with (9.2) and the local objects in their declared range, is the
 coefficient-descended compatible system over $\mathbf Q$.
 
+Without $(\mathrm{AI}_2)$, the same construction and conclusions hold place by place for
+$\lambda\nmid2$, including at every $\nu\mid3$, but no member above $2$ is thereby constructed.
+That restricted collection is not the all-finite-place compatible system asserted in this
+theorem.
+
 ### 9.2 Proof
 
 Choose the common finite Galois coefficient field of Chapter 2. It simultaneously realizes all
@@ -1603,12 +1642,13 @@ many bad local objects. For a Brauer relation, finite Galois induction construct
 semisimple positive and negative representations $R_{\mathfrak B,\lambda}^\pm$ over every
 completion.
 
-Book 184's norm-one theorem gives the signed equality (2.7) over an algebraic closure. Theorem
-3.2 applies because the surviving constituent has multiplicity one. Its Galois orbit is a
-singleton and its Schur multiplicity is one, so it descends to $E_\lambda$ and actual
-cancellation holds there. The cocycle interpretation in Section 3.4 proves clause 2. The
-constituent is a closed invariant summand of a continuous representation and is absolutely
-irreducible after scalar extension, proving clause 1.
+Under $(\mathrm{AI}_2)$, Book 184's norm-one theorem gives the signed equality (2.7) over an
+algebraic closure at every coefficient place. Theorem 3.2 applies because the surviving
+constituent has multiplicity one. Its Galois orbit is a singleton and its Schur multiplicity is
+one, so it descends to $E_\lambda$ and actual cancellation holds there. The cocycle
+interpretation in Section 3.4 proves clause 2. The constituent is a closed invariant summand of
+a continuous representation and is absolutely irreducible after scalar extension, proving
+clause 1.
 
 For two Brauer relations, combine their induced lists. The exact elementary-overlap theorem and
 the automorphic self-twist test make every entry of the combined Mackey Gram matrix embedding
@@ -1617,12 +1657,15 @@ difference has norm zero. Positivity makes the two scalar-extended classes equal
 change descends the isomorphism. The remaining presentation and coordinate choices change no
 induced isomorphism class. This proves clause 3.
 
-The cyclic-block calculation gives the algebraic rational function (7.3). At the distinguished
-embedding it is the quadratic characteristic series of $\rho$, and injectivity makes it the
-polynomial (9.2) over $E$. Actual cancellation gives both unramifiedness and (9.3). The
-determinant-transfer calculation becomes the actual identity (9.4). Restriction to the pure top
-packet and the residue-degree power calculation give purity. These arguments prove clauses
-4--5.
+For primes outside $S_0$, the cyclic-block calculation gives the algebraic rational function
+(7.3). At the distinguished embedding it is the quadratic characteristic series of $\rho$, and
+injectivity makes it the polynomial (9.2) over $E$. Actual cancellation gives both
+unramifiedness and (9.3). At an auxiliary prime removed from $S_0$, the algebraic local
+complement supplies the common unramified polynomial, and removal from $S$ includes the
+separate purity certificate required in Section 8.3. The determinant-transfer calculation
+becomes the actual identity (9.4). Restriction to the pure top packet and the residue-degree
+power calculation give purity on the original good set. These arguments and the declared
+certificates prove clauses 4--5.
 
 Restrict a signed presentation to $G_{F_H}$. Mackey decomposition, Book 183's overlap theorem,
 and the tensor identity factor out $r_{H,\lambda}$; the restricted finite-group Brauer relation
@@ -1665,6 +1708,11 @@ $$
 so $V$ has the same rational rank-one monodromy, line, sign, and conductor-one record at $2$.
 It also receives the common unramified local records at every prime certified by clause 8.
 
+This handoff does not by itself imply the stronger minimal-support hypothesis used in Book 186,
+Section 2.3. To assert that $V$ is unramified outside $\{2,3\}$, every prime in the finite
+auxiliary set left by clause 8 must first be certified and removed. This is the same
+clean-support boundary denoted $(\mathrm U)$ in Book 187.
+
 No statement at the coefficient-prime place $3$ follows from (9.10). Crystallinity, Hodge
 type, finite flatness, and the choice of a globally stable lattice are separate inputs or
 constructions for the fixed-three integral theory. Likewise, rational nonzero $N_2$ does not
@@ -1684,9 +1732,9 @@ $$
 |---|---|---|
 | Book 168 | coefficient systems and algebraic local objects attached to the already constructed weight-two packets, including determinant, purity, and coefficient transport | no base-field family, canonical lattice, or moving-prime integral conclusion |
 | Book 180 | multiplicity-one coefficient descent, coefficient cocycle effectivity, presentation comparison, induction/Mackey/tensor formulas, and Brauer--Nesbitt recognition | no packet overlap, positivity verification, or SP local object is imported |
-| Book 182 | the conditional controlled SP top datum and its explicit missing-seed boundary | this book does not make that datum unconditional |
+| Book 182 | the conditional controlled SP top datum and its explicit controlled-seed and bridge-readiness boundaries | this book does not make that datum unconditional |
 | Book 183 | selected elementary packets, exact elementary and conjugate-intersection identities, integral Brauer classes, determinant and local Mackey formulas, common virtual polynomials, purity, and the algebraic SP pair | no virtual class is called effective and no inadmissible automorphic transfer is inserted |
-| Book 184 | the application-specific coefficient-independent Gram matrix, norm-one positivity, actual characteristic-zero cancellation, coefficient covariance, and scalar relation independence | no completion-valued model or assembled family is imported |
+| Book 184 | under the explicit additional hypothesis $(\mathrm{AI}_2)$, the application-specific coefficient-independent Gram matrix, all-place norm-one positivity, actual characteristic-zero cancellation, coefficient covariance, and scalar relation independence | no completion-valued model or assembled family is imported; without $(\mathrm{AI}_2)$ only coefficient places away from two are available |
 
 The work retained here is the assembly itself. Chapter 2 places every finite packet and character
 in one algebraic ledger. Chapters 3--5 instantiate Book 180's coefficient-descent criterion over
@@ -1705,6 +1753,11 @@ cocycle.
 ### 10.2 Hostile mathematical audit
 
 The construction withstands the following failure tests.
+
+**Coefficient-two effectivity is not silently imported.** The all-place theorem assumes
+$(\mathrm{AI}_2)$, exactly as Book 184 does. Without that hypothesis, Sections 2--8 assemble
+only the members with $q_\lambda\ne2$; they do not manufacture a place above two from trace
+data or from a coefficient-prime SP statement that Book 183 never supplied.
 
 **A trace field is not silently called a field of definition.** The coefficient ledger first
 splits the finite realization algebras of the elementary terms. The new rank-two constituent is
@@ -1764,9 +1817,10 @@ conjugation, the distinguished member, and the global place-indexed compatible s
 record at $2$ is carried as a full Weil--Deligne pair with nonzero rank-one monodromy, line,
 sign, and conductor one. Integral refinement is excluded explicitly.
 
-Every substantial premise is either the controlled SP top datum of Book 182, the abstract
-representation-theoretic toolkit of Book 180, or an exact theorem of Books 168, 183, or 184.
-No conclusion of this book and no later consumer is used as a premise. Arithmetic
+Every substantial premise is either the conditional controlled SP top datum of Book 182, the
+explicit additional hypothesis $(\mathrm{AI}_2)$, the abstract representation-theoretic toolkit
+of Book 180, or an exact theorem of Books 168, 183, or 184. No conclusion of this book and no
+later consumer is used as a premise. Arithmetic
 Frobenius, induction, determinant, character
 ratio, residue-degree, duality, and conductor conventions are consistent throughout. The table
 of contents matches the heading structure, every displayed reference resolves within the
@@ -1816,7 +1870,10 @@ P_p(X)=X^2-a_pX+p.}
 \tag{10.1}
 $$
 
-Conditional on the controlled SP top datum, the assembly is complete at the rational level.
-Its final boundary is exact: the SP line exists over the coefficient field, but no integral
-lattice, finite-flat quotient, or transition tower has been chosen or inferred. The missing
-upstream construction of the controlled seed remains outside this theorem.
+Conditional on both the controlled SP top datum and $(\mathrm{AI}_2)$, the all-place assembly is
+complete at the rational level. Its final boundary is exact: the SP line exists over the
+coefficient field, but no integral lattice, finite-flat quotient, or transition tower has been
+chosen or inferred. The missing upstream construction of the controlled seed and the separate
+bridge-readiness data, as well as the separate coefficient-two irreducibility hypothesis,
+remain outside this theorem. Without $(\mathrm{AI}_2)$, only the partial assembly away from
+coefficient characteristic two is proved.
