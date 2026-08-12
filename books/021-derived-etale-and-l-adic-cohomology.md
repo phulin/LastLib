@@ -77,16 +77,11 @@
   - [15.2 Torsion and lisse Tate systems](#152-torsion-and-lisse-tate-systems)
   - [15.3 Families and base change](#153-families-and-base-change)
   - [15.4 Integral perfectness](#154-integral-perfectness)
-- [16. Selected Shimura surfaces](#16-selected-shimura-surfaces)
-  - [16.1 The geometric input](#161-the-geometric-input)
-  - [16.2 Interior and boundary complexes](#162-interior-and-boundary-complexes)
-  - [16.3 Finiteness and perfectness](#163-finiteness-and-perfectness)
-  - [16.4 Hecke and Galois actions](#164-hecke-and-galois-actions)
-- [17. A reusable derived package](#17-a-reusable-derived-package)
-  - [17.1 The integral theorem](#171-the-integral-theorem)
-  - [17.2 The rational theorem](#172-the-rational-theorem)
-  - [17.3 A diagnostic checklist](#173-a-diagnostic-checklist)
-  - [17.4 Final synthesis](#174-final-synthesis)
+- [16. A reusable derived package](#16-a-reusable-derived-package)
+  - [16.1 The integral theorem](#161-the-integral-theorem)
+  - [16.2 The rational theorem](#162-the-rational-theorem)
+  - [16.3 A diagnostic checklist](#163-a-diagnostic-checklist)
+  - [16.4 Final synthesis](#164-final-synthesis)
 
 ## 1. From local sheets to global invariants
 
@@ -137,7 +132,7 @@ At the rational level, one inverts $\ell$ only after constructing an integral ob
 
 ### 1.4 The main results
 
-The book establishes four packages. First, finite torsion coefficients admit a complete derived theory on the small étale topos, with Leray, hypercohomology, localization, Hochschild--Serre, and cup products. Second, constructible prime-to-residue-characteristic coefficients on a separated finite-type $d$-fold over a separably closed field have finite cohomology and vanish above degree $2d$. We prove the affine theorem and the dimension-controlled gluing argument from which this follows; in particular the bounds are $2$ for proper curves, $2g$ for $g$-dimensional abelian varieties, and $4$ for surfaces. Third, compatible finite-level complexes define continuous integral and rational cohomology, with the exact $\varprojlim^1$ obstruction displayed. Fourth, in the cases needed for curves, abelian schemes, and the selected two-dimensional PEL varieties, the resulting geometric complexes are bounded and perfect over $\Lambda$, and their cohomology carries continuous Galois and functorial correspondence actions.
+The book establishes four packages. First, finite torsion coefficients admit a complete derived theory on the small étale topos, with Leray, hypercohomology, localization, Hochschild--Serre, and cup products. Second, constructible prime-to-residue-characteristic coefficients on a separated finite-type $d$-fold over a separably closed field have finite cohomology and vanish above degree $2d$. We prove the affine theorem and the dimension-controlled gluing argument from which this follows; in particular the bounds are $2$ for proper curves, $2g$ for $g$-dimensional abelian varieties, and $4$ for surfaces. Third, compatible finite-level complexes define continuous integral and rational cohomology, with the exact $\varprojlim^1$ obstruction displayed. Fourth, in the cases needed for curves and abelian schemes, the resulting geometric complexes are bounded and perfect over $\Lambda$, and their cohomology carries continuous Galois and functorial finite-correspondence actions.
 
 The geometric comparison theorem asserting proper or smooth base change in complete generality belongs to the next stage of the theory. Here we construct its canonical maps, prove the cases forced by finite étale morphisms and constant products, and formulate exact hypotheses under which finite-level comparison passes to adic coefficients. This boundary prevents a formal derived argument from being mistaken for the geometric theorem it is designed to transport.
 
@@ -1014,7 +1009,7 @@ $$
 
 for every $n$. These arrows already form an isomorphism of finite-level systems. After normalizing both systems they therefore give an isomorphism in the adic derived category; no interchange of a stalk with an ordinary inverse limit is involved in that assertion. If one realizes the two sides as $R\varprojlim$ complexes of ordinary $\Lambda$-module sheaves, uniform bounded amplitude and the relevant Mittag--Leffler conditions justify the realization and its stalkwise interpretation.
 
-For a proper smooth family of curves, abelian varieties, or selected surfaces with lisse finite free coefficients, finite-level constructibility and uniform cohomological dimension give precisely this control. One obtains
+For a proper smooth family of curves or abelian varieties with lisse finite free coefficients, finite-level constructibility and uniform cohomological dimension give precisely this control. One obtains
 
 $$
 g^*R f_{*,\mathrm{cont}}\mathcal F
@@ -1255,104 +1250,16 @@ Relatively, after finite-level proper smooth base change and constructibility, t
 
 Tensoring with $E$ gives a perfect rational complex. Computing its individual ranks or Euler characteristic is a separate constant-coefficient calculation and is not needed for finiteness, completion, or continuity.
 
-## 16. Selected Shimura surfaces
+## 16. A reusable derived package
 
-### 16.1 The geometric input
-
-The surfaces needed in the arithmetic route arise from PEL moduli problems at sufficiently small level. For the present cohomological package, their detailed moduli interpretation is compressed into the following explicit hypotheses. Let $S$ be a smooth geometrically connected quasi-projective surface over a number field $K$. Assume:
-
-1. $S$ has a smooth projective compactification $j:S\hookrightarrow\overline S$ whose boundary $D$ is a strict normal-crossings divisor after a finite extension of $K$;
-2. away from a finite set of primes there is a smooth model of the pair $(\overline S,D)$;
-3. the coefficient systems under consideration arise from finite free $\Lambda$-lattices in algebraic PEL representations and are lisse on $S$;
-4. $D$ has a finite stratification on which every finite-level local inertia action is constant up to isomorphism, and the corresponding inertia cohomology vanishes outside one bounded range independent of the level.
-
-Compact quaternionic surfaces have $D=\varnothing$. For noncompact Hilbert or unitary examples, toroidal compactifications provide the normal-crossings boundary after the stated level and field adjustments. The book uses only the four geometric properties above; it does not infer them from the word “Shimura.”
-
-### 16.2 Interior and boundary complexes
-
-Let $\mathcal L=(\mathcal L_n)$ be one of the coefficient systems. At finite level define
-
-$$
-R\Gamma_c(S,\mathcal L_n)
-=R\Gamma(\overline S,j_!\mathcal L_n),
-\qquad
-R\Gamma(S,\mathcal L_n)
-=R\Gamma(\overline S,Rj_*\mathcal L_n).
-$$
-
-For the fixed compactifications here, the first displayed expression is the definition of compactly supported cohomology. The natural map $j_!\mathcal L_n\to Rj_*\mathcal L_n$ gives the boundary triangle
-
-$$
-R\Gamma_c(S,\mathcal L_n)
-\longrightarrow R\Gamma(S,\mathcal L_n)
-\longrightarrow R\Gamma(D,\mathcal B_n)
-\longrightarrow,
-$$
-
-where
-
-$$
-\mathcal B_n=i^*Rj_*\mathcal L_n
-$$
-
-is the boundary complex. Its stalk at a smooth boundary point is continuous cohomology of the local inertia group acting on the stalk of $\mathcal L_n$; at a crossing, two inertia directions produce a two-variable local complex. The finite-level local-monodromy hypothesis in Section 16.1 makes these cohomology sheaves constructible.
-
-Define interior cohomology by
-
-$$
-H^q_!(S,\mathcal L_n)
-=\operatorname{im}\bigl(
-H^q_c(S,\mathcal L_n)\to H^q(S,\mathcal L_n)
-\bigr).
-$$
-
-It is a group, not generally the cohomology of a canonically split direct summand. Boundary classes can form nontrivial extensions with interior classes. Projectors supplied by correspondences may later isolate summands, but degeneration of a boundary sequence alone does not do so.
-
-### 16.3 Finiteness and perfectness
-
-Since $\dim S=2$, every constructible finite coefficient complex above has cohomology only in a uniform finite range; ordinary sheaf cohomology vanishes above degree $4$, and the bounded local-inertia amplitude enlarges the range of $Rj_*\mathcal L_n$ only by its stated finite amount. All groups are finite. The same holds for compact support because $j_!\mathcal L_n$ is constructible on the proper surface.
-
-Taking derived inverse limits defines
-
-$$
-R\Gamma_c(S,\mathcal L),
-\qquad
-R\Gamma(S,\mathcal L),
-\qquad
-R\Gamma(D,\mathcal B).
-$$
-
-Finite-level finiteness makes every cohomology tower Mittag--Leffler, so the boundary triangle survives completion. Normalization and (7.1) identify the mod-$\ell$ reductions of the three continuous complexes with their finite-level counterparts. The complete-DVR lemma therefore makes each complex perfect over $\Lambda$ and its cohomology finitely generated. If $S$ is proper, the boundary complex is zero and ordinary and compactly supported cohomology coincide.
-
-For the constant system on a smooth proper surface, the cohomological range is exactly contained in $[0,4]$. For an open surface, ordinary and compactly supported cohomology are still bounded, but their groups need not agree and boundary contributions can occur in several degrees. A claim that only the middle degree matters requires a separate projector, vanishing theorem, or weight argument; dimension alone does not provide it.
-
-### 16.4 Hecke and Galois actions
-
-A prime-to-level Hecke correspondence is represented by a diagram
-
-$$
-S\xleftarrow{p}S'\xrightarrow{q}S
-$$
-
-whose arrows are finite étale on the open surface and extend compatibly to the chosen compactifications after refinement. Pullback along $p$ and finite pushforward along $q$ define an endomorphism $q_*p^*$ of finite-level cohomology. Compatibility with reduction gives an action on the integral perfect complex and then on rational cohomology.
-
-The notation includes the coefficient isomorphism $p^*\mathcal L_n\simeq q^*\mathcal L_n$ supplied by the PEL correspondence; without such an isomorphism the diagram does not act on cohomology with coefficients in $\mathcal L_n$.
-
-Because the correspondence and coefficients descend to $K$, Hecke actions commute with the continuous $G_K$-action on geometric cohomology. This commutation is already true at every finite level and survives inverse limit. It is therefore legitimate to take generalized Hecke eigenspaces inside a finite-dimensional $E$-representation of $G_K$.
-
-Two cautions remain. Integral eigenspaces need not be direct summands when eigenvalues are congruent modulo $\ell$; a rational projector can have denominators. And a Hecke correspondence that does not extend cleanly across the boundary may act on ordinary cohomology while requiring additional work on compact support or boundary cohomology. The finite étale open correspondence alone does not settle that extension problem.
-
-## 17. A reusable derived package
-
-### 17.1 The integral theorem
+### 16.1 The integral theorem
 
 We can now collect the constructions into the form used later.
 
 **Integral geometric cohomology theorem.** Let $k$ be a field, let $X/k$ be one of the following:
 
 - a smooth proper or semistable proper curve;
-- an abelian variety of dimension $g$;
-- a selected smooth Shimura surface satisfying Section 16.1, with either ordinary or compactly supported cohomology.
+- an abelian variety of dimension $g$.
 
 Let $\mathcal F=(\mathcal F_n)$ be a normalized bounded constructible $\Lambda$-system on a common finite stratification. For compact support, apply this hypothesis to $(j_!\mathcal F_n)$. Then:
 
@@ -1362,11 +1269,11 @@ Let $\mathcal F=(\mathcal F_n)$ be a normalized bounded constructible $\Lambda$-
 4. reduction modulo $\ell^n$ recovers $R\Gamma(\bar X,\mathcal F_n)$;
 5. it carries a continuous $G_k$-action compatible with cup products and every finite correspondence defined over $k$ that is equipped with the required coefficient identification.
 
-For a proper curve the sheaf-cohomological range is $[0,2]$, for an abelian variety it is $[0,2g]$, and for a proper surface it is $[0,4]$. A coefficient complex shifts these ranges by its own amplitude. For open surfaces with boundary complexes, add the finite local-inertia amplitude rather than asserting the proper range.
+For a proper curve the sheaf-cohomological range is $[0,2]$, and for an abelian variety it is $[0,2g]$. A coefficient complex shifts these ranges by its own amplitude.
 
 **Proof.** Finite-level boundedness and finiteness are supplied by Chapters 6 and 7. Hence every fixed-degree tower is Mittag--Leffler, so Milnor identifies continuous cohomology with its inverse limit and preserves the uniform range. Equation (7.1) gives derived reduction directly from normalization. In particular the mod-$\ell$ reduction is bounded with finite-dimensional cohomology; the complete-DVR lemma makes the continuous complex perfect and its cohomology finitely generated. The descent action is continuous at every finite level and therefore on the inverse-limit topology. Products and finite traces are compatible levelwise and hence on the normalized limit. $\square$
 
-### 17.2 The rational theorem
+### 16.2 The rational theorem
 
 **Rational geometric cohomology theorem.** Under the same hypotheses, let $\mathcal V$ be the rational coefficient object obtained from an integral lattice $\mathcal F$. Then
 
@@ -1382,7 +1289,7 @@ is a bounded perfect $E$-complex, independent of the lattice. Every cohomology g
 
 This theorem does not say that every system of $E$-vector spaces arises from a constructible lattice. The stable-lattice theorem applies to continuous finite-dimensional representations with compact image. Infinite-rank or noncontinuous actions fall outside the category.
 
-### 17.3 A diagnostic checklist
+### 16.3 A diagnostic checklist
 
 When a geometric construction is claimed to produce an $\ell$-adic cohomology representation, the following questions locate every possible gap.
 
@@ -1398,9 +1305,9 @@ When a geometric construction is claimed to produce an $\ell$-adic cohomology re
 
 Each question addresses a real failure mode. A naive limit can miss $\varprojlim^1$; a base-change map can exist without being invertible; a rational local system can be misstated as a discrete sheaf; and finite cohomology groups can assemble into a nonperfect complex if boundedness or finite generation is absent.
 
-### 17.4 Final synthesis
+### 16.4 Final synthesis
 
-Étale cohomology begins with a simple obstruction: local sections need not glue. The small étale topos supplies the correct neighborhoods, and derived global sections retain every obstruction and connecting map at once. Constructibility turns arbitrary local behavior into finitely many lisse pieces. Cohomological-dimension and finiteness arguments then make the resulting complexes bounded and arithmetically manageable for curves, abelian varieties, and the two-dimensional PEL spaces required here.
+Étale cohomology begins with a simple obstruction: local sections need not glue. The small étale topos supplies the correct neighborhoods, and derived global sections retain every obstruction and connecting map at once. Constructibility turns arbitrary local behavior into finitely many lisse pieces. Cohomological-dimension and finiteness arguments then make the resulting complexes bounded and arithmetically manageable for curves and abelian varieties.
 
 The passage to $\ell$-adic coefficients is not a change of symbols. It is a passage from finite sheaves to a normalized inverse system, from ordinary limit to derived limit, and from discrete finite actions to a continuous action on a profinite lattice. The Milnor sequence records the possible defect. In the finite geometric situations of this book, Mittag--Leffler kills that defect, but only after finiteness has been proved.
 

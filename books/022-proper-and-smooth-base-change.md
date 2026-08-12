@@ -63,7 +63,7 @@
    - [The first direct image](#131-the-first-direct-image)
    - [Exterior powers and arbitrary base change](#132-exterior-powers-and-arbitrary-base-change)
    - [Isogenies, polarizations, and endomorphisms](#133-isogenies-polarizations-and-endomorphisms)
-14. [Selected PEL families](#14-selected-pel-families)
+14. [PEL abelian families and parameter spaces](#14-pel-abelian-families-and-parameter-spaces)
    - [The geometric hypotheses](#141-the-geometric-hypotheses)
    - [Universal abelian families and coefficient systems](#142-universal-abelian-families-and-coefficient-systems)
    - [Proper and nonproper parameter spaces](#143-proper-and-nonproper-parameter-spaces)
@@ -252,13 +252,13 @@ Finiteness is also indispensable for adic coefficients. For a tower of finite gr
 
 ### 3.2 Absolute finiteness in the required range
 
-Book 21 established the following absolute input. If $k$ is separably closed, $Y$ is separated of finite type over $k$ with $\dim Y\leq2$, and $\mathcal F$ is a constructible finite $\Lambda$-sheaf with $N$ prime to $\operatorname{char}k$, then every $H^q(Y,\mathcal F)$ is finite and
+Book 21 established the following absolute input. If $k$ is separably closed, $Y$ is separated of finite type over $k$ of dimension $d$, and $\mathcal F$ is a constructible finite $\Lambda$-sheaf with $N$ prime to $\operatorname{char}k$, then every $H^q(Y,\mathcal F)$ is finite and
 
 $$
 H^q(Y,\mathcal F)=0\qquad(q>2\dim Y).
 $$
 
-It also established the corresponding finite bound $2g$ for an abelian variety of dimension $g$. These statements are enough for relative curves, abelian schemes, and the selected surfaces. For a proper curve, the bound is $[0,2]$; for a smooth affine curve it improves to $[0,1]$. For a proper surface it is $[0,4]$.
+It also established the corresponding finite bound $2g$ for an abelian variety of dimension $g$. These statements are enough for relative curves, abelian schemes, and the Hilbert--Blumenthal parameter spaces retained below. For a proper curve, the bound is $[0,2]$; for a smooth affine curve it improves to $[0,1]$. In higher-dimensional Hilbert cases one uses the general $2d$ bound for a $d$-dimensional fiber.
 
 These results used constructible dévissage, finite étale descent, compactification, and the Kummer calculation for curves and abelian varieties. We do not reprove those derived foundations. We do prove the relative constructibility needed here, whose additional content is uniformity as the fiber moves.
 
@@ -356,7 +356,7 @@ $$
 M\xrightarrow{\tau-1}M.
 $$
 
-This display uses a chosen tame generator; intrinsically the degree-one term transforms with the inverse cyclotomic twist. Wild inertia has pro-order prime to the order of $M$, so taking its invariants is exact. Higher intersections, branch loci, and nonnormal loci have smaller support and are handled by noetherian induction. In the normal-crossings cases used for open curves and PEL surfaces this procedure is simply the familiar one- or two-variable tame-inertia complex.
+This display uses a chosen tame generator; intrinsically the degree-one term transforms with the inverse cyclotomic twist. Wild inertia has pro-order prime to the order of $M$, so taking its invariants is exact. Higher intersections, branch loci, and nonnormal loci have smaller support and are handled by noetherian induction. In the normal-crossings cases used for marked curves and compactified Hilbert--Blumenthal parameter spaces this procedure is the familiar tame-inertia complex, with one factor for each local boundary branch.
 
 Compactification is essential in constructibility and smooth base change, where $f$ need not be proper. It also explains counterexamples: a nonproper family can change because its boundary changes.
 
@@ -376,7 +376,7 @@ For a base of larger dimension, choose a chain of immediate specializations and 
 
 Three measures decrease. Constructible dévissage lowers the dimension of coefficient support. Compactification moves failure to a boundary of smaller dimension. Trait reduction replaces a specialization by a one-dimensional local problem. Finite étale descent changes none of these measures but trivializes monodromy after a finite step.
 
-In the required low-dimensional range, normalization separates the zero-dimensional defects of curves, while the PEL surfaces enter with a normal-crossings compactification as an explicit hypothesis. Every presentation complex is finite in each fixed cohomological range, and Book 21 supplies a uniform cohomological bound. Thus neither an infinite geometric process nor an unproved alteration theorem is concealed.
+In the required range, normalization separates the zero-dimensional defects of curves, while a nonproper Hilbert--Blumenthal parameter space enters only when a normal-crossings compactification is supplied as an explicit hypothesis. Every presentation complex is finite in each fixed cohomological range, and Book 21 supplies a uniform cohomological bound. Thus neither an infinite geometric process nor an unproved alteration theorem is concealed.
 
 ## 5. The strict-local proper theorem
 
@@ -1126,16 +1126,16 @@ For an arbitrary polarization the same construction is a rational perfect form a
 
 Over a henselian trait of residue characteristic different from $\ell$, an abelian scheme has unramified $T_\ell A$ and unramified cohomology in all degrees. The statement uses the existence of the abelian scheme over the trait. A generic abelian variety with semistable but non-good reduction is not covered; its nontrivial inertia belongs to the monodromy theory developed later.
 
-## 14. Selected PEL families
+## 14. PEL abelian families and parameter spaces
 
 ### 14.1 The geometric hypotheses
 
 A PEL parameter space records abelian schemes equipped with polarizations, endomorphisms, and level structures. Those words alone do not imply smoothness, representability, or properness. We isolate the precise geometric input.
 
-Let $M\to B$ be one of the low-dimensional parameter spaces used in the arithmetic route. Assume:
+Let $M\to B$ be a modular or quaternionic parameter curve, or a Hilbert--Blumenthal parameter space used in the arithmetic route. Assume:
 
 1. $B$ is excellent noetherian and $\ell$ is invertible on $B$;
-2. $M$ is a smooth quasi-projective scheme over $B$, of relative dimension at most two;
+2. $M$ is a smooth quasi-projective scheme over $B$;
 3. the level is sufficiently small that a universal abelian scheme
 
    $$
@@ -1147,7 +1147,7 @@ Let $M\to B$ be one of the low-dimensional parameter spaces used in the arithmet
 5. when cohomology of $M$ itself is considered, either $M$ is proper over $B$, or a proper compactification $\bar M$ with relative normal-crossings boundary $D$ is part of the data;
 6. every prime inverted to make the level, endomorphism order, and boundary tame is also inverted on $B$.
 
-Quaternionic compact families satisfy the proper alternative. Hilbert and unitary families are often nonproper and require the compactified-pair alternative. These are hypotheses, not consequences of the label “PEL.” Construction of the spaces and compactifications belongs to later geometric volumes.
+Compact quaternionic parameter curves satisfy the proper alternative. Hilbert--Blumenthal parameter spaces are often nonproper and require the compactified-pair alternative. These are hypotheses, not consequences of the label “PEL.” Construction of the spaces and compactifications belongs to later geometric volumes.
 
 Book 15 supplies coherent finiteness and Hodge bundles once such proper families or compactifications exist. The present results concern their prime-to-residue-characteristic étale coefficient systems and geometric fiber cohomology.
 
@@ -1182,7 +1182,7 @@ $$
 R^qm_*\mathcal L_n
 $$
 
-on $B$, arbitrary base change, and invertible specialization. If the fibers are surfaces, the cohomology lies in $[0,4]$. Passing through the coefficient tower gives the integral and rational statements. Pullbacks by endomorphisms and finite étale correspondences with their sheet-summing traces act compatibly. General proper-correspondence traces are not asserted in this book.
+on $B$, arbitrary base change, and invertible specialization. For parameter curves the cohomology lies in $[0,2]$; a Hilbert--Blumenthal space of relative dimension $d$ lies in the general range $[0,2d]$. Passing through the coefficient tower gives the integral and rational statements. Pullbacks by endomorphisms and finite étale correspondences with their sheet-summing traces act compatibly. General proper-correspondence traces are not asserted in this book.
 
 Now suppose $M$ is nonproper with compactification $j:M\hookrightarrow\bar M$ and relative normal-crossings boundary $i:D\hookrightarrow\bar M$. Compactly supported cohomology is governed by
 

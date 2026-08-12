@@ -1,4 +1,4 @@
-# Lefschetz Trace Formulas for Curves and Surfaces
+# Lefschetz Trace Formulas for Curves
 
 ## Contents
 
@@ -37,7 +37,7 @@
   - [7.4 Positive-dimensional fixed loci](#74-positive-dimensional-fixed-loci)
 - [8. The Grothendieck--Lefschetz formula over a finite field](#8-the-grothendieck--lefschetz-formula-over-a-finite-field)
   - [8.1 Smooth schemes and constant coefficients](#81-smooth-schemes-and-constant-coefficients)
-  - [8.2 Arbitrary curves and surfaces](#82-arbitrary-curves-and-surfaces)
+  - [8.2 Arbitrary curves](#82-arbitrary-curves)
   - [8.3 Constructible coefficients](#83-constructible-coefficients)
   - [8.4 Extension fields and iterated Frobenius](#84-extension-fields-and-iterated-frobenius)
 - [9. Curves](#9-curves)
@@ -45,41 +45,35 @@
   - [9.2 Open curves and boundary points](#92-open-curves-and-boundary-points)
   - [9.3 Singular curves and normalization](#93-singular-curves-and-normalization)
   - [9.4 Endomorphisms of curves](#94-endomorphisms-of-curves)
-- [10. Surfaces](#10-surfaces)
-  - [10.1 The five cohomological degrees](#101-the-five-cohomological-degrees)
-  - [10.2 Divisors and the middle trace](#102-divisors-and-the-middle-trace)
-  - [10.3 Open and singular surfaces](#103-open-and-singular-surfaces)
-  - [10.4 Products of curves and a model computation](#104-products-of-curves-and-a-model-computation)
-- [11. Trace formulas for correspondences](#11-trace-formulas-for-correspondences)
-  - [11.1 Properly supported correspondences](#111-properly-supported-correspondences)
-  - [11.2 Fixed points of a correspondence](#112-fixed-points-of-a-correspondence)
-  - [11.3 Finite étale and Hecke-type diagrams](#113-finite-étale-and-hecke-type-diagrams)
-  - [11.4 Projectors and simultaneous Frobenius traces](#114-projectors-and-simultaneous-frobenius-traces)
-- [12. Zeta functions and rationality](#12-zeta-functions-and-rationality)
-  - [12.1 The Euler product and point-count exponential](#121-the-euler-product-and-point-count-exponential)
-  - [12.2 Cohomological factorization](#122-cohomological-factorization)
-  - [12.3 Curves and surfaces explicitly](#123-curves-and-surfaces-explicitly)
-  - [12.4 Open--closed factorization](#124-open--closed-factorization)
-- [13. Functional equations](#13-functional-equations)
-  - [13.1 Reciprocal characteristic polynomials](#131-reciprocal-characteristic-polynomials)
-  - [13.2 The functional equation for smooth proper varieties](#132-the-functional-equation-for-smooth-proper-varieties)
-  - [13.3 Curves](#133-curves)
-  - [13.4 Surfaces and the middle sign](#134-surfaces-and-the-middle-sign)
-  - [13.5 Why open varieties require a paired statement](#135-why-open-varieties-require-a-paired-statement)
-- [14. Coefficients, families, and good reduction](#14-coefficients-families-and-good-reduction)
-  - [14.1 L-functions of constructible sheaves](#141-l-functions-of-constructible-sheaves)
-  - [14.2 Base change in a family](#142-base-change-in-a-family)
-  - [14.3 Good reduction and local factors](#143-good-reduction-and-local-factors)
-  - [14.4 A hypothesis checklist](#144-a-hypothesis-checklist)
-- [15. The reusable trace-formula package](#15-the-reusable-trace-formula-package)
-  - [15.1 The complete theorem](#151-the-complete-theorem)
-  - [15.2 Final synthesis](#152-final-synthesis)
+- [10. Trace formulas for correspondences](#10-trace-formulas-for-correspondences)
+  - [10.1 Properly supported correspondences](#101-properly-supported-correspondences)
+  - [10.2 Fixed points of a correspondence](#102-fixed-points-of-a-correspondence)
+  - [10.3 Finite étale and Hecke-type diagrams](#103-finite-étale-and-hecke-type-diagrams)
+  - [10.4 Projectors and simultaneous Frobenius traces](#104-projectors-and-simultaneous-frobenius-traces)
+- [11. Zeta functions and rationality](#11-zeta-functions-and-rationality)
+  - [11.1 The Euler product and point-count exponential](#111-the-euler-product-and-point-count-exponential)
+  - [11.2 Cohomological factorization](#112-cohomological-factorization)
+  - [11.3 Curves explicitly](#113-curves-explicitly)
+  - [11.4 Open--closed factorization](#114-open--closed-factorization)
+- [12. Functional equations](#12-functional-equations)
+  - [12.1 Reciprocal characteristic polynomials](#121-reciprocal-characteristic-polynomials)
+  - [12.2 The functional equation for smooth proper curves](#122-the-functional-equation-for-smooth-proper-curves)
+  - [12.3 Curves](#123-curves)
+  - [12.4 Why open varieties require a paired statement](#124-why-open-varieties-require-a-paired-statement)
+- [13. Coefficients, families, and good reduction](#13-coefficients-families-and-good-reduction)
+  - [13.1 L-functions of constructible sheaves](#131-l-functions-of-constructible-sheaves)
+  - [13.2 Base change in a family](#132-base-change-in-a-family)
+  - [13.3 Good reduction and local factors](#133-good-reduction-and-local-factors)
+  - [13.4 A hypothesis checklist](#134-a-hypothesis-checklist)
+- [14. The reusable trace-formula package](#14-the-reusable-trace-formula-package)
+  - [14.1 The complete theorem](#141-the-complete-theorem)
+  - [14.2 Final synthesis](#142-final-synthesis)
 
 ## 1. From counting to cohomological trace
 
 ### 1.1 The organizing question
 
-Arithmetic geometry repeatedly asks for the number of solutions of polynomial equations over a finite field. Direct counting sees one field at a time. Geometry suggests that the counts over all extensions should instead be shadows of one finite collection of linear operators. This book explains that suggestion and proves it for curves and surfaces.
+Arithmetic geometry repeatedly asks for the number of solutions of polynomial equations over a finite field. Direct counting sees one field at a time. Geometry suggests that the counts over all extensions should instead be shadows of one finite collection of linear operators. This book explains that suggestion and proves it for proper, open, and singular curves.
 
 Let $X$ be a separated scheme of finite type over $k=\mathbf F_q$. Write $\bar X=X\times_k\bar k$, and let $F$ denote geometric Frobenius acting on $\bar X$ and on its compactly supported étale cohomology. The central identity is
 
@@ -104,21 +98,21 @@ $$
 \qquad E=\mathbf Q_\ell.
 $$
 
-We use $R\Gamma_c$ and $H_c^i$ for compactly supported étale cohomology. At integral level these mean continuous cohomology of the normalized tower $(\Lambda_m)_m$. Rational cohomology is obtained only after taking the derived inverse limit and tensoring with $E$. For curves and surfaces the resulting complexes are perfect, so traces of endomorphisms are defined without choosing cohomology splittings.
+We use $R\Gamma_c$ and $H_c^i$ for compactly supported étale cohomology. At integral level these mean continuous cohomology of the normalized tower $(\Lambda_m)_m$. Rational cohomology is obtained only after taking the derived inverse limit and tensoring with $E$. For curves the resulting complexes are perfect, so traces of endomorphisms are defined without choosing cohomology splittings.
 
 If $k=\mathbf F_q$, arithmetic Frobenius is $a\mapsto a^q$ on $\bar k$ and geometric Frobenius is its inverse. The action on geometric cohomology used throughout is geometric Frobenius and is denoted $F$. Thus $F$ acts by $q^d$ on $H^{2d}(\bar X,E)$ when $X$ is smooth, proper, geometrically connected, and $d$-dimensional. If $\varphi$ denotes arithmetic Frobenius, then $F=\varphi^{-1}$. This convention is fixed once and for all.
 
-A **variety** means a separated scheme of finite type over a field; it need not be smooth, proper, connected, or geometrically irreducible. Every theorem states the extra hypotheses it uses. Dimension is at most two unless a proof plainly works in arbitrary dimension and is stated that way.
+A **variety** means a separated scheme of finite type over a field; it need not be smooth, proper, connected, or geometrically irreducible. Every theorem states the extra hypotheses it uses. The application range is dimension at most one unless a foundational proof plainly works in arbitrary dimension and is stated that way.
 
 ### 1.3 The route through the book
 
 The first stage is geometric. Frobenius fixed points become an intersection $\Gamma_F\cap\Delta$. Künneth and Poincaré duality then identify kernels on $X\times X$ with endomorphisms of $R\Gamma_c(X,-)$. The Lefschetz--Verdier theorem says that the trace of such an endomorphism is the sum of local contributions on the fixed locus.
 
-The second stage is arithmetic. For Frobenius, the differential vanishes, so the graph meets the diagonal cleanly at smooth rational points. Localization and stratification extend the formula to singular curves and surfaces and to constructible sheaves. Applying the identity to every power of Frobenius produces zeta functions.
+The second stage is arithmetic. For Frobenius, the differential vanishes, so the graph meets the diagonal cleanly at smooth rational points. Localization and stratification extend the formula to singular curves and to constructible sheaves. Applying the identity to every power of Frobenius produces zeta functions.
 
 The last stage is duality. Reciprocal eigenvalue pairs give functional equations, but only under properness and smoothness in the self-dual form. Open varieties instead pair compactly supported cohomology with ordinary cohomology, and singular varieties use a dualizing complex. Stating this boundary correctly is part of the theorem, not an editorial qualification.
 
-The imported foundation is precise. Derived étale cohomology supplies bounded constructible and normalized adic complexes, perfectness, cup products, and continuous Galois actions. Proper and smooth base change supply compactification independence and transport in families. Low-dimensional duality supplies $Rf_!$, $f^!$, Verdier duality, trace maps, smooth and regular-immersion purity, and the regular lci cycle classes and refined intersections used below. What is not imported is the product theorem in the form required here, the passage from a cohomological correspondence to a class on its fixed locus, the equality of its local and global traces, the Frobenius point-count formula, or the zeta-function arguments. Those are proved here.
+The imported foundation is precise. Derived étale cohomology supplies bounded constructible and normalized adic complexes, perfectness, cup products, and continuous Galois actions. Proper and smooth base change supply compactification independence and transport in families. Curve duality supplies $Rf_!$, $f^!$, Verdier duality, trace maps, smooth and regular-immersion purity, and the regular lci cycle classes and refined intersections used below. What is not imported is the product theorem in the form required here, the passage from a cohomological correspondence to a class on its fixed locus, the equality of its local and global traces, the Frobenius point-count formula, or the zeta-function arguments. Those are proved here.
 
 ## 2. Frobenius and its fixed points
 
@@ -278,7 +272,7 @@ The proof also establishes associativity and symmetry because those identities h
 
 Arithmetic representations use $\mathbf Z_\ell$-lattices and $\mathbf Q_\ell$-vector spaces, so a finite-level product is not the endpoint. The issue is to pass through the coefficient tower without losing a derived-limit term; uniform finiteness and perfectness are what make that passage legitimate.
 
-At level $m$, Theorem 3.1 is compatible with reduction $\Lambda_{m+1}\to\Lambda_m$. For curves and surfaces the complexes have a uniform bounded range and finite cohomology. Their fixed-degree cohomology towers are therefore Mittag--Leffler. For the normalized constant coefficient systems, finite-level reduction identifies the derived inverse limits modulo every $\ell^m$, and the natural integral external-product map is
+At level $m$, Theorem 3.1 is compatible with reduction $\Lambda_{m+1}\to\Lambda_m$. For curves the complexes have a uniform bounded range and finite cohomology. Their fixed-degree cohomology towers are therefore Mittag--Leffler. For the normalized constant coefficient systems, finite-level reduction identifies the derived inverse limits modulo every $\ell^m$, and the natural integral external-product map is
 
 $$
 R\Gamma_c(X,\mathbf Z_\ell)
@@ -359,7 +353,7 @@ $$
 
 The transpose graph $(f,\operatorname{id})$ acts as $f^*$. Indeed, for the latter graph, $p_2$ restricts to the identity and $p_1$ restricts to $f$, so the projection formula gives $f^*$. For trace questions it does not matter which convention is chosen provided graph and action are matched: $f^*$ and $f_*$ are adjoint, hence have the same alternating trace when both are endomorphisms of a perfect self-dual complex.
 
-For a nonproper $X$, an arbitrary graph need not define an endomorphism of compactly supported cohomology by pullback: pullback does not preserve proper support unless $f$ is proper. A proper $f$ does act on $R\Gamma_c$ by pullback followed through the proper-support identification, while a general cohomological correspondence must carry its own proper-support condition. This distinction will be explicit in Chapter 11.
+For a nonproper $X$, an arbitrary graph need not define an endomorphism of compactly supported cohomology by pullback: pullback does not preserve proper support unless $f$ is proper. A proper $f$ does act on $R\Gamma_c$ by pullback followed through the proper-support identification, while a general cohomological correspondence must carry its own proper-support condition. This distinction will be explicit in Chapter 10.
 
 ### 4.3 General degree-zero correspondences
 
@@ -650,7 +644,7 @@ The proof explains the hypotheses. Constructibility and finite cohomology make t
 
 ## 7. Local terms and isolated fixed points
 
-The global theorem is useful only after its local terms can be computed. This chapter handles the cases required for Frobenius and for the curve and surface correspondences used later. It also explains precisely what changes when an intersection is not transverse.
+The global theorem is useful only after its local terms can be computed. This chapter handles the cases required for Frobenius and for the curve correspondences used later. It also explains precisely what changes when an intersection is not transverse.
 
 ### 7.1 What a local term measures
 
@@ -698,7 +692,7 @@ For example, on an affine chart the map $t\mapsto t+t^m$ has a fixed point at $0
 
 ### 7.4 Positive-dimensional fixed loci
 
-When a component $Z$ of the fixed locus has positive dimension, there is no point multiplicity to sum. If $Z$ is smooth and the fixed intersection is clean, the excess intersection formula expresses the local term as an integral over $Z$ of an Euler class of the moving normal complex, multiplied by the coefficient trace. For a surface, $Z$ can be a curve or the whole surface.
+When a component $Z$ of the fixed locus has positive dimension, there is no point multiplicity to sum. If $Z$ is smooth and the fixed intersection is clean, the excess intersection formula expresses the local term as an integral over $Z$ of an Euler class of the moving normal complex, multiplied by the coefficient trace. For a curve endomorphism this occurs, for example, for the identity correspondence.
 
 The intrinsic and always correct statement is
 
@@ -729,11 +723,11 @@ $$
 
 Properness of $X$ was not used: compact support absorbs the boundary. Ordinary cohomology would already give the wrong answer for $\mathbf A^1$.
 
-### 8.2 Arbitrary curves and surfaces
+### 8.2 Arbitrary curves
 
 Singular schemes should still be counted point by point, but their local dualizing complexes need not look smooth. A Frobenius-stable smooth-locus decomposition avoids inventing a singular point formula and reduces the assertion to lower dimension.
 
-**Theorem 8.2 (Grothendieck--Lefschetz).** Let $X$ be any separated finite-type scheme of dimension at most two over $\mathbf F_q$. Then the formula of Theorem 8.1 holds.
+**Theorem 8.2 (Grothendieck--Lefschetz for curves).** Let $X$ be any separated finite-type scheme of dimension at most one over $\mathbf F_q$. Then the formula of Theorem 8.1 holds.
 
 **Proof.** Nilpotents alter neither rational points nor the étale topos, so replace $X$ by $X_{\mathrm{red}}$. Let $U\subset X$ be the smooth locus, defined over $\mathbf F_q$, and let $Z=X\setminus U$. The compact-support localization triangle is Frobenius-equivariant, so trace additivity gives
 
@@ -888,90 +882,11 @@ Here $f^*$ is $1$ on $H^0$ and multiplication by $\deg(f)$ on $H^2$, since pullb
 
 If $f=\operatorname{id}$, the fixed locus is the whole curve, so the isolated formula is inapplicable. The intrinsic local term integrates the Euler class of the tangent bundle and gives $\chi(C)=2-2g$. Positive-dimensional fixed loci are therefore not counted by their number of geometric points.
 
-## 10. Surfaces
-
-Surfaces add a self-dual middle cohomology group, where divisors, transcendental classes, and geometric correspondences all act. The formula is unchanged, but interpreting its five terms requires more care.
-
-### 10.1 The five cohomological degrees
-
-Writing all five terms first prevents the middle degree from obscuring odd cohomology or the top fundamental class. Duality will later pair the terms symmetrically, but the trace formula itself sees each degree separately.
-
-Let $S/\mathbf F_q$ be smooth, proper, and geometrically connected of dimension two. Put
-
-$$
-b_i=\dim_EH^i(\bar S,E),
-\qquad
-P_i(t)=\det(1-tF\mid H^i(\bar S,E)).
-$$
-
-Then $H^0=E$, $H^4=E(-2)$, and geometric Frobenius acts there by $1$ and $q^2$. Thus
-
-$$
-\#S(\mathbf F_{q^n})
-=1-\operatorname{Tr}(F^n\mid H^1)
-+\operatorname{Tr}(F^n\mid H^2)
--\operatorname{Tr}(F^n\mid H^3)+q^{2n}.
-$$
-
-Poincaré duality pairs $H^1$ with $H^3(2)$ and $H^2$ with itself up to twist. The odd-degree contributions are related, while $H^2$ carries its own reciprocal symmetry. The trace formula does not assert that $H^2$ is generated by divisor classes.
-
-### 10.2 Divisors and the middle trace
-
-Divisors give the most concrete part of surface middle cohomology. Their cup product is geometric intersection, so correspondences assembled from divisors can be traced through an explicit intersection matrix while leaving any nonalgebraic complement visible.
-
-A divisor $D$ on $S$ has a class $[D]\in H^2(\bar S,E(1))$. If $D$ is defined over $\mathbf F_q$, its twisted class is fixed, so $F$ acts by $q$ on the corresponding untwisted line. For divisors $D,E$,
-
-$$
-\operatorname{Tr}_S([D]\smile[E])=D\cdot E.
-$$
-
-If $D$ and $E$ meet properly, purity at each intersection point and the finite trace from its residue field identify the local cup product with the local intersection length; summing gives $D\cdot E$. No moving lemma is needed. If the divisors share a component, use the refined Gysin product: deformation to the normal bundle replaces the common component by the zero section, and the excess factor is the first Chern class of its normal line. This is exactly the self-intersection term in the divisor intersection product. The refined cycle-class compatibility of Chapter 4 therefore gives the displayed formula in general. Consequently a correspondence built from divisor products has a middle-degree trace computable from the intersection matrix.
-
-The full $H^2$ may contain nonalgebraic classes. A cycle correspondence still acts on them through its class on $S\times S$, and the Lefschetz number includes their trace. Replacing $H^2$ by a divisor span requires a separate justification.
-
-### 10.3 Open and singular surfaces
-
-Boundary divisors and singular curves are precisely the lower-dimensional pieces omitted by the smooth proper formula. Compact-support localization reduces both phenomena to curve and point calculations already established.
-
-For an open immersion $j:U\hookrightarrow S$ with closed complement $D$, compact-support localization gives
-
-$$
-L(F^n,U)=L(F^n,S)-L(F^n,D).
-$$
-
-If $D$ is a normal-crossings divisor, its components and crossing points form an incidence complex. Frobenius may permute components and branches. The boundary trace on that complex gives $\#D(\mathbf F_{q^n})$, including inclusion--exclusion at crossings.
-
-For a singular surface $Y$, let $U$ be its smooth locus and $Z=Y\setminus U$. Then $\dim Z\le1$. The formula on $Y$ follows from the smooth formula on $U$ and the curve formula on $Z$. This avoids assigning a smooth local term to a singular fixed point; the total singular contribution is computed by its own compactly supported cohomology.
-
-If a resolution $\pi:\widetilde Y\to Y$ is available, one may compare the two spaces using the exceptional divisor and the locus where $\pi$ is an isomorphism. Exceptional curves contribute genuine factors, so no birational invariance of zeta functions is asserted.
-
-### 10.4 Products of curves and a model computation
-
-Products of curves are the best consistency test for a surface formula because their Künneth decomposition is completely visible. The calculation checks that tensor traces and the two factor fundamental classes reproduce the elementary product of point counts.
-
-Let $S=C_1\times C_2$ for smooth proper geometrically connected curves. Künneth gives
-
-$$
-H^2(\bar S,E)
-\cong E(-1)\oplus
-\bigl(H^1(\bar C_1,E)\otimes H^1(\bar C_2,E)\bigr)
-\oplus E(-1).
-$$
-
-If $a_{j,n}=\operatorname{Tr}(F^n\mid H^1(\bar C_j,E))$, the middle trace is $2q^n+a_{1,n}a_{2,n}$. Substitution in the five-term surface formula gives
-
-$$
-\#S(\mathbf F_{q^n})
-=(q^n+1-a_{1,n})(q^n+1-a_{2,n}),
-$$
-
-exactly the product of the curve counts. This checks the Künneth signs, the two algebraic $E(-1)$ summands, and tensor-product trace simultaneously.
-
-## 11. Trace formulas for correspondences
+## 10. Trace formulas for correspondences
 
 Point counting uses the graph of Frobenius, but arithmetic applications often insert a second geometric operator. A correspondence defined over the finite field commutes with Frobenius, so its action and the Galois action can be traced simultaneously. The geometry then counts fixed points of a twisted correspondence rather than rational points of the original variety.
 
-### 11.1 Properly supported correspondences
+### 10.1 Properly supported correspondences
 
 Before tracing a correspondence, one must know that its pull--push action preserves compact support. This section isolates that geometric condition, especially at a compactification boundary where an apparently finite open correspondence may acquire new components.
 
@@ -995,7 +910,7 @@ is defined for every $n$.
 
 Properness must be attached to the correct projection. A finite correspondence on an open variety is proper over the open target, but a closure can acquire a boundary component. Such a component can create a fixed-locus contribution. It may be excluded only by a geometric argument, not by the fact that the original open diagram was finite étale.
 
-### 11.2 Fixed points of a correspondence
+### 10.2 Fixed points of a correspondence
 
 Inserting Frobenius changes the diagonal equation into a twisted incidence equation between the two legs. Writing this equation explicitly identifies the geometric objects whose local multiplicities compute the simultaneous trace.
 
@@ -1032,7 +947,7 @@ $$
 
 when the intersection is proper. Refined intersection is understood. The identity correspondence $\Delta$ recovers the Frobenius point-count formula.
 
-### 11.3 Finite étale and Hecke-type diagrams
+### 10.3 Finite étale and Hecke-type diagrams
 
 Finite étale legs provide the cleanest arithmetic correspondences: extraordinary pullback becomes ordinary pullback, transfer is a sum over sheets, and transverse local terms are literal coefficient traces. This is the model for prime-to-level Hecke diagrams.
 
@@ -1052,9 +967,9 @@ At a transverse solution of $c_2(z)=F^nc_1(z)$, the local term is the trace of t
 
 If $c_2$ is finite flat of degree $m$, then $c_{2*}c_2^*=m$ on constant coefficients. This degree is scheme-theoretic; ramified points do not turn it into the number of distinct geometric sheets. In a composite of correspondences, refined intersection and the projection formula ensure that local multiplicities compose with the operator.
 
-Prime-to-level correspondences on moduli surfaces often have exactly this form on the open locus. Once a compatible proper model of the correspondence is supplied, the operator acts on ordinary, compactly supported, and interior cohomology and commutes with Frobenius. The trace theorem does not itself construct that model; it computes the operator after proper support has been verified.
+Prime-to-level correspondences on modular and quaternionic curves often have exactly this form on the open locus. Once a compatible proper model of the correspondence is supplied, the operator acts on ordinary, compactly supported, and interior cohomology and commutes with Frobenius. The trace theorem does not itself construct that model; it computes the operator after proper support has been verified.
 
-### 11.4 Projectors and simultaneous Frobenius traces
+### 10.4 Projectors and simultaneous Frobenius traces
 
 Correspondence algebras often contain projectors designed to isolate a desired cohomological constituent. Tracing the projector together with Frobenius extracts that constituent without requiring a basis, while denominators explain why the splitting may be only rational.
 
@@ -1075,11 +990,11 @@ The equality follows by choosing a basis adapted to the idempotent decomposition
 
 If $e$ has denominators divisible by $\ell$, this splitting may exist over $E$ but not over $\mathbf Z_\ell$. Rational trace formulas remain valid; an integral direct summand is not implied. Likewise, an image such as interior cohomology need not split until a genuine projector is constructed.
 
-## 12. Zeta functions and rationality
+## 11. Zeta functions and rationality
 
-The trace formula turns infinitely many point counts into traces of powers of finitely many operators. A standard determinant identity then turns the exponential generating series into a rational function. This chapter proves both transformations and records the explicit curve and surface shapes.
+The trace formula turns infinitely many point counts into traces of powers of finitely many operators. A standard determinant identity then turns the exponential generating series into a rational function. This chapter proves both transformations and records the explicit curve shape.
 
-### 12.1 The Euler product and point-count exponential
+### 11.1 The Euler product and point-count exponential
 
 The zeta function has two complementary meanings: an Euler product indexed by closed points and an exponential series indexed by extension fields. Proving their equality makes it possible to feed the trace formula, which controls extension-field counts, into an invariant built from closed points.
 
@@ -1116,7 +1031,7 @@ $$
 
 Exponentiating gives the product. Every coefficient involves only finitely many closed points, so the formal manipulation is valid. $\square$
 
-### 12.2 Cohomological factorization
+### 11.2 Cohomological factorization
 
 The infinite list of traces $\operatorname{Tr}(F^n)$ is finite-dimensional data in disguise. The logarithm of a characteristic polynomial is the exact linear-algebra device that packages those traces and yields rationality.
 
@@ -1149,9 +1064,9 @@ Only finitely many factors occur. This proves $Z(X,t)\in E(t)$. In fact it lies 
 
 The individual $P_{c,i}$ can depend on the chosen coefficient field in ways not addressed here; the alternating product is the intrinsic zeta function. No independence-of-$\ell$ assertion for each separate cohomological polynomial is needed for rationality of $Z$.
 
-### 12.3 Curves and surfaces explicitly
+### 11.3 Curves explicitly
 
-The general alternating product becomes especially informative in low dimension because the bottom and top factors are known. Displaying the remaining factors exposes the curve numerator and the surface middle denominator that later duality constrains.
+The general alternating product becomes especially informative in low dimension because the bottom and top factors are known. Displaying the remaining factors exposes the curve numerator that later duality constrains.
 
 For a smooth proper geometrically connected curve $C$,
 
@@ -1169,30 +1084,7 @@ $$
 
 The polynomial contributed by $D$ records the Frobenius permutation of its geometric points.
 
-For a smooth proper geometrically connected surface $S$,
-
-$$
-Z(S,t)
-=\frac{P_1(t)P_3(t)}
-{(1-t)P_2(t)(1-q^2t)}.
-$$
-
-The degrees are $b_i$. Duality relates $P_3$ to $P_1$ and makes $P_2$ reciprocal up to a sign, but it does not factor $P_2$ into algebraic and transcendental parts.
-
-As a check,
-
-$$
-Z(\mathbf P^1,t)=\frac1{(1-t)(1-qt)}
-$$
-
-and Künneth gives
-
-$$
-Z(\mathbf P^1\times\mathbf P^1,t)
-=\frac1{(1-t)(1-qt)^2(1-q^2t)}.
-$$
-
-### 12.4 Open--closed factorization
+### 11.4 Open--closed factorization
 
 Zeta functions should multiply when a variety is partitioned into an open piece and its closed complement. The cohomological proof shows that this elementary counting rule is the determinant shadow of the localization triangle.
 
@@ -1222,23 +1114,15 @@ $$
 Z(C,t)=Z(\widetilde C,t)\frac{Z(S,t)}{Z(\widetilde S,t)}.
 $$
 
-For a resolution of a surface that is an isomorphism off a closed locus $Z$, with exceptional inverse image $E_Z$, the same argument gives
-
-$$
-Z(\widetilde S,t)Z(Z,t)=Z(S,t)Z(E_Z,t).
-$$
-
-This formula measures rather than suppresses the exceptional contribution.
-
-## 13. Functional equations
+## 12. Functional equations
 
 Rationality uses only traces of powers. A functional equation needs a symmetry among eigenvalues, and that symmetry comes from Poincaré duality. Smoothness identifies the dualizing complex with a Tate twist, while properness identifies compact and ordinary cohomology. Both hypotheses are essential for a self-reciprocal zeta function.
 
-### 13.1 Reciprocal characteristic polynomials
+### 12.1 Reciprocal characteristic polynomials
 
 A functional equation begins with a degree-by-degree eigenvalue pairing. Translating Poincaré duality into an exact identity between characteristic polynomials fixes the powers of $q$, $t$, and the determinant sign before the factors are multiplied.
 
-Let $X/\mathbf F_q$ be smooth, proper, geometrically connected of pure dimension $d\le2$. Put
+Let $X/\mathbf F_q$ be a smooth, proper, geometrically connected curve, so $d=1$. Put
 
 $$
 V_i=H^i(\bar X,E),
@@ -1263,18 +1147,9 @@ $$
 
 Indeed, both sides are the product of $1-q^dt/\alpha$ over the eigenvalues $\alpha$, after extracting the scalar from $P_i(1/(q^dt))$.
 
-In middle degree, $\delta_d^2=q^{db_d}$. If $d$ is odd, the middle pairing is alternating, $b_d$ is even, and the determinant of a symplectic similitude is $q^{db_d/2}$. If $d$ is even, the pairing is symmetric and
+### 12.2 The functional equation for smooth proper curves
 
-$$
-\delta_d=\eta q^{db_d/2},
-\qquad \eta\in\{1,-1\}.
-$$
-
-For surfaces this sign is the normalized determinant of Frobenius on $H^2$.
-
-### 13.2 The functional equation for smooth proper varieties
-
-The reciprocal identities now have to be multiplied with alternating exponents. The only delicate scalar is the alternating product of Frobenius determinants, whose middle-degree sign distinguishes surfaces from curves.
+The reciprocal identities now have to be multiplied with alternating exponents. For a curve, the alternating middle pairing fixes the determinant without a residual orthogonal sign.
 
 Let
 
@@ -1282,7 +1157,7 @@ $$
 \chi(X)=\sum_i(-1)^ib_i.
 $$
 
-**Theorem 13.1.** There is a sign $\varepsilon_X\in\{1,-1\}$ such that
+**Theorem 12.1.** There is a sign $\varepsilon_X\in\{1,-1\}$ such that
 
 $$
 \boxed{
@@ -1300,7 +1175,7 @@ $$
 
 Multiply with exponents $s_i$. Since $s_{2d-i}=s_i$, the polynomial factors reproduce $Z(X,t)$. The signs contribute $(-1)^{\chi(X)}$, and the powers of $q$ and $t$ outside the determinants contribute $q^{d\chi(X)}t^{\chi(X)}$.
 
-It remains to evaluate $A=\prod_i\delta_i^{s_i}$. Pairing degrees $i$ and $2d-i$ gives $\delta_i\delta_{2d-i}=q^{db_i}$. In middle degree use the alternating or symmetric determinant calculation of Section 13.1. Collecting exponents gives
+It remains to evaluate $A=\prod_i\delta_i^{s_i}$. Pairing degrees $i$ and $2d-i$ gives $\delta_i\delta_{2d-i}=q^{db_i}$. In middle degree, the alternating pairing makes the symplectic-similitude determinant equal to $q^{b_1/2}$. Collecting exponents gives
 
 $$
 A=\eta_Xq^{-d\chi(X)/2}
@@ -1314,9 +1189,9 @@ $$
 
 Set $\varepsilon_X=(-1)^{\chi(X)}\eta_X$. $\square$
 
-The half exponent is always integral in the cases at hand: for $d=2$ this is obvious, and for $d=1$ the Euler characteristic of a proper smooth curve is even.
+The half exponent is integral because the Euler characteristic of a proper smooth curve is even.
 
-### 13.3 Curves
+### 12.3 Curves
 
 For curves the middle pairing is alternating, so its similitude determinant has no residual sign. This collapses the general functional equation to the classical reciprocal numerator and makes the exponent depend only on the genus.
 
@@ -1335,39 +1210,7 @@ $$
 
 For $\mathbf P^1$, direct substitution gives $Z(1/(qt))=qt^2Z(t)$, agreeing with $g=0$.
 
-### 13.4 Surfaces and the middle sign
-
-Surface middle cohomology is paired symmetrically, allowing a normalized determinant sign that cannot be discarded. Isolating it gives both the reciprocal law for $P_2$ and the correct global sign, as projective space already demonstrates.
-
-For a smooth proper geometrically connected surface, put $b_2=\dim H^2$ and
-
-$$
-\eta_S=q^{-b_2}\det(F\mid H^2(\bar S,E))\in\{1,-1\}.
-$$
-
-Then
-
-$$
-P_2(t)=(-1)^{b_2}\eta_Sq^{b_2}t^{b_2}
-P_2\left(\frac1{q^2t}\right).
-$$
-
-The whole zeta function satisfies
-
-$$
-Z\left(S,\frac1{q^2t}\right)
-=(-1)^{\chi(S)}\eta_Sq^{\chi(S)}t^{\chi(S)}Z(S,t).
-$$
-
-For $\mathbf P^2$, $\chi=3$ and $\eta_S=1$, so the sign is negative. Directly,
-
-$$
-Z(\mathbf P^2,t)=\frac1{(1-t)(1-qt)(1-q^2t)}
-$$
-
-has exactly this transformation. The sign is therefore structural, not a defect in normalization.
-
-### 13.5 Why open varieties require a paired statement
+### 12.4 Why open varieties require a paired statement
 
 The self-functional equation is not a formal consequence of having a trace formula. On an open variety duality exchanges compactly supported and ordinary cohomology, so the correct reciprocity relates two different complexes rather than the zeta function to itself.
 
@@ -1394,11 +1237,11 @@ For example, $Z(\mathbf A^1,t)=(1-qt)^{-1}$. Substitution $t\mapsto1/(qt)$ does 
 
 For singular proper varieties, Verdier duality pairs the constant sheaf with its Verdier dual, not necessarily with a shifted Tate twist of itself. A self-functional equation therefore requires an appropriate self-duality statement; properness alone does not supply one.
 
-## 14. Coefficients, families, and good reduction
+## 13. Coefficients, families, and good reduction
 
 The trace formula is most reusable when it travels with coefficient sheaves and through smooth proper families. This chapter packages those extensions while keeping separate the roles of base change, local terms, and duality.
 
-### 14.1 L-functions of constructible sheaves
+### 13.1 L-functions of constructible sheaves
 
 The constant-sheaf zeta function is only the first member of a wider construction. Local Frobenius actions on a coefficient complex produce Euler factors whose global rationality follows from the same sheaf--function trace identity.
 
@@ -1430,23 +1273,23 @@ $$
 
 Hence this $L$-function is rational. For $K_0=E$ it is $Z(X_0,t)$. If $K_0$ is self-dual up to a Tate twist and $X_0$ is smooth proper, Poincaré duality gives a corresponding functional equation. The shift, twist, and dual coefficient must all be included; self-duality is not automatic for a lisse sheaf.
 
-### 14.2 Base change in a family
+### 13.2 Base change in a family
 
 Fiberwise trace formulas become useful in arithmetic families only when their operators and pairings specialize compatibly. Smooth proper base change supplies that transport, while compact support records exactly what survives when the total space is open.
 
-Let $f:X\to S$ be smooth and proper of relative dimension at most two over a connected base on which $\ell$ is invertible, and let $K$ be lisse. Proper and smooth base change make each $R^if_*K$ lisse and identify its stalk with fiber cohomology. Cup products, trace, Künneth, and properly supported correspondences commute with arbitrary base change.
+Let $f:X\to S$ be a smooth proper relative curve over a connected base on which $\ell$ is invertible, and let $K$ be lisse. Proper and smooth base change make each $R^if_*K$ lisse and identify its stalk with fiber cohomology. Cup products, trace, Künneth, and properly supported correspondences commute with arbitrary base change.
 
 Consequently a correspondence $c$ over $S$ defines an endomorphism of the lisse derived direct image $Rf_*K$. At a finite-field point $s$, the simultaneous operator $T_cF_s^n$ on the fiber is the specialization of the global correspondence action followed by geometric Frobenius. The trace formula computes it from the fixed locus on $X_s$.
 
 The proof is a diagram chase at the derived level. Pullback carries the cohomological correspondence to the fiber; proper base change commutes with its pushforward; the projection formula commutes with its coefficient map; and base change for the extraordinary trace carries the global trace class to the fiber trace class. Taking cohomology then preserves the identity.
 
-If the family is not proper, compactly supported direct image still commutes with base change after a compactification, but ordinary cohomology can vary with the boundary. A relative normal-crossings boundary with controlled local monodromy is sufficient in the curve and surface cases; absent such control, only the compact-support statement is automatic.
+If the family is not proper, compactly supported direct image still commutes with base change after a compactification, but ordinary cohomology can vary with the boundary. A finite relative marked boundary with controlled local monodromy is sufficient in the curve case; absent such control, only the compact-support statement is automatic.
 
-### 14.3 Good reduction and local factors
+### 13.3 Good reduction and local factors
 
 Good reduction converts an arithmetic Frobenius problem on the generic fiber into a geometric Frobenius problem over a finite field. The value of the trace formula here is therefore computational transport, not the construction of a model or an eigenvalue estimate.
 
-Suppose a smooth proper curve or surface over the fraction field of a henselian discrete valuation ring extends to a smooth proper model, with residue field $\mathbf F_q$ and $\ell$ invertible. Smooth proper base change identifies geometric generic cohomology with special-fiber cohomology and makes inertia act trivially. The unramified geometric Frobenius on the generic representation corresponds to geometric Frobenius on the special fiber.
+Suppose a smooth proper curve over the fraction field of a henselian discrete valuation ring extends to a smooth proper model, with residue field $\mathbf F_q$ and $\ell$ invertible. Smooth proper base change identifies geometric generic cohomology with special-fiber cohomology and makes inertia act trivially. The unramified geometric Frobenius on the generic representation corresponds to geometric Frobenius on the special fiber.
 
 Therefore the good-reduction local polynomial
 
@@ -1462,7 +1305,7 @@ $$
 
 This is a transport statement. The trace formula evaluates alternating traces on the special fiber; it does not by itself prove absolute-value bounds for eigenvalues or construct a smooth model.
 
-### 14.4 A hypothesis checklist
+### 13.4 A hypothesis checklist
 
 Before applying a trace or zeta formula, the following points must be settled.
 
@@ -1479,17 +1322,17 @@ Before applying a trace or zeta formula, the following points must be settled.
 
 Each item marks a genuine mathematical transition. Checking them prevents the most common trace-formula errors: boundary terms, inverted eigenvalues, missing intersection multiplicities, and unjustified self-duality.
 
-## 15. The reusable trace-formula package
+## 14. The reusable trace-formula package
 
 The purpose of the final chapter is to consolidate the arguments into one theorem that can be cited without suppressing its hypotheses. It also marks the exact boundary between trace formulas and the weight theory that follows them.
 
-### 15.1 The complete theorem
+### 14.1 The complete theorem
 
 Later arguments need a single citation that preserves every support, smoothness, and normalization condition proved above. The following package collects the results without turning their distinct hypotheses into one overstrong slogan.
 
-**Theorem 15.1 (low-dimensional trace and zeta package).** Let $X$ be a separated finite-type scheme of dimension at most two over $\mathbf F_q$, and let $\ell\ne\operatorname{char}\mathbf F_q$.
+**Theorem 14.1 (curve trace and zeta package).** Let $X$ be a separated finite-type scheme of dimension at most one over $\mathbf F_q$, and let $\ell\ne\operatorname{char}\mathbf F_q$.
 
-1. The compactly supported complexes $R\Gamma_c(\bar X,\Lambda_m)$, $R\Gamma_c(\bar X,\mathbf Z_\ell)$, and $R\Gamma_c(\bar X,E)$ are bounded in the established ranges; the integral complex is perfect in the curve and surface cases under the standing finiteness hypotheses.
+1. The compactly supported complexes $R\Gamma_c(\bar X,\Lambda_m)$, $R\Gamma_c(\bar X,\mathbf Z_\ell)$, and $R\Gamma_c(\bar X,E)$ are bounded in the established ranges; the integral complex is perfect under the standing curve-finiteness hypotheses.
 2. Compactly supported Künneth is a derived isomorphism at finite and integral levels. Over $E$ it yields the ordinary direct-sum Künneth decomposition. It respects Frobenius, traces, cycle classes, and fundamental classes.
 3. A properly supported cohomological correspondence with proper fixed locus satisfies the Lefschetz--Verdier formula: its alternating compact-support trace is the sum of its local terms.
 4. At a smooth isolated fixed point with $1-df$ invertible and lisse coefficients, the local term is the stalk trace. A nontransverse isolated point contributes the refined graph--diagonal intersection term. A positive-dimensional fixed component contributes its intrinsic Verdier local trace.
@@ -1511,7 +1354,7 @@ Later arguments need a single citation that preserves every support, smoothness,
    $$
 
    Open--closed decompositions multiply zeta functions.
-8. If $X$ is smooth, proper, and geometrically connected of pure dimension $d\le2$, then
+8. If $X$ is smooth, proper, and geometrically connected of dimension $d=1$, then
 
    $$
    Z\left(X,\frac1{q^dt}\right)
@@ -1519,17 +1362,17 @@ Later arguments need a single citation that preserves every support, smoothness,
    \qquad \varepsilon_X\in\{1,-1\}.
    $$
 
-   For curves $\varepsilon_X=1$; for surfaces it is $(-1)^{\chi(X)}$ times the normalized determinant sign on $H^2$.
+   Here $\varepsilon_X=1$.
 9. The cohomology complexes, Künneth maps, traces, duality pairings, and properly extending correspondence actions commute with smooth proper base change and with specialization at good reduction. Fiberwise point counts and zeta functions are then computed from the specialized Frobenius operators; no assertion that point counts are constant in an arbitrary family is intended.
 
-**Proof.** Clause 1 is the bounded finiteness and perfectness package for compact support. Clause 2 is Theorem 3.1 and its derived-limit passage. Clause 3 is Theorem 6.1, while Clause 4 is Proposition 7.1 and refined intersection. Clause 5 follows from Frobenius transversality on smooth strata and localization induction. Clause 6 follows from cycle-class compatibility, projection, and the cohomological-correspondence theorem. Clause 7 is the trace-of-powers determinant identity, with rationality over $\mathbf Q$ obtained from the Hankel-rank argument. Clause 8 is Theorem 13.1. Clause 9 follows from proper and smooth base change for compact support, duality, trace, and correspondences. $\square$
+**Proof.** Clause 1 is the bounded finiteness and perfectness package for compact support. Clause 2 is Theorem 3.1 and its derived-limit passage. Clause 3 is Theorem 6.1, while Clause 4 is Proposition 7.1 and refined intersection. Clause 5 follows from Frobenius transversality on smooth strata and localization induction. Clause 6 follows from cycle-class compatibility, projection, and the cohomological-correspondence theorem. Clause 7 is the trace-of-powers determinant identity, with rationality over $\mathbf Q$ obtained from the Hankel-rank argument. Clause 8 is Theorem 12.1. Clause 9 follows from proper and smooth base change for compact support, duality, trace, and correspondences. $\square$
 
-### 15.2 Final synthesis
+### 14.2 Final synthesis
 
 The trace formula succeeds because three languages describe the same scalar. Linear algebra calls it the alternating trace of an endomorphism of a perfect complex. Duality calls it evaluation of a kernel against the diagonal coevaluation. Geometry calls it the integral of local classes on a fixed locus. Künneth and the projection formula identify these descriptions.
 
-Frobenius makes the local geometry exceptionally clean. Rational points are its fixed points, its differential vanishes, and every smooth fixed point has multiplicity one. Stratification and localization extend this clean calculation to singular curves and surfaces without pretending their local geometry is smooth. Constructible coefficients replace the number one by a stalk trace, while algebraic correspondences replace rational points by solutions of a twisted correspondence equation.
+Frobenius makes the local geometry exceptionally clean. Rational points are its fixed points, its differential vanishes, and every smooth fixed point has multiplicity one. Stratification and localization extend this clean calculation to singular curves without pretending their local geometry is smooth. Constructible coefficients replace the number one by a stalk trace, while algebraic correspondences replace rational points by solutions of a twisted correspondence equation.
 
-Once all powers of Frobenius are known, a determinant identity makes the zeta function rational. Once Poincaré duality is added, complementary eigenvalues multiply to $q^d$ and the zeta function becomes reciprocal, with the middle determinant supplying the surface sign. Properness and smoothness are exactly what turn the paired duality statement into a self-functional equation.
+Once all powers of Frobenius are known, a determinant identity makes the zeta function rational. Once Poincaré duality is added, complementary curve eigenvalues multiply to $q$ and the zeta function becomes reciprocal. Properness and smoothness are exactly what turn the paired duality statement into a self-functional equation.
 
-Nothing in these arguments estimates the complex absolute values of Frobenius eigenvalues. Trace formulas organize counts, duality organizes reciprocal pairs, and weights control size. Keeping those achievements distinct leaves a complete and stable foundation for the weight and hard-Lefschetz theory that follows.
+Nothing in these arguments estimates the complex absolute values of Frobenius eigenvalues. Trace formulas organize counts, duality organizes reciprocal pairs, and weights control size. Keeping those achievements distinct leaves a complete and stable foundation for the curve weight theory that follows.

@@ -1016,22 +1016,7 @@ $$
 \simeq\prod_{\tau}W'.
 $$
 
-Let $e_\tau$ be the resulting idempotents. Relation (12.1) with $a=e_\tau$ makes distinct eigenspaces orthogonal. The surviving coordinates are the diagonal pairings on $e_\tau X$, one for each embedding $\tau$. Descent packages them into the formal torus whose character lattice is the corresponding rank-one $\mathcal O_p$-module. This is the ordinary Hilbert--Blumenthal pattern: the endomorphism action reduces the $g(g+1)/2$ principally polarized coordinates to $g$ coordinates when $[\mathcal O_p:\mathbf Z_p]=g$ and $X$ has rank one over it.
-
-For a split unitary pattern, let
-
-$$
-\mathcal O_p=\mathbf Z_p\times\mathbf Z_p,
-\qquad e^\dagger=1-e.
-$$
-
-Write $X=eX\oplus(1-e)X$. Taking $a=e$ in (12.1) forces the pairings on $eX\times eX$ and on $(1-e)X\times(1-e)X$ to be trivial; only the cross-pairing survives. Symmetry identifies the two orders, so
-
-$$
-L_{\mathrm{PEL}}\simeq eX\otimes_{\mathbf Z_p}(1-e)X. \tag{12.4}
-$$
-
-If the two ranks are $r$ and $s$, the local dimension is $rs$. This is the linear-algebra source of the familiar unitary local dimension. Both examples use integral idempotents. A decomposition only after tensoring with $\mathbf Q_p$ would not justify either calculation.
+Let $e_\tau$ be the resulting idempotents. Relation (12.1) with $a=e_\tau$ makes distinct eigenspaces orthogonal. The surviving coordinates are the diagonal pairings on $e_\tau X$, one for each embedding $\tau$. Descent packages them into the formal torus whose character lattice is the corresponding rank-one $\mathcal O_p$-module. This is the ordinary Hilbert--Blumenthal pattern: the endomorphism action reduces the $g(g+1)/2$ principally polarized coordinates to $g$ coordinates when $[\mathcal O_p:\mathbf Z_p]=g$ and $X$ has rank one over it. The calculation uses integral idempotents; a decomposition only after tensoring with $\mathbf Q_p$ would not justify the coordinate count.
 
 ### 12.3 Determinant conditions and smoothness boundaries
 

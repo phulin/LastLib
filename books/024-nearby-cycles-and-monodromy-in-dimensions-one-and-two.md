@@ -1,78 +1,62 @@
-# Nearby Cycles and Monodromy in Dimensions One and Two
+# Nearby Cycles and Monodromy for Semistable Curves
 
 ## Contents
 
-1. [Degeneration as an action](#1-degeneration-as-an-action)
+[1. Degeneration as an action](#1-degeneration-as-an-action)
    - [1.1 The missing information in the special fiber](#11-the-missing-information-in-the-special-fiber)
    - [1.2 Conventions and normalizations](#12-conventions-and-normalizations)
-   - [1.3 Strictly semistable curves and surfaces](#13-strictly-semistable-curves-and-surfaces)
-2. [The nearby-cycle construction](#2-the-nearby-cycle-construction)
+   - [1.3 Strictly semistable curves](#13-strictly-semistable-curves)
+[2. The nearby-cycle construction](#2-the-nearby-cycle-construction)
    - [2.1 The oriented specialization space](#21-the-oriented-specialization-space)
    - [2.2 Nearby and vanishing cycles](#22-nearby-and-vanishing-cycles)
    - [2.3 Stalks, proper comparison, and base change](#23-stalks-proper-comparison-and-base-change)
    - [2.4 Duality and functoriality](#24-duality-and-functoriality)
-3. [The semistable local calculation](#3-the-semistable-local-calculation)
+[3. The semistable local calculation](#3-the-semistable-local-calculation)
    - [3.1 The punctured normal-crossings chart](#31-the-punctured-normal-crossings-chart)
    - [3.2 The exterior-algebra theorem](#32-the-exterior-algebra-theorem)
    - [3.3 Curves: smooth points and nodes](#33-curves-smooth-points-and-nodes)
-   - [3.4 Surfaces: double curves and triple points](#34-surfaces-double-curves-and-triple-points)
-   - [3.5 What fails outside strict semistability](#35-what-fails-outside-strict-semistability)
-4. [Inertia: tame, wild, and finite parts](#4-inertia-tame-wild-and-finite-parts)
+   - [3.4 What fails outside strict semistability](#34-what-fails-outside-strict-semistability)
+[4. Inertia: tame, wild, and finite parts](#4-inertia-tame-wild-and-finite-parts)
    - [4.1 The tame character](#41-the-tame-character)
    - [4.2 Unipotence in a strict semistable model](#42-unipotence-in-a-strict-semistable-model)
    - [4.3 Descent from a semistable extension](#43-descent-from-a-semistable-extension)
    - [4.4 Invariant cycles](#44-invariant-cycles)
-5. [The monodromy operator and its filtration](#5-the-monodromy-operator-and-its-filtration)
+[5. The monodromy operator and its filtration](#5-the-monodromy-operator-and-its-filtration)
    - [5.1 Logarithm of tame inertia](#51-logarithm-of-tame-inertia)
    - [5.2 The canonical filtration of a nilpotent operator](#52-the-canonical-filtration-of-a-nilpotent-operator)
    - [5.3 Centers, twists, and Frobenius](#53-centers-twists-and-frobenius)
    - [5.4 Integral qualifications](#54-integral-qualifications)
-6. [The weight spectral sequence](#6-the-weight-spectral-sequence)
+[6. The weight spectral sequence](#6-the-weight-spectral-sequence)
    - [6.1 Strata and the incidence operators](#61-strata-and-the-incidence-operators)
-   - [6.2 The general low-dimensional formula](#62-the-general-low-dimensional-formula)
+   - [6.2 The semistable curve formula](#62-the-semistable-curve-formula)
    - [6.3 Curves on the first page](#63-curves-on-the-first-page)
-   - [6.4 Surfaces on the first page](#64-surfaces-on-the-first-page)
-   - [6.5 Degeneration and the weight qualification](#65-degeneration-and-the-weight-qualification)
-7. [Semistable curves](#7-semistable-curves)
+   - [6.4 Degeneration and the weight qualification](#64-degeneration-and-the-weight-qualification)
+[7. Semistable curves](#7-semistable-curves)
    - [7.1 The three graded pieces of first cohomology](#71-the-three-graded-pieces-of-first-cohomology)
    - [7.2 The specialization exact sequence](#72-the-specialization-exact-sequence)
    - [7.3 The graph monodromy pairing](#73-the-graph-monodromy-pairing)
    - [7.4 Model calculations](#74-model-calculations)
-8. [Picard--Lefschetz theory for curves](#8-picard--lefschetz-theory-for-curves)
+[8. Picard--Lefschetz theory for curves](#8-picard--lefschetz-theory-for-curves)
    - [8.1 Thimbles and vanishing classes](#81-thimbles-and-vanishing-classes)
    - [8.2 The transvection formula](#82-the-transvection-formula)
    - [8.3 Several nodes and relations](#83-several-nodes-and-relations)
    - [8.4 Separating and nonseparating nodes](#84-separating-and-nonseparating-nodes)
-9. [Strictly semistable surfaces](#9-strictly-semistable-surfaces)
-   - [9.1 The five possible monodromy levels in degree two](#91-the-five-possible-monodromy-levels-in-degree-two)
-   - [9.2 The dual complex at the extremes](#92-the-dual-complex-at-the-extremes)
-   - [9.3 Double-curve and component terms](#93-double-curve-and-component-terms)
-   - [9.4 Degree one, degree three, and duality](#94-degree-one-degree-three-and-duality)
-   - [9.5 Two instructive degenerations](#95-two-instructive-degenerations)
-10. [Picard--Lefschetz theory for surfaces](#10-picard--lefschetz-theory-for-surfaces)
-   - [10.1 An isolated ordinary double point](#101-an-isolated-ordinary-double-point)
-   - [10.2 The reflection formula](#102-the-reflection-formula)
-   - [10.3 From a reflection to semistable monodromy](#103-from-a-reflection-to-semistable-monodromy)
-   - [10.4 Why a double curve is different](#104-why-a-double-curve-is-different)
-11. [Component pairings and geometric correspondences](#11-component-pairings-and-geometric-correspondences)
-   - [11.1 Restriction and Gysin as adjoints](#111-restriction-and-gysin-as-adjoints)
-   - [11.2 The curve component group](#112-the-curve-component-group)
-   - [11.3 Surface intersection complexes](#113-surface-intersection-complexes)
-   - [11.4 Pull--push actions](#114-pull--push-actions)
-12. [Conductors and local type](#12-conductors-and-local-type)
-   - [12.1 The conductor formula](#121-the-conductor-formula)
-   - [12.2 Curves](#122-curves)
-   - [12.3 Surfaces](#123-surfaces)
-   - [12.4 Tame type, wild type, and what the conductor forgets](#124-tame-type-wild-type-and-what-the-conductor-forgets)
-13. [Base change, descent, and diagnostic examples](#13-base-change-descent-and-diagnostic-examples)
-   - [13.1 Ramified base change](#131-ramified-base-change)
-   - [13.2 Residue extension and nonsplit strata](#132-residue-extension-and-nonsplit-strata)
-   - [13.3 Good reduction and false converses](#133-good-reduction-and-false-converses)
-   - [13.4 A calculation protocol](#134-a-calculation-protocol)
-14. [The local memory of a degeneration](#14-the-local-memory-of-a-degeneration)
-   - [14.1 The curve package](#141-the-curve-package)
-   - [14.2 The surface package](#142-the-surface-package)
-   - [14.3 Conclusion](#143-conclusion)
+[9. Component pairings and geometric correspondences](#9-component-pairings-and-geometric-correspondences)
+   - [9.1 Restriction and Gysin as adjoints](#91-restriction-and-gysin-as-adjoints)
+   - [9.2 The curve component group](#92-the-curve-component-group)
+   - [9.3 Pull--push actions](#93-pull--push-actions)
+[10. Conductors and local type](#10-conductors-and-local-type)
+   - [10.1 The conductor formula](#101-the-conductor-formula)
+   - [10.2 Curves](#102-curves)
+   - [10.3 Tame type, wild type, and what the conductor forgets](#103-tame-type-wild-type-and-what-the-conductor-forgets)
+[11. Base change, descent, and diagnostic examples](#11-base-change-descent-and-diagnostic-examples)
+   - [11.1 Ramified base change](#111-ramified-base-change)
+   - [11.2 Residue extension and nonsplit strata](#112-residue-extension-and-nonsplit-strata)
+   - [11.3 Good reduction and false converses](#113-good-reduction-and-false-converses)
+   - [11.4 A calculation protocol](#114-a-calculation-protocol)
+[12. The local memory of a degeneration](#12-the-local-memory-of-a-degeneration)
+   - [12.1 The curve package](#121-the-curve-package)
+   - [12.2 Conclusion](#122-conclusion)
 
 ## 1. Degeneration as an action
 
@@ -96,7 +80,7 @@ $$
 \end{array}
 $$
 
-In relative dimensions one and two these objects are sparse enough to calculate. For curves, nodes, component genera, and the first homology of the dual graph give the complete rational picture in degree one. For surfaces, components, double curves, triple points, and the two-dimensional dual complex govern the five possible monodromy levels in middle cohomology. The aim of this book is to construct this package, prove its low-dimensional form, and turn it into formulas for conductors and local types.
+For semistable curves these objects are sparse enough to calculate: nodes, component genera, and the first homology of the dual graph give the complete rational picture in degree one. The aim of this book is to construct that package and turn it into formulas for conductors and local types.
 
 The geometry of semistable curves, graph lattices, thicknesses, component groups, derived cohomology, base change, trace, low-dimensional duality, and the finite-image Artin--Swan formalism is assumed. We recall notation when it enters a formula, but we do not rebuild those foundations. Nearby cycles, their local semistable calculation, the passage from finite tame inertia to a nilpotent logarithm, and the resulting weight spectral sequence are proved here.
 
@@ -143,18 +127,18 @@ $$
 
 This is a global comparison theorem, not part of the definition of $R\Psi_f$. The distinction will matter for nonproper examples.
 
-### 1.3 Strictly semistable curves and surfaces
+### 1.3 Strictly semistable curves
 
-Let $f:X\to S$ be proper and flat of relative dimension $d\in\{1,2\}$, with smooth generic fiber. It is **strictly semistable** if $X$ is regular and, étale locally at every geometric point of the special fiber, $f$ has the form
+Let $f:X\to S$ be proper and flat of relative dimension one, with smooth generic fiber. It is **strictly semistable** if $X$ is regular and, étale locally at every geometric point of the special fiber, $f$ has the form
 
 $$
 \operatorname{Spec}
-R[t_1,\ldots,t_{d+1}]/(t_1\cdots t_r-\pi)
+R[t_1,t_2]/(t_1\cdots t_r-\pi)
 \longrightarrow \operatorname{Spec}R
 \tag{1.4}
 $$
 
-for some $1\le r\le d+1$, with any remaining coordinates smooth. Its special fiber
+for some $1\le r\le2$. Its special fiber
 
 $$
 Y=X_{\bar s}=\bigcup_{i\in I}Y_i
@@ -169,13 +153,13 @@ Y_{i_1}\cap\cdots\cap Y_{i_r},
 \tag{1.5}
 $$
 
-Empty intersections are simply omitted. For a curve, $Y^{(1)}$ is the disjoint union of normalized components and $Y^{(2)}$ is the set of nodes. For a surface, $Y^{(2)}$ is the disjoint union of double curves and $Y^{(3)}$ is the set of triple points. There are no fourfold intersections.
+Empty intersections are simply omitted. Here $Y^{(1)}$ is the disjoint union of normalized components and $Y^{(2)}$ is the set of nodes; no higher intersection occurs.
 
 Strictness is doing real work. It makes every component geometrically defined after the displayed base change and makes the local smoothing parameter have multiplicity one. A semistable model with equation $xy=\pi^a$ has the same reduced special fiber but a different integral monodromy pairing. A normal-crossings divisor with multiplicities has finite tame characters in addition to unipotent monodromy. We will return to both warnings rather than hiding them in terminology.
 
 The definition is insensitive to mixed versus equal characteristic as long as $\ell\ne p$. Thus $R$ may be the integers of a mixed-characteristic local field or a power-series ring $k[[\pi]]$. What matters for the local calculation is the prime-to-$p$ Kummer tower around the divisor. Equal characteristic does not make wild phenomena disappear: it is strict semistability, not the shape of the coefficient field, that kills wild inertia in the calculation below.
 
-Two global examples locate the range. A regular model of a curve with reduced nodal fiber is strictly semistable because its node equations have thickness one. A regular threefold whose special divisor is a union of smooth surfaces meeting pairwise in smooth curves and three at a time transversely is a strictly semistable surface family. By contrast, a special divisor whose three components meet along one common curve is not strict normal crossings in relative dimension two: three components should meet in codimension three in the total space, hence at isolated points in the special surface.
+A regular model of a curve with reduced nodal fiber is strictly semistable precisely when its node equations have thickness one. An equation $xy=\pi^a$ with $a>1$ has the same reduced nodal fiber but is not strict in this sense until the model and base are modified.
 
 ## 2. The nearby-cycle construction
 
@@ -338,7 +322,7 @@ The punctured local fiber is tamely equivalent, for prime-to-$p$ cohomology, to 
 
 ### 3.2 The exterior-algebra theorem
 
-**Semistable local theorem.** Let $f:X\to S$ be strictly semistable of relative dimension $d$, let $x$ lie on exactly $r$ geometric components of $Y$, and let coefficients have order prime to $p$. Then
+**Semistable local theorem.** Let $f:X\to S$ be a strictly semistable curve, let $x$ lie on exactly $r\in\{1,2\}$ geometric components of $Y$, and let coefficients have order prime to $p$. Then
 
 $$
 (R^q\Psi_f\Lambda_n)_x
@@ -393,31 +377,7 @@ Here $E_e$ denotes the skyscraper sheaf at the geometric node $e$. By (2.6), $R\
 
 For the local family $xy=\pi$, the Milnor fiber is an annulus. Its one-dimensional $H^1$ is $E(-1)$. If instead the total space is smooth over $S$, the local fiber is a disc and there is no $H^1$. This elementary contrast is the local origin of the global rank jump in a nodal elliptic degeneration.
 
-### 3.4 Surfaces: double curves and triple points
-
-For a surface there are three local patterns. At a point on one component, no higher nearby cycle occurs. At a point of a double curve, $r=2$ and
-
-$$
-(R^1\Psi E)_x=E(-1),
-\qquad (R^q\Psi E)_x=0\quad(q\ge2).
-$$
-
-At a triple point, $r=3$ and
-
-$$
-(R^1\Psi E)_x=E(-1)^2,
-\qquad
-(R^2\Psi E)_x=E(-2).
-\tag{3.4}
-$$
-
-The rank-two first group is generated by three branch classes subject to their sum being zero. Their exterior product gives the rank-one second group.
-
-Globally, $R^1\Psi$ is not simply the direct sum of constant sheaves on the double curves: the three branches meeting at a triple point impose compatibility maps. Similarly, $R^2\Psi$ is supported at triple points but is tied to $R^1\Psi$ by the extension class of $R\Psi$. The weight spectral sequence is the organized form of these gluings.
-
-A useful counterexample to point-counting is a special fiber with many double curves arranged as a tree and no triple points. Local $R^1\Phi$ is nonzero along every double curve, yet some global degrees can have $N=0$ because the restriction and Gysin maps cancel all candidate classes. Local vanishing cycles are raw generators, not the final global monodromy.
-
-### 3.5 What fails outside strict semistability
+### 3.4 What fails outside strict semistability
 
 Three nearby local equations should not be confused. The equation $xy=\pi^a$ has reduced nodal special fiber but singular total space for $a>1$; resolving it replaces one weighted edge by a chain of $a$ unit edges. Rationally the shape of monodromy is unchanged, but the integral operator is multiplied by $a$. The equation $x_1^{m_1}\cdots x_r^{m_r}=\pi$ has a normal-crossings support with multiplicities. Its inertia action can have a nontrivial finite tame semisimple part determined by the $m_i$. Finally, an arbitrary singularity may carry wild vanishing cycles and need not be described by an exterior algebra.
 
@@ -447,20 +407,18 @@ This identity forces (1.2). It also explains why a Tate twist accompanies every 
 
 ### 4.2 Unipotence in a strict semistable model
 
-**Semistable inertia theorem.** Let $X/S$ be proper and strictly semistable of relative dimension at most two. For every $m$, wild inertia acts trivially on $H^m(X_{\bar\eta},E)$ and inertia acts unipotently. There is a unique nilpotent operator $N$ such that, on an open subgroup of inertia,
+**Semistable inertia theorem.** Let $X/S$ be a proper strictly semistable curve. For every $m$, wild inertia acts trivially on $H^m(X_{\bar\eta},E)$ and inertia acts unipotently. There is a unique nilpotent operator $N$ such that, on an open subgroup of inertia,
 
 $$
 \rho(\sigma)=\exp\bigl(t_\ell(\sigma)N\bigr).
 \tag{4.3}
 $$
 
-Moreover $N^{d+1}=0$ on all cohomology; in particular $N^2=0$ for curves and $N^3=0$ for surfaces.
+For a semistable curve, $N^2=0$ on all cohomology.
 
-**Proof.** Filter $R\Psi E$ by the Postnikov filtration. By the local theorem its only nonzero cohomology sheaves have degrees $0,\ldots,d$, wild inertia acts trivially on them, and tame inertia acts trivially on each of them. Thus $\rho(\sigma)-1$ lowers this filtration. Every product of $d+1$ such lowering operators is zero, so inertia acts unipotently and $(\rho(\sigma)-1)^{d+1}=0$. When $p>1$, the continuous image of wild inertia is at once pro-$p$ and, after choosing a stable lattice, contained in a pro-$\ell$ unipotent group; because $p\ne\ell$, that image is trivial. In residue characteristic zero wild inertia is already trivial. Proper comparison transports these conclusions to $H^m(X_{\bar\eta},E)$.
+**Proof.** Filter $R\Psi E$ by the Postnikov filtration. By the local theorem its only nonzero cohomology sheaves have degrees zero and one, wild inertia acts trivially on them, and tame inertia acts trivially on each of them. Thus $\rho(\sigma)-1$ lowers this filtration. Every product of two such lowering operators is zero, so inertia acts unipotently and $(\rho(\sigma)-1)^{d+1}=0$. When $p>1$, the continuous image of wild inertia is at once pro-$p$ and, after choosing a stable lattice, contained in a pro-$\ell$ unipotent group; because $p\ne\ell$, that image is trivial. In residue characteristic zero wild inertia is already trivial. Proper comparison transports these conclusions to $H^m(X_{\bar\eta},E)$.
 
-On a sufficiently small tame subgroup, $t_\ell$ identifies the pro-$\ell$ quotient with an open submodule of $\mathbf Z_\ell(1)$. The logarithm is additive on the resulting commuting unipotent operators, so $\log\rho(\sigma)=t_\ell(\sigma)N$ for one nilpotent $N$. The density of the image of $t_\ell$ gives uniqueness. Conjugating this identity by Frobenius and using (4.2) gives (1.2). Since the logarithm is a polynomial in $\rho(\sigma)-1$, the same filtration argument gives $N^{d+1}=0$. $\square$
-
-The exponent bound is coarse in degrees away from the middle. Duality and the spectral sequence give $N^2=0$ on $H^1$ of a surface and, dually, on $H^3$. Only $H^2$ can contain a Jordan block of length three.
+On a sufficiently small tame subgroup, $t_\ell$ identifies the pro-$\ell$ quotient with an open submodule of $\mathbf Z_\ell(1)$. The logarithm is additive on the resulting commuting unipotent operators, so $\log\rho(\sigma)=t_\ell(\sigma)N$ for one nilpotent $N$. The density of the image of $t_\ell$ gives uniqueness. Conjugating this identity by Frobenius and using (4.2) gives (1.2). Since the logarithm is a polynomial in $\rho(\sigma)-1$, the same filtration argument gives $N^2=0$. $\square$
 
 ### 4.3 Descent from a semistable extension
 
@@ -509,7 +467,7 @@ H^m(Y,E)\longrightarrow H^m(X_{\bar\eta},E)^{I_K}.
 \tag{4.6}
 $$
 
-For a proper semistable curve it is an isomorphism in degree one. In higher dimension, surjectivity is a separate local invariant-cycle theorem, not a formal consequence of nearby cycles. When that theorem is available, the kernel can still contain component classes that vanish after smoothing. The surface calculations below therefore use the $E_\infty$ filtration directly; they invoke an $E_2$ description only under the explicit degeneration hypotheses stated there.
+For a proper semistable curve it is an isomorphism in degree one. This is a theorem about the curve comparison map, not a formal consequence of the definition of nearby cycles.
 
 Even for curves, (4.6) does not identify all generic cohomology. Its cokernel before taking invariants is precisely where the monodromy partner of a graph class lives.
 
@@ -534,16 +492,6 @@ $$
 \rho(\sigma)=1+t_\ell(\sigma)N.
 \tag{5.2}
 $$
-
-For a surface, $N^3=0$ and
-
-$$
-\rho(\sigma)=1+t_\ell(\sigma)N+
-\frac{t_\ell(\sigma)^2}{2}N^2.
-\tag{5.3}
-$$
-
-The quadratic term is the signature of a length-three Jordan block and is geometrically tied to the extreme triple-intersection terms.
 
 ### 5.2 The canonical filtration of a nilpotent operator
 
@@ -573,15 +521,7 @@ $$
 \tag{5.6}
 $$
 
-placed at indices $-1,0,1$. For $N^3=0$, the five indices $-2,-1,0,1,2$ can occur. The extreme pieces are
-
-$$
-\operatorname{gr}_{-2}^L=\operatorname{im}N^2,
-\qquad
-\operatorname{gr}_{2}^L=V/(\ker N^2+\operatorname{im}N),
-$$
-
-and $N^2$ identifies them with the appropriate twist.
+placed at indices $-1,0,1$.
 
 ### 5.3 Centers, twists, and Frobenius
 
@@ -601,7 +541,7 @@ N^a:\operatorname{gr}_{m+a}^M V
 \tag{5.8}
 $$
 
-This indexing anticipates weights: in a semistable family over a finite residue field, the graded piece indexed by $w$ is expected to have Frobenius weight $w$. The assertion that the filtration delivered geometrically by strata equals the canonical filtration (5.7) is the monodromy--weight statement. In dimensions one and two, the spectral sequence supplies the candidate and reduces the statement to nondegeneracy of explicit restriction--Gysin pairings.
+This indexing anticipates weights: in a semistable family over a finite residue field, the graded piece indexed by $w$ is expected to have Frobenius weight $w$. The assertion that the filtration delivered geometrically by strata equals the canonical filtration (5.7) is the monodromy--weight statement. For semistable curves, the spectral sequence supplies the candidate and reduces the statement to nondegeneracy of the graph restriction--Gysin pairing.
 
 The Tate twist in (5.8) is indispensable. If geometric Frobenius eigenvalues on the upper piece have size corresponding to weight $m+a$, twisting the lower piece by $(-a)$ raises its weight by $2a$, so the weights match. Omitting the twist makes (5.8) incompatible with (1.2).
 
@@ -609,7 +549,7 @@ The Tate twist in (5.8) is indispensable. If geometric Frobenius eigenvalues on 
 
 The filtration of a rational vector space is canonical. On a lattice, intersections $L_aV\cap T$ give an integral filtration, but the induced maps on graded lattices need not be isomorphisms: their finite cokernels contain arithmetic information. For curves that cokernel is governed by the graph monodromy pairing and is closely related to the component group.
 
-There is also a denominator issue. When $N^2=0$, $N=\rho(\tau)-1$ after normalizing $t_\ell(\tau)=1$, so the operator preserves a stable lattice. When $N^3=0$, the logarithm contains $1/2$. For $\ell\ne2$ it remains integral on a suitably chosen semistable lattice; at $\ell=2$ rational monodromy is still canonical, but integral preservation needs a separate check. No integral conclusion below is inferred merely from the rational logarithm.
+There is also an integrality point. Because $N^2=0$, one has $N=\rho(\tau)-1$ after normalizing $t_\ell(\tau)=1$, so the operator preserves a stable lattice. Saturation of its image and kernel remains a separate issue, measured by the graph pairing.
 
 ## 6. The weight spectral sequence
 
@@ -629,9 +569,9 @@ follow by pairing the two orders in which components can be dropped. The last id
 
 Filtering nearby cycles by the number of components through a point produces a spectral object whose first differential is $d_1=\rho+\gamma$. This construction is functorial for maps respecting the ordered strata; changing the order changes individual signs but gives an isomorphic spectral sequence.
 
-### 6.2 The general low-dimensional formula
+### 6.2 The semistable curve formula
 
-**Weight spectral sequence theorem.** Let $X/S$ be proper and strictly semistable of relative dimension $d\le2$. Then there is an inertia- and residue-Galois-equivariant spectral sequence
+**Weight spectral sequence theorem.** Let $X/S$ be a proper strictly semistable curve. Then there is an inertia- and residue-Galois-equivariant spectral sequence
 
 $$
 E_1^{-r,w+r}=
@@ -652,7 +592,7 @@ $$
 H^{w-r-2k}\bigl(Y^{(r+2k+1)},E\bigr)(-r-k)
 $$
 
-in bidegree $(-r,w+r)$, which is (6.2). The simplicial sign rule and the self-intersection formula give $d_1=\rho+\gamma$ and $d_1^2=0$ as in (6.1). Only $1\le r+2k+1\le d+1$ occurs, so the filtration is finite and the spectral sequence converges strongly. Proper comparison identifies its abutment with $H^w(X_{\bar\eta},E)$.
+in bidegree $(-r,w+r)$, which is (6.2). The simplicial sign rule and the self-intersection formula give $d_1=\rho+\gamma$ and $d_1^2=0$ as in (6.1). Only $1\le r+2k+1\le2$ occurs, so the filtration is finite and the spectral sequence converges strongly. Proper comparison identifies its abutment with $H^w(X_{\bar\eta},E)$.
 
 On the local exterior algebra, the tame logarithm is contraction by the diagonal relation. In the resolved complex this is the identity from each stratum summand to its matching copy two columns to the right, with one Tate twist; it therefore has bidegree $(2,-2)$. All constructions are canonical under inertia and residue Galois. When the residue field is finite, this includes Frobenius equivariance. $\square$
 
@@ -688,72 +628,9 @@ whose kernel is $H_1(\Gamma,E)(-1)$. The middle row has no neighboring term and 
 
 No higher differential can connect these three terms in total degree one, so the curve sequence degenerates at $E_2$ without a weight argument. Degeneration gives a filtration, not a canonical direct sum. The extension between the two graph pieces is exactly where nontrivial inertia lives.
 
-### 6.4 Surfaces on the first page
+### 6.4 Degeneration and the weight qualification
 
-For a surface it is clearest to write $E_1^{p,q}$ by columns:
-
-$$
-\begin{array}{c|c}
-p& E_1^{p,q}\\ \hline
--2&H^{q-4}(Y^{(3)},E)(-2)\\
--1&H^{q-2}(Y^{(2)},E)(-1)\\
-0&H^q(Y^{(1)},E)\oplus H^{q-2}(Y^{(3)},E)(-1)\\
-1&H^q(Y^{(2)},E)\\
-2&H^q(Y^{(3)},E).
-\end{array}
-\tag{6.4}
-$$
-
-The total degree is $p+q$. The horizontal $d_1$ mixes restriction and Gysin. For middle cohomology, the five relevant positions are
-
-$$
-\begin{array}{c|c}
-(p,q)&\text{term contributing before }d_1\text{-cohomology}\\ \hline
-(-2,4)&H^0(Y^{(3)})(-2)\\
-(-1,3)&H^1(Y^{(2)})(-1)\\
-(0,2)&H^2(Y^{(1)})\oplus H^0(Y^{(3)})(-1)\\
-(1,1)&H^1(Y^{(2)})\\
-(2,0)&H^0(Y^{(3)}).
-\end{array}
-\tag{6.5}
-$$
-
-The $E_2$ groups are the cohomology of the entire horizontal rows, not of the five entries viewed diagonally. For example, $E_2^{-2,4}$ is the kernel of the Gysin map from triple points into the top cohomology of double curves. Dually, $E_2^{2,0}$ is the cokernel of the restriction map from connected components of double curves to triple points. These are the homology and cohomology of the dual complex at the two extremes.
-
-Writing the shortest rows explicitly makes the incidence visible. The bottom row is
-
-$$
-H^0(Y^{(1)})\xrightarrow{\rho}
-H^0(Y^{(2)})\xrightarrow{\rho}
-H^0(Y^{(3)}),
-\tag{6.5a}
-$$
-
-placed in columns $0,1,2$. The top row is its twisted dual
-
-$$
-H^0(Y^{(3)})(-2)\xrightarrow{\gamma}
-H^2(Y^{(2)})(-1)\xrightarrow{\gamma}
-H^4(Y^{(1)}),
-\tag{6.5b}
-$$
-
-placed in columns $-2,-1,0$. Between them, the odd row containing $H^1(Y^{(2)})$ maps by Gysin to $H^3(Y^{(1)})$, while its dual row maps by restriction from $H^1(Y^{(1)})$ to $H^1(Y^{(2)})$. The middle row contains
-
-$$
-H^0(Y^{(2)})(-1)\longrightarrow
-H^2(Y^{(1)})\oplus H^0(Y^{(3)})(-1)
-\longrightarrow H^2(Y^{(2)}).
-\tag{6.5c}
-$$
-
-The two arrows in (6.5c) contain both Gysin and restriction components. Their composite vanishes because the normal-bundle self-intersections cancel the two ways through a triple point.
-
-The middle entry contains both component divisor classes and an extra triple-point term. Treating it as only $\bigoplus H^2(Y_i)$ loses the self-intersection correction needed for $d_1^2=0$ and for monodromy duality.
-
-### 6.5 Degeneration and the weight qualification
-
-Suppose $k$ is finite and every smooth proper stratum satisfies purity: $H^a$ has geometric-Frobenius weight $a$. Every term $E_1^{p,q}$ in (6.4) then has weight $q$. A differential
+Suppose $k$ is finite and every smooth proper stratum satisfies purity: $H^a$ has geometric-Frobenius weight $a$. Every term $E_1^{p,q}$ in (6.2) then has weight $q$. A differential
 
 $$
 d_r:E_r^{p,q}\longrightarrow E_r^{p+r,q-r+1}
@@ -761,7 +638,7 @@ $$
 
 with $r\ge2$ would map a pure object of weight $q$ to one of weight $q-r+1$. Frobenius equivariance forces it to vanish. Hence the spectral sequence degenerates at $E_2$ under this purity hypothesis.
 
-This is a proof of degeneration from purity, not a proof of purity. Over an arbitrary residue field there is no numerical weight argument. In the curve case sparsity already suffices. For surfaces, one must either assume the needed purity, prove the relevant differentials vanish geometrically, or retain the $E_\infty$ notation. A first-page display alone never licenses an $E_2$ decomposition.
+This is a proof of degeneration from purity, not a proof of purity. Over an arbitrary residue field there is no numerical weight argument. For curves the sparsity of the first page already gives the stated degeneration, but in general a first-page display alone never licenses an $E_2$ decomposition.
 
 Even after degeneration, the result is a filtered representation. Frobenius may split the filtration rationally when its graded eigenvalues have disjoint spectra, but no canonical splitting exists in general, and integral extensions can remain when rational eigenvalues separate.
 
@@ -979,199 +856,9 @@ A nonseparating node lies on a graph cycle and can contribute to $N$. Yet the ra
 
 This provides a useful counterexample to a naive local conductor formula. Two components meeting in three points have three local nodal vanishing groups but only two independent global vanishing cycles. Summing local stalk dimensions gives three; the conductor contribution is two. The incidence relations are indispensable.
 
-## 9. Strictly semistable surfaces
+## 9. Component pairings and geometric correspondences
 
-### 9.1 The five possible monodromy levels in degree two
-
-Let $X/S$ now have relative dimension two and let $V=H^2(X_{\bar\eta},E)$. Under $E_2$-degeneration, the weight spectral sequence gives a filtration
-
-$$
-0\subset M_0\subset M_1\subset M_2
-\subset M_3\subset M_4=V.
-\tag{9.1}
-$$
-
-The five graded pieces are
-
-$$
-\operatorname{gr}_a^M V\cong E_2^{2-a,a}
-\qquad(0\le a\le4).
-\tag{9.2}
-$$
-
-Monodromy satisfies
-
-$$
-N:\operatorname{gr}_a^M\to
-\operatorname{gr}_{a-2}^M(-1),
-\qquad
-N^2:\operatorname{gr}_4^M\to
-\operatorname{gr}_0^M(-2).
-\tag{9.3}
-$$
-
-If the maps in (9.3) are isomorphisms in the symmetric degrees, (9.1) is the monodromy filtration centered at two. The possible Jordan blocks then have lengths one, two, and three. Triple intersections are necessary for an extreme piece and hence for $N^2\ne0$, but their mere presence is not sufficient: the triple-point zero-cycles must survive the adjacent incidence maps.
-
-### 9.2 The dual complex at the extremes
-
-The dual complex $\Delta(Y)$ has a vertex for each component, an edge for each connected component of a double curve, and a two-simplex for each triple point, with the evident attaching maps. Its cochain complex begins
-
-$$
-H^0(Y^{(1)},E)
-\xrightarrow{\rho}H^0(Y^{(2)},E)
-\xrightarrow{\rho}H^0(Y^{(3)},E).
-\tag{9.4}
-$$
-
-Therefore
-
-$$
-E_2^{2,0}\cong H^2(\Delta(Y),E).
-\tag{9.5}
-$$
-
-The dual Gysin row identifies
-
-$$
-E_2^{-2,4}\cong H_2(\Delta(Y),E)(-2).
-\tag{9.6}
-$$
-
-Under these identifications $N^2$ is the natural pairing from cellular homology to cellular cohomology, corrected by local intersection multiplicities. For a strict model all local simplex multiplicities are one. Rational nondegeneracy yields the extreme monodromy isomorphism.
-
-If $\Delta(Y)$ is a tree, both extreme groups vanish. If it is a triangulated two-sphere, both are one-dimensional and a length-three block can occur. A contractible dual complex can still support nonzero $N$ through double-curve cohomology; $N^2=0$ does not imply $N=0$.
-
-### 9.3 Double-curve and component terms
-
-The odd graded pieces come from $H^1$ of the double curves, modulo restriction and Gysin relations. Reading the rows of (6.4) gives the exact formulas
-
-$$
-\operatorname{gr}_3^M V
-=E_2^{-1,3}
-=\ker\left[
-H^1(Y^{(2)},E)(-1)
-\xrightarrow{\gamma}H^3(Y^{(1)},E)
-\right]
-$$
-
-and
-
-$$
-\operatorname{gr}_1^M V
-=E_2^{1,1}
-=\operatorname{coker}\left[
-H^1(Y^{(1)},E)
-\xrightarrow{\rho}H^1(Y^{(2)},E)
-\right].
-$$
-
-There are no additional adjacent terms because $Y^{(3)}$ is zero-dimensional. Duality makes
-
-$$
-N:\operatorname{gr}_3^M
-\xrightarrow{\sim}\operatorname{gr}_1^M(-1)
-\tag{9.7}
-$$
-
-when the monodromy--weight property holds.
-
-The middle piece $\operatorname{gr}_2^M$ contains classes from $H^2(Y_i)$ subject to compatibility along double curves, together with the triple-point correction $H^0(Y^{(3)})(-1)$. Its length-one, monodromy-primitive quotient is killed by $N$; the middle vectors of length-three blocks need not be. This piece contains divisor classes on components and may also contain transcendental component cohomology. The spectral sequence does not assert that it is algebraic.
-
-An important counterexample is obtained by replacing each component with another smooth surface having the same incidence divisor but different middle cohomology. The dual complex and all local crossing equations remain unchanged, while $\operatorname{gr}_2^M$ changes. Combinatorics determines the extremes, not the whole middle cohomology.
-
-### 9.4 Degree one, degree three, and duality
-
-For $H^1(X_{\bar\eta},E)$, only three levels can occur, just as for a curve, although $Y^{(2)}$ now consists of curves. The extreme combinatorial terms come from the first cohomology of the dual complex, and the central terms come from $H^1(Y_i)$ with compatibility along intersections. One has $N^2=0$.
-
-Poincaré duality identifies $H^3$ with the twisted dual of $H^1$. Consequently its monodromy filtration is the dual reflected filtration, and $\operatorname{rank}N$ is the same in degrees one and three. Degrees zero and four have trivial monodromy for a geometrically connected proper surface: they are generated by the unit and fundamental class.
-
-Thus all semistable ramification of a proper surface is concentrated in degrees one, two, and three, with degree two carrying the only possible length-three blocks.
-
-### 9.5 Two instructive degenerations
-
-First let $Y=Y_1\cup Y_2$ with smooth components meeting transversely along a smooth curve $D$ and no triple points. The dual complex is an interval, so the extreme degree-two pieces vanish and $N^2=0$. Nevertheless $H^1(D)$ may survive the Gysin maps and create length-two blocks in $H^2$. If $D$ is rational and the component restriction--Gysin maps account for its entire cohomology, $N$ can vanish in degree two even though the family is singular.
-
-Second, suppose the components and double curves form the boundary pattern of a triangulated sphere and the component and double-curve odd cohomology vanish. Then the extreme pieces are each one-dimensional. Provided the incidence pairing is nondegenerate, $H^2$ contains one length-three block. The quadratic term in (5.3) is nonzero. Counting only double curves would miss this phenomenon; it is created by their two-dimensional pattern of attachment.
-
-A product gives a third calculation and a check on all indices. Let $\mathcal C/S$ be a semistable curve and let $D/S$ be a smooth proper curve. After resolving the product strata, the generic surface is $C\times D$. The Künneth decomposition gives
-
-$$
-H^2(C_{\bar K}\times D_{\bar K})
-\cong H^2(C)\oplus
-\bigl(H^1(C)\otimes H^1(D)\bigr)\oplus H^2(D).
-\tag{9.8}
-$$
-
-Monodromy is zero on the outer summands and is $N_C\otimes1$ on the middle summand. Hence
-
-$$
-\operatorname{rank}N_{H^2}=2g(D)b_1(\Gamma_C),
-\qquad N^2=0.
-\tag{9.9}
-$$
-
-The double curves inherited from the nodes of $\mathcal C$ are copies of $D$, and their $H^1$ produces exactly the same number of length-two blocks on the spectral-sequence side. There are no essential triple-point extreme terms. This verifies that positive-genus double curves can create monodromy even when the dual complex is one-dimensional and contractible in each local piece.
-
-## 10. Picard--Lefschetz theory for surfaces
-
-### 10.1 An isolated ordinary double point
-
-Strict semistable crossings are not the only controlled surface singularities. A one-parameter surface degeneration may have one isolated ordinary quadratic singularity, étale locally
-
-$$
-x_0^2+x_1^2+x_2^2=\pi
-\tag{10.1}
-$$
-
-when $2$ is invertible. Its vanishing cohomology is rank one in degree two. Normalize middle cohomology by
-
-$$
-W=H^2(X_{\bar\eta},E(1)).
-$$
-
-The cup-product trace is then an $E$-valued symmetric form on $W$. The normalized vanishing class $\delta\in W$ has self-intersection
-
-$$
-\langle\delta,\delta\rangle=-2
-\tag{10.2}
-$$
-
-under the orientation convention (8.1).
-
-Unlike a curve vanishing class, $\delta$ lies in an even-degree symmetric pairing and has nonzero square. This changes a unipotent transvection into a reflection. The local monodromy is finite of order two on the vanishing line before semistable base change. Untwisting $W$ recovers the same inertia action on $H^2$; the normalization is needed only to make the pairing and formula scalar-valued.
-
-### 10.2 The reflection formula
-
-Since $\varepsilon_2=+1$, Picard--Lefschetz gives, for $v\in W$,
-
-$$
-T(v)=v+\langle v,\delta\rangle\delta.
-\tag{10.3}
-$$
-
-In particular, (10.2) gives $T(\delta)=-\delta$, while $T$ fixes $\delta^\perp$. Thus $T$ is the orthogonal reflection in the root $\delta$.
-
-**Proof.** Local acyclicity away from the singular point confines variation to the rank-one vanishing group generated by $\delta$. For the diagonal quadratic singularity, the vanishing thimble has boundary the middle-dimensional quadric sphere; its normal Euler number is $-2$. Purity identifies this local intersection calculation with $\langle\delta,\delta\rangle=-2$ in $W$. The canonical and variation maps are adjoint under local duality, so with $\varepsilon_2=+1$ their composite sends $v$ to $\langle v,\delta\rangle\delta$. Adding this variation to the identity gives (10.3). It sends $\delta$ to $-\delta$ and fixes $\delta^\perp$, so its square is the identity. $\square$
-
-For several disjoint ordinary double points with mutually orthogonal vanishing classes, the monodromy is the product of their commuting reflections. If vanishing paths are changed so that the classes are not orthogonal, braid relations replace commutativity. A count of singular points alone does not determine the global reflection group.
-
-### 10.3 From a reflection to semistable monodromy
-
-After the quadratic base change $\pi=u^2$, the sign on the vanishing line is killed. Resolving the resulting total space produces a semistable model. The finite tame reflection has then moved into the descent datum of that model. On this rank-one vanishing line the restricted action is trivial, so the unipotent logarithm is $N=0$.
-
-This is an essential distinction. Potential strict semistability packages the original action as a finite part $r$ together with $N$. For an isolated surface ordinary double point, $r$ can contain the quadratic character and $N=0$ on its rank-one vanishing line. For a double-curve semistable degeneration, the finite part is trivial and $N$ can be nonzero. Both are called monodromy in informal speech, but they contribute differently to local type.
-
-In residue characteristic two, equation (10.1) and the quadratic base change need modification, and wild vanishing cycles may occur. The reflection theorem above assumes $2$ invertible and does not extend by deleting that hypothesis.
-
-### 10.4 Why a double curve is different
-
-A strict semistable surface near a double curve has equation $xy=\pi$ with one additional smooth coordinate. Its local vanishing cohomology is a rank-one system along the entire curve, not a skyscraper at one point. Global $H^2$ receives the cohomology of that curve through both restriction and Gysin maps. The resulting tame action is unipotent and described by $N$.
-
-By contrast, the ordinary quadratic point has a skyscraper vanishing group in middle degree and a finite reflection. Resolving both singularities and looking only at the final reduced special fiber can obscure this difference unless multiplicities and descent are retained. Nearby cycles remember it automatically.
-
-## 11. Component pairings and geometric correspondences
-
-### 11.1 Restriction and Gysin as adjoints
+### 9.1 Restriction and Gysin as adjoints
 
 The first differential of the weight spectral sequence is geometric, not merely combinatorial. If $i:Z\hookrightarrow W$ is a smooth divisor inclusion, restriction
 
@@ -1187,9 +874,9 @@ $$
 
 are adjoint under Poincaré duality. Alternating across the components gives $\rho$ and $\gamma$. This adjunction proves the symmetry of the $E_2$ page around the middle and makes the monodromy maps compatible with global duality.
 
-The composite $i^*i_*$ is cup product with the normal-bundle class. At a double curve inside a component surface, these self-intersection classes supply the diagonal terms of the intersection matrix. Omitting them produces an incidence matrix with the wrong square and usually violates $d_1^2=0$.
+The composite $i^*i_*$ is cup product with the normal-bundle class. At a node of a semistable curve, the two branch normal directions supply the local thickness in the graph pairing; omitting it gives the wrong integral monodromy map.
 
-### 11.2 The curve component group
+### 9.2 The curve component group
 
 For curves, the restriction--Gysin pairing reduces to the weighted edge-length pairing (7.8). Let
 
@@ -1217,15 +904,7 @@ $$
 
 The identifications are equivariant under residue-field descent. At a nonsplit node, inertia or residue Galois may reverse an edge orientation, acting by $-1$ on the corresponding cycle. Passing first to an unoriented quotient graph would lose that action.
 
-### 11.3 Surface intersection complexes
-
-For surfaces there is no single finite graph Jacobian controlling all middle cohomology. Instead one obtains a complex of lattices built from component divisor groups, double-curve cohomology, triple-point zero-cycles, restriction, Gysin, and their intersection forms. Its rational cohomology gives the $E_2$ terms in (6.4); its torsion measures failure of the integral monodromy maps to be saturated.
-
-At the extreme combinatorial levels this complex reduces to cellular chains and cochains of $\Delta(Y)$. In the middle it also sees the Néron--Severi lattices and primitive second cohomology of the $Y_i$. Consequently two semistable surfaces with homeomorphic dual complexes can have different integral cokernels, different conductor contributions from double curves, and different local types.
-
-When a later application needs a finite component term, it must specify which cohomological degree and which lattice complex is meant. The curve phrase “the component group” has no automatic surface analogue.
-
-### 11.4 Pull--push actions
+### 9.3 Pull--push actions
 
 Suppose a correspondence
 
@@ -1237,11 +916,11 @@ extends over $S$. Assume that its pull--push is oriented and degree-preserving�
 
 If transversality fails, refined intersection multiplicities must be included. If the closure of a generic correspondence gains a vertical component, that component contributes a map on the $E_1$ page. Therefore equality of generic correspondences does not by itself imply equality of their actions on a chosen integral semistable complex.
 
-For finite maps of semistable curves, these statements recover adjunction between pullback and norm on graph cycle lattices. For surfaces, they permit projectors to isolate a cohomological summand, provided the projector denominators are invertible in the coefficient ring. Rational splitting never guarantees an integral direct summand.
+For finite maps of semistable curves, these statements recover adjunction between pullback and norm on graph cycle lattices. A rational projector can isolate a curve-cohomology summand, but it does not guarantee an integral direct summand unless its denominators are invertible and the projected lattice is saturated.
 
-## 12. Conductors and local type
+## 10. Conductors and local type
 
-### 12.1 The conductor formula
+### 10.1 The conductor formula
 
 In this chapter assume that the residue field is perfect, so the classical upper-numbering break decomposition and its integrality theorem apply. The strict semistable identities involving only $N$ do not require this added hypothesis, but the Artin--Swan packaging does.
 
@@ -1249,7 +928,7 @@ Let $V$ be a finite-dimensional quasi-unipotent $E$-representation of $G_K$. Its
 
 $$
 a(V)=\dim V-\dim V^{I_K}+\operatorname{Sw}(V),
-\tag{12.1}
+\tag{10.1}
 $$
 
 where $\operatorname{Sw}(V)$ is the Swan conductor. This normalization assigns conductor zero to an unramified representation and counts tame loss of invariants with coefficient one.
@@ -1264,17 +943,17 @@ and hence
 
 $$
 a(V)=\dim V-\dim(\ker N)^{r(I_K)}+\operatorname{Sw}(r).
-\tag{12.2}
+\tag{10.2}
 $$
 
-Indeed, invariance under the open subgroup on which $r$ is trivial is equivalent to membership in $\ker N$; on that kernel the exponential term disappears, leaving precisely invariance under the finite group $r(I_K)$. Moreover the tame character vanishes on every positive ramification group, so the wild break decomposition of $V$ is the one carried by $r$ and $\operatorname{Sw}(V)=\operatorname{Sw}(r)$. This proves (12.2). In a strict semistable model over $K$, $r|_{I_K}=1$ and $\operatorname{Sw}=0$, so
+Indeed, invariance under the open subgroup on which $r$ is trivial is equivalent to membership in $\ker N$; on that kernel the exponential term disappears, leaving precisely invariance under the finite group $r(I_K)$. Moreover the tame character vanishes on every positive ramification group, so the wild break decomposition of $V$ is the one carried by $r$ and $\operatorname{Sw}(V)=\operatorname{Sw}(r)$. This proves (10.2). In a strict semistable model over $K$, $r|_{I_K}=1$ and $\operatorname{Sw}=0$, so
 
 $$
 a(V)=\dim V-\dim\ker N=\operatorname{rank}N.
-\tag{12.3}
+\tag{10.3}
 $$
 
-The simplicity of (12.3) depends on both strictness and descent over the original field.
+The simplicity of (10.3) depends on both strictness and descent over the original field.
 
 For later numerical use, let
 
@@ -1286,21 +965,21 @@ be the upper-break decomposition for the finite inertial representation, with $V
 
 $$
 \operatorname{Sw}(V)=\sum_{u>0}u\,\dim V(u).
-\tag{12.3a}
+\tag{10.3a}
 $$
 
-The sum is an integer although the breaks may be rational. Formula (12.1) follows by adding the tame codimension of invariants to this weighted wild loss. In the strict semistable case every $V(u)$ with $u>0$ is zero, explaining geometrically why no Swan term remains.
+The sum is an integer although the breaks may be rational. Formula (10.1) follows by adding the tame codimension of invariants to this weighted wild loss. In the strict semistable case every $V(u)$ with $u>0$ is zero, explaining geometrically why no Swan term remains.
 
-### 12.2 Curves
+### 10.2 Curves
 
 For a proper strictly semistable curve,
 
 $$
 a\bigl(H^1(C_{\bar K},E)\bigr)=b_1(\Gamma).
-\tag{12.4}
+\tag{10.4}
 $$
 
-The proof combines (7.4), (4.5), and (12.1). Component genera contribute unramified middle blocks; each independent graph cycle contributes one length-two special block and one unit to the conductor.
+The proof combines (7.4), (4.5), and (10.1). Component genera contribute unramified middle blocks; each independent graph cycle contributes one length-two special block and one unit to the conductor.
 
 Over a field where the model is not split, let the finite inertial part act on
 
@@ -1310,76 +989,37 @@ H^1(\Gamma,E),\qquad
 H_1(\Gamma,E)(-1).
 $$
 
-Formula (12.2) then computes the conductor from its invariants and Swan term. A nonsplit multiplicative elliptic curve and a split multiplicative elliptic curve both have conductor exponent one, but their finite unramified quadratic characters and Frobenius signs distinguish the local types. The conductor is not the type.
+Formula (10.2) then computes the conductor from its invariants and Swan term. A nonsplit multiplicative elliptic curve and a split multiplicative elliptic curve both have conductor exponent one, but their finite unramified quadratic characters and Frobenius signs distinguish the local types. The conductor is not the type.
 
-For a weighted node, thickness changes the integral monodromy pairing but not the rational rank of $N$, so it does not change (12.4). It can change the component group. This is a clean example of arithmetic information invisible to the rational conductor.
+For a weighted node, thickness changes the integral monodromy pairing but not the rational rank of $N$, so it does not change (10.4). It can change the component group. This is a clean example of arithmetic information invisible to the rational conductor.
 
-### 12.3 Surfaces
-
-For a proper strictly semistable surface,
-
-$$
-a(H^m)=\operatorname{rank}N_m
-\qquad(0\le m\le4).
-\tag{12.5}
-$$
-
-The values for $m=0,4$ are zero, and duality gives equal values for $m=1,3$. In degree two, let
-
-$$
-r_1=\operatorname{rank}N,
-\qquad r_2=\operatorname{rank}N^2.
-$$
-
-If $n_j$ is the number of Jordan blocks of length $j$, then
-
-$$
-n_3=r_2,\qquad
-n_2=r_1-2r_2,\qquad
-n_1=\dim H^2-2r_1+r_2.
-\tag{12.6}
-$$
-
-Thus the conductor $r_1$ alone does not distinguish length-three blocks from two length-two blocks. The extra invariant $r_2$, controlled by the extreme dual-complex terms, is part of the local monodromy type.
-
-Under $E_2$-degeneration and the monodromy--weight isomorphisms, $r_2$ equals the dimension of $E_2^{-2,4}$, while the number of length-two primitive blocks is read from the primitive part of $E_2^{-1,3}$. The remaining dimension belongs to length-one blocks. This turns the low-degree spectral sequence into an explicit local-type calculation.
-
-### 12.4 Tame type, wild type, and what the conductor forgets
+### 10.3 Tame type, wild type, and what the conductor forgets
 
 The local type consists of more than the integer $a(V)$. In the present setting it includes the finite inertial representation $r|_{I_K}$, the nilpotent operator $N$, and their compatibility. Frobenius adds further unramified information. The conductor compresses all of this into the codimension of invariants plus a weighted sum of wild breaks.
 
-Three examples show the loss. A surface reflection and a one-dimensional nontrivial tame character both have tame conductor one, but one is an orthogonal Picard--Lefschetz reflection and the other need not come from geometry of a node. A length-three unipotent block and two length-two blocks both have $\operatorname{rank}N=2$, but their $N^2$ differ. Finally, two wild representations can have the same Swan conductor while having different break decompositions and different inertia characters.
+Two examples show the loss. Split and nonsplit multiplicative curve degenerations can have the same conductor exponent while differing by a finite quadratic character and Frobenius sign. Two wild representations can have the same Swan conductor while having different break decompositions and inertia characters.
 
 Accordingly a reliable local description reports at least
 
 $$
-\bigl(r|_{I_K},\ N,\ \operatorname{rank}N^2,\
-\operatorname{Sw},\ \text{Frobenius on }(\ker N)^{r(I_K)}\bigr)
+\bigl(r|_{I_K},\ N,\
+\operatorname{Sw},\ \text{Frobenius on }(\ker N)^{r(I_K)}\bigr).
 $$
 
-in degree two. The last term controls the local Euler factor; it is not determined by the conductor.
+The last term controls the local Euler factor; it is not determined by the conductor.
 
 When the residue field is finite, with geometric Frobenius $F$, the local Euler polynomial in this normalization is
 
 $$
 P(V,T)=\det\left(1-FT\mid(\ker N)^{r(I_K)}\right).
-\tag{12.7}
+\tag{10.7}
 $$
 
-For a strict semistable curve, (7.6) computes this polynomial on $H^1(Y,E)$, but its filtration still separates graph Frobenius from component Frobenius. For a surface, it must be computed on the kernel of the explicit spectral-sequence monodromy map, not on all $H^m(Y)$. Two local representations with equal conductor and equal Jordan block sizes can still have different polynomials because Frobenius acts differently on their invariant pieces.
+For a strict semistable curve, (7.6) computes this polynomial on $H^1(Y,E)$, but its filtration still separates graph Frobenius from component Frobenius. Two local representations with equal conductor and equal Jordan block sizes can still have different polynomials because Frobenius acts differently on their invariant pieces.
 
-The alternating conductor of a proper surface is also constrained by duality. Degrees one and three have equal monodromy ranks, while zero and four contribute none. Thus the total alternating Artin conductor of the cohomology complex reduces, in the strict case, to
+## 11. Base change, descent, and diagnostic examples
 
-$$
-a(H^2)-2a(H^1).
-\tag{12.8}
-$$
-
-This identity is bookkeeping rather than a positivity statement; the alternating quantity can have either sign before a geometric conductor theorem relates it to singularities.
-
-## 13. Base change, descent, and diagnostic examples
-
-### 13.1 Ramified base change
+### 11.1 Ramified base change
 
 Let $K'/K$ have ramification index $e$ and choose compatible tame parameters. Restriction gives
 
@@ -1391,35 +1031,31 @@ Hence the monodromy operator measured with the normalized parameter of $K'$ is
 
 $$
 N_{K'}=eN_K.
-\tag{13.1}
+\tag{11.1}
 $$
 
 This matches the geometric equation: $xy=\pi$ becomes $xy=u(\pi')^e$, so an edge acquires length $e$ before resolution. The rational monodromy filtration is unchanged because multiplying $N$ by a nonzero scalar does not change its Jordan blocks. Integral cokernels and component groups can change.
 
 If a curve base change leaves the geometric graph and descent action unchanged and merely multiplies every edge length by $e$, then the graph pairing is multiplied by $e$. On a cycle lattice of rank $b_1(\Gamma)$ its discriminant, and hence the geometric component-group order, is multiplied by $e^{b_1(\Gamma)}$. This is the exact fixed-graph scaling law.
 
-After normalization, resolution, or contraction of unstable chains, however, the graph or its saturated cycle lattice may change and the fixed-graph hypothesis must be checked again. The operator still scales as in (13.1), but no component-group order should be scaled before that comparison.
+After normalization, resolution, or contraction of unstable chains, however, the graph or its saturated cycle lattice may change and the fixed-graph hypothesis must be checked again. The operator still scales as in (11.1), but no component-group order should be scaled before that comparison.
 
-### 13.2 Residue extension and nonsplit strata
+### 11.2 Residue extension and nonsplit strata
 
-An unramified residue extension does not scale $N$, but it can split components, nodes, and double curves. The geometric dual graph or dual complex carries an action of the residue Galois group. Local type over the original field is obtained by descent from this action, not by taking the topology of a quotient complex.
+An unramified residue extension does not scale $N$, but it can split components and nodes. The geometric dual graph carries an action of the residue Galois group. Local type over the original field is obtained by descent from this action, not by taking the topology of a quotient complex.
 
-For curves, an element can fix a geometric edge and reverse its orientation, acting by $-1$ on the associated cycle. For surfaces, it can permute the vertices of a two-simplex or reverse its orientation, changing the action on $H_2(\Delta(Y))$. Quotienting the complex first can erase stabilizers and orientation characters. The safe order is: construct the full geometric strata, form the incidence and monodromy complexes equivariantly, then take invariants or descend.
+An element can fix a geometric edge and reverse its orientation, acting by $-1$ on the associated cycle. Quotienting the graph first can erase stabilizers and orientation characters. The safe order is: construct the full geometric strata, form the incidence and monodromy complexes equivariantly, then take invariants or descend.
 
-### 13.3 Good reduction and false converses
+### 11.3 Good reduction and false converses
 
-Good reduction implies $R\Phi E=0$, $N=0$, and unramified cohomology. The converse “$N=0$ implies good reduction” is false. A curve whose special fiber has two components meeting in one separating node has $N=0$ on $H^1$ but is not smooth. An isolated ordinary double point on a surface can have $N=0$ after the quadratic finite part is separated, while the original inertia still acts by a reflection.
+Good reduction implies $R\Phi E=0$, $N=0$, and unramified cohomology. The converse “$N=0$ implies good reduction” is false: a curve whose special fiber has two components meeting in one separating node has $N=0$ on $H^1$ but is not smooth. Even trivial action on a chosen cohomological summand need not imply smooth reduction. Reduction criteria require enough cohomology plus a geometric theorem; monodromy vanishing alone is only a necessary condition in the standard good-reduction direction.
 
-Even trivial action on one cohomological degree need not imply smooth reduction. A rational surface degeneration may have no interesting $H^1$ while $H^2$ detects vanishing cycles. Conversely, a singular degeneration can be cohomologically invisible to a chosen projector. Reduction criteria require enough cohomology plus a geometric theorem; monodromy vanishing alone is only a necessary condition in the standard good-reduction direction.
+### 11.4 A calculation protocol
 
-Another false inference is that a tree-like dual complex forces all monodromy to vanish. It kills the extreme combinatorial terms, but positive-genus double curves can still create length-two blocks in surface middle cohomology.
-
-### 13.4 A calculation protocol
-
-A local calculation in dimension one or two is reliable when performed in the following order.
+A local calculation for a semistable curve is reliable when performed in the following order.
 
 1. Pass to a finite extension on which a strict semistable model exists, but retain the finite descent group.
-2. List the geometric strata $Y^{(1)},Y^{(2)}$, and, for surfaces, $Y^{(3)}$, including residue actions, orientations, and thicknesses.
+2. List the geometric strata $Y^{(1)}$ and $Y^{(2)}$, including residue actions, edge orientations, and thicknesses.
 3. Compute cohomology of each smooth proper stratum with its Frobenius and finite inertial actions.
 4. Write the restriction and Gysin maps, including self-intersection and local multiplicities.
 5. Take horizontal cohomology to obtain the $E_2$ terms; do not read them off from the diagonal entries alone.
@@ -1430,9 +1066,9 @@ A local calculation in dimension one or two is reliable when performed in the fo
 
 Each stage answers a different question. Skipping from the special-fiber picture directly to a conductor discards the maps that impose global relations. Skipping descent discards tame or wild finite type. Passing immediately to rational coefficients discards component and saturation data.
 
-## 14. The local memory of a degeneration
+## 12. The local memory of a degeneration
 
-### 14.1 The curve package
+### 12.1 The curve package
 
 For a proper strictly semistable curve, nearby cycles have only two nonzero cohomology sheaves: the constant degree-zero sheaf and one degree-one skyscraper at each node. The weight spectral sequence turns those local generators into three global pieces: graph cohomology, component $H^1$, and twisted graph homology. Monodromy identifies the two graph pieces through the edge-length pairing, while specialization identifies ordinary special-fiber $H^1$ with inertia invariants.
 
@@ -1446,16 +1082,10 @@ $$
 
 in the split strict case; the integral cokernel of $N$ is the graph discriminant and component term; separating nodes contribute no global transvection; and finite or wild descent is added through $(r,N)$ rather than concealed in the graph.
 
-### 14.2 The surface package
-
-For a strictly semistable surface, local nearby cycles are exterior algebras of ranks zero, one, or two according as one, two, or three components meet. Globally, the first page consists of component, double-curve, and triple-point cohomology joined by restriction and Gysin. Middle cohomology can have five monodromy levels and Jordan blocks of lengths at most three. The extreme levels are the second homology and cohomology of the dual complex; odd levels are governed by double-curve $H^1$; the middle retains component $H^2$ and triple-point corrections.
-
-Under the stated degeneration and monodromy--weight hypotheses, these terms determine $N$, $N^2$, the Jordan block counts, and hence the tame semistable conductor. Isolated ordinary double points form a complementary local model: their middle vanishing class gives a finite reflection, not a unipotent transvection, until base change and descent separate the finite part from $N$.
-
-### 14.3 Conclusion
+### 12.2 Conclusion
 
 A degeneration is not remembered by its reduced special fiber alone. It is remembered by the cohomology of every stratum, the maps among strata, the thickness and orientation of their incidence, and the inertia action tying the resulting graded pieces together. Nearby cycles are the object in which all of that information coexists. Vanishing cycles locate the failure of local constancy. The weight spectral sequence arranges the local data globally. The logarithm of tame inertia converts the hidden extension into a nilpotent operator, and the monodromy filtration records its exact Jordan geometry.
 
-In dimension one this memory becomes a weighted graph pairing. In dimension two it becomes a three-level incidence geometry of components, curves, and points, with a five-step middle filtration. Picard--Lefschetz formulas show the action at its most concrete: a curve node gives a transvection, while an isolated surface double point gives a reflection. Conductors then measure only the loss of invariants and wild breaks; local type retains the finite action, the nilpotent operator, its higher ranks, and Frobenius.
+For a curve this memory becomes a weighted graph pairing, and the Picard--Lefschetz formula makes a node act by a transvection. Conductors then measure only the loss of invariants and wild breaks; local type retains the finite action, the nilpotent operator, and Frobenius.
 
-The guiding discipline is therefore to preserve structure until the final numerical step. Local stalks must be glued before they are counted, $E_2$ must be justified before it is read as graded cohomology, finite descent must be restored after semistable base change, and integral lattices must be retained when component terms matter. With those distinctions in place, semistable curves and surfaces admit a precise and computable theory of specialization, monodromy, and local arithmetic.
+The guiding discipline is therefore to preserve structure until the final numerical step. Local stalks must be glued before they are counted, $E_2$ must be justified before it is read as graded cohomology, finite descent must be restored after semistable base change, and integral lattices must be retained when component terms matter. With those distinctions in place, semistable curves admit a precise and computable theory of specialization, monodromy, and local arithmetic.
