@@ -26,7 +26,7 @@
    - [Application to the Brauer summands](#44-application-to-the-brauer-summands)
 5. [Elementary overlap packets and their self-twists](#5-elementary-overlap-packets-and-their-self-twists)
    - [The overlap packet really is one packet](#51-the-overlap-packet-really-is-one-packet)
-   - [Absolute irreducibility of a cuspidal rank-two realization](#52-absolute-irreducibility-of-a-cuspidal-rank-two-realization)
+   - [Absolute irreducibility of an elementary packet realization](#52-absolute-irreducibility-of-an-elementary-packet-realization)
    - [Self-twist groups](#53-self-twist-groups)
    - [Determinants constrain, but do not determine, self-twists](#54-determinants-constrain-but-do-not-determine-self-twists)
    - [Continuity and coefficient placement of the twists](#55-continuity-and-coefficient-placement-of-the-twists)
@@ -91,7 +91,10 @@ is a quadratic polynomial independent of the coefficient embedding. None of thos
 says that the negative constituents of $R_\tau^-$ occur in $R_\tau^+$. Effectivity is exactly
 the missing assertion.
 
-The argument proves it. The central idea is not to inspect one Frobenius polynomial at a time. We
+The argument proves it away from coefficient characteristic two from Book 183's exported SP
+pair, and at coefficient characteristic two under the explicit top-packet irreducibility
+hypothesis $(\mathrm{AI}_2)$ stated in Section 1.1. The central idea is not to inspect one
+Frobenius polynomial at a time. We
 instead measure the signed character globally by its character norm. Mackey theory and
 Frobenius reciprocity turn that norm into a finite Gram-matrix calculation among the induced
 summands. Book 183 identifies the two restrictions on every elementary intersection field with
@@ -99,7 +102,8 @@ one selected cuspidal packet, so every entry is a self-twist calculation. The po
 intertwining is therefore a finite-order self-twist question. Its answer is algebraic and is
 unchanged by a coefficient embedding. At the distinguished embedding the virtual class is the
 given absolutely irreducible representation, so its norm is one. The same is consequently true
-at every embedding.
+at every embedding under $(\mathrm{AI}_2)$, and at every embedding of residue characteristic
+different from two without it.
 
 An integral generalized character of norm one has one irreducible coefficient equal to $1$ or
 $-1$ and all others zero. Its virtual dimension is two, so the sign must be positive and the
@@ -107,7 +111,7 @@ irreducible constituent must have dimension two. This short final step is why al
 bookkeeping matters: integrality, not merely rationality, turns a numerical norm into
 positivity.
 
-The result is characteristic-zero effectivity. It produces an actual continuous irreducible
+The resulting characteristic-zero effectivity produces an actual continuous irreducible
 semisimple representation and promotes the virtual determinant and local records to records of
 that representation. It does not canonically subtract lattices, choose coefficient-field
 models simultaneously at every place, or construct the base-field compatible system. Those
@@ -251,6 +255,24 @@ common coefficient field. The rank-two comparisons in (1.3)--(1.3a) remain
 characteristic-zero comparisons at every $\tau$ and produce no integral intertwiner or
 coherent system of intertwiners.
 
+One additional coefficient-two hypothesis is required. Book 183's full SP pair proves the
+absolute irreducibility needed below when the residue characteristic of $\tau$ is not two, but
+it deliberately exports no coefficient-prime SP, de Rham, or Hodge--Tate statement when that
+residue characteristic is two. Write $q(\tau)$ for the residue characteristic of the
+nonarchimedean target of $\tau$. We assume explicitly that
+
+$$
+\boxed{
+r_{1,\tau}:G_M\longrightarrow\operatorname{GL}_2(\Omega)
+\text{ is absolutely irreducible whenever }q(\tau)=2.}
+\tag{\mathrm{AI}_2}
+$$
+
+Here $r_{1,\tau}$ is the realization of the top packet $\pi_M$. This is a rational
+characteristic-zero hypothesis, not a residual or lattice assertion. It is not supplied by
+Book 183 and is a standing hypothesis below. Proposition 5.1 explains why this single top-field
+hypothesis suffices for every elementary intersection packet.
+
 Choose an integral Brauer datum
 
 $$
@@ -350,8 +372,8 @@ multiplicity. The appropriate invariant is the norm of the entire generalized ch
 
 ### 1.3 The main theorem
 
-**Theorem 1.1 (effectivity of the signed Brauer array).** For every coefficient embedding
-$\tau:K\hookrightarrow\Omega$, the virtual class
+**Theorem 1.1 (effectivity of the signed Brauer array).** Assume $(\mathrm{AI}_2)$. For every
+coefficient embedding $\tau:K\hookrightarrow\Omega$, the virtual class
 $\mathcal R_{\mathfrak B,\tau}$ is represented
 by a continuous absolutely irreducible two-dimensional semisimple representation
 
@@ -370,7 +392,7 @@ $$
 \tag{1.14}
 $$
 
-at every Book-187-good $p$ distinct from the residue characteristic of $\tau$; at such a prime
+at every $p\notin S_0$ distinct from the residue characteristic of $\tau$; at such a prime
 it is unramified. At $\tau_0$ it is $\rho$ after scalar extension. Its actual restriction at
 every place satisfies the direct-sum Mackey cancellation of Section 9.2; away from the
 coefficient residue characteristic, its Weil--Deligne class is the effective member of Book
@@ -382,6 +404,10 @@ positive-minus-negative presentation and of the integral Brauer datum.
 The theorem asserts no preferred stable lattice for a general $\tau$. It also does not yet
 assemble the representations (1.13), their coefficient fields, and their place labels into one
 base-field compatible system. That assembly is the task of Book 185.
+
+Without $(\mathrm{AI}_2)$, the same conclusion and proof apply to every $\tau$ whose residue
+characteristic is different from two. No conclusion at coefficient characteristic two is then
+claimed.
 
 ### 1.4 Proof architecture
 
@@ -489,14 +515,17 @@ $$
 \simeq\operatorname{Hom}_G(V\otimes_LL',W\otimes_LL'). \tag{2.12}
 $$
 
-Equivariance is a finite system of linear equations
+Indeed, the image of the group algebra in
+$\operatorname{End}_L(V\oplus W)$ is finite dimensional. Choose finitely many group elements
+whose images span it. Equivariance is then the finite system of linear equations
 
 $$
 TV(g)-W(g)T=0, \tag{2.13}
 $$
 
-so flat scalar extension preserves the relevant kernels and Hom dimensions. This justifies the
-single finite Galois coefficient ledger used in the Gram calculation.
+for those chosen elements, so flat scalar extension preserves the common kernel and hence the
+Hom dimension. This justifies the single finite Galois coefficient ledger used in the Gram
+calculation.
 
 ## 3. Frobenius reciprocity and the Mackey Gram matrix
 
@@ -859,52 +888,48 @@ Finally, (5.1a)--(5.1c) are characteristic-zero statements at every embedding. T
 lattice, homothety, integral intertwiner, residual comparison, or compatible cocycle. The norm
 argument uses only their semisimple characteristic-zero Hom spaces.
 
-### 5.2 Absolute irreducibility of a cuspidal rank-two realization
+### 5.2 Absolute irreducibility of an elementary packet realization
 
-We need Schur's lemma for $r_{D,\tau}$. The following consequence of the automorphic realization
-package records why it applies at every embedding, not just at $\tau_0$.
+We need Schur's lemma for $r_{D,\tau}$. The imported all-embedding SP record proves what is
+needed away from coefficient characteristic two; hypothesis $(\mathrm{AI}_2)$ supplies exactly
+the omitted coefficient-two case.
 
-**Proposition 5.1.** Let $F$ be one of the elementary fixed fields occurring as an intersection
-field, and let $\pi_F$ be its selected parallel-weight-two cuspidal packet. For every coefficient
-embedding $\tau$, the semisimple representation $r_{\pi_F,\tau}$ is absolutely irreducible.
+**Proposition 5.1.** Assume $(\mathrm{AI}_2)$. Let $D\leq\Gamma$ be elementary. For every
+coefficient embedding $\tau$, the semisimple representation $r_{D,\tau}$ is absolutely
+irreducible.
 
-**Proof.** Work over an algebraic closure $\Omega$ of the coefficient field. Suppose
+**Proof.** Suppose first that the residue characteristic of $\tau$ is not two. Since $2$ splits
+completely in $M$, choose a dyadic place of $F_D$. Book 183's algebraic SP record identifies the
+Frobenius-semisimple Weil--Deligne pair of $r_{D,\tau}$ there and gives it nonzero rank-one
+monodromy. If the semisimple global representation were reducible, then over the algebraically
+closed coefficient field it would be a sum of two continuous characters,
 
 $$
-r_{\pi_F,\tau}^{\mathrm{ss}}=\eta_1\oplus\eta_2
+r_{D,\tau}=\eta_1\oplus\eta_2
 \tag{5.2}
 $$
 
-with continuous one-dimensional characters. Each $\eta_a$ is unramified outside a finite set.
-At places above the coefficient residue characteristic it is a direct summand of the de Rham
-parallel-weight-two realization, hence is de Rham with integral labeled Hodge--Tate weights.
-The established one-dimensional reciprocity theorem therefore identifies $\eta_a$ with the
-$\tau$-adic avatar of an algebraic Hecke character $\mu_a$ of $F$. This is precisely the
-rank-one Galois--Hecke dictionary already used in Book 183 for its finite-order twists; here the
-characters may also carry the algebraic infinity type.
+whose local Weil--Deligne pair has monodromy zero. This contradicts the imported SP pair.
+Hence $r_{D,\tau}$ is absolutely irreducible in this case.
 
-At every prime $w$ outside the common exceptional set, (5.2) gives
+Suppose now that the residue characteristic is two. Proposition 6.2 of Book 183 applied to
+$1\leq D$ gives
 
 $$
-P_{\pi_F,w}(X)=
-\bigl(X-\eta_1(\operatorname{Frob}_w)\bigr)
-\bigl(X-\eta_2(\operatorname{Frob}_w)\bigr).
+\left(r_{D,\tau}|_{G_M}\right)^{\mathrm{ss}}\simeq r_{1,\tau}.
 \tag{5.3}
 $$
 
-Thus the unramified local parameter of $\pi_F$ equals that of the isobaric sum
-$\mu_1\boxplus\mu_2$ at almost every place. Strong multiplicity one identifies
-$\pi_F$ with that isobaric sum. The latter is not cuspidal, contradicting the selected
-cuspidality of $\pi_F$. Hence (5.2) is impossible. Since the realization was already
-semisimple, it is absolutely irreducible. $\square$
+The right side is absolutely irreducible by $(\mathrm{AI}_2)$. If $r_{D,\tau}$ had an invariant
+line, its restriction to $G_M$ would retain that line and its semisimplification would be
+reducible, contradicting (5.3). Thus $r_{D,\tau}$ is absolutely irreducible. $\square$
 
-The argument tracks the weight hypothesis for a reason. An arbitrary continuous one-dimensional
-$q$-adic character need not be the avatar of an algebraic Hecke character. The de Rham and
-integral-weight properties supplied by the packet realization are what make the rank-one
-reciprocity step available.
+No coefficient-place de Rham or Hodge--Tate assertion is used. In particular, cuspidality and
+good Frobenius polynomials alone have not been treated as a proof of Galois irreducibility.
 
 ### 5.3 Self-twist groups
 
+Fix an elementary $D\leq\Gamma$ and put $F=F_D$ and $\pi_F=\pi_D$.
 Let $\Delta$ be a finite group quotient of $G_F$ through which the finite characters under
 consideration factor. For a finite-order character $\delta:G_F\to K^\times$, let
 $\psi_\delta$ be its finite-order Hecke avatar. To shorten notation, write
@@ -1395,7 +1420,7 @@ of Book 183 makes them commute before induction.
 
 ### 9.1 The common quadratic polynomial is now effective
 
-Let $p$ be Book-187-good and distinct from the residue characteristic of $\tau$. Substituting
+Let $p\notin S_0$ be distinct from the residue characteristic of $\tau$. Substituting
 (7.4) into Book 183's virtual good-prime identity gives
 
 $$
@@ -1795,10 +1820,10 @@ $$
 
 This proves semisimple relation-independence over an algebraically closed common coefficient
 field and therefore relation-independence of the effective irreducible. Book 183 already proves
-equality of the underlying virtual classes by common Frobenius polynomials and its
-Chebotarev--Brauer--Nesbitt lemma. The calculation here is an independent norm proof that uses
-the stronger entrywise overlap export and, once effectivity is known, identifies the actual
-irreducibles. No new Frobenius-density theorem is needed in this second proof.
+that the good virtual polynomials are relation-independent. The calculation here proves the
+stronger equality of the full virtual classes from the entrywise overlap export and, once
+effectivity is known, identifies the actual irreducibles. No new Frobenius-density theorem is
+needed in this proof.
 
 ### 11.4 Independence of harmless coefficient enlargement
 
@@ -1881,8 +1906,11 @@ $$
 \tag{12.2}
 $$
 
-At a rational prime $p\ne q$, this reads $\operatorname{tr}r(\operatorname{Frob}_p)=1+p$.
-The normalization matters: geometric Frobenius would replace $p$ by $p^{-1}$.
+At a place $v\nmid q$ of residue cardinality $Nv$, this reads
+$\operatorname{tr}r(\operatorname{Frob}_v)=1+Nv$. When $F=\mathbf Q$ and $v=p$, it is
+$\operatorname{tr}r(\operatorname{Frob}_p)=1+p$.
+The normalization matters: geometric Frobenius would replace $Nv$ by $(Nv)^{-1}$, and hence
+$p$ by $p^{-1}$ over $\mathbf Q$.
 
 ### 12.2 Proof by Brauer–Nesbitt
 
@@ -1945,8 +1973,8 @@ Suppose a rank-two semisimple representation is known to be absolutely irreducib
 cannot satisfy (12.2) on a dense Frobenius set, since Theorem 12.1 would make it reducible. In
 particular, for the effective members of Theorem 7.1, the common trace system cannot equal
 $1+\chi_\tau$ on a dense good set. At the distinguished member this is already visible from
-the absolute irreducibility of $\rho$; coefficient compatibility and the theorem make the same
-obstruction available at every embedding.
+the absolute irreducibility of $\rho$; under $(\mathrm{AI}_2)$, coefficient compatibility and
+the theorem make the same obstruction available at every embedding.
 
 ## 13. Exact endpoint and conclusion
 
@@ -1955,7 +1983,7 @@ obstruction available at every embedding.
 We can now state the complete output in the notation of Chapter 1.
 
 **Theorem 13.1 (effective Brauer character package).** Fix the controlled data and the exact
-elementary-intersection interface exported by Book 183, fix an integral Brauer datum
+elementary-intersection interface exported by Book 183, assume $(\mathrm{AI}_2)$, and fix an integral Brauer datum
 $\mathfrak B$, and use a common Galois coefficient field $K$ containing the elementary packets
 and character values. For every coefficient embedding
 $\tau:K\hookrightarrow\Omega$:
@@ -1965,7 +1993,7 @@ $\tau:K\hookrightarrow\Omega$:
    irreducible continuous two-dimensional semisimple representation
    $r_{\mathfrak B,\tau}$;
 3. $\det r_{\mathfrak B,\tau}=\chi_\tau$;
-4. at every Book-187-good rational prime distinct from the residue characteristic of $\tau$,
+4. at every rational prime $p\notin S_0$ distinct from the residue characteristic of $\tau$,
    it is unramified and
 
    $$
@@ -2053,10 +2081,10 @@ $$
 
 | Source | Input used here | Application-specific work retained |
 |---|---|---|
-| Book 24 | continuity for open finite-index induction and compact-image representations | continuity of the effective SP constituent |
-| Book 57 | distinction between trace fields, fields of definition, finite local models, and stable lattices | the finite coefficient-field and lattice boundary of Chapter 8 |
+| Book 24 | open subgroups, finite coset constructions, and continuity for profinite actions | continuity of the induced terms and effective constituent |
+| Book 57 | complete local coefficient rings and the topology of finite modules | the integral-model boundary in Chapter 8; stable-lattice existence is proved here |
 | Book 180 | Hom norm, Frobenius reciprocity, Mackey Gram formula, Clifford blocks, norm-one effectivity, Brauer--Nesbitt recognition, and the abstract coefficient-descent boundary | none of the SP overlap or self-twist indicators is imported |
-| Book 183 | selected elementary SP packets, exact nonnormal intersection identities, finite-order avatars, signed induced terms, rank and determinant, common polynomials, purity, and the full virtual SP pair | every Gram entry is computed from those exact packets |
+| Book 183 | selected elementary SP packets, exact nonnormal intersection identities, finite-order avatars, signed induced terms, rank and determinant, common polynomials, purity, and the full virtual SP pair away from coefficient characteristic two | every Gram entry is computed from those exact packets; $(\mathrm{AI}_2)$ is an additional Book-184 hypothesis, not an imported conclusion |
 
 The proof does not merely invoke abstract effectivity. Chapters 5--6 identify every overlap Hom
 space with the correctly oriented finite quotient self-twist, prove the indicator is coefficient
@@ -2074,6 +2102,12 @@ extension; completion-level coefficient descent and coherent place indexing are 
 No signed lattice is reduced, no automorphic transfer is asserted over a nonnormal compositum,
 and no base-field compatible family is assumed.
 
+The coefficient-two boundary is equally explicit. Without $(\mathrm{AI}_2)$ the same proof gives
+effectivity for every embedding of residue characteristic different from two, but the present
+dependencies do not prove the coefficient-two Gram entries invariant. Any downstream assembly
+that includes places above two must retain $(\mathrm{AI}_2)$ or provide a replacement
+irreducibility theorem.
+
 ### 13.4 The boundary with Book 185
 
 Book 184 ends with algebraically closed local isomorphism classes
@@ -2085,8 +2119,9 @@ $$
 
 their determinant, common good polynomials, actual local Mackey records, and the
 representation-theoretic independence statements of Chapter 11. The local export includes the
-full SP pair and its conductor-one consequence, but no integral model. Book 185 must turn those
-classes into a single compatible-system object. Concretely, it must choose and descend finite
+full SP pair and its conductor-one consequence, but no integral model. Under $(\mathrm{AI}_2)$,
+Book 185 must turn those classes into a single compatible-system object. Concretely, it must
+retain that hypothesis (or discharge it), choose and descend finite
 coefficient fields, index members coherently by places of one number field, verify that the
 chosen models realize the common polynomials without dependence on auxiliary embeddings,
 assemble continuity and local compatibility in that common language, and identify the original
@@ -2094,8 +2129,10 @@ member inside the completed family. Any integral refinement must then choose lat
 its own local properties.
 
 Thus effectivity and assembly are adjacent but different. Equation (1.3) is now an exported
-theorem of Book 183, so, relative to that exported controlled packet datum, this book proves
-that each signed Brauer character is one honest irreducible representation. The next book must
+theorem of Book 183, so, relative to that exported controlled packet datum and
+$(\mathrm{AI}_2)$, this book proves that each signed Brauer character is one honest irreducible
+representation. Without $(\mathrm{AI}_2)$ the assertion is restricted to coefficient residue
+characteristic different from two. The next book must
 still prove that all those honest
 representations are the members of one honest compatible family.
 
@@ -2125,7 +2162,8 @@ pair.
 Book 180's Brauer--Nesbitt theorem then supplied recognition, not existence. It proved the semisimple independence
 statements that properly belong at this stage and gave the sharp rank-two diagnostic: a dense
 trace identity $1+\chi$ forces semisimplification $1\oplus\chi$. Book 183's completed
-intersection-field theorem closes the sole former prerequisite, so characteristic-zero
-effectivity is unconditional and dependency-closed. Coherent coefficient descent,
+intersection-field theorem closes the overlap prerequisite. The remaining coefficient-two
+irreducibility input is exactly $(\mathrm{AI}_2)$; subject to it, characteristic-zero
+effectivity is dependency-closed. Coherent coefficient descent,
 compatible-system assembly, and integral local refinement remain separate tasks rather than
 hidden consequences of a signed formula.

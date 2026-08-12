@@ -793,7 +793,7 @@ available from the current manuscript.
 
 183. **Brauer Induction for Automorphy Families** — Construct the elementary fixed-field packet array, overlap identities, integral Brauer classes, common polynomials, and virtual Frey-special local record from a supplied controlled top datum. Effectivity is deliberately deferred and the missing controlled seed is not supplied.
 
-184. **Brauer Characters and Effectivity of Compatible Families** — Prove characteristic-zero effectivity of the special Brauer virtual class by an application-specific Gram and norm-one calculation. The result is relative to the controlled packet datum and stops before coherent completion-valued assembly or an integral coefficient-prime model.
+184. **Brauer Characters and Effectivity of Compatible Families** — Prove characteristic-zero effectivity of the special Brauer virtual class by an application-specific Gram and norm-one calculation. Nonzero special monodromy supplies the needed irreducibility at odd coefficient residue characteristic; the characteristic-two member retains the stated absolute-irreducibility hypothesis. The result is relative to the controlled packet datum and stops before coherent completion-valued assembly or an integral coefficient-prime model.
 
 185. **Compatible Systems over the Base Field** — Assemble the effective constituents into a coefficient-descended compatible family over the base field, carrying the rational signed special record at two. The construction remains conditional on the controlled top datum and provides no crystallinity, finite-flat lattice, or coefficient-prime comparison at three.
 

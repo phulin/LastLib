@@ -41,7 +41,7 @@
 7. [Exact identities on every overlap field](#7-exact-identities-on-every-overlap-field)
    - [The admissible-tower identity](#71-the-admissible-tower-identity)
    - [The Frobenius-power comparison](#72-the-frobenius-power-comparison)
-   - [The unconditional semisimple overlap theorem](#73-the-unconditional-semisimple-overlap-theorem)
+   - [The tower-independent semisimple overlap theorem](#73-the-tower-independent-semisimple-overlap-theorem)
    - [Conjugate intersections and the Hom-ready identity](#74-conjugate-intersections-and-the-hom-ready-identity)
    - [Why agreement only over the top is insufficient](#75-why-agreement-only-over-the-top-is-insufficient)
 8. [The signed induced array](#8-the-signed-induced-array)
@@ -129,14 +129,18 @@ $$
 \tag{1.2}
 $$
 
-No lattice is part of the datum. We assume that $\rho|_{G_M}$ remains absolutely irreducible.
+No lattice is part of the datum used in this book. The conditional source in Book 182 retains a
+stronger integral chosen point, but the passage to the present interface deliberately forgets
+that lattice; none of the arguments below may recover it from characteristic-zero cancellation.
+We assume that $\rho|_{G_M}$ remains absolutely irreducible.
 This one rational hypothesis implies the absolute irreducibility of
 $\rho|_{G_{F'}}$ for every intermediate field $F'\subseteq M$, because an invariant line for
 the larger group would also be invariant under $G_M$.
 
 The extension $M/\mathbf Q$ is assumed totally real and Galois. The primes $2$ and $\ell$
 split completely in $M$. More generally, any finite collection of sensitive places may be
-required to split completely; all statements below then apply to it in the same way.
+required to split completely; the complete-splitting preservation statements below then apply
+to it in the same way.
 
 At $2$, the chosen representation has the SP local record. In the arithmetic-Frobenius
 normalization its Frobenius-semisimple Weil--Deligne pair is
@@ -200,15 +204,17 @@ is an exact attachment hypothesis, not an inference from the distinguished reali
 conductor one.
 
 We call (1.1)--(1.6), complete splitting, and these exact range hypotheses a
-**controlled SP top datum**. The arithmetic problem of producing such a datum is prior to this
-book. The theorem here begins once the chosen lift is already automorphic over the controlled
-top.
+**controlled SP top datum**. Book 182 exports this datum only conditionally on its controlled
+exact residual seed and bridge-readiness package; it explicitly proves no unconditional
+existence theorem for that seed. The theorem here begins only after this conditional input has
+been supplied and the chosen lift is already automorphic over the controlled top.
 
 ### 1.3 The packet-array theorem
 
 The endpoint is a finite algebraic array, not a base-field compatible family.
 
-**Theorem 1.1 (finite elementary-packet array).** From a controlled SP top datum one can
+**Theorem 1.1 (conditional finite elementary-packet array).** Given a controlled SP top datum,
+one can
 construct, for every elementary subgroup $H\leq\Gamma$, a parallel-weight-two cuspidal packet
 $\pi_H$ over $F_H=M^H$ with the following properties.
 
@@ -226,7 +232,8 @@ $\pi_H$ over $F_H=M^H$ with the following properties.
 3. There is one finite Galois number field $K$ containing the Hecke, realization, local-type,
    and finite-character fields of every packet in the array. For every coefficient embedding
    $\tau:K\hookrightarrow\Omega$ into an algebraically closed characteristic-zero
-   nonarchimedean field, the packet theorem constructs a continuous semisimple realization
+   nonarchimedean field of positive residue characteristic, inducing a finite place of $K$, the
+   packet theorem constructs a continuous semisimple realization
 
    $$
    r_{H,\tau}:G_{F_H}\longrightarrow\operatorname{GL}_2(\Omega).
@@ -249,8 +256,9 @@ $\pi_H$ over $F_H=M^H$ with the following properties.
    conductor exponent is one.
 6. For any integral Brauer relation for $1_\Gamma$, the twisted packet realizations give a
    signed induced class of virtual rank two and virtual determinant cyclotomic. At $\iota_0$
-   it is exactly $[\rho]$. Its good Frobenius characteristic series is one algebraic quadratic
-   polynomial, independent of the coefficient embedding.
+   it is exactly $[\rho]$. At each good rational prime its Frobenius characteristic series is
+   a single algebraic quadratic polynomial, independent of the coefficient embedding after
+   scalar transport.
 7. For every pair of Brauer terms and every Mackey double coset, the two restrictions to the
    corresponding intersection field are twists of the same $r_{D,\tau}$. Their Hom space is
    therefore the self-twist space for one explicitly oriented quotient character.
@@ -285,6 +293,11 @@ Induction of Galois representations is unnormalized finite induction. Automorphi
 a Hecke character is through the determinant. All global Galois representations used in
 Grothendieck groups are semisimple. Local Weil--Deligne pairs are Frobenius semisimple; their
 finite inertia and monodromy operator are retained.
+
+A **coefficient embedding** $K\hookrightarrow\Omega$ always means one into an algebraically
+closed nonarchimedean field of positive residue characteristic $q$, with the induced valuation
+on $K$ a finite place. Thus it displays a usual $q$-adic packet member; no representation over
+a characteristic-zero-residue Laurent-series completion is asserted.
 
 Books 108--109 state their transfer ledger with geometric Frobenius. Whenever that ledger is used
 here, Frobenius is inverted and the attached rank-two representation is put in the arithmetic
@@ -798,17 +811,19 @@ minimal trace field.
 
 ### 6.2 Constructing, rather than assuming, the coefficient systems
 
-Apply the established weight-two packet attachment theorem separately to each automorphic
-packet $\pi_H$. In the arithmetic covariant normalization, it constructs for every finite
-place of a suitable realization field a rank-two semisimple Galois representation. After the
-common enlargement to $K$, an embedding
+Apply Book 127, Theorem 8.1, and Book 168, Theorem 12.1, separately to each automorphic packet
+$\pi_H$, in the exact attachment range certified by the controlled datum. In the arithmetic
+covariant normalization, these results construct for every finite place of a suitable
+realization field a rank-two semisimple Galois representation. After the common enlargement to
+$K$, an embedding
 
 $$
 \tau:K\hookrightarrow\Omega
 \tag{6.2}
 $$
 
-into an algebraically closed characteristic-zero nonarchimedean field gives
+into an algebraically closed characteristic-zero nonarchimedean field as specified in Section
+1.4 gives
 
 $$
 r_{H,\tau}:G_{F_H}\longrightarrow\operatorname{GL}_2(\Omega).
@@ -994,11 +1009,13 @@ $$
 Applying any $\tau$ gives equality of the characteristic polynomials of the two existing
 semisimple representations at almost every $u$.
 
-### 7.3 The unconditional semisimple overlap theorem
+### 7.3 The tower-independent semisimple overlap theorem
 
 The next proposition retains the interface number used by the succeeding character-norm
 theorem. Its proof belongs here, after the coefficient ledger and the Frobenius-power
-calculation; the stable number is not an assertion that the proof occurred earlier.
+calculation; the stable number is not an assertion that the proof occurred earlier. Here
+**tower-independent** means that no ascent-admissible automorphic tower is needed. It does not
+remove the controlled-top and all-embedding attachment hypotheses of Theorem 1.1.
 
 **Proposition 6.2 (elementary overlap; stable interface label).** For every inclusion
 $D\leq H$ of elementary subgroups and every coefficient embedding $\tau$,
@@ -1012,20 +1029,13 @@ $$
 This holds whether or not an ascent-admissible automorphic tower from $F_H$ to $F_D$ has been
 verified.
 
-**Proof.** Book 180's Clifford restriction in Section 5.1, applied to the normal core, together
-with the averaging argument in Section 3.1 shows that the restriction on the left is
-semisimple. By (6.4d), the two
-representations have equal characteristic polynomials at all finite places outside one finite
-set. The prior density theorem says that these arithmetic Frobenius conjugacy classes are dense
-in $G_{F_D}$. Their trace functions are continuous, so the traces agree on all of $G_{F_D}$.
-
-For completeness, Brauer--Nesbitt applies as follows. Let $B$ be the finite-dimensional algebra
-generated by the image of $G_{F_D}$ in the endomorphisms of the direct sum of the two
-representations. After scalar extension, its semisimple quotient is a product of matrix
-algebras. The trace of a central idempotent in one factor is its simple dimension times the
-multiplicity of that simple module. Equality of trace functionals on group elements extends
-linearly to $B$, so all simple multiplicities agree. The two semisimple representations are
-isomorphic. $\square$
+**Proof.** Book 180's Clifford restriction in Section 5.1, applied constituentwise after
+passing to the normal core, together with the averaging argument in Section 3.1 shows that the
+restriction on the left is semisimple. By (6.4d), the two representations have equal
+characteristic polynomials at all finite places outside one finite set. Book 154, Theorem 4.3,
+gives the required Chebotarev density, so continuity makes their traces equal on all of
+$G_{F_D}$. Book 180, Theorem 8.1 (Brauer--Nesbitt), now identifies the two semisimple
+representations. $\square$
 
 The proof recognizes two representations that already exist over $F_D$. It neither constructs
 an effective base-field representation nor assumes a compatible family for $\rho$. No
@@ -1390,9 +1400,8 @@ degrees $f$ and $g$.
 
 Let $L/K$ be a finite unramified extension of nonarchimedean local fields of residue degree
 $f$, and let $U$ be an unramified $d$-dimensional representation of $G_L$. Arithmetic
-Frobenius of $K$ permutes the $f$ coset blocks cyclically. Its $f$th power returns to the
-initial block and acts there as arithmetic Frobenius of $L$. A cyclic block determinant
-therefore gives
+Frobenius of $K$ permutes the $f$ coset blocks cyclically. Book 180, equation (6.14), applied to
+this one local block gives
 
 $$
 \det(1-\operatorname{Frob}_KT\mid\operatorname{Ind}_{G_L}^{G_K}U)
@@ -1575,7 +1584,8 @@ $$
 $$
 
 whose realization under $\iota_0$ is (1.3)--(1.5). The operator $N_{2,K}$ is nonzero because
-an injective coefficient embedding cannot send a nonzero matrix to zero. It has rank one, and
+$N_{2,K}\otimes_{K,\iota_0}\overline{\mathbf Q}_\ell=N_2\ne0$. Matrix rank is preserved by
+field extension, so it has rank one, and
 
 $$
 \mathscr L_{2,K}=\ker N_{2,K}=\operatorname{im}N_{2,K}
@@ -1592,7 +1602,9 @@ $(\varepsilon_2,2\varepsilon_2)$ on quotient and line. This accounts for both th
 (1.4) and the cyclotomic determinant; no sign is chosen from a square after completion.
 
 For every $H$, every dyadic place $w$ of $F_H$, and every coefficient embedding $\tau$ whose
-residue characteristic is not two,
+residue characteristic is not two, the controlled local-preservation certificates allow the
+special comparison of Book 128, Theorem 12.1, and Book 168, Theorem 12.1 and Corollary 12.2, to
+be applied, giving
 
 $$
 \operatorname{WD}_w(r_{H,\tau})^{\mathrm{F\text{-}ss}}
@@ -1735,9 +1747,9 @@ structure.
 ### 11.2 Proof
 
 Book 180 supplies integral Brauer induction, the tensor identity, determinant transfer,
-Frobenius reciprocity, Mackey decomposition, and a prime-cyclic subgroup chain for every
-elementary group and every elementary intersection. Chapters 2--4 fixed their notation and
-instantiated them in the controlled field diagram.
+Frobenius reciprocity, Mackey decomposition, Brauer--Nesbitt recognition, and a prime-cyclic
+subgroup chain for every elementary group and every elementary intersection. Chapters 2--4
+fixed their notation and instantiated them in the controlled field diagram.
 
 Using a descent-admissible chain, Chapter 5 constructs $\pi_H$ one cyclic layer at a time. The
 extension comparison lemma and the fact that $\rho$ is already defined downstairs select the
@@ -1805,22 +1817,24 @@ premise.
 The direct dependency row is
 
 $$
-\boxed{183\mid98,\ 108,\ 109,\ 154,\ 180,\ 182.} \tag{11.3}
+\boxed{183\mid98,\ 108,\ 109,\ 127,\ 128,\ 154,\ 168,\ 180,\ 182.} \tag{11.3}
 $$
 
 | Source | Input used here | Strengthening not made |
 |---|---|---|
 | Book 98 | finite-order Hecke avatars of the Brauer characters, with reciprocity, norm pullback, and conjugation | no higher-rank automorphic induction across $F_H/\mathbf Q$ |
 | Books 108--109 | selected prime-cyclic descent and base change, antecedent-complete saturated fibers, local-parameter restriction, and tower independence in the admissible range | no transfer along an inadmissible tower and no nonsolvable descent |
-| Book 154 | the controlled Galois fixed-field diagram, preservation by complete splitting, and the density input used for good Frobenius comparison | no assertion that the field-theoretic towers satisfy automorphic selectors |
-| Book 180 | monomiality, the elementary projector and integral Brauer relation, induction/tensor/Mackey/determinant formulas, prime-cyclic refinement, and the cyclic Clifford torsor | no packet construction, overlap identity, Gram positivity, or coefficient family is imported |
-| Book 182 | the exact conditional controlled SP datum: $\rho$, $M$, the distinguished top realization, and the SP record | the missing controlled residual automorphic seed is not supplied by this book |
+| Books 127--128 and 168 | the weight-two packet realizations, covariant arithmetic normalization, coefficient conjugates, algebraic good data, and the conditional raw-to-semisimple SP comparison in its stated range | no automatic all-embedding SP comparison and no packet lattice after semisimplification |
+| Book 154 | the Chebotarev density input used to recognize representations from their good Frobenius traces | no assertion that the field-theoretic towers satisfy automorphic selectors |
+| Book 180 | monomiality, the elementary projector and integral Brauer relation, induction/tensor/Mackey/determinant formulas, prime-cyclic refinement, the cyclic Clifford torsor, and Brauer--Nesbitt recognition | no packet construction, overlap identity, Gram positivity, or coefficient family is imported |
+| Book 182 | the exact conditional controlled SP datum: $\rho$, $M$, the distinguished top realization, the SP record, and the finite descent-and-attachment ledger | the missing controlled residual automorphic seed and bridge-readiness theorem are not supplied unconditionally |
 
-The finite packet attachment and its all-embedding SP comparison are part of the controlled datum
-assumed in Theorem 11.1. In particular, the special scalar equality and raw-to-semisimple
-local-preservation identity must be available for every constructed packet and every coefficient
-place away from two. If either clause is absent, the distinguished $\ell$-adic SP pair does not
-determine monodromy or its sign at another embedding.
+The controlled datum supplies the hypotheses and certificates needed to apply the finite packet
+attachment results; Books 127--128 and 168 supply the attachment and local-comparison theorems
+actually applied in Chapters 6 and 10. In particular, the special scalar equality and
+raw-to-semisimple local-preservation identity must be available for every constructed packet and
+every coefficient place away from two. If either clause is absent, the distinguished
+$\ell$-adic SP pair does not determine monodromy or its sign at another embedding.
 
 The application-specific work retained here is substantial: construction and conjugation of the
 selected elementary packets, the nonnormal overlap theorem, the coefficient ledger, the signed

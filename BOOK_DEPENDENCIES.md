@@ -211,7 +211,7 @@ flowchart LR
 | 180 | Brauer Induction and Descent of Automorphy | 24, 75, 98, 109, 168 |
 | 181 | Finite Image and the Balanced Minimal-Lift Argument | 57, 62, 64, 141, 163, 164, 165, 166, 173 |
 | 182 | Potential Automorphy and Galois Refinement of a Chosen Lift | 109, 127, 128, 168, 163, 173, 154, 178, 164, 181 |
-| 183 | Brauer Induction for Automorphy Families | 98, 108, 109, 154, 180, 182 |
+| 183 | Brauer Induction for Automorphy Families | 98, 108, 109, 127, 128, 154, 168, 180, 182 |
 | 184 | Brauer Characters and Effectivity of Compatible Families | 24, 57, 180, 183 |
 | 185 | Compatible Systems over the Base Field | 168, 180, 182, 183, 184 |
 | 186 | Changing the Coefficient Prime while Keeping the Frey Special Place | 185 |
