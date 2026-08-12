@@ -173,7 +173,7 @@ theorem chapter01_standard_chart_restriction_map {A : Type*} [CommRing A]
     (hg : g ∈ 𝒜 n) (hn : 0 < n) :
     Nonempty (chapter01StandardChartRing 𝒜 f →+*
       chapter01StandardChartRing 𝒜 (f * g)) := by
-  sorry
+  exact ⟨HomogeneousLocalization.awayMap 𝒜 hg rfl⟩
 
 theorem chapter01_proj_empty_of_irrelevant_eq_bot {A : Type*} [CommRing A]
     (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜]
@@ -391,7 +391,8 @@ theorem chapter01_relative_ideal_closed_immersion {S : Scheme.{u}}
     (I : Chapter01RelativeGradedIdeal 𝒜) :
     ∃ (Q : Chapter01RelativeProj (chapter01RelativeQuotient I))
       (ι : Q.scheme ⟶ (chapter01RelativeProj 𝒜).scheme),
-      IsClosedImmersion ι := by
+      IsClosedImmersion ι ∧
+        ι ≫ (chapter01RelativeProj 𝒜).projection = Q.projection := by
   sorry
 
 def chapter01Saturation {A : Type*} [CommRing A]
@@ -419,8 +420,9 @@ theorem chapter01_saturation_same_proj_point_locus {A : Type*} [CommRing A]
   sorry
 
 /- LOCAL_DEPENDENCY_GUESS: the canonical relative/ordinary Proj quotient
-construction supplies this closed-subscheme interface.  The point-locus field
-prevents the interface from forgetting which homogeneous ideal is represented.
+construction should eventually supply this closed-subscheme interface.  The
+point-locus field is enough for the set-theoretic saturation statement above,
+but not for equality of scheme structures in the presence of nilpotents.
 -/
 structure Chapter01ProjClosedSubschemeInterface {A : Type*} [CommRing A]
     (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜] where
@@ -435,12 +437,6 @@ def Chapter01SameProjClosedSubscheme {A : Type*} [CommRing A]
     (C : Chapter01ProjClosedSubschemeInterface 𝒜)
     (I J : HomogeneousIdeal 𝒜) : Prop :=
   ∃ e : C.scheme I ≅ C.scheme J, e.hom ≫ C.inclusion J = C.inclusion I
-
-theorem chapter01_saturation_same_proj_closed_subscheme {A : Type*} [CommRing A]
-    (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜]
-    (C : Chapter01ProjClosedSubschemeInterface 𝒜) (I : HomogeneousIdeal 𝒜) :
-    Chapter01SameProjClosedSubscheme 𝒜 C I (chapter01Saturation 𝒜 I) := by
-  sorry
 
 /-! ### 1.4 Standard opens and base change -/
 
@@ -458,8 +454,11 @@ def chapter01RelativeProjBaseChange {S T : Scheme.{u}}
 
 theorem chapter01_relative_proj_base_change {S T : Scheme.{u}}
     (𝒜 : Chapter01RelativeGradedAlgebra S) (g : T ⟶ S) :
-    Nonempty ((chapter01RelativeProj (chapter01RelativePullback 𝒜 g)).scheme ≅
-      chapter01RelativeProjBaseChange 𝒜 g) := by
+    ∃ (Q : Chapter01RelativeProj (chapter01RelativePullback 𝒜 g))
+      (e : chapter01RelativeProjBaseChange 𝒜 g ⟶ Q.scheme),
+      IsIso e ∧
+        e ≫ Q.projection =
+          Limits.pullback.snd (chapter01RelativeProj 𝒜).projection g := by
   sorry
 
 /- The ring-level chart statement is orientation-independent up to the canonical
@@ -484,8 +483,11 @@ theorem chapter01_homogeneous_localization_base_change
 
 theorem chapter01_relative_proj_base_change_without_flatness {S T : Scheme.{u}}
     (𝒜 : Chapter01RelativeGradedAlgebra S) (g : T ⟶ S) :
-    Nonempty ((chapter01RelativeProj (chapter01RelativePullback 𝒜 g)).scheme ≅
-      chapter01RelativeProjBaseChange 𝒜 g) := by
+    ∃ (Q : Chapter01RelativeProj (chapter01RelativePullback 𝒜 g))
+      (e : chapter01RelativeProjBaseChange 𝒜 g ⟶ Q.scheme),
+      IsIso e ∧
+        e ≫ Q.projection =
+          Limits.pullback.snd (chapter01RelativeProj 𝒜).projection g := by
   exact chapter01_relative_proj_base_change 𝒜 g
 
 noncomputable def chapter01RelativeFiberAlgebra {S : Scheme.{u}}
@@ -495,9 +497,11 @@ noncomputable def chapter01RelativeFiberAlgebra {S : Scheme.{u}}
 
 theorem chapter01_relative_proj_fiber {S : Scheme.{u}}
     (𝒜 : Chapter01RelativeGradedAlgebra S) (s : S) :
-    Nonempty (
-      (chapter01RelativeProj 𝒜).projection.fiber s ≅
-        (chapter01RelativeProj (chapter01RelativeFiberAlgebra 𝒜 s)).scheme) := by
+    ∃ (Q : Chapter01RelativeProj (chapter01RelativeFiberAlgebra 𝒜 s))
+      (e : (chapter01RelativeProj 𝒜).projection.fiber s ⟶ Q.scheme),
+      IsIso e ∧
+        e ≫ Q.projection =
+          (chapter01RelativeProj 𝒜).projection.fiberToSpecResidueField s := by
   sorry
 
 /-! ### 1.5 Twisting sheaves -/
@@ -572,8 +576,13 @@ theorem chapter01_ordinary_structure_twist_iso {A : Type*} [CommRing A]
       SheafOfModules.unit (AlgebraicGeometry.«Proj» 𝒜).ringCatSheaf) := by
   sorry
 
+def chapter01GeneratedInDegreeOne {A : Type*} [CommRing A]
+    (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜] : Prop :=
+  Algebra.adjoin (𝒜 0) {x : A | x ∈ 𝒜 1} = ⊤
+
 theorem chapter01_ordinary_twist_tensor_iso {A : Type*} [CommRing A]
     (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜] (m n : ℤ) :
+    chapter01GeneratedInDegreeOne 𝒜 →
     Nonempty (chapter01SheafTensor (chapter01OrdinaryTwistingSheaf 𝒜 m)
         (chapter01OrdinaryTwistingSheaf 𝒜 n) ≅
       chapter01OrdinaryTwistingSheaf 𝒜 (m + n)) := by
@@ -581,6 +590,7 @@ theorem chapter01_ordinary_twist_tensor_iso {A : Type*} [CommRing A]
 
 theorem chapter01_ordinary_twist_dual_iso {A : Type*} [CommRing A]
     (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜] (n : ℤ) :
+    chapter01GeneratedInDegreeOne 𝒜 →
     Nonempty (chapter01SheafDual (chapter01OrdinaryTwistingSheaf 𝒜 n) ≅
       chapter01OrdinaryTwistingSheaf 𝒜 (-n)) := by
   sorry
@@ -588,6 +598,7 @@ theorem chapter01_ordinary_twist_dual_iso {A : Type*} [CommRing A]
 theorem chapter01_relative_twist_tensor_iso {S : Scheme.{u}}
     (𝒜 : Chapter01RelativeGradedAlgebra S) (P : Chapter01RelativeProj 𝒜)
     (m n : ℤ) :
+    chapter01RelativeGeneratedInDegreeOneByFiniteType 𝒜 →
     Nonempty (chapter01SheafTensor (chapter01RelativeTwistingSheaf 𝒜 P m)
         (chapter01RelativeTwistingSheaf 𝒜 P n) ≅
       chapter01RelativeTwistingSheaf 𝒜 P (m + n)) := by
@@ -596,13 +607,10 @@ theorem chapter01_relative_twist_tensor_iso {S : Scheme.{u}}
 theorem chapter01_relative_twist_dual_iso {S : Scheme.{u}}
     (𝒜 : Chapter01RelativeGradedAlgebra S) (P : Chapter01RelativeProj 𝒜)
     (n : ℤ) :
+    chapter01RelativeGeneratedInDegreeOneByFiniteType 𝒜 →
     Nonempty (chapter01SheafDual (chapter01RelativeTwistingSheaf 𝒜 P n) ≅
       chapter01RelativeTwistingSheaf 𝒜 P (-n)) := by
   sorry
-
-def chapter01GeneratedInDegreeOne {A : Type*} [CommRing A]
-    (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜] : Prop :=
-  Algebra.adjoin (𝒜 0) {x : A | x ∈ 𝒜 1} = ⊤
 
 theorem chapter01_ordinary_twist_one_is_line_bundle {A : Type*} [CommRing A]
     (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜]
@@ -662,17 +670,18 @@ def chapter01TwistedGlobalSectionsMapFromDecomposition
     (φ : ∀ n, 𝓜 n →+ Γ n) : M →+ (⨁ n, Γ n) :=
   (chapter01TwistedGlobalSectionsMap φ).comp (DirectSum.decomposeAddEquiv 𝓜).toAddHom
 
-/- SOURCE_ISSUE (§1.5, paragraph beginning "There is a natural map"): the
-source's eventual-isomorphism claim is stated for an arbitrary graded module
-`M`, but it needs finite-generation/noetherian hypotheses (or a weaker
-saturation conclusion). -/
+/- The source's eventual-isomorphism claim applies after imposing the usual
+noetherian/standard-graded and finite-generation hypotheses.  These predicates
+keep that eventual property separate from the generic componentwise map. -/
 def Chapter01EventuallyAnIsomorphism
     {M Γ : ℤ → Type*} (φ : ∀ n, M n → Γ n) : Prop :=
   ∃ n₀ : ℤ, ∀ n, n₀ ≤ n → Function.Bijective (φ n)
 
 def Chapter01SmallDegreeSaturationFailure
     {M Γ : ℤ → Type*} (φ : ∀ n, M n → Γ n) : Prop :=
-  ∃ n : ℤ, ¬ Function.Bijective (φ n)
+  ∃ n₀ : ℤ,
+    (∀ n, n₀ ≤ n → Function.Bijective (φ n)) ∧
+      ∃ n, n < n₀ ∧ ¬ Function.Bijective (φ n)
 
 /-! ### 1.6 Veronese algebras and presentations -/
 
@@ -706,7 +715,7 @@ def chapter01VeroneseComponent {A : Type*} [CommRing A]
   exact DirectSum.coeRingHom_of _ _ _
 
 theorem chapter01_veronese_inclusion_injective {A : Type*} [CommRing A]
-    (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜] (d : ℕ) :
+    (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜] {d : ℕ} (hd : 0 < d) :
     Function.Injective (chapter01VeroneseInclusion 𝒜 d) := by
   sorry
 
@@ -718,6 +727,11 @@ structure Chapter01VeroneseGradingData {A : Type*} [CommRing A]
     ∀ n (x : chapter01Veronese 𝒜 d),
       x ∈ grading n ↔
         ∃ y : 𝒜 (n * d), chapter01VeroneseComponent 𝒜 d n y = x
+
+def chapter01VeroneseGeneratedInDegreeOne {A : Type*} [CommRing A]
+    (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜] (d : ℕ) : Prop :=
+  ∀ n (x : A), x ∈ 𝒜 (n * d) →
+    x ∈ Algebra.adjoin (𝒜 0) (Set.range (fun y : 𝒜 d => (y : A)))
 
 noncomputable def chapter01VeroneseProj {A : Type*} [CommRing A]
     {𝒜 : ℕ → Submodule ℤ A} [GradedAlgebra 𝒜] {d : ℕ}
@@ -732,36 +746,49 @@ noncomputable def chapter01VeroneseTwistingSheaf {A : Type*} [CommRing A]
   letI := V.graded
   exact chapter01OrdinaryTwistingSheaf V.grading n
 
+/- The Veronese comparison needs an admissible positive degree, expressed by
+`chapter01VeroneseGeneratedInDegreeOne`; arbitrary positive degrees need not
+give the same Proj.  The twist comparison is part of the chosen isomorphism,
+since an arbitrary witness of scheme isomorphism need not preserve twists. -/
+theorem chapter01_proj_veronese_iso_and_twist {A : Type*} [CommRing A]
+    (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜] {d : ℕ} (hd : 0 < d)
+    (hgen : chapter01VeroneseGeneratedInDegreeOne 𝒜 d)
+    (V : Chapter01VeroneseGradingData 𝒜 d) :
+    ∃ e : AlgebraicGeometry.«Proj» 𝒜 ≅ chapter01VeroneseProj V,
+      Nonempty ((Scheme.Modules.pullback e.hom).obj
+        (chapter01VeroneseTwistingSheaf V 1) ≅
+        chapter01OrdinaryTwistingSheaf 𝒜 (d : ℤ)) := by
+  sorry
+
 theorem chapter01_proj_veronese_iso {A : Type*} [CommRing A]
     (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜] {d : ℕ} (hd : 0 < d)
+    (hgen : chapter01VeroneseGeneratedInDegreeOne 𝒜 d)
     (V : Chapter01VeroneseGradingData 𝒜 d) :
     Nonempty (AlgebraicGeometry.«Proj» 𝒜 ≅ chapter01VeroneseProj V) := by
-  sorry
+  exact ⟨(chapter01_proj_veronese_iso_and_twist 𝒜 hd hgen V).choose⟩
 
 noncomputable def chapter01ProjVeroneseIso {A : Type*} [CommRing A]
     (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜] {d : ℕ} (hd : 0 < d)
+    (hgen : chapter01VeroneseGeneratedInDegreeOne 𝒜 d)
     (V : Chapter01VeroneseGradingData 𝒜 d) :
     AlgebraicGeometry.«Proj» 𝒜 ≅ chapter01VeroneseProj V :=
-  Classical.choice (chapter01_proj_veronese_iso 𝒜 hd V)
+  (chapter01_proj_veronese_iso_and_twist 𝒜 hd hgen V).choose
 
 theorem chapter01_veronese_twist_correspondence {A : Type*} [CommRing A]
     (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜] {d : ℕ} (hd : 0 < d)
+    (hgen : chapter01VeroneseGeneratedInDegreeOne 𝒜 d)
     (V : Chapter01VeroneseGradingData 𝒜 d) :
-    Nonempty ((Scheme.Modules.pullback (chapter01ProjVeroneseIso 𝒜 hd V).hom).obj
+      Nonempty ((Scheme.Modules.pullback (chapter01ProjVeroneseIso 𝒜 hd hgen V).hom).obj
         (chapter01VeroneseTwistingSheaf V 1) ≅
       chapter01OrdinaryTwistingSheaf 𝒜 (d : ℤ)) := by
-  sorry
+  simpa [chapter01ProjVeroneseIso] using
+    (chapter01_proj_veronese_iso_and_twist 𝒜 hd hgen V).choose_spec
 
 def chapter01FinitelyGeneratedGrading {A : Type*} [CommRing A]
     (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜] : Prop :=
   ∃ r : ℕ, ∃ x : Fin r → A,
     (∀ i, ∃ n, 0 < n ∧ x i ∈ 𝒜 n) ∧
       Algebra.adjoin (𝒜 0) (Set.range x) = ⊤
-
-def chapter01VeroneseGeneratedInDegreeOne {A : Type*} [CommRing A]
-    (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜] (d : ℕ) : Prop :=
-  ∀ n (x : A), x ∈ 𝒜 (n * d) →
-    x ∈ Algebra.adjoin (𝒜 0) (Set.range (fun y : 𝒜 d => (y : A)))
 
 theorem chapter01_veronese_eventually_generated_in_degree_one
     {A : Type*} [CommRing A] (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜]
