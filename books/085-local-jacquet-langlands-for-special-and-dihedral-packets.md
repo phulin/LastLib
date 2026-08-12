@@ -154,7 +154,7 @@ $$
 \tag{1.4}
 $$
 
-The assignment is the one in (1.3) for special twists and attaches to the same rectified quadratic pair in the dihedral case. It is a bijection in the selected range. It preserves central characters, twisting, contragredients, conductor exponents, and the common two-dimensional local parameter. Consequently it preserves local $L$- and epsilon factors with all arithmetic, Frobenius, additive-character, and self-dual-measure conventions fixed.
+The assignment is the one in (1.3) for special twists and attaches to the same rectified quadratic pair in the dihedral case. It is a bijection in the selected range. It preserves central characters, twisting, contragredients, conductor exponents, and the common two-dimensional local parameter. Consequently it preserves local $L$-, epsilon, and gamma factors with all arithmetic, Frobenius, additive-character, and self-dual-measure conventions fixed.
 
 The minus sign is not a convention that may be silently removed. It is the degree-two inner-form sign. One may move it from the character identity into the definition of transferred test functions, but it must appear exactly once. Chapter 3 makes this distinction precise.
 
@@ -314,7 +314,7 @@ O_g(f)=O_d(f')
 \tag{3.6}
 $$
 
-for every $g\leftrightarrow d$. The character relation (1.4) then gives, for elliptic-supported functions after Weyl integration,
+for every $g\leftrightarrow d$; in the elliptic transfer situation the split regular orbital integrals of $f$ also vanish, since split classes have no division-side partners. The character relation (1.4) then gives, for elliptic-supported functions after Weyl integration,
 
 $$
 \operatorname{tr}\pi(f)=-\operatorname{tr}\pi'(f').
@@ -998,13 +998,56 @@ $$
 =-\int_D\Phi_D(x)\psi(\operatorname{Trd}(xy))\,dx.
 $$
 
-The sign is the anisotropic degree-two Hasse sign. With this normalization, the resulting division Euler and epsilon factors satisfy
+The sign is the anisotropic degree-two Hasse sign.
+
+**Proposition 9.1 (division functional equation in the selected range).** For a selected irreducible $\pi'$ and its contragredient, the integrals $Z_D(s,\Phi_D,c)$ span a principal fractional ideal in $\mathbf C[q^s,q^{-s}]$; write its normalized generator as $L_D(s,\pi')$. If $\check c(x)=c(x^{-1})$, there is a scalar rational function $\gamma_D(s,\pi',\psi)$, independent of $\Phi_D$ and $c$, such that
+
+$$
+Z_D(1-s,\mathcal F_D\Phi_D,\check c)
+=\gamma_D(s,\pi',\psi)Z_D(s,\Phi_D,c).
+$$
+
+The division epsilon factor is determined by
+
+$$
+\gamma_D(s,\pi',\psi)
+=\epsilon_D(s,\pi',\psi)
+\frac{L_D(1-s,(\pi')^\vee)}{L_D(s,\pi')}.
+$$
+
+**Proof.** Smoothness and finite dimensionality give $r$ such that $U_D^r$ acts trivially on $\pi'$. Subdivide $D^\times$ into cosets of $U_D^r$ and reduced-norm valuation shells. On each compact valuation interval the zeta integral is a finite matrix sum. Multiplication by a division prime translates the tail by one shell and its square is central, so the tail satisfies a recurrence of degree at most two; hence the integral is rational in $q^{-s}$.
+
+For the reduced-trace pairing one has
+
+$$
+(\mathfrak P_D^m)^\perp=\mathfrak P_D^{-m-1}.
+$$
+
+The signed Fourier transform therefore exchanges characteristic functions of lattice cosets with explicit character multiples of their annihilator cosets. On the intervening finite quotients its square is reflection; multiplying the Fourier transform by $-1$ does not alter this inversion law, but inserts the degree-two anisotropic sign in the one-step functional-equation scalar. Pairing this finite operator with matrix coefficients of $\pi'$ and $(\pi')^\vee$, Schur orthogonality makes the proportionality operator scalar on the irreducible isotypic block and independent of the coefficient. Passage through deeper quotients gives the functional equation for every test function. Removing the shell recurrences gives the Euler generators; the remaining scalar is a monomial times a finite Gauss sum, hence the epsilon factor. $\square$
+
+With this functional-equation normalization, the independently constructed division Euler and epsilon factors satisfy
 
 $$
 L(s,\pi)=L(s,\operatorname{JL}(\pi)),
 \qquad
 \epsilon(s,\pi,\psi)=\epsilon(s,\operatorname{JL}(\pi),\psi).
 \tag{9.5}
+$$
+
+Therefore, with
+
+$$
+\gamma(s,\pi,\psi)
+=\epsilon(s,\pi,\psi)
+\frac{L(1-s,\pi^\vee)}{L(s,\pi)},
+$$
+
+one also has
+
+$$
+\gamma(s,\pi,\psi)
+=\gamma(s,\operatorname{JL}(\pi),\psi).
+\tag{9.5a}
 $$
 
 Here is the calculation. For $\mu\circ\operatorname{Nrd}$, decompose $D^\times$ into reduced-norm valuation shells. Unit averaging kills the Euler tail when $\mu$ is ramified. When $\mu$ is unramified, the shell sum is the geometric series with root $\mu(\varpi)q^{-s-1/2}$, giving (4.9). Fourier reversal leaves one endpoint; the displayed minus sign makes it $-\mu(\varpi)q^{-(s-1/2)}$. In the ramified case the two boundary unit sums are the rank-one factors for $\mu|\cdot|^{1/2}$ and $\mu|\cdot|^{-1/2}$. This proves (4.10)--(4.12) from the division coefficient integral as well as from the special parameter.
@@ -1182,6 +1225,17 @@ There is a second source of nonbanality. At positive depth the Heisenberg quotie
 
 Accordingly, integral compatibility has two layers. Stable lattices, contragredient pairings, and primitive selected lines hold for unit-valued data with $\ell\ne p$. Irreducibility and multiplicity preservation after reduction require the stated banal hypotheses.
 
+Precisely, the transfer-facing integral datum is
+
+$$
+(a(\pi),\mathcal L_R,\mathcal L_R^\#)
+\quad\longleftrightarrow\quad
+(a(\pi'),\mathcal L'_R,(\mathcal L'_R)^\#),
+\tag{11.4}
+$$
+
+where the conductor exponents agree, $\mathcal L_R$ is the saturated rank-one split newvector/type line, $\mathcal L'_R$ is the saturated rank-one division type-multiplicity line, and the displayed lines pair perfectly with their contragredient lines. The comparison is unique up to $R^\times$. It does not identify the ambient representation lattices or full fixed-vector spaces. Under the banal hypotheses, the reduced lines retain multiplicity one.
+
 ## 12. Bijection and uniqueness in the selected range
 
 ### 12.1 The selected sets
@@ -1249,7 +1303,7 @@ $$
 \Theta_\pi(g)=-\Theta_{\operatorname{JL}_{\mathrm{sel}}(\pi)}(d)
 $$
 
-for matching regular elliptic elements. It is given by (12.1), commutes with twists and contragredients, and preserves central characters, conductor exponents, common local parameters, and local $L$- and epsilon factors. For unit-valued data over $R$ with $\ell\ne p$, it matches the distinguished integral type and newvector lines and their perfect contragredient pairings. Under the banal finite-quotient hypotheses, these multiplicity statements survive reduction.
+for matching regular elliptic elements. It is given by (12.1), commutes with twists and contragredients, and preserves central characters, conductor exponents, common local parameters, and local $L$-, epsilon, and gamma factors. For unit-valued data over $R$ with $\ell\ne p$, it preserves the precise integral package (11.4): a saturated rank-one split newvector/type line, a saturated rank-one division type-multiplicity line, and their perfect contragredient pairings, with comparison unique up to $R^\times$. Under the banal finite-quotient hypotheses, these multiplicity statements survive reduction.
 
 **Proof.** Character matching is (4.4), (6.4), and (7.7). The label classifications prove bijectivity, while Section 12.3 proves character-theoretic uniqueness. Chapters 8 and 9 establish the invariant compatibilities. Chapters 10 and 11 establish type-line and lattice compatibility. $\square$
 
@@ -1336,6 +1390,7 @@ $$
 \text{additive conductor}&n(\psi)=0\text{ when }\mathcal O\text{ is the largest trivial fractional ideal}\\
 \text{epsilon measure}&\text{self-dual for }\psi\\
 \text{centralizer measure}&\operatorname{vol}(\mathcal O_E^\times)=1\\
+\text{geometric orbital transfer}&O_g(f)=O_d(f')\\
 \text{pointwise sign}&\Theta_G=-\Theta_{G'}
 \end{array}
 $$
@@ -1353,8 +1408,9 @@ Changing one row is allowed only if every dependent formula changes with it. Ari
 | conductor | $1$ if $a(\mu)=0$, else $2a(\mu)$ | $v_F(\mathfrak d_{E/F})+f(E/F)a_E(\theta)$ |
 | Euler factor | $L(s+1/2,\mu)$ | $1$ |
 | epsilon factor | that of $\operatorname{Sp}_2(\mu)$ | $\lambda(E/F,\psi)\epsilon_E(s,\theta,\psi_E)$ |
+| gamma factor | derived from the displayed $L$- and epsilon factors | derived from the displayed $L$- and epsilon factors |
 | elliptic character | negative of division value | negative of division value |
-| integral object | new/type line | new line and type multiplicity line |
+| integral object | saturated split new/type and division special lines | saturated split new/type line and division type-multiplicity line |
 
 Every row is compatible with twisting. In the dihedral column, replace $\theta$ by $\theta(\chi\circ N_{E/F})$; in the special column, replace $\mu$ by $\mu\chi$.
 

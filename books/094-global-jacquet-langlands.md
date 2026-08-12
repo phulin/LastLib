@@ -100,7 +100,7 @@
 
 Let $F$ be a number field and let $D$ be a quaternion algebra over $F$. At every place $v$, the algebra $D_v=D\otimes_FF_v$ is either $M_2(F_v)$ or a quaternion division algebra. Thus the adelic group $D^\times(\mathbf A_F)$ agrees locally with $\mathrm{GL}_2(F_v)$ at almost every place, but it may differ at a prescribed finite set. Global Jacquet--Langlands answers the natural question: when can an automorphic representation on the quaternionic group be transported to the matrix group without losing its local identity?
 
-The answer is subtler than replacing each local factor independently. At a ramified finite place, Book 84 gives the correspondence in the range needed here: norm characters, hence special representations on the split side, and the selected depth-zero or tame positive-depth dihedral representations. Primitive wild packets and ramified dyadic positive-depth packets are not in that local theorem and are not smuggled into the global statement. At a split place there is nothing to transfer. For a packet in this selected range one can therefore write down a formal tensor
+The answer is subtler than replacing each local factor independently. At a ramified finite place, Book 85 gives the correspondence in the range needed here: norm characters, hence special representations on the split side, and the selected depth-zero or tame positive-depth dihedral representations. Primitive wild packets and ramified dyadic positive-depth packets are not in that local theorem and are not smuggled into the global statement. At a split place there is nothing to transfer. For a packet in this selected range one can therefore write down a formal tensor
 
 $$
 \bigotimes_v'\operatorname{JL}_v(\Pi_v).
@@ -132,7 +132,7 @@ $$
 \iota_v:D_v\xrightarrow{\sim}M_2(F_v).
 $$
 
-Changing $\iota_v$ conjugates it and hence changes neither local representation classes nor orbital integrals. At finite $v\in R$, write $\operatorname{JL}_v$ for the selected local correspondence of Book 84, with the archimedean correspondence constructed from the real discrete-series character formula at a ramified real place.
+Changing $\iota_v$ conjugates it and hence changes neither local representation classes nor orbital integrals. At finite $v\in R$, write $\operatorname{JL}_v$ for the selected local correspondence of Book 85, with the archimedean correspondence constructed from the real discrete-series character formula at a ramified real place.
 
 The trace-formula argument will be used only in the following two ranges.
 
@@ -187,7 +187,7 @@ $$
 \Pi=\chi\circ\operatorname{Nrd}.
 $$
 
-All other irreducible automorphic representations will be called **noncharacters**. A noncharacter is **selected** if, at every finite $v\in R$, its local factor is a norm character or one of the depth-zero or tame positive-depth dihedral factors covered by Book 84. The theorem will give a bijection between selected noncharacters on $G$ and cuspidal representations on $G^*$ whose ramified finite factors are the corresponding selected special or dihedral discrete series and whose ramified real factors have the prescribed algebraic discrete-series type. Parallel weight two is obtained from the trivial compact type at every ramified real place and, in the one-split range, from the unchanged minimal weight-two discrete series at $\tau _0$. Norm characters are genuinely exceptional and will be treated in Chapter 10.
+All other irreducible automorphic representations will be called **noncharacters**. A noncharacter is **selected** if, at every finite $v\in R$, its local factor is a norm character or one of the depth-zero or tame positive-depth dihedral factors covered by Book 85. The theorem will give a bijection between selected noncharacters on $G$ and cuspidal representations on $G^*$ whose ramified finite factors are the corresponding selected special or dihedral discrete series and whose ramified real factors have the prescribed algebraic discrete-series type. Parallel weight two is obtained from the trivial compact type at every ramified real place and, in the one-split range, from the unchanged minimal weight-two discrete series at $\tau _0$. Norm characters are genuinely exceptional and will be treated in Chapter 10.
 
 We use $\Pi$ for a quaternionic representation and $\pi$ for a representation of $G^*(\mathbf A)$. Their local components are $\Pi_v$ and $\pi_v$. At a split place, the assertion $\pi_v\cong\Pi_v$ always means that $\Pi_v$ has been transported through $\iota_v$.
 
@@ -687,7 +687,7 @@ $$
 =-\operatorname{tr}\rho(f_v').
 $$
 
-This relation holds for every $\rho$ in Book 84's selected special or dihedral range, including division norm characters. No assertion is made here for primitive wild or excluded dyadic packets. It is the local representation-theoretic input used in the global trace comparison.
+This relation holds for every $\rho$ in Book 85's selected special or dihedral range, including division norm characters. No assertion is made here for primitive wild or excluded dyadic packets. It is the local representation-theoretic input used in the global trace comparison.
 
 ### 6.2 Split places and spherical units
 
@@ -1004,7 +1004,7 @@ Use local pseudo-coefficients of $\pi_v$ at ramified places and transfer them to
 
 This use of the subtracted identity is essential when some $\pi_v$ is Steinberg. Its local division partner is a norm character, but the assembled global preimage must not be allowed to fall into the global norm-character spectrum. The right side has already removed that spectrum, so its nonzero trace produces a noncharacter constituent. As a consistency check, a norm-character preimage would be one dimensional at almost every split place, contradicting the local genericity of a cuspidal representation.
 
-The hypothesis at **every** ramified place is necessary. If $\pi_v$ is principal series at even one $v\in R$, there is no local inverse transfer. Within the present dependency closure, a primitive wild or excluded ramified dyadic packet is likewise outside the theorem: it may belong to the full classical correspondence, but Book 84 and Book 112 do not construct the local character and test-function identities needed here.
+The hypothesis at **every** ramified place is necessary. If $\pi_v$ is principal series at even one $v\in R$, there is no local inverse transfer. Within the present dependency closure, a primitive wild or excluded ramified dyadic packet is likewise outside the theorem: it may belong to the full classical correspondence, but Book 85 and Book 112 do not construct the local character and test-function identities needed here.
 
 ### 9.4 Multiplicity preservation
 
@@ -1033,7 +1033,7 @@ R(B)=\{\tau:\tau\mid\infty,\ \tau\ne\tau _0\}\sqcup W.
 \tag{9.1}
 $$
 
-Fix a compatible unitary central character $\omega$. Let $\pi$ be a cuspidal automorphic representation of $\mathrm{GL}_2(\mathbf A_F)$ with central character $\omega$, with full-group parallel-weight-two component $D_{2,\omega_\tau}$ at every real place, and such that, for every $w\in W$, $\pi_w$ is either selected special or selected depth-zero or tame positive-depth dihedral in the range of Books 84 and 112. Then there is a unique noncharacter automorphic representation
+Fix a compatible unitary central character $\omega$. Let $\pi$ be a cuspidal automorphic representation of $\mathrm{GL}_2(\mathbf A_F)$ with central character $\omega$, with full-group parallel-weight-two component $D_{2,\omega_\tau}$ at every real place, and such that, for every $w\in W$, $\pi_w$ is either selected special or selected depth-zero or tame positive-depth dihedral in the range of Books 85 and 112. Then there is a unique noncharacter automorphic representation
 
 $$
 \Pi_B=\operatorname{JL}_B^{-1}(\pi)
@@ -1123,7 +1123,7 @@ $$
 
 is compact. The split real factor does not create a cusp: compactness is an adelic consequence of division over $F$, not compactness of every local factor.
 
-Define the candidate factors by (9.3). They exist locally: transfer is the identity away from $R(B)$, Book 84 supplies the inverse selected special or tame-dihedral factor at every $w\in W$, and real local Jacquet--Langlands supplies the compact inverse at every ramified real place. Their central characters are the local factors of $\omega$, so the restricted tensor has the correct global central character. What remains is automorphy.
+Define the candidate factors by (9.3). They exist locally: transfer is the identity away from $R(B)$, Book 85 supplies the inverse selected special or tame-dihedral factor at every $w\in W$, and real local Jacquet--Langlands supplies the compact inverse at every ramified real place. Their central characters are the local factors of $\omega$, so the restricted tensor has the correct global central character. What remains is automorphy.
 
 Choose a ramified real place $a\ne\tau _0$ and a finite place $b\in W$. At $a$ use the weight-two compact projector and its split discrete-series transfer. At $b$ use a prepared selected type function and its transfer. Both split functions have zero split regular orbital integrals and trace zero on every full normalized principal series. Hence they are the two distinct zero factors required by Book 93, Proposition 7.2. At the active split real place $\tau _0$, use on both groups the same compact-mod-center Euler--Poincare pseudo-coefficient for $D_{2,\omega_{\tau _0}}$ used in Book 112, Chapter 12. Its trace is one on the chosen full-group weight-two discrete series and zero on the other tempered types, normalized principal series, and their one-dimensional quotients; its compact support puts it directly in the kernel class of Chapter 4. It plays no role in the ramification sign and requires neither a weight-two extension of the one-place formula nor a geometric realization of the packet.
 
@@ -1135,7 +1135,7 @@ If two compact automorphic representations had these factors, they would agree a
 
 Isolating a corresponding pair with local trace-one functions reduces the comparison to equality of automorphic multiplicities. Book 93 gives multiplicity one on the compact division side and Book 92 gives multiplicity one on the split cuspidal side, proving the multiplicity assertion.
 
-Local transfer preserves central characters, which proves the global central-character assertion. Book 84 proves (9.4) and identifies the selected minimal types; identity transfer outside $W$ preserves the local conductor and type. Formula (9.5) follows directly from right convolution and the right-coset decomposition, so the good operators have exactly the same eigenvalues on the identical local representations.
+Local transfer preserves central characters, which proves the global central-character assertion. Book 85 proves (9.4) and identifies the selected minimal types; identity transfer outside $W$ preserves the local conductor and type. Formula (9.5) follows directly from right convolution and the right-coset decomposition, so the good operators have exactly the same eigenvalues on the identical local representations.
 
 Finally, assume the additional Book 107 hypothesis in the statement. The good eigenvalues of $\pi$ are algebraic and generate a number field by the rationality theorem of Book 107. They are the same numbers on $\Pi_B$, so the two good Hecke fields coincide. Algebraic conjugation preserves selected special labels, selected admissible tame pairs, the conjugated central character, and the parallel-weight-two algebraic coefficient system. Applying the construction to $\pi^\sigma$ and using local uniqueness gives
 
@@ -1272,7 +1272,7 @@ $$
 a(\pi_v)=a(\Pi_v).
 $$
 
-At a division place the raw first principal-unit depth is not a conductor on the same scale: division invariants jump from zero to the entire finite-dimensional representation, whereas split newvectors first appear on a line. Book 84 therefore defines the transfer-facing exponent from the selected packet label:
+At a division place the raw first principal-unit depth is not a conductor on the same scale: division invariants jump from zero to the entire finite-dimensional representation, whereas split newvectors first appear on a line. Book 85 therefore defines the transfer-facing exponent from the selected packet label:
 
 $$
 a_D(\Pi_v)=
@@ -1564,7 +1564,7 @@ with multiplicity one and with a separate norm-character block.
 
 For a noncharacter constituent, transfer identifies the global representation but not the fixed-vector space. At split places $U_v$ is transported unchanged and the invariant spaces agree. At division places the local level must be translated through conductor and type theory.
 
-For a selected special or dihedral factor, Book 84 constructs a minimal division type $(J_v',\lambda_v')$ and the corresponding split type $(J_v,\lambda_v)$. Book 112 transfers their normalized type functions, and their trace on the selected representation is the same. On the split side the newform theorem recalled in Book 92 gives a one-dimensional $K_1(\mathfrak p_v^{a_D(\Pi_v)})$ newvector line. On the division side a normal principal-unit subgroup fixes either zero or the whole irreducible representation. Thus the theorem matches the representation and its prepared minimal type, not the ambient fixed-vector spaces term by term.
+For a selected special or dihedral factor, Book 85 constructs a minimal division type $(J_v',\lambda_v')$ and the corresponding split type $(J_v,\lambda_v)$. Book 112 transfers their normalized type functions, and their trace on the selected representation is the same. On the split side the newform theorem recalled in Book 92 gives a one-dimensional $K_1(\mathfrak p_v^{a_D(\Pi_v)})$ newvector line. On the division side a normal principal-unit subgroup fixes either zero or the whole irreducible representation. Thus the theorem matches the representation and its prepared minimal type, not the ambient fixed-vector spaces term by term.
 
 ### 14.2 Maximal level and the discriminant factor
 
@@ -1755,7 +1755,7 @@ The single local failure at $11$ is decisive. There is no representation of the 
 
 ### 16.4 A local level calculation
 
-Let $D/\mathbf Q$ be definite and ramified at a finite prime $p$, and suppose $\Pi_p=\pi'(E,\theta)$ is a selected depth-zero dihedral factor, with $E/\mathbf Q_p$ unramified and $\theta$ regular on the residue torus. Book 84 gives
+Let $D/\mathbf Q$ be definite and ramified at a finite prime $p$, and suppose $\Pi_p=\pi'(E,\theta)$ is a selected depth-zero dihedral factor, with $E/\mathbf Q_p$ unramified and $\theta$ regular on the residue torus. Book 85 gives
 
 $$
 a(\operatorname{JL}_p(\Pi_p))

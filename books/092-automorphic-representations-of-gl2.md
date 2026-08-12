@@ -917,8 +917,8 @@ H_T=\prod_{v\in T}H_v,
 H^T=\prod_{v\notin T}'(H_v,K_v).
 $$
 
-The product-group factorization theorem proved in the earlier global Whittaker package, and
-recalled in the direct global-newform prerequisite, applies to these admissible representations
+The product-group factorization theorem proved in Book 104, Section 3.3, and
+recalled as Book 106, Theorem 2.2, applies to these admissible representations
 of products of local reductive groups. It gives
 
 $$
@@ -1504,9 +1504,9 @@ $$
 \dim\operatorname{Hom}_{N(F_v)}(\pi_v,\psi_v)\le1.
 $$
 
-At a finite place this is the rank-one distribution theorem from the local $\mathrm{GL}_2$
-theory. At a real or complex place it is the Casselman--Wallach Whittaker multiplicity-one
-theorem used in the earlier global Whittaker package; continuity is understood in the smooth
+At a finite place this is Book 78, Theorem 8.2, the rank-one distribution theorem for local $\mathrm{GL}_2$.
+At a real or complex place it is the Casselman--Wallach Whittaker multiplicity-one
+input used in Book 104, Sections 3.3--3.4; continuity is understood in the smooth
 Fréchet topology. The archimedean assertion is not obtained by repeating the nonarchimedean
 Bruhat-cell argument without its regularity input.
 
@@ -2082,10 +2082,10 @@ m-a(\pi_v)+1,&m\ge a(\pi_v).
 \end{cases}
 $$
 
-The generality here is deliberate. The earlier local volume proves this formula directly for
-principal series, special representations, depth-zero supercuspidals, and tame dihedral
-supercuspidals, but explicitly does not claim it for primitive wild supercuspidals. The direct
-global-newform prerequisite closes that boundary for every irreducible
+The generality here is deliberate. Book 81, Theorem 10.1, proves the formula for
+principal series, special representations, and the depth-zero and tame-dihedral
+supercuspidals in its selected range, but does not claim it for primitive wild supercuspidals.
+Book 106, Theorem 5.1, closes that boundary for every irreducible
 admissible generic representation by the two-filtration argument in the Kirillov model. Upper
 unipotent and unit invariance put the Kirillov function in one valuation flag; lower-unipotent
 invariance puts its Weyl transform in the opposite flag. Each new shell has dimension at most

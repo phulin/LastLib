@@ -433,7 +433,7 @@ When the residue characteristic is two, unramified quadratic depth-zero data rem
 
 We use five established packages, each with its hypotheses retained.
 
-Book 84, *Local Jacquet--Langlands*, gives (2.5)--(2.7), the regular character sign, twist and contragredient compatibility, and saturated integral type lines. We use it only for selected packets and only with unit-valued coefficient data.
+Book 85, *Local Jacquet--Langlands for Special and Dihedral Packets*, gives (2.5)--(2.7), the regular character sign, twist and contragredient compatibility, and saturated integral type lines. We use it only for selected packets and only with unit-valued coefficient data.
 
 Book 91, *Hecke Algebras and Congruences*, says that the faithful image of a commuting Hecke family on a finite free $\mathcal O$-module is finite free over $\mathcal O$. Localization at a maximal ideal preserves faithfulness; perfect adjoint pairings localize; congruence modules are measured by Fitting ideals; and equality of generic branches alone does not imply equality of orders.
 
@@ -2080,17 +2080,17 @@ The logical sources and retained hypotheses are as follows.
 
 | source package | result used | retained boundary | new conclusion here |
 |---|---|---|---|
-| Book 84: local Jacquet--Langlands | selected character identity, conductors, factors, integral type lines | special and tame-dihedral only; unit-valued labels; banal hypotheses when residual irreducibility is used | type-compatible switch at $v$ |
+| Book 85: local Jacquet--Langlands | selected character identity, conductors, factors, integral type lines | special and tame-dihedral only; unit-valued labels; banal hypotheses when residual irreducibility is used | type-compatible switch at $v$ |
 | Book 91: Hecke algebras and congruences | faithful finite image orders, localization, pairings, Fitting ideals, branch language | no automatic reducedness, Hecke freeness, Gorensteinness, or Gram-to-augmentation identification | common-kernel order equality; exact scalar ideals only under Section 11.4's extra hypotheses |
 | Book 94: global Jacquet--Langlands | selected noncharacter packet bijection from the totally definite algebra, multiplicity, and good Hecke data | totally real algebraic weight; norm characters removed; rational comparison only | split interpretation of the graph packets after geometric occurrence is proved |
 | Book 132: automorphic decomposition of Shimura-curve $H^1$ | packet decomposition and rational semisimplicity on the actual one-split-place curve at both levels | full component routing or a separating projector; characteristic zero only | generic old/new support on $Q_E$ |
 | Book 158: conditional saturated Ihara theory | exact tree kernel, conditional primitive old image and free quotient, Gram matrix, graph discriminant, branch Smith correction | proper clean curves; constant coefficients; $v\nmid\ell$; neat or tame descent; non-Eisenstein localization plus the independent abelian Ihara condition (1.5d) | uses its corrected filtration in raising, lowering, and order comparison |
 | node uniformization | superspecial nodes identified with the switched definite class set, including routing, weights, and coefficient-one scale | an explicit external hypothesis for the chosen PEL datum | integral graph--definite lattice map |
 
-Thus the current catalog row $159\mid91,84,94,158$ omits an actual direct prerequisite. The mathematical direct row is
+Thus the intended consolidated catalog row $159\mid91,85,94,158$ omits an actual direct prerequisite. The mathematical direct row is
 
 $$
-159\mid91,84,94,132,158,
+159\mid91,85,94,132,158,
 \tag{15.1a}
 $$
 

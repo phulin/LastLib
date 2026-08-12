@@ -313,7 +313,7 @@ Over a nonalgebraically closed field, simple modules over the Laurent ring need 
 
 A smooth representation of a compact group can be an infinite direct sum, so compactness modulo center does not make every smooth representation finite dimensional. Irreducibility is decisive. Nor does compactness classify the irreducibles: a profinite group can have irreducible representations through arbitrarily deep finite quotients.
 
-There is also no analogue of a nontrivial parabolic subgroup of $D^\times$. Thus the character versus higher-dimensional division is intrinsic, not a principal-series versus supercuspidal division. Every irreducible has matrix coefficients compactly supported modulo the center, simply because the entire central quotient is compact. Book 84 will compare these representations with a particular nonprincipal portion of a matrix group, but no matching theorem is asserted here.
+There is also no analogue of a nontrivial parabolic subgroup of $D^\times$. Thus the character versus higher-dimensional division is intrinsic, not a principal-series versus supercuspidal division. Every irreducible has matrix coefficients compactly supported modulo the center, simply because the entire central quotient is compact. Book 85 compares these representations with a particular nonprincipal portion of a matrix group, but no matching theorem is asserted here.
 
 ## 3. Characters and the reduced norm
 
@@ -2269,7 +2269,7 @@ Every irreducible smooth representation of $D^\times$ now enters later theory wi
 - stable finite free lattices and perfect contragredient pairings for unit-valued selected data;
 - compatible centralizer, quotient, orbital-integral, and formal-degree measures.
 
-No representation has yet been matched with a representation of $\mathrm{GL}_2(K)$. In particular, equality of conductors, signs in a character identity, and the placement of one-dimensional norm characters relative to special representations remain theorems to be established in Book 84. The present conductor normalization is a prepared interface, not a proof of those statements.
+No representation has yet been matched with a representation of $\mathrm{GL}_2(K)$. In particular, equality of conductors, signs in a character identity, and the placement of one-dimensional norm characters relative to special representations are established by the comparison theorem in Book 85. The present conductor normalization is a prepared interface, not a proof of those statements.
 
 ### 19.4 Conclusion
 

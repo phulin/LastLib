@@ -166,7 +166,8 @@ Twisting a representation of $\mathrm{GL}_2(K)$ by $\chi$ means twisting by
 $\chi\circ\det$. Additive characters are displayed in epsilon factors; none is
 silently fixed.
 
-This matches Books 77, 81, and 84. Book 5 states local class field theory with
+This matches the normalized induction and Whittaker conventions of Book 78, the selected
+parameter dictionary of Book 81, and the local inner-form conventions of Book 85. Book 5 states local class field theory with
 arithmetic Frobenius; inverting both horizontal reciprocity maps converts its
 norm--inclusion square to the geometric convention used here. The norm direction and
 all kernels are unchanged by this simultaneous inversion.
@@ -549,8 +550,7 @@ row contains both the generic principal series and the nongeneric determinant
 characters. Matching the two classifications requires care exactly at normalized
 induction's reducibility points.
 
-We use the selected rank-two local parameter correspondence proved in Books 77 and
-81,
+We use the selected rank-two local parameter correspondence proved in Book 81,
 
 $$
 \operatorname{rec}_K:
@@ -566,7 +566,7 @@ half-powers.
 
 Here **selected** has its literal earlier meaning: split parameters, special
 parameters, and irreducible inductions from tame admissible quadratic pairs. The
-smooth classification from Book 77 supplies the representation-theoretic families;
+smooth theory from Books 78 and 79 supplies the representation-theoretic families;
 Book 81 constructs this correspondence and proves its invariant and local-factor
 compatibilities. Primitive wild parameters and ramified dyadic positive-depth pairs
 are not smuggled into the word “selected.” What will be proved from the established
@@ -580,7 +580,7 @@ families below show that, in rank two, they force every normalization.
 
 Here $a_K(\pi)$ denotes the analytic conductor exponent supplied by the parameter (or,
 equivalently, by the epsilon factor). For an infinite-dimensional generic
-representation it agrees with the newvector conductor of Book 77. For a
+representation it agrees with the selected newvector conductor of Book 81. For a
 one-dimensional representation $\mu\circ\det$, whose literal fixed-vector minimum is
 not the appropriate definition, it means the parameter conductor: it is $0$ for
 unramified $\mu$ and $2a_K(\mu)$ for ramified $\mu$.
@@ -738,7 +738,7 @@ $\chi_1/\chi_2=\nu_K^{\pm1}$ the two possibilities with the same semisimple Weil
 representation are $N=0$ and $N\ne0$; the spherical character constituent has
 $N=0$, while the generic special constituent has $N\ne0$. Determinants, twists, and
 duals are then visible in the displayed formulas, and the conductor and $L$-factor
-computations agree with the newvector and zeta-integral normalizations of Book 77.
+computations agree with the newvector normalization of Book 81 and the zeta-integral normalizations of Books 78 and 79.
 For an induced quadratic parameter, the permutation sign gives the correct central
 character and the conductor--discriminant formula gives the correct conductor.
 
@@ -2155,7 +2155,7 @@ exceptional larger fibers belong to the split semisimple row.
 
 For this chapter assume in addition that $K$ has characteristic zero, and let $D$ be
 the quaternion division algebra over $K$. This is exactly the field hypothesis under
-which Book 84 proves local Jacquet--Langlands in the selected range: special twists
+which Book 85 proves local Jacquet--Langlands in the selected range: special twists
 and tame dihedral packets. If
 $\rho$ is a selected representation of $D^\times$ and
 
@@ -2274,7 +2274,7 @@ More explicitly, the upper route first identifies $\rho$ and $\pi$ through equal
 of their elliptic parameter. The right vertical route restricts it. The left vertical
 route is defined by that same restriction and the lower Jacquet--Langlands inverse.
 The two outputs therefore have identical parameters, and injectivity of the local
-dictionary makes them isomorphic. The conclusion is exactly as broad as Book 84: it
+dictionary makes them isomorphic. The conclusion is exactly as broad as Book 85: it
 covers special and selected tame-dihedral division representations, not primitive
 wild packets.
 

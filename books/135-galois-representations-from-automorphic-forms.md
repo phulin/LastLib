@@ -647,7 +647,7 @@ $$
 
 with the same good polynomial $X^2-t_vX+q_v$.
 
-Call a finite place $w$ **eligible** if $\pi_w$ is selected special or selected depth-zero or tame positive-depth dihedral in the exact range of Books 84, 94, and 112. To apply Theorem 8.1, choose an odd nonempty finite set $W$ of eligible places and let $B/F$ be ramified at every real place except $\tau_0$ and exactly at $W$.
+Call a finite place $w$ **eligible** if $\pi_w$ is selected special or selected depth-zero or tame positive-depth dihedral in the exact range of Books 85, 94, and 112. To apply Theorem 8.1, choose an odd nonempty finite set $W$ of eligible places and let $B/F$ be ramified at every real place except $\tau_0$ and exactly at $W$.
 
 Ramification parity requires $|W|$ to be odd because $B$ is ramified at $[F:\mathbf Q]-1$ real places. Book 94, Theorem 9.2 then constructs, unconditionally and uniquely, the noncharacter packet
 

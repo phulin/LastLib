@@ -1352,7 +1352,7 @@ quaternion division algebra, even one split at a real place: Book 93 uses anisot
 compactness and its two ramified transfer places, not the totally-definite hypothesis of the
 packaged theorem in Book 94.  Its Bessel inequality and strong determination show that a
 surviving quaternionic block has one unique split cuspidal completion.  At selected division
-places Books 84, 111, and 112 identify the local component and the two local signs; the global
+places Books 85, 111, and 112 identify the local component and the two local signs; the global
 number of ramified places is even, so their product is $+1$.
 
 The word ``then'' denotes an order of proof, not a later alteration of an already matched
@@ -1368,7 +1368,7 @@ simultaneously.  Thus the Book 93 interpolation cannot reopen a geometric row ca
 We record the finite character calculation which connects this completed inner-form spectrum
 to (6.4). Let $V_S=(\mathbb F_2)^{S_0}$ and let
 $\mathcal A_S=\mathbf1^\perp\subset V_S$ be the even-parity Brauer patterns. On a selected
-noncharacter block, the local elliptic character identity of Books 84--85 and 112 says that
+noncharacter block, the local elliptic character identity of Books 85 and 112 says that
 changing the local inner-form coordinate $\epsilon_v$ multiplies its elliptic extension
 coordinate $x_v$ by $(-1)^{\epsilon_vx_v}$. If the block has no division member at $v$, its
 $\epsilon_v=1$ coefficient is zero; that is the vanishing of a principal-series character on

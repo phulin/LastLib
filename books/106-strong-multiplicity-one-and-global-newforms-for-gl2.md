@@ -149,7 +149,7 @@ L^2_{\mathrm{cusp},\omega}
 =L^2_{\mathrm{cusp}}\bigl(Z(\mathbf A)G(F)\backslash G(\mathbf A),\omega\bigr).
 $$
 
-Book 102 proves that it is a discrete Hilbert sum with finite multiplicities. Book 104 proves restricted tensor factorization, local genericity of every finite component of a cuspidal representation, global Whittaker uniqueness, and automorphic multiplicity one. Book 105 proves the exact Rankin--Selberg pole criterion used for strong multiplicity one. Book 77 supplies the Kirillov-model input and proves the $K_1$ theorem in the principal-series, special, depth-zero, and tame-dihedral cases. Its stated theorem does not cover primitive wild supercuspidals. Section 5.3 therefore proves the generic $K_1$ theorem in the generality needed here instead of silently enlarging Book 77's interface.
+Book 102 proves that it is a discrete Hilbert sum with finite multiplicities. Book 104 proves restricted tensor factorization, local genericity of every finite component of a cuspidal representation, global Whittaker uniqueness, and automorphic multiplicity one. Book 105 proves the exact Rankin--Selberg pole criterion used for strong multiplicity one. Book 78 supplies the general Kirillov-model input, while Book 81 proves the $K_1$ theorem for the selected principal, special, depth-zero, and tame-dihedral range from the split calculations of Books 78 and 79. That selected theorem does not cover primitive wild supercuspidals. Section 5.3 therefore proves the generic $K_1$ theorem in the generality needed here instead of silently enlarging those interfaces.
 
 ### 1.3 The three multiplicity statements
 
@@ -681,7 +681,7 @@ E_n/E_{n-1}\hookrightarrow
 \mathcal B_{-n}/\mathcal B_{-n+1}.
 $$
 
-The one-dimensional shell quotient therefore gives $\dim E_n-\dim E_{n-1}\leq1$. The universal Kirillov-model theorem proved in Book 77 says that $C_c^\infty(K^\times)$ lies in $\mathcal K(\sigma,\psi_K)$ and that the quotient is the finite-dimensional asymptotic space controlled by the Jacquet module. In particular the characteristic function of one integral unit shell is available. It is $\mathcal O^\times$-invariant, has the required upper support, and its Weyl transform is bounded below in valuation. For sufficiently large $n$, also with $n\geq a(\omega_\sigma)$, the two bounds and the subgroup factorization above show that this vector belongs to $E_n$. Hence some $E_n$ is nonzero.
+The one-dimensional shell quotient therefore gives $\dim E_n-\dim E_{n-1}\leq1$. The universal Kirillov-model theorem proved in Book 78 says that $C_c^\infty(K^\times)$ lies in $\mathcal K(\sigma,\psi_K)$ and that the quotient is the finite-dimensional asymptotic space controlled by the Jacquet module. In particular the characteristic function of one integral unit shell is available. It is $\mathcal O^\times$-invariant, has the required upper support, and its Weyl transform is bounded below in valuation. For sufficiently large $n$, also with $n\geq a(\omega_\sigma)$, the two bounds and the subgroup factorization above show that this vector belongs to $E_n$. Hence some $E_n$ is nonzero.
 
 Let $a$ be the first such $n$. The one-step bound makes $E_a$ one dimensional. Choose $0\ne v^{\mathrm{new}}\in E_a$. A direct conjugation gives
 
@@ -754,7 +754,7 @@ The value at $m=0$ is one, checking compatibility between spherical and newvecto
 
 The abstract definition (5.2) becomes calculable through the local classification.
 
-**Proposition 5.3 (conductor formulas).** The following formulas, proved for these selected classes in Book 77, hold.
+**Proposition 5.3 (conductor formulas).** The following selected formulas are proved in Book 81, Propositions 9.1--9.2, from the principal-special calculations of Book 78 and the dihedral calculations of Book 79.
 
 1. For an irreducible principal series $I(\chi_1,\chi_2)$,
 
@@ -783,7 +783,7 @@ The abstract definition (5.2) becomes calculable through the local classificatio
 
    where $\Delta(L/K)$ is the discriminant exponent and $f(L/K)$ the residue degree.
 
-**Proof.** We recall the calculations from Book 77. For the principal series, the double cosets
+**Proof.** We recall the calculations consolidated in Book 81. For the principal series, the double cosets
 
 $$
 (B\cap K_0)\backslash K_0/K_1(\mathfrak p^n)

@@ -110,7 +110,7 @@ Thus a division uniformizer $\Pi$ has $v_D(\Pi)=1$, whereas a scalar $z$ has $v_
 
 All test functions are complex valued. At a nonarchimedean place they are locally constant and compactly supported; at an archimedean place they are smooth and compactly supported unless a rapidly decreasing matrix coefficient is explicitly used. Conjugation is $x^{-1}\gamma x$. Haar measures are left Haar measures. Both $G$ and $D^\times$ are unimodular, so no modular character appears when passing between left and right quotients.
 
-We use results about smooth representations, $\mathrm{GL}_2(F)$, Weil--Deligne parameters, quaternionic representations, and real discrete series established in Books 77, 80, 82, and 99. We recall every convention that affects a formula. We do not assume a local transfer theorem in proving the orbital calculations.
+We use results about smooth representations, $\mathrm{GL}_2(F)$, Weil--Deligne parameters, quaternionic representations, and real discrete series established in Books 78, 79, 80, 82, and 99. We recall every convention that affects a formula. We do not assume a local transfer theorem in proving the orbital calculations.
 
 ### 1.3 The normalization ledger
 
@@ -1064,7 +1064,7 @@ on the corresponding regular torus shell. Here too $c_D(t)$ is the trace of the 
 
 ### 9.5 The selected regular character identity
 
-**Theorem 9.1.** For the special pairs and for the depth-zero or tame quadratic-dihedral pairs constructed in the selected range of Books 77 and 82, matching regular elements satisfy
+**Theorem 9.1.** For the special pairs and for the depth-zero or tame quadratic-dihedral pairs constructed in the selected range of Books 79 and 82 and compared in Book 85, matching regular elements satisfy
 
 $$
 \boxed{\Theta_{\pi}(\gamma)=-\Theta_{\rho}(\delta).}
@@ -1073,11 +1073,11 @@ $$
 
 Moreover the split regular character of $\pi$ has no quaternionic partner.
 
-**Proof strategy.** The special row follows from an exact sequence. For the dihedral row, use the paired tame-type trace calculation already proved in Book 77 after checking that its rectifier, additive character, valuation, and pointwise-character conventions agree with the inducing data of Book 82 and the self-dual measures of Book 80. We recall the terminal finite calculation to make the sign visible, but do not replace the earlier full compact-induction proof by a two-coset approximation near the center.
+**Proof strategy.** The special row follows from an exact sequence. For the dihedral row, use the paired tame-type trace calculation proved in Book 85 after checking that its rectifier, additive character, valuation, and pointwise-character conventions agree with the inducing data of Book 82 and the self-dual measures of Book 80. We recall the terminal finite calculation to make the sign visible, but do not replace the earlier full compact-induction proof by a two-coset approximation near the center.
 
 **Proof.** If $\pi=\operatorname{St}\otimes\mu$ and $\rho=\mu\circ\operatorname{Nrd}$, equations (9.4) and (9.7), together with $\det\gamma=\operatorname{Nrd}\delta$, prove the identity.
 
-For a quadratic-dihedral pair, the rectified torus character used on the two sides is the same one. Matching identifies the two copies of $E$, the values at $t$ and $t^\sigma$, the trace-dual congruence lattices, and the Heisenberg commutator pairings. Book 77 proves that every nonterminal compact-induction contribution cancels in paired finite Fourier fibers, including the extra fibers that occur when the element is close to the center. The terminal transverse plane is hyperbolic for $M_2(F)$ and anisotropic for $D$. Its normalized Fourier sums have ratio $-1$, as (9.10)--(9.11) below verify. Thus the scalar traces satisfy $c_G(t)=-c_D(t)$ and (9.9) follows. This use is genuine prior-library mathematics: Book 80 supplies only the trace-character and self-dual-measure normalization, while Book 82 supplies the division type and its finite character formula; neither is being silently promoted into the comparison theorem. $\square$
+For a quadratic-dihedral pair, the rectified torus character used on the two sides is the same one. Matching identifies the two copies of $E$, the values at $t$ and $t^\sigma$, the trace-dual congruence lattices, and the Heisenberg commutator pairings. Book 85 proves that every nonterminal compact-induction contribution cancels in paired finite Fourier fibers, including the extra fibers that occur when the element is close to the center. The terminal transverse plane is hyperbolic for $M_2(F)$ and anisotropic for $D$. Its normalized Fourier sums have ratio $-1$, as (9.10)--(9.11) below verify. Thus the scalar traces satisfy $c_G(t)=-c_D(t)$ and (9.9) follows. This use is genuine prior-library mathematics: Book 80 supplies only the trace-character and self-dual-measure normalization, while Book 82 supplies the division type and its finite character formula; neither is being silently promoted into the comparison theorem. $\square$
 
 Here is the finite calculation behind the sign. On a residue quotient of odd characteristic, the split transverse plane has hyperbolic quadratic form $Q_s(x,y)=xy$, whereas the anisotropic transverse plane has a norm form $Q_a(u)=N_{k_{q^2}/k}(u)$ multiplied by a nonsquare scalar. For a nontrivial additive character $\bar\psi$ of $k$,
 
