@@ -1,4 +1,4 @@
-# Galois Representations Attached to Weight-Two Automorphic Forms
+# Galois Representations Attached to Parallel-Weight-Two Automorphic Forms in the Curve-Realizable Range
 
 ## Contents
 
@@ -12,16 +12,14 @@
    - [Hecke data and the packet field](#22-hecke-data-and-the-packet-field)
    - [Central and component characters](#23-central-and-component-characters)
    - [Conjugates and splitting fields](#24-conjugates-and-splitting-fields)
-3. [The three geometric carriers](#3-the-three-geometric-carriers)
+3. [The curve-realizable carriers](#3-the-curve-realizable-carriers)
    - [Modular curves](#31-modular-curves)
    - [Quaternionic Shimura curves](#32-quaternionic-shimura-curves)
-   - [Compact unitary surfaces](#33-compact-unitary-surfaces)
-   - [A common realization datum](#34-a-common-realization-datum)
+   - [A curve realization datum](#33-a-curve-realization-datum)
 4. [Extracting rank two](#4-extracting-rank-two)
    - [Commuting actions](#41-commuting-actions)
    - [Why an eigenspace is not enough](#42-why-an-eigenspace-is-not-enough)
    - [The curve multiplicity space](#43-the-curve-multiplicity-space)
-   - [The surface-cancellation boundary](#44-the-surface-cancellation-boundary)
 5. [Continuity, semisimplification, and uniqueness](#5-continuity-semisimplification-and-uniqueness)
    - [Continuity from cohomology](#51-continuity-from-cohomology)
    - [The canonical semisimple representation](#52-the-canonical-semisimple-representation)
@@ -57,26 +55,21 @@
     - [All open ideals](#112-all-open-ideals)
     - [Transition maps and ranks](#113-transition-maps-and-ranks)
     - [Duality and base change](#114-duality-and-base-change)
-12. [The surface case in full](#12-the-surface-case-in-full)
-    - [The honest degree-two block](#121-the-honest-degree-two-block)
-    - [Global rational cancellation](#122-global-rational-cancellation)
-    - [Local and integral cancellation](#123-local-and-integral-cancellation)
-    - [Four independent boundaries](#124-four-independent-boundaries)
-13. [Examples and counterexamples](#13-examples-and-counterexamples)
-    - [An elliptic curve packet](#131-an-elliptic-curve-packet)
-    - [An old packet](#132-an-old-packet)
-    - [A scalar Frobenius](#133-a-scalar-frobenius)
-    - [A residual extension and a surface block](#134-a-residual-extension-and-a-surface-block)
-14. [The attachment theorem](#14-the-attachment-theorem)
-    - [Statement](#141-statement)
-    - [Proof](#142-proof)
-    - [The range used in the Fermat argument](#143-the-range-used-in-the-fermat-argument)
-15. [Hypothesis and dependency audit](#15-hypothesis-and-dependency-audit)
-    - [Exact hypothesis ledger](#151-exact-hypothesis-ledger)
-    - [Use of the six direct prerequisites](#152-use-of-the-six-direct-prerequisites)
-    - [What the theorem does not say](#153-what-the-theorem-does-not-say)
-16. [Conclusion](#16-conclusion)
-   - [The completed arithmetic package](#161-the-completed-arithmetic-package)
+12. [Examples and counterexamples](#12-examples-and-counterexamples)
+    - [An elliptic curve packet](#121-an-elliptic-curve-packet)
+    - [An old packet](#122-an-old-packet)
+    - [A scalar Frobenius](#123-a-scalar-frobenius)
+    - [A residual extension](#124-a-residual-extension)
+13. [The attachment theorem](#13-the-attachment-theorem)
+    - [Statement](#131-statement)
+    - [Proof](#132-proof)
+    - [The range used in the Fermat argument](#133-the-range-used-in-the-fermat-argument)
+14. [Hypothesis and dependency audit](#14-hypothesis-and-dependency-audit)
+    - [Exact hypothesis ledger](#141-exact-hypothesis-ledger)
+    - [Use of the five direct prerequisites](#142-use-of-the-five-direct-prerequisites)
+    - [What the theorem does not say](#143-what-the-theorem-does-not-say)
+15. [Conclusion](#15-conclusion)
+    - [The completed arithmetic package](#151-the-completed-arithmetic-package)
 
 ## 1. The reciprocity question
 
@@ -92,19 +85,19 @@ where $q_v$ is the residue cardinality. A two-dimensional Galois representation 
 
 The question has three logically separate parts. One must first construct a two-dimensional space on which Galois acts. One must then identify the trace and determinant of Frobenius. Finally, one must show that the constructions made at different coefficient primes are realizations of a single algebraic system, with the predicted behavior at bad places and with integral models at the coefficient prime.
 
-Almost-everywhere Hecke values give rigidity, but not existence. Geometry gives existence. Curves and surfaces carry continuous cohomological Galois actions, and algebraic Hecke correspondences commute with them. Automorphic decomposition identifies the desired packet inside cohomology. The central difficulty is to remove automorphic multiplicity without discarding Galois information. On curves the relevant multiplicity space has rank two. On the auxiliary surface it has rank two only after an entire descended auxiliary factor has been cancelled.
+Almost-everywhere Hecke values give rigidity, but not existence. Curve geometry gives existence. Modular and quaternionic Shimura curves carry continuous cohomological Galois actions, and algebraic Hecke correspondences commute with them. Automorphic decomposition identifies the desired packet inside $H^1$. The central difficulty is to remove automorphic multiplicity without discarding Galois information; the curve multiplicity space has rank two.
 
-This book carries out the whole passage. Its endpoint is not merely one representation at one prime. It is a pure compatible rank-two system, with its determinant, oddness, local Weil--Deligne parameters in the verified geometric range, canonical cohomological lattices under explicit integral hypotheses, and finite-flat models for every required coefficient quotient.
+This book carries out the whole passage in the curve-realizable range. Its endpoint is not merely one representation at one prime. Under the respective determinant, local, and integral hypotheses, it is a pure compatible rank-two system with determinant, oddness, local Weil--Deligne parameters in the verified geometric range, canonical cohomological lattices, and finite-flat models for every required coefficient quotient.
 
 ### 1.2 The range of the theorem
 
-Let $F$ be totally real. The automorphic input is a noncharacter cuspidal packet $Pi$ of parallel weight two in one of the geometric ranges already established:
+Let $F$ be totally real. The automorphic input is a noncharacter cuspidal packet $\Pi$ of parallel weight two in one of the established curve-realizable ranges:
 
-1. a cuspidal weight-two eigensystem in the parabolic first cohomology of a compactified modular curve;
+1. when $F=\mathbf Q$, a cuspidal weight-two eigensystem in the parabolic first cohomology of a compactified modular curve;
 2. a noncharacter parallel-weight-two packet on a quaternion algebra split at exactly one real place, occurring in the first cohomology of a compact Shimura curve;
-3. a corresponding packet in the middle cohomology of a compact unitary surface, provided the global, local, and integral cancellation data stated below are present whenever a rank-two conclusion is claimed.
+3. a selected packet on a totally definite quaternion algebra only when the established global transfer, including every ramified local-image condition, carries it to a split packet already realized by one of the preceding curve constructions.
 
-The split and quaternionic descriptions are related only in the established global transfer range. At a place where the quaternion algebra is ramified, the split local representation must belong to the discrete-series packet required by transfer. Equality of spherical eigenvalues elsewhere does not repair a failure of this local hypothesis.
+The third clause is the totally-definite transfer range used in the FLT route. Equality of spherical eigenvalues away from finitely many places is not a substitute for global transfer, and a local component outside the discrete-series image blocks the transfer claim.
 
 Parallel weight two is essential here. Constant-coefficient $H^1$ of a curve has Hodge types $(1,0)$ and $(0,1)$ and motivic weight one. Higher algebraic weights require nonconstant coefficient systems and different integral comparison statements. They are outside the theorem. Character packets are also excluded: on a compact quaternionic quotient, norm characters can have familiar-looking Hecke eigenvalues but do not produce the desired cuspidal rank-two factor.
 
@@ -118,13 +111,13 @@ $$
 \Phi_u\in W_{F_u}
 $$
 
-for geometric Frobenius. Thus $Phi_u$ acts on the Tate twist $E_\lambda(1)$ by $q_u^{-1}$. The associated cyclotomic character satisfies
+for geometric Frobenius. Thus $\Phi_u$ acts on the Tate twist $E_\lambda(1)$ by $q_u^{-1}$. The associated cyclotomic character satisfies
 
 $$
 \chi_\lambda(\Phi_u)=q_u^{-1}.
 $$
 
-This is the convention used in the cohomological extraction and local comparison theorems. At a good place, the characteristic polynomial is
+This is the convention used in the cohomological extraction and local comparison theorems. Under the curve determinant datum, the good-place characteristic polynomial is
 
 $$
 \det(X-\rho_{\Pi,\lambda}(\Phi_u))
@@ -140,15 +133,15 @@ T_\lambda J\otimes E_\lambda
 \simeq H^1(C_{\overline F},E_\lambda(1)).
 $$
 
-Passing between these realizations changes both Frobenius and the Tate twist. Arithmetic Frobenius is $Phi_u^{-1}$; its roots are the reciprocals of the roots in (1.1). One must not carry the same polynomial unchanged through this conversion.
+Passing between these realizations changes both Frobenius and the Tate twist. Arithmetic Frobenius is $\Phi_u^{-1}$; its roots are the reciprocals of the roots in (1.1). One must not carry the same polynomial unchanged through this conversion.
 
 ### 1.4 The proof architecture
 
 The construction has a fixed order.
 
-First, isolate the full rational Hecke block and split its finite simple algebra. Second, remove its level multiplicity by a Hom construction, obtaining rank two. Third, use duality to determine the determinant, and only then upgrade the good-place quadratic annihilator to a characteristic polynomial. Fourth, run the construction over every coefficient completion and compare the resulting local parameters. Fifth, return to integral cohomology: saturate the packet block, perform integral multiplicity extraction, and construct all finite-flat coefficient quotients inside a fixed geometric or filtered carrier.
+First, isolate the full rational Hecke block and split its finite simple algebra. Second, remove its level multiplicity by a Hom construction, obtaining rank two. Third, when the curve determinant datum is available, use duality to determine the determinant, and only then upgrade the good-place quadratic annihilator to a characteristic polynomial in the scalar case. Fourth, run the construction over every coefficient completion and compare the resulting local parameters. Fifth, return to integral cohomology: saturate the packet block, perform integral multiplicity extraction, and construct all finite-flat coefficient quotients inside a fixed geometric or filtered carrier.
 
-The order prevents four common circularities. Dimension is not inferred from the degree of an annihilating polynomial. The determinant is not inferred from the same quadratic relation used to identify the trace. An integral summand is not inferred from a rational projector. A rank-two surface factor is not inferred by halving a four-dimensional Hodge structure.
+The order prevents four common circularities. Dimension is not inferred from the degree of an annihilating polynomial. The determinant is not inferred from the same quadratic relation used to identify the trace. An integral summand is not inferred from a rational projector. A two-dimensional Galois factor is not obtained by choosing one oldvector or one Hodge line.
 
 ## 2. Weight-two packets and their coefficient fields
 
@@ -156,7 +149,7 @@ The order prevents four common circularities. Dimension is not inferred from the
 
 At every real place of $F$, a parallel-weight-two cuspidal representation has the minimal cohomological discrete-series type. On a quaternionic group split at exactly one real place, that active factor contributes one holomorphic and one antiholomorphic cohomology line. Compact real factors contribute no further cohomological degree. Consequently the automorphic multiplicity space in curve $H^1$ has dimension two.
 
-This dimension is independent of the number of oldvectors. If $Pi_f^K$ has dimension $r$, the complete packet block has dimension $2r$, but it factors as
+This dimension is independent of the number of oldvectors. If $\Pi_f^K$ has dimension $r$, the complete packet block has dimension $2r$, but it factors as
 
 $$
 P_{\Pi,\lambda}\otimes W_{\Pi,\lambda},
@@ -178,7 +171,7 @@ In weight two it agrees with the cuspidal part of $H^1(X)$. This removes the bou
 
 ### 2.2 Hecke data and the packet field
 
-Choose a finite set $S$ containing the ramified group, level, central-character, component, and bad-model places. The abstract spherical Hecke algebra away from $S$ acts through a character on $Pi$. At an unramified place, we use the raw cohomological normalization
+Choose a finite set $S$ containing the ramified group, level, central-character, component, and bad-model places. The abstract spherical Hecke algebra away from $S$ acts through a character on $\Pi$. At an unramified place, we use the raw cohomological normalization
 
 $$
 P_v(X)=X^2-t_vX+q_vs_v. \tag{2.2}
@@ -198,13 +191,13 @@ $$
 \eta_\Pi:G_F\longrightarrow E_0^\times.
 $$
 
-After embedding $E_0$ in $E_\lambda$, its local realization is denoted $\eta_{\Pi,\lambda}$. In the cohomological geometric-Frobenius convention, the determinant will be
+After embedding $E_0$ in $E_\lambda$, its local realization is denoted $\eta_{\Pi,\lambda}$. Under the curve determinant datum, the cohomological geometric-Frobenius convention gives
 
 $$
 \det\rho_{\Pi,\lambda}=\chi_\lambda^{-1}\eta_{\Pi,\lambda}. \tag{2.3}
 $$
 
-At a good place, therefore,
+At a good place, under the same datum,
 
 $$
 q_us_v=\chi_\lambda(\Phi_u)^{-1}\eta_{\Pi,\lambda}(\Phi_u).
@@ -220,17 +213,17 @@ $$
 E/E_0
 $$
 
-which splits every simple packet factor under consideration and contains the local type and cancellation data. For a finite place $\lambda$ of $E$, write $E_\lambda$ for the completion and $\mathcal O_\lambda$ for its valuation ring.
+which splits every simple packet factor under consideration and contains the local type data. For a finite place $\lambda$ of $E$, write $E_\lambda$ for the completion and $\mathcal O_\lambda$ for its valuation ring.
 
 Every embedding $\iota:E\hookrightarrow\mathbf C$ produces a coefficient-conjugate packet. Its good polynomial is obtained by applying $\iota$ to (2.2), and the geometric decomposition contains this conjugate block. Thus changing a coefficient embedding changes all of $t_v$, $s_v$, $\eta_\Pi$, and the bad local data together.
 
 The extension $E/E_0$ is a field of realization, not an assertion that $E_0$ was inadequate as a trace field. The semisimple system is determined over its trace field up to the usual descent obstruction. Enlarging $E$ does not change the underlying compatible system; it makes its multiplicity modules honest vector spaces and its local types simultaneously visible.
 
-## 3. The three geometric carriers
+## 3. The curve-realizable carriers
 
 ### 3.1 Modular curves
 
-Let $X/F$ be a compactified modular curve with sufficiently fine level and let $J$ be its Jacobian. Algebraic Hecke correspondences extend across the cusps, act on $J$, and commute with Galois. The weight-two cuspidal packet lies in parabolic $H^1$ and therefore in the Jacobian realization.
+Let $X/\mathbf Q$ be a compactified modular curve with sufficiently fine level and let $J$ be its Jacobian. Algebraic Hecke correspondences extend across the cusps, act on $J$, and commute with Galois. The weight-two cuspidal packet lies in parabolic $H^1$ and therefore in the Jacobian realization. In the theorem below this is the $F=\mathbf Q$ branch; base change of the curve alone is not asserted to realize an arbitrary packet over a larger totally real field.
 
 The boundary must be removed before extraction. Ordinary cohomology of the open modular curve contains classes whose Hecke polynomials factor as characters. On the compactification, the cuspidal part is self-dual and carries the weight-one pairing. This is the correct receptacle for a cuspidal rank-two representation.
 
@@ -238,7 +231,7 @@ At a fine level, the correspondence legs are finite and the component action is 
 
 The modular carrier is especially useful at the coefficient prime. A quotient of $J$ with good reduction can extend to an abelian scheme, whose torsion supplies finite-flat models. Yet an isogeny factor cut out only by a rational idempotent need not extend integrally. The integral theorem therefore names the coefficient action and the unit-degree comparison as hypotheses.
 
-**Proposition 3.1 (modular-curve realization).** Let $X$ be a compactified modular curve over a totally real field of definition, with sufficiently fine level, and let $\Pi$ be a cuspidal weight-two packet whose finite new line or specified type occurs in its parabolic cohomology. After the finite Hecke block is split, the $\Pi$-block factors as a finite automorphic module tensored with a continuous two-dimensional Galois module. Its Hodge types are $(1,0)$ and $(0,1)$, and its integral packet lattice is the saturated intersection with integral parabolic cohomology.
+**Proposition 3.1 (modular-curve realization).** Let $X/\mathbf Q$ be a compactified modular curve with sufficiently fine level, and let $\Pi$ be a cuspidal weight-two packet whose finite new line or specified type occurs in its parabolic cohomology. After the finite Hecke block is split, the $\Pi$-block factors as a finite automorphic module tensored with a continuous two-dimensional Galois module. Its Hodge types are $(1,0)$ and $(0,1)$, and its integral packet lattice is the saturated intersection with integral parabolic cohomology.
 
 **Proof.** Over $\mathbf C$, harmonic representatives identify parabolic cohomology with the cuspidal discrete spectrum. The weight-two archimedean representation contributes one holomorphic differential and its antiholomorphic conjugate, hence two cohomological dimensions. Global multiplicity one gives one automorphic occurrence. Any dimension contributed by level raising remains in the finite fixed-vector module, so the complete block has the tensor shape (2.1).
 
@@ -256,43 +249,20 @@ Transfer to or from the split group is used only when every ramified local compo
 
 The natural integral $H^1$ lattice is finite free and stable under Galois and Hecke. Its intersection with a rational packet block is saturated. This gives a canonical packet lattice relative to the chosen curve, but not yet a canonical rank-two Morita factor.
 
-### 3.3 Compact unitary surfaces
+### 3.3 A curve realization datum
 
-The auxiliary compact unitary surface has two active real directions. Its noncharacter parallel-weight-two packet lies in $H^2$, generally with four Hodge lines and motivic weight two. The full packet block is an honest Galois representation and must be respected as such.
-
-A rank-two system emerges only if there is a descended split algebra $B_\Pi\simeq M_2(E)$ acting through algebraic correspondences and a two-dimensional simple module $R_\Pi$ such that
-
-$$
-V^{\mathrm{surf}}_{\Pi,\lambda}
-\simeq R_{\Pi,\lambda}\otimes W^{\mathrm{surf}}_{\Pi,\lambda}. \tag{3.1}
-$$
-
-Then
-
-$$
-W^{\mathrm{surf}}_{\Pi,\lambda}
-=\operatorname{Hom}_{B_{\Pi,\lambda}}
-(R_{\Pi,\lambda},V^{\mathrm{surf}}_{\Pi,\lambda})
-$$
-
-is two-dimensional. The algebra action, its descent, and the evaluation isomorphism are the **global cancellation datum**. Choosing two Hodge lines, dividing the dimension by two, or inserting a half Tate twist does not supply it.
-
-At a bad place, global cancellation is insufficient. The nearby-cycle complex must factor compatibly, so that the Hom construction subtracts the auxiliary monodromy. At the coefficient prime, a rational split algebra is again insufficient: a split integral order, projective generator, integral evaluation, pairing, and finite-flat carrier are needed.
-
-### 3.4 A common realization datum
-
-It is useful to package the hypotheses shared by all three carriers.
-
-A **weight-two realization datum** for $\Pi$ consists of a smooth projective curve with its cuspidal packet block, or a compact surface with global cancellation, together with:
+A **curve realization datum** for $\Pi$ consists of a modular or quaternionic curve with its cuspidal packet block, together with:
 
 - a Galois- and Hecke-stable component union defined over the field on which the representation is claimed;
 - the full finite adjoint-stable Hecke image and a splitting field;
 - a simple finite Hecke module and an evaluation isomorphism producing a rank-two multiplicity space;
 - the adjoint packet and the central-component character $\eta_\Pi$;
-- good integral models and normalized correspondences at the places where (1.1) is claimed;
-- the verified semistable, finite-descent, or dihedral geometric packages at bad places where full local comparison is claimed.
+- for determinant and scalar-Frobenius conclusions, the curve determinant datum of Book 134: the descended component twist with its Galois covariance and a polarization-compatible symmetric pairing on the finite Hecke module;
+- good integral models and normalized correspondences at the places where the good polynomial is claimed;
+- the verified semistable, finite-descent, or dihedral geometric packages at bad places where full local comparison is claimed, including the passage from the raw cohomological multiplicity space to the chosen global semisimplification.
 
-An **integral weight-two realization datum** adds a finite-free ambient lattice, split integral Hecke order, projective integral generator, integral evaluation and pairing, coefficient-prime carrier, and unit-degree comparison maps. These additions solve independent problems; none follows formally from the rational datum.
+An **integral curve realization datum** adds a finite-free ambient lattice, split integral Hecke order, projective integral generator, integral evaluation and pairing, coefficient-prime carrier, and unit-degree comparison maps. These additions solve independent problems; none follows formally from the rational datum.
+
 
 ## 4. Extracting rank two
 
@@ -328,15 +298,7 @@ At characteristic zero, a semisimple finite Hecke algebra decomposes into blocks
 
 Old level causes a different enlargement. If a newform is viewed one unramified level higher, two degeneracy vectors have the same Hecke values away from the new place. The total eigenspace is four-dimensional, even though the associated Galois representation remains two-dimensional. A local new quotient, a type operator, or the full finite simple Hecke module is required to remove this multiplicity.
 
-Thus three objects must remain distinct:
-
-$$
-\text{ordinary eigenspace}
-\subseteq
-\text{generalized eigenspace}
-\subseteq
-\text{localized congruence block}.
-$$
+Thus three constructions must remain distinct: the ordinary characteristic-zero eigenspace, the generalized eigenspace, and the localized integral congruence block. After scalar extension they can be compared inside one ambient cohomology space, but the integral localization is not literally another characteristic-zero eigenspace.
 
 The rational attachment uses the complete simple block and its multiplicity space. The canonical integral construction begins with the saturated block, not an ordinary eigenline.
 
@@ -387,31 +349,6 @@ $$
 
 using (4.1). Hence (4.2) remains in the Hom space. Its defining equations are closed, so the inherited action is continuous. Finally, evaluation is Galois equivariant because $g(f(p))=(g\cdot f)(p)$. $\square$
 
-### 4.4 The surface-cancellation boundary
-
-For a surface block $V$ with a descended cancellation algebra $B$ and simple module $R$, the same proof gives
-
-$$
-W=\operatorname{Hom}_B(R,V),
-\qquad R\otimes W\overset\sim\longrightarrow V. \tag{4.6}
-$$
-
-If $\dim R=2$ and $\dim V=4$, then $\dim W=2$. But the dimension calculation is a consequence of the algebra action and evaluation isomorphism, not a replacement for them.
-
-The Galois action on $B$ may be nontrivial. If the descent datum acts on $R$, the correct formula is
-
-$$
-(g\cdot f)(r)=g\bigl(f(g^{-1}r)\bigr). \tag{4.7}
-$$
-
-Omitting the action on $R$ gives a non-equivariant Hom construction. Likewise, at a bad place the monodromy on $W$ is obtained by differentiating (4.7); schematically,
-
-$$
-N_W(f)=N_V\circ f-f\circ N_R. \tag{4.8}
-$$
-
-This subtraction is the local cancellation datum. It explains how a surface block with $N^3=0$ can yield a rank-two factor with $N_W^2=0$.
-
 ## 5. Continuity, semisimplification, and uniqueness
 
 ### 5.1 Continuity from cohomology
@@ -433,9 +370,9 @@ $$
 
 to be this continuous semisimple representation, after coefficient extension if required by the splitting field.
 
-Semisimplification does not mean that Frobenius is diagonalizable at every place. A semisimple representation of the global group may contain an element acting by a nontrivial unipotent matrix. At a Steinberg place, the associated Weil--Deligne monodromy is deliberately nonzero.
+Semisimplification does not mean that every group element is diagonalizable. A semisimple representation of the global group may restrict nonsemisimply to a decomposition group, and at a Steinberg place its Weil--Deligne monodromy is deliberately nonzero.
 
-Nor does semisimplification erase the local Weil--Deligne operator. It removes global invariant subrepresentation extensions; the local monodromy operator is extracted from quasi-unipotent inertia and remains part of the local parameter.
+On the other hand, passage from the raw global multiplicity space to its global semisimplification can erase monodromy when that monodromy is carried by a globally nonsplit extension. Local comparison is therefore first computed on the raw cohomological Hom space. A statement for $\rho_{\Pi,\lambda}$ retains the additional verification that the identified local parameter survives global semisimplification; global irreducibility is one sufficient case. This is distinct from Frobenius semisimplification of a Weil--Deligne pair, which retains $N$.
 
 ### 5.3 Chebotarev uniqueness
 
@@ -443,7 +380,7 @@ Nor does semisimplification erase the local Weil--Deligne operator. It removes g
 
 **Proof.** Frobenius conjugacy classes outside a finite set are dense. Equality of their traces extends by continuity to equality of trace on all of $G_F$. The characteristic of a finite-dimensional characteristic-zero representation determines its semisimplification. Since both representations are semisimple, they are isomorphic. $\square$
 
-This proposition compares a modular-curve carrier with a quaternionic carrier, or a curve carrier with a cancellable surface carrier, once their descent fields agree and their good polynomials agree on a dense set. It compares semisimple representations only. It does not compare integral lattices or nonsplit residual extensions.
+This proposition compares modular-curve and quaternionic-curve realizations once their descent fields agree and their good polynomials agree on a dense set. It compares semisimple representations only. It does not compare integral lattices or nonsplit residual extensions.
 
 ### 5.4 Irreducible and reducible cases
 
@@ -453,7 +390,7 @@ $$
 \rho_{\Pi,\lambda}=\alpha_\lambda\oplus\beta_\lambda,
 $$
 
-the good polynomials determine the unordered pair of characters and the determinant forces
+the good polynomials determine the unordered pair of characters and, under the curve determinant datum, the determinant forces
 
 $$
 \alpha_\lambda\beta_\lambda
@@ -470,16 +407,15 @@ A single Frobenius polynomial irreducible over the residue field proves irreduci
 
 ### 6.1 The complete good-place ledger
 
-Let $u\nmid\ell$ be a place of the geometric field, corresponding to an automorphic place $v$. We call $u$ **good for the realization datum** only when all of the following hold:
+Let $u\nmid\ell$ be a place of the geometric field, corresponding to an automorphic place $v$. We call $u$ **good for the curve realization datum** only when all of the following hold:
 
 - the group, order, polarization, and level are unramified and hyperspecial;
 - the selected component union extends and remains stable under Frobenius and Hecke;
-- the curve or surface has the required smooth projective integral model;
+- the curve has the required smooth projective integral model;
 - the two legs of the normalized Hecke correspondence extend as finite correspondences;
 - the coefficient lattice is self-dual in the sense used by the model;
-- the packet projector or cancellation action commutes with specialization;
+- the packet projector commutes with specialization;
 - the central and component characters are unramified;
-- in the surface case, the global cancellation algebra is accompanied by its good-place local factorization.
 
 Under these hypotheses smooth proper base change gives trivial inertia. The special-fiber correspondence gives an operator identity. Neither conclusion follows merely from the word “hyperspecial” attached to the abstract automorphic representation.
 
@@ -493,7 +429,7 @@ $$
 \rho(\Phi_u)^2-t_v\rho(\Phi_u)+q_us_v=0. \tag{6.1}
 $$
 
-This says that $P_v$ annihilates Frobenius. An annihilating polynomial need not be the characteristic polynomial when Frobenius is scalar. The determinant obtained independently from duality supplies the missing coefficient.
+This says that $P_v$ annihilates Frobenius. An annihilating polynomial need not be the characteristic polynomial when Frobenius is scalar. Under the curve determinant datum, the determinant obtained independently from duality supplies the missing coefficient.
 
 **Lemma 6.1.** Let $T$ be an invertible operator on a two-dimensional vector space. Suppose
 
@@ -505,11 +441,11 @@ and $\det T=d$. Then the characteristic polynomial of $T$ is $X^2-aX+d$.
 
 **Proof.** Write the characteristic polynomial as $X^2-cX+d$. Cayley--Hamilton gives $T^2-cT+d=0$. Subtracting the two relations yields $(c-a)T=0$. Since $T$ is invertible, $c=a$. $\square$
 
-Applying the lemma to (6.1) proves (1.1), including the repeated-root case. This order of proof is essential: the geometric relation alone does not identify the trace of a scalar Frobenius.
+Under that datum, applying the lemma to (6.1) proves (1.1), including the repeated-root case. This order of proof is essential: the geometric relation alone does not identify the trace of a scalar Frobenius. Without the datum, (6.1) is already the characteristic polynomial when Frobenius is nonscalar and remains only an annihilator in the scalar case.
 
 ### 6.3 The trace and determinant formulas
 
-At every good place with equal residue fields,
+Assume the curve determinant datum. At every good place with equal residue fields,
 
 $$
 \operatorname{tr}\rho_{\Pi,\lambda}(\Phi_u)=t_v,
@@ -517,7 +453,7 @@ $$
 \det\rho_{\Pi,\lambda}(\Phi_u)=q_us_v. \tag{6.2}
 $$
 
-These values lie in $E$ before completion at $\lambda$. They are preserved by coefficient conjugation and by change of geometric carrier. If $u/v$ has residue degree $f$ and the roots at $v$ are $\alpha_v,\beta_v$, then the polynomial at $u$ is
+These values lie in $E$ before completion at $\lambda$. They are preserved by coefficient conjugation and by change of curve carrier. If $u/v$ has residue degree $f$ and the roots at $v$ are $\alpha_v,\beta_v$, then the polynomial at $u$ is
 
 $$
 (X-\alpha_v^f)(X-\beta_v^f). \tag{6.3}
@@ -556,23 +492,21 @@ Three tests keep the convention stable. A Tate twist $(n)$ multiplies geometric-
 
 ### 7.1 The factored pairing
 
-Poincaré duality pairs the packet block with its adjoint packet. On a curve it has target $E_\lambda(-1)$ before the component character is inserted. Factoring the pairing through the simple finite Hecke module yields a perfect alternating pairing on the rank-two multiplicity space,
+Poincare duality pairs the curve packet block with its adjoint packet into $E_\lambda(-1)$. Factoring through the finite Hecke module therefore gives unconditionally a perfect pairing between the two multiplicity spaces. It does not by itself give an alternating self-pairing of $W_{\Pi,\lambda}$.
+
+For the determinant assertions, retain the curve determinant datum of Book 134. Its descended component twist identifies the adjoint multiplicity space with $W_{\Pi,\lambda}\otimes\eta_{\Pi,\lambda}^{-1}$, and its polarization-compatible symmetric form on the finite module leaves the alternating sign on the multiplicity factor. Only under this datum do we obtain
 
 $$
 \langle\ ,\ \rangle_\Pi:
 W_{\Pi,\lambda}\times W_{\Pi,\lambda}
-\longrightarrow E_\lambda(\chi_\lambda^{-1}\eta_{\Pi,\lambda}), \tag{7.1}
+\longrightarrow E_\lambda(-1)\otimes\eta_{\Pi,\lambda}. \tag{7.1}
 $$
 
-in the self-paired normalization. More generally it is first a perfect pairing between the packet and its adjoint; the central-component identification turns it into (7.1).
-
-The distinction matters. Hecke transpose sends a correspondence to its adjoint, so the paired Hecke character need not equal the original character. Forgetting the adjoint changes the component character and can invert the determinant.
-
-For a surface Hom factor, the ambient pairing has weight two. The cancellation module contributes one complete weight-one factor. Only a pairing-compatible cancellation datum leaves the curve-normalized target (7.1). A numerical four-to-two dimension reduction does not prove this twist statement.
+The symmetry clause matters at old level: the sign of a finite-module pairing cannot be inferred from its dimension. Likewise, equality of central eigenvalues does not replace the descended twisting correspondence and its Galois covariance.
 
 ### 7.2 The determinant character
 
-For a two-dimensional vector space, the multiplier of a nondegenerate alternating similitude is its determinant. Applying this linear-algebra fact to (7.1) gives
+For a two-dimensional vector space, the multiplier of a nondegenerate alternating similitude is its determinant. Under the curve determinant datum, applying this linear-algebra fact to (7.1) gives
 
 $$
 \boxed{\det\rho_{\Pi,\lambda}
@@ -593,7 +527,7 @@ This is essential self-duality, not ordinary self-duality. Scaling the pairing b
 
 ### 7.3 Total oddness
 
-Let $c_\tau$ be complex conjugation at a real place $\tau$ of $F$. The weight-two Hodge structure has one $(1,0)$ line and one $(0,1)$ line. Complex conjugation exchanges them. Therefore its eigenvalues on the rank-two realization are $1$ and $-1$, so
+Let $c_\tau$ be complex conjugation at a real place $\tau$ of $F$, and assume the individual coefficient block is preserved by the real descent action. The weight-two Hodge structure has one $(1,0)$ line and one $(0,1)$ line. Complex conjugation exchanges them. Therefore its eigenvalues on the rank-two realization are $1$ and $-1$, so
 
 $$
 \operatorname{tr}\rho_{\Pi,\lambda}(c_\tau)=0,
@@ -601,11 +535,11 @@ $$
 \det\rho_{\Pi,\lambda}(c_\tau)=-1. \tag{7.4}
 $$
 
-This holds at every real place: the representation is totally odd. It is also consistent with (7.2), because the parity of the finite component character is the one forced by the cohomological packet.
+When the preservation hypothesis holds at every real place, the representation is totally odd. It is also consistent with (7.2), because the parity of the finite component character is the one forced by the cohomological packet.
 
 Oddness is not the assertion that complex conjugation acts by $-1$ on the whole space; that scalar has determinant $+1$. In residue characteristic two the two eigenvalues become equal, so oddness is first a characteristic-zero statement and is not detected by the residual determinant alone.
 
-If the carrier is initially defined over a reflex field larger than $F$, total oddness is claimed only after the component and cancellation descent data produce a representation of $G_F$. Parity is not defined at a complex place.
+If the curve is initially defined over a reflex field larger than $F$, total oddness is claimed only after the component descent data produce a representation of $G_F$. Parity is not defined at a complex place.
 
 ### 7.4 Normalization checks
 
@@ -625,7 +559,7 @@ These checks separate central inversion, Frobenius inversion, duality, and Tate 
 Let $u\nmid\ell$. Quasi-unipotence of inertia associates to $\rho_{\Pi,\lambda}|_{G_{F_u}}$ a Frobenius-semisimple Weil--Deligne pair
 
 $$
-\operatorname{WD}_u(\rho_{\Pi,\lambda})^{\mathrm{F\!-!ss}}
+\operatorname{WD}_u(\rho_{\Pi,\lambda})^{\mathrm{F\text{-}ss}}
 =(r_{u,\lambda},N_{u,\lambda}),
 $$
 
@@ -637,7 +571,7 @@ $$
 
 Local--global compatibility means equality of this complete pair with the algebraically normalized local parameter of $\Pi_v$. Equality of conductor or inertial type alone is weaker. A finite type leaves an unramified Frobenius-return ambiguity, while conductor one does not distinguish finite tame ramification from nonzero monodromy.
 
-The geometric proof uses the equivariant nearby-cycle complex. Hecke projectors commute with restriction, Gysin, finite descent, Frobenius, and monodromy. In the curve case the Hom extraction passes through this complex. In the surface case the local cancellation formula (4.8) must also hold.
+The geometric proof uses the equivariant nearby-cycle complex. Hecke projectors commute with restriction, Gysin, finite descent, Frobenius, and monodromy. The curve Hom extraction passes through this complex on the raw multiplicity space. The local packages invoked below also retain the raw-to-global-semisimplification verification of Section 5.2 whenever the conclusion is stated for $\rho_{\Pi,\lambda}$.
 
 ### 8.2 Good and Steinberg places
 
@@ -690,7 +624,7 @@ No statement in this chapter concerns $u\mid\ell$. Prime-to-residue-characterist
 
 ### 9.1 Weak compatibility
 
-For every finite place $\lambda$ of $E$, the multiplicity construction gives $\rho_{\Pi,\lambda}$. Choose a finite set $S$ containing every group, level, component, character, model, and correspondence exception. Then for $v\notin S$ and $v\nmid\ell(\lambda)$, the representation is unramified and
+Assume the curve determinant datum. For every finite place $\lambda$ of $E$, the multiplicity construction gives $\rho_{\Pi,\lambda}$. Choose a finite set $S$ containing every group, level, component, character, model, and correspondence exception. Then for $v\notin S$ and $v\nmid\ell(\lambda)$, the representation is unramified and
 
 $$
 \det(X-\rho_{\Pi,\lambda}(\Phi_v))
@@ -703,10 +637,10 @@ Coefficient conjugation also commutes with the construction. If $\sigma:E\hookri
 
 ### 9.2 Strict compatibility
 
-At a finite place $v$, suppose one of the uniform local geometric packages of Chapter 8 is supplied over $E$: unramified, special, finite descent, or tame dihedral. Let $D_v$ be the resulting algebraic Weil--Deligne parameter. Then for every $\lambda$ with $v\nmid\ell(\lambda)$,
+At a finite place $v$, suppose one of the uniform local geometric packages of Chapter 8 is supplied over $E$: unramified, special, finite descent, or tame dihedral, including the required passage to the global semisimplification. Let $D_v$ be the resulting algebraic Weil--Deligne parameter. Then for every $\lambda$ with $v\nmid\ell(\lambda)$,
 
 $$
-\operatorname{WD}_v(\rho_{\Pi,\lambda})^{\mathrm{F\!-!ss}}
+\operatorname{WD}_v(\rho_{\Pi,\lambda})^{\mathrm{F\text{-}ss}}
 \simeq D_v\otimes_EE_\lambda. \tag{9.2}
 $$
 
@@ -714,7 +648,7 @@ This is strict compatibility at $v$. If the selected packet range supplies such 
 
 It follows that the prime-to-$\lambda$ conductor is obtained from one common conductor datum by omitting the factors above $\ell(\lambda)$. Euler factors, Swan conductors, monodromy ranks, and normalized epsilon factors are independent of $\lambda$ in the same range.
 
-**Proposition 9.1 (assembly of the compatible family).** Suppose the weight-two realization datum is available for every coefficient embedding and the local packages are defined over $E$. Then the representations $\{\rho_{\Pi,\lambda}\}_\lambda$ form a weakly compatible system, strictly compatible at every place carrying one of those local packages.
+**Proposition 9.1 (assembly of the compatible family).** Suppose the curve realization datum, including its determinant datum, is available for every coefficient embedding and the local packages are defined over $E$. Then the representations $\{\rho_{\Pi,\lambda}\}_\lambda$ form a weakly compatible system, strictly compatible at every place carrying one of those local packages.
 
 **Proof.** Fixed-level algebraicity puts all $t_v$ and $s_v$ in one number field and places every conjugate packet in the corresponding conjugate Hecke block. There are only finitely many places where the group, level, component character, carrier, or normalized correspondence is bad. Their union is a set $S$ independent of $\lambda$. For $v\notin S$ and $v\nmid\ell(\lambda)$, the good-place argument gives (9.1), proving weak compatibility.
 
@@ -728,7 +662,7 @@ $$
 |\alpha_v|=q_v^{1/2}. \tag{9.3}
 $$
 
-This is purity of weight one. It passes to coefficient conjugates because the statement concerns all complex embeddings. In the surface case, the honest block has weight two, while the cancellation module has weight one; the Hom factor has weight one only when the factorization and pairing prove that one complete auxiliary weight has been removed.
+This is purity of weight one. It passes to coefficient conjugates because the statement concerns all complex embeddings.
 
 At a verified bad place, purity is expressed by the monodromy filtration. For a special parameter the two Frobenius lines have weights differing by two and centered at one. Finite-monodromy parameters have the corresponding common absolute value after the local normalization. The nearby-cycle weight calculation proves this only under its stated semistability and degeneration hypotheses.
 
@@ -788,9 +722,9 @@ The hypotheses cannot be shortened to “the generic algebra is a matrix algebra
 
 ### 10.3 Canonicity and its limits
 
-The lattice $T_{\Pi,\lambda}$ is canonical relative to the integral realization datum. This means independence of projector formulas, bases, matrix coordinates, and integral presentations connected by the verified unit-degree comparisons. It does not mean that the rational representation has one intrinsically distinguished stable lattice.
+The lattice $T_{\Pi,\lambda}$ is canonical relative to the integral curve realization datum. This means independence of projector formulas, bases, matrix coordinates, and integral presentations connected by the verified unit-degree comparisons. It does not mean that the rational representation has one intrinsically distinguished stable lattice.
 
-At coarse level, canonicity passes from a fine cover only if averaging and stabilizer denominators are units, or if a direct integral comparison replaces averaging. Between isogenous abelian carriers it passes only when the isogeny and its normalized dual have coefficient-unit composites. Between a curve and a surface it requires an integral cancellation comparison, not merely equality of rational Frobenius polynomials.
+At coarse level, canonicity passes from a fine cover only if averaging and stabilizer denominators are units, or if a direct integral comparison replaces averaging. Between isogenous abelian carriers it passes only when the isogeny and its normalized dual have coefficient-unit composites. Between two curve carriers it requires a unit-degree integral comparison, not merely equality of rational Frobenius polynomials.
 
 The factored pairing on $T$ is perfect only when its duality index is a unit. Rational self-duality does not imply integral self-duality. When perfectness holds, the coefficient involution and Tate twist must be retained on the dual lattice.
 
@@ -811,7 +745,7 @@ $$
 
 For an arbitrary stable lattice its isomorphism class can vary, but its semisimplification is independent of the lattice. Indeed, every stable lattice gives the same integral characteristic polynomial for each group element; reduction and the residual character criterion identify the semisimplifications.
 
-At a good place,
+Under the curve determinant datum, or whenever Frobenius is already known to be nonscalar in characteristic zero, at a good place,
 
 $$
 \det(X-\overline\rho^{\mathrm{ss}}_{\Pi,\lambda}(\Phi_v))
@@ -824,13 +758,12 @@ If the residual semisimplification is absolutely irreducible, every stable-latti
 
 ### 11.1 The coefficient-prime carriers
 
-Fix $u\mid\ell$. A rational representation and even a canonical stable lattice do not by themselves produce a finite-flat model. The integral realization datum must supply one of two carriers.
+Fix $u\mid\ell$. A rational representation and even a canonical stable lattice do not by themselves produce a finite-flat model. The integral curve realization datum must supply one of two carriers.
 
 The geometric route uses a good-reduction abelian scheme over $\mathcal O_{F_u}$ with integral $\mathcal O_\lambda$-action and a unit-degree identification of its marked Tate lattice with $T_{\Pi,\lambda}$ in the stated dual-and-twist convention. Its torsion is finite flat.
 
 The filtered route applies when $\ell>2$, $F_u=W(k)[1/\ell]$ with $k$ perfect, and a finite-free strongly divisible lattice of weights $[0,1]$ with integral coefficient action realizes $T_{\Pi,\lambda}$. The absolutely unramified base and the short weight interval are essential. No extension to $\ell=2$ or to ramified $F_u$ is implicit.
 
-In the surface case, the carrier must belong to the rank-two Hom factor after integral cancellation. Finite flatness of the full surface torsion does not automatically descend through a rational projector.
 
 ### 11.2 All open ideals
 
@@ -842,7 +775,7 @@ $$
 
 This construction is safer than taking the kernel of an arbitrary coefficient endomorphism. A kernel of a nonflat coefficient relation need not be flat. Closure inside a supplied finite-flat carrier and represented quotient preserve flatness and retain the generic marking.
 
-The coefficient action descends because the closed relation subgroup is stable. It factors through $\mathcal O_\lambda/I$. The construction also treats nonprincipal open ideals after coefficient extension or in a nontrivial coefficient order; no choice of generators enters its definition.
+The coefficient action descends because the closed relation subgroup is stable. It factors through $\mathcal O_\lambda/I$. Every ideal of the coefficient DVR $\mathcal O_\lambda$ is principal, but phrasing the construction in terms of $I$ rather than a generator makes it canonical. More general coefficient orders require the additional admissibility hypotheses of the integral theory.
 
 ### 11.3 Transition maps and ranks
 
@@ -882,60 +815,23 @@ Finite extension of the local ground field base-changes the quotient system. Unr
 
 Finite flat coefficient extension is governed by the trace-dual coefficient module, while nonflat coefficient quotients are governed by admissible annihilators in the filtered category. Treating both operations as naive tensor products loses duality and flatness.
 
-## 12. The surface case in full
+## 12. Examples and counterexamples
 
-### 12.1 The honest degree-two block
-
-The compact unitary surface contributes a Galois-stable packet block in $H^2$. At full orientation level it is generally four-dimensional, has Hodge numbers $(1,2,1)$, pairing twist $(-2)$, and good-place purity of weight two. At semistable places its monodromy may satisfy $N^3=0$ with $N^2\ne0$.
-
-These are not defects. They are the correct invariants of the surface. A rank-two weight-one representation is a further multiplicity factor, not a subspace selected by Hodge type. The unconditional surface output must therefore remain four-dimensional whenever cancellation is absent.
-
-### 12.2 Global rational cancellation
-
-Global cancellation requires a descended split algebra $B_\Pi$, a simple two-dimensional module $R_\Pi$, a compatible action on the packet block, and an evaluation isomorphism (3.1). The Galois descent on $R_\Pi$ is part of the datum. Formula (4.7) then defines a continuous rank-two Hom factor.
-
-The surface pairing must factor through a pairing on $R_\Pi$ and leave on $W_\Pi$ the multiplier $\chi_\lambda^{-1}\eta_\Pi$. This establishes the correct determinant and weight. Without the pairing condition, a two-dimensional Hom space could carry the wrong Tate twist.
-
-Good-place local cancellation requires the Frobenius action on the tensor factors to match the global factorization. It then gives the same polynomial (1.1) as the curve packet. Chebotarev compares the resulting semisimple systems.
-
-### 12.3 Local and integral cancellation
-
-At a bad place the nearby-cycle complex, not just its generic cohomology, must factor. The monodromy on the Hom factor is (4.8). This supplies $N_W^2=0$ and lets the curve-style unramified, special, finite-type, or dihedral recognition theorem apply. Global cancellation alone cannot determine local monodromy.
-
-Integral cancellation requires a split order $\mathcal B_\Pi$, projective generator $\mathcal R_\Pi$, saturated surface packet lattice, and an integral evaluation isomorphism. The factored pairing must be perfect. These data produce a canonical rank-two lattice by integral Hom.
-
-Finite-flat cancellation is yet another step. At $u\mid\ell$, the rank-two lattice must have its own geometric or strongly divisible carrier. Rational crystallinity of the surface block, or finite flatness of an ambient abelian torsion group, does not automatically pass through a nonintegral cancellation factor.
-
-### 12.4 Four independent boundaries
-
-The surface argument therefore has four independent ledgers:
-
-1. global rational cancellation constructs rank two;
-2. good and bad local cancellation identifies Frobenius and monodromy;
-3. integral cancellation constructs the canonical rank-two lattice;
-4. a coefficient-prime carrier constructs finite-flat quotients.
-
-No implication among these four is automatic. A descended rational matrix algebra can exist without a split integral order. An integral Hom lattice can exist without finite-flat models at $\ell$. A global tensor factorization can coexist with a nearby-cycle complex that does not factor. Conversely, local coincidence of conductors cannot manufacture a global Galois factor.
-
-This boundary is the main protection against overclaiming in the unitary-surface route.
-
-## 13. Examples and counterexamples
-
-### 13.1 An elliptic curve packet
+### 12.1 An elliptic curve packet
 
 Let $A/\mathbf Q$ be an elliptic curve of conductor $N$, and let $\Pi$ be its weight-two modular packet. The modular parametrization realizes its covariant member on $T_\ell A$. In untwisted cohomology, the geometric-Frobenius polynomial at $p\nmid N\ell$ is
 
 $$
 X^2-a_pX+p,
 \qquad
-a_p=p+1-\#A(\mathbf F_p). \tag{13.1}
+a_p=p+1-\#A(\mathbf F_p). \tag{12.1}
 $$
 
 Thus $E=\mathbf Q$, $s_p=1$, and $\det\rho=\chi_\ell^{-1}$ in the convention of this book. The roots have absolute value $p^{1/2}$.
 
 At a multiplicative prime, the local parameter is special with rank-one monodromy. Its conductor is one. At a prime above $\ell$ where $A$ has good reduction, every $A[\ell^n]$ is finite flat, although the $\ell$-adic representation is generally ramified. Good reduction at the coefficient prime must never be paraphrased as unramifiedness.
 
-### 13.2 An old packet
+### 12.2 An old packet
 
 Suppose a new packet of conductor $\mathfrak n$ is viewed at level $\mathfrak n v$ with $v\nmid\mathfrak n$. Its fixed-vector module can have dimension two. The total cohomological block then has dimension four:
 
@@ -947,7 +843,7 @@ The Galois factor remains $W_{\Pi,\lambda}$ of dimension two. An eigenspace for 
 
 Integrally, the two degeneracy lattices can meet with finite index. A rational old/new projector may have a $\lambda$-denominator, so rational decomposition does not imply a direct integral decomposition.
 
-### 13.3 A scalar Frobenius
+### 12.3 A scalar Frobenius
 
 Let Frobenius act as $\alpha I$ on a two-dimensional space. It is annihilated by every quadratic
 
@@ -959,7 +855,7 @@ with $\beta=\alpha$ only if it is to be the characteristic polynomial, but many 
 
 This is why determinant and good correspondence are proved independently. The repeated-root case is not negligible: congruences can make distinct good roots coincide modulo $\lambda$ even when they are distinct in characteristic zero.
 
-### 13.4 A residual extension and a surface block
+### 12.4 A residual extension
 
 Let $V$ be an extension of characters
 
@@ -970,29 +866,13 @@ $$
 \longrightarrow0.
 $$
 
-Every group element has characteristic polynomial $(X-\alpha(g))(X-\beta(g))$, independent of the extension class. Rescaling one basis vector can change a stable lattice so that reduction changes from nonsplit to split. The residual semisimplification is fixed; the extension is not.
+Every group element has characteristic polynomial $(X-\alpha(g))(X-\beta(g))$, independent of the extension class. Rescaling one basis vector can change a stable lattice so that reduction changes from nonsplit to split. The residual semisimplification is fixed; the extension is not. This is why compatible Frobenius polynomials determine the semisimple system but not a preferred residual extension.
 
-For the surface warning, take two rank-two monodromy factors with nonzero square-zero operators $N_1,N_2$. On their tensor product,
+## 13. The attachment theorem
 
-$$
-N=N_1\otimes1+1\otimes N_2,
-\qquad
-N^2=2N_1\otimes N_2.
-$$
+### 13.1 Statement
 
-The four-dimensional block can have $N^2\ne0$. A rank-two Hom factor has square-zero monodromy only after subtracting the auxiliary term as in (4.8). Merely dividing the dimension would assign impossible monodromy to rank two.
-
-## 14. The attachment theorem
-
-### 14.1 Statement
-
-**Theorem 14.1 (attachment of the weight-two compatible system).** Let $F$ be totally real and let $\Pi$ be a noncharacter cuspidal parallel-weight-two automorphic packet. Assume that $\Pi$ has a weight-two realization datum of Section 3.4 in one of the following forms:
-
-- a modular-curve parabolic $H^1$ realization;
-- a compact quaternionic Shimura-curve $H^1$ realization in the established transfer range;
-- a compact unitary-surface $H^2$ realization with the full global cancellation datum.
-
-Let $E$ be a finite extension of the packet field splitting the finite Hecke and cancellation algebras. Then for every finite place $\lambda$ of $E$ there is a continuous semisimple representation
+**Theorem 13.1 (attachment in the curve-realizable parallel-weight-two range).** Let $F$ be totally real and let $\Pi$ be a noncharacter cuspidal parallel-weight-two automorphic packet. Assume that $\Pi$ has a curve realization datum of Section 3.3, either on a modular curve when $F=\mathbf Q$, directly on a compact quaternionic Shimura curve, or through the selected totally-definite transfer range of Section 1.2. Let $E$ be a finite extension of the packet field splitting the finite Hecke algebra. Then for every finite place $\lambda$ of $E$ there is a continuous semisimple representation
 
 $$
 \rho_{\Pi,\lambda}:G_F\longrightarrow
@@ -1001,14 +881,14 @@ $$
 
 with the following properties.
 
-1. **Finite ramification and weak compatibility.** There is a finite set $S$, independent of $\lambda$, such that for $v\notin S$ and $v\nmid\ell(\lambda)$, $\rho_{\Pi,\lambda}$ is unramified and
+1. **Finite ramification and conditional weak compatibility.** There is a finite set $S$, independent of $\lambda$, such that for $v\notin S$ and $v\nmid\ell(\lambda)$, $\rho_{\Pi,\lambda}$ is unramified and, under the determinant datum,
 
    $$
    \det(X-\rho_{\Pi,\lambda}(\Phi_v))
    =X^2-t_vX+q_vs_v\in E[X].
    $$
 
-2. **Determinant and duality.** For every $\lambda$,
+2. **Determinant and duality.** Under the curve determinant datum, for every $\lambda$,
 
    $$
    \det\rho_{\Pi,\lambda}=\chi_\lambda^{-1}\eta_{\Pi,\lambda},
@@ -1017,7 +897,7 @@ with the following properties.
    \simeq\rho_{\Pi,\lambda}(1)\otimes\eta_{\Pi,\lambda}^{-1}.
    $$
 
-3. **Oddness.** At every real place $\tau$ of $F$,
+3. **Oddness.** If every real descent action preserves the individual coefficient block, then at each real place $\tau$ of $F$,
 
    $$
    \operatorname{tr}\rho_{\Pi,\lambda}(c_\tau)=0,
@@ -1025,79 +905,78 @@ with the following properties.
    \det\rho_{\Pi,\lambda}(c_\tau)=-1.
    $$
 
-4. **Purity.** The system is pure of weight one at every good place. It is pure at the verified bad places under the local weight hypotheses of the nearby-cycle comparison.
+4. **Purity.** The system is pure of weight one at every good place. It is pure at verified bad places under the local weight hypotheses of the nearby-cycle comparison.
 
-5. **Strict local compatibility.** At every $v\nmid\ell(\lambda)$ carrying one of the uniform good, Steinberg, finite-descent, or tame-dihedral packages, its Frobenius-semisimple Weil--Deligne representation equals the algebraic local parameter of $\Pi_v$. Consequently the Euler factor, Artin and Swan conductors, monodromy rank, and normalized epsilon factor agree.
+5. **Strict local compatibility.** At every $v\nmid\ell(\lambda)$ carrying one of the uniform good, Steinberg, finite-descent, or tame-dihedral packages, including its raw-to-global-semisimplification verification, its Frobenius-semisimple Weil--Deligne representation equals the algebraic local parameter of $\Pi_v$. Consequently the Euler factor, Artin and Swan conductors, monodromy rank, and normalized epsilon factor agree.
 
-6. **Choice independence.** The system commutes with coefficient conjugation and extension and is independent of bases, matrix splittings, multiplicity coordinates, and polarization scaling. It is independent of a geometric carrier when the stated descent and rational carrier-comparison hypotheses hold.
+6. **Choice independence.** The system commutes with coefficient conjugation and extension and is independent of bases, matrix splittings, multiplicity coordinates, and polarization scaling. It is independent of the chosen curve carrier when the stated descent and rational curve-comparison hypotheses hold.
 
-If an integral weight-two realization datum is also given, there is a canonical, relative to that datum, finite-free rank-two Galois lattice $T_{\Pi,\lambda}$. At every required $u\mid\ell$ and for every open ideal $I\subset\mathcal O_\lambda$, there is a marked coefficient-linear finite-flat group $\mathcal T_{\Pi,I}$ with generic module $T_{\Pi,\lambda}/IT_{\Pi,\lambda}$, rank $|\mathcal O_\lambda/I|^2$, and canonical transitive transition maps for inclusions of ideals. Cartier duality, the permitted base changes, and coefficient actions are compatible with this system.
+If an integral curve realization datum is also given, there is a canonical, relative to that datum, finite-free rank-two Galois lattice $T_{\Pi,\lambda}$. At every required $u\mid\ell$ and for every open ideal $I\subset\mathcal O_\lambda$, there is a marked coefficient-linear finite-flat group $\mathcal T_{\Pi,I}$ with generic module $T_{\Pi,\lambda}/IT_{\Pi,\lambda}$, rank $|\mathcal O_\lambda/I|^2$, and canonical transitive transition maps for inclusions of ideals. Cartier duality, the permitted base changes, and coefficient actions are compatible with this system.
 
-Without the integral datum, only existence of a stable lattice and lattice-independent residual semisimplification is asserted. Without surface cancellation, the surface contributes only its generally four-dimensional pure weight-two block.
+Without the integral datum, only existence of a stable lattice and lattice-independent residual semisimplification is asserted. Without the curve determinant datum, the rank-two extraction, continuity, semisimplification, oddness, purity, saturation, and residual semisimplification remain; the good quadratic is an annihilator and is the characteristic polynomial at nonscalar Frobenius, but no determinant identification or scalar-Frobenius upgrade is asserted.
 
-### 14.2 Proof
+### 13.2 Proof
 
-For a curve carrier, the rational packet projector and the splitting field produce the simple Hecke module. The automorphic decomposition gives the evaluation isomorphism (4.4) and the two-dimensionality (4.5). Commutation with Galois defines the continuous action. For a surface carrier, the global cancellation datum gives the same conclusions through (4.6)--(4.7). Taking the canonical semisimplification yields $\rho_{\Pi,\lambda}$.
+The rational packet projector and a splitting field produce the simple finite Hecke module. The automorphic decomposition of curve $H^1$ gives the evaluation isomorphism (4.4) and the two-dimensionality (4.5). Commutation with Galois defines the continuous action, and canonical semisimplification yields $\rho_{\Pi,\lambda}$.
 
-Choose $S$ to contain all exceptions in the good-place ledger. At $v\notin S$ away from $\ell(\lambda)$, smooth proper specialization kills inertia. The normalized special-fiber correspondence gives the quadratic annihilator (6.1). Factored duality gives the perfect alternating pairing (7.1), hence the determinant (7.2). Lemma 6.1 now turns the annihilator into the asserted characteristic polynomial, including scalar Frobenius. The same pairing gives duality. The two Hodge lines are exchanged by each real complex conjugation, proving total oddness.
+Choose $S$ to contain all exceptions in the good-place ledger. At $v\notin S$ away from $\ell(\lambda)$, smooth proper specialization kills inertia. The normalized special-fiber correspondence gives the quadratic annihilator (6.1). Under the curve determinant datum, factored duality gives the alternating pairing (7.1), hence the determinant (7.2); Lemma 6.1 then turns the annihilator into the asserted characteristic polynomial, including scalar Frobenius. Without that datum, the proof stops at the annihilator, except that nonscalar Frobenius already has the displayed characteristic polynomial. The two Hodge lines are exchanged by each real complex conjugation preserving the coefficient block, proving total oddness in the stated range.
 
-The good polynomials lie in $E[X]$ before completion, and every conjugate packet occurs in cohomology. Repeating the construction at all $\lambda$ proves weak compatibility and coefficient compatibility. Weight-one purity of curve $H^1$ passes to the Hom factor. In the surface case the pairing-compatible cancellation removes one complete weight-one auxiliary factor from the pure weight-two block. This proves purity.
+Under the determinant datum, the good polynomials lie in $E[X]$ before completion, and every conjugate packet occurs in curve cohomology. Repeating the construction at all $\lambda$ then proves weak compatibility and coefficient compatibility. Weight-one purity of curve $H^1$ passes to the Hom factor independently of that datum.
 
-At a verified bad place, the equivariant nearby-cycle complex carries Hecke, finite descent, Frobenius, and monodromy. The curve Hom construction commutes with these operations. For a surface, the local cancellation factorization and formula (4.8) are additionally used. The local recognition theorems then identify the complete Weil--Deligne pair. The formulas of Chapter 8 give the local invariants and their coefficient independence.
+At a verified bad place, the equivariant nearby-cycle complex carries Hecke, finite descent, Frobenius, and monodromy. The curve Hom construction commutes with these operations on the raw multiplicity space. The retained raw-to-global-semisimplification clause and the local recognition theorems identify the complete Weil--Deligne pair of $\rho_{\Pi,\lambda}$. The formulas of Chapter 8 give the local invariants and their coefficient independence.
 
-For the integral statement, intersect the rational block with integral cohomology. Section 10.1 proves saturation, finite freeness, and stability. The split order, projective generator, and integral evaluation hypotheses give the rank-two Hom lattice by Section 10.2. At a coefficient prime, the geometric or filtered carrier supplies principal finite-flat levels. Schematic closure of coefficient relations and represented quotient give every open-ideal quotient. Successive quotient proves the transition maps, generic rank gives the stated rank, and Cartier duality and the permitted base-change theorems give the final compatibilities. $\square$
+For the integral statement, intersect the rational block with integral curve cohomology. Section 10.1 proves saturation, finite freeness, and stability. The split order, projective generator, and integral evaluation hypotheses give the rank-two Hom lattice by Section 10.2. At a coefficient prime, the geometric or filtered carrier supplies principal finite-flat levels. Schematic closure of coefficient relations and represented quotient give every open-ideal quotient. Successive quotient proves the transition maps, generic rank gives the stated rank, and Cartier duality and the permitted base-change theorems give the final compatibilities. $\square$
 
-### 14.3 The range used in the Fermat argument
+### 13.3 The range used in the Fermat argument
 
-In the applications motivating this volume, every automorphic packet is parallel weight two and lies in one of the curve-realizable transfer ranges, or in a surface range for which cancellation has been constructed. Every finite place belongs to one of the verified good, Steinberg, finite-descent, or tame-dihedral alternatives. The integral applications use fine minimal level or retain explicit split-order and evaluation hypotheses, and the coefficient-prime lattice is supplied by good-reduction abelian geometry or the absolutely unramified weight-$[0,1]$ filtered route.
+In the applications motivating this volume, every automorphic packet is parallel weight two and is realized on a modular or compact quaternionic Shimura curve, either directly or through the selected totally-definite transfer with all local-image hypotheses checked. Every finite place used in a local claim belongs to one of the verified good, Steinberg, finite-descent, or tame-dihedral alternatives. The integral applications use fine minimal level or retain explicit split-order and evaluation hypotheses, and the coefficient-prime lattice is supplied by good-reduction abelian geometry or the absolutely unramified weight-$[0,1]$ filtered route.
 
-Under exactly those conditions, Theorem 14.1 attaches a strictly compatible pure rank-two system at all places away from the varying coefficient prime and supplies the required canonical lattice and finite-flat quotient system at that prime. This is the form needed for changing coefficients, comparing conductors, and imposing finite-flat local conditions.
+Under exactly those conditions, Theorem 13.1 supplies the continuous semisimple rank-two family, the determinant-enhanced compatible system when the curve determinant datum is present, the verified local parameters, and the required integral and finite-flat objects. If a transfer, local model, determinant datum, integral Morita datum, or coefficient-prime carrier is missing, the conclusion stops at the last established layer.
 
-The statement is intentionally conditional on the geometric ledgers rather than on a vague label such as “weight two.” The arithmetic applications verify those ledgers separately. If one packet falls outside the transfer, cancellation, local-model, or coefficient-prime range, the corresponding conclusion stops at the last established layer.
 
-## 15. Hypothesis and dependency audit
+## 14. Hypothesis and dependency audit
 
-### 15.1 Exact hypothesis ledger
+### 14.1 Exact hypothesis ledger
 
 | Conclusion | Required hypotheses | Failure without them |
 |---|---|---|
 | rank-two curve factor | cuspidal parallel weight two, full finite Hecke block, splitting field, exact automorphic multiplicity | characters, oldvectors, or a Schur algebra inflate or obstruct the factor |
 | modular-curve factor | parabolic cohomology of the compactification | boundary classes can mimic reducible systems |
-| transfer identification | all ramified local components in the established global transfer packet | good-place eigenvalues do not create a global transfer |
+| totally-definite transfer | global transfer and every ramified local-image condition | almost-all good eigenvalues do not create a curve realization |
 | Galois action on a packet | descended correspondences and Galois-stable component union | an eigensystem need not define a stable subspace |
 | good unramifiedness | complete smooth projective integral-model ledger and $v\nmid\ell$ | inertia or nearby cycles may survive |
-| good characteristic polynomial | normalized correspondence, rank two, and independent determinant | the quadratic may be only an annihilator |
-| determinant | factored adjoint pairing and correct component character | central inversion or a Tate twist can be wrong |
-| oddness | weight-two Hodge types and descent to a totally real field | parity is undefined or unsupported |
-| strict local compatibility | full local nearby-cycle, type, monodromy, and return-map package | conductor or inertia alone does not identify the parameter |
+| good characteristic polynomial | normalized correspondence, rank two, and independent determinant datum in the scalar case | the quadratic may be only an annihilator |
+| determinant | Book 134 curve determinant datum | adjoint duality alone does not give an alternating self-pairing |
+| oddness | weight-two Hodge types and preservation of the coefficient block by real descent | parity is undefined or unsupported |
+| strict local compatibility | full local nearby-cycle, type, monodromy, return-map, and raw-to-global-semisimplification package | conductor or inertia alone does not identify the parameter, and global semisimplification can erase extension monodromy |
 | pure compatible system | coefficient conjugates, common algebraic polynomials, and local weight hypotheses | one realization does not control all completions or bad weights |
-| rational surface rank two | descended split cancellation algebra, evaluation, and pairing | the honest block remains four-dimensional of weight two |
-| surface local parameter | local nearby-cycle factorization and Hom monodromy | global cancellation does not determine $N$ |
 | canonical rank-two lattice | saturation, split order, projective generator, integral evaluation | rational projectors can have nonunit denominators |
 | integral perfect duality | unit duality index and coefficient involution | rational self-duality need not be integral |
 | finite-flat quotients | marked geometric carrier, or $\ell>2$ absolutely unramified weights $[0,1]$ carrier | a stable lattice or rational crystallinity is insufficient |
 | every open ideal and transitions | closure inside one carrier and represented successive quotients | raw kernels can be nonflat and levelwise models incompatible |
-| carrier independence integrally | unit-degree integral comparison | isogenous carriers can define different lattices |
+| curve-carrier independence integrally | unit-degree integral comparison | isogenous carriers can define different lattices |
 
-### 15.2 Use of the six direct prerequisites
+### 14.2 Use of the five direct prerequisites
 
-The construction uses the six direct prerequisites in nonoverlapping roles.
+The exact direct dependency row is
 
-**Automorphic decomposition of Shimura-curve $H^1$.** The curve decomposition supplies the noncharacter parallel-weight-two range, exact factorization into a finite Hecke module and a two-dimensional multiplicity space, rational Hecke fields, comparison among realizations, Hodge types, pairings, good correspondence relation, and saturated ambient lattice. We retain its fine/coarse, component-stability, splitting-field, and denominator hypotheses.
+$$
+\boxed{135\mid 132,\ 134,\ 136,\ 137,\ 138.}
+$$
 
-**Automorphic decomposition of unitary-surface $H^2$.** The surface decomposition supplies the honest generally four-dimensional packet block, rational projectors, coefficient fields, weight-two purity, pairing twist $(-2)$, semistable packet monodromy, and the comparison of packet labels with curves. It explicitly does not supply rank two; this book invokes it only together with cancellation.
+**Book 132, Automorphic decomposition of Shimura-curve $H^1$.** It supplies the noncharacter parallel-weight-two curve range, exact factorization into a finite Hecke module and a two-dimensional multiplicity space, rational Hecke fields, Hodge types, adjoint pairings, good correspondence relation, saturated ambient lattice, and the exact boundary on the selected totally-definite transfer.
 
-**Galois representations from weight-two Shimura cohomology.** The extraction theorem supplies continuous rank-two curve Hom spaces, canonical semisimplification, the determinant $\chi_\lambda^{-1}\eta_\Pi$, total oddness, good Frobenius polynomials, the rational surface-cancellation criterion, and the saturation boundary. The present synthesis repeats the construction to attach it uniformly to automorphic packets and never assumes integral Morita exactness from the rational result.
+**Book 134, Galois representations from weight-two Shimura-curve cohomology.** It supplies continuous rank-two Hom spaces, canonical semisimplification, the conditional determinant and scalar-Frobenius upgrade, oddness, good Frobenius polynomials, and the saturation boundary. This book retains its curve determinant datum verbatim and does not repair the old-level pairing gap by another geometric carrier.
 
-**Local--global compatibility for weight-two representations.** The local theorem supplies the complete good, split semistable, Steinberg, finite-descent, tame-dihedral, and surface-cancellation comparisons. We retain $v\nmid\ell$, the verified model, extending correspondences, type projectors, Frobenius return maps, and global-plus-local cancellation. Its coefficient-prime boundary is not crossed.
+**Book 136, Local--global compatibility for weight-two Galois representations.** It supplies the complete good, split semistable, Steinberg, finite-descent, and tame-dihedral comparisons in the curve range. We retain $v\nmid\ell$, the verified model, extending correspondences, type projectors, Frobenius return maps, finite descent, and the requirement that the computed raw cohomological parameter is the parameter of the stated global semisimplification.
 
-**Compatible coefficient systems and purity.** The compatible-system theorem supplies the common coefficient field, all coefficient conjugates, weak and strict compatibility, determinant and polarization independence, good and bad purity, conductor independence, and carrier-comparison criteria. It expressly supplies only stable and saturated lattices, not canonical rank-two integral factors.
+**Book 137, Compatible coefficient systems and purity.** It supplies the common coefficient field, all coefficient conjugates, weak and strict compatibility, good and bad purity, conductor independence, and rational curve-comparison criteria. It supplies stable and saturated lattices, not canonical rank-two integral factors.
 
-**Canonical Galois lattices and finite-flat quotients.** The integral theorem supplies saturation, integral Morita extraction, canonicity relative to a carrier, split-order and evaluation hypotheses, geometric and absolutely unramified filtered coefficient-prime routes, closure-and-quotient construction for all open ideals, transition maps, Cartier duality, and base change. We retain its exclusions at $\ell=2$, ramified filtered bases, denominator primes, and uncancelled surfaces.
+**Book 138, Canonical Galois lattices and finite-flat quotients.** It supplies saturation, integral Morita extraction, canonicity relative to a curve carrier, split-order and evaluation hypotheses, the geometric and absolutely unramified filtered coefficient-prime routes, closure-and-quotient construction for all open ideals, transition maps, Cartier duality, and base change. We retain its exclusions at $\ell=2$, ramified filtered bases, and denominator primes.
 
-These inputs fit without circularity. Rational extraction precedes local comparison; local comparison precedes strict compatibility; the compatible system precedes the integral refinement; the coefficient-prime carrier is independent of prime-to-$\ell$ local compatibility. The later-numbered prerequisites are therefore logically prior packages in the dependency graph, not conclusions smuggled into their own proofs.
+These inputs fit without circularity. Rational extraction precedes local comparison; local comparison precedes strict compatibility; the compatible system precedes the integral refinement; and the coefficient-prime carrier is independent of prime-to-$\ell$ local compatibility.
 
-### 15.3 What the theorem does not say
+### 14.3 What the theorem does not say
 
 The theorem does not attach a rank-two representation to an arbitrary nonalgebraic or noncuspidal eigensystem. It does not treat higher weights. It does not remove a failure of global transfer by matching almost all Hecke values.
 
@@ -1105,30 +984,23 @@ It does not identify nonsplit global or residual extensions from Frobenius polyn
 
 It does not assert a Weil--Deligne comparison at the coefficient residue characteristic. Good reduction there does not imply unramifiedness. Finite-flatness is asserted only for the named integral lattice and only through a supplied geometric or filtered carrier.
 
-It does not make a rational projector integral, a saturated block a direct Hecke summand, or rational self-duality a perfect integral pairing. It does not identify canonical lattices across carriers without unit-degree integral comparison.
+It does not make a rational projector integral, a saturated block a direct Hecke summand, or rational self-duality a perfect integral pairing. It does not identify canonical lattices across curve carriers without unit-degree integral comparison.
 
-Finally, it does not turn the honest surface $H^2$ block into rank two by a Hodge decomposition, a dimension count, or a half twist. Global, local, integral, and coefficient-prime cancellation remain separate hypotheses.
 
-## 16. Conclusion
+## 15. Conclusion
 
-### 16.1 The completed arithmetic package
+### 15.1 The completed arithmetic package
 
-A parallel-weight-two automorphic packet in the stated geometric range now determines one coherent arithmetic object. The modular or quaternionic curve supplies a rank-two multiplicity space directly; the unitary surface supplies it only after a descended auxiliary factor has been cancelled. In every case, Hecke and Galois act on the same cohomology, and the full finite Hecke module removes oldvectors without choosing an eigenline.
+A parallel-weight-two automorphic packet in the curve-realizable range determines a rank-two multiplicity space in modular or quaternionic curve $H^1$. The same applies to a selected totally-definite packet only after the exact global transfer and local-image conditions place its split packet in that curve range. Hecke and Galois then act on the same cohomology, and the full finite Hecke module removes oldvectors without choosing an eigenline.
 
-The good-place correspondence gives a quadratic relation, while the factored pairing gives the independent determinant
-
-$$
-\det\rho_{\Pi,\lambda}=\chi_\lambda^{-1}\eta_{\Pi,\lambda}.
-$$
-
-Together they give the geometric-Frobenius polynomial
+The good-place correspondence gives a quadratic relation. When the curve determinant datum is supplied, the factored pairing gives the independent determinant
 
 $$
-X^2-t_vX+q_vs_v,
+\det\rho_{\Pi,\lambda}=\chi_\lambda^{-1}\eta_{\Pi,\lambda},
 $$
 
-even when Frobenius is scalar. The Hodge lines give total oddness. Repeating the construction at every coefficient place produces a pure weight-one compatible system. At every verified bad place, nearby cycles identify the complete Weil--Deligne pair and hence the local factor, conductor, Swan term, monodromy, and epsilon factor.
+and the two inputs give the geometric-Frobenius polynomial $X^2-t_vX+q_vs_v$, even when Frobenius is scalar. Without that datum the determinant and scalar upgrade remain open. The Hodge lines give total oddness in the stated descent range, and every curve realization is pure of weight one. Under the determinant datum, repetition at every coefficient place produces the compatible system. At every verified bad place, the retained local package identifies the complete Weil--Deligne pair and hence the local factor, conductor, Swan term, monodromy, and epsilon factor.
 
-The integral refinement begins with saturation, not a rational projector. A split Hecke order, projective generator, and exact integral evaluation remove automorphic multiplicity and produce the canonical rank-two lattice relative to the chosen carrier. A good-reduction abelian scheme or an absolutely unramified weight-$[0,1]$ filtered carrier then supplies finite-flat principal levels. Schematic closure and represented quotient extend them to every open coefficient ideal, with compatible transitions, duality, coefficient action, and allowed base change.
+The integral refinement begins with saturation, not a rational projector. A split Hecke order, projective generator, and exact integral evaluation remove automorphic multiplicity and produce the canonical rank-two lattice relative to the chosen curve carrier. A good-reduction abelian scheme or an absolutely unramified weight-$[0,1]$ filtered carrier then supplies finite-flat principal levels. Schematic closure and represented quotient extend them to every open coefficient ideal, with compatible transitions, duality, coefficient action, and allowed base change.
 
-The boundaries are part of the result. Semisimplification does not remember extensions; local types do not replace Frobenius return maps; rational compatibility does not synchronize lattices; and surface cancellation must be global, local, integral, and coefficient-prime exact. With those distinctions preserved, the attachment theorem delivers precisely the package required in the weight-two arithmetic applications: a continuous odd rank-two system with controlled traces, determinants, ramification, purity, local parameters, canonical integral realizations, and finite-flat quotients.
+The boundaries are part of the result: semisimplification does not remember extensions, local types do not replace Frobenius return maps, rational compatibility does not synchronize lattices, and almost-all Hecke agreement does not replace a global transfer. With those distinctions preserved, the attachment theorem supplies precisely the parallel-weight-two arithmetic package used in the FLT route.

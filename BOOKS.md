@@ -727,18 +727,14 @@ compatibility.
 required Shimura curves to parallel-weight-two automorphic representations, including Hecke
 actions, multiplicity, rational structures, and isolation of two-dimensional constituents.
 
-133. **Automorphic Decomposition of Unitary-Surface H²** — Establish the degree-two
-cohomological realization on the auxiliary compact unitary surfaces. Use the low-dimensional
-Lefschetz formula, purity, and Hecke correspondences to isolate the relevant quaternionic packets,
-then compare their rational, Hecke, and Galois structures with the curve cases.
-
 134. **Galois Representations from Weight-Two Shimura Cohomology** — Extract continuous
 two-dimensional representations and determinants from localized cohomology, establish parity,
 semisimplicity, coefficient fields, and the good-prime Frobenius polynomials.
 
 135. **Galois Representations Attached to Weight-Two Automorphic Forms**
     Construct two-dimensional ℓ-adic Galois representations from weight-two eigensystems in the
-cohomology of modular curves, quaternionic Shimura curves, and the required unitary surfaces.
+cohomology of modular curves and quaternionic Shimura curves in the selected totally-definite
+transfer range.
 Determine Frobenius polynomials, determinants, ramification, and purity; construct canonical
 integral lattices and finite-flat quotients; and prove local–global compatibility. The main
 theorem attaches a compatible Galois system to every weight-two automorphic representation in the

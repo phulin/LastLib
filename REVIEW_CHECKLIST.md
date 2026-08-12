@@ -197,7 +197,6 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [ ] 130. Good Integral Models of Shimura Curves and Surfaces
 - [ ] 131. Semistable Models and Monodromy of Shimura Varieties
 - [x] 132. Automorphic Decomposition of Shimura-Curve H¹
-- [x] 133. Automorphic Decomposition of Unitary-Surface H²
 - [x] 134. Galois Representations from Weight-Two Shimura Cohomology
 - [x] 135. Galois Representations Attached to Weight-Two Automorphic Forms
 - [x] 136. Local–Global Compatibility for Weight-Two Galois Representations
