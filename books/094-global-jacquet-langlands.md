@@ -47,6 +47,8 @@
    - [Existence and injectivity](#92-existence-and-injectivity)
    - [Surjectivity onto the stated image](#93-surjectivity-onto-the-stated-image)
    - [Multiplicity preservation](#94-multiplicity-preservation)
+   - [The compact one-split theorem](#95-the-compact-one-split-theorem)
+   - [Construction, uniqueness, and exact image](#96-construction-uniqueness-and-exact-image)
 10. [Norm characters and the exceptional spectrum](#10-norm-characters-and-the-exceptional-spectrum)
     - [Why global characters must be separated](#101-why-global-characters-must-be-separated)
     - [Their local Steinberg transfers](#102-their-local-steinberg-transfers)
@@ -104,11 +106,11 @@ $$
 \bigotimes_v'\operatorname{JL}_v(\Pi_v).
 $$
 
-But a restricted tensor of admissible local representations need not occur automorphically. Automorphy is a global condition, and cuspidality is even more global: it is expressed by an integral over $F\backslash\mathbf A_F$, not by a condition on each component. The main work of this book is to prove that the formal tensor is indeed a cuspidal automorphic representation for the noncharacter, selected weight-two packets used in the FLT route, and that every cusp form satisfying the corresponding selected local conditions arises this way.
+But a restricted tensor of admissible local representations need not occur automorphically. Automorphy is a global condition, and cuspidality is even more global: it is expressed by an integral over $F\backslash\mathbf A_F$, not by a condition on each component. The main work of this book is to prove automorphy and exactness in two named compact ranges. The first is the totally definite selected weight-two range. The second is the narrow curve range needed by the FLT route: $F$ has even degree, the quaternion algebra is split at exactly one real place and ramified at a nonempty odd set of finite places, and the split packet is special or selected tame dihedral at every one of those finite places. In that second range the theorem constructs the inverse quaternionic packet from the split cusp form.
 
-The proof compares two trace formulas. On $D^\times$, compactness modulo the center makes the kernel and its trace completely discrete. On $\mathrm{GL}_2$, the quotient has cusps, so continuous and parabolic terms ordinarily appear. Books 109 and 110 prove a one-place simple formula when a strongly cuspidal real factor also satisfies their global kernel-admissibility estimate. Their theorem does not automatically include a low-weight coefficient merely because it is a valid local pseudo-coefficient. For parallel weight two, the closed input is instead Book 93's character-clean two-place identity: two ramified transfer factors have zero induced trace and zero split regular orbital integrals, so differentiated continuous and boundary terms cancel place by place. One factor is the cuspidal archimedean weight-two projector. On the compact side the same identity removes the norm-character trace. Book 112's singular-germ calculation and Book 93's finite interpolation then normalize the scalar distribution. After that correction, matching regular orbital integrals forces the desired cuspidal representation to exist.
+The proof compares two trace formulas. On $D^\times$, compactness modulo the center makes the kernel and its trace completely discrete. On $\mathrm{GL}_2$, the quotient has cusps, so continuous and parabolic terms ordinarily appear. Books 109 and 110 prove a one-place simple formula when a strongly cuspidal real factor also satisfies their global kernel-admissibility estimate. Their theorem does not automatically include a low-weight matrix-coefficient pseudo-coefficient merely because it is valid locally; the compact-mod-center Euler--Poincare projector used in Book 112, Chapter 12 is a separate admissible choice. For parallel weight two, the comparison used here is Book 93's character-clean two-place identity: two ramified transfer factors have zero induced trace and zero split regular orbital integrals, so differentiated continuous and boundary terms cancel place by place. One factor is the cuspidal archimedean weight-two projector. On the compact side the same identity removes the norm-character trace. Book 112's singular-germ calculation and Book 93's finite interpolation then normalize the scalar distribution. After that correction, matching regular orbital integrals forces the desired cuspidal representation to exist.
 
-This route explains more than existence. It shows why the image condition is discrete series at every ramified place, why the local minus signs disappear globally, why Hecke eigenvalues are unchanged at good places, and why the quaternionic character subspace must be removed before claiming a cuspidal bijection.
+This route explains more than existence. It shows why the image condition is discrete series at every ramified place, why the local minus signs disappear globally, why Hecke eigenvalues are unchanged at good places, and why the quaternionic character subspace must be removed before claiming a cuspidal bijection. The one-split proof uses only compact automorphic traces, local transfer, and the split trace formula. It does not use the cohomology of a Shimura curve, and it therefore supplies rather than assumes the automorphic packet later used on that curve.
 
 ### 1.2 Standing notation and the scope of the theorem
 
@@ -132,13 +134,30 @@ $$
 
 Changing $\iota_v$ conjugates it and hence changes neither local representation classes nor orbital integrals. At finite $v\in R$, write $\operatorname{JL}_v$ for the selected local correspondence of Book 84, with the archimedean correspondence constructed from the real discrete-series character formula at a ramified real place.
 
-For the trace-formula theorem proved from the stated prerequisites, assume that $F$ is totally real and that $D$ is totally definite. This is the weight-two setting used in the FLT route and supplies a ramified real place carrying the cuspidal weight-two projector. Since $D$ is then a division algebra, $R\ne\varnothing$; reciprocity makes $|R|$ even, so in fact $|R|\ge2$. These two ramified places supply the two trace-cuspidal factors in the low-weight comparison. Moreover
+The trace-formula argument will be used only in the following two ranges.
+
+1. **Totally definite range.** The field $F$ is totally real, $D$ is ramified at every real place, and every finite component at a place of $R_f$ lies in the selected local range.
+2. **Compact one-split range.** The degree $d=[F:\mathbf Q]$ is even, a real place $\tau _0$ is fixed, $D$ is split at $\tau _0$, ramified at every other real place, and
+
+   $$
+   R_f=W
+   $$
+
+   is an odd nonempty finite set. At every $w\in W$ the local component lies in the selected special or tame-dihedral range.
+
+In the first range the full ramification set is nonempty and even, hence has at least two members. In the second range
+
+$$
+|R|=(d-1)+|W|
+$$
+
+is even and at least two; one ramified real place and one member of $W$ are distinct. In both ranges $D$ is not the split matrix algebra, so a quaternion algebra of degree two is a division algebra. Book 93 then gives
 
 $$
 [G]=Z(\mathbf A)G(F)\backslash G(\mathbf A)
 $$
 
-is compact. The split case $D=M_2(F)$ has $R=\varnothing$ and the correspondence is the identity; it contains no trace-formula comparison and will be understood as the degenerate boundary case.
+as a compact quotient. These common facts, rather than total definiteness by itself, are what the comparison uses: two ramified trace-cuspidal factors, at least one of them a real weight-two projector, and a discrete compact quaternionic spectrum. No other mixed archimedean signature is claimed. The split case $D=M_2(F)$ has $R=\varnothing$ and the correspondence is the identity; it contains no trace-formula comparison and will be understood as the degenerate boundary case.
 
 An automorphic representation of $G(\mathbf A)$ factors as $\Pi=\bigotimes_v'\Pi_v$. We call it a **norm character** if it is one dimensional. To state this spectrum without hiding a sign condition, put
 
@@ -168,11 +187,17 @@ $$
 \Pi=\chi\circ\operatorname{Nrd}.
 $$
 
-All other irreducible automorphic representations will be called **noncharacters**. A noncharacter is **selected** if, at every finite $v\in R$, its local factor is a norm character or one of the depth-zero or tame positive-depth dihedral factors covered by Book 84. The theorem will give a bijection between selected noncharacters on $G$ and cuspidal representations on $G^*$ whose ramified finite factors are the corresponding selected special or dihedral discrete series and whose ramified real factors have the prescribed algebraic discrete-series type. Parallel weight two is obtained from the trivial compact type at every real place. Norm characters are genuinely exceptional and will be treated in Chapter 10.
+All other irreducible automorphic representations will be called **noncharacters**. A noncharacter is **selected** if, at every finite $v\in R$, its local factor is a norm character or one of the depth-zero or tame positive-depth dihedral factors covered by Book 84. The theorem will give a bijection between selected noncharacters on $G$ and cuspidal representations on $G^*$ whose ramified finite factors are the corresponding selected special or dihedral discrete series and whose ramified real factors have the prescribed algebraic discrete-series type. Parallel weight two is obtained from the trivial compact type at every ramified real place and, in the one-split range, from the unchanged minimal weight-two discrete series at $\tau _0$. Norm characters are genuinely exceptional and will be treated in Chapter 10.
 
 We use $\Pi$ for a quaternionic representation and $\pi$ for a representation of $G^*(\mathbf A)$. Their local components are $\Pi_v$ and $\pi_v$. At a split place, the assertion $\pi_v\cong\Pi_v$ always means that $\Pi_v$ has been transported through $\iota_v$.
 
-Trace comparison is carried out one central character and one infinity type at a time. Fix a unitary Hecke character $\omega$ and, for every real $v$, an irreducible algebraic automorphic type $\tau_v$ of $D_v^\times$ whose scalar action is $\omega_v$. In the parallel-weight-two range, $\tau_v$ is trivial on the norm-one subgroup of $D_v^\times$; a common norm twist accounts for the chosen scalar action. Write $\tau_v^*=\operatorname{JL}_v(\tau_v)$ for the corresponding full-group discrete series. The algebraic, possibly nonunitary normalization is recovered after the Hilbert-space argument by undoing the common real norm twist.
+Trace comparison is carried out one central character and one infinity type at a time. Fix a unitary Hecke character $\omega$. At a ramified real place $v$, fix an irreducible algebraic automorphic type $\tau_v$ of $D_v^\times$ whose scalar action is $\omega_v$, and write $\tau_v^*=\operatorname{JL}_v(\tau_v)$ for the corresponding full-group discrete series. In parallel weight two, $\tau_v$ is trivial on the norm-one subgroup; a common norm twist accounts for the scalar action. In the compact one-split range, put
+
+$$
+\tau_{\tau _0}=\tau_{\tau _0}^*=D_{2,\omega_{\tau _0}},
+$$
+
+the full-group minimal weight-two discrete series under the fixed splitting $D_{\tau _0}^\times\simeq\mathrm{GL}_2(\mathbf R)$. Thus local transfer is the identity at the active real place and is the compact-to-discrete correspondence at every other real place. The algebraic, possibly nonunitary normalization is recovered after the Hilbert-space argument by undoing the common real norm twist.
 
 ### 1.3 A normalization ledger
 
@@ -274,7 +299,7 @@ C_\gamma(F)=
 \{\bar x\in\overline G(F):x^{-1}\gamma x\in F^\times\gamma\}.
 $$
 
-The connected subgroup is $\overline G_\gamma(F)=G_\gamma(F)/Z(F)$. If $\operatorname{Trd}(\gamma)\ne0$, taking traces in $x^{-1}\gamma x=z\gamma$ forces $z=1$. If $\operatorname{Trd}(\gamma)=0$, determinants force $z=\pm1$, and Skolem--Noether supplies an element implementing the nontrivial automorphism of $F[\gamma]$, which sends $\gamma$ to $-\gamma$. Therefore
+The connected subgroup is $\overline G_\gamma(F)=G_\gamma(F)/Z(F)$. If $\operatorname{Trd}(\gamma)\ne0$, taking traces in $x^{-1}\gamma x=z\gamma$ forces $z=1$. If $\operatorname{Trd}(\gamma)=0$, determinants force $z=\pm1$, and Skolem--Noether supplies an element which realizes the nontrivial automorphism of $F[\gamma]$ and sends $\gamma$ to $-\gamma$. Therefore
 
 $$
 \kappa(\gamma):=
@@ -446,7 +471,7 @@ Geometric orbital transfer has sign $+1$ at every place, so its global product i
 
 ### 4.1 The kernel
 
-Assume $D$ is division. For a smooth test function $f'$ on $G(\mathbf A)$, compactly supported modulo $Z(\mathbf A)$ and transforming by $\omega^{-1}$, define
+Assume $D$ is division. Let $f'$ be locally constant and compactly supported modulo the center at the finite places, smooth and compact-finite at infinity, and transforming by $\omega^{-1}$. At a split archimedean place require either compact support modulo the center or the rapid-decay/smoothing class of Book 93, Proposition 7.2: after the common smoothing multiplier, the function and every required derivative decrease faster than every prescribed power of a projective norm. In the totally definite range the projective archimedean factors are compact, so this condition is automatic. Define
 
 $$
 K_{f'}(x,y)=
@@ -454,7 +479,7 @@ K_{f'}(x,y)=
 f'(x^{-1}\gamma y).
 $$
 
-The sum is locally finite because $G(F)$ is discrete and $f'$ has compact support modulo the center. It descends in both variables to $[G]$. Right convolution is
+For compactly supported archimedean factors the sum is locally finite. For factors in the second class it is absolutely and locally uniformly convergent, with all required derivatives, by the lattice count and rapid-decay estimate in Book 93, Proposition 7.2. It descends in both variables to $[G]$. Right convolution is
 
 $$
 (R(f')\phi)(x)=
@@ -468,7 +493,7 @@ $$
 (R(f')\phi)(x)=\int_{[G]}K_{f'}(x,y)\phi(y)\,dy.
 $$
 
-Compactness of $[G]$ makes $R(f')$ trace class. There is no truncation and no convergence correction. This is the analytic advantage of the inner form.
+The resulting smooth kernel on the compact quotient makes $R(f')$ trace class. There is no truncation and no continuous spectrum. Compactness alone does not make an arbitrary nonsmoothing operator trace class; the stated local smoothness and decay are part of the test-function hypothesis. This is the analytic advantage of the inner form.
 
 ### 4.2 The spectral expansion
 
@@ -485,7 +510,7 @@ I_D(f'):=\operatorname{tr}R(f')
 =\sum_\Pi m_D(\Pi)\operatorname{tr}\Pi(f').
 $$
 
-At any fixed finite level and archimedean type only finitely many summands contribute. Book 93 proves $m_D(\Pi)=1$, but it is useful to retain the multiplicity symbol during comparison: doing so shows exactly where multiplicity preservation enters.
+At fixed finite level, fixed archimedean compact types, and bounded infinitesimal character, only finitely many summands contribute. In the theorem ranges the local projectors select the required weight-two factors inside such a window. Book 93 proves $m_D(\Pi)=1$, but it is useful to retain the multiplicity symbol during comparison: doing so shows exactly where multiplicity preservation enters.
 
 If $f'=\bigotimes_vf'_v$ and $\Pi=\bigotimes_v'\Pi_v$, then
 
@@ -535,7 +560,7 @@ The same connected-centralizer measure occurs in both expressions. For regular n
 
 **Proof strategy.** Absolute convergence allows the sum and integral to be interchanged. Each projective orbit is unfolded against its full rational projective stabilizer. Passing to the connected centralizer contributes $\kappa(\gamma)$, and Weil's quotient formula then separates its adelic volume from the orbital integral.
 
-**Proof.** Insert the kernel on the diagonal and integrate. Compact support and compactness of $[G]$ give absolute convergence. For a fixed projective class, the rational orbit is $C_\gamma(F)\backslash\overline G(F)$. The summand descends to this quotient because replacing $\gamma$ by $z\gamma$ for $z\in F^\times$ multiplies it by $\omega(z)^{-1}=1$. Replacing $C_\gamma(F)$ by its connected subgroup $\overline G_\gamma(F)$ is a cover of degree $\kappa(\gamma)^{-1}$. Weil's formula along $\overline G_\gamma(\mathbf A)$ then gives $\kappa(\gamma)a_D(\gamma)O_\gamma(f')$. Summing over projective conjugacy classes proves the formula. $\square$
+**Proof.** Insert the kernel on the diagonal and integrate. Local finiteness in the compact-support case, and the lattice-count and rapid-decay estimate just cited in the smoothed case, give absolute convergence uniformly on the compact quotient $[G]$. For a fixed projective class, the rational orbit is $C_\gamma(F)\backslash\overline G(F)$. The summand descends to this quotient because replacing $\gamma$ by $z\gamma$ for $z\in F^\times$ multiplies it by $\omega(z)^{-1}=1$. Replacing $C_\gamma(F)$ by its connected subgroup $\overline G_\gamma(F)$ is a cover of degree $\kappa(\gamma)^{-1}$. Weil's formula along $\overline G_\gamma(\mathbf A)$ then gives $\kappa(\gamma)a_D(\gamma)O_\gamma(f')$. Summing over projective conjugacy classes proves the formula. $\square$
 
 The argument is elementary once compactness is known. Its importance lies in exposing exactly the geometric data that local transfer can compare.
 
@@ -567,7 +592,7 @@ For $G^*=\mathrm{GL}_2$, the quotient by the center has finite volume but is not
 
 Books 109 and 110 prove a smaller formula under a precise hypothesis: one real local factor is **strongly cuspidal**, meaning that its two-sided parabolic transform vanishes, and it belongs to their kernel-admissible global test class. Its convolution operator is then zero on every representation induced from the Borel. This kills the continuous channel, while the zero parabolic transform kills residual characters directly. The geometric formula consequently retains only the central and elliptic distributions.
 
-The local discrete-series projector transferred from a compact real factor is strongly cuspidal and isolates the required infinity type. There is nevertheless a separate global analytic condition: Book 109 proves its fixed kernel estimate automatically only in sufficiently high lowest weight and explicitly requires low weights to be checked independently. We do not assume that missing check at weight two. Instead we use Book 93, Proposition 7.2. It proves the needed simple identity from two ramified factors whose traces on normalized principal series and whose split regular orbital integrals vanish. Because $|R|\ge2$, such a pair is always available; because $D$ is totally definite, one member can be the archimedean weight-two projector. Thus the exact low-weight proof still uses a cuspidal archimedean test function, but its global cancellation is the proved two-place argument rather than an unstated extension of the one-place kernel theorem.
+The local discrete-series projector transferred from a compact real factor is strongly cuspidal and isolates the required infinity type. Book 109's matrix-coefficient construction has a separate global analytic condition: its fixed kernel estimate is automatic only in sufficiently high lowest weight and must otherwise be checked independently. The compact-mod-center Euler--Poincare projector used in Book 112, Chapter 12 does satisfy the test class of Book 110, so no failure of the one-place formula at weight two is asserted. The proof here uses instead the comparison already packaged in Book 93, Proposition 7.2, because it simultaneously supplies the two-place boundary cancellation, norm-character removal, and scalar-germ interpolation. It starts from two ramified factors whose traces on normalized principal series and whose split regular orbital integrals vanish. In each of the two named ranges of Section 1.2, $|R|\ge2$ and at least one member of $R$ is real. Hence one factor can be the archimedean weight-two projector and another ramified place supplies the second zero. In the compact one-split range we may, and will, take the second place in $W$.
 
 ### 5.2 Cuspidal local test functions
 
@@ -914,7 +939,7 @@ Strong multiplicity one alone cannot prove existence. Nor is local multiplicity 
 
 We can now state the theorem with its exceptional clause visible.
 
-**Theorem 9.1 (global Jacquet--Langlands in the selected weight-two range).** Let $F$ be totally real and let $D/F$ be totally definite, with ramification set $R$. Fix $\omega$ and the compatible parallel-weight-two types $\tau_v,\tau_v^*$ as in Section 1.2. There is a unique bijection
+**Theorem 9.1 (totally definite selected global Jacquet--Langlands).** Let $F$ be totally real and let $D/F$ be totally definite, with ramification set $R$. Fix $\omega$ and the compatible parallel-weight-two types $\tau_v,\tau_v^*$ as in Section 1.2. There is a unique bijection
 
 $$
 \operatorname{JL}_D:
@@ -947,6 +972,8 @@ At a ramified real place, the representation of the full group $\mathrm{GL}_2(\m
 If $D=M_2(F)$, no inner-form comparison is needed: global Jacquet--Langlands is, by definition, the identity on the cuspidal spectrum of $\mathrm{GL}_2(\mathbf A_F)$. This split boundary case is stated separately because the phrase “noncharacter automorphic representation of $D^\times$” would otherwise also admit noncuspidal induced representations, which are not in the source of the displayed bijection.
 
 ### 9.2 Existence and injectivity
+
+The definite range has two edge cases worth auditing before invoking the common proof. If $[F:\mathbf Q]=1$, total definiteness contributes one ramified real place; reciprocity forces an odd nonempty finite ramification set, so a finite place supplies the second trace-cuspidal factor. If $[F:\mathbf Q]\ge2$, the real ramification set already contains two places unless the degree is one, and any additional finite ramification only enlarges the choice. Thus the assertion $|R|\ge2$ used in Chapters 5 and 8 is valid in every totally definite case covered by Theorem 9.1. The algebra is division and its quotient modulo center is compact by Book 93; no finite-class-set formula, high-weight kernel estimate, or unproved weight-two extension is being substituted for these facts.
 
 Existence for every selected noncharacter $\Pi$ was proved by spectral extraction. The local formulas determine every component of $\pi$.
 
@@ -994,6 +1021,132 @@ m_D(\Pi)=m_{G^*}(\operatorname{JL}_D(\Pi))=1.
 $$
 
 This statement concerns occurrences in the automorphic spectrum. It does not say that $\dim\Pi_f^U$ equals $\dim\pi_f^K$. Fixed-vector dimensions can differ dramatically at ramified places: a division newlevel block may have dimension $\dim\Pi_v$, while the split newvector space is a line.
+
+### 9.5 The compact one-split theorem
+
+We now state the inverse theorem which is needed to move a split Hilbert packet onto a compact Shimura-curve inner form. Its hypotheses deliberately describe only one archimedean signature.
+
+**Theorem 9.2 (compact one-split inverse Jacquet--Langlands).** Let $F$ be totally real of even degree $d$, fix a real place $\tau _0$, and let $W$ be an odd nonempty finite set of finite places. Let $B/F$ be the quaternion algebra ramified exactly at
+
+$$
+R(B)=\{\tau:\tau\mid\infty,\ \tau\ne\tau _0\}\sqcup W.
+\tag{9.1}
+$$
+
+Fix a compatible unitary central character $\omega$. Let $\pi$ be a cuspidal automorphic representation of $\mathrm{GL}_2(\mathbf A_F)$ with central character $\omega$, with full-group parallel-weight-two component $D_{2,\omega_\tau}$ at every real place, and such that, for every $w\in W$, $\pi_w$ is either selected special or selected depth-zero or tame positive-depth dihedral in the range of Books 84 and 112. Then there is a unique noncharacter automorphic representation
+
+$$
+\Pi_B=\operatorname{JL}_B^{-1}(\pi)
+\quad\text{of}\quad B^\times(\mathbf A_F)
+\tag{9.2}
+$$
+
+whose local factors are
+
+$$
+(\Pi_B)_v\cong
+\begin{cases}
+\pi_v,&v\notin R(B),\\
+\operatorname{JL}_v^{-1}(\pi_v),&v\in R(B).
+\end{cases}
+\tag{9.3}
+$$
+
+At $\tau _0$ the first line uses the fixed splitting $B_{\tau _0}^\times\simeq\mathrm{GL}_2(\mathbf R)$; at the other real places the second line is the compact type trivial on the norm-one group, with the scalar action imposed by $\omega$. The assignment is inverse to global transfer and is a bijection between these split cusp forms and the selected noncharacter parallel-weight-two automorphic representations of $B^\times$ with the stated infinity type. This is its exact image.
+
+Both automorphic multiplicities equal one. The central character of $\Pi_B$ is $\omega$. At every finite $v\notin W$, the local representation, conductor, compact type, and right-convolution Hecke action are unchanged. At $w\in W$ the exact prepared exponent is
+
+$$
+a_B((\Pi_B)_w)=a(\pi_w)=
+\begin{cases}
+1,&\pi_w=\operatorname{St}\otimes(\mu_w\circ\det),\ a(\mu_w)=0,\\
+2a(\mu_w),&\pi_w=\operatorname{St}\otimes(\mu_w\circ\det),\ a(\mu_w)>0,\\
+v_w(\mathfrak d_{E/F_w})+f(E/F_w)a_E(\theta),
+&\pi_w=\pi(E,\theta).
+\end{cases}
+\tag{9.4}
+$$
+
+In the first line $(\Pi_B)_w=\mu_w\circ\operatorname{Nrd}$ has maximal-order fixed vectors although its prepared exponent is one; in the remaining lines the selected minimal division type is the one constructed from the displayed local label. Put $Z_w=F_w^\times$. If $(J_w',\lambda_w')$ is that division type, its normalized trace function is
+
+$$
+p_{\lambda_w'}(j)
+=\operatorname{vol}(J_w'/Z_w)^{-1}
+\operatorname{tr}\lambda_w'(j^{-1}),
+$$
+
+extended by zero with inverse central covariance. Right convolution by this function has trace
+
+$$
+\operatorname{tr}(\Pi_B)_w(p_{\lambda_w'})
+=\dim\operatorname{Hom}_{J_w'}(\lambda_w',(\Pi_B)_w),
+$$
+
+which is one for the defining selected type. No equality of the full fixed-vector towers, or identification with an independently chosen raw split type idempotent, is asserted.
+
+In particular, if every $\pi_w$ is an unramified Steinberg twist and the conductor away from $W$ is an ideal $\mathfrak n$ prime to $W$, then $(\Pi_B)_w$ is fixed by $\mathcal O_{B_w}^\times$ for every $w\in W$. The raw quaternionic level is maximal at $W$, while the prepared conductor and the split conductor are both
+
+$$
+\mathfrak n\prod_{w\in W}\mathfrak p_w.
+$$
+
+With $\operatorname{vol}(K_v)=1$ and
+
+$$
+K_vaK_v=\coprod_i a_iK_v,
+$$
+
+the common unnormalized action at a split finite place is
+
+$$
+R(\mathbf 1_{K_vaK_v})\phi(x)=\sum_i\phi(xa_i),
+\tag{9.5}
+$$
+
+with right cosets, no inverse, and no averaging by the degree. Consequently the good eigenvalues $t_v,s_v$, the reciprocal polynomial $1-t_vX+q_vs_vX^2$, and the Frobenius-shaped polynomial $X^2-t_vX+q_vs_v$ agree exactly for $\pi$ and $\Pi_B$. If, in addition, the fixed common norm twist puts $\pi$ in Book 107's conjugation-compatible algebraic parallel-weight-two packet, then their good Hecke fields and their fields of rationality are equal, and algebraic coefficient conjugation commutes with (9.2). The existence, image, local, and multiplicity assertions do not require this additional rationality hypothesis.
+
+### 9.6 Construction, uniqueness, and exact image
+
+**Proof strategy.** Parity first constructs the algebra and division proves compactness. We then form the only possible local inverse tensor. A ramified real projector and one selected place in $W$ supply the two zeros in the character-clean trace identity, which forces a noncharacter compact constituent. Varying one local function at a time identifies the entire tensor; the same comparison in the forward direction proves exactness. Local uniqueness, the two multiplicity-one theorems, and the normalization ledger then prove the remaining assertions.
+
+**Proof.** The ramification set (9.1) has
+
+$$
+(d-1)+|W|
+$$
+
+members, an even number. The local invariant reciprocity law therefore gives a unique isomorphism class of quaternion algebra with the stated ramification set. Since it is ramified at every real place except $\tau _0$ and $d\ge2$, it is not $M_2(F)$; a quaternion algebra is consequently division. Book 93, Theorem 2.1 then proves that
+
+$$
+Z(\mathbf A)B^\times(F)\backslash B^\times(\mathbf A)
+$$
+
+is compact. The split real factor does not create a cusp: compactness is an adelic consequence of division over $F$, not compactness of every local factor.
+
+Define the candidate factors by (9.3). They exist locally: transfer is the identity away from $R(B)$, Book 84 supplies the inverse selected special or tame-dihedral factor at every $w\in W$, and real local Jacquet--Langlands supplies the compact inverse at every ramified real place. Their central characters are the local factors of $\omega$, so the restricted tensor has the correct global central character. What remains is automorphy.
+
+Choose a ramified real place $a\ne\tau _0$ and a finite place $b\in W$. At $a$ use the weight-two compact projector and its split discrete-series transfer. At $b$ use a prepared selected type function and its transfer. Both split functions have zero split regular orbital integrals and trace zero on every full normalized principal series. Hence they are the two distinct zero factors required by Book 93, Proposition 7.2. At the active split real place $\tau _0$, use on both groups the same compact-mod-center Euler--Poincare pseudo-coefficient for $D_{2,\omega_{\tau _0}}$ used in Book 112, Chapter 12. Its trace is one on the chosen full-group weight-two discrete series and zero on the other tempered types, normalized principal series, and their one-dimensional quotients; its compact support puts it directly in the kernel class of Chapter 4. It plays no role in the ramification sign and requires neither a weight-two extension of the one-place formula nor a geometric realization of the packet.
+
+Fix a finite level and infinity type containing $\pi$. Only finitely many cuspidal representations occur in that block. Begin with trace-nonzero local functions on the formal inverse factors of (9.3); at ramified places their transferred traces on the selected factors are fixed by the local character identities, and at split places transfer is the identity. Book 93's interpolation clause changes these tensors so that all quaternionic norm-character traces vanish and the scalar germs match, without changing the prescribed selected noncharacter trace coordinates. Strong multiplicity one separates the remaining finite split list, so interpolation in finitely many good spherical Hecke operators normalizes the split trace to one on $\pi$ and zero on every other cusp form in the block. Apply the reverse character-clean comparison of Theorem 7.1. The split side is nonzero, so the compact side contains a noncharacter constituent $\Pi_B$. Independently, its weight-two discrete-series factor at $\tau _0$ already rules out a global norm character; this remains true even when one or more finite inverse factors are local norm characters.
+
+We next identify it rather than merely its good eigenvalues. The fixed pseudo-coefficient at $\tau _0$ already forces $(\Pi_B)_{\tau _0}\cong\pi_{\tau _0}$. At any other place $v$, hold the two selected factors fixed and vary a local function; if $v$ is one of those two places, keep the other as an undifferentiated zero factor. Every transferred function at such a ramified $v$ still has zero principal-series trace and zero split regular orbital integrals. The interpolation clause of Book 93 permits this variation while continuing to annihilate the finite norm-character list and normalize the scalar term. At a finite split place, equality of local character distributions gives $(\Pi_B)_v\cong\pi_v$. At a ramified place, the remaining $|R(B)|-1$ local signs leave the single local character identity, which gives $(\Pi_B)_v\cong\operatorname{JL}_v^{-1}(\pi_v)$. Thus every factor is the factor prescribed in (9.3).
+
+If two compact automorphic representations had these factors, they would agree at every place and their restricted tensor products would be isomorphic. Equivalently, Book 93's strong determination identifies them already from their good split Hecke characters. This proves uniqueness. Conversely, starting with a selected noncharacter $B^\times$ representation, the forward extraction of Chapter 8 produces a cusp form with precisely the local factors in the theorem. The inverse construction just proved returns the original representation. Hence the image is exactly, and not merely contained in, the displayed selected split set.
+
+Isolating a corresponding pair with local trace-one functions reduces the comparison to equality of automorphic multiplicities. Book 93 gives multiplicity one on the compact division side and Book 92 gives multiplicity one on the split cuspidal side, proving the multiplicity assertion.
+
+Local transfer preserves central characters, which proves the global central-character assertion. Book 84 proves (9.4) and identifies the selected minimal types; identity transfer outside $W$ preserves the local conductor and type. Formula (9.5) follows directly from right convolution and the right-coset decomposition, so the good operators have exactly the same eigenvalues on the identical local representations.
+
+Finally, assume the additional Book 107 hypothesis in the statement. The good eigenvalues of $\pi$ are algebraic and generate a number field by the rationality theorem of Book 107. They are the same numbers on $\Pi_B$, so the two good Hecke fields coincide. Algebraic conjugation preserves selected special labels, selected admissible tame pairs, the conjugated central character, and the parallel-weight-two algebraic coefficient system. Applying the construction to $\pi^\sigma$ and using local uniqueness gives
+
+$$
+\operatorname{JL}_B^{-1}(\pi^\sigma)
+\cong
+\operatorname{JL}_B^{-1}(\pi)^\sigma.
+\tag{9.6}
+$$
+
+Thus an automorphism fixes $\pi$ if and only if it fixes $\Pi_B$: one implication uses inverse uniqueness, and the other uses injectivity of forward transfer. Their stabilizers in $\operatorname{Aut}(\mathbf C)$, hence their fields of rationality, are equal. This argument transports rationality through the trace-theoretic bijection; it uses no curve cohomology and claims no model over a field smaller than the field of rationality. $\square$
 
 ## 10. Norm characters and the exceptional spectrum
 
@@ -1080,7 +1233,7 @@ The example simultaneously shows why the local Steinberg statement is correct an
 
 ### 11.1 Central characters, twists, and contragredients
 
-Let $\pi=\operatorname{JL}_D(\Pi)$. At split places the central characters agree tautologically; at ramified places local transfer preserves them. Therefore
+Let $\pi=\operatorname{JL}_D(\Pi)$ in either Theorem 9.1 or Theorem 9.2. At split places the central characters agree tautologically; at ramified places local transfer preserves them. Therefore
 
 $$
 \boxed{\omega_\pi=\omega_\Pi.}
@@ -1238,11 +1391,27 @@ $$
 T_v\mapsto t_v,\qquad S_v\mapsto s_v.
 $$
 
-The raw integral Hecke polynomial is
+If $K_vaK_v=\coprod_i a_iK_v$ is a right-coset decomposition, the convention is
+
+$$
+R(\mathbf1_{K_vaK_v})\phi(x)=\sum_i\phi(xa_i).
+\tag{12.1}
+$$
+
+There is no $a_i^{-1}$, no division by the number of cosets, and no hidden degree factor. The raw reciprocal Hecke polynomial is
 
 $$
 P_v(X)=1-t_vX+q_vs_vX^2.
 $$
+
+The same coefficients give the Frobenius-shaped polynomial
+
+$$
+P_v^{\mathrm{Fr}}(X)=X^2-t_vX+q_vs_v.
+\tag{12.2}
+$$
+
+The first polynomial is convenient for Euler factors; the second is the characteristic-polynomial orientation used by right-convolution Hecke correspondences on curves. Neither notation changes the operators $T_v,S_v$.
 
 If $\alpha_v,\beta_v$ are unitary normalized Satake parameters, then
 
@@ -1365,6 +1534,8 @@ If $a_\tau+b_\tau=w$ is independent of $\tau$, the coefficient system has a glob
 
 The theorem does not claim algebraicity for arbitrary Maass-type archimedean parameters. Algebraic and cohomological conclusions require an algebraic coefficient system on the quaternionic side.
 
+In the compact one-split range of Theorem 9.2, the active factor at $\tau _0$ is already the full-group weight-two discrete series and is left unchanged. At every other real place the trivial compact adjoint type transfers to the same weight-two discrete series. Hence the inverse packet has the intrinsic parallel-weight-two infinity type: weight two at the split factor and trivial compact adjoint type at the ramified factors. This is a local archimedean calculation inside the trace-formula proof; no Shimura-curve cohomology is used to establish the global packet.
+
 ### 13.4 Parity and the global center
 
 At a real place, the lowest weight $k_\tau$ determines the action of $-1$ by $(-1)^{k_\tau}$, modified by the prescribed sign of the central character. Because a global Hecke character is trivial on the principal element $-1\in F^\times$, the product of local signs must be one.
@@ -1377,13 +1548,15 @@ Global Jacquet--Langlands preserves rather than repairs this condition: the quat
 
 ### 14.1 From quaternionic fixed vectors to split newvectors
 
-Let $U=\prod_{v<\infty}U_v\subset D^\times(\mathbf A_f)$ be a compact open and let $W$ be an archimedean algebraic weight. The finite quaternionic space decomposes in characteristic zero as
+The finite algebraic-space formula in this paragraph belongs to the totally definite range. For the compact one-split range, the same local conductor and type assertions apply representation by representation, as stated in Theorem 9.2, but no finite double-coset model is substituted for the split real factor.
+
+Let $U=\prod_{v<\infty}U_v\subset D^\times(\mathbf A_f)$ be a compact open and let $\mathcal W$ be an archimedean algebraic weight. The finite quaternionic space decomposes in characteristic zero as
 
 $$
-S_D(U,W,\omega)
+S_D(U,\mathcal W,\omega)
 \cong
 \bigoplus_\Pi
-\operatorname{Hom}_{G(F_\infty)}(W^\vee,\Pi_\infty)
+\operatorname{Hom}_{G(F_\infty)}(\mathcal W^\vee,\Pi_\infty)
 \otimes\Pi_f^U,
 $$
 
@@ -1460,7 +1633,7 @@ Every comparison in this chapter is over characteristic zero. Book 107 construct
 
 ### 15.1 What character identities prove
 
-The global correspondence is characterized by local character identities at ramified places and equality of local representations at split places. Both statements are algebraic after the representations and test functions have been placed over a number field. If $\sigma\in\operatorname{Aut}(\mathbf C)$, applying $\sigma$ to the identities gives
+In either theorem range, the global correspondence is characterized by local character identities at ramified places and equality of local representations at split places. Both statements are algebraic after the representations and test functions have been placed over a number field. If $\sigma\in\operatorname{Aut}(\mathbf C)$, applying $\sigma$ to the identities gives
 
 $$
 \Theta_{\pi_v^\sigma}(g)
@@ -1481,20 +1654,20 @@ This proof does not apply an automorphism to analytic square roots $q_v^{1/2}$ o
 
 ### 15.2 Fields of coefficients
 
-For a cohomological quaternionic eigensystem, define its Hecke field by
+For an algebraic packet in either theorem range, define its good Hecke field by
 
 $$
 E(\Pi)=
 \mathbf Q\bigl(t_v(\Pi),s_v(\Pi):v\notin\Sigma\bigr),
 $$
 
-with the values of the central character included when they are not already fixed. The finite algebraic quaternionic space has a number-field model, so this is a number field. Equality of good-place Hecke polynomials gives
+with the values of the central character included when they are not already fixed. On the split side Book 107 supplies algebraicity and a number-field model for these eigenvalues. Equality of good-place Hecke polynomials then gives
 
 $$
 E(\Pi)=E(\operatorname{JL}_D(\Pi))
 $$
 
-for the finite eigensystems in the same algebraic normalization.
+for the eigensystems in the same algebraic normalization, and proves at once that the quaternionic field is a number field. In the totally definite range the finite algebraic quaternionic class module gives an independent rational model. In the one-split range the equality is transported from the split packet; no finite class-set model and no geometric cohomology realization are being asserted.
 
 This is also equality of fields of rationality. Indeed, let $\sigma\in\operatorname{Aut}(\mathbf C)$. If $\sigma$ fixes the good Hecke field of $\pi=\operatorname{JL}_D(\Pi)$ and the central character, then $\pi^\sigma$ and $\pi$ agree at almost every place, so strong multiplicity one gives $\pi^\sigma\cong\pi$. Conversely an isomorphism fixes all good Hecke eigenvalues. By conjugation compatibility and injectivity of global transfer,
 
@@ -1665,13 +1838,14 @@ For a selected noncharacter automorphic $\Pi$ and $\pi=\operatorname{JL}_D(\Pi)$
 | $v\in R_f$, ramified norm character | ramified Steinberg twist | exponent $2a(\mu_v)$ on both prepared scales |
 | $v\in R_f$, selected dihedral $\pi'(E,\theta)$ | selected dihedral supercuspidal | exponent $v(\mathfrak d_{E/F_v})+f(E/F_v)a_E(\theta)$ |
 | real $v\in R$, compact highest degree $n_v$ | real discrete series | minimal weight $n_v+2$, same center |
+| the unique real $\tau _0\notin R$ in Theorem 9.2 | the same full-group $D_{2,\omega_{\tau _0}}$ | active weight two is unchanged |
 | real or complex $v\notin R$ | the same representation | no change |
 
 In every row, central characters, contragredients, determinant/norm twists, and local $L$- and epsilon factors are compatible. At ramified places the character identity has sign $-1$; over all ramified places the product sign is $+1$.
 
 ### 18.2 A reusable global theorem
 
-The correspondence can be applied through the following checklist.
+The totally definite theorem can be applied through the following checklist.
 
 1. Verify that the quaternionic constituent is not one dimensional and lies in the selected range at every finite division place.
 2. Verify the totally real, totally definite, algebraic infinity-type hypotheses and record the full ramification set $R$, including infinity.
@@ -1684,6 +1858,17 @@ The correspondence can be applied through the following checklist.
 
 In the reverse direction, begin with a cuspidal $\pi$, check the selected special-or-dihedral condition at every finite place of $R$, and check the prescribed algebraic discrete-series type at infinity. Only then apply the local inverse correspondence. The trace formula guarantees that the resulting tensor is an automorphic noncharacter representation of $D^\times(\mathbf A)$.
 
+For the compact one-split theorem, use a separate checklist.
+
+1. Verify that $[F:\mathbf Q]$ is even, choose the active real place $\tau _0$, and choose an odd nonempty finite set $W$.
+2. Form the quaternion algebra ramified at every real place except $\tau _0$ and at exactly the places of $W$; the parity count makes it exist and its real ramification makes it division.
+3. Begin with a cuspidal full-group parallel-weight-two $\pi$ and verify at every $w\in W$ that $\pi_w$ is selected special or selected tame dihedral. A principal series or excluded wild packet at one member of $W$ stops the construction.
+4. Retain $\pi_v$ at every split place, including $\tau _0$, and take the proved local inverse at every place of $R(B)$.
+5. Use Theorem 9.2 to globalize that tensor uniquely as a noncharacter $\Pi_B$. Its central character and good right-convolution eigenvalues are those of $\pi$; under Book 107's additional algebraicity hypothesis, its coefficient field and field of rationality are as well.
+6. At $W$, record the prepared conductor and selected minimal division type by (9.4). In particular, an unramified Steinberg twist corresponds to a maximal-order-fixed norm character but retains prepared exponent one.
+
+This second procedure is exactly the one-split inverse theorem, not an assertion for quaternion algebras with any other real signature.
+
 ### 18.3 Inputs for later applications
 
 The output needed downstream is now precise.
@@ -1693,8 +1878,9 @@ The output needed downstream is now precise.
 - The finite conductor, bad-place newness, central character, twists, dual, and local factors obey the exact selected local dictionary, with the explicit $0\mapsto1$ shift when raw maximal division level is compared with an unramified Steinberg component.
 - Algebraic compact weights become cohomological discrete-series weights, and algebraic Galois conjugation of coefficients commutes with transfer.
 - Multiplicity is one on both sides, while fixed-level vector multiplicities remain governed by their different local towers.
+- If $F$ has even degree and an odd nonempty set $W$ of selected special or tame-dihedral places is chosen, Theorem 9.2 constructs the unique one-split compact quaternionic packet with those inverse local factors. This closes the automorphic arrow from a split parallel-weight-two packet to the compact curve inner form without using the curve's cohomology.
 
-These facts are exactly what is needed before one performs operations on the split representation or inserts the result into a modularity-lifting argument. This book does not construct automorphic induction or base change; those are separate global transfers with their own image and descent conditions. It also does not attach Galois representations to the Hecke system. Here the endpoint is the automorphic representation and its complete local dictionary.
+These facts are the complete automorphic output of the book. The book does not construct automorphic induction or base change; those are separate global transfers with their own image and descent conditions. It also does not attach Galois representations to the Hecke system. Here the endpoint is the automorphic representation and its complete local dictionary.
 
 ### 18.4 Conclusion
 
@@ -1706,4 +1892,4 @@ On the spectral side every ramified local transfer contributes a minus sign. Glo
 
 The exceptional character spectrum reveals one boundary of the theorem. A norm character has legitimate local Steinberg transfers at division places, but its almost-everywhere one-dimensional tensor cannot be cuspidal. Character-clean subtraction removes it together with the corresponding residual determinant trace. The other boundary is local: the proved bijection covers exactly the selected special and tame-dihedral finite packets with the prescribed algebraic infinity type, not primitive wild packets.
 
-The resulting rational dictionary preserves multiplicity, central characters, twists, contragredients, local factors, root numbers, good Hecke polynomials, rationality fields, and algebraic conjugation. It changes raw maximal division level by the explicit discriminant factor and turns compact archimedean weights into discrete-series weights shifted by two. It does not identify integral lattices or congruence indices. Within the selected weight-two range, a computable quaternionic eigensystem becomes a unique split cuspidal representation; that is the durable content established here.
+For algebraic packets, the resulting rational dictionary preserves multiplicity, central characters, twists, contragredients, local factors, root numbers, good Hecke polynomials, rationality fields, and algebraic conjugation. The analytic correspondence and its local identities do not depend on this rationality qualification. It changes raw maximal division level by the explicit discriminant factor and turns compact archimedean weights into discrete-series weights shifted by two. It does not identify integral lattices or congruence indices. In the totally definite selected range, a quaternionic eigensystem becomes a unique split cuspidal representation. In the compact one-split range, a split cusp form satisfying the exact local image condition becomes a unique noncharacter quaternionic representation. These are the two, and only the two, global ranges established here.
