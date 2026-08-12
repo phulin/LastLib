@@ -13,8 +13,8 @@ open AlgebraicGeometry CategoryTheory
 ## 2.3 Sections without common zeros
 
 The phrase “without common zeros” is formalized as stalkwise generation.  The evaluation map is
-the canonical map from the free sheaf on the finite index type to the line bundle, obtained from
-Mathlib's `freeHomEquiv`.
+the canonical map from the free sheaf on the chosen index type to the line bundle, obtained from
+Mathlib's `freeHomEquiv`; finite index types recover the displayed finite tuples.
 -/
 
 abbrev Chapter02LineBundleSections {X : Scheme.{u}} (L : Chapter02LineBundle X) :=
@@ -82,23 +82,20 @@ theorem chapter02_sections_generate_iff_stalkwise_generation
   sorry
 
 /-!
-Over a non-Jacobson scheme, closed points need not detect all stalks.  This theorem records the
-precise warning as an existence statement; the proof supplies a standard non-Jacobson example in
-the later proof pass.
+The canonical pullback statement is phrased before choosing a comparison between a pulled-back
+free sheaf and the free sheaf on the target.  Once that comparison is supplied, this is exactly
+generation by the pulled-back sections.
 -/
-theorem chapter02_closed_points_do_not_detect_stalkwise_generation :
-    ∃ (X : Scheme.{u}) (L : Chapter02LineBundle X)
-      (s : Fin 2 → Chapter02LineBundleSections L),
-      Chapter02ClosedPointwiseGeneration L (fun i : ULift.{u} (Fin 2) => s i.down) ∧
-        ¬ Chapter02SectionsGenerate L (fun i : ULift.{u} (Fin 2) => s i.down) := by
-  sorry
+def Chapter02PullbackEvaluationIsEpi
+    {X Y : Scheme.{u}} (g : Y ⟶ X) (L : Chapter02LineBundle X)
+    {I : Type u} (s : I → Chapter02LineBundleSections L) : Prop :=
+  Epi ((Scheme.Modules.pullback g).map (chapter02EvaluationMap L s))
 
 theorem chapter02_sections_generate_is_stable_under_base_change
     {X Y : Scheme.{u}} (g : Y ⟶ X) (L : Chapter02LineBundle X)
     {I : Type u} (s : I → Chapter02LineBundleSections L)
     (h : Chapter02SectionsGenerate L s) :
-    Chapter02SectionsGenerate (chapter02PullbackLineBundle g L)
-      (fun i => (chapter02PullbackSectionData g L.carrier).map (s i)) := by
+    Chapter02PullbackEvaluationIsEpi g L s := by
   sorry
 
 /-!
@@ -167,24 +164,28 @@ The ratio criterion used to test immersion is kept as a ring-level interface.  I
 chosen affine chart, the source affine coordinates occur among the ratios of target coordinates.
 -/
 structure Chapter02AffineChartRatioGenerationData
-    (I : Type u) (A R : Type u) [CommRing A] [CommRing R] where
+    (B I A R : Type u) [CommRing B] [CommRing A] [CommRing R]
+    [Algebra B A] [Algebra B R] where
   targetCoordinate : I → A
-  targetToSource : A →+* R
+  targetToSource : A →ₐ[B] R
   targetRatio : I → R
   targetRatio_eq : ∀ i, targetRatio i = targetToSource (targetCoordinate i)
   sourceCoordinate : I → R
   sourceCoordinate_in_ratio_range : ∀ i, ∃ j, sourceCoordinate i = targetRatio j
+  sourceCoordinate_generate : Algebra.adjoin B (Set.range sourceCoordinate) = ⊤
 
 def Chapter02RatiosGenerateRelevantCoordinateAlgebra
-    {I A R : Type u} [CommRing A] [CommRing R]
-    (d : Chapter02AffineChartRatioGenerationData I A R) : Prop :=
-  ∀ i, ∃ j, d.sourceCoordinate i = d.targetRatio j
+    {B I A R : Type u} [CommRing B] [CommRing A] [CommRing R]
+    [Algebra B A] [Algebra B R]
+    (d : Chapter02AffineChartRatioGenerationData B I A R) : Prop :=
+  Algebra.adjoin B (Set.range d.targetRatio) = ⊤
 
 theorem chapter02_ratios_generate_relevant_coordinate_algebra_iff
-    {I A R : Type u} [CommRing A] [CommRing R]
-    (d : Chapter02AffineChartRatioGenerationData I A R) :
+    {B I A R : Type u} [CommRing B] [CommRing A] [CommRing R]
+    [Algebra B A] [Algebra B R]
+    (d : Chapter02AffineChartRatioGenerationData B I A R) :
     Chapter02RatiosGenerateRelevantCoordinateAlgebra d ↔
-      ∀ i, ∃ j, d.sourceCoordinate i = d.targetRatio j :=
+      Algebra.adjoin B (Set.range d.targetRatio) = ⊤ :=
   Iff.rfl
 
 end

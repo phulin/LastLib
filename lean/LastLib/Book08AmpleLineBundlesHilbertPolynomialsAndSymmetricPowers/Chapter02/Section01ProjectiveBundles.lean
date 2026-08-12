@@ -21,6 +21,14 @@ relative scheme and universal quotient are the bundled interfaces from `Dependen
 structure Chapter02ProjectiveSpaceData (S : Scheme.{u}) (I : Type u) where
   bundle : Chapter02ProjectiveBundleData S (chapter02FreeQuasiCoherentModule S I)
   coordinateSections : I → bundle.twistingLineBundle.carrier.sections
+  /-- The free sheaf on the target identifies with the pullback of the free sheaf on `S`. -/
+  coordinateComparison :
+    SheafOfModules.free (R := bundle.scheme.ringCatSheaf) I ≅
+      (Scheme.Modules.pullback bundle.projection).obj
+        (chapter02FreeQuasiCoherentModule S I).carrier
+  coordinateSections_spec :
+    coordinateComparison.hom ≫ bundle.universalQuotient =
+      (bundle.twistingLineBundle.carrier.freeHomEquiv).symm coordinateSections
 
 /- LOCAL_DEPENDENCY_GUESS: the free relative Proj has its canonical coordinate sections. -/
 theorem chapter02_projective_space_data_exists
@@ -91,6 +99,22 @@ def chapter02ProjectiveSpaceOverRing
     (R : Type u) [CommRing R] (r : ℕ) : Scheme.{u} :=
   chapter02ProjOfGradedAlgebra (R := R) (A := chapter02PolynomialRing R r)
     (chapter02PolynomialGradedAlgebra R r)
+
+noncomputable def chapter02ProjectiveSpaceOverRingProjection
+    (R : Type u) [CommRing R] (r : ℕ) :
+    chapter02ProjectiveSpaceOverRing R r ⟶
+      AlgebraicGeometry.Spec (CommRingCat.of R) :=
+  chapter02GradedAlgebraToSpec R (chapter02PolynomialGradedAlgebra R r)
+
+/- LOCAL_DEPENDENCY_GUESS: the affine polynomial Proj and the relative free projective bundle agree. -/
+theorem chapter02_projective_space_over_ring_is_relative_projective_space
+    (R : Type u) [CommRing R] (r : ℕ) :
+    ∃ e : chapter02ProjectiveSpaceOverRing R r ≅
+        chapter02ProjectiveSpace (AlgebraicGeometry.Spec (CommRingCat.of R)) r,
+      e.hom ≫ chapter02ProjectiveSpaceProjection
+          (AlgebraicGeometry.Spec (CommRingCat.of R)) r =
+        chapter02ProjectiveSpaceOverRingProjection R r := by
+  sorry
 
 theorem chapter02_projective_bundle_universal_quotient_is_epi
     {S : Scheme.{u}} {E : Chapter02QuasiCoherentModule S}

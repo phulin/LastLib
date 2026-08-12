@@ -6,6 +6,7 @@ import Mathlib.AlgebraicGeometry.Fiber
 import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
 import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
 import Mathlib.AlgebraicGeometry.Morphisms.Immersion
+import Mathlib.AlgebraicGeometry.Morphisms.QuasiCompact
 import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Basic
 import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Functor
@@ -126,6 +127,21 @@ structure Chapter02ProjectiveBundleData
   universalQuotient :
     (Scheme.Modules.pullback projection).obj E.carrier ⟶ twistingLineBundle.carrier
   universalQuotient_is_epi : Epi universalQuotient
+  /-- The representability statement that identifies this package with relative Proj. -/
+  universalProperty : ∀ {T : Scheme.{u}} (f : T ⟶ S),
+    {u : T ⟶ scheme // u ≫ projection = f} ≃
+      Chapter02InvertibleQuotientClass ((Scheme.Modules.pullback f).obj E.carrier)
+  /-- The universal equivalence is normalized by the displayed universal quotient. -/
+  universalProperty_compatible :
+    ∀ {T : Scheme.{u}} (f : T ⟶ S)
+      (u : {u : T ⟶ scheme // u ≫ projection = f}),
+      ∃ p : Chapter02InvertibleQuotientPair ((Scheme.Modules.pullback f).obj E.carrier),
+        universalProperty f u = chapter02QuotientClassMk p ∧
+          ∃ e : p.line.carrier ≅ (Scheme.Modules.pullback u.1).obj twistingLineBundle.carrier,
+            p.quotient ≫ e.hom =
+              (Scheme.Modules.pullbackCongr u.2).inv.app E.carrier ≫
+                (Scheme.Modules.pullbackComp u.1 projection).inv.app E.carrier ≫
+                (Scheme.Modules.pullback u.1).map universalQuotient
 
 /- LOCAL_DEPENDENCY_GUESS: relative Proj of a quasi-coherent module and the universal quotient. -/
 theorem chapter02_relative_projective_bundle_exists
@@ -168,23 +184,26 @@ def chapter02ProjectiveBundleMapOver
     (f : T ⟶ S) (u : T ⟶ chapter02ProjectiveBundle S E) : Prop :=
   u ≫ chapter02ProjectiveBundleProjection S E = f
 
-/-!
-The following composition comparison is a small categorical bridge needed to state the universal
-property with the source morphism written as `u ≫ projection`.  It is independent of the target
-conclusion and can later be replaced by the canonical pullback comparison.
--/
-/- LOCAL_DEPENDENCY_GUESS: pullback functors are pseudofunctorial at the sheaf-of-modules level. -/
-theorem chapter02_pullback_composition_iso_exists
-    {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (M : Z.Modules) :
-    Nonempty (((Scheme.Modules.pullback (f ≫ g)).obj M) ≅
-      (Scheme.Modules.pullback f).obj ((Scheme.Modules.pullback g).obj M)) := by
-  sorry
-
 noncomputable def chapter02PullbackCompositionIso
     {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (M : Z.Modules) :
     ((Scheme.Modules.pullback (f ≫ g)).obj M) ≅
       (Scheme.Modules.pullback f).obj ((Scheme.Modules.pullback g).obj M) :=
-  Classical.choice (chapter02_pullback_composition_iso_exists f g M)
+  (Scheme.Modules.pullbackComp f g).symm.app M
+
+/-!
+The canonical comparison also transports an invertible quotient along a composite.  Keeping this
+pair-level map explicit prevents later quotient-class maps from silently choosing unrelated
+representatives.
+-/
+def chapter02PullbackInvertibleQuotientPairAlongComposition
+    {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) {E : Z.Modules}
+    (p : Chapter02InvertibleQuotientPair ((Scheme.Modules.pullback g).obj E)) :
+    Chapter02InvertibleQuotientPair ((Scheme.Modules.pullback (f ≫ g)).obj E) where
+  line := chapter02PullbackLineBundle f p.line
+  quotient :=
+    (chapter02PullbackCompositionIso f g E).hom ≫
+      (Scheme.Modules.pullback f).map p.quotient
+  quotient_is_epi := by sorry
 
 /-!
 Mathlib's `free` sheaf gives the canonical free module and its global-section equivalence.  The
@@ -230,6 +249,8 @@ proof work should replace it by the actual sheaf tensor powers and coherence.
 structure Chapter02LineBundlePowerData {S : Scheme.{u}} (L : Chapter02LineBundle S) where
   power : ℕ → S.Modules
   power_invertible : ∀ d, Chapter02InvertibleModule (power d)
+  power_zero : power 0 ≅ SheafOfModules.unit S.ringCatSheaf
+  power_one : power 1 ≅ L.carrier
 
 /- LOCAL_DEPENDENCY_GUESS: tensor powers of an invertible sheaf. -/
 theorem chapter02_line_bundle_power_data_exists
@@ -263,6 +284,21 @@ def chapter02ProjOfGradedAlgebra
     (G : Chapter02GradedAlgebra R A) : Scheme.{u} := by
   letI : GradedAlgebra G.component := G.graded
   exact AlgebraicGeometry.Proj G.component
+
+/-!
+The degree-zero projection supplies the canonical structure morphism of a graded `R`-algebra.
+This is the ring-level bridge used by both ordinary projective space and homogeneous quotients.
+-/
+noncomputable def chapter02GradedAlgebraToSpec
+    (R : Type u) [CommRing R]
+    {A : Type u} [CommRing A] [Algebra R A]
+    (G : Chapter02GradedAlgebra R A) :
+    chapter02ProjOfGradedAlgebra G ⟶ AlgebraicGeometry.Spec (CommRingCat.of R) := by
+  letI : GradedAlgebra G.component := G.graded
+  exact AlgebraicGeometry.Proj.toSpecZero G.component ≫
+    AlgebraicGeometry.Spec.map
+      (CommRingCat.ofHom
+        ((GradedRing.projZeroRingHom' G.component).comp (algebraMap R A)))
 
 /- LOCAL_DEPENDENCY_GUESS: the pinned API has `SymmetricAlgebra` but no canonical internal grading. -/
 theorem chapter02_symmetric_algebra_grading_exists

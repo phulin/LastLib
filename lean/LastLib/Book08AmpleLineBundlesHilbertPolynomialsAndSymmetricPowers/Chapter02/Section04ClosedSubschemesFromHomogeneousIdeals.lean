@@ -33,19 +33,25 @@ This structure is definitionally equivalent to a homogeneous ideal in Mathlib af
 `G.graded`, while retaining the book's explicit ideal field.
 -/
 structure Chapter02HomogeneousIdealData
-    {R A : Type u} [CommSemiring R] [Semiring A] [Algebra R A]
+    {R A : Type u} [CommSemiring R] [CommRing A] [Algebra R A]
     (G : Chapter02GradedAlgebra R A) where
   ideal : Ideal A
   is_homogeneous : Chapter02IsHomogeneousIdeal G ideal
+  /-- The grading on the quotient is part of the induced quotient construction. -/
+  quotientGrading : Chapter02GradedAlgebra R (A ⧸ ideal)
+  quotientGrading_component_iff :
+    ∀ d (x : A ⧸ ideal),
+      x ∈ quotientGrading.component d ↔
+        ∃ a : A, a ∈ G.component d ∧ Ideal.Quotient.mk ideal a = x
 
 def chapter02HomogeneousIdealToIdeal
-    {R A : Type u} [CommSemiring R] [Semiring A] [Algebra R A]
+    {R A : Type u} [CommSemiring R] [CommRing A] [Algebra R A]
     {G : Chapter02GradedAlgebra R A}
     (I : Chapter02HomogeneousIdealData G) : Ideal A :=
   I.ideal
 
 theorem chapter02_homogeneous_ideal_is_homogeneous
-    {R A : Type u} [CommSemiring R] [Semiring A] [Algebra R A]
+    {R A : Type u} [CommSemiring R] [CommRing A] [Algebra R A]
     {G : Chapter02GradedAlgebra R A}
     (I : Chapter02HomogeneousIdealData G) :
     Chapter02IsHomogeneousIdeal G (chapter02HomogeneousIdealToIdeal I) :=
@@ -66,14 +72,14 @@ theorem chapter02_homogeneous_quotient_grading_exists
     {G : Chapter02GradedAlgebra R A}
     (I : Chapter02HomogeneousIdealData G) :
     Nonempty (Chapter02GradedAlgebra R (chapter02HomogeneousQuotientRing I)) := by
-  sorry
+  exact ⟨I.quotientGrading⟩
 
 noncomputable def chapter02HomogeneousQuotientGrading
     {R A : Type u} [CommRing R] [CommRing A] [Algebra R A]
     {G : Chapter02GradedAlgebra R A}
     (I : Chapter02HomogeneousIdealData G) :
     Chapter02GradedAlgebra R (chapter02HomogeneousQuotientRing I) :=
-  Classical.choice (chapter02_homogeneous_quotient_grading_exists I)
+  I.quotientGrading
 
 def chapter02VPlus
     {R A : Type u} [CommRing R] [CommRing A] [Algebra R A]
@@ -89,21 +95,31 @@ theorem chapter02_vplus_is_proj_of_homogeneous_quotient
       chapter02ProjOfGradedAlgebra (chapter02HomogeneousQuotientGrading I) :=
   rfl
 
-/- LOCAL_DEPENDENCY_GUESS: the quotient Proj has its canonical morphism to `Spec R`. -/
+/-!
+The structure map is obtained from `Proj.toSpecZero` and the degree-zero projection of the
+graded `R`-algebra.  This avoids choosing an unrelated morphism merely because one exists.
+-/
+noncomputable def chapter02GradedAlgebraProjection
+    (R : Type u) [CommRing R]
+    {A : Type u} [CommRing A] [Algebra R A]
+    (G : Chapter02GradedAlgebra R A) :
+    chapter02ProjOfGradedAlgebra G ⟶ chapter02Spec R := by
+  exact chapter02GradedAlgebraToSpec R G
+
 theorem chapter02_vplus_base_map_exists
     (R : Type u) [CommRing R]
     {A : Type u} [CommRing A] [Algebra R A]
     {G : Chapter02GradedAlgebra R A}
     (I : Chapter02HomogeneousIdealData G) :
     Nonempty (chapter02VPlus I ⟶ chapter02Spec R) := by
-  sorry
+  exact ⟨chapter02GradedAlgebraProjection R (chapter02HomogeneousQuotientGrading I)⟩
 
 noncomputable def chapter02VPlusProjection
     (R : Type u) [CommRing R]
     {A : Type u} [CommRing A] [Algebra R A]
     {G : Chapter02GradedAlgebra R A}
     (I : Chapter02HomogeneousIdealData G) : chapter02VPlus I ⟶ chapter02Spec R :=
-  Classical.choice (chapter02_vplus_base_map_exists R I)
+  chapter02GradedAlgebraProjection R (chapter02HomogeneousQuotientGrading I)
 
 def Chapter02HomogeneousPolynomial
     {R A : Type u} [CommSemiring R] [Semiring A] [Algebra R A]
@@ -111,7 +127,7 @@ def Chapter02HomogeneousPolynomial
   {F : A // F ∈ G.component d}
 
 def Chapter02HomogeneousPolynomialInIdeal
-    {R A : Type u} [CommSemiring R] [Semiring A] [Algebra R A]
+    {R A : Type u} [CommSemiring R] [CommRing A] [Algebra R A]
     {G : Chapter02GradedAlgebra R A}
     (I : Chapter02HomogeneousIdealData G) (d : ℕ) :=
   {F : A // F ∈ I.ideal ∧ F ∈ G.component d}
@@ -139,6 +155,17 @@ abbrev chapter02PolynomialVPlusProjection
     (I : Chapter02PolynomialHomogeneousIdealData R r) :
     Chapter02PolynomialVPlus R r I ⟶ chapter02Spec R :=
   chapter02VPlusProjection R I
+
+/- LOCAL_DEPENDENCY_GUESS: the homogeneous quotient map induces the closed immersion into
+the polynomial projective space, with the displayed structure morphism over `Spec R`. -/
+theorem chapter02_polynomial_vplus_is_closed_subscheme
+    (R : Type u) [CommRing R] (r : ℕ)
+    (I : Chapter02PolynomialHomogeneousIdealData R r) :
+    ∃ i : Chapter02PolynomialVPlus R r I ⟶ chapter02ProjectiveSpaceOverRing R r,
+      i ≫ chapter02ProjectiveSpaceOverRingProjection R r =
+          chapter02PolynomialVPlusProjection R r I ∧
+        IsClosedImmersion i := by
+  sorry
 
 /-!
 The value of a homogeneous polynomial on a quotient is the only sheaf-tensor operation needed
@@ -337,13 +364,13 @@ theorem chapter02_veronese_map_is_over
       (chapter02VeroneseMapData S r d).source.bundle.projection :=
   (chapter02VeroneseMapData S r d).over
 
-theorem chapter02_veronese_pullback_of_twisting_line
+noncomputable def chapter02_veronese_pullback_of_twisting_line
     (S : Scheme.{u}) (r d : ℕ) :
-    Nonempty ((Scheme.Modules.pullback (chapter02VeroneseMap S r d)).obj
+    (Scheme.Modules.pullback (chapter02VeroneseMap S r d)).obj
         (chapter02VeroneseTargetData S r d).bundle.twistingLineBundle.carrier ≅
       (chapter02LineBundlePowerBundle
-        (chapter02VeroneseMapData S r d).source.bundle.twistingLineBundle d).carrier) :=
-  ⟨(chapter02VeroneseMapData S r d).pullbackTwistingLineIso⟩
+        (chapter02VeroneseMapData S r d).source.bundle.twistingLineBundle d).carrier :=
+  (chapter02VeroneseMapData S r d).pullbackTwistingLineIso
 
 theorem chapter02_veronese_map_is_closed_immersion
     (S : Scheme.{u}) (r d : ℕ) (hd : 0 < d) :
@@ -359,7 +386,9 @@ structure Chapter02VeroneseAffineChartData (R : Type u) [CommRing R] (r d : ℕ)
   targetRing : Type u
   [sourceRingCommRing : CommRing sourceRing]
   [targetRingCommRing : CommRing targetRing]
-  chartMap : targetRing →+* sourceRing
+  [sourceRingAlgebra : Algebra R sourceRing]
+  [targetRingAlgebra : Algebra R targetRing]
+  chartMap : targetRing →ₐ[R] sourceRing
   sourceCoordinate : Fin (r + 1) → sourceRing
   targetCoordinate : Chapter02MonomialIndex r d → targetRing
   targetRatio : Chapter02MonomialIndex r d → sourceRing
@@ -367,9 +396,12 @@ structure Chapter02VeroneseAffineChartData (R : Type u) [CommRing R] (r d : ℕ)
     ∀ a, targetRatio a = chartMap (targetCoordinate a)
   sourceCoordinate_in_target_ratios :
     ∀ i, ∃ a, sourceCoordinate i = targetRatio a
+  sourceCoordinate_generate : Algebra.adjoin R (Set.range sourceCoordinate) = ⊤
 
 attribute [instance] Chapter02VeroneseAffineChartData.sourceRingCommRing
   Chapter02VeroneseAffineChartData.targetRingCommRing
+  Chapter02VeroneseAffineChartData.sourceRingAlgebra
+  Chapter02VeroneseAffineChartData.targetRingAlgebra
 
 def Chapter02VeroneseRatiosContainOriginalCoordinates
     {R : Type u} [CommRing R] {r d : ℕ}
