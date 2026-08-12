@@ -24,14 +24,14 @@
    - [The one-edge quotient](#44-the-one-edge-quotient)
 5. [Cohomology of a group acting on a tree](#5-cohomology-of-a-group-acting-on-a-tree)
    - [The cellular resolution](#51-the-cellular-resolution)
-    - [The Mayer--Vietoris sequence](#52-the-mayer--vietoris-sequence)
+   - [The Mayer--Vietoris sequence](#52-the-mayer--vietoris-sequence)
    - [The kernel of the two degeneracy restrictions](#53-the-kernel-of-the-two-degeneracy-restrictions)
    - [Hecke action on arithmetic characters](#54-hecke-action-on-arithmetic-characters)
-6. [Geometric Ihara injectivity](#6-geometric-ihara-injectivity)
+6. [The geometric Ihara criterion](#6-the-geometric-ihara-criterion)
    - [Complex uniformization and comparison](#61-complex-uniformization-and-comparison)
    - [The degeneracy map as restriction](#62-the-degeneracy-map-as-restriction)
-   - [The Eisenstein kernel theorem](#63-the-eisenstein-kernel-theorem)
-   - [The mod-$\ell$ Ihara theorem](#64-the-mod-ell-ihara-theorem)
+   - [The exact kernel and its congruence part](#63-the-exact-kernel-and-its-congruence-part)
+   - [The residual Ihara criterion](#64-the-residual-ihara-criterion)
 7. [Integral saturation](#7-integral-saturation)
    - [Freeness of curve cohomology](#71-freeness-of-curve-cohomology)
    - [From residual injectivity to a primitive image](#72-from-residual-injectivity-to-a-primitive-image)
@@ -127,15 +127,15 @@ $$
 
 The kernel of $\delta$ can contain a finite subgroup even if its tangent map is injective. Such a subgroup is harmless at a non-Eisenstein localization only after its Hecke action has been calculated. Declaring the kernel finite is not enough: its order may be divisible by $\ell$, and its reduction may then create exactly the kernel in (1.2).
 
-This book proves the needed conclusion by identifying the entire residual kernel as Eisenstein. It then turns residual injectivity into saturation by elementary integral algebra. The semistable model at $v$ supplies the further monodromy and component-group description needed to know what survives in the new quotient.
+The tree calculation below identifies the entire residual kernel exactly. It also proves that the part coming from congruence-continuous characters of the norm-one arithmetic group is Eisenstein. Reduced norm, the center, and the component set are incorporated separately through component routing, central-character twists, and tame descent. What the calculation does not prove from the stated catalog hypotheses is that every abstract finite character of the $S$-arithmetic group is congruence-continuous, or the weaker assertion that the remaining characters have Eisenstein Hecke transfer. That distinction is decisive. The integral saturation and component package is therefore proved under the exact residual vanishing condition isolated in Section 6.4; Section 14 records why removing that condition requires a new arithmetic theorem.
 
 ### 1.3 The geometric mechanism
 
 There are two geometries, one generic and one integral.
 
-At the generic place, the Bruhat--Tits tree for $\operatorname{PGL}_2(F_v)$ has two adjacent vertices stabilized by the two hyperspecial levels and an edge stabilized by the Iwahori level. The two degeneracy maps become the two restriction maps in the cohomology of vertex and edge stabilizers. The cellular resolution of the tree shows that the kernel comes from the cohomology of the group obtained by allowing arbitrary level at $v$. In degree one with constant coefficients, this cohomology consists of additive characters. A direct double-coset calculation shows that every away-from-$v$ Hecke operator acts on these characters by its Eisenstein degree. Non-Eisenstein localization therefore kills the kernel.
+At the generic place, the Bruhat--Tits tree for $\operatorname{PGL}_2(F_v)$ has two adjacent vertices stabilized by the two hyperspecial levels and an edge stabilized by the Iwahori level. The two degeneracy maps become the two restriction maps in the cohomology of vertex and edge stabilizers. The cellular resolution of the tree shows that the kernel comes from the cohomology of the group obtained by allowing arbitrary level at $v$. In degree one with constant coefficients, this cohomology consists of additive characters. A direct double-coset calculation expresses the difference between a good Hecke operator and its Eisenstein degree as an explicit commensurator discrepancy. That discrepancy vanishes on congruence-continuous characters; its possible noncongruence part is the exact unresolved term. Non-Eisenstein localization kills the whole kernel only when that remaining term vanishes.
 
-At the integral place, the Iwahori PEL model is regular semistable. Its completed nodal charts are
+At the integral place, the fine Iwahori PEL model is regular semistable. Its completed nodal charts are
 
 $$
 xy=\pi_v.
@@ -155,13 +155,17 @@ $$
 
 has cokernel equal to the geometric Néron component group. Thus the same bad fiber records both the nontrivial monodromy of the new quotient and the finite obstruction that rational linear algebra would erase.
 
+There is a second, logically independent Smith module. Projecting the old image to the normalized components gives the branch matrix $\left(\begin{smallmatrix}1&F_v^*\\F_v^*&1\end{smallmatrix}\right)$. Under the residual Ihara condition this is an equal-rank injection, so its cokernel is finite and measures whether the sum of the old lattice and the bottom graph lattice is primitive. Full old-image saturation does not force this cokernel to vanish, so the component filtration below retains it explicitly.
+
 ### 1.4 Dependency boundary
 
-Five earlier books supply the exact imported facts.
+Six earlier books supply the exact imported facts.
 
-Book 12 supplies the normalization sequence of a nodal curve, graph homology, weighted monodromy pairings, their discriminant groups, subdivision invariance, and functoriality under finite maps. Book 39 supplies Néron models, extension of Jacobian homomorphisms, identity components, component maps, and the Raynaud description of a semistable Jacobian. Book 41 supplies integral pull--norm correspondences, adjunction, specialization, and the intersection- and graph-lattice formulas for their component actions. Book 122 supplies the two Shimura degeneracy maps with the right-double-coset orientation, their adjoints, and the exact old-level Gram formalism; it explicitly does not supply saturation. Book 131 supplies the parahoric PEL model, the chart $xy=\pi_v$, strict semistability, the graph description of monodromy, and Hecke functoriality away from $v$; it explicitly makes integral conclusions conditional on saturation.
+Book 12 supplies the normalization sequence of a nodal curve, graph homology, weighted monodromy pairings, their discriminant groups, subdivision invariance, and functoriality under finite maps. Book 39 supplies Néron models, extension of Jacobian homomorphisms, identity components, component maps, and the Raynaud description of a semistable Jacobian. Book 41 supplies integral pull--norm correspondences, adjunction, specialization, and the intersection- and graph-lattice formulas for their component actions. Book 122 supplies the two Shimura degeneracy maps with the right-double-coset orientation, their adjoints, and the exact old-level Gram formalism; it explicitly does not supply saturation. Book 126 supplies rank-one strong approximation for the simply connected norm-one quaternion group, with the required archimedean noncompactness and arbitrary compact-open conditions at every finite place. Book 131 supplies the parahoric PEL model, the chart $xy=\pi_v$, strict semistability, the graph description of monodromy, and Hecke functoriality away from $v$; it explicitly makes integral conclusions conditional on saturation.
 
-The new work here is the tree calculation, the Eisenstein-kernel theorem, residual injectivity, the primitive-image theorem, the torsion-free new quotient, and their synthesis with the monodromy and component sequences. No rational old--new decomposition, later level-change theorem, or later automorphic comparison is used to prove them.
+No listed prerequisite computes the prime-to-small-prime abelianization of the norm-one $S$-arithmetic group or the action of its good-place commensurators. In particular Book 126 proves strong approximation, which gives density and the one-edge tree quotient, but not a congruence-subgroup property and not continuity of an abstract finite character for the congruence topology.
+
+The new work here is the specialization of strong approximation to the tree quotient, the exact Bass--Serre and Mayer--Vietoris calculation, the good-place calculation on congruence-continuous norm-one characters with the separate norm and component routing, the precise isolation of the noncongruence character obstruction, the conditional primitive-image and torsion-free-quotient theorems, and their synthesis with the monodromy, component, and branch-correction sequences. No rational old--new decomposition, later level-change theorem, or later automorphic comparison is used to conceal the unresolved arithmetic condition.
 
 ## 2. The clean Shimura-curve datum
 
@@ -175,13 +179,31 @@ $$
 G=\operatorname{Res}_{F/\mathbf Q}B^\times
 $$
 
-with the central convention already fixed in the chosen canonical model. For the group-theoretic calculation it is convenient to use the derived group
+with the central convention already fixed in the chosen canonical model. For the group-theoretic calculation put $H=\operatorname{SL}_1(B)$ over $F$ and use the derived group
 
 $$
-G^1=\operatorname{Res}_{F/\mathbf Q}\operatorname{SL}_1(B).
+G^1=\operatorname{Res}_{F/\mathbf Q}H.
 $$
 
-Passing from $G$ to $G^1$ fixes a connected component and removes the reduced-norm character. The finite component routing of a central double coset is handled before this passage, as in the established Shimura-curve convention. We require the chosen component union to be stable under every correspondence used below.
+Passing from $G$ to $G^1$ fixes a connected component and removes the reduced-norm coordinate, but it need not identify the effective arithmetic stabilizers literally. Let $\overline\Gamma$ be the effective projective stabilizer of one connected $G$-component and let $\Gamma^1$ be the image of its norm-one subgroup. Reduced norm modulo central squares gives an injection
+
+$$
+\overline\Gamma/\Gamma^1
+\hookrightarrow F^\times/F^{\times2}.
+$$
+
+Indeed, if the reduced norm of $b$ is $z^2$, then $z^{-1}b$ has norm one and represents the same projective element. This quotient has exponent two and is finite because the arithmetic stabilizer is finitely generated. Ineffective rational central units have already been divided out; any remaining central kernel of the norm-one cover also has order at most two.
+
+Write $\Delta_{\mathrm{cen}}$ for this finite effective descent group. Since $\ell\ge7$, restriction and averaging give
+
+$$
+H^j(\overline\Gamma,A)
+\simeq H^j(\Gamma^1,A)^{\Delta_{\mathrm{cen}}}
+$$
+
+for every finite $\ell$-primary trivial coefficient module $A$. Indeed the Hochschild--Serre spectral sequence has terms $H^a(\Delta_{\mathrm{cen}},H^b(\Gamma^1,A))$, and averaging by $|\Delta_{\mathrm{cen}}|^{-1}$ kills every term with $a>0$. The same statement holds after adjoining any normal fine-cover deck group of order prime to $\ell$. Choose one common normal cover at hyperspecial and Iwahori level, so that its descent action preserves the two vertex types and both degeneracy maps. We write $\Delta$ for the resulting finite descent group and take $\Delta=1$ when the chosen curve is already the norm-one fine cover. Thus reduced norm and the center contribute exact prime-to-$\ell$ invariants, not new $\ell$-primary characters.
+
+The finite component routing of a central double coset is handled before this passage, as in the established Shimura-curve convention. We require the chosen component union to be stable under every correspondence used below, and every norm-one tree sequence below is understood componentwise before applying the exact functor $(\ )^\Delta$.
 
 Fix a compact open
 
@@ -241,28 +263,44 @@ $$
 
 After choosing an embedding $\overline F\hookrightarrow\mathbf C$, comparison identifies these with singular cohomology. The compact oriented surfaces underlying the curves have torsion-free integral first homology, so $M$ and $N$ are finite free over $\mathcal O$. This elementary fact will be proved in Section 7.1 rather than assumed at the point where saturation is needed.
 
-At nonneat level, choose a neat normal subgroup $U'\triangleleft U$. If the order of the deck group is a unit in $\mathcal O$, taking invariants is exact and the theorem descends. If $\ell$ divides that order, a stabilizer cohomology class can enter the Ihara kernel. Such a level is outside the clean theorem; it requires a stack-level or type-enhanced calculation.
+At nonneat level, choose a neat normal subgroup $U'\triangleleft U$. If the order of the deck group is a unit in $\mathcal O$, taking invariants is exact and every result, including the abelian Ihara condition when known upstairs, descends. If $\ell$ divides that order, a stabilizer cohomology class can enter the Ihara kernel. Such a level is outside the clean conditional package; it requires a stack-level or type-enhanced calculation.
 
 ### 2.4 Hecke and Eisenstein conventions
 
-Let $\Sigma$ contain $v$, the places where $B$, the level, or the integral PEL datum is ramified, and the coefficient place. For $w\notin\Sigma$, let $T_w$ be the unnormalized spherical right-double-coset operator. Thus $T_w$ has degree $q_w+1$ on constants. Let $S_w$ be the central one-coset operator.
+Let $\Sigma$ contain $v$, the places where $B$, the level, or the integral PEL datum is ramified, and the coefficient place. After fixing representatives for the finite component union, enlarge $\Sigma$ by the finitely many places where one of those representatives is nonintegral. For $w\notin\Sigma$, let $T_w$ be the unnormalized spherical right-double-coset operator. Thus $T_w$ has degree $q_w+1$ on constants. Let $S_w$ be the central one-coset operator.
 
-For the fixed connected, trivial-central-character block used in the clean theorem, define the Eisenstein ideal
+Component routing must be fixed before an Eisenstein ideal is named. On a Hecke-stable union of geometric components, let $P_w$ be the one-coset transport induced by right multiplication by the abelianized class of a uniformizer at $w$. On labels it is a permutation; on the direct sum of component cohomologies it includes the canonical right-translation identification, expressed in chosen uniformizations by the corresponding rational transition. The intrinsic arithmetic Eisenstein relations on that union are
+
+$$
+T_w-(q_w+1)P_w,
+\qquad
+S_w-P_w^2. \tag{2.2}
+$$
+
+If a central or component character $\eta$ is selected, then $P_w$ acts by $\eta_w(\varpi_w)$ and these relations become
+
+$$
+T_w-(q_w+1)\eta_w(\varpi_w),
+\qquad
+S_w-\eta_w(\varpi_w)^2. \tag{2.3}
+$$
+
+The clean block used below is a Hecke-stable block on which both component routing and the central character are trivial. There $P_w=1$, and we write
 
 $$
 \mathfrak E=\bigl(T_w-(q_w+1),\ S_w-1:
-w\notin\Sigma\bigr). \tag{2.2}
+w\notin\Sigma\bigr). \tag{2.4}
 $$
 
-A maximal ideal $\mathfrak m$ of the integral Hecke image is **non-Eisenstein** if it does not contain $\mathfrak E$ in the sense that at least one generator in (2.2) acts invertibly after localization at $\mathfrak m$. Equivalently, the simultaneous scalar system carried by arithmetic characters does not occur at $\mathfrak m$.
+A maximal ideal $\mathfrak m$ of the integral Hecke image is **non-Eisenstein** if it does not contain $\mathfrak E$ in the sense that at least one generator in (2.4) acts invertibly after localization at $\mathfrak m$. Equivalently, the trivial arithmetic scalar system does not occur at $\mathfrak m$. On a nontrivial component or central block one uses (2.2) or (2.3), not (2.4).
 
-This definition is deliberately operator-theoretic. When a residual two-dimensional representation has already been constructed, absolute irreducibility implies non-Eisensteinness, but no such representation is needed in the proof. For a nontrivial fixed central character, the degree relation is twisted by the corresponding one-dimensional character. The proof is identical after replacing (2.2) by that visibly twisted scalar ideal. We state the main theorem in the trivial-central form because it is the exact clean block used in the coefficient-prime range under consideration.
+This definition is deliberately operator-theoretic. When a residual two-dimensional representation has already been constructed, absolute irreducibility implies non-Eisensteinness, but no such representation is needed in the conditional argument. The calculation below proves the displayed relations on congruence-continuous arithmetic characters. It does not build continuity into the word “character.”
 
-There are two reasons to define the ideal using infinitely many good operators. First, it makes the definition independent of a chosen generating set of the finite image algebra. Since the image algebra acting on a fixed finite module is finite over $\mathcal O$, finitely many of the displayed relations generate the same localized ideal on that module. Second, it separates a geometric condition from a Galois interpretation. The proof below only needs one operator $T_w-(q_w+1)$ or $S_w-1$ to become a unit. It never needs a representation attached to $\mathfrak m$.
+There are two reasons to define the ideal using infinitely many good operators. First, it makes the definition independent of a chosen generating set of the finite image algebra. Since the image algebra acting on a fixed finite module is finite over $\mathcal O$, finitely many of the displayed relations generate the same localized ideal on that module. Second, it separates a geometric condition from a Galois interpretation. Once the exact residual condition of Section 6.4 is imposed, the proof only needs one operator $T_w-(q_w+1)$ or $S_w-1$ to become a unit. It never needs a representation attached to $\mathfrak m$.
 
-If a central character $\chi$ is retained, a one-dimensional unramified system has two Satake characters, one of which is trivial after normalization and the other determined by $\chi$. The scalar relation becomes the trace of those two characters. Rather than guess an inverse diamond, one obtains it by applying the declared right-coset correspondence to the central component. The transpose identity then checks the result. This is why the main theorem records the trivial-central relation explicitly and treats the twisted relation by the invariant matrix (11.4).
+If a central character is retained, a one-dimensional unramified system has two Satake characters, one of which is trivial after normalization and the other determined by that character. The scalar relation is (2.3). Rather than guess an inverse diamond, one obtains it by applying the declared right-coset correspondence to the central component. The transpose identity then checks the result. This is why the main theorem records the trivial-central relation explicitly and treats the twisted relation by the invariant matrix (11.4).
 
-A maximal ideal supported only on component permutation is not automatically Eisenstein. The chosen component union must first be stable, so every $T_w$ is an actual endomorphism. Only then does (2.2) make sense in one image algebra. Component routing and Eisenstein localization solve different typing problems.
+A maximal ideal supported only on component permutation is not automatically Eisenstein. The chosen component union must first be stable, so every $T_w$ is an actual endomorphism. Only then do (2.2)--(2.4) make sense in one image algebra. Component routing and Eisenstein localization solve different typing problems.
 
 ## 3. Integral linear algebra before geometry
 
@@ -470,7 +508,7 @@ and has $q_v+1$ points. Nonbacktracking paths of length $r$ correspond to relati
 Let
 
 $$
-\Gamma^v=G^1(F)\cap U^{1,v}, \tag{4.3}
+\Gamma^v=H(F)\cap U^{1,v}, \tag{4.3}
 $$
 
 where $U^{1,v}$ is the part away from $v$ of the chosen level in the norm-one group. We impose no condition at $v$ in (4.3). Inside $\Gamma^v$ define
@@ -483,21 +521,21 @@ $$
 \Gamma_e=\operatorname{Stab}([L_0],[L_1]). \tag{4.4}
 $$
 
-After conjugating $\Gamma_1$ by the chosen $h_v$, the quotients $\Gamma_0\backslash\mathfrak H$ and $\Gamma_1\backslash\mathfrak H$ are the two copies of the lower-level complex Shimura curve. The quotient $\Gamma_e\backslash\mathfrak H$ is the Iwahori-level curve. The inclusions $\Gamma_e\subset\Gamma_i$ induce its two degeneracy maps.
+The quotient $\Gamma_0\backslash\mathfrak H$ is the first lower-level component. Right translation by the finite adele $h_v$ routes the second vertex to a lower-level component; the component formula of Book 122 supplies the rational transition which identifies that component with $\Gamma_1\backslash\mathfrak H$. The quotient $\Gamma_e\backslash\mathfrak H$ is the Iwahori-level curve. The inclusions $\Gamma_e\subset\Gamma_i$, with that rational transition on the second leg, induce its two degeneracy maps. No local adele is being used to conjugate a diagonal rational group.
 
 There is no orientation reversal in $\Gamma^v$. An element reversing the edge would exchange vertex types, but every norm-one element has determinant valuation zero under the chosen splitting. This matters in the cellular resolution: the edge stabilizer acts trivially on the chosen orientation module.
 
 ### 4.4 The one-edge quotient
 
-We need the action of $\Gamma^v$ on $\mathscr T_v$ to have one edge as quotient. This is the precise strong-approximation input, so we prove the form being used.
+We need the action of $\Gamma^v$ on $\mathscr T_v$ to have one edge as quotient. This is exactly the rank-one strong-approximation theorem proved in Book 126, Section 6.2; it is not a consequence of weak approximation on a rational chart.
 
-**Theorem 4.2 (strong approximation in the required form).** Let $B/F$ be a quaternion algebra split at the distinguished real place. For every open compact $U^{1,v}\subset G^1(\mathbf A_f^v)$, the projection of
+**Theorem 4.2 (strong approximation in the required form).** Let $B/F$ be a quaternion algebra split at the distinguished real place. For every open compact $U^{1,v}\subset H(\mathbf A_{F,f}^v)$, the projection of
 
 $$
-G^1(F)\cap U^{1,v}
+H(F)\cap U^{1,v}
 $$
 
-to $G^1(F_v)\simeq\operatorname{SL}_2(F_v)$ is dense. Consequently $\Gamma^v$ is transitive on edges of $\mathscr T_v$ and on vertices of each type, and
+to $H(F_v)\simeq\operatorname{SL}_2(F_v)$ is dense. Consequently $\Gamma^v$ is transitive on edges of $\mathscr T_v$ and on vertices of each type, and
 
 $$
 \Gamma^v\backslash\mathscr T_v
@@ -505,82 +543,31 @@ $$
 
 is a single closed edge with its two endpoints.
 
-**Proof.** We give the approximation argument for the norm-one quaternion group. Choose finitely many places $S$ containing $v$, every place at which the prescribed compact open is not maximal, and the distinguished split real place. The affine quadric
+**Proof.** The group $H$ is simply connected. Because $B$ is split at the distinguished real place $\tau$, the group $H(F_\tau)$ is $\operatorname{SL}_2(\mathbf R)$ and is noncompact. The rank-one strong-approximation theorem of Book 126, Section 6.2, therefore says that
 
 $$
-Q(x)=\operatorname{Nrd}(x)=1 \tag{4.5}
+\operatorname{SL}_1(B)(F)
+\quad\hbox{is dense in}\quad
+\operatorname{SL}_1(B)(\mathbf A_{F,f}). \tag{4.5}
 $$
 
-has the rational point $1$. Projection from this point gives a rational parametrization on the complement of the tangent hyperplane: if $z$ lies in the trace-zero subspace and $1-Q(z)\ne0$, then
+This theorem includes the integral compact-open condition at every finite place outside any prescribed finite set. Apply it to the nonempty adelic open
 
 $$
-c(z)=(1+z)(1-z)^{-1} \tag{4.6}
+W_v\times U^{1,v}
+\subset
+H(F_v)\times H(\mathbf A_{F,f}^v), \tag{4.6}
 $$
 
-has reduced norm one, and every element with $-1$ not an eigenvalue is obtained in this way. Formula (4.6) is the quaternionic Cayley transform.
-
-Let $g_v\in G^1(F_v)$ and let $W_v$ be a neighborhood of it. At every place of $S\setminus\{v\}$ choose an open subset of the prescribed factor of $U^{1,v}$, and at every finite place outside $S$ use the maximal norm-one compact. Lemma 4.3 below produces a rational norm-one element in all of these sets. It therefore belongs to $G^1(F)\cap U^{1,v}$ and its $v$-component belongs to $W_v$. Since $g_v$ and $W_v$ were arbitrary, the required projection is dense.
+where $W_v$ is an arbitrary neighborhood of an arbitrary element of $H(F_v)$. A rational point in this open lies in $H(F)\cap U^{1,v}$ and has $v$-component in $W_v$. Hence the projection of $\Gamma^v$ is dense.
 
 The stabilizer in $\operatorname{SL}_2(F_v)$ of a vertex or edge is open. Density therefore implies that every translate of $[L_0]$, $[L_1]$, or their edge under $\operatorname{SL}_2(F_v)$ is already a translate under $\Gamma^v$. The local transitivity from Section 4.1 gives the asserted quotient. $\square$
 
-The denominator-reduction argument is exactly where the split real place is used: it supplies a noncompact approximation place, so the rational Cayley parameter can be altered without being trapped in a compact global set. No assertion of strong approximation for a torus or for $B^\times$ modulo its derived group is being made.
-
-We record more detail about the denominator step, both to fix its scope and to prevent a common misuse of weak approximation. The needed statement is the following integral approximation lemma.
-
-**Lemma 4.3 (integral norm-one approximation).** Let $S$ contain one place at which $B$ is split and noncompact, together with all finite places at which an order or level condition is prescribed. Given open subsets
-
-$$
-W_s\subset\operatorname{SL}_1(B)(F_s)
-\quad(s\in S)
-$$
-
-and maximal compact norm-one subgroups $K_r$ for finite $r\notin S$, there is $g\in\operatorname{SL}_1(B)(F)$ such that
-
-$$
-g\in W_s\quad(s\in S),
-\qquad
-g\in K_r\quad(r\notin S). \tag{4.7}
-$$
-
-**Proof.** Choose a maximal order $\mathcal R$ outside $S$. We first solve the approximation problem with a bounded denominator ideal $\mathfrak a$ supported outside $S$. This follows from the Cayley chart (4.6) and additive weak approximation in the trace-zero vector space: after clearing the finitely many denominators, one obtains $g_0$ of norm one which is integral outside $S\cup\operatorname{Supp}(\mathfrak a)$ and lies in the prescribed $W_s$.
-
-Among all such solutions choose one for which
-
-$$
-D(g_0)=\sum_{r\notin S}
-\max\{0,-\min v_r(\text{coordinates of }g_0)} \tag{4.8}
-$$
-
-is minimal. Suppose $D(g_0)>0$, and choose a prime $r$ at which a denominator remains. Multiplying by a scalar power of a uniformizer merely changes the reduced norm and is not allowed. Instead use the norm equation itself.
-
-Let $m>0$ be the largest denominator exponent at $r$. Reduction of $\varpi_r^m g_0$ gives a nonzero element $\bar x$ of the quaternion algebra over $k_r$ with reduced norm zero. If the local quaternion algebra is division, an element of negative valuation cannot have norm valuation zero, so such an $r$ cannot occur. Thus the algebra is split and $\bar x$ has rank one. Choose rank-one matrices $\bar u,\bar z$ with
-
-$$
-\bar u\bar x=0,
-\qquad
-\bar x\bar z=0,
-\qquad
-\operatorname{tr}(\bar u\bar z)=1. \tag{4.9}
-$$
-
-Lift $\bar u,\bar z$ to trace-zero elements of the order. The split noncompact place in $S$ lets us use additive weak approximation to choose global lifts $u,z\in B(F)$ that satisfy (4.9) at $r$, are arbitrarily small at the prescribed places in $S$, and are integral elsewhere. Consider
-
-$$
-g(t)=(1+tu)g_0(1+tz) \tag{4.10}
-$$
-
-with $t\in F$ initially chosen to have valuation $m$ at $r$ and to be sufficiently small at $S$. The two first-order rank conditions in (4.9) cancel the leading denominator of $g_0$. Allow $t$ and one still-unused coefficient of $z$ to vary. The remaining scalar condition $\operatorname{Nrd}(g(t))=1$ cuts out an affine conic $C$ over $F$ in these two variables. It contains the rational point corresponding to $t=0$, and its linear term at the desired $r$-adic correction is the nonzero trace in (4.9). Hensel lifting therefore gives a smooth point $P_r\in C(F_r)$ with the required cancellation. At every other prescribed place take a point of $C$ arbitrarily close to the uncorrected rational point.
-
-Projection from the rational point at $t=0$ identifies a dense open subset of $C$ with a dense open subset of the affine line: a line of slope $a$ through that point meets the conic in exactly one further point, whose two coordinates are rational functions of $a$ with coefficients in $F$. Choose local slopes representing $P_r$ and the selected points at the other prescribed places, avoiding the finitely many poles. Additive weak approximation chooses one $a\in F$ simultaneously close to those slopes. Substitution in the rational parametrization gives a global point of $C(F)$, so the norm equation holds exactly, while openness preserves every imposed congruence and the denominator cancellation at $r$.
-
-The corrected element has norm one, remains in every $W_s$, is integral at all primes where $g_0$ was integral, and has strictly smaller denominator exponent at $r$. It introduces no new denominator because both correcting factors are integral away from $S\cup\{r\}$ and have unit reduced norm there. This contradicts minimality of (4.8). Hence $D(g_0)=0$, which proves (4.7). $\square$
-
-The lemma is stated only for the simply connected norm-one group. For $B^\times$, reduced norm gives an additional ideal-class and sign obstruction, and the analogue of (4.7) is false without recording components. In Theorem 4.2 we first selected a connected norm-one component, exactly so that Lemma 4.3 applies.
-
+The hypotheses just checked are essential. The cited theorem is for the simply connected norm-one group and requires a noncompact archimedean factor. It makes no strong-approximation assertion for the reduced-norm torus or for $B^\times$; those groups retain the component, ideal-class, and sign obstructions recorded in Book 126. We selected one connected norm-one component before applying it.
 There is also a useful algebraic consequence of the one-edge quotient. A group acting without inversion on a tree with fundamental domain one edge is the amalgamated product
 
 $$
-\Gamma^v\simeq\Gamma_0*_{\Gamma_e}\Gamma_1. \tag{4.11}
+\Gamma^v\simeq\Gamma_0*_{\Gamma_e}\Gamma_1. \tag{4.7}
 $$
 
 To prove this, the inclusions define a homomorphism from the amalgam to $\Gamma^v$. Transitivity on edges makes it surjective. A reduced word alternating between the two vertex stabilizers traces a nonbacktracking path starting at the fundamental edge. If the word represented the identity, that path would close, contradicting that the lattice graph is a tree. This proves injectivity. We shall use the cohomological form of the same statement, because it keeps all coefficient rings visible.
@@ -640,7 +627,7 @@ $$
 \end{aligned}
 $$
 
-Here $r_i$ is restriction, with the second inclusion understood after the fixed conjugation identifying its vertex quotient with the lower-level curve.
+Here $r_i$ is restriction, with the second inclusion followed by the fixed rational component transition identifying its vertex quotient with the routed lower-level curve.
 
 **Proof.** Replace the three terms of (5.1) by projective $\mathbf Z[\Gamma]$-resolutions and apply $\operatorname{Hom}_\Gamma(-,A)$. The horizontal homology is $H^*(\Gamma,A)$ because (5.1) resolves the trivial module. The vertical homology of the induced resolution $\mathbf Z[\Gamma/\Gamma_H]$ is $H^*(H,A)$ by the adjunction
 
@@ -678,120 +665,189 @@ Formula (5.6) is the heart of Ihara's argument. It does not say the kernel is ze
 
 ### 5.4 Hecke action on arithmetic characters
 
-There is a subtlety which must be settled before using a transfer formula. The Hecke representative at a place $w$ need not belong to $\Gamma^v$, so its conjugation is not automatically inner on $\Gamma^{v,\mathrm{ab}}$. The required invariance is an arithmetic fact about the clean norm-one level.
+There is a subtlety which must be settled before using a transfer formula. A Hecke representative at a place $w$ need not belong to $\Gamma^v$, so conjugation by it is not inner on $\Gamma^{v,\mathrm{ab}}$. Strong approximation does not remove this problem: it controls the congruence closure of $\Gamma^v$, whereas a homomorphism from the abstract group to a finite abelian group need not be continuous for that topology.
 
-**Abelian congruence claim.** Every homomorphism from $\Gamma^v$ to a finite abelian $\ell$-group kills a principal congruence subgroup.
-
-To prove the claim, enlarge a maximal order at $v$ and the split real place and write $\mathcal R_S^1$ for its norm-one $S$-units. The group $\Gamma^v$ is cut from $\mathcal R_S^1$ by finitely many congruence conditions. At a split finite place, Gaussian elimination expresses a sufficiently deep principal congruence element as a product of upper and lower elementary matrices. Over the $S$-integer order, rank-one ideals can obstruct a single elimination step; replacing the level ideal $\mathfrak a$ by $\mathfrak a^c$, where $c$ is the exponent of the finite ideal class group, makes all those ideals principal. Performing the factorization after a finite splitting field and multiplying its Galois conjugates descends it to the quaternionic inner form.
-
-The elementary factors are commutators. Strong approximation supplies a global element whose component at the chosen split place is $h=\operatorname{diag}(a,a^{-1})$, with $a^2-1$ a unit, and which satisfies the fixed level elsewhere. Then
+Fix the finite stable component set from Section 2.4 and choose a finite-adelic representative $x_c$ for each label $c$; write $x_c^v$ for its away-from-$v$ component. Put
 
 $$
-[h,u_{12}(x)]=u_{12}((a^2-1)x),
+H=\operatorname{SL}_1(B),
 \qquad
-[h,u_{21}(x)]=u_{21}((a^{-2}-1)x). \tag{5.7}
-$$
-
-Thus, after increasing the exponent of $\mathfrak a$ once more, every elementary factor is a commutator in $\Gamma^v$. The diagonal remainder in Gaussian elimination is itself a product of four elementary matrices; direct multiplication of the standard upper--lower--upper--lower factorization verifies this. Consequently there is a nonzero ideal $\mathfrak b$ away from $S$ such that
-
-$$
-\Gamma^v(\mathfrak b)\subset[\Gamma^v,\Gamma^v]. \tag{5.8}
-$$
-
-Every homomorphism to an abelian group kills the right side, proving the claim. Notice that only abelian quotients have been treated; no assertion that every finite-index subgroup is congruence is required.
-
-**Lemma 5.2 (arithmetic abelianization).** Assume the level is neat and hyperspecial at the coefficient place, and that every finite stabilizer or deck quotient used to descend the chosen level has order prime to $\ell$. For a finite $\mathcal O$-module $A$ with trivial $\Gamma^v$-action, every homomorphism
-
-$$
-\chi:\Gamma^v\longrightarrow A
-$$
-
-is invariant under the away-from-$v$ Hecke commensurator, modulo the reduced-norm central character. In the norm-one, trivial-central block the latter character is zero.
-
-**Proof strategy.** Strong approximation lets global commutators approximate the local elementary commutators. The only abelian quotients left after those commutators are the center and the explicitly excluded stabilizer quotients.
-
-**Proof.** Because $A$ is finite, $\ker\chi$ has finite index. Its closure in every compact local factor is therefore open. At a split hyperspecial place $r$, reduction modulo $r$ gives $\operatorname{SL}_2(k_r)$. For $|k_r|>3$, this group is generated by the elementary matrices and is perfect modulo its center. The successive congruence kernels are generated by
-
-$$
-u_{12}(x)=\begin{pmatrix}1&x\\0&1\end{pmatrix},
+K_c^v=H(\mathbf A_{F,f}^v)\cap x_c^vU^v(x_c^v)^{-1},
 \qquad
-u_{21}(x)=\begin{pmatrix}1&0\\x&1\end{pmatrix}. \tag{5.9}
+\Gamma_c=H(F)\cap K_c^v. \tag{5.7}
 $$
 
-Choose a unit $a$ such that $a^2-1$ is a unit. The identities
+Book 126 makes $\Gamma_c$ dense in $K_c^v$. For a finite $\ell$-primary $\mathcal O$-module $A$, define
 
 $$
-\left[
-\begin{pmatrix}a&0\\0&a^{-1}\end{pmatrix},u_{12}(x)
-\right]
-=u_{12}((a^2-1)x), \tag{5.10}
+H^1_{\mathrm{cong}}(\Gamma_c,A)
+=\operatorname{Hom}_{\mathrm{cont}}(K_c^v,A)
+\hookrightarrow\operatorname{Hom}(\Gamma_c,A)
+=H^1(\Gamma_c,A), \tag{5.8}
 $$
 
-and its lower-triangular analogue show that every sufficiently deep elementary generator is a commutator. At the finitely many small residue fields, enlarge the excluded stabilizer set; in the coefficient range $\ell\ge7$ their orders are units.
-
-At a division place, the first congruence subgroup is pro-$p_r$. It has no nonzero homomorphism to an $\ell$-primary module when $p_r\ne\ell$. At the coefficient place, the hyperspecial split calculation (5.9)--(5.10) applies and $\ell\ge5$ makes the residual special linear group perfect modulo its order-two center. Thus no local noncentral $\ell$-primary character remains.
-
-By the abelian congruence claim, $\chi$ kills some principal congruence subgroup. Strong approximation in the form of Lemma 4.3 then lifts every local elementary commutator modulo that subgroup. Hence $\chi$ kills every noncentral local generator. Since those generators and the center generate every finite congruence quotient of a Hecke commensurator intersection, $\chi$ factors through the reduced-norm center and the finite level stabilizers. The latter have prime-to-$\ell$ order by hypothesis. In the norm-one trivial-central block the former is trivial. Conjugation by an away-from-$v$ Hecke representative therefore fixes $\chi$. $\square$
-
-We can now compute the operator. Let $w\notin\Sigma$ and choose a double coset
+where injectivity follows from density, and define
 
 $$
-K_wg_wK_w=\coprod_{i=1}^{d_w}g_iK_w,
-\qquad d_w=q_w+1. \tag{5.11}
+H^1_{\mathrm{nc}}(\Gamma_c,A)
+=H^1(\Gamma_c,A)/H^1_{\mathrm{cong}}(\Gamma_c,A). \tag{5.9}
 $$
 
-The Hecke action on group cohomology is restriction to the intersection subgroup, conjugation by $g_w$, and corestriction. For a character $\chi:\Gamma^v\to A$, choose right-coset representatives $a_i$ for the corresponding finite-index subgroup. For every $\gamma\in\Gamma^v$, write
+On the stable union these modules are summed over $c$; write the resulting modules as $\mathcal H^1(A)$, $\mathcal H^1_{\mathrm{cong}}(A)$, and $\mathcal H^1_{\mathrm{nc}}(A)$. The quotient in (5.9) measures only failure of congruence continuity. No finiteness or centrality assertion about the congruence kernel is being made.
+
+Let $w\notin\Sigma$, and let $h_w$ be the finite adele whose $w$-component is $\operatorname{diag}(\varpi_w,1)$ and whose other components are $1$. It belongs to the ambient quaternionic similitude group, not in general to $H(F)$. Thus it must not be used to conjugate a diagonal rational arithmetic group.
+
+The Hecke span routes $c$ to $c'=P_wc$. Its intermediate component has fundamental group
 
 $$
-a_i\gamma=\gamma_i a_{\sigma_\gamma(i)}, \tag{5.12}
+\Gamma_{c,w}
+=H(F)\cap x_c^v
+\bigl(U^{1,v}\cap h_wU^{1,v}h_w^{-1}\bigr)
+(x_c^v)^{-1}. \tag{5.10}
 $$
 
-where $\gamma_i$ lies in the subgroup on which the conjugated character is evaluated. The transfer formula is
+At $w$ the compact intersection is an Iwahori subgroup. Density makes $\Gamma_c$ surject onto its finite coset set, and hence
 
 $$
-(T_w\chi)(\gamma)=\sum_i\chi(g_w\gamma_i g_w^{-1}). \tag{5.13}
+[\Gamma_c:\Gamma_{c,w}]=q_w+1.
 $$
 
-Lemma 5.2 permits removal of the outer conjugation. Taking the product of (5.12) over the cycles of the permutation $\sigma_\gamma$ makes the $a_i$ telescope. In the abelianization one obtains
+Both legs give genuine embeddings of rational groups
 
 $$
-\sum_i[\gamma_i]=d_w[\gamma]. \tag{5.14}
+i_{0,c}:\Gamma_{c,w}\longrightarrow\Gamma_c,
+\qquad
+i_{1,c}:\Gamma_{c,w}\longrightarrow\Gamma_{c'}. \tag{5.11}
 $$
 
-Consequently
+The first is inclusion. The exact component formula of Books 122 and 126 lets us choose the representatives so that
 
 $$
-T_w\chi=d_w\chi=(q_w+1)\chi. \tag{5.15}
+q_{c,w}x_ch_w=x_{c'}k_{c,w}
 $$
 
-A central one-coset correspondence conjugates nothing and acts as the chosen central character; it is the identity in the block fixed in Section 2.4.
+for some $q_{c,w}\in G(\mathbf Q)_+$ and $k_{c,w}\in U$; then $i_{1,c}(\delta)=q_{c,w}\delta q_{c,w}^{-1}$. Changing this choice conjugates inside $\Gamma_{c'}$ and hence does not change trivial-coefficient $H^1$. This is the rational transition hidden by the shorthand of conjugating with the local matrix $h_w$.
 
-**Proposition 5.3 (Eisenstein character module).** The Hecke action on $H^1(\Gamma^v,A)$ is annihilated by the Eisenstein ideal $\mathfrak E$ of (2.2).
+The transition $q_{c,w}$ is a rational quaternionic commensurator, not an element of an absolute Galois group. There is no natural homomorphism $B^\times(F)\to G_F$, so an attached residual Galois representation cannot be evaluated at $q_{c,w}$. Good-place Frobenius characteristic polynomials specify conjugacy classes, not a multiplicative comparison functor on rational quaternion units. A Galois or patched proof of the localized leg equality would first have to construct such a correctly typed local--global comparison; residual adequacy alone cannot do so.
 
-**Proof.** Equation (5.15) gives $T_w-(q_w+1)=0$ for every $w\notin\Sigma$. The central convention gives $S_w-1=0$. These elements generate $\mathfrak E$. $\square$
+Sum (5.11) over the stable component set. After using $P_w$ to route the second target back to the corresponding direct-sum factor, define
 
-The prime-to-$\ell$ level condition in Lemma 5.2 is not cosmetic. Without it, a local stabilizer character can transform nontrivially under the commensurator, and the assertion that conjugation “has no effect” would be false. The clean theorem either works at neat level throughout or descends through a quotient whose order is a unit.
+$$
+D_w=i_1^*-i_0^*P_w. \tag{5.12}
+$$
 
-## 6. Geometric Ihara injectivity
+Restriction along $i_1$ followed by corestriction along $i_0$ is the Hecke operator. Restriction along $i_0$ followed by corestriction is multiplication by $q_w+1$. Therefore
+
+$$
+T_w-(q_w+1)P_w
+=\operatorname{cor}_{i_0}\circ D_w. \tag{5.13}
+$$
+
+In the trivial-routing block $P_w=1$. Formula (5.13) is the exact abelianization identity needed in Ihara's argument. To see it directly, choose right-coset representatives $a_i$ for $\Gamma_{c,w}\backslash\Gamma_c$ and write
+
+$$
+a_i\gamma=\gamma_i a_{\sigma_\gamma(i)},
+\qquad \gamma_i\in\Gamma_{c,w}. \tag{5.14}
+$$
+
+Then
+
+$$
+(T_w\chi)_c(\gamma)
+=\sum_i\chi_{c'}(i_{1,c}(\gamma_i)),
+\qquad
+((q_w+1)P_w\chi)_c(\gamma)
+=\sum_i(P_w\chi)_c(i_{0,c}(\gamma_i)). \tag{5.15}
+$$
+
+The second equality follows by multiplying (5.14) around every cycle of $\sigma_\gamma$ and abelianizing. Subtraction gives (5.13), without any continuity assumption.
+
+We can now prove the Eisenstein relation on the part whose arithmetic nature is actually controlled.
+
+**Lemma 5.2 (congruence-character invariance).** On the stable component sum, $D_w$ vanishes on $H^1_{\mathrm{cong}}$ for every $w\notin\Sigma$.
+
+**Proof.** Extend a character on the $c$-factor continuously to $K_c^v$. In the compact-open groupoid defined by the Hecke span, the two legs agree away from $w$ after the prescribed component transport and differ at $w$ by conjugation with $h_w$. The rational elements $q_{c,w}$ above merely express those adelic legs in the chosen component representatives.
+
+At the good place $w$, reduction of $K_w=\operatorname{SL}_2(\mathcal O_{F_w})$ has a pro-$p_w$ kernel, which has no nonzero map to the $\ell$-primary group $A$. The abelianization of $\operatorname{SL}_2(k_w)$ is trivial when $|k_w|>3$ and has order $2$ or $3$ for $|k_w|=2$ or $3$. Hence
+
+$$
+\operatorname{Hom}_{\mathrm{cont}}(K_w,A)=0
+\qquad(\ell\ge7). \tag{5.16}
+$$
+
+Because $w\notin\Sigma$, the compact open splits as $K_c^v=K_w\times K_c^{v,w}$. Any homomorphism from this product to the abelian group $A$ is the sum of its restrictions to the two factors, so (5.16) makes the extension factor through $K_c^{v,w}$. After the transport $P_w$, the two Hecke legs have the same projection to $K_c^{v,w}$ and differ only on $K_w$. Their pullbacks therefore agree, so $D_w\chi=0$. $\square$
+
+The proof retains every other local factor. At a quaternion division place $r\nmid\ell$, reduction of a maximal norm-one compact has quotient
+
+$$
+k_{r^2}^{\,1}
+=\ker\!\left(
+N_{k_{r^2}/k_r}:k_{r^2}^{\times}\to k_r^\times
+\right), \tag{5.17}
+$$
+
+of order $q_r+1$, and its $\ell$-part can contribute a character. A nonmaximal bad-level factor or a coefficient-place factor can also contribute. These factors occur away from $w$ and are fixed pointwise by conjugation at $w$; they are arithmetic Eisenstein characters, not errors to be discarded. No perfection assertion at a coefficient-place or bad-level compact is needed.
+
+**Proposition 5.3 (arithmetic Eisenstein submodule).** On the trivial-routing, trivial-central block, $\mathcal H^1_{\mathrm{cong}}(A)$ is annihilated by $\mathfrak E$. On a stable component union it satisfies (2.2), and on a component or norm-character block $\eta$ it satisfies (2.3).
+
+**Proof.** Lemma 5.2 and (5.13) give $T_w=(q_w+1)$ on the congruence submodule. The central one-coset acts as the declared central and component translation. Every right coset at $w$ has reduced norm $\varpi_w$ modulo units, which gives exactly (2.2)--(2.3). Restriction, conjugation, and corestriction between open compact subgroups preserve continuous characters, so the submodule is stable under the full away-from-$v$ Hecke algebra and its quotient in (5.9) inherits that action. $\square$
+
+The remaining issue has an exact formulation. The following are sufficient conditions for the full character module to be Eisenstein at a fixed good place:
+
+$$
+\operatorname{cor}_{i_0}D_w=0
+\quad\hbox{on }\mathcal H^1(A), \tag{5.18}
+$$
+
+or, more strongly,
+
+$$
+(i_1)_*=(P_w)_*(i_0)_*:
+\bigoplus_c\Gamma_{c,w}^{\mathrm{ab}}\otimes\mathbf Z_\ell
+\longrightarrow
+\bigoplus_c\Gamma_c^{\mathrm{ab}}\otimes\mathbf Z_\ell. \tag{5.19}
+$$
+
+Condition (5.18) is equivalent to $T_w=(q_w+1)P_w$ by (5.13). Condition (5.19) says that the two abelianized leg maps agree after component routing and implies (5.18). Lemma 5.2 proves the dual equality after restriction to the congruence-continuous character submodule, so every possible failure is carried by $\mathcal H^1_{\mathrm{nc}}(A)$.
+
+Neither the one-edge quotient nor strong approximation proves (5.18) or (5.19) on that quotient. Density only says that each $\Gamma_c$ and the kernel of a finite-index abstract character have specified closures; it does not identify the character with a continuous character of those closures. Thus the precise missing uniform input is an abelian commensurator theorem, not a full congruence-subgroup property:
+
+The logical gap already appears in the elementary dense embedding $\mathbf Z\hookrightarrow\mathbf Z_p$. If $r\ne p$, reduction $\mathbf Z\to\mathbf Z/r\mathbf Z$ is an abstract finite character, but it is not continuous for the topology induced from $\mathbf Z_p$: its kernel $r\mathbf Z$ is dense because $r$ is a unit in $\mathbf Z_p$. Therefore neither density nor approximation of finitely many local multiplication tables can show that an arbitrary finite character is congruence-continuous. In particular, an argument that makes a local error arbitrarily small and then declares its value zero in an unrelated abstract finite quotient has already assumed the desired conclusion.
+
+> For the norm-one $S$-arithmetic component family (5.7), prove (5.18) for every good $w$ and every finite $\ell$-primary coefficient module, or at least prove it on the $\Delta$-invariant noncongruence quotient localized at the chosen non-Eisenstein maximal ideal.
+
+This statement is not supplied by Books 12, 39, 41, 122, 126, or 131. Replacing it by the claim that the whole congruence kernel is finite central and $2$-primary would be strictly stronger and would not be a proof from the declared dependencies.
+
+## 6. The geometric Ihara criterion
 
 ### 6.1 Complex uniformization and comparison
 
-For a chosen connected component, complex uniformization gives
+For the norm-one fine cover of a chosen connected component, complex uniformization gives
 
 $$
-X_U(\mathbf C)\simeq\Gamma_0\backslash\mathfrak H,
+\widetilde X_U(\mathbf C)\simeq\Gamma_0\backslash\mathfrak H,
 \qquad
-X_{U_0(v)}(\mathbf C)\simeq\Gamma_e\backslash\mathfrak H, \tag{6.1}
+\widetilde X_{U_0(v)}(\mathbf C)\simeq\Gamma_e\backslash\mathfrak H, \tag{6.1}
 $$
 
-and the conjugate lower component is $\Gamma_1\backslash\mathfrak H$. Neatness makes the groups torsion-free. The upper half-plane is contractible, so each quotient is a classifying space for its arithmetic group. Hence
+and the routed lower component is $\Gamma_1\backslash\mathfrak H$. Neatness makes the groups torsion-free. The upper half-plane is contractible, so each quotient is a classifying space for its arithmetic group. Hence
 
 $$
-H^1(X_U(\mathbf C),A)\simeq H^1(\Gamma_0,A),
+H^1(\widetilde X_U(\mathbf C),A)\simeq H^1(\Gamma_0,A),
 $$
 
 $$
-H^1(X_{U_0(v)}(\mathbf C),A)\simeq H^1(\Gamma_e,A). \tag{6.2}
+H^1(\widetilde X_{U_0(v)}(\mathbf C),A)\simeq H^1(\Gamma_e,A). \tag{6.2}
+$$
+
+For the original selected component union, apply the compatible finite descent group $\Delta$ of Section 2.1. Since $|\Delta|$ is a unit in $A$, its invariants are exact and
+
+$$
+H^1(X_U(\mathbf C),A)
+\simeq H^1(\Gamma_0,A)^\Delta,
+\qquad
+H^1(X_{U_0(v)}(\mathbf C),A)
+\simeq H^1(\Gamma_e,A)^\Delta.
 $$
 
 For $A=k$, the comparison theorem between singular and finite étale cohomology gives
@@ -805,95 +861,115 @@ The isomorphism is functorial for finite maps, so it respects degeneracy pullbac
 
 ### 6.2 The degeneracy map as restriction
 
-Under (6.2), pullback along the finite covering induced by $\Gamma_e\subset\Gamma_0$ is restriction $r_0$. For the second degeneracy map, right translation by $h_v$ first identifies the source with the conjugate vertex quotient and then forgets level; its pullback is $r_1$ after conjugation. Therefore
+Under (6.2), pullback on the norm-one cover along the finite covering induced by $\Gamma_e\subset\Gamma_0$ is restriction $r_0$. For the second degeneracy map, right translation by $h_v$ first identifies the source with the conjugate vertex quotient and then forgets level; its pullback is $r_1$ after the rational component transition. Taking exact $\Delta$-invariants gives the map on the original curve. Therefore
 
 $$
-d_k=(r_0,r_1):
-H^1(\Gamma_0,k)\oplus H^1(\Gamma_1,k)
-\longrightarrow H^1(\Gamma_e,k), \tag{6.4}
+d_k=(r_0,r_1)^\Delta:
+\bigl(H^1(\Gamma_0,k)\oplus H^1(\Gamma_1,k)\bigr)^\Delta
+\longrightarrow H^1(\Gamma_e,k)^\Delta, \tag{6.4}
 $$
 
 up to the harmless sign on the second summand already discussed.
 
 Every away-from-$v$ Hecke correspondence is defined by changing level at a different finite place. It commutes with both inclusions and with the conjugation at $v$. The identifications (6.2)--(6.4) are therefore Hecke equivariant.
 
-### 6.3 The Eisenstein kernel theorem
+### 6.3 The exact kernel and its congruence part
 
-**Theorem 6.1 (geometric Eisenstein kernel).** For every finite quotient $A$ of $\mathcal O$, the kernel of
-
-$$
-d_A:H^1(X_U,A)^{\oplus2}\longrightarrow
-H^1(X_{U_0(v)},A) \tag{6.5}
-$$
-
-is a quotient of $H^1(\Gamma^v,A)$ and is annihilated by $\mathfrak E$. More precisely, after the fixed identification of the two lower vertex quotients,
+**Theorem 6.1 (exact tree kernel and cokernel).** For every finite quotient $A$ of $\mathcal O$, comparison and the tree give a natural Hecke-equivariant exact sequence
 
 $$
-\ker d_A=
-\operatorname{im}\left(
-H^1(\Gamma^v,A)\longrightarrow
-H^1(\Gamma_0,A)\oplus H^1(\Gamma_1,A)
-\right). \tag{6.6}
+0\longrightarrow H^1(\Gamma^v,A)^\Delta
+\longrightarrow H^1(X_U,A)^{\oplus2}
+\xrightarrow{d_A}H^1(X_{U_0(v)},A)
+\longrightarrow H^2(\Gamma^v,A)^\Delta
+\longrightarrow\bigl(H^2(\Gamma_0,A)\oplus H^2(\Gamma_1,A)\bigr)^\Delta. \tag{6.5}
 $$
 
-**Proof strategy.** The tree identifies the relation between the two pullbacks. The double-coset transfer then identifies its Hecke character.
-
-**Proof.** The one-edge quotient of Theorem 4.2 permits application of Theorem 5.1. Exactness gives (6.6), with a sign change on the second summand if (6.5) is written as a sum. Proposition 5.3 says that the source of the right side is annihilated by $\mathfrak E$. Its image, hence the kernel, is annihilated by the same ideal. Comparison and uniformization identify this group-cohomological map with the geometric degeneracy map. $\square$
-
-The theorem includes the entire kernel, not merely its semisimplification. An extension of Eisenstein characters remains annihilated by the displayed operators because the calculation (5.15) is an equality on the full character module.
-
-It is helpful to compare (6.6) with the amalgam (4.11). A character on $\Gamma^v$ is exactly a pair of characters $(\chi_0,\chi_1)$ on $\Gamma_0$ and $\Gamma_1$ whose restrictions to $\Gamma_e$ agree. Replacing $\chi_1$ by $-\chi_1$ turns agreement into the relation
+The sign on the second source summand is changed when the geometric old map is written with a sum rather than the cellular difference. In particular,
 
 $$
-r_0\chi_0+r_1(-\chi_1)=0.
+\ker d_A\simeq H^1(\Gamma^v,A)^\Delta, \tag{6.6}
 $$
 
-Thus no relation is lost in passing from group presentations to cohomology. The tree theorem says that a reduced alternating word supplies every relation in the amalgam, while the Hecke calculation says that abelianizing such words erases all cuspidal information and leaves only degree.
-
-There is a Jacobian version. For $A=\mathbf Z/\ell^n\mathbf Z$, Kummer theory identifies
+and
 
 $$
-H^1(X,A(1))\simeq J_X[\ell^n](\overline F). \tag{6.8}
+\operatorname{coker}d_A\simeq
+\ker\!\left(
+H^2(\Gamma^v,A)^\Delta\longrightarrow
+\bigl(H^2(\Gamma_0,A)\oplus H^2(\Gamma_1,A)\bigr)^\Delta
+\right). \tag{6.7}
 $$
 
-Twisting Theorem 6.1 therefore shows that the $\ell$-primary subgroup of the geometric kernel of
+**Proof.** In the degree-zero part of (5.4), the map $A\oplus A\to A$ is $(a,b)\mapsto a-b$ and is surjective. Hence the connecting map into $H^1(\Gamma^v,A)$ vanishes and the next arrow is injective. This gives the asserted sequence on the norm-one cover. The order of $\Delta$ is invertible in $A$, so applying $(\ )^\Delta$ preserves its exactness. Sections 6.1--6.2 identify the three stabilizer cohomology groups and their restriction maps with the cohomology of the two lower curves and the Iwahori curve after that descent. Naturality of the cellular resolution gives Hecke equivariance. $\square$
+
+Thus the amalgam does more than bound the kernel: it identifies it. Before descent, a character on $\Gamma^v=\Gamma_0*_{\Gamma_e}\Gamma_1$ is exactly a pair $(\chi_0,\chi_1)$ whose restrictions to $\Gamma_e$ agree. Replacing $\chi_1$ by $-\chi_1$ turns agreement into the relation $r_0\chi_0+r_1(-\chi_1)=0$; the relations on the original curve are exactly the $\Delta$-invariant such pairs. Formula (6.7) records the next obstruction rather than silently declaring the two-map cokernel free.
+
+Under (6.6), the submodule $H^1_{\mathrm{cong}}(\Gamma^v,A)^\Delta$ gives the arithmetic part of the kernel. Proposition 5.3 proves that this submodule is Eisenstein. Exactness of invariants gives
 
 $$
-J_U\times J_U\xrightarrow{\delta}J_{U_0(v)}
+0\longrightarrow H^1_{\mathrm{cong}}(\Gamma^v,A)^\Delta
+\longrightarrow\ker d_A
+\longrightarrow H^1_{\mathrm{nc}}(\Gamma^v,A)^\Delta
+\longrightarrow0. \tag{6.8}
 $$
 
-is Eisenstein. Indeed a point of order $\ell^n$ in the kernel gives a class in the kernel with $A(1)$ coefficients, and the Tate twist changes only the Galois action, not the geometric Hecke transfer. Conversely every such cohomology class is a torsion point. Hence
+This is the strongest unconditional Eisenstein-kernel statement supplied by the declared sources. Continuous characters of division-place, coefficient-place, and bad-level compact factors occur in the first term. Reduced norm and the component set do not create characters of the fixed norm-one group: they route that first term between connected-component factors through $P_w$, producing the twists (2.2)--(2.3). Ineffective central units are divided out, while the effective norm-squareclass and fine-cover descent is carried by $\Delta$. Since $\ell\nmid|\Delta|$, averaging is exact and $H^i(\Delta,A)=0$ for $i>0$, so no additional degree-one character appears. If $\ell\mid|\Delta|$, the assertion is deliberately excluded. Only the $\Delta$-invariant noncongruence quotient of the norm-one character module remains in the clean range.
+
+For $A=\mathbf Z/\ell^n\mathbf Z$, Kummer theory identifies
 
 $$
-\ker(\delta)[\ell^\infty]_{\mathfrak m}=0. \tag{6.9}
+H^1(X,A(1))\simeq J_X[\ell^n](\overline F). \tag{6.9}
 $$
 
-This does not say the full finite kernel is trivial. It says that its part visible to the chosen coefficient localization vanishes. Prime-to-$\ell$ kernel is irrelevant to saturation of an $\mathcal O$-lattice, while Eisenstein $\ell$-torsion has been explicitly isolated.
+Consequently the same exact obstruction describes the $\ell$-primary part of the geometric kernel of $J_U\times J_U\to J_{U_0(v)}$. Its congruence-character part is Eisenstein; vanishing of the whole localized kernel requires the condition in the next section.
 
-### 6.4 The mod-$\ell$ Ihara theorem
+### 6.4 The residual Ihara criterion
 
-**Corollary 6.2 (mod-$\ell$ Ihara injectivity).** Let $\mathfrak m$ be a non-Eisenstein maximal ideal of the Hecke image on the two curve cohomology groups. Then
+Let $\mathfrak m$ be non-Eisenstein in the sense of Section 2.4. Localizing (6.8) kills its first term and gives
+
+$$
+\ker(d_k)_{\mathfrak m}
+\simeq \bigl(H^1(\Gamma^v,k)^\Delta\bigr)_{\mathfrak m}
+\simeq \bigl(H^1_{\mathrm{nc}}(\Gamma^v,k)^\Delta\bigr)_{\mathfrak m}. \tag{6.10}
+$$
+
+The middle isomorphism uses (6.6), and the last uses Proposition 5.3. Hence the following are equivalent:
+
+$$
+\begin{array}{c}
+(d_k)_{\mathfrak m}\text{ is injective},\\
+\bigl(H^1(\Gamma^v,k)^\Delta\bigr)_{\mathfrak m}=0,\\
+\bigl(H^1_{\mathrm{nc}}(\Gamma^v,k)^\Delta\bigr)_{\mathfrak m}=0.
+\end{array} \tag{6.11}
+$$
+
+We denote the conditions in (6.11) by
+
+$$
+({\rm AIH})_{v,\mathfrak m}
+$$
+
+and call them the **abelian Ihara condition** at $\mathfrak m$. This is exactly what remains after the tree, component, center, stabilizer, and congruence-character calculations have been completed. A uniform proof from the hypotheses of Section 2 would amount to the localized form of (5.18), or to another theorem forcing the last group in (6.10) to vanish. No such theorem occurs among the listed dependencies.
+
+Under the abelian Ihara condition, the desired residual map is therefore injective:
 
 $$
 \bar d_{\mathfrak m}:
 H^1(X_U,k)_{\mathfrak m}^{\oplus2}
 \longrightarrow
-H^1(X_{U_0(v)},k)_{\mathfrak m} \tag{6.7}
+H^1(X_{U_0(v)},k)_{\mathfrak m}. \tag{6.12}
 $$
 
-is injective.
+The condition and conclusion survive finite coefficient extension by faithful flatness. They also assemble over a finite Hecke-stable orbit of connected components: one writes (6.5) for every representative and lets the routing operators $P_w$ permute the summands. A nonstable single component gives a correspondence between different factors, not an endomorphism.
 
-**Proof.** Localizing Theorem 6.1 at $\mathfrak m$ kills every module annihilated by $\mathfrak E$: one generator of $\mathfrak E$ is a unit in $\mathbb T_{\mathfrak m}$. Thus the localized kernel is zero. Exactness of localization identifies it with the kernel of the localized map. $\square$
+No assumption that $q_v\not\equiv\pm1\pmod\ell$ is involved in (6.11). Those congruences enter only when a later argument separates signed Gram factors. Neatness, or descent through a deck quotient of order prime to $\ell$, remains essential: otherwise stabilizer cohomology adds another term before (6.5).
 
-No assumption that $q_v\not\equiv\pm1\pmod\ell$ is required for (6.7). Those congruences enter later when one wants a unique signed factor of the old Gram determinant or an integral projector onto one $U_v$ root. They are not part of geometric Ihara injectivity.
-
-The result also survives finite coefficient extensions. If $k'/k$ is finite, tensoring (6.7) with $k'$ is exact and preserves injectivity. Conversely, faithful flatness of $k'/k$ shows that injectivity after extension implies injectivity before extension. One may therefore enlarge the residue field to contain Hecke eigenvalues without changing the theorem.
-
-The same proof works for a finite product of connected Shimura components. The tree sequence is written for each component representative, and the component-routing permutation assembles the sequences into one induced module. A Hecke-stable orbit gives an endomorphism of the direct sum, while a single nonstable component gives only a map between two different summands. After the stable orbit is chosen, induction and restriction are exact and the Eisenstein-kernel calculation proceeds componentwise.
-
-The use of constant coefficients is essential at one precise point: (5.5) identifies $H^1(\Gamma^v,A)$ with ordinary homomorphisms. For a nontrivial local system, one-cocycles are crossed homomorphisms and the arithmetic kernel need not be one-dimensional or Eisenstein. A type lattice can sometimes be incorporated by replacing Lemma 5.2 with a type-enhanced abelianization calculation, but that is new input, not a formal coefficient change.
+Constant coefficients are also essential. Formula (5.5) turns $H^1(\Gamma^v,A)$ into ordinary homomorphisms. For a nontrivial local system, one-cocycles are crossed homomorphisms and neither (5.8) nor the arithmetic-character calculation applies without a type-enhanced theorem.
 
 ## 7. Integral saturation
+
+From this chapter through Chapter 12, fix a non-Eisenstein maximal ideal $\mathfrak m$ and assume the abelian Ihara condition (6.11). Everything after this sentence is a source-closed consequence of that explicit condition. The condition is repeated in the main theorem so that none of the lattice conclusions is mistaken for an unconditional consequence of strong approximation.
 
 ### 7.1 Freeness of curve cohomology
 
@@ -930,7 +1006,7 @@ d_{\mathfrak m}:M_{\mathfrak m}^{\oplus2}
 \longrightarrow N_{\mathfrak m}. \tag{7.4}
 $$
 
-By (7.3), its reduction is the map in (6.7). It is injective. Lemma 3.1 therefore gives at once:
+By (7.3), its reduction is the map in (6.12). It is injective by the abelian Ihara condition. Lemma 3.1 therefore gives at once:
 
 $$
 d_{\mathfrak m}\text{ is injective}, \tag{7.5}
@@ -955,7 +1031,7 @@ Q^{\mathrm{new}}_{\mathfrak m}
 =N_{\mathfrak m}/N^{\mathrm{old}}_{\mathfrak m}. \tag{7.7}
 $$
 
-**Theorem 7.1 (saturated degeneracy theorem).** The sequence
+**Theorem 7.1 (conditional saturated degeneracy theorem).** Under the abelian Ihara condition, the sequence
 
 $$
 0\longrightarrow M_{\mathfrak m}^{\oplus2}
@@ -999,9 +1075,9 @@ If $e$ is an idempotent in the **integral** localized Hecke algebra, applying $e
 
 ### 7.4 What fails without localization
 
-The kernel before localization is not asserted to vanish. Theorem 6.1 permits arithmetic characters, and their $\ell$-torsion can make the global image nonsaturated. This is not a defect of the proof: it is the exact Eisenstein exception.
+The kernel before localization is not asserted to vanish. Theorem 6.1 identifies it with the $\Delta$-invariant part of the full norm-one arithmetic character module. Its congruence part is Eisenstein, but a $\Delta$-invariant noncongruence character can survive even at a non-Eisenstein localization unless (6.11) is known. Such a class makes the residual map noninjective and prevents the saturation conclusion.
 
-Nor can rational injectivity replace (6.7). The map
+Nor can rational injectivity replace (6.12). The map
 
 $$
 R\xrightarrow{\ \pi\ }R
@@ -1009,13 +1085,13 @@ $$
 
 is injective over $R$ and over $K$, but its reduction is zero and its cokernel is $R/\pi R$. The same elementary divisor can occur in a degeneracy lattice if one uses only a characteristic-zero old decomposition.
 
-Finally, invertibility of the Gram determinant is sufficient for the old image to split orthogonally, but it is not necessary for saturation. At a level-raising congruence the Gram determinant is deliberately a nonunit. The old image is nevertheless primitive by Theorem 7.1; what fails is orthogonal splitting, and that failure is the congruence with the new lattice.
+Finally, invertibility of the Gram determinant is sufficient for the old image to split orthogonally, but it is not necessary for saturation. At a level-raising congruence the Gram determinant is deliberately a nonunit. Under (6.11), the old image is nevertheless primitive by Theorem 7.1; what fails is orthogonal splitting, and that failure is the congruence with the new lattice.
 
 ## 8. The Iwahori integral model
 
 ### 8.1 The incidence moduli problem
 
-The tree proves injectivity on the generic curve. We now turn to the integral geometry that controls monodromy and components.
+Under the abelian Ihara condition, the tree proves injectivity on the generic curve. We now turn to the integral geometry that controls monodromy and components.
 
 Let $R_v$ be the henselian valuation ring at the changing place. The hyperspecial PEL curve $\mathscr X/R_v$ is smooth and proper under the datum of Section 2.2. The Iwahori curve $\mathscr C/R_v$ records two PEL abelian schemes and an isogeny
 
@@ -1118,36 +1194,34 @@ Although Frobenius is bijective on geometric points, it has scheme-theoretic deg
 The branch table also explains why it cannot prove Ihara injectivity by itself. On normalized-component cohomology, the two old classes $(x,y)$ restrict through the matrix
 
 $$
-\begin{pmatrix}1&F^*\\F^*&1\end{pmatrix}. \tag{8.9}
+\begin{pmatrix}1&F^*\\F^*&1\end{pmatrix}. \tag{8.8}
 $$
 
 At a level-raising congruence this matrix can have a residual kernel. That does not mean the generic old map has a kernel. A class vanishing on the normalizations can survive in the gluing cohomology $H^1(\Gamma,k)$ or in the vanishing-cycle quotient. The tree argument proves that the complete generic class is nonzero; the semistable filtration identifies where the missing information lies. Looking only at the two normalized components discards the very graph class which rescues injectivity.
 
-Nodes occur where the connected and étale descriptions meet. Let $\Sigma$ be the finite superspecial incidence set. Étale locally at a point of $\Sigma$, the two branches of the source have parameters $x$ and $y$, while a parameter $t$ on the smooth hyperspecial target pulls back, up to a unit, as
+Nodes occur where the connected and étale descriptions meet. Let $\Sigma$ be the finite superspecial incidence set. On one reduced branch $\pi_0$ is generically separable of degree one and $\pi_1$ is radicial of degree $q_v$; on the other branch the roles reverse. These are scheme-theoretic degrees, so their sums give
 
 $$
-\pi_0^*t=x+y^{q_v}+\text{higher terms},
+\deg(\pi_0)=\deg(\pi_1)=q_v+1. \tag{8.9}
 $$
 
-$$
-\pi_1^*t=x^{q_v}+y+\text{higher terms}. \tag{8.10}
-$$
-
-On $y=0$ the first map is separable and the second is Frobenius; on $x=0$ the roles reverse. The higher terms do not alter generic branch degrees. Formula (8.10) is not needed to define the maps, but it checks simultaneously the table, the local degree $q_v+1$, and the exchange under the Atkin--Lehner involution.
+This degree calculation uses the global branch normalizations and their Frobenius restrictions, not an unproved formula for a target parameter in the nodal completed ring. The Atkin--Lehner involution exchanges the two branches and the two rows of (8.7), providing the corresponding orientation check.
 
 ### 8.4 Fine covers and coarse descent
 
 The proof has been carried out at neat level. Suppose a finite group $\Delta$ acts on the fine model and the desired curve is its quotient. The universal isogeny and both degeneracy maps are $\Delta$-equivariant. If $|\Delta|$ is invertible in $\mathcal O$, the averaging idempotent
 
 $$
-e_\Delta=|\Delta|^{-1}\sum_{\delta\in\Delta}\delta \tag{8.8}
+e_\Delta=|\Delta|^{-1}\sum_{\delta\in\Delta}\delta \tag{8.10}
 $$
 
 makes invariants an exact functor. The tree sequence, cohomology, old map, and saturation theorem descend by applying $e_\Delta$.
 
 At fixed points, the coarse special fiber can have quotient singularities even when the fine model is semistable. Component and monodromy calculations are then performed equivariantly on the fine graph before invariants are taken. Quotienting the unoriented graph first can lose a branch reversal and its sign.
 
-If $\ell\mid|\Delta|$, (8.8) is unavailable. The invariant functor can have higher cohomology, and a stabilizer character can appear in the Ihara kernel. The clean theorem does not hide this failure; it requires a neat level or prime-to-$\ell$ descent.
+If $\ell\mid|\Delta|$, (8.10) is unavailable. The invariant functor can have higher cohomology, and a stabilizer character can appear in the Ihara kernel. The clean conditional package does not hide this failure; it requires a neat level or prime-to-$\ell$ descent in addition to (6.11).
+
+From Chapter 9 onward, $\Gamma$ denotes the geometric dual graph of this common fine model. When the curve of interest is a tame quotient, every graph module, filtration, and branch map means its exact $\Delta$-invariant descent. Since $|\Delta|$ is a unit in $\mathcal O$, invariants and coinvariants are identified by averaging; the graph pairing, its adjunction, and its discriminant sequence descend after the corresponding unit normalization. This does not assert that the pairing is unimodular, and we do not assert that the coarse quotient model itself is regular semistable.
 
 ## 9. Nodal cohomology and monodromy
 
@@ -1258,7 +1332,7 @@ $$
 \to H^1(Y_a^\circ,A)
 \xrightarrow{\operatorname{res}}
 \bigoplus_{b\in B_a}A(-1)
-\xrightarrow{\sum}A(-1)\to0, \tag{9.12}
+\xrightarrow{\sum}A(-1)\to0, \tag{9.8}
 $$
 
 where $B_a$ is the set of branches on $\widetilde Y_a$. The last map is the sum of residues. Its kernel is free and is generated by differences of branch basis vectors. For a global oriented edge, the two branch residues must be opposite. Therefore a global residue assignment is an element $(r_e)\in A^E$ satisfying
@@ -1269,7 +1343,7 @@ $$
 
 at every vertex $a$. This is exactly $\partial r=0$, so the residue module is $H_1(\Gamma,A)(-1)$.
 
-Choose local classes realizing these residues by exactness of (9.12). On the overlap annuli, two choices differ by a class extending over the node. Adjusting by component classes glues them. If a multiple $\varpi z$ glues, the incidence matrices in the adjustment equations are totally unimodular, so $z$ glues as well. Hence the image in (9.5) is saturated. This gives a direct integral proof of the freeness asserted after (9.7), independent of a rational degeneration argument.
+Choose local classes realizing these residues by exactness of (9.8). On the overlap annuli, two choices differ by a class extending over the node. Adjusting by component classes glues them. If a multiple $\varpi z$ glues, the incidence matrices in the adjustment equations are totally unimodular, so $z$ glues as well. Hence the image in (9.5) is saturated. This gives a direct integral proof of the freeness asserted after (9.7), independent of a rational degeneration argument.
 
 The ranks provide a useful audit. If $g_a$ is the genus of $\widetilde Y_a$ and $b=b_1(\Gamma)$, then
 
@@ -1288,7 +1362,7 @@ $$
 Their sum is
 
 $$
-2\sum_ag_a+2b=2g(C), \tag{9.13}
+2\sum_ag_a+2b=2g(C), \tag{9.9}
 $$
 
 because the arithmetic genus of the special fiber is $\sum g_a+b$. Thus no cohomology rank is missing from the filtration.
@@ -1299,20 +1373,20 @@ Give each geometric edge its thickness $n_e$. For the model of Theorem 8.1, $n_e
 
 $$
 q_\Gamma(a,b)=\sum_{e}n_ea_eb_e,
-\qquad a,b\in H_1(\Gamma,\mathbf Z). \tag{9.8}
+\qquad a,b\in H_1(\Gamma,\mathbf Z). \tag{9.10}
 $$
 
 This positive definite pairing induces
 
 $$
 q_\Gamma:H_1(\Gamma,A)
-\longrightarrow H_1(\Gamma,A)^\vee. \tag{9.9}
+\longrightarrow H_1(\Gamma,A)^\vee. \tag{9.11}
 $$
 
 Cellular duality identifies
 
 $$
-H_1(\Gamma,A)^\vee=H^1(\Gamma,A). \tag{9.10}
+H_1(\Gamma,A)^\vee=H^1(\Gamma,A). \tag{9.12}
 $$
 
 The logarithm of tame inertia on (9.6) is zero on $W_1$ and factors as
@@ -1322,10 +1396,10 @@ H^1(C,A)\twoheadrightarrow
 H_1(\Gamma,A)(-1)
 \xrightarrow{q_\Gamma}
 H^1(\Gamma,A)(-1)
-\hookrightarrow H^1(C,A)(-1). \tag{9.11}
+\hookrightarrow H^1(C,A)(-1). \tag{9.13}
 $$
 
-**Proof of the factorization.** At a node $xy=\pi_v^{n_e}$, a tame loop changes a branch Kummer logarithm by $n_e$ times the tame character. A class with residue $a_e$ therefore acquires the graph cocycle whose pairing with a second residue vector $b$ is $n_ea_eb_e$. Summing over nodes gives (9.8). Classes extending across the special fiber have zero residues, so monodromy kills $W_1$. This proves (9.11). $\square$
+**Proof of the factorization.** At a node $xy=\pi_v^{n_e}$, a tame loop changes a branch Kummer logarithm by $n_e$ times the tame character. A class with residue $a_e$ therefore acquires the graph cocycle whose pairing with a second residue vector $b$ is $n_ea_eb_e$. Summing over nodes gives (9.10). Classes extending across the special fiber have zero residues, so monodromy kills $W_1$. This proves (9.13). $\square$
 
 The rank of monodromy is $b_1(\Gamma)$ after tensoring with $E$. Integrally, its cokernel retains the edge lengths and is the component group studied next.
 
@@ -1399,20 +1473,20 @@ $$
 \operatorname{Div}^0(\Gamma)/\Delta\mathbf Z^V. \tag{10.4}
 $$
 
-The proof is the separated Picard calculation: vertical divisors change multidegrees by the graph Laplacian, while normalization identifies the torus character group with graph cycles. Resolving a thick node subdivides its edge and turns the unit pairing into (9.8). These are exactly the hypotheses established for $\mathscr C$.
+The proof is the separated Picard calculation: vertical divisors change multidegrees by the graph Laplacian, while normalization identifies the torus character group with graph cycles. Resolving a thick node subdivides its edge and turns the unit pairing into (9.10). These are exactly the hypotheses established for $\mathscr C$.
 
 Tensoring (10.3) with $\mathbf Z_\ell$ gives
 
 $$
 \Phi_C(\bar k_v)[\ell^\infty]
 \simeq
-\operatorname{coker}left(
+\operatorname{coker}\left(
 q_\Gamma:X_\Gamma\otimes\mathbf Z_\ell
 \to X_\Gamma^\vee\otimes\mathbf Z_\ell
 \right). \tag{10.5}
 $$
 
-Thus the integral defect of monodromy in (9.11) and the $\ell$-primary component group are the same finite module.
+Thus the integral defect of monodromy in (9.13) and the $\ell$-primary component group are the same finite module.
 
 For a regular model, (10.4) gives an equivalent vertex calculation. If two components meet in $m$ geometric points, a degree-zero vertex divisor is $a(Y_0-Y_1)$ and the Laplacian sends $(r,s)$ to
 
@@ -1429,14 +1503,14 @@ Q_{ij}=
 \begin{cases}
 n_i+n_m,&i=j,\\
 n_m,&i\ne j.
-\end{cases} \tag{10.11}
+\end{cases} \tag{10.5a}
 $$
 
 Expansion after subtracting one row shows
 
 $$
 \det Q=
-\sum_{j=1}^{m}\prod_{i\ne j}n_i. \tag{10.12}
+\sum_{j=1}^{m}\prod_{i\ne j}n_i. \tag{10.5b}
 $$
 
 The determinant gives the order but not the invariant factors. If $m=3$ and all $n_i=2$, then
@@ -1469,72 +1543,210 @@ The degeneracy maps themselves go from the semistable curve to the smooth hypers
 
 The last assertion can be sharpened.
 
-**Lemma 10.1 (proper source versus graph torus).** Let $\mathcal A/R_v$ be an abelian scheme and $u:\mathcal A\to\mathcal J$ a homomorphism to the Néron model of a semistable Jacobian. On the geometric special fiber, the induced map has zero component in the torus $T_\Gamma$. Equivalently, on the filtration (9.6), the cohomological image of $u$ has zero projection to $W_0$ and to $W_2/W_1$.
+**Lemma 10.1 (proper source versus graph torus).** Let $\mathcal A/R_v$ be an abelian scheme and $u:\mathcal A\to\mathcal J$ a homomorphism to the Néron model of a semistable Jacobian. On prime-to-$v$ cohomology, the image of the generic fiber lies in $W_1$ and has zero intersection with $W_0$. Equivalently, it has no top residue class and no nonzero class supported in the graph-torus lattice.
 
-**Proof.** The image $H$ of the proper connected group $\mathcal A_{\bar k_v}$ in the separated group $\mathcal J_{\bar k_v}^0$ is proper and connected. Its maximal connected affine subgroup is therefore trivial: a proper connected affine group over a field has a coordinate ring which is both finite-dimensional and a domain, hence it is a point. Thus $H$ is an abelian variety and has toric rank zero. Its intersection with $T_\Gamma$ can be finite, but it has bounded exponent and contributes nothing to an inverse system of prime-to-$v$ Tate modules.
+**Proof.** The image $H$ of the proper connected group $\mathcal A_{\bar k_v}$ in the separated group $\mathcal J_{\bar k_v}^0$ is proper and connected. Its maximal connected affine subgroup is trivial, so $H$ is an abelian variety. Its intersection with the torus $T_\Gamma$ is finite. A finite group scheme has bounded exponent and therefore contributes nothing to the inverse system of prime-to-$v$ Tate modules. Functoriality of the semiabelian filtration consequently makes the map on the top torus cocharacter lattice zero; on cohomology this says that the image lies in $W_1$.
 
-Functoriality of the semiabelian filtration now says that the map from the good-reduction source has zero map on torus character and cocharacter lattices. Those lattices give the bottom and top graph pieces of (9.6), dually. Hence the cohomological image has zero projection to both extreme graded pieces. $\square$
+For the intersection with $W_0$, tensor with the characteristic-zero coefficient field. The source has good reduction, so geometric Frobenius on its first cohomology is pure of weight $1$. The graph term $W_0=H^1(\Gamma,\mathcal O)$ is pure of weight $0$, with the signed finite permutation action on edges and vertices. A Frobenius-equivariant map between these two spaces is zero because their eigenvalues have different complex absolute values. The integral modules are torsion-free, so vanishing after tensoring with the coefficient field gives zero intersection integrally. $\square$
 
-Apply the lemma to each $\pi_i^*:J_U\to J_C$. The old lattice lies in the normalized-component layer. This is the geometric reason the graph monodromy is genuinely new; it cannot be supplied by good-reduction old classes.
+Apply the lemma to the single combined homomorphism
+
+$$
+\delta:J_U\times J_U\longrightarrow J_C,
+\qquad (x,y)\longmapsto\pi_0^*x+\pi_1^*y.
+$$
+
+Its source is again an abelian scheme at $v$, so the lemma proves directly that the **sum** of the two old images lies in the normalized-component layer and has zero intersection with $W_0$. This conclusion is not inferred separately from the two summands: two submodules can each meet $W_0$ trivially while their sum meets it nontrivially. The combined proper-source argument is the geometric reason graph monodromy is genuinely new; it cannot be supplied by good-reduction old classes.
 
 ### 10.4 The localized component-control theorem
 
-Let $Q^{\mathrm{new}}_{\mathfrak m}$ be (7.7). Intersect the filtration (9.6) with $N_{\mathfrak m}$ and pass to the quotient by the saturated old image. Lemma 10.1 shows that the extreme graph pieces are unchanged.
-
-**Theorem 10.2 (component control).** The torsion-free module $Q^{\mathrm{new}}_{\mathfrak m}$ has a canonical Hecke- and Galois-stable filtration whose extreme graded pieces are
+Set
 
 $$
-\operatorname{gr}_0Q^{\mathrm{new}}_{\mathfrak m}
-=H^1(\Gamma,\mathcal O)_{\mathfrak m}, \tag{10.8}
+R=\mathcal O,\qquad
+A=N^{\mathrm{old}}_{\mathfrak m},\qquad
+Q=N_{\mathfrak m}/A,
 $$
 
-$$
-\operatorname{gr}_2Q^{\mathrm{new}}_{\mathfrak m}
-=H_1(\Gamma,\mathcal O)_{\mathfrak m}(-1). \tag{10.9}
-$$
-
-The induced monodromy map between them is $q_\Gamma$, and
+and localize the filtration (9.6). Write
 
 $$
-\operatorname{coker}(q_\Gamma)_{\mathfrak m}
+X=H_1(\Gamma,R)_{\mathfrak m},
+\qquad
+X^\vee=H^1(\Gamma,R)_{\mathfrak m},
+\qquad
+H_{\mathrm{nor}}=(W_1/W_0)_{\mathfrak m}. \tag{10.8}
+$$
+
+Lemma 10.1 gives $A\subset W_1$ and $A\cap W_0=0$. It does **not** imply that $A+W_0$ is saturated. The elementary counterexample $W_0=Re_1$ and $A=R(e_1+\varpi e_2)$ inside $R^2$ shows why an index calculation is indispensable.
+
+Projecting the old map to normalized-component cohomology defines the branch map
+
+$$
+B_v:M_{\mathfrak m}^{\oplus2}\longrightarrow H_{\mathrm{nor}}.
+\tag{10.9}
+$$
+
+Under smooth proper base change and the two branch identifications of Proposition 8.2, it is
+
+$$
+B_v=
+\begin{pmatrix}
+1&F_v^*\\
+F_v^*&1
+\end{pmatrix}. \tag{10.10}
+$$
+
+Define the branch-correction module
+
+$$
+\mathcal C_{\mathrm{br},v}
+=\operatorname{coker}(B_v). \tag{10.11}
+$$
+
+It is an explicit module, not an unspecified index; Theorem 10.2 proves that it is finite under the abelian Ihara condition. Block row and column operations with unit determinant give
+
+$$
+\begin{pmatrix}1&0\\-F_v^*&1\end{pmatrix}
+B_v
+\begin{pmatrix}1&-F_v^*\\0&1\end{pmatrix}
+=
+\begin{pmatrix}1&0\\0&1-(F_v^*)^2\end{pmatrix}. \tag{10.12}
+$$
+
+Consequently
+
+$$
+\mathcal C_{\mathrm{br},v}
 \simeq
+\operatorname{coker}\!\left(
+1-(F_v^*)^2:M_{\mathfrak m}\to M_{\mathfrak m}
+\right), \tag{10.13}
+$$
+
+and its elementary divisors are the nonunit entries in the Smith form of $1-(F_v^*)^2$. With a nontrivial central branch transport, the same calculation uses the corresponding product of the two off-diagonal maps rather than silently setting that scalar to one.
+
+**Theorem 10.2 (conditional component and branch control).** Assume the abelian Ihara condition. The module $Q$ is finite free. Put
+
+$$
+L_0=(W_1)_{\mathfrak m}/A\subset Q.
+$$
+
+Then the four relevant saturation statements are
+
+$$
+W_0=X^\vee\text{ is saturated in }N_{\mathfrak m},
+\qquad
+A\text{ is saturated in }N_{\mathfrak m}, \tag{10.13a}
+$$
+
+$$
+(A+W_0)^{\mathrm{sat},N_{\mathfrak m}}=(W_1)_{\mathfrak m},
+\qquad
+\bigl(\operatorname{im}(W_0\to Q)\bigr)^{\mathrm{sat},Q}=L_0. \tag{10.13b}
+$$
+
+In particular, $L_0$ is a saturated free submodule of $Q$, and there are canonical Hecke- and Galois-equivariant exact sequences
+
+$$
+0\longrightarrow X^\vee
+\longrightarrow L_0
+\longrightarrow\mathcal C_{\mathrm{br},v}
+\longrightarrow0, \tag{10.14}
+$$
+
+$$
+0\longrightarrow L_0
+\longrightarrow Q
+\longrightarrow X(-1)
+\longrightarrow0. \tag{10.15}
+$$
+
+After cancelling the common Tate twist, monodromy from the top quotient to the saturated bottom lattice is the composite
+
+$$
+X\xrightarrow{q_\Gamma}X^\vee\longrightarrow L_0. \tag{10.16}
+$$
+
+Its cokernel sits in the canonical exact sequence
+
+$$
+0\longrightarrow
 \Phi_C(\bar k_v)[\ell^\infty]_{\mathfrak m}
-\otimes_{\mathbf Z_\ell}\mathcal O. \tag{10.10}
+\otimes_{\mathbf Z_\ell}R
+\longrightarrow
+\operatorname{coker}(N_Q:X\to L_0)
+\longrightarrow
+\mathcal C_{\mathrm{br},v}
+\longrightarrow0. \tag{10.17}
 $$
 
-No further finite module is introduced by quotienting by the old lattice.
+In particular, $X^\vee$ is a primitive bottom graph lattice in $Q$ if and only if $\mathcal C_{\mathrm{br},v}=0$. Without that additional unimodularity condition, the saturated bottom lattice is $L_0$, and the finite branch correction must be retained.
 
-**Proof.** The filtration of $N$ is integral with free graded pieces by Sections 9.2--9.3. Lemma 10.1 places $N^{\mathrm{old}}$ entirely in the middle layer and gives zero intersection with the bottom graph layer. Because the old image is saturated in $N$, its intersections with the filtration steps are saturated: if $\pi x$ lies in the intersection and $x$ lies in the filtration step, saturation in $N$ gives $x$ in the old image. Passing to the quotient is therefore exact and creates no torsion. The two extreme pieces remain (10.8)--(10.9).
-
-Monodromy commutes with every degeneracy and Hecke map. It is zero on old classes because the lower curve has good reduction. Its induced map on the quotient is consequently the same graph map (9.11). The component identification (10.10) is (10.5) after localization and coefficient extension. Since the quotient was formed by a primitive submodule, there is no additional saturation cokernel. $\square$
-
-The theorem does not claim that the localized component group vanishes. At a level-raising prime it can be nonzero and can carry the desired non-Eisenstein system. What is controlled is its exact origin: it is the discriminant of the new monodromy lattice, not torsion accidentally created by the old quotient.
-
-There is a useful diagrammatic restatement. Let $X_\ell=X_\Gamma\otimes\mathcal O$ and write $Q=Q^{\mathrm{new}}_{\mathfrak m}$. The extreme part of its filtration fits into
+**Proof.** The old map is injective and its image $A$ is saturated in $N_{\mathfrak m}$ by Theorem 7.1, so $Q$ is free. If $B_v(x)=0$, then $d(x)$ lies in $A\cap W_0$, which is zero by Lemma 10.1. Injectivity of $d$ gives $x=0$. The normalization consists, with the component routing fixed in Section 2.1, of the two lower-level branch copies. Hence
 
 $$
-\begin{array}{ccccccccc}
-0&\to&X_{\ell,\mathfrak m}&\to&X_{\ell,\mathfrak m}^\vee&\to&\Phi_{\mathfrak m}&\to&0\\
-&&\downarrow&&\downarrow&&\Vert&&\\
-0&\to&\operatorname{gr}_2Q(1)&\xrightarrow{N_{\mathrm{mon}}}&
-\operatorname{gr}_0Q&\to&\Phi_{\mathfrak m}&\to&0.
-\end{array} \tag{10.13}
+\operatorname{rank}_R H_{\mathrm{nor}}
+=\operatorname{rank}_R M_{\mathfrak m}^{\oplus2}.
 $$
 
-The vertical arrows are the residue and specialization identifications. Away-from-$v$ Hecke operators act on both rows and transpose the two lattice arrows under the discriminant pairing. Formula (10.13) is the precise bridge between vanishing cycles and Néron components.
+Thus $B_v$ is an injection of equal-rank free modules and (10.11) is finite. Formula (10.12) proves the Smith presentation (10.13).
 
-Suppose one had used the unsaturated quotient $N/A$ for an arbitrary old submodule $A$. Its torsion $A^{\mathrm{sat}}/A$ would sit beside $\Phi$ in the lower-right corner, and a residual class could not be assigned uniquely to monodromy or to old-index torsion. Theorem 7.1 removes that extra term. This is the exact mathematical content of the phrase “component-group control.”
+The two exact sequences in the semistable filtration have free quotients:
+
+$$
+0\to W_0\to W_1\to H_{\mathrm{nor}}\to0,
+\qquad
+0\to W_1\to N_{\mathfrak m}\to X(-1)\to0.
+$$
+
+Consequently $W_0$ is saturated in $W_1$, $W_1$ is saturated in $N_{\mathfrak m}$, and transitivity through torsion-free quotients makes $W_0$ saturated in $N_{\mathfrak m}$. This proves the first assertion of (10.13a); the second is Theorem 7.1. These two individual primitivity assertions do not imply that their sum is primitive.
+
+Projection $W_1\to W_1/W_0$ identifies
+
+$$
+W_1/(A+W_0)\simeq\operatorname{coker}(B_v)
+=\mathcal C_{\mathrm{br},v}. \tag{10.18}
+$$
+
+Because $A\cap W_0=0$, the image of $W_0$ in $W_1/A=L_0$ is $X^\vee$, and (10.18) gives (10.14). Moreover
+
+$$
+Q/L_0\simeq N_{\mathfrak m}/(W_1)_{\mathfrak m}
+\simeq X(-1),
+$$
+
+which is free; hence $L_0$ is saturated in $Q$ and (10.15) follows. Equivalently,
+
+$$
+(A+W_0)^{\mathrm{sat}}=(W_1)_{\mathfrak m},
+\qquad
+(A+W_0)^{\mathrm{sat}}/(A+W_0)
+\simeq\mathcal C_{\mathrm{br},v}. \tag{10.19}
+$$
+
+Here the saturation in (10.19) may be taken in $W_1$ or in $N_{\mathfrak m}$. Indeed, the finite equal-rank cokernel in (10.18) shows that every element of $W_1$ enters the saturation of $A+W_0$, while the torsion-free quotient $N_{\mathfrak m}/W_1$ shows that no element outside $W_1$ can enter it. Passing to $Q=N_{\mathfrak m}/A$ carries $A+W_0$ to the graph copy and $W_1$ to $L_0$, proving (10.13b). Thus the graph copy is primitive in the ambient lattice $N_{\mathfrak m}$ but need not remain primitive after quotienting by the old lattice; its exact saturation there is $L_0$.
+
+Functoriality gives $N_{\mathrm{mon}}d=0$. Formula (9.13) therefore descends to $Q$, kills $L_0$, and induces (10.16) on the top quotient. Taking cokernels of
+
+$$
+X\xrightarrow{q_\Gamma}X^\vee\longrightarrow L_0
+$$
+
+and using (10.14) gives (10.17), because (10.5) identifies $\operatorname{coker}(q_\Gamma)$ with the localized geometric component group. This also proves every asserted equivariance. $\square$
+
+The correction $\mathcal C_{\mathrm{br},v}$ can be nonzero precisely in the congruence range. For example, an eigenvalue $F_v^*\equiv\varepsilon$ modulo $\varpi$ makes $1-(F_v^*)^2$ singular and corresponds, through $T_v=F_v^*+q_v(F_v^*)^{-1}$, to the level-raising congruence $T_v\equiv\varepsilon(q_v+1)$. Thus saturation of the full generic old image does not force the graph bottom to remain primitive after quotienting. Under the abelian Ihara condition, $Q$ is torsion-free, the ambient component module is exactly $\operatorname{coker}(q_\Gamma)$, and the monodromy cokernel for the saturated quotient is the extension (10.17). Without that condition, the ambient graph and branch calculations remain valid, but they apply to the quotient by the actual old image, which may have coefficient torsion.
 
 Consider explicitly the frequent case in which $Y=Y_0\cup Y_1$ and the two components meet at $m$ unit nodes. Let an away-from-$v$ self-correspondence act on vertex divisors through
 
 $$
-A_T=\begin{pmatrix}a&b\\b&a\end{pmatrix}. \tag{10.14}
+A_T=\begin{pmatrix}a&b\\b&a\end{pmatrix}. \tag{10.20}
 $$
 
 The row sum $a+b$ is the degree on the total fiber. On the degree-zero generator $Y_0-Y_1$, however,
 
 $$
-A_T(Y_0-Y_1)=(a-b)(Y_0-Y_1). \tag{10.15}
+A_T(Y_0-Y_1)=(a-b)(Y_0-Y_1). \tag{10.21}
 $$
 
 Since $\Phi\simeq\mathbf Z/m\mathbf Z$, the component action is multiplication by $a-b$ modulo $m$. Two correspondences with the same degree can therefore have different component actions. Total degree cannot replace the graph calculation.
@@ -1546,7 +1758,7 @@ Suppose instead that Frobenius exchanges the two components and permutes the $m$
 The component theorem also controls specialization of divisor classes. If $P$ and $Q$ are sections reducing to smooth points on $Y_0$ and $Y_1$, then
 
 $$
-\operatorname{sp}([P-Q])=[Y_0-Y_1]\in\Phi. \tag{10.16}
+\operatorname{sp}([P-Q])=[Y_0-Y_1]\in\Phi. \tag{10.22}
 $$
 
 In the unit-edge two-vertex case this class generates $\Phi$. Applying $T$ before specialization multiplies it by $a-b$; applying the component operator after specialization gives the same answer by the correspondence specialization theorem. If $P$ or $Q$ is defined only over a residue extension, its full Galois orbit contributes, with residue degrees. A single geometric branch point does not define a rational divisor class.
@@ -1632,7 +1844,7 @@ a_v\equiv\varepsilon(q_v+1)\pmod\varpi,
 \qquad \varepsilon\in\{1,-1\}, \tag{11.6}
 $$
 
-then the residual vector $(1,-\varepsilon)$ lies in the kernel of the Gram matrix. It does **not** lie in the kernel of $d$: Corollary 6.2 says that its image is nonzero at a non-Eisenstein localization. Rather, its image is orthogonal modulo $\varpi$ to the old image. This is the seed of a congruence with the new quotient.
+then the residual vector $(1,-\varepsilon)$ lies in the kernel of the Gram matrix. Under the abelian Ihara condition it does **not** lie in the kernel of $d$, by (6.12). Rather, its image is orthogonal modulo $\varpi$ to the old image. This is the seed of a congruence with the new quotient.
 
 The two signed factors are
 
@@ -1649,7 +1861,7 @@ $$
 =\operatorname{ord}_\varpi c_v^\varepsilon. \tag{11.8}
 $$
 
-If $q_v\equiv-1\pmod\ell$, both signed factors can be nonunits. The full determinant then no longer measures one chosen branch. Geometric Ihara and saturation still hold, but a signed level-change theorem requires a refined $U_v$-selected calculation.
+If $q_v\equiv-1\pmod\ell$, both signed factors can be nonunits. The full determinant then no longer measures one chosen branch. Conditional residual Ihara and saturation still hold, but a signed level-change theorem requires a refined $U_v$-selected calculation.
 
 ### 11.4 Why a determinant is not an Ihara proof
 
@@ -1659,7 +1871,7 @@ If $\Delta_v$ is a unit, the old image is an orthogonal direct summand. The inve
 
 If $\Delta_v$ is a nonzero nonunit, the old image may be saturated while failing to split orthogonally. This is the desired congruence regime. The map $R\to R^2$, $x\mapsto(x,x)$, is primitive although the Gram determinant for a suitably scaled pairing can be a nonunit; splitting and primitivity are different questions.
 
-If $\Delta_v=0$ on a characteristic-zero summand, the two old vectors are rationally dependent. Such a summand is scalar or one-dimensional in the clean quaternionic setting and belongs to the Eisenstein exception. Its exclusion follows from Theorem 6.1, not from formally canceling a zero determinant.
+If $\Delta_v=0$ on a characteristic-zero summand, the Gram matrix alone says only that a nonzero old vector lies in the orthogonal intersection of the old space with itself. It does not say that the two old vectors are rationally dependent: excluding this case requires a separate characteristic-zero temperedness or automorphic input, and does not follow from the tree sequence.
 
 Conversely, a nonzero determinant does not prove saturation. Multiplication by $\pi$ has nonzero determinant but nonsaturated image. Any proof that computes (11.5), observes that it is nonzero in $E$, and declares the integral quotient torsion-free has skipped the central arithmetic step.
 
@@ -1738,7 +1950,7 @@ $$
 
 This is well defined because $z$ annihilates the old image.
 
-**Theorem 12.1 (new quotient duality).** The map (12.3) is an isomorphism. In particular both $Q_{\mathfrak m}$ and $N^{\perp}_{\mathfrak m}$ are finite free of the same rank.
+**Theorem 12.1 (conditional new quotient duality).** Under the abelian Ihara condition, the map (12.3) is an isomorphism. In particular both $Q_{\mathfrak m}$ and $N^{\perp}_{\mathfrak m}$ are finite free of the same rank.
 
 **Proof.** The old image is saturated by Theorem 7.1. Apply Lemma 3.2 with $P=N_{\mathfrak m}$ and $A=N^{\mathrm{old}}_{\mathfrak m}$. Under the perfect pairing, its orthogonal is precisely the kernel of the adjoint $d^*$. $\square$
 
@@ -1765,32 +1977,36 @@ $$
 N_{\mathrm{mon}}\circ d=d\circ0=0. \tag{12.5}
 $$
 
-Thus monodromy descends to $Q_{\mathfrak m}$. Theorem 10.2 identifies its extreme graded pieces and says that the descended operator is the graph pairing.
+Thus monodromy descends to $Q_{\mathfrak m}$. Theorem 10.2 identifies the top quotient with $X(-1)$ and the saturated bottom lattice with $L_0$. After cancelling the common Tate twist, the descended operator is
+
+$$
+X\xrightarrow{q_\Gamma}X^\vee\longrightarrow L_0. \tag{12.6}
+$$
 
 There are two immediate consequences.
 
 First, every nonzero graph cycle in the localized quotient gives a length-two monodromy block after tensoring with $E$. The old subspace cannot contain such a block.
 
-Second, the failure of this monodromy map to be an integral isomorphism is precisely
+Second, the ambient graph pairing still has cokernel
 
 $$
-\Phi_C[\ell^\infty]_{\mathfrak m}. \tag{12.6}
+\Phi_C[\ell^\infty]_{\mathfrak m}. \tag{12.7}
 $$
 
-There is no unnamed congruence module between (12.5) and (12.6). Saturation has removed the only additional finite quotient that the old lattice could create.
+But $X^\vee$ need not be saturated in $Q$. The quotient $L_0/X^\vee$ is the explicit branch correction $\mathcal C_{\mathrm{br},v}$, and the full monodromy cokernel is the extension (10.17). Saturation of the old image removes torsion from $Q$; it does not make the sum of the old and graph lattices primitive.
 
-This is the form of component control needed in level lowering. A residual class killed by monodromy can be compared with the lower-level image without mistaking old-quotient torsion for a component class. Any remaining finite obstruction is visible in the explicit discriminant group (10.3).
+This is the form of component control needed in level lowering. A residual class killed by monodromy can be compared directly with the lower-level image only after checking $\mathcal C_{\mathrm{br},v}[\varpi]=0$, or after carrying the class through the two-step extension (10.17). The two finite sources are now distinguished: $\Phi_C$ is the discriminant of $q_\Gamma$, while $\mathcal C_{\mathrm{br},v}$ is the Smith cokernel of the normalized branch map.
 
 One can also see directly how a Gram-kernel vector enters the orthogonal new reduction. Let $x\in M^2$ have nonzero reduction and suppose
 
 $$
-Gx\in\varpi(M^2)^\vee. \tag{12.7}
+Gx\in\varpi(M^2)^\vee. \tag{12.8}
 $$
 
 Surjectivity of $d^*$ from (11.12) supplies $z\in N$ with
 
 $$
-d^*z=\varpi^{-1}Gx. \tag{12.8}
+d^*z=\varpi^{-1}Gx. \tag{12.9}
 $$
 
 Then
@@ -1802,12 +2018,12 @@ $$
 satisfies $d^*y=0$, so $y\in N^\perp$. Modulo $\varpi$,
 
 $$
-\bar y=\overline{d(x)}. \tag{12.9}
+\bar y=\overline{d(x)}. \tag{12.10}
 $$
 
-Ihara injectivity makes the right side nonzero. Thus a nonzero Gram-kernel vector produces a nonzero new residual class. Saturation guarantees that this class is the reduction of a free new lattice rather than the boundary of torsion in $Q$. This calculation explains why both injectivity and saturation are needed even though they arise from the same residual criterion in the clean curve setting.
+The abelian Ihara condition makes the right side nonzero. Thus a nonzero Gram-kernel vector produces a nonzero new residual class. Saturation guarantees that this class is the reduction of a free new lattice rather than the boundary of torsion in $Q$. This calculation explains why both injectivity and saturation are needed even though they arise from the same residual criterion once (6.11) is supplied.
 
-If (12.7) holds only after multiplying $x$ by a denominator, the construction fails integrally. Likewise, if $d^*$ is not surjective because the old image is not primitive, (12.8) may have no solution. These are not technical inconveniences; they are the two precise ways a rational level-raising argument can fail to produce an integral new class.
+If (12.8) holds only after multiplying $x$ by a denominator, the construction fails integrally. Likewise, if $d^*$ is not surjective because the old image is not primitive, (12.9) may have no solution. These are not technical inconveniences; they are the two precise ways a rational level-raising argument can fail to produce an integral new class.
 
 Assume now that $x$ is an eigenvector and (11.6) holds. Choosing
 
@@ -1815,13 +2031,13 @@ $$
 x_\varepsilon=(x,-\varepsilon x)
 $$
 
-makes (12.7) equivalent to divisibility of $c_v^\varepsilon$. If the companion factor is a unit, the Gram cokernel on this eigenplane is cyclic with length
+makes (12.8) equivalent to divisibility of $c_v^\varepsilon$. If the companion factor is a unit, the Gram cokernel on this eigenplane is cyclic with length
 
 $$
 \operatorname{ord}_\varpi c_v^\varepsilon.
 $$
 
-The construction (12.8)--(12.9) then produces a residual orthogonal class of the selected sign. Notice the order of the argument: Ihara first proves $d(x_\varepsilon)\not\equiv0$; perfectness moves its Gram divisibility into the orthogonal kernel; saturation proves that the quotient carrying the class is free. Reversing this order would use the desired new class to justify its own integrality.
+The construction (12.9)--(12.10) then produces a residual orthogonal class of the selected sign. Notice the order of the conditional argument: (6.11) first proves $d(x_\varepsilon)\not\equiv0$; perfectness moves its Gram divisibility into the orthogonal kernel; saturation proves that the quotient carrying the class is free. Reversing this order would use the desired new class to justify its own integrality.
 
 If both signed factors are nonunits, the Gram cokernel can have two generators and the single vector $x_\varepsilon$ does not determine its elementary divisors. Smith normal form of the full $2\times2$ operator matrix is then required. This is the algebraic content of the $q_v\equiv-1$ exception.
 
@@ -1887,7 +2103,7 @@ $$
 
 It splits exactly when $e$ and $n$ are coprime. If they have a common factor, the middle cyclic group is not the direct sum of the endpoints. This elementary example is the safest warning against replacing the exact lattice sequence by an order formula.
 
-Ramified base change does not affect Ihara injectivity on the characteristic-zero generic curves: the tree and its arithmetic groups are attached to the original level-changing place. What changes is the integral model used to read monodromy. The cycle lattice remains canonically the same after subdivision, while $q$ is multiplied by $e$. Thus saturation of the old cohomology image and enlargement of the component group are compatible and independent phenomena.
+Ramified base change does not change the tree obstruction (6.10): the tree and its arithmetic groups are attached to the original level-changing place. What changes is the integral model used to read monodromy. The cycle lattice remains canonically the same after subdivision, while $q$ is multiplied by $e$. Thus, when the abelian Ihara condition holds, saturation of the old cohomology image and enlargement of the component group are compatible and independent phenomena.
 
 ### 13.3 Stabilizers and small coefficient primes
 
@@ -1905,28 +2121,32 @@ The prime $\ell=2$ also changes signs in the tree map: $r_0-r_1$ and $r_0+r_1$ b
 
 ### 13.4 Scalar, Eisenstein, and vexing cases
 
-The Eisenstein localization is essential. Arithmetic characters of $\Gamma^v$ give actual relations between the two degeneracy pullbacks, and Theorem 6.1 says precisely that these are the only relations. At an Eisenstein maximal ideal, (6.7) can fail and the old quotient can have torsion. No conclusion of the clean theorem is asserted there.
+The tree theorem says that arithmetic characters of $\Gamma^v$ give exactly all relations on the norm-one cover, and the original curve retains their $\Delta$-invariant part. The congruence-continuous characters, including those supported at division, coefficient, and bad-level compact factors, are Eisenstein. Reduced norm, central action, and component routing supply the corresponding twists and exact descent rather than extra characters of $\Gamma^v$. A $\Delta$-invariant noncongruence character is the additional obstruction isolated in (6.10). Thus non-Eisenstein localization is necessary but, without the abelian Ihara condition, not by itself sufficient for residual injectivity.
 
 The congruences $q_v\equiv1$ and $q_v\equiv-1\pmod\ell$ are different exceptional phenomena.
 
-If $q_v\equiv1$, the two residual roots $\varepsilon$ and $\varepsilon q_v$ of the old $U_v$ polynomial collide. The unramified residual representation can be scalar, so an ordered Frobenius line is not intrinsic. Geometric Ihara still proves saturation of the full two-map image, but it does not produce a canonical integral projector onto one branch.
+If $q_v\equiv1$, the two residual roots $\varepsilon$ and $\varepsilon q_v$ of the old $U_v$ polynomial collide. The unramified residual representation can be scalar, so an ordered Frobenius line is not intrinsic. Under the abelian Ihara condition the full two-map image is still saturated, but this does not produce a canonical integral projector onto one branch.
 
 If $q_v\equiv-1$, the two roots $\varepsilon$ and $-\varepsilon$ remain distinct for odd $\ell$, but both signed Gram factors in (11.7) can vanish. The valuation identity (11.8) fails. A $U_v$-selected determinant calculation can distinguish the branches, but the unselected Gram determinant cannot.
 
-A **vexing** local datum is one in which the residual scalar or ramified type admits more than one integral lattice or flag with the same unlabelled reduction. The constant-coefficient Ihara theorem controls the full cohomology lattice; it does not assert that an independently chosen type projector has saturated image. Such a case requires the type-enhanced level structure and its own prime-to-stabilizer hypotheses. Primitive wild supercuspidal types are outside the catalog scope.
+A **vexing** local datum is one in which the residual scalar or ramified type admits more than one integral lattice or flag with the same unlabelled reduction. Even after the constant-coefficient abelian Ihara condition is supplied, the resulting theorem controls only the full cohomology lattice; it does not assert that an independently chosen type projector has saturated image. Such a case requires the type-enhanced level structure and its own prime-to-stabilizer hypotheses. Primitive wild supercuspidal types are outside the catalog scope.
+
+Even when the abelian Ihara condition holds, the branch correction need not vanish. Its support is the Smith support of $1-(F_v^*)^2$, so it is expected at a signed level-raising congruence. It does not alter conditional residual injectivity or the resulting freeness of $Q$; it changes the integral identification of the bottom monodromy lattice and must be carried in any lowering argument.
 
 It is useful to summarize the exceptional cases as failures of exact statements rather than as labels.
 
 | Situation | Statement that can fail | Statement that remains valid under the other hypotheses |
 |---|---|---|
-| Eisenstein localization | residual injectivity and saturation | tree identification of the kernel |
-| $\ell$-divisible stabilizer | exact descent from a fine cover | fine-level Ihara theorem |
-| $q_v\equiv1\pmod\ell$ | integral separation of the two old $U_v$ roots | full two-map saturation |
-| $q_v\equiv-1\pmod\ell$ | one-factor valuation formula | full Gram matrix and saturation |
+| Eisenstein localization | residual injectivity and saturation | tree identification of the kernel and cokernel |
+| noncongruence character at $\mathfrak m$ | residual injectivity even when $\mathfrak m$ is non-Eisenstein | Eisenstein calculation on the congruence-character submodule |
+| $\ell$-divisible stabilizer | exact descent from a fine cover | fine-level tree criterion and, if (6.11) holds there, fine-level saturation |
+| $q_v\equiv1\pmod\ell$ | integral separation of the two old $U_v$ roots | conditional full two-map saturation |
+| $q_v\equiv-1\pmod\ell$ | one-factor valuation formula | full Gram matrix and conditional saturation |
+| nonunimodular branch map | primitive bottom graph copy and correction-free lowering | under (6.11), free new quotient and exact sequence (10.17) |
 | ramified base change | unit edge lengths and unchanged component group | subdivision-invariant cycle lattice |
 | nonstable component | endomorphism of one factor | correspondence between the routed factors |
 
-This table prevents two opposite mistakes. One must not discard the full Ihara theorem merely because a branch projector fails; but one must not use full-image saturation as if it supplied the missing labelled branch.
+This table separates three independent questions: the noncongruence character obstruction to full Ihara, the signed projector obstruction, and the branch-correction obstruction. None can be used to erase another.
 
 The coefficient-prime equality $v\mid\ell$ is more serious. The analytic tree still exists, but the integral geometric comparison changes: the $v$-power torsion of the Jacobian is finite flat rather than étale, Kummer residues no longer produce a free $\mathbf Z_\ell$ local system in the same way, and connected group schemes can contribute. The present component and saturation package is therefore deliberately prime-to-$v$.
 
@@ -1934,17 +2154,22 @@ The coefficient-prime equality $v\mid\ell$ is more serious. The analytic tree st
 
 ### 14.1 Main theorem
 
-We collect the exact result proved in this book.
+We collect the exact source-closed implication proved in this book. The extra hypothesis in item 8 is the obstruction isolated by the tree, not a disguised congruence-subgroup property.
 
-**Theorem 14.1 (geometric Ihara, saturation, and components).** Let $F$, $B$, $U$, $v$, $U_0(v)$, $\mathcal O$, and $\mathfrak m$ satisfy the following hypotheses:
+**Theorem 14.1 (conditional geometric Ihara, saturation, and components).** Let $F$, $B$, $U$, $v$, $U_0(v)$, $\mathcal O$, and $\mathfrak m$ satisfy the following hypotheses:
 
 1. $F$ is totally real and $B/F$ is a division quaternion algebra split at exactly one real place;
 2. the chosen Shimura component union is proper, stable under the relevant correspondences, and represented at a neat level, or obtained from such a level by a quotient of order prime to $\ell$;
 3. $B$ is split at $v$, $U_v$ is hyperspecial, and $U_0(v)_v$ is the standard Iwahori;
 4. the PEL datum at $v$ is unramified with self-dual lattice and verified flat rank-two incidence local model;
 5. $\ell\ge7$, $v\nmid\ell$, and $\mathcal O$ is a finite extension of $\mathbf Z_\ell$;
-6. the central character is trivial on the selected connected block, with $T_w,S_w$ normalized as unnormalized right-double-coset operators;
-7. $\mathfrak m$ is non-Eisenstein for the ideal (2.2).
+6. component routing and the center act trivially on the selected Hecke-stable block, with $T_w,S_w$ normalized as unnormalized right-double-coset operators;
+7. $\mathfrak m$ is non-Eisenstein for the ideal (2.4);
+8. the abelian Ihara condition $({\rm AIH})_{v,\mathfrak m}$ holds:
+   $$
+   \bigl(H^1_{\mathrm{nc}}(\Gamma^v,k)^\Delta\bigr)_{\mathfrak m}=0,
+   $$
+   equivalently any of the conditions in (6.11).
 
 Put
 
@@ -1983,60 +2208,118 @@ Then:
    d^*d=
    \begin{pmatrix}q_v+1&T_v\\T_v&q_v+1\end{pmatrix};
    $$
-6. the Iwahori model at $v$ is regular strict semistable with weighted dual graph $\Gamma$, and $Q_{\mathfrak m}$ inherits extreme monodromy pieces
+6. the common fine Iwahori model at $v$ is regular strict semistable with weighted dual graph $\Gamma$. If $\Delta\ne1$, all modules in this clause mean their exact $\Delta$-invariant descent from that model. If
    $$
-   H^1(\Gamma,\mathcal O)_{\mathfrak m},
+   X=H_1(\Gamma,\mathcal O)_{\mathfrak m},
    \qquad
-   H_1(\Gamma,\mathcal O)_{\mathfrak m}(-1);
+   X^\vee=H^1(\Gamma,\mathcal O)_{\mathfrak m},
    $$
-7. monodromy between those pieces is the weighted edge pairing $q_\Gamma$, and its cokernel is canonically
+   then $W_0=X^\vee$ is saturated in $N_{\mathfrak m}$, the saturation of
+   $d(M_{\mathfrak m}^{\oplus2})+W_0$ is $(W_1)_{\mathfrak m}$, and its image in
+   $Q_{\mathfrak m}$ has saturation $L_0=(W_1)_{\mathfrak m}/d(M_{\mathfrak m}^{\oplus2})$.
+   The lattice $L_0$ is free and saturated in $Q_{\mathfrak m}$, with exact sequences
    $$
+   0\to X^\vee\to L_0\to\mathcal C_{\mathrm{br},v}\to0,
+   \qquad
+   0\to L_0\to Q_{\mathfrak m}\to X(-1)\to0,
+   $$
+   where
+   $$
+   \mathcal C_{\mathrm{br},v}
+   \simeq\operatorname{coker}\!\left(1-(F_v^*)^2\right)_{\mathfrak m};
+   $$
+7. after cancelling the common Tate twist, monodromy is
+   $$
+   X\xrightarrow{q_\Gamma}X^\vee\to L_0,
+   $$
+   and its cokernel is the canonical extension
+   $$
+   0\to
    \Phi_{J_{U_0(v)}}(\bar k_v)[\ell^\infty]_{\mathfrak m}
-   \otimes_{\mathbf Z_\ell}\mathcal O;
+   \otimes_{\mathbf Z_\ell}\mathcal O
+   \to\operatorname{coker}(N_Q)
+   \to\mathcal C_{\mathrm{br},v}\to0;
    $$
 8. all statements are equivariant for away-from-$v$ Hecke operators, transpose adjunction, and the signed residue Galois action.
 
-In particular the localized old image is primitive, the integral new quotient has no torsion, and every remaining component obstruction is the explicit monodromy discriminant rather than an unmeasured saturation defect.
+In particular the localized old image is primitive and the integral new quotient has no torsion. The two finite special-fiber effects are measured separately: the Néron component group is the discriminant of $q_\Gamma$, while the branch correction is the Smith cokernel of the normalized-component degeneracy map.
 
 ### 14.2 Proof of the main theorem
 
-**Proof strategy.** The proof has four independent parts: the tree isolates the kernel; Hecke transfer makes it Eisenstein; DVR algebra turns residual injectivity into saturation; and the nodal model identifies the component module.
+**Proof strategy.** The proof has four independent parts: the tree isolates the full kernel and its noncongruence quotient; the arithmetic calculation makes the congruence part Eisenstein and hypothesis 8 removes the remaining localization; DVR algebra turns residual injectivity into saturation; and the nodal model identifies the component and branch modules.
 
-**Proof.** The lattice graph at $v$ is a tree by Proposition 4.1. Strong approximation, Theorem 4.2, makes its quotient by the $S$-arithmetic group a single edge. The tree Mayer--Vietoris sequence therefore identifies the kernel of the two restriction maps with the image of $H^1(\Gamma^v,k)$. Complex uniformization and cohomological comparison identify those restriction maps with $\pi_0^*$ and $\pi_1^*$.
+**Proof.** The lattice graph at $v$ is a tree by Proposition 4.1. Strong approximation, Theorem 4.2, makes its quotient by the $S$-arithmetic group a single edge. The tree Mayer--Vietoris sequence therefore gives the exact kernel and cokernel sequence (6.5). Complex uniformization and cohomological comparison identify its two restriction maps with $\pi_0^*$ and $\pi_1^*$.
 
-For a character of $\Gamma^v$, the transfer formula telescopes in the abelianization and gives $T_w=q_w+1$ and $S_w=1$. Hence the kernel is Eisenstein. Localization at $\mathfrak m$ kills it, proving clause 1.
+Proposition 5.3 makes the congruence-continuous norm-one character submodule Eisenstein, including its division-, coefficient-, and bad-level local factors; reduced norm, central action, and component routing give the declared twists. Exact prime-to-$\ell$ descent then takes $\Delta$-invariants. Non-Eisenstein localization kills the resulting congruence submodule. Formula (6.10) identifies the remaining kernel with $\bigl(H^1_{\mathrm{nc}}(\Gamma^v,k)^\Delta\bigr)_{\mathfrak m}$, which is zero by hypothesis 8. This proves clause 1 without any assertion about the full congruence kernel.
 
 The two cohomology modules are finite free over $\mathcal O$ by the Riemann-surface cell calculation of Section 7.1. Lemma 3.1 applied to the localized map now proves injectivity and saturation, hence clauses 2 and 3. Perfect Poincaré duality and Lemma 3.2 prove clause 4. Pull--norm adjunction and the right-double-coset calculation prove clause 5.
 
-The parahoric PEL local model has equation $xy=\pi_v$, so Theorem 8.1 gives the required regular semistable model. The normalization and nearby-cycle calculations give the free filtration (9.6)--(9.7). Since the lower Jacobian has good reduction, Lemma 10.1 shows that the old image has no graph-toric part. Passing through the saturated quotient therefore retains both extreme graph lattices. The local Kummer calculation identifies monodromy with $q_\Gamma$, proving clause 6 and the first part of clause 7. The Raynaud graph theorem identifies its cokernel with the Néron component group, finishing clause 7.
+The parahoric PEL local model has equation $xy=\pi_v$, so Theorem 8.1 gives the required regular semistable fine model. In the tame quotient case, Section 8.4 applies exact $\Delta$-invariants to every following construction; no regularity assertion about the coarse quotient is used. The normalization and nearby-cycle calculations give the free filtration (9.6)--(9.7). Since the lower Jacobian has good reduction, Lemma 10.1 places the old image in $W_1$ with zero intersection with $W_0$. The projection to normalized-component cohomology is the branch matrix (10.10). Its Smith reduction (10.12), rather than saturation of the old image alone, gives the finite module $\mathcal C_{\mathrm{br},v}$.
+
+Quotienting the filtration yields (10.14)--(10.15): the top graph lattice survives unchanged, while the saturated bottom lattice $L_0$ contains the graph dual with quotient $\mathcal C_{\mathrm{br},v}$. The local Kummer calculation identifies monodromy with the composite (10.16). The Raynaud graph theorem identifies the first cokernel in (10.17) with the Néron component group, and the cokernel sequence retains the branch correction. This proves clauses 6 and 7.
 
 Correspondence extension, graph adjunction, and descent preserve each construction, proving clause 8. $\square$
 
 ### 14.3 Hypothesis and dependency ledger
 
-The logical use of the five direct prerequisites is exact.
+The logical use of the six direct prerequisites is exact.
 
 | Source | Imported result | Hypotheses retained | Work done here |
 |---|---|---|---|
-| Book 12 | nodal normalization, graph cycles, weighted pairing, discriminant component group, subdivision, finite-map adjunction | semistable curve; geometric graph; thickness and signed descent retained | application to the Iwahori quotient and proof that the old image does not alter the graph extremes |
-| Book 39 | Néron mapping property, identity component, component group, semistable Jacobian, unramified base change | excellent DVR; henselianity where reduction is used; perfect residue field for fixed-point notation | localized component-control sequence for the saturated quotient |
+| Book 12 | nodal normalization, graph cycles, weighted pairing, discriminant component group, subdivision, finite-map adjunction | semistable curve; geometric graph; thickness and signed descent retained | application to the Iwahori quotient and separation of the graph discriminant from the branch correction |
+| Book 39 | Néron mapping property, identity component, component group, semistable Jacobian, unramified base change | excellent DVR; henselianity where reduction is used; perfect residue field for fixed-point notation | identification of the ambient component term in the localized monodromy-cokernel sequence |
 | Book 41 | extension of pull--norm correspondences, transpose, specialization, graph and intersection maps | smooth proper generic curves; regular models; controlled resolved correspondence | simultaneous Hecke action and adjunction on the new and component lattices |
-| Book 122 | Shimura degeneracy maps, right-coset orientation, old map, adjoints, Gram matrix framework | stable component union; fine or tame descent; unnormalized operators | proof of geometric injectivity and saturation, which Book 122 explicitly leaves open |
-| Book 131 | rank-two parahoric PEL model, $xy=\pi_v$, strict semistability, graph monodromy, Hecke functoriality | verified flat incidence local model; neat level; prime-to-$v$ coefficients | integral filtration after quotienting by the primitive old image and exact component discriminant |
+| Book 122 | Shimura degeneracy maps, right-coset orientation, component routing, old map, adjoints, Gram matrix framework | stable component union; fine or tame descent; unnormalized operators | exact tree criterion and, under (6.11), geometric injectivity and saturation, which Book 122 explicitly leaves open |
+| Book 126 | rank-one strong approximation for simply connected quaternion norm-one groups | a noncompact archimedean factor; arbitrary finite compact-open conditions | exact specialization to the one-edge quotient in Theorem 4.2 |
+| Book 131 | rank-two parahoric PEL model, $xy=\pi_v$, strict semistability, graph monodromy, Hecke functoriality | verified flat incidence local model; neat level; prime-to-$v$ coefficients | integral quotient filtration, normalized branch map, and its Smith correction |
+| Abelian Ihara condition | explicit additional hypothesis, not an imported theorem | vanishing of $\bigl(H^1_{\mathrm{nc}}(\Gamma^v,k)^\Delta\bigr)_{\mathfrak m}$ | exact point at which the conditional residual theorem becomes injective |
 
-The strong-approximation statement, tree Mayer--Vietoris sequence, Hecke calculation on arithmetic characters, residual Ihara theorem, and saturation criterion were proved in this book. No class-field-theoretic or density theorem for Frobenius elements is used. No automorphic decomposition, multiplicity-one theorem, local newvector theorem, or modularity argument enters the proof.
+The tree Mayer--Vietoris sequence, the local-factor calculation on congruence-continuous arithmetic characters, the exact noncongruence obstruction, the conditional saturation criterion, and the branch Smith calculation are proved here. Strong approximation is imported only from Book 126. No congruence-kernel theorem, automorphic decomposition, multiplicity-one theorem, local newvector theorem, or modularity argument is invoked.
+
+The mathematical direct-dependency row is therefore
+
+$$
+158\mid 12,39,41,122,126,131. \tag{14.1}
+$$
+
+The first seven hypotheses of Theorem 14.1 do not currently imply hypothesis 8 from those sources. A proof of (5.18) on the localized noncongruence quotient, an exact computation of (5.19), or a different theorem proving the last vanishing in (6.10) would close the catalog objective. Strong approximation alone cannot do so.
 
 ### 14.4 Exact boundary of the theorem
 
-The theorem proves the clean full-Iwahori two-map statement. It does not silently imply stronger variants.
+The theorem proves the clean full-Iwahori two-map statement conditional on the exact abelian Ihara condition. It does not assert that condition from the geometric and strong-approximation hypotheses alone.
 
-At an Eisenstein maximal ideal, the $S$-arithmetic character module can survive and residual injectivity can fail. At a nonneat quotient with $\ell$-divisible stabilizers, group cohomology of the stabilizer can add a kernel. At $q_v\equiv1\pmod\ell$, the full old image remains saturated, but an ordered $U_v$ branch need not be defined integrally. At $q_v\equiv-1\pmod\ell$, both signed Gram factors can be nonunits, so one determinant does not measure one sign. These cases require additional labelled or type-enhanced data.
+The single missing arithmetic theorem can now be named without strengthening it.
+
+**Missing arithmetic theorem $({\rm AC}^{\rm loc}_\ell)$ (localized odd-primary abelian congruence).** For every datum satisfying hypotheses 1--7 of Theorem 14.1, including every fixed tame spectator level needed downstream, one has
+
+$$
+\bigl(H^1_{\mathrm{nc}}(\Gamma^v,k)^\Delta\bigr)_{\mathfrak m}=0.
+\tag{14.2}
+$$
+
+This theorem is not proved here. At one fixed datum it is exactly $({\rm AIH})_{v,\mathfrak m}$, hence is equivalent to residual Ihara injectivity by (6.10)--(6.11). A full odd-primary abelian congruence-subgroup property would assert $H^1_{\mathrm{nc}}(\Gamma^v,A)=0$ before localization for every finite $\ell$-primary $A$; it would imply (14.2), but is strictly stronger than the theorem actually needed. Likewise, centrality or $2$-primary finiteness of the entire congruence kernel would be stronger. The minimal missing assertion is the localized vanishing (14.2), not either of those global claims.
+
+At an Eisenstein maximal ideal, the congruence arithmetic character module can survive. At a non-Eisenstein ideal, the noncongruence quotient in (6.10) is the separate possible kernel. At a nonneat quotient with $\ell$-divisible stabilizers, group cohomology of the stabilizer can add another kernel. Once (6.11) and tame descent hold, $q_v\equiv1\pmod\ell$ affects only the integral choice of an ordered $U_v$ branch, while $q_v\equiv-1\pmod\ell$ can make both signed Gram factors nonunits.
 
 The theorem concerns constant first cohomology of the compact quaternionic Shimura curves with the verified rank-two local model. It does not cover deeper parahoric chains, primitive wild supercuspidal type projectors, nonflat determinant loci, boundary cohomology of noncompact curves, or coefficient characteristic equal to the residue characteristic at $v$.
 
 Nor does torsion-freeness produce a canonical integral direct-sum old--new decomposition. It produces the quotient lattice and its perfect orthogonal dual. A direct summand requires the Gram determinant to be a unit, which is incompatible with the congruence regime in which level raising is used.
 
-Finally, component control does not mean component-group vanishing. The localized component group can be nonzero. The theorem identifies it exactly as the discriminant of the weighted monodromy pairing on the new graph lattice and proves that no extra finite quotient is hidden in the old image.
+Finally, component control does not mean component-group vanishing, nor does old-image saturation imply that $A+W_0$ is primitive. The localized component group can be nonzero and is exactly the discriminant of the weighted graph pairing. Independently, the branch map can have the finite Smith cokernel $\mathcal C_{\mathrm{br},v}$. The clean two-piece monodromy statement is available only when that module vanishes; otherwise (10.17) is the exact interface.
+
+There is also a precise definite-routing boundary. Book 158 constructs the geometric edge and cycle lattices $X$ and $X^\vee$, their signed Galois and Hecke actions, and the pairing $q_\Gamma$. It does **not** identify the node set with a class set for the quaternion algebra obtained by switching the invariants at $v$ and the distinguished real place. That integral graph--definite identification requires the datum-specific, coefficient-one node-uniformization theorem imposed in Book 159, together with its stabilizer, mass-pairing, and component-routing checks. Rational Jacquet--Langlands does not supply this integral identification.
+
+The downstream interface is therefore the following. Every freeness, type-transfer, or seed entry in the right column is conditional on the stated instances of $({\rm AIH})$.
+
+| Consumer | Valid input from this book and retained boundary |
+|---|---|
+| Book 159 | It may use the exact tree kernel unconditionally. Under $({\rm AIH})_{v,\mathfrak m}$ it may additionally use residual injectivity, the saturated old image, free $Q$, quotient--orthogonal duality, the Gram matrix, and (10.14)--(10.17). Its formula (8.2) is precisely the corrected filtration here. Identifying $X$ with a switched definite quaternionic lattice still requires its separate node-uniformization and generic-support inputs. |
+| Book 156 | Its one-prime nonminimal comparison may import the same conditional free-quotient package and the three distinct finite modules: Gram, component, and branch. It may not promote the one-prime theorem to the finite set required by its final modularity-lifting target; mixed Ihara, product residue, and joint support remain additional inputs. |
+| Book 165 | Constant-coefficient residual injectivity may be used in the integral flag-excision argument only after $({\rm AIH})$ has been imposed for **every** constant-level curve in the finite flag diagram, with the actual tame spectator levels. Book 158 neither proves the type-coefficient transfer nor makes its quotient projective over a tame deformation algebra; those are the conditional achievements of Book 165 after flag excision. |
+| Book 185 | Book 158 supplies no automorphic seed by itself. For the seed used in the finite-image argument, (14.2) is the first missing input in proof order; even after it is supplied, node uniformization, the relevant one- or several-prime carrier, component support, and the other seed hypotheses must still be verified. No balanced-lift or finite-image conclusion flows directly from this book. |
+| level lowering | Even under $({\rm AIH})$, require $\Phi[\varpi]_{\mathfrak n}=0$ and $\mathcal C_{\mathrm{br},v}[\varpi]_{\mathfrak n}=0$, or work inside the full extension (10.17). Component cleanliness does not erase the branch correction. |
+
+In particular, no consumer can use $T_w\chi=(q_w+1)P_w\chi$ for every abstract character without first supplying (5.18) or (14.2). After that arithmetic gap is closed, a statement that the component group is the only finite module in the semistable quotient, or that component cleanliness alone makes residual monodromy an isomorphism between the two graph copies, still requires the independent hypothesis $\mathcal C_{\mathrm{br},v}=0$.
 
 ## 15. Conclusion
 
@@ -2044,15 +2327,17 @@ Finally, component control does not mean component-group vanishing. The localize
 
 The two degeneracy maps are deceptively simple. They come from the two endpoints of one edge in the local lattice tree, but integrally their images can meet the new lattice in a congruence of positive index. The correct argument therefore begins before any determinant is computed.
 
-The Bruhat--Tits tree turns the two pullbacks into a Mayer--Vietoris map. Its kernel is not guessed from dimensions: it is exactly the image of the first cohomology of the group with the $v$-level removed. In degree one that cohomology consists of additive arithmetic characters. The transfer formula calculates their full Hecke action and makes it Eisenstein. Non-Eisenstein localization kills the entire kernel, including its possible $\ell$-torsion.
+The Bruhat--Tits tree turns the two pullbacks into a Mayer--Vietoris map. On the norm-one cover its kernel is not guessed from dimensions: it is exactly the first cohomology of the group with the $v$-level removed, and its cokernel is the next explicit $H^2$ kernel. Exact prime-to-$\ell$ descent takes the corresponding $\Delta$-invariants on the original curve. In degree one the obstruction consists of additive arithmetic characters. Strong approximation embeds the congruence-continuous ones densely into the compact product. Division-place tori, coefficient-place factors, and bad-level factors are retained inside that module, while norms, centers, and components are retained through routing and descent; the transfer formula makes the resulting congruence submodule Eisenstein.
 
-Once residual injectivity is known, elementary divisor theory does the integral work. The old image is saturated, its quotient is free, and perfect duality identifies the orthogonal new lattice with the dual of that quotient. This remains true when the Gram determinant is a nonunit. The nonunit then records a genuine old--new congruence rather than torsion caused by a defective lattice.
+An abstract finite character need not be congruence-continuous. The unresolved quotient on the original curve is $\bigl(H^1_{\mathrm{nc}}(\Gamma^v,k)^\Delta\bigr)_{\mathfrak m}$, and residual Ihara is equivalent to its vanishing. This is the exact point at which the catalog objective presently needs a new abelian commensurator or localized $H^1$ theorem. A full congruence-subgroup property is neither assumed nor substituted for it.
 
-The semistable model supplies the second half of the package. Its node $xy=\pi_v$ produces a geometric dual graph, graph cycles produce the torus in the special Jacobian, and edge thicknesses produce the integral monodromy pairing. The discriminant of that pairing is the Néron component group. Because the lower-level Jacobian has good reduction, old classes carry no graph-toric part. Passing to the saturated new quotient therefore preserves the graph extremes and their monodromy without creating another finite error term.
+Once the abelian Ihara condition supplies residual injectivity, elementary divisor theory does the integral work. The old image is saturated, its quotient is free, and perfect duality identifies the orthogonal new lattice with the dual of that quotient. This remains true when the Gram determinant is a nonunit. The nonunit then records a genuine old--new congruence rather than torsion caused by a defective lattice.
+
+The semistable model supplies the second half of the package. Its node $xy=\pi_v$ produces a geometric dual graph, graph cycles produce the torus in the special Jacobian, and edge thicknesses produce the integral monodromy pairing. The discriminant of that pairing is the Néron component group. Good reduction places old classes in the normalized-component layer, but it does not make their sum with the bottom graph lattice primitive. The branch matrix measures the exact index, and its Smith cokernel $\mathcal C_{\mathrm{br},v}$ is retained in the quotient filtration.
 
 ### 15.2 The role in integral level change
 
-The final structure is a short exact sequence of free lattices
+Under the abelian Ihara condition, the final structure is a short exact sequence of free lattices
 
 $$
 0\longrightarrow M_{\mathfrak m}^{\oplus2}
@@ -2066,7 +2351,23 @@ $$
 \ker d^*_{\mathfrak m}\simeq Q_{\mathfrak m}^\vee,
 $$
 
-and the monodromy--component sequence
+the quotient filtration
+
+$$
+0\longrightarrow X^\vee
+\longrightarrow L_0
+\longrightarrow\mathcal C_{\mathrm{br},v}
+\longrightarrow0,
+$$
+
+$$
+0\longrightarrow L_0
+\longrightarrow Q_{\mathfrak m}
+\longrightarrow X(-1)
+\longrightarrow0,
+$$
+
+and the ambient monodromy--component sequence
 
 $$
 0\longrightarrow H_1(\Gamma,\mathbf Z_\ell)_{\mathfrak m}
@@ -2076,6 +2377,6 @@ H_1(\Gamma,\mathbf Z_\ell)_{\mathfrak m}^\vee
 \longrightarrow0.
 $$
 
-Each finite module now has one source and one meaning. The old quotient has no torsion. The failure of orthogonal splitting is measured by the Gram congruence. The remaining special-fiber torsion is the component discriminant. The exceptional kernel is Eisenstein and has been removed by a stated localization.
+Each finite module now has one source and one meaning. Under (6.11), the old quotient has no torsion. The failure of orthogonal splitting is measured by the Gram congruence. The Néron component group is the graph discriminant. The possible failure of the bottom graph copy to be primitive is $\mathcal C_{\mathrm{br},v}$. Before (6.11), the additional module is the localized noncongruence character group in (6.10); non-Eisenstein localization alone has not removed it.
 
-This is the saturated Ihara theory required for integral level change on the selected Shimura curves. It is strong enough to carry a residual congruence into a genuine torsion-free new lattice and precise enough to distinguish that congruence from scalar characters, stabilizer torsion, branch collisions, and Néron component classes.
+Thus the geometric, linear-algebraic, and component parts of saturated Ihara theory are complete, and their downstream interfaces are exact. The full catalog theorem for the stated range is not source-closed until the localized odd-primary vanishing $({\rm AC}^{\rm loc}_\ell)$ in (14.2) is proved by additional arithmetic input. The abelian commensurator identity (5.18) would suffice, but is stronger than that minimal localized theorem.
