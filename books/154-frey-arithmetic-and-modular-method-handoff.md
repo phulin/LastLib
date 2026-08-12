@@ -53,7 +53,7 @@ There are two branches, and keeping them separate is essential.
 1. Exponent $5$ is already eliminated by the independent descent proved in Book 192.
 2. For every prime exponent $p\ge 7$, a normalized primitive solution produces a Frey curve whose mod-$p$ representation is absolutely irreducible, finite flat at $p$, and special of a prescribed sign at $2$.
 
-The second branch is the Frey residual/deformation spine. Book 148 applies exactly in its natural range $p\ge 7$; it is not asked to prove anything at exponent $5$.
+The second branch is the Frey residual/deformation spine. Book 153 applies exactly in its natural range $p\ge 7$; it is not asked to prove anything at exponent $5$.
 
 This book proves all arithmetic assertions needed to manufacture that spine. It does not construct a characteristic-zero lift, a compatible family, or the final modular contradiction. Those are outputs of later books. The last section records the exact implication that those later outputs must supply.
 
@@ -368,7 +368,7 @@ $$
   X^5+Y^5+Z^5=0.
 $$
 
-Book 192 proves this theorem by descent in $\mathbf Z[\zeta_5]$. Its proof, including the ramified prime above $5$, the unit calculation, and the class-number-one input, is independent of the Frey-curve argument here. No result from Book 148 is used for exponent $5$.
+Book 192 proves this theorem by descent in $\mathbf Z[\zeta_5]$. Its proof, including the ramified prime above $5$, the unit calculation, and the class-number-one input, is independent of the Frey-curve argument here. No result from Book 153 is used for exponent $5$.
 
 ### 2.5. The exact prime-exponent split
 
@@ -493,7 +493,7 @@ $$
   \tag{4.4}
 $$
 The rational full-two structure, not merely the
-numerical divisibility of $\#E[2](\mathbf Q)$, is the input to Book 148.
+numerical divisibility of $\#E[2](\mathbf Q)$, is the input to Book 153.
 
 Expanding (4.1) gives
 $$
@@ -837,7 +837,7 @@ This is a coefficient-prime integral assertion. It does not say that $\bar\rho$ 
 
 ### 6.3. Irreducibility from full two-torsion
 
-Book 148 proves the following theorem in exactly the range needed here.
+Book 153 proves the following theorem in exactly the range needed here.
 
 **Semistable full-two irreducibility theorem.** If $E/\mathbf Q$ is
 semistable, if
@@ -1135,10 +1135,10 @@ The proof uses the following earlier books directly.
 | 49 | integral Weierstrass invariants, minimality, reduction type, and the split-node criterion | Sections 4.1--4.4 |
 | 50 | Tate uniformization, the residual inertia formula, the conductor criterion, and the canonical coefficient-prime finite-flat Kummer model | Sections 5.2 and 6.2 |
 | 51 | rank-two torsion, the Weil pairing, good-reduction Frobenius, and finite flatness of torsion for good reduction | Sections 5.1 and 6.1 |
-| 148 | semistable full-two residual irreducibility for every prime $p\ge7$ | Section 6.3 |
+| 153 | semistable full-two residual irreducibility for every prime $p\ge7$ | Section 6.3 |
 | 192 | the complete exponent-$5$ descent | Sections 2.4--2.5 |
 
-Book 191 supplies cyclotomic foundations to Book 192, but no theorem from it is invoked directly here. Likewise the prerequisites internal to Books 49--51 and 148 remain transitive dependencies, not extra direct imports.
+Book 191 supplies cyclotomic foundations to Book 192, but no theorem from it is invoked directly here. Likewise the prerequisites internal to Books 49--51 and 153 remain transitive dependencies, not extra direct imports.
 
 The later deformation books consume the datum of Section 7. The later three-adic endgame consumes the stronger package listed in Section 8.2. They are downstream consumers, not foundations for the arithmetic theorem proved here.
 
