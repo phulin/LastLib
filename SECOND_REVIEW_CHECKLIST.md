@@ -184,15 +184,15 @@ unconditional dependency-spine column must not be promoted while the named hypot
 | 163 | The Frey Curve: Arithmetic Reduction and the Exact Modular-Method Handoff | [x] | [x] | [x] | — |
 | 164 | Local Conditions for Hardly-Ramified Minimal Deformations | [x] | [x] | [x] | — |
 | 165 | Supported Galois Cohomology and Selmer Calculations | [x] | [x] | [x] | — |
-| 166 | Relation Obstructions and Poitou--Tate Corrections | [ ] | [ ] | — | — |
+| 166 | Relation Obstructions and Poitou--Tate Corrections | [x] | [x] | [x] | — |
 | 167 | The Chebotarev Density Theorem | [x] | [x] | — | — |
-| 168 | Compatible Coefficient Systems and Purity | [x] | [ ] | — | — |
+| 168 | Compatible Coefficient Systems and Purity | [x] | [x] | [x] | — |
 | 169 | The Eisenstein Ideal | [x] | [x] | — | — |
 | 170 | Hecke-Valued Galois Representations and Nonminimal Reciprocity | [x] | [x] | — | — |
 | 171 | The Minimal Totally-Real Deformation--Hecke Problem | [x] | [x] | — | — |
 | 172 | Minimal Patching and $R=T$ over Totally Real Fields | [x] | [x] | — | — |
 | 173 | Minimal Modularity Lifting | [x] | [x] | — | — |
-| 174 | One-Prime Type Complexes and Component Support | [ ] | [ ] | — | — |
+| 174 | One-Prime Type Complexes and Component Support | [x] | [x] | [x] | — |
 | 175 | One-Prime Nonminimal Patching and R=T | [x] | [ ] | — | — |
 | 176 | Nonminimal Modularity Lifting | [x] | [ ] | — | — |
 | 177 | Potential Modularity of Two-Dimensional Representations | [x] | [ ] | — | — |

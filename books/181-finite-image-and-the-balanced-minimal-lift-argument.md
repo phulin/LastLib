@@ -861,8 +861,10 @@ $$
 $$
 
 at the relevant non-Eisenstein localization. Its tree calculation and strong approximation do
-not prove (4.3). Book 140 and the support statements of Book 174 retain that hypothesis; they
-cannot be used to erase it by changing terminology.
+not prove (4.3). Book 140 retains that hypothesis. Book 174's core support theorem instead uses
+$({\rm TIC})$, $({\rm TIH})$, and $({\rm SUP})$; its abelian-Ihara and primitive-residue
+hypotheses enter only the corrected constant-row residue and filtration. None of these distinct
+conditions can be erased by changing terminology.
 
 The intervening algebraic and automorphic tools do not close this existence gap. Book 151
 proves finite-level diamond-module statements once a clean torsor and saturated integral maps

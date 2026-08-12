@@ -90,9 +90,13 @@ approximation alone do not imply (1.5).
 
 ### 1.3 What is and is not proved here
 
-Conditional on $({\rm AIH}_{\mathscr F})$ and the separately stated type-incidence,
-type-Ihara, and primitive-residue hypotheses, this book proves the following one-place
-implications.
+With each named hypothesis imposed only at the use stated below, this book proves the following
+one-place implications. In particular, $({\rm TIC}_v)$ and
+$({\rm TIH}_{\mathscr F})$ govern the strict type complexes;
+$({\rm AIH}_{\mathscr F})$ governs the constant-coefficient flag terms and corrected
+normalization filtration; $({\rm PRI}_{\rm type})$ governs global primitive extreme residues;
+$({\rm NU}_{\rm type})$ governs only the graph--definite comparison; and $({\rm SUP}_v)$
+separately governs component support.
 
 1. The constant-coefficient theorem transfers through the actual flag resolution to the
    quotient primary and augmentation companion systems.
@@ -103,7 +107,8 @@ implications.
 4. The extreme nearby-cycle residues have coefficient one, but the normalized-branch
    correction $\mathcal C_{\mathrm{br},v}$ remains in the middle filtration.
 5. Under the explicit boundary-chart and depth hypotheses of Chapter 8, the complex has full
-   topological support on the named enhanced special component.
+   topological support on the named enhanced special component; the scalar-twisted face
+   additionally requires the genuine global ray quotient.
 6. A genuine global scalar twist makes fixed-prime augmentation strict for deformation rings,
    complexes, new modules, pairings, and faithful acting orders.
 
@@ -233,11 +238,13 @@ The theorem keeps three cases separate.
 | residue relation | retained local datum | forbidden shortcut |
 |---|---|---|
 | $q\not\equiv\pm1\pmod\ell$ | an enhanced special line and an integral sign block | none beyond the declared normalization |
-| $q\equiv1\pmod\ell$ | the scalar flag, both line characters, Kummer directions, and an integral $W_v$-sign | a Frobenius-root projector |
+| $q\equiv1\pmod\ell$ in the scalar-residual branch | the scalar flag, both line characters, Kummer directions, and an integral $W_v$-sign | a Frobenius-root projector |
 | $q\equiv-1\pmod\ell$ | distinct special lines, the full Gram block, and both primary--companion extension orientations | division by either signed Gram factor |
 
 Primitive wild types, noncompact boundary cohomology, $v\mid\ell$, and descent through an
 $\ell$-divisible stabilizer are outside the theorem.
+The middle row is the scalar-residual subrange treated in Section 7.2; a different congruent
+nonsemisimple Frobenius shape requires its own represented enhanced chart.
 
 ## 3. Actual flag and type coefficient systems
 
@@ -1049,14 +1056,15 @@ Let $R_\infty^{\rm sp}$ be the patched global deformation ring with the named lo
 the following one-prime support datum. In this patched section, $({\rm TIC}_v)$ and
 $({\rm TIH}_{\mathscr F})$ are imposed on every retained finite shadow.
 
-1. Taylor--Wiles sets are disjoint from $v$, kill the dual Selmer group as in Book 141, and
+1. Taylor--Wiles sets are disjoint from $v$, kill the dual Selmer group, satisfy the
+   split-regular detector input of Book 141, and
    retain both degeneracy maps, both type rows, the flag, sign, determinant, and companion
    pairing in every finite shadow.
 2. The lower boundary problem is a clean minimal problem to which Book 172 applies; its patched
    module is nonzero and free over its regular scalar source.
 3. At the boundary prime of each named local component, the special incidence equation makes
-   the companion same-coefficient Gram block $G_v^-=r_v^-p_v^-$ singular modulo $\varpi$
-   (equivalently, its primary transpose is singular).
+   the companion same-coefficient Gram block $G_v^-=r_v^-p_v^-$ singular over the residue
+   field of that prime (equivalently, its primary transpose is singular there).
 4. After removal of the same frame variables on both sides, the completed patched selected
    chart at that boundary is the lower patched chart with the monodromy coordinate $m$ and the
    displayed flag/Kummer coordinates; equivalently, the relative cotangent mapping fiber is the
@@ -1067,8 +1075,10 @@ $({\rm TIH}_{\mathscr F})$ are imposed on every retained finite shadow.
 5. The patched coefficient source $S_\infty$ and $R_\infty^{\rm sp}$ have the same local
    dimension at these boundary primes.
 
-These are geometric and Taylor--Wiles hypotheses, not a support assumption. Book 172 supplies
-the lower carrier in clause 2 and Book 141 supplies the auxiliary primes in clause 1; Books 138--141, 151, and 170--172 do not prove the boundary-chart and local-dimension assertions in clauses 4--5 for
+These are geometric and Taylor--Wiles hypotheses, not a support assumption. Book 141 supplies
+the adequacy and detector input in clause 1; the clean patching package of Book 172 supplies
+the Taylor--Wiles selection and the lower carrier in clauses 1--2. Books 138--145, 151, and
+170--172 do not prove the boundary-chart and local-dimension assertions in clauses 4--5 for
 this nonminimal typed problem. Clause 4 is false if the extraneous component of (7.4) is
 retained or if a scalar flag/Kummer coordinate is deleted.
 
@@ -1112,8 +1122,9 @@ $$
 as topological spaces. The same is true for the companion complex and after descent to every
 retained finite auxiliary level.
 
-**Proof.** The finite-shadow construction of Book 151, with the strict complexes and pairings
-marked, patches (5.2) to a split injection over the regular scalar source $S_\infty$. Hence
+**Proof.** Apply the marked finite-shadow patching mechanism used in Book 172 to Book 151's
+regular auxiliary modules, with the strict complexes and pairings also marked. It patches
+(5.2) to a split injection over the regular scalar source $S_\infty$. Hence
 
 $$
 C_{\infty,v}^+\simeq N_{\infty,v}^+[-1]
@@ -1149,6 +1160,9 @@ $$
 $$
 
 It does not make the annihilator zero. Killing it is part of the later nonminimal comparison.
+Neither $({\rm AIH}_{\mathscr F})$ nor $({\rm PRI}_{\rm type})$ enters this support proof;
+they are additionally required only when the corrected constant-row residue and normalization
+filtration of Chapter 6 is invoked.
 
 ## 9. Scalar twisting and exact augmentation
 
@@ -1167,7 +1181,8 @@ C_v^{(2),+}
 \tag{9.1}
 $$
 
-as strict complexes, and similarly on the companion side with $\iota$.
+as strict complexes, equivariantly for the represented-ring identity (7.12), and similarly on
+the companion side with $\iota$.
 
 Orbit sum on the regular group basis is fixed-prime augmentation. It is not trace or averaging.
 Thus
@@ -1238,6 +1253,27 @@ $$
 Unlike an arbitrary module-base-change argument, (9.6) proves the assertion for the faithful
 acting image. It depends on the global twist identity; without that identity, exact module
 augmentation would not imply (9.7).
+
+The same strict identities transport component support at the patched level and at every
+retained finite auxiliary level. Write $R^{(i)}$ and $C_v^{(i),+}$ for either corresponding
+pair. If the conductor-one complex has full support under $({\rm SUP}_v)$, then for a prime
+$\mathfrak P$ of $R^{(2)}\simeq
+R^{(1)}\widehat\otimes_{\mathcal O}\Lambda_v$, with contraction $\mathfrak p$ to $R^{(1)}$,
+
+$$
+C_v^{(2),+}\otimes_{R^{(2)}}^L k(\mathfrak P)
+\simeq
+C_v^{(1),+}\otimes_{R^{(1)}}^L k(\mathfrak P)
+\simeq
+\left(C_v^{(1),+}\otimes_{R^{(1)}}^L k(\mathfrak p)\right)
+\otimes_{k(\mathfrak p)}k(\mathfrak P).
+\tag{9.8}
+$$
+
+The last line is the nonzero $k(\mathfrak p)$-fiber followed by a field extension. Hence the
+conductor-two complex also has full topological support. This uses the represented-ring and
+strict-complex twist identities together; support is not inferred from module augmentation
+alone. The inverse-twist companion identity gives the same conclusion for $C_v^{(2),-}$.
 
 ## 10. Determinant and adjoint ledger
 
@@ -1372,9 +1408,10 @@ auxiliary level $Q$:
 8. if the effective global ray quotient of Section 2.2 exists, scalar twist augmentation gives
    (9.2)--(9.7), changes the Galois determinant by $\boldsymbol\chi_v^2$, and forgets no
    enhancement;
-9. if $({\rm SUP}_v)$ holds, the primary and companion
-   complexes have full topological support on the named enhanced special deformation component
-   at patched and finite level;
+9. if $({\rm SUP}_v)$ holds, the conductor-one primary and companion complexes have full
+   topological support on the named enhanced special deformation component at patched and
+   finite level; if the effective global ray quotient also exists, (9.8) gives the same support
+   on the conductor-two scalar-twisted component;
 10. the determinant conventions are (10.1)--(10.7), with no pre-$R=T$ cross-chain
     isomorphism.
 
@@ -1400,9 +1437,10 @@ graph--definite assertion. The corrected filtration of
 Theorem 6.2 and the cokernel sequence (6.11) give clause 6 without deleting either finite
 module. Chapter 7 proves the two exceptional charts and the determinant-square rule. The
 global twist identity, when defined by the chosen ray quotient, proves all parts of clause 8,
-including faithful acting images.
-The depth-and-boundary proof of Theorem 8.3 gives clause 9. Chapter 10 proves the normalization
-ledger and explicitly stops before any cross-complex comparison. $\square$
+including faithful acting images. The depth-and-boundary proof of Theorem 8.3 gives the
+conductor-one assertion of clause 9, and (9.8) transports it to the scalar-twisted face under
+the same ray hypothesis. Chapter 10 proves the normalization ledger and explicitly stops before
+any cross-complex comparison. $\square$
 
 ## 12. Scope, dependencies, and audit
 
@@ -1430,7 +1468,8 @@ $$
 The last complex retains $\Phi_v^{\rm type}$ and
 $\mathcal C_{\mathrm{br},v}^+$ as distinct finite corrections. When the global scalar ray
 quotient exists, (9.1)--(9.7) add strict fixed-prime augmentation. Under $({\rm SUP}_v)$,
-Theorem 8.3 adds topological support on the named one-place component.
+Theorem 8.3 adds topological support on the named conductor-one component; with the ray quotient,
+(9.8) transports it to the conductor-two scalar-twisted component.
 
 This interface controls only the chosen place $v$. It contains no calculation of intersections
 of old images at different places, no mixed-Ihara statement, and no simultaneous-component
@@ -1449,11 +1488,11 @@ an intersection of local conditions.
 | Book 138 | quotient primary and augmentation companion lattices, twists, and type labels | no rational projector and no primitive wild type |
 | Book 139 | Theorem 14.1 under localized $({\rm AIH})_{v,\mathfrak m}$ and its corrected branch filtration | this book assumes the finite family $({\rm AIH}_{\mathscr F})$; Book 139 neither proves it nor extends it to type coefficients |
 | Book 140 | the datum-specific node-uniformization and generic-support interfaces | its constant-coefficient theorem does not prove $({\rm TIC}_v)$, $({\rm TIH}_{\mathscr F})$, $({\rm PRI}_{\rm type})$, $({\rm NU}_{\rm type})$, or $({\rm SUP}_v)$ |
-| Book 151 | effective auxiliary torsors, regular group modules, pairings, and finite shadows | module augmentation alone does not imply acting-order augmentation |
+| Book 151 | effective auxiliary torsors, regular group modules, pairings, and compatible finite-level presentations | it does not itself perform the nonminimal patch; module augmentation alone does not imply acting-order augmentation |
 | Book 170 | Hecke-valued representation, local factorization, and $R^{\rm sp}\twoheadrightarrow\mathbb T^{\rm sp}$ | no deformation faithfulness or component coverage follows from the surjection |
-| Book 141 | adequate Taylor--Wiles primes for $({\rm SUP}_v)$ | used only in the patched boundary-depth argument |
+| Book 141 | adequacy and split-regular detector input for the Taylor--Wiles clause of $({\rm SUP}_v)$ | prime selection and patching do not follow from adequacy alone |
 | Book 171 | exact global deformation datum and variance | conductor labels do not replace represented functors |
-| Book 172 | minimal $R=T$ and the nonzero free lower boundary carrier | no nonminimal equality is imported |
+| Book 172 | retained Taylor--Wiles selection and marked patching mechanism, minimal $R=T$, and the nonzero free lower boundary carrier | no nonminimal equality is imported |
 
 The exact direct-dependency row is therefore
 
@@ -1503,8 +1542,9 @@ normalization filtration; $({\rm TIC}_v)$ for extension, adjunction, and nearby-
 compatibility of the type systems; $({\rm TIH}_{\mathscr F})$ for their residual Ihara theorem;
 $({\rm PRI}_{\rm type})$ for global primitive extreme residues; $({\rm NU}_{\rm type})$ only for
 the switched graph--definite comparison; the effective global ray quotient only for scalar
-augmentation; and $({\rm SUP}_v)$ only for component support. Books 138--141, 151, and 170--172 do not establish
-the last six in the required typed nonminimal generality.
+augmentation and transport of support to the scalar-twisted face; and $({\rm SUP}_v)$ only for
+component support. Books 138--141, 151, and 170--172 do not establish the last six in the
+required typed nonminimal generality.
 
 ### 12.4 Conclusion
 
