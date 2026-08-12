@@ -47,10 +47,10 @@
    - [Existence of a stable lattice](#83-existence-of-a-stable-lattice)
    - [What happens after reduction](#84-what-happens-after-reduction)
    - [Coefficient conjugation](#85-coefficient-conjugation)
-9. [Frobenius polynomials and local types after effectivity](#9-frobenius-polynomials-and-local-types-after-effectivity)
+9. [Frobenius polynomials and local records after effectivity](#9-frobenius-polynomials-and-local-records-after-effectivity)
    - [The common quadratic polynomial is now effective](#91-the-common-quadratic-polynomial-is-now-effective)
    - [Local restriction and exact cancellation](#92-local-restriction-and-exact-cancellation)
-   - [The dyadic type](#93-the-dyadic-type)
+   - [The SP local record](#93-the-sp-local-record)
    - [The coefficient prime](#94-the-coefficient-prime)
    - [Archimedean parameters and conductors](#95-archimedean-parameters-and-conductors)
    - [The common bad set](#96-the-common-bad-set)
@@ -80,15 +80,15 @@
     - [Conclusion](#135-conclusion)
 
 Brauer induction solves a descent problem by allowing subtraction. The preceding book produced,
-for every coefficient place, a signed expression
+for every coefficient embedding, a signed expression
 
 $$
-\mathcal R_\lambda=[R_\lambda^+]-[R_\lambda^-]
+\mathcal R_\tau=[R_\tau^+]-[R_\tau^-]
 $$
 
 whose virtual rank is two, whose determinant line is cyclotomic, and whose good Frobenius series
-is a quadratic polynomial independent of the coefficient place. None of those assertions says
-that the negative constituents of $R_\lambda^-$ occur in $R_\lambda^+$. Effectivity is exactly
+is a quadratic polynomial independent of the coefficient embedding. None of those assertions
+says that the negative constituents of $R_\tau^-$ occur in $R_\tau^+$. Effectivity is exactly
 the missing assertion.
 
 The argument proves it. The central idea is not to inspect one Frobenius polynomial at a time. We
@@ -126,9 +126,8 @@ $G_L$, for every coefficient embedding $\tau$. This remains true when either ext
 elementary fixed field to $L$ is non-Galois. Book 187 also exports the two restricted Brauer
 characters $\alpha$, $\beta$, their correctly oriented ratio
 $\delta=\beta\alpha^{-1}$, and the resulting Hom-ready identity. The comparison is
-characteristic zero at a general embedding; only at the distinguished embedding are the named
-packet lattices compared up to homothety. No coherent choice of overlap intertwiners is part of
-the export or needed below.
+characteristic zero at every embedding. No packet lattice, integral overlap map, or coherent
+choice of overlap intertwiners is part of the export or needed below.
 
 ## 1. The effectivity problem
 
@@ -148,10 +147,41 @@ $$
 \tag{1.1}
 $$
 
-Here $E/\mathbf Q_\ell$ is finite. A chosen stable lattice for $\rho$ is part of the input. It
-has the prescribed finite-flat record at $\ell$ and the primitive tame order-three record at
-$2$. The field $M$ preserves the residual image required to keep the restrictions of $\rho$
-absolutely irreducible.
+Here $E/\mathbf Q_\ell$ is finite, $\ell\geq7$, and no lattice is part of the input. The
+restriction $\rho|_{G_M}$ is absolutely irreducible; consequently every
+$\rho|_{G_{F_H}}$ is absolutely irreducible as well. The primes $2$ and $\ell$ split
+completely in $M$.
+
+At $2$, the chosen representation has Book 187's special, or SP, record. In arithmetic-Frobenius
+normalization its Frobenius-semisimple Weil--Deligne pair is
+
+$$
+\mathscr D_2=(r_2,N_2),
+\qquad
+N_2^2=0,
+\qquad
+\operatorname{rank}N_2=1.
+\tag{1.1a}
+$$
+
+Thus $N_2\ne0$ and
+
+$$
+\mathscr L_2=\ker N_2=\operatorname{im}N_2
+\tag{1.1b}
+$$
+
+is a line. Finite Weil inertia is trivial, and
+
+$$
+r_2(F_2)N_2r_2(F_2)^{-1}=2N_2.
+\tag{1.1c}
+$$
+
+For a fixed sign $\varepsilon_2\in\{1,-1\}$, arithmetic Frobenius acts on the quotient
+by $\varepsilon_2$ and on $\mathscr L_2$ by $2\varepsilon_2$. In particular the SP label
+contains the nonzero monodromy, its invariant line, and its sign; conductor one will be
+recovered from this full pair rather than assumed as a substitute for it.
 
 For every elementary subgroup $H\leq\Gamma$, put
 
@@ -164,13 +194,14 @@ are conjugation compatible, their base changes to $M$ are the one selected packe
 at the distinguished coefficient embedding their Galois realizations satisfy
 
 $$
-r_{H,\lambda_0}\simeq\rho|_{G_{F_H}}.
+r_{H,\tau_0}\simeq\rho|_{G_{F_H}}.
 \tag{1.2}
 $$
 
 The selection includes determinant, finite-order twists, coefficient embeddings, good-prime
-polynomials, stable packet lattices, and local types. Book 187's elementary-intersection theorem
-adds the exact overlap statement needed by the norm argument. If $D\leq H$ are elementary, then
+polynomials, and the algebraic SP local pair. It includes no packet lattice. Book 187's
+elementary-intersection theorem adds the exact overlap statement needed by the norm argument.
+If $D\leq H$ are elementary, then
 at every coefficient embedding $\tau$,
 
 $$
@@ -216,9 +247,9 @@ $r_{D,\tau}\otimes\beta_\tau$. After tensoring both Hom arguments by $\alpha_\ta
 their Hom space is the self-twist space from $r_{D,\tau}$ to
 $r_{D,\tau}\otimes\delta_\tau$. This direction fixes the ratio as
 $\beta\alpha^{-1}$, not its inverse. The roots of unity in these three characters lie in the
-common coefficient field and have canonical rank-one unit lattices. The rank-two comparisons
-in (1.3)--(1.3a) remain characteristic-zero comparisons at a general $\tau$ and produce no
-integral intertwiner or coherent system of intertwiners.
+common coefficient field. The rank-two comparisons in (1.3)--(1.3a) remain
+characteristic-zero comparisons at every $\tau$ and produce no integral intertwiner or
+coherent system of intertwiners.
 
 Choose an integral Brauer datum
 
@@ -319,7 +350,7 @@ multiplicity. The appropriate invariant is the norm of the entire generalized ch
 
 ### 1.3 The main theorem
 
-**Theorem 1.1 (effectivity of the Brauer family).** For every coefficient embedding
+**Theorem 1.1 (effectivity of the signed Brauer array).** For every coefficient embedding
 $\tau:K\hookrightarrow\Omega$, the virtual class
 $\mathcal R_{\mathfrak B,\tau}$ is represented
 by a continuous absolutely irreducible two-dimensional semisimple representation
@@ -339,10 +370,13 @@ $$
 \tag{1.14}
 $$
 
-at every good $p$. At $\tau_0$ it is $\rho$ after scalar extension. Its actual restriction at
+at every Book-187-good $p$ distinct from the residue characteristic of $\tau$; at such a prime
+it is unramified. At $\tau_0$ it is $\rho$ after scalar extension. Its actual restriction at
 every place satisfies the direct-sum Mackey cancellation of Section 9.2; away from the
 coefficient residue characteristic, its Weil--Deligne class is the effective member of Book
-187's local record. The representation is independent, after scalar extension, of the
+187's local record. In particular, at $2$ and away from coefficient characteristic two it has
+nonzero rank-one monodromy, the invariant line and sign in (1.1b)--(1.1c), and Artin conductor
+exponent one. The representation is independent, after scalar extension, of the
 positive-minus-negative presentation and of the integral Brauer datum.
 
 The theorem asserts no preferred stable lattice for a general $\tau$. It also does not yet
@@ -1035,11 +1069,9 @@ $r_{D,\tau}$ and hence does not change its semisimple isomorphism class. Book 18
 declares such a self-twist character trivial nor chooses a coherent intertwiner; neither is
 needed for a Hom dimension.
 
-Finally, (5.1a)--(5.1c) are characteristic-zero statements. At the distinguished embedding the
-named packet lattices are homothetic after common coefficient enlargement and carry the same
-restricted Book-187 labels. At a general embedding these equations supply no lattice,
-homothety, integral intertwiner, residual comparison, or compatible cocycle. The norm argument
-uses only their semisimple characteristic-zero Hom spaces.
+Finally, (5.1a)--(5.1c) are characteristic-zero statements at every embedding. They supply no
+lattice, homothety, integral intertwiner, residual comparison, or compatible cocycle. The norm
+argument uses only their semisimple characteristic-zero Hom spaces.
 
 ### 5.2 Absolute irreducibility of a cuspidal rank-two realization
 
@@ -1213,9 +1245,7 @@ finite self-twist groups. It does not depend on $\tau$.
 The formula also passes a symmetry check. Reversing $(i,j)$ sends a double coset represented by
 $x$ to the one represented by $x^{-1}$, transports the intersection packet, and replaces the
 character ratio by its inverse. A self-twist group is closed under inversion, so the indicator
-is unchanged, as required by
-$\langle A_{i,\tau},A_{j,\tau}\rangle=
-\langle A_{j,\tau},A_{i,\tau}\rangle$.
+is unchanged, as required by the symmetry of the Hom pairing.
 
 **Theorem 6.1 (Gram invariance).** The Mackey Gram matrix $G_\tau$ of (3.2) is the same integral
 matrix for every coefficient embedding $\tau$.
@@ -1266,8 +1296,7 @@ $$
 \tag{6.4}
 $$
 
-The residual-image condition in the controlled field construction implies that $\rho$ is
-absolutely irreducible; this is also part of the chosen input (1.1). Schur's lemma yields
+Absolute irreducibility of $\rho$ is part of the controlled input (1.1). Schur's lemma yields
 
 $$
 \|\mathcal R_{\mathfrak B,\tau_0}\|^2
@@ -1285,7 +1314,7 @@ $$
 
 This is the only propagation from the distinguished member. We propagate an integer Gram
 matrix whose entries have separately been shown embedding independent. We do not claim that an
-isomorphism or a stable lattice at $\tau_0$ can simply be transported through an unrelated
+isomorphism or matrix model at $\tau_0$ can simply be transported through an unrelated
 nonarchimedean completion.
 
 ### 6.5 A hostile check on possible circularity
@@ -1420,9 +1449,8 @@ r_{\mathfrak B,\tau_0}\simeq\rho\otimes_E\Omega.
 $$
 
 This identification is representation theoretic and hence respects every global restriction.
-The specified lattice $L_\rho$, finite-flat quotient system at $\ell$, and primitive dyadic type
-remain the chosen integral and local data of this member. They are not reconstructed by the
-norm argument.
+In particular it recovers the SP pair (1.1a)--(1.1c) at $2$. There is no named lattice or
+integral quotient system to recover, and none is reconstructed by the norm argument.
 
 ## 8. Coefficient fields, continuity, and lattices
 
@@ -1481,10 +1509,10 @@ r_{\mathfrak B,\tau,L'}:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(L')
 \tag{8.3}
 $$
 
-whose scalar extension to $\Omega$ is (7.4). A primitive **central** idempotent would select
-the full isotypic factor, possibly with multiplicity; the standard simple module of the split
-matrix factor is what selects one copy. No idempotent is asserted to preserve any chosen
-integral lattice.
+whose scalar extension to $\Omega$ is (7.4). The central idempotent belonging to one simple
+factor would select the full isotypic factor, possibly with multiplicity; the standard simple
+module of the split matrix factor is what selects one copy. No idempotent is asserted to
+preserve any chosen integral lattice.
 
 This is a finite field-of-definition statement at one coefficient place. It does not say that
 the same number field, without completion, contains matrices for all coefficient places. The
@@ -1513,7 +1541,8 @@ where the sum means the finite set of distinct translates, is again a lattice an
 $\square$
 
 Thus effectivity supplies at least one rank-two stable lattice. It supplies neither a preferred
-lattice nor a comparison with the formal difference of the induced lattices from Book 187.
+lattice nor a comparison with lattices chosen separately on the positive and negative induced
+terms.
 If two stable lattices have absolutely irreducible residual reductions, the usual homothety
 argument may identify them up to scale; no such residual irreducibility has been proved here at
 an arbitrary coefficient place.
@@ -1544,12 +1573,13 @@ $$
 
 The characteristic-zero matching can use denominators, intersections with lattices can be
 nonsaturated, and modular representations of the finite quotient need not be semisimple. Thus
-the proof of effectivity does not turn the virtual integral class of Book 187 into a literal
-integral quotient.
+the proof of effectivity does not turn Book 187's integral-coefficient signed class into a
+literal integral quotient.
 
-At $\tau_0$ there is no ambiguity for the application: the specified $L_\rho$ is retained. At
-new coefficient places, any assertion of finite-flatness, crystalline integral structure, or a
-particular residual extension requires additional local integral work.
+At $\tau_0$ the rational representation is the specified $\rho$, but no lattice was part of
+the packet-array input. At every coefficient place, any assertion of finite-flatness,
+crystalline integral structure, or a particular residual extension requires additional local
+integral work.
 
 ### 8.5 Coefficient conjugation
 
@@ -1572,11 +1602,12 @@ it does not move the number fields $F_H$. Field conjugation moves $F_H$ and loca
 does not apply $\sigma$ to an eigenvalue. The two operations commute because the packet ledger
 of Book 187 makes them commute before induction.
 
-## 9. Frobenius polynomials and local types after effectivity
+## 9. Frobenius polynomials and local records after effectivity
 
 ### 9.1 The common quadratic polynomial is now effective
 
-Substituting (7.4) into Book 187's virtual good-prime identity gives
+Let $p$ be Book-187-good and distinct from the residue characteristic of $\tau$. Substituting
+(7.4) into Book 187's virtual good-prime identity gives
 
 $$
 \det(1-r_{\mathfrak B,\tau}(\operatorname{Frob}_p)T)
@@ -1635,8 +1666,9 @@ extension data.
 Two kinds of Mackey intersection must remain distinct. The Gram matrix used the global
 elementary groups $H_i\cap xH_jx^{-1}$ and therefore invoked Book 187's packet comparison over
 $M^{H_i\cap xH_jx^{-1}}$. Formula (9.4) uses intersections with a local decomposition group;
-those intersections need not be elementary, and no packet indexed by them is asserted. The
-local formula follows directly from profinite Mackey applied to the existing summands. When an
+those intersections are subgroups of conjugates of the elementary $H_i$ and hence are
+elementary, but no packet indexed by them is needed or asserted in the local formula. That
+formula follows directly from profinite Mackey applied to the existing summands. When an
 elementary-overlap comparison is subsequently restricted to a place of its intersection field,
 Book 187's global semisimple isomorphism identifies the corresponding local Galois, and away
 from coefficient characteristic Weil--Deligne, isomorphism classes. At a general coefficient
@@ -1658,47 +1690,96 @@ is the effective rank-two class represented by Book 187's virtual Weil--Deligne 
 Both the Weil action and the monodromy operator are retained. We do not infer monodromy from
 the good Frobenius trace.
 
-### 9.3 The dyadic type
+### 9.3 The SP local record
 
 The prime $2$ splits completely in $M$. Hence every completion $(F_i)_w$ above $2$ is
 $\mathbf Q_2$, every local quotient character $\theta_i$ is trivial there, and every selected
 packet has the same transported automorphic local component. Suppose first that the residue
 characteristic of $\tau$ is not two. Local--global compatibility identifies all corresponding
-Weil--Deligne representations with one transported object, denoted $W_{2,\tau}$. Applying
-Weil--Deligne to local Mackey decomposition gives
+Weil--Deligne representations with
 
 $$
-[\operatorname{WD}_2(r_{\mathfrak B,\tau})]
-=\left(\sum_i n_i[\Gamma:H_i]\right)[W_{2,\tau}]
-=[W_{2,\tau}].
+\mathscr D_{2,\tau}=\mathscr D_{2,K}\otimes_{K,\tau}\Omega,
+$$
+
+where $\mathscr D_{2,K}$ is Book 187's algebraic SP pair. Put
+
+$$
+a=\sum_i n_i^+[\Gamma:H_i],
+\qquad
+b=\sum_i n_i^-[\Gamma:H_i].
+$$
+
+Local Mackey gives $a$ copies of $\mathscr D_{2,\tau}$ on the positive side and $b$ copies on
+the negative side. Applying Weil--Deligne to the actual direct-sum cancellation (9.3) gives
+
+$$
+\mathscr D_{2,\tau}^{\oplus a}
+\simeq
+\operatorname{WD}_2(r_{\mathfrak B,\tau})^{\mathrm{F\!-\!ss}}
+\oplus\mathscr D_{2,\tau}^{\oplus b}.
 \tag{9.5}
 $$
 
-This equality comes from the actual cancellation (9.3), not merely from a conductor calculation.
-The finite-length Krull--Schmidt cancellation theorem applies to Weil--Deligne modules: if
-$U\oplus C\simeq W\oplus C$, comparison of indecomposable summands gives $U\simeq W$.
-Therefore the actual rank-two local member carries the selected dyadic record
+The rank identity says $a-b=1$. The finite-length Krull--Schmidt cancellation theorem applies
+to Weil--Deligne modules: if $U\oplus C\simeq W\oplus C$, comparison of indecomposable
+summands gives $U\simeq W$. Indeed, on the direct sum of the finitely many objects at issue,
+the algebra generated by finite inertia, Frobenius and its inverse, and $N$ is a
+finite-dimensional algebra. Direct-sum decompositions of the pairs are exactly decompositions
+as modules for this algebra, where the usual finite-length Krull--Schmidt theorem applies.
+Canceling $b$ copies in (9.5) therefore gives the full-pair identity
 
 $$
-N=0,
-\qquad I_2^{\mathrm{wild}}=1,
-\qquad T^2+T+1=0
+\boxed{
+\operatorname{WD}_2(r_{\mathfrak B,\tau})^{\mathrm{F\!-\!ss}}
+\simeq\mathscr D_{2,\tau}.}
 \tag{9.6}
 $$
 
-on tame inertia. When the coefficient characteristic is two, the $\ell\ne p$ Weil--Deligne
-argument is unavailable. Effectivity still supplies an actual two-adic local restriction and
-the exact Mackey expression (9.4); no stronger two-adic Hodge or integral type is inferred here
-unless it is separately present in the packet ledger.
+This is not merely equality of conductor or inertial type. Write the pair as
+$(r_{2,\tau},N)$. Then
+
+$$
+N^2=0,
+\qquad
+\operatorname{rank}N=1,
+\qquad
+\ker N=\operatorname{im}N=\mathscr L_{2,\tau}.
+\tag{9.7}
+$$
+
+Finite Weil inertia is trivial, and arithmetic Frobenius satisfies
+
+$$
+r_{2,\tau}(F_2)Nr_{2,\tau}(F_2)^{-1}=2N.
+\tag{9.8}
+$$
+
+It acts by $\varepsilon_2$ on the quotient and by $2\varepsilon_2$ on
+$\mathscr L_{2,\tau}$. Thus the invariant line and the split/nonsplit sign survive
+cancellation. In the corresponding $\tau$-adic representation, inertia invariants are exactly
+$\ker N=\mathscr L_{2,\tau}$. The Swan conductor is zero, and the Weil--Deligne conductor
+formula gives
+
+$$
+a_2(r_{\mathfrak B,\tau})
+=\dim V-\dim(\ker N)^{I_2}
+=2-1=1.
+\tag{9.9}
+$$
+
+Conductor one is therefore a consequence of the retained SP pair, not the datum used to
+recognize it. When the coefficient characteristic is two, the prime-to-coefficient
+Weil--Deligne argument is unavailable. Effectivity still supplies an actual two-adic local
+restriction and the exact Mackey expression (9.4); no two-adic SP or integral conclusion is
+inferred here.
 
 ### 9.4 The coefficient prime
 
 At the distinguished place $\tau_0\mid\ell$, equation (7.8) identifies the representation with
-$\rho$, and the chosen lattice $L_\rho$ retains its finite locally free quotient system. The
-finite-order characters used in the Brauer summands are unramified at the places above $\ell$;
-termwise they preserve Hodge--Tate weights and finite-flatness while translating the fixed
-determinant component by $\theta_i^2$. The signed determinant calculation cancels those
-translations only in characteristic zero.
+$\rho$ as a rational representation. This retains whatever rational coefficient-prime record
+was part of $\rho$, but Book 187 supplied no named lattice, finite-flat quotient system, or
+integral projector. The determinant calculation remains a characteristic-zero calculation.
 
 For a new $\tau$ of residue characteristic $q$, effectivity proves that
 $r_{\mathfrak B,\tau}$ is an actual rank-two $q$-adic representation. It does not prove that an
@@ -1707,8 +1788,8 @@ crystalline type if $q$ ramifies in $M$ and the quotient characters are ramified
 output is the actual local representation together with the direct-sum identity (9.3). Any
 $p$-adic Hodge property supplied for all positive summands and stable under direct summands
 passes to this representation; no property is inferred merely by subtracting numerical records
-in (9.4). In particular, no finite-flat lattice or fixed integral component is obtained at a new
-coefficient place without separate input.
+in (9.4). In particular, no finite-flat lattice, compatible quotient tower, or fixed integral
+component is obtained at a new coefficient place without separate input.
 
 ### 9.5 Archimedean parameters and conductors
 
@@ -1722,7 +1803,7 @@ $[\Gamma:H_i]$ copies of the weight-two odd block
 
 $$
 1\oplus\operatorname{sgn}.
-\tag{9.7}
+\tag{9.10}
 $$
 
 Using $\sum_i n_i[\Gamma:H_i]=1$ and the actual local cancellation (9.3) gives
@@ -1730,7 +1811,7 @@ Using $\sum_i n_i[\Gamma:H_i]=1$ and the actual local cancellation (9.3) gives
 $$
 r_{\mathfrak B,\tau}|_{G_{\mathbf R}}
 \simeq1\oplus\operatorname{sgn}.
-\tag{9.8}
+\tag{9.11}
 $$
 
 In particular complex conjugation has eigenvalues $1,-1$ and determinant $-1$, agreeing with
@@ -1751,22 +1832,25 @@ a_{\mathbf Q_v}\left(
 (r_{H_i,\tau,w}\otimes\theta_{i,\tau,w})
 \right).
 \end{aligned}
-\tag{9.9}
+\tag{9.12}
 $$
 
-For one local extension $L/\mathbf Q_v$, its summand can be calculated as
+For one local extension $L/\mathbf Q_v$, write $f(L/\mathbf Q_v)$ for its residue degree and
+$d(L/\mathbf Q_v)$ for the valuation of its discriminant ideal, normalized on
+$\mathbf Q_v$. Its summand can be calculated as
 
 $$
 a_{\mathbf Q_v}(\operatorname{Ind}_{L/\mathbf Q_v}u)
 =\dim(u)\,d(L/\mathbf Q_v)+f(L/\mathbf Q_v)a_L(u).
-\tag{9.10}
+\tag{9.13}
 $$
 
-Before effectivity the right side of (9.9) was only a signed integer. It is now the conductor
+Before effectivity the right side of (9.12) was only a signed integer. It is now the conductor
 of an actual rank-two representation and is consequently nonnegative. This does not mean that
 the negative terms cancel conductor term by term, nor does it provide a conductor formula for
-a residual lattice. At the coefficient prime the correct invariants are the available
-$p$-adic Hodge and integral records, not the $\ell\ne p$ Artin-conductor formalism.
+a residual lattice. At the coefficient prime one may retain rational $p$-adic Hodge records
+that are separately supplied and stable under direct summands; integral records require their
+own proof and do not follow from the prime-to-coefficient Artin-conductor formalism.
 
 ### 9.6 The common bad set
 
@@ -1776,7 +1860,7 @@ required by the coefficient and type ledgers. For $\tau$ of residue characterist
 
 $$
 S_\tau=S_0\cup\{q\}.
-\tag{9.11}
+\tag{9.14}
 $$
 
 The effective representation is unramified outside $S_\tau$. Indeed each $A_{i,\tau}$ is
@@ -1916,7 +2000,7 @@ for every $g$. Theorem 10.1 identifies the two semisimple representations. Rearr
 Grothendieck classes gives $X=Y$. $\square$
 
 Book 187 already used this virtual recognition principle, together with its Chebotarev input, to
-prove relation-independence of the virtual family. The self-contained proof here fixes the
+prove relation-independence of the virtual signed class. The self-contained proof here fixes the
 recognition interface used later in this book. It still does not imply effectivity from trace
 values: it identifies a virtual class only with another class already known to exist.
 
@@ -2188,7 +2272,8 @@ $\tau:K\hookrightarrow\Omega$:
    irreducible continuous two-dimensional semisimple representation
    $r_{\mathfrak B,\tau}$;
 3. $\det r_{\mathfrak B,\tau}=\chi_\tau$;
-4. at every good rational prime,
+4. at every Book-187-good rational prime distinct from the residue characteristic of $\tau$,
+   it is unramified and
 
    $$
    \det(X-r_{\mathfrak B,\tau}(\operatorname{Frob}_p))
@@ -2197,9 +2282,10 @@ $\tau:K\hookrightarrow\Omega$:
 
 5. the member at $\tau_0$ is the chosen $\rho$ after scalar extension;
 6. local restriction is the effective rank-two member of the Mackey record from Book 187; away
-   from coefficient characteristic two the dyadic Weil--Deligne member carries the selected
-   primitive tame order-three type, while the archimedean and conductor records become those of
-   the actual representation;
+   from coefficient characteristic two its SP pair has nonzero rank-one monodromy, invariant
+   line $\ker N=\operatorname{im}N$, sign $\varepsilon_2$, and conductor exponent one, while
+   the other local, archimedean, and conductor records become those of the actual
+   representation;
 7. the isomorphism class is independent of the positive-minus-negative presentation, of
    conjugating a Brauer term, of harmless coefficient enlargement, and—after scalar
    extension—of the integral Brauer relation; and
@@ -2250,7 +2336,7 @@ $$
 \tag{13.3}
 $$
 
-The chosen distinguished lattice survives because it was an input. A new member has stable
+No distinguished lattice was part of Book 187's packet-array input. A new member has stable
 lattices, but no preferred one and no automatically effective finite-flat quotient system.
 
 Fourth,
@@ -2275,6 +2361,11 @@ importantly here—Proposition 6.2 and (6.4e)--(6.4h) over every elementary inte
 That theorem covers non-Galois intersection extensions, every coefficient embedding, conjugate
 packet data, the ratio $\beta\alpha^{-1}$, and the precise characteristic-zero/lattice
 boundary.
+
+The abstract mechanism and normalizations were also checked against Book 176. The proof here
+is not an appeal to that book's conditional effectivity theorem: it redoes the Gram calculation
+for Book 187's exact SP packet array, whose unconditional overlap theorem is the decisive
+application-specific input.
 
 Book 187 proves its overlap theorem from residue-degree Frobenius identities and its
 Chebotarev--Brauer--Nesbitt lemma. That density input, ultimately recorded there from Book 171,
@@ -2303,8 +2394,8 @@ overlap: the overlap representations already exist over the elementary intersect
 never infers cuspidality from the result being proved, treats a virtual determinant as actual
 before Theorem 7.1, or reduces a signed lattice as though subtraction were exact. At a general
 embedding the overlap theorem contributes no lattice; at $\tau_0$ the pre-existing named
-lattice of $\rho$ is retained rather than reconstructed. The dependency audit therefore closes
-without an integral or coherent-family import.
+representation $\rho$ is retained, but no named lattice is imported or reconstructed. The
+dependency audit therefore closes without an integral or coherent-family import.
 
 ### 13.4 The boundary with Book 189
 
@@ -2316,7 +2407,8 @@ r_{\mathfrak B,\tau}:G_{\mathbf Q}\to\operatorname{GL}_2(\Omega),
 $$
 
 their determinant, common good polynomials, actual local Mackey records, and the
-representation-theoretic independence statements of Chapter 11. Book 189 must turn those
+representation-theoretic independence statements of Chapter 11. The local export includes the
+full SP pair and its conductor-one consequence, but no integral model. Book 189 must turn those
 classes into a single compatible-system object. Concretely, it must choose and descend finite
 coefficient fields, index members coherently by places of one number field, verify that the
 chosen models realize the common polynomials without dependence on auxiliary embeddings,
@@ -2333,7 +2425,7 @@ representations are the members of one honest compatible family.
 
 The obstruction left by Brauer induction was not a missing Euler-factor calculation. Book 187
 already had the correct quadratic factors, determinant line, twists, residue degrees, local
-types, and distinguished member. The obstruction was positivity: subtraction in a character
+records, and distinguished member. The obstruction was positivity: subtraction in a character
 ring had to be shown to cancel the same constituents everywhere at once.
 
 Mackey theory found the correct places to test that cancellation. Frobenius reciprocity changed
@@ -2348,7 +2440,9 @@ the fixed Gram calculation had norm one. Integrality then left no room for a hid
 negative pair: one irreducible occurred with coefficient $1$ or $-1$, and dimension two chose
 the positive sign. The virtual determinant became an actual cyclotomic determinant, the virtual
 quadratic polynomial became an actual Frobenius polynomial, and the local Mackey record became
-the record of an actual rank-two representation.
+the record of an actual rank-two representation. At $2$, Krull--Schmidt cancellation retained
+the nonzero rank-one monodromy, invariant line, Frobenius sign, and conductor one of the SP
+pair.
 
 Brauer--Nesbitt then supplied recognition, not existence. It proved the semisimple independence
 statements that properly belong at this stage and gave the sharp rank-two diagnostic: a dense
