@@ -1,4 +1,4 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter06.Section04Series
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter06.Section03CauchySequences
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter06
 

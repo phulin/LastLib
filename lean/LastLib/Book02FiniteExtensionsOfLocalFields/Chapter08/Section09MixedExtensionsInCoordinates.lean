@@ -23,7 +23,9 @@ theorem chapter08_unramified_stage_profile
     ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
       q.degree = f ∧ q.ramificationIndex = 1 ∧ q.residueDegree = f ∧
         LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10Unramified q := by
-  refine ⟨{ degree := f, ramificationIndex := 1, residueDegree := f }, rfl, rfl, rfl, rfl⟩
+  refine ⟨{ degree := f, ramificationIndex := 1, residueDegree := f }, rfl, rfl, rfl, ?_⟩
+  change (1 : ℕ) = 1 ∧ f = f
+  exact ⟨rfl, rfl⟩
 
 /-- Book §8.9: adjoining a root of `varpi^e = π_K` over the unramified stage
 produces the ramified degree-`e` stage. -/
@@ -132,8 +134,8 @@ theorem chapter08_mixed_ramified_stage_is_galois_when_roots_are_present
   have H : Irreducible (X ^ e - C a) := by
     simpa [chapter08KummerPolynomial] using
       (Fact.out : Irreducible (chapter08KummerPolynomial a e))
-  letI : Fact (Irreducible (X ^ e - C a)) := ⟨H⟩
-  letI : IsSplittingField Kf (chapter08KummerRadicalField Kf a e)
+  let _ : Fact (Irreducible (X ^ e - C a)) := ⟨H⟩
+  let _ : IsSplittingField Kf (chapter08KummerRadicalField Kf a e)
       (X ^ e - C a) := isSplittingField_AdjoinRoot_X_pow_sub_C hroots H
   exact ⟨isGalois_of_isSplittingField_X_pow_sub_C hroots H _,
     ⟨autAdjoinRootXPowSubCEquiv hroots H⟩⟩

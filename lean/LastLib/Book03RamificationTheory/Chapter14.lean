@@ -1,0 +1,9 @@
+import LastLib.Book03RamificationTheory.Chapter14.Section01WhatRemainsIntrinsicWithoutGaloisSymmetry
+import LastLib.Book03RamificationTheory.Chapter14.Section02NormalClosuresAndOvercounting
+import LastLib.Book03RamificationTheory.Chapter14.Section03PurelyInseparableExtensions
+import LastLib.Book03RamificationTheory.Chapter14.Section04AHypothesisMap
+
+/-!
+Aggregator for Book 3, Chapter 14: nongalois extensions and imperfect
+residues.
+-/

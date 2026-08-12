@@ -91,7 +91,8 @@ theorem chapter12_artin_character_difference_is_scalar_regular
     (hoff : ∀ h, h ≠ 1 → AG (ι h) = (p.residueDegree : ℚ) * AH h) :
     chapter12ScalarMultipleOfRegularCharacter
       (fun h => AG (ι h) - (p.residueDegree : ℚ) * AH h) := by
-  apply chapter12_supported_difference_is_scalar_regular AG
+  apply chapter12_supported_difference_is_scalar_regular
+    (fun h => AG (ι h))
     (fun h => (p.residueDegree : ℚ) * AH h)
   exact hoff
 

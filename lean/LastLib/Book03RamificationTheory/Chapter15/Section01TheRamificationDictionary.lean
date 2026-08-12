@@ -12,6 +12,8 @@ namespace LastLib.Book03RamificationTheory.Chapter15
 
 noncomputable section
 
+universe uG
+
 open scoped BigOperators
 open Ideal
 
@@ -92,8 +94,6 @@ The positive-depth layers are modelled as additive vector spaces over a residue
 field of characteristic `p`.  `Additive` changes the multiplicative quotient
 notation into the additive group used by the standard ramification dictionary.
 -/
-universe uG
-
 def chapter15WildLayerIsAdditiveOver
     {G : Type uG} {k : Type*} [Group G] [Finite G] [Field k]
     (p i : ℕ) [CharP k p]
@@ -177,6 +177,32 @@ theorem chapter15RestrictLowerFiltration_group
     (chapter15RestrictLowerFiltration F H).group i =
       (F.group i).comap H.subtype :=
   rfl
+
+/- The quotient-compatibility predicates are part of the dictionary because
+   later synthesis sections import this foundational interface directly. -/
+
+/-- The lower-numbering compatibility condition that fails for arbitrary quotients. -/
+def chapter15LowerQuotientCompatibility
+    {G Q : Type*} [Group G] [Finite G] [Group Q] [Finite Q]
+    (F : Chapter15LowerRamificationFiltration G)
+    (FQ : Chapter15LowerRamificationFiltration Q)
+    (π : G →* Q) : Prop :=
+  ∀ i : ℕ, (F.group i).map π = FQ.group i
+
+/-- The upper-numbering pushforward along a quotient map. -/
+def chapter15UpperPushforward
+    {G Q : Type*} [Group G] [Group Q]
+    (U : ℝ → Subgroup G) (π : G →* Q) (r : ℝ) : Subgroup Q :=
+  (U r).map π
+
+/-
+The Herbrand quotient interface: upper groups are compared after pushing them
+forward, whereas lower groups require the stronger compatibility condition above.
+-/
+def chapter15UpperQuotientCompatibility
+    {G Q : Type*} [Group G] [Group Q]
+    (U : ℝ → Subgroup G) (UQ : ℝ → Subgroup Q) (π : G →* Q) : Prop :=
+  ∀ r : ℝ, chapter15UpperPushforward U π r = UQ r
 
 /-- The rational index weight used by the Herbrand integral. -/
 def chapter15IndexWeight

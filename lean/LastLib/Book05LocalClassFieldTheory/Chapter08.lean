@@ -1,0 +1,12 @@
+import LastLib.Book05LocalClassFieldTheory.Chapter08.Section01TheUnramifiedCoordinate
+import LastLib.Book05LocalClassFieldTheory.Chapter08.Section02UnitsAreAbelianInertia
+import LastLib.Book05LocalClassFieldTheory.Chapter08.Section03UpperNumbering
+import LastLib.Book05LocalClassFieldTheory.Chapter08.Section04UnitAndRamificationTheorem
+import LastLib.Book05LocalClassFieldTheory.Chapter08.Section05Conductors
+import LastLib.Book05LocalClassFieldTheory.Chapter08.Section06TameAndWildPieces
+
+namespace LastLib.Book05LocalClassFieldTheory.Chapter08
+
+/-! Aggregator for Book 5, Chapter 8: uniformizers, units, and ramification. -/
+
+end LastLib.Book05LocalClassFieldTheory.Chapter08

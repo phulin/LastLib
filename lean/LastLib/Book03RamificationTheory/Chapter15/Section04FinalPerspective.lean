@@ -28,7 +28,7 @@ theorem chapter15_ramification_bound_feeds_discriminant_bound
     (hδ : δ = chapter15DiscriminantDisplacementSum F f)
     (hbound : chapter15DiscriminantDisplacementSum F f ≤ B) :
     chapter15DiscriminantExponentBound δ B := by
-  simpa [hδ] using hbound
+  simpa [chapter15DiscriminantExponentBound, hδ] using hbound
 
 /--
 The trace-dual lattice whose inverse defines the different.  This is kept as
@@ -58,7 +58,7 @@ discriminants is represented by their different codomains: an ideal downstairs
 versus a coefficient of a chosen model.
 -/
 theorem chapter15_field_and_model_discriminants_have_distinct_interfaces
-    (A R : Type*) :
+    (A R : Type*) [Semiring A] :
     Chapter15FieldDiscriminant A = Ideal A ∧
       Chapter15WeierstrassDiscriminant R = R := by
   exact ⟨rfl, rfl⟩

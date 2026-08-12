@@ -50,9 +50,9 @@ def chapter10IdealUnitFiltration
       (I ^ n).neg_mem
         (Ideal.mul_mem_left (I ^ n) ((↑u⁻¹ : Rˣ) : R) hu)
 
-/-- The unit filtration on the valuation ring `A`: `Uⁿ = 1 + 𝔪ⁿ`. -/
-def chapter10UnitFiltration {L : Type*} [Field L]
-    (A : ValuationSubring L) (n : ℕ) : Subgroup Aˣ :=
+/-- The unit filtration on a local ring `A`: `Uⁿ = 1 + 𝔪ⁿ`. -/
+def chapter10UnitFiltration
+    (A : Type*) [CommRing A] [IsLocalRing A] (n : ℕ) : Subgroup Aˣ :=
   chapter10IdealUnitFiltration A (IsLocalRing.maximalIdeal A) n
 
 /-- The same filtration transported to the unit group of the fraction field. -/

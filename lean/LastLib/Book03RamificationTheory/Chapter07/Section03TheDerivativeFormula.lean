@@ -44,13 +44,13 @@ theorem chapter07MonogenicPresentation_generates
 
 theorem chapter07_different_eq_derivative_ideal
     (A B K L : Type*) [CommRing A] [IsDomain A]
-    [IsDiscreteValuationRing A] [CommRing B] [IsDomain B]
+    [IsDiscreteValuationRing A] [CommRing B] [IsDedekindDomain B]
     [IsDiscreteValuationRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
     [Algebra.IsSeparable K L] [IsIntegralClosure B A L]
-    [IsIntegrallyClosed A] [IsDedekindDomain B]
+    [IsIntegrallyClosed A]
     [Module.Finite A B] [Module.Free A B] [Module.IsTorsionFree A B]
     [Algebra.IsIntegral A B]
     (α : B) (f : A[X])
@@ -98,8 +98,8 @@ theorem chapter07_interpolation_is_trace
 /- The numerator polynomials q_i from the source. -/
 def chapter07DualNumerator
     {A : Type*} [CommRing A] (f : A[X]) (n i : ℕ) : A[X] :=
-  ∑ j in Finset.Icc (i + 1) n,
-    C (f.coeff j) * X ^ (j - i - 1)
+  Finset.sum (Finset.Icc (i + 1) n) (fun j =>
+    C (f.coeff j) * X ^ (j - i - 1))
 
 def chapter07DualNumeratorValue
     {A B : Type*} [CommRing A] [CommRing B] [Algebra A B]
@@ -160,12 +160,12 @@ theorem chapter07_inverse_principal_mem_iff
       ∃ b : B, x = algebraMap B L b / algebraMap B L δ := Iff.rfl
 
 theorem chapter07_codifferent_eq_inverse_derivative_principal
-    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B] [IsDomain B]
+    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B] [IsDedekindDomain B]
     [Field K] [Field L] [Algebra A B] [Algebra A K] [Algebra K L]
     [Algebra B L] [Algebra A L] [IsScalarTower A K L]
     [IsScalarTower A B L] [IsFractionRing A K] [IsFractionRing B L]
     [FiniteDimensional K L] [Algebra.IsSeparable K L]
-    [IsIntegralClosure B A L] [IsIntegrallyClosed A] [IsDedekindDomain B]
+    [IsIntegralClosure B A L] [IsIntegrallyClosed A]
     (α : B) (f : A[X])
     (hmono : chapter07MonogenicPresentation A B K L α f) :
     chapter07CodifferentSet A B K L =
@@ -175,19 +175,19 @@ theorem chapter07_codifferent_eq_inverse_derivative_principal
 
 theorem chapter07_eisenstein_different_exponent_eq_derivative_valuation
     (A B K L : Type*) [CommRing A] [IsDomain A]
-    [IsDiscreteValuationRing A] [CommRing B] [IsDomain B]
+    [IsDiscreteValuationRing A] [CommRing B] [IsDedekindDomain B]
     [IsDiscreteValuationRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
     [Algebra.IsSeparable K L] [IsIntegralClosure B A L]
-    [IsIntegrallyClosed A] [IsDedekindDomain B]
+    [IsIntegrallyClosed A]
     [Module.Finite A B] [Module.Free A B] [Module.IsTorsionFree A B]
     [Algebra.IsIntegral A B]
     (vL : AddValuation L (WithTop ℤ)) (mB : Ideal B) (d : ℕ)
     (πL : B) (f : A[X])
-    (hmono : chapter07MonogenicPresentation A B K L πL f)
-    (hD : chapter07DifferentIdeal A B = mB ^ d)
+    (_hmono : chapter07MonogenicPresentation A B K L πL f)
+    (_hD : chapter07DifferentIdeal A B = mB ^ d)
     (hvalue : vL (algebraMap B L
         (chapter07DerivativeAt A B f πL)) = (d : WithTop ℤ)) :
     vL (algebraMap B L (chapter07DerivativeAt A B f πL)) =

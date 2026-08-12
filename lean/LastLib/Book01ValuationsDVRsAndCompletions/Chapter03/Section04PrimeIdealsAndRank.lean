@@ -26,7 +26,8 @@ variable {K : Type*} [Field K]
 /-! ### 3.4. Prime ideals and rank -/
 
 /-- A chapter-local interface for a convex additive subgroup of an ordered group. -/
-structure ChapterConvexAddSubgroup (G : Type*) [AddCommGroup G] [LinearOrder G] where
+structure ChapterConvexAddSubgroup (G : Type*) [AddCommGroup G] [LinearOrder G]
+    [IsOrderedAddMonoid G] where
   carrier : AddSubgroup G
   convex : ∀ {a b c : G}, a ≤ b → b ≤ c → a ∈ carrier → c ∈ carrier → b ∈ carrier
 
@@ -38,7 +39,7 @@ noncomputable def valuationPrimeSpectrum_equiv_coarsenings (A : ValuationSubring
     PrimeSpectrum A ≃ {S : ValuationSubring K // A ≤ S} :=
   ValuationSubring.primeSpectrumEquiv A
 
-theorem convex_scales_correspond_to_prime_ideals (A : ValuationSubring K) :
+theorem coarsenings_correspond_to_prime_ideals (A : ValuationSubring K) :
     Nonempty ((PrimeSpectrum A)ᵒᵈ ≃o {S : ValuationSubring K // A ≤ S}) :=
   ⟨valuationPrimeSpectrum_orderEquiv A⟩
 
@@ -386,7 +387,7 @@ private theorem nonarch_valuation_has_intermediate_prime
 theorem rankOne_valuationRing_only_prime_ideals
     {Γ : Type*} [LinearOrderedCommGroupWithZero Γ]
     (v : Valuation K Γ) (hrank : IsRankOneValuation v)
-    (_hnontrivial : v.IsNontrivial) (P : Ideal (valuationRingOf v))
+    (P : Ideal (valuationRingOf v))
     (hP : P.IsPrime) :
     P = ⊥ ∨ P = maximalIdealOf v := by
   exact rankOne_prime_bot_or_maximal v hrank P hP
@@ -394,11 +395,12 @@ theorem rankOne_valuationRing_only_prime_ideals
 theorem rankOne_nonzero_proper_ideal_radical
     {Γ : Type*} [LinearOrderedCommGroupWithZero Γ]
     (v : Valuation K Γ) (hrank : IsRankOneValuation v)
-    (_hnontrivial : v.IsNontrivial) (I : Ideal (valuationRingOf v))
+    (I : Ideal (valuationRingOf v))
     (hI0 : I ≠ ⊥) (hItop : I ≠ ⊤) :
     Ideal.radical I = maximalIdealOf v := by
   classical
-  let : v.IsNontrivial := _hnontrivial
+  let : v.IsNontrivial := by
+    exact hrank.some.toIsNontrivial
   have hle : Ideal.radical I ≤ maximalIdealOf v := by
     apply (Ideal.IsPrime.radical_le_iff
       (IsLocalRing.maximalIdeal.isMaximal (valuationRingOf v)).isPrime).2
@@ -419,7 +421,7 @@ theorem rankOne_power_divisibility
     {Γ : Type*} [LinearOrderedCommGroupWithZero Γ]
     (v : Valuation K Γ) (hrank : IsRankOneValuation v)
     (a b : valuationRingOf v) (ha : a ≠ 0) (hb : b ≠ 0)
-    (ha_m : a ∈ maximalIdealOf v) (_hb_m : b ∈ maximalIdealOf v) :
+    (ha_m : a ∈ maximalIdealOf v) :
     ∃ n : ℕ, v ((a : K) ^ n) ≤ v (b : K) ∧
       a ^ n ∈ Ideal.span ({b} : Set (valuationRingOf v)) := by
   classical
@@ -501,7 +503,8 @@ theorem lexicographic_infinitesimals_are_all_below_dominant (n : ℕ) :
     (0, (n : ℤ)) (1, 0)
   exact Prod.Lex.toLex_lt_toLex.mpr (Or.inl (by norm_num))
 
-def ChapterArchimedean (A : Type*) [AddCommGroup A] [LinearOrder A] : Prop :=
+def ChapterArchimedean (A : Type*) [AddCommGroup A] [LinearOrder A]
+    [IsOrderedAddMonoid A] : Prop :=
   ∀ a b : A, 0 < a → 0 < b → ∃ n : ℕ, b ≤ n • a
 
 theorem lexicographic_integer_pair_is_not_archimedean :

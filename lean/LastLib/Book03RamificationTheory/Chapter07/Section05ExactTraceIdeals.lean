@@ -37,13 +37,13 @@ theorem chapter07TraceImageExponent_eq_displayed_floor
 /-- The exact trace-image formula for all integral and fractional powers. -/
 theorem chapter07_trace_fractional_power_formula
     (A B K L : Type*) [CommRing A] [IsDomain A]
-    [IsDiscreteValuationRing A] [CommRing B] [IsDomain B]
+    [IsDiscreteValuationRing A] [CommRing B] [IsDedekindDomain B]
     [IsDiscreteValuationRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
     [Algebra.IsSeparable K L] [IsIntegralClosure B A L]
-    [IsIntegrallyClosed A] [IsDedekindDomain B]
+    [IsIntegrallyClosed A]
     [Module.Finite A B] [Module.Free A B] [Module.IsTorsionFree A B]
     [Algebra.IsIntegral A B]
     (mA : Ideal A) (mB : Ideal B) (e d : ℕ)
@@ -62,13 +62,13 @@ theorem chapter07_trace_fractional_power_formula
 
 theorem chapter07_trace_fractional_power_contained_iff
     (A B K L : Type*) [CommRing A] [IsDomain A]
-    [IsDiscreteValuationRing A] [CommRing B] [IsDomain B]
+    [IsDiscreteValuationRing A] [CommRing B] [IsDedekindDomain B]
     [IsDiscreteValuationRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
     [Algebra.IsSeparable K L] [IsIntegralClosure B A L]
-    [IsIntegrallyClosed A] [IsDedekindDomain B]
+    [IsIntegrallyClosed A]
     [Module.Finite A B] [Module.Free A B] [Module.IsTorsionFree A B]
     [Algebra.IsIntegral A B]
     (mA : Ideal A) (mB : Ideal B) (e d : ℕ)
@@ -96,13 +96,13 @@ def chapter07MaximalIdealSet
 
 theorem chapter07_unramified_exact_integral_trace
     (A B K L : Type*) [CommRing A] [IsDomain A]
-    [IsDiscreteValuationRing A] [CommRing B] [IsDomain B]
+    [IsDiscreteValuationRing A] [CommRing B] [IsDedekindDomain B]
     [IsDiscreteValuationRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
     [Algebra.IsSeparable K L] [IsIntegralClosure B A L]
-    [IsIntegrallyClosed A] [IsDedekindDomain B]
+    [IsIntegrallyClosed A]
     [Module.Finite A B] [Module.Free A B] [Module.IsTorsionFree A B]
     [Algebra.IsIntegral A B]
     (mA : Ideal A) (mB : Ideal B)
@@ -120,13 +120,13 @@ theorem chapter07_unramified_exact_integral_trace
 
 theorem chapter07_tame_exact_integral_and_maximal_trace
     (A B K L : Type*) [CommRing A] [IsDomain A]
-    [IsDiscreteValuationRing A] [CommRing B] [IsDomain B]
+    [IsDiscreteValuationRing A] [CommRing B] [IsDedekindDomain B]
     [IsDiscreteValuationRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
     [Algebra.IsSeparable K L] [IsIntegralClosure B A L]
-    [IsIntegrallyClosed A] [IsDedekindDomain B]
+    [IsIntegrallyClosed A]
     [Module.Finite A B] [Module.Free A B] [Module.IsTorsionFree A B]
     [Algebra.IsIntegral A B]
     (mA : Ideal A) (mB : Ideal B) (e : ℕ)
@@ -161,7 +161,7 @@ theorem chapter07_sqrt_two_trace_formula
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] (sqrtTwo : L)
     (hmodel : chapter07QuadraticTraceModel K L sqrtTwo)
-    (hsquare : sqrtTwo ^ 2 = algebraMap K L 2) (a b : K) :
+    (_hsquare : sqrtTwo ^ 2 = algebraMap K L 2) (a b : K) :
     Algebra.trace K L
         (algebraMap K L a + algebraMap K L b * sqrtTwo) = 2 * a := by
   exact chapter07_quadratic_trace_formula K L sqrtTwo hmodel a b
@@ -171,7 +171,7 @@ theorem chapter07_sqrt_two_integral_trace_is_two_adic
     [FiniteDimensional K L] (sqrtTwo : L)
     (hmodel : chapter07QuadraticTraceModel K L sqrtTwo)
     (hsquare : sqrtTwo ^ 2 = algebraMap K L 2)
-    (hintegral_trace : ∀ a : K, ∃ x : K,
+    (_hintegral_trace : ∀ a : K, ∃ x : K,
       Algebra.trace K L (algebraMap K L a +
         algebraMap K L 0 * sqrtTwo) = 2 * x) :
     ∀ a b : K,
@@ -196,7 +196,7 @@ theorem chapter07_norm_one_add_trace_remainder
 def chapter07NormLiftingFailure
     (K L k l : Type*) [Field K] [Field L] [Field k] [Field l]
     [Algebra K L] [Algebra k l]
-    (ρK : K →+* k) (ρL : L →+* l)
+    (_ρK : K →+* k) (_ρL : L →+* l)
     (unitLayerL : Set L) (unitLayerK : Set K) : Prop :=
   Function.Surjective (Algebra.norm k (S := l)) ∧
     ¬Set.SurjOn (Algebra.norm K (S := L)) unitLayerL unitLayerK

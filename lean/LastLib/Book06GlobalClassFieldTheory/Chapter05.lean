@@ -1,0 +1,11 @@
+import LastLib.Book06GlobalClassFieldTheory.Chapter05.Dependencies
+import LastLib.Book06GlobalClassFieldTheory.Chapter05.Section01TheReciprocityIsomorphism
+import LastLib.Book06GlobalClassFieldTheory.Chapter05.Section02FrobeniusDecompositionAndInertia
+import LastLib.Book06GlobalClassFieldTheory.Chapter05.Section03CompatibilityInQuotientsAndTowers
+import LastLib.Book06GlobalClassFieldTheory.Chapter05.Section04AFirstExplicitCalculationOverTheRationals
+
+namespace LastLib.Book06GlobalClassFieldTheory.Chapter05
+
+/-! Aggregator for Book 6, Chapter 5: finite global reciprocity. -/
+
+end LastLib.Book06GlobalClassFieldTheory.Chapter05

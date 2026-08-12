@@ -1,4 +1,5 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Section01WhyTowerFormulasMatter
+import Mathlib.FieldTheory.LinearDisjoint
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03
 
@@ -138,7 +139,7 @@ theorem chapter03CompositumDegreeFormula_iff
     {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω]
     (L₁ L₂ : IntermediateField K Ω) :
     chapter03CompositumDegreeFormula L₁ L₂ ↔
-      Module.finrank K (L₁ ⊔ L₂) =
+      Module.finrank K (chapter03Compositum L₁ L₂) =
         Module.finrank K L₁ * Module.finrank K L₂ := Iff.rfl
 
 theorem chapter03_compositum_degree_of_linearly_disjoint

@@ -1,0 +1,6 @@
+import LastLib.Book04AdelesAndIdeles.Chapter01.Dependencies
+import LastLib.Book04AdelesAndIdeles.Chapter01.Section01LocalGlobalProblem
+import LastLib.Book04AdelesAndIdeles.Chapter01.Section02NumberFieldsAndIntegers
+import LastLib.Book04AdelesAndIdeles.Chapter01.Section03ArchimedeanEmbeddings
+import LastLib.Book04AdelesAndIdeles.Chapter01.Section04Approximation
+import LastLib.Book04AdelesAndIdeles.Chapter01.Section05IdealLatticesAndDiscriminants

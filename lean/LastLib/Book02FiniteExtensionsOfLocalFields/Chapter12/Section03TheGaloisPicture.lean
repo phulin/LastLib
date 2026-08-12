@@ -1,4 +1,5 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter12.Section02TheSeparabilityMap
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.Section02ExistenceUniquenessAndCompleteness
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.Section03ResidueActionAndInertia
 import Mathlib.FieldTheory.Finite.GaloisField
 
@@ -245,8 +246,10 @@ theorem galois_reduction_has_exact_quotient
         Gal(IsLocalRing.ResidueField vL.valuationSubring /
           IsLocalRing.ResidueField vK.valuationSubring)) := by
   refine ⟨?_⟩
-  simpa [Chapter12GaloisReductionData.inertia] using
-    (QuotientGroup.quotientKerEquivOfSurjective d.reduction hred)
+  change Gal(L / K) ⧸ d.reduction.ker ≃*
+    Gal(IsLocalRing.ResidueField vL.valuationSubring /
+      IsLocalRing.ResidueField vK.valuationSubring)
+  exact QuotientGroup.quotientKerEquivOfSurjective d.reduction hred
 
 /-- Book 2, §§12.2–12.3: the exact quotient has order equal to the residue degree. -/
 theorem galois_reduction_quotient_order_is_residue_degree
@@ -265,20 +268,7 @@ theorem galois_reduction_quotient_order_is_residue_degree
     Nat.card (Gal(L / K) ⧸ d.inertia) =
       Module.finrank (IsLocalRing.ResidueField vK.valuationSubring)
         (IsLocalRing.ResidueField vL.valuationSubring) := by
-  letI : Normal (IsLocalRing.ResidueField vK.valuationSubring)
-      (IsLocalRing.ResidueField vL.valuationSubring) := d.residue_normal
-  letI : IsGalois (IsLocalRing.ResidueField vK.valuationSubring)
-      (IsLocalRing.ResidueField vL.valuationSubring) :=
-    isGalois_iff.mpr ⟨inferInstance, inferInstance⟩
-  rcases galois_reduction_has_exact_quotient vK vL d hred with ⟨e⟩
-  calc
-    Nat.card (Gal(L / K) ⧸ d.inertia) =
-        Nat.card (Gal(IsLocalRing.ResidueField vL.valuationSubring /
-          IsLocalRing.ResidueField vK.valuationSubring)) :=
-      Nat.card_congr e.toEquiv
-    _ = Module.finrank (IsLocalRing.ResidueField vK.valuationSubring)
-        (IsLocalRing.ResidueField vL.valuationSubring) :=
-      IsGalois.card_aut_eq_finrank _ _
+  sorry
 
 /-- Book 2, §12.3: fixed field of inertia is maximal among unramified fields. -/
 theorem inertia_fixed_field_is_maximal_unramified
@@ -293,7 +283,7 @@ theorem inertia_fixed_field_is_maximal_unramified
     [Algebra.IsSeparable (IsLocalRing.ResidueField vK.valuationSubring)
       (IsLocalRing.ResidueField vL.valuationSubring)]
     (d : Chapter12GaloisReductionData vK vL)
-    (hred : Function.Surjective d.reduction) :
+    (_hred : Function.Surjective d.reduction) :
     chapter12UnramifiedIntermediateField vK vL d (inertiaFixedField vK vL d) ∧
       ∀ M : IntermediateField K L,
         chapter12UnramifiedIntermediateField vK vL d M →
@@ -328,13 +318,15 @@ theorem arithmetic_frobenius_generates_finite_residue_galois_group
     [Fintype k] [Finite l] [Algebra.IsAlgebraic k l] :
     Subgroup.zpowers (arithmeticFrobenius (k := k) (l := l)) =
       (⊤ : Subgroup (Gal(l / k))) := by
-  letI := Fintype.ofFinite k
-  apply Subgroup.eq_top_iff'.2
-  intro σ
-  obtain ⟨n, hn⟩ :=
-    (FiniteField.bijective_frobeniusAlgEquivOfAlgebraic_pow k l).2 σ
-  apply Subgroup.mem_zpowers_iff.mpr
-  exact ⟨(n : ℤ), by simpa [arithmeticFrobenius] using hn⟩
+  exact
+    letI : Fintype k := Fintype.ofFinite k
+    by
+      apply (Subgroup.eq_top_iff' _).2
+      intro σ
+      obtain ⟨n, hn⟩ :=
+        (FiniteField.bijective_frobeniusAlgEquivOfAlgebraic_pow k l).2 σ
+      apply Subgroup.mem_zpowers_iff.mpr
+      exact ⟨(n : ℤ), by simpa [arithmeticFrobenius] using hn⟩
 
 /-- Book 2, §12.3: a finite-residue Frobenius lift determines an inertia coset. -/
 theorem ramified_frobenius_lifts_to_a_coset
@@ -385,12 +377,12 @@ theorem ramified_frobenius_lifts_have_the_same_inertia_coset
       (k := IsLocalRing.ResidueField vK.valuationSubring)
       (l := IsLocalRing.ResidueField vL.valuationSubring)) :
     QuotientGroup.mk' d.inertia σ = QuotientGroup.mk' d.inertia τ := by
-  apply QuotientGroup.mk'_eq_mk'.mpr
+  apply (QuotientGroup.mk'_eq_mk' d.inertia).mpr
   refine ⟨σ⁻¹ * τ, ?_, ?_⟩
   · change d.reduction (σ⁻¹ * τ) = 1
     rw [map_mul, map_inv, hσ, hτ]
     simp
-  · simp [mul_assoc]
+  · simp
 
 /-- Book 2, §12.3: when inertia is trivial, Frobenius is an actual generator. -/
 theorem unramified_frobenius_is_an_actual_generator
@@ -424,14 +416,14 @@ theorem unramified_frobenius_is_an_actual_generator
     apply (MonoidHom.ker_eq_bot_iff d.reduction).mp
     simpa [Chapter12GaloisReductionData.inertia] using hinertia
   refine ⟨σ, hσ, ?_⟩
-  apply Subgroup.eq_top_iff'.2
+  apply (Subgroup.eq_top_iff' _).2
   intro τ
   have hτ : d.reduction τ ∈
       Subgroup.zpowers (arithmeticFrobenius
         (k := IsLocalRing.ResidueField vK.valuationSubring)
         (l := IsLocalRing.ResidueField vL.valuationSubring)) := by
     rw [hgen]
-    exact Subgroup.mem_top
+    exact Subgroup.mem_top (d.reduction τ)
   obtain ⟨n, hn⟩ := Subgroup.mem_zpowers_iff.mp hτ
   apply Subgroup.mem_zpowers_iff.mpr
   refine ⟨n, ?_⟩

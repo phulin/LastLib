@@ -12,8 +12,8 @@ open scoped BigOperators Polynomial nonZeroDivisors
 /-- The cyclotomic polynomial in the coordinate `λ = ζ - 1`. -/
 def chapter07CyclotomicPolynomial
     (R : Type*) [CommRing R] (p : ℕ) : R[X] :=
-  ∑ i in Finset.range p,
-    C (Nat.choose p (i + 1)) * X ^ i
+  Finset.sum (Finset.range p) (fun i =>
+    C (Nat.choose p (i + 1) : R) * X ^ i)
 
 theorem chapter07_cyclotomic_polynomial_is_the_displayed_quotient
     (R : Type*) [CommRing R] (p : ℕ) :
@@ -33,23 +33,26 @@ theorem chapter07_cyclotomic_degree_and_tameness
     (p : ℕ) [Fact (Nat.Prime p)] (hpodd : 2 < p)
     {L : Type*} [Field L] [Algebra (ℚ_[p]) L]
     [FiniteDimensional (ℚ_[p]) L]
-    (hdegree : Module.finrank (ℚ_[p]) L = p - 1)
-    (htotal : Prop) :
+    (hdegree : Module.finrank (ℚ_[p]) L = p - 1) :
     Module.finrank (ℚ_[p]) L = p - 1 ∧ Nat.Coprime (p - 1) p := by
-  exact ⟨hdegree, Nat.coprime_sub_one_iff.mpr (Fact.out : Nat.Prime p)⟩
+  refine ⟨hdegree, ?_⟩
+  rw [Nat.coprime_comm]
+  apply (Fact.out : Nat.Prime p).coprime_iff_not_dvd.mpr
+  have hpos : 0 < p - 1 :=
+    Nat.sub_pos_of_lt (lt_trans (by decide : (1 : ℕ) < 2) hpodd)
+  exact Nat.not_dvd_of_pos_of_lt hpos
+    (Nat.sub_lt (Fact.out : Nat.Prime p).pos (by decide))
 
 theorem chapter07_cyclotomic_lambda_is_uniformizer_and_root
     (p : ℕ) [Fact (Nat.Prime p)]
     {L : Type*} [Field L] [Algebra (ℚ_[p]) L]
     [FiniteDimensional (ℚ_[p]) L]
-    (ζ λ : L) (hζ : IsPrimitiveRoot ζ p) (hlambda : λ = ζ - 1)
-    (hdegree : Module.finrank (ℚ_[p]) L = p - 1)
-    (hroot : aeval λ (chapter07CyclotomicPolynomial (ℚ_[p]) p) = 0)
-    (hvalue : chapter07IsUniformizer
-      (AddValuation.comap (algebraMap (ℚ_[p]) L)
-        (AddValuation.comap (algebraMap (ℚ_[p]) L)
-          (by infer_instance : AddValuation L (WithTop ℤ)))) λ) :
-    λ = ζ - 1 ∧ aeval λ (chapter07CyclotomicPolynomial (ℚ_[p]) p) = 0 := by
+    (vL : AddValuation L (WithTop ℤ))
+    (ζ lambda : L) (_hζ : IsPrimitiveRoot ζ p) (hlambda : lambda = ζ - 1)
+    (_hdegree : Module.finrank (ℚ_[p]) L = p - 1)
+    (hroot : aeval lambda (chapter07CyclotomicPolynomial (ℚ_[p]) p) = 0)
+    (_hvalue : chapter07IsUniformizer vL lambda) :
+    lambda = ζ - 1 ∧ aeval lambda (chapter07CyclotomicPolynomial (ℚ_[p]) p) = 0 := by
   exact ⟨hlambda, hroot⟩
 
 /- The valuation calculation is separated from the choice of a generator of
@@ -58,14 +61,14 @@ theorem chapter07_cyclotomic_derivative_valuation
     (p : ℕ) [Fact (Nat.Prime p)]
     {L : Type*} [Field L] [Algebra (ℚ_[p]) L]
     [FiniteDimensional (ℚ_[p]) L]
-    (vL : AddValuation L (WithTop ℤ)) (ζ λ : L)
-    (hζ : IsPrimitiveRoot ζ p) (hlambda : λ = ζ - 1)
-    (hroot : aeval λ (chapter07CyclotomicPolynomial (ℚ_[p]) p) = 0)
-    (huniformizer : chapter07IsUniformizer vL λ)
+    (vL : AddValuation L (WithTop ℤ)) (ζ lambda : L)
+    (hζ : IsPrimitiveRoot ζ p) (hlambda : lambda = ζ - 1)
+    (hroot : aeval lambda (chapter07CyclotomicPolynomial (ℚ_[p]) p) = 0)
+    (huniformizer : chapter07IsUniformizer vL lambda)
     (hEisenstein :
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.IsEisensteinAt
         (p : ℤ_[p]) (chapter07CyclotomicPolynomial (ℤ_[p]) p)) :
-    vL (aeval λ
+    vL (aeval lambda
       (chapter07CyclotomicPolynomial (ℚ_[p]) p).derivative) =
       (p - 2 : WithTop ℤ) := by
   sorry
@@ -74,15 +77,15 @@ theorem chapter07_cyclotomic_different_exponent
     (p : ℕ) [Fact (Nat.Prime p)]
     {L : Type*} [Field L] [Algebra (ℚ_[p]) L]
     [FiniteDimensional (ℚ_[p]) L]
-    (vL : AddValuation L (WithTop ℤ)) (ζ λ : L) (d : ℕ)
-    (hζ : IsPrimitiveRoot ζ p) (hlambda : λ = ζ - 1)
-    (hroot : aeval λ (chapter07CyclotomicPolynomial (ℚ_[p]) p) = 0)
-    (huniformizer : chapter07IsUniformizer vL λ)
+    (vL : AddValuation L (WithTop ℤ)) (ζ lambda : L) (d : ℕ)
+    (hζ : IsPrimitiveRoot ζ p) (hlambda : lambda = ζ - 1)
+    (hroot : aeval lambda (chapter07CyclotomicPolynomial (ℚ_[p]) p) = 0)
+    (huniformizer : chapter07IsUniformizer vL lambda)
     (hEisenstein :
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.IsEisensteinAt
         (p : ℤ_[p]) (chapter07CyclotomicPolynomial (ℤ_[p]) p))
     (hdifferent : chapter07DifferentExponentValuation vL
-      (aeval λ (chapter07CyclotomicPolynomial (ℚ_[p]) p).derivative) d) :
+      (aeval lambda (chapter07CyclotomicPolynomial (ℚ_[p]) p).derivative) d) :
     d = p - 2 := by
   sorry
 
@@ -134,7 +137,7 @@ def chapter07ArtinSchreierHilbertExponent (p m : ℕ) : ℕ :=
 
 theorem chapter07_artin_schreier_hilbert_sum
     (p m : ℕ) :
-    (∑ _i in Finset.range (m + 1), p - 1) =
+    Finset.sum (Finset.range (m + 1)) (fun _i => p - 1) =
       chapter07ArtinSchreierHilbertExponent p m := by
   simp [chapter07ArtinSchreierHilbertExponent]
 
@@ -149,13 +152,13 @@ theorem chapter07_artin_schreier_coordinate_not_integral
   exact (not_le_of_gt hy) hnonnegative
 
 def chapter07ArtinSchreierHilbertData (p m d : ℕ) : Prop :=
-  d = ∑ _i in Finset.range (m + 1), p - 1
+  d = Finset.sum (Finset.range (m + 1)) (fun _i => p - 1)
 
 theorem chapter07_artin_schreier_hilbert_different_formula
     (p m d : ℕ) (hdata : chapter07ArtinSchreierHilbertData p m d) :
     d = chapter07ArtinSchreierHilbertExponent p m := by
-  rw [hdata]
-  exact chapter07_artin_schreier_hilbert_sum p m
+  change d = Finset.sum (Finset.range (m + 1)) (fun _i => p - 1) at hdata
+  exact hdata.trans (chapter07_artin_schreier_hilbert_sum p m)
 
 end
 

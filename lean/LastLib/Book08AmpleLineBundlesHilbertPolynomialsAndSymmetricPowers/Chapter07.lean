@@ -1,0 +1,13 @@
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter07.Core
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter07.Section01FromDimensionsToAPolynomial
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter07.Section02PolynomialOfProjectiveScheme
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter07.Section03DegreeDimensionAndExamples
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter07.Section04DependenceOnPolarization
+
+namespace LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter07
+
+/-! Aggregator for Chapter 7: eventual Hilbert-polynomial existence and
+integer-valuedness, projective-scheme formulas, degree and dimension, exact
+sequence and finite-length interfaces, and polarization dependence. -/
+
+end LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter07

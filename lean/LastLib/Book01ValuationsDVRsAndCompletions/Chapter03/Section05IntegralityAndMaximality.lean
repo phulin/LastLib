@@ -1,4 +1,4 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter03.Section04PrimeIdealsAndRank
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter03.Section01BoundedElements
 import Mathlib.Algebra.BigOperators.Field
 import Mathlib.RingTheory.Valuation.Integers
 import Mathlib.RingTheory.Valuation.Integral
@@ -73,8 +73,7 @@ theorem monic_relation_divide_by_top_power
 
 theorem monic_relation_divided_tail_is_infinitesimal
     (v : Valuation K Γ) (p : Polynomial (valuationRingOf v)) {x : K}
-    (hx : x ≠ 0) (_hp : p.Monic) (hxV : x ∉ valuationRingOf v)
-    (_hroot : p.eval₂ (algebraMap (valuationRingOf v) K) x = 0) :
+    (hx : x ≠ 0) (hxV : x ∉ valuationRingOf v) :
     ∀ i ∈ Finset.range p.natDegree,
       (algebraMap (valuationRingOf v) K (p.coeff i) * x ^ i) / x ^ p.natDegree ∈
         maximalIdealImageOf v := by

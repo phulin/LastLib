@@ -8,6 +8,7 @@ noncomputable section
 
 open Ideal Polynomial
 open scoped BigOperators
+attribute [local instance] FractionRing.liftAlgebra FractionRing.isScalarTower_liftAlgebra
 
 /-! ## 15.2. A calculation protocol -/
 
@@ -69,29 +70,6 @@ structure Chapter15TameCharacterData
   surjective : Function.Surjective character
   cyclic : IsCyclic C
 
-/-- The lower-numbering compatibility condition that fails for arbitrary quotients. -/
-def chapter15LowerQuotientCompatibility
-    {G Q : Type*} [Group G] [Finite G] [Group Q] [Finite Q]
-    (F : Chapter15LowerRamificationFiltration G)
-    (FQ : Chapter15LowerRamificationFiltration Q)
-    (π : G →* Q) : Prop :=
-  ∀ i : ℕ, (F.group i).map π = FQ.group i
-
-/-- The upper-numbering pushforward along a quotient map. -/
-def chapter15UpperPushforward
-    {G Q : Type*} [Group G] [Group Q]
-    (U : ℝ → Subgroup G) (π : G →* Q) (r : ℝ) : Subgroup Q :=
-  (U r).map π
-
-/--
-The Herbrand quotient interface: upper groups are compared after pushing them
-forward, whereas lower groups require the stronger compatibility condition above.
--/
-def chapter15UpperQuotientCompatibility
-    {G Q : Type*} [Group G] [Group Q]
-    (U : ℝ → Subgroup G) (UQ : ℝ → Subgroup Q) (π : G →* Q) : Prop :=
-  ∀ r : ℝ, chapter15UpperPushforward U π r = UQ r
-
 /-- Hilbert's different formula in a ring-level lower-group interface. -/
 def chapter15RingLowerRamificationGroup
     {G B : Type*} [Group G] [CommRing B] [MulSemiringAction G B]
@@ -152,7 +130,7 @@ theorem chapter15_derivative_and_hilbert_calculations_agree
 
 /-- Derivative calculation of the different, available after the generator certificate. -/
 theorem chapter15_generator_derivative_mem_different
-    {A B K L : Type*} [CommRing A] [IsDomain A] [CommRing B] [IsDomain B]
+    {A B K L : Type*} [CommRing A] [IsDomain A] [CommRing B]
     [Field K] [Field L] [Algebra A B] [Algebra A K] [Algebra A L]
     [Algebra B L] [Algebra K L] [IsScalarTower A B L]
     [IsScalarTower A K L] [IsFractionRing A K] [IsFractionRing B L]
@@ -167,12 +145,13 @@ theorem chapter15_generator_derivative_mem_different
 
 /-- The different is multiplicative in a tower, with the lower different mapped upstairs. -/
 theorem chapter15_different_ideal_transitivity
-    {A B C : Type*} [CommRing A] [IsDomain A] [CommRing B] [IsDomain B]
-    [CommRing C] [IsDomain C] [Algebra A B] [Algebra B C] [Algebra A C]
+    {A B C : Type*} [CommRing A] [IsDomain A] [CommRing B]
+    [CommRing C] [Algebra A B] [Algebra B C] [Algebra A C]
     [IsScalarTower A B C] [IsIntegrallyClosed A]
     [IsDedekindDomain B] [IsDedekindDomain C]
     [Module.Finite A B] [Module.Finite A C] [Module.Finite B C]
-    [Module.IsTorsionFree A C] [Module.IsTorsionFree B C]
+    [Module.IsTorsionFree A B] [Module.IsTorsionFree A C]
+    [Module.IsTorsionFree B C]
     [Algebra.IsSeparable (FractionRing A) (FractionRing C)] :
     chapter15DifferentIdeal A C =
       chapter15DifferentIdeal B C *
@@ -181,8 +160,8 @@ theorem chapter15_different_ideal_transitivity
 
 /-- The exponent form of different transitivity at a compatible prime tower. -/
 theorem chapter15_different_exponent_tower
-    {A B C : Type*} [CommRing A] [IsDomain A] [CommRing B] [IsDomain B]
-    [CommRing C] [IsDomain C] [Algebra A B] [Algebra B C] [Algebra A C]
+    {A B C : Type*} [CommRing A] [IsDomain A] [CommRing B]
+    [CommRing C] [Algebra A B] [Algebra B C] [Algebra A C]
     [IsScalarTower A B C] [IsIntegrallyClosed A]
     [IsDedekindDomain B] [IsDedekindDomain C]
     [Module.Finite A B] [Module.Finite A C] [Module.Finite B C]
@@ -198,13 +177,16 @@ theorem chapter15_different_exponent_tower
   sorry
 
 /-- In the one-branch local situation, the norm of the different gives `δ = f d`. -/
-/- SOURCE_ISSUE: The displayed identity `f * ∑ᵢ (|Gᵢ| - 1) = δ(L/K)`
-   requires a selected branch with no branch-count contribution (for example,
-   a complete or henselian base).  The opening sentence of §15.1 says only
-   "finite Galois extension with separable residue extension".  The minimal
-   principled correction is the explicit one-branch hypothesis below. -/
+/- SOURCE_ISSUE: In §13.5, the displayed identity
+   `f * ∑ᵢ (|Gᵢ| - 1) = δ(L/K)` follows the wording
+   "Let ρ have finite image G, let L/K be its fixed field, and assume that
+   this extension has separable residue extension."  In a general
+   Dedekind/global setting this does not select a single branch or remove
+   branch-count contributions (a complete or henselian local base does).
+   The minimal principled correction is the explicit one-branch hypothesis
+   below. -/
 theorem chapter15_discriminant_exponent_eq_residue_degree_mul_different
-    {A B : Type*} [CommRing A] [IsDomain A] [CommRing B]
+    {A B : Type*} [CommRing A] [CommRing B]
     [Algebra A B] [IsDedekindDomain A] [IsDedekindDomain B]
     [Module.Finite A B] [Module.IsTorsionFree A B]
     (p : Ideal A) (P : Ideal B) [p.IsPrime] [p.IsMaximal]

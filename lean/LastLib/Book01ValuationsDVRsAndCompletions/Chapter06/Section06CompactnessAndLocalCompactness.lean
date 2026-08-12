@@ -1,4 +1,26 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter06.Section05InfiniteProducts
+import Mathlib.Analysis.Normed.Field.Basic
+import Mathlib.RingTheory.AdicCompletion.Basic
+import Mathlib.RingTheory.AdicCompletion.Completeness
+import Mathlib.RingTheory.AdicCompletion.Topology
+import Mathlib.RingTheory.DiscreteValuationRing.Basic
+import Mathlib.RingTheory.LaurentSeries
+import Mathlib.RingTheory.PowerSeries.Basic
+import Mathlib.RingTheory.PowerSeries.WellKnown
+import Mathlib.NumberTheory.LocalField.Basic
+import Mathlib.NumberTheory.Padics.PadicIntegers
+import Mathlib.NumberTheory.Padics.ProperSpace
+import Mathlib.RingTheory.Valuation.Discrete.RankOne
+import Mathlib.Topology.Algebra.Ring.Compact
+import Mathlib.Topology.Algebra.Module.FiniteDimension
+import Mathlib.Topology.Algebra.Valued.LocallyCompact
+import Mathlib.Topology.MetricSpace.Pseudo.Defs
+import Mathlib.Topology.UniformSpace.AbsoluteValue
+import Mathlib.Tactic.Abel
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Order
+import Mathlib.Tactic.Ring
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter06
 

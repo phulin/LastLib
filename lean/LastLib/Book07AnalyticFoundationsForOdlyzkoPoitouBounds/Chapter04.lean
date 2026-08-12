@@ -1,0 +1,13 @@
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter04.Dependencies
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter04.Section01ArchimedeanLocalFactors
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter04.Section02ThetaKernelsAndDualLattices
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter04.Section03ContinuationAndFunctionalEquation
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter04.Section04PolesZerosAndGrowth
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter04.Section05DiscriminantAndAnalyticConductor
+
+namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter04
+
+/-! Aggregator for Chapter 4: archimedean factors, theta kernels, continuation,
+the functional equation, zero growth, and analytic conductor. -/
+
+end LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter04

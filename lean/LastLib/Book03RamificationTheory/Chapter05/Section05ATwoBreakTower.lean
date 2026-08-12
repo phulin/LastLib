@@ -26,7 +26,9 @@ structure Chapter05TwoBreakData
     (G : Type*) [Group G] [Fintype G]
     (H : Subgroup G) [H.Normal] where
   profile : Chapter05RamificationFiltration G
-  p a b : ℕ
+  p : ℕ
+  a : ℕ
+  b : ℕ
   p_prime : Nat.Prime p
   a_pos : 0 < a
   a_lt_b : a < b
@@ -160,7 +162,7 @@ theorem chapter05_two_break_hasse_arf_congruence
       (chapter05TwoBreakSecondUpper T.twoBreak.p T.twoBreak.a T.twoBreak.b)) :
     T.twoBreak.p ∣ T.twoBreak.b - T.twoBreak.a := by
   exact (chapter05_two_break_second_label_integral_iff_dvd
-    T.twoBreak.p T.twoBreak.a T.twoBreak.b T.twoBreak.p_pos.pos T.twoBreak.a_lt_b).mp
+    T.twoBreak.p T.twoBreak.a T.twoBreak.b T.twoBreak.p_prime.pos T.twoBreak.a_lt_b).mp
       hsecond
 
 end

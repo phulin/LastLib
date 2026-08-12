@@ -113,6 +113,11 @@ theorem inertia_iff_positive_valuation_displacement
         w ((σ : Gal(L / F)) (x : L) - (x : L)) > 0 := by
   sorry
 
+/- SOURCE_ISSUE: The surjectivity argument in §5.3 invokes Hensel's lemma
+   after the chapter has introduced a possibly noncomplete global extension.
+   It requires the chosen base valuation to be henselian (for example, after
+   passing to the completion); the explicit completeness and normalization
+   hypotheses of the theorem below record that missing local context. -/
 /-- The exactness assertion for a residue action whose kernel is inertia. -/
 theorem residue_action_exact_sequence
     {D Q : Type*} [Group D] [Group Q]

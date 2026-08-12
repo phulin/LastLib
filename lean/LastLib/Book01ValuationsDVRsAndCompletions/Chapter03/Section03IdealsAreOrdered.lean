@@ -297,7 +297,6 @@ theorem valueCut_without_least_gives_nonprincipal_ideal
 
 theorem integer_upward_closed_nonnegative_set_has_least (S : Set ℤ)
     (hne : S.Nonempty) (hnonneg : S ⊆ Set.Ici 0)
-    (_hup : ∀ {a b : ℤ}, a ∈ S → a ≤ b → b ∈ S) :
     hasLeastValue S := by
   classical
   rcases Int.exists_least_of_bdd
@@ -384,7 +383,7 @@ def strictUpperValueCut (α : A) (hα : 0 ≤ α) : AdditiveValueCut A :=
       intro γ δ hγ hδ
       exact lt_of_lt_of_le hγ (le_add_of_nonneg_right hδ) }
 theorem dense_strict_cut_has_no_least {A : Type*} [LinearOrder A] [DenselyOrdered A]
-    (α : A) (_hne : ({γ : A | α < γ}).Nonempty) :
+    (α : A) :
     ¬ hasLeastValue {γ : A | α < γ} := by
   rintro ⟨γ, hγ, hleast⟩
   obtain ⟨δ, hαδ, hδγ⟩ := exists_between hγ
@@ -399,7 +398,7 @@ theorem strictUpperRationalValueCut_is_nonprincipal
   classical
   apply valueCut_without_least_gives_nonprincipal_ideal v
     (strictUpperValueCut α hα) hreal hne
-  exact dense_strict_cut_has_no_least α hne
+  exact dense_strict_cut_has_no_least α
 theorem rational_dense_value_cut_is_nonprincipal
     (v : AddValuation K (WithTop ℚ)) (S : AdditiveValueCut ℚ)
     (hreal : ∀ {γ}, γ ∈ S.carrier → ∃ x : K, x ≠ 0 ∧

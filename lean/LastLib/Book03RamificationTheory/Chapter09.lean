@@ -1,0 +1,11 @@
+import LastLib.Book03RamificationTheory.Chapter09.Section01TheFormulaAndItsHypotheses
+import LastLib.Book03RamificationTheory.Chapter09.Section02ProofByAWellChosenGenerator
+import LastLib.Book03RamificationTheory.Chapter09.Section03TameAndWildPartsOfTheDifferent
+import LastLib.Book03RamificationTheory.Chapter09.Section04ATowerCheck
+import LastLib.Book03RamificationTheory.Chapter09.Section05UpperNumberedFormAndADiscriminantBound
+
+namespace LastLib.Book03RamificationTheory.Chapter09
+
+/-! Aggregator for Book 3, Chapter 9: Hilbert's different formula. -/
+
+end LastLib.Book03RamificationTheory.Chapter09

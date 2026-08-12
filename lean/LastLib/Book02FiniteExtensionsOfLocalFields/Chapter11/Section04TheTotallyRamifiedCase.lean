@@ -74,15 +74,15 @@ theorem chapter11_totally_ramified_norm_residue_formula
 theorem chapter11_totally_ramified_norm_of_uniformizer
     (K L : Type*) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
-    (e : ℕ) (he : 0 < e)
+    (e : ℕ) (_he : 0 < e)
     (hext : chapter11ValuationExtension vK vL)
-    (hscale : chapter11ValuationScaling vK vL e)
-    (hres : chapter11TotallyRamifiedResidueAgreement vK vL)
-    (hdegree : Module.finrank K L = e)
-    (hfres :
+    (_hscale : chapter11ValuationScaling vK vL e)
+    (_hres : chapter11TotallyRamifiedResidueAgreement vK vL)
+    (_hdegree : Module.finrank K L = e)
+    (_hfres :
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
         vK vL hext = 1)
-    (πL : L) (hπ : chapter11IsUniformizer vL πL)
+    (πL : L) (_hπ : chapter11IsUniformizer vL πL)
     (hnorm : vK (Algebra.norm K πL) = (1 : WithTop ℤ)) :
     vK (Algebra.norm K πL) = (1 : WithTop ℤ) := by
   exact hnorm

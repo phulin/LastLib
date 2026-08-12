@@ -1,0 +1,13 @@
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.Core
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.Section01TransformConventions
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.Section02BasicAdmissibleClass
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.Section03PositiveType
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.Section04PositivityRegimes
+
+namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05
+
+/-! Aggregator for Chapter 5: transform conventions, admissible test
+functions, positive type/autocorrelation, and the conditional/unconditional
+positivity regimes. -/
+
+end LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05

@@ -43,13 +43,13 @@ theorem chapter07_integral_trace_pairing_perfect_iff
    integral trace pairing and the unit different. -/
 theorem chapter07_unramified_trace_pairing_perfect
     (A B K L k l : Type*) [CommRing A] [IsDomain A]
-    [IsDiscreteValuationRing A] [CommRing B] [IsDomain B]
+    [IsDiscreteValuationRing A] [CommRing B] [IsDedekindDomain B]
     [IsDiscreteValuationRing B] [Field K] [Field L] [Field k] [Field l]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [Algebra k l] [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
     [Algebra.IsSeparable K L] [IsIntegralClosure B A L]
-    [IsIntegrallyClosed A] [IsDedekindDomain B]
+    [IsIntegrallyClosed A]
     [Module.Finite A B] [Module.Free A B] [Module.IsTorsionFree A B]
     [Algebra.IsIntegral A B]
     (e : ℕ) (hunram : chapter07UnramifiedProfile e k l)
@@ -101,7 +101,7 @@ theorem chapter07_nilpotent_is_in_trace_radical
 
 theorem chapter07_reduced_finite_local_algebra_is_a_field
     (k R : Type*) [Field k] [CommRing R] [Algebra k R]
-    [FiniteDimensional k R] [IsLocalRing R] [IsReduced R] [Nontrivial R] :
+    [FiniteDimensional k R] [IsLocalRing R] [IsReduced R] :
     IsField R := by
   sorry
 
@@ -117,13 +117,14 @@ theorem chapter07_field_trace_pairing_nondegenerate_iff_separable
    both value-group invariants and residue separability. -/
 theorem chapter07_zero_different_implies_unramified
     (A B K L k l : Type*) [CommRing A] [IsDomain A]
-    [IsDiscreteValuationRing A] [CommRing B] [IsDomain B]
+    [IsDiscreteValuationRing A] [CommRing B] [IsDedekindDomain B]
     [IsDiscreteValuationRing B] [Field K] [Field L] [Field k] [Field l]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
-    [Algebra k l] [IsScalarTower A K L] [IsScalarTower A B L]
+    [Algebra k l] [FiniteDimensional k l] [IsScalarTower A K L]
+    [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
     [Algebra.IsSeparable K L] [IsIntegralClosure B A L]
-    [IsIntegrallyClosed A] [IsDedekindDomain B]
+    [IsIntegrallyClosed A]
     [Module.Finite A B] [Module.Free A B] [Module.IsTorsionFree A B]
     [Algebra.IsIntegral A B]
     (e : ℕ) (mA : Ideal A) (mB : Ideal B)
@@ -143,13 +144,13 @@ theorem chapter07_zero_different_implies_unramified
 
 theorem chapter07_different_zero_iff_unramified
     (A B K L k l : Type*) [CommRing A] [IsDomain A]
-    [IsDiscreteValuationRing A] [CommRing B] [IsDomain B]
+    [IsDiscreteValuationRing A] [CommRing B] [IsDedekindDomain B]
     [IsDiscreteValuationRing B] [Field K] [Field L] [Field k] [Field l]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [Algebra k l] [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
     [Algebra.IsSeparable K L] [IsIntegralClosure B A L]
-    [IsIntegrallyClosed A] [IsDedekindDomain B]
+    [IsIntegrallyClosed A]
     [Module.Finite A B] [Module.Free A B] [Module.IsTorsionFree A B]
     [Algebra.IsIntegral A B]
     (e : ℕ) (mA : Ideal A) (mB : Ideal B)
@@ -167,13 +168,13 @@ theorem chapter07_different_zero_iff_unramified
    forces a nontrivial different. -/
 theorem chapter07_e_one_inseparable_residue_forces_nontrivial_different
     (A B K L k l : Type*) [CommRing A] [IsDomain A]
-    [IsDiscreteValuationRing A] [CommRing B] [IsDomain B]
+    [IsDiscreteValuationRing A] [CommRing B] [IsDedekindDomain B]
     [IsDiscreteValuationRing B] [Field K] [Field L] [Field k] [Field l]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [Algebra k l] [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
     [Algebra.IsSeparable K L] [IsIntegralClosure B A L]
-    [IsIntegrallyClosed A] [IsDedekindDomain B]
+    [IsIntegrallyClosed A]
     [Module.Finite A B] [Module.Free A B] [Module.IsTorsionFree A B]
     [Algebra.IsIntegral A B]
     (mA : Ideal A) (mB : Ideal B)

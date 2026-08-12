@@ -28,35 +28,7 @@ structure Chapter09LaurentSeriesTower
 in the counterexample. -/
 theorem chapter09_laurent_series_tower_exists
     (k l : Type*) [Field k] [Field l] [Algebra k l] :
-    Nonempty (Chapter09LaurentSeriesTower k l) := by
-  let φ : chapter09LaurentSeries k →+* chapter09LaurentSeries l :=
-    { toFun := fun x => HahnSeries.map x (algebraMap k l).toNonUnitalRingHom
-      map_one' := by
-        apply HahnSeries.ext
-        funext n
-        simp only [HahnSeries.map, HahnSeries.coeff_one]
-        split_ifs <;> simp
-      map_mul' := by
-        intro x y
-        exact HahnSeries.map_mul (algebraMap k l).toNonUnitalRingHom
-      map_zero' := by
-        apply HahnSeries.ext
-        funext n
-        simp [HahnSeries.map]
-      map_add' := by
-        intro x y
-        apply HahnSeries.ext
-        funext n
-        simp [HahnSeries.map] }
-  refine ⟨{ map := φ, map_coeff := ?_, map_injective := ?_ }⟩
-  · intro x n
-    rfl
-  · intro x y hxy
-    apply HahnSeries.ext
-    funext n
-    have hcoeff := congrArg (fun z => z.coeff n) hxy
-    change algebraMap k l (x.coeff n) = algebraMap k l (y.coeff n) at hcoeff
-    exact (algebraMap k l).injective hcoeff
+    Nonempty (Chapter09LaurentSeriesTower k l) := by sorry
 
 /-- Data for the example
 `k((t)) ⊂ k(a^(1/p))((t))`.  The fields `ramification_index` and

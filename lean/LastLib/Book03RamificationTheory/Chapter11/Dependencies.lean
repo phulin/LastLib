@@ -1,3 +1,5 @@
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.Group.Subgroup.Finite
 import Mathlib.Algebra.Homology.ShortComplex.ShortExact
 import Mathlib.LinearAlgebra.Complex.Module
 import Mathlib.FieldTheory.Galois.Basic
@@ -40,7 +42,7 @@ structure Chapter11RamificationData (G : Type*) [Fintype G] [Group G] where
   lower_succ_le : ∀ i, lower (i + 1) ≤ lower i
   lower_eq_bot_of_bound_le : ∀ i, bound ≤ i → lower i = ⊥
   inertia_normal : inertia.Normal
-  inertia_card : Fintype.card inertia = e
+  inertia_card : Nat.card inertia = e
   group_card : Fintype.card G = e * f
   e_pos : 0 < e
   f_pos : 0 < f
@@ -52,6 +54,10 @@ structure Chapter11RamificationData (G : Type*) [Fintype G] [Group G] where
     ∀ i (g σ : G), σ ∈ lower i ↔ g * σ * g⁻¹ ∈ lower i
   /-- The residue extension hypothesis used by the classical `i_G` theory. -/
   residue_separable : Prop
+
+noncomputable instance chapter11SubgroupFintype
+    {G : Type*} [Group G] [Finite G] (H : Subgroup G) : Fintype H :=
+  Fintype.ofFinite H
 
 /- A concrete realization of the preceding abstract interface.  The residue
   fields and valuation identifications belong to the missing Book 3 chapters;
@@ -65,9 +71,13 @@ structure Chapter11FiniteGaloisRamificationContext
   group_identification : G ≃* Gal(L / K)
   residue_separable : D.residue_separable
 
-abbrev Chapter11Inertia (D : Chapter11RamificationData G) : Subgroup G := D.inertia
+abbrev Chapter11Inertia
+    {G : Type*} [Fintype G] [Group G]
+    (D : Chapter11RamificationData G) : Subgroup G := D.inertia
 
-abbrev Chapter11LowerGroup (D : Chapter11RamificationData G) (i : ℕ) : Subgroup G := D.lower i
+abbrev Chapter11LowerGroup
+    {G : Type*} [Fintype G] [Group G]
+    (D : Chapter11RamificationData G) (i : ℕ) : Subgroup G := D.lower i
 
 /-- The finite set of lower levels at which a group element occurs. -/
 def chapter11LowerSupport
@@ -98,7 +108,7 @@ below identify these rationals with nonnegative integers.
 def chapter11FixedSpaceCodimension
     {k G V : Type*} [Field k] [Fintype G] [Group G]
     [AddCommGroup V] [Module k V] [FiniteDimensional k V]
-    (D : Chapter11RamificationData G)
+    (_D : Chapter11RamificationData G)
     (ρ : Representation k G V) (H : Subgroup G) : ℕ :=
   Module.finrank k V - Module.finrank k (Representation.invariants (ρ.comp H.subtype))
 
@@ -106,14 +116,14 @@ def chapter11FixedSpaceCodimension
 def chapter11LowerWeight
     {G : Type*} [Fintype G] [Group G]
     (D : Chapter11RamificationData G) (i : ℕ) : ℚ :=
-  (Fintype.card (D.lower i) : ℚ) / (Fintype.card D.inertia : ℚ)
+  (Nat.card (D.lower i) : ℚ) / (Nat.card D.inertia : ℚ)
 
 /-- The Artin conductor in its fixed-space, lower-numbered form. -/
 def chapter11ArtinConductor
     {k G V : Type*} [Field k] [Fintype G] [Group G]
     [AddCommGroup V] [Module k V] [FiniteDimensional k V]
     (D : Chapter11RamificationData G) (ρ : Representation k G V) : ℚ :=
-  ∑ i in Finset.range D.bound,
+  ∑ i ∈ Finset.range D.bound,
     chapter11LowerWeight D i *
       (chapter11FixedSpaceCodimension D ρ (D.lower i) : ℚ)
 

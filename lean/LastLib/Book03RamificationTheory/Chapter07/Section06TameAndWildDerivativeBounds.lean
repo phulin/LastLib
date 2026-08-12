@@ -9,6 +9,12 @@ open scoped BigOperators Polynomial nonZeroDivisors
 
 /-! ## 7.6. Tame and wild derivative bounds -/
 
+/- SOURCE_ISSUE (7.6): The source promotes the Eisenstein/monogenic
+   calculation to an extension-level equivalence `d = e - 1` from residue
+   separability alone.  A defectless (for example perfect-residue) hypothesis,
+   together with the indicated monogenic decomposition, is needed; otherwise
+   retain only the bound for the displayed presentation. -/
+
 /-- The `j`th derivative term evaluated at a chosen uniformizer. -/
 def chapter07DerivativeTerm
     (K L : Type*) [Field K] [Field L] [Algebra K L]
@@ -25,8 +31,8 @@ theorem chapter07_derivative_eval_expansion
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     (f : K[X]) (π : L) (n : ℕ) (hdegree : f.natDegree = n) :
     aeval π f.derivative =
-      ∑ j in Finset.range n,
-        chapter07DerivativeTerm K L (j + 1) (f.coeff (j + 1)) π := by
+      Finset.sum (Finset.range n) (fun j =>
+        chapter07DerivativeTerm K L (j + 1) (f.coeff (j + 1)) π) := by
   sorry
 
 theorem chapter07_leading_derivative_term_value
@@ -56,6 +62,7 @@ theorem chapter07_other_derivative_term_value_lower_bound
   sorry
 
 def chapter07DifferentExponentValuation
+    {L : Type*} [Ring L]
     (vL : AddValuation L (WithTop ℤ)) (z : L) (d : ℕ) : Prop :=
   vL z = (d : WithTop ℤ)
 

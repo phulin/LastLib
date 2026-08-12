@@ -47,12 +47,12 @@ theorem finite_integral_closure_is_free
       IsDiscreteValuationRing vL.valuationSubring ∧
       IsFractionRing vL.valuationSubring L := by
   have hstruct := finite_complete_extension_valuation_ring vK vL hcomplete
-  letI : Module.Finite vK.valuationSubring vL.valuationSubring := hstruct.1
-  letI : Module.Free vK.valuationSubring vL.valuationSubring := hstruct.2.1
+  let : Module.Finite vK.valuationSubring vL.valuationSubring := hstruct.1
+  let : Module.Free vK.valuationSubring vL.valuationSubring := hstruct.2.1
   have hclosure := complete_extension_unit_ball_is_integral_closure vK vL
-  letI : IsFractionRing vK.valuationSubring K :=
+  let : IsFractionRing vK.valuationSubring K :=
     (Valuation.valuationSubring.integers vK).isFractionRing
-  letI : IsFractionRing vL.valuationSubring L :=
+  let : IsFractionRing vL.valuationSubring L :=
     (Valuation.valuationSubring.integers vL).isFractionRing
   have hfinrank : Module.finrank vK.valuationSubring vL.valuationSubring =
       Module.finrank K L :=
@@ -79,7 +79,7 @@ theorem integral_closure_is_module_finite
       (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring) :
     Module.Finite vK.valuationSubring (integralClosure vK.valuationSubring L) := by
   have h := finite_integral_closure_is_free vK vL hcomplete
-  letI : Module.Finite vK.valuationSubring vL.valuationSubring := h.2.1
+  let : Module.Finite vK.valuationSubring vL.valuationSubring := h.2.1
   let f : vL.valuationSubring →ₗ[vK.valuationSubring]
     integralClosure vK.valuationSubring L :=
     ((IsScalarTower.toAlgHom vK.valuationSubring vL.valuationSubring L).toLinearMap).codRestrict

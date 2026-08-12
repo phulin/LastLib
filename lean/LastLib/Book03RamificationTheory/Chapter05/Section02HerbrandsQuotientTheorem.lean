@@ -1,9 +1,12 @@
 import LastLib.Book03RamificationTheory.Chapter05.Section01ANumberingDesignedForQuotients
+import Mathlib.Algebra.Group.Subgroup.Finite
 import Mathlib.GroupTheory.QuotientGroup.Basic
 
 namespace LastLib.Book03RamificationTheory.Chapter05
 
 noncomputable section
+
+open scoped Classical
 
 open scoped BigOperators
 
@@ -37,7 +40,7 @@ structure Chapter05QuotientRamificationSetup
   eLM : ℕ
   eLM_pos : 0 < eLM
   eLM_eq_inertia_card :
-    eLM = Nat.card (H ⊓ upstairs.lowerGroup 0)
+    eLM = Nat.card (H ⊓ upstairs.lowerGroup 0 : Subgroup G)
   coset_displacement_identity :
     ∀ {σ : G}, σ ∉ H →
       eLM * downstairs.displacement (chapter05QuotientMap H σ) =

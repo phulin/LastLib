@@ -1,0 +1,13 @@
+import LastLib.Book04AdelesAndIdeles.Chapter09.Section01TheGlobalModuleAndDegree
+import LastLib.Book04AdelesAndIdeles.Chapter09.Section02DirichletUnitLattice
+import LastLib.Book04AdelesAndIdeles.Chapter09.Section03CompactnessOfNormOneClassGroup
+import LastLib.Book04AdelesAndIdeles.Chapter09.Section04StructureOfIdeleClassGroup
+import LastLib.Book04AdelesAndIdeles.Chapter09.Section05CompactKernelOverIdealClassGroup
+import LastLib.Book04AdelesAndIdeles.Chapter09.Section06CompactnessCriteriaAndFiniteQuotients
+import LastLib.Book04AdelesAndIdeles.Chapter09.Section07TheModuleAsHaarModulus
+
+namespace LastLib.Book04AdelesAndIdeles.Chapter09
+
+/-! Aggregator for Book 4, Chapter 9: the idele module and compactness. -/
+
+end LastLib.Book04AdelesAndIdeles.Chapter09

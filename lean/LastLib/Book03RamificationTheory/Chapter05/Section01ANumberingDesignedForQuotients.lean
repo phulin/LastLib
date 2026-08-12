@@ -107,11 +107,12 @@ noncomputable def chapter05HerbrandInverse
     (D : Chapter05RamificationFiltration G) (v : ℝ) : ℝ :=
   Function.invFun (chapter05HerbrandFunction D) v
 
-/-- The upper-numbered group `G^v = G_{ψ(v)}`. -/
+/-- The upper-numbered group `G^v = G_{ψ(v)}` on `[-1, ∞)`, extended by `⊤`
+outside the ramification domain so the filtration is globally antitone. -/
 def chapter05UpperRamificationGroup
     {G : Type*} [Group G] [Finite G]
     (D : Chapter05RamificationFiltration G) (v : ℝ) : Subgroup G :=
-  if (-1 : ℝ) ≤ v then D.lowerGroup (chapter05HerbrandInverse D v) else ⊥
+  if (-1 : ℝ) ≤ v then D.lowerGroup (chapter05HerbrandInverse D v) else ⊤
 
 /-- The upper filtration immediately to the right of an index. -/
 noncomputable def chapter05UpperRightLimit

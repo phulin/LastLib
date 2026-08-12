@@ -1203,8 +1203,20 @@ theorem valuation_newton_corrections_tend_to_top_of_doubling_cofinal {K Γ : Typ
   apply hγ.trans
   simpa [s, q₀, valuationExcess, add_comm] using add_le_add_left hnstep.2.1 s
 
-/-- The Newton corrections tend to the top in the rank-one case. -/
--- STATEMENT_NEEDS_UPDATE: `Valuation.RankOne v.toValuation` controls only the ordered value-group image of `v`, not the ambient codomain `Γ`; that image can lie in a proper non-cofinal convex subgroup. Moreover, `TendsToTop` quantifies over `⊤`, while a generic Newton correction has finite value, so the displayed sequence need not tend to the top even in the value-group image. The minimal correction is to quantify only over finite values in the value-group image (or to add an appropriate finite-value cofinality hypothesis and exclude `⊤`).
+/-- A sequence is cofinal among the finite values represented by a valuation. -/
+def TendsToTopInValueGroupImage {K Γ : Type*} [Field K]
+    [LinearOrderedAddCommGroupWithTop Γ] (v : AddValuation K Γ)
+    (s : ℕ → Γ) : Prop :=
+  ∀ γ : Γ, (∃ x : K, x ≠ 0 ∧ v x = γ) →
+    ∃ N : ℕ, ∀ n : ℕ, N ≤ n → γ ≤ s n
+
+/- SOURCE_ISSUE (books/001-valuations-dvrs-and-completions.md:§9.2, paragraph
+  beginning “Because the value group is archimedean”): the informal argument
+  concerns the ordered value-group image, but the provisional statement below
+  quantified over an arbitrary ambient codomain `Γ`.  Rank one does not make
+  that ambient codomain cofinal, and Newton corrections have finite value.
+  The interface therefore quantifies only over finite values represented by
+  the valuation. -/
 theorem valuation_newton_corrections_tend_to_top {K Γ : Type*} [Field K]
     [LinearOrderedAddCommGroupWithTop Γ] (v : AddValuation K Γ)
     [Valuation.RankOne v.toValuation]
@@ -1212,7 +1224,8 @@ theorem valuation_newton_corrections_tend_to_top {K Γ : Type*} [Field K]
     (hf : PolynomialCoefficientsInSubring A f) (a₀ : K) (ha₀ : a₀ ∈ A)
     (hineq : v (f.eval a₀) > v (f.derivative.eval a₀) + v (f.derivative.eval a₀))
     (hcomplete : Chapter09NonarchimedeanComplete v) :
-    TendsToTop (fun n => v (newtonIterate f a₀ (n + 1) - newtonIterate f a₀ n)) := by
+    TendsToTopInValueGroupImage v
+      (fun n => v (newtonIterate f a₀ (n + 1) - newtonIterate f a₀ n)) := by
   sorry
 
 /-- The strict Newton inequality is the error being smaller than the square of the derivative. -/

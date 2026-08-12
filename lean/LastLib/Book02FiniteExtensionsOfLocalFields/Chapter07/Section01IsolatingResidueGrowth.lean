@@ -27,6 +27,10 @@ structure Chapter07FiniteLocalExtensionData
     [FiniteDimensional K L] [FiniteDimensional k l] where
   ramificationIndex : ℕ
   residueDegree : ℕ
+  -- SOURCE_ISSUE: Section 7.1 invokes `[L:K] = e f` for the whole complete
+  -- discretely valued setting, but imperfect residue fields can admit defect.
+  -- Keep the degree equality explicit until the source adds a defectless
+  -- hypothesis (or restricts the theorem to a defectless class).
   degree_eq_ramification_residue :
     Module.finrank K L = ramificationIndex * residueDegree
   residueDegree_eq : residueDegree = Module.finrank k l

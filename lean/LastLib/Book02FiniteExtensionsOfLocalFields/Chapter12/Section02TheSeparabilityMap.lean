@@ -122,7 +122,7 @@ theorem separable_trace_and_norm_are_embedding_sum_and_product
       ∑ σ : L →ₐ[K] E, σ x ∧
       algebraMap K E (Algebra.norm K x) =
         ∏ σ : L →ₐ[K] E, σ x := by
-  exact ⟨trace_eq_sum_embeddings E, Algebra.norm_eq_prod_embeddings E x⟩
+  exact ⟨trace_eq_sum_embeddings E, Algebra.norm_eq_prod_embeddings K E x⟩
 
 /-- Book 2, §12.2: trace nondegeneracy is a separable-extension statement. -/
 theorem separable_trace_pairing_is_nondegenerate
@@ -196,8 +196,6 @@ theorem finite_residue_field_has_the_listed_consequences
     [TopologicalSpace l] [DiscreteTopology l]
     [Module.Finite k l] :
     finiteResidueFieldConsequences k l := by
-  letI : Finite k := Fintype.finite k
-  letI : Finite l := Fintype.finite l
   exact ⟨inferInstance, inferInstance, inferInstance, inferInstance,
     FiniteField.norm_surjective k l⟩
 

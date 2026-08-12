@@ -55,7 +55,7 @@ theorem chapter10_unit_filtration_inverse
 
 /-- The congruence filtration is descending. -/
 theorem chapter10_unit_filtration_descending
-    {L : Type*} [Field L] (A : ValuationSubring L) :
+    (A : Type*) [CommRing A] [IsLocalRing A] :
     ∀ n : ℕ, chapter10UnitFiltration A (n + 1) ≤ chapter10UnitFiltration A n := by
   intro n u hu
   change ((u : A) - 1) ∈ (IsLocalRing.maximalIdeal A) ^ (n + 1) at hu

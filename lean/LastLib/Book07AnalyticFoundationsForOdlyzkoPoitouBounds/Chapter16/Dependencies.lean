@@ -1,0 +1,25 @@
+import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+import Mathlib.NumberTheory.NumberField.Discriminant.Different
+import Mathlib.Order.Filter.Basic
+
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01.Section03TheShapeOfAUsefulLowerBound
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter02.Core
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter03.Section04PrimePowersAndPositivity
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.Section04PositivityRegimes
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter07.Section01TheConditionalArgument
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter07.Section04WhatPositivityDoesNotPermit
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter08.Section03ExactEvaluationOfTheArchimedeanTerms
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter09.Section01UniversalOdlyzkoPoitouInequalities
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter11.Section06QuadraticBaseCertificate
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter13.Dependencies
+
+namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter16
+
+/-!
+Focused imports for the conclusion chapter.  The conclusion is a synthesis,
+so this leaf depends on the canonical number-field, positivity, transform,
+certificate, and stabilization interfaces from the earlier chapters without
+importing any earlier chapter aggregator.
+-/
+
+end LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter16

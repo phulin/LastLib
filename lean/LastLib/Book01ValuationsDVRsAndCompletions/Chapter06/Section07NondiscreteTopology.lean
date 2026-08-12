@@ -1,4 +1,5 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter06.Section06CompactnessAndLocalCompactness
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter06.Section01BallsAndTheStrongTriangleInequality
+import Mathlib.Topology.UniformSpace.Completion
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter06
 
@@ -313,8 +314,6 @@ def chapter06ValuationCompletionIsAdic
 def chapter06CompletionIdentificationHypothesis
     {A : Subring K} (v : AbsoluteValue K ℝ) (m : Ideal A) : Prop :=
   (∀ x : K, x ∈ (A : Set K) ↔ v x ≤ 1) ∧
-    (∀ x : K, ∃ a b : A, (b : K) ≠ 0 ∧
-      x * (b : K) = (a : K)) ∧
     ((IsDiscreteValuationRing A ∧ m.IsMaximal) ∨
       ((∀ r : ℝ, 0 < r → ∃ n : ℕ,
           ((m ^ n : Ideal A) : Set A) ⊆ {x : A | v (x : K) < r}) ∧
@@ -327,7 +326,7 @@ theorem chapter06_completion_is_inverse_limit_under_discrete_or_cofinal
     (hallowed : chapter06CompletionIdentificationHypothesis v m) :
     chapter06ValuationCompletionIsAdic (A := A) v m := by
   classical
-  rcases hallowed with ⟨hA, hfrac, hcase⟩
+  rcases hallowed with ⟨hA, hcase⟩
   have hcof1 : ∀ r : ℝ, 0 < r → ∃ n : ℕ,
       ((m ^ n : Ideal A) : Set A) ⊆ {x : A | v (x : K) < r} := by
     intro r hr

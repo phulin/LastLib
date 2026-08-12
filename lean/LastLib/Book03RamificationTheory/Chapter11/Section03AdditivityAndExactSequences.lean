@@ -44,11 +44,10 @@ def chapter11Twist
     (χ : G →* kˣ) (ρ : Representation k G V) : Representation k G V where
   toFun g := (χ g : k) • ρ g
   map_one' := by
-    ext x
     simp
   map_mul' g h := by
-    ext x
-    simp [MonoidHom.map_mul, mul_assoc]
+    ext
+    simp [MonoidHom.map_mul, smul_smul, mul_comm]
 
 /-- A character is unramified when it is trivial on inertia. -/
 def chapter11UnramifiedCharacter

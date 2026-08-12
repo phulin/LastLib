@@ -1,0 +1,13 @@
+import LastLib.Book03RamificationTheory.Chapter03.Section01UnramifiedExtensions
+import LastLib.Book03RamificationTheory.Chapter03.Section02TameKummerExtensions
+import LastLib.Book03RamificationTheory.Chapter03.Section03EqualCharacteristicWildExtension
+import LastLib.Book03RamificationTheory.Chapter03.Section04MixedCharacteristicQuadraticContrast
+import LastLib.Book03RamificationTheory.Chapter03.Section05WildKummerCalculation
+import LastLib.Book03RamificationTheory.Chapter03.Section06MixedUnramifiedTameExtension
+import LastLib.Book03RamificationTheory.Chapter03.Section07SameDegreeArbitrarilyDifferentDepth
+
+namespace LastLib.Book03RamificationTheory.Chapter03
+
+/-! Aggregator for Book 3, Chapter 3: first ramification calculations. -/
+
+end LastLib.Book03RamificationTheory.Chapter03

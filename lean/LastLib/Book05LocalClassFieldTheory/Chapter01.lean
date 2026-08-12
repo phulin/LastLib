@@ -1,0 +1,11 @@
+import LastLib.Book05LocalClassFieldTheory.Chapter01.Dependencies
+import LastLib.Book05LocalClassFieldTheory.Chapter01.Section01WhatKindOfLocalFieldIsMeant
+import LastLib.Book05LocalClassFieldTheory.Chapter01.Section02TheClassificationOneHopesFor
+import LastLib.Book05LocalClassFieldTheory.Chapter01.Section03TheReciprocityConvention
+import LastLib.Book05LocalClassFieldTheory.Chapter01.Section04WhyTheProofHasSeveralLayers
+
+namespace LastLib.Book05LocalClassFieldTheory.Chapter01
+
+/-! Aggregator for Book 5, Chapter 1: the local reciprocity problem. -/
+
+end LastLib.Book05LocalClassFieldTheory.Chapter01

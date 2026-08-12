@@ -110,9 +110,9 @@ structure Chapter03ResidueLift
   residueEquiv :
     IsLocalRing.ResidueField vK.toValuation.valuationSubring ≃+* k
   section_compatibility :
-    residueEquiv.toRingHom.comp
+    (residueEquiv.toRingHom.comp
         (Ideal.Quotient.mk
-          (IsLocalRing.maximalIdeal vK.toValuation.valuationSubring)).comp lift =
+          (IsLocalRing.maximalIdeal vK.toValuation.valuationSubring))).comp lift =
       RingHom.id k
   algebra_compatibility :
     ∀ a : k, algebraMap k K a = (lift a : K)

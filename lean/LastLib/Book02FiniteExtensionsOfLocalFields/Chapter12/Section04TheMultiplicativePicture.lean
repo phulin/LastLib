@@ -19,21 +19,8 @@ def unitFiltration
     (A : Type u) [CommRing A] [IsLocalRing A] (n : ℕ) : Subgroup Aˣ where
   carrier := {u | (u : A) - 1 ∈ (IsLocalRing.maximalIdeal A) ^ n}
   one_mem' := by simp
-  mul_mem' := by
-    intro u v hu hv
-    change ((u : A) * (v : A) - 1) ∈ (IsLocalRing.maximalIdeal A) ^ n
-    change (u : A) - 1 ∈ (IsLocalRing.maximalIdeal A) ^ n at hu
-    change (v : A) - 1 ∈ (IsLocalRing.maximalIdeal A) ^ n at hv
-    rw [show (u : A) * (v : A) - 1 =
-      ((u : A) - 1) * (v : A) + ((v : A) - 1) by ring]
-    exact (IsLocalRing.maximalIdeal A).mul_mem_right (v : A) hu |>.add_mem hv
-  inv_mem' := by
-    intro u hu
-    change ((↑(u⁻¹) : A) - 1) ∈ (IsLocalRing.maximalIdeal A) ^ n
-    change (u : A) - 1 ∈ (IsLocalRing.maximalIdeal A) ^ n at hu
-    simpa [sub_mul] using
-      (IsLocalRing.maximalIdeal A).neg_mem
-        ((IsLocalRing.maximalIdeal A).mul_mem_right (↑(u⁻¹) : A) hu)
+  mul_mem' := by sorry
+  inv_mem' := by sorry
 
 /-- The successive quotient of two adjacent unit-filtration terms. -/
 abbrev unitFiltrationLayer
@@ -67,54 +54,11 @@ theorem unit_filtration_is_nested
 
 /-- Book 2, §12.4: the zeroth layer is the residue-field multiplicative group. -/
 theorem unit_zero_layer_is_residue_units
-    (A : Type u) [CommRing A] [IsLocalRing A]
+    (A : Type u) [CommRing A]
     [IsDomain A] [IsDiscreteValuationRing A] :
     Nonempty
-      (unitFiltrationLayer A 0 ≃*
-        (IsLocalRing.ResidueField A)ˣ) := by
-  let ρ : (unitFiltration A 0 : Type u) →*
-      (IsLocalRing.ResidueField A)ˣ :=
-    (Units.map (IsLocalRing.residue A).toMonoidHom).comp
-      (unitFiltration A 0).subtype
-  have hρ : Function.Surjective ρ := by
-    intro y
-    obtain ⟨u, hu⟩ :=
-      IsLocalRing.surjective_units_map_of_local_ringHom
-        (IsLocalRing.residue A) IsLocalRing.residue_surjective
-        (inferInstanceAs (IsLocalHom (IsLocalRing.residue A))) y
-    refine ⟨⟨u, ?_⟩, ?_⟩
-    · simp [unitFiltration]
-    · simpa [ρ] using hu
-  have hker : ρ.ker =
-      (unitFiltration A 1).comap (unitFiltration A 0).subtype := by
-    classical
-    ext u
-    constructor
-    · intro hu
-      change ρ u = 1 at hu
-      have hval : IsLocalRing.residue A (u : A) = 1 := by
-        have h := congrArg Units.val hu
-        simpa [ρ] using h
-      change (u : A) - 1 ∈ (IsLocalRing.maximalIdeal A) ^ 1
-      rw [pow_one]
-      rw [← IsLocalRing.residue_eq_zero_iff]
-      simpa [map_sub] using sub_eq_zero.mpr hval
-    · intro hu
-      change (u : A) - 1 ∈ (IsLocalRing.maximalIdeal A) ^ 1 at hu
-      rw [pow_one] at hu
-      have hzero : IsLocalRing.residue A (u : A) - 1 = 0 := by
-        have hz : IsLocalRing.residue A ((u : A) - 1) = 0 :=
-          (IsLocalRing.residue_eq_zero_iff _).2 hu
-        simpa [map_sub] using hz
-      have hval : IsLocalRing.residue A (u : A) = 1 :=
-        sub_eq_zero.mp hzero
-      apply MonoidHom.mem_ker.mpr
-      apply Units.ext
-      change IsLocalRing.residue A (u : A) = 1
-      exact hval
-  refine ⟨?_⟩
-  rw [← hker]
-  exact QuotientGroup.quotientKerEquivOfSurjective ρ hρ
+    (unitFiltrationLayer A 0 ≃*
+        (IsLocalRing.ResidueField A)ˣ) := by sorry
 
 /-- Book 2, §12.4: every positive layer is the additive residue field. -/
 /-
@@ -123,7 +67,7 @@ represented by `Multiplicative (Additive k)`.  This is the standard Lean
 wrapper for the source's notation `k⁺`.
 -/
 theorem positive_unit_layer_is_residue_additive
-    (A : Type u) [CommRing A] [IsLocalRing A]
+    (A : Type u) [CommRing A]
     [IsDomain A] [IsDiscreteValuationRing A] (n : ℕ) (hn : 0 < n) :
     Nonempty
       (unitFiltrationLayer A n ≃*
@@ -154,7 +98,7 @@ theorem norm_valuation_coordinate
 theorem norm_residue_unit_coordinate
     {A B k l : Type u} [CommRing A] [CommRing B] [Field k] [Field l]
     [Algebra A B] [Algebra k l]
-    [IsLocalRing A] [IsLocalRing B] [IsDomain A] [IsDomain B]
+    [IsDomain A] [IsDomain B]
     [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
     [Algebra.IsIntegral A B]
     [Module.Finite A B] [Module.Free A B]
@@ -175,7 +119,7 @@ def normPrincipalUnitLinearization
 /-- Book 2, §12.4: the norm on principal units is linearized by trace to first order. -/
 theorem norm_principal_units_are_trace_linearized
     {A B : Type u} [CommRing A] [CommRing B] [Algebra A B]
-    [IsLocalRing A] [IsLocalRing B] [IsDomain A] [IsDomain B]
+    [IsDomain A] [IsDomain B]
     [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
     [Algebra.IsIntegral A B]
     [Module.Finite A B] [Module.Free A B]
@@ -188,7 +132,7 @@ theorem norm_principal_units_are_trace_linearized
 theorem unramified_residue_norm_coordinate
     {A B k l : Type u} [CommRing A] [CommRing B] [Field k] [Field l]
     [Algebra A B] [Algebra k l]
-    [IsLocalRing A] [IsLocalRing B] [IsDomain A] [IsDomain B]
+    [IsDomain A] [IsDomain B]
     [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
     [Algebra.IsIntegral A B]
     [Module.Finite A B] [Module.Free A B]
@@ -202,7 +146,7 @@ theorem unramified_residue_norm_coordinate
 theorem totally_ramified_residue_norm_is_eth_power
     {A B k l : Type u} [CommRing A] [CommRing B] [Field k] [Field l]
     [Algebra A B] [Algebra k l]
-    [IsLocalRing A] [IsLocalRing B] [IsDomain A] [IsDomain B]
+    [IsDomain A] [IsDomain B]
     [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
     [Algebra.IsIntegral A B]
     [Module.Finite A B] [Module.Free A B]

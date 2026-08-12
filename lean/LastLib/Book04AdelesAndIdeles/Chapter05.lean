@@ -1,0 +1,13 @@
+import LastLib.Book04AdelesAndIdeles.Chapter05.Dependencies
+import LastLib.Book04AdelesAndIdeles.Chapter05.Section01TheDiagonalEmbedding
+import LastLib.Book04AdelesAndIdeles.Chapter05.Section02StrongApproximationInTheFiniteAdeles
+import LastLib.Book04AdelesAndIdeles.Chapter05.Section03DiscretenessInTheFullAdeles
+import LastLib.Book04AdelesAndIdeles.Chapter05.Section04ALocalGlobalWarning
+import LastLib.Book04AdelesAndIdeles.Chapter05.Section05WeakApproximationAtArbitraryPlaces
+import LastLib.Book04AdelesAndIdeles.Chapter05.Section06StrongAndWeakApproximationCompared
+
+namespace LastLib.Book04AdelesAndIdeles.Chapter05
+
+/-! Aggregator for Book 4, Chapter 5: diagonal arithmetic and approximation. -/
+
+end LastLib.Book04AdelesAndIdeles.Chapter05

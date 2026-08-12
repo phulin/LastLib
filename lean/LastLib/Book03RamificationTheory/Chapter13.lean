@@ -1,0 +1,11 @@
+import LastLib.Book03RamificationTheory.Chapter13.Section01ThePermutationRepresentationOfEmbeddings
+import LastLib.Book03RamificationTheory.Chapter13.Section02TheRegularRepresentation
+import LastLib.Book03RamificationTheory.Chapter13.Section03DecompositionIntoIrreducibleCharacters
+import LastLib.Book03RamificationTheory.Chapter13.Section04ACyclicWildExampleRevisited
+import LastLib.Book03RamificationTheory.Chapter13.Section05DiscriminantsOfFieldsCutOutByRepresentations
+
+namespace LastLib.Book03RamificationTheory.Chapter13
+
+/-! Aggregator for Book 3, Chapter 13: conductor--discriminant identities. -/
+
+end LastLib.Book03RamificationTheory.Chapter13

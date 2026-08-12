@@ -1,0 +1,13 @@
+import LastLib.Book05LocalClassFieldTheory.Chapter02.Dependencies
+import LastLib.Book05LocalClassFieldTheory.Chapter02.Section01SeparatingMagnitudeFromUnits
+import LastLib.Book05LocalClassFieldTheory.Chapter02.Section02OpenSubgroupsOfFiniteIndex
+import LastLib.Book05LocalClassFieldTheory.Chapter02.Section03NormsAndValuationCoordinates
+import LastLib.Book05LocalClassFieldTheory.Chapter02.Section04NormGroupsAreOpenAndClosed
+import LastLib.Book05LocalClassFieldTheory.Chapter02.Section05TheIndexQuestion
+
+namespace LastLib.Book05LocalClassFieldTheory.Chapter02
+
+/-! Aggregator for Book 5, Chapter 2: the topology of the multiplicative group
+and its norm subgroups. -/
+
+end LastLib.Book05LocalClassFieldTheory.Chapter02

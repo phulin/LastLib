@@ -1,0 +1,15 @@
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.Dependencies
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.Section01StatementWithEveryTermVisible
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.Section02TruncatedContourIdentity
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.Section03PrimeAndDiscriminantTerms
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.Section04GammaAndPoleTerms
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.Section05RemovingTruncations
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.Section06NormalizationDiagnostics
+
+namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06
+
+/-! Aggregator for Chapter 6: the Weil--Poitou explicit formula, its
+truncated contour proof, prime/discriminant and Gamma/pole contributions,
+removal of truncations, and normalization diagnostics. -/
+
+end LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06

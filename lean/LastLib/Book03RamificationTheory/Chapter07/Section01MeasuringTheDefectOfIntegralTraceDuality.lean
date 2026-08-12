@@ -53,7 +53,7 @@ theorem chapter07_codifferent_coe_eq_set
 
 /- The fractional-ideal realization of the codifferent. -/
 noncomputable def chapter07CodifferentFractionalIdeal
-    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B] [IsDomain B]
+    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B]
     [Field K] [Field L] [Algebra A B] [Algebra A K] [Algebra K L]
     [Algebra B L] [Algebra A L] [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
@@ -63,7 +63,7 @@ noncomputable def chapter07CodifferentFractionalIdeal
   FractionalIdeal.dual A K (1 : FractionalIdeal B⁰ L)
 
 theorem chapter07_codifferent_fractional_coe_eq
-    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B] [IsDomain B]
+    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B]
     [Field K] [Field L] [Algebra A B] [Algebra A K] [Algebra K L]
     [Algebra B L] [Algebra A L] [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
@@ -83,7 +83,7 @@ def chapter07TraceDualRepresentation
     algebraMap A K (φ y) = Algebra.trace K L (x * algebraMap B L y)
 
 theorem chapter07_codifferent_iff_unique_trace_dual
-    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B] [IsDomain B]
+    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B]
     [Field K] [Field L] [Algebra A B] [Algebra A K] [Algebra K L]
     [Algebra B L] [Algebra A L] [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
@@ -121,7 +121,7 @@ noncomputable def chapter07DifferentIdeal
   differentIdeal A B
 
 noncomputable def chapter07DifferentFractionalIdeal
-    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B] [IsDomain B]
+    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B]
     [Field K] [Field L] [Algebra A B] [Algebra A K] [Algebra K L]
     [Algebra B L] [Algebra A L] [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
@@ -132,7 +132,7 @@ noncomputable def chapter07DifferentFractionalIdeal
   (chapter07CodifferentFractionalIdeal A B K L)⁻¹
 
 theorem chapter07_different_fractional_is_inverse_codifferent
-    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B] [IsDomain B]
+    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B]
     [Field K] [Field L] [Algebra A B] [Algebra A K] [Algebra K L]
     [Algebra B L] [Algebra A L] [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
@@ -144,7 +144,7 @@ theorem chapter07_different_fractional_is_inverse_codifferent
   rfl
 
 theorem chapter07_integral_ring_le_codifferent
-    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B] [IsDomain B]
+    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B]
     [Field K] [Field L] [Algebra A B] [Algebra A K] [Algebra K L]
     [Algebra B L] [Algebra A L] [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
@@ -155,7 +155,7 @@ theorem chapter07_integral_ring_le_codifferent
   sorry
 
 theorem chapter07_different_fractional_coe_eq
-    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B] [IsDomain B]
+    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B]
     [Field K] [Field L] [Algebra A B] [Algebra A K] [Algebra K L]
     [Algebra B L] [Algebra A L] [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
@@ -170,13 +170,13 @@ theorem chapter07_different_fractional_coe_eq
    different. -/
 theorem chapter07_different_is_unique_maximal_power
     (A B K L : Type*) [CommRing A] [IsDomain A]
-    [IsDiscreteValuationRing A] [CommRing B] [IsDomain B]
+    [IsDiscreteValuationRing A] [CommRing B] [IsDedekindDomain B]
     [IsDiscreteValuationRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
     [Algebra.IsSeparable K L] [IsIntegralClosure B A L]
-    [IsIntegrallyClosed A] [IsDedekindDomain B]
+    [IsIntegrallyClosed A]
     [Module.Finite A B] [Module.Free A B] [Module.IsTorsionFree A B]
     [Algebra.IsIntegral A B] :
     ∃! d : ℕ,
@@ -193,7 +193,7 @@ theorem chapter07DifferentExponent_spec
     {B : Type*} [CommRing B] (mB D : Ideal B)
     (hD : ∃! d : ℕ, D = mB ^ d) :
     D = mB ^ chapter07DifferentExponent mB D hD := by
-  exact Classical.choose_spec hD
+  exact (Classical.choose_spec hD).1
 
 end
 

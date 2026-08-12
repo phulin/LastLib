@@ -1,0 +1,4 @@
+import LastLib.Book04AdelesAndIdeles.Chapter16.Section01TwoRestrictedProductsTwoKindsOfGluing
+import LastLib.Book04AdelesAndIdeles.Chapter16.Section02ExactHypothesesAndDurableConsequences
+import LastLib.Book04AdelesAndIdeles.Chapter16.Section03WhatHasNotBeenAsserted
+import LastLib.Book04AdelesAndIdeles.Chapter16.Section04Conclusion

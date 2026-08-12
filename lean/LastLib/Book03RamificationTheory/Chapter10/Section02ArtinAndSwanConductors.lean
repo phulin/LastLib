@@ -36,7 +36,7 @@ The Artin conductor exponent.  The displayed finite sum is the source's
 def artinConductor
     (F : RamificationFiltration G) (_hseparable : F.residue_separable)
     (ρ : Representation E G V) : ℚ :=
-  ∑ i in Finset.range (F.lower.cutoff + 1), lowerConductorTerm F ρ i
+  ∑ i ∈ Finset.range (F.lower.cutoff + 1), lowerConductorTerm F ρ i
 
 /-- The tame part, namely the codimension of inertia invariants. -/
 def tameConductor
@@ -48,7 +48,7 @@ def tameConductor
 def swanConductor
     (F : RamificationFiltration G) (_hseparable : F.residue_separable)
     (ρ : Representation E G V) : ℚ :=
-  ∑ i in Finset.Ico 1 (F.lower.cutoff + 1), lowerConductorTerm F ρ i
+  ∑ i ∈ Finset.Ico 1 (F.lower.cutoff + 1), lowerConductorTerm F ρ i
 
 @[simp] theorem lowerConductorTerm_eq_weight_mul_codimension
     (F : RamificationFiltration G) (ρ : Representation E G V) (i : ℕ) :
@@ -77,14 +77,14 @@ theorem artinConductor_eq_full_lower_sum
     (F : RamificationFiltration G) (hseparable : F.residue_separable)
     (ρ : Representation E G V) {N : ℕ} (hN : F.lower.cutoff ≤ N) :
     artinConductor F hseparable ρ =
-      ∑ i in Finset.range (N + 1), lowerConductorTerm F ρ i := by
+      ∑ i ∈ Finset.range (N + 1), lowerConductorTerm F ρ i := by
   sorry
 
 theorem swanConductor_eq_full_positive_lower_sum
     (F : RamificationFiltration G) (hseparable : F.residue_separable)
     (ρ : Representation E G V) {N : ℕ} (hN : F.lower.cutoff ≤ N) :
     swanConductor F hseparable ρ =
-      ∑ i in Finset.Ico 1 (N + 1), lowerConductorTerm F ρ i := by
+      ∑ i ∈ Finset.Ico 1 (N + 1), lowerConductorTerm F ρ i := by
   sorry
 
 theorem lowerConductorTerm_nonnegative

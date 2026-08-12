@@ -1,4 +1,4 @@
-import Mathlib.RingTheory.RootsOfUnity.Basic
+import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Section06FactorizationAndBaseChange
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07

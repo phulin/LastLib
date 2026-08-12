@@ -4,14 +4,14 @@ namespace LastLib.Book03RamificationTheory.Chapter11
 
 noncomputable section
 
-open scoped BigOperators
+open scoped BigOperators DirectSum
 
 /-! ## 11.4. Fixed-space calculations -/
 
 def Chapter11TwoDimensional
     {k G V : Type*} [Field k] [Fintype G] [Group G]
     [AddCommGroup V] [Module k V] [FiniteDimensional k V]
-    (ρ : Representation k G V) : Prop :=
+    (_ρ : Representation k G V) : Prop :=
   Module.finrank k V = 2
 
 def Chapter11InertiaActsTrivially
@@ -137,7 +137,7 @@ def chapter11DirectSumOfAllNontrivialCharacters
     {D : Chapter11RamificationData G}
     (W : Chapter11WildCyclicBreakData G D)
     (C : Chapter11AllNontrivialCharacters G D W) :
-    Representation ℂ G (⨁ j : Fin (W.p - 1), ℂ) :=
+    Representation ℂ G (⨁ _j : Fin (W.p - 1), ℂ) :=
   Representation.directSum (fun j => chapter11OneDimensionalRepresentation (C.characters j))
 
 theorem chapter11_wild_cyclic_sum_of_nontrivial_characters

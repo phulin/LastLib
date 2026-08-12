@@ -14,7 +14,7 @@ def chapter11ArtinClassFunction
     (D : Chapter11RamificationData G) : G → k := by
   classical
   exact fun σ ↦ if hσ : σ = 1 then
-      (D.f : k) * ∑ τ in (Finset.univ.erase (1 : G)),
+      (D.f : k) * ∑ τ ∈ (Finset.univ.erase (1 : G)),
         (chapter11Displacement D τ : k)
     else -(D.f : k) * (chapter11Displacement D σ : k)
 
@@ -30,12 +30,13 @@ def chapter11CharacterPairing
 def chapter11AveragingProjector
     {k G V : Type*} [Field k] [Fintype G] [Group G]
     [AddCommGroup V] [Module k V]
-    (ρ : Representation k G V) (H : Subgroup G) : V →ₗ[k] V :=
-  (Fintype.card H : k)⁻¹ • ∑ h : H, ρ h
+    (ρ : Representation k G V) (H : Subgroup G) : V →ₗ[k] V := by
+  classical
+  exact (Nat.card H : k)⁻¹ • ∑ h : H, ρ h
 
 theorem chapter11_card_inertia_eq_e
     {G : Type*} [Fintype G] [Group G]
-    (D : Chapter11RamificationData G) : Fintype.card D.inertia = D.e := by
+    (D : Chapter11RamificationData G) : Nat.card D.inertia = D.e := by
   sorry
 
 theorem chapter11_card_group_eq_ef
@@ -58,21 +59,21 @@ theorem chapter11_displacement_inverse_invariant
 theorem chapter11_artin_class_function_conjugation_invariant
     {k G : Type*} [Field k] [Fintype G] [Group G]
     (D : Chapter11RamificationData G) (g σ : G) :
-    chapter11ArtinClassFunction D (g * σ * g⁻¹) =
-      chapter11ArtinClassFunction D σ := by
+    chapter11ArtinClassFunction (k := k) D (g * σ * g⁻¹) =
+      chapter11ArtinClassFunction (k := k) D σ := by
   sorry
 
 theorem chapter11_artin_class_function_sum_eq_zero
     {k G : Type*} [Field k] [Fintype G] [Group G]
     (D : Chapter11RamificationData G) :
-    ∑ σ : G, chapter11ArtinClassFunction D σ = 0 := by
+    ∑ σ : G, chapter11ArtinClassFunction (k := k) D σ = 0 := by
   sorry
 
 theorem chapter11_artin_class_function_eq_zero_of_not_mem_inertia
     {k G : Type*} [Field k] [Fintype G] [Group G]
     (D : Chapter11RamificationData G) {σ : G}
     (hσ : σ ∉ D.inertia) :
-    chapter11ArtinClassFunction D σ = 0 := by
+    chapter11ArtinClassFunction (k := k) D σ = 0 := by
   sorry
 
 theorem chapter11_averaging_projector_range
@@ -97,8 +98,8 @@ theorem chapter11_artin_conductor_eq_fixed_space_sum
     [AddCommGroup V] [Module k V] [FiniteDimensional k V]
     (D : Chapter11RamificationData G) (ρ : Representation k G V) :
     chapter11ArtinConductor D ρ =
-      ∑ i in Finset.range D.bound,
-        ((Fintype.card (D.lower i) : ℚ) / (Fintype.card D.inertia : ℚ)) *
+      ∑ i ∈ Finset.range D.bound,
+        ((Nat.card (D.lower i) : ℚ) / (Nat.card D.inertia : ℚ)) *
           ((Module.finrank k V -
             Module.finrank k (Representation.invariants (ρ.comp (D.lower i).subtype))) : ℚ) := by
   sorry

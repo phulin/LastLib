@@ -1,0 +1,97 @@
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter03.Section03SeparatednessFiniteTypeAndProperness
+
+/-!
+## 3.4 What projectivity does not mean
+
+The statements in this section make the relative nature of projectivity and the limits of
+fiberwise tests explicit.
+-/
+
+namespace LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter03
+
+open CategoryTheory Limits AlgebraicGeometry
+
+noncomputable section
+
+universe u
+
+variable {X S T : Scheme.{u}}
+
+/-- Projectivity over a projective base composes to projectivity over the smaller base. -/
+theorem chapter03_projective_over_projective_base (f : X ⟶ S) (g : S ⟶ T)
+    (hf : chapter03Projective f) (hg : chapter03Projective g) :
+    chapter03Projective (f ≫ g) :=
+  chapter03_projective_comp f g hf hg
+
+/-- The affine line over a field, viewed as relative affine space. -/
+def chapter03AffineLine (k : Type u) [Field k] : Scheme.{u} :=
+  chapter03AffineSpace (Spec (CommRingCat.of k)) 1
+
+/-- The structure morphism of the affine line over a field. -/
+def chapter03AffineLineProjection (k : Type u) [Field k] :
+    chapter03AffineLine k ⟶ Spec (CommRingCat.of k) :=
+  chapter03AffineSpaceProjection (Spec (CommRingCat.of k)) 1
+
+/-- The affine line over a field is not proper over that field. -/
+theorem chapter03_affineLine_not_proper (k : Type u) [Field k] :
+    ¬ IsProper (chapter03AffineLineProjection k) := by
+  sorry
+
+/-- The affine line over a field is not projective over that field. -/
+theorem chapter03_affineLine_not_projective (k : Type u) [Field k] :
+    ¬ chapter03Projective (chapter03AffineLineProjection k) := by
+  sorry
+
+/-- The affine line is nevertheless quasi-projective as the standard projective-space open. -/
+theorem chapter03_affineLine_quasiProjective (k : Type u) [Field k] :
+    chapter03QuasiProjective (chapter03AffineLineProjection k) := by
+  sorry
+
+/-- A projective morphism over a projective base need not be projective over a smaller base. -/
+def chapter03ProjectivityCanDependOnBase : Prop :=
+  ∃ (X S T : Scheme.{u}) (f : X ⟶ S) (g : S ⟶ T),
+    chapter03Projective f ∧ ¬ chapter03Projective (f ≫ g) ∧ ¬ chapter03Projective g
+
+theorem chapter03_projectivity_can_depend_on_base :
+    chapter03ProjectivityCanDependOnBase := by
+  sorry
+
+/-- Fiberwise projectivity means projectivity after passage to every residue-field fiber. -/
+def chapter03FiberwiseProjective (f : X ⟶ S) : Prop :=
+  ∀ s : S, chapter03Projective (f.fiberToSpecResidueField s)
+
+/-- A projective morphism is fiberwise projective. -/
+theorem chapter03_projective_fiberwiseProjective (f : X ⟶ S)
+    (hf : chapter03Projective f) : chapter03FiberwiseProjective f := by
+  sorry
+
+/-- The source's fiberwise-projectivity warning, with all data quantified explicitly. -/
+def chapter03FiberwiseProjectivityIsInsufficient : Prop :=
+  ∃ (X S : Scheme.{u}) (f : X ⟶ S),
+    chapter03FiberwiseProjective f ∧ ¬ chapter03Projective f
+
+theorem chapter03_fiberwiseProjectivity_is_insufficient :
+    chapter03FiberwiseProjectivityIsInsufficient := by
+  sorry
+
+/-- Properness alone does not force projectivity in general. -/
+def chapter03ProperNeedNotBeProjective : Prop :=
+  ∃ (X S : Scheme.{u}) (f : X ⟶ S),
+    IsProper f ∧ ¬ chapter03Projective f
+
+theorem chapter03_proper_need_not_be_projective :
+    chapter03ProperNeedNotBeProjective := by
+  sorry
+
+/-
+COVERAGE NOTE: The final warning in the source concerns a line bundle that is ample on every
+residue-field fiber but not relatively ample when quasi-compactness or finite-presentation
+hypotheses are dropped.  The pinned Mathlib imports do not yet expose the book's relative
+line-bundle/ampleness predicate, so this draft records the warning here rather than introducing
+an unrelated surrogate.  The preceding and following chapters should supply that interface and
+turn this warning into an existential counterexample statement.
+-/
+
+end
+
+end LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter03

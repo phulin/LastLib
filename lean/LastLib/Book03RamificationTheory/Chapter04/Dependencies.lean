@@ -234,7 +234,7 @@ def chapter04HerbrandPiecewiseValue
     {G : Type u} [Group G] [Finite G]
     (F : Chapter04LowerFiltration G) (m : ℕ) (u : ℝ) : ℝ :=
   (1 / (Nat.card (F.lower 0) : ℝ)) *
-    ((∑ j in Finset.Icc 1 m, (Nat.card (F.lower j) : ℝ)) +
+    (Finset.sum (Finset.Icc 1 m) (fun j => (Nat.card (F.lower j) : ℝ)) +
       (u - m) * Nat.card (F.lower (m + 1)))
 
 def chapter04HerbrandSlope

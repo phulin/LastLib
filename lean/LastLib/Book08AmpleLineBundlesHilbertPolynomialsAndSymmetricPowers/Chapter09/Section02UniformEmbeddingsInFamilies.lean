@@ -1,0 +1,109 @@
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09.Dependencies
+
+namespace LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09
+
+open AlgebraicGeometry CategoryTheory
+
+noncomputable section
+
+/-! ### 9.2 Uniform embeddings in families -/
+
+structure Chapter09ProjectiveFlatCurveFamily (S : Scheme) where
+  curve : Scheme
+  map : curve ⟶ S
+  projective : Chapter09ProjectiveMorphism map
+  flat : Flat map
+  finitePresentation : LocallyOfFinitePresentation map
+  fibers_are_curves : Chapter09RelativeCurve map
+
+def chapter09FamilyPowerPushforward {S : Scheme}
+    (F : Chapter09ProjectiveFlatCurveFamily S)
+    [Chapter09LineBundleTensorTheory F.curve]
+    (L : Chapter09LineBundle F.curve) (n : ℕ) : S.Modules :=
+  (Scheme.Modules.pushforward F.map).obj (chapter09LineBundlePower L n).module
+
+def chapter09LocallyFreeModule {S : Scheme} (E : S.Modules) : Prop :=
+  E.IsLocallyFree
+
+def chapter09FiberAmbientDimension {S : Scheme}
+    [Chapter09ModuleRankTheory S] (E : S.Modules) (s : S) : ℕ :=
+  chapter09ModuleRank E s - 1
+
+theorem chapter09_family_rank_eq_fiber_hilbert_polynomial
+    {S : Scheme} [IsNoetherian S]
+    (F : Chapter09ProjectiveFlatCurveFamily S)
+    [Chapter09LineBundleTensorTheory F.curve]
+    [Chapter09ModuleRankTheory S]
+    (L : Chapter09LineBundle F.curve)
+    [Chapter09FiberHilbertPolynomialTheory F.map L]
+    (s : S) (n : ℕ) :
+    chapter09ModuleRank (chapter09FamilyPowerPushforward F L n) s =
+      chapter09FiberHilbertPolynomial F.map L s n := by
+  sorry
+
+theorem chapter09_family_rank_constant_on_connected_components
+    {S : Scheme}
+    (F : Chapter09ProjectiveFlatCurveFamily S)
+    [Chapter09LineBundleTensorTheory F.curve]
+    [Chapter09ModuleRankTheory S]
+    (L : Chapter09LineBundle F.curve)
+    (n : ℕ)
+    (hE : chapter09LocallyFreeModule (chapter09FamilyPowerPushforward F L n)) :
+    chapter09ConstantOnConnectedComponents
+      (chapter09ModuleRank (chapter09FamilyPowerPushforward F L n)) := by
+  sorry
+
+theorem chapter09_family_ambient_dimension_constant_on_connected_components
+    {S : Scheme}
+    (F : Chapter09ProjectiveFlatCurveFamily S)
+    [Chapter09LineBundleTensorTheory F.curve]
+    [Chapter09ModuleRankTheory S]
+    (L : Chapter09LineBundle F.curve)
+    (n : ℕ)
+    (hE : chapter09LocallyFreeModule (chapter09FamilyPowerPushforward F L n)) :
+    chapter09ConstantOnConnectedComponents
+      (chapter09FiberAmbientDimension (chapter09FamilyPowerPushforward F L n)) := by
+  sorry
+
+theorem chapter09_uniform_embedding_in_a_projective_flat_family
+    {S : Scheme} [IsNoetherian S]
+    (F : Chapter09ProjectiveFlatCurveFamily S)
+    [Chapter09LineBundleTensorTheory F.curve]
+    [Chapter09RelativePositivityTheory F.map]
+    (L : Chapter09LineBundle F.curve)
+    (hL : chapter09RelativelyAmple F.map L) :
+    ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
+      chapter09LocallyFreeModule (chapter09FamilyPowerPushforward F L n) ∧
+      chapter09PushforwardCommutesWithBaseChange F.map
+        (chapter09LineBundlePower L n).module ∧
+      ∃ E : Chapter09EvaluationWitness F.map
+          (chapter09FamilyPowerPushforward F L n),
+        E.isEvaluationMap ∧ IsClosedImmersion E.map := by
+  sorry
+
+structure Chapter09NonFlatRankJumpWitness where
+  base : Scheme
+  curve : Scheme
+  map : curve ⟶ base
+  projective : Chapter09ProjectiveMorphism map
+  finitePresentation : LocallyOfFinitePresentation map
+  notFlat : ¬ Flat map
+  lineBundle : Chapter09LineBundle curve
+  completeLinearSystem : base.Modules
+  rank : base → ℕ
+  rank_is_fiber_rank : Prop
+  ranks_jump : ∃ s t, rank s ≠ rank t
+  completeLinearSystemNotVectorBundle : ¬ completeLinearSystem.IsLocallyFree
+
+theorem chapter09_without_flatness_ranks_can_jump :
+    Nonempty Chapter09NonFlatRankJumpWitness := by
+  sorry
+
+theorem chapter09_nonflat_complete_linear_system_need_not_be_a_vector_bundle
+    (W : Chapter09NonFlatRankJumpWitness) :
+    ¬ W.completeLinearSystem.IsLocallyFree := by
+  exact W.completeLinearSystemNotVectorBundle
+
+end
+
+end LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09

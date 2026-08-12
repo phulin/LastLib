@@ -99,7 +99,7 @@ theorem finite_precision_length_formula
     (r e f : ℕ)
     (hrank : Cardinal.toNat
       (Module.rank vK.valuationSubring vL.valuationSubring) = Module.finrank K L)
-    (hr : 0 < r)
+    (_hr : 0 < r)
     (he : chapterRamificationIndex vK.valuationSubring vL.valuationSubring
       (IsLocalRing.maximalIdeal vL.valuationSubring) = e)
     (hf : chapterResidueDegree vK.valuationSubring vL.valuationSubring
@@ -211,9 +211,9 @@ theorem base_precision_cardinality_formula
     [Fintype (IsLocalRing.ResidueField vL.valuationSubring)]
     (q e f r : ℕ)
     (hq : Fintype.card (IsLocalRing.ResidueField vK.valuationSubring) = q)
-    (he : chapterRamificationIndex vK.valuationSubring vL.valuationSubring
+    (_he : chapterRamificationIndex vK.valuationSubring vL.valuationSubring
       (IsLocalRing.maximalIdeal vL.valuationSubring) = e)
-    (hf : chapterResidueDegree vK.valuationSubring vL.valuationSubring
+    (_hf : chapterResidueDegree vK.valuationSubring vL.valuationSubring
       (IsLocalRing.maximalIdeal vL.valuationSubring) = f)
     (hrank : Cardinal.toNat
       (Module.rank vK.valuationSubring vL.valuationSubring) = Module.finrank K L)
@@ -296,7 +296,7 @@ theorem base_precision_cardinality_formula
               IsLocalRing.maximalIdeal vK.valuationSubring ^ r)) := hcard
       _ = q ^ (r * Module.finrank K L) := hfun
       _ = q ^ (r * (e * f)) := by rw [hdegree]
-      _ = q ^ (r * f * e) := by congr 1 <;> ac_rfl
+      _ = q ^ (r * f * e) := by congr 1; ac_rfl
   · calc
       Fintype.card (vL.valuationSubring ⧸
           ((IsLocalRing.maximalIdeal vK.valuationSubring).map

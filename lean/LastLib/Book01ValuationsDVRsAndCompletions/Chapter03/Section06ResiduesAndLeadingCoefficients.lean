@@ -1,4 +1,4 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter03.Section05IntegralityAndMaximality
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter03.Section01BoundedElements
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter03
 

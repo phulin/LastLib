@@ -1,0 +1,13 @@
+import LastLib.Book05LocalClassFieldTheory.Chapter07.Dependencies
+import LastLib.Book05LocalClassFieldTheory.Chapter07.Section01PassageThroughFiniteQuotients
+import LastLib.Book05LocalClassFieldTheory.Chapter07.Section02Continuity
+import LastLib.Book05LocalClassFieldTheory.Chapter07.Section03DensityAndSurjectivity
+import LastLib.Book05LocalClassFieldTheory.Chapter07.Section04Injectivity
+import LastLib.Book05LocalClassFieldTheory.Chapter07.Section05ProfiniteCompletion
+import LastLib.Book05LocalClassFieldTheory.Chapter07.Section06ReciprocityExistenceAndNorm
+
+namespace LastLib.Book05LocalClassFieldTheory.Chapter07
+
+/-! Aggregator for Book 5, Chapter 7: the infinite reciprocity map. -/
+
+end LastLib.Book05LocalClassFieldTheory.Chapter07

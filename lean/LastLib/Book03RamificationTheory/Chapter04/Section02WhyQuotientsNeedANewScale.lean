@@ -8,6 +8,12 @@ open scoped BigOperators Pointwise
 
 /-! ## 4.2. Why quotients require a new scale -/
 
+/- SOURCE_ISSUE (4.2): The source says that the Herbrand change of coordinates
+   "accelerates whenever the ramification group becomes smaller," but the
+   displayed definition in §4.4 has slope `|G_t| / |G_0|`, so the clock slows
+   (and §4.4 says so explicitly).  Replace "accelerates" with "slows" or
+   "compresses lower depth". -/
+
 /-- The lower group obtained by the tempting, but generally invalid, naive
 quotient operation.  It is retained as a named candidate so that later
 statements can distinguish it from the normalized quotient filtration. -/
@@ -76,7 +82,7 @@ theorem chapter04_normal_fixed_field_quotient_galois_group
     (H : Subgroup Gal(L / K)) [H.Normal] :
     Nonempty
       ((Gal(L / K) ⧸ H) ≃* Gal(chapter04FixedField H / K)) := by
-  exact ⟨IntermediateField.normalAutEquivQuotient H⟩
+  exact ⟨IsGalois.normalAutEquivQuotient H⟩
 
 /-- The normal subgroup condition is the exact field-theoretic condition used
 by the quotient construction; without it, there is no canonical quotient

@@ -1,0 +1,11 @@
+import LastLib.Book06GlobalClassFieldTheory.Chapter09.Dependencies
+import LastLib.Book06GlobalClassFieldTheory.Chapter09.Section01TheKnotBetweenLocalAndGlobalNorms
+import LastLib.Book06GlobalClassFieldTheory.Chapter09.Section02TheHasseNormTheoremForCyclicExtensions
+import LastLib.Book06GlobalClassFieldTheory.Chapter09.Section03WhyCyclicityCannotBeDropped
+import LastLib.Book06GlobalClassFieldTheory.Chapter09.Section04NormLimitationCorrectlyStated
+
+namespace LastLib.Book06GlobalClassFieldTheory.Chapter09
+
+/-! Aggregator for Book 6, Chapter 9: norm principles and their limits. -/
+
+end LastLib.Book06GlobalClassFieldTheory.Chapter09

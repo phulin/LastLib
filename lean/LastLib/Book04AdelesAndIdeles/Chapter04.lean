@@ -1,0 +1,13 @@
+import LastLib.Book04AdelesAndIdeles.Chapter04.Section01TheFiniteAdeleRing
+import LastLib.Book04AdelesAndIdeles.Chapter04.Section02TheFullAdeleRing
+import LastLib.Book04AdelesAndIdeles.Chapter04.Section03NeighborhoodsAsLocalSpecifications
+import LastLib.Book04AdelesAndIdeles.Chapter04.Section04ScalarExtension
+import LastLib.Book04AdelesAndIdeles.Chapter04.Section05FinitePrincipalPartsQuotient
+import LastLib.Book04AdelesAndIdeles.Chapter04.Section06AdelicTrace
+import LastLib.Book04AdelesAndIdeles.Chapter04.Section07LinearAlgebraOverAdeles
+
+namespace LastLib.Book04AdelesAndIdeles.Chapter04
+
+/-! Aggregator for Book 4, Chapter 4: finite and full adeles. -/
+
+end LastLib.Book04AdelesAndIdeles.Chapter04

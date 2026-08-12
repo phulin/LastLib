@@ -1,0 +1,5 @@
+import LastLib.Book06GlobalClassFieldTheory.Chapter03.Dependencies
+import LastLib.Book06GlobalClassFieldTheory.Chapter03.Section01ConstructingTheGlobalNorm
+import LastLib.Book06GlobalClassFieldTheory.Chapter03.Section02OpenNormGroups
+import LastLib.Book06GlobalClassFieldTheory.Chapter03.Section03LocalNormTests
+import LastLib.Book06GlobalClassFieldTheory.Chapter03.Section04IndexPreview

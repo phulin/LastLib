@@ -1,4 +1,5 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Section04FiniteResidueFields
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section07ConcreteFiniteExtensions
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07
 

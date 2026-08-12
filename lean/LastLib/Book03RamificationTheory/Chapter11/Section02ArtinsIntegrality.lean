@@ -14,11 +14,10 @@ def chapter11OneDimensionalRepresentation
     (χ : G →* kˣ) : Representation k G k where
   toFun g := (χ g : k) • LinearMap.id
   map_one' := by
-    ext x
-    simp
+    simp [Module.End.one_eq_id]
   map_mul' g h := by
-    ext x
-    simp [MonoidHom.map_mul, mul_assoc]
+    ext
+    simp [MonoidHom.map_mul, mul_comm]
 
 /-- A representation of an arbitrary group has finite image when its operator image is finite. -/
 def Chapter11FiniteImage
@@ -75,7 +74,7 @@ def chapter11RamificationClassFunction
     (D : Chapter11RamificationData G) : G → k := by
   classical
   exact fun σ ↦ if hσ : σ = 1 then
-      ∑ τ in (Finset.univ.erase (1 : G)),
+      ∑ τ ∈ (Finset.univ.erase (1 : G)),
         (chapter11Displacement D τ : k)
     else -(chapter11Displacement D σ : k)
 
@@ -85,7 +84,7 @@ def chapter11InertiaClassFunction
     (D : Chapter11RamificationData G) : D.inertia → k := by
   classical
   exact fun σ ↦ if hσ : σ = 1 then
-      ∑ τ in (Finset.univ.erase (1 : D.inertia)),
+      ∑ τ ∈ (Finset.univ.erase (1 : D.inertia)),
         (chapter11Displacement D (τ : G) : k)
     else -(chapter11Displacement D (σ : G) : k)
 
@@ -95,7 +94,7 @@ def chapter11InducedClassFunction
     {k G : Type*} [Field k] [Fintype G] [Group G]
     (I : Subgroup G) (b : I → k) : G → k := by
   classical
-  exact fun g ↦ (Fintype.card I : k)⁻¹ *
+  exact fun g ↦ (Nat.card I : k)⁻¹ *
     ∑ x : G, if h : x⁻¹ * g * x ∈ I then
       b ⟨x⁻¹ * g * x, h⟩
     else 0
@@ -103,16 +102,17 @@ def chapter11InducedClassFunction
 theorem chapter11_artin_class_function_eq_residue_degree_smul_ramification
     {k G : Type*} [Field k] [Fintype G] [Group G]
     (D : Chapter11RamificationData G) :
-    chapter11ArtinClassFunction D =
-      (D.f : k) • chapter11RamificationClassFunction D := by
+    chapter11ArtinClassFunction (k := k) D =
+      (D.f : k) • chapter11RamificationClassFunction (k := k) D := by
   sorry
 
 /-- The induction formula (11.1) for the Artin class function. -/
 theorem chapter11_artin_class_function_eq_induced_inertia
     {k G : Type*} [Field k] [Fintype G] [Group G]
     (D : Chapter11RamificationData G) :
-    chapter11ArtinClassFunction D =
-      chapter11InducedClassFunction D.inertia (chapter11InertiaClassFunction D) := by
+    chapter11ArtinClassFunction (k := k) D =
+      chapter11InducedClassFunction (k := k) D.inertia
+        (chapter11InertiaClassFunction (k := k) D) := by
   sorry
 
 /-- The finite totally ramified ramification-character lemma. -/
@@ -126,19 +126,20 @@ theorem chapter11_ramification_character_lemma
 /-- The augmentation character of the finite quotient by a normal subgroup. -/
 def chapter11AugmentationCharacter
     {C : Type*} [Fintype C] [Group C]
-    (N : Subgroup C) : C → ℚ := fun c ↦
-  if c ∈ N then
-    ((Fintype.card C / Fintype.card N : ℕ) : ℚ) - 1
+    (N : Subgroup C) : C → ℚ := by
+  classical
+  exact fun c ↦ if c ∈ N then
+    ((Fintype.card C / Nat.card N : ℕ) : ℚ) - 1
   else -1
 
 /-- An integral sum of augmentation characters of finite cyclic quotients. -/
 structure Chapter11IntegralAugmentationDecomposition
-    {C : Type*} [Fintype C] [Group C] (b : C → ℚ) : Prop where
+    {C : Type*} [Fintype C] [Group C] (b : C → ℚ) where
   terms : Finset (Subgroup C)
   coefficient : Subgroup C → ℤ
   normal : ∀ N, N ∈ terms → N.Normal
   equation :
-    b = fun c ↦ ∑ N in terms,
+    b = fun c ↦ ∑ N ∈ terms,
       (coefficient N : ℚ) * chapter11AugmentationCharacter N c
 
 /-- The integral cyclic-restriction condition used by the character criterion. -/

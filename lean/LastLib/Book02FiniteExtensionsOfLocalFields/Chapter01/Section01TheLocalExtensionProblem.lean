@@ -63,6 +63,46 @@ theorem chapter01_complete_discrete_has_uniformizer
     exact congrArg (fun y : chapter01ValuationRing v => (y : K)) h,
     hπ.is_generator⟩
 
+/-! ### The uniqueness bridge exported by the leaf interface -/
+
+/-- Adic completeness of the valuation ring implies henselianity of the field. -/
+theorem chapter01_complete_field_is_henselian
+    {K Γ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ]
+    (vK : Valuation K Γ)
+    (hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal vK.valuationSubring)
+      vK.valuationSubring) :
+    HenselianLocalRing vK.valuationSubring := by
+  exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.complete_separated_local_ring_is_henselian
+    hcomplete
+
+/-- Henselianity, rather than completeness, is enough for uniqueness of an algebraic extension. -/
+theorem chapter01_henselian_discrete_field_unique_extension
+    {K L Γ : Type u} [Field K] [Field L] [Algebra K L]
+    [Algebra.IsAlgebraic K L]
+    [LinearOrderedCommGroupWithZero Γ]
+    (vK : Valuation K Γ) [Valuation.IsRankOneDiscrete vK]
+    (hH : HenselianLocalRing vK.valuationSubring) :
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.hasUniqueValuationExtension vK L := by
+  have hiff :=
+    List.TFAE.out
+      (LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.henselian_uniqueness_criterion vK) 0 1
+  have hall :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.hasUniqueExtensionToEveryAlgebraicField vK :=
+    hiff.mp hH
+  exact hall L
+
+/-- Theorem 1.1, in the heterogeneous value-group interface. -/
+theorem chapter01_theorem_1_1
+    {K L Γ : Type u} [Field K] [Field L] [Algebra K L]
+    [Algebra.IsAlgebraic K L]
+    [LinearOrderedCommGroupWithZero Γ]
+    (vK : Valuation K Γ) [Valuation.IsRankOneDiscrete vK]
+    (hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal vK.valuationSubring)
+      vK.valuationSubring) :
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.hasUniqueValuationExtension vK L := by
+  exact chapter01_henselian_discrete_field_unique_extension vK
+    (chapter01_complete_field_is_henselian vK hcomplete)
+
 /-! ### Normalized additive scales and compatible valuation rings -/
 
 /-- The normalized additive restriction formula with its positive integer factor. -/

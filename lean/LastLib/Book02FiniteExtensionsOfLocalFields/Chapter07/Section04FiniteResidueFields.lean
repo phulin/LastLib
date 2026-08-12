@@ -10,7 +10,7 @@ open LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06
 
 noncomputable section
 
-universe uK uΩ
+universe uK uΩ uModel
 
 /-! # Book 2, Chapter 7, §7.4: finite residue fields -/
 
@@ -34,13 +34,13 @@ are existential in the existence theorem below. -/
 structure Chapter07FiniteResidueUnramifiedModel
     (A K k : Type*) [CommRing A] [Field K] [Field k] [Fintype k]
     [Algebra A K] [IsFractionRing A K] (res : A →+* k) where
-  carrier : Type*
+  carrier : Type uModel
   [carrierField : Field carrier]
   [carrierAlgebra : Algebra K carrier]
   [carrierAAlgebra : Algebra A carrier]
   [carrierTower : IsScalarTower A K carrier]
   [carrierFinite : FiniteDimensional K carrier]
-  residue : Type*
+  residue : Type uModel
   [residueField : Field residue]
   [residueAlgebra : Algebra k residue]
   [residueFinite : FiniteDimensional k residue]
@@ -137,10 +137,10 @@ fixed closure rather than through a chosen valuation presentation. -/
 structure Chapter07IntermediateUnramifiedData
     (K Ω : Type*) [Field K] [Field Ω] [Algebra K Ω]
     (E : IntermediateField K Ω) [FiniteDimensional K E] where
-  residueBase : Type*
+  residueBase : Type uModel
   [residueBaseField : Field residueBase]
   [residueBaseFinite : Finite residueBase]
-  residue : Type*
+  residue : Type uModel
   [residueField : Field residue]
   [residueAlgebra : Algebra residueBase residue]
   [residueFinite : FiniteDimensional residueBase residue]
@@ -152,7 +152,7 @@ def Chapter07IntermediateIsUnramified
     (E : IntermediateField K Ω) : Prop :=
   ∃ hfinite : FiniteDimensional K E,
     letI := hfinite
-    Nonempty (Chapter07IntermediateUnramifiedData.{uK, uΩ, uK, uΩ} K Ω E)
+    Nonempty (Chapter07IntermediateUnramifiedData.{uModel, uK, uΩ} K Ω E)
 
 abbrev Chapter07PositiveNat := {n : ℕ // 0 < n}
 
@@ -169,10 +169,10 @@ structure Chapter07FiniteResidueTower
     IsGalois K (level f)
   level_unramified : ∀ f,
     letI := level_finite f
-    Chapter07IntermediateIsUnramified (level f)
+    Chapter07IntermediateIsUnramified.{uK, uΩ, uModel} (level f)
   nested : ∀ {m n : Chapter07PositiveNat}, m.1 ∣ n.1 → level m ≤ level n
   exhaustive : ∀ E : IntermediateField K Ω,
-    Chapter07IntermediateIsUnramified E →
+    Chapter07IntermediateIsUnramified.{uK, uΩ, uModel} E →
     ∃ f, E = level f
   compositum_lcm : ∀ m n, ∃ f,
     f.1 = Nat.lcm m.1 n.1 ∧ level m ⊔ level n = level f
@@ -182,14 +182,16 @@ structure Chapter07FiniteResidueTower
 /-- The maximal unramified subextension inside a chosen separable closure is
 the union of all finite unramified levels. -/
 def chapter07MaximalUnramifiedExtension
-    (K Ω : Type*) [Field K] [Field Ω] [Algebra K Ω]
-    (T : Chapter07FiniteResidueTower K Ω) : IntermediateField K Ω :=
+    (K : Type uK) (Ω : Type uΩ) [Field K] [Field Ω] [Algebra K Ω]
+    (T : Chapter07FiniteResidueTower.{uK, uΩ, uModel} K Ω) :
+    IntermediateField K Ω :=
   ⨆ f, T.level f
 
 theorem chapter07_maximal_unramified_extension_is_maximal
-    {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω]
-    (T : Chapter07FiniteResidueTower K Ω) :
-    ∀ E : IntermediateField K Ω, Chapter07IntermediateIsUnramified E →
+    {K : Type uK} {Ω : Type uΩ} [Field K] [Field Ω] [Algebra K Ω]
+    (T : Chapter07FiniteResidueTower.{uK, uΩ, uModel} K Ω) :
+    ∀ E : IntermediateField K Ω,
+      Chapter07IntermediateIsUnramified.{uK, uΩ, uModel} E →
       E ≤ chapter07MaximalUnramifiedExtension K Ω T := by
   intro E hE
   obtain ⟨f, hf⟩ := T.exhaustive E hE
@@ -200,7 +202,7 @@ theorem chapter07_maximal_unramified_extension_is_maximal
 tower. -/
 theorem chapter07_finite_residue_tower_compositum_intersection
     {K : Type uK} {Ω : Type uΩ} [Field K] [Field Ω] [Algebra K Ω]
-    (T : Chapter07FiniteResidueTower K Ω)
+    (T : Chapter07FiniteResidueTower.{uK, uΩ, uModel} K Ω)
     (m n : Chapter07PositiveNat) :
     (∃ f, f.1 = Nat.lcm m.1 n.1 ∧ T.level m ⊔ T.level n = T.level f) ∧
       (∃ f, f.1 = Nat.gcd m.1 n.1 ∧ T.level m ⊓ T.level n = T.level f) := by

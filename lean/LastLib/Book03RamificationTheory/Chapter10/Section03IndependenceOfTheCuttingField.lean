@@ -108,15 +108,17 @@ def conductorViaCuttingField
     {G : Type v} [Group G]
     (ρ : FiniteImageRepresentation E G V)
     {Q : Type*} [Group Q] [Fintype Q]
-    (R : FiniteQuotientRealization ρ Q) : ℚ :=
-  artinConductor R.ramification R.ramification.residue_separable R.action
+    (R : FiniteQuotientRealization ρ Q)
+    (hseparable : R.ramification.residue_separable) : ℚ :=
+  artinConductor R.ramification hseparable R.action
 
 def swanViaCuttingField
     {G : Type v} [Group G]
     (ρ : FiniteImageRepresentation E G V)
     {Q : Type*} [Group Q] [Fintype Q]
-    (R : FiniteQuotientRealization ρ Q) : ℚ :=
-  swanConductor R.ramification R.ramification.residue_separable R.action
+    (R : FiniteQuotientRealization ρ Q)
+    (hseparable : R.ramification.residue_separable) : ℚ :=
+  swanConductor R.ramification hseparable R.action
 
 theorem conductorViaCuttingField_independent
     {G : Type v} [Group G]
@@ -126,8 +128,10 @@ theorem conductorViaCuttingField_independent
     (Rbig : FiniteQuotientRealization ρ Qbig)
     (Rsmall : FiniteQuotientRealization ρ Qsmall)
     (C : HerbrandQuotientData Rbig.ramification Rsmall.ramification)
-    (hfactor : Rbig.action = Rsmall.action.comp C.projection) :
-    conductorViaCuttingField ρ Rbig = conductorViaCuttingField ρ Rsmall := by
+    (hfactor : Rbig.action = Rsmall.action.comp C.projection)
+    (hbig : Rbig.ramification.residue_separable)
+    (hsmall : Rsmall.ramification.residue_separable) :
+    conductorViaCuttingField ρ Rbig hbig = conductorViaCuttingField ρ Rsmall hsmall := by
   sorry
 
 theorem swanViaCuttingField_independent
@@ -138,8 +142,10 @@ theorem swanViaCuttingField_independent
     (Rbig : FiniteQuotientRealization ρ Qbig)
     (Rsmall : FiniteQuotientRealization ρ Qsmall)
     (C : HerbrandQuotientData Rbig.ramification Rsmall.ramification)
-    (hfactor : Rbig.action = Rsmall.action.comp C.projection) :
-    swanViaCuttingField ρ Rbig = swanViaCuttingField ρ Rsmall := by
+    (hfactor : Rbig.action = Rsmall.action.comp C.projection)
+    (hbig : Rbig.ramification.residue_separable)
+    (hsmall : Rsmall.ramification.residue_separable) :
+    swanViaCuttingField ρ Rbig hbig = swanViaCuttingField ρ Rsmall hsmall := by
   sorry
 
 /-- An absolute-Galois conductor is evaluated through any chosen finite
@@ -148,15 +154,17 @@ def absoluteGaloisConductorVia
     {G : Type v} [Group G]
     (ρ : FiniteImageRepresentation E G V)
     {Q : Type*} [Group Q] [Fintype Q]
-    (R : FiniteQuotientRealization ρ Q) : ℚ :=
-  conductorViaCuttingField ρ R
+    (R : FiniteQuotientRealization ρ Q)
+    (hseparable : R.ramification.residue_separable) : ℚ :=
+  conductorViaCuttingField ρ R hseparable
 
 def absoluteGaloisSwanVia
     {G : Type v} [Group G]
     (ρ : FiniteImageRepresentation E G V)
     {Q : Type*} [Group Q] [Fintype Q]
-    (R : FiniteQuotientRealization ρ Q) : ℚ :=
-  swanViaCuttingField ρ R
+    (R : FiniteQuotientRealization ρ Q)
+    (hseparable : R.ramification.residue_separable) : ℚ :=
+  swanViaCuttingField ρ R hseparable
 
 theorem absoluteGaloisConductorVia_well_defined
     {G : Type v} [Group G]
@@ -166,8 +174,11 @@ theorem absoluteGaloisConductorVia_well_defined
     (Rbig : FiniteQuotientRealization ρ Qbig)
     (Rsmall : FiniteQuotientRealization ρ Qsmall)
     (C : HerbrandQuotientData Rbig.ramification Rsmall.ramification)
-    (hfactor : Rbig.action = Rsmall.action.comp C.projection) :
-    absoluteGaloisConductorVia ρ Rbig = absoluteGaloisConductorVia ρ Rsmall := by
+    (hfactor : Rbig.action = Rsmall.action.comp C.projection)
+    (hbig : Rbig.ramification.residue_separable)
+    (hsmall : Rsmall.ramification.residue_separable) :
+    absoluteGaloisConductorVia ρ Rbig hbig =
+      absoluteGaloisConductorVia ρ Rsmall hsmall := by
   sorry
 
 theorem absoluteGaloisSwanVia_well_defined
@@ -178,8 +189,10 @@ theorem absoluteGaloisSwanVia_well_defined
     (Rbig : FiniteQuotientRealization ρ Qbig)
     (Rsmall : FiniteQuotientRealization ρ Qsmall)
     (C : HerbrandQuotientData Rbig.ramification Rsmall.ramification)
-    (hfactor : Rbig.action = Rsmall.action.comp C.projection) :
-    absoluteGaloisSwanVia ρ Rbig = absoluteGaloisSwanVia ρ Rsmall := by
+    (hfactor : Rbig.action = Rsmall.action.comp C.projection)
+    (hbig : Rbig.ramification.residue_separable)
+    (hsmall : Rsmall.ramification.residue_separable) :
+    absoluteGaloisSwanVia ρ Rbig hbig = absoluteGaloisSwanVia ρ Rsmall hsmall := by
   sorry
 
 end

@@ -1,0 +1,6 @@
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter09.Dependencies
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter09.Section01UniversalOdlyzkoPoitouInequalities
+
+namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter09
+
+end LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter09

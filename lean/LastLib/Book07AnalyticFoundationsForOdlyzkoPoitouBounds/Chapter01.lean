@@ -1,0 +1,10 @@
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01.Section01TheProblemAndTheScale
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01.Section02DegreeSignatureAndRootDiscriminant
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01.Section03TheShapeOfAUsefulLowerBound
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01.Section04ScopeAndStandingConventions
+
+namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01
+
+/-! Aggregator for Book 7, Chapter 1: the discriminant as analytic complexity. -/
+
+end LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01

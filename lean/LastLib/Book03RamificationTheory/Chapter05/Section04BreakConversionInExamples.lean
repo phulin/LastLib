@@ -1,4 +1,6 @@
 import LastLib.Book03RamificationTheory.Chapter05.Section03TowerTransitivity
+import Mathlib.Data.Nat.Prime.Basic
+import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
 
 namespace LastLib.Book03RamificationTheory.Chapter05
 
@@ -19,7 +21,8 @@ def chapter05TameHerbrand (e : ℕ) (u : ℝ) : ℝ :=
 structure Chapter05SingleWildBreakData
     (G : Type*) [Group G] [Fintype G] where
   profile : Chapter05RamificationFiltration G
-  p m : ℕ
+  p : ℕ
+  m : ℕ
   p_prime : Nat.Prime p
   m_pos : 0 < m
   cyclic : IsCyclic G

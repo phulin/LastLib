@@ -26,8 +26,14 @@ def IsTamelyRamifiedRepresentation
 def IsTrivialRepresentation (ρ : Representation E G V) : Prop :=
   ∀ g : G, ρ g = LinearMap.id
 
-def IsOneDimensionalRepresentation (ρ : Representation E G V) : Prop :=
+def IsOneDimensionalRepresentation (_ρ : Representation E G V) : Prop :=
   Module.finrank E V = 1
+
+/- SOURCE_ISSUE (10.4): the source's phrase "a nontrivial one-dimensional
+   tame character" does not exclude a nontrivial unramified character, which
+   is tame under the preceding definition but has conductor zero.  The
+   additional non-unramified clause below is the smallest correction matching
+   the claimed conductor-one conclusion. -/
 
 /-- A nontrivial one-dimensional tame character. -/
 def IsNontrivialTameCharacter
@@ -49,12 +55,14 @@ def HasUniqueUpperBreak
     (∀ {v : ℝ}, r < v →
       fixedSpaceCodimReal ρ (F.upper.group v) = 0)
 
+omit [CharZero E] [FiniteDimensional E V] in
 theorem isUnramified_iff_inertia_trivial
     (F : RamificationFiltration G) (ρ : Representation E G V) :
     IsUnramifiedRepresentation F ρ ↔
       ∀ g : inertiaGroup F, ρ g = LinearMap.id := by
   rfl
 
+omit [CharZero E] [FiniteDimensional E V] in
 theorem isTame_iff_wild_group_trivial
     (F : RamificationFiltration G) (ρ : Representation E G V) :
     IsTamelyRamifiedRepresentation F ρ ↔

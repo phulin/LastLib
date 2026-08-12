@@ -8,6 +8,12 @@ open scoped BigOperators Pointwise
 
 /-! ## 5.6. Counting branches before completion -/
 
+/- SOURCE_ISSUE: The displayed formula `[E : F] = g e f` in §5.6 needs a
+   defectless hypothesis.  The chapter allows imperfect residue fields, where
+   a finite completed extension can have a nontrivial defect and degree
+   `e * f * d`.  The API below keeps the local equality as an explicit
+   hypothesis instead of deriving it from completeness and discreteness alone. -/
+
 /-- Orbit--stabilizer for the Galois action on the finite set of branches above `v`. -/
 theorem galois_group_order_eq_branch_count_mul_decomposition_order
     {F E Γ : Type*} [Field F] [Field E] [Algebra F E]

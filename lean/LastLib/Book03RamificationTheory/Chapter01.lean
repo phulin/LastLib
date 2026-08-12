@@ -1,0 +1,13 @@
+import LastLib.Book03RamificationTheory.Chapter01.Section01TheQuestionLeftByInertia
+import LastLib.Book03RamificationTheory.Chapter01.Section02InertiaRevisited
+import LastLib.Book03RamificationTheory.Chapter01.Section03TheFirstInfinitesimalAction
+import LastLib.Book03RamificationTheory.Chapter01.Section04TameAndWild
+import LastLib.Book03RamificationTheory.Chapter01.Section05TheMaximalTameStage
+import LastLib.Book03RamificationTheory.Chapter01.Section06TheShapeOfATameGaloisGroup
+import LastLib.Book03RamificationTheory.Chapter01.Section07StabilityPropertiesOfTameness
+
+namespace LastLib.Book03RamificationTheory.Chapter01
+
+/-! Aggregator for Book 3, Chapter 1: from inertia to depth. -/
+
+end LastLib.Book03RamificationTheory.Chapter01

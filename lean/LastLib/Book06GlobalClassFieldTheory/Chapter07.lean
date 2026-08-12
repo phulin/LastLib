@@ -1,0 +1,12 @@
+import LastLib.Book06GlobalClassFieldTheory.Chapter07.Section01WhyAModulusHasFiniteAndInfinitePart
+import LastLib.Book06GlobalClassFieldTheory.Chapter07.Section02IdealTheoreticRayClasses
+import LastLib.Book06GlobalClassFieldTheory.Chapter07.Section03ConductorsOfExtensionsAndCharacters
+import LastLib.Book06GlobalClassFieldTheory.Chapter07.Section04ExistenceAndMaximalityOfRayClassFields
+import LastLib.Book06GlobalClassFieldTheory.Chapter07.Section05RayExactSequenceAndUnits
+import LastLib.Book06GlobalClassFieldTheory.Chapter07.Section06ConductorDiscriminantFormula
+
+namespace LastLib.Book06GlobalClassFieldTheory.Chapter07
+
+/-! Aggregator for Book 6, Chapter 7: moduli and ray class fields. -/
+
+end LastLib.Book06GlobalClassFieldTheory.Chapter07

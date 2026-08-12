@@ -12,7 +12,7 @@ open Ideal IsLocalRing
 
 /-- Reduction from precision `n+1` to precision `n`. -/
 noncomputable def chapter10PrecisionRingTransition
-    {L : Type*} [Field L] (A : ValuationSubring L) (n : ℕ) :
+    (A : Type*) [CommRing A] [IsLocalRing A] (n : ℕ) :
     Chapter10PrecisionQuotient A (n + 1) →+*
       Chapter10PrecisionQuotient A n := by
   exact Ideal.Quotient.factor
@@ -20,25 +20,25 @@ noncomputable def chapter10PrecisionRingTransition
 
 /-- The induced transition map on finite-precision unit groups. -/
 def chapter10PrecisionUnitTransition
-    {L : Type*} [Field L] (A : ValuationSubring L) (n : ℕ) :
+    (A : Type*) [CommRing A] [IsLocalRing A] (n : ℕ) :
     (Chapter10PrecisionQuotient A (n + 1))ˣ →*
       (Chapter10PrecisionQuotient A n)ˣ :=
   Units.map (chapter10PrecisionRingTransition A n).toMonoidHom
 
 /-- An opaque name for a finite-precision unit group, avoiding quotient unfolding in families. -/
 def Chapter10PrecisionUnitGroup
-    {L : Type*} [Field L] (A : ValuationSubring L) (n : ℕ) : Type _ :=
+    (A : Type*) [CommRing A] [IsLocalRing A] (n : ℕ) : Type _ :=
   (Chapter10PrecisionQuotient A (n + 1))ˣ
 
 instance chapter10PrecisionUnitGroupGroup
-    {L : Type*} [Field L] (A : ValuationSubring L) (n : ℕ) :
+    (A : Type*) [CommRing A] [IsLocalRing A] (n : ℕ) :
     Group (Chapter10PrecisionUnitGroup A n) := by
   change Group ((Chapter10PrecisionQuotient A (n + 1))ˣ)
   infer_instance
 
 /-- The abstract transition used by the inverse-limit interface. -/
 noncomputable def chapter10AbstractPrecisionUnitTransition
-    {L : Type*} [Field L] (A : ValuationSubring L) (n : ℕ) :
+    (A : Type*) [CommRing A] [IsLocalRing A] (n : ℕ) :
     Chapter10PrecisionUnitGroup A (n + 1) →*
       Chapter10PrecisionUnitGroup A n := by
   change (Chapter10PrecisionQuotient A (n + 2))ˣ →*
@@ -47,7 +47,7 @@ noncomputable def chapter10AbstractPrecisionUnitTransition
 
 /-- A compatible family of units in all finite congruence quotients. -/
 def Chapter10CompatibleUnitFamily
-    {L : Type*} [Field L] (A : ValuationSubring L) :
+    (A : Type*) [CommRing A] [IsLocalRing A] :
     Subgroup (∀ n : ℕ, Chapter10PrecisionUnitGroup A n) where
   carrier := {x | ∀ n,
     chapter10AbstractPrecisionUnitTransition A n (x (n + 1)) = x n}
@@ -67,12 +67,12 @@ def Chapter10CompatibleUnitFamily
 
 /-- The inverse-limit group of finite-precision units. -/
 abbrev Chapter10AdicUnitInverseLimit
-    {L : Type*} [Field L] (A : ValuationSubring L) : Type _ :=
+    (A : Type*) [CommRing A] [IsLocalRing A] : Type _ :=
   Chapter10CompatibleUnitFamily A
 
 /-- The canonical compatible family attached to a ring unit. -/
 noncomputable def chapter10UnitToAdicInverseLimit
-    {L : Type*} [Field L] (A : ValuationSubring L) :
+    (A : Type*) [CommRing A] [IsLocalRing A] :
     Aˣ →* Chapter10AdicUnitInverseLimit A := by
   let q : ∀ n : ℕ, Aˣ →* Chapter10PrecisionUnitGroup A n :=
     fun n => Units.map
@@ -106,13 +106,13 @@ theorem chapter10_complete_units_inverse_limit
 
 /-- The finite-precision quotients of the principal-unit group. -/
 abbrev Chapter10PrincipalUnitPrecisionQuotient
-    {L : Type*} [Field L] (A : ValuationSubring L) (n : ℕ) : Type _ :=
+    (A : Type*) [CommRing A] [IsLocalRing A] (n : ℕ) : Type _ :=
   chapter10UnitFiltration A 1 ⧸
     (chapter10UnitFiltration A (n + 1)).subgroupOf (chapter10UnitFiltration A 1)
 
 /-- Reduction between successive principal-unit precision quotients. -/
 noncomputable def chapter10PrincipalUnitTransition
-    {L : Type*} [Field L] (A : ValuationSubring L) (n : ℕ) :
+    (A : Type*) [CommRing A] [IsLocalRing A] (n : ℕ) :
     Chapter10PrincipalUnitPrecisionQuotient A (n + 1) →*
       Chapter10PrincipalUnitPrecisionQuotient A n := by
   exact QuotientGroup.map
@@ -127,18 +127,18 @@ noncomputable def chapter10PrincipalUnitTransition
 
 /-- An opaque name for a principal-unit precision quotient. -/
 def Chapter10PrincipalUnitPrecisionGroup
-    {L : Type*} [Field L] (A : ValuationSubring L) (n : ℕ) : Type _ :=
+    (A : Type*) [CommRing A] [IsLocalRing A] (n : ℕ) : Type _ :=
   Chapter10PrincipalUnitPrecisionQuotient A n
 
 instance chapter10PrincipalUnitPrecisionGroupGroup
-    {L : Type*} [Field L] (A : ValuationSubring L) (n : ℕ) :
+    (A : Type*) [CommRing A] [IsLocalRing A] (n : ℕ) :
     Group (Chapter10PrincipalUnitPrecisionGroup A n) := by
   change Group (Chapter10PrincipalUnitPrecisionQuotient A n)
   infer_instance
 
 /-- The abstract transition used by the principal-unit inverse-limit interface. -/
 noncomputable def chapter10AbstractPrincipalUnitTransition
-    {L : Type*} [Field L] (A : ValuationSubring L) (n : ℕ) :
+    (A : Type*) [CommRing A] [IsLocalRing A] (n : ℕ) :
     Chapter10PrincipalUnitPrecisionGroup A (n + 1) →*
       Chapter10PrincipalUnitPrecisionGroup A n := by
   change Chapter10PrincipalUnitPrecisionQuotient A (n + 1) →*
@@ -147,7 +147,7 @@ noncomputable def chapter10AbstractPrincipalUnitTransition
 
 /-- A compatible family of principal units modulo every deeper subgroup. -/
 def Chapter10CompatiblePrincipalUnitFamily
-    {L : Type*} [Field L] (A : ValuationSubring L) :
+    (A : Type*) [CommRing A] [IsLocalRing A] :
     Subgroup (∀ n : ℕ, Chapter10PrincipalUnitPrecisionGroup A n) where
   carrier := {x | ∀ n,
     chapter10AbstractPrincipalUnitTransition A n (x (n + 1)) = x n}
@@ -167,7 +167,7 @@ def Chapter10CompatiblePrincipalUnitFamily
 
 /-- The inverse-limit type for principal units. -/
 abbrev Chapter10PrincipalUnitInverseLimit
-    {L : Type*} [Field L] (A : ValuationSubring L) : Type _ :=
+    (A : Type*) [CommRing A] [IsLocalRing A] : Type _ :=
   Chapter10CompatiblePrincipalUnitFamily A
 
 /-- Completeness identifies principal units with their compatible finite layers. -/

@@ -9,6 +9,12 @@ open scoped BigOperators Polynomial nonZeroDivisors
 
 /-! ## 7.4. Kähler differentials -/
 
+/- SOURCE_ISSUE (7.4): The source says that residue separability alone lets
+   Book 2 supply an integral generator.  Over an imperfect residue field, the
+   integral monogenic conclusion also needs the henselian, finite-normalization,
+   and defectless/monogenic hypotheses used by the local presentation theorem.
+   The declarations below retain the explicit `hmono` certificate. -/
+
 /-- A presentation-level form of `Ω[B⁄A] ≅ B/(f'(α)) dα`. -/
 def chapter07MonogenicDifferentialPresentation
     (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
@@ -30,13 +36,13 @@ def chapter07MonogenicDifferentialPresentation
 
 theorem chapter07_kaehler_differential_monogenic_equiv
     (A B K L : Type*) [CommRing A] [IsDomain A]
-    [IsDiscreteValuationRing A] [CommRing B] [IsDomain B]
+    [IsDiscreteValuationRing A] [CommRing B] [IsDedekindDomain B]
     [IsDiscreteValuationRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
     [Algebra.IsSeparable K L] [IsIntegralClosure B A L]
-    [IsIntegrallyClosed A] [IsDedekindDomain B]
+    [IsIntegrallyClosed A]
     [Module.Finite A B] [Module.Free A B] [Module.IsTorsionFree A B]
     [Algebra.IsIntegral A B]
     (α : B) (f : A[X])
@@ -55,13 +61,13 @@ def chapter07ZerothFittingIdealOfMonogenicPresentation
 
 theorem chapter07_fitting_ideal_of_monogenic_presentation_eq_different
     (A B K L : Type*) [CommRing A] [IsDomain A]
-    [IsDiscreteValuationRing A] [CommRing B] [IsDomain B]
+    [IsDiscreteValuationRing A] [CommRing B] [IsDedekindDomain B]
     [IsDiscreteValuationRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
     [Algebra.IsSeparable K L] [IsIntegralClosure B A L]
-    [IsIntegrallyClosed A] [IsDedekindDomain B]
+    [IsIntegrallyClosed A]
     [Module.Finite A B] [Module.Free A B] [Module.IsTorsionFree A B]
     [Algebra.IsIntegral A B]
     (α : B) (f : A[X])
@@ -74,13 +80,13 @@ theorem chapter07_fitting_ideal_of_monogenic_presentation_eq_different
 /-- The source's geometric slogan, made explicit as a vanishing statement. -/
 theorem chapter07_unramified_monogenic_differentials_subsingleton
     (A B K L : Type*) [CommRing A] [IsDomain A]
-    [IsDiscreteValuationRing A] [CommRing B] [IsDomain B]
+    [IsDiscreteValuationRing A] [CommRing B] [IsDedekindDomain B]
     [IsDiscreteValuationRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
     [Algebra.IsSeparable K L] [IsIntegralClosure B A L]
-    [IsIntegrallyClosed A] [IsDedekindDomain B]
+    [IsIntegrallyClosed A]
     [Module.Finite A B] [Module.Free A B] [Module.IsTorsionFree A B]
     [Algebra.IsIntegral A B]
     (α : B) (f : A[X])
@@ -91,13 +97,13 @@ theorem chapter07_unramified_monogenic_differentials_subsingleton
 
 theorem chapter07_differential_module_has_finite_length
     (A B K L : Type*) [CommRing A] [IsDomain A]
-    [IsDiscreteValuationRing A] [CommRing B] [IsDomain B]
+    [IsDiscreteValuationRing A] [CommRing B] [IsDedekindDomain B]
     [IsDiscreteValuationRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
     [Algebra.IsSeparable K L] [IsIntegralClosure B A L]
-    [IsIntegrallyClosed A] [IsDedekindDomain B]
+    [IsIntegrallyClosed A]
     [Module.Finite A B] [Module.Free A B] [Module.IsTorsionFree A B]
     [Algebra.IsIntegral A B]
     (α : B) (f : A[X])
@@ -107,13 +113,13 @@ theorem chapter07_differential_module_has_finite_length
 
 theorem chapter07_different_exponent_eq_differential_length
     (A B K L : Type*) [CommRing A] [IsDomain A]
-    [IsDiscreteValuationRing A] [CommRing B] [IsDomain B]
+    [IsDiscreteValuationRing A] [CommRing B] [IsDedekindDomain B]
     [IsDiscreteValuationRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
     [Algebra.IsSeparable K L] [IsIntegralClosure B A L]
-    [IsIntegrallyClosed A] [IsDedekindDomain B]
+    [IsIntegrallyClosed A]
     [Module.Finite A B] [Module.Free A B] [Module.IsTorsionFree A B]
     [Algebra.IsIntegral A B]
     (mB : Ideal B) (d : ℕ) (α : B) (f : A[X])
@@ -135,13 +141,13 @@ def chapter07TraceAndDifferentialAgreement
 
 theorem chapter07_trace_differential_agreement_from_presentation
     (A B K L : Type*) [CommRing A] [IsDomain A]
-    [IsDiscreteValuationRing A] [CommRing B] [IsDomain B]
+    [IsDiscreteValuationRing A] [CommRing B] [IsDedekindDomain B]
     [IsDiscreteValuationRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
     [Algebra.IsSeparable K L] [IsIntegralClosure B A L]
-    [IsIntegrallyClosed A] [IsDedekindDomain B]
+    [IsIntegrallyClosed A]
     [Module.Finite A B] [Module.Free A B] [Module.IsTorsionFree A B]
     [Algebra.IsIntegral A B]
     (α : B) (f : A[X])

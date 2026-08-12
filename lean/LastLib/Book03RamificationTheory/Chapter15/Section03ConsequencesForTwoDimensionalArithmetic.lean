@@ -23,6 +23,12 @@ theorem chapter15_representation_kernel_normal
     (chapter15RepresentationKernel ρ).Normal := by
   sorry
 
+instance chapter15_representation_kernel_normal_instance
+    {k G V : Type*} [Semiring k] [Group G] [AddCommGroup V] [Module k V]
+    (ρ : Representation k G V) :
+    (chapter15RepresentationKernel ρ).Normal :=
+  chapter15_representation_kernel_normal ρ
+
 /-- The fixed field cut out by a representation of a finite Galois group. -/
 def chapter15RepresentationFixedField
     {k K L V : Type*} [Semiring k] [Field K] [Field L]
@@ -77,7 +83,7 @@ def chapter15PermutationRepresentation
 
 /-- The permutation conductor is the discriminant exponent of the corresponding field extension. -/
 theorem chapter15_permutation_conductor_recovers_discriminant
-    {A B G k : Type*} [CommRing A] [IsDomain A] [CommRing B]
+    {A B G k : Type*} [CommRing A] [CommRing B]
     [Algebra A B] [IsDedekindDomain A] [IsDedekindDomain B]
     [Module.Finite A B] [Module.IsTorsionFree A B]
     [Group G] [Finite G] [MulSemiringAction G B] [SMulCommClass G A B]
@@ -92,7 +98,7 @@ theorem chapter15_permutation_conductor_recovers_discriminant
   sorry
 
 /-- A field discriminant is an ideal-valued invariant, distinct in kind from a model discriminant. -/
-abbrev Chapter15FieldDiscriminant (A : Type*) := Ideal A
+abbrev Chapter15FieldDiscriminant (A : Type*) [Semiring A] := Ideal A
 
 /-- The discriminant of a chosen Weierstrass model is coefficient-valued. -/
 abbrev Chapter15WeierstrassDiscriminant (R : Type*) := R

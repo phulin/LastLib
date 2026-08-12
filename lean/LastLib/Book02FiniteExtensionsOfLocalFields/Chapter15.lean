@@ -1,0 +1,11 @@
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter15.Section01TheStructuralDictionary
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter15.Section02TheSeparabilityMap
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter15.Section03TheGaloisPicture
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter15.Section04TheMultiplicativePicture
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter15.Section05Conclusion
+
+namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter15
+
+/-! Aggregator for Book 2, Chapter 15. -/
+
+end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter15

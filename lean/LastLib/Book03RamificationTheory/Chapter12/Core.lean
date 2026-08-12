@@ -1,4 +1,5 @@
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.Group.Subgroup.Finite
 import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.FieldTheory.Galois.Notation
 import Mathlib.GroupTheory.Coset.Card
@@ -15,6 +16,10 @@ noncomputable section
 universe uV
 
 open scoped BigOperators
+
+noncomputable instance chapter12SubgroupFintype
+    {G : Type*} [Group G] [Fintype G] (H : Subgroup G) : Fintype H :=
+  Fintype.ofFinite H
 
 /-!
 ## Shared interfaces for Chapter 12
@@ -168,17 +173,17 @@ def chapter12ArtinConductorSum
     {G V : Type*} [Group G] [Fintype G] [AddCommGroup V] [Module ℚ V]
     [FiniteDimensional ℚ V] (P : Chapter12RamificationProfile G)
     (ρ : Representation ℚ G V) : ℚ :=
-  ∑ i in Finset.range (P.bound + 1),
+  Finset.sum (Finset.range (P.bound + 1)) (fun i =>
     ((Nat.card (P.lower i) : ℚ) / (Nat.card P.inertia : ℚ)) *
-      (chapter12FixedSpaceCodimension (P.lower i) ρ : ℚ)
+      (chapter12FixedSpaceCodimension (P.lower i) ρ : ℚ))
 
 def chapter12SwanConductorSum
     {G V : Type*} [Group G] [Fintype G] [AddCommGroup V] [Module ℚ V]
     [FiniteDimensional ℚ V] (P : Chapter12RamificationProfile G)
     (ρ : Representation ℚ G V) : ℚ :=
-  ∑ i in Finset.Icc 1 P.bound,
+  Finset.sum (Finset.Icc 1 P.bound) (fun i =>
     ((Nat.card (P.lower i) : ℚ) / (Nat.card P.inertia : ℚ)) *
-      (chapter12FixedSpaceCodimension (P.lower i) ρ : ℚ)
+      (chapter12FixedSpaceCodimension (P.lower i) ρ : ℚ))
 
 def chapter12CharacterPairing
     {G : Type*} [Group G] [Fintype G]

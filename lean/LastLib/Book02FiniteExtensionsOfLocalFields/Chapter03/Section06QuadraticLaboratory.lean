@@ -173,7 +173,7 @@ def chapter03PrincipalUnitSquareCondition
     ∃ z : A, z ^ 2 = x
 
 theorem chapter03_complete_odd_dvr_principal_units_are_squares
-    (A : Type*) [CommRing A] [IsDomain A] [IsLocalRing A]
+    (A : Type*) [CommRing A] [IsDomain A]
     [IsDiscreteValuationRing A]
     (hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal A) A)
     (h2 : IsUnit (2 : A)) :
@@ -198,7 +198,7 @@ def chapter03LocalSquareClassDecomposition
 
 theorem chapter03_principal_units_supply_square_class_decomposition
     (A K k : Type*) [CommRing A] [Field K] [Field k]
-    [IsDomain A] [IsLocalRing A] [IsDiscreteValuationRing A]
+    [IsDomain A] [IsDiscreteValuationRing A]
     [Algebra A K] [IsFractionRing A K]
     (hresidue : Nonempty (A ⧸ IsLocalRing.maximalIdeal A ≃+* k))
     (hprincipal :
@@ -279,7 +279,7 @@ def chapter03PrincipalUnitSquaringBijective
 -- without the local DVR, fraction-field, and non-bijective-principal-unit
 -- hypotheses; they are made explicit here.
 theorem chapter03_residue_characteristic_two_needs_a_different_square_class_count
-    (A K k : Type*) [CommRing A] [IsDomain A] [IsLocalRing A]
+    (A K k : Type*) [CommRing A] [IsDomain A]
     [Field K] [Field k] [Algebra A K]
     [IsDiscreteValuationRing A] [IsFractionRing A K]
     [Fintype k] [CharP k 2]

@@ -1,4 +1,5 @@
 import LastLib.Book03RamificationTheory.Chapter05.Section05ATwoBreakTower
+import Mathlib.FieldTheory.Fixed
 import Mathlib.RingTheory.Valuation.Discrete.RankOne
 
 namespace LastLib.Book03RamificationTheory.Chapter05
@@ -25,7 +26,7 @@ def chapter05AllUpperBreaksIntegral
    with the Book 2 congruence groups and does not assume any upper conclusion. -/
 structure Chapter05LocalGaloisUpperData
     (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [IsGalois K L] where
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))] where
   vK : AddValuation K (WithTop ℤ)
   vL : AddValuation L (WithTop ℤ)
   vK_rank_one_discrete : Valuation.IsRankOneDiscrete vK.toValuation
@@ -45,17 +46,19 @@ structure Chapter05LocalGaloisUpperData
   lower_canonical :
     ∀ n : ℕ,
       profile.lowerGroup (n : ℝ) =
-        chapter05RamificationGroupInG vL.toValuation.valuationSubring n
+        chapter05RamificationGroupInG (F := K)
+          vL.toValuation.valuationSubring n
 
 namespace Chapter05LocalGaloisUpperData
 
 variable {K L : Type*} [Field K] [Field L] [Algebra K L]
-variable [FiniteDimensional K L] [IsGalois K L]
+variable [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
 
 theorem lower_canonical_at
     (D : Chapter05LocalGaloisUpperData K L) (n : ℕ) :
     D.profile.lowerGroup (n : ℝ) =
-      chapter05RamificationGroupInG D.vL.toValuation.valuationSubring n := by
+      chapter05RamificationGroupInG (F := K)
+        D.vL.toValuation.valuationSubring n := by
   exact D.lower_canonical n
 
 end Chapter05LocalGaloisUpperData
@@ -63,7 +66,7 @@ end Chapter05LocalGaloisUpperData
 /-- The Hasse--Arf theorem in the local field interface of this chapter. -/
 theorem chapter05_hasse_arf
     {K L : Type*} [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [IsGalois K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
     (D : Chapter05LocalGaloisUpperData K L)
     (habelian : ∀ σ τ : Gal(L / K), σ * τ = τ * σ)
     [Algebra (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)
@@ -78,7 +81,7 @@ theorem chapter05_hasse_arf
 
 theorem chapter05_hasse_arf_upper_break_integer
     {K L : Type*} [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [IsGalois K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
     (D : Chapter05LocalGaloisUpperData K L)
     (habelian : ∀ σ τ : Gal(L / K), σ * τ = τ * σ)
     [Algebra (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)

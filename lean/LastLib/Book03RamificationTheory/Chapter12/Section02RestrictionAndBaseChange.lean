@@ -22,13 +22,13 @@ def chapter12IntersectRamificationProfile
   lower := fun i => (P.lower i).comap H.subtype
   bound := P.bound
   lower_zero := by
-    simpa [P.lower_zero]
+    simp [P.lower_zero]
   lower_succ_le := by
     intro i x hx
     exact P.lower_succ_le i hx
   lower_eq_bot_of_bound := by
     intro i hi
-    simpa [P.lower_eq_bot_of_bound i hi]
+    simp [P.lower_eq_bot_of_bound i hi]
 
 theorem chapter12_intersected_lower_group_coe
     {G : Type*} [Group G] [Fintype G]
@@ -41,11 +41,11 @@ def chapter12RestrictionConductorSum
     {G V : Type*} [Group G] [Fintype G]
     [AddCommGroup V] [Module ℚ V] [FiniteDimensional ℚ V]
     (P : Chapter12RamificationProfile G) (H : Subgroup G)
-    (ρ : Representation ℚ G V) : ℚ :=
-  ∑ i in Finset.range (P.bound + 1),
-    ((Nat.card (H ⊓ P.lower i) : ℚ) /
-        (Nat.card (H ⊓ P.lower 0) : ℚ)) *
-      (chapter12FixedSpaceCodimension (H ⊓ P.lower i) ρ : ℚ)
+  (ρ : Representation ℚ G V) : ℚ :=
+  Finset.sum (Finset.range (P.bound + 1)) (fun i =>
+    ((Nat.card (H ⊓ P.lower i : Subgroup G) : ℚ) /
+        (Nat.card (H ⊓ P.lower 0 : Subgroup G) : ℚ)) *
+      (chapter12FixedSpaceCodimension (H ⊓ P.lower i) ρ : ℚ))
 
 theorem chapter12_fixed_space_codimension_intersection_eq_comap
     {G V : Type*} [Group G] [Fintype G]
@@ -74,16 +74,16 @@ theorem chapter12_lower_subgroup_restriction_formula
 upstairs conductor is represented by the explicit intersection/fixed-space
 ledger on the right-hand side. -/
 theorem chapter12_restriction_uses_intersection_fixed_spaces
-    {G H V : Type*} [Group G] [Fintype G] [AddCommGroup V] [Module ℚ V]
+    {G V : Type*} [Group G] [Fintype G] [AddCommGroup V] [Module ℚ V]
     [FiniteDimensional ℚ V]
     (pG : Chapter12ConductorProfile G) (Hsub : Subgroup G)
     (ρ : Representation ℚ G V) :
     chapter12RestrictionConductorSum pG.ramification Hsub ρ =
-      ∑ i in Finset.range (pG.ramification.bound + 1),
-        ((Nat.card (Hsub ⊓ pG.ramification.lower i) : ℚ) /
-            (Nat.card (Hsub ⊓ pG.ramification.lower 0) : ℚ)) *
+      Finset.sum (Finset.range (pG.ramification.bound + 1)) (fun i =>
+        ((Nat.card (Hsub ⊓ pG.ramification.lower i : Subgroup G) : ℚ) /
+            (Nat.card (Hsub ⊓ pG.ramification.lower 0 : Subgroup G) : ℚ)) *
           (chapter12FixedSpaceCodimension
-            (Hsub ⊓ pG.ramification.lower i) ρ : ℚ) := by
+            (Hsub ⊓ pG.ramification.lower i) ρ : ℚ)) := by
   rfl
 
 /- Upper-numbering comparison data isolates the exact transition statements

@@ -73,7 +73,9 @@ theorem chapter08_tame_radical_extension_profile
     ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
       q.degree = e ∧ q.ramificationIndex = e ∧ q.residueDegree = 1 ∧
         LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10TotallyRamified q := by
-  refine ⟨{ degree := e, ramificationIndex := e, residueDegree := 1 }, rfl, rfl, rfl, rfl⟩
+  refine ⟨{ degree := e, ramificationIndex := e, residueDegree := 1 }, rfl, rfl, rfl, ?_⟩
+  change e = e ∧ 1 = 1
+  exact ⟨rfl, rfl⟩
 
 /-- The ratio by which a Kummer automorphism acts on a chosen radical root.
 -/
@@ -116,8 +118,8 @@ theorem chapter08_kummer_radical_is_galois_with_roots_of_unity
   have H : Irreducible (X ^ e - C a) := by
     simpa [chapter08KummerPolynomial] using
       (Fact.out : Irreducible (chapter08KummerPolynomial a e))
-  letI : Fact (Irreducible (X ^ e - C a)) := ⟨H⟩
-  letI : IsSplittingField K (chapter08KummerRadicalField K a e)
+  let _ : Fact (Irreducible (X ^ e - C a)) := ⟨H⟩
+  let _ : IsSplittingField K (chapter08KummerRadicalField K a e)
       (X ^ e - C a) := isSplittingField_AdjoinRoot_X_pow_sub_C hζ H
   exact ⟨isGalois_of_isSplittingField_X_pow_sub_C hζ H _,
     ⟨autAdjoinRootXPowSubCEquiv hζ H⟩⟩
@@ -155,7 +157,9 @@ theorem chapter08_prime_to_p_roots_of_unity_are_unramified
     { degree := Module.finrank K K'
       ramificationIndex := 1
       residueDegree := Module.finrank K K' }
-  exact ⟨q, rfl, rfl, rfl, rfl⟩
+  refine ⟨q, rfl, rfl, rfl, ?_⟩
+  change q.ramificationIndex = 1 ∧ q.residueDegree = q.degree
+  exact ⟨rfl, rfl⟩
 
 /-- The formal derivative of a prime-exponent radical polynomial. -/
 theorem chapter08_prime_radical_derivative_formula
@@ -171,7 +175,7 @@ theorem chapter08_prime_radical_is_wild_in_equal_characteristic
     {K : Type*} [Field K] (a : K) (p : ℕ) [CharP K p] :
     (chapter08KummerPolynomial a p).derivative = 0 := by
   rw [chapter08_prime_radical_derivative_formula]
-  simp [CharP.cast_eq_zero K p]
+  simp
 
 /-- In mixed characteristic the derivative coefficients are all in the
 maximal ideal when the residue characteristic divides the exponent;

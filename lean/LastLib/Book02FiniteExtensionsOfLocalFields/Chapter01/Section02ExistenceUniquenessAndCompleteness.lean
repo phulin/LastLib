@@ -10,8 +10,10 @@ open scoped Polynomial TensorProduct WithZero
 
 /-! # Book 2, Chapter 1, Section 1.2
 
-This file records Theorem 1.1, the henselian-versus-complete distinction, and
-the concrete Gaussian example at the prime `5`.
+This file records the henselian-versus-complete distinction and the concrete
+Gaussian example at the prime `5`; the uniqueness bridge is exported by the
+leaf interface in Section 1.1 so later chapter modules can import it without
+creating an import cycle through this section.
 -/
 
 /-! ### Existence, uniqueness, and branches
@@ -30,44 +32,6 @@ theorem chapter01_algebraic_extension_exists
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ContractsTo
         vK.valuationSubring.toSubring W.toSubring := by
   exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_algebraic_valuation_extension_exists vK
-
-/-- Adic completeness of the valuation ring implies henselianity of the field. -/
-theorem chapter01_complete_field_is_henselian
-    {K Γ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ]
-    (vK : Valuation K Γ)
-    (hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal vK.valuationSubring)
-      vK.valuationSubring) :
-    HenselianLocalRing vK.valuationSubring := by
-  exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.complete_separated_local_ring_is_henselian
-    hcomplete
-
-/-- Henselianity, rather than completeness, is enough for uniqueness of an algebraic extension. -/
-theorem chapter01_henselian_discrete_field_unique_extension
-    {K L Γ : Type u} [Field K] [Field L] [Algebra K L]
-    [Algebra.IsAlgebraic K L]
-    [LinearOrderedCommGroupWithZero Γ]
-    (vK : Valuation K Γ) [Valuation.IsRankOneDiscrete vK]
-    (hH : HenselianLocalRing vK.valuationSubring) :
-    LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.hasUniqueValuationExtension vK L := by
-  have hiff :=
-    List.TFAE.out
-      (LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.henselian_uniqueness_criterion vK) 0 1
-  have hall :
-      LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.hasUniqueExtensionToEveryAlgebraicField vK :=
-    hiff.mp hH
-  exact hall L
-
-/-- Theorem 1.1, in the heterogeneous value-group interface. -/
-theorem chapter01_theorem_1_1
-    {K L Γ : Type u} [Field K] [Field L] [Algebra K L]
-    [Algebra.IsAlgebraic K L]
-    [LinearOrderedCommGroupWithZero Γ]
-    (vK : Valuation K Γ) [Valuation.IsRankOneDiscrete vK]
-    (hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal vK.valuationSubring)
-      vK.valuationSubring) :
-    LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.hasUniqueValuationExtension vK L := by
-  exact chapter01_henselian_discrete_field_unique_extension vK
-    (chapter01_complete_field_is_henselian vK hcomplete)
 
 /-! ### The prime/valuation branch interface -/
 

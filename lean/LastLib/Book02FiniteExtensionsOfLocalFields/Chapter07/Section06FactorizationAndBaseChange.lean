@@ -10,6 +10,8 @@ open scoped BigOperators TensorProduct
 
 noncomputable section
 
+universe uFactor
+
 -- The tensor product has a canonical right-factor algebra structure, but
 -- Mathlib keeps it local to avoid ambiguity with the left-factor action.
 attribute [local instance] Algebra.TensorProduct.rightAlgebra
@@ -126,7 +128,7 @@ theorem chapter07_unramified_residue_compositum_and_intersection
     [Algebra K Ω] [Algebra k κ]
     (K₁ K₂ : IntermediateField K Ω)
     [FiniteDimensional K K₁] [FiniteDimensional K K₂]
-    [FiniteDimensional K (K₁ ⊔ K₂)] [FiniteDimensional K (K₁ ⊓ K₂)]
+    [FiniteDimensional K ↥(K₁ ⊔ K₂)] [FiniteDimensional K ↥(K₁ ⊓ K₂)]
     (S₁ : Chapter07IntermediateResidueShadow K Ω k κ K₁)
     (S₂ : Chapter07IntermediateResidueShadow K Ω k κ K₂)
     (S₁₂ : Chapter07IntermediateResidueShadow K Ω k κ (K₁ ⊔ K₂))
@@ -151,11 +153,11 @@ structure Chapter07UnramifiedScalarExtensionProduct
     [Algebra k k'] [Algebra k l] (r : ℕ)
     [FiniteDimensional K K'] [FiniteDimensional K L]
     [FiniteDimensional k l] where
-  factor : Fin r → Type*
+  factor : Fin r → Type uFactor
   [factorField : ∀ i, Field (factor i)]
   [factorAlgebra : ∀ i, Algebra K' (factor i)]
   [factorFinite : ∀ i, FiniteDimensional K' (factor i)]
-  residue : Fin r → Type*
+  residue : Fin r → Type uFactor
   [residueField : ∀ i, Field (residue i)]
   [residueAlgebra : ∀ i, Algebra k' (residue i)]
   [residueFinite : ∀ i, FiniteDimensional k' (residue i)]

@@ -1,0 +1,13 @@
+import LastLib.Book04AdelesAndIdeles.Chapter03.Section01TheAlgebraicConstruction
+import LastLib.Book04AdelesAndIdeles.Chapter03.Section02TheRestrictedProductTopology
+import LastLib.Book04AdelesAndIdeles.Chapter03.Section03LocalCompactnessAndCompactOpens
+import LastLib.Book04AdelesAndIdeles.Chapter03.Section04MappingProperties
+import LastLib.Book04AdelesAndIdeles.Chapter03.Section05RestrictedProductsAsIncreasingUnions
+import LastLib.Book04AdelesAndIdeles.Chapter03.Section06CompletenessCountabilityAndQuotients
+import LastLib.Book04AdelesAndIdeles.Chapter03.Section07DependenceOnDistinguishedSubgroups
+
+namespace LastLib.Book04AdelesAndIdeles.Chapter03
+
+/-! Aggregator for Book 4, Chapter 3: restricted products. -/
+
+end LastLib.Book04AdelesAndIdeles.Chapter03
