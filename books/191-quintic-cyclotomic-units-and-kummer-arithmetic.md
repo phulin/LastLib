@@ -8,9 +8,10 @@
    - [The architecture of the argument](#13-the-architecture-of-the-argument)
 2. [Coordinates, symmetries, and the real subfield](#2-coordinates-symmetries-and-the-real-subfield)
    - [The cyclotomic equation](#21-the-cyclotomic-equation)
-   - [Galois automorphisms and conjugation](#22-galois-automorphisms-and-conjugation)
-   - [The real quadratic core](#23-the-real-quadratic-core)
-   - [Integral coordinates](#24-integral-coordinates)
+   - [Integral basis, discriminant, and class number](#22-integral-basis-discriminant-and-class-number)
+   - [Galois automorphisms and conjugation](#23-galois-automorphisms-and-conjugation)
+   - [The real quadratic core](#24-the-real-quadratic-core)
+   - [Integral coordinates](#25-integral-coordinates)
 3. [The unique prime above five](#3-the-unique-prime-above-five)
    - [The uniformizer](#31-the-uniformizer)
    - [The exact factorization of five](#32-the-exact-factorization-of-five)
@@ -91,7 +92,8 @@ $$
 K=\mathbf Q(\zeta),\qquad \zeta^5=1,\qquad \zeta\ne1.
 $$
 
-The following three facts are the permitted starting data for this volume:
+We write $\mathcal O=\mathcal O_K$ for the ring of integers of $K$. The three
+structural facts on which the later ideal arguments depend are
 
 $$
 \mathcal O_K=\mathbf Z[\zeta],\qquad
@@ -100,7 +102,12 @@ $$
 \operatorname{Cl}(\mathcal O_K)=1.
 $$
 
-We write $\mathcal O=\mathcal O_K$. Since the ring of integers of a number field is a Dedekind domain, triviality of its ideal class group says that every nonzero ideal is principal. Thus $\mathcal O$ is a principal ideal domain and hence a unique factorization domain. We will use ideal factorization first and pass to element factorization only afterward; this prevents units from being lost.
+These are not assumptions: Theorem 2.1 proves all three from the cyclotomic
+polynomial, an index calculation, and Minkowski's theorem. In particular, it
+will follow before the first ideal extraction that every nonzero ideal of
+$\mathcal O$ is principal. We will nevertheless use ideal factorization first
+and pass to element factorization only afterward; this prevents units from
+being lost.
 
 Our distinguished elements are
 
@@ -151,6 +158,7 @@ $$
 \Phi_5(T)=T^4+T^3+T^2+T+1.
 $$
 
+It is monic with integer coefficients, so $\zeta$ is an algebraic integer.
 Consequently $[K:\mathbf Q]=4$, and
 
 $$
@@ -165,11 +173,251 @@ a_0+a_1\zeta+a_2\zeta^2+a_3\zeta^3,
 \qquad a_i\in\mathbf Q,
 $$
 
-and it belongs to $\mathcal O$ exactly when the four coefficients may be taken in $\mathbf Z$. The relation (2.1) is more than a way to shorten powers: it makes all four nontrivial fifth roots symmetric and turns every conjugate of $1-\zeta$ into an explicit associate.
+and the integer combinations form the order
+
+$$
+A=\mathbf Z[\zeta].
+$$
+
+The next section proves that this order is the full ring of integers; that
+conclusion must not be built into the choice of coordinates. The relation
+(2.1) is more than a way to shorten powers: it makes all four nontrivial fifth
+roots symmetric and turns every conjugate of $1-\zeta$ into an explicit
+associate.
 
 The four embeddings of $K$ into $\mathbf C$ send $\zeta$ to $\zeta,\zeta^2,\zeta^3,\zeta^4$. There are no real embeddings. They occur in two conjugate pairs, so the norm of every nonzero element is real, and the norm of a unit is positive. In particular, a unit of $\mathcal O$ always has absolute norm $1$, not $-1$.
 
-### 2.2 Galois automorphisms and conjugation
+Thus $K$ is quartic and totally imaginary, with signature
+
+$$
+(r_1,r_2)=(0,2).
+$$
+
+This will determine both the sign of the discriminant and the archimedean
+factor in Minkowski's bound.
+
+### 2.2 Integral basis, discriminant, and class number
+
+We now prove the arithmetic facts announced in Section 1.2. The index step is
+essential: computing the discriminant of the visible order
+$\mathbf Z[\zeta]$ does not by itself prove that this order is maximal.
+
+**Theorem 2.1 (arithmetic foundation).** One has
+
+$$
+\boxed{
+\mathcal O_K=\mathbf Z[\zeta],\qquad
+\operatorname{disc}(K)=+125,\qquad
+\operatorname{Cl}(\mathcal O_K)=1.
+}
+$$
+
+Consequently $\mathcal O_K$ is a principal ideal domain, hence also a unique
+factorization domain.
+
+**Proof strategy.** First compute the discriminant of the power basis from
+$\Phi_5'$. Its only possible defect from the full ring of integers is then an
+index of five. The shifted polynomial for $\lambda=1-\zeta$ gives distinct
+$5$-adic values for the four power-basis terms, excluding that index. Finally,
+the Minkowski bound is strictly less than two, so every ideal class contains
+the unit ideal.
+
+**Proof.** We use the convention
+
+$$
+\operatorname{disc}(b_1,\ldots,b_4)
+=\det\bigl(\operatorname{Tr}_{K/\mathbf Q}(b_ib_j)\bigr).
+$$
+
+For a monic separable irreducible polynomial $f$ of degree four, let $\alpha$
+be one root and let $\alpha_1,\ldots,\alpha_4$ be its conjugates. The
+Vandermonde determinant gives
+
+$$
+\operatorname{disc}(1,\alpha,\alpha^2,\alpha^3)
+=\prod_{i<j}(\alpha_i-\alpha_j)^2
+=(-1)^6\prod_{i=1}^4 f'(\alpha_i).
+$$
+
+Take $f=\Phi_5$. Differentiating
+
+$$
+(T-1)\Phi_5(T)=T^5-1
+$$
+
+and evaluating at $\zeta^a$, for $1\le a\le4$, gives
+
+$$
+\Phi_5'(\zeta^a)=\frac{5\zeta^{4a}}{\zeta^a-1}.
+$$
+
+Now $\zeta^{4(1+2+3+4)}=\zeta^{40}=1$, while the four minus signs cancel in
+
+$$
+\prod_{a=1}^4(\zeta^a-1)
+=\prod_{a=1}^4(1-\zeta^a)
+=\Phi_5(1)=5.
+$$
+
+Therefore the visible order $A=\mathbf Z[\zeta]$ has
+
+$$
+\boxed{\operatorname{disc}(A)=5^3=125.}
+\tag{2.2}
+$$
+
+The sign here is positive, not merely an absolute-value convention. It agrees
+with the general sign $(-1)^{r_2}$ because $r_2=2$.
+
+Let
+
+$$
+m=[\mathcal O_K:A].
+$$
+
+The discriminant-index formula says
+
+$$
+\operatorname{disc}(A)=m^2\operatorname{disc}(K).
+\tag{2.3}
+$$
+
+Since the field discriminant is an integer, (2.2) shows that $m^2$ divides
+$5^3$. Hence $m=1$ or $m=5$. We rule out the latter directly.
+
+For the shifted element $\lambda=1-\zeta$, consider
+
+$$
+g(X)=\Phi_5(1-X)
+=X^4-5X^3+10X^2-10X+5.
+$$
+
+We have $g(\lambda)=0$, and $g$ is Eisenstein at $5$. We spell out the
+valuation argument needed for maximality instead of treating that observation
+as an integral-basis black box. The defining equation rearranges to
+
+$$
+\lambda^4=5(\lambda^3-2\lambda^2+2\lambda-1).
+\tag{2.4}
+$$
+
+Choose a prime ideal $\mathfrak P$ of $\mathcal O_K$ above $5$, and let
+$\widetilde\zeta$ be the residue class of $\zeta$. In the residue field,
+characteristic five gives
+
+$$
+(\widetilde\zeta-1)^5=\widetilde\zeta^5-1=0,
+$$
+
+so $\widetilde\zeta=1$ and $\lambda\in\mathfrak P$. The factor in parentheses
+on the right of (2.4) is congruent to $-1$ modulo $\mathfrak P$ and is
+therefore a $\mathfrak P$-adic unit. For the normalized valuation
+$v_{\mathfrak P}$,
+
+$$
+4v_{\mathfrak P}(\lambda)
+=v_{\mathfrak P}(5)
+=e(\mathfrak P/5).
+\tag{2.5}
+$$
+
+The value $v_{\mathfrak P}(\lambda)$ is a positive integer, so four divides
+$e(\mathfrak P/5)$. Since the ramification index is at most
+$[K:\mathbf Q]=4$, equality holds:
+
+$$
+e(\mathfrak P/5)=4,\qquad v_{\mathfrak P}(\lambda)=1.
+$$
+
+Indeed, the fundamental identity
+
+$$
+[K:\mathbf Q]=\sum_{\mathfrak Q\mid5}
+e(\mathfrak Q/5)f(\mathfrak Q/5)=4
+$$
+
+now forces $f(\mathfrak P/5)=1$ and leaves no room for any other prime above
+$5$. This preliminary argument is used only to settle the index; Chapter 3
+will identify the same prime explicitly as $(\lambda)$ and record the exact
+factorization of $5$.
+
+Suppose for contradiction that $m=5$. The finite group
+$\mathcal O_K/A$ has order five, so $5\mathcal O_K\subseteq A$. The binomial
+change from $1,\zeta,\zeta^2,\zeta^3$ to
+$1,\lambda,\lambda^2,\lambda^3$ is triangular with diagonal entries
+$1,-1,1,-1$, hence unimodular. Thus this is also a $\mathbf Z$-basis of $A$,
+and every $\alpha\in\mathcal O_K$ can be written
+
+$$
+\alpha=b_0+b_1\lambda+b_2\lambda^2+b_3\lambda^3,
+\qquad b_i\in\tfrac15\mathbf Z.
+$$
+
+There is nothing to prove for $\alpha=0$. Otherwise, for each nonzero summand,
+
+$$
+v_{\mathfrak P}(b_i\lambda^i)=4v_5(b_i)+i.
+$$
+
+Here $v_5$ is the usual valuation extended to $\mathbf Q^\times$. The finite
+values among these four terms are pairwise distinct modulo four, so the least
+occurs only once and cannot cancel. Since $\alpha$ is integral,
+$v_{\mathfrak P}(\alpha)\ge0$; hence every displayed summand has nonnegative
+value. For $0\le i\le3$, the inequality
+$4v_5(b_i)+i\ge0$ forces $v_5(b_i)\ge0$. Because the only possible
+denominator of $b_i$ is five, all $b_i$ are integers. Thus every element of
+$\mathcal O_K$ already lies in $A$, contradicting $m=5$. We have proved
+
+$$
+\mathcal O_K=A=\mathbf Z[\zeta],
+\qquad
+\operatorname{disc}(K)=+125.
+$$
+
+It remains to prove the class-number assertion. Minkowski's ideal-class
+theorem says that every ideal class of a degree-$n$ field of signature
+$(r_1,r_2)$ contains a nonzero integral ideal $I$ satisfying
+
+$$
+N(I)\le
+\left(\frac4\pi\right)^{r_2}
+\frac{n!}{n^n}\sqrt{|\operatorname{disc}(K)|}.
+$$
+
+Here $N(I)=|\mathcal O_K/I|$ is the absolute ideal norm. In our field,
+$n=4$, $r_2=2$, and $|\operatorname{disc}(K)|=125$, so the exact bound is
+
+$$
+N(I)\le
+\left(\frac4\pi\right)^2\frac{4!}{4^4}\sqrt{125}
+=\frac{15\sqrt5}{2\pi^2}<2.
+\tag{2.6}
+$$
+
+For the last strict inequality,
+
+$$
+(15\sqrt5)^2=1125<1296=36^2,\qquad \pi>3,
+$$
+
+so $15\sqrt5/(2\pi^2)<36/18=2$. The norm of a nonzero integral ideal is a
+positive integer, so (2.6) forces $N(I)=1$. Then
+$|\mathcal O_K/I|=1$, whence $I=\mathcal O_K$. Every ideal class is therefore
+trivial:
+
+$$
+\operatorname{Cl}(\mathcal O_K)=1.
+$$
+
+The ring of integers is a Dedekind domain, and a Dedekind domain with trivial
+ideal class group has every nonzero ideal principal. Thus $\mathcal O_K$ is a
+PID, and every PID is a UFD. $\square$
+
+This proof is deliberately field-specific. It uses neither a general formula
+for cyclotomic class numbers nor a classification of imaginary quadratic
+fields.
+
+### 2.3 Galois automorphisms and conjugation
 
 The Galois group is
 
@@ -195,7 +443,7 @@ $$
 
 for rational $x,y$. This simple pairing is the source of both positivity of the norm form and the conjugate-quotient identities used after fifth-power extraction.
 
-### 2.3 The real quadratic core
+### 2.4 The real quadratic core
 
 Put
 
@@ -235,7 +483,7 @@ $$
 \eta^2-\eta-1=0,\qquad
 \eta'=1-\eta=-\eta^{-1},\qquad
 N_{K^+/\mathbf Q}(\eta)=-1.
-\tag{2.2}
+\tag{2.7}
 $$
 
 Here the prime denotes the nontrivial conjugation of $K^+/\mathbf Q$. Because $K/K^+$ has degree two and $\eta$ is fixed by complex conjugation,
@@ -271,12 +519,12 @@ an integral linear combination of $1$ and $\eta=1+t$. Conversely $\eta$ is visib
 
 $$
 \mathcal O_{K^+}=\mathbf Z[\eta].
-\tag{2.3}
+\tag{2.8}
 $$
 
 The field $K^+$ is not a side calculation. Complex conjugation will reduce the unit problem in $K$ to the elementary Pell-type unit problem in this real quadratic ring.
 
-### 2.4 Integral coordinates
+### 2.5 Integral coordinates
 
 Since $\zeta=1-\lambda$, the ring also has the integral basis
 
@@ -295,7 +543,7 @@ and every algebraic integer has a unique $\lambda$-coordinate expansion
 $$
 \alpha=b_0+b_1\lambda+b_2\lambda^2+b_3\lambda^3,
 \qquad b_i\in\mathbf Z.
-\tag{2.4}
+\tag{2.9}
 $$
 
 These are global coordinates, not an infinite power series. Nevertheless, after localizing at $(\lambda)$ they behave exactly like the first four digits in a totally ramified extension of $\mathbf Q_5$. The distinct residue classes of their valuations modulo four will make cancellation impossible between the four displayed terms.
@@ -335,7 +583,10 @@ $$
 \tag{3.3}
 $$
 
-This already identifies a prime above $5$. The next identity shows that it is the only one and that it is totally ramified.
+This identifies the prime above $5$ concretely. The index argument in Theorem
+2.1 already forced uniqueness and total ramification; the next identity
+recovers both facts inside $\mathcal O$ and, more importantly, records the
+exact unit relating $5$ and $\lambda^4$.
 
 ### 3.2 The exact factorization of five
 
@@ -371,7 +622,7 @@ $$
 \tag{3.6}
 $$
 
-Thus $\mathfrak p$ is the unique prime of $\mathcal O$ above $5$, with ramification index four and residue degree one. The degree check is $4\cdot1=[K:\mathbf Q]$. The discriminant input says that no rational prime other than $5$ ramifies; equation (3.6) gives the finer structure at the exceptional prime directly.
+Thus $\mathfrak p$ is the unique prime of $\mathcal O$ above $5$, with ramification index four and residue degree one. The degree check is $4\cdot1=[K:\mathbf Q]$. Theorem 2.1 gives $\operatorname{disc}(K)=125$, so no rational prime other than $5$ ramifies; equation (3.6) gives the finer structure at the exceptional prime directly.
 
 It is important not to abbreviate (3.6) as “$5=\lambda^4$.” The two elements differ by the nontrivial unit $\zeta^3\eta^2$. Ideal divisibility ignores this unit, but congruences and exact fifth-power equations do not.
 
@@ -413,7 +664,7 @@ In particular all four conjugates of $\lambda$ are uniformizers and are associat
 
 ### 3.4 A coordinate formula for the valuation
 
-The basis (2.4) makes $v_{\mathfrak p}$ computable without factoring an element. If
+The basis (2.9) makes $v_{\mathfrak p}$ computable without factoring an element. If
 
 $$
 \alpha=b_0+b_1\lambda+b_2\lambda^2+b_3\lambda^3\ne0,
@@ -845,7 +1096,8 @@ The last two points warn against using the sign of a real norm as though it were
 
 ### 6.1 Why congruence modulo powers of $\lambda$ matters
 
-Unique factorization turns an ideal fifth power into an element of the form
+Unique factorization of ideals, followed by the principality proved in
+Theorem 2.1, turns an ideal fifth power into an element of the form
 
 $$
 u\alpha^5,\qquad u\in\mathcal O^\times.
@@ -1118,7 +1370,8 @@ One should not reverse Proposition 7.1 for arbitrary algebraic integers. For ins
 
 ### 7.2 Extracting fifth powers from ideals
 
-The class-number-one input enters in a precise two-step argument.
+The class-number-one conclusion of Theorem 2.1 enters in a precise two-step
+argument.
 
 **Proposition 7.2 (ideal-to-element extraction).** Let $0\ne\alpha\in\mathcal O$.
 
@@ -1137,9 +1390,9 @@ The class-number-one input enters in a precise two-step argument.
    \alpha=u\lambda^r\beta^5.
    $$
 
-**Proof strategy.** Divide the ideal by the indicated power of $\mathfrak p$. The remaining ideal has all exponents divisible by five, so it is the fifth power of an ideal. Class number one makes that ideal principal. Equality of principal ideals then leaves exactly a unit.
+**Proof strategy.** Divide the ideal by the indicated power of $\mathfrak p$. The remaining ideal has all exponents divisible by five, so it is the fifth power of an ideal. Theorem 2.1 makes that ideal principal. Equality of principal ideals then leaves exactly a unit.
 
-**Proof.** In the first case, unique factorization of ideals gives $(\alpha)=\mathfrak a^5$. Since every ideal is principal, write $\mathfrak a=(\beta)$. Then $(\alpha)=(\beta^5)$, so $\alpha=u\beta^5$ for a unit $u$. In the second case,
+**Proof.** In the first case, unique factorization of ideals gives $(\alpha)=\mathfrak a^5$. By Theorem 2.1, write $\mathfrak a=(\beta)$. Then $(\alpha)=(\beta^5)$, so $\alpha=u\beta^5$ for a unit $u$. In the second case,
 
 $$
 (\alpha)=\mathfrak p^r\mathfrak a^5=(\lambda^r\beta^5)
@@ -1187,7 +1440,7 @@ $$
 \qquad m_{\mathfrak q}\in\mathbf Z.
 $$
 
-If every $m_{\mathfrak q}$ is divisible by five, then $(a)=\mathfrak a^5$ for a fractional ideal $\mathfrak a$. Class number one makes $\mathfrak a=(b)$ for some $b\in K^\times$, so
+If every $m_{\mathfrak q}$ is divisible by five, then $(a)=\mathfrak a^5$ for a fractional ideal $\mathfrak a$. Theorem 2.1 makes $\mathfrak a=(b)$ for some $b\in K^\times$, so
 
 $$
 a=ub^5
@@ -1305,7 +1558,18 @@ $$
 
 If $5\nmid v_{\mathfrak q}(a)$, equation (8.2) forces $5\mid e$. Since $[L:K]=5$, we have $e=5$. The fundamental equality then forces residue degree one and leaves room for no second prime above $\mathfrak q$, so the prime is totally ramified.
 
-Now suppose $5\mid v_{\mathfrak q}(a)$. Because $\mathfrak q$ is principal, changing $a$ by a fifth power lets us arrange $v_{\mathfrak q}(a)=0$. Put $A=\mathcal O_{\mathfrak q}$. The finite free $A$-algebra
+Now suppose $5\mid v_{\mathfrak q}(a)$, say
+$v_{\mathfrak q}(a)=5m$. Theorem 2.1 gives
+$\mathfrak q=(\pi_{\mathfrak q})$. Replacing $a$ by the Kummer-equivalent
+radicand
+
+$$
+a/\pi_{\mathfrak q}^{5m}
+$$
+
+does not change $K(\sqrt[5]{a})$ and makes its $\mathfrak q$-valuation zero.
+Rename this radicand $a$, and put $A=\mathcal O_{\mathfrak q}$. The finite
+free $A$-algebra
 
 $$
 B=A[T]/(T^5-a)
@@ -1332,7 +1596,10 @@ The thresholds cannot be lowered. The class of $\eta$ has zero valuation everywh
 
 Three examples distinguish the available Kummer classes.
 
-1. For a prime element $\pi_{\mathfrak q}$ with $\mathfrak q\nmid5$, the extension
+1. For a prime ideal $\mathfrak q\nmid(5)$, choose a generator
+   $\pi_{\mathfrak q}$ with
+   $\mathfrak q=(\pi_{\mathfrak q})$; such a generator exists by Theorem 2.1.
+   The extension
    $K(\sqrt[5]{\pi_{\mathfrak q}})/K$ is totally ramified at $\mathfrak q$ by Theorem 8.3. Its radicand has an obvious valuation obstruction to being a fifth power.
 2. The extension $K(\sqrt[5]{\eta})/K$ is unramified away from $\mathfrak p$ because $\eta$ is a global unit. It is nontrivial because $\eta$ is not a fifth power. Its obstruction is the real unit exponent $b=1$ in (5.5).
 3. The extension $K(\sqrt[5]{\zeta})/K=K(\zeta_{25})$ is also unramified away from $\mathfrak p$. Its obstruction is the torsion exponent $a=1$. The identity with $K(\zeta_{25})$ follows because a fifth root of $\zeta_5$ is a primitive twenty-fifth root of unity.
@@ -1847,7 +2114,17 @@ Changing this order often creates a circular argument. In particular, one cannot
 
 ### 11.4 What has been achieved
 
-The arithmetic of $K=\mathbf Q(\zeta_5)$ is now explicit at every point needed for quintic Diophantine descent. The ring $\mathcal O=\mathbf Z[\zeta]$ has one prime
+The arithmetic of $K=\mathbf Q(\zeta_5)$ is now explicit at every point needed
+for quintic Diophantine descent. Theorem 2.1 proves
+
+$$
+\mathcal O_K=\mathbf Z[\zeta],\qquad
+\operatorname{disc}(K)=+125,\qquad
+\operatorname{Cl}(\mathcal O_K)=1,
+$$
+
+so every later passage from an ideal fifth power to an element fifth power is
+justified. The ring $\mathcal O=\mathbf Z[\zeta]$ has one prime
 
 $$
 \mathfrak p=(1-\zeta)
