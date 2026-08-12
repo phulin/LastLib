@@ -63,12 +63,6 @@
     - [Unramified base change in the filtered description](#112-unramified-base-change-in-the-filtered-description)
     - [Coefficient extension and the trace dual](#113-coefficient-extension-and-the-trace-dual)
     - [Descent requires integral data](#114-descent-requires-integral-data)
-12. [The unitary-surface carrier](#12-the-unitary-surface-carrier)
-    - [The honest four-dimensional lattice](#121-the-honest-four-dimensional-lattice)
-    - [Integral cancellation data](#122-integral-cancellation-data)
-    - [The surface multiplicity lattice](#123-the-surface-multiplicity-lattice)
-    - [Finite flatness at the coefficient prime](#124-finite-flatness-at-the-coefficient-prime)
-    - [Local cancellation away from the coefficient prime](#125-local-cancellation-away-from-the-coefficient-prime)
 13. [Independence and its limits](#13-independence-and-its-limits)
     - [Projector and presentation independence](#131-projector-and-presentation-independence)
     - [Splitting fields and matrix coordinates](#132-splitting-fields-and-matrix-coordinates)
@@ -79,13 +73,11 @@
     - [A rational projector with a nonunit denominator](#141-a-rational-projector-with-a-nonunit-denominator)
     - [A stable lattice with the wrong residual extension](#142-a-stable-lattice-with-the-wrong-residual-extension)
     - [Rational crystallinity without an integral lattice](#143-rational-crystallinity-without-an-integral-lattice)
-    - [A rational surface factor without integral cancellation](#144-a-rational-surface-factor-without-integral-cancellation)
-    - [Flat base change versus descent](#145-flat-base-change-versus-descent)
+    - [Flat base change versus descent](#144-flat-base-change-versus-descent)
 15. [The canonical-lattice and quotient theorem](#15-the-canonical-lattice-and-quotient-theorem)
     - [The hypothesis ledger](#151-the-hypothesis-ledger)
     - [The curve theorem](#152-the-curve-theorem)
-    - [The surface theorem](#153-the-surface-theorem)
-    - [Duality and base-change refinements](#154-duality-and-base-change-refinements)
+    - [Duality and base-change refinements](#153-duality-and-base-change-refinements)
 16. [Dependency audit and conclusion](#16-dependency-audit-and-conclusion)
     - [Exact use of the prerequisites](#161-exact-use-of-the-prerequisites)
     - [What has been proved](#162-what-has-been-proved)
@@ -99,7 +91,7 @@ A weight-two automorphic packet produces a two-dimensional representation over a
 
 The missing integral object matters most at the coefficient prime. Let $L_\lambda$ be a finite extension of $\mathbf Q_\ell$, let $\mathcal O_\lambda$ be its ring of integers, and let $V_\lambda$ be a two-dimensional $L_\lambda$-representation. Any continuous action preserves some full $\mathcal O_\lambda$-lattice. Different stable lattices can have different nonsplit residual extensions, however, and an arbitrary one need not arise from a finite-flat group over a place above $\ell$. Existence of a stable lattice is therefore far weaker than the integral statement required in arithmetic applications.
 
-Geometry supplies a preferred ambient lattice. For a compact Shimura curve it is integral degree-one cohomology; for a compact unitary surface it is torsion-free integral degree-two cohomology. The packet subspace meets that ambient lattice in a saturated lattice. This intersection is canonical relative to the geometric carrier, but it can still have dimension larger than two because it retains the finite Hecke multiplicity. Removing that multiplicity integrally requires a split order and a projective generator, not merely a rational matrix-algebra isomorphism.
+Geometry supplies a preferred ambient lattice: integral degree-one cohomology of a compact Shimura curve. The packet subspace meets that ambient lattice in a saturated lattice. This intersection is canonical relative to the geometric carrier, but it can still have dimension larger than two because it retains the finite Hecke multiplicity. Removing that multiplicity integrally requires a split order and a projective generator, not merely a rational matrix-algebra isomorphism.
 
 At the coefficient prime a second issue appears. Even after a free rank-two lattice $T_\lambda$ has been obtained, the quotients
 
@@ -164,8 +156,6 @@ Second, integral Morita theory removes oldvector multiplicity. It works exactly 
 Third, an integral coefficient-prime carrier is supplied. In the geometric route it is the torsion of a good-reduction abelian scheme with integral coefficient action. In the filtered route it is a strongly divisible lattice of weights $[0,1]$ over an absolutely unramified base with $p>2$.
 
 Fourth, every open coefficient quotient is constructed by closing the generic relation submodule inside one finite-flat ambient group and taking the represented quotient. This produces the coefficient action and all transition maps simultaneously. Cartier duality, flat base change, and nested-ideal exact sequences then follow from the exact calculus of finite-flat groups.
-
-The surface case repeats the first two layers only after an integral cancellation datum is supplied. Rational surface cancellation is enough for a rational two-dimensional representation, but not for an integral rank-two lattice or a coefficient-prime finite-flat system.
 
 ## 2. Saturation and lattices over a coefficient DVR
 
@@ -326,7 +316,7 @@ $$
 M=H^i_{\mathrm{et}}(X_{\bar E},\mathcal O)/\text{torsion}
 $$
 
-in the degree under consideration. For a curve in degree one there is no torsion; for a surface we explicitly pass to the torsion-free quotient. Let $\mathbb T$ be the image in $\operatorname{End}_\mathcal O(M)$ of the integral Hecke correspondences which are defined on the selected component union. Then $\mathbb T$ is a finite torsion-free $\mathcal O$-algebra.
+in degree one. For a curve in degree one there is no torsion. Let $\mathbb T$ be the image in $\operatorname{End}_\mathcal O(M)$ of the integral Hecke correspondences which are defined on the selected component union. Then $\mathbb T$ is a finite torsion-free $\mathcal O$-algebra.
 
 The word “image” has three advantages. It makes $\mathbb T$ finite, makes its action faithful, and ensures that every equality in $\mathbb T$ is an equality of actual integral endomorphisms. Galois commutes with $\mathbb T$ because pullback and proper trace are defined over $E$.
 
@@ -1313,104 +1303,6 @@ Effective faithfully flat descent then produces a unique marked model over $R$. 
 
 In the Fontaine--Laffaille range, unramified descent data can be checked equivalently on the finite-flat groups, the filtered modules, or the supplied generic model system. Ramified descent is outside that equivalence. This is a hypothesis boundary rather than a failure of notation.
 
-## 12. The unitary-surface carrier
-
-### 12.1 The honest four-dimensional lattice
-
-Let $S_C/E$ be the compact unitary surface with two active real factors. Its noncharacter packet block in degree two is generally four-dimensional and pure of weight two. Let
-
-$$
-M^{\mathrm{surf}}_\lambda
-=H^2_{\mathrm{et}}(S_{C,\bar E},\mathcal O_\lambda)/\text{torsion} \tag{12.1}
-$$
-
-and let $V^{\mathrm{surf}}_{\Pi,\lambda}$ be the rational packet block. The canonical saturated surface packet lattice is
-
-$$
-M^{\mathrm{surf}}_{\Pi,\lambda}
-=M^{\mathrm{surf}}_\lambda
-\cap V^{\mathrm{surf}}_{\Pi,\lambda}. \tag{12.2}
-$$
-
-It is finite free, saturated, Galois stable, and stable under integral packet correspondences. Unless a cancellation algebra is supplied, this four-dimensional object is the end of the construction. Selecting the $(2,0)$ and $(0,2)$ Hodge lines does not produce a Galois-stable lattice.
-
-Integral Poincare duality on the torsion-free quotient can have a finite defect caused by adjacent-degree torsion. Therefore self-duality of (12.2) is an additional hypothesis, not a consequence of rational surface duality.
-
-### 12.2 Integral cancellation data
-
-An **integral surface cancellation datum at $\lambda$** consists of:
-
-1. a descended split order $\mathcal B_\Pi\simeq\operatorname{End}_\mathcal O(\mathcal R_\Pi)$ acting by integral algebraic correspondences on (12.2);
-2. a projective generator $\mathcal R_\Pi$, free of rank two over $\mathcal O$;
-3. a semilinear Galois action on $\mathcal B_\Pi$ and $\mathcal R_\Pi$ which normalizes the action on the surface lattice;
-4. an integral evaluation isomorphism
-
-   $$
-   \mathcal R_\Pi\otimes_\mathcal O\mathcal W_\Pi
-   \xrightarrow{\sim}M^{\mathrm{surf}}_{\Pi,\lambda}; \tag{12.3}
-   $$
-
-5. a factorization of the integral surface pairing into a perfect pairing on $\mathcal R_\Pi$ and the curve-normalized pairing on $\mathcal W_\Pi$;
-6. at a place above the coefficient prime, either a marked good-reduction abelian carrier for $\mathcal W_\Pi$ or a strongly divisible lattice satisfying (10.1).
-
-The first five clauses are the integral strengthening of rational cancellation. The sixth is new local information. A rational factorization of surface cohomology at $p$ does not say that the Hom lattice lies in the finite-flat essential image.
-
-For local--global compatibility away from $\ell$, one also needs the local nearby-cycle tensor factorization and pairing already used to separate monodromy on the Hom factor. That condition concerns the local Weil--Deligne parameter; it does not replace clause 6 at the coefficient prime.
-
-### 12.3 The surface multiplicity lattice
-
-Define
-
-$$
-T^{\mathrm{surf}}_{\Pi,\lambda}
-=\operatorname{Hom}_{\mathcal B_\Pi}
-(\mathcal R_\Pi,M^{\mathrm{surf}}_{\Pi,\lambda}). \tag{12.4}
-$$
-
-The Galois action is
-
-$$
-(g\cdot f)(r)=g\bigl(f(g^{-1}r)\bigr). \tag{12.5}
-$$
-
-It is $\mathcal B_\Pi$-linear because Galois acts compatibly on the algebra, module, and surface block.
-
-**Theorem 12.1 (integral surface extraction).** Under clauses 1--5 of the integral cancellation datum, $T^{\mathrm{surf}}_{\Pi,\lambda}$ is a finite free rank-two Galois lattice, evaluation (12.3) is canonical, and its rationalization is the established rank-two surface Hom factor. Its pairing has the curve-normalized target and is perfect.
-
-**Proof.** Integral Morita evaluation, Theorem 4.1, applied to the split order $\mathcal B_\Pi$ gives (12.3) and freeness. Rational dimension four divided by the rank-two cancellation module gives rank two. Formula (12.5) defines the continuous action and makes evaluation equivariant. Factoring the perfect surface pairing through the perfect pairing on $\mathcal R_\Pi$ leaves a perfect pairing on the Hom lattice because the adjoint evaluation maps are isomorphisms between finite free modules of matching ranks. $\square$
-
-If evaluation has a nonunit cokernel, the rational Hom factor still exists, and the Hom module remains a stable lattice after removing torsion. The theorem's canonical tensor factorization and perfect pairing do not.
-
-### 12.4 Finite flatness at the coefficient prime
-
-Clause 6 has two possible forms.
-
-In the geometric form, there is a good-reduction abelian scheme $\mathcal A_\Pi/R$ with integral coefficient action and a marked identification of $T^{\mathrm{surf}}_{\Pi,\lambda}$, in the stated covariance normalization, with its rank-two coefficient Tate factor. Chapters 7--9 then produce every quotient $T^{\mathrm{surf}}_{\Pi,\lambda}/I$ and all transition maps.
-
-In the filtered form, $p=\ell>2$, the local ground field is absolutely unramified, and the surface multiplicity lattice is the realization of a height-two strongly divisible lattice of weights $[0,1]$. Theorem 10.1 produces the same quotient package.
-
-**Corollary 12.2.** An integral cancellation datum satisfying either coefficient-prime clause produces coefficient-linear finite-flat models of every open-ideal quotient of the rank-two surface lattice, compatible with transitions, Cartier duality, and the allowed base changes.
-
-**Proof.** Apply Theorem 8.1 in the geometric case and Theorem 10.1 in the filtered case. Integral evaluation identifies the lattice to which those theorems apply with (12.4). $\square$
-
-Rational cancellation alone proves none of this. Nor does the fact that the ambient surface has a smooth proper model at the coefficient prime: smooth proper $p$-adic cohomology needs an integral comparison theorem before a chosen multiplicity lattice can be called finite flat.
-
-### 12.5 Local cancellation away from the coefficient prime
-
-At a finite place $u\nmid\ell$, the local cancellation datum identifies the nearby-cycle complex with the tensor product of a cancellation complex and a desired packet complex. If $N_R$, $N_V$, and $N_W$ are the logarithms of inertia on the cancellation, surface, and Hom factors, then
-
-$$
-N_V=N_R\otimes1+1\otimes N_W, \tag{12.6}
-$$
-
-and
-
-$$
-(N_Wf)(r)=N_V(f(r))-f(N_Rr). \tag{12.7}
-$$
-
-These formulas require the local tensor factorization; a generic rational tensor decomposition is not enough. They explain why the coefficient-prime assertion and away-from-$\ell$ local--global compatibility are complementary. The former comes from finite-flat or filtered integral geometry. The latter comes from nearby cycles with coefficients prime to the residue characteristic.
-
 ## 13. Independence and its limits
 
 ### 13.1 Projector and presentation independence
@@ -1437,7 +1329,7 @@ T_{\Pi,\lambda}\otimes_\mathcal O\mathcal O'
 \xrightarrow{\sim}T_{\Pi,\lambda'}. \tag{13.2}
 $$
 
-Changing matrix coordinates conjugates the order and transports the projective generator. Since (5.3) and (12.4) are intrinsic Hom modules, the resulting lattices are canonically isomorphic. Choosing one basis of the simple module merely writes this isomorphism as matrices.
+Changing matrix coordinates conjugates the order and transports the projective generator. Since (5.3) is an intrinsic Hom module, the resulting lattices are canonically isomorphic. Choosing one basis of the simple module merely writes this isomorphism as matrices.
 
 If the rational algebra splits only after a ramified coefficient extension, the trace dual and different described in Section 11.3 must be retained. A rational splitting does not prove that the original integral order was already Morita-split.
 
@@ -1465,9 +1357,9 @@ This is the main limit of absolute canonicity. The construction chooses the latt
 
 ### 13.5 Carrier independence
 
-Suppose a curve multiplicity lattice and a surface multiplicity lattice have rationally isomorphic semisimplifications because their good Frobenius polynomials agree on a dense set. This proves rational carrier independence. It does not identify their integral lattices.
+Suppose two curve multiplicity lattices, or a curve lattice and the Tate lattice of a marked abelian quotient, have rationally isomorphic semisimplifications because their good Frobenius polynomials agree on a dense set. This proves rational carrier independence. It does not identify their integral lattices.
 
-An integral comparison follows only if there is an actual descended correspondence or an integral cancellation isomorphism carrying one saturated lattice to the other. If the two comparison maps have composites equal to multiplication by a coefficient unit, they are inverse. If their composite is a nonunit, they show only commensurability and measure an index defect.
+An integral comparison follows only if there is an actual descended correspondence or an integral isogeny comparison carrying one saturated lattice to the other. If the two comparison maps have composites equal to multiplication by a coefficient unit, they are inverse. If their composite is a nonunit, they show only commensurability and measure an index defect.
 
 Therefore the strongest correct statement is:
 
@@ -1544,28 +1436,7 @@ $$
 
 The valid implication begins with an integral comparison placing the chosen $T$ in the Fontaine--Laffaille essential image. Theorem 10.2 then supplies all finite quotients.
 
-### 14.4 A rational surface factor without integral cancellation
-
-Let a four-dimensional surface packet satisfy rationally
-
-$$
-V^{\mathrm{surf}}\simeq R\otimes_LW,
-\qquad\dim R=\dim W=2. \tag{14.6}
-$$
-
-Choose lattices $\mathcal R\subset R$ and $\mathcal W\subset W$. Their tensor product is a lattice in the surface block, but the canonical saturated surface lattice can lie strictly between
-
-$$
-\varpi^{-a}(\mathcal R\otimes\mathcal W)
-\quad\text{and}\quad
-\varpi^b(\mathcal R\otimes\mathcal W) \tag{14.7}
-$$
-
-for some $a,b$. Without an integral split order and an integral evaluation isomorphism, there is no canonical way to assign the index defect to one tensor factor rather than the other.
-
-Even if a stable rank-two Hom lattice is chosen, rational weight-one crystallinity does not make its quotients finite flat. A coefficient-prime carrier is still needed. Thus rational cancellation solves the rational dimension problem and nothing more.
-
-### 14.5 Flat base change versus descent
+### 14.4 Flat base change versus descent
 
 Let $R'/R$ be a ramified extension over which two generic points acquire an integral closure with desired equations. The resulting finite-flat group $\mathcal H/R'$ can be conjugated by the Galois group of $R'/R$. If the conjugates are isomorphic but no compatible choice satisfies the cocycle condition, $\mathcal H$ does not descend.
 
@@ -1586,7 +1457,6 @@ The principal invalid inferences and their repairs are now visible in one ledger
 | a raw coefficient kernel is finite flat | flatness of the kernel | close generic relations and take a represented quotient |
 | separately chosen finite-flat levels form a system | integral transition maps | construct every level inside common ambient groups |
 | rational self-duality is integral self-duality | unit duality index | prove the pairing perfect on the chosen lattice |
-| a rational surface tensor factor is an integral rank-two carrier | integral cancellation and local comparison | use a descended split order, evaluation, pairing, and coefficient-prime carrier |
 | an upstairs model descends | cocycle-compatible integral action | provide effective descent data |
 | isogenous abelian factors have the same lattice | isogeny degree is a coefficient unit | compare by integral isogeny and its normalized dual |
 
@@ -1598,9 +1468,9 @@ Each repair appears in the main theorem as a hypothesis or a construction. The l
 
 We now collect the exact hypotheses under which the full catalog statement holds. Let $\Pi$ be a noncharacter parallel-weight-two packet, let $\lambda\mid\ell$ be a coefficient place, and let $\mathcal O=\mathcal O_\lambda$. An **integral weight-two packet datum** consists of the following.
 
-**Cohomological carrier.** One has either a compact Shimura curve in degree one or a compact unitary surface in degree two. The selected component union is Galois and Hecke stable, and the relevant integral cohomology lattice is finite free after removing surface torsion.
+**Cohomological carrier.** One has a compact Shimura curve in degree one. The selected component union is Galois and Hecke stable, and the relevant integral cohomology lattice is finite free.
 
-**Rational extraction.** The full finite Hecke image isolates the established packet block. In the curve case its rational multiplicity is two. In the surface case all global cancellation hypotheses are supplied; without them the datum stops at the four-dimensional block.
+**Rational extraction.** The full finite Hecke image isolates the established packet block, whose rational multiplicity is two.
 
 **Integral extraction.** The localized Hecke order is split by a projective generator, and the integral evaluation map is an isomorphism. At coarse level, every averaging denominator used for comparison is a $\lambda$-adic unit or a direct integral comparison is supplied. The packet pairing factors integrally with its stated component character.
 
@@ -1609,7 +1479,7 @@ We now collect the exact hypotheses under which the full catalog statement holds
 1. a good-reduction abelian scheme with integral $\mathcal O$-action; or
 2. when $\ell>2$ and $E_u=W(k)[1/\ell]$ with $k$ perfect, a finite free strongly divisible lattice of weights $[0,1]$ with integral $\mathcal O$-action.
 
-**Comparison.** Every claimed change of curve, level, PEL presentation, abelian quotient, or surface carrier is induced by an integral correspondence whose two composites are coefficient units, or else the corresponding independence claim is omitted.
+**Comparison.** Every claimed change of curve, level, PEL presentation, or abelian quotient is induced by an integral correspondence whose two composites are coefficient units, or else the corresponding independence claim is omitted.
 
 These hypotheses are not all consequences of rational local--global compatibility. Each supplies a separate integral step.
 
@@ -1667,27 +1537,9 @@ The theorem deliberately does not say that $T_{\Pi,\lambda}$ is the unique stabl
 
 This corollary is the form most often used in the weight-two applications for which no oldvector multiplicity or denominator-prime is present. Its hypotheses also show exactly what must be added at old level or at a congruence prime.
 
-### 15.3 The surface theorem
+### 15.3 Duality and base-change refinements
 
-**Theorem 15.3 (surface cancellation and finite-flat quotients).** Let an integral weight-two packet datum be given in the surface case.
-
-Without integral cancellation, the canonical output is only the saturated, generally four-dimensional lattice $M^{\mathrm{surf}}_{\Pi,\lambda}$ in the honest surface packet.
-
-With the full integral cancellation datum of Section 12.2:
-
-1. the Hom lattice $T^{\mathrm{surf}}_{\Pi,\lambda}$ is canonical relative to the cancellation datum, finite free of rank two, and Galois stable;
-2. integral evaluation reconstructs the saturated surface packet lattice;
-3. the factored pairing is perfect and has the curve-normalized target;
-4. the coefficient-prime carrier produces a compatible finite-flat model for every quotient $T^{\mathrm{surf}}_{\Pi,\lambda}/I$;
-5. at places away from $\ell$, the separate local cancellation datum transports the established local--global compatibility to the Hom factor.
-
-**Proof.** Parts 1--3 are Theorem 12.1. Part 4 is Corollary 12.2 together with Theorem 8.1 and the transition construction of Chapter 9. Part 5 is the nearby-cycle tensor calculation (12.6)--(12.7) together with the already established local comparison for the desired packet complex. $\square$
-
-The global rational cancellation algebra, the integral order, the coefficient-prime carrier, and the away-from-$\ell$ nearby-cycle factorization solve four different problems. None may be omitted merely because the dimensions match.
-
-### 15.4 Duality and base-change refinements
-
-**Theorem 15.4.** In either case of Theorems 15.1 and 15.3:
+**Theorem 15.3.** For the lattice and quotient system of Theorem 15.1:
 
 1. Cartier duality sends $\mathcal T_I$ to a finite-flat model of $(T/IT)^*(1)$ and reverses every transition exact sequence;
 2. if a perfect coefficient-adjoint pairing identifies the lattice with its appropriate twisted dual and $I$ is stable under the coefficient involution, this identification descends to the quotient system;
@@ -1712,13 +1564,13 @@ The argument uses its direct prerequisites in the following forms.
 
 **Integral Fontaine--Laffaille equivalence and base change (Book 59).** We use it only for $p>2$, perfect residue field, absolutely unramified base $W(k)$, and weights $[0,1]$. In that range it classifies finite-flat groups, gives uniqueness of marked models, treats Cartier duality and unramified base change, constructs admissible objects for nonflat coefficient quotients, and identifies stable lattices with compatible systems of all finite-flat levels. No statement is extended to $p=2$ or a ramified base.
 
-**Good integral models of Shimura curves and surfaces (Book 130).** At a good PEL place the chosen curve or surface has a unique smooth projective model under the unramified-order, self-dual-lattice, hyperspecial-level, smooth-local-model, component-stability, neatness, and anisotropy hypotheses. Integral prime-to-residue-characteristic cohomology and Hecke correspondences specialize. Rational idempotents with coefficient-prime denominators are not treated as integral, and the theorem does not itself give a coefficient-prime comparison for the extracted lattice.
+**Good integral models (Book 130).** At a good PEL place the chosen Shimura curve has a unique smooth projective model under the unramified-order, self-dual-lattice, hyperspecial-level, smooth-local-model, component-stability, neatness, and anisotropy hypotheses. Integral prime-to-residue-characteristic cohomology and Hecke correspondences specialize. Rational idempotents with coefficient-prime denominators are not treated as integral, and the theorem does not itself give a coefficient-prime comparison for the extracted lattice.
 
-**Galois representations from weight-two Shimura cohomology (Book 134).** The curve packet supplies the rational rank-two multiplicity space, its determinant and pairing, and the saturated packet lattice, while recording projector, coarse-level, order, and evaluation denominators. The surface supplies an honest four-dimensional block and a rank-two Hom factor only under a descended cancellation algebra and compatible pairing. We add integral Morita hypotheses rather than assuming them from the rational extraction.
+**Galois representations from weight-two Shimura cohomology (Book 134).** The curve packet supplies the rational rank-two multiplicity space, its determinant and pairing, and the saturated packet lattice, while recording projector, coarse-level, order, and evaluation denominators. We add integral Morita hypotheses rather than assuming them from the rational extraction.
 
-**Local--global compatibility (Book 136).** Away from the coefficient prime, the established good, semistable, finite-type, and tame-dihedral comparisons are used only under their exact geometric ledgers. A surface Hom factor uses both global and local cancellation. At the coefficient prime that theory explicitly supplies no finite-flat conclusion; the present geometric or Fontaine--Laffaille carrier is a separate input.
+**Local--global compatibility (Book 136).** Away from the coefficient prime, the established good, semistable, finite-type, and tame-dihedral comparisons are used only under their exact geometric ledgers. At the coefficient prime that theory explicitly supplies no finite-flat conclusion; the present geometric or Fontaine--Laffaille carrier is a separate input.
 
-The hypotheses match in every composition. Schematic closure is used only over a DVR. Fontaine--Laffaille base change is used only for unramified Witt extensions. Surface rank two is used only after cancellation. Integral perfectness is used only after the duality index is shown to vanish. A rational representation is never used to select an integral lattice by itself.
+The hypotheses match in every composition. Schematic closure is used only over a DVR. Fontaine--Laffaille base change is used only for unramified Witt extensions. Integral perfectness is used only after the duality index is shown to vanish. A rational representation is never used to select an integral lattice by itself.
 
 ### 16.2 What has been proved
 
@@ -1740,7 +1592,7 @@ $$
 
 Each arrow has both an existence theorem and a boundary. Saturation needs a fixed ambient lattice. Integral Morita extraction needs a split order, projective generator, and index-one evaluation. The coefficient-prime step needs an actual abelian or strongly divisible carrier. Quotient formation needs the DVR closure theorem. Independence needs integral comparison maps with unit composites.
 
-This is why the resulting lattice is genuinely canonical in the useful sense. It is not chosen by a basis or by one eigenvector. It is functorial in the integral geometry and its full Hecke module, and every finite quotient belongs to one exact system. At the same time, the construction does not conceal its dependence on an isogeny class representative, a denominator prime, or an integral cancellation datum.
+This is why the resulting lattice is genuinely canonical in the useful sense. It is not chosen by a basis or by one eigenvector. It is functorial in the integral geometry and its full Hecke module, and every finite quotient belongs to one exact system. At the same time, the construction does not conceal its dependence on an isogeny class representative or a denominator prime.
 
 ### 16.3 Conclusion
 
@@ -1748,6 +1600,6 @@ The rational theory of a weight-two packet records traces, determinants, purity,
 
 Saturation answers the first question without pretending that a rational projector is integral. Integral Morita theory answers the second without choosing an oldvector. A good-reduction abelian factor or an absolutely unramified strongly divisible lattice answers the third. Once one finite-flat ambient system has been supplied, schematic closure of coefficient relations and represented quotients produce every open-ideal quotient, and successive quotient makes all transition maps compatible. Cartier duality retains the Tate twist, reverses these exact sequences, and identifies annihilators inside the fixed dual models.
 
-The curve construction gives rank two directly when the integral Hecke order is split and evaluation is exact. The surface construction gives rank two only after a descended integral cancellation algebra removes one complete auxiliary factor; coefficient-prime finite flatness then still requires its own integral carrier. These conditions are substantive. Rational cancellation, rational crystallinity, good Frobenius polynomials, and stable-lattice existence do not replace them.
+The curve construction gives rank two directly when the integral Hecke order is split and evaluation is exact. Coefficient-prime finite flatness still requires its own integral carrier. Rational crystallinity, good Frobenius polynomials, and stable-lattice existence do not replace that condition.
 
 The final package is therefore both strong and precise: a free localized cohomological lattice, independent of the harmless integral presentations that have been proved harmless; a finite-flat model for every required coefficient quotient; canonical transition maps, coefficient actions, duals, and allowed base changes; and a complete ledger of the primes and choices at which canonicity legitimately stops.

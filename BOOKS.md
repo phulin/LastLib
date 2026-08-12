@@ -700,7 +700,7 @@ action, good-reduction, and finite-place consequences for CM points on the selec
 
 126. **Shimura Data and Canonical Models in the FLT Cases** — Develop the relevant Shimura
 data, reflex fields, connected components, reciprocity maps, neat levels, and canonical-model
-descent for Hilbert, quaternionic, and unitary data.
+descent for Hilbert and quaternionic data.
 
 127. **Quaternionic PEL Functors and Representability** — Construct the moduli functors,
 determinant and polarization conditions, fine covers, representability, and universal abelian
@@ -710,16 +710,12 @@ families for the required quaternionic curves.
 uniformization, identify connected components and canonical descent, compare fine and coarse
 levels, and descend universal isogenies and Hecke correspondences.
 
-129. **Unitary Shimura Surfaces and the Modèles Étranges Construction** — Construct the compact
-unitary surfaces and auxiliary PEL varieties used to realize quaternionic automorphic
-representations when the parity of the totally-real degree requires degree-two cohomology.
-
-130. **Good Integral Models of Shimura Curves and Surfaces** — Construct smooth PEL models at
+130. **Good Integral Models of Quaternionic Shimura Curves** — Construct smooth PEL models at
 good primes, extend universal abelian schemes and Hecke correspondences, and prove smooth/proper
 base change and integral comparison for their cohomology.
 
-131. **Semistable Models and Monodromy of Shimura Varieties** — Construct and regularize the
-bad-prime models required for the quaternionic curves and unitary surfaces, analyze components,
+131. **Semistable Models and Monodromy of Quaternionic Shimura Curves** — Construct and regularize the
+bad-prime models required for the quaternionic curves, analyze components,
 nearby cycles and monodromy, and compute the conductor and type information used in local–global
 compatibility.
 

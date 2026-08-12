@@ -5,7 +5,7 @@
 1. [The bridge from real domains to arithmetic varieties](#1-the-bridge-from-real-domains-to-arithmetic-varieties)
    - [The organizing problem](#11-the-organizing-problem)
    - [Standing conventions](#12-standing-conventions)
-   - [The three families](#13-the-three-families)
+   - [The two families](#13-the-two-families)
    - [What canonical means](#14-what-canonical-means)
 2. [The Deligne torus and Hodge structures](#2-the-deligne-torus-and-hodge-structures)
    - [The real torus that records conjugation](#21-the-real-torus-that-records-conjugation)
@@ -43,11 +43,6 @@
    - [Reflex field](#83-reflex-field)
    - [Components and the curve case](#84-components-and-the-curve-case)
    - [CM tori in a quaternion algebra](#85-cm-tori-in-a-quaternion-algebra)
-9. [Unitary data](#9-unitary-data)
-   - [Hermitian spaces and similitudes](#91-hermitian-spaces-and-similitudes)
-   - [Signatures and the Hodge map](#92-signatures-and-the-hodge-map)
-   - [Axiom verification and reflex field](#93-axiom-verification-and-reflex-field)
-   - [Components and compact surfaces](#94-components-and-compact-surfaces)
 10. [Reciprocity morphisms](#10-reciprocity-morphisms)
     - [The toric construction](#101-the-toric-construction)
     - [Special-point reciprocity](#102-special-point-reciprocity)
@@ -56,7 +51,7 @@
 11. [Canonical models](#11-canonical-models)
     - [Definition by arithmetic special points](#111-definition-by-arithmetic-special-points)
     - [Uniqueness](#112-uniqueness)
-    - [Existence in the three families](#113-existence-in-the-three-families)
+    - [Existence in the two families](#113-existence-in-the-two-families)
     - [Effective descent](#114-effective-descent)
 12. [Level descent and functoriality](#12-level-descent-and-functoriality)
     - [The tower over the reflex field](#121-the-tower-over-the-reflex-field)
@@ -64,14 +59,14 @@
     - [Morphisms and Hecke translations](#123-morphisms-and-hecke-translations)
     - [Descent of connected components](#124-descent-of-connected-components)
 13. [The FLT package](#13-the-flt-package)
-    - [Curves, surfaces, and the parity split](#131-curves-surfaces-and-the-parity-split)
+    - [Shimura curves and the parity check](#131-shimura-curves-and-the-parity-check)
     - [A reusable canonical-model theorem](#132-a-reusable-canonical-model-theorem)
     - [Hypothesis ledger](#133-hypothesis-ledger)
     - [Conclusion](#134-conclusion)
 
 ## 1. The bridge from real domains to arithmetic varieties
 
-Shimura varieties begin with an apparently analytic object: a conjugacy class of homomorphisms from a real torus into a reductive group. Their arithmetic force comes from a second fact. The resulting quotient has a preferred field of definition, and Galois acts on its special points through class field theory. This book builds that bridge for the Hilbert, quaternionic, and unitary data that occur in the geometric route to Fermat's Last Theorem.
+Shimura varieties begin with an apparently analytic object: a conjugacy class of homomorphisms from a real torus into a reductive group. Their arithmetic force comes from a second fact. The resulting quotient has a preferred field of definition, and Galois acts on its special points through class field theory. This book builds that bridge for the Hilbert and quaternionic data that occur in the geometric route to Fermat's Last Theorem.
 
 ### 1.1 The organizing problem
 
@@ -136,7 +131,7 @@ Changing (1.3) to $h_{\mathbf C}(1,z)$ conjugates the cocharacter and can conjug
 
 A **special point** is a point represented by $h\in X$ whose Mumford--Tate group is a torus. The reflex field of that toric datum will be denoted $E(h)$; it contains the reflex field $E(G,X)$ after the chosen embeddings are fixed.
 
-### 1.3 The three families
+### 1.3 The two families
 
 Let $F$ be totally real of degree $d$.
 
@@ -144,9 +139,7 @@ The Hilbert family uses $\operatorname{Res}_{F/\mathbf Q}\operatorname{GL}_2$. E
 
 The quaternionic family starts with a quaternion algebra $B/F$. Only the real places at which $B$ splits contribute noncompact factors. If $B$ splits at $r$ real places, the domain has dimension $r$. The curve case is $r=1$. The reflex field is the fixed field of the automorphisms of $\overline{\mathbf Q}$ preserving the labelled set of split places.
 
-The unitary family starts with a CM extension $K/F$ and a two-dimensional Hermitian $K$-space. A real place of signature $(1,1)$ contributes a complex one-ball, while signatures $(2,0)$ and $(0,2)$ contribute points. Two indefinite places give the compact surfaces used when degree parity prevents the desired representation from occurring in curve cohomology. The reflex field remembers the full signature function, including the difference between $(2,0)$ and $(0,2)$.
-
-The words Hilbert, quaternionic, and unitary describe the rational group. They do not by themselves specify a Shimura datum. The set of noncompact embeddings, the orientation at those embeddings, the central weight, and the level are part of the data.
+The words Hilbert and quaternionic describe the rational group. They do not by themselves specify a Shimura datum. The set of noncompact embeddings, the orientation at those embeddings, the central weight, and the level are part of the data.
 
 ### 1.4 What canonical means
 
@@ -278,7 +271,7 @@ $$
 
 Indeed, $J^{-1}=-J$, and substituting the symplectic adjoint identity in $(x,y)_h=\psi(x,Jy)$ yields (2.5), modulo the scalar similitude direction. The involution $u\mapsto-u^{\dagger_h}$ is the standard Cartan involution: the trace form $\operatorname{Tr}(uu^{\dagger_h})$ is positive definite. Since $h(i)$ lies in the reductive stabilizer, its Lie algebra is stable under this involution, whose restriction is therefore Cartan. The stated nontriviality condition is the remaining axiom. $\square$
 
-Book 123 supplies the symplectic representations and positivity choices for the quaternionic groups used below. For unitary groups, the trace of the imaginary part of a Hermitian form supplies $\psi$. Proposition 2.1 will often reduce a matrix calculation to a transparent weight-one calculation.
+Book 123 supplies the symplectic representations and positivity choices for the quaternionic groups used below. Proposition 2.1 will often reduce a matrix calculation to a transparent weight-one calculation.
 
 ## 3. Shimura data
 
@@ -337,7 +330,7 @@ $$
 \dim_{\mathbf C}X^+=\dim_{\mathbf C}\mathfrak g^{-1,1}.             \tag{3.3}
 $$
 
-This dimension formula will distinguish curves from surfaces.
+This dimension formula identifies the Shimura-curve case by the condition $\dim_{\mathbf C}X^+=1$.
 
 ### 3.3 Morphisms, products, and central changes
 
@@ -367,7 +360,7 @@ Finally, a homomorphism whose representation on $V$ has types $(-2,0)$ and $(0,-
 
 ## 4. Reflex fields
 
-The symmetric domain depends only on real conjugacy, but arithmetic conjugates all embeddings at once. The reflex field is the smallest field over which the complex conjugacy class of the Hodge cocharacter can be recognized. This definition works uniformly for Hilbert, quaternionic, unitary, and toric data.
+The symmetric domain depends only on real conjugacy, but arithmetic conjugates all embeddings at once. The reflex field is the smallest field over which the complex conjugacy class of the Hodge cocharacter can be recognized. This definition works uniformly for Hilbert, quaternionic, and toric data.
 
 ### 4.1 The conjugacy class of the Hodge cocharacter
 
@@ -423,7 +416,7 @@ $$
 E(G_1\times G_2,X_1\times X_2)=E(G_1,X_1)E(G_2,X_2).                \tag{4.3}
 $$
 
-For an adjoint quotient, the central part of $\mu$ disappears. Thus the adjoint reflex field can be smaller than the reflex field of a similitude datum. In the three families considered here the central weight is rational, so it creates no extra extension; the embedding labels in the derived factors determine the field.
+For an adjoint quotient, the central part of $\mu$ disappears. Thus the adjoint reflex field can be smaller than the reflex field of a similitude datum. In the two families considered here the central weight is rational, so it creates no extra extension; the embedding labels in the derived factors determine the field.
 
 ### 4.4 Computing by labelled embeddings
 
@@ -435,9 +428,9 @@ $$
 
 where $H$ is the subgroup preserving the tuple up to the Weyl group at every label.
 
-For a restriction of scalars of type $A_1$, the Weyl group at a label exchanges the two diagonal weights. An oriented upper-half-plane choice fixes which weight is holomorphic, but the $G(\mathbf C)$-conjugacy class already allows this local exchange. What survives is usually the set of active labels. For unitary groups, complex conjugation also interchanges the two embeddings over a real place; signatures $(2,0)$ and $(0,2)$ are therefore exchanged rather than identified unless an inner conjugacy in the specified similitude group performs that exchange.
+For a restriction of scalars of type $A_1$, the Weyl group at a label exchanges the two diagonal weights. An oriented upper-half-plane choice fixes which weight is holomorphic, but the $G(\mathbf C)$-conjugacy class already allows this local exchange. What survives is usually the set of active labels.
 
-This labelled-embedding procedure is the computational engine used in Chapters 7--9. It is also a reliable defense against a common mistake: the field of definition of the group and the reflex field of its Shimura datum answer different questions. A quaternion algebra may be defined over $F$, while its reflex field is $\mathbf Q$, $F$, or an intermediate conjugate field depending on its active real places.
+This labelled-embedding procedure is the computational engine used in Chapters 7--8. It is also a reliable defense against a common mistake: the field of definition of the group and the reflex field of its Shimura datum answer different questions. A quaternion algebra may be defined over $F$, while its reflex field is $\mathbf Q$, $F$, or an intermediate conjugate field depending on its active real places.
 
 Here is a concrete stabilizer calculation. Suppose $F/\mathbf Q$ is Galois with group $\Gamma$ and a quaternionic cocharacter is active on $\Sigma\subset\Gamma$. Then
 
@@ -446,8 +439,6 @@ E(G,X)=F^{\{\gamma\in\Gamma:\gamma\Sigma=\Sigma\}}.                 \tag{4.4}
 $$
 
 If $\Sigma=\Gamma$, the stabilizer is all of $\Gamma$ and the field is $\mathbf Q$. If $\Sigma=\{1\}$, the stabilizer is trivial and the field is $F$. If $F/\mathbf Q$ is cyclic quartic and $\Sigma=\{1,\gamma^2\}$, the stabilizer is $\{1,\gamma^2\}$ and the reflex field is the quadratic subfield. The same rational group can therefore support cocharacters with three different reflex fields.
-
-For a unitary example, let $K/F$ be CM and suppose $F$ is real quadratic. If the two real places have signatures $(1,1)$ and $(1,1)$, all four CM embedding labels have multiplicity one and the reflex field is $\mathbf Q$. If the signatures are $(1,1)$ and $(2,0)$, the second conjugate pair is oriented. An automorphism exchanging its two CM embeddings changes $(2,0)$ to $(0,2)$ and does not fix the cocharacter class. The reflex field is then the field fixed by the stabilizer of that orientation, generally a CM field. The complex dimension changed from two to one, but the definite place still affected the arithmetic field.
 
 ## 5. Adelic quotients and finite level
 
@@ -574,7 +565,7 @@ $$
 \bigl(\pi_0(X)\times G(\mathbf A_f)/K\bigr).                     \tag{6.2a}
 $$
 
-The Shimura axioms alone do not improve (6.2a) to (6.2). In the three families here, transitivity is a separate arithmetic verification. For Hilbert data, weak approximation chooses a determinant with any prescribed real sign pattern. For the basic quaternionic group, the Hasse--Schilling reduced-norm theorem gives arbitrary signs at the split real places and forces positivity only at Hamiltonian places; those are precisely the signs needed to move among the components of $X$. For the unitary similitude groups selected below, the determinant--multiplier torus and weak approximation give the required sign changes at the indefinite factors. Central modifications are required to satisfy the same transitivity statement before (6.2) is used for them.
+The Shimura axioms alone do not improve (6.2a) to (6.2). In the two families here, transitivity is a separate arithmetic verification. For Hilbert data, weak approximation chooses a determinant with any prescribed real sign pattern. For the basic quaternionic group, the Hasse--Schilling reduced-norm theorem gives arbitrary signs at the split real places and forces positivity only at Hamiltonian places; those are precisely the signs needed to move among the components of $X$. Central modifications are required to satisfy the same transitivity statement before (6.2) is used for them.
 
 Formula (6.2) is exact but not yet computable. The next step removes the nonabelian derived group.
 
@@ -588,9 +579,9 @@ $$
 
 We need the following rank-one form of strong approximation.
 
-**Rank-one strong approximation theorem.** Let $H/F$ be $\operatorname{SL}_2$, the reduced-norm-one group of a quaternion algebra, or the special unitary group of a two-dimensional Hermitian space. Assume $H$ is simply connected and $H(F_v)$ is noncompact for at least one archimedean place $v$. Then the diagonal $H(F)$ is dense in $H(\mathbf A_{F,f})$.
+**Rank-one strong approximation theorem.** Let $H/F$ be $\operatorname{SL}_2$ or the reduced-norm-one group of a quaternion algebra. Assume $H$ is simply connected and $H(F_v)$ is noncompact for at least one archimedean place $v$. Then the diagonal $H(F)$ is dense in $H(\mathbf A_{F,f})$.
 
-**Proof strategy.** Strong approximation is an integral, not merely a weak, approximation assertion: outside a prescribed finite set the approximant must remain in a fixed compact open. We prove the split case with root subgroups. The other two groups are simply connected forms of type $A_1$; the norm-quadric approximation lemma below supplies the missing integrality and is the rank-one form of the standard strong-approximation argument.
+**Proof strategy.** Strong approximation is an integral, not merely a weak, approximation assertion: outside a prescribed finite set the approximant must remain in a fixed compact open. We prove the split case with root subgroups. The quaternionic group is a simply connected form of type $A_1$; the norm-quadric approximation lemma below supplies the missing integrality and is the rank-one form of the standard strong-approximation argument.
 
 **Proof.** For $\operatorname{SL}_2$, use the two root subgroups
 
@@ -611,9 +602,9 @@ $$
 
 To prove this integral approximation lemma, choose an isotropic pair $e,f$ at $v$ with $(e,f)=1$ and use projection from the rational point of $Y$ to obtain affine coordinates whose inverse has denominator $D$, a nonzero quadratic polynomial. Clear the finitely many coefficients of this chart once and for all. Additive approximation chooses the affine coordinates in the prescribed $w$-adic neighborhoods and integral away from a finite set. The remaining requirement is that $D$ be a unit away from that set. Replace one coordinate by $x+cM$ where $M$ is divisible by every prescribed finite modulus and $c\in F$ varies in the isotropic $e$-direction at $v$. For each new prime divisor $\mathfrak p$ of $D$, nondegeneracy makes the reduction of $D(x+cM)$ a nonzero polynomial of degree at most two in $c$; choose $c$ modulo $\mathfrak p$ away from its at most two roots. Chinese remaindering preserves all earlier choices. The norm of the part of $(D)$ supported outside the prescribed set strictly decreases after cancelling those prime factors from numerator and denominator. Induction on that nonnegative norm terminates and makes $D$ an outside unit. Substitution in the inverse chart proves (6.2b). Points outside the chosen chart are reached by first making an arbitrarily small local perturbation, permissible because the chart is dense and every local $Y(F_w)$ is smooth.
 
-For $H=B^1$, reduced norm is such a four-dimensional $Q$, and $B$ split at the chosen archimedean place is exactly the required isotropy. Multiplication on the quadric identifies its integral points with the required compact-open conditions after enlarging $S$; conjugating lattices handles an arbitrary compact open. A two-dimensional special unitary group is a simply connected form of type $A_1$. Type $A_1$ has no outer forms, so the degree-two classification identifies it with $B'^1$ for a quaternion algebra $B'/F$; noncompactness at $v$ says that $B'$ splits there. The same norm-quadric argument applies. Restriction of scalars and finite products preserve density. $\square$
+For $H=B^1$, reduced norm is such a four-dimensional $Q$, and $B$ split at the chosen archimedean place is exactly the required isotropy. Multiplication on the quadric identifies its integral points with the required compact-open conditions after enlarging $S$; conjugating lattices handles an arbitrary compact open. Restriction of scalars and finite products preserve density. $\square$
 
-We may therefore assume that $G^{\mathrm{der}}$ is simply connected and satisfies this approximation theorem. This holds for the Hilbert, indefinite quaternionic, and indefinite unitary groups considered below: their derived groups are restrictions of scalars of $\operatorname{SL}_2$, $B^1$, and $\operatorname{SU}(V)$, respectively.
+We may therefore assume that $G^{\mathrm{der}}$ is simply connected and satisfies this approximation theorem. This holds for the Hilbert and indefinite quaternionic groups considered below: their derived groups are restrictions of scalars of $\operatorname{SL}_2$ and $B^1$, respectively.
 
 **Theorem 6.1.** Under that hypothesis, $\nu$ induces a bijection
 
@@ -635,13 +626,13 @@ d=qk_d,
 k_d\in K\cap G^{\mathrm{der}}(\mathbf A_f).
 $$
 
-In the three rank-one families, $G^{\mathrm{der}}(\mathbf R)$ is a product of the connected groups $\operatorname{SL}_2(\mathbf R)$, compact $\operatorname{SU}(2)$, and indefinite $\operatorname{SU}(1,1)$ factors. It therefore preserves $X^+$, so $q\in G(\mathbf Q)_+$. Hence $g_1$ and $g_2$ give the same left double coset. Conversely, equality on the left plainly implies equality on the right. Surjectivity onto the displayed image follows from its definition. $\square$
+In the two rank-one families, $G^{\mathrm{der}}(\mathbf R)$ is a product of the connected groups $\operatorname{SL}_2(\mathbf R)$ and compact $\operatorname{SU}(2)$ factors. It therefore preserves $X^+$, so $q\in G(\mathbf Q)_+$. Hence $g_1$ and $g_2$ give the same left double coset. Conversely, equality on the left plainly implies equality on the right. Surjectivity onto the displayed image follows from its definition. $\square$
 
 The finiteness of (6.3) follows from the finiteness of the relevant torus class group. In the examples it is a quotient of an ordinary, narrow, or CM ray class group, whose finiteness is part of the adelic theory recalled in Book 4.
 
-The strong-approximation hypothesis cannot simply be deleted. For a torus, the derived group is trivial and (6.3) says nothing beyond the original class quotient. For a semisimple group anisotropic at every place omitted from the adèles, rational points need not be dense enough to absorb the derived adelic coordinate. The residual finite set is a genuine class set. Our groups avoid this obstruction because their simply connected derived groups have a noncompact real factor: $\operatorname{SL}_2$ for Hilbert data, $B^1$ at a split quaternionic place, and $\operatorname{SU}(1,1)$ at an indefinite unitary place.
+The strong-approximation hypothesis cannot simply be deleted. For a torus, the derived group is trivial and (6.3) says nothing beyond the original class quotient. For a semisimple group anisotropic at every place omitted from the adèles, rational points need not be dense enough to absorb the derived adelic coordinate. The residual finite set is a genuine class set. Our groups avoid this obstruction because their simply connected derived groups have a noncompact real factor: $\operatorname{SL}_2$ for Hilbert data and $B^1$ at a split quaternionic place.
 
-There is also a central-surjectivity issue. Even if $G\to T$ is surjective as an algebraic group, $G(\mathbf A_f)\to T(\mathbf A_f)$ need not be onto when a finite central kernel has nontrivial local cohomology. This is why (6.3) uses $\nu(G(\mathbf A_f))$ before stating the simpler surjective form. In the Hilbert determinant and quaternionic reduced-norm cases, local surjectivity is elementary. In the unitary case, retaining the image in (9.9) avoids an unjustified Hasse norm assertion.
+There is also a central-surjectivity issue. Even if $G\to T$ is surjective as an algebraic group, $G(\mathbf A_f)\to T(\mathbf A_f)$ need not be onto when a finite central kernel has nontrivial local cohomology. This is why (6.3) uses $\nu(G(\mathbf A_f))$ before stating the simpler surjective form. In the Hilbert determinant and quaternionic reduced-norm cases, local surjectivity is elementary.
 
 ### 6.3 Galois action on components
 
@@ -687,7 +678,7 @@ Even when the whole canonical model is defined over $E$, Galois can permute its 
 
 ## 7. Hilbert modular data
 
-The Hilbert datum is the split benchmark. Every real place is active, the reflex field collapses to $\mathbf Q$, and the components become a narrow ideal-class quotient. The calculation fixes all signs before inner and unitary forms are introduced.
+The Hilbert datum is the split benchmark. Every real place is active, the reflex field collapses to $\mathbf Q$, and the components become a narrow ideal-class quotient. The calculation fixes all signs before quaternionic inner forms are introduced.
 
 ### 7.1 The group and its domain
 
@@ -959,125 +950,6 @@ $$
 
 By Book 125, arithmetic reciprocity acts by left multiplication with (8.10). The quaternion algebra changes the admissible tori, the component quotient, and compactness; it does not introduce a new inverse into CM reciprocity.
 
-## 9. Unitary data
-
-Unitary groups make the Hodge labels more expressive. At each real place the signature records how many holomorphic directions occur above each of the two CM embeddings. This flexibility produces compact surfaces while retaining the same rank-two automorphic input.
-
-### 9.1 Hermitian spaces and similitudes
-
-Let $K/F$ be a CM quadratic extension with conjugation $c$, and let $V$ be a two-dimensional $K$-vector space with a nondegenerate Hermitian form
-
-$$
-\langle ax,by\rangle=a\langle x,y\rangle\bar b.
-$$
-
-We use the rational similitude group
-
-$$
-G(R)=\{g\in\operatorname{GL}_{K\otimes R}(V\otimes R):
-\langle gx,gy\rangle=\nu(g)\langle x,y\rangle,
-\ \nu(g)\in R^\times\}.                                             \tag{9.1}
-$$
-
-This is connected reductive. Its derived group is $\operatorname{Res}_{F/\mathbf Q}\operatorname{SU}(V)$, and its center is a subtorus of $\operatorname{Res}_{K/\mathbf Q}\mathbf G_m$ cut out by $a\bar a\in\mathbf G_m$. These assertions follow after base change to $\overline{\mathbf Q}$, where (9.1) becomes a product of general linear groups with one common scalar multiplier; connectedness and reductivity then descend.
-
-Choose $\delta\in K$ with $\bar\delta=-\delta$ and signs arranged so that
-
-$$
-\psi(x,y)=\operatorname{Tr}_{K/\mathbf Q}
-(\delta\langle x,y\rangle)                                           \tag{9.2}
-$$
-
-is alternating and has the desired positivity. Then $G$ embeds into $\operatorname{GSp}(V_\mathbf Q,\psi)$ with multiplier $\nu$. This makes the datum of Hodge type and links it to polarized abelian varieties.
-
-### 9.2 Signatures and the Hodge map
-
-For each real embedding $\tau:F\hookrightarrow\mathbf R$, choose an extension $\varphi:K\hookrightarrow\mathbf C$. Write
-
-$$
-(p_\tau,q_\tau),\qquad p_\tau+q_\tau=2,                             \tag{9.3}
-$$
-
-for the signature of the Hermitian form, with the convention that the $p_\tau$-dimensional subspace has positive sign. A Hodge map selects a negative $q_\tau$-plane on which $z$ acts and its positive complement on which $\bar z$ acts, with the convention adjusted globally to (1.3).
-
-The local domain is
-
-$$
-\mathcal D_\tau=
-\{\text{negative $q_\tau$-planes in }\mathbf C^2\}.                 \tag{9.4}
-$$
-
-For signatures $(2,0)$ or $(0,2)$ this is a point. For $(1,1)$ it is a complex one-ball, biholomorphic to the upper half-plane. Therefore
-
-$$
-X^+=\prod_{\tau}\mathcal D_\tau,
-\qquad
-\dim_{\mathbf C}X^+=\sum_\tau p_\tau q_\tau.                      \tag{9.5}
-$$
-
-In rank two this dimension is simply the number of places of signature $(1,1)$.
-
-### 9.3 Axiom verification and reflex field
-
-The signatures have two simultaneous meanings: they are dimensions of positive and negative subspaces, and they are multiplicities of Hodge weights. The first verifies the Cartan geometry; the second computes the Galois stabilizer.
-
-**Proposition 9.1.** The homomorphisms determined by (9.3)--(9.4) form a Shimura datum, provided each rational simple adjoint factor is indefinite at one or more real places.
-
-**Proof.** On $V_{\mathbf C}$ the Hodge map has types $(-1,0)$ and $(0,-1)$. Proposition 2.1 gives the first two axioms from (9.2) and positivity. Explicitly, maps between the two Hodge subspaces have types $(-1,1)$ and $(1,-1)$, while endomorphisms preserving each have type $(0,0)$. The stabilizer of the Hodge decomposition is $U(p_\tau)\times U(q_\tau)$ modulo center, a maximal compact subgroup of $PU(p_\tau,q_\tau)$. The final hypothesis is exactly axiom 3. Formula (9.5) follows by identifying the holomorphic tangent space with $\operatorname{Hom}(W^-,W^+)$, of dimension $p_\tau q_\tau$. $\square$
-
-The reflex field is computed from the **signature function** on embeddings of $K$:
-
-$$
-r_\varphi=p_\tau,
-\qquad r_{\bar\varphi}=q_\tau.                                      \tag{9.6}
-$$
-
-It is the fixed field of
-
-$$
-H_r=\{\sigma:r_{\sigma\varphi}=r_\varphi
-\text{ for every }\varphi\}.                                       \tag{9.7}
-$$
-
-**Proof.** Over $\mathbf C$, the cocharacter on the factor labelled by $\varphi$ has $r_\varphi$ entries of weight one and $2-r_\varphi$ entries of weight zero. Two such cocharacters are conjugate exactly when these multiplicities agree. Galois permutes the labels, so its stabilizer is precisely (9.7). Definition 4.1 gives the claim. $\square$
-
-If every signature is $(1,1)$, then $r_\varphi=r_{\bar\varphi}=1$ everywhere and the reflex field is $\mathbf Q$. If some definite places are oriented as $(2,0)$ rather than $(0,2)$, their CM labels survive and the reflex field can be CM. Forgetting those definite labels gives the wrong field even though those places contribute no complex dimension.
-
-For $F=\mathbf Q$ and $K$ imaginary quadratic, signature $(1,1)$ gives the unitary upper half-plane. Its reflex field is $\mathbf Q$, although the Hermitian group is defined using $K$. Signature $(2,0)$ instead gives a zero-dimensional datum. Its cocharacter distinguishes the chosen embedding $K\hookrightarrow\mathbf C$, so its reflex field is $K$. The algebraic group alone therefore determines neither the domain dimension nor the reflex field.
-
-For $[F:\mathbf Q]=3$, signatures $(1,1),(1,1),(2,0)$ give dimension two. The definite factor makes no tangent contribution, yet it selects one member of a CM embedding pair. This is the characteristic pattern of the auxiliary surfaces in parity-sensitive cases: two noncompact factors provide degree-two geometry, while a definite label retains arithmetic information in the Hodge cocharacter.
-
-### 9.4 Components and compact surfaces
-
-Let $T=G/G^{\mathrm{der}}$. Determinant together with the multiplier identifies it with the torus
-
-$$
-\{(a,c)\in\operatorname{Res}_{K/\mathbf Q}\mathbf G_m\times
-\mathbf G_m:a\bar a=c^2\}
-$$
-
-subject to
-
-$$
-N_{K/F}(\det_K g)=\nu(g)^2.                                         \tag{9.8}
-$$
-
-Since $\operatorname{SU}(V)$ is simply connected and has a noncompact real factor, strong approximation gives
-
-$$
-\pi_0(\operatorname{Sh}_K(G,X)(\mathbf C))
-\simeq T(\mathbf Q)^\dagger\backslash
-\nu_T(G(\mathbf A_f))/\nu_T(K).                                     \tag{9.9}
-$$
-
-Writing only $\nu(g)$ in (9.9) can lose the determinant class; writing only $\det_K(g)$ can violate (9.8). The torus quotient is the invariant formulation.
-
-When exactly two real places have signature $(1,1)$, (9.5) gives a surface. It is compact when $G^{\mathrm{ad}}$ is anisotropic over $\mathbf Q$. For a unitary group, isotropic rational lines give rational proper parabolics and hence cusps; anisotropy of the Hermitian space rules them out. Thus a Hermitian space can be chosen indefinite at two real places yet anisotropic over $F$, producing a compact complex surface. This is not contradictory: real isotropy and rational isotropy are different conditions.
-
-The signatures and the finite local invariants of a Hermitian space obey one global product relation. They cannot be prescribed independently. In practice one fixes the two indefinite real signatures, chooses definite orientations at the remaining real places, and adjusts one finite local invariant so that the product relation holds and the global Hermitian space remains anisotropic. That adjustment changes the bad-prime set and permissible compact opens but not (9.5) or (9.7), which depend only on the archimedean cocharacter.
-
-At a special point, a commutative CM algebra $L$ acts on $V$ compatibly with the involution. Its torus maps to $G$ only if every component has the same rational similitude multiplier. The componentwise weight identity from Book 124 proves this condition for reflex norms. Book 125 then supplies the special-point formula (1.4), including polarization and level.
-
 ## 10. Reciprocity morphisms
 
 The reflex field of the ambient datum governs the whole variety; the larger reflex field of a special point governs its individual Galois orbit. Both actions arise from the same operation on cocharacters. This chapter constructs the relevant torus morphisms and proves their compatibility with the adelic quotient and its component set.
@@ -1111,20 +983,20 @@ $$
 
 is a single cocharacter because the quotient is commutative. Its field of definition is contained in $E(G,X)$, so corestriction from $E(G,X)$ gives (6.4). Equivalently, (6.4) sends the distinguished basis cocharacter to $\mu^{\mathrm{ab}}$.
 
-The construction can be read directly in the three families. For the Hilbert datum, determinant sends every local cocharacter to weight one, so
+The construction can be read directly in the two families. For the Hilbert datum, determinant sends every local cocharacter to weight one, so
 
 $$
 r_{(G,X)}:\mathbf G_m\longrightarrow
 \operatorname{Res}_{F/\mathbf Q}\mathbf G_m
 $$
 
-is the diagonal embedding. On finite ideles, a rational idele is extended to every place of $F$. For the quaternionic datum, the exponent vector of the abelianized cocharacter is the characteristic vector of $\Sigma$; its Galois orbit sum defines a monomial map from the reflex-field torus to $\operatorname{Res}_{F/\mathbf Q}\mathbf G_m$. For the basic group this monomial acts on the narrow quotient (8.7): the cocharacter labels determine the translating idele, while the Hamiltonian sign restrictions enter separately through the exact rational subgroup $\operatorname{Nrd}(G(\mathbf Q)_+)=F_+^\times$. A central modification uses its own target torus and the quotient (8.8). For the unitary datum, the exponents are the signature multiplicities $r_\varphi$ and $2-r_\varphi$, followed by the determinant--multiplier torus (9.8). Thus the Hodge labels compute the reciprocity multiplier, while the exact abelianized quotient determines where that multiplier acts.
+is the diagonal embedding. On finite ideles, a rational idele is extended to every place of $F$. For the quaternionic datum, the exponent vector of the abelianized cocharacter is the characteristic vector of $\Sigma$; its Galois orbit sum defines a monomial map from the reflex-field torus to $\operatorname{Res}_{F/\mathbf Q}\mathbf G_m$. For the basic group this monomial acts on the narrow quotient (8.7): the cocharacter labels determine the translating idele, while the Hamiltonian sign restrictions enter separately through the exact rational subgroup $\operatorname{Nrd}(G(\mathbf Q)_+)=F_+^\times$. A central modification uses its own target torus and the quotient (8.8). Thus the Hodge labels compute the reciprocity multiplier, while the exact abelianized quotient determines where that multiplier acts.
 
 The ambient map generally contains less information than $r_h$ for a special point. Abelianization forgets the position of the CM torus inside the derived group. It is nevertheless exactly the information needed for connected components, because strong approximation has already erased the derived finite adelic coordinate there.
 
 ### 10.2 Special-point reciprocity
 
-**Theorem 10.1.** Let $x=[h,g]\in\operatorname{Sh}_K(G,X)(\mathbf C)$ be special in one of the selected Hilbert, quaternionic, or unitary data, with its compatible PEL-exact realization directly or through the chosen central modification. Let $T=\operatorname{MT}(h)$ and let $E(h)$ be its reflex field. For $s\in\mathbf A_{E(h)}^\times$, the canonical Galois action is
+**Theorem 10.1.** Let $x=[h,g]\in\operatorname{Sh}_K(G,X)(\mathbf C)$ be special in one of the selected Hilbert or quaternionic data, with its compatible PEL-exact realization directly or through the chosen central modification. Let $T=\operatorname{MT}(h)$ and let $E(h)$ be its reflex field. For $s\in\mathbf A_{E(h)}^\times$, the canonical Galois action is
 
 $$
 x^{\operatorname{Art}_{E(h)}(s)}
@@ -1218,19 +1090,13 @@ A rule on a sparse set of algebraic points would not determine a variety. The de
 
 We need a density statement.
 
-**Lemma 11.1 (density of special points).** In each Hilbert, quaternionic, or unitary domain considered here, special points are analytically dense in every connected component and hence Zariski dense in every algebraic component.
+**Lemma 11.1 (density of special points).** In each Hilbert or quaternionic domain considered here, special points are analytically dense in every connected component and hence Zariski dense in every algebraic component.
 
 **Proof strategy.** Construct one special point in each component, then use rational conjugates. This makes both rationality and density explicit and avoids the unjustified claim that a nearby rational endomorphism automatically has a CM centralizer compatible with every prescribed tensor.
 
-**Proof.** First choose a special point $h_0$ in the component. In the Hilbert case, choose a CM quadratic extension of $F$ with one complex embedding above each real embedding and let it act on its two-dimensional $F$-space. In the quaternionic case, choose a CM quadratic extension nonsplit at every ramified place of $B$ and with the orientations prescribed by $X^+$; weak approximation and the local quaternion embedding criterion give an embedding into $B$. In the unitary case, choose a maximal commutative CM algebra stable under the adjoint involution and choose its CM type with multiplicities equal to the signature function. The local sign conditions are open, and weak approximation in the self-adjoint subspace globalizes the choice. In every case the centralizer of the chosen regular element is a torus and the resulting Hodge map factors through it, so $h_0$ is special.
+**Proof.** First choose a special point $h_0$ in the component. In the Hilbert case, choose a CM quadratic extension of $F$ with one complex embedding above each real embedding and let it act on its two-dimensional $F$-space. In the quaternionic case, choose a CM quadratic extension nonsplit at every ramified place of $B$ and with the orientations prescribed by $X^+$; weak approximation and the local quaternion embedding criterion give an embedding into $B$. In either case the centralizer of the chosen regular element is a torus and the resulting Hodge map factors through it, so $h_0$ is special.
 
-Now the groups occurring here have weak approximation at the archimedean places. For $\operatorname{Res}_{F/\mathbf Q}\operatorname{GL}_2$ and $\operatorname{Res}_{F/\mathbf Q}B^\times$ this is ordinary additive weak approximation in the ambient matrix or quaternion algebra, since invertibility is open. For the unitary group, the Cayley transform
-
-$$
-Y\longmapsto(1-Y)(1+Y)^{-1}
-$$
-
-is a rational chart from the skew-adjoint Lie algebra to a neighborhood of the identity; additive weak approximation in that Lie algebra gives density near the identity, and translates give density in the required real component. Hence $G(\mathbf Q)\cap G(\mathbf R)^+$ is dense in $G(\mathbf R)^+$. The rational conjugates $q h_0q^{-1}$ are still special and are dense in the orbit $X^+$. Repeating the construction in each component proves analytic density. An algebraic closed subset is analytically closed; if it contained all special points, analytic density would force it to contain the whole component. Thus the special points are Zariski dense as well. $\square$
+Now the groups occurring here have weak approximation at the archimedean places. For $\operatorname{Res}_{F/\mathbf Q}\operatorname{GL}_2$ and $\operatorname{Res}_{F/\mathbf Q}B^\times$ this is ordinary additive weak approximation in the ambient matrix or quaternion algebra, since invertibility is open. Hence $G(\mathbf Q)\cap G(\mathbf R)^+$ is dense in $G(\mathbf R)^+$. The rational conjugates $q h_0q^{-1}$ are still special and are dense in the orbit $X^+$. Repeating the construction in each component proves analytic density. An algebraic closed subset is analytically closed; if it contained all special points, analytic density would force it to contain the whole component. Thus the special points are Zariski dense as well. $\square$
 
 **Theorem 11.2 (uniqueness).** A canonical model, if it exists, is unique up to a unique $E$-isomorphism compatible with (11.1).
 
@@ -1238,11 +1104,11 @@ is a rational chart from the skew-adjoint Lie algebra to a neighborhood of the i
 
 For $\sigma\in\operatorname{Gal}(L/E)$, the maps $f$ and ${}^\sigma f$ have the same value on every special point: both values are forced by (11.2). Density gives ${}^\sigma f=f$. Faithfully flat Galois descent therefore produces an $E$-morphism $S\to S'$. Apply the same argument to $f_\mathbf C^{-1}$; the two descended composites become the identity over $\mathbf C$ and hence are the identity over $E$. Thus the descended map is an isomorphism. Any two such isomorphisms agree on the dense special set and are equal. $\square$
 
-### 11.3 Existence in the three families
+### 11.3 Existence in the two families
 
 The existence argument uses the following algebraization lemma, proved here in the form needed.
 
-**Lemma 11.3 (PEL-exact algebraization).** Let $(G,X)$ be one of the three data above. Suppose either that there is a faithful symplectic representation
+**Lemma 11.3 (PEL-exact algebraization).** Let $(G,X)$ be one of the two data above. Suppose either that there is a faithful symplectic representation
 
 $$
 \rho:(G,X)\longrightarrow
@@ -1277,9 +1143,9 @@ The final independence statement is important. A tensor-corestriction representa
 
 For the common-norm Hilbert group, the rational multiplier makes the symplectic representation direct because every real factor is active with the same determinant. The full group $\operatorname{Res}_{F/\mathbf Q}\operatorname{GL}_2$ is treated by the central-modification clause. In the mixed quaternionic case, a common-norm lift is not automatic, as Section 8.1 explained. One instead uses a compatible trace-pairing or tensor-corestriction central modification supplied by the rank-two structure, and one must verify PEL-exactness rather than infer it from faithfulness. When a split corestriction gives the smaller tensor representation, odd tensor parity is symplectic and even tensor parity is repaired by the hyperbolic construction. This choice affects the auxiliary abelian dimension, not the adjoint Shimura datum or its canonical model.
 
-For the realizations retained in the FLT route, that exactness is a calculation, not a new hypothesis hidden in terminology. In the Hilbert case the commutant of the $F$-action on $F^2$ gives precisely the common-determinant similitude group. In the quaternion trace-pairing construction, left and right multiplication are mutual commutants; imposing right-$B^{\mathrm{op}}$ linearity, the adjoint involution, and a rational multiplier recovers exactly the common-norm group of Book 123. A tensor-corestriction realization is used only after quotienting or detecting its recorded finite central kernel, so its stabilizer is the stated central modification rather than a larger orthogonal group. In the unitary case, $K$-linearity and preservation of the Hermitian adjoint recover (9.1) by definition. The determinant polynomial then selects exactly the Hodge conjugacy class computed in Chapters 7--9.
+For the realizations retained in the FLT route, that exactness is a calculation, not a new hypothesis hidden in terminology. In the Hilbert case the commutant of the $F$-action on $F^2$ gives precisely the common-determinant similitude group. In the quaternion trace-pairing construction, left and right multiplication are mutual commutants; imposing right-$B^{\mathrm{op}}$ linearity, the adjoint involution, and a rational multiplier recovers exactly the common-norm group of Book 123. A tensor-corestriction realization is used only after quotienting or detecting its recorded finite central kernel, so its stabilizer is the stated central modification rather than a larger orthogonal group. The determinant polynomial then selects exactly the Hodge conjugacy class computed in Chapters 7--8.
 
-**Theorem 11.4 (existence of canonical models).** For every sufficiently small neat compact open $K$ and every Hilbert, quaternionic, or unitary datum of Chapters 7--9 satisfying the PEL-exact or central-modification hypothesis of Lemma 11.3, that algebraization admits a canonical model over $E(G,X)$. It satisfies (11.2).
+**Theorem 11.4 (existence of canonical models).** For every sufficiently small neat compact open $K$ and every Hilbert or quaternionic datum of Chapters 7--8 satisfying the PEL-exact or central-modification hypothesis of Lemma 11.3, that algebraization admits a canonical model over $E(G,X)$. It satisfies (11.2).
 
 **Proof strategy.** First descend over a finite Galois extension by transporting the algebraic tensor data. Then identify the descent action on a dense set of CM points using Book 125. The cocycle follows on that dense set and hence everywhere.
 
@@ -1391,17 +1257,15 @@ The component formula (6.5) now has a geometric interpretation. Let $C$ be a geo
 
 **Proof.** Every component contains a special point by Lemma 11.1. For such a point, projection of special reciprocity to $G^{\mathrm{ab}}$ is (6.5) by (10.4). Hence an automorphism fixes the component exactly when its reciprocity element fixes the class in (6.3). The stabilizer is open, so its fixed field is finite. Since the component is open and closed after base change, its idempotent in the finite étale algebra of components is fixed by that stabilizer and descends to $E_C$. $\square$
 
-For Hilbert data this recovers an action on narrow ideal classes. For the basic quaternionic group it gives the narrow quotient $F_+^\times\backslash\mathbf A_{F,f}^\times/\operatorname{Nrd}(K)$: orientation supplies the split-place signs and the rational norm theorem supplies the Hamiltonian signs. A quaternionic central modification instead uses its own exact quotient (8.8). For unitary data it gives the torus quotient subject to determinant--multiplier relation (9.8). In each case the connected canonical model over $E_C$ is obtained by selecting one idempotent, not by pretending the component was already defined over $E$.
+For Hilbert data this recovers an action on narrow ideal classes. For the basic quaternionic group it gives the narrow quotient $F_+^\times\backslash\mathbf A_{F,f}^\times/\operatorname{Nrd}(K)$: orientation supplies the split-place signs and the rational norm theorem supplies the Hamiltonian signs. A quaternionic central modification instead uses its own exact quotient (8.8). In each case the connected canonical model over $E_C$ is obtained by selecting one idempotent, not by pretending the component was already defined over $E$.
 
 ## 13. The FLT package
 
-The preceding constructions can now be read as one decision procedure. The parity of the totally real degree selects a quaternionic curve or a unitary surface; real ramification selects the domain; the Hodge cocharacter selects the reflex field; and reciprocity descends the entire adelic tower.
+The preceding constructions can now be read as one decision procedure. Real and finite ramification select a quaternionic curve; the Hodge cocharacter selects the reflex field; and reciprocity descends the entire adelic tower.
 
-### 13.1 Curves, surfaces, and the parity split
+### 13.1 Shimura curves and the parity check
 
-Let $F$ be totally real. A quaternion algebra has an even total number of ramified places. To obtain a Shimura curve, choose $B/F$ split at exactly one real place and ramified at the other $d-1$ real places, adjusting finite ramification so the total is even. The resulting domain has dimension one and reflex field the embedded copy of $F$ singled out by the split place.
-
-When the required global ramification and representation parity cannot be arranged in a curve without losing the desired automorphic packet, use a rank-two unitary group attached to a CM extension $K/F$. Choose signature $(1,1)$ at exactly two real places and definite signature elsewhere. The domain has dimension two. Choosing the Hermitian space anisotropic over $F$ makes the surface compact. The definite-place orientations are retained in the signature function and hence in its reflex field.
+Let $F$ be totally real. A quaternion algebra has an even total number of ramified places. To obtain a Shimura curve, choose $B/F$ split at exactly one real place and ramified at the other $d-1$ real places. If $d-1$ has the wrong parity, include one finite ramified place compatible with the packet and local correspondence. The resulting domain has dimension one and reflex field the embedded copy of $F$ singled out by the split place. Thus parity is handled inside the quaternionic ramification ledger rather than by changing the geometric dimension.
 
 The symplectic representation has an independent parity issue. For a tensor of $d$ alternating two-dimensional representations, the tensor form is alternating when $d$ is odd and symmetric when $d$ is even. Book 123 proves this sign and supplies hyperbolic enlargement in the even case. That repair changes the auxiliary abelian variety but neither the adjoint domain nor the reciprocity morphism. Confusing geometric dimension with representation dimension is therefore a serious error: a one-dimensional Shimura curve can map to a high-dimensional Siegel space.
 
@@ -1410,25 +1274,23 @@ The symplectic representation has an independent parity issue. For a tensor of $
 **Theorem 13.1 (FLT Shimura package).** Let $(G,X)$ be one of the following:
 
 1. the Hilbert datum for $\operatorname{Res}_{F/\mathbf Q}\operatorname{GL}_2$;
-2. a quaternionic datum for $\operatorname{Res}_{F/\mathbf Q}B^\times$, or a connected central modification to which its adjoint Hodge map lifts, with at least one split real place;
-3. a rank-two unitary similitude datum for a CM extension $K/F$, with at least one indefinite real place and with every rational simple adjoint factor active.
+2. a quaternionic datum for $\operatorname{Res}_{F/\mathbf Q}B^\times$, or a connected central modification to which its adjoint Hodge map lifts, with at least one split real place.
 
-Assume in cases 2 and 3 that the selected rational group, or a central modification with the same adjoint datum and reflex field, carries the PEL-exact polarized weight-one realization specified by the algebra with involution, with rational multiplier. Assume also the rational transitivity on $\pi_0(X)$ verified in Section 6.1 when the simplified component formula is used. Then:
+Assume in case 2 that the selected rational group, or a central modification with the same adjoint datum and reflex field, carries the PEL-exact polarized weight-one realization specified by the algebra with involution, with rational multiplier. Assume also the rational transitivity on $\pi_0(X)$ verified in Section 6.1 when the simplified component formula is used. Then:
 
 - $(G,X)$ is a Shimura datum and
 
   $$
   \dim X=\begin{cases}
   [F:\mathbf Q],&\text{Hilbert},\\
-  |\Sigma|,&\text{quaternionic},\\
-  \sum_\tau p_\tau q_\tau,&\text{unitary};
+  |\Sigma|,&\text{quaternionic};
   \end{cases}                                                         \tag{13.1}
   $$
 
-- its reflex field is respectively $\mathbf Q$, the stabilizer field of $\Sigma$, or the stabilizer field of the signature function;
+- its reflex field is respectively $\mathbf Q$ or the stabilizer field of $\Sigma$;
 - every compact open contains a neat normal compact open of finite index;
 - at neat level the complex quotient is a smooth quasi-projective variety, and at arbitrary level it is a normal quasi-projective variety with finite quotient singularities;
-- connected components are given by (6.3), with the explicit Hilbert formula (7.5), the basic quaternionic narrow formula (8.7), the exact central-modification formula (8.8), and the unitary torus formula (9.9);
+- connected components are given by (6.3), with the explicit Hilbert formula (7.5), the basic quaternionic narrow formula (8.7), and the exact central-modification formula (8.8);
 - for every level there is a unique canonical model over the reflex field, characterized by
 
   $$
@@ -1439,7 +1301,7 @@ Assume in cases 2 and 3 that the selected rational group, or a central modificat
 - level maps, morphisms of data, and Hecke translations descend over the appropriate reflex field;
 - geometric components descend over the finite abelian extensions determined by the ambient reciprocity map on (6.3).
 
-**Proof.** Propositions 7.1, 8.1, and 9.1 verify the axioms and dimensions. Sections 7.3, 8.3, and 9.3 compute the reflex fields from Definition 4.1. Proposition 5.1 gives neat levels. Lemma 11.3 gives algebraization, Theorem 11.4 and Proposition 11.5 give canonical descent, and Section 12 treats arbitrary level and functoriality. Theorem 6.1 computes components, while Section 12.4 identifies their fields of definition. Finally, Theorem 10.1 gives (13.2). $\square$
+**Proof.** Propositions 7.1 and 8.1 verify the axioms and dimensions. Sections 7.3 and 8.3 compute the reflex fields from Definition 4.1. Proposition 5.1 gives neat levels. Lemma 11.3 gives algebraization, Theorem 11.4 and Proposition 11.5 give canonical descent, and Section 12 treats arbitrary level and functoriality. Theorem 6.1 computes components, while Section 12.4 identifies their fields of definition. Finally, Theorem 10.1 gives (13.2). $\square$
 
 This theorem deliberately stops at the generic canonical model. Smooth or semistable integral models, extension of correspondences at bad primes, and cohomological realizations require local geometric hypotheses not present in a rational Shimura datum.
 
@@ -1451,7 +1313,6 @@ The central statements depend on different hypotheses, and none should be carrie
 |---|---|---|
 | Shimura axioms | connected reductive $G$, Hodge types (3.1), Cartan involution, active rational factors | the orbit need not be Hermitian or effective |
 | quaternionic positive dimension | at least one split real place | the proposed $h$ is adjoint-trivial |
-| unitary dimension formula | nondegenerate Hermitian form and fixed signatures | the domain and cocharacter are undefined |
 | symplectic algebraization | PEL-exact polarized weight-one representation, directly or through a compatible central modification with the same reflex field | faithfulness alone does not identify the Shimura quotient with a PEL locus |
 | component reduction | strong approximation for the simply connected derived group | the torus quotient may miss a derived obstruction |
 | simplified component labels | transitivity of $G(\mathbf Q)$ on $\pi_0(X)$ | one must retain the orbit set (6.2a) |
@@ -1469,7 +1330,7 @@ The dependency chain is now closed. Adèles and ray quotients provide the topolo
 
 A Shimura datum is the precise interface between Hodge theory and arithmetic groups. The Deligne torus turns a complex structure into a cocharacter; the three Shimura axioms turn its real conjugacy class into a Hermitian symmetric domain. Finite adèles add level, and neatness turns arithmetic orbifolds into manifolds without changing the cofinal tower.
 
-For the Hilbert datum every real embedding is active, so the domain is $(\mathfrak H^\pm)^d$, the reflex field is $\mathbf Q$, and components form a narrow class quotient. A quaternion algebra suppresses the ramified real factors in the domain: the active set $\Sigma$ determines the dimension and reflex field, while reduced norm computes the basic group’s components as a narrow quotient. The signs have two sources—orientation at split active places and positivity of rational reduced norms at Hamiltonian places. A quaternionic central modification retains its own abelianized quotient. A rank-two unitary group replaces the active-set indicator by a signature function; its $(1,1)$ places contribute dimension, and its definite orientations can still enlarge the reflex field. In all three families, strong approximation transfers the component problem from the derived group to an explicit torus quotient.
+For the Hilbert datum every real embedding is active, so the domain is $(\mathfrak H^\pm)^d$, the reflex field is $\mathbf Q$, and components form a narrow class quotient. A quaternion algebra suppresses the ramified real factors in the domain: the active set $\Sigma$ determines the dimension and reflex field, while reduced norm computes the basic group’s components as a narrow quotient. The signs have two sources—orientation at split active places and positivity of rational reduced norms at Hamiltonian places. A quaternionic central modification retains its own abelianized quotient. In both families, strong approximation transfers the component problem from the derived group to an explicit torus quotient.
 
 The arithmetic structure is fixed by one normalization. With arithmetic Artin reciprocity and the left adelic convention,
 
@@ -1479,4 +1340,4 @@ $$
 
 The reflex morphism is built from $\mu_h$, and the main theorem of complex multiplication identifies its lattice action with Galois conjugation. Special points are dense, so this rule uniquely determines descent. A symplectic algebraization supplies a quasi-projective complex variety, the CM rule supplies a cocycle, and effective descent produces the canonical model over $E(G,X)$. Level maps, Hecke translations, and morphisms commute with the same formula and therefore descend with it.
 
-The resulting package is exactly what the FLT cases require: correctly typed Hilbert, quaternionic, and unitary Shimura data; explicit reflex fields; finite and computable component sets; cofinal neat levels; canonical models at every level; and a reciprocity law that controls both special points and geometric components. The analytic quotient, the adelic tower, and the Galois action are no longer separate constructions. They are three views of one canonical arithmetic variety.
+The resulting package is exactly what the FLT cases require: correctly typed Hilbert and quaternionic Shimura data; explicit reflex fields; finite and computable component sets; cofinal neat levels; canonical models at every level; and a reciprocity law that controls both special points and geometric components. The analytic quotient, the adelic tower, and the Galois action are no longer separate constructions. They are three views of one canonical arithmetic variety.

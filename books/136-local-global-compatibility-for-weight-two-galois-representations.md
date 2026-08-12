@@ -5,7 +5,7 @@
 1. [The local information carried by a global representation](#1-the-local-information-carried-by-a-global-representation)
    - [1.1 The comparison problem](#11-the-comparison-problem)
    - [1.2 Standing fields and Frobenius conventions](#12-standing-fields-and-frobenius-conventions)
-   - [1.3 The geometric carriers](#13-the-geometric-carriers)
+   - [1.3 The geometric carrier](#13-the-geometric-carrier)
    - [1.4 Scope and logical boundary](#14-scope-and-logical-boundary)
 2. [The rank-two Weil--Deligne dictionary](#2-the-rank-two-weil--deligne-dictionary)
    - [2.1 From quasi-unipotent inertia to a pair](#21-from-quasi-unipotent-inertia-to-a-pair)
@@ -43,12 +43,6 @@
    - [8.2 The unramified quadratic case](#82-the-unramified-quadratic-case)
    - [8.3 The ramified quadratic case](#83-the-ramified-quadratic-case)
    - [8.4 The tame dihedral comparison theorem](#84-the-tame-dihedral-comparison-theorem)
-9. [Unitary surfaces and cancellation](#9-unitary-surfaces-and-cancellation)
-   - [9.1 The honest surface monodromy](#91-the-honest-surface-monodromy)
-   - [9.2 Local cancellation data](#92-local-cancellation-data)
-   - [9.3 The logarithm on a Hom factor](#93-the-logarithm-on-a-hom-factor)
-   - [9.4 Surface local--global compatibility](#94-surface-local--global-compatibility)
-   - [9.5 Why cancellation hypotheses cannot be weakened](#95-why-cancellation-hypotheses-cannot-be-weakened)
 10. [Local factors, conductors, and epsilon factors](#10-local-factors-conductors-and-epsilon-factors)
     - [10.1 Euler factors](#101-euler-factors)
     - [10.2 Artin, Swan, and monodromy conductors](#102-artin-swan-and-monodromy-conductors)
@@ -67,8 +61,7 @@
     - [13.1 A good prime](#131-a-good-prime)
     - [13.2 One loop and a separating node](#132-one-loop-and-a-separating-node)
     - [13.3 A tame dihedral parameter](#133-a-tame-dihedral-parameter)
-    - [13.4 A surface with two bad directions](#134-a-surface-with-two-bad-directions)
-    - [13.5 Equal conductors and unequal types](#135-equal-conductors-and-unequal-types)
+    - [13.4 Equal conductors and unequal types](#134-equal-conductors-and-unequal-types)
 14. [Dependency and hypothesis audit](#14-dependency-and-hypothesis-audit)
     - [14.1 Imported geometric results](#141-imported-geometric-results)
     - [14.2 Exact hypothesis ledger](#142-exact-hypothesis-ledger)
@@ -80,7 +73,7 @@ A global Galois representation is constructed from the cohomology of a variety, 
 
 ### 1.1 The comparison problem
 
-Let $E$ be the field over which a selected Shimura curve or unitary surface is defined, let $u$ be a finite place of $E$, and let $K=E_u$. A parallel-weight-two packet $\Pi$ gives, by the cohomological extraction already established, a continuous semisimple representation
+Let $E$ be the field over which a selected Shimura curve is defined, let $u$ be a finite place of $E$, and let $K=E_u$. A parallel-weight-two packet $\Pi$ gives, by the cohomological extraction already established, a continuous semisimple representation
 
 $$
 \rho_{\Pi,\lambda}:G_E\longrightarrow
@@ -88,7 +81,7 @@ $$
 \tag{1.1}
 $$
 
-in the curve case. The same notation is used for a rank-two surface factor only when a descended cancellation datum has been supplied. Here $L$ is a finite splitting field for the relevant Hecke algebra and $\lambda\mid\ell$.
+Here $L$ is a finite splitting field for the relevant Hecke algebra and $\lambda\mid\ell$.
 
 Restrict (1.1) to $G_K$, with $u\nmid\ell$. The local monodromy theorem packages this restriction into a Weil--Deligne representation
 
@@ -163,9 +156,9 @@ $$
 \tag{1.10}
 $$
 
-### 1.3 The geometric carriers
+### 1.3 The geometric carrier
 
-There are two carriers. A compact quaternionic Shimura curve contributes a packet block
+A compact quaternionic Shimura curve contributes a packet block
 
 $$
 P_{\Pi,\lambda}\otimes W_{\Pi,\lambda},
@@ -173,9 +166,9 @@ P_{\Pi,\lambda}\otimes W_{\Pi,\lambda},
 \tag{1.11}
 $$
 
-and Galois acts on the multiplicity space $W_{\Pi,\lambda}$. A compact unitary surface contributes an honest middle-cohomology block which is generally four-dimensional and pure of weight two. It contributes a rank-two weight-one representation only if an algebraic cancellation factor, its descent action, and its pairing have all been supplied.
+and Galois acts on the multiplicity space $W_{\Pi,\lambda}$.
 
-At a good place, the carrier has a smooth proper integral model and ordinary specialization suffices. At a bad parahoric place, a verified rank-two lattice-chain local model gives a strict semistable curve or surface after the explicit regularization. Nearby cycles then replace ordinary specialization. Prime-to-$p$ Hecke correspondences extend to these models and commute with inertia, Frobenius, restriction, Gysin, and monodromy.
+At a good place, the curve has a smooth proper integral model and ordinary specialization suffices. At a bad parahoric place, a verified rank-two lattice-chain local model gives a strict semistable curve after the explicit regularization. Nearby cycles then replace ordinary specialization. Prime-to-$p$ Hecke correspondences extend to these models and commute with inertia, Frobenius, restriction, Gysin, and monodromy.
 
 ### 1.4 Scope and logical boundary
 
@@ -184,10 +177,9 @@ The local results in this book require $u\nmid\ell$. They cover:
 - good hyperspecial places;
 - strict semistable rank-two Iwahori places, including the Steinberg branch;
 - finite inertial descent when its action on the geometric strata is retained;
-- tame dihedral types whose quadratic cover, inducing character, and type projector occur in that descent complex;
-- rank-two factors of unitary-surface cohomology only under the local cancellation hypotheses stated in Chapter 9.
+- tame dihedral types whose quadratic cover, inducing character, and type projector occur in that descent complex.
 
-No claim at $u\mid\ell$ follows from nearby cycles with $\ell$-adic coefficients. No wild type is identified from a tame chart alone. No integral direct summand follows from a rational Hecke projector. No rank-two surface representation is obtained by selecting two Hodge lines. These are theorem boundaries, not omissions to be filled by a change of notation.
+No claim at $u\mid\ell$ follows from nearby cycles with $\ell$-adic coefficients. No wild type is identified from a tame chart alone. No integral direct summand follows from a rational Hecke projector. These are theorem boundaries, not omissions to be filled by a change of notation.
 
 ## 2. The rank-two Weil--Deligne dictionary
 
@@ -420,9 +412,9 @@ r(\Phi)\text{ on }(\ker N)^{I_K},\
 \tag{3.3}
 $$
 
-For a surface one also records $\operatorname{rank}N^2$ on the full middle cohomology. The stratum complex supplies these data in the following order: finite descent acts on components and incidence orientations; restriction and Gysin maps determine the surviving subquotients; monodromy joins matching subquotients; Frobenius acts on their cohomology.
+The stratum complex supplies these data in the following order: finite descent acts on components and incidence orientations; restriction and Gysin maps determine the surviving subquotients; monodromy joins matching subquotients; Frobenius acts on their cohomology.
 
-Only after this construction may a Hecke projector be applied. Counting nodes, double curves, or triple points before taking the incidence cohomology can give a wrong rank for $N$.
+Only after this construction may a Hecke projector be applied. Counting nodes before taking graph cohomology can give a wrong rank for $N$.
 
 ### 3.3 A rigidity criterion
 
@@ -478,7 +470,7 @@ Let $u\mid v$ and let $p$ be the residue characteristic. We assume:
 - the relevant order is maximal and the involution is unramified;
 - the alternating lattice is self-dual and the polarization degree is a unit;
 - the local group scheme is reductive and the $p$-level is hyperspecial;
-- the actual determinant local model is the required smooth projective line, or product of two such lines;
+- the actual determinant local model is the required smooth projective line;
 - the selected component union descends and is stable under the Hecke correspondences used;
 - the prime-to-$p$ level is fine, or the argument is made rationally through a fine cover;
 - the Shimura datum is in the compact anisotropic range, so the model is proper;
@@ -761,7 +753,7 @@ Strict semistability may appear only after a finite extension. The extension sim
 Let $K'/K$ be a finite Galois extension over which a strict semistable model exists. The geometric special fiber over $K'$ carries an action of the finite descent group. This action can:
 
 - permute components and double intersections;
-- reverse the orientation of graph edges or surface simplices;
+- reverse the orientation of graph edges;
 - act on component cohomology;
 - act on a coefficient system;
 - contribute a finite wild image.
@@ -911,105 +903,6 @@ $$
 **Proof.** The equivariant descent module gives the restriction to inertia, in the form (2.13) or (8.4). Vanishing monodromy gives $N=0$. The Frobenius return scalar supplies the remaining datum in the induced matrices. Lemma 3.1, or directly (8.1), identifies the Weil representations. $\square$
 
 The theorem is unchanged after extending the coefficient field enough to contain the values of $\theta_v$. Its conductor and epsilon factor then agree automatically because they are invariants of the same Weil--Deligne representation.
-
-## 9. Unitary surfaces and cancellation
-
-The surface geometry is indispensable in the two-active-place construction, but it has more cohomology than the desired rank-two representation. Local--global compatibility on a surface must therefore be stated in two stages: first for the honest four-dimensional block, then for a rank-two factor under a genuine cancellation datum.
-
-### 9.1 The honest surface monodromy
-
-For a proper strictly semistable surface, the middle-cohomology weight complex contains component surfaces, double curves, and triple points. Its monodromy satisfies
-
-$$
-N^3=0.
-\tag{9.1}
-$$
-
-If
-
-$$
-r_1=\operatorname{rank}N,
-\qquad r_2=\operatorname{rank}N^2,
-$$
-
-then the numbers of Jordan blocks of lengths three, two, and one are
-
-$$
-n_3=r_2,
-\qquad n_2=r_1-2r_2,
-\qquad n_1=\dim V-2r_1+r_2.
-\tag{9.2}
-$$
-
-The extreme term $r_2$ is controlled by the second homology of the dual complex. The length-two primitive term is controlled by the quotient of double-curve $H^1$ left after restriction and Gysin. Neither is determined by counting triple points or summing genera.
-
-The honest surface packet $V_{\Pi,\lambda}$ inherits this $N$, the finite descent action, and Frobenius. It remains generally four-dimensional. Formula (9.2) is meaningful on that full block and must not be forced into a rank-two classification.
-
-### 9.2 Local cancellation data
-
-A **local cancellation datum** at $u$ consists of:
-
-1. a two-dimensional $B_\Pi$-module $R_\Pi$ for a descended split algebra $B_\Pi\simeq M_2(L_\lambda)$;
-2. compatible $W_K$-actions on $B_\Pi$, $R_\Pi$, and $V_{\Pi,\lambda}$, with Galois normalizing the algebra action;
-3. a $W_K$-equivariant evaluation isomorphism
-
-   $$
-   R_\Pi\otimes W_\Pi^{\mathrm{surf}}
-   \xrightarrow{\sim}V_{\Pi,\lambda};
-   \tag{9.3}
-   $$
-
-4. an identification of the surface nearby-cycle stratum complex with the tensor product of the cancellation complex and the desired packet complex, compatible with restriction, Gysin, and Frobenius;
-5. the pairing factorization which leaves on $W_\Pi^{\mathrm{surf}}$ the target $L_\lambda(-1)\otimes\eta_\Pi$.
-
-The fourth condition is the local addition to the global cancellation datum. A tensor factorization on generic cohomology alone does not say how monodromy divides between its two factors.
-
-### 9.3 The logarithm on a Hom factor
-
-Define
-
-$$
-W=\operatorname{Hom}_{B_\Pi}(R_\Pi,V_\Pi)
-$$
-
-with
-
-$$
-(g\cdot f)(x)=g\bigl(f(g^{-1}x)\bigr).
-\tag{9.4}
-$$
-
-Let $N_R$ and $N_V$ be the logarithms of inertia on $R$ and $V$. Differentiating (9.4) gives
-
-$$
-(N_Wf)(x)=N_V(f(x))-f(N_Rx).
-\tag{9.5}
-$$
-
-**Proposition 9.1.** Under the local cancellation datum,
-
-$$
-N_V=N_R\otimes1+1\otimes N_W
-\tag{9.6}
-$$
-
-under (9.3), and $(r_W,N_W)$ satisfies the Weil--Deligne relation.
-
-**Proof.** On a sufficiently small inertia subgroup, (9.3) identifies the action with the tensor product of the two actions. The logarithm of a tensor product of commuting unipotent one-parameter groups is the sum of their logarithms, proving (9.6). Solving (9.6) for the Hom factor gives (9.5). Conjugating (9.5) by a Weil element and using the scaling relation for $N_V$ and $N_R$ yields the same relation for $N_W$. $\square$
-
-Although $N_V^3$ may be nonzero on a four-dimensional surface block, dimensional reasoning gives $N_W^2=0$ on the rank-two factor. One cannot infer $N_W$ from $N_V$ without knowing $N_R$ and the tensor factorization.
-
-### 9.4 Surface local--global compatibility
-
-**Theorem 9.2.** Assume a surface cancellation datum globally and the local cancellation datum of Section 9.2 at $u\nmid\ell$. Suppose the desired packet complex satisfies one of the good, special, finite-type, or tame dihedral comparison hypotheses already stated. Then the rank-two surface factor satisfies the corresponding local--global compatibility theorem.
-
-**Proof.** Proposition 9.1 identifies the Weil--Deligne pair on the Hom factor with the pair computed from the desired packet complex after removing the known cancellation pair. The pairing factorization gives determinant $\chi_\ell^{-1}\eta_\Pi$, so the determinant checks in Chapters 4 and 6 remain valid. The relevant recognition theorem then applies: Theorem 4.2 in the good case, Theorem 6.2 in the special case, Theorem 7.1 for finite type, and Theorem 8.1 for tame dihedral type. $\square$
-
-### 9.5 Why cancellation hypotheses cannot be weakened
-
-A four-dimensional surface block can have Hodge numbers $(1,2,1)$ and $N^3=0$. Choosing the $(2,0)$ and $(0,2)$ lines does not give a Galois-stable subspace. Taking a formal half Tate twist is impossible because integral Tate twists change weight by an even integer.
-
-Nor does an abstract vector-space factorization $V\simeq R\otimes W$ suffice. Without descended algebra action, $W$ need not be Galois stable. Without the local tensor factorization, equation (9.6) is unavailable. Without the pairing factorization, the determinant on $W$ is undetermined. Each clause in the cancellation datum supplies one of these missing structures.
 
 ## 10. Local factors, conductors, and epsilon factors
 
@@ -1177,16 +1070,7 @@ If a type projector contains the denominator $|J|$ from (7.2) and $\ell\mid|J|$,
 
 ### 11.3 Integral monodromy and its denominators
 
-For a curve, $N^2=0$ and, after normalizing a tame generator, the integral logarithm is simply $\rho(\tau)-1$. The induced map between the outer graph lattices is the weighted graph pairing. Its finite cokernel records the monodromy discriminant and component information, not the rational conductor.
-
-For a surface, the logarithm can contain
-
-$$
-\log(1+U)=U-\frac{U^2}{2}.
-\tag{11.3}
-$$
-
-At $\ell=2$, rational $N$ is still canonical, but integral preservation requires a separate divisibility argument. Even for odd $\ell$, restriction and Gysin images can be nonsaturated. A rational cancellation factor therefore does not automatically carry a canonical integral monodromy lattice.
+For a curve, $N^2=0$ and, after normalizing a tame generator, the integral logarithm is simply $\rho(\tau)-1$. The induced map between the outer graph lattices is the weighted graph pairing. Its finite cokernel records the monodromy discriminant and component information, not the rational conductor. Even for odd $\ell$, restriction and Gysin images can be nonsaturated, so rational local compatibility does not automatically produce a canonical integral monodromy lattice.
 
 Ramified base change of index $e$ scales the normalized integral operator by $e$. It leaves the rational Jordan type unchanged but can change cokernels and component groups. This is why conductor stability under semistable base change does not imply stability of integral monodromy discriminants.
 
@@ -1233,8 +1117,6 @@ Let $u\nmid\ell$ be a finite place of $E$, put $K=E_u$, and let $v$ be the corre
 
 5. **Tame dihedral place.** Under the quadratic-cover, character-projector, vanishing-monodromy, and Frobenius-return hypotheses of Theorem 8.1, compatibility holds with $\operatorname{Ind}_{W_L}^{W_K}\theta_v$.
 
-6. **Surface carrier.** The unitary surface supplies unconditionally its full, generally four-dimensional, middle-cohomology Weil--Deligne block. A rank-two compatibility statement holds only when both the global and local cancellation data of Chapter 9 are supplied. Under those data, the corresponding assertion from parts 1--5 holds for the surface Hom factor.
-
 In every compatible case, Euler factors, Artin and Swan conductors, monodromy ranks, and epsilon factors for a fixed additive character and self-dual measure agree on the automorphic and Galois sides.
 
 ### 12.2 Proof
@@ -1244,8 +1126,6 @@ At a good place, the good integral-model theorem gives a smooth projective model
 At a strict semistable curve place, nearby cycles give the three graded pieces (5.1), and monodromy is the graph restriction--Gysin pairing. Hecke functoriality lets the multiplicity Hom construction pass through that complex. Since the multiplicity space is two-dimensional, $N$ has rank zero or one. Strictness over $K$ makes finite inertia trivial. Proposition 5.1 and Proposition 2.1 give part 2. The normalized bad correspondence computes Frobenius on the invariant graph line, so Theorem 6.2 proves part 3.
 
 After a finite semistable extension, the equivariant stratum complex retains the finite descent action. Type projectors commute with every differential and with monodromy. If $N=0$, agreement of the inertial type and Frobenius return maps identifies the whole Weil representation by Lemma 3.1. This proves part 4. For a quadratic character orbit, the same argument is the explicit induction calculation of Chapter 8, proving part 5.
-
-For a surface, the weight complex first computes the honest middle-cohomology pair. Under local cancellation, differentiation of the Hom action gives (9.5), and the nearby-cycle tensor factorization identifies this operator with the desired packet monodromy. The pairing supplies the determinant. The appropriate rank-two recognition theorem then proves part 6.
 
 Finally, the formulas of Chapter 10 depend only on the isomorphism class of the Weil--Deligne parameter. Equality of parameters therefore gives equality of all the listed local invariants. $\square$
 
@@ -1317,33 +1197,13 @@ is irreducible, $N=0$, and $D^I=0$. Hence $L(s,D)=1$ and $a(D)=2$. Geometric Fro
 
 Changing $\theta(\Phi_L)$ by an unramified scalar leaves the inertial type and conductor unchanged but changes the determinant and parameter. This explicitly demonstrates why type plus conductor is not local--global compatibility.
 
-### 13.4 A surface with two bad directions
-
-Suppose a local surface complex is a product of two nodal curve complexes with one graph cycle in each direction. On the tensor product,
-
-$$
-N=N_1\otimes1+1\otimes N_2,
-$$
-
-so
-
-$$
-N^2=2N_1\otimes N_2\ne0
-\tag{13.1}
-$$
-
-over characteristic zero. The full surface block contains a length-three Jordan block. At $\ell=2$, the factor $2$ is an integral warning even though rational rank is unchanged.
-
-A rank-two cancellation factor nevertheless satisfies $N_W^2=0$. Equation (9.5), not the total rank of $N_V$, determines whether that factor is unramified or special. Assigning the full surface $N^2$ to the rank-two factor would contradict dimension.
-
-### 13.5 Equal conductors and unequal types
+### 13.4 Equal conductors and unequal types
 
 The following pairs have equal conductor but different parameters:
 
 - $\operatorname{St}(1)$ and a nontrivial tame character direct-summed with an unramified line can both have conductor one, but only the first has $N\ne0$;
 - split and nonsplit multiplicative special parameters both have conductor one, but their invariant Frobenius eigenvalues are $1$ and $-1$;
-- two tame dihedral parameters with the same inertial characters and different unramified twists have the same conductor and type but different Frobenius return scalars;
-- a surface block with one length-three Jordan block and a block with two length-two blocks can have the same rank of $N$ while their $N^2$ differ.
+- two tame dihedral parameters with the same inertial characters and different unramified twists have the same conductor and type but different Frobenius return scalars.
 
 These examples justify the full comparison target $(r,N)$ and the insistence on Frobenius data.
 
@@ -1355,17 +1215,17 @@ The proof is complete only if every imported geometric statement is used within 
 
 The following prior results are used.
 
-**Nearby cycles and monodromy.** The low-dimensional nearby-cycle theory supplies the semistable inertia formula, $N^2=0$ for curves, $N^3=0$ for surfaces, the restriction--Gysin weight complex, the graph and dual-complex descriptions, the conductor formula, finite descent, and the integral saturation warnings. Its hypotheses are proper strict semistability, coefficients prime to the residue characteristic, and purity when surface degeneration at the second page is invoked.
+**Nearby cycles and monodromy.** The low-dimensional nearby-cycle theory supplies the semistable inertia formula, $N^2=0$ for curves, the restriction--Gysin weight complex, the graph description, the conductor formula, finite descent, and the integral saturation warnings. Its hypotheses are proper strict semistability and coefficients prime to the residue characteristic.
 
 **Semistable abelian varieties.** The semistable abelian-variety theory supplies the interpretation of square-zero monodromy through toric periods, the distinction between rational monodromy and component discriminants, the effect of ramified base change, and the split versus nonsplit multiplicative example. It is used only for abelian or Jacobian realizations, with $\ell\ne p$ and semistability over the stated field.
 
 **Weil--Deligne representations.** The local parameter theory supplies the Weil group convention, extraction and reconstruction of $(r,N)$, Frobenius semisimplification, special blocks, inertial types, conductor formulas, induction, Euler factors, and epsilon factors. Every formula here uses its geometric-Frobenius and reciprocity normalization.
 
-**Good integral models.** The good-model theorem supplies smooth projective curve and surface models, extension of prime-to-$p$ Hecke correspondences, and integral smooth proper specialization. It is invoked only under the unramified-order, self-dual-lattice, hyperspecial-level, smooth-local-model, component-descent, neatness, and anisotropy hypotheses listed in Section 4.1.
+**Good integral models.** The good-model theorem supplies smooth projective curve models, extension of prime-to-$p$ Hecke correspondences, and integral smooth proper specialization. It is invoked only under the unramified-order, self-dual-lattice, hyperspecial-level, smooth-local-model, component-descent, neatness, and anisotropy hypotheses listed in Section 4.1.
 
-**Semistable Shimura models.** The parahoric model theorem supplies the rank-two Iwahori curve, one-direction surface, regularized two-direction surface, equivariant strata, and Hecke action on nearby cycles. It is invoked only for verified flat incidence local models and the explicit strict semistable regularizations. Arbitrary parahoric or ramified local models are not included.
+**Semistable Shimura models.** The parahoric model theorem supplies the rank-two Iwahori curve, its equivariant strata, and the Hecke action on nearby cycles. It is invoked only for verified flat incidence local models and explicit strict semistability. Arbitrary parahoric or ramified local models are not included.
 
-**Cohomological extraction.** The weight-two extraction theorem supplies the rank-two curve multiplicity space, determinant, good Frobenius polynomial, saturated rational packet lattice, and the exact surface cancellation boundary. The present book adds the bad-place comparison; it does not reconstruct the global representation.
+**Cohomological extraction.** The weight-two extraction theorem supplies the rank-two curve multiplicity space, determinant, good Frobenius polynomial, and saturated rational packet lattice. The present book adds the bad-place comparison; it does not reconstruct the global representation.
 
 ### 14.2 Exact hypothesis ledger
 
@@ -1378,10 +1238,7 @@ The following prior results are used.
 | Steinberg identification | rank-one packet monodromy and Frobenius on its kernel | conductor one does not determine the parameter |
 | finite inertial type | equivariant finite descent complex and matching type projector | quotient strata can lose stabilizers and signs |
 | tame dihedral type | quadratic descent cover, inducing character, return scalar, $N=0$ | inertial characters leave an unramified ambiguity |
-| surface rank two | descended split cancellation algebra, local tensor complex, pairing | the honest block remains four-dimensional |
-| surface $E_2$ description | finite residue field purity or a direct degeneration proof | first-page terms need not equal graded cohomology |
 | integral type summand | integral projector, saturated images, split Hecke order | rational summands need not split the lattice |
-| integral surface logarithm at $\ell=2$ | separate divisibility check | the coefficient $1/2$ in the logarithm is not integral |
 | coefficient-prime statement | a residue-characteristic comparison theorem | prime-to-$p$ nearby-cycle arguments do not apply |
 
 There is no circular use of a compatible-system theorem or a finite-flat quotient theorem. Density of global Frobenius classes is unnecessary for the local arguments: each place is computed directly from its model and correspondences. A comparison between two different global carriers may use a separate density theorem, but carrier comparison is not used to prove the local parameter here.
@@ -1392,6 +1249,4 @@ Local--global compatibility in weight two is now a geometric equality of Weil--D
 
 Finite descent supplies the part that semistable base change temporarily removes. Components, orientations, and coefficient systems carry the finite inertial type. Frobenius return maps complete that type to a Weil representation. In the tame dihedral case, this is exactly quadratic induction from the character appearing on the descent cover. Conductors and local factors then follow from the identified pair rather than serving as substitutes for it.
 
-The surface case obeys the same principle at its proper dimension. Its full middle cohomology can contain length-three monodromy and is generally four-dimensional. Only a descended algebraic cancellation factor, compatible with the local nearby-cycle tensor structure and the pairing, exposes a rank-two parameter. Under that hypothesis the Hom logarithm subtracts the auxiliary monodromy and leaves the same unramified, special, or finite-type alternatives as for curves.
-
-Throughout, geometric Frobenius acts on a Tate twist by $q^{-1}$, monodromy satisfies $FNF^{-1}=q^{-1}N$, and local Euler factors use $(\ker N)^I$. Integral lattices retain graph discriminants, component information, and saturation defects that rational conductors forget. The resulting theorem therefore compares exactly the information present on both sides—finite inertia, monodromy, Frobenius, determinant, conductor, and local constants—while keeping good reduction, semistable geometry, coefficient extension, integral structure, and surface cancellation within their proven boundaries.
+Throughout, geometric Frobenius acts on a Tate twist by $q^{-1}$, monodromy satisfies $FNF^{-1}=q^{-1}N$, and local Euler factors use $(\ker N)^I$. Integral lattices retain graph discriminants, component information, and saturation defects that rational conductors forget. The resulting theorem therefore compares exactly the information present on both sides—finite inertia, monodromy, Frobenius, determinant, conductor, and local constants—while keeping good reduction, semistable geometry, coefficient extension, and integral structure within their proven boundaries.

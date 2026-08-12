@@ -83,7 +83,7 @@
    - [Descending one cyclic layer at a time](#125-descending-one-cyclic-layer-at-a-time)
    - [Why there is no automatic descent to the original field](#126-why-there-is-no-automatic-descent-to-the-original-field)
 13. [The theorem package](#13-the-theorem-package)
-   - [Residual potential modularity](#131-residual-potential-modularity)
+   - [Conditional residual potential modularity](#131-conditional-residual-potential-modularity)
    - [Conditional characteristic-zero potential automorphy](#132-conditional-characteristic-zero-potential-automorphy)
    - [The field-control theorem](#133-the-field-control-theorem)
    - [The elliptic-curve specialization](#134-the-elliptic-curve-specialization)
@@ -115,7 +115,7 @@ Potential modularity is an existence theorem with a carefully delimited endpoint
 
 The proof has four load-bearing pieces. A dihedral automorphic representation supplies a known residual system at an auxiliary prime. A determinant-compatible Hilbert--Blumenthal moduli space places that system and the prescribed residual representation on one polarized abelian variety. Moret--Bailly approximation supplies a totally real point field with the required local behavior and disjointness. A one-prime lifting theorem makes the auxiliary-adic Tate factor automorphic, after which weight-two Galois realization reads the same automorphic packet at the original coefficient prime.
 
-Books 95, 168, and 169 supply the character-theoretic, arithmetic, and moduli ingredients. Book 156 supplies only its stated clean one-prime lifting range. Book 135 supplies weight-two Galois realizations only in its verified geometric range. Book 97 governs any separately supplied solvable ascent or descent. From Book 174 we use the controlled auxiliary seed, signed level-raising, clean augmentation, and exact two-prime admissibility package; its final residual theorem is not used as a premise for the proof below. The argument retains every hypothesis at these interfaces.
+Books 95, 168, and 169 supply the character-theoretic, arithmetic, and moduli ingredients. Book 156 supplies only its stated clean one-prime lifting range. Book 135 supplies weight-two Galois realizations only in its verified geometric range. Book 97 governs any separately supplied solvable ascent or descent. From Book 174 we use the controlled auxiliary seed, signed level-raising, clean augmentation, and exact two-prime admissibility boundary; its conditional final residual theorem is not used as a premise for the proof below. The argument retains every hypothesis at these interfaces.
 
 ### 1.1 From one residual representation to one geometric bridge
 
@@ -196,15 +196,15 @@ For a Hilbert--Blumenthal abelian variety, a chosen generator of the local polar
 
 ### 1.4 The exact scope of this book
 
-The theorem applies to a **two-prime admissible weight-two residual datum**. In particular, $\ell\geq7$; $\bar\rho$ is totally odd, absolutely irreducible even after restriction to $F(\zeta_\ell)$, has cyclotomic determinant, has the required integral finite-flat models at places above $\ell$, and satisfies the named adjoint-twist vanishing. The auxiliary prime also satisfies $q\geq7$. The dihedral seed, the connected paired-frame component, all local comparison objects, the Moret--Bailly data, the clean one-prime lifting datum, and the integral weight-two carrier are parts of admissibility, not consequences of the first five residual conditions.
+The conditional theorem applies to a **two-prime admissible weight-two residual datum**. In particular, $\ell\geq7$; $\bar\rho$ is totally odd, absolutely irreducible even after restriction to $F(\zeta_\ell)$, has cyclotomic determinant, has the required integral finite-flat models at places above $\ell$, and satisfies the named adjoint-twist vanishing. The auxiliary prime also satisfies $q\geq7$. The dihedral seed, the connected paired-frame component, all local comparison objects, the Moret--Bailly data, the post-specialization clean one-prime lifting datum, and the rational weight-two realization are parts of admissibility, not consequences of the first five residual conditions.
 
-This scope is deliberately exact. No assertion is made for coefficient characteristic five. No arbitrary finite-order determinant is absorbed into a polarization. No broad modularity-lifting theorem is inferred from absolute irreducibility. No ordinary Moret--Bailly field is called Galois or solvable. The endpoint is residual potential modularity over a finite totally real field, with only the splitting and disjointness controls actually imposed in advance.
+This scope is deliberately exact. No assertion is made for coefficient characteristic five. No arbitrary finite-order determinant is absorbed into a polarization. No broad modularity-lifting theorem is inferred from absolute irreducibility. No ordinary Moret--Bailly field is called Galois or solvable. The proved endpoint is residual potential modularity over a finite totally real field once the post-specialization cleanability clause has been verified. The present prerequisites do not prove that clause for every residual target in the catalog range.
 
 ## 2. The residual datum and its ledger
 
 A potential-modularity argument should begin with a data sheet, not with the choice of an auxiliary curve. The eventual lifting theorem is sensitive to the coefficient field, determinant, local integral model, residual image, and named local components. If any of these is left vague at the start, the moduli construction can easily produce an object that cannot be used at the end.
 
-This chapter gives the complete input record. The theorem needs only $\bar\rho$. A characteristic-zero lift is discussed first only to explain why residual potential modularity does not automatically imply automorphy of a chosen lift.
+This chapter gives the complete input record. The target representation in the residual theorem is only $\bar\rho$; the auxiliary, moduli, local, and lifting-admissibility data remain additional hypotheses. A characteristic-zero lift is discussed first only to explain why residual potential modularity does not automatically imply automorphy of a chosen lift.
 
 ### 2.1 A comparison lift outside the main theorem
 
@@ -250,7 +250,7 @@ $$
 be its reduction. The theorem starts directly from (2.2), without a chosen lift. We assume $\ell\geq7$, that $\bar\rho$ is absolutely irreducible and totally odd, and that
 
 $$
-\det\bar\rho=\bar\chi_\ell, \tag{2.3}
+\det\bar\rho=\bar\chi_\ell. \tag{2.3}
 $$
 
 At every $v\mid\ell$ it is the generic fiber of a named paired finite locally free group scheme of rank $|k|^2$. If $k\ne\mathbf F_\ell$, the coefficient structure is part of the model; forgetting it and restricting scalars changes the dimension. We further require
@@ -305,7 +305,7 @@ $$
 F'_w=F_v\qquad(w\mid v). \tag{2.7}
 $$
 
-Let $\mathcal G_v$ be the paired finite locally free group scheme whose generic fiber is $\bar\rho|_{G_{F_v}}$. In an ordinary refinement it includes a chosen connected--étale filtration and ordinary line. In a local--local case it includes the actual PEL seed realizing that finite-flat module. These are different local conditions; neither may be inferred from the other.
+Let $\mathcal G_v$ be the paired finite locally free group scheme whose generic fiber is $\bar\rho|_{G_{F_v}}$. In an ordinary refinement it includes a chosen connected--étale filtration and ordinary line. In a local--local case it includes the actual Hilbert--Blumenthal seed realizing that finite-flat module. These are different local conditions; neither may be inferred from the other.
 
 The residual Schur hypotheses used by the local deformation theorem are included explicitly. In one common formulation they require that the relevant residual endomorphism ring be $k$ and exclude exceptional extensions for which the finite-flat deformation functor has extra automorphisms. Since their exact expression depends on the local shape, the admissible datum records the named local theorem and verifies its hypotheses place by place.
 
@@ -370,10 +370,10 @@ An **admissible weight-two residual target** consists of the following objects.
 2. A residual representation (2.2), with (2.3), (2.3a), a pairing (2.4), total oddness, absolute irreducibility, and (2.9).
 3. At each $v\mid\ell$, a paired finite locally free model $\mathcal G_v$, with every declared coefficient-extension model also satisfying the named local Schur hypotheses.
 4. A full two-prime datum: a prime $q\geq7$, a controlled dihedral seed, a determinant-compatible connected paired-frame component, simultaneous local seeds, and the avoidance ledger.
-5. A one-prime clean lifting datum at $q$, or a finite clean chain changing one named prime at a time, including the conductor-one augmentation component and every integral hypothesis of Book 156.
-6. A verified weight-two geometric realization and integral carrier in the range of Book 135.
+5. After specialization, a one-prime clean lifting datum at $q$, or a finite clean chain changing one named prime at a time, including the conductor-one augmentation component, every newly appearing bad place, and every integral hypothesis of Book 156.
+6. After the auxiliary lift, a verified rational weight-two geometric realization in the range of Book 135, with a stable lattice. The exact comparison with $A[\lambda]$ will be derived from the common Frobenius polynomials and absolute irreducibility, not assumed as an integral carrier comparison.
 
-These last three clauses are the exact two-prime admissibility boundary of Book 174. They are verification clauses, not consequences of absolute irreducibility. If the moduli space exists but the local seeds do not lie on one component, the proof stops before approximation. If the specialized auxiliary Tate module falls outside the clean local profile of Book 156, the proof stops before lifting. If the automorphic packet lacks the geometric carrier required by Book 135, the proof yields no exact target residual lattice.
+These last three clauses are the exact two-prime admissibility boundary of Book 174. Clauses 5--6 are post-specialization verification clauses, not inputs that ordinary Moret--Bailly approximation can guarantee and not consequences of absolute irreducibility. If the moduli space exists but the local seeds do not lie on one component, the proof stops before approximation. If the specialized auxiliary Tate module falls outside the clean local profile of Book 156, the proof stops before lifting. In particular, the current prerequisites do not supply the exact lower-face automorphic classes, flags, and integral vanishing-cycle data at every extra semistable prime that can appear only after specialization. If the automorphic packet lacks the rational geometric realization required by Book 135, the change-of-prime argument also stops.
 
 ## 3. Why two primes make a bridge
 
@@ -419,11 +419,9 @@ The prime $q$ is chosen after the target data at $\ell$ are fixed but before the
 8. the automorphic representation producing $\bar\sigma$ has parallel weight two, has the characteristic-zero determinant and central character prescribed by the fixed-determinant problem, and lies in a non-Eisenstein block; and
 9. all small-prime, vexing-prime, and integral type exclusions of the first lifting argument are satisfied.
 
-There is no virtue in choosing $q$ small. In the clean theorem one chooses it outside the finite exceptional sets coming from the target, the auxiliary character, coefficient fields, local type denominators, and residual image. If a proposed $q$ fails its finite-flat local calculation, one changes $q$ before constructing the moduli space.
+There is no virtue in choosing $q$ small. In the controlled construction of Book 174, first choose the CM extension $K/F$ and then choose $q$ outside the target ramification set and the finite arithmetic exclusions, large enough for the ray-unit correction and the clean one-prime theorem. With $q$ fixed, construct the algebraic Hecke character so that its determinant, finite-flat local branches, and conjugate-ratio witnesses all survive modulo $q$; the correction characters and protected witnesses are chosen of order prime to $q$. Only then fix a place of its actual coefficient field above $q$, its residue field $k_q^{\mathrm{in}}$, the representation $\bar\sigma$, and its paired local models.
 
-The order of choices prevents circularity. First choose the CM extension $K/F$ and a characteristic-zero algebraic Hecke character with the desired determinant and with prescribed local behavior away from its future coefficient prime. Next exclude the finite set of rational primes at which its two conjugates become equal after reduction, its stable lattice is not well behaved, a required type denominator is nonunit, or the intended residue field cannot be embedded in the coefficient datum. Choose $q$ outside that set with the desired splitting in the coefficient fields. Only then inspect the local avatars at places above $q$ and construct the finite-flat comparison objects.
-
-If that final local inspection fails, return to the choice of character or $q$. One may not alter the $q$-adic local characters after reducing them while pretending to retain the same global Hecke character. Once $q$, $\bar\sigma$, its pairing, and all local $q$-models are fixed, choose the totally real coefficient field $M$ and the prime $\mathfrak q$. The moduli space comes last.
+This order prevents circularity. The character-value field may enlarge while the ray-class problem is solved, so the totally real multiplication field $M$ is not chosen beforehand. Once $q$, $\bar\sigma$, its actual residue field, its pairing, and all local $q$-models are fixed, the simultaneous coefficient-realization theorem of Book 174 chooses $M$, $\lambda$, and $\mathfrak q$ to receive both residual coefficient fields and to make both primes unramified and monodromy-admissible. The moduli space comes last. If the local inspection fails, one returns to the character or to $q$; one may not alter the reduced local characters while pretending to retain the same global Hecke character.
 
 The field $M$ is chosen so that its residue fields at $\lambda$ and $\mathfrak q$ are the declared scalar extensions of the two residual coefficient fields, and so that $\ell q$ is prime to the polarization and auxiliary level. Prescribing separable factorization at $\ell$ and $q$ and requiring all archimedean roots to remain real gives a totally real $M$. Nothing requires $M$ to be larger than necessary; its degree is both the dimension of the moduli space and the dimension of the auxiliary abelian variety.
 
@@ -646,7 +644,7 @@ Full ordered level at an odd prime eliminates $[-1]$, but the independent neat r
 
 ### 4.5 The Hilbert--Blumenthal moduli problem
 
-Fix a fractional polarization ideal $\mathfrak c$, a positivity orientation, and a neat auxiliary level $\mathfrak n$, all prime to $\ell q$ and to the relevant different. A point of the untwisted PEL space is a tuple
+Fix a fractional polarization ideal $\mathfrak c$, a positivity orientation, and a neat auxiliary level $\mathfrak n$, all prime to $\ell q$ and to the relevant different. A point of the untwisted Hilbert--Blumenthal space is a tuple
 
 $$
 (A,\iota,\lambda_A,\eta_{\mathfrak n}) \tag{4.6}
@@ -661,7 +659,7 @@ $$
 
 The polarization has the prescribed $\mathfrak c$-type and sends the positive cone to polarizations. The neat level kills every automorphism preserving the datum. A chosen narrow-class and orientation component is required to be geometrically connected and defined over $F$.
 
-Add the paired frames (4.2). After splitting both residual modules, this is a finite etale frame cover of the fine PEL space. Twisting by the product cocycle produces
+Add the paired frames (4.2). After splitting both residual modules, this is a finite etale frame cover of the fine Hilbert--Blumenthal space. Twisting by the product cocycle produces
 
 $$
 X=X(\bar\rho,\bar\sigma), \tag{4.8}
@@ -681,7 +679,7 @@ Changing the convention from $\mathfrak c$ to $\mathfrak c^{-1}$ changes $L_\nu$
 
 ### 4.6 Representability, smoothness, and dimension
 
-The fine-space theorem of Book 169 applies only after all of the preceding PEL and level data have been fixed. It gives a quasi-projective scheme with a universal tuple. Smoothness is checked on the characteristic-zero generic fiber by deforming the Hodge filtration. After splitting $M$, one has
+The fine-space theorem of Book 169 applies only after all of the preceding Hilbert--Blumenthal and level data have been fixed. It gives a quasi-projective scheme with a universal tuple. Smoothness is checked on the characteristic-zero generic fiber by deforming the Hodge filtration. After splitting $M$, one has
 
 $$
 H^1_{\mathrm{dR}}(A)=\bigoplus_\tau H_\tau,
@@ -714,7 +712,7 @@ This Hom module has rank one. Every line in a two-dimensional alternating plane 
 
 ### 4.7 Geometric connectedness is a monodromy assertion
 
-Let $Y^\circ$ be the selected untwisted PEL component. Its simultaneous paired frame cover has deck group
+Let $Y^\circ$ be the selected untwisted Hilbert--Blumenthal component. Its simultaneous paired frame cover has deck group
 
 $$
 G=\operatorname{SL}_2(k_\lambda)\times\operatorname{SL}_2(k_{\mathfrak q}). \tag{4.11}
@@ -745,7 +743,7 @@ The local problem is intentionally asymmetric. At a place above $\ell$, the $\la
 
 ### 5.1 The local design principle
 
-Let $S$ contain all real places, all places above $\ell q$, every place at which either residual representation is ramified, every place at which a particular reduction type is required, and every place at which the PEL or auxiliary level has bad integral geometry. For each $v\in S$, the local datum consists of an object
+Let $S$ contain all real places, all places above $\ell q$, every place at which either residual representation is ramified, every place at which a particular reduction type is required, and every place at which the Hilbert--Blumenthal or auxiliary level has bad integral geometry. For each $v\in S$, the local datum consists of an object
 
 $$
 B_v/F_v
@@ -920,7 +918,7 @@ Before proceeding, every place in $S$ must have a completed row in the following
 | $v\mid q$ | integral object with (5.4) | Cartier pairing, finite-flat component, and actual $\lambda$-torsion |
 | prescribed good $v$ | smooth integral object | both finite etale Frobenius modules and an integral tube |
 | prescribed Steinberg $v$ | named semiabelian or Tate object | nonzero monodromy, sign, toric rank, and boundary open |
-| PEL or level-bad $v$ | point on the actual generic moduli component | every rigidification and a verified analytic neighborhood |
+| moduli- or level-bad $v$ | point on the actual generic moduli component | every rigidification and a verified analytic neighborhood |
 
 If any row lacks an object, Moret--Bailly cannot repair it. The moduli choices, the auxiliary character, or the local prescription must be changed.
 
@@ -1130,7 +1128,7 @@ $$
 \det V_{\mathfrak q}(A)=\chi_q. \tag{7.6}
 $$
 
-These equalities use the selected generator of the PEL polarization line. If a nontrivial coefficient or polarization character is retained, it must occur identically in the target pairings, the automorphic central character, and both deformation problems.
+These equalities use the selected generator of the Hilbert--Blumenthal polarization line. If a nontrivial coefficient or polarization character is retained, it must occur identically in the target pairings, the automorphic central character, and both deformation problems.
 
 ### 7.4 Preservation of residual images
 
@@ -1180,6 +1178,8 @@ S_A=S\cup B_A. \tag{7.8}
 $$
 
 At every new place in $B_A\setminus S$, compute the actual Weil--Deligne type of each rank-two factor and place it on a named controlled local component. For an elliptic curve, multiplicative reduction gives a Steinberg factor and potentially good additive reduction gives a finite inertia type; the relevant integral type and component theorem must still apply at the lifting prime. For an HBAV, the same audit is made on each $\mathcal O_M$-linear rank-two factor.
+
+Membership of the Galois point in a named local component is only the local half of the clean datum. The automorphic side must also contain the exact lower-face class, saturated primary and companion lattices, flags and pairings, and coherent integral vanishing-cycle comparison required by the selected lifting route. At an extra bad place discovered only after specialization, none of these objects is produced merely by semistability or by the level-raising congruence. This is the unresolved post-specialization cleanability clause isolated in Book 174.
 
 If a new place lies outside the controlled range, one has three honest choices: refine the integral moduli construction so that it cannot occur, pass to a carefully chosen further field where an applicable component theorem holds, or stop. The finite set of bad reduction places cannot be wished away by saying that $A$ is geometric.
 
@@ -1355,17 +1355,17 @@ At $w\nmid q$, classify the actual local representation (9.1). Good reduction gi
 
 For each nonminimal place, choose a represented local functor and one component containing the point defined by $r_{A,q}|_{G_{F'_w}}$. The residual conductor can be smaller than the characteristic-zero conductor; such a prime is included in the fixed nonminimal set $P_q$. A nonzero monodromy condition is imposed on the generic locus of a closed special component, not as an Artinian “nonvanishing equation.”
 
-At every place newly appearing in $B_A\setminus S$, the calculation of Section 7.5 must yield one of these controlled cases. The construction does not assume this without inspection. The determinant on every local functor is the restriction of $\chi_q$, matching (9.2).
+At every place newly appearing in $B_A\setminus S$, the calculation of Section 7.5 must yield one of these controlled cases. In addition, the residual automorphic localization, exact lowering or type-selection maps, saturated lattices, and comparison complexes required by the chosen clean chain must be independently constructed there. The construction does not obtain those data from the local Galois classification. The determinant on every local functor is the restriction of $\chi_q$, matching (9.2).
 
 ### 9.5 The nonminimal infrastructure ledger
 
-Book 156 separates three independent infrastructure packages. All three are required over $F'$.
+Book 156 separates three independent infrastructure packages. NM-I and NM-II are always required for the general controlled criterion. NM-III has two independent halves: clauses 1--4 belong to the relative determinant route, while clauses 5--6 belong to the component-support route; the sharp balanced route uses neither half. We record both halves below, but an application assumes only the half used by its selected route, together with that route's separate dimension, coverage, reducedness, nilpotent-control, or finiteness hypotheses.
 
 **NM-I: integral level and type control.** The primary automorphic lattice and its adjoint companion must be finite free and perfectly paired at the base, mixed, and Taylor--Wiles levels. Degeneracy maps must satisfy integral Ihara injectivity and saturation; type selection must use saturated lattices rather than a projector with a $q$-divisible denominator. The multi-prime degeneracy/type cube must have an exact saturated total complex, with no unrecorded higher torsion. At every Taylor--Wiles prime the full Iwahori old image, its new quotient, the primary $U$-block, and the companion $V$-block must satisfy the splitness, saturation, vanishing, inverse-diamond duality, and group-algebra freeness clauses of Book 156 before any block is discarded. Module and faithful-order augmentation must both be exact. The selected local component must contain a nonzero characteristic-zero automorphic point, with Eisenstein boundary and unwanted self-twist packets excluded, and the ranks and presentation amplitudes must be uniformly bounded for finite-shadow patching.
 
 **NM-II: integral reciprocity and local compatibility.** The localized Hecke algebra must carry a genuine two-dimensional Galois representation of determinant $\chi_q$. Every Artinian quotient at $w\mid q$ must be finite flat, and at every fixed nonminimal place the family must factor through the same local quotient as (9.1), with ordered characters and generic monodromy treated exactly as in Book 156. At Taylor--Wiles primes inertia must be the tautological diamond character and its inverse, becoming unramified after augmentation. If an inner form intervenes, the faithful integral Hecke orders and their Galois families must be identified before transfer. The Hecke order must be generated by the verified trace, determinant, diamond, and retained local data so that the deformation-to-Hecke map is surjective.
 
-**NM-III: determinant lines and component support.** The global problem and every local condition must be represented by the complete effective perfect complexes specified in Book 156. Their determinant lines must be identified with those of the primary--companion automorphic comparison complexes, with the stated one-prime factors and every higher $\operatorname{Tor}$ contribution retained. The patched module must meet the generic point of every component claimed in the theorem. For a componentwise conclusion, component ideals must be compatible through the finite shadows and their augmentation must equal the independently defined finite component-closure quotient.
+**NM-III: route-specific determinant lines or component support.** For the relative determinant route, the global problem and every local condition must be represented by the complete effective perfect complexes specified in Book 156. Their determinant lines must be identified with those of the primary--companion automorphic comparison complexes, with the stated one-prime factors and every higher $\operatorname{Tor}$ contribution retained. For the support route, the patched module must meet the generic point of every component claimed in the theorem. For a componentwise conclusion, component ideals must be compatible through the finite shadows and their augmentation must equal the independently defined finite component-closure quotient. These clauses are not interchangeable, and the applicable dimension, coverage, reducedness, or nilpotent-control hypotheses remain separate.
 
 In addition, the global conditions are checked:
 
@@ -1394,7 +1394,7 @@ $$
 x_A:R_q^P\longrightarrow\mathcal O_{M,\mathfrak q}. \tag{9.6b}
 $$
 
-NM-I supplies the paired Taylor--Wiles modules and exact augmentation; NM-III identifies determinant lines and proves that patched support contains the component through $x_A$. The applicable full, reduced, or componentwise $R=T$ theorem therefore makes $x_A$ factor through the Hecke side. If only reduced equality is known, the factorization still holds because the target coefficient ring is a domain and kills nilpotents.
+NM-I supplies the paired Taylor--Wiles modules and exact augmentation. The selected Book 156 route then supplies the remaining comparison: sharp balance proves faithfulness directly, the support route uses NM-III clauses 5--6 and its independent coverage and nilpotent-control hypotheses, and the relative route uses NM-III clauses 1--4 together with a proved base equality and the numerical finiteness hypotheses. The resulting full, reduced, componentwise, or relative $R=T$ statement makes $x_A$ factor through the Hecke side. If only reduced equality is known, the factorization still holds because the target coefficient ring is a domain and kills nilpotents.
 
 Specializing the Hecke-valued Galois representation at the resulting Hecke character produces a representation $r_{\Pi}$. Its traces and determinants agree with $r_{A,q}$ at all good Frobenius elements. Chebotarev and Brauer--Nesbitt identify their rational representations. Their common residual representation is absolutely irreducible, so the stable-lattice comparison upgrades the identification to the selected integral lattices. This is the mechanism behind the conclusion below; it is not a mere appeal to equal dimensions.
 
@@ -1417,7 +1417,7 @@ V_{\mathfrak q}(A)\otimes_{M_{\mathfrak q}}C_q
 \otimes_{E_{\Pi_A,\widetilde{\mathfrak q}}}C_q. \tag{9.7}
 $$
 
-The central character is trivial in the cyclotomic-determinant normalization. At every finite place, the local component of $\Pi_A$ has the conductor, inertial type, ordered branch, and monodromy prescribed by the actual local representation of $A$ within the range of NM-II.
+The central character is trivial in the cyclotomic-determinant normalization. At every finite place away from $q$ covered by NM-II and the stated local--global compatibility, the local component of $\Pi_A$ has the conductor, inertial type, ordered branch, and monodromy prescribed by the actual local representation of $A$. At places above $q$, the conclusion supplied here is the integral finite-flat Galois identification in (9.7); an automorphic local label there requires a separate $q$-adic local--global compatibility theorem.
 
 This is the first modularity-lifting conclusion. It is stronger than residual modularity of $A[\mathfrak q]$ and weaker than automorphy of every coefficient-prime factor until the next chapter supplies the comparison.
 
@@ -1542,7 +1542,7 @@ Local integral properties at the new coefficient prime do not follow solely from
 
 ## 11. A conditional second lifting step
 
-The first lift and the changing-prime argument have now produced an automorphic lift of $\bar\rho|_{G_{F'}}$, namely $V_\lambda(A)$. This already completes the theorem described in the title and catalog. If an independent characteristic-zero comparison lift $\rho$ as in Section 2.1 has also been supplied, one may ask for a further conclusion. The present chapter records that conclusion only under a second complete clean lifting datum; it is not part of residual potential modularity.
+Under the post-specialization cleanability hypothesis, the first lift and the changing-prime argument have now produced an automorphic lift of $\bar\rho|_{G_{F'}}$, namely $V_\lambda(A)$. This completes the conditional residual theorem. It does not complete the unqualified catalog objective for every target. If an independent characteristic-zero comparison lift $\rho$ as in Section 2.1 has also been supplied, one may ask for a further conclusion. The present chapter records that conclusion only under a second complete clean lifting datum; it is not part of residual potential modularity.
 
 This conditional step is logically independent of the first. Its coefficient prime is $\ell$, its local components are those of $\rho$, and its fixed nonminimal set need not equal the bad reduction set of $A$. Nothing in the residual theorem asserts that these extra hypotheses hold.
 
@@ -1665,7 +1665,8 @@ with a tower of cyclic prime-degree extensions. It is **admissible** for the swi
 3. at each problematic finite place, the specified local solvable extension sends the two points to one named local component;
 4. no uncontrolled ramification is introduced elsewhere;
 5. the base changes of the residual automorphic sources remain cuspidal at every cyclic step; and
-6. NM-I--NM-III and the curve-realization input are available over each field where they are invoked.
+6. NM-I--NM-III and the curve-realization input are available over each field where they are invoked; and
+7. every upward cyclic step is ascent-admissible in the sense of Book 97, and every downward step actually used is descent-admissible with the required base-change, twisting, and arithmetic-realization compatibilities.
 
 Such an extension is not supplied by Moret--Bailly. It is constructed separately, one cyclic layer at a time, with local compatibility and disjointness checked at every stage. The composite $E/F$ need not be Galois or solvable because $L/F$ need not be either. What is claimed is only that $E/L$ has the stated solvable Galois structure.
 
@@ -1723,7 +1724,7 @@ $$
 L=L_0\subset L_1\subset\cdots\subset L_s=E
 $$
 
-be the cyclic tower. The top representation $\Pi_E$ is invariant because its Galois representation is the restriction of one defined over $L$. Cyclic descent gives at least one cusp form $\pi_{s-1}$ over $L_{s-1}$. Its Galois representation and $\rho|_{G_{L_{s-1}}}$ have isomorphic irreducible restrictions to $G_E$.
+be the cyclic tower. The top representation $\Pi_E$ is invariant because its Galois representation is the restriction of one defined over $L$. Under the descent-admissibility and compatibility hypotheses in Section 12.1, cyclic descent gives at least one cusp form $\pi_{s-1}$ over $L_{s-1}$. Its Galois representation and $\rho|_{G_{L_{s-1}}}$ have isomorphic irreducible restrictions to $G_E$.
 
 Clifford theory gives a quotient character $\eta_{s-1}$ such that
 
@@ -1754,11 +1755,11 @@ Only then can automorphy descend to $F$. The main potential-modularity theorem m
 
 ## 13. The theorem package
 
-We can now state the results without hiding any of the bridge's load-bearing hypotheses. The residual theorem requires a lifting-admissible two-prime realization datum. The characteristic-zero theorem adds one particular lift on controlled local components. A separate field-control statement records exactly what the construction says about the extension.
+We can now state the results without hiding any of the bridge's load-bearing hypotheses. The residual theorem first requires a pre-specialization two-prime realization datum and then a separate verification that the resulting auxiliary Tate module belongs to the clean lifting range. The characteristic-zero theorem adds one particular lift on controlled local components. A separate field-control statement records exactly what the construction says about the extension.
 
 The length of the hypotheses is useful. Each clause identifies either a local point, an image-preservation condition, a residual-automorphy input, or a lifting-theorem input. Together they are the two-prime admissibility conditions of Book 174, unpacked here so that none can be hidden behind the phrase “suitable representation.” Deleting a clause points to a specific logical gap rather than to a vague technicality.
 
-### 13.1 Residual potential modularity
+### 13.1 Conditional residual potential modularity
 
 Call a collection
 
@@ -1767,7 +1768,7 @@ $$
 X,S,(\Omega_v)_{v\in S},D) \tag{13.1}
 $$
 
-a **lifting-admissible two-prime realization datum** if it has the following properties.
+a **pre-specialization two-prime realization datum** if it has the following properties.
 
 1. $F$ is totally real; $\ell\ne q$ satisfy $\ell,q\geq7$ and are unramified in $F$ at every place where the clean unramified finite-flat theorem is used.
 2. $\bar\rho$ and $\bar\sigma$ are continuous, totally odd, absolutely irreducible rank-two representations in characteristics $\ell$ and $q$, with chosen cyclotomic determinant pairings.
@@ -1777,11 +1778,15 @@ a **lifting-admissible two-prime realization datum** if it has the following pro
 6. The chosen twisted fine space $X$ is smooth, geometrically connected, quasi-projective, positive-dimensional, and carries a universal family. Its connectedness is proved by product monodromy or by an equally explicit component calculation.
 7. For every $v\in S$, an actual local comparison object on that same component supplies a nonempty open $\Omega_v$. At $\ell$ and $q$ it has good reduction and the comparison is integral and pairing-preserving; at real and away-from-$\ell q$ semistable places the orientation and boundary data are explicit.
 8. The Galois avoidance field $D$ contains the two residual fixed fields and every finite cyclotomic, self-twist, component, and descent field needed to preserve the two lifting problems.
-9. The auxiliary full-level descent is unramified outside $S$, so the semistable reduction criterion controls every new bad place of a specialization. The $q$-adic representation lies in the exact one-prime clean datum, including the signed level-raising place $v_0$, its conductor-one augmentation face, all coefficient-prime finite-flat quotients, and every named prime-to-$q$ component; alternatively there is a finite clean chain changing one such component at a time.
-10. Over the Moret--Bailly field, the residual auxiliary source remains cuspidal and modular. This is proved either by the dihedral construction of Section 8.1 or by a genuinely applicable base-change theorem with its stepwise cusp checks.
-11. The $q$-adic versions of NM-I--NM-III and the global deformation hypotheses hold for the component containing the auxiliary Tate module, while the resulting packet has the curve realization, or the fully cancelled surface realization, and the integral carrier required by Book 135.
+9. The auxiliary full-level descent is unramified outside $S$, so the semistable reduction criterion makes every new bad place of a specialization semistable. The prescribed special place $v_0$, its line and sign, its conductor-one augmentation face, and the coefficient-prime finite-flat comparisons are all built into the local ledger.
 
-**Theorem 13.1 (residual potential modularity).** Given a lifting-admissible two-prime realization datum, there exist a finite totally real extension $F'/F$, an elliptic curve or Hilbert--Blumenthal abelian variety $A/F'$, and a parallel-weight-two cuspidal automorphic representation $\Pi_A$ over $F'$ such that
+Clauses 1--9 allow Books 168--169 to produce a finite totally real Moret--Bailly field $F'/F$ and an abelian variety $A/F'$ with the paired frames (13.2). Call this specialization **lifting-admissible** only if the following additional facts have then been verified.
+
+1. The actual representation $V_{\mathfrak q}(A)$, including every bad place in $B_A\setminus S$, lies in the exact one-prime clean datum of Books 156 and 174, or in a finite clean chain changing one named prime at a time. This includes the conductor-one augmentation component, the residual automorphic lower faces, all coefficient-prime finite-flat quotients, saturated primary and companion lattices, flags, pairings, and integral comparison complexes.
+2. Over $F'$, the residual auxiliary source remains cuspidal and modular. This is proved either by the dihedral construction of Section 8.1 or by a genuinely applicable base-change theorem with its stepwise cusp checks.
+3. The $q$-adic versions of NM-I and NM-II and the route-specific clauses of NM-III, together with the applicable global dimension, coverage, reducedness, nilpotent-control, and support hypotheses, hold for the component containing the auxiliary Tate module. The resulting packet has the rational Shimura-curve realization required by Book 135.
+
+**Theorem 13.1 (conditional residual potential modularity).** Given a pre-specialization two-prime realization datum, let $F'/F$ and $A/F'$ be a Moret--Bailly specialization furnished by clauses 1--9. Thus $F'/F$ is finite and totally real and $A$ has the paired frames (13.2). If this specialization is lifting-admissible in the preceding sense, then there is a parallel-weight-two cuspidal automorphic representation $\Pi_A$ over $F'$ such that
 
 $$
 A[\lambda]\simeq
@@ -1816,9 +1821,9 @@ is modular of parallel weight two. The images of $\bar\rho$ and $\bar\sigma$ are
 
 **Proof.** Clauses 5--7 and the theorem of Book 169 give the fine variety and all nonempty local opens. Apply the simultaneous totally real, disjoint theorem of Book 168 using $D$. This produces $F'$ and a point $x\in X(F')$ satisfying Sections 6.2--6.3. Pulling back the universal family gives $A$ and (13.2). Lemma 6.1 and clause 8 preserve both residual images.
 
-Clause 10 gives a cuspidal residual automorphic source for $A[\mathfrak q]$. The local integral models, clause 9, image preservation, and clause 11 verify every input of the first controlled nonminimal lifting theorem, which gives (9.7). The reduced Frobenius polynomial of $A$ is independent of its coefficient prime, as in (10.1). Comparing it with the Hecke polynomial of $\Pi_A$, constructing $\rho_{\Pi_A,\widetilde\lambda}$, and applying Chebotarev yields (13.3). Reduction gives (13.4). $\square$
+Post-specialization clause 2 gives a cuspidal residual automorphic source for $A[\mathfrak q]$. The local integral models and post-specialization clauses 1 and 3 verify every input of the first controlled nonminimal lifting theorem, which gives (9.7). The reduced Frobenius polynomial of $A$ is independent of its coefficient prime, as in (10.1). Comparing it with the Hecke polynomial of $\Pi_A$, constructing $\rho_{\Pi_A,\widetilde\lambda}$, and applying Chebotarev yields (13.3). Reduction gives (13.4). $\square$
 
-The proof does not use a characteristic-zero target at $\ell$. This is why Theorem 13.1 is a genuine residual theorem rather than a disguised special case of the next result.
+The proof does not use a characteristic-zero target at $\ell$. Thus Theorem 13.1 is a genuine residual transfer theorem rather than a disguised special case of the next result. It is nevertheless conditional: the current prerequisite chain does not prove post-specialization clause 1 for every target satisfying only the pre-specialization hypotheses. Extra semistable primes of $A$ are known only after the point is chosen, and no acyclic prior theorem presently constructs all of their exact automorphic lower-face and integral vanishing-cycle data.
 
 ### 13.2 Conditional characteristic-zero potential automorphy
 
@@ -1844,7 +1849,7 @@ The determinant is cyclotomic, and at every finite place in the controlled range
 
 One may take $F^{\mathrm{pm}}=F'$ if the target component is already covered over the Moret--Bailly field. If switching is needed, one may take $F^{\mathrm{pm}}=E$ as in (12.1). No assertion is made that $F^{\mathrm{pm}}/F$ is Galois or solvable.
 
-This conditional theorem is not the catalog endpoint and is not used in the proof of Theorem 13.1. Without the final exact-instance hypothesis, the available prerequisites prove only residual potential modularity.
+This conditional characteristic-zero theorem is not the catalog endpoint and is not used in the proof of Theorem 13.1. Without its final exact-instance hypothesis, one retains only the conditional residual statement of Theorem 13.1.
 
 **Proof.** Theorem 13.1 gives residual modularity over $F'$. Complete splitting preserves every local field and every named local condition of $\rho$. Image preservation supplies absolute irreducibility, adequacy, and the global adjoint vanishing over $F'$. If the target component is covered there, the second controlled nonminimal lifting theorem gives (13.5) with $F^{\mathrm{pm}}=F'$.
 
@@ -1861,7 +1866,7 @@ The logical provenance can be summarized without blurring it:
 | dihedral automorphic induction | imported from Book 95 and reapplied over $KF'/F'$ |
 | cyclic and solvable base change or descent | imported from Book 97 only on the stated towers |
 | automorphic Galois representations at each coefficient prime | imported from Book 135 in its curve-realizable range |
-| the two nonminimal lifting steps | imported from Book 156 with NM-I--NM-III and component support |
+| the two nonminimal lifting steps | imported from Book 156 with NM-I--NM-II, the route-specific part of NM-III, and every associated clean or conditional comparison hypothesis |
 | assembly of the field, torsion identifications, image lemma, two-prime switching, and theorem conclusion | proved in Chapters 6--13 |
 
 This division matters for variants. Replacing the moduli space changes the first row. Enlarging the Hodge range changes the fifth and sixth rows. Neither alteration follows from the assembly argument alone.
@@ -1916,7 +1921,7 @@ $$
 
 The Weil pairing gives the determinant and polarization automatically. If $C$ has good reduction at every $v\mid\ell$, its full compatible torsion system is finite flat there. At a multiplicative place $v\nmid\ell$, the Tate-curve sequence puts $T_\ell(C)$ on a Steinberg component. At a potentially good additive place, one must identify the finite inertial type and verify that it belongs to the integral controlled range.
 
-**Corollary 13.4 (elliptic-curve variant).** Suppose $C/F$ admits a prime $\ell$ for which $C[\ell]$ is absolutely irreducible, adequate, totally odd, and satisfies the global adjoint and local Schur hypotheses. Suppose its local representations have the controlled types just described, and suppose there is a lifting-admissible two-prime realization datum for $C[\ell]$. Then there exist a finite totally real field $F^{\mathrm{pm}}/F$, a parallel-weight-two cuspidal representation $\Pi$ over $F^{\mathrm{pm}}$, a coefficient place $\widetilde\lambda\mid\ell$ of $\Pi$, and a finite extension $C_\ell/\mathbf Q_\ell$ receiving $E_{\Pi,\widetilde\lambda}$ such that
+**Corollary 13.4 (elliptic-curve variant).** Suppose $C/F$ admits a prime $\ell$ for which $C[\ell]$ is absolutely irreducible, adequate, totally odd, and satisfies the global adjoint and local Schur hypotheses. Suppose its local representations have the controlled types just described, there is a pre-specialization two-prime realization datum for $C[\ell]$ whose resulting specialization is lifting-admissible, and the full second-lift exact-instance hypotheses of Theorem 13.2 hold for $V_\ell(C)$. Then there exist a finite totally real field $F^{\mathrm{pm}}/F$, a parallel-weight-two cuspidal representation $\Pi$ over $F^{\mathrm{pm}}$, a coefficient place $\widetilde\lambda\mid\ell$ of $\Pi$, and a finite extension $C_\ell/\mathbf Q_\ell$ receiving $E_{\Pi,\widetilde\lambda}$ such that
 
 $$
 V_\ell(C)|_{G_{F^{\mathrm{pm}}}}\otimes_{\mathbf Q_\ell}C_\ell
@@ -1977,7 +1982,7 @@ $$
 
 has cyclotomic determinant. Apply Theorem 13.2 to $\rho^\circ$, after checking that the twist preserves finite flatness at $\ell$, the named away-from-$\ell$ local components, residual adequacy, and all local pairing data. Twisting the resulting automorphic representation by the Hecke character attached to $\eta^{-1}$ gives automorphy of $\rho$ with central character $\psi$.
 
-If (13.8) has no solution, one needs a PEL moduli problem whose multiplier line carries the exact character $\bar\psi\bar\chi_\ell$. Existence and local solvability of such a moduli problem are additional hypotheses; an arbitrary quadratic twist cannot repair the determinant because it changes a rank-two determinant by a square.
+If (13.8) has no solution, the datum lies outside the Hilbert--Blumenthal realization treated here. An arbitrary quadratic twist cannot repair the determinant because it changes a rank-two determinant by a square.
 
 ## 14. Weight, level, and local type
 
@@ -2093,7 +2098,7 @@ Suppose a local elliptic curve $C_v$ realizes $V$ abstractly but its Weil pairin
 
 ### 15.2 An empty local moduli problem
 
-At $v\mid\ell$, suppose $V|_{G_{F_v}}$ is wildly ramified and admits no finite locally free model of the rank and pairing required by the PEL datum. An abelian scheme with good reduction has finite locally free $\lambda$-torsion, so it cannot realize this module. Thus the proposed good-reduction open is empty even if the generic twisted moduli space has points over $\overline F_v$.
+At $v\mid\ell$, suppose $V|_{G_{F_v}}$ is wildly ramified and admits no finite locally free model of the rank and pairing required by the fixed Hilbert--Blumenthal datum. An abelian scheme with good reduction has finite locally free $\lambda$-torsion, so it cannot realize this module. Thus the proposed good-reduction open is empty even if the generic twisted moduli space has points over $\overline F_v$.
 
 A second form of emptiness occurs when the target and auxiliary prime-to-residue-characteristic Frobenius modules cannot occur on one local abelian variety. Choosing bases does not change Frobenius eigenvalues. A third occurs at a real place when a constant auxiliary frame asks complex conjugation to act trivially while the polarized torsion factor has eigenvalues $1$ and $-1$.
 
@@ -2207,7 +2212,7 @@ and every conductor drop after reduction lies on a controlled local component. T
 For later arithmetic applications, export the following checklist.
 
 - **Field:** $F^{\mathrm{pm}}$ is finite totally real over $F$, with the exact split places and avoidance intersections recorded. Its Galois and solvability status is stated truthfully.
-- **Representation:** the original target restricted to $G_{F^{\mathrm{pm}}}$ is identified with the Galois representation of a named parallel-weight-two cuspidal automorphic representation.
+- **Representation:** in the residual theorem, the restricted residual target is identified with the reduction of a named parallel-weight-two cuspidal packet; only under Theorem 13.2 is a specified characteristic-zero target itself identified with the packet's coefficient-adic representation.
 - **Determinant:** the cyclotomic or finite-character-times-cyclotomic determinant is exact.
 - **Residual image:** the full residual matrix image after restriction is recorded, together with adequacy and adjoint vanishing.
 - **Local coefficient-prime condition:** the integral finite-flat or ordinary model is named at every place above the coefficient prime.
@@ -2227,13 +2232,13 @@ The dependency row for this book consists exactly of Books 95, 97, 135, 156, 168
 |---|---|---|
 | Book 95 | CM quadratic extension, compatible ray-unit data, type $(1,0)$, the quadratic determinant factor, and a surviving conjugate-ratio witness | cuspidal weight-two automorphic induction and its residual dihedral representation |
 | Book 97 | an exhibited ascent-admissible cyclic tower, stepwise cuspidality, compatible local parameters, and, for descent, a representation extending to the lower field | only the stated solvable base change or recursive descent; never base change across an arbitrary point field |
-| Book 135 | a noncharacter parallel-weight-two packet in the curve-realizable range, or a surface realization with full cancellation, plus the required integral carrier | the covariant dual Galois realization, common good Frobenius polynomials, determinant, oddness, purity, and exact residual lattice comparison |
-| Book 156 | residue characteristic at least seven, cyclotomic irreducibility, adjoint vanishing, unramified finite-flat coefficient-prime data, the signed special place, and every named integral saturation and support hypothesis | the one-prime clean lifting conclusion, including the conductor-one augmentation face only through the verified universal equality |
+| Book 135 | a noncharacter parallel-weight-two packet in the Shimura-curve-realizable range | the covariant dual rational Galois realizations, common good Frobenius polynomials, determinant, oddness, purity, and existence of stable lattices; the exact comparison with $A[\lambda]$ is proved here |
+| Book 156 | residue characteristic at least seven, cyclotomic irreducibility, adjoint vanishing, unramified finite-flat coefficient-prime data, the signed special place, NM-I--NM-II, and the hypotheses of the selected sharp, support, componentwise, or relative route | the clean selected lifting conclusion, or a conditional controlled conclusion only after its route-specific hypotheses; the conductor-one augmentation face is used only through the verified universal equality |
 | Book 168 | a smooth geometrically connected variety, nonempty local opens, all real places, exact local cycles, and a finite avoidance extension | a finite totally real point field, complete splitting at selected places, and root-field linear disjointness; no Galois or solvable conclusion |
-| Book 169 | good PEL primes, ordered polarization, neat level, determinant-compatible paired frames, one arithmetic component, simultaneous local seeds, and full product monodromy | a smooth geometrically connected fine two-prime twist with a universal abelian variety; no global point or automorphy |
-| Book 174 | the complete two-prime admissibility ledger, including the dihedral seed, signed level raising, local package, field ledger, clean lift, and integral carrier | the controlled seed theorem, signed residual localization, clean augmentation interface, and the exact characteristic-at-least-seven boundary |
+| Book 169 | good Hilbert--Blumenthal primes, ordered polarization, neat level, determinant-compatible paired frames, one arithmetic component, simultaneous local seeds, and full product monodromy | a smooth geometrically connected fine two-prime twist with a universal abelian variety; no global point or automorphy |
+| Book 174 | the complete two-prime admissibility ledger, including the dihedral seed, simultaneous coefficient realization, signed level raising, local package, field ledger, and post-specialization cleanability clause | the controlled seed theorem, signed residual localization, clean augmentation interface, cross-prime comparison pattern, and the exact conditional characteristic-at-least-seven boundary |
 
-The final residual theorem of Book 174 is not invoked to prove Theorem 13.1. The proof uses its constituent auxiliary and lifting interfaces and then performs the moduli specialization, automorphy transfer, coefficient change, and lattice comparison explicitly. Thus the dependency is not circular.
+The conditional final residual theorem of Book 174 is not invoked to prove Theorem 13.1. The proof uses its constituent auxiliary and lifting interfaces and then performs the moduli specialization, automorphy transfer, coefficient change, and lattice comparison explicitly. Its unresolved post-specialization cleanability clause is retained verbatim, so the dependency is neither circular nor stronger than the prerequisite.
 
 This ledger resolves the principal failure modes.
 
@@ -2244,10 +2249,10 @@ This ledger resolves the principal failure modes.
 - Every coefficient enlargement is an extension of scalars in rank two. No completion at $q$ is tensored with a completion at $\ell$, and restriction of scalars is never used to disguise a dimension change.
 - Determinants are fixed before the moduli space is formed. The quadratic sign in induction, the inverse-different polarization line, the covariant dual convention, and the finite central character all agree.
 - Purity is the weight-one purity supplied by the geometric weight-two realization. It is not inferred from determinant or oddness.
-- Exact residual comparison uses the geometric integral carrier and absolute irreducibility. Without that carrier the safe output would be equality only of residual semisimplifications.
+- Exact residual comparison uses the rational packet realization, common algebraic Frobenius polynomials, the Tate lattice, and absolute irreducibility. Book 135 alone would canonically determine only a residual semisimplification without its own integral datum; here the comparison with $T_\lambda(A)$ makes every stable lattice homothetic and recovers the exact target module without assuming cross-carrier integral independence.
 - Solvable descent is available only along a separately exhibited cyclic tower with compatible local data and coherent quotient-character corrections. Nothing descends across the ordinary Moret--Bailly extension merely because its degree happens to be a solvable integer.
 
-The exact catalog conclusion is therefore
+The exact conditional conclusion currently proved is therefore
 
 $$
 \ell\geq7,\qquad
@@ -2266,14 +2271,16 @@ $$
 
 for one finite common residue field $\kappa$. No unrestricted theorem for all odd residual representations, no characteristic-five theorem, and no descent to $F$ is contained in this statement.
 
+This does not yet complete the unqualified catalog objective for every residual target in the stated range. That stronger conclusion requires an acyclic prior theorem constructing the exact clean automorphic and integral data at every uncontrolled extra semistable prime of the specialized auxiliary abelian variety.
+
 ### 16.5 Final synthesis
 
 The two-prime method succeeds because it assigns one task to each piece of structure. The target residual representation determines a twisted symplectic level. The auxiliary residual representation supplies a known automorphic seed. A fine elliptic or Hilbert--Blumenthal moduli space places both levels on one geometric object. Its pairing components enforce the determinant; its Hodge deformation theory gives smoothness; its product monodromy gives geometric connectedness; and explicit local comparison objects give nonempty opens.
 
 Moret--Bailly then chooses one closed point whose residue field is totally real, split at every sensitive place, and disjoint from every residual fixed field. The universal family at that point has the two torsion representations with their pairings intact. Disjointness preserves absolute irreducibility and adequacy. The known side remains modular either because a dihedral character can be induced anew over the output field or because a genuinely applicable solvable base change has passed every cuspidality check.
 
-The one lifting theorem needed for the catalog result proves automorphy of the auxiliary-adic Tate factor. The real-multiplication Frobenius endomorphisms produce algebraic polynomials independent of coefficient prime, and the Galois representations attached to the resulting automorphic representation identify the target-adic Tate factor. This makes the target residual representation modular. A separate characteristic-zero comparison lift can be treated only under the second complete clean datum isolated in Chapter 11.
+The one lifting theorem needed for the conditional residual result proves automorphy of the auxiliary-adic Tate factor. The real-multiplication Frobenius endomorphisms produce algebraic polynomials independent of coefficient prime, and the Galois representations attached to the resulting automorphic representation identify the target-adic Tate factor. This makes the target residual representation modular. A separate characteristic-zero comparison lift can be treated only under the second complete clean datum isolated in Chapter 11.
 
 No final shortcut remains hidden. A torsion isomorphism respects the Weil pairing. A local open contains an actual point. A residual image is preserved by a proved disjointness statement. A residual automorphic representation becomes a characteristic-zero automorphic lift only through a lifting theorem. One coefficient prime communicates with another only through algebraic Frobenius polynomials and local--global compatibility. A solvable component switch is checked on local rings, and a descent is performed one cyclic layer at a time with its character ambiguity corrected. The auxiliary field is called Galois, solvable, or parity-controlled only when a separate construction has made it so.
 
-The resulting record is exact: a controlled finite totally real field, a parallel-weight-two cuspidal automorphic representation, an identification of its residual covariant realization with the prescribed target after restriction, and a complete ledger of determinants, residual images, local types, purity, coefficient extensions, and field intersections. That is residual potential modularity in the strongest form justified by the stated prerequisites.
+When the post-specialization cleanability hypothesis is verified, the resulting record is exact: a controlled finite totally real field, a parallel-weight-two cuspidal automorphic representation, an identification of its residual covariant realization with the prescribed target after restriction, and a complete ledger of determinants, residual images, local types, purity, coefficient extensions, and field intersections. That is the strongest conditional residual potential-modularity statement justified by the stated prerequisites.
