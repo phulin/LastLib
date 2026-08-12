@@ -2,1107 +2,1806 @@
 
 ## Contents
 
-- [1. The middle-degree realization problem](#1-the-middle-degree-realization-problem)
-  - [1.1 Why degree two is unavoidable](#11-why-degree-two-is-unavoidable)
-  - [1.2 The geometric and automorphic data](#12-the-geometric-and-automorphic-data)
-  - [1.3 Coefficients, Frobenius, and actions](#13-coefficients-frobenius-and-actions)
-  - [1.4 The logical boundary](#14-the-logical-boundary)
-- [2. The compact surface and its cohomology](#2-the-compact-surface-and-its-cohomology)
-  - [2.1 Compactness removes the boundary](#21-compactness-removes-the-boundary)
-  - [2.2 The five cohomological degrees](#22-the-five-cohomological-degrees)
-  - [2.3 Lefschetz classes and the character part](#23-lefschetz-classes-and-the-character-part)
-  - [2.4 Components and finite quotients](#24-components-and-finite-quotients)
-- [3. Hecke correspondences in middle degree](#3-hecke-correspondences-in-middle-degree)
-  - [3.1 Pull--push and variance](#31-pull-push-and-variance)
-  - [3.2 Composition and adjoints](#32-composition-and-adjoints)
-  - [3.3 The common spherical algebra](#33-the-common-spherical-algebra)
-  - [3.4 Galois and specialization compatibility](#34-galois-and-specialization-compatibility)
-- [4. The compact Matsushima decomposition](#4-the-compact-matsushima-decomposition)
-  - [4.1 From differential forms to the discrete spectrum](#41-from-differential-forms-to-the-discrete-spectrum)
-  - [4.2 Relative Lie algebra cohomology](#42-relative-lie-algebra-cohomology)
-  - [4.3 Proof of the decomposition](#43-proof-of-the-decomposition)
-  - [4.4 Fixed level and finiteness](#44-fixed-level-and-finiteness)
-- [5. The archimedean degree-two calculation](#5-the-archimedean-degree-two-calculation)
-  - [5.1 One active rank-one factor](#51-one-active-rank-one-factor)
-  - [5.2 Two active factors and Kunneth](#52-two-active-factors-and-kunneth)
-  - [5.3 Hodge types and orientation packets](#53-hodge-types-and-orientation-packets)
-  - [5.4 Exclusion of other infinity types](#54-exclusion-of-other-infinity-types)
-- [6. Quaternionic packets and exact multiplicities](#6-quaternionic-packets-and-exact-multiplicities)
-  - [6.1 Finite-adelic matching](#61-finite-adelic-matching)
-  - [6.2 Central extensions and auxiliary characters](#62-central-extensions-and-auxiliary-characters)
-  - [6.3 Multiplicity one versus cohomological dimension](#63-multiplicity-one-versus-cohomological-dimension)
-  - [6.4 The complex decomposition theorem](#64-the-complex-decomposition-theorem)
-- [7. Isolating a packet by Hecke operators](#7-isolating-a-packet-by-hecke-operators)
-  - [7.1 Simultaneous eigenspaces](#71-simultaneous-eigenspaces)
-  - [7.2 Finite separating sets and projectors](#72-finite-separating-sets-and-projectors)
-  - [7.3 Character packets and noncharacter packets](#73-character-packets-and-noncharacter-packets)
-  - [7.4 Denominators and integral warnings](#74-denominators-and-integral-warnings)
-- [8. Rational and Hodge structures](#8-rational-and-hodge-structures)
-  - [8.1 The rational Betti decomposition](#81-the-rational-betti-decomposition)
-  - [8.2 Hecke fields and conjugation](#82-hecke-fields-and-conjugation)
-  - [8.3 Polarizations and duality](#83-polarizations-and-duality)
-  - [8.4 De Rham realization](#84-de-rham-realization)
-- [9. The etale Galois realization](#9-the-etale-galois-realization)
-  - [9.1 Comparison and descent](#91-comparison-and-descent)
-  - [9.2 The packet representation](#92-the-packet-representation)
-  - [9.3 Dimensions and scalar extension](#93-dimensions-and-scalar-extension)
-  - [9.4 What has and has not been extracted](#94-what-has-and-has-not-been-extracted)
-- [10. Frobenius traces, purity, and independence](#10-frobenius-traces-purity-and-independence)
-  - [10.1 Good reduction](#101-good-reduction)
-  - [10.2 Projected Lefschetz traces](#102-projected-lefschetz-traces)
-  - [10.3 Purity and reciprocal roots](#103-purity-and-reciprocal-roots)
-  - [10.4 Coefficient and auxiliary-prime independence](#104-coefficient-and-auxiliary-prime-independence)
-- [11. Bad primes and monodromy](#11-bad-primes-and-monodromy)
-  - [11.1 Semistable surface cohomology](#111-semistable-surface-cohomology)
-  - [11.2 Hecke isolation of monodromy](#112-hecke-isolation-of-monodromy)
-  - [11.3 Conductors and the limits of degree two](#113-conductors-and-the-limits-of-degree-two)
-  - [11.4 Descent from a semistable extension](#114-descent-from-a-semistable-extension)
-- [12. Comparison with Shimura-curve $H^1$](#12-comparison-with-shimura-curve-h1)
-  - [12.1 The common quaternionic eigensystem](#121-the-common-quaternionic-eigensystem)
-  - [12.2 Rational and Hecke comparison](#122-rational-and-hecke-comparison)
-  - [12.3 Weight and Tate-twist audit](#123-weight-and-tate-twist-audit)
-  - [12.4 Galois comparison without a false isomorphism](#124-galois-comparison-without-a-false-isomorphism)
-- [13. The degree-two automorphic decomposition theorem](#13-the-degree-two-automorphic-decomposition-theorem)
-  - [13.1 Complete statement](#131-complete-statement)
-  - [13.2 Proof](#132-proof)
-  - [13.3 Hypothesis and failure ledger](#133-hypothesis-and-failure-ledger)
-  - [13.4 Conclusion](#134-conclusion)
+- [1. The exact realization problem](#1-the-exact-realization-problem)
+  - [1.1 The catalog promise](#11-the-catalog-promise)
+  - [1.2 The standard surface datum](#12-the-standard-surface-datum)
+  - [1.3 Actions and normalizations](#13-actions-and-normalizations)
+  - [1.4 The proof architecture](#14-the-proof-architecture)
+- [2. The full group and central automorphic descent](#2-the-full-group-and-central-automorphic-descent)
+  - [2.1 The PEL group is not the common-norm group](#21-the-pel-group-is-not-the-common-norm-group)
+  - [2.2 The obstruction-free auxiliary cover](#22-the-obstruction-free-auxiliary-cover)
+  - [2.3 Measures, fixed center, and the real stabilizer](#23-measures-fixed-center-and-the-real-stabilizer)
+  - [2.4 Compatible pairs, occurrence, and level](#24-compatible-pairs-occurrence-and-level)
+- [3. Right-convolution Hecke correspondences](#3-right-convolution-hecke-correspondences)
+  - [3.1 The two legs and their variance](#31-the-two-legs-and-their-variance)
+  - [3.2 Composition, transpose, and adjoint](#32-composition-transpose-and-adjoint)
+  - [3.3 Lifted operators and good Hecke labels](#33-lifted-operators-and-good-hecke-labels)
+  - [3.4 Components and routed operators](#34-components-and-routed-operators)
+- [4. Fixed-central Matsushima and the real projector](#4-fixed-central-matsushima-and-the-real-projector)
+  - [4.1 Automorphic cochains on the full union](#41-automorphic-cochains-on-the-full-union)
+  - [4.2 The compact Matsushima formula](#42-the-compact-matsushima-formula)
+  - [4.3 The archimedean Clifford calculation](#43-the-archimedean-clifford-calculation)
+  - [4.4 Character cohomology](#44-character-cohomology)
+- [5. Exact complex blocks and ranks](#5-exact-complex-blocks-and-ranks)
+  - [5.1 Full-union decomposition](#51-full-union-decomposition)
+  - [5.2 Individual ranks and Hodge numbers](#52-individual-ranks-and-hodge-numbers)
+  - [5.3 Proper-support orbit blocks](#53-proper-support-orbit-blocks)
+  - [5.4 Exhaustion and multiplicity audit](#54-exhaustion-and-multiplicity-audit)
+- [6. Rational Hecke blocks and degree isolation](#6-rational-hecke-blocks-and-degree-isolation)
+  - [6.1 The finite geometric image on total cohomology](#61-the-finite-geometric-image-on-total-cohomology)
+  - [6.2 The middle-degree projector](#62-the-middle-degree-projector)
+  - [6.3 Coefficient fields and Schur indices](#63-coefficient-fields-and-schur-indices)
+  - [6.4 Absolute labels and rational orbit blocks](#64-absolute-labels-and-rational-orbit-blocks)
+- [7. Betti, de Rham, and etale realizations](#7-betti-de-rham-and-etale-realizations)
+  - [7.1 Admissible surface spans](#71-admissible-surface-spans)
+  - [7.2 Compatible realization spaces](#72-compatible-realization-spaces)
+  - [7.3 Galois action and duality](#73-galois-action-and-duality)
+  - [7.4 Integral, fine-level, and coarse-level boundaries](#74-integral-fine-level-and-coarse-level-boundaries)
+- [8. Good reduction, Lefschetz traces, and purity](#8-good-reduction-lefschetz-traces-and-purity)
+  - [8.1 The verified good-model range](#81-the-verified-good-model-range)
+  - [8.2 Projected low-dimensional Lefschetz formula](#82-projected-low-dimensional-lefschetz-formula)
+  - [8.3 Purity and coefficient-prime independence](#83-purity-and-coefficient-prime-independence)
+  - [8.4 The rank-two Hecke polynomial boundary](#84-the-rank-two-hecke-polynomial-boundary)
+- [9. Semistable boundary and monodromy](#9-semistable-boundary-and-monodromy)
+  - [9.1 The two verified parahoric geometries](#91-the-two-verified-parahoric-geometries)
+  - [9.2 Projected nearby cycles](#92-projected-nearby-cycles)
+  - [9.3 Exact rank and conductor formulas](#93-exact-rank-and-conductor-formulas)
+  - [9.4 The boundary of the semistable assertion](#94-the-boundary-of-the-semistable-assertion)
+- [10. Comparison with Shimura-curve $H^1$](#10-comparison-with-shimura-curve-h1)
+  - [10.1 The common split Jacquet--Langlands label](#101-the-common-split-jacquet--langlands-label)
+  - [10.2 Rational and Hecke comparison](#102-rational-and-hecke-comparison)
+  - [10.3 Realization and Galois comparison](#103-realization-and-galois-comparison)
+  - [10.4 Why there is no Tate-twist isomorphism](#104-why-there-is-no-tate-twist-isomorphism)
+- [11. The unitary-surface realization theorem](#11-the-unitary-surface-realization-theorem)
+  - [11.1 Complete statement](#111-complete-statement)
+  - [11.2 Proof](#112-proof)
+  - [11.3 Hypothesis and failure ledger](#113-hypothesis-and-failure-ledger)
+- [12. Dependency and readiness audit](#12-dependency-and-readiness-audit)
+  - [12.1 Exact direct dependency row](#121-exact-direct-dependency-row)
+  - [12.2 Imported-interface audit](#122-imported-interface-audit)
+  - [12.3 Symbol, action, and mechanics audit](#123-symbol-action-and-mechanics-audit)
+  - [12.4 Readiness verdict](#124-readiness-verdict)
 
-## 1. The middle-degree realization problem
+## 1. The exact realization problem
 
-The compact unitary surfaces constructed from the modèles étranges datum exist for a precise arithmetic reason. A rank-two quaternionic packet may have the wrong parity to be carried by a Shimura curve with all the desired finite local forms. Two noncompact real factors repair the parity, but they also change the geometry: the symmetric domain becomes two-dimensional, and the cohomological packet moves from degree one to degree two. The purpose of this book is to identify that packet inside the middle cohomology without confusing the dimension of the automorphic representation, the dimension of its level invariants, and the dimension of its archimedean cohomology.
+### 1.1 The catalog promise
 
-### 1.1 Why degree two is unavoidable
+The auxiliary compact unitary surface is the geometric carrier for a quaternionic packet whose
+archimedean cohomology uses two active real places. This book establishes its
+constant-coefficient degree-two realization. It does four things at once:
 
-For one real rank-one factor, the weight-two discrete series contributes relative Lie algebra cohomology in degree one. With two independent factors, the Kunneth rule adds the degrees:
+1. it identifies the representations of the actual rational-multiplier PEL group, including
+   their central descent and exact multiplicities;
+2. it realizes right finite-adelic convolution by algebraic surface correspondences and
+   isolates the resulting finite geometric blocks on total cohomology;
+3. it transports those blocks to rational Betti, filtered de Rham, and continuous etale
+   realizations, with exact ranks and Hodge numbers; and
+4. it uses the surface Lefschetz formula, purity, good specialization, and the verified
+   semistable models only under the hypotheses which make those operations available.
 
-$$
-1+1=2.
-$$
+The comparison with Shimura curves is deliberately typed. A curve block and a surface block
+can have the same split Jacquet--Langlands label and the same good quaternionic Hecke field.
+They nevertheless have different weights, pairing twists, archimedean factors, component
+groups, and often different dimensions. No equality of good labels is turned into a Galois
+isomorphism.
 
-This equality is more than a dimension count. The two degree-one classes are odd, so their interchange carries the graded sign $-1$. Their tensor product nevertheless lies in even total degree, exactly where the tensor product of two alternating rank-two pairings becomes symmetric. The surface construction and the automorphic sign calculation are therefore two forms of the same parity repair.
+### 1.2 The standard surface datum
 
-A smooth projective surface has a self-dual middle group $H^2$. This is the only degree capable of containing the product of the two active discrete-series classes. Degrees $0$ and $4$ contain component and orientation classes; degrees $1$ and $3$ would require only one active cohomological factor. The archimedean calculation below will turn this intuition into a vanishing theorem.
-
-### 1.2 The geometric and automorphic data
-
-Let $F$ be totally real and $K/F$ a CM extension. Fix the PEL-exact strange datum of the preceding construction. Its rational similitude group is denoted by $G$, its Shimura conjugacy class by $X$, and its reflex field by $E$. The adjoint group has exactly two noncompact real rank-one factors, indexed by $v_1$ and $v_2$, and is compact at the other real places. The defining Hermitian plane is anisotropic over $F$.
-
-Let $C=C^\Sigma C_\Sigma\subset G(\mathbf A_f)$ be a neat compact open. Here $\Sigma$ contains every finite place at which the group, level, chosen order, central matching, or coefficient normalization is ramified. Let
-
-$$
-S_C/E
-$$
-
-be a Galois-stable union of the required connected components of the canonical unitary surface. It is smooth and projective of dimension two. Selecting a Galois-stable union is essential: a single geometric component can be defined only over its component field.
-
-A useful mental model is a compact quotient of $\mathfrak h\times\mathfrak h$. It is not generally a product of curves, because the arithmetic lattice can be irreducible in the two real factors. Nevertheless the tangent representation splits into the two complex lines coming from those factors. All archimedean computations below are local to that splitting and therefore do not assume a global product decomposition.
-
-The finite derived group of $G$ matches, up to the specified finite central kernel, the finite adelic points of a quaternion algebra $D/F$. At infinity one uses the inner form having exactly the two active split factors; comparison with a totally definite quaternionic model, when required, passes through their common split Jacquet--Langlands transfer. We write $\Pi$ for a noncharacter automorphic representation in this selected quaternionic packet and $\pi=\operatorname{JL}(\Pi)$ for its split transfer when that description is useful. The good spherical eigenvalues are written
+Let $F$ be totally real of degree $d$, let $K/F$ be CM with conjugation $c$, and choose
+$a,b\in F^\times$. Put
 
 $$
-T_w\mapsto t_w(\Pi),\qquad S_w\mapsto s_w(\Pi),
-$$
-
-with raw Hecke polynomial
-
-$$
-P_w(X,\Pi)=1-t_w(\Pi)X+q_ws_w(\Pi)X^2. \tag{1.1}
-$$
-
-Equation (1.1) names the rank-two automorphic eigensystem. It is not, by itself, the characteristic polynomial of Frobenius on surface $H^2$; the latter has weight two and generally has degree four on the full orientation packet.
-
-### 1.3 Coefficients, Frobenius, and actions
-
-Betti cohomology is singular cohomology of $S_C(\mathbf C)$. For a prime $\ell$ and an embedding $\iota_\ell:\overline{\mathbf Q}\hookrightarrow\overline{\mathbf Q}_\ell$, étale cohomology means
-
-$$
-H^i_{\mathrm{et}}(S_{C,\bar E},\mathbf Q_\ell).
-$$
-
-At a finite residue field $\mathbf F_q$, $F_q$ denotes geometric Frobenius. Our Tate twist is normalized by
-
-$$
-F_q\mid\mathbf Q_\ell(1)=q^{-1}.
-$$
-
-Thus a pure weight-$m$ eigenvalue has complex absolute value $q^{m/2}$. The middle pairing has target
-
-$$
-H^2\times H^2\longrightarrow\mathbf Q_\ell(-2), \tag{1.2}
-$$
-
-so reciprocal middle eigenvalues multiply to $q^2$.
-
-A finite Hecke correspondence
-
-$$
-S_C\xleftarrow{p_1}S_{C\cap gCg^{-1}}\xrightarrow{p_2}S_C
-$$
-
-acts by $(p_2)_*p_1^*$. Galois acts on the left on étale cohomology and Hecke acts on the right through these pull--push maps; the two actions commute because the correspondence is defined over the relevant canonical field. We always keep the selected component union large enough for both maps to land in it.
-
-### 1.4 The logical boundary
-
-The goal is an automorphic decomposition of $H^2$, rational projectors onto its quaternionic packets, and the resulting Hecke-stable Galois representations. We prove purity, good-prime compatibility, and the inherited monodromy structure. We do not manufacture a weight-one, two-dimensional Galois representation from a weight-two surface block. That extraction needs an additional descent argument and belongs after the present decomposition.
-
-Nor do we identify the cohomology of the parameter surface with the cohomology of its auxiliary universal abelian scheme. The latter supplied the PEL moduli interpretation; the former carries the automorphic decomposition. Confusing them would replace an action of $G$ on a locally symmetric space by an unrelated exterior algebra in the fibers.
-
-## 2. The compact surface and its cohomology
-
-Before decomposing cohomology, we must identify which cohomology is being decomposed. Compactness is the decisive simplification. It makes ordinary, compactly supported, and interior cohomology equal, eliminates Eisenstein and boundary terms, and lets the discrete automorphic spectrum account for every differential form.
-
-### 2.1 Compactness removes the boundary
-
-The Hermitian plane defining $G$ is anisotropic over $F$. A rational boundary component of the Hermitian domain would determine a proper rational parabolic of $G^{\mathrm{ad}}$, hence an isotropic $K$-line in that plane. Anisotropy excludes such a line. Therefore the complex double quotient
-
-$$
-G(\mathbf Q)\backslash\bigl(X\times G(\mathbf A_f)/C\bigr)
-$$
-
-is compact. Its canonical model $S_C$ is projective.
-
-Consequently
-
-$$
-H_c^i(S_{C,\bar E},L)=H^i(S_{C,\bar E},L)=H_!^i(S_{C,\bar E},L) \tag{2.1}
-$$
-
-for $L=\mathbf Q_\ell$, and similarly in Betti cohomology. There is no boundary long exact sequence and no Eisenstein cohomology. This does not mean that every automorphic constituent is cuspidal in a split-group sense: one-dimensional norm characters remain in the discrete spectrum of the compact quotient. They must be separated internally rather than mislabeled as boundary classes.
-
-### 2.2 The five cohomological degrees
-
-For a geometrically connected component of a smooth projective surface,
-
-$$
-H^0\simeq\mathbf Q,\qquad H^4\simeq\mathbf Q(-2),
-$$
-
-and Poincaré duality pairs $H^i$ with $H^{4-i}$. Hard Lefschetz for an ample class $\eta\in H^2(1)$ gives
-
-$$
-\eta:H^0\xrightarrow{\sim}H^2(1)_{\mathrm{Lef}},
+W=b\langle 1,-a\rangle,
 \qquad
-\eta:H^1\xrightarrow{\sim}H^3(1). \tag{2.2}
+D=Q_a=(K/F,a)=K\oplus Kj.                                    \tag{1.1}
 $$
 
-The first map singles out the chosen Lefschetz line, not all algebraic classes. The middle group may also contain a primitive algebraic part and the noncharacter automorphic packets. In particular, “primitive” and “cuspidal” are not synonyms.
+The exact surface hypotheses are these:
 
-The literal product $C_1\times C_2$ of two smooth projective curves provides a sanity check. Kunneth gives
+- $W$ has signature $(1,1)$ at exactly two real places $v_1,v_2$ and a fixed definite
+  orientation at every other real place;
+- $W$ is anisotropic over $F$, equivalently $D$ is a division algebra, although $D$ is split
+  at $v_1$ and $v_2$;
+- the standard PEL datum, determinant law, polarization type, integral orientation data, and
+  center-detecting level are those of the constructed unitary surface.
 
-$$
-H^2(C_1\times C_2)
-=H^2(C_1)\otimes H^0(C_2)
-\oplus H^1(C_1)\otimes H^1(C_2)
-\oplus H^0(C_1)\otimes H^2(C_2). \tag{2.3}
-$$
-
-The outer terms are the two factor classes. For a pair of two-dimensional weight-one eigensystems, the middle term has Hodge types $(2,0)$, two copies of $(1,1)$, and $(0,2)$. The arithmetic surface need not be a product, but its relative Lie algebra calculation will reproduce exactly this pattern.
-
-For a union of $r$ geometric components, $H^0$ and $H^4$ have dimension $r$. Galois permutes their standard bases through the component reciprocity action. The same permutation can appear inside $H^2$ on componentwise Kähler classes, so component bookkeeping cannot be discarded before taking a Hecke projector.
-
-### 2.3 Lefschetz classes and the character part
-
-Over the symmetric domain $\mathfrak h_1\times\mathfrak h_2$, let $\omega_1$ and $\omega_2$ be the invariant $(1,1)$-forms from the two factors. They descend to the quotient and span the degree-two invariant differential forms. Their sum is represented by an ample automorphic line bundle; their difference can be primitive for that polarization.
-
-The trivial representation of each noncompact derived factor has relative cohomology generated by $1$ and its invariant area form. Kunneth therefore gives, in total degree two,
-
-$$
-\mathbf C\omega_1\oplus\mathbf C\omega_2. \tag{2.4}
-$$
-
-Allowable global norm characters have the same derived archimedean representation and can attach (2.4) to different component characters. These are the **character part** $H^2_{\mathrm{char}}$. It is algebraic after a finite extension: the two forms are first Chern classes of the two automorphic Hodge lines, and finite component characters are isolated by algebraic zero-dimensional projectors.
-
-The orthogonal Hecke complement will be denoted $H^2_{\mathrm{nch}}$. Defining it by the character spectrum, rather than by the kernel of one Lefschetz operator, avoids losing the primitive class $\omega_1-\omega_2$ or admitting an unwanted character twist.
-
-### 2.4 Components and finite quotients
-
-At neat level the quotient is a manifold. At a coarser level choose a neat normal subgroup $C'\triangleleft C$ and put $\Delta=C/C'$. In characteristic zero the transfer identities give
-
-$$
-H^i(S_C,L)\simeq H^i(S_{C'},L)^\Delta. \tag{2.5}
-$$
-
-Indeed, pullback followed by trace is multiplication by $|\Delta|$, while trace followed by pullback is the sum over $\Delta$. Division by $|\Delta|$ makes invariants exact. Thus all rational decompositions descend from a neat cover. Formula (2.5) does not assert an integral equality when $\ell\mid|\Delta|$.
-
-If a single geometric component is not defined over $E$, replacing $S_C$ by it destroys the $\operatorname{Gal}(\bar E/E)$-action. We instead take the orbit under component reciprocity. Automorphic decompositions may then contain a finite permutation multiplicity. This multiplicity is separate from automorphic multiplicity and will be recorded by the orientation-component factor.
-
-## 3. Hecke correspondences in middle degree
-
-Automorphic representations become visible in geometry through correspondences. The action convention matters: reversing the two maps changes an operator to its adjoint, while omitting a degree changes its integral normalization. We therefore establish the correspondence algebra before using eigenvalues.
-
-### 3.1 Pull--push and variance
-
-For $g\in G(\mathbf A_f)$ set $C_g=C\cap gCg^{-1}$. Right translation by $g$ gives the second map in
-
-$$
-S_C\xleftarrow{p_1}S_{C_g}\xrightarrow{p_2}S_C.
-$$
-
-Both maps are finite étale at neat level. Define
-
-$$
-[CgC]=(p_2)_*p_1^*. \tag{3.1}
-$$
-
-Pullback is contravariant and trace is covariant, so (3.1) acts in the same order as right convolution on automorphic forms. The identity double coset acts as the identity. If $g$ normalizes $C$, (3.1) is the pullback by the inverse of right translation, again agreeing with right-regular conventions.
-
-The projection formula proves that (3.1) respects cup products in the usual module sense. It preserves degree and every rational coefficient structure over which the correspondence is defined.
-
-As a normalization check, take $g$ with $CgC=Cg$ and suppose the induced map $r_g:S_C\to S_C$ is an automorphism. Then $p_1$ is the identity and $p_2=r_g$, so (3.1) is $(r_g)_*=(r_g^{-1})^*$ on cohomology. This is exactly the operator obtained by right translating automorphic functions by $g$. If instead $p_2$ is a finite cover of degree $d$ and $p_1=p_2$, then $(p_2)_*p_2^*=d$; counting distinct geometric sheets would give the wrong answer in a ramified specialization.
-
-### 3.2 Composition and adjoints
-
-Fiber products of the two correspondence diagrams decompose into double cosets. Proper base change and the projection formula then give
-
-$$
-[CgC][ChC]=\sum_x m_x[C x C], \tag{3.2}
-$$
-
-where $m_x$ is the scheme-theoretic multiplicity in the double-coset convolution. Thus the geometric action is a representation of the unnormalized Hecke algebra.
-
-Transpose interchanges $p_1$ and $p_2$. Poincaré duality gives
-
-$$
-\langle [CgC]x,y\rangle
-=\langle x,[Cg^{-1}C]y\rangle, \tag{3.3}
-$$
-
-after the Haar and degree normalizations implicit in (3.1). For moduli correspondences, dualizing the universal isogeny can add the central similitude involution; it is included in the notation $g\mapsto g^\dagger$. The correct general formula is $T_g^*=T_{g^\dagger}$.
-
-Because the Hecke algebra contains its adjoints, its image on a finite-dimensional polarized complex cohomology space is semisimple: a commuting family of normal operators is simultaneously diagonalizable. This is the linear-algebra reason that rational eigenspace projectors exist.
-
-### 3.3 The common spherical algebra
-
-Outside $\Sigma$, the strange construction identifies the derived finite local group with the split quaternionic group and preserves the chosen hyperspecial compact. We use the common algebra
-
-$$
-\mathbb T^\Sigma
-=\mathbf Z[T_w,S_w,S_w^{-1}:w\notin\Sigma]. \tag{3.4}
-$$
-
-The operators are unnormalized, so the polynomial is exactly (1.1). Global Jacquet--Langlands gives
-
-$$
-t_w(\Pi)=t_w(\pi),\qquad s_w(\Pi)=s_w(\pi) \tag{3.5}
-$$
-
-at every good $w$. There is no sign in (3.5). Signs in local character transfer at division places do not alter spherical Hecke operators at split places.
-
-The central generator $S_w$ is indispensable. The eigenvalue of $T_w$ alone does not determine the unordered Satake pair when the central character varies. Likewise, the derived-group Hecke algebra alone cannot distinguish auxiliary torus characters that agree on the derived subgroup.
-
-### 3.4 Galois and specialization compatibility
-
-Canonical descent of Hecke correspondences implies
-
-$$
-\sigma T=T\sigma
-\quad
-(\sigma\in\operatorname{Gal}(\bar E/E),\ T\in\mathbb T^\Sigma). \tag{3.6}
-$$
-
-At a good integral place $u$ of $E$ above residue characteristic $p$, every prime-to-$p$ correspondence extends to the smooth projective model. Smooth proper base change intertwines its generic and special-fiber actions. Therefore geometric Frobenius $F_u$, specialization, and $\mathbb T^{\Sigma\cup\{p\}}$ commute.
-
-At a parahoric prime, prime-to-$p$ correspondences extend to the semistable model and act on nearby cycles. They commute with inertia and the monodromy operator. A correspondence involving the bad prime itself requires its explicit integral moduli diagram; nothing here infers such an extension from the generic double coset.
-
-## 4. The compact Matsushima decomposition
-
-We now connect differential forms to automorphic representations. Compactness makes the proof transparent: the regular spectrum is discrete, the Hodge Laplacian has discrete spectrum, and there are no continuous or residual integrals. The only subtlety is to retain the multiplicity space rather than silently replacing it by a scalar.
-
-### 4.1 From differential forms to the discrete spectrum
-
-Choose a connected component $X^+$ of $X$ and let $K_\infty^0$ be its stabilizer in $G(\mathbf R)^0$. For each finite double coset representative $g_j$ the corresponding connected quotient is
-
-$$
-\Gamma_j\backslash X^+,\qquad
-\Gamma_j=G(\mathbf Q)^+\cap g_jCg_j^{-1}. \tag{4.1}
-$$
-
-Neatness makes $\Gamma_j$ torsion-free. Differential $q$-forms on (4.1) identify with functions
-
-$$
-f:G(\mathbf R)^0\longrightarrow
-\bigwedge^q\mathfrak p^*
-$$
-
-satisfying left $\Gamma_j$-invariance and right $K_\infty^0$-equivariance. Here
-
-$$
-\mathfrak g_\mathbf C=\mathfrak k_\mathbf C\oplus\mathfrak p_\mathbf C
-$$
-
-is the Cartan decomposition. Summing over $j$ rewrites the de Rham complex as the $C$-fixed part of the automorphic complex.
-
-The quotient is compact, so the right regular representation on its $L^2$-space is a Hilbert direct sum
-
-$$
-L^2_{\mathrm{disc}}
-=\widehat{\bigoplus}_{\rho}
-\mathcal M(\rho)\widehat\otimes\rho. \tag{4.2}
-$$
-
-Each multiplicity space $\mathcal M(\rho)$ is finite-dimensional. Smooth vectors and a fixed $K_\infty$-type turn (4.2) into an algebraic direct sum with only finitely many summands contributing to a fixed Laplace eigenspace.
-
-### 4.2 Relative Lie algebra cohomology
-
-For an admissible representation $V$ of $G(\mathbf R)^0$, its relative cochain complex is
-
-$$
-C^q(\mathfrak g,K_\infty^0;V)
-=\operatorname{Hom}_{K_\infty^0}
-(\bigwedge^q\mathfrak p_\mathbf C,V). \tag{4.3}
-$$
-
-The differential is induced by the infinitesimal action and the Lie bracket. Under the identification of the preceding section, the exterior derivative on automorphic forms is exactly this differential. Hence one automorphic representation contributes
-
-$$
-H^q(\mathfrak g,K_\infty^0;\rho_\infty)
-\otimes\rho_f^C
-$$
-
-at level $C$.
-
-Hodge theory justifies passage from the Hilbert sum to cohomology. On a compact quotient every de Rham class has a unique harmonic representative. The Laplacian is the action of a central elliptic operator plus a scalar on each $K_\infty$-type. Its kernel is finite-dimensional. Therefore only finitely many summands of (4.2) meet the harmonic kernel, and kernels and direct sums commute there.
-
-### 4.3 Proof of the decomposition
-
-Combining the automorphic complex with harmonic representatives gives the Hecke-equivariant isomorphism
-
-$$
-H^q_B(S_C(\mathbf C),\mathbf C)
-\simeq
-\bigoplus_\rho
-\mathcal M(\rho)\otimes
-\rho_f^C\otimes
-H^q(\mathfrak g,K_\infty;\rho_\infty). \tag{4.4}
-$$
-
-If the selected surface is an orientation or component union rather than the full double quotient, the last factor is replaced by its allowed orientation-component subspace. We denote it by $A^q_C(\rho_\infty)$.
-
-To prove (4.4) directly, decompose the smooth automorphic forms by (4.2), insert the decomposition into (4.3), and apply the differential componentwise. The harmonic projection preserves every irreducible summand because the Laplacian commutes with the right regular action. Its finite-dimensional kernel is the direct sum of the component kernels. These kernels calculate both de Rham cohomology and relative Lie algebra cohomology. Finally, the finite adelic right action on $C$-fixed vectors agrees with the pull--push action (3.1), so the isomorphism is Hecke-equivariant.
-
-There is no term from a parabolic induction: such a term would arise from the continuous spectrum of a noncompact quotient, which compactness has removed. One-dimensional automorphic representations do occur in (4.4), and Section 2.3 already identified their degree-two classes.
-
-### 4.4 Fixed level and finiteness
-
-At fixed $C$ only representations with $\rho_f^C\ne0$ contribute. The harmonic space in degree $q$ is finite-dimensional, hence only finitely many cohomological $\rho$ occur. Formula (4.4) gives the exact dimension identity
-
-$$
-\dim H^q[\rho]
-=m(\rho)\,\dim\rho_f^C\,
-\dim A_C^q(\rho_\infty). \tag{4.5}
-$$
-
-The three factors have different meanings. The first counts automorphic occurrences, the second level vectors, and the third cohomological orientations. A four-dimensional surface eigenspace can arise from the last factor even when the first two factors are one.
-
-## 5. The archimedean degree-two calculation
-
-Formula (4.4) becomes useful only after its archimedean term is computed. The two active factors are rank one, so the calculation reduces to the weight decomposition of the tangent plane and a Kunneth argument.
-
-### 5.1 One active rank-one factor
-
-For an oriented upper half-plane let $K^0\simeq\mathrm{SO}(2)$. The complexified cotangent representation splits into weights $2$ and $-2$:
-
-$$
-\mathfrak p_\mathbf C^*=\mathfrak p^{1,0,*}\oplus\mathfrak p^{0,1,*}. \tag{5.1}
-$$
-
-Let $D_2^+$ and $D_2^-$ be the two discrete-series representations on the identity component with minimal $K^0$-types $2$ and $-2$. In (4.3), $K^0$-equivariance permits one cochain in degree one and none in degrees zero or two. The neighboring $K$-types in a discrete series differ by two and occur only on one side of the minimal type; the relative differential into and out of the minimal cochain is therefore zero. Thus
-
-$$
-H^q(\mathfrak g_1,K^0;D_2^\pm)
-=
-\begin{cases}
-\mathbf C,&q=1,\\
-0,&q\ne1.
-\end{cases} \tag{5.2}
-$$
-
-The $+$ class has Hodge type $(1,0)$ and the $-$ class type $(0,1)$. For the full disconnected real group, the cohomological representation joins the two orientations; its degree-one cohomology is their two-dimensional sum. On a fixed oriented component, one retains the sign selected by that component.
-
-The trivial representation has invariant cohomology in degrees $0$ and $2$, represented by $1$ and the area form, and no degree-one cohomology. A principal series or a discrete series of weight other than two has no constant-coefficient cohomology: its infinitesimal character differs from that of the trivial coefficient system, so the Casimir acts by a nonzero scalar on the relative complex. Harmonic cochains must have Casimir eigenvalue zero.
-
-### 5.2 Two active factors and Kunneth
-
-At the two active places the relative complex is the tensor product of the two rank-one complexes. For a weight-two representation at both places, Kunneth and (5.2) give
-
-$$
-H^q(\mathfrak g_1\oplus\mathfrak g_2,
-K_1^0\times K_2^0;D_2^{\epsilon_1}\boxtimes D_2^{\epsilon_2})
-=
-\begin{cases}
-\mathbf C,&q=2,\\
-0,&q\ne2.
-\end{cases} \tag{5.3}
-$$
-
-Compact real factors contribute only their prescribed algebraic type. For constant coefficients that type is trivial. Thus a noncharacter automorphic representation contributes to constant cohomology precisely when it has weight two at both active places and the trivial finite-dimensional type at every compact real place.
-
-For the trivial derived representation, Kunneth yields degree-two invariant forms from
-
-$$
-H^2_1\otimes H^0_2
-\quad\text{and}\quad
-H^0_1\otimes H^2_2,
-$$
-
-recovering $\omega_1$ and $\omega_2$. There is no mixed $H^1_1\otimes H^1_2$ term because the trivial rank-one representation has no $H^1$.
-
-### 5.3 Hodge types and orientation packets
-
-The sign pair $(\epsilon_1,\epsilon_2)$ determines Hodge type:
-
-$$
-(+,+)\mapsto(2,0),\quad
-(+,-),(-,+)\mapsto(1,1),\quad
-(-,-)\mapsto(0,2). \tag{5.4}
-$$
-
-Let $\Omega_C(\Pi)$ be the set of sign pairs and component characters admitted by the chosen canonical component union. Put
-
-$$
-d_\infty(\Pi,C)=|\Omega_C(\Pi)|. \tag{5.5}
-$$
-
-For a full union stable under both orientation involutions, $d_\infty=4$ and the packet Hodge numbers are
-
-$$
-h^{2,0}=1,\qquad h^{1,1}=2,\qquad h^{0,2}=1. \tag{5.6}
-$$
-
-For a connected oriented component, only the compatible sign pairs occur. Formula (5.5), rather than the unconditional number four, is the correct multiplicity in general. Complex conjugation interchanges $(2,0)$ with $(0,2)$ and the two mixed orientations with one another, so every union defined over a real subfield contains signs in conjugate pairs.
-
-### 5.4 Exclusion of other infinity types
-
-Suppose an irreducible automorphic $\rho$ contributes to $H^2$. At a compact real place, the coefficient and representation types must pair. At an active place, the Casimir argument leaves either the trivial representation in degrees $0,2$ or weight-two discrete series in degree $1$. Total degree two therefore has only three possibilities:
-
-1. discrete series in both active factors, contributing the noncharacter packet (5.3);
-2. trivial derived type in both factors, contributing (2.4);
-3. a degree-two trivial class at one factor and degree zero at the other, which is already the second case.
-
-There is no constituent with discrete series at exactly one active factor: it would contribute in odd total degree. There is no higher-weight constituent with constant coefficients. This proves that the character and selected parallel-weight-two packets exhaust $H^2$.
-
-## 6. Quaternionic packets and exact multiplicities
-
-The strange surface is unitary, whereas the eigensystems of interest are described quaternionically. The bridge is finite-adelic matching plus central bookkeeping. The derived groups alone do not determine a representation of the full similitude group, so auxiliary characters must remain visible.
-
-### 6.1 Finite-adelic matching
-
-The strange datum supplies a homomorphism from a group built from $D^\times$ and an auxiliary torus to $G$ with finite central kernel. At every finite place outside $\Sigma$, it identifies the derived groups, hyperspecial compact subgroups, and spherical double cosets. There are two directions to the comparison, and they must be distinguished.
-
-Starting with an automorphic representation $\rho$ of $G$, pullback through the central homomorphism decomposes into tensor products $\Pi\boxtimes\chi$. Automorphy is preserved because an automorphic function is simply being pulled back along a homomorphism carrying rational points to rational points. Conversely, suppose $\Pi\boxtimes\chi$ is automorphic, is trivial on the finite central kernel, and satisfies the rational and component equations. Its automorphic functions are constant on kernel fibers and therefore descend to $G$. This produces $\rho(\Pi,\chi)$.
-
-Thus finite local matching alone is not being used to infer automorphy. It identifies local factors after an actual global pullback or descent. When $\Pi$ begins on a different quaternionic inner form with the same finite factors, global Jacquet--Langlands first transfers it to the split group and then to the surface inner form, under the stated local image condition. Changing two archimedean invariants preserves the global parity relation, while the finite components and their good Hecke characters remain unchanged.
-
-The central equation has the form
-
-$$
-\omega_\Pi(z)\chi(z) =1
-\quad(z\in Z_{\mathrm{ker}}(\mathbf A)), \tag{6.1}
-$$
-
-together with triviality on rational points and compatibility with the level. Only finitely many $\chi$ occur at fixed level and infinity type. Different choices can have the same derived Hecke eigenvalues, which is why the center and component action are included in $\Omega_C(\Pi)$.
-
-Global Jacquet--Langlands identifies $\Pi$ with a unique selected cuspidal $\pi$ on $\mathrm{GL}_2(\mathbf A_F)$ and preserves the good polynomial (1.1), algebraic weight, central character, and field of rationality. At a definite real factor, parallel weight two is represented by the trivial algebraic quaternionic type; at an active split factor it is represented by the weight-two discrete series of Chapter 5. This supplies a second name for the same good eigensystem without identifying the underlying infinite-dimensional representation spaces.
-
-### 6.2 Central extensions and auxiliary characters
-
-We record the multiplicity argument for the central modification. Let $H\to G^{\mathrm{der}}$ be the finite central cover arising from the quaternionic group, and fix an admissible $\chi$. Restriction of a $G$-automorphic occurrence to $H$ lands in the $\Pi$-isotypic automorphic space. The latter has a one-dimensional multiplicity space by quaternionic multiplicity one.
-
-Let $\mathcal M_G(\rho)$ be the occurrence space of $\rho$ and $\mathcal M_H(\Pi)$ that of $\Pi$. Restriction followed by projection to the chosen central character defines an injection from $\mathcal M_G(\rho)$ into the $\chi$-eigenspace of
-
-$$
-\mathcal M_H(\Pi)\otimes \operatorname{Fun}(A,\mathbf C),
-$$
-
-where $A$ is the finite abelian component fiber of the central map. Injectivity follows because an automorphic embedding that vanishes after pullback vanishes on the selected quotient. The regular representation of $A$ contains each character once, and $\mathcal M_H(\Pi)$ is a line. Thus the target eigenspace has dimension one. If $\rho(\Pi,\chi)$ occurs, its occurrence space is nonzero and hence
-
-$$
-m_G(\rho(\Pi,\chi))=1. \tag{6.2}
-$$
-
-This proof uses the full central equation. Without fixing $\chi$, several distinct one-dimensional eigenspaces may be grouped under one derived packet and look like higher automorphic multiplicity.
-
-### 6.3 Multiplicity one versus cohomological dimension
-
-Insert (6.2) into (4.5). For a selected lift $\rho=\rho(\Pi,\chi)$,
-
-$$
-\dim_\mathbf C H^2[\rho]
-=\dim\rho_f^C\cdot d_\infty(\rho,C). \tag{6.3}
-$$
-
-At a minimal level where every selected local invariant space is a line, a full orientation packet therefore has dimension four. This does not contradict multiplicity one: there is one global occurrence, one finite level vector, and four archimedean cohomology lines.
-
-At deeper level, $\dim\rho_f^C$ can exceed one. At a division place a normal congruence subgroup can fix either none or an entire finite-dimensional local representation. At split old level several oldvectors can occur. Formula (6.3) records these effects without treating them as repeated automorphic occurrences.
-
-### 6.4 The complex decomposition theorem
-
-Let $\mathcal P_C$ be the finite set of pairs $(\Pi,\chi)$ satisfying:
-
-- $\Pi$ is a selected noncharacter quaternionic automorphic representation;
-- its algebraic weight is parallel two, so its surface lift is discrete series at the two active places and has the required trivial algebraic type at compact places;
-- the central equation (6.1), component condition, and $C$-invariance hold.
-
-Then
-
-$$
-H^2_B(S_C,\mathbf C)
-=H^2_{\mathrm{char}}
-\oplus
-\bigoplus_{(\Pi,\chi)\in\mathcal P_C}
-\rho(\Pi,\chi)_f^C\otimes A_C^2(\Pi,\chi). \tag{6.4}
-$$
-
-Every sum is direct and Hecke-stable. Each $A_C^2$ has the sign basis (5.4); each automorphic multiplicity is one. The proof is now complete: Matsushima gives (4.4), Section 5 classifies all nonzero archimedean terms, the character calculation gives the first summand, and (6.2) removes multiplicity spaces from the noncharacter terms without choosing a basis for their canonical lines.
-
-## 7. Isolating a packet by Hecke operators
-
-The direct sum (6.4) is complex analytic. Arithmetic applications require algebraic projectors defined from correspondences. Fixed level finiteness and strong determination allow one to construct them from finitely many good Hecke operators.
-
-### 7.1 Simultaneous eigenspaces
-
-The image of $\mathbb T^\Sigma$ on $H^2_B(S_C,\mathbf Q)$ is a finite-dimensional commutative algebra. After extending to $\mathbf C$ and adjoining adjoints, it acts semisimply by Section 3.2. Hence
-
-$$
-H^2_B(S_C,\mathbf C)=\bigoplus_\lambda H^2[\lambda], \tag{7.1}
-$$
-
-where $\lambda$ ranges over simultaneous characters, including the central and component operators needed to distinguish lifts.
-
-For a noncharacter packet, $\lambda=\lambda_{\Pi,\chi}$ has values $t_w(\Pi),s_w(\Pi)$ at good places. Strong multiplicity one after global Jacquet--Langlands shows that equality of these values for almost all $w$, together with the central character, identifies $\Pi$. The auxiliary character is then identified by the torus and component operators.
-
-### 7.2 Finite separating sets and projectors
-
-Only finitely many characters occur in (7.1). For a fixed $\lambda$, choose for every $\mu\ne\lambda$ an operator $T_\mu$ with $\lambda(T_\mu)\ne\mu(T_\mu)$. The product
-
-$$
-e_\lambda
-=\prod_{\mu\ne\lambda}
-\frac{T_\mu-\mu(T_\mu)}
-{\lambda(T_\mu)-\mu(T_\mu)} \tag{7.2}
-$$
-
-acts as identity on $H^2[\lambda]$ and zero on every other simultaneous eigenspace. Thus it is an idempotent correspondence with coefficients in a finite extension containing the eigenvalues.
-
-If $\lambda$ is replaced by its orbit under $\operatorname{Gal}(\overline{\mathbf Q}/\mathbf Q)$, summing the conjugates of (7.2) gives a rational projector
-
-$$
-e_{[\lambda]}\in\mathbb T^\Sigma\otimes\mathbf Q. \tag{7.3}
-$$
-
-The individual projector is defined over the Hecke field $L_\lambda$. Formula (7.2) also proves that a finite set of good places separates the packets at this fixed level; no infinite limiting projector is involved.
-
-For example, if exactly two packets occur and one operator $T$ has eigenvalues $a\ne b$, then
-
-$$
-e_a=\frac{T-b}{a-b},\qquad e_b=\frac{T-a}{b-a}.
-$$
-
-One checks immediately that $e_a^2=e_a$, $e_ae_b=0$, and $e_a+e_b=1$ on the cohomology space. If $a\equiv b$ modulo a prime above $\ell$, the denominator explains exactly why this rational splitting can fail on the integral lattice.
-
-### 7.3 Character packets and noncharacter packets
-
-The set of character eigensystems at fixed level is finite. Applying the same interpolation gives $e_{\mathrm{char}}$ and
-
-$$
-e_{\mathrm{nch}}=1-e_{\mathrm{char}}. \tag{7.4}
-$$
-
-This is the precise boundary exclusion. Since $S_C$ is projective, there is no geometric boundary contribution. Equation (7.4) removes only global norm-character classes, including both invariant Kähler lines and their component twists.
-
-It would be incorrect to quotient merely by the ample Lefschetz line. The second invariant class can be primitive. It would also be incorrect to call the full $H^{1,1}$ algebraic or character-valued: mixed-orientation noncharacter packets contribute to $H^{1,1}$ by (5.4).
-
-### 7.4 Denominators and integral warnings
-
-The denominators in (7.2) are differences of eigenvalues. They need not be units at a chosen prime $\lambda\mid\ell$. Consequently $e_\lambda$ always splits rational $\ell$-adic cohomology but need not preserve or split the natural $\mathbf Z_\ell$-lattice.
-
-One may define the saturated lattice
-
-$$
-\Lambda_\lambda
-=H^2(S_{C,\bar E},\mathbf Z_\ell)
-\cap e_\lambda H^2(S_{C,\bar E},L_{\lambda}) \tag{7.5}
-$$
-
-inside rational cohomology. It is Galois and Hecke stable, but (7.5) is not asserted to be a direct summand. Congruent packets can meet modulo $\ell$, and semisimplicity over characteristic zero does not prevent that intersection.
-
-## 8. Rational and Hodge structures
-
-Automorphic decomposition over $\mathbf C$ must be reconciled with the rational structure coming from topology. Hecke correspondences do this: their characteristic polynomials are rational, conjugation permutes eigenspaces, and the sum over a conjugacy orbit descends.
-
-### 8.1 The rational Betti decomposition
-
-For a Galois orbit $[\lambda]$, put
-
-$$
-H^2_B[\lambda]_{\mathbf Q}=e_{[\lambda]}H^2_B(S_C,\mathbf Q). \tag{8.1}
-$$
-
-Then
-
-$$
-H^2_B(S_C,\mathbf Q)
-=H^2_{\mathrm{char},\mathbf Q}
-\oplus\bigoplus_{[\lambda]}H^2_B[\lambda]_{\mathbf Q}. \tag{8.2}
-$$
-
-Tensoring (8.2) with $\mathbf C$ recovers (6.4), grouped by algebraic conjugacy. The equality follows because (7.3) consists of rational algebraic correspondences and the mutually orthogonal idempotents sum to one.
-
-An individual eigenspace is naturally a vector space over its Hecke field $L_\lambda$. If $L_\lambda$ acts faithfully, its $L_\lambda$-dimension is the common complex dimension of one embedding component, namely
-
-$$
-\dim_{L_\lambda}H^2_B[\lambda]
-=\dim\rho_f^C\,d_\infty(\rho,C). \tag{8.3}
-$$
-
-If several auxiliary lifts have identical chosen spherical eigenvalues, the torus operators must be adjoined before (8.3) is applied.
-
-### 8.2 Hecke fields and conjugation
-
-Define
-
-$$
-L_\Pi=\mathbf Q(t_w(\Pi),s_w(\Pi):w\notin\Sigma), \tag{8.4}
-$$
-
-including the central and auxiliary character values. Algebraicity of the cohomological Hecke action makes $L_\Pi$ a number field. Global Jacquet--Langlands and (3.5) show that the quaternionic, split, and surface eigensystems have the same field.
+For a $\mathbf Q$-algebra $R$, the full rational-multiplier group is
 
-For $\sigma\in\operatorname{Aut}(\mathbf C)$,
-
-$$
-\sigma(H^2[\Pi,\chi])=H^2[\Pi^\sigma,\chi^\sigma]. \tag{8.5}
-$$
-
-Indeed, apply $\sigma$ to every eigenvalue equation. Conversely, if $\sigma$ fixes the good eigenvalues and central data, strong determination fixes the automorphic packet. Thus the stabilizer of the eigensystem is exactly the stabilizer of its Hecke field.
-
-### 8.3 Polarizations and duality
-
-Choose an ample Hecke-equivariant polarization and average it over the finite adjoint algebra if necessary. Poincaré duality and (3.3) restrict to a perfect pairing between a packet and its adjoint packet:
-
-$$
-H^2_B[\lambda]\times H^2_B[\lambda^\dagger]
-\longrightarrow L_\lambda(-2). \tag{8.6}
-$$
-
-When the packet is self-dual after the prescribed central twist, (8.6) is nondegenerate on it. In degree two the cup product is symmetric, consistent with the tensor product of the two alternating rank-one orientation pairings.
-
-Complex conjugation interchanges the Hodge pieces in (5.4). Hence the full orientation packet is a polarizable Hodge structure of weight two. A smaller component packet is paired with its conjugate component if it is not itself conjugation-stable.
-
-### 8.4 De Rham realization
-
-Over an embedding $E\hookrightarrow\mathbf C$, algebraic de Rham comparison gives
-
-$$
-H^2_{\mathrm{dR}}(S_C/E)\otimes_E\mathbf C
-\simeq H^2_B(S_C,\mathbf Q)\otimes\mathbf C. \tag{8.7}
-$$
-
-Algebraic correspondences commute with (8.7), so every $e_{[\lambda]}$ cuts out a de Rham block with the same characteristic polynomials. The Hodge filtration on a full minimal packet has graded dimensions $1,2,1$ in degrees $2,1,0$, as in (5.6).
-
-The comparison is rational, not integral. Torsion in coherent surface cohomology can obstruct an ordinary integral Hodge decomposition even though the derived de Rham complex base-changes correctly. No integral period lattice is inferred from (8.7).
-
-## 9. The etale Galois realization
-
-The canonical model gives arithmetic meaning to a Betti packet. Étale comparison transports its projector, while canonical descent makes the resulting subspace stable under Galois. This produces the degree-two representation promised by the surface construction.
-
-### 9.1 Comparison and descent
-
-Fix an embedding $\bar E\hookrightarrow\mathbf C$ and a prime $\ell$. Betti--étale comparison for smooth proper varieties gives a functorial isomorphism
-
-$$
-H^2_B(S_C(\mathbf C),\mathbf Q_\ell)
-\simeq H^2_{\mathrm{et}}(S_{C,\bar E},\mathbf Q_\ell). \tag{9.1}
-$$
-
-Functoriality for finite pullback and trace makes (9.1) Hecke-equivariant. The left side supplies the dimension and rational projector; the right side supplies a continuous action of $G_E=\operatorname{Gal}(\bar E/E)$.
-
-Because the correspondences defining $e_{[\lambda]}$ descend to $E$, (3.6) implies that their images are $G_E$-stable. If an individual $e_\lambda$ is defined over $L_\lambda$ and $\iota_\ell:L_\lambda\hookrightarrow\overline{\mathbf Q}_\ell$, it also cuts out a stable block after scalar extension.
-
-### 9.2 The packet representation
-
-Define
-
-$$
-V_{\lambda,\ell}
-=e_\lambda
-H^2_{\mathrm{et}}(S_{C,\bar E},
-L_{\lambda,\ell}), \tag{9.2}
-$$
-
-where $L_{\lambda,\ell}$ is the completion determined by $\iota_\ell$. Then $V_{\lambda,\ell}$ is a continuous $L_{\lambda,\ell}$-representation of $G_E$, commuting with the Hecke action. Its formation commutes with finite coefficient extension.
-
-The cup-product pairing has the typed form
-
-$$
-V_{\lambda,\ell}\times V_{\lambda^\dagger,\ell}
-\longrightarrow L_{\lambda,\ell}(-2). \tag{9.3}
-$$
-
-Thus
-
-$$
-V_{\lambda,\ell}^\vee\simeq
-V_{\lambda^\dagger,\ell}(2). \tag{9.4}
-$$
-
-Equation (9.4) fixes both the sign and the twist: geometric Frobenius eigenvalues on paired blocks multiply to $q^2$.
-
-### 9.3 Dimensions and scalar extension
-
-Comparison with (6.3) yields
-
-$$
-\dim_{L_{\lambda,\ell}}V_{\lambda,\ell}
-=\dim\rho_f^C\,d_\infty(\rho,C). \tag{9.5}
-$$
-
-In particular, a full minimal orientation packet has dimension four. If the level-invariant dimension is greater than one, the Galois action may mix those level vectors only through endomorphisms commuting with the common Hecke character; the automorphic decomposition alone does not canonically split them further.
-
-Changing $\iota_\ell$ conjugates $\lambda$ and gives the conjugate packet. Changing $\ell$ changes the coefficient topology but not (9.5), the Betti source, or the algebraic Hecke character.
-
-### 9.4 What has and has not been extracted
-
-The representation (9.2) is the complete degree-two surface realization. It is not automatically irreducible or two-dimensional. A four-dimensional full packet can encode a tensor or descent pattern, but discovering a rank-two factor requires information not contained in a semisimple Hecke eigencharacter alone.
-
-In particular, one may not choose a two-dimensional Hodge subspace such as $(2,0)\oplus(0,2)$ and declare it Galois-stable. Hodge decomposition is defined after an archimedean embedding and is generally not preserved by arithmetic Galois. Nor may one divide Frobenius weights by taking a formal half Tate twist. The extraction problem begins only after the honest weight-two representation has been constructed.
-
-## 10. Frobenius traces, purity, and independence
-
-At a good finite place, geometry supplies more than unramifiedness. The Lefschetz formula computes traces of Frobenius combined with Hecke correspondences, and purity constrains every root. Projectors then transfer both statements to a single packet.
-
-### 10.1 Good reduction
-
-Let $u$ be a finite place of $E$ above $p$, with residue field $k_u$ of size $q_u$. Assume the PEL algebra is unramified at $p$, the lattice is self-dual, the level is hyperspecial, the determinant local model is smooth, and $u\notin\Sigma$. The unitary surface has a smooth projective model $\mathscr S_C/\mathcal O_{E,u}$, and smooth proper base change gives
-
-$$
-H^2_{\mathrm{et}}(S_{C,\bar E},\mathbf Q_\ell)
-\simeq H^2_{\mathrm{et}}(\mathscr S_{C,\bar k_u},\mathbf Q_\ell)
-\quad(\ell\ne p). \tag{10.1}
-$$
-
-The left representation is unramified at $u$. Under (10.1), a geometric Frobenius element acts as geometric Frobenius on the special fiber. Every prime-to-$p$ Hecke correspondence extends and commutes with this identification.
-
-### 10.2 Projected Lefschetz traces
-
-Let $T$ be a finite linear combination of good Hecke correspondences. The Lefschetz--Verdier formula gives
-
 $$
-\sum_{i=0}^4(-1)^i
-\operatorname{Tr}(TF_u^n\mid H^i)
-=\sum_{z\in\operatorname{Fix}(T\circ F_u^n)}
-\operatorname{LT}_z(T,F_u^n), \tag{10.2}
+G(R)=G_W(R)=
+\left\{
+g\in\operatorname{GL}_{K\otimes R}(W\otimes R):
+\langle gx,gy\rangle=\nu(g)\langle x,y\rangle,
+\ \nu(g)\in R^\times
+\right\}.                                                     \tag{1.2}
 $$
-
-with positive-dimensional fixed loci interpreted by their local trace classes. For a finite étale transverse correspondence and constant coefficients, every isolated local term is its scheme-theoretic intersection multiplicity, equal to one in the transverse case.
-
-Apply (10.2) to every monomial appearing in (7.2). Since the projector commutes with Frobenius,
-
-$$
-\operatorname{Tr}(e_\lambda F_u^n\mid H^2)
-=\operatorname{Tr}(F_u^n\mid V_{\lambda,\ell}). \tag{10.3}
-$$
-
-For a noncharacter $\lambda$, the archimedean calculation proves
-
-$$
-e_\lambda H^i=0\qquad(i\ne2). \tag{10.4}
-$$
-
-Therefore the entire alternating trace of $e_\lambda F_u^n$ is its degree-two trace; no algebraic projector onto cohomological degree is required. Applying (10.2) to the polynomial expression for $e_\lambda$ computes (10.3) from algebraic intersections. For a character projector, the known invariant classes in degrees $0,2,4$ are instead subtracted explicitly. This is the promised use of the low-dimensional Lefschetz formula: it isolates the packet without presupposing a Galois factorization.
-
-### 10.3 Purity and reciprocal roots
-
-The special fiber in (10.1) is smooth and projective of dimension two. Hence its $H^2$ is pure of weight two. A Frobenius-compatible idempotent preserves purity, so every eigenvalue $\alpha$ of $F_u$ on $V_{\lambda,\ell}$ satisfies
-
-$$
-|\iota(\alpha)|=q_u \tag{10.5}
-$$
-
-for every complex embedding $\iota$. If $\lambda$ is self-adjoint, (9.3) pairs roots as
-
-$$
-\alpha\longleftrightarrow q_u^2/\alpha. \tag{10.6}
-$$
-
-For a four-dimensional full minimal packet the characteristic polynomial has degree four, all roots have modulus $q_u$, and its constant term has modulus $q_u^4$. This cannot equal the quadratic raw Hecke polynomial (1.1), whose rank-two roots have weight one in the cohomological normalization. The surface trace formula determines a weight-two polynomial attached to the packet; extracting a weight-one quadratic factor is a later theorem.
-
-### 10.4 Coefficient and auxiliary-prime independence
 
+The multiplier in (1.2) is one rational scalar. It is not an arbitrary element of
+$(F\otimes_{\mathbf Q}R)^\times$. Let $C\subset G(\mathbf A_f)$ be center-detecting and neat.
 Write
 
 $$
-Q_{u,\lambda}(X)
-=\det(1-XF_u\mid V_{\lambda,\ell}). \tag{10.7}
+\operatorname{Sh}^{\mathrm{all}}_C/ E
 $$
 
-For all $n\ge1$, (10.3) expresses the power sum of the reciprocal roots as a finite $L_\lambda$-linear combination of intersection numbers of algebraic correspondences. It is therefore independent of $\ell$. Newton identities recover the coefficients of (10.7) from the first $d=\dim V_{\lambda,\ell}$ power sums. Hence
+for the smooth projective canonical union containing the complete component-and-orientation
+orbit, and write $\operatorname{Sh}_{C,\mathscr U}/E_{\mathscr U}$ for a ground-field-defined
+open-and-closed union selected by a subset $\mathscr U$ of the actual finite component quotient.
+The latter field contains the reciprocity field needed to define that union. The geometry is a
+surface; it is not the cohomology of the universal PEL abelian scheme.
+
+### 1.3 Actions and normalizations
+
+The rational group acts on the left of the double quotient and the finite adelic group acts by
+right translation. Haar measures are coherent with quotient measures. At an unramified
+hyperspecial place the hyperspecial subgroup has volume one, and for any compact open $C$ the
+normalized identity is
 
 $$
-Q_{u,\lambda}(X)\in L_\lambda[X]
+e_C=\operatorname{vol}(C)^{-1}\mathbf 1_C.                   \tag{1.3}
 $$
 
-and is independent of the auxiliary prime and embedding, up to applying the corresponding embedding of $L_\lambda$.
+Compact class quotients used in central descent carry probability measure. These choices make
+geometric trace maps agree with unnormalized right-double-coset convolution. At each active
+real adjoint factor the rotation group has volume one; each definite adjoint factor has
+probability measure; and central measures are the Weil quotient measures compatible with the
+cover (2.8).
 
-More explicitly, if $p_n=\operatorname{Tr}(F_u^n\mid V_{\lambda,\ell})$ and
-
-$$
-Q_{u,\lambda}(X)=1+c_1X+\cdots+c_dX^d,
-$$
-
-then
-
-$$
-mc_m+\sum_{i=1}^m c_{m-i}p_i=0
-\qquad(1\le m\le d),\qquad c_0=1.
-$$
-
-Induction on $m$ places every $c_m$ in $L_\lambda$ and proves its independence. The denominators $m$ occur inside a characteristic-zero number field and create no ambiguity; they say nothing about integrality at primes dividing $m$.
-
-This proof requires the correspondences and their projector coefficients to be defined over the stated field. It proves rational compatibility, not an integral common lattice. It also does not say that $Q_{u,\lambda}$ is determined by the single pair $t_w,s_w$ at one place; the projected fixed-point traces are the geometric input.
-
-## 11. Bad primes and monodromy
-
-Good reduction sees only unramified Frobenius. At a parahoric prime the same packet projector acts on nearby cycles, so the semistable geometry restricts to the automorphic block. This gives a precise Galois structure even before it is compared with a local Langlands parameter.
-
-### 11.1 Semistable surface cohomology
-
-Let $u\mid p$ be a place at which one or two active rank-two directions are Iwahori. After the verified regularization, the model is strictly semistable, locally of the form
+For a finite field $\mathbf F_q$, $F_q$ denotes cohomological geometric Frobenius. The Tate
+twist convention is
 
 $$
-xy=\varpi
-\quad\text{or}\quad
-xyz=\varpi.
+F_q\mid L_\lambda(1)=q^{-1}.                                 \tag{1.4}
 $$
 
-The nearby-cycle weight complex is built from component surfaces, double curves, and triple points with alternating restriction and Gysin maps. On $H^2$ the logarithm of tame inertia has typed form
+Thus a pure weight-two eigenvalue has complex absolute value $q$, and the middle pairing of a
+smooth proper surface has target $L_\lambda(-2)$. Betti, de Rham, and etale cohomology always
+refer to the base surface or its stated component union.
+
+### 1.4 The proof architecture
+
+There are three layers, and none substitutes for another:
 
 $$
-N:H^2\longrightarrow H^2(-1),\qquad N^3=0, \tag{11.1}
+\begin{array}{c}
+\text{central automorphic descent and fixed-central Matsushima}\\[1mm]
+\Downarrow\quad\text{exact complex full-group blocks}\\[1mm]
+\text{finite algebraic span algebra on total surface cohomology}\\[1mm]
+\Downarrow\quad\text{rational projectors and degree isolation}\\[1mm]
+\text{Betti--de Rham--etale realizations and arithmetic specialization}.
+\end{array}                                                    \tag{1.5}
 $$
 
-and geometric Frobenius satisfies
+The first layer supplies labels, occurrence, multiplicity, component routing, and the real
+cohomology projector. The second supplies an actual algebraic idempotent, possibly only after
+grouping component or coefficient conjugates. The third transports that idempotent and applies
+trace and purity. In particular, the analytic real projector is never declared algebraic merely
+because it has an explicit formula.
+
+## 2. The full group and central automorphic descent
+
+### 2.1 The PEL group is not the common-norm group
+
+Taking the $K$-determinant in (1.2) gives
 
 $$
-FNF^{-1}=q_u^{-1}N. \tag{11.2}
+N_{K/F}(\det_Kg)=\nu(g)^2.
 $$
 
-Double-curve cohomology controls length-two Jordan blocks; surviving two-cycles in the dual complex control $N^2$. The number of triple points alone determines neither quantity.
-
-### 11.2 Hecke isolation of monodromy
-
-Prime-to-$p$ Hecke correspondences act on every stratum and commute with the restriction--Gysin differentials. Hence
+The structural groups are
 
 $$
-e_\lambda N=Ne_\lambda,\qquad
-e_\lambda F=Fe_\lambda. \tag{11.3}
+\begin{aligned}
+G^{\mathrm{der}}&=\operatorname{Res}_{F/\mathbf Q}D^1,
+&\dim G^{\mathrm{der}}&=3d,\\
+Z_G&=\{z\in\operatorname{Res}_{K/\mathbf Q}\mathbf G_m:
+N_{K/F}z\in\mathbf G_m\},
+&\dim Z_G&=d+1,\\
+T_G&=\{(\delta,q):N_{K/F}\delta=q^2\},
+&\dim T_G&=d+1,\\
+&&\dim G&=4d+1.
+\end{aligned}                                                  \tag{2.1}
 $$
 
-The Weil--Deligne structure therefore restricts to
+Both $Z_G$ and $T_G$ are connected tori. The maximal split central torus is
+$A_G\simeq\mathbf G_m$.
+
+The abelianization map is
 
 $$
-(r_{\lambda,u},N_{\lambda,u})
-\quad\text{on }V_{\lambda,\ell}. \tag{11.4}
+t_G(g)=(\det_Kg,\nu(g)):G\longrightarrow T_G.                \tag{2.2}
 $$
 
-Its ranks can be computed by applying $e_\lambda$ to the cohomology of the strata before taking the weight-complex cohomology. Exactness over the coefficient field makes this equivalent to projecting afterward. Integral exactness is not asserted if the projector has denominators.
-
-### 11.3 Conductors and the limits of degree two
-
-The Artin conductor is
+Multiplication gives a finite central isogeny
 
 $$
-a(V)=\dim V-\dim V^{I_u}+\operatorname{Swan}(V), \tag{11.5}
+1\longrightarrow\operatorname{Res}_{F/\mathbf Q}\mu_2
+\longrightarrow G^{\mathrm{der}}\times Z_G
+\longrightarrow G\longrightarrow1.                          \tag{2.3}
 $$
 
-or, after separating finite inertia from the unipotent part, the equivalent Weil--Deligne formula including $\operatorname{rank}N$ on inertia invariants. At split strictly semistable level with trivial finite inertia and no wild part,
+It is fppf-surjective but need not be surjective on rational, local, or adelic points. If
+$g\in G(\mathbf Q)$ and $x\in K^\times$ satisfies
+$x/c(x)=\det_K(g)/\nu(g)$, its obstruction is the well-defined square class
 
 $$
-a(V_{\lambda,\ell})=\operatorname{rank}N_{\lambda,u}. \tag{11.6}
+\operatorname{ob}_G(g)
+=\left[\frac{\nu(g)}{N_{K/F}(x)}\right]
+\in F^\times/F^{\times2}.                                    \tag{2.4}
 $$
 
-The conductor does not record $\operatorname{rank}N^2$, the Frobenius eigenvalues on $\ker N$, or finite descent. A full four-dimensional packet can have length-three blocks. If a genuine two-dimensional subquotient is later isolated, dimensional reasons force $N^2=0$ on it; that conclusion cannot be imposed on the full surface block in advance.
+This is why a central-isogeny slogan cannot perform the required automorphic descent.
 
-Two elementary Jordan calculations illustrate the loss of information. On a four-dimensional space, two blocks of length two have
-
-$$
-\operatorname{rank}N=2,\qquad \operatorname{rank}N^2=0.
-$$
-
-A block of length three together with a trivial block also has $\operatorname{rank}N=2$, but now $\operatorname{rank}N^2=1$. Formula (11.6) gives the same conductor in the split semistable case, although the two Weil--Deligne representations are not isomorphic. Moreover, changing Frobenius on the trivial block preserves both ranks and can change the local Euler factor. This is why the nearby-cycle package retains $(r,N)$ rather than only its conductor.
-
-### 11.4 Descent from a semistable extension
-
-If strict semistability is achieved only after a finite extension $E'_u/E_u$, the model computes the unipotent part of inertia over $E'_u$. Descent retains a finite action of $\operatorname{Gal}(E'_u/E_u)$ on the strata and on their incidence complex. Combining it with $N$ recovers the full inertial representation over $E_u$.
-
-Dropping that finite action can change $\dim V^{I_u}$ and the conductor. Likewise, a nonsplit node carries a signed Galois permutation on its branches. The packet projector commutes with this descent action because it is defined by correspondences over the original canonical field.
-
-## 12. Comparison with Shimura-curve $H^1$
-
-The surface was introduced because a curve realization is not always available with the required parity. Where both descriptions can be formed, they should nevertheless be compared. The correct comparison preserves quaternionic eigensystems and rationality fields while respecting the one-degree shift in geometry.
-
-### 12.1 The common quaternionic eigensystem
-
-Let $C_U$ be a compact quaternionic Shimura curve whose finite derived datum admits the same selected $\Pi$ and good spherical algebra. Matsushima in dimension one gives a weight-two packet in
+Let $J=\operatorname{Res}_{F/\mathbf Q}D^\times$. The common-norm quaternionic group is
 
 $$
-H^1_B(C_U,\mathbf C)
+H=J\times_{\operatorname{Res}_{F/\mathbf Q}\mathbf G_m}\mathbf G_m
+=\{b\in J:\operatorname{Nrd}(b)\in\mathbf G_m\}.            \tag{2.5}
 $$
 
-with the same eigenvalues $t_w(\Pi),s_w(\Pi)$ and automorphic multiplicity one. At minimal level its full orientation space has dimension two, of Hodge types $(1,0)$ and $(0,1)$.
-
-The surface packet and curve packet are therefore indexed by the same finite quaternionic representation, and global Jacquet--Langlands identifies both with the same split $\mathrm{GL}_2$ representation. This is a statement about automorphic labels and finite Hecke actions, not about an isomorphism of varieties.
-
-### 12.2 Rational and Hecke comparison
-
-Let $W_{\Pi,\ell}\subset H^1_{\mathrm{et}}(C_{U,\bar E},L_{\Pi,\ell})$ be the curve block and $V_{\Pi,\ell}\subset H^2_{\mathrm{et}}(S_{C,\bar E},L_{\Pi,\ell})$ the surface block, after a common field of definition has been chosen. Then:
+It has dimension $3d+1$ and the same derived group as $G$, but it is not $G$. Its center is
 
 $$
-L(W_\Pi)=L(V_\Pi)=L_\Pi, \tag{12.1}
+Z_H=\{r\in\operatorname{Res}_{F/\mathbf Q}\mathbf G_m:r^2\in\mathbf G_m\};
 $$
 
-and every good Hecke operator acts through the same character on the two blocks. Algebraic conjugation sends both blocks to those indexed by $\Pi^\sigma$. Their Betti, de Rham, and étale projectors are polynomials in the same abstract good Hecke operators, interpreted on the two varieties.
-
-The dimensions differ:
-
-$$
-\dim W_\Pi=2\dim\pi_f^U,\qquad
-\dim V_\Pi=4\dim\rho_f^C \tag{12.2}
-$$
-
-for full orientation unions. Local fixed-vector dimensions may also differ. Thus equality of Hecke characters never justifies equality of total vector spaces.
-
-### 12.3 Weight and Tate-twist audit
-
-At a common good place $u$, curve $H^1$ is pure of weight one and surface $H^2$ is pure of weight two:
+its identity component is the diagonal $\mathbf G_m$ and its geometric component group is
+$(\mu_2^d)/\mu_2$. Moreover
 
 $$
-|\alpha(W_\Pi)|=q_u^{1/2},
+1\longrightarrow H\longrightarrow G
+\longrightarrow
+\operatorname{Res}_{F/\mathbf Q}\operatorname{Res}^{1}_{K/F}\mathbf G_m
+\longrightarrow1                                             \tag{2.6}
+$$
+
+is split and generally semidirect: the quotient map is
+$\alpha(g)=\det_K(g)/\nu(g)$ and the diagonal Hermitian model supplies
+$u\mapsto\operatorname{diag}(u,1)$. The auxiliary CM torus in (2.6) is part of the full PEL
+group and cannot be discarded when central characters or components are counted.
+
+### 2.2 The obstruction-free auxiliary cover
+
+Put
+
+$$
+S=(\operatorname{Res}_{F/\mathbf Q}\mathbf G_m)/\mathbf G_m,
 \qquad
-|\alpha(V_\Pi)|=q_u. \tag{12.3}
+L=J\times\operatorname{Res}_{K/\mathbf Q}\mathbf G_m,
 $$
 
-An integral Tate twist changes weight by an even integer:
+and define
 
 $$
-\operatorname{wt}(V(n))=\operatorname{wt}(V)-2n. \tag{12.4}
-$$
-
-There is no integer $n$ with $2-2n=1$. Therefore $V_\Pi(n)$ cannot be isomorphic to $W_\Pi$ for any Tate twist. Their pairings also have different targets:
-
-$$
-W_\Pi\times W_{\Pi^\dagger}\to L_\Pi(-1),
+\beta:L\longrightarrow S,
 \qquad
-V_\Pi\times V_{\Pi^\dagger}\to L_\Pi(-2). \tag{12.5}
+\beta(b,z)=\left[\operatorname{Nrd}(b)N_{K/F}(z)\right].
 $$
 
-This normalization check rules out one of the most tempting but serious errors in using the surface construction.
-
-### 12.4 Galois comparison without a false isomorphism
-
-Both $W_{\Pi,\ell}$ and $V_{\Pi,\ell}$ are continuous Galois representations, unramified at common good primes, with Hecke-compatible Frobenius traces and packet fields $L_\Pi$. At bad primes their monodromy operators are obtained from the respective curve graph and surface incidence complexes, and both commute with the same prime-to-bad Hecke projector.
-
-The comparison is therefore the commutative pattern
+Then
 
 $$
-\begin{array}{ccc}
-\Pi&\longleftrightarrow&W_{\Pi,\ell}\subset H^1(C_U)\\
-\Vert&&\quad\text{same Hecke field and eigencharacter}\\
-\Pi&\longleftrightarrow&V_{\Pi,\ell}\subset H^2(S_C),
-\end{array} \tag{12.6}
+\widetilde G
+=\ker\beta
+=\left\{(b,z)\in L:
+\operatorname{Nrd}(b)N_{K/F}(z)\in\mathbf G_m\right\}.       \tag{2.7}
 $$
 
-not a vertical Galois isomorphism. The surface block contains the degree-two arithmetic object from which a later descent theorem may recover rank-two data. The present comparison supplies the common labels, rationality, duality conventions, and local geometric operators needed for that theorem.
-
-## 13. The degree-two automorphic decomposition theorem
-
-We conclude by assembling the analytic, geometric, and arithmetic arguments into one theorem. Its hypotheses deliberately retain compactness, component stability, central characters, and projector denominators, since each prevents a distinct false conclusion.
-
-### 13.1 Complete statement
-
-**Theorem 13.1 (automorphic decomposition of unitary-surface $H^2$).** Let $F$ be totally real, $K/F$ CM, and let $(G,X)$ be a PEL-exact compact unitary modèles étranges datum with exactly two signature-$(1,1)$ real places. Assume:
-
-1. the defining Hermitian plane is anisotropic over $F$;
-2. its finite derived group matches the selected quaternion algebra $D/F$, with finite central kernel, auxiliary torus, and central equation specified;
-3. $C\subset G(\mathbf A_f)$ is neat, and $S_C/E$ is a Galois- and Hecke-stable union of canonical components;
-4. $\Sigma$ contains every ramified group, level, central, and integral place;
-5. all quaternionic packets under consideration lie in the established global Jacquet--Langlands range and have parallel algebraic weight two, so the associated surface representation is weight-two discrete series at the two active real places and has the required trivial types elsewhere.
-
-Then the following hold.
-
-**(a) Complex decomposition.** There is a Hecke-equivariant direct sum
+Multiplication in $M_2(K)$ gives
 
 $$
-H^2_B(S_C,\mathbf C)
-=H^2_{\mathrm{char}}
-\oplus
-\bigoplus_{(\Pi,\chi)\in\mathcal P_C}
-\rho(\Pi,\chi)_f^C\otimes A_C^2(\Pi,\chi).
+1\longrightarrow R_F
+\longrightarrow\widetilde G\xrightarrow{\theta}G
+\longrightarrow1,
+\qquad
+R_F=\operatorname{Res}_{F/\mathbf Q}\mathbf G_m,             \tag{2.8}
 $$
 
-Every noncharacter automorphic multiplicity is one, and
+where $r\in R_F$ maps to $(r,r^{-1})$. The induced-torus kernel has vanishing first cohomology
+on every field point set used here, so $\theta$ is onto on rational, local, finite adelic, and
+full adelic points. Integral lifts exist at almost every finite place. This, rather than (2.3),
+is the cover used for automorphic descent.
 
 $$
-\dim A_C^2(\Pi,\chi)=d_\infty(\Pi,\chi;C).
+\dim L=6d,
+\qquad
+\dim\widetilde G=5d+1,
+\qquad
+\dim R_F=d,
 $$
 
-For the full orientation union this dimension is four with Hodge numbers $(1,2,1)$. The character part is generated by the two invariant degree-two classes and their allowable component-character twists. No boundary or Eisenstein term occurs.
+so (2.8) also recovers $\dim G=4d+1$.
 
-**(b) Hecke and rational structures.** Finitely many operators in $\mathbb T^\Sigma$, together with central and component operators, separate the occurring packets. Each packet has a projector over its Hecke field $L_\Pi$; the sum over its conjugacy orbit is rational. The quaternionic, split Jacquet--Langlands, surface, and available curve realizations have the same good Hecke field and conjugation action.
-
-**(c) Galois realization.** For every $\ell$ and embedding $L_\Pi\hookrightarrow\overline{\mathbf Q}_\ell$, the projector cuts out a continuous $G_E$-representation
+The pulled-back level itself is not compact. The correct finite-level object is
 
 $$
-V_{\Pi,\chi,\ell}\subset
-H^2_{\mathrm{et}}(S_{C,\bar E},L_{\Pi,\ell})
+\overline C_{\widetilde G}
+=\theta^{-1}(C)/R_F(\mathbf A_f)\simeq C,                    \tag{2.9}
 $$
 
-of dimension $\dim\rho_f^C\,d_\infty$. It is paired with its adjoint into $L_{\Pi,\ell}(-2)$. The natural integral lattice need not split if the projector has $\ell$-adic denominators.
+with probability average. Write $e_{\overline C}$ for its averaging idempotent. Neither a
+level projector nor a Hecke integral is taken over the noncompact space
+$\theta^{-1}(C)$.
 
-**(d) Good primes.** At every good PEL place $u\nmid\ell$ outside $\Sigma$, this representation is unramified and pure of weight two. Its Frobenius polynomial lies in $L_\Pi[X]$, is independent of $\ell$, and is computed by projected Lefschetz traces. Reciprocal roots in adjoint packets multiply to $q_u^2$.
+### 2.3 Measures, fixed center, and the real stabilizer
 
-**(e) Bad primes.** At the verified semistable parahoric places, nearby-cycle monodromy, finite inertia, Frobenius, and the conductor restrict to every rational Hecke packet. On the full surface block $N^3=0$; no stronger nilpotence is inferred without a smaller Galois-stable constituent.
+Fix a unitary character
 
-**(f) Curve comparison.** When the same quaternionic packet occurs in Shimura-curve $H^1$, the curve and surface blocks share $L_\Pi$, the good Hecke eigencharacter, algebraic conjugation, and compatible projector formalism. The curve block has weight one and pairing twist $(-1)$; the surface block has weight two and pairing twist $(-2)$. They are not related by an integral Tate twist and are not asserted to be Galois-isomorphic.
+$$
+\Omega:Z_G(\mathbf Q)\backslash Z_G(\mathbf A)\longrightarrow S^1. \tag{2.10}
+$$
 
-### 13.2 Proof
+The Hilbert space $L^2(G,\Omega)$ consists of functions satisfying
 
-Anisotropy implies projectivity and (2.1), so the compact discrete spectrum accounts for all cohomology. The automorphic de Rham complex and harmonic decomposition prove the Matsushima formula (4.4). The rank-one relative Lie algebra calculation (5.2) and Kunneth prove that noncharacter constant-coefficient cohomology occurs exactly in degree two for parallel-weight-two packets at both active places, with signs and Hodge types given by (5.4). The trivial derived representation gives exactly the two invariant degree-two forms. This proves exhaustion and boundary exclusion.
+$$
+f(zg)=\Omega(z)f(g),
+\qquad
+\int_{Z_G(\mathbf A)G(\mathbf Q)\backslash G(\mathbf A)}
+|f(g)|^2\,dg<\infty.                                         \tag{2.11}
+$$
 
-Finite-adelic matching attaches the quaternionic labels. Quaternionic multiplicity one, followed by the finite central-character eigenspace argument of Section 6.2, proves unit multiplicity for every specified lift to $G$. Formula (4.5) then gives the exact level and orientation dimensions. This proves part (a).
+The quotient in the norm is compact because the adjoint datum is anisotropic. Its discrete
+decomposition is
 
-At fixed level only finitely many packets occur. Strong determination through global Jacquet--Langlands separates their good eigensystems once central and component data are retained. Lagrange interpolation (7.2) constructs individual projectors, and summing conjugates constructs rational ones. Algebraicity and conjugation compatibility give the common Hecke field. This proves part (b).
+$$
+L^2(G,\Omega)=\widehat\bigoplus_\rho
+\mathcal M_G(\rho)\widehat\otimes\rho.                       \tag{2.12}
+$$
 
-Betti--étale comparison is functorial for every correspondence. Canonical descent makes the idempotent image Galois-stable; complex comparison gives its dimension, and Poincaré duality gives the twist in (9.3). This proves part (c).
+At finite level one must have
+$\Omega_f|_{C\cap Z_G(\mathbf A_f)}=1$. A central sector on components is formed only after
+including the whole finite routing orbit on which its idempotent acts.
 
-At a good place, the smooth projective integral model and Hecke-equivariant smooth proper base change identify generic and special cohomology. The surface purity theorem passes to every Frobenius-compatible idempotent. The Lefschetz formula applied to the polynomial projector computes all Frobenius power traces; Newton identities prove coefficient and auxiliary-prime independence. This proves part (d).
+Choose a point $h$ with the two active orientations. Let $K_{h,c}^0$ be the connected compact
+stabilizer after removal of the split center, and set
 
-At a semistable place, prime-to-bad Hecke correspondences act on the restriction--Gysin complex and commute with nearby cycles, $N$, finite descent, and Frobenius. Applying the projector gives part (e). Finally, the one-factor archimedean calculation, the common quaternionic Hecke character, and the explicit weight and pairing audit of Chapter 12 prove part (f). $\square$
+$$
+\boxed{K_\infty^\dagger=A_G(\mathbf R)^0K_{h,c}^0.}          \tag{2.13}
+$$
 
-### 13.3 Hypothesis and failure ledger
+Up to finite central overlap, (2.13) contains
 
-| Conclusion | Necessary input | Failure if omitted |
+$$
+\mathbf R_{>0},\qquad (S^1)^d,\qquad
+\operatorname{SO}(2)_{v_1}\times\operatorname{SO}(2)_{v_2},
+\qquad\prod_{v\ne v_1,v_2}\operatorname{SU}(2)_v.           \tag{2.14}
+$$
+
+The positive split factor in (2.14) removes the central tangent direction. For an algebraic
+coefficient representation $V_\xi$, nonzero relative cohomology requires
+
+$$
+\Omega_\infty(a)\xi(a)=1
+\quad(a\in A_G(\mathbf R)^0),                                \tag{2.15}
+$$
+
+and also trivial action of $\Omega_\infty\xi$ on the compact central torus in
+$Z_G(\mathbf R)\cap K_\infty^\dagger$. With constant coefficients, $\Omega_\infty$ must be
+trivial on both pieces. Omitting the positive split center creates a spurious adjacent degree;
+using disconnected orthogonal normalizers identifies orientation lines which the Shimura datum
+keeps distinct.
+
+### 2.4 Compatible pairs, occurrence, and level
+
+Let $\Pi$ be a noncharacter automorphic representation of $D^\times(\mathbf A_F)$ with central
+character $\omega_\Pi$, and let
+
+$$
+\chi:K^\times\backslash\mathbf A_K^\times\longrightarrow\mathbf C^\times
+$$
+
+be a Hecke character. The product $\Pi\boxtimes\chi$ descends through (2.8) exactly when
+
+$$
+\boxed{
+\chi|_{C_F}=\omega_\Pi,
+\qquad
+\chi|_{Z_G(\mathbf A)}=\Omega,}
+\qquad C_F=F^\times\backslash\mathbf A_F^\times.             \tag{2.16}
+$$
+
+For constant surface cohomology its infinity type must additionally satisfy
+
+$$
+\Pi_{v_1}=\Pi_{v_2}=D_2,
+\qquad
+\Pi_v=\mathbf1_{\mathbf H^\times}
+\quad(v\mid\infty,\ v\ne v_1,v_2),                         \tag{2.17}
+$$
+
+with $\chi_\infty$ enforcing the entire stabilizer-center condition following (2.15).
+Compatible pairs are identified only by characters of the actual compact quotient of
+$L/\widetilde G$, namely
+
+$$
+\mathcal C_L=S_L(\mathbf Q)\backslash S_L(\mathbf A),
+$$
+
+Here $S_L(\mathbf Q)$ and $S_L(\mathbf A)$ are the actual point images of $\beta$. The torus
+$S$ is $\mathbf Q$-anisotropic, so this class quotient is compact. No arbitrary character of
+an ambient torus is substituted for a character of $\mathcal C_L$.
+
+At a fixed type, let $Y_{\mathcal T}(\Pi,\chi)$ be the elementary $2$-group of invisible pair
+self-twists, and let $Y_{\mathrm{aut}}(\Pi,\chi)$ be its automorphic subgroup. The latter obeys
+
+$$
+Y_{\mathrm{aut}}(\Pi,\chi)\subseteq\{1,\eta_{K/F}\}.        \tag{2.18}
+$$
+
+Normalized tensor intertwiners $I_y$ linearize the factor set. If $\rho$ is a typewise
+constituent with packet character $\langle\,\cdot\,,\rho\rangle$, its exact occurrence is
+
+$$
+\boxed{
+m_G(\rho;[\Pi,\chi])
+=\frac1{|Y_{\mathrm{aut}}|}
+\sum_{\eta\in Y_{\mathrm{aut}}}
+\varepsilon_{\Pi,\chi}(\eta)
+\overline{\langle\eta,\rho\rangle}
+\in\{0,1\}.}                                                 \tag{2.19}
+$$
+
+Every label satisfying the global sign equation occurs once; a formally possible local label
+which fails it does not occur. If $Y_{\mathcal T,f}$ is the finite-place factor and
+$\lambda_f$ is the finite packet character, then
+
+$$
+e_{\lambda,f}
+=\frac1{|Y_{\mathcal T,f}|}
+\sum_{y\in Y_{\mathcal T,f}}
+\overline{\lambda_f(y)}I_y,
+\qquad
+\rho_f^C\simeq
+e_{\lambda,f}e_{\overline C}(\Pi_f\boxtimes\chi_f).         \tag{2.20}
+$$
+
+Thus automorphic multiplicity, packet size, fixed-vector dimension, and the number of surface
+components remain four different integers.
+
+## 3. Right-convolution Hecke correspondences
+
+### 3.1 The two legs and their variance
+
+For $a\in G(\mathbf A_f)$ put
+
+$$
+C_a=C\cap aCa^{-1}.
+$$
+
+Let $p_1$ be the forgetful map and let $p_2$ be right translation by $a$ followed by forgetting
+level. To make the source leg visible, draw the endospan in the order
+
+$$
+\operatorname{Sh}_C
+\xleftarrow{\ p_2\ }
+\operatorname{Sh}_{C_a}
+\xrightarrow{\ p_1\ }
+\operatorname{Sh}_C.                                        \tag{3.1}
+$$
+
+The Book 198 convention for a span $X\xleftarrow{u}Z\xrightarrow{v}Y$ is $v_*u^*$.
+Consequently the right-double-coset operator is
+
+$$
+\boxed{T(a)=(p_1)_*p_2^*.}                                  \tag{3.2}
+$$
+
+The order in (3.1) is intentional. If $a$ normalizes $C$, then $p_1$ is the identity and
+$p_2=r_a$, so (3.2) is $r_a^*$, the right action $f(g)\mapsto f(ga)$. If
+$CaC=\coprod_i a_iC$ and $\operatorname{vol}(C)=1$, its action on automorphic functions is
+
+$$
+T(a)f(g)=\sum_i f(ga_i).                                     \tag{3.3}
+$$
+
+Swapping the pullback and trace in (3.2) would implement the opposite variance and is not
+done. The finite degree of the trace is already present in (3.2); no averaging by the number
+of right cosets is inserted.
+
+At neat generic level both legs are finite etale. On an integral model they are used only when
+they extend as finite flat lci maps with the orientation required for the surface trace.
+
+### 3.2 Composition, transpose, and adjoint
+
+With the right-convolution convention,
+
+$$
+T(a)T(b)=T(\mathbf1_{CaC}*\mathbf1_{CbC})
+=\sum_c m(a,b;c)T(c),                                       \tag{3.4}
+$$
+
+where the structure constants use the coherent Haar measure. Every operator composition in
+(3.4) exists on cohomology. A single fiber-product carrier represents it geometrically only
+when that carrier is smooth and the middle square is Tor-independent. In the one allowed
+nontransverse replacement, every component must be regular, the excess bundle must be locally
+free of rank at most two, and the proved Euler class must be inserted. An ordered
+noncommutative polynomial is retained when the operators do not commute.
+
+Transposing (3.1) swaps its legs. For constant coefficients,
+
+$$
+T(a)^t=T(a^{-1}),
+\qquad
+\langle T(a)x,y\rangle=\langle x,T(a^{-1})y\rangle.          \tag{3.5}
+$$
+
+The coefficient-system adjoint includes the recorded adjoint of the universal isogeny. The
+coefficient involution must also be specified. If $\iota$ is an involution of the coefficient
+field, then
+
+$$
+(\alpha T(a_1)\cdots T(a_r))^{\dagger,\iota}
+=\iota(\alpha)\,T(a_r^{-1})\cdots T(a_1^{-1}).              \tag{3.6}
+$$
+
+The identity coefficient involution is the default for Poincare duality. Complex conjugation
+is used for the positive analytic Hermitian adjoint, and any nontrivial involution used after
+completion is required to preserve that completion. In every case the anti-involution reverses
+products.
+
+The identity span acts as the identity. Pullback, trace, transpose, and (3.4) preserve
+cohomological degree and Hodge type.
+
+### 3.3 Lifted operators and good Hecke labels
+
+Choose a lift $\widetilde a=(b,z)\in\widetilde G(\mathbf A_f)$ of $a$. On a compatible pair,
+
+$$
+\rho(a)=\Pi(b)\chi(z).                                       \tag{3.7}
+$$
+
+Replacing $(b,z)$ by $(br,zr^{-1})$ multiplies (3.7) by
+$\omega_\Pi(r)\chi(r)^{-1}=1$, so the action is independent of the lift. The lifted double
+coset is integrated over its compact quotient by $R_F(\mathbf A_f)$, never over the full
+inverse image.
+
+$$
+T_{CaC}|_\rho
+=e_{\lambda,f}
+\left(
+\int_{\overline C\widetilde a\overline C}
+\Pi(b_x)\chi(z_x)\,d\overline x
+\right)e_{\lambda,f}.
+$$
+
+Weil quotient measure makes this operator agree with (3.2).
+
+Book 197 supplies global Jacquet--Langlands for the actual arbitrary-signature algebra $D$.
+For every good place $v$ of $F$, write
+
+$$
+P_v(\Pi,X)=1-t_v(\Pi)X+q_vs_v(\Pi)X^2.                      \tag{3.8}
+$$
+
+It is the same raw polynomial for the split transfer. To name a raw operator on the PEL tower,
+one must choose an isolating lifted spherical datum: its $D_v^\times$ coordinate is the
+standard spherical double coset, all other quaternionic coordinates act as the identity on the
+selected spherical lines, and its $K$-idele coordinate completes an actual point of
+$\widetilde G$. If $\gamma_{\widetilde v}=\chi(z)$, the resulting label is
+
+$$
+\boxed{
+P_{\widetilde v}(\rho,X)
+=1-\gamma_{\widetilde v}t_v(\Pi)X
++\gamma_{\widetilde v}^{2}q_vs_v(\Pi)X^2.}                 \tag{3.9}
+$$
+
+The derived spherical algebra by itself knows only the projective Satake ratio. It cannot name
+an arbitrary single-$F$-place raw $\operatorname{GL}_2$ operator inside the common rational
+multiplier group. Formula (3.9) is asserted only for the isolating lift just described.
+
+### 3.4 Components and routed operators
+
+Strong approximation for the simply connected derived group gives the exact finite component
+set
+
+$$
+\Gamma_C
+=T_G(\mathbf Q)^\dagger\backslash
+t_G(G(\mathbf A_f))/t_G(C),                                  \tag{3.10}
+$$
+
+where every term is its actual image and
+$T_G(\mathbf Q)^\dagger=t_G(G(\mathbf Q)_+)$. The multiplier alone is insufficient, and the
+middle term is not enlarged to all of $T_G(\mathbf A_f)$.
+
+For simultaneous component and real-orientation routing use the finite abelian quotient
+
+$$
+\Delta_C^{\mathrm{or}}
+=t_G(G(\mathbf Q))\backslash t_G(G(\mathbf A))
+/t_G(K_\infty^\dagger C),
+\qquad
+\Xi_C=\operatorname{Hom}(\Delta_C^{\mathrm{or}},\mathbf C^\times). \tag{3.11}
+$$
+
+A Hecke span with route $r$ maps the $\mathscr U$-supported cohomology to the
+$\mathscr U r$-supported cohomology. It is an endomorphism only if $\mathscr U r=\mathscr U$;
+otherwise the endomorphism retained on that union is the corner
+
+$$
+e_{\mathscr U}T(a)e_{\mathscr U}.                            \tag{3.12}
+$$
+
+The same statement applies over the field of definition: component reciprocity must stabilize
+$\mathscr U$ before $e_{\mathscr U}$ or its corner is Galois equivariant.
+
+## 4. Fixed-central Matsushima and the real projector
+
+### 4.1 Automorphic cochains on the full union
+
+For an algebraic coefficient representation $V_\xi$, put
+
+$$
+\mathfrak p_\mathbf C
+=\mathfrak g_\mathbf C/\mathfrak k_\mathbf C^\dagger.
+$$
+
+Because $K_\infty^\dagger$ contains $A_G(\mathbf R)^0$, this tangent representation contains
+the two disk tangents and no positive central line. On the full union and in the fixed sector
+$\Omega$, the automorphic cochain complex is
+
+$$
+C^q_{\mathrm{aut}}(C,\Omega,\xi)
+=\operatorname{Hom}_{K_\infty^\dagger}
+\left(
+\bigwedge^q\mathfrak p_\mathbf C,
+\mathcal A(G,\Omega)^C\otimes V_\xi
+\right).                                                       \tag{4.1}
+$$
+
+The differential is the relative Lie algebra differential. The whole stabilizer-center
+condition in Section 2.3 is required before (4.1) models differential forms. For a proper
+union, one first sums the finite central sectors in its $\Xi_C$-orbit and only then applies
+$e_{\mathscr U}$.
+
+### 4.2 The compact Matsushima formula
+
+Compact Hodge theory gives a finite-dimensional harmonic kernel in every degree. Intersecting
+the discrete spectrum (2.12) with that kernel before taking cohomology avoids any interchange
+with an uncontrolled Hilbert direct sum. The result is
+
+$$
+\boxed{
+H_B^q(\operatorname{Sh}^{\mathrm{all}}_C,
+\mathcal V_\xi\otimes\mathbf C)[\Omega]
+\simeq
+\bigoplus_{\substack{\rho\\\omega_\rho=\Omega}}
+\mathcal M_G(\rho)\otimes\rho_f^C\otimes
+H^q(\mathfrak g,K_\infty^\dagger;
+\rho_\infty\otimes V_\xi).}                                \tag{4.2}
+$$
+
+The formula is Hecke equivariant for (3.2). The transpose relation in (3.5) agrees with the
+automorphic adjoint because both use the coherent quotient measures. Formula (4.2) is a
+full-union statement; applying it termwise to one proper component would incorrectly assert
+that support preserves every full-$G$ representation.
+
+### 4.3 The archimedean Clifford calculation
+
+For constant coefficients, the weight-two representation at each active place restricts as
+
+$$
+D_2|_{\operatorname{GL}_2(\mathbf R)^+}=D_2^+\oplus D_2^-.
+$$
+
+Each summand has one relative degree-one line,
+
+$$
+H^q(\mathfrak{gl}_2,
+\mathbf R_{>0}\operatorname{SO}(2);D_2^\epsilon)
+=
+\begin{cases}
+\mathbf C\eta^\epsilon,&q=1,\\
+0,&q\ne1,
+\end{cases}                                                   \tag{4.3}
+$$
+
+where $\eta^+$ has Hodge type $(1,0)$ and $\eta^-$ has type $(0,1)$. Before descent the product
+ascension has four lines
+
+$$
+\mathcal A_\infty^2
+=\bigoplus_{\epsilon_1,\epsilon_2\in\{+,-\}}
+\mathbf C\eta_1^{\epsilon_1}\otimes\eta_2^{\epsilon_2}.     \tag{4.4}
+$$
+
+Put $s_i=\operatorname{sgn}\circ\det$ on
+$D_{v_i}^\times\simeq\operatorname{GL}_2(\mathbf R)$. Let $I_i$ be the normalized
+self-intertwiner $D_2\simeq D_2\otimes s_i$, with $I_i^2=1$ and eigenvalue $\epsilon$ on
+$D_2^\epsilon$. The effective real self-twist group and the actual constituent projector are
+
+$$
+Y_\infty^{\mathrm{eff}}=
+\begin{cases}
+\langle s_1,s_2\rangle\simeq(\mathbf Z/2\mathbf Z)^2,&d>2,\\
+\langle s_1s_2\rangle\simeq\mathbf Z/2\mathbf Z,&d=2,
+\end{cases}                                                   \tag{4.5}
+$$
+
+and
+
+$$
+e_{\lambda,\infty}=
+\begin{cases}
+\dfrac14(1+\lambda_1I_1)(1+\lambda_2I_2),
+&d>2,\\[2mm]
+\dfrac12(1+\lambda I_1I_2),
+&d=2.
+\end{cases}                                                   \tag{4.6}
+$$
+
+For an occurring descended constituent,
+
+$$
+H^q(\mathfrak g,K_\infty^\dagger;\rho_\infty)
+=
+\begin{cases}
+e_{\lambda,\infty}\mathcal A_\infty^2,&q=2,\\
+0,&q\ne2.
+\end{cases}                                                   \tag{4.7}
+$$
+
+The exact ranks and Hodge vectors are
+
+$$
+\begin{array}{c|c|c|c}
+\text{case}&\lambda_\infty&
+\dim e_{\lambda,\infty}\mathcal A_\infty^2&
+(h^{2,0},h^{1,1},h^{0,2})\\ \hline
+d>2 &(+,+)&1&(1,0,0)\\
+d>2 &(+,-)\text{ or }(-,+)&1&(0,1,0)\\
+d>2 &(-,-)&1&(0,0,1)\\
+d=2 &+&2&(1,0,1)\\
+d=2 &-&2&(0,2,0).
+\end{array}                                                    \tag{4.8}
+$$
+
+When $d=2$, negative common multiplier exchanges both active signs simultaneously, so the
+$++/--$ pair and the $+-/-+$ pair cannot be split by a $G(\mathbf R)$-equivariant projector.
+The vector $(1,2,1)$ belongs to the unprojected space (4.4), not to an individual full-$G$
+representation. The operator (4.6) is an analytic Clifford projector; a finite geometric
+projector transports the constituent it identifies but is not obtained by simply adjoining
+(4.6) to the correspondence algebra.
+
+### 4.4 Character cohomology
+
+An automorphic character is trivial on the derived real group. Subject to the same central
+cancellation, its relative cohomology is
+
+$$
+H^q(\mathfrak g,K_\infty^\dagger;\rho_\infty)
+\simeq
+\begin{cases}
+\mathbf C,&q=0,4,\\
+\mathbf C\omega_1\oplus\mathbf C\omega_2,&q=2,\\
+0,&q=1,3,
+\end{cases}                                                   \tag{4.9}
+$$
+
+where the two area lines have Hodge type $(1,1)$. These are discrete character terms, not
+boundary or Eisenstein cohomology. Automorphic characters have multiplicity one, so on the
+full union their exact contribution is
+
+$$
+H_B^q(\operatorname{Sh}^{\mathrm{all}}_C,\mathbf C)_{\mathrm{char}}[\Omega]
+\simeq
+\bigoplus_{\substack{\rho\ \mathrm{character}\\\omega_\rho=\Omega}}
+\rho_f^C\otimes
+H^q(\mathfrak g,K_\infty^\dagger;\rho_\infty).               \tag{4.10}
+$$
+
+On a proper union these characters too must be grouped into $\Xi_C$-orbits before support is
+imposed; the Fourier and stabilizer formulas (5.5)--(5.7) apply to those character orbit sums.
+
+## 5. Exact complex blocks and ranks
+
+### 5.1 Full-union decomposition
+
+Let $\mathscr P(C,\Omega)$ be the set of compatible-pair orbits and complete local packet
+labels which satisfy all of the following:
+
+- the descent and central equations (2.16);
+- the stabilizer-center cancellation of Section 2.3;
+- the real condition (2.17);
+- the global occurrence equation (2.19); and
+- nonvanishing of the fixed-level space (2.20).
+
+Then the noncharacter middle cohomology of the complete union is
+
+$$
+\boxed{
+H_B^2(\operatorname{Sh}^{\mathrm{all}}_C,\mathbf C)_{\mathrm{nch}}[\Omega]
+\simeq
+\bigoplus_{\rho\in\mathscr P(C,\Omega)}
+\mathcal M_G(\rho)\otimes\rho_f^C\otimes
+e_{\lambda(\rho),\infty}\mathcal A_\infty^2.}              \tag{5.1}
+$$
+
+For every displayed summand, $\dim\mathcal M_G(\rho)=1$. Formula (5.1), together with the
+character contribution (4.9)--(4.10), exhausts constant-coefficient $H^2$. There is no boundary term
+because the surface is projective.
+
+### 5.2 Individual ranks and Hodge numbers
+
+Put $n_C(\rho)=\dim_\mathbf C\rho_f^C$. The rank of an individual full-union block is
+
+$$
+r_C(\rho)=
+\begin{cases}
+n_C(\rho),&d>2,\\
+2n_C(\rho),&d=2.
+\end{cases}                                                   \tag{5.2}
+$$
+
+Its Hodge vector is $n_C(\rho)$ times the appropriate row of (4.8). In particular, oldvectors
+scale every Hodge number but do not change automorphic multiplicity. Suppose a splitting field
+$L$ and an individual geometric idempotent $e_\rho$ exist. Let $A_L$ be the split finite Hecke
+image on that factor and choose a simple left $A_L$-module $P_\rho$ modeling $\rho_f^C$. The
+cohomological multiplicity space and evaluation isomorphism are
+
+$$
+\begin{aligned}
+W_{\rho,B}
+&=\operatorname{Hom}_{A_L}
+(P_\rho,e_\rho H_B^2(\operatorname{Sh}^{\mathrm{all}}_C,L)),\\
+P_\rho\otimes_LW_{\rho,B}
+&\xrightarrow{\ \sim\ }
+e_\rho H_B^2(\operatorname{Sh}^{\mathrm{all}}_C,L).
+\end{aligned}                                                  \tag{5.3}
+$$
+
+The space $W_{\rho,B}$ has dimension one for $d>2$ and two for $d=2$, with the Hodge vector in
+(4.8). Formula (5.3) is not formed when finite geometry does not separate the archimedean label;
+in that case the exact block is the sum of all labels carried by the same simple geometric
+factor.
+
+### 5.3 Proper-support orbit blocks
+
+For $\kappa\in\Xi_C$, the operator $M_\kappa f(g)=\kappa(g)f(g)$ carries the full summand for
+$\rho$ to that for $\rho\otimes\kappa$. Define
+
+$$
+\begin{aligned}
+\mathcal W_C^2(\rho)&=
+\mathcal M_G(\rho)\otimes\rho_f^C\otimes
+e_{\lambda(\rho),\infty}\mathcal A_\infty^2,\\
+\mathcal O_C(\rho)&=\{\rho\otimes\kappa:\kappa\in\Xi_C\}/\simeq,\\
+S_C(\rho)&=\{\kappa\in\Xi_C:\rho\otimes\kappa\simeq\rho\},\\
+\mathcal W_C^2(\mathcal O)&=
+\bigoplus_{\rho'\in\mathcal O}\mathcal W_C^2(\rho').
+\end{aligned}                                                  \tag{5.4}
+$$
+
+On the product ascension the finite and real labels route together:
+
+$$
+M_\kappa e_{\lambda(\rho),\infty}
+=e_{\lambda(\rho\otimes\kappa),\infty}M_\kappa.
+$$
+
+For $\mathscr U\subset\Delta_C^{\mathrm{or}}$, Fourier inversion gives the support idempotent
+
+$$
+e_{\mathscr U}
+=\sum_{\kappa\in\Xi_C}
+\left(
+\frac1{|\Delta_C^{\mathrm{or}}|}
+\sum_{\delta\in\mathscr U}\overline{\kappa(\delta)}
+\right)M_\kappa.                                             \tag{5.5}
+$$
+
+It preserves the orbit sum in (5.4), not generally one $\rho$-summand. The exact supported
+block and decomposition are as follows. Here $\mathfrak O_C^{\mathrm{coh}}$ is the finite set
+of $\Xi_C$-orbits of occurring noncharacter cohomological representations across every central
+sector mixed by support:
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal W_{C,\mathscr U}^2(\mathcal O)
+&=e_{\mathscr U}\mathcal W_C^2(\mathcal O),\\
+H_B^2(\operatorname{Sh}_{C,\mathscr U},\mathbf C)_{\mathrm{nch}}
+&\simeq
+\bigoplus_{\mathcal O\in\mathfrak O_C^{\mathrm{coh}}}
+\mathcal W_{C,\mathscr U}^2(\mathcal O).
+\end{aligned}}                                                \tag{5.6}
+$$
+
+The actual multiplication operators of $S_C(\rho)$ act on
+$\mathcal W_C^2(\rho)$. Let $a_{\rho,\theta}^{p,q}$ be the multiplicity of
+$\theta\in\widehat{S_C(\rho)}$ in its $(p,q)$-part, and put
+$a_{\rho,\theta}^2=\sum_{p+q=2}a_{\rho,\theta}^{p,q}$. If
+$\operatorname{ev}_\delta(s)=s(\delta)$, induction from the stabilizer gives the exact formulas
+
+$$
+\boxed{
+\begin{aligned}
+\dim\mathcal W_{C,\mathscr U}^2(\mathcal O)
+&=\sum_{\delta\in\mathscr U}
+a_{\rho,\operatorname{ev}_\delta|_{S_C(\rho)}}^2,\\
+h^{p,2-p}(\mathcal O,\mathscr U)
+&=\sum_{\delta\in\mathscr U}
+a_{\rho,\operatorname{ev}_\delta|_{S_C(\rho)}}^{p,2-p}.
+\end{aligned}}                                                \tag{5.7}
+$$
+
+These are intrinsic ranks. A proper union need not retain a fixed fraction of a full orbit,
+and $e_{\mathscr U}$ is never applied to one summand in order to guess that fraction. For
+$d>2$, a definite real factor forces the common multiplier to be positive. For $d=2$, a
+component character can change the extension across the simultaneous negative component; the
+covariance preceding (5.5) routes that real label together with the finite and central labels.
+
+### 5.4 Exhaustion and multiplicity audit
+
+The factors in (5.1)--(5.7) have distinct roles:
+
+| datum | what it counts |
+|---|---|
+| $m_G(\rho)$ | zero-or-one global automorphic occurrence |
+| $\dim\rho_f^C$ | fixed vectors and oldvectors at finite level |
+| $e_{\lambda,\infty}\mathcal A_\infty^2$ | the one- or two-line real cohomology of one descended constituent |
+| $\mathcal O_C(\rho)$ | representations mixed by component-character translation |
+| $e_{\mathscr U}$ | support on the selected open-and-closed union |
+| coefficient conjugacy | descent from absolute labels to a rational block |
+
+The arbitrary-signature correspondence of Book 197 proves that (2.17) is the actual
+two-active quaternionic type. It is not obtained from a theorem restricted to a totally
+definite algebra. Book 196 proves the descent from that quaternionic type to the full $G$ and
+the exact formulas above; no multiplicity is inferred merely from a common derived group.
+
+## 6. Rational Hecke blocks and degree isolation
+
+### 6.1 The finite geometric image on total cohomology
+
+Set
+
+$$
+H_{B,\mathrm{tot}}
+=\bigoplus_{i=0}^4
+H_B^i(\operatorname{Sh}^{\mathrm{all}}_C,\mathbf Q).          \tag{6.1}
+$$
+
+Let $\mathbb T_C^{\mathrm{tot}}$ be the image on (6.1) of the rational algebra generated by
+finitely many admissible Hecke spans, their transposes, required finite central translations,
+and ground-field component identities. Enlarge this finite family, when necessary, by a finite
+set separating the cohomological modules used in Section 6.2. This image is finite dimensional
+and stable under adjoint. In each degree, combine the Poincare polarization with the Weil
+operator to obtain a positive Hodge Hermitian form. Because every generator has Hodge type
+$(0,0)$, it commutes with the Weil operator, so transpose is also its Hilbert adjoint for this
+positive form after conjugating scalar coefficients. If the Jacobson radical contained
+$x\ne0$, then $xx^*$ would be both
+positive semidefinite and nilpotent, which is impossible. Hence
+
+$$
+\mathbb T_C^{\mathrm{tot}}
+\text{ is a finite-dimensional semisimple }\mathbf Q\text{-algebra}. \tag{6.2}
+$$
+
+Every generator is of Hodge type $(0,0)$. Hence every rational central idempotent cuts a
+rational Hodge substructure in each degree; as a rational sub-Hodge structure of a polarizable
+smooth-projective cohomology group, its image is polarizable.
+
+The proper-union image is the semisimple corner
+
+$$
+\mathbb T_{C,\mathscr U}^{\mathrm{tot}}
+=e_{\mathscr U}\mathbb T_C^{\mathrm{tot}}e_{\mathscr U}.    \tag{6.3}
+$$
+
+The abstract convolution algebra may have a kernel on cohomology; semisimplicity is asserted
+for the finite image in (6.2), not for an infinite formal algebra.
+
+### 6.2 The middle-degree projector
+
+At fixed level only finitely many cohomological finite modules occur. The full $C$-Hecke
+algebra separates distinct representations generated by their $C$-fixed vectors. Book 197
+strong determination separates a noncharacter quaternionic packet from automorphic characters,
+while the central and component operators retain the full lifted data. If two real extension
+labels have the same finite geometric module, they remain grouped; this is precisely the
+geometric equivalence relation rather than a defect in the construction.
+
+Let $\mathscr B$ be a coefficient- and component-stable geometric block which contains the
+chosen compatible-pair label and all labels inseparable from it by
+$\mathbb T_C^{\mathrm{tot}}$. It consists entirely of noncharacter cohomological labels. The
+identity of its simple rational factor, or the sum of the required simple-factor identities,
+is a rational central idempotent $e_{\mathscr B}$. After a splitting field is chosen it has an
+ordered polynomial expression
+
+$$
+e_{\mathscr B}=P_{\mathscr B}(T_1,\ldots,T_s),
+\qquad
+P_{\mathscr B}\in L\langle X_1,\ldots,X_s\rangle.            \tag{6.4}
+$$
+
+On a proper union the corresponding exact idempotent is
+
+$$
+e_{\mathscr U,\mathcal O}
+=e_{\mathscr U}e_{\mathcal O}
+=e_{\mathcal O}e_{\mathscr U},                               \tag{6.5}
+$$
+
+where $e_{\mathcal O}$ is the full component-character orbit idempotent. The commutation in
+(6.5) follows because $e_{\mathcal O}$ is invariant under every $M_\kappa$. In general
+$e_\rho e_{\mathscr U}$ is not an idempotent.
+
+The crucial point is that (6.4) acts on total cohomology. Fixed-central Matsushima and the real
+calculation say that every noncharacter label in $\mathscr B$ contributes only in degree two.
+The character labels in degrees zero and four are separated from $\mathscr B$. Therefore
+
+$$
+\boxed{
+e_{\mathscr B}H_B^i=0\quad(i\ne2),
+\qquad
+e_{\mathscr B}H_{B,\mathrm{tot}}
+=e_{\mathscr B}H_B^2.}                                      \tag{6.6}
+$$
+
+This is total-cohomology degree isolation. Constructing a projector only on $H^2$ and then
+assuming (6.6) would be circular; here (6.6) is proved from the full Matsushima calculation.
+No algebraic Kunneth projector is required.
+
+### 6.3 Coefficient fields and Schur indices
+
+Assume $\Pi$ is in the parallel-weight-two arithmetic normalization and $\chi$ is algebraic.
+For such a compatible pair define
+
+$$
+E_\Pi=\mathbf Q(t_v(\Pi),s_v(\Pi):v\notin\Sigma),
+$$
+
+let $E_\chi$ contain the algebraic values and finite roots of unity of $\chi$, and let
+$E_{\Omega,\Gamma}$ contain the central, component, and support values. Then
+
+$$
+E_0(\Pi,\chi)=E_\Pi E_\chi E_{\Omega,\Gamma}.                \tag{6.7}
+$$
+
+Every actual lifted good eigenvalue in (3.9) lies in (6.7). The signs in the finite and real
+Clifford projectors introduce no further transcendental values. The field $E_0$ controls the
+good commutative eigensystem, but it need not define the full bad-level module.
+
+Let $A$ be a simple rational factor of (6.2). Wedderburn theory writes
+
+$$
+A\simeq M_n(D_A),
+\qquad Z(D_A)=E_A,                                            \tag{6.8}
+$$
+
+where $D_A$ may be a nontrivial central division algebra. After choosing the embedding
+corresponding to an absolute label, $E_A$ is a finite extension of the relevant image of
+$E_0$; on a proper union one first takes the orbit-invariant subfield. A model of an absolutely
+simple module can still require a further field $L$ which splits $D_A$. This is the Schur-index
+obstruction. The identity of $A$ is rational and canonical; a primitive matrix idempotent is
+defined only after choosing an embedding $E_A\hookrightarrow L$ and a splitting.
+
+### 6.4 Absolute labels and rational orbit blocks
+
+Over a common splitting field $L$, let $\operatorname{Lab}(A,L)$ be the complete multiset of
+absolute simple spectral summands in the rational factor, counted with their module
+multiplicities and including coefficient conjugates and, for a proper union, the
+component-character orbit required by (5.6). Then the exact rational rank is
+
+$$
+\dim_\mathbf Q(e_AH_B^2)
+=\dim_L(e_AH_B^2\otimes_\mathbf Q L)
+=\sum_{\tau\in\operatorname{Lab}(A,L)}r_\tau,                \tag{6.9}
+$$
+
+where $r_\tau$ is given by (5.2) on the full union or by (5.7) on proper support. The Hodge
+numbers are the same sum of the corresponding rows. Formula (6.9), rather than a guessed
+multiple by a Hecke-field degree, remains valid in the presence of Schur index or unequal
+component stabilizers. Complex conjugation exchanges $++$ with $--$ and $+-$ with $-+$,
+together with the corresponding coefficient embeddings, so every rational orbit sum has Hodge
+symmetry even though one complex full-$G$ label in the $d>2$ table need not.
+
+If the finite spans distinguish one full-union label, a matrix idempotent $e_\rho$ over $L$
+cuts it out. Otherwise the smallest honest output is the whole simple geometric block. All
+these projectors are finite ordered polynomials in actual spans. The analytic
+$e_{\lambda,\infty}$ tells which Hodge row occurs inside them; it is not an extra algebraic
+factor in (6.4).
+
+## 7. Betti, de Rham, and etale realizations
+
+### 7.1 Admissible surface spans
+
+An admissible span between smooth proper surfaces is a diagram
+
+$$
+X\xleftarrow{u}Z\xrightarrow{v}Y                              \tag{7.1}
+$$
+
+with $Z$ a smooth proper surface and both legs finite flat lci of constant degree, equipped
+with their regular graph orientations. It acts in every realization by
+
+$$
+T_{(u,v)}=v_*u^*.                                             \tag{7.2}
+$$
+
+Finite disjoint unions, characteristic-zero linear combinations, ordered polynomials, and
+transposes are allowed. The operator preserves cohomological degree, is of Hodge type $(0,0)$,
+and has no residual Tate twist. The kernel construction and (7.2) agree exactly: the two
+codimension-two comparison factors cancel. This is the surface comparison interface; a
+curve-only comparison theorem cannot replace it.
+
+At neat generic level, (3.1) is admissible with $(u,v)=(p_2,p_1)$, so (7.2) is exactly
+$(p_1)_*p_2^*$. An open-and-closed component identity is an admissible identity span on a finite
+disjoint union.
+
+### 7.2 Compatible realization spaces
+
+Assume the surface union, component identities, and every span in (6.4) or (6.5) are defined
+over $E_{\mathscr U}$. Let $e$ denote either a full-union block projector or a proper-support
+orbit projector. Put $R_L=E_{\mathscr U}\otimes_\mathbf Q L$. The compatible images are
+
+$$
+\begin{aligned}
+V_{B,e}&=eH_B^2(\operatorname{Sh}^{\mathrm{all}}_C,L),\\
+V_{\mathrm{dR},e}&=
+e\left(
+H_{\mathrm{dR}}^2(\operatorname{Sh}^{\mathrm{all}}_C/E_{\mathscr U})
+\otimes_\mathbf Q L
+\right),\\
+V_{\lambda,e}&=
+eH_{\mathrm{et}}^2
+(\operatorname{Sh}^{\mathrm{all}}_{C,\overline E_{\mathscr U}},L_\lambda).
+\end{aligned}                                                  \tag{7.3}
+$$
+
+The middle line is an $R_L$-module; no unchosen embedding
+$E_{\mathscr U}\hookrightarrow L$ is implicit. After passage to a field factor of $R_L$, its
+rank agrees with the corresponding Betti and etale rank. The Hodge filtration is
+
+$$
+F^2=H^{2,0},
+\qquad
+F^1=H^{2,0}\oplus H^{1,1},
+\qquad
+F^0=H^2,                                                       \tag{7.4}
+$$
+
+with dimensions given by (5.7) or (6.9). Comparison intertwines every span, polynomial,
+transpose, and component identity exactly. Since $e$ is idempotent on total Betti cohomology,
+faithful scalar extension makes it idempotent in de Rham and etale cohomology. Equation (6.6)
+transports as well, so these are genuine degree-two summands.
+
+### 7.3 Galois action and duality
+
+Every defining span is over $E_{\mathscr U}$, hence $V_{\lambda,e}$ is a continuous
+$G_{E_{\mathscr U}}$-representation and all ground-field Hecke operators commute with Galois.
+Betti cohomology itself is not a Galois representation.
+
+Let $e^\dagger$ be formed by transposing spans, reversing products, and using the identity
+coefficient involution, unless a nontrivial involution preserving $L_\lambda$ has explicitly
+been fixed. Poincare duality, or the corresponding sesquilinear pairing in the latter case,
+restricts to a perfect pairing
+
+$$
+V_{\lambda,e}\times V_{\lambda,e^\dagger}
+\longrightarrow L_\lambda(-2),
+\qquad
+V_{\lambda,e}^\vee\simeq V_{\lambda,e^\dagger}(2).           \tag{7.5}
+$$
+
+A self-pairing is asserted only when $e=e^\dagger$ with the required coefficient
+identification. At a good finite field, eigenvalues in adjoint blocks are paired so their
+products are $q^2$. No alternating pairing is inferred merely because a chosen block happens
+to have rank two.
+
+When an individual split finite module $P_\rho$ is geometrically separated, the etale
+multiplicity space
+
+$$
+W_{\rho,\lambda}
+=\operatorname{Hom}_{A_{L_\lambda}}
+(P_{\rho,\lambda},V_{\lambda,e_\rho})                        \tag{7.6}
+$$
+
+inherits Galois action because Galois commutes with the finite Hecke algebra. Its dimension is
+the real rank in (4.8). Before splitting, the invariant object is a module for the opposite
+division algebra in (6.8), not a prematurely chosen vector space.
+
+### 7.4 Integral, fine-level, and coarse-level boundaries
+
+Let
+
+$$
+\Lambda_\lambda
+=\left(H^2_{\mathrm{et}}
+(\operatorname{Sh}^{\mathrm{all}}_{C,\overline E_{\mathscr U}},
+\mathbf Z_\ell)/\mathrm{tors}\right)
+\otimes_{\mathbf Z_\ell}\mathcal O_{L_\lambda}.              \tag{7.7}
+$$
+
+Let $N_e>0$ clear the coefficients of the chosen polynomial expression for $e$. The
+always-defined lattice in the rational block is the saturated intersection
+
+$$
+\Lambda_{\lambda,e}
+=V_{\lambda,e}\cap\Lambda_\lambda.                           \tag{7.8}
+$$
+
+When every defining span is integral at $\lambda$ and $\lambda\nmid N_e$,
+
+$$
+\Lambda_\lambda
+=e\Lambda_\lambda\oplus(1-e)\Lambda_\lambda.                \tag{7.9}
+$$
+
+At a denominator prime, (7.8) remains a Galois- and Hecke-stable lattice but need not be a
+direct summand. A rational projector has no automatic action on torsion. Integral torsion is
+governed by complementary-degree linking, not by a perfect raw self-pairing on $H^2$.
+
+All preceding geometric comparison statements apply directly to smooth proper fine schemes and
+finite disjoint unions. At non-neat level one may pass to a normal fine cover and take
+characteristic-zero invariants under the effective deck group. If the action is free, the
+scheme quotient is again smooth. With stabilizers, the quotient stack can be smooth proper
+while the coarse scheme has quotient singularities; the smooth-surface comparison theorem is
+not silently applied to that coarse scheme. Integral invariant descent additionally requires
+the deck-group order to be a unit and retains projector denominators.
+
+## 8. Good reduction, Lefschetz traces, and purity
+
+### 8.1 The verified good-model range
+
+At a good odd PEL place, all hypotheses of the PEL-exact standard Book 129 surface must be
+present: the center is unramified, the order is maximal and involution-stable, the alternating
+lattice is self-dual, the polarization degree is prime to the residue characteristic, the
+stabilizer is reductive and hyperspecial, the two determinant-and-orientation packets are
+integral, the level is neat away from the place, the chosen component union extends, and the
+prime lies below no recorded exceptional place, including the anisotropic localization. Book
+130 then gives a unique smooth projective fine model
+
+$$
+\mathscr S_C/\mathcal O_{E,u}                                \tag{8.1}
+$$
+
+for the fixed PEL presentation. Prime-to-$p$ Hecke spans extend with finite etale, hence finite
+flat lci, legs. A routed span is a self-correspondence only when its route preserves the
+selected integral union.
+
+Book 130 names the operator attached to its displayed integral legs as
+$(p_2)_*p_1^*$. Only its extension and specialization of the two legs are imported here. For
+constant coefficients the transposed integral span extends as well, and it is this transpose
+which is named by the right-convolution convention of Section 3 as $(p_1)_*p_2^*$.
+
+For $\ell\ne p$, smooth proper specialization is Hecke equivariant. If every span in $e$
+extends over (8.1), then
+
+$$
+V_{\lambda,e}\xrightarrow{\sim}
+eH^2_{\mathrm{et}}(\mathscr S_{C,\overline{\mathbf F}_q},L_\lambda) \tag{8.2}
+$$
+
+is Frobenius compatible, and the generic representation is unramified. There is no assertion
+here for $\ell=p$.
+
+### 8.2 Projected low-dimensional Lefschetz formula
+
+Let $F$ be geometric Frobenius on the special fiber. Because $e$ is defined over
+$\mathbf F_q$, it commutes with $F$. Its cohomological Lefschetz number is always
+
+$$
+L(F^m e)
+=\sum_{i=0}^4(-1)^i
+\operatorname{Tr}(F^m e\mid H^i_{\mathrm{et}}).              \tag{8.3}
+$$
+
+Degree isolation (6.6), transported by (8.2), gives
+
+$$
+\boxed{
+L(F^m e)=\operatorname{Tr}(F^m\mid V_{\lambda,e}).}          \tag{8.4}
+$$
+
+To turn (8.4) into an intersection degree, expand the chosen polynomial for $e$ as a finite
+$L$-linear combination of admissible endospans with smooth carriers. Every composition used in
+that expansion must satisfy the smooth Tor-independent rule of Section 3.2. For each required
+$m$, assume the Frobenius-twisted fixed locus of every carrier is either finite and transverse,
+or proper and covered by the clean regular-excess calculation with every component, including
+vertical ones, present. Then
+
+$$
+\operatorname{Tr}(F^m\mid V_{\lambda,e})=I_m(e)\in L,        \tag{8.5}
+$$
+
+where $I_m(e)$ is the weighted sum of the resulting local lengths or Euler-class degrees.
+Without these hypotheses, (8.3) remains a valid cohomological trace, but it is not renamed an
+unproved geometric intersection degree.
+
+### 8.3 Purity and coefficient-prime independence
+
+The ambient smooth proper surface cohomology is pure of weight two. Hence every eigenvalue
+$\alpha$ of $F$ on $V_{\lambda,e}$ satisfies
+
+$$
+|\iota(\alpha)|=q                                            \tag{8.6}
+$$
+
+for every complex embedding. If $r=\dim_{L_\lambda}V_{\lambda,e}$ and the fixed-locus
+hypotheses of Section 8.2 hold for $1\le m\le r$ at every coefficient prime being compared,
+then the power sums
+
+$$
+s_m=I_m(e)=\sum_{j=1}^r\alpha_j^m
+$$
+
+determine
+
+$$
+Q_{u,e}(X)=\det(1-FX\mid V_{\lambda,e})                      \tag{8.7}
+$$
+
+by Newton identities. Thus $Q_{u,e}(X)\in L[X]$ is independent of $\lambda\ne p$. No
+semisimplicity of Frobenius is needed. If the fixed-locus hypotheses fail, purity and
+unramifiedness remain valid, but this argument does not prove coefficient-prime independence
+of (8.7).
+
+### 8.4 The rank-two Hecke polynomial boundary
+
+The polynomial (3.8) is the rank-two split or quaternionic Satake label. The lifted PEL
+polynomial (3.9) includes the necessary $\chi$-scalar. In contrast, the degree of (8.7) is the
+geometric rank (5.2), (5.7), or (6.9). Therefore
+
+$$
+P_{\widetilde v}(\rho,X)
+\quad\text{is not automatically}\quad
+Q_{u,e}(X).                                                    \tag{8.8}
+$$
+
+Even when $Q_{u,e}$ has degree two, equality requires a proved specialization relation or an
+additional geometric construction; a common Hecke name is not enough. The surface Lefschetz
+argument computes the actual projected Frobenius polynomial through (8.5), not by substituting
+Satake symbols into a polynomial of the wrong rank.
+
+## 9. Semistable boundary and monodromy
+
+### 9.1 The two verified parahoric geometries
+
+Book 131 treats the catalogued rank-two Iwahori cases at the completely split odd places
+selected in its prerequisite ledger. With one bad direction, the local model is étale locally
+
+$$
+xy=\pi                                                        \tag{9.1}
+$$
+
+times a smooth direction; the total space is regular and strictly semistable with two
+components and no triple points. With two bad directions, the raw product of two nodes is not
+strictly semistable. The proved small regularization replaces it by charts of the form
+
+$$
+xyz=\pi,                                                      \tag{9.2}
+$$
+
+with component surfaces, double curves, and triple points. These statements apply only to the
+specified integral PEL tensors, lattice chains, selected component unions, and finite
+regularizations of that construction. They are not a theorem for arbitrary ramified
+parahoric level.
+
+### 9.2 Projected nearby cycles
+
+Let strict semistability be reached after a finite extension. The surface nearby-cycle complex
+has contributions from component surfaces, double curves, and triple points. Its monodromy
+operator satisfies
+
+$$
+N^3=0\quad\text{on }H^2.                                     \tag{9.3}
+$$
+
+Suppose every span in the polynomial $e$ extends as finite flat lci maps of semistable models
+and meets every ordered stratum transversely. If not, require a separately supplied proper
+cohomological correspondence satisfying the clean regular-excess hypotheses on every relevant
+square, with all vertical components included. Under exactly these conditions the spans act on
+nearby cycles and commute with inertia, Frobenius, duality, and $N$. Hence
+
+$$
+eN=Ne,
+\qquad
+N^3=0\quad\text{on }V_{\lambda,e},
+\qquad
+FNF^{-1}=q^{-1}N.                                             \tag{9.4}
+$$
+
+Finite descent remains part of the Weil--Deligne representation; it is not discarded after a
+strict semistable extension is chosen.
+
+### 9.3 Exact rank and conductor formulas
+
+For the one-direction model, let $Z_1$ be the Hasse double curve, let $s_1$ be the rank of the
+restriction map from the endpoint surface cohomology, and let $g_1$ be the rank of the induced
+cup-product Gram form on its image. Then
+
+$$
+N^2=0,
+\qquad
+\operatorname{rank}N=b_1(Z_1)-2s_1+g_1.                     \tag{9.5}
+$$
+
+For several endpoint components, the symbols in (9.5) mean the full signed restriction and
+Gram matrices, not a componentwise sum.
+
+For the two-direction model, let $Z_1,Z_2$ be the two Hasse-curve families, $P$ their
+intersection set, and $B$ their bipartite incidence graph. With the restriction and Gram ranks
+$s_1,s_2,s_{12},g_{12}$ of the proved stratum complex,
+
+$$
+\begin{aligned}
+R_2=\operatorname{rank}N^2
+&=|P|-|\pi_0(Z_1)|-|\pi_0(Z_2)|+c(B),\\
+n_2&=2b_1(Z_1)+2b_1(Z_2)
+-2(s_1+s_2+s_{12})+g_{12},\\
+R_1=\operatorname{rank}N&=n_2+2R_2.
+\end{aligned}                                                  \tag{9.6}
+$$
+
+For a projector satisfying Section 9.2, apply it to the explicit restriction--Gysin and
+incidence matrices. If $e=e^\dagger$, apply it on both paired sides; otherwise use the paired
+$e$- and $e^\dagger$-pieces as in Poincare adjunction. If the resulting projected numerical
+invariants are denoted
+$b_e,r_e,g_e,h_e$, then the exact projected formula is
+
+$$
+n_{2,e}=b_e-2r_e+g_e,
+\qquad
+\operatorname{rank}N^2|_{V_{\lambda,e}}=h_e,
+\qquad
+\operatorname{rank}N|_{V_{\lambda,e}}=n_{2,e}+2h_e.         \tag{9.7}
+$$
+
+At split strict semistable level the Artin conductor is $\operatorname{rank}N$. After finite
+descent it is instead
+
+$$
+a(V_{\lambda,e})
+=\dim V_{\lambda,e}-\dim(\ker N)^{r(I)}+\operatorname{Sw}(r), \tag{9.8}
+$$
+
+and the local Euler factor uses $F$ on $(\ker N)^{r(I)}$. Neither the conductor nor
+$\operatorname{rank}N$ alone determines the Weil--Deligne type.
+
+### 9.4 The boundary of the semistable assertion
+
+Prime-to-bad Hecke correspondences in the verified models preserve the Hasse and exceptional
+strata, so projectors made from those spans meet the functorial input when their component
+routes also extend. No action on the stratum spectral sequence is claimed from the mere fact
+that two generic-fiber legs extend as finite maps. Singular stratum intersections, a non-locally
+free excess quotient, omitted vertical components, deeper lattice chains, wild local models,
+and coarse quotient singularities all lie outside the assertion.
+
+Book 131, like Book 130, writes $(p_2)_*p_1^*$ for the operator attached to its displayed
+integral legs. This book imports the extension, stratum preservation, and nearby-cycle
+functoriality of those legs and uses their transpose. Thus the operator acting here remains
+$(p_1)_*p_2^*$, and no opposite-convolution convention enters the projector.
+
+There is again no $\ell=p$ comparison. The rational projector acts on monodromy even at a
+denominator prime, but its integral direct-summand statement remains limited by Section 7.4.
+
+## 10. Comparison with Shimura-curve $H^1$
+
+### 10.1 The common split Jacquet--Langlands label
+
+Let $D_s=D$ be the two-active surface algebra and let $D_c$ be a quaternion division algebra
+defining a compact Shimura curve and split at exactly one real place. A surface representation
+$\Pi_s$ and a curve representation $\Pi_c$ have a common label only when there is a cuspidal
+representation $\pi$ of $\operatorname{GL}_2(\mathbf A_F)$ such that
+
+$$
+\operatorname{JL}_{D_s}(\Pi_s)=\pi
+=\operatorname{JL}_{D_c}(\Pi_c),                             \tag{10.1}
+$$
+
+and $\pi_v$ is essentially square-integrable at every place at which the relevant quaternion
+algebra is nonsplit. Book 197 proves this arbitrary-signature transfer and its reverse under
+exactly that local-image condition. A comparison through a totally definite or one-active
+inner form uses the common split intermediary (10.1); it is not obtained from a theorem whose
+scope is only the totally definite case.
+
+### 10.2 Rational and Hecke comparison
+
+At every place good for both inner forms, (10.1) gives
+
+$$
+t_v(\Pi_s)=t_v(\pi)=t_v(\Pi_c),
+\qquad
+s_v(\Pi_s)=s_v(\pi)=s_v(\Pi_c).                              \tag{10.2}
+$$
+
+Thus the common quaternionic field is
+
+$$
+E_\pi=\mathbf Q(t_v(\pi),s_v(\pi):v\notin\Sigma).            \tag{10.3}
+$$
+
+Book 132 constructs the curve rational Hecke block and, after a splitting field, factors it as
+
+$$
+e_cH_B^1\simeq P_{\Pi_c}\otimes W_{\Pi_c,B},
+\qquad
+\dim W_{\Pi_c,B}=2,                                          \tag{10.4}
+$$
+
+with Hodge types $(1,0)$ and $(0,1)$. The surface rational block is (6.8)--(6.9). Its good
+eigensystem starts over $E_\pi$; the full coefficient package adjoins $\chi$, fixed-center
+values, component routing, and bad local data, and a field of definition can further require a
+Schur splitting field. Likewise the curve block can have its own central or component
+extension. Equality (10.2) therefore compares the common derived eigensystem; it does not
+identify the two full rational Hecke algebras or their projectors.
+
+For an actual lifted surface operator, (10.2) appears with the scalar
+$\gamma_{\widetilde v}$ in (3.9). A full curve and surface eigencharacter agrees only after
+their respective central lifts have also been matched.
+
+### 10.3 Realization and Galois comparison
+
+Both constructions have the same formal realization pattern:
+
+$$
+\begin{array}{ccccc}
+e_cH_B^1&\longleftrightarrow&e_cH_{\mathrm{dR}}^1
+&\longleftrightarrow&e_cH_{\mathrm{et}}^1,\\[1mm]
+e_sH_B^2&\longleftrightarrow&e_sH_{\mathrm{dR}}^2
+&\longleftrightarrow&e_sH_{\mathrm{et}}^2.
+\end{array}                                                    \tag{10.5}
+$$
+
+Their projectors are algebraic, their etale images are stable under the Galois group of the
+appropriate component field, and their integral lattices are saturated rather than
+automatically split at denominator primes. These are structural comparisons. The varieties
+have different reflex or component fields, and after restriction to a common overfield there
+is still no natural map between the two rows of (10.5).
+
+At good places the curve theorem gives its rank-two Frobenius relation under its own integral
+hypotheses. The surface theorem gives purity and, under Sections 8.2--8.3, its projected
+polynomial (8.7). Equation (10.2) alone does not identify those Frobenius polynomials. At bad
+places the curve graph complex and the surface component--double-curve--triple-point complex
+are different geometric objects, even when their prime-to-bad Hecke labels agree.
+
+### 10.4 Why there is no Tate-twist isomorphism
+
+The curve multiplicity space in (10.4) is pure of weight one and pairs into
+$L_\lambda(-1)$. The surface block is pure of weight two and pairs with its adjoint into
+$L_\lambda(-2)$. A Tate twist changes weight by an even integer. There is no integer $n$ with
+
+$$
+2-2n=1.                                                       \tag{10.6}
+$$
+
+Consequently no Tate twist of the surface block is the curve block. This remains true if a
+surface block happens to have dimension two. A cross-variety Galois isomorphism would require
+an additional algebraic correspondence or a separately proved representation-theoretic
+construction; neither is manufactured here.
+
+## 11. The unitary-surface realization theorem
+
+### 11.1 Complete statement
+
+**Theorem 11.1 (automorphic realization on the auxiliary unitary surface).** Let the datum
+$(F,K,W,D,G)$ satisfy Section 1.2, let $C$ be center-detecting and neat, and let
+$\operatorname{Sh}^{\mathrm{all}}_C$ be the complete component-and-orientation union. Fix a
+unitary central character $\Omega$ satisfying the finite-level and full
+$K_\infty^\dagger$-center cancellation. Let
+$\operatorname{Sh}_{C,\mathscr U}/E_{\mathscr U}$ be a ground-field-defined open-and-closed
+union stable under the routes used below. A fixed-$\Omega$ assertion on this proper union is
+made only if $\mathscr U$ is also stable under the central translations defining that sector;
+otherwise its formulas range over every central sector in the $\Xi_C$-orbit. Then:
+
+1. Every noncharacter cohomological representation of $G$ arises from a compatible pair
+   $(\Pi,\chi)$ satisfying (2.16)--(2.17), modulo the actual compact quotient character group,
+   and a complete Clifford label satisfying (2.19). Every occurring individual representation
+   has multiplicity one. Its finite level is (2.20).
+
+2. In a fixed central sector, the full-union noncharacter decomposition is (5.1). An individual
+   block has rank and Hodge vector (5.2) and (4.8). The full character contribution is
+   (4.9)--(4.10).
+   On a proper union, the canonical decomposition is the component-character orbit formula
+   (5.6), with exact rank and Hodge numbers (5.7).
+
+3. A finite Hecke double coset acts by the right-convolution span
+   $(p_1)_*p_2^*$ of (3.1)--(3.3). Lifted actions are (3.7), and an isolating lifted spherical
+   datum has polynomial (3.9). Transpose, ordered composition, and component corners are
+   (3.4)--(3.6) and (3.12).
+
+4. The adjoint-stable finite geometric image on total cohomology is semisimple. Its rational
+   central idempotents isolate the minimal geometric noncharacter blocks and kill every degree
+   other than two as in (6.6). An individual absolute label needs a splitting field and actual
+   separation by finite spans; a proper union needs $e_{\mathscr U,\mathcal O}$, not
+   $e_\rho e_{\mathscr U}$. For arithmetic $\Pi$ and algebraic $\chi$, coefficient fields and
+   Schur indices are exactly (6.7)--(6.9).
+
+5. Every projector expressed in ground-field admissible spans defines the compatible spaces
+   (7.3), with ranks and Hodge filtration already computed over $\mathbf C$. Its etale image is
+   a continuous $G_{E_{\mathscr U}}$-representation and pairs with its adjoint as in (7.5).
+   Integral splitting holds under (7.9), while saturation (7.8) is the unconditional lattice
+   statement.
+
+6. Under the full good-model and extension hypotheses of Section 8.1 and for $\ell\ne p$, the
+   block is unramified and pure of weight two. If degree isolation and all transverse or clean
+   regular-excess fixed-locus hypotheses hold for the required Frobenius powers, the
+   low-dimensional Lefschetz formula (8.5) and Newton identities give the
+   coefficient-prime-independent polynomial (8.7). The raw rank-two label (3.9) is not
+   automatically that polynomial.
+
+7. In the verified one- and two-direction semistable models, a projector acts on nearby cycles
+   only under Section 9.2. It then retains finite descent, commutes with $N$ and $F$, satisfies
+   (9.4), and has the rank and conductor formulas (9.5)--(9.8). No assertion is extended to an
+   unverified ramified local model.
+
+8. If a curve packet and a surface packet have the common split transfer (10.1), their
+   quaternionic good field and eigenvalues agree as in (10.2)--(10.3). Their rational blocks,
+   projectors, and realization functoriality are comparable as in Sections 10.2--10.3, but
+   their weights and pairing twists differ. They are not asserted to be Galois-isomorphic.
+
+At non-neat level, rational statements may be descended from a normal fine cover through the
+effective finite deck action. Smooth coarse geometry and integral splitting retain all
+qualifications of Section 7.4.
+
+### 11.2 Proof
+
+The group calculation in Section 2.1 identifies the actual PEL group, its center and
+abelianization, and the smaller common-norm subgroup. The point obstruction (2.4) rules out a
+false descent across the finite central isogeny. The induced-torus cover (2.8), the compact
+quotient level (2.9), and the two character equations (2.16) instead give the exact descent of
+$\Pi\boxtimes\chi$. Clifford linearization and Fourier orthogonality on the actual quotient
+give (2.19), hence zero-or-one occurrence and multiplicity one for every occurring $\rho$.
+
+Compactness gives the discrete spectrum. The positive split center and compact center in
+$K_\infty^\dagger$ make the relative complex correctly typed. Compact harmonic theory then
+proves (4.2). The two one-factor calculations (4.3) and Kunneth give the four product lines;
+real Clifford descent applies (4.6) and yields the individual rows (4.8), rather than assigning
+all four lines to one representation. This proves (5.1)--(5.2). Fourier inversion on the exact
+quotient (3.11) proves the orbit-support formula (5.6) and the stabilizer rank formula (5.7).
+
+The leg declaration in (3.1) and the admissible-span rule $v_*u^*$ prove the right-convolution
+formula (3.2). Quotient measures identify it with (3.3). Lift independence follows from
+$\omega_\Pi=\chi|_{C_F}$, and arbitrary-signature Jacquet--Langlands gives (3.8)--(3.9).
+Surface span theory proves comparison, transpose, and the carefully limited composition rules.
+
+The finite total-cohomology image is adjoint stable, so the radical argument proves (6.2).
+Full Hecke-module separation and strong determination isolate the minimal noncharacter
+geometric factor from character cohomology. The complete Matsushima calculation places every
+label in that factor only in degree two, proving (6.6) without a Kunneth projector. Wedderburn
+theory then gives the rational central block, its Schur obstruction, and the exact rank sum
+(6.9).
+
+The comparison theorem for smooth proper surfaces evaluates the same ordered polynomial in
+Betti, de Rham, and etale cohomology. Faithful scalar extension transports idempotence and
+degree vanishing, giving (7.3), while transpose and Poincare duality give (7.5). Its integral
+statement gives saturation and splitting exactly as in Section 7.4.
+
+At a verified good place, the integral surface theorem and smooth proper base change give
+(8.2), unramifiedness, and Frobenius compatibility. Surface purity gives (8.6). The
+low-dimensional Lefschetz calculation identifies projected power traces with geometric degrees
+only under Section 8.2, and Newton identities then prove (8.7). At the verified semistable
+places, the explicit local models and surface nearby cycles give (9.3); functoriality of the
+extending spans gives (9.4), and the restriction--Gysin matrices give (9.5)--(9.8).
+
+Finally, arbitrary-signature Jacquet--Langlands gives the conditional common split label
+(10.1), while the already established curve decomposition gives (10.4). The coefficient-field,
+weight, pairing, and Galois audits in Chapter 10 prove exactly the comparison claimed in part 8
+and no cross-variety isomorphism. $\square$
+
+### 11.3 Hypothesis and failure ledger
+
+| conclusion | exact hypothesis | failure if omitted |
 |---|---|---|
-| ordinary cohomology has no boundary term | anisotropy and projectivity | Eisenstein and boundary cohomology can enter |
-| a genuine Galois action on the selected space | Galois-stable component union | one geometric component may live over a larger field |
-| correct packet label | full central equation and auxiliary character | distinct lifts are merged |
-| automorphic multiplicity one | quaternionic multiplicity one plus central eigenspaces | compactness alone gives only finite multiplicity |
-| exact cohomological dimension | level invariants and orientation factor retained | multiplicity, oldvectors, and Hodge signs are conflated |
-| exhaustion of constant $H^2$ | both active archimedean calculations | higher weights or one-active-factor terms are falsely admitted |
-| rational packet projector | fixed-level finiteness and separating Hecke data | an infinite or nonalgebraic projector is used |
-| integral splitting | denominators prime to $\ell$ and saturation | a rational summand need not split the lattice |
-| unramified pure realization | good PEL integral model and $u\nmid\ell$ | nearby cycles or ramification replace smooth specialization |
-| Frobenius polynomial independent of $\ell$ | algebraic correspondences and projected trace formula | dimension alone gives no compatible polynomial |
-| correct duality | geometric Frobenius and $\mathbf Q_\ell(1)$ conventions | the reciprocal factor becomes $q^{-2}$ instead of $q^2$ |
-| semistable local type | verified local model, regularization, and finite descent | incidence data or inertia can be wrong |
-| comparison with curve cohomology | common quaternionic packet only | equal Hecke eigenvalues are mistaken for equal Galois spaces |
+| correct automorphic group | rational-multiplier $G_W$ of (1.2) | the common-norm subgroup loses the CM quotient and has the wrong dimension and center |
+| central descent | induced-torus cover and both equations (2.16) | a finite-cover obstruction or wrong kernel character is ignored |
+| fixed-central Matsushima | $K_\infty^\dagger$ and full center cancellation | a spurious central degree appears or all equivariant cochains vanish |
+| occurrence multiplicity | complete Clifford label and global sign (2.19) | local packet size is confused with automorphic multiplicity |
+| right Hecke action | translated source leg and $(p_1)_*p_2^*$ | the opposite convolution convention is represented |
+| raw PEL good polynomial | isolating lift and $\chi$-scalar | a derived ratio is mislabeled as a full raw operator |
+| individual real rank | $e_{\lambda,\infty}$ with the $d>2$/$d=2$ split | four product lines are assigned to one full-$G$ representation |
+| proper-union rank | full $\Xi_C$-orbit and stabilizer formula | support is falsely applied to one representation |
+| rational absolute projector | simple geometric factor and a Schur splitting field | a good eigenvalue field is mistaken for a field of definition |
+| degree isolation | projector constructed on total cohomology and full Matsushima | an $H^2$ interpolation is assumed to kill other degrees |
+| compatible realizations | ground-field admissible surface spans | a curve comparison theorem is used outside its dimension |
+| Galois-stable summand | field-defined union and spans | Galois permutes the proposed support or operator |
+| integral direct summand | integral spans and denominator prime avoided | saturation need not split the lattice |
+| good Frobenius trace | smooth proper model, degree isolation, and fixed-locus hypotheses | a total trace is mistaken for a projected middle trace |
+| semistable action | transverse strata or complete clean-excess datum | generic finite legs do not act on nearby-cycle strata |
+| curve comparison | common split transfer with local-image conditions | similar good names are treated as the same global packet |
 
-### 13.4 Conclusion
+## 12. Dependency and readiness audit
 
-The auxiliary unitary surface now performs the task for which it was constructed. Its two noncompact real directions each contribute one rank-one cohomological degree; their product lands in the self-dual middle degree. Compactness removes geometric boundary terms, while the compact Matsushima formula turns every harmonic middle class into either an invariant character class or a parallel-weight-two automorphic packet. The archimedean sign calculation explains the four lines of a full packet and their Hodge numbers $1,2,1$.
+### 12.1 Exact direct dependency row
 
-Finite-adelic matching labels these packets by quaternionic representations. Multiplicity one counts one automorphic occurrence; level invariants and orientation signs account separately for the actual dimension. Good Hecke operators, central data, and component operators isolate each packet by an algebraic correspondence. Their projectors descend the complex decomposition to rational Betti, de Rham, and étale structures, and the canonical model turns the étale block into a continuous Galois representation.
+The exact noncircular direct dependency row is
 
-At good primes, smooth proper base change identifies this representation with special-fiber cohomology. Projected Lefschetz traces determine its Frobenius polynomial, and surface purity places every root on the circle of radius $q$. At semistable primes, the same projector carries the restriction--Gysin complex, finite inertia, and monodromy into the packet. Thus Hecke, Galois, Frobenius, duality, and monodromy act on one and the same degree-two object.
+$$
+\boxed{
+\text{133}\mid 129,\ 130,\ 131,\ 132,\ 196,\ 197,\ 198.}    \tag{12.1}
+$$
 
-The comparison with curves is now exact in its proper sense. Curve $H^1$ and surface $H^2$ share the quaternionic label, Hecke field, eigencharacter, and conjugation law, but their weights, pairing twists, dimensions, and local incidence geometries differ. The surface block is not disguised curve cohomology and admits no half Tate twist. It is the honest weight-two cohomological carrier from which subsequent descent may extract rank-two arithmetic data.
+There are exactly seven direct dependencies.
+
+- Book 129 supplies the PEL-exact standard rational-multiplier unitary datum, its anisotropic
+  compact surface, canonical component fields, actual abelianized component formula, and
+  generic Hecke spans.
+- Book 130 supplies the smooth projective good integral model of this standard surface and the
+  extension and specialization of prime-to-residue-characteristic Hecke spans, with its exact
+  fine, stack, and coarse qualifications.
+- Book 131 supplies only the verified one- and two-direction parahoric surface models at its
+  selected completely split odd places, their strata, nearby cycles, monodromy matrices,
+  conductor formulas, and prime-to-bad Hecke functoriality.
+- Book 132 supplies the already established Shimura-curve $H^1$ rational Hecke block,
+  rank-two multiplicity space, and its Betti, de Rham, and etale realizations. Its transfer
+  restriction is not used for the surface algebra.
+- Book 196 supplies the exact $G_W/H/\widetilde G$ central descent, fixed-center spaces,
+  measures and compact quotient level, Clifford packets, occurrence formula, component
+  character orbit sums, $e_{\lambda,\infty}$, Matsushima decomposition, multiplicities, and
+  Hodge ranks used verbatim in Chapters 2, 4, and 5.
+- Book 197 supplies global Jacquet--Langlands for the actual arbitrary-signature quaternion
+  algebra, its reverse local-image criterion, good raw polynomial, conductor and field
+  compatibility, and the common-split comparison in Chapter 10.
+- Book 198 supplies comparison for smooth proper surfaces and admissible finite-flat lci spans,
+  ordered composition, transpose, total-degree projectors, duality, integral denominators,
+  low-dimensional Lefschetz traces, purity, good specialization, and the exact semistable
+  functoriality boundary.
+
+Books 94 and 27 are not direct dependencies. Book 94 is not used to transfer the two-active
+algebra; Book 197 supplies that theorem. Book 27 is not used as a surface comparison theorem;
+Book 198 uses it internally only on actual curves in its Lefschetz-pencil proof. Books 196,
+197, and 198 are explicitly designated spine inputs. Book 196 proves that it does not depend on
+Book 133, Book 197 excludes Books 133 and 196 from its inputs, and Book 198 has no dependence on
+this decomposition, so (12.1) is noncircular.
+
+### 12.2 Imported-interface audit
+
+| input | exact interface consumed here | stronger claim not imported |
+|---|---|---|
+| Book 129 | standard surface, $G_W$, components, canonical fields, generic spans | no automorphic decomposition or central multiplicity |
+| Book 130 | good fine model and extending prime-to-$p$ spans | no smooth coarse quotient with stabilizers and no $\ell=p$ comparison |
+| Book 131 | two catalogued semistable geometries at its selected completely split odd places and their explicit matrices | no arbitrary parahoric or wild local-model theorem |
+| Book 132 | curve $H^1$ block and rank-two multiplicity realization | no surface comparison and no automatic cross-variety Galois map |
+| Book 196 | exact full-group block handed off after central, real, and component projection | no permission to replace a proper orbit by one $\rho$ or four real lines |
+| Book 197 | arbitrary-signature representation-theoretic Jacquet--Langlands | no central ascension to $G$ and no use of its unresolved enhanced wild-parameter statement |
+| Book 198 | functorial surface realizations for already constructed admissible spans | no spectral projector, no arbitrary singular cycle, and no automatic Frobenius polynomial |
+
+### 12.3 Symbol, action, and mechanics audit
+
+- $G$ always means the full rational-multiplier PEL group; $J=\operatorname{Res}D^\times$,
+  $H$ is the common-norm subgroup, and $\widetilde G$ is the induced-torus cover.
+- $K$ denotes the CM field and never the real stabilizer; the latter is
+  $K_\infty^\dagger$. The finite level is $C$.
+- $\Omega$ is a fixed central character; $\chi$ is the auxiliary CM Hecke character; $\Pi$ is
+  quaternionic; $\rho$ is a descended full-$G$ representation.
+- The Hecke span is displayed with $p_2$ as source leg and $p_1$ as target leg, and every use is
+  $(p_1)_*p_2^*$. Its transpose is inversion and its anti-involution reverses products.
+- The coefficient involution in the adjoint is the identity by default; complex conjugation is
+  used only for the positive analytic Hermitian adjoint, and a nontrivial completed involution
+  must preserve the chosen completion.
+- $e_{\lambda,f}$ and $e_{\lambda,\infty}$ are distinct Clifford projectors;
+  $e_{\mathscr U}$ is support; $e_{\mathcal O}$ is a component-orbit spectral projector; and
+  $e_A$ is a rational central Hecke-factor idempotent.
+- Every proper-support formula uses an orbit sum before $e_{\mathscr U}$. Every realization
+  projector is a polynomial in admissible finite spans and acts on total cohomology before
+  degree two is selected.
+- Geometric Frobenius, the twist $L_\lambda(1)$, pairing target $L_\lambda(-2)$, purity radius
+  $q$, and the relation $FNF^{-1}=q^{-1}N$ use one convention throughout.
+- All displayed references point to existing numbered equations or sections. The contents links
+  match the chapter and section headings. Mathematics uses dollar delimiters, and every result
+  belongs to the main theorem sequence.
+
+### 12.4 Readiness verdict
+
+The catalog promise is met: the relevant two-active quaternionic packets are identified in the
+actual full PEL group, their exact middle-degree complex blocks and Hodge ranks are computed,
+right-convolution Hecke spans isolate rational total-cohomology blocks, surface comparison
+transports those blocks to de Rham and Galois realizations, and low-dimensional Lefschetz,
+purity, good reduction, semistable monodromy, and curve comparison are stated exactly at their
+proved boundaries.
+
+The repair audit has seven direct dependencies, zero direct uses of Books 94 or 27, one Hecke
+variance convention, one fixed real stabilizer containing the positive split center, and no
+unprojected four-line assignment to an individual representation.
+
+The word ``ready'' is relative to the dependency row (12.1). In particular, the good-model and
+good-specialization conclusions in part 6 of Theorem 11.1 remain contingent on the current Book
+130 theorem, while the semistable models, stratum matrices, and rank formulas in part 7 remain
+contingent on the current Book 131 theorem and, through its endpoint models, on Book 130. This
+book neither reproves nor strengthens either of those geometric inputs.
+
+$$
+\boxed{\text{READY}}                                         \tag{12.2}
+$$
