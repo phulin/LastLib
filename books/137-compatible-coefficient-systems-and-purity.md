@@ -8,7 +8,7 @@
    - [What the preceding constructions provide](#13-what-the-preceding-constructions-provide)
    - [The logical route](#14-the-logical-route)
 2. [Coefficient fields, embeddings, and places](#2-coefficient-fields-embeddings-and-places)
-   - [The Hecke field and a field of realization](#21-the-hecke-field-and-a-field-of-realization)
+   - [The good-polynomial field, packet center, and realization field](#21-the-good-polynomial-field-packet-center-and-realization-field)
    - [Embeddings into local fields](#22-embeddings-into-local-fields)
    - [Conjugate packets](#23-conjugate-packets)
    - [Changing or enlarging the coefficient field](#24-changing-or-enlarging-the-coefficient-field)
@@ -18,7 +18,7 @@
    - [Strictly compatible systems](#33-strictly-compatible-systems)
    - [Why the distinction matters](#34-why-the-distinction-matters)
 4. [Constructing the family from a weight-two packet](#4-constructing-the-family-from-a-weight-two-packet)
-   - [The family at coefficient places](#41-the-family-at-coefficient-places)
+   - [The eligible curve carrier and family at coefficient places](#41-the-eligible-curve-carrier-and-family-at-coefficient-places)
    - [Continuity and semisimplicity](#42-continuity-and-semisimplicity)
    - [The good-place polynomial](#43-the-good-place-polynomial)
    - [Weak compatibility theorem](#44-weak-compatibility-theorem)
@@ -56,16 +56,16 @@
     - [Saturated cohomological lattices](#112-saturated-cohomological-lattices)
     - [Congruence and projector denominators](#113-congruence-and-projector-denominators)
     - [What rational compatibility does not provide](#114-what-rational-compatibility-does-not-provide)
-13. [The complete compatible-system theorem](#13-the-complete-compatible-system-theorem)
-    - [Statement](#131-statement)
-    - [Proof](#132-proof)
-    - [Variants and edge cases](#133-variants-and-edge-cases)
-    - [Dependency and hypothesis ledger](#134-dependency-and-hypothesis-ledger)
-14. [The arithmetic package](#14-the-arithmetic-package)
-    - [A worked synthesis](#141-a-worked-synthesis)
-    - [A normalization audit](#142-a-normalization-audit)
-    - [What has and has not been proved](#143-what-has-and-has-not-been-proved)
-    - [Conclusion](#144-conclusion)
+12. [The complete compatible-system theorem](#12-the-complete-compatible-system-theorem)
+    - [Statement](#121-statement)
+    - [Proof](#122-proof)
+    - [Variants and edge cases](#123-variants-and-edge-cases)
+    - [Dependency and hypothesis ledger](#124-dependency-and-hypothesis-ledger)
+13. [The arithmetic package](#13-the-arithmetic-package)
+    - [A worked synthesis](#131-a-worked-synthesis)
+    - [A normalization audit](#132-a-normalization-audit)
+    - [What has and has not been proved](#133-what-has-and-has-not-been-proved)
+    - [Conclusion](#134-conclusion)
 
 ## 1. One arithmetic object seen at many coefficient places
 
@@ -83,7 +83,9 @@ Here $q_v$ is the residue cardinality, while $t_v$ and $s_v$ lie in one number f
 
 At a bad place, a characteristic polynomial is not enough. Inertia can be finite, monodromy can be nonzero, and Frobenius acts on inertia-isotypic pieces. The common datum must be a Weil--Deligne representation defined over a number field. Requiring every allowed coefficient realization to be obtained from this one local datum is **strict compatibility**. It remembers exactly what weak compatibility forgets.
 
-The purpose of this book is to assemble the representations attached to all coefficient conjugates of a weight-two packet into such a system. We prove independence from the chosen algebraic embedding, from harmless enlargements of the coefficient field, and from the scalar used to normalize a polarization. We prove purity of weight one and independence of conductors. At every finite place away from the varying coefficient residue characteristic, we prove strict compatibility in the good, special, finite-type, and tame dihedral cases for which the geometric local comparison has already been established.
+The purpose of this book is to assemble the representations attached to all coefficient conjugates of a weight-two packet into one weakly compatible system. We prove independence from the chosen algebraic embedding, from harmless enlargements of the coefficient field, from the scalar used to normalize a polarization, and, for semisimple members, from the eligible curve carrier. We prove good-place purity of weight one.
+
+At bad places there are two different outputs. In the split one-step Iwahori special range, the preceding semistable-curve theorem actually constructs the graph line, nonzero monodromy, and raw unnormalized $U_v$ return scalar. By contrast, the tame principal, scalar-special after descent, and tame dihedral statements are recognition criteria: they identify a parameter only after the type lines, monodromy branch, and every Frobenius return map have been supplied. Passing any raw parameter to the globally semisimplified family requires the local-preservation identity below. The preceding local-comparison book proves that identity at a coefficient place whose stable lattice has absolutely irreducible residual reduction; it does not prove it simultaneously at every coefficient place.
 
 ### 1.2 Standing fields and conventions
 
@@ -93,7 +95,7 @@ $$
 t_v=t_v(\Pi),\qquad s_v=s_v(\Pi).
 $$
 
-Let $E_0$ be the number field generated by the $t_v$, the $s_v$, and the finite central and component values. We call it the **Hecke field**. When a simple Hecke factor has a Schur obstruction, choose once and for all a finite extension $E/E_0$ which splits it and contains all finite type data used below. The system is realized over $E$; its polynomials and determinant descend to $E_0$. Enlarging $E$ later changes only scalars.
+Let $E_0$ be the number field generated by the $t_v$, the $s_v$, and the finite central and component values. It is the **good-polynomial field**. Let $Z_\Pi$ be the center of the selected simple factor of the full finite Hecke image. One can have $E_0\subsetneq Z_\Pi$ when the good operators determine only a near-equivalence block. Choose once and for all a finite extension $E/E_0$ which contains every selected embedding of $Z_\Pi$, splits the resulting central simple factors, and contains all tame type data used below. The system is realized over $E$; its good polynomials and determinant descend to $E_0$. Enlarging $E$ later changes only scalars.
 
 For a finite place $\lambda$ of $E$, write $E_\lambda$ for the completion, $\mathcal O_\lambda$ for its valuation ring, $k_\lambda$ for its residue field, and $\ell(\lambda)$ for its residue characteristic. A finite place $v$ of $F$ has residue characteristic $p(v)$ and residue cardinality $q_v$.
 
@@ -119,23 +121,32 @@ Four established inputs meet here.
 
 First, the algebraic packet theory gives the number field $E_0$, algebraic-integral good Hecke values, all coefficient conjugates, and saturated eigenlattices. It also distinguishes the field of rationality from a field which splits the full simple Hecke algebra.
 
-Second, cohomological extraction gives, for every $\lambda$, a continuous semisimple rank-two representation
+Second, cohomological extraction from a compact Shimura curve gives, for every $\lambda$, a continuous raw rank-two representation $\widetilde\rho_\lambda$ on the multiplicity space and its canonical global semisimplification
 
 $$
-\rho_\lambda:G_F\longrightarrow\operatorname{GL}_2(E_\lambda) \tag{1.4}
+\rho_\lambda=\widetilde\rho_\lambda^{\mathrm{ss}}:
+G_F\longrightarrow\operatorname{GL}_2(E_\lambda). \tag{1.4}
 $$
 
-from a compact Shimura curve. Its determinant is
+Their common determinant is
 
 $$
-\det\rho_\lambda=\chi_\lambda^{-1}\eta, \tag{1.5}
+\det\rho_\lambda=\chi_\lambda^{-1}\eta_\lambda, \tag{1.5}
 $$
 
 where $\eta$ is a finite central-component character with values in $E_0^\times$. At every place satisfying the full good-model hypotheses and with $v\nmid\ell(\lambda)$, the representation is unramified and has polynomial (1.1).
 
 Third, the low-dimensional weight theorem proves that smooth proper curve $H^1$ is pure of weight one. Purity passes to correspondence summands and hence to the rank-two multiplicity space.
 
-Fourth, the local comparison theorem identifies the full Frobenius-semisimple Weil--Deligne parameter in the verified good, special, finite descent, and tame dihedral cases. It also proves equality of the corresponding Euler factors, conductors, and local constants.
+Fourth, the local comparison argument identifies the full Frobenius-semisimple Weil--Deligne parameter of the raw multiplicity representation at good places and at the verified split one-step Iwahori special places. It also gives recognition theorems for tame principal, scalar-special, and tame dihedral parameters when the complete descent and return-map data are separately present. Global Galois semisimplification need not preserve local monodromy or conductor. Thus strict compatibility of $\rho_\lambda$ at a bad place requires the identity
+
+$$
+\operatorname{WD}_v(\rho_\lambda)^{\mathrm{F\!-\!ss}}
+\simeq
+\operatorname{WD}_v(\widetilde\rho_\lambda)^{\mathrm{F\!-\!ss}}. \tag{1.6}
+$$
+
+We call (1.6) the **local-preservation condition** at $(v,\lambda)$; it is exactly $(\mathrm R_u)$ in the preceding local-comparison book, after matching the local place. It follows if the raw global representation is already semisimple. More concretely, if a stable lattice in the two-dimensional member has absolutely irreducible residual reduction, then the characteristic-zero member is absolutely irreducible, the raw representation is already irreducible, and (1.6) holds at every $v\nmid\ell(\lambda)$. This closes the passage for the distinguished residual-irreducible FLT member. It is a place-by-place argument and supplies no uniform assertion for all $\lambda$.
 
 These inputs do not yet constitute a compatible-system theorem. We must organize coefficient embeddings, show that all local data have a common algebraic model, and separate rational compatibility from integral choices.
 
@@ -143,30 +154,30 @@ These inputs do not yet constitute a compatible-system theorem. We must organize
 
 The construction follows a strict order.
 
-1. Fix the Hecke field and a common field of realization.
+1. Fix the good-polynomial field, the full packet centers, and a common field of realization.
 2. Index representations by finite places of that field, not by unnamed embeddings into algebraic closures.
 3. Prove weak compatibility from the common good Hecke polynomial.
 4. Identify the determinant and show that changing a polarization does not change it.
 5. Deduce good-place purity from the geometric carrier.
-6. Package every verified bad local parameter over the common number field and deduce strict compatibility.
-7. Read conductors, local factors, and monodromy purity from those common parameters.
+6. Construct the split-Iwahori special raw parameter in the proved geometric range, and keep the other tame rows explicitly at the level of recognition criteria.
+7. Deduce strict compatibility, conductors, and local factors for the semisimple family only where (1.6) is known; retain the separate weight normalization needed for bad-place purity.
 8. Treat stable lattices only after the rational family is complete.
 
 The order prevents three circular arguments. Purity is not inferred from reciprocal roots alone. A quadratic annihilator is not called a characteristic polynomial before the determinant is known. Equality of conductor is not used as a substitute for equality of Weil--Deligne parameters.
 
 ## 2. Coefficient fields, embeddings, and places
 
-### 2.1 The Hecke field and a field of realization
+### 2.1 The good-polynomial field, packet center, and realization field
 
-The distinction between $E_0$ and $E$ solves two different descent problems. The coefficients of (1.1) naturally belong to $E_0$. The rank-two multiplicity space can require $E$ because a simple factor of the finite Hecke algebra may be a nonsplit central simple algebra over its center.
+There are three coefficient layers. The coefficients of (1.1) naturally belong to $E_0$. The full separating Hecke block has center $Z_\Pi$, which can be larger. Finally, the rank-two multiplicity space can require $E$ because the simple factor over $Z_\Pi$ may be a nonsplit central simple algebra. Thus good-polynomial rationality, selection of a center embedding, and splitting of a Schur obstruction are distinct operations.
 
-**Proposition 2.1 (finite common field).** There is a finite extension $E/E_0$ over which every simple packet factor and every finite inertial type in the stated local range splits. The field $E$ may be chosen normal over $\mathbf Q$, so every embedding of $E_0$ extends to an automorphism of $E$ and all coefficient conjugates occur inside it.
+**Proposition 2.1 (finite common field).** There is a finite extension $E/E_0$ containing the relevant conjugates of every packet center, splitting every selected simple packet factor, and realizing every tame inertial type in the stated local range. The field $E$ may be chosen normal over $\mathbf Q$, so every embedding of $E_0$ extends to an automorphism of $E$ and all coefficient conjugates occur inside it.
 
 **Proof strategy.** Each obstruction is finite-dimensional algebraic data, so each is killed by a finite extension; a compositum handles all of them simultaneously.
 
-**Proof.** A finite-dimensional central simple algebra has a finite splitting field. A finite inertial group has finitely many matrix entries in algebraic closures, and adjoining them gives a finite field. A tame inducing character used at one of the finitely many ramified places has finite-degree algebraic values. There are only finitely many bad places, so the compositum of these fields is finite over $E_0$. Taking its normal closure over $\mathbf Q$ gives the last assertion, and the extension theorem for embeddings extends every embedding of $E_0$ to an automorphism of that normal closure. $\square$
+**Proof.** Each packet center is finite over $E_0$, and each central simple factor over that center has a finite splitting field. A finite inertial group has finitely many matrix entries in algebraic closures, and adjoining them gives a finite field. A tame inducing character used at one of the finitely many ramified places has finite-degree algebraic values. There are only finitely many bad places, so the compositum of these fields is finite over $E_0$. Taking its normal closure over $\mathbf Q$ gives the last assertion, and the extension theorem for embeddings extends every embedding of $E_0$ to an automorphism of that normal closure. $\square$
 
-The word “common” does not mean minimal. A larger field may be convenient, and the system will be unchanged up to scalar extension. The genuinely intrinsic coefficient field for the good polynomials remains $E_0$.
+The word “common” does not mean minimal. A larger field may be convenient, and the system will be unchanged up to scalar extension. The genuinely intrinsic coefficient field for the displayed good polynomials remains $E_0$; this does not assert that the full packet block has center $E_0$.
 
 ### 2.2 Embeddings into local fields
 
@@ -193,9 +204,15 @@ $$
 =j\bigl(\det(X-g\mid V_\lambda)\bigr). \tag{2.2}
 $$
 
-Kernels, images, ranks, and semisimplification commute with this scalar extension.
+Kernels, images, and ranks commute with this scalar extension. For semisimplification, the precise assertion is
 
-**Proof.** Choose a basis. The matrix after scalar extension is obtained by applying $j$ to every entry, so its determinant polynomial is obtained by applying $j$ to every coefficient. Flatness of field extension preserves exact sequences, hence kernels, images, and ranks. A composition series extends to a composition series after a finite splitting extension, giving the assertion about semisimplification. $\square$
+$$
+\bigl(V_\lambda^{\mathrm{ss}}\otimes_{E_\lambda,j}\Omega\bigr)^{\mathrm{ss}}
+\simeq
+\bigl(V_\lambda\otimes_{E_\lambda,j}\Omega\bigr)^{\mathrm{ss}}. \tag{2.2a}
+$$
+
+**Proof.** Choose a basis. The matrix after scalar extension is obtained by applying $j$ to every entry, so its determinant polynomial is obtained by applying $j$ to every coefficient. Flatness of field extension preserves exact sequences, hence kernels, images, and ranks. After passing to a finite splitting extension, scalar-extended Jordan--Holder factors may split further, but both sides of (2.2a) have the same resulting simple factors with the same multiplicities. $\square$
 
 ### 2.3 Conjugate packets
 
@@ -216,7 +233,7 @@ $$
 
 Ignoring $s_v$ or $\eta$ would allow equal traces with different determinants. Raw algebraic normalization is therefore essential.
 
-**Proposition 2.3 (conjugation of extracted data).** Suppose the full packet block and its multiplicity construction are defined over their algebraic Hecke data in $E_0$ and split over a field $E$ normal over $\mathbf Q$. For every $\sigma\in\operatorname{Aut}(E/\mathbf Q)$ and every finite place $\lambda$ of $E$, scalar conjugation carries the representation attached to the $\sigma$-conjugate block at $\lambda$ to the representation attached to the original block at $\sigma^{-1}\lambda$. Its determinant and every verified local parameter are obtained by applying $\sigma$ to their algebraic coefficients.
+**Proposition 2.3 (conjugation of extracted data).** Suppose one rational conjugation-orbit packet block and its multiplicity construction are defined over $\mathbf Q$, and suppose $E$ is normal over $\mathbf Q$, contains the conjugate packet centers, and splits their selected factors. For every $\sigma\in\operatorname{Aut}(E/\mathbf Q)$ and every finite place $\lambda$ of $E$, scalar conjugation carries both the raw representation and its semisimplification attached to the $\sigma$-conjugate factor at $\lambda$ to the corresponding objects for the original factor at $\sigma^{-1}\lambda$. Their determinant and every verified raw local parameter are obtained by applying $\sigma$ to their algebraic coefficients. The same assertion for a semisimple local parameter requires (1.6).
 
 **Proof.** The packet idempotents, simple modules, evaluation maps, pairings, and local type projectors are all defined by algebraic correspondences and finite-dimensional algebra. Applying $\sigma$ to their coefficients carries each defining identity to the corresponding identity for the conjugate block. The Hom multiplicity construction commutes with field automorphisms. The determinant target becomes $E_\lambda(-1)\otimes\eta^\sigma$, and the local Weil--Deligne matrices are conjugated coefficientwise. $\square$
 
@@ -319,7 +336,9 @@ There is also an integral distinction. Two rationally isomorphic local represent
 
 ## 4. Constructing the family from a weight-two packet
 
-### 4.1 The family at coefficient places
+### 4.1 The eligible curve carrier and family at coefficient places
+
+The construction begins only after a curve packet exists. There is an unconditional source in the selected range. Let $F$ be totally real of even degree, fix an active real place, and let $\pi$ be a cuspidal full-group parallel-weight-two representation. Call a finite place **eligible** when its local factor is selected special or selected depth-zero or tame positive-depth dihedral in the proved local Jacquet--Langlands range. If $W$ is an odd nonempty set of eligible places, the compact one-split inverse theorem constructs the packet $\Pi_B$ on the quaternion algebra ramified at every inactive real place and exactly at $W$. The compact-curve decomposition and cohomological extraction theorems then supply the rational packet block used below. If no eligible place exists, this route constructs no curve carrier. A principal-series place, a primitive wild place, or an excluded dyadic place is not made eligible by the need for a carrier.
 
 Fix the field $E$ of Section 2.1. For each finite place $\lambda$ of $E$, choose the cohomological realization corresponding to the embedding $E\hookrightarrow E_\lambda$. In the curve case let $A_\lambda$ be the split finite Hecke block, $P_{\Pi,\lambda}$ its simple finite module, and $H_{\Pi,\lambda}$ the packet part of $H^1$. Define
 
@@ -336,27 +355,35 @@ P_{\Pi,\lambda}\otimes_{E_\lambda}W_{\Pi,\lambda}
 \xrightarrow{\sim}H_{\Pi,\lambda}. \tag{4.2}
 $$
 
-The multiplicity theorem gives $\dim W_{\Pi,\lambda}=2$. Galois commutes with the Hecke algebra, hence acts on the Hom factor. Put
+The multiplicity theorem gives $\dim W_{\Pi,\lambda}=2$. Galois commutes with the Hecke algebra, hence acts on the Hom factor. Write $\widetilde\rho_\lambda$ for this raw action and put
 
 $$
-\rho_\lambda=igl(W_{\Pi,\lambda}\bigr)^{\mathrm{ss}}. \tag{4.3}
+\rho_\lambda=\widetilde\rho_\lambda^{\mathrm{ss}}. \tag{4.3}
 $$
 
 At old level the finite module $P_{\Pi,\lambda}$ may have dimension greater than one. Formula (4.1) still extracts rank two. Choosing a single oldvector would not be canonical and is not part of the construction.
 
 ### 4.2 Continuity and semisimplicity
 
-The space (4.1) is a closed subspace of a finite product of copies of cohomology: $A_\lambda$-linearity is expressed by finitely many closed linear equations. Therefore its Galois action is continuous. A Jordan--Holder semisimplification remains continuous and preserves characteristic polynomials, traces, determinants, inertia semisimplification, and the associated Frobenius-semisimple Weil--Deligne object.
+The space (4.1) is a closed subspace of a finite product of copies of cohomology: $A_\lambda$-linearity is expressed by finitely many closed linear equations. Therefore its Galois action is continuous. A Jordan--Holder semisimplification remains continuous and preserves characteristic polynomials, traces, and determinants of every global Galois element.
 
-**Lemma 4.1.** The isomorphism class of (4.3) is independent of a composition series and commutes with finite extension of $E_\lambda$.
+It does **not** in general preserve the local Weil--Deligne pair. A nonsplit global extension can restrict to the unipotent extension whose logarithm is $N$; global semisimplification can replace it by a direct sum and make $N$ vanish. It can therefore change the Artin conductor. This is why (1.6) is a separate hypothesis.
 
-**Proof.** Jordan--Holder gives the same multiset of simple factors for every composition series. Their direct sum therefore has a unique isomorphism class. Field extension is flat; after passing to a splitting field it extends the same simple factors with their multiplicities. $\square$
+**Lemma 4.1.** The isomorphism class of (4.3) is independent of a composition series. If $K/E_\lambda$ is finite, then
 
-This semisimplicity is a definition of the extracted object, not a theorem that every cohomological extension splits. That distinction matters integrally and at the coefficient prime.
+$$
+\bigl(\rho_\lambda\otimes_{E_\lambda}K\bigr)^{\mathrm{ss}}
+\simeq
+\bigl(\widetilde\rho_\lambda\otimes_{E_\lambda}K\bigr)^{\mathrm{ss}}. \tag{4.3a}
+$$
+
+**Proof.** Jordan--Holder gives the same multiset of simple factors for every composition series. Their direct sum therefore has a unique isomorphism class. After scalar extension some factors may split, but applying Jordan--Holder again to both sides gives the same simple factors with the same multiplicities, proving (4.3a). $\square$
+
+This semisimplicity is a definition of the member of the weak system, not a theorem that every cohomological extension splits. The distinction matters at bad places as well as integrally and at the coefficient prime.
 
 ### 4.3 The good-place polynomial
 
-Let $v\notin S$, $v\nmid\ell(\lambda)$, and suppose first that the place of the reflex field has the same residue field as $v$. Smooth proper specialization makes $\rho_\lambda$ unramified. The extended Hecke correspondence gives the operator relation
+Let $v\notin S$, $v\nmid\ell(\lambda)$, and suppose first that the place of the reflex field has the same residue field as $v$. Smooth proper specialization makes both $\widetilde\rho_\lambda$ and $\rho_\lambda$ unramified. The extended Hecke correspondence gives the operator relation
 
 $$
 \Phi_v^2-t_v\Phi_v+q_vs_v=0. \tag{4.4}
@@ -386,18 +413,25 @@ This proof includes scalar Frobenius. A degree-two annihilator alone would not.
 If the actual residue extension has degree $f$, geometric Frobenius upstairs is the $f$th power of the downstairs Frobenius and $q_u=q_v^f$. If $\alpha_v,\beta_v$ are the roots of (4.6), the upstairs polynomial is
 
 $$
-(X-\alpha_v^f)(X-\beta_v^f). \tag{4.7}
+(X-\alpha_v^f)(X-\beta_v^f)
+=X^2-(\alpha_v^f+\beta_v^f)X+q_v^fs_v^f. \tag{4.7}
 $$
 
 One must not replace $q_v$ by $q_v^f$ while leaving the middle coefficient unchanged.
 
+At such a good place, (1.6) is automatic. Both local pairs are unramified with $N=0$, and global semisimplification preserves the Frobenius characteristic polynomial. The unresolved local-preservation issue is therefore confined to bad places where inertia or monodromy is nontrivial.
+
 ### 4.4 Weak compatibility theorem
 
-**Theorem 4.2 (packet family at good places).** Let $\Pi$ be a noncharacter parallel-weight-two packet with a compact Shimura-curve realization satisfying the extraction hypotheses. Let $E$ split the packet block. Then the family $\{\rho_\lambda\}_\lambda$ of (4.3) is an $E$-rational weakly compatible system of rank two. Its exceptional set may be chosen independently of $\lambda$, and its common good polynomial is (3.4).
+**Theorem 4.2 (packet family at good places).** Let $\Pi$ be a noncharacter parallel-weight-two packet with a compact Shimura-curve realization satisfying the extraction hypotheses. Assume that one finite algebraic Hecke module over $\mathbf Q$ contains the full conjugation-stable isolated packet block, that its common curve carrier realizes every conjugate block, and that $E$ splits the block. Then the family $\{\rho_\lambda\}_\lambda$ of (4.3) is an $E$-rational weakly compatible system of rank two. Its exceptional set may be chosen independently of $\lambda$, and its common polynomial at an actual base-field good place is (3.4). Under a residue extension of degree $f$, the polynomial is instead (4.7).
 
 **Proof strategy.** Every coefficient realization is cut from the same algebraic Hecke packet. The good model supplies unramifiedness, while the Hecke relation and the common determinant identify the entire characteristic polynomial.
 
 **Proof.** The packet construction and scalar transport give a continuous semisimple rank-two representation at every $\lambda$. Choose $S$ to contain the finitely many places excluded by the integral model, level, packet, component, and correspondence ledgers. For $v\notin S$ and $v\nmid\ell(\lambda)$, smooth proper base change gives unramifiedness. Equations (4.4)--(4.6) identify the characteristic polynomial with the image in $E_\lambda[X]$ of the polynomial in $E_0[X]$. These are precisely the conditions of Definition 3.1. $\square$
+
+**Corollary 4.3 (construction from an eligible split packet).** In the selected one-split range described at the start of Section 4.1, every choice of odd nonempty eligible $W$ constructs a weakly compatible rank-two system satisfying Theorem 4.2. The system has the determinant and good-place purity proved in Chapters 5--6. No surface realization, modular-curve realization, or abstract carrier-existence assertion is used.
+
+**Proof.** The compact inverse Jacquet--Langlands theorem constructs $\Pi_B$ without curve cohomology. The compact-curve decomposition places its full isolated block in $H^1$ with multiplicity space of rank two, and the extraction theorem constructs the members. Theorem 4.2 then applies. $\square$
 
 The theorem does not compare the vector spaces for two different $\lambda$. It compares their Frobenius polynomials through the common field $E_0$. That is the only field-independent comparison which is naturally available.
 
@@ -431,7 +465,7 @@ Because $\chi_\lambda(\Phi_v)=q_v^{-1}$, formula (5.3) gives $q_vs_v$ on geometr
 
 ### 5.2 Alternating pairings in rank two
 
-Poincare duality on curve cohomology pairs the packet with its adjoint. Removing the finite Hecke module and using the central-component descent gives a perfect alternating pairing
+Poincare duality on curve cohomology pairs the packet with its adjoint. The determinant argument requires the exact descent datum proved in the extraction book: component-twist covariance for the descended block and a polarization-compatible symmetric pairing on the finite packet module. Under those hypotheses, removing the finite Hecke module gives a perfect alternating pairing
 
 $$
 \psi_\lambda:W_{\Pi,\lambda}\times W_{\Pi,\lambda}
@@ -444,7 +478,7 @@ $$
 \psi(gx,gy)=\det(g)\psi(x,y). \tag{5.5}
 $$
 
-Indeed, both sides are alternating forms, and on a basis the scalar relating them is the determinant of the matrix of $g$. Galois equivariance of (5.4) therefore proves (5.3).
+Indeed, both sides are alternating forms, and on a basis the scalar relating them is the determinant of the matrix of $g$. Galois equivariance of (5.4) therefore proves (5.3) first for $\widetilde\rho_\lambda$ and then, because determinant is unchanged by global semisimplification, for $\rho_\lambda$.
 
 The factor $\eta$ is indispensable. The adjoint packet need not be literally the same finite Hecke packet; it differs by the component character dictated by the central action. Erasing the finite Hecke factor from the ambient pairing without tracking its adjoint would lose precisely this character.
 
@@ -455,13 +489,13 @@ $$
 \simeq \rho_\lambda(1)\otimes\eta_\lambda^{-1}. \tag{5.6}
 $$
 
-**Proof.** Send $x$ to the functional $y\mapsto\psi_\lambda(x,y)$. The target of the pairing gives
+**Proof.** Send $x$ to the functional $y\mapsto\psi_\lambda(x,y)$. On the raw multiplicity space the target of the pairing gives
 
 $$
 W\simeq W^\vee\otimes E_\lambda(-1)\otimes\eta_\lambda.
 $$
 
-Rearranging yields (5.6). $\square$
+Rearranging gives the analogous identity for $\widetilde\rho_\lambda$; dualizing, twisting, and taking Jordan--Holder semisimplifications then yields (5.6). $\square$
 
 ### 5.3 Independence of the polarization
 
@@ -567,14 +601,14 @@ A repeated root is allowed. If $P_v=(X-c)^2$, then $|\iota(c)|=q_v^{1/2}$. Purit
 
 ### 7.1 The common local datum
 
-Fix a finite place $v$ of $F$. For every $\lambda$ with $v\nmid\ell(\lambda)$, the local representation determines
+Fix a finite place $v$ of $F$. For every $\lambda$ with $v\nmid\ell(\lambda)$, the raw local representation determines
 
 $$
-\operatorname{WD}_v(\rho_\lambda)^{\mathrm{F\!-\!ss}}
+\operatorname{WD}_v(\widetilde\rho_\lambda)^{\mathrm{F\!-\!ss}}
 =(r_{v,\lambda},N_{v,\lambda}). \tag{7.1}
 $$
 
-Strict compatibility asks for one algebraic pair $D_v=(r_v,N_v)$ whose scalar extensions are all the pairs (7.1). The local comparison theorem supplies precisely such a pair when its geometric hypotheses are uniform in $\lambda$. The strata, their incidence maps, finite descent group, Hecke and type projectors, and normalized Frobenius correspondences are geometric and algebraic; changing $\lambda$ changes only the coefficient realization.
+The local comparison argument supplies one algebraic pair $D_v=(r_v,N_v)$ whose scalar extensions are all the raw pairs (7.1) when its geometric hypotheses are uniform in $\lambda$. The strata, their incidence maps, finite descent group, Hecke and type projectors, and normalized Frobenius correspondences are geometric and algebraic; changing $\lambda$ changes only the coefficient realization. Strict compatibility of the semisimple family asks in addition that (1.6) hold.
 
 The nilpotent operator has the typed form
 
@@ -598,7 +632,7 @@ $$
 \det(X-r_v(\Phi_v))=P_v(X). \tag{7.4}
 $$
 
-At a split strict semistable Steinberg place, let $\beta_v\in E^\times$ be the scalar of the normalized bad Hecke operator on the invariant graph line. Define $D_v=\operatorname{St}(\beta_v)$ on a basis $e_0,e_1$ by
+At a split strict semistable Steinberg place, let $\beta_v\in E^\times$ be the scalar of the raw unnormalized right-coset operator $U_v$ on the invariant graph line. Define $D_v=\operatorname{St}(\beta_v)$ on a basis $e_0,e_1$ by
 
 $$
 N_ve_1=e_0,\qquad N_ve_0=0, \tag{7.5}
@@ -617,9 +651,15 @@ $$
 
 When finite descent survives together with monodromy, inertia acts through a Frobenius-stable scalar character $\xi_v$. The common pair is $\operatorname{St}(\xi_v,\delta_v)$, obtained by replacing trivial inertia by $\xi_v$ and $\beta_v$ by the actual Frobenius eigenvalue $\delta_v$ on $\ker N_v$.
 
-**Proposition 7.1.** Under the verified strict semistable model, packet graph multiplicity one, extended normalized bad correspondence, and component-stability hypotheses, every $\lambda$ away from $v$ has local pair $\operatorname{St}(\beta_v)$. Under equivariant finite descent, the analogous assertion holds for $\operatorname{St}(\xi_v,\delta_v)$ when the type and kernel-Frobenius hypotheses are satisfied.
+**Proposition 7.1 (the constructed special pair).** Assume the complete direct-quaternion split one-step Iwahori ledger: the quaternion algebra is split at $v$; the odd split or dyadically tensor-split PEL model exists; the component union and raw $U_v$ correspondence descend; and the characteristic-zero packet has the multiplicity-one and good-normalization support stated in the semistable-curve theorem. Then that theorem proves graph multiplicity one, nonzero rank-one monodromy, and the scalar equality $(\mathrm B_v)$ with $\beta_v$ equal to the raw unnormalized $U_v$ eigenvalue. Consequently the raw representation $\widetilde\rho_\lambda$ has local pair $\operatorname{St}(\beta_v)$ for every $\lambda$ away from $v$. The same assertion holds for $\rho_\lambda$ if (1.6) holds at $(v,\lambda)$.
 
-**Proof.** Nearby cycles give $N^2=0$ and identify the packet monodromy with the graph restriction--Gysin map. Graph multiplicity one makes its rank one. Strict semistability over $F_v$ makes finite inertia trivial, so rank-two special recognition gives $\operatorname{St}(\beta)$ for the eigenvalue $\beta$ on $\ker N$. The normalized bad correspondence identifies this eigenvalue with the algebraic scalar $\beta_v$, independently of $\lambda$. With finite descent, the finite inertia centralizing a nonzero rank-one nilpotent is scalar; the common type projector identifies it with $\xi_v$, and the Frobenius correspondence identifies the kernel scalar with $\delta_v$. $\square$
+**Proof.** Nearby cycles give $N^2=0$ and identify packet monodromy with the graph restriction--Gysin map. The good-normalization support kills the component-cohomology packet term; multiplicity two and the one-dimensional Iwahori new line then force both graph multiplicities to equal one. Strict semistability makes finite inertia trivial. The geometric $U_v$ calculation identifies Frobenius on $\ker N$ with the raw scalar $\beta_v$, and rank-two special recognition gives $\operatorname{St}(\beta_v)$. Every map is algebraic before completion, so the result holds at all coefficient places away from $v$. $\square$
+
+**Proposition 7.2 (when a split special carrier can be constructed).** Let $F$ be totally real of even degree, let $\pi$ be a selected cuspidal parallel-weight-two split packet, and let $v$ be a selected special place at which the split-Iwahori comparison is desired. The present one-split curve route constructs such a carrier whenever there is an odd nonempty set $W$ of eligible places with $v\notin W$. It constructs no carrier split at $v$ if $v$ is the only eligible finite place.
+
+In the controlled FLT SP situation, assume additionally that $2$ splits completely in $F$, every $v\mid2$ is selected special, and the direct dyadic tensor ledger of Proposition 7.1 is satisfied. Since $[F:\mathbf Q]$ is even, there are at least two dyadic places. For each target $v\mid2$, choose another $w\mid2$ and take $W=\{w\}$. Thus a split-Iwahori carrier, and hence the common raw pair $\operatorname{St}(\beta_v)$, is constructed at every dyadic target. The carrier may depend on $v$. There are only finitely many targets, so one finite compositum contains all their packet centers, splitting fields, and local scalars.
+
+**Proof.** If $W$ is odd, nonempty, eligible, and avoids $v$, the compact inverse Jacquet--Langlands theorem constructs the quaternion algebra ramified at the inactive real places and at $W$; it is split at $v$. The curve decomposition and extraction theorems provide its raw rank-two packet, and Proposition 7.1 applies. If $v$ is the only eligible place, every nonempty eligible $W$ contains it, so every constructed quaternion algebra is ramified at the desired target and the split-Iwahori theorem is unavailable. In the FLT specialization, complete splitting gives exactly $[F:\mathbf Q]\ge2$ dyadic places, all eligible by hypothesis, so a singleton $\{w\}$ closes the parity condition while avoiding $v$. $\square$
 
 ### 7.3 Finite and tame dihedral types
 
@@ -642,7 +682,7 @@ $$
 
 The value of $\theta_v$ on a Frobenius return element is part of the datum. In the unramified quadratic case geometric Frobenius exchanges the two inertia characters; in the ramified case the inertia subgroup itself has index two. These cases have different matrices and cannot be merged by a conductor calculation.
 
-**Proposition 7.2.** If the finite descent complex, packet projector, type projector, monodromy-vanishing statement, and all Frobenius return maps are defined over $E$ and satisfy the local comparison hypotheses, then every local pair (7.1) is $D_v\otimes_EE_\lambda$. This includes the tame dihedral pair (7.8) when the quadratic cover and inducing character occur in the descent complex.
+**Proposition 7.3 (recognition, not construction).** Suppose wild inertia is trivial on the selected packet part. If the tame finite descent complex, packet projector, type projector, monodromy-vanishing statement, and all Frobenius return maps are defined over $E$ and satisfy the selected principal or dihedral comparison hypotheses, then every raw local pair (7.1) is $D_v\otimes_EE_\lambda$. This includes the tame dihedral pair (7.8) when the quadratic cover and inducing character actually occur in the descent complex. The same statement holds for $\rho_\lambda$ if (1.6) holds at $(v,\lambda)$.
 
 **Proof.** All differentials and projectors commute with coefficient extension. Hence the inertia decomposition and return maps on every $E_\lambda$-realization are scalar extensions of the common algebraic data. The finite-inertia reconstruction just described identifies the Weil representations. Monodromy vanishes on both sides. $\square$
 
@@ -650,18 +690,27 @@ The value of $\theta_v$ on a Frobenius return element is part of the datum. In t
 
 Let $S_{\mathrm{loc}}$ denote the finite places at which one of the verified local packages is needed; at places outside it the good package applies.
 
-**Theorem 7.3 (strict compatibility in the geometric weight-two range).** Assume that for every finite place $v$ of $F$, one of the following uniform geometric packages is supplied:
+**Theorem 7.4 (common raw local pairs and the strictness criterion).** Assume that for every finite place $v$ of $F$, one of the following packages is available:
 
 1. the complete smooth proper good-place ledger;
-2. the split strict semistable Steinberg ledger, including the normalized bad correspondence;
-3. an equivariant finite semistable descent complex with matching type projector, monodromy statement, and Frobenius return maps;
-4. the tame dihedral specialization of package 3.
+2. the complete constructed split-Iwahori special ledger of Proposition 7.1;
+3. an equivariant tame semistable descent complex, with wild inertia trivial on the selected part, matching principal or scalar-special type projector, monodromy statement, and every Frobenius return map, supplied as recognition data;
+4. the tame dihedral specialization of the recognition package in item 3.
 
-Then the weakly compatible packet family is strictly compatible in the sense of Definition 3.2. The common $D_v$ is respectively unramified, special, finite type, or tame dihedral as described above.
+Then the raw cohomological family has the common Frobenius-semisimple local pair $D_v$ at every allowed coefficient place. The pair is respectively unramified, special, finite type, or tame dihedral as described above. If, in addition, (1.6) holds at every bad $v$ for every $\lambda$ with $v\nmid\ell(\lambda)$, then the semisimple weakly compatible family is strictly compatible in the sense of Definition 3.2; at good places (1.6) is automatic by Section 4.3.
 
-**Proof.** At a good place the smooth proper comparison and (4.6) give (7.4) for every $\lambda$ away from $v$. Proposition 7.1 treats the two special cases. Proposition 7.2 treats finite and tame dihedral types. These identifications are made from the same algebraic model, correspondences, type data, and Frobenius return maps, so they hold for every allowed coefficient place. This is exactly (3.6). $\square$
+**Proof.** At a good place the smooth proper comparison and (4.6) give (7.4) for every $\lambda$ away from $v$. Proposition 7.1 treats the constructed special case for $\widetilde\rho_\lambda$. Proposition 7.3 recognizes its tame principal, scalar-special, and dihedral types only from the complete supplied data. These identifications use one algebraic model and therefore hold for every allowed coefficient place. Composing them with (1.6) gives (3.6) for $\rho_\lambda$. $\square$
 
-The theorem is deliberately conditional at a place not covered by one of the four packages. A common good polynomial at almost all places does not manufacture a missing local model at the remaining place.
+The theorem has two independent boundaries. A common good polynomial at almost all places does not manufacture a finite-descent complex, type line, or return map at a remaining place. Nor does a raw nearby-cycle calculation prove (1.6): global semisimplification must be shown harmless by a separate argument.
+
+**Corollary 7.5 (residual-irreducible strictness at one coefficient place).** Let $\lambda$ be a coefficient place and suppose a stable lattice in $\rho_\lambda$, or in its covariant Tate twist, has absolutely irreducible residual reduction. Then $\widetilde\rho_\lambda\simeq\rho_\lambda$, so (1.6) holds for every $v\nmid\ell(\lambda)$. Every constructed or recognized raw comparison in Theorem 7.4 is therefore a comparison for $\rho_\lambda$.
+
+**Proof.** Suppose first that $\rho_\lambda$ became reducible after scalar extension. Its invariant line is defined over some finite extension of $E_\lambda$. Extend the stable lattice and intersect it with that line. The intersection is rank one and saturated: if a uniformizer multiple of a lattice vector lies in the rational line, then the vector lies there too. Its reduction is therefore a nonzero proper stable line in the scalar extension of the residual representation, contradicting absolute residual irreducibility. Thus $\rho_\lambda$ is absolutely irreducible.
+
+If the raw two-dimensional representation were reducible, a nonzero proper stable subspace would give at least two nonzero Jordan--Holder factors after semisimplification. But its semisimplification is $\rho_\lambda$, which is absolutely irreducible. Hence the raw representation is already irreducible and equals its semisimplification. Restriction to every decomposition group and formation of the Weil--Deligne pair preserve this global isomorphism, proving (1.6). Tate twist and duality preserve absolute irreducibility. $\square$
+
+This corollary is not an independence-of-$\lambda$ theorem. Absolute irreducibility of one residual member does not prove it for the reductions at every other coefficient place.
+No semisimplicity theorem for abelian varieties or for raw curve cohomology is being used here; in particular, the argument does not hide a Faltings input.
 
 ## 8. Purity at bad places
 
@@ -717,13 +766,19 @@ $$
 
 Thus $\operatorname{St}(\beta_v)$ is pure of weight one.
 
-For $\operatorname{St}(\xi_v,\delta_v)$, finite inertia does not alter weights. The pair is pure of weight one precisely when $\delta_v$ is a $q_v$-Weil number of weight zero. In the weight-two geometric range the kernel line is an algebraic finite-character line, so this holds. If an arbitrary unramified scalar were allowed, purity would need to be imposed rather than inferred from $N\ne0$.
+For $\operatorname{St}(\xi_v,\delta_v)$, finite inertia does not alter weights. The pair is pure of weight one precisely when $\delta_v$ is a $q_v$-Weil number of weight zero. In the packet normalization this follows from the determinant once the special shape has been proved: the two Frobenius eigenvalues are $\delta_v$ and $q_v\delta_v$, while (5.3) gives determinant $q_v\eta(\Phi_v)$, so
+
+$$
+\delta_v^2=\eta(\Phi_v). \tag{8.5a}
+$$
+
+The right side has finite order, hence so does $\delta_v$. Thus special-type purity is closed by the matched determinant and local shape. For an arbitrary special pair without that determinant normalization, $N\ne0$ alone would not prove purity.
 
 ### 8.3 Finite-monodromy parameters
 
 Suppose $N=0$ and inertia has finite image. Purity of weight one means that every eigenvalue of $r(\Phi_v)$, after taking a suitable Frobenius power preserving an inertia-isotypic component, has the absolute value dictated by residue degree and weight one.
 
-For the finite types arising from the weight-two packet, this is a local algebraicity condition on the Frobenius return maps. The geometric local comparison identifies those maps with the automorphic ones. Their weight-one normalization is fixed globally by the determinant and by the cohomological normalization of the packet.
+For the finite types arising from the weight-two packet, this is a local algebraicity condition on the Frobenius return maps. The geometric local comparison identifies those maps with the automorphic ones, but the preceding local comparison book does not prove their complex absolute values. A weight-monodromy theorem or a direct return-map calculation must supply the weight-one normalization. The determinant fixes only the product of two roots and cannot replace this input.
 
 For a dihedral parameter
 
@@ -737,22 +792,22 @@ $$
 |\iota(\theta_v(\Phi_L))|=q_v^{f/2} \tag{8.7}
 $$
 
-for every complex embedding. Indeed, after restricting to $W_L$, the two characters are $\theta_v$ and $\theta_v^\sigma$; induction only permutes their Frobenius conjugates. In the verified tame dihedral weight-two package, (8.7) is part of the algebraic normalization of the inducing character.
+for every complex embedding. Indeed, after restricting to $W_L$, the two characters are $\theta_v$ and $\theta_v^\sigma$; induction only permutes their Frobenius conjugates. Accordingly, a tame dihedral weight-two package proves purity only when it includes (8.7), not merely the algebraic inducing character.
 
 Finite inertia by itself does not prove (8.7). An unramified twist can change the absolute values without changing inertia or conductor.
 
 ### 8.4 Local purity of the system
 
-**Theorem 8.2 (purity at every verified place).** The strictly compatible packet system is pure of weight one at every good place. At a bad place it is Weil--Deligne pure of weight one in the following cases:
+**Theorem 8.2 (purity of the common local pairs).** The semisimple packet system is pure of weight one at every good place. At a bad place its common raw Weil--Deligne pair is pure of weight one in the following cases:
 
 1. special type with finite-order kernel scalar;
 2. ramified special type with finite-order kernel scalar after removal of its stated finite inertia character;
-3. finite type whose common Frobenius return maps satisfy the weight-one algebraic normalization;
+3. tame principal type whose common Frobenius return maps satisfy the weight-one algebraic normalization;
 4. tame dihedral type satisfying (8.7).
 
-The conclusion is independent of $\lambda$.
+The conclusion is independent of $\lambda$. It applies to the local pair of $\rho_\lambda$ wherever (1.6) also holds.
 
-**Proof.** Good-place purity is Theorem 6.2. Sections 8.2 and 8.3 verify the monodromy-graded weights of every listed common pair $D_v$. Since $\operatorname{WD}_v(\rho_\lambda)^{\mathrm{F\!-\!ss}}=D_v\otimes E_\lambda$, the eigenvalues are the same algebraic numbers viewed in different completions. Their complex absolute values therefore do not depend on $\lambda$. $\square$
+**Proof.** Good-place purity is Theorem 6.2. Sections 8.2 and 8.3 verify the monodromy-graded weights of every listed common pair $D_v$. Its scalar realizations have the same algebraic eigenvalues viewed in different completions, so their complex absolute values do not depend on $\lambda$. Under (1.6), this pair is also $\operatorname{WD}_v(\rho_\lambda)^{\mathrm{F\!-\!ss}}$. $\square$
 
 At a special place the two Frobenius eigenvalues of the Weil representation have weights zero and two. Calling the pair “pure of weight one” refers to the filtration (8.4), not to naive equal modulus. This is the most important normalization distinction at bad reduction.
 
@@ -787,16 +842,16 @@ $$
 
 and $L_v(T,D)=P_v^{\mathrm{loc}}(T,D)^{-1}$. These formulas show why neither the characteristic polynomial on all of $V$ nor the inertia representation alone determines the local factor.
 
-The Swan conductor is computed from the upper ramification filtration of the finite inertial image. If the image factors through a finite quotient $J$, then
+The Swan conductor may be computed from the lower ramification filtration $J_i$ of a finite inertial quotient $J$:
 
 $$
 \operatorname{Sw}(r)
-=\sum_{u>0}
-\frac{|J^u|}{|J^0|}
-\operatorname{codim}V^{J^u}, \tag{9.5}
+=\sum_{i\ge1}
+\frac{|J_i|}{|J_0|}
+\operatorname{codim}V^{J_i}. \tag{9.5}
 $$
 
-with the standard interpretation as a finite sum over jumps. Thus it depends on the filtered inertia representation, not merely on its abstract character.
+Equivalently, with upper numbering it is the integral $\int_0^\infty\operatorname{codim}V^{J^u}\,du$. Thus it depends on the filtered inertia representation, not merely on its abstract character.
 
 ### 9.2 Independence of the coefficient place
 
@@ -812,7 +867,7 @@ In particular these integers are independent of $\lambda$.
 
 **Proof strategy.** Strict compatibility identifies more than the numerical invariants: it identifies the entire pair after scalar extension. Dimensions of invariants, kernels, and ramification-fixed spaces are unchanged by extending a characteristic-zero field.
 
-**Proof.** By (3.6), the local pair of $\rho_\lambda$ is $D_v\otimes_EE_\lambda$. Field extension preserves the ranks of $N$, $(\ker N)^{I_v}$, and $V^{J^u}$ for every ramification subgroup in the finite inertial quotient. Therefore (9.3) and (9.5) have the same value for every $\lambda$. $\square$
+**Proof.** By (3.6), the local pair of $\rho_\lambda$ is $D_v\otimes_EE_\lambda$. Field extension preserves the ranks of $N$, $(\ker N)^{I_v}$, and $V^{J_i}$ for every ramification subgroup in the finite inertial quotient. Therefore (9.3) and (9.5) have the same value for every $\lambda$. $\square$
 
 The qualification $v\nmid\ell(\lambda)$ cannot be omitted. At the coefficient residue characteristic, an Artin conductor may still be defined for the Galois representation, but the comparison with the prime-to-residue-characteristic Weil--Deligne construction used here requires additional theory.
 
@@ -828,9 +883,9 @@ $$
 
 whose image in $E_\lambda[T]$ is the Euler polynomial of $\rho_\lambda$ for every allowed $\lambda$. Thus strict compatibility supplies coefficient-place independence of local Euler factors at bad places as well as good ones.
 
-For epsilon factors, fix once and for all a nontrivial additive character $\psi_v:F_v\to\mathbf C^\times$ of specified conductor and the self-dual Haar measure. The epsilon factor of a Weil--Deligne pair depends on the finite Weil representation, $N$, $\psi_v$, and the measure. Equality of the pairs gives equality of epsilon factors after applying the chosen coefficient embedding.
+For epsilon factors, fix one algebraic additive character of specified conductor and the corresponding self-dual Haar measure, and enlarge $E$ to contain the finitely many roots of unity which occur. The epsilon factor of a Weil--Deligne pair depends on the finite Weil representation, $N$, the character, and the measure. Scalar extension transports the resulting algebraic epsilon factor to each completion. This is embedding-equivariance, not a numerical equality between unrelated displayed fields.
 
-**Proposition 9.2.** In every strictly compatible local case, the Euler polynomial, conductor, Swan conductor, monodromy rank, and epsilon factor with fixed auxiliary normalizations are independent of $\lambda$.
+**Proposition 9.2.** In every strictly compatible local case, the Euler polynomial, conductor, Swan conductor, and monodromy rank are independent of $\lambda$. With the fixed algebraic auxiliary normalizations above, epsilon factors are transported coefficientwise from one algebraic value.
 
 **Proof.** The first four invariants are algebraic constructions from $D_v$. The epsilon factor is functorial under scalar extension and is an invariant of the isomorphism class of $D_v$ once $\psi_v$ and the measure are fixed. $\square$
 
@@ -856,7 +911,13 @@ $$
 
 The other Frobenius eigenvalue $q_v\beta_v$ does not enter the Euler polynomial because it lies outside $\ker N$.
 
-**Ramified special type.** For $\operatorname{St}(\xi_v,\delta_v)$, if $\xi_v$ is nontrivial on inertia, then $(\ker N)^{I_v}=0$, so the Euler polynomial is $1$. Its conductor contains the conductor of the scalar finite character on two dimensions together with the monodromy correction in (9.1).
+**Ramified special type.** For $\operatorname{St}(\xi_v,\delta_v)$, if $\xi_v$ is nontrivial on inertia, then $(\ker N)^{I_v}=0$, so the Euler polynomial is $1$. Because $\xi_v$ acts scalarly on both dimensions, (9.3) gives the exact formula
+
+$$
+a\bigl(\operatorname{St}(\xi_v,\delta_v)\bigr)=2a(\xi_v). \tag{9.9a}
+$$
+
+There is no additional monodromy term once the kernel has no inertia invariants.
 
 **Tame dihedral type.** If neither inducing inertia character is trivial, then $V^{I_v}=0$, $N=0$, and
 
@@ -885,7 +946,7 @@ $$
 1. conjugating the packet and then extracting its representation gives (10.1);
 2. the good polynomial becomes $\sigma(P_v)$;
 3. the determinant becomes $\chi^{-1}\eta^\sigma$;
-4. the local pair becomes $D_v^\sigma$;
+4. the raw common local pair becomes $D_v^\sigma$, and the semisimple local pair does so under (1.6);
 5. weights, conductor exponents, monodromy ranks, and dimensions of inertia invariants are unchanged.
 
 **Proof.** Assertion 1 is Proposition 2.3. The next three follow by applying $\sigma$ to the algebraic identities defining the Hecke polynomial, pairing target, and local stratum actions. For assertion 5, a field embedding permutes complex embeddings and preserves dimensions and nilpotent ranks; Weil-number absolute values and conductor formulas are therefore unchanged. $\square$
@@ -920,23 +981,27 @@ The phrase “unique isomorphism class” does not select a preferred basis. Mat
 
 ### 10.3 Changing the geometric carrier
 
-Two curve realizations of the same full packet data can produce the same rank-two object because their multiplicity constructions are identified by the packet correspondences and the common adjoint pairing. If an actual descended correspondence identifies their multiplicity objects, this gives an isomorphism of the global representations without any density argument.
+Different eligible ramification sets can produce different one-split quaternion algebras and hence different curves. Their raw cohomological multiplicity spaces have no direct geometric comparison. Their semisimplifications can nevertheless be compared because both realize the same split cuspidal packet.
 
-Without such a correspondence, equality of all good Frobenius polynomials establishes equality of their weak compatibility data but is not, within the present dependency range, used to manufacture a canonical global intertwiner. The compatible system is an isomorphism class of each independently constructed placewise representation together with its common local data; it is not a chosen web of cross-carrier maps.
+**Proposition 10.3 (semisimple carrier independence).** Let two eligible compact curve carriers realize the same split cuspidal packet, with the same coefficient embedding and determinant normalization. After one common finite coefficient extension, the semisimple representations extracted from the two carriers are isomorphic at every coefficient place. Hence they define the same weakly compatible system up to placewise isomorphism.
 
-**Proposition 10.3 (carrier independence at the level proved).** A change of curve carrier which is related by a descended multiplicity identification leaves the rank-two system unchanged up to isomorphism. If only common Hecke polynomials and local parameters are known, the two constructions define the same compatible-system data; no canonical comparison of their ambient cohomology or integral lattices is asserted.
+**Proof strategy.** The two representations already exist. Jacquet--Langlands gives them the same good Hecke polynomials. Chebotarev density and Brauer--Nesbitt then recognize the two semisimple representations; neither theorem is being used to manufacture a representation from polynomials.
 
-This formulation avoids importing a global density theorem not required for constructing the family.
+**Proof.** Fix $\lambda$ and enlarge coefficients so that both representations are defined over one nonarchimedean field and the finite-dimensional algebra generated by their diagonal action on the direct sum is split. Outside the union of their finite bad sets, their Frobenius traces are the images of the same Hecke numbers $t_v$. Chebotarev density says that the conjugacy classes of these unramified Frobenius elements meet every open conjugacy-stable subset of $G_F$. The two trace functions are continuous class functions, so equality on those Frobenius classes implies equality on all of $G_F$.
+
+For completeness, let $A$ be the finite-dimensional coefficient algebra generated by the diagonal image of $G_F$ in the endomorphisms of the direct sum. The two trace characters agree on the spanning subset coming from $G_F$, hence on $A$. They vanish on the radical of $A$, and the split semisimple quotient is a product of matrix algebras. The characters of its simple modules are linearly independent. Since both representations are semisimple, their simple constituents therefore occur with the same multiplicities. They are isomorphic. Repeating the argument at every $\lambda$ proves the assertion. $\square$
+
+This proposition gives an isomorphism class, not a canonical intertwiner. It compares neither the raw representations nor their integral lattices. In particular, a raw special pair computed on one carrier passes to the common semisimple member only when (1.6) holds for that carrier and coefficient place.
 
 ### 10.4 The exact meaning of independence
 
 It is useful to summarize what has become choice-free.
 
-- The Hecke field $E_0$, good polynomials, finite character $\eta$, weights, and common local isomorphism classes are intrinsic to the isolated packet.
+- The good-polynomial field $E_0$, good polynomials, finite character $\eta$, and good-place weights are intrinsic to the isolated packet. A bad algebraic pair is intrinsic once the constructed special ledger or the complete recognition data identify it; the raw global extension carrying it remains carrier dependent. The full packet center can be larger than $E_0$.
 - A field of realization $E$ is auxiliary, but enlarging it only extends scalars.
 - The representation at a place $\lambda$ is independent of bases, matrix coordinates, and splitting modules up to isomorphism.
 - A perfect polarization pairing is unique only up to scalar, while its multiplier and determinant are intrinsic.
-- A rational geometric carrier is interchangeable only when the required descended comparison data exist.
+- Eligible curve carriers for the same split packet give the same semisimple system by Proposition 10.3; their raw cohomological extensions and integral lattices need not agree.
 - Integral lattices remain dependent on their ambient integral realization until a stronger integral theorem identifies them.
 
 These distinctions prevent the word “canonical” from carrying more content than the construction proves.
@@ -1000,12 +1065,12 @@ Inverting one denominator does not remove the others. Saturated intersection rem
 
 ### 11.4 What rational compatibility does not provide
 
-The family $\{\rho_\lambda\}$ has common rational Frobenius and Weil--Deligne data. From this one may conclude:
+The family $\{\rho_\lambda\}$ has common rational good Frobenius data, and it has common Weil--Deligne data wherever (1.6) is known. From this one may conclude:
 
 - algebraic-integral good Frobenius polynomials;
 - existence of a stable lattice at each $\lambda$;
 - independence of residual semisimplification from the chosen stable lattice;
-- common rational determinant and conductor away from coefficient residue characteristic.
+- a common rational determinant, and a common conductor away from coefficient residue characteristic under strict compatibility.
 
 One may not conclude:
 
@@ -1018,39 +1083,39 @@ One may not conclude:
 
 Those assertions require a separate integral construction. Keeping this boundary visible is essential: rational strict compatibility is insensitive to the index of one lattice inside another.
 
-## 13. The complete compatible-system theorem
+## 12. The complete compatible-system theorem
 
-### 13.1 Statement
+### 12.1 Statement
 
 We now collect the construction in the exact form available for the weight-two packets used in the arithmetic applications.
 
-**Theorem 13.1 (compatible coefficient systems and purity).** Let $F$ be a number field and let $\Pi$ be a noncharacter parallel-weight-two packet with the following data.
+**Theorem 12.1 (compatible coefficient systems and purity).** Let $F$ be a totally real field and let $\Pi$ be a noncharacter parallel-weight-two packet with the following data.
 
-1. The packet occurs in a finite algebraic Hecke module, has Hecke field
+1. The packet occurs in one finite algebraic Hecke module over $\mathbf Q$, stable under coefficient conjugation and equipped with a Hecke-stable full integral lattice, and has good-polynomial field
 
    $$
    E_0=\mathbf Q(t_v,s_v,\text{ central and component values}),
    $$
 
-   and all its coefficient conjugates occur with the stated isolating data.
-2. It has a compact Shimura-curve cohomological realization whose full finite Hecke block admits multiplicity extraction of rank two.
-3. The adjoint packet and component descent give the perfect alternating multiplicity pairing with finite character $\eta$.
-4. A finite extension $E/E_0$ splits the simple Hecke factors and contains the finitely many local types.
+   All its coefficient conjugates occur in this module with isolating data sufficient to distinguish the desired constituent.
+2. A compact Shimura-curve carrier in the proved one-split range realizes this conjugation-stable full finite Hecke block and admits multiplicity extraction of rank two at every coefficient place. For a split packet, such a carrier is constructed from an odd nonempty eligible set as in Corollary 4.3; outside that range its existence is an explicit hypothesis.
+3. The descended block has the component-twist covariance and polarization-compatible symmetric finite-module pairing required in the extraction theorem; after multiplicity extraction these data give the perfect alternating pairing with finite character $\eta$.
+4. A finite extension $E/E_0$ contains the selected embeddings of the packet centers, splits the corresponding simple Hecke factors, and contains the finitely many tame local types.
 
 Then for every finite place $\lambda$ of $E$ there is a continuous semisimple representation
 
 $$
 \rho_{\Pi,\lambda}:G_F\longrightarrow
-\operatorname{GL}_2(E_\lambda) \tag{13.1}
+\operatorname{GL}_2(E_\lambda) \tag{12.1}
 $$
 
-with the following properties.
+The same construction gives a raw cohomological representation $\widetilde\rho_{\Pi,\lambda}$ with $\rho_{\Pi,\lambda}=\widetilde\rho_{\Pi,\lambda}^{\mathrm{ss}}$. These objects have the following properties.
 
-**Weak compatibility.** There is a finite set $S$, independent of $\lambda$, such that for $v\notin S$ and $v\nmid\ell(\lambda)$ the representation is unramified and
+**Weak compatibility.** There is a finite set $S$, independent of $\lambda$, such that for every actual base-field place $v\notin S$ with $v\nmid\ell(\lambda)$ the representation is unramified and
 
 $$
 \det(X-\rho_{\Pi,\lambda}(\Phi_v))
-=X^2-t_vX+q_vs_v. \tag{13.2}
+=X^2-t_vX+q_vs_v. \tag{12.2}
 $$
 
 **Determinant and duality.** For every $\lambda$,
@@ -1059,59 +1124,92 @@ $$
 \det\rho_{\Pi,\lambda}=\chi_\lambda^{-1}\eta_\lambda,
 \qquad
 \rho_{\Pi,\lambda}^\vee
-\simeq\rho_{\Pi,\lambda}(1)\otimes\eta_\lambda^{-1}. \tag{13.3}
+\simeq\rho_{\Pi,\lambda}(1)\otimes\eta_\lambda^{-1}. \tag{12.3}
 $$
 
 These identities are independent of the scalar normalization of the polarization.
 
-**Purity.** The system is pure of weight one: every root of (13.2) has absolute value $q_v^{1/2}$ under every complex embedding. At a verified bad place, its common Weil--Deligne pair is pure of weight one under the local normalization hypotheses of Theorem 8.2.
+**Good-place purity.** Every root of (12.2) has absolute value $q_v^{1/2}$ under every complex embedding. Thus the weakly compatible system is pure of weight one in the sense of Definition 6.1.
 
-**Strict compatibility.** Let $v$ be a finite place and suppose the local geometry supplies one of the uniform packages in Theorem 7.3. For every $\lambda$ with $v\nmid\ell(\lambda)$,
+**Raw local compatibility.** Let $v$ be a finite place. If the constructed split-Iwahori special package of Proposition 7.1 is available, or if all the recognition data in one of the tame rows of Theorem 7.4 are supplied, then for every $\lambda$ with $v\nmid\ell(\lambda)$,
+
+$$
+\operatorname{WD}_v(\widetilde\rho_{\Pi,\lambda})^{\mathrm{F\!-\!ss}}
+\simeq D_v\otimes_EE_\lambda. \tag{12.4}
+$$
+
+Here $D_v$ is the algebraic unramified or special parameter constructed by the geometric theorem, or the tame principal, scalar-special, or tame dihedral parameter identified from the complete supplied recognition data. The latter three rows are not carrier-existence or return-map construction theorems.
+
+**Strictness criterion.** If (1.6) is known for this $(v,\lambda)$, then
 
 $$
 \operatorname{WD}_v(\rho_{\Pi,\lambda})^{\mathrm{F\!-\!ss}}
-\simeq D_v\otimes_EE_\lambda, \tag{13.4}
+\simeq D_v\otimes_EE_\lambda. \tag{12.5}
 $$
 
-where $D_v$ is the algebraic unramified, special, finite-type, or tame dihedral parameter prescribed by the packet. If such a package is supplied at every finite $v$, the family is strictly compatible at every finite place away from the varying coefficient residue characteristic.
+If one of these packages is available at every finite $v$ and (1.6) holds at every bad $v$, the semisimple family is strictly compatible away from the varying coefficient residue characteristic. Corollary 7.5 supplies (1.6) at a coefficient place with absolutely irreducible residual reduction. It does not supply it uniformly in $\lambda$. At a bad finite-monodromy place, purity of weight one also needs the separate return-map weight hypothesis of Theorem 8.2; the constructed special pair is already pure by Section 8.2.
 
-**Local invariants.** In the range of (13.4), the local Euler polynomial, Artin and Swan conductor, monodromy rank, and epsilon factor with fixed additive character and self-dual measure are independent of $\lambda$. The global prime-to-$\lambda$ conductor ideal
+**Local invariants.** In the range of (12.5), the local Euler polynomial, Artin and Swan conductor, and monodromy rank are independent of $\lambda$; normalized epsilon factors are coefficientwise realizations of one algebraic value. The global prime-to-$\lambda$ conductor ideal
 
 $$
 \mathfrak N(\rho_\lambda)
 =\prod_{v\nmid\ell(\lambda)}
-\mathfrak p_v^{a(D_v)} \tag{13.5}
+\mathfrak p_v^{a(D_v)} \tag{12.6}
 $$
 
 is obtained by omitting only the factors above $\ell(\lambda)$ from one common conductor datum.
 
-**Coefficient and choice independence.** The construction commutes with coefficient embeddings and finite coefficient extension. It is independent, up to isomorphism, of bases, matrix splittings, simple-module coordinates, and polarization scaling. A change of curve carrier preserves the system when accompanied by the descended multiplicity identification stated in Chapter 10.
+**Coefficient and choice independence.** The construction commutes with coefficient embeddings and finite coefficient extension. It is independent, up to isomorphism, of bases, matrix splittings, simple-module coordinates, and polarization scaling. Eligible curve carriers for the same split packet yield the same semisimple system by Proposition 10.3. This does not compare their raw extensions or integral lattices.
 
-**Integral structures.** Each $\rho_{\Pi,\lambda}$ has a stable lattice, and its geometric realization supplies a saturated packet lattice. No canonical integral rank-two direct summand, self-dual lattice, cross-$\lambda$ lattice, or finite-flat coefficient-prime quotient is asserted by this theorem.
+**Integral structures.** Each $\rho_{\Pi,\lambda}$ has some stable lattice. The raw geometric carrier supplies a saturated lattice in the full cohomological packet block. Global semisimplification does not embed a new rank-two plane into that same lattice. No canonical integral rank-two direct summand, self-dual lattice, cross-$\lambda$ lattice, or finite-flat coefficient-prime quotient is asserted by this theorem.
 
-### 13.2 Proof
+### 12.2 Proof
 
-The finite algebraic Hecke module gives $E_0$, integrality of $t_v$ and $s_v$, and the occurrence of every coefficient conjugate. A finite splitting extension $E$ exists by Proposition 2.1. At each $\lambda$, multiplicity extraction from curve $H^1$ gives the rank-two Hom space (4.1). Closedness of the Hom equations proves continuity, and Jordan--Holder gives the canonical semisimplification. This constructs (13.1).
+The single conjugation-stable algebraic Hecke module gives $E_0$, integrality of $t_v$ and $s_v$, and the occurrence of every coefficient conjugate in the common carrier. A finite splitting extension $E$ exists by Proposition 2.1. At each $\lambda$, multiplicity extraction from curve $H^1$ gives the raw rank-two Hom space (4.1). Closedness of the Hom equations proves continuity, and Jordan--Holder gives the canonical semisimplification. This constructs (12.1).
 
-Choose $S$ to contain all places excluded by the packet, level, component, integral-model, and correspondence hypotheses. At $v\notin S$ and away from the coefficient residue characteristic, smooth proper specialization gives unramifiedness. The common Hecke correspondence gives the quadratic annihilator (4.4). Factoring Poincare duality through the adjoint finite Hecke module gives (5.4), whose two-dimensional multiplier is the determinant. This proves (13.3) and evaluates the determinant at $\Phi_v$ as $q_vs_v$. Cayley--Hamilton then upgrades the annihilator to (13.2), including when Frobenius is scalar. Thus the family is weakly compatible.
+Choose $S$ to contain all places excluded by the packet, level, component, integral-model, and correspondence hypotheses. At $v\notin S$ and away from the coefficient residue characteristic, smooth proper specialization gives unramifiedness. The common Hecke correspondence gives the quadratic annihilator (4.4). Factoring Poincare duality through the adjoint finite Hecke module gives (5.4), whose two-dimensional multiplier is the determinant. This proves (12.3) and evaluates the determinant at $\Phi_v$ as $q_vs_v$. Cayley--Hamilton then upgrades the annihilator to (12.2), including when Frobenius is scalar. Thus the family is weakly compatible.
 
 The same special fiber is a smooth proper curve over a finite field. Weight-one purity of its $H^1$ passes through the correspondence summand and multiplicity factor, proving good-place purity. The alternating pairing confirms the normalization.
 
-At a bad place, the local comparison theorem computes the packet part of the equivariant nearby-cycle complex. For split strict semistability it identifies nonzero graph monodromy and the bad-correspondence scalar, giving $\operatorname{St}(\beta_v)$. Finite descent supplies a common inertia representation and Frobenius return maps. In the tame dihedral case these data are the quadratic extension and inducing character. All are defined algebraically over $E$ and commute with scalar extension, so Propositions 7.1 and 7.2 give (13.4).
+At a bad place, the local comparison argument computes the packet part of the equivariant nearby-cycle complex on the raw multiplicity space. For the complete split one-step Iwahori ledger, Book 131 identifies nonzero graph monodromy and the raw $U_v$ scalar, giving $\operatorname{St}(\beta_v)$ by Proposition 7.1. In the other tame rows, a common inertia representation and every Frobenius return map must first be supplied; Proposition 7.3 then recognizes the parameter. These data are algebraic over $E$ and commute with scalar extension, proving (12.4). Composing with (1.6) gives (12.5). Corollary 7.5 proves that identity at a residual-irreducible coefficient place, but no nearby-cycle calculation proves it uniformly over all coefficient places.
 
-The monodromy filtrations in Chapter 8 prove local weight-one purity under the listed normalization hypotheses. The formulas of Chapter 9 read Euler factors, conductors, Swan terms, monodromy ranks, and epsilon factors from the common $D_v$, proving their independence and (13.5).
+The monodromy filtrations in Chapter 8 prove local weight-one purity only under the listed return-map normalization hypotheses. The formulas of Chapter 9 read Euler factors, conductors, Swan terms, monodromy ranks, and normalized epsilon factors from the common $D_v$, proving the asserted transport and (12.6) wherever strict compatibility holds.
 
-Propositions 2.3, 2.4, 10.2, and Theorem 10.1 prove the coefficient and auxiliary-choice assertions. The rank-two determinant identity shows that scaling a perfect alternating pairing cannot alter its multiplier. Finally, compactness gives some stable lattice and intersection with integral cohomology gives a saturated one. Sections 11.2--11.4 explain why none of the stronger integral conclusions follows without further hypotheses. $\square$
+Propositions 2.3, 2.4, 10.2, 10.3, and Theorem 10.1 prove the coefficient, carrier, and auxiliary-choice assertions. The rank-two determinant identity shows that scaling a perfect alternating pairing cannot alter its multiplier. Finally, compactness gives some stable lattice, while intersection with integral cohomology gives a saturated lattice in the raw packet block. Sections 11.2--11.4 explain why none of the stronger integral conclusions follows without further hypotheses. $\square$
 
-**Corollary 13.2 (the packet range used in the Fermat argument).** Suppose every finite place of $F$ is either good for the packet or is one of the verified Steinberg, finite-descent, or tame dihedral places, and suppose the corresponding component, type, return-map, and local weight normalization hypotheses have been established by the chosen curve carrier. Then (13.4) holds at every finite $v\nmid\ell(\lambda)$. Thus the packet gives a strictly compatible pure rank-two system at every place in this range, with coefficient-independent conductor and local factor.
+**Corollary 12.2 (the honest FLT SP output).** Let $F$ be totally real of even degree, suppose $2$ splits completely in $F$, and let $\pi$ be a selected trivial-character parallel-weight-two packet which is special at every $v\mid2$. Assume the direct dyadic tensor and component ledger of Proposition 7.1; away from the dyadic places, retain only the good or separately recognized local rows actually available for $\pi$.
 
-**Proof.** Every finite place belongs to one of the four alternatives in Theorem 7.3. Apply that theorem place by place. Purity and independence of local invariants then follow from Theorems 8.2 and 9.1 and Proposition 9.2. $\square$
+Then the prior books construct the following data.
 
-### 13.3 Variants and edge cases
+1. The packet has a pure weight-one weakly compatible system with determinant $\chi_\lambda^{-1}$ in the untwisted geometric-Frobenius normalization.
+2. For every target $v\mid2$, a target-dependent eligible carrier constructs the algebraic raw pair
+
+   $$
+   D_v=\operatorname{St}(\beta_v),
+   \qquad \beta_v^2=1,
+   $$
+
+   at every coefficient place away from two. The pair is pure of weight one, has conductor one, and has Euler polynomial $1-\beta_vT$.
+3. All target-dependent carriers have the same semisimple weak system by Proposition 10.3.
+4. At any coefficient place whose stable lattice has absolutely irreducible residual reduction, Corollary 7.5 transfers every dyadic raw pair to the semisimple member. Thus that member has the full SP pair, sign, nonzero monodromy, and conductor one at every $v\mid2$.
+
+In the covariant Tate normalization used by the FLT blueprint, put
+
+$$
+\rho^{\mathrm{cov}}_\lambda=\rho_\lambda(1).
+$$
+
+It has determinant $\chi_\lambda$ and, at a good place, arithmetic-Frobenius polynomial $X^2-t_vX+q_v$. At a dyadic special place the untwisted geometric eigenvalues are $\beta_v$ on $\ker N$ and $2\beta_v$ on the quotient. Since $\beta_v=\beta_v^{-1}$, arithmetic Frobenius on $\rho^{\mathrm{cov}}_\lambda$ acts by $\beta_v$ on the quotient and by $2\beta_v$ on the monodromy line. This is the SP sign and line convention consumed downstream.
+
+The prior books do not prove item 4 simultaneously for every coefficient place. An all-embedding SP assertion therefore still requires (1.6) for every allowed $\lambda$, or another theorem proving global semisimplicity or absolute irreducibility of every member.
+
+**Proof.** Weak compatibility, determinant, and good purity are Theorem 12.1. Proposition 7.2 supplies a second dyadic eligible place for each target and constructs the raw special pair. Section 8.2 proves its purity from $\beta_v^2=1$. Proposition 10.3 identifies the semisimple systems obtained from the varying carriers. Corollary 7.5 proves the final transfer exactly at the residual-irreducible coefficient places. Twisting, then inverting geometric Frobenius, gives the final covariant formulas. $\square$
+
+### 12.3 Variants and edge cases
 
 Several boundary cases fit the theorem without changing its statement.
 
-**Scalar good Frobenius.** The polynomial in (13.2) may have a repeated root. The determinant argument proves that it is still the characteristic polynomial, and purity fixes the modulus of the repeated root.
+**Scalar good Frobenius.** The polynomial in (12.2) may have a repeated root. The determinant argument proves that it is still the characteristic polynomial, and purity fixes the modulus of the repeated root.
 
 **Reducible semisimple systems.** The extraction theorem does not require absolute irreducibility for its determinant or good-polynomial conclusions. If
 
@@ -1125,54 +1223,68 @@ then trace and determinant record the unordered pair of characters at good place
 
 **Residue extensions.** If a geometric place $u$ lies over the automorphic place $v$ with residue degree $f$, the common local pair is restricted from $W_{F_v}$ to $W_{F_u}$. Frobenius becomes $\Phi_v^f$ and the roots become $\alpha_v^f,\beta_v^f$. Every weight and conductor assertion must use the actual local extension.
 
-**The coefficient residue characteristic.** For a fixed $\lambda$, equations (13.2) and (13.4) deliberately omit $v\mid\ell(\lambda)$. Continuity of $\rho_\lambda$ remains true there, but crystalline, semistable, de Rham, Hodge--Tate, and finite-flat assertions require additional hypotheses and are outside this theorem.
+**The coefficient residue characteristic.** For a fixed $\lambda$, equations (12.2), (12.4), and (12.5) deliberately omit $v\mid\ell(\lambda)$. Continuity of $\rho_\lambda$ remains true there, but crystalline, semistable, de Rham, Hodge--Tate, and finite-flat assertions require additional hypotheses and are outside this theorem.
 
-**Wild finite descent.** The finite-type clause includes wild inertia only when the entire finite descent action and its ramification filtration are supplied. A tame chart cannot determine a Swan conductor. When the wild filtered action is supplied algebraically over $E$, the proof of Theorem 9.1 applies unchanged.
+**Wild finite descent.** The local comparison source explicitly excludes primitive wild parameters and does not identify a nontrivial wild descent action with an automorphic packet parameter. Accordingly the theorem above makes no wild compatibility claim. A tame chart cannot determine the filtered wild action or its Swan conductor.
 
 **Nonminimal and old level.** Oldvectors enlarge $P_{\Pi,\lambda}$, not the rank of $W_{\Pi,\lambda}$. The full finite Hecke image is needed so that Morita extraction removes the whole level module. A sparse collection of spherical operators can leave an artificially large multiplicity space.
 
-### 13.4 Dependency and hypothesis ledger
+### 12.4 Dependency and hypothesis ledger
 
-The proof uses exactly four prior mathematical packages.
+The proof uses the following prior mathematical packages. Books 135 and 138 are interface checks, not proof inputs: Book 135 depends on this compatible-system assembly, while Book 138 begins only after the rational member has been constructed.
 
 | Conclusion in this book | Established source | Hypotheses retained here | Boundary |
 |---|---|---|---|
-| Weil-number calculus and purity of curve $H^1$ | the low-dimensional weight and Weil-bound theory | smooth proper curve over a finite field; geometric Frobenius | reciprocal roots alone do not prove purity |
-| Hecke field and coefficient conjugates | algebraicity and integral structures of weight-two packets | finite integral Hecke module, reduced generic image, raw $T_v,S_v$ normalization | a quaternionic good block needs isolating data to name one constituent |
-| saturated eigenlattices | the same packet theory | intersection with a fixed ambient integral module | rational projectors need not be integral |
-| rank-two representations | extraction from weight-two Shimura cohomology | full finite Hecke block, splitting field, curve multiplicity two | oldspace dimension is not Galois rank |
-| determinant and good polynomial | the same extraction theory | adjoint packet, component character, perfect pairing, full good-model ledger | a quadratic relation alone may only annihilate Frobenius |
-| bad local parameters | local--global compatibility for weight-two representations | $v\nmid\ell$, verified semistable model, extending correspondences, type and return data | conductor or inertia alone does not identify a parameter |
+| Weil-number calculus and good-place purity of curve $H^1$ | Book 26, *Weights, Hard Lefschetz, and Weil Bounds in Low Dimension* | smooth proper curve over a finite field; geometric Frobenius; correspondence summand | it supplies no bad-place return-map weights |
+| good-polynomial field, conjugate packets, and saturated eigenlattices | Book 107, *Algebraicity and Integral Structures of Weight-Two Packets* | one absolute $\mathbf Q$-algebraic conjugation-stable finite Hecke module; raw $T_v,S_v$ normalization; isolating data; intersection with a fixed integral module | a relative model gives only embeddings over its base field; the full packet center can exceed the field of good values; good eigenvalues can name only a near-equivalence block |
+| eligible one-split packet | Book 94, *Global Jacquet--Langlands* | $F$ totally real of even degree; odd nonempty ramification set; selected special or selected tame-dihedral factor at every ramified finite place | no eligible place gives no carrier; a carrier for split-Iwahori geometry at $v$ must use a ramification set avoiding $v$ |
+| curve realization and multiplicity | Book 132, *Automorphic Decomposition of Shimura-Curve $H^1$* | actual one-split compact curve; full component-routing orbit; full finite Hecke image; separating component idempotent; multiplicity two | no surface or modular-curve substitute is supplied; the raw representation need not be semisimple |
+| raw rank-two representations | Book 134, *Galois Representations from Weight-Two Shimura Cohomology* | full finite Hecke block, splitting field, common curve carrier, multiplicity two | oldspace dimension is not Galois rank; absolute irreducibility is not supplied |
+| determinant and good polynomial | Book 134 | component-twist covariance, polarization-compatible symmetric finite-module pairing, full good-model ledger, and the actual residue-field comparison | a quadratic relation alone may only annihilate Frobenius; residue degree changes the middle coefficient |
+| constructed raw split-Iwahori special pair | Book 131, *Semistable Models and Monodromy of Shimura Varieties*, assembled in Book 136 | split quaternion algebra at $v$; complete odd-split or dyadically tensor-split direct PEL ledger; component support; multiplicity one; raw unnormalized $U_v$ | it proves $(\mathrm B_v)$ and rank-one $N$ on the raw multiplicity space, but not raw-to-global passage |
+| tame principal, scalar-special, or dihedral parameter | Book 136, *Local--Global Compatibility for Weight-Two Galois Representations* | $v\nmid\ell$; the actual descent complex, type lines, monodromy branch, exchange maps, and every Frobenius return map | these are recognition criteria; they construct none of the missing tame return data for an arbitrary packet and cover no primitive wild row |
+| strict bad parameter at one residual-irreducible coefficient place | Book 136, Lemmas 9.1--9.2 and Corollary 9.3 | a stable lattice with absolutely irreducible residual reduction at that $\lambda$ | the argument is coefficient-place by coefficient-place and gives no uniform all-$\lambda$ SP record |
+| bad-place purity | Section 8 from the identified algebraic pair | special shape plus determinant closes the special row; finite-monodromy rows require the return-map absolute values such as (8.7) | determinant, finite inertia, and algebraicity do not prove finite-type weight one |
+| semisimple carrier independence | Chebotarev density and Brauer--Nesbitt, applied in Proposition 10.3 | two already constructed semisimple representations with the same split-packet good polynomials | no raw extension, canonical intertwiner, or integral lattice is compared |
 
-No theorem about later canonical lattices or finite-flat quotients is used. No global comparison of two unrelated carriers is inferred from a numerical coincidence. The common system is built directly from the packet at every coefficient place, and bad-place compatibility is proved directly from the corresponding local geometric package.
+No theorem about later finite-flat quotients is used. Book 138 can construct a chosen all-level finite-flat tower only after a member has its own good-reduction abelian bridge and low-ramification hypotheses; it neither synchronizes coefficient places nor proves the SP pair. Book 187 therefore correctly retains a **controlled SP top datum** requiring local preservation at every coefficient place. Books 188 and 189 propagate that datum through characteristic-zero effectivity and base-field assembly but do not create it. Book 190 likewise treats its SP family as an input and cannot repair its absence. The even-degree, completely split dyadic hypothesis closes the need for a second eligible place at the raw geometric stage; the remaining FLT-facing boundary is uniform all-embedding raw-to-global preservation, together with the separate coefficient-prime integral bridge used later.
 
-## 14. The arithmetic package
+The downstream contract is therefore:
 
-### 14.1 A worked synthesis
+| Consumer | May use from this book | Must not infer |
+|---|---|---|
+| Book 138 | a rational raw packet plane, its semisimplification, determinant, and existence of placewise stable lattices | a canonical rank-two cohomological summand, coefficient-prime finite flatness, or one lattice across coefficient places |
+| Book 187 | the constructed weak packet systems, coefficient conjugation, determinant, good purity, and the conditional algebraic SP pair | the all-embedding SP pair unless its controlled top datum supplies local preservation for every coefficient embedding |
+| Books 188--189 | the packet systems and local objects already present in Book 187's controlled array | effectivity, base-field descent, or a new local comparison merely from good polynomials; those books prove their own characteristic-zero conclusions |
+| Book 190 | a rational SP member only after Books 187--189 have actually produced it | the missing SP family, a three-adic good-reduction bridge, a stable lattice, or an all-level finite-flat tower |
+
+## 13. The arithmetic package
+
+### 13.1 A worked synthesis
 
 Consider first a packet with trivial central-component character, so $s_v=1$ at every good place and
 
 $$
-\det\rho_\lambda=\chi_\lambda^{-1}. \tag{14.1}
+\det\rho_\lambda=\chi_\lambda^{-1}. \tag{13.1}
 $$
 
 At a good place $v\nmid\ell(\lambda)$,
 
 $$
-P_v(X)=X^2-t_vX+q_v, \tag{14.2}
+P_v(X)=X^2-t_vX+q_v, \tag{13.2}
 $$
 
 and every conjugate of each root has modulus $q_v^{1/2}$. Hence every conjugate of $t_v$ lies in the interval allowed by
 
 $$
-|t_v|\le2q_v^{1/2}. \tag{14.3}
+|t_v|\le2q_v^{1/2}. \tag{13.3}
 $$
 
-At a split multiplicative place, the common pair is $\operatorname{St}(\beta_v)$ with $\beta_v=1$ or $-1$. It has
+At a split multiplicative place, the common raw pair is $\operatorname{St}(\beta_v)$ with $\beta_v=1$ or $-1$. It has
 
 $$
 N\ne0,\qquad a_v=1,\qquad
-P_v^{\mathrm{loc}}(T)=1-\beta_vT. \tag{14.4}
+P_v^{\mathrm{loc}}(T)=1-\beta_vT. \tag{13.4}
 $$
 
 The sign distinguishes split from nonsplit multiplicative behavior while inertia and conductor remain the same. Its monodromy-graded Frobenius eigenvalues have weights zero and two, making the pair pure of center weight one.
@@ -1181,14 +1293,14 @@ At an irreducible tame dihedral place with no inertia invariants,
 
 $$
 D_v=\operatorname{Ind}_{W_L}^{W_{F_v}}\theta_v,
-\qquad N=0, \tag{14.5}
+\qquad N=0, \tag{13.5}
 $$
 
 the local Euler polynomial is $1$ and the basic tame conductor is two. Nevertheless the inducing Frobenius value remains essential: changing it by an unramified scalar preserves both the Euler polynomial and conductor while changing the Weil representation. Strict compatibility retains that scalar.
 
-For every coefficient place away from $v$, these three calculations are scalar realizations of the same algebraic data. This is the practical force of the system: one can change the coefficient prime without changing Frobenius polynomials, local type, monodromy, conductor, or purity.
+For every coefficient place away from $v$, these local calculations are scalar realizations of the same algebraic raw data. The good polynomial and its purity survive a coefficient-prime change unconditionally. For the constructed special row, the bad-place weight follows from the determinant and $\beta_v^2=s_v$. Local type, monodromy, and conductor survive for the semisimple family only under (1.6); the finite-monodromy rows also need the return-map weight condition of Theorem 8.2.
 
-### 14.2 A normalization audit
+### 13.2 A normalization audit
 
 The following checks should accompany every use of the theorem.
 
@@ -1196,27 +1308,29 @@ The following checks should accompany every use of the theorem.
 2. The good characteristic polynomial is $X^2-t_vX+q_vs_v$; the Euler denominator is $1-t_vT+q_vs_vT^2$.
 3. Arithmetic Frobenius has reciprocal roots and polynomial (5.9).
 4. The determinant is $\chi_\lambda^{-1}\eta_\lambda$, not $\chi_\lambda\eta_\lambda$.
-5. Purity of weight one means modulus $q_v^{1/2}$ at good places and monodromy-graded weights at bad places.
+5. Good-place purity means modulus $q_v^{1/2}$ for every complex conjugate; bad-place purity is the separate monodromy-graded assertion of Theorem 8.2.
 6. A special parameter has Frobenius eigenvalues $\beta_v$ and $q_v\beta_v$, with $N$ mapping the second line to the first.
-7. Strict compatibility is asserted only for $v\nmid\ell(\lambda)$.
+7. The local comparison computes the raw pair; strict compatibility of $\rho_\lambda$ also requires (1.6) and is asserted only for $v\nmid\ell(\lambda)$. Absolute residual irreducibility at that coefficient place proves (1.6), but not at the other coefficient places.
 8. Inertial type plus conductor does not determine Frobenius return maps or monodromy.
 9. Coefficient conjugation acts on $t_v$, $s_v$, $\eta$, and every local type value together.
 10. A rational compatible system supplies stable lattices but not canonical integral direct summands.
-11. A residue-degree change raises Frobenius roots to the corresponding power.
+11. A residue-degree change raises Frobenius roots to the corresponding power and changes the middle coefficient to their power sum.
 
 These tests catch the most common sign, twist, and scope errors before they enter a global argument.
 
-### 14.3 What has and has not been proved
+### 13.3 What has and has not been proved
 
-The construction gives one coherent arithmetic family. Its good Frobenius polynomials live in the Hecke field and survive every coefficient completion. Its determinant is fixed globally. Its roots have the expected absolute values. At every place covered by the geometric local comparison, the complete Frobenius-semisimple Weil--Deligne pair is independent of the coefficient place. Conductors and local factors follow from that stronger statement.
+The construction gives one coherent semisimple weakly compatible family. Its good Frobenius polynomials live in the good-polynomial field and survive every coefficient completion. Its determinant is fixed globally, and every complex conjugate of every good root has the expected absolute value. At every place covered by the geometric local comparison, the complete Frobenius-semisimple Weil--Deligne pair of the raw cohomological family is independent of the coefficient place.
 
-Several nearby assertions remain logically separate. The theorem does not compare nonsemisimple global extension classes. It does not assert a local Weil--Deligne comparison at the coefficient residue characteristic. It does not construct a globally canonical lattice, prove integral self-duality at denominator primes, or produce finite-flat quotients. It does not identify a quaternionic constituent from good eigenvalues unless the requisite isolating data are already present.
+Three load-bearing assertions remain logically separate. First, Book 131 does construct $(\mathrm B_v)$ and the raw special pair in its exact split one-step Iwahori range, whereas Book 136's tame principal, scalar-special, and dihedral rows merely recognize data that must already have been supplied. Second, Book 136 identifies the raw and globally semisimplified members at a coefficient place with absolutely irreducible residual reduction, but no prior theorem proves this simultaneously for every coefficient place. Third, finite-monodromy return maps have not in general been proved to have the complex absolute values required for bad-place purity; the special row has no such gap because its shape and determinant force a finite-order kernel scalar.
 
-These limits do not weaken the compatible-system theorem. They specify exactly which information is rational, which is local, and which is integral.
+For the FLT SP carrier problem, the apparent need for a second eligible place is closed at the raw stage when the field has even degree, two splits completely, and every dyadic factor is special: another dyadic place supplies the singleton ramification set. The all-embedding SP record assumed by Book 187 is not closed, because the residual-irreducibility argument applies only at the coefficient places where that residual hypothesis is known. The theorem also makes no comparison at the coefficient residue characteristic, constructs no globally canonical lattice, proves no integral self-duality at denominator primes, and produces no finite-flat quotient. It does not identify a quaternionic constituent from good eigenvalues unless the requisite isolating data are already present.
 
-### 14.4 Conclusion
+Thus the good-polynomial, determinant, conjugation, and weight-bound inputs are complete. The distinguished residual-irreducible member also has the proved SP comparison. Uniform strict SP compatibility across all coefficient places remains an explicit hypothesis for the later changing-prime assembly.
 
-A weight-two packet now determines more than one representation for each chosen prime. Its algebraic conjugates assemble into a single compatible coefficient system. The common field records the raw Hecke polynomials, the finite component character, and the bad local types. Completion at $\lambda$ realizes those data on a continuous two-dimensional space, while changing $\lambda$ changes only the scalar topology.
+### 13.4 Conclusion
+
+A weight-two packet satisfying the absolute rationality hypotheses determines a semisimple representation at every coefficient place. Its algebraic conjugates assemble into a single weakly compatible coefficient system. The common field records the raw Hecke polynomials and finite component character; the local geometric packages record the bad parameters of the raw multiplicity spaces.
 
 The determinant and pairing organize the family globally:
 
@@ -1230,6 +1344,6 @@ $$
 X^2-t_vX+q_vs_v.
 $$
 
-Smooth proper geometry gives weight one, including every complex conjugate of every root. Nearby-cycle geometry supplies the finer bad-place package: finite inertia, nilpotent monodromy, and Frobenius return maps. Because that package is algebraic before a coefficient place is chosen, its Euler factor, conductor, Swan term, monodromy rank, and local constant are coefficient independent.
+Smooth proper geometry gives good-place weight one, including every complex conjugate of every root. Nearby-cycle geometry supplies the finer raw bad-place package: finite inertia, nilpotent monodromy, and Frobenius return maps. These data are algebraic before a coefficient place is chosen.
 
-The theory also draws its own boundary sharply. Rational compatibility does not canonically synchronize integral lattices. At the coefficient residue characteristic, additional comparison conditions are required. Within these boundaries, however, the result is genuinely uniform: coefficient embeddings, polarization scalars, splitting fields, and verified curve carriers alter presentations but not the compatible arithmetic data.
+The boundary is exact. The split-Iwahori special pair is geometrically constructed, and absolute residual irreducibility proves its passage to the semisimple member at the coefficient place where that residual condition holds. Passing it at every coefficient place still requires (1.6) there. Finite-monodromy bad purity still requires the return-map weight. Rational compatibility does not synchronize integral lattices, and coefficient-residue-characteristic comparisons require separate hypotheses. Subject to these boundaries, coefficient embeddings, polarization scalars, splitting fields, and eligible curve carriers alter presentations but not the semisimple good compatible data.
