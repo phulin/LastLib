@@ -108,7 +108,7 @@ An algebraic closure $\overline K$ and a separable closure $K^s\subseteq\overlin
 
 The finiteness of $k$ is not decorative. It makes $\mathcal O$ compact, gives a canonical Frobenius on every finite residue extension, and forces finite-index subgroups of $K^\times$ to interact well with the topology. A complete discretely valued field with infinite residue field has much of the valuation theory developed earlier, but the reciprocity theorem in the form proved here is not a theorem about that broader class.
 
-The valuation-theoretic foundations are those of Books 1 and 2. In particular, we use the unique-extension and finite-completeness theorem of Book 1, Theorem 10.3, the fundamental equality of Book 2, Theorem 2.3,
+The valuation-theoretic foundations are those of Books 1--2. In particular, we use the unique-extension and finite-completeness theorem of Book 1, Theorem 10.3, the fundamental equality of Book 2, Theorem 2.3,
 
 $$
 [L:K]=e(L/K)f(L/K),

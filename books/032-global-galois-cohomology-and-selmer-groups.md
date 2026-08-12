@@ -445,7 +445,7 @@ H^3(U,A_\ell)=0
 \qquad\text{for every open }U\subseteq G_{K,S}. \tag{3.1k}
 $$
 
-The open-subgroup criterion proved in Book 30, Section 6.3, now applies: if $H^{d+1}(U,\mathbf F_\ell)=0$ for every open subgroup $U$ of a profinite group $G$, then $\operatorname{cd}_\ell(G)\leq d$. Its proof uses Shapiro on the permutation modules $\mathbf F_\ell[G/U]$ and dimension shifting, so it applies to arbitrary finite $\ell$-primary actions rather than only the trivial module. Book 29, Section 13.8, then passes from finite modules to every discrete $\ell$-primary torsion module by filtered unions of finite stable submodules. Taking $d=2$ in (3.1k) proves (3.1f) and the full statement (3.1).
+The open-subgroup criterion proved in Book 30, Section 6.3, now applies: if $H^{d+1}(U,\mathbf F_\ell)=0$ for every open subgroup $U$ of a profinite group $G$, then $\operatorname{cd}_\ell(G)\leq d$. Its proof uses Shapiro on the permutation modules $\mathbf F_\ell[G/U]$ and dimension shifting, so it applies to arbitrary finite $\ell$-primary actions rather than only the trivial module. Book 24, Section 13.8, then passes from finite modules to every discrete $\ell$-primary torsion module by filtered unions of finite stable submodules. Taking $d=2$ in (3.1k) proves (3.1f) and the full statement (3.1).
 
 **The real $2$-primary case.** Suppose that $K$ has a real place. Because $S$ contains the places above $2$, the extension
 
@@ -465,7 +465,7 @@ $$
 2H^i(G_{K,S},A)=0\qquad(i>2).
 $$
 
-On the other hand, choose a real geometric place. Its decomposition group maps injectively to $G_{K,S}$: complex conjugation acts nontrivially on $i\in K_S$, so it is not killed by the quotient. Thus $G_{K,S}$ contains $C_2$. A profinite group containing an element of order $2$ has infinite $2$-cohomological dimension by the periodic cohomology calculation of Book 29. Therefore
+On the other hand, choose a real geometric place. Its decomposition group maps injectively to $G_{K,S}$: complex conjugation acts nontrivially on $i\in K_S$, so it is not killed by the quotient. Thus $G_{K,S}$ contains $C_2$. A profinite group containing an element of order $2$ has infinite $2$-cohomological dimension by the periodic cohomology calculation of Book 24. Therefore
 
 $$
 \operatorname{cd}_2(G_{K,S})=\infty \tag{3.1l}
@@ -499,7 +499,7 @@ The same statement should not be promoted to all degrees without checking the hi
 
 If $M$ is finite-dimensional over a finite field $k$ and $S$ contains the places above $\operatorname{char}k$, every $H^i(G_{K,S},M)$ is a finite-dimensional $k$-vector space. It vanishes for $i>2$ when $\operatorname{char}k$ is odd or $K$ is totally imaginary; no such ordinary vanishing is asserted in characteristic two over a field with real places. A local condition must be a $k$-subspace if linear Selmer theory is intended; an arbitrary additive subgroup need not respect scalar multiplication.
 
-Let $\mathcal O$ be the integers of a finite extension $E/\mathbf Q_\ell$, with uniformizer $\varpi$, and let $T$ be a finite free $\mathcal O$-module with its $\varpi$-adic topology and a continuous $G_{K,S}$-action. Assume that $S$ contains infinity and the places above $\ell$. Put $T_m=T/\varpi^mT$. Section 3.2 makes every $H^i(G_{K,S},T_m)$ finite. The Milnor sequence of Book 29 is
+Let $\mathcal O$ be the integers of a finite extension $E/\mathbf Q_\ell$, with uniformizer $\varpi$, and let $T$ be a finite free $\mathcal O$-module with its $\varpi$-adic topology and a continuous $G_{K,S}$-action. Assume that $S$ contains infinity and the places above $\ell$. Put $T_m=T/\varpi^mT$. Section 3.2 makes every $H^i(G_{K,S},T_m)$ finite. The Milnor sequence of Book 24 is
 
 $$
 0\longrightarrow
@@ -537,7 +537,7 @@ $$
 
 If $\ell=2$ and $K$ has a real place, restriction to $K(i)$ and the finite-level identity $\operatorname{cor}\circ\operatorname{res}=2$ instead show that $2$ kills $H^i_{\mathrm{cts}}(G_{K,S},T)$ for $i>2$. These groups can be nonzero, but they are finite because they are finitely generated $\mathcal O$-modules killed by $2$.
 
-For $V=T\otimes_{\mathcal O}E$, compactness of the cochain domain shows that every continuous cochain has bounded image. The scalar-extension theorem of Book 29 therefore gives
+For $V=T\otimes_{\mathcal O}E$, compactness of the cochain domain shows that every continuous cochain has bounded image. The scalar-extension theorem of Book 24 therefore gives
 
 $$
 H^i_{\mathrm{cts}}(G_{K,S},T)\otimes_{\mathcal O}E
@@ -1746,7 +1746,7 @@ H^i_{\mathrm{cts}}(G_{K,S},T)
 \simeq\varprojlim_mH^i(G_{K,S},T_m),
 $$
 
-because all finite-level groups are finite and hence their inverse systems are Mittag--Leffler. The same argument applies to every completion $K_v$: finite-level local cohomology is finite by Books 30 and 31, including the mixed-characteristic $\ell$-primary case, while real and complex places are finite-group calculations. Consequently
+because all finite-level groups are finite and hence their inverse systems are Mittag--Leffler. The same argument applies to every completion $K_v$: finite-level local cohomology is finite by Books 30--31, including the mixed-characteristic $\ell$-primary case, while real and complex places are finite-group calculations. Consequently
 
 $$
 H^i_{\mathrm{cts}}(K_v,T)

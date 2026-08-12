@@ -104,7 +104,7 @@
 
 ### 1.1 The next layer of local algebra
 
-Book 69 turned tangent and obstruction calculations into presentations of complete local rings. A presentation records variables and equations, but patching arguments ask more. They produce modules over those rings, and the decisive question is often whether the equations cut independently enough that a large module must be free or faithful.
+Book 64 turned tangent and obstruction calculations into presentations of complete local rings. A presentation records variables and equations, but patching arguments ask more. They produce modules over those rings, and the decisive question is often whether the equations cut independently enough that a large module must be free or faithful.
 
 The invariant that measures independence is **depth**. Its elementary definition counts successive nonzerodivisors; its homological definition finds the first nonvanishing Ext group. The bridge between them is the Koszul complex. Once depth is connected to free resolutions, the Auslander--Buchsbaum formula turns a depth equality into projective dimension zero. This is the source of many freeness arguments.
 
@@ -1119,13 +1119,13 @@ The module $R\oplus R/(x)$ has full support and is faithful because of its free 
 
 ### 9.1 Regularity revisited
 
-Book 69 characterized a Noetherian local ring as regular when
+Book 64 characterized a Noetherian local ring as regular when
 
 $$
 \operatorname{edim}R=\dim R.
 $$
 
-That equality says the maximal ideal has as few generators as dimension permits. Depth now gives a stronger interpretation. If $d=\dim R$ and $x_1,\ldots,x_d$ minimally generate $\mathfrak m$, Book 69 identified
+That equality says the maximal ideal has as few generators as dimension permits. Depth now gives a stronger interpretation. If $d=\dim R$ and $x_1,\ldots,x_d$ minimally generate $\mathfrak m$, Book 64 identified
 
 $$
 \operatorname{gr}_{\mathfrak m}R
@@ -1245,7 +1245,7 @@ $$
 \widehat A\simeq Q/(f_1,\ldots,f_c)
 $$
 
-for some complete regular local $Q$ and a regular sequence. This definition is intrinsic and is the appropriate one when a regular presentation exists naturally only after completion. For the complete coefficient rings of Book 69, no extra completion is needed.
+for some complete regular local $Q$ and a regular sequence. This definition is intrinsic and is the appropriate one when a regular presentation exists naturally only after completion. For the complete coefficient rings of Book 64, no extra completion is needed.
 
 In a complete-intersection presentation,
 

@@ -110,7 +110,7 @@
 
 ### 1.1 Why a point can determine a ring map
 
-Books 69 and 70 developed two complementary languages. Presentations and cotangent spaces describe equations near a closed point; depth, regular sequences, and Fitting ideals decide whether those equations are independent. We now use both languages to answer a sharper question. Suppose there is a surjection
+Books 64 and 70 developed two complementary languages. Presentations and cotangent spaces describe equations near a closed point; depth, regular sequences, and Fitting ideals decide whether those equations are independent. We now use both languages to answer a sharper question. Suppose there is a surjection
 
 $$
 R\longrightarrow T
@@ -1387,7 +1387,7 @@ $$
 \mathfrak m_R/(\mathfrak m_R^2+\varpi R).
 $$
 
-The complete relative cotangent-surjectivity criterion from Book 69 then makes the displayed
+The complete relative cotangent-surjectivity criterion from Book 64 then makes the displayed
 power-series map surjective.
 
 Let $K_R$ and $K_T$ be the kernels of $S\to R$ and $S\to T$. Then

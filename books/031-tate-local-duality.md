@@ -114,7 +114,7 @@ $$
 
 The theorem will say that this pairing loses no information in either variable. This is stronger than equality of orders. A cardinality calculation can show that an already injective map between finite groups is bijective; it cannot produce the injection. We shall construct detectors first and count only at the final step of an exact-sequence argument.
 
-The result has a second role. A local deformation condition is usually a subgroup or subspace of $H^1(K,M)$. Duality assigns to it an exact orthogonal condition in $H^1(K,M^*(1))$. Books 32 and 33 will assemble such local conditions globally. We stop before that assembly: every statement here concerns one local field.
+The result has a second role. A local deformation condition is usually a subgroup or subspace of $H^1(K,M)$. Duality assigns to it an exact orthogonal condition in $H^1(K,M^*(1))$. Books 32--33 will assemble such local conditions globally. We stop before that assembly: every statement here concerns one local field.
 
 ### 1.2 Standing field hypotheses
 
