@@ -954,8 +954,9 @@ $$
 It is a quotient of the universal fixed-determinant deformation ring of
 $\bar\rho$ unramified outside $S$.
 
-**Proof.** The global Schur condition (4.2) and the standard finiteness of
-$H^1(G_{\mathbf Q,S},M)$ give the universal unframed fixed-determinant ring.
+**Proof.** The global Schur condition (4.2) and the global cohomology
+finiteness theorem of Book 32, Section 3.2, applied to
+$H^1(G_{\mathbf Q,S},M)$, give the universal unframed fixed-determinant ring.
 Choose a representative of its universal class and restrict it to the two
 decomposition groups.  Theorems 2.2 and 3.1 represent the framed local
 conditions by closed quotients of the ambient framed local rings.  Pull
@@ -1265,6 +1266,7 @@ The proof uses only foundational mathematics and books preceding this one.
 | Source | Imported result | Use here |
 |---|---|---|
 | Books 30--31 | local Euler characteristic and Tate duality, including $H^2\simeq H^0(M^*(1))^*$ | Section 2.5 |
+| Book 32, Section 3.2 | finiteness of $H^1(G_{\mathbf Q,S},M)$ for finite coefficients and a controlling set containing the coefficient prime | Section 4.2 |
 | Book 44 | Tate-curve inertia, Frobenius sign, and conductor of a rank-one monodromy block | Sections 1.3 and 2.5 |
 | Books 63 and 66 | strict equivalence, tangent and obstruction theory, scalar-centralizer representability, and closed global quotients | Sections 1.4, 2.4, 3.4, and 4.2 |
 | Book 67, Theorem 7.1 | closed and liftable nonzero-monodromy minimal condition | Section 2.4 |

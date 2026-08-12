@@ -577,7 +577,7 @@ $$
 and (3.5) give
 
 $$
-H^0(U_v^-(M))=0, \tag{3.9}
+H^i(U_v^-(M))=0\qquad(i\leq0), \tag{3.9}
 $$
 
 $$
@@ -751,7 +751,8 @@ $$
 \longrightarrow\cdots. \tag{4.9}
 $$
 
-Because every local quotient complex has zero \(H^0\),
+Because every local quotient complex has zero cohomology in degrees at most
+zero,
 
 $$
 H^0_{\mathcal L}(\mathbf Q,M)
@@ -1167,8 +1168,9 @@ in the Books 166 and 181 hardly-ramified lift:
   lift extraction.
 
 The sole warning about excluded characteristics needed in the proof is
-already visible in (2.7): the dyadic invariant calculation used here
-requires the stated range \(\ell\ge7\).
+already visible in (2.7): the dyadic invariant calculation excludes
+characteristics \(2\) and \(3\). The stated Frey range \(\ell\ge7\) is
+therefore more than sufficient for this calculation.
 
 ## 8. Source-closure audit
 

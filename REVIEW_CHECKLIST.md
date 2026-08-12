@@ -190,9 +190,9 @@ dependency spine is not closed.
 | 160 | Schoof's Finite-Flat Category over $\mathbf Z[1/2]$ | [x] | [x] | — | — |
 | 161 | Quintic Cyclotomic Units and Kummer Arithmetic | [x] | [x] | — | — |
 | 162 | Cyclotomic Descent for Quintic Fermat-Type Equations | [x] | [x] | — | — |
-| 163 | The Frey Curve: Arithmetic Reduction and the Exact Modular-Method Handoff | [ ] | [ ] | — | — |
-| 164 | Local Conditions for Hardly-Ramified Minimal Deformations | [ ] | [ ] | — | — |
-| 165 | Supported Galois Cohomology and Selmer Calculations | [ ] | [ ] | — | — |
+| 163 | The Frey Curve: Arithmetic Reduction and the Exact Modular-Method Handoff | [x] | [x] | [x] | — |
+| 164 | Local Conditions for Hardly-Ramified Minimal Deformations | [x] | [x] | [x] | — |
+| 165 | Supported Galois Cohomology and Selmer Calculations | [x] | [x] | [x] | — |
 | 166 | Relation Obstructions and Poitou--Tate Corrections | [ ] | [ ] | — | — |
 | 167 | The Chebotarev Density Theorem | [x] | [x] | — | — |
 | 168 | Compatible Coefficient Systems and Purity | [x] | [ ] | — | — |

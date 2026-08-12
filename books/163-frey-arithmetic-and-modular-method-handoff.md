@@ -1070,9 +1070,15 @@ has:
    $$
      \rho_3:G_{\mathbf Q}\longrightarrow\operatorname{GL}_K(V)
    $$
-   with determinant $\chi_3$, unramified outside $\{2,3\}$, and the common pure weight-one good-prime polynomials;
+   with determinant $\chi_3$, unramified outside $\{2,3\}$, and common pure
+   weight-one good-prime polynomials, with the polynomial at $5$ included in
+   that certified common set;
 2. the exact signed SP filtration at $2$;
-3. a globally stable free rank-two lattice $T\subset V$ whose every quotient by a power of the coefficient uniformizer has a compatible coefficient-linear finite-flat model over $\mathbf Z_3$.
+3. a globally stable free rank-two lattice $T\subset V$ whose quotients by
+   powers of the coefficient uniformizer form a quotient-compatible
+   coefficient-linear tower of finite locally free models over
+   $\mathbf Z[1/2]$, including the exact multiplication sequences; in
+   particular, every quotient has a finite-flat model over $\mathbf Z_3$.
 
 Then the later finite-flat classification and endgame give
 $$

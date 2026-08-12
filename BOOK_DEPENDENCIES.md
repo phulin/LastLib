@@ -192,7 +192,7 @@ flowchart LR
 | 161 | Quintic Cyclotomic Units and Kummer Arithmetic | 1, MATHLIB |
 | 162 | Cyclotomic Descent for Quintic Fermat-Type Equations | 161 |
 | 163 | The Frey Curve: Arithmetic Reduction and the Exact Modular-Method Handoff | 43, 44, 45, 150, 162 |
-| 164 | Local Conditions for Hardly-Ramified Minimal Deformations | 30, 31, 44, 63, 66, 67, 68, 163 |
+| 164 | Local Conditions for Hardly-Ramified Minimal Deformations | 30, 31, 32, 44, 63, 66, 67, 68, 163 |
 | 165 | Supported Galois Cohomology and Selmer Calculations | 24, 30, 31, 32, 33, 69, 164 |
 | 166 | Relation Obstructions and Poitou--Tate Corrections | 164, 165 |
 | 167 | The Chebotarev Density Theorem | 2, 3, 4, 5, 6, 7, 17, 21, 23, 24 |
