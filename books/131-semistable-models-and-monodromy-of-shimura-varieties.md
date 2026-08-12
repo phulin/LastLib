@@ -82,8 +82,8 @@
 
 At a hyperspecial prime, the integral PEL moduli space is smooth. Its special fiber therefore has no local memory beyond ordinary specialization, and inertia acts trivially on prime-to-residue-characteristic cohomology. A prime at which the level stabilizes a nontrivial lattice chain is different. The Hodge filtration must move compatibly through that chain. The resulting local model has several components, and their intersections create vanishing cycles.
 
-The theorem turns that failure of smoothness into usable arithmetic. For the
-quaternionic curves, the resulting essential singular fiber is nodal and the total space is
+The theorem turns that failure of smoothness into usable arithmetic. For the direct
+quaternion-trace curve, the resulting essential singular fiber is nodal and the total space is
 regular. For the compact unitary surfaces used in the modèles étranges construction, one or two
 rank-two directions can be parahoric. One bad direction gives a regular strict
 normal-crossings model. Two bad directions first give a product of nodes whose total space is
@@ -141,20 +141,20 @@ $$
 
 The ordering of $I$ fixes signs in incidence maps; the resulting cohomology is independent of it.
 
-The normalization, blowup, regular-model, graph, component-group, and low-dimensional nearby-cycle results established earlier are used with their stated hypotheses. We recall every formula that enters a calculation. The generic quaternionic and unitary PEL spaces, their selected canonical components, and their universal families are the ones already constructed. No later automorphic decomposition is assumed.
+The normalization, blowup, regular-model, graph, component-group, and low-dimensional nearby-cycle results established earlier are used with their stated hypotheses. We recall every formula that enters a calculation. The generic direct quaternionic and standard unitary PEL spaces, their selected canonical components, and their universal families are the ones already constructed. No later automorphic decomposition is assumed.
 
 ### 1.3 The exact scope of the construction
 
 Bad integral models are not uniform across all parahoric groups. This book treats exactly the
-rank-two minuscule parahorics occurring in the catalogued PEL-exact quaternionic curves and the
-standard unitary modèles étranges surfaces. The residue prime is chosen to split every algebra
+rank-two minuscule parahorics for the direct quaternion-trace curve and the
+standard unitary modèles étranges surface retained in Book 130. The residue prime is chosen to split every algebra
 and coefficient packet. That choice is restrictive enough to make the integral tensors
 visible. It is exactly the completely split odd sub-scope consumed by the downstream surface
 theorem, not a claim about every parahoric place of the same rational groups.
 
 Three cases result:
 
-1. a quaternionic curve with one Iwahori chain;
+1. the direct quaternion-trace curve with one Iwahori chain;
 2. a unitary surface with one Iwahori direction and one hyperspecial direction;
 3. a unitary surface with two Iwahori directions.
 
@@ -167,17 +167,16 @@ additional hyperspecial Book 130 models.
 We also allow finite extension of $K$ followed by normalization and the explicit semistable modifications of Chapter 7. This is a semistable alteration when the generic variety is replaced by a finite cover. It is not called a model of the original generic variety. Arbitrary ramified unitary local models, deeper lattice chains, nonflat naive determinant loci, and wild singularities are outside the theorem. Their exclusion is necessary because their nearby cycles are not determined by the charts proved here.
 
 There is one inherited qualification, already discharged for the models used here. Projectivity
-of the distinguished good vertex is taken from the current Book 130 theorem, including the Book
-205 presentation audit which that theorem imports for every PEL-exact quaternionic realization.
-We do not reproduce its Raynaud-boundary proof or promote a central common refinement to an
-isomorphism of universal abelian schemes. Section 1.4 verifies the local premises of the
+of the distinguished good vertex is taken from the current Book 130 theorem for the direct
+quaternion-trace curve and the standard unitary surface. We do not reproduce its Raynaud
+torus-rank or anisotropic-localization proof. Section 1.4 verifies the local premises of the
 imported theorem. In degree two no monodromy--weight assertion is assumed. Sections 10.4 and 12
 compute the induced restriction--Gysin and extreme incidence maps themselves, including their
 ranks and radicals.
 
 ### 1.4 Prerequisite audit and the selected split place
 
-Fix one of the rational quaternionic PEL-exact data of Book 127, or the standard two-active
+Fix the direct quaternion-trace PEL datum of Book 127, or the standard two-active
 unitary-surface datum of Book 129, together with its selected canonical component union and a
 neat level away from a finite set of level primes. Let $L/\mathbf Q$ be a finite Galois field containing the normal closures of
 the center, reflex field, and, in the unitary case, the CM field, and splitting every simple
@@ -205,9 +204,8 @@ unramified.
 idempotents and both active unitary packets are defined over $\mathbf Z_p$, the maximal order is
 split and $*$-stable, and the distinguished polarization lattice is self-dual. The
 distinguished hyperspecial models are the smooth projective fine models of Book 130, Theorem
-16.1: this applies to every PEL-exact quaternionic realization admitted by Book 127 and to the
-standard unitary realization of Book 129. Compatible central and common-refinement quotients
-in the quaternionic case, and ordinary level quotients in either case, have exactly the fine,
+16.1: this applies to the direct quaternion-trace realization of Book 127 and to the
+standard unitary realization of Book 129. Ordinary level quotients in either case have the fine,
 stack, coarse, and universal-family qualifications in that theorem. The
 parahoric chains selected in Section 2.1 therefore have a projective good vertex to which all
 extra flag data may be forgotten.
@@ -222,22 +220,19 @@ $$
 with $*$ either pairing two factors or acting by the standard adjoint involution. Because
 $p\notin\Sigma$, the chosen maximal order is unramified, the polarization degree is a unit, and
 the lattice and its tensor stabilizer are respectively self-dual and reductive. The determinant
-orientation of Books 127 and 129 singles out one quaternionic rank-two Morita packet or two
+orientation of Books 127 and 129 singles out one quaternionic rank-two multiplicity packet or two
 independent unitary rank-two packets. Book 130 computes the actual stable-isotropic good-vertex
 local model, not merely its generic fiber: it is $\mathbf P^1_R$ in the curve case and
 $\mathbf P^1_R\times\mathbf P^1_R$ in the surface case. Its integral
 Hodge-filtration lifting theorem gives the smooth framed deformation diagram. Thus every
 good-place premise appearing in its boundary theorem is verified at (1.1); the exclusion of
-$p=2$ also removes its special alternation qualification.
+$p=2$ keeps the construction inside its verified odd local-model ledger.
 
-The properness input is imported at exactly that strength. Book 130 uses Book 205 to compare the
-global Raynaud middle form packet by packet, trivialize only the adjoint similarity torsor, and
-exclude false flags supported in auxiliary or central packets. Replacing that argument by the
-slogan that an arbitrary isotropic subspace has a proper stabilizer would lose precisely the
-presentation independence which Book 205 proves. The present book needs only the resulting
-projectivity of the distinguished fine model and the stated finite-quotient comparisons. Book
-205 is therefore in the dependency closure through Book 130, not an additional direct input
-here.
+The properness input is imported at exactly the strength proved in Book 130. For the direct
+curve, the Raynaud cocharacter module is a unital left $B$-module whose rank cannot fit inside
+$V=B$; Book 130 also records its positive $J_T$-block. For the standard surface, the recorded
+anisotropic finite localization excludes the torus. The present book needs only the resulting
+projectivity of those distinguished fine models and the ordinary level comparisons.
 
 The remaining direct inputs have equally sharp boundaries. Books 127 and 129 provide the exact
 rational tensors, determinant orientation, selected components, and Hecke datum, but no
@@ -253,8 +248,8 @@ $$
 \tag{1.2}
 $$
 
-There are nine direct dependencies. Book 205 is used through the accepted Book 130 interface
-and remains transitive. $\square$
+There are nine direct dependencies; the good-model input is used only through the narrowed
+Book 130 interface. $\square$
 
 ## 2. Parahoric PEL data and bad-prime moduli
 
@@ -279,7 +274,7 @@ $$
 \tag{2.1}
 $$
 
-For each active packet $a$, choose a basis $e_a,f_a$ of the endpoint Morita module and set
+For each active packet $a$, choose a basis $e_a,f_a$ of the endpoint multiplicity module and set
 
 $$
 U_{a,0}=Re_a\oplus Rf_a,\qquad
@@ -301,7 +296,7 @@ $k$, each map has rank one, and two limiting choices appear. That rank drop is t
 two components.
 
 We now place this chain in the exact PEL lattices. Under the split decomposition in Theorem 1.1,
-Morita equivalence writes each algebra packet as a matrix module built from a multiplicity
+passage to a full idempotent writes each algebra packet as a matrix module built from a multiplicity
 module $U_\tau$. The involution either pairs the $\tau$-packet perfectly with a distinct
 $\tau^*$-packet or gives the usual perfect alternating pairing on their sum. At a selected
 active packet extend the two displayed lattices to all $n\in\mathbf Z$ by
@@ -333,10 +328,10 @@ active factor the neighboring vertex is modular, and globally its dual is the op
 vertex as in (2.2a). Multiplying the form on one reduced packet does not make the full PEL lattice
 self-dual when inactive packets and the common similitude are retained. The neighboring vertex
 therefore carries the polarization type dictated by the full multichain; it is not a second
-hyperspecial endpoint. This distinction is essential in a presentation with fixed central
-packets and in the one-direction surface case.
+hyperspecial endpoint. This distinction is essential when fixed packets and the common
+similitude are retained, especially in the one-direction surface case.
 
-For the quaternionic curve, (2.2a) is inserted only in the unique moving rank-one determinant
+For the direct quaternion-trace curve, (2.2a) is inserted only in the unique moving rank-one determinant
 packet and its $*$-partner. For the unitary surface, insert it in the first active packet and
 retain the hyperspecial vertex in the second direction for one-direction level; insert the same
 chain independently in both active packets for two-direction level. Complex conjugation supplies
@@ -349,7 +344,7 @@ distinguished hyperspecial functor of Theorem 1.1.
 
 Equivalently, and without choosing representatives for the neighboring global lattices, let
 $\mathrm{red}_a:G_{\mathbf Z_p}(\mathbf Z_p)\to\mathrm{GL}(U_{a,0}\otimes k)$ be the active
-Morita reduction and let $B_a$ stabilize the oriented line selected by (2.2). For a set $J$ of
+idempotent reduction and let $B_a$ stabilize the oriented line selected by (2.2). For a set $J$ of
 bad directions put
 
 $$
@@ -362,20 +357,16 @@ This inverse-image definition retains the exact common-similitude and all fixed 
 the Iwahori, Iwahori--hyperspecial, or two-Iwahori level used on the generic fiber; the displayed
 multichain is its integral realization.
 
-The presentation audit can now be read without suppressing a packet. The accepted Book 130
-interface leaves exactly the following rows at the selected split place:
+The narrowed Book 130 interface leaves exactly the following fixed data at the selected split place:
 
-| rational PEL presentation | active reduced integral packet | modified vertices | framed local model |
+| fixed PEL datum | active reduced integral packet | modified vertices | framed local model |
 |---|---|---|---|
-| Book 127 quaternionic-Hermitian-line row, including matrix Morita transfer and derived-trivial central packets | one self-paired alternating rank-two plane; all auxiliary packets fixed | $(\Lambda_0,\Lambda_1)$ in that plane and its full-chain dual | $M^{\mathrm{Iw}}$ |
-| Book 127 binary-unitary curve row, including its Morita and central variants | one ordered split CM packet and its forced annihilator packet | $U_{a,i}$ in one factor and $U_{a,-i}^{\vee}$ in its conjugate | $M^{\mathrm{Iw}}$ |
+| direct Book 127 quaternion-trace curve | one self-paired alternating rank-two plane; all inactive packets fixed | $(\Lambda_0,\Lambda_1)$ in that plane and its full-chain dual | $M^{\mathrm{Iw}}$ |
 | standard Book 129 surface, one bad direction | first ordered unitary packet chained; second active packet kept hyperspecial | one two-vertex chain and one good line | $M^{\mathrm{Iw}}\times_R\mathbf P^1_R$ |
 | standard Book 129 surface, two bad directions | both ordered unitary packets chained independently, with both annihilator packets forced | the commuting square of the two two-vertex chains | $M^{\mathrm{Iw}}\times_RM^{\mathrm{Iw}}$ |
 
-No higher-corestriction, bare hyperbolic, or altered two-active surface presentation is hidden in
-this table: those are not additional admitted Book 127 curve rows or the standard Book 129
-surface. Fixed packets still retain their order, orientation, polarization, and common-multiplier
-labels even though they contribute no moving flag.
+Fixed packets retain their order, orientation, polarization, and common-multiplier labels even
+though they contribute no moving flag. No alternative faithful realization is included.
 
 ### 2.2 The moduli problem
 
@@ -407,7 +398,7 @@ for the scalar $c$ and the target polarization type determined by the full self-
 and the prime-to-$p$ levels correspond under $\phi$. Both Lie algebras satisfy their vertexwise
 determinant and orientation laws. Equivalently, one specifies a finite locally free,
 $\mathcal O$-stable, polarization-isotropic kernel $H\subset A_0[p^a]$ with the prescribed active
-Morita summand and forced $*$-annihilator, puts $A_1=A_0/H$, and uses Book 38 to descend
+multiplicity summand and forced $*$-annihilator, puts $A_1=A_0/H$, and uses Book 38 to descend
 $p^a\lambda_0$ to the prescribed polarization on $A_1$. Unless $H$ is globally Lagrangian, that
 target polarization has nontrivial $p$-primary kernel. This is why $A_1$ is not another good
 Book 130 endpoint.
@@ -443,8 +434,8 @@ schemes are flat over $R$ and have no extra vertical associated components.
 
 **Proof.** Work over an arbitrary $R$-algebra $B$; this proves equality of functors, including
 nilpotent test rings. The split primitive idempotents decompose every framed de Rham lattice and
-its Hodge direct summand. Stability under a matrix factor $M_n(R)$ is, by integral Morita
-equivalence, exactly the assertion that the corresponding summand is obtained from a direct
+its Hodge direct summand. Stability under a matrix factor $M_n(R)$ is, by full-idempotent
+reduction, exactly the assertion that the corresponding summand is obtained from a direct
 summand in the multiplicity module. The determinant polynomial from Book 127 or Book 129 has
 rank zero or full rank in every inactive oriented packet and rank one in each active packet.
 Consequently inactive Hodge factors are forced, while an active factor is a line subbundle
@@ -454,7 +445,7 @@ The $*$-paired packet is not a second choice: perfect polarization identifies it
 annihilator of $L_{a,-i}$. In a self-paired rank-two alternating plane every line is isotropic.
 Thus polarization and duality add no equation after the active line has been chosen. The only
 remaining equations say that the Hodge summands respect the two maps of the isogeny crystal;
-under Morita equivalence they are exactly
+after full-idempotent reduction they are exactly
 
 $$
 \alpha L_{a,0}\subset L_{a,1},\qquad
@@ -479,7 +470,7 @@ vertical embedded or associated component remains. $\square$
 
 **Theorem 2.2 (parahoric PEL representability).** At neat prime-to-$p$ level, the one-chain and
 two-chain functors of Section 2.2 are represented by projective $R$-schemes of finite
-presentation. Their generic fibers are the selected quaternionic or unitary Shimura varieties
+presentation. Their generic fibers are the selected direct quaternionic or standard unitary Shimura varieties
 at the corresponding parahoric level. They carry the universal isogeny chain and are flat over
 $R$.
 
@@ -495,7 +486,7 @@ in Theorem 1.1. Over $\mathscr M^{\mathrm{hyp}}$, the relative Hilbert scheme of
 finite flat group $\mathcal A[p^a]$ is projective. Its universal subscheme is flat with its fixed
 Hilbert polynomial. The conditions that it be a subgroup, be stable under a finite generating
 set of $\mathcal O$, have the prescribed rank, and be isotropic for the polarization pairing are
-closed. Packetwise Hilbert polynomials impose the active Morita rank and the forced
+closed. Packetwise Hilbert polynomials impose the active multiplicity rank and the forced
 $*$-annihilator; these conditions are open and closed inside that fixed-rank subgroup locus. The
 quotient by the resulting finite locally free subgroup exists as an abelian scheme. Book 38
 descends the required multiple of the source polarization, and (2.4), its prescribed target
@@ -544,7 +535,7 @@ equally many formal power-series variables. Their morphisms to $R$ are therefore
 equivalent; regularity, flatness, and the strict-normal-crossings property may be checked on the
 displayed local models.
 
-**Proof.** The frame group is smooth in the present data. Under the split Morita decomposition,
+**Proof.** The frame group is smooth in the present data. Under the split idempotent decomposition,
 an active factor is the standard smooth $\mathrm{GL}_2$ lattice-chain group scheme. Its special
 fiber maps onto the corresponding Borel and has a smooth affine-unipotent kernel; it is not
 itself identified with that lower-dimensional Borel. Inactive factors are the reductive
@@ -654,7 +645,7 @@ This separates rational and integral monodromy. Tensoring with $E_\ell$, subdivi
 
 ### 4.1 Construction of the integral curve
 
-Use the split place and the unique active quaternionic chain selected in Sections 1.4 and 2.1.
+Use the split place and the direct curve's unique active quaternionic chain selected in Sections 1.4 and 2.1.
 Let
 
 $$
@@ -667,7 +658,7 @@ This moduli construction is important even when one can describe the generic cur
 
 ### 4.2 Regularity and semistability
 
-**Theorem 4.1 (semistable quaternionic model).** For the selected quaternionic datum,
+**Theorem 4.1 (semistable quaternionic model).** For the selected direct quaternion-trace datum,
 $\mathscr C_{\mathrm{Iw}}$ is a regular projective flat curve over
 $R$ with reduced nodal special fiber. At every geometric node its completed strict henselian
 local ring is
@@ -769,17 +760,17 @@ determinant--multiplier correction in Book 130's Kodaira--Spencer formula.
 
 We next identify the parahoric branches globally. Reassemble the active kernel of relative
 Frobenius with its forced $*$-paired packets and the zero summands in the inactive factors.
-If $e_a,e_a^*$ are the paired primitive idempotents and $\operatorname{Mor}_a$ denotes inverse
-integral Morita reassembly from the $e_a$-packet, the subgroup is explicitly
+If $e_a,e_a^*$ are the paired primitive idempotents and $\operatorname{Rec}_a$ denotes integral
+reassembly from the $e_a$-packet, the subgroup is explicitly
 
 $$
-H_{F,a}=\operatorname{Mor}_a(\ker F_{G_a})\oplus
-\operatorname{Mor}_{a^*}\bigl((\ker F_{G_a})^\perp\bigr),
+H_{F,a}=\operatorname{Rec}_a(\ker F_{G_a})\oplus
+\operatorname{Rec}_{a^*}\bigl((\ker F_{G_a})^\perp\bigr),
 \tag{4.4a}
 $$
 
 when $a$ and $a^*$ are distinct. In a self-paired alternating packet, the line is its own
-orthogonal and only the first Morita-reassembled summand is taken. This subgroup is finite
+orthogonal and only the first reassembled summand is taken. This subgroup is finite
 locally free, $\mathcal O$-stable, and isotropic. Book 38 therefore supplies the PEL quotient,
 which is the partial relative-Frobenius isogeny in the active packet. This construction gives a
 morphism
@@ -791,7 +782,7 @@ $$
 Here none of the three kernel properties is inferred from a generic closure. Relative
 Frobenius on a Barsotti--Tate group has a finite locally free kernel; the split idempotents make
 its reduced active idempotent summand a direct finite locally free factor of rank $p$, and
-integral Morita reassembly gives the full packet rank prescribed by the lattice index. The polarization pairs
+integral reassembly gives the full packet rank prescribed by the lattice index. The polarization pairs
 distinct $*$-packets and is alternating on a self-paired packet, so the selected summand and its
 forced annihilator are isotropic. In the display (4.3), quotienting by that line interchanges
 the two adjacent-vertex Hodge ranks and leaves every inactive determinant block fixed. Thus the
@@ -931,7 +922,7 @@ M^{\mathrm{Iw}}\times_R\mathbf P^1_R.
 \tag{5.1}
 $$
 
-This product is not merely a dimension count. Morita decomposition separates the two algebra
+This product is not merely a dimension count. The idempotent decomposition separates the two algebra
 idempotent factors, and the common similitude condition relates determinant lines without
 coupling their infinitesimal line choices. Proposition 2.1 proves this independence for the
 selected integral datum over arbitrary test rings.
@@ -1550,16 +1541,11 @@ trace on nearby cycles then compare the cohomology of every translate. One must 
 quotient the dual graph or dual complex before forming its signed chain complex: stabilizers and
 orientation reversal affect invariants.
 
-There is a second finite operation, distinct from residue-field descent. Within a fixed
-quaternionic PEL presentation, Book 130 imports the Book 205 central and level deck
-representatives. At the selected catalog-good place those representatives are $p$-integral and
-have prime-to-$p$ kernels. They therefore identify the presentation's $p$-divisible groups and
-commute with every split idempotent and with $F,V$. A central representative acts scalarly on
-the active reduced packet and hence preserves the oriented multichain; an ordinary
-prime-to-$p$ level deck map leaves the local $p$-level unchanged. These, and only those imported
-deck maps whose $p$-component preserves the oriented parahoric, act on the same fine parahoric
-model and preserve the Hasse and
-Kottwitz--Rapoport strata proved above. A free effective quotient is finite etale and remains
+There is a second finite operation, distinct from residue-field descent. Within either fixed
+PEL datum, an ordinary prime-to-$p$ level deck map leaves the local $p$-level and oriented
+multichain unchanged. It identifies the $p$-divisible groups and commutes with every split
+idempotent and with $F,V$, so it acts on the same fine parahoric model and preserves the Hasse
+and Kottwitz--Rapoport strata proved above. A free effective quotient is finite étale and remains
 regular with semistable charts étale locally. It is strict in the global convention of Section
 1.2 only if no deck orbit identifies two geometric branch components into a self-node; otherwise
 the ordered-strata calculation stays on the fine cover with its descent action. With
@@ -1572,14 +1558,6 @@ An integral representative which merely normalizes the hyperspecial group need n
 chosen Borel line. It then carries this model to the correspondingly translated parahoric model,
 just as a nonpreserving prime-to-$p$ Hecke element carries a selected component union to its
 translate; no self-action is inferred.
-
-The quaternionic-line--binary-unitary common refinement is weaker. Book 130 compares the good
-base curves by finite maps but explicitly does not identify, or canonically isogenize, their
-universal abelian schemes. Accordingly this book constructs the parahoric model separately in
-each admitted presentation and obtains the same rank-two charts and rational monodromy
-formulas; it does not assert a canonical cross-presentation isomorphism of the integral
-parahoric functors. Such an isomorphism would require an additional integral tensor or
-$p$-divisible-group identification. This is the exact presentation-independence boundary.
 
 ## 8. Strata and incidence complexes
 
@@ -2075,7 +2053,7 @@ Over a general perfect residue field, (10.11) and (8.7) still compute the induce
 but the rank sum in (10.19) uses the finite-field purity available at the selected place (1.1).
 There the stratum filtration equals the monodromy filtration exactly when $J|_A$ is
 nondegenerate, or $g=r$. Whether or not that equality holds, (10.12)--(10.19) give the actual
-nilpotent operator's ranks and Jordan blocks at the catalogued split place.
+nilpotent operator's ranks and Jordan blocks at the selected split place.
 
 ### 10.5 Integral lattices and saturation
 
@@ -2482,8 +2460,8 @@ This package is geometric input to a local--global comparison theorem. Identifyi
 
 ### 14.1 Unified construction and computation
 
-**Theorem 14.1 (semistable models and monodromy).** Fix any catalogued PEL-exact quaternionic
-curve datum of Book 127 or the standard unitary modèles étranges surface datum of Book 129, its
+**Theorem 14.1 (semistable models and monodromy).** Fix the direct quaternion-trace curve datum
+of Book 127 or the standard unitary modèles étranges surface datum of Book 129, its
 selected canonical component union and a neat prime-to-$p$ level. Choose the split place (1.1)
 and impose the one- or two-direction parahoric chains (2.2a). Then:
 
@@ -2521,11 +2499,9 @@ and impose the one- or two-direction parahoric chains (2.2a). Then:
     selected union which it preserves, preserve the partial
     $F/V$ kernels, Hasse strata, branch blowup, component pairing, restriction--Gysin complex,
     and the operators $N,N^2$; and
-11. quaternionic central and level deck maps within a fixed presentation whose $p$-component
-    preserves the oriented parahoric act on the fine model and its strata; free quotients remain
-    semistable, while stack, coarse, and universal-family conclusions retain the exact
-    qualifications of Chapter 7. Different PEL presentations have the same proved local charts
-    but no asserted cross-presentation isomorphism of parahoric functors.
+11. ordinary prime-to-$p$ level deck maps within either fixed datum act on the fine model and
+    its strata; free quotients remain semistable, while stack, coarse, and universal-family
+    conclusions retain the exact qualifications of Chapter 7.
 
 **Proof.** Theorem 1.1 verifies the current Book 130 input and projectivity of the distinguished
 good models. Section 2.1 selects the full self-dual periodic multichains. Proposition 2.1
@@ -2544,22 +2520,22 @@ monodromy map; its kernel calculation gives (10.12), and (10.15)--(10.18) evalua
 global Hasse strata. The positive square form (8.7) gives (8.8), so (10.19) and elementary
 Jordan theory prove statement 8 without a monodromy--weight hypothesis. The Artin formula proves
 statement 9. Naturality of partial Frobenius and Verschiebung, flat base change for the branch
-blowup, the projection formula, and functoriality of nearby cycles prove statement 10. The final
-paragraph of Section 7.4 proves statement 11. $\square$
+blowup, the projection formula, and functoriality of nearby cycles prove statement 10. The
+ordinary-level quotient paragraph of Section 7.4 proves statement 11. $\square$
 
 ### 14.2 Scope ledger and failure modes
 
-The theorem is deliberately exact about its scope. The rational inputs are the PEL-exact
-quaternionic curves of Book 127 and the standard unitary surface of Book 129. The residue prime
+The theorem is deliberately exact about its scope. The rational inputs are the direct
+quaternion-trace curve of Book 127 and the standard unitary surface of Book 129. The residue prime
 is one of the completely split primes selected in Section 1.4, and the only bad level groups are
 the one- and two-factor Iwahoris of Section 2.1. Deeper chains, ramified unitary groups,
 non-minuscule cocharacters, and orthogonal spin local models are different problems; no claim
-about them is needed for the catalogued varieties.
+about them is needed for the two retained varieties.
 
-The odd and completely split qualifications are structural. Book 130 records that its Book 205
-input can recover flat-closure properness at a dyadic quaternionic place only after a complete
-oriented genus and common multiplier are supplied, but Book 130 does not then provide the smooth dyadic good
-vertex and this book has not proved the required dyadic display or parahoric local model. Thus
+The odd and completely split qualifications are structural. Book 130's direct torus-rank and
+trait arguments can establish flat-closure properness for the direct curve at a dyadic place
+once the integral moduli functor is available, but Book 130 does not provide the smooth dyadic
+good vertex. This book has not proved the required dyadic display or parahoric local model. Thus
 there is no dyadic semistable conclusion here. Likewise Chapter 7 transports the displayed
 charts after a separately supplied finite splitting extension; it does not prove that an
 arbitrary nonsplit or ramified initial PEL local model becomes one of those charts.
@@ -2573,9 +2549,9 @@ parameters identify the intersections globally. Blowup cycle formulas then deter
 maps, rather than inferring them from a local node.
 
 Projectivity also has no suppressed boundary premise. At the chosen prime, every local
-hypothesis of Book 130, Theorem 16.1, was verified in Theorem 1.1. Its Book 205 input gives the
-presentation-independent parabolic contradiction for quaternionic curves, while the standard
-unitary surface retains its recorded anisotropic finite localization. If those boundary
+hypothesis of Book 130, Theorem 16.1, was verified in Theorem 1.1. The direct curve uses the
+Raynaud torus-rank obstruction, while the standard unitary surface retains its recorded
+anisotropic finite localization. If those boundary
 hypotheses were dropped, a compactification theorem would be required.
 At coarse level a fixed point can still create a quotient singularity, so the theorem computes
 equivariantly on the fine cover unless the quotient action is free.
@@ -2599,12 +2575,12 @@ or type calculation.
 ### 14.3 Conclusion
 
 The active integral linear algebra has rank two, and it has now been installed in the exact
-catalogued tensors. The selected maximal order and annihilator chains turn the determinant and
+fixed tensors. The selected maximal order and annihilator chains turn the determinant and
 polarization equations into an incidence of two lines over every test ring; that incidence
 produces $xy=p$. One bad direction gives the semistable quaternionic curve or a normal crossing
 in the unitary surface. Two bad directions produce the product of two nodes; its small
 resolution replaces an impermissible fourfold meeting by triple normal crossings. Theorem 7.2
-proves that both diagonal choices admit a finite invariant regular common refinement.
+proves that both diagonal choices admit a simultaneous finite invariant regular refinement.
 
 Once the model is strict semistable, its arithmetic memory is distributed across its strata. Components retain their own cohomology. Double curves supply possible length-two monodromy. Triple incidences and the topology of the dual complex supply possible length-three blocks. Restriction and Gysin maps decide which local generators survive globally. The logarithm of tame inertia then turns that incidence geometry into $N$, while finite descent restores the part of inertia that semistable base change temporarily removed.
 
@@ -2622,5 +2598,5 @@ product, and signed incidence. The geometric pair $(r,N)$, the curve component g
 conductor, Frobenius polynomial, and integral stratum matrices therefore pass functorially to
 rational Hecke summands; a surface lattice cokernel requires the saturation hypotheses already
 stated. This supplies the semistable models, global components, nearby cycles,
-monodromy, conductor, and type information promised by the catalog, without importing any later
+monodromy, conductor, and type information promised for these fixed data, without importing any later
 automorphic theorem.

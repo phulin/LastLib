@@ -4,7 +4,7 @@
 
 - [1. The good-reduction problem](#1-the-good-reduction-problem)
   - [1.1 From a canonical model to arithmetic geometry](#11-from-a-canonical-model-to-arithmetic-geometry)
-  - [1.2 The curve presentations, the surface, and the dependency boundary](#12-the-curve-presentations-the-surface-and-the-dependency-boundary)
+  - [1.2 The direct curve, the surface, and the dependency boundary](#12-the-direct-curve-the-surface-and-the-dependency-boundary)
   - [1.3 Conventions and the meaning of good](#13-conventions-and-the-meaning-of-good)
 - [2. Good integral PEL data](#2-good-integral-pel-data)
   - [2.1 A local datum at a finite place](#21-a-local-datum-at-a-finite-place)
@@ -19,7 +19,7 @@
 - [4. The good local model](#4-the-good-local-model)
   - [4.1 Why a determinant equation is not enough](#41-why-a-determinant-equation-is-not-enough)
   - [4.2 The framed local-model diagram](#42-the-framed-local-model-diagram)
-  - [4.3 The quaternionic curve packets](#43-the-quaternionic-curve-packets)
+  - [4.3 The direct quaternionic curve packet](#43-the-direct-quaternionic-curve-packet)
   - [4.4 The two unitary lines](#44-the-two-unitary-lines)
 - [5. Smoothness and extension properties](#5-smoothness-and-extension-properties)
   - [5.1 Formal smoothness from filtration lifting](#51-formal-smoothness-from-filtration-lifting)
@@ -28,8 +28,8 @@
   - [5.4 Uniqueness of the good model](#54-uniqueness-of-the-good-model)
 - [6. Properness in the compact cases](#6-properness-in-the-compact-cases)
   - [6.1 Flat closure and the valuative criterion](#61-flat-closure-and-the-valuative-criterion)
-  - [6.2 Semiabelian degeneration and the similarity obstruction](#62-semiabelian-degeneration-and-the-similarity-obstruction)
-  - [6.3 The catalog audit and boundary exclusion](#63-the-catalog-audit-and-boundary-exclusion)
+  - [6.2 Semiabelian degeneration and the direct toric obstruction](#62-semiabelian-degeneration-and-the-direct-toric-obstruction)
+  - [6.3 Direct boundary exclusion](#63-direct-boundary-exclusion)
   - [6.4 Actual good reduction and properness](#64-actual-good-reduction-and-properness)
 - [7. Fine levels, quotient levels, and base change](#7-fine-levels-quotient-levels-and-base-change)
   - [7.1 Change of prime-to-$p$ level](#71-change-of-prime-to-p-level)
@@ -67,7 +67,7 @@
 - [14. Integral comparison package](#14-integral-comparison-package)
   - [14.1 The geometric comparison theorem](#141-the-geometric-comparison-theorem)
   - [14.2 Functoriality for tensors and correspondences](#142-functoriality-for-tensors-and-correspondences)
-  - [14.3 Independence of the chosen good presentation](#143-independence-of-the-chosen-good-presentation)
+  - [14.3 Fixed-presentation scope](#143-fixed-presentation-scope)
 - [15. Failure modes and the good-prime boundary](#15-failure-modes-and-the-good-prime-boundary)
   - [15.1 Ramified orders and non-self-dual lattices](#151-ramified-orders-and-non-self-dual-lattices)
   - [15.2 Parahoric level and singular local models](#152-parahoric-level-and-singular-local-models)
@@ -79,11 +79,11 @@
 
 ## 1. The good-reduction problem
 
-The complex points of a Shimura curve or surface are described by a double quotient, and its canonical model supplies a variety over a number field. Neither description answers the question asked at a finite prime: is there a model over the local ring whose special fiber is as regular as the generic fiber, and do the moduli objects and correspondences survive reduction? This book constructs smooth proper integral PEL models at the odd catalog-good primes specified below; unramified integral tensors and hyperspecial level are necessary parts of that ledger, not its whole content.
+The complex points of a Shimura curve or surface are described by a double quotient, and its canonical model supplies a variety over a number field. Neither description answers the question asked at a finite prime: is there a model over the local ring whose special fiber is as regular as the generic fiber, and do the moduli objects and correspondences survive reduction? This book constructs smooth proper integral PEL models for the direct quaternion-trace curve and the standard unitary surface at the odd good primes specified below; unramified integral tensors and hyperspecial level are necessary parts of that ledger, not its whole content.
 
-The delicate part is properness. It is not enough to know that the generic Shimura variety is compact. A hypothetical degeneration of its universal abelian variety has a Raynaud torus, and one must exclude that torus inside the actual faithful PEL representation. Book 205 proves that exclusion for every quaternionic PEL realization admitted by Book 127, including matrix Morita transfer, the genuinely different binary-unitary plane, and compatible central refinements. Its proof also audits the apparent split-corestriction and hyperbolic alternatives: for a division quaternion datum with one active real place, no nontrivial higher-corestriction or bare hyperbolic candidate survives all of splitting, exact-stabilizer, and positive-involution requirements. The standard two-active-place unitary surface of Book 129 is a different construction; its recorded anisotropic finite Hermitian localization supplies a separate elementary boundary obstruction.
+The delicate part is properness. It is not enough to know that the generic Shimura variety is compact. A hypothetical degeneration of its universal abelian variety has a Raynaud torus, and one must exclude that torus inside the actual faithful PEL representation. For the direct trace realization $D=V=B$, the cocharacter group of a nonzero Raynaud torus would be a nonzero unital left $B$-module, too large to fit inside an abelian variety with rational homology $B$. Section 6 also records the associated positive $J_T$-block, so the variance and determinant content of this short obstruction remain explicit. For the standard two-active-place unitary surface of Book 129, the recorded anisotropic finite Hermitian localization supplies a separate elementary boundary obstruction.
 
-Properness and smoothness enter through different schemes. Book 127 first gives an ambient quasi-projective determinant scheme. Book 205 proves that the **schematic flat closure** of the selected generic quaternionic component union inside that ambient scheme is projective; it neither asserts that the ambient scheme is flat nor that the closure is smooth. Chapters 4--5 of this book use the exact odd unramified local model to prove ambient smoothness. Only then may the flat closure be identified with an open-and-closed smooth union of ambient components. Keeping this order prevents integral properness from being inferred from generic compactness and prevents ambient flatness from being smuggled into the boundary theorem.
+Properness and smoothness enter through different schemes. Book 127 first gives an ambient quasi-projective determinant scheme. Section 6 proves directly that the **schematic flat closure** of the selected generic component union inside that ambient scheme is projective; it does not assume that the ambient scheme is flat or that the closure is smooth. Chapters 4--5 independently use the exact odd unramified local model to prove ambient smoothness. Only then may the flat closure be identified with an open-and-closed smooth union of ambient components. Keeping this order prevents integral properness from being inferred from generic compactness and prevents ambient flatness from being smuggled into the boundary theorem.
 
 ### 1.1 From a canonical model to arithmetic geometry
 
@@ -99,9 +99,9 @@ These geometric demands have a cohomological purpose. For every prime $\ell\ne p
 
 There are three possible logical shortcuts, and all are wrong. A smooth generic fiber does not force a smooth integral closure. A proper generic fiber does not by itself make a chosen integral moduli scheme proper. Finally, comparison with $\mathbf Q_\ell$-coefficients does not automatically preserve a preferred $\mathbf Z_\ell$-lattice. Each issue receives a separate proof below.
 
-### 1.2 The curve presentations, the surface, and the dependency boundary
+### 1.2 The direct curve, the surface, and the dependency boundary
 
-There are two geometric families, but the curve family has many PEL presentations.
+There are two fixed geometric constructions in scope.
 
 For the curve, let $B/F$ be a quaternion division algebra split at exactly one real place and let
 
@@ -109,15 +109,29 @@ $$
 G^{\mathrm{ad}}=\operatorname{Res}_{F/\mathbf Q}\operatorname{PGL}_1(B).
 $$
 
-We allow **any quaternionic PEL realization in the sense of Book 127, Definition 1.1** whose adjoint datum is this one. The direct trace realization $D=V=B$ is one row, not the definition of the scope. Book 205, Proposition 7.1, proves that after full-idempotent Morita reduction and removal of derived-trivial central packets, the unique noncentral packet is either a quaternionic Hermitian line or a binary Hermitian plane over a CM quadratic center. Matrix Morita transfer and compatible central refinements account for the remaining admitted presentations. The active adjoint factor is still unique, so every such fine generic PEL space is a curve.
+The curve datum is the **direct quaternion trace realization** of Book 127: $D=V=B$ with its left $B$-action and alternating form
 
-The phrase **binary-unitary curve presentation** will always mean the one-active-place replacement in Book 205, Section 7.5. It must not be confused with the **standard unitary surface** of Book 129, Definition 4.1 and Proposition 4.2, assumed PEL-exact in the sense of its Definition 5.2. For that surface $D=K$, $V=W$ is a binary Hermitian space with two active signature-$(1,1)$ places and one recorded anisotropic finite localization. Its parameter space has dimension two. In both families the universal abelian scheme can have dimension much larger than the base.
+$$
+\psi_\delta(x,y)=\operatorname{Tr}_{F/\mathbf Q}
+\operatorname{Trd}_B(x\bar y\delta),
+\qquad \bar\delta=-\delta,
+$$
 
-The direct prerequisites have distinct jobs. Book 127 supplies the exact quaternionic PEL definition, ambient fine functor, generic canonical-model comparison, characteristic-zero Hodge chart, levels, and universal families. Book 129 supplies the standard surface tensors, determinant orientation, anisotropic finite localization, and generic surface. Book 205 supplies the exhaustive presentation audit, the odd packet-lattice comparison, presentation-independent potential good reduction, projectivity of the fine flat closure, and the finite central/common-refinement quotient construction. Book 60 supplies Grothendieck--Messing and Serre--Tate deformation theory. Book 40 supplies potential semistable reduction, the Raynaud one-motive and its functorial weight filtration, and the Néron--Ogg--Shafarevich criterion used directly for the surface and for the descent from potential to actual good reduction. Books 38, 15, 18, and 22 supply, respectively, abelian quotients and extension of homomorphisms and polarizations, coherent base change, formal algebraization with an ample line, and prime-to-residue-characteristic proper and smooth base change. The arbitrary-dimensional abelian Betti--étale calculation used to identify universal coefficient systems is proved directly in Section 9.3.
+for a choice for which the induced involution $b^*=\delta^{-1}\bar b\delta$ is positive and the Hodge map lifts. Its active split packet is a single rank-two alternating multiplicity plane, so the fine generic PEL space is a curve. No other faithful PEL realization of the same adjoint datum is claimed here.
 
-Accordingly the exact direct dependency set is Books 15, 18, 22, 38, 40, 60, 127, 129, and 205. The deeper quaternion, corestriction, canonical-model, and central-comparison inputs used to prove Book 205 belong to its dependency closure and are not invoked independently here.
+The second construction is the **standard unitary surface** of Book 129, Definition 4.1 and Proposition 4.2, assumed PEL-exact in the sense of its Definition 5.2. For that surface $D=K$, $V=W$ is a binary Hermitian space with two active signature-$(1,1)$ places and one recorded anisotropic finite localization. Its parameter space has dimension two. In both constructions the universal abelian scheme can have dimension much larger than the base.
 
-Classification of adjoint rank-one inner forms alone would not classify a faithful PEL representation or trivialize its similarity torsor. Section 6.2 retains that obstruction calculation. Book 205 resolves exactly the part needed for properness: it constructs one global middle polarized form, compares every packet and orientation locally, trivializes only the adjoint bitorsor by the quaternionic Hasse principle, and proves that a nonzero torus produces a noncentral rational parabolic. It deliberately does not claim a lift through the center. There is no circularity: despite its numerical filename, Book 205 is a prior input in the eventual dependency order, proves its boundary theorem without a local-model smoothness assertion, and does not use this book.
+The direct prerequisites have distinct jobs. Book 127 supplies the direct quaternion-trace PEL datum, ambient fine functor, generic canonical-model comparison, characteristic-zero Hodge chart, levels, and universal family. Book 129 supplies the standard surface tensors, determinant orientation, anisotropic finite localization, and generic surface. Book 60 supplies Grothendieck--Messing and Serre--Tate deformation theory. Book 40 supplies potential semistable reduction, the Raynaud one-motive and its functorial weight filtration, and the Néron--Ogg--Shafarevich criterion. Books 38, 15, 18, and 22 supply, respectively, abelian quotients and extension of homomorphisms and polarizations, coherent base change, formal algebraization with an ample line, and prime-to-residue-characteristic proper and smooth base change. The arbitrary-dimensional abelian Betti--étale calculation used to identify universal coefficient systems is proved directly in Section 9.3.
+
+Accordingly the exact direct dependency row is
+
+$$
+\boxed{130\mid 15,18,22,38,40,60,127,129.}
+$$
+
+There are eight direct dependencies.
+
+The direct curve needs no comparison among faithful presentations. Its boundary obstruction is internal to $D=V=B$: the Raynaud cocharacters carry the covariant left $B$-action, and their rank already forces the torus to vanish. Section 6.2 retains the positive toric complex structure $J_T$ and its determinant interpretation as an independent check on that argument.
 
 The bad-prime geometry is not part of the present construction. A parahoric lattice chain, a non-self-dual lattice, or a semiabelian special fiber gives nearby cycles and monodromy rather than the constant specialization proved here. Those phenomena belong after the good model has been isolated.
 
@@ -125,9 +139,9 @@ The bad-prime geometry is not part of the present construction. A parahoric latt
 
 All schemes are locally noetherian when coherent or infinitesimal arguments are used. Write $R=\mathcal O_{E,v}$, so $\operatorname{Frac}(R)=E$; write $E_v$ for the completion of $E$ at $v$ and $k=k(v)$. The symbols $\bar E$ and $\bar k$ denote separable algebraic closures together with a chosen geometric specialization $\bar E\rightsquigarrow\bar k$; when a local Galois action is discussed, we base change through $E\hookrightarrow E_v$ and write $\bar E_v$. The fraction field is always denoted by $E$; a subscript $K$ on a moduli space denotes the compact-open level $K=K_pK^p$. A trait means the spectrum of a discrete valuation ring.
 
-A **good PEL place in this book** is odd. For a quaternionic curve presentation it is catalog-good in the sense of Book 205, Definition 1.1: every center at $p$ is unramified; the order is maximal hereditary and involution-stable; the alternating lattice is self-dual with the selected hyperspecial stabilizer; the polarization degree is a unit; the adjoint packet is unramified and quasi-split; every discriminant, determinant, multiplier-component, and orientation label is fixed packetwise; and every central representative is $p$-integral, every finite kernel has order prime to $p$, and the effective deck set is finite. For the standard unitary surface it satisfies the analogous order, lattice, polarization, hyperspecial, determinant, and orientation conditions of Chapters 2 and 6, and $p$ lies below no place in Book 129's recorded exceptional set. In both cases Chapter 4 proves that the actual local model is the expected smooth flag variety.
+A **good PEL place in this book** is odd. For the direct quaternion-trace curve, the center $F$ is unramified at $p$, $B$ is split at every place above $p$, the order is maximal and involution-stable, the alternating lattice is self-dual with its hyperspecial stabilizer, the polarization degree is a unit, and the determinant and orientation labels extend over $R$. For the standard unitary surface it satisfies the analogous order, lattice, polarization, hyperspecial, determinant, and orientation conditions of Chapters 2 and 6, and $p$ lies below no place in Book 129's recorded exceptional set. In both cases Chapter 4 proves that the actual local model is the expected smooth flag variety.
 
-Books 127 and 129 placed $2$ in their bad sets, and Book 205's catalog-good definition is also odd. We retain that boundary. While retaining all the other order, central, and level hypotheses, Book 205 proves properness at a dyadic place only if the complete oriented self-dual genus of every Raynaud packet and one common multiplier are supplied separately. Even that stronger boundary input does not prove the smooth dyadic local model required for the good-model theorem here. A dyadic smooth model therefore remains outside the conclusions below unless both ingredients are independently verified.
+Books 127 and 129 place $2$ in their bad sets, and we retain that boundary. The direct torus-rank proof of potential good reduction does not use odd integral lattice classification, but it does not supply the missing dyadic ambient local model. A smooth dyadic model therefore remains outside the conclusions below unless the exact dyadic order, lattice, determinant-orientation, and local-model smoothness are independently verified. Properness of the direct flat closure may then be recovered by the same auxiliary-level trait argument; it must not be conflated with smoothness of the ambient determinant scheme.
 
 Arithmetic reciprocity sends a uniformizer to arithmetic Frobenius. Geometric Frobenius is its inverse. Pullback makes cohomology contravariant; a finite proper correspondence acts by pullback along its first projection and trace along its second.
 
@@ -171,15 +185,15 @@ The words in the preceding definition have concrete content. We require:
 
 1. the center of $D\otimes\mathbf Q_p$ is a product of unramified extensions of $\mathbf Q_p$;
 2. $\mathcal O\otimes\mathbf Z_p$ is maximal hereditary, and every factor active in the local model is split over its unramified center, hence has a maximal Azumaya order there;
-3. the involution preserves the full hereditary order and every fixed exchange, unitary, orthogonal, or quaternionic packet is one of the unramified standard packets selected by the catalog labels;
+3. the involution preserves the full order and the determinant-orientation labels select the fixed direct-trace or standard-unitary packet;
 4. the map $\Lambda_p\to\Lambda_p^\vee$ induced by $\psi$ is an isomorphism;
 5. the prescribed polarization type has degree prime to $p$.
 
-These conditions are sufficient in the curve and surface data used here because Morita equivalence reduces the deformation problem to one or two ordinary rank-two multiplicity modules. More generally, unramifiedness of the algebra and self-duality of the lattice do not alone prove that a determinant local model is smooth. Ramified unitary signatures and certain residue-characteristic-two forms show why smoothness of the actual local model remains a separate condition.
+These conditions are sufficient in the curve and surface data used here because passage to a full idempotent reduces the deformation problem to one or two ordinary rank-two multiplicity modules. More generally, unramifiedness of the algebra and self-duality of the lattice do not alone prove that a determinant local model is smooth. Ramified unitary signatures and certain residue-characteristic-two forms show why smoothness of the actual local model remains a separate condition.
 
 Self-duality has two roles. It makes the polarization pairing perfect on de Rham homology, so isotropic direct summands lift cleanly. It also makes the stabilizer reductive; an almost self-dual lattice typically has a parahoric, rather than hyperspecial, stabilizer. Thus replacing self-duality by a finite-index inclusion changes the geometry rather than merely its notation.
 
-A split quaternionic factor gives the basic local example. Let $F_w/\mathbf Q_p$ be unramified, take $D_w=M_2(F_w)$ and $\mathcal O_w=M_2(\mathcal O_{F_w})$, and use the adjoint involution for a perfect alternating form. On a self-dual module, Morita equivalence removes the matrix factor and leaves a free rank-two multiplicity module. Choosing its Hodge line gives $\mathbf P^1_{\mathcal O_{F_w}}$.
+A split quaternionic factor gives the basic local example. Let $F_w/\mathbf Q_p$ be unramified, take $D_w=M_2(F_w)$ and $\mathcal O_w=M_2(\mathcal O_{F_w})$, and use the adjoint involution for a perfect alternating form. On a self-dual module, a full idempotent removes the matrix factor and leaves a free rank-two multiplicity module. Choosing its Hodge line gives $\mathbf P^1_{\mathcal O_{F_w}}$.
 
 For the unitary example, let $K_w/F_w$ be an unramified quadratic étale algebra, either a field or the split algebra, and give $K_w^2$ the split Hermitian form with matrix
 
@@ -191,7 +205,7 @@ The lattice $\mathcal O_{K_w}^2$ is self-dual, its unitary similitude group is u
 
 The integral classification needed here is elementary at odd unramified places and must not be confused with rational classification of the underlying form.
 
-**Proposition 2.1 (odd unramified moving packets).** At a good odd place for any admitted quaternionic curve presentation or for the standard unitary surface, every moving noncentral factor becomes, after an unramified splitting extension and full-idempotent Morita equivalence, one of the following:
+**Proposition 2.1 (odd unramified moving packets).** At a good odd place for the direct quaternion-trace curve or the standard unitary surface, every moving factor becomes, after an unramified splitting extension and the standard idempotent reduction, one of the following:
 
 1. a free rank-two module over an unramified discrete valuation ring with a perfect alternating form and a symplectic basis; or
 2. the standard self-dual lattice in a split binary Hermitian space for an unramified quadratic étale algebra, with Gram matrix
@@ -200,13 +214,13 @@ The integral classification needed here is elementary at odd unramified places a
    \begin{pmatrix}0&1\\1&0\end{pmatrix}.
    $$
 
-In the first case all perfect alternating rank-two lattices are isometric. In the second case all self-dual lattices in the split rational plane are isometric under the full unitary group; when the quadratic algebra is split, this is the evaluation packet $P\oplus P^\vee$ with its two ordered idempotents. The determinant law selects a line in the resulting multiplicity plane. Matrix Morita transfer changes the ordinary module rank but not this reduced moving packet. Derived-trivial central packets have zero-dimensional flag varieties; their ordered idempotents, unitary norm classes, signs, and common multiplier remain discrete labels. Any ordered determinant orientation is additional open-and-closed data and is not a consequence of lattice isometry.
+In the first case all perfect alternating rank-two lattices are isometric. In the second case all self-dual lattices in the split rational plane are isometric under the full unitary group; when the quadratic algebra is split, its two idempotents give the evaluation packet $P\oplus P^\vee$. The determinant law selects a line in each moving multiplicity plane. Any ordered determinant orientation is additional open-and-closed data and is not a consequence of lattice isometry.
 
-**Proof.** Each moving maximal unramified Azumaya factor becomes a product of matrix rings over unramified valuation rings. Integral Morita equivalence therefore reduces a moving packet to its rank-two multiplicity module and carries duality to an alternating or Hermitian form on that module. Fixed hereditary packets are not being Morita-equated with a split field; they remain the standard labeled packets covered by Book 205, Theorem 6.3.
+**Proof.** Each moving maximal unramified Azumaya factor becomes a product of matrix rings over unramified valuation rings. Passing to a full idempotent reduces the direct trace factor or either active surface factor to its rank-two multiplicity module and carries duality to an alternating or Hermitian form on that module.
 
 For a perfect alternating plane, choose a primitive vector $e$. Perfectness gives $f$ with $\langle e,f\rangle$ a unit; rescale $f$ to make that value $1$. Alternation gives zero diagonal entries, so $(e,f)$ is a symplectic basis.
 
-If the quadratic étale algebra is split, its two idempotents write a self-dual lattice as $P\oplus Q$. Adjointness makes both summands isotropic and pairs them perfectly, so $Q=P^\vee$; a basis of the free rank-two reduced module gives the displayed evaluation, hence hyperbolic, packet.
+If the quadratic étale algebra is split, its two idempotents write a self-dual lattice as $P\oplus Q$. Adjointness makes both summands isotropic and pairs them perfectly, so $Q=P^\vee$; a basis of the free rank-two reduced module gives the displayed evaluation packet.
 
 Now let $S/O$ be an unramified quadratic field extension of odd-residue-characteristic valuation rings and let $L$ be a self-dual lattice in a split Hermitian plane. Reduction modulo the uniformizer is a nondegenerate Hermitian plane over the quadratic residue-field extension. The finite-field norm is surjective, so this plane has a nonzero isotropic vector. The isotropic equation is smooth at such a vector: its differential is
 
@@ -214,9 +228,9 @@ $$
 w\longmapsto h(w,e)+h(e,w)=\operatorname{Tr}_{S/O}h(w,e),
 $$
 
-which is onto because $h(-,e)$ and the unramified trace are onto. Hensel lifting gives a primitive isotropic $e\in L$. Self-duality gives $f\in L$ with $h(e,f)=1$. Choose $c\in S$ with $c+\bar c=h(f,f)$ and replace $f$ by $f-ce$; the new vector is isotropic and still pairs to $1$ with $e$. Thus $L=Se\oplus Sf$ has the displayed hyperbolic Gram matrix. This proves the two moving classifications. Book 205, Theorem 6.3, supplies the compatible standard forms for the fixed exchange, orthogonal, quaternionic, and rank-one unitary packets, preserves self-duality under integral Morita transfer, and realizes one common allowed unit multiplier across all packets. The determinant and orientation assertions follow from the packet decomposition of the Hodge quotient: rank one is a Grassmannian condition, while choosing one of two ordered components is a separate idempotent condition. $\square$
+which is onto because $h(-,e)$ and the unramified trace are onto. Hensel lifting gives a primitive isotropic $e\in L$. Self-duality gives $f\in L$ with $h(e,f)=1$. Choose $c\in S$ with $c+\bar c=h(f,f)$ and replace $f$ by $f-ce$; the new vector is isotropic and still pairs to $1$ with $e$. Thus $L=Se\oplus Sf$ has the displayed Gram matrix. The determinant and orientation assertions follow from the packet decomposition of the Hodge quotient: rank one is a Grassmannian condition, while choosing one of two ordered components is a separate idempotent condition. $\square$
 
-The dyadic boundary is different. For a Hermitian lattice $L$, the scale ideal generated by all $h(x,y)$ and the norm ideal generated by the $h(x,x)$ are distinct integral invariants. Self-duality fixes the scale but need not fix the norm ideal at residue characteristic two; parity types and, in larger packets, several self-dual genera can therefore share the same rational Hermitian space, rank, and determinant norm-class. A rational local similarity does not choose among them. The same warning applies before Morita equivalence when an involution has dyadic integral invariants. Books 127 and 129 avoid this issue by putting $2$ in the bad set, and so does the theorem below. A separately verified dyadic local model would be new input, not a consequence of the present dependency list.
+The dyadic boundary is different for the surface. For a Hermitian lattice $L$, the scale ideal generated by all $h(x,y)$ and the norm ideal generated by the $h(x,x)$ are distinct integral invariants. Self-duality fixes the scale but need not fix the norm ideal at residue characteristic two; different parity types can therefore share the same rational Hermitian space, rank, and determinant norm-class. The direct alternating plane itself still has a symplectic basis in residue characteristic two, but Book 127 does not verify the complete dyadic direct-trace order and local-model package used here. Books 127 and 129 put $2$ in their bad sets, and so does the theorem below. A separately verified dyadic local model would be new input, not a consequence of the present dependency list.
 
 
 ### 2.3 The reflex ring and determinant law
@@ -236,7 +250,7 @@ $$
 
 It is enough to impose (2.1) on a finite $\mathbf Z$-basis of $\mathcal O$ together with the universal linear combination: equality for separate basis elements would miss mixed coefficients. Written universally, (2.1) is closed and commutes with every base change on $R$.
 
-At an unramified place the embeddings of the center form finite étale packets. Their idempotents split the de Rham module, and $r$ prescribes the rank of the Hodge quotient in every packet. For every Book 127 presentation of the quaternionic curve, Book 205, Proposition 7.1, leaves exactly one active reduced rank-two multiplicity plane. It may be written as an alternating plane in the quaternionic-line row or as a split binary Hermitian plane in the binary-unitary row; Morita and central operations do not add a moving adjoint factor. For the standard unitary surface exactly two planes move. All remaining packets are fixed. This is the integral source of the one- and two-dimensional local models.
+At an unramified place the embeddings of the center form finite étale packets. Their idempotents split the de Rham module, and $r$ prescribes the rank of the Hodge quotient in every packet. The direct quaternion-trace curve has exactly one active reduced rank-two alternating plane. For the standard unitary surface exactly two Hermitian planes move. All remaining packets are fixed. This is the integral source of the one- and two-dimensional local models.
 
 ### 2.4 A hypothesis ledger for curves and surfaces
 
@@ -248,17 +262,15 @@ $$
 
 The good-model theorem will use the following ledger.
 
-- The rational PEL realization is either any exact quaternionic PEL realization of Book 127 with adjoint datum $\operatorname{Res}_{F/\mathbf Q}\operatorname{PGL}_1(B)$ for $B$ division and split at one real place, or the standard exact two-active-place unitary surface of Book 129. Its selected generic fine PEL component union has been identified with the appropriate canonical model or PEL central cover.
+- The rational PEL realization is either the direct quaternion-trace realization $D=V=B$ of Book 127, with $B$ division and split at one real place, or the standard exact two-active-place unitary surface of Book 129. Its selected generic fine PEL component union has been identified with the corresponding canonical model.
 - The level $K^p$ is neat, or a full level $N\ge3$ with $(N,p\deg\lambda)=1$ is imposed, so the moduli problem has no inertia and its polarization pairing modulo $N$ is perfect.
-- The rational prime $p$ is odd. In the curve case the place is catalog-good for the exact presentation, including the order, lattice, multiplier component, every orientation, and every central representative. In the surface case the order, lattice, form, polarization type, determinant polynomial, and orientation extend over $R$ as above.
+- The rational prime $p$ is odd. In the curve case $B$ is split at every place above $p$, and the direct trace order, self-dual lattice, alternating form, polarization type, determinant law, multiplier component, and orientation extend over $R$. In the surface case the order, lattice, form, polarization type, determinant polynomial, and orientation extend over $R$ as above.
 - The group $G_{\mathbf Z_p}$ is reductive and the integral local model is the smooth product of the active projective lines.
 - The selected generic component union is stable under the decomposition group at $v$. If it is not already cut out by an integral determinant or orientation invariant, its integral model initially means its schematic flat closure in the ambient fine PEL scheme. Chapters 4--6 prove that this closure is an open-and-closed smooth projective union.
 - A Hecke operator on a selected component union is asserted only for a double coset that preserves that union. The full component union is preserved by every prime-to-$p$ Hecke correspondence; otherwise the same construction is a correspondence from the chosen union to its Hecke translate, not an endomorphism of its cohomology.
 - In the curve case $B$ is division; no anisotropic localization of the faithful PEL module is required. In the surface case the standard Hermitian plane $W$ is anisotropic and retains the finite anisotropic localization constructed in Book 129.
 - In the unitary case, the rational prime $p$ lies below no place in the recorded exceptional set, in particular not below the anisotropic localization. This ensures that the latter may be used at a coefficient prime different from the residue characteristic.
-- A connected central modification is treated through the actual finite lift-class groupoid of Book 205, not through an assumed surjection on rational or adelic centers. Its representatives at $p$ are integral, its finite kernels have order prime to $p$, and its effective deck set is finite.
-
-One always first constructs the ambient functor defined by the integral determinant and orientation data. An arbitrarily chosen geometric component need not descend to $R$. If neatness is omitted, the natural object is a Deligne--Mumford stack; its coarse scheme can acquire quotient singularities even at a good prime. For a central/common-refinement quotient, even the stack carries a universal abelian scheme only when the deck action has a genuine PEL-isomorphism linearization; a system of prime-to-$p$ quasi-isogenies is not such a linearization.
+One always first constructs the ambient functor defined by the integral determinant and orientation data. An arbitrarily chosen geometric component need not descend to $R$. If neatness is omitted, the natural object is a Deligne--Mumford stack; its coarse scheme can acquire quotient singularities even at a good prime.
 
 ## 3. The integral moduli functor
 
@@ -324,7 +336,7 @@ $$
  \simeq\operatorname{Sh}_K(G,X)^{\mathrm{sel}}.              \tag{3.4}
 $$
 
-For a quaternionic presentation this is Book 127's comparison with the canonical model of its PEL-exact datum; when a further central quotient is needed to recover the original datum, that quotient is treated in Book 205 and Section 7. For the surface it is Book 129's comparison. The isomorphism is over $E$, not merely over $\mathbf C$: both sides have canonical-model descent, and the complex moduli identification respects reciprocity on connected components.
+For the direct quaternion-trace curve this is Book 127's comparison with the canonical model of that PEL-exact datum; for the surface it is Book 129's comparison. The isomorphism is over $E$, not merely over $\mathbf C$: both sides have canonical-model descent, and the complex moduli identification respects reciprocity on connected components.
 
 Define the fine flat-closure model
 
@@ -336,7 +348,7 @@ $$
 
 Affine-locally its coordinate ring is the image of the ambient ring in its localization at the uniformizer, so $\mathscr M_K^{\mathrm{fl}}$ is $R$-flat and its generic fiber is (3.4). This formal property says nothing about smoothness or properness. The universal tuple on the ambient scheme restricts to (3.5), but (3.5) is not yet claimed to represent an independently described open-and-closed integral subfunctor. Chapter 5 will obtain that claim from ambient smoothness, while Chapter 6 obtains properness from the boundary theorem.
 
-The universal object on the generic fiber agrees with the earlier universal PEL abelian variety. Different quaternionic presentations can give different universal abelian schemes on different fine covers even when their adjoint base curve is the same. If the Shimura variety is described through the unitary modèles étranges surface, its universal abelian variety remains auxiliary: its endomorphism action realizes the required group, but its first cohomology is not automatically the desired rank-two automorphic representation.
+The universal object on the generic fiber agrees with the earlier universal PEL abelian variety. For the unitary modèles étranges surface, that universal abelian variety remains auxiliary: its endomorphism action realizes the required group, but its first cohomology is not automatically the desired rank-two automorphic representation.
 
 ## 4. The good local model
 
@@ -352,7 +364,7 @@ $$
 
 The conditions that $F$ be $\mathcal O$-stable, isotropic, and of the prescribed determinant type are linear to first order. Merely subtracting the number of equations from the dimension of a Grassmannian would assume that these linear equations have constant rank. At ramified primes they often do not.
 
-Goodness supplies a stronger description. The unramified center splits étale-locally on $R$, the Azumaya order is removed by Morita equivalence, and the determinant law fixes all multiplicity modules except the active rank-two planes. Thus the local model is visibly a product of Grassmannians of lines. This proves flatness, smoothness, and the tangent dimension at once.
+Goodness supplies a stronger description. The unramified center splits étale-locally on $R$, a full idempotent removes the Azumaya matrix factor, and the determinant law fixes all multiplicity modules except the active rank-two planes. Thus the local model is visibly a product of Grassmannians of lines. This proves flatness, smoothness, and the tangent dimension at once.
 
 ### 4.2 The framed local-model diagram
 
@@ -368,7 +380,7 @@ The same theorems identify morphisms with filtration-preserving crystal maps. Bo
 
 If $p$ is invertible on $S$, Book 127, Theorem 11.1, identifies the completed characteristic-zero PEL moduli space with the completed stable isotropic flag scheme. It gives the same formal-smoothness conclusion, including the determinant and integral orientation conditions and unique lifting of level. Since $S$ is local Artinian, $p$ is either nilpotent or invertible. $\square$
 
-At every geometric point of the ambient functor, the order action, perfect polarization form, determinant ranks, and selected packet labels put de Rham homology étale-locally in the fixed lattice genus. Proposition 2.1 gives this assertion on each moving alternating or binary-unitary packet; its same unramified Hermitian calculation treats the fixed packets of the standard surface, while the odd packet normal forms of Book 205, Sections 6.2--6.4, assembled in its Theorem 6.3, treat the fixed exchange, orthogonal, quaternionic, and rank-one unitary packets in a quaternionic presentation. Thus the frame functor below is locally nonempty. This is where integral lattice classification enters: the determinant polynomial alone would not make it a torsor under the selected hyperspecial group.
+At every geometric point of the ambient functor, the order action, perfect polarization form, determinant ranks, and selected labels put de Rham homology étale-locally in the fixed lattice genus. Proposition 2.1 gives this assertion on the direct curve's alternating plane and on the standard surface's Hermitian planes. Thus the frame functor below is locally nonempty. This is where integral lattice classification enters: the determinant polynomial alone would not make it a torsor under the selected hyperspecial group.
 
 Let $\widetilde{\mathscr M}_K^{\mathrm{amb}}$ classify an ambient PEL object together with an $\mathcal O\otimes R$-linear symplectic frame of its de Rham homology by $\Lambda\otimes R$. There is a diagram
 
@@ -382,53 +394,21 @@ Here $\pi$ is a torsor under the reductive smooth group $G_R$, and $\varphi$ sen
 
 Since the schemes are finitely presented, formal smoothness is smoothness. Thus $\mathscr M_K^{\mathrm{amb}}$ and $M^{\mathrm{loc}}$ have the same completed local singularities up to formally smooth variables. This argument uses the integral deformation theorem for abelian schemes; it is not an inference from the generic local-model diagram.
 
-### 4.3 The quaternionic curve packets
+### 4.3 The direct quaternionic curve packet
 
-Let $\mathscr D$ be any Book 127 quaternionic PEL realization in the curve scope. Book 205's catalog audit shows that the following list is exhaustive, including its exclusions.
-
-For the direct quaternion trace row, integral Morita equivalence makes the active piece of $\Lambda\otimes R'$ over an étale splitting ring $R'$ equal to $W\otimes U$, where $W$ is the fixed simple module and $U$ is a self-dual alternating plane. A stable Hodge submodule is $W\otimes L$ for a line subbundle $L\subset U$, and every such line is isotropic. A matrix Morita presentation replaces the acting algebra by $M_m(D)$ and the ordinary module by $V^m$, but a full idempotent recovers the same $U$, the same determinant orientation, and the same flag.
-
-The binary-unitary curve row is genuinely different rationally. Its positive acting algebra is a CM field $K$ and its noncentral packet is the Hermitian plane $\langle1,-\beta\rangle$. At a catalog-good place $w\mid p$ the adjoint quaternion is split. Writing $\mathcal S=\mathcal O_{K_w}$, Book 205 gives the integral cyclic presentation
-
-$$
-\mathcal O_{B_w}=\mathcal S\oplus\mathcal S j,
-\qquad ja=\bar a j,
-\qquad j^2=1.
-$$
-
-On $L_U=\mathcal O_{B_w}$ the local Hermitian form is $\langle1,-1\rangle$, and, because $2$ is a unit,
-
-$$
-u=(1,1),
-\qquad v=\tfrac12(1,-1)
-$$
-
-is a hyperbolic basis. An anti-invariant unit $\delta_w\in\mathcal S^\times$ makes the displayed local trace alternating form perfect. For a fixed global trace factor $\delta$, write $\delta=s_w\delta_w$ and absorb $s_w$ into the local Hermitian form; catalog-good self-duality then transports that fixed form to the same hyperbolic coordinates without changing the rational pairing. The identity
-
-$$
-\operatorname{Tr}_{K_w/\mathbf Q_p}
-\bigl(\delta_w\operatorname{pr}_{K_w}(x\bar y)\bigr)
-=\operatorname{Tr}_{F_w/\mathbf Q_p}
-\operatorname{Trd}_{B_w}(x\bar y\delta_w)
-$$
-
-shows that this is literally the same underlying self-dual symplectic lattice as in the quaternionic-line row. Scaling $u$ by the common allowed unit $c_p$ realizes the same multiplier in every packet. Thus its one active signature-$(1,1)$ packet again asks for one line; the definite CM types and active half-plane orientation are fixed labels, not extra tangent directions.
-
-A split-corestriction candidate contributes no omitted curve presentation. If the corestriction degree is $r\ge3$, its associative commutant and the form stabilize a larger classical group, so it is not PEL-exact. The exceptional $r=2$ tensor has an orthogonal rank-four stabilizer, but for the one-active-place division datum its real corestriction invariant is $1/2$, so the required split input does not exist. The bare hyperbolic enlargement of that orthogonal packet has the expected connected stabilizer only in rank four, but its acting matrix algebra has the symplectic adjoint, which is not a positive involution at the active real split place. It therefore fails Book 127, Definition 1.1. A standalone orthogonal rank-three multiplicity packet fails the same positivity test, and an exchange involution on two real simple factors is nonpositive; when the exchange is instead complex conjugation on a CM center, it is exactly the binary-unitary row. The only surviving corestriction row is $r=1$, namely the ordinary rank-two alternating or exchange packet already described. Any alternative called hyperbolic would have to supply a different positive acting algebra and pass the full commutant test; if it does, Book 205, Proposition 7.1, reduces it to the quaternionic-line or binary-unitary row rather than creating a third packet.
-
-Finally, a compatible central refinement may adjoin only derived-trivial exchange pairs or rank-one unitary packets. Their determinant ranks, ordered idempotents, norm classes, real signs, and common multiplier are fixed. Their flag varieties are points, so they add neither a tangent direction nor an equation on the unique adjoint line. Consequently, in every admitted quaternionic presentation,
+Let $D=V=B$ be the direct quaternion-trace datum. At a good place, every factor $B_w$ above $p$ is split and its maximal order is $M_2(\mathcal O_{F_w})$. Over an étale splitting ring $R'$, a full idempotent identifies the active part of $\Lambda\otimes R'$ with $W\otimes U$, where $W$ is the fixed simple module and $U$ is a self-dual alternating plane. A stable Hodge submodule is $W\otimes L$ for a line subbundle $L\subset U$, and every such line is isotropic. The determinant law and the chosen orientation fix every other summand. Consequently
 
 $$
  M^{\mathrm{loc}}_{R'}\simeq\mathbf P(U)\simeq\mathbf P^1_{R'}. \tag{4.2}
 $$
 
-Descent from $R'$ gives a smooth projective $R$-form of this flag variety. Its tangent space at $L$ is
+Descent from $R'$ gives the selected smooth projective $R$-form of this flag variety. Its tangent space at $L$ is
 
 $$
 \operatorname{Hom}(L,U/L),
 $$
 
-free of rank one. All inactive and derived-trivial factors have a unique filtration of the prescribed labeled type and contribute no tangent direction. This conclusion uses both halves of Book 205's audit: standard integral packets for the admitted rows and valid exclusion of candidates that never satisfied the Book 127 PEL definition.
+free of rank one. All inactive factors have a unique filtration of the prescribed labeled type and contribute no tangent direction. This conclusion is only for the direct datum $D=V=B$.
 
 ### 4.4 The two unitary lines
 
@@ -460,7 +440,7 @@ $$
 \mathscr M_K^{\mathrm{amb}}\longrightarrow\operatorname{Spec}R
 $$
 
-is smooth. Its relative dimension is one for every admitted quaternionic curve presentation and two for the standard unitary surface.
+is smooth. Its relative dimension is one for the direct quaternion-trace curve and two for the standard unitary surface.
 
 **Proof.** In (4.1), $\pi$ is smooth and surjective, $\varphi$ is smooth, and $M^{\mathrm{loc}}/R$ is smooth by (4.2) or (4.3). Therefore $\widetilde{\mathscr M}_K^{\mathrm{amb}}/R$ is smooth. Smoothness descends through $\pi$, proving the assertion for the ambient scheme. Relative dimensions may be computed on completed local rings or after the étale splitting: the frame directions occur on both sides of (4.1), so the moduli tangent directions are those of the local model. They have ranks one and two by (4.2) and (4.4). $\square$
 
@@ -482,7 +462,7 @@ $$
 \mathscr M_K:=\mathscr M_K^{\mathrm{fl}}.
 $$
 
-It represents the open-and-closed subfunctor obtained by restricting the ambient representing functor and carries the restricted universal tuple. This is the promised identification of flat closure with a smooth integral component union. It does not say that $\mathscr M_K^{\mathrm{amb}}=\mathscr M_K$ unless the selected generic union is the whole ambient generic fiber; other horizontal PEL components may remain. More importantly, this identification came from the local-model theorem, not from Book 205's properness argument.
+It represents the open-and-closed subfunctor obtained by restricting the ambient representing functor and carries the restricted universal tuple. This is the promised identification of flat closure with a smooth integral component union. It does not say that $\mathscr M_K^{\mathrm{amb}}=\mathscr M_K$ unless the selected generic union is the whole ambient generic fiber; other horizontal PEL components may remain. More importantly, this identification came from the local-model theorem, not from the properness argument of Chapter 6.
 
 ### 5.3 The extension property
 
@@ -504,13 +484,13 @@ provided the generic PEL abelian scheme has good reduction at every codimension-
 
 The generic order action and polarization extend uniquely over the normal base $S$ by the extension theorem for homomorphisms of abelian schemes; positivity persists because the degree is constant and the ample chamber cannot change without degeneracy, and the prime-to-$p$ kernel type is locally constant. Once $A/S$ exists, the scheme of prime-to-$p$ level trivializations is finite étale over $S$. The generic level section extends at every codimension-one point by construction. Its schematic closure is finite and birational over the normal scheme $S$, hence is $S$; this extends the section without invoking an undeclared purity theorem. The finite étale orientation label extends by the same argument. The Rosati and determinant identities hold on the dense generic fiber and therefore everywhere. The resulting map to $\mathscr M_K^{\mathrm{amb}}$ factors through its open-and-closed subscheme $\mathscr M_K$: the generic fiber does, and flatness of $S/R$ makes that fiber dense in every component of $S$. Uniqueness follows from separatedness, or term by term from rigidity. $\square$
 
-The good-reduction qualification is essential. The extension property does not turn a semistable generic abelian variety into an abelian scheme. Chapter 6 proves the qualification for every Book 127 quaternionic curve presentation by the presentation-independent boundary theorem and for the standard surface by its anisotropic-localization obstruction.
+The good-reduction qualification is essential. The extension property does not turn a semistable generic abelian variety into an abelian scheme. Chapter 6 proves the qualification for the direct quaternion-trace curve by its torus-rank obstruction and for the standard surface by its anisotropic-localization obstruction.
 
 ### 5.4 Uniqueness of the good model
 
 Suppose $\mathscr X$ and $\mathscr Y$ are smooth $R$-models of the same PEL generic fiber in one fixed presentation, the generic identity identifies their universal PEL abelian varieties, and both have the corresponding PEL extension property. To extend the generic identity from $\mathscr X$ to $\mathscr Y$, repeat the proof of Theorem 5.2 with test scheme $\mathscr X$. No general healthiness theorem for $\mathscr X$ is needed: the relevant generic abelian variety already extends as the universal abelian scheme on $\mathscr X$. Its PEL structures give a map $f:\mathscr X\to\mathscr Y$. Reversing the roles gives $g:\mathscr Y\to\mathscr X$. Both composites restrict to the identity generically, hence are the identity by separatedness. Thus $f$ is unique and is an isomorphism.
 
-For two genuinely different PEL presentations, Book 205 now supplies potential and, at odd auxiliary level, actual codimension-one good reduction for both faithful families. It does not identify those families, and its common-refinement construction explicitly warns that they need not be canonically isogenous. Equality of the generic base curves therefore still does not by itself run the preceding proof across codimension two. Cross-presentation base comparison is made through the finite common-refinement and central quotients of Section 7. An isomorphism of two integral base models follows if one additionally supplies either the relevant healthy-regular purity input or an integral tensor/isogeny identification extending the other presentation's family. This is a uniqueness boundary, not a failure of presentation-independent properness.
+No uniqueness statement across different faithful PEL realizations is made. The preceding argument applies only when the generic identity identifies the fixed universal PEL family and all of its tensors.
 
 This proof explains why a good model is canonical after its extension property is established. Normalization in the generic function field alone would allow many regular modifications of the special fiber; the extension property excludes them.
 
@@ -528,9 +508,9 @@ $$
 
 be a point. Separatedness gives uniqueness of an extension. Existence asks whether the PEL abelian variety $A_L$ has good reduction over $V$. Properness of the generic Shimura variety only extends the associated point after passing to some abstract proper $R$-model; it says nothing about extension of $A_L$ on the PEL moduli scheme. Nor would a trait argument through the selected generic union control an unrelated vertical component of $\mathscr M_K^{\mathrm{amb}}$. The correct object is therefore the flat closure $\mathscr M_K=\mathscr M_K^{\mathrm{fl}}$ from (3.5).
 
-There are two ways to rule out the torus. Proposition 6.1 records elementary shortcuts for the direct quaternionic line and the standard unitary surface. They are useful checks but are not presentation-independent. Proposition 6.2 records the similarity, determinant, orientation, and lattice data a uniform proof must control. Book 205 supplies that control for every genuine Book 127 quaternionic presentation without asserting that the full similarity torsor is trivial.
+There are two direct ways to rule out the torus in the fixed realizations. For $D=V=B$, its cocharacter group is a unital $B$-module and a dimension count is decisive; the positive $J_T$-block below records the same obstruction in polarized Hodge-theoretic form. For the standard surface, one recorded anisotropic finite localization is decisive.
 
-### 6.2 Semiabelian degeneration and the similarity obstruction
+### 6.2 Semiabelian degeneration and the direct toric obstruction
 
 After passing to a henselian completion, then making a finite separable extension of its fraction field and normalizing the valuation ring, Book 40, Theorem 9.7, gives semistable reduction. Thus the identity component of the Néron model has special fiber
 
@@ -613,89 +593,40 @@ Nondegeneracy of the field-trace pairing forces $\Phi_t(x,x)=0$. The anisotropy 
 
 The qualifier “away from the good residue prime” is not extra luck. Proposition 4.2 of Book 129 puts every nonsplit finite localization in its recorded exceptional set, while the good-place ledger requires the chosen hyperspecial place to lie outside that set. The argument uses one actual $\ell$-adic Raynaud piece and the common $K$-module $X_T$; it never descends distinct $\ell$-adic subspaces to a subspace of $V$ over $\mathbf Q$.
 
-For a general PEL-exact curve realization, neither shortcut in Proposition 6.1 is automatic. Matrix Morita transfer changes ordinary dimensions, the binary-unitary curve packet need not retain the surface's chosen anisotropic localization, and central refinements change the faithful module and multiplier torus. Putative corestriction and hyperbolic representations also illustrate the danger, although Book 205's audit will exclude the nontrivial ones from the one-active-place PEL catalog. The uniform route is a local--global problem for a polarized PEL-similarity space.
+The rank proof has a useful polarized refinement that fixes the action variance and Hodge convention explicitly.
 
-**Proposition 6.2 (the similarity torsor and its packet invariants).** Let $(H,\psi_H)$ be a rational polarized left $D$-module of the same dimension as $(V,\psi)$, and suppose its determinant polynomial has been specified packet by packet. Put
-
-$$
-G=\operatorname{GSim}_D(V,\psi)^\circ.
-$$
-
-Fix a rational geometric component of the similarity space compatible with the selected determinant orientation. The oriented similarity functor on that component is
-
-$$
-\mathscr I(S)=
-\left\{(f,c):
-\begin{array}{l}
-f:H\otimes S\xrightarrow{\sim}V\otimes S
-\text{ is }D\otimes S\text{-linear},\\
-c\in S^\times,\quad
-\psi(fx,fy)=c\,\psi_H(x,y),\\
-f\text{ lies in the fixed oriented component}
-\end{array}
-\right\}
-\tag{6.4}
-$$
-
-is, when geometrically nonempty, a right $G$-torsor for
-
-$$
-(f,c)\cdot g=(g^{-1}\circ f,c\nu(g)^{-1}).
-$$
-
-Geometric nonemptiness already requires equality of the faithful $D_{\overline{\mathbf Q}}$-module multiplicities and of the polarized-form invariants; equality of adjoint groups or of total determinant polynomials does not imply it. Once this first obstruction vanishes, a global $D$-linear similarity exists exactly when $[\mathscr I]=1$ in $H^1(\mathbf Q,G)$. Similarities over every completion prove only that
-
-$$
-[\mathscr I]\in
-\ker^1(\mathbf Q,G):=
-\ker\!\left(
-H^1(\mathbf Q,G)\longrightarrow
-\prod_v H^1(\mathbf Q_v,G)
-\right).
-\tag{6.5}
-$$
-
-An isomorphism of the adjoint groups of $(H,\psi_H)$ and $(V,\psi)$ neither trivializes this class nor produces $f$. For
-
-$$
-1\longrightarrow Z(G)\longrightarrow G
-\longrightarrow G^{\mathrm{ad}}\longrightarrow1,             \tag{6.6}
-$$
-
-lifting adjoint data has a central obstruction in $H^2(\mathbf Q,Z(G))$, and distinct lifts can differ by $H^1(\mathbf Q,Z(G))$.
-
-For a polarized Raynaud one-motive, the proposed toric Hodge summand can be calculated exactly. Let
+**Proposition 6.2 (the direct toric block).** For a polarized Raynaud one-motive carrying the direct left $B$-action, let
 
 $$
 X=X_*(T)_{\mathbf Q},\qquad Y=Y_A\otimes\mathbf Q,
 $$
 
 let $e_\lambda:X\times Y\to\mathbf Q$ be the perfect outer pairing, and let
-$\nu:Y\xrightarrow{\sim}X$ be the rational tropical map. The induced left $D$-actions satisfy
+$\nu:Y\xrightarrow{\sim}X$ be the rational tropical map. The induced left $B$-actions satisfy
 
 $$
 e_\lambda(bx,y)=e_\lambda(x,b^*y).
 $$
 
-For $H_T$ to be a PEL summand, the tropical map must in addition satisfy $\nu(by)=b\nu(y)$; this is one of the conditions that an auxiliary boundary construction has to verify. Under that condition put
+Functoriality of the Raynaud construction gives $\nu(by)=b\nu(y)$. Put
 
 $$
 H_T=X\oplus Y,\qquad
 \psi_T((x,y),(x',y'))=
-e_\lambda(x,y')-e_\lambda(x',y).                              \tag{6.7}
+e_\lambda(x,y')-e_\lambda(x',y).                              \tag{6.4}
 $$
 
 If $q_\lambda(z,z')=e_\lambda(\nu z,z')$ is the positive symmetric monodromy form, then
 
 $$
-J_T(\nu z,y)=(-\nu y,z)                                       \tag{6.8}
+J_T(\nu z,y)=(-\nu y,z)                                       \tag{6.5}
 $$
 
-commutes with $D$, has square $-1$, and satisfies
+commutes with $B$, has square $-1$, and satisfies
 
 $$
 \psi_T((\nu z,y),J_T(\nu z,y))
-=q_\lambda(z,z)+q_\lambda(y,y)>0.                             \tag{6.9}
+=q_\lambda(z,z)+q_\lambda(y,y)>0.                             \tag{6.6}
 $$
 
 Its $i$-eigenspace is
@@ -703,115 +634,40 @@ Its $i$-eigenspace is
 $$
 H_T^{\,i}=
 \{(\nu z,-iz):z\in Y_{\mathbf C}\}
-\simeq Y_{\mathbf C}.                                        \tag{6.10}
+\simeq Y_{\mathbf C}.                                        \tag{6.7}
 $$
 
 Consequently the toric determinant contribution at a complex packet $\tau$ is not an unspecified rank term: in the convention selecting $H_T^{\,i}$ it is
 
 $$
 P^T_{b,\tau}(T)=
-\det\!\left(T-b\mid Y_\tau\right),                        \tag{6.11}
+\det\!\left(T-b\mid Y_\tau\right),                        \tag{6.8}
 $$
 
 with the conjugate packet used if the opposite Hodge quotient convention is chosen.
 
-To make “packet by packet” explicit, write $D_{\mathbf C}=\prod_\tau M_{n_\tau}(\mathbf C)$ and $Y_{\mathbf C}=\bigoplus_\tau S_\tau\otimes M_\tau$, with $S_\tau$ the standard simple module. Formula (6.10) says that the toric $i$-eigenspace has multiplicity $\dim M_\tau$ at $\tau$, so its factor is $\det(T-b\mid S_\tau)^{\dim M_\tau}$. The involution pairs the $\tau$ and $\tau^*$ factors, and the opposite Hodge convention exchanges their ordered multiplicities. At a self-paired factor, the determinant can still be constant on two flag components. Thus neither the product over all $\tau$ nor the adjoint group remembers which ordered component was selected.
+For the direct datum $V=B$, any nonzero left $B$-module $X$ has $\mathbf Q$-dimension at least $\dim_{\mathbf Q}B$. Hence the polarized block $H_T=X\oplus Y$ would already have dimension at least $2\dim_{\mathbf Q}B$, while the whole rational homology $V$ has dimension $\dim_{\mathbf Q}B$. Thus $H_T$ cannot occur unless $T=0$. Equivalently, the shorter calculation in Proposition 6.1 compares $\dim_{\mathbf Q}X$ directly with the abelian dimension. The $J_T$ calculation is not being used to compare different PEL realizations; it records that the toric subquotient carries the correct positive direct-trace Hodge block and determinant convention.
 
-If $H_0$ is a proposed middle lift, equality with the original PEL determinant law requires, for every $b$ and every packet,
-
-$$
-P^T_{b,\tau}(T)P^0_{b,\tau}(T)=P_{b,\tau}(T).                \tag{6.12}
-$$
-
-This polynomial identity does not prove orientation preservation: the selected component of the Hodge flag must also agree at every packet on which the determinant law has two components.
-
-Finally, a rational point of $\mathscr I(\mathbf Q_p)$ does not identify integral PEL lattices. For a proposed self-dual $\mathcal O\otimes\mathbf Z_p$-lattice $\Lambda_H\subset H\otimes\mathbf Q_p$, the integral comparison is the stronger nonemptiness assertion
-
-$$
-\mathscr I_{\Lambda_H,\Lambda}(\mathbf Z_p)\ne\varnothing, \tag{6.13}
-$$
-
-where the torsor includes the two self-dual lattices, the order, and the orientation. At odd unramified packets Proposition 2.1 classifies the standard lattice orbit once the rational packet form and orientation have already been matched. At $p=2$, rank, rational discriminant, and determinant orientation do not determine the norm ideal or the self-dual genus.
-
-**Proof.** Inverse composition on the target gives the displayed simply transitive right $G$-action after an fppf cover; choosing one geometric similarity identifies every other one with a unique element of $G$. This is precisely the torsor represented by $\mathscr I$. A rational point is the same thing as a trivialization, which proves the first cohomological assertion. Local similarities give local trivializations and hence only (6.5).
-
-Passing from a faithful polarized representation to its adjoint group forgets the center, its multiplier character, and the embedding of $D$ in the endomorphism algebra. The nonabelian cohomology sequence of (6.6) gives the displayed $H^2$ obstruction and the $H^1$ ambiguity. Thus classification of adjoint inner forms cannot by itself settle (6.4).
-
-For the toric calculation, symmetry and positivity of $q_\lambda$ are Book 40, Theorem 7.2. Direct substitution in (6.7) proves (6.9), while applying (6.8) twice gives $J_T^2=-1$. The required tropical identity gives
+**Proof.** Every order endomorphism acts functorially on the Raynaud extension and period lattice. Cocharacters and periods therefore carry covariant left $B$-actions. The polarization identity places the involution in the outer pairing, and functoriality of valuation gives $\nu(by)=b\nu(y)$. Symmetry and positivity of $q_\lambda$ are Book 40, Theorem 7.2. Direct substitution in (6.4) proves (6.6), while applying (6.5) twice gives $J_T^2=-1$. The tropical identity gives
 
 $$
 J_T(b\nu z,by)=(-\nu(by),bz)=b(-\nu y,z),
 $$
 
-so $J_T$ commutes with $D$. Solving $J_T(x,y)=i(x,y)$ gives $x=\nu z$ and $y=-iz$, proving (6.10). Decomposition by the complex simple factors of $D$ then turns (6.10) into (6.11). Determinants multiply on a direct sum, giving the necessary packet identities (6.12). A characteristic polynomial records multiplicities but not a choice between disconnected oriented flag components, so orientation remains a separate condition.
+so $J_T$ commutes with $B$. Solving $J_T(x,y)=i(x,y)$ gives $x=\nu z$ and $y=-iz$, proving (6.7). Differentiation of cocharacters identifies $X\otimes L$ with $\operatorname{Lie}T$ $B$-linearly, so (6.7) gives (6.8). The final dimension comparison is the one stated above. $\square$
 
-An integral similarity is exactly a section of the lattice-preserving torsor in (6.13). Rational local similarity says only that this torsor has a generic point. Once the rational form and orientation match, Proposition 2.1 reduces the selected odd standard packets to explicit standard bases; the dyadic norm-ideal discussion there shows why no analogous inference follows from the rational invariants alone. $\square$
+### 6.3 Direct boundary exclusion
 
-Proposition 6.2 identifies rather than suppresses the obstruction. Book 205 resolves it in the exact strength needed here, and crucially does **not** prove that the full class $[\mathscr I]$ vanishes. Its construction has the following order.
+The boundary calculation now has exactly the scope of the two fixed faithful modules.
 
-First, the Raynaud torus cocharacters $X$, the period lattice $Y$, and the abelian quotient all carry the correct covariant left $D$-actions; Rosati enters the outer pairing, not by reversing the left action. The tropical map is proved $D$-linear. The derivative of torus uniformization identifies $X$ with $\operatorname{Lie}T$, so the positive toric complex structure (6.8) gives exactly the packet determinant (6.11), including the opposite-Hodge and orientation convention. This verifies the hypotheses that Proposition 6.2 left conditional.
+**Proposition 6.3 (boundary exclusion).** Under the ledger of Section 2.4:
 
-Second, the middle block is one global object: the rational Betti homology of the polarized abelian quotient of the Raynaud extension. It is not assembled from unrelated local complements. Determinants, discriminants, Hasse invariants, Clifford classes, real signatures, and orientations therefore satisfy their product relations automatically. Book 205 compares this one global middle form with the fixed faithful PEL form at every completion and proves the odd integral assertion (6.13), with one common multiplier for every packet.
-
-Third, the oriented full similarity space can retain a central $H^1$ or $H^2$ obstruction. Book 205 quotients it by the centers and obtains an inner torsor under
-
-$$
-\operatorname{Res}_{F/\mathbf Q}\operatorname{PGL}_1(B).
-$$
-
-Its Hasse kernel is trivial: noncommutative Hilbert 90 injects its $H^1$ into $\operatorname{Br}(F)$, and global Brauer injectivity kills a class trivial at every completion. Thus the required **adjoint** identification is rational. No lift through (6.6), no vanishing for a norm torus, and no global similarity of the faithful modules is asserted.
-
-Finally, on the global polarized block $H=X\oplus H_0\oplus Y$, let the weight cocharacter $\gamma$ have weights $1,0,-1$, and let $N$ carry $Y$ to $X$ through the tropical isomorphism and vanish elsewhere. Then
-
-$$
-N^2=0,\qquad \operatorname{Ad}(\gamma(t))N=t^2N.
-$$
-
-If $T\ne0$, then $N\ne0$, so $\gamma$ cannot be central. Its adjoint image defines a proper rational parabolic. Transport through the rational adjoint identification gives a proper rational parabolic of $\operatorname{Res}_{F/\mathbf Q}\operatorname{PGL}_1(B)$, impossible because $B$ is division. This noncentrality argument is what prevents a Morita multiplicity flag, hyperbolic summand, multiplier torus, or finite central modification from masquerading as a boundary direction.
-
-### 6.3 The catalog audit and boundary exclusion
-
-The presentation-independent theorem applies only after the Book 127 admission test has been enforced. For the one-active-place division datum the audit is exact.
-
-| proposed presentation | admission and boundary status |
-|---|---|
-| direct quaternion trace | admitted only when the chosen Hodge map lifts and the trace involution is positive; Proposition 6.1 gives a short rank proof and Book 205 gives the uniform proof |
-| matrix Morita transfer | admitted; full-idempotent Morita equivalence preserves the reduced packet, involution, self-duality, multiplier, and orientation |
-| split corestriction | $r=1$ is the ordinary rank-two packet; $r=2$ is excluded here because the real corestriction invariant prevents the required split input; $r\ge3$ has a larger full stabilizer and is not PEL-exact |
-| bare hyperbolic enlargement | not admitted: in the only exceptional stabilizer rank its acting matrix algebra has a nonpositive symplectic adjoint; in higher rank the stabilizer is also too large |
-| orthogonal rank three or real exchange | not admitted: the commuting algebra has a nonpositive symplectic adjoint in the orthogonal case, while exchange of two real factors fails positivity; positive CM exchange is the binary-unitary row |
-| binary-unitary curve replacement | admitted; the positive CM involution, exact unitary stabilizer, determinant and Hasse data, active orientation, and odd self-dual lattice are all verified in Book 205 |
-| compatible central refinement | admitted only with derived-trivial packets, the actual common multiplier and lift classes, $p$-integral representatives, and prime-to-$p$ finite kernels retained |
-
-Thus “including corestriction and hyperbolic candidates” means auditing and validly excluding the nonpresentations, not enlarging the theorem to symplectic representations that fail Book 127, Definition 1.1.
-
-The binary-unitary row also passes the global form audit, not only the local lattice test. If $K=F(\sqrt{\Delta})$ and $B=(K/F,\beta)$, the norm form underlying $\langle1,-\beta\rangle$ is
-
-$$
-q_{\mathcal H}(a,b)=N_{K/F}(a)-\beta N_{K/F}(b)
-\simeq\langle1,-\Delta,-\beta,\Delta\beta\rangle.
-$$
-
-It has square determinant and discriminant $1$, and at every place $u$ of $F$,
-
-$$
-\epsilon_u(q_{\mathcal H})=(\Delta,\beta)_u(-1,-1)_u,
-\qquad
-C^+(q_{\mathcal H})\simeq B\times B^{\mathrm{op}}.
-$$
-
-Ordering the two Clifford factors is exactly the retained orientation. The signatures are $(2,2)$ at the active place and $(4,0)$ at a Hamiltonian place, matching the Hermitian signatures $(1,1)$ and $(2,0)$. These identities explain why the binary-unitary packet has the same quaternionic adjoint inner form and the same selected component while remaining a genuinely different faithful PEL presentation.
-
-**Proposition 6.3 (presentation-independent boundary exclusion).** Under the ledger of Section 2.4:
-
-1. every semistable degeneration of a PEL abelian variety belonging to any Book 127 quaternionic curve presentation has $T=0$;
+1. every semistable degeneration belonging to the direct quaternion-trace curve has $T=0$;
 2. every semistable degeneration belonging to the standard unitary surface has $T=0$.
 
 Consequently every such generic PEL abelian variety has potential good reduction.
 
-**Proof.** For clause 1, Book 205, Theorem 10.1 and Theorem 12.1, apply because the catalog audit above proves exact Book 127 admission and catalog-goodness records precisely the order, lattice, discriminant and determinant, multiplier, orientation, and central data used by its proof. The global middle form, adjoint Hasse argument, and noncentral monodromy operator just summarized force $T=0$. This includes the binary-unitary noncentral packet, matrix Morita transfer, and allowed central refinements; the rejected corestriction, hyperbolic, orthogonal-rank-three, and real-exchange candidates create no missing case. Clause 2 is Proposition 6.1(2). After the finite semistable extension, toric rank zero means that the connected special fiber is an abelian variety, hence the original abelian variety has good reduction over that extension. $\square$
-
-The direct quaternionic rank calculation in Proposition 6.1 remains a useful independent check on clause 1, but it is no longer the scope boundary. Likewise, Book 205's binary-unitary curve argument is the global forbidden-parabolic argument, not the anisotropic-localization proof used for the two-active-place surface.
+**Proof.** Clause 1 is Proposition 6.1(1); Proposition 6.2 supplies its polarized $J_T$ formulation. Clause 2 is Proposition 6.1(2). After the finite semistable extension, toric rank zero means that the connected special fiber is an abelian variety, hence the original abelian variety has good reduction over that extension. $\square$
 
 ### 6.4 Actual good reduction and properness
 
@@ -823,21 +679,21 @@ Once the abelian scheme exists, the structures extend in the correct order. Endo
 
 **Theorem 6.4 (flat-closure properness and the good model).** Let $\mathscr M_K^{\mathrm{fl}}$ be (3.5).
 
-1. For every Book 127 quaternionic PEL realization and every catalog-good odd place, $\mathscr M_K^{\mathrm{fl}}$ is proper and projective over $R$.
+1. For the direct quaternion-trace curve at every good odd place, $\mathscr M_K^{\mathrm{fl}}$ is proper and projective over $R$.
 2. For the standard unitary surface under the good-place ledger, $\mathscr M_K^{\mathrm{fl}}$ is proper and projective over $R$.
 3. Under the local-model hypotheses proved in Chapter 4, $\mathscr M_K^{\mathrm{fl}}=\mathscr M_K$ is the open-and-closed smooth component union identified in Section 5.2. It is therefore the desired smooth projective fine integral PEL model. The ambient scheme is proper only when its entire generic component union is selected or when properness is proved separately for every horizontal union.
 
-**Proof.** Clause 1 is Book 205, Theorem 12.1(3)--(4), applied to the exact presentation; its full-level projectivity input is Theorem 10.3 there. To see why its conclusion is about the right scheme, first work at a normal full level at an odd auxiliary prime. Embed the quasi-projective flat closure there in a projective closure. Its generic fiber is already closed because the division adjoint has no rational parabolic. If a vertical boundary point remained, the noetherian trait-selection lemma would produce a mixed-characteristic DVR with generic point in the selected PEL curve and closed point on that boundary. After completion, Proposition 6.3 and the principal-level congruence argument extend the entire PEL object over the original DVR. Every generic equation of the selected component vanishes in that torsion-free DVR, so the extension factors through the schematic flat closure. Separatedness of the projective closure then contradicts the chosen boundary specialization. The full-level flat closure therefore equals its projective closure. For an arbitrary neat level, choose a normal full-level subgroup inside it. The resulting finite map is surjective onto the selected flat closure, so properness descends; projectivity is the corresponding finite-quotient conclusion of Book 205.
+**Proof.** Work first at a normal full level containing an odd auxiliary prime. Embed the quasi-projective flat closure in its scheme-theoretic closure inside a projective space over $R$. Its generic fiber is already closed because the selected compact Shimura variety is proper. If a vertical boundary point remained, the noetherian trait-selection lemma would produce a mixed-characteristic DVR with generic point in the selected PEL space and closed point on that boundary. After completion, Proposition 6.3 and the principal-level congruence argument extend the entire PEL object over the original DVR. Every generic equation of the selected component vanishes in that torsion-free DVR, so the extension factors through the schematic flat closure. Separatedness of the projective closure then contradicts the chosen boundary specialization. Thus the full-level flat closure equals its projective closure.
 
-For clause 2, the same trait argument uses Proposition 6.3(2). At full odd auxiliary level it extends every generic object over the original trait, and a finite principal cover descends properness to a neat level. Quasi-projectivity then turns properness into projectivity. Clause 3 is Section 5.2 and does not enter the proofs of clauses 1--2. This logical separation is exactly why no local-model theorem is used circularly in Book 205. $\square$
+For an arbitrary neat level, choose a normal full-level subgroup inside it. The resulting finite map is surjective onto the selected flat closure, so properness descends. The flat closure is quasi-projective by Theorem 3.1, hence properness makes it projective. This proves clauses 1 and 2, using respectively the two clauses of Proposition 6.3. Clause 3 is Section 5.2 and does not enter the properness proof. Thus ambient smoothness and flat-closure properness remain logically independent. $\square$
 
 Theorem 6.4 removes the good-reduction qualification in Theorem 5.2 for every final fine model. At principal auxiliary level, Proposition 6.3 and the congruence argument give good reduction directly. At a general neat level, properness extends the base point over each codimension-one trait and pullback of the universal abelian scheme gives good reduction there. Hence the final fine models satisfy the healthy-regular extension property and are unique within their fixed PEL presentation as in Section 5.4.
 
-This is the sense in which $\mathscr M_K$ is the **integral canonical PEL model**: its generic canonical model, fine moduli interpretation, and healthy-regular extension property determine it uniquely within the fixed presentation. A finite central/common-refinement quotient is canonically constructed as a base quotient and is proper and projective, but it is not silently promoted to a fine PEL integral canonical model. Its own extension-property or universal-family assertion requires the descent hypotheses stated in Chapter 7.
+This is the sense in which $\mathscr M_K$ is the **integral canonical PEL model**: its generic canonical model, fine moduli interpretation, and healthy-regular extension property determine it uniquely within the fixed direct-trace or standard-unitary presentation.
 
 For a smooth proper scheme, the étale sheaf of geometric connected components is finite étale over $R$. A decomposition-group-stable union of generic components therefore also determines, after properness, a unique open-and-closed integral union through its idempotent. This agrees with the flat closure already identified in Section 5.2. A single geometric component still need not be defined over $R$; it must first be replaced by its decomposition-stable union or the reflex local ring must be extended to its component field.
 
-The theorem is presentation-independent in its properness conclusion, not in the identity of universal abelian schemes. A noncompact PEL variety is different again: its open moduli scheme can have a genuine semiabelian boundary and requires a compactification.
+A noncompact PEL variety is different: its open moduli scheme can have a genuine semiabelian boundary and requires a compactification.
 
 ## 7. Fine levels, quotient levels, and base change
 
@@ -864,19 +720,11 @@ $$
 
 The stack is smooth because smoothness is smooth-local and the fine atlas is finite étale. Under the hypotheses of Theorem 6.4 it is also proper, since properness descends through its finite cover. The map from the fine-level scheme to the coarse quotient is finite; the coarse quotient itself has the same relative dimension over $R$ and can have quotient singularities at fixed points. Thus “good reduction at coarse level” cannot mean smoothness without a hypothesis killing stabilizers.
 
-A central modification or the quaternionic-line--binary-unitary comparison requires a different quotient construction. For a central sequence, the connecting maps to $H^1$ need not vanish, so one first takes the finite disjoint union of **all** generic PEL component lifts that actually occur. At a common normal fine level, Book 205 presents their finite deck groupoid by a finite group $\Delta$ and divides by the rational center already acting trivially to obtain $\Delta_{\mathrm{eff}}$. No surjectivity of rational or adelic centers is assumed.
-
-At a catalog-good place, each already occurring deck class has a $p$-integral representative and every denominator can be cleared away from $p$ after one common principal refinement. A representative then acts on the ambient integral PEL scheme either by changing level or by quotienting the universal abelian scheme by an explicitly prescribed finite étale, order-stable kernel. Book 38 supplies the quotient and polarization; the determinant and orientation labels are unchanged because the isogeny is étale at $p$. The action preserves the selected generic union and hence its schematic flat closure. Group relations hold on that closure by schematic density, so this is an honest base action **before** properness is known.
-
-The quasi-projective finite quotient exists by invariant affine charts and is finite. Theorem 6.4 makes its source proper, after which the quotient is proper; the norm of an ample line gives projectivity. If the effective action is free, the base quotient is a finite étale quotient and remains smooth. With stabilizers, the quotient stack is the natural smooth proper stack and the finite scheme quotient is its proper coarse space, which need not be smooth. These central/common-refinement conclusions are presentation-independent consequences of Book 205, Theorem 12.1(5)--(8); they are not consequences of the simpler level map (7.1).
-
 ### 7.3 Universal families at coarse level
 
 The fine scheme carries the universal abelian scheme. For an ordinary level quotient, its deck action is linearized by PEL isomorphisms, so it descends to the quotient stack and remains universal. It descends further to the coarse scheme exactly when every stabilizer acts trivially on the complete PEL object. Usually a scalar such as $-1$ acts trivially on the coarse moduli point and nontrivially on the abelian variety, so no universal family exists there.
 
-For a general central or common-refinement quotient, the deck maps constructed above may identify fibers only in the prime-to-$p$ isogeny category. Such quasi-isogenies define the base action and its correspondence data but are not a descent datum by isomorphisms. In that case no universal abelian scheme is asserted on either the quotient stack or the coarse scheme. If a genuine PEL-isomorphism linearization is supplied, the family descends to the stack; it descends to the coarse scheme precisely under the same trivial-stabilizer criterion. The two universal families pulled back from the quaternionic-line and binary-unitary presentations are not asserted to be isomorphic or canonically isogenous.
-
-Cohomological correspondences on the base may nevertheless descend to the coarse scheme because their graphs and cycle classes are stabilizer-invariant. One must not infer descent of the universal abelian variety or of a presentation-specific integral coefficient system from descent of its base Hecke action.
+Cohomological correspondences on the base may descend to the coarse scheme because their graphs and cycle classes are stabilizer-invariant. One must not infer descent of the universal abelian variety or of an integral coefficient system from descent of its base Hecke action.
 
 ### 7.4 Extension of scalars
 
@@ -886,7 +734,7 @@ $$
 \mathscr M_K\otimes_RR'\simeq\mathscr M_{K,R'}.                \tag{7.3}
 $$
 
-On a fine PEL model, the universal family, Hodge bundles, polarization, and prime-to-$p$ level pull back under (7.3). The local model becomes the corresponding split form after a sufficiently large unramified extension. Smoothness and properness are preserved. In a common-refinement comparison, the generic maps may first be formed over the compositum of the two reflex fields; Book 205 includes the finite component descent datum and descends properness through the resulting finite faithfully flat extension. No equality of the two reflex fields is assumed.
+On a fine PEL model, the universal family, Hodge bundles, polarization, and prime-to-$p$ level pull back under (7.3). The local model becomes the corresponding split form after a sufficiently large unramified extension. Smoothness and properness are preserved.
 
 For a ramified extension $R\to R'$, ordinary scalar extension of an already good model remains smooth, but it need not equal a newly formulated moduli problem based on a different ramified order or parahoric lattice. Equality holds only when the entire integral datum is the pullback of the old one.
 
@@ -894,7 +742,7 @@ For a ramified extension $R\to R'$, ordinary scalar extension of an already good
 
 A Hecke operator changes a prime-to-$p$ lattice. At a good prime this modification is finite étale on torsion and therefore extends over the integral model without altering its local deformation theory.
 
-Throughout this chapter, $\mathscr M_K$ denotes a fine PEL flat-closure model in one fixed presentation, either the full selected canonical component union or a smaller union preserved by the Hecke element under discussion. For a nonpreserving element, the identical construction has the Hecke translate of that union as its second target; it is then a correspondence between two integral models rather than a self-correspondence. On a central/common-refinement quotient, the base correspondence descends as explained below, but its universal isogeny and coefficient-system action require the same linearization qualifications as Section 7.3.
+Throughout this chapter, $\mathscr M_K$ denotes a fine PEL flat-closure model for one of the two fixed data, either the full selected canonical component union or a smaller union preserved by the Hecke element under discussion. For a nonpreserving element, the identical construction has the Hecke translate of that union as its second target; it is then a correspondence between two integral models rather than a self-correspondence.
 
 ### 8.1 Integral Hecke data
 
@@ -964,7 +812,7 @@ The graph of (8.4) is proper over both factors because the projections are finit
 
 ### 8.4 Composition, adjoints, and descent
 
-If $g,h\in G(\mathbf A_f^p)$, pull the correspondences for $g$ and $h$ to the common refinement
+If $g,h\in G(\mathbf A_f^p)$, pull the correspondences for $g$ and $h$ to the sufficiently small level
 
 $$
 K^p\cap gK^pg^{-1}\cap ghK^p(gh)^{-1}.
@@ -974,7 +822,7 @@ The canonical quasi-isogenies compose as $u_hu_g=u_{gh}$. Chosen integral multip
 
 The polarization identifies the transpose of the $g$-isogeny, up to its explicit multiplier, with the correspondence for $g^{-1}$. Accordingly the cohomological adjoint of $T_g$ is the multiplier-normalized $T_{g^{-1}}$. Suppressing the multiplier would give an incorrect integral adjoint formula.
 
-All constructions are equivariant under ordinary finite changes of level. There the universal isogeny descends to the quotient stack and descends to a coarse fine quotient when the universal object does. For a central/common-refinement action supplied only by quasi-isogenies, the graphs of the base correspondences descend to the quotient stack and coarse scheme, but no universal abelian scheme or integral map between its Tate sheaves is thereby created. Hecke operators at $p$ are excluded: changing the hyperspecial $p$-lattice introduces $p$-power kernels, whose connected parts and parahoric local models require different geometry.
+All constructions are equivariant under ordinary finite changes of level. There the universal isogeny descends to the quotient stack and descends to a coarse fine quotient when the universal object does. Hecke operators at $p$ are excluded: changing the hyperspecial $p$-lattice introduces $p$-power kernels, whose connected parts and parahoric local models require different geometry.
 
 ## 9. Étale cohomology of the good models
 
@@ -1110,7 +958,7 @@ E_2^{ij}=H^i\left(\mathscr M_K,\bigwedge^j\mathbb V_\ell\right)
 R^ja_*\mathbf Z_\ell\simeq\bigwedge^j\mathbb V_\ell.          \tag{9.7}
 $$
 
-This identifies the terms controlling the Leray filtration; no integral degeneration or splitting of that spectral sequence is asserted. On an ordinary quotient stack with a genuine level linearization, the same formulas define lisse coefficient systems, but no separate stack-valued base-change theorem is imported here. If such a system descends to a smooth proper scheme quotient, the scheme theorem applies there. On a central/common-refinement quotient lacking an isomorphism linearization, (9.4)--(9.7) remain statements on the fine cover. Constant coefficients and any independently descended lisse system still satisfy base change on a smooth proper scheme quotient, but there is no automatic “universal PEL coefficient system” on the quotient.
+This identifies the terms controlling the Leray filtration; no integral degeneration or splitting of that spectral sequence is asserted. On an ordinary quotient stack with a genuine level linearization, the same formulas define lisse coefficient systems, but no separate stack-valued base-change theorem is imported here. If such a system descends to a smooth proper scheme quotient, the scheme theorem applies there.
 
 ### 9.4 Unramifiedness and Frobenius
 
@@ -1286,7 +1134,7 @@ We now collect the general construction in its one-dimensional form. The point i
 
 ### 12.1 Construction theorem
 
-**Theorem 12.1 (all quaternionic PEL presentations).** Let $B/F$ be a quaternion division algebra split at exactly one real place, and let $\mathscr D=(D,*,V,\psi,h)$ be any quaternionic PEL realization of Book 127 with adjoint datum $\operatorname{Res}_{F/\mathbf Q}\operatorname{PGL}_1(B)$. Let $v\mid p$ be catalog-good for its exact integral data, let $K_p$ be the hyperspecial stabilizer of the selected self-dual lattice genus, and let $K^p$ be neat. Then the selected generic PEL curve has a smooth projective flat-closure model
+**Theorem 12.1 (direct quaternion-trace curve).** Let $B/F$ be a quaternion division algebra split at exactly one real place, and let $\mathscr D=(B,*,B,\psi_\delta,h)$ be the direct PEL realization of Book 127. Let $v\mid p$ be a good odd place for its exact integral data, let $K_p$ be the hyperspecial stabilizer of the selected self-dual lattice, and let $K^p$ be neat. Then the selected generic PEL curve has a smooth projective flat-closure model
 
 $$
 \mathscr C_K/\mathcal O_{E,v}
@@ -1294,13 +1142,11 @@ $$
 
 of relative dimension one satisfying the healthy-regular extension property. It is unique within the fixed PEL presentation, represents the corresponding open-and-closed integral PEL subfunctor, and carries its universal abelian scheme. Every prime-to-$p$ change of level extends, as does every Hecke self-correspondence preserving the selected union; on the full component union this includes all prime-to-$p$ Hecke correspondences.
 
-**Proof.** Theorem 3.1 constructs the ambient scheme and (3.5) its selected flat closure. The exhaustive packet audit in Section 4.3 makes the actual local model $\mathbf P^1$ for the direct, Morita, binary-unitary, and centrally refined rows and validly excludes the failed corestriction, hyperbolic, orthogonal-rank-three, and real-exchange candidates. Theorem 5.1 and Section 5.2 therefore identify the flat closure with a smooth open-and-closed component union of relative dimension one. Proposition 6.3 excludes every Raynaud torus presentation-independently, and Theorem 6.4 gives projectivity. Theorem 5.2 gives the extension property and Section 5.4 gives uniqueness within the fixed PEL presentation. Universal and Hecke structures are built over the fine moduli scheme itself. $\square$
-
-If the realization is a nontrivial central modification, $\mathscr C_K$ is the fine PEL cover or component union belonging to that realization. Recovering a different central form of the base uses the finite common-refinement quotient of Section 7. Its quotient is proper and projective, and is smooth when the effective action is free. It carries a universal family only under the isomorphism-linearization conditions of Section 7.3. Thus Theorem 12.1 covers central modifications without identifying a coarse central quotient with a fine moduli scheme.
+**Proof.** Theorem 3.1 constructs the ambient scheme and (3.5) its selected flat closure. Section 4.3 computes the direct datum's actual local model as $\mathbf P^1$. Theorem 5.1 and Section 5.2 therefore identify the flat closure with a smooth open-and-closed component union of relative dimension one. Proposition 6.3 excludes its Raynaud torus, and Theorem 6.4 gives projectivity. Theorem 5.2 gives the extension property and Section 5.4 gives uniqueness within this fixed PEL presentation. Universal and Hecke structures are built over the fine moduli scheme itself. $\square$
 
 ### 12.2 The integral Kodaira--Spencer line
 
-Let $\mathcal U$ be the active reduced rank-two bundle of the chosen presentation, let $\mathcal L\subset\mathcal U$ be its Hodge line, and put $\mathcal M=\det\mathcal U$ with its recorded determinant-and-multiplier character. Matrix Morita transfer changes the surrounding Hodge bundle but retains this reduced plane and line; the binary-unitary presentation obtains them from its active Hermitian plane. The tangent calculation
+Let $\mathcal U$ be the direct datum's active reduced rank-two bundle, let $\mathcal L\subset\mathcal U$ be its Hodge line, and put $\mathcal M=\det\mathcal U$ with its recorded determinant-and-multiplier character. The tangent calculation
 
 $$
 T_{\mathscr C_K/R}\simeq\operatorname{Hom}(\mathcal L,\mathcal U/\mathcal L)
@@ -1320,9 +1166,9 @@ $$
 \simeq\mathcal L^{\otimes2}\otimes(\det\mathcal U)^{-1}.
 $$
 
-The construction is frame-change equivariant and identifies $\det\mathcal U$ with $\mathcal M$, so faithfully flat descent gives (12.1). A trivialization of $\mathcal M$ may be used only when the chosen determinant-and-multiplier level supplies one; no such trivialization is implicit in a general similitude presentation.
+The construction is frame-change equivariant and identifies $\det\mathcal U$ with $\mathcal M$, so faithfully flat descent gives (12.1). A trivialization of $\mathcal M$ may be used only when the chosen determinant-and-multiplier level supplies one; no such trivialization is implicit.
 
-Relative duality and (12.1) relate coherent degree-one cohomology to sections of an automorphic line. This relation is integral and base-change compatible because every bundle in (12.1) is locally free over $R$. On a central quotient the line descends only when its stabilizer character is trivial; a suitable power may descend even when the universal abelian scheme does not.
+Relative duality and (12.1) relate coherent degree-one cohomology to sections of an automorphic line. This relation is integral and base-change compatible because every bundle in (12.1) is locally free over $R$.
 
 ### 12.3 Cohomology and good reduction
 
@@ -1334,7 +1180,7 @@ H^1(\mathscr C_{K,\bar k},\mathbf Z_\ell)
 H^1(\mathscr C_{K,\bar E},\mathbf Z_\ell).                      \tag{12.2}
 $$
 
-The right side is unramified. The same holds with every integral coefficient system constructed from the presentation's universal abelian scheme. Coherently, (11.5) compares the Hodge and de Rham lattices without an extra torsion hypothesis. Therefore every fine quaternionic presentation supplies an étale lattice, a de Rham lattice, and their Hecke actions. The constant-coefficient statement descends to any smooth proper finite base quotient; presentation-specific coefficient systems descend only when their integral local systems do. A comparison between the étale and de Rham lattices at the residue prime would require a separate integral $p$-adic comparison theorem and is not asserted here.
+The right side is unramified. The same holds with every integral coefficient system constructed from the direct presentation's universal abelian scheme. Coherently, (11.5) compares the Hodge and de Rham lattices without an extra torsion hypothesis. Thus the fine direct-trace curve supplies an étale lattice, a de Rham lattice, and their Hecke actions. A comparison between the étale and de Rham lattices at the residue prime would require a separate integral $p$-adic comparison theorem and is not asserted here.
 
 ## 13. The unitary surface model
 
@@ -1352,7 +1198,7 @@ of relative dimension two satisfying the extension property. It represents the i
 
 **Proof.** Ambient representability and the generic comparison are Theorem 3.1 and (3.4), and (3.5) defines the selected flat closure. The integral local model is the product of the two active projective lines, so Theorem 5.1 and Section 5.2 identify that closure with a smooth open-and-closed surface. Book 129 constructs a finite place where the binary Hermitian plane is anisotropic; the good residue prime is outside that exceptional set. Proposition 6.3(2) therefore rules out the Raynaud torus, and Theorem 6.4 gives projectivity. The extension property, uniqueness within the fixed presentation, and the Hecke tower follow from the corresponding general theorems. $\square$
 
-The finite-adelic matching remains indispensable for identifying the Hecke datum and the intended derived group. For the standard faithful $K$-module $V=W$, one anisotropic finite localization proves properness. If a Morita or corestriction realization is substituted in this **two-active-place surface** construction, that localization need not remain visible in the new faithful module and its exact centralizer must be recalculated. Book 205 resolves the similarity obstruction for one-active-place quaternionic Book 127 curves; it does not assert a presentation-independent theorem for arbitrary variants of the Book 129 surface. No such substitution is included in Theorem 13.1.
+The finite-adelic matching remains indispensable for identifying the Hecke datum and the intended derived group. For the standard faithful $K$-module $V=W$, one anisotropic finite localization proves properness. No alternative faithful realization is included in Theorem 13.1.
 
 ### 13.2 Two tangent directions and canonical bundles
 
@@ -1408,9 +1254,9 @@ We can now state the reusable output without mixing the geometric, étale, and c
 5. every prime-to-$p$ level map is finite étale, and every prime-to-$p$ Hecke double coset extends on the full component union to a finite correspondence on which a common-denominator multiple of the universal quasi-isogeny is an isogeny; on a smaller selected union it is a self-correspondence exactly when it preserves that union, and otherwise has the translated union as target;
 6. for $\ell\ne p$, finite and adic étale cohomology of the base and of every integral PEL coefficient system satisfies smooth proper base change equivariantly for the stabilizer Hecke algebra (the full prime-to-$p$ Hecke algebra on the full component union);
 7. coherent complexes that are flat over $R$, and the relative de Rham complex, satisfy proper finiteness and derived base change, while ordinary integral fiber comparison holds exactly under the adjacent-degree or torsion-freeness criteria of Chapter 11;
-8. for quaternionic curves, all these geometric conclusions apply to every admitted Book 127 PEL presentation, and compatible finite central/common-refinement quotients are proper and projective with the fine/stack/coarse and universal-family qualifications of Chapter 7.
+8. in the curve case, all these conclusions apply to the direct quaternion-trace realization specified in Theorem 12.1.
 
-**Proof.** Statements 1--5 are Theorems 5.1, 6.4, 3.1, 5.2, and the constructions of Chapters 7--8. Statement 6 is (9.1)--(9.5) together with Theorem 10.1. Statement 7 follows from coherent cohomology and base change, perfection of the smooth proper de Rham complex, and the universal-coefficient sequence. Statement 8 is the catalog audit of Sections 4.3 and 6.3 together with Book 205, Theorem 12.1, and Sections 7.2--7.3. $\square$
+**Proof.** Statements 1--5 are Theorems 5.1, 6.4, 3.1, 5.2, and the constructions of Chapters 7--8. Statement 6 is (9.1)--(9.5) together with Theorem 10.1. Statement 7 follows from coherent cohomology and base change, perfection of the smooth proper de Rham complex, and the universal-coefficient sequence. Statement 8 is Theorem 12.1. $\square$
 
 ### 14.2 Functoriality for tensors and correspondences
 
@@ -1426,17 +1272,11 @@ Every comparison above is functorial for:
 
 The proof is uniform. Each operation is a morphism in the relevant derived category over $R$. Base change is a natural transformation compatible with composition, tensor products, and proper trace. Checking equality after base change therefore reduces to equality before it. No choice of geometric basis enters.
 
-### 14.3 Independence of the chosen good presentation
+### 14.3 Fixed-presentation scope
 
-Presentation independence has three distinct meanings here.
+Every uniqueness, universal-family, coefficient-system, and extension-property assertion in this book is typed to one of the two fixed PEL data. For the curve this is the direct quaternion-trace realization; for the surface it is the standard realization of Book 129. The book makes no comparison with another faithful realization of either adjoint datum.
 
-First, **properness is unconditional within the catalog**. Every exact Book 127 quaternionic presentation has a projective fine flat closure at an odd catalog-good place. This includes replacement of the quaternionic Hermitian line by the genuinely different binary-unitary plane, not just a coordinate change. The corestriction and hyperbolic candidates that fail exactness or positivity are valid exclusions, so they do not create unproved cases.
-
-Second, **the bases admit a finite common-refinement comparison**. Book 205 forms the connected fiber product over the common adjoint group, passes initially to the compositum of reflex fields, includes every central $H^1$ lift class, and chooses a common sufficiently small level. The resulting generic base maps are finite covers of the same adjoint arithmetic curve. Their actual prime-to-$p$ deck representatives extend to the ambient integral PEL schemes and preserve the flat closures before properness. Taking the finite quotient afterward creates no new boundary. This construction compares the integral base curves and their component groupoids without asserting surjectivity of adelic centers.
-
-Third, **literal isomorphism and uniqueness remain typed**. Within one fixed PEL presentation, Section 5.4 gives a unique smooth integral model with its PEL extension property. Between genuinely different presentations, equality of generic base curves does not identify the universal abelian schemes: the common base carries the pullback of each family, but the two families need not be isomorphic or canonically isogenous. A unique cross-presentation isomorphism follows if one supplies an integral tensor or prime-to-$p$ isogeny identification sufficient to run Section 5.4 in both directions, or an appropriate healthy-regular purity theorem. Without that input, the canonical comparison is the finite common-refinement diagram, not a fabricated equality of families.
-
-Whenever an integral base isomorphism has been obtained, prime-to-$p$ Hecke correspondences agree if their generic graphs agree. Both graphs are finite étale over the base and hence $R$-flat; their ideals in the common separated product are $R$-saturated, so equality after inverting the uniformizer forces equality integrally. Constant-coefficient cohomology is intrinsic to the resulting base comparison. PEL coefficient systems are compared only after an actual tensor, lattice, or isogeny identification has been supplied. This is the precise strength of presentation independence.
+Within either fixed datum, prime-to-$p$ Hecke correspondences agree integrally when their generic graphs agree. Both graphs are finite étale over the base and hence $R$-flat; their ideals in the common separated product are $R$-saturated, so equality after inverting the uniformizer forces equality integrally. Constant-coefficient cohomology and the coefficient systems constructed from the fixed universal family are therefore functorial throughout the corresponding level tower.
 
 ## 15. Failure modes and the good-prime boundary
 
@@ -1471,7 +1311,7 @@ $$
 
 need not be an isomorphism. Proper base change still identifies the special-fiber group with the stalk of the direct image, but smooth local acyclicity has failed. Nearby cycles record the missing classes and monodromy operator.
 
-Similarly, for a nonproper Shimura variety, classes can enter through the boundary even when the open morphism is smooth. A smooth compactification with a controlled normal-crossings boundary can recover compactly supported comparison, but it is a different theorem. Proposition 6.3 excludes the boundary for every admitted one-active-place quaternionic PEL presentation and for the standard unitary surface. It does so for quaternionic curves by verifying the packet, orientation, integral-lattice, and adjoint-torsor requirements of Proposition 6.2, not by assuming anisotropy of an arbitrary faithful representation. If the quaternion algebra ceases to be division, or if a proposed representation fails Book 127 exactness, that theorem no longer applies.
+Similarly, for a nonproper Shimura variety, classes can enter through the boundary even when the open morphism is smooth. A smooth compactification with a controlled normal-crossings boundary can recover compactly supported comparison, but it is a different theorem. Proposition 6.3 excludes the boundary for the direct one-active-place quaternionic curve and for the standard unitary surface. If the quaternion algebra ceases to be division or the faithful module is changed, the direct rank argument no longer applies.
 
 ## 16. The good integral-model theorem
 
@@ -1481,14 +1321,14 @@ The separate arguments can now be assembled into one theorem with every hypothes
 
 **Theorem 16.1 (good integral models of the selected Shimura curves and surfaces).** Let $(G,X)$ be either:
 
-1. any quaternionic PEL realization $\mathscr D=(D,*,V,\psi,h)$ in the sense of Book 127 whose adjoint datum is $\operatorname{Res}_{F/\mathbf Q}\operatorname{PGL}_1(B)$, where $B/F$ is a quaternion division algebra split at exactly one real place; or
+1. the direct quaternion-trace PEL realization $\mathscr D=(B,*,B,\psi_\delta,h)$ of Book 127, where $B/F$ is a quaternion division algebra split at exactly one real place; or
 2. the standard compact unitary datum of Book 129, Definition 4.1 and Proposition 4.2, PEL-exact in the sense of its Definition 5.2, with exactly two active signature-$(1,1)$ factors.
 
 Let $E$ be its reflex field, let $v\mid p$, and assume:
 
 - the exact rational PEL realization and a decomposition-group-stable canonical component union are fixed;
 - $p$ is odd;
-- in case 1, $v$ is catalog-good for the unramified centers, exact involution-stable maximal hereditary order, self-dual lattice packets and alternating form, unit polarization degree, unramified quasi-split adjoint packet with the selected hyperspecial stabilizer, discriminant, determinant, multiplier-component, and orientation labels, $p$-integral central representatives, prime-to-$p$ finite kernels, and a finite effective deck set;
+- in case 1, $F$ is unramified at $p$, $B$ is split at every place above $p$, the direct trace order is maximal and involution-stable, the alternating lattice is self-dual, the polarization degree is a unit, the stabilizer is reductive and hyperspecial, and the determinant, multiplier-component, and orientation labels extend over $R$;
 - in case 2, the center is unramified at $p$, the acting order is maximal and involution-stable, the alternating lattice is self-dual, the polarization degree is prime to $p$, the stabilizer is reductive and hyperspecial, the two active determinant-and-orientation packets are the split unitary planes of Chapter 4, and every definite packet retains its recorded fixed label;
 - $K^p$ is neat or a full level $N\ge3$ with $(N,p\deg\lambda)=1$ is imposed;
 - in case 2, the rational prime $p$ lies below no place in the recorded exceptional set containing the finite anisotropic localization.
@@ -1505,26 +1345,24 @@ $$
 
 compatible with products, pairings, tensors, level change, and the stabilizer Hecke algebra; for the full component union it is equivariant for the full prime-to-$p$ Hecke algebra. The generic representation is unramified at $v$. Derived cohomology of coherent $R$-flat sheaves, and relative de Rham cohomology, also commute with base change; ordinary integral coherent comparison is subject to the precise torsion criteria of Chapter 11, and is unconditional in degree one for the curve's structure sheaf and de Rham complex.
 
-In case 1, compatible central modifications and quaternionic-line--binary-unitary common refinements admit the finite integral quotients of Book 205. These quotients are proper and projective and introduce no new boundary. A free effective quotient is smooth; with stabilizers the quotient stack is smooth proper and the finite coarse scheme can have quotient singularities. A universal PEL abelian scheme exists on such a quotient stack only when its deck action is linearized by genuine PEL isomorphisms, and it descends to the coarse scheme only when stabilizers act trivially. Quasi-isogeny deck data alone supplies neither conclusion.
-
-This is the maximal unconditional scope supplied by the direct prerequisites: **every** exact Book 127 quaternionic curve presentation, together with the standard Book 129 unitary surface. The higher-corestriction, bare hyperbolic, orthogonal-rank-three, and real-exchange candidates are outside the curve theorem because they fail the exact admission tests listed in Section 6.3, not because their properness was left open. At $p=2$, retention of all other order, central, and level conditions together with Book 205's separately supplied complete-genus and common-multiplier hypothesis can recover flat-closure properness for a quaternionic curve, but smoothness still requires an independently verified dyadic local model; the smooth good-model theorem above remains odd.
+This is the unconditional scope supplied by the direct prerequisites: the direct Book 127 quaternion-trace curve and the standard Book 129 unitary surface. At $p=2$, the direct curve's torus-rank argument and the projective-closure trait proof still establish flat-closure properness once the required integral moduli functor and full auxiliary level are available. They do not establish ambient smoothness. The smooth good-model theorem above therefore remains odd unless the exact dyadic order, lattice, determinant-orientation, and local model are independently verified; the standard surface has the additional dyadic Hermitian-lattice issue described in Section 2.2.
 
 ### 16.2 Proof architecture
 
 The proof has a strict order.
 
-First, integral tensors define the ambient finite-type PEL scheme and its universal family, while the chosen generic canonical union defines its schematic flat closure. Second, the framed deformation diagram reduces the ambient completed local rings to the actual integral local model. Book 205's exhaustive packet audit and odd lattice theorem reduce every admitted quaternionic curve presentation to one moving projective line; the standard surface has two. This proves ambient smoothness and identifies the flat closure with an open-and-closed smooth component union. It is logically separate from properness.
+First, integral tensors define the ambient finite-type PEL scheme and its universal family, while the chosen generic canonical union defines its schematic flat closure. Second, the framed deformation diagram reduces the ambient completed local rings to the actual integral local model. The direct trace datum has one moving alternating projective line; the standard surface has two moving Hermitian lines. This proves ambient smoothness and identifies the flat closure with an open-and-closed smooth component union. It is logically separate from properness.
 
-Third, Book 40 supplies potential semistable reduction and the Raynaud one-motive. For a general quaternionic presentation, Book 205 constructs the positive toric block with (6.8), factors the determinant packetwise, obtains the middle form globally from the polarized abelian quotient, verifies all local invariants and odd lattices, and trivializes the adjoint rather than the full similarity bitorsor. The operator $N$ proves that any torus produces a noncentral proper parabolic, which division of $B$ forbids. For the standard surface, the recorded finite anisotropic localization gives the shorter obstruction of Proposition 6.1. Full odd auxiliary level and the congruence lemma descend actual good reduction to the original trait.
+Third, Book 40 supplies potential semistable reduction and the Raynaud one-motive. For the direct curve, $X_*(T)_{\mathbf Q}$ is a unital left $B$-module; its dimension cannot fit inside the direct homology $V=B$. Proposition 6.2 records the same toric contribution as the positive $J_T$-block (6.5). For the standard surface, the recorded finite anisotropic localization gives the obstruction of Proposition 6.1. Full odd auxiliary level and the congruence lemma descend actual good reduction to the original trait.
 
-Fourth, Book 205's projective-closure argument proves properness of the quaternionic **flat closure**, while the same trait argument proves it for the surface. Only after combining this with the independent local-model result do we obtain a smooth projective fine model. Extension of abelian schemes, homomorphisms, polarizations, determinant orientation, and finite étale level gives the extension property and uniqueness within the fixed presentation. Fifth, actual lift classes and $p$-integral deck representatives construct central quotients before properness; ordinary prime-to-$p$ lattice modifications extend the Hecke isogenies. Finally, smooth proper base change, Proposition 9.1, derived inverse limits, and functorial trace give (16.1) with its integral Hecke structure wherever the coefficient system is defined.
+Fourth, the projective-closure trait argument proves properness of the **flat closure** for both fixed data. Only after combining this with the independent local-model result do we obtain a smooth projective fine model. Extension of abelian schemes, homomorphisms, polarizations, determinant orientation, and finite étale level gives the extension property and uniqueness within the fixed presentation. Fifth, ordinary prime-to-$p$ lattice modifications extend the Hecke isogenies. Finally, smooth proper base change, Proposition 9.1, derived inverse limits, and functorial trace give (16.1) with its integral Hecke structure wherever the coefficient system is defined.
 
-No arrow in this chain can be reversed without adding a hypothesis. Generic representability does not prove the local model smooth; smoothness does not prove properness; an adjoint-group identification does not trivialize a PEL-similarity torsor; rational local similarity does not identify an integral lattice, especially at $2$; and rational Hecke equivariance does not control denominators.
+No arrow in this chain can be reversed without adding a hypothesis. Generic representability does not prove the local model smooth; smoothness does not prove properness; the rational direct-trace form does not by itself identify a dyadic integral lattice; and rational Hecke equivariance does not control denominators.
 
 ### 16.3 Conclusion
 
-At a good odd prime, every admitted quaternionic PEL curve and the standard unitary surface are not merely varieties with fortunate reduction. Their exact order, lattice, determinant, multiplier, and orientation data produce smooth flag local models. For the curve, Morita and central operations do not change the unique active adjoint line, the binary-unitary plane supplies the one genuinely different positive packet, and the failed corestriction, hyperbolic, orthogonal-rank-three, and real-exchange candidates are excluded at the admission stage. If a universal quaternionic PEL abelian scheme tried to escape into a semiabelian boundary, its Raynaud data would produce a noncentral rational parabolic in the division adjoint group. For the surface, the torus would produce an isotropic vector at the recorded anisotropic localization. The fine flat-closure models are therefore smooth, projective, functorial in level, and uniquely characterized by extension within each fixed presentation.
+At a good odd prime, the direct quaternion-trace PEL curve and the standard unitary surface are not merely varieties with fortunate reduction. Their exact order, lattice, determinant, multiplier, and orientation data produce smooth flag local models. If the direct curve's universal abelian scheme tried to escape into a semiabelian boundary, its nonzero Raynaud cocharacter module would be too large to fit inside $V=B$; the positive $J_T$-block makes the same Hodge-theoretic obstruction explicit. For the surface, the torus would produce an isotropic vector at the recorded anisotropic localization. The fine flat-closure models are therefore smooth, projective, functorial in level, and uniquely characterized by extension within each fixed presentation.
 
 This geometry carries its arithmetic structures intact. Universal abelian schemes, endomorphisms, polarizations, Hodge bundles, and prime-to-$p$ Hecke isogenies all live over the local reflex ring. Once properness is known, prime-to-$p$ étale cohomology specializes with its integral lattice and the stabilizer Hecke algebra, which is the full prime-to-$p$ Hecke algebra on the full component union; coherent and de Rham lattices specialize exactly when their visible torsion criteria permit it. The curve contributes its degree-one package, and the modèles étranges surface contributes its degree-two package.
 
-The promised curve-and-surface good-reduction package is therefore complete with presentation-independent quaternionic properness in its precise sense. Common refinements and finite central quotients compare the bases and introduce no boundary, while universal families and their coefficient systems retain the fine/stack/coarse descent limitations forced by their actual linearizations. Bad primes begin precisely where a lattice chain, an unresolved dyadic genus, a nonintegral central representative, a genuine boundary, or nontrivial monodromy replaces this constant smooth picture.
+The promised curve-and-surface good-reduction package is therefore complete for the two fixed faithful realizations. Bad primes begin precisely where a lattice chain, unresolved dyadic integral data, a genuine boundary, or nontrivial monodromy replaces this constant smooth picture.
