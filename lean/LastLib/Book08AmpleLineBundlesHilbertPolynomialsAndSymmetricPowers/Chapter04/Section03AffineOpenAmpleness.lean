@@ -18,24 +18,33 @@ theorem chapter04_veryAmple_implies_ample
     chapter04Ample f L := by
   sorry
 
-/-- A quasi-compact finite-type ample family has a positive power with a projective-space immersion. -/
+/-- Over a quasi-compact base, a quasi-compact finite-type ample family has a positive power with a projective-space immersion. -/
 theorem chapter04_ample_has_quasiProjective_power
-    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact f]
+    {X S : Scheme.{u}} (f : X ⟶ S) [CompactSpace S] [QuasiCompact f]
+    [LocallyOfFiniteType f] [QuasiSeparated f]
     (L : Chapter04LineBundle X) (hL : chapter04Ample f L) :
     ∃ d : ℕ, 0 < d ∧ chapter04VeryAmple f (chapter04LineBundleTensorPower L d) := by
   sorry
 
-/-- In this chapter, a quasi-projective section-map witness is an immersion into a relative projective bundle. -/
+/-- Quasi-projectivity is the existence of some relative projective immersion. -/
 def chapter04QuasiProjective
-    {X S : Scheme.{u}} (f : X ⟶ S) (L : Chapter04LineBundle X) : Prop :=
-  chapter04VeryAmple f L
+    {X S : Scheme.{u}} (f : X ⟶ S) : Prop :=
+  ∃ L : Chapter04LineBundle X, chapter04VeryAmple f L
+
+theorem chapter04_veryAmple_is_quasiProjective
+    {X S : Scheme.{u}} (f : X ⟶ S) (L : Chapter04LineBundle X)
+    (hL : chapter04VeryAmple f L) :
+    chapter04QuasiProjective f := by
+  exact ⟨L, hL⟩
 
 theorem chapter04_ample_power_gives_quasiProjective_immersion
-    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact f]
+    {X S : Scheme.{u}} (f : X ⟶ S) [CompactSpace S] [QuasiCompact f]
+    [LocallyOfFiniteType f] [QuasiSeparated f]
     (L : Chapter04LineBundle X) (hL : chapter04Ample f L) :
-    ∃ d : ℕ, 0 < d ∧ chapter04QuasiProjective f (chapter04LineBundleTensorPower L d) := by
-  simpa [chapter04QuasiProjective] using
-    chapter04_ample_has_quasiProjective_power f L hL
+    ∃ d : ℕ, 0 < d ∧
+      chapter04VeryAmple f (chapter04LineBundleTensorPower L d) ∧
+      chapter04QuasiProjective f := by
+  sorry
 
 /-- The trivial bundle is ample for an affine morphism: its unit section gives the whole space. -/
 theorem chapter04_trivial_line_bundle_ample_of_affine
@@ -46,7 +55,7 @@ theorem chapter04_trivial_line_bundle_ample_of_affine
 /-- A proper non-affine variety cannot have the trivial bundle as an ample bundle. -/
 theorem chapter04_trivial_line_bundle_not_ample_of_proper_nonAffine
     {K : Type u} [Field K] (X : Scheme.{u})
-    (f : X ⟶ AlgebraicGeometry.Spec (.of K)) [IsProper f]
+    (f : X ⟶ AlgebraicGeometry.Spec (.of K)) [IsProper f] [QuasiCompact f]
     (hX : ¬ IsAffine X) :
     ¬ chapter04Ample f (chapter04TrivialLineBundle X) := by
   sorry

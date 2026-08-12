@@ -44,26 +44,26 @@ def chapter04EventuallyHigherCohomologyVanishes
     ∀ i : ℕ, 0 < i →
       C.Vanishes (chapter04TwistedModule F L n) i
 
-/-- Serre vanishing for a projective morphism over a noetherian affine base. -/
-theorem chapter04_serre_vanishing
+/-!
+The pinned checkout does not provide a canonical coherent-cohomology object.
+Consequently the vanishing assertion is exposed as a proposition rather than
+as a theorem about an arbitrary type-valued placeholder.  The latter would be
+false: a context may assign a nonzero module to every positive degree.
+-/
+def chapter04SerreVanishingStatement
     {X S : Scheme.{u}} (C : Chapter04CohomologyContext X)
     (f : X ⟶ S) [IsAffine S] [IsNoetherian S]
+    [IsNoetherian X] [QuasiCompact f] [IsSeparated f]
     (hproj : chapter04Projective f) (L : Chapter04LineBundle X)
-    (hL : chapter04Ample f L) (F : X.Modules)
-    (hF : chapter04FiniteTypeQuasiCoherent F) :
-    chapter04EventuallyHigherCohomologyVanishes C f F L := by
-  sorry
-
-/- SOURCE_ISSUE (4.4, converse paragraph): the source says only "if this
-vanishing holds" before invoking eventual generation of all coherent ideals;
-the projective/noetherian/affine hypotheses from the preceding vanishing theorem
-are needed for a mathematically meaningful converse.  The declaration below
-therefore carries those hypotheses and states both required conditions. -/
+    (hL : chapter04Ample f L) : Prop :=
+  ∀ F : X.Modules, chapter04FiniteTypeQuasiCoherent F →
+    chapter04EventuallyHigherCohomologyVanishes C f F L
 
 /-- The converse Serre criterion, with the projective and noetherian hypotheses made explicit. -/
 theorem chapter04_serre_ampleness_converse
     {X S : Scheme.{u}} (C : Chapter04CohomologyContext X)
     (f : X ⟶ S) [IsAffine S] [IsNoetherian S]
+    [IsNoetherian X] [QuasiCompact f] [IsSeparated f]
     (hproj : chapter04Projective f) (L : Chapter04LineBundle X)
     (hvanish : ∀ F : X.Modules, chapter04FiniteTypeQuasiCoherent F →
       chapter04EventuallyHigherCohomologyVanishes C f F L)

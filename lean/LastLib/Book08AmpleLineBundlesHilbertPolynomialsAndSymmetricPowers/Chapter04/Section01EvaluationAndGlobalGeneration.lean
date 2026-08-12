@@ -49,55 +49,19 @@ theorem chapter04_finite_relative_generators_of_quasiCompact
   sorry
 
 /- DEPENDENCY_GUESS: the standard `P¹` and its two named line bundles are not
-yet exposed by the preceding Book 8 files or pinned Mathlib.  This compact
-interface records the two source examples while leaving their identification
-with the usual Proj construction to that earlier chapter. -/
+yet exposed by the preceding Book 8 files or pinned Mathlib.  This data record
+keeps only the underlying objects needed by the examples; the generation,
+separation, and identity assertions belong after a canonical `P¹` interface. -/
 structure Chapter04ProjectiveLineExample (K : Type u) [Field K] where
   projectiveLine : Scheme.{u}
   structureMap : projectiveLine ⟶ AlgebraicGeometry.Spec (.of K)
   trivial : Chapter04LineBundle projectiveLine
   tautological : Chapter04LineBundle projectiveLine
   constant_section : trivial.sheaf.val.sections
-  constant_section_generates :
-    Epi (trivial.sheaf.freeHomEquiv.symm (fun _ : PUnit => constant_section))
-  trivial_not_veryAmple : ¬ chapter04VeryAmple structureMap trivial
   constant_map : projectiveLine ⟶ projectiveLine
   constant_map_over : constant_map ≫ structureMap = structureMap
-  constant_map_is_constant :
-    ∀ x y : projectiveLine, constant_map.base x = constant_map.base y
+  constant_map_is_constant : chapter04UnderlyingConstant constant_map
   basis : Fin 2 → tautological.sheaf.sections
-  basis_generates :
-    Epi (tautological.sheaf.freeHomEquiv.symm
-      (fun i : ULift.{u} (Fin 2) => basis i.down))
-  tautological_veryAmple : chapter04VeryAmple structureMap tautological
-  basis_map : projectiveLine ⟶ projectiveLine
-  basis_map_eq_identity : basis_map = 𝟙 projectiveLine
-
-theorem chapter04_projective_line_constant_section_generates
-    {K : Type u} [Field K] (P : Chapter04ProjectiveLineExample K) :
-    Epi (P.trivial.sheaf.freeHomEquiv.symm
-      (fun _ : PUnit => P.constant_section)) :=
-  P.constant_section_generates
-
-theorem chapter04_projective_line_constant_map_is_constant
-    {K : Type u} [Field K] (P : Chapter04ProjectiveLineExample K) :
-    ∀ x y : P.projectiveLine, P.constant_map.base x = P.constant_map.base y :=
-  P.constant_map_is_constant
-
-theorem chapter04_projective_line_trivial_not_veryAmple
-    {K : Type u} [Field K] (P : Chapter04ProjectiveLineExample K) :
-    ¬ chapter04VeryAmple P.structureMap P.trivial :=
-  P.trivial_not_veryAmple
-
-theorem chapter04_projective_line_tautological_is_veryAmple
-    {K : Type u} [Field K] (P : Chapter04ProjectiveLineExample K) :
-    chapter04VeryAmple P.structureMap P.tautological :=
-  P.tautological_veryAmple
-
-theorem chapter04_projective_line_tautological_basis_gives_identity
-    {K : Type u} [Field K] (P : Chapter04ProjectiveLineExample K) :
-    P.basis_map = 𝟙 P.projectiveLine :=
-  P.basis_map_eq_identity
 
 end
 end LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04

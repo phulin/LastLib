@@ -26,6 +26,14 @@ theorem chapter04SectionSystem_generates
     chapter04SectionSystemGenerates V :=
   V.generates
 
+theorem chapter04_section_system_restriction_agrees_with_pullback_data
+    {K : Type u} [Field K] {X : Scheme.{u}}
+    {f : X ⟶ AlgebraicGeometry.Spec (.of K)} {L : Chapter04LineBundle X}
+    (V : Chapter04FiniteSectionSystem K f L)
+    (Z : Chapter04LengthTwoClosedSubscheme K f) (i : V.I) :
+    V.restriction Z i = chapter04PullbackSectionMap Z.inclusion L.sheaf (V.sectionMap i) :=
+  V.restriction_eq Z i
+
 /-- Separation of points and tangent directions is surjectivity on every length-two subscheme. -/
 theorem chapter04_separates_length_two_of_restriction_surjective
     {K : Type u} [Field K] {X : Scheme.{u}}
@@ -36,23 +44,11 @@ theorem chapter04_separates_length_two_of_restriction_surjective
       Function.Surjective (V.restriction Z) :=
   hV
 
-/-- The finite-section length-two criterion for an immersion into projective space. -/
-theorem chapter04_immersion_criterion
-    {K : Type u} [Field K] {X : Scheme.{u}}
-    (f : X ⟶ AlgebraicGeometry.Spec (.of K)) [LocallyOfFiniteType f] [QuasiCompact f]
-    (L : Chapter04LineBundle X) (V : Chapter04FiniteSectionSystem K f L)
-    (hV : chapter04SeparatesLengthTwo V) :
-    chapter04VeryAmple f L := by
-  sorry
-
-/-- Over a field, very ampleness is equivalent to a finite generating system separating length two. -/
-theorem chapter04_veryAmple_iff_separates_length_two
-    {K : Type u} [Field K] {X : Scheme.{u}}
-    (f : X ⟶ AlgebraicGeometry.Spec (.of K)) [LocallyOfFiniteType f] [QuasiCompact f]
-    (L : Chapter04LineBundle X) :
-    chapter04VeryAmple f L ↔
-      ∃ V : Chapter04FiniteSectionSystem K f L, chapter04SeparatesLengthTwo V := by
-  sorry
+/- DEPENDENCY_GUESS: the immersion criterion and its converse are withheld
+until the pullback-section bridge is canonical and the section system carries
+its base changes to every field extension.  With the current data-only bridge,
+the displayed restriction maps could be unrelated to geometric restriction,
+so the two implications would not be sound declarations. -/
 
 /-- A proper family turns the locally closed immersion from very ampleness into a closed immersion. -/
 theorem chapter04_veryAmple_closed_immersion_of_proper

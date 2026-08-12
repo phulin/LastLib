@@ -16,6 +16,31 @@ def chapter04LineBundleIsomorphic
     {X : Scheme.{u}} (L M : Chapter04LineBundle X) : Prop :=
   Nonempty (L.sheaf ≅ M.sheaf)
 
+theorem chapter04_lineBundleIsomorphic_refl
+    {X : Scheme.{u}} (L : Chapter04LineBundle X) :
+    chapter04LineBundleIsomorphic L L := by
+  exact ⟨Iso.refl L.sheaf⟩
+
+theorem chapter04_lineBundleIsomorphic_symm
+    {X : Scheme.{u}} {L M : Chapter04LineBundle X}
+    (h : chapter04LineBundleIsomorphic L M) :
+    chapter04LineBundleIsomorphic M L := by
+  sorry
+
+theorem chapter04_lineBundleIsomorphic_trans
+    {X : Scheme.{u}} {L M N : Chapter04LineBundle X}
+    (hLM : chapter04LineBundleIsomorphic L M)
+    (hMN : chapter04LineBundleIsomorphic M N) :
+    chapter04LineBundleIsomorphic L N := by
+  sorry
+
+theorem chapter04_ample_iff_of_lineBundleIsomorphic
+    {X S : Scheme.{u}} (f : X ⟶ S)
+    {L M : Chapter04LineBundle X}
+    (hLM : chapter04LineBundleIsomorphic L M) :
+    chapter04Ample f L ↔ chapter04Ample f M := by
+  sorry
+
 /-- Positive tensor powers preserve relative ampleness. -/
 theorem chapter04_ample_tensorPower
     {X S : Scheme.{u}} (f : X ⟶ S) (L : Chapter04LineBundle X)
@@ -31,38 +56,61 @@ theorem chapter04_ample_of_ample_tensorPower
     chapter04Ample f L := by
   sorry
 
-/- SOURCE_ISSUE (4.5, bounded twists): the source states "`L^n ⊗ M` is
-ample for all sufficiently large `n`" without retaining the quasi-compact
-separated context needed for a uniform bounded-twist threshold.  The minimal
-correction below makes those hypotheses explicit. -/
-
-/-- A fixed invertible twist does not affect ampleness in sufficiently high powers. -/
+/- SOURCE_ISSUE (4.5, bounded twists): the source gives a global eventual
+threshold with only quasi-compactness of `f`.  A uniform threshold also needs
+quasi-compactness of the base; this declaration records that missing hypothesis. -/
+/-- Over a quasi-compact base, a fixed invertible twist does not affect ampleness in sufficiently high powers. -/
 theorem chapter04_ample_eventually_tensor_twist
-    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact f] [IsSeparated f]
+    {X S : Scheme.{u}} (f : X ⟶ S) [CompactSpace S] [QuasiCompact f] [IsSeparated f]
     (L M : Chapter04LineBundle X) (hL : chapter04Ample f L) :
     ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
       chapter04Ample f
         (chapter04LineBundleTensor (chapter04LineBundleTensorPower L n) M) := by
   sorry
 
-/-- An ample line bundle on a quasi-compact finite-type family has a very ample power. -/
+/-- Every sufficiently high power of an ample bundle is relatively very ample. -/
+theorem chapter04_ample_eventually_veryAmple_power
+    {X S : Scheme.{u}} (f : X ⟶ S) [CompactSpace S] [QuasiCompact f]
+    [LocallyOfFiniteType f] [QuasiSeparated f]
+    (L : Chapter04LineBundle X) (hL : chapter04Ample f L) :
+    ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
+      chapter04VeryAmple f (chapter04LineBundleTensorPower L n) := by
+  sorry
+
+/-- Over a quasi-compact base, an ample line bundle on a quasi-compact finite-type family has a very ample power. -/
 theorem chapter04_ample_has_veryAmple_power
-    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact f] [LocallyOfFiniteType f]
+    {X S : Scheme.{u}} (f : X ⟶ S) [CompactSpace S] [QuasiCompact f]
+    [LocallyOfFiniteType f]
+    [QuasiSeparated f]
     (L : Chapter04LineBundle X) (hL : chapter04Ample f L) :
     ∃ d : ℕ, 0 < d ∧ chapter04VeryAmple f (chapter04LineBundleTensorPower L d) := by
   sorry
 
 /-- If the family is proper, a sufficiently high ample power gives a closed projective embedding. -/
 theorem chapter04_proper_ample_has_closed_projective_power
-    {X S : Scheme.{u}} (f : X ⟶ S) [IsProper f] [QuasiCompact f]
+    {X S : Scheme.{u}} (f : X ⟶ S) [CompactSpace S] [IsProper f] [QuasiCompact f]
     (L : Chapter04LineBundle X) (hL : chapter04Ample f L) :
     ∃ d : ℕ, 0 < d ∧
       ∃ w : Chapter04VeryAmpleWitness f (chapter04LineBundleTensorPower L d),
         IsClosedImmersion w.map := by
   sorry
 
+/-!
+For a proper family the eventual very-ampleness statement upgrades to closed
+immersions, so the exponent can be chosen uniformly rather than separately
+for one power.
+-/
+theorem chapter04_proper_ample_eventually_closed_projective_power
+    {X S : Scheme.{u}} (f : X ⟶ S) [CompactSpace S] [IsProper f] [QuasiCompact f]
+    [QuasiSeparated f]
+    (L : Chapter04LineBundle X) (hL : chapter04Ample f L) :
+    ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
+      ∃ w : Chapter04VeryAmpleWitness f (chapter04LineBundleTensorPower L n),
+        IsClosedImmersion w.map := by
+  sorry
+
 theorem chapter04_proper_ample_is_projective
-    {X S : Scheme.{u}} (f : X ⟶ S) [IsProper f] [QuasiCompact f]
+    {X S : Scheme.{u}} (f : X ⟶ S) [CompactSpace S] [IsProper f] [QuasiCompact f]
     (L : Chapter04LineBundle X) (hL : chapter04Ample f L) :
     chapter04Projective f := by
   sorry
