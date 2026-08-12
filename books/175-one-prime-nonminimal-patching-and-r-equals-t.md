@@ -251,10 +251,11 @@ finite free over $\mathcal O$, the pairing between them is perfect, and stabiliz
 either avoided by neatness or has order prime to $\ell$. Every characteristic-zero factor
 used below is a noncharacter packet in the verified Galois-attachment and local--global
 compatibility range. If the carrier is moved from the curve-new lattice to a switched definite
-lattice, Book 140's node-uniformization and generic-support hypotheses are imposed and its
-common-kernel theorem identifies the two faithful orders; the normalized-branch Smith
-correction remains distinct from the Néron component group. Equality of good residual traces
-is not a substitute for this datum.
+lattice, impose $({\rm AIH}_{\mathscr F})$, $({\rm PRI}_{\rm type})$, and
+$({\rm NU}_{\rm type})$ for the actual type coefficients, together with Book 140's
+node-uniformization, generic-support, and common-kernel hypotheses. These inputs identify the
+two faithful orders; the normalized-branch Smith correction remains distinct from the Néron
+component group. Equality of good residual traces is not a substitute for this datum.
 
 **$({\rm AIH}_{\mathscr F})$ (constant-coefficient Ihara).** At every constant-coefficient
 curve in the actual finite flag diagram, including all tame and auxiliary spectator levels,
@@ -291,10 +292,11 @@ combined fixed-prime and auxiliary coefficient algebra. The constant-coefficient
 
 **$({\rm SUP}_v)$ (the one-boundary support datum).** Every one of the five clauses called
 $({\rm SUP}_v)$ in Book 174, Section 8.2, holds: (1) the Taylor--Wiles sets are disjoint from
-$v$, kill the dual Selmer group, and retain both maps, both type rows, the flag, sign,
-determinant, and companion pairing in every finite shadow; (2) the lower clean minimal problem
-has a nonzero patched module free over its regular scalar source; (3) the full
-same-coefficient Gram block is singular at each declared boundary prime; (4), after removing
+$v$, kill the dual Selmer group, satisfy Book 141's split-regular detector input, and retain
+both maps, both type rows, the flag, sign, determinant, and companion pairing in every finite
+shadow; (2) the lower clean minimal problem has a nonzero patched module free over its regular
+scalar source; (3) the full same-coefficient Gram block is singular at each declared boundary
+prime; (4), after removing
 the same frame variables on both sides, the completed selected boundary chart is precisely the
 lower chart with the monodromy, flag, and Kummer coordinates retained, and the chosen boundary
 prime on each global component lies over the generic point of its lower component and on no
@@ -310,11 +312,14 @@ $\Lambda_v$-action; at auxiliary level also retain the effective diamond algebra
 those ordered auxiliary operators already proved to lie in the trace/structural image. It is
 therefore faithful by definition. Require the clean hypotheses of
 Book 170: the module is $\mathcal O$-free, its characteristic-zero Hecke action is semisimple,
-every generic factor satisfies the named local conditions, and the trace/structural generators
-listed above generate this entire image. Book 170 then constructs the order-valued
-representation and a surjection from the represented deformation ring. If line, sign, or
-orientation operators outside this trace/structural order are adjoined, surjectivity onto the
-larger image is an additional generation hypothesis and is not assumed silently.
+every generic factor has the required integral Galois realization and exact local--global
+compatibility, the represented finite-flat condition holds on every Artinian quotient above
+$\ell$, every generic factor satisfies the other named local conditions, and the
+trace/structural generators listed above generate this entire image. Book 170 then constructs
+the order-valued representation and a surjection from the represented deformation ring. If
+line, sign, or orientation operators outside this trace/structural order are adjoined,
+surjectivity onto the larger image is an additional generation hypothesis and is not assumed
+silently.
 
 **$({\rm RAY}_v)$ (strict scalar twisting).** The effective global ray quotient of
 Section 2.2 exists, and Book 174's twisting identities hold for represented deformation rings,
@@ -329,10 +334,12 @@ and pairing assertions under its clean hypotheses; it does not formally deduce t
 acting-image assertion from module augmentation. That final assertion is retained here as a
 separate hypothesis, just as it is in clean minimal patching.
 
-The corrected normalized-branch filtration is needed only if one also invokes its component
-or lowering consequences. Then $({\rm PRI}_{\rm type})$, and $({\rm NU}_{\rm type})$ for a
-switched graph--definite comparison, must be added exactly as in Book 174. Neither is used to
-identify a Galois cotangent determinant in this book. The formal reduced comparison below uses
+On the curve-new carrier, the corrected normalized-branch filtration and primitive extreme
+residues are needed only if one also invokes their component or lowering consequences. Then
+$({\rm AIH}_{\mathscr F})$ and $({\rm PRI}_{\rm type})$ must be added exactly as in Book 174;
+$({\rm NU}_{\rm type})$ is additionally required for the switched graph--definite comparison,
+as already recorded in $({\rm AUT}_v)$. None is used to identify a Galois cotangent determinant
+in this book. The formal reduced comparison below uses
 $({\rm AUT}_v)$, $({\rm TYPE}_v)$, $({\rm SUP}_v)$, and $({\rm REC}_v)$; the scalar-family
 conclusions add $({\rm RAY}_v)$, while descent from an auxiliary patch adds
 $({\rm AUG}_Q)$. Hypothesis $({\rm AIH}_{\mathscr F})$ remains part of the richer level-change
@@ -465,9 +472,10 @@ C_{Q,v}^{\mathrm{pri}}
 \tag{3.8}
 $$
 
-in degrees zero and one. Its terms are finite projective over the combined fixed-prime and
-auxiliary coefficient algebra. The differential is split injective over that algebra and its
-cokernel is finite projective over that algebra. The companion complex satisfies
+in degrees zero and one. Write $A_Q$ for the combined fixed-prime and auxiliary coefficient
+algebra. The terms of (3.8) are finite projective over $A_Q$, the differential is split
+injective over $A_Q$, and its cokernel is finite projective over $A_Q$. The companion complex
+satisfies
 
 $$
 C_{Q,v}^{\mathrm{cmp}}
@@ -795,8 +803,9 @@ $$
 not the neutral minimal complex. Book 173 therefore cannot be used to verify (5.4) for the
 right side of (5.5).
 
-There is nevertheless no amplitude gap: Book 174 proves directly, through its typed incidence
-diagram and finite shadows under $({\rm TYPE}_v)$, that the patched differential is split
+There is nevertheless no amplitude gap: under $({\rm TYPE}_v)$ and the retained
+finite-shadow patching data in $({\rm SUP}_v)$, with $({\rm RAY}_v)$ also imposed for the
+scalar-twisted family, Book 174 proves directly that the patched differential is split
 injective and its cokernel is finite projective over the one-prime scalar patching source
 $S_\infty$. Since that source is local, the cokernel is finite free. Consequently
 

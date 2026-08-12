@@ -786,9 +786,10 @@ further assumes $({\rm NU}_{\rm type})$, including coefficient actions, unit sta
 weights, routing, and coefficient-one scale.
 
 The support datum $({\rm SUP}_v)$ is separate again. It retains the actual Taylor--Wiles
-shadows, a nonzero lower boundary carrier, singularity of the correct same-coefficient Gram
-block, the full scalar or two-sign boundary chart, uniqueness of the named component at each
-boundary prime, and equality of the local dimensions used in the depth argument. Under
+shadows with Book 141's split-regular detector input, a nonzero lower boundary carrier,
+singularity of the correct same-coefficient Gram block, the full scalar or two-sign boundary
+chart, uniqueness of the named component at each boundary prime, and equality of the local
+dimensions used in the depth argument. Under
 $({\rm TIC}_v)$, $({\rm TIH}_{\mathscr F})$, and $({\rm SUP}_v)$, Book 174 proves that the
 patched and finite-level primary--companion complexes meet every generic point of every named
 one-prime component.
@@ -824,10 +825,11 @@ logical roles.
 2. $({\rm TYPE}_v)$ means $({\rm TIC}_v)$ and
    $({\rm TIH}_{\mathscr F})$ for every actual primary and companion shadow and spectator
    tuple.
-3. $({\rm SUP}_v)$ is the five-clause one-boundary datum of Book 174: marked finite shadows,
-   a nonzero lower minimal boundary carrier, singularity of the correct same-coefficient Gram
-   block, the exact selected boundary chart with a unique named component through each
-   witness, and equality of the local dimensions used in the depth argument.
+3. $({\rm SUP}_v)$ is the five-clause one-boundary datum of Book 174: marked finite shadows
+   satisfying Book 141's split-regular detector input, a nonzero lower minimal boundary
+   carrier, singularity of the correct same-coefficient Gram block, the exact selected boundary
+   chart with a unique named component through each witness, and equality of the local
+   dimensions used in the depth argument.
 4. $({\rm REC}_v)$ is the Book 170 reciprocity package on the actual finite carrier: integral
    Galois realization and exact local--global compatibility on every generic factor,
    all-Artinian finite-flat factorization above $\ell$, semisimplicity of the generic Hecke
@@ -1388,11 +1390,15 @@ correction. These component Tor groups are genuine semistable invariants and are
 as unwanted Tor over the automorphic face algebra.
 
 **Joint support $({\rm JSUP}_P)$.** The patched total carrier, and every retained finite
-quotient used in the conclusion, has full topological support on the entire named product of
-local components. Equivalently, one may prove the patched assertion together with the exact
-residue-fiber comparison that carries nonvanishing to each finite quotient. Full support
-after projection to every one-place factor is weaker: a module supported only on diagonal
-product components can have surjective support under every projection.
+quotient used in the conclusion, has full topological support over the corresponding global
+deformation ring restricted to the entire named product of local components. In particular,
+for the finite-level ring and total primary--companion carrier defined below, this means
+$\operatorname{Supp}_{R_P}(M_P)=\operatorname{Spec}R_P$. Equivalently, one may prove the
+patched assertion together with the exact residue-fiber comparison that carries nonvanishing
+to each finite quotient. Full support after projection to every one-place factor, or merely
+onto the local product base, is weaker: a module supported only on diagonal product components
+can have surjective support under every projection, and distinct global components can lie
+over the same local product component.
 
 **Simultaneous augmentation $({\rm AUG}_P)$.** Fixed-prime and Taylor--Wiles augmentations are
 exact, commute in every order, and identify the represented deformation rings, total
@@ -1412,8 +1418,8 @@ generate the finite faithful order, which is $\mathcal O$-torsion-free with redu
 fiber.
 
 Let $R_P$ represent the resulting finite-level product deformation problem after the marked
-augmentations, and let $\mathbb T_P$ be the faithful image on its total
-primary--companion carrier.
+augmentations, let $M_P$ be its total primary--companion carrier, and let $\mathbb T_P$ be the
+faithful image on $M_P$.
 
 **Theorem 9.1 (conditional finite-level finite-set nonminimal modularity lifting).** Assume
 $({\rm FACE}_P)$, $({\rm CUBE}_P)$, $({\rm MIX}_P)$,
