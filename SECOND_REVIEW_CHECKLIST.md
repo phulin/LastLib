@@ -206,4 +206,4 @@ unconditional dependency-spine column must not be promoted while the named hypot
 | 185 | Compatible Systems over the Base Field | [x] | [x] | [x] | — |
 | 186 | Changing the Coefficient Prime while Keeping the Frey Special Place | [x] | [x] | [x] | — |
 | 187 | The Fixed-Three Integral Local Theory | [x] | [x] | [x] | — |
-| 188 | Hardly Ramified $3$-adic Representations | [ ] | [ ] | — | — |
+| 188 | Hardly Ramified $3$-adic Representations | [x] | [x] | [x] | — |

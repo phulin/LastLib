@@ -238,6 +238,12 @@ Book 185, Theorem 9.1, conditionally supplies the actual compatible family, the 
 determinant, the pure polynomials outside a finite set, and the rational SP pair (1.8)--(1.10).
 It does not supply a lattice or coefficient-prime finite flatness.
 
+The full all-finite-place form of Book 185, Theorem 9.1, also assumes Book 184's
+$(\mathrm{AI}_2)$. Book 185 records the same conclusions place by place for coefficient places
+away from $2$ without that hypothesis, but Book 187, Theorem 10.2, is currently stated under the
+full conditional base-field theorem. Thus $(\mathrm{AI}_2)$ remains part of the present upstream
+antecedent.
+
 Book 187, Theorem 10.2, conditionally supplies (1.6)--(1.7). Its hypotheses include both the
 coefficient-prime certificate $(\mathrm C_3)$ and the clean-support certificate $(\mathrm U)$.
 This book consumes that theorem exactly as stated. It does not assert that either certificate
@@ -898,6 +904,8 @@ $$
 Multiplication by $3$ on $E$ factors through a morphism $C\to M$, which is zero on generic
 characters. Hence $E$ is killed by $3$. Pulling (6.6) back along the section
 $1\in C(R)$ gives a $\mu_3$-torsor, and conversely that torsor reconstructs the extension.
+The contracted-third-power trivialization introduces no additional choice here because
+$\mu_3(R)=\{1\}$.
 Since $\operatorname{Pic}(R)=0$, the fppf Kummer sequence gives
 
 $$
@@ -1393,13 +1401,14 @@ reducible residual representation.
 
 ### 10.1 Direct dependencies
 
-The proof uses the following results directly.
+The proof uses the following mathematical sources directly. The status of the companion formal
+Class Field Theory development is recorded separately below.
 
 | Source | Exact input | Use here |
 |---|---|---|
 | Books 2--3 | local Galois groups, tame return, upper numbering, Hilbert's different formula, Hasse--Arf | Sections 2, 4, and 5 |
-| Books 5--6 | local and global reciprocity and ray exact sequences | the abelian exclusions in Section 5 |
-| Class Field Theory development | the reciprocity/existence identification of ray quotients with abelian extensions | Sections 5.1--5.2 |
+| Books 5--6 | local and global reciprocity, the existence theorem, and ray exact sequences | the abelian exclusions in Section 5 |
+| Class Field Theory development | implemented ray-class groups, the unit and right-hand ray exact sequences, and ray-class finiteness | the formal arithmetic counterpart of (5.7) |
 | Book 17 | finite-etale descent over henselian odd local bases | local uniqueness and gluing of the reverse splitting |
 | Book 29 | fppf Kummer theory | the mixed extension calculation in Section 6 |
 | Books 28, 34, and 42 | saturated closure, represented quotients, finite-flat generic modules, and coefficient actions | the exact devissage in Sections 3 and 6 |
@@ -1410,17 +1419,24 @@ The proof uses the following results directly.
 | Book 185, Theorem 9.1 | determinant, rational SP pair, cofinite common good polynomials, and purity | the rational local record and Section 9 |
 | Book 187, Theorem 10.2 | the conditional clean-support, coefficient-linear all-level tower over $\mathbf Z[1/2]$ | the sole integral input at and away from $3$ |
 
+The companion Class Field Theory development currently implements ray-class groups, the unit and
+right-hand ray exact sequences, and ray-class finiteness. Its ray-class-field existence and global
+reciprocity declarations remain in `BlueprintStubs`. It therefore corroborates the arithmetic in
+(5.7) and is counted only for those implemented ray-class results, not as a proved source for the
+extension-field identification; that mathematical input is taken from Book 6.
+
 Book 163 is the Frey provenance and downstream consumer contract, not a proof input to the
-bounded representation-theoretic theorem. Book 160 gives a broader monograph treatment of the
-finite-flat category, but no theorem of Book 160 is needed here: the SP-specific degree-$20$
-classification and trace argument have been proved above.
+bounded representation-theoretic theorem. Books 40--41 concern descent and heights and are not
+used here. Book 160 gives a broader monograph treatment of the finite-flat category, but no
+theorem of Book 160 is needed here: the SP-specific degree-$20$ classification and trace argument
+have been proved above.
 
 The recommended direct dependency row is
 
 $$
 \boxed{
 188\mid
-2,3,5,6,17,29,28,34,42,51,158,159,185,187,\mathrm{CFT}.
+2,3,5,6,17,28,29,34,42,51,158,159,185,187,\mathrm{CFT}.
 }
 \tag{10.1}
 $$
@@ -1433,10 +1449,15 @@ unconditionally by the spine.
 1. **Controlled SP top datum.** Book 185, Theorem 9.1, assumes the controlled SP packet-array
    datum used by Books 183--184. Book 185's own audit records that the current Book 182 does not
    unconditionally supply the controlled residual automorphic seed.
-2. **Coefficient-prime certificate $(\mathrm C_3)$.** Even after the conditional Book 185
+2. **Coefficient-two irreducibility $(\mathrm{AI}_2)$.** Book 184 assumes that its top-packet
+   realization is absolutely irreducible at every coefficient place of residue characteristic
+   $2$. The full Book 185 theorem cited by Book 187 retains this hypothesis. Book 185 supplies a
+   restricted place-by-place conclusion for $\lambda\nmid2$ without it, but Book 187's current
+   packaged theorem has not weakened its stated input to that restricted conclusion.
+3. **Coefficient-prime certificate $(\mathrm C_3)$.** Even after the conditional Book 185
    member is granted, Book 187 requires a proof that the selected member at $\nu\mid3$ is
    crystalline over $\mathbf Q_3$ of Hodge type $(0,1)$. Book 185 does not prove this.
-3. **Clean-support certificate $(\mathrm U)$.** Book 187 also requires actual unramifiedness at
+4. **Clean-support certificate $(\mathrm U)$.** Book 187 also requires actual unramifiedness at
    every prime in the finite auxiliary set left by Book 185. Weak compatibility does not remove
    those primes. Without these finite checks, the local tower at $3$ cannot be glued over
    $\mathbf Z[1/2]$.
@@ -1516,6 +1537,6 @@ $$
 \tag{10.2}
 $$
 
-The unconditional FLT dependency spine is not ready for the three upstream reasons listed in
+The unconditional FLT dependency spine is not ready for the four upstream reasons listed in
 Section 10.2. That upstream status does not weaken the proved implication from the exact tower to
 the contradiction.
