@@ -2,1620 +2,1651 @@
 
 ## Contents
 
-1. [The last step from balance to a lift](#1-the-last-step-from-balance-to-a-lift)
-   - [What balance gives and what it does not give](#11-what-balance-gives-and-what-it-does-not-give)
-   - [The finite scalar fibre as the missing bridge](#12-the-finite-scalar-fibre-as-the-missing-bridge)
-   - [The theorem and its precise scope](#13-the-theorem-and-its-precise-scope)
-   - [Logical order of the proof](#14-logical-order-of-the-proof)
-2. [The hardly-ramified deformation problem](#2-the-hardly-ramified-deformation-problem)
-   - [Coefficients and residual representation](#21-coefficients-and-residual-representation)
-   - [The condition at two](#22-the-condition-at-two)
-   - [The finite-flat condition at the coefficient prime](#23-the-finite-flat-condition-at-the-coefficient-prime)
-   - [The global functor and universal representation](#24-the-global-functor-and-universal-representation)
-   - [Coefficient extension](#25-coefficient-extension)
-   - [Finite flatness rules out the cyclotomic-dihedral branch](#26-finite-flatness-rules-out-the-cyclotomic-dihedral-branch)
-3. [Supported balance and the relation bound](#3-supported-balance-and-the-relation-bound)
-   - [The tangent and dual Selmer structures](#31-the-tangent-and-dual-selmer-structures)
-   - [Why the local corrections cancel](#32-why-the-local-corrections-cancel)
-   - [Supported obstructions](#33-supported-obstructions)
-   - [Relations inject into supported degree two](#34-relations-inject-into-supported-degree-two)
-   - [The balanced presentation](#35-the-balanced-presentation)
-4. [The automorphic finiteness witness](#4-the-automorphic-finiteness-witness)
-   - [Why residual potential modularity is not enough](#41-why-residual-potential-modularity-is-not-enough)
-   - [Choosing the totally real field](#42-choosing-the-totally-real-field)
-   - [Preservation of the local problem](#43-preservation-of-the-local-problem)
-   - [Image and adequacy after restriction](#44-image-and-adequacy-after-restriction)
-   - [The restricted modularity-lifting ring](#45-the-restricted-modularity-lifting-ring)
-5. [Finite image on the scalar fibre](#5-finite-image-on-the-scalar-fibre)
-   - [Restriction of the universal scalar-fibre representation](#51-restriction-of-the-universal-scalar-fibre-representation)
-   - [Factorization through a finite ring](#52-factorization-through-a-finite-ring)
-   - [From the subgroup image to the full image](#53-from-the-subgroup-image-to-the-full-image)
-   - [What has and has not been proved](#54-what-has-and-has-not-been-proved)
-6. [Trace descent and scalar-fibre factorization](#6-trace-descent-and-scalar-fibre-factorization)
-   - [The closed trace ring](#61-the-closed-trace-ring)
-   - [Why the trace ring is finite](#62-why-the-trace-ring-is-finite)
-   - [Carayol descent](#63-carayol-descent)
-   - [Universality forces equality with the trace ring](#64-universality-forces-equality-with-the-trace-ring)
-   - [The scalar-fibre finiteness theorem](#65-the-scalar-fibre-finiteness-theorem)
-7. [Topological Nakayama and finiteness over the coefficient ring](#7-topological-nakayama-and-finiteness-over-the-coefficient-ring)
-   - [A complete-module Nakayama lemma](#71-a-complete-module-nakayama-lemma)
+1. [Scope, theorem, and logical order](#1-scope-theorem-and-logical-order)
+   - [The gap between balance and a point](#11-the-gap-between-balance-and-a-point)
+   - [The conditional criterion proved here](#12-the-conditional-criterion-proved-here)
+   - [What is not an input](#13-what-is-not-an-input)
+2. [The exact signed-special deformation problem](#2-the-exact-signed-special-deformation-problem)
+   - [Coefficients and residual data](#21-coefficients-and-residual-data)
+   - [The dyadic minimal-special condition](#22-the-dyadic-minimal-special-condition)
+   - [The coefficient-prime condition](#23-the-coefficient-prime-condition)
+   - [The global functor](#24-the-global-functor)
+   - [Cyclotomic absolute irreducibility](#25-cyclotomic-absolute-irreducibility)
+3. [Supported balance and actual relations](#3-supported-balance-and-actual-relations)
+   - [The Selmer tangent and supported obstruction](#31-the-selmer-tangent-and-supported-obstruction)
+   - [The relation-obstruction injection](#32-the-relation-obstruction-injection)
+   - [The balanced presentation](#33-the-balanced-presentation)
+4. [The exact restricted automorphic input](#4-the-exact-restricted-automorphic-input)
+   - [The signed-special seed package](#41-the-signed-special-seed-package)
+   - [Finiteness from the prior minimal theorem](#42-finiteness-from-the-prior-minimal-theorem)
+   - [Why the preceding construction does not supply the seed](#43-why-the-preceding-construction-does-not-supply-the-seed)
+5. [Finite image of the universal scalar fibre](#5-finite-image-of-the-universal-scalar-fibre)
+   - [Restriction to the totally real field](#51-restriction-to-the-totally-real-field)
+   - [From an open subgroup to the full group](#52-from-an-open-subgroup-to-the-full-group)
+6. [Trace descent and scalar-fibre finiteness](#6-trace-descent-and-scalar-fibre-finiteness)
+   - [The finite closed trace ring](#61-the-finite-closed-trace-ring)
+   - [Carayol descent and reflection of closed conditions](#62-carayol-descent-and-reflection-of-closed-conditions)
+   - [Universality forces equality](#63-universality-forces-equality)
+7. [Topological Nakayama over the coefficient DVR](#7-topological-nakayama-over-the-coefficient-dvr)
+   - [The complete-module lemma](#71-the-complete-module-lemma)
    - [Application to the universal ring](#72-application-to-the-universal-ring)
-   - [Why ordinary Nakayama is not enough by itself](#73-why-ordinary-nakayama-is-not-enough-by-itself)
-8. [Balanced finite algebras are flat complete intersections](#8-balanced-finite-algebras-are-flat-complete-intersections)
-   - [The dimension lower bound](#81-the-dimension-lower-bound)
-   - [The uniformizer cannot be nilpotent](#82-the-uniformizer-cannot-be-nilpotent)
-   - [Injectivity of the coefficient map](#83-injectivity-of-the-coefficient-map)
-   - [The balanced finite criterion](#84-the-balanced-finite-criterion)
-   - [Consequences for the universal ring](#85-consequences-for-the-universal-ring)
-9. [Horizontal minimal primes and normalization](#9-horizontal-minimal-primes-and-normalization)
-   - [Choosing a horizontal component](#91-choosing-a-horizontal-component)
-   - [The domain quotient](#92-the-domain-quotient)
-   - [Finiteness of normalization](#93-finiteness-of-normalization)
-   - [A coefficient DVR and a characteristic-zero point](#94-a-coefficient-dvr-and-a-characteristic-zero-point)
-10. [The extracted hardly-ramified lift](#10-the-extracted-hardly-ramified-lift)
-   - [Construction of the representation](#101-construction-of-the-representation)
-   - [Reduction and determinant](#102-reduction-and-determinant)
-   - [Ramification and the condition at two](#103-ramification-and-the-condition-at-two)
-   - [Finite flatness at the coefficient prime](#104-finite-flatness-at-the-coefficient-prime)
-   - [The final existence theorem](#105-the-final-existence-theorem)
-11. [Failure diagnostics and forbidden shortcuts](#11-failure-diagnostics-and-forbidden-shortcuts)
-   - [Potential modularity is not automorphy of the universal family](#111-potential-modularity-is-not-automorphy-of-the-universal-family)
-   - [Balance alone does not imply finiteness](#112-balance-alone-does-not-imply-finiteness)
-   - [Finite image alone does not make matrix entries finite](#113-finite-image-alone-does-not-make-matrix-entries-finite)
-   - [Faithfulness is not assumed](#114-faithfulness-is-not-assumed)
-   - [Normalization does not precede the horizontal component](#115-normalization-does-not-precede-the-horizontal-component)
-12. [Exceptional primes and the dihedral boundary](#12-exceptional-primes-and-the-dihedral-boundary)
-   - [Characteristics two and three](#121-characteristics-two-and-three)
-   - [Characteristic five](#122-characteristic-five)
-   - [Why cyclotomic failure cannot occur](#123-why-cyclotomic-failure-cannot-occur)
-   - [Why character lifting does not provide an alternative](#124-why-character-lifting-does-not-provide-an-alternative)
-13. [Dependency, hypothesis, and normalization audit](#13-dependency-hypothesis-and-normalization-audit)
-   - [Direct prerequisite ledger](#131-direct-prerequisite-ledger)
-   - [Hypothesis matching](#132-hypothesis-matching)
-   - [Circularity audit](#133-circularity-audit)
-   - [Normalization and notation audit](#134-normalization-and-notation-audit)
-14. [Conclusion](#14-conclusion)
+8. [Balance plus finiteness gives finite flatness](#8-balance-plus-finiteness-gives-finite-flatness)
+   - [Every dimension inequality](#81-every-dimension-inequality)
+   - [Complete intersection and coefficient flatness](#82-complete-intersection-and-coefficient-flatness)
+   - [Failure examples](#83-failure-examples)
+9. [Horizontal components and normalization](#9-horizontal-components-and-normalization)
+   - [A horizontal minimal prime](#91-a-horizontal-minimal-prime)
+   - [Finite normalization without an excellence shortcut](#92-finite-normalization-without-an-excellence-shortcut)
+   - [The coefficient DVR point](#93-the-coefficient-dvr-point)
+10. [Extraction of the characteristic-zero SP lift](#10-extraction-of-the-characteristic-zero-sp-lift)
+    - [Global properties](#101-global-properties)
+    - [Nonzero dyadic monodromy](#102-nonzero-dyadic-monodromy)
+    - [Finite flatness at the coefficient prime](#103-finite-flatness-at-the-coefficient-prime)
+11. [Frey specialization and logical boundaries](#11-frey-specialization-and-logical-boundaries)
+    - [The Frey input](#111-the-frey-input)
+    - [No circular automorphic seed](#112-no-circular-automorphic-seed)
+    - [Exceptional characteristics](#113-exceptional-characteristics)
+12. [Dependency closure and verdict](#12-dependency-closure-and-verdict)
+    - [Exact prerequisite ledger](#121-exact-prerequisite-ledger)
+    - [Consumer audit](#122-consumer-audit)
+    - [First irreducible gap](#123-first-irreducible-gap)
+    - [Conclusion](#124-conclusion)
 
-## 1. The last step from balance to a lift
+## 1. Scope, theorem, and logical order
 
-### 1.1 What balance gives and what it does not give
+### 1.1 The gap between balance and a point
 
-Let $\ell\geq 7$, let $\mathcal O$ be the ring of integers in a finite extension of $\mathbf Q_\ell$, let $\varpi$ be a uniformizer, and let $k$ be the finite residue field. The hardly-ramified deformation problem begins with an absolutely irreducible representation
+The preceding books construct one precise fixed-determinant deformation problem and prove a
+balanced presentation for its universal ring. Balance is indispensable, but it is not the
+existence theorem. If
 
 $$
-\bar\rho:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(k)
-$$
-
-of determinant $\bar\chi_\ell$, unramified outside $\{2,\ell\}$, having one rigid tame-quadratic type at $2$ and a coefficient-linear finite-flat model at $\ell$. Books 182--184 construct its universal fixed-determinant deformation ring and prove that it admits a presentation
-
-$$
-R_{\mathrm{hr}}
-\simeq
-\mathcal O[[X_1,\ldots,X_t]]/(f_1,\ldots,f_r)
-\qquad\text{with}\qquad r\leq t.
+R\simeq\mathcal O[[X_1,\ldots,X_t]]/(f_1,\ldots,f_r),
+\qquad r\leq t,
 \tag{1.1}
 $$
 
-This is the balanced presentation. It is already a strong theorem. The $t$ variables are not guessed from a global Euler characteristic: they form the actual tangent space of the represented deformation problem. The $r$ relations are not bounded by an ambient cohomology group through a dimension slogan: their dual injects into the supported obstruction group after all local correction torsors have been included.
-
-Yet (1.1) does not itself produce a characteristic-zero point. The example
+then Krull's height theorem gives only
 
 $$
-k[[X]]
+\dim R\geq 1+t-r\geq1.
+\tag{1.2}
 $$
 
-is balanced when regarded as a quotient of $\mathcal O[[X]]$ by the single relation $\varpi$, but it has no characteristic-zero point. At the opposite extreme, the power-series ring $\mathcal O[[X]]$ is balanced and has many characteristic-zero points, but it is not finite over $\mathcal O$. Balance controls dimension; it does not decide whether the universal ring is vertical, finite, flat, reduced, or faithful on an automorphic module.
+The ring $\mathcal O[[X]]$ is already a counterexample to any stronger inference: it is
+balanced and has dimension two, but it is not finite over $\mathcal O$. A positive-dimensional
+formal space over the coefficient DVR need not contain a point finite over that DVR.
 
-The task of this book is to add exactly the missing input and no more. We shall prove that the special fibre
+The missing upper bound is supplied by finiteness of the scalar fibre $R/\varpi R$. That
+finiteness promotes, by topological Nakayama, to finiteness of $R$ over $\mathcal O$. The upper
+dimension bound from a finite map then meets (1.2), forces all inequalities to be equalities,
+and turns the balanced presentation into a complete intersection finite flat over
+$\mathcal O$. A horizontal minimal prime and normalization finally produce a coefficient DVR
+point.
+
+There are two subtleties between the arithmetic input and that upper bound. First, the
+automorphic theorem is naturally available only after restriction to a carefully chosen
+totally real field $F$, whereas the desired ring and lift live over $\mathbf Q$. Finiteness of
+the restricted universal ring gives finite image on the open subgroup $G_F$; elementary
+finite-index group theory then returns finite image on $G_{\mathbf Q}$. Second, finite image of
+a representation over a large coefficient ring does not by itself show that the coefficient
+ring is finite. A change of basis can introduce arbitrary matrix entries without changing the
+finite abstract image. Absolute residual irreducibility and Carayol descent solve this problem:
+the conjugacy-invariant trace ring is finite, the representation descends to it, and
+universality identifies that trace ring with the entire scalar fibre. Chapters 5--6 keep these
+two descent steps separate.
+
+The proof therefore has the following one-way architecture:
 
 $$
-R_{\mathrm{hr}}/\varpi R_{\mathrm{hr}}
+\begin{array}{c}
+\text{supported Selmer balance and relation injection}\\
+\Downarrow\\
+\text{balanced presentation}\\
+\Downarrow\\
+\text{finite image of the universal scalar-fibre representation}\\
+\Downarrow\\
+R/\varpi R\text{ finite over }k\\
+\Downarrow\\
+R\text{ finite flat over }\mathcal O\\
+\Downarrow\\
+\text{horizontal normalized DVR point and an SP lift}.
+\end{array}
+\tag{1.3}
 $$
 
-is finite over $k$. Topological Nakayama will then make $R_{\mathrm{hr}}$ finite over $\mathcal O$. The balanced relation bound will rule out a vertical ring and force flat complete-intersection structure. A horizontal minimal prime and its normalization will finally give a coefficient discrete valuation ring and a characteristic-zero hardly-ramified representation.
+Only the third line requires a new arithmetic input. In the conditional theorem below it comes
+from the already established minimal modularity-lifting theorem, applied to an exact
+signed-special automorphic seed over a totally real field. Constructing that seed is a separate
+arithmetic problem. Every arrow after the seed will be proved from the preceding deformation,
+trace, and complete-local algebra.
 
-### 1.2 The finite scalar fibre as the missing bridge
+### 1.2 The conditional criterion proved here
 
-Write
+Fix the exact SP datum of Chapter 2 and let $R^{\mathrm{hr,SP}}$ be its universal ring.
+Chapter 4 states the **signed-special seed hypothesis** $(\mathrm{Seed}_{\mathrm{SP}})$. It
+asserts the existence of a totally real field and an exact clean automorphic realization for
+the restricted deformation problem, with every integral hypothesis of the prior minimal
+$R=\mathbb T$ theorem written into the package. It does not assume finiteness of a deformation
+ring as an unexplained black box: Book 155 supplies that finiteness from the stated seed.
+
+**Theorem 1.1 (balanced signed-special minimal-lift criterion).** Assume the residual
+hypotheses of Section 2.1, the SP and coefficient-prime conditions of Sections 2.2--2.3, and
+$(\mathrm{Seed}_{\mathrm{SP}})$. Then:
+
+1. the universal scalar-fibre representation has finite image;
+2. $R^{\mathrm{hr,SP}}/\varpi R^{\mathrm{hr,SP}}$ is a finite-dimensional $k$-algebra;
+3. $R^{\mathrm{hr,SP}}$ is a finite free $\mathcal O$-algebra and a one-dimensional complete
+   intersection;
+4. there are a finite extension $E'/E$, its integer ring $\mathcal O'$, and a continuous lift
+
+   $$
+   \rho':G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(\mathcal O')
+   \tag{1.4}
+   $$
+
+   of $\bar\rho$ after residue-field extension, absolutely irreducible over its fraction field,
+   with determinant $\chi_\ell$, unramified outside $\{2,\ell\}$,
+   coefficient-linearly finite flat at $\ell$, and with the selected dyadic line, sign,
+   nonzero rank-one monodromy, and conductor exponent one.
+
+The residual restriction to $G_{\mathbf Q(\zeta_\ell)}$ is absolutely irreducible by
+Proposition 2.1, and the same is therefore true after the residue-field extension in (1.4).
+Thus (1.4) is exactly the chosen primitive SP lift required as the opening datum of Book 186.
+
+Every implication in this theorem is proved below. What is not proved is
+$(\mathrm{Seed}_{\mathrm{SP}})$ for the Frey residual datum. That missing arithmetic theorem
+prevents an unconditional version of Theorem 1.1.
+
+### 1.3 What is not an input
+
+The theorem does not assume that the universal scalar-fibre representation has finite image,
+that $R/\varpi R$ is finite, that $R$ is flat, or that a characteristic-zero lift exists.
+Those are its conclusions.
+
+It does assume substantially more than the phrase “residually automorphic.” The seed must be
+a nonzero non-Eisenstein localization on the same integral SP component and must satisfy all
+saturation, pairing, diamond, support, Galois-attachment, and local--global compatibility
+hypotheses needed by Book 155. Replacing this exact package by vague residual automorphy would
+make the proof invalid. Conversely, once the exact package exists, no new reduced-finiteness,
+Ihara, or support theorem is asserted here; the established conditional $R=\mathbb T$ theorem
+is applied exactly as stated.
+
+## 2. The exact signed-special deformation problem
+
+### 2.1 Coefficients and residual data
+
+Let $\ell\geq7$, let $E/\mathbf Q_\ell$ be finite, and let
+$(\mathcal O,(\varpi),k)$ be its integer ring, a uniformizer, and its finite residue field. We
+use covariant representations and arithmetic Frobenius. Thus
 
 $$
-A=R_{\mathrm{hr}}/\varpi R_{\mathrm{hr}}
+\det\rho=\chi_\ell,
+\qquad \chi_\ell(\phi_p)=p
+\quad(p\ne\ell).
+\tag{2.1}
+$$
+
+Let
+
+$$
+\bar\rho:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(k)
+\tag{2.2}
+$$
+
+be continuous and satisfy:
+
+1. $\det\bar\rho=\bar\chi_\ell$;
+2. $\bar\rho$ is absolutely irreducible and odd;
+3. $\bar\rho$ is unramified outside $\{2,\ell\}$;
+4. its restriction at $2$ has the nonzero-monodromy SP form of Section 2.2, including a named
+   sign;
+5. its restriction at $\ell$ is coefficient-linearly finite flat of weights $\{0,1\}$.
+
+Put
+
+$$
+S=\{2,\ell,\infty\},
+\qquad M=\operatorname{ad}^0\bar\rho,
+\qquad M'=M^*(1)\simeq M(1).
+\tag{2.3}
+$$
+
+The last identification uses the perfect trace pairing on $M$. Absolute irreducibility gives
+the scalar global centralizer, so the unframed fixed-determinant problem is representable.
+
+These are abstract representation-theoretic hypotheses. No elliptic curve, Frey package, or
+automorphic realization occurs in them.
+
+### 2.2 The dyadic minimal-special condition
+
+Choose the $\ell$-primary tame character
+
+$$
+t_\ell:I_2\twoheadrightarrow\mathbf Z_\ell
+$$
+
+normalized so that arithmetic Frobenius $\phi$ satisfies
+
+$$
+t_\ell(\phi\sigma\phi^{-1})=2t_\ell(\sigma).
+\tag{2.4}
+$$
+
+After one residual change of basis, the SP datum is
+
+$$
+\bar\rho(\sigma)=I+\overline t_\ell(\sigma)\bar N,
+\qquad \bar N=e_{12}\ne0,
+\tag{2.5}
+$$
+
+and
+
+$$
+\bar F=\bar\rho(\phi)
+=\begin{pmatrix}2\bar s&0\\0&\bar s\end{pmatrix},
+\qquad \bar s\in\{1,-1\}.
+\tag{2.6}
+$$
+
+For an Artinian local $\mathcal O$-algebra $A$ with residue field $k$, an SP lift has trivial
+wild inertia and matrices
+
+$$
+\rho_A(\sigma)=I+t_\ell(\sigma)N_A,
+\qquad N_A^2=0,
+\qquad F_AN_AF_A^{-1}=2N_A,
+\tag{2.7}
+$$
+
+where $N_A$ lifts $\bar N$, the determinant is cyclotomic, and the unramified character on
+the quotient by
+
+$$
+L_A=\ker N_A=\operatorname{im}N_A
+\tag{2.8}
+$$
+
+has Frobenius value $s\in\{1,-1\}$ lifting $\bar s$. Because one entry of $N_A$ is a unit,
+$N_A$ has rank one and (2.8) is a direct-summand line over every $A$. Nonzero monodromy is not
+an open condition being inserted into a functor: it is forced on every lift by the nonzero
+residual matrix.
+
+Book 182 proves the strict normal form
+
+$$
+N_A=e_{12},
+\qquad F_A=\begin{pmatrix}2s&0\\0&s\end{pmatrix}
+\tag{2.9}
+$$
+
+after strict conjugacy. The rigidity can be seen directly. Since $N_A$ has a unit entry and
+reduces to $e_{12}$, its image and kernel give a lifted ordered basis in which
+$N_A=e_{12}$. Write
+
+$$
+F_A=\begin{pmatrix}a&b\\c&d\end{pmatrix}.
+$$
+
+The relation $F_Ae_{12}=2e_{12}F_A$ gives
+
+$$
+c=0,
+\qquad a=2d,
+\qquad
+F_A=\begin{pmatrix}2d&b\\0&d\end{pmatrix}.
+$$
+
+Cyclotomic determinant at arithmetic Frobenius gives
+$2d^2=\chi_\ell(\phi)=2$, hence $d^2=1$. The chosen residual sign and the fact that $2$ is a
+unit imply $d=s$: of the two factors $(d-s)(d+s)=0$, the second is a unit. Finally strict
+conjugation by $I+(b/d)e_{12}$ kills the upper-right entry; it is strict because $b$ reduces
+to zero. This is (2.9). There is no infinitesimal unframed parameter at $2$.
+
+Consequently the unframed fixed-determinant local ring is $\mathcal O$, the framed ring is
+noncanonically $\mathcal O[[Y_1,Y_2,Y_3]]$, and
+
+$$
+L_2=0.
+\tag{2.10}
+$$
+
+The adjoint vanishing is equally concrete. On $M=\operatorname{ad}^0\bar\rho$, invariance
+under the nontrivial residual unipotent inertia is the centralizer calculation
+
+$$
+M^{I_2}=k e_{12}.
+$$
+
+Arithmetic Frobenius acts on that line by $2$, so it has no fixed vector. On
+$M'=M(1)$, the cyclotomic twist multiplies the eigenvalue by another $2$, giving eigenvalue
+$4$. Since $\ell\geq7$, neither eigenvalue is $1$. Thus
+$H^0(\mathbf Q_2,M)=H^0(\mathbf Q_2,M')=0$. Local Tate duality exchanges these two invariant
+groups with the respective degree-two groups, and the away-from-$\ell$ local Euler
+characteristic then kills degree one. Hence Book 182's full result is
+
+$$
+H^i(\mathbf Q_2,M)=0\quad(i=0,1,2),
+\qquad
+H^i(\mathbf Q_2,M')=0\quad(i=0,1,2).
+\tag{2.11}
+$$
+
+The characteristic-zero Artin conductor is one: wild inertia is trivial and the inertia-fixed
+space is the single line $\ker N$. This calculation also explains why the sign and the
+nonzero residual monodromy belong to the deformation datum: omitting either changes the local
+component rather than merely changing its notation.
+
+### 2.3 The coefficient-prime condition
+
+At $\ell$, membership is integral. For each Artinian coefficient algebra $A$, the
+$G_{\mathbf Q_\ell}$-representation must be the generic fibre of the selected
+coefficient-linear finite locally free group scheme, equivalently of the selected
+weight-$\{0,1\}$ filtered object. This condition includes cyclotomic determinant and is stable
+under coefficient change and quotient.
+
+Book 182 proves that the framed fixed-determinant condition is represented and liftable. To
+interpret its tangent formula, put
+
+$$
+h_\ell=\dim_k\operatorname{End}_{k[G_{\mathbf Q_\ell}]}(\bar V).
+$$
+
+Because $\ell$ is odd, the local adjoint splits as
+$\operatorname{ad}\bar V=k\oplus M$, and therefore
+$h_\ell=1+h^0(\mathbf Q_\ell,M)$. The weight-$\{0,1\}$ finite-flat
+classification over the unramified base $\mathbf Q_\ell$ gives unframed fixed-determinant
+tangent dimension $h_\ell$. If
+
+$$
+L_\ell=H^1_{\mathrm{fl}}(\mathbf Q_\ell,M),
+\tag{2.12}
+$$
+
+then
+
+$$
+\dim_kL_\ell=h^0(\mathbf Q_\ell,M)+1.
+\tag{2.13}
+$$
+
+The added $1$ is the coefficient-prime local correction in the global Euler formula. Local
+liftability says that the obstruction map for this *constrained functor* is zero for every
+small extension. It does not imply $H^2(\mathbf Q_\ell,M)=0$; the ambient group may be
+nonzero. The supported obstruction theory must therefore retain the ambient group while
+remembering that the selected local object can itself be lifted.
+
+Two different uses of the word *flat* must remain separate. Section 2.3 concerns compatible
+finite-flat models of the Galois representation on all Artinian quotients. Section 8.2 will
+prove that the global universal ring is flat as an $\mathcal O$-module. Neither assertion
+implies the other.
+
+### 2.4 The global functor
+
+Let $D^{\mathrm{hr,SP}}(A)$ be the strict-equivalence classes of lifts
+
+$$
+\rho_A:G_{\mathbf Q,S}\longrightarrow\operatorname{GL}_2(A)
+\tag{2.14}
+$$
+
+with determinant $\chi_\ell$, the SP condition at $2$, and the coefficient-linearly
+finite-flat condition at $\ell$. The source group builds in unramifiedness away from
+$\{2,\ell\}$.
+
+Book 182 proves that this functor is represented by a complete Noetherian local
+$\mathcal O$-algebra
+
+$$
+R=R^{\mathrm{hr,SP}}
+\tag{2.15}
+$$
+
+with universal class $\rho_R$. Its relative tangent space is the Selmer kernel
+
+$$
+H^1_{\mathrm{hr}}(\mathbf Q,M)
+=\ker\left(
+H^1(G_{\mathbf Q,S},M)\longrightarrow
+H^1(\mathbf Q_2,M)\oplus
+\frac{H^1(\mathbf Q_\ell,M)}{L_\ell}
+\right).
+\tag{2.16}
+$$
+
+The tangent identification follows from the standard dual-number calculation, which also
+fixes the coefficient module and the equivalence relation. A determinant-preserving lift to
+$k[\epsilon]/(\epsilon^2)$ can be written
+
+$$
+\rho_\epsilon(g)=(I+\epsilon c(g))\bar\rho(g),
+\qquad c(g)\in M.
+$$
+
+The homomorphism equation is
+
+$$
+c(gh)=c(g)+\bar\rho(g)c(h)\bar\rho(g)^{-1},
+$$
+
+so $c$ is a continuous $1$-cocycle in $M$. Strict conjugation by
+$I+\epsilon X$ changes $c$ by the coboundary
+$g\mapsto X-ar\rho(g)X\bar\rho(g)^{-1}$. The dyadic restriction must lie in
+$L_2=0$, while the coefficient-prime restriction must lie in $L_\ell$. Taking cocycles modulo
+coboundaries gives exactly (2.16). In particular, the scalar summand of
+$\operatorname{ad}\bar\rho$ never enters: fixing the determinant places the calculation in
+$M=\operatorname{ad}^0\bar\rho$ from the start.
+
+Representability uses two different facts that should not be conflated. The scalar global
+centralizer supplies the Schur hypothesis needed for an unframed universal functor. The local
+SP and finite-flat conditions are represented closed subfunctors stable under coefficient
+pushout. Their completed fibre product with the unrestricted global functor therefore gives
+the ring $R$; local formal smoothness is not being used to assert global smoothness.
+
+The zero dyadic target could be omitted numerically by (2.11), but retaining it remembers the
+nonlinear SP condition whose tangent it represents.
+
+### 2.5 Cyclotomic absolute irreducibility
+
+The automorphic theorem used in Chapter 4 requires absolute irreducibility on the cyclotomic
+subgroup. Here it follows from the primitive dyadic SP datum, without any automorphy or an
+unrecorded classification of finite-flat inertia.
+
+**Proposition 2.1 (primitive dyadic inertia excludes the cyclotomic dihedral branch).** The
+restriction
+
+$$
+\bar\rho|_{G_{\mathbf Q(\zeta_\ell)}}
+\tag{2.17}
+$$
+
+is absolutely irreducible.
+
+**Proof strategy.** Book 162 turns failure of cyclotomic irreducibility into induction from
+the unique cyclotomic quadratic field. That field is unramified at $2$, whereas the SP datum
+contains a nontrivial unipotent element of order $\ell$ in dyadic inertia. The two local
+descriptions are incompatible.
+
+**Proof.** Suppose (2.17) were not absolutely irreducible. By the cyclotomic restriction
+dichotomy of Book 162, after extending $k$ inside $\overline k$ there would be a character
+$\bar\theta:G_M\to\overline k^\times$ such that
+
+$$
+\bar\rho\otimes_k\overline k
+\simeq\operatorname{Ind}_{G_M}^{G_{\mathbf Q}}\bar\theta,
+\tag{2.18}
+$$
+
+where $M$ is the unique quadratic subfield of $\mathbf Q(\zeta_\ell)$. Its fundamental
+discriminant is
+
+$$
+\ell^*=(-1)^{(\ell-1)/2}\ell,
+\tag{2.19}
+$$
+
+which is odd. Hence $M/\mathbf Q$ is unramified at $2$, so the quadratic character cutting
+out $M$ is trivial on $I_2$ and $I_2\subseteq G_M$.
+
+Restriction of (2.18) to $G_M$ is the sum of the two characters
+$\bar\theta$ and $\bar\theta^c$. In particular its restriction to $I_2$ is semisimple after
+extension to $\overline k$. Every value of either character lies in
+$\overline k^\times$, whose finite subgroups have order prime to $\ell$.
+
+On the other hand, choose $\tau\in I_2$ with
+$\overline t_\ell(\tau)=1$. Equation (2.5) gives
+
+$$
+\bar\rho(\tau)=I+\bar N,
+\qquad \bar N\ne0,
+\qquad (I+\bar N)^\ell=I.
+\tag{2.20}
+$$
+
+This is a nontrivial unipotent matrix. It is not semisimple over
+$\overline k$ and has order $\ell$, contradicting the character-sum description. Thus
+(2.17) is absolutely irreducible. $\square$
+
+This argument uses the actual SP residual monodromy. Finite flatness at $\ell$ is needed for
+the deformation problem and its tangent calculation, but it is not pressed into service as a
+small-image theorem.
+
+## 3. Supported balance and actual relations
+
+### 3.1 The Selmer tangent and supported obstruction
+
+For $v\in S$, put
+
+$$
+L_2=0,
+\qquad L_\ell=H^1_{\mathrm{fl}}(\mathbf Q_\ell,M),
+\qquad L_\infty=0,
+\tag{3.1}
+$$
+
+and let $L_v^\perp\subseteq H^1(\mathbf Q_v,M')$ be the exact annihilator under local Tate
+duality. Book 183 constructs local positive complexes $U_v^+(M)$ that realize the actual
+liftable conditions, not just subspaces having the same dimension. With complete Tate cochains
+at the real place, the supported complex has the schematic form
+
+$$
+C^\bullet_{\mathrm{hr}}(\mathbf Q,M)=
+\operatorname{Cone}\!\left(
+C^\bullet(G_{\mathbf Q,S},M)\oplus\bigoplus_{v\in S}U_v^+(M)
+\longrightarrow
+\bigoplus_{v\in S}C^\bullet(\mathbf Q_v,M)
+\right)[-1].
+$$
+
+Its degree-one group is exactly (2.16). Degree two records a global factor set together with
+chosen local null-homotopies; changing the global matrix lift or a local admissible lift changes
+that pair by a supported coboundary. This is why the group detects whether one global
+correction can satisfy both local conditions simultaneously. Supported Poitou--Tate duality,
+with the exact orthogonal local complexes, gives
+
+$$
+H^2_{\mathrm{hr}}(\mathbf Q,M)
+\simeq H^1_{\mathrm{hr}^\perp}(\mathbf Q,M')^*.
+\tag{3.2}
+$$
+
+Here is the numerical calculation, rather than only its slogan. Absolute irreducibility gives
+$H^0(G_{\mathbf Q,S},M)=0$. The injection of global invariants into the dyadic invariants and
+the vanishing $H^0(\mathbf Q_2,M')=0$ give
+$H^0(G_{\mathbf Q,S},M')=0$. The local ledger is
+
+$$
+\begin{array}{c|c|c|c}
+v&\dim_kL_v&h^0(\mathbf Q_v,M)&
+\dim_kL_v-h^0(\mathbf Q_v,M)\\ \hline
+2&0&0&0\\
+\ell&h^0(\mathbf Q_\ell,M)+1&h^0(\mathbf Q_\ell,M)&1\\
+\infty&0&1&-1.
+\end{array}
+\tag{3.3}
+$$
+
+The final row uses ordinary real invariants: oddness makes conjugation act on $M$ with a
+one-dimensional fixed diagonal line. Positive-degree complete real cohomology vanishes, but
+that does not erase the $-h^0(\mathbf R,M)$ term in the Euler formula. Consequently the exact
+Greenberg--Wiles identity is
+
+$$
+\begin{aligned}
+&\dim_kH^1_{\mathrm{hr}}(\mathbf Q,M)
+-\dim_kH^1_{\mathrm{hr}^\perp}(\mathbf Q,M')\\
+&\qquad=h^0(G_{\mathbf Q,S},M)-h^0(G_{\mathbf Q,S},M')
++\sum_{v\in S}\bigl(\dim_kL_v-h^0(\mathbf Q_v,M)\bigr)\\
+&\qquad=0-0+(0+1-1)=0.
+\end{aligned}
+\tag{3.4}
+$$
+
+An independent exact-sequence check shows where the possibly nonzero coefficient-prime
+$H^2$ went. The global Euler characteristic gives
+$h_S^1(M)-h_S^2(M)=2$. Local Euler characteristic and Tate duality give
+
+$$
+\dim_k\bigl(H^1(\mathbf Q_\ell,M)/L_\ell\bigr)
+=h^0(\mathbf Q_\ell,M')+2,
+\qquad
+h^2(\mathbf Q_\ell,M)=h^0(\mathbf Q_\ell,M').
+$$
+
+Taking alternating dimensions in the specialized Poitou--Tate sequence therefore gives
+
+$$
+2-igl(h^0(\mathbf Q_\ell,M')+2\bigr)
++h^0(\mathbf Q_\ell,M')=0.
+$$
+
+The last term is the ambient coefficient-prime obstruction group. It cancels; it has not been
+declared zero.
+
+Thus
+
+$$
+\dim_kH^1_{\mathrm{hr}}(\mathbf Q,M)
+=\dim_kH^1_{\mathrm{hr}^\perp}(\mathbf Q,M').
+\tag{3.5}
+$$
+
+Combining (3.2) and (3.5), if
+
+$$
+t=\dim_kH^1_{\mathrm{hr}}(\mathbf Q,M),
+\tag{3.6}
+$$
+
+then
+
+$$
+\boxed{\dim_kH^2_{\mathrm{hr}}(\mathbf Q,M)=t.}
+\tag{3.7}
+$$
+
+The supported group is not ordinary global $H^2$. Projecting a supported class to its global
+factor set forgets the local null-homotopies and can lose the obstruction to making them
+compatible. Conversely, local liftability only says that each restricted factor set can be
+null-homotoped separately. The mapping fibre retains the affine Poitou--Tate correction needed
+to choose one global correction compatible with all local conditions.
+
+### 3.2 The relation-obstruction injection
+
+Choose a minimal relative cotangent presentation
+
+$$
+P=\mathcal O[[X_1,\ldots,X_t]]\twoheadrightarrow R,
+\qquad J=\ker(P\to R),
+\tag{3.8}
+$$
+
+and let $\mathfrak n=(\varpi,X_1,\ldots,X_t)$. The number of variables is exactly $t$ because
+the dual of the relative cotangent space is (2.16).
+
+Here is the small-extension class used by Book 184. Let
+$A'\twoheadrightarrow A$ have kernel $I$ with $\mathfrak m_{A'}I=0$, and let
+$\rho_A$ be an admissible deformation. Choose matrix lifts $\widetilde\rho(g)$ and use
+$2\in k^\times$ to normalize their determinants to the fixed character. Their failure to be
+a representation is the factor set
+
+$$
+\widetilde\rho(g)\widetilde\rho(h)
+\widetilde\rho(gh)^{-1}=I+c(g,h),
+\qquad c(g,h)\in M\otimes_k I.
+$$
+
+Associativity makes $c$ a continuous $2$-cocycle. Changing the matrix lifts changes it by a
+coboundary. At each selected place, local liftability gives an admissible local lift; comparing
+that lift with $\widetilde\rho|_{G_v}$ gives a local $1$-cochain $b_v$ satisfying
+$db_v=c|_{G_v}$. Thus the pair $(c,(b_v)_v)$ is a degree-two cocycle in the supported mapping
+fibre. Changing the local admissible lifts changes it by the allowed local tangent action.
+
+The resulting class vanishes precisely when a global $1$-cochain kills $c$ and its local
+restrictions differ from the $b_v$ by classes in the selected tangent spaces. Correcting the
+matrix lifts by that cochain then produces one global lift satisfying both local conditions.
+This proves completeness of the supported obstruction; separate vanishing of the two local
+obstructions would not suffice.
+
+The universal algebraic extension behind the relation bound is worth displaying. Put
+
+$$
+\mathcal R=J/\mathfrak nJ,
+\qquad B=P/\mathfrak nJ.
+$$
+
+Then
+
+$$
+0\longrightarrow\mathcal R\longrightarrow B\longrightarrow R\longrightarrow0
+$$
+
+has square-zero kernel annihilated by the maximal ideal of $B$. Although $B$ and $R$ need not
+be Artinian, reduction modulo sufficiently high powers of their maximal ideals produces honest
+Artinian small extensions with the same finite kernel. Applying the complete supported
+obstruction at those levels and passing through the compatible system gives
+
+$$
+\Omega_R\in H^2_{\mathrm{hr}}(\mathbf Q,M)\otimes_k\mathcal R.
+$$
+
+A functional $\lambda\in\mathcal R^*$ pushes the relation kernel out to a principal
+small extension and contracts $\Omega_R$. Thus the covariant map goes from the *dual*
+conormal space to obstructions:
+
+$$
+(J/\mathfrak nJ)^*
+\hookrightarrow H^2_{\mathrm{hr}}(\mathbf Q,M).
+\tag{3.9}
+$$
+
+For completeness, suppose $0\ne\lambda\in\mathcal R^*$ mapped to zero. Effectiveness of the
+complete obstruction would lift the universal deformation through the corresponding
+one-dimensional relation extension $B_\lambda\twoheadrightarrow R$. Representability would
+then give a section $R\to B_\lambda$. The kernel $I_\lambda\simeq k$ is killed by the maximal
+ideal, while minimality of the variables says
+$J\subseteq\varpi P+\mathfrak n^2$. In $B_\lambda$ this places
+$I_\lambda$ inside the image of the section, contradicting the direct decomposition
+$B_\lambda=R\oplus I_\lambda$ induced by that section. Hence (3.9) is injective. It does not
+assert that every supported obstruction is a relation; dualizing gives a quotient of the dual
+Selmer group onto the conormal space, not an injection in the reverse direction.
+
+Put
+
+$$
+r=\dim_kJ/\mathfrak nJ.
+\tag{3.10}
+$$
+
+Equations (3.7) and (3.9) give only
+
+$$
+r\leq t.
+\tag{3.11}
+$$
+
+Neither source proves $r=t$. That equality will follow later from finiteness and dimension,
+not from cohomology alone.
+
+### 3.3 The balanced presentation
+
+Topological Nakayama for the finite ideal $J$ lifts a basis of
+$J/\mathfrak nJ$ to a minimal generating set $f_1,\ldots,f_r$. Thus
+
+$$
+\boxed{
+R\simeq
+\mathcal O[[X_1,\ldots,X_t]]/(f_1,\ldots,f_r),
+\qquad r\leq t.}
+\tag{3.12}
+$$
+
+Since $P$ has dimension $t+1$, the height theorem gives
+
+$$
+\dim R\geq(t+1)-r\geq1.
+\tag{3.13}
+$$
+
+This is the full unconditional output of Books 182--184. It does not prove coefficient
+injectivity, finiteness, flatness, reducedness, a horizontal prime, or a characteristic-zero
+point.
+
+## 4. The exact restricted automorphic input
+
+### 4.1 The signed-special seed package
+
+The scalar-fibre argument needs a finite restricted deformation ring. The prior minimal
+modularity-lifting theorem proves that finiteness, but only after one supplies its full clean
+automorphic datum. We therefore state the arithmetic input at the level at which that theorem
+can actually be invoked.
+
+**Hypothesis $(\mathrm{Seed}_{\mathrm{SP}})$.** There exist a finite totally real field
+$F/\mathbf Q$ of even degree and an exact clean minimal automorphic datum with the following
+properties.
+
+1. The primes $2$ and $\ell$ split completely in $F$. Both
+   $\bar\rho_F=\bar\rho|_{G_F}$ and
+   $\bar\rho|_{G_{F(\zeta_\ell)}}$ are absolutely irreducible.
+2. The restricted fixed-determinant deformation problem has determinant
+   $\chi_\ell|_{G_F}$; at every $w\mid2$ it imposes the schematic closure of the same named
+   minimal-special component, including the inherited line, sign, and relation
+   $F_wN_wF_w^{-1}=2N_w$; at every $w\mid\ell$ it imposes the coefficient-linear
+   weight-$\{0,1\}$ finite-flat condition; and it is unramified at every other finite place.
+   Write its represented complete local ring as $R_F^{\mathrm{SP}}$.
+3. The representation $\bar\rho_F$ occurs in a nonzero non-Eisenstein localized
+   parallel-weight-two definite-quaternionic module whose central character is compatible with
+   $\chi_\ell|_{G_F}$ and whose every integral local factor agrees with item 2. In particular,
+   this is an automorphic carrier on the selected SP component, not merely a system of
+   good-prime residual traces.
+4. The minimal and auxiliary localized modules satisfy the remaining clean-datum hypotheses
+   of Book 155, Theorem 1.1: finite freeness over $\mathcal O$; effective stabilizer and
+   diamond-torsor control; integral saturation of the type lattices and degeneracy maps; a
+   perfect primary--companion pairing with the prescribed adjoints; generic reducedness of
+   every relevant Hecke algebra; branchwise integral Galois attachment and local--global
+   compatibility; and specialization of the named Hecke and diamond actions onto the full
+   faithful minimal Hecke image.
+
+Complete splitting is used for more than notation. It identifies every completion at a place
+above $2$ or $\ell$ with the local field for which Books 182--184 computed the condition. Thus
+restriction retains the nonzero monodromy matrix, intrinsic line, sign, and selected finite-flat
+model without a ramified-base-change descent problem. The two irreducibility clauses put the
+restricted representation in the Schur and adequate range used by the minimal theorem.
+
+The final two items are intentionally long. None may be shortened to “residually automorphic,”
+“Ihara holds,” or “the Hecke algebra has the expected support.” Those phrases are conclusions
+or packages whose exact integral content is what the theorem requires.
+
+### 4.2 Finiteness from the prior minimal theorem
+
+**Proposition 4.1 (restricted finite-freeness).** Under
+$(\mathrm{Seed}_{\mathrm{SP}})$, there is a canonical isomorphism
+
+$$
+R_F^{\mathrm{SP}}\xrightarrow{\sim}\mathbb T_F^{\mathrm{SP}},
+\tag{4.1}
+$$
+
+and this common ring is a nonzero finite free $\mathcal O$-algebra and a relative complete
+intersection.
+
+**Proof.** Item 1 gives the total oddness, global Schur condition, cyclotomic absolute
+irreducibility, and coefficient range required by Book 155, Theorem 1.1. Complete splitting at
+$\ell$ makes the coefficient-prime extensions unramified, and item 2 supplies precisely its
+clean finite-flat and named minimal-special local conditions. Item 3 is its exact residual
+automorphy hypothesis. Item 4 reproduces, rather than anticipates, all of its integral patching
+and Hecke-valued Galois hypotheses. The theorem therefore applies to the same represented ring
+$R_F^{\mathrm{SP}}$ and gives (4.1) together with finite freeness and the complete-intersection
+statement. $\square$
+
+Only the consequence
+
+$$
+R_F^{\mathrm{SP}}/\varpi R_F^{\mathrm{SP}}
+\quad\text{is a finite-dimensional }k\text{-algebra}
+\tag{4.2}
+$$
+
+will enter the descent argument. We use the stronger established theorem because it is the
+available source of (4.2). No reduced-finiteness or reduced-support assertion is manufactured
+inside this book.
+
+There is an important distinction in that last sentence. Generic reducedness is one of the
+automorphic hypotheses used by Book 155 to assemble a Hecke-valued Galois representation and
+identify its branches. It is not being promoted here to a claim that
+$R_F^{\mathrm{SP}}$ or its special fibre is reduced. Nor is such a claim needed: a finite free
+$\mathcal O$-algebra can have nilpotents in its special fibre, while (4.2) remains true. The
+finite-image argument needs module-finiteness of the whole represented restricted ring so that
+the universal restricted representation is defined over a finite coefficient ring after
+modulo $\varpi$; a statement only about an unspecified collection of generic points would not
+provide that.
+
+The named component is also essential. At a minimal-special place, equality of conductor
+numbers would not identify the integral deformation quotient. The seed matches the line,
+Frobenius sign, monodromy relation, determinant, and their schematic closure. This is exactly
+what lets the map in Chapter 5 classify the restriction of the universal SP representation,
+rather than a representation on some neighboring local component.
+
+### 4.3 Why the preceding construction does not supply the seed
+
+Hypothesis $(\mathrm{Seed}_{\mathrm{SP}})$ is not known for the Frey datum from the preceding
+books. The obstruction appears before any commutative algebra in Chapters 5--9.
+
+The integral level comparison of Book 158 is conditional on the abelian Ihara vanishing
+
+$$
+\left(H^1_{\mathrm{nc}}(\Gamma^v,k)^\Delta\right)_{\mathfrak m}=0
+\tag{4.3}
+$$
+
+at the relevant non-Eisenstein localization. Its tree calculation and strong approximation do
+not prove (4.3). Book 159 and the support statements of Book 165 retain that hypothesis; they
+cannot be used to erase it by changing terminology.
+
+The intervening algebraic and automorphic tools do not close this existence gap. Book 160
+proves finite-level diamond-module statements once a clean torsor and saturated integral maps
+have been supplied. Book 161 constructs Hecke-valued Galois representations only from exact
+branchwise attachment and local compatibility, and gives a comparison map rather than an
+automatic isomorphism. Book 163 organizes that minimal comparison; Book 164, and then its
+synthesis in Book 155, proves equality under the full clean datum. These are precisely the
+theorems invoked in Proposition 4.1 after the seed exists. None constructs the missing
+non-Eisenstein localization or proves (4.3).
+
+Book 166 studies a different one-prime scalar residual problem, requiring
+$q_v\equiv1\pmod\ell$ and a line-special closure that meets a monodromy-zero boundary. At the
+place used here, $q_v=2$, the residual inertia is nontrivial unipotent, and the unframed SP
+ring is the rigid ring $\mathcal O$. Thus Book 166 neither constructs nor compares
+$R_F^{\mathrm{SP}}$.
+
+Book 170's potential-modularity construction consequently remains conditional. Its first
+unproved input in proof order is (4.3); even after that vanishing, the simultaneous
+multi-place cleanability, product-support, and rational-curve realization needed for the exact
+carrier still have to be proved. Therefore no prior theorem constructs item 3 together with
+item 4 of $(\mathrm{Seed}_{\mathrm{SP}})$. This is the first irreducible arithmetic gap.
+
+## 5. Finite image of the universal scalar fibre
+
+### 5.1 Restriction to the totally real field
+
+Set
+
+$$
+A=R/\varpi R
+\tag{5.1}
 $$
 
 and let
 
 $$
 \rho_A:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(A)
-\tag{1.2}
-$$
-
-be the universal representation after scalar reduction. There are two logically separate claims.
-
-First, the image of (1.2) is finite. This is proved by restricting to a finite totally real field $F$ on which the residual representation is modular and on which the restricted deformation problem lies in the exact finite-flat modularity-lifting range. The restricted representation then factors through the special fibre of a finite Hecke algebra. Because $G_F$ has finite index in $G_{\mathbf Q}$, finiteness of the restricted image implies finiteness of the full image.
-
-Second, finite image must be converted into finiteness of the coefficient ring $A$. Matrix entries need not be generated by traces in an arbitrary reducible family, and a finite subgroup can contain unipotent matrices whose entries involve apparently free nilpotent parameters. Absolute irreducibility of the residual representation is decisive here. Carayol descent conjugates (1.2) into its closed trace ring. The universal property then shows that the inclusion of the trace ring into $A$ has a retraction whose composite is the identity on $A$. Hence the trace ring is all of $A$.
-
-This is the spine of the argument:
-
-$$
-\begin{array}{c}
-\text{residual modularity over }F
-\\ \Downarrow
-\\
-\rho_A|_{G_F}\text{ factors through a finite ring}
-\\ \Downarrow
-\\
-\rho_A(G_{\mathbf Q})\text{ is finite}
-\\ \Downarrow\ \text{Carayol descent and universality}
-\\
-A\text{ is a finite }k\text{-algebra}
-\\ \Downarrow\ \text{topological Nakayama}
-\\
-R_{\mathrm{hr}}\text{ is finite over }\mathcal O
-\\ \Downarrow\ \text{balance}
-\\
-R_{\mathrm{hr}}\text{ is finite flat and a complete intersection}
-\\ \Downarrow\ \text{minimal prime and normalization}
-\\
-\text{a characteristic-zero hardly-ramified lift.}
-\end{array}
-\tag{1.3}
-$$
-
-Each downward arrow has its own hypotheses. None may be replaced by the conclusion of a later arrow.
-
-### 1.3 The theorem and its precise scope
-
-We isolate the extra hypothesis not contained in the local and Selmer calculations.
-
-**Definition 1.1 (modularity-admissible hardly-ramified datum).** A residual representation $\bar\rho$ satisfying the six hardly-ramified hypotheses is called **modularity-admissible** if the following further conditions hold.
-
-1. The residual datum, with its pairings and integral local models, belongs to the lifting-admissible two-prime range of the residual potential-modularity theorem of Book 170.
-2. In the field-control theorem of Book 170, the places $2$ and $\ell$ are required to split completely and the output field is required to be disjoint from the joint residual and cyclotomic image field.
-3. Over the resulting totally real field $F$, the fixed-determinant deformation problem obtained by restricting the hardly-ramified local conditions is an exact instance of the finite-flat fixed-type modularity-lifting theorem exported by Book 166: the residual automorphic localization, coefficient-prime conditions, named prime-to-$\ell$ types, integral type lattices, local--global compatibility, auxiliary-level exactness, support, reducedness, and trace-generation hypotheses all match.
-
-The cyclotomic absolute irreducibility required by Books 170 and 166 is not an extra clause: Theorem 2.2 below proves it from the six hardly-ramified hypotheses. Clause 3 is intentionally exact. It does not say merely that some automorphic representation congruent to $\bar\rho|_{G_F}$ exists. It says that the universal restricted deformation ring through which $\rho_A|_{G_F}$ factors is identified with a finite flat faithful Hecke order.
-
-**Theorem 1.2 (balanced hardly-ramified lift).** Let $\bar\rho$ be a modularity-admissible hardly-ramified datum. Then, after a finite extension $k'/k$, there exist a finite extension $E'/\operatorname{Frac}(\mathcal O)$ with ring of integers $\mathcal O'$, residue field $k'$, and a continuous representation
-
-$$
-\rho:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(\mathcal O')
-\tag{1.4}
-$$
-
-such that:
-
-1. $\rho\bmod\mathfrak m_{\mathcal O'}\simeq\bar\rho\otimes_k k'$;
-2. $\det\rho=\chi_\ell$;
-3. $\rho$ is unramified outside $\{2,\ell\}$;
-4. at $2$, wild inertia is trivial and tame inertia has characteristic polynomial $T^2+T+1$, so the Artin conductor exponent is two; and
-5. at $\ell$, every quotient of the selected lattice is coefficient-linearly finite flat of weight $\{0,1\}$.
-
-Moreover $R_{\mathrm{hr}}$ is finite free over $\mathcal O$ and is a relative complete intersection. The representation (1.4) is obtained from a horizontal minimal prime of $R_{\mathrm{hr}}$ and the normalization of its domain quotient.
-
-The residue extension is harmless and sometimes unavoidable: normalization of a horizontal component can have residue field strictly larger than $k$. The theorem lifts the prescribed residual representation after extension of scalars, not merely its semisimplification.
-
-### 1.4 Logical order of the proof
-
-The proof is organized to prevent four circles.
-
-We do not use a characteristic-zero lift to prove residual potential modularity. Book 170 supplies residual modularity from a separate two-prime construction.
-
-We do not use finiteness of $R_{\mathrm{hr}}$ to prove finiteness of its special fibre. The special fibre is controlled first by the restricted modularity-lifting ring.
-
-We do not use flatness to invoke topological Nakayama. Finiteness over $\mathcal O$ is obtained before flatness. Flatness is deduced later from finiteness, balance, and injectivity of $\mathcal O\to R_{\mathrm{hr}}$.
-
-We do not choose a characteristic-zero point before proving that a horizontal component exists. The component is forced by the dimension bound; normalization is performed only afterward.
-
-## 2. The hardly-ramified deformation problem
-
-### 2.1 Coefficients and residual representation
-
-Fix a finite extension $E/\mathbf Q_\ell$ with ring of integers $\mathcal O$, uniformizer $\varpi$, and finite residue field $k$. Assume $\ell\geq7$. Let
-
-$$
-\bar\rho:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(k)
-\tag{2.1}
-$$
-
-be continuous and satisfy:
-
-$$
-\det\bar\rho=\bar\chi_\ell,
-\qquad
-\bar\rho\text{ is absolutely irreducible and odd},
-\tag{2.2}
-$$
-
-and suppose that it is unramified outside $\{2,\ell\}$. Absolute irreducibility gives
-
-$$
-\operatorname{End}_{k[G_{\mathbf Q}]}(k^2)=k,
-\tag{2.3}
-$$
-
-so strict-equivalence classes form a represented unframed global deformation problem. No analogous scalar-centralizer assertion is made locally at $\ell$; the local restriction may be a split sum of distinct characters.
-
-Put
-
-$$
-S=\{2,\ell,\infty\},
-\qquad
-M=\operatorname{ad}^0\bar\rho,
-\qquad
-M'=M(1).
-\tag{2.4}
-$$
-
-The trace pairing identifies $M^*(1)$ with $M'$ because $2$ is invertible in $k$.
-
-### 2.2 The condition at two
-
-Choose a tame inertia generator $\tau$ and arithmetic Frobenius $\phi$ at $2$, normalized by
-
-$$
-\phi\tau\phi^{-1}=\tau^2.
-\tag{2.5}
-$$
-
-The residual restriction has trivial wild inertia and satisfies
-
-$$
-\bar\rho(\tau)^2+\bar\rho(\tau)+I=0.
-\tag{2.6}
-$$
-
-The hardly-ramified condition imposes the same two equations on every lift:
-
-$$
-\rho(P_2)=1,
-\qquad
-\rho(\tau)^2+\rho(\tau)+I=0.
-\tag{2.7}
-$$
-
-Because $T^2+T+1$ is separable for $\ell\ne3$, tame inertia has two distinct primitive cubic eigencharacters after scalar extension. Frobenius interchanges them. The unframed fixed-determinant local deformation ring is $\mathcal O$, its tangent space is zero, and its framed ring is a power-series ring in three frame variables.
-
-The adjoint calculation is equally important. The trace-zero inertia invariants form a line on which arithmetic Frobenius acts by $-1$. After a Tate twist Frobenius acts by $-2$, which is not $1$ for $\ell\geq7$. Thus
-
-$$
-H^0(\mathbf Q_2,M)=H^1(\mathbf Q_2,M)
-=H^0(\mathbf Q_2,M')=H^1(\mathbf Q_2,M')=0.
-\tag{2.8}
-$$
-
-Local duality also gives $H^2(\mathbf Q_2,M)=0$. Every characteristic-zero representation satisfying (2.7) has Artin conductor exponent two. This is a fixed tame-quadratic type, not a Steinberg condition and not an inequality on conductors.
-
-### 2.3 The finite-flat condition at the coefficient prime
-
-At $\ell$, the residual representation is the generic fibre of a coefficient-linear finite locally free group scheme of rank $|k|^2$ over $\mathbf Z_\ell$. A lift over an Artinian $\mathcal O$-algebra is admitted only when it has compatible coefficient-linear finite-flat models on all Artinian quotients, with determinant $\chi_\ell$ and Hodge weights $\{0,1\}$.
-
-Let
-
-$$
-h_\ell
-=\dim_k\operatorname{End}_{k[G_{\mathbf Q_\ell}]}(k^2).
-\tag{2.9}
-$$
-
-The finite-flat tangent space $L_\ell$ satisfies
-
-$$
-\dim_kL_\ell=h_\ell,
-\qquad
-\dim_kH^0(\mathbf Q_\ell,M)=h_\ell-1.
-\tag{2.10}
-$$
-
-The framed local ring is formally smooth of relative dimension four. If $h_\ell=1$, the unframed local ring is $\mathcal O[[Z]]$. If the local representation splits as two distinct characters, then $h_\ell=2$ and a coarse unframed local universal ring is not inferred. The global problem remains represented because its global centralizer is scalar and the framed local condition is available.
-
-The finite-flat local condition lifts through every small extension. This is intrinsic liftability inside the finite-flat category. It does not assert
-
-$$
-H^2(\mathbf Q_\ell,M)=0.
-$$
-
-That ambient group may be nonzero.
-
-### 2.4 The global functor and universal representation
-
-For a complete Noetherian local $\mathcal O$-algebra $B$ with residue field $k$, a hardly-ramified deformation is a strict-equivalence class of continuous lifts
-
-$$
-\rho_B:G_{\mathbf Q,S}\longrightarrow\operatorname{GL}_2(B)
-$$
-
-with determinant $\chi_\ell$, satisfying (2.7) at $2$ and the coefficient-linear finite-flat condition at $\ell$. The source group already imposes unramifiedness outside $\{2,\ell\}$.
-
-This functor is represented by a complete Noetherian local ring $R_{\mathrm{hr}}$ with universal strict-equivalence class
-
-$$
-\rho^{\mathrm{univ}}:
-G_{\mathbf Q,S}\longrightarrow
-\operatorname{GL}_2(R_{\mathrm{hr}}).
-\tag{2.11}
-$$
-
-The representing property has a consequence that will later be crucial. Two local homomorphisms
-
-$$
-f_1,f_2:R_{\mathrm{hr}}\longrightarrow B
-$$
-
-are equal if the corresponding $B$-valued deformations are strictly equivalent. This is stronger than equality of traces, but it rests on the scalar residual centralizer (2.3).
-
-### 2.5 Coefficient extension
-
-Let $\mathcal O'/\mathcal O$ be a finite extension with residue extension $k'/k$. The tame equations at $2$ commute with scalar extension. The coefficient-linear finite-flat condition at $\ell$ also commutes with the finite coefficient extensions in its established range. Consequently the global problem for $\bar\rho\otimes_k k'$ is obtained by the corresponding completed base change.
-
-This fact has two uses. The potential-modularity and modularity-lifting constructions may enlarge coefficients to contain type values and Hecke eigenvalues. Later, normalization of a horizontal component may enlarge the residue field. Neither operation changes the ground field $\mathbf Q$, the primes $2$ and $\ell$, or the meaning of the local conditions.
-
-### 2.6 Finite flatness rules out the cyclotomic-dihedral branch
-
-The image theorem of Book 162 leaves one apparent exception to cyclotomic absolute irreducibility. The local condition at $\ell$ removes it. Because this point is needed before potential modularity is invoked, we prove the removal here rather than leaving it among the later diagnostics.
-
-We first isolate the local calculation.
-
-**Proposition 2.1 (the ramified-quadratic induction obstruction).** Let $\ell\geq7$, let $k$ be a finite field of characteristic $\ell$, and let
-
-$$
-\bar r:G_{\mathbf Q_\ell}\longrightarrow\operatorname{GL}_2(k)
-\tag{2.12}
-$$
-
-be coefficient-linearly finite flat over $\mathbf Z_\ell$, of weights $\{0,1\}$ and determinant $\bar\chi_\ell$. Even after a finite extension of $k$, the representation $\bar r$ cannot have the form
-
-$$
-\operatorname{Ind}_{G_L}^{G_{\mathbf Q_\ell}}\bar\theta
-\tag{2.13}
-$$
-
-for a ramified quadratic extension $L/\mathbf Q_\ell$ and a character $\bar\theta:G_L\to\overline k^\times$.
-
-**Proof.** There are two independent descriptions of projective tame inertia.
-
-The integral low-weight classification recalled in Book 182 attaches to $\bar r$ a rank-two divided filtered module with one Hodge line. Extend the residue coefficients so that its simple factors are defined. The generic-fibre calculation has exactly two possibilities. If the filtered Frobenius module has a stable line, the line and quotient have weights zero and one; up to unramified characters, their tame inertial characters are
-
-$$
-1,\qquad \omega,
-\tag{2.14}
-$$
-
-where $\omega=\bar\chi_\ell|_{I_\ell}$. If it has no stable line, its two weights form one Frobenius orbit of length two. With $\omega_2$ a fundamental character of niveau two, the two tame characters are, again up to unramified factors,
-
-$$
-\omega_2,\qquad \omega_2^\ell.
-\tag{2.15}
-$$
-
-Here is the short filtered-module verification. In the reducible case, strictness puts the unique Hodge line on exactly one rank-one factor. The weight-zero and weight-one atomic calculations give $1$ and $\omega$. In the irreducible case, divided Frobenius exchanges the two scalar lines. Reading the two successive weights around that orbit gives the exponents $1$ and $\ell$ modulo $\ell^2-1$. Exactness and scalar extension show that extensions do not alter the semisimplified tame characters. This is the low-weight inertial calculation obtained from the integral classification, not from rational Hodge--Tate labels.
-
-Consequently the ratio of the two semisimplified tame characters has order
-
-$$
-\ell-1\quad\text{in (2.14)},
-\qquad
-\ell+1\quad\text{in (2.15)}.
-\tag{2.16}
-$$
-
-Now suppose (2.13) held. The continuous image of $\bar\theta$ is finite, and every finite subgroup of $\overline k^\times$ has order prime to $\ell$; hence $\bar\theta$ kills wild inertia. Let $\tau$ be a tame inertia generator. Since $L/\mathbf Q_\ell$ is ramified quadratic, $\tau$ lies outside $G_L$ and $\tau^2$ lies in $G_L$. In the induced basis, $\bar r(\tau)$ is antidiagonal and its square is scalar. Its two eigenvalues therefore have ratio $-1$. Equivalently, the ratio of the two semisimplified tame characters is the ramified quadratic character and has order two.
-
-For $\ell\geq7$, neither $\ell-1$ nor $\ell+1$ is two. This contradicts (2.16). The argument is unchanged by finite extension of $k$, since both the finite-flat model and the tame character ratios commute with coefficient extension. $\square$
-
-The proposition eliminates precisely the quadratic field arising in the cyclotomic dichotomy.
-
-**Theorem 2.2 (automatic cyclotomic absolute irreducibility).** Every residual representation satisfying the six hardly-ramified hypotheses of Book 182 has
-
-$$
-\bar\rho|_{G_{\mathbf Q(\zeta_\ell)}}
-\quad\text{absolutely irreducible}.
-\tag{2.17}
-$$
-
-**Proof.** Suppose the restriction were reducible. The cyclotomic Clifford theorem of Book 162 would give, after a finite coefficient extension,
-
-$$
-\bar\rho\simeq
-\operatorname{Ind}_{G_K}^{G_{\mathbf Q}}\bar\theta,
-\tag{2.18}
-$$
-
-where $K$ is the unique quadratic subfield of $\mathbf Q(\zeta_\ell)$. Its discriminant is
-
-$$
-\ell^*=(-1)^{(\ell-1)/2}\ell,
-$$
-
-so its unique completion at $\ell$ is a ramified quadratic extension of $\mathbf Q_\ell$. There is one double coset in the local Mackey decomposition, and restriction of (2.18) gives
-
-$$
-\bar\rho|_{G_{\mathbf Q_\ell}}
-\simeq
-\operatorname{Ind}_{G_{K_\ell}}^{G_{\mathbf Q_\ell}}
-(\bar\theta|_{G_{K_\ell}}).
-\tag{2.19}
-$$
-
-The left side is coefficient-linearly finite flat with determinant $\bar\chi_\ell$ by the hardly-ramified hypotheses. Proposition 2.1 forbids (2.19). Thus the reducible alternative in Book 162 cannot occur. $\square$
-
-This is stronger than adequacy of the full residual image. It proves irreducibility on the cyclotomic subgroup itself, which is the exact image hypothesis used by Books 170 and 166. No characteristic-zero lift and no automorphy theorem has entered the proof.
-
-## 3. Supported balance and the relation bound
-
-### 3.1 The tangent and dual Selmer structures
-
-The tangent structure on $M$ is
-
-$$
-L_2=0,
-\qquad
-L_\ell=H^1_{\mathrm{fl}}(\mathbf Q_\ell,M),
-\qquad
-L_\infty=0.
-\tag{3.1}
-$$
-
-At every other finite place the implicit condition is unramified. The global tangent space is
-
-$$
-H^1_{\mathrm{hr}}(\mathbf Q,M)
-=\ker\!\left(
-H^1(G_{\mathbf Q,S},M)
-\longrightarrow
-\frac{H^1(\mathbf Q_2,M)}{L_2}
-\oplus
-\frac{H^1(\mathbf Q_\ell,M)}{L_\ell}
-\right).
-\tag{3.2}
-$$
-
-Let $L_v^\perp\subset H^1(\mathbf Q_v,M')$ be the exact local Tate orthogonal. The dual Selmer group is
-
-$$
-H^1_{\mathrm{hr}^\perp}(\mathbf Q,M')
-=\ker\!\left(
-H^1(G_{\mathbf Q,S},M')
-\longrightarrow
-\bigoplus_{v\in S}
-\frac{H^1(\mathbf Q_v,M')}{L_v^\perp}
-\right),
-\tag{3.3}
-$$
-
-with the positive convention at the real place. The orthogonal is part of the definition. It is not replaced by a subspace having the expected dimension.
-
-The supported mapping fibre retains the global cochain and its local nullhomotopies. Its first cohomology is (3.2), and supported duality gives
-
-$$
-H^2_{\mathrm{hr}}(\mathbf Q,M)
-\simeq
-H^1_{\mathrm{hr}^\perp}(\mathbf Q,M')^*.
-\tag{3.4}
-$$
-
-### 3.2 Why the local corrections cancel
-
-The Greenberg--Wiles correction at a place $v$ is
-
-$$
-c_v=\dim_kL_v-\dim_kH^0(\mathbf Q_v,M).
-\tag{3.5}
-$$
-
-At $2$, both terms vanish by (2.8), so $c_2=0$. At $\ell$, equation (2.10) gives $c_\ell=1$. At infinity, oddness fixes the deformation class, while the trace-zero centralizer of complex conjugation has dimension one. Hence $c_\infty=-1$.
-
-Global absolute irreducibility gives $H^0(\mathbf Q,M)=0$. A global class in $H^0(\mathbf Q,M')$ restricts to a class in $H^0(\mathbf Q_2,M')$, which is zero by (2.8); hence
-
-$$
-H^0(\mathbf Q,M')=0.
-\tag{3.6}
-$$
-
-The global invariant terms vanish, and
-
-$$
-c_2+c_\ell+c_\infty=0+1-1=0.
-\tag{3.7}
-$$
-
-Therefore
-
-$$
-\dim_kH^1_{\mathrm{hr}}(\mathbf Q,M)
-=
-\dim_kH^1_{\mathrm{hr}^\perp}(\mathbf Q,M').
-\tag{3.8}
-$$
-
-Combining (3.4) and (3.8) gives the supported balance
-
-$$
-\dim_kH^2_{\mathrm{hr}}(\mathbf Q,M)
-=
-\dim_kH^1_{\mathrm{hr}}(\mathbf Q,M).
-\tag{3.9}
-$$
-
-The calculation remains valid when the local restriction at $\ell$ splits as two distinct characters: both dimensions in (2.10) rise by one, so their difference remains one.
-
-### 3.3 Supported obstructions
-
-Consider a small extension of Artinian coefficient rings
-
-$$
-0\longrightarrow I\longrightarrow B'\longrightarrow B\longrightarrow0,
-\qquad \mathfrak m_{B'}I=0.
-\tag{3.10}
-$$
-
-Choose set-theoretic determinant-compatible lifts of the matrices of a $B$-valued deformation. Their failure to multiply defines a normalized factor-set cocycle with values in $M\otimes_k I$. At $2$ and $\ell$, local liftability supplies admissible local lifts. Comparing the global matrix lifts with those local lifts gives local $1$-cochains whose coboundaries are the restricted factor sets. The global cocycle together with these local nullhomotopies defines a supported class
-
-$$
-\operatorname{ob}(\rho_B,B')
-\in H^2_{\mathrm{hr}}(\mathbf Q,M)\otimes_k I.
-\tag{3.11}
-$$
-
-The class is independent of every choice. It vanishes if and only if the global deformation lifts with all local conditions preserved. The reverse implication uses the Poitou--Tate correction functional: local admissible lifts form torsors under the $L_v$, their mismatch pairs with dual Selmer classes, and global reciprocity says that a mismatch is globally correctable precisely when every such pairing vanishes.
-
-Thus supported degree two is not merely a convenient upper bound. It is a complete obstruction receptacle for this deformation problem.
-
-### 3.4 Relations inject into supported degree two
-
-Choose a minimal presentation
-
-$$
-P=\mathcal O[[X_1,\ldots,X_t]]
-\twoheadrightarrow R_{\mathrm{hr}},
-\qquad J=\ker(P\to R_{\mathrm{hr}}),
-\tag{3.12}
-$$
-
-where
-
-$$
-t=\dim_kH^1_{\mathrm{hr}}(\mathbf Q,M).
-\tag{3.13}
-$$
-
-Let $\mathfrak n=(\varpi,X_1,\ldots,X_t)$ and put
-
-$$
-\operatorname{Rel}=J/\mathfrak nJ.
-\tag{3.14}
-$$
-
-A functional $\lambda\in\operatorname{Rel}^*$ defines a small quotient of $P$ in which exactly the relation direction measured by $\lambda$ is retained. Pull the universal representation to that quotient and form its supported obstruction class. This gives a linear map
-
-$$
-\operatorname{Rel}^*
-\longrightarrow H^2_{\mathrm{hr}}(\mathbf Q,M).
-\tag{3.15}
-$$
-
-The map is injective. Indeed, if the supported class of a nonzero relation functional vanished, completeness of (3.11) would lift the universal deformation across the corresponding small extension. Universality would then give a section of the quotient that kills the chosen nonzero conormal functional, contradicting minimality of the relation direction.
-
-Here is the small-extension argument in detail. Choose $\lambda\ne0$ in $\operatorname{Rel}^*$ and let
-
-$$
-J_\lambda=\ker\!\left(
-J\longrightarrow J/\mathfrak nJ
-\xrightarrow{\lambda}k
-\right).
-$$
-
-Put $P_\lambda=P/J_\lambda$. The image $I_\lambda$ of $J$ in $P_\lambda$ is one-dimensional over $k$, is killed by the maximal ideal, and has square zero. Thus
-
-$$
-0\longrightarrow I_\lambda
-\longrightarrow P_\lambda
-\longrightarrow R_{\mathrm{hr}}
-\longrightarrow0
-\tag{3.15a}
-$$
-
-is a small extension in the pro-Artinian sense after reduction at any finite precision. Pull the universal representation over $R_{\mathrm{hr}}$ across (3.15a). Its obstruction is precisely the image of $\lambda$ under (3.15), because changing the lift of a matrix coefficient changes the factor set by a supported coboundary and changing the generator of $I_\lambda$ scales both constructions by the same scalar.
-
-Suppose this class were zero. At each finite precision the complete obstruction criterion would give a locally admissible lift to the corresponding quotient of $P_\lambda$. The lifts are torsors under finite tangent groups. Surjective transition maps and compactness let us choose a compatible inverse system, producing a deformation over $P_\lambda$. Universality gives a map
-
-$$
-s:R_{\mathrm{hr}}\longrightarrow P_\lambda
-$$
-
-whose composite with $P_\lambda\to R_{\mathrm{hr}}$ is the identity. On cotangent spaces, the quotient and section split the conormal sequence. But the class of $I_\lambda$ is, by construction, the nonzero functional $\lambda$ on the minimal conormal space. A split would make that conormal direction zero. This contradiction proves injectivity.
-
-This proof also explains why an arbitrary obstruction space does not bound minimal relations. One needs a functorial obstruction class whose vanishing is equivalent to an actual lift preserving every local condition. The supported class has this completeness because the local nullhomotopies and the Poitou--Tate correction functional were built into it.
-
-The variance matters. It is the dual relation space that injects into supported degree two:
-
-$$
-\operatorname{Rel}^*\hookrightarrow H^2_{\mathrm{hr}}.
-\tag{3.16}
-$$
-
-Equivalently, after supported duality, the dual Selmer group surjects onto $\operatorname{Rel}$.
-
-### 3.5 The balanced presentation
-
-Let
-
-$$
-r=\dim_k\operatorname{Rel}.
-$$
-
-Equations (3.9) and (3.16) give
-
-$$
-r\leq\dim_kH^2_{\mathrm{hr}}
-=\dim_kH^1_{\mathrm{hr}}=t.
-\tag{3.17}
-$$
-
-Lifting a basis of $\operatorname{Rel}$ to $J$ and applying topological Nakayama to the finite $P$-module $J$ shows that these $r$ lifts generate $J$. Hence
-
-$$
-R_{\mathrm{hr}}
-\simeq
-\mathcal O[[X_1,\ldots,X_t]]/(f_1,\ldots,f_r),
-\qquad r\leq t.
-\tag{3.18}
-$$
-
-The elementary height inequality yields
-
-$$
-\dim R_{\mathrm{hr}}
-\geq 1+t-r\geq1.
-\tag{3.19}
-$$
-
-This lower bound will later rule out a vertical finite ring. At this stage no finiteness or flatness has been proved.
-
-## 4. The automorphic finiteness witness
-
-### 4.1 Why residual potential modularity is not enough
-
-Residual potential modularity produces a finite totally real field $F$ and a parallel-weight-two cuspidal automorphic representation whose residual representation is $\bar\rho|_{G_F}$ after scalar extension. This establishes residual automorphy. It does not say that the $A$-valued representation $\rho_A|_{G_F}$ is automorphic, and it does not imply that the universal restricted deformation ring is finite.
-
-To obtain a finite ring through which $\rho_A|_{G_F}$ factors, one needs an exact modularity-lifting theorem for the restricted deformation problem. Its local conditions must be represented, its residual automorphic form must occur in the correct localization, the image hypotheses must hold, and the integral patching theorem must identify the restricted universal deformation ring with a faithful Hecke order finite over $\mathcal O$.
-
-This is why Definition 1.1 contains both Books 170 and 166. The first supplies the residual automorphic field and its control. The second supplies finiteness of the ring governing all deformations on the selected local tuple.
-
-### 4.2 Choosing the totally real field
-
-Apply the field-control form of residual potential modularity with the finite split set containing $2$ and $\ell$. Put into the avoidance field:
-
-- the fixed field of $\ker\bar\rho$;
-- the finite cyclotomic field needed to preserve the joint action on $M(1)$;
-- the component and self-twist fields used by the modularity-lifting datum; and
-- every finite auxiliary field whose intersection could shrink the residual image.
-
-The resulting field $F$ is finite and totally real, and
-
-$$
-F\otimes_{\mathbf Q}\mathbf Q_2
-\simeq\mathbf Q_2^{[F:\mathbf Q]},
-\qquad
-F\otimes_{\mathbf Q}\mathbf Q_\ell
-\simeq\mathbf Q_\ell^{[F:\mathbf Q]}.
-\tag{4.1}
-$$
-
-It is linearly disjoint from the chosen finite Galois avoidance field. The theorem does not need $F/\mathbf Q$ to be Galois or solvable. Its only group-theoretic use below is that $G_F$ is an open subgroup of finite index in $G_{\mathbf Q}$.
-
-### 4.3 Preservation of the local problem
-
-At every $w\mid2$, complete splitting identifies $F_w$ with $\mathbf Q_2$. Hence the equations (2.7), their rigid tangent calculation, and the tame-quadratic type are literally unchanged.
-
-At every $w\mid\ell$, complete splitting identifies $F_w$ with $\mathbf Q_\ell$. Thus the coefficient-linear finite-flat category, determinant, Hodge range, and possible local centralizer are unchanged. No theorem about finite flatness over a ramified extension is required.
-
-At a finite place $w\nmid2\ell$, the restriction of an unramified representation of $G_{\mathbf Q_p}$ to $G_{F_w}$ is unramified. Ramification of the number-field extension itself does not create inertia in the restricted representation: local inertia maps into the original inertia group, on which the representation is trivial.
-
-Consequently every hardly-ramified deformation over $\mathbf Q$ restricts to the fixed-determinant deformation problem $\mathcal D_F$ having:
-
-$$
-\begin{array}{c|c}
-w\mid2&\text{the same named tame-quadratic type},\\
-w\mid\ell&\text{the same coefficient-linear finite-flat condition},\\
-w\nmid2\ell&\text{unramified}.
-\end{array}
-\tag{4.2}
-$$
-
-The automorphic finiteness witness requires this exact tuple, not a tuple having merely equal conductor exponents.
-
-### 4.4 Image and adequacy after restriction
-
-Let $L/\mathbf Q$ be the finite Galois extension fixed by $\ker\bar\rho$. Since $F\cap L=\mathbf Q$, restriction gives
-
-$$
-\bar\rho(G_F)=\bar\rho(G_{\mathbf Q}).
-\tag{4.3}
-$$
-
-Indeed, $\operatorname{Gal}(FL/F)\to\operatorname{Gal}(L/\mathbf Q)$ is an isomorphism, and $G_F$ surjects onto the left side. The same argument applied to the joint residual-cyclotomic representation preserves the relevant adjoint-twist invariants.
-
-Theorem 2.2 proves that $\bar\rho|_{G_{\mathbf Q(\zeta_\ell)}}$ is absolutely irreducible. Since $\ell\geq7$, Book 162 therefore supplies adequacy. Equality of the matrix image after restriction preserves adequacy verbatim. Exceptional projective images $A_4$, $S_4$, and $A_5$ cause no additional exception in this range when their order is prime to $\ell$; the defining-characteristic large-image cases are adequate as well.
-
-The vanishing
-
-$$
-H^0(F,\operatorname{ad}^0\bar\rho(1))=0
-\tag{4.4}
-$$
-
-can also be seen locally: restriction to a place above $2$ injects global invariants into the zero group in (2.8). Thus the adjoint invariant required by the modularity-lifting ledger is checked without assuming it from adequacy.
-
-### 4.5 The restricted modularity-lifting ring
-
-Let $R_F$ be the universal fixed-determinant ring for the exact local tuple $\mathcal D_F$. By modularity-admissibility, residual potential modularity places $\bar\rho|_{G_F}$ in the correct non-Eisenstein parallel-weight-two localization, and the finite-flat fixed-type modularity-lifting theorem gives
-
-$$
-R_F\xrightarrow{\sim}\mathbb T_F,
-\tag{4.5}
-$$
-
-where $\mathbb T_F$ is a faithful Hecke order finite flat over $\mathcal O$. In particular,
-
-$$
-R_F/\varpi R_F
-\quad\text{is a finite-dimensional }k\text{-algebra}.
-\tag{4.6}
-$$
-
-The patching theorem behind (4.5) keeps the coefficient-prime finite-flat quotients, the named tame types, the primary and companion type lattices, auxiliary diamond actions, determinant lines, and acting-image augmentation. Its role here is precisely (4.6). We do not reproduce its patching construction, and we do not use its conclusion for a local tuple different from (4.2).
-
-It is useful to see why the conclusion is ring-theoretic rather than pointwise. At Taylor--Wiles level $Q_N$, the automorphic carrier is finite free over the diamond group algebra and carries a faithful image algebra $\mathbb T_{F,Q_N}$. The corresponding deformation ring $R_{F,Q_N}$ acts through a surjection
-
-$$
-R_{F,Q_N}\twoheadrightarrow\mathbb T_{F,Q_N}.
-\tag{4.7}
-$$
-
-Finite marked quotients retain the local type actions, pairings, determinant, and both augmentation ideals. Passing to a compatible inverse system produces a patched deformation source, a patched deformation ring, and a patched Hecke image. The patched automorphic complex collapses to a finite free module over the regular auxiliary base. Component support and reducedness make the selected deformation source act faithfully. Thus the patched analogue of (4.7) is an isomorphism. Exact auxiliary augmentation descends the equality to finite level, giving (4.5).
-
-Two consequences are essential for the present argument. First, the equality concerns the universal ring for the selected local tuple, so every coefficient algebra point of that ring factors through the Hecke order. Second, the Hecke order is finite over $\mathcal O$ because it is an image in the endomorphisms of a finite $\mathcal O$-module. Neither conclusion would follow from knowing only that every characteristic-zero irreducible component contains some automorphic point. A nilpotent kernel could survive pointwise tests, and a positive-dimensional formal direction could contain infinitely many automorphic points.
-
-The exact augmentation hypotheses also prevent a different gap. If one patched cohomology after discarding the type complex, specialization could create
-
-$$
-\operatorname{Tor}_1
-$$
-
-and enlarge the acting kernel. The amplitude-collapse theorem proves flatness over the auxiliary and type parameters before augmentation. Hence the Hecke algebra in (4.5) is the faithful specialized image, not merely a quotient of an image constructed before specialization.
-
-## 5. Finite image on the scalar fibre
-
-### 5.1 Restriction of the universal scalar-fibre representation
-
-Set
-
-$$
-A=R_{\mathrm{hr}}/\varpi R_{\mathrm{hr}}
-$$
-
-and reduce (2.11):
-
-$$
-\rho_A:G_{\mathbf Q,S}\longrightarrow\operatorname{GL}_2(A).
-\tag{5.1}
-$$
-
-By Section 4.3, its restriction to $G_F$ belongs to $\mathcal D_F(A)$. The universal property of $R_F$ therefore gives a local homomorphism
-
-$$
-\alpha:R_F\longrightarrow A
 \tag{5.2}
 $$
 
-such that the pushforward of the universal $R_F$-valued representation is strictly equivalent to $\rho_A|_{G_F}$. Since $A$ has characteristic $\ell$, the map factors through
+be the universal representation after scalar reduction. Under
+$(\mathrm{Seed}_{\mathrm{SP}})$, restriction
+of the universal deformation to $G_F$ satisfies the exact restricted problem. At a place
+$w\mid2$ or $w\mid\ell$, complete splitting identifies $F_w$ with the corresponding rational
+local field, so the represented local quotient is literally unchanged. At every other finite
+place, an unramified representation remains unramified on restriction. The determinant becomes
+$\chi_\ell|_{G_F}$, and the residual representation is $\bar\rho_F$. Universality therefore
+gives a local map
 
 $$
-\bar\alpha:R_F/\varpi R_F\longrightarrow A.
+R_F^{\mathrm{SP}}\longrightarrow A.
 \tag{5.3}
 $$
 
-No finiteness of $A$ has been used.
+Because $A$ has characteristic $\ell$, (5.3) factors through
+$R_F^{\mathrm{SP}}/\varpi R_F^{\mathrm{SP}}$. Let $B$ be its image. Equation (4.2) makes
+$B$ a finite-dimensional $k$-algebra, hence a finite ring.
 
-### 5.2 Factorization through a finite ring
-
-Let
-
-$$
-B=\operatorname{im}(\bar\alpha)\subset A.
-\tag{5.4}
-$$
-
-By (4.6), $B$ is a finite-dimensional $k$-algebra, hence a finite set. After a strict change of basis, the restricted representation takes values in
-
-$$
-\operatorname{GL}_2(B).
-\tag{5.5}
-$$
-
-Therefore
+After a strict conjugacy, $\rho_A|_{G_F}$ is obtained by scalar extension from the universal
+restricted representation over $B$. Equivalently, after choosing a representative of the
+universal strict-equivalence class, all its matrices lie in $\operatorname{GL}_2(B)$. Since
+$B$ is a finite ring, $\operatorname{GL}_2(B)$ is a finite set. Consequently
 
 $$
 \rho_A(G_F)
+\quad\text{is finite}.
+\tag{5.4}
 $$
 
-is finite. Notice the direction of the reasoning. The representation factors through a finite coefficient ring because the restricted universal deformation ring is finite. We have not argued that an arbitrary characteristic-$\ell$ lift of a modular residual representation is automorphic.
+Notice the direction of the argument. We did not assume finite image of (5.2). We obtained
+finite image after restriction from finiteness of a represented restricted deformation ring.
 
-### 5.3 From the subgroup image to the full image
+### 5.2 From an open subgroup to the full group
 
-We use a general lemma.
-
-**Lemma 5.1.** Let $G$ be a group, let $H\subset G$ have finite index, and let $r:G\to\Gamma$ be a homomorphism. If $r(H)$ is finite, then $r(G)$ is finite.
-
-**Proof.** Choose right-coset representatives $g_1,\ldots,g_d$ for $H\backslash G$. Every $g\in G$ has the form $hg_i$, so
+The subgroup $G_F\subseteq G_{\mathbf Q}$ has finite index. The map of left-coset sets
 
 $$
-r(G)\subseteq\bigcup_{i=1}^d r(H)r(g_i).
+G_{\mathbf Q}/G_F
+\longrightarrow
+\rho_A(G_{\mathbf Q})/\rho_A(G_F)
+\tag{5.5}
 $$
 
-The right side is a finite union of finite sets. $\square$
-
-Apply the lemma with $G=G_{\mathbf Q}$ and $H=G_F$. Since $F/\mathbf Q$ is finite, $G_F$ is open of finite index. We obtain
+is surjective. Thus the second index is finite. Since its subgroup in (5.4) is finite, so is
+the whole group:
 
 $$
 \boxed{\rho_A(G_{\mathbf Q})\text{ is finite}.}
 \tag{5.6}
 $$
 
-Normality of $F/\mathbf Q$ is unnecessary.
+No Galois or normality hypothesis on $F/\mathbf Q$ is needed for this elementary finite-index
+step.
 
-### 5.4 What has and has not been proved
+## 6. Trace descent and scalar-fibre finiteness
 
-Equation (5.6) is a statement about the image group. It does not yet say that $A$ is finite-dimensional. A finite group can act through matrices over a large characteristic-$\ell$ ring, especially through unipotent elements of $\ell$-power order. For example, if $N^2=0$, then
+### 6.1 The finite closed trace ring
 
-$$
-(I+xN)^\ell=I
-$$
-
-in characteristic $\ell$, even when $x$ lies in a large ring. Thus finite image cannot be converted into coefficient finiteness by inspecting orders of matrices.
-
-The residual absolute irreducibility and the universal property are needed to eliminate these hidden coefficient directions. This is the purpose of trace descent.
-
-## 6. Trace descent and scalar-fibre factorization
-
-### 6.1 The closed trace ring
-
-Let
+Let $T\subseteq A$ be the closed $k$-subalgebra generated by
 
 $$
-T\subseteq A
-$$
-
-be the closed $k$-subalgebra topologically generated by the traces
-
-$$
-\operatorname{tr}\rho_A(g),\qquad g\in G_{\mathbf Q}.
+\{\operatorname{tr}\rho_A(g):g\in G_{\mathbf Q}\}.
 \tag{6.1}
 $$
 
-The determinant of $\rho_A$ is the reduction of the cyclotomic character, so
-
-$$
-\det\rho_A(g)\in k^\times.
-\tag{6.2}
-$$
-
-The ring $T$ is a complete local pseudocompact $k$-algebra with residue field $k$. At this point it is merely a closed subring of $A$.
-
-### 6.2 Why the trace ring is finite
-
-Let $H=\rho_A(G_{\mathbf Q})$, which is finite by (5.6). For $2\times2$ invertible matrices one has
+Finite image makes the displayed set finite, but finite generation as an algebra would not by
+itself imply finite dimension. The rank-two trace identity supplies the missing multiplicative
+closure:
 
 $$
 \operatorname{tr}(X)\operatorname{tr}(Y)
 =\operatorname{tr}(XY)+\det(Y)\operatorname{tr}(XY^{-1}).
+\tag{6.2}
+$$
+
+Indeed, Cayley--Hamilton for the invertible $2\times2$ matrix $Y$ gives
+$Y+\det(Y)Y^{-1}=\operatorname{tr}(Y)I$; multiply by $X$ and take traces. Thus the identity is
+valid over the possibly nonreduced commutative ring $A$, not only over a field.
+
+Here every determinant lies in the finite field $k$ because it is the residual cyclotomic
+character. Hence the $k$-linear span $W$ of the finite trace set is a subalgebra. It contains
+$1$ because $\operatorname{tr}(I)=2$ and $2\in k^\times$. The space $W$ is finite, and
+therefore closed in the Hausdorff ring $A$. Thus
+
+$$
+T=W
+\quad\text{is a finite-dimensional }k\text{-algebra}.
 \tag{6.3}
 $$
 
-To verify (6.3), use the Cayley--Hamilton identity
+It is local. Indeed, an element of $T$ with nonzero residue is a unit in $A$. Multiplication by
+it is injective on the finite-dimensional space $T$, hence surjective, so its inverse also lies
+in $T$.
+
+Finite image alone does not make an arbitrarily chosen matrix-entry algebra finite. Conjugating
+a constant finite representation by a matrix with an entry $X\in k[[X]]$ can make an entry
+generate the infinite-dimensional algebra $k[X]$. Traces are invariant under conjugacy, which
+is why the trace ring is the correct object.
+
+### 6.2 Carayol descent and reflection of closed conditions
+
+The residual representation is absolutely irreducible. The mechanism behind Carayol descent
+is useful here. Burnside's theorem makes the residual group algebra span
+$M_2(k)$. Choose four residual group-algebra elements giving a basis and a trace-dual basis.
+The determinant and trace identities express the coefficients of every $\rho_A(g)$ in the
+lifted basis through traces belonging to $T$. The resulting rank-two $T$-lattice inside
+$A^2$ is stable under $G_{\mathbf Q}$; residual absolute irreducibility makes it free and
+allows its basis to be normalized to the original residual basis. Book 63 carries out this
+construction in the pseudocompact category and proves compatibility across all Artinian
+shadows.
+
+Carayol descent therefore strictly conjugates $\rho_A$ to a representation
 
 $$
-Y+\det(Y)Y^{-1}=\operatorname{tr}(Y)I
-$$
-
-and multiply by $X$ before taking traces.
-
-Let $V$ be the $k$-linear span in $A$ of
-
-$$
-\{\operatorname{tr}(h):h\in H\}.
-$$
-
-The set is finite, so $V$ is finite-dimensional. Equations (6.2) and (6.3) show that $V$ is closed under multiplication; it contains $1$ because $2$ is invertible and $\operatorname{tr}(I)=2$. Hence $V$ is a finite-dimensional $k$-subalgebra. It contains every trace and is contained in the trace algebra, so
-
-$$
-T=V.
+\rho_T:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(T).
 \tag{6.4}
 $$
 
-In particular, $T$ is finite-dimensional over $k$ and is already closed.
+The hypotheses here are exact: $A$ and $T$ are local pseudocompact rings with the same residue
+field, the determinant already takes values in $k\subseteq T$, and the residual centralizer is
+scalar. Carayol descent uses absolute irreducibility to recover matrix coefficients after a
+strict change of basis; it is not the false assertion that arbitrary representations with the
+same traces are isomorphic over a ring with nilpotents.
 
-### 6.3 Carayol descent
+One must still check that (6.4) is a point of the same SP deformation functor. Matrix descent
+alone does not say that an integral local condition descends through a coefficient subring.
 
-The ring $A$ is a complete Noetherian local $k$-algebra, hence a countable inverse limit of Artinian local rings. The group $G_{\mathbf Q,S}$ is compact, the representation $\rho_A$ is continuous, and its residual representation is absolutely irreducible. The hypotheses of Carayol descent therefore apply.
+**Lemma 6.1 (reflection of represented closed conditions).** Let an unrestricted represented
+deformation functor have universal ring $U$, and let a closed subfunctor be represented by
+$R=U/I$. Suppose $T\hookrightarrow A$ is injective and a $T$-valued representation becomes,
+after scalar extension to $A$, a point of the closed subfunctor. Then the $T$-valued point
+already belongs to the closed subfunctor.
 
-There exists
+**Proof.** The $T$-valued point gives a map $U\to T$. Its composite with $T\hookrightarrow A$
+kills $I$. Injectivity therefore implies that $U\to T$ kills $I$, so it factors through
+$R=U/I$. $\square$
+
+Book 182 constructs the global SP and finite-flat problem exactly as such a closed quotient of
+the unrestricted fixed-determinant ring, using represented framed local quotients. Lemma 6.1
+therefore applies to (6.4). It avoids any unjustified attempt to descend a finite-flat group
+scheme directly through an arbitrary subring.
+
+### 6.3 Universality forces equality
+
+Since $\rho_T$ belongs to $D^{\mathrm{hr,SP}}(T)$, universality gives
 
 $$
-u\in1+M_2(\mathfrak m_A)
-$$
-
-such that
-
-$$
-u\rho_Au^{-1}:
-G_{\mathbf Q,S}\longrightarrow\operatorname{GL}_2(T).
+R\longrightarrow T.
 \tag{6.5}
 $$
 
-No flatness of $A$ is required. The conjugator is strict, so (6.5) represents the same $A$-valued deformation after applying the inclusion
+The ring $T$ has characteristic $\ell$, so (6.5) factors through a map
 
 $$
-i:T\hookrightarrow A.
+f:A=R/\varpi R\longrightarrow T.
 \tag{6.6}
 $$
 
-The theorem descends matrix entries, not only characteristic polynomials. Absolute irreducibility is essential: without it, extension classes can vary while all traces remain fixed.
-
-We recall the mechanism of the descent theorem because it clarifies every hypothesis. Choose elements $g_1,\ldots,g_4$ of the group whose residual matrices form a $k$-basis of $M_2(k)$. Such elements exist by the density theorem for an absolutely irreducible finite-dimensional representation. After replacing the list if necessary, the trace Gram matrix
-
-$$
-\mathcal G=
-\bigl(\operatorname{tr}(\rho_A(g_i)\rho_A(g_j))\bigr)_{i,j}
-\tag{6.5a}
-$$
-
-has determinant a unit: modulo the maximal ideal it is the nondegenerate trace pairing on $M_2(k)$. Every matrix $\rho_A(g)$ can therefore be expanded uniquely as
+Let $i:T\hookrightarrow A$ be the inclusion. Scalar extension of $\rho_T$ along $i$ is
+strictly equivalent to $\rho_A$. Since $R$ represents strict-equivalence classes, the two
+corresponding maps from $R$ to $A$ are equal. Therefore
 
 $$
-\rho_A(g)=\sum_{i=1}^4 c_i(g)\rho_A(g_i),
-\tag{6.5b}
-$$
-
-and Cramer's rule expresses each $c_i(g)$ using traces of products and the inverse of $\det\mathcal G$. Since traces of products are traces of group elements, all $c_i(g)$ lie in the closed trace ring $T$.
-
-Let $\mathscr A_T$ be the $T$-span of the four matrices $\rho_A(g_i)$ inside $M_2(A)$. Equation (6.5b) shows that it contains the image of the group. Multiplication of basis matrices again has structure constants computed from trace pairings, so $\mathscr A_T$ is a rank-four $T$-algebra. Its reduction is $M_2(k)$, and the reduced trace pairing is perfect. Consequently $\mathscr A_T$ is an Azumaya algebra of degree two over the complete local ring $T$.
-
-An Azumaya algebra over a complete local ring whose residue algebra is split is itself split. One proof lifts matrix units. Lift the two diagonal residual idempotents successively using Hensel's lemma for $X^2-X$; lift generators of the two off-diagonal rank-one bimodules; their products are units in the diagonal corners and can be rescaled to satisfy the matrix-unit relations. Completeness turns the compatible finite-level lifts into exact matrix units. Hence
-
-$$
-\mathscr A_T\simeq M_2(T).
-\tag{6.5c}
-$$
-
-There are now two embeddings of the split algebra $\mathscr A_T$ into $M_2(A)$: the given one and the standard one supplied by (6.5c). The local Skolem--Noether theorem says they are conjugate. Reducing the conjugator modulo the maximal ideal gives a scalar because the residual representation has scalar centralizer. Multiplying by the inverse of that scalar and correcting successively through the nilpotent quotients makes the conjugator congruent to $1$. Passing to the inverse limit gives
-
-$$
-u\in1+M_2(\mathfrak m_A)
-$$
-
-and the descent (6.5).
-
-This argument also shows why the closed topology matters. The conjugators and matrix units are first constructed modulo every open ideal. Completeness produces their limit, while separatedness makes the limiting identities exact. It also shows why no flatness is used: invertibility of the trace Gram determinant and Henselian lifting take place entirely in the local topology.
-
-### 6.4 Universality forces equality with the trace ring
-
-The $T$-valued deformation (6.5) gives, by universality of $R_{\mathrm{hr}}$, a local map
-
-$$
-f:R_{\mathrm{hr}}\longrightarrow T.
+i\circ f=\operatorname{id}_A.
 \tag{6.7}
 $$
 
-Because $T$ has characteristic $\ell$, this factors through a map
+The inclusion $i$ is consequently surjective, and
 
 $$
-\bar f:A\longrightarrow T.
+\boxed{A=T.}
 \tag{6.8}
 $$
 
-Let $q:R_{\mathrm{hr}}\twoheadrightarrow A$ be scalar reduction. The two maps
+Together with (6.3), this proves that $R/\varpi R$ is finite-dimensional over $k$. This is the
+precise scalar-fibre factorization. No additional faithfulness or support assertion appears in
+this step: the restricted $R=\mathbb T$ theorem was used earlier, and only earlier, to obtain
+finite image after restriction.
+
+## 7. Topological Nakayama over the coefficient DVR
+
+### 7.1 The complete-module lemma
+
+Ordinary Nakayama applies to modules already known to be finite. Here finiteness is the
+conclusion, so completeness must enter explicitly.
+
+**Lemma 7.1 (pseudocompact Nakayama over a DVR).** Let $M$ be a pseudocompact
+$\mathcal O$-module. If $M/\varpi M$ is finite-dimensional over $k$ and $\varpi M$ is closed,
+then $M$ is a finite $\mathcal O$-module.
+
+**Proof strategy.** Lift a basis of the scalar fibre, then use the complete form of Nakayama
+to turn topological spanning into algebraic generation.
+
+**Proof.** Choose lifts $m_1,\ldots,m_d$ of a $k$-basis and let
+$N=\sum_i\mathcal O m_i$. The continuous image of the compact module $\mathcal O^d$ in the
+Hausdorff module $M$ is compact and hence closed; compactness uses that the residue field is
+finite, so the coefficient DVR is the inverse limit of finite rings. The quotient $Q=M/N$ is
+therefore
+pseudocompact. Surjectivity modulo $\varpi$ says $Q=\varpi Q$. Iteration gives
+$Q=\varpi^nQ$ for every $n$. A pseudocompact $\mathcal O$-module is separated for the
+$\varpi$-adic filtration in the needed sense: for every open submodule $U$, the finite-length
+module $Q/U$ is killed by some power of $\varpi$, so an element in every $\varpi^nQ$ maps to
+zero in $Q/U$. Finite-shadow reconstruction and Hausdorffness then give
 
 $$
-q,qquad i\circ f:R_{\mathrm{hr}}\longrightarrow A
-$$
-
-give strictly equivalent $A$-valued deformations: the first gives $\rho_A$, and the second gives its strict conjugate (6.5) followed by inclusion. Representability therefore implies
-
-$$
-i\circ f=q.
-\tag{6.9}
-$$
-
-Factoring through $A$ yields
-
-$$
-i\circ\bar f=\operatorname{id}_A.
-\tag{6.10}
-$$
-
-But $i$ is the inclusion of $T$ into $A$. Equation (6.10) says that every $a\in A$ equals the image of an element of $T$. Thus
-
-$$
-A=T.
-\tag{6.11}
-$$
-
-This is the scalar-fibre factorization. Carayol descent supplies a ring of definition; universality proves that the universal coefficient ring has no elements outside it.
-
-### 6.5 The scalar-fibre finiteness theorem
-
-Combining (6.4) and (6.11) gives the central theorem.
-
-**Theorem 6.1 (finite universal scalar fibre).** For a modularity-admissible hardly-ramified datum,
-
-$$
-\boxed{R_{\mathrm{hr}}/\varpi R_{\mathrm{hr}}
-\text{ is a finite-dimensional }k\text{-algebra}.}
-\tag{6.12}
-$$
-
-**Proof.** Restriction to the controlled totally real field and the finite restricted modularity-lifting ring give finite image by Chapter 5. The trace identity makes the closed trace ring finite-dimensional. Carayol descent makes the representation trace-ring-valued after strict conjugacy. The universal property gives the retraction (6.10), hence equality (6.11). $\square$
-
-The theorem proves neither that the special fibre is reduced nor that it is a field. Nilpotents and several components can remain. Only its finite length is needed next.
-
-## 7. Topological Nakayama and finiteness over the coefficient ring
-
-### 7.1 A complete-module Nakayama lemma
-
-We use the following form of topological Nakayama.
-
-**Lemma 7.1.** Let $M$ be a separated and complete $\mathcal O$-module for the $\varpi$-adic topology. Suppose $M/\varpi M$ is finite-dimensional over $k$ and $M$ is a pseudocompact quotient of a finite product of complete Noetherian local modules. Then $M$ is finitely generated over $\mathcal O$.
-
-**Proof.** Choose $m_1,\ldots,m_d\in M$ lifting a $k$-basis of $M/\varpi M$, and let
-
-$$
-\psi:\mathcal O^d\longrightarrow M
-$$
-
-send the standard basis to the $m_i$. Its image is compact and therefore closed. Modulo $\varpi$, the map is surjective, so
-
-$$
-M=\operatorname{im}\psi+\varpi M.
+Q=\bigcap_{n\geq0}\varpi^nQ=0.
 \tag{7.1}
 $$
 
-Iterating gives
+Thus the $m_i$ generate $M$. $\square$
 
-$$
-M=\operatorname{im}\psi+\varpi^nM
-\qquad(n\geq1).
-$$
-
-For $m\in M$, choose $x_n\in\mathcal O^d$ with $m-\psi(x_n)\in\varpi^nM$. Successively modify $x_n$ so that $x_{n+1}\equiv x_n\pmod{\varpi^n}$. Completeness of $\mathcal O^d$ gives a limit $x$, continuity gives $m-\psi(x)\in\bigcap_n\varpi^nM=0$, and separatedness finishes the proof. $\square$
-
-The compactness clause is automatic for the complete Noetherian local rings used here. It ensures that the finite span has closed image; without closedness, density modulo every finite quotient would not imply equality.
-
-There is a useful quotient formulation. Let $N$ be the closed $\mathcal O$-submodule generated by the chosen lifts $m_i$. Surjectivity modulo $\varpi$ gives $M/N=\varpi(M/N)$. Because $M/N$ remains complete and separated, iteration gives
-
-$$
-M/N=\varpi^n(M/N)
-$$
-
-for every $n$. An element of $M/N$ therefore lies in every $\varpi^n(M/N)$ and is zero. Thus $M=N$. This is the topological replacement for applying the ordinary finite-module Nakayama lemma to $M/N$ before its finiteness is known.
+This is the coefficient-base specialization of the pseudocompact Nakayama theorem in Book 62.
 
 ### 7.2 Application to the universal ring
 
-Apply Lemma 7.1 to $M=R_{\mathrm{hr}}$, regarded as an $\mathcal O$-module. Completeness and separatedness are part of the definition of the representing ring. Theorem 6.1 gives finite-dimensional reduction. Therefore
+As a module over $\mathcal O$, the complete Noetherian local ring $R$ is pseudocompact:
 
 $$
-\boxed{R_{\mathrm{hr}}\text{ is finite over }\mathcal O.}
+R\simeq\varprojlim_nR/\mathfrak m_R^n,
 \tag{7.2}
 $$
 
-This is the first finiteness statement about the original universal ring over $\mathbf Q$. It was not imported from the modularity-lifting theorem over $F$; only the finite scalar fibre was imported back through restriction and trace descent.
-
-### 7.3 Why ordinary Nakayama is not enough by itself
-
-The usual finite-module Nakayama lemma assumes in advance that the module is finitely generated. Here finite generation is the conclusion. The topological form uses completeness and closed image to pass from a finite set of residual generators to actual generators.
-
-Nor may one argue that $R_{\mathrm{hr}}$ is generated as an $\mathcal O$-algebra by finitely many elements and hence is finite as a module. The power-series ring $\mathcal O[[X]]$ is topologically generated by one algebra element but has infinite $\mathcal O$-rank. The finite-dimensional special fibre is the additional input that turns topological algebra generation into module finiteness.
-
-## 8. Balanced finite algebras are flat complete intersections
-
-### 8.1 The dimension lower bound
-
-Recall the presentation
+and each quotient has finite length over $\mathcal O$. The ideal $\varpi R$ is closed in the
+maximal-ideal topology because every ideal of a complete Noetherian local ring is closed.
+Equation (6.8) makes $R/\varpi R$ finite-dimensional over $k$. Lemma 7.1 now gives
 
 $$
-R_{\mathrm{hr}}
-\simeq P/(f_1,\ldots,f_r),
-\qquad
-P=\mathcal O[[X_1,\ldots,X_t]],
-\qquad r\leq t.
+\boxed{R\text{ is finite over }\mathcal O.}
+\tag{7.3}
+$$
+
+The topology is not ornamental in this step. Without completeness, a finite spanning set
+modulo $\varpi$ need not sum to exact coefficients in $\mathcal O$.
+
+## 8. Balance plus finiteness gives finite flatness
+
+### 8.1 Every dimension inequality
+
+Recall the minimal presentation (3.12). Since $R$ is finite over $\mathcal O$, the exact
+dimension formula for a finite map gives
+
+$$
+\dim R=\dim\bigl(\mathcal O/\ker(\mathcal O\to R)\bigr)\leq1.
 \tag{8.1}
 $$
 
-The regular local ring $P$ has dimension $1+t$. Krull's height theorem gives
+The balanced lower bound (3.13) gives the opposite inequality. Hence
 
 $$
-\operatorname{ht}(f_1,\ldots,f_r)\leq r,
-$$
-
-so
-
-$$
-\dim R_{\mathrm{hr}}
-\geq1+t-r\geq1.
+\dim R=1.
 \tag{8.2}
 $$
 
-This is the only place where the inequality $r\leq t$ is needed to prove existence of a horizontal direction. It says nothing about which prime is horizontal until finiteness over $\mathcal O$ is also known.
-
-### 8.2 The uniformizer cannot be nilpotent
-
-Suppose $\varpi$ were nilpotent in $R_{\mathrm{hr}}$. Since the ring is finite over $\mathcal O$, it would be killed by some power $\varpi^n$ and would have finite length as an $\mathcal O$-module. A finite-length ring is Artinian and has Krull dimension zero, contradicting (8.2). Hence
+A nonzero ideal in a DVR contains a power of $\varpi$, and its quotient has dimension zero.
+Equations (8.1)--(8.2) therefore force
 
 $$
-\varpi\text{ is not nilpotent in }R_{\mathrm{hr}}.
+\ker(\mathcal O\to R)=0.
 \tag{8.3}
 $$
 
-This conclusion is weaker than saying that $\varpi$ is a nonzerodivisor. The latter will follow from the balanced finite criterion.
+This is the first point at which a characteristic-zero component is proved to exist. Before
+(8.3), a complete local deformation ring could have been supported entirely in
+characteristic $\ell$. The lower bound coming from balance rules that out only after the upper
+bound from module-finiteness is available.
 
-### 8.3 Injectivity of the coefficient map
-
-The kernel of the local homomorphism
+Now (3.13) and (8.2) yield
 
 $$
-\mathcal O\longrightarrow R_{\mathrm{hr}}
+1=\dim R\geq1+t-r,
+\qquad r\geq t.
 \tag{8.4}
 $$
 
-is an ideal of the discrete valuation ring $\mathcal O$. If it is nonzero, it contains a power of $\varpi$, making $\varpi$ nilpotent in the target. Equation (8.3) therefore gives
+Together with the obstruction inequality $r\leq t$, this gives
 
 $$
-\mathcal O\hookrightarrow R_{\mathrm{hr}}.
+\boxed{r=t.}
 \tag{8.5}
 $$
 
-Thus faithfulness of the coefficient action has been proved. It is not borrowed from a Hecke module and not assumed before finiteness.
+Thus equality of relations and variables is a consequence of scalar-fibre finiteness. It was
+not silently inserted into the Selmer calculation.
 
-### 8.4 The balanced finite criterion
+### 8.2 Complete intersection and coefficient flatness
 
-We prove the commutative-algebra result in the form needed here.
-
-**Proposition 8.1 (balanced finite criterion).** Let $\mathcal O$ be a complete discrete valuation ring and
-
-$$
-R=\mathcal O[[X_1,\ldots,X_g]]/(f_1,\ldots,f_s)
-$$
-
-be a nonzero complete local ring. Suppose $R$ is finite over $\mathcal O$, the structural map $\mathcal O\to R$ is injective, and $s\leq g$. Then $s=g$, the $f_i$ form a regular sequence, and $R$ is finite free over $\mathcal O$.
-
-**Proof.** Since $R$ is finite and integral over the image of $\mathcal O$, every prime of $R$ contracts to a prime of $\mathcal O$, and
+The regular local source
 
 $$
-\dim R=\dim\mathcal O=1.
+P=\mathcal O[[X_1,\ldots,X_t]]
 \tag{8.6}
 $$
 
-The source $P=\mathcal O[[X_1,\ldots,X_g]]$ is regular local of dimension $g+1$. Hence the kernel $I=(f_1,\ldots,f_s)$ has height
+has dimension $t+1$. The exact dimension formula for its quotient gives
 
 $$
-\operatorname{ht}I=(g+1)-1=g.
+\operatorname{ht}J=(t+1)-1=t.
 \tag{8.7}
 $$
 
-Krull's height theorem gives $g\leq s$, while the hypothesis gives $s\leq g$. Thus $s=g$.
+The ideal $J$ is minimally generated by the $t$ elements in (8.5). In the Cohen--Macaulay
+regular local ring $P$, an ideal of height $t$ minimally generated by $t$ elements is generated
+by a regular sequence. Therefore $R$ is a complete intersection and is Cohen--Macaulay of
+dimension one.
 
-A regular local ring is Cohen--Macaulay. An ideal of height $g$ generated by $g$ elements is generated by a regular sequence. Therefore $R=P/I$ is Cohen--Macaulay of dimension one. The injection $\mathcal O\hookrightarrow R$ makes $\varpi$ a parameter: because $R$ is finite over $\mathcal O$, the quotient $R/\varpi R$ has dimension zero. In a one-dimensional Cohen--Macaulay local ring every parameter is a nonzerodivisor. Hence multiplication by $\varpi$ on $R$ is injective.
+More explicitly, $P$ is regular and hence Cohen--Macaulay, so
+$\operatorname{grade}(J)=\operatorname{ht}(J)=t$. An ideal generated by $t$ elements cannot
+have a regular sequence in it longer than its number of generators. Equality of grade and the
+minimal number of generators therefore makes a minimal generating sequence
+$f_1,\ldots,f_t$ regular. This is the algebraic step for which both inequalities
+$r\leq t$ and $r\geq t$ were needed.
 
-Thus $R$ is torsion-free as an $\mathcal O$-module. It is already finite over the DVR, so it is finite free. $\square$
-
-The proposition does not begin with faithfulness of an $R$-action on a patched module. Its injectivity hypothesis is the coefficient injectivity proved in Section 8.3.
-
-### 8.5 Consequences for the universal ring
-
-Apply Proposition 8.1 to (8.1), using (7.2), (8.5), and $r\leq t$. We conclude
+Because $R$ is finite local over $\mathcal O$, the quotient $R/\varpi R$ is Artinian. Thus
+$\varpi$ is a parameter of the one-dimensional local ring $R$. Every parameter in a
+one-dimensional Cohen--Macaulay ring is a non-zero-divisor: a Cohen--Macaulay local ring has
+no embedded associated prime, and an element whose quotient has dimension zero avoids every
+one-dimensional minimal prime. Therefore
 
 $$
-r=t,
+R[\varpi]=0.
 \tag{8.8}
 $$
 
-the minimal relations form a regular sequence, and
+Over a DVR, torsion-free is equivalent to flat. A finite flat module over a local ring is free.
+Indeed, multiplication by $\varpi$ being injective makes multiplication by every nonzero
+element of $\mathcal O$ injective, since each is a unit times a power of $\varpi$.
+Consequently
 
 $$
-\boxed{R_{\mathrm{hr}}
-\text{ is finite free over }\mathcal O
-\text{ and a relative complete intersection}.}
+\boxed{R\text{ is finite free over }\mathcal O.}
 \tag{8.9}
 $$
 
-In particular, $\varpi$ is a nonzerodivisor. Notice that equality $r=t$ is a conclusion of finiteness plus balance. It was not obtained from the equality of tangent and obstruction dimensions alone.
+This proves coefficient-ring flatness with no appeal to reducedness. A complete intersection
+can be nonreduced, but its parameter $\varpi$ is still regular here.
 
-Finite flatness of the universal ring still does not itself choose a characteristic-zero field-valued point. The ring may have several components and nilpotents. We now isolate a domain component.
+### 8.3 Failure examples
 
-## 9. Horizontal minimal primes and normalization
+Each hypothesis above has a distinct role.
 
-### 9.1 Choosing a horizontal component
+The balanced ring $\mathcal O[[X]]$ is not finite over $\mathcal O$; balance supplies only a
+lower dimension bound. The finite algebra $\mathcal O/(\varpi)$ has no horizontal
+characteristic-zero point; finiteness without coefficient injectivity or balance is
+insufficient. Finally,
 
-Because $R_{\mathrm{hr}}$ is finite flat over $\mathcal O$, $\varpi$ lies in no associated prime. Every minimal prime is associated in the Cohen--Macaulay ring $R_{\mathrm{hr}}$, so no minimal prime contains $\varpi$.
+$$
+\mathcal O[[X]]/(\varpi X)
+\tag{8.10}
+$$
 
-One can also see horizontality by contraction. The finite map $\mathcal O\to R_{\mathrm{hr}}$ is integral. The contraction of a minimal prime of $R_{\mathrm{hr}}$ is a minimal prime of $\mathcal O$, hence is $(0)$. Thus, for every minimal prime $\mathfrak p$,
+has a horizontal and a vertical component and is not flat: the nonzero class of $X$ is killed
+by $\varpi$. The height-equals-relations conclusion is what excludes this coefficient torsion
+in the universal ring.
+
+## 9. Horizontal components and normalization
+
+### 9.1 A horizontal minimal prime
+
+Finite freeness guarantees that the generic fibre is nonzero, but a point of
+$\operatorname{Spec}R[1/\varpi]$ initially has values in a finite field extension only after
+choosing a component. Moreover, mapping directly to that field would forget the integral
+lattice on which the local deformation conditions were defined. The purpose of this chapter
+is therefore twofold: select one horizontal domain quotient and replace its order by a finite
+coefficient DVR. The universal representation can then be evaluated integrally.
+
+The finite map $\mathcal O\hookrightarrow R$ is integral. If $\mathfrak p$ is a minimal prime
+of $R$, its contraction is a minimal prime of the domain $\mathcal O$. Therefore
 
 $$
 \mathfrak p\cap\mathcal O=(0).
 \tag{9.1}
 $$
 
-Choose one minimal prime $\mathfrak p$.
-
-### 9.2 The domain quotient
-
-Put
+Equivalently, flatness puts $\varpi$ in no associated prime. Choose one minimal prime and set
 
 $$
-C=R_{\mathrm{hr}}/\mathfrak p.
+C=R/\mathfrak p.
 \tag{9.2}
 $$
 
-Then $C$ is a complete local domain, finite over $\mathcal O$. Equation (9.1) makes it torsion-free over $\mathcal O$, hence finite free. Its fraction field
+Then $C$ is a complete local domain finite over $\mathcal O$, the coefficient map into $C$ is
+injective, and
 
 $$
 L=\operatorname{Frac}(C)
-$$
-
-is a finite extension of $E=\operatorname{Frac}(\mathcal O)$. The composite
-
-$$
-R_{\mathrm{hr}}\twoheadrightarrow C\hookrightarrow L
 \tag{9.3}
 $$
 
-already gives a characteristic-zero representation over a field. To obtain an integral lattice with a discrete valuation coefficient ring and controlled reduction, we pass to normalization.
+is a finite extension of $E=\operatorname{Frac}(\mathcal O)$.
 
-### 9.3 Finiteness of normalization
+### 9.2 Finite normalization without an excellence shortcut
 
-Let $\widetilde C$ be the integral closure of $C$ in $L$. Since $C$ is finite over the complete discrete valuation ring $\mathcal O$, it is an excellent one-dimensional Noetherian domain. Its normalization is therefore finite:
+Let $\mathcal O_L$ be the integral closure of $\mathcal O$ in $L$. We prove directly that it
+is finite over $\mathcal O$.
+
+Choose an $E$-basis $a_1,\ldots,a_n$ of $L$ consisting of elements integral over
+$\mathcal O$; multiplying an arbitrary basis by sufficiently large powers of $\varpi$ produces
+such a basis. Put
 
 $$
-\widetilde C\text{ is a finite }C\text{-module}.
+\Lambda=\sum_i\mathcal Oa_i,
+\qquad
+\Lambda^\vee=
+\{x\in L:\operatorname{Tr}_{L/E}(x\Lambda)\subseteq\mathcal O\}.
 \tag{9.4}
 $$
 
-There is also a direct order-theoretic interpretation. The ring $C$ is an $\mathcal O$-order in the finite extension $L/E$. The integral closure of $\mathcal O$ in $L$ is finite over $\mathcal O$, and every element integral over $C$ is integral over $\mathcal O$. Hence $\widetilde C$ lies inside that finite $\mathcal O$-module and is itself finite.
-
-The normalization can be semilocal. Choose a maximal ideal $\mathfrak n$ of $\widetilde C$ above the maximal ideal of $C$ and set
+Characteristic zero makes $L/E$ separable, so the trace pairing is nondegenerate and
+$\Lambda^\vee$ is a finite free fractional $\mathcal O$-lattice. Concretely, the Gram matrix
+$(\operatorname{Tr}_{L/E}(a_ia_j))$ is invertible over $E$; clearing the denominators of its
+inverse sandwiches $\Lambda^\vee$ between two finite free fractional lattices. If
+$x\in\mathcal O_L$, then
+$xa_i$ is integral over $\mathcal O$. Its trace lies in $E$ and is integral over the integrally
+closed DVR $\mathcal O$, hence lies in $\mathcal O$: the conjugates of an integral element are
+integral, so their sum is integral. Thus
 
 $$
-\mathcal O'=\widetilde C_{\mathfrak n}.
+\mathcal O_L\subseteq\Lambda^\vee.
 \tag{9.5}
 $$
 
-We justify the order-theoretic finiteness more explicitly. Since $C$ is finite and torsion-free over $\mathcal O$, multiplication embeds $C$ into the $E$-vector space $L$ and makes $L$ finite-dimensional over $E$. Let $\mathcal O_L$ be the integral closure of $\mathcal O$ in $L$. The trace pairing on the separable field extension $L/E$ identifies the complementary module
+As an $\mathcal O$-submodule of a finite module, $\mathcal O_L$ is finite. This direct
+trace-dual argument is why no excellence theorem is needed.
+
+The normalization of $C$ in $L$ is exactly $\mathcal O_L$. Indeed, an element integral over
+$C$ is integral over $\mathcal O$ by transitivity because $C$ is finite over $\mathcal O$.
+Conversely, a monic polynomial over $\mathcal O\subseteq C$ shows that every element of
+$\mathcal O_L$ is integral over $C$.
+
+### 9.3 The coefficient DVR point
+
+The complete local ring $\mathcal O$ is henselian. A finite $\mathcal O$-algebra decomposes
+as the product of its local factors, because the primitive idempotents of its Artinian special
+fibre lift uniquely. The ring $\mathcal O_L$ is a domain, so this product has only one factor.
+Thus $\mathcal O_L$ is already local. Put
 
 $$
-C^\vee=
-\{x\in L:\operatorname{Tr}_{L/E}(xC)\subseteq\mathcal O\}
-$$
-
-as a finite $\mathcal O$-module containing every $C$-integral element after multiplication by one fixed discriminant denominator. Hence $\mathcal O_L$ is contained in a finite fractional $\mathcal O$-lattice. Being an $\mathcal O$-submodule of a finite free module over a Noetherian ring, it is finite. Since an element integral over $C$ is integral over $\mathcal O$, $\widetilde C\subseteq\mathcal O_L$ and is finite as well.
-
-The separability used here is automatic: $E$ has characteristic zero. Thus no inseparable normalization phenomenon is hidden in the argument.
-
-### 9.4 A coefficient DVR and a characteristic-zero point
-
-The ring $\mathcal O'$ is a one-dimensional Noetherian normal local domain. Therefore it is a discrete valuation ring. It is finite over $\mathcal O$, its fraction field is $L$, and its residue field $k'$ is a finite extension of $k$.
-
-The composite
-
-$$
-x:R_{\mathrm{hr}}longrightarrow C
-\longrightarrow\widetilde C
-\longrightarrow\mathcal O'
+\mathcal O'=\mathcal O_L.
 \tag{9.6}
 $$
 
-is local. Reducing it modulo the maximal ideal of $\mathcal O'$ gives the original residue map followed by $k\hookrightarrow k'$. Thus (9.6) is an integral characteristic-zero point lying over the prescribed residual point.
-
-No claim that $R_{\mathrm{hr}}$ is reduced was needed. Passing to a minimal-prime quotient removes nilpotents on one horizontal component, and normalization then supplies a regular integral coefficient ring.
-
-## 10. The extracted hardly-ramified lift
-
-### 10.1 Construction of the representation
-
-Push the universal representation (2.11) forward along (9.6):
+It is a one-dimensional Noetherian normal local domain, hence a DVR. It is finite over
+$\mathcal O$, has fraction field $L$, and has residue field $k'$ finite over $k$. The composite
 
 $$
-\rho_x=x\circ\rho^{\mathrm{univ}}:
-G_{\mathbf Q,S}\longrightarrow\operatorname{GL}_2(\mathcal O').
+x:R\twoheadrightarrow C\longrightarrow\mathcal O'
+\tag{9.7}
+$$
+
+is local and reduces to the original residual map followed by $k\hookrightarrow k'$. No
+reducedness of $R$ was required: quotienting by one minimal prime chooses a reduced horizontal
+component, and normalization regularizes that component.
+
+The locality of (9.7) matters. It ensures that the reduction of every universal matrix is the
+given residual matrix after $k\hookrightarrow k'$, rather than a point on a different maximal
+ideal of a finite coefficient algebra. Passing to the normalization changes coefficients and
+removes singularities on the selected component; it does not change any equation already
+satisfied by the universal representation.
+
+## 10. Extraction of the characteristic-zero SP lift
+
+### 10.1 Global properties
+
+Evaluate the universal representation along (9.7):
+
+$$
+\rho'=x\circ\rho_R:
+G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(\mathcal O').
 \tag{10.1}
 $$
 
-Continuity follows because $x$ is continuous between finite complete local $\mathcal O$-algebras. The representation is genuinely integral; it is not obtained merely by semisimplifying a field-valued representation and then choosing an arbitrary lattice.
-
-### 10.2 Reduction and determinant
-
-Since $x$ is local and induces $k\hookrightarrow k'$ on residue fields,
+It reduces to $\bar\rho\otimes_kk'$. Since determinant and unramifiedness are equations in the
+universal problem,
 
 $$
-\rho_x\bmod\mathfrak m_{\mathcal O'}
-\simeq\bar\rho\otimes_k k'.
+\det\rho'=\chi_\ell,
+\qquad
+\rho'\text{ is unramified outside }\{2,\ell\}.
 \tag{10.2}
 $$
 
-The universal determinant is $\chi_\ell$, so
+The fraction field of $\mathcal O'$ is a finite characteristic-zero extension of $E$, so
+(10.1) is the desired integral characteristic-zero point.
+
+The representation over that fraction field is absolutely irreducible. Otherwise, after a
+finite coefficient extension, a stable line could be intersected with the lattice and
+saturated. Its reduction would give a nonzero proper invariant line in
+$\bar\rho\otimes_k\overline k$, contradicting residual absolute irreducibility. This uses no
+automorphy of the extracted point.
+
+### 10.2 Nonzero dyadic monodromy
+
+At $2$, the universal identities (2.7) base-change to $\mathcal O'$:
 
 $$
-\det\rho_x=\chi_\ell.
+\rho'(\sigma)=I+t_\ell(\sigma)N',
+\qquad (N')^2=0,
+\qquad F'N'(F')^{-1}=2N'.
 \tag{10.3}
 $$
 
-This equality is integral and holds on all of $G_{\mathbf Q}$, not only at unramified Frobenius elements.
-
-### 10.3 Ramification and the condition at two
-
-The universal representation factors through $G_{\mathbf Q,S}$, so $\rho_x$ is unramified outside $\{2,\ell\}$.
-
-At $2$, the universal matrices satisfy
+The reduction of $N'$ is $\bar N\otimes_kk'\ne0$. Therefore $N'$ is nonzero and has rank one;
+its kernel and image are the same direct-summand line. The quotient Frobenius value is the
+selected $s\in\{1,-1\}$. Thus the lift retains the full SP record, not merely conductor one:
 
 $$
-\rho^{\mathrm{univ}}(P_2)=1,
+N'\ne0,
 \qquad
-\rho^{\mathrm{univ}}(\tau)^2+\rho^{\mathrm{univ}}(\tau)+I=0.
+\ker N'=\operatorname{im}N',
+\qquad
+F'N'(F')^{-1}=2N'.
+\tag{10.4}
 $$
 
-These polynomial identities survive every coefficient map, including (9.6). Thus $\rho_x$ has trivial wild inertia and the fixed tame-quadratic order-three inertia. The local classification of Book 182 gives the unramified-quadratic induced Weil form and Artin conductor exponent two.
+Wild inertia is trivial and the fixed space has dimension one, so the Artin conductor exponent
+is one. Nonzero monodromy survives because it was nonzero already in the residual condition;
+normalization cannot move the point to a monodromy-zero boundary.
 
-No nonzero-monodromy assertion is inserted: this local type is finite tame dihedral, not special. Conversely, it would be too weak to say only that the conductor is at most two; the exact inertia polynomial is retained.
+### 10.3 Finite flatness at the coefficient prime
 
-### 10.4 Finite flatness at the coefficient prime
-
-The coefficient-prime local condition is represented as a closed condition stable under base change. The universal restriction at $\ell$ has compatible finite-flat models on every Artinian quotient. Pushing forward along
-
-$$
-R_{\mathrm{hr}}\longrightarrow\mathcal O'/\mathfrak m_{\mathcal O'}^n
-$$
-
-therefore gives a coefficient-linear finite locally free group scheme realizing
+For every $n\geq1$, reduce (10.1) modulo the $n$th power of the maximal ideal of
+$\mathcal O'$. Book 182's coefficient-extension and quotient compatibility supplies the
+selected coefficient-linear finite locally free model for
 
 $$
-\rho_x|_{G_{\mathbf Q_\ell}}\bmod\mathfrak m_{\mathcal O'}^n
+\rho'\bmod\mathfrak m_{\mathcal O'}^n.
+\tag{10.5}
 $$
 
-for every $n\geq1$. These models are compatible as $n$ varies. Hence the selected lattice is finite flat of weight $\{0,1\}$ in the integral sense.
+These models are compatible with further quotient. This is exactly the pro-Artinian meaning
+of finite flatness used in the signed-special problem. Raynaud uniqueness in the low-weight
+range supplies the compatibility; arbitrary existence of unrelated models at each level would
+not be enough. We do not claim that the infinite free $\mathcal O'$-lattice itself is a finite
+group scheme.
 
-This conclusion does not come from flatness of the global ring $R_{\mathrm{hr}}$ over $\mathcal O$. Global coefficient flatness and local finite flatness of a Galois representation are different notions. The former was proved in Chapter 8; the latter is inherited from the represented local deformation condition.
+It is useful to distinguish the two residual statements retained by $\rho'$. First,
+$\rho'\bmod\mathfrak m_{\mathcal O'}$ is
+$\bar\rho\otimes_kk'$, so Proposition 2.1 still gives absolute irreducibility on the
+cyclotomic subgroup. Second, the reduction of $N'$ is the specified nonzero matrix, so the
+dyadic line and sign are not merely characteristic-zero choices. These are precisely the
+image and local-component clauses needed before Book 186 can begin its changing-prime
+argument.
 
-### 10.5 The final existence theorem
+Equations (10.1)--(10.5), together with Proposition 2.1, complete the proof of Theorem 1.1
+under $(\mathrm{Seed}_{\mathrm{SP}})$.
 
-**Theorem 10.1 (characteristic-zero hardly-ramified lift).** Let $\ell\geq7$ and let $\bar\rho$ be a modularity-admissible hardly-ramified residual representation. Then the representation $\rho_x$ of (10.1) satisfies every conclusion of Theorem 1.2.
+## 11. Frey specialization and logical boundaries
 
-**Proof.** Chapters 4--6 prove that the special fibre of $R_{\mathrm{hr}}$ is finite. Chapter 7 proves that $R_{\mathrm{hr}}$ is finite over $\mathcal O$. Supported balance and the relation injection give the presentation (8.1); Chapters 8 and 9 produce the local homomorphism (9.6) into a finite coefficient DVR. Sections 10.1--10.4 verify reduction, determinant, ramification, the exact type at $2$, and coefficient-linear finite flatness at $\ell$. $\square$
+### 11.1 The Frey input
 
-The construction proves existence, not uniqueness. Different horizontal minimal primes can give nonisomorphic lifts. The universal ring records all of them and their congruences.
-
-## 11. Failure diagnostics and forbidden shortcuts
-
-### 11.1 Potential modularity is not automorphy of the universal family
-
-Suppose $\bar\rho|_{G_F}$ is the reduction of an automorphic representation. This fact supplies a residual Hecke maximal ideal. It does not force a deformation
-
-$$
-G_F\to\operatorname{GL}_2(A)
-$$
-
-to factor through a finite Hecke algebra. The factorization requires an $R=T$ theorem for the exact determinant and local components containing that deformation.
-
-In the proof above, the decisive statement is (4.5), not the bare residual automorphy statement. Omitting the integral type, local--global compatibility, support, or acting-order hypotheses would break (5.2)--(5.4).
-
-### 11.2 Balance alone does not imply finiteness
-
-The ring
+The criterion is reusable, but its intended first input is concrete. Book 154 proves that a
+normalized primitive Fermat solution of prime exponent $p\geq7$ produces a representation
 
 $$
-\mathcal O[[X]]
+\bar\rho_{a,b,c,p}:G_{\mathbf Q}\longrightarrow
+\operatorname{GL}_2(\mathbf F_p)
+\tag{11.1}
 $$
 
-has one tangent variable and no relation, so it satisfies the inequality $r\leq t$, but it is not finite over $\mathcal O$. The ring
+which is odd and absolutely irreducible, has determinant $\bar\chi_p$, is unramified outside
+$\{2,p\}$, is coefficient-linearly finite flat at $p$, and has at $2$ the exact signed SP
+datum (2.5)--(2.6) with $\bar N\ne0$. Thus it satisfies every residual and local hypothesis
+of Chapters 2--3 after setting
 
 $$
-\mathcal O[[X]]/(\varpi)
+\ell=p,qquad k=\mathbf F_p,qquad \mathcal O=\mathbf Z_p
+\tag{11.2}
 $$
 
-has one variable and one relation and is balanced, but it is vertical and has no characteristic-zero point.
+and, if desired, enlarging the coefficient DVR. Proposition 2.1 supplies the cyclotomic
+absolute irreducibility needed for the automorphic theorem directly from that dyadic SP datum.
 
-The first example shows why scalar-fibre finiteness is needed. The second shows why the dimension lower bound must be combined with finiteness to prove that $\varpi$ is not nilpotent. Neither defect is repaired by calling the presentation balanced.
-
-### 11.3 Finite image alone does not make matrix entries finite
-
-In characteristic $\ell$, take a square-zero matrix $N$ and an arbitrary element $x$ of a large complete local ring. The matrix $I+xN$ has order dividing $\ell$. Thus a finite cyclic image can be written using a coefficient parameter that does not visibly lie in a finite subring.
-
-For an absolutely irreducible residual family, Carayol descent removes this apparent freedom: after strict conjugacy all entries lie in the trace ring. Universality then proves that the coefficient parameter was not genuinely universal. Without residual absolute irreducibility, the trace ring can miss extension parameters and Chapter 6 fails.
-
-### 11.4 Faithfulness is not assumed
-
-There are two possible faithfulness statements in nearby arguments. A patched automorphic module can be faithful over a deformation source, and the coefficient ring $\mathcal O$ can act faithfully on $R_{\mathrm{hr}}$. Neither is assumed here for the global ring over $\mathbf Q$.
-
-The modularity-lifting theorem over $F$ proves the faithful Hecke comparison needed to make $R_F$ finite. For $R_{\mathrm{hr}}$, injectivity of $\mathcal O\to R_{\mathrm{hr}}$ is proved only in Section 8.3, after scalar-fibre finiteness, topological Nakayama, and the dimension lower bound. Assuming it earlier would conceal the possibility of a vertical universal ring.
-
-### 11.5 Normalization does not precede the horizontal component
-
-Normalizing a ring annihilated by a power of $\varpi$ cannot create characteristic zero. Nor is normalization of a nonreduced ring defined by simply placing all its elements in one fraction field. The correct order is:
+The adjective “exact” here carries arithmetic content. Book 154 computes the dyadic
+discriminant valuation modulo $p$ and shows that the residual tame parameter does not vanish;
+after the chosen basis, inertia contains
 
 $$
-R_{\mathrm{hr}}
-\longrightarrow R_{\mathrm{hr}}/\mathfrak p
-\longrightarrow\widetilde{R_{\mathrm{hr}}/\mathfrak p}
-\longrightarrow\mathcal O'.
+I+\overline t_p(\sigma)e_{12}
 $$
 
-The minimal prime $\mathfrak p$ is known to be horizontal before the domain quotient is formed. Only that domain has a fraction field in which normalization is taken.
+rather than only a representation whose conductor is bounded by one. Split or nonsplit
+multiplicative reduction supplies the named quotient sign. The intrinsic line is simultaneously
+$\ker e_{12}$ and $\operatorname{im}e_{12}$. At the coefficient prime, the finite-flat model
+is coefficient-linear, so it is the integral local condition represented in Book 182, not only
+a statement about Hodge--Tate weights after inverting $p$. These are exactly the pieces used in
+Sections 2.2--2.4.
 
-## 12. Exceptional primes and the dihedral boundary
+Accordingly, no additional “Frey admissibility” condition is hidden in Theorem 1.1. For this
+specialization, its sole unproved hypothesis is the exact totally real automorphic package
+$(\mathrm{Seed}_{\mathrm{SP}})$.
 
-### 12.1 Characteristics two and three
-
-At $\ell=2$, scalars do not split from trace-zero endomorphisms, determinant correction cannot divide by two, signs coincide, and real complete cohomology is no longer acyclic in the required way. The local deformation, supported duality, and relation-obstruction arguments all change.
-
-At $\ell=3$, the polynomial
-
-$$
-T^2+T+1
-$$
-
-is inseparable. The tame order-three algebra is not etale, the two inertia characters coalesce, and the Frobenius eigenvalue $-2$ on the twisted adjoint invariant becomes $1$. The rigid local calculation (2.8) and the supported balance therefore fail in their stated form.
-
-These are structural exclusions, not notational inconveniences.
-
-### 12.2 Characteristic five
-
-The local equalities at $2$ remain favorable in characteristic five: $2$ is invertible and $-2\ne1$. Nevertheless the unified hardly-ramified local package and the modularity-lifting package used here are stated for $\ell\geq7$.
-
-There is also a genuine image boundary. In characteristic five, an icosahedral residual image can fail the adequacy conclusion needed by the Taylor--Wiles argument. Absolute irreducibility does not repair that failure. A characteristic-five version of Theorem 10.1 would require a separately verified local, image, and patching theorem.
-
-### 12.3 Why cyclotomic failure cannot occur
-
-Book 162 proves the sharp dichotomy. If $\bar\rho$ is absolutely irreducible but
+Arithmetic Frobenius is used throughout. Hence the retained relation is
 
 $$
-\bar\rho|_{G_{\mathbf Q(\zeta_\ell)}}
+FNF^{-1}=2N.
+\tag{11.3}
 $$
 
-is reducible, then $\bar\rho$ is induced from a character of the quadratic subfield
+For geometric Frobenius $\Phi=F^{-1}$ the equivalent relation is
+$\Phi N\Phi^{-1}=2^{-1}N$. The line and quotient sign are unchanged by this notational
+conversion.
+
+### 11.2 No circular automorphic seed
+
+The order of construction is strict:
 
 $$
-K\subset\mathbf Q(\zeta_\ell).
+\text{Frey SP residual datum}
+\longrightarrow
+\text{independently constructed exact automorphic seed over }F
+\longrightarrow
+\text{Book 155 finite }R_F^{\mathrm{SP}}
+\longrightarrow
+\text{Chapters 5--10 chosen SP lift}.
+\tag{11.4}
+$$
+
+The lift at the last term cannot be used to prove the seed at the second term. Doing so would
+use the output of Theorem 1.1 to establish its own hypothesis. The same rule excludes all
+later changing-prime and compatible-family books as proof inputs: they begin with the chosen
+SP lift constructed here, or with data built from it.
+
+Mere existence of an automorphic representation with congruent good-prime traces also does not
+fill the second term. The carrier must be nonzero integrally on the named component, and its
+level maps, type lattices, pairings, Hecke order, and Galois representations must satisfy item
+4 of $(\mathrm{Seed}_{\mathrm{SP}})$ before Book 155 can be invoked.
+
+### 11.3 Exceptional characteristics
+
+The restriction $\ell\geq7$ is structural. In characteristic two, trace does not split the
+adjoint, signs coalesce, and the determinant correction changes. In characteristic three, the
+dyadic twisted-adjoint eigenvalue used in the SP vanishing becomes $4=1$, so (2.11) and the
+supported balance do not have the stated proof. In characteristic five, the local SP
+calculation remains favorable, but the imported image and patching range has an additional
+icosahedral boundary. A theorem in any of these characteristics requires a separate local,
+Selmer, and automorphic analysis.
+
+## 12. Dependency closure and verdict
+
+### 12.1 Exact prerequisite ledger
+
+The mathematically direct row for the reusable conditional theorem is
+
+$$
+\boxed{185\mid 62,63,69,155,162,182,183,184.}
 \tag{12.1}
 $$
 
-At first sight this cyclotomic-dihedral alternative appears to be a genuine boundary. Theorem 2.2 shows that it is not a branch of the hardly-ramified problem at all. The field $K$ is ramified quadratic at $\ell$, so localizing the induction produces ramified-quadratic projective tame inertia of order two. Integral finite flatness of weights $\{0,1\}$ permits only the two tame ratios in (2.16), of orders $\ell-1$ and $\ell+1$. The contradiction occurs already in the residual local representation.
+The FLT specialization in Section 11.1 additionally uses Book 154 for the Frey residual datum.
+The exact use and boundary of each source are as follows.
 
-The condition at $2$ neither causes nor repairs this contradiction. If $2$ splits in $K$, local restriction of the global induction is a sum and cannot have the irreducible tame-quadratic type. If $2$ is inert, the completion is the unramified quadratic field and an order-three inducing character can indeed give the required local type. That compatibility at $2$ does not affect the ramified completion at $\ell$.
+| Source | Result used here | Boundary retained |
+|---|---|---|
+| Book 62 | pseudocompact coefficient modules and topological Nakayama | completeness and closedness are checked in Chapter 7 |
+| Book 63 | closed trace rings and Carayol descent | absolute residual irreducibility is required; closed local conditions are reflected separately in Lemma 6.1 |
+| Book 69 | minimal presentations, relation modules, dimension, regular sequences, Cohen--Macaulayness, finite-map dimension, and finite flat implies free | balance alone gives only a lower bound; every equality is proved in Chapter 8 |
+| Book 155 | minimal $R=\mathbb T$, finite freeness, and complete intersection for an exact clean datum | it is conditional on every clause of $(\mathrm{Seed}_{\mathrm{SP}})$ and does not construct that datum |
+| Book 162 | cyclotomic restriction dichotomy | the resulting quadratic induction is excluded by primitive dyadic inertia in Proposition 2.1 |
+| Book 182 | represented SP local and global conditions, $L_2=0$, dyadic adjoint vanishing, finite-flat liftability, and tangent formula | it proves no global finiteness |
+| Book 183 | supported mapping fibre, duality, and equality of tangent and supported-obstruction dimensions | it supplies no relation or finiteness theorem |
+| Book 184 | complete supported obstruction and injection of the dual conormal relation space | it gives $r\leq t$, not equality, flatness, or a point |
+| Book 154 | exact Frey residual datum for Section 11.1 | application input only; it does not construct the automorphic seed |
 
-Thus the cyclotomic irreducibility used in Chapter 4 is a theorem from the six local and global residual hypotheses, not an added modularity assumption. Passing to the disjoint totally real field preserves it, and Books 170 and 166 may test their cyclotomic image hypotheses in the ordinary way.
-
-### 12.4 Why character lifting does not provide an alternative
-
-It is useful to examine the proposed character construction, because it identifies why a superficially natural repair would have been false even before Theorem 2.2 made it unnecessary.
-
-Suppose hypothetically that (12.1) and a character $\bar\theta$ had survived the local test. Pointwise Teichmüller lifting would give a finite-order character
+The repository metadata currently records
 
 $$
-\widetilde\theta:G_K\longrightarrow\mathcal O_1^\times
-$$
-
-after a finite unramified coefficient extension. It would preserve the exact prime-to-$\ell$ inertia at $2$, and the standard induced lattice would reduce to $\operatorname{Ind}\bar\theta$, not merely to its semisimplification. But
-
-$$
-\det\operatorname{Ind}_{G_K}^{G_{\mathbf Q}}\widetilde\theta
-=\eta_{K/\mathbf Q}(\widetilde\theta\circ\operatorname{Ver})
+185\mid62,69,170,166,182,183,184,162,63.
 \tag{12.2}
 $$
 
-has finite image. It cannot equal the cyclotomic character, which has infinite pro-$\ell$ image. This is the first failure of the finite-image lift. Taking a formal square root of the quotient of the two determinants does not solve it: such a half-cyclotomic character has nonintegral labeled weight and is not finite flat. A Teichmüller lift controls reduction and finite inertial type; it does not choose a Hodge type.
+That row is stale for the repaired proof: it omits the actually invoked Book 155 and lists
+Books 166 and 170, which are diagnostic audits rather than proof inputs. The present file does
+not alter repository metadata. The normalization proof in Chapter 9 is included directly, so
+no unlisted excellence or normalization theorem is imported.
 
-The weight-two alternative also fails locally. If $K$ is imaginary and the ray-unit and determinant compatibilities can be solved, Books 6 and 95 can construct an algebraic Hecke character $\psi$ of infinity type $(1,0)$ and Book 95 gives the cuspidal automorphic induction $\operatorname{AI}_{K/\mathbf Q}(\psi)$. If $K$ is real, that CM weight-two theorem is unavailable and the nonparallel rank-one infinity type is already incompatible with the positive-rank unit relations. In either signature the completion $K_\ell/\mathbf Q_\ell$ in (12.1) is ramified quadratic.
+### 12.2 Consumer audit
 
-Let $\chi$ be any characteristic-zero local character of $G_{K_\ell}$ and put
+Book 186 consumes a fixed characteristic-zero primitive SP lift with determinant cyclotomic,
+ramification restricted to $\{2,\ell\}$, compatible finite-flat quotients at $\ell$, and the
+named dyadic line, sign, nonzero rank-one monodromy, and conductor exponent one. Equations
+(10.1)--(10.5) give exactly that object under $(\mathrm{Seed}_{\mathrm{SP}})$. Its later
+conditional arguments cannot be used backwards to construct the point assumed at its start.
+
+Books 187--190 retain the same chosen branch through changing prime, effectivity, assembly,
+and the fixed-three specialization. They are downstream consumers. None proves the seed over
+$F$, and none is used here.
+
+The FLT blueprint asks for precisely the chain isolated here: supported relations, finite image
+after scalar reduction, Carayol descent, topological Nakayama, finite flatness, and a normalized
+horizontal point. For the repaired dependency path, Book 185 supplies exactly the signed SP
+version of that chain. The blueprint is a consumer, not evidence for the missing arithmetic
+input.
+
+### 12.3 First irreducible gap
+
+The first missing theorem in proof order is not topological Nakayama, normalization, or
+flatness; all of those implications have been proved. It occurs while trying to establish
+$(\mathrm{Seed}_{\mathrm{SP}})$.
+
+Equivalently, the missing arithmetic theorem can be stated without reference to the proof of
+this book:
+
+**Missing theorem (clean Frey-SP carrier).** For every Frey residual datum of Book 154 with
+$p\geq7$, there is an even-degree totally real field $F$ in which $2$ and $p$ split completely,
+which preserves absolute irreducibility before and after adjoining $\zeta_p$, and on which the
+restricted datum occurs in an exact nonzero parallel-weight-two definite-quaternionic
+localization satisfying every clean integral hypothesis of Book 155 on the inherited signed
+SP component.
+
+That statement would imply $(\mathrm{Seed}_{\mathrm{SP}})$ and hence Theorem 1.1. It is not a
+theorem of the current dependency closure.
+
+Book 170's conditional potential-modularity construction first fails at the abelian Ihara
+vanishing retained in its Section 10.4. Even if that vanishing were supplied, its multi-place
+cleanability, product support, and exact carrier obligations would remain. Independently, the
+comparison of Book 166 is for a different scalar local problem and cannot be applied to the
+nonzero-monodromy dyadic SP ring. Thus the exact clean automorphic datum required by Book 155
+has no proved prior construction.
+
+### 12.4 Conclusion
+
+The exact source-closed statement is the implication
 
 $$
-V=\operatorname{Ind}_{G_{K_\ell}}^{G_{\mathbf Q_\ell}}\chi.
-$$
-
-The induced model itself gives
-
-$$
-D_{\mathrm{cris},\mathbf Q_\ell}(V)
-\simeq D_{\mathrm{cris},K_\ell}(\chi)
+\boxed{
+(\mathrm{Seed}_{\mathrm{SP}})
+\Longrightarrow
+\begin{gathered}
+R^{\mathrm{hr,SP}}\text{ finite free, one-dimensional, and complete intersection over }
+\mathcal O,\\
+\exists\,\mathcal O'/\mathcal O\text{ finite and }
+\rho':G_{\mathbf Q}\to\operatorname{GL}_2(\mathcal O')
+\text{ with exactly the selected SP data.}
+\end{gathered}}
 \tag{12.3}
 $$
 
-as vector spaces over the maximal unramified subfield of $K_\ell$. Because $K_\ell/\mathbf Q_\ell$ is totally ramified, that subfield is $\mathbf Q_\ell$. The right side has dimension at most one, whereas $V$ has dimension two. Hence $V$ is not crystalline, whatever the conductor or infinity type of $\chi$.
+Chapters 5--10 prove this implication: finite restricted image, finite trace descent, scalar
+fibre finiteness, topological Nakayama, balanced complete-intersection forcing, a horizontal
+minimal prime, finite normalization, and preservation of the integral local conditions.
 
-Indeed, realize the induction as functions on $G_{\mathbf Q_\ell}$ with the usual $G_{K_\ell}$-equivariance. After tensoring with the crystalline period ring, evaluation at the identity identifies the $G_{\mathbf Q_\ell}$-invariants with the $G_{K_\ell}$-invariants of the inducing line. This proves (12.3) directly and keeps track of the common maximal unramified coefficient field.
-
-Compatible finite-flat quotients of weights $\{0,1\}$ would give a strongly divisible lattice and therefore a crystalline generic representation. Equation (12.3) proves that no induced characteristic-zero representation from this ramified quadratic field can satisfy the coefficient-prime condition. Automorphically the same failure appears as a ramified dihedral local parameter at $\ell$, with the discriminant contribution in the conductor formula. It is not a point of the finite-flat coefficient-prime deformation ring.
-
-This obstruction is invariant under coefficient extension and coefficient descent. Enlarging a field of values can split eigencharacters and provide an integral induced lattice, but it neither changes the ramification index of $K_\ell/\mathbf Q_\ell$ nor increases the crystalline-period dimension in (12.3).
-
-The prior theorems have exactly the expected boundaries. Books 5 and 6 globalize compatible rank-one characters but do not turn ramified induction into a finite-flat representation. Book 95 proves automorphic induction and its determinant and conductor formulas, not coefficient-prime level lowering. Book 174 obtains a finite-flat dihedral seed by requiring the coefficient prime to split in the CM field; here it is ramified. Books 166 and 170 require cyclotomic irreducibility rather than treating this bad-dihedral image. No allowed theorem supplies the proposed induced finite-flat source, because such a source cannot exist.
-
-The scalar-fibre argument therefore needs no second factorization. Theorem 2.2 places every actual hardly-ramified residual datum in the cyclotomically irreducible image branch. For every datum satisfying the remaining realization and exact-patching clauses of Definition 1.1, Chapters 4--6 give the strict trace-ring factorization (6.10), and Chapters 7--10 finish the balanced lift without circular $R=T$ reasoning.
-
-## 13. Dependency, hypothesis, and normalization audit
-
-### 13.1 Direct prerequisite ledger
-
-| Book | Result used | Hypotheses retained | Exact role |
-|---|---|---|---|
-| 62, *Coefficient Rings and Deformation Categories* | pseudocompact trace rings, closed images, topological Nakayama, strict universality conventions | complete separated local rings, finite residual quotients, closed finite spans | Chapters 6 and 7 |
-| 63, *Carayol Descent and Strict Conjugacy* | descent of an absolutely residually irreducible family to its closed trace ring | compact group, pro-Artinian local coefficient ring, scalar residual centralizer | Section 6.3 |
-| 69, *Balanced Commutative Algebra* | height bound, balanced finite criterion, torsion-free equals flat over a DVR, finite normalization of orders | finite local algebra, injective coefficient map, no more relations than variables | Chapters 8 and 9 |
-| 162, *Finite Subgroups, Dickson Classification, and Adequacy* | adequacy for cyclotomically irreducible rank-two images at $\ell\geq7$; classification of cyclotomic failure | absolute irreducibility, exact cyclotomic restriction, small-prime boundary | Theorem 2.2 and Sections 4.4 and 12.3 |
-| 166, *One-Prime Nonminimal Patching and $R=T$* | finite-flat fixed-type $R=T$, faithful finite Hecke order, exact augmentation and coefficient extension | exact clean local tuple, residual automorphy, cyclotomic irreducibility supplied by Theorem 2.2, integral patching and support ledger | Equation (4.5) and scalar-fibre factorization after restriction |
-| 170, *Potential Modularity of Two-Dimensional Representations* | residual potential modularity and field control | lifting-admissible two-prime datum, complete splitting, disjointness, exact coefficient and local models | construction of $F$ and residual automorphic localization |
-| 182, *Local Conditions for Hardly-Ramified Minimal Deformations* | represented universal ring; integral low-weight classification; exact conditions, tangents, liftability, coefficient extension | six hardly-ramified hypotheses, $\ell\geq7$, actual coefficient-linear finite-flat model | Chapter 2 and inheritance in Chapter 10 |
-| 183, *Supported Galois Cohomology and Selmer Calculations* | mapping fibre, supported duality, local ledger, zero Greenberg--Wiles correction | exact local tangent spaces and positive real convention | Sections 3.1--3.2 |
-| 184, *Relation Obstructions and Poitou--Tate Corrections* | complete supported obstruction, correction torsors, relation injection | locally liftable conditions, exact orthogonals, global reciprocity | Sections 3.3--3.5 |
-
-No theorem from a later book is used. In particular, no potential automorphy theorem for the characteristic-zero lift constructed here is assumed.
-
-### 13.2 Hypothesis matching
-
-The local condition at $2$ is a fixed prime-to-$\ell$ tame type. In the modularity-lifting application it must appear as that named type, with its integral lattice and local--global compatibility. It is not substituted for the selected Steinberg family appearing in a different one-prime theorem.
-
-At places above $\ell$, complete splitting makes the local field exactly $\mathbf Q_\ell$. This matches the unramified low-weight finite-flat theorem. The possible split local residual representation is retained through framed local deformation theory; no local absolute irreducibility is added.
-
-The potential-modularity theorem is used only for residual modularity and field control. The automorphy of an arbitrary deformation is supplied only by the matching $R=T$ theorem over $F$.
-
-The adequacy theorem is invoked only after Theorem 2.2 proves cyclotomic absolute irreducibility from the finite-flat local condition. The adjoint-twist invariant is checked separately at the place above $2$.
-
-Carayol descent is invoked only after global residual absolute irreducibility is known. The coefficient ring $A$ is complete Noetherian local and hence pro-Artinian; no flatness or reducedness is inserted.
-
-The balanced finite criterion is invoked only after three independent facts are established: $R_{\mathrm{hr}}$ is finite over $\mathcal O$, $\mathcal O\to R_{\mathrm{hr}}$ is injective, and $r\leq t$.
-
-### 13.3 Circularity audit
-
-The proof order is:
-
-1. local theory represents $R_{\mathrm{hr}}$;
-2. the local low-weight calculation eliminates ramified quadratic induction and proves cyclotomic absolute irreducibility;
-3. supported duality and relation obstructions prove $r\leq t$;
-4. residual potential modularity chooses $F$ without using a characteristic-zero lift of $\bar\rho$;
-5. modularity lifting over $F$ makes the restricted universal special-fibre representation factor through a finite ring;
-6. finite index gives finite full image;
-7. Carayol descent and universality prove that the special fibre itself is finite;
-8. topological Nakayama proves finiteness over $\mathcal O$;
-9. balance rules out a vertical ring and proves flat complete-intersection structure;
-10. a minimal prime and normalization give the characteristic-zero lift.
-
-No step assumes potential automorphy of the lift, finite image of the universal family, faithfulness of $R_{\mathrm{hr}}$, finiteness of $R_{\mathrm{hr}}$, or flatness of $R_{\mathrm{hr}}$ before that conclusion has been proved.
-
-### 13.4 Normalization and notation audit
-
-The local relation at $2$ uses arithmetic Frobenius and the exponent $2$ in (2.5). The determinant is the covariant cyclotomic character $\chi_\ell$. The fixed tame inertia polynomial is $T^2+T+1$ and gives conductor exponent two.
-
-The symbol $A$ always denotes the scalar fibre $R_{\mathrm{hr}}/\varpi$. The symbol $B$ denotes the finite image of the restricted modularity-lifting ring in $A$. The symbol $T$ denotes the closed trace ring. These rings are not identified until the corresponding proofs: $B$ need not equal $A$, while $T=A$ follows only from Carayol descent and universality.
-
-The finite flatness of $R_{\mathrm{hr}}$ over $\mathcal O$ is a commutative-algebra conclusion. The finite flatness of $\rho_x$ at $\ell$ is a local integral Galois condition. Their identical adjective does not make either imply the other.
-
-The normalization is taken after quotienting by a horizontal minimal prime. The residue field may enlarge from $k$ to $k'$, and the final residual identification is stated after scalar extension.
-
-## 14. Conclusion
-
-The hardly-ramified deformation problem has one permitted tame type at $2$, one integral finite-flat condition at $\ell$, and no ramification elsewhere. Its local deformation theory is smooth in the relevant constrained sense, but its global deformation ring can still have relations. Supported cohomology records exactly those global obstructions together with their local nullhomotopies. Rigidity at $2$, the one normalized finite-flat direction at $\ell$, and oddness at infinity make the tangent and supported obstruction dimensions equal. The factor-set construction then injects the dual relation module into supported degree two and gives a presentation with no more relations than variables.
-
-Balance is only half of the lift argument. The other half is the finite scalar fibre. Residual potential modularity supplies a totally real field split at $2$ and $\ell$ and disjoint from the residual image fields. On the exact restricted local tuple, modularity lifting identifies the restricted universal deformation ring with a finite Hecke order. The universal scalar-fibre representation therefore has finite image on $G_F$, and hence on $G_{\mathbf Q}$.
-
-Finite image is converted into coefficient finiteness without assuming faithfulness or reducedness. The rank-two trace identity makes the trace algebra finite-dimensional. Carayol descent conjugates the family into that trace algebra. The universal property forces the scalar fibre to equal its trace ring. Topological Nakayama then makes the full universal ring finite over $\mathcal O$.
-
-Only at this point does balance become a flatness theorem. The dimension lower bound prevents the uniformizer from being nilpotent, so the coefficient map is injective. The balanced finite criterion forces equality of generators and relations, a regular sequence, and finite freeness over $\mathcal O$. Every minimal component is horizontal. Quotienting by one minimal prime and normalizing produces a finite coefficient discrete valuation ring and a local characteristic-zero point.
-
-Specializing the universal representation at that point gives
+The FLT-range unconditional theorem is not dependency-closed because
+$(\mathrm{Seed}_{\mathrm{SP}})$ is unproved. The precise verdict is therefore
 
 $$
-\rho:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(\mathcal O')
+\boxed{\text{NOT READY}.}
 $$
-
-with cyclotomic determinant, exact tame-quadratic conductor-two type at $2$, compatible coefficient-linear finite-flat quotients at $\ell$, and no other ramification. Its reduction is the prescribed residual representation after a finite scalar extension.
-
-The construction is complete for modularity-admissible data. Cyclotomic absolute irreducibility is not an extra part of that admissibility: a cyclotomic-dihedral residual representation would localize at $\ell$ to ramified quadratic induction, whose projective tame inertia is incompatible with the integral weight-$\{0,1\}$ classification. Finite-order Teichmüller induction has the wrong determinant, while algebraic weight-two induction from the ramified quadratic completion is not crystalline. Thus there is no omitted dihedral source and no unproved factorization for such a source. Subject only to the explicit two-prime realization and exact-patching clauses in Definition 1.1, every step from supported balance to the characteristic-zero hardly-ramified lift is closed by the preceding argument.
