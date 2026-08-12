@@ -2,856 +2,788 @@
 
 ## Contents
 
-1. [From effective members to one arithmetic family](#1-from-effective-members-to-one-arithmetic-family)
-   - [The last descent problem](#11-the-last-descent-problem)
-   - [The repaired input](#12-the-repaired-input)
-   - [The base-field theorem](#13-the-base-field-theorem)
-   - [Conventions and boundaries](#14-conventions-and-boundaries)
+1. [From effective members to an arithmetic family](#1-from-effective-members-to-an-arithmetic-family)
+   - [The assembly problem](#11-the-assembly-problem)
+   - [The exact input from the packet and effectivity theorems](#12-the-exact-input-from-the-packet-and-effectivity-theorems)
+   - [The theorem to be proved](#13-the-theorem-to-be-proved)
+   - [Conventions and logical boundaries](#14-conventions-and-logical-boundaries)
    - [The order of construction](#15-the-order-of-construction)
-2. [The intersection-field repair](#2-the-intersection-field-repair)
-   - [Elementary groups are nilpotent](#21-elementary-groups-are-nilpotent)
-   - [Subgroups admit prime-cyclic subnormal chains](#22-subgroups-admit-prime-cyclic-subnormal-chains)
-   - [The fixed-field tower](#23-the-fixed-field-tower)
-   - [Identification of the overlap packet](#24-identification-of-the-overlap-packet)
-   - [The repaired export](#25-the-repaired-export)
-3. [One algebraic coefficient ledger](#3-one-algebraic-coefficient-ledger)
-   - [Intrinsic fields and fields of realization](#31-intrinsic-fields-and-fields-of-realization)
-   - [Globalizing the distinguished completion](#32-globalizing-the-distinguished-completion)
-   - [A common field for every elementary term](#33-a-common-field-for-every-elementary-term)
-   - [Places rather than unnamed embeddings](#34-places-rather-than-unnamed-embeddings)
-   - [The positive and negative representations](#35-the-positive-and-negative-representations)
-4. [Multiplicity-one descent of an effective constituent](#4-multiplicity-one-descent-of-an-effective-constituent)
-   - [The descent obstruction](#41-the-descent-obstruction)
-   - [The multiplicity divisibility lemma](#42-the-multiplicity-divisibility-lemma)
-   - [Descent from a signed equality](#43-descent-from-a-signed-equality)
-   - [Why the Schur obstruction vanishes here](#44-why-the-schur-obstruction-vanishes-here)
-   - [Descent of isomorphisms](#45-descent-of-isomorphisms)
-5. [Construction at every coefficient place](#5-construction-at-every-coefficient-place)
-   - [The effective constituent over a completion](#51-the-effective-constituent-over-a-completion)
-   - [Continuity and absolute irreducibility](#52-continuity-and-absolute-irreducibility)
-   - [Independence of the displaying embedding](#53-independence-of-the-displaying-embedding)
-   - [Scalar extension](#54-scalar-extension)
-   - [What coherence means](#55-what-coherence-means)
-6. [Independence of Brauer decomposition](#6-independence-of-brauer-decomposition)
-   - [Two relations in one ledger](#61-two-relations-in-one-ledger)
-   - [Norm-zero comparison](#62-norm-zero-comparison)
-   - [Independence over the completion](#63-independence-over-the-completion)
-   - [Independence of presentation and conjugate terms](#64-independence-of-presentation-and-conjugate-terms)
-   - [The intrinsic member](#65-the-intrinsic-member)
-7. [Common Frobenius polynomials](#7-common-frobenius-polynomials)
-   - [The algebraic polynomial](#71-the-algebraic-polynomial)
-   - [Unramifiedness of the effective constituent](#72-unramifiedness-of-the-effective-constituent)
+2. [One algebraic coefficient ledger](#2-one-algebraic-coefficient-ledger)
+   - [Trace fields, realization fields, and places](#21-trace-fields-realization-fields-and-places)
+   - [Simultaneous models for the elementary packets](#22-simultaneous-models-for-the-elementary-packets)
+   - [The induced positive and negative representations](#23-the-induced-positive-and-negative-representations)
+   - [The imported overlap theorem](#24-the-imported-overlap-theorem)
+   - [Why no base-field family has been assumed](#25-why-no-base-field-family-has-been-assumed)
+3. [Multiplicity-one coefficient descent](#3-multiplicity-one-coefficient-descent)
+   - [The Schur obstruction](#31-the-schur-obstruction)
+   - [Orbit and Schur multiplicities](#32-orbit-and-schur-multiplicities)
+   - [Descent from a signed equality](#33-descent-from-a-signed-equality)
+   - [Cocycle effectivity](#34-cocycle-effectivity)
+   - [Effectivity on coefficient overlaps](#35-effectivity-on-coefficient-overlaps)
+4. [Construction at every coefficient place](#4-construction-at-every-coefficient-place)
+   - [The descended member](#41-the-descended-member)
+   - [Continuity and absolute irreducibility](#42-continuity-and-absolute-irreducibility)
+   - [Independence of the displaying embedding](#43-independence-of-the-displaying-embedding)
+   - [Scalar extension](#44-scalar-extension)
+   - [What coherence does and does not mean](#45-what-coherence-does-and-does-not-mean)
+5. [Independence of the Brauer relation](#5-independence-of-the-brauer-relation)
+   - [Two relations in one ledger](#51-two-relations-in-one-ledger)
+   - [The norm-zero comparison](#52-the-norm-zero-comparison)
+   - [Descent of the comparison isomorphism](#53-descent-of-the-comparison-isomorphism)
+   - [Presentation, conjugate-term, and coordinate independence](#54-presentation-conjugate-term-and-coordinate-independence)
+   - [The intrinsic member](#55-the-intrinsic-member)
+6. [Restriction recovery and the two conjugation actions](#6-restriction-recovery-and-the-two-conjugation-actions)
+   - [Restricting the signed expression](#61-restricting-the-signed-expression)
+   - [Recovery on every elementary fixed field](#62-recovery-on-every-elementary-fixed-field)
+   - [Recovery over the controlled top](#63-recovery-over-the-controlled-top)
+   - [Field conjugation](#64-field-conjugation)
+   - [Coefficient conjugation](#65-coefficient-conjugation)
+7. [Common Frobenius polynomials, determinant, and purity](#7-common-frobenius-polynomials-determinant-and-purity)
+   - [The algebraic quadratic polynomial](#71-the-algebraic-quadratic-polynomial)
+   - [Unramifiedness of the descended constituent](#72-unramifiedness-of-the-descended-constituent)
    - [Weak compatibility](#73-weak-compatibility)
-   - [Removing auxiliary bad primes](#74-removing-auxiliary-bad-primes)
-   - [Purity](#75-purity)
-   - [Frobenius powers](#76-frobenius-powers)
-8. [Determinant, duality, and the original member](#8-determinant-duality-and-the-original-member)
-   - [The actual determinant](#81-the-actual-determinant)
-   - [Duality](#82-duality)
-   - [Identification at the distinguished place](#83-identification-at-the-distinguished-place)
-   - [The original local records](#84-the-original-local-records)
-9. [Strict local compatibility](#9-strict-local-compatibility)
-   - [The algebraic local Mackey object](#91-the-algebraic-local-mackey-object)
-   - [Krull--Schmidt cancellation](#92-krull--schmidt-cancellation)
-   - [A common Weil--Deligne pair](#93-a-common-weil--deligne-pair)
-   - [The dyadic type](#94-the-dyadic-type)
-   - [The prime of the original lift](#95-the-prime-of-the-original-lift)
-   - [Conductors and local factors](#96-conductors-and-local-factors)
-10. [Coefficient covariance and family-level descent](#10-coefficient-covariance-and-family-level-descent)
-    - [Coefficient conjugation](#101-coefficient-conjugation)
-    - [Changing the common field](#102-changing-the-common-field)
-    - [Descent data without chosen matrices](#103-descent-data-without-chosen-matrices)
-    - [The global compatible family](#104-the-global-compatible-family)
-11. [Stable lattices and the integral boundary](#11-stable-lattices-and-the-integral-boundary)
-    - [Existence place by place](#111-existence-place-by-place)
-    - [The distinguished lattice](#112-the-distinguished-lattice)
-    - [Why characteristic-zero cancellation does not descend integrally](#113-why-characteristic-zero-cancellation-does-not-descend-integrally)
-    - [Residual semisimplification](#114-residual-semisimplification)
-    - [The exact boundary](#115-the-exact-boundary)
-12. [The complete base-field compatible-system theorem](#12-the-complete-base-field-compatible-system-theorem)
-    - [Statement](#121-statement)
-    - [Proof](#122-proof)
-    - [Dependency and interface audit](#123-dependency-and-interface-audit)
-    - [Hostile failure audit](#124-hostile-failure-audit)
-    - [Conclusion](#125-conclusion)
+   - [The actual determinant and duality](#74-the-actual-determinant-and-duality)
+   - [Weight-one purity](#75-weight-one-purity)
+   - [Frobenius powers after restriction](#76-frobenius-powers-after-restriction)
+8. [Local effectivity and the SP record at two](#8-local-effectivity-and-the-sp-record-at-two)
+   - [The algebraic local Mackey class](#81-the-algebraic-local-mackey-class)
+   - [An effective local complement](#82-an-effective-local-complement)
+   - [The proved strong-compatibility range](#83-the-proved-strong-compatibility-range)
+   - [The common special pair](#84-the-common-special-pair)
+   - [Monodromy line, sign, and conductor](#85-monodromy-line-sign-and-conductor)
+   - [Identification of the chosen SP member](#86-identification-of-the-chosen-sp-member)
+   - [The integral boundary](#87-the-integral-boundary)
+9. [The complete base-field assembly theorem](#9-the-complete-base-field-assembly-theorem)
+   - [Statement](#91-statement)
+   - [Proof](#92-proof)
+   - [The exact interface to prime switching](#93-the-exact-interface-to-prime-switching)
+10. [Dependency, hostile, and final audits](#10-dependency-hostile-and-final-audits)
+    - [Dependency audit](#101-dependency-audit)
+    - [Hostile mathematical audit](#102-hostile-mathematical-audit)
+    - [Scope and format audit](#103-scope-and-format-audit)
+    - [Conclusion](#104-conclusion)
 
-## 1. From effective members to one arithmetic family
+## 1. From effective members to an arithmetic family
 
-### 1.1 The last descent problem
+### 1.1 The assembly problem
 
-The preceding two books solve two different problems. Brauer induction first expresses the
-desired ground-field object as a signed sum of actual induced representations coming from
-elementary fixed fields. The character-norm argument then proves that, after placing the
-coefficients in an algebraic closure of a nonarchimedean completion, that signed class is one
-honest irreducible representation of dimension two.
+The preceding two books begin with one representation over the ground field and an automorphic
+packet only after restriction to a controlled totally real Galois extension. Book 187 replaces
+the unavailable nonsolvable descent by a finite array over elementary fixed fields. It then
+forms, for each coefficient embedding, a signed sum of actual induced representations. Book
+188 proves that the signed class has norm one and positive dimension two. Consequently it is
+represented by one actual absolutely irreducible rank-two representation over an algebraically
+closed nonarchimedean field.
 
-This is not yet a compatible system. An algebraic closure contains many copies of the same
-finite extension, and a representation whose isomorphism class is invariant under coefficient
-automorphisms need not automatically have matrices over the smaller field. The obstruction is
-the familiar Schur obstruction: an invariant absolutely irreducible representation can descend
-only to a module over a division algebra. Moreover, even if every coefficient place separately
-admits some finite field of definition, an arbitrary list of those fields is not one number
-field indexed coherently by its finite places.
-
-The last rational construction must therefore accomplish four things at once.
-
-1. Put every elementary packet, every Brauer character, and every local type into one algebraic
-   coefficient ledger.
-2. Prove that the unique effective constituent descends from an algebraic closure to the
-   corresponding completion of that one field.
-3. Prove that changing a Brauer relation, an auxiliary splitting field, or an embedding used to
-   display a completion does not change the descended member.
-4. Assemble the common Frobenius polynomials and bad-place Weil--Deligne pairs into one weakly
-   and strictly compatible family over the ground field.
-
-The decisive new observation is that effectivity occurs with multiplicity exactly one inside a
-difference of representations already defined over the completion. A nontrivial Schur index
-would force that multiplicity to be divisible by an integer greater than one. Multiplicity one
-therefore kills the coefficient descent obstruction.
-
-### 1.2 The repaired input
-
-Let
+That conclusion is pointwise effectivity. It is not yet the standard object called a compatible
+system. A compatible system is indexed by the finite places of one number field. Its member at
+a place $\lambda$ must have a model over the completion at that place, and its Frobenius and
+local records must be algebraic before completion. In contrast, an embedding-indexed member
 
 $$
-\rho:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(L_0)
+r_{\mathfrak B,\tau}:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(\Omega_\tau)
 \tag{1.1}
 $$
 
-be the chosen representation of Book 186, where $L_0/\mathbf Q_\ell$ is finite and
-$\ell\ge 7$. It is absolutely irreducible,
+initially lives only over an algebraically closed field $\Omega_\tau$. Invariance of its trace
+under automorphisms of $\Omega_\tau$ does not alone give matrices over a smaller completion.
+The familiar obstruction is a Schur class: the trace can be rational while the representation
+is defined only over a division algebra.
+
+There is a second coherence problem. Different Brauer relations give different positive and
+negative presentations. Book 188 proves that their effective members agree after scalar
+extension, but a compatible-system construction must show that the descended models agree over
+the completion itself. Likewise, two embeddings inducing the same coefficient place must be
+recognized as two displays of one member rather than as two separately chosen representations.
+
+This book solves precisely those assembly problems. Its key input is stronger than trace
+invariance: the effective constituent occurs with multiplicity one in a difference of two
+semisimple representations already defined over the completion. Galois orbits and Schur
+indices multiply geometric multiplicities. Since neither can divide one nontrivially, the
+coefficient cocycle is effective and the constituent descends.
+
+### 1.2 The exact input from the packet and effectivity theorems
+
+We begin with the **controlled SP top datum** of Book 187. It includes a prime $\ell\geq7$, a
+finite extension $L_0/\mathbf Q_\ell$, and a continuous absolutely irreducible representation
+
+$$
+\rho:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(L_0)
+\tag{1.2}
+$$
+
+such that
 
 $$
 \det\rho=\chi_\ell,
 \qquad
-\rho\text{ is unramified outside }\{2,\ell\},
-\tag{1.2}
-$$
-
-and it comes with its selected stable lattice. At $2$ it has trivial wild inertia, zero
-monodromy, and primitive tame order-three type; at $\ell$ its lattice has the selected
-coefficient-linear finite locally free quotient system.
-
-Let $M/\mathbf Q$ be the controlled totally real Galois extension of Book 186 and put
-
-$$
-\Gamma=\operatorname{Gal}(M/\mathbf Q).
+\rho\text{ is unramified outside }\{2,\ell\}.
 \tag{1.3}
 $$
 
-For every elementary subgroup $H\leq\Gamma$, write $F_H=M^H$. The repaired interface from
-Books 187--188 supplies a selected parallel-weight-two cuspidal packet $\pi_H$ over $F_H$, all
-of its coefficient realizations, and compatibility with conjugation and with restriction to
-every elementary intersection field. More precisely, if $D\leq H$ is elementary, then
+There is a finite totally real Galois extension $M/\mathbf Q$ with
 
 $$
-r_{H,\lambda}|_{G_{F_D}}^{\mathrm{ss}}
-\simeq r_{D,\lambda}
+\Gamma=\operatorname{Gal}(M/\mathbf Q),
 \tag{1.4}
 $$
 
-for every coefficient place after scalar extension to a common realization field. The same
-statement holds after conjugating $H$ and $D$ inside $\Gamma$.
+the primes $2$ and $\ell$ split completely in $M$, and $\rho|_{G_M}$ is absolutely
+irreducible. The selected top packet over $M$ realizes this restriction at one distinguished
+coefficient embedding. This controlled SP top datum is an explicit hypothesis of the present
+assembly theorem. The current Book 186 does not construct it unconditionally: that book isolates
+a missing controlled residual automorphic seed. Thus the arguments below prove the rational
+assembly once the datum has been supplied; they do not close that upstream arithmetic gap.
 
-The draft preceding the repair stopped with equality only after restriction to $G_M$. That is
-not enough for the character-norm proof: two extensions from $G_M$ to $G_{F_D}$ can differ by a
-character of $D$. Chapter 2 proves independently that (1.4) follows from the elementary nature
-of $H$ and the selected prime-cyclic descent. Thus the remainder of this book uses the intended
-repaired export, not the weaker unrepaired sentence.
-
-Fix an integral Brauer relation
+For every elementary subgroup $H\leq\Gamma$, put
 
 $$
-1_\Gamma=\sum_i n_i\operatorname{Ind}_{H_i}^{\Gamma}\theta_i,
-\qquad n_i\in\mathbf Z,
+F_H=M^H.
 \tag{1.5}
 $$
 
-with elementary $H_i$ and finite-order linear characters $\theta_i$. Books 187--188 then give,
-at every coefficient embedding $\tau$, the effective absolutely irreducible representation
+Book 187 constructs a selected parallel-weight-two cuspidal packet $\pi_H$ over $F_H$, together
+with its embedding-indexed rank-two realizations $r_{H,\tau}$. These are packet systems over the
+elementary fields, not members of a family over $\mathbf Q$. At the distinguished embedding
+$\tau_0$,
 
 $$
-r_{\mathfrak B,\tau}:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(\Omega_\tau)
+r_{H,\tau_0}\simeq\rho|_{G_{F_H}}.
 \tag{1.6}
 $$
 
-whose class is the signed induced Brauer class. They prove its determinant, common good
-Frobenius polynomials, local Mackey record, recovery of $\rho$, and independence of the Brauer
-relation after scalar extension. Our task is to descend and assemble those isomorphism classes.
-
-### 1.3 The base-field theorem
-
-The endpoint is best stated now, before the auxiliary coefficient field is chosen.
-
-**Theorem 1.1 (compatible system over the base field).** There are a number field $E$, a place
-$\lambda_0\mid\ell$ of $E$, a finite set $S=\{2,\ell\}$, and, for every finite place $\lambda$
-of $E$, a continuous absolutely irreducible representation
+The packet array is compatible with field conjugation and coefficient conjugation. Most
+importantly, Book 187 proves the exact elementary-overlap theorem. If $D\leq H$ are elementary,
+then for every coefficient embedding
 
 $$
-r_\lambda:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(E_\lambda)
+\left(r_{H,\tau}|_{G_{F_D}}\right)^{\mathrm{ss}}
+\simeq r_{D,\tau}.
 \tag{1.7}
 $$
 
-with the following properties.
-
-For every rational prime $p\notin S$ there is a polynomial
+For two elementary groups $H,J$ and $x\in\Gamma$, the corresponding statement holds over
 
 $$
-P_p(X)=X^2-a_pX+p\in E[X]
+F_{H\cap xJx^{-1}}=F_H\,x(F_J).
 \tag{1.8}
 $$
 
-such that, if $p$ differs from the residue characteristic of $\lambda$, then $r_\lambda$ is
-unramified at $p$ and
+This theorem already covers nonnormal intersection fields. Its proof in Book 187 uses the
+correct residue-degree Frobenius comparison and recognition of two already existing packet
+representations. It does not assert that every group-theoretic prime-cyclic tower is
+automorphically admissible. Equation (1.7) is an imported proved theorem; this book neither
+reconstructs it nor replaces it by an automatic solvable-descent claim.
+
+Fix for the moment an integral Brauer relation
 
 $$
-\det(X-r_\lambda(\operatorname{Frob}_p))=P_p(X).
+\mathfrak B=\{(H_i,\theta_i,n_i)\}_{i=1}^t,
+\qquad
+1_\Gamma=\sum_i n_i\operatorname{Ind}_{H_i}^{\Gamma}\theta_i,
 \tag{1.9}
 $$
 
-Every root of every $P_p$ is a $p$-Weil number of weight one. For every finite $p$ there is a
-Frobenius-semisimple rank-two Weil--Deligne representation $D_p$ over $E$, after one harmless
-finite enlargement made once for the finitely many bad places, such that
+where every $H_i$ is elementary, every $\theta_i$ is a finite-order linear character, and
+$n_i\in\mathbf Z$. Book 187 forms the signed induced class. Book 188 proves that, at every
+coefficient embedding $\tau$, it is represented by an actual continuous absolutely irreducible
+two-dimensional representation (1.1). It also proves relation-independence after scalar
+extension, common good Frobenius polynomials, the cyclotomic determinant, exact local
+characteristic-zero cancellation, and recovery of $\rho$ at $\tau_0$.
+
+No family over $\mathbf Q$ is included in this input. No stable lattice is included either.
+The objects to be assembled are exactly the effective embedding-indexed isomorphism classes
+(1.1).
+
+### 1.3 The theorem to be proved
+
+The endpoint can now be stated informally. We shall construct a finite Galois number field
+$E$, a distinguished place $\lambda_0\mid\ell$, and, for every finite place $\lambda$ of $E$,
+an absolutely irreducible continuous representation
 
 $$
-\operatorname{WD}_p(r_\lambda)^{\mathrm{F\!-\!ss}}
-\simeq D_p\otimes_EE_\lambda
+r_\lambda:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(E_\lambda).
 \tag{1.10}
 $$
 
-whenever $p$ differs from the residue characteristic of $\lambda$. At $p\notin S$, $D_p$ is
-unramified with polynomial $P_p$. At $2$ it has zero monodromy, trivial wild inertia, and the
-primitive tame order-three type.
+After scalar extension to an algebraic closure, this is the effective member of Book 188. The
+isomorphism class over $E_\lambda$ will be independent of the Brauer relation and every
+auxiliary display.
 
-For every $\lambda$,
+Outside one finite set $S$, there will be polynomials
 
 $$
-\det r_\lambda=\chi_\lambda,
-\qquad
-r_\lambda^\vee\simeq r_\lambda\otimes\chi_\lambda^{-1}.
+P_p(X)=X^2-a_pX+p\in E[X]
 \tag{1.11}
 $$
 
-After embedding $L_0$ and $E_{\lambda_0}$ into one finite extension of $\mathbf Q_\ell$,
+such that $r_\lambda$ is unramified at $p\ne\ell(\lambda)$ and has arithmetic-Frobenius
+polynomial $P_p$. Their roots will be pure of weight one, and
 
 $$
-r_{\lambda_0}\simeq\rho.
+\det r_\lambda=\chi_{\ell(\lambda)}.
 \tag{1.12}
 $$
 
-The isomorphism class of every $r_\lambda$, every $P_p$, and every $D_p$ is independent of the
-integral Brauer relation, of a positive-minus-negative presentation, of conjugating Brauer
-terms, and of harmless coefficient enlargement. The family is covariant under coefficient
-conjugation.
+Restriction to every elementary fixed field will recover its packet member. Coefficient and
+field conjugation will retain their distinct, correct meanings. At the distinguished place,
+$r_{\lambda_0}$ will recover the chosen representation $\rho$ after one common scalar
+extension.
 
-Each $r_\lambda$ admits a stable lattice. The theorem does not choose those lattices
-compatibly, does not derive an integral cancellation from the Brauer relation, and does not
-assert finite-flatness or a prescribed integral local structure for a new coefficient member.
-At $\lambda_0$ the original selected lattice and all of its integral local properties are
-retained unchanged.
+At the rational prime $2$, the family carries one algebraic SP pair. For every coefficient
+place away from $2$, its scalar extension is the full Frobenius-semisimple Weil--Deligne pair
+of $r_\lambda|_{G_{\mathbf Q_2}}$. Its monodromy is nonzero of rank one, its named line and
+sign are retained, and its conductor exponent is one. These are rational local data. Choosing
+an integral lattice and constructing a compatible quotient tower are deliberately not part of
+the theorem.
 
-### 1.4 Conventions and boundaries
+### 1.4 Conventions and logical boundaries
 
-Arithmetic Frobenius is used. Thus
+Arithmetic Frobenius is used throughout. Therefore
 
 $$
-\chi_\lambda(\operatorname{Frob}_p)=p
+\chi_{\ell(\lambda)}(\operatorname{Frob}_p)=p
 \tag{1.13}
 $$
 
-when $p$ differs from the residue characteristic of $\lambda$, and the weight-two polynomial
-is $X^2-a_pX+p$. If geometric Frobenius is desired, its eigenvalues are the inverses of the
-displayed roots.
-
-All global representations in the final family are semisimple and in fact absolutely
-irreducible. At a finite place away from coefficient characteristic, $\operatorname{WD}$ means
-the Frobenius-semisimple Weil--Deligne object: finite inertia and the monodromy operator are not
-discarded. Strict compatibility makes no assertion at the varying coefficient prime.
-
-Four levels of structure remain distinct throughout:
+when $p\ne\ell(\lambda)$, and the reciprocal characteristic series associated with (1.11) is
 
 $$
-\begin{array}{c}
-\text{signed equality in a Grothendieck group}\cr
-\Downarrow\ \text{character-norm effectivity}\cr
-\text{one actual semisimple representation over an algebraic closure}\cr
-\Downarrow\ \text{multiplicity-one coefficient descent}\cr
-\text{one representation over a coefficient completion}\cr
-\Downarrow\ \text{common polynomial and local data}\cr
-\text{one compatible family of rational representations.}
-\end{array}
+1-a_pT+pT^2.
 \tag{1.14}
 $$
 
-No arrow in (1.14) is an integral arrow. Stable lattices form a fifth layer and are treated
-only after the rational compatible family is complete.
+All global characteristic-zero representations are semisimple. The final members are
+absolutely irreducible. Finite Galois induction is unnormalized. A Frobenius-semisimple
+Weil--Deligne pair always retains finite inertia and its nilpotent operator $N$.
+
+The following stages are distinct:
+
+$$
+\begin{array}{c}
+\text{elementary-field packet systems}
+\\ \Downarrow\ \text{Brauer induction}
+\\ \text{signed base-field classes}
+\\ \Downarrow\ \text{character-norm effectivity}
+\\ \text{effective members over algebraically closed local fields}
+\\ \Downarrow\ \text{multiplicity-one coefficient descent}
+\\ \text{members over the completions of one number field}
+\\ \Downarrow\ \text{common algebraic records}
+\\ \text{the base-field compatible system.}
+\end{array}
+\tag{1.15}
+$$
+
+No arrow in (1.15) is an integral arrow. In particular, characteristic-zero cancellation does
+not choose a saturated integral complement. The later integral theory must start by choosing a
+lattice in one selected member and must prove its own local properties.
+
+We use neither the changing-prime theorem nor the fixed-three integral theorem. Those books are
+consumers of the family constructed here. The compatible family is never assumed in a
+hypothesis of its own construction.
 
 ### 1.5 The order of construction
 
-We first close the repaired intersection-field interface. We then choose a common number field
-large enough to realize every actual induced summand and to contain one globalization of the
-distinguished $\ell$-adic completion. The signed expression is consequently defined over each
-completion $E_\lambda$, even though its unique effective constituent is initially known only
-over an algebraic closure.
+Chapter 2 places all elementary packet systems and finite Brauer characters in one algebraic
+ledger. This makes the positive and negative induced representations actual objects over each
+completion $E_\lambda$. Chapter 3 proves the multiplicity-one descent theorem and interprets it
+as effectivity of the coefficient cocycle. Chapter 4 applies the theorem place by place and
+proves continuity.
 
-Chapter 4 proves the descent lemma that removes this discrepancy. Chapters 5--6 construct the
-members and prove all choice independence over $E_\lambda$, rather than merely after scalar
-extension. Chapters 7--9 assemble the good and bad local data. Only then do we call the result
-a compatible system. Lattices come last, because no characteristic-zero cancellation theorem
-controls the saturation or reduction of a chosen integral summand.
+Chapter 5 compares two Brauer relations by one combined Mackey Gram matrix and descends the
+resulting comparison to $E_\lambda$. Chapter 6 proves the stronger restriction-recovery
+identity using Mackey theory and the already proved elementary-overlap theorem. Chapters 7--8
+assemble the global and local algebraic records, including the complete SP object at $2$.
+Chapter 9 states the final theorem, and Chapter 10 subjects the construction to the two review
+rubrics and the main hostile failure tests.
 
-## 2. The intersection-field repair
+## 2. One algebraic coefficient ledger
 
-### 2.1 Elementary groups are nilpotent
+### 2.1 Trace fields, realization fields, and places
 
-For a prime $q$, a $q$-elementary group has the form
+The coefficient field of a polynomial and a field over which matrices exist are not the same
+notion. For a packet $\pi_H$, its good Hecke polynomials generate an intrinsic field of
+rationality. A chosen simple packet factor can nevertheless have a nontrivial endomorphism
+algebra, and a finite local type can require a splitting field. Calling the trace field a field
+of definition without checking these algebras would merely move the Schur problem into the
+hypotheses.
+
+There are only finitely many elementary subgroups of the finite group $\Gamma$. There are also
+only finitely many linear characters of all of those groups. Book 187 already chooses a common
+number field containing their values and the algebraic good and local packet data. Enlarge that
+field once to split every finite-dimensional coefficient algebra used to realize every
+elementary packet and every elementary intersection packet. Take its normal closure over
+$\mathbf Q$ and call the result $E$.
+
+This is a finite enlargement because the packet array is finite. It is deliberately made before
+a Brauer relation is selected. Consequently two relations can later be compared inside the same
+ledger, rather than by choosing a new coefficient field for each relation.
+
+A finite place $\lambda$ of $E$ is the correct index. Write
 
 $$
-H=C\times Q,
+E_\lambda=\widehat E^{\,\lambda},
+\qquad
+q_\lambda=\ell(\lambda).
 \tag{2.1}
 $$
 
-where $C$ is cyclic of order prime to $q$ and $Q$ is a $q$-group. Decompose $C$ into its Sylow
-subgroups. Every Sylow subgroup of $H$ is then normal, and $H$ is their direct product. Hence
-$H$ is finite nilpotent.
+Several places may lie above the same rational prime, and their completions need not be
+canonically isomorphic. An embedding $E\hookrightarrow\overline{\mathbf Q}_{q_\lambda}$
+induces $\lambda$ precisely when it extends continuously to $E_\lambda$. Thus an embedding is
+a display of the place, not a replacement for it.
 
-The relevant property of a finite nilpotent group is stronger than solvability.
+The distinguished algebraic embedding from Book 187 induces a place
+$\lambda_0\mid\ell$. The two local fields $E_{\lambda_0}$ and $L_0$ embed in one finite
+extension of $\mathbf Q_\ell$. No assertion that they are equal is needed.
 
-**Lemma 2.1.** Every proper subgroup $D$ of a finite nilpotent group $H$ is properly contained
-in its normalizer:
+### 2.2 Simultaneous models for the elementary packets
+
+The packet attachment theorem, already applied term by term in Book 187, gives compatible
+coefficient systems for the finitely many $\pi_H$. Because $E$ splits their realization
+algebras, every elementary $H$ and every finite place $\lambda$ of $E$ have a model
 
 $$
-D<N_H(D).
+r_{H,\lambda}:G_{F_H}\longrightarrow\operatorname{GL}_2(E_\lambda)
 \tag{2.2}
 $$
 
-**Proof.** Write $H=\prod_qH_q$ as the direct product of its Sylow groups and put
-$D_q=D\cap H_q$. Taking the primary components of each element shows
-$D=\prod_qD_q$. If $D\ne H$, choose $q$ with $D_q\ne H_q$. It is enough to prove the claim in
-the finite $q$-group $H_q$.
+whose scalar extension under an embedding inducing $\lambda$ is $r_{H,\tau}$. These are
+continuous semisimple representations. They are absolutely irreducible: Book 188 proves this
+from the cuspidality of $\pi_H$, the rank-one Galois--Hecke dictionary for a hypothetical
+decomposition, and strong multiplicity one.
 
-Let a finite $q$-group $P$ act by left multiplication on the cosets $P/D_q$. The fixed points
-of the subgroup $D_q$ are the cosets $xD_q$ with $x\in N_P(D_q)$. Hence their number is
-$[N_P(D_q):D_q]$. Orbit counting for the $D_q$-action gives
-
-$$
-[P:D_q]\equiv[N_P(D_q):D_q]\pmod q.
-\tag{2.3}
-$$
-
-Since $D_q$ is proper, $[P:D_q]$ is divisible by $q$. The normalizer index in (2.3) is
-therefore divisible by $q$ and cannot equal one. Choose an element of
-$N_P(D_q)\setminus D_q$ and insert it in the $q$-factor of $H$; it normalizes every other
-$D_{q'}$ because the Sylow factors commute. This proves (2.2). $\square$
-
-### 2.2 Subgroups admit prime-cyclic subnormal chains
-
-**Proposition 2.2 (prime-cyclic refinement).** If $D\leq H$ and $H$ is elementary, there is a
-chain
-
-$$
-D=D_0\triangleleft D_1\triangleleft\cdots\triangleleft D_m=H
-\tag{2.4}
-$$
-
-such that every quotient $D_{j+1}/D_j$ is cyclic of prime order.
-
-**Proof.** Repeatedly replace a proper subgroup by its normalizer. Lemma 2.1 gives a strictly
-increasing subnormal chain from $D$ to $H$. Each quotient in that chain is a finite nilpotent,
-hence solvable, group. Refine one normal inclusion $A\triangleleft B$ by pulling back a
-composition series of the solvable quotient $B/A$. Every composition factor of a finite
-solvable group is cyclic of prime order. The inverse images remain normal in the next group,
-so performing this refinement at every step gives (2.4). $\square$
-
-The proposition is exactly stronger than the observation that an intersection subgroup need
-not be normal in $H$. It need not be normal in one step; it is nevertheless subnormal through
-prime-cyclic steps. That is all solvable base change requires.
-
-### 2.3 The fixed-field tower
-
-Reverse (2.4) under Galois correspondence. Since $F_J=M^J$, inclusions reverse and give
-
-$$
-F_H=F_{D_m}\subset F_{D_{m-1}}\subset\cdots\subset F_{D_0}=F_D.
-\tag{2.5}
-$$
-
-Because $D_j\triangleleft D_{j+1}$,
-
-$$
-F_{D_j}/F_{D_{j+1}}
-\tag{2.6}
-$$
-
-is cyclic Galois with group $D_{j+1}/D_j$, hence of prime degree. Thus the possibly non-Galois
-extension $F_D/F_H$ is a composite of extensions lying one by one in the exact transfer range
-of the prime-cyclic base-change theorem.
-
-This also treats Mackey intersections. If
-
-$$
-D=H_i\cap xH_jx^{-1},
-\tag{2.7}
-$$
-
-then $D$ is a subgroup of the elementary group $H_i$ and of the elementary group
-$xH_jx^{-1}$. Proposition 2.2 gives a prime-cyclic tower from either fixed field to
-$F_D=F_i\,xF_j$.
-
-### 2.4 Identification of the overlap packet
-
-**Theorem 2.3 (elementary overlap identity).** Let $D\leq H\leq\Gamma$ with $H$ elementary.
-The iterated prime-cyclic base change of $\pi_H$ through (2.5) is the selected packet $\pi_D$.
-Consequently, for every coefficient place $\lambda$,
+If $D\leq H$ are elementary, equation (1.7) becomes, after scalar extension,
 
 $$
 r_{H,\lambda}|_{G_{F_D}}^{\mathrm{ss}}
-\simeq r_{D,\lambda}.
-\tag{2.8}
+\otimes_{E_\lambda}\overline E_\lambda
+\simeq
+r_{D,\lambda}\otimes_{E_\lambda}\overline E_\lambda.
+\tag{2.3}
 $$
 
-**Proof.** Apply prime-cyclic base change at every step of (2.5). Local parameter restriction
-is transitive, so the endpoint $\Pi$ over $F_D$ base changes to $\pi_M$ and has the local
-restrictions obtained from $\pi_H$.
+Both sides are absolutely irreducible after restriction in the cases used below, and in all
+cases their semisimple classes are already the exact overlap classes needed by Mackey theory.
+Chapter 6 will show that the relevant comparisons descend over $E_\lambda$ whenever an actual
+isomorphism over the completion is required.
 
-At the distinguished coefficient place, Book 186 selected both packets by the same extending
-representation:
-
-$$
-r_{H,\lambda_0}\simeq\rho|_{G_{F_H}},
-\qquad
-r_{D,\lambda_0}\simeq\rho|_{G_{F_D}}.
-\tag{2.9}
-$$
-
-Compatibility of Galois realizations with prime-cyclic base change gives
-$r_{\Pi,\lambda_0}\simeq\rho|_{G_{F_D}}$. The endpoint $\Pi$ and $\pi_D$ therefore have the
-same good Hecke polynomials and the same selected central character. Strong multiplicity one
-identifies them. This also removes any character ambiguity accumulated along the tower: a
-nontrivial quotient twist would change the selected realization, and the self-twist exclusions
-in the controlled field ledger rule out two different selected endpoints.
-
-Once $\Pi\simeq\pi_D$ automorphically, compatibility of coefficient realizations with base
-change gives (2.8) at every $\lambda$, not merely at $\lambda_0$. The construction is
-independent of the chain (2.4), because any two endpoints are both $\pi_D$ by the same
-argument. $\square$
-
-No density theorem is used. The proof remains inside the prime-cyclic transfer, selected
-descent, Galois realization, and strong-multiplicity-one interfaces already present in Books
-186--187.
-
-### 2.5 The repaired export
-
-For $D=H_i\cap xH_jx^{-1}$, apply Theorem 2.3 once to $D\leq H_i$ and once to
-$D\leq xH_jx^{-1}$. Conjugation compatibility gives
+For a finite-order character $\theta:H\to E^\times$, inflate it through
 
 $$
-r_{H_i,\lambda}|_{G_{F_D}}^{\mathrm{ss}}
-\simeq r_{D,\lambda}
-\simeq{}^xr_{H_j,\lambda}|_{G_{F_D}}^{\mathrm{ss}}.
-\tag{2.10}
+G_{F_H}/G_M\simeq H.
+\tag{2.4}
 $$
 
-After the Brauer characters are inserted, the two sides differ only by the explicit ratio
+Its $\lambda$-adic avatar $\theta_\lambda$ is an $E_\lambda$-valued continuous character. It
+is trivial on $G_M$. Although global reciprocity also gives a finite-order Hecke avatar, the
+construction in this book uses only its Galois avatar.
 
-$$
-\delta_{ij,x}
-=({}^x\theta_j)|_D\,(\theta_i|_D)^{-1}.
-\tag{2.11}
-$$
+### 2.3 The induced positive and negative representations
 
-This is exactly the overlap hypothesis used by the Mackey Gram calculation in Book 188.
-Therefore its norm-one effectivity theorem, relation-independence theorem, and local
-cancellation theorem are unconditional after the repair. Nothing in Chapters 3--12 below is
-used to prove (2.10), so the interface is noncircular.
-
-## 3. One algebraic coefficient ledger
-
-### 3.1 Intrinsic fields and fields of realization
-
-For each elementary packet $\pi_H$, let $K_H$ be the field generated by its good Hecke
-eigenvalues, its central character, and the finite local-type values used in the controlled
-family. The polynomial data are intrinsic to $K_H$. A rank-two multiplicity module or a local
-type can require a finite extension of $K_H$ to split a simple algebra. We call any field over
-which all those objects have models a field of realization.
-
-Only finitely many subgroups occur in a fixed Brauer relation, and only finitely many
-intersection subgroups occur in its Mackey Gram matrix. To compare two relations, take the
-union of their two finite lists. Adjoin:
-
-- every $K_H$ in the list;
-- every value of every Brauer character;
-- splitting fields for the finite packet algebras and finite local types; and
-- the coefficients of the finitely many bad-place local comparison objects.
-
-The compositum is a number field. Taking its normal closure over $\mathbf Q$ makes coefficient
-conjugation visible without changing any isomorphism class after scalar extension.
-
-We initially call this field $K$. It contains the algebraic Frobenius polynomials but need not
-yet have a completion receiving the original coefficient field $L_0$.
-
-### 3.2 Globalizing the distinguished completion
-
-We use a standard approximation fact in a precise form.
-
-**Lemma 3.1 (globalization of a local extension).** Let $K$ be a number field, let $v$ be a
-finite place, and let $C/K_v$ be finite. There are a finite extension $E/K$ and a place
-$\lambda_0\mid v$ such that
-
-$$
-E_{\lambda_0}\simeq C
-\tag{3.1}
-$$
-
-as extensions of $K_v$.
-
-**Proof.** By the primitive element theorem write $C=K_v(\alpha)$, with monic minimal
-polynomial $f\in K_v[X]$. Separability makes the roots of $f$ distinct. Choose a sufficiently
-small coefficient neighborhood of $f$ such that every monic polynomial in that neighborhood
-has, by Krasner's lemma, one root generating an extension isomorphic to $C$.
-
-The diagonal copy of $K$ is dense in $K_v$. Approximate the coefficients of $f$ by elements
-of $K$ and obtain a monic $g\in K[X]$ in that neighborhood. Let $\beta$ be the root of $g$ in
-the prescribed local root neighborhood and set $E=K(\beta)$. The place induced by the chosen
-embedding $E\hookrightarrow\overline K_v$ has completion $K_v(\beta)\simeq C$. If $g$ has
-extraneous global factors, replace $E$ by the field generated by the selected root; the local
-conclusion is unchanged. $\square$
-
-Choose a finite extension $C/K_v$ containing the completion used by every packet at the
-distinguished embedding and the original field $L_0$. Apply Lemma 3.1. Enlarge the resulting
-$E$ further, if necessary, by the finite splitting fields from Section 3.1 and take a normal
-closure. Choose a place above the original $\lambda_0$ and retain the same notation. Its
-completion embeds in a finite local overfield containing $L_0$; exact equality of completions
-is no longer needed after the later harmless enlargement.
-
-### 3.3 A common field for every elementary term
-
-After the preceding enlargement, the compatible-system theorem of Book 137 gives, for every
-elementary $H$ in the ledger and every finite place $\lambda$ of $E$, a continuous semisimple
-representation
-
-$$
-r_{H,\lambda}:G_{F_H}\longrightarrow\operatorname{GL}_2(E_\lambda).
-\tag{3.2}
-$$
-
-If an intrinsic packet field embeds in $E$ in several ways, the coefficient-conjugate packet is
-used for the corresponding embedding. Thus (3.2) is an $E_\lambda$-model, not an unnamed
-representation over $\overline{\mathbf Q}_{q_\lambda}$.
-
-For a Brauer character $\theta_i:H_i\to E^\times$, inflation through
-$G_{F_i}/G_M\simeq H_i$ gives an $E$-valued finite character. Its $\lambda$-adic realization
-preserves the obvious free rank-one $\mathcal O_{E_\lambda}$-lattice. Define
+For the relation (1.9), put
 
 $$
 A_{i,\lambda}
-=\operatorname{Ind}_{G_{F_i}}^{G_{\mathbf Q}}
+=
+\operatorname{Ind}_{G_{F_{H_i}}}^{G_{\mathbf Q}}
 (r_{H_i,\lambda}\otimes\theta_{i,\lambda}).
+\tag{2.5}
+$$
+
+This is actual finite Galois induction. It is defined over $E_\lambda$: in a coset basis, its
+matrices consist of packet matrices, permutation blocks, and the values of $\theta_i$. There is
+no automorphic induction from the generally nonnormal field $F_{H_i}$ to $\mathbf Q$ in this
+statement.
+
+Write $n_i=n_i^+-n_i^-$ with $n_i^\pm\geq0$ and define
+
+$$
+R_{\mathfrak B,\lambda}^+
+=\bigoplus_i A_{i,\lambda}^{\oplus n_i^+},
+\qquad
+R_{\mathfrak B,\lambda}^-
+=\bigoplus_i A_{i,\lambda}^{\oplus n_i^-}.
+\tag{2.6}
+$$
+
+Both are actual continuous semisimple $E_\lambda$-representations. To see semisimplicity, first
+restrict an induced term to the normal open subgroup $G_M$. Normal-subgroup Mackey decomposition
+makes that restriction a finite direct sum of conjugates of the semisimple top packet member.
+If a $G_{\mathbf Q}$-stable subspace is given, choose a $G_M$-equivariant projection and average
+its conjugates over the finite quotient $\Gamma$. Characteristic zero permits division by
+$|\Gamma|$, producing a $G_{\mathbf Q}$-equivariant complement.
+
+For an embedding $j:E_\lambda\hookrightarrow\Omega$ into an algebraically closed
+nonarchimedean field, Book 188 gives an absolutely irreducible rank-two representation
+$S_{\mathfrak B,\lambda,j}$ such that
+
+$$
+[R_{\mathfrak B,\lambda}^+\otimes_j\Omega]
+-[R_{\mathfrak B,\lambda}^-\otimes_j\Omega]
+=[S_{\mathfrak B,\lambda,j}].
+\tag{2.7}
+$$
+
+This is the multiplicity-one signed equality from which coefficient descent will be proved.
+
+### 2.4 The imported overlap theorem
+
+The norm calculation behind (2.7) compares two induced summands on a field
+
+$$
+L_x=M^{H_i\cap xH_jx^{-1}}.
+\tag{2.8}
+$$
+
+Book 187 identifies both untwisted restrictions there with the packet attached to
+$D_x=H_i\cap xH_jx^{-1}$. After the Brauer characters are restored, the Hom space becomes
+
+$$
+\operatorname{Hom}_{G_{L_x}}
+(r_{D_x,\tau},r_{D_x,\tau}\otimes\delta_{ij,x,\tau}),
+\tag{2.9}
+$$
+
+where the orientation is
+
+$$
+\delta_{ij,x}
+=({}^x\theta_j)|_{D_x}\,(\theta_i|_{D_x})^{-1}.
+\tag{2.10}
+$$
+
+Book 188 proves that the dimension of (2.9) is the coefficient-independent indicator of an
+actual finite-order automorphic self-twist. These entrywise identities make the entire Mackey
+Gram matrix independent of the coefficient embedding.
+
+This exact interface matters twice in the present book: it underlies relation-independence in
+Chapter 5, and it gives restriction recovery in Chapter 6. We do not infer (2.9) merely from
+agreement over $G_M$. Such an inference would lose a quotient character of $D_x$.
+
+Nor do we declare every prime-cyclic subgroup chain to be an admissible automorphic transfer
+chain. Elementary nilpotence supplies a group-theoretic chain, but arithmetic admissibility is
+separate. The unconditional semisimple overlap theorem of Book 187 is what closes the interface.
+
+### 2.5 Why no base-field family has been assumed
+
+Every object constructed so far has one of three forms:
+
+- a packet system $r_{H,\lambda}$ on $G_{F_H}$;
+- an induced representation $A_{i,\lambda}$ on $G_{\mathbf Q}$; or
+- an embedding-indexed effective constituent $S_{\mathfrak B,\lambda,j}$ over an algebraic
+  closure.
+
+The first objects come from already existing automorphic packets over elementary fields. The
+second are ordinary finite inductions. The third are conclusions of the norm-one theorem. None
+is a family of rank-two representations on $G_{\mathbf Q}$ indexed by the places of $E$.
+
+This distinction prevents a circular shortcut. One cannot say that the $S_{\mathfrak
+B,\lambda,j}$ are compatible and then use compatibility to descend them. The descent will come
+from the signed equality (2.7), and compatibility will be proved afterward from algebraic
+Frobenius and local records.
+
+## 3. Multiplicity-one coefficient descent
+
+### 3.1 The Schur obstruction
+
+Suppose $k$ is a characteristic-zero field and $S$ is an absolutely irreducible representation
+over an algebraic closure $\overline k$. Even if $S^\sigma\simeq S$ for every
+$\sigma\in\operatorname{Aut}(\overline k/k)$, an honest $k$-model need not exist. Choose
+intertwiners $u_\sigma:S^\sigma\to S$. Schur's lemma makes
+
+$$
+c(\sigma,\tau)
+=u_\sigma\,{}^\sigma u_\tau\,u_{\sigma\tau}^{-1}
+\tag{3.1}
+$$
+
+a scalar. Associativity gives the two-cocycle equation, and changing the $u_\sigma$ changes
+$c$ by a coboundary. The resulting Brauer class is the obstruction to choosing the
+intertwiners so that they satisfy a genuine descent cocycle.
+
+A classical diagnostic is the two-dimensional complex irreducible representation of the
+quaternion group. Its character is rational, but its rational simple module is quaternionic:
+after scalar extension it contains the complex constituent with Schur multiplicity two. This
+example shows that trace containment, Galois invariance, and absolute irreducibility over an
+algebraic closure do not by themselves prove coefficient descent.
+
+Our situation has extra information. The constituent occurs with coefficient one in a virtual
+difference defined over $k$. The decomposition law for simple $k$-modules shows that a
+quaternionic, or any nontrivial, Schur multiplicity is impossible.
+
+### 3.2 Orbit and Schur multiplicities
+
+We first isolate the algebra behind that statement.
+
+**Lemma 3.1 (orbit and Schur multiplicity).** Let $T$ be a finite-dimensional simple
+$k$-representation of a group $G$, where $k$ has characteristic zero. Over $\overline k$, its
+semisimplification has the form
+
+$$
+(T\otimes_k\overline k)^{\mathrm{ss}}
+\simeq
+m\bigoplus_{S'\in\mathcal O}S',
+\tag{3.2}
+$$
+
+where $\mathcal O$ is one finite Galois orbit of pairwise nonisomorphic absolutely irreducible
+representations and the positive integer $m$ is constant on the orbit.
+
+**Proof.** Let $B$ be the image of $k[G]$ in $\operatorname{End}_k(T)$. It is a
+finite-dimensional algebra and $T$ is a simple $B$-module. By the density theorem for a simple
+module, the corresponding simple factor of the semisimple quotient of $B$ has the form
+
+$$
+M_d(\Delta),
 \tag{3.3}
 $$
 
-Finite induction is defined over $E_\lambda$: after coset representatives are chosen, its
-matrices contain only packet matrices, permutation matrices, and values of $\theta_i$. A change
-of representatives conjugates the result over $E_\lambda$.
+where $\Delta$ is a finite-dimensional division algebra over its center $Z$, and $Z/k$ is
+finite. After passing to a finite normal extension that contains every embedding of $Z$ and
+splits $\Delta$, each central embedding gives one absolutely irreducible constituent. Galois
+acts transitively on those embeddings because the original $k$-module was simple. The degree
+of the split division algebra is the same at every embedding and is the common multiplicity
+$m$. Extending further to $\overline k$ gives (3.2). $\square$
 
-### 3.4 Places rather than unnamed embeddings
+Consequently, in the scalar extension of any integral virtual combination of simple
+$k$-modules, the coefficient of an absolutely irreducible constituent is constant on its
+Galois orbit and divisible by the Schur multiplicity attached to that orbit.
 
-Let $q_\lambda$ be the residue characteristic of $\lambda$. An embedding
+### 3.3 Descent from a signed equality
+
+**Theorem 3.2 (multiplicity-one coefficient descent).** Let $V^+$ and $V^-$ be
+finite-dimensional semisimple $k$-representations of a group $G$. Suppose that
 
 $$
-\tau:E\hookrightarrow\overline{\mathbf Q}_{q_\lambda}
+[V^+\otimes_k\overline k]-[V^-\otimes_k\overline k]=[S]
 \tag{3.4}
 $$
 
-induces $\lambda$ exactly when it extends continuously to
-$E_\lambda\hookrightarrow\overline{\mathbf Q}_{q_\lambda}$. Two embeddings inducing the same
-place merely display the same completion in two ways. Therefore the member to be constructed
-must first live over $E_\lambda$; only then can embedding independence be a formal scalar
-transport statement.
-
-This is stronger than choosing one embedding for every rational prime. A number field can have
-several places above the same prime, and they are distinct members of a compatible system. The
-common comparison is made through the polynomials in $E[X]$, not by identifying their
-topological vector spaces.
-
-### 3.5 The positive and negative representations
-
-Write $n_i=n_i^+-n_i^-$ with $n_i^\pm\ge0$ and put
+for one absolutely irreducible representation $S$ over $\overline k$. Then there is a unique
+isomorphism class of absolutely irreducible $k$-representation $V$ such that
 
 $$
-R_\lambda^+=\bigoplus_iA_{i,\lambda}^{\oplus n_i^+},
-\qquad
-R_\lambda^-=\bigoplus_iA_{i,\lambda}^{\oplus n_i^-}.
+V\otimes_k\overline k\simeq S
 \tag{3.5}
-$$
-
-Both are actual continuous semisimple $E_\lambda$-representations. Semisimplicity follows from
-the normal-core argument of Book 187: restriction to $G_M$ is a direct sum of semisimple
-conjugates of the top packet, and averaging a projection over the finite quotient promotes a
-$G_M$-stable complement to a $G_{\mathbf Q}$-stable complement.
-
-For any embedding $j:E_\lambda\hookrightarrow\Omega$ into an algebraically closed field,
-Book 188, now unconditional by Chapter 2, proves
-
-$$
-[R_\lambda^+\otimes_j\Omega]
--[R_\lambda^-\otimes_j\Omega]
-=[S_{\lambda,j}],
-\tag{3.6}
-$$
-
-where $S_{\lambda,j}$ is absolutely irreducible of dimension two. Equation (3.6) is the exact
-input for coefficient descent.
-
-## 4. Multiplicity-one descent of an effective constituent
-
-### 4.1 The descent obstruction
-
-Suppose an absolutely irreducible representation $S$ over an algebraic closure $\overline F$ is
-fixed up to isomorphism by $\operatorname{Aut}(\overline F/F)$. It does not follow in general
-that $S$ has an $F$-model. The intertwiners between $S$ and its conjugates can compose only up
-to scalars, producing a class in a Brauer group. Equivalently, the corresponding simple
-$F$-module can have a division algebra as endomorphism ring. After scalar extension, such a
-module contains several copies of $S$; their common multiplicity is the Schur index.
-
-Our situation contains more information than invariance. The class $[S]$ is the difference of
-two semisimple representations already defined over $F$. The coefficient of $S$ in that
-difference is exactly one. The next two lemmas show that this coefficient is incompatible with
-a nontrivial orbit or Schur index.
-
-### 4.2 The multiplicity divisibility lemma
-
-**Lemma 4.1 (orbit and Schur multiplicity).** Let $F$ be a characteristic-zero field, let $G$
-be a group, and let $T$ be a finite-dimensional simple $F$-representation of $G$. Let
-$\overline F$ be an algebraic closure. Then the semisimplification of
-$T\otimes_F\overline F$ has the form
-
-$$
-(T\otimes_F\overline F)^{\mathrm{ss}}
-\simeq m\bigoplus_{\sigma\in\mathcal O}S^\sigma,
-\tag{4.1}
-$$
-
-where $S$ is absolutely irreducible, $\mathcal O$ is one finite Galois orbit of pairwise
-nonisomorphic conjugates, and $m\ge1$ is independent of $\sigma$.
-
-**Proof.** Let $B$ be the image of $F[G]$ in $\operatorname{End}_F(T)$. It is a
-finite-dimensional $F$-algebra, and $T$ is a simple $B$-module. Its endomorphism ring
-
-$$
-\Delta=\operatorname{End}_B(T)
-\tag{4.2}
-$$
-
-is a finite-dimensional division algebra. The center $Z$ of $\Delta$ is finite over $F$.
-After extending to a normal closure of $Z/F$ and then splitting $\Delta$, the simple module
-decomposes into absolutely irreducible modules indexed by the embeddings of the relevant
-center. Galois permutes these constituents transitively because $T$ was simple over $F$.
-The matrix degree of the split division algebra is the same at every conjugate embedding and
-is the common multiplicity $m$. Further scalar extension to $\overline F$ gives (4.1).
-$\square$
-
-The lemma has an immediate divisibility consequence: in the scalar extension of any virtual
-integral combination of simple $F$-modules, the coefficient of every $S^\sigma$ is an integer
-multiple of the corresponding Schur multiplicity $m$ and is constant on the orbit
-$\mathcal O$.
-
-### 4.3 Descent from a signed equality
-
-**Theorem 4.2 (multiplicity-one descent).** Let $V^+$ and $V^-$ be finite-dimensional
-semisimple $F$-representations of a group $G$. Suppose that over $\overline F$
-
-$$
-[V^+_{\overline F}]-[V^-_{\overline F}]=[S]
-\tag{4.3}
-$$
-
-for one absolutely irreducible representation $S$. Then there is a unique isomorphism class of
-absolutely irreducible $F$-representation $V$ such that
-
-$$
-V\otimes_F\overline F\simeq S
-\tag{4.4}
 $$
 
 and
 
 $$
 V^+\simeq V\oplus V^-.
-\tag{4.5}
+\tag{3.6}
 $$
 
-**Proof.** Decompose $V^+$ and $V^-$ into simple $F$-modules. Apply Lemma 4.1 to each simple
-module. The coefficient function of the left side of (4.3), on absolutely irreducible
-$\overline F$-representations, is constant on every Galois orbit and divisible on that orbit by
-its Schur multiplicity.
+**Proof.** Decompose $V^+$ and $V^-$ into simple $k$-modules and apply Lemma 3.1 to each
+simple summand. The coefficient function of the left side of (3.4) is constant on every Galois
+orbit and divisible by the Schur multiplicity of that orbit.
 
-The right side has coefficient one at $S$ and zero everywhere else. It follows first that the
-orbit of $S$ is a singleton: otherwise every conjugate $S^\sigma$ would also have coefficient
-one. It follows next that the Schur multiplicity is one, because it divides the coefficient
-one. Thus the unique simple $F$-module $V$ in the corresponding block satisfies (4.4), and its
-coefficient in $[V^+]-[V^-]$ is one. Every other simple $F$-module has coefficient zero.
-Therefore
+Distinct simple $k$-modules have disjoint geometric supports. Indeed, if two of their scalar
+extensions shared an absolutely irreducible constituent, their semisimplifications would have a
+nonzero Hom over $\overline k$. Equivariance is a finite system of linear equations in the
+finite-dimensional Hom space, so Hom commutes with scalar extension. A nonzero Hom would
+therefore already exist over $k$, forcing the two simple modules to be isomorphic.
+
+The right side is one at $S$ and zero at every other absolutely irreducible representation.
+Its support therefore cannot contain a second Galois conjugate of $S$, so the orbit of $S$ is
+a singleton. Its coefficient one is divisible by the Schur multiplicity, so that multiplicity
+is one. The corresponding simple $k$-module $V$ consequently has scalar extension $S$, not a
+multiple of $S$.
+
+For every other simple $k$-module, the difference of the multiplicities in $V^+$ and $V^-$ is
+zero. For the module $V$, the difference is one. Equality of simple multiplicities over $k$
+therefore gives
 
 $$
 [V^+]-[V^-]=[V]
+\tag{3.7}
+$$
+
+and, because all three representations are semisimple, the actual direct-sum isomorphism
+(3.6). The scalar extension (3.5) proves absolute irreducibility. Uniqueness follows from
+unique simple multiplicities. $\square$
+
+The proof uses the signed equality over $k$, not merely its trace. It also proves more than the
+existence of some model after a finite extension: it produces a model over $k$ itself.
+
+### 3.4 Cocycle effectivity
+
+Theorem 3.2 has an equivalent descent-data interpretation which is useful for auditing
+coherence. Choose a finite Galois extension $k'/k$ over which $S$ and a finite set of
+intertwiners $u_\sigma$ are defined. The scalar factor set (3.1) determines the central simple
+algebra whose simple $k$-module gives the isotypic block containing $S$. If its division part
+has degree $m$, then every $k$-defined virtual class has coefficient divisible by $m$ at $S$.
+
+Equation (3.4) gives coefficient one. Hence $m=1$, the central simple algebra is split, and the
+factor set represents zero in the Brauer group of $k$. After rescaling the $u_\sigma$, one has
+
+$$
+u_{\sigma\tau}=u_\sigma\,{}^\sigma u_\tau.
+\tag{3.8}
+$$
+
+The fixed vectors for this semilinear action form the module $V$ of Theorem 3.2. Thus the
+coefficient cocycle is not ignored; its effectivity is forced by multiplicity one.
+
+This argument also explains why no preferred matrices result. Rescaling the descent
+intertwiners changes the chosen basis of the descended module, while its $k$-isomorphism class
+remains unique. A compatible system needs the latter, not a canonical basis.
+
+### 3.5 Effectivity on coefficient overlaps
+
+Suppose $k_1/k$ and $k_2/k$ are two finite fields used to realize the signed equality. Apply
+Theorem 3.2 over $k$ and call its unique model $V$. Applying the same theorem after scalar
+extension to $k_i$ shows that the model obtained there is $V\otimes_k k_i$. On a common
+overfield $k_{12}$, the two displays are therefore isomorphic to the same representation
+$V\otimes_k k_{12}$. This proves effectivity on overlaps of finite realization fields.
+
+There is also a useful uniqueness statement over the base field. If two $k$-models $V_1,V_2$
+become isomorphic after a field extension $k'/k$, equivariance inside
+$\operatorname{Hom}_k(V_1,V_2)$ is a system of homogeneous linear equations. Only finitely many
+of those equations are independent because the Hom space is finite dimensional. Flat scalar
+extension consequently gives
+
+$$
+\operatorname{Hom}_G(V_1,V_2)\otimes_k k'
+\simeq
+\operatorname{Hom}_G(V_1\otimes k',V_2\otimes k').
+\tag{3.9}
+$$
+
+The right side is nonzero, so the left side is nonzero. A nonzero map between irreducible
+modules is an isomorphism. Thus finite realization fields, embeddings of a completion, and
+their common overlaps do not create different descended members.
+
+There are therefore two different overlap assertions in the proof spine. Book 187's
+elementary-field overlap theorem compares restrictions on the Galois side and is an input to
+effectivity. The present coefficient-overlap theorem compares models of the already effective
+constituent and is a consequence of multiplicity one. Confusing the two would reverse the
+logical order.
+
+## 4. Construction at every coefficient place
+
+### 4.1 The descended member
+
+Fix a finite place $\lambda$ of $E$. Apply Theorem 3.2 to (2.7) with
+
+$$
+k=E_\lambda,
+\qquad
+V^\pm=R_{\mathfrak B,\lambda}^\pm.
+\tag{4.1}
+$$
+
+**Definition 4.1.** The **descended effective member** associated with $\mathfrak B$ at
+$\lambda$ is the unique representation
+
+$$
+r_{\mathfrak B,\lambda}:G_{\mathbf Q}\longrightarrow
+\operatorname{GL}_2(E_\lambda)
+\tag{4.2}
+$$
+
+for which
+
+$$
+R_{\mathfrak B,\lambda}^+
+\simeq
+r_{\mathfrak B,\lambda}\oplus R_{\mathfrak B,\lambda}^-.
+\tag{4.3}
+$$
+
+For every embedding $j:E_\lambda\hookrightarrow\Omega$ into an algebraically closed field,
+
+$$
+r_{\mathfrak B,\lambda}\otimes_j\Omega
+\simeq S_{\mathfrak B,\lambda,j}.
+\tag{4.4}
+$$
+
+Equation (4.3) is stronger than an equality in a Grothendieck group. It is a noncanonical
+direct-sum isomorphism over the completion itself. The representation (4.2), however, is unique
+up to $E_\lambda$-linear isomorphism.
+
+### 4.2 Continuity and absolute irreducibility
+
+**Proposition 4.2.** The representation $r_{\mathfrak B,\lambda}$ is continuous and
+absolutely irreducible.
+
+**Proof.** It is a $G_{\mathbf Q}$-stable direct summand of the continuous representation
+$R_{\mathfrak B,\lambda}^+$. A finite-dimensional linear subspace of a nonarchimedean vector
+space is closed. Restricting the continuous action on $R_{\mathfrak B,\lambda}^+$ to that
+closed stable subspace proves continuity.
+
+After extension to an algebraic closure, (4.4) identifies the member with Book 188's absolutely
+irreducible constituent. Hence the descended member is absolutely irreducible. $\square$
+
+Continuity is not inferred from a trace function on Frobenius elements. It follows from an
+actual invariant subspace of an already continuous representation. This distinction is
+important because a compatible list of traces does not by itself supply an action law.
+
+### 4.3 Independence of the displaying embedding
+
+Let $j_1,j_2:E_\lambda\hookrightarrow\Omega$ be two embeddings into one algebraically closed
+field. Scalar extension of (4.3) through $j_a$ gives the signed expression used by Book 188 at
+that embedding. Its effective constituent is unique. Therefore
+
+$$
+r_{\mathfrak B,\lambda}\otimes_{j_a}\Omega
+\simeq S_{\mathfrak B,\lambda,j_a}
+\tag{4.5}
+$$
+
+for $a=1,2$, compatibly with scalar transport.
+
+Nothing identifies $j_1$ and $j_2$ as maps. Instead, they display the same $E_\lambda$-model.
+This is exactly the place-indexed coherence missing from the embedding-indexed output of Book
+188.
+
+### 4.4 Scalar extension
+
+Let $E'/E$ be finite, let $\lambda'\mid\lambda$, and enlarge the elementary packet ledger by
+scalars. Then
+
+$$
+R_{\mathfrak B,\lambda'}^\pm
+\simeq
+R_{\mathfrak B,\lambda}^\pm
+\otimes_{E_\lambda}E'_{\lambda'}.
 \tag{4.6}
 $$
 
-in the semisimple Grothendieck group over $F$. Equality of simple multiplicities gives the
-actual semisimple isomorphism (4.5). The module $V$ is absolutely irreducible by (4.4), and
-uniqueness follows from the unique simple decomposition. $\square$
-
-### 4.4 Why the Schur obstruction vanishes here
-
-Apply Theorem 4.2 with
+Scalar extension of (4.3) exhibits
+$r_{\mathfrak B,\lambda}\otimes E'_{\lambda'}$ as an effective complement. Uniqueness in
+Theorem 3.2 gives
 
 $$
-F=E_\lambda,
-\qquad V^\pm=R_\lambda^\pm.
+r_{\mathfrak B,\lambda'}
+\simeq
+r_{\mathfrak B,\lambda}\otimes_{E_\lambda}E'_{\lambda'}.
 \tag{4.7}
 $$
 
-Book 188 provides (4.3). Consequently its algebraically closed effective member has an
-$E_\lambda$-model, and the cancellation already occurs over $E_\lambda$.
+Thus a harmless coefficient enlargement refines the set of places and extends scalars. It does
+not create a new arithmetic representation.
 
-This proof is stronger than saying that the trace field is $E_\lambda$. Character values do not
-by themselves kill a quaternionic Schur obstruction. The obstruction vanishes because an
-$E_\lambda$-defined virtual class has geometric multiplicity one. A division algebra of index
-$m>1$ would make that multiplicity divisible by $m$.
+### 4.5 What coherence does and does not mean
 
-It is also stronger than choosing a finite local extension separately at every place. No new
-local extension is needed after the common packet realization field $E$ has been fixed. The
-member descends to the completion $E_\lambda$ itself.
+Representations over $E_\lambda$ and $E_\mu$ for coefficient places of different residue
+characteristics cannot be compared by tensoring one into the other. There is usually no field
+map between the two completions. Coherence means instead that
 
-### 4.5 Descent of isomorphisms
+- one number field $E$ indexes all members;
+- the member at $\lambda$ is defined over $E_\lambda$;
+- the Frobenius and declared bad-local objects exist over $E$ before completion;
+- two displays of the same place give scalar transports of one model; and
+- finite enlargement commutes with construction.
 
-We will repeatedly know that two $E_\lambda$-representations become isomorphic after scalar
-extension. The following observation brings the comparison back down.
+No web of linear maps between different completions is part of the definition. Attempting to
+choose such maps would add meaningless structure rather than strengthen compatibility.
 
-**Lemma 4.3 (faithful descent of an intertwiner).** Let $V$ and $W$ be finite-dimensional
-$F$-representations of a group $G$, and let $F'/F$ be a field extension. If
+## 5. Independence of the Brauer relation
 
-$$
-V\otimes_FF'\simeq W\otimes_FF',
-\tag{4.8}
-$$
-
-then $V\simeq W$ provided both are absolutely irreducible.
-
-**Proof.** Equivariance is a system of homogeneous linear equations in
-$\operatorname{Hom}_F(V,W)$. Their common kernel commutes with flat scalar extension, so
-
-$$
-\operatorname{Hom}_G(V,W)\otimes_FF'
-\simeq\operatorname{Hom}_G(V\otimes F',W\otimes F').
-\tag{4.9}
-$$
-
-The right side is nonzero by (4.8), hence the left factor
-$\operatorname{Hom}_G(V,W)$ is nonzero. A nonzero map between irreducible representations is
-an isomorphism. $\square$
-
-Only finitely many group elements are needed in the kernel calculation: the subspace spanned by
-the equations stabilizes inside the finite-dimensional Hom space. Thus the lemma applies to
-profinite Galois groups without a finite-image assumption.
-
-## 5. Construction at every coefficient place
-
-### 5.1 The effective constituent over a completion
-
-**Definition 5.1.** For a finite place $\lambda$ of $E$, let
-
-$$
-r_\lambda:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(E_\lambda)
-\tag{5.1}
-$$
-
-be the unique representation supplied by Theorem 4.2 from the signed equality (3.6).
-
-Equivalently, $r_\lambda$ is characterized by either of the following two conditions:
-
-$$
-R_\lambda^+\simeq r_\lambda\oplus R_\lambda^-,
-\tag{5.2}
-$$
-
-or, after any embedding $E_\lambda\hookrightarrow\Omega$ into an algebraically closed field,
-
-$$
-r_\lambda\otimes_{E_\lambda}\Omega
-\simeq r_{\mathfrak B,\tau}.
-\tag{5.3}
-$$
-
-The first characterization constructs the member over the completion. The second identifies it
-with the effective member of Book 188.
-
-### 5.2 Continuity and absolute irreducibility
-
-**Proposition 5.2.** The representation $r_\lambda$ is continuous and absolutely irreducible.
-
-**Proof.** Equation (5.2) realizes $r_\lambda$ as a $G_{\mathbf Q}$-stable direct summand of
-the finite-dimensional continuous representation $R_\lambda^+$. A linear subspace over a
-nonarchimedean local field is closed, and restricting a continuous action to a closed stable
-subspace is continuous. Absolute irreducibility follows from (5.3), because scalar extension to
-an algebraic closure is the irreducible member proved effective in Book 188. $\square$
-
-Continuity is therefore a consequence of actual characteristic-zero cancellation. It is not
-inferred from continuity of the Frobenius trace function.
-
-### 5.3 Independence of the displaying embedding
-
-Let $j_1,j_2:E_\lambda\hookrightarrow\Omega$ be two embeddings into a common algebraically
-closed field. Each scalar extension of $r_\lambda$ is the unique effective constituent of the
-corresponding scalar extension of the same signed $E_\lambda$-class. Hence the two displayed
-representations are carried into one another by scalar transport.
-
-More concretely, every matrix coefficient of $R_\lambda^\pm$ is transported by $j_a$, the
-norm-one theorem selects the unique irreducible class in each transported signed expression,
-and uniqueness makes that selection commute with $j_a$. Thus the invariant index is the place
-$\lambda$, not the auxiliary embedding.
-
-### 5.4 Scalar extension
-
-Let $E'/E$ be finite and let $\lambda'$ lie above $\lambda$. Construct the family using the
-scalar-extended elementary packet ledger over $E'$. Then
-
-$$
-R_{\lambda'}^\pm
-\simeq R_\lambda^\pm\otimes_{E_\lambda}E'_{\lambda'}.
-\tag{5.4}
-$$
-
-Scalar extension of (5.2) gives one effective complement. Uniqueness gives
-
-$$
-r_{\lambda'}
-\simeq r_\lambda\otimes_{E_\lambda}E'_{\lambda'}.
-\tag{5.5}
-$$
-
-Thus enlarging the common coefficient field refines the indexing by places and extends scalars;
-it does not change the arithmetic family.
-
-### 5.5 What coherence means
-
-Representations over different completions are not compared by a linear isomorphism. Their
-scalar fields can have different residue characteristics. Coherence means instead:
-
-- one number field $E$ indexes every member by its finite places;
-- every member has matrices over the corresponding completion $E_\lambda$;
-- good Frobenius polynomials lie in $E[X]$ before completion;
-- bad local Weil--Deligne objects lie over $E$ before completion; and
-- coefficient embeddings, field enlargement, and Brauer decomposition commute with the
-  construction.
-
-These are precisely the data of a compatible system. No chosen web of inter-completion vector
-space maps is either available or required.
-
-## 6. Independence of Brauer decomposition
-
-### 6.1 Two relations in one ledger
+### 5.1 Two relations in one ledger
 
 Let
 
@@ -859,103 +791,321 @@ $$
 \mathfrak B=\{(H_i,\theta_i,n_i)\},
 \qquad
 \mathfrak B'=\{(J_j,\eta_j,m_j)\}
+\tag{5.1}
+$$
+
+be two integral Brauer relations for $1_\Gamma$. The field $E$ was chosen using the complete
+finite elementary packet and character ledger, so both relations and every cross-intersection
+
+$$
+H_i\cap xJ_jx^{-1}
+\tag{5.2}
+$$
+
+already have models in the same coefficient field. No relation-specific change of coefficients
+is required.
+
+At a place $\lambda$, form the virtual difference
+
+$$
+\mathcal D_\lambda
+=
+\bigl([R_{\mathfrak B,\lambda}^+]-[R_{\mathfrak B,\lambda}^-]\bigr)
+-
+\bigl([R_{\mathfrak B',\lambda}^+]-[R_{\mathfrak B',\lambda}^-]\bigr).
+\tag{5.3}
+$$
+
+It is an integral virtual class defined over $E_\lambda$.
+
+### 5.2 The norm-zero comparison
+
+Expand the Hom norm of (5.3) using the union of the two induced lists and coefficient vector
+$(n_i,-m_j)$. Frobenius reciprocity and Mackey decomposition express each Gram entry as a sum
+over the double cosets in $H_i\backslash\Gamma/J_j$. Book 187's exact intersection theorem
+identifies the two untwisted restrictions with one elementary packet. Book 188's self-twist
+criterion then makes every summand, including every cross term, independent of the coefficient
+embedding.
+
+At the distinguished embedding, the tensor identity for either Brauer relation gives the same
+class:
+
+$$
+[R_{\mathfrak B,\lambda_0}^+]-[R_{\mathfrak B,\lambda_0}^-]
+=[\rho]
+=[R_{\mathfrak B',\lambda_0}^+]-[R_{\mathfrak B',\lambda_0}^-]
+\tag{5.4}
+$$
+
+after passage to one common $\ell$-adic overfield. Thus the norm of the difference is zero at
+the distinguished embedding. Since the combined Gram matrix is embedding independent,
+
+$$
+\|\mathcal D_\lambda\otimes\overline E_\lambda\|^2=0
+\tag{5.5}
+$$
+
+at every $\lambda$. The Hom norm is positive definite on the integral semisimple
+Grothendieck group, so
+
+$$
+\mathcal D_\lambda\otimes\overline E_\lambda=0.
+\tag{5.6}
+$$
+
+This proves equality of the full semisimple classes. Equality of their common good Frobenius
+polynomials would be weaker and is not substituted for the norm calculation.
+
+### 5.3 Descent of the comparison isomorphism
+
+By Theorem 3.2, the two signed classes in (5.3) are represented over $E_\lambda$ by
+$r_{\mathfrak B,\lambda}$ and $r_{\mathfrak B',\lambda}$. Equation (5.6) makes their scalar
+extensions isomorphic. The Hom-base-change identity (3.9) produces a nonzero
+$E_\lambda$-linear intertwiner. Absolute irreducibility makes it an isomorphism:
+
+$$
+\boxed{
+r_{\mathfrak B,\lambda}\simeq r_{\mathfrak B',\lambda}.}
+\tag{5.7}
+$$
+
+Thus Brauer-relation independence holds over the completion itself, not only after embedding
+the completion into an algebraic closure.
+
+### 5.4 Presentation, conjugate-term, and coordinate independence
+
+Replacing $n_i=n_i^+-n_i^-$ by another positive-minus-negative presentation adds the same
+semisimple representation to both sides of (4.3). It does not change the unique complement.
+
+Replacing a term $(H_i,\theta_i,r_{H_i,\lambda})$ by its field conjugate under $x\in\Gamma$
+also does not change its induction. The explicit map
+
+$$
+g\otimes v\longmapsto gx^{-1}\otimes{}^xv
+\tag{5.8}
+$$
+
+identifies the two induced representations. Changing coset representatives, bases, or splitting
+coordinates conjugates the matrices of an actual summand over $E_\lambda$ and leaves the
+isomorphism class of the complement unchanged.
+
+These statements concern the output, not the noncanonical cancellation map. The isomorphism in
+(4.3) can change when coordinates change; the remaining rank-two isomorphism class cannot.
+
+### 5.5 The intrinsic member
+
+We may now suppress the Brauer relation and write
+
+$$
+r_\lambda:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(E_\lambda).
+\tag{5.9}
+$$
+
+A relation remains a useful device for proving properties because it displays $r_\lambda$ as a
+complement inside induced automorphic realizations. It is no longer part of the definition of
+the member. This is the first point at which the family can be indexed intrinsically by places
+of $E$.
+
+## 6. Restriction recovery and the two conjugation actions
+
+### 6.1 Restricting the signed expression
+
+Effectivity over $\mathbf Q$ should recover the packet members from which the signed expression
+was built. This is stronger than the top-field consistency check alone and is proved directly
+in the representation ring.
+
+Fix an elementary subgroup $H\leq\Gamma$ and work first over an algebraic closure of
+$E_\lambda$. Put $G_H=G_{F_H}$. For one induced term (2.5), Mackey decomposition gives
+
+$$
+\begin{aligned}
+\operatorname{Res}_{G_H}^{G_{\mathbf Q}}A_{i,\lambda}
+\simeq
+\bigoplus_{x\in H\backslash\Gamma/H_i}
+\operatorname{Ind}_{G_{F_{D_x}}}^{G_H}
+\left({}^x(r_{H_i,\lambda}\otimes\theta_{i,\lambda})
+|_{G_{F_{D_x}}}\right),
+\end{aligned}
 \tag{6.1}
 $$
 
-be two integral Brauer relations for $1_\Gamma$. Enlarge $E$ once to realize every packet,
-character, intersection packet, and bad local type in the union of the two finite ledgers. This
-is a harmless scalar extension by (5.5).
-
-For a coefficient place $\lambda$, let $\mathcal R_{\mathfrak B,\lambda}$ and
-$\mathcal R_{\mathfrak B',\lambda}$ be the two virtual classes over $E_\lambda$. Their
-difference is represented by one combined signed list.
-
-### 6.2 Norm-zero comparison
-
-Book 188 applies the Mackey Gram calculation to that combined list. Every cross term is
-computed on a subgroup
+where
 
 $$
-H_i\cap xJ_jx^{-1},
+D_x=H\cap xH_ix^{-1}.
 \tag{6.2}
 $$
 
-which is elementary and satisfies the repaired overlap identity of Chapter 2. The resulting
-Gram matrix is independent of the coefficient embedding.
-
-At the distinguished embedding, the tensor identity identifies both Brauer expressions with
-$[\rho]$. Their difference is zero, so its character norm is zero. The same Gram matrix at any
-other embedding has the same quadratic value. Positive definiteness of the integral Hom norm
-therefore gives
+The group $D_x$ is elementary. Book 187's overlap theorem identifies
 
 $$
-\mathcal R_{\mathfrak B,\lambda}\otimes\overline E_\lambda
-=\mathcal R_{\mathfrak B',\lambda}\otimes\overline E_\lambda
+{}^xr_{H_i,\lambda}|_{G_{F_{D_x}}}^{\mathrm{ss}}
+\simeq r_{D_x,\lambda}
+\simeq r_{H,\lambda}|_{G_{F_{D_x}}}^{\mathrm{ss}}.
 \tag{6.3}
 $$
 
-in the semisimple Grothendieck group.
-
-### 6.3 Independence over the completion
-
-Both sides of (6.3) are effective and absolutely irreducible. Let their descended
-$E_\lambda$-models be $r_{\mathfrak B,\lambda}$ and
-$r_{\mathfrak B',\lambda}$. They become isomorphic over $\overline E_\lambda$, so Lemma 4.3
-gives
+Restoring the finite character and applying the tensor identity for induction turns the
+$x$-summand of (6.1) into
 
 $$
-r_{\mathfrak B,\lambda}
-\simeq r_{\mathfrak B',\lambda}
+r_{H,\lambda}\otimes
+\operatorname{Ind}_{D_x}^{H}
+\left(({}^x\theta_i)|_{D_x}\right).
 \tag{6.4}
 $$
 
-over $E_\lambda$ itself.
+Here the finite-group representation in (6.4) is inflated through $G_H/G_M\simeq H$. The
+same double-coset formula is the restriction of the finite-group induced character
+$\operatorname{Ind}_{H_i}^{\Gamma}\theta_i$ to $H$.
 
-This is the desired independence of Brauer decomposition. It is stronger than equality of good
-Frobenius polynomials and does not use a density theorem. The norm calculation compares the
-entire semisimple classes; multiplicity-one descent then returns the comparison to the chosen
-completion.
+### 6.2 Recovery on every elementary fixed field
 
-### 6.4 Independence of presentation and conjugate terms
+Sum (6.4) with coefficients $n_i$. Restricting the Brauer identity (1.9) from $\Gamma$ to
+$H$ gives
 
-Changing $n_i=n_i^+-n_i^-$ only adds the same summand to $R_\lambda^+$ and
-$R_\lambda^-$. The signed class is unchanged, so its unique descended effective constituent is
-unchanged.
+$$
+\sum_i n_i
+\operatorname{Res}_{H}^{\Gamma}
+\operatorname{Ind}_{H_i}^{\Gamma}\theta_i
+=1_H.
+\tag{6.5}
+$$
 
-Replacing $(H_i,\theta_i,\pi_{H_i})$ by a conjugate triple replaces (3.3) by an isomorphic
-induced representation. Indeed, conjugation transports the fixed field and packet, and the map
-$g\otimes v\mapsto gx^{-1}\otimes{}^xv$ gives the induction isomorphism. Thus field
-conjugation permutes a presentation without changing $r_\lambda$.
+Consequently, in the semisimple Grothendieck group over $\overline E_\lambda$,
 
-Changing coset representatives in finite induction, bases in packet modules, polarizations by
-nonzero scalars, or split-matrix coordinates conjugates actual summands and therefore leaves the
-unique complement unchanged. The rational independence statements of Book 137 pass through the
-construction term by term.
+$$
+\operatorname{Res}_{G_H}^{G_{\mathbf Q}}
+\left(
+[R_{\mathfrak B,\lambda}^+]-[R_{\mathfrak B,\lambda}^-]
+\right)
+=[r_{H,\lambda}].
+\tag{6.6}
+$$
 
-### 6.5 The intrinsic member
+Substitute the actual effective class $[r_\lambda]$ from Chapter 4. Restriction of a
+semisimple characteristic-zero representation to a finite-index subgroup is semisimple: pass
+to the normal core, use its socle, and average projections over the finite quotient. Therefore
+(6.6) is equality of two actual semisimple representations after scalar extension.
 
-Because of (6.4), we now suppress $\mathfrak B$ and write simply $r_\lambda$. The notation
-denotes an isomorphism class over $E_\lambda$. Choosing a relation remains useful for proving
-properties: it presents $r_\lambda$ as a complement inside explicit induced automorphic
-representations. It is not part of the resulting family.
+**Theorem 6.1 (restriction recovery).** For every elementary $H\leq\Gamma$ and every finite
+place $\lambda$ of $E$,
 
-## 7. Common Frobenius polynomials
+$$
+\boxed{
+r_\lambda|_{G_{F_H}}\simeq r_{H,\lambda}.}
+\tag{6.7}
+$$
 
-### 7.1 The algebraic polynomial
+**Proof.** The preceding Mackey calculation gives the isomorphism after extension to
+$\overline E_\lambda$. Both sides of (6.7) are $E_\lambda$-representations. The right side is
+absolutely irreducible, so the left side is as well. Hom base change as in (3.9) descends the
+intertwiner to $E_\lambda$. $\square$
 
-Fix a rational prime $p$ outside the finite good-place exclusions of the elementary packet
-ledger. For a Brauer term indexed by $H_i$, let $w$ run over the places of $F_i$ above $p$ and
-let $f_w=f(w/p)$. If
+This proof is relation independent because its output is the intrinsic member of Chapter 5.
+It uses the exact intersection comparison (6.3), not only restriction to $G_M$.
+
+### 6.3 Recovery over the controlled top
+
+Take $H=1$ in Theorem 6.1. Since $F_1=M$,
+
+$$
+r_\lambda|_{G_M}\simeq r_{1,\lambda},
+\tag{6.8}
+$$
+
+the coefficient member of the selected top packet. This is the expected recovery statement
+over the controlled automorphy field.
+
+Equation (6.8) is not itself a proof of effectivity: it is obtained only after the rank-two
+member has been constructed. Nor would (6.8) alone recover (6.7), because two extensions from
+$G_M$ to $G_{F_H}$ can differ by a character of $H$. The Mackey calculation retains exactly
+that finite-quotient information.
+
+At the distinguished place, (1.6) and (6.7) give
+
+$$
+r_{\lambda_0}|_{G_{F_H}}
+\simeq \rho|_{G_{F_H}}
+\tag{6.9}
+$$
+
+after placing the coefficient fields in one finite $\ell$-adic overfield. The global
+identification with $\rho$ will be proved in Section 8.6.
+
+### 6.4 Field conjugation
+
+Let $x\in\Gamma$. It carries $F_H$ to $F_{xHx^{-1}}$. Conjugation of the packet array gives
+
+$$
+{}^xr_{H,\lambda}\simeq r_{xHx^{-1},\lambda}.
+\tag{6.10}
+$$
+
+Theorem 6.1 makes this compatibility intrinsic to the assembled member. Choose a lift
+$\widetilde x\in G_{\mathbf Q}$. The matrix $r_\lambda(\widetilde x)$ intertwines the
+conjugate of $r_\lambda|_{G_{F_H}}$ with its restriction to
+$G_{F_{xHx^{-1}}}$. Combined with (6.7), this gives (6.10). Changing the lift multiplies by
+an element of $G_M$ and does not change the isomorphism class.
+
+Field conjugation moves number fields and their places. It does not apply an automorphism to
+Hecke eigenvalues. This action was already built into the Mackey double cosets and should not
+be confused with coefficient conjugation.
+
+### 6.5 Coefficient conjugation
+
+Because $E/\mathbf Q$ is Galois, an automorphism $\sigma\in\operatorname{Gal}(E/\mathbf Q)$
+carries a place $\lambda$ to $\sigma\lambda$ and induces a topological field isomorphism
+
+$$
+\sigma:E_\lambda\xrightarrow{\sim}E_{\sigma\lambda}.
+\tag{6.11}
+$$
+
+Apply $\sigma$ to every packet coefficient and finite-character value in a Brauer
+presentation. This produces the coefficient-conjugate packet ledger and another integral
+Brauer relation. Scalar transport of (4.3) is its descended cancellation at
+$\sigma\lambda$. Relation-independence then gives
+
+$$
+{}^\sigma r_\lambda
+\simeq r^{\sigma}_{\sigma\lambda},
+\tag{6.12}
+$$
+
+where the superscript on the right means the member of the coefficient-conjugate system. At a
+good prime its polynomial is
+
+$$
+P_p^\sigma(X)=X^2-\sigma(a_p)X+p.
+\tag{6.13}
+$$
+
+Equation (6.12) is covariance, not invariance. Unless all $a_p$ lie in the fixed field of
+$\sigma$, one must not identify $r^{\sigma}_{\sigma\lambda}$ with the member of the original
+system carrying the un-conjugated polynomial. Field conjugation and coefficient conjugation
+commute because they act on different coordinates of the finite packet ledger.
+
+## 7. Common Frobenius polynomials, determinant, and purity
+
+### 7.1 The algebraic quadratic polynomial
+
+Let $S_0$ be the common finite exceptional set in the Book-187 packet array. It contains $2$,
+$\ell$, every rational prime ramified in $M$, and the finitely many packet and character
+exceptions. For $p\notin S_0$, Book 187 computes the local cyclic blocks of each induced term.
+If $w\mid p$ is a place of $F_{H_i}$, $f_w=f(w/p)$, and
 
 $$
 X^2-a_{i,w}X+Nw
 \tag{7.1}
 $$
 
-is the arithmetic-Frobenius polynomial of $\pi_{H_i}$ at $w$, twisting by $\theta_i$ and
-inducing locally gives the characteristic series
+is the packet polynomial, then the reciprocal characteristic series for the $i$th induced
+term is
 
 $$
+D_{i,p}(T)
+=
 \prod_{w\mid p}
 \left(
 1-a_{i,w}\theta_i(\operatorname{Frob}_w)T^{f_w}
@@ -964,57 +1114,51 @@ $$
 \tag{7.2}
 $$
 
-The power $T^{f_w}$ is forced by the Frobenius cycle on the embeddings of $F_i$ in $M$. If
-$\alpha$ is an eigenvalue of $\operatorname{Frob}_w$, the corresponding cyclic block of
-$\operatorname{Frob}_p$ has determinant $1-\alpha T^{f_w}$. This proves (7.2) without a
-choice of Satake roots.
+The exponent is the residue degree, not the ramification index or the global degree. It comes
+from the cycle by which arithmetic Frobenius permutes the local induction blocks.
 
-Taking the signed product over the Brauer relation gives an element
+The signed product
 
 $$
-D_{p,\mathfrak B}(T)\in E(T)^\times.
+D_{\mathfrak B,p}(T)=\prod_iD_{i,p}(T)^{n_i}
 \tag{7.3}
 $$
 
-At the distinguished place, the tensor identity identifies the virtual class with $\rho$, so
+is initially a rational function in $E(T)$. At the distinguished embedding, the tensor
+identity turns it into the characteristic series of $\rho$:
 
 $$
-D_{p,\mathfrak B}(T)
-=\det(1-\rho(\operatorname{Frob}_p)T)
-=1-a_pT+pT^2
+D_{\mathfrak B,p}(T)=1-a_pT+pT^2
 \tag{7.4}
 $$
 
-inside a finite $\ell$-adic overfield. The embedding of $E(T)$ in that overfield is injective.
-Thus (7.4) is already an equality in $E(T)$, and its right side lies in $E[T]$. Define
+after applying the injective map into a finite $\ell$-adic overfield. Injectivity implies that
+(7.4) already holds in $E(T)$, so the rational function is a polynomial in $E[T]$. Define
 
 $$
-P_p(X)=X^2-a_pX+p.
+P_p(X)=X^2-a_pX+p\in E[X].
 \tag{7.5}
 $$
 
-By Chapter 6, using another Brauer relation gives the same representation at the distinguished
-place and hence the same polynomial. Thus $P_p$ is intrinsic to the assembled family.
+The same distinguished calculation for another Brauer relation gives the same $P_p$.
+Alternatively, this follows from the relation-independent member of Chapter 5. Polynomiality
+precedes coefficient descent, but only after coefficient descent does $P_p$ become the
+characteristic polynomial of a place-indexed member.
 
-### 7.2 Unramifiedness of the effective constituent
+### 7.2 Unramifiedness of the descended constituent
 
-**Lemma 7.1.** Let $I$ be a subgroup of $G$, let $V=W\oplus U$ be a direct sum of
-$G$-representations, and suppose $I$ acts trivially on $V$. Then $I$ acts trivially on both
-$W$ and $U$.
+Fix $p\notin S_0$ with $p\ne q_\lambda$. Every elementary packet and finite character in
+$R_{\mathfrak B,\lambda}^+$ is unramified at $p$, and the extensions used in its local
+induction are unramified there. Thus inertia at $p$ acts trivially on
+$R_{\mathfrak B,\lambda}^+$.
 
-**Proof.** The action on each stable summand is the restriction of the identity action on
-$V$. $\square$
-
-Let $q_\lambda$ be the residue characteristic of $\lambda$. At a rational prime $p$ outside
-the common exceptional set and with $p\ne q_\lambda$, every elementary packet, quotient
-character, and extension entering $R_\lambda^\pm$ is unramified. Hence $R_\lambda^+$ is
-unramified. Equation (5.2) and Lemma 7.1 imply that $r_\lambda$ is unramified.
-
-Taking determinants of $1-\operatorname{Frob}_pT$ in (5.2) gives
+Equation (4.3) realizes $r_\lambda$ as a stable direct summand of this representation. The
+restriction of the identity action to a stable summand is the identity, so $r_\lambda$ is
+unramified at $p$. Taking characteristic series in (4.3) and canceling the negative factor
+gives
 
 $$
 \det(1-r_\lambda(\operatorname{Frob}_p)T)
-=D_{p,\mathfrak B}(T)
 =1-a_pT+pT^2.
 \tag{7.6}
 $$
@@ -1026,854 +1170,741 @@ $$
 \tag{7.7}
 $$
 
-This is now the characteristic polynomial of an actual two-dimensional representation, not a
-rational determinant of a virtual class.
+This proves unramifiedness from an actual direct summand, not from formal cancellation of
+inertial characters.
 
 ### 7.3 Weak compatibility
 
-**Theorem 7.2 (weak compatibility before shrinking the bad set).** There is a finite set
-$S_0$ of rational primes, independent of $\lambda$, such that the collection
-$\{r_\lambda\}_\lambda$ is an $E$-rational weakly compatible system of rank two with common
-polynomials $P_p$ for $p\notin S_0$.
-
-**Proof.** Choose $S_0$ to contain every rational prime ramified in $M$, every prime below a
-ramified elementary packet or Brauer character, the primes in the finite local-type ledger,
-and $2,\ell$. Outside $S_0\cup\{q_\lambda\}$ all summands in (3.5) are unramified. Section 7.2
-gives unramifiedness and (7.7). The set and polynomials do not depend on $\lambda$. $\square$
-
-The theorem already constructs a compatible system. The next section uses the original member
-and strict local compatibility to remove auxiliary primes introduced only by the Galois top and
-the Brauer presentation.
-
-### 7.4 Removing auxiliary bad primes
-
-Let $p\in S_0\setminus\{2,\ell\}$. Since $p\ne\ell$, the local Weil--Deligne comparison at
-the distinguished place is available. The original representation $\rho$ is unramified at
-$p$. Chapter 9 will construct a common local object $D_p$ whose realization at $\lambda_0$ is
-$\operatorname{WD}_p(\rho)$. It follows that $D_p$ is unramified. Define $P_p$ at these
-formerly auxiliary primes to be the characteristic polynomial of Frobenius on $D_p$. Its
-coefficients lie in $E$, and its realization at $\lambda_0$ is
-$\det(X-\rho(\operatorname{Frob}_p))=X^2-a_pX+p$. Every $r_\lambda$ with
-$q_\lambda\ne p$ is therefore unramified at $p$ and has this same Frobenius polynomial.
-
-This argument cancels auxiliary ramification at the level of the actual effective
-representation. It does not claim that inertia cancels term by term inside the positive and
-negative Brauer presentations. Once Chapter 9 is established, the weakly compatible exceptional
-set can be reduced to
+**Theorem 7.1 (weak compatibility).** The collection
 
 $$
-S=\{2,\ell\}.
+\mathcal R_E=\{r_\lambda\}_{\lambda\in\operatorname{Pl}_f(E)}
 \tag{7.8}
 $$
 
-At the varying coefficient prime $q_\lambda$, weak compatibility deliberately makes no
-unramifiedness assertion, even if that prime lies outside $S$.
+is an $E$-rational weakly compatible system of rank two over $\mathbf Q$, with common
+exceptional set $S_0$ and common polynomials (7.5).
 
-### 7.5 Purity
+**Proof.** Proposition 4.2 gives continuous semisimple rank-two members over the correct
+completions. Sections 7.1--7.2 prove that, whenever $p\notin S_0$ and
+$p\ne q_\lambda$, the member is unramified and has the scalar image of $P_p$. These are
+exactly the defining conditions. $\square$
 
-**Theorem 7.3 (weight-one purity).** For every $p\notin\{2,\ell\}$, every root $\alpha_p$ of
-$P_p$ is a $p$-Weil number of weight one:
+At the coefficient prime $p=q_\lambda$, no unramifiedness statement is implicit. The
+coefficient-prime local representation belongs to $p$-adic Hodge theory and cannot be read from
+(7.7).
 
-$$
-|\iota(\alpha_p)|=p^{1/2}
-\tag{7.9}
-$$
+### 7.4 The actual determinant and duality
 
-for every embedding $\iota:\overline{\mathbf Q}\hookrightarrow\mathbf C$.
-
-**Proof.** Choose a place $w$ of $M$ above $p$ and let $f=f(w/p)$. Restriction of the
-unramified representation $r_{\lambda_0}\simeq\rho$ from $G_{\mathbf Q_p}$ to $G_{M_w}$
-raises arithmetic-Frobenius eigenvalues to their $f$th powers. Thus the roots of the top packet
-polynomial at $w$ are
-
-$$
-\alpha_p^f,\qquad\beta_p^f.
-\tag{7.10}
-$$
-
-The parallel-weight-two packet $\pi_M$ is pure of weight one by the compatible-system and
-purity theorem of Book 137. Therefore every complex embedding has
-
-$$
-|\iota(\alpha_p^f)|=(p^f)^{1/2}.
-\tag{7.11}
-$$
-
-Taking the positive real $f$th root gives (7.9). Applying the same argument to every
-coefficient-conjugate top packet proves the assertion for every conjugate of every root.
-$\square$
-
-The proof uses the actual restriction of the original member to $M$. It does not infer purity
-from the product $\alpha_p\beta_p=p$, which by itself would allow unequal absolute values.
-
-### 7.6 Frobenius powers
-
-The common polynomial determines every unramified residue-degree transform. If
-$\alpha_p,\beta_p$ are its roots, put
-
-$$
-A_{p,f}=\alpha_p^f+\beta_p^f.
-\tag{7.12}
-$$
-
-Then
-
-$$
-A_{p,0}=2,
-\qquad A_{p,1}=a_p,
-\qquad A_{p,f}=a_pA_{p,f-1}-pA_{p,f-2}.
-\tag{7.13}
-$$
-
-The recurrence follows by applying
-$x^2=a_px-p$ to both roots. It proves $A_{p,f}\in E$ without choosing the roots. At a place of
-residue degree $f$, the restricted polynomial is
-
-$$
-X^2-A_{p,f}X+p^f.
-\tag{7.14}
-$$
-
-Formula (7.14) is the common base-change record. Reusing $a_p$ at a degree-$f$ place would be a
-Frobenius-normalization error.
-
-## 8. Determinant, duality, and the original member
-
-### 8.1 The actual determinant
-
-Book 187 computes the determinant of the signed class using the determinant of finite
-induction. For a rank-two representation $u$ of an open subgroup $H\leq G$,
-
-$$
-\det\operatorname{Ind}_H^Gu
-=\operatorname{sgn}_{G/H}^{,2}\operatorname{Ver}_H^G(\det u)
-=\operatorname{Ver}_H^G(\det u).
-\tag{8.1}
-$$
-
-Twisting by a linear character $\theta$ multiplies $\det u$ by $\theta^2$. The determinant of
-the one-dimensional Brauer relation cancels the transferred squares, while evaluation of that
-relation at the identity gives
+Book 187 computes the determinant line of the signed class. For a rank-two representation $u$
+of an open subgroup, the determinant of finite induction contains a coset-permutation sign
+squared, hence trivial, and the transfer of $\det u$. Twisting $u$ by $\theta_i$ multiplies
+its determinant by $\theta_i^2$. Applying the determinant to the one-dimensional Brauer
+relation cancels the transferred character squares, while evaluation of (1.9) at the identity
+gives
 
 $$
 \sum_i n_i[\Gamma:H_i]=1.
+\tag{7.9}
+$$
+
+The resulting virtual determinant is $\chi_{q_\lambda}$. Taking determinants in the actual
+isomorphism (4.3) yields
+
+$$
+\boxed{\det r_\lambda=\chi_{q_\lambda}.}
+\tag{7.10}
+$$
+
+No determinant-normalizing twist is chosen after effectivity. Such a twist would alter the
+Frobenius and SP records.
+
+Two-dimensional exterior algebra gives a canonical isomorphism
+
+$$
+V^\vee\simeq V\otimes(\det V)^{-1}.
+\tag{7.11}
+$$
+
+Therefore
+
+$$
+r_\lambda^\vee\simeq r_\lambda\otimes\chi_{q_\lambda}^{-1}.
+\tag{7.12}
+$$
+
+This is a rational duality. It does not choose a self-dual integral lattice.
+
+### 7.5 Weight-one purity
+
+**Theorem 7.2 (purity).** For every $p\notin S_0$, every root $\alpha$ of $P_p$ and every
+complex embedding $\iota:\overline{\mathbf Q}\hookrightarrow\mathbf C$ satisfy
+
+$$
+|\iota(\alpha)|=p^{1/2}.
+\tag{7.13}
+$$
+
+**Proof.** Let $\alpha,\beta$ be the roots of $P_p$ and choose a place $w$ of $M$ above $p$,
+with residue degree $f=f(w/p)$. Restriction recovery (6.8) identifies the restriction of the
+assembled member with the selected top packet. At the distinguished embedding, restriction of
+arithmetic Frobenius raises the two roots to the $f$th powers. Thus the top packet polynomial at
+$w$ has roots
+
+$$
+\alpha^f,\qquad\beta^f.
+\tag{7.14}
+$$
+
+The parallel-weight-two top packet is pure of weight one, so for every complex embedding
+
+$$
+|\iota(\alpha^f)|=(p^f)^{1/2}.
+\tag{7.15}
+$$
+
+Taking the positive real $f$th root gives (7.13). Coefficient conjugation of the top packet
+proves the statement for every conjugate root, not merely for the distinguished complex
+embedding. $\square$
+
+The determinant equality $\alpha\beta=p$ alone would not prove purity: two algebraic numbers
+can have product $p$ and unequal complex absolute values. The top packet's weight theorem is
+the decisive input.
+
+### 7.6 Frobenius powers after restriction
+
+The polynomial $P_p$ determines its restriction to every unramified residue-degree extension
+without choosing its roots. Define
+
+$$
+A_0=2,
+\qquad A_1=a_p,
+\qquad A_f=a_pA_{f-1}-pA_{f-2}\quad(f\geq2).
+\tag{7.16}
+$$
+
+If $\alpha,\beta$ are the roots, then $A_f=\alpha^f+\beta^f$. Hence the restricted
+polynomial at residue degree $f$ is
+
+$$
+P_p^{[f]}(X)=X^2-A_fX+p^f.
+\tag{7.17}
+$$
+
+All coefficients lie in $E$, and
+
+$$
+(P_p^{[f]})^{[g]}=P_p^{[fg]}.
+\tag{7.18}
+$$
+
+Equation (7.17) agrees with the packet polynomial under restriction recovery. Reusing $a_p$
+unchanged at a degree-$f$ place would be a Frobenius-normalization error.
+
+## 8. Local effectivity and the SP record at two
+
+### 8.1 The algebraic local Mackey class
+
+Good Frobenius polynomials do not determine monodromy. To obtain a common SP record, we return
+to the full algebraic local objects in the packet array.
+
+Fix a rational prime $v$. At every place $w\mid v$ of an elementary fixed field
+$F_{H_i}$, let $D_{i,w}$ be the algebraic Frobenius-semisimple Weil--Deligne pair supplied in
+the proved local-compatibility range of the packet attachment theorem. After the one common
+finite coefficient enlargement already allowed in Chapter 2, the finitely many bad local
+objects have models over $E$.
+
+Finite twisting and Weil-group induction are algebraic operations on Weil--Deligne pairs. Put
+
+$$
+\mathscr D_{v,E}^\pm
+=
+\bigoplus_i\bigoplus_{w\mid v}
+\left(
+\operatorname{Ind}_{W_{(F_{H_i})_w}}^{W_{\mathbf Q_v}}
+(D_{i,w}\otimes\theta_{i,w})
+\right)^{\oplus n_i^\pm}.
+\tag{8.1}
+$$
+
+For a coefficient place $\lambda$ with $q_\lambda\ne v$, local--global compatibility and
+local Mackey decomposition identify
+
+$$
+\mathscr D_{v,E}^\pm\otimes_E\overline E_\lambda
+\simeq
+\operatorname{WD}_v(R_{\mathfrak B,\lambda}^\pm)^{\mathrm{F\text{-}ss}}.
 \tag{8.2}
 $$
 
-Consequently the virtual determinant line is $\chi_\lambda$. Substituting the actual equality
-(5.2) turns the line identity into
+Applying the Weil--Deligne functor to (4.3) gives an actual direct-sum cancellation
 
 $$
-\boxed{\det r_\lambda=\chi_\lambda.}
+\mathscr D_{v,E}^+\otimes_E\overline E_\lambda
+\simeq
+\operatorname{WD}_v(r_\lambda)^{\mathrm{F\text{-}ss}}
+\oplus
+\mathscr D_{v,E}^-\otimes_E\overline E_\lambda.
 \tag{8.3}
 $$
 
-No determinant-normalizing twist is chosen afterward. Such a twist would change the common
-Frobenius and local records. Equation (8.3) is inherited from the complete Brauer transfer
-calculation.
+Both finite inertia and $N$ are present in (8.3). It is not an equality of conductor integers
+or local Euler factors.
 
-### 8.2 Duality
+### 8.2 An effective local complement
 
-For every two-dimensional representation $V$, the map
-
-$$
-V\longrightarrow V^\vee\otimes\det V,
-\qquad
-x\longmapsto(y\mapsto x\wedge y)
-\tag{8.4}
-$$
-
-is an isomorphism. Applying (8.3) gives
-
-$$
-r_\lambda^\vee
-\simeq r_\lambda\otimes\chi_\lambda^{-1}.
-\tag{8.5}
-$$
-
-This is a rational duality statement. At $\lambda_0$, the selected alternating pairing on the
-original lattice realizes it integrally. At a new coefficient place, (8.5) does not choose a
-self-dual lattice or control the index of a lattice in its dual.
-
-At a good $p$, (8.3) gives
-
-$$
-\alpha_p\beta_p=p,
-\tag{8.6}
-$$
-
-which agrees with (7.5) and arithmetic Frobenius. For geometric Frobenius the product is
-$p^{-1}$.
-
-### 8.3 Identification at the distinguished place
-
-The number field $E$ and its place $\lambda_0$ were chosen so that all distinguished packet
-realizations and $\rho$ embed into one finite extension $C/\mathbf Q_\ell$. At that embedding,
-the tensor identity for the Brauer relation gives
-
-$$
-[R_{\lambda_0}^+\otimes C]-[R_{\lambda_0}^-\otimes C]
-=[\rho\otimes_{L_0}C].
-\tag{8.7}
-$$
-
-The right side is absolutely irreducible. The unique effective complement therefore satisfies
-
-$$
-r_{\lambda_0}\otimes_{E_{\lambda_0}}C
-\simeq\rho\otimes_{L_0}C.
-\tag{8.8}
-$$
-
-This identifies the original member itself, not merely its semisimplification at good
-Frobenius elements. Both sides are already semisimple and absolutely irreducible.
-
-### 8.4 The original local records
-
-Equation (8.8) retains every rational local property of $\rho$. More importantly, the selected
-lattice of $\rho$ is not discarded and reconstructed from (8.8). It remains the named integral
-model of the $\lambda_0$ member. Thus:
-
-- every quotient of that lattice has the selected coefficient-linear finite locally free model
-  at $\ell$;
-- at $2$ its wild inertia is trivial, its monodromy is zero, and a tame generator satisfies
-  $T^2+T+1=0$;
-- it is unramified away from $2$ and $\ell$; and
-- its determinant pairing is the original cyclotomic pairing.
-
-The common compatible family contains this member exactly. It does not replace the original
-lattice by a lattice cut from the large induced representations.
-
-## 9. Strict local compatibility
-
-### 9.1 The algebraic local Mackey object
-
-Fix a finite rational prime $p$. For every elementary packet $\pi_{H_i}$ and every place
-$w\mid p$ of $F_i$, Book 137 supplies, away from coefficient characteristic, an algebraic
-Frobenius-semisimple Weil--Deligne object
-
-$$
-D_{i,w}
-\tag{9.1}
-$$
-
-over a finite extension of its Hecke field. The common field $E$ was chosen to contain models
-of the finitely many bad local objects. At good places $D_{i,w}$ is unramified and is determined
-by its Hecke polynomial.
-
-Finite-order twisting, finite local induction, and direct sum are algebraic operations on
-Weil--Deligne representations. Define the local positive and negative objects
-
-$$
-\mathscr D_{p,E}^\pm
-=\bigoplus_i\bigoplus_{w\mid p}
-\left(
-\operatorname{Ind}_{W_{(F_i)_w}}^{W_{\mathbf Q_p}}
-(D_{i,w}\otimes\theta_{i,w})
-\right)^{\oplus n_i^\pm}.
-\tag{9.2}
-$$
-
-Their signed difference is the **algebraic local Mackey class**. It records the finite inertia
-action, the Frobenius return maps, and the monodromy operator. It is stronger than a conductor
-or an inertial type.
-
-For a place $\lambda$ with $q_\lambda\ne p$, local--global compatibility of every elementary
-packet and local Mackey decomposition identify
-
-$$
-\mathscr D_{p,E}^\pm\otimes_EE_\lambda
-\simeq\operatorname{WD}_p(R_\lambda^\pm)^{\mathrm{F\!-\!ss}}.
-\tag{9.3}
-$$
-
-Applying $\operatorname{WD}$ to (5.2) gives
-
-$$
-\mathscr D_{p,E}^+\otimes_EE_\lambda
-\simeq
-\operatorname{WD}_p(r_\lambda)^{\mathrm{F\!-\!ss}}
-\oplus
-\mathscr D_{p,E}^-\otimes_EE_\lambda.
-\tag{9.4}
-$$
-
-### 9.2 Krull--Schmidt cancellation
-
-We need to know that the remaining local object in (9.4) is determined before $\lambda$ is
-chosen. Weil--Deligne representations over a characteristic-zero field form a finite-length
-Krull--Schmidt category for direct sums: every object is a finite direct sum of indecomposables,
-and the multiset of indecomposable summands is unique.
-
-For completeness, let $D$ be one Weil--Deligne representation. The algebra generated by its
-finite inertia image, one Frobenius operator and its inverse, and $N$ inside
-$\operatorname{End}(D)$ is finite dimensional. Direct-sum decompositions of $D$ are exactly
-module decompositions for this finite-dimensional algebra. The endomorphism ring of an
-indecomposable finite-length module is local, and the usual exchange argument gives uniqueness
-of indecomposable multiplicities. Thus
+Weil--Deligne representations form a Krull--Schmidt category for direct sums. For the finitely
+many objects under consideration, take the finite-dimensional algebra generated by finite
+inertia, Frobenius and its inverse, and $N$. Direct-sum decompositions are module
+decompositions for this algebra, and indecomposable multiplicities are unique. Hence
 
 $$
 U\oplus C\simeq V\oplus C
 \quad\Longrightarrow\quad U\simeq V.
-\tag{9.5}
+\tag{8.4}
 $$
 
-The same statement applies to Frobenius-semisimplified objects; semisimplifying Frobenius does
-not remove finite inertia or $N$.
+Work first over $\overline E$. Equation (8.3) shows that the difference between the
+indecomposable multiplicities of $\mathscr D_{v,E}^+$ and $\mathscr D_{v,E}^-$ is
+nonnegative and has total rank two. Let $D_{v,\overline E}$ be the resulting rank-two
+complement. This object is independent of the coefficient place used in (8.3), because its
+indecomposable multiplicities were calculated from the one algebraic pair
+$\mathscr D_{v,E}^\pm$.
 
-### 9.3 A common Weil--Deligne pair
-
-**Theorem 9.1 (strict compatibility).** After one finite enlargement of $E$ that splits the
-finitely many bad local complements, for every finite prime $p$ there is a rank-two
-Frobenius-semisimple Weil--Deligne representation $D_p$ over $E$ such that
-
-$$
-\mathscr D_{p,E}^+\simeq D_p\oplus\mathscr D_{p,E}^-
-\tag{9.6}
-$$
-
-and, for every $\lambda$ with $q_\lambda\ne p$,
+Outside the finite packet exceptional set, the complement is unramified and is defined over
+$E$ by $P_v$. At the finitely many remaining places, the matrices and decomposition idempotents
+of $D_{v,\overline E}$ are algebraic. Enlarge $E$ once by their finitely many coefficients.
+Then there is an algebraic pair $D_v$ over $E$ such that
 
 $$
-\operatorname{WD}_p(r_\lambda)^{\mathrm{F\!-\!ss}}
-\simeq D_p\otimes_EE_\lambda.
-\tag{9.7}
+\mathscr D_{v,E}^+\simeq D_v\oplus\mathscr D_{v,E}^-
+\tag{8.5}
 $$
 
-**Proof.** First work over an algebraic closure $\overline E$. Choose one coefficient place
-$\lambda$ away from $p$ and an embedding $\overline E\hookrightarrow\overline E_\lambda$.
-Equation (9.4) proves that every indecomposable multiplicity in
-$[\mathscr D_{p,E}^+]-[\mathscr D_{p,E}^-]$ is nonnegative after scalar extension, because the
-difference is represented by the actual local object of $r_\lambda$. Faithful scalar extension
-and Krull--Schmidt uniqueness bring those multiplicities back to $\overline E$. Their total
-rank is two. Let $D_{p,\overline E}$ be the resulting complement.
-
-At all but finitely many $p$, the original local summands are unramified and the complement is
-the unramified pair determined by $P_p$; it has an $E$-model. At the finitely many remaining
-places, every matrix and decomposition idempotent is algebraic. Adjoin their finitely many
-coefficients to $E$. Then all $D_{p,\overline E}$ descend simultaneously to $E$ and (9.6)
-holds. Scalar extension of (9.6), comparison with (9.4), and cancellation (9.5) prove (9.7).
-$\square$
-
-Changing the Brauer relation does not change $D_p$. The global representations obtained from
-two relations are isomorphic over every completion by (6.4), so their local Weil--Deligne
-objects agree. A faithful coefficient embedding and Krull--Schmidt uniqueness then identify the
-two algebraic complements after the common harmless enlargement.
-
-### 9.4 The dyadic type
-
-The prime $2$ splits completely in $M$. Therefore every completion of every elementary fixed
-field above $2$ is $\mathbf Q_2$, and every quotient character $\theta_i$ is locally trivial.
-All elementary packet local objects are copies of the same rank-two pair
+and, throughout the proved packet local-compatibility range,
 
 $$
-D_2^{\mathrm{top}},
+\operatorname{WD}_v(r_\lambda)^{\mathrm{F\text{-}ss}}
+\simeq D_v\otimes_EE_\lambda
+\qquad(q_\lambda\ne v).
+\tag{8.6}
+$$
+
+The finite enlargement does not alter previously constructed members: Section 4.4 identifies
+the reconstruction over the enlarged field with scalar extension. A second Brauer relation
+gives the same $D_v$, because the corresponding global members are isomorphic and
+Krull--Schmidt cancellation identifies their algebraic local complements after a common
+faithful scalar extension.
+
+### 8.3 The proved strong-compatibility range
+
+Equation (8.6) is asserted exactly where the elementary packet attachment theorem supplies the
+local pairs $D_{i,w}$. In the controlled packet array this includes the designated SP place
+$2$ and the other finite places in the established local--global comparison range. No omitted
+bad-place theorem is manufactured from good Frobenius traces.
+
+At a good $v\notin S_0$, the pair $D_v$ is unramified, has $N=0$, and its Frobenius
+polynomial is $P_v$. If $v$ lies in the finite auxiliary set and the distinguished member is
+available there away from its coefficient characteristic, (8.6) can compare $D_v$ with the
+actual local pair of $\rho$. In particular, whenever that local representation is unramified,
+$D_v$ is unramified and the auxiliary prime can be removed from the weak exceptional set.
+
+This shrinking is made prime by prime and only with the stated local comparison. It is not a
+formal consequence of a signed conductor sum. The permanent weak exceptional set is therefore
+the set left after these certified removals; denoting it by $S$ avoids claiming a smaller set
+than the local packet input proves.
+
+### 8.4 The common special pair
+
+The prime $2$ splits completely in $M$. Hence it splits completely in every $F_H$, every
+completion above it is $\mathbf Q_2$, and every character inflated from an elementary quotient
+is locally trivial. Book 187 supplies one algebraic SP pair
+
+$$
+D_2=(r_2,N_2)
+\tag{8.7}
+$$
+
+over the common coefficient field. Its finite Weil inertia is trivial, and
+
+$$
+N_2^2=0,
 \qquad
-N=0,
+N_2\ne0,
 \qquad
-I_2^{\mathrm{wild}}=1,
+\operatorname{rank}N_2=1.
+\tag{8.8}
+$$
+
+Arithmetic Frobenius $F_2$ satisfies
+
+$$
+r_2(F_2)N_2r_2(F_2)^{-1}=2N_2.
+\tag{8.9}
+$$
+
+Every local packet term in (8.1) is a copy of (8.7). If
+
+$$
+a=\sum_i n_i^+[\Gamma:H_i],
 \qquad
-T^2+T+1=0.
-\tag{9.8}
+b=\sum_i n_i^-[\Gamma:H_i],
+\tag{8.10}
 $$
 
-Local Mackey gives
+then local Mackey decomposition gives $a$ copies on the positive side and $b$ copies on the
+negative side. The rank identity (7.9) says $a-b=1$. Thus (8.5) at $2$ has complement exactly
+one copy of $D_2$. For every $\lambda\nmid2$,
 
 $$
-[\mathscr D_{2,E}^+]-[\mathscr D_{2,E}^-]
-=\left(\sum_i n_i[\Gamma:H_i]\right)[D_2^{\mathrm{top}}]
-=[D_2^{\mathrm{top}}].
-\tag{9.9}
+\boxed{
+\operatorname{WD}_2(r_\lambda)^{\mathrm{F\text{-}ss}}
+\simeq D_2\otimes_EE_\lambda.}
+\tag{8.11}
 $$
 
-Thus $D_2\simeq D_2^{\mathrm{top}}$. For every coefficient place of residue characteristic
-different from two, the member $r_\lambda$ has exactly the primitive tame order-three
-Weil--Deligne type. This is equality of the full pair, not inference from conductor two or from
-the characteristic polynomial of tame inertia alone.
+This is the SP branch. It has nonzero monodromy and trivial finite inertia. No nontrivial
+finite tame type occurs in (8.7)--(8.11).
 
-At a two-adic coefficient place, (9.7) is outside the prime-to-coefficient Weil--Deligne range.
-The global representation still exists and is continuous, but no two-adic Hodge-theoretic or
-integral dyadic assertion is made here.
+### 8.5 Monodromy line, sign, and conductor
 
-### 9.5 The prime of the original lift
+Since $N_2$ is nonzero nilpotent of rank one on a two-dimensional space,
 
-At $p=\ell$, Theorem 9.1 gives a common $D_\ell$ for every coefficient place whose residue
-characteristic is not $\ell$. It is computed from the elementary automorphic local records and
-is independent of the Brauer relation.
+$$
+\mathscr L_2=\ker N_2=\operatorname{im}N_2
+\tag{8.12}
+$$
 
-The member $r_{\lambda_0}$ has coefficient characteristic $\ell$, so (9.7) does not compare
-its local representation with $D_\ell$. Its correct local datum is instead the selected
-finite-flat lattice of $\rho$. Relating that lattice to $D_\ell$ by crystalline or semistable
-comparison would be an additional coefficient-prime theorem. It is neither needed for strict
-compatibility in the usual varying-prime sense nor proved here.
+is an $E$-line. Equation (8.9) makes it stable under the Weil group. The controlled SP datum
+includes one sign $\varepsilon_2\in\{1,-1\}$ such that arithmetic Frobenius acts on the
+quotient by $\varepsilon_2$ and on $\mathscr L_2$ by $2\varepsilon_2$:
 
-This separation prevents the rational local family from silently acquiring the integral local
-theory reserved for the next stage of the critical spine.
+$$
+\left(
+F_2\mid D_2/\mathscr L_2,
+F_2\mid\mathscr L_2
+\right)
+=
+(\varepsilon_2,2\varepsilon_2).
+\tag{8.13}
+$$
 
-### 9.6 Conductors and local factors
+The product of these eigenvalues is $2$, in agreement with the cyclotomic determinant. The
+order in (8.13) matters: the line is the cyclotomic side of the special filtration.
 
-For $p\ne q_\lambda$, strict compatibility makes the following invariants independent of
-$\lambda$:
+Finite Weil inertia is trivial, but the associated adic representation has nontrivial
+unipotent tame inertia because $N_2\ne0$. Its inertia-fixed space is precisely
+$\mathscr L_2$. The Swan conductor is zero, and the Weil--Deligne conductor formula gives
 
 $$
 \begin{aligned}
-P_p^{\mathrm{loc}}(T)
-&=\det(1-T\operatorname{Frob}_p\mid(\ker N_p)^{I_p}),\cr
-a_p^{\mathrm{Art}}
-&=\dim D_p-\dim(\ker N_p)^{I_p}+\operatorname{Sw}(D_p),\cr
-\operatorname{rank}N_p,&\qquad
-\operatorname{Sw}(D_p).
+a_2(D_2)
+&=a(r_2)+\dim D_2^{I_2}-\dim(\ker N_2)^{I_2}\\
+&=0+2-1=1.
 \end{aligned}
-\tag{9.10}
+\tag{8.14}
 $$
 
-Indeed, all are invariants of the common pair $D_p$, and scalar extension preserves kernels,
-invariants, nilpotent ranks, and the finite ramification filtration. With a fixed additive
-character and Haar measure, the same applies to the epsilon factor.
-
-At $p\notin\{2,\ell\}$, the distinguished member is available in the prime-to-coefficient
-range and is unramified. Hence $D_p$ is unramified, $N_p=0$, $a_p^{\mathrm{Art}}=0$, and
+Thus every $r_\lambda$ with $\lambda\nmid2$ carries the complete rational record
 
 $$
-P_p^{\mathrm{loc}}(T)=1-a_pT+pT^2.
-\tag{9.11}
+N_2\ne0,
+\qquad
+\mathscr L_2,
+\qquad
+\varepsilon_2,
+\qquad
+a_2=1.
+\tag{8.15}
 $$
 
-This proves the shrinking of the weak exceptional set asserted in Section 7.4. Auxiliary
-discriminant and character ramification cancel in the effective local complement even though
-they remain visible in a chosen Brauer presentation.
+Conductor one is a consequence of the pair, not a substitute for it. At a coefficient place
+above $2$, prime-to-coefficient Weil--Deligne comparison is unavailable and no assertion is
+made by (8.11).
 
-## 10. Coefficient covariance and family-level descent
+### 8.6 Identification of the chosen SP member
 
-### 10.1 Coefficient conjugation
-
-Assume $E/\mathbf Q$ is Galois, as arranged in Chapter 3. For
-$\sigma\in\operatorname{Gal}(E/\mathbf Q)$, a place $\lambda$ is carried to
-$\sigma\lambda$, and $\sigma$ extends to a topological field isomorphism
+At the distinguished embedding, Book 187's tensor identity gives
 
 $$
-\sigma:E_\lambda\xrightarrow{\sim}E_{\sigma\lambda}.
-\tag{10.1}
+[R_{\mathfrak B,\lambda_0}^+]-[R_{\mathfrak B,\lambda_0}^-]=[\rho]
+\tag{8.16}
 $$
 
-Applying $\sigma$ to every elementary packet coefficient and Brauer-character value carries
-$R_\lambda^\pm$ to the positive and negative representations for the conjugate ledger at
-$\sigma\lambda$. Multiplicity-one descent commutes with this scalar transport. Therefore
+after embedding $E_{\lambda_0}$ and $L_0$ in one finite extension $C/\mathbf Q_\ell$.
+Both sides are effective and absolutely irreducible. Uniqueness of the constituent therefore
+gives
 
 $$
-{}^\sigma r_\lambda
-\simeq r^{\sigma}_{\sigma\lambda},
-\tag{10.2}
+\boxed{
+r_{\lambda_0}\otimes_{E_{\lambda_0}}C
+\simeq
+\rho\otimes_{L_0}C.}
+\tag{8.17}
 $$
 
-where the superscript on the right indicates the coefficient-conjugate polynomial record. At a
-good prime,
+This identifies the chosen representation itself, not merely its good Frobenius
+semisimplification. Because $2\ne\ell$, equation (8.11) applies to the distinguished member;
+the local pair in (8.17) is the chosen SP pair with the same line and sign.
+
+No lattice is needed for this identification. In particular, the chosen member is not replaced
+by a lattice cut out of the positive induced representation.
+
+### 8.7 The integral boundary
+
+The output through Section 8.6 is entirely characteristic zero. It provides the rational
+representation at every coefficient place and the rational SP line at $2$. It does not choose
+an $\mathcal O_{E_\lambda}$-lattice in any member, does not intersect a lattice with
+$\mathscr L_2$, and does not measure an integral monodromy thickness.
+
+The cancellation
 
 $$
-P_p^\sigma(X)=X^2-\sigma(a_p)X+p,
-\tag{10.3}
+R_{\mathfrak B,\lambda}^+
+\simeq r_\lambda\oplus R_{\mathfrak B,\lambda}^-
+\tag{8.18}
 $$
 
-and at a bad prime the common local object is $D_p^\sigma$.
+can use denominators. Even after stable lattices are chosen in all three rational summands, the
+intersection with $r_\lambda$ need not be saturated and reduction need not preserve the direct
+sum. Modular representations of the finite quotient can have nonsplit extensions.
 
-Coefficient conjugation does not move the number fields $F_H$ inside $M$. Field conjugation
-moves those fields and their places but leaves the induced ground-field term isomorphic.
-Because the two actions address different entries of the packet ledger, they commute.
+Accordingly, no finite-flat quotient, compatible transition map, integral special line, or
+residual conductor is asserted here. The fixed-three integral theory begins only after a
+three-adic member has been selected and a stable lattice has been chosen. Rational nonzero
+monodromy survives coefficient extension; its reduction modulo a chosen lattice is a separate
+question.
 
-### 10.2 Changing the common field
+## 9. The complete base-field assembly theorem
 
-Let $E'/E$ be finite. The scalar-extended family has members
+### 9.1 Statement
 
-$$
-r'_{\lambda'}
-=r_\lambda\otimes_{E_\lambda}E'_{\lambda'}
-\qquad(\lambda'\mid\lambda),
-\tag{10.4}
-$$
+We can now collect the construction without reference to a chosen Brauer presentation.
 
-common polynomials viewed in $E'[X]$, and local pairs
-$D_p\otimes_EE'$. Equation (5.5) proves that reconstructing the family from the enlarged
-Brauer ledger yields exactly (10.4).
+**Theorem 9.1 (coefficient-descended compatible system over the base field).** Let
+(1.2)--(1.8) be the controlled SP packet-array datum of Book 187, and let Book 188's
+embedding-indexed effectivity theorem be applied to its integral Brauer classes. Assume no
+base-field compatible family as part of the input.
 
-Conversely, the multiplicity-one theorem already gives models over $E_\lambda$, so the
-extension $E'$ is not part of the intrinsic construction unless it is needed to display a
-finite set of local types. Even then, the system over $E'$ is merely scalar extension of the
-one over $E$ after those local objects are descended. No minimal coefficient field is claimed.
-
-### 10.3 Descent data without chosen matrices
-
-A compatible system is naturally a family of isomorphism classes, not a family of preferred
-bases. The descent proved here consists of:
-
-1. an $E_\lambda$-model of every effective algebraically closed member;
-2. uniqueness of that model as the complement in (5.2);
-3. covariance under every coefficient embedding and field enlargement; and
-4. common algebraic polynomial and local data.
-
-No semilinear intertwiner is chosen for every automorphism of $E$, and no cocycle of matrices is
-needed. Such intertwiners would describe a particular based descent. The representation over
-$E_\lambda$ already is the descended object.
-
-The Schur obstruction was a genuine possible obstruction to this conclusion. Chapter 4 killed
-it by multiplicity divisibility, not by suppressing the need for descent data.
-
-### 10.4 The global compatible family
-
-**Theorem 10.1 (family-level assembly).** The collection
-
-$$
-\mathcal R_E=\{r_\lambda\}_{\lambda\in\operatorname{Pl}_f(E)}
-\tag{10.5}
-$$
-
-together with the polynomials $P_p$ for $p\notin\{2,\ell\}$ and the local pairs $D_p$ is an
-$E$-rational, pure, strictly compatible system of rank two over $\mathbf Q$. It is independent
-of the Brauer relation and contains the original representation at $\lambda_0$.
-
-**Proof.** The members and their continuity are Proposition 5.2. Relation-independence is
-Chapter 6. Weak compatibility with exceptional set $\{2,\ell\}$ is Chapters 7.2--7.4. Purity
-is Theorem 7.3. Determinant and duality are Chapter 8. Strict compatibility is Theorem 9.1.
-The distinguished identification is (8.8), and coefficient covariance and field enlargement
-are Sections 10.1--10.2. These are exactly the defining and choice-independence clauses of the
-stated compatible system. $\square$
-
-The theorem is the point at which the phrase “the family over the base field” becomes
-justified. Before coefficient descent, there were effective representations over algebraic
-closures; before effectivity, there was a virtual class; before Brauer induction, there were
-only elementary-field systems. The theorem does not identify those stages retroactively.
-
-## 11. Stable lattices and the integral boundary
-
-### 11.1 Existence place by place
-
-Let $V$ be a finite-dimensional $E_\lambda$-representation of a profinite group with continuous
-action. Its image is compact. Starting from any lattice $L_0$, compactness bounds all matrix
-entries and their inverses, so the sum
-
-$$
-L=\sum_{g\in G_{\mathbf Q}}gL_0
-\tag{11.1}
-$$
-
-lies between two scalar multiples of $L_0$. It is a finitely generated torsion-free
-$\mathcal O_{E_\lambda}$-module spanning $V$, hence a lattice, and it is stable by
-construction.
-
-Apply this to $r_\lambda$.
-
-**Proposition 11.1.** Every member $r_\lambda$ has a stable
-$\mathcal O_{E_\lambda}$-lattice.
-
-Existence uses only continuity. It supplies no preferred lattice and no relation between
-lattices at different coefficient places.
-
-### 11.2 The distinguished lattice
-
-At $\lambda_0$, retain the lattice $L_\rho$ chosen in Book 185 and carried through Book 186.
-After the common finite scalar extension used in (8.8), it is a stable lattice for
-$r_{\lambda_0}$. Its residual representation is absolutely irreducible, so any other stable
-lattice with the same coefficient field is homothetic: scale $L'$ until
-$L'\subset L_\rho$ but $L'\not\subset\varpi L_\rho$; its image modulo $\varpi$ is a nonzero
-stable subspace and hence the whole residual space, so Nakayama gives equality.
-
-This uniqueness is local to the distinguished member and depends on residual irreducibility.
-It validates retention of the chosen finite-flat quotient system. It does not make the Brauer
-positive and negative lattices cancel integrally.
-
-### 11.3 Why characteristic-zero cancellation does not descend integrally
-
-Choose stable lattices $\mathcal R_\lambda^\pm$ in $R_\lambda^\pm$. Equation (5.2) gives a
-characteristic-zero isomorphism
-
-$$
-R_\lambda^+\simeq r_\lambda\oplus R_\lambda^-.
-\tag{11.2}
-$$
-
-There is no reason for an isomorphism in (11.2) to carry
-$\mathcal R_\lambda^+$ onto a direct sum of a stable rank-two lattice and
-$\mathcal R_\lambda^-$. Its matrix can have denominators. The intersection of the rational
-summand $r_\lambda$ with $\mathcal R_\lambda^+$ can fail to be a direct summand, and the
-quotient can have torsion.
-
-The obstruction is unavoidable when the residue characteristic divides $|\Gamma|$.
-Characteristic-zero finite-group representations are semisimple, while their reductions can
-have nonsplit extensions. A permutation lattice can contain an invariant line inside its
-augmentation submodule after reduction even though the characteristic-zero representation is a
-direct sum. Thus equality of integral Grothendieck classes controls composition factors at best;
-it does not supply a saturated injection from the negative lattice to the positive lattice.
-
-Consequently no lattice for $r_\lambda$ is defined by “subtracting” induced lattices.
-
-### 11.4 Residual semisimplification
-
-For a fixed rational representation $r_\lambda$, the semisimplification of the reduction of a
-stable lattice is independent of the lattice. To see this, scale two lattices until one is
-contained in the other and filter their finite quotient by powers of the uniformizer.
-Additivity of Jordan--Hölder multiplicities in the successive reduction sequences gives the
-same residual simple factors.
-
-Thus
-
-$$
-\overline r_\lambda^{\mathrm{ss}}
-\tag{11.3}
-$$
-
-is attached to the rational member. A nonsplit residual extension is not. Neither the common
-characteristic-zero Frobenius polynomials nor strict rational local compatibility chooses such
-an extension.
-
-### 11.5 The exact boundary
-
-The present construction proves:
-
-- one rational rank-two representation over every $E_\lambda$;
-- a stable lattice for each member;
-- the original selected lattice at $\lambda_0$;
-- an actual cyclotomic determinant line;
-- common rational Frobenius and Weil--Deligne data; and
-- lattice-independent residual semisimplification at each fixed $\lambda$.
-
-It does not prove:
-
-- one finite free module over the ring of integers of $E$ whose completions give all members;
-- compatible integral projectors for the effective constituent;
-- self-duality of an arbitrary stable lattice;
-- equality of residual extension classes for different lattices;
-- finite-flatness, crystallinity of a selected lattice, or compatible finite locally free
-  quotients at a new coefficient prime; or
-- the transition maps and local integral structure required by the later fixed-three theory.
-
-These are not missing details of coefficient descent. They are different integral assertions
-that rational representation theory cannot see.
-
-## 12. The complete base-field compatible-system theorem
-
-### 12.1 Statement
-
-We now collect the result in a reusable form.
-
-**Theorem 12.1 (complete compatible system over the base field).** Let $\rho$ be the chosen
-balanced minimally ramified lift of Book 186, and let $M/\mathbf Q$ and the elementary packets
-$\pi_H$ be its controlled potential-automorphy family. Assume the repaired Books 187--188
-export, namely the intersection-field identity (2.8), and no stronger conclusion from a later
-book.
-
-Then there is a number field $E$, which may be chosen Galois over $\mathbf Q$, a place
-$\lambda_0\mid\ell$, and a family
+Then there are a finite Galois number field $E$, a place $\lambda_0\mid\ell$, a finite set
+$S$ of rational primes, and representations
 
 $$
 r_\lambda:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(E_\lambda)
-\qquad(\lambda\in\operatorname{Pl}_f(E))
-\tag{12.1}
-$$
-
-such that:
-
-1. **Existence and continuity.** Every $r_\lambda$ is continuous, semisimple, and absolutely
-   irreducible.
-2. **Brauer independence.** Its $E_\lambda$-isomorphism class is independent of the integral
-   Brauer relation, its positive-minus-negative presentation, conjugation of its terms, bases,
-   coset representatives, packet splitting coordinates, and harmless coefficient enlargement.
-3. **Weak compatibility.** For every rational prime $p\notin\{2,\ell\}$ there is
-   $P_p(X)=X^2-a_pX+p\in E[X]$ such that, for
-   $p\ne q_\lambda$, $r_\lambda$ is unramified at $p$ and has arithmetic-Frobenius polynomial
-   $P_p$.
-4. **Purity.** Every root of $P_p$ and every coefficient conjugate of that root has complex
-   absolute value $p^{1/2}$.
-5. **Determinant and duality.** For every $\lambda$,
-
-   $$
-   \det r_\lambda=\chi_\lambda,
-   \qquad
-   r_\lambda^\vee\simeq r_\lambda\otimes\chi_\lambda^{-1}.
-   $$
-
-6. **Strict compatibility.** For every finite $p$ there is an algebraic rank-two
-   Frobenius-semisimple Weil--Deligne pair $D_p$ over $E$ such that
-
-   $$
-   \operatorname{WD}_p(r_\lambda)^{\mathrm{F\!-\!ss}}
-   \simeq D_p\otimes_EE_\lambda
-   $$
-
-   whenever $p\ne q_\lambda$. The pair is unramified with polynomial $P_p$ for
-   $p\notin\{2,\ell\}$; at $2$ it has zero monodromy, trivial wild inertia, and primitive
-   tame order-three type.
-7. **Local invariants.** Away from coefficient characteristic, local Euler polynomials, Artin
-   and Swan conductors, monodromy ranks, and epsilon factors with fixed auxiliary
-   normalizations are independent of $\lambda$.
-8. **Original member.** In a finite common $\ell$-adic overfield,
-
-   $$
-   r_{\lambda_0}\simeq\rho.
-   $$
-
-   The selected lattice of $\rho$, its finite-flat quotient system at $\ell$, its dyadic type,
-   and its unramified local records are retained.
-9. **Coefficient covariance.** Coefficient conjugation applies to $a_p$, $D_p$, and the member
-   at the conjugate place together. Finite enlargement of $E$ gives exactly the scalar-extended
-   family.
-10. **Integral boundary.** Every $r_\lambda$ has a stable lattice, but no coherent global
-    lattice, integral Brauer cancellation, new finite-flat quotient system, or canonical
-    residual extension is asserted.
-
-The family (12.1) is therefore the global compatible family over the base field
-$\mathbf Q$. It is a family of actual rank-two representations, not a virtual family, and it
-is defined over completions of one number field, not merely over unrelated algebraic closures.
-
-### 12.2 Proof
-
-Proposition 2.2 gives a prime-cyclic subnormal chain from every Mackey intersection to either
-elementary group containing it. Prime-cyclic base change through the reversed fixed-field tower
-and the extending representation identify the endpoint with the selected intersection packet.
-This proves the repaired overlap identity without using effectivity or this book's coefficient
-descent.
-
-Choose one number field containing the finite elementary packet, Brauer character, intersection,
-and local-type ledgers. Lemma 3.1 globalizes the distinguished local coefficient field, and the
-finite common-field theorem of Book 137 supplies $E_\lambda$-models for all elementary packet
-systems. Finite induction constructs the actual positive and negative representations
-$R_\lambda^\pm$ over every completion.
-
-The repaired overlap makes the Mackey Gram matrix coefficient independent. At the distinguished
-embedding the signed class is the original absolutely irreducible $\rho$, so its norm is one.
-The integral norm-one argument of Book 188 makes the signed class one absolutely irreducible
-rank-two representation after scalar extension to an algebraic closure.
-
-Theorem 4.2 then supplies the step not contained in effectivity alone. Since that constituent
-has coefficient one inside a virtual difference defined over $E_\lambda$, its Galois orbit and
-Schur multiplicity are both one. It descends to $E_\lambda$, actual cancellation holds over the
-completion, and Proposition 5.2 proves continuity. Applying the combined Gram calculation to
-two Brauer relations and then descending the resulting isomorphism proves the full independence
-statement.
-
-Local cyclic-block determinants and the distinguished tensor identity give the polynomials
-$P_p$ in $E[X]$. Actual cancellation gives unramifiedness and makes these polynomials the
-characteristic polynomials of $r_\lambda$. Restriction to the pure top packet proves weight-one
-purity. The determinant-transfer calculation becomes the actual determinant after effectivity,
-and two-dimensional exterior algebra gives duality. At $\lambda_0$, uniqueness of the effective
-constituent identifies the member with $\rho$.
-
-For local compatibility, form the algebraic local Mackey objects from the strictly compatible
-elementary packet pairs. Global cancellation restricts locally, and Krull--Schmidt cancellation
-extracts one rank-two complement independent of the coefficient place. A finite enlargement
-descends the finitely many bad complements to $E$; good complements are already defined by
-$P_p$. This proves strict compatibility and independence of local invariants. Comparison at the
-distinguished member removes every auxiliary bad prime other than $2$ and $\ell$. Complete
-splitting at $2$ identifies the common dyadic pair directly.
-
-Finally, compactness supplies a stable lattice to each member, while Chapter 11 proves that no
-integral cancellation follows. All ten clauses are established. $\square$
-
-### 12.3 Dependency and interface audit
-
-The proof uses exactly the four direct prerequisites assigned to this book.
-
-| Source | Imported interface | Use here | Boundary retained |
-|---|---|---|---|
-| Book 137 | common realization fields; weak and strict compatible systems of weight-two packets; determinant, purity, local Weil--Deligne data; scalar and embedding transport; stable-lattice boundary | models for every elementary packet over $E_\lambda$, algebraic good polynomials and bad local pairs, purity | no canonical integral packet summand or coefficient-prime finite-flat conclusion is imported |
-| Book 186 | the fixed $\rho$ and its lattice; controlled Galois top $M$; selected elementary packets; conjugation, cyclic descent, local completions, and identification with restrictions of $\rho$ | distinguished member, overlap selection, removal of auxiliary bad primes, exact dyadic and $\ell$-adic records | no Books 187--189 result is used inside its construction |
-| Book 187, repaired | integral Brauer relation; induced virtual family; tensor identity at $\lambda_0$; determinant transfer; common Frobenius rational function; local Mackey record; lattice warning | construction of $R_\lambda^\pm$, virtual determinant and polynomials, local algebraic presentation | virtual equality is not called effectivity or integral cancellation |
-| Book 188, repaired | Hom-norm and Gram invariance on elementary intersections; norm-one effectivity; actual local cancellation; relation-independence after scalar extension; Brauer--Nesbitt recognition | existence and absolute irreducibility over algebraic closures, comparison of two relations | effectivity is not called coefficient descent or a compatible family |
-
-The only defect explicitly reported by the current drafts of Books 187--188 is the
-intersection-field overlap. Chapter 2 verifies the intended repair from their existing
-prime-cyclic interfaces: elementary groups are nilpotent, their subgroups are subnormal, and
-the subnormal chain refines to cyclic prime-order quotients. Thus the overlap is not an extra
-hypothesis on the arithmetic representation and does not require a new dependency.
-
-Book 137 uses geometric Frobenius in its displayed general theory, whereas Books 186--188 use
-arithmetic Frobenius in the chosen-lift spine. This book translates once and consistently uses
-arithmetic Frobenius. The determinant $\chi_\lambda$ therefore takes $\operatorname{Frob}_p$
-to $p$, and weight one means roots of absolute value $p^{1/2}$.
-
-No density theorem is used to prove effectivity, relation-independence, overlap compatibility,
-or coefficient descent. Strong multiplicity one is used only between already existing
-automorphic packets on the same elementary field. No nonsolvable automorphic induction from an
-elementary fixed field to $\mathbf Q$ is asserted; induction across the bottom is Galois and
-Weil-group induction.
-
-### 12.4 Hostile failure audit
-
-We finish by testing the construction against the shortcuts most likely to invalidate it.
-
-**Top-field equality is not overlap equality.** Restriction to $G_M$ forgets characters of the
-finite quotient $D$. The repair uses a prime-cyclic tower to identify the packet on $F_D$;
-it does not infer the identity from top restriction alone.
-
-**Virtual polynomiality is not existence.** The rational Brauer determinant becomes a
-quadratic polynomial at every coefficient embedding before an actual member is known. The
-character norm, not the polynomial degree, proves effectivity.
-
-**Effectivity over an algebraic closure is not coefficient descent.** A Galois-stable
-irreducible can have nontrivial Schur index. Theorem 4.2 kills that index using the coefficient
-one in an $E_\lambda$-defined virtual difference.
-
-**Relation-independent Frobenius is not relation-independent representation theory.** Two
-relations are compared by one combined Mackey Gram matrix. Norm zero gives equality of the full
-semisimple classes, and Lemma 4.3 descends the isomorphism to $E_\lambda$.
-
-**Global cancellation is not local identification by traces.** The actual global direct-sum
-isomorphism restricts to decomposition groups. Weil--Deligne functoriality and Krull--Schmidt
-cancellation retain inertia and monodromy. Conductor equality is a consequence, not a
-substitute.
-
-**Auxiliary ramification does not vanish term by term.** It vanishes from the common effective
-local complement because the distinguished member is unramified. No assertion is made about a
-map between the ramified positive and negative integral summands.
-
-**A completion model is not a global matrix representation over $E$.** A compatible system
-requires $E_\lambda$-models indexed by places and common algebraic local data. It does not
-require one two-dimensional $E$-vector space carrying a continuous action of $G_{\mathbf Q}$.
-
-**A stable lattice is not an integral compatible system.** Compactness gives existence at each
-place. It does not give compatible projectors, saturation, self-duality, finite-flatness, or
-transition maps. None of the integral theory of the next book has been imported.
-
-Every implication used in Theorem 12.1 survives these tests.
-
-### 12.5 Conclusion
-
-The elementary-field systems have now become one system over the base field. The route was
-necessarily indirect. The nonsolvable top prevented ordinary descent, so Brauer induction
-replaced descent by a signed expression. Mackey theory exposed the exact intersection fields on
-which its character norm had to be computed. The nilpotence of elementary groups supplied the
-missing prime-cyclic towers to those intersections, making the norm calculation unconditional.
-Norm one then turned the signed character into one irreducible rank-two member at every
-coefficient embedding.
-
-That was still not enough. A compatible family needs coefficient fields, not only algebraic
-closures. The effective constituent occurred with multiplicity one in a virtual class already
-defined over $E_\lambda$. Galois orbits and Schur indices multiply geometric multiplicities;
-neither can divide one except trivially. This forced descent to the completion itself and made
-the member independent of the embedding used to display it.
-
-The resulting family is therefore honest in every rational sense:
-
-$$
-r_\lambda:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(E_\lambda),
 \qquad
-\det r_\lambda=\chi_\lambda,
-\tag{12.2}
+(\lambda\in\operatorname{Pl}_f(E))
+\tag{9.1}
 $$
 
-with common pure polynomials
+with the following properties.
+
+1. **Existence over completions.** Every $r_\lambda$ is continuous and absolutely
+   irreducible. Its scalar extension under any embedding inducing $\lambda$ is the effective
+   embedding-indexed member of Book 188.
+2. **Coefficient descent.** The Schur class and the scalar descent cocycle of that effective
+   member vanish. The descended $E_\lambda$-model is the multiplicity-one complement in an
+   actual signed expression defined over $E_\lambda$.
+3. **Brauer independence.** The $E_\lambda$-isomorphism class is independent of the integral
+   Brauer relation, its positive-minus-negative presentation, conjugation of a term, coset
+   representatives, packet coordinates, the embedding used to display $E_\lambda$, and
+   harmless finite coefficient enlargement.
+4. **Weak compatibility.** For every $p\notin S$ there is
+
+   $$
+   P_p(X)=X^2-a_pX+p\in E[X]
+   \tag{9.2}
+   $$
+
+   such that, whenever $p\ne q_\lambda$, the member $r_\lambda$ is unramified at $p$ and
+
+   $$
+   \det(X-r_\lambda(\operatorname{Frob}_p))=P_p(X).
+   \tag{9.3}
+   $$
+
+5. **Determinant and purity.** For every $\lambda$,
+
+   $$
+   \det r_\lambda=\chi_{q_\lambda},
+   \qquad
+   r_\lambda^\vee\simeq r_\lambda\otimes\chi_{q_\lambda}^{-1}.
+   \tag{9.4}
+   $$
+
+   Every root of every $P_p$, under every complex embedding, has absolute value $p^{1/2}$.
+6. **Restriction recovery.** For every elementary $H\leq\Gamma$,
+
+   $$
+   r_\lambda|_{G_{F_H}}\simeq r_{H,\lambda}.
+   \tag{9.5}
+   $$
+
+   In particular, restriction to $G_M$ recovers the selected top packet member.
+7. **Conjugation.** Field conjugation transports (9.5) to the conjugate elementary fixed
+   field. Coefficient conjugation carries the system to the coefficient-conjugate system,
+   sending $P_p$ to $P_p^\sigma$ and commuting with field conjugation.
+8. **Strong local records in the proved range.** For every finite $v$ in the local--global
+   comparison range of the elementary packet array, there is an algebraic
+   Frobenius-semisimple Weil--Deligne pair $D_v$ such that
+
+   $$
+   \operatorname{WD}_v(r_\lambda)^{\mathrm{F\text{-}ss}}
+   \simeq D_v\otimes_EE_\lambda
+   \qquad(v\ne q_\lambda).
+   \tag{9.6}
+   $$
+
+   An auxiliary prime is removed from $S$ whenever this comparison identifies $D_v$ as
+   unramified. No place outside the proved range is inserted by a density argument.
+9. **The SP place.** The place $2$ lies in the range of clause 8. The pair $D_2=(r_2,N_2)$
+   has trivial finite inertia,
+
+   $$
+   N_2^2=0,
+   \quad
+   \operatorname{rank}N_2=1,
+   \quad
+   \ker N_2=\operatorname{im}N_2=\mathscr L_2,
+   \tag{9.7}
+   $$
+
+   and arithmetic Frobenius acts by $\varepsilon_2$ on the quotient and by
+   $2\varepsilon_2$ on $\mathscr L_2$. Its Artin conductor exponent is one. These statements
+   hold for every $r_\lambda$ with $\lambda\nmid2$ after scalar extension.
+10. **Chosen member and integral boundary.** In one finite common $\ell$-adic overfield $C$,
+
+    $$
+    r_{\lambda_0}\otimes C\simeq\rho\otimes C.
+    \tag{9.8}
+    $$
+
+    No stable lattice, integral projector, finite-flat quotient, transition tower, or residual
+    local extension is part of the construction.
+
+The collection (9.1), together with (9.2) and the local objects in their declared range, is the
+coefficient-descended compatible system over $\mathbf Q$.
+
+### 9.2 Proof
+
+Choose the common finite Galois coefficient field of Chapter 2. It simultaneously realizes all
+elementary packet systems, elementary intersection packets, finite characters, and the finitely
+many bad local objects. For a Brauer relation, finite Galois induction constructs the
+semisimple positive and negative representations $R_{\mathfrak B,\lambda}^\pm$ over every
+completion.
+
+Book 188's norm-one theorem gives the signed equality (2.7) over an algebraic closure. Theorem
+3.2 applies because the surviving constituent has multiplicity one. Its Galois orbit is a
+singleton and its Schur multiplicity is one, so it descends to $E_\lambda$ and actual
+cancellation holds there. The cocycle interpretation in Section 3.4 proves clause 2. The
+constituent is a closed invariant summand of a continuous representation and is absolutely
+irreducible after scalar extension, proving clause 1.
+
+For two Brauer relations, combine their induced lists. The exact elementary-overlap theorem and
+the automorphic self-twist test make every entry of the combined Mackey Gram matrix embedding
+independent. At the distinguished embedding the two expressions are both $[\rho]$, so their
+difference has norm zero. Positivity makes the two scalar-extended classes equal, and Hom base
+change descends the isomorphism. The remaining presentation and coordinate choices change no
+induced isomorphism class. This proves clause 3.
+
+The cyclic-block calculation gives the algebraic rational function (7.3). At the distinguished
+embedding it is the quadratic characteristic series of $\rho$, and injectivity makes it the
+polynomial (9.2) over $E$. Actual cancellation gives both unramifiedness and (9.3). The
+determinant-transfer calculation becomes the actual identity (9.4). Restriction to the pure top
+packet and the residue-degree power calculation give purity. These arguments prove clauses
+4--5.
+
+Restrict a signed presentation to $G_{F_H}$. Mackey decomposition, Book 187's overlap theorem,
+and the tensor identity factor out $r_{H,\lambda}$; the restricted finite-group Brauer relation
+is $1_H$. Thus the restricted class is $[r_{H,\lambda}]$. Semisimplicity and faithful Hom
+descent give the actual isomorphism (9.5). The two conjugation laws then follow from packet
+conjugation and scalar transport, proving clauses 6--7.
+
+For local compatibility, form the algebraic local Mackey objects (8.1). Global cancellation
+restricts to decomposition groups. Weil--Deligne functoriality gives (8.3), and
+Krull--Schmidt cancellation extracts the algebraic rank-two complement after one harmless
+finite enlargement. This proves clause 8 without extending the local range beyond the packet
+input. Complete splitting at $2$ makes every local term one copy of the selected SP pair; the
+rank identity leaves exactly one copy. Equations (8.12)--(8.14) prove clause 9.
+
+Finally, at the distinguished embedding the tensor identity is $[\rho]$. Uniqueness of the
+effective constituent proves (9.8). Section 8.7 proves the integral boundary. All clauses
+follow. $\square$
+
+### 9.3 The exact interface to prime switching
+
+The rational operation of changing coefficient prime can now begin without adding a family
+hypothesis. Choose an actual place $\nu\mid3$ of the final coefficient field $E$ and set
 
 $$
-X^2-a_pX+p
-\tag{12.3}
+V=r_\nu:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(E_\nu).
+\tag{9.9}
 $$
 
-and common local Weil--Deligne pairs away from the varying coefficient prime. It is independent
-of the Brauer decomposition, covariant under coefficient conjugation, unchanged by harmless
-field enlargement, and contains the original chosen lift with its original lattice.
+This is selection of a member of (9.1), not a tensor product of the distinguished
+$\ell$-adic member with $E_\nu$. The theorem supplies
 
-The final boundary is integral and deliberate. The rational constituent has stable lattices,
-but the Brauer subtraction supplies no saturated integral complement and no coherent family of
-finite locally free quotients. Virtual equality, semisimple effectivity, coefficient descent,
-compatible-family assembly, and integral structure have remained separate at every step.
+$$
+\det V=\chi_3,
+\qquad
+\operatorname{WD}_2(V)^{\mathrm{F\text{-}ss}}
+\simeq D_2\otimes_EE_\nu,
+\tag{9.10}
+$$
 
-With the single intersection-field repair of Books 187--188 made as proved in Chapter 2, the
-dependency and interface audit is **READY**.
+so $V$ has the same rational rank-one monodromy, line, sign, and conductor-one record at $2$.
+It also receives the common unramified local records at every prime certified by clause 8.
+
+No statement at the coefficient-prime place $3$ follows from (9.10). Crystallinity, Hodge
+type, finite flatness, and the choice of a globally stable lattice are separate inputs or
+constructions for the fixed-three integral theory. Likewise, rational nonzero $N_2$ does not
+by itself determine the reduction of tame monodromy on a future lattice.
+
+## 10. Dependency, hostile, and final audits
+
+### 10.1 Dependency audit
+
+The substantial imports and their exact uses are as follows.
+
+| Source | Imported result | Use in this book | Strengthening not made |
+|---|---|---|---|
+| Book 137 | coefficient systems and algebraic local records attached to each already constructed weight-two packet; determinant and purity; coefficient transport | simultaneous $E_\lambda$-models for the finite elementary packet array and its local objects | no base-field family, canonical lattice, or coefficient-prime integral conclusion |
+| The controlled SP top datum assumed by Book 187 | the chosen representation $\rho$, controlled top $M$, distinguished automorphic realization, and SP label | distinguished comparison and the conditional arithmetic starting object | the current Book 186 does not unconditionally supply the controlled residual automorphic seed |
+| Book 187 | packet array, exact elementary and conjugate-intersection identities, integral Brauer classes, determinant transfer, common virtual polynomials, restriction and local Mackey formulas, and the algebraic SP pair | construction of the signed terms, Gram entries, restriction recovery, global invariants, and local algebraic classes | no automatic automorphic transfer along every subgroup chain; no virtual class is called effective |
+| Book 188 | norm-one positive effectivity at every coefficient embedding, actual characteristic-zero cancellation, coefficient covariance, and scalar relation-independence | the multiplicity-one input (2.7) and the combined norm-zero comparison | no coefficient-completion model or assembled family is imported |
+
+The definitions and normalizations agree with Book 175: the base field and coefficient field
+have different places; arithmetic Frobenius gives constant term $p$; weak compatibility is
+place indexed; strong compatibility retains $N$; and coefficient descent is stronger than
+trace containment. Book 176's general Brauer discussion is used only as a normalization and
+failure-mode check. In particular, its older idea that a group-theoretic prime-cyclic tower
+automatically lies in the automorphic transfer range is not used. The exact overlap theorem is
+the committed interface of Book 187.
+
+No theorem from the changing-prime or fixed-three books enters the proof. Section 9.3 produces
+the base-field member and rational SP record needed for a later prime selection, but it does not
+produce coefficient-prime crystallinity, finite flatness, or unramifiedness at any exceptional
+prime not removed by the proved local comparison. Those later conclusions do not feed backward.
+The assembly theorem is conditional on the controlled SP top datum: it does not repair the
+missing Book-186 seed or turn that conditional datum into an unconditional consequence.
+No density theorem is used to manufacture effectivity, coefficient descent, local monodromy,
+or a coefficient cocycle. Recognition by traces is used only where two representations already
+exist and the relevant density input has already been discharged in the packet theorem.
+
+### 10.2 Hostile mathematical audit
+
+The construction withstands the following failure tests.
+
+**A trace field is not silently called a field of definition.** The coefficient ledger first
+splits the finite realization algebras of the elementary terms. The new rank-two constituent is
+then descended by Theorem 3.2. Its Schur obstruction is killed by multiplicity one, not by
+trace containment.
+
+**An invariant isomorphism class is not mistaken for an effective cocycle.** Section 3.4
+exhibits the scalar two-cocycle and identifies its Brauer class with the division-algebra
+obstruction. Coefficient one forces index one and makes the cocycle a coboundary.
+
+**Two coefficient displays are compared on their overlap.** Hom base change descends a
+nonzero intertwiner from a common overfield. The member is indexed by $\lambda$, not by an
+unnamed embedding into an algebraic closure.
+
+**Top-field agreement is not substituted for intersection agreement.** The norm and
+restriction calculations use Book 187's theorem over
+$M^{H\cap xJx^{-1}}$. A possible quotient character is retained as the explicit ratio
+$\beta\alpha^{-1}$.
+
+**A group-theoretic tower is not declared automorphically admissible.** No prime-cyclic descent
+is performed in this book. Exact semisimple overlaps are imported from the theorem that proved
+them by algebraic Frobenius comparison when automorphic ascent was unavailable.
+
+**Virtual rank and polynomiality are not called existence.** Book 188's character norm supplies
+the actual algebraically closed constituent. The present multiplicity-one theorem then supplies
+the completion model. Each step has a different conclusion.
+
+**Relation-independent polynomials are not substituted for relation-independent
+representations.** Two relations are compared by the combined Gram norm. Norm zero gives
+equality of their full semisimple classes, and Hom descent gives an isomorphism over
+$E_\lambda$.
+
+**Restriction recovery retains quotient information.** The proof of (6.7) restricts the
+finite-group Brauer identity to $H$ and uses every Mackey double coset. The weaker top
+restriction (6.8) is recorded only afterward.
+
+**Purity is not inferred from the determinant.** It comes from residue-degree powers in the
+pure top packet and is checked under every coefficient conjugation.
+
+**The SP record is not replaced by a finite tame type.** The common pair has trivial finite
+inertia and nonzero rank-one $N$. Its line and sign are named before the conductor-one formula
+is calculated. No zero-monodromy finite-type branch occurs in the theorem.
+
+**Prime-to-coefficient local theory is not applied at the coefficient prime.** Equation (8.11)
+excludes $\lambda\mid2$. The prime-switch interface makes no claim at the new base place $3$
+from a Weil--Deligne statement at $2$.
+
+**Rational cancellation is not reduced integrally.** No lattice or quotient tower is part of
+Theorem 9.1. The rational line $\mathscr L_2$ is not declared saturated in an as-yet unchosen
+lattice, and rational nonzero monodromy is not declared residually nonzero.
+
+### 10.3 Scope and format audit
+
+The manuscript proves the catalogued assembly: coefficient descent, Brauer independence,
+continuity, common Frobenius polynomials, determinant, purity, restriction recovery,
+conjugation, the distinguished member, and the global place-indexed compatible system. The SP
+record at $2$ is carried as a full Weil--Deligne pair with nonzero rank-one monodromy, line,
+sign, and conductor one. Integral refinement is excluded explicitly.
+
+Every substantial premise is either the explicitly assumed controlled SP top datum, ordinary
+characteristic-zero representation theory proved here, or an exact theorem of Books 137, 187,
+or 188. No conclusion of this book and no later consumer is used as a premise. Arithmetic
+Frobenius, induction, determinant, character
+ratio, residue-degree, duality, and conductor conventions are consistent throughout. The table
+of contents matches the heading structure, every displayed reference resolves within the
+manuscript, and the narrative ends with the constructed mathematical package rather than with
+future work.
+
+### 10.4 Conclusion
+
+The passage from potential automorphy to a family over the ground field has three genuinely
+different obstructions. Brauer induction first replaces unavailable nonsolvable descent by a
+signed expression assembled from elementary-field packets. Mackey theory then exposes the
+intersection fields on which those signs can be tested. The exact overlap theorem and the
+self-twist calculation make the signed character norm independent of the coefficient
+embedding, and norm one makes the virtual rank-two class effective.
+
+Effectivity still leaves a coefficient obstruction. An absolutely irreducible representation
+over an algebraic closure can carry a nontrivial Schur class even when all of its traces lie in
+the smaller field. Here the effective constituent occurs once in a difference already defined
+over the completion. Galois orbits and Schur indices would repeat that occurrence. Since one
+cannot be repeated nontrivially, the orbit is a singleton, the Schur index is one, and the
+descent cocycle is effective. The constituent therefore has an honest model over every
+$E_\lambda$.
+
+The resulting members are independent of the Brauer relation and recover every elementary
+packet after restriction. Their common arithmetic-Frobenius polynomials are quadratic with
+cyclotomic constant term, their determinant is cyclotomic as a character, and their roots are
+pure of weight one. Field conjugation organizes the elementary fixed fields; coefficient
+conjugation transports the algebraic eigenvalues; the two actions commute without being
+conflated.
+
+At the distinguished coefficient place, the family contains the chosen representation
+$\rho$. At the rational prime $2$, every member away from coefficient characteristic two has
+the same SP object: nonzero rank-one monodromy, the line
+$\ker N_2=\operatorname{im}N_2$, the selected Frobenius sign, and conductor exponent one.
+These are the precise rational data needed for a later coefficient-prime selection.
+
+Thus the elementary systems have been assembled into one coherent compatible system over
+$\mathbf Q$:
+
+$$
+\boxed{
+\mathcal R_E=\{r_\lambda\}_{\lambda\in\operatorname{Pl}_f(E)},
+\qquad
+\det r_\lambda=\chi_{q_\lambda},
+\qquad
+P_p(X)=X^2-a_pX+p.}
+\tag{10.1}
+$$
+
+Conditional on the controlled SP top datum, the assembly is complete at the rational level.
+Its final boundary is exact: the SP line exists over the coefficient field, but no integral
+lattice, finite-flat quotient, or transition tower has been chosen or inferred. The missing
+upstream construction of the controlled seed remains outside this theorem.
