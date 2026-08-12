@@ -1,5 +1,8 @@
-import Mathlib
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter02.Section06TheTrivialValuationAndFailureModes
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter02.Section01WhyTheValuesFormAGroup
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter02.Section03TheDecisiveEquality
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter02
 

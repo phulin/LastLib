@@ -1,5 +1,10 @@
-import Mathlib
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter02.Section04EquivalenceAndNormalization
+import Mathlib.Algebra.Ring.IsFormallyReal
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.NumberTheory.Padics.PadicVal.Basic
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.LaurentSeries
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter02
 
