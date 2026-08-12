@@ -485,181 +485,88 @@ Frobenius and local records.
 
 ## 3. Multiplicity-one coefficient descent
 
+Book 176, Section 7.4 is the general source for orbit/Schur multiplicities, the coefficient
+factor set, and multiplicity-one descent. This chapter instantiates that theorem in the one
+completion-valued signed equality furnished by the SP packet array.
+
 ### 3.1 The Schur obstruction
 
-Suppose $k$ is a characteristic-zero field and $S$ is an absolutely irreducible representation
-over an algebraic closure $\overline k$. Even if $S^\sigma\simeq S$ for every
-$\sigma\in\operatorname{Aut}(\overline k/k)$, an honest $k$-model need not exist. Choose
-intertwiners $u_\sigma:S^\sigma\to S$. Schur's lemma makes
+An absolutely irreducible $\overline k$-representation fixed up to isomorphism by
+$\operatorname{Aut}(\overline k/k)$ need not have a $k$-model. Semilinear intertwiners have a
+scalar factor set
 
 $$
-c(\sigma,\tau)
-=u_\sigma\,{}^\sigma u_\tau\,u_{\sigma\tau}^{-1}
-\tag{3.1}
+c(\sigma,\tau)=u_\sigma\,{}^\sigma u_\tau\,u_{\sigma\tau}^{-1}. \tag{3.1}
 $$
 
-a scalar. Associativity gives the two-cocycle equation, and changing the $u_\sigma$ changes
-$c$ by a coboundary. The resulting Brauer class is the obstruction to choosing the
-intertwiners so that they satisfy a genuine descent cocycle.
-
-A classical diagnostic is the two-dimensional complex irreducible representation of the
-quaternion group. Its character is rational, but its rational simple module is quaternionic:
-after scalar extension it contains the complex constituent with Schur multiplicity two. This
-example shows that trace containment, Galois invariance, and absolute irreducibility over an
-algebraic closure do not by themselves prove coefficient descent.
-
-Our situation has extra information. The constituent occurs with coefficient one in a virtual
-difference defined over $k$. The decomposition law for simple $k$-modules shows that a
-quaternionic, or any nontrivial, Schur multiplicity is impossible.
+Book 176 explains why this coefficient-field obstruction is distinct from the Clifford
+obstruction for extending a representation across a quotient of arithmetic groups.
 
 ### 3.2 Orbit and Schur multiplicities
 
-We first isolate the algebra behind that statement.
-
-**Lemma 3.1 (orbit and Schur multiplicity).** Let $T$ be a finite-dimensional simple
-$k$-representation of a group $G$, where $k$ has characteristic zero. Over $\overline k$, its
-semisimplification has the form
+The scalar extension of a simple $k$-module has the form
 
 $$
 (T\otimes_k\overline k)^{\mathrm{ss}}
-\simeq
-m\bigoplus_{S'\in\mathcal O}S',
-\tag{3.2}
+\simeq m\bigoplus_{S'\in\mathcal O}S', \tag{3.2}
 $$
 
-where $\mathcal O$ is one finite Galois orbit of pairwise nonisomorphic absolutely irreducible
-representations and the positive integer $m$ is constant on the orbit.
-
-**Proof.** Let $B$ be the image of $k[G]$ in $\operatorname{End}_k(T)$. It is a
-finite-dimensional algebra and $T$ is a simple $B$-module. By the density theorem for a simple
-module, the corresponding simple factor of the semisimple quotient of $B$ has the form
-
-$$
-M_d(\Delta),
-\tag{3.3}
-$$
-
-where $\Delta$ is a finite-dimensional division algebra over its center $Z$, and $Z/k$ is
-finite. After passing to a finite normal extension that contains every embedding of $Z$ and
-splits $\Delta$, each central embedding gives one absolutely irreducible constituent. Galois
-acts transitively on those embeddings because the original $k$-module was simple. The degree
-of the split division algebra is the same at every embedding and is the common multiplicity
-$m$. Extending further to $\overline k$ gives (3.2). $\square$
-
-Consequently, in the scalar extension of any integral virtual combination of simple
-$k$-modules, the coefficient of an absolutely irreducible constituent is constant on its
-Galois orbit and divisible by the Schur multiplicity attached to that orbit.
+where $\mathcal O$ is one Galois orbit and $m$ is its Schur multiplicity. Consequently any
+integral virtual class defined over $k$ has coefficients constant on each orbit and divisible by
+the corresponding $m$.
 
 ### 3.3 Descent from a signed equality
 
-**Theorem 3.2 (multiplicity-one coefficient descent).** Let $V^+$ and $V^-$ be
-finite-dimensional semisimple $k$-representations of a group $G$. Suppose that
+We use the following result exactly as proved in Book 176.
+
+**Theorem 3.2 (multiplicity-one coefficient descent; Book 176, Theorem 7.4).** If $V^+,V^-$
+are semisimple $k$-representations and
 
 $$
-[V^+\otimes_k\overline k]-[V^-\otimes_k\overline k]=[S]
-\tag{3.4}
+[V^+\otimes_k\overline k]-[V^-\otimes_k\overline k]=[S] \tag{3.4}
 $$
 
-for one absolutely irreducible representation $S$ over $\overline k$. Then there is a unique
-isomorphism class of absolutely irreducible $k$-representation $V$ such that
+for one absolutely irreducible $S$, then $S$ has a unique absolutely irreducible $k$-model
+$V$, and
 
 $$
-V\otimes_k\overline k\simeq S
-\tag{3.5}
+V^+\simeq V\oplus V^-. \tag{3.6}
 $$
 
-and
-
-$$
-V^+\simeq V\oplus V^-.
-\tag{3.6}
-$$
-
-**Proof.** Decompose $V^+$ and $V^-$ into simple $k$-modules and apply Lemma 3.1 to each
-simple summand. The coefficient function of the left side of (3.4) is constant on every Galois
-orbit and divisible by the Schur multiplicity of that orbit.
-
-Distinct simple $k$-modules have disjoint geometric supports. Indeed, if two of their scalar
-extensions shared an absolutely irreducible constituent, their semisimplifications would have a
-nonzero Hom over $\overline k$. Equivariance is a finite system of linear equations in the
-finite-dimensional Hom space, so Hom commutes with scalar extension. A nonzero Hom would
-therefore already exist over $k$, forcing the two simple modules to be isomorphic.
-
-The right side is one at $S$ and zero at every other absolutely irreducible representation.
-Its support therefore cannot contain a second Galois conjugate of $S$, so the orbit of $S$ is
-a singleton. Its coefficient one is divisible by the Schur multiplicity, so that multiplicity
-is one. The corresponding simple $k$-module $V$ consequently has scalar extension $S$, not a
-multiple of $S$.
-
-For every other simple $k$-module, the difference of the multiplicities in $V^+$ and $V^-$ is
-zero. For the module $V$, the difference is one. Equality of simple multiplicities over $k$
-therefore gives
-
-$$
-[V^+]-[V^-]=[V]
-\tag{3.7}
-$$
-
-and, because all three representations are semisimple, the actual direct-sum isomorphism
-(3.6). The scalar extension (3.5) proves absolute irreducibility. Uniqueness follows from
-unique simple multiplicities. $\square$
-
-The proof uses the signed equality over $k$, not merely its trace. It also proves more than the
-existence of some model after a finite extension: it produces a model over $k$ itself.
+In the SP application take $k=E_\lambda$ and
+$V^\pm=R_{\mathfrak B,\lambda}^\pm$. Book 188 supplies (3.4) after embedding
+$E_\lambda$ into an algebraic closure, while Chapter 2 ensures both signed terms are already
+defined over $E_\lambda$. Therefore the coefficient-one constituent descends over the desired
+completion itself; no trace-field shortcut is used.
 
 ### 3.4 Cocycle effectivity
 
-Theorem 3.2 has an equivalent descent-data interpretation which is useful for auditing
-coherence. Choose a finite Galois extension $k'/k$ over which $S$ and a finite set of
-intertwiners $u_\sigma$ are defined. The scalar factor set (3.1) determines the central simple
-algebra whose simple $k$-module gives the isotypic block containing $S$. If its division part
-has degree $m$, then every $k$-defined virtual class has coefficient divisible by $m$ at $S$.
-
-Equation (3.4) gives coefficient one. Hence $m=1$, the central simple algebra is split, and the
-factor set represents zero in the Brauer group of $k$. After rescaling the $u_\sigma$, one has
+The coefficient one in (3.4) forces its Galois orbit to be a singleton and its Schur
+multiplicity to be one. Equivalently, the class of (3.1) vanishes, so the intertwiners may be
+rescaled to satisfy
 
 $$
-u_{\sigma\tau}=u_\sigma\,{}^\sigma u_\tau.
-\tag{3.8}
+u_{\sigma\tau}=u_\sigma\,{}^\sigma u_\tau. \tag{3.8}
 $$
 
-The fixed vectors for this semilinear action form the module $V$ of Theorem 3.2. Thus the
-coefficient cocycle is not ignored; its effectivity is forced by multiplicity one.
-
-This argument also explains why no preferred matrices result. Rescaling the descent
-intertwiners changes the chosen basis of the descended module, while its $k$-isomorphism class
-remains unique. A compatible system needs the latter, not a canonical basis.
+This proves existence of the completion-valued isomorphism class, not a preferred basis or a
+canonical family of matrices.
 
 ### 3.5 Effectivity on coefficient overlaps
 
-Suppose $k_1/k$ and $k_2/k$ are two finite fields used to realize the signed equality. Apply
-Theorem 3.2 over $k$ and call its unique model $V$. Applying the same theorem after scalar
-extension to $k_i$ shows that the model obtained there is $V\otimes_k k_i$. On a common
-overfield $k_{12}$, the two displays are therefore isomorphic to the same representation
-$V\otimes_k k_{12}$. This proves effectivity on overlaps of finite realization fields.
-
-There is also a useful uniqueness statement over the base field. If two $k$-models $V_1,V_2$
-become isomorphic after a field extension $k'/k$, equivariance inside
-$\operatorname{Hom}_k(V_1,V_2)$ is a system of homogeneous linear equations. Only finitely many
-of those equations are independent because the Hom space is finite dimensional. Flat scalar
-extension consequently gives
+The same Book 176 theorem is stable under finite scalar extension. If two realization fields or
+two displays of one completion are embedded in a common overfield, both descended models become
+the scalar extension of the unique $E_\lambda$-model. The underlying Hom-base-change identity
+is
 
 $$
 \operatorname{Hom}_G(V_1,V_2)\otimes_k k'
-\simeq
-\operatorname{Hom}_G(V_1\otimes k',V_2\otimes k').
-\tag{3.9}
+\simeq\operatorname{Hom}_G(V_1\otimes k',V_2\otimes k'). \tag{3.9}
 $$
 
-The right side is nonzero, so the left side is nonzero. A nonzero map between irreducible
-modules is an isomorphism. Thus finite realization fields, embeddings of a completion, and
-their common overlaps do not create different descended members.
-
-There are therefore two different overlap assertions in the proof spine. Book 187's
-elementary-field overlap theorem compares restrictions on the Galois side and is an input to
-effectivity. The present coefficient-overlap theorem compares models of the already effective
-constituent and is a consequence of multiplicity one. Confusing the two would reverse the
-logical order.
+Thus coefficient-place overlap is a consequence of multiplicity one. It is logically different
+from Book 187's elementary-field overlap theorem, which is an input to the Gram calculation
+before effectivity.
 
 ## 4. Construction at every coefficient place
 
@@ -820,6 +727,9 @@ It is an integral virtual class defined over $E_\lambda$.
 
 ### 5.2 The norm-zero comparison
 
+This is the SP instantiation of Book 176, Corollary 7.3. Its extra work is to verify the
+combined cross-relation Gram hypotheses from the actual packet array.
+
 Expand the Hom norm of (5.3) using the union of the two induced lists and coefficient vector
 $(n_i,-m_j)$. Frobenius reciprocity and Mackey decomposition express each Gram entry as a sum
 over the double cosets in $H_i\backslash\Gamma/J_j$. Book 187's exact intersection theorem
@@ -915,7 +825,8 @@ was built. This is stronger than the top-field consistency check alone and is pr
 in the representation ring.
 
 Fix an elementary subgroup $H\leq\Gamma$ and work first over an algebraic closure of
-$E_\lambda$. Put $G_H=G_{F_H}$. For one induced term (2.5), Mackey decomposition gives
+$E_\lambda$. Put $G_H=G_{F_H}$. Applying Book 176's Mackey decomposition and tensor identity
+to one induced term (2.5) gives
 
 $$
 \begin{aligned}
@@ -1763,32 +1674,33 @@ by itself determine the reduction of tame monodromy on a future lattice.
 
 ### 10.1 Dependency audit
 
-The substantial imports and their exact uses are as follows.
+The direct dependency row is
 
-| Source | Imported result | Use in this book | Strengthening not made |
-|---|---|---|---|
-| Book 137 | coefficient systems and algebraic local records attached to each already constructed weight-two packet; determinant and purity; coefficient transport | simultaneous $E_\lambda$-models for the finite elementary packet array and its local objects | no base-field family, canonical lattice, or coefficient-prime integral conclusion |
-| The controlled SP top datum assumed by Book 187 | the chosen representation $\rho$, controlled top $M$, distinguished automorphic realization, and SP label | distinguished comparison and the conditional arithmetic starting object | the current Book 186 does not unconditionally supply the controlled residual automorphic seed |
-| Book 187 | packet array, exact elementary and conjugate-intersection identities, integral Brauer classes, determinant transfer, common virtual polynomials, restriction and local Mackey formulas, and the algebraic SP pair | construction of the signed terms, Gram entries, restriction recovery, global invariants, and local algebraic classes | no automatic automorphic transfer along every subgroup chain; no virtual class is called effective |
-| Book 188 | norm-one positive effectivity at every coefficient embedding, actual characteristic-zero cancellation, coefficient covariance, and scalar relation-independence | the multiplicity-one input (2.7) and the combined norm-zero comparison | no coefficient-completion model or assembled family is imported |
+$$
+\boxed{189\mid137,\ 176,\ 186,\ 187,\ 188.}
+$$
 
-The definitions and normalizations agree with Book 175: the base field and coefficient field
-have different places; arithmetic Frobenius gives constant term $p$; weak compatibility is
-place indexed; strong compatibility retains $N$; and coefficient descent is stronger than
-trace containment. Book 176's general Brauer discussion is used only as a normalization and
-failure-mode check. In particular, its older idea that a group-theoretic prime-cyclic tower
-automatically lies in the automorphic transfer range is not used. The exact overlap theorem is
-the committed interface of Book 187.
+| Source | Input used here | Strengthening not made |
+|---|---|---|
+| Book 137 | coefficient systems and algebraic local objects attached to the already constructed weight-two packets, including determinant, purity, and coefficient transport | no base-field family, canonical lattice, or moving-prime integral conclusion |
+| Book 176 | multiplicity-one coefficient descent, coefficient cocycle effectivity, presentation comparison, induction/Mackey/tensor formulas, and Brauer--Nesbitt recognition | no packet overlap, positivity verification, or SP local object is imported |
+| Book 186 | the conditional controlled SP top datum and its explicit missing-seed boundary | this book does not make that datum unconditional |
+| Book 187 | selected elementary packets, exact elementary and conjugate-intersection identities, integral Brauer classes, determinant and local Mackey formulas, common virtual polynomials, purity, and the algebraic SP pair | no virtual class is called effective and no inadmissible automorphic transfer is inserted |
+| Book 188 | the application-specific coefficient-independent Gram matrix, norm-one positivity, actual characteristic-zero cancellation, coefficient covariance, and scalar relation independence | no completion-valued model or assembled family is imported |
 
-No theorem from the changing-prime or fixed-three books enters the proof. Section 9.3 produces
-the base-field member and rational SP record needed for a later prime selection, but it does not
-produce coefficient-prime crystallinity, finite flatness, or unramifiedness at any exceptional
-prime not removed by the proved local comparison. Those later conclusions do not feed backward.
-The assembly theorem is conditional on the controlled SP top datum: it does not repair the
-missing Book-186 seed or turn that conditional datum into an unconditional consequence.
-No density theorem is used to manufacture effectivity, coefficient descent, local monodromy,
-or a coefficient cocycle. Recognition by traces is used only where two representations already
-exist and the relevant density input has already been discharged in the packet theorem.
+The work retained here is the assembly itself. Chapter 2 places every finite packet and character
+in one algebraic ledger. Chapters 3--5 instantiate Book 176's coefficient-descent criterion over
+each actual completion and prove completion-level relation independence. Chapters 6--8 recover
+every elementary restriction, construct common Frobenius polynomials, determinant and purity,
+and cancel the full algebraic local Mackey class, including the nonzero SP monodromy line, sign,
+and conductor. None of those application-specific conclusions is delegated to the abstract
+toolkit.
+
+No changing-prime or fixed-three theorem enters the proof. The assembled family exports rational
+SP data and the exact boundary at the coefficient prime; it does not manufacture crystallinity,
+finite flatness, or a coherent lattice. Recognition by traces is used only after the relevant
+representations exist, and density is never used to manufacture effectivity or a coefficient
+cocycle.
 
 ### 10.2 Hostile mathematical audit
 
@@ -1852,9 +1764,9 @@ conjugation, the distinguished member, and the global place-indexed compatible s
 record at $2$ is carried as a full Weil--Deligne pair with nonzero rank-one monodromy, line,
 sign, and conductor one. Integral refinement is excluded explicitly.
 
-Every substantial premise is either the explicitly assumed controlled SP top datum, ordinary
-characteristic-zero representation theory proved here, or an exact theorem of Books 137, 187,
-or 188. No conclusion of this book and no later consumer is used as a premise. Arithmetic
+Every substantial premise is either the controlled SP top datum of Book 186, the abstract
+representation-theoretic toolkit of Book 176, or an exact theorem of Books 137, 187, or 188.
+No conclusion of this book and no later consumer is used as a premise. Arithmetic
 Frobenius, induction, determinant, character
 ratio, residue-degree, duality, and conductor conventions are consistent throughout. The table
 of contents matches the heading structure, every displayed reference resolves within the

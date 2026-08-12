@@ -66,12 +66,10 @@
     - [A worked elliptic-curve diagnostic](#122-a-worked-elliptic-curve-diagnostic)
     - [Abelian varieties and coefficient factors](#123-abelian-varieties-and-coefficient-factors)
     - [Comparison with an automorphic system](#124-comparison-with-an-automorphic-system)
-13. [Potential modularity and descent to the base field](#13-potential-modularity-and-descent-to-the-base-field)
-    - [The exact input inherited from potential modularity](#131-the-exact-input-inherited-from-potential-modularity)
-    - [Constructing the system after restriction](#132-constructing-the-system-after-restriction)
-    - [Residual potential modularity is not enough](#133-residual-potential-modularity-is-not-enough)
-    - [Why descent is a new theorem](#134-why-descent-is-a-new-theorem)
-    - [Effective Brauer descent](#135-effective-brauer-descent)
+13. [Conditional potential automorphy and the downstream boundary](#13-conditional-potential-automorphy-and-the-downstream-boundary)
+    - [What potential automorphy actually gives](#131-what-potential-automorphy-actually-gives)
+    - [Why this does not descend the family](#132-why-this-does-not-descend-the-family)
+    - [Downstream producers](#133-downstream-producers)
 14. [Coefficient descent and conjugate systems](#14-coefficient-descent-and-conjugate-systems)
     - [Trace fields and enlargement](#141-trace-fields-and-enlargement)
     - [Galois conjugates](#142-galois-conjugates)
@@ -84,7 +82,7 @@
     - [Density-one and finite-exception conclusions](#154-density-one-and-finite-exception-conclusions)
 16. [Residual image, adequacy, and the CM boundary](#16-residual-image-adequacy-and-the-cm-boundary)
     - [Why compatibility alone gives no large image](#161-why-compatibility-alone-gives-no-large-image)
-    - [The non-CM large-image theorem](#162-the-non-cm-large-image-theorem)
+    - [The finite-exception large-image wrapper](#162-the-finite-exception-large-image-wrapper)
     - [Adequacy outside a finite set](#163-adequacy-outside-a-finite-set)
     - [CM and dihedral systems](#164-cm-and-dihedral-systems)
     - [A worked CM diagnostic](#165-a-worked-cm-diagnostic)
@@ -106,12 +104,10 @@
     - [Residual collapse and coefficient-prime ramification](#193-residual-collapse-and-coefficient-prime-ramification)
     - [Restriction, induction, and self-twist failures](#194-restriction-induction-and-self-twist-failures)
     - [A Steinberg-place audit](#195-a-steinberg-place-audit)
-20. [The exported arithmetic-family package](#20-the-exported-arithmetic-family-package)
-    - [The complete ledger](#201-the-complete-ledger)
-    - [The descent interface](#202-the-descent-interface)
-    - [The changing-prime interface](#203-the-changing-prime-interface)
-    - [Final theorem](#204-final-theorem)
-    - [Conclusion](#205-conclusion)
+20. [Scoped export and downstream handoff](#20-scoped-export-and-downstream-handoff)
+    - [The generic ledger](#201-the-generic-ledger)
+    - [The switching interface](#202-the-switching-interface)
+    - [Descent is downstream](#203-descent-is-downstream)
 
 ## 1. From one representation to an arithmetic family
 
@@ -179,39 +175,48 @@ All representations are continuous. A characteristic-zero member of a compatible
 
 ### 1.4 The prerequisite boundary
 
-Two established constructions form the input boundary for this book. The first attaches a pure rank-two family to a parallel-weight-two automorphic packet. In its geometric-Frobenius normalization it supplies a common Hecke polynomial, determinant, coefficient conjugates, and the full Frobenius-semisimple Weil--Deligne pair at every place covered by the established local geometric package. It also supplies stable lattices place by place, but no canonical lattice shared across coefficient places and no automatic finite-flat conclusion at the moving coefficient prime.
-
-The normalization change is exact. Suppose that source writes geometric Frobenius $\Phi_v$ and
+This volume has three direct inputs, and only three:
 
 $$
-\det(X-\rho_\lambda(\Phi_v))
-=X^2-t_vX+q_vs_v,
-\qquad
-\det\rho_\lambda=\chi_\lambda^{-1}\eta_\lambda, \tag{1.3}
+\boxed{175\mid 137,\ 162,\ 193.} \tag{1.3}
 $$
 
-with $s_v=\eta(\Phi_v)$. Put
+Book 137 supplies the coefficient-indexed systems attached to already constructed
+parallel-weight-two packets: common algebraic Frobenius polynomials, determinants, purity,
+coefficient conjugation, and the full Frobenius-semisimple Weil--Deligne pair exactly in its
+proved local range. Book 162 supplies the finite-subgroup classification and adequacy criteria
+used by the large-image wrapper in Chapter 16. Book 193 supplies Chebotarev density and the
+dense-Frobenius uniqueness step used throughout the compatibility calculus.
+
+The arithmetic-Frobenius normalization is fixed here. If Book 137 writes geometric Frobenius
+$\Phi_v$ and
 
 $$
-\rho_\lambda^{\mathrm{arith}}=\rho_\lambda^\vee,
-\qquad
-\psi=\eta^{-1}. \tag{1.4}
+\det(X-\rho_\lambda(\Phi_v))=X^2-t_vX+q_vs_v,
+\qquad \det\rho_\lambda=\chi_\lambda^{-1}\eta_\lambda,
 $$
 
-Because arithmetic Frobenius is $\Phi_v^{-1}$, its action on $\rho_\lambda^\vee$ has the same eigenvalues as $\rho_\lambda(\Phi_v)$. Thus the polynomial in (1.3) remains $X^2-t_vX+q_vs_v$, while
+we use $\rho_\lambda^{\mathrm{arith}}=\rho_\lambda^\vee$ and
+$\psi=\eta^{-1}$. Arithmetic Frobenius is $\Phi_v^{-1}$, so the displayed polynomial is
+unchanged and
 
 $$
-\det\rho_\lambda^{\mathrm{arith}}
-=\chi_\lambda\psi_\lambda,
-\qquad
-\psi(\operatorname{Frob}_v)=s_v.
+\det\rho_\lambda^{\mathrm{arith}}=\chi_\lambda\psi_\lambda.
 $$
 
-Dualizing the common local pair, with the dual monodromy operator, transports strict compatibility and does not alter conductor or purity weight in this simultaneous Frobenius conversion. This is the packet family used below; no coefficient or local theorem is added during the change of convention.
+Dualizing the local pair, including its monodromy operator, transports the verified local
+compatibility without enlarging its range.
 
-The second input begins with a chosen two-dimensional representation that becomes automorphic over a controlled totally real Galois extension. It supplies compatible automorphic systems on elementary fixed fields, an effective Brauer relation, coefficient descent of the multiplicity-one constituent to one completion of one number field, and algebraic local cancellation. Its output is an honest pure strictly compatible rank-two system—in the full Frobenius-semisimple Weil--Deligne sense fixed below—over the original base field, containing the chosen representation at a distinguished coefficient place. This is stronger than potential automorphy over the top field and stronger than a virtual identity in a Grothendieck group.
+No descent theorem is an input here. Books 187--189 are downstream: they construct and verify a
+particular elementary packet array, prove its effectivity, and assemble its members over the
+base field. They may instantiate the definitions and switching interface developed here, but
+none of their conclusions is used to prove anything in this volume. This direction avoids a
+cycle and keeps the distinction between generic compatible-system calculus and one Brauer
+application explicit.
 
-The exact boundary matters. From the first input we may use the common packet polynomials, purity, determinant, and verified local pairs, but not an unproved all-place comparison. From the second we may use actual base-field members, common local pairs, and independence of the Brauer presentation, but not integral cancellation, a coherent global lattice, or finite-flat structures at newly chosen coefficient places. Everything else developed below is either proved here from these inputs or stated with its additional hypotheses visible.
+Book 176 is likewise not a prerequisite. Its general integral Brauer, Clifford, effectivity,
+and coefficient-descent toolkit is the reusable source for later descent applications; this
+book does not reproduce that stack.
 
 ## 2. The two number fields and their places
 
@@ -1695,196 +1700,51 @@ Equation (12.11) identifies the global rational representations. It does not ide
 
 When both sides have proved strong local compatibility, their common Weil--Deligne parameters agree with $D(\pi_v)$ at every $v\nmid\lambda$. This is a consistency theorem among geometry, automorphic local correspondence, and Chebotarev. The local comparison input cannot be deleted merely because the good-prime comparison is dense.
 
-## 13. Potential modularity and descent to the base field
+## 13. Conditional potential automorphy and the downstream boundary
 
-### 13.1 The exact input inherited from potential modularity
+### 13.1 What potential automorphy actually gives
 
-Potential modularity begins with one representation and ends with an automorphic realization after restricting the base field. The hypotheses are substantial and must travel with the conclusion.
-
-In the weight-two range, let $F$ be totally real, let $\ell>2$ be unramified in $F$, and let
-
-$$
-\rho:G_F\longrightarrow\operatorname{GL}_2(\mathcal O) \tag{13.1}
-$$
-
-be continuous and irreducible. The phrase “under the potential-modularity hypotheses” will mean the entire following ledger; every item is an assumption, not an automatic consequence of the preceding ones.
-
-1. The representation is unramified outside finitely many places, has $\det\rho=\chi_\ell$, and is totally odd. In the standard clean infrastructure one takes $\ell\ge7$.
-2. At every $u\mid\ell$, the displayed lattice is an integral finite-flat object of labelled type $\{0,1\}$, with a chosen cyclotomic pairing. Every coefficient extension of this local model satisfies the named local Schur hypotheses. De Rham or crystalline type $\{0,1\}$ without this lattice is not enough.
-3. The chosen reduction $\bar\rho$ is totally odd and absolutely irreducible, its image is adequate, and
-   $$
-   H^0\bigl(F,\operatorname{ad}^0\bar\rho(1)\bigr)=0. \tag{13.2}
-   $$
-   Its alternating pairing with multiplier $\bar\chi_\ell$ is part of the datum.
-4. At every ramified $v\nmid\ell$, the target lies on a named represented component in the controlled nonminimal range. The record includes determinant, conductor, finite type, ordered characters or stable line when relevant, and whether monodromy is required to be nonzero.
-5. There is an odd auxiliary prime $q\ne\ell$, unramified in $F$, and an auxiliary residual representation $\bar\sigma$ that is totally odd, absolutely irreducible, adequate, and satisfies its own adjoint vanishing and local Schur conditions. It is the reduction of a known parallel-weight-two cuspidal source in the correct fixed-determinant and central-character block.
-6. The elliptic or Hilbert--Blumenthal realization datum has matching coefficient residue fields, a fixed polarization and orientation, locally compatible neat auxiliary level, and pairing-preserving frames at both coefficient primes.
-7. The resulting twisted fine moduli space is smooth, geometrically connected, positive-dimensional, and carries the required universal family. At every prescribed place there is an actual local comparison object on that same component and hence a nonempty local open; at $\ell$ and $q$ the comparison is integral and pairing-preserving. The auxiliary full-level descent is unramified outside the declared finite set.
-8. The avoidance field contains both residual fixed fields and every cyclotomic, self-twist, component, and descent field needed by the two lifting problems. The chosen totally real point is disjoint from it and splits the places whose local fields must remain unchanged. These conditions, rather than mere total reality, preserve the residual images and their adequacy.
-9. The auxiliary source remains cuspidal and residually automorphic over the output field. This is proved either by the explicit dihedral construction or by a solvable base-change argument with the self-twist test at each layer.
-10. The $q$-adic nonminimal integral hypotheses, global deformation hypotheses, and weight-two curve-realization theorem hold for the complete tuple of local components actually encountered, including every scalar or vexing case. These are the hypotheses for the first lifting step.
-11. The residual automorphic system can be lowered and raised to the precise target datum; the $\ell$-adic versions of the integral level/type, local Galois-family, determinant-line, and component-support theorems hold on the target component. These are the hypotheses for the second lifting step.
-12. If component switching is needed, it occurs over an admissible further solvable totally real extension, residual images remain unchanged, and cuspidality survives each base-change layer. That further field is retained as the endpoint unless the separate descent hypotheses are verified.
-
-This ledger is deliberately conditional. In particular, the residual two-prime construction does not by itself verify post-specialization cleanability at every additional semistable place. Clauses 10--12 assume the exact clean local components, support, and switching data actually encountered; they are not consequences of residual potential modularity, and no assertion is made here that every weight-two residual datum satisfies them.
-
-A finite-order determinant factor $\psi$ can be removed by a finite character $\eta$ only when
+Assume a representation $\rho:G_F\to\operatorname{GL}_2(L)$ satisfies a named
+potential-automorphy theorem, including all of that theorem's residual-image, determinant,
+Hodge, local-component, and field-avoidance hypotheses. Its usable output has the form
 
 $$
-\eta^2=\psi^{-1} \tag{13.2a}
+\rho|_{G_{F'}}\otimes C\simeq \rho_{\Pi,\lambda'}\otimes C,
+\tag{13.1}
 $$
 
-and the twist preserves every local and integral hypothesis. If no such square root exists, a different polarized moduli problem is needed.
+where $F'/F$ is finite, $\Pi$ is an automorphic packet over $F'$, and $C$ aligns the local
+coefficient fields. Book 137 then attaches the coefficient-indexed packet system
+$\{\rho_{\Pi,\nu}\}_\nu$ over $F'$. The system has the common good polynomials, determinant,
+purity, Hodge data, and local pairs in Book 137's proved range.
 
-Under these hypotheses, there are a finite totally real extension $F^{\mathrm{pm}}/F$, a parallel-weight-two cuspidal $\Pi$ over $F^{\mathrm{pm}}$, a coefficient place $\widetilde\lambda\mid\ell$, and a common finite local coefficient extension $C$ such that
+This is a conditional interface, not a new potential-automorphy theorem. A residual congruence
+alone does not identify a prescribed characteristic-zero lift with (13.1), and the hypotheses
+of the chosen lifting theorem must remain attached to the conclusion.
 
-$$
-\rho|_{G_{F^{\mathrm{pm}}}}\otimes C
-\simeq
-\rho_{\Pi,\widetilde\lambda}\otimes C. \tag{13.3}
-$$
+### 13.2 Why this does not descend the family
 
-The field is finite and totally real and can satisfy prescribed splitting and disjointness conditions. It is not automatically Galois or solvable.
+Equation (13.1) selects one member after restriction. It does not construct representations of
+$G_F$ at the other coefficient places. Even when $F'/F$ is Galois and every restricted member
+is invariant up to isomorphism, intertwiners can carry a nontrivial Clifford factor set; a
+virtual Brauer identity can also have negative multiplicities; and an effective constituent
+over an algebraic closure can still have a coefficient-field Schur obstruction.
 
-### 13.2 Constructing the system after restriction
+Those are not gaps in the definition of compatibility. They are separate descent problems.
+The reusable integral Brauer, Clifford, norm-one, and coefficient-descent mechanisms are kept in
+Book 176. This volume uses none of them as a premise.
 
-Equation (13.3) places the restricted target into an arithmetic family. Let $E_\Pi$ be the coefficient field of $\Pi$. For every finite place $\nu$ of $E_\Pi$, construct
+### 13.3 Downstream producers
 
-$$
-\rho_{\Pi,\nu}:G_{F^{\mathrm{pm}}}\longrightarrow
-\operatorname{GL}_2(E_{\Pi,\nu}). \tag{13.4}
-$$
+Books 187--189 implement one controlled application of that toolkit. Book 187 constructs the
+SP elementary-packet array and proves its nonnormal overlap identities. Book 188 verifies the
+application-specific Gram matrix and norm-one positivity. Book 189 kills the remaining
+coefficient obstruction and assembles the actual base-field family, including restriction
+recovery, purity, and the proved SP local record.
 
-The common good polynomials are
-
-$$
-P_w(X)=X^2-a_w(\Pi)X+q_w \tag{13.5}
-
-$$
-
-in the cyclotomic-determinant case, or
-
-$$
-X^2-a_w(\Pi)X+\psi(w)q_w \tag{13.6}
-
-$$
-
-in the verified finite-character variant. Theorems 10.1--10.2 organize these members into a weak or strong compatible system according to the available local comparison package. The member at $\widetilde\lambda$ is the restricted original target after the explicit coefficient embeddings in (13.3).
-
-This construction produces a system over $F^{\mathrm{pm}}$. It does not produce representations of $G_F$ at the other coefficient primes. To do that one must descend the system, or construct it independently over $F$. Potential modularity alone has completed neither task.
-
-The local ledger remains part of the output. At every place split completely from $F$, the local field and target component are unchanged. At a Steinberg place, monodromy and its chosen branch are retained in the controlled range. At coefficient-prime places, the chosen finite-flat lattice and Hodge type belong to the original $\widetilde\lambda$-member; another coefficient prime has its own coefficient-prime places and needs its own integral comparison.
-
-### 13.3 Residual potential modularity is not enough
-
-The residual potential-modularity theorem begins with
-
-$$
-\bar\rho:G_F\longrightarrow\operatorname{GL}_2(k)
-$$
-
-and, under its two-prime realization hypotheses, constructs $F'/F$ and an automorphic $\Pi_A$ such that
-
-$$
-\bar\rho|_{G_{F'}}\simeq
-\bar\rho_{\Pi_A,\lambda}^{\mathrm{ss}} \tag{13.7}
-$$
-
-after residue-field extension. This proves residual modularity over $F'$. It does not identify a prescribed characteristic-zero lift $\rho$ with $\rho_{\Pi_A,\lambda}$.
-
-That identification requires the second modularity-lifting theorem and all its determinant, integral Hodge, local component, residual image, and automorphic-support hypotheses. Without it, one may construct the compatible system attached to $\Pi_A$, but one may not claim that the original characteristic-zero representation is one of its members.
-
-The distinction is decisive in changing-prime arguments. A residual congruence gives one automorphic lift. It does not make every other lift of the same residual representation automorphic. Component support and a lifting theorem choose the desired lift.
-
-### 13.4 Why descent is a new theorem
-
-Suppose $F^{\mathrm{pm}}/F$ is Galois for the moment. The system attached to $\Pi$ may be invariant under $\operatorname{Gal}(F^{\mathrm{pm}}/F)$ at the level of isomorphism classes. Even this is not automatic from (13.3) unless the original $G_F$-representation supplies the conjugation isomorphisms. And invariance is not yet a descent datum: the intertwiners must satisfy a cocycle condition.
-
-If the extension is solvable, cyclic descent can be attempted one layer at a time. Each layer has a finite twisting ambiguity. Choices at one layer must be invariant at the next. A compatible representation already defined on $G_F$ can select the correct twists, but a representation at only one coefficient prime need not select coherent descents for every other member without a compatibility argument.
-
-If $F^{\mathrm{pm}}/F$ is not solvable or not Galois, the solvable descent theorem does not apply directly. Passing to a Galois closure changes the field and can destroy residual image conditions. A different mechanism is available only when one has a controlled Galois top, compatible systems on the necessary elementary fixed fields, and exact overlap identities on their intersections. Effective Brauer descent, treated in the next section, uses precisely that stronger ledger.
-
-Potential modularity should therefore be recorded as
-
-$$
-\bigl(F^{\mathrm{pm}},\Pi,\mathcal R(\Pi),
-\rho|_{G_{F^{\mathrm{pm}}}}\simeq\rho_{\Pi,\widetilde\lambda},
-\text{local and field ledgers}\bigr), \tag{13.8}
-$$
-
-not as an unnamed system over $F$.
-
-### 13.5 Effective Brauer descent
-
-Potential automorphy over a top field and a compatible system over the original field are separated by three obstructions. A Brauer expression is initially virtual; an effective constituent obtained over an algebraic closure may have a Schur obstruction; and rational cancellation need not preserve any chosen lattice. The established base-field descent theorem removes the first two obstructions, while deliberately leaving the third in place.
-
-Here is the reusable form of that theorem. Let $M/F$ be a finite Galois extension with group $\Gamma$. Suppose that for every elementary subgroup $H\leq\Gamma$, with fixed field $F_H=M^H$, there is a pure strongly compatible rank-two automorphic system
-
-$$
-\mathcal R_H=\{r_{H,\lambda}:G_{F_H}\to
-\operatorname{GL}_2(E_\lambda)\}_\lambda. \tag{13.9}
-$$
-
-Assume the following data have been proved.
-
-1. There is an integral Brauer relation
-
-   $$
-   1_\Gamma=\sum_i n_i
-   \operatorname{Ind}_{H_i}^{\Gamma}\theta_i, \tag{13.10}
-   $$
-
-   where the $H_i$ are elementary and the $\theta_i$ are finite-order characters defined over one number field $E$.
-2. If $D\leq H$ is an elementary intersection subgroup occurring in a Mackey calculation, then the restriction of the selected system on $F_H$ to $F_D$ is the selected system on $F_D$, after scalar extension. Equality only after restriction to $G_M$ is not enough, because two extensions to $G_{F_D}$ can differ by a character of $D$.
-3. At a distinguished coefficient place $\lambda_0$, the signed induced class associated with (13.10) is one prescribed absolutely irreducible rank-two representation $r$ of $G_F$.
-4. The character-norm calculation for the signed class is coefficient independent and has norm one, and the combined norm-zero comparison applies to any two allowable Brauer relations. The determinant-of-induction calculation, including permutation determinants and the transferred character squares, yields one prescribed compatible determinant character. Locally, the analogous Mackey class includes finite inertia, Frobenius return maps, and monodromy, not only Euler factors or conductors.
-
-Write $n_i=n_i^+-n_i^-$ and form actual semisimple representations
-
-$$
-R_\lambda^\pm=
-\bigoplus_i
-\left(
-\operatorname{Ind}_{G_{F_{H_i}}}^{G_F}
-(r_{H_i,\lambda}\otimes\theta_{i,\lambda})
-\right)^{\oplus n_i^\pm}. \tag{13.11}
-$$
-
-The norm-one theorem says that over an algebraic closure
-
-$$
-[R_\lambda^+]-[R_\lambda^-]=[S_\lambda] \tag{13.12}
-$$
-
-for one absolutely irreducible rank-two representation $S_\lambda$. This is effectivity, but coefficient descent still has to be proved. Decompose $R_\lambda^\pm$ into simple $E_\lambda$-modules. After scalar extension, every simple module contributes a complete Galois orbit of absolutely irreducible constituents, each with common multiplicity equal to its Schur index. In (13.12) the constituent $S_\lambda$ has coefficient one and every conjugate constituent has coefficient zero. Its Galois orbit must therefore be a singleton, and its Schur index must divide one. Hence $S_\lambda$ has an $E_\lambda$-model $r_\lambda$, uniquely characterized by
-
-$$
-R_\lambda^+\simeq r_\lambda\oplus R_\lambda^-. \tag{13.13}
-$$
-
-This argument simultaneously proves continuity and independence of the positive-minus-negative presentation. Applying it to two Brauer relations and using the combined norm-zero comparison proves independence of the relation itself.
-
-At a good place $v$, taking determinants of $1-T\operatorname{Frob}_v$ in (13.13) turns the signed product of induced local polynomials into the characteristic polynomial of the actual rank-two complement. At a bad place, apply the Weil--Deligne construction to (13.13). The algebraic local Mackey objects satisfy
-
-$$
-\mathscr D_{v,E}^+
-\simeq D_v\oplus\mathscr D_{v,E}^-, \tag{13.14}
-$$
-
-after a single finite coefficient enlargement for the finitely many bad places. Krull--Schmidt cancellation makes the rank-two complement $D_v$ independent of $\lambda$ and of the Brauer relation. Thus the family $\{r_\lambda\}_\lambda$ is weakly compatible, and it is strongly compatible wherever the elementary-field inputs provide the required full local pairs.
-
-**Theorem 13.1 (effective descent of a potentially automorphic family).** Under hypotheses 1--4 above, there is an $E$-rational rank-two compatible system
-
-$$
-\mathcal R_F=\{r_\lambda:G_F\to
-\operatorname{GL}_2(E_\lambda)\}_\lambda \tag{13.15}
-$$
-
-whose distinguished member is $r$ and whose common good polynomials, prescribed determinant, purity, and proved local Weil--Deligne pairs are independent of the Brauer presentation. Its restriction data are compatible with the elementary-field ledger wherever the stated overlap and base-change identities identify them. If the local elementary systems are strictly compatible at every finite place and the local Mackey cancellation applies there, then so is $\mathcal R_F$.
-
-**Proof.** Equations (13.11)--(13.13) give actual continuous rank-two members over every $E_\lambda$ and show coefficient descent. Induced Frobenius-block determinants give the common good polynomials. Their restriction to the top-field polynomial ledger gives purity: if a Frobenius root becomes its $f$-th power over a residue-degree-$f$ place, weight one upstairs gives absolute value $q_v^{f/2}$, so the original root has absolute value $q_v^{1/2}$. The assumed determinant-transfer calculation gives the prescribed compatible determinant. Equation (13.14) gives the common local pair and hence conductor, type, and monodromy independence. The norm-zero comparison for two relations and faithful descent of intertwiners prove presentation independence. The distinguished tensor identity identifies $r_{\lambda_0}$ with $r$. $\square$
-
-The theorem does not descend lattices through (13.13). An isomorphism over $E_\lambda$ can have denominators, the intersection of $r_\lambda$ with a positive lattice need not be saturated, and reduction need not preserve the direct sum. Each member has some stable lattice by compactness, while the distinguished member retains its originally selected lattice. New finite-flat quotients, self-dual lattices, and residual extension classes require separate integral arguments.
+Thus a downstream theorem may feed an already assembled family back into Chapters 14--18 for
+coefficient operations or prime switching. It may not be read backward as a prerequisite for
+the definitions, uniqueness results, image wrapper, or switching theorem proved here.
 
 ## 14. Coefficient descent and conjugate systems
 
@@ -2098,50 +1958,45 @@ $$
 
 inside the residual image after a choice of coordinates, not necessarily $\operatorname{SL}_2(k_\lambda)$.
 
-### 16.2 The non-CM large-image theorem
+### 16.2 The finite-exception large-image wrapper
 
-We state the rank-two theorem in the form used later.
+The group theory is imported from Book 162 rather than reproved here. The compatible-system
+input needed to apply it can be stated cleanly.
 
-**Theorem 16.1 (finite-exception large image).** Let $F$ be totally real and let $\mathcal R(\pi)$ be the strongly compatible system attached to a regular algebraic cuspidal representation $\pi$ of $\operatorname{GL}_2(\mathbf A_F)$. Assume:
+**Theorem 16.1 (finite-exception large-image wrapper).** Let $F$ be totally real and let
+$\mathcal R(\pi)$ be a strongly compatible rank-two system attached to a regular algebraic
+cuspidal packet. Assume:
 
-1. $\pi$ is not automorphically induced from a character of a quadratic extension of $F$;
-2. every finite-order self-twist has been accounted for in the inner-twist field $E^{\mathrm{it}}$;
-3. the characteristic-zero algebraic monodromy group has derived group $\operatorname{SL}_2$ after restriction of scalars from $E^{\mathrm{it}}$; and
-4. the integral specialization and local-inertia theorem for this automorphic system applies: outside finitely many $\lambda$, the trace identities detecting proper algebraic subgroups specialize faithfully, every quadratic character obtained from a residual Cartan-normalizer quotient has conductor dividing one fixed modulus, and the residual projective trace field is $k_{\lambda_0}$.
+1. the system is not dihedral, equivalently the packet is not automorphically induced from a
+   character of a quadratic extension;
+2. all finite-order self-twists have been absorbed into the inner-twist field
+   $E^{\mathrm{it}}$;
+3. the characteristic-zero derived monodromy group is the expected $\operatorname{SL}_2$ after
+   restriction of scalars from $E^{\mathrm{it}}$; and
+4. an integral specialization theorem bounds the conductors of residual Cartan-normalizer
+   characters and identifies the residual projective trace field with
+   $k_{\lambda_0}$, where $\lambda_0=\lambda|_{E^{\mathrm{it}}}$.
 
-Then there is a finite set $B_{\mathrm{img}}$ of coefficient places such that, for every $\lambda\notin B_{\mathrm{img}}$, the residual representation is absolutely irreducible and its image contains, after conjugation, the group in (16.1). The determinant restricts the full image to the subgroup allowed by (15.6); no assertion that the image is all of $\operatorname{GL}_2(k_\lambda)$ is made.
-
-**Proof strategy.** The classification of finite subgroups of $\operatorname{PGL}_2$ leaves four obstructions: a Borel, a Cartan normalizer, one of the bounded exceptional groups, or failure to contain the predicted subfield special linear group. The specialization theorem in clause 4 turns an obstruction occurring at infinitely many coefficient primes into a characteristic-zero algebraic relation. Borel occurrence forces reducibility of the system, Cartan-normalizer occurrence forces a quadratic self-twist, and bounded exceptional occurrence forces the projective trace ratios into a finite algebraic set. Each contradicts the hypotheses.
-
-**Proof.** By clause 3, finitely many good Frobenius conjugacy classes can be chosen whose characteristic-zero image is not contained in a proper algebraic subgroup of the predicted derived monodromy group. This is a statement about trace identities and simultaneous invariant-subspace equations, not about choosing one common matrix model in every completion. Clause 4 says that the required nonvanishing identities survive reduction outside a finite set. Thus the residual image is not contained in a Borel at those places.
-
-Suppose Cartan-normalizer containment occurs for infinitely many remaining $\lambda$, after adding the places of residue characteristic $2$ to the finite exceptional set. The quotient of the normalizer by the Cartan supplies a quadratic character $\eta_\lambda$. Weak or strong compatibility alone does not bound the conductor of $\eta_\lambda$ at the moving coefficient prime. The fixed-modulus assertion in clause 4 is exactly the extra local input that makes the set of possible global quadratic characters finite. Passing to an infinite subset fixes one $\eta$. On the Cartan coset where $\eta=-1$, the residual trace is zero. Hence
-
-$$
-a_v\equiv\eta(v)a_v\pmod\lambda
-$$
-
-for infinitely many $\lambda$ and every good $v$. The algebraic integers are therefore equal:
+Then outside a finite set of coefficient places, $\bar\rho_\lambda$ is absolutely irreducible
+and its image contains a conjugate of
 
 $$
-a_v=\eta(v)a_v. \tag{16.2}
+\operatorname{SL}_2(k_{\lambda_0}). \tag{16.2}
 $$
 
-Strong multiplicity one and Chebotarev give the characteristic-zero self-twist $\mathcal R\simeq\mathcal R\otimes\eta$. The rank-two self-twist criterion makes the system dihedral, contradicting clause 1. Clause 2 enters separately in identifying the correct projective trace field rather than the full displayed coefficient field.
+**Justification.** Book 162 reduces a finite subgroup of $\operatorname{PGL}_2$ to the Borel,
+Cartan-normalizer, bounded exceptional, or subfield special-linear cases. Hypothesis 3 plus
+integral specialization excludes the Borel and bounded exceptional loci outside finitely many
+places. Hypotheses 1, 2, and the conductor bound in hypothesis 4 turn infinitely many
+Cartan-normalizer occurrences into one characteristic-zero quadratic self-twist, a
+contradiction. The projective-trace-field clause then identifies the field in the remaining
+special-linear case. This is exactly the Book 162 classification/adequacy input combined with
+the family-specific integral specialization input; compatibility alone proves neither part.
 
-The projective exceptional groups $A_4,S_4,A_5$ have bounded order. For a matrix with eigenvalue ratio $z$, the projective invariant
-
-$$
-u(g)=\frac{\operatorname{tr}(g)^2}{\det(g)}=z+2+z^{-1} \tag{16.3}
-$$
-
-therefore lies in a fixed finite set for every element of such a group. It is not enough to test this invariant on the chosen generators: finite-order matrices can generate an infinite group. Instead test the finitely many words supplied by the specialization theorem in clause 4. Equivalently, view the tuples conjugate into $A_4$, $S_4$, or $A_5$ as a finite union of proper algebraic loci in the tuple space. A characteristic-zero tuple with Zariski-dense generated group lies outside that union, so a polynomial separating it from the union remains nonzero after reduction outside finitely many places. Exceptional containment is then impossible.
-
-The remaining case in the subgroup classification contains the special linear group over the field generated by the residual projective invariants. The projective-trace-field assertion in clause 4 identifies that field with $k_{\lambda_0}$. This proves containment of (16.1), absolute irreducibility, and the theorem. $\square$
-
-The proof makes clear why bounded conductor and the inner-twist field are not decorative. Without bounded quadratic characters the self-twist cannot be fixed by pigeonhole. Without the correct trace field, one can overstate the subfield over which the residual special linear group is defined.
-
-Clause 4 is additional image-theorem input. Neither weak compatibility, strong local compatibility, nor the automorphic construction of Chapter 10 by itself proves its moving-prime conductor bound or its integral specialization assertion. An application must cite the appropriate open-image theorem for its automorphic family or retain clause 4 as a hypothesis.
+The conclusion concerns the inner-twist residue field, not automatically the full displayed
+$k_\lambda$, and the determinant can still restrict the full image. The theorem is therefore a
+wrapper: every application must separately cite or assume the integral specialization and
+moving-prime conductor statements in clause 4.
 
 ### 16.3 Adequacy outside a finite set
 
@@ -2229,123 +2084,86 @@ Choose a split $w$ for which $\theta(\operatorname{Frob}_w)\ne\theta^\sigma(\ope
 
 ## 17. Solvable base change, descent, and self-twists
 
+This chapter is an interface, not an additional transfer theorem. Every automorphic assertion
+below is conditional on a named base-change, descent, or automorphic-induction theorem whose
+cuspidality, selector, and local-compatibility hypotheses have been verified.
+
 ### 17.1 Ascent of a compatible system
 
-Let $L/F$ admit a tower of cyclic extensions, and let $\pi$ be regular algebraic cuspidal over $F$. Solvable base change constructs an automorphic isobaric representation
+If an available solvable base-change theorem constructs
+$\Pi=\operatorname{BC}_{L/F}(\pi)$, its expected local interface is
 
 $$
-\Pi=\operatorname{BC}_{L/F}(\pi) \tag{17.1}
+D(\Pi_w)=D(\pi_v)|_{W_{L_w}}, \tag{17.1}
 $$
 
-whose local parameter at $w\mid v$ is
+with the same monodromy operator, and
 
 $$
-D(\Pi_w)=D(\pi_v)|_{W_{L_w}}. \tag{17.2}
+\omega_\Pi=\omega_\pi\circ N_{L/F}. \tag{17.2}
 $$
 
-The monodromy operator is unchanged. The central character becomes
-
-$$
-\omega_\Pi=\omega_\pi\circ N_{L/F}. \tag{17.3}
-$$
-
-On the Galois side, (17.2) is exactly restriction of the compatible system. At an unramified place the roots are raised to $f(w/v)$ as in (9.4). At a ramified place, the full parameter must be restricted; conductor is not obtained by extending the old conductor ideal.
-
-If the endpoint remains cuspidal and lies in the same curve-realizable range, the automorphic system attached to $\Pi$ agrees memberwise after semisimplification with $\mathcal R(\pi)|_{G_L}$ by Chebotarev. Strong local compatibility identifies their full Frobenius-semisimple Weil--Deligne pairs.
-
-Algebraic weights pull back along embeddings $L\hookrightarrow\overline{\mathbf Q}$. Coefficient fields do not grow at the level of good Hecke data: the base-changed trace at $w$ is a polynomial in the original trace and determinant. A field of definition may still be enlarged for local or cohomological models.
+On the Galois side this is ordinary restriction of the compatible system. At unramified places,
+Frobenius roots are raised to the residue degree; at ramified places, the full Weil--Deligne
+pair must be restricted. The interface does not infer the conductor by extending an ideal and
+does not enlarge the proved local range of the attachment theorem.
 
 ### 17.2 Cuspidality and its first failure
 
-Ascent always produces an isobaric automorphic object; it need not remain cuspidal. Along a prime cyclic tower, the first failure can occur only at a quadratic step. If $L_i/L_{i-1}$ is that step with norm character $\eta$, then the preceding cuspidal representation satisfies
+A solvable base change may be isobaric rather than cuspidal. At a quadratic layer with quotient
+character $\eta$, the warning signal is the self-twist
 
 $$
-\pi_{i-1}\simeq\pi_{i-1}\otimes\eta. \tag{17.4}
+\pi_i\simeq\pi_i\otimes\eta. \tag{17.3}
 $$
 
-Equivalently,
-
-$$
-\pi_{i-1}\simeq
-\operatorname{AI}_{L_i/L_{i-1}}(\theta) \tag{17.5}
-$$
-
-for a character $\theta$, and
-
-$$
-\operatorname{BC}_{L_i/L_{i-1}}(\pi_{i-1})
-=\theta\boxplus\theta^\sigma. \tag{17.6}
-$$
-
-The compatible Galois system becomes reducible after the same restriction. Every later base change remains isobaric.
-
-Thus the cusp check is stepwise. Absence of a self-twist visibly attached to the bottom field is sufficient in many cyclic cases, but in a noncyclic solvable tower a quadratic obstruction can appear at an intermediate field. The endpoint system itself exposes the failure through reducibility.
+In the induced case the next restriction splits into the two conjugate characters. The check is
+stepwise: a self-twist can first appear over an intermediate field even when none is visible at
+the bottom. This criterion is recorded here only to audit whether a supplied automorphic
+interface remains in the cuspidal rank-two range.
 
 ### 17.3 Descent with a compatible arithmetic extension
 
-Descent reverses (17.1) and is more delicate. Let $L/F$ be solvable Galois, let $r:G_F\to\operatorname{GL}_2(\overline{\mathbf Q}_\ell)$ be continuous semisimple, and suppose $r|_{G_L}$ is irreducible and associated with a regular algebraic cuspidal $\Pi_L$. Assume the standard compatibilities of Galois representations with cyclic base change and finite-order twists.
-
-Then the representation $r$ supplies coherent descent data. Its restriction is invariant under $\operatorname{Gal}(L/F)$, so strong multiplicity one makes $\Pi_L$ invariant. At the top cyclic layer, choose any automorphic descent. Its attached Galois representation and the restriction of $r$ have isomorphic restrictions to the top field. Since that restriction is irreducible, Clifford theory says that the two extensions differ by a character of the cyclic quotient. Twist the automorphic descent by the inverse character. The corrected descent is associated with the next restriction of $r$ and is therefore invariant at the next layer. Iterate.
-
-This proves a cuspidal $\pi/F$ with
+Suppose a descent theorem is available along a solvable tower and a representation
+$r:G_F\to\operatorname{GL}_2(\overline{\mathbf Q}_\ell)$ already extends the selected
+irreducible top member. Then $r$ selects the quotient twist at each cyclic layer. The desired
+interface is
 
 $$
-\operatorname{BC}_{L/F}(\pi)\simeq\Pi_L,
-\qquad
-\rho_{\pi,\ell}^{\mathrm{ss}}\simeq r. \tag{17.7}
+\operatorname{BC}_{L/F}(\pi)\simeq\Pi_L,\qquad
+\rho_{\pi,\ell}^{\mathrm{ss}}\simeq r. \tag{17.4}
 $$
 
-The argument also descends the compatible system: for every coefficient prime $\lambda$, the common good polynomials of the corrected bottom form define $\rho_{\pi,\lambda}$, and restriction recovers the top member by Chebotarev. The one arithmetic extension at the chosen prime selects the coherent automorphic twists; the bottom automorphic form then constructs every coefficient-prime member.
-
-If $r|_{G_L}$ is reducible, scalar Schur's lemma fails and the correction need not be one character. One must use the explicit two-character and automorphic-induction analysis. If no $r$ over $F$ is supplied, Galois invariance of $\Pi_L$ is necessary but a compatible chain of cyclic descent choices remains to be proved.
+The extension $r$ is essential data, not a consequence of invariant traces. Without it, a
+Clifford factor set and a torsor of quotient twists remain. Book 176 develops that general
+obstruction theory for downstream descent arguments; it is not used as a premise here. Once a
+bottom automorphic packet has actually been constructed, Book 137 attaches its coefficient
+system and the generic calculus of this book applies.
 
 ### 17.4 Automorphic induction in a solvable diagram
 
-Base change and automorphic induction commute through the Mackey formula, with split, disjoint, and contained cases treated separately. For a quadratic $M/F$ and a further field $L/F$, restriction of
+A supplied automorphic-induction theorem must match the Galois induction and its local Mackey
+formula. If a quadratic inducing field becomes contained in the base-change field, the induced
+rank-two object splits; in a disjoint compositum it remains a quadratic induction precisely
+when the conjugate characters remain distinct.
 
-$$
-\operatorname{Ind}_{G_M}^{G_F}\theta
-$$
-
-to $G_L$ is induced from the components of $ML/L$. If $M\subset L$, it splits as two characters. If $M$ and $L$ are suitably disjoint, it remains a quadratic induction from $ML/L$ and is cuspidal precisely when the conjugate characters remain distinct.
-
-On the automorphic side this says that
-
-$$
-\operatorname{BC}_{L/F}\operatorname{AI}_{M/F}(\theta)
-$$
-
-is the corresponding automorphic induction or isobaric sum. A self-twist is the caveat controlling which. The equality is a local-parameter theorem, not a formal interchange of two symbols.
-
-For higher cyclic induction of a character, dimension becomes the extension degree. For induction of a $\operatorname{GL}_2$ system, dimension doubles at a quadratic step and requires a higher-rank automorphic-induction theorem. Solvable base change alone does not provide that theorem.
-
-These facts give the safe descent rule: restrict full local parameters on ascent; use an actual compatible extension or a proved recursive descent datum on descent; check self-twists at every quadratic layer; and never use induction without auditing its new dimension.
+Dimension is the decisive audit. Induction of a character across a degree-$d$ extension has
+rank $d$, while induction of a rank-two system has rank $2d$. Solvable base change does not by
+itself provide the corresponding higher-rank automorphic induction. No interchange of
+$\operatorname{BC}$ and $\operatorname{AI}$ is asserted without the required local-parameter
+theorem.
 
 ### 17.5 Descent beyond solvable towers
 
-The failure of a solvable tower does not license an induction of one two-dimensional top-field member: that induction has dimension multiplied by the degree. Effective Brauer descent instead combines many induced systems in a signed relation and proves that their virtual difference is one actual rank-two constituent.
+For a nonsolvable top, inducing one rank-two member has the wrong dimension. The general Brauer,
+Clifford, norm-one, and coefficient-descent mechanisms belong to Book 176. Books 187--189 are a
+downstream SP application: they build the elementary packet diagram, verify every intersection
+and Gram entry, prove effectivity, descend coefficients, and recover one base-field compatible
+system with its local record.
 
-The logical order is indispensable:
-
-$$
-\begin{array}{c}
-\text{compatible systems on elementary fixed fields}
-\\ \Downarrow\ \text{intersection identities and Mackey theory}
-\\
-\text{one coefficient-independent signed class}
-\\ \Downarrow\ \text{character norm one}
-\\
-\text{one effective rank-two constituent over an algebraic closure}
-\\ \Downarrow\ \text{multiplicity-one Schur descent}
-\\
-\text{one }E_\lambda\text{-representation for every }\lambda
-\\ \Downarrow\ \text{local Krull--Schmidt cancellation}
-\\
-\text{one compatible system over the base field.}
-\end{array} \tag{17.8}
-$$
-
-Skipping the intersection identities makes the character norm wrong: restrictions that agree only over the top field can differ on an intersection field by quotient characters. Skipping effectivity leaves a virtual object. Skipping multiplicity-one descent leaves representations over unrelated algebraic closures. Skipping local cancellation retains good traces but loses inertia and monodromy. Section 13.5 proves the resulting base-field theorem and also explains why none of these rational steps performs integral cancellation.
+This book imports none of those conclusions. Its role begins again once an honest base-field
+system has been produced: coefficient operations, inner-twist bookkeeping, the large-image
+wrapper, and the switching theorem can then be applied to that system.
 
 ## 18. Changing the coefficient prime
 
@@ -2572,124 +2390,57 @@ The hostile audit is short and decisive.
 
 Every item must survive a claimed base change or coefficient-prime switch. Under base change, the unramified twist is pulled back by the norm, Frobenius values are raised by the residue degree, and $N$ stays nonzero. Under coefficient change, the algebraic scalar is embedded into the new completion and the same $N$ is transported.
 
-## 20. The exported arithmetic-family package
+## 20. Scoped export and downstream handoff
 
-### 20.1 The complete ledger
+### 20.1 The generic ledger
 
-A usable compatible system is more than the symbol $\{\rho_\lambda\}$. The complete arithmetic ledger is
+The output of this book is the compatible-system ledger
 
 $$
 \mathscr C=
-\left(
-F,E,S,\mathcal V_{\mathrm{str}},
-\{\rho_\lambda\}_\lambda,
-\{P_v\}_{v\notin S},
-\delta,
+\left(F,E,S,\{\rho_\lambda\}_\lambda,
+\{P_v\}_{v\notin S},\delta,
 \{D_v\}_{v\in\mathcal V_{\mathrm{str}}},
-\{H_{\tau_0}\}_{\tau_0},
-m,\mu,
-\{T_\lambda\}_\lambda,
-B
-\right). \tag{20.1}
+\{H_{\tau_0}\}_{\tau_0},m,\mu,B\right). \tag{20.1}
 $$
 
-Its entries mean:
+It keeps the base and coefficient fields separate; records the weak good-prime polynomials;
+records full Frobenius-semisimple Weil--Deligne pairs only on the proved strong range
+$\mathcal V_{\mathrm{str}}$; and carries determinant, Hodge, purity, parity, polarization, and
+inner-twist data. The exception ledger $B$ distinguishes integral-local exceptions from image
+exceptions. Chosen lattices are placewise auxiliary data, not one lattice shared across
+coefficient characteristics.
 
-- $F$ is the base field and $E$ the coefficient field;
-- $S$ is the common finite bad set;
-- $\mathcal V_{\mathrm{str}}$ is the declared set of places with proved strong local compatibility; it is the set of all finite places in a fully strong system;
-- $P_v$ is the algebraic arithmetic-Frobenius polynomial;
-- $\delta_\lambda=\det\rho_\lambda$ is the compatible determinant character;
-- $D_v=(r_v,N_v)$ is the strong local parameter for every $\lambda\nmid v$ and every $v$ in the declared strong range; a complete ledger has all finite $v$ in that range;
-- $H_{\tau_0}$ is the labelled Hodge datum;
-- $m$ is the purity weight and $\mu$ the polarization multiplier;
-- $T_\lambda$ are chosen lattices only where integral conclusions are needed; a finite-exception assertion across varying $\lambda$ also records the uniform algebraic integral model and fixed denominator ideal tying those lattices together; and
-- $B$ is the exception ledger: it contains the finite integral-local set, and it records separately a finite image-exception set, a density-zero exception set, or a one-prime verification according to the image theorem actually available.
+The constructions proved here are the generic calculus: coefficient extension and restriction,
+coefficient conjugation and inner twists, Tate and finite-order twists, duals, sums, tensors and
+symmetric powers, base-field restriction and finite induction, and conditional attachment from
+an automorphic packet in Book 137's range. Book 193 supplies the dense-Frobenius uniqueness
+step; Book 162 supplies the finite-group and adequacy input for the large-image wrapper.
 
-The compatibility level of each entry can be read from the following table.
+### 20.2 The switching interface
 
-| datum | uniform range | source |
-|---|---|---|
-| $P_v$ | all $\lambda\nmid v$, $v\notin S$ | weak compatibility |
-| determinant character | all $\lambda$ | compatible rank-one system |
-| $D_v$, type, $N_v$, conductor | all $\lambda\nmid v$ for each declared $v$ | strong local compatibility |
-| labelled Hodge weights | places above every $\ell(\lambda)$ | coefficient-prime comparison |
-| crystalline or semistable status | stated coefficient-prime range | geometry or local--global comparison |
-| purity | every good $v$ and complex embedding | weight theorem |
-| residual semisimplification | each $\lambda$ | stable-lattice theorem |
-| residual irreducibility and adequacy | a stated density-one set or outside finite $B_{\mathrm{img}}$ | image theorem |
-| residual local extension | only for chosen lattices and certificates | integral local analysis |
-
-This table prevents a later argument from promoting a row to a stronger range than its source permits.
-
-### 20.2 The descent interface
-
-For descent, attach to (20.1) a field ledger. It records whether the field over which the system is automorphic is Galois, solvable, or merely finite; which base places split completely; which residual fixed fields are disjoint; and which local components are preserved.
-
-Solvable descent may use the following data:
-
-$$
-F=F_0\subset F_1\subset\cdots\subset F_r=L, \tag{20.2}
-$$
-
-an automorphic representation at the top, a compatible arithmetic representation over $F$ or a recursive chain of descent data, and the self-twist group at every step. The system supplies common polynomials and local parameters throughout the tower. It does not supply the coherent downward choices by itself.
-
-For a nonsolvable potential-modularity field, the exact field and disjointness data are passed forward unchanged unless the effective descent hypotheses of Section 13.5 have actually been verified. When they are verified, the elementary fixed-field systems, intersection identities, character-norm calculation, multiplicity-one coefficient descent, and local cancellation produce an honest base-field system. Without any one of those ingredients, the output remains the top-field system (13.8); invariance of traces is not a substitute.
-
-### 20.3 The changing-prime interface
-
-For changing prime, choose a new coefficient place $\nu$ only after consulting $B$. The new member receives:
+For a new coefficient place $\nu$, compatibility transports
 
 $$
 P_v,\quad \delta_\nu,\quad
-D_v\ (v\in\mathcal V_{\mathrm{str}},\ v\nmid q),\quad
-H_{\tau_0},\quad m,\quad\mu_\nu. \tag{20.3}
+D_v\ (v\in\mathcal V_{\mathrm{str}},\ v\nmid\ell(\nu)),\quad
+H_{\tau_0},\quad m,\quad\mu_\nu. \tag{20.2}
 $$
 
-It does not automatically receive the old residual representation, old stable lattice, or old finite-flat model. Residual irreducibility and adequacy come from Theorem 16.1 or a direct small-prime calculation. Residual local behavior comes from the certificates of Section 18.4. At $u\mid q$, the relevant integral condition is reconstructed from the new member's geometry or comparison theorem.
+It does not transport an old residual extension, stable lattice, or finite-flat model. Theorem
+18.1 gives the genuinely generic all-but-finitely-many switch once its uniform integral
+certificates and large-image hypotheses are supplied. Without those certificates, the rational
+algebraic invariants still switch, but residual local extension and conductor statements do
+not.
 
-The common polynomials permit two uses of Chebotarev. They identify the new member with the $\nu$-adic realization of the same automorphic representation, and they identify a geometric realization with that automorphic member after coefficient alignment. In both uses the conclusion is semisimplified unless irreducibility removes the qualifier.
+### 20.3 Descent is downstream
 
-### 20.4 Final theorem
+There is intentionally no omnibus theorem combining automorphic attachment, potential
+automorphy, Brauer effectivity, coefficient descent, and switching. A system already produced
+over the base field—whether directly from Book 137 or downstream by Books 187--189—may be
+inserted into this ledger and switching interface. The construction of the latter descended
+system is not repeated here and is not a premise of this book.
 
-The entire book can be exported as one theorem with three entry routes.
-
-Before stating it, the dependency boundary can be audited in one table.
-
-| established input | exact use here | conclusion not imported |
-|---|---|---|
-| weight-two packet compatible-system theorem | members over coefficient completions, common packet polynomials, determinant, purity, coefficient transport, and the verified Frobenius-semisimple local pairs | no unverified bad-place pair, canonical cross-prime lattice, or coefficient-prime finite-flat model |
-| effective base-field descent theorem | elementary-field systems, overlap identities, norm-one effectivity, multiplicity-one coefficient descent, common local Mackey complements, and the distinguished original member | no integral Brauer cancellation, new finite-flat lattice, or automatic residual extension |
-| Chebotarev density and representation transport, together with the semisimple algebra developed in Chapters 2--9 | uniqueness from good Frobenius polynomials, scalar operations, restriction, induction, stable lattices, and residual semisimplification | no residual large-image theorem, bad-place comparison, or moving-prime integral conclusion follows from density |
-
-Thus the first input is neither weakened by forgetting its full local pair nor strengthened to coefficient-prime comparison. The second is neither weakened to a virtual family nor strengthened to integral cancellation. The remaining image and changing-prime assertions retain their explicit additional hypotheses.
-
-**Theorem 20.1 (arithmetic family for descent and changing prime).** Let $F$ be totally real. Suppose either:
-
-1. **Automorphic route:** $\pi$ is a regular algebraic cuspidal representation of $\operatorname{GL}_2(\mathbf A_F)$ satisfying the curve-realization, multiplicity, coefficient-field, local--global, coefficient-prime comparison, and purity hypotheses of Theorems 10.1--10.2; or
-2. **Conditional potential-modularity route:** one representation $\rho$ satisfies every hypothesis of the controlled characteristic-zero potential-modularity theorem listed in Section 13.1, producing a finite totally real $F^{\mathrm{pm}}/F$ and an automorphic $\Pi$ with the identity (13.3). In this route replace $F$ below by $F^{\mathrm{pm}}$, retain the full field-control ledger, and record the exact local--global comparison range proved for $\Pi$. Full strong compatibility at every finite place is included only if the all-place hypothesis of Theorem 10.2 is also available. Residual potential modularity or a residual congruence alone does not enter this route.
-3. **Descended potential-automorphy route:** in addition to the second route, there is a controlled finite Galois top together with the elementary fixed-field automorphic systems, intersection identities, effective Brauer relation, norm-one theorem, and algebraic local Mackey data of Section 13.5. In this route the base field remains $F$, and the distinguished member of the descended system is the original representation $\rho$.
-
-Then the relevant automorphic construction—directly over the base field, over the potential-automorphy field, or through effective descent—produces a rank-two arithmetic family (20.1) with the following properties.
-
-1. Every finite coefficient place has a continuous semisimple member, and all members have the common algebraic arithmetic-Frobenius polynomials outside one finite set.
-2. The determinant is $\psi_\lambda\chi_{\ell(\lambda)}^m$, the system is polarized, totally odd, and pure of weight $m$ under the stated hypotheses.
-3. At every fixed finite $v$ in the established strong-compatibility range and away from the coefficient characteristic, the Frobenius-semisimple Weil--Deligne pair, including $N_v$, is independent of $\lambda$ through coefficient embeddings. Hence inertial type, characteristic-zero conductor exponent, and monodromy rank are independent there. Under the full hypothesis of Theorem 10.2 this range is all finite $v$; otherwise no unproved place is inserted.
-4. At coefficient-prime places, the labelled Hodge--Tate weights are the algebraic weights transported by embeddings. Crystalline, semistable, ordinary, or finite-flat conclusions hold only in the explicitly assumed comparison and integral ranges.
-5. Stable lattices exist. Their semisimplified reductions are canonical, their full reductions need not be, and their residual determinants are the reductions of the compatible determinant.
-6. Coefficient extension, twists, duals, the tensor operations of Chapter 8, and restriction preserve compatibility with the stated changes of rank, roots, weights, and local parameters. Induction has the polynomial (9.9) and multiplies dimension by the extension degree.
-7. If the non-CM, inner-twist, monodromy, and integral-specialization hypotheses of Theorem 16.1 hold, residual members are absolutely irreducible and adequate outside a finite set. In the CM case, the exact induced description (16.5)--(16.9) replaces this conclusion.
-8. Solvable base change agrees with restriction of the family. Cuspidality is subject to the stepwise self-twist criterion. Solvable descent requires a compatible cyclic descent chain or an extending arithmetic representation. Beyond the solvable case, descent is available under the effective Brauer hypotheses of Section 13.5; potential modularity alone still gives no descent to the original field.
-9. Once the uniform integral models and nonzero certificates required by hypothesis 4 of Theorem 18.1 have been supplied, excluding their finite integral-local set permits the residual local conclusions of that theorem at a new coefficient prime. Without those certificates, one may still transfer the rational algebraic invariants and use Chebotarev for automorphic identification, but no uniform residual local extension or conductor claim follows. Adequacy holds uniformly outside a further finite set only under Theorem 16.1; otherwise it must be verified at the particular new place.
-
-**Proof.** The automorphic route is Theorems 10.1--10.2 together with Chapters 6--12 and 14--18. The potential-modularity route first invokes the exact output (13.3), then applies Theorem 10.1 and precisely the proved range of Theorem 10.2 over $F^{\mathrm{pm}}$; no local comparison and no descent is inserted. The descended route applies Theorem 13.1: character-norm effectivity produces one constituent, multiplicity one kills its Schur obstruction, induced Frobenius determinants give the common good polynomials, and local Krull--Schmidt cancellation gives the common proved Weil--Deligne pairs. The residual, functorial, image, base-change, and switching clauses are respectively Theorem 7.1, the calculations of Chapters 8--9, Theorem 16.1 and Corollary 16.2, Chapter 17, and Theorem 18.1. $\square$
-
-### 20.5 Conclusion
-
-A compatible system is an arithmetic family because its common information exists before completion. The base field supplies places, inertia, and Frobenius. The coefficient field supplies algebraic traces and the completions in which matrices live. Weak compatibility joins the members at good Frobenius classes; strong compatibility joins their full Frobenius-semisimple Weil--Deligne pairs, including monodromy; labelled Hodge data join the moving coefficient-prime places through embeddings.
-
-The distinctions are as important as the identifications. Chebotarev determines semisimplification, not extensions or lattices. A stable lattice has a canonical residual semisimplification, not a canonical residual extension. Purity and algebraicity require weight and rationality theorems. Residual irreducibility and adequacy require image theorems and admit exceptional primes. Restriction can split an irreducible dihedral member, while induction changes dimension. Potential modularity by itself constructs the family only over the controlled totally real extension where automorphy was proved. Descent to the original field is a separate achievement: in the solvable case coherent cyclic choices may suffice, while in the nonsolvable controlled case effectivity, multiplicity-one coefficient descent, and local cancellation are all required.
-
-Once those boundaries are respected, changing the coefficient prime becomes exact rather than heuristic. One passes through common algebraic Frobenius polynomials, identifies the new member by Chebotarev, transports strong local data away from the new coefficient prime, reads labelled Hodge data at that prime, and invokes a separate image theorem for its reduction. Solvable descent is exact when a compatible arithmetic extension selects the twisting choices at every cyclic layer. Effective Brauer descent is exact for a controlled nonsolvable top because it turns a signed family into one actual coefficient-descended rank-two member before any prime is changed.
-
-The resulting ledger is the required endpoint: an automorphic, potentially automorphic top-field, or effectively descended base-field rank-two family indexed by coefficient places, with common polynomials, determinant, purity, polarization, local parameters, Hodge labels, integral warnings, residual exceptional set, and an honest field-of-descent status. It is now suitable both for descent by induction identities and for a controlled change from one coefficient prime to another.
+This scoped endpoint prevents three common overclaims: weak compatibility is not strong local
+compatibility; rational cancellation is not integral cancellation; and potential automorphy
+over a top field is not a compatible family over the original field.

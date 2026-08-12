@@ -405,157 +405,98 @@ ambiguity as a finite quotient self-twist, precisely the ambiguity measured in S
 
 ## 2. Generalized characters and their norm
 
+Book 176, Section 7.1 is the general source for the semisimple Grothendieck group, its Hom
+pairing, and the norm-one sign lemma. We keep the scalar-extension formula and the formulas used
+by the SP application so that the later positivity check remains explicit.
+
 ### 2.1 The semisimple Grothendieck group
 
-Let $G$ be a group and $L$ an algebraically closed field of characteristic zero. We consider
-finite-dimensional semisimple $L$-representations of $G$. Every such representation has a
-finite decomposition
+Over an algebraically closed characteristic-zero field,
 
 $$
-V\simeq\bigoplus_{\alpha\in I}S_\alpha^{\oplus m_\alpha},
-\tag{2.1}
+V\simeq\bigoplus_\alpha S_\alpha^{\oplus m_\alpha}, \tag{2.1}
 $$
 
-where the $S_\alpha$ are pairwise nonisomorphic irreducibles and $m_\alpha\geq0$. The
-Jordan--Hölder theorem makes the multiplicities unique. The Grothendieck group
-$K_0^{\mathrm{ss}}(G,L)$ is therefore the free abelian group on the irreducible isomorphism
-classes.
-
-A virtual class has a unique expression
+and every virtual class has a unique integral expansion
 
 $$
-X=\sum_\alpha c_\alpha[S_\alpha],
-\qquad c_\alpha\in\mathbf Z,
-\tag{2.2}
+X=\sum_\alpha c_\alpha[S_\alpha]. \tag{2.2}
 $$
 
-with finite support. It is **effective** if $c_\alpha\geq0$ for every $\alpha$. The dimension is
+Its virtual dimension and generalized trace are
 
 $$
-\dim X=\sum_\alpha c_\alpha\dim S_\alpha.
-\tag{2.3}
+\dim X=\sum_\alpha c_\alpha\dim S_\alpha, \tag{2.3}
 $$
 
-The trace of $X$ is the generalized character
-
 $$
-\chi_X(g)=\sum_\alpha c_\alpha\operatorname{tr}S_\alpha(g).
-\tag{2.4}
+\chi_X(g)=\sum_\alpha c_\alpha\operatorname{tr}S_\alpha(g). \tag{2.4}
 $$
-
-Later the Brauer--Nesbitt theorem will show that (2.4) determines (2.2). For the moment the
-Grothendieck expression, rather than the trace function, is the definition of the class.
 
 ### 2.2 The Hom inner product
 
-For actual semisimple representations define
+Book 176 defines
 
 $$
-\langle V,W\rangle_G=\dim_L\operatorname{Hom}_{L[G]}(V,W).
-\tag{2.5}
+\langle V,W\rangle_G=\dim\operatorname{Hom}_G(V,W), \tag{2.5}
 $$
 
-Schur's lemma gives
+with Schur orthogonality
 
 $$
-\dim_L\operatorname{Hom}_G(S_\alpha,S_\beta)=
-\begin{cases}
-1,&S_\alpha\simeq S_\beta,\\
-0,&S_\alpha\not\simeq S_\beta.
-\end{cases}
-\tag{2.6}
+\dim\operatorname{Hom}_G(S_\alpha,S_\beta)=\delta_{\alpha\beta}. \tag{2.6}
 $$
 
-Indeed, a nonzero map between irreducibles is an isomorphism, while an endomorphism of an
-irreducible over an algebraically closed field is scalar. Additivity in direct sums extends
-(2.5) uniquely to a symmetric bilinear pairing on $K_0^{\mathrm{ss}}(G,L)$:
+Thus
 
 $$
 \left\langle\sum c_\alpha[S_\alpha],
-\sum d_\alpha[S_\alpha]\right\rangle_G
-=\sum_\alpha c_\alpha d_\alpha.
-\tag{2.7}
+\sum d_\alpha[S_\alpha]\right\rangle=\sum c_\alpha d_\alpha, \tag{2.7}
 $$
 
-We call
+and
 
 $$
-\|X\|_G^2=\langle X,X\rangle_G=\sum_\alpha c_\alpha^2
-\tag{2.8}
+\|X\|^2=\sum_\alpha c_\alpha^2. \tag{2.8}
 $$
 
-the **character norm** of $X$. It is a nonnegative integer and vanishes exactly when $X=0$.
-No Haar measure on $G$ is involved. This matters for profinite groups with $q$-adic
-coefficients: averaging over ever larger finite quotients would introduce unbounded powers of
-$q$ and is neither needed nor justified. Formula (2.8) is the correct algebraic norm.
-
-When $G$ is finite, (2.7) agrees with the usual character inner product
+For a finite group this equals the usual character average
 
 $$
-\langle\chi,\psi\rangle_G
-=\frac1{|G|}\sum_{g\in G}\chi(g)\psi(g^{-1}).
-\tag{2.9}
+\langle\chi,\psi\rangle_G=|G|^{-1}\sum_{g\in G}\chi(g)\psi(g^{-1}). \tag{2.9}
 $$
 
-To prove this, it suffices by bilinearity to take irreducible characters. The averaging operator
-
-$$
-T\longmapsto\frac1{|G|}\sum_{g\in G}W(g)T V(g)^{-1}
-\tag{2.10}
-$$
-
-projects $\operatorname{Hom}_L(V,W)$ onto $\operatorname{Hom}_G(V,W)$. Its trace is the
-right side of (2.9), and (2.6) gives orthonormality.
+For the profinite Galois groups below, (2.5), not a Haar average, is the definition.
 
 ### 2.3 Norm one and the sign lemma
 
-The final positivity argument is elementary enough to isolate now.
-
-**Lemma 2.1 (norm-one sign lemma).** Let $X\in K_0^{\mathrm{ss}}(G,L)$. If
-$\|X\|_G^2=1$, then
+The Book 176 norm-one lemma says
 
 $$
-X=[S]\quad\text{or}\quad X=-[S]
-\tag{2.11}
+\|X\|^2=1\quad\Longrightarrow\quad X=[S]\text{ or }-[S] \tag{2.11}
 $$
 
-for one irreducible representation $S$. If in addition $\dim X=d>0$, then $X=[S]$ and
-$\dim S=d$.
-
-**Proof.** Write $X=\sum c_\alpha[S_\alpha]$. The equality
-$\sum c_\alpha^2=1$ with integral $c_\alpha$ forces exactly one coefficient to be $1$ or $-1$
-and all others to be zero. If $X=-[S]$, its dimension is $-\dim S<0$. Positive dimension rules
-out that sign, and (2.3) gives $\dim S=d$. $\square$
-
-This lemma would be false with rational coefficients: many nonintegral vectors have Euclidean
-norm one. The integral Brauer relation of Book 187 is therefore essential twice—first to define
-an integral virtual class, and finally to convert norm one into effectivity.
+for one irreducible $S$. If $\dim X=d>0$, the sign is positive and $\dim S=d$. The integrality
+of Book 187's Brauer relation is essential: the assertion is false for arbitrary rational
+coefficient vectors.
 
 ### 2.4 Scalar extension
 
-Let $L\subseteq L'$ be algebraically closed characteristic-zero fields, or let $L'/L$ be an
-extension large enough to split the finitely many endomorphism algebras under consideration.
-Scalar extension is additive and preserves Hom dimensions after splitting:
+For a splitting extension $L'/L$,
 
 $$
 \operatorname{Hom}_G(V,W)\otimes_LL'
-\simeq\operatorname{Hom}_G(V\otimes_LL',W\otimes_LL').
-\tag{2.12}
+\simeq\operatorname{Hom}_G(V\otimes_LL',W\otimes_LL'). \tag{2.12}
 $$
 
-For finite-dimensional representations this follows by writing equivariance as the simultaneous
-kernel of the linear equations
+Equivariance is a finite system of linear equations
 
 $$
-T V(g)-W(g)T=0.
-\tag{2.13}
+TV(g)-W(g)T=0, \tag{2.13}
 $$
 
-Only finitely many equations are needed: their span inside the finite-dimensional matrix space
-stabilizes. Flat scalar extension commutes with that kernel. Consequently the inner products
-used below are unchanged after a finite coefficient enlargement. We are therefore free to put
-all packet and character values in one Galois number field and to work over algebraic closures
-of its completions.
+so flat scalar extension preserves the relevant kernels and Hom dimensions. This justifies the
+single finite Galois coefficient ledger used in the Gram calculation.
 
 ## 3. Frobenius reciprocity and the Mackey Gram matrix
 
@@ -588,164 +529,62 @@ That is precisely the geometry on which Book 187 supplied compatible packets.
 
 ### 3.2 Induction for finite-index subgroups
 
-Let $H\leq G$ have finite index and let $U$ be an $H$-representation. Algebraic induction is
+We use Book 176's finite-coset induction and both adjunctions:
 
 $$
-\operatorname{Ind}_H^G U=L[G]\otimes_{L[H]}U.
-\tag{3.3}
+\operatorname{Ind}_H^GU=L[G]\otimes_{L[H]}U, \tag{3.3}
 $$
-
-Choosing left-coset representatives identifies it with a finite direct sum of copies of $U$.
-If $G$ is profinite, $H$ is open, and $U$ is continuous, this model is continuous: on each
-coset block the matrices are those of $U$ multiplied by a locally constant permutation matrix.
-
-For a $G$-representation $V$, define
-
-$$
-\Phi:\operatorname{Hom}_G(\operatorname{Ind}_H^GU,V)
-\longrightarrow\operatorname{Hom}_H(U,V|_H),
-\qquad
-\Phi(f)(u)=f(1\otimes u).
-\tag{3.4}
-$$
-
-Conversely, for an $H$-map $a:U\to V|_H$, set
-
-$$
-\Psi(a)(g\otimes u)=g\,a(u).
-\tag{3.5}
-$$
-
-If $gh\otimes u=g\otimes hu$, then
-$gh\,a(u)=g\,a(hu)$, so (3.5) is well defined. The two maps are inverse and natural. We have
-proved
 
 $$
 \operatorname{Hom}_G(\operatorname{Ind}_H^GU,V)
-\simeq\operatorname{Hom}_H(U,V|_H).
-\tag{3.6}
+\simeq\operatorname{Hom}_H(U,V|_H), \tag{3.6}
 $$
-
-This is **Frobenius reciprocity**. Because induction and restriction are exact on the finite
-direct-sum models used here, the same identity extends bilinearly to semisimple Grothendieck
-groups.
-
-We will also use the following semisimplicity test. If $N\triangleleft G$ has finite index,
-$L$ has characteristic zero, and $V|_N$ is semisimple, then $V$ is semisimple. Indeed, for a
-$G$-stable subspace $W\subseteq V$, choose an $N$-equivariant projection $p:V\to W$. Average
-the conjugates of $p$ over $G/N$:
-
-$$
-p_G=\frac1{[G:N]}\sum_{g\in G/N}gpg^{-1}.
-\tag{3.6a}
-$$
-
-Normality makes each conjugate depend only on the coset, and the average is $G$-equivariant.
-Every summand restricts to the identity on the $G$-stable space $W$, so $p_G|_W=1$. Its kernel
-is a $G$-stable complement. In our application, Proposition 5.1 and (4.11) show that every
-induced summand restricts semisimply to $G_M$; hence the actual $A_{i,\tau}$ are semisimple,
-not merely formally semisimplified.
-
-We also need the reverse-direction restriction fact. If $H\leq G$ has finite index and $V$ is
-semisimple over $G$, then $V|_H$ is semisimple in characteristic zero. Reduce to irreducible
-$V$ and let $N=\bigcap_{g\in G}gHg^{-1}$. A finite-dimensional $N$-module contains an
-irreducible $N$-submodule. The $N$-socle of $V$, the sum of all such submodules, is therefore
-nonzero; normality of $N$ makes it $G$-stable, so irreducibility of $V$ makes the socle all of
-$V$. Thus $V|_N$ is semisimple. Apply the preceding averaging test with the group $H$ and its
-normal finite-index subgroup $N$ to conclude that $V|_H$ is semisimple. Direct sums give the
-general case.
-
-There is also a right-adjoint form. At finite index, induction and coinduction agree. Explicitly,
-a function $f:G\to U$ satisfying $f(hg)=hf(g)$ is determined by finitely many right-coset
-values, so direct sum and direct product coincide. Hence
 
 $$
 \operatorname{Hom}_G(V,\operatorname{Ind}_H^GU)
-\simeq\operatorname{Hom}_H(V|_H,U).
-\tag{3.7}
+\simeq\operatorname{Hom}_H(V|_H,U). \tag{3.7}
 $$
 
-The two adjunctions and the preceding averaging criterion therefore apply directly to the
-actual induced representations used in the Gram matrix.
+Finite-index restriction and induction preserve semisimplicity in characteristic zero, so the
+actual $A_{i,\tau}$ enter the Hom calculation.
 
 ### 3.3 Mackey decomposition with conjugation
 
-Let $H,J\leq G$ have finite index. For $x\in G$ and a $J$-representation $W$, define the
-$xJx^{-1}$-representation ${}^xW$ by
-
-$$
-{}^xW(xjx^{-1})=W(j).
-\tag{3.8}
-$$
-
-Choose representatives for $H\backslash G/J$. The $(H,J)$-biset decomposition
-
-$$
-G=\coprod_{x\in H\backslash G/J}HxJ
-\tag{3.9}
-$$
-
-gives the Mackey isomorphism
+For $x\in G$, the conjugate is defined by the rule
+$({}^xW)(xjx^{-1})=W(j)$. Book 176 gives
 
 $$
 \operatorname{Res}_H^G\operatorname{Ind}_J^GW
-\simeq
-\bigoplus_{x\in H\backslash G/J}
+\simeq\bigoplus_{x\in H\backslash G/J}
 \operatorname{Ind}_{H\cap xJx^{-1}}^H
-\operatorname{Res}_{H\cap xJx^{-1}}^{xJx^{-1}}({}^xW).
-\tag{3.10}
+({}^xW)|_{H\cap xJx^{-1}}. \tag{3.10}
 $$
 
-For completeness, the summand belonging to $x$ is induced by
-
-$$
-L[H]\otimes_{L[H\cap xJx^{-1}]}{}^xW
-\longrightarrow L[HxJ]\otimes_{L[J]}W,
-\qquad
-h\otimes{}^xw\longmapsto hx\otimes w.
-\tag{3.11}
-$$
-
-If $y=xjx^{-1}$ lies in the intersection, then
-$hyx\otimes w=hxj\otimes w=hx\otimes jw$, so the map is well defined. It is surjective, and
-both sides have dimension $[H:H\cap xJx^{-1}]\dim W$. Summing (3.11) proves (3.10).
-
-Every group in the arithmetic application is profinite, but the indices are finite and the
-double-coset set is finite. The same algebraic proof therefore applies, and all maps are
-continuous on the finite coset models.
+All double-coset sets are finite in the present profinite application.
 
 ### 3.4 The Hom form of Mackey theory
 
-Apply (3.6), then (3.10), then (3.7). For an $H$-representation $U$ and a $J$-representation
-$W$ one obtains
+Combining the two adjunctions with (3.10) gives
 
 $$
 \begin{aligned}
-&\operatorname{Hom}_G(\operatorname{Ind}_H^GU,
-\operatorname{Ind}_J^GW)\\
-&\quad\simeq
-\bigoplus_{x\in H\backslash G/J}
+\operatorname{Hom}_G(\operatorname{Ind}_H^GU,\operatorname{Ind}_J^GW)
+\simeq\bigoplus_{x\in H\backslash G/J}
 \operatorname{Hom}_{H\cap xJx^{-1}}
-\left(U|_{H\cap xJx^{-1}},
-{}^xW|_{H\cap xJx^{-1}}\right).
-\end{aligned}
-\tag{3.12}
+(U|_{H\cap xJx^{-1}},{}^xW|_{H\cap xJx^{-1}}).
+\end{aligned} \tag{3.12}
 $$
 
-Taking dimensions gives
+Hence
 
 $$
-\left\langle\operatorname{Ind}_H^GU,
-\operatorname{Ind}_J^GW\right\rangle_G
-=\sum_{x\in H\backslash G/J}
-\left\langle U|_{H\cap xJx^{-1}},
-{}^xW|_{H\cap xJx^{-1}}\right\rangle.
-\tag{3.13}
+\left\langle\operatorname{Ind}_H^GU,\operatorname{Ind}_J^GW\right\rangle
+=\sum_x\left\langle U|_{H\cap xJx^{-1}},
+{}^xW|_{H\cap xJx^{-1}}\right\rangle. \tag{3.13}
 $$
 
-Formula (3.13) is the main computational engine of this book. It is stronger than the
-character formula for induction: it counts common irreducible constituents, which is exactly
-the information effectivity needs.
+This is the imported formal mechanism. Section 3.5 supplies the application-specific packet
+identification on each intersection field.
 
 ### 3.5 Translation to intersection fields
 
@@ -844,119 +683,66 @@ already contains the general proof.
 
 ## 4. Clifford theory and the common top block
 
+Book 176, Chapter 5 is the general source for homogeneous restriction, inertia groups,
+projective multiplicity representations, factor sets, and extension torsors. We retain the
+notation needed to locate the SP summands in one Clifford block.
+
 ### 4.1 Why a normal subgroup organizes the constituents
 
-The Mackey calculation is sufficient for the numerical proof, but Clifford theory explains why
-its entries reduce to self-twists rather than arbitrary comparisons. Let $N\triangleleft G$ be
-normal of finite index and let $V$ be an irreducible $G$-representation whose restriction to
-$N$ is semisimple. Choose an irreducible constituent $T$ of $V|_N$.
-
-For $g\in G$, the subspace $gT$ is an $N$-subrepresentation isomorphic to the conjugate
-${}^gT$. Hence the sum of the $G$-translates of $T$ is a nonzero $G$-subrepresentation of $V$
-and is therefore all of $V$. It follows that every irreducible constituent of $V|_N$ lies in
-the single $G$-orbit of $T$.
-
-The multiplicities in that orbit are equal. Indeed, multiplication by $g$ identifies the
-$T$-isotypic subspace with the ${}^gT$-isotypic subspace. If
+For $N\triangleleft G$ of finite index and an irreducible $G$-representation $V$, choose an
+irreducible constituent $T$ of $V|_N$. If
 
 $$
-I_G(T)=\{g\in G:{}^gT\simeq T\}
-\tag{4.1}
+I_G(T)=\{g\in G:{}^gT\simeq T\}, \tag{4.1}
 $$
 
-is the inertia group, then
+Book 176 gives the homogeneous restriction
 
 $$
-V|_N\simeq e\bigoplus_{g\in G/I_G(T)}{}^gT
-\tag{4.2}
+V|_N\simeq e\bigoplus_{g\in G/I_G(T)}{}^gT. \tag{4.2}
 $$
 
-for an integer $e\geq1$. This is the basic Clifford decomposition.
+Thus irreducibles above distinct $G$-orbits of $N$-constituents occupy orthogonal Clifford
+blocks.
 
 ### 4.2 The isotypic block when the top representation is invariant
 
-Suppose now that ${}^gT\simeq T$ for every $g\in G$. Then (4.2) reads
+When $T$ is $G$-invariant, $V|_N\simeq T^{\oplus e}$. Intertwiners for the conjugation action
+have a scalar factor set
 
 $$
-V|_N\simeq T^{\oplus e}.
-\tag{4.3}
+I_gI_h=c(g,h)I_{gh}, \tag{4.4}
 $$
 
-Choose operators $I_g$ on the space of $T$ satisfying
+and the multiplicity space
 
 $$
-I_gT(n)I_g^{-1}=T(gng^{-1})\qquad(n\in N).
-\tag{4.3a}
+P=\operatorname{Hom}_N(T,V) \tag{4.7}
 $$
 
-They may be normalized by $I_n=T(n)$ for $n\in N$. Schur's lemma shows that the failure of
-multiplicativity, after a section of $G/N$ is fixed and its $N$-valued factor is inserted, is
-scalar:
+carries the inverse projective multiplier. Book 176 proves that the multipliers cancel on
+$T\otimes P$ and that
 
 $$
-I_gI_h=c(g,h)I_{gh},
-\qquad c(g,h)\in L^\times.
-\tag{4.4}
+e=\dim P,\qquad \dim V=e\dim T. \tag{4.8}
 $$
 
-Associativity gives
-
-$$
-c(g,h)c(gh,k)=c(h,k)c(g,hk),
-\tag{4.5}
-$$
-
-so $c$ is a $2$-cocycle on $G/N$. Rescaling the operators attached to the section changes $c$
-by a coboundary. The obstruction to extending $T$ to $G$ is the class of $c$.
-
-An irreducible $V$ above $T$ is obtained by tensoring the projective action $I_g$ on $T$ with a
-projective representation $P$ of $G/N$ having inverse multiplier $c^{-1}$. The multipliers
-cancel, producing an honest action on
-
-$$
-T\otimes P.
-\tag{4.6}
-$$
-
-Conversely, the multiplicity space
-
-$$
-P=\operatorname{Hom}_N(T,V)
-\tag{4.7}
-$$
-
-carries precisely that inverse projective action, evaluation gives $T\otimes P\simeq V$ as
-$N$-representations, and irreducibility on one side is equivalent to projective irreducibility
-on the other. This proves the projective form of Clifford theory. In particular,
-
-$$
-e=\dim P,
-\qquad
-\dim V=e\dim T.
-\tag{4.8}
-$$
-
-No claim that $c$ vanishes has been made. Effectivity will not be proved by choosing coherent
-intertwiners; it will be proved by the norm, which is insensitive to the choice of the
-intertwiners but sensitive to their self-twist multiplicities.
+No vanishing of the factor set is assumed here; the norm computation does not choose descent
+intertwiners.
 
 ### 4.3 The block decomposition of a semisimple category
 
-Two irreducible $G$-representations whose restrictions to $N$ have constituents in different
-$G$-orbits have no nonzero $G$-map between them. Thus the semisimple Grothendieck group splits
-as an orthogonal direct sum of **Clifford blocks**, indexed by $G$-orbits of irreducible
-$N$-representations.
-
-If $U$ is a representation of an intermediate group $J$ with $N\leq J\leq G$ and
-$U|_N$ is a sum of conjugates of one $T$, then $\operatorname{Ind}_J^GU$ belongs entirely to
-the block of the $G$-orbit of $T$. This follows either from (4.2) or directly from the normal
-subgroup form of Mackey decomposition:
+If $N\leq J\leq G$ and $U|_N$ is a sum of conjugates of $T$, then
+$\operatorname{Ind}_J^GU$ lies in the block of the $G$-orbit of $T$. Equivalently,
 
 $$
 \operatorname{Res}_N^G\operatorname{Ind}_J^GU
-\simeq\bigoplus_{g\in G/J}{}^g(U|_N).
-\tag{4.9}
+\simeq\bigoplus_{g\in G/J}{}^g(U|_N). \tag{4.9}
 $$
+
+This structural statement explains why the later Mackey entries reduce to finite quotient
+self-twists; their numerical values still require Book 187's exact overlaps and the computation
+in Chapters 5--6.
 
 ### 4.4 Application to the Brauer summands
 
@@ -1325,7 +1111,7 @@ apply to these actual terms. Proposition 5.1 concerns the already existing eleme
 cuspidal realizations, not the desired base-field representation. Proposition 5.2 uses
 automorphic twisting and strong multiplicity one over an elementary field, again before any
 base-field object is constructed. Finally, norm one is evaluated at $\tau_0$ using the
-pre-existing $\rho$ from Book 186. No conclusion of this book has been used as an input.
+pre-existing $\rho$ from the controlled datum. No conclusion of this book has been used as an input.
 
 Nor is Book 187's proof of the overlap theorem circular here. Its
 Chebotarev--Brauer--Nesbitt step compares two packet representations that already exist over the
@@ -1374,8 +1160,11 @@ $$
 \tag{7.4}
 $$
 
-**Proof.** The preceding argument is Lemma 2.1 applied to (6.6) and (7.3). Uniqueness follows
-from uniqueness of irreducible multiplicities in the semisimple Grothendieck group. $\square$
+**Proof.** The application-specific work is (6.2)--(6.6): every Gram entry is reduced to a
+packet self-twist and shown coefficient independent, and the distinguished norm is one. Book
+176, Theorem 7.2 now applies to (6.6) and (7.3), giving the positive irreducible rank-two
+constituent and the cancellation (7.5). Uniqueness follows from irreducible multiplicities.
+$\square$
 
 This proves positive sign, dimension two, norm one, and irreducibility at every coefficient
 embedding. The four assertions are logically distinct: norm one gives one signed irreducible;
@@ -1875,163 +1664,67 @@ lattices or residual extensions.
 
 ## 10. Brauer–Nesbitt recognition
 
+Book 176, Theorem 8.1 is the recognition theorem used here. It is cited only after Chapters
+6--7 have produced actual semisimple representations.
+
 ### 10.1 Why traces become decisive only after existence
 
-The norm argument has constructed actual semisimple representations. We may now use their
-traces to identify them. This order is essential. Brauer--Nesbitt compares representations that
-already exist; it cannot turn an arbitrary class function or a signed Euler product into a
-representation.
-
-Let $G$ be any group and let $L$ be a characteristic-zero field. For a finite-dimensional
-representation $V$, write $V^{\mathrm{ss}}$ for its semisimplification. Trace is additive in
-short exact sequences, so
+Trace is unchanged by semisimplification:
 
 $$
-\operatorname{tr}_V(g)=\operatorname{tr}_{V^{\mathrm{ss}}}(g).
-\tag{10.1}
+\operatorname{tr}_V(g)=\operatorname{tr}_{V^{\mathrm{ss}}}(g). \tag{10.1}
 $$
 
-Thus no trace theorem can recover a nonsplit extension class. The correct conclusion is always
-about semisimplification.
+Thus trace data never recover a nonsplit extension, and a virtual Euler product does not become
+a representation merely because its coefficients look effective.
 
 ### 10.2 The algebra generated by the group
 
-Let $V$ and $W$ be finite-dimensional $L$-representations. After extending scalars, we may
-assume $L$ algebraically closed. Let $A$ be the image of $L[G]$ in
-
-$$
-\operatorname{End}_L(V\oplus W).
-\tag{10.2}
-$$
-
-Although $G$ may be infinite, $A$ is finite dimensional. Both $V$ and $W$ are finite-dimensional
-$A$-modules. If they are semisimple as $G$-representations, they are semisimple as $A$-modules:
-$A$-stable and $G$-stable subspaces are the same.
-
-Let $J$ be the Jacobson radical of $A$. It annihilates every simple $A$-module, hence every
-semisimple $A$-module. The semisimple algebra $A/J$ has a decomposition
-
-$$
-A/J\simeq\prod_{a=1}^s M_{d_a}(L).
-\tag{10.3}
-$$
-
-Its simple modules $S_a=L^{d_a}$ are pairwise nonisomorphic. Let $e_a$ be the central idempotent
-which is the identity in the $a$th factor and zero in all others. If
-
-$$
-V\simeq\bigoplus_a S_a^{\oplus m_a},
-\qquad
-W\simeq\bigoplus_a S_a^{\oplus n_a},
-\tag{10.4}
-$$
-
-then
-
-$$
-\operatorname{tr}_V(e_a)=m_a d_a,
-\qquad
-\operatorname{tr}_W(e_a)=n_a d_a.
-\tag{10.5}
-$$
-
-Here a lift of $e_a$ to $A$ may be used; two lifts differ by $J$, which acts as zero.
+The proof in Book 176 passes to the finite-dimensional image of the group algebra in
+$\operatorname{End}(V\oplus W)$ and reads simple multiplicities from the central idempotents of
+its semisimple quotient. This applies to arbitrary groups; finiteness of the Galois group image
+is not assumed.
 
 ### 10.3 The Brauer–Nesbitt theorem
 
-**Theorem 10.1 (Brauer--Nesbitt).** Let $V$ and $W$ be finite-dimensional representations of a
-group $G$ over a characteristic-zero field $L$. If
+**Theorem 10.1 (Brauer--Nesbitt; Book 176, Theorem 8.1).** If two finite-dimensional
+characteristic-zero representations satisfy
 
 $$
-\operatorname{tr}_V(g)=\operatorname{tr}_W(g)
-\qquad\text{for every }g\in G,
-\tag{10.6}
+\operatorname{tr}_V(g)=\operatorname{tr}_W(g)\qquad(g\in G), \tag{10.6}
 $$
 
 then
 
 $$
-V^{\mathrm{ss}}\simeq W^{\mathrm{ss}}.
-\tag{10.7}
+V^{\mathrm{ss}}\simeq W^{\mathrm{ss}}. \tag{10.7}
 $$
 
-**Proof.** Let $L_0$ denote the original field and let $\overline L_0$ be an algebraic closure.
-Trace is unchanged by semisimplification and faithful scalar extension. Over $\overline L_0$,
-equality on the images of group elements extends by linearity to equality of the two trace
-functionals on the finite-dimensional algebra $A$ of (10.2). Apply it to lifts of the central
-idempotents $e_a$. Formula (10.5) gives $m_ad_a=n_ad_a$, hence $m_a=n_a$ for every $a$. Thus
+In rank two, trace and determinant give
 
 $$
-V^{\mathrm{ss}}\otimes_{L_0}\overline L_0
-\simeq W^{\mathrm{ss}}\otimes_{L_0}\overline L_0.
-$$
-
-In particular the two semisimplifications have the same dimension; this also follows by taking
-$g=1$ in (10.6). To descend the isomorphism, use the scalar-extension identity (2.12). The determinant
-polynomial on the $L_0$-vector space
-$\operatorname{Hom}_G(V^{\mathrm{ss}},W^{\mathrm{ss}})$ is not identically zero, because it
-has a nonzero value after extension to $\overline L_0$. Since $L_0$ is infinite, some
-$L_0$-rational Hom element has nonzero determinant and is an isomorphism. $\square$
-
-The theorem remains true if characteristic polynomials agree for all $g$, since their linear
-coefficients give trace equality. Conversely, in dimension two, trace and determinant determine
-the characteristic polynomial:
-
-$$
-\det(X-r(g))=X^2-\operatorname{tr}(r(g))X+\det r(g).
-\tag{10.8}
+\det(X-r(g))=X^2-\operatorname{tr}(r(g))X+\det r(g). \tag{10.8}
 $$
 
 ### 10.4 The virtual form
 
-**Corollary 10.2 (virtual Brauer--Nesbitt).** If
-$X,Y\in K_0^{\mathrm{ss}}(G,L)$ have the same generalized character, then $X=Y$.
-
-**Proof.** Choose actual semisimple presentations
-$X=[X^+]-[X^-]$ and $Y=[Y^+]-[Y^-]$. Equality of generalized characters gives
-
-$$
-\operatorname{tr}_{X^+\oplus Y^-}(g)
-=\operatorname{tr}_{X^-\oplus Y^+}(g)
-\tag{10.9}
-$$
-
-for every $g$. Theorem 10.1 identifies the two semisimple representations. Rearranging their
-Grothendieck classes gives $X=Y$. $\square$
-
-Book 187 already used this virtual recognition principle, together with its Chebotarev input, to
-prove relation-independence of the virtual signed class. The self-contained proof here fixes the
-recognition interface used later in this book. It still does not imply effectivity from trace
-values: it identifies a virtual class only with another class already known to exist.
+Applying Theorem 10.1 to positive-minus-negative presentations gives: two integral semisimple
+virtual classes with the same generalized character are equal. This is recognition inside the
+Grothendieck group, not an effectivity theorem. Book 187 uses the same principle only to compare
+already existing packet restrictions.
 
 ### 10.5 Density and continuity
 
-Suppose now that $G$ is profinite, $L$ is nonarchimedean, and $V,W$ are continuous. Their trace
-functions are continuous. If $D\subseteq G$ is dense and
+For continuous representations of a profinite group, equality of traces on a dense union of
+conjugacy classes extends by continuity, and Theorem 10.1 gives
 
 $$
-\operatorname{tr}_V(d)=\operatorname{tr}_W(d)
-\qquad(d\in D),
-\tag{10.10}
+V^{\mathrm{ss}}\simeq W^{\mathrm{ss}}. \tag{10.11}
 $$
 
-then equality holds on all of $G$: for $g\in G$, choose a net $d\to g$ and use the Hausdorff
-topology of $L$. Theorem 10.1 gives
-
-$$
-V^{\mathrm{ss}}\simeq W^{\mathrm{ss}}.
-\tag{10.11}
-$$
-
-For arithmetic applications, $D$ is often a dense set of Frobenius conjugacy classes. The
-density is an input—normally supplied by the relevant density theorem. This book proves the
-recognition implication once density is known; it does not import a density theorem as an
-axiom or reprove one.
-
-It is enough that equality hold on a dense union of conjugacy classes. Traces are class
-functions, and continuity descends to the same limiting argument. Removing finitely many
-ramified primes does not change the intended density assertion when the supplied Frobenius set
-is stated to remain dense.
+In the present application the required Frobenius density has already been discharged by Book
+187's overlap theorem. No density argument is used to create the effective constituent or to
+prove norm one.
 
 ## 11. Independence statements proved at the effectivity stage
 
@@ -2352,50 +2045,34 @@ local compatibility are genuine construction steps.
 
 ### 13.3 Dependency and interface audit
 
-The character norm, Frobenius reciprocity, Hom-form Mackey theory, Clifford block theory,
-norm-one sign argument, Brauer--Nesbitt theorem, and dense-trace criterion were proved in this
-book. The arithmetic input is the unconditional package exported by Book 187: one controlled
-Galois top, the selected elementary packets, finite-order avatars, coefficient embeddings, the
-distinguished representation, virtual determinant, common polynomials, local records, and—most
-importantly here—Proposition 6.2 and (6.4e)--(6.4h) over every elementary intersection field.
-That theorem covers non-Galois intersection extensions, every coefficient embedding, conjugate
-packet data, the ratio $\beta\alpha^{-1}$, and the precise characteristic-zero/lattice
-boundary.
+The direct dependency row is
 
-The abstract mechanism and normalizations were also checked against Book 176. The proof here
-is not an appeal to that book's conditional effectivity theorem: it redoes the Gram calculation
-for Book 187's exact SP packet array, whose unconditional overlap theorem is the decisive
-application-specific input.
+$$
+\boxed{188\mid29,\ 62,\ 176,\ 187.}
+$$
 
-Book 187 proves its overlap theorem from residue-degree Frobenius identities and its
-Chebotarev--Brauer--Nesbitt lemma. That density input, ultimately recorded there from Book 171,
-is already discharged inside the exported theorem. The Gram-matrix proof here invokes the
-theorem, not a new density assertion. Chapter 12 is different: its dense-Frobenius criterion
-explicitly assumes a dense Frobenius union and proves only the recognition implication from
-that stated hypothesis.
+| Source | Input used here | Application-specific work retained |
+|---|---|---|
+| Book 29 | continuity for open finite-index induction and compact-image representations | continuity of the effective SP constituent |
+| Book 62 | distinction between trace fields, fields of definition, finite local models, and stable lattices | the finite coefficient-field and lattice boundary of Chapter 8 |
+| Book 176 | Hom norm, Frobenius reciprocity, Mackey Gram formula, Clifford blocks, norm-one effectivity, Brauer--Nesbitt recognition, and the abstract coefficient-descent boundary | none of the SP overlap or self-twist indicators is imported |
+| Book 187 | selected elementary SP packets, exact nonnormal intersection identities, finite-order avatars, signed induced terms, rank and determinant, common polynomials, purity, and the full virtual SP pair | every Gram entry is computed from those exact packets |
 
-Propositions 5.1--5.2 use the pre-189 automorphic interface already present in the Book-187
-spine: algebraic rank-one Galois--Hecke reciprocity for de Rham characters, compatibility of
-finite-order twisting with Galois realizations, local--global compatibility at good places, and
-strong multiplicity one. They apply only to the already existing cuspidal packets over
-elementary fixed fields. No base-field representation, nonsolvable automorphic induction, or
-compatible-system assembly is assumed.
+The proof does not merely invoke abstract effectivity. Chapters 5--6 identify every overlap Hom
+space with the correctly oriented finite quotient self-twist, prove the indicator is coefficient
+independent, evaluate the complete Gram norm at the distinguished embedding, and obtain norm
+one. Only then is Book 176's positivity theorem applied. Chapters 7--9 promote the application-specific
+virtual determinant, Frobenius polynomial, purity, and SP local Mackey object to records of the
+actual constituent.
 
-The continuity arguments use the open finite-index and compact-image conventions of Book 29.
-The coefficient-field and lattice arguments respect the distinctions of Book 62 between a trace
-field, a field of definition, a finite local model, and an integral lattice. In particular, the
-split semisimple algebra in Section 8.2 supplies a finite local model; traces alone are not used
-to descend matrices. Compactness supplies a stable lattice only after that model exists.
+The dense-Frobenius input used inside Book 187's overlap theorem is already discharged by that
+export. Chapter 12 states its own density hypothesis when it uses the rank-two recognition
+criterion. No density statement creates the constituent.
 
-No result from Book 189 or a later book is used. Relation-independence here is an isomorphism of
-already effective semisimple representations after scalar extension, not a choice of one
-coefficient-descended family. The proof never assumes desired base-field effectivity on an
-overlap: the overlap representations already exist over the elementary intersection field. It
-never infers cuspidality from the result being proved, treats a virtual determinant as actual
-before Theorem 7.1, or reduces a signed lattice as though subtraction were exact. At a general
-embedding the overlap theorem contributes no lattice; at $\tau_0$ the pre-existing named
-representation $\rho$ is retained, but no named lattice is imported or reconstructed. The
-dependency audit therefore closes without an integral or coherent-family import.
+No result from Book 189 is used. Relation independence here remains an isomorphism after scalar
+extension; completion-level coefficient descent and coherent place indexing are downstream.
+No signed lattice is reduced, no automorphic transfer is asserted over a nonnormal compositum,
+and no base-field compatible family is assumed.
 
 ### 13.4 The boundary with Book 189
 
@@ -2417,8 +2094,9 @@ member inside the completed family. Any integral refinement must then choose lat
 its own local properties.
 
 Thus effectivity and assembly are adjacent but different. Equation (1.3) is now an exported
-theorem of Book 187, so this book proves unconditionally that each signed Brauer character is one
-honest irreducible representation. The next book must still prove that all those honest
+theorem of Book 187, so, relative to that exported controlled packet datum, this book proves
+that each signed Brauer character is one honest irreducible representation. The next book must
+still prove that all those honest
 representations are the members of one honest compatible family.
 
 ### 13.5 Conclusion
@@ -2444,7 +2122,7 @@ the record of an actual rank-two representation. At $2$, Krull--Schmidt cancella
 the nonzero rank-one monodromy, invariant line, Frobenius sign, and conductor one of the SP
 pair.
 
-Brauer--Nesbitt then supplied recognition, not existence. It proved the semisimple independence
+Book 176's Brauer--Nesbitt theorem then supplied recognition, not existence. It proved the semisimple independence
 statements that properly belong at this stage and gave the sharp rank-two diagnostic: a dense
 trace identity $1+\chi$ forces semisimplification $1\oplus\chi$. Book 187's completed
 intersection-field theorem closes the sole former prerequisite, so characteristic-zero
