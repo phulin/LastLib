@@ -7,7 +7,7 @@
   - [1.2 Coefficients and local conditions](#12-coefficients-and-local-conditions)
   - [1.3 What this book proves](#13-what-this-book-proves)
 - [2. The complete local ledger](#2-the-complete-local-ledger)
-  - [2.1 The two selected dyadic profiles](#21-the-two-selected-dyadic-profiles)
+  - [2.1 The dyadic Frey-special profile](#21-the-dyadic-frey-special-profile)
   - [2.2 The coefficient prime](#22-the-coefficient-prime)
   - [2.3 The real place and global invariants](#23-the-real-place-and-global-invariants)
   - [2.4 Local conditions and exact orthogonals](#24-local-conditions-and-exact-orthogonals)
@@ -58,16 +58,12 @@ be continuous and satisfy all of the following conditions.
 1. \(\det\bar\rho=\bar\chi_\ell\).
 2. \(\bar\rho\) is absolutely irreducible and odd.
 3. \(\bar\rho\) is unramified outside \(\{2,\ell\}\).
-4. At \(2\), one selected local datum from Book 182 is fixed: the
-   tame-quadratic order-three profile (TQ), or the nonzero-monodromy
-   minimal-special profile with its intrinsic line and named sign (SP).
+4. At \(2\), the Frey-special datum from Book 182 is fixed: the
+   nonzero-monodromy minimal-special profile with its intrinsic line and
+   named sign (SP).
 5. At \(\ell\), the restriction is the generic fibre of a
    coefficient-linear finite-flat model over \(\mathbf Z_\ell\), of weights
    \(\{0,1\}\) and cyclotomic determinant.
-
-The Frey branch is SP. The TQ calculation is retained only because Books 184
-and 185 expose a common selected-profile interface for TQ and SP; the two
-local deformation functors are never identified.
 
 Set
 
@@ -163,10 +159,10 @@ H^1(G_{\mathbf Q,S},M')\longrightarrow
 \right). \tag{1.10}
 $$
 
-Book 182 proves that (1.9) is the tangent space of the represented global
-hardly-ramified fixed-determinant functor. The supported complex below does
-not replace that tangent calculation; it extends the same kernel into
-adjacent cohomological degrees.
+Book 182, Theorem 4.1 and Section 4.3, prove that (1.9) is the tangent space
+of the represented global hardly-ramified fixed-determinant functor. The
+supported complex below does not replace that tangent calculation; it
+extends the same kernel into adjacent cohomological degrees.
 
 ### 1.3 What this book proves
 
@@ -209,21 +205,10 @@ $$
 Every local dimension used later is calculated in this chapter. In
 particular, the ambient group at \(\ell\) is not assumed unobstructed.
 
-### 2.1 The two selected dyadic profiles
+### 2.1 The dyadic Frey-special profile
 
-On TQ, if \(H\) spans the trace-zero centralizer of the order-three inertia
-operator, Book 182 gives
-
-$$
-M^{I_2}=kH,
-\qquad
-\phi(H)=-H. \tag{2.2}
-$$
-
-Thus Frobenius has eigenvalue \(-1\) on \(M^{I_2}\), and eigenvalue \(-2\)
-on \((M')^{I_2}=M^{I_2}(1)\).
-
-On SP, the residual inertial representation has the form
+The residual inertial representation in the SP condition of Book 182,
+Sections 2.1--2.2, has the form
 
 $$
 \bar\rho(\sigma)=1+\overline t_\ell(\sigma)\bar N,
@@ -256,40 +241,32 @@ M^{I_2}=k\bar N,
 \phi(\bar N)=2\bar N. \tag{2.6}
 $$
 
-After the Tate twist, Frobenius acts by \(4\) on \((M')^{I_2}\). The four
-relevant eigenvalues are therefore
+After the Tate twist, Frobenius acts by \(4\) on \((M')^{I_2}\). Thus the
+two relevant eigenvalues are
 
 $$
 \begin{array}{c|cc}
 &M^{I_2}&(M')^{I_2}\\ \hline
-\mathrm{TQ}&-1&-2\\
 \mathrm{SP}&2&4.
 \end{array} \tag{2.7}
 $$
 
-For \(\ell\ge7\), none is \(1\). It follows on either selected branch that
+For \(\ell\ge7\), neither is \(1\). It follows that
 
 $$
 H^0(\mathbf Q_2,M)=H^0(\mathbf Q_2,M')=0. \tag{2.8}
 $$
 
-For TQ, the fixed-type tangent is
-
-$$
-H^1_{\mathrm{ur}}(\mathbf Q_2,M)
-\simeq M^{I_2}/(\phi-1)M^{I_2}=0. \tag{2.9}
-$$
-
-For SP, the nonzero-monodromy normal form of Book 182 gives the
-fixed-determinant unframed tangent directly, and it is also zero. Thus
+The nonzero-monodromy normal form of Book 182 gives the fixed-determinant
+unframed SP tangent directly, and it is zero. Thus
 
 $$
 L_2=0 \tag{2.10}
 $$
 
-on either branch. This common tangent does not identify the nonlinear local
-conditions: TQ has finite order-three inertia, while SP retains nonzero
-rank-one monodromy and the line (2.4).
+The tangent calculation retains the nonlinear SP condition: nonzero
+rank-one monodromy, the intrinsic line (2.4), the named sign, and the
+Frobenius equation (2.5).
 
 Local duality and (2.8) give
 
@@ -312,9 +289,9 @@ H^i(\mathbf Q_2,M)=H^i(\mathbf Q_2,M')=0
 \quad(0\le i\le2).} \tag{2.13}
 $$
 
-In particular, the strict, relaxed, and selected degree-one subspaces all
-have the same underlying zero vector space at \(2\), although their
-deformation functors need not agree.
+In particular, the ambient and SP degree-one spaces have the same underlying
+zero vector space at \(2\); the SP deformation condition still retains its
+full nonlinear data.
 
 ### 2.2 The coefficient prime
 
@@ -330,8 +307,9 @@ $$
 h_\ell^0(M)=h_\ell-1. \tag{2.15}
 $$
 
-Book 182 proves, for \(K=\mathbf Q_\ell\) and local degree \(f=1\), that the
-fixed-determinant finite-flat tangent satisfies
+Book 182, Theorem 3.1 and its tangent calculation in Section 3.3, proves that
+the fixed-determinant coefficient-linear finite-flat tangent over
+\(\mathbf Z_\ell\) satisfies
 
 $$
 \dim_kL_\ell
@@ -389,9 +367,10 @@ $$
 $$
 
 No vanishing of \(H^2(\mathbf Q_\ell,M)\) has been used or proved. The exact
-statement is (2.19). Book 182 proves instead that the obstruction map for
-the constrained finite-flat local functor is zero: every admissible object
-lifts through a small extension. This distinction is required by Book 184.
+statement is (2.19). Book 182, Section 3.4, proves instead that the
+obstruction map for the constrained finite-flat local functor is zero: every
+admissible object lifts through a small extension. This distinction is
+required by Book 184.
 
 ### 2.3 The real place and global invariants
 
@@ -451,7 +430,7 @@ H^0(G_{\mathbf Q,S},M')=0. \tag{2.30}
 $$
 
 Absolute irreducibility alone proves (2.28), not (2.30); the latter uses the
-selected dyadic profile.
+Frey-special dyadic profile.
 
 ### 2.4 Local conditions and exact orthogonals
 
@@ -1169,9 +1148,10 @@ to obtain a balanced presentation. Its later finiteness, flatness,
 complete-intersection, horizontal-component, and characteristic-zero-point
 arguments are logically downstream and are not inputs to this book.
 
-For the Frey application, choose SP in Section 1.1. Equations (2.3)--(2.6)
-show explicitly that the retained representation line, adjoint line,
-Frobenius return, and twist eigenvalue are the SP data consumed downstream.
+For the Frey application, the SP condition in Section 1.1 is fixed.
+Equations (2.3)--(2.6) show explicitly that the retained representation line,
+adjoint line, Frobenius return, and twist eigenvalue are the SP data consumed
+downstream.
 
 ### 7.3 Scope boundary
 
@@ -1188,7 +1168,7 @@ in the Book 184/185 hardly-ramified lift:
   lift extraction.
 
 The sole warning about excluded characteristics needed in the proof is
-already visible in (2.7): the uniform dyadic invariant calculation used here
+already visible in (2.7): the dyadic invariant calculation used here
 requires the stated range \(\ell\ge7\).
 
 ## 8. Source-closure audit
@@ -1206,7 +1186,7 @@ matched below.
 | Book 32, *Global Galois Cohomology and Selmer Groups*, Sections 1, 3, 6, 9, and 13.3 | \(G_{\mathbf Q,S}\), finiteness, Selmer kernels, exact orthogonal structures, and the adjoint-tangent dictionary | \(S\) contains infinity, \(\ell\), and every ramified finite place; fixed determinant uses \(M=\operatorname{ad}^0\bar\rho\) |
 | Book 33, *Poitou--Tate Duality*, Sections 5, 6, 8, and 9 | complete real convention, compactly supported duality, (5.1), global Euler characteristic, and Greenberg--Wiles | finite coefficients; exact local annihilators; complete Tate cochains at real places |
 | Book 68, *Global Deformation Problems*, Sections 7--9 | fixed-determinant adjoint tangents, the mapping-fibre shape of constrained obstruction theory, and the distinction between ambient and constrained local \(H^2\) | global Schur representation; \(\ell\nmid2\); locally liftable conditions with their actual tangent subspaces |
-| Book 182, *Local Conditions for Hardly-Ramified Minimal Deformations*, Theorem 4.2, Sections 5.1--5.6 and 10.4, and Theorems 7.1 and 8.1 | TQ/SP lines and Frobenius eigenvalues, \(L_2=0\), \(\dim L_\ell=h_\ell\), local liftability, and the global tangent kernel | \(\ell\ge7\); selected TQ or SP datum; coefficient-linear finite flatness over unramified \(\mathbf Q_\ell\), weights \(\{0,1\}\), cyclotomic determinant |
+| Book 182, *Local Conditions for Hardly-Ramified Minimal Deformations*, Theorems 2.2, 3.1, 4.1, and 6.1, and Sections 5.1--5.2 | SP line and Frobenius eigenvalues, \(L_2=0\), \(\dim L_\ell=h_\ell\), local liftability, and the global tangent kernel | \(\ell\ge7\); nonzero SP monodromy with intrinsic line and named sign; coefficient-linear finite flatness over \(\mathbf Z_\ell\), weights \(\{0,1\}\), cyclotomic determinant |
 
 Cone calculations, the differential check (4.6), and the passage from an
 exact sequence to an alternating dimension identity are proved explicitly
@@ -1232,11 +1212,11 @@ its direct source rather than reopening its transitive local inputs.
 
 The hypotheses also close under every use:
 
-- \(\ell\ge7\) makes \(2\) invertible, excludes all four eigenvalues in
-  (2.7) from \(1\), and makes the real complete complex acyclic.
+- \(\ell\ge7\) makes \(2\) invertible, excludes both eigenvalues in (2.7)
+  from \(1\), and makes the real complete complex acyclic.
 - Absolute irreducibility is used only for the global invariant (2.28) and
   the fixed-determinant global problem.
-- The selected dyadic profile proves (2.8), hence the separate global
+- The Frey-special dyadic profile proves (2.8), hence the separate global
   twisted-invariant vanishing (2.30).
 - Coefficient-linear finite flatness supplies (2.16) and constrained local
   liftability, but is never used to assert ambient \(H^2=0\).

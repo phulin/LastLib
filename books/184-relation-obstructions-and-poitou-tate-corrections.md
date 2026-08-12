@@ -21,7 +21,7 @@
   - [4.3 The mapping fiber and its sign](#43-the-mapping-fiber-and-its-sign)
   - [4.4 Construction and choice independence](#44-construction-and-choice-independence)
   - [4.5 Completeness](#45-completeness)
-- [5. The Poitou--Tate correction term](#5-the-poitou-tate-correction-term)
+- [5. The Poitou--Tate correction term](#5-the-poitou--tate-correction-term)
   - [5.1 The affine mismatch](#51-the-affine-mismatch)
   - [5.2 The exact correction functional](#52-the-exact-correction-functional)
   - [5.3 The two layers of supported degree two](#53-the-two-layers-of-supported-degree-two)
@@ -51,11 +51,9 @@ $$
 $$
 
 which is absolutely irreducible and odd, has determinant
-\(\bar\chi_\ell\), is unramified outside \(\{2,\ell\}\), has one selected
-dyadic branch from Book 182, and is coefficient-linearly finite flat at
-\(\ell\). The Frey branch is the minimal-special branch SP. The
-tame-quadratic branch TQ has the same cohomological ledger but is a different
-nonlinear local condition.
+\(\bar\chi_\ell\), is unramified outside \(\{2,\ell\}\), has the
+minimal-special Frey condition SP from Book 182 at \(2\), and is
+coefficient-linearly finite flat at \(\ell\).
 
 Put
 
@@ -69,13 +67,15 @@ The last identification uses the trace pairing. It is valid because \(2\)
 is invertible in \(k\); it is also the reason that fixed-determinant
 factor sets take values in \(M\), rather than in the full adjoint module.
 
-Book 182 constructs the represented global deformation functor
-\(D_{\mathrm{hr}}\) of strict-equivalence classes of lifts with determinant
-\(\chi_\ell\), the selected dyadic condition, the coefficient-linear
-finite-flat condition at \(\ell\), and no ramification elsewhere. Write
+Book 182, Theorem 4.1, constructs the represented global deformation functor
+\(D^{\mathrm{hr,SP}}\) of strict-equivalence classes of lifts with determinant
+\(\chi_\ell\), the SP condition at \(2\), the coefficient-linear finite-flat
+condition at \(\ell\), and no ramification elsewhere. Throughout, write
 
 $$
-R_{\mathrm{hr}}
+D_{\mathrm{hr}}=D^{\mathrm{hr,SP}},
+\qquad
+R_{\mathrm{hr}}=R^{\mathrm{hr,SP}}
 $$
 
 for its universal complete Noetherian local \(\mathcal O\)-algebra. Nothing
@@ -140,9 +140,8 @@ be minimal in its variables, and let
 1. every small-extension lifting problem for \(D_{\mathrm{hr}}\) has a
    functorial class in
    \(H^2_{\mathrm{hr}}(\mathbf Q,M)\) tensored with the square-zero kernel;
-2. that class vanishes if and only if a global lift satisfying the SP (or
-   selected TQ) condition and the coefficient-linear finite-flat condition
-   exists;
+2. that class vanishes if and only if a global lift satisfying the SP
+   condition and the coefficient-linear finite-flat condition exists;
 3. the affine local correction is exact: a family of local mismatches is
    globally correctable if and only if its Poitou--Tate pairing with every
    class in \(H^1_{\mathrm{hr}^\perp}(\mathbf Q,M')\) is zero;
@@ -440,9 +439,10 @@ there.
 
 ### 4.1 The dyadic SP and coefficient-prime inputs
 
-The local statements used here are the exact outputs of Book 182.
+The local statements used here are the exact outputs of Book 182, Theorem
+6.1 and Sections 5.1--5.2.
 
-On the Frey minimal-special branch, after a fixed residual normalization,
+For the Frey minimal-special condition, after a fixed residual normalization,
 
 $$
 \bar\rho(\sigma)=1+\overline t_\ell(\sigma)\bar N,
@@ -472,17 +472,17 @@ $$
 H^0(\mathbf Q_2,M)=H^0(\mathbf Q_2,M')=0. \tag{4.4}
 $$
 
-Local duality and the away-from-\(\ell\) Euler formula then give
+Book 182's adjoint calculation, equivalently local duality and the
+away-from-\(\ell\) Euler formula applied to (4.4), gives the full vanishing
 
 $$
-H^1(\mathbf Q_2,M)=H^2(\mathbf Q_2,M)=0,
-\qquad H^1(\mathbf Q_2,M')=0. \tag{4.5}
+H^i(\mathbf Q_2,M)=H^i(\mathbf Q_2,M')=0
+\qquad(0\leq i\leq2). \tag{4.5}
 $$
 
 Thus SP rigidity is not a slogan about conductor: it is the precise
 nonzero-monodromy local functor whose degree-one and ambient degree-two
-groups vanish. On TQ, Frobenius eigenvalues \(-1\) and \(-2\) replace
-\(2\) and \(4\), giving the same vanishings for \(\ell\geq7\).
+groups vanish.
 
 At \(\ell\), the condition is coefficient-linear finite flat of weight
 \(\{0,1\}\), with determinant \(\chi_\ell\). It lifts through every small
@@ -503,7 +503,7 @@ $$
 $$
 
 The framed finite-flat local ring is smooth in four variables. If
-\(h_\ell=2\), no coarse unframed local universal ring is inferred. This
+\(h_\ell>1\), no coarse unframed local universal ring is inferred. This
 does not harm the global problem: the framed local lift groupoid has the
 required deformation and automorphism complexes.
 
@@ -1036,7 +1036,7 @@ $$
 c_v=\dim_kL_v-\dim_kH^0(\mathbf Q_v,M). \tag{7.1}
 $$
 
-For the Frey-SP branch, (4.3)--(4.4) give
+For the Frey-SP condition, (4.3)--(4.4) give
 
 $$
 c_2=0-0=0. \tag{7.2}
@@ -1084,9 +1084,6 @@ $$
 \dim_kH^2_{\mathrm{hr}}(\mathbf Q,M)
 =\dim_kH^1_{\mathrm{hr}}(\mathbf Q,M). \tag{7.8}
 $$
-
-The TQ branch has the same equations (7.2)--(7.8), using its eigenvalues
-\(-1\) and \(-2\) in place of the SP eigenvalues \(2\) and \(4\).
 
 ### 7.2 Relations versus variables
 
@@ -1138,7 +1135,7 @@ that \(R_{\mathrm{hr}}\) is finite over \(\mathcal O\).
 The complete output of this book that Book 185 may use is the following
 package, and no more.
 
-1. \(R_{\mathrm{hr}}\) represents the selected fixed-determinant
+1. \(R_{\mathrm{hr}}\) represents the Frey-SP fixed-determinant
    hardly-ramified problem constructed in Book 182.
 2. Its relative tangent dimension is
    \(t=\dim_kH^1_{\mathrm{hr}}(\mathbf Q,M)\).
@@ -1146,9 +1143,9 @@ package, and no more.
    by \(r=\dim_kJ/\mathfrak nJ\) elements and \(r\leq t\).
 4. Hence the presentation (7.12) and the lower bound (7.13) hold.
 5. Every characteristic-zero point obtained later from this same universal
-   ring automatically retains the selected SP (or TQ) condition and the
-   coefficient-linear finite-flat condition, because those predicates are
-   built into the represented functor.
+   ring automatically retains the SP condition and the coefficient-linear
+   finite-flat condition, because those predicates are built into the
+   represented functor.
 
 No conclusion of Book 185 is used to prove this package. In particular, the
 argument here does not assume scalar-fiber finiteness, automorphy after
@@ -1164,7 +1161,7 @@ Only the following prior results carry mathematical weight here.
 
 | source | exact input used | hypothesis matched here |
 |---|---|---|
-| Book 182 | represented global functor; SP and TQ closed local conditions; local lift groupoids; \(L_2=0\); SP eigenvalues \(2,4\); finite-flat liftability and \(\dim L_\ell=h_\ell\) | \(\ell\geq7\); nonzero SP monodromy with line and sign, or selected TQ branch; actual coefficient-linear finite-flat model; cyclotomic determinant |
+| Book 182, Theorem 6.1 and Sections 5.1--5.2 | represented global Frey-SP functor; SP and finite-flat local lift groupoids; \(L_2=0\); SP eigenvalues \(2,4\); finite-flat liftability and \(\dim L_\ell=h_\ell\) | \(\ell\geq7\); nonzero SP monodromy with intrinsic line and named sign; actual coefficient-linear finite-flat model; cyclotomic determinant |
 | Book 183 | positive local complexes; supported duality; the exact Poitou--Tate sequence; Greenberg--Wiles balance | \(S=\{2,\ell,\infty\}\); finite modules; exact local orthogonals; complete real convention; \(M'=M^*(1)\) |
 | standard complete-local algebra | Nakayama, Krull intersection, the generalized principal ideal theorem, and representability over inverse limits | complete Noetherian local rings and the minimal presentation (1.7) |
 
@@ -1199,9 +1196,8 @@ structure.
 
 The following possible shortcuts have been tested and excluded.
 
-- SP is not replaced by a conductor-only condition or by TQ. Its nonzero
-  nilpotent, intrinsic line, named sign, and equation \(FNF^{-1}=2N\) are
-  retained.
+- SP is not replaced by a conductor-only condition. Its nonzero nilpotent,
+  intrinsic line, named sign, and equation \(FNF^{-1}=2N\) are retained.
 - Finite flatness is not replaced by unramifiedness, endpoint characters, or
   rational Hodge labels. The middle coefficient-linear finite-flat object is
   required.
