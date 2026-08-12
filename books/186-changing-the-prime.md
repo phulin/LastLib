@@ -2,7 +2,7 @@
 
 ## 1. Scope
 
-This chapter performs one operation. Starting with the rank-two compatible family that
+This chapter performs one operation. Starting with the rank-two compatible collection that
 contains the distinguished Frey lift, it selects a member of coefficient characteristic
 $3$ and proves that its local representation at $2$ has the same special
 (Steinberg) record as the original member.
@@ -23,31 +23,45 @@ Nothing here reconstructs compatible-family theory, automorphic descent, integra
 $3$-adic Hodge theory, or a classification of finite-flat group schemes. Those are
 dependency boundaries. The final sections state exactly what is handed to Books 160 and 187--188.
 
+The existence of the collection used below is conditional on the controlled SP top datum
+of Books 182--185. In particular, the current dependency spine does not construct the
+required controlled residual automorphic seed. The result of this chapter is therefore a
+bounded implication from the assembled rational data, not an unconditional construction of
+that data.
+
 Throughout, Frobenius is arithmetic and
 $\chi_q(\operatorname{Frob}_v)=v$ for $v\ne q$.
 
 ## 2. Input contract
 
 Let $p\ge5$ be the coefficient characteristic of the distinguished Frey lift. The
-input consists of the following already-proved data.
+input consists of the following supplied data.
 
 ### 2.1 The family and its coefficient field
 
-There is a number field $E$, a place $\lambda_p\mid p$, and a family
+There is a number field $E$, a place $\lambda_p\mid p$, and an away-from-two
+compatible collection
 
 $$
-\mathcal R=\{r_\lambda:G_{\mathbf Q}\longrightarrow
-\operatorname{GL}_2(E_\lambda)\}_\lambda
+\mathcal R^{(2)}=\{r_\lambda:G_{\mathbf Q}\longrightarrow
+\operatorname{GL}_2(E_\lambda)\}_{\lambda\nmid2}
 \tag{2.1}
 $$
 
-of continuous semisimple rank-two representations. The member $r_{\lambda_p}$
+of continuous absolutely irreducible rank-two representations. The member $r_{\lambda_p}$
 is the distinguished Frey lift after a stated common scalar extension. Every
 coefficient enlargement needed to define the family and its local parameters has
 already been made. In particular, $E$ in (2.1) is the final coefficient field,
 not a temporary trace field.
 
-For every rational prime $v$ outside the declared bad set, there is a polynomial
+Under Book 185's hypothesis $(\mathrm{AI}_2)$, (2.1) extends to an all-finite-place
+compatible system. Without $(\mathrm{AI}_2)$, Book 185 still constructs exactly the
+away-from-two collection displayed here. Both $\lambda_p$ and every $\nu\mid3$ belong to
+that collection. Thus the coefficient-three route in this chapter does not use
+$(\mathrm{AI}_2)$ and makes no selection at a coefficient place above $2$.
+
+There is a finite certified exceptional set $S$, containing $2$, such that for every
+rational prime $v\notin S$ there is a polynomial
 
 $$
 P_v(X)=X^2-a_vX+v\in E[X]
@@ -68,6 +82,17 @@ $$
 \det r_\lambda=\chi_{\ell(\lambda)}.
 \tag{2.4}
 $$
+
+The polynomials are pure of weight one: for every root $\alpha$ of $P_v$ and every
+complex embedding $\iota$ of a splitting field,
+
+$$
+|\iota(\alpha)|=v^{1/2}.
+\tag{2.4a}
+$$
+
+Purity is an independent part of the compatible-family input. It is not a consequence of
+the constant term $v$ or of the cyclotomic determinant.
 
 The phrase “same Frobenius polynomial” always means the two images of (2.2)
 under the relevant embeddings. It never means that two unrelated completions of
@@ -102,14 +127,17 @@ r_2(\phi_2)N_2r_2(\phi_2)^{-1}=2N_2.
 \tag{2.7}
 $$
 
-The determinant in (2.4) fixes an unramified quadratic character $\eta$ and a
-sign
+The action of $D_2$ on its one-dimensional quotient defines an unramified character
+$\eta$. Its Frobenius value is the sign
 
 $$
 \eta^2=1,
 \qquad \varepsilon=\eta(\phi_2)\in\{\pm1\}.
 \tag{2.8}
 $$
+
+Here the pair $D_2$ determines which sign occurs; the determinant and the
+Weil--Deligne relation force its square to be one.
 
 The word *sign* in this chapter means exactly (2.8). It is the Frobenius
 eigenvalue on the one-dimensional quotient by the monodromy line. No root-number
@@ -120,13 +148,21 @@ integer. Weak compatibility alone is insufficient for this chapter.
 
 ### 2.3 Ramification away from two
 
-For the minimal FLT family under discussion, the common away-from-coefficient
-local pair at every $v\ne2$ is unramified. Consequently a member of coefficient
-characteristic $q$ is unramified outside $\{2,q\}$. This is an input about the
-assembled family. In particular, removal of the old coefficient prime $p$ is not
-deduced from its role in the original member; it is certified by the common local
-pair at $p$ as read by every member of coefficient characteristic different from
-$p$.
+Book 185 gives the common pure polynomials outside $S$, but it does not automatically remove
+every auxiliary prime in $S$. For a candidate place $\nu\mid3$, the additional
+minimal-support conclusion uses the separate clean-support certificate
+
+$$
+(\mathrm U)\qquad
+r_\nu\text{ is unramified at every rational prime }v\ne2,3
+\quad\text{for the selected }\nu\mid3.
+\tag{2.9}
+$$
+
+Only the finitely many auxiliary primes left by Book 185 require new checks. This certificate
+is an input, not a consequence of equality at the cofinite set of good Frobenius classes. In
+particular, removal of the old coefficient prime $p$ must be certified by the actual local
+record at $p$ for $r_\nu$; it is not deduced from $p$'s role in the original member.
 
 ## 3. The special parameter at two
 
@@ -259,7 +295,7 @@ many actual places in (4.1).
 
 ### 4.2 The rational companion
 
-For every $v\ne2,3$, the family input gives
+For every certified good prime $v\notin S$ with $v\ne3$, the family input gives
 
 $$
 V\text{ is unramified at }v,
@@ -268,6 +304,12 @@ V\text{ is unramified at }v,
 =X^2-\iota_\nu(a_v)X+v.
 \tag{4.4}
 $$
+
+Every root of the algebraic polynomial $P_v\in E[X]$ has complex absolute value $v^{1/2}$
+under every complex embedding. Separately, the clean-support certificate $(\mathrm U)$ says that
+$V$ is unramified at all $v\ne2,3$, including the finitely many auxiliary primes not covered
+by the certified good set. It does not manufacture a pure common polynomial at one of those
+auxiliary primes.
 
 In addition,
 
@@ -489,6 +531,8 @@ For each $\nu\mid3$, record the following without conflation:
 |---|---|
 | $K$ and $k$ | factorization of $3\mathcal O_E$ |
 | existence of $V=r_\nu$ | the actual family (2.1) |
+| good Frobenius polynomials and purity | Book 185's certified set $v\notin S$ |
+| clean support outside $\{2,3\}$ | the separate certificate $(\mathrm U)$ |
 | special record at $2$ | strong compatibility (4.6) |
 | residual representation | a named stable lattice |
 | absolute irreducibility or image | a direct calculation or an exact imported theorem |
@@ -502,17 +546,19 @@ and assuming that all places above it behave alike.
 
 ## 7. Prime-switch theorem
 
-**Theorem 7.1 (Frey special record at coefficient prime three).** Assume the input
-contract of Section 2, and choose a place $\nu\mid3$ of the final coefficient
-field. Let $V=r_\nu$.
+**Theorem 7.1 (Frey special record at coefficient prime three).** Assume the rational input
+contract of Sections 2.1--2.2, and choose a place $\nu\mid3$ of the final coefficient
+field. Let $V=r_\nu$. The additional minimal-support assertion below is conditional on
+$(\mathrm U)$ for this $\nu$.
 
 Then:
 
-1. $V$ is an actual two-dimensional $E_\nu$-representation with
+1. $V$ is an actual absolutely irreducible two-dimensional $E_\nu$-representation with
    $\det V=\chi_3$; it is not obtained by tensoring the original $p$-adic member
    with $E_\nu$.
-2. It has the common Frobenius polynomials and is unramified outside
-   $\{2,3\}$.
+2. At every certified good prime $v\notin S$ with $v\ne3$, it has the common
+   polynomial $P_v$, whose roots are pure of weight one. Under $(\mathrm U)$ it is
+   unramified outside $\{2,3\}$.
 3. Its Frobenius-semisimple Weil--Deligne pair at $2$ is
    $D_2\otimes_EE_\nu$.
 4. Its monodromy is nonzero of rank one. The line
@@ -526,11 +572,12 @@ Then:
 
 No assertion about residual absolute irreducibility, crystallinity at $3$, or
 finite flatness at $3$ is included unless the corresponding entries in the
-ledger of Section 6.3 have separately been certified.
+ledger of Section 6.3 have separately been certified. The theorem does not require
+$(\mathrm{AI}_2)$; it uses only the away-from-two collection (2.1).
 
-**Proof.** Clauses 1 and 2 follow from selection of the member in (2.1), the
-common polynomials, the common unramified local pairs, and the determinant
-identity. Because the coefficient characteristic of $V$ is $3$, the base place
+**Proof.** Clause 1 and the good-prime part of clause 2 follow from selection of the member in
+(2.1), the common pure polynomials, and the determinant identity. The final support statement
+in clause 2 is exactly $(\mathrm U)$. Because the coefficient characteristic of $V$ is $3$, the base place
 $2$ lies in the away-from-coefficient range. Strong local compatibility gives
 (4.6). Equations (3.1)--(3.3) then give the nonzero monodromy, the line, and the
 sign, while (3.5) gives conductor one. Compactness supplies $T$; intersection
@@ -550,9 +597,12 @@ $$
 $$
 
 together with the rational ramification statement and the special line at $2$.
-Its task is separate from Theorem 7.1: prove the required coefficient-prime
-comparison at $3$, construct or identify a global stable lattice with the needed
-finite-flat quotient system, and return that same named lattice $T$.
+Here the ramification statement is the assumed certificate $(\mathrm U)$, not a
+consequence of weak compatibility. Book 187's task is separate from Theorem 7.1:
+it must be supplied with its coefficient-prime certificate $(\mathrm C_3)$ and may then
+construct or identify a global stable lattice with the needed finite-flat quotient system and
+return that same named lattice $T$. Neither the target Hodge labels in (8.1) nor the rational
+representation by itself proves crystallinity or finite flatness at $3$.
 
 Once Book 187 fixes $T$, the local intersection $T\cap L_{2,\nu}$ and the ideal
 $\mathfrak c_2(T)$ must be evaluated on that lattice. The rational special record
@@ -560,15 +610,26 @@ survives every lattice change; a primitive residual monodromy class does not.
 
 ### 8.2 Book 188: the residual input
 
-Book 188 may use only the following checked objects:
+The direct rational input from this chapter to Book 188 is
+
+$$
+(V,\det V=\chi_3,D_2\otimes_EK,\{P_v\}_{v\notin S\cup\{3\}}),
+\tag{8.2}
+$$
+
+with the transported SP record and the imported weight-one purity. The all-level finite-flat tower is not
+in (8.2); it must come from Book 187 for the same $\nu$ and the same named lattice $T$.
+For any residual argument, Book 188 may use only checked objects such as
 
 $$
 (k,\overline T,\overline L_2,\overline\varepsilon,
 \mathfrak c_2(T),\text{ the certified global residual image}).
-\tag{8.2}
+\tag{8.3}
 $$
 
-If its theorem requires residual conductor one, it must see
+The signed-special endgame of Book 188 does not require primitive residual monodromy or
+residual absolute irreducibility: it permits the residual inertia extension to split and uses
+the saturated all-level filtration. If a variant requires residual conductor one, it must see
 $\mathfrak c_2(T)=\mathcal O$. If it requires a representation over
 $\mathbf F_3$, it must see an $\mathbf F_3$-descent or $k=\mathbf F_3$. If it
 requires absolute irreducibility, the certificate of Section 6.2 or an exact
@@ -588,7 +649,7 @@ $$
 =\operatorname{Sp}_2(\varepsilon),
 \qquad
 a_2(V)=1.
-\tag{8.3}
+\tag{8.4}
 $$
 
 It may not silently replace $\nu$, descend coefficients, change $T$, or upgrade
@@ -605,7 +666,7 @@ $$
 \text{Book 188 checked residual input}
 \longrightarrow
 \text{Book 160 final use}.
-\tag{8.4}
+\tag{8.5}
 $$
 
 No result of those later books is used to prove Theorem 7.1.
@@ -643,9 +704,13 @@ only scalar extension at $2$ is $D_2\otimes_EE_\nu$, which is defined.
 the preserved base place is $2$, so (4.6) lies strictly away from the coefficient
 prime. Nothing in that statement addresses the base place $3$.
 
-**Old coefficient prime.** Unramifiedness at $p$ comes from the common local
-record at $p$ for the new member, not from the old $p$-adic member's
-coefficient-prime behavior.
+**Old coefficient prime.** Unramifiedness at $p$ comes from a direct local certificate for the
+new member, as required by $(\mathrm U)$, not from the old $p$-adic member's coefficient-prime
+behavior.
+
+**Purity is separate from determinant.** The roots of $P_v$ have complex absolute value
+$v^{1/2}$ by the pure compatible-polynomial theorem imported in (2.4a). Neither their product
+$v$ nor $\det V=\chi_3$ proves that bound.
 
 **Global versus local recognition.** Good Frobenius polynomials recognize the
 global semisimplification. The bad-place pair, including $N$, comes from the
@@ -676,16 +741,18 @@ index is also one.
 
 Theorem 7.1 imports only:
 
-- the already-assembled family over its final coefficient field;
-- common good polynomials and determinant;
-- common unramified local pairs away from $2$;
+- the conditional controlled SP top datum through Book 185's away-from-two assembly over its
+  final coefficient field;
+- common certified good polynomials, their purity, and the cyclotomic determinant;
 - full strong local compatibility at $2$; and
 - identification of the distinguished member's dyadic pair as
   $\operatorname{Sp}_2(\varepsilon)$.
 
-It does not import a later finite-flat theorem, residual classification, or final
-FLT contradiction. Books 160 and 187--188 receive outputs in that order and do
-not feed assumptions backward into the proof.
+The optional minimal-support assertion additionally imports the separate certificate
+$(\mathrm U)$ for the selected member. The theorem does not import a later finite-flat theorem, residual classification, or final
+FLT contradiction. It also does not import $(\mathrm{AI}_2)$, because no coefficient-two
+member is used. Books 160 and 187--188 receive outputs in that order and do not feed
+assumptions backward into the proof.
 
 ## 10. Mechanical audit
 
@@ -694,7 +761,10 @@ $2$, and one local shape. All equations use the arithmetic-Frobenius convention.
 Every occurrence of a residual representation is attached either to a named
 lattice or explicitly marked as a semisimplification. Every claim at the base
 place $3$ is deferred to a coefficient-prime certificate. Every conductor claim
-states whether it is rational or residual.
+states whether it is rational or residual. The clean-support assertion is visibly
+conditional on $(\mathrm U)$, the prime-three route is independent of $(\mathrm{AI}_2)$, and
+the missing controlled seed remains an upstream hypothesis. Pure weight one is recorded
+separately from the Frobenius constant term and determinant.
 
 The chapter's final certified object is
 
@@ -703,6 +773,9 @@ $$
 V=r_\nu,
 \quad
 \det V=\chi_3,
+\quad
+\det(X-V(\operatorname{Frob}_v))=\iota_\nu P_v(X)
+\text{ with }P_v\text{ pure of weight one }(v\notin S\cup\{3\}),
 \quad
 \operatorname{WD}_2(V)^{\mathrm{F\text{-}ss}}
 =\operatorname{Sp}_2(\varepsilon),

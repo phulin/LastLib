@@ -213,6 +213,6 @@ dependency spine is not closed.
 | 183 | Brauer Induction for Automorphy Families | [x] | [x] | [x] | — |
 | 184 | Brauer Characters and Effectivity of Compatible Families | [x] | [x] | [x] | — |
 | 185 | Compatible Systems over the Base Field | [x] | [x] | [x] | — |
-| 186 | Changing the Coefficient Prime while Keeping the Frey Special Place | [ ] | [ ] | — | — |
-| 187 | The Fixed-Three Integral Local Theory | [ ] | [ ] | — | — |
+| 186 | Changing the Coefficient Prime while Keeping the Frey Special Place | [x] | [x] | [x] | — |
+| 187 | The Fixed-Three Integral Local Theory | [x] | [x] | [x] | — |
 | 188 | Hardly Ramified $3$-adic Representations | [ ] | [ ] | — | — |

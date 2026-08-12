@@ -133,10 +133,12 @@ V|_{G_{\mathbf Q_3}}
 \tag{C3}
 $$
 
-Equivalently, in the conventions below its crystalline module is weakly admissible, has one
-Hodge line, and has total Newton number one. Section 2 gives two concrete ways an upstream
-geometric theorem can prove this certificate. It is a rational comparison certificate; no
-lattice is included in it.
+Equivalently, its crystalline periods have full dimension two and, in the covariant
+normalization below, the resulting filtered Frobenius module is weakly admissible, has one
+Hodge line, and has total Newton number one. The full-dimension condition is essential: the
+filtered numerical assertions alone, applied to a proper period subspace, would not certify
+crystallinity of $V$. Section 2 gives two concrete ways an upstream geometric theorem can prove
+this certificate. It is a rational comparison certificate; no lattice is included in it.
 
 The **clean-support certificate** $(\mathrm U)$ is the assertion
 
@@ -311,7 +313,12 @@ F_M=M\cap L
 \tag{3.1}
 $$
 
-is a saturated rank-one submodule and divided Frobenius generates $M$. If
+is a saturated rank-one submodule and divided Frobenius generates $M$.
+
+More precisely, we require $\varphi(M)\subset M$ and
+$\varphi(F_M)\subset 3M$, set
+$\varphi_0=\varphi|_M$ and $\varphi_1=3^{-1}\varphi|_{F_M}$, and require their normal map to
+be an isomorphism. If
 
 $$
 M=\mathcal Oe_0\oplus\mathcal Oe_1,
@@ -442,10 +449,10 @@ T_0\subset V
 \tag{3.13}
 $$
 
-stable under $G_{\mathbf Q_3}$. Rational comparison identifies the realization of
-$M[1/3]=D$ with the original $V|_{G_{\mathbf Q_3}}$; thus (3.13) is a lattice in the
-specified rational representation, not merely in another representation with the same Hodge
-numbers.
+stable under $G_{\mathbf Q_3}$. The rational Fontaine--Laffaille comparison, in the same
+covariant normalization used in $(\mathrm C_3)$, identifies the realization of $M[1/3]=D$
+with the original $V|_{G_{\mathbf Q_3}}$. Thus (3.13) is a lattice in the specified rational
+representation, not merely in another representation with the same Hodge numbers.
 
 For every nonzero proper ideal $I\subset\mathcal O$, integral Fontaine--Laffaille theory
 constructs a marked finite locally free commutative group
@@ -1217,7 +1224,8 @@ Therefore every $\mathcal G_n$ is an object of the Schoof category. Moreover:
 2. the coefficient action extends to $\mathcal G_n$;
 3. $\det T_n=\chi_3\bmod\varpi^n$;
 4. the maps $q_{m,n}$ are compatible coefficient reductions; and
-5. every exponent-three subquotient satisfies the refined square-zero relation (6.15).
+5. every exponent-three subquotient satisfies the square-zero relation (6.10), and hence the
+   cube-one relation (6.15).
 
 The category requires only odd-tame inertia, not nontrivial residual inertia and not a uniform
 order-three bound on every higher quotient. Higher SP quotients may have inertia of order
@@ -1370,9 +1378,9 @@ The proof uses the following sources directly.
 
 | source | exact input | use here | strengthening not made |
 |---|---|---|---|
-| Book 3 | tame characters, Swan and Artin conductor formulas | (6.4), tame inertia, and conductor bookkeeping | no residual conductor is inferred from a characteristic-zero conductor |
+| Book 3 | tame characters, finite-image ramification bookkeeping, and the trace-dual description of the inverse different | (5.13) and the tame quotient calculations in Sections 6.3--6.4 | its finite-image conductor theory is not used to manufacture the characteristic-zero SP conductor imported from Book 185 |
 | Book 42 | marked finite-flat models, schematic closure, represented quotients, coefficient actions, and finite-etale models | Proposition 4.2 and the local-to-global model calculus | no extension is called finite flat from its endpoints alone |
-| Book 54 | integral Fontaine--Laffaille realization, full faithfulness over $\mathbf Z_3$, admissible coefficient quotients, and exact compatible systems | Chapters 3 and 5 | rational Hodge labels do not select a lattice |
+| Book 54 | integral Fontaine--Laffaille realization, full faithfulness over $\mathbf Z_3$, admissible coefficient quotients, exact compatible systems, and coefficient-dual normalization | Chapters 3 and 5 | rational Hodge labels do not select a lattice, and coefficient duality is not silently identified with Cartier self-duality |
 | Book 129 | saturated geometric intersections, exact closure towers, commensurability transfer, coefficient change, and the fixed-three handoff | the geometric route and the proof architecture of Chapters 3--5 | no canonical geometric carrier or integral projector is claimed |
 | Book 185 | the actual coefficient-descended member, determinant, purity at its good primes, and the full signed SP pair at two | the rational starting object and dyadic local data | no coefficient-prime comparison, clean support, lattice, or tower is imported |
 
@@ -1392,7 +1400,8 @@ prerequisites of Theorems 10.1--10.2.
 ### 11.2 Exact blocker audit
 
 Even conditional on Book 185's controlled SP top datum, its theorem does not prove
-$(\mathrm C_3)$. The first post-189 blocker is therefore the following precise source theorem.
+$(\mathrm C_3)$. The first post-assembly blocker is therefore the following precise source
+theorem.
 
 > **Missing coefficient-prime source theorem.** For the selected place $\nu\mid3$, prove that
 > the effective member $r_\nu|_{G_{\mathbf Q_3}}$ is crystalline of Hodge type $(0,1)$ over
@@ -1412,6 +1421,12 @@ There is a second independent global source theorem.
 
 Without the first theorem, there is no finite-flat model at three. Without the second, the
 local tower exists but cannot be glued over $\mathbf Z[1/2]$.
+
+Book 186 does not close either gap. Its unramified-outside-$\{2,3\}$ conclusion is conditional
+on the separate minimal-support input in its Section 2.3; for the selected member, that input is
+precisely $(\mathrm U)$. It also explicitly defers coefficient-prime crystallinity and finite
+flatness to this book. Conversely, Book 188 consumes Theorem 10.2 only after both certificates
+have been supplied, so neither interface feeds one of the missing assertions backward.
 
 The conditional controlled SP top datum upstream of Book 185 is inherited by this statement.
 This book neither repairs nor worsens that earlier conditionality; it identifies the first new
@@ -1516,7 +1531,7 @@ $$
 \tag{12.1}
 $$
 
-The first exact post-189 blocker is the coefficient-prime source theorem stated in Section
+The first exact post-assembly blocker is the coefficient-prime source theorem stated in Section
 11.2. After it is proved, Chapters 3--6 give the entire local integral tower without another
 lattice assumption. The remaining global blocker is the finite clean-support comparison at
 $S_{\mathrm{aux}}$; after that finite check, Theorem 10.2 is Schoof-ready.
