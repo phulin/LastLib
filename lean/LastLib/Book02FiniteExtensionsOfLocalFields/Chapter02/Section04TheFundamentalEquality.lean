@@ -21,12 +21,10 @@ projection.  This retains the source proof's two counts: finite freeness over
 the base and the `e` successive residue-field layers upstairs.
 -/
 
--- SOURCE_ISSUE: The source claims that completeness and discreteness alone
--- force `[L : K] = e f` even for imperfect residue fields.  Finite defect
--- extensions in that setting can have `[L : K] > e f`, so the claim is not
--- valid with the displayed hypotheses.  The source should instead assume a
--- verified defectless condition (for example, a sufficient residue-field
--- hypothesis) before stating this equality.
+/- Completeness and rank-one discreteness give the one-branch fundamental
+equality without a separability or residue-perfection hypothesis.  The
+finite-lattice theorem for the extension valuation ring supplies the needed
+finite freeness. -/
 
 /-- The central degree formula, with no separability or residue perfection
 hypothesis. -/

@@ -22,14 +22,11 @@ noncomputable def chapter04NormInducedAbsoluteValue
 /- Theorem 4.1: normalized valuations of a norm (§4.4).  The restriction
 relation is recorded with its ramification factor, rather than as literal
 equality of normalized valuations. -/
--- SOURCE_ISSUE: The source asserts the defectless equality and one-branch norm
--- formula from completeness and discrete normalization alone.  Over an
--- imperfect residue field, finite defect extensions show that completeness,
--- rank-one discreteness, and even uniqueness of the chosen extension do not
--- force `[L : K] = e * f`; moreover, without uniqueness the norm valuation is
--- a sum over all branches.  The minimal correction is to assume rank-one
--- discreteness, uniqueness of the normalized extension, and the needed
--- defectless degree equality explicitly.
+/- This declaration is stated for a generic pair of chosen discrete
+valuations, so it records the unique-branch and degree data explicitly.  In
+the book's complete discretely valued setting, uniqueness follows from
+henselianity and `[L : K] = e * f` follows from finite freeness of the
+extension valuation ring. -/
 theorem chapter04_norm_valuation_formula
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] {vK : AddValuation K (WithTop ℤ)}

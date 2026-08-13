@@ -12,12 +12,9 @@ noncomputable section
 
 /-- Tameness at the exponential characteristic of the residue field.  The
 use of coprimality makes the characteristic-zero case automatic because
-ringExpChar is one there. -/
--- SOURCE_ISSUE: Over an imperfect residue field, coprimality of `e` and the
--- residue characteristic does not by itself exclude finite defect, so the
--- source's extension-level use of “tamely ramified” needs a defectless (or
--- perfect-residue) hypothesis.  This predicate intentionally records only
--- the numerical prime-to-`p` condition stated in the section.
+ringExpChar is one there.  This predicate records the numerical prime-to-`p`
+condition; extension-level tameness also carries the separate
+residue-separability hypothesis used below. -/
 def chapter09Tame (k : Type*) [Ring k] (e : ℕ) : Prop :=
   Nat.Coprime e (ringExpChar k)
 

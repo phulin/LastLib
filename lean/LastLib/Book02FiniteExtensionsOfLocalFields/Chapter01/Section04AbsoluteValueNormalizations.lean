@@ -75,11 +75,12 @@ def chapter01CompleteAdditiveValuation {K : Type*} [Field K]
       (IsLocalRing.maximalIdeal v.toValuation.valuationSubring)
       v.toValuation.valuationSubring
 
-/-- For a finite complete extension, the relative absolute value is the norm root. -/
--- SOURCE_ISSUE: The norm valuation in a non-henselian extension sums over all
--- branches.  The source's complete-extension setting has one branch, so the
--- corrected interface records that uniqueness explicitly.  No defectless
--- equality is imposed: the norm-root formula also absorbs the defect factor.
+/-- For a finite complete extension, the relative absolute value is the norm root.
+
+The declaration is formulated for chosen valuations without packaging
+henselianity, so uniqueness of the extending valuation is recorded explicitly.
+In the book's complete discretely valued setting, that uniqueness follows from
+completeness. -/
 theorem chapter01_relative_absolute_value_norm_formula
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L]
@@ -141,11 +142,11 @@ theorem chapter01_residue_cardinality_power
     chapter01ResidueCardinality vL = chapter01ResidueCardinality vK ^ f := by
   sorry
 
--- SOURCE_ISSUE: Section 1.4 uses `[L : K] = e f` without a defectless
--- hypothesis.  Finite defect extensions over complete discretely valued
--- fields with imperfect residue field can violate that equality.  The
--- corrected declaration below assumes the needed degree equality explicitly.
-/-- Canonical norms restrict with the full field degree as exponent. -/
+/-- Canonical norms restrict with the full field degree as exponent.
+
+This generic interface does not assume completeness, so it takes the degree
+identity as explicit data.  For the complete discrete extensions treated in
+the book, finite freeness of the valuation ring gives `[L : K] = e f`. -/
 theorem chapter01_canonical_absolute_value_restricts_by_degree
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L]
@@ -164,11 +165,11 @@ theorem chapter01_canonical_absolute_value_restricts_by_degree
           Module.finrank K L := by
   sorry
 
--- SOURCE_ISSUE: The final warning in Section 1.4 also relies on the same
--- defectless equality: a nontrivial immediate defect extension can have
--- `e * f = 1`, so its canonical normalization can restrict literally.  The
--- corrected declaration below retains the explicit degree equality.
-/-- A nontrivial finite extension cannot have the canonical norm literally restrict. -/
+/-- A nontrivial finite extension cannot have the canonical norm literally restrict.
+
+As above, the declaration retains the degree identity explicitly because its
+valuation interface is more general than the complete discrete setting in
+which that identity is automatic. -/
 theorem chapter01_canonical_normalization_not_literal_extension
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L]

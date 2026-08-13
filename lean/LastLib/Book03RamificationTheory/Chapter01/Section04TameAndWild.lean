@@ -18,12 +18,10 @@ structure Chapter01FiniteSeparableExtensionProfile
   residue_separable : Algebra.IsSeparable k l
   ramification_index : ℕ
 
-/-- The source's extension-level tameness predicate. -/
--- SOURCE_ISSUE: The source defines tameness by residue separability and
--- `gcd(e,p)=1` without stating a defectless/perfect-residue hypothesis.  The
--- numerical predicate below records that definition; the later degree and
--- closure interfaces retain the extra hypotheses needed for the classical
--- conclusions.
+/-- The extension-level tame predicate: the field and residue extensions are
+separable, and the ramification index is prime to the residue characteristic
+exponent.  In the complete discretely valued setting of the book, no separate
+residue-perfection hypothesis is needed. -/
 def chapter01TamelyRamifiedExtension
     (K E k l : Type*) [Field K] [Field E] [Field k] [Field l]
     [Algebra K E] [Algebra k l] [FiniteDimensional K E]
