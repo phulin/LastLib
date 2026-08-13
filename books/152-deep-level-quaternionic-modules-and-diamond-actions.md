@@ -1983,7 +1983,7 @@ The prior-book boundary is exact:
 
 | Prior book | Result used here | Boundary retained here |
 |---|---|---|
-| Book 143, Taylor--Wiles systems | exact-level diamond algebras, augmentation covariance, pairing conventions, and the distinction between presentations and transitions | it leaves diamond freeness, module control, and automorphic duality to the realization |
+| Book 144, Taylor--Wiles systems | exact-level diamond algebras, augmentation covariance, pairing conventions, and the distinction between presentations and transitions | it leaves diamond freeness, module control, and automorphic duality to the realization |
 | Book 82, orders in quaternion algebras | finite definite class sets, projective stabilizers, and change-of-level fibers | it supplies no weighted automorphic module or Hecke action |
 | Book 83, definite quaternionic forms | exact stabilizer-lattice description, central-character compatibility, pullback, trace, and integral pairings | bad stabilizer primes and perfectness remain explicit hypotheses |
 | Book 84, quaternionic Hecke operators | right-coset normalization, $T_v,S_v,U_v$, degeneracy matrices, Gram determinant, and inverse-diamond adjunction | its lower-right diamond becomes scalar after fixing the center, so this book replaces it by the projective ratio rather than misusing it |

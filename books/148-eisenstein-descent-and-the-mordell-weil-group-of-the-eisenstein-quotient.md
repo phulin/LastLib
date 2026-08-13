@@ -201,7 +201,7 @@ $$
 \mu_\ell. \tag{1.11}
 $$
 
-Book 146, Theorem 8.1 also proves that the quotient map identifies
+Book 147, Theorem 8.1 also proves that the quotient map identifies
 $P_r$ with $G_r$ over $U$. That integral comparison is not a formal
 consequence of the generic Tate-module comparison: it is the conclusion of
 the ordinary endpoint, determinant, and finite-flat rigidity argument
@@ -242,7 +242,7 @@ $\varepsilon$. A coefficient field can have several primes above $\ell$.
 The rational quotient retains every conjugate prime, while $\varepsilon$
 selects one completed factor. Generic saturation compares the selected
 integral Tate lattices. It does not identify their finite-flat models.
-The latter conclusion is Book 146, Theorem 8.1 and uses the compatible
+The latter conclusion is Book 147, Theorem 8.1 and uses the compatible
 ordinary endpoint sequences, equal endpoint heights, a determinant-unit
 argument, and finite-flat rigidity.
 
@@ -327,7 +327,7 @@ $$
 
 but in general $\varepsilon\ne E\otimes1$.
 
-The quotient map $\pi:J\to A$ has connected generic kernel. Book 146's
+The quotient map $\pi:J\to A$ has connected generic kernel. Book 147's
 generic saturation theorem gives
 
 $$
@@ -336,7 +336,7 @@ $$
 
 Reducing (2.2) modulo $\ell^r$ identifies the generic fibers of the two
 independently defined groups in (1.9). It does not identify their finite-flat
-models over $U$. That stronger statement is Book 146, Theorem 8.1
+models over $U$. That stronger statement is Book 147, Theorem 8.1
 (ordinary-tower rigidity):
 
 $$
@@ -369,7 +369,7 @@ occurs. This proves $\varepsilon E=\varepsilon$ and explains why
 $\varepsilon$ need not equal the scalar extension of $E$.
 
 Connectedness of the optimal generic kernel makes $A$ an abelian variety and
-is used in Book 146 to prove primitivity of the selected homology lattice.
+is used in Book 147 to prove primitivity of the selected homology lattice.
 After completion this yields (2.2). The conclusion remains a generic
 $\ell$-adic lattice statement: it supplies neither smoothness of the
 positive-dimensional integral kernel nor full faithfulness for finite-flat
@@ -486,7 +486,7 @@ rank, but it is not an isomorphism on the special fiber. Thus even an
 integral generic Tate comparison gives no general full-faithfulness theorem
 for finite-flat models.
 
-Book 146, Theorem 8.1 eliminates this vertical defect only after adding the
+Book 147, Theorem 8.1 eliminates this vertical defect only after adding the
 structure of the two compatible ordinary towers. Over $\mathbf Z_\ell$,
 admissibility and endpoint recognition give functorial multiplicative--etale
 exact sequences for the $P$- and $G$-divisible groups. Quasi-isogeny and
@@ -736,7 +736,7 @@ reduction map for an arbitrary quotient model. Defining $D_N(A)$ as the
 image makes (4.3) right exact by definition and gives every later snake-lemma
 map its precise target.
 
-Book 146, Theorem 8.1 is a comparison over
+Book 147, Theorem 8.1 is a comparison over
 $U=\operatorname{Spec}\mathbf Z[1/N]$ and therefore makes no assertion about
 the special fiber at $N$. In particular it does not transport the component
 sequence of $J$ to $A$. Every component object here is defined from the
@@ -1748,7 +1748,7 @@ The identity (9.6) descends as an identity of commuting endomorphisms on the
 Hecke-stable quotient. It is not deduced by extending the positive-dimensional
 kernel of a modular parametrization over $\mathbf Z_p$. On every order-$p$
 factor, it is the special-fiber form of the integral Eichler--Shimura
-correspondence recorded in Book 146 and is stronger than merely substituting
+correspondence recorded in Book 147 and is stronger than merely substituting
 $F$ into the generic quadratic polynomial. Thus
 $T_p-1$ acts as zero on all successive
 factors of $\mathcal V$. On the other hand $T_p$ acts on $V$ through the
@@ -2241,7 +2241,7 @@ $\varepsilon$ be the completed local idempotent, and put
 $P_r=\varepsilon\mathcal J[\ell^r]$ and
 $G_r=\varepsilon\mathcal A[\ell^r]$ over $\mathbf Z[1/N]$. These are the
 ambient and quotient finite-flat selected torsion groups, respectively.
-Book 146 proves that the quotient tower is exact and has admissible
+Book 147 proves that the quotient tower is exact and has admissible
 constant--multiplicative filtrations. Its Theorem 8.1 proves the integral
 comparison $P_r\xrightarrow{\sim}G_r$ using the compatible ordinary endpoint
 sequences, determinant-unit control, and finite-flat rigidity, rather than
@@ -2328,7 +2328,7 @@ each transition.
 
 The ambient-to-quotient model comparison is logically separate from this
 table because descent starts with $G_r$. Whenever a Jacobian-tower input is
-transported to $G_r$, Book 146, Theorem 8.1 supplies the bridge through
+transported to $G_r$, Book 147, Theorem 8.1 supplies the bridge through
 ordinary endpoint sequences, determinant-unit control, finite-etale
 full faithfulness, Cartier duality, and fppf exactness.
 
@@ -2370,7 +2370,7 @@ Every substantial input occurs earlier with the same hypotheses:
 - Book 134 classifies the admissible constant and multiplicative atoms and
   their extensions, including the odd $[N]$-class and the dyadic sign and
   carry.
-- Book 146 constructs the selected optimal quotient, distinguishes the
+- Book 147 constructs the selected optimal quotient, distinguishes the
   rational projector from the completed idempotent, and constructs
   $P_r=\varepsilon\mathcal J[\ell^r]$ and
   $G_r=\varepsilon\mathcal A[\ell^r]$ independently as exact finite-flat
@@ -2380,20 +2380,20 @@ Every substantial input occurs earlier with the same hypotheses:
   equal endpoint heights, determinant-unit control, finite-etale full
   faithfulness, Cartier duality, and the fppf short five lemma to prove the
   integral tower isomorphisms $P_r\simeq G_r$. It does not assert smoothness
-  of the positive-dimensional kernel. Book 146's integral
+  of the positive-dimensional kernel. Book 147's integral
   Eichler--Shimura input also gives the good-prime identities used in
   Sections 9.1 and 9.2.
 
 The hypothesis matching is exact.  Book 32 provides the language of
 finite-flat-shaped local images, while the actual coefficient-prime models
-and their functorial fppf conditions come from Books 40, 134, and 146 and
+and their functorial fppf conditions come from Books 40, 134, and 147 and
 the direct flat Kummer calculations (3.4)--(3.5).  Book 31's generic-fiber
 duality is not used to manufacture an integral orthogonality statement.
 Book 40 applies to the multiplication isogenies of an abelian variety over
 $\mathbf Q$ and identifies their good-reduction Kummer images. Book 41
 applies because an optimal quotient of $J_0(N)$ is an abelian variety over a
 number field. Books 132--133 assume prime level and use the same
-arithmetic Frobenius and $U_N$ convention as (1.5). Books 134 and 146 work
+arithmetic Frobenius and $U_N$ convention as (1.5). Books 134 and 147 work
 over $\mathbf Z[1/N]$ with $\ell\mid n_N$, hence $\ell\ne N$, and include
 the full dyadic closure data needed in Chapters 5 and 6.
 
@@ -2409,7 +2409,7 @@ component calculation for $J$ is not promoted to an equality for
 $\Phi_N(A)$. Admissible constituents are not promoted to a direct-sum
 decomposition. Generic saturation is asserted only for the selected Tate
 lattices and is never treated as full faithfulness for finite-flat models.
-The integral equality of the two towers is invoked only through Book 146,
+The integral equality of the two towers is invoked only through Book 147,
 Theorem 8.1 with its ordinary endpoint and determinant hypotheses. Finite
 generation is not promoted to rank zero without descent. Finally,
 constituent-wise Eisenstein action is promoted only to a power annihilator,
@@ -2433,7 +2433,7 @@ v=N&\text{identity-component strictness}&\text{lost component error}\\
 v=\infty,\ \ell=2&\text{positive condition}&\text{surviving sign class}\\
 \varepsilon&\text{completed local idempotent}
 &\text{wrong completed support or coefficient summand}\\
-P_r\to G_r&\text{Book 146, Theorem 8.1}&\text{unsupported model identification}
+P_r\to G_r&\text{Book 147, Theorem 8.1}&\text{unsupported model identification}
 \end{array} \tag{12.6}
 $$
 

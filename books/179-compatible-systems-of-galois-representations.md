@@ -178,14 +178,14 @@ All representations are continuous. A characteristic-zero member of a compatible
 This volume has three direct inputs, and only three:
 
 $$
-\boxed{179\mid 168,\ 141,\ 154.} \tag{1.3}
+\boxed{179\mid 168,\ 141,\ 142.} \tag{1.3}
 $$
 
 Book 168 supplies the coefficient-indexed systems attached to already constructed
 parallel-weight-two packets: common algebraic Frobenius polynomials, determinants, purity,
 coefficient conjugation, and the full Frobenius-semisimple Weil--Deligne pair exactly in its
 proved local range. Book 141 supplies the finite-subgroup classification and adequacy criteria
-used by the large-image wrapper in Chapter 16. Book 154 supplies Chebotarev density and the
+used by the large-image wrapper in Chapter 16. Book 142 supplies Chebotarev density and the
 dense-Frobenius uniqueness step used throughout the compatibility calculus.
 
 The arithmetic-Frobenius normalization is fixed here. If Book 168 writes geometric Frobenius
@@ -2414,7 +2414,7 @@ coefficient characteristics.
 The constructions proved here are the generic calculus: coefficient extension and restriction,
 coefficient conjugation and inner twists, Tate and finite-order twists, duals, sums, tensors and
 symmetric powers, base-field restriction and finite induction, and conditional attachment from
-an automorphic packet in Book 168's range. Book 154 supplies the dense-Frobenius uniqueness
+an automorphic packet in Book 168's range. Book 142 supplies the dense-Frobenius uniqueness
 step; Book 141 supplies the finite-group and adequacy input for the large-image wrapper.
 
 ### 20.2 The switching interface

@@ -1032,7 +1032,7 @@ verified.
 **Proof.** Book 180's Clifford restriction in Section 5.1, applied constituentwise after
 passing to the normal core, together with the averaging argument in Section 3.1 shows that the
 restriction on the left is semisimple. By (6.4d), the two representations have equal
-characteristic polynomials at all finite places outside one finite set. Book 154, Theorem 9.1,
+characteristic polynomials at all finite places outside one finite set. Book 142, Theorem 9.1,
 gives the required Chebotarev density, so continuity makes their traces equal on all of
 $G_{F_D}$. Book 180, Theorem 8.1 (Brauer--Nesbitt), now identifies the two semisimple
 representations. $\square$
@@ -1817,7 +1817,7 @@ premise.
 The direct dependency row is
 
 $$
-\boxed{183\mid98,\ 108,\ 109,\ 127,\ 128,\ 154,\ 168,\ 180,\ 182.} \tag{11.3}
+\boxed{183\mid98,\ 108,\ 109,\ 127,\ 128,\ 142,\ 168,\ 180,\ 182.} \tag{11.3}
 $$
 
 | Source | Input used here | Strengthening not made |
@@ -1825,7 +1825,7 @@ $$
 | Book 98 | finite-order Hecke avatars of the Brauer characters, with reciprocity, norm pullback, and conjugation | no higher-rank automorphic induction across $F_H/\mathbf Q$ |
 | Books 108--109 | selected prime-cyclic descent and base change, antecedent-complete saturated fibers, local-parameter restriction, and tower independence in the admissible range | no transfer along an inadmissible tower and no nonsolvable descent |
 | Books 127--128 and 168 | the weight-two packet realizations, covariant arithmetic normalization, coefficient conjugates, algebraic good data, and the conditional raw-to-semisimple SP comparison in its stated range | no automatic all-embedding SP comparison and no packet lattice after semisimplification |
-| Book 154 | the Chebotarev density input used to recognize representations from their good Frobenius traces | no assertion that the field-theoretic towers satisfy automorphic selectors |
+| Book 142 | the Chebotarev density input used to recognize representations from their good Frobenius traces | no assertion that the field-theoretic towers satisfy automorphic selectors |
 | Book 180 | monomiality, the elementary projector and integral Brauer relation, induction/tensor/Mackey/determinant formulas, prime-cyclic refinement, the cyclic Clifford torsor, and Brauer--Nesbitt recognition | no packet construction, overlap identity, Gram positivity, or coefficient family is imported |
 | Book 182 | the exact conditional controlled SP datum: $\rho$, $M$, the distinguished top realization, the SP record, and the finite descent-and-attachment ledger | the missing controlled residual automorphic seed and bridge-readiness theorem are not supplied unconditionally |
 

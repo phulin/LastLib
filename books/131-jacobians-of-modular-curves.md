@@ -1219,14 +1219,14 @@ The forward boundary is equally exact:
 | 132 | Exact congruence modulus and $\mathbb T/I_{\mathrm{Eis}}\simeq\mathbf Z/n_p\mathbf Z$ |
 | 133 | Exact order of $c$, cyclic component group, generator specialization, and the limited exact Shimura calculation |
 | 134 | Admissible constant--multiplicative finite-flat filtrations and their extension theory |
-| 146 | Selection at every Eisenstein prime, scheme-level comparison at each torsion power, and the exact finite-flat tower |
-| 147 | Eisenstein descent and finiteness of the selected quotient's rational points |
-| 148 | Primitive cotangent lattices, oriented formal immersion, and cusp-disk rigidity |
-| 148 | Prime-isogeny and prime-torsion classification, exceptional genus-two calculations, and semistable full-two residual irreducibility |
+| 147 | Selection at every Eisenstein prime, scheme-level comparison at each torsion power, and the exact finite-flat tower |
+| 148 | Eisenstein descent and finiteness of the selected quotient's rational points |
+| 149 | Primitive cotangent lattices, oriented formal immersion, and cusp-disk rigidity |
+| 151 | Prime-isogeny and prime-torsion classification, exceptional genus-two calculations, and semistable full-two residual irreducibility |
 
 Thus the lattice presentation (7.6) has not been replaced by a closed order formula; the annihilator (4.11) has not been promoted to the exact order of $c$; $I_{\mathrm{Eis}}$ has not been assigned an index; a completed idempotent has not been promoted to a finite-flat tower; the winding quotient has not been identified with either Eisenstein projector; and its rational points have not been claimed finite. Those are not missing proofs inside Theorem 14.1. They are the stated inputs and conclusions of the later books.
 
-The direct downstream contract is narrower than that forward list. Book 169 uses the pointed Albanese map, the connected optimal-quotient construction, the prime-level Néron and monodromy geometry, the $U_p=-w_p$ convention, and the distinction among rational points, finite subgroup schemes, and components. Books 132--134 and 146--148 do not depend on Book 131; they prove the specialist chain independently and Book 169 assembles it. The current residual-irreducibility volume uses the specialist formal-immersion and explicit-sieve chain directly; no deleted synthesis volume is treated as a source. Consequently no exact index, exact subgroup order, completed finite-flat tower, finiteness theorem, formal immersion, prime-isogeny classification, or Fermat conclusion flows from Theorem 14.1 alone.
+The direct downstream contract is narrower than that forward list. Book 169 uses the pointed Albanese map, the connected optimal-quotient construction, the prime-level Néron and monodromy geometry, the $U_p=-w_p$ convention, and the distinction among rational points, finite subgroup schemes, and components. Books 132--134 and 147--149 do not depend on Book 131; they prove the specialist chain independently and Book 169 assembles it. The current residual-irreducibility volume uses the specialist formal-immersion and explicit-sieve chain directly; no deleted synthesis volume is treated as a source. Consequently no exact index, exact subgroup order, completed finite-flat tower, finiteness theorem, formal immersion, prime-isogeny classification, or Fermat conclusion flows from Theorem 14.1 alone.
 
 The two quotient branches constructed in this volume fit into the common chain
 

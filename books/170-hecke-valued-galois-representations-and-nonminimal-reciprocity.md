@@ -1761,9 +1761,9 @@ The proof uses only the permitted packages, with the following exact roles.
 | Book 128, *Local--Global Compatibility for Weight-Two Galois Representations* | full good, special, finite-descent, and tame-dihedral Weil--Deligne comparison | $w\nmid\ell$, verified curve models and correspondences, type projectors, monodromy and Frobenius return maps |
 | Book 138, *Integral Local Types and Type Lattices* | primary and companion lattices, saturation, ordered principal, enhanced special, fixed finite-type deformation rings | $w\nmid\ell$, unit-valued labels, tame quadratic range, stated banality and sign hypotheses; no primitive wild types |
 | Book 140, *Integral Level Change and Jacquet--Langlands Comparison* | saturated old map, free new quotient, equality of faithful inner-form orders, level raising and lowering | clean proper Shimura-curve datum, $\ell\ge7$, non-Eisenstein localization, component and nonexceptional hypotheses |
-| Book 154, *The Chebotarev Density Theorem* | finite Galois Frobenius selection with positive Dirichlet density and closed-condition transport | finite Galois extension, removal of a finite set, continuity, and a closed target condition; geometric form obtained by inversion |
+| Book 142, *The Chebotarev Density Theorem* | finite Galois Frobenius selection with positive Dirichlet density and closed-condition transport | finite Galois extension, removal of a finite set, continuity, and a closed target condition; geometric form obtained by inversion |
 
-Book 154 is used only for the density and transport theorem whose consequence was proved explicitly in Lemma 5.2. No later-numbered deformation--Hecke, support, or patching theorem is used.
+Book 142 is used only for the density and transport theorem whose consequence was proved explicitly in Lemma 5.2. No later-numbered deformation--Hecke, support, or patching theorem is used.
 
 ### 16.3 Hypothesis ledger
 

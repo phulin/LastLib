@@ -1686,7 +1686,7 @@ The declared direct dependency row is exactly:
 
 | Book | Direct prerequisites |
 |---:|---|
-| 146 | 28, 34--35, 38, 51, 55, 57, 85, 114, 132--134, and 142 |
+| 147 | 28, 34--35, 38, 51, 55, 57, 85, 114, 132--134, and 142 |
 
 The row includes every earlier source explicitly reused below, even when another listed source
 also imports it transitively. Book 62 is mentioned only as a boundary comparison; no result

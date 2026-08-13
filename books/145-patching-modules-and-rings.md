@@ -183,7 +183,7 @@ together with the structural maps $R_{\mathrm{loc}}\to R_\infty$ and $S_\infty\t
 
 ### 1.3 Standing hypotheses and notation
 
-Fix a controlled presentation-compatible Taylor--Wiles system of Book 143. Thus the following data are available for every $N$.
+Fix a controlled presentation-compatible Taylor--Wiles system of Book 144. Thus the following data are available for every $N$.
 
 1. The group $\Delta_N$ has the form (1.2), after a chosen ordering and a chosen generator in every cyclic factor.
 2. The ring $R_N$ is a complete Noetherian local $\mathcal O$-algebra, equipped with maps from $R_{\mathrm{loc}}$ and $\Lambda_N$.
@@ -199,7 +199,7 @@ Every ring homomorphism is continuous and local. Every module called finite is f
 
 ### 1.4 Three rings that must not be conflated
 
-Book 143 used the symbol $R_\infty$ for a common power-series source. Here it is useful to reserve $R_\infty$ for the actual patched quotient and to rename that source
+Book 144 used the symbol $R_\infty$ for a common power-series source. Here it is useful to reserve $R_\infty$ for the actual patched quotient and to rename that source
 
 $$
 P_\infty
@@ -440,7 +440,7 @@ $$
 \tag{2.22}
 $$
 
-The uniform integer $b$ is the padded relative relation bound of Book 143. If fewer relations are required, zero entries may be appended only after every unused source variable has been killed by a genuine linear relation. Thus (2.22) is a statement about an actual chosen generating tuple, not a count inferred from a tangent dimension.
+The uniform integer $b$ is the padded relative relation bound of Book 144. If fewer relations are required, zero entries may be appended only after every unused source variable has been killed by a genuine linear relation. Thus (2.22) is a statement about an actual chosen generating tuple, not a count inferred from a tangent dimension.
 
 The variables $x_i$ contain three kinds of coordinates: auxiliary Frobenius-eigenvalue coordinates, auxiliary or global frame coordinates when retained, and global relative tangent coordinates over the chosen local base. Their total number $G$ must be read from one convention. Moving an auxiliary smooth coordinate from the base into the relative presentation changes both ledgers and does not change the total ring.
 
@@ -1683,7 +1683,7 @@ $$
 b_{\mathrm{rel},N}\leq q_{\mathrm{rel},N}
 $$
 
-only under those complete effective obstruction hypotheses. Book 143 compares the relative Selmer conditions for the actual finite-level local base, proves uniform boundedness, and performs simultaneous variable-and-relation padding. Equation (9.5) is the first place in the limiting argument where that finite-level bound is used.
+only under those complete effective obstruction hypotheses. Book 144 compares the relative Selmer conditions for the actual finite-level local base, proves uniform boundedness, and performs simultaneous variable-and-relation padding. Equation (9.5) is the first place in the limiting argument where that finite-level bound is used.
 
 ### 9.3 Where the dual-Selmer defect disappears
 
@@ -1703,7 +1703,7 @@ $$
 
 The first $q$ equations are not global deformation obstructions; they say that the new characters have order dividing $\ell^N$. Lemma 2.1 makes them disappear in every fixed patched shadow. The remaining relation number $b$ is uniformly bounded because the enlarged absolute dual Selmer group is zero and the relevant relative dual group injects into a fixed sum of local quotients.
 
-More precisely, in the full-local-base convention of Book 143, let
+More precisely, in the full-local-base convention of Book 144, let
 
 $$
 q_{\mathrm{rel},N}

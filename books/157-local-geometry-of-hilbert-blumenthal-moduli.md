@@ -1556,7 +1556,7 @@ The restriction on semistable Kummer classes is exact. Two arbitrary triangular 
 
 **Corollary 13.2 (potential-automorphy catalog interface).** In every catalog problem in which the polarization ideal, PEL lattice, neat level, and Hilbert component are auxiliary, take the datum (3.13) and the corrected level (1.1b). Then the moduli variety supplied to arithmetic approximation is smooth and geometrically connected, and Theorem 13.1 supplies its five required kinds of nonempty local opens. Thus the catalog's local-seed clause is discharged in the stated unramified odd-prime and tensor-Tate ranges once its exact representation compatibility and completion-extension policy have been checked; no separate hypothesis of real auxiliary descent, a toroidal chart, or seed existence on a chosen polarization component remains.
 
-**Proof.** Theorem 3.3 makes the catalog reduction without changing either residual system or any desired local conclusion. Proposition 3.2 gives smooth geometric connectedness of the determinant-compatible twist. Theorem 13.1 gives nonempty local opens on that same twist, so the hypotheses of Book 153's simultaneous Moret--Bailly theorem are exactly the recorded local algebras, avoidance fields, and those opens. $\square$
+**Proof.** Theorem 3.3 makes the catalog reduction without changing either residual system or any desired local conclusion. Proposition 3.2 gives smooth geometric connectedness of the determinant-compatible twist. Theorem 13.1 gives nonempty local opens on that same twist, so the hypotheses of Book 154's simultaneous Moret--Bailly theorem are exactly the recorded local algebras, avoidance fields, and those opens. $\square$
 
 ### 13.3 Passing from neighborhoods to every conjugate
 

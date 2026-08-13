@@ -170,48 +170,48 @@ flowchart LR
 | 139 | Ihara Theory and Saturated Degeneracy Maps on Shimura Curves | 16, 38, 39, 124, 118, 122 |
 | 140 | Integral Level Change and Jacquet--Langlands Comparison | 80, 85, 104, 125, 139 |
 | 141 | Dickson Classification and Adequate Residual Image | 3, 6, 45, 42, 24 |
-| 142 | Taylor–Wiles Primes | 5, 6, 33, 69, 141 |
-| 143 | Taylor–Wiles Systems | 69, 142 |
-| 144 | Patching Modules and Rings | 69, 70, 143 |
-| 145 | The Abstract $R=T$ Argument | 71, 144 |
-| 146 | Completed Hecke Pieces and Eisenstein $p$-divisible Groups | 28, 34, 35, 38, 51, 55, 57, 85, 114, 132, 133, 134, 142 |
-| 147 | Eisenstein Descent and the Mordell--Weil Group of the Eisenstein Quotient | 31, 32, 40, 41, 132, 133, 134, 146 |
-| 148 | Eisenstein Cotangent Lattices and Formal Immersion | 9, 15, 113, 114, 146, 147 |
-| 149 | Mordell--Weil Sieves for Hyperelliptic Curves | 41, 148, 136, 137 |
-| 150 | Semistable Full-Two Residual Irreducibility | 6, 35, 42, 44, 45, 51, 148, 149 |
-| 151 | Deep-Level Quaternionic Modules and Diamond Actions | 143, 82, 83, 84, 85, 139 |
-| 152 | Hilbert Irreducibility and Arithmetic Approximation | 2, 17, 37 |
-| 153 | Moret–Bailly’s Theorem | 8, 10, 58, 152 |
-| 154 | The Chebotarev Density Theorem | 2, 3, 4, 5, 6, 7, 17, 21, 23, 24 |
-| 155 | Galois and Solvable Refinements of Arithmetic Approximation | 2, 6, 152, 153, 154 |
+| 142 | The Chebotarev Density Theorem | 2, 3, 4, 5, 6, 7, 17, 21, 23, 24 |
+| 143 | Taylor–Wiles Primes | 5, 6, 33, 69, 141, 142 |
+| 144 | Taylor–Wiles Systems | 69, 143 |
+| 145 | Patching Modules and Rings | 69, 70, 144 |
+| 146 | The Abstract $R=T$ Argument | 71, 145 |
+| 147 | Completed Hecke Pieces and Eisenstein $p$-divisible Groups | 28, 34, 35, 38, 51, 55, 57, 85, 114, 132, 133, 134, 142 |
+| 148 | Eisenstein Descent and the Mordell--Weil Group of the Eisenstein Quotient | 31, 32, 40, 41, 132, 133, 134, 147 |
+| 149 | Eisenstein Cotangent Lattices and Formal Immersion | 9, 15, 113, 114, 147, 148 |
+| 150 | Mordell--Weil Sieves for Hyperelliptic Curves | 41, 149, 136, 137 |
+| 151 | Semistable Full-Two Residual Irreducibility | 6, 35, 42, 44, 45, 51, 149, 150 |
+| 152 | Deep-Level Quaternionic Modules and Diamond Actions | 144, 82, 83, 84, 85, 139 |
+| 153 | Hilbert Irreducibility and Arithmetic Approximation | 2, 17, 37 |
+| 154 | Moret–Bailly’s Theorem | 8, 10, 58, 153 |
+| 155 | Galois and Solvable Refinements of Arithmetic Approximation | 2, 6, 153, 154, 142 |
 | 156 | Hilbert--Blumenthal Moduli and Two-Prime Level Covers | 17, 10, 13, 35, 55, 115, 116 |
-| 157 | Local Geometry of Hilbert--Blumenthal Moduli | 2, 58, 60, 43, 44, 51, 54, 153, 156 |
+| 157 | Local Geometry of Hilbert--Blumenthal Moduli | 2, 58, 60, 43, 44, 51, 54, 154, 156 |
 | 158 | Moduli Constructions for Potential Modularity | 156, 157 |
 | 159 | Discriminants of Galois Representations | 3, 56 |
 | 160 | Odlyzko Bounds and Fontaine's Argument | 7, 56, 159 |
 | 161 | Schoof's Finite-Flat Category over $\mathbf Z[1/2]$ | 2, 3, 17, 28, 29, 34, 42, 51, 55, 56, 160 |
 | 162 | Quintic Cyclotomic Units and Kummer Arithmetic | 1, MATHLIB |
 | 163 | Cyclotomic Descent for Quintic Fermat-Type Equations | 162 |
-| 164 | The Frey Curve: Arithmetic Reduction and the Exact Modular-Method Handoff | 43, 44, 45, 150, 163 |
+| 164 | The Frey Curve: Arithmetic Reduction and the Exact Modular-Method Handoff | 43, 44, 45, 151, 163 |
 | 165 | Local Conditions for Hardly-Ramified Minimal Deformations | 30, 31, 32, 44, 63, 66, 67, 68, 164 |
 | 166 | Supported Galois Cohomology and Selmer Calculations | 24, 30, 31, 32, 33, 69, 165 |
 | 167 | Relation Obstructions and Poitou--Tate Corrections | 165, 166 |
-| 168 | Compatible Coefficient Systems and Purity | 97, 122, 127, 128, 154 |
-| 169 | The Eisenstein Ideal | 85, 113, 114, 131, 132, 133, 134, 146, 147, 148, 154 |
-| 170 | Hecke-Valued Galois Representations and Nonminimal Reciprocity | 68, 69, 85, 127, 128, 138, 140, 62, 154 |
+| 168 | Compatible Coefficient Systems and Purity | 97, 122, 127, 128, 142 |
+| 169 | The Eisenstein Ideal | 85, 113, 114, 131, 132, 133, 134, 147, 148, 149, 142 |
+| 170 | Hecke-Valued Galois Representations and Nonminimal Reciprocity | 68, 69, 85, 127, 128, 138, 140, 62, 142 |
 | 171 | The Minimal Totally-Real Deformation--Hecke Problem | 69, 71, 85, 124, 127, 65, 138, 170, 141 |
-| 172 | Minimal Patching and $R=T$ over Totally Real Fields | 141, 142, 143, 144, 145, 151, 171 |
+| 172 | Minimal Patching and $R=T$ over Totally Real Fields | 141, 143, 144, 145, 146, 152, 171 |
 | 173 | Minimal Modularity Lifting | 171, 172 |
-| 174 | One-Prime Type Complexes and Component Support | 6, 65, 67, 70, 122, 138, 139, 140, 151, 170, 141, 171, 172 |
+| 174 | One-Prime Type Complexes and Component Support | 6, 65, 67, 70, 122, 138, 139, 140, 152, 170, 141, 171, 172 |
 | 175 | One-Prime Nonminimal Patching and R=T | 109, 173, 138, 139, 140, 170, 174 |
 | 176 | Nonminimal Modularity Lifting | 109, 173, 138, 139, 140, 170, 175, 174 |
-| 177 | Potential Modularity of Two-Dimensional Representations | 104, 98, 127, 176, 153, 158, 154 |
-| 178 | Auxiliary Dihedral Data and Residual Potential Modularity | 104, 98, 127, 141, 175, 153, 154, 155, 156, 157 |
-| 179 | Compatible Systems of Galois Representations | 168, 141, 154 |
+| 177 | Potential Modularity of Two-Dimensional Representations | 104, 98, 127, 176, 154, 158, 142 |
+| 178 | Auxiliary Dihedral Data and Residual Potential Modularity | 104, 98, 127, 141, 175, 154, 142, 155, 156, 157 |
+| 179 | Compatible Systems of Galois Representations | 168, 141, 142 |
 | 180 | Brauer Induction and Descent of Automorphy | 24, 75, 98, 109, 168 |
 | 181 | Finite Image and the Balanced Minimal-Lift Argument | 57, 62, 64, 141, 164, 165, 166, 167, 173 |
 | 182 | Potential Automorphy and Galois Refinement of a Chosen Lift | 109, 127, 128, 168, 164, 173, 155, 178, 165, 181 |
-| 183 | Brauer Induction for Automorphy Families | 98, 108, 109, 127, 128, 154, 168, 180, 182 |
+| 183 | Brauer Induction for Automorphy Families | 98, 108, 109, 127, 128, 142, 168, 180, 182 |
 | 184 | Brauer Characters and Effectivity of Compatible Families | 24, 57, 180, 183 |
 | 185 | Compatible Systems over the Base Field | 168, 180, 182, 183, 184 |
 | 186 | Changing the Coefficient Prime while Keeping the Frey Special Place | 185 |

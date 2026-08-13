@@ -456,7 +456,7 @@ $A_Q$-local system are finite free $A_Q$-modules. Prime-to-$\ell$ descent and He
 localization take direct summands, hence finite projectives. Cellular pullback computes finite
 coefficient change termwise, proving derived base change. At auxiliary level the clean deck
 action is a free effective $\Delta_Q$-torsor. Counting cell orbits rather than cells makes the
-ranks bounded over $A_Q$; this is the curve version of Book 151's regular-module argument.
+ranks bounded over $A_Q$; this is the curve version of Book 152's regular-module argument.
 $\square$
 
 Perfectness alone does not make $H^1(K_j^\pm)$ projective. The following fiber argument is the
@@ -609,7 +609,7 @@ K_D(\overline W)=0.
 \tag{5.0a}
 $$
 
-This is the exact type-specific residual Ihara input missing from Books 138--141, 151, and 170--172. The
+This is the exact type-specific residual Ihara input missing from Books 138--141, 152, and 170--172. The
 permutation terms are already constant-coefficient cohomology on actual flag subgroups by
 Shapiro and belong to $\mathscr F_v(Q)$; no extra hypothesis is imposed on them. The type
 hypothesis is stated for every actual spectator level because one instance does not propagate
@@ -708,7 +708,7 @@ the constructible normalization diagram remain exact: the quotient by the normal
 maps onto $X_v^+(-1)$, and dually $X_v^-$ embeds into the bottom companion layer, with no
 additional snake-lemma class from the nonsemisimple flag rows.
 
-This is stronger than the nodewise coefficient-one calculation of Proposition 3.1. Books 138--141, 151, and 170--172 do not prove the required global exactness for these type coefficients; Book 140's
+This is stronger than the nodewise coefficient-one calculation of Proposition 3.1. Books 138--141, 152, and 170--172 do not prove the required global exactness for these type coefficients; Book 140's
 consumer ledger identifies precisely this primitive-residue or bottom-lattice input as still
 missing.
 
@@ -1077,7 +1077,7 @@ $({\rm TIH}_{\mathscr F})$ are imposed on every retained finite shadow.
 
 These are geometric and Taylor--Wiles hypotheses, not a support assumption. Book 141 supplies
 the adequacy and detector input in clause 1; the clean patching package of Book 172 supplies
-the Taylor--Wiles selection and the lower carrier in clauses 1--2. Books 138--145, 151, and
+the Taylor--Wiles selection and the lower carrier in clauses 1--2. Books 138--146, 152, and
 170--172 do not prove the boundary-chart and local-dimension assertions in clauses 4--5 for
 this nonminimal typed problem. Clause 4 is false if the extraneous component of (7.4) is
 retained or if a scalar flag/Kummer coordinate is deleted.
@@ -1122,7 +1122,7 @@ $$
 as topological spaces. The same is true for the companion complex and after descent to every
 retained finite auxiliary level.
 
-**Proof.** Apply the marked finite-shadow patching mechanism used in Book 172 to Book 151's
+**Proof.** Apply the marked finite-shadow patching mechanism used in Book 172 to Book 152's
 regular auxiliary modules, with the strict complexes and pairings also marked. It patches
 (5.2) to a split injection over the regular scalar source $S_\infty$. Hence
 
@@ -1489,7 +1489,7 @@ an intersection of local conditions.
 | Book 138 | quotient primary and augmentation companion lattices, twists, and type labels | no rational projector and no primitive wild type |
 | Book 139 | Theorem 14.1 under localized $({\rm AIH})_{v,\mathfrak m}$ and its corrected branch filtration | this book assumes the finite family $({\rm AIH}_{\mathscr F})$; Book 139 neither proves it nor extends it to type coefficients |
 | Book 140 | the datum-specific node-uniformization and generic-support interfaces | its constant-coefficient theorem does not prove $({\rm TIC}_v)$, $({\rm TIH}_{\mathscr F})$, $({\rm PRI}_{\rm type})$, $({\rm NU}_{\rm type})$, or $({\rm SUP}_v)$ |
-| Book 151 | effective auxiliary torsors, regular group modules, pairings, and compatible finite-level presentations | it does not itself perform the nonminimal patch; module augmentation alone does not imply acting-order augmentation |
+| Book 152 | effective auxiliary torsors, regular group modules, pairings, and compatible finite-level presentations | it does not itself perform the nonminimal patch; module augmentation alone does not imply acting-order augmentation |
 | Book 170 | Hecke-valued representation, local factorization, and $R^{\rm sp}\twoheadrightarrow\mathbb T^{\rm sp}$ | no deformation faithfulness or component coverage follows from the surjection |
 | Book 141 | adequacy and split-regular detector input for the Taylor--Wiles clause of $({\rm SUP}_v)$ | prime selection and patching do not follow from adequacy alone |
 | Book 171 | exact global deformation datum and variance | conductor labels do not replace represented functors |
@@ -1511,9 +1511,9 @@ The earlier gaps have the following exact status.
 
 | interface | status in this book |
 |---|---|
-| primary/companion type control on curves | not supplied by Books 138--141, 151, and 170--172: $({\rm TIC}_v)$ assumes extension and adjunction on the actual incidence model, while $({\rm TIH}_{\mathscr F})$ is the missing crossed-coefficient residual Ihara theorem; Sections 3--5 derive strict complexes and split amplitude from these exact inputs |
-| primitive type residues | not supplied by Books 138--141, 151, and 170--172: Proposition 3.1 proves nodewise coefficients $\pm1$, but global primitivity additionally assumes the exact residual normalization statement $({\rm PRI}_{\rm type})$; the switched definite comparison further requires $({\rm NU}_{\rm type})$ |
-| faithful acting-image augmentation | proved in Section 9 by a genuine global twist and coefficient extraction, provided the effective ray quotient of Section 2.2 exists; it is not a formal consequence of Book 151's module augmentation |
+| primary/companion type control on curves | not supplied by Books 138--141, 152, and 170--172: $({\rm TIC}_v)$ assumes extension and adjunction on the actual incidence model, while $({\rm TIH}_{\mathscr F})$ is the missing crossed-coefficient residual Ihara theorem; Sections 3--5 derive strict complexes and split amplitude from these exact inputs |
+| primitive type residues | not supplied by Books 138--141, 152, and 170--172: Proposition 3.1 proves nodewise coefficients $\pm1$, but global primitivity additionally assumes the exact residual normalization statement $({\rm PRI}_{\rm type})$; the switched definite comparison further requires $({\rm NU}_{\rm type})$ |
+| faithful acting-image augmentation | proved in Section 9 by a genuine global twist and coefficient extraction, provided the effective ray quotient of Section 2.2 exists; it is not a formal consequence of Book 152's module augmentation |
 | cross determinant | unavailable and not claimed: (10.7) is only equality of principal scalar equations in the faithful Hecke order, not a chain map or determinant-line comparison |
 
 The broader failure audit is as follows.
@@ -1544,7 +1544,7 @@ compatibility of the type systems; $({\rm TIH}_{\mathscr F})$ for their residual
 $({\rm PRI}_{\rm type})$ for global primitive extreme residues; $({\rm NU}_{\rm type})$ only for
 the switched graph--definite comparison; the effective global ray quotient only for scalar
 augmentation and transport of support to the scalar-twisted face; and $({\rm SUP}_v)$ only for
-component support. Books 138--141, 151, and 170--172 do not establish the last six in the
+component support. Books 138--141, 152, and 170--172 do not establish the last six in the
 required typed nonminimal generality.
 
 ### 12.4 Conclusion

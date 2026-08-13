@@ -1012,93 +1012,25 @@ $$
 \operatorname{Gal}(F_{z,N}/K).
 $$
 
-We now prove the distribution statement needed for this finite quotient. This is included here because global reciprocity by itself identifies Frobenius elements but does not prove that primes realizing them exist.
 
-For a set $\mathcal P$ of finite primes of a number field, its **Dirichlet density**, when the limit exists, is
+The analytic distribution step is imported from Book 142, which owns the complete proof and all
+normalizations.  The matching is exact: $F_{z,N}/K$ is finite Galois; the constructed element
+specifies one conjugacy class; arithmetic Frobenius is used on both sides; and the finite set to
+be removed contains the ramified, coefficient-prime, and previously selected places.  Density
+only distributes this already compatible class.  It does not create the detector or repair an
+empty fiber product.
 
-$$
-\delta(\mathcal P)
-=\lim_{s\to1^+}
-\frac{\sum_{v\in\mathcal P}q_v^{-s}}
-{\log(1/(s-1))}.
-\tag{6.1}
-$$
+The following established locators are retained as compatibility aliases for consumers of this
+Taylor--Wiles package.
 
-A positive lower limit in (6.1) already implies infinitude and survives deletion of finitely many primes.
+**Lemma 6.1 (the analytic ray-class estimate; compatibility alias).** The power-saving count for
+narrow ray classes, with leading constant independent of the class, is Book 142, Corollary 4.2.
+Its character-weighted consequence is the holomorphy at $s=1$ used in the former proof.
 
-**Lemma 6.1 (the analytic ray-class estimate).** Let $B$ be a number field and $\mathfrak m$ a modulus. If $c$ ranges over the narrow ray class group $\operatorname{Cl}_{\mathfrak m}(B)$, then there are constants $a_{\mathfrak m}>0$ and $\eta>0$, independent of $c$, such that
-
-$$
-A_c(X)
-=\#\{\mathfrak a\subseteq\mathcal O_B:
-(\mathfrak a,\mathfrak m)=1,
-[\mathfrak a]=c,
-\mathrm N\mathfrak a\le X\}
-=a_{\mathfrak m}X+O_{B,\mathfrak m}(X^{1-\eta}).
-\tag{6.2}
-$$
-
-Consequently, if $\chi$ is a nontrivial character of this ray class group, its ideal series
-
-$$
-L(s,\chi)=
-\sum_{(\mathfrak a,\mathfrak m)=1}
-\frac{\chi(\mathfrak a)}{(\mathrm N\mathfrak a)^s}
-\tag{6.3}
-$$
-
-extends holomorphically to a neighborhood of $s=1$.
-
-**Proof.** We recall the geometry-of-numbers argument because the cancellation at $s=1$ is the analytic point on which prime selection depends. Put $n=[B:\mathbf Q]$. For a ray class $c$, choose an integral ideal $\mathfrak b_c$, prime to $\mathfrak m$, in its inverse ordinary ideal class. Then an integral ideal $\mathfrak a$ in the underlying ordinary class satisfies
-
-$$
-\mathfrak a\mathfrak b_c=(\alpha),
-\qquad
-\mathrm N\mathfrak a
-=\frac{|N_{B/\mathbf Q}(\alpha)|}{\mathrm N\mathfrak b_c}.
-\tag{6.2a}
-$$
-
-The ray condition on $\mathfrak a$ is a fixed congruence condition on $\alpha$ modulo the finite part of $\mathfrak m$, together with fixed signs at its real part. Two such generators determine the same ideal precisely when they differ by a ray unit. The ray-unit group has finite index in the full unit group and the same logarithmic rank.
-
-Embed $\mathfrak b_c$ as a lattice in Minkowski space. Choose a bounded fundamental parallelepiped for the logarithms of the ray units in the hyperplane supplied by the product formula. Requiring the logarithmic ratios of the archimedean absolute values to lie in this parallelepiped chooses one generator from every ray-unit orbit. Within it, the condition in (6.2a) with $\mathrm N\mathfrak a\le X$ cuts out a fixed finite union of Lipschitz regions expanded by the linear factor $X^{1/n}$. Its volume is
-
-$$
-v_{\mathfrak m}(\mathrm N\mathfrak b_c)X.
-$$
-
-The permitted finite congruence is a translate of a sublattice of $\mathfrak b_c$ whose index depends only on $\mathfrak m$, and each permitted sign sector has the same archimedean volume. The covolume of the ambient ideal lattice is a fixed field constant times $\mathrm N\mathfrak b_c$. Thus the factor $\mathrm N\mathfrak b_c$ in the region volume cancels the same factor in the lattice covolume. The leading constant is consequently independent of $c$.
-
-The elementary Lipschitz lattice-point estimate in real dimension $n$ gives an error $O(X^{(n-1)/n})$ for each bounded piece. A dyadic decomposition along the finitely many faces of the logarithmic parallelepiped gives the same estimate with at most a power of $\log X$; this is $O(X^{1-\eta})$ for some $\eta>0$. There are only finitely many ideal classes, congruence translates, and sign sectors, so the constants are uniform in $c$. This proves (6.2). It is precisely the ray-class refinement of the ideal-counting proof of the simple pole of a Dedekind zeta function.
-
-Put
-
-$$
-A_\chi(X)=
-\sum_{\substack{\mathrm N\mathfrak a\le X\\
-(\mathfrak a,\mathfrak m)=1}}
-\chi(\mathfrak a).
-$$
-
-Summing (6.2) with weights $\chi(c)$ and using
-
-$$
-\sum_{c\in\operatorname{Cl}_{\mathfrak m}(B)}\chi(c)=0
-$$
-
-gives $A_\chi(X)=O(X^{1-\eta})$. Partial summation now gives, initially for $\operatorname{Re}(s)>1$,
-
-$$
-L(s,\chi)
-=s\int_1^\infty A_\chi(X)X^{-s-1}\,dX.
-\tag{6.4}
-$$
-
-The integral converges locally uniformly for $\operatorname{Re}(s)>1-\eta$, and hence defines the required holomorphic continuation. $\square$
-
-The estimate proves holomorphy, but the logarithmic prime argument also needs nonvanishing at $1$. For the finite-order characters arising from a finite abelian extension, this follows without a separate zero-free-region theorem.
-
-**Lemma 6.2 (nonvanishing and prime sums in an abelian extension).** Let $D/B$ be a finite abelian extension with group $A$. For $\chi\in\widehat A$, let $L(s,\chi)$ be the finite-order Hecke series obtained from global reciprocity, using at every prime the invariant-line local factor described in the proof below. Equivalently, this is the ray-class ideal series for the conductor of $\chi$. Then every nontrivial $L(s,\chi)$ is holomorphic and nonzero at $s=1$, and, as $s\to1^+$,
+**Lemma 6.2 (nonvanishing and prime sums in an abelian extension; compatibility alias).** Book
+142, Theorem 5.1 gives the finite-order character prime sum after Book 142, Sections 5.2--5.3
+prove holomorphy and nonvanishing at one.  Applied through reciprocity to a finite abelian
+extension $D/B$, it gives
 
 $$
 \sum_{w\text{ unramified in }D}
@@ -1108,121 +1040,27 @@ $$
 \log(1/(s-1))+O(1),&\chi=1,\\
 O(1),&\chi\ne1.
 \end{cases}
-\tag{6.5}
 $$
 
-**Proof.** A finite-order character of $A$ factors, by global reciprocity, through a narrow ray class group, so Lemma 6.1 gives holomorphy at $1$ when $\chi\ne1$. We next compare all characters at once. Away from the finite ramified set, if $g=\operatorname{Frob}_w$ has order $f$, the characters of $A$ take every $f$th root of unity on $g$, each $|A|/f$ times. Therefore
+**Proposition 6.3 (abelian Frobenius distribution; compatibility alias).** Book 142, Theorem 7.1
+states that if $D/B$ is finite abelian with group $A$, then the unramified primes with
+$\operatorname{Frob}_w=a$ have Dirichlet density $1/|A|$.
 
-$$
-\prod_{\chi\in\widehat A}
-\left(1-\chi(g)(\mathrm Nw)^{-s}\right)^{-1}
-=\left(1-(\mathrm Nw)^{-fs}\right)^{-|A|/f}.
-\tag{6.6}
-$$
+**Theorem 6.4 (finite Galois Frobenius selection; compatibility alias).** Book 142, Theorem 9.1
+is stronger than the form used here: for a finite Galois extension $F/K$ and a conjugacy class
+$C\subseteq\operatorname{Gal}(F/K)$, the primes with arithmetic Frobenius class $C$ have
+Dirichlet density $|C|/|\operatorname{Gal}(F/K)|$.  Book 142, Corollary 10.1 permits deletion of
+any finite set.
 
-The right side is exactly the product of the local zeta factors of the primes of $D$ over $w$. The same calculation also treats ramification rather than hiding it in an unspecified correction. If $I_w\subseteq A$ is inertia and $\bar g_w\in A/I_w$ is residue Frobenius of order $f_w$, the local factor for $\chi$ is $1$ unless $\chi|_{I_w}=1$, and otherwise it is
+For simultaneous conditions, form the compositum of the finitely many Galois extensions.  The
+successive agreement-on-intersections criterion of Lemma 4.1 proves that the desired subset of
+the compositum Galois group is nonempty.  Choose one conjugacy class in it and apply Book 142,
+Theorem 9.1.  Thus residual conjugacy, cyclotomic identity, cocycle translation, complete
+splitting in auxiliary fields, and compatible avoidance conditions are realized together.
 
-$$
-\left(1-\chi(\bar g_w)(\mathrm Nw)^{-s}\right)^{-1}.
-$$
-
-The characters trivial on $I_w$ are the characters of $A/I_w$. Their values on $\bar g_w$ run through the $f_w$th roots of unity, each $|A|/(|I_w|f_w)$ times, so their product is
-
-$$
-\left(1-(\mathrm Nw)^{-f_ws}\right)^{-|A|/(|I_w|f_w)}.
-$$
-
-There are $|A|/(|I_w|f_w)$ primes of $D$ above $w$, each of residue degree $f_w$, so this is exactly the full local zeta factor. Multiplying over all primes gives the abelian factorization
-
-$$
-\zeta_D(s)=\prod_{\chi\in\widehat A}L(s,\chi).
-\tag{6.7}
-$$
-
-The factor for the trivial character is exactly $\zeta_B(s)$. Both Dedekind zeta functions have simple poles at $1$ with positive residues. Hence
-
-$$
-\prod_{\chi\ne1}L(1,\chi)
-$$
-
-is finite and nonzero. Since every factor is holomorphic there, none can vanish.
-
-For $\operatorname{Re}(s)>1$, take the logarithm of the absolutely convergent Euler product. The terms of prime-power exponent at least two are bounded uniformly as $s\to1^+$, because
-
-$$
-\sum_w\sum_{r\ge2}
-\frac1{r(\mathrm Nw)^{rs}}
-$$
-
-converges already at $s=1$. Thus
-
-$$
-\log L(s,\chi)
-=\sum_{w\text{ unramified}}
-\frac{\chi(\operatorname{Frob}_w)}{(\mathrm Nw)^s}
-+O(1).
-\tag{6.8}
-$$
-
-For $\chi\ne1$, holomorphy and nonvanishing make the logarithm bounded near $1$. For $\chi=1$, the simple pole of $\zeta_B$ gives $\log L(s,1)=\log(1/(s-1))+O(1)$. This proves (6.5). $\square$
-
-**Proposition 6.3 (abelian Frobenius distribution).** If $D/B$ is finite abelian with group $A$ and $a\in A$, the unramified primes $w$ satisfying
-
-$$
-\operatorname{Frob}_w=a
-$$
-
-have Dirichlet density $1/|A|$.
-
-**Proof.** Character orthogonality gives
-
-$$
-\mathbf1_{\{g=a\}}
-=\frac1{|A|}\sum_{\chi\in\widehat A}
-\chi(ga^{-1}).
-\tag{6.9}
-$$
-
-Sum (6.9) over unramified primes with weight $(\mathrm Nw)^{-s}$ and apply (6.5). Only the trivial character contributes an unbounded term, with coefficient $1/|A|$. Division by $\log(1/(s-1))$ proves the assertion. $\square$
-
-We can now pass from the abelian statement to exactly the nonabelian form used here.
-
-**Theorem 6.4 (finite Galois Frobenius selection).** Let $F/K$ be a finite Galois extension, let $\sigma\in\operatorname{Gal}(F/K)$, and let $C$ be its conjugacy class. The primes of $K$, unramified in $F$, whose arithmetic Frobenius class is $C$ have positive lower Dirichlet density. In particular, there are infinitely many of them after any finite set of primes is removed.
-
-**Proof.** Put $H=\langle\sigma\rangle$ and $E=F^H$. The extension $F/E$ is cyclic. Proposition 6.3 gives a set $\mathcal W$ of primes $w$ of $E$, of density $1/|H|$, whose Frobenius in $H$ is $\sigma$. Discard primes lying over the finite set ramified in $F/K$.
-
-The primes $w$ having relative residue degree at least two over $K$ have Dirichlet density zero. Indeed, for $s>1$,
-
-$$
-\sum_{\substack{w\text{ of }E\\f(w/v)\ge2}}
-(\mathrm Nw)^{-s}
-\le [E:K]\sum_v(\mathrm Nv)^{-2s},
-\tag{6.10}
-$$
-
-and the right side remains bounded as $s\to1^+$. Hence the degree-one part $\mathcal W_1$ still has density $1/|H|$ among the primes of $E$.
-
-For $w\in\mathcal W_1$ above $v$, choose $u$ of $F$ above $w$. Since $k(w)=k(v)$, arithmetic Frobenius in $F/E$ and arithmetic Frobenius in $F/K$ induce the same automorphism of $k(u)$; the unramified decomposition group acts faithfully on that residue field. Thus
-
-$$
-\operatorname{Frob}(u/v)=\operatorname{Frob}(u/w)=\sigma.
-$$
-
-Changing $u$ conjugates this element, so the Frobenius class at $v$ is $C$. A prime $v$ has at most $[E:K]$ primes of $E$ above it. Since norms agree for degree-one primes,
-
-$$
-\sum_{\substack{v:\operatorname{Frob}_v\in C}}
-(\mathrm Nv)^{-s}
-\ge\frac1{[E:K]}
-\sum_{w\in\mathcal W_1}(\mathrm Nw)^{-s}.
-\tag{6.11}
-$$
-
-The right side has a positive logarithmic leading term. This proves positive lower Dirichlet density and hence infinitude. $\square$
-
-There is a useful simultaneous version. Let $F_1,\ldots,F_r$ be finite Galois extensions of $K$, let $B=F_1\cdots F_r$, and let $\Omega\subseteq\operatorname{Gal}(B/K)$ be a nonempty conjugacy-stable subset. Then the primes unramified in $B$ with Frobenius in $\Omega$ have positive lower Dirichlet density: choose one conjugacy class contained in $\Omega$ and apply Theorem 6.4. By Lemma 4.1, nonemptiness of $\Omega$ is equivalent to the successive agreement-on-intersections conditions for the desired restrictions. Thus the same theorem simultaneously realizes residual conjugacy, cyclotomic identity, cocycle translation, complete splitting in auxiliary fields, and every compatible avoidance condition. The distribution argument has no additional disjointness hypothesis; all such hypotheses enter only in proving that $\Omega$ is nonempty.
-
-Apply Theorem 6.4 to $F_{z,N}/K$ and the class constructed in Lemma 5.2. Removing finitely many further primes preserves positive lower density. The theorem is being applied only after the conjugacy class has been proved nonempty: it distributes compatible elements and does not repair incompatible prescriptions.
+Apply this imported theorem to $F_{z,N}/K$ and the class constructed in Lemma 5.2. Removing
+finitely many further primes preserves positive density.  This is the only Chebotarev use in the
+Taylor--Wiles selection proof.
 
 ### 6.2 The one-class prime-selection theorem
 
@@ -2841,7 +2679,7 @@ For different values of $N$, the theorem gives independent sets and permits them
 
 ### 14.4 Conclusion
 
-Auxiliary primes solve a precise global problem by a precise local exchange. A nonzero dual Selmer class first becomes an elementary abelian extension over the residual and cyclotomic fixed field. The split Taylor–Wiles image conditions force that extension to be nontrivial, separate it from higher cyclotomic layers, and supply a split regular semisimple element that detects a translation. Ordinary adequacy supplies the finite-image cohomology vanishing and semisimple detection, but the underlying-prime-field no-trivial-quotient clause used for cyclotomic disjointness is an additional hypothesis unless it has been verified in the particular image. The fiber-product lemma proves that the resulting residual, cyclotomic, and cohomological prescriptions are compatible. Only then does the finite Galois distribution theorem proved in Chapter 6 turn the compatible element into primes.
+Auxiliary primes solve a precise global problem by a precise local exchange. A nonzero dual Selmer class first becomes an elementary abelian extension over the residual and cyclotomic fixed field. The split Taylor–Wiles image conditions force that extension to be nontrivial, separate it from higher cyclotomic layers, and supply a split regular semisimple element that detects a translation. Ordinary adequacy supplies the finite-image cohomology vanishing and semisimple detection, but the underlying-prime-field no-trivial-quotient clause used for cyclotomic disjointness is an additional hypothesis unless it has been verified in the particular image. The fiber-product lemma proves that the resulting residual, cyclotomic, and cohomological prescriptions are compatible. Only then does the finite Galois distribution theorem imported from Book 142 in Chapter 6 turn the compatible element into primes.
 
 At each such prime, distinct residual eigenvalues select a unique local branch. The tame relation and the congruence $q_v\equiv1\pmod{\ell^N}$ produce one diamond character, while fixed determinant places its inverse on the complementary line. The universal local ring is a power-series ring over the finite group algebra. Its augmentation is the smooth unramified branch, its special-fiber tangent gains one direction, and its exact dual orthogonal loses one direction.
 

@@ -59,7 +59,7 @@
 
 The residual representation of an elliptic curve is a two-dimensional object, but its reducibility is governed by a one-dimensional character. That reduction in dimension is the central opportunity of this book. A stable line in $E[p]$ is the kernel of a rational isogeny; Galois acts on that line through a character; semistable reduction sharply restricts the character on inertia; and arithmetic over $\mathbf Q$ then forces one of the two diagonal characters to be trivial. The last statement turns a rational isogeny, whose kernel need not have a rational generator, into an actual rational point of order $p$ on one of two isogenous curves.
 
-For a general elliptic curve this conclusion is not enough to prove irreducibility, because rational prime torsion exists at small primes. The additional hypothesis studied here is full rational two-torsion. An odd isogeny preserves that structure, so the curve on which rational $p$-torsion appears would have both full rational two-torsion and a rational point of order $p$. The formal-immersion and exceptional-level results of Books 148--149 eliminate $p\ge11$, while their exact mixed-seven reduction and sieve eliminate the sole remaining prime in this book's range.
+For a general elliptic curve this conclusion is not enough to prove irreducibility, because rational prime torsion exists at small primes. The additional hypothesis studied here is full rational two-torsion. An odd isogeny preserves that structure, so the curve on which rational $p$-torsion appears would have both full rational two-torsion and a rational point of order $p$. The formal-immersion and exceptional-level results of Books 149--150 eliminate $p\ge11$, while their exact mixed-seven reduction and sieve eliminate the sole remaining prime in this book's range.
 
 The point of the argument is not merely its short conclusion. Several superficially similar local statements have different hypotheses. Away from $p$, semistability makes diagonal characters unramified. At $p$, good reduction leads to finite-flat group schemes and the Oort--Tate dichotomy, whereas multiplicative reduction leads to the Tate curve and need not make the whole residual representation finite flat. Keeping these branches separate is what makes the global argument valid.
 
@@ -720,11 +720,11 @@ Nor can one replace Lemma 7.1 by the assertion that every unramified local chara
 
 ## 8. Prime torsion in the range at least eleven
 
-The semistable isogeny theorem reduces reducibility to rational prime torsion on one side of an isogeny. For primes at least eleven, Books 148--149 already supply the exact exclusion. This chapter records that imported theorem with its exceptional levels visible, so the main proof will not conceal a general torsion-classification theorem.
+The semistable isogeny theorem reduces reducibility to rational prime torsion on one side of an isogeny. For primes at least eleven, Books 149--150 already supply the exact exclusion. This chapter records that imported theorem with its exceptional levels visible, so the main proof will not conceal a general torsion-classification theorem.
 
 ### 8.1 The formal-immersion range
 
-Book 148 studies a rational point $P$ of prime order $p$ through its point on $X_1(p)$. For $p\ge11$, reduction modulo $3$ cannot remain in the interior: the Hasse bound gives
+Book 149 studies a rational point $P$ of prime order $p$ through its point on $X_1(p)$. For $p\ge11$, reduction modulo $3$ cannot remain in the interior: the Hasse bound gives
 
 $$
 \#\widetilde E(\mathbf F_3)\le7<p.
@@ -744,7 +744,7 @@ The denominator in $n_p$ is essential. At $p=13$, $n_{13}=1$, so the selected qu
 
 ### 8.2 The exceptional levels eleven and thirteen
 
-Book 148 identifies $X_1(11)$ with
+Book 149 identifies $X_1(11)$ with
 
 $$
 y^2+y=x^3-x^2
@@ -752,7 +752,7 @@ $$
 
 and proves that its five rational points are precisely its five cusps. Therefore no elliptic curve over $\mathbf Q$ has a rational point of order $11$.
 
-Book 149 completes the level-thirteen handoff. On the model
+Book 150 completes the level-thirteen handoff. On the model
 
 $$
 y^2+(x^3+x^2+1)y=x^2+x,
@@ -873,11 +873,11 @@ For $p=7$, the exact impossibility of (9.7) is the remaining arithmetic input.
 
 ## 10. The exceptional prime seven
 
-The large-prime theorem begins at eleven, so one prime remains in the range of this book. Elliptic curves over $\mathbf Q$ can have rational points of order seven; the contradiction must use full rational two-torsion as well. The required arithmetic has already been completed in Books 148--149. Our task is to import its exact logical form, not to repeat its parameter calculations or Mordell--Weil sieve.
+The large-prime theorem begins at eleven, so one prime remains in the range of this book. Elliptic curves over $\mathbf Q$ can have rational points of order seven; the contradiction must use full rational two-torsion as well. The required arithmetic has already been completed in Books 149--150. Our task is to import its exact logical form, not to repeat its parameter calculations or Mordell--Weil sieve.
 
 ### 10.1 The exact modular reduction
 
-Book 148 starts from Tate normal form for an elliptic curve with a rational point of order seven. Requiring full rational two-torsion makes the cubic of nonzero two-torsion coordinates split. Its discriminant is therefore a square, and the parameter consequently determines a rational point on
+Book 149 starts from Tate normal form for an elliptic curve with a rational point of order seven. Requiring full rational two-torsion makes the cubic of nonzero two-torsion coordinates split. Its discriminant is therefore a square, and the parameter consequently determines a rational point on
 
 $$
 C_7:z^2=t(t-1)(t^3-8t^2+5t+1).
@@ -898,11 +898,11 @@ E/\mathbf Q\text{ has full rational two-torsion}\\
 \tag{10.2}
 $$
 
-Book 148 proves this implication, including the Tate-normal-form substitutions and the identification of $t=0,1,\infty$ as degenerate or boundary parameters. It does not use the false converse that a square cubic discriminant forces the cubic to split.
+Book 149 proves this implication, including the Tate-normal-form substitutions and the identification of $t=0,1,\infty$ as degenerate or boundary parameters. It does not use the false converse that a square cubic discriminant forces the cubic to split.
 
 ### 10.2 The imported rational-point computation
 
-Book 149 completes the rational-point problem left by (10.1). Using the full Jacobian
+Book 150 completes the rational-point problem left by (10.1). Using the full Jacobian
 
 $$
 J_7(\mathbf Q)\simeq
@@ -1013,10 +1013,10 @@ A standalone theorem is only as sound as its imports. This final chapter records
 | 44 | Tate uniformization and its torsion exact sequence, including the unramified nonsplit twist | Chapters 3 and 5 |
 | 45 | stable-line/isogeny equivalence, Weil-pairing determinant, and good-reduction unramifiedness | Chapters 1--3 |
 | 51 | order-$p$ finite-flat classification over the unramified base $\mathbf Z_p$ | Chapter 4 |
-| 148 | formal-immersion exclusion for $p\ge17$, the level-$11$ calculation, and the one-way mixed-seven parameter reduction | Sections 8.1--8.2 and 10.1 |
-| 149 | complete rational-point sets for $X_1(13)$ and the mixed-seven curve | Sections 8.2 and 10.2 |
+| 149 | formal-immersion exclusion for $p\ge17$, the level-$11$ calculation, and the one-way mixed-seven parameter reduction | Sections 8.1--8.2 and 10.1 |
+| 150 | complete rational-point sets for $X_1(13)$ and the mixed-seven curve | Sections 8.2 and 10.2 |
 
-Book 149 itself imports the exact Jacobian arithmetic needed for its exhaustive sieves; those books are transitive, not direct, dependencies here. No later manuscript supplies any step in Theorem 11.1.
+Book 150 itself imports the exact Jacobian arithmetic needed for its exhaustive sieves; those books are transitive, not direct, dependencies here. No later manuscript supplies any step in Theorem 11.1.
 
 ### 12.2 Exceptional-prime ledger
 
@@ -1026,10 +1026,10 @@ Book 149 itself imports the exact Jacobian arithmetic needed for its exhaustive 
 | $q\ne p$, multiplicative | Tate unipotence and an unramified possible twist | both diagonal characters are unramified |
 | $q=p$, good | finite-flat closure and absolute ramification index one | diagonal inertia is $1$ or $\overline\chi_p$ |
 | $q=p$, multiplicative | stable-line analysis in the Tate exact sequence | diagonal inertia is $1$ or $\overline\chi_p$ |
-| $p=7$ | Book 148 reduction plus Book 149 exhaustive sieve | full rational two-torsion forbids rational $7$-torsion |
-| $p=11$ | Book 148 genus-one calculation | rational $11$-torsion is impossible |
-| $p=13$ | Book 149 genus-two sieve | rational $13$-torsion is impossible |
-| $p\ge17$ | Book 148 oriented formal immersion | rational $p$-torsion is impossible |
+| $p=7$ | Book 149 reduction plus Book 150 exhaustive sieve | full rational two-torsion forbids rational $7$-torsion |
+| $p=11$ | Book 149 genus-one calculation | rational $11$-torsion is impossible |
+| $p=13$ | Book 150 genus-two sieve | rational $13$-torsion is impossible |
+| $p\ge17$ | Book 149 oriented formal immersion | rational $p$-torsion is impossible |
 
 Arithmetic Frobenius is used throughout. The nonsplit multiplicative twist is unramified, so it does not alter inertia. The square-discriminant condition in the mixed-seven reduction is used only in the necessary direction.
 

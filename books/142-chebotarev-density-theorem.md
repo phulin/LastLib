@@ -26,6 +26,7 @@
    - [Theta kernels and Poisson summation](#43-theta-kernels-and-poisson-summation)
    - [Mellin unfolding through the unit lattice](#44-mellin-unfolding-through-the-unit-lattice)
    - [Continuation and the equal-residue theorem](#45-continuation-and-the-equal-residue-theorem)
+   - [A power-saving ray-class count](#45a-a-power-saving-ray-class-count)
    - [Dedekind zeta and the full prime sum](#46-dedekind-zeta-and-the-full-prime-sum)
 5. [Finite-order Hecke characters at one](#5-finite-order-hecke-characters-at-one)
    - [From ray classes to characters](#51-from-ray-classes-to-characters)
@@ -794,6 +795,43 @@ sets $s=1$, while the zero-frequency term divides by
 $\operatorname{covol}(\mathfrak m_0\mathfrak a)$, which is proportional to
 $N\mathfrak a$. The cancellation is exact. Without it, residues could depend on the ray class
 and character orthogonality would not remove the pole.
+
+### 4.5a A power-saving ray-class count
+
+The Taylor--Wiles application formerly carried a separate geometry-of-numbers proof of the
+following refinement. It belongs with the analytic density package and is recorded here so that
+the application volume need not reproduce it.
+
+**Corollary 4.2 (analytic ray-class estimate).** Let $B$ be a number field and $\mathfrak m$ a
+modulus. For each $c\in\operatorname{Cl}_{\mathfrak m}(B)$ there are constants
+$a_{\mathfrak m}>0$ and $\eta>0$, independent of $c$, such that
+
+$$
+A_c(X)=\#\{\mathfrak a\subseteq\mathcal O_B:(\mathfrak a,\mathfrak m)=1,
+[\mathfrak a]=c,\ \mathrm N\mathfrak a\le X\}
+=a_{\mathfrak m}X+O_{B,\mathfrak m}(X^{1-\eta}).
+\tag{4.17a}
+$$
+
+Consequently the ideal series of every nontrivial character of the narrow ray class group is
+holomorphic in a neighborhood of $s=1$.
+
+**Proof.** Choose an integral ideal $\mathfrak b_c$, prime to $\mathfrak m$, in the inverse
+ordinary ideal class. Writing $\mathfrak a\mathfrak b_c=(\alpha)$ turns the ray condition into
+one fixed finite congruence and one fixed sign condition on $\alpha$. A bounded fundamental
+parallelepiped for the logarithms of the ray units selects one generator from each ray-unit
+orbit. In Minkowski space the norm bound cuts out finitely many Lipschitz regions dilated by
+$X^{1/[B:\mathbf Q]}$. Their volume is a constant times
+$(\mathrm N\mathfrak b_c)X$, while the covolume of the ideal lattice contains the same factor
+$\mathrm N\mathfrak b_c$. Thus the leading constant is independent of $c$.
+
+The Lipschitz lattice-point estimate, followed by a dyadic decomposition along the finitely many
+faces of the logarithmic fundamental domain, gives an error
+$O(X^{1-1/[B:\mathbf Q]}(\log X)^r)$, hence $O(X^{1-\eta})$ after decreasing $\eta$. Only
+finitely many ideal classes, congruence translates, and sign sectors occur, so the constants are
+uniform in $c$. Summing the displayed asymptotic with the values of a nontrivial ray-class
+character cancels the common main term. Partial summation then continues its ideal series
+holomorphically across $s=1$. $\square$
 
 ### 4.6 Dedekind zeta and the full prime sum
 

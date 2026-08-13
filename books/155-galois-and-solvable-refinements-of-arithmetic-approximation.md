@@ -92,7 +92,7 @@
 
 Arithmetic approximation becomes substantially more delicate when the field produced by a
 specialization is only the first layer of a later descent argument. The ordinary local-open
-theorem of Book 153 is designed to produce a closed point. Its residue field has the prescribed
+theorem of Book 154 is designed to produce a closed point. Its residue field has the prescribed
 local behavior and can be made linearly disjoint from a fixed extension. It is deliberately not
 a theorem about the normal closure of that residue field. This book develops the extra structure
 needed when the normal closure, its subgroup fields, and its local decomposition groups are the
@@ -229,14 +229,14 @@ inside $G$ is always understood up to simultaneous $G$-conjugacy unless a labeli
 been chosen.
 
 Book 2 supplies the completed tensor-product formula, uniqueness of valuations on local fields,
-and the identification of a decomposition group with a completed Galois group. Book 152 supplies
+and the identification of a decomposition group with a completed Galois group. Book 153 supplies
 Hilbert irreducibility with finite local approximation, preservation of generic monodromy, and
-equivariant local constancy of finite étale fibers. Book 153 supplies the moving-family
+equivariant local constancy of finite étale fibers. Book 154 supplies the moving-family
 construction that turns locally prescribed configurations on a smooth geometrically connected
 variety into a finite étale incidence family. Book 6 supplies finite global Artin reciprocity,
 finite-character existence, and the dictionary between finite-order Hecke characters and
 finite-image one-dimensional Galois characters. It supplies no prime-distribution theorem used
-here. Book 154 supplies the full Chebotarev density and finite-selection package. Chapter 4
+here. Book 142 supplies the full Chebotarev density and finite-selection package. Chapter 4
 records its exact interface and retains the established theorem locators as compatibility aliases.
 
 ## 2. Normal closures and field intersections
@@ -671,7 +671,7 @@ intersection with an avoidance field need not.
 
 ## 4. Chebotarev prime selection
 
-This chapter is an import boundary, not a second proof of Chebotarev. Book 154 owns the analytic
+This chapter is an import boundary, not a second proof of Chebotarev. Book 142 owns the analytic
 character argument, the abelian theorem, the reduction from a conjugacy class to a cyclic
 subgroup, and the full density calculation. The present book needs only the resulting finite
 selection interface while it constructs Galois specializations and compatible fixed fields.
@@ -679,7 +679,7 @@ selection interface while it constructs Galois specializations and compatible fi
 ### 4.1 Dirichlet density and Frobenius classes
 
 We use arithmetic Frobenius. For a finite Galois extension $M/K$, group $G$, and conjugacy class
-$C\subset G$, Book 154, Theorem 9.1 proves
+$C\subset G$, Book 142, Theorem 9.1 proves
 
 $$
 \delta\{\mathfrak p:\operatorname{Frob}_{\mathfrak p}=C\}=\frac{|C|}{|G|}.
@@ -692,55 +692,55 @@ $C$ by $C^{-1}$ and does not change the density. No effective least-prime bound 
 ### 4.2 The analytic character lemma
 
 **Lemma 4.1 (finite-order Hecke-character prime sum; compatibility alias).** The theorem used in the proof of
-(4.1) is Book 154, Theorem 5.1. Its equal-ray-residue input is Book 154, Theorem 4.1. These results
+(4.1) is Book 142, Theorem 5.1. Its equal-ray-residue input is Book 142, Theorem 4.1. These results
 are cited only to identify proof ownership; no analytic step is repeated here.
 
 This locator replaces the former local analytic development. A consumer needing residues,
-nonvanishing at $s=1$, or the bounded higher-prime-power tail must cite Book 154 directly.
+nonvanishing at $s=1$, or the bounded higher-prime-power tail must cite Book 142 directly.
 
 ### 4.3 The abelian density theorem
 
-**Theorem 4.2 (abelian Chebotarev; compatibility alias).** Book 154, Theorem 7.1 applies to every
+**Theorem 4.2 (abelian Chebotarev; compatibility alias).** Book 142, Theorem 7.1 applies to every
 finite abelian extension used below. In particular, each element occurs as arithmetic Frobenius
 with density $1/|G|$.
 
 The statement is retained under its Book 155 locator because later field diagrams cite it, but
-its proof and hypotheses belong to Book 154.
+its proof and hypotheses belong to Book 142.
 
 ### 4.4 Reduction from a conjugacy class to a cyclic subgroup
 
-Book 154, Chapter 8 proves the exact fixed-field comparison. If $c\in G$, $H=\langle c\rangle$,
+Book 142, Chapter 8 proves the exact fixed-field comparison. If $c\in G$, $H=\langle c\rangle$,
 and $E=M^H$, degree-one primes of $E$ with upper Frobenius $c$ contribute with the centralizer
 multiplicity needed to recover the density of the class $[c]$ over $K$. This is the only
 reduction used here; it must not be replaced by an assertion that arbitrary factorization data
 determine a decomposition subgroup.
 
-For simultaneous intermediate fields we import Book 154, Section 10.4: primes of $M^J$ above a
+For simultaneous intermediate fields we import Book 142, Section 10.4: primes of $M^J$ above a
 selected base prime are the $\langle c\rangle$-orbits on $G/J$, their lengths are residue degrees,
 and upper Frobenius is the corresponding conjugate of $c^f$. This matches exactly the
 double-coset completion formula of Theorem 3.1.
 
 ### 4.5 Chebotarev's theorem and its selection forms
 
-**Theorem 4.3 (Chebotarev density theorem; compatibility alias).** This is Book 154,
+**Theorem 4.3 (Chebotarev density theorem; compatibility alias).** This is Book 142,
 Theorem 9.1 with $L=M$. Thus every conjugacy class $C\subset\operatorname{Gal}(M/K)$ has density
 $|C|/[M:K]$.
 
-**Corollary 4.4 (finite avoidance; compatibility alias).** This is Book 154, Corollary 10.1:
+**Corollary 4.4 (finite avoidance; compatibility alias).** This is Book 142, Corollary 10.1:
 outside any prescribed finite set there are infinitely many unramified primes with Frobenius in
 $C$.
 
 **Corollary 4.5 (splitting plus detection; compatibility alias).** If $A/K$ and $B/K$ are finite
-Galois and linearly disjoint, Book 154, Corollary 10.2 selects infinitely many primes which split
+Galois and linearly disjoint, Book 142, Corollary 10.2 selects infinitely many primes which split
 completely in $B$ and have a prescribed Frobenius class in $A$. If the fields intersect, the
 requested classes must first agree on the intersection and selection takes place in the actual
 fiber-product Galois group.
 
-**Corollary 4.6 (finite witnesses; compatibility alias).** Book 154, Section 10.3 selects
+**Corollary 4.6 (finite witnesses; compatibility alias).** Book 142, Section 10.3 selects
 distinct primes in finitely many conjugacy classes outside a prescribed finite set. If no proper
 subgroup meets all the selected classes, their Frobenius elements witness the full group.
 
-**Corollary 4.7 (fixed-field and character selection; compatibility alias).** Book 154,
+**Corollary 4.7 (fixed-field and character selection; compatibility alias).** Book 142,
 Section 10.4 supplies the simultaneous orbit, residue-degree, upper-Frobenius, and character-value
 calculation for every named subgroup of one fixed top Galois group. This is the form used in the
 elementary-field family below.
@@ -820,7 +820,7 @@ A connected fiber of $T\to H$ says only that $G_h$ acts transitively on $G/J$. I
 $G_h=G$. The difference is essential. For instance, $A_n$ is transitive in the natural
 $S_n$-action, so an irreducible polynomial can have Galois group $A_n$ rather than $S_n$.
 
-Book 152 proves that full monodromy is a Hilbert condition. We recall the argument because it
+Book 153 proves that full monodromy is a Hilbert condition. We recall the argument because it
 will be combined with base change. For each conjugacy class of maximal proper subgroups
 $Q\subsetneq G$, form the quotient cover
 
@@ -840,7 +840,7 @@ cover with group $G$. Given finitely many places $v$ and nonempty opens $V_v\sub
 there is an $h\in H(K)$ lying in every $V_v$ for which $\widetilde T_h$ is connected. The set of
 such $h$ is dense in the product of the $V_v$.
 
-**Proof.** Apply the simultaneous-cover form of Hilbert irreducibility from Book 152 to the
+**Proof.** Apply the simultaneous-cover form of Hilbert irreducibility from Book 153 to the
 finite list of maximal-subgroup resolvent covers. A specialization satisfying all the resolvent
 conditions has image in no maximal proper subgroup, hence its image is $G$. Local approximation
 is part of the same theorem. $\square$
@@ -1023,7 +1023,7 @@ condition.
 If the cover is connected but not geometrically connected, let $C$ be the algebraic closure of
 $K$ in $K(\widetilde T)$. Then $C\ne K$ is contained in every sufficiently good top
 specialization. Avoidance of a field containing $C$ is impossible. One can sometimes replace
-$K$ by $C$ or separate the constant quotient, as in Book 152, but the simple theorem below uses
+$K$ by $C$ or separate the constant quotient, as in Book 153, but the simple theorem below uses
 geometric connectedness to avoid hidden constants altogether.
 
 ### 6.4 Solvable bridge data
@@ -1077,7 +1077,7 @@ solvable degree.
 ## 7. The Galois-refined approximation theorem
 
 We now prove the central theorem. All difficult geometry is isolated in the existence of the
-Galois approximation datum, just as Book 153 isolates its geometry in a simultaneous moving
+Galois approximation datum, just as Book 154 isolates its geometry in a simultaneous moving
 presentation. Once the datum exists, local topology, full monodromy, and closure-level
 disjointness are compatible Hilbert conditions on one affine parameter space.
 
@@ -1132,7 +1132,7 @@ Lemma 6.1.
 **Proof strategy.** There are three independent requirements on the parameter. Membership in
 $V_v$ is local and open. Surjectivity of the specialization homomorphism is a Hilbert condition
 detected by the finite list of maximal-subgroup resolvents. Disjointness of the top field from
-$D_{\mathrm{av}}$ is connectedness of the top fiber after base change. Book 152 allows their
+$D_{\mathrm{av}}$ is connectedness of the top fiber after base change. Book 153 allows their
 finite intersection to meet every local box.
 
 **Proof.** Replace $D_{\mathrm{av}}$ by its normal closure. Let $\mathcal H_G\subset H(K)$ be
@@ -1187,7 +1187,7 @@ as $G$-torsors, so the local homomorphism is conjugate to $\phi_v$. Passing to t
 $J$ identifies the root algebras and the evaluated points. This proves all five conclusions.
 
 Density follows by beginning with arbitrary smaller local neighborhoods. To see that the set is
-not thin, suppose it were thin. Book 152's thin--Hilbert dictionary provides finitely many
+not thin, suppose it were thin. Book 153's thin--Hilbert dictionary provides finitely many
 additional connected-cover conditions avoiding it. Intersect those with $\mathcal H$ and the
 same local boxes. Hilbert approximation would produce a parameter having all conclusions but
 outside the supposed set of all such parameters, a contradiction.
@@ -1244,7 +1244,7 @@ same time. None of these prime choices is used to construct or vary $M$.
 
 ### 7.4 Why this is stronger than Moret--Bailly
 
-Book 153 starts from local points on a smooth geometrically connected variety and constructs a
+Book 154 starts from local points on a smooth geometrically connected variety and constructs a
 moving incidence cover. Connectedness of its specialized degree-$d$ fiber produces $L$ and
 connectedness after base change produces $L\cap D=K$. The generic Galois closure of that
 incidence cover need not have a prescribed group, its sheet stabilizer need not be solvable, and
@@ -1530,7 +1530,7 @@ index not dividing five, so it may have no degree-five closed point at all. Even
 points, a chosen moving family may have monodromy smaller than $S_5$ or may fail to realize the
 required local torsors.
 
-Book 153 obtains flexibility by allowing the degree of a moving zero-cycle to become large. That
+Book 154 obtains flexibility by allowing the degree of a moving zero-cycle to become large. That
 freedom cannot be reconciled automatically with the fixed degree five. A quintic Galois
 refinement therefore requires additional geometry: an actual degree-five evaluation family with
 generic $S_5$ monodromy and the desired local fibers. Corollary 9.2 is conditional on precisely
@@ -1992,7 +1992,7 @@ Likewise, Theorem 12.2 handles only finitely many covers at once. A countable fi
 not be a finite-type variety, and a countable intersection of Hilbert subsets need not be
 covered by Hilbert irreducibility. When an application seems to require infinitely many
 avoidance conditions for one bounded-degree field, it must first prove that only finitely many
-subextensions can occur, as in Book 152's bounded-degree criterion.
+subextensions can occur, as in Book 153's bounded-degree criterion.
 
 The finite-stage formulation is sufficient for Brauer descent. A finite group has finitely many
 subgroups, a Brauer relation uses finitely many of them, and every local or character kernel
@@ -2167,7 +2167,7 @@ There are several natural sources.
 
 1. A finite morphism from a geometrically integral curve $C\subset X$ to an affine line. The
    open obtained by deleting branch values gives a finite étale evaluation family.
-2. A finite étale incidence family over a moving linear system, as in Book 153. Here the points
+2. A finite étale incidence family over a moving linear system, as in Book 154. Here the points
    of a divisor evaluate on $X$.
 3. A fine moduli cover carrying a universal object, followed by a finite map to a rational chart
    of its base.
@@ -2486,12 +2486,12 @@ Let us record exactly where the substantial inputs enter.
 - Hilbert density in finite local boxes, full generic monodromy through resolvents, disjoint
   specialization after base change, and equivariant local constancy are established in Book
   152.
-- Book 153 supplies moving incidence presentations for ordinary local-open approximation and
+- Book 154 supplies moving incidence presentations for ordinary local-open approximation and
   explains how a point is evaluated from a connected fiber. It does not supply the bridge datum;
   that stronger presentation is hypothesis 1 of the ledger and must be proved in the geometric
   application.
 - Finite global reciprocity, finite-character existence, and the finite-order Hecke-character
-  dictionary used for cyclic layers are supplied by Book 6. Book 154 supplies Chebotarev density,
+  dictionary used for cyclic layers are supplied by Book 6. Book 142 supplies Chebotarev density,
   finite avoidance, simultaneous splitting, finite witnesses, and the fixed-field character
   selection package imported in Chapter 4.
 - All normal-closure, solvable-stabilizer, elementary-field, mutual-disjointness, and compatible

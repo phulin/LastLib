@@ -329,7 +329,7 @@ fixed-prime augmentation. A merely local tame character does not suffice.
 **$({\rm AUG}_Q)$ (auxiliary control).** The Taylor--Wiles modules are free over their
 effective diamond group rings, the marked finite-shadow patch exists, and auxiliary
 augmentation recovers the represented rings, complexes, deformation actions, and pairings.
-In addition, augmentation of the *acting image* is exact. Book 151 proves the torsor, module,
+In addition, augmentation of the *acting image* is exact. Book 152 proves the torsor, module,
 and pairing assertions under its clean hypotheses; it does not formally deduce the last
 acting-image assertion from module augmentation. That final assertion is retained here as a
 separate hypothesis, just as it is in clean minimal patching.
@@ -1246,9 +1246,9 @@ audit are as follows.
 
 The proof of Theorem 4.2 uses Books 170 and 174 directly, with Books 138--140 supplying the
 hypotheses built into Book 174. Book 173 is not an augmented-fiber $R=T$ input. Book 109 is used
-only for the final descent statement. Book 151's torsor and module augmentation enter
+only for the final descent statement. Book 152's torsor and module augmentation enter
 transitively through Book 174; exact auxiliary *acting-image* augmentation remains the
-separate hypothesis $({\rm AUG}_Q)$ and is not attributed to Book 151.
+separate hypothesis $({\rm AUG}_Q)$ and is not attributed to Book 152.
 Books 141 and 171--172 likewise enter transitively through Book 174's Taylor--Wiles and lower-boundary
 support datum; none is used here to manufacture nonminimal support or reducedness.
 

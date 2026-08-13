@@ -913,7 +913,7 @@ $({\rm PRI}_{\rm type})$ hypotheses enter only when the corrected constant-row r
 normalization filtration of Chapter 6 are invoked. None of these distinct conditions implies
 the others.
 
-The intervening algebraic and automorphic tools do not close this existence gap. Book 151
+The intervening algebraic and automorphic tools do not close this existence gap. Book 152
 proves finite-level diamond-module statements once a clean torsor and saturated integral maps
 have been supplied. Book 170 constructs Hecke-valued Galois representations only from exact
 branchwise attachment and local compatibility, and gives a comparison map rather than an

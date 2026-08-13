@@ -556,7 +556,7 @@ equivalent to linear disjointness. A nonnormal root field would not control inte
 
 ### 6.2 The Moret--Bailly step
 
-Apply Book 153 to the smooth geometrically connected variety $X/F$, the finite set $S$, the nonempty opens $\Omega_v$, and the avoidance field $D$. In the split formulation, it produces a closed point with residue field $F'$ such that
+Apply Book 154 to the smooth geometrically connected variety $X/F$, the finite set $S$, the nonempty opens $\Omega_v$, and the avoidance field $D$. In the split formulation, it produces a closed point with residue field $F'$ such that
 
 $$
 F'\otimes_FF_v\simeq F_v^{[F':F]}
@@ -565,7 +565,7 @@ $$
 
 every conjugate local point lies in $\Omega_v$, and $F'$ is linearly disjoint from $D$.
 
-Choose the moving degree even. In Book 153's split moving-family proof the degree is sufficiently divisible rather than prescribed in advance; replacing the auxiliary ample bundle by its square makes every resulting divisor degree even without changing any local open. Hence we may and do require
+Choose the moving degree even. In Book 154's split moving-family proof the degree is sufficiently divisible rather than prescribed in advance; replacing the auxiliary ample bundle by its square makes every resulting divisor degree even without changing any local open. Hence we may and do require
 
 $$
 [F':F]\equiv0\pmod2,
@@ -898,7 +898,7 @@ $$
 
 The left side is irreducible. Indeed, a characteristic-zero invariant line would meet a stable lattice in a saturated rank-one submodule and reduce to a line in $A[\lambda]$, contradicting (7.2) and preservation of absolute irreducibility. Hence the semisimplification sign on the left can be removed, and (9.4) also makes the right side irreducible.
 
-This argument uses Corollary 11.2 of the companion Chebotarev development, Book 154, which the critical proof spine declares globally upstream. Book 127 supplies the family and its Frobenius polynomials; it does not prove density. No theorem from Books 178--180, and in particular no compatible-system assembly or Brauer descent, is used.
+This argument uses Corollary 11.2 of the companion Chebotarev development, Book 142, which the critical proof spine declares globally upstream. Book 127 supplies the family and its Frobenius polynomials; it does not prove density. No theorem from Books 178--180, and in particular no compatible-system assembly or Brauer descent, is used.
 
 ### 9.4 The exact residual member
 
@@ -984,7 +984,7 @@ $$
 
 for the prescribed finite local set $S$ and finite Galois avoidance field $D/F$ in the Moret--Bailly datum. Taking $D$ to contain the target and seed residual cutout fields proves the image equalities (6.4). Enlarging $S$ preserves further exact coefficient-prime local models when simultaneous local witnesses are supplied.
 
-Neither Book 153 nor this construction makes $F'/F$ Galois, solvable, or cyclic. Any further field $E$ used in Section 8.6 has only the properties explicitly imposed there. Consequently none of these fields supports automorphic descent merely by how it was constructed.
+Neither Book 154 nor this construction makes $F'/F$ Galois, solvable, or cyclic. Any further field $E$ used in Section 8.6 has only the properties explicitly imposed there. Consequently none of these fields supports automorphic descent merely by how it was constructed.
 
 ### 10.4 Why the theorem is conditional
 
@@ -1085,9 +1085,9 @@ The proof uses the following earlier books, with no enlargement of their conclus
 | Book 98 | automorphic induction of an algebraic Hecke character, the determinant formula (3.3), the explicit residual induced lattice, and cuspidality | the quadratic extension must remain a field; the character quotient must remain nontrivial |
 | Book 127 | compact-curve packet decomposition, rank-two extraction, determinant and Frobenius normalization, the weak family, and stable lattices | no surface realization or density theorem; integral finite-flat comparison is obtained from $A$, not from an arbitrary curve lattice |
 | Book 176 | literal conditional Theorem 7.1 for the scalar-twist family, the separately conditional generic and $q_v\equiv-1$ reduced-image argument of Section 7.1, and conditional finite-set Theorem 9.1 | every applicable Ihara, type, support, reciprocity, ray, augmentation, mixed-exactness, product-residue, and joint-support hypothesis is retained; source reducedness is not required for pointwise modularity |
-| Book 153 | Moret--Bailly specialization with local opens, total reality, splitting, and linear disjointness | no Galois or solvable conclusion |
+| Book 154 | Moret--Bailly specialization with local opens, total reality, splitting, and linear disjointness | no Galois or solvable conclusion |
 | Book 158 | the fine smooth geometrically connected paired-frame moduli space and its admissible local opens | both frames and both pairings must occur on the same object and component |
-| Book 154, the globally upstream companion Chebotarev development | finite-quotient prime selection in Section 3.4 and Corollary 11.2 in Sections 8.5 and 9.3 | density recognizes existing data and supplies no carrier, lattice, or local compatibility |
+| Book 142, the globally upstream companion Chebotarev development | finite-quotient prime selection in Section 3.4 and Corollary 11.2 in Sections 8.5 and 9.3 | density recognizes existing data and supplies no carrier, lattice, or local compatibility |
 
 Ordinary foundational inputs are finite-flat group schemes, polarization pairings, Schur's lemma, stable lattices, Nakayama's lemma, and elementary field-disjointness calculations. Book 109 is consulted only to state why descent is unavailable; no theorem from it enters Theorem 10.1. The source-closed direct row for the argument is therefore
 

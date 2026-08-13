@@ -783,7 +783,7 @@ $J(\mathbf Q)$, exact generators, their relations, and the proof that no
 additional rank or torsion exists.
 
 The logical provenance matters. Finite generation comes from the
-Mordell--Weil theorem of Book 41. Book 148 supplies the marked modular curve
+Mordell--Weil theorem of Book 41. Book 149 supplies the marked modular curve
 models and the interpretation of their boundary values. Exact polynomial
 arithmetic, specialization, finite-field groups, and torsion bounds come from
 Book 136 under its pointed quintic hypotheses. The rank and torsion
@@ -1040,7 +1040,7 @@ merely a preliminary to Chabauty.
 
 ### 10.1 The curve and its Jacobian
 
-Book 148 derives, by reversible changes from the order-thirteen Tate normal
+Book 149 derives, by reversible changes from the order-thirteen Tate normal
 form, the smooth projective modular curve whose affine model is
 
 $$
@@ -1094,7 +1094,7 @@ $$
 
 where the affine coordinates in (10.6) are those of (10.1). Direct
 substitution proves that they lie on the curve. The same Tate-normal-form
-derivation in Book 148 identifies these six points, including the two
+derivation in Book 149 identifies these six points, including the two
 branches at infinity, as precisely the six rational outward cusps. That
 identification uses no rational-point classification. We will prove there
 are no other rational points.
@@ -1290,7 +1290,7 @@ inclusion. $\square$
 
 These six points are the rational cusps on $X_1(13)$. The modular
 interpretation and the boundary identification are the Tate-normal-form
-calculation of Book 148; the arithmetic proof of (11.3) itself used only the
+calculation of Book 149; the arithmetic proof of (11.3) itself used only the
 smooth curve, its Jacobian, and the exhaustive finite sieve.
 
 ## 12. The mixed-seven curve
@@ -1431,7 +1431,7 @@ twelve classes.
 
 ### 13.2 Cuspidal and degenerate meaning
 
-We recall the exact handoff proved in Book 148, since its direction is part
+We recall the exact handoff proved in Book 149, since its direction is part
 of the conclusion. A point of order seven puts an elliptic curve in Tate
 normal form with
 
@@ -1507,7 +1507,7 @@ The main constructions and their exact hypotheses are summarized below.
 | reduction saturation criterion | good primes away from $\ell$, full rational $\ell$-torsion contained in the subgroup |
 | singleton terminal sieve | complete finite Mordell--Weil group and a modulus annihilating it |
 
-Book 41 supplies finite generation and the height-lattice language. Book 148
+Book 41 supplies finite generation and the height-lattice language. Book 149
 derives the two marked curve models from their modular parameter problems,
 identifies the six rational $X_1(13)$ cusps, and proves the one-way
 mixed-seven implication used in Section 13.2. Book 136 supplies unique

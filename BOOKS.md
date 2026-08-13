@@ -644,67 +644,7 @@ available from the current manuscript.
 
 141. **Dickson Classification and Adequate Residual Image** — Develop the Dickson classification and the adequate-image consequences needed to select Taylor--Wiles elements in coefficient characteristic at least seven. The small-image and coefficient-five boundaries are stated explicitly and no automorphy conclusion follows from adequacy alone.
 
-142. **Taylor–Wiles Primes** — Study the auxiliary primes that alter a deformation problem while controlling global
-   cohomology. Use Chebotarev density and residual-image theory to impose simultaneous congruence and
-   Frobenius conditions, describe the enlarged local rings, and calculate their tangent
-   contributions. Conclude with the existence of Taylor–Wiles sets of prescribed cardinality and
-   level that kill the dual Selmer group.
-
-143. **Taylor–Wiles Systems** — Study the towers of deformation rings, Hecke algebras, and modules obtained by adjoining
-   Taylor–Wiles primes. Develop the finite quotient group actions, augmentation maps, transition
-   maps, and compatibility across levels, and isolate the structural properties that survive passage
-   to the inverse limit.
-
-144. **Patching Modules and Rings** — Construct patched deformation rings and modules from Taylor–Wiles towers. Develop the
-   inverse-limit or ultraproduct construction, auxiliary power-series and completed group rings,
-   support and depth calculations, and freeness over the auxiliary ring. Culminate in the patched
-   pair ((R_\infty,M_\infty)) with the dimension and depth properties needed for (R=T).
-
-145. **The Abstract $R=T$ Argument** — Complete the Taylor–Wiles method in an abstract algebraic setting. Show how the patched
-   module forces faithfulness of the (R_\infty)-action, compare dimensions and
-   complete-intersection properties, and descend from infinite level to the original deformation
-   and Hecke rings. The main theorem gives (R\simeq T) from the structural hypotheses isolated in
-   the preceding volume.
-
-146. **Completed Hecke Pieces and Eisenstein $p$-divisible Groups** — Construct the selected
-   Eisenstein quotient, its Néron model and completed Hecke piece, and prove admissibility and control
-   of the finite-flat p-power torsion used in Eisenstein descent. Exclude generic cyclotomic-tower
-   theory and unrelated p-adic analytic results.
-
-147. **Eisenstein Descent and the Mordell--Weil Group of the Eisenstein Quotient** — Develop
-   flat-cohomological Eisenstein descent, compute the relevant Selmer groups and Hecke annihilators,
-   and combine descent with height theory to prove finiteness of the rational points of the
-   Eisenstein quotient. The treatment follows the algebraic Eisenstein argument rather than the
-   winding-quotient method or analytic rank-zero theorems for arbitrary modular factors.
-
-148. **Eisenstein Cotangent Lattices and Formal Immersion** — Develop integral cotangent
-   comparisons for the Eisenstein quotient and prove formal immersion at the oriented Γ₁ cusp.
-   Combine specialization of rational prime-order points with the uniform theorem for primes at
-   least seventeen and with the genus-one calculation at level eleven, isolating the two remaining
-   genus-two rational-point problems.
-
-149. **Mordell--Weil Sieves for Hyperelliptic Curves** — Develop reduction-set constraints,
-   coset sieving, saturation certificates, completeness criteria, and exhaustive Mordell–Weil
-   sieves. Determine X₁(13)(ℚ) and prove that the mixed-seven curve has only cuspidal or degenerate
-   rational points.
-
-150. **Semistable Full-Two Residual Irreducibility** — Prove irreducibility over $\mathbf F_p$ for the $p$-torsion of a semistable elliptic curve over $\mathbf Q$ with full rational two-torsion, for every $p\ge7$. The argument imports the bounded formal-immersion and explicit genus-two computations for the exceptional primes and does not claim absolute irreducibility or a general rational-isogeny classification.
-
-151. **Deep-Level Quaternionic Modules and Diamond Actions** — Construct deep-level quaternionic modules with effective diamond torsors, pairings, finite shadows, and exact module augmentation. Acting-order augmentation and the old--new control needed in patching are separate hypotheses rather than consequences of group-ring freeness.
-
-152. **Hilbert Irreducibility and Arithmetic Approximation** — Develop Hilbert irreducibility together with weak approximation, prescribed decomposition and
-   completion data at finitely many places, linear disjointness, avoidance of given extensions, and
-   totally real specialization. Use the finiteness of local extensions of bounded degree to reduce
-   simultaneous local requirements to finitely many conditions. Conclude with the specialization
-   theorems needed for Moret–Bailly and automorphy fields.
-
-153. **Moret–Bailly’s Theorem** — Develop moving lemmas for zero-cycles, symmetric powers, configuration spaces, and irreducible
-   zero-cycle approximation, then prove Moret–Bailly's local-open existence theorem in the required
-   totally-real form. Derive the linear-disjointness and splitting refinements used later. The
-   main theorem turns prescribed local points on a moduli space into a global point over a
-   controlled totally real extension.
-
-154. **The Chebotarev Density Theorem** — Develop Frobenius conjugacy classes and Dirichlet
+142. **The Chebotarev Density Theorem** — Develop Frobenius conjugacy classes and Dirichlet
    density, then use ray partial zeta functions, Poisson–Mellin analysis, finite-order Hecke
    characters, and logarithmic Euler products to prove the required pole, holomorphy, and
    nonvanishing statements at one. Prove abelian density by character orthogonality and full
@@ -713,10 +653,71 @@ available from the current manuscript.
    representation-transport interfaces, without claiming effective bounds or general Artin
    holomorphy.
 
+143. **Taylor–Wiles Primes** — Study the auxiliary primes that alter a deformation problem while controlling global
+   cohomology. Import the full finite-quotient Chebotarev theorem from Book 142 and combine it with
+   the residual-image detector to impose simultaneous congruence and Frobenius conditions. Describe
+   the enlarged local rings and calculate their tangent
+   contributions. Conclude with the existence of Taylor–Wiles sets of prescribed cardinality and
+   level that kill the dual Selmer group.
+
+144. **Taylor–Wiles Systems** — Study the towers of deformation rings, Hecke algebras, and modules obtained by adjoining
+   Taylor–Wiles primes. Develop the finite quotient group actions, augmentation maps, transition
+   maps, and compatibility across levels, and isolate the structural properties that survive passage
+   to the inverse limit.
+
+145. **Patching Modules and Rings** — Construct patched deformation rings and modules from Taylor–Wiles towers. Develop the
+   inverse-limit or ultraproduct construction, auxiliary power-series and completed group rings,
+   support and depth calculations, and freeness over the auxiliary ring. Culminate in the patched
+   pair ((R_\infty,M_\infty)) with the dimension and depth properties needed for (R=T).
+
+146. **The Abstract $R=T$ Argument** — Complete the Taylor–Wiles method in an abstract algebraic setting. Show how the patched
+   module forces faithfulness of the (R_\infty)-action, compare dimensions and
+   complete-intersection properties, and descend from infinite level to the original deformation
+   and Hecke rings. The main theorem gives (R\simeq T) from the structural hypotheses isolated in
+   the preceding volume.
+
+147. **Completed Hecke Pieces and Eisenstein $p$-divisible Groups** — Construct the selected
+   Eisenstein quotient, its Néron model and completed Hecke piece, and prove admissibility and control
+   of the finite-flat p-power torsion used in Eisenstein descent. Exclude generic cyclotomic-tower
+   theory and unrelated p-adic analytic results.
+
+148. **Eisenstein Descent and the Mordell--Weil Group of the Eisenstein Quotient** — Develop
+   flat-cohomological Eisenstein descent, compute the relevant Selmer groups and Hecke annihilators,
+   and combine descent with height theory to prove finiteness of the rational points of the
+   Eisenstein quotient. The treatment follows the algebraic Eisenstein argument rather than the
+   winding-quotient method or analytic rank-zero theorems for arbitrary modular factors.
+
+149. **Eisenstein Cotangent Lattices and Formal Immersion** — Develop integral cotangent
+   comparisons for the Eisenstein quotient and prove formal immersion at the oriented Γ₁ cusp.
+   Combine specialization of rational prime-order points with the uniform theorem for primes at
+   least seventeen and with the genus-one calculation at level eleven, isolating the two remaining
+   genus-two rational-point problems.
+
+150. **Mordell--Weil Sieves for Hyperelliptic Curves** — Develop reduction-set constraints,
+   coset sieving, saturation certificates, completeness criteria, and exhaustive Mordell–Weil
+   sieves. Determine X₁(13)(ℚ) and prove that the mixed-seven curve has only cuspidal or degenerate
+   rational points.
+
+151. **Semistable Full-Two Residual Irreducibility** — Prove irreducibility over $\mathbf F_p$ for the $p$-torsion of a semistable elliptic curve over $\mathbf Q$ with full rational two-torsion, for every $p\ge7$. The argument imports the bounded formal-immersion and explicit genus-two computations for the exceptional primes and does not claim absolute irreducibility or a general rational-isogeny classification.
+
+152. **Deep-Level Quaternionic Modules and Diamond Actions** — Construct deep-level quaternionic modules with effective diamond torsors, pairings, finite shadows, and exact module augmentation. Acting-order augmentation and the old--new control needed in patching are separate hypotheses rather than consequences of group-ring freeness.
+
+153. **Hilbert Irreducibility and Arithmetic Approximation** — Develop Hilbert irreducibility together with weak approximation, prescribed decomposition and
+   completion data at finitely many places, linear disjointness, avoidance of given extensions, and
+   totally real specialization. Use the finiteness of local extensions of bounded degree to reduce
+   simultaneous local requirements to finitely many conditions. Conclude with the specialization
+   theorems needed for Moret–Bailly and automorphy fields.
+
+154. **Moret–Bailly’s Theorem** — Develop moving lemmas for zero-cycles, symmetric powers, configuration spaces, and irreducible
+   zero-cycle approximation, then prove Moret–Bailly's local-open existence theorem in the required
+   totally-real form. Derive the linear-disjointness and splitting refinements used later. The
+   main theorem turns prescribed local points on a moduli space into a global point over a
+   controlled totally real extension.
+
 155. **Galois and Solvable Refinements of Arithmetic Approximation** — Control normal closures,
    local completion data, elementary and solvable subfields, mutual disjointness, and the compatible
    families of fields required for Brauer descent. Import the full density and prime-selection
-   package from Book 154 rather than reproving Chebotarev, and do not infer the Galois refinements
+   package from Book 142 rather than reproving Chebotarev, and do not infer the Galois refinements
    from ordinary Moret–Bailly alone.
 
 156. **Hilbert--Blumenthal Moduli and Two-Prime Level Covers** — Construct fine polarized

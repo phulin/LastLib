@@ -160,19 +160,19 @@ unconditional dependency-spine column must not be promoted while the named hypot
 | 139 | Ihara Theory and Saturated Degeneracy Maps on Shimura Curves | [x] | [x] | [x] | — |
 | 140 | Integral Level Change and Jacquet--Langlands Comparison | [x] | [x] | — | — |
 | 141 | Dickson Classification and Adequate Residual Image | [x] | [x] | — | — |
-| 142 | Taylor–Wiles Primes | [x] | [x] | — | — |
-| 143 | Taylor–Wiles Systems | [x] | [x] | — | — |
-| 144 | Patching Modules and Rings | [x] | [x] | — | — |
-| 145 | The Abstract $R=T$ Argument | [x] | [x] | — | — |
-| 146 | Completed Hecke Pieces and Eisenstein $p$-divisible Groups | [x] | [x] | — | — |
-| 147 | Eisenstein Descent and the Mordell--Weil Group of the Eisenstein Quotient | [x] | [x] | — | — |
-| 148 | Eisenstein Cotangent Lattices and Formal Immersion | [x] | [x] | — | — |
-| 149 | Mordell--Weil Sieves for Hyperelliptic Curves | [x] | [x] | — | — |
-| 150 | Semistable Full-Two Residual Irreducibility | [x] | [x] | — | — |
-| 151 | Deep-Level Quaternionic Modules and Diamond Actions | [x] | [x] | — | — |
-| 152 | Hilbert Irreducibility and Arithmetic Approximation | [x] | [x] | — | — |
-| 153 | Moret–Bailly’s Theorem | [x] | [x] | — | — |
-| 154 | The Chebotarev Density Theorem | [x] | [x] | — | — |
+| 142 | The Chebotarev Density Theorem | [x] | [x] | — | — |
+| 143 | Taylor–Wiles Primes | [x] | [x] | — | — |
+| 144 | Taylor–Wiles Systems | [x] | [x] | — | — |
+| 145 | Patching Modules and Rings | [x] | [x] | — | — |
+| 146 | The Abstract $R=T$ Argument | [x] | [x] | — | — |
+| 147 | Completed Hecke Pieces and Eisenstein $p$-divisible Groups | [x] | [x] | — | — |
+| 148 | Eisenstein Descent and the Mordell--Weil Group of the Eisenstein Quotient | [x] | [x] | — | — |
+| 149 | Eisenstein Cotangent Lattices and Formal Immersion | [x] | [x] | — | — |
+| 150 | Mordell--Weil Sieves for Hyperelliptic Curves | [x] | [x] | — | — |
+| 151 | Semistable Full-Two Residual Irreducibility | [x] | [x] | — | — |
+| 152 | Deep-Level Quaternionic Modules and Diamond Actions | [x] | [x] | — | — |
+| 153 | Hilbert Irreducibility and Arithmetic Approximation | [x] | [x] | — | — |
+| 154 | Moret–Bailly’s Theorem | [x] | [x] | — | — |
 | 155 | Galois and Solvable Refinements of Arithmetic Approximation | [x] | [x] | — | — |
 | 156 | Hilbert--Blumenthal Moduli and Two-Prime Level Covers | [x] | [x] | — | — |
 | 157 | Local Geometry of Hilbert--Blumenthal Moduli | [x] | [x] | — | — |

@@ -87,7 +87,7 @@ $$
 
 turns the difference between a rational point and the cusp into a rational point of $J$. Passing to a quotient $A$ gives two complementary advantages. First, if $A(\mathbf Q)$ is finite, equality after reduction can force equality in $A(\mathbf Q)$. Second, if the map $X\to A$ is a formal immersion at $c$, equality in $A$ forces equality of sections in the cusp disk.
 
-These two implications solve different problems. Finiteness is global and arithmetic. Formal immersion is local and integral. A proof that establishes only one of them cannot conclude that the rational point is the cusp. Book 147 established finiteness for the selected Eisenstein quotient. The purpose of the present book is to establish the integral cotangent comparison and the formal immersion, then join the two statements without losing the oriented point-level structure.
+These two implications solve different problems. Finiteness is global and arithmetic. Formal immersion is local and integral. A proof that establishes only one of them cannot conclude that the rational point is the cusp. Book 148 established finiteness for the selected Eisenstein quotient. The purpose of the present book is to establish the integral cotangent comparison and the formal immersion, then join the two statements without losing the oriented point-level structure.
 
 The central chain is
 
@@ -150,7 +150,7 @@ $$
 \mathfrak m=(\ell,I).
 $$
 
-Books 146--147 construct the selected optimal quotient
+Books 147--148 construct the selected optimal quotient
 
 $$
 \pi:J\twoheadrightarrow A_{\mathfrak m}, \tag{1.5}
@@ -199,7 +199,7 @@ Several tempting strengthenings are neither needed nor justified.
 
 We do not claim that the rational projector defining $A$ is an integral idempotent. A coefficient field can have several places above $\ell$. The rational quotient retains every companion place, while $e_{\mathfrak m}$ selects one completed factor.
 
-We do not claim that $I$ itself annihilates $A(\mathbf Q)$. Book 147 proves Eisenstein support and a power annihilator; formal immersion uses only finiteness.
+We do not claim that $I$ itself annihilates $A(\mathbf Q)$. Book 148 proves Eisenstein support and a power annihilator; formal immersion uses only finiteness.
 
 We do not infer injectivity of torsion specialization at $2$ from good reduction. The uniform rational-point application is made at $3$, where the kernel of reduction of an abelian variety over the unramified field $\mathbf Q_3$ is torsion-free.
 
@@ -421,7 +421,7 @@ $$
 \xrightarrow{\pi}A\longrightarrow0 \tag{4.1}
 $$
 
-be the selected optimal quotient over $\mathbf Q$. Its kernel $K$ is connected. Book 146 proves that, over
+be the selected optimal quotient over $\mathbf Q$. Its kernel $K$ is connected. Book 147 proves that, over
 
 $$
 S=\operatorname{Spec}\mathbf Z[1/N],
@@ -496,7 +496,7 @@ $$
 e=e_{\mathfrak m}\in\mathbb T\otimes\mathbf Z_\ell.
 $$
 
-Book 146 proves the saturated Tate comparison
+Book 147 proves the saturated Tate comparison
 
 $$
 eT_\ell J\xrightarrow{\sim}eT_\ell A \tag{4.6}
@@ -520,7 +520,7 @@ $$
 
 The idempotent $e$ modulo $\ell^n$ acts on both sides. The transition maps in (4.6a) are reduction maps, and the finite free module $\omega_B$ is $\ell$-adically complete.
 
-Book 146 identifies the finite flat groups $e\mathcal J[\ell^n]$ and $e\mathcal A[\ell^n]$ through the map induced by $\pi$, compatibly in $n$. Contravariance of invariant differentials and (4.6a) therefore give
+Book 147 identifies the finite flat groups $e\mathcal J[\ell^n]$ and $e\mathcal A[\ell^n]$ through the map induced by $\pi$, compatibly in $n$. Contravariance of invariant differentials and (4.6a) therefore give
 
 $$
 e\bigl(\omega_{\mathcal A}/\ell^n\omega_{\mathcal A}\bigr)
@@ -756,7 +756,7 @@ The theorem makes no multiplicity-one or rank-two assertion.
 
 ### 6.2 Proof of primitivity and base change
 
-**Proof of Theorem 6.1, items 1--4.** Book 146 supplies the exact sequence (4.2). Its cotangent sequence is (4.3). After base change to $\mathbf Z_r$, the image of $\pi^*$ has finite free quotient $\omega_{\mathcal K/\mathbf Z_r}$, proving primitivity and item 2. Exactness of a sequence of vector bundles survives arbitrary base change, proving item 3.
+**Proof of Theorem 6.1, items 1--4.** Book 147 supplies the exact sequence (4.2). Its cotangent sequence is (4.3). After base change to $\mathbf Z_r$, the image of $\pi^*$ has finite free quotient $\omega_{\mathcal K/\mathbf Z_r}$, proving primitivity and item 2. Exactness of a sequence of vector bundles survives arbitrary base change, proving item 3.
 
 Book 114 identifies the middle cotangent module with the canonical dualizing differential lattice, and Book 113 identifies that lattice at good level with integral weight-two cusp forms. Hecke endomorphisms descend to $A$ because its rational support is Hecke stable; uniqueness of Néron extension makes the cotangent image Hecke stable. This proves item 1.
 
@@ -766,7 +766,7 @@ The proof uses the whole optimal quotient lattice at $r$, not merely the chosen 
 
 ### 6.3 The selected summand at the Eisenstein prime
 
-**Proof of Theorem 6.1, item 5.** The local idempotent $e_{\mathfrak m}$ acts modulo $\ell^n$ on the finite-flat $\ell$-power torsion tower and on invariant differentials. For every abelian scheme $B/\mathbf Z_\ell$, formula (4.6a) identifies the latter module with $\omega_B/\ell^n\omega_B$. Book 146 identifies the selected towers in $\mathcal J$ and $\mathcal A$ level by level, so contravariance gives an isomorphism
+**Proof of Theorem 6.1, item 5.** The local idempotent $e_{\mathfrak m}$ acts modulo $\ell^n$ on the finite-flat $\ell$-power torsion tower and on invariant differentials. For every abelian scheme $B/\mathbf Z_\ell$, formula (4.6a) identifies the latter module with $\omega_B/\ell^n\omega_B$. Book 147 identifies the selected towers in $\mathcal J$ and $\mathcal A$ level by level, so contravariance gives an isomorphism
 
 $$
 e_{\mathfrak m}(\omega_{\mathcal A}/\ell^n)
@@ -776,7 +776,7 @@ $$
 
 for every $n$. The transition maps agree, and both cotangent modules are finite free and $\ell$-adically complete. Their inverse limits give (6.2).
 
-Equivalently, apply $e_{\mathfrak m}$ to (4.3). Book 146's finite-flat kernel statement gives
+Equivalently, apply $e_{\mathfrak m}$ to (4.3). Book 147's finite-flat kernel statement gives
 
 $$
 e_{\mathfrak m}\mathcal K[\ell^n]=0
@@ -794,7 +794,7 @@ The theorem excludes four common errors.
 
 2. A primitive quotient of rational homology does not automatically give a primitive Néron cotangent inclusion. Here primitivity is proved from the exact sequence of abelian schemes.
 
-3. Equality of selected Tate spaces after tensoring with $\mathbf Q_\ell$ does not imply equality of finite-flat towers or cotangent lattices. Book 146's saturated comparison supplies the integral statement.
+3. Equality of selected Tate spaces after tensoring with $\mathbf Q_\ell$ does not imply equality of finite-flat towers or cotangent lattices. Book 147's saturated comparison supplies the integral statement.
 
 4. Faithfulness of the completed Hecke action does not make the cotangent module free of rank one over $\mathbb T_{\mathfrak m}$. No such freeness is needed to find the coefficient in (6.1).
 
@@ -876,7 +876,7 @@ $$
 
 is a formal immersion at the reduction of $c$.
 
-**Proof.** Because $\ell\mid n_N$, the completed Eisenstein piece is nonzero: its finite level contains the nonzero $\ell$-primary cuspidal subgroup established in Book 146. Hence $A_{\mathfrak m}$ has positive dimension.
+**Proof.** Because $\ell\mid n_N$, the completed Eisenstein piece is nonzero: its finite level contains the nonzero $\ell$-primary cuspidal subgroup established in Book 147. Hence $A_{\mathfrak m}$ has positive dimension.
 
 Apply Theorem 6.1 at $r$. It gives $f$ in the primitive quotient cotangent lattice and $m\ge1$ such that $a_1(\mathcal T_mf)$ is a unit. Equation (7.6) shows that $h_m^*f$ is nonzero in the one-dimensional cotangent line at $c$. Thus (7.7) is surjective. Proposition 2.1 gives the formal immersion. $\square$
 
@@ -922,7 +922,7 @@ At a ramified extension of $\mathbf Q_r$, shallow torsion can occur in a formal 
 
 ### 8.2 Cusp-disk rigidity for the selected quotient
 
-Let $A=A_{\mathfrak m}$ and retain the map $h$ of (7.2). Book 147 proves that $A(\mathbf Q)$ is finite. Fix an odd prime $r\ne N$ and an outward rational cusp $c$. Suppose
+Let $A=A_{\mathfrak m}$ and retain the map $h$ of (7.2). Book 148 proves that $A(\mathbf Q)$ is finite. Fix an odd prime $r\ne N$ and an outward rational cusp $c$. Suppose
 
 $$
 x\in X_1(N)(\mathbf Q)
@@ -971,7 +971,7 @@ The cotangent theorem itself remains valid at $r=2$. The obstruction is Proposit
 
 One could establish a separate connected--étale theorem for the exact quotient at $2$, but no such theorem is needed here. The prime-order specialization argument works at $3$. Stating Theorem 8.2 at odd $r$ makes the input exact and prevents an accidental two-primary strengthening.
 
-This boundary is independent of the dyadic admissibility in Book 146. Admissibility describes finite-flat constituents of the selected $2$-divisible group. It does not by itself say that every rational torsion point of the abelian quotient specializes injectively.
+This boundary is independent of the dyadic admissibility in Book 147. Admissibility describes finite-flat constituents of the selected $2$-divisible group. It does not by itself say that every rational torsion point of the abelian quotient specializes injectively.
 
 ### 8.4 Compatibility with changing the oriented cusp
 
@@ -1117,7 +1117,7 @@ $$
 x\equiv c\pmod3. \tag{10.2}
 $$
 
-Choose a prime $\ell\mid n_p$ and the selected quotient $A_{\mathfrak m}$. Book 147 gives
+Choose a prime $\ell\mid n_p$ and the selected quotient $A_{\mathfrak m}$. Book 148 gives
 
 $$
 A_{\mathfrak m}(\mathbf Q)\text{ finite}.
@@ -1135,7 +1135,7 @@ Every hypothesis has now been used. The threshold $17$ guarantees a nontrivial E
 
 ### 10.3 Exceptional index and residue-characteristic checks
 
-The small-prime corrections in $n_p$ remain exactly those of Books 146--147:
+The small-prime corrections in $n_p$ remain exactly those of Books 147--148:
 
 $$
 v_\ell(n_p)=
@@ -1354,7 +1354,7 @@ $$
 n_{11}=\frac{10}{\gcd(10,12)}=5.
 $$
 
-The faithful Hecke algebra of the one-dimensional $J_0(11)$ has a nonzero selected maximal ideal $(5,I)$. Its selected rational support is the whole elliptic curve. Book 147 therefore gives
+The faithful Hecke algebra of the one-dimensional $J_0(11)$ has a nonzero selected maximal ideal $(5,I)$. Its selected rational support is the whole elliptic curve. Book 148 therefore gives
 
 $$
 J_0(11)(\mathbf Q)\text{ finite}. \tag{11.10}
@@ -1424,7 +1424,7 @@ Every point in the set is a cusp by Proposition 11.1. Hence
 
 **Proof.** Proposition 11.1 identifies the five points in (11.2) as cusps. Eisenstein finiteness and the isogeny (11.9) make $C_{11}(\mathbf Q)$ finite; the two reduction counts then prove (11.14), while the five displayed points force equality. Thus (11.15) is the full rational-point set and lies in the boundary. A smooth elliptic curve with a rational point of exact order $11$ would instead define a rational point of the open curve $Y_1(11)$, which is impossible. $\square$
 
-This argument is exact about the role of finiteness. Reduction counts alone bound rational torsion, not a positive-rank Mordell--Weil group. Book 147 first proves finiteness through the isogenous Eisenstein quotient; only then do the two finite-field counts determine every rational point.
+This argument is exact about the role of finiteness. Reduction counts alone bound rational torsion, not a positive-rank Mordell--Weil group. Book 148 first proves finiteness through the isogenous Eisenstein quotient; only then do the two finite-field counts determine every rational point.
 
 ## 12. The remaining small-prime geometry
 
@@ -1875,7 +1875,7 @@ be the selected optimal Eisenstein quotient. Then:
 7. every rational point of $X_1(11)$ is one of its five rational cusps, so order $11$ is also impossible; and
 8. after these results, the unresolved prime-order case is the explicit genus-two rational-point problem on $X_1(13)$, while the surviving order-seven configuration with full rational two-torsion reduces to the explicit mixed-seven genus-two problem (13.11). The five-primary mixed configuration is already excluded by the genus-one calculation (12.13).
 
-**Proof.** Items 1--3 are Theorem 6.1. Item 4 is Theorem 7.1. Book 147 supplies finiteness of $A_{\mathfrak m}(\mathbf Q)$; Proposition 8.1 and formal section separation give item 5. Proposition 9.1 locates a prime-order point in an outward cusp disk at $3$, and the exact index ensures a selected quotient for $p\ge17$; Theorem 10.1 gives item 6. Chapter 11 gives item 7. Chapters 12--13 prove the reductions and equations in item 8, including the warning that the mixed-seven implication is only necessary. $\square$
+**Proof.** Items 1--3 are Theorem 6.1. Item 4 is Theorem 7.1. Book 148 supplies finiteness of $A_{\mathfrak m}(\mathbf Q)$; Proposition 8.1 and formal section separation give item 5. Proposition 9.1 locates a prime-order point in an outward cusp disk at $3$, and the exact index ensures a selected quotient for $p\ge17$; Theorem 10.1 gives item 6. Chapter 11 gives item 7. Chapters 12--13 prove the reductions and equations in item 8, including the warning that the mixed-seven implication is only necessary. $\square$
 
 As an immediate prime-order summary, if an elliptic curve over $\mathbf Q$ has a rational point of prime order, the results proved here reduce the prime to
 
@@ -1903,9 +1903,9 @@ for $(m,N)=1$. We prove the $U_N$ extension (5.6)--(5.7) in the incoming normali
 
 **Book 114.** The Néron cotangent lattice is the canonical lattice of regular dualizing differentials, the correspondence action has variance $(\pi_2)_*\pi_1^*$, and pullback on cotangents agrees with the normalized weight-two Hecke operator. The integral Hecke action extends to Néron models and preserves cotangents. Its Atkin--Lehner moduli formula sends a cyclic isogeny to its dual; the Tate quotient in Section 3.3 then proves that $w_N\rho$ takes an outward point-level parameter to the standard parameter at $\infty$. We use no rank-two conclusion from Eichler--Shimura and no rational projector on a component lattice.
 
-**Book 146.** The selected rational support defines an optimal quotient with connected kernel; over $\mathbf Z[1/N]$ it gives the exact abelian-scheme sequence (4.2). The local idempotent $e_{\mathfrak m}$ is distinct from the rational projector, the selected Tate lattice is saturated, and the selected finite-flat torsion towers in $J$ and $A$ agree. These facts prove both the primitive whole-quotient cotangent inclusion and the completed comparison (4.7). Nontriviality follows from the actual cuspidal $\ell$-primary subgroup, not merely from a formal maximal ideal.
+**Book 147.** The selected rational support defines an optimal quotient with connected kernel; over $\mathbf Z[1/N]$ it gives the exact abelian-scheme sequence (4.2). The local idempotent $e_{\mathfrak m}$ is distinct from the rational projector, the selected Tate lattice is saturated, and the selected finite-flat torsion towers in $J$ and $A$ agree. These facts prove both the primitive whole-quotient cotangent inclusion and the completed comparison (4.7). Nontriviality follows from the actual cuspidal $\ell$-primary subgroup, not merely from a formal maximal ideal.
 
-**Book 147.** For every $\ell\mid n_N$, the exact selected quotient satisfies
+**Book 148.** For every $\ell\mid n_N$, the exact selected quotient satisfies
 
 $$
 A_{\mathfrak m}(\mathbf Q)\text{ finite}.

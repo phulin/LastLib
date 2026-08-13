@@ -506,7 +506,7 @@ approximation is clean.
 5. every required real, coefficient-prime, ramified, good, and semistable seed lies on that same
    component after the recorded local extension;
 6. in the ordinary specialization form, all local completion algebras have the common-degree
-   moving-family presentations required by Book 153, and their common degree $d$ is chosen so
+   moving-family presentations required by Book 154, and their common degree $d$ is chosen so
    that $d[K:\mathbf Q]$ is even; in the closure-controlled form, a full Galois approximation
    datum is supplied as in Book 155 and $[G:J][K:\mathbf Q]$ is even. In either form the
    completion algebra at $v_0$ has exactly one distinguished degree-one factor carrying the
@@ -1439,7 +1439,7 @@ all compatibility conditions can be imposed at once.
 If only a finite totally real point field, local opens, exact finite étale completion algebras,
 and disjointness of the point field from $D_{\mathrm{av}}$ are needed, simultaneous
 Moret--Bailly approximation applies to $Y^{\mathrm{ten}}\setminus Z$ when the local algebras
-have the common-degree moving-family presentations required in Book 153. It produces $K'$ and
+have the common-degree moving-family presentations required in Book 154. It produces $K'$ and
 a point, but does not assert that $K'/K$ is Galois or that its normal closure is disjoint from
 $D_{\mathrm{av}}$.
 
@@ -1520,7 +1520,7 @@ preserve none of them.
 
 **Theorem 8.2 (controlled two-prime specialization).** Assume items 1--6 of the two-prime
 ledger and the local package of Theorem 7.1. In the ordinary form, assume a common degree and a
-simultaneous moving-family presentation for every exact local algebra as required by Book 153.
+simultaneous moving-family presentation for every exact local algebra as required by Book 154.
 In the closure-controlled form, assume the Galois datum (8.1), including a split top torsor at
 every real place and a realized evaluated point on every factor of each prescribed quotient
 algebra. Then there are a finite totally real extension $K'/K$ of even absolute degree and a
@@ -2202,7 +2202,7 @@ ledger. The present one-prime theorem does not contain such a route.
 
 ### 13.1 The prerequisite interfaces
 
-The declared direct prerequisites are Books 98, 104, 127, 141, 153--157, and 175. Book
+The declared direct prerequisites are Books 98, 104, 127, 141, 142, 154--157, and 175. Book
 175 in turn exposes the load-bearing interfaces from Books 139--140 and 174; they are not
 treated as stronger than their stated hypotheses, and its descent clause exposes Book 109's
 admissible cyclic interface. Book 98 imports global reciprocity from Book 6, while Book 156
@@ -2219,7 +2219,7 @@ ray-subgroup compatibility hypotheses are retained.
 used. Kronecker's theorem makes every ratio $u/u^\sigma$ a root of unity; reduction at one
 split prime detects the resulting finite group, and elementary character extension produces
 the inverse branch. This proves the unit correction, not the separate capitulation-intersection
-compatibility assumed by Theorem 4.2. Chebotarev is taken from its actual source, Book 154; Book
+compatibility assumed by Theorem 4.2. Chebotarev is taken from its actual source, Book 142; Book
 155 supplies the Galois and solvable approximation refinements. No Kummer congruence
 theorem or later congruence-subgroup result is an undeclared input.
 

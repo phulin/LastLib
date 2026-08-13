@@ -997,7 +997,7 @@ $$
 \tag{10.0}
 $$
 
-Within Books 138--141, 151, 163, and 170--176, Books 141, 151, and 171--172 enter transitively through the type-support
+Within Books 138--141, 152, 163, and 170--176, Books 141, 152, and 171--172 enter transitively through the type-support
 and one-prime patching packages. Book 164 is a downstream arithmetic synthesis, not a proof
 source. The mixed reduction (8.3)--(8.10) is proved here; its missing vanishing, product
 residue, and joint support are not imported from a later consumer.
