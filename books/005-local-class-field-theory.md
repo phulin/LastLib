@@ -2286,7 +2286,7 @@ $$
 U_K^n\subseteq N_{L/K}(L^\times).
 $$
 
-By Theorem 8.1, this is equivalently the least $n$ with $G^n=1$. The extension is unramified exactly when the conductor exponent is $0$. A tamely ramified nontrivial abelian extension has conductor exponent $1$: inertia is nontrivial, but $G^1=1$. Wild extensions have conductor at least $2$.
+By Theorem 8.1, this is equivalently the least $n$ with $G^n=1$. The extension is unramified exactly when the conductor exponent is $0$, even when the extension itself is nontrivial. An abelian extension with nontrivial tame inertia has conductor exponent $1$: $G^0$ is nontrivial, but $G^1=1$. Wild extensions have conductor at least $2$.
 
 For a finite-order character
 
@@ -2885,6 +2885,36 @@ $$
 
 Thus units fix the unramified tower and $\pi$ fixes the Lubin–Tate tower. The inverse in the torsion formula is not a second normalization choice. If reciprocity were normalized by geometric Frobenius $\Phi^{-1}$, the entire Artin map would be inverted and the formula would become $\omega_n\mapsto[u]_f(\omega_n)$. This finite-level calculation is a reliable way to translate between the two conventions.
 
+For later use, specialize this calculation to $K=\mathbf Q_p$ and the multiplicative formal
+group, for which
+
+$$
+[a](T)=(1+T)^a-1.
+$$
+
+If $\zeta_{p^n}$ is a primitive $p^n$th root of unity, then
+$\omega_n=\zeta_{p^n}-1$ is a primitive level-$n$ point. Hence, for
+$u\in\mathbf Z_p^\times$,
+
+$$
+\boxed{\quad
+\operatorname{rec}_{\mathbf Q_p}(u)(\zeta_{p^n})
+=\zeta_{p^n}^{\,u^{-1}},
+\quad}
+$$
+
+where $u^{-1}$ in the exponent means its reduction in
+$(\mathbf Z/p^n\mathbf Z)^\times$. Indeed, Proposition 10.1 gives
+
+$$
+\operatorname{rec}_{\mathbf Q_p}(u)(\zeta_{p^n}-1)
+=[u^{-1}](\zeta_{p^n}-1)
+=\zeta_{p^n}^{\,u^{-1}}-1,
+$$
+
+and a field automorphism fixes $1$. Thus the inverse in the cyclotomic action is deduced
+from the arithmetic-Frobenius normalization rather than imposed as a separate convention.
+
 ### 10.5 Composita and intersections
 
 If $L_1,L_2/K$ are finite abelian with norm groups $H_1,H_2$, then
@@ -2969,7 +2999,28 @@ $$
 
 are exactly continuous characters $K^\times\to\mathcal O_E^\times$.
 
-For a general Hausdorff abelian target $A$, not every continuous character of $K^\times$ comes from Galois. The exact condition is that it extend continuously to the profinite completion. The neighborhood condition that the inverse image of every identity neighborhood in the closure of the image contain an open finite-index subgroup of $K^\times$ is necessary; it is also sufficient when that closure is complete (in particular, when it is profinite). A character $K^\times\to\mathbf C^\times$ sending $\pi$ to $2$ is continuous because $\pi^{\mathbf Z}$ is discrete, but it cannot come from $G_K$: its image is not relatively compact. This counterexample is why the coefficient topology must be stated.
+For a general Hausdorff abelian target $A$, not every continuous character of $K^\times$
+comes from Galois. Let $C=\overline{\chi(K^\times)}\subseteq A$. The exact condition is
+that $\chi$ extend continuously to the profinite completion. Equivalently, the following two
+requirements hold:
+
+1. $C$ is complete for its topological-group uniformity;
+2. for every identity neighborhood $V$ in $C$, the inverse image $\chi^{-1}(V)$ contains
+   an open finite-index subgroup of $K^\times$.
+
+The second condition says precisely that $\chi$ is continuous for the profinite topology on
+$K^\times$; it also makes $C$ totally bounded. Together with completeness, it makes $C$
+compact, so the uniformly continuous map from the dense subgroup $K^\times$ extends uniquely
+to $\widehat{K^\times}$. Conversely, an extension has compact image, equal to $C$, and
+continuity on the profinite group gives the finite-index neighborhood condition. Thus one may
+equivalently require that $C$ be compact and that condition 2 hold. It is enough, but stronger,
+to assume that $A$ itself is complete and impose condition 2; Hausdorffness alone does not
+supply the missing limits.
+
+A character $K^\times\to\mathbf C^\times$ sending $\pi$ to $2$ is continuous because
+$\pi^{\mathbf Z}$ is discrete, but it cannot come from $G_K$: its image is not relatively
+compact. This counterexample is why both the coefficient topology and the convergence
+condition must be stated.
 
 After choosing $\pi$, every continuous character into a profinite abelian group is described by a pair
 
@@ -3039,8 +3090,13 @@ $$
 Thus:
 
 - $a(\chi)=0$ exactly when $\chi$ is unramified;
-- $a(\chi)=1$ for a nontrivial tamely ramified character;
+- $a(\chi)=1$ exactly when $\chi|_{\mathcal O^\times}$ is nontrivial but
+  $\chi|_{U^1}$ is trivial, that is, when its inertia character is nontrivial and tame;
 - $a(\chi)\geq2$ signals wild ramification.
+
+In particular, “nontrivial” in the middle line refers to the restriction to inertia. A
+globally nontrivial unramified character can have $\chi(\pi)\ne1$ and still has conductor
+exponent $0$.
 
 For a continuous $\ell$-adic character with infinite image on $U^1$, there may be no finite $n$ on which it becomes trivial. One then speaks of finite conductor only under the additional hypothesis that inertia has finite image, or uses a more general analytic notion. Finite-order characters, which cut out finite abelian extensions, always have the integral conductor above.
 
@@ -3101,7 +3157,15 @@ $$
 \chi_\ell(\operatorname{rec}_K(\pi^ru))=q^r.
 $$
 
-Second take $K=\mathbf Q_p$ and the $p$-adic cyclotomic character. Its extension is totally ramified, $p$ acts trivially on the Lubin–Tate cyclotomic tower, and Proposition 10.1 gives
+Second take $K=\mathbf Q_p$ and the $p$-adic cyclotomic character. Its extension is totally ramified, and $p$ acts trivially on the Lubin–Tate cyclotomic tower. For every primitive $p^n$th root $\zeta_{p^n}$, the finite-level calculation following Proposition 10.1 says
+
+$$
+\operatorname{rec}_{\mathbf Q_p}(u)(\zeta_{p^n})
+=\zeta_{p^n}^{\,u^{-1}}
+\qquad(u\in\mathbf Z_p^\times).
+$$
+
+By the definition of the cyclotomic character, passage through all $n$ therefore gives
 
 $$
 \chi_p(\operatorname{rec}_{\mathbf Q_p}(p^ru))=u^{-1}
@@ -3244,7 +3308,11 @@ $$
 \end{array}
 $$
 
-For a nonprofinite target, retain only the characters that extend continuously to $\widehat{K^\times}$; relative compactness of the image is necessary, and extension to the completion is the exact criterion.
+For a nonprofinite Hausdorff target, retain only the characters that extend continuously to
+$\widehat{K^\times}$. Equivalently, their image closure is complete and their inverse images
+of identity neighborhoods contain open finite-index subgroups; equivalently, the image closure
+is compact and the character is continuous for the profinite topology. Relative compactness
+alone is necessary but does not replace the finite-index neighborhood condition.
 
 ### 12.6 Conclusion
 
