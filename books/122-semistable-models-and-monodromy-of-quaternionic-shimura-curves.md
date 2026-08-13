@@ -111,6 +111,15 @@ where different intersection points give different summands.
 
 The only rational datum in scope is the direct quaternion-trace realization $D=V=B$ of Book 119, with $B/F$ division and split at exactly one real place. Fix its selected canonical component union and a neat prime-to-$p$ level.
 
+This is a conditional input, not an existence theorem in the mixed one-split range. Book 119's
+direct trace similitude group is the common-norm group, and Book 118, Proposition 8.2 proves
+that when $[F:\mathbf Q]>1$ the one-split adjoint Hodge map cannot lift to it: its reduced-norm
+exponent is odd at the active real factor and even at every compact factor. Thus the local-model
+and monodromy theorem below remains valid for any supplied datum satisfying its ledger, but it
+does not itself produce the raw SP carrier needed in the FLT application. Using a different
+central modification requires a new comparison of its parahoric PEL model, components, and raw
+packet plane with the basic curve; none is inferred from equality of adjoint groups.
+
 Choose a finite Galois extension $L/\mathbf Q$ containing the normal closures of the center and reflex field and splitting every simple factor of the PEL algebra. Away from two, let $\Sigma_{\mathrm{odd}}$ contain all relevant discriminants, the polarization degree, the order index, the primes supporting the fixed level, and the exceptional set of Book 119. There are two allowed local situations.
 
 In the first, choose an odd prime
@@ -155,15 +164,15 @@ All generic curves and all coefficient fields in the packet theorem have charact
 
 ### 1.4 Dependency ledger
 
-Books 11--12 and 16 supply normalization, blowups and regular models, and graph/component-group algebra. Book 22 supplies the strict-semistable nearby-cycle and weight complexes. Book 37 supplies the Frobenius--Verschiebung formalism, purity, and duality used to identify global strata. Book 35 supplies quotients by finite locally free subgroups and descended polarizations. Book 76 supplies the selected special Weil--Deligne normalization used to compare the Iwahori scalar with geometric Frobenius. Book 119 supplies the exact direct rational tensors, generic PEL curve, and generic parahoric datum. Book 121 supplies the projective good vertex at odd places, its integral filtration-lifting theorem, universal family, and, at two, the characteristic-independent toric obstruction and flat-closure properness argument once an exact integral functor has been constructed.
+Books 11--12 and 16 supply normalization, blowups and regular models, and graph/component-group algebra. Book 22 supplies the strict-semistable nearby-cycle and weight complexes. Book 37 supplies the Frobenius--Verschiebung formalism, purity, and duality used to identify global strata. Book 35 supplies quotients by finite locally free subgroups and descended polarizations. Book 76 supplies the selected special Weil--Deligne normalization used to compare the Iwahori scalar with geometric Frobenius. Book 118 supplies the exact common-norm Hodge-lift obstruction that makes the direct mixed-signature input conditional. Book 119 supplies the exact direct rational tensors, generic PEL curve, and generic parahoric datum. Book 121 supplies the projective good vertex at odd places, its integral filtration-lifting theorem, universal family, and, at two, the characteristic-independent toric obstruction and flat-closure properness argument once an exact integral functor has been constructed.
 
 The exact direct dependency row is
 
 $$
-\boxed{122\mid 11,12,16,22,35,37,76,119,121}.               \tag{1.6}
+\boxed{122\mid 11,12,16,22,35,37,76,118,119,121}.           \tag{1.6}
 $$
 
-There are nine direct dependencies. The right-double-coset, transpose, central, and degree conventions are chosen to agree with Book 124 and are rederived in Section 9.3 for the residue-prime span. The packet theorem is a characteristic-zero statement conditional only on the already isolated curve packet described in its hypotheses; it imports no Ihara saturation, level-raising theorem, deformation theorem, or modularity-lifting theorem.
+There are ten direct dependencies. The right-double-coset, transpose, central, and degree conventions are chosen to agree with Book 124 and are rederived in Section 9.3 for the residue-prime span. The packet theorem is a characteristic-zero statement conditional only on the already isolated curve packet described in its hypotheses; it imports no Ihara saturation, level-raising theorem, deformation theorem, or modularity-lifting theorem.
 
 The downstream compatibility audit is as follows. Book 124 deliberately leaves a
 level-prime polynomial open; (9.8) uses its incoming right-action convention and proves

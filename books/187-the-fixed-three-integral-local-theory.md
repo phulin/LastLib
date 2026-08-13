@@ -206,8 +206,8 @@ This explains why $(\mathrm C_3)$ is the first exact local question after the
 $(\mathrm{AI}_2)$-independent prime-three selection of Book 186.  It is not, however, an
 irreducible new arithmetic hypothesis once a good carrier exists: Section 2.5 derives the
 stronger $(\mathrm{IC}_3)$ from $(\mathrm{AVCar}_{3,\ell}^+)$ once $3$ was named split in
-the controlled top and its split local packet was supplied.  The current source chain does not
-construct that carrier certificate.
+the controlled top and its split local packet was supplied. Section 2.5 reduces that carrier
+certificate to the finite unitary common-multiplier cover constructed there.
 Once $(\mathrm C_3)$ is known,
 the lattice and tower will be consequences. Before it is known, integral Fontaine--Laffaille
 theory has no object to which it can be applied.
@@ -360,39 +360,18 @@ that source theorem once the actual positive packet carriers have been construct
 ### 2.5 The fixed-three positive-carrier theorem
 
 There is a direct geometric route to $(\mathrm{IC}_3)$ which is substantially weaker than
-the source-facing compatible-family arithmetic core.  As part of the carrier input, require
-the rational prime $3$ to be among the sensitive places in Book 182's normal-top construction
-and require the corresponding split evaluated packet over $\mathbf Q_3$ in its moving datum.
-The normal-top theorem then makes $3$ split completely in $M$ and hence in every elementary
-fixed field.  This is an input, not a consequence of merely writing $3$ in the sensitive set:
-Book 182, Proposition 6.2A constructs the base-completion packets at $2$ and $\ell$, not an
-additional packet at $3$.
-After the top and one integral Brauer datum
+the source-facing compatible-family arithmetic core.  Book 182, Theorem 6.2 and Proposition
+6.2A now construct the exact split evaluated packet over $\mathbf Q_3$ together with the packets
+over $\mathbf Q_2$ and $\mathbf Q_\ell$.  Its normal-top construction therefore makes $3$
+split completely in $M$ and hence in every elementary fixed field.  After the top and one
+integral Brauer datum
 $\mathfrak B=\{(H_i,\theta_i,n_i)\}$ have been chosen, write
-$n_i=n_i^+-n_i^-$.  For every $i$ with $n_i^+>0$, require the following rational carrier
-certificate.
-
-- The corrected packet $\pi_{H_i}$ occurs on an actual compact division-quaternion
-  one-split carrier $X_i$.  There is also a specified direct-trace PEL-exact curve $Y_i$ for
-  the connected common-norm central modification to which the basic Hodge map lifts, or for
-  the basic group when the two data coincide, together
-  with a finite surjective morphism $f_i:Y_i\to X_i$ over the elementary fixed field, at
-  compatible levels and on full component-routing unions.  Equality of adjoint groups is not
-  substituted for this morphism.
-- The rational raw multiplicity plane extracted from $H^1(X_i)$, after the covariant Tate
-  twist, has semisimplification equal to the elementary representation used in Book 185.
-  Every local factor above $3\ell$ is spherical, and the basic packet occurrence and finite
-  comparison persist when those local levels are replaced by compatible hyperspecial
-  stabilizers.
-
-Call this finite requirement $(\mathrm{Car}_3^+)$.  No carrier is required for an index
-occurring only on the negative side.  The requirement does not say that an integral Hecke
-idempotent cuts out the packet, and it does not assume a good integral model.  It supplies the
-exact rational PEL cover to which the good-model theorem can be applied.  This distinction is
-necessary: a basic quaternionic curve and a direct-trace PEL central modification have the
-same adjoint domain but need not have the same component set or universal abelian scheme.
-The finite map, rather than an identification of the two curves, will transport the rational
-packet plane.
+$n_i=n_i^+-n_i^-$.  Book 182, Proposition 7.2A already supplies every corrected packet with an
+actual compact division-quaternion one-split basic carrier $X_i$ and its all-coefficient
+attachment.  If $d_i=[M^{H_i}:\mathbf Q]$ is even, its finite ramification set can be one
+dyadic special place; if $d_i$ is odd, it can be empty.  In both cases the carrier is split and
+the packet is spherical at every place above $3\ell$.  Thus basic carrier existence is no
+longer part of the positive hypothesis below.
 
 The still weaker output actually used below will be denoted
 $(\mathrm{AVCar}_{3,\ell}^+)$.  It asks, for each positive elementary term, for an abelian
@@ -406,115 +385,169 @@ $\ell$ is irrelevant to the finite-flat construction but will remove the old coe
 prime from the selected member's auxiliary support in Section 7.2.  Both carrier symbols retain
 the split-at-three controlled-top and local-packet requirement in the preceding paragraph.
 
-**Proposition 2.2 (good carriers at the prescribed split primes).** Under
-$(\mathrm{Car}_3^+)$, the positive carriers may be chosen so that their curves, and hence
-their relative Jacobians, have good reduction at every place above both $3$ and the old
-coefficient prime $\ell$.  Their covariant raw multiplicity planes have semisimplifications
-equal to the elementary representations used in $R_{\mathfrak B,\nu}^+$.
+The previously proposed direct common-norm source for this output is impossible in the present
+mixed signature.
 
-**Proof.** The top seed is minimal away from $\{2,\ell\}$.  Thus its factor at every place
-above $3$ is spherical.  The exact SP seed also uses the clean hyperspecial
-coefficient-prime automorphic level, so its factor at every place above $\ell$ is spherical.
-Complete splitting at both $3$ and $\ell$ makes every
-downward local extension there the identity and makes every quotient-character correction and
-every Brauer character $\theta_i$ locally trivial.  Consequently each $\pi_{H_i,w}$ with
-$w\mid3\ell$ is spherical.
-
-Use the division one-split quaternion algebra supplied by $(\mathrm{Car}_3^+)$.  Its finite ramification
-set is chosen from the eligible special or tame-dihedral places, so it contains no spherical
-place above $3\ell$.  Choose its local order at $w\mid3\ell$ to be the full matrix order and its
-level to be hyperspecial.  It remains to verify rather than assume the integral trace lattice.
-
-Fix splittings $B_w\simeq M_2(\mathbf Q_p)$ for $w\mid p$ and
-$p\in\{3,\ell\}$.  Since both rational primes split completely in $F_i$, there is no local
-inverse-different factor in the field trace.  In the pure subspace of $M_2(\mathbf Q_p)$ the
-matrix
+**Lemma 2.2A (the common-norm carrier is vacuous).**  For every elementary term in the
+controlled top, the one-split basic Hodge map does not lift to the connected common-norm group
 
 $$
-\delta_w^0=\begin{pmatrix}1&0\\0&-1\end{pmatrix}
+G_i^\star=\{b\in\operatorname{Res}_{F_i/\mathbf Q}B_i^\times:
+\operatorname{Nrd}(b)\in\mathbf G_m\}.
 $$
 
-is invertible.  For the direct-trace form on $M_2(\mathbf Z_p)$ its Gram matrix, in the four
-matrix units, pairs the two diagonal units and the two off-diagonal units in two alternating
-blocks with unit entries.  It is therefore perfect.  Moreover the positive involution
-$b\mapsto(\delta_w^0)^{-1}\bar b\delta_w^0$ preserves $M_2(\mathbf Z_p)$.  Both properties
-remain true when the pure multiplier lies in a sufficiently small $p$-adic neighborhood of
-$\delta_w^0$.
+Hence no direct-trace common-norm PEL curve of the kind formerly required by
+$(\mathrm{Car}_3^+)$ exists.
 
-Start from the positive multiplier in the rational PEL datum stipulated by
-$(\mathrm{Car}_3^+)$.  Weak approximation in the global pure-quaternion subspace chooses one
-invertible $\delta$ in all the prescribed finite neighborhoods and sufficiently close to that
-multiplier at every real place to stay in the same positive Hodge cones.
-This simultaneously addresses the warning in Book 115 that a rational pure multiplier and an
-integral order cannot be selected independently.  At $w\mid3\ell$ prescribe the full matrix
-order.  Away from those places start with any auxiliary local order and intersect it with its
-image under the $\delta$-involution; these intersections agree with one reference order at
-almost every place.  Book 82's reconstruction theorem gives a global $*$-stable order with
-the prescribed completions.  Use that order itself as the left-module lattice.  The
-direct-trace form is already integral and perfect at $w\mid3\ell$; multiplying it by one
-positive integer supported away from $3\ell$ clears every remaining denominator without
-changing the involution or local self-duality.  The common-norm similitude group is independent
-of the pure multiplier, and the real approximation stays in the original positive component.
-Thus the new multiplier gives another PEL-exact realization of the same common-norm Shimura
-datum.  Canonical-model uniqueness identifies its component union with the stipulated one and
-transports the finite central comparison and packet occurrence, although the literal PEL
-presentation has changed.  The integral
-constructions of Books 115 and 119 now give
-polarization degree a unit and reductive self-dual stabilizer at both prescribed primes; Book
-118 retains the specified basic-to-central-modification comparison and its actual component
-labels.
+**Proof.**  The group $\Gamma=G_0\times S_5$ is not solvable, while every elementary subgroup
+$H_i$ is solvable.  Thus $H_i\ne\Gamma$ and $[F_i:\mathbf Q]=[\Gamma:H_i]>1$.  The carrier has
+one active split real place and at least one compact real place.  Book 118, Proposition 8.2
+then applies: at the active factor every lift has reduced-norm character
+$(z\bar z)^{2m+1}$, while an adjoint-trivial compact factor has reduced-norm character
+$(z\bar z)^{2n}$.  The common-norm equation cannot equate an odd and an even exponent.  Varying
+the pure multiplier, the order, or the finite level does not change this real-group
+obstruction. $\square$
 
-Take the full component-routing union, retain the entire multiplier-and-orientation label
-union occurring in the rational datum, and choose a normal fine auxiliary level away from
-$3\ell$ and from the polarization degree.  Because $3$ splits completely in $F_i$, the decomposition
-$\mathcal O_{F_i}\otimes\mathbf Z_3\simeq\prod_{w\mid3}\mathbf Z_3$ has integral primitive
-idempotents.  The direct-trace determinant law is therefore the standard rank-one law on the
-active matrix factor and the fixed rank-zero or full-rank law on every inactive factor.  No
-smaller multiplier or orientation component is selected, so those two ledger clauses impose
-no generic idempotent whose integral extension would have to be proved.  The full component
-union is decomposition-group stable, and the self-dual matrix lattice has the reductive
-hyperspecial stabilizer.  Thus every nonvacuous item in the exact ledger holds over the split
-reflex local ring $\mathbf Z_3$.  This
-verifies the complete ledger of Book 121, Theorem 12.1.  That theorem supplies a smooth
-projective integral curve with its universal PEL data.  Book 129, Section 8.2 then makes its
-relative identity Picard scheme, equivalently the product of its component Jacobians after a
-splitting extension, an abelian scheme over $\mathbf Z_3$.  The identical argument using the integral
-decomposition at $\ell$ gives good reduction over every completion above $\ell$.
+The replacement is the unitary common-multiplier, or modèle-étrange, cover.  Choose once an
+imaginary quadratic field $K_{\mathrm{CM}}/\mathbf Q$ which is nonsplit at $2$ and split at
+$3$ and $\ell$.
+The $n=2$ case of Book 6, Theorem 6.1 and its Grunwald alternative supplies such a field after
+prescribing the nontrivial local class at the real place and at $2$, and the trivial class at
+$3$ and $\ell$; there is no Wang exception at exponent two.  For a positive term put
 
-The spherical basic packet still occurs after this choice of level: a spherical vector is
-fixed by the hyperspecial factor, and the other level factors may be shrunk without destroying
-a previously fixed vector.  Book 127 extracts its intrinsic raw rank-two multiplicity space
-$W_i^{\mathrm{raw}}$.  Choose a nonzero vector in the finite oldvector factor; Book 129,
-Sections 8.1--8.2 then embeds a copy of $W_i^{\mathrm{raw}}$ in $H^1(X_i)$ with the required
-curve-to-Tate normalization.  For the finite central
-comparison, on each target component one has
+$$
+L_i=F_iK_{\mathrm{CM}}.
+\tag{2.5b}
+$$
+
+The field $F_i$ is totally real, so $F_i\cap K_{\mathrm{CM}}=\mathbf Q$.  If $d_i$ is odd, $B_i$ has no
+finite ramification.  If $d_i$ is even, its only finite ramified place is one $w_i\mid2$ and
+$(F_i)_{w_i}=\mathbf Q_2$; nonsplitting of $K_{\mathrm{CM}}$ at $2$ makes $(L_i)_{w_i}$ a field.  At every
+ramified real place $L_i$ is complex.  The quaternion embedding criterion of Book 118,
+Section 8.5 therefore gives
+
+$$
+L_i\hookrightarrow B_i.
+\tag{2.5c}
+$$
+
+Regard $B_i$ as a rank-two right $L_i$-space with Hermitian norm
+$H_i(x,x)=\operatorname{Nrd}_{B_i}(x)$.  Book 118, Proposition 8.3 constructs the PEL-exact
+unitary common-multiplier central modification $G_i^{\mathrm u}$, with reflex field $L_i$ and
+the same adjoint datum as the basic curve.  This is the trivial-character FLT packet: Book 127,
+Section 6.2 records $s_v=1$ and $\eta=1$ (equivalently, its covariant determinant is
+cyclotomic), and Book 182 retains that normalization on every candidate.
+Enlarging the basic local levels by the central signs therefore changes neither the packet
+block nor its raw multiplicity plane and makes the level centrally saturated on
+$\operatorname{Res}_{F_i/\mathbf Q}B_i^1$.  Corollary 10.3A, applied with
+$S=\{3,\ell\}$, gives a finite extension $E_i/L_i$ unramified above $3\ell$, a unitary
+PEL component union $Y_i/E_i$, and, at compatible levels and on the full component-routing
+unions, a finite surjective morphism
+
+$$
+f_i:Y_i\longrightarrow X_i\times_{F_i}E_i.
+\tag{2.5d}
+$$
+
+The integral ledger can be imposed simultaneously at $3$ and $\ell$. Indeed, these primes
+split completely in $F_i$, the algebra $B_i$ is split there, and splitting of $K_{\mathrm{CM}}$ gives the
+two CM idempotents. Multiply the anti-invariant $\xi$ of (8.3b) by a totally positive element
+of $F_i^\times$ chosen by weak approximation so that it is a unit at those places; this
+preserves every polarization sign. The standard split Hermitian
+plane has a self-dual lattice; Book 82, Section 4.3 patches these prescribed local lattices into
+one global $\mathcal O_{L_i}$-lattice. Take the full routed component union together with its
+finite Galois orbit over $L_i$, choose polarization type prime to $3\ell$, and choose the fine
+level hyperspecial at both primes, shrinking only away from them. This union is globally
+$L_i$-defined and in particular stable under both decomposition groups; adding its finitely
+many translates preserves finite surjectivity. Corollary 10.3A permits these simultaneous
+compatible level choices.
+
+Book 121, Theorem 11.2 gives smooth projective models of the unitary component union over
+$L_i$ and good reduction of its relative Picard scheme at all places above $3\ell$.
+Corollary 10.3A constructs $Y_i$ by lowering only the prime-to-$3\ell$ unitary level, so the
+same theorem applies to those globally defined orbit unions.  After the unramified base
+change to $E_i$, their component idempotents are open and closed, so the selected labelled
+union remains smooth and projective.
+This exact construction is $(\mathrm{Car}_3^+)$.  It is unitary common-multiplier PEL
+geometry, not the impossible direct common-norm trace datum of Lemma 2.2A.
+
+**Proposition 2.2 (the unitary cover supplies the abelian carrier).**  The construction
+$(\mathrm{Car}_3^+)$ proves $(\mathrm{AVCar}_{3,\ell}^+)$.
+
+**Proof.**  Book 127 extracts the intrinsic raw rank-two multiplicity plane from $H^1(X_i)$
+and, in (2.5) and (2.9), defines its covariant form by the Tate twist.  Write
+$W_i^{\mathrm{raw}}$ for that covariant plane, as in the FLT normalization, and choose a
+nonzero vector in its finite oldvector factor.  On each target component, pullback and trace
+on $H^1(1)$ give
 
 $$
 (f_i)_*f_i^*=(\deg f_{i,\mathrm{comp}})\operatorname{id}
 $$
 
-on rational first cohomology.  Every displayed degree is nonzero, so $f_i^*$ embeds
-$W_i^{\mathrm{raw}}$ into $H^1(Y_i)$,
-and therefore, with the covariant twist, into a finite power of the Tate module of the good
-relative Jacobian of $Y_i$.  No assumption that the universal PEL abelian scheme descends to
-$X_i$ is used.  If the elementary representation in the controlled array was first
-constructed from another level, the two semisimplifications have the same packet Frobenius
-polynomials at a density-one set; Book 142's density theorem and Book 180's
-Brauer--Nesbitt criterion identify them.  The degree of $f_i$ and the
-level-return maps may be divisible by $3$ or $\ell$: only the rational embedding is used, and
-Book 129 later saturates it rather than dividing integrally.  Thus the good PEL cover realizes
-precisely the elementary semisimple representation used by Book 185.  This is
-$(\mathrm{AVCar}_{3,\ell}^+)$. $\square$
+on rational first cohomology.  The component degrees are nonzero, so after restriction to
+$G_{E_i}$ the map $f_i^*$ embeds the raw plane into, at every coefficient place $\lambda$,
+
+$$
+H^1_{\mathrm{et}}(Y_{i,\overline E_i},L_\lambda(1))
+\simeq V_\lambda(\operatorname{Pic}^0_{Y_i}),
+$$
+
+by Book 125, (3.4).
+
+Let $J_i=\operatorname{Pic}^0_{Y_i/E_i}$, the product of the Jacobians of the smooth
+projective components of $Y_i$, and put
+
+$$
+A_i=\operatorname{Res}_{E_i/F_i}J_i.
+\tag{2.5e}
+$$
+
+This is an abelian variety over $F_i$.  At every place above $3\ell$ the quadratic algebra
+$L_i/F_i$ is split and $E_i/L_i$ is unramified.  Weil
+restriction along the resulting finite etale extension of local valuation rings preserves
+abelian schemes: Book 26, Sections 20.4--20.5 represent the restriction and commute it with
+base change, after which the split cover is a product of abelian schemes and Book 10 descends
+the abelian-scheme properties.  Thus (2.5e) has good reduction.  Over $\overline F_i$ the same
+base-change formula is the product indexed by the embeddings $E_i\hookrightarrow\overline F_i$;
+Galois permutes those factors, so on rational Tate modules
+
+$$
+V(A_i)\simeq
+\operatorname{Ind}_{G_{E_i}}^{G_{F_i}}V(J_i).
+\tag{2.5f}
+$$
+
+The constant-function line in the finite permutation representation gives a
+$G_{F_i}$-equivariant injection
+
+$$
+W_i^{\mathrm{raw}}
+\longrightarrow
+\operatorname{Ind}_{G_{E_i}}^{G_{F_i}}
+\operatorname{Res}_{G_{E_i}}^{G_{F_i}}W_i^{\mathrm{raw}}.
+\tag{2.5g}
+$$
+
+Inducing $f_i^*$ and using (2.5f) embeds the correctly covariantly twisted raw plane into a
+finite power of $V(A_i)$.  A finite further power realizes the regular integral coefficient
+action exactly as in Book 129, Section 1.2.  Proposition 7.2A of Book 182 identifies the
+plane's semisimplification with the elementary representation used by Book 185.  Thus every
+clause of $(\mathrm{AVCar}_{3,\ell}^+)$ holds.  Neither the degree of $f_i$ nor $[E_i:F_i]$
+is required to be a unit: only a rational injection is used, and Book 129 later
+saturates it rather than extending an integral projector.  In particular, no extension of
+$f_i$ to the basic curve's integral model is asserted or needed; the good integral model is
+the proved unitary source model. $\square$
 
 **Theorem 2.3 (the positive display supplies $(\mathrm{IC}_3)$).** Under
-$(\mathrm{AVCar}_{3,\ell}^+)$, and hence under $(\mathrm{Car}_3^+)$, the actual cancellation
+$(\mathrm{AVCar}_{3,\ell}^+)$, and hence under the constructed $(\mathrm{Car}_3^+)$ for every
+positive term, the actual cancellation
 (2.3) constructs a flat companion satisfying $(\mathrm{IC}_3)$.  In fact its quotients form
 one compatible exact coefficient-linear finite-flat tower over $\mathbf Z_3$.
 
 **Proof.** Enlarge the coefficient field once to a finite extension $C/K$ which splits all
 positive packet blocks, and put $A=\mathcal O_C$.  For a positive elementary packet and a
 place $w\mid3$, use the rational embedding supplied by
-$(\mathrm{AVCar}_{3,\ell}^+)$.  In the PEL-cover construction of Proposition 2.2 it is the
+$(\mathrm{AVCar}_{3,\ell}^+)$.  When that certificate comes from Proposition 2.2, it is the
 composite of a nonzero-oldvector embedding with $f_i^*$.  Book 129, Theorem 5.1 applies to a
 finite power of the supplied good abelian variety; saturated intersection and schematic
 closure give an all-level finite-flat lattice in that raw plane.  Book 129,
@@ -573,19 +606,13 @@ It places $V$ rationally inside the product of the positive good abelian carrier
 saturated lattice in their torsion.  This weaker carrier relation is exactly what finite
 flatness needs and avoids an unsourced integral idempotent or isogeny-factor theorem.
 
-The integral primitive idempotents used in Proposition 2.2 are of a different kind: they are
-the factors of $\mathcal O_{F_i}\otimes\mathbf Z_3$ supplied by complete splitting, and they
-route the determinant and Hodge labels of the PEL local model.  They do not cut the packet out
-of cohomology.  The packet and coefficient-block projectors remain rational and may have
-nonunit denominators; neither finite flatness nor exactness is deduced by applying them to
-torsion.
-
-The theorem removes $(\mathrm{IC}_3)$ as an independent post-assembly arithmetic premise
-once $(\mathrm{AVCar}_{3,\ell}^+)$ is supplied.  It does not construct the still-missing
-positive attachment and basic-carrier theorem upstream of Book 183, nor the exact direct-trace
-PEL cover used to prove the good-carrier certificate.  It proves that no additional full
-compatible-family arithmetic core is needed at three after those earlier carrier inputs are
-supplied.
+The theorem removes $(\mathrm{IC}_3)$ as an independent post-assembly arithmetic premise once
+$(\mathrm{AVCar}_{3,\ell}^+)$ is supplied. Book 182 supplies basic positive attachment and the
+split $\mathbf Q_3$ packet; Proposition 2.2 supplies $(\mathrm{AVCar}_{3,\ell}^+)$ from the
+unitary PEL covers.  Thus no additional full compatible-family arithmetic core is needed at
+three.  This
+positive-only argument does not make characteristic-zero Brauer cancellation integral; it
+uses the actual rational injection (2.3), saturated intersections, and finite-flat closure.
 
 ### 2.6 The filtered module
 
@@ -1369,9 +1396,10 @@ object at $q$ has actually been constructed and compared. Injectivity of a coeff
 embedding transports a zero monodromy matrix and identity inertia once those algebraic
 matrices exist; it does not create them.
 
-The old coefficient prime $q=\ell$ is already removed on the geometric route
-$(\mathrm{AVCar}_{3,\ell}^+)$.  In the sufficient PEL version, Proposition 2.2 chooses every
-positive carrier good and hyperspecial at $\ell$.  In either formulation, the oldvector
+The old coefficient prime $q=\ell$ is already removed by the constructed geometric route.
+Goodness and hyperspecial persistence at $\ell$ hold on the unitary cover
+$(\mathrm{Car}_3^+)$, and Proposition 2.2 transports the raw plane to its Weil-restricted
+good carrier. The oldvector
 embedding into the good Jacobian makes the raw three-adic multiplicity plane unramified at
 $\ell$, and unramifiedness survives its semisimplification.  In the PEL formulation this is
 also exactly Book 128's good-place comparison.  Complete splitting makes the Brauer characters
@@ -1407,8 +1435,9 @@ This implication is a complete conductor reduction.  Book 185's stronger
 $(\mathrm{AUX}_{\mathrm{all}})$ supplies all of the finite local-complement checks and proves
 $(\mathrm{Cond}_2)$ without using the source-facing compatible-family arithmetic core.  It
 is not presently proved: at the nonspherical auxiliary places the missing input is the actual
-tame principal or dihedral descent comparison, including its type lines, zero-monodromy
-calculation, exchange and Frobenius return maps, and raw-to-global passage.  The already proved
+tame principal or dihedral descent comparison, including its type lines, trivial-wild-inertia
+and zero-monodromy calculations, exchange, and Frobenius return maps. Book 128, Lemma 3.2 then gives raw-to-global
+passage automatically. The already proved
 common finite-bad-set statement does not imply that its support is only two.
 
 One cannot instead declare all auxiliary primes spherical.  Primes ramified in the
@@ -1697,10 +1726,10 @@ Sections 5.2--5.3 use Raynaud rigidity to construct all transitions and exact se
 Section 5.4 proves determinant and duality. Lemma 6.1 and Sections 6.3--6.4 construct the
 integral SP filtration and calculate every finite inertia image. $\square$
 
-Under $(\mathrm{AVCar}_{3,\ell}^+)$, and hence under $(\mathrm{Car}_3^+)$, the separate
-hypothesis $(\mathrm C_3)$ in Theorem 10.1 is automatic: Theorem 2.3 supplies
-$(\mathrm{IC}_3)$ and Proposition 2.1 supplies $(\mathrm C_3)$.  Thus the FLT-scoped
-geometric version of the theorem begins with the positive good-carrier statement, not with an
+For the controlled top, Proposition 2.2 supplies $(\mathrm{AVCar}_{3,\ell}^+)$ from the
+constructed unitary cover.  The separate hypothesis $(\mathrm C_3)$ in Theorem 10.1 is
+therefore automatic: Theorem 2.3 supplies $(\mathrm{IC}_3)$ and Proposition 2.1 supplies
+$(\mathrm C_3)$. The FLT-scoped geometric version begins with the controlled top, not with an
 admitted integral companion.
 
 The theorem is genuinely local at the coefficient prime even though its lattice is globally
@@ -1755,34 +1784,38 @@ The proof uses the following sources directly.
 | source | exact input | use here | strengthening not made |
 |---|---|---|---|
 | Book 3 | tame characters, finite-image ramification bookkeeping, and the trace-dual description of the inverse different | (5.13) and the tame quotient calculations in Sections 6.3--6.4 | its finite-image conductor theory is not used to manufacture the characteristic-zero SP conductor transported in Book 186 |
+| Book 6 | the exponent-two Grunwald alternative with prescribed local quadratic classes | the imaginary quadratic field used in (2.5b) | the carrier CM field is independent of the auxiliary dihedral CM field in Book 182 |
+| Book 10 | effective fpqc descent of schemes, group laws, properness, smoothness, and geometric connectedness | descent of the local Weil restriction in Proposition 2.2 | good reduction is used only after $E_i/F_i$ is finite etale locally |
+| Book 26 | representability and arbitrary base change for Weil restriction along a finite locally free map | $A_i=\operatorname{Res}_{E_i/F_i}J_i$ and the induced Tate-module formula | no ramified integral restriction is asserted |
 | Book 42 | marked finite-flat models, schematic closure, represented quotients, coefficient actions, and finite-etale models | Proposition 4.2 and the local-to-global model calculus | no extension is called finite flat from its endpoints alone |
 | Book 54 | integral Fontaine--Laffaille realization, full faithfulness over $\mathbf Z_3$, admissible coefficient quotients, exact compatible systems, and coefficient-dual normalization | Chapters 3 and 5 | rational Hodge labels do not select a lattice, and coefficient duality is not silently identified with Cartier self-duality |
-| Book 82 | reconstruction of global quaternion orders and lattices from finitely prescribed local models | Proposition 2.2's fixed-three integral selection | local maximality at three is not called a global canonical order |
-| Book 115 | direct quaternion-trace pairing, multiplier group, positivity boundary, and the separate integral self-duality test | Proposition 2.2's local standard matrix calculation | a pure multiplier and an order are not selected independently |
-| Book 118 | PEL-exact central modifications, their finite comparison with the basic canonical curve, their component labels, and the warning that equal adjoint groups do not identify curves | the precise carrier certificate and rational pullback in Section 2.5 | the basic curve is not silently identified with a PEL cover |
-| Book 119 | exact quaternionic PEL datum, finite central cover, integral order, lattice, polarization type, determinant law, and representability interface | Proposition 2.2's passage from the rational cover to integral PEL data | rational PEL realizability is not inferred from the quaternion algebra alone |
-| Book 121 | the complete odd hyperspecial ledger and the resulting smooth projective direct-trace curve with universal abelian scheme | Proposition 2.2 | sphericality alone is not called good reduction |
+| Book 82 | patching a finite collection of prescribed local quaternionic lattices into one global lattice | the unitary lattice in (2.5b)--(2.5d) which is self-dual at every place above $3\ell$ | local self-duality is proved from the split Hermitian plane before patching and is not inferred from rational splitting alone |
+| Book 118 | the direct common-norm parity obstruction, the PEL-exact unitary common-multiplier central modification, its reflex field, and its finite unitary-to-basic full-component cover over a component field unramified at the retained primes | Lemma 2.2A and construction (2.5b)--(2.5d) | the cover uses a distinct CM-unitary group and does not rehabilitate the obstructed direct trace group |
+| Book 119 | representability and the universal abelian scheme for the exact unitary PEL datum | the fine carrier curve in Proposition 2.2 | equality of adjoint groups alone is not a moduli interpretation |
+| Book 121 | the split odd hyperspecial local model, anisotropic-Hermitian boundary exclusion, and smooth projective unitary PEL model | good reduction of $Y_i$ and its Jacobian at $3\ell$ | no dyadic parahoric conclusion is imported |
 | Book 125 | rational pullback--trace on full component unions and the complete finite Hecke block in curve cohomology | transporting the basic raw packet plane to the good PEL cover | the cover degree is not assumed to be a coefficient unit |
-| Book 127 | the actual basic one-split curve carrier and its covariantly normalized raw multiplicity space | Proposition 2.2 | no carrier is asserted outside its stated eligibility range and no basic-to-PEL comparison is inferred |
+| Book 127 | the parity-complete basic one-split curve carrier and its covariantly normalized raw multiplicity space | Proposition 2.2 | no basic-to-PEL comparison or good abelian carrier is inferred |
 | Book 128 | the exact good, tame-principal, and tame-dihedral local comparison criteria | the finite auxiliary blocker in Chapter 7 | an automorphic type name is not substituted for the geometric type and return-map package |
 | Book 129 | saturated geometric intersections, exact closure towers, commensurability transfer, coefficient change, and the fixed-three handoff | the geometric route and the proof architecture of Chapters 3--5 | no canonical geometric carrier or integral projector is claimed |
-| Book 142 | density of Frobenius classes after removal of the finite packet exceptional set | recognizing the semisimple packet realization after the fixed-three level change | density is not used to construct a representation or compare different coefficient topologies |
 | Book 161 | the Schoof category, its classification and filtration theorem, and the finite-level coefficient trace identity | Section 9 handoff and Theorem 10.2's Schoof-ready output | it does not select the coefficient place or construct the named tower |
-| Book 180 | Brauer--Nesbitt recognition for already existing semisimple representations and local Mackey algebra | identifying the same packet after the fixed-three level choice | density is not used across different coefficient topologies |
-| Book 182 | the normal-top mechanism making a supplied finite set of split local packets split in the controlled top, and minimality of the top packet away from $\{2,\ell\}$ | the spherical fixed-three input to Proposition 2.2 after the $\mathbf Q_3$ packet has been supplied | it constructs the base-completion packets at $2$ and $\ell$, not the additional split packet at $3$ or the missing elementary carriers |
+| Book 182 | the exact evaluated packets at $2,3,\ell$, the normal-top splitting mechanism, minimality away from $\{2,\ell\}$, and parity-complete basic attachment of every elementary candidate | the split-three and basic-carrier inputs to Section 2.5 | it does not construct the separate auxiliary-prime descent complexes audited below |
 | Book 185 | the $(\mathrm{AI}_2)$-independent away-from-two members, actual characteristic-zero Brauer cancellation, algebraic local complements, and the common pure polynomial ledger | the optional cancellation route in Section 2.3 and the finite clean-support checks in Chapter 7 | no coefficient-two member or coefficient-prime comparison is imported |
 | Book 186 | selection of the actual member at $\nu\mid3$, its determinant, pure good polynomials, and its full signed SP pair at two | the rational starting object and dyadic local data | its theorem explicitly uses no $(\mathrm{AI}_2)$ and supplies no coefficient-prime comparison, clean support, lattice, or tower |
 
 Accordingly the proposed direct dependency row is
 
 $$
-\boxed{187\mid 3,\ 42,\ 54,\ 82,\ 115,\ 118,\ 119,\ 121,\ 125,\ 127,\ 128,\ 129,\ 142,\ 161,\ 180,\ 182,\ 185,\ 186.}
+\boxed{187\mid 3,\ 6,\ 10,\ 26,\ 42,\ 54,\ 82,\ 118,\ 119,\ 121,\ 125,\ 127,\ 128,\ 129,\ 161,\ 182,\ 185,\ 186.}
 \tag{11.1}
 $$
 
-Book 168 is a transitive source for the packet comparison records used inside Books 183--185.
-Books 164--165 establish the Frey provenance and deformation-theoretic meaning of the signed
-SP line. Books 183--184 construct
+Book 82 is now a direct lattice-patching source for the distinct unitary presentation. Book 115
+remains a comparative carrier-audit source through Book 118: it shows why changing an order or
+real multiplier cannot repair the direct Hodge-lift obstruction. Books 119 and 121 are direct
+proof inputs for the unitary presentation. Books 142 and 180 are transitive
+recognition sources through the packet construction.  Book 168 is a transitive source for the
+packet comparison records used inside Books 183--185. Books 164--165 establish the Frey
+provenance and deformation-theoretic meaning of the signed SP line. Books 183--184 construct
 the SP packet array and prove rational effectivity. None is a separate direct proof input after
 the restricted Book 185 result and Book 186 handoff are assumed. Book 161 is the actual category
 and classification source named in the Schoof-ready handoff; Book 188 is the downstream
@@ -1790,71 +1823,51 @@ application layer.
 
 ### 11.2 Exact blocker audit
 
-Books 185--186 by themselves do not prove $(\mathrm C_3)$, but
-$(\mathrm{IC}_3)$ is no longer an independent post-assembly arithmetic hypothesis once the
-positive good-abelian-carrier certificate is supplied.  Require $3$ among the sensitive places
-before constructing the controlled top and include its split $\mathbf Q_3$ packet in that
-input.  Proposition 2.2 proves
-$(\mathrm{Car}_3^+)\Rightarrow(\mathrm{AVCar}_{3,\ell}^+)$, and Theorem 2.3 proves
-$(\mathrm{AVCar}_{3,\ell}^+)\Rightarrow(\mathrm{IC}_3)$.  Proposition 2.1 then proves
-$(\mathrm C_3)$.  In particular, an integral coefficient idempotent, an integral Brauer
-cancellation, and the admitted full compatible-family arithmetic core are not needed after
-the good positive carriers exist.
+Books 185--186 by themselves do not prove $(\mathrm C_3)$. Book 182 includes $3$ among the sensitive places, constructs its split evaluated
+$\mathbf Q_3$ packet, and supplies parity-complete basic carriers. Lemma 2.2A rules out the
+formerly proposed direct common-norm trace group. The distinct unitary construction
+(2.5b)--(2.5d) proves $(\mathrm{Car}_3^+)$.  Its CM center repairs the real parity and Book
+118 calculates the exact PEL centralizer.  Corollary 10.3A uses the connected fiber product over
+the common adjoint group, first saturates the trivial-central-character basic level by the
+central signs, and removes its finite arithmetic cosets at primes away from $3\ell$; it
+therefore gives an actual fine unitary PEL level cover of every routed basic component over a
+component field unramified above $3\ell$.  Book 121 supplies the smooth projective model and
+good relative Picard scheme, and Proposition 2.2 proves
 
-The first missing carrier theorem is therefore upstream and exact:
+$$
+(\mathrm{Car}_3^+)\Longrightarrow(\mathrm{AVCar}_{3,\ell}^+).
+$$
 
-> **Positive good-abelian-carrier theorem
-> $(\mathrm{AVCar}_{3,\ell}^+)$.** Start with a controlled top whose moving datum includes
-> the split evaluated packet over $\mathbf Q_3$.  Along the selected cyclic descents used by
-> one integral Brauer relation, construct for every positive corrected packet an abelian variety good above
-> $3$ and $\ell$, together with the correctly normalized raw multiplicity embedding in its
-> coefficient-linear Tate module and the identification after semisimplification with the
-> elementary representation.  A sufficient geometric version is $(\mathrm{Car}_3^+)$:
-> construct the actual direct-trace PEL cover of a compact division-quaternion basic carrier,
-> including the finite morphism on the required full component unions and compatible levels.
-> Proposition 2.2 then makes its integral datum hyperspecial and self-dual at the two split
-> primes and injects the basic raw packet plane by rational pullback.
+Theorem 2.3 proves $(\mathrm{IC}_3)$, and Proposition 2.1 proves $(\mathrm C_3)$. Thus there is
+no remaining positive-carrier assertion in the fixed-three route: the group, PEL datum,
+field of definition, finite cover, proper good model, and rational Tate injection are all
+constructed.
 
-This is the positive part of Book 182's already isolated all-elementary attachment, descent,
-and raw-carrier problem, sharpened by one indispensable clause: each positive compact
-division-quaternion basic carrier must admit the stated direct-trace PEL central cover and
-finite component-level comparison.
-The prior PEL books construct such a finite comparison once the exact PEL realization is
-supplied, but they do not prove that the direct-trace positive-Hodge realization required by
-the good-model theorem exists for every one-split carrier in this packet array.  The present
-corpus also does not exhibit an integral Brauer relation whose positive
-subgroup list avoids every missing carrier range; abstract Brauer induction gives no control
-of the signs needed for that shortcut.  Some elementary fixed fields have odd degree, the
-minimal top packet can lack an eligible away-from-two place, and the candidate cyclic descents
-still need their attachment and base-change compatibility.  Book 182's ambient-semisimplicity
-clause is not required for this fixed-three substatement because Theorem 2.3 passes to
-semisimplification by finite-flat subquotients.  Once these actual positive PEL carriers exist,
-no further coefficient-three blocker remains.
-
-Before those carrier questions, the controlled-seed construction has the separate local task
-of supplying the split $\mathbf Q_3$ packet; Proposition 6.2A of Book 182 handles only $2$ and
-$\ell$.  This task is folded into the standing input of both carrier symbols above, not inferred
-from the normal-top field geometry.
-
-There are then two carrier failure points, not one theorem hidden under two names.
-The earlier one is the positive-sign part of Book 182's attachment/descent/raw-carrier theorem:
-some required corrected packets and basic carriers have not yet been constructed.  Even after
-that theorem, the present good-model source still needs the exact direct-trace PEL realization
-for each resulting carrier.  The combined minimal conclusion needed by this book is
-$(\mathrm{AVCar}_{3,\ell}^+)$; $(\mathrm{Car}_3^+)$ is the source-facing geometric theorem
-which proves it.  Neither gap may be replaced by the statement that the automorphic local
-factor is spherical.
+This closure remains separate from integral Brauer effectivity. The construction uses only
+the positive terms of one actual characteristic-zero display. No rational packet idempotent is
+extended integrally, no cancellation is asserted in a Grothendieck group of finite-flat group
+schemes, and no ambient Tate-module semisimplicity is needed: saturated subquotients transfer
+finite-flat existence to the semisimplification. The direct common-norm obstruction also
+remains valid; it is bypassed by a CM-unitary common-multiplier group, not repaired by changing
+the direct order or pure quaternion.
 
 There is a separate local-support obstruction.  For the selected member the minimal missing
 theorem is Book 185's finite certificate $(\mathrm{AUX}_\nu)$; for the whole family it is
 $(\mathrm{AUX}_{\mathrm{all}})$, which implies $(\mathrm{Cond}_2)$.  At each nonspherical
 auxiliary prime this theorem must construct the actual algebraic packet pairs and verify the
-principal or dihedral descent complex, type lines, zero monodromy, exchange and Frobenius
-return maps, and raw-to-global passage at the two coefficient places used in the comparison.
+principal or dihedral descent complex, type lines, trivial wild inertia, zero monodromy,
+exchange and Frobenius
+return maps at the two coefficient places used in the comparison. Book 128, Lemma 3.2 supplies
+the resulting raw-to-global passage from $N=0$, without ambient semisimplicity. This finite
+geometric input is Book 182, Required Theorem 7.3; its first unresolved clause is the fine
+tame-level model with equivariant packet and type projectors.
+This is exactly the auxiliary-local clause of Book 182's controlled attachment geometry,
+already required before Book 183; it is not a new post-assembly or Brauer-effectivity topic.
 For the family-wide statement, $q=\ell$ instead uses the spherical algebraic calculation and
 its prime-to-$\ell$ realization.  For the selected member the good positive display in
 $(\mathrm{AVCar}_{3,\ell}^+)$ removes $q=\ell$ directly; in the sufficient PEL route,
-Proposition 2.2 constructs that display and its good-place comparison.  Book 185,
+the corrected carrier certificate supplies the good-place comparison and Proposition 2.2
+constructs that display.  Book 185,
 Proposition 8.2 proves
 
 $$
@@ -1938,17 +1951,18 @@ continuous trace functions at an inertia element by taking limits in different c
 **Attack: every auxiliary packet factor may be taken spherical.** It may not.  Ramification
 of the controlled top and nonsplit cyclic descent can produce principal or tame-dihedral
 factors.  Only the fixed prime $3$, named split before the construction, has the uniform
-spherical argument used in Proposition 2.2.
+spherical argument used in the positive-carrier certificate.
 
 **Attack: a spherical basic quaternionic packet automatically has the good PEL carrier used
-in Proposition 2.2.** It does not.  The good-model theorem is typed to an exact PEL
-realization.  A central modification can change components and the abelian quotient, and a
-rational quaternion algebra does not by itself supply a positive involution or a self-dual
-trace lattice.  A supplied finite central map is enough to transport the raw plane by rational
-pullback, even when its degree is not a unit, but equality of adjoint groups does not construct
-that map or the exact direct-trace realization.  These are precisely the extra clauses in
-$(\mathrm{Car}_3^+)$; the weaker minimal alternative is to supply
-$(\mathrm{AVCar}_{3,\ell}^+)$ directly.
+in Proposition 2.2.** It does not follow formally from sphericality. Lemma 2.2A proves that
+the natural direct common-norm realization has no Hodge lift in mixed signature, so varying its
+multiplier or order cannot help. The proposed proof instead chooses the CM field (2.5b),
+calculates the unitary PEL centralizer and Hodge lift, realizes the connected adjoint
+fiber-product component after the harmless central saturation as an actual prime-to-$3\ell$
+fine unitary level cover, controls its
+component field, verifies the split hyperspecial local model, and excludes the integral
+boundary by anisotropy of the reduced-norm Hermitian form. Those are the substantive inputs of
+$(\mathrm{Car}_3^+)$; none is an inference from the local word ``spherical.''
 
 **Attack: a finite-flat model at three alone glues over $\mathbf Z[1/2]$.** It does not. Every
 other odd prime needs its finite-etale model, which is available precisely under
@@ -1973,18 +1987,21 @@ its Frobenius sign is retained, and its conductor exponent is one. Nothing at tw
 replaced by a tame-quadratic or monodromy-zero branch, and no coefficient-two member is used.
 
 At three, the source-facing flat companion still implies the needed crystalline certificate.
-The full arithmetic core is unnecessary once the weaker positive good-abelian-carrier theorem
-$(\mathrm{AVCar}_{3,\ell}^+)$ is supplied.  A sufficient source is the exact rational PEL
-carrier certificate $(\mathrm{Car}_3^+)$ on compact division-quaternion carriers, from which
-Proposition 2.2 constructs good reduction at the two prescribed split primes.
+The full arithmetic core is unnecessary: Section 2.5 constructs the positive
+good-abelian-carrier theorem $(\mathrm{AVCar}_{3,\ell}^+)$. Its source is the unitary
+common-multiplier PEL cover $(\mathrm{Car}_3^+)$ of the compact division-quaternion basic
+carrier. The direct common-norm trace candidate is impossible by Lemma 2.2A; the CM-unitary
+center instead supplies the Hodge lift.  The connected adjoint fiber product identifies an
+actual unitary level cover over a component field unramified at $3\ell$, Book 121 supplies its
+good model, and Proposition 2.2 transports the raw plane to the Tate module of a good abelian
+variety over $F_i$.
 Nonzero-oldvector embeddings, semisimplification,
 commensurability, local Mackey decomposition, and saturated closure inside the positive Brauer
 term then construct $(\mathrm{IC}_3)$ directly.  The rank-two filtered calculation gives an
 independent second construction of a strongly divisible lattice.  In either route, compactness
 chooses a global lattice and the saturated subquotient theorem transfers finite flatness without
-identifying two integral structures.  Raynaud rigidity supplies all transition maps and exact
-multiplication sequences.  The present source chain does not construct
-$(\mathrm{AVCar}_{3,\ell}^+)$ or $(\mathrm{Car}_3^+)$.
+identifying two integral structures. Raynaud rigidity supplies all transition maps and exact
+multiplication sequences. No integral packet projector is constructed because none is needed.
 
 The same global lattice meets the rational SP line in a saturated rank-one module. Its finite
 reductions form compatible signed-special filtrations. Their tame inertia is cyclic of
@@ -1999,11 +2016,9 @@ is precisely the input to Book 188's conditional Frey--SP reducibility theorem.
 
 ### 12.2 Readiness verdict
 
-The integral construction is complete as a conditional theorem.  The direct fixed-three
-argument removes $(\mathrm{IC}_3)$ as an independent field of the admitted compatible-family
-arithmetic core after $(\mathrm{AVCar}_{3,\ell}^+)$ is supplied.  The current spine does not
-construct that good-abelian-carrier theorem or its sufficient exact PEL version
-$(\mathrm{Car}_3^+)$.  Clean support at every auxiliary prime is also not proved.
+The positive good-abelian carriers and the fixed-three integral construction are complete.
+The direct argument removes $(\mathrm{IC}_3)$ as an independent field of the admitted
+compatible-family arithmetic core. Clean support at every auxiliary prime is not proved.
 
 Therefore the unconditional FLT dependency status of this book is
 
@@ -2012,11 +2027,10 @@ $$
 \tag{12.1}
 $$
 
-The first carrier blocker is now the exact upstream theorem
-$(\mathrm{AVCar}_{3,\ell}^+)$ of Section 11.2, with $(\mathrm{Car}_3^+)$ as a sufficient
-PEL-geometric version, not a separate flat-companion theorem.  Once it is supplied, Theorem
-2.3 proves $(\mathrm{IC}_3)$ and hence the entire local integral tower.  The remaining global blocker is
-the finite selected-member comparison $(\mathrm{AUX}_\nu)$; its family-wide form
+The first remaining blocker is the finite selected-member comparison $(\mathrm{AUX}_\nu)$;
+its family-wide form
 $(\mathrm{AUX}_{\mathrm{all}})$ proves $(\mathrm{Cond}_2)$, and Proposition 8.1 then gives
-$(\mathrm U)$.  After those exact carrier and local-comparison clauses, Theorem 10.2 is
+$(\mathrm U)$.  The AUX clauses are the retained-prime local-geometry portion of the
+controlled attachment theorem already required before the packet array, not a new consequence
+of integral Brauer effectivity.  After that exact local-comparison clause, Theorem 10.2 is
 Schoof-ready.

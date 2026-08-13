@@ -199,10 +199,15 @@ available from the current manuscript.
    sets in the elementary isogeny range, finiteness modulo multiplication, and effective control of
    the finite bad-place data.
 
-41. **Heights and the Mordell--Weil Theorem** — Construct Weil and Néron–Tate heights,
-   Northcott finiteness, height pairings, and finite generation of rational points on polarized
-   abelian varieties. Conclude with the finite-generation theorem used in Mazur's
-   Eisenstein-quotient argument.
+41. **Heights, Mordell--Weil, and the Faltings--Tate Reduction** — Construct Weil and
+   Néron–Tate heights, prove Mordell--Weil, and develop the Faltings height, moduli-height, and
+   isogeny-finiteness route to rational Tate-module semisimplicity. The stable-lattice and
+   Jacobson-radical argument and curve-$H^1$ export are proved from the exact minimal input:
+   finiteness of the relevant $K$-isogeny classes. Faltings--Shafarevich finiteness is a
+   sufficient uniform source. Its moduli route still requires both the arithmetic Siegel
+   height package and the separate Zarhin factor-cancellation/$K$-descent theorem; these are
+   isolated rather than cited as an unsourced Faltings theorem, so Tate semisimplicity remains
+   conditional.
 
 42. **Finite-Flat Galois Representations** — Relate finite flat group schemes over valuation rings to finite continuous representations of
    local Galois groups. Study the generic-fiber functor, integral models of (G_K)-modules, uniqueness
@@ -500,7 +505,7 @@ available from the current manuscript.
    functions for GL₂ and its quaternionic inner form and prove the unit, Iwahori, and selected level
    fundamental lemmas needed by global comparison.
 
-104. **Global Jacquet--Langlands** — Prove global Jacquet--Langlands for noncharacter algebraic weight-two packets whose ramified finite factors lie in the constructed special or tame-dihedral local range. The trace-formula comparison gives multiplicity, good Hecke data, and the compact one-split inverse transfer under its parity and eligible-place hypotheses; primitive wild and excluded dyadic packets are not covered.
+104. **Global Jacquet--Langlands** — Prove global Jacquet--Langlands for noncharacter algebraic weight-two packets whose ramified finite factors lie in the constructed special or tame-dihedral local range. The trace-formula comparison gives multiplicity, good Hecke data, and the compact one-split inverse transfer in every degree $d\ge2$ for $(d-1)+|W|$ even; in odd degree $W$ may be empty. Primitive wild and excluded dyadic packets are not covered.
 
 105. **Twisted Conjugacy and Geometric Trace Distributions** — Develop twisted conjugacy,
    norms, centralizers, stable classes, measures, and the convergent geometric distributions for
@@ -560,11 +565,21 @@ available from the current manuscript.
 
 118. **Shimura Data and Canonical Models in the FLT Cases** — Develop the relevant Shimura
    data, reflex fields, connected components, reciprocity maps, neat levels, and canonical-model
-   descent for Hilbert and quaternionic data.
+   descent for Hilbert and quaternionic data. Prove that a mixed split/compact quaternionic
+   Hodge map cannot lift to the direct common-norm group because its reduced-norm exponents
+   have opposite parity. Construct the exact replacement: the CM-unitary common-multiplier
+   PEL datum with the same adjoint group and reflex field the CM composite. By a connected
+   fiber product over the common adjoint group, construct an actual finite unitary PEL level
+   cover of every centrally saturated routed basic component over a component field unramified
+   at prescribed split hyperspecial primes, with all level shrinking away from those primes.
+   Central saturation is harmless on the trivial-central-character FLT packet block; fine PEL
+   rigidification is imposed only after the effective component comparison.
 
 119. **Quaternionic PEL Functors and Representability** — Construct the moduli functors,
    determinant and polarization conditions, fine covers, representability, and universal abelian
-   families for the required quaternionic curves.
+   families for supplied quaternionic PEL realizations. The direct common-norm trace example is
+   explicitly excluded in mixed one-split signature by Book 118's Hodge-lift obstruction; the
+   unitary common-multiplier replacement is proved PEL-exact with its determinant law.
 
 120. **Uniformization, Components, and Hecke Descent for Shimura Curves** — Prove complex
    uniformization, identify connected components and canonical descent, compare fine and coarse
@@ -572,9 +587,11 @@ available from the current manuscript.
 
 121. **Good Integral Models of Quaternionic Shimura Curves** — Construct smooth PEL models at
    good primes, extend universal abelian schemes and Hecke correspondences, and prove smooth/proper
-   base change and integral comparison for their cohomology.
+   base change and integral comparison for their cohomology. Besides the conditional direct
+   presentation, prove the split odd hyperspecial local model and proper good model for Book
+   118's unitary common-multiplier cover; no dyadic parahoric comparison is inferred.
 
-122. **Semistable Models and Monodromy of Quaternionic Shimura Curves** — Construct the one-step Iwahori semistable models of the direct quaternionic PEL curves in the verified odd and dyadic tensor-split cases. Compute the two branches, nodes, graph monodromy, Hecke action, and raw packet parameter, while leaving Ihara saturation and raw-to-global semisimplification to separately stated hypotheses.
+122. **Semistable Models and Monodromy of Quaternionic Shimura Curves** — Construct the one-step Iwahori semistable models of supplied direct quaternionic PEL curves in the verified odd and dyadic tensor-split cases. Compute the two branches, nodes, graph monodromy, Hecke action, and raw packet parameter. The mixed one-split direct common-norm realization is excluded by Book 118's Hodge-lift obstruction, so the FLT raw carrier still needs a non-direct parahoric PEL comparison; Ihara saturation and raw-to-global semisimplification remain separate hypotheses.
 
 123. **Modular and Shimura Curves** — Give a unified geometric treatment of the modular and quaternionic Shimura curves used in
    FLT. Develop their moduli problems, level structures, compactifications, cusps, connected
@@ -592,9 +609,9 @@ available from the current manuscript.
 
 126. **Galois Representations from Weight-Two Shimura-Curve Cohomology** — Extract continuous rank-two Galois representations from the full Shimura-curve Hecke block, with determinant, parity, good Frobenius polynomials, and a placewise stable lattice. The construction distinguishes the raw cohomological representation from its semisimplification and claims no bad-place compatibility or canonical integral summand.
 
-127. **Galois Representations Attached to Weight-Two Automorphic Forms** — Assemble the cohomological extraction into a weakly compatible family for weight-two packets that possess a proved compact one-split carrier. Global Jacquet--Langlands supplies that carrier only when an odd nonempty eligible special or tame-dihedral set exists; no surface substitute, strict bad-place compatibility, or canonical finite-flat lattice is asserted.
+127. **Galois Representations Attached to Weight-Two Automorphic Forms** — Assemble the cohomological extraction into a weakly compatible family for weight-two packets that possess a proved compact one-split carrier. Global Jacquet--Langlands supplies that carrier for every parity-compatible selected set: odd nonempty in even degree and possibly empty in odd degree. No surface substitute, strict bad-place compatibility, or canonical finite-flat lattice is asserted.
 
-128. **Local--Global Compatibility for Weight-Two Galois Representations** — Prove the stated local--global recognition results at good, split-Iwahori special, and selected tame places for the raw rank-two carrier. Passage to the global semisimplification follows at one coefficient place from residual absolute irreducibility and, uniformly, is reduced through the full Hecke block and Morita evaluation to semisimplicity of the ambient curve cohomology. The sufficient Tate-module theorem and the coefficient-prime local comparison are not proved here.
+128. **Local--Global Compatibility for Weight-Two Galois Representations** — Prove the stated local--global recognition results at good, split-Iwahori special, and selected tame places for the raw rank-two carrier. Zero-monodromy pairs pass formally to the global semisimplification. For nonzero monodromy, passage follows at one coefficient place from residual absolute irreducibility and, uniformly, is reduced through the full Hecke block and Morita evaluation to semisimplicity of the ambient curve cohomology. Book 41 proves the Tate stable-lattice reduction from finite isogeny classes and isolates the missing Faltings--Shafarevich height-and-cancellation package supplying them uniformly; the coefficient-prime local comparison is also not proved here.
 
 129. **Galois Lattices and Finite-Flat Closures in Abelian Tate Modules** — Given a rational Galois plane inside a good-reduction abelian Tate module, construct a saturated stable lattice and an exact all-level finite-flat tower in the Raynaud--Fontaine--Laffaille range. The lattice is noncanonical, coefficient places are not synchronized, and rational crystallinity alone does not supply the required geometric or strongly divisible bridge.
 
@@ -713,8 +730,10 @@ available from the current manuscript.
    totally-real form. Derive the linear-disjointness and splitting refinements used later. The
    main theorem turns prescribed local points on a moduli space into a global point over a
    controlled totally real extension.  The norm--Abel refinement constructs moving families for
-   nonsplit packets repeatable wholesale and isolates the finite Picard-quotient obstruction for
-   a fixed exceptional factor.
+   nonsplit packets repeatable wholesale.  For one exceptional factor it gives the exact mixed
+   degree-indexed allowed-divisor criterion, coset-complete and integral-open saturation repairs,
+   and a residue-tube counterexample showing that norms and high degree alone do not supply either
+   geometric hypothesis.
 
 155. **Galois and Solvable Refinements of Arithmetic Approximation** — Control normal closures,
    local completion data, elementary and solvable subfields, mutual disjointness, and the compatible
@@ -730,7 +749,9 @@ available from the current manuscript.
    nonordinary finite-flat, and semistable local points; prove openness and persistence of the exact
    local conditions used in Moret–Bailly specialization.  Permit an elliptic-source neat level
    matching finitely many base-completion tensor seeds, and prove base-field solvability of a
-   fixed geometrically connected twist at all sufficiently large good places.
+   fixed geometrically connected twist at all sufficiently large good places.  These point-centered
+   opens do not themselves construct the integral slice or coset-complete good packets needed for
+   a singleton mixed moving presentation.
 
 158. **Moduli Constructions for Potential Modularity** — Apply Books 156--157 to the target and
    auxiliary residual representations. Match their determinant lines to one corrected
@@ -773,12 +794,14 @@ available from the current manuscript.
 
 168. **Compatible Coefficient Systems and Purity** — Import Book 127's curve-carried weak family,
    determinant, good-place purity, and lattice boundaries. Prove coefficient-conjugation and
-   carrier independence, strict local compatibility where raw-to-global preservation and return
-   maps are supplied, and the resulting bad-place purity and conductor independence. Reduce
-   uniform raw-to-global preservation for every actual carrier and coefficient embedding to
-   ambient curve-$H^1$ semisimplicity $(\mathrm{SS}_{\mathrm{array}})$; rational Tate-module
-   semisimplicity for the carrier Jacobians is sufficient but is not proved in the dependency
-   chain. Raw dyadic-carrier existence and the coefficient-prime boundary remain separate.
+   carrier independence, prove zero-monodromy raw-to-global preservation formally, and prove
+   strict local compatibility where the required return maps and nonzero-monodromy preservation
+   are supplied. Reduce uniform nonzero-monodromy preservation for every actual carrier and coefficient embedding to
+   ambient curve-$H^1$ semisimplicity $(\mathrm{SS}_{\mathrm{array}})$. Book 41 proves every
+   implication from finite isogeny classes to this ambient statement. Those finite isogeny
+   classes are the exact arithmetic input; Book 41's standard uniform route to them retains the
+   Faltings moduli-height and Zarhin cancellation/descent package. Raw dyadic-carrier
+   existence and the coefficient-prime boundary remain separate.
 
 169. **The Eisenstein Ideal** — Develop the Eisenstein ideal at prime level, calculate its exact index, and study the cuspidal
    specialization, admissible finite group schemes, completed Hecke piece, and Eisenstein descent.
@@ -810,30 +833,30 @@ available from the current manuscript.
 
 177. **Potential Modularity of Two-Dimensional Representations** — Construct the paired-frame potential-modularity bridge and prove its residual automorphy conclusion only for a lifting-admissible specialization. Localized Ihara, the actual multi-place mixed exactness, product-residue comparison, joint support, coherent simultaneous ring--complex--module--action--pairing augmentation, and finite-set reciprocity are unresolved, so the advertised unconditional existence theorem is not ready.
 
-178. **Auxiliary Dihedral Data and Residual Potential Modularity** — Construct the two-prime Hilbert--Blumenthal specialization and dihedral residual packet from a supplied compatible corrected relative ray datum and a complete admissibility ledger. Prove relative-ray compatibility over the rational base and use an anti-cyclotomic Grunwald--Wang twist to impose finitely many exact protected residual branch characters, including unramified Frobenius values, without changing the determinant. The compact carrier is obtained in the selected range; relative-ray compatibility remains conditional over a general totally real base, and post-specialization cleanability and its integral comparison hypotheses remain conditional.
+178. **Auxiliary Dihedral Data and Residual Potential Modularity** — Construct the two-prime Hilbert--Blumenthal specialization and dihedral residual packet from a supplied compatible corrected relative ray datum and a complete admissibility ledger. Prove relative-ray compatibility over the rational base and use an anti-cyclotomic Grunwald--Wang twist to impose finitely many exact protected residual branch characters, including unramified Frobenius values, without changing the determinant. Its pre-specialization ledger retains the degree-indexed allowed-good Abel condition needed for the unique special factor. The compact carrier is obtained in the selected range; relative-ray compatibility remains conditional over a general totally real base, and post-specialization cleanability and its integral comparison hypotheses remain conditional.
 
-179. **Compatible Systems of Galois Representations** — Define and analyze compatible systems, coefficient fields, residual members, purity, and recognition from Frobenius data in the precise rank-two range needed later. The volume packages the already constructed curve systems and image criteria; its abelian-variety examples explicitly use rational Tate-module semisimplicity as an external theorem not proved by its three book dependencies. It does not create a descended base-field family or an integral lattice at a new coefficient prime.
+179. **Compatible Systems of Galois Representations** — Define and analyze compatible systems, coefficient fields, residual members, purity, and recognition from Frobenius data in the precise rank-two range needed later. The volume packages the already constructed curve systems and image criteria; its abelian-variety examples use Book 41's conditional Tate theorem. The exact input is finite isogeny classes, while the displayed uniform source remains the Faltings--Shafarevich height-and-cancellation package. It does not create a descended base-field family or an integral lattice at a new coefficient prime.
 
 180. **Brauer Induction and Descent of Automorphy** — Develop the abstract Brauer-induction, Mackey, determinant, Clifford, positivity, and coefficient-descent toolkit. Its theorems act on supplied semisimple representations and packet-local objects; they do not construct the application-specific packets, their overlaps or seed, and cannot recover monodromy erased before the descent input is formed.
 
 181. **Finite Image and the Balanced Minimal-Lift Argument** — Turn the balanced hardly-ramified presentation into a normalized primitive special lift under the stated exact automorphic seed. The seed is the sole new arithmetic hypothesis and is not constructed here, so the lift theorem is conditional.
 
-182. **Potential Automorphy and Galois Refinement of a Chosen Lift** — Apply the rational-base relative-ray compatibility and protected anti-cyclotomic Grunwald correction now proved in Book 178 to construct exact auxiliary Frobenius branches, then construct exact paired-frame seeds over the dyadic and target-prime base completions by adapting the local elliptic seeds and neat source. Force Galois-closure constant-field avoidance with split Chebotarev certificate primes. Isolate the first remaining pre-specialization theorem as a moving presentation for Book 178's singleton special/good packet, whose precise obstruction in the existing curve--pencil construction is a finite Picard-quotient congruence, and use the normal top itself as the seed field once that input exists so upward transfer is vacuous. The post-specialization clean minimal SP occurrence and the later all-elementary attachment and descent, raw dyadic carrier, and packet-carrier ambient semisimplicity remain unproved; Books 128 and 168 close the formal uniform-preservation reduction once that last input is supplied. The volume does not make its downstream compatible family unconditional.
+182. **Potential Automorphy and Galois Refinement of a Chosen Lift** — Apply the rational-base relative-ray compatibility and protected anti-cyclotomic Grunwald correction of Book 178 to construct exact auxiliary Frobenius branches and paired-frame seeds over $\mathbf Q_2$, $\mathbf Q_3$, and $\mathbf Q_\ell$. Force Galois-closure constant-field avoidance with split Chebotarev certificate primes. Isolate the first remaining pre-specialization theorem as a moving presentation for Book 178's singleton special/good packet, with its exact mixed Abel condition and two concrete geometric repair routes, and retain the post-specialization clean minimal SP occurrence. Extend the two-place trace argument to give parity-complete basic carriers and all-coefficient attachment for every elementary candidate, including odd-degree fixed fields. The later non-common-norm PEL-exact parahoric comparison for raw SP geometry, the additional away-from-two ramification set in the even-degree minimal case, and the auxiliary principal/dihedral descent/type/return maps remain unproved; packet-carrier ambient semisimplicity is an additional input only for the nonzero-monodromy SP row. Books 128 and 168 make zero-monodromy AUX raw-to-global passage formal and reduce the remaining SP preservation problem. The volume does not make its downstream compatible family unconditional.
 
-183. **Brauer Induction for Automorphy Families** — Construct the elementary fixed-field packet array, overlap identities, integral Brauer classes, common polynomials, and virtual Frey-special local record from a supplied controlled top datum. Prove that ambient semisimplicity of the actual curve carriers is a noncircular uniform raw-to-global preservation certificate for the whole finite array. Effectivity is deliberately deferred, and neither the ambient theorem nor the missing controlled seed is supplied.
+183. **Brauer Induction for Automorphy Families** — Construct the elementary fixed-field packet array, overlap identities, integral Brauer classes, common polynomials, and virtual Frey-special local record from a supplied controlled top datum. Prove that ambient semisimplicity of the actual curve carriers is a noncircular uniform raw-to-global preservation certificate for the whole finite array. Book 41 reduces that certificate completely to finite isogeny classes and isolates the missing Faltings--Shafarevich height-and-cancellation route to them; effectivity is deliberately deferred, and neither that route nor the missing controlled seed is supplied.
 
 184. **Brauer Characters and Effectivity of Compatible Families** — Prove characteristic-zero effectivity of the special Brauer virtual class by an application-specific Gram and norm-one calculation. Nonzero special monodromy supplies the needed irreducibility at odd coefficient residue characteristic; the already existing top-packet member at residue characteristic two retains the stated characteristic-zero absolute-irreducibility hypothesis. The exact numerical gate is norm one for the signed class, and coefficient-prime SP comparison would be a sufficient but presently missing source. The result is relative to the controlled packet datum and stops before coherent completion-valued assembly or an integral coefficient-prime model.
 
-185. **Compatible Systems over the Base Field** — Assemble the effective constituents into a coefficient-descended compatible family over the base field, carrying the rational signed special record at two. All-place assembly retains Book 184's characteristic-zero absolute-irreducibility hypothesis at coefficient places above two; without it, the construction still covers every coefficient place away from two, including those above three. Prove both the source-facing reduction $(\mathrm{Cond}_2)\Rightarrow(\mathrm U)$ and the sharper finite reductions $(\mathrm{AUX}_\nu)\Rightarrow(\mathrm U)$ and $(\mathrm{AUX}_{\mathrm{all}})\Rightarrow(\mathrm{Cond}_2)$, while isolating the required auxiliary local comparisons from almost-all Frobenius compatibility. The construction remains conditional on the controlled top datum and does not prove those principal/dihedral comparison certificates.
+185. **Compatible Systems over the Base Field** — Assemble the effective constituents into a coefficient-descended compatible family over the base field, carrying the rational signed special record at two. All-place assembly retains Book 184's characteristic-zero absolute-irreducibility hypothesis at coefficient places above two; without it, the construction still covers every coefficient place away from two, including those above three. Prove both the source-facing reduction $(\mathrm{Cond}_2)\Rightarrow(\mathrm U)$ and the sharper finite reductions $(\mathrm{AUX}_\nu)\Rightarrow(\mathrm U)$ and $(\mathrm{AUX}_{\mathrm{all}})\Rightarrow(\mathrm{Cond}_2)$. The missing principal/dihedral descent complexes, type lines, trivial-wild-inertia and zero-monodromy calculations, and return maps are explicitly the auxiliary-local clause of the already-required controlled attachment geometry, not a new post-assembly theorem; zero monodromy makes raw-to-global passage formal.
 
 186. **Changing the Coefficient Prime while Keeping the Frey Special Place** — Select the coefficient-three member of the away-from-two compatible collection and transport the full rational special Weil--Deligne record at two. This route is independent of the coefficient-two hypothesis $(\mathrm{AI}_2)$. Hand the named member to Book 187's integral construction and Book 161's actual category/classification input as applied by Book 188; do not infer crystallinity, finite flatness, or residual monodromy primitivity.
 
-187. **The Fixed-Three Integral Local Theory** — Starting from Book 186's selected member in the away-from-two collection, prove that a flat companion $(\mathrm{IC}_3)$ yields crystallinity of Hodge type $\{0,1\}$ and, more directly, that positive elementary good-abelian carriers construct $(\mathrm{IC}_3)$ by oldvector embedding, saturation, and finite-flat closure without integral packet idempotents or integral Brauer cancellation. Require the controlled-top input to include the split evaluated packet over $\mathbf Q_3$. Prove that an exact direct-trace PEL cover of each compact division-quaternion basic carrier, with its finite morphism on compatible component unions, can be made good at the prescribed split primes $3$ and $\ell$; rational pullback transports the packet plane even when the cover degree is not a unit. Sphericality alone does not supply that PEL realization. Construct one named all-level lattice, measure its residual dyadic thickness, and verify every level lies in Book 161's Schoof category. The independent unresolved inputs are this positive good-carrier theorem (including the split-at-three local packet) and the finite auxiliary comparison $(\mathrm{AUX}_\nu)$ needed for clean support; the result does not require $(\mathrm{AI}_2)$.
+187. **The Fixed-Three Integral Local Theory** — Starting from Book 186's selected member in the away-from-two collection, prove that a flat companion $(\mathrm{IC}_3)$ yields crystallinity of Hodge type $\{0,1\}$. Construct the CM-unitary common-multiplier PEL group, its proper good model, and its finite full-component cover of every positive compact division-quaternion carrier after the harmless central saturation of its trivial-character packet level, over a field unramified at $3\ell$. Construct the positive elementary good-abelian carriers and $(\mathrm{IC}_3)$ by product Jacobian, Weil restriction, oldvector embedding, saturation, and finite-flat closure without integral packet idempotents or integral Brauer cancellation. Import Book 182's split evaluated $\mathbf Q_3$ packet and parity-complete basic carriers, and prove that the formerly proposed direct common-norm PEL cover is impossible rather than silently using it. Construct the named all-level Schoof tower conditionally on clean support. The remaining input is the controlled auxiliary comparison $(\mathrm{AUX}_\nu)$; it is already part of controlled attachment geometry. The result does not require $(\mathrm{AI}_2)$.
 
 188. **Hardly Ramified $3$-adic Representations** — Verify that Book 187's signed-special tower
    satisfies Book 161's category hypotheses and import its simple-object, Ext, filtration, and
    finite-level trace theorems. Prove the new $\mathcal O$-adic inverse-limit and saturation step,
    identify the global cyclotomic line with the local SP line, and derive the pure-good-prime
    contradiction. The implication is complete and uses only the coefficient-three member, so
-   $(\mathrm{AI}_2)$ is not upstream; the audited positive-carrier and auxiliary local-comparison
-   certificates remain conditional.
+   $(\mathrm{AI}_2)$ is not upstream; the positive-carrier certificate is constructed, while
+   the auxiliary local-comparison certificate remains conditional.

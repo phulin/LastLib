@@ -48,6 +48,7 @@
   - [11.1 What the torus argument still proves](#111-what-the-torus-argument-still-proves)
   - [11.2 What remains unproved at two](#112-what-remains-unproved-at-two)
   - [11.3 Parahoric level](#113-parahoric-level)
+  - [11.4 The unitary common-multiplier good cover](#114-the-unitary-common-multiplier-good-cover)
 - [12. The good integral-model theorem](#12-the-good-integral-model-theorem)
   - [12.1 Statement](#121-statement)
   - [12.2 Proof architecture](#122-proof-architecture)
@@ -55,7 +56,7 @@
 
 ## 1. The good-reduction problem
 
-The canonical model of a compact quaternionic Shimura curve is defined over its reflex field, but that fact alone does not produce the integral geometry needed at a finite place. A useful model must represent the exact PEL problem, carry its universal abelian scheme, extend prime-to-residue-characteristic correspondences, and have a special fiber as regular as the generic fiber. This book constructs that package for the direct quaternion-trace realization at the verified odd hyperspecial places.
+The canonical model of a compact quaternionic Shimura curve is defined over its reflex field, but that fact alone does not produce the integral geometry needed at a finite place. A useful model must represent the exact PEL problem, carry its universal abelian scheme, extend prime-to-residue-characteristic correspondences, and have a special fiber as regular as the generic fiber. This book constructs that package for a supplied direct quaternion-trace realization at the verified odd hyperspecial places. It also treats the explicit unitary common-multiplier PEL cover of Book 118 at odd primes where its CM field and quaternion algebra are split. The latter is the good integral ``modèle étrange'' needed when the direct common-norm realization is obstructed.
 
 Smoothness and properness have different proofs. The ambient determinant scheme is first shown smooth by an exact integral local-model calculation. Properness is proved separately for the schematic flat closure of the selected generic component union. In the latter argument a hypothetical semiabelian degeneration has a Raynaud torus whose rational cocharacters form a unital left module over the division quaternion algebra. Such a module is already too large to occur inside the direct rational homology. Keeping the two proofs separate prevents generic compactness from being mistaken for integral properness and prevents ambient flatness from being assumed in the boundary argument.
 
@@ -83,7 +84,9 @@ $$
 
 where $\delta$ is chosen so that $b^*=\delta^{-1}\bar b\delta$ is positive and the Hodge map lifts to the similitude group. The selected determinant and orientation data leave one active rank-two alternating multiplicity plane. Its Hodge line is the single deformation direction, so the parameter scheme is a curve even though the universal abelian scheme can have much larger relative dimension.
 
-All uniqueness, extension, universal-family, and coefficient-system statements below are typed to this direct presentation. No comparison with another faithful realization of the same adjoint datum is asserted.
+This is a conditional datum, and in the mixed one-split signature its direct common-norm instance has an exact obstruction. Book 119 identifies the direct trace similitude group with the common-norm group, while Book 118, Proposition 8.2 proves that the one-split adjoint Hodge map cannot lift to that group when $[F:\mathbf Q]>1$: the reduced-norm exponent is odd at the active real factor and even at every compact real factor. Consequently the direct theorem below supplies no common-norm PEL carrier in that range. Book 118, Proposition 8.3 and Corollary 10.3A instead construct the unitary common-multiplier central modification and its finite full-component unitary level cover of a centrally saturated basic level, with fine-level lowering away from every prescribed split hyperspecial prime and an unramified component field there. The FLT packet has trivial central character, so saturation changes no packet vectors. Section 11.4 verifies its separate split odd integral ledger. This does not rehabilitate the obstructed direct presentation, and it supplies no dyadic parahoric model.
+
+Chapters 2--10 remain typed to the direct presentation. Section 11.4 repeats the load-bearing local-model and toric arguments for the unitary presentation rather than identifying the two integral functors from their common adjoint generic fiber.
 
 ### 1.2 Conventions and the meaning of good
 
@@ -111,15 +114,25 @@ Arithmetic reciprocity sends a uniformizer to arithmetic Frobenius. Geometric Fr
 
 ### 1.3 Dependency ledger
 
-Book 119 supplies the direct rational PEL datum, the selected generic canonical component union, its characteristic-zero Hodge chart, levels, and universal family. Book 55 supplies Grothendieck--Messing and Serre--Tate deformation theory. Book 61 supplies potential semistable reduction, Raynaud one-motives and their functorial filtration, the positive monodromy pairing, the congruence lemma, and the good-reduction criterion. Book 35 supplies abelian quotients and extension of homomorphisms and polarizations. Books 15, 19, and 58 supply coherent base change, formal algebraization with an ample line, and prime-to-residue-characteristic proper and smooth base change, respectively.
+Book 118 supplies both the direct common-norm obstruction and the exact unitary
+common-multiplier datum. Book 119 supplies representability, the selected generic canonical
+component union, its characteristic-zero Hodge chart, levels, and universal family for a
+supplied exact PEL datum; it is applied separately to the direct and unitary presentations.
+Book 55 supplies Grothendieck--Messing and Serre--Tate deformation theory. Book 61 supplies
+potential semistable reduction, Raynaud one-motives and their functorial filtration, the
+positive monodromy pairing, the congruence lemma, and the good-reduction criterion. Book 35
+supplies abelian quotients and extension of homomorphisms and polarizations. Book 36 supplies
+the relative identity Picard scheme of a smooth proper curve and the fact that it is an abelian
+scheme. Books 15, 19, and 58 supply coherent base change, formal algebraization with an ample
+line, and prime-to-residue-characteristic proper and smooth base change, respectively.
 
 The exact direct dependency row is
 
 $$
-\boxed{121\mid 15,58,19,35,61,55,119}.                       \tag{1.2}
+\boxed{121\mid 15,58,19,35,36,61,55,118,119}.                \tag{1.2}
 $$
 
-There are seven direct dependencies. Every other assertion used below is proved in this book.
+There are nine direct dependencies. Every other assertion used below is proved in this book.
 
 ## 2. Good integral PEL data
 
@@ -726,6 +739,90 @@ The smooth theorem therefore remains odd. Extending it to two requires a separat
 
 If the lattice is not self-dual or the level at $p$ stabilizes a chain, the Hodge filtration must be compatible with several vertices. The local model can have multiple components and nodes. Kernels of $p$-isogenies need not be etale, so the construction of Chapter 8 no longer applies. Smooth proper base change is replaced by nearby cycles and monodromy. This is the exact boundary treated by the subsequent semistable theory.
 
+### 11.4 The unitary common-multiplier good cover
+
+Retain the one-split division algebra $B/F$ and let $L=FK$ be the CM field of Book 118,
+Proposition 8.3. The PEL datum is
+
+$$
+\mathscr D^{\mathrm u}=(L,c,B,\psi,h^{\mathrm u}),
+\qquad
+\psi(x,y)=\operatorname{Tr}_{L/\mathbf Q}(\xi H(x,y)),
+\tag{11.1}
+$$
+
+where $H(x,x)=\operatorname{Nrd}_B(x)$. Let $u\mid p$ be a place of the reflex field $L$.
+Assume that $p$ is odd, $p$ splits completely in $F$, $K/\mathbf Q$ is split at $p$, and $B$ is
+split at every place above $p$. Choose the maximal CM order and a lattice $\Lambda\subset B$
+whose localization at $p$ is self-dual for $\psi$; impose hyperspecial level at $p$ and neat
+prime-to-$p$ level. Polarization degree, determinant labels, and the selected full component
+union are required to be prime to $p$ and decomposition-stable.
+
+**Proposition 11.1 (split unitary local model).** Under this ledger, the framed local model
+of $\mathscr D^{\mathrm u}$ is a product of one copy of $\mathbf P^1$ with zero-dimensional
+factors. It is smooth and projective of relative dimension one over $\mathcal O_{L,u}$.
+
+**Proof.** Splitting of $K$ gives
+
+$$
+\mathcal O_L\otimes\mathbf Z_p
+\simeq
+(\mathcal O_F\otimes\mathbf Z_p)\times
+(\mathcal O_F\otimes\mathbf Z_p),
+\tag{11.2}
+$$
+
+with $c$ exchanging the two factors. Splitting of $B$ identifies every evaluated rank-two
+$L$-module with the standard plane, and self-duality identifies its paired factor with the
+annihilator. The determinant multiplicities of Book 118, Proposition 8.3 are $(1,1)$ at the
+active label and $(2,0)$ at every inactive label. Thus the active Hodge filtration is one
+line in a rank-two direct summand, while every inactive filtration is forced to be zero or the
+whole summand. A line in an alternating plane is automatically isotropic, so no additional
+equation cuts the active Grassmannian. The local model is therefore $\mathbf P^1$ times
+points. $\square$
+
+The boundary argument is different from the direct rank count but equally exact. Suppose a
+trait degeneration has nonzero Raynaud torus. The extended $\mathcal O_L$-action makes the
+rational toric weight subspace a nonzero $L$-subspace $I\subset B$. Compatibility of the
+monodromy pairing with the polarization first makes $I$ isotropic for $\psi$. Since $I$ is
+$L$-stable, applying this identity to $xa$ for every $a\in L$ and using the nondegenerate
+trace pairing makes it totally isotropic for $H$. Hence any
+$0\ne x\in I$ satisfies
+
+$$
+0=H(x,x)=\operatorname{Nrd}_B(x),
+\tag{11.3}
+$$
+
+contradicting that $B$ is division. Thus the universal abelian variety has potential good
+reduction. Normal full level at an odd auxiliary prime kills the finite descent action exactly
+as in Section 6.3, so good reduction occurs over the original trait. The flat-closure
+projectivity argument of Section 6.4 then applies.
+
+**Theorem 11.2 (good unitary PEL cover).** Under the ledger above, the schematic flat closure
+of the selected unitary PEL component union is smooth and projective of relative dimension one
+over $\mathcal O_{L,u}$. It represents the selected PEL functor and carries its universal
+abelian scheme. The identity component of its relative Picard scheme is an abelian scheme over
+$\mathcal O_{L,u}$; geometrically it is the product of the component Jacobians. Prime-to-$p$ level maps and Hecke correspondences
+extend, smooth proper base change is equivariant for them, and the generic Tate modules are
+unramified at $u$.
+
+**Proof.** Book 119 represents the exact unitary PEL functor. Grothendieck--Messing and
+Serre--Tate reduce its completed rings to Proposition 11.1, proving smoothness and that the
+selected flat closure is open and closed. The preceding anisotropic-Hermitian argument and
+the auxiliary-level descent prove properness; quasi-projectivity then gives projectivity.
+For the Picard assertion, the Stein factor of the smooth proper curve union is finite etale
+over the base.  After a finite etale base change the union is a disjoint union of smooth proper
+curves with geometrically connected fibers.  Book 36 applies componentwise, and finite-etale
+descent gives the asserted abelian scheme and product description before that base change.
+The extension, correspondence, and comparison assertions
+follow verbatim from Chapters 5, 7--9 because their proofs use only the exact PEL functor,
+smooth projectivity, and prime-to-$p$ isogenies. $\square$
+
+This theorem is deliberately hyperspecial and odd. If $K$ is nonsplit at two in order to
+embed in a quaternion algebra ramified at a dyadic place, (11.2) fails there; no dyadic
+Iwahori or nearby-cycle statement follows.
+
 ## 12. The good integral-model theorem
 
 ### 12.1 Statement
@@ -754,6 +851,10 @@ compatible with products, pairings, tensors, level change, Frobenius, and the st
 
 At $p=2$, the toric obstruction and auxiliary-level trait argument still prove flat-closure properness once the exact integral moduli functor is independently provided. They do not prove ambient smoothness, so the smooth theorem makes no dyadic claim.
 
+Theorem 11.2 is the parallel good-model statement for the unitary common-multiplier cover.
+Its split odd local ledger is separate from the direct hypotheses of Theorem 12.1, and the two
+integral presentations are not identified.
+
 ### 12.2 Proof architecture
 
 The proof has a fixed order.
@@ -768,6 +869,6 @@ None of these arrows reverses without new hypotheses: generic compactness does n
 
 ### 12.3 Conclusion
 
-At a verified good odd prime, the direct quaternion-trace curve has one and only one moving integral Hodge line. That line makes the local model smooth; the division algebra makes every nonzero Raynaud cocharacter module too large; auxiliary level turns potential good reduction into actual good reduction; and the flat-closure trait argument turns that boundary exclusion into projectivity.
+At a verified good odd prime, the direct quaternion-trace curve has one and only one moving integral Hodge line. The split unitary cover has the same one-line local model for a different reason: its CM idempotents pair, the active determinant rank is one, and every inactive rank is forced. In the direct case division makes a nonzero Raynaud cocharacter module too large; in the unitary case it would make an isotropic $L$-line in the reduced-norm Hermitian space. Auxiliary level turns potential good reduction into actual good reduction, and the flat-closure trait argument turns either boundary exclusion into projectivity.
 
 The resulting model retains the structures needed by the FLT blueprint: the exact PEL functor, universal abelian scheme, integral Kodaira--Spencer line, prime-to-$p$ Hecke tower, integral etale coefficient systems, smooth proper specialization, Frobenius action, and degree-one coherent and de Rham lattices. The next geometric regime begins when the hyperspecial lattice is replaced by an Iwahori chain, producing nodal reduction and monodromy.

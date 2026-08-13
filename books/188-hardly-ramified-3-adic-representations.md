@@ -847,27 +847,27 @@ $$
 \tag{10.1}
 $$
 
-### 10.2 Exact upstream blockers
+### 10.2 Exact upstream status
 
-The bounded implication of Theorem 1.1 is complete. Its antecedent is not currently produced
-unconditionally by the spine.
+The bounded implication of Theorem 1.1 is complete. Two parts of its antecedent are not
+currently produced unconditionally by the spine; the positive-carrier interface between them
+is now closed.
 
 1. **Controlled SP seed.** Book 185, Theorem 9.1, assumes the controlled SP packet-array datum
    used by Books 183--184. Book 185's own audit records that the current Book 182 does not
    unconditionally supply the controlled residual automorphic seed.
-2. **Positive good carriers $(\mathrm{AVCar}_{3,\ell}^+)$.** For one Brauer relation, every
-   positive corrected packet must have a good abelian carrier at the split primes $3$ and
-   $\ell$, its correctly normalized raw multiplicity embedding, and its identification after
-   semisimplification with the elementary representation; the controlled-top input must also
-   contain the split evaluated packet over $\mathbf Q_3$.  Book 187's sufficient version
-   $(\mathrm{Car}_3^+)$ asks for an exact direct-trace PEL cover of each compact
-   division-quaternion basic carrier and its finite morphism on compatible component unions;
-   Proposition 2.2 then chooses it good at the two primes and transports the raw plane by
-   rational pullback.  Theorem 2.3 constructs $(\mathrm{IC}_3)$ without an integral projector
-   or an additional compatible-family arithmetic theorem.  Thus $(\mathrm{IC}_3)$
-   is derived, not an independent blocker, but the current sources do not construct the good
-   carrier.  Ambient Tate-module semisimplicity is not needed for this fixed-three step,
-   because Book 129 transfers the raw finite-flat tower to the semisimplification.
+2. **Positive good carriers $(\mathrm{AVCar}_{3,\ell}^+)$.** Book 187 now constructs these
+   for every positive corrected packet.  Its sufficient $(\mathrm{Car}_3^+)$ uses the exact
+   CM-unitary common-multiplier PEL datum, not the obstructed direct trace group.  The basic
+   packet has trivial central character, so its level is first saturated by the central signs;
+   Book 118 then identifies a common-adjoint component with a preliminary unitary component,
+   rigidifies it at a fine level away from $3\ell$, and maps it finitely to the routed basic
+   component over a field unramified at $3\ell$.  Book 121 gives the good model and Book 187,
+   Proposition 2.2 transports the raw plane by rational pullback.  Theorem 2.3 constructs
+   $(\mathrm{IC}_3)$ without an integral projector or an additional compatible-family
+   arithmetic theorem.  Thus neither the positive carrier nor $(\mathrm{IC}_3)$ remains an
+   independent blocker.  Ambient Tate-module semisimplicity is not needed for this fixed-three
+   step, because Book 129 transfers the raw finite-flat tower to the semisimplification.
 3. **Finite auxiliary comparison $(\mathrm{AUX}_\nu)$.** Book 185, Proposition 8.2 reduces
    clean support $(\mathrm U)$ to comparisons at the finite auxiliary set, using the
    distinguished unramified member away from $\ell$ and the spherical prime-to-$\ell$
@@ -877,8 +877,10 @@ unconditionally by the spine.
    Proposition 2.2 constructs that display.  Its family-wide form
    $(\mathrm{AUX}_{\mathrm{all}})$ proves $(\mathrm{Cond}_2)$, which also implies
    $(\mathrm U)$ by Proposition 8.1.  Weak compatibility does not supply the missing
-   principal or dihedral type, monodromy, return-map, and raw-to-global data.  Without
-   $(\mathrm U)$, the local tower at $3$ cannot be glued over $\mathbf Z[1/2]$.
+   principal or dihedral descent model, type lines, trivial-wild and zero-monodromy
+   calculations, exchange, or return maps.  Once those geometric data prove $N=0$, Book 128,
+   Lemma 3.2 supplies raw-to-global passage formally.  Without $(\mathrm U)$, the local tower
+   at $3$ cannot be glued over $\mathbf Z[1/2]$.
 
 The omitted all-place hypothesis $(\mathrm{AI}_2)$ is deliberately not on this list: every
 object used in Books 186--188 has coefficient characteristic three.

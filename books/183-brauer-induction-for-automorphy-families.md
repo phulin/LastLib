@@ -207,7 +207,10 @@ The preservation clause may be certified in either of two ways with the same int
 it may be supplied directly for every packet and coefficient place, or the datum may list all
 actual smooth projective curve carriers and supply $(\mathrm{SS}_{\mathrm{array}})$ of Book
 168, (7.9). In the second form Book 168, Proposition 7.6 proves the preservation clause. The
-present theorem does not itself prove that stronger ambient semisimplicity hypothesis.
+present theorem does not itself prove that stronger ambient semisimplicity hypothesis. Book 41
+proves it from finite isogeny classes of the carrier Jacobians. Those classes are the exact
+arithmetic input; its standard uniform source is the unresolved Faltings--Shafarevich
+height-and-cancellation package.
 
 We call (1.1)--(1.6), complete splitting, and these exact range hypotheses a
 **controlled SP top datum**. Book 182 exports this datum only conditionally on its controlled
@@ -866,9 +869,11 @@ Weil--Deligne operator $N$, its line, and its Frobenius scalar. The final restri
 $\tau$ is exactly the prime-to-coefficient range of the geometric local comparison. $\square$
 
 Rational Tate-module semisimplicity $(\mathrm{TS})$ for the Jacobians of these carriers is a
-sufficient theorem for the hypothesis. It is not proved by the current dependency row. This
-proposition closes the raw-to-global reduction without using the signed Brauer class,
-effectivity, or the later assembled family.
+sufficient theorem for the hypothesis. Book 41, Theorem 15.3 and Corollary 16.1 prove it from
+finiteness of their $K$-isogeny classes, and Section 16.2 proves the coefficient and
+multiplicity-space passage. Neither those classes nor Book 41's standard
+Faltings--Shafarevich height-and-cancellation source is proved. This proposition closes the raw-to-global reduction without using
+the signed Brauer class, effectivity, or the later assembled family.
 
 The distinguished member satisfies
 
@@ -1848,14 +1853,15 @@ premise.
 The direct dependency row is
 
 $$
-\boxed{183\mid98,\ 108,\ 109,\ 127,\ 128,\ 142,\ 168,\ 180,\ 182.} \tag{11.3}
+\boxed{183\mid41,\ 98,\ 108,\ 109,\ 127,\ 128,\ 142,\ 168,\ 180,\ 182.} \tag{11.3}
 $$
 
 | Source | Input used here | Strengthening not made |
 |---|---|---|
+| Book 41 | finite-isogeny-class $\Rightarrow$ Tate semisimplicity $\Rightarrow$ curve-$H^1$ semisimplicity, including finite coefficient extension and multiplicity extraction | finite isogeny classes are the exact input; the standard uniform Faltings--Shafarevich route retains separate height and Zarhin cancellation/descent gaps |
 | Book 98 | finite-order Hecke avatars of the Brauer characters, with reciprocity, norm pullback, and conjugation | no higher-rank automorphic induction across $F_H/\mathbf Q$ |
 | Books 108--109 | selected prime-cyclic descent and base change, antecedent-complete saturated fibers, local-parameter restriction, and tower independence in the admissible range | no transfer along an inadmissible tower and no nonsolvable descent |
-| Books 127--128 and 168 | the weight-two packet realizations, covariant arithmetic normalization, coefficient conjugates, algebraic good data, the conditional raw SP comparison, and reduction of its uniform raw-to-global passage to $(\mathrm{SS}_{\mathrm{array}})$ | no construction of a missing carrier, no proof of ambient Tate-module semisimplicity, no comparison at the coefficient residue characteristic, and no packet lattice after semisimplification |
+| Books 127--128 and 168 | the weight-two packet realizations, covariant arithmetic normalization, coefficient conjugates, algebraic good data, the conditional raw SP comparison, and reduction of its uniform raw-to-global passage to $(\mathrm{SS}_{\mathrm{array}})$ | no construction of a missing carrier, no proof of Book 41's finite-isogeny-class input, no comparison at the coefficient residue characteristic, and no packet lattice after semisimplification |
 | Book 142 | the Chebotarev density input used to recognize representations from their good Frobenius traces | no assertion that the field-theoretic towers satisfy automorphic selectors |
 | Book 180 | monomiality, the elementary projector and integral Brauer relation, induction/tensor/Mackey/determinant formulas, prime-cyclic refinement, the cyclic Clifford torsor, and Brauer--Nesbitt recognition | no packet construction, overlap identity, Gram positivity, or coefficient family is imported |
 | Book 182 | the exact conditional controlled SP datum: $\rho$, $M$, the distinguished top realization, the SP record, and the finite descent-and-attachment ledger | the missing controlled residual automorphic seed and bridge-readiness theorem are not supplied unconditionally |
@@ -1866,9 +1872,10 @@ actually applied in Chapters 6 and 10. In particular, the special scalar equalit
 raw-to-semisimple local-preservation identity must be available for every constructed packet and
 every coefficient place away from two. Proposition 6.1 proves the latter from
 $(\mathrm{SS}_{\mathrm{array}})$ and shows that coefficient extension, packet projection, and
-Morita extraction introduce no further obstruction. The current sources do not prove that
-ambient semisimplicity statement for the carrier Jacobians. If either the raw special clause or
-this preservation certificate is absent, the distinguished $\ell$-adic SP pair does not
+Morita extraction introduce no further obstruction. Book 41 proves the ambient statement from
+finite isogeny classes of the carrier Jacobians, but those classes and their standard uniform
+Faltings--Shafarevich source are absent. If either the raw special clause or this
+preservation certificate is absent, the distinguished $\ell$-adic SP pair does not
 determine monodromy or its sign at another embedding.
 
 The application-specific work retained here is substantial: construction and conjugation of the

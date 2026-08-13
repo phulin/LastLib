@@ -106,7 +106,7 @@ $$
 \bigotimes_v'\operatorname{JL}_v(\Pi_v).
 $$
 
-But a restricted tensor of admissible local representations need not occur automorphically. Automorphy is a global condition, and cuspidality is even more global: it is expressed by an integral over $F\backslash\mathbf A_F$, not by a condition on each component. The main work of this book is to prove automorphy and exactness in two named compact ranges. The first is the totally definite selected weight-two range. The second is the narrow curve range needed by the FLT route: $F$ has even degree, the quaternion algebra is split at exactly one real place and ramified at a nonempty odd set of finite places, and the split packet is special or selected tame dihedral at every one of those finite places. In that second range the theorem constructs the inverse quaternionic packet from the split cusp form.
+But a restricted tensor of admissible local representations need not occur automorphically. Automorphy is a global condition, and cuspidality is even more global: it is expressed by an integral over $F\backslash\mathbf A_F$, not by a condition on each component. The main work of this book is to prove automorphy and exactness in two named compact ranges. The first is the totally definite selected weight-two range. The second is the one-split curve range needed by the FLT route: $F$ has degree at least two, the quaternion algebra is split at exactly one real place, and its finite ramification set has the parity complementary to $[F:\mathbf Q]-1$ and consists of places where the split packet is special or selected tame dihedral. Thus the finite set is odd and nonempty in even degree, while in odd degree it is even and may be empty. In that second range the theorem constructs the inverse quaternionic packet from the split cusp form.
 
 The proof compares two trace formulas. On $D^\times$, compactness modulo the center makes the kernel and its trace completely discrete. On $\mathrm{GL}_2$, the quotient has cusps, so continuous and parabolic terms ordinarily appear. Books 100--101 prove a one-place simple formula when a strongly cuspidal real factor also satisfies their global kernel-admissibility estimate. Their theorem does not automatically include a low-weight matrix-coefficient pseudo-coefficient merely because it is valid locally; the compact-mod-center Euler--Poincare projector used in Book 103, Chapter 12 is a separate admissible choice. For parallel weight two, the comparison used here is Book 96's character-clean two-place identity: two ramified transfer factors have zero induced trace and zero split regular orbital integrals, so differentiated continuous and boundary terms cancel place by place. One factor is the cuspidal archimedean weight-two projector. On the compact side the same identity removes the norm-character trace. Book 103's singular-germ calculation and Book 96's finite interpolation then normalize the scalar distribution. After that correction, matching regular orbital integrals forces the desired cuspidal representation to exist.
 
@@ -137,13 +137,19 @@ Changing $\iota_v$ conjugates it and hence changes neither local representation 
 The trace-formula argument will be used only in the following two ranges.
 
 1. **Totally definite range.** The field $F$ is totally real, $D$ is ramified at every real place, and every finite component at a place of $R_f$ lies in the selected local range.
-2. **Compact one-split range.** The degree $d=[F:\mathbf Q]$ is even, a real place $\tau _0$ is fixed, $D$ is split at $\tau _0$, ramified at every other real place, and
+2. **Compact one-split range.** The degree $d=[F:\mathbf Q]$ is at least two, a real place $\tau _0$ is fixed, $D$ is split at $\tau _0$, ramified at every other real place, and
 
    $$
    R_f=W
    $$
 
-   is an odd nonempty finite set. At every $w\in W$ the local component lies in the selected special or tame-dihedral range.
+   is a finite set satisfying
+
+   $$
+   (d-1)+|W|\equiv0\pmod2.
+   $$
+
+   At every $w\in W$ the local component lies in the selected special or tame-dihedral range. When $d$ is even, $W$ is necessarily odd and nonempty. When $d$ is odd, $W$ is even and may be empty.
 
 In the first range the full ramification set is nonempty and even, hence has at least two members. In the second range
 
@@ -151,7 +157,7 @@ $$
 |R|=(d-1)+|W|
 $$
 
-is even and at least two; one ramified real place and one member of $W$ are distinct. In both ranges $D$ is not the split matrix algebra, so a quaternion algebra of degree two is a division algebra. Book 96 then gives
+is even and at least two. If $d=2$, one ramified real place and one member of $W$ are distinct; if $d\ge3$, two ramified real places are distinct. In both ranges $D$ is not the split matrix algebra, so a quaternion algebra of degree two is a division algebra. Book 96 then gives
 
 $$
 [G]=Z(\mathbf A)G(F)\backslash G(\mathbf A)
@@ -592,7 +598,7 @@ For $G^*=\mathrm{GL}_2$, the quotient by the center has finite volume but is not
 
 Books 100--101 prove a smaller formula under a precise hypothesis: one real local factor is **strongly cuspidal**, meaning that its two-sided parabolic transform vanishes, and it belongs to their kernel-admissible global test class. Its convolution operator is then zero on every representation induced from the Borel. This kills the continuous channel, while the zero parabolic transform kills residual characters directly. The geometric formula consequently retains only the central and elliptic distributions.
 
-The local discrete-series projector transferred from a compact real factor is strongly cuspidal and isolates the required infinity type. Book 100's matrix-coefficient construction has a separate global analytic condition: its fixed kernel estimate is automatic only in sufficiently high lowest weight and must otherwise be checked independently. The compact-mod-center Euler--Poincare projector used in Book 103, Chapter 12 does satisfy the test class of Book 101, so no failure of the one-place formula at weight two is asserted. The proof here uses instead the comparison already packaged in Book 96, Proposition 7.2, because it simultaneously supplies the two-place boundary cancellation, norm-character removal, and scalar-germ interpolation. It starts from two ramified factors whose traces on normalized principal series and whose split regular orbital integrals vanish. In each of the two named ranges of Section 1.2, $|R|\ge2$ and at least one member of $R$ is real. Hence one factor can be the archimedean weight-two projector and another ramified place supplies the second zero. In the compact one-split range we may, and will, take the second place in $W$.
+The local discrete-series projector transferred from a compact real factor is strongly cuspidal and isolates the required infinity type. Book 100's matrix-coefficient construction has a separate global analytic condition: its fixed kernel estimate is automatic only in sufficiently high lowest weight and must otherwise be checked independently. The compact-mod-center Euler--Poincare projector used in Book 103, Chapter 12 does satisfy the test class of Book 101, so no failure of the one-place formula at weight two is asserted. The proof here uses instead the comparison already packaged in Book 96, Proposition 7.2, because it simultaneously supplies the two-place boundary cancellation, norm-character removal, and scalar-germ interpolation. It starts from two ramified factors whose traces on normalized principal series and whose split regular orbital integrals vanish. In each of the two named ranges of Section 1.2, $|R|\ge2$ and at least one member of $R$ is real. Hence one factor can be the archimedean weight-two projector and another ramified place supplies the second zero. In the compact one-split range take the second place in $W$ when $d=2$, and take a second ramified real place when $d\ge3$ and $W$ is empty.
 
 ### 5.2 Cuspidal local test functions
 
@@ -1026,7 +1032,7 @@ This statement concerns occurrences in the automorphic spectrum. It does not say
 
 We now state the inverse theorem which is needed to move a split Hilbert packet onto a compact Shimura-curve inner form. Its hypotheses deliberately describe only one archimedean signature.
 
-**Theorem 9.2 (compact one-split inverse Jacquet--Langlands).** Let $F$ be totally real of even degree $d$, fix a real place $\tau _0$, and let $W$ be an odd nonempty finite set of finite places. Let $B/F$ be the quaternion algebra ramified exactly at
+**Theorem 9.2 (compact one-split inverse Jacquet--Langlands).** Let $F$ be totally real of degree $d\ge2$, fix a real place $\tau _0$, and let $W$ be a finite set of finite places such that $(d-1)+|W|$ is even. Let $B/F$ be the quaternion algebra ramified exactly at
 
 $$
 R(B)=\{\tau:\tau\mid\infty,\ \tau\ne\tau _0\}\sqcup W.
@@ -1107,7 +1113,7 @@ with right cosets, no inverse, and no averaging by the degree. Consequently the 
 
 ### 9.6 Construction, uniqueness, and exact image
 
-**Proof strategy.** Parity first constructs the algebra and division proves compactness. We then form the only possible local inverse tensor. A ramified real projector and one selected place in $W$ supply the two zeros in the character-clean trace identity, which forces a noncharacter compact constituent. Varying one local function at a time identifies the entire tensor; the same comparison in the forward direction proves exactness. Local uniqueness, the two multiplicity-one theorems, and the normalization ledger then prove the remaining assertions.
+**Proof strategy.** Parity first constructs the algebra and division proves compactness. We then form the only possible local inverse tensor. Two distinct ramified places, at least one real, supply the two zeros in the character-clean trace identity, which forces a noncharacter compact constituent. Varying one local function at a time identifies the entire tensor; the same comparison in the forward direction proves exactness. Local uniqueness, the two multiplicity-one theorems, and the normalization ledger then prove the remaining assertions.
 
 **Proof.** The ramification set (9.1) has
 
@@ -1125,7 +1131,7 @@ is compact. The split real factor does not create a cusp: compactness is an adel
 
 Define the candidate factors by (9.3). They exist locally: transfer is the identity away from $R(B)$, Book 80 supplies the inverse selected special or tame-dihedral factor at every $w\in W$, and real local Jacquet--Langlands supplies the compact inverse at every ramified real place. Their central characters are the local factors of $\omega$, so the restricted tensor has the correct global central character. What remains is automorphy.
 
-Choose a ramified real place $a\ne\tau _0$ and a finite place $b\in W$. At $a$ use the weight-two compact projector and its split discrete-series transfer. At $b$ use a prepared selected type function and its transfer. Both split functions have zero split regular orbital integrals and trace zero on every full normalized principal series. Hence they are the two distinct zero factors required by Book 96, Proposition 7.2. At the active split real place $\tau _0$, use on both groups the same compact-mod-center Euler--Poincare pseudo-coefficient for $D_{2,\omega_{\tau _0}}$ used in Book 103, Chapter 12. Its trace is one on the chosen full-group weight-two discrete series and zero on the other tempered types, normalized principal series, and their one-dimensional quotients; its compact support puts it directly in the kernel class of Chapter 4. It plays no role in the ramification sign and requires neither a weight-two extension of the one-place formula nor a geometric realization of the packet.
+Choose a ramified real place $a\ne\tau _0$. If $d=2$, parity makes $W$ odd and nonempty; choose $b\in W$. If $d\ge3$, choose a second ramified real place $b\ne a,\tau _0$ (one may instead use a member of $W$). At a real selected place use the weight-two compact projector and its split discrete-series transfer; at a finite selected place use the prepared type function and its transfer. In either case both split functions have zero split regular orbital integrals and trace zero on every full normalized principal series. Hence they are the two distinct zero factors required by Book 96, Proposition 7.2. At the active split real place $\tau _0$, use on both groups the same compact-mod-center Euler--Poincare pseudo-coefficient for $D_{2,\omega_{\tau _0}}$ used in Book 103, Chapter 12. Its trace is one on the chosen full-group weight-two discrete series and zero on the other tempered types, normalized principal series, and their one-dimensional quotients; its compact support puts it directly in the kernel class of Chapter 4. It plays no role in the ramification sign and requires neither a weight-two extension of the one-place formula nor a geometric realization of the packet.
 
 Fix a finite level and infinity type containing $\pi$. Only finitely many cuspidal representations occur in that block. Begin with trace-nonzero local functions on the formal inverse factors of (9.3); at ramified places their transferred traces on the selected factors are fixed by the local character identities, and at split places transfer is the identity. Book 96's interpolation clause changes these tensors so that all quaternionic norm-character traces vanish and the scalar germs match, without changing the prescribed selected noncharacter trace coordinates. Strong multiplicity one separates the remaining finite split list, so interpolation in finitely many good spherical Hecke operators normalizes the split trace to one on $\pi$ and zero on every other cusp form in the block. Apply the reverse character-clean comparison of Theorem 7.1. The split side is nonzero, so the compact side contains a noncharacter constituent $\Pi_B$. Independently, its weight-two discrete-series factor at $\tau _0$ already rules out a global norm character; this remains true even when one or more finite inverse factors are local norm characters.
 
@@ -1860,7 +1866,7 @@ In the reverse direction, begin with a cuspidal $\pi$, check the selected specia
 
 For the compact one-split theorem, use a separate checklist.
 
-1. Verify that $[F:\mathbf Q]$ is even, choose the active real place $\tau _0$, and choose an odd nonempty finite set $W$.
+1. Verify that $d=[F:\mathbf Q]\ge2$, choose the active real place $\tau _0$, and choose a finite set $W$ with $(d-1)+|W|$ even. Thus $W$ is odd and nonempty when $d$ is even, and is even, possibly empty, when $d$ is odd.
 2. Form the quaternion algebra ramified at every real place except $\tau _0$ and at exactly the places of $W$; the parity count makes it exist and its real ramification makes it division.
 3. Begin with a cuspidal full-group parallel-weight-two $\pi$ and verify at every $w\in W$ that $\pi_w$ is selected special or selected tame dihedral. A principal series or excluded wild packet at one member of $W$ stops the construction.
 4. Retain $\pi_v$ at every split place, including $\tau _0$, and take the proved local inverse at every place of $R(B)$.
@@ -1878,7 +1884,7 @@ The output needed downstream is now precise.
 - The finite conductor, bad-place newness, central character, twists, dual, and local factors obey the exact selected local dictionary, with the explicit $0\mapsto1$ shift when raw maximal division level is compared with an unramified Steinberg component.
 - Algebraic compact weights become cohomological discrete-series weights, and algebraic Galois conjugation of coefficients commutes with transfer.
 - Multiplicity is one on both sides, while fixed-level vector multiplicities remain governed by their different local towers.
-- If $F$ has even degree and an odd nonempty set $W$ of selected special or tame-dihedral places is chosen, Theorem 9.2 constructs the unique one-split compact quaternionic packet with those inverse local factors. This closes the automorphic arrow from a split parallel-weight-two packet to the compact curve inner form without using the curve's cohomology.
+- If $F$ has degree at least two and a parity-compatible set $W$ of selected special or tame-dihedral places is chosen, Theorem 9.2 constructs the unique one-split compact quaternionic packet with those inverse local factors. In even degree $W$ is odd and nonempty; in odd degree it is even and may be empty. This closes the automorphic arrow from a split parallel-weight-two packet to the compact curve inner form without using the curve's cohomology.
 
 These facts are the complete automorphic output of the book. The book does not construct automorphic induction or base change; those are separate global transfers with their own image and descent conditions. It also does not attach Galois representations to the Hecke system. Here the endpoint is the automorphic representation and its complete local dictionary.
 

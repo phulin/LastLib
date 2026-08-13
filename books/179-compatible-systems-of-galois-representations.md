@@ -175,21 +175,26 @@ All representations are continuous. A characteristic-zero member of a compatible
 
 ### 1.4 The prerequisite boundary
 
-This volume has three direct **book** inputs:
+This volume has four direct **book** inputs:
 
 $$
-\boxed{179\mid 168,\ 141,\ 142.} \tag{1.3}
+\boxed{179\mid 41,\ 168,\ 141,\ 142.} \tag{1.3}
 $$
 
-Book 168 supplies the coefficient-indexed systems attached to already constructed
+Book 41 supplies the exact Faltings--Tate reduction used by the geometric examples: finite
+isogeny classes imply finitely many stable Tate-lattice types, and Tate's Jacobson-radical
+argument then proves rational semisimplicity. It identifies finite isogeny classes as the exact
+arithmetic input and the unresolved Faltings--Shafarevich height-and-cancellation package as a
+standard uniform source. Book 168 supplies the coefficient-indexed
+systems attached to already constructed
 parallel-weight-two packets: common algebraic Frobenius polynomials, determinants, purity,
 coefficient conjugation, and the full Frobenius-semisimple Weil--Deligne pair exactly in its
 proved local range. Book 141 supplies the finite-subgroup classification and adequacy criteria
 used by the large-image wrapper in Chapter 16. Book 142 supplies Chebotarev density and the
 dense-Frobenius uniqueness step used throughout the compatibility calculus.
 
-There is also one external arithmetic theorem used only when Chapter 12 keeps the original
-geometric Tate modules rather than replacing them by their global semisimplifications:
+There is also one conditional arithmetic conclusion used only when Chapter 12 keeps the
+original geometric Tate modules rather than replacing them by their global semisimplifications:
 
 $$
 \boxed{(\mathrm{TS})\quad
@@ -198,10 +203,16 @@ abelian variety }A/K\text{ over a number field and every }\ell.}
 \tag{1.4}
 $$
 
-None of the three books in (1.3) proves $(\mathrm{TS})$. Book 168 instead isolates the finite
+Book 41, Theorem 15.3 proves $(\mathrm{TS})$ from finiteness of the $K$-isogeny class of $A$
+and proves every subsequent curve-cohomology and coefficient-factor implication. Its Section
+13.5 shows why its standard uniform Faltings--Shafarevich source is incomplete: the arithmetic
+Siegel compactification, stable-Hodge base-change and metrized Hodge/theta slope/boundary
+estimates needed for the moduli-height bound, and the separate Zarhin factor-cancellation and
+$K$-descent theorem are not available. Potential semistable reduction itself is proved in Book
+61, but it does not supply those missing height and cancellation steps. Book 168 isolates the finite
 carrier instance as the exact sufficient input for uniform raw-to-global local preservation.
-Thus the dependency display is a complete book-dependency row, not a proof of the separately
-named arithmetic theorem.
+Thus (1.4) is conditional on the explicit finite-isogeny-class hypothesis, not an unexplained
+external theorem and not a conclusion of the other three books.
 
 The arithmetic-Frobenius normalization is fixed here. If Book 168 writes geometric Frobenius
 $\Phi_v$ and
@@ -1597,13 +1608,15 @@ $$
 V_\ell(A)=T_\ell(A)\otimes_{\mathbf Z_\ell}\mathbf Q_\ell. \tag{12.1}
 $$
 
-The external theorem $(\mathrm{TS})$ from Section 1.4 supplies the semisimplicity required in
-Section 3.1. This is a genuine input, not a conclusion of Books 168, 141, or 142. Without it,
+The conditional theorem $(\mathrm{TS})$ from Section 1.4 supplies the semisimplicity required in
+Section 3.1. Book 41 proves it from finite isogeny classes, but neither those classes nor their
+standard Faltings--Shafarevich height-and-cancellation source is a conclusion of the current
+corpus. Without them,
 the good Frobenius polynomials would still define a compatible collection, but the collection
 would meet our definition only after taking global semisimplifications, and the original
 geometric lattices would have to be retained separately. Applied to Jacobians of the actual
 Shimura-curve carriers, the same theorem is precisely the sufficient input in Book 168,
-Proposition 7.6; this observation does not prove it inside the current corpus.
+Proposition 7.6; Book 41 closes the Tate lattice step but not its finite-isogeny-class input.
 
 The coefficient field is $\mathbf Q$, so there is one coefficient place for every $\ell$. Let $S_A$ be the finite set of bad-reduction places. At $v\notin S_A$ and $v\nmid\ell$, good reduction gives unramifiedness and
 

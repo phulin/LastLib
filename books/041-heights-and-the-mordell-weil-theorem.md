@@ -1,4 +1,4 @@
-# Heights and the Mordell--Weil Theorem
+# Heights, Mordell--Weil, and the Faltings--Tate Reduction
 
 ## Contents
 
@@ -52,10 +52,40 @@
     - [Abelian subvarieties and quotients](#101-abelian-subvarieties-and-quotients)
     - [Base change, trace, and restriction](#102-base-change-trace-and-restriction)
     - [The Eisenstein-quotient input](#103-the-eisenstein-quotient-input)
-11. [Synthesis](#11-synthesis)
-    - [The logical chain](#111-the-logical-chain)
-    - [Normalization ledger](#112-normalization-ledger)
-    - [Conclusion](#113-conclusion)
+11. [From point heights to moduli heights](#11-from-point-heights-to-moduli-heights)
+    - [The exact downstream question](#111-the-exact-downstream-question)
+    - [Why Mordell--Weil does not answer it](#112-why-mordell--weil-does-not-answer-it)
+    - [The noncircular proof architecture](#113-the-noncircular-proof-architecture)
+12. [The Faltings height and the moduli comparison](#12-the-faltings-height-and-the-moduli-comparison)
+    - [The metrized Hodge line](#121-the-metrized-hodge-line)
+    - [Base change and stable height](#122-base-change-and-stable-height)
+    - [The isogeny formula](#123-the-isogeny-formula)
+    - [Theta coordinates and moduli height](#124-theta-coordinates-and-moduli-height)
+    - [What the comparison actually proves](#125-what-the-comparison-actually-proves)
+13. [The Faltings finiteness gate](#13-the-faltings-finiteness-gate)
+    - [The required Shafarevich statement](#131-the-required-shafarevich-statement)
+    - [Level fields and integral moduli points](#132-level-fields-and-integral-moduli-points)
+    - [The missing arithmetic height bound](#133-the-missing-arithmetic-height-bound)
+    - [Why integrality is not a substitute](#134-why-integrality-is-not-a-substitute)
+    - [Exact prerequisite ledger](#135-exact-prerequisite-ledger)
+14. [From Faltings finiteness to finite isogeny classes](#14-from-faltings-finiteness-to-finite-isogeny-classes)
+    - [Good reduction is preserved by isogeny](#141-good-reduction-is-preserved-by-isogeny)
+    - [The finite-isogeny-class consequence](#142-the-finite-isogeny-class-consequence)
+    - [The precise conditional input](#143-the-precise-conditional-input)
+15. [Tate lattices and semisimplicity](#15-tate-lattices-and-semisimplicity)
+    - [Stable lattices are isogeny quotients](#151-stable-lattices-are-isogeny-quotients)
+    - [Finite isogeny classes give finite lattice type](#152-finite-isogeny-classes-give-finite-lattice-type)
+    - [Tate's lattice lemma](#153-tates-lattice-lemma)
+    - [Conditional rational Tate-module semisimplicity](#154-conditional-rational-tate-module-semisimplicity)
+16. [The exact cohomological export](#16-the-exact-cohomological-export)
+    - [Curves and Jacobians](#161-curves-and-jacobians)
+    - [Coefficient extension, summands, and multiplicity spaces](#162-coefficient-extension-summands-and-multiplicity-spaces)
+    - [The Hom--Tate boundary](#163-the-hom--tate-boundary)
+    - [The packet-carrier array](#164-the-packet-carrier-array)
+17. [Synthesis](#17-synthesis)
+    - [The two logical chains](#171-the-two-logical-chains)
+    - [Normalization and dependency ledger](#172-normalization-and-dependency-ledger)
+    - [Conclusion](#173-conclusion)
 
 ## 1. Arithmetic size and the missing half of descent
 
@@ -90,12 +120,14 @@ $$
 We use the usual absolute value on $\mathbf R$ and the usual modulus on $\mathbf C$. As described precisely in Section 2.1, a complex place has local degree $2$; we do not instead square its absolute value. At a finite place over $p$, $|p|_v=p^{-1}$. This separates the absolute-value normalization from the local multiplicity and prevents the common factor-of-two error at complex places.
 
 An **abelian variety** is a smooth, proper, geometrically connected group variety. A line bundle $L$ on an abelian variety is **symmetric** if $[-1]^*L\simeq L$. It is ample in the ordinary projective sense. Book 8 provides projective embeddings from high powers of ample bundles; Book 35 provides the theorem of the cube, symmetric ample bundles, and the homomorphism $\lambda_L:A\to A^\vee$ associated with $L$.
+The Minkowski lattice and covolume normalization used once in the moduli-field reduction are
+those of Book 4. Book 2 supplies finiteness of local extensions of bounded degree.
 
 All heights in this book are logarithmic. Their exponential versions are denoted by $H=e^h$. An equality $h=h'+O(1)$ means that $h-h'$ is bounded on the stated set of algebraic points; the bound may depend on the variety, line bundles, morphisms, and ground field, but not on the varying point.
 
 ### 1.3 The architecture of the proof
 
-The argument has four genuinely different layers:
+The Mordell--Weil argument has four genuinely different layers:
 
 $$
 \begin{array}{c}
@@ -109,6 +141,15 @@ $$
 $$
 
 The first layer is arithmetic and works on projective space. The second transports it to projective varieties. The third uses the special geometry of an abelian variety. The last is a group-theoretic descent whose termination is supplied by the first three. Keeping the layers separate ensures that finite generation is not smuggled into the proof of positivity or finiteness.
+
+The second half of the book asks a different height question. It replaces a point of $A$ by
+the moduli point of $A$, replaces the Néron--Tate metric by the metrized Hodge line, and seeks a
+uniform height bound from prescribed good reduction. Once Faltings--Shafarevich finiteness is
+available, Tate's stable-lattice argument gives rational Tate-module semisimplicity. Chapters
+11--16 prove every implication after finite isogeny classes and identify the exact height,
+compactification, slope, factor-cancellation, and descent inputs absent from the present
+prerequisites; they do not disguise those missing deep inputs as an application of ordinary
+Northcott finiteness.
 
 ## 2. Absolute values and projective height
 
@@ -1402,13 +1443,910 @@ for some finite $r$, and every subgroup and every quotient of $A(K)$ is finitely
 
 In particular, over $K=\mathbf Q$, any Eisenstein quotient of a modular Jacobian has a finitely generated group of rational points. Further arguments may show that a particular quotient has rank zero or identify its torsion, but those are additional arithmetic inputs. The conclusion established here is exactly the unconditional finite-generation statement: no claim about the rank or torsion order is hidden in it.
 
-## 11. Synthesis
+## 11. From point heights to moduli heights
 
-The proof of Mordell--Weil is short only after three substantial theories have been fitted together with consistent normalizations. This final chapter records the chain and the conventions in a form that can be reused without reopening the construction.
+The preceding chapters control points on one fixed abelian variety. A different arithmetic
+question asks whether only finitely many abelian varieties can occur when dimension and bad
+reduction are fixed. That question is the entrance to the Faltings--Tate theorem. It uses the
+same product formula and Northcott principle, but the point whose height must be bounded is now
+a point of an abelian-moduli space.
 
-### 11.1 The logical chain
+This distinction is load-bearing. The Néron--Tate height proves finite generation of
+$A(K)$ after $A$ has been chosen. It does not put a bound on the height of $A$ itself.
 
-For an abelian variety $A/K$, choose a symmetric ample line bundle $L$ and an integer $m\geq2$. Then
+### 11.1 The exact downstream question
+
+Let $A/K$ be an abelian variety and let $\ell$ be a rational prime. Write
+
+$$
+T_\ell A=\varprojlim_n A[\ell^n](\overline K),
+\qquad
+V_\ell A=T_\ell A\otimes_{\mathbf Z_\ell}\mathbf Q_\ell.
+\tag{11.1}
+$$
+
+The arithmetic statement needed by the later curve-carrier construction is
+
+$$
+\boxed{(\mathrm{TS})_{A,K,\ell}\quad
+V_\ell A\text{ is a semisimple }\mathbf Q_\ell[G_K]\text{-module}.}
+\tag{11.2}
+$$
+
+Semisimple means that every $G_K$-stable subspace has a $G_K$-stable complement. It is not the
+semisimplicity of the isogeny category from Book 36. Poincaré reducibility splits an actual
+abelian subvariety up to isogeny; a general $G_K$-stable $\mathbf Q_\ell$-subspace has not yet
+been shown to arise from an abelian subvariety. Treating it as one would assume the conclusion.
+
+For a smooth projective geometrically connected curve $C/K$ with Jacobian $J$, the comparison
+constructed in Book 36 is
+
+$$
+T_\ell J\simeq H^1_{\mathrm{et}}
+(C_{\overline K},\mathbf Z_\ell(1)).
+\tag{11.3}
+$$
+
+Consequently $(\mathrm{TS})$ for $J$ gives semisimplicity of
+$H^1_{\mathrm{et}}(C_{\overline K},\mathbf Q_\ell)$: duals and Tate twists do not change
+semisimplicity. This is the complete ambient input later denoted
+$(\mathrm{SS}_{\mathrm{array}})$ when finitely many curve carriers and coefficient primes are
+under consideration.
+
+### 11.2 Why Mordell--Weil does not answer it
+
+Mordell--Weil concerns the discrete group $A(K)$. The Tate module records all geometric
+$\ell$-power torsion and its continuous Galois action. Neither finite generation of $A(K)$ nor
+finiteness of $A(K)/\ell A(K)$ produces invariant complements in (11.1).
+
+There is also no averaging argument. The image of $G_K$ in
+$\operatorname{GL}(T_\ell A)$ is compact, but its order is usually divisible by arbitrarily
+large powers of $\ell$. A continuous representation of the compact group $\mathbf Z_\ell$
+can be unipotent:
+
+$$
+x\longmapsto
+\begin{pmatrix}1&x\\0&1\end{pmatrix}.
+\tag{11.4}
+$$
+
+Thus compactness is enough to produce a stable lattice, not enough to split the rational
+representation. Polarization is likewise insufficient by itself: a stable subspace may be
+degenerate for the alternating form, so its orthogonal need not be a complement.
+
+### 11.3 The noncircular proof architecture
+
+The Faltings--Tate route separates into four implications:
+
+$$
+\begin{array}{c}
+\text{arithmetic height bound on polarized moduli}
++\text{ Zarhin factor cancellation and }K\text{-descent}
+\Longrightarrow \text{Faltings--Shafarevich finiteness},\\
+\text{Faltings--Shafarevich finiteness}
+\Longrightarrow \text{finiteness of each }K\text{-isogeny class},\\
+\text{finite isogeny class}
+\Longrightarrow \text{finitely many stable Tate-lattice types},\\
+\text{finitely many stable lattice types}
+\Longrightarrow (\mathrm{TS}).
+\end{array}
+\tag{11.5}
+$$
+
+The last three arrows are algebraic and are proved completely in Chapters 14--16. The first
+arrow contains two parts of the deep Faltings input: the numerical height bound and the
+factor-cancellation/descent passage from the stabilized principally polarized objects back to
+the original abelian varieties. Chapters 12--13 identify both at theorem level. The distinction prevents a
+moduli point that is merely integral outside finitely many primes from being declared to have
+bounded height.
+
+## 12. The Faltings height and the moduli comparison
+
+The height of an abelian variety is the Arakelov degree of its Hodge line. Its finite-place
+lattice measures integral invariant differentials; its archimedean metric measures their
+period volume. The product formula makes the resulting number independent of the differential
+used to compute it.
+
+### 12.1 The metrized Hodge line
+
+First suppose that $A/K$ has semiabelian reduction everywhere, and let $\mathcal A^0$ be the
+identity component of its Néron model over $\mathcal O_K$. Put
+
+$$
+\omega_{\mathcal A}
+=e^*\det\Omega^1_{\mathcal A^0/\mathcal O_K}.
+\tag{12.1}
+$$
+
+This is an invertible $\mathcal O_K$-module inside the one-dimensional $K$-space
+$\det H^0(A,\Omega^1_{A/K})$. For an embedding $\sigma:K\hookrightarrow\mathbf C$ and a
+top differential $\eta$, use the translation-invariant metric
+
+$$
+\|\eta\|_\sigma^2
+=\frac{i^{g^2}}{(2\pi)^g}
+\int_{A_\sigma(\mathbf C)}\eta\wedge\overline\eta,
+\qquad g=\dim A.
+\tag{12.2}
+$$
+
+Changing the harmless constant $(2\pi)^{-g}$ changes every height in fixed dimension by one
+fixed additive constant. Fixing it now makes all later comparisons unambiguous.
+
+Choose $0\ne\eta$ in the generic Hodge line. The Arakelov degree is
+
+$$
+\widehat{\deg}(\overline\omega_{\mathcal A})
+=\log\#(\omega_{\mathcal A}/\mathcal O_K\eta)
+-\sum_{\sigma:K\hookrightarrow\mathbf C}\log\|\eta\|_\sigma,
+\tag{12.3}
+$$
+
+where a fractional-ideal interpretation is used if $\eta$ does not generate a submodule.
+Multiplying $\eta$ by $a\in K^\times$ changes the first term by the finite valuation of $(a)$
+and the second by its archimedean norm. The product formula cancels them. Thus
+
+$$
+h_F(A/K)=\frac{1}{[K:\mathbf Q]}
+\widehat{\deg}(\overline\omega_{\mathcal A})
+\tag{12.4}
+$$
+
+is well defined. This is the semistable Faltings height in the convention of (12.2).
+
+The formula displays why an ordinary projective height is not enough. At finite places one
+needs the particular lattice of invariant differentials, while at infinity one needs a metric
+defined by integration on the complex torus. Both pieces enter the product formula.
+
+### 12.2 Base change and stable height
+
+Under an extension $L/K$, the pulled-back Hodge lattice need not equal the Hodge lattice of the
+Néron model over $\mathcal O_L$ at places where reduction improves. Their index is the base-change
+conductor. Accordingly the naive value $h_F(A/K)$ need not be invariant before semistable
+reduction.
+
+If $A$ becomes semistable over $L$, define its stable height by
+
+$$
+h_F^{\mathrm{st}}(A)=h_F(A_L/L).
+\tag{12.5}
+$$
+
+Assume the semistable Hodge-lattice base-change theorem recorded in Section 13.5. Once
+semistability holds, that theorem identifies invariant differentials after every further finite
+base change, while the archimedean terms repeat with total local degree. Formula (2.2) then
+proves that (12.5) is independent of a further extension. Making (12.5) available for every
+abelian variety requires both potential semistable reduction and this Hodge-lattice
+base-change theorem. Neither is a consequence of the Néron-model construction in Book 38;
+both remain among the specialized prerequisites recorded in Section 13.5.
+
+### 12.3 The isogeny formula
+
+The behavior under isogeny explains both the power and the limitation of Faltings height. Let
+
+$$
+f:A\longrightarrow B
+\tag{12.6}
+$$
+
+be a $K$-isogeny between everywhere semistable abelian varieties, and enlarge $K$ once if
+necessary so that the relevant finite kernel and semiabelian models have the stated form. Pullback
+of invariant differentials gives an injection of Hodge lattices
+
+$$
+f^*:\omega_{\mathcal B}\hookrightarrow\omega_{\mathcal A}
+\tag{12.7}
+$$
+
+with finite cokernel $Q_f$. At a complex embedding, change of variables under the covering
+$f:A(\mathbf C)\to B(\mathbf C)$ gives
+
+$$
+\|f^*\eta\|_{A,\sigma}^2
+=(\deg f)\|\eta\|_{B,\sigma}^2.
+\tag{12.8}
+$$
+
+Compute both Arakelov degrees with $\eta$ and $f^*\eta$. The finite lattice index contributes
+$\log\#Q_f$ and (12.8) contributes one half of $\log\deg f$ at every embedding. Hence
+
+$$
+\boxed{
+h_F(B)-h_F(A)
+=\frac12\log\deg f
+-\frac{1}{[K:\mathbf Q]}\log\#Q_f.}
+\tag{12.9}
+$$
+
+The formula passes the multiplication test. For $f=[n]$, one has
+$\deg[n]=n^{2g}$ and $Q_f\simeq\omega_{\mathcal A}/n^g\omega_{\mathcal A}$, whose order is
+$n^{g[K:\mathbf Q]}$; the two terms cancel because source and target are the same variety.
+
+Since the second term in (12.9) is nonpositive,
+
+$$
+h_F(B)\leq h_F(A)+\frac12\log\deg f.
+\tag{12.10}
+$$
+
+This inequality does not bound the heights of all varieties isogenous to $A$: the degrees of
+the isogenies can be unbounded. Replacing that missing bound by (12.10) is one of the standard
+false shortcuts in this argument.
+
+### 12.4 Theta coordinates and moduli height
+
+Fix a dimension $g$, a polarization type, and an integer $N\geq3$ invertible on the base. A
+symplectic full level-$N$ structure removes automorphisms and places the polarized abelian
+variety on a fine quasi-projective moduli scheme $\mathcal M_{g,d,N}$. A sufficiently high
+power of the polarizing bundle has a theta group. Choosing a theta frame gives projective
+coordinates for the fiber and, after taking invariant equations, projective coordinates for
+the moduli point
+
+$$
+x(A,\lambda,\alpha_N)\in\mathcal M_{g,d,N}(K).
+\tag{12.11}
+$$
+
+Once a projective closure and an ample moduli line are fixed, Chapter 4 gives a Weil height
+$h_{\mathrm{mod}}(x)$. Northcott immediately proves:
+
+**Lemma 12.1 (bounded moduli height gives finiteness).** Fix $K,g,d,N$ and a projective
+moduli presentation. There are only finitely many $K$-isomorphism classes of triples
+$(A,\lambda,\alpha_N)$ whose moduli height is at most a fixed constant.
+
+**Proof.** The points (12.11) have degree one over $K$. Projective Northcott gives finitely
+many such points of bounded height. Fine level means that a point represents one isomorphism
+class, not merely a geometric orbit. $\square$
+
+To connect this elementary lemma with (12.4), one must compare the projective moduli line with
+the Hodge line carrying the $L^2$ metric. Algebraically, determinant-of-cohomology and theta
+transformation formulas identify fixed positive tensor powers of the two lines. Metrically, the
+comparison asks for uniform estimates on theta norms, including their growth toward the
+degeneration boundary. The desired conclusion has the shape
+
+$$
+h_{\mathrm{mod}}(x(A,\lambda,\alpha_N))
+\leq c_1 h_F^{\mathrm{st}}(A)+c_2+\operatorname{bdry}(A),
+\tag{12.12}
+$$
+
+with a reverse inequality of the same kind. The boundary term is an arithmetic intersection
+with the degeneration divisor; it is not a bounded $O(1)$ on the whole open moduli space.
+
+### 12.5 What the comparison actually proves
+
+If both $h_F^{\mathrm{st}}(A)$ and the boundary contribution in (12.12) are bounded in a
+family, Lemma 12.1 proves finiteness. Conversely, a bound for the moduli height controls the
+Faltings height by the reverse comparison. This is the useful height/moduli-height bridge.
+
+The bridge alone gives no bound. Good reduction outside a fixed set says that the boundary
+intersection is supported on that set, but it does not bound the multiplicity at those primes
+or the archimedean contribution. The theorem that supplies a uniform global bound is the deep
+arithmetic slope estimate in the next chapter. It cannot be replaced by the ordinary height
+machine, by (12.9), or by the quasi-projectivity of the moduli scheme.
+
+## 13. The Faltings finiteness gate
+
+We now state the precise finiteness theorem from which the Tate argument starts and audit the
+proof ingredients that are and are not present in the earlier sequence.
+
+### 13.1 The required Shafarevich statement
+
+For a number field $K$, a finite set $S$ of finite places, and an integer $g\geq1$, let
+
+$$
+\boxed{
+(\mathrm{FS})_{K,S,g}:\quad
+\#\{A/K:\dim A=g,\ A\text{ has good reduction outside }S\}/\simeq_K<\infty.}
+\tag{13.1}
+$$
+
+The polarized version fixes a polarization type and asserts finiteness of polarized
+isomorphism classes. The unpolarized statement follows in the full Faltings proof by Zarhin's
+trick together with the integral cancellation and descent argument for the resulting factors.
+Neither the polarization nor the cancellation may be discarded: an arbitrary abelian variety
+need not carry a principal polarization over $K$, and an isogeny-class statement is not an
+isomorphism-class statement.
+
+The theorem needed for semisimplicity is weaker than all of (13.1): for one fixed $A/K$, only
+the $K$-isomorphism classes in its $K$-isogeny class must be finite. Nevertheless (13.1) is the
+standard uniform source, because every member of that isogeny class has the same good-reduction
+locus by Section 14.1.
+
+### 13.2 Level fields and integral moduli points
+
+Several reductions toward (13.1) are already formal. We first record the exact elementary
+part of Zarhin's trick. Choose a $K$-rational polarization
+$\lambda:A\to A^\vee$. If $n$ annihilates $\ker\lambda$, the quotient property of
+$\lambda$ factors $[n]_A$ through a map $\mu:A^\vee\to A$; on complex tangent spaces it is
+$n\lambda^{-1}$ and is again positive, hence is the dual polarization. Thus
+
+$$
+\mu\lambda=[n]_A,
+\qquad
+\lambda\mu=[n]_{A^\vee}.
+$$
+
+Write $n-1=a^2+b^2+c^2+d^2$ and let
+
+$$
+Q=
+\begin{pmatrix}
+a&b&c&d\\
+-b&a&-d&c\\
+-c&d&a&-b\\
+-d&-c&b&a
+\end{pmatrix},
+\qquad
+Q^{\mathsf t}Q=QQ^{\mathsf t}=(n-1)I_4.
+$$
+
+On $A^4\times(A^\vee)^4$, the symmetric homomorphism to its dual
+
+$$
+\lambda_Z=
+\begin{pmatrix}
+\lambda I_4&Q\\
+Q^{\mathsf t}&\mu I_4
+\end{pmatrix}
+$$
+
+is an isomorphism: its inverse is obtained by replacing the diagonal blocks by
+$\mu I_4,\lambda I_4$ and both off-diagonal blocks by their negatives. At every complex
+embedding, the Schur complement of the positive block $\lambda I_4$ is
+$\mu I_4-Q^{\mathsf t}\lambda^{-1}Q=\lambda^{-1}I_4>0$. Thus $\lambda_Z$ is a
+principal polarization. It is not canonical--it depends on $\lambda$ and on the four-square
+matrix--but existence is all that is used below. Consequently Zarhin's construction
+
+$$
+Z(A)=(A\times A^\vee)^4
+\tag{13.2}
+$$
+
+has a $K$-rational principal polarization. For fixed $g$, its dimension is fixed. Choose
+$N\geq3$. The field generated by $Z(A)[N]$ has degree bounded by
+$|\operatorname{GSp}_{16g}(\mathbf Z/N\mathbf Z)|$. If $A$ has good reduction outside $S$,
+this level field is unramified outside $S$ and the primes dividing $N$: at every other place,
+$Z(A)$ extends to an abelian scheme and multiplication by $N$ is finite étale, so its torsion
+points form an unramified Galois set. Bounded-degree local
+extension finiteness and the following lemma therefore leave only finitely many possible level
+fields.
+
+**Lemma 13.1 (bounded ramification fields).** Fix a number field $K$, a finite set $T$ of
+finite places, and an integer $D$. There are only finitely many $K$-isomorphism classes of
+extensions $L/K$ of degree at most $D$ which are unramified outside $T$.
+
+**Proof.** For each $v\in T$, Book 2 gives only finitely many extensions of $K_v$ of degree at
+most $D$. Their different exponents therefore have a common bound. The relative discriminant
+$\mathfrak d_{L/K}$ is supported on $T$, and its exponent at $v$ is the sum of the local
+different exponents weighted by residue degrees. Both the number and the degrees of the local
+factors are at most $D$, so $N_{K/\mathbf Q}\mathfrak d_{L/K}$ is bounded in terms of
+$K,T,D$. The discriminant tower formula
+
+$$
+|d_L|=|d_K|^{[L:K]}
+N_{K/\mathbf Q}\mathfrak d_{L/K}
+\tag{13.2a}
+$$
+
+therefore bounds both $[L:\mathbf Q]$ and $|d_L|$.
+
+We recall why these two bounds give only finitely many fields. In the Minkowski embedding,
+$\mathcal O_L$ has covolume $2^{-r_2}|d_L|^{1/2}$. The successive-minima form of the
+convex-body argument chooses $n=[L:\mathbf Q]$ independent algebraic integers of uniformly
+bounded Euclidean length: the product of their successive minima is bounded by a
+dimension-dependent multiple of the covolume, while every nonzero algebraic integer has
+Euclidean length bounded below because its norm is a nonzero integer. Their span has uniformly
+bounded index, so a Hermite-normal-form adjustment gives an integral basis
+$e_1,\ldots,e_n$ whose conjugates are uniformly bounded. The embedding matrix of this basis
+has determinant of absolute value $|d_L|^{1/2}$, bounded below by $1$ and above by the fixed
+discriminant bound. Cramer's rule therefore bounds the integral structure constants in
+
+$$
+e_ie_j=\sum_k c_{ij}^k e_k.
+\tag{13.2b}
+$$
+
+Only finitely many integer multiplication tables can occur. They determine the ring
+$\mathcal O_L$ and hence its fraction field. Thus only finitely many fields $L$ occur. Each
+has only finitely many embeddings of the fixed separable field $K$, so only finitely many
+$K$-isomorphism classes occur. $\square$
+
+After replacing $K$ by one of these finitely many level fields, (13.2) has full level and
+defines a point on the fine moduli scheme.
+
+At a place outside $S\cup\{v:v\mid N\}$, the abelian scheme and its level structure extend
+over the valuation ring. The moduli point is consequently integral there. We have reached
+
+$$
+x(Z(A),\lambda_Z,\alpha_N)
+\in\mathcal M_{8g,1,N}(\mathcal O_{L,S_L}).
+\tag{13.3}
+$$
+
+This reduction uses bounded extension degree, level rigidity, and extension of good abelian
+schemes. It still has not produced a height bound.
+
+### 13.3 The missing arithmetic height bound
+
+The decisive missing height assertion can be expressed in the following sufficient
+existential form: for every $A$ in (13.1), one can choose a Zarhin polarization $\lambda_Z$
+as above and a full level basis $\alpha_N$ over its level field so that
+
+$$
+(\mathrm{FH})_{K,S,g}:
+\quad
+\sup h_{\mathrm{mod}}
+\bigl(x(Z(A),\lambda_Z,\alpha_N)\bigr)<\infty,
+\tag{13.4}
+$$
+
+where $A$ ranges over the varieties in (13.1), $L$ ranges over the finitely many level fields
+from Section 13.2, and the height is normalized by $[L:\mathbf Q]$. After the metric comparison
+is established, a standard sufficient route to (13.4) is a joint bound for the stable Faltings
+height and the arithmetic boundary term.
+
+Given (13.4), Lemma 12.1 gives finitely many $L$-isomorphism classes of principally polarized
+$Z(A)_L$ with level, as $L$ ranges over the finite list in Section 13.2. This stabilized
+polarized finiteness is not yet (13.1): one must remove level, descend from $L$ to $K$, and
+recover only finitely many $K$-isomorphism classes of the factors $A$. Let
+$(\mathrm{ZC})_{K,g}$ denote the integral Zarhin factor-cancellation and descent theorem making
+exactly that passage. The formal implication is therefore
+
+$$
+(\mathrm{FH})_{K,S,g}+(\mathrm{ZC})_{K,g}
+\Longrightarrow(\mathrm{FS})_{K,S,g}
+\tag{13.5}
+$$
+
+Neither input on the left is proved here. The compactification, metric comparison, and slope
+estimates below are needed to establish $(\mathrm{FH})$; factor cancellation and descent are a
+separate post-Northcott input.
+
+The height part, (13.4), comes in the Faltings proof from arithmetic intersection
+theory on a toroidal compactification of Siegel moduli. One extends the Hodge bundle with its
+logarithmic metric, applies arithmetic Riemann--Roch or the equivalent arithmetic
+Hilbert--Samuel slope inequality to powers of a theta bundle, and controls every boundary term
+by the semistable degeneration data. The product formula then converts local discriminant and
+period estimates into a global upper bound. The archimedean theta estimate is essential: an
+algebraic extension of the Hodge line without its metric does not control (12.2).
+
+### 13.4 Why integrality is not a substitute
+
+An integral point of a quasi-projective arithmetic scheme need not have bounded height. The
+simplest example is
+
+$$
+\mathbf G_m(\mathbf Z[1/p])
+=\{\pm p^n:n\in\mathbf Z\}.
+\tag{13.6}
+$$
+
+Every point is integral outside $p$, while
+
+$$
+h([1:p^n])=|n|\log p
+\tag{13.7}
+$$
+
+is unbounded. The same logical issue occurs in (13.3): support of the boundary is controlled,
+but its multiplicity can grow. Northcott begins only after a numerical height bound has been
+proved.
+
+Nor does the isogeny formula repair the problem. Inequality (12.10) contains
+$\log\deg f$, and no preceding theorem bounds the least degree of an isogeny to every member
+of the class. Assuming such a bound is another form of assuming isogeny finiteness.
+
+### 13.5 Exact prerequisite ledger
+
+The earlier books provide projective heights and Northcott, quasi-projective PEL moduli with
+theta frames, coherent Hodge bundles, abelian schemes and their quotients, Néron models, and
+polarizations. They do not provide the following specialized package:
+
+1. potential semistable reduction for arbitrary abelian varieties, with the base-change
+   formula for the Hodge lattice;
+2. a toroidal or comparably strong arithmetic compactification of Siegel moduli carrying the
+   canonical extension of the Hodge and theta bundles;
+3. arithmetic intersection theory and arithmetic Riemann--Roch or Hilbert--Samuel in the
+   dimension needed on that compactification;
+4. the uniform archimedean theta-norm and nonarchimedean boundary estimates which prove
+   (12.12) and the slope bound (13.4); and
+5. the integral Zarhin factor-cancellation argument passing from the principally polarized
+   stabilized objects to unpolarized $K$-isomorphism classes.
+
+These are not general formal foundations such as tensor products, projective embeddings, or
+ordinary Riemann--Roch on a curve. Together they are the deep Faltings finiteness proof. None is
+proved in Chapters 1--12, and the catalog before this volume contains no source for the package.
+Consequently this book does **not** assert (13.4), $(\mathrm{ZC})$, (13.1), or unconditional
+Tate-module semisimplicity. The remaining chapters prove every implication after
+$(\mathrm{FS})$, and in fact need only $(\mathrm{IF})$. Thus $(\mathrm{IF})$ is the first
+irreducible arithmetic hypothesis in the Tate argument. The standard uniform route to it remains
+conditional on the two-part Faltings--Shafarevich package in (13.5), rather than on the numerical
+height bound alone.
+
+## 14. From Faltings finiteness to finite isogeny classes
+
+This chapter proves the geometric implication needed by Tate's lattice argument. No moduli
+height occurs after this point.
+
+### 14.1 Good reduction is preserved by isogeny
+
+**Lemma 14.1.** Let $A$ and $B$ be abelian varieties over $K$ and let
+$f:A\to B$ be a $K$-isogeny. At every finite place $v$, $A$ has good reduction if and only if
+$B$ has good reduction.
+
+**Proof.** Work first over the valuation ring $R=\mathcal O_{K_v}$. Suppose $A$ extends to an
+abelian scheme $\mathcal A/R$. The kernel of $f$ is contained in $A[n]$ for some $n$. Its
+schematic closure $\mathcal H$ in the finite flat group scheme $\mathcal A[n]$ is the flat
+closure, hence is finite flat over the DVR. The quotient
+
+$$
+\mathcal B=\mathcal A/\mathcal H
+\tag{14.1}
+$$
+
+exists as an abelian scheme by the quotient theorem for finite flat subgroup schemes. Its
+generic fiber is $B$, so $B$ has good reduction. A dual isogeny $g:B\to A$ with
+$gf=[n]$ gives the converse by the same argument. $\square$
+
+The use of the flat closure matters at residue characteristic dividing $n$. Taking only the
+set-theoretic closure of geometric torsion points would not produce a quotient abelian scheme.
+
+### 14.2 The finite-isogeny-class consequence
+
+Fix $A/K$ of dimension $g$, and let $S_A$ be its finite bad-reduction set. Every abelian
+variety $B$ that is $K$-isogenous to $A$ has dimension $g$ and, by Lemma 14.1, good reduction
+outside $S_A$. Therefore (13.1), if available, gives
+
+$$
+\#\{B/K:B\text{ is }K\text{-isogenous to }A\}/\simeq_K<\infty.
+\tag{14.2}
+$$
+
+Only $K$-isomorphism classes are being counted. Geometric isomorphism is too weak for the
+Galois-module argument, while finiteness merely up to isogeny is tautological because the set
+being studied is already one isogeny class.
+
+### 14.3 The precise conditional input
+
+For later reuse, name the exact conclusion rather than all of Shafarevich finiteness:
+
+$$
+(\mathrm{IF})_{A/K}:
+\quad\text{the }K\text{-isogeny class of }A
+\text{ contains finitely many }K\text{-isomorphism classes}.
+\tag{14.3}
+$$
+
+Sections 14.1--14.2 prove
+
+$$
+(\mathrm{FS})_{K,S_A,g}\Longrightarrow(\mathrm{IF})_{A/K}.
+\tag{14.4}
+$$
+
+The Tate argument below uses exactly (14.3). Thus a future source may close the gap either by
+proving the full height-and-cancellation package (13.5), by proving Faltings--Shafarevich
+finiteness directly, or by proving (14.3) for the particular carrier Jacobians. No stronger
+theorem is silently required.
+
+## 15. Tate lattices and semisimplicity
+
+The hard arithmetic geometry has now been compressed into (14.3). The remaining proof is a
+short but delicate interaction between isogenies and integral representation theory.
+
+### 15.1 Stable lattices are isogeny quotients
+
+Let $T=T_\ell A$ and $V=V_\ell A$. The quotient $V/T$ is canonically the geometric
+$\ell$-primary torsion:
+
+$$
+V/T\simeq A[\ell^\infty](\overline K).
+\tag{15.1}
+$$
+
+Let $L\subset V$ be any full $G_K$-stable $\mathbf Z_\ell$-lattice. Multiplication by a power
+of $\ell$ is a $G_K$-module isomorphism from $L$ to a homothetic lattice, so we may arrange
+
+$$
+T\subseteq L\subseteq\ell^{-n}T
+\tag{15.2}
+$$
+
+for some $n$. Then
+
+$$
+H=L/T\subset V/T
+\tag{15.3}
+$$
+
+is a finite $G_K$-stable subgroup of $A[\ell^\infty](\overline K)$. In characteristic zero,
+finite torsion group schemes are étale, so Galois descent identifies $H$ with a finite
+$K$-subgroup scheme of $A$. Form the quotient isogeny
+
+$$
+q_H:A\longrightarrow A_H=A/H.
+\tag{15.4}
+$$
+
+The rational Tate map $V_\ell(q_H)$ is an isomorphism. Under the resulting identification of
+$V_\ell A_H$ with $V$, one has
+
+$$
+V_\ell(q_H)^{-1}(T_\ell A_H)=L.
+\tag{15.5}
+$$
+
+To verify (15.5), reduce modulo $T$. A vector of $V$ maps into the target Tate lattice exactly
+when its torsion class is killed in the quotient by $H$, which is exactly the condition that
+its class lie in $H=L/T$. This also passes the test $H=A[\ell]$: then $q_H=[\ell]$ and the
+preimage of $T$ is $\ell^{-1}T$.
+
+### 15.2 Finite isogeny classes give finite lattice type
+
+**Proposition 15.1.** Assume $(\mathrm{IF})_{A/K}$. Up to isomorphism as
+$\mathbf Z_\ell[G_K]$-modules, only finitely many $G_K$-stable full lattices occur in $V$.
+
+**Proof.** Replace a lattice by a homothetic one satisfying (15.2); this does not change its
+abstract $G_K$-module isomorphism class. Section 15.1 associates to it a quotient $A_H$ in
+the $K$-isogeny class of $A$, and (15.5) identifies the lattice with $T_\ell A_H$. By
+$(\mathrm{IF})_{A/K}$ there are only finitely many possible $K$-isomorphism classes of
+$A_H$. A $K$-isomorphism induces an isomorphism of Tate lattices. $\square$
+
+The proposition does not claim that two lattices giving isomorphic quotients are equal inside
+$V$. Equality is unnecessary; Tate's criterion uses only their abstract integral
+representation type.
+
+### 15.3 Tate's lattice lemma
+
+We prove the representation-theoretic engine in a form independent of abelian varieties.
+
+**Lemma 15.2 (Tate's lattice criterion).** Let $k$ be a characteristic-zero nonarchimedean
+local field with valuation ring $\mathcal O$, let $G$ be a group, and let $V$ be a
+finite-dimensional continuous $k$-representation admitting a stable lattice. If there are only
+finitely many isomorphism classes of full $G$-stable $\mathcal O$-lattices in $V$, then $V$ is
+semisimple.
+
+**Proof.** Let $R\subseteq\operatorname{End}_k(V)$ be the finite-dimensional $k$-algebra
+generated by the image of $G$. Because $R$ acts faithfully on $V$, the representation $V$ is
+semisimple exactly when the Jacobson radical $J=\operatorname{rad}R$ is zero. Indeed, if $V$
+is semisimple then $J$ kills $V$ and faithfulness gives $J=0$; if $J=0$, the algebra $R$ is
+semisimple Artinian and all of its modules are semisimple.
+
+Assume for contradiction that $J\ne0$. Choose $a\geq2$ minimal with $J^a=0$ and put
+
+$$
+W=J^{a-1}V\ne0.
+\tag{15.6}
+$$
+
+Fix a $G$-stable lattice $T$. The image of the $\mathcal O$-algebra $\mathcal O[G]$ inside
+$\operatorname{End}_{\mathcal O}(T)$ is a finite $\mathcal O$-module and spans $R$; denote
+it by $\Lambda$. Put
+
+$$
+I=\Lambda\cap J^{a-1}.
+\tag{15.7}
+$$
+
+Then $I$ is a two-sided ideal of $\Lambda$, it spans $J^{a-1}$ over $k$, and
+
+$$
+IW=0,
+\tag{15.8}
+$$
+
+because $J^{2a-2}=0$. Let $X=T\cap W$, a full lattice in $W$, and define
+
+$$
+T_n=T+\varpi^{-n}X
+\qquad(n\geq0),
+\tag{15.9}
+$$
+
+where $\varpi$ is a uniformizer. Both $T$ and $X$ are $\Lambda$-stable, so every $T_n$ is a
+full $G$-stable lattice. Moreover
+
+$$
+T_n\cap W=\varpi^{-n}X,
+\qquad
+IT_n=IT.
+\tag{15.10}
+$$
+
+The first equality follows by projecting $T_n$ to $V/W$; the second follows from (15.8).
+Since $I$ spans $J^{a-1}$, $IT$ is a full lattice in $W$. Thus
+
+$$
+\delta(T_n)=
+\operatorname{length}_{\mathcal O}
+\frac{T_n\cap W}{IT_n}
+=n\dim_kW+\delta(T_0).
+\tag{15.11}
+$$
+
+This length is an isomorphism invariant of the $G$-lattice. A $G$-linear lattice isomorphism
+extends to a $k$-linear map commuting with $R$; it therefore preserves the intrinsic subspace
+$W=J^{a-1}V$ and carries $IT_n$ to the corresponding $IT_m$. Equation (15.11) shows that the
+$T_n$ are pairwise nonisomorphic, contradicting the finiteness hypothesis. Hence $J=0$ and
+$V$ is semisimple. $\square$
+
+The growing length (15.11) is the obstruction hidden by a rational semisimplification. In a
+nontrivial unipotent extension, rescaling the deepest radical layer creates infinitely many
+integral extension depths. A finite isogeny class forbids precisely that phenomenon.
+
+### 15.4 Conditional rational Tate-module semisimplicity
+
+Combining Proposition 15.1 and Lemma 15.2 gives the desired theorem with its exact hypothesis.
+
+**Theorem 15.3 (Tate semisimplicity from isogeny-class finiteness).** Let $A/K$ be an abelian
+variety and let $\ell$ be a prime. If $(\mathrm{IF})_{A/K}$ holds, then
+
+$$
+V_\ell A\text{ is semisimple as a }\mathbf Q_\ell[G_K]\text{-module}.
+\tag{15.12}
+$$
+
+In particular,
+
+$$
+(\mathrm{FS})_{K,S_A,\dim A}
+\Longrightarrow(\mathrm{TS})_{A,K,\ell}
+\quad\text{for every }\ell.
+\tag{15.13}
+$$
+
+**Proof.** Proposition 15.1 supplies finitely many stable lattice types in $V_\ell A$.
+Lemma 15.2 supplies semisimplicity. The implication (15.13) uses (14.4). $\square$
+
+No Hom--Tate surjectivity, Frobenius-density theorem, or algebraicity of an arbitrary invariant
+subspace occurs in this proof. The geometry is used exactly once, to turn a stable lattice into
+an isogenous quotient.
+
+## 16. The exact cohomological export
+
+We now transport Theorem 15.3 through the elementary operations used by the curve-carrier
+books. Every statement in this chapter remains conditional on $(\mathrm{IF})$ or on the
+Faltings finiteness gate identified in Chapter 13.
+
+### 16.1 Curves and Jacobians
+
+**Corollary 16.1.** Let $C/K$ be a smooth projective geometrically connected curve and let
+$J=\operatorname{Jac}(C)$. If $(\mathrm{IF})_{J/K}$ holds, then for every $\ell$,
+
+$$
+H^1_{\mathrm{et}}(C_{\overline K},\mathbf Q_\ell)
+\quad\text{is semisimple as a }\mathbf Q_\ell[G_K]\text{-module}.
+\tag{16.1}
+$$
+
+**Proof.** Theorem 15.3 makes $V_\ell J$ semisimple. Formula (11.3) identifies curve
+cohomology with a Tate twist of this representation. If a representation is semisimple, so
+are its dual and every character twist, because these operations carry direct sums of simple
+modules to direct sums of simple modules. $\square$
+
+The conclusion concerns global $G_K$-semisimplicity. It does not say that a local
+Weil--Deligne operator is zero, and it does not make an integral packet projector split a Tate
+lattice.
+
+### 16.2 Coefficient extension, summands, and multiplicity spaces
+
+Let $V$ be a semisimple $\mathbf Q_\ell[G]$-module and let $E/\mathbf Q_\ell$ be finite. The
+image algebra $R$ from Lemma 15.2 is semisimple. Since characteristic zero extensions are
+separable, $R\otimes_{\mathbf Q_\ell}E$ is semisimple, so
+
+$$
+V\otimes_{\mathbf Q_\ell}E
+\tag{16.2}
+$$
+
+is semisimple. Every $G$-stable direct summand of (16.2) is semisimple. Therefore a rational
+Hecke idempotent, after the finite scalar extension on which it is defined, preserves
+semisimplicity of the selected block.
+
+Suppose a Morita evaluation identifies a selected block with
+
+$$
+P\otimes_E W,
+\tag{16.3}
+$$
+
+where $G$ acts trivially on the nonzero finite-dimensional coefficient module $P$ and acts on
+$W$. Choose $p\in P$ and $\lambda\in P^\vee$ with $\lambda(p)=1$. The maps
+
+$$
+W\xrightarrow{w\mapsto p\otimes w}P\otimes W
+\xrightarrow{\lambda\otimes1}W
+\tag{16.4}
+$$
+
+are $G$-equivariant and their composite is the identity. Thus $W$ is a direct summand of the
+ambient block and is semisimple. This proves the coefficient-extension, packet-idempotent, and
+multiplicity-space steps without adding an arithmetic hypothesis.
+
+### 16.3 The Hom--Tate boundary
+
+Only faithfulness of the Tate realization is needed above. We prove that comparison and do not
+claim the much stronger surjectivity theorem.
+
+**Proposition 16.2 (faithful Hom--Tate comparison).** For abelian varieties $A,B/K$, the map
+
+$$
+\operatorname{Hom}_K(A,B)\otimes\mathbf Z_\ell
+\longrightarrow
+\operatorname{Hom}_{G_K}(T_\ell A,T_\ell B)
+\tag{16.5}
+$$
+
+is injective.
+
+**Proof.** Put $H=\operatorname{Hom}_K(A,B)$, which is finite free by Book 36. First let
+$f\in H$ act trivially on $T_\ell A$. It kills $A[\ell^n]$ for every $n$. Since
+$[\ell^n]:A\to A$ is the quotient by that finite subgroup, the quotient universal property
+gives $f=f_n\circ[\ell^n]$ for some $f_n\in H$. Hence $f\in\ell^nH$ for every $n$, and
+$\bigcap_n\ell^nH=0$ gives $f=0$.
+
+Now let $u\in H\otimes\mathbf Z_\ell$ act trivially. For every $n$, choose $f_n\in H$ whose
+class modulo $\ell^nH$ is the class of $u$. The action of $f_n$ on $T_\ell A/\ell^nT_\ell A$
+is zero, so $f_n$ kills $A[\ell^n]$. The preceding quotient argument gives
+$f_n\in\ell^nH$. Thus $u$ is zero modulo $\ell^n$ for every $n$, hence $u=0$. $\square$
+
+Surjectivity of (16.5) is the full Hom--Tate isogeny theorem. It is not needed for
+$(\mathrm{TS})$, for Corollary 16.1, or for the raw-to-global packet passage. Proving it would
+require an additional graph-of-a-homomorphism approximation argument resting on the same
+Faltings finiteness gate. It is therefore deliberately not cited as though it were an earlier
+theorem and not included as an unused stronger conclusion.
+
+### 16.4 The packet-carrier array
+
+Let $\{C_i/K_i\}_{i=1}^r$ be the finite collection of smooth projective curve carriers used in
+a packet array, and let $J_i$ be their Jacobians. If
+
+$$
+(\mathrm{IF})_{J_i/K_i}\qquad(1\leq i\leq r)
+\tag{16.6}
+$$
+
+holds, Corollary 16.1 and Section 16.2 prove
+
+$$
+\boxed{(\mathrm{SS}_{\mathrm{array}})}
+\tag{16.7}
+$$
+
+for every relevant coefficient characteristic: each ambient rational $H^1$ is globally
+semisimple, and finite coefficient extension, packet projection, and Morita extraction retain
+that property. Consequently a raw multiplicity representation equals its global
+semisimplification and a locally computed nonzero monodromy operator is not lost merely by
+passing to that semisimplification.
+
+The full implication chain, with its unproved initial premises displayed, is
+
+$$
+[(\mathrm{FH})+(\mathrm{ZC})]\Longrightarrow(\mathrm{FS})
+\Longrightarrow(\mathrm{IF})
+\Longrightarrow(\mathrm{TS})
+\Longrightarrow(\mathrm{SS}_{\mathrm{array}}).
+\tag{16.8}
+$$
+
+Every arrow beginning with $(\mathrm{FS})\Rightarrow(\mathrm{IF})$ is proved here. The initial
+arrow is available only after the compactification, height comparison, and slope estimates that
+produce $(\mathrm{FH})$, and the separate theorem $(\mathrm{ZC})$, have been supplied; neither
+input is established by the available prior books. Thus (16.7) remains conditional.
+In particular, it would be incorrect to remove the packet-carrier ambient semisimplicity
+blocker merely on the strength of the Tate lattice argument.
+
+## 17. Synthesis
+
+This volume contains two height arguments with the same Northcott endpoint but different
+inputs. Keeping them side by side makes clear both the completed Mordell--Weil theorem and the
+exact unfinished Faltings gate.
+
+### 17.1 The two logical chains
+
+For an abelian variety $A/K$, choose a symmetric ample line bundle $L$ and an integer $m\geq2$.
+The unconditional point-height chain is
 
 $$
 \begin{array}{c}
@@ -1420,36 +2358,70 @@ L^r\text{ very ample}\Rightarrow h_L\text{ with Northcott},\\
 \text{cube identity}\Rightarrow
 \widehat h_L(P+Q)+\widehat h_L(P-Q)
 =2\widehat h_L(P)+2\widehat h_L(Q),\\
-\text{ampleness}+\text{Northcott}\Rightarrow
-\widehat h_L(P)=0\iff P\text{ torsion in a fixed number field},\\
-\text{weak Mordell--Weil}\Rightarrow |A(K)/mA(K)|<\infty,\\
-\text{contracting height descent}\Rightarrow A(K)\text{ finitely generated}.
+\text{weak Mordell--Weil}+\text{contracting height descent}
+\Rightarrow A(K)\text{ finitely generated}.
 \end{array}
+\tag{17.1}
 $$
 
-Every arrow has a distinct job. The product formula makes height projective; ampleness makes it finite; symmetry makes it quadratic; weak descent supplies finitely many congruence classes; the explicit contraction (8.2) makes iteration terminate.
+The moduli-height chain is
 
-### 11.2 Normalization ledger
+$$
+\begin{array}{c}
+\text{metrized Hodge line}+\text{arithmetic boundary estimates}
+\Rightarrow(\mathrm{FH}),\\
+(\mathrm{FH})+(\mathrm{ZC})+\text{moduli Northcott}
+\Rightarrow(\mathrm{FS})\Rightarrow(\mathrm{IF}),\\
+(\mathrm{IF})\Rightarrow\text{finitely many stable Tate-lattice types},\\
+\text{Tate's radical-length lemma}\Rightarrow(\mathrm{TS})
+\Rightarrow(\mathrm{SS}_{\mathrm{array}}).
+\end{array}
+\tag{17.2}
+$$
+
+Every arrow in the last two lines of (17.2) is proved in Chapters 14--16. The first line is the
+specialized arithmetic-geometry package absent from the established dependency chain.
+
+### 17.2 Normalization and dependency ledger
 
 The conventions used throughout are:
 
-| Object | Normalization |
+| Object | Normalization or status |
 |---|---|
 | finite absolute value over $p$ | $|p|_v=p^{-1}$ |
 | complex absolute value | usual modulus, with local degree $n_v=2$ |
 | absolute projective height | $[K:\mathbf Q]^{-1}\sum_v n_v\log\max_i|x_i|_v$ |
-| tensor power | $h_{L^r}=r h_L+O(1)$ |
-| symmetric multiplication | $[n]^*L\simeq L^{n^2}$ |
 | canonical height | $\widehat h_L=\lim q^{-2r}h_L\circ[q^r]$ |
-| pairing | $\langle P,Q\rangle_L=\tfrac12(\widehat h_L(P+Q)-\widehat h_L(P)-\widehat h_L(Q))$ |
-| pairing diagonal | $\langle P,P\rangle_L=\widehat h_L(P)$ |
+| Faltings metric | (12.2), fixed up to one dimension-dependent additive constant |
+| stable Faltings height | normalized Arakelov degree after semistable reduction |
+| finite isogeny input | $(\mathrm{IF})_{A/K}$ in (14.3) |
+| proved Tate output | $(\mathrm{IF})_{A/K}\Rightarrow(\mathrm{TS})_{A,K,\ell}$ |
+| unresolved uniform source | $(\mathrm{FH})_{K,S,g}$, $(\mathrm{ZC})_{K,g}$, and the package in Section 13.5 |
 
-Changing the bundle to $L^r$ multiplies both the canonical height and pairing by $r$. Extending the ground number field does not change an absolute height. These two facts distinguish a genuine geometric rescaling from a harmless change of arithmetic field.
+Changing $L$ to $L^r$ multiplies the canonical point height by $r$. Extending a field does
+not change an absolute projective height, and it does not change the stable Faltings height once
+semistability has been reached. These are separate assertions with separate proofs.
 
-### 11.3 Conclusion
+### 17.3 Conclusion
 
-Weil height turns projective coordinates into an arithmetic size by summing local maxima against the product formula. Northcott's theorem makes bounded size finite once both height and residue degree are bounded. The height machine transports this structure from projective space to every line bundle on a projective variety, retaining functoriality and additivity up to a bounded function.
+Weil height and the Néron--Tate limiting process complete the Mordell--Weil theorem: every
+abelian variety over a number field has a finitely generated group of rational points, and the
+same holds for every abelian quotient of a Jacobian.
 
-On an abelian variety, a symmetric ample bundle transforms under multiplication by the square of the multiplier. The limiting construction erases the bounded ambiguity and produces the Néron--Tate height, an exact nonnegative quadratic form whose zero set over a fixed number field is precisely torsion. Its polarization is a positive-definite pairing modulo torsion and supplies a genuine norm.
+For Tate-module semisimplicity, the reusable algebraic half is also complete. A stable Tate
+lattice is the Tate lattice of an isogenous quotient. If the isogeny class has finitely many
+$K$-isomorphism classes, only finitely many integral lattice types occur. Tate's
+Jacobson-radical construction shows that a nonsemisimple rational representation would create
+infinitely many types, a contradiction. Curve cohomology, coefficient factors, and multiplicity
+spaces then inherit semisimplicity exactly as required by the packet-carrier array.
 
-Weak Mordell--Weil gives finitely many classes modulo multiplication. The height norm contracts division representatives into one finite Northcott ball, so those representatives and that ball generate all rational points. Hence rational points on every abelian variety over a number field form a finitely generated abelian group. In particular, every abelian quotient of a Jacobian—including the Eisenstein quotients for which this theorem is later invoked—has a finitely generated group of rational points.
+The remaining gap is not Hom--Tate linear algebra. The first exact arithmetic input is finite
+isogeny classes. The standard uniform source is the Faltings--Shafarevich package: the arithmetic
+height bound on Siegel moduli, with its semistable Hodge theory, compactification, metrized
+Hodge/theta comparison, and slope and boundary estimates, together with the separate Zarhin
+factor-cancellation and $K$-descent theorem. The existing height machine proves what follows
+from a bound; it does not prove that bound from $S$-integrality or recover the original factors.
+Until that package is supplied by a prior volume or proved here in full,
+Faltings--Shafarevich finiteness remains unproved, while rational Tate-module semisimplicity and
+$(\mathrm{SS}_{\mathrm{array}})$ are available only conditionally on the finite-isogeny-class
+input, not as unconditional conclusions of the present corpus.

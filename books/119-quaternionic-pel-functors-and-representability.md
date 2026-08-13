@@ -190,6 +190,44 @@ $$
 
 Right multiplication by $c$ scales the form by $\operatorname{Nrd}(c)$. Requiring this reduced norm to be a rational scalar gives the common-norm group. This calculation explains both the side convention and the rational multiplier condition.
 
+It does not prove that the desired Hodge map lands in that group.  Book 118, Proposition 8.2
+shows that when the quaternionic adjoint datum has both an active split real factor and an
+inactive compact real factor, the lift is impossible: the reduced-norm exponent is odd at the
+active factor and even at the compact factor.  Thus this direct common-norm example is not a
+PEL realization of a mixed one-split datum.  Such a datum must begin with a genuinely different
+central modification satisfying Definition 1.1.
+
+Book 118, Proposition 8.3 provides such a modification in the form needed below.  If
+$L=FK$ is a CM quadratic extension embedded in $B$, regard $B$ as a rank-two right $L$-space
+with Hermitian norm $H(x,x)=\operatorname{Nrd}_B(x)$ and put
+
+$$
+\psi(x,y)=\operatorname{Tr}_{L/\mathbf Q}(\xi H(x,y)),
+\qquad c(\xi)=-\xi.
+\tag{2.1a}
+$$
+
+**Proposition 2.1A (the unitary datum is PEL-exact).**  Let $L$ act on $B$ by right
+multiplication and give it the positive involution $c$.  The identity component of the
+$L$-linear similitude group of (2.1a) is exactly the unitary common-multiplier group
+$G^{\mathrm u}$ of Book 118, (8.3c).  Its determinant law has multiplicities $(1,1)$ at the
+active real place and $(2,0)$ at every inactive real place.  Consequently
+
+$$
+(L,c,B,\psi,h^{\mathrm u})
+\tag{2.1b}
+$$
+
+is a quaternionic PEL realization in the sense of Definition 1.1, with reflex field $L$ and
+the same adjoint curve datum as $B^\times$.
+
+**Proof.**  Complex conjugation is the positive involution on the CM field $L$.  The adjoint
+of right multiplication by $a$ in (2.1a) is right multiplication by $c(a)$.  If an
+$L$-linear automorphism scales $\psi$ by a rational scalar, nondegeneracy of the trace pairing
+forces it to scale $H$ by the same scalar; this is precisely (8.3c).  Book 118, Proposition
+8.3 verifies the real signatures, positivity, weight-one types, derived group, determinant
+multiplicities, and reflex field. $\square$
+
 ### 2.2 Positivity and the quaternionic model
 
 An alternating form alone produces a symplectic group, but an abelian variety requires a positive weight-one Hodge structure. The involution is called positive when, after extending to $\mathbf R$, the trace form associated with $xx^*$ is positive in the PEL sense. Equivalently in the chosen representation, for every $h\in X$ the form

@@ -79,9 +79,9 @@ The basic group has an established polarized component construction. A connected
 
 The FLT blueprint uses a different inner form. Its automorphic forms live on the units of a totally definite quaternion algebra $D/F$, with $[F:\mathbf Q]$ even, $D$ ramified at every real place and at no finite place, parallel weight two, trivial character, and square-free level $U_1(S)$. In this normalization “weight two” is the trivial compact type at infinity. At a place of $S$, the local representation allowed by the blueprint is either Steinberg or a tamely ramified principal series $\pi(\xi_1,\xi_2)$ with $\xi_1\xi_2$ unramified.
 
-The selected global Jacquet--Langlands theorem first transfers a noncharacter packet on this totally definite $D^\times$ to a cuspidal parallel-weight-two representation $\pi$ of $\operatorname{GL}_2(\mathbf A_F)$ and preserves its good Hecke polynomials. Book 104, Theorem 9.2 then supplies the required one-split inner form whenever one can choose an odd nonempty finite set $W$ such that every $\pi_w$, for $w\in W$, is selected special or selected depth-zero or tame positive-depth dihedral. It constructs the unique quaternionic packet for the algebra ramified at every real place except the chosen active place and exactly at $W$, without using curve cohomology.
+The selected global Jacquet--Langlands theorem first transfers a noncharacter packet on this totally definite $D^\times$ to a cuspidal parallel-weight-two representation $\pi$ of $\operatorname{GL}_2(\mathbf A_F)$ and preserves its good Hecke polynomials. Book 104, Theorem 9.2 then supplies the required one-split inner form whenever one can choose a finite set $W$ such that $(d-1)+|W|$ is even and every $\pi_w$, for $w\in W$, is selected special or selected depth-zero or tame positive-depth dihedral. It constructs the unique quaternionic packet for the algebra ramified at every real place except the chosen active place and exactly at $W$, without using curve cohomology.
 
-Thus the curve carrier is unconditional in precisely this selected range. The genuine boundary is a split packet with no eligible finite place: then no odd nonempty $W$ exists. Equality of almost all spherical eigenvalues still does not manufacture a carrier outside Book 104's selected special-or-tame-dihedral image.
+Thus the curve carrier is unconditional in this parity-compatible selected range. In even degree one needs an odd nonempty eligible set. In odd degree at least three, $W=\varnothing$ works, so no eligible finite place is needed. Equality of almost all spherical eigenvalues still does not manufacture the finite ramification required in the even-degree case.
 
 ### 1.4 The logical order
 
@@ -623,7 +623,7 @@ with the following properties.
 
 For a connected central modification, the same conclusion holds only after replacing the automatic basic-group determinant construction by the explicit determinant datum of Sections 3.3--3.4 and retaining the actual reflex field as the ground field of the Galois representation.
 
-Moreover, let $F$ have even degree, fix $\tau_0$, and let $\pi$ be a cuspidal full-group parallel-weight-two representation of $\operatorname{GL}_2(\mathbf A_F)$ with compatible unitary central character. Within the selected local range of Book 104, a compact curve carrier exists unconditionally exactly when there is an odd nonempty finite set $W$ such that $\pi_w$ is selected special or selected tame dihedral for every $w\in W$. In that case Book 104, Theorem 9.2 supplies the unique packet $\Pi_B$ for the quaternion algebra ramified at every real place except $\tau_0$ and at exactly $W$; after choosing $K$ with $\Pi_{B,f}^K\ne0$, all conclusions above apply to $\Pi_B$. If $\pi$ has no eligible finite place, this theorem supplies no compact curve carrier.
+Moreover, let $d=[F:\mathbf Q]\ge2$, fix $\tau_0$, and let $\pi$ be a cuspidal full-group parallel-weight-two representation of $\operatorname{GL}_2(\mathbf A_F)$ with compatible unitary central character. Within the selected local range of Book 104, a compact curve carrier exists unconditionally whenever there is a finite set $W$ such that $(d-1)+|W|$ is even and $\pi_w$ is selected special or selected tame dihedral for every $w\in W$. In that case Book 104, Theorem 9.2 supplies the unique packet $\Pi_B$ for the quaternion algebra ramified at every real place except $\tau_0$ and at exactly $W$; after choosing $K$ with $\Pi_{B,f}^K\ne0$, all conclusions above apply to $\Pi_B$. Thus in even degree this is the old odd-nonempty eligible condition, while in odd degree one may take $W=\varnothing$ and every such split packet has a compact basic curve carrier.
 
 ### 8.2 Proof
 
@@ -675,7 +675,7 @@ The proofs in this book use exactly the following prior-book outputs.
 
 **Book 37, Weights and Weil Bounds for Curves and Abelian Varieties.** Its curve Weil theorem supplies purity of smooth proper $H^1$ and hence the weight-one bounds for the extracted multiplicity factor. Book 126 deliberately does not prove or import this purity statement.
 
-**Book 104, Global Jacquet--Langlands.** Its totally definite theorem supplies the split cusp form (8.2). For even-degree $F$, the compatible unitary central character, and one active real place, its compact one-split inverse theorem supplies (8.3) exactly when an odd nonempty finite set $W$ of selected special or selected tame-dihedral places has been chosen. It preserves the central character, multiplicity, and good right-convolution Hecke polynomials. Its proof does not use Shimura-curve cohomology, Book 125, Book 126, or the Galois extraction of this book.
+**Book 104, Global Jacquet--Langlands.** Its totally definite theorem supplies the split cusp form (8.2). For $[F:\mathbf Q]\ge2$, a compatible unitary central character, and one active real place, its compact one-split inverse theorem supplies the inverse packet when the selected finite ramification set $W$ satisfies $(d-1)+|W|$ even. It preserves the central character, multiplicity, and good right-convolution Hecke polynomials. For odd $d$ the empty set is allowed, so no eligible finite place is needed; for even $d$ this specializes to the odd-nonempty condition used in (8.3). Its proof does not use Shimura-curve cohomology, Book 125, Book 126, or the Galois extraction of this book.
 
 Finite-dimensional semisimple algebra, Jordan--Holder theory, Cayley--Hamilton, and the existence of a stable lattice for a continuous representation of a profinite group are ordinary foundational inputs. No density theorem, later local--global compatibility theorem, compatible-system theorem, or finite-flat quotient theorem is used in a proof.
 
@@ -688,12 +688,12 @@ The scope can be summarized without ambiguity.
 - No representation is attached here to an arbitrary inner form of $\operatorname{GL}_2$.
 - No modular-curve branch is claimed: the present proof dependencies do not supply the full packet multiplicity and determinant construction for that carrier.
 - No Shimura-surface cohomology claim is made.
-- No compact curve carrier is asserted when the split packet has no eligible selected special or selected tame-dihedral finite place.
+- In even degree, no compact curve carrier is asserted when the split packet has no eligible selected special or selected tame-dihedral finite place. In odd degree at least three, the empty finite ramification set already gives the basic compact carrier.
 - No strict compatibility at bad places or at the coefficient residue characteristic is claimed.
 - No canonical integral rank-two lattice or finite-flat quotient is constructed.
 - No comparison of unrelated carriers is deduced from good polynomials.
 
-These exclusions leave one coherent result: attachment from a one-split compact curve packet to its rank-two weakly compatible Galois family, with Book 104 supplying that curve packet unconditionally exactly when an odd nonempty eligible set $W$ exists.
+These exclusions leave one coherent result: attachment from a one-split compact curve packet to its rank-two weakly compatible Galois family, with Book 104 supplying that curve packet from every parity-compatible selected set $W$. This requires an odd nonempty eligible set in even degree and permits $W=\varnothing$ in odd degree.
 
 ### 9.3 Conclusion
 

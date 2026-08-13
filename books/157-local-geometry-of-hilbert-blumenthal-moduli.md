@@ -1678,7 +1678,19 @@ The restriction on semistable Kummer classes is exact. Two arbitrary triangular 
 
 **Corollary 13.2 (potential-automorphy catalog interface).** In every catalog problem in which the polarization ideal, PEL lattice, neat level, and Hilbert component are auxiliary, take the datum (3.13) and the corrected level (1.1b). Then the moduli variety supplied to arithmetic approximation is smooth and geometrically connected, and Theorem 13.1 supplies its five required kinds of nonempty local opens. Thus the catalog's local-seed clause is discharged in the stated unramified odd-prime and tensor-Tate ranges once its exact representation compatibility and completion-extension policy have been checked; no separate hypothesis of real auxiliary descent, a toroidal chart, or seed existence on a chosen polarization component remains.
 
-**Proof.** Theorem 3.3 makes the catalog reduction without changing either residual system or any desired local conclusion. Proposition 3.2 gives smooth geometric connectedness of the determinant-compatible twist. Theorem 13.1 gives nonempty local opens on that same twist, so the hypotheses of Book 154's simultaneous Moret--Bailly theorem are exactly the recorded local algebras, avoidance fields, and those opens. $\square$
+**Proof.** Theorem 3.3 makes the catalog reduction without changing either residual system or
+any desired local conclusion. Proposition 3.2 gives smooth geometric connectedness of the
+determinant-compatible twist, and Theorem 13.1 gives the asserted nonempty local opens on it.
+These discharge the local-seed clause.  To apply Book 154 with an exact completion algebra one
+must additionally supply the common moving presentation required there; the opens alone do not
+prove its degree and Abel-class compatibility. $\square$
+
+In particular, the separate good residue tubes and full-dimensional semistable boundary chart
+do not construct one smooth proper integral slice through the special packet whose special
+fiber contains a dense open of allowed good points.  Such a slice would invoke Book 154, Lemma
+5.2D's integral-open saturation, while a coset-complete finite family of good divisors would
+invoke Lemma 5.2B.  Neither geometric assertion follows from Theorem 13.1's point-centered
+neighborhoods.
 
 ### 13.3 Passing from neighborhoods to every conjugate
 
@@ -1765,7 +1777,7 @@ The semistable construction is genuinely $d$-dimensional. The period lattice $\m
 
 Ordinary reduction is open by partial Hasse invariants. Nonordinary reduction is retained on an open residue tube despite being closed in the special fiber. Semistability is retained in the full-dimensional chart by fixed positive valuation shells. Exact torsion representations and both frames are locally constant through finite etale isomorphism schemes, after only the completion extensions explicitly allowed in the datum. Proposition 3.2 and Theorem 12.1 ensure that every intersection is witnessed on the same geometrically connected twist.
 
-Finally, good reduction, ordinary or local--local type, semistability, toric rank, and finite flatness survive finite extension. Splitness can improve, frames need not descend, and valuations rescale. Theorem 13.1 and Corollary 13.2 therefore provide all five nonempty local-open inputs required by simultaneous Moret--Bailly specialization in the unramified odd-prime, monodromy-admissible catalog range. The remaining qualifications—an externally fixed nonsquare polarization class, a dyadic coefficient prime, an unramified-only frame not realized over an unramified field, or two incompatible prescribed Tate Kummer classes—are explicit changes of scope, not unresolved dependencies of the package proved here.
+Finally, good reduction, ordinary or local--local type, semistability, toric rank, and finite flatness survive finite extension. Splitness can improve, frames need not descend, and valuations rescale. Theorem 13.1 and Corollary 13.2 therefore provide all five nonempty local-open inputs required by simultaneous Moret--Bailly specialization in the unramified odd-prime, monodromy-admissible catalog range; an exact singleton mixed packet still needs Book 154's separate moving-presentation criterion. The remaining qualifications—an externally fixed nonsquare polarization class, a dyadic coefficient prime, an unramified-only frame not realized over an unramified field, or two incompatible prescribed Tate Kummer classes—are explicit changes of scope, not unresolved dependencies of the local package proved here.
 
 For a fixed smooth geometrically connected twist, Proposition 9.3 additionally gives
 base-field points at all sufficiently large good places.  This uniform statement is designed

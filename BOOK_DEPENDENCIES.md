@@ -69,7 +69,7 @@ flowchart LR
 | 38 | Néron Models and Component Groups | 11, 16, 25, 35 |
 | 39 | Integral Correspondences on Curves and Jacobians | 12, 16, 38, 36 |
 | 40 | Descent and Weak Mordell--Weil for Abelian Varieties | 29, 35, 30, 32 |
-| 41 | Heights and the Mordell--Weil Theorem | 8, 35, 40 |
+| 41 | Heights, Mordell--Weil, and the Faltings--Tate Reduction | 2, 4, 8, 13, 15, 35, 36, 38, 40 |
 | 42 | Finite-Flat Galois Representations | 2, 28, 34, 17 |
 | 43 | Elliptic Curves over DVRs | 1, 2, 11 |
 | 44 | Tate Curves and Multiplicative Reduction | 2, 43 |
@@ -149,14 +149,14 @@ flowchart LR
 | 118 | Shimura Data and Canonical Models in the FLT Cases | 4, 115, 116, 117 |
 | 119 | Quaternionic PEL Functors and Representability | 10, 13, 65, 35, 115, 118 |
 | 120 | Uniformization, Components, and Hecke Descent for Shimura Curves | 58, 39, 118, 119 |
-| 121 | Good Integral Models of Quaternionic Shimura Curves | 15, 58, 19, 35, 61, 55, 119 |
-| 122 | Semistable Models and Monodromy of Quaternionic Shimura Curves | 11, 12, 16, 22, 35, 37, 76, 119, 121 |
+| 121 | Good Integral Models of Quaternionic Shimura Curves | 15, 58, 19, 35, 36, 61, 55, 118, 119 |
+| 122 | Semistable Models and Monodromy of Quaternionic Shimura Curves | 11, 12, 16, 22, 35, 37, 76, 118, 119, 121 |
 | 123 | Modular and Shimura Curves | 110, 111, 112, 114, 115, 116, 118, 119, 121, 122, 120 |
 | 124 | Hecke Correspondences on Curves and Jacobians | 39, 83, 84, 114, 120, 123 |
 | 125 | Automorphic Decomposition of Shimura-Curve $H^1$ | 21, 47, 36, 96, 104, 87, 124, 118, 119, 120 |
 | 126 | Galois Representations from Weight-Two Shimura-Curve Cohomology | 17, 21, 47, 115, 125 |
 | 127 | Galois Representations Attached to Weight-Two Automorphic Forms | 37, 104, 125, 126 |
-| 128 | Local--Global Compatibility for Weight-Two Galois Representations | 22, 61, 75, 76, 104, 121, 122, 125, 126 |
+| 128 | Local--Global Compatibility for Weight-Two Galois Representations | 22, 41, 61, 75, 76, 104, 118, 121, 122, 125, 126 |
 | 129 | Galois Lattices and Finite-Flat Closures in Abelian Tate Modules | 35, 26, 27, 28, 34, 42, 45, 52, 53, 54, 125, 126 |
 | 130 | Modular Curves $X_0(N)$ and $X_1(N)$ | 110, 111, 112, 113 |
 | 131 | Jacobians of Modular Curves | 47, 25, 35, 38, 40, 113, 114, 130 |
@@ -182,7 +182,7 @@ flowchart LR
 | 151 | Semistable Full-Two Residual Irreducibility | 6, 35, 42, 44, 45, 51, 149, 150 |
 | 152 | Deep-Level Quaternionic Modules and Diamond Actions | 144, 82, 83, 84, 85, 139 |
 | 153 | Hilbert Irreducibility and Arithmetic Approximation | 2, 17, 37 |
-| 154 | Moret–Bailly’s Theorem | 8, 10, 58, 153 |
+| 154 | Moret–Bailly’s Theorem | 8, 9, 10, 40, 41, 58, 153 |
 | 155 | Galois and Solvable Refinements of Arithmetic Approximation | 2, 6, 153, 154, 142 |
 | 156 | Hilbert--Blumenthal Moduli and Two-Prime Level Covers | 17, 10, 13, 35, 55, 115, 116 |
 | 157 | Local Geometry of Hilbert--Blumenthal Moduli | 2, 37, 58, 60, 43, 44, 51, 54, 154, 156 |
@@ -196,7 +196,7 @@ flowchart LR
 | 165 | Local Conditions for Hardly-Ramified Minimal Deformations | 30, 31, 32, 44, 63, 66, 67, 68, 164 |
 | 166 | Supported Galois Cohomology and Selmer Calculations | 24, 30, 31, 32, 33, 69, 165 |
 | 167 | Relation Obstructions and Poitou--Tate Corrections | 165, 166 |
-| 168 | Compatible Coefficient Systems and Purity | 97, 122, 127, 128, 142 |
+| 168 | Compatible Coefficient Systems and Purity | 41, 97, 118, 122, 127, 128, 142 |
 | 169 | The Eisenstein Ideal | 85, 113, 114, 131, 132, 133, 134, 147, 148, 149, 142 |
 | 170 | Hecke-Valued Galois Representations and Nonminimal Reciprocity | 68, 69, 85, 127, 128, 138, 140, 62, 142 |
 | 171 | The Minimal Totally-Real Deformation--Hecke Problem | 69, 71, 85, 124, 127, 65, 138, 170, 141 |
@@ -207,21 +207,22 @@ flowchart LR
 | 176 | Nonminimal Modularity Lifting | 109, 173, 138, 139, 140, 170, 175, 174 |
 | 177 | Potential Modularity of Two-Dimensional Representations | 104, 98, 127, 176, 154, 158, 142 |
 | 178 | Auxiliary Dihedral Data and Residual Potential Modularity | 6, 104, 98, 127, 141, 175, 154, 142, 155, 156, 157 |
-| 179 | Compatible Systems of Galois Representations | 168, 141, 142 |
+| 179 | Compatible Systems of Galois Representations | 41, 168, 141, 142 |
 | 180 | Brauer Induction and Descent of Automorphy | 24, 75, 98, 109, 168 |
 | 181 | Finite Image and the Balanced Minimal-Lift Argument | 57, 62, 64, 141, 164, 165, 166, 167, 173 |
 | 182 | Potential Automorphy and Galois Refinement of a Chosen Lift | 6, 44, 109, 127, 128, 142, 153, 154, 155, 157, 164, 165, 168, 173, 176, 178, 181 |
-| 183 | Brauer Induction for Automorphy Families | 98, 108, 109, 127, 128, 142, 168, 180, 182 |
+| 183 | Brauer Induction for Automorphy Families | 41, 98, 108, 109, 127, 128, 142, 168, 180, 182 |
 | 184 | Brauer Characters and Effectivity of Compatible Families | 24, 57, 180, 183 |
 | 185 | Compatible Systems over the Base Field | 168, 180, 182, 183, 184 |
 | 186 | Changing the Coefficient Prime while Keeping the Frey Special Place | 185 |
-| 187 | The Fixed-Three Integral Local Theory | 3, 42, 54, 82, 115, 118, 119, 121, 125, 127, 128, 129, 142, 161, 180, 182, 185, 186 |
+| 187 | The Fixed-Three Integral Local Theory | 3, 6, 10, 26, 42, 54, 82, 118, 119, 121, 125, 127, 128, 129, 161, 182, 185, 186 |
 | 188 | Hardly Ramified $3$-adic Representations | 161, 185, 187 |
 
 ## Named unresolved theorem hypotheses
 
-These conditions are assumptions or missing source theorems, not dependency nodes. The list is
-deliberately separate from the acyclic manuscript graph.
+These conditions are assumptions or missing source theorems, not dependency nodes, except for
+the one interface explicitly marked closed below. The list is deliberately separate from the
+acyclic manuscript graph so that the closed record cannot be mistaken for a remaining blocker.
 
 - **Localized abelian Ihara:** vanishing of the localized noncongruence-character quotient
   required for saturated two-map Ihara; the current Ihara manuscript isolates but does not prove it.
@@ -253,29 +254,34 @@ deliberately separate from the acyclic manuscript graph.
   reciprocity for the actual active set.  Fixed-prime faithful-order augmentation is formal
   once the joint strict product twist exists; auxiliary acting-image injectivity follows after
   full base $R=T$ and is not a separate input to the reduced finite-level comparison.
-- **Controlled residual automorphic seed:** the finite Picard-quotient congruence in the
-  existing curve--pencil route, or another common moving presentation, for the actual packet
-  having one distinguished special factor and all remaining factors good; after the resulting
-  normal-top specialization, a
+- **Controlled residual automorphic seed:** the degree-indexed allowed-good Abel condition in
+  the existing curve--pencil route, its one-tube finite Picard-quotient specialization, a
+  coset-complete compensating-good-packet theorem, the smooth-integral-slice/dense-good-open
+  saturation criterion, or another common moving presentation, for the actual packet having one
+  distinguished special factor and all remaining factors good; after the resulting normal-top
+  specialization, a
   saturated path from the target eigensystem to a nonzero clean bottom minimal SP localization;
-  and the later all-elementary attachment-and-descent record, including distinguished
-  attachment of cyclic descent candidates over odd-degree fixed fields and a raw
-  dyadic SP carrier despite the minimal packet's lack of an eligible ramification place away
-  from two.  The lifting faces also require the separately named one-prime and several-place
-  inputs above.  Once actual raw carriers exist, Books 128, 168, and 183 close the formal
-  raw-to-global reduction; the remaining arithmetic input is the separately named
+  and the later controlled raw-local record, including a raw dyadic SP carrier in the
+  remaining even-degree minimal case and the actual principal/dihedral descent complexes,
+  type and exchange lines, trivial-wild-inertia and zero-monodromy calculations, and Frobenius return maps at the retained
+  auxiliary primes. Book 128, Lemma 3.2 then gives their raw-to-global comparisons formally.
+  Book 182 now constructs parity-complete basic carriers and attachment for
+  the cyclic descent candidates, including odd-degree fixed fields.  The lifting faces also
+  require the separately named one-prime and several-place inputs above. Once actual raw SP
+  carriers exist, Books 128, 168, and 183 close the formal nonzero-monodromy raw-to-global
+  reduction; the remaining arithmetic input for that SP record is the separately named
   packet-carrier ambient semisimplicity theorem below.  Book 178's protected
   anti-cyclotomic Grunwald correction lets Book 182 impose the exact unramified auxiliary
-  Frobenius values at $2$ and $\ell$; it then constructs the exact paired Frey/auxiliary frames
-  over $\mathbf Q_2$ and $\mathbf Q_\ell$ by adapting the local elliptic seeds and neat source.
+  Frobenius values at $2$, $3$, and $\ell$; it then constructs the exact paired Frey/auxiliary frames
+  over $\mathbf Q_2$, $\mathbf Q_3$, and $\mathbf Q_\ell$ by adapting the local elliptic seeds and neat source.
   It forces constant-field avoidance with split Chebotarev certificate primes.  The first
   remaining pre-specialization input is the singleton common presentation.  Once that is
   supplied, Book 182 proves the remaining
   normal-closure control, applies Book 178's corrected relative-ray compatibility in the
   rational-base Frey case, and takes the top
   itself as seed field, makes upward transfer vacuous, and reduces the local and group-theoretic
-  descent checks to Book 109 while retaining the distinguished attachment that theorem needs
-  for each candidate cyclic descent.  Book 178's general totally-real-base ray hypothesis remains
+  descent checks to Book 109. Its parity-complete carrier theorem supplies the distinguished
+  attachment and cyclic compatibility for every candidate descent. Book 178's general totally-real-base ray hypothesis remains
   separate.
 - **Balanced-lift finiteness:** no separate restricted reduced-finiteness hypothesis remains.
   From the exact automorphic seed, Book 173 makes the whole restricted ring finite free and Book
@@ -288,12 +294,22 @@ deliberately separate from the acyclic manuscript graph.
   extension, packet idempotents, and Morita extraction, so each raw multiplicity representation
   equals its global semisimplification. It therefore preserves the complete signed special
   Weil--Deligne pair, including nonzero $N$, its line, and its Frobenius sign, at every
-  coefficient embedding with $q\ne2$. Rational Tate-module semisimplicity $(\mathrm{TS})$ for
-  the Jacobians of the actual carriers is sufficient, but the current corpus only invokes that
-  theorem in Book 179 and neither proves it nor records a prior source for it. This is separate
-  from constructing the raw dyadic carriers. At $q=2$ it proves global semisimplicity but does
-  not extend the prime-to-coefficient Weil--Deligne comparison at the dyadic base place; Book
-  184's $(\mathrm{AI}_2)$ remains a separate effectivity gate.
+  coefficient embedding with $q\ne2$. Book 41 now proves, without Hom--Tate surjectivity, the
+  complete chain from finiteness of each carrier Jacobian's $K$-isogeny class to rational
+  Tate-module semisimplicity $(\mathrm{TS})$ and thence to
+  $(\mathrm{SS}_{\mathrm{array}})$. It also proves the Faltings-height isogeny formula and the
+  formal moduli-Northcott reductions. The first exact arithmetic input is finiteness of the
+  carrier Jacobians' $K$-isogeny classes. A standard uniform source is
+  Faltings--Shafarevich finiteness. Book 41's moduli route to that theorem has two separate
+  unresolved parts: the arithmetic Siegel compactification, stable-Hodge base-change formula,
+  metrized Hodge/theta comparison, and slope/boundary estimates needed for the moduli-height
+  bound, and the Zarhin factor-cancellation/$K$-descent theorem needed after Northcott. Potential
+  semistable reduction itself is proved later in Book 61, but that does not supply these height
+  and cancellation inputs. The blocker therefore cannot honestly be removed.
+  This is separate from constructing the raw dyadic carriers. At $q=2$ the conditional theorem
+  proves global semisimplicity but does not extend the prime-to-coefficient Weil--Deligne
+  comparison at the dyadic base place; Book 184's $(\mathrm{AI}_2)$ remains a separate
+  effectivity gate.
 - **Coefficient-two top-packet irreducibility $(\mathrm{AI}_2)$:** absolute irreducibility in
   characteristic zero of the already existing top-packet realization at every coefficient
   place of residue characteristic two. It is a uniform sufficient input for the Mackey Gram
@@ -306,28 +322,33 @@ deliberately separate from the acyclic manuscript graph.
   monodromy for the top packet, which implies $(\mathrm{AI}_2)$, but Books 128 and 168 do not
   prove it. The coefficient-three route through Books 186--188 uses only places away from two
   and does not use this hypothesis.
-- **Positive fixed-three packet carriers $(\mathrm{AVCar}_{3,\ell}^+)$,
+- **Closed: positive fixed-three packet carriers $(\mathrm{AVCar}_{3,\ell}^+)$,
   $(\mathrm{Car}_3^+)$, and $(\mathrm{IC}_3)$:** name $3$ among the split sensitive places
-  before constructing the controlled top, supply the corresponding split evaluated packet
-  over $\mathbf Q_3$ in the moving datum, and, for one integral Brauer relation, supply a
-  good abelian carrier for every positive elementary term. A sufficient geometric version
-  $(\mathrm{Car}_3^+)$ supplies an exact direct-trace PEL cover of each compact
-  division-quaternion basic carrier, including its finite morphism on compatible full
-  component unions;
-  sphericality and equality of adjoint groups alone do not supply it. Book 187, Proposition
-  2.2 chooses its level and integral PEL data so that the curve and its relative Jacobian have
-  good reduction at $3$ and at the old coefficient prime. Theorem 2.3 then uses nonzero-oldvector embeddings,
+  before constructing the controlled top. Book 182 now supplies the corresponding split
+  evaluated packet over $\mathbf Q_3$ and parity-complete basic carriers for every elementary
+  term. Book 118 constructs the required replacement for the impossible direct common-norm
+  group: after adjoining an imaginary quadratic field nonsplit at $2$ and split at $3\ell$,
+  its unitary common-multiplier group is PEL-exact, has the same adjoint one-split datum, and
+  finitely dominates every routed basic component after CM base change. The trivial central
+  character permits central saturation of the basic level; its connected fiber-product argument
+  then identifies the comparison component at a preliminary coarse unitary level, passes to a
+  fine unitary level away from $3\ell$, and chooses its component field unramified there.
+  Book 121 verifies the split odd
+  hyperspecial local model and excludes its boundary by anisotropy of the reduced-norm
+  Hermitian space. Weil restriction of the product of component Jacobians returns a good
+  abelian carrier over the elementary fixed field. Thus Book 187, Proposition 2.2 proves
+  $(\mathrm{Car}_3^+)\Rightarrow(\mathrm{AVCar}_{3,\ell}^+)$ by rational pullback. Theorem
+  2.3 then uses nonzero-oldvector embeddings,
   semisimplification, commensurability, local Mackey decomposition, saturated intersection,
   and schematic closure to construct the flat companion $(\mathrm{IC}_3)$. No integral
   packet idempotent, negative-term carrier, or integral Brauer cancellation is required.
   Thus $(\mathrm{IC}_3)$ is not an independent post-assembly field of the admitted
-  compatible-family arithmetic core after the positive good carriers exist. The unresolved
-  input includes the split $\mathbf Q_3$ packet (Book 182, Proposition 6.2A constructs only
-  the packets over $\mathbf Q_2$ and $\mathbf Q_\ell$) and the positive
-  good-abelian-carrier theorem, including the additional exact PEL
-  realization and finite cover when Proposition 2.2 is used; current sources neither construct the required
-  positive list nor exhibit a sign-controlled integral Brauer relation avoiding every missing
-  carrier. Ambient Tate-module semisimplicity is unnecessary for this fixed-three substatement
+  compatible-family arithmetic core. This is a positive-only geometric construction, not
+  integral Brauer effectivity. Book 118's parity
+  calculation remains essential: it proves that changing the multiplier, order, or level of
+  the direct trace group cannot produce the cover; the CM-unitary center is genuinely
+  different. Ambient
+  Tate-module semisimplicity is unnecessary for this fixed-three substatement
   because Book 129 transfers the finite-flat tower from the raw plane to its semisimplification
   by subquotients.
 - **Clean support $(\mathrm U)$ / conductor support $(\mathrm{Cond}_2)$:** Book 185,
@@ -341,9 +362,13 @@ deliberately separate from the acyclic manuscript graph.
   good-carrier choice already removes $q=\ell$ for the selected member. Ramified
   controlled-top primes can acquire tame principal or dihedral descent factors, so the
   auxiliary packets cannot all be declared spherical.
-  Their actual type lines, zero monodromy, exchange and Frobenius return maps, and
-  raw-to-global comparisons are not supplied by the current packet input. Equality of
-  almost-all Frobenius polynomials is not a substitute.
+  Their actual descent complexes, type lines, trivial wild inertia, zero monodromy, exchange, and Frobenius return
+  maps are not supplied by the current packet input. Book 128, Lemma 3.2 makes raw-to-global
+  passage automatic after $N=0$ is proved, so ambient semisimplicity is not a separate AUX
+  input. Equality of
+  almost-all Frobenius polynomials is not a substitute. These data are the auxiliary-local
+  clause of the controlled attachment geometry already required before Book 183, not a new
+  post-assembly or integral Brauer-effectivity theorem.
 
 Consequently the final conditional-FLT spine is **not unconditionally closed**. No review or
 catalog status may be read as claiming otherwise.

@@ -68,7 +68,7 @@ dependency spine is not closed.
 | 38 | Néron Models and Component Groups | [x] | [x] | — | — |
 | 39 | Integral Correspondences on Curves and Jacobians | [x] | [x] | — | — |
 | 40 | Descent and Weak Mordell--Weil for Abelian Varieties | [x] | [x] | — | — |
-| 41 | Heights and the Mordell--Weil Theorem | [x] | [x] | — | — |
+| 41 | Heights, Mordell--Weil, and the Faltings--Tate Reduction | [x] | [x] | — | — |
 | 42 | Finite-Flat Galois Representations | [x] | [x] | — | — |
 | 43 | Elliptic Curves over DVRs | [x] | [x] | — | — |
 | 44 | Tate Curves and Multiplicative Reduction | [x] | [x] | — | — |

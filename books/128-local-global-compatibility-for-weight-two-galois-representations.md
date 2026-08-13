@@ -222,16 +222,17 @@ $$
 and Galois acts on the raw multiplicity space
 $W^{\mathrm{raw}}_{\Pi,\lambda}$.
 
-For the FLT route, existence of this carrier is a theorem only in the exact
-one-split range already established. Let $F$ be totally real of even degree,
-fix the active real place, and let $\pi$ be a cuspidal full-group
-parallel-weight-two packet. If there is an odd nonempty set $W$ of finite
-places at which $\pi_w$ is selected special or selected tame dihedral, Book
-104 constructs the packet on the quaternion algebra ramified at every other
-real place and exactly at $W$. Book 125 realizes that packet in the $H^1$ of
-the compact one-split curve, and Book 126 extracts (1.13). Principal-series,
-primitive-wild, and excluded dyadic factors are not made eligible as members
-of $W$ by this construction.
+Existence of this carrier is a theorem in the exact one-split range already
+established. Let $F$ be totally real of degree $d\ge2$, fix the active real
+place, and let $\pi$ be a cuspidal full-group parallel-weight-two packet. If
+there is a finite set $W$ with $(d-1)+|W|$ even at which every $\pi_w$ is
+selected special or selected tame dihedral, Book 104 constructs the packet on
+the quaternion algebra ramified at every other real place and exactly at $W$.
+Book 125 realizes that packet in the $H^1$ of the compact one-split curve, and
+Book 126 extracts (1.13). In even degree $W$ is odd and nonempty; this is the
+case used by the FLT route. In odd degree $W$ is even and may be empty.
+Principal-series, primitive-wild, and excluded dyadic factors are not made
+eligible as nonempty members of $W$ by this construction.
 
 To study a particular finite place $v$ by the split-Iwahori geometry of Book
 122 one must moreover choose this carrier with $v\notin W$, so that the
@@ -240,11 +241,11 @@ of Section 6.2. Thus the existence of some eligible carrier is not by itself
 the existence of a split-Iwahori carrier at every desired $v$. In the
 square-free FLT specialization a Steinberg place is eligible for $W$, whereas
 a tame principal-series place is not. These qualifications are the carrier
-boundary used below. In particular, if the desired split-Iwahori place $v$ is
-the only eligible finite place, every nonempty eligible $W$ contains $v$ and
-Book 104 supplies no one-split carrier that is split at $v$. The existence of
-the curve carrier used for good-prime attachment does not close that bad-place
-gap.
+boundary used below. In particular, in even degree, if the desired split-Iwahori place $v$ is
+the only eligible finite place, every parity-compatible $W$ is nonempty and contains $v$, so
+Book 104 supplies no one-split carrier that is split at $v$. In odd degree $W=\varnothing$
+is parity-compatible. The existence of the curve carrier used for good-prime attachment does
+not by itself close the separate parahoric PEL gap.
 
 At a good place, the curve has a smooth proper integral model and ordinary specialization suffices. At a bad parahoric place, a verified rank-two lattice-chain local model gives a strict semistable curve after the explicit regularization. Nearby cycles then replace ordinary specialization. Prime-to-$p$ Hecke correspondences extend to these models and commute with inertia, Frobenius, restriction, Gysin, and monodromy.
 
@@ -260,7 +261,7 @@ The local results in this book require $u\nmid\ell$. They cover:
 - a recognition criterion for tame dihedral types whose quadratic cover,
   inducing character, and type projector occur in that descent complex.
 
-No claim at $u\mid\ell$ follows from nearby cycles with $\ell$-adic coefficients. Primitive wild parameters and finite wild descent are outside the selected local correspondence. No general local Langlands theorem is asserted. No integral direct summand follows from a rational Hecke projector. Finally, bad-place assertions for $\rho_{\Pi,\lambda}$ require the raw-to-global passage of Chapter 9. These are theorem boundaries, not omissions to be filled by a change of notation.
+No claim at $u\mid\ell$ follows from nearby cycles with $\ell$-adic coefficients. Primitive wild parameters and finite wild descent are outside the selected local correspondence. No general local Langlands theorem is asserted. No integral direct summand follows from a rational Hecke projector. Finally, nonzero-monodromy bad-place assertions for $\rho_{\Pi,\lambda}$ require the raw-to-global passage of Chapter 9; Lemma 3.2 below handles zero monodromy. These are theorem boundaries, not omissions to be filled by a change of notation.
 
 ## 2. The rank-two Weil--Deligne dictionary
 
@@ -641,6 +642,28 @@ Then $r_1\simeq r_2$.
 
 For an irreducible dihedral representation the orbit is determined by $\theta$ and $\theta^\sigma$; one return scalar, equivalently the specified inducing character on a Frobenius lift in $W_L$, completes the parameter. In the unramified case, inertial type alone leaves an unramified-twist ambiguity.
 
+**Lemma 3.2 (zero monodromy survives global semisimplification).** Let $W$ be a continuous
+$L_\lambda$-representation of $G_E$, let $W^{\mathrm{ss}}$ be its global semisimplification,
+and let $u\nmid\ell$. If the monodromy operator of $W|_{G_{E_u}}$ is zero, then
+
+$$
+\operatorname{WD}_u(W)^{\mathrm{F\!-\!ss}}
+\simeq
+\operatorname{WD}_u(W^{\mathrm{ss}})^{\mathrm{F\!-\!ss}}.
+\tag{3.3a}
+$$
+
+**Proof.** Vanishing monodromy is equivalent to finite inertia after restriction to an open
+subgroup. It passes to every global subquotient, so the local representation underlying
+$W^{\mathrm{ss}}$ also has zero monodromy. Global semisimplification preserves the trace of
+every group element, hence the two finite-inertia Weil representations have the same character
+on every element of $W_{E_u}$. Their Frobenius semisimplifications are semisimple
+representations with that same character. Brauer--Nesbitt therefore identifies them. $\square$
+
+This lemma is special to the zero-monodromy rows. A globally nonsplit unipotent extension has
+nonzero $N$ while its global semisimplification can have $N=0$, so it does not repair the
+special case.
+
 ### 3.4 Hecke isolation and exactness
 
 Let $H$ be a cohomology group or the total cohomology of a stratum complex, and let a finite semisimple Hecke algebra $A$ commute with $W_K$ and $N$. For a simple module $P$ define the raw multiplicity space
@@ -667,7 +690,8 @@ $$
 and similarly for images and invariant subspaces.
 
 This argument is rational and computes the local parameter of the raw Hom
-space. It says nothing by itself about the global semisimplification (1.3).
+space. Apart from the zero-monodromy case of Lemma 3.2, it says nothing by itself about the
+global semisimplification (1.3).
 For an integral Hecke order, Hom need not be exact, and a rational projector
 need not preserve the ambient lattice. Section 11.2 keeps that distinction
 visible.
@@ -960,6 +984,11 @@ The scalar comparison is now a theorem in the exact one-step Iwahori range.
 Assume the direct quaternion-trace curve and decomposition-stable component
 union of Book 122. At $v$, assume either its completely split odd ledger or
 its dyadically tensor-split ledger; in the latter case $K\simeq\mathbf Q_2$.
+This is a recognition theorem for a supplied raw carrier. Book 118, Proposition
+8.2 and Book 122, Section 1.3 show that the direct common-norm realization is not
+an available Hodge lift for a mixed one-split datum; a non-common-norm central
+modification requires its own parahoric and finite-component comparison before
+the theorem can be applied in that setting.
 Impose the oriented one-step Iwahori chain and the characteristic-zero packet
 factorization
 
@@ -1159,14 +1188,14 @@ $$
 \tag{7.3}
 $$
 
-after the chosen coefficient embedding. If $(\mathrm R_u)$ holds, the same
-comparison holds for $\rho_{\Pi,\lambda}$.
+after the chosen coefficient embedding. The same comparison holds for
+$\rho_{\Pi,\lambda}$ without an additional $(\mathrm R_u)$ hypothesis.
 
 **Proof.** The first two hypotheses identify the restrictions of the two Weil
 representations to inertia. The third gives $N=0$. The fourth identifies the
 Frobenius return maps. Lemma 3.1 then gives an isomorphism of
-Frobenius-semisimple Weil representations. Condition $(\mathrm R_u)$ transfers
-it to the global semisimplification. $\square$
+Frobenius-semisimple Weil representations. The third hypothesis also lets Lemma 3.2 transfer
+the pair to the global semisimplification. $\square$
 
 If monodromy does not vanish, rank two makes the selected scalar-special case
 equally rigid.
@@ -1320,17 +1349,16 @@ $$
 \tag{8.5}
 $$
 
-If $(\mathrm R_u)$ holds, the same comparison holds for
-$\rho_{\Pi,\lambda}$ and hence equals $D(\Pi_v)$.
+The same comparison holds for $\rho_{\Pi,\lambda}$ and hence equals $D(\Pi_v)$, without an
+additional $(\mathrm R_u)$ hypothesis.
 
 **Proof.** The equivariant descent module gives the restriction to inertia, in
 the form (2.19) or (8.4). Vanishing monodromy gives $N=0$. The exchange and
 return maps supply the remaining entries in the induced matrices. Lemma 3.1,
-or directly (8.1), identifies the Weil representations. Equation (2.18)
+or directly (8.1), identifies the Weil representations, and Lemma 3.2 transfers the
+zero-monodromy pair to the global semisimplification. Equation (2.18)
 identifies this shifted induced parameter with the rectified automorphic
-induction. Condition
-$(\mathrm R_u)$ gives the assertion for the global semisimplification.
-$\square$
+induction. $\square$
 
 The theorem is unchanged after extending the coefficient field enough to
 contain the values of $\theta_v$. Its conductor and epsilon factor then agree
@@ -1384,8 +1412,9 @@ $$
 \tag{9.2}
 $$
 
-This is the exact hypothesis needed to transfer any bad-place computation in
-Chapters 5--8 to the globally stated representation.
+This is the exact hypothesis needed to transfer a nonzero-monodromy bad-place computation in
+Chapters 5--8 to the globally stated representation. Lemma 3.2 proves it automatically when
+the raw monodromy is zero.
 
 **Lemma 9.1 (safe raw-to-global passage).** Condition $(\mathrm R_u)$ holds
 for every $u\nmid\ell$ if $W^{\mathrm{raw}}_{\Pi,\lambda}$ is globally
@@ -1476,9 +1505,9 @@ supply global irreducibility either.
 
 In the FLT situation of Corollary 9.3, absolute residual irreducibility closes
 the passage without using any local monodromy and hence without circularity.
-For a packet or coefficient place outside that situation, an application at
-a bad place must still provide one of the hypotheses in Lemma 9.1 or prove
-(9.2) directly. No general semisimplicity statement is imported from Faltings
+For a packet or coefficient place outside that situation, an application at a
+nonzero-monodromy bad place must still provide one of the hypotheses in Lemma 9.1 or prove
+(9.2) directly; Lemma 3.2 handles the zero-monodromy case. No general semisimplicity statement is imported from Faltings
 without its hypotheses and a proved route from the selected multiplicity Hom
 space. Equality of conductors cannot fill this boundary. By contrast, the
 former special-line scalar $(\mathrm B_v)$ is now proved by Book 122 under
@@ -1559,10 +1588,16 @@ abelian variety }A/K\text{ over a number field and every }\ell.}
 $$
 
 It is enough to assume only the finite application-specific instance of $(\mathrm{TS})$ for
-the Jacobians of the actual packet carriers. The books preceding this one do not prove
-$(\mathrm{TS})$. In particular, Book 36, Section 15.4 explicitly warns that semisimplicity of
-the isogeny category of abelian varieties does not imply semisimplicity of the Galois module,
-and the Hecke algebra's semisimplicity acts in the commuting factor rather than on $G_E$.
+the Jacobians of the actual packet carriers. Book 41, Theorem 15.3 and Corollary 16.1 prove
+this instance from finiteness of the $K$-isogeny class of each carrier Jacobian, using Tate's
+stable-lattice and Jacobson-radical argument. Those finite isogeny classes are the exact
+application-specific arithmetic input. Book 41's standard uniform source is
+Faltings--Shafarevich finiteness, whose moduli route still needs both the arithmetic height
+package and the separate Zarhin factor-cancellation/$K$-descent theorem. Thus the formal
+Tate-module reduction is proved, but $(\mathrm{TS})$ is not unconditional in the present
+corpus. Book 36, Section 15.4 correctly warns that semisimplicity of the isogeny category alone
+does not imply semisimplicity of the Galois module, and the Hecke algebra's semisimplicity acts
+in the commuting factor rather than on $G_E$.
 
 The reduction handles coefficient embeddings uniformly: for a fixed $\ell$, one ambient
 $\mathbf Q_\ell$-semisimplicity statement survives every finite realization field and every
@@ -1857,8 +1892,8 @@ coefficient embedding. Then:
 4. **Tame principal comparison.** Under the ordered-character,
    type-projector, zero-monodromy, and Frobenius-return hypotheses of
    Theorem 7.1, the raw parameter is
-   $(\chi_{1,v}\oplus\chi_{2,v},0)=D(\Pi_v)$. If
-   $(\mathrm R_u)$ holds, the same is true for $\rho_{\Pi,\lambda}$.
+   $(\chi_{1,v}\oplus\chi_{2,v},0)=D(\Pi_v)$. Lemma 3.2 makes the same
+   statement automatic for $\rho_{\Pi,\lambda}$.
 
 5. **Tame scalar-special descent.** Under the hypotheses of Corollary 7.2,
    the raw parameter is $\operatorname{St}(\xi_v,\delta_v)=D(\Pi_v)$. If
@@ -1869,18 +1904,19 @@ coefficient embedding. Then:
    parameter is
    $\operatorname{Ind}_{W_L}^{W_K}\theta_v=D(\Pi_v)$ for
    $\Pi_v=\operatorname{AI}_{L/K}(\theta_v^{\mathrm{cen}})$ and
-   $\theta_v=\theta_v^{\mathrm{cen}}|\cdot|_L^{-1/2}$. If $(\mathrm R_u)$
-   holds, the same is true for $\rho_{\Pi,\lambda}$.
+   $\theta_v=\theta_v^{\mathrm{cen}}|\cdot|_L^{-1/2}$. Lemma 3.2 makes the
+   same statement automatic for $\rho_{\Pi,\lambda}$.
 
 7. **Raw-to-global passage.** In the selected FLT one-split carrier range,
    if the stable lattice has the absolutely irreducible residual reduction
    specified by the FLT input, Corollary 9.3 proves
    $W^{\mathrm{raw}}_{\Pi,\lambda}\simeq\rho_{\Pi,\lambda}$. Thus every bad
-   comparison in parts 3--6 whose stated geometric package is available is a
+   nonzero-monodromy comparison in parts 3 and 5 whose stated geometric package is available is a
    comparison for $\rho_{\Pi,\lambda}$ with no additional $(\mathrm R_u)$
-   assumption. Outside that residual-irreducible situation, the displayed
+   assumption. Outside that residual-irreducible situation, the displayed special
    raw comparisons remain valid, but their transfer to
-   $\rho_{\Pi,\lambda}$ requires exactly $(\mathrm R_u)$.
+   $\rho_{\Pi,\lambda}$ requires exactly $(\mathrm R_u)$. Parts 4 and 6 need no
+   irreducibility or ambient semisimplicity because their monodromy is zero.
 
 In every case where equality with $D(\Pi_v)$ has been obtained, Euler factors,
 Artin and Swan conductors, monodromy ranks, and epsilon factors for a fixed
@@ -1909,8 +1945,9 @@ descent, the type projectors commute with every differential and with
 monodromy. The prescribed inertial characters and Frobenius return maps
 identify the whole Weil representation by Lemma 3.1, proving parts 4--5. The
 quadratic character-line and exchange calculation of Chapter 8 proves part 6.
-In every bad case, $(\mathrm R_u)$ is precisely the passage from the computed
-raw parameter to the stated global semisimplification. Lemma 9.2 and
+Lemma 3.2 supplies the raw-to-global passage in the zero-monodromy parts 4 and 6. In the
+nonzero-monodromy parts 3 and 5, $(\mathrm R_u)$ remains precisely the passage from the
+computed raw parameter to the stated global semisimplification. Lemma 9.2 and
 Corollary 9.3 prove this passage in part 7 from absolute residual
 irreducibility, without using the local comparison itself.
 
@@ -1933,9 +1970,11 @@ N^{\mathrm{raw}}_\Pi=0.
 \tag{12.1}
 $$
 
-It does not follow that the model is smooth. The same equivalence for
-$\rho_{\Pi,\lambda}$ requires $(\mathrm R_u)$, which is automatic under
-Corollary 9.3. Under the special hypotheses,
+It does not follow that the model is smooth.  If
+$N^{\mathrm{raw}}_\Pi=0$, Lemma 3.2 also makes
+$\rho_{\Pi,\lambda}$ unramified without a separate semisimplicity hypothesis.
+The converse comparison when $N^{\mathrm{raw}}_\Pi\ne0$ still requires
+$(\mathrm R_u)$. Under the special hypotheses,
 
 $$
 N^{\mathrm{raw}}_\Pi\ne0
@@ -2066,12 +2105,13 @@ merely rationally split dyadic, ramified-order, and wild local models are not
 included.
 
 **One-split carrier (Books 104 and 125).** Book 104's compact one-split inverse
-theorem constructs the quaternionic packet only from an odd nonempty set of
-selected special or selected tame-dihedral finite places. Book 125 realizes
-that packet on the compact curve, proves multiplicity one and the rank-two
-packet factorization, and supplies the good-level support used in Book 122.
-For a split-Iwahori calculation at $v$, the chosen ramification set must avoid
-$v$. This is the exact carrier qualification in Section 1.3.
+theorem constructs the quaternionic packet from a finite selected set $W$ with
+$(d-1)+|W|$ even: $W$ is odd and nonempty in even degree and may be empty in
+odd degree. Book 125 realizes that packet on the compact curve, proves
+multiplicity one and the rank-two packet factorization, and supplies the
+good-level support used in Book 122. For a split-Iwahori calculation at $v$,
+the chosen ramification set must avoid $v$. This is the exact carrier
+qualification in Section 1.3.
 
 **Cohomological extraction (Book 126).** The weight-two extraction theorem
 supplies the raw rank-two multiplicity space, its global semisimplification,
@@ -2089,7 +2129,7 @@ carrier construction.
 Thus the exact recommended direct dependency row is
 
 $$
-\boxed{128\mid22,61,75,76,104,121,122,125,126}.
+\boxed{128\mid22,41,61,75,76,104,118,121,122,125,126}.
 $$
 
 Book 76 is direct because it supplies the automorphic labels and their
@@ -2097,10 +2137,13 @@ centered normalization; Books 104 and 125 are direct because they supply the
 eligible one-split packet, its curve realization, its multiplicities, and the
 normalization-component support used in the bad-prime proof. None of these
 three inputs is supplied by the other books in the displayed row.
-Book 36 is already transitive through Book 125. Its Kummer comparison supplies the
+Book 118 is direct because Proposition 8.2 supplies the common-norm
+Hodge-lift obstruction used in Sections 6.2 and 14.2.
+Book 36 is already transitive through Books 41 and 125. Its Kummer comparison supplies the
 $H^1$--Jacobian identification used above, while Section 15.4 explicitly warns that
-isogeny-category semisimplicity does not prove Tate-module semisimplicity. No new direct edge
-is needed.
+isogeny-category semisimplicity does not prove Tate-module semisimplicity. Book 41 is direct
+because it proves the stable-lattice implication used in Proposition 9.4 and records both the
+exact finite-isogeny-class hypothesis and its unresolved Faltings--Shafarevich source.
 
 ### 14.2 Exact hypothesis ledger
 
@@ -2111,13 +2154,13 @@ is needed.
 | raw curve $N^2=0$ | proper strict semistable curve, rational packet Hom | the local model may have a different nearby-cycle complex |
 | conductor equals rank $N$ | split strict semistability over $K$ | finite inertia and Swan terms are missing |
 | odd or dyadic split-Iwahori special identification | complete Book 122 tensor, packet, support, and raw $U_v$ ledger; $(\mathrm B_v)$ is then a theorem | determinant gives only the square of the kernel scalar |
-| split-Iwahori carrier at $v$ | eligible odd nonempty $W$ for Book 104 with $v\notin W$, then the Book 125 curve packet | an eligible carrier ramified at $v$ does not supply split-Iwahori geometry there |
-| split-Iwahori carrier when $v$ is the only eligible place | impossible in the present one-split construction | every nonempty eligible $W$ contains $v$, so the carrier is ramified rather than split at the target place |
-| any bad parameter for $\rho_{\Pi,\lambda}$ in the residual-irreducible FLT range | stable lattice with absolutely irreducible residual reduction | without irreducibility, global semisimplification can erase local monodromy |
-| any bad parameter for $\rho_{\Pi,\lambda}$ outside that range | $(\mathrm R_u)$; Proposition 9.4 reduces it to semisimplicity of the ambient curve $H^1$ | the preceding books do not prove $(\mathrm{TS})$ for the carrier Jacobian; Hecke semisimplicity and isogeny-category semisimplicity do not replace it |
-| tame principal parameter | two character lines, ordering where needed, $N=0$, and both return scalars | inertia alone forgets unramified characters and the boundary constituent |
+| split-Iwahori basic carrier at $v$ | parity-compatible selected $W$ for Book 104 with $v\notin W$, then the Book 125 curve packet | an eligible carrier ramified at $v$ does not supply split-Iwahori geometry there; basic attachment alone does not supply the required non-common-norm parahoric PEL comparison |
+| split-Iwahori basic carrier when $v$ is the only eligible place | in odd degree, $W=\varnothing$ works; in even degree the present construction has no eligible $W$ avoiding $v$ | even after the basic carrier exists, the raw theorem still requires the supplied PEL-exact parahoric ledger |
+| any nonzero-monodromy bad parameter for $\rho_{\Pi,\lambda}$ in the residual-irreducible FLT range | stable lattice with absolutely irreducible residual reduction | without irreducibility, global semisimplification can erase local monodromy |
+| any nonzero-monodromy bad parameter for $\rho_{\Pi,\lambda}$ outside that range | $(\mathrm R_u)$; Proposition 9.4 reduces it to semisimplicity of the ambient curve $H^1$, and Book 41 reduces that to finite isogeny classes | those finite isogeny classes are not proved; Book 41's standard Faltings--Shafarevich route still lacks its height and Zarhin cancellation/descent inputs, and Hecke or isogeny-category semisimplicity does not replace them |
+| tame principal parameter | two character lines, ordering where needed, $N=0$, and both return scalars; Lemma 3.2 then gives raw-to-global passage | inertia alone forgets unramified characters and the boundary constituent |
 | tame scalar-special parameter | scalar tame type, $N\ne0$, and kernel Frobenius | type alone does not distinguish $N=0$ from $N\ne0$ |
-| tame dihedral parameter | tame quadratic cover, two character lines, exchange, return maps, $N=0$ | inertial characters leave an unramified ambiguity |
+| tame dihedral parameter | tame quadratic cover, two character lines, exchange, return maps, $N=0$; Lemma 3.2 then gives raw-to-global passage | inertial characters leave an unramified ambiguity |
 | cohomological special normalization | centered kernel root $q^{-1/2}u_v$, shift $\lvert\cdot\rvert^{-1/2}$, raw unnormalized $U_v$ eigenvalue $u_v$ | dividing $U_v$ by $q$ or $q^{1/2}$ breaks the Frobenius and determinant identities |
 | coefficient conjugation | conjugate the packet block, all scalars and characters, and the rectified automorphic label together | separately choosing roots can break determinant and return-map identities |
 | any selected automorphic label | the matching row of Book 76 | parameter recognition alone is not an automorphic correspondence |
@@ -2128,15 +2171,19 @@ quotient theorem. The good-place theorem and the raw semistable computation
 are closed under the dependencies above. Book 122 closes the former
 $(\mathrm B_v)$ gap in its complete odd and dyadic split-Iwahori range.
 Absolute residual irreducibility closes $(\mathrm R_u)$ in the stated FLT
-range by elementary lattice theory. Outside that range $(\mathrm R_u)$ is
-retained exactly. Proposition 9.4 proves every remaining formal reduction: the
+range by elementary lattice theory. Outside that range $(\mathrm R_u)$ is retained exactly
+for nonzero-monodromy rows. Lemma 3.2 closes it directly when $N=0$. Proposition 9.4 proves
+every remaining formal reduction: the
 finite application-specific instance of $(\mathrm{TS})$ for the actual curve carriers makes
 all their raw multiplicity spaces globally semisimple, uniformly over coefficient embeddings,
-and hence proves $(\mathrm R_u)$ without using monodromy. The present dependency row does not
-prove that ambient semisimplicity theorem. For tame principal, scalar-special, and dihedral places,
-Chapters 7--8 are recognition criteria; they require the stated geometric
-type and return-map data and do not construct those data for an arbitrary
-packet.
+and hence proves $(\mathrm R_u)$ without using monodromy. Book 41 proves this implication from
+finite carrier-isogeny classes; its explicitly missing Faltings--Shafarevich
+height-and-cancellation source prevents an
+unconditional ambient theorem. For tame principal, scalar-special, and dihedral places,
+Chapters 7--8 are recognition criteria; they require the stated geometric type and return-map
+data and do not construct those data for an arbitrary packet. The separate raw-to-global
+hypothesis is automatic in the principal and dihedral zero-monodromy rows, but not in the
+scalar-special row.
 
 ### 14.3 Final synthesis
 
@@ -2157,13 +2204,16 @@ In the FLT range with absolutely irreducible residual reduction, the
 characteristic-zero rank-two carrier is absolutely irreducible, hence already
 semisimple. The raw and globally named representations are therefore the
 same, so the special comparison just obtained survives unchanged. Outside
-that range, $(\mathrm R_u)$ remains the exact conditional boundary unless the ambient
+that range, $(\mathrm R_u)$ remains the exact conditional boundary for nonzero monodromy unless the ambient
 semisimplicity hypothesis of Proposition 9.4 is supplied. That proposition reduces the
-uniform problem to $(\mathrm{TS})$ for the carrier Jacobians; it does not invoke a later
-compatible family or infer semisimplicity from the special line. Tame
+uniform problem to $(\mathrm{TS})$ for the carrier Jacobians, and Book 41 proves the further
+reduction to finite isogeny classes while retaining the Faltings--Shafarevich
+height-and-cancellation gate; neither argument
+invokes a later compatible family or infers semisimplicity from the special line. Tame
 descent recognizes principal, scalar-special, and dihedral parameters only
 after the exact character lines, exchange maps, and Frobenius returns have
-been supplied; no wild or general local-correspondence claim is added.
+been supplied. The principal and dihedral zero-monodromy rows then pass automatically to the
+global semisimplification; no wild or general local-correspondence claim is added.
 
 Throughout, geometric Frobenius acts on a Tate twist by $q^{-1}$, monodromy
 satisfies $FNF^{-1}=q^{-1}N$, and local Euler factors use $(\ker N)^I$.

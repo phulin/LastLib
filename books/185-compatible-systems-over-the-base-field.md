@@ -1457,10 +1457,12 @@ $\{2\}$ gives $(\mathrm{Cond}_2)$. $\square$
 The two certificates identify the first missing local theorem precisely.  At a spherical
 place it is the complete good-place comparison, including the integral model, component, and
 hyperspecial ledger.  At a tame principal or dihedral place it is the actual finite descent
-complex with its type projector, zero-monodromy calculation, character or exchange lines,
-Frobenius return maps, and raw-to-global passage.  Those are the hypotheses of the recognition
-theorems of Books 128 and 168; neither the automorphic type name nor the global Brauer
-cancellation supplies them.
+complex with its type projector, trivial wild inertia, zero-monodromy calculation, character
+or exchange lines, and Frobenius return maps.  Those are the geometric hypotheses of the recognition theorems of
+Books 128 and 168; Book 128, Lemma 3.2 then supplies raw-to-global passage formally from
+$N=0$. Neither the automorphic type name nor the global Brauer cancellation supplies the
+geometric inputs. This is exactly Book 182, Required Theorem 7.3; its first clause is the
+fine tame-level model carrying the equivariant packet and type projectors.
 
 It is not possible to replace these finite checks by the claim that every auxiliary place is
 spherical.  A rational prime ramified in the nontrivial controlled top cannot split completely
@@ -1479,7 +1481,13 @@ all of $G_{\mathbf Q}$.  Even after finite inertia is known, an inertial type or
 semisimplification does not recover the monodromy operator.  Thus
 $(\mathrm{AUX}_\nu)$ is a finite all-required-primes local theorem, while
 $(\mathrm{AUX}_{\mathrm{all}})$ is its family-wide form; the current packet input proves
-neither one.
+neither one.  This is not a new post-assembly topic.  Book 182, Proposition 7.2A supplies the
+basic rational carriers and attachment of the candidate cyclic descents, but its controlled
+top datum must already include the raw principal/dihedral descent complexes, type and exchange
+lines, trivial-wild-inertia and zero-monodromy calculations, and Frobenius return maps for the
+retained auxiliary primes.
+No separate ambient-semisimplicity or raw-to-global hypothesis remains in these $N=0$ rows.
+Proposition 8.2 is the formal cancellation after that local-geometric clause has been supplied.
 
 ### 8.4 The common special pair
 
@@ -1860,7 +1868,7 @@ $$
 |---|---|---|
 | Book 168 | coefficient systems and algebraic local objects attached to the already constructed weight-two packets, including determinant, purity, and coefficient transport | no base-field family, canonical lattice, or moving-prime integral conclusion |
 | Book 180 | multiplicity-one coefficient descent, coefficient cocycle effectivity, presentation comparison, induction/Mackey/tensor formulas, and Brauer--Nesbitt recognition | no packet overlap, positivity verification, or SP local object is imported |
-| Book 182 | the conditional controlled SP top datum and its explicit controlled-seed and bridge-readiness boundaries | this book does not make that datum unconditional |
+| Book 182 | the conditional controlled SP top datum, the split evaluated packets at $2,3,\ell$, parity-complete basic attachment of candidate elementary descents, and its explicit controlled-seed and bridge-readiness boundaries | it does not construct the raw SP carrier, the auxiliary descent/type/return-map geometry, or the ambient semisimplicity needed only for uniform nonzero-monodromy SP preservation, and this book does not make that datum unconditional |
 | Book 183 | selected elementary packets, exact elementary and conjugate-intersection identities, integral Brauer classes, determinant and local Mackey formulas, common virtual polynomials, purity, and the algebraic SP pair with its prior local-preservation certificate | no virtual class is called effective, no inadmissible automorphic transfer is inserted, and the later assembly is not a proof of raw packet preservation |
 | Book 184 | under the explicit additional hypothesis $(\mathrm{AI}_2)$, the application-specific coefficient-independent Gram matrix, all-place norm-one positivity, actual characteristic-zero cancellation, coefficient covariance, and scalar relation independence | no completion-valued model or assembled family is imported; without $(\mathrm{AI}_2)$ only coefficient places away from two are available |
 
@@ -2045,7 +2053,9 @@ chosen or inferred. Nor has the conductor-support premise $(\mathrm{Cond}_2)$ be
 Proposition 8.1 proves that it implies the selected-member support statement, and Proposition
 8.2 reduces the selected and family-wide support conclusions to the exact finite auxiliary
 local-comparison certificates $(\mathrm{AUX}_\nu)$ and $(\mathrm{AUX}_{\mathrm{all}})$.
-Those certificates remain unproved.
+Those certificates remain unproved. Their first missing theorem is the auxiliary-local clause
+of the already-required controlled all-elementary attachment geometry, not an additional
+Brauer-effectivity or post-assembly theorem.
 
 The missing upstream construction of the controlled seed and the separate bridge-readiness
 data, as well as the separate coefficient-two irreducibility hypothesis, remain outside this
