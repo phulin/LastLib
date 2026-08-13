@@ -84,6 +84,14 @@ theorem chapter09_infinite_log_kernel_equiv_phase_model
       Chapter09ArchimedeanPhaseModel K) := by
   sorry
 
+/-! The algebraic phase identification is also an identification of the
+subgroup topologies; this is the form needed to transfer compactness. -/
+theorem chapter09_infinite_log_kernel_continuous_equiv_phase_model
+    (K : Type*) [Field K] [NumberField K] :
+    Nonempty (chapter09InfiniteLogKernel K ≃ₜ*
+      Chapter09ArchimedeanPhaseModel K) := by
+  sorry
+
 theorem chapter09_infinite_log_kernel_compact
     (K : Type*) [Field K] [NumberField K] :
     IsCompact (Set.univ : Set (chapter09InfiniteLogKernel K)) := by

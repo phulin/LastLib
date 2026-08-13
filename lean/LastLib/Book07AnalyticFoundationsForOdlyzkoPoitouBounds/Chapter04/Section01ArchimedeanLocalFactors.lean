@@ -28,7 +28,7 @@ theorem chapter04_complex_gaussian_mellin_eq_gamma
 theorem chapter04_gamma_real_eq_mathlib
     (s : ℂ) :
     chapter04GammaReal s = Complex.Gammaℝ s := by
-  sorry
+  rfl
 
 /-!
 Mathlib's Deligne normalization is `Gammaℂ s = 2 * (2π)^(-s) Γ(s)`,
@@ -38,7 +38,8 @@ compatibility is exposed rather than silently identifying the two symbols.
 theorem chapter04_gamma_complex_eq_half_mathlib
     (s : ℂ) :
     chapter04GammaComplex s = (2 : ℂ)⁻¹ * Complex.Gammaℂ s := by
-  sorry
+  unfold chapter04GammaComplex Complex.Gammaℂ
+  ring
 
 theorem chapter04_euler_completed_dedekind_zeta_eq_displayed
     (K : Type*) [Field K] [NumberField K] (s : ℂ) :

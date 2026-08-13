@@ -6,12 +6,12 @@ noncomputable section
 
 open MeasureTheory
 
-/- A GRH-admissible test function packages Chapter 5's basic admissibility,
-   pointwise positivity for the prime term, and Fourier positivity for zeros. -/
-def chapter07GRHAdmissible (f : Chapter07TestFunction) : Prop :=
-  LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.Chapter05BasicallyAdmissible f ∧
-    chapter07PointwiseNonnegative f ∧
-    chapter07FourierNonnegative f
+/- Reuse Chapter 5's source-facing GRH predicate and add the origin
+   integrability condition (5.1), which is part of basic admissibility in the
+   book even though Chapter 5 exposes it as a separate predicate. -/
+abbrev chapter07GRHAdmissible (f : Chapter07TestFunction) : Prop :=
+  LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.Chapter05GRHAdmissible f ∧
+    LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05OriginCondition f
 
 theorem chapter07_zeroTransform_on_critical_line
     (f : Chapter07TestFunction) (hf : Integrable f)

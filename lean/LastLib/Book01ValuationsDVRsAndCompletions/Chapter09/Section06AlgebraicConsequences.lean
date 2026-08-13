@@ -1,4 +1,5 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Section05WorkedLifts
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Section02TheValuationForm
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Section04HenselianLocalRings
 import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
 import Mathlib.RingTheory.Polynomial.IsIntegral
 import Mathlib.RingTheory.Valuation.Integers
@@ -148,7 +149,6 @@ theorem complete_valued_field_has_simple_root_henselianity
     [Valuation.RankOne vK]
     (hcomplete : @CompleteSpace K (Valued.mk' vK).toUniformSpace) :
     HenselianLocalRing vK.valuationSubring := by
-  change HenselianLocalRing vK.valuationSubring
   let v : AddValuation K (Additive Γ)ᵒᵈ := Valuation.toAddValuation vK
   have hv_equiv : vK.IsEquiv v.toValuation := by
     rw [Valuation.isEquiv_iff_val_le_one]

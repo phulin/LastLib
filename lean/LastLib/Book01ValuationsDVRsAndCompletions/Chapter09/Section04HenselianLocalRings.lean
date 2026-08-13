@@ -154,10 +154,9 @@ theorem simple_root_lifting_by_linear_factorization
 /-- Mathlib's henselian local-ring class is equivalent to simple-root lifting. -/
 theorem mathlib_henselian_iff_simple_residue_root_lifting {A : Type*} [CommRing A]
     [IsLocalRing A] :
-    HenselianLocalRing A ↔ SimpleResidueRootLiftingProperty A := by
+  HenselianLocalRing A ↔ SimpleResidueRootLiftingProperty A := by
   constructor
-  · intro hH
-    intro f a₀ hf hroot hsimple
+  · intro hH f a₀ hf hroot hsimple
     obtain ⟨a₀', ha₀'⟩ := Ideal.Quotient.mk_surjective a₀
     have hfa : f.eval a₀' ∈ IsLocalRing.maximalIdeal A := by
       rw [← Ideal.Quotient.eq_zero_iff_mem]

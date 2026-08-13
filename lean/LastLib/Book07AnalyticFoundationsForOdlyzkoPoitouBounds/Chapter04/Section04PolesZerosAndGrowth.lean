@@ -34,7 +34,10 @@ theorem chapter04_xi_entire
 theorem chapter04_xi_functional_equation
     (K : Type*) [Field K] [NumberField K] (s : ℂ) :
     chapter04Xi K s = chapter04Xi K (1 - s) := by
-  sorry
+  rw [chapter04Xi, chapter04Xi,
+    chapter04_completed_dedekind_zeta_functional_equation]
+  unfold chapter04PoleFactor
+  ring
 
 theorem chapter04_xi_conjugation_symmetry
     (K : Type*) [Field K] [NumberField K] (s : ℂ) :
@@ -63,7 +66,29 @@ noncomputable def chapter04ZeroMultiplicity
 theorem chapter04_zero_multiplicity_pos_iff
     (K : Type*) [Field K] [NumberField K] {ρ : ℂ} :
     0 < chapter04ZeroMultiplicity K ρ ↔ chapter04NontrivialZero K ρ := by
-  sorry
+  constructor
+  · intro h
+    apply apply_eq_zero_of_analyticOrderNatAt_ne_zero
+    change (analyticOrderAt (chapter04Xi K) ρ).toNat ≠ 0
+    exact Nat.ne_of_gt h
+  · intro h
+    unfold chapter04NontrivialZero at h
+    have hwhole := chapter04_xi_entire K
+    have hρ : AnalyticAt ℂ (chapter04Xi K) ρ := hwhole ρ (Set.mem_univ _)
+    obtain ⟨z, hz⟩ : ∃ z : ℂ, chapter04Xi K z ≠ 0 := by
+      by_contra h'
+      push Not at h'
+      exact (chapter04_xi_not_identically_zero K) h'
+    have hzorder : analyticOrderAt (chapter04Xi K) z ≠ ⊤ := by
+      have hzzero : analyticOrderAt (chapter04Xi K) z = 0 :=
+        (hwhole z (Set.mem_univ _)).analyticOrderAt_eq_zero.mpr hz
+      rw [hzzero]
+      exact ENat.zero_ne_top
+    have hρtop : analyticOrderAt (chapter04Xi K) ρ ≠ ⊤ :=
+      hwhole.analyticOrderAt_ne_top_of_isPreconnected isPreconnected_univ
+        (Set.mem_univ _) (Set.mem_univ _) hzorder
+    unfold chapter04ZeroMultiplicity
+    exact ENat.toNat_pos (hρ.analyticOrderAt_ne_zero.mpr h) hρtop
 
 def chapter04CriticalStrip (ρ : ℂ) : Prop :=
   0 ≤ ρ.re ∧ ρ.re ≤ 1
@@ -82,7 +107,19 @@ theorem chapter04_nontrivial_zero_partner_iff
     (K : Type*) [Field K] [NumberField K] (ρ : ℂ) :
     chapter04NontrivialZero K ρ ↔
       chapter04NontrivialZero K (chapter04ZeroPartner ρ) := by
-  sorry
+  constructor
+  · intro h
+    unfold chapter04NontrivialZero at h ⊢
+    rw [chapter04ZeroPartner, ← chapter04_xi_functional_equation K (star ρ)]
+    rw [chapter04_xi_conjugation_symmetry K ρ, h]
+    simp
+  · intro h
+    unfold chapter04NontrivialZero at h ⊢
+    have heq : chapter04Xi K (chapter04ZeroPartner ρ) = star (chapter04Xi K ρ) := by
+      rw [chapter04ZeroPartner, ← chapter04_xi_functional_equation K (star ρ)]
+      exact chapter04_xi_conjugation_symmetry K ρ
+    rw [heq] at h
+    simpa using h
 
 theorem chapter04_zero_multiplicity_partner
     (K : Type*) [Field K] [NumberField K] (ρ : ℂ) :
@@ -93,7 +130,9 @@ theorem chapter04_zero_multiplicity_partner
 theorem chapter04_nontrivial_zero_conjugate_iff
     (K : Type*) [Field K] [NumberField K] (ρ : ℂ) :
     chapter04NontrivialZero K ρ ↔ chapter04NontrivialZero K (star ρ) := by
-  sorry
+  unfold chapter04NontrivialZero
+  rw [chapter04_xi_conjugation_symmetry K ρ]
+  simp
 
 theorem chapter04_zero_multiplicity_conjugate
     (K : Type*) [Field K] [NumberField K] (ρ : ℂ) :
@@ -145,7 +184,22 @@ theorem chapter04_pole_factor_log_derivative
     {s : ℂ} (hs0 : s ≠ 0) (hs1 : s ≠ 1) :
     deriv chapter04PoleFactor s / chapter04PoleFactor s =
       1 / s + 1 / (s - 1) := by
-  sorry
+  have hderiv :
+      HasDerivAt chapter04PoleFactor
+        ((1 / 2 : ℂ) * (s - 1) + (1 / 2 : ℂ) * s) s := by
+    change HasDerivAt (fun z : ℂ => (1 / 2 : ℂ) * z * (z - 1))
+      ((1 / 2 : ℂ) * (s - 1) + (1 / 2 : ℂ) * s) s
+    convert (((hasDerivAt_const s (1 / 2 : ℂ)).mul (hasDerivAt_id s)).mul
+      ((hasDerivAt_id s).sub (hasDerivAt_const s (1 : ℂ)))) using 1
+    · rfl
+    · rfl
+    · funext z
+      simp only [Pi.mul_apply, Pi.sub_apply, id_eq]
+    · simp only [Pi.mul_apply, Pi.sub_apply, id_eq]
+      ring
+  rw [hderiv.deriv]
+  simp only [chapter04PoleFactor]
+  field_simp [hs0, hs1]
 
 noncomputable def chapter04ResidueAt
     (f : ℂ → ℂ) (z : ℂ) : ℂ :=
@@ -203,7 +257,17 @@ theorem chapter04_zero_counting_monotone
     (K : Type*) [Field K] [NumberField K] {S T : ℝ}
     (hST : S ≤ T) :
     chapter04ZeroCounting K S ≤ chapter04ZeroCounting K T := by
-  sorry
+  let fS := chapter04_zero_band_finite K S
+  let fT := chapter04_zero_band_finite K T
+  have hsubset : chapter04ZeroBand K S ⊆ chapter04ZeroBand K T := by
+    intro ρ hρ
+    exact ⟨hρ.1, hρ.2.trans hST⟩
+  have hfin : fS.toFinset ⊆ fT.toFinset := by
+    exact (Set.Finite.toFinset_subset_toFinset).2 hsubset
+  change fS.toFinset.sum (fun ρ => chapter04ZeroMultiplicity K ρ) ≤
+    fT.toFinset.sum (fun ρ => chapter04ZeroMultiplicity K ρ)
+  exact Finset.sum_le_sum_of_subset_of_nonneg hfin
+    (fun _ _ _ => Nat.zero_le _)
 
 theorem chapter04_zero_counting_unit_band_bound
     (K : Type*) [Field K] [NumberField K] :

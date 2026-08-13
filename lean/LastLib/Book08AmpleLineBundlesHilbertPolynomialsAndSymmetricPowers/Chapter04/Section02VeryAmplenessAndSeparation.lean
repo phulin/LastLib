@@ -1,4 +1,5 @@
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Dependencies
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02.Section03SectionsWithoutCommonZeros
 
 namespace LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
 
@@ -48,11 +49,27 @@ theorem chapter04_separates_length_two_of_restriction_surjective
 /-! An induced projective map records the canonical pullback of the ambient
 coordinate sections, so its immersion criterion is a statement about the
 given section system rather than about unrelated restriction functions. -/
+def chapter04SectionSystemMapCoordinateCompatible
+    {K : Type u} [Field K] {X : Scheme.{u}}
+    {f : X ⟶ AlgebraicGeometry.Spec (.of K)} {L : Chapter04LineBundle X}
+    (V : Chapter04FiniteSectionSystem K f L)
+    (P : Chapter04ProjectiveBundle (AlgebraicGeometry.Spec (.of K)))
+    (coordinateSections : V.I → P.tautological.val.sections)
+    (u : X ⟶ P.space) : Prop :=
+  u ≫ P.projection = f ∧
+    ∃ e : (Scheme.Modules.pullback u).obj P.tautological ≅ L.sheaf,
+      ∀ i,
+        SheafOfModules.sectionsMap e.hom
+          ((chapter04PullbackSectionData u P.tautological).map
+            (coordinateSections i)) = V.sectionMap i
+
 structure Chapter04InducedSectionSystemMap
     {K : Type u} [Field K] {X : Scheme.{u}}
     {f : X ⟶ AlgebraicGeometry.Spec (.of K)} {L : Chapter04LineBundle X}
     (V : Chapter04FiniteSectionSystem K f L) where
   projectiveBundle : Chapter04ProjectiveBundle (AlgebraicGeometry.Spec (.of K))
+  universalQuotientCompatible :
+    chapter04ProjectiveBundleUniversalQuotientCompatible projectiveBundle
   map : X ⟶ projectiveBundle.space
   over : map ≫ projectiveBundle.projection = f
   pullback_iso : L.sheaf ≅
@@ -64,6 +81,11 @@ structure Chapter04InducedSectionSystemMap
     SheafOfModules.sectionsMap pullback_iso.symm.hom
       ((chapter04PullbackSectionData map projectiveBundle.tautological).map
         (coordinateSections i)) = V.sectionMap i
+  map_is_unique_from_coordinates :
+    ∀ u : X ⟶ projectiveBundle.space,
+      chapter04SectionSystemMapCoordinateCompatible V projectiveBundle
+        coordinateSections u →
+      u = map
 
 theorem chapter04_induced_section_system_map_exists
     {K : Type u} [Field K] {X : Scheme.{u}}
@@ -84,6 +106,7 @@ noncomputable def chapter04InducedSectionSystemMap
 theorem chapter04_induced_section_system_map_isImmersion_iff
     {K : Type u} [Field K] {X : Scheme.{u}}
     {f : X ⟶ AlgebraicGeometry.Spec (.of K)} {L : Chapter04LineBundle X}
+    [QuasiCompact f] [LocallyOfFiniteType f]
     (V : Chapter04FiniteSectionSystem K f L)
     (w : Chapter04InducedSectionSystemMap V) :
     IsImmersion w.map ↔
@@ -93,7 +116,8 @@ theorem chapter04_induced_section_system_map_isImmersion_iff
 theorem chapter04_induced_section_system_map_isClosedImmersion_of_proper
     {K : Type u} [Field K] {X : Scheme.{u}}
     {f : X ⟶ AlgebraicGeometry.Spec (.of K)} {L : Chapter04LineBundle X}
-    [IsProper f] (V : Chapter04FiniteSectionSystem K f L)
+    [IsProper f] [QuasiCompact f]
+    (V : Chapter04FiniteSectionSystem K f L)
     (w : Chapter04InducedSectionSystemMap V)
     (hV : chapter04SectionSystemGenerates V ∧ chapter04SeparatesLengthTwo V) :
     IsClosedImmersion w.map := by

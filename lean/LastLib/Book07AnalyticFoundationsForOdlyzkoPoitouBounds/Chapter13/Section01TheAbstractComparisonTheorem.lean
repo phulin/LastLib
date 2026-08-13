@@ -24,8 +24,7 @@ theorem chapter13_abstract_comparison_theorem
     (hmargin :
       Real.eulerMascheroniConstant + Real.log (8 * Real.pi) + α₀ * (Real.pi / 2) -
           4 * chapter13A F / (N : ℝ) - chapter13B F - α₀ * chapter13C F > Real.log U)
-    (hanalytic : ∀ (K : Type u) [Field K] [NumberField K],
-      chapter13FieldwiseAnalyticBound F K) :
+    (hanalytic : chapter13GlobalAnalyticBound.{u} F) :
     ∀ (K : Type u) [Field K] [NumberField K],
       chapter13RootDiscriminant K ≤ U →
       α₀ ≤ chapter13RealProportion K →

@@ -80,6 +80,7 @@ theorem chapter13_absolute_degree_cap_from_base_field_ceiling
 theorem chapter13_relative_degree_cap_from_absolute_degree_cap
     (F L : Type*) [Field F] [NumberField F] [Field L] [NumberField L]
     [Algebra F L] [Algebra ℚ F] [Algebra ℚ L] [IsScalarTower ℚ F L]
+    [Module.Finite F L]
     {N : ℕ} (hdegree : chapter13Degree L < N) :
     (Module.finrank F L : ℝ) < N / (chapter13Degree F : ℝ) := by
   exact chapter13_relative_degree_lt_of_absolute_degree_lt F L hdegree
@@ -95,6 +96,7 @@ theorem chapter13_base_field_ceiling_gives_relative_cap
     (L : Type u) [Field L] [NumberField L]
     (hanalytic : chapter13FieldwiseAnalyticBound f L)
     [Algebra F L] [Algebra ℚ F] [Algebra ℚ L] [IsScalarTower ℚ F L]
+    [Module.Finite F L]
     (hceil : chapter13RootDiscriminant L ≤
       chapter13AbsoluteCeilingFromLocalCosts F P)
     (hα : α₀ ≤ chapter13RealProportion L) :

@@ -1,6 +1,8 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section06LocalizationAndResidues
+import Mathlib.Algebra.Module.DedekindDomain
 import Mathlib.LinearAlgebra.Charpoly.ToMatrix
 import Mathlib.RingTheory.DedekindDomain.Different
+import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+import Mathlib.RingTheory.Localization.FractionRing
 
 universe u v
 
@@ -230,7 +232,8 @@ theorem chapter11_higher_degree_trace_norm_omit_intermediate_coefficients
     (A : Type*) [CommRing A] [Nontrivial A] (n : ℕ) (hn : 3 ≤ n) :
     ∃ c d : chapter11MonicCoefficientProfile A n,
       c 0 = d 0 ∧ c ⟨n, Nat.lt_succ_self n⟩ =
-        d ⟨n, Nat.lt_succ_self n⟩ ∧ c ≠ d := by
+        d ⟨n, Nat.lt_succ_self n⟩ ∧
+      c ⟨n - 1, by omega⟩ = d ⟨n - 1, by omega⟩ ∧ c ≠ d := by
   classical
   let j : Fin (n + 1) := ⟨1, by omega⟩
   let c : chapter11MonicCoefficientProfile A n := fun _ => 0
@@ -246,9 +249,16 @@ theorem chapter11_higher_degree_trace_norm_omit_intermediate_coefficients
     omega
   have hj0' : (0 : Fin (n + 1)) ≠ j := Ne.symm hj0
   have hjn' : (⟨n, Nat.lt_succ_self n⟩ : Fin (n + 1)) ≠ j := Ne.symm hjn
-  refine ⟨c, d, ?_, ?_, ?_⟩
+  have hjtrace : j ≠ (⟨n - 1, by omega⟩ : Fin (n + 1)) := by
+    intro h
+    have hval := congrArg Fin.val h
+    simp [j] at hval
+    omega
+  have hjtrace' : (⟨n - 1, by omega⟩ : Fin (n + 1)) ≠ j := Ne.symm hjtrace
+  refine ⟨c, d, ?_, ?_, ?_, ?_⟩
   · simp [c, d, hj0']
   · simp [c, d, hjn']
+  · simp [c, d, hjtrace']
   · intro hcd
     have hcdj := congrFun hcd j
     change (0 : A) = if j = j then 1 else 0 at hcdj
@@ -257,12 +267,13 @@ theorem chapter11_higher_degree_trace_norm_omit_intermediate_coefficients
     exact zero_ne_one h01
 
 /-- In degree at least three, distinct monic polynomials can have the same
-constant and leading coefficients.  These are the intermediate coefficients
-which trace and norm do not record. -/
+constant, next-to-leading, and leading coefficients.  The remaining
+intermediate coefficients are not recorded by trace and norm. -/
 theorem chapter11_monic_polynomials_with_same_endpoint_coefficients
     (A : Type*) [CommRing A] [Nontrivial A] (n : ℕ) (hn : 3 ≤ n) :
     ∃ f g : A[X], f.Monic ∧ g.Monic ∧ f.natDegree = n ∧ g.natDegree = n ∧
-      f.coeff 0 = g.coeff 0 ∧ f.coeff n = g.coeff n ∧ f ≠ g := by
+      f.coeff 0 = g.coeff 0 ∧
+      f.coeff (n - 1) = g.coeff (n - 1) ∧ f.coeff n = g.coeff n ∧ f ≠ g := by
   let f : A[X] := X ^ n
   let g : A[X] := X ^ n + X
   have hnpos : 0 < n := lt_of_lt_of_le (by norm_num) hn
@@ -282,8 +293,10 @@ theorem chapter11_monic_polynomials_with_same_endpoint_coefficients
     intro hfg
     have hc := congrArg (fun q : A[X] => q.coeff 1) hfg
     simp [f, g] at hc
-  refine ⟨f, g, by simp [f], hng, hfn, hgn, ?_, ?_, hneq⟩
+  refine ⟨f, g, by simp [f], hng, hfn, hgn, ?_, ?_, ?_, hneq⟩
   · simp [f, g]
+  · rw [coeff_add, coeff_X_pow, coeff_X]
+    simp [show n - 1 ≠ n by omega, show (1 : ℕ) ≠ n - 1 by omega]
   · rw [coeff_add, coeff_X_pow, coeff_X]
     simp [show 1 ≠ n by omega]
 
@@ -293,10 +306,11 @@ theorem chapter11_trace_norm_are_insufficient_in_higher_degree
     (A : Type*) [CommRing A] [Nontrivial A] (n : ℕ) (hn : 3 ≤ n) :
     ∃ c d : chapter11MonicCoefficientProfile A n,
       c ≠ d ∧ c 0 = d 0 ∧
+        c ⟨n - 1, by omega⟩ = d ⟨n - 1, by omega⟩ ∧
         c ⟨n, Nat.lt_succ_self n⟩ = d ⟨n, Nat.lt_succ_self n⟩ := by
   rcases chapter11_higher_degree_trace_norm_omit_intermediate_coefficients A n hn with
-    ⟨c, d, h0, hn, hcd⟩
-  exact ⟨c, d, hcd, h0, hn⟩
+    ⟨c, d, h0, hn, htrace, hcd⟩
+  exact ⟨c, d, hcd, h0, htrace, hn⟩
 
 end
 end LastLib.Book01ValuationsDVRsAndCompletions.Chapter11

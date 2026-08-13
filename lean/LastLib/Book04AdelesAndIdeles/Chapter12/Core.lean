@@ -216,7 +216,7 @@ def chapter12CanonicalIdeleModuleData
 /-- The finite-unit factor in the canonical number-field idele decomposition. -/
 abbrev chapter12CanonicalFiniteUnitIdeles
     (K : Type*) [Field K] [NumberField K] :=
-  (chapter09FiniteUnitIdeles K : Type)
+  ↥(chapter09FiniteUnitIdeles K)
 
 def chapter12NormOneIdeleClasses
     {R K : Type*} [CommRing R] [IsDedekindDomain R] [Field K]

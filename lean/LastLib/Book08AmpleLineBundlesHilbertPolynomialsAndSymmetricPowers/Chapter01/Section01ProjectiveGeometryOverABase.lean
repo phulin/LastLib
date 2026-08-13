@@ -849,7 +849,7 @@ theorem chapter01_finite_projective_bundle_exists
     {S : Scheme.{u}} {r : ℕ} (E : S.Modules)
     (hE : Chapter01FiniteLocallyFree E)
     (hr : Chapter01LocallyFreeRank E (r + 1)) :
-    Nonempty (Chapter01FiniteProjectiveBundle S r) := by
+    ∃ P : Chapter01FiniteProjectiveBundle S r, P.E = E := by
   sorry
 
 abbrev Chapter01RelativeProjectiveSpace (S : Scheme.{u}) (r : ℕ) :=
@@ -1204,10 +1204,19 @@ instance chapter01HomogeneousLocalizationAlgebra {R A : Type*} [CommRing R] [Com
       ((GradedRing.projZeroRingHom' 𝒜).comp (algebraMap R A))
   h.toAlgebra
 
+/-! The relative chart base ring is the degree-zero part of the graded
+algebra.  In particular, the scalar map used by the localization algebra
+instance above agrees with the given `R`-algebra structure only when the
+scalars are homogeneous of degree zero. -/
+def chapter01ScalarsInDegreeZero {R A : Type*} [CommRing R] [CommRing A]
+    [Algebra R A] (𝒜 : ℕ → Submodule R A) [GradedAlgebra 𝒜] : Prop :=
+  ∀ r : R, algebraMap R A r ∈ 𝒜 0
+
 theorem chapter01_homogeneous_localization_base_change
     {R A R' : Type*} [CommRing R] [CommRing A] [CommRing R']
     [Algebra R A] [Algebra R R']
     (𝒜 : ℕ → Submodule R A) [GradedAlgebra 𝒜]
+    (hR : chapter01ScalarsInDegreeZero 𝒜)
     {d : ℕ} {f : A} (hf : f ∈ 𝒜 d) (hd : 0 < d) :
     Nonempty ((R' ⊗[R] HomogeneousLocalization.Away 𝒜 f) ≃+*
       HomogeneousLocalization.Away

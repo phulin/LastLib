@@ -27,14 +27,88 @@ theorem chapter08_local_order_ignores_unit
     chapter08LocalOrder v
         (((u : v.adicCompletionIntegers K) : v.adicCompletion K) * x) =
       chapter08LocalOrder v x := by
-  sorry
+  have huval : Valued.v ((u : v.adicCompletionIntegers K) : v.adicCompletion K) = 1 := by
+    exact (IsDedekindDomain.HeightOneSpectrum.adicCompletionIntegers.isUnit_iff_valued_eq_one).1
+      u.isUnit
+  by_cases hx : x = 0
+  · simp [hx, chapter08LocalOrder]
+  · have huxv :
+        (Valued.v ((u : v.adicCompletionIntegers K) : v.adicCompletion K) : ℤᵐ⁰) ≠ 0 := by
+      rw [huval]
+      exact one_ne_zero
+    have hxv : (Valued.v x : ℤᵐ⁰) ≠ 0 := by simpa using hx
+    have hmulv :
+        Valued.v (((u : v.adicCompletionIntegers K) : v.adicCompletion K) * x) =
+          Valued.v ((u : v.adicCompletionIntegers K) : v.adicCompletion K) * Valued.v x :=
+      (Valued.v : Valuation (v.adicCompletion K) ℤᵐ⁰).map_mul _ _
+    have hprodv :
+        (Valued.v (((u : v.adicCompletionIntegers K) : v.adicCompletion K) * x) : ℤᵐ⁰) ≠ 0 := by
+      rw [hmulv]
+      exact mul_ne_zero huxv hxv
+    unfold chapter08LocalOrder
+    rw [dif_neg hprodv, dif_neg hxv]
+    have hu :
+        WithZero.unzero hprodv =
+          WithZero.unzero huxv * WithZero.unzero hxv := by
+      rw [← WithZero.coe_inj, WithZero.coe_unzero, WithZero.coe_mul,
+        WithZero.coe_unzero, WithZero.coe_unzero]
+      exact hmulv
+    have huadd : Multiplicative.toAdd (WithZero.unzero huxv) = 0 := by
+      apply (WithZero.toAdd_unzero_eq_iff huxv (0 : ℤ)).2
+      simpa only [ofAdd_zero, WithZero.coe_one] using huval
+    rw [hu, toAdd_mul, huadd, zero_add]
 
 theorem chapter08_local_ideal_eq_iff_unit_multiple
     {K : Type*} [Field K] [NumberField K]
     (v : HeightOneSpectrum (Chapter08Integers K))
     {x y : v.adicCompletion K} (hx : x ≠ 0) (hy : y ≠ 0) :
     chapter08SameLocalIdealAt v x y ↔ chapter08LocalUnitMultipleAt v x y := by
-  sorry
+  unfold chapter08SameLocalIdealAt chapter08LocalUnitMultipleAt
+  constructor
+  · rintro ⟨_, _, hxy⟩
+    have hxv : (Valued.v x : ℤᵐ⁰) ≠ 0 := by simpa using hx
+    have hyv : (Valued.v y : ℤᵐ⁰) ≠ 0 := by simpa using hy
+    unfold chapter08LocalOrder at hxy
+    rw [dif_neg hxv, dif_neg hyv] at hxy
+    have hadd :
+        Multiplicative.toAdd (WithZero.unzero hxv) =
+          Multiplicative.toAdd (WithZero.unzero hyv) := by
+      exact neg_injective hxy
+    have hun : WithZero.unzero hxv = WithZero.unzero hyv :=
+      Multiplicative.toAdd.injective hadd
+    have hval : Valued.v x = Valued.v y := by
+      rw [← WithZero.coe_unzero hxv, ← WithZero.coe_unzero hyv, hun]
+    let q : (v.adicCompletion K)ˣ :=
+      Units.mk0 (y * x⁻¹) (mul_ne_zero hy (inv_ne_zero hx))
+    have hqval : Valued.v (q : v.adicCompletion K) = 1 := by
+      change Valued.v (y * x⁻¹) = 1
+      calc
+        Valued.v (y * x⁻¹) = Valued.v y * (Valued.v x)⁻¹ := by
+          rw [(Valued.v : Valuation (v.adicCompletion K) ℤᵐ⁰).map_mul,
+            (Valued.v : Valuation (v.adicCompletion K) ℤᵐ⁰).map_inv]
+        _ = Valued.v x * (Valued.v x)⁻¹ := by rw [hval]
+        _ = 1 := mul_inv_cancel₀ hxv
+    have hqmem : q ∈ (v.adicCompletionIntegers K).units :=
+      (IsDedekindDomain.HeightOneSpectrum.adicCompletionIntegers.mem_units_iff_valued_eq_one).2
+        hqval
+    let uq : (v.adicCompletionIntegers K).units := ⟨q, hqmem⟩
+    let u : (v.adicCompletionIntegers K)ˣ :=
+      (v.adicCompletionIntegers K).unitsEquivUnitsType uq
+    refine ⟨u, ?_⟩
+    change y = (y * x⁻¹) * x
+    rw [mul_assoc, inv_mul_cancel₀ hx, mul_one]
+  · intro h
+    rcases h with ⟨u, hu⟩
+    rw [hu]
+    have hu0 : ((u : v.adicCompletionIntegers K) : v.adicCompletion K) ≠ 0 := by
+      intro hzero
+      have hzero' : (u : v.adicCompletionIntegers K) = 0 := Subtype.ext hzero
+      exact u.isUnit.ne_zero hzero'
+    constructor
+    · exact hx
+    constructor
+    · exact mul_ne_zero hu0 hx
+    · exact (chapter08_local_order_ignores_unit v u x).symm
 
 theorem chapter08_finite_idele_ideal_eq_iff_same_orders
     {K : Type*} [Field K] [NumberField K]
@@ -131,7 +205,29 @@ theorem chapter08_unit_pair_has_same_local_ideal
     chapter08SameLocalIdealAt v
       ((u : v.adicCompletionIntegers K) : v.adicCompletion K)
       ((w : v.adicCompletionIntegers K) : v.adicCompletion K) := by
-  sorry
+  unfold chapter08SameLocalIdealAt
+  have hu0 : ((u : v.adicCompletionIntegers K) : v.adicCompletion K) ≠ 0 := by
+    intro hzero
+    have hzero' : (u : v.adicCompletionIntegers K) = 0 := Subtype.ext hzero
+    exact u.isUnit.ne_zero hzero'
+  have hw0 : ((w : v.adicCompletionIntegers K) : v.adicCompletion K) ≠ 0 := by
+    intro hzero
+    have hzero' : (w : v.adicCompletionIntegers K) = 0 := Subtype.ext hzero
+    exact w.isUnit.ne_zero hzero'
+  have huv : Valued.v ((u : v.adicCompletionIntegers K) : v.adicCompletion K) = 1 := by
+    exact (IsDedekindDomain.HeightOneSpectrum.adicCompletionIntegers.isUnit_iff_valued_eq_one).1
+      u.isUnit
+  have hwv : Valued.v ((w : v.adicCompletionIntegers K) : v.adicCompletion K) = 1 := by
+    exact (IsDedekindDomain.HeightOneSpectrum.adicCompletionIntegers.isUnit_iff_valued_eq_one).1
+      w.isUnit
+  constructor
+  · exact hu0
+  constructor
+  · exact hw0
+  · exact ((chapter08_local_order_eq_zero_iff_valued_eq_one v
+        ((u : v.adicCompletionIntegers K) : v.adicCompletion K) hu0).2 huv).trans
+      ((chapter08_local_order_eq_zero_iff_valued_eq_one v
+        ((w : v.adicCompletionIntegers K) : v.adicCompletion K) hw0).2 hwv).symm
 
 /-! Infinite coordinates are absent from the ideal map; signs at real places and arguments at
 complex places therefore require separate quotient or character data. -/

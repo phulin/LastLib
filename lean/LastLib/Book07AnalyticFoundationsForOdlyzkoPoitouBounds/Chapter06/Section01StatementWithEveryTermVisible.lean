@@ -89,7 +89,8 @@ theorem chapter06_prime_contribution_eq_ledger_sum
   sorry
 
 theorem chapter06_prime_contribution_eq_nested_sum
-    (K : Type*) [Field K] [NumberField K] (F : ℝ → ℝ) :
+    (K : Type*) [Field K] [NumberField K] (F : ℝ → ℝ)
+    (hF : Chapter06BasicallyAdmissible F) :
     chapter06PrimeContribution K F =
       2 * ∑' P : Chapter06PrimeIdeal K,
         ∑' m : Chapter06PositiveExponent, chapter06PrimePowerTerm F (P, m) := by

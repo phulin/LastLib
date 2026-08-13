@@ -15,7 +15,10 @@ theorem chapter04_self_dual_covolume_pos
     (K : Type*) [Field K] [NumberField K]
     (a : Chapter04NonzeroFractionalIdeal K) :
     0 < chapter04SelfDualCovolume K (a : Chapter04FractionalIdeal K) := by
-  sorry
+  have hnorm := chapter04_fractional_ideal_norm_eq_chapter02 K a
+  rw [chapter04SelfDualCovolume, hnorm]
+  exact mul_pos (Real.sqrt_pos.2 (chapter04_absolute_discriminant_pos K))
+    (chapter02_fractional_ideal_norm_pos K a)
 
 theorem chapter04_ordinary_covolume_unchanged
     (K : Type*) [Field K] [NumberField K]
@@ -32,9 +35,29 @@ theorem chapter04_self_dual_covolume_eq_rescaled_ordinary
     (a : Chapter04NonzeroFractionalIdeal K) :
     chapter04SelfDualCovolume K (a : Chapter04FractionalIdeal K) =
       (2 : ℝ) ^ chapter04ComplexPlaces K *
-        ZLattice.covolume (E := chapter04MinkowskiSpace K)
-          (chapter02FractionalIdealLattice K a) := by
-  sorry
+          ZLattice.covolume (E := chapter04MinkowskiSpace K)
+            (chapter02FractionalIdealLattice K a) := by
+  have hnorm := chapter04_fractional_ideal_norm_eq_chapter02 K a
+  rw [chapter04SelfDualCovolume, hnorm,
+    chapter02_fractional_ideal_lattice_covolume K a]
+  have hpow :
+      (2 : ℝ) ^ chapter04ComplexPlaces K *
+          (2 : ℝ)⁻¹ ^ chapter04ComplexPlaces K = 1 := by
+    rw [← mul_pow]
+    norm_num
+  calc
+    Real.sqrt (chapter04AbsoluteDiscriminant K) *
+        chapter02FractionalIdealNorm K a =
+        1 * (Real.sqrt (chapter04AbsoluteDiscriminant K) *
+          chapter02FractionalIdealNorm K a) := by ring
+    _ = ((2 : ℝ) ^ chapter04ComplexPlaces K *
+          (2 : ℝ)⁻¹ ^ chapter04ComplexPlaces K) *
+        (Real.sqrt (chapter04AbsoluteDiscriminant K) *
+          chapter02FractionalIdealNorm K a) := by rw [hpow]
+    _ = (2 : ℝ) ^ chapter04ComplexPlaces K *
+        (chapter02FractionalIdealNorm K a * (2 : ℝ)⁻¹ ^
+          chapter04ComplexPlaces K * Real.sqrt (chapter04AbsoluteDiscriminant K)) := by
+            ring
 
 /- The normalization is exposed as a lattice interface because the canonical
    mixed-space ideal lattice is a submodule, while its real scalar multiple is
@@ -69,7 +92,9 @@ theorem chapter04_orbit_ideal_class
         (J : Chapter04FractionalIdeal K) =
           FractionalIdeal.spanSingleton (𝓞 K)⁰ x₀ *
             (a : Chapter04FractionalIdeal K)⁻¹ := by
-  sorry
+  simpa using
+    (chapter02_principal_mul_inverse_class K ((ClassGroup.mk K a)⁻¹) a
+      (by simp) hx₀ hx₀_ne)
 
 noncomputable def chapter04NormalizedArchimedeanProduct
     (K : Type*) [Field K] [NumberField K]
@@ -81,10 +106,11 @@ theorem chapter04_normalized_archimedean_product_formula
     (K : Type*) [Field K] [NumberField K]
     (a : Chapter04NonzeroFractionalIdeal K) (x₀ : K) :
     chapter04NormalizedArchimedeanProduct K a x₀ =
-      (Real.sqrt (chapter04AbsoluteDiscriminant K))⁻¹ *
+        (Real.sqrt (chapter04AbsoluteDiscriminant K))⁻¹ *
         (chapter04FractionalIdealNorm K (a : Chapter04FractionalIdeal K))⁻¹ *
           |Algebra.norm ℚ x₀| := by
-  sorry
+  rw [chapter04NormalizedArchimedeanProduct, chapter04SelfDualCovolume]
+  field_simp
 
 theorem chapter04_theta_series_and_derivatives_locally_uniform
     (K : Type*) [Field K] [NumberField K]
@@ -117,7 +143,7 @@ theorem chapter04_unit_log_lattice_span_eq_top
     (K : Type*) [Field K] [NumberField K] :
     Submodule.span ℝ (chapter04UnitLogLattice K :
       Set (chapter04UnitLogHyperplane K)) = ⊤ := by
-  sorry
+  exact (chapter04_unit_log_lattice_is_full K).span_top
 
 theorem chapter04_exists_unit_fundamental_domain
     (K : Type*) [Field K] [NumberField K] :

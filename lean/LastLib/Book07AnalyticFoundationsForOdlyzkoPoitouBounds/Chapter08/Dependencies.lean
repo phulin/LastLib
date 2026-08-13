@@ -192,7 +192,7 @@ theorem chapter08_fourier_transform_eq_cosine_of_even
       _ = (↑(∫ x : ℝ, F x * Real.cos (t * x)) : ℂ).im := by simp
 
 theorem chapter08_positive_type_iff_angular_transform_nonnegative
-    {F : ℝ → ℝ} (heven : Chapter08Even F) :
+    {F : ℝ → ℝ} :
     Chapter08PositiveType F ↔
       Continuous F ∧ Integrable F ∧
         ∀ t, 0 ≤ (chapter08FourierTransform F t).re ∧
@@ -201,11 +201,6 @@ theorem chapter08_positive_type_iff_angular_transform_nonnegative
   · intro hF
     refine ⟨hF.continuous, hF.integrable, ?_⟩
     intro t
-    have hfourier :=
-      chapter08_fourier_transform_eq_cosine_of_even hF.integrable heven t
-    have hre : (chapter08FourierTransform F t).re = chapter08CosineTransform F t := by
-      rw [hfourier]
-      simp
     have htransform := hF.transformNonnegative t
     rw [← chapter08_fourier_transform_eq_chapter05 F t] at htransform
     refine ⟨?_, ?_⟩
@@ -214,11 +209,6 @@ theorem chapter08_positive_type_iff_angular_transform_nonnegative
   · rintro ⟨hcont, hint, hnonneg⟩
     refine ⟨hcont, hint, ?_⟩
     intro t
-    have hfourier :=
-      chapter08_fourier_transform_eq_cosine_of_even hint heven t
-    have hre : (chapter08FourierTransform F t).re = chapter08CosineTransform F t := by
-      rw [hfourier]
-      simp
     have htransform :
         0 ≤ (chapter08FourierTransform F t).re ∧
           (chapter08FourierTransform F t).im = 0 := by

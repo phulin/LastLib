@@ -141,13 +141,37 @@ theorem chapter09NormUnitHom_apply {F : Type*} [NormedField F] (u : Fˣ) :
     chapter09NormUnitHom u = chapter09NormUnit u :=
   rfl
 
+/-! Mathlib's norm on a finite adic completion is `exp (-ord)`, whereas the
+book's normalized finite-place absolute value is `q_v ^ (-ord)`.  Keep the
+finite normalization separate from `chapter09NormUnit`, which is used for the
+archimedean factors. -/
+def chapter09FiniteNormUnit
+    {K : Type*} [Field K] [NumberField K]
+    (v : HeightOneSpectrum (𝓞 K))
+    (u : (v.adicCompletion K)ˣ) : Chapter09PositiveReal :=
+  Units.mk0
+    ((Ideal.absNorm v.asIdeal : ℝ≥0) ^
+      (-LastLib.Book04AdelesAndIdeles.Chapter08.chapter08LocalOrder v
+        (u : v.adicCompletion K))) (by sorry)
+
+@[simp]
+theorem chapter09FiniteNormUnit_coe
+    {K : Type*} [Field K] [NumberField K]
+    (v : HeightOneSpectrum (𝓞 K))
+    (u : (v.adicCompletion K)ˣ) :
+    ((chapter09FiniteNormUnit v u : Chapter09PositiveReal) : ℝ≥0) =
+      (Ideal.absNorm v.asIdeal : ℝ≥0) ^
+        (-LastLib.Book04AdelesAndIdeles.Chapter08.chapter08LocalOrder v
+          (u : v.adicCompletion K)) :=
+  rfl
+
 /-! ### Finite, infinite, and full idele modules -/
 
 def chapter09FiniteIdeleModule
     {K : Type*} [Field K] [NumberField K]
     (x : (Chapter09FiniteAdele K)ˣ) : Chapter09PositiveReal :=
   ∏ᶠ v : HeightOneSpectrum (𝓞 K),
-    chapter09NormUnit
+    chapter09FiniteNormUnit v
       ((RestrictedProduct.unitsEquiv
         (fun v : HeightOneSpectrum (𝓞 K) => v.adicCompletion K) x) v)
 
@@ -283,7 +307,7 @@ theorem chapter09FiniteUnitIdeles_mem_iff
     {x : (Chapter09FiniteAdele K)ˣ} :
     x ∈ chapter09FiniteUnitIdeles K ↔
       ∀ v : HeightOneSpectrum (𝓞 K),
-        chapter09NormUnit
+        chapter09FiniteNormUnit v
           ((RestrictedProduct.unitsEquiv
             (fun v : HeightOneSpectrum (𝓞 K) => v.adicCompletion K) x) v) = 1 := by
   sorry
@@ -390,6 +414,13 @@ theorem chapter09NormOneClassIdealClassMap_apply
 noncomputable def chapter09NormOneClassGroup_equiv_classNormOne
     {K : Type*} [Field K] [NumberField K] :
     Chapter09NormOneClassGroup K ≃* chapter09ClassNormOne K := by
+  sorry
+
+/-! The compactness arguments use the quotient topology on both sides, so the
+algebraic identification above also needs its topological form. -/
+noncomputable def chapter09NormOneClassGroup_continuousEquiv_classNormOne
+    {K : Type*} [Field K] [NumberField K] :
+    Chapter09NormOneClassGroup K ≃ₜ* chapter09ClassNormOne K := by
   sorry
 
 /-! ### Finite unit ideles and the archimedean norm-one subgroup -/

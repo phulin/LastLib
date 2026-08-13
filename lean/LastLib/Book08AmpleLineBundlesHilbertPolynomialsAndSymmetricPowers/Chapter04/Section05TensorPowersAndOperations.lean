@@ -56,9 +56,8 @@ theorem chapter04_ample_of_ample_tensorPower
     chapter04Ample f L := by
   sorry
 
-/- SOURCE_ISSUE (4.5, bounded twists): the source gives a global eventual
-threshold with only quasi-compactness of `f`.  A uniform threshold also needs
-quasi-compactness of the base; this declaration records that missing hypothesis. -/
+/- The source's bounded-twist assertion assumes quasi-compactness of both the
+base and the morphism; those hypotheses are recorded explicitly here. -/
 /-- Over a quasi-compact base, a fixed invertible twist does not affect ampleness in sufficiently high powers. -/
 theorem chapter04_ample_eventually_tensor_twist
     {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact (𝟙 S)] [QuasiCompact f] [IsSeparated f]

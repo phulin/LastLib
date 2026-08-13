@@ -1,4 +1,4 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Section04HenselianLocalRings
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Section01CorrectingAnApproximateRoot
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions
 namespace Chapter09

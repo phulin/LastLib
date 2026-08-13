@@ -1,4 +1,4 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Section02TheValuationForm
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Section01CorrectingAnApproximateRoot
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions
 namespace Chapter09
@@ -1079,13 +1079,11 @@ theorem hensel_factorization_unique_at_first_nonzero_precision
   exact (huniq gh₁ h₁').trans (huniq gh₂ h₂).symm
 
 /-- A simple residue root is a linear factor and therefore lifts uniquely. -/
-theorem monic_simple_residue_root_lifts {A : Type*} [CommRing A] [IsDomain A]
+theorem simple_residue_root_lifts {A : Type*} [CommRing A] [IsDomain A]
     [CompleteDVR A] (f : A[X]) (a₀ : ResidueRing A)
-    (hf : f.Monic)
     (hroot : (residuePolynomial f).eval a₀ = 0)
     (hsimple : IsUnit ((residuePolynomial f).derivative.eval a₀)) :
     ∃! a : A, f.eval a = 0 ∧ residueClass a = a₀ := by
-  have _hf := hf
   obtain ⟨a₀', ha₀'⟩ := Ideal.Quotient.mk_surjective a₀
   have hfa : f.eval a₀' ∈ IsLocalRing.maximalIdeal A := by
     rw [← Ideal.Quotient.eq_zero_iff_mem]

@@ -182,8 +182,8 @@ theorem chapter07_intervalBump_not_fourierNonnegative (T : ℝ) (hT : 0 < T) :
 def chapter07CosineWave (x : ℝ) : ℝ :=
   Real.cos x
 
-theorem chapter07_cosineWave_positiveType :
-    chapter07PositiveType chapter07CosineWave := by
+theorem chapter07_cosineWave_positiveDefinite :
+    chapter07PositiveDefinite chapter07CosineWave := by
   sorry
 
 theorem chapter07_cosineWave_not_pointwiseNonnegative :

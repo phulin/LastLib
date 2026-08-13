@@ -13,13 +13,9 @@ theorem chapter07FOfG_eq_div_cosh (G : Chapter07TestFunction) :
     chapter07FOfG G = fun x => G x / Real.cosh (x / 2) := by
   sorry
 
-def chapter07UnconditionalAdmissible (F : Chapter07TestFunction) : Prop :=
-  ∃ G : Chapter07TestFunction,
-    F = chapter07FOfG G ∧
-      LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.Chapter05BasicallyAdmissible F ∧
-      Integrable G ∧
-      chapter07Even G ∧ chapter07PointwiseNonnegative G ∧
-        chapter07PositiveType G
+abbrev chapter07UnconditionalAdmissible (F : Chapter07TestFunction) : Prop :=
+  LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.Chapter05UnconditionallyAdmissible F ∧
+    LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05OriginCondition F
 
 def chapter07PairedZeroContribution
     (G : Chapter07TestFunction) (β γ : ℝ) : ℝ :=

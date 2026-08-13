@@ -69,15 +69,20 @@ theorem chapter07FourierTransform_im_eq_zero_of_even
     (chapter07FourierTransform f t).im = 0 := by
   sorry
 
-/- Positive type is the continuous finite positive-semidefinite-kernel condition.
-   Continuity is needed for the Bochner/Fourier bridge below; integrability is
-   kept as an explicit hypothesis there because positive-definite examples such
-   as the cosine wave need not be integrable. -/
-def chapter07PositiveType (f : Chapter07TestFunction) : Prop :=
+/- Positive definiteness is the continuous finite positive-semidefinite-kernel
+   condition.  It is kept separate from the book's integrable Fourier-positive
+   notion because endpoint kernels and examples such as the cosine wave need
+   not be integrable. -/
+def chapter07PositiveDefinite (f : Chapter07TestFunction) : Prop :=
   Continuous f ∧
     ∀ n : ℕ, ∀ x : Fin n → ℝ, ∀ c : Fin n → ℂ,
       0 ≤ (∑ i, ∑ j, c i * star (c j) * (f (x i - x j) : ℂ)).re ∧
         (∑ i, ∑ j, c i * star (c j) * (f (x i - x j) : ℂ)).im = 0
+
+/- The book's positive-type condition from §5.3, reused here rather than
+   replacing it by the stronger-looking finite-kernel presentation. -/
+abbrev chapter07PositiveType (f : Chapter07TestFunction) : Prop :=
+  LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.Chapter05PositiveType f
 
 def chapter07FourierNonnegative (f : Chapter07TestFunction) : Prop :=
   Integrable f ∧
@@ -92,8 +97,7 @@ theorem chapter07_positiveType_mul
   sorry
 
 theorem chapter07_positiveType_fourierNonnegative
-    (f : Chapter07TestFunction) (hf : Integrable f)
-    (hpositive : chapter07PositiveType f) :
+    (f : Chapter07TestFunction) (hpositive : chapter07PositiveType f) :
     chapter07FourierNonnegative f := by
   sorry
 

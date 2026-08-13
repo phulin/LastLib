@@ -54,6 +54,16 @@ instance chapter15LocalRingCommRing (p : Chapter15Place R K) :
       change CommRing (v.adicCompletion K)
       infer_instance
 
+instance chapter15LocalRingTopologicalSpace (p : Chapter15Place R K) :
+    TopologicalSpace (chapter15LocalRing p) := by
+  cases p with
+  | inl v =>
+      change TopologicalSpace v.Completion
+      infer_instance
+  | inr v =>
+      change TopologicalSpace (v.adicCompletion K)
+      infer_instance
+
 /-- The distinguished integral subset at a place; it is unrestricted at infinity. -/
 def chapter15LocalIntegerSet (p : Chapter15Place R K) : Set (chapter15LocalRing p) :=
   match p with

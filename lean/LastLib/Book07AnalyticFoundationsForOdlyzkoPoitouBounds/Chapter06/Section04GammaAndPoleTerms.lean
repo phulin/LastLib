@@ -1,4 +1,4 @@
-import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.Section03PrimeAndDiscriminantTerms
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.Dependencies
 
 namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06
 
@@ -101,7 +101,8 @@ theorem chapter06_pole_factor_transform_contribution
   sorry
 
 theorem chapter06_pole_terms_enter_with_negative_sign
-    {F : ℝ → ℝ} (hF : Chapter06BasicallyAdmissible F) :
+    {F : ℝ → ℝ} (hF : Chapter06BasicallyAdmissible F)
+    (hFnonnegative : ∀ x, 0 ≤ F x) :
     chapter06PoleFactorTransformContribution F ≤ 0 := by
   sorry
 

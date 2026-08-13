@@ -12,18 +12,16 @@ infinite algebraic tower cannot in general sit inside one finite extension of
 `ℚ`.  Each member is required to be finite over `ℚ`, which is exactly what is
 needed to recover the number-field API locally.
 -/
-structure Chapter13NestedFieldTower
-    (Ω : Type*) [Field Ω] [Algebra ℚ Ω] where
-  field : ℕ → IntermediateField ℚ Ω
-  finite : ∀ j, FiniteDimensional ℚ (field j)
-  nested : ∀ j, field j ≤ field (j + 1)
+abbrev Chapter13NestedFieldTower
+    (Ω : Type*) [Field Ω] [Algebra ℚ Ω] :=
+  LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01.Chapter01NestedFieldChain Ω
 
 theorem chapter13_tower_field_numberField
     {Ω : Type*} [Field Ω] [Algebra ℚ Ω]
     (T : Chapter13NestedFieldTower Ω) (j : ℕ) :
     NumberField (T.field j) := by
   exact @NumberField.of_module_finite ℚ (T.field j) _ _ _
-    (IntermediateField.algebra' (T.field j)) (T.finite j)
+    (IntermediateField.algebra' (T.field j)) (T.finiteDimensional j)
 
 noncomputable instance chapter13NestedFieldTowerNumberField
     {Ω : Type*} [Field Ω] [Algebra ℚ Ω]
@@ -74,7 +72,7 @@ theorem chapter13_tower_degree_pos
     {Ω : Type*} [Field Ω] [Algebra ℚ Ω]
     (T : Chapter13NestedFieldTower Ω) (j : ℕ) :
     0 < chapter13TowerDegree T j := by
-  let hfinite : Module.Finite ℚ (T.field j) := T.finite j
+  let hfinite : Module.Finite ℚ (T.field j) := T.finiteDimensional j
   exact @Module.finrank_pos ℚ (T.field j) _ _ _ _ hfinite _ _ _
 
 theorem chapter13_tower_realProportion_mem_Icc

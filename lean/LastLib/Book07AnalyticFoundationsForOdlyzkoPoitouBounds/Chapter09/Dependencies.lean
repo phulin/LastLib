@@ -215,8 +215,9 @@ def satisfiesGRH (M : Chapter09NumberFieldModel) : Prop :=
 /- A model carries its zero set as data, whereas the fieldwise GRH theorem
    consumes the chapter's zero-interface typeclass.  This constructor is the
    non-circular bridge needed when applying that theorem to a model member. -/
+@[instance_reducible]
 def zetaZeroInterface (M : Chapter09NumberFieldModel) :
-    Chapter09ZetaZeroInterface M.K := by
+    @Chapter09ZetaZeroInterface M.K M.field M.numberField := by
   letI := M.field
   letI := M.numberField
   exact

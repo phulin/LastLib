@@ -1,4 +1,4 @@
-import LastLib.Book04AdelesAndIdeles.Chapter09.Dependencies
+import LastLib.Book04AdelesAndIdeles.Chapter09.Section02DirichletUnitLattice
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter09
 

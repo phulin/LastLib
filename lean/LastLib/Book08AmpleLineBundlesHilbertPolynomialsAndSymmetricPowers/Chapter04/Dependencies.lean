@@ -419,6 +419,8 @@ theorem chapter04_projective_bundle_universal_point_is_pullback_universal_quotie
 structure Chapter04VeryAmpleWitness
     {X S : Scheme.{u}} (f : X ⟶ S) (L : Chapter04LineBundle X) where
   projectiveBundle : Chapter04ProjectiveBundle S
+  universalQuotientCompatible :
+    chapter04ProjectiveBundleUniversalQuotientCompatible projectiveBundle
   map : X ⟶ projectiveBundle.space
   immersion : IsImmersion map
   over : map ≫ projectiveBundle.projection = f
@@ -434,6 +436,8 @@ def chapter04VeryAmple
 structure Chapter04ProjectiveWitness
     {X S : Scheme.{u}} (f : X ⟶ S) where
   projectiveBundle : Chapter04ProjectiveBundle S
+  universalQuotientCompatible :
+    chapter04ProjectiveBundleUniversalQuotientCompatible projectiveBundle
   map : X ⟶ projectiveBundle.space
   closedImmersion : IsClosedImmersion map
   over : map ≫ projectiveBundle.projection = f
@@ -677,18 +681,13 @@ noncomputable def chapter04Cohomology
     ((SheafOfModules.toSheaf X.ringCatSheaf).obj F) i (⊤ : X.Opens)
 
 /-! The context fixes the canonical cohomology object and records its
-functoriality in coefficient sheaves together with the canonical pushforward
-base-change comparison. -/
+functoriality in coefficient sheaves. -/
 structure Chapter04CohomologyContext (X : Scheme.{u}) where
   map : ∀ {F G : X.Modules} (_φ : F ⟶ G) (i : ℕ),
     chapter04Cohomology F i ⟶ chapter04Cohomology G i
   map_id : ∀ (F : X.Modules) (i : ℕ), map (𝟙 F) i = 𝟙 _
   map_comp : ∀ {F G H : X.Modules} (φ : F ⟶ G) (ψ : G ⟶ H) (i : ℕ),
     map (φ ≫ ψ) i = map φ i ≫ map ψ i
-  pushforward_baseChange :
-    ∀ {Y : Scheme.{u}} (g : Y ⟶ X) (F : Y.Modules) (i : ℕ),
-      Nonempty (chapter04Cohomology F i ≅
-        chapter04Cohomology ((Scheme.Modules.pushforward g).obj F) i)
 
 abbrev Chapter04CohomologyContext.H
     {X : Scheme.{u}} (_C : Chapter04CohomologyContext X)
@@ -702,8 +701,6 @@ noncomputable def chapter04CanonicalCohomologyContext (X : Scheme.{u}) :
     map_id := by
       sorry
     map_comp := by
-      sorry
-    pushforward_baseChange := by
       sorry }
 
 def chapter04CohomologyVanishes

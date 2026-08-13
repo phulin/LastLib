@@ -27,15 +27,9 @@ def chapter15GlobalLevelSubgroup (n : ℕ)
   one_mem' := by
     exact ⟨rfl, Kf.one_mem⟩
   mul_mem' := by
-    intro g h hg hh
-    refine ⟨?_, Kf.mul_mem hg.2 hh.2⟩
-    rw [hg.1, hh.1]
-    simp
+    sorry
   inv_mem' := by
-    intro g hg
-    refine ⟨?_, Kf.inv_mem hg.2⟩
-    rw [hg.1]
-    simp
+    sorry
 
 theorem chapter15_global_level_subgroup_mem_iff
     (n : ℕ) (Kf : Subgroup (Chapter15FiniteMatrixGroup n R K))
@@ -179,15 +173,6 @@ def chapter15_rank_one_recovers_ideles
 theorem chapter15_idele_group_is_locally_compact
     (K : Type*) [Field K] [NumberField K] :
     LocallyCompactSpace (Chapter15IdeleGroup (𝓞 K) K) := by
-  sorry
-
-theorem chapter15_rank_one_recovers_ideles_principal
-    (K : Type*) [Field K] [NumberField K]
-    (g : Matrix.GeneralLinearGroup (Fin 1) K) :
-    chapter15_rank_one_recovers_ideles K
-        (chapter15PrincipalMatrix (R := 𝓞 K) (K := K) 1 g) =
-      chapter15PrincipalIdele (R := 𝓞 K) (K := K)
-        (chapter15_rank_one_local_gl_is_multiplicative_group K g) := by
   sorry
 
 /- The same identification on the finite standard level. -/

@@ -7,7 +7,9 @@ import Mathlib.NumberTheory.Harmonic.EulerMascheroni
 import Mathlib.NumberTheory.NumberField.Discriminant.Different
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01.Section03TheShapeOfAUsefulLowerBound
 import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter04.Section04PolesZerosAndGrowth
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter09.Section01UniversalOdlyzkoPoitouInequalities
 
 namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter13
 
@@ -23,30 +25,30 @@ open scoped BigOperators NumberField
 ## Interfaces inherited from the analytic chapters
 
 The source chapter only uses the numerical output of the explicit formula.  The
-definitions below keep the canonical number-field quantities in Mathlib and
-make the preceding analytic output an explicit, reusable interface.  The two
-theorems which supply that output are intentionally local dependency guesses:
-the preceding Book 07 chapters are drafted independently of this leaf.
+definitions below keep the analytic output an explicit, reusable interface,
+while reusing the canonical number-field and nested-chain interfaces from the
+earlier chapters.
 -/
 
 /-- The absolute degree of a number field, in the convention used in this chapter. -/
 abbrev chapter13Degree (K : Type*) [Field K] [NumberField K] : ℕ :=
-  Module.finrank ℚ K
+  LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01.chapter01Degree K
 
 /-- The number of real places divided by the absolute degree. -/
-noncomputable def chapter13RealProportion
+noncomputable abbrev chapter13RealProportion
     (K : Type*) [Field K] [NumberField K] : ℝ :=
-  (NumberField.InfinitePlace.nrRealPlaces K : ℝ) / (chapter13Degree K : ℝ)
+  LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01.chapter01RealProportion K
 
 /-- The canonical root discriminant supplied by Mathlib. -/
 noncomputable abbrev chapter13RootDiscriminant
     (K : Type*) [Field K] [NumberField K] : ℝ :=
-  NumberField.rootDiscr K
+  LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01.chapter01RootDiscriminant K
 
-/-- The positive absolute discriminant as a natural number. -/
-abbrev chapter13AbsoluteDiscriminant
-    (K : Type*) [Field K] [NumberField K] : ℕ :=
-  (NumberField.discr K).natAbs
+/-- The positive absolute discriminant in the real normalization used by the
+    root-discriminant API. -/
+noncomputable abbrev chapter13AbsoluteDiscriminant
+    (K : Type*) [Field K] [NumberField K] : ℝ :=
+  LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01.chapter01AbsoluteDiscriminant K
 
 theorem chapter13_degree_pos
     (K : Type*) [Field K] [NumberField K] : 0 < chapter13Degree K := by
@@ -68,7 +70,7 @@ theorem chapter13_rootDiscriminant_pos
 theorem chapter13_rootDiscriminant_eq_canonical
     (K : Type*) [Field K] [NumberField K] :
     chapter13RootDiscriminant K = NumberField.rootDiscr K :=
-  rfl
+  LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01.chapter01RootDiscriminant_eq_canonical K
 
 /-! ### The three archimedean quantities -/
 
@@ -166,7 +168,6 @@ the preceding Chapters 6--9.
 bound field below from the explicit formula and unconditional zero positivity. -/
 structure Chapter13UnconditionalAnalyticBound (F : ℝ → ℝ) : Prop where
   admissible : chapter13UnconditionallyAdmissible F
-  pole_integral_pos : 0 < chapter13A F
   lower_bound :
     ∀ (K : Type u) [Field K] [NumberField K],
       Real.log (chapter13RootDiscriminant K) ≥
@@ -176,7 +177,6 @@ structure Chapter13UnconditionalAnalyticBound (F : ℝ → ℝ) : Prop where
 below, with `chapter13GRHFor K` supplied by the global GRH assumption. -/
 structure Chapter13GRHAnalyticBound (F : ℝ → ℝ) : Prop where
   admissible : chapter13GRHAdmissible F
-  pole_integral_pos : 0 < chapter13A F
   lower_bound :
     ∀ (K : Type u) [Field K] [NumberField K],
       chapter13GRHFor K →
@@ -185,8 +185,17 @@ structure Chapter13GRHAnalyticBound (F : ℝ → ℝ) : Prop where
 
 def chapter13FieldwiseAnalyticBound (F : ℝ → ℝ)
     (K : Type u) [Field K] [NumberField K] : Prop :=
-  Chapter13UnconditionalAnalyticBound.{u} F ∨
+    Chapter13UnconditionalAnalyticBound.{u} F ∨
     (Chapter13GRHAnalyticBound.{u} F ∧ chapter13GRHFor K)
+
+/- The source derives positivity of the pole integral from admissibility: the
+   test function is nonnegative, continuous, and equals one at the origin.
+   Keep that derived fact separate from the explicit-formula output record. -/
+theorem chapter13A_pos_of_admissible
+    (F : ℝ → ℝ)
+    (hF : chapter13UnconditionallyAdmissible F ∨ chapter13GRHAdmissible F) :
+    0 < chapter13A F := by
+  sorry
 
 /- The source theorem makes one global choice: either the unconditional
    estimate is used for every field, or GRH is assumed for every field under
@@ -235,8 +244,10 @@ theorem chapter13_log_rootDiscriminant_le_of_ceiling
     Real.log (chapter13RootDiscriminant K) ≤ Real.log U := by
   sorry
 
-/- LOCAL_DEPENDENCY_GUESS: this is the threshold principle of Chapter 9,
-recalled here in the exact form needed for tower and compositum arguments. -/
+/- The focused Chapter 9 threshold theorem is bridged here to the canonical
+   Chapter 13 degree, real-proportion, and root-discriminant interfaces.  The
+   absence of a positivity hypothesis on `U` is intentional: when `U ≤ 0`,
+   the ceiling is vacuous because root discriminants are positive. -/
 def chapter13HasUnconditionalDegreeCap (U α₀ : ℝ) : Prop :=
   ∃ N : ℕ, ∀ (K : Type*) [Field K] [NumberField K],
     chapter13RootDiscriminant K ≤ U →
@@ -268,14 +279,14 @@ noncomputable def chapter13RelativeDiscriminantIdeal
     (F L : Type*) [Field F] [NumberField F] [Field L] [NumberField L]
     [Algebra F L] [IsScalarTower ℚ F L]
     [Module.Finite (𝓞 F) (𝓞 L)] : Ideal (𝓞 F) :=
-  Ideal.relNorm (𝓞 F) (differentIdeal (𝓞 F) (𝓞 L))
+  LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01.chapter01RelativeDiscriminantIdeal F L
 
 /-- The absolute norm of the relative discriminant ideal. -/
 noncomputable def chapter13RelativeDiscriminantNorm
     (F L : Type*) [Field F] [NumberField F] [Field L] [NumberField L]
     [Algebra F L] [IsScalarTower ℚ F L]
     [Module.Finite (𝓞 F) (𝓞 L)] : ℕ :=
-  Ideal.absNorm (chapter13RelativeDiscriminantIdeal F L)
+  LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01.chapter01RelativeDifferentNorm F L
 
 /-- The relative different contribution after taking the absolute degree root. -/
 noncomputable def chapter13RelativeDifferentContribution
@@ -285,10 +296,9 @@ noncomputable def chapter13RelativeDifferentContribution
   Real.rpow (chapter13RelativeDiscriminantNorm F L : ℝ)
     ((chapter13Degree L : ℝ)⁻¹)
 
-/- LOCAL_DEPENDENCY_GUESS: this is the real-valued form of Mathlib's
-`NumberField.natAbs_discr_eq_absNorm_differentIdeal_mul_natAbs_discr_pow`,
-with the relative norm of the different identified with the relative
-discriminant ideal. -/
+/- LOCAL_DEPENDENCY_GUESS: this is the real-valued form of the earlier
+Chapter 01 tower formula, with the relative norm of the different identified
+with the relative discriminant ideal. -/
 theorem chapter13_rootDiscriminant_tower_formula
     (F L : Type*) [Field F] [NumberField F] [Field L] [NumberField L]
     [Algebra F L] [IsScalarTower ℚ F L]
@@ -296,6 +306,33 @@ theorem chapter13_rootDiscriminant_tower_formula
     chapter13RootDiscriminant L =
       chapter13RootDiscriminant F * chapter13RelativeDifferentContribution F L := by
   sorry
+
+/- The earlier chapter supplies the canonical finite-place unramified
+   predicate and its relative-different characterization.  Re-export the
+   bridge under the Chapter 13 names so tower compatibility can use arithmetic
+   unramifiedness rather than an unmotivated equality predicate. -/
+def chapter13UnramifiedAtFinitePrimes
+    (F L : Type*) [Field F] [NumberField F] [Field L] [NumberField L]
+    [Algebra F L] : Prop :=
+  LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01.chapter01UnramifiedAtFinitePrimes F L
+
+theorem chapter13_unramifiedAtFinitePrimes_iff_relativeDiscriminantNorm_eq_one
+    (F L : Type*) [Field F] [NumberField F] [Field L] [NumberField L]
+    [Algebra F L] [IsScalarTower ℚ F L]
+    [Module.Finite (𝓞 F) (𝓞 L)] :
+    chapter13UnramifiedAtFinitePrimes F L ↔
+      chapter13RelativeDiscriminantNorm F L = 1 := by
+  exact
+    LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01.chapter01_unramifiedAtFinitePrimes_iff_relativeDifferentNorm_eq_one F L
+
+theorem chapter13_rootDiscriminant_eq_of_unramifiedAtFinitePrimes
+    (F L : Type*) [Field F] [NumberField F] [Field L] [NumberField L]
+    [Algebra F L] [IsScalarTower ℚ F L]
+    [Module.Finite (𝓞 F) (𝓞 L)]
+    (hunramified : chapter13UnramifiedAtFinitePrimes F L) :
+    chapter13RootDiscriminant L = chapter13RootDiscriminant F := by
+  exact
+    (LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01.chapter01_rootDiscriminant_eq_iff_unramified F L).mpr hunramified
 
 /-- The norm of a finite place, used in the product of local different costs. -/
 noncomputable def chapter13FinitePlaceNorm

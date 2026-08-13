@@ -1,4 +1,4 @@
-import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.Section04GammaAndPoleTerms
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.Dependencies
 
 namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06
 
@@ -20,8 +20,7 @@ theorem chapter06_zero_count_unit_band
     (K : Type*) [Field K] [NumberField K]
     (Z : Chapter06ZeroSpectrum K) :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ T : ℝ, 0 ≤ T →
-      ((Set.ncard {ρ : ℂ |
-        ρ ∈ Z.support ∧ T < |ρ.im| ∧ |ρ.im| ≤ T + 1} : ℕ) : ℝ) ≤
+      ((chapter06ZeroBandCount Z T : ℕ) : ℝ) ≤
         C * (Real.log (chapter06AbsoluteDiscriminant K) +
           (chapter06Degree K : ℝ) * Real.log (T + 3)) := by
   exact Z.unit_band_bound
@@ -108,7 +107,7 @@ theorem chapter06_smoothed_test_functions_basic_admissible
     {η : ℕ → ℝ → ℝ} {F : ℝ → ℝ}
     (hη : chapter06ApproximateIdentity η)
     (hF : Chapter06BasicallyAdmissible F) :
-    ∀ n, Chapter06BasicallyAdmissible
+    ∀ᶠ n : ℕ in atTop, Chapter06BasicallyAdmissible
       (chapter06SmoothedTestFunction η F n) := by
   sorry
 

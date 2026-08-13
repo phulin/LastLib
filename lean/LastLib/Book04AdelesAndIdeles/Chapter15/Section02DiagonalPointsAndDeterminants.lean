@@ -108,6 +108,15 @@ def chapter15PrincipalIdele : Kˣ →* Chapter15IdeleGroup R K where
   map_mul' x y := by
     sorry
 
+theorem chapter15_rank_one_recovers_ideles_principal
+    (K : Type*) [Field K] [NumberField K]
+    (g : Matrix.GeneralLinearGroup (Fin 1) K) :
+    chapter15_rank_one_recovers_ideles K
+        (chapter15PrincipalMatrix (R := 𝓞 K) (K := K) 1 g) =
+      chapter15PrincipalIdele (R := 𝓞 K) (K := K)
+        (chapter15_rank_one_local_gl_is_multiplicative_group K g) := by
+  sorry
+
 /- LOCAL_DEPENDENCY_GUESS: the book's normalized idele module is not a named
 Mathlib object.  The structure records the surjective, continuous,
 principal-trivial multiplicative interface needed by this chapter. -/

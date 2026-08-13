@@ -45,7 +45,7 @@ idele-module product. -/
 theorem chapter09FiniteIdeleModule_eventually_one
     {K : Type*} [Field K] [NumberField K] (x : (Chapter09FiniteAdele K)ˣ) :
     ∀ᶠ v : HeightOneSpectrum (𝓞 K) in Filter.cofinite,
-      chapter09NormUnit
+      chapter09FiniteNormUnit v
         ((RestrictedProduct.unitsEquiv
           (fun v : HeightOneSpectrum (𝓞 K) => v.adicCompletion K) x) v) = 1 := by
   sorry
@@ -53,7 +53,7 @@ theorem chapter09FiniteIdeleModule_eventually_one
 theorem chapter09FiniteIdeleModule_support_finite
     {K : Type*} [Field K] [NumberField K] (x : (Chapter09FiniteAdele K)ˣ) :
     ({v : HeightOneSpectrum (𝓞 K) |
-      chapter09NormUnit
+      chapter09FiniteNormUnit v
         ((RestrictedProduct.unitsEquiv
           (fun v : HeightOneSpectrum (𝓞 K) => v.adicCompletion K) x) v) ≠ 1}).Finite := by
   sorry
@@ -66,7 +66,7 @@ theorem chapter09FiniteIdeleModule_reindexed_finite_places
     (x : (Chapter09FiniteAdele K)ˣ) :
     chapter09FiniteIdeleModule x =
       ∏ᶠ w : NumberField.FinitePlace K,
-        chapter09NormUnit
+        chapter09FiniteNormUnit (NumberField.FinitePlace.maximalIdeal w)
           ((RestrictedProduct.unitsEquiv
             (fun v : HeightOneSpectrum (𝓞 K) => v.adicCompletion K) x)
             (NumberField.FinitePlace.maximalIdeal w)) := by
@@ -125,7 +125,7 @@ structure Chapter09UniformizerIdeleData
     ∀ w : InfinitePlace K,
       (MulEquiv.piUnits ((chapter09IdeleProductEquiv K idele).1) w) = 1
   finite_component_at :
-    ((chapter09NormUnit
+    ((chapter09FiniteNormUnit v
       ((RestrictedProduct.unitsEquiv
         (fun w : HeightOneSpectrum (𝓞 K) => w.adicCompletion K)
         ((chapter09IdeleProductEquiv K idele).2)) v) : Chapter09PositiveReal) : ℝ≥0) =
@@ -140,7 +140,7 @@ theorem chapter09_uniformizer_data_local_norm
     {K : Type*} [Field K] [NumberField K]
     {v : HeightOneSpectrum (𝓞 K)}
     (d : Chapter09UniformizerIdeleData K v) :
-    ((chapter09NormUnit
+    ((chapter09FiniteNormUnit v
       ((RestrictedProduct.unitsEquiv
         (fun w : HeightOneSpectrum (𝓞 K) => w.adicCompletion K)
       ((chapter09IdeleProductEquiv K d.idele).2)) v) : Chapter09PositiveReal) : ℝ≥0) =

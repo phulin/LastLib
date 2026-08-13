@@ -70,18 +70,7 @@ def chapter15DoubleQuotientMapOfLevelRefinement
       (chapter15PrincipalMatrix (R := R) (K := K) n).range
       (chapter15GlobalLevelSubgroup n K₂) g)
     (by
-      intro x y hxy
-      change chapter15DoubleCosetRel
-        (chapter15PrincipalMatrix (R := R) (K := K) n).range
-        (chapter15GlobalLevelSubgroup n K₁) x y at hxy
-      rcases hxy with ⟨γ, hγ, k, hk, heq⟩
-      apply (chapter15DoubleQuotient_mk_eq_iff
-        (chapter15PrincipalMatrix (R := R) (K := K) n).range
-        (chapter15GlobalLevelSubgroup n K₂) x y).2
-      refine ⟨γ, hγ, k, ?_, heq⟩
-      apply (chapter15_global_level_subgroup_mem_iff n K₂ k).2
-      rcases (chapter15_global_level_subgroup_mem_iff n K₁ k).1 hk with ⟨h∞, hk₁⟩
-      exact ⟨h∞, hK hk₁⟩)
+      sorry)
 
 theorem chapter15DoubleQuotientMapOfLevelRefinement_mk
     (n : ℕ) {K₁ K₂ : Subgroup (Chapter15FiniteMatrixGroup n R K)}

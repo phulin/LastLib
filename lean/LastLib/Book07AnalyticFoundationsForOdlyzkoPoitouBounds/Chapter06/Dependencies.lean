@@ -11,6 +11,8 @@ import Mathlib.NumberTheory.NumberField.Discriminant.Basic
 import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
 import Mathlib.Topology.Algebra.Support
 import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter03.Dependencies
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter03.Section03LogarithmicDerivatives
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter04.Section05DiscriminantAndAnalyticConductor
 import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.Core
 
 namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06
@@ -21,10 +23,11 @@ open MeasureTheory Set Filter NumberField
 open scoped BigOperators ContDiff Topology
 
 /-!
-Shared interfaces for Chapter 6.  The completed-zeta facts are kept as a
-small package because the preceding Chapter 4 draft is not present in this
-checkout.  The book-facing definitions below nevertheless use the canonical
-Mathlib number-field, discriminant, Gamma, and Laplace-transform objects.
+Shared interfaces for Chapter 6.  Chapter 4 supplies the global completed
+Dedekind zeta function, its Xi function, and the basic zero and conductor
+interfaces.  This chapter retains an explicit package for the additional
+contour-height data needed by the explicit formula, while the book-facing
+definitions below use the canonical earlier-chapter and Mathlib objects.
 -/
 
 /-! ### Number-field and completion conventions -/
@@ -52,28 +55,29 @@ noncomputable def chapter06RootDiscriminant
   chapter06AbsoluteDiscriminant K ^ (chapter06Degree K : ℝ)⁻¹
 
 def chapter06GammaReal (s : ℂ) : ℂ :=
-  (Real.pi : ℂ) ^ (-s / 2) * Complex.Gamma (s / 2)
+  LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter04.chapter04GammaReal s
 
 def chapter06GammaComplex (s : ℂ) : ℂ :=
-  (2 * Real.pi : ℂ) ^ (-s) * Complex.Gamma s
+  LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter04.chapter04GammaComplex s
 
-def chapter06CompletedDedekindZeta
+noncomputable def chapter06EulerCompletedDedekindZeta
     (K : Type*) [Field K] [NumberField K] (s : ℂ) : ℂ :=
-  (chapter06AbsoluteDiscriminant K : ℂ) ^ (s / 2) *
-    chapter06GammaReal s ^ chapter06RealPlaces K *
-    chapter06GammaComplex s ^ chapter06ComplexPlaces K *
-    LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter03.chapter03DedekindZeta K s
+  LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter04.chapter04EulerCompletedDedekindZeta K s
+
+noncomputable def chapter06CompletedDedekindZeta
+    (K : Type*) [Field K] [NumberField K] (s : ℂ) : ℂ :=
+  LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter04.chapter04CompletedDedekindZeta K s
 
 def chapter06Xi
     (K : Type*) [Field K] [NumberField K] (s : ℂ) : ℂ :=
-  (1 / 2 : ℂ) * s * (s - 1) * chapter06CompletedDedekindZeta K s
+  LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter04.chapter04Xi K s
 
 def chapter06LogDerivative (f : ℂ → ℂ) (s : ℂ) : ℂ :=
   deriv f s / f s
 
 def chapter06AnalyticConductor
     (K : Type*) [Field K] [NumberField K] (t : ℝ) : ℝ :=
-  chapter06AbsoluteDiscriminant K * (|t| + 3) ^ chapter06Degree K
+  LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter04.chapter04AnalyticConductor K t
 
 def chapter06VerticalLinePoint (σ t : ℝ) : ℂ :=
   (σ : ℂ) + (t : ℂ) * Complex.I
@@ -139,7 +143,7 @@ noncomputable def chapter06PrimeContribution
     (K : Type*) [Field K] [NumberField K] (F : ℝ → ℝ) : ℝ :=
   2 * ∑' q : Chapter06PrimePower K, chapter06PrimePowerTerm F q
 
-/-! ### The zero spectrum and the missing Chapter 4 package -/
+/-! ### The zero spectrum and the contour package -/
 
 def chapter06NontrivialZero
     (K : Type*) [Field K] [NumberField K] (ρ : ℂ) : Prop :=
@@ -147,8 +151,12 @@ def chapter06NontrivialZero
 
 def chapter06SimplePoleWithResidue
     (f : ℂ → ℂ) (ρ r : ℂ) : Prop :=
-  ∃ g : ℂ → ℂ, DifferentiableAt ℂ g ρ ∧
+  ∃ g : ℂ → ℂ, AnalyticAt ℂ g ρ ∧
     ∀ᶠ s in 𝓝[≠] ρ, f s = r / (s - ρ) + g s
+
+noncomputable def chapter06FiniteMultiplicitySum
+    (multiplicity : ℂ → ℕ) (S : Set ℂ) (hS : S.Finite) : ℕ :=
+  ∑ ρ ∈ hS.toFinset, multiplicity ρ
 
 structure Chapter06ZeroSpectrum
     (K : Type*) [Field K] [NumberField K] where
@@ -176,17 +184,21 @@ structure Chapter06ZeroSpectrum
     ∀ T : ℝ, Set.Finite {ρ : ℂ | ρ ∈ support ∧ |ρ.im| < T}
   unit_band_bound :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ T : ℝ, 0 ≤ T →
-      ((Set.ncard {ρ : ℂ |
-        ρ ∈ support ∧ T < |ρ.im| ∧ |ρ.im| ≤ T + 1} : ℕ) : ℝ) ≤
+      ((chapter06FiniteMultiplicitySum multiplicity
+        {ρ : ℂ | ρ ∈ support ∧ T < |ρ.im| ∧ |ρ.im| ≤ T + 1}
+        ((locally_finite (T + 2)).subset (by
+          intro ρ hρ
+          exact ⟨hρ.1,
+            lt_of_le_of_lt hρ.2.2 (by linarith)⟩))) : ℝ) ≤
         C * (Real.log (chapter06AbsoluteDiscriminant K) +
           (chapter06Degree K : ℝ) * Real.log (T + 3))
 
 /-
-DEPENDENCY_GUESS: Chapter 4 should provide this package.  Its zero field is
-the completed-zeta zero multiset counted with multiplicity; the height field
+Chapter 4 supplies the completed-zeta zero facts.  The height field here
 records the order-one estimate and the inverse-polynomial choice of contour
-heights used in §6.2.  It is deliberately an input interface, not an axiom
-or a conclusion engineered from the explicit formula.
+heights used in §6.2.  It is deliberately an input interface for that
+remaining contour data, not an axiom or a conclusion engineered from the
+explicit formula.
 -/
 structure Chapter06ContourHeightSequence
     (K : Type*) [Field K] [NumberField K]
@@ -195,6 +207,7 @@ structure Chapter06ContourHeightSequence
   tendsToInfinity : Tendsto height atTop atTop
   positive : ∀ j, 0 < height j
   separationExponent : ℕ
+  separationExponent_ge_two : 2 ≤ separationExponent
   separationConstant : ℝ
   separationConstant_pos : 0 < separationConstant
   avoids_zero_ordinates :
@@ -214,7 +227,7 @@ structure Chapter06ContourHeightSequence
 
 structure Chapter06ZetaAnalyticPackage
     (K : Type*) [Field K] [NumberField K] where
-  xi_entire : Differentiable ℂ (chapter06Xi K)
+  xi_entire : AnalyticOnNhd ℂ (chapter06Xi K) Set.univ
   functional_equation : ∀ s : ℂ, chapter06Xi K s = chapter06Xi K (1 - s)
   conjugation_symmetry : ∀ s : ℂ,
     chapter06Xi K (star s) = star (chapter06Xi K s)
@@ -225,13 +238,22 @@ structure Chapter06ZetaAnalyticPackage
 def chapter06ZeroCountingFunction
     {K : Type*} [Field K] [NumberField K]
     (Z : Chapter06ZeroSpectrum K) (T : ℝ) : ℕ :=
-  Set.ncard {ρ : ℂ | ρ ∈ Z.support ∧ |ρ.im| ≤ T}
+  chapter06FiniteMultiplicitySum Z.multiplicity
+    {ρ : ℂ | ρ ∈ Z.support ∧ |ρ.im| ≤ T}
+    ((Z.locally_finite (T + 1)).subset (by
+      intro ρ hρ
+      exact ⟨hρ.1, lt_of_le_of_lt hρ.2 (by linarith)⟩))
 
 def chapter06ZeroBandCount
     {K : Type*} [Field K] [NumberField K]
     (Z : Chapter06ZeroSpectrum K) (T : ℝ) : ℕ :=
-  Set.ncard {ρ : ℂ |
-    ρ ∈ Z.support ∧ T < |ρ.im| ∧ |ρ.im| ≤ T + 1}
+  chapter06FiniteMultiplicitySum Z.multiplicity
+    {ρ : ℂ |
+      ρ ∈ Z.support ∧ T < |ρ.im| ∧ |ρ.im| ≤ T + 1}
+    ((Z.locally_finite (T + 2)).subset (by
+      intro ρ hρ
+      exact ⟨hρ.1,
+        lt_of_le_of_lt hρ.2.2 (by linarith)⟩))
 
 /-! ### Symmetric zero sums -/
 
@@ -312,9 +334,9 @@ noncomputable def chapter06BottomHorizontalIntegral
 noncomputable def chapter06HorizontalError
     {K : Type*} [Field K] [NumberField K]
     (F : ℝ → ℝ) (c T : ℝ) : ℂ :=
-  (1 / (2 * (Real.pi : ℂ) * Complex.I)) *
+  -((1 / (2 * (Real.pi : ℂ) * Complex.I)) *
     (chapter06TopHorizontalIntegral (K := K) F c T +
-      chapter06BottomHorizontalIntegral (K := K) F c T)
+      chapter06BottomHorizontalIntegral (K := K) F c T))
 
 noncomputable def chapter06ContourResidueSum
     {K : Type*} [Field K] [NumberField K]
@@ -364,6 +386,7 @@ def chapter06ComplexGammaLogDerivative
 def chapter06ApproximateIdentity (η : ℕ → ℝ → ℝ) : Prop :=
   (∀ n, Integrable (η n)) ∧
     (∀ n, HasCompactSupport (η n)) ∧
+    (∃ R : ℝ, 0 ≤ R ∧ ∀ n, Function.support (η n) ⊆ Set.Icc (-R) R) ∧
     (∀ n, ContDiff ℝ ∞ (η n)) ∧
     (∀ n x, 0 ≤ η n x) ∧
     (∀ n x, η n (-x) = η n x) ∧

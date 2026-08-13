@@ -143,13 +143,58 @@ theorem chapter04_trace_pairing_self_nonneg
     (K : Type*) [Field K] [NumberField K]
     (x : chapter04MinkowskiSpace K) :
     0 ≤ chapter04TracePairing K x x := by
-  sorry
+  simpa [chapter04TracePairing, Complex.mul_re] using
+    (add_nonneg (Finset.sum_nonneg (fun _ _ => mul_self_nonneg _))
+      (mul_nonneg (by norm_num)
+        (Finset.sum_nonneg (fun _ _ =>
+          add_nonneg (mul_self_nonneg _) (mul_self_nonneg _)))))
 
 theorem chapter04_trace_pairing_self_eq_zero_iff
     (K : Type*) [Field K] [NumberField K]
     (x : chapter04MinkowskiSpace K) :
     chapter04TracePairing K x x = 0 ↔ x = 0 := by
-  sorry
+  constructor
+  · intro h
+    simp [chapter04TracePairing, Complex.mul_re] at h
+    have hreal_nonneg :
+        0 ≤ ∑ w : {w : InfinitePlace K // IsReal w}, x.1 w * x.1 w :=
+      Finset.sum_nonneg (fun _ _ => mul_self_nonneg _)
+    have hcomp_nonneg :
+        0 ≤ ∑ w : {w : InfinitePlace K // IsComplex w},
+          ((x.2 w).re * (x.2 w).re + (x.2 w).im * (x.2 w).im) :=
+      Finset.sum_nonneg (fun _ _ =>
+        add_nonneg (mul_self_nonneg _) (mul_self_nonneg _))
+    have hreal :
+        (∑ w : {w : InfinitePlace K // IsReal w}, x.1 w * x.1 w) = 0 := by
+      nlinarith
+    have hcomp :
+        (∑ w : {w : InfinitePlace K // IsComplex w},
+          ((x.2 w).re * (x.2 w).re + (x.2 w).im * (x.2 w).im)) = 0 := by
+      nlinarith
+    have hreal' : ∀ w : {w : InfinitePlace K // IsReal w}, x.1 w = 0 := by
+      intro w
+      exact mul_self_eq_zero.mp
+        ((Finset.sum_eq_zero_iff_of_nonneg
+          (fun _ _ => mul_self_nonneg (x.1 _))).mp hreal w
+            (Finset.mem_univ w))
+    have hcomp' : ∀ w : {w : InfinitePlace K // IsComplex w},
+        (x.2 w).re = 0 ∧ (x.2 w).im = 0 := by
+      intro w
+      have hw := (Finset.sum_eq_zero_iff_of_nonneg
+        (fun _ _ => add_nonneg (mul_self_nonneg (x.2 _).re)
+          (mul_self_nonneg (x.2 _).im))).mp hcomp w (Finset.mem_univ w)
+      exact (add_eq_zero_iff_of_nonneg (mul_self_nonneg _)
+        (mul_self_nonneg _)).mp hw |>.imp mul_self_eq_zero.mp mul_self_eq_zero.mp
+    apply Prod.ext
+    · funext w
+      exact hreal' w
+    · funext w
+      apply Complex.ext
+      · exact (hcomp' w).1
+      · exact (hcomp' w).2
+  · intro hx
+    subst hx
+    simp [chapter04TracePairing]
 
 /-- Ordinary and self-dual covolumes differ only by the factor coming from
     doubling Lebesgue measure in each complex coordinate. -/
@@ -194,7 +239,8 @@ theorem chapter04_fractional_ideal_image_eq_canonical
     (a : Chapter04NonzeroFractionalIdeal K) :
     chapter04FractionalIdealImage K (a : Chapter04FractionalIdeal K) =
       (chapter02FractionalIdealLattice K a : Set (chapter04MinkowskiSpace K)) := by
-  sorry
+  ext x
+  simp [chapter04FractionalIdealImage]
 
 /-- The different, viewed as a fractional ideal. -/
 noncomputable def chapter04DifferentFractionalIdeal
@@ -217,7 +263,8 @@ theorem chapter04_coordinate_conjugation_isometry
     (x : chapter04MinkowskiSpace K) :
     chapter04MinkowskiNormSq K (chapter04CoordinateConjugation K x) =
       chapter04MinkowskiNormSq K x := by
-  sorry
+  simp [chapter04MinkowskiNormSq, chapter04TracePairing,
+    chapter04CoordinateConjugation, Complex.mul_re]
 
 /- The Fourier dual below is taken with respect to the trace pairing and the
    integer character lattice.  This keeps the book's coordinate dual distinct
@@ -239,7 +286,10 @@ theorem chapter04_dual_fractional_ideal_ne_zero
     (K : Type*) [Field K] [NumberField K]
     {a : Chapter04FractionalIdeal K} (ha : a ≠ 0) :
     chapter04DualFractionalIdeal K a ≠ 0 := by
-  sorry
+  unfold chapter04DualFractionalIdeal
+  apply mul_ne_zero
+  · exact inv_ne_zero (FractionalIdeal.coeIdeal_ne_zero.mpr differentIdeal_ne_bot)
+  · exact inv_ne_zero ha
 
 noncomputable def chapter04DualNonzeroFractionalIdeal
     (K : Type*) [Field K] [NumberField K]
@@ -260,7 +310,11 @@ theorem chapter04_dual_dual_fractional_ideal
     {a : Chapter04FractionalIdeal K} (ha : a ≠ 0) :
     chapter04DualFractionalIdeal K
         (chapter04DualFractionalIdeal K a) = a := by
-  sorry
+  by_cases hzero : a = 0
+  · exact (ha hzero).elim
+  have hD : chapter04DifferentFractionalIdeal K ≠ 0 :=
+    FractionalIdeal.coeIdeal_ne_zero.mpr differentIdeal_ne_bot
+  simp [chapter04DualFractionalIdeal, hD, mul_comm]
 
 theorem chapter04_dual_fractional_ideal_norm
     (K : Type*) [Field K] [NumberField K]
@@ -268,14 +322,27 @@ theorem chapter04_dual_fractional_ideal_norm
     chapter04FractionalIdealNorm K (chapter04DualFractionalIdeal K a) =
       (chapter04AbsoluteDiscriminant K)⁻¹ *
         (chapter04FractionalIdealNorm K a)⁻¹ := by
-  sorry
+  by_cases hzero : a = 0
+  · exact (ha hzero).elim
+  simp [chapter04FractionalIdealNorm, chapter04DualFractionalIdeal,
+    chapter04DifferentFractionalIdeal, FractionalIdeal.coeIdeal_absNorm,
+    NumberField.absNorm_differentIdeal K (𝓞 K),
+    chapter04AbsoluteDiscriminant, chapter02AbsoluteDiscriminant]
 
 theorem chapter04_self_dual_covolume_dual
     (K : Type*) [Field K] [NumberField K]
     {a : Chapter04FractionalIdeal K} (ha : a ≠ 0) :
     chapter04SelfDualCovolume K (chapter04DualFractionalIdeal K a) =
       (chapter04SelfDualCovolume K a)⁻¹ := by
-  sorry
+  rw [chapter04SelfDualCovolume,
+    chapter04_dual_fractional_ideal_norm K ha,
+    chapter04SelfDualCovolume]
+  have hD : 0 < chapter04AbsoluteDiscriminant K :=
+    chapter04_absolute_discriminant_pos K
+  have hnorm : 0 < chapter04FractionalIdealNorm K a := by
+    exact chapter02_fractional_ideal_norm_pos K (Units.mk0 a ha)
+  field_simp [ne_of_gt (Real.sqrt_pos.2 hD), ne_of_gt hnorm]
+  rw [Real.sq_sqrt hD.le]
 
 /-- Positive diagonal archimedean scalings of determinant one. -/
 structure Chapter04ArchimedeanScaling
@@ -308,7 +375,17 @@ noncomputable def chapter04YMul
   { scale := fun v => y.scale v * z.scale v
     positive := by intro v; exact mul_pos (y.positive v) (z.positive v)
     determinant_one := by
-      sorry }
+      calc
+        ∏ v : InfinitePlace K, (y.scale v * z.scale v) ^ v.mult =
+            ∏ v : InfinitePlace K,
+              (y.scale v ^ v.mult * z.scale v ^ v.mult) := by
+                apply Finset.prod_congr rfl
+                intro v hv
+                rw [mul_pow]
+        _ = (∏ v : InfinitePlace K, y.scale v ^ v.mult) *
+              (∏ v : InfinitePlace K, z.scale v ^ v.mult) := by
+                rw [Finset.prod_mul_distrib]
+        _ = 1 := by rw [y.determinant_one, z.determinant_one, one_mul] }
 
 noncomputable def chapter04YInv
     (K : Type*) [Field K] [NumberField K]
@@ -316,7 +393,9 @@ noncomputable def chapter04YInv
   { scale := fun v => (y.scale v)⁻¹
     positive := by intro v; exact inv_pos.mpr (y.positive v)
     determinant_one := by
-      sorry }
+      simp_rw [inv_pow]
+      rw [Finset.prod_inv_distrib, y.determinant_one]
+      simp }
 
 theorem chapter04_y_mul_apply
     (K : Type*) [Field K] [NumberField K]
@@ -334,13 +413,21 @@ theorem chapter04_y_mul_inv
     (K : Type*) [Field K] [NumberField K]
     (y : chapter04Y K) :
     chapter04YMul K y (chapter04YInv K y) = chapter04YOne K := by
-  sorry
+  rcases y with ⟨scale, hscale, hdet⟩
+  simp only [chapter04YMul, chapter04YInv, chapter04YOne]
+  congr 1
+  funext v
+  exact mul_inv_cancel₀ (hscale v).ne'
 
 theorem chapter04_y_inv_mul
     (K : Type*) [Field K] [NumberField K]
     (y : chapter04Y K) :
     chapter04YMul K (chapter04YInv K y) y = chapter04YOne K := by
-  sorry
+  rcases y with ⟨scale, hscale, hdet⟩
+  simp only [chapter04YMul, chapter04YInv, chapter04YOne]
+  congr 1
+  funext v
+  exact inv_mul_cancel₀ (hscale v).ne'
 
 /-- The action of an archimedean scaling on the mixed Minkowski coordinates. -/
 noncomputable def chapter04YAction
@@ -354,21 +441,23 @@ theorem chapter04_y_action_one
     (K : Type*) [Field K] [NumberField K]
     (x : chapter04MinkowskiSpace K) :
     chapter04YAction K (chapter04YOne K) x = x := by
-  sorry
+  ext <;> simp [chapter04YAction, chapter04YOne]
 
 theorem chapter04_y_action_mul
     (K : Type*) [Field K] [NumberField K]
     (y z : chapter04Y K) (x : chapter04MinkowskiSpace K) :
     chapter04YAction K (chapter04YMul K y z) x =
       chapter04YAction K y (chapter04YAction K z x) := by
-  sorry
+  ext <;> simp [chapter04YAction, chapter04YMul, mul_assoc]
 
 theorem chapter04_y_action_inv_left_inverse
     (K : Type*) [Field K] [NumberField K]
     (y : chapter04Y K) (x : chapter04MinkowskiSpace K) :
     chapter04YAction K (chapter04YInv K y)
         (chapter04YAction K y x) = x := by
-  sorry
+  rcases y with ⟨scale, hscale, hdet⟩
+  apply Prod.ext <;> funext v <;>
+    simp [chapter04YAction, chapter04YInv, ne_of_gt (hscale v)]
 
 /-- The determinant-scale coordinate factor `t^(1/n)`. -/
 noncomputable def chapter04DeterminantScale
@@ -378,12 +467,15 @@ noncomputable def chapter04DeterminantScale
 theorem chapter04_determinant_scale_pos
     (K : Type*) [Field K] [NumberField K] {t : ℝ} (ht : 0 < t) :
     0 < chapter04DeterminantScale K t := by
-  sorry
+  exact Real.rpow_pos_of_pos ht _
 
 theorem chapter04_determinant_scale_pow_degree
     (K : Type*) [Field K] [NumberField K] {t : ℝ} (ht : 0 < t) :
     (chapter04DeterminantScale K t) ^ chapter04Degree K = t := by
-  sorry
+  rw [chapter04DeterminantScale]
+  simpa [one_div] using
+    Real.rpow_inv_natCast_pow (le_of_lt ht)
+      (Nat.ne_of_gt (show 0 < chapter04Degree K from Module.finrank_pos))
 
 noncomputable def chapter04ThetaTerm
     (K : Type*) [Field K] [NumberField K]
@@ -427,8 +519,32 @@ def chapter04UnitLogHyperplane
     Submodule ℝ (InfinitePlace K → ℝ) where
   carrier := {t | ∑ v : InfinitePlace K, (v.mult : ℝ) * t v = 0}
   zero_mem' := by simp
-  add_mem' := by sorry
-  smul_mem' := by sorry
+  add_mem' := by
+    intro x y hx hy
+    change (∑ v : InfinitePlace K, (v.mult : ℝ) * x v) = 0 at hx
+    change (∑ v : InfinitePlace K, (v.mult : ℝ) * y v) = 0 at hy
+    change (∑ v : InfinitePlace K,
+      (v.mult : ℝ) * (x v + y v)) = 0
+    simp [mul_add, Finset.sum_add_distrib, hx, hy]
+  smul_mem' := by
+    intro c x hx
+    change (∑ v : InfinitePlace K, (v.mult : ℝ) * x v) = 0 at hx
+    change (∑ v : InfinitePlace K,
+      (v.mult : ℝ) * (c • x v)) = 0
+    calc
+      (∑ v : InfinitePlace K, (v.mult : ℝ) * (c • x v)) =
+          c * ∑ v : InfinitePlace K, (v.mult : ℝ) * x v := by
+            simp only [smul_eq_mul]
+            calc
+              (∑ v : InfinitePlace K,
+                  (v.mult : ℝ) * (c * x v)) =
+                  ∑ v : InfinitePlace K, c * ((v.mult : ℝ) * x v) := by
+                    apply Finset.sum_congr rfl
+                    intro v hv
+                    ring
+              _ = c * ∑ v : InfinitePlace K, (v.mult : ℝ) * x v := by
+                    rw [Finset.mul_sum]
+      _ = 0 := by rw [hx, mul_zero]
 
 noncomputable def chapter04UnitLogVector
     (K : Type*) [Field K] [NumberField K]
@@ -443,7 +559,8 @@ noncomputable def chapter04UnitScaling
       intro v
       exact InfinitePlace.pos_iff.mpr (NumberField.Units.coe_ne_zero u)
     determinant_one := by
-      sorry }
+      rw [NumberField.InfinitePlace.prod_eq_abs_norm]
+      exact_mod_cast NumberField.Units.norm K u }
 
 noncomputable def chapter04UnitLogEmbedding
     (K : Type*) [Field K] [NumberField K] :
@@ -451,11 +568,16 @@ noncomputable def chapter04UnitLogEmbedding
   toFun u :=
     { val := chapter04UnitLogVector K u.toMul
       property := by
-        sorry }
+        change ∑ v : InfinitePlace K, (v.mult : ℝ) *
+          chapter04UnitLogVector K u.toMul v = 0
+        simpa [chapter04UnitLogVector] using
+          (NumberField.Units.sum_mult_mul_log (K := K) u.toMul) }
   map_zero' := by
     ext v
     simp [chapter04UnitLogVector]
-  map_add' u v := by sorry
+  map_add' u v := by
+    ext w
+    simp [chapter04UnitLogVector, Real.log_mul]
 
 noncomputable def chapter04UnitLogLattice
     (K : Type*) [Field K] [NumberField K] :
