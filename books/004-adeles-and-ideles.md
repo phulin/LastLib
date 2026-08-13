@@ -1291,13 +1291,32 @@ $$
 \operatorname{Cl}^+(K)=I_K/P_K^+.
 $$
 
-It maps onto $\operatorname{Cl}(K)$. The kernel measures sign patterns not realized by global units. More explicitly, the sign map gives an exact sequence
+It maps onto $\operatorname{Cl}(K)$. The kernel measures sign patterns not realized by global units. The map from sign patterns is canonical, although one convenient construction of it uses a choice. Given
+$\epsilon\in\{\pm1\}^{r_1}$, weak approximation supplies $a\in K^\times$ having sign
+$\epsilon$ at the real places; define
+
+$$
+\delta(\epsilon)=[(a)]_+\in\operatorname{Cl}^+(K).
+$$
+
+This does not depend on the chosen $a$. If $b$ has the same signs, then $b/a$ is totally
+positive, so $(b)(a)^{-1}=(b/a)$ belongs to $P_K^+$ and $[(b)]_+=[(a)]_+$. The same
+observation applied to products shows that $\delta$ is a homomorphism. Thus, with the first
+map given by the signs of a global unit, there is an exact sequence
 
 $$
 \mathcal O_K^\times\longrightarrow\{\pm1\}^{r_1}
 \longrightarrow\operatorname{Cl}^+(K)
 \longrightarrow\operatorname{Cl}(K)\longrightarrow1.
 $$
+
+Indeed, if $a$ realizes $\epsilon$, then $\delta(\epsilon)$ is trivial precisely when
+$(a)=(c)$ for some totally positive $c$. In that case $a/c$ is a global unit with sign
+$\epsilon$, and the converse follows by taking a unit as the realizing element. Thus the kernel
+of $\delta$ is the unit-sign image. Every class in the kernel of
+$\operatorname{Cl}^+(K)\to\operatorname{Cl}(K)$ is represented by an ordinary principal ideal
+$(a)$ and hence equals $\delta(\operatorname{sgn}(a))$; conversely every value of $\delta$ maps
+to an ordinary principal class. Finally, $P_K^+\subseteq P_K$, so the last map is surjective.
 
 At the idele level, replace each real factor $\mathbf R^\times$ in the subgroup discarded for ordinary classes by $\mathbf R_{>0}$. The quotient retains the signs and produces $\operatorname{Cl}^+(K)$. If there is a unit realizing every sign obstruction needed to change a generator into a totally positive one, ordinary and narrow classes agree. A unit of norm $-1$ is enough in a real quadratic field; in higher degree the full sign image, not merely the norm, must be examined.
 
