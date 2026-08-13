@@ -919,6 +919,47 @@ A[\lambda]\otimes_{k_\lambda}\kappa
 \otimes_{k_{\widetilde\lambda}}\kappa. \tag{9.5}
 $$
 
+**Corollary 9.2 (nonzero upper target block).** Write $\varpi$ for a uniformizer of
+$\mathcal O_C$. Retain the exact packet block used in
+Section 9.2, before any attempt to remove the specialization-dependent bad places, and let
+$L_{\Pi_A}$ be the intersection of that rational packet block with the integral curve
+cohomology lattice after the declared coefficient extension. Let $\mathfrak m_{\ell,A}$ be
+the maximal ideal in this carrier's commuting faithful Hecke image order obtained by reducing
+the packet character. Then
+
+$$
+(L_{\Pi_A})_{\mathfrak m_{\ell,A}}/\varpi\ne0,                 \tag{9.6}
+$$
+
+and hence the ambient integral curve-cohomology localization at
+$\mathfrak m_{\ell,A}$ is nonzero modulo $\varpi$.  Moreover, the associated rational
+rank-two Galois factor admits a stable lattice whose residual
+representation is (9.5).  No integral Morita extraction of that rank-two lattice from
+$L_{\Pi_A}$ is asserted.
+
+**Proof.** The intersection of a rational subspace with a finite free DVR lattice is
+saturated. Choose a nonzero simultaneous packet eigenvector for the selected character and
+scale it until it is primitive in that
+intersection. Saturation makes its reduction inject into the ambient cohomology reduction.
+It is nonzero and is killed by the reduction of every Hecke operator
+minus its packet eigenvalue, so it survives in the localization at
+$\mathfrak m_{\ell,A}$. Choose any stable lattice in the associated rational rank-two curve
+factor.  It and the lattice transported from $T_\lambda(A)$ have the same irreducible
+characteristic-zero representation by (9.4).  Lemma 9.1 and absolute irreducibility of (7.2)
+identify their reductions, giving (9.5) for the associated factor. $\square$
+
+This is an **upper-level** occurrence theorem. It is formal from the already automorphic
+packet, its integral packet lattice, and the exact stable-lattice comparison. It does not say
+that $\mathfrak m_{\ell,A}$ occurs after removing any extra special places of $A$, and it does
+not verify the saturation, component, branch, or auxiliary-level hypotheses of the minimal
+Book 173 localization. Those require an actual lowering path; equality of good Frobenius
+polynomials alone would not even give (9.6) without the integral packet lattice.
+Moreover, the particular compact carrier of Section 9.2 is ramified at $w_0$.  Book 140 cannot
+be applied at $w_0$ on that carrier, because its changing place must be split in the
+quaternion algebra.  Any later argument which must remove $w_0$ therefore needs a separate
+path-compatible carrier, together with its own primitive packet lattice; Corollary 9.2 does
+not supply that carrier switch.
+
 This is residual modularity of the target. If $\bar\rho$ were reducible, good Frobenius polynomials would determine only a semisimplification and different stable lattices could reduce to different nonsplit extensions. That edge case is why absolute irreducibility appears at the beginning of the construction.
 
 ## 10. The conditional potential-modularity theorem

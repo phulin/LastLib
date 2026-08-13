@@ -204,13 +204,13 @@ flowchart LR
 | 173 | Minimal Modularity Lifting | 171, 172 |
 | 174 | One-Prime Type Complexes and Component Support | 6, 17, 21, 22, 65, 67, 70, 122, 125, 138, 139, 140, 141, 143, 152, 170, 171, 172 |
 | 175 | One-Prime Nonminimal Patching and R=T | 67, 69, 109, 138, 139, 140, 143, 170, 171, 172, 173, 174 |
-| 176 | Nonminimal Modularity Lifting | 109, 173, 138, 139, 140, 170, 175, 174 |
+| 176 | Nonminimal Modularity Lifting | 22, 109, 122, 123, 124, 125, 138, 139, 140, 143, 170, 173, 174, 175 |
 | 177 | Potential Modularity of Two-Dimensional Representations | 104, 98, 127, 176, 154, 158, 142 |
 | 178 | Auxiliary Dihedral Data and Residual Potential Modularity | 6, 104, 98, 127, 141, 175, 154, 142, 155, 156, 157 |
 | 179 | Compatible Systems of Galois Representations | 41, 168, 141, 142 |
 | 180 | Brauer Induction and Descent of Automorphy | 24, 75, 98, 109, 168 |
 | 181 | Finite Image and the Balanced Minimal-Lift Argument | 57, 62, 64, 141, 164, 165, 166, 167, 173 |
-| 182 | Potential Automorphy and Galois Refinement of a Chosen Lift | 6, 44, 61, 109, 118, 121, 122, 124, 125, 127, 128, 142, 153, 154, 155, 157, 164, 165, 168, 173, 176, 178, 181 |
+| 182 | Potential Automorphy and Galois Refinement of a Chosen Lift | 6, 44, 61, 104, 109, 118, 121, 122, 124, 125, 127, 128, 140, 142, 153, 154, 155, 157, 164, 165, 168, 173, 176, 178, 181 |
 | 183 | Brauer Induction for Automorphy Families | 41, 98, 108, 109, 127, 128, 142, 168, 180, 182 |
 | 184 | Brauer Characters and Effectivity of Compatible Families | 24, 57, 180, 183 |
 | 185 | Compatible Systems over the Base Field | 168, 180, 182, 183, 184 |
@@ -240,9 +240,17 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   residue-prime Hecke graph; the common-normalization isomorphism
   then forces node expansion index one. Together with the
   accompanying unit-order coarse-descent hypothesis, it implies $({\rm TPE}_v)$. The later
-  unresolved inputs are crossed-coefficient type-Ihara vanishing, primitive-residue obstruction vanishing,
-  superspecial type-compatible node uniformization, and the nonminimal boundary-chart and
-  local-dimension theorem needed for one-prime component support. Relative to the separately
+  type algebra has now been reduced further.  Under those geometric hypotheses and the named
+  abelian-Ihara family, for the actual quotient/augmentation flag pair, when $q_v+1$ is a
+  coefficient unit the integral flag idempotent makes type-Ihara and primitive residue direct
+  summands of the Shapiro constant rows; even in the nonbanal range the
+  augmentation-companion pull is automatic.  At $q_v\equiv-1\pmod\ell$ the exact remaining
+  type inputs are the quotient-new injection (Book 174, (5.0d)) and the primitive
+  filtered-cofiber comparison (6.0d).  Superspecial node uniformization remains a geometric
+  classification theorem, but once stated as an equivalence of flagged PEL node groupoids its
+  transport of the quotient/augmentation representations is formal.  The nonminimal
+  boundary-chart and local-dimension theorem remains needed for one-prime component support.
+  Relative to the separately
   named localized abelian Ihara input, constant-coefficient generic support in the clean special
   block is proved in Book 140 from Book 125 and is not another unresolved hypothesis. After the
   typed filtration exists, Book 174 likewise proves the typed generic-residue kernel equality
@@ -269,22 +277,60 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   generic rigidity and then makes that last surjection injective, with the strict ray twist
   additionally retained for the scalar family. No separate one-prime
   acting-order theorem remains in that faithful range.
-- **Several active places:** construction of the coherent global level cube, vanishing of its
-  mixed obstruction groups, derived product-residue comparison, simultaneous component
-  support, coherent joint ring--complex--module--action--pairing augmentation, and finite-set
-  reciprocity for the actual active set.  Fixed-prime faithful-order augmentation is formal
-  once the joint strict product twist exists; auxiliary acting-image injectivity follows after
-  full base $R=T$ and is not a separate input to the reduced finite-level comparison.
+- **Several active places:** once one actual product coefficient system and all component
+  routes are supplied, Books 123--124 and 174 formally construct the coherent generic global
+  level cube and its adjoint companion.  Book 125's packetwise restricted tensor factorization puts its
+  generic fiber in top degree, with the global multiplicity module occurring only once; it does
+  not kill lower $\varpi$-power torsion or residual hyper-Tor over a larger face base.  The
+  unresolved inputs are therefore vanishing of the mixed obstruction groups, a derived
+  product-residue/iterated-switching Beck--Chevalley
+  theorem (Books 22 and 122 provide only separate one-trait models), and simultaneous component
+  support.  A joint scalar ray quotient and strict product twist remain arithmetic inputs when
+  scalar active places occur.  Book 143 gives represented-ring augmentation for the product
+  problem under its ordered-distinct-root hypotheses.  One common equivariant auxiliary
+  package, including the full vertexwise ordered-root and old/new hypotheses of Book 174,
+  Proposition 9.1, gives coherent complex--module--action--pairing augmentation objectwise;
+  fixed-prime faithful-order
+  augmentation is formal once the joint strict product twist exists, while auxiliary
+  acting-image injectivity follows after full base $R=T$ and is not a separate input to the
+  reduced finite-level comparison.  Book 170 already proves finite-set reciprocity once the
+  actual joint carrier, simultaneous generic local labels, integral coefficient-prime
+  realization, and exact trace/structural generation have been verified; its reduced-order
+  argument then supplies the all-Artinian factorizations.  Those joint inputs do not follow
+  from separate one-prime carriers.
 - **Controlled residual automorphic seed:** the degree-indexed allowed-good Abel condition in
   the existing curve--pencil route, its one-tube finite Picard-quotient specialization, a
   coset-complete compensating-good-packet theorem, Book 157's stable integral connecting-slice
   assertion $(\mathrm{ICS})_{v_0,Z}$ (the smooth-integral-slice/dense-good-open saturation
   criterion made stable under the global cutting-section approximation), or another common
   moving presentation, for the actual packet having one
-  distinguished special factor and all remaining factors good; after the resulting normal-top
-  specialization, a
-  saturated path from the target eigensystem to a nonzero clean bottom minimal SP localization;
-  and the later controlled raw-local record, including a raw dyadic SP carrier in the
+  distinguished special factor and all remaining factors good; in the multiplicative-$\ell$
+  Frey branch, the additional good ordinary/local--local $\mathbf Q_\ell$ point
+  $({\rm FF}^{\rm base}_\ell)$ carrying both exact frames, because the Tate seed realizes only
+  the residual finite-flat $\ell$-torsion and Book 140 cannot change level at the coefficient
+  prime; after the resulting normal-top
+  specialization, actual auxiliary-prime lifting certificates and an ordered target-prime path
+  whose every current edge satisfies Book 140's
+  abelian-Ihara, saturation, duality, full-monodromy, component, branch, normalization, and
+  nonexceptional hypotheses, together with exact saturated inter-edge localizations and the
+  bottom Book 173 structural ledger.  The auxiliary-$q$ active set and the later target set
+  are separate ledgers even when places, notably the full conjugate distinguished set
+  $W_0(M)$, occur in both.  In the Frey-adapted
+  construction every dyadic place is forced into the auxiliary-$q$ active set but is absent
+  from the target set because the target retains its SP condition; hence Book 178's literal
+  singleton is unavailable and the auxiliary step needs an ordered route-appropriate chain or
+  the genuine Book 176 finite-set datum.  A retained multiplicative place above $3$ belongs to
+  both ledgers, while an unrepaired multiplicative place above $\ell$ prevents the target path
+  altogether.  Once the split target
+  packet and its actual extra set are known, Book 182 formally uses Books 104 and 125 to place it on a
+  path-compatible compact carrier ramified at one retained dyadic SP place and therefore split
+  at every target-extra place; a primitive upper packet lattice gives nonzero occurrence there;
+  Book 182, Proposition 7.1A proves from those data that every lower localization, including
+  the clean bottom minimal SP localization, is nonzero; its final definite occurrence uses
+  Book 104's forward transfer from the path carrier followed by its totally definite inverse
+  transfer and a primitive saturated packet lattice, not an integral
+  Jacquet--Langlands comparison at either carrier switch; and the later controlled raw-local record, including a raw
+  dyadic SP carrier in the
   remaining even-degree minimal case.  Full principal/dihedral descent complexes, type and
   exchange lines, tameness, zero monodromy, and Frobenius return maps at retained auxiliary
   primes remain a separate stronger automorphic-type problem.  Equivariant conductor and
@@ -300,8 +346,10 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   anti-cyclotomic Grunwald correction lets Book 182 impose the exact unramified auxiliary
   Frobenius values at $2$, $3$, and $\ell$; it then constructs the exact paired Frey/auxiliary frames
   over $\mathbf Q_2$, $\mathbf Q_3$, and $\mathbf Q_\ell$ by adapting the local elliptic seeds and neat source.
-  It forces constant-field avoidance with split Chebotarev certificate primes.  The first
-  remaining pre-specialization input is the singleton common presentation; Book 157,
+  In the multiplicative-$\ell$ branch, $({\rm FF}^{\rm base}_\ell)$ is the first remaining
+  pre-specialization input; in the good-reduction branch it is already supplied.  After that,
+  the next input is the singleton common presentation.  Book 182 forces constant-field
+  avoidance with split Chebotarev certificate primes once that presentation exists.  Book 157,
   Section 13.2A gives the conditional implication from $(\mathrm{ICS})_{v_0,Z}$ but no audited
   source proves that slice theorem.  Once the presentation is
   supplied, Book 182 proves the remaining

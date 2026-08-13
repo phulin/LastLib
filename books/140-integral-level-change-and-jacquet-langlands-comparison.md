@@ -807,6 +807,17 @@ quasi-isogeny classification. The local equation $xy=\varpi_v$ determines two br
 does not classify their global node set, and rational Jacquet--Langlands compares
 representations rather than integral PEL groupoids.
 
+For a later quotient/augmentation type coefficient, the correct source theorem is the same
+equivalence with one extra item retained: the active finite flag functor and the automorphism
+action on it.  Once that **flagged** groupoid equivalence is known, no additional
+representation-classification theorem is required.  The permutation module is functorially
+the free module on the flag functor; the constant-vector and augmentation natural
+transformations of its free-module linearization, their cokernel and kernel, the flag-basis dot
+product, and coefficient-one basis vectors all transport across the equivalence.  Conversely, a bijection of node sets, or
+even an equivalence of unflagged groupoids, does not determine an isotropy representation.
+Thus the typed refinement sharpens the missing PEL classification but does not create a
+second independent local-representation input.
+
 **Formal reduction from the superspecial classification.** A node is the point where the two possible rank-$q_v$ directions in the active height-two group cease to be distinct. The endomorphism algebra of this superspecial object changes local invariant at $v$ and at the unique split real place. This produces $B^\dagger$. Prime-to-$v$ level structures turn quasi-isogeny classes into the double quotient (5.8). The following argument records the normalization and inverse constructions that the missing classification theorem would supply; it is not a proof of that classification from the five catalogued prerequisites.
 
 **Conditional construction.** Choose a geometric node $z$ and a representative PEL object $A_z$ with its polarization, endomorphisms, and prime-to-$v$ level. Let
@@ -829,6 +840,26 @@ Fix one base node $z_0$ and one identification in (5.10). A prime-to-$v$ quasi-i
 Conversely, an adelic class modifies the prime-to-$v$ Tate lattices of $A_{z_0}$ and the maximal $v$-adic lattice in its division isocrystal. The usual lattice-isogeny construction produces a PEL object in the same superspecial isogeny class with the transported level. Its two deformation directions give a node of the incidence model. Left and right changes produce an isomorphic object, so the construction descends to (5.8).
 
 The two constructions are inverse because a prime-to-$v$ quasi-isogeny is determined by its action on all rational Tate modules together with the polarization multiplier, and the chosen $v$-adic maximal lattice fixes the remaining isogeny ambiguity. Conditional on the stated classification of superspecial objects and their Tate lattices, this proves bijectivity.
+
+This last sentence is exactly where a classification theorem, rather than formal
+double-coset algebra, enters.  Computing $\operatorname{End}^0(A_z)\simeq B^\dagger$ for
+each already given node does not prove that all nodes lie in one PEL quasi-isogeny class.
+Nor does it prove that every admissible adelic lattice is realized by an abelian variety with
+the required integral order action, polarization type, determinant condition, and incidence
+flag.  The first missing theorem must simultaneously give:
+
+1. essential surjectivity of the basic PEL quasi-isogeny class onto the node groupoid;
+2. full faithfulness of prime-to-$v$ quasi-isogenies after the polarization multiplier and
+   center are retained;
+3. classification of the integral maximal $v$-adic Dieudonne modules and their active
+   incidence flags; and
+4. compatibility of those integral constructions with automorphisms and the two deformation
+   branches.
+
+Only after these four clauses are known do the displayed left and right quotient operations
+prove an equivalence of groupoids.  A rational endomorphism-algebra calculation, Tate modules
+away from $v$, or the local equation $xy=\varpi_v$ proves none of essential surjectivity,
+integral realization, or the flagged stabilizer action.
 
 An away-from-$v$ double coset modifies exactly one prime-to-$v$ lattice. The same modification describes both the PEL correspondence on nodes and right multiplication on (5.8), proving Hecke equivariance. Geometric Frobenius acts on the isocrystal and level structure on both sides, proving Galois equivariance.
 
@@ -1888,6 +1919,17 @@ are rank one over the coefficient field. Intersecting with the integral fixed mo
 
 The graph-node construction with coefficients in $\Lambda_v^\dagger$ is valid only when the type sheaf extends over the full incidence model, pull and norm preserve it, every coarse-descent stabilizer order is a unit, and a type-specific residual Ihara theorem makes the selected old image primitive. The edge module is then a vector-valued definite function module. A primitive extreme-residue theorem is also needed to obtain the typed graph filtration.
 
+For the quotient/augmentation flag pair this ledger has a useful sharp boundary.  If
+$q_v+1$ is a unit in the coefficient ring, the idempotent
+$(q_v+1)^{-1}u\circ\operatorname{aug}$ makes both type lattices direct summands of the
+permutation row.  After the actual parahoric extension has been supplied, Shapiro and the
+constant Ihara theorem then give type-Ihara and the normalization filtration on that summand.
+Only the nonbanal range $q_v\equiv-1\pmod\ell$ retains the quotient-new snake-lemma
+obstruction and the primitive filtered-cofiber obstruction isolated in Book 174.  The
+augmentation companion pull is already a subrow of the permutation pull even in that range;
+duality turns the unresolved primary pull into a companion norm question and does not confuse
+the two.
+
 The extension condition has a sharper downstream form. Book 122, Proposition 9.2 constructs the
 actual normalization in the effective common Galois closure of the residue-prime
 principal/ray diagram and proves every object
@@ -1909,9 +1951,10 @@ flatness of the normalization.
 Book 174, Proposition 6.3 later proves, from $({\rm PNS}_v)$ and its other typed inputs and
 Book 125's component-routed semisimple decomposition on the common principal cover, that the
 curve-new and graph generic Hecke kernels agree. Thus typed generic support is not a further
-independent hypothesis. None of the preceding typed integral assertions follows from the
-constant-coefficient abelian Ihara condition. In particular, at a coalesced special flag a
-trace may be multiplication by $q_v+1$ on a rank-one stalk; if
+independent hypothesis. Apart from the quotient/augmentation projector deductions in the
+preceding paragraph, the extension, routing, and general compact-type assertions do not follow
+merely from the constant-coefficient abelian Ihara condition. In particular, at a coalesced
+special flag a trace may be multiplication by $q_v+1$ on a rank-one stalk; if
 $\ell\mid q_v+1$, an underived pushforward row is not exact. The strict procyclic complex, not
 the adjective “finite flat,” carries that defect.
 
@@ -1954,7 +1997,7 @@ At the semistable Iwahori prime used for the basic level-raising theorem, the ne
 
 ### 13.4 Boundaries of the selected theorem
 
-The basic one-prime semistable theorem includes the unramified special family at Iwahori level. Ramified special twists, unramified quadratic depth-zero packets, and tame positive-depth dihedral packets are included only in the conditional type-enhanced variant of Section 13.1, with $({\rm PNS}_v)$, pull--norm, unit-order coarse descent, type-Ihara, and primitive-residue hypotheses imposed. Book 174, Proposition 6.3 derives the resulting generic-residue kernel equality from that filtration and Book 125 rather than imposing it separately.
+The basic one-prime semistable theorem includes the unramified special family at Iwahori level. Ramified special twists, unramified quadratic depth-zero packets, and tame positive-depth dihedral packets are included only in the conditional type-enhanced variant of Section 13.1, with $({\rm PNS}_v)$, pull--norm, unit-order coarse descent, and the applicable type-Ihara and primitive-residue inputs imposed.  For Book 174's quotient/augmentation pair the latter two are automatic in the $q_v+1$-unit range and reduce to its explicit nonbanal maps otherwise; no such deduction is asserted here for arbitrary compact types. Book 174, Proposition 6.3 derives the resulting generic-residue kernel equality from that filtration and Book 125 rather than imposing it separately.
 
 It excludes primitive wild packets and ramified dyadic positive-depth packets. The local character and type-lattice comparison used in Chapter 4 is not proved there. It also excludes a type projector that exists only after inverting $\varpi$: applying such a projector to a saturated full cohomology lattice can create a nonsaturated intersection.
 
@@ -1997,6 +2040,28 @@ N_{v_1v_2}.
 $$
 
 The alternating signs come from orienting the square of local edges. There is, however, no canonical identification of (14.3) with a tensor product of abstract one-prime complexes merely because all terms are $\mathcal O$-free. A simultaneous theorem requires explicit cartesian base-change maps from the iterated global-level complexes and a quasi-isomorphism with the derived tensor product over the relevant common acting or augmentation base $A$.
+
+Here the factors in such a derived tensor must be genuinely local or relative factors, with the
+common global packet and spectator carrier inserted only once. They cannot be the full global
+one-prime cohomology complexes. Over a splitting field, at a fixed spectator tuple
+$\epsilon$ away from $v$, a full global one-prime packet block has the form
+
+$$
+W_\Pi\otimes P_\Pi^P\otimes
+\bigotimes_{w\in P\setminus\{v\}}\Pi_w^{K_{w,\epsilon_w}}
+\otimes D_{\Pi,v},
+$$
+
+where
+$P_\Pi^P=\bigotimes_{u\notin P}\Pi_u^{K_u}$ is the fixed spectator factor and the
+two-dimensional global multiplicity
+$W_\Pi$ is common to every direction. Tensoring two full one-prime blocks over the coefficient
+field produces $W_\Pi^{\otimes2}$, while the actual two-place block contains only one
+$W_\Pi$. For a packet new at every member of $P$, the frozen Iwahori newvector factors in the
+display are lines, so already $\dim W_\Pi=2$ gives multiplicity rank four in the tensor square
+and rank two in the actual joint block. Thus even a common coefficient ring and vanishing
+cross-Tor do not repair a rank-wrong external product; one must first exhibit the common global
+carrier and the relative local factors.
 
 Assume those comparison maps are isomorphisms and
 
@@ -2156,7 +2221,7 @@ The downstream interface is equally exact.
 |---|---|---|
 | Book 176 | one-prime special raising/lowering and common away-from-$v$ acting order | (1.5d), node uniformization, Book 125's component-routing source condition, both finite modules in (8.3a), and Section 11.4 before using a scalar as an augmented congruence ideal |
 | Book 170 | free $Q$, equality of faithful inner-form trace orders, and geometric lowering criterion | freeness and order equality are conditional on abelian Ihara; lowering requires both $\Phi[\varpi]=0$ and $\mathcal C_{\mathrm{br},v}[\varpi]=0$ |
-| Book 174 | coefficient-one constant graph--definite map $X_v\simeq S^\dagger$ | Book 140 does not give $\operatorname{gr}_0Q=X_v^\vee$; the typed variant must retain $({\rm PNS}_v)$, type-Ihara, and a type-coefficient primitive residue or bottom-lattice statement |
+| Book 174 | coefficient-one constant graph--definite map $X_v\simeq S^\dagger$ | Book 140 does not give $\operatorname{gr}_0Q=X_v^\vee$; the typed variant retains $({\rm AIH}_{\mathscr F})$, $({\rm PNS}_v)$, unit-order coarse descent, and the flagged node-groupoid form of node uniformization, together, only in the nonbanal quotient/augmentation range, with the quotient-new and filtered-cofiber assertions (5.0d), (6.0d) |
 | Book 175 | no inner-form order index and the signed Gram Smith factor | the factor is an augmented congruence ideal only under Section 11.4; scalar/vexing refinements and all fixed-prime Tor/augmentation statements require the separate Book 174 hypotheses |
 
 In particular, no downstream patching or reciprocity argument can retroactively prove (1.5d), delete $\mathcal C_{\mathrm{br},v}$, or turn the conditional several-prime discussion into a theorem.

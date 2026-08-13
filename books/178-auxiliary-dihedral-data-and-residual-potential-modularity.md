@@ -1987,7 +1987,8 @@ line over the fraction field, intersecting and saturating it in a stable lattice
 proper stable line in $A[\mathfrak q]$, contradicting absolute irreducibility of $\bar r$.
 Thus $r_A$ is irreducible, and the generic isomorphism is an actual isomorphism.
 
-For lattices, scale an automorphic stable lattice $L'$ so that $L'\subseteq L=T_{\mathfrak q}A$
+Write $\varpi$ for a uniformizer of the common coefficient DVR after this extension. For
+lattices, scale an automorphic stable lattice $L'$ so that $L'\subseteq L=T_{\mathfrak q}A$
 but $L'\nsubseteq\varpi L$. Its image in $L/\varpi L$ is a nonzero stable subspace and therefore
 the whole space. Nakayama's lemma gives $L'=L$. The finite-flat quotient models at $q$ then
 agree by full faithfulness in the clean unramified weight range. This is why (10.4) is integral,
@@ -2199,6 +2200,45 @@ $$
 
 The descended $E_{\mathfrak l}$-form has residual representation exactly
 $\bar\rho|_{G_{K'}}$ under the fixed isomorphism $k_{\mathfrak l}\simeq k$.
+
+**Corollary 11.1A (the nonzero upper target localization).** Retain the common coefficient DVR
+and its uniformizer $\varpi$. Let
+$L_{\Pi_A}$ be the saturated intersection of the rational $\Pi_A$ packet block in the compact
+curve carrier of Section 11.1 with its finite free integral cohomology lattice. Let
+$\mathfrak m_{\ell,A}$ be the maximal ideal in this carrier's commuting faithful Hecke image
+order obtained by reducing the packet character at $\widetilde\lambda$. Then
+
+$$
+(L_{\Pi_A})_{\mathfrak m_{\ell,A}}/\varpi\ne0,                \tag{11.6a}
+$$
+
+and hence the ambient integral curve-cohomology localization at
+$\mathfrak m_{\ell,A}$ is nonzero modulo $\varpi$.  Moreover, the associated rational
+rank-two Galois factor admits a stable lattice whose residual
+representation is (11.6).  No integral Morita extraction of that rank-two lattice from
+$L_{\Pi_A}$ is asserted.
+
+**Proof.** The intersection is saturated by its definition as the intersection of a rational
+subspace with a DVR lattice. Scale a nonzero simultaneous packet eigenvector for the selected
+character to be primitive in it. Its reduction
+injects into the ambient cohomology reduction, is nonzero, and is supported at
+$\mathfrak m_{\ell,A}$, which proves (11.6a). Proposition 11.1
+identifies the reduction of every stable lattice in the packet representation with
+$A[\mathfrak l]$ after the displayed scalar extension, so the residual rank-two factor is
+(11.6).  This stable lattice is attached to the rational factor; it need not be an integral
+direct factor of $L_{\Pi_A}$. $\square$
+
+This corollary is deliberately at the **actual upper level** of $\Pi_A$. It neither lowers an
+extra specialization-dependent special place nor places the eigensystem on the bottom minimal
+SP face. A type projector defined only after inverting $\varpi$ also cannot be inserted into
+$L_{\Pi_A}$ without a separate integral saturation theorem. Thus the corollary supplies the
+nonzero upper occurrence from which a later certified lowering construction starts, not the
+endpoint or, when $w_0$ must be lowered, the actual first path carrier.
+The particular compact carrier of Section 11.1 is ramified at $w_0$.  Since Book 140 requires
+its changing place to be split in the current quaternion algebra, this carrier cannot itself
+be used to lower $w_0$.  A later application whose target minimal problem is unramified at
+$w_0$ must first construct a path-compatible carrier, with a new primitive packet lattice;
+Corollary 11.1A does not provide an integral switch between the two carriers.
 
 ### 11.3 The residual potential-modularity theorem
 
