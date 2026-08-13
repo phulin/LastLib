@@ -44,12 +44,15 @@ log "Installing Ubuntu packages"
   build-essential \
   ca-certificates \
   curl \
+  fish \
   fuse3 \
   fuse-overlayfs \
   git \
+  htop \
   pkg-config \
   ripgrep \
-  rsync
+  rsync \
+  tmux
 
 SETUP_TMP_DIR="$(mktemp -d)"
 readonly SETUP_TMP_DIR
