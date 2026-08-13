@@ -863,8 +863,7 @@ will enter the descent argument. We use the stronger established theorem because
 available source of (4.2). No reduced-finiteness or reduced-support assertion is manufactured
 inside this book.
 
-Book 165's forward-looking ledger called the anticipated extra input $(\mathrm{RF})$. In the
-present formulation there is no second restricted-finiteness hypothesis: the sole new
+There is no second restricted-finiteness hypothesis in the present formulation: the sole new
 arithmetic hypothesis is $(\mathrm{Seed}_{\mathrm{SP}})$, and Proposition 4.1 derives the
 stronger whole-ring statement (4.2) from it. Finiteness only of
 $(R_F^{\mathrm{SP}})_{\mathrm{red}}/\varpi$ would not suffice, because the universal
@@ -885,6 +884,15 @@ numbers would not identify the integral deformation quotient. The seed matches t
 Frobenius sign, monodromy relation, determinant, and their schematic closure. This is exactly
 what lets the map in Chapter 5 classify the restriction of the universal SP representation,
 rather than a representation on some neighboring local component.
+
+The hypotheses and conclusions in this invocation should not be interchanged.  Generic
+reducedness of the relevant **Hecke** algebras and faithfulness of the named automorphic action
+are explicit clauses of $(\mathrm{Seed}_{\mathrm{SP}})$ because Books 171--172 use them to
+construct the comparison and the patched action.  Equality
+$R_F^{\mathrm{SP}}=\mathbb T_F^{\mathrm{SP}}$, scheme-theoretic faithfulness of the deformation
+action, and finite freeness of the whole represented deformation ring are conclusions of the
+minimal patching theorem.  Chapters 5--10 use only that last whole-ring finiteness consequence;
+they assume neither reducedness of $R_F^{\mathrm{SP}}$ nor a prior point of its generic fibre.
 
 ### 4.3 Why the preceding construction does not supply the seed
 
@@ -1328,8 +1336,14 @@ lattice on which the local deformation conditions were defined. The purpose of t
 is therefore twofold: select one horizontal domain quotient and replace its order by a finite
 coefficient DVR. The universal representation can then be evaluated integrally.
 
-The finite map $\mathcal O\hookrightarrow R$ is integral. If $\mathfrak p$ is a minimal prime
-of $R$, its contraction is a minimal prime of the domain $\mathcal O$. Therefore
+The finite map $\mathcal O\hookrightarrow R$ is integral, but integrality by itself does **not**
+force the contraction of every minimal prime to be minimal: a finite injective algebra can have
+a vertical minimal component.  What rules that out here is the coefficient flatness proved in
+Section 8.2.  If $\mathfrak p$ is a minimal prime of $R$ and
+$\mathfrak p\cap\mathcal O\ne(0)$, then, because $\mathcal O$ is a DVR, the contraction contains
+a power of $\varpi$.  Primality then gives $\varpi\in\mathfrak p$.  But every minimal prime of a
+Noetherian ring is associated, while (8.8) says that multiplication by $\varpi$ on $R$ is
+injective.  Hence $\varpi$ belongs to no minimal prime, a contradiction.  Therefore
 
 $$
 \mathfrak p\cap\mathcal O=(0).
@@ -1606,10 +1620,11 @@ Selmer, and automorphic analysis.
 
 ### 12.1 Exact prerequisite ledger
 
-The mathematically direct row for the reusable conditional theorem is
+The mathematically direct row for the reusable conditional theorem, before specializing the
+residual datum to a Frey representation, is
 
 $$
-\boxed{181\mid 57,62,64,141,164,165,166,167,173.}
+\boxed{181_{\mathrm{abstract}}\mid57,62,64,141,165,166,167,173.}
 \tag{12.1}
 $$
 
@@ -1627,6 +1642,14 @@ The exact use and boundary of each source are as follows.
 | Book 166 | supported mapping fibre, duality, and equality of tangent and supported-obstruction dimensions | it supplies no relation or finiteness theorem |
 | Book 167 | complete supported obstruction and injection of the dual conormal relation space | it gives $r\leq t$, not equality, flatness, or a point |
 | Book 164 | exact Frey residual datum for Section 11.1 | application input only; it does not construct the automorphic seed |
+
+For the only imported $R=\mathbb T$ step, Book 173 is a synthesis whose proof owners are Books
+171--172, as recorded in the repository dependency table.  Book 171 constructs the represented
+minimal ring, the finite Hecke order, and the surjective comparison from the explicit clean
+datum.  Book 172 proves scheme-theoretic injectivity by equal-variable rigidity over a regular
+domain and then derives finite freeness of the entire minimal ring.  Neither book consumes Book
+181 or a lift constructed here.  Thus Proposition 4.1 is not a reduced $R=\mathbb T$ statement
+being silently upgraded, and its use is acyclic.
 
 The FLT specialization in Section 11.1 additionally uses Book 164, so the exact
 manuscript-wide repository row is

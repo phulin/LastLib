@@ -106,7 +106,7 @@ Both rings have generic fiber $E^2$. Their difference is invisible after inverti
 
 The problem becomes sharper at a level-raising prime. The old and new characteristic-zero subspaces are complementary, but their integral lattices need not split. The failure to split is not an error: it is the congruence one wants. What must be excluded is a different phenomenon, namely a nonsaturated old image whose quotient has coefficient torsion. Such torsion can imitate a new residual class without lifting to a characteristic-zero new packet.
 
-This book proves a conditional theorem showing that, in the clean weight-two Shimura-curve setting, the intended congruence survives and coefficient torsion does not imitate it. The decisive geometric input is saturated Ihara theory under Book 139's abelian Ihara condition. The decisive inner-form input is the datum-specific node uniformization identifying the monodromy lattice with the natural integral automorphic lattice on the switched definite quaternion algebra. Once those inputs and Book 125's generic support are placed in one diagram, the two faithful Hecke orders are images of the same abstract algebra with the same kernel. No finite congruence index remains between them.
+This book proves a conditional theorem showing that, in the clean weight-two Shimura-curve setting, the intended congruence survives and coefficient torsion does not imitate it. The decisive geometric input is saturated Ihara theory under Book 139's abelian Ihara condition. The decisive inner-form input is the datum-specific node uniformization identifying the monodromy lattice with the natural integral automorphic lattice on the switched definite quaternion algebra. Book 125's automorphic decomposition, combined with the corrected generic filtration, proves the required generic-support equality in Section 8.3. Once these ingredients are placed in one diagram, the two faithful Hecke orders are images of the same abstract algebra with the same kernel. No finite congruence index remains between them.
 
 ### 1.2 The three lattices
 
@@ -223,10 +223,11 @@ We work in the following clean datum throughout, unless a section explicitly var
     125 applies to both curve levels, with the full component-routing algebra
     or a proved separating component projector. Together with the generic
     local old/new decomposition, this identifies $Q_E$ with the selected
-    $v$-new packet sum. We call this the **generic-support input**. It is a
-    direct prerequisite because rational Jacquet--Langlands for the totally
-    definite algebra does not by itself prove occurrence in the indefinite
-    curve.
+    $v$-new packet sum. This is the **generic-support source condition** used
+    in Section 8.3. The equality of generic kernels is proved there; it is not
+    an additional unresolved theorem. The condition is retained because
+    rational Jacquet--Langlands for the totally definite algebra does not by
+    itself prove occurrence in the indefinite curve.
 
 The restrictions have distinct purposes. Properness removes cusp cohomology. Neatness removes stabilizer denominators. The condition $v\nmid\ell$ keeps the coefficient sheaf étale at the semistable prime. Non-Eisenstein localization kills only the congruence-continuous part of the tree kernel; hypothesis 11 kills the remaining localized noncongruence-character quotient. The selected-packet hypothesis is exactly the range in which local and global Jacquet--Langlands, conductor comparison, type lattices, and local factors have already been proved. Hypothesis 12 is datum-specific; hypothesis 13 records the additional direct prior-book input now included in the current dependency row.
 
@@ -459,7 +460,7 @@ $$
 \tag{2.7b}
 $$
 
-These inputs do not, by themselves, prove (1.5d) or the node-uniformization hypothesis. Subject to those two explicit inputs, Book 125 and the generic filtration supply generic support, and Chapters 5--9 establish the integral graph--definite bridge and the resulting equality of image orders. No later statement will turn the conditional residual Ihara theorem into an unconditional one.
+These inputs do not, by themselves, prove (1.5d) or the node-uniformization hypothesis. Subject to those two explicit inputs, Book 125 and the generic filtration prove generic support in Section 8.3, and Chapters 5--9 establish the integral graph--definite bridge and the resulting equality of image orders. No later statement will turn the conditional residual Ihara theorem into an unconditional one.
 
 ## 3. Integral image algebras and packet lattices
 
@@ -796,9 +797,19 @@ cover and is descended by exact $\Delta$-invariants when the deck-group order is
 unit in $\mathcal O$. We do not infer regularity of a coarse quotient with fixed
 points.
 
-**Verification strategy.** A node is the point where the two possible rank-$q_v$ directions in the active height-two group cease to be distinct. The endomorphism algebra of this superspecial object changes local invariant at $v$ and at the unique split real place. This produces $B^\dagger$. Prime-to-$v$ level structures turn quasi-isogeny classes into the double quotient (5.8). The following argument records the normalization and inverse constructions that a proof of the hypothesis must supply; the four catalogued prerequisites do not themselves contain this superspecial classification.
+The first irreducible input here is a datum-specific classification theorem. The groupoid of
+superspecial PEL objects occurring as nodes, with polarization multiplier, center,
+prime-to-$v$ level, and automorphisms retained, must be equivalent to the double-coset groupoid
+of $B^\dagger$. Under this equivalence the two deformation branches, residue Frobenius,
+away-from-$v$ correspondences, and stabilizer masses must have the routing stated in
+Hypothesis 5.1. None of the direct prerequisites proves this superspecial PEL
+quasi-isogeny classification. The local equation $xy=\varpi_v$ determines two branches but
+does not classify their global node set, and rational Jacquet--Langlands compares
+representations rather than integral PEL groupoids.
 
-**Verification.** Choose a geometric node $z$ and a representative PEL object $A_z$ with its polarization, endomorphisms, and prime-to-$v$ level. Let
+**Formal reduction from the superspecial classification.** A node is the point where the two possible rank-$q_v$ directions in the active height-two group cease to be distinct. The endomorphism algebra of this superspecial object changes local invariant at $v$ and at the unique split real place. This produces $B^\dagger$. Prime-to-$v$ level structures turn quasi-isogeny classes into the double quotient (5.8). The following argument records the normalization and inverse constructions that the missing classification theorem would supply; it is not a proof of that classification from the five catalogued prerequisites.
+
+**Conditional construction.** Choose a geometric node $z$ and a representative PEL object $A_z$ with its polarization, endomorphisms, and prime-to-$v$ level. Let
 
 $$
 I_z=\operatorname{End}^0(A_z,\text{PEL data})^\times
@@ -817,11 +828,11 @@ Fix one base node $z_0$ and one identification in (5.10). A prime-to-$v$ quasi-i
 
 Conversely, an adelic class modifies the prime-to-$v$ Tate lattices of $A_{z_0}$ and the maximal $v$-adic lattice in its division isocrystal. The usual lattice-isogeny construction produces a PEL object in the same superspecial isogeny class with the transported level. Its two deformation directions give a node of the incidence model. Left and right changes produce an isomorphic object, so the construction descends to (5.8).
 
-The two constructions are inverse because a prime-to-$v$ quasi-isogeny is determined by its action on all rational Tate modules together with the polarization multiplier, and the chosen $v$-adic maximal lattice fixes the remaining isogeny ambiguity. This proves bijectivity.
+The two constructions are inverse because a prime-to-$v$ quasi-isogeny is determined by its action on all rational Tate modules together with the polarization multiplier, and the chosen $v$-adic maximal lattice fixes the remaining isogeny ambiguity. Conditional on the stated classification of superspecial objects and their Tate lattices, this proves bijectivity.
 
-An away-from-$v$ double coset modifies exactly one prime-to-$v$ lattice. The same modification describes both the PEL correspondence on nodes and right multiplication on (5.8), proving Hecke equivariance. Geometric Frobenius acts on the isocrystal and level structure on both sides, proving Galois equivariance. $\square$
+An away-from-$v$ double coset modifies exactly one prime-to-$v$ lattice. The same modification describes both the PEL correspondence on nodes and right multiplication on (5.8), proving Hecke equivariance. Geometric Frobenius acts on the isocrystal and level structure on both sides, proving Galois equivariance.
 
-The verification uses the moduli interpretation of the already constructed semistable model and the stated superspecial quasi-isogeny classification. It does not assume the integral comparison that (5.9) is meant to establish. Conversely, without that classification the displayed construction is a proof sketch, not a consequence of rational Jacquet--Langlands; this is why (5.9) is an explicit hypothesis of the complete theorem.
+The reduction uses the moduli interpretation of the already constructed semistable model and the stated superspecial quasi-isogeny classification. It does not assume the integral comparison that (5.9) is meant to establish. Conversely, without that classification the displayed construction is a proof sketch, not a consequence of rational Jacquet--Langlands; this is why (5.9) is an explicit hypothesis of the complete theorem.
 
 ### 5.4 Hecke equivariance of the node dictionary
 
@@ -1245,9 +1256,18 @@ Equivalently, one may read (8.6) packet by packet. The left kernel is the inters
 
 Here is a local proof that no clean Iwahori packet is lost. Put $H=\operatorname{GL}_2(F_v)$, $K=\operatorname{GL}_2(\mathcal O_{F_v})$, and let $I\subset K$ be the standard Iwahori. An irreducible generic representation in the unramified Iwahori block has one of the two forms relevant here.
 
-For an irreducible unramified principal series, the $I$-fixed space has dimension two and the $K$-fixed space has dimension one. The two degeneracy translates of the spherical line span the $I$-fixed space. Indeed they are fixed by the two adjacent hyperspecial vertex stabilizers. If the two lines coincided, their common vector would be fixed by the group generated by those stabilizers, hence by $H$; that would force a one-dimensional constituent, contrary to irreducibility of the principal series. Since the target has dimension two, the two lines form a basis. Such a packet is entirely old and disappears from $Q_E$.
+For an irreducible unramified principal series, the $I$-fixed space has dimension two and the $K$-fixed space has dimension one. The two degeneracy translates of the spherical line span the $I$-fixed space. Indeed they are fixed by the two adjacent hyperspecial vertex stabilizers. If the two lines coincided, their common vector would be fixed by the subgroup generated by those stabilizers. This is the normal subgroup $\ker(v_v\circ\det)$ of $H$, so its invariant subspace is $H$-stable; irreducibility would force the representation to factor through the abelian quotient $H/\ker(v_v\circ\det)\simeq\mathbf Z$. Such a representation is nongeneric, a contradiction. Since the target has dimension two, the two lines form a basis. Such a packet is entirely old and disappears from $Q_E$.
 
-For an unramified Steinberg twist, the $I$-fixed space is a line and the $K$-fixed space is zero. It is entirely new. Its centered special parameter has nonzero monodromy, so its top residue in $X_{v,E}(-1)$ is nonzero. Conversely a nonzero graph residue cannot arise from a good-reduction spherical packet, since good reduction has zero monodromy. At the reducible boundary of principal induction, the special quotient is exactly this Steinberg line and the character constituent is Eisenstein. This proves the equality of support in (8.6) throughout the clean special block.
+For an unramified Steinberg twist, the $I$-fixed space is a line and the $K$-fixed space is zero. It is entirely new. Its centered special parameter has nonzero monodromy, so its top residue in $X_{v,E}(-1)$ is nonzero. Conversely a nonzero graph residue cannot arise from a good-reduction spherical packet, since good reduction has zero monodromy. At the reducible boundary of principal induction, the special constituent is exactly this Steinberg line and the other, character constituent is Eisenstein. This proves the equality of support in (8.6) throughout the clean special block.
+
+Thus generic support in the constant-coefficient theorem is source-closed relative to the
+already separated abelian Ihara hypothesis: Book 125 supplies the semisimple packet
+decomposition on the actual curve, the corrected filtration supplies its two graph extremes,
+and the preceding local calculation removes exactly the spherical old packets. No additional
+generic-support hypothesis is used after the source condition in item 13 of Section 1.3 has
+been matched. This constant-coefficient argument by itself does not supply the typed integral
+filtration of Section 13.1; once that filtration is available, Book 174, Proposition 6.3
+derives its typed generic-residue kernel equality from the same routed packet decomposition.
 
 ### 8.4 Equality of localized Hecke orders
 
@@ -1549,7 +1569,7 @@ If $q_v\equiv-1\pmod\ell$, the roots $\varepsilon$ and $-\varepsilon$ are distin
 
 If $\ell=2$, the signs coincide. Neither the signed Gram decomposition nor branch reversal retains the required information. The clean theorem assumes $\ell\ge7$.
 
-Finally, $\Delta_v=0$ in characteristic zero is not a finite level-raising congruence. It is the reducible boundary at which the generic old/new complement or the restricted old pairing degenerates. Removing it requires the generic-support/noncharacter hypothesis packet by packet; the phrase “non-Eisenstein” alone is not a proof that every scalar or vexing localization has disappeared. Globally scalar residual systems, residually scalar local systems with no chosen line, and the usual vexing primes are therefore outside every rank-one signed formula unless an enhanced integral type theorem is supplied.
+Finally, $\Delta_v=0$ in characteristic zero is not a finite level-raising congruence. It is the reducible boundary at which the generic old/new complement or the restricted old pairing degenerates. Removing it requires the packet-by-packet noncharacter calculation of Section 8.3; the phrase “non-Eisenstein” alone is not a proof that every scalar or vexing localization has disappeared. Globally scalar residual systems, residually scalar local systems with no chosen line, and the usual vexing primes are therefore outside every rank-one signed formula unless an enhanced integral type theorem is supplied.
 
 ## 11. Integral level raising
 
@@ -1633,7 +1653,9 @@ $$
 \tag{11.5}
 $$
 
-If the node-uniformization and generic-support hypotheses also hold, then under the integral Jacquet--Langlands comparison the same residual away-from-$v$ eigensystem occurs in
+If the node-uniformization hypothesis also holds and the Book 125 source condition of Section
+1.3 is in force, then the generic-support equality already proved in Section 8.3 gives the
+integral Jacquet--Langlands comparison, and the same residual away-from-$v$ eigensystem occurs in
 
 $$
 S(B^\dagger,U^\dagger,k)_{\mathfrak n}^{\mathrm{nc}}.
@@ -1864,7 +1886,7 @@ $$
 
 are rank one over the coefficient field. Intersecting with the integral fixed module and saturating gives primitive rank-one $\mathcal O$-lattices, well defined up to a unit.
 
-The graph-node construction with coefficients in $\Lambda_v^\dagger$ is valid only when the type sheaf extends over the full incidence model, pull and norm preserve it, every finite stabilizer order is a unit, and a type-specific residual Ihara theorem makes the selected old image primitive. The edge module is then a vector-valued definite function module. If, in addition, the type-specific generic residue theorem identifies the curve-new and graph packet supports, the incidence and common-kernel arguments prove analogues of Theorems 6.1 and 8.1. None of these type-coefficient assertions follows from the constant-coefficient abelian Ihara condition. They are explicit external hypotheses for the type-enhanced variant.
+The graph-node construction with coefficients in $\Lambda_v^\dagger$ is valid only when the type sheaf extends over the full incidence model, pull and norm preserve it, every finite stabilizer order is a unit, and a type-specific residual Ihara theorem makes the selected old image primitive. The edge module is then a vector-valued definite function module. A primitive extreme-residue theorem is also needed to obtain the typed graph filtration. Book 174, Proposition 6.3 later proves, from those typed inputs and Book 125's component-routed semisimple decomposition on the common principal cover, that the curve-new and graph generic Hecke kernels agree. Thus typed generic support is not a further independent hypothesis. None of the preceding typed integral assertions follows from the constant-coefficient abelian Ihara condition.
 
 The unit ambiguity in a primitive local generator does not alter the global image order. Both sides remain images of the same abstract Hecke algebra, and Lemma 3.2 compares kernels rather than chosen basis vectors.
 
@@ -1905,7 +1927,7 @@ At the semistable Iwahori prime used for the basic level-raising theorem, the ne
 
 ### 13.4 Boundaries of the selected theorem
 
-The basic one-prime semistable theorem includes the unramified special family at Iwahori level. Ramified special twists, unramified quadratic depth-zero packets, and tame positive-depth dihedral packets are included only in the conditional type-enhanced variant of Section 13.1, with its extension, pull--norm, stabilizer, type-Ihara, saturation, and generic-support hypotheses all imposed.
+The basic one-prime semistable theorem includes the unramified special family at Iwahori level. Ramified special twists, unramified quadratic depth-zero packets, and tame positive-depth dihedral packets are included only in the conditional type-enhanced variant of Section 13.1, with its extension, pull--norm, stabilizer, type-Ihara, and primitive-residue hypotheses imposed. Book 174, Proposition 6.3 derives the resulting generic-residue kernel equality from that filtration and Book 125 rather than imposing it separately.
 
 It excludes primitive wild packets and ramified dyadic positive-depth packets. The local character and type-lattice comparison used in Chapter 4 is not proved there. It also excludes a type projector that exists only after inverting $\varpi$: applying such a projector to a saturated full cohomology lattice can create a nonsaturated intersection.
 
@@ -1918,7 +1940,7 @@ Residual irreducibility of a reduced type is not automatic when $\ell$ divides $
 Let $P=\{v_1,\ldots,v_r\}$ be a finite set of clean level-changing primes. One may apply the one-prime theorem successively. At stage $i$, localize the module obtained after the first $i-1$ changes and verify anew:
 
 $$
-\text{abelian Ihara, non-Eisensteinness, adjoint stability, node/support comparison, and sign separation.}
+\text{abelian Ihara, non-Eisensteinness, adjoint stability, node comparison, Book 125 applicability, and sign separation.}
 \tag{14.1}
 $$
 
@@ -1987,7 +2009,9 @@ $$
 
 If a higher Tor group is nonzero, (14.4) is false; its contribution is governed by the determinant/Fitting identity of the resulting derived complex and need not be expressible as a naively multiplied “extra factor.” If multiplicities exceed one, each local scalar factor must be replaced by the Fitting ideal of the full local Smith module. Pairwise branch depths alone do not determine a many-branch augmentation ideal.
 
-At any stage where the one-prime node and support hypotheses hold, integral Jacquet--Langlands introduces no further factor. A simultaneous final-inner-form assertion is not proved by multiplying these stagewise equalities; it additionally requires a valid global ramification set, a common packet support theorem, and a coefficient-one multi-node comparison for that inner form.
+At any stage where the one-prime node hypothesis and the Book 125 source condition hold, Section
+8.3 proves the required support equality and integral Jacquet--Langlands introduces no further
+factor. A simultaneous final-inner-form assertion is not proved by multiplying these stagewise equalities; it additionally requires a valid global ramification set, a common packet support theorem, and a coefficient-one multi-node comparison for that inner form.
 
 For two primes $v_1,v_2$ on rank-one branches, the signed Gram basis has four vectors indexed by $(\pm,\pm)$. On the selected $(\varepsilon_1,\varepsilon_2)$ vector the total Gram operator acts by
 
@@ -2015,7 +2039,7 @@ For repeated use it is helpful to record the exact failure at each boundary.
 | nonunit type label | existence of a stable finite lattice | characteristic-zero local transfer |
 | primitive wild type | selected local comparison | no assertion beyond the proved selected range |
 
-The table distinguishes failure of a labelled refinement from failure of the full conditional lattice theorem. Once (1.5d) and the node/support hypotheses hold, $q_v\equiv\pm1$ does not invalidate full-map saturation or away-from-$v$ acting-order equality; it invalidates a simpler signed corollary.
+The table distinguishes failure of a labelled refinement from failure of the full conditional lattice theorem. Once (1.5d), node uniformization, and the Book 125 source condition hold, $q_v\equiv\pm1$ does not invalidate full-map saturation or away-from-$v$ acting-order equality; it invalidates a simpler signed corollary.
 
 ## 15. The complete comparison theorem
 
@@ -2023,7 +2047,7 @@ The table distinguishes failure of a labelled refinement from failure of the ful
 
 We now collect the book's results in one reusable form.
 
-**Theorem 15.1 (conditional integral level change and Jacquet--Langlands comparison).** Let $F,B,B^\dagger,v,U,U_0(v),U^\dagger,\mathcal O$, and $\mathfrak m$ satisfy the clean datum of Section 1.3, including the abelian Ihara condition (1.5d), node uniformization, and generic support. Use unnormalized right-double-coset operators, geometric class matching, the selected local Jacquet--Langlands normalization, and the fixed central/component block. Then:
+**Theorem 15.1 (conditional integral level change and Jacquet--Langlands comparison).** Let $F,B,B^\dagger,v,U,U_0(v),U^\dagger,\mathcal O$, and $\mathfrak m$ satisfy the clean datum of Section 1.3, including the abelian Ihara condition (1.5d), node uniformization, and the Book 125 component-routing source condition. Generic support is then the conclusion (8.6), not a further hypothesis. Use unnormalized right-double-coset operators, geometric class matching, the selected local Jacquet--Langlands normalization, and the fixed central/component block. Then:
 
 1. the degeneracy map
    $$
@@ -2087,11 +2111,11 @@ The logical sources and retained hypotheses are as follows.
 | Book 139: conditional saturated Ihara theory | exact tree kernel, conditional primitive old image and free quotient, Gram matrix, graph discriminant, branch Smith correction | proper clean curves; constant coefficients; $v\nmid\ell$; neat or tame descent; non-Eisenstein localization plus the independent abelian Ihara condition (1.5d) | uses its corrected filtration in raising, lowering, and order comparison |
 | node uniformization | superspecial nodes identified with the switched definite class set, including routing, weights, and coefficient-one scale | an explicit external hypothesis for the chosen PEL datum | integral graph--definite lattice map |
 
-The direct-dependency audit adds Book 125's generic-support input to the local
+The direct-dependency audit adds Book 125's source for the generic-support proof to the local
 Jacquet--Langlands, Hecke, global Jacquet--Langlands, and Ihara sources. The exact current row is
 
 $$
-140\mid80,85,104,125,139,
+140\mid80,85,104,125,139.
 \tag{15.1a}
 $$
 
@@ -2101,7 +2125,7 @@ The downstream interface is equally exact.
 
 | consumer | valid output from this book | condition that the consumer must retain |
 |---|---|---|
-| Book 176 | one-prime special raising/lowering and common away-from-$v$ acting order | (1.5d), node/support hypotheses, both finite modules in (8.3a), and Section 11.4 before using a scalar as an augmented congruence ideal |
+| Book 176 | one-prime special raising/lowering and common away-from-$v$ acting order | (1.5d), node uniformization, Book 125's component-routing source condition, both finite modules in (8.3a), and Section 11.4 before using a scalar as an augmented congruence ideal |
 | Book 170 | free $Q$, equality of faithful inner-form trace orders, and geometric lowering criterion | freeness and order equality are conditional on abelian Ihara; lowering requires both $\Phi[\varpi]=0$ and $\mathcal C_{\mathrm{br},v}[\varpi]=0$ |
 | Book 174 | coefficient-one constant graph--definite map $X_v\simeq S^\dagger$ | Book 140 does not give $\operatorname{gr}_0Q=X_v^\vee$; a type-coefficient primitive residue or bottom-lattice statement must be proved independently, together with type-Ihara |
 | Book 175 | no inner-form order index and the signed Gram Smith factor | the factor is an augmented congruence ideal only under Section 11.4; scalar/vexing refinements and all fixed-prime Tor/augmentation statements require the separate Book 174 hypotheses |
@@ -2129,7 +2153,7 @@ Changing a row requires changing every dependent formula. In particular, normali
 
 ### 15.4 Exact scope
 
-The theorem proves a complete **conditional** one-prime integral level-change statement for the clean compact weight-two Shimura curves and their switched totally definite inner forms. Its conditions include the abelian Ihara vanishing which Book 139 leaves open and the datum-specific node classification, while generic support is imported from direct prerequisite Book 125. It covers the full two-map Iwahori lattice and its special sign blocks when the roots separate. Type-enhanced variants require the longer hypothesis list of Section 13.1, not merely extension of a type sheaf.
+The theorem proves a complete **conditional** one-prime integral level-change statement for the clean compact weight-two Shimura curves and their switched totally definite inner forms. Its unresolved conditions are the abelian Ihara vanishing which Book 139 leaves open and the datum-specific node classification. Under Book 125's stated component-routing source condition, generic support is proved in Section 8.3 from its semisimple decomposition and the corrected filtration. It covers the full two-map Iwahori lattice and its special sign blocks when the roots separate. Type-enhanced variants require the longer hypothesis list of Section 13.1, not merely extension of a type sheaf.
 
 It does not cover Eisenstein maximal ideals, failure of (1.5d), coefficient characteristic equal to the residue characteristic at $v$, noncompact boundary cohomology, $\ell$-divisible stabilizers, primitive wild types, or a projector defined only over the fraction field. It does not turn torsion-freeness into an integral old--new direct sum. It does not assert that either the Néron component group or $\mathcal C_{\mathrm{br},v}$ vanishes.
 
@@ -2141,7 +2165,8 @@ These are the exact boundaries of the conditional theorem. In particular, provin
 
 ### 16.1 The established package
 
-Under the three explicit external conditions of Theorem 15.1, the integral comparison consists of five exact sequences and one equality of orders.
+Under the two unresolved external hypotheses of Theorem 15.1 and the matched Book 125 source
+condition, the integral comparison consists of five exact sequences and one equality of orders.
 
 The old sequence is
 
@@ -2213,7 +2238,7 @@ One local edge controls the whole theory. Its two vertices give the two degenera
 
 In the special fiber, the same edge becomes a node. Under the explicit superspecial node-uniformization hypothesis, the collection of nodes is the class set of the quaternion algebra obtained by ramifying at the changing finite place and at the formerly split real place. Cycles in the node graph are therefore definite automorphic forms with their natural integral scale. The edge-length pairing is the ambient graph monodromy pairing and the mass pairing on the definite class set. In the quotient $Q$ it is followed by $X_v^\vee\to L_0$, which exposes the branch correction.
 
-Rational Jacquet--Langlands performs one precise task: it interprets a graph packet, already known to occur by Book 125 and the corrected generic filtration, as the unique selected split cuspidal packet. It does not prove occurrence in the indefinite curve. Once equality of generic support is supplied by that direct prerequisite, torsion-freeness descends equality of generic kernels to equality of integral kernels. That short argument eliminates the otherwise possible congruence index between two acting orders in the same generic algebra.
+Rational Jacquet--Langlands performs one precise task: it interprets a graph packet, already known to occur by Book 125 and the corrected generic filtration, as the unique selected split cuspidal packet. It does not prove occurrence in the indefinite curve. Section 8.3 proves equality of generic support from that direct prerequisite and the local old/new calculation; torsion-freeness then descends equality of generic kernels to equality of integral kernels. That short argument eliminates the otherwise possible congruence index between two acting orders in the same generic algebra.
 
 Finally, the old Gram matrix converts a signed Hecke congruence into a nonzero new residual class. Conditional saturation makes it live in a free quotient, and the integral order comparison carries its common away-from-$v$ eigensystem across the inner form. In the opposite direction, the corrected normalization and monodromy filtration show that a genuinely monodromy-free residual new block lowers only when both the component and branch-Smith obstructions are clean. Integral level raising and lowering are thus two consequences of the same geometry, but not formal inverses: raising uses failure of unimodularity, while lowering uses vanishing of monodromy after both finite obstructions have been exposed.
 

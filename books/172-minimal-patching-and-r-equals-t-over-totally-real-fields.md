@@ -29,7 +29,7 @@
 - [6. The finite Taylor--Wiles system](#6-the-finite-taylor--wiles-system)
   - [6.1 Rings, Hecke algebras, and modules](#61-rings-hecke-algebras-and-modules)
   - [6.2 The commuting action diagram](#62-the-commuting-action-diagram)
-  - [6.3 Exact augmentation](#63-exact-augmentation)
+  - [6.3 The pending acting-order quotient](#63-the-pending-acting-order-quotient)
   - [6.4 Nonnested levels and finite shadows](#64-nonnested-levels-and-finite-shadows)
 - [7. The minimal presentation theorem](#7-the-minimal-presentation-theorem)
   - [7.1 Why absolute and relative counts must be separated](#71-why-absolute-and-relative-counts-must-be-separated)
@@ -40,7 +40,7 @@
   - [8.1 Artinian precision](#81-artinian-precision)
   - [8.2 Coherent diagonalization](#82-coherent-diagonalization)
   - [8.3 The patched objects](#83-the-patched-objects)
-  - [8.4 Exact recovery at augmentation](#84-exact-recovery-at-augmentation)
+  - [8.4 Exact recovery of rings and modules](#84-exact-recovery-of-rings-and-modules)
 - [9. The dimension and depth ledger](#9-the-dimension-and-depth-ledger)
   - [9.1 Dimensions of the two source rings](#91-dimensions-of-the-two-source-rings)
   - [9.2 Depth over three acting rings](#92-depth-over-three-acting-rings)
@@ -140,7 +140,9 @@ M_N/\mathfrak a_NM_N\simeq M^{\min},
 \tag{1.5}
 $$
 
-and the acting image specializes to $\mathbb T^{\min}$. After passing through coherent finite shadows, patching gives
+and compatible Hecke operators give a canonical surjection from the augmented acting image to
+$\mathbb T^{\min}$. Injectivity of this last map is not assumed. After passing through coherent
+finite shadows, patching gives
 
 $$
 S_\infty=\mathcal O[[z_1,\ldots,z_q]],
@@ -172,7 +174,10 @@ M_\infty\simeq R_\infty^{\oplus r}
 \tag{1.8}
 $$
 
-for some $r>0$. Thus $R_\infty$ acts faithfully. Exact augmentation descends this equality of action rings to (1.1), proving that (1.1) is an isomorphism.
+for some $r>0$. Thus $R_\infty$ acts faithfully. Exact ring and module augmentation makes
+$M^{\min}$ a nonzero free $R^{\min}$-module. Its action is therefore faithful, and the
+canonical map (1.1), whose target is the faithful action image, is an isomorphism. Exact
+acting-order augmentation is then a consequence, not an input.
 
 ### 1.3 The main theorem
 
@@ -199,7 +204,9 @@ Moreover:
 2. it is a relative complete intersection over $\mathcal O$, hence Gorenstein;
 3. $M^{\min}$ is finite free of positive rank over $R^{\min}$;
 4. the primary--companion pairing remains perfect after descent and has the prescribed Hecke adjoints;
-5. for every generically isolated integral branch satisfying the retained saturation and primitive multiplicity hypotheses, the cotangent and congruence Fitting ideals agree.
+5. for every generically isolated integral branch satisfying the retained saturation and primitive multiplicity hypotheses, the cotangent and congruence Fitting ideals agree;
+6. at every clean auxiliary level used in the construction, the faithful acting order has
+   exact augmentation to $\mathbb T^{\min}$.
 
 No conclusion is asserted here for $\ell=5$, for a residual cyclotomic restriction that is reducible, for a scalar auxiliary Frobenius, or for a local condition outside the clean represented components.
 
@@ -301,9 +308,21 @@ Choose a totally definite quaternion algebra over $F$, a parallel-weight-two coe
 - integral local--global compatibility puts the minimal and auxiliary Hecke-valued representations in exactly the local conditions of Section 2.2 and the ordered conditions of Section 4.1, on every Artinian quotient;
 - type lattices, degeneracy maps, and primary idempotents are saturated;
 - at every admissible auxiliary set, the projective diagonal-ratio diamond group has full nominal rank, every remaining arithmetic point stabilizer has trivial image in it, and the resulting deep-to-oriented fibers are genuine torsors;
-- the localized oriented new complement has no support at the chosen regular refinement, and the acting-image augmentation is saturated, so that it recovers exactly $\mathbb T^{\min}$ rather than only a quotient or a finite-index order.
+- the localized oriented new complement has no support at the chosen regular refinement.
 
-The first minimal-level instances of these assumptions are already needed to construct (1.1). Their auxiliary-level instances are separate input to the Taylor--Wiles system: residual occurrence at minimal level supplies a nonzero old summand, but does not by itself construct a representation over every auxiliary Hecke order or prove exact augmentation of its acting image. The auxiliary modules must use the same determinant, central character, local branches, and integral lattices. Patching cannot repair a mismatch at finite level.
+The first minimal-level instances of these assumptions are already needed to construct (1.1).
+Their auxiliary-level instances are separate input to the Taylor--Wiles system: residual
+occurrence at minimal level supplies a nonzero old summand, but does not by itself construct a
+representation over every auxiliary Hecke order. The auxiliary modules must use the same
+determinant, central character, local branches, and integral lattices. Patching cannot repair a
+mismatch at finite level.
+
+No acting-image augmentation is assumed. Exact deformation-ring augmentation follows from the
+represented auxiliary functor, and exact primary and companion module augmentation follows from
+the torsor and old--new control below. These two facts suffice for patching. Once the patched
+deformation action has been proved faithful, Chapter 11 deduces exact augmentation of the
+faithful acting orders by a short quotient diagram. Assuming that conclusion here would be
+unnecessary and would obscure the logical order.
 
 Residual automorphy is assumed over $F$ in this exact definite-quaternion realization. If it is known only after a solvable extension, a separate automorphic descent theorem and an integral comparison of the descended Hecke order are required before this book applies. No such existence or descent statement is hidden in the patching argument.
 
@@ -747,16 +766,28 @@ The top-left map comes from tame inertia in the universal deformation. The botto
 
 The algebra $\mathbb T_N$ is by definition faithful on $M_N$. No faithfulness of $R_N$ is asserted. Its kernel is precisely the question that patching will resolve.
 
-### 6.3 Exact augmentation
+### 6.3 The pending acting-order quotient
 
-Equations (4.8) and (5.7) give exact ring and module control. The acting algebra requires one more, logically independent saturation statement: endomorphisms that vanish after augmentation must be generated by the augmentation ideal in the acting image. This is the acting-image augmentation hypothesis stated in Section 2.3; module freeness and saturated degeneracy maps alone would not imply it. It gives
+Equations (4.8) and (5.7) give exact ring and module control. Compatible Hecke generators and
+the Hecke-equivariant module augmentation give a canonical surjection
 
 $$
-\mathbb T_N/\mathfrak a_N\mathbb T_N\xrightarrow{\sim}\mathbb T^{\min}.
+\theta_N:
+\mathbb T_N/\mathfrak a_N\mathbb T_N
+\twoheadrightarrow\mathbb T^{\min}.
 \tag{6.4}
 $$
 
-Thus the entire auxiliary datum specializes to the fixed minimal datum, not to a rationally isomorphic lattice or a larger oriented Hecke algebra.
+Surjectivity holds because the descended named operators generate the minimal faithful image.
+Injectivity is not formal: an operator can have all matrix entries in the augmentation ideal
+without itself belonging to that ideal inside the acting order. Group-ring freeness, saturated
+degeneracy, and a perfect primary--companion pairing do not exclude this phenomenon.
+
+We therefore retain (6.4), with its kernel, in the finite shadows and assume no acting-order
+saturation. The proof of minimal $R=T$ will use only exact deformation-ring and module
+augmentation. After that equality is known, Section 11.2 proves that every $\theta_N$ is an
+isomorphism. This postponement is logically essential: exact acting-order augmentation is a
+conclusion of the faithful patched action, not a premise used to obtain it.
 
 ### 6.4 Nonnested levels and finite shadows
 
@@ -768,7 +799,7 @@ Instead, fix an increasing sequence of Artinian precision ideals. At precision $
 - the quotient deformation ring and named structural maps;
 - the free module with a marked basis;
 - the acting image and a finite initial set of named Hecke operators;
-- augmentation maps, primary idempotents, pairings, and adjoints;
+- the canonical quotient map (6.4), primary idempotents, pairings, and adjoints;
 - the chosen absolute source and its marked quotient ideal, together with any relation tuple retained for the separate framed audit.
 
 Only finitely many marked diagrams of bounded size occur at a fixed precision. An infinite pigeonhole argument chooses a subsequence on which the precision-$1$ diagram stabilizes; a further subsequence stabilizes precision $2$; continuing diagonally gives compatible finite shadows at every precision. The transitions belong to these stabilized shadows, not to the original arithmetic family.
@@ -931,7 +962,11 @@ The marked basis matters. An abstract assertion that $M_N$ is free of rank $r$ w
 
 ### 8.2 Coherent diagonalization
 
-Form a rooted tree whose vertices at height $d$ are the marked precision-$d$ diagrams occurring infinitely often. Join a height-$(d+1)$ vertex to its reduction at height $d$. The tree is finitely branching and has vertices at every height, so it has an infinite path. That path supplies compatible ring, module, action, augmentation, and pairing shadows.
+Form a rooted tree whose vertices at height $d$ are the marked precision-$d$ diagrams occurring
+infinitely often. Join a height-$(d+1)$ vertex to its reduction at height $d$. The tree is
+finitely branching and has vertices at every height, so it has an infinite path. That path
+supplies compatible ring, module, action, ring-and-module augmentation, acting-order quotient,
+and pairing shadows.
 
 To justify the infinite path directly, prune every vertex that has only finitely many descendants arising from the arithmetic family. At least one vertex remains at every height, for otherwise only finitely many arithmetic levels would occur. Starting at the root, choose a surviving child at each stage. Finite branching ensures that a surviving child exists, and the resulting path has vertices at all heights.
 
@@ -1002,7 +1037,7 @@ $$
 
 with diamond inversion and the named Hecke adjoints.
 
-### 8.4 Exact recovery at augmentation
+### 8.4 Exact recovery of rings and modules
 
 Finite inverse systems with surjective shadow transitions satisfy exact inverse-limit descent. Applying this to the augmented rings and modules gives
 
@@ -1021,23 +1056,16 @@ $$
 \tag{8.13}
 $$
 
-The retained acting-algebra saturation gives
-
-$$
-A_\infty/\mathfrak a_\infty A_\infty\simeq\mathbb T^{\min}.
-\tag{8.14}
-$$
-
 Let us prove the first isomorphism rather than infer it from a tensor product. At every finite level,
 
 $$
 R_N/(h_{N,1},\ldots,h_{N,q})R_N\simeq R^{\min}.
-\tag{8.15}
+\tag{8.14}
 $$
 
-Reduce (8.15) at every retained precision and include its kernel and quotient maps in the finite shadow. The transition maps are surjective, so the inverse system of kernels satisfies the Mittag--Leffler condition. Inverse limits preserve the exact quotient sequence. The ideals generated by the compatible $h_i$ are closed because the limiting rings are Noetherian and complete. This proves the ring statement in (8.12). The module and acting-algebra statements follow from the separately retained exact sequences and saturation marks in the same way.
+Reduce (8.14) at every retained precision and include its kernel and quotient maps in the finite shadow. The transition maps are surjective, so the inverse system of kernels satisfies the Mittag--Leffler condition. Inverse limits preserve the exact quotient sequence. The ideals generated by the compatible $h_i$ are closed because the limiting rings are Noetherian and complete. This proves the ring statement in (8.12). The module statement follows from the separately retained exact sequences in the same way. No assertion about $A_\infty/\mathfrak a_\infty A_\infty$ is used here; it follows later from $R_\infty=A_\infty$ and faithful descent.
 
-Ordinary tensor product is sufficient in (8.12)--(8.14) because the relevant modules are finite and complete. Completed tensor notation gives the same result. The first quotient uses the ideal generated by the images $h_i=\alpha(z_i)$; writing it merely as $(z_1,\ldots,z_q)R_\infty$ would hide the structural map.
+Ordinary tensor product is sufficient in (8.12)--(8.13) because the relevant modules are finite and complete. Completed tensor notation gives the same result. The first quotient uses the ideal generated by the images $h_i=\alpha(z_i)$; writing it merely as $(z_1,\ldots,z_q)R_\infty$ would hide the structural map.
 
 ## 9. The dimension and depth ledger
 
@@ -1226,44 +1254,100 @@ is an $R_\infty$-regular sequence. Notice that these are the images of the diamo
 
 ### 11.2 Ring, module, and Hecke descent
 
-Exact control gives the commutative diagram
+Exact ring and module control, together with (10.3), gives
 
 $$
-\begin{array}{ccc}
-R_\infty&\xrightarrow{\sim}&A_\infty\\
-\downarrow&&\downarrow\\
-R^{\min}&\twoheadrightarrow&\mathbb T^{\min},
-\end{array}
+R^{\min}\simeq
+R_\infty/\mathfrak a_\infty R_\infty,
+\qquad
+M^{\min}\simeq M_\infty/\mathfrak a_\infty M_\infty
+\simeq (R^{\min})^{\oplus m}.
 \tag{11.2}
 $$
 
-where the vertical maps are quotient by the ideals generated by the images of $\mathfrak a_\infty$. Quotienting an isomorphism by the corresponding ideal gives an isomorphism. Hence the bottom map is injective as well as surjective.
+There are no higher Tor correction terms because $R_\infty$ and $M_\infty$ are finite free
+over $S_\infty$. In particular, $M^{\min}$ is a nonzero faithful $R^{\min}$-module: under the
+displayed identification its annihilator is the annihilator of
+$(R^{\min})^{\oplus m}$, namely zero.
 
-For modules, (10.3) and exact augmentation give
+The canonical surjection
 
 $$
-M^{\min}
-\simeq M_\infty/\mathfrak a_\infty M_\infty
-\simeq
-(R^{\min})^{\oplus m}.
+f:R^{\min}\twoheadrightarrow\mathbb T^{\min}
 \tag{11.3}
 $$
 
-There are no higher Tor correction terms because the augmentation sequence is regular on both the ring and the module.
+acts on $M^{\min}$ through the original deformation action, while
+$\mathbb T^{\min}$ is by definition its faithful image. Hence
+
+$$
+\ker f=\operatorname{Ann}_{R^{\min}}(M^{\min})=0.
+\tag{11.4}
+$$
+
+Thus $f$ is an isomorphism without any prior acting-order augmentation hypothesis.
+
+This also proves the missing acting-order control at every finite auxiliary level. Put
+
+$$
+B_N=\mathbb T_N/\mathfrak a_N\mathbb T_N.
+$$
+
+The auxiliary reciprocity map, exact deformation-ring augmentation, and compatible Hecke
+generators give canonical surjections
+
+$$
+R^{\min}\simeq R_N/\mathfrak a_NR_N
+\twoheadrightarrow B_N
+\xrightarrow{\theta_N}\mathbb T^{\min}.
+\tag{11.5}
+$$
+
+Their composite is $f$, now known to be an isomorphism. A composite of two surjections can be
+injective only if both maps are injective. Therefore
+
+$$
+\boxed{B_N\xrightarrow{\sim}\mathbb T^{\min}}
+\tag{11.6}
+$$
+
+for every clean auxiliary level. At patched level, (10.6) and exact ring augmentation likewise
+give
+
+$$
+A_\infty/\mathfrak a_\infty A_\infty
+\simeq R^{\min}\simeq\mathbb T^{\min}.
+\tag{11.7}
+$$
+
+Thus finite and patched acting-order augmentation have been derived after faithfulness, rather
+than assumed before it.
 
 ### 11.3 Proof of the minimal comparison theorem
 
-**Proof of Theorem 1.1.** Chapters 3--6 construct, for every $N$, the auxiliary sets, deformation rings, Hecke action algebras, and free diamond modules with exact augmentation. Chapters 7--8 patch their coherent finite shadows under two power-series sources with the same dimension. Chapters 9--10 use the scalar-compatible action to prove $R_\infty=P=A_\infty$, then prove $M_\infty$ free over this regular ring. Diagram (11.2) gives
+**Proof of Theorem 1.1.** Chapters 3--6 construct, for every $N$, the auxiliary sets,
+deformation rings, Hecke action algebras, and free diamond modules with exact ring and module
+augmentation and the surjection (6.4). Chapters 7--8 patch their coherent finite shadows under
+two power-series sources with the same dimension. Chapters 9--10 use the scalar-compatible
+action to prove $R_\infty=P=A_\infty$, then prove $M_\infty$ free over this regular ring.
+Equations (11.2)--(11.4) give
 
 $$
 R^{\min}\xrightarrow{\sim}\mathbb T^{\min}.
 $$
 
-The regular augmentation sequence makes the common ring finite free over $\mathcal O$ and a complete intersection, as proved in Chapter 12. Equation (11.3) gives module freeness. Perfect pairings descend by (8.11), and the determinant statement follows from Chapter 13. $\square$
+The regular augmentation sequence makes the common ring finite free over $\mathcal O$ and a
+complete intersection, as proved in Chapter 12. Equation (11.2) gives module freeness, and
+(11.5)--(11.7) give finite and patched acting-order augmentation. Perfect pairings descend by
+(8.11), and the determinant statement follows from Chapter 13. $\square$
 
 ### 11.4 Canonicity
 
-Coordinates, ordered cyclic generators, marked bases, and the diagonal subsequence are not canonical. They affect the displayed presentations of $S_\infty$, $R_\infty$, and $M_\infty$. They do not affect the finite comparison map. The map at the bottom of (11.2) is characterized by the universal minimal representation and the Hecke-valued representation, so it is the original canonical map (1.1).
+Coordinates, ordered cyclic generators, marked bases, and the diagonal subsequence are not
+canonical. They affect the displayed presentations of $S_\infty$, $R_\infty$, and $M_\infty$.
+They do not affect the finite comparison map. The map (11.3) is characterized by the universal
+minimal representation and the Hecke-valued representation, so it is the original canonical
+map (1.1).
 
 Thus one successful patch proves a choice-independent arithmetic equality. A second choice can produce a different auxiliary limiting presentation, but after augmentation it proves the same universal statement.
 
@@ -1298,7 +1382,7 @@ The number of augmentation equations is exactly $q$. This is not a recycled clai
 
 ### 12.2 Freeness of the minimal automorphic module
 
-Equation (11.3) proves
+Equation (11.2) proves
 
 $$
 M^{\min}\simeq(R^{\min})^{\oplus m}.
@@ -1426,7 +1510,11 @@ Without saturation, a lattice-index term would have to be added to (13.9). Witho
 
 ### 13.4 Why the argument is not circular
 
-The route used in Chapters 10--11 proves the ring equality from equal-variable rigidity and patched module freeness. No determinant comparison enters Proposition 10.1, Proposition 10.2, or diagram (11.2). Only afterward do Sections 13.2--13.3 use the common complete-intersection presentation to identify its intrinsic cotangent and congruence determinants.
+The route used in Chapters 10--11 proves the ring equality from equal-variable rigidity and
+patched module freeness. No determinant comparison enters Proposition 10.1, Proposition 10.2,
+or equations (11.2)--(11.4). Only afterward do Sections 13.2--13.3 use the common
+complete-intersection presentation to identify its intrinsic cotangent and congruence
+determinants.
 
 This order is deliberately asymmetric. Before equality, the Selmer determinant and the automorphic branch determinant are separately defined, and the surjection gives only the usual direction of cotangent and congruence inequalities. We do not claim that finite-shadow compatibility alone supplies the missing equality of determinant sections. After equality and the regular-sequence theorem, the Koszul calculation proves (13.7) without being used retroactively to eliminate the kernel.
 
@@ -1509,7 +1597,7 @@ The proof uses its direct prerequisites in the following exact forms.
 | Prior theory | Result used here | Hypotheses matched here |
 |---|---|---|
 | Book 143, Taylor--Wiles primes | sets of exactly $q$ split regular primes at every depth, killing dual Selmer; local auxiliary rings and augmentation | fixed determinant, odd $\ell$, represented local conditions, adequate cyclotomic restricted image, eigenvalues in the residue field |
-| Book 146, abstract $R=T$ | depth transfer, support versus faithfulness, regular-sequence descent, determinant criterion | complete local rings, finite faithful action image, exact augmentation, finite free diamond module, independent regularity or support input |
+| Book 146, abstract $R=T$ | depth transfer, support versus faithfulness, regular-sequence descent, determinant criterion | complete local rings, finite faithful action image, exact ring and module augmentation, finite free diamond module, independent regularity or support input |
 | Book 152, deep-level quaternionic modules | projective diamond torsors, full-effective-rank group-ring freeness, exact module augmentation, primary--companion duality, minimal-level control criterion | trivial scalar ratio, clean arithmetic stabilizers, saturated degeneracy maps, unit Gram determinant, no localized new support, distinct roots |
 | Book 171, minimal totally real deformation--Hecke problem | $R^{\min}\twoheadrightarrow\mathbb T^{\min}$, balanced number $q$, local smoothness, trace-coordinate descent, pairings and determinant data | its standing minimal hypotheses, with the auxiliary analogues separately assumed in Section 2.3 |
 | Book 141, residual image classification and adequacy | adequacy and regular semisimple detection for $\ell\geq7$, coefficient-five boundary | absolute irreducibility after cyclotomic restriction and coefficient characteristic at least seven |
@@ -1522,11 +1610,21 @@ The mechanics invoked in Chapters 6--8 are the results of Book 144 on Taylor--Wi
 
 First, a family indexed by unrelated auxiliary sets becomes patchable only after fixed power-series sources, marked quotient ideals, marked bases, named maps, and pairings are included in finite shadows. No arithmetic transition among the $Q_N$ is asserted. Marking quotient ideals rather than relation tuples is legitimate here because every precision ring is finite and therefore has only finitely many ideals.
 
-Second, inverse limits preserve the required quotient sequences because the finite shadow systems have surjective transitions and satisfy the Mittag--Leffler condition. This justifies exact augmentation and the passage of perfect pairings. It does not justify an arbitrary inverse limit of the original finite levels.
+Second, inverse limits preserve the required quotient sequences because the finite shadow systems
+have surjective transitions and satisfy the Mittag--Leffler condition. This justifies exact ring
+and module augmentation and the passage of perfect pairings. It does not justify an arbitrary
+inverse limit of the original finite levels.
 
 The hypothesis matching is literal. Book 143 requires the split regular detection clauses, not merely a slogan of “large image”; Book 141 supplies those clauses under the $\ell\geq7$ cyclotomic irreducibility assumptions. Book 152 makes its deep-level freeness conditional on effective diamond torsors and makes its hyperspecial augmentation conditional on integral old--new control. Sections 5.1--5.3 verify these conditions, using the standing saturation assumption from Book 171 and the unit calculation (4.10). Book 146 distinguishes near faithfulness from faithfulness; Proposition 10.1 supplies the stronger nilpotent-sensitive conclusion needed for full equality.
 
-Book 171 requires every generic Hecke branch to lie in the verified Galois attachment and integral local-compatibility range. Section 2.3 explicitly retains that condition at auxiliary level, and Section 6.1 uses it before constructing $R_N\to\mathbb T_N$. The map and the exact acting-image augmentation are not manufactured by patching. Book 173 is a later synthesis that depends on the present theorem and is not used here. Conversely, no theorem from Book 172 is used to justify any hypothesis imported from Book 171, so the dependency is acyclic.
+Book 171 requires every generic Hecke branch to lie in the verified Galois attachment and
+integral local-compatibility range. Section 2.3 explicitly retains that condition at auxiliary
+level, and Section 6.1 uses it before constructing $R_N\to\mathbb T_N$. Patching does not
+formally manufacture acting-image augmentation: the faithful patched action first proves the
+minimal equality, and the quotient argument (11.5) then proves exact augmentation. Book 173 is
+a later synthesis that depends on the present theorem and is not used here. Conversely, no
+theorem from Book 172 is used to justify any hypothesis imported from Book 171, so the
+dependency is acyclic.
 
 ### 16.3 Hypothesis matching
 
@@ -1614,7 +1712,8 @@ The final audit checks that:
 
 - ring augmentation recovers the universal minimal functor, using uniqueness of the lifted eigenline;
 - module augmentation passes through oriented level using the unit Gram determinant, saturation, and absence of new support;
-- acting-algebra augmentation is saturated and recovers the faithful minimal Hecke image;
+- acting-algebra augmentation is derived only after patched faithfulness, through the two
+  surjections in (11.5), and recovers the faithful minimal Hecke image;
 - auxiliary Hecke-valued representations exist on every generic branch in the retained range, and the ordered-projector calculation puts every diamond in the trace order;
 - the images of $z_1,\ldots,z_q$ form a regular sequence on $R_\infty$ and $M_\infty$;
 - quotienting $R_\infty=A_\infty$ gives the canonical map $R^{\min}\to\mathbb T^{\min}$;
@@ -1632,12 +1731,28 @@ This closes every possible gap between a patched generic comparison and the inte
 
 The minimal deformation--Hecke problem over a totally real field is balanced because the coefficient-prime local degrees exactly cancel the real places. Adequacy at coefficient primes at least seven turns the common Selmer dimension $q$ into $q$ detecting auxiliary primes at every depth. Their tame characters form finite diamond groups, while definite-quaternion torsors make the corresponding automorphic modules free over the finite group rings.
 
-The changing prime sets do not form a tower. Coherent finite shadows retain exactly the sources, quotient ideals, modules, actions, augmentations, and pairings needed for a limit. The vanishing auxiliary dual Selmer group gives a $q$-variable absolute source, while the diamond algebra has $q$ variables as well. The free patched diamond module makes the scalar-compatible action image finite of full dimension, so equal-variable rigidity kills the entire patched quotient ideal. Thus the patched deformation ring is a regular power-series ring in $q$ variables over $\mathcal O$.
+The changing prime sets do not form a tower. Coherent finite shadows retain exactly the
+sources, quotient ideals, modules, actions, exact ring-and-module augmentations, canonical
+acting-order quotient maps, and pairings needed for a limit. The vanishing auxiliary dual
+Selmer group gives a $q$-variable absolute source, while the diamond algebra has $q$ variables
+as well. The free patched diamond module makes the scalar-compatible action image finite of
+full dimension, so equal-variable rigidity kills the entire patched quotient ideal. Thus the
+patched deformation ring is a regular power-series ring in $q$ variables over $\mathcal O$.
 
-The patched module is free over the diamond power-series algebra and consequently has depth $q+1$ over the deformation ring. Regularity upgrades maximal depth to freeness. This proves full support and faithful action scheme-theoretically, killing nilpotents as well as components. Exact augmentation then yields
+The patched module is free over the diamond power-series algebra and consequently has depth
+$q+1$ over the deformation ring. Regularity upgrades maximal depth to freeness. This proves
+full support and faithful action scheme-theoretically, killing nilpotents as well as components.
+Exact ring and module augmentation makes the minimal module faithful over the minimal
+deformation ring and yields
 
 $$
 \boxed{R^{\min}=\mathbb T^{\min}},
 $$
 
-with the common ring finite free, complete intersection, and Gorenstein over $\mathcal O$, and with the minimal automorphic module finite free over it. Perfect pairings, adjoint Hecke actions, and determinant--congruence comparisons descend with the equality. These conclusions hold under the stated clean local and automorphic hypotheses for $\ell\geq7$; the exceptional image at five, scalar auxiliary roots, nonsaturated level change, and nonminimal components remain genuinely outside the theorem.
+with the common ring finite free, complete intersection, and Gorenstein over $\mathcal O$, and
+with the minimal automorphic module finite free over it. The equality in turn proves exact
+finite and patched acting-order augmentation. Perfect pairings, adjoint Hecke actions, and
+determinant--congruence comparisons descend with the equality. These conclusions hold under the
+stated clean local and automorphic hypotheses for $\ell\geq7$; the exceptional image at five,
+scalar auxiliary roots, nonsaturated level change, and nonminimal components remain genuinely
+outside the theorem.

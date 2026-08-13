@@ -21,6 +21,7 @@
    - [The reduced one-prime theorem](#42-the-reduced-one-prime-theorem)
    - [The exact obstruction to full R=T](#43-the-exact-obstruction-to-full-rt)
    - [Why the tame direction cannot kill the obstruction](#44-why-the-tame-direction-cannot-kill-the-obstruction)
+   - [Generic rigidity: the exact remaining theorem](#45-generic-rigidity-the-exact-remaining-theorem)
 5. [What patching and augmentation do prove](#5-what-patching-and-augmentation-do-prove)
    - [The two-term complex and its Tor term](#51-the-two-term-complex-and-its-tor-term)
    - [Amplitude after Book 174](#52-amplitude-after-book-174)
@@ -140,11 +141,19 @@ characteristic-zero point on either the conductor-one face or a nontrivial condu
 fiber is automorphic, because a homomorphism to a discrete valuation ring kills nilpotents.
 
 A full finite-level scheme-theoretic equality follows if the relevant global line-special
-deformation ring is reduced. Likewise, the patched comparison is a full equality if the
-actual patched deformation ring is reduced, or if an independent theorem kills the
-annihilator scheme-theoretically. No prior book proves either nilpotent-control statement for
-this scalar line-special global problem. The full $R=T$ assertion is therefore isolated as a
-conditional criterion, not presented as an unconditional consequence of minimal patching.
+deformation ring is reduced. Section 4.5 identifies this condition exactly with a
+generic-rigidity theorem: vertical torsion-freeness of the global deformation ring and
+vanishing of the enhanced fixed-condition tangent--Selmer group at every characteristic-zero
+point. On the nonzero-monodromy locus this is the ordinary exact-condition adjoint Selmer
+group; at the boundary it also retains the infinitesimal line.
+Once this theorem holds, $({\rm AUX}_Q)$—and $({\rm RAY}_v)$ for the scalar family—forces
+auxiliary acting-order augmentation by a diagram of surjections; injectivity is not a second
+arithmetic hypothesis. Likewise, the patched comparison is a
+full equality if the actual patched deformation ring is reduced, or if an independent theorem
+kills the annihilator scheme-theoretically. No prior book proves the generic-rigidity or
+patched nilpotent-control statement for this scalar line-special global problem. The full
+$R=T$ assertion is therefore isolated as a conditional criterion, not presented as an
+unconditional consequence of minimal patching.
 
 ## 2. Arithmetic datum and conventions
 
@@ -253,9 +262,14 @@ used below is a noncharacter packet in the verified Galois-attachment and local-
 compatibility range. If the carrier is moved from the curve-new lattice to a switched definite
 lattice, impose $({\rm AIH}_{\mathscr F})$, $({\rm PRI}_{\rm type})$, and
 $({\rm NU}_{\rm type})$ for the actual type coefficients, together with Book 140's
-node-uniformization, generic-support, and common-kernel hypotheses. These inputs identify the
-two faithful orders; the normalized-branch Smith correction remains distinct from the Néron
-component group. Equality of good residual traces is not a substitute for this datum.
+node-uniformization hypothesis and Book 125 component-routing source condition. Relative to
+the separate abelian Ihara vanishing, Book 140 proves constant-coefficient generic support.
+After the typed integral filtration is available, Book 174, Proposition 6.3 proves the typed
+generic-residue kernel equality from the same component-routed Book 125 decomposition; it is
+not an additional hypothesis. Torsion-free contraction gives equality of the integral faithful
+image orders, and $({\rm NU}_{\rm type})$ transports that equality to the switched typed
+lattice. The normalized-branch Smith correction remains distinct from the Néron component
+group. Equality of good residual traces is not a substitute for this datum.
 
 **$({\rm AIH}_{\mathscr F})$ (constant-coefficient Ihara).** At every constant-coefficient
 curve in the actual finite flag diagram, including all tame and auxiliary spectator levels,
@@ -270,11 +284,11 @@ vanishes. Book 139 proves saturation and its corrected component filtration only
 vanishings are supplied. Non-Eisenstein localization and strong approximation do not prove
 them.
 
-**$({\rm TYPE}_v)$ (the typed complex).** Book 174's independent hypotheses
-$({\rm TIC}_v)$ and $({\rm TIH}_{\mathscr F})$ hold on every retained finite shadow.
-The first says that the quotient-primary and augmentation-companion sheaves extend through the
-actual incidence model, their flag resolutions and component routing are exact, and pull and
-norm have the declared inverse-character adjunction. The second says that, for every actual
+**$({\rm TYPE}_v)$ (the typed complex).** The required typed parahoric theorem
+$({\rm TPE}_v)$ formulated in Book 174, the accompanying $({\rm TIC}_v)$ hypothesis, and the independent hypothesis
+$({\rm TIH}_{\mathscr F})$ hold on every retained finite shadow. The first two supply the
+actual typed incidence diagram, exact flag resolutions and component routing, and the declared
+pull--norm inverse-character adjunction. The last says that, for every actual
 crossed-coefficient object $\overline W$ in the flag diagram,
 
 $$
@@ -291,7 +305,9 @@ combined fixed-prime and auxiliary coefficient algebra. The constant-coefficient
 (2.7) does not imply (2.8).
 
 **$({\rm SUP}_v)$ (the one-boundary support datum).** Every one of the five clauses called
-$({\rm SUP}_v)$ in Book 174, Section 8.2, holds: (1) the Taylor--Wiles sets are disjoint from
+$({\rm SUP}_v)$ in Book 174, Section 8.2, holds. Clauses 1--3 are its boundary-carrier datum,
+while clauses 4--5 are the separate boundary chart-and-dimension theorem $({\rm BCD}_v)$:
+(1) the Taylor--Wiles sets are disjoint from
 $v$, kill the dual Selmer group, satisfy Book 141's split-regular detector input, and retain
 both maps, both type rows, the flag, sign, determinant, and companion pairing in every finite
 shadow; (2) the lower clean minimal problem has a nonzero patched module free over its regular
@@ -326,13 +342,17 @@ Section 2.2 exists, and Book 174's twisting identities hold for represented defo
 strict complexes, new modules, pairings, and faithful acting images. This is what proves
 fixed-prime augmentation. A merely local tame character does not suffice.
 
-**$({\rm AUG}_Q)$ (auxiliary control).** The Taylor--Wiles modules are free over their
-effective diamond group rings, the marked finite-shadow patch exists, and auxiliary
-augmentation recovers the represented rings, complexes, deformation actions, and pairings.
-In addition, augmentation of the *acting image* is exact. Book 152 proves the torsor, module,
-and pairing assertions under its clean hypotheses; it does not formally deduce the last
-acting-image assertion from module augmentation. That final assertion is retained here as a
-separate hypothesis, just as it is in clean minimal patching.
+**$({\rm AUX}_Q)$ (clean auxiliary control).** The Taylor--Wiles set is disjoint from $v$,
+its residual Frobenius roots are distinct and ordered, its effective diamond cover is a genuine
+torsor, and every retained generic branch has the old--new decomposition, newvector relation,
+Galois realization, and exact local compatibility used in the chosen localization. The marked
+finite-shadow patch retains the represented rings, both adjoint complexes, their deformation
+actions, and their pairings. Under precisely these hypotheses, Book 174, Proposition 9.1
+proves that auxiliary augmentation recovers the
+represented rings, primary and companion complexes, new modules, actions, and pairings, with
+zero positive diamond-algebra Tor. It gives a canonical surjection on faithful acting images,
+not injectivity of that surjection. Section 4.5 derives the missing injectivity from generic
+rigidity; it is not assumed here and is not inferred formally from module augmentation.
 
 On the curve-new carrier, the corrected normalized-branch filtration and primitive extreme
 residues are needed only if one also invokes their component or lowering consequences. Then
@@ -341,8 +361,8 @@ $({\rm NU}_{\rm type})$ is additionally required for the switched graph--definit
 as already recorded in $({\rm AUT}_v)$. None is used to identify a Galois cotangent determinant
 in this book. The formal reduced comparison below uses
 $({\rm AUT}_v)$, $({\rm TYPE}_v)$, $({\rm SUP}_v)$, and $({\rm REC}_v)$; the scalar-family
-conclusions add $({\rm RAY}_v)$, while descent from an auxiliary patch adds
-$({\rm AUG}_Q)$. Hypothesis $({\rm AIH}_{\mathscr F})$ remains part of the richer level-change
+conclusions add $({\rm RAY}_v)$, while an auxiliary patch uses $({\rm AUX}_Q)$.
+Hypothesis $({\rm AIH}_{\mathscr F})$ remains part of the richer level-change
 realization just stated, but it never supplies the independent typed Ihara or support
 hypotheses by itself.
 
@@ -724,6 +744,218 @@ scalar family, proving only topological support there, and then augmenting to th
 conductor-one problem. Nor can it replace that conductor-one problem by the neutral minimal
 ring used as a boundary anchor in Book 174.
 
+### 4.5 Generic rigidity: the exact remaining theorem
+
+The phrase *global reducedness* can be replaced by a precise arithmetic statement. Put
+
+$$
+R=R^{\mathrm{sp},1},
+\qquad
+T=\mathbb T^{\mathrm{sp},1},
+\qquad
+K=\ker(R\twoheadrightarrow T).
+$$
+
+Under Theorem 4.2, $K=\sqrt{(0)}$. Since $R$ is noetherian, $K$ is nilpotent. Moreover $R$ is
+finite over $\mathcal O$. Indeed, $T$ is a finite $\mathcal O$-module and, for $K^n=0$, every
+quotient $K^j/K^{j+1}$ is a finite module over $R/K=T$. Induction through
+
+$$
+0\longrightarrow K^j/K^{j+1}
+\longrightarrow R/K^{j+1}
+\longrightarrow R/K^j\longrightarrow0
+\tag{4.7}
+$$
+
+proves the assertion. Thus $R_E=R[1/\varpi]$ is an Artinian $E$-algebra.
+
+Let $x$ be any maximal point of $R_E$, with residue field $E_x$, and let $\rho_x$ and
+$L_x\subset V_x$ be the corresponding representation and retained line at $v$. The line must
+remain in the tangent problem. Define
+
+$$
+H^{1,\mathrm{enh}}_{\mathcal E_x}
+\!\left(F,\operatorname{ad}^0\rho_x\right)
+$$
+
+to be the following exact enhanced tangent--Selmer space. Its cocycles are pairs
+$(c,\lambda)$ with
+
+$$
+c\in Z^1\!\left(G_{F,S},\operatorname{ad}^0\rho_x\right),
+\qquad
+\lambda\in\operatorname{Hom}_{E_x}(L_x,V_x/L_x).
+$$
+
+Away from $v$, the localization of $c$ must lie in the actual tangent of the base-changed
+represented local condition. At $v$, the pair $(c|_{G_{F_v}},\lambda)$ must satisfy the full
+linearization of the enhanced line, character, determinant, and monodromy-incidence equations
+of Book 174, Chapter 7. Divide these pairs by infinitesimal global strict conjugation, acting
+simultaneously on the cocycle and on the line. This is a kernel modulo coboundaries, as an
+ordinary Selmer group is, but it retains the possible pure flag direction. Book 67, Section
+8.4 explains why that direction cannot be discarded when the line characters coincide.
+
+The dual-number cocycle-and-line calculation, applied over $E_x$, gives a canonical
+identification
+
+$$
+\operatorname{Hom}_{E_x}
+\left(\mathfrak m_x/\mathfrak m_x^2,E_x\right)
+\xrightarrow{\sim}
+H^{1,\mathrm{enh}}_{\mathcal E_x}
+\!\left(F,\operatorname{ad}^0\rho_x\right).
+\tag{4.8}
+$$
+
+Here $\mathfrak m_x$ is the maximal ideal in the local Artin factor of $R_E$ at $x$.
+Because $R$ is finite over $\mathcal O$, no convergence or integral scalar-extension issue is
+hidden here. The extension $E_x/E$ is finite separable, so the relative cotangent of the
+residue field vanishes and a tangent vector is exactly an $E$-derivation from the local factor
+of $R_E$ to $E_x$, equivalently a functional on $\mathfrak m_x/\mathfrak m_x^2$. Evaluate such
+a derivation on the universal representation and retained line.
+Multiplicativity gives the cocycle $c$, moving the line gives $\lambda$, and differentiating
+the represented local equations gives precisely the conditions just stated. Conversely a pair
+satisfying those linearized equations defines a derivation of a matrix-and-line presentation
+of the represented global ring. These constructions are inverse. The representation $\rho_x$
+is absolutely irreducible: Theorem 4.2 makes the point factor through the noncharacter
+automorphic order in $({\rm AUT}_v)$, whose generic packet representation has scalar
+endomorphisms. Consequently infinitesimal changes of representative are exactly global
+coboundaries, so the identification is independent of the chosen presentation. This is Book
+69's tangent--Selmer calculation with Book 67's enhanced-line term retained.
+
+On the locus where monodromy is nonzero,
+$L_x=\operatorname{im}N_x=\ker N_x$. Its infinitesimal motion is then determined by the
+motion of $N_x$, so forgetting $\lambda$ identifies the enhanced group with the ordinary
+adjoint Selmer group for the exact special local tangent. At a monodromy-zero boundary point
+this need not be true, and global reducedness requires the enhanced group, not the smaller
+ordinary group.
+
+Define the remaining arithmetic assertion as follows:
+
+$$
+({\rm GR}_v):
+\quad
+\begin{cases}
+R\longrightarrow R[1/\varpi]\text{ is injective};\\[2mm]
+H^{1,\mathrm{enh}}_{\mathcal E_x}
+(F,\operatorname{ad}^0\rho_x)=0
+\text{ for every maximal point }x\text{ of }R_E.
+\end{cases}
+\tag{4.9}
+$$
+
+The first clause is vertical torsion-freeness. The second is rigidity of every generic
+enhanced fixed-condition point; it uses the exact line and local equations, not merely a
+conductor label or an ordinary Selmer group that forgets the flag.
+
+**Theorem 4.4 (generic rigidity is exactly full $R=T$).** Under the hypotheses of
+Theorem 4.2, the following are equivalent:
+
+1. $({\rm GR}_v)$ holds;
+2. $R^{\mathrm{sp},1}$ is reduced;
+3. the canonical map
+   $R^{\mathrm{sp},1}\xrightarrow{\sim}\mathbb T^{\mathrm{sp},1}$ is an isomorphism.
+
+If $({\rm RAY}_v)$ also holds, these are equivalent to the full scalar-family equality in
+Corollary 4.3.
+
+**Proof.** Assume $({\rm GR}_v)$. By (4.8), every local Artin factor $A_x$ of $R_E$ has
+zero Zariski tangent space. If $\mathfrak n_x$ is its maximal ideal, then
+$\mathfrak n_x/\mathfrak n_x^2=0$. Nakayama's lemma gives $\mathfrak n_x=0$, so every
+$A_x$ is its residue field. Hence $R_E$ is a product of finite field extensions of $E$ and is
+reduced. The first clause of (4.9) and Lemma 4.1a now show that $R$ is reduced.
+
+The equivalence of statements 2 and 3 is Theorem 4.2. If statement 3 holds, then $R=T$ is
+$\mathcal O$-torsion-free. Its generic fiber is a finite reduced algebra in characteristic
+zero, hence a product of finite separable fields and has zero tangent space at every maximal
+point. Equation (4.8) gives the enhanced tangent--Selmer vanishing in (4.9). Thus statement 3
+implies
+$({\rm GR}_v)$, completing the cycle of implications. The scalar-family assertion is
+Corollary 4.3. $\square$
+
+Theorem 4.4 identifies the first external arithmetic theorem exactly, once the prior
+localization, typed-complex, support, and reciprocity inputs have been supplied: prove the two
+clauses of $({\rm GR}_v)$ for the represented conductor-one global problem. The preceding books
+prove neither clause. They cannot be recovered from support, local reducedness, or generic
+packet semisimplicity. Nor can one replace vanishing of the enhanced group at every maximal
+point by generic smoothness on a dense open: a finite Artin algebra is reduced only when the
+maximal ideal in every local factor vanishes. The maps
+
+$$
+\mathcal O[\eta]/(\eta^2)\twoheadrightarrow\mathcal O,
+\qquad
+\mathcal O[\eta]/(\eta^2,\varpi\eta)\twoheadrightarrow\mathcal O
+\tag{4.10}
+$$
+
+show the two independent failures: the first source is vertically torsion-free but has a
+nonreduced generic fiber, while the second has reduced generic fiber but nonzero vertical
+torsion. In both examples the kernel is nilpotent and the target carrier has full topological
+support over the source.
+
+**Corollary 4.5 (exact auxiliary acting-order augmentation).** Assume $({\rm AUX}_Q)$ and
+$({\rm GR}_v)$. For $i=2$, assume $({\rm RAY}_v)$ as well. Let
+$\mathfrak a_Q\subset\Lambda_Q$ be the auxiliary augmentation ideal and let
+$\mathbb T_{Q,v}^{\mathrm{sp},i}$ be the faithful auxiliary acting order. Then
+
+$$
+\boxed{
+\mathbb T_{Q,v}^{\mathrm{sp},i}/
+\mathfrak a_Q\mathbb T_{Q,v}^{\mathrm{sp},i}
+\xrightarrow{\sim}
+\mathbb T_v^{\mathrm{sp},i}.}
+\tag{4.11}
+$$
+
+**Proof.** Book 174, Proposition 9.1 gives represented-ring augmentation and exact
+primary--companion module augmentation. Compatible trace and structural generators give the
+two surjections
+
+$$
+R_v^{\mathrm{sp},i}
+\simeq R_{Q,v}^{\mathrm{sp},i}/\mathfrak a_QR_{Q,v}^{\mathrm{sp},i}
+\twoheadrightarrow
+B_{Q,v}^{i}:=
+\mathbb T_{Q,v}^{\mathrm{sp},i}/
+\mathfrak a_Q\mathbb T_{Q,v}^{\mathrm{sp},i}
+\twoheadrightarrow
+\mathbb T_v^{\mathrm{sp},i}.
+\tag{4.12}
+$$
+
+Their composite is the base reciprocity map. It is an isomorphism by Theorem 4.4 for $i=1$
+and by Corollary 4.3 for $i=2$. A composite of two surjections can be injective only if both
+maps are injective, so both arrows in (4.12) are isomorphisms. This proves (4.11). $\square$
+
+Consequently
+
+$$
+R_{Q,v}^{\mathrm{sp},i}/\mathfrak a_QR_{Q,v}^{\mathrm{sp},i}
+\simeq R_v^{\mathrm{sp},i}
+\simeq B_{Q,v}^i
+\simeq\mathbb T_v^{\mathrm{sp},i}
+\tag{4.13}
+$$
+
+is reduced, and Proposition 9.1 of Book 174 identifies the augmented primary--companion
+carrier with the base carrier. The common ring in (4.13) acts faithfully on that carrier, so
+its annihilator is zero and its support is the whole spectrum scheme-theoretically. This is
+the required reduced-source support. Thus faithful Hecke-order equality,
+primary/companion augmentation, and auxiliary acting-order augmentation introduce no further
+theorem once $({\rm GR}_v)$ is known under the already stated $({\rm AUX}_Q)$ and, for the
+scalar family, $({\rm RAY}_v)$ hypotheses. Fixed-prime acting-order augmentation was already proved
+by the global twist, and minimal acting-order augmentation is derived after patched
+faithfulness in Book 172.
+
+There is one different use of the phrase *faithful-order equality*. Equality between the
+curve-new and switched definite image orders is already the conditional conclusion of Book
+140, Theorem 8.1, after its localized abelian Ihara, node-uniformization, and Book 125 routing
+inputs are supplied in the constant block. For the typed block, Book 174, Proposition 6.3
+proves the generic kernel equality after its typed filtration, contracts it to equality of
+integral faithful image orders, and uses $({\rm NU}_{\rm type})$ to transport the equality to
+the switched lattice. That realization comparison enters here through $({\rm AUT}_v)$ and is
+not another consequence or requirement of $({\rm GR}_v)$.
+
 ## 5. What patching and augmentation do prove
 
 ### 5.1 The two-term complex and its Tor term
@@ -852,9 +1084,10 @@ R_\infty^{\mathrm{sp},i}
 \tag{5.6c}
 $$
 
-If $({\rm AUG}_Q)$ identifies the auxiliary quotients of the two sides with the represented
-finite-level deformation ring and its faithful acting order, then (5.6c) descends to a full
-finite-level $R=T$ equality.
+If auxiliary augmentation independently identifies the quotient of the patched acting image
+with the finite faithful acting order, then (5.6c) descends to a full finite-level $R=T$
+equality. In the base generic-rigidity route, Corollary 4.5 proves this acting-order
+identification from $({\rm AUX}_Q)$ and $({\rm GR}_v)$; it is not an extra assumption there.
 
 **Proof strategy.** Patching is used to produce a genuine module and the support statement.
 Reducedness is then used once, at the annihilator.
@@ -872,8 +1105,9 @@ $$
 Hypothesis (5.6b) makes the right side zero. Thus the primary summand is faithful, so the
 action on the larger primary--companion carrier is faithful as well. The kernel of the map to
 its actual image is therefore zero, proving (5.6c). Quotienting an isomorphism by the marked
-auxiliary ideal remains an isomorphism; $({\rm AUG}_Q)$ identifies those quotients with the
-claimed finite objects. $\square$
+auxiliary ideal remains an isomorphism. When the two quotients have been identified with the
+represented finite ring and its faithful acting order as stated, this is the claimed finite
+comparison. $\square$
 
 Under $({\rm RAY}_v)$, the patched conductor-two comparison is the tensor product of the
 conductor-one comparison with $\Lambda_v$. Hence a patched equality for $i=1$ implies one for
@@ -895,9 +1129,9 @@ There are two independent augmentations. The fixed-prime map is $\epsilon_v$ fro
 auxiliary map sends every Taylor--Wiles diamond operator to one. Book 174 proves the
 fixed-prime statements under $({\rm RAY}_v)$ from the genuine global twist and coefficient
 extraction.
-Hypothesis $({\rm AUG}_Q)$ supplies the separately required auxiliary statements. Both maps
-are marked on the finite complexes, their pairings, deformation actions, represented rings,
-and faithful acting images before passing to the patch.
+Under $({\rm AUX}_Q)$, Book 174, Proposition 9.1 proves the auxiliary statements for represented
+rings, primary and companion complexes, new modules, deformation actions, and pairings. Both
+maps are marked on the finite complexes and their actions before passing to the patch.
 
 The two augmentation ideals lie in independent coefficient factors. The strict projective
 terms compute derived specialization termwise, and the projective new module supplied by
@@ -910,6 +1144,14 @@ Exact acting-image augmentation is separate from exact module augmentation. The 
 algebra in an endomorphism ring can acquire a larger kernel after specialization. Equation
 (3.7) is valid because Book 174 proves it by global twisting and coefficient extraction, not
 because cohomology happens to specialize exactly.
+
+For auxiliary augmentation, Proposition 9.1 therefore stops at the canonical surjection on
+acting images. Corollary 4.5 proves that this surjection is an isomorphism under
+$({\rm GR}_v)$, with $({\rm RAY}_v)$ also retained for the scalar family: the augmented deformation ring surjects onto the augmented acting order and
+then onto the faithful base order, while the composite is the full base $R=T$ isomorphism.
+This also proves the augmented acting order reduced; no separate reduced-source hypothesis is
+needed. Without $({\rm GR}_v)$ or another proof that the base deformation action is faithful,
+injectivity remains genuinely unavailable.
 
 Reduced comparison can be applied directly at every finite auxiliary level, where full support
 is already known. It is therefore unnecessary, and generally unsafe, to assume that reduction
@@ -1231,24 +1473,28 @@ contracting a conductor ideal.
 
 ### 8.1 Direct prerequisite ledger
 
-The declared dependency row is $109,173,138,139,140,170,174$. Their exact roles after the
+The declared dependency row is $67,69,109,173,138,139,140,170,174$. Their exact roles after the
 audit are as follows.
 
 | Book | Result used | Boundary retained |
 |---|---|---|
+| 67, *Local Deformation Conditions Away from $\ell$* | the enhanced-line tangent term and its linearized special equations in Section 8.4 | at coincident line characters or zero monodromy, the flag direction cannot be replaced by an ordinary local $H^1$ subspace |
+| 69, *Global Deformation Problems* | the global cocycle, coboundary, and ordinary tangent--Selmer assembly used in (4.8) | it supplies no enhanced-line term and no tangent vanishing; Book 67 supplies the former and $({\rm GR}_v)$ asks for the latter |
 | 109, *Solvable Base Change and Descent* | recursive cyclic descent selected by an extending irreducible arithmetic representation | used only after top-field automorphy; invariance under a noncyclic solvable group is not enough |
 | 173, *Minimal Modularity Lifting* | comparison point for the neutral minimal theorem and its finite-flat range | its equality is not applied to $R^{\mathrm{sp},1}$; the scalar Kummer and line-special directions do not satisfy that identification |
 | 138, *Integral Local Types and Type Lattices* | enhanced special line, primary and companion lattices, primitive type occurrence, Frobenius conventions | at $q_v\equiv1$ a line enhancement replaces old-root separation; local lattices alone do not prove global support |
 | 139, *Ihara Theory and Saturated Degeneracy Maps on Shimura Curves* | residual two-map Ihara injectivity and primitive saturation | conditional on the abelian Ihara hypothesis; full-map saturation does not create a scalar selected summand |
-| 140, *Integral Level Change and Jacquet--Langlands Comparison* | node, graph, component-group, and normalized Smith comparisons | node-uniformization and generic support remain hypotheses; branch correction and the Néron component group are distinct |
+| 140, *Integral Level Change and Jacquet--Langlands Comparison* | node, graph, component-group, normalized Smith comparisons, and constant-coefficient generic support in the clean special block | datum-specific node uniformization and the typed extension remain separate; branch correction and the Néron component group are distinct; typed generic support is instead derived in Book 174 after its typed filtration |
 | 170, *Hecke-Valued Galois Representations and Nonminimal Reciprocity* | the order-valued representation, named local factorization, trace generation, and the surjections (3.13) | every generic branch and every structural generator must be accounted for; a pseudorepresentation alone is insufficient |
-| 174, *One-Prime Type Complexes and Component Support* | scalar chart, twist identities, projective primary--companion complexes, conditional full named-component support, and exact fixed-prime module and acting-image augmentation | $({\rm TIC}_v)$, $({\rm TIH}_{\mathscr F})$, $({\rm SUP}_v)$, and the effective ray quotient are separate hypotheses; its determinant result is only the scalar equation (10.7), with no cross-complex map; no global reducedness or nonminimal $R=T$ is asserted |
+| 174, *One-Prime Type Complexes and Component Support* | scalar chart, twist identities, projective primary--companion complexes, conditional full named-component support, Proposition 6.3 typed generic-kernel and integral faithful-order equality, exact fixed-prime augmentation, and Proposition 9.1 auxiliary augmentation on both adjoint sides | the typed parahoric extension, type-Ihara, primitive-residue, node, Book 125 routing, and boundary chart inputs retain their stated roles; auxiliary acting-image augmentation is only a surjection there; no global reducedness or nonminimal $R=T$ is asserted |
 
 The proof of Theorem 4.2 uses Books 170 and 174 directly, with Books 138--140 supplying the
-hypotheses built into Book 174. Book 173 is not an augmented-fiber $R=T$ input. Book 109 is used
-only for the final descent statement. Book 152's torsor and module augmentation enter
-transitively through Book 174; exact auxiliary *acting-image* augmentation remains the
-separate hypothesis $({\rm AUG}_Q)$ and is not attributed to Book 152.
+hypotheses built into Book 174. Books 67 and 69 enter only in the enhanced tangent equivalence
+of Theorem 4.4. Book 173
+is not an augmented-fiber $R=T$ input, and Book 109 is used only for the final descent
+statement. Book 152's torsor and module augmentation enter transitively through Book 174;
+Proposition 9.1 turns them into exact primary--companion augmentation, while Corollary 4.5
+derives acting-image injectivity only after $({\rm GR}_v)$.
 Books 141 and 171--172 likewise enter transitively through Book 174's Taylor--Wiles and lower-boundary
 support datum; none is used here to manufacture nonminimal support or reducedness.
 
@@ -1277,13 +1523,19 @@ verified, together with $({\rm RAY}_v)$ for the scalar family, the remaining gap
 finite-level $R=T$ proof is
 
 $$
+({\rm GR}_v),
+\quad\text{equivalently}\quad
 R^{\mathrm{sp},1}\text{ is reduced}.
 \tag{8.2}
 $$
 
 Local reducedness of (3.2), expected dimension, Cohen--Macaulayness, and reducedness of the
-Hecke image do not prove (8.2) for the global quotient. Theorems 4.2 and 7.1 are the strongest
-conclusions available without it.
+Hecke image do not prove (8.2) for the global quotient. Theorem 4.4 proves both directions of
+the equivalence: the first exact external arithmetic theorem is vertical torsion-freeness plus
+vanishing of every characteristic-zero enhanced tangent--Selmer group with the represented
+local equations. At nonzero monodromy this is the ordinary exact-condition adjoint Selmer
+group; at a zero-monodromy boundary point it also records the flag tangent. Theorems 4.2 and
+7.1 are the strongest unconditional conclusions available without it.
 
 There are earlier blockers to an unconditional arithmetic application. For the finite reduced
 comparison itself, they are the actual localization $({\rm AUT}_v)$; the independent type
@@ -1292,11 +1544,13 @@ $({\rm SUP}_v)$; branchwise reciprocity and exact generation in $({\rm REC}_v)$;
 effective ray quotient $({\rm RAY}_v)$ when the scalar family is used. The finite family
 $({\rm AIH}_{\mathscr F})$ is additionally required whenever the constant-coefficient
 level-change or normalized-residue package is invoked; it does not replace the typed
-hypotheses. Exact auxiliary acting-image augmentation $({\rm AUG}_Q)$ is not needed to apply
-Lemma 4.1 directly at a retained finite level, but it is required to descend an equality from
-the patched level. Books 139 and 174 give precise conditional implications after the
-applicable inputs are supplied; they do not prove those inputs from the bare residual
-representation.
+hypotheses. Under $({\rm AUX}_Q)$, auxiliary primary and companion augmentation is already
+Proposition 9.1 of Book 174. Its acting-image quotient is not needed to apply Lemma 4.1 directly at
+a retained finite level; Corollary 4.5 makes that quotient exact under $({\rm GR}_v)$. If one
+instead tries to descend only a patched equality without $({\rm GR}_v)$, an independent
+identification of the patched acting quotient is still required. Books 139 and 174 give
+precise conditional implications after the applicable inputs are supplied; they do not prove
+those inputs from the bare residual representation.
 
 ### 8.3 No finite-set or hidden-support argument
 
@@ -1353,7 +1607,9 @@ Under $({\rm AUT}_v)$, $({\rm TYPE}_v)$, and $({\rm SUP}_v)$, and with
 $({\rm RAY}_v)$ for the scalar family, Book 174 supplies the exact mathematical heart of the
 one-prime comparison: the local chart with its Kummer directions, projective primary and
 companion complexes, full topological support on every named conductor-one and conductor-two
-component, and exact fixed-prime augmentation of modules and faithful acting images. Under
+component, exact fixed-prime augmentation of modules and faithful acting images, and, under
+$({\rm AUX}_Q)$, exact auxiliary augmentation of represented rings, primary and companion
+complexes, modules, and pairings. Under
 $({\rm REC}_v)$, Book 170 supplies the surjection
 from each deformation ring to its faithful finite reduced Hecke order. These inputs prove that
 the finite-level kernel is exactly the nilradical, yielding the reduced comparisons (4.3),
@@ -1361,12 +1617,19 @@ the finite-level kernel is exactly the nilradical, yielding the reduced comparis
 
 Every characteristic-zero deformation point kills that nilradical, so the reduced theorem
 proves the one-prime finite-flat modularity statement needed by the arithmetic application.
-What the imported source chain does not prove is global reducedness. The scalar family is the
+What the imported source chain does not prove is $({\rm GR}_v)$: vertical torsion-freeness of
+the conductor-one global ring and vanishing of its enhanced fixed-condition tangent--Selmer
+groups at all characteristic-zero points. Theorem 4.4 proves that this assertion is equivalent to
+global reducedness and to full $R=T$. The scalar family is the
 tensor product of the conductor-one line-special problem with $\Lambda_v$ on both deformation
 and Hecke sides, so it carries any nilpotent kernel with it. At finite level,
-$R^{\mathrm{sp},1}$ is reduced if and only if the canonical comparison is a full equality.
-At patched level, Proposition 5.2 gives the full equality under the separately named
-$({\rm RED}_\infty)$ hypothesis, and $({\rm AUG}_Q)$ then descends it.
+$R^{\mathrm{sp},1}$ is reduced if and only if the canonical comparison is a full equality;
+Corollary 4.5 then forces exact auxiliary acting-order augmentation under $({\rm AUX}_Q)$ and,
+for the scalar family, $({\rm RAY}_v)$, so no separate reduced-source or faithful-order
+hypothesis remains. At patched level, Proposition 5.2 gives
+the full equality under the separately named $({\rm RED}_\infty)$ hypothesis, but descent from
+that route still needs an independently identified acting quotient unless $({\rm GR}_v)$ is
+also known.
 
 Accordingly, this book's bounded conditional theorem is **READY**: under the exact named
 arithmetic hypotheses it proves the reduced one-prime comparisons, strict character

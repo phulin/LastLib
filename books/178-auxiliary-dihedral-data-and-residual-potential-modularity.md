@@ -419,7 +419,7 @@ represented minimal component; residual automorphy occurs in the exact non-Eisen
 quaternionic localization; the normalized branch Smith correction and component-support
 conditions are recorded; and the exact hypotheses
 $({\rm AUT}_v)$, $({\rm TYPE}_v)$, $({\rm SUP}_v)$, and $({\rm REC}_v)$ of Book 175
-hold, together with $({\rm RAY}_v)$ when the scalar family is used and $({\rm AUG}_Q)$
+hold, together with $({\rm RAY}_v)$ when the scalar family is used and $({\rm AUX}_Q)$
 when a patched auxiliary level is augmented. In particular, the type-incidence and typed-Ihara
 hypotheses, the five support clauses, faithful-order generation, branchwise local--global
 compatibility, and the Taylor--Wiles hypotheses are not compressed into residual automorphy.
@@ -518,16 +518,17 @@ approximation is clean.
    final carrier lies in the exact signed special localization at the distinguished place
    $w_0\mid v_0$ and in the same named minimal spectator components as the Tate module
    everywhere else. The equality $P_{\mathrm{nm}}=\{w_0\}$ holds, and at $w_0$ all hypotheses
-   of Book 175 are verified: $({\rm AUT}_{w_0})$, $({\rm TYPE}_{w_0})$ including its
-   type-incidence and typed-Ihara rows, all five clauses of $({\rm SUP}_{w_0})$,
+   of Book 175 are verified: $({\rm AUT}_{w_0})$, $({\rm TYPE}_{w_0})$ including its typed
+   parahoric-extension, incidence, and typed-Ihara rows, all five clauses of $({\rm SUP}_{w_0})$,
    $({\rm REC}_{w_0})$, and the effective global $({\rm RAY}_{w_0})$ datum. The entire
    applicable family $({\rm AIH}_{\mathscr F})$, the line and sign, primitive primary and
    companion lattices, normalized branch correction, component support, finite-flat quotients,
    faithful trace/structural Hecke order, and exact fixed-prime augmentation are retained;
-   $({\rm AUG}_Q)$ is added if the comparison descends from patched auxiliary level, and the
+   $({\rm AUX}_Q)$ is added if the comparison descends from patched auxiliary level, and the
    applicable $({\rm PRI}_{\rm type})$, $({\rm NU}_{\rm type})$, and Book 140
-   node-uniformization, generic-support, and common-kernel hypotheses are added whenever their
-   level-change consequences are used. The specialized Tate-module point has nonzero rank-one
+   node-uniformization hypothesis are added whenever their level-change consequences are used.
+   Generic support and common-kernel equality are then conclusions of Books 140 and 174 under
+   the preceding inputs, not further hypotheses. The specialized Tate-module point has nonzero rank-one
    conductor-one monodromy and the fixed determinant corresponding to trivial automorphic
    central character.
 
@@ -1707,7 +1708,8 @@ comparison is enough for a characteristic-zero point.
 
 **Lemma 10.1 (scalar augmentation modularity lifting).** Let a one-prime clean datum in residue
 characteristic $s\geq7$ be given at a place with $q_v\equiv1\pmod s$, including the enhanced
-scalar line, sign, and all hypotheses of Book 175. Let
+scalar line, sign, and all hypotheses required for Book 175's conductor-one reduced comparison.
+If this face is reached by specializing the scalar family, assume $({\rm RAY}_v)$ as well. Let
 
 $$
 r:G_F\longrightarrow\operatorname{GL}_2(\mathcal O')
@@ -1738,9 +1740,11 @@ $$
 $$
 
 Thus $x_r$ occurs in the faithful automorphic carrier at the conductor-one line-special type.
-No full scheme-theoretic $R=T$ statement is used. Exact fixed-prime augmentation and the absence
-of a higher Tor correction are among the hypotheses entering Book 175's construction of
-(10.3), rather than consequences inferred from the displayed reduced equality.
+No full scheme-theoretic $R=T$ statement or acting-order augmentation is used: (10.3) is the
+direct conductor-one reduced comparison. The projective-complex hypotheses construct its
+carrier with no coefficient-algebra Tor, while $({\rm RAY}_v)$ supplies strict specialization
+only when the conductor-one face is reached from the scalar family. None of these facts is
+inferred from the displayed reduced equality.
 
 Type occurrence identifies the selected line, sign, and determinant; the hypothesis that the
 given point has nonzero rank-one monodromy supplies its conductor-one assertion. At good
@@ -2064,7 +2068,7 @@ The word “conditional” records two stages of the lifting boundary. The first
 the selected place. Book 139 does not prove the family $({\rm AIH}_{\mathscr F})$, so
 Proposition 5.1 and item 7 are not unconditional; even after those constant rows are granted,
 the independent $({\rm TYPE}_{w_0})$, $({\rm SUP}_{w_0})$, $({\rm REC}_{w_0})$,
-$({\rm RAY}_{w_0})$, and any required $({\rm AUG}_Q)$ and switched-carrier hypotheses still
+$({\rm RAY}_{w_0})$, and any required $({\rm AUX}_Q)$ and switched-carrier hypotheses still
 have to be verified for the actual localization. The second stage concerns uncontrolled extra
 bad primes of $A$, which are known only after specialization. The prior one-prime theorem
 neither constructs their exact lower-face classes, flags, and branch corrections nor retains
@@ -2236,10 +2240,10 @@ relevant integral lattice from $T_{\mathfrak l}A$ and absolute residual irreduci
 least seven implies adequacy. Image preservation under disjoint base change uses the full
 cutout field. Adequacy is not used to infer the separate adjoint-twist vanishing.
 
-**One-prime nonminimal patching.** Book 175's reduced conductor-one comparison, exact
-augmentation hypotheses, scalar line and sign, and its exact $({\rm AUT})$, $({\rm TYPE})$,
+**One-prime nonminimal patching.** Book 175's reduced conductor-one comparison, scalar line and
+sign, and its exact $({\rm AUT})$, $({\rm TYPE})$,
 $({\rm SUP})$, $({\rm REC})$, and $({\rm RAY})$ ledger give Lemma 10.1 and the transfer in
-Chapter 10; $({\rm AUG}_Q)$ is retained when patched auxiliary level is removed. The selected
+Chapter 10; $({\rm AUX}_Q)$ is retained when patched auxiliary level is removed. The selected
 prime satisfies $q_{v_0}\equiv1\pmod q$, and the point has nonzero rank-one monodromy. A
 characteristic-zero point kills the possible nilradical, so no full scheme-theoretic ring
 equality is asserted. Book 175 still assumes the applicable Book 139 abelian-Ihara family and
@@ -2285,7 +2289,7 @@ completion algebra.
 | Galois refinement | geometrically connected Galois cover; core-free stabilizer; even fixed-field index; realized top torsors; base-changed connectedness; solvability of $J$ only when a bridge is requested | controlled normal closure and exact fixed-field completions with an even-degree point field; a prime-cyclic upper bridge only in the solvable-$J$ case |
 | image preservation | disjointness from full cutout and cyclotomic compositum | unchanged full and cyclotomic images |
 | post-specialization level control | actual bad set; lower residual carrier after proved saturated level lowering; $P_{\mathrm{nm}}=\{w_0\}$; every other place on the same named minimal spectator component | one fixed nonminimal problem rather than an unproved finite-set problem |
-| one-prime lifting | scalar branch $q_{v_0}\equiv1$; global tame ray character; $({\rm AUT})$, $({\rm TYPE})$, $({\rm SUP})$, $({\rm REC})$, $({\rm RAY})$, and any required $({\rm AUG}_Q)$; reduced conductor-one comparison; finite-flat quotients; named components; nonzero rank-one monodromy of the point | automorphy of the characteristic-zero point $V_{\mathfrak q}(A)$ with conductor-one special monodromy and trivial central character |
+| one-prime lifting | scalar branch $q_{v_0}\equiv1$; global tame ray character; $({\rm AUT})$, $({\rm TYPE})$, $({\rm SUP})$, $({\rm REC})$, $({\rm RAY})$, and any required $({\rm AUX}_Q)$; reduced conductor-one comparison; finite-flat quotients; named components; nonzero rank-one monodromy of the point | automorphy of the characteristic-zero point $V_{\mathfrak q}(A)$ with conductor-one special monodromy and trivial central character |
 | compact curve carrier | even $[K':\mathbf Q]$; eligible selected Steinberg factor at $w_0$; $W=\{w_0\}$; full component-routing and Schur-splitting data | Book 104 one-split packet and Book 127 rational rank-two family over $K'$ |
 | cross-prime comparison | noncharacter cuspidal packet; rational rank-two realization; $q$-adic equality after scalar extension; common abelian Frobenius polynomials; absolutely irreducible target torsion | equality after the necessary coefficient extension, an $E_{\mathfrak l}$-form, and exact residual equality over $k_{\mathfrak l}$ for its distinguished lattice |
 

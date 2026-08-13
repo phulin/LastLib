@@ -44,10 +44,19 @@ disappeared.  At the automorphic lifting boundary of the audited seed-constructi
 first unresolved constant-row input is the localized abelian Ihara family identified in Book
 181, Section 4.3.  Its vanishing would still leave the independent type, localization, support,
 reciprocity, ray, augmentation, and faithful-order clauses.  On the current Book 178 route there
-are also a separate pre-specialization relative-ray compatibility hypothesis, the literal
-post-specialization singleton condition of its item 7, and, for closure control, a supplied
-moduli-specific Galois approximation datum.  None is a consequence of Book 181.  A controlled
-Galois version must discharge the applicable clauses while also controlling the normal closure.
+are also the literal post-specialization singleton condition of its item 7 and the stronger
+target-prime minimal localization required here.  Book 178 retains relative-ray compatibility
+over a general totally real base, but Section 6.3 proves it from the inverse-branch correction
+in the rational-base case used here.  Its local geometry usually constructs paired-frame seeds
+only after a finite completion extension; complete splitting in the controlled top instead
+requires actual paired-frame seeds over $\mathbf Q_2$ and $\mathbf Q_\ell$.  The mixed exact
+local packets must also occur in one simultaneous moving presentation, as retained in Book
+178, item 6.  Once that presentation exists, Section 4 reduces closure control to one exact
+field-geometric certificate: the constant field of its Galois closure must be disjoint from the
+avoidance field.  After that, adjoin an independent ordered-quintic torsor and use the normal
+top as the field of definition.
+The resulting arithmetic problem has a finite active set over that top and still requires
+actual lower-face automorphic support.
 
 ### 1.2 Verdict at the start
 
@@ -55,26 +64,28 @@ This book proves the following conditional implication:
 
 $$
 \begin{array}{c}
-\text{controlled exact SP residual seed over a point field }F
-\\[-2pt]
-\text{plus the required transfer and attachment certificates}
+\text{constant-compatible normal-top exact SP residual seed over }M
 \\ \Downarrow \\
 \text{Book 181 constructs a normalized primitive SP lift }\rho
 \\[-2pt]
 \text{using that same seed}
 \\ \Downarrow \\
-\rho|_{G_F}\text{ is automorphic by the exact minimal }R=\mathbb T\text{ theorem}
+\rho|_{G_M}\text{ is automorphic by the exact minimal }R=\mathbb T\text{ theorem}
 \\ \Downarrow \\
-\rho|_{G_M}\text{ gives the controlled SP top datum of Book 183}.
+\text{the distinguished attachment-and-descent and all-coefficient SP certificates remain}.
 \end{array}
 \tag{1.2}
 $$
 
 No earlier unconditional theorem constructs the first line of (1.2) for the Frey datum with
-all of the required local support, normal-closure control, and transfer certificates.  In
-particular, Book 181 proves the chosen-lift implication conditional on its seed; it does not
-construct either that seed or its controlled refinement.  This volume therefore cannot assert
-the desired potential-automorphy theorem.  Its status is **NOT READY**.
+all of the required post-specialization lower faces and clean minimal support.  Proposition 4.1
+constructs its normal-closure field diagram from a compatible moving cover and the stated
+constant-field certificate, and Section 7.3 reduces the local and group-theoretic part of the
+elementary descent ledger.  Actual corrected descents still require distinguished-coefficient
+Galois attachment for the candidate packets before Book 109 can select the quotient-character
+correction; all-coefficient attachment remains a stronger separate requirement.  Book 181
+still proves the chosen-lift implication only conditional on the arithmetic seed.  This volume
+therefore cannot assert the desired potential-automorphy theorem.  Its status is **NOT READY**.
 
 The obstruction is not local deformation theory.  Books 164--165 give the primitive
 signed-special residual chart and its represented minimal deformation condition.  Books 166--167 give the supported cohomology and balanced presentation.  Those results do not make
@@ -392,18 +403,114 @@ and a subgroup $J\leq\Gamma$ such that, for $F=M^J$:
 6. all other prescribed real and finite completion conditions hold simultaneously on the
    full fixed-field diagram.
 
-A convenient group-theoretic template is
+There is no need to force a quintic quotient presentation on the Hilbert--Blumenthal moduli
+space.  The ordinary moving family already has a Galois closure, and one may use that closure
+itself as the field of definition.  The following reduction removes the previously apparent
+moduli-specific $S_5/S_4$ obstruction.
+
+**Proposition 4.1 (normal-top refinement with controlled constants).**  Let $X/K$ be a smooth
+geometrically connected positive-dimensional variety over a totally real field.  Suppose the
+local packets under consideration admit one simultaneous moving presentation
 
 $$
-\Gamma=S_5\times C_2,
+T_0\longrightarrow H_0,
+\qquad T_0\longrightarrow X,
+\tag{4.1a}
+$$
+
+as in Book 154, Lemma 5.2, with $H_0$ an open of affine space and $T_0/H_0$ finite étale and
+geometrically integral.  Let $E_0/K(H_0)$ be its Galois closure, let $C$ be the algebraic
+closure of $K$ in $E_0$, and let $D/K$ be a finite Galois avoidance field.  Assume
+
+$$
+C\cap D=K.
+\tag{4.1b}
+$$
+
+Suppose also that the displayed fiber is split with its labeled evaluated packet at every real
+place and at every finite place required to split.  At each remaining controlled finite place,
+assume that the fiber of the normalized Galois closure and its pulled-back evaluated packet have
+the required local behavior.  Then there is a specialization for $X$ with
+
+$$
+J=1,
 \qquad
-J=S_4\times\{1\}.
-\tag{4.2}
+\Gamma=G_0\times S_5,
+\tag{4.1c}
 $$
 
-Then $[\Gamma:J]=10$, $J$ is solvable, and its core is trivial.  This calculation supplies a
-useful target for a Galois approximation datum; it does not construct such a datum for the
-Hilbert--Blumenthal moduli space.
+where $G_0=\operatorname{Gal}(E_0/K(H_0))$ is the arithmetic Galois group.  Its
+specialization field $M$ is itself the quotient field $F=M^J$, is totally real and Galois over
+$K$, has even degree, is disjoint from $D$, and realizes all the prescribed
+evaluated local packets.  Every prescribed split place splits completely in $M$.
+
+**Proof.**  Normalize $H_0$ in the Galois closure of $K(T_0)/K(H_0)$ and shrink off the branch
+locus.  The resulting integral cover $\widetilde T_0\to H_0$ is a finite étale
+$G_0$-torsor with constant field $C$; it need not be geometrically connected.  The original
+evaluation map pulls back to $\widetilde T_0\to X$.  Independently take the geometrically
+connected ordered-root $S_5$-torsor over the discriminant complement in the coefficient space
+of monic quintics from Book 155, Proposition 13.1.  Over the product of the two parameter
+spaces, the ordered-root function field is regular over $K$ and its parameter coordinates are
+algebraically independent from those of $H_0$.  It is therefore linearly disjoint from $E_0$
+over the product rational function field.  Their product is consequently an integral torsor
+with group $G_0\times S_5$, constant field $C$, and an evaluation map to $X$.  Take $J=1$.
+
+At a prescribed split place the local homomorphism into $G_0$ acts trivially on the faithful
+sheet set of the normal closure and hence is trivial.  Choose a split quintic there, using the
+local coefficient neighborhoods of Book 155, Proposition 13.2.  The product top torsor is
+therefore split at every prescribed real or finite split place.  Its evaluation is the pullback
+of the labeled split packet on $T_0$; labels may repeat on the sheets of the normal closure and
+on the independent $S_5$ factor, but no new local field extension is introduced.  At a
+nonsplit controlled place, use the assumed local normal-closure fiber and again choose the
+quintic factor split.  Equivariant local constancy for all these top torsors and evaluated
+packets is Book 155, Proposition 5.2.
+
+Condition (4.1b) makes the product torsor's function field linearly disjoint from $D$ over the
+rational function field.  Indeed, because $D/K$ is Galois, every intermediate field of its
+constant extension is $L(H_0,H_5)$ for an intermediate field $L/K$ of $D/K$; containment in
+the product top field forces $L\subseteq C$.  Hence the intersection is the base rational
+function field exactly when $C\cap D=K$.  Thus both the product top cover and its base change
+by $D$ are integral.
+Apply Book 153, Theorem 5.1, simultaneously to those two covers inside the prescribed local
+boxes.  Connectedness of the top fiber gives a Galois field $M/K$ with group
+$G_0\times S_5$; connectedness after base change says $M\otimes_KD$ is a field.  The split
+real fibers make $M$ totally real, and the split finite fibers give the stated completion data.
+Since $J=1$, the quotient field equals the Galois top and its upper bridge is trivial.  The
+factor $S_5$ makes its degree even. $\square$
+
+The evaluated object may descend to the root field of $T_0/H_0$.  This causes no
+field-theoretic problem: Book 155's definition does not require the evaluated point to have
+minimal residue field, and all deformation and automorphic conditions may be restricted
+further to $G_M$.  What changes is the lifting problem.  Pullback through the normal-closure
+sheets and the independent $S_5$ factor repeats a distinguished root-place condition at a
+finite set of places over $M$.  Thus the arithmetic argument over the normal top must use an
+honest ordered chain or the finite-set interface of Book 176.  This is an arithmetic
+post-specialization obligation, not a missing normal-closure presentation.
+
+For a Book 178 packet already given over a nonsplit completion factor, the nonsplit clause of
+Proposition 4.1 adds no new local existence theorem.  Passing to that factor's local Galois
+closure only base-changes the chosen moduli point.  Good, ordinary, local--local, semistable,
+torsion-frame, and component-open conditions used there persist under that finite base change.
+This observation does **not** create a split local fiber.  Book 157, Theorem 13.1, generally
+produces the simultaneous coefficient-prime frames only after a finite local extension, and
+Section 13.3 explicitly forbids descending such a point to the original completion.  Since the
+controlled top must split completely at $2$ and $\ell$, Proposition 4.1 therefore needs actual
+paired-frame points over $\mathbf Q_2$ and $\mathbf Q_\ell$, not points over recorded proper
+extensions.  Book 178 constructs its distinguished special seed over its base completion, but
+no audited prerequisite proves these two simultaneous base-field frame assertions for the
+Frey and auxiliary systems.
+
+Geometric integrality of $T_0$ does not force $C=K$: a regular non-Galois function-field
+extension can acquire constants in its Galois closure.  Full regularity of the closure is a
+sufficient special case of (4.1b), but it is stronger than necessary.  Book 154 constructs
+$T_0/H_0$ in its flexible split range.  For the exact nonsplit completion algebras used by Book
+178, it instead retains the simultaneous presentation as a hypothesis.  Once such a
+presentation is supplied, neither source computes $C$ or its intersection with the avoidance
+field.  Thus the two field-geometric obligations are to construct the actual mixed moving
+presentation and to prove $C\cap D=K$ for its closure.  Full symmetric geometric monodromy would
+imply $C=K$ and suffice for the second obligation, but it has not been proved for the
+paired-frame moving family.  Once both inputs are supplied, Proposition 4.1 proves every other
+normal-closure and upward-bridge assertion.
 
 ### 4.2 Arithmetic seed at the point field
 
@@ -432,9 +539,9 @@ level.
 
 ### 4.3 Transfer certificates are arithmetic data
 
-Solvability of $J$ gives a group-theoretic prime-cyclic series; it does not put the packets in
-the transfer range of Books 108--109.  The package must therefore include an
-**ascent-admissible** prime-cyclic chain from $F$ to $M$ in the sense of Book 109.  At each
+For a general quotient presentation, solvability of $J$ gives a group-theoretic prime-cyclic
+series; it does not put the packets in Book 109's transfer range.  The package must therefore
+include an **ascent-admissible** prime-cyclic chain from $F$ to $M$ in the sense of Book 109.  At each
 cuspidal source step the packet must be selected and trace-comparable; its finite local
 components and restricted parameters must lie in the selected range; at every nonsplit place
 the full fixed-determinant extension fiber must be selected; its archimedean components must be
@@ -442,6 +549,12 @@ in the proved cohomological range; and matching test tensors must have the requi
 cuspidal factor.  The package must also supply the distinguished-coefficient compatibility of
 attachment with those base-change steps.  Antecedent-completeness and quotient-character fiber
 saturation belong to the downward descent ledger below, not to this upward definition.
+
+For the normal-top construction of Proposition 4.1, $F=M$ and this entire upward ledger is
+empty.  Once the compatible moving cover, its constant-field certificate, and the exact seed
+exist over $M$, Book 173 makes the chosen point automorphic there directly.  Thus all
+normal-closure and upward-bridge assertions after those inputs are proved reductions; they are
+not part of the post-specialization theorem below.
 
 The top packet eventually delivered to Book 183 needs a second, finite ledger.  For every
 elementary subgroup $H\leq\Gamma$, at least one prime-cyclic descent chain from $M$ to $M^H$
@@ -463,14 +576,20 @@ $(\mathrm{Seed}_{\mathrm{SP}}^{181})$; the new content is that the seed field is
 the prescribed normal-closure diagram.  Since $[F:\mathbf Q]$ is even and $2$ and $\ell$
 split completely, forgetting the top diagram gives precisely a permissible
 $(\mathrm{Seed}_{\mathrm{SP}}^{181})$.  Thus this single controlled seed both enables Book 181
-to construct the chosen lift and enables Book 173 to make its restriction automorphic.  This
-is the first missing object.
+to construct the chosen lift and enables Book 173 to make its restriction automorphic.
+Proposition 4.1 constructs the field diagram with $F=M$ once Required Local Theorem 6.2 has
+supplied the split base-completion packets, Required Moving Input 6.3a supplies the presentation,
+and that presentation satisfies (4.1b).  After those pre-specialization inputs, the missing
+object is its arithmetic part: exact post-specialization occurrence in the clean minimal SP
+localization.
 
 A **controlled SP bridge package for the chosen lift** consists of that residual seed together
 with the ascent ledger and all of the downstream-readiness certificates in Section 4.3.  The
 ascent certificate must apply to the exact eigenpacket obtained by evaluating the minimal
 Hecke algebra at the chosen point.  It may, for example, be verified uniformly on that Hecke
 family; it may not assume in advance that an unrelated packet will represent $\rho|_{G_F}$.
+For the normal-top construction the ascent certificate is vacuous.  The elementary-subfield
+descent and all-coefficient attachment certificates remain a later, nonvacuous interface.
 
 These are exact hypotheses, not theorems of the present dependency graph.  Separating them is
 important: constructing minimal residual support does not automatically prove automorphic
@@ -523,6 +642,19 @@ $\square$
 
 The theorem uses $R=\mathbb T$ only after the exact residual localization has been constructed.
 It therefore does not argue circularly from the desired automorphy of $\rho$.
+
+In the normal-top case of Proposition 4.1, take $F=M$ in Theorem 5.1.  Its output is already a
+cuspidal packet $\pi_M$ satisfying
+
+$$
+r_{\pi_M,\lambda_M}\simeq\rho|_{G_M}.
+\tag{5.2a}
+$$
+
+No cyclic base change, solvable ascent, or attachment comparison is used to obtain (5.2a).
+Absolute irreducibility follows from closure-level avoidance, and the full SP record is literal
+because $2$ splits completely in $M$.  This proves the controlled-top automorphy assertion as
+soon as the post-specialization exact seed has been constructed over the normal top.
 
 ### 5.2 Passage to the controlled top
 
@@ -616,8 +748,9 @@ specified in its missing-theorem statement: over an even-degree totally real spl
 nonzero minimal SP localization satisfying every clean integral hypothesis of Book 173.  Within
 the audited constant-row construction, (6.1) is the smallest presently isolated missing
 assertion, not the whole carrier theorem.  Book 182 needs a stronger controlled form in which
-that field is the quotient field of a prescribed Galois top.  Normal-closure control does not
-repair the missing localized support.
+the carrier is constructed after restriction to the normal Galois top of Proposition 4.1.
+That proposition supplies normal-closure control, but it does not repair the missing localized
+support.
 
 ### 6.2 Book 178's literal one-prime boundary
 
@@ -679,55 +812,162 @@ Even a complete seven-item Book 178 witness gives its stated residual potential-
 output.  To obtain the seed of Section 3.2 one must still prove that the target residual packet
 occurs in the exact minimal SP localization with every integral hypothesis of Book 173.
 
-### 6.3 Independent ray and normal-closure inputs
+### 6.3 The rational ray datum and the normal-top reduction
 
-Book 178 also retains a pre-specialization boundary which is logically earlier than its
-specialization.  Its inverse-branch lemma cancels the ray-unit obstruction, but its dihedral
-seed theorem still assumes a fully compatible corrected relative ray datum, including every
-diagonal ideal intersection and capitulation relation.  That compatibility is item 2 of the
-seven-item witness; it is not proved merely by the inverse-branch unit calculation.
+Book 178 correctly retains a separate relative-ray compatibility hypothesis over a general
+totally real base: its inverse-branch lemma cancels the ray-unit obstruction but does not in
+general settle capitulation from the base ideal class group.  The present application has base
+$K=\mathbf Q$, where that additional obstruction disappears.
 
-Book 155 proves Galois-refined approximation after a **Galois approximation datum** for the
-given variety has been supplied.  Its $S_5/S_4$ calculation proves that such a datum would have
-a solvable point stabilizer.  Its universal symmetric family supplies a datum for an affine
-coefficient space.  Neither result constructs the required full-monodromy presentation and
-local top torsors for the paired-frame Hilbert--Blumenthal moduli space used in Book 178.
+**Lemma 6.1 (rational-base relative-ray compatibility).**  In the setup of Book 178,
+Section 4, take $K=\mathbf Q$ and write $L/\mathbf Q$ for the CM quadratic field called $M$
+there.  Include the conductor of $\eta_{L/\mathbf Q}$ and the real sign in the modulus, and use
+the determinant-compatible paired local factors prescribed there.
+Then the inverse-branch correction of Book 178, Lemma 4.1, is compatible on the full subgroup
+$R$ of Book 178, Section 4.3.  Hence its controlled dihedral seed theorem has an actual
+compatible corrected relative ray datum in this rational-base case.
+
+**Proof.**  The diagonal fractional-ideal group of $\mathbf Q$ is principal.  After extension
+to $L$, a relation between a diagonal ideal and a ray-principal $L$-ideal is therefore a
+relation between two generators of the same principal $L$-ideal; their quotient is a global
+unit.  Equivalently, the diagonal map $C_{\mathbf Q}\to C_L$ has trivial kernel: if a rational
+idele is the principal $L$-idele of $a\in L^\times$, applying the nontrivial automorphism of
+$L/\mathbf Q$ gives $a=a^\sigma$, so $a\in\mathbf Q^\times$.  In the ray exact sequence,
+changing either ideal generator changes the relation by a ray unit.
+The corrected principal and local rules agree on every ray unit by Book 178, Lemma 4.1.  On a
+rational principal idele they agree with the diagonal rule because the original branch factors
+were chosen to satisfy (4.4), the modulus contains the conductor of $\eta_{L/\mathbf Q}$, and
+the real sign fixes the only rational-unit ambiguity.  Every auxiliary inverse pair introduced
+by Lemma 4.1 is trivial on the diagonal copy of $\mathbf Q_v^\times$, so the correction does
+not alter this agreement.  The ray exact sequence now shows that these are all relations among
+the principal, diagonal, and local-unit subgroups.  Thus the proposed values define a character
+of $R$; the finite ray-group extension in Book 178 extends it to the required Hecke character.
+$\square$
+
+The class-number-one step is load-bearing.  Over a general $K$, a nonprincipal $K$-ideal can
+become principal over its CM quadratic extension and impose a relation not represented by a
+rational principal idele or a ray unit, which is why Book 178's general hypothesis remains
+correct.
+
+The first unresolved Frey-specific input now occurs in the local completion policy.
+
+**Required Local Theorem 6.2 (split paired-frame seeds).**  Let $Y^{\mathrm{ten}}$ be Book 178's
+determinant-compatible two-prime twist for the Frey representation $\bar\rho$ at $\ell$ and the
+auxiliary dihedral representation $\bar r$ at $q$, and remove the prescribed degeneracy locus
+$Z$.  Construct points
+
+$$
+y_2\in(Y^{\mathrm{ten}}\setminus Z)(\mathbf Q_2),
+\qquad
+y_\ell\in(Y^{\mathrm{ten}}\setminus Z)(\mathbf Q_\ell)
+\tag{6.2a}
+$$
+
+on the one tensor component, with the corrected auxiliary level and both exact paired frames.
+At $2$, the first point must be a semistable tensor point over $\mathbf Q_2$ realizing the
+primitive Frey SP Kummer class, intrinsic line, and prescribed split or nonsplit sign.  At
+$\ell$, the second must realize the selected ordinary or local--local finite-flat model of
+$\bar\rho$ integrally.  In both cases the
+auxiliary $q$-frame must occur on that same abelian variety.  The points must admit the
+point-centered open neighborhoods of Book 157, Theorem 12.1.  More generally, the same
+base-completion assertion is required at every rational place declared completely split in
+the controlled top.
+
+Book 157 proves the required openness once the points in (6.2a) exist.  Its coefficient-prime
+existence theorem instead allows a finite splitting extension, and its completion-policy audit
+states that such a point need not descend.  Book 178 likewise records those extensions in its
+ordinary completion algebra.  Thus neither source proves Required Local Theorem 6.2.  A tensor
+construction from the Frey curve would still have to solve the auxiliary frame on the same
+seed and verify the exact integral and component labels; merely noting that the individual
+representations become trivial after extension does not do so.
+
+**Required Moving Input 6.3a (one compatible moving family).**  Starting from the split points
+of Required Local Theorem 6.2 and the other extension-valued local packets of Book 178, choose
+one common degree, with repetitions or auxiliary good packets only where the assigned arithmetic
+condition is stable under that enlargement.  Construct an open $H_0$ of affine space and a
+geometrically integral finite étale cover $T_0/H_0$, with evaluation to
+$Y^{\mathrm{ten}}\setminus Z$, whose local fibers and point-centered neighborhoods realize all
+those cycles simultaneously.  At every place declared split the fiber must be split with all
+its evaluated sheets in the assigned open; at every remaining controlled place the pulled-back
+normal-closure sheets must retain their assigned local behavior.
+
+Book 154, Lemma 5.2, constructs this presentation automatically for flexible split packets.  In
+the exact nonsplit range it says that equality of local ranks is insufficient and retains the
+common presentation as a hypothesis.  Book 178 does the same in item 6 and Theorem 8.2.  The
+audited sources do not verify Required Moving Input 6.3a for the actual mixture used here.
+
+The nontrivial-stabilizer version of Book 155 would additionally require a special
+$S_5/S_4$ evaluation presentation on the paired-frame moduli space.  Proposition 4.1 replaces
+that demand.  Once Required Moving Input 6.3a supplies the actual cover, the smaller exact
+certificate is $C\cap D=K$ for the constant field $C$ of its Galois closure.  Given that
+certificate, multiply the top cover by the universal ordered-quintic torsor, set $J=1$, and
+evaluate on the top.  Books 153 and 155 then supply closure-level disjointness and all local top
+torsors.  No upward solvable-transfer problem remains.  Neither Required Moving Input 6.3a nor
+the constant-field certificate is proved.
+
+The price is exact and arithmetic.  Over the normal top, the distinguished local condition
+and every accidental bad place occur on their full finite conjugate sets.  Book 178's literal
+one-prime item 7 over its root field does not prove modularity over that top.  One must verify an
+ordered clean chain or all seven hypotheses of Book 176, Theorem 9.1, for the actual active set,
+and then lower the target residual eigensystem to the exact minimal SP face.  Book 176 proves the
+formal implication from those data but does not construct its face modules, global cube, mixed
+exactness, product residue, joint support, simultaneous augmentation, or finite-set
+reciprocity.
 
 Consequently the current Book 178 route to the controlled seed has the following distinct
 unmet tasks:
 
 $$
 \begin{array}{ll}
-\text{dihedral input:}&
-\text{construct the fully compatible corrected relative ray datum;}\\
-\text{lifting support:}&
-\text{prove (6.1) and all remaining exact one-prime localization clauses;}\\
-\text{field geometry:}&
-\text{construct the moduli-specific Galois approximation datum;}\\
-\text{specialized shape:}&
-\text{produce a seven-item witness with }P_{\mathrm{nm}}=\{w_0\};\\
+\text{split local input:}&
+\text{prove Required Local Theorem 6.2 over }\mathbf Q_2\text{ and }\mathbf Q_\ell;\\
+\text{moving-family input:}&
+\text{prove Required Moving Input 6.3a for the actual mixed local packets;}\\
+\text{field certificate:}&
+\text{prove }C\cap D=K\text{ for the paired-frame moving Galois closure;}\\
+\text{root-field route:}&
+\text{prove (6.1), the remaining one-prime clauses, and }P_{\mathrm{nm}}=\{w_0\};\\
+\text{normal-top route:}&
+\text{construct the actual finite-set faces and every joint hypothesis of Book 176;}\\
 \text{target support:}&
-\text{prove occurrence in the exact minimal Book 173 SP localization.}
+\text{construct the bottom exact minimal Book 173 SP localization.}
 \end{array}
 \tag{6.3}
 $$
 
-The order inside the route is exact.  The ray datum, Galois presentation, and any general
-lifting-support theorems must exist before the controlled specialization.  The remaining
-one-prime clauses and the singleton condition are then verified on its actual localization and
-bad set as item 7.  Only after that does Book 178 produce the target residual packet, whose
-exact Book 173 localization is a still stronger subsequent obligation.  Within the
-lifting-support row, (6.1) is the first unresolved constant-row input, not a substitute for the
-later independent clauses.  Ordinary Moret--Bailly approximation cannot be promoted to
-normal-closure control, and a controlled normal closure forces none of the arithmetic support
-rows.
+The order inside either route is exact.  Lemma 6.1 closes the rational-base ray datum.  Required
+Local Theorem 6.2, Required Moving Input 6.3a, and the constant-field certificate remain
+pre-specialization.  The one-prime or finite-set data are verified only after the actual bad
+set is known.  The target residual eigensystem must then be placed on the bottom minimal SP
+face.  Within a face construction, (6.1) is the first unresolved constant row, not a substitute
+for the later independent clauses.  Proposition 4.1 proves the remaining field geometry from
+the two moving-cover inputs, but a controlled normal closure forces none of these arithmetic
+support rows.
 
 ### 6.4 Why no formal workaround is available
 
 Several tempting shortcuts fail for precise reasons.
 
-* **Pass to a normal closure.**  The normal closure of an uncontrolled point field need not
-  have a solvable stabilizer over that field and need not preserve the avoidance ledger.
+* **Pass to a normal closure afterward.**  The normal closure of an already chosen point field
+  need not preserve the avoidance ledger, and automorphy over the root field need not ascend
+  through its nonsolvable stabilizer.  Proposition 4.1 avoids both errors by specializing the
+  top cover itself and requiring the arithmetic lifting and lowering over that top.
+* **Use the local frame point only after extension.**  A proper extension of $\mathbf Q_2$ or
+  $\mathbf Q_\ell$ cannot be a completion of any subfield of a top in which that rational prime
+  splits completely.  Specializing over such an extension and descending automorphy to a
+  separate split top would require a new solvable Galois evaluation and selected-descent datum;
+  none is supplied by the ordinary Moret--Bailly field.
+* **Force the constant-field intersection by unnamed split primes.**  If split fibers were
+  available at primes whose Frobenius classes normally generate $\operatorname{Gal}(D/K)$,
+  then their splitting in $C$ would indeed force $C\cap D=K$.  For Book 178's fixed-rank
+  nonsplit packets, however, Book 154 assumes one common moving presentation and does not prove
+  that it can be enlarged by those extra split packets.  For a fixed presentation, a split
+  fiber at a prime acting nontrivially on $C$ is impossible.  Thus this observation is a useful
+  certificate test, not an existence theorem for the required presentation.  A fresh
+  all-split application of Book 154 would make the argument valid: include such Frobenius
+  primes before constructing the flexible split presentation.  But that route requires
+  base-completion paired-frame points for every controlled packet and every added prime, not
+  merely the two points in (6.2a); no audited local theorem supplies that stronger input.
 * **Use group solvability alone.**  It gives a prime-cyclic series, not the selected arithmetic
   fibers and comparisons required by Book 109.
 * **Invoke minimal patching.**  Book 173 needs the exact minimal automorphic module before
@@ -743,54 +983,76 @@ Thus the gap cannot be absorbed into the words “admissible,” “potentially 
 
 ## 7. The missing theorem, stated without concealment
 
-### 7.1 Required controlled-SP seed theorem
+### 7.1 Required post-specialization theorem
 
-The following theorem, placed strictly before Book 182, would remove the first missing object.
-Together with the bridge-readiness result of Section 7.3, it would make the conditional
-argument dependency-closed.
+After the earlier pre-specialization arithmetic inputs and the constant-field certificate have
+been supplied, the field-theoretic part is Proposition 4.1.  The remaining seed theorem should
+therefore be stated at the post-specialization boundary and should not demand an arbitrary
+prescribed group which the geometry may not realize.
 
-**Required Theorem 7.1 (controlled exact SP residual seed).**  Let $\ell\geq7$ and let
-$\bar\rho:G_{\mathbf Q}\to\operatorname{GL}_2(k)$ be the primitive signed-special Frey
-residual representation of Book 164, satisfying the determinant, finite-flat, absolute
-irreducibility, cyclotomic absolute irreducibility, and other global image hypotheses required
-by Book 173.  Given a finite Galois avoidance field $D$, finitely many prescribed split places, and an
-even-index solvable-bridge group datum $(\Gamma,J)$, construct a controlled exact SP residual
-seed as in Section 4.4.
+**Required Theorem 7.1 (post-specialization top-clean SP occurrence).**  Let $\ell\geq7$ and
+let $\bar\rho:G_{\mathbf Q}\to\operatorname{GL}_2(k)$ be the primitive signed-special Frey
+residual representation of Book 164 with the image and local hypotheses required by Book 173.
+Fix a finite Galois avoidance field $D$.  Assume that the pre-specialization two-prime package
+of Book 178 has actually been constructed, with the rational-base corrected relative ray datum
+of Lemma 6.1, the split packets of Required Local Theorem 6.2, its other local packets, Required
+Moving Input 6.3a, and a Galois-closure constant field satisfying (4.1b), with the induced local
+top packets of Proposition 4.1.  Form its normal-top datum.
 
-Any proof must produce the exact output of Section 4.4 rather than merely a residually
-automorphic packet.  A proof through the current Book 178 route must in particular prove rather
-than assume:
+Then there is a specialization in the prescribed local and closure-level Hilbert set, with
+totally real Galois top $M/\mathbf Q$, for which
 
-1. every applicable localized abelian Ihara family (6.1), and every independent type,
-   localization, support, reciprocity, augmentation, faithful-order, and saturated integral
-   comparison used on the actual automorphic localizations in the construction;
-2. the fully compatible corrected relative ray datum required by Book 178's dihedral seed;
-3. a Galois approximation datum for the actual paired-frame moduli space, with full top group
-   $\Gamma$, point stabilizer $J$, all required local top fibers, and closure-level
-   disjointness from $D$;
-4. a totally real specialized output satisfying all seven witness items and, in particular,
-   the literal equality $P_{\mathrm{nm}}=\{w_0\}$ after every recorded saturated lowering of
-   superfluous dihedral conductor, with minimal spectator matching everywhere else; and
-5. exact occurrence of $\bar\rho|_{G_F}$ in the minimal SP localization, including every
-   saturation, pairing, augmentation, generic-reducedness, and integral local--global hypothesis
-   of Book 173.
+$$
+\bar\rho|_{G_M}
+\tag{7.1}
+$$
 
-The proof must be acyclic: it may not use Book 182, the elementary packet array of Book 183,
-the effectivity theorem of Book 184, the compatible system of Book 185, or any later theorem
-whose hypotheses include those outputs.
+occurs in the exact nonzero minimal SP localization for $M$ and that localization satisfies
+every clean integral hypothesis of Book 173, Theorem 1.1.
+
+The word *occurs* in this statement includes the post-specialization proof record.  A proof by
+the two-prime route must list the actual bad sets, construct the required lower-face
+automorphic classes, and give either a verified ordered clean chain or the genuine global
+finite-set carriers needed to make the auxiliary-adic Tate module automorphic over $M$.  It
+must then attach the target-prime residual eigensystem and give saturated lowering maps all the
+way to the bottom minimal SP face.  On that bottom face it must verify finite freeness,
+stabilizer and diamond control, saturated type and degeneracy maps, the primary--companion
+pairing, exact augmentation, generic reducedness, faithful Hecke action, and branchwise integral
+local--global compatibility.  Merely producing the auxiliary abelian variety, its torsion
+frames, a nonminimal automorphic packet, or numerical level-lowering congruences does not prove
+the theorem.
+
+The constant-field certificate, Proposition 4.1, and Required Theorem 7.1 immediately give a
+controlled exact SP residual seed: take $F=M$ and $J=1$.  The degree is even, $2$ and $\ell$
+split completely, closure-level avoidance gives (3.3), and (7.1) supplies the entire arithmetic
+seed.  Thus no additional
+normal-closure or upward-transfer theorem is hidden in this implication.
+
+The proof of the automorphic-support assertion must be acyclic.  It may use the independent
+ray and field-geometric reductions of Lemma 6.1 and Proposition 4.1, but it may not use Book
+181's characteristic-zero output, Proposition 3.2 or Theorem 5.1 of this volume, the elementary
+packet array of Book 183, the effectivity theorem of Book 184, the compatible system of Book
+185, or any later theorem whose hypotheses include those outputs.  Book 173 may be applied only
+after the bottom localization and all of its hypotheses have been independently constructed.
 
 No theorem with this conclusion occurs among the audited prerequisites.  Required Theorem 7.1
-is therefore a specification of the first missing result, not a result proved in this volume.
+is therefore the exact post-specialization theorem needed to close the seed, not a result proved
+in this volume.
 
 ### 7.2 Smallest presently isolated subtheorem
 
-The first missing assertion in the audited constant-row proof order is (6.1).  The smallest
-honest direct repair is a localized Ihara theorem proving that finite family at the Frey
-non-Eisenstein maximal ideals and deriving the saturated integral level maps needed for the
-exact signed-SP carrier.  It must apply at the inherited nontrivial-unipotent dyadic component;
-a scalar-boundary comparison for another local deformation ring does not suffice.  The
+For a general totally real base, Book 178's first unproved arithmetic input remains its
+compatible corrected relative ray datum.  For the Frey application over $\mathbf Q$, Lemma 6.1
+proves that compatibility.  Required Local Theorem 6.2 is then the first unresolved
+pre-specialization arithmetic assertion: the prior local theorem supplies the needed paired
+frames only after a finite extension, whereas the controlled top requires split base-completion
+points.  Required Moving Input 6.3a is the next field-geometric assertion: the prior
+approximation theorem retains rather than constructs a common presentation for the exact
+nonsplit packets.  After that presentation and its constant-field certificate, the first
+unresolved constant-row assertion in the actual lifting comparison is (6.1).  A localized
+Ihara theorem proving that finite family does not produce the
 independent type, localization, support, reciprocity, ray, augmentation, and faithful-order
-clauses remain after that repair.
+clauses.
 
 For Book 178's post-specialization boundary, the next obligation on the current route is not a
 finite-clean-chain theorem.  It is the existential singleton assertion:
@@ -800,21 +1062,80 @@ finite-clean-chain theorem.  It is the existential singleton assertion:
 > superfluous dihedral conductor, and verify
 > $P_{\mathrm{nm}}=\{w_0\}$ with named minimal spectator matching everywhere else.
 
-That is the literal content of Book 178, Section 2.5, item 7.  A genuine prior finite-set theorem
-could instead justify a newly enlarged route, but it is not the current item 7.  Once item 7
-holds, Book 178 proves the final compact carrier itself.  Neither alternative would by itself
-supply the independent Galois presentation, the exact target SP localization, or Book 183's
-transfer and attachment certificates.
+That is the literal content of Book 178, Section 2.5, item 7 over its root field.  On the
+normal-top route it is replaced by an actual finite-set verification over $M$; citing the
+conditional conclusion of Book 176 without constructing its faces does not do this.
+
+After the auxiliary-prime lift is automorphic, the first irreducible target-prime assertion is
+the existence of the bottom lower-face class itself.  Book 176 compares a supplied global cube
+and proves pointwise modularity from its hypotheses; it does not manufacture the minimal face
+from the upper packet.  The exact missing assertion is therefore that the specialized target
+eigensystem has a saturated path to a nonzero clean minimal SP localization.  Once that is
+proved with all Book 173 clauses, Required Theorem 7.1 is complete.  After the separately stated
+constant-field certificate, normal-closure geometry is no longer an additional blocker.
 
 ### 7.3 The later bridge-readiness obligation
 
-After Required Theorem 7.1, Book 181, and Theorem 5.1 have produced the chosen point and its
-selected eigenpacket, a separate prior argument must verify that this packet satisfies the
-ascent ledger and that the resulting top packet carries
-Book 183's finite descent and attachment ledger.  This may be packaged with Required Theorem
-7.1 if it is genuinely proved there, but it is not part of the residual seed and does not
-follow from $J$ being solvable.  It is a later obligation; it must not obscure the earlier
-failure to construct the minimal residual seed itself.
+For the normal-top seed, there is no ascent ledger: $F=M$.  At the distinguished coefficient,
+the local and group-theoretic part of the downward ledger reduces once Theorem 5.1 has produced
+the minimal packet.
+Every place above $2$ or $\ell$ splits at every intermediate step; the dyadic special factor is
+therefore unchanged.  Every other finite factor is spherical.  In a nonsplit cyclic step, the
+extensions of such a spherical parameter are principal-series or selected tame-dihedral
+factors.  Indeed, local Clifford theory makes every irreducible rank-two extension across a
+prime cyclic quotient dihedral, and it can occur only across a quadratic step; away from two a
+ramified quadratic step is tame.  The only omitted rank-two boundary is therefore ramified
+dyadic, which complete splitting excludes.  This proves extension-completeness for the whole
+fixed-determinant fiber, not merely for the extension selected by $\rho$.
+Quotient-character twists remain in the same selected families.  The real weight-two discrete
+series supplies the strongly cuspidal comparison factor.  Closure-level avoidance preserves
+absolute irreducibility of $\bar\rho|_{G_M}$; the stable lattice therefore forces
+$\rho|_{G_M}$ to be irreducible.  Finally, $\rho$ is defined on $G_{\mathbf Q}$, so it supplies
+the coherent extension that would select the quotient-character correction in Book 109,
+Theorem 13.3.
+
+That last selection is not yet a descent theorem in the present source range.  Book 109 also
+assumes that the arbitrary cuspidal descent at each cyclic step has an attached arithmetic
+representation and that attachment commutes with cyclic base change and finite-order twisting.
+The extending representation $\rho$ compares two such attached extensions; it does not attach
+the arbitrary descent in the first place.  Consequently the distinguished-coefficient descent
+array still requires a Galois-attachment certificate for every candidate cyclic descent, in
+addition to the admissibility and fiber-saturation checks above.
+
+The full Book 183 interface is stronger still.  Each corrected packet must have a curve-attached
+family at every coefficient embedding and the same algebraic dyadic SP pair must survive the
+raw-to-semisimple passage uniformly.  The present sources do not prove this.  First, some
+elementary fixed fields necessarily have odd degree in the normal-top construction: a Sylow
+$2$-subgroup $P\leq\Gamma$ is elementary, $[\Gamma:P]$ is odd, and the $S_5$ quotient makes
+that index greater than one.  More generally, every even-order top group has an elementary
+Sylow $2$-subgroup of odd index, so changing the auxiliary even group cannot remove the parity
+boundary.  Book 127's one-split carrier and attachment theorem is proved in the required inverse
+range only for even degree.  This already prevents the presently cited attachment theorem from
+supplying the distinguished realization needed to run Book 109 at every elementary fixed field,
+and a fortiori prevents the all-coefficient interface.
+Second, already for the trivial elementary subgroup $H=1$, the top minimal packet $\pi_M$ is
+spherical away from the dyadic SP factors and the clean coefficient-prime factor is not
+supplied as a selected special or tame-dihedral place.  Downward extension fibers can acquire
+selected tame-dihedral factors, but that does not furnish an away-from-two factor for this top
+packet.  A dyadic special factor gives a general curve carrier in the even-degree range, but a
+carrier ramified at any dyadic factor fails the dyadically tensor-split ledger recorded in Book 168,
+Corollary 12.2.  Its raw SP construction instead requires an odd nonempty eligible ramification
+set away from $2$, and this minimal packet has no such place.  Third, even if that
+raw carrier were supplied, Book 168 passes the raw SP pair to the globally semisimplified
+member from absolute residual irreducibility only coefficient place by coefficient place; the
+current argument proves it at the distinguished coefficient, not at every coefficient place.
+
+Consequently the exact later bridge theorem is an **all-elementary attachment, descent, and
+uniform-SP theorem**.  It must supply distinguished-coefficient attachment, with cyclic
+base-change and twist compatibility, for the candidate descent packets so that Book 109 can
+select the corrections; provide the missing odd-degree carriers; construct a raw dyadic SP
+carrier without a pre-existing eligible place away from $2$ (or give another attachment
+construction); and prove raw-to-semisimple local preservation at every
+coefficient place.  This later theorem must not be bundled into Required Theorem 7.1 or used to
+obscure the earlier failure to construct the minimal residual seed itself.  It must also be
+strictly prior to Book 183: the elementary packet array, its effectivity, and the descended
+compatible system cannot be used backward to prove the attachment or uniform-SP hypotheses
+which that array consumes.
 
 ## 8. Dependency, circularity, and downstream audit
 
@@ -822,14 +1143,19 @@ failure to construct the minimal residual seed itself.
 
 | Source | Legitimate use here | What it does not supply |
 |---|---|---|
-| Book 109 | prime-cyclic ascent on an exhibited extension-complete selected chain, and descent on exhibited antecedent-complete selected chains with the required fiber saturation | either direction from solvability alone |
+| Book 109 | prime-cyclic ascent on an exhibited extension-complete selected chain, and descent on exhibited antecedent-complete selected chains with the required fiber saturation and attached arithmetic representations | attachment of candidate cyclic descents, or either direction from solvability alone |
 | Books 127--128 and 168 | weight-two coefficient attachment and the SP local comparison in their explicitly stated range | an automatic all-coefficient SP comparison for an arbitrary packet |
 | Book 164 | the primitive residual Frey SP tuple, intrinsic line, sign, and conductor-one record used in the FLT specialization | a characteristic-zero chosen lift or automorphic seed |
 | Book 173 | exact minimal $R=\mathbb T$ and automorphy of every point of a clean minimal deformation problem | existence of the exact residual automorphic localization |
 | Book 175 | a local change at a previously named place under its exact clean augmentation hypotheses | simultaneous lowering at the unknown extra bad primes of a specialization |
+| Book 176 | a conditional finite-set reduced comparison and pointwise modularity from one supplied global cube and all its joint hypotheses | the face classes, cube, mixed exactness, product residue, joint support, augmentation, or reciprocity for an actual specialization |
 | Book 177 | a conditional two-prime potential-modularity route and point-field control in its admitted range | an unconditional clean seed or controlled normal closure |
-| Book 155 | Galois-refined approximation from a supplied Galois approximation datum | that datum for the paired-frame moduli problem |
-| Book 178 | conditional residual potential modularity for a fixed seven-item two-prime-admissible witness; after lifting, proof of final compact-carrier eligibility | construction of the corrected relative ray datum, a specialization satisfying item 7's literal singleton condition, or the exact minimal Book 173 SP seed |
+| Book 153 | simultaneous connected specialization for the integral top cover and its avoidance-field base change | the constant-field disjointness certificate or any automorphic support |
+| Book 154 | construction of a simultaneous moving presentation in the flexible split range and globalization from a supplied presentation in the exact local-algebra range | the common presentation for Book 178's actual mixed nonsplit packets, the constant field of its Galois closure, its intersection with $D$, or post-specialization automorphic support |
+| Book 155 | equivariant local constancy and the regular ordered-quintic torsor | the paired-frame constant-field certificate or any automorphic lifting and lowering on the specialized top |
+| Book 157 | point-centered opens around simultaneous paired-frame seeds and persistence after permitted extension | descent of coefficient-prime or semistable frame points from a proper completion extension to $\mathbf Q_2$ or $\mathbf Q_\ell$ as required by complete splitting |
+| Book 178 | conditional residual potential modularity for a fixed seven-item two-prime-admissible witness; after lifting, proof of final compact-carrier eligibility; its inverse-branch lemma, completed over $\mathbf Q$ by Lemma 6.1 here | over a general base, the capitulation part of the corrected relative ray datum; a specialization satisfying item 7's literal singleton condition; or the exact minimal Book 173 SP seed |
+| Book 180 | integral Brauer and Clifford identities for supplied representations, characters, and packet data | construction or attachment of any elementary fixed-field packet, or the all-embedding SP comparison |
 | Books 165--167 | the SP local deformation problem, supported cohomology, and balanced presentation | a horizontal point or a nonzero exact automorphic module |
 | Book 181 | under $(\mathrm{Seed}_{\mathrm{SP}}^{181})$, finite-flatness of the balanced global SP ring and the normalized primitive SP point used here | construction of its seed, normal-closure control, or the controlled seed required in Section 4 |
 
@@ -843,20 +1169,24 @@ For the conditional theorem actually proved here, the honest direct dependency r
 
 $$
 \boxed{
-182\mid 109,127,128,168,164,173,155,178,165,181.}
+182\mid 109,127,128,153,154,155,157,164,165,168,173,176,178,181.}
 \tag{8.1}
 $$
 
-Books 175 and 177 are background to the seed-construction audit inherited through Books 178 and 181 and need not be direct edges here.  Books 166--167 are direct inputs to Book 181, but
-transitive for this volume.  Book 165 is retained because this volume directly identifies the
-represented local SP problem; it could be made transitive by treating all local identifications
-as part of the Book 181 export.
+Book 175 is a transitive input through Book 178.  Books 177 and 180 are comparative background
+for the seed and downstream bridge audits; Book 180's abstract machinery is consumed by Book
+183 only after the packets exist.  Neither is used in the conditional proof, so neither is a
+direct edge here.  Books 166--167 are direct inputs to Book 181, but transitive for this volume.
+Book 165 is retained because this volume directly identifies the represented local SP problem;
+it could be made transitive by treating all local identifications as part of the Book 181
+export.
 
 Equation (8.1) does not make the result unconditional.  To mark Book 182 **READY**, a new
-strictly prior result proving Required Theorem 7.1, and a prior proof of the bridge-readiness
-ledger of Section 7.3, must be added as direct dependencies.  They may be two results in one
-new volume, but no existing book number may be put in either slot merely because it states the
-conclusion conditionally.
+strictly prior result must prove Required Local Theorem 6.2, Required Moving Input 6.3a, the
+constant-field certificate, and Required Theorem 7.1; a prior all-elementary attachment,
+descent, and uniform-SP theorem of Section 7.3 is also required.  Those results belong in their natural
+prior owners; no book number may be put in a slot merely because it states the conclusion
+conditionally.
 
 ### 8.3 Proof-order audit
 
@@ -866,19 +1196,25 @@ $$
 \begin{array}{c}
 \text{primitive residual SP datum}
 \\ \Downarrow \\
-\text{Required Theorem 7.1: controlled exact residual seed}
+\text{Lemma 6.1, Required Local Theorem 6.2, Required Moving Input 6.3a, and }C\cap D=\mathbf Q
+\\ \Downarrow \\
+\text{Proposition 4.1: normal Galois top with }F=M\text{ and }J=1
+\\ \Downarrow \\
+\text{Required Theorem 7.1: post-specialization top-clean residual seed}
 \\ \Downarrow \\
 \text{the controlled seed supplies }(\mathrm{Seed}_{\mathrm{SP}}^{181})
 \\ \Downarrow \\
 \text{Book 181: a normalized primitive chosen SP lift }\rho
 \\ \Downarrow \\
-\text{Book 173: }R_F^{\mathrm{SP}}=\mathbb T_F^{\mathrm{SP}}
+\text{Book 173: }R_M^{\mathrm{SP}}=\mathbb T_M^{\mathrm{SP}}
 \\ \Downarrow \\
-\rho|_{G_F}\text{ is automorphic}
+\rho|_{G_M}\text{ is automorphic, with no upward base change}
 \\ \Downarrow \\
-\text{the bridge-readiness ledger is verified for the selected packet}
+\text{distinguished attachment and cyclic compatibility for candidate descents}
 \\ \Downarrow \\
-\text{Book 109 along the supplied ascent-admissible chain}
+\text{Book 109: distinguished-coefficient elementary descents selected by }\rho
+\\ \Downarrow \\
+\text{all-coefficient attachment and uniform-SP completion}
 \\ \Downarrow \\
 (M,\rho,\pi_M,\text{certificates})\text{ is the controlled SP top datum}
 \\ \Downarrow \\
@@ -917,23 +1253,41 @@ and cannot repair the gap found here.
 
 Book 181 now genuinely constructs the chosen primitive SP lift under its explicit
 $(\mathrm{Seed}_{\mathrm{SP}}^{181})$ hypothesis, and Proposition 3.2 makes that lift automorphic
-over Book 181's uncontrolled seed field.  Given the stronger controlled residual seed, Book
-173 makes the same *chosen* lift automorphic over the solvable-bridge point field, and a
-supplied Book 109 transfer ledger carries it to the controlled top.  This conditional argument
-exports precisely the datum consumed by Book 183 and does not duplicate Book 183's
-elementary-packet construction.
+over Book 181's uncontrolled seed field.  Proposition 4.1 now proves the field-theoretic
+refinement needed here from two sharply isolated inputs: Required Moving Input 6.3a supplies
+the actual mixed local moving cover, and its Galois-closure constant field $C$ must satisfy
+$C\cap D=\mathbf Q$.  Multiplying that closure by an independent ordered-quintic torsor and
+specializing the top together with its $D$-base change then gives an even-degree totally real
+normal top with $F=M$, $J=1$, split sensitive places, and closure-level avoidance.
+Consequently no moduli-specific $S_5/S_4$ presentation and no upward solvable base change
+remain after those inputs.  The prerequisites construct the flexible split presentation, but
+not the actual mixed one; they also do not compute $C$ or prove the required intersection.
 
-The first missing object at the interface is the controlled exact SP residual automorphic seed
-of Section 4.  At the lifting boundary of the available routes, the first unresolved
-constant-row blocker is the localized abelian Ihara family (6.1); the remaining exact carrier
-clauses do not follow from it.  On the current Book 178 route, the fully compatible corrected
-relative ray datum, a controlled specialization satisfying the literal singleton
-$P_{\mathrm{nm}}=\{w_0\}$, the exact target minimal localization, and the independent
-moduli-specific Galois presentation are also unproved.  Book 178 does prove final
-compact-carrier eligibility once its seven-item witness is supplied, so that is not an
-additional blocker.  Independently, the bridge-readiness theorem of Section 7.3 must still
-verify the ascent chain and Book 183's finite descent-and-attachment ledger for the exact packet
-selected by the chosen point.
+Over a general base Book 178 still correctly retains full relative-ray compatibility.  For the
+rational Frey application, Lemma 6.1 proves that compatibility from its inverse-branch
+correction and the determinant-compatible local choices.  The first remaining
+pre-specialization arithmetic assertion is Required Local Theorem 6.2: simultaneous paired-frame
+seeds must exist over $\mathbf Q_2$ and $\mathbf Q_\ell$ themselves, since points obtained only
+after proper local extension are incompatible with complete splitting in the top.  Required
+Moving Input 6.3a and the constant-field intersection are the subsequent pre-specialization
+geometric obligations.  The localized abelian Ihara family (6.1) is then the first missing
+constant row in the lifting comparison, and it does not imply the other faces or the bottom
+carrier.  After those earlier inputs, Required Theorem 7.1 is the exact remaining seed theorem:
+among the normal-top specializations, construct one whose target eigensystem reaches a nonzero
+bottom minimal SP localization satisfying every clean hypothesis of Book 173.  The irreducible
+post-specialization obstruction is that clean bottom minimal-SP occurrence itself; Book 176
+consumes such face data and does not construct it.
+
+After that seed exists, Books 181 and 173 make the chosen lift automorphic directly over $M$.
+Section 7.3 reduces the local and group-theoretic descent checks using the extension of $\rho$
+and the split minimal local support, but Book 109 still needs distinguished Galois attachment
+for each candidate cyclic descent before $\rho$ can select its correction.  The remaining later
+bridge blocker is therefore the all-elementary attachment, descent, and uniform-SP theorem:
+current sources do not cover every
+odd-degree fixed field in the needed one-split curve range, do not construct the dyadically
+split raw SP carrier from a minimal packet with no eligible place away from $2$, and do not
+preserve the raw SP pair at every coefficient embedding.  This is separate from Required
+Theorem 7.1 and from the normal-closure construction.
 
 Accordingly,
 

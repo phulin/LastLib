@@ -437,8 +437,10 @@ package.
 
 ### 7.4 Exact module augmentation and the Hecke image
 
-Book 172, Section 6.3 identifies both the augmented module and the named
-faithful acting order. Module coinvariants alone would not suffice.
+Book 172, Section 6.3 identifies the augmented module and gives the natural
+surjection onto the augmented acting image.  The faithful acting-order
+identification is obtained only after patched faithfulness, in Book 172,
+Section 11.2.  Module coinvariants alone would not suffice.
 
 ## 8. The finite system and its patch
 

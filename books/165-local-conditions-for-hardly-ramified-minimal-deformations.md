@@ -1148,17 +1148,19 @@ Book 181 receives:
   field split completely at $2$ and $\ell$;
 - the tangent and obstruction inputs already passed through Books 166--167.
 
-Book 181 treats its additional restricted reduced-finiteness hypothesis
-**(RF)** separately.  This book exports only the Galois local conditions and
-the represented global deformation functor; it neither proves nor assumes
-(RF).
+Book 181 treats its additional exact automorphic seed separately.  From that
+seed, Book 173 supplies finiteness of the **whole** represented restricted
+ring, and Book 181 derives scalar-fibre finiteness from it.  This book exports
+only the Galois local conditions and the represented global deformation
+functor; it neither proves nor assumes that seed or the resulting finiteness.
 
 ### 5.4 Non-exports
 
 This book does not prove any of the following:
 
 - residual potential modularity or automorphy;
-- Book 181's restricted reduced-finiteness hypothesis (RF);
+- Book 181's exact automorphic seed or the resulting whole-ring restricted
+  finiteness;
 - an $R=T$ theorem, finite scalar fibre, or characteristic-zero point;
 - global smoothness or vanishing of the global obstruction group;
 - ambient $H^2$-vanishing at $\ell$;
@@ -1226,8 +1228,9 @@ problem).** Let $\ell\geq7$, let $\mathcal O$ and $k$ be as in Section
    $R^{\mathrm{hr,SP}}$, and its tangent is the localization kernel (4.9).
 
 8. The exact downstream interface is the ledger of Sections 5.1--5.3.  In
-   particular, the local theorem supplies neither Book 181's hypothesis
-   (RF) nor a characteristic-zero global point.
+   particular, the local theorem supplies neither Book 181's exact
+   automorphic seed (nor its whole-ring finiteness consequence) nor a
+   characteristic-zero global point.
 
 **Proof.** Parts 1--3 are Lemma 2.1, Theorem 2.2, the conductor calculation
 (2.14), and the cohomology calculation (2.15)--(2.21).  Parts 4--6 are the
@@ -1281,9 +1284,11 @@ theorems rather than silently strengthening them.  No result from Books 166--167
 listed in Chapter 5.
 
 There is therefore no hidden conditional theorem in the local package.
-The later global conclusion remains external: Book 181 states the additional
-restricted reduced-finiteness hypothesis (RF) under which its balanced ring
-argument produces a characteristic-zero point.
+The later global conclusion remains external: Book 181 assumes an exact
+automorphic seed, invokes Book 173 to make the whole restricted ring finite
+free, and then uses its balanced-ring argument to produce a
+characteristic-zero point.  No separate reduced-finiteness hypothesis is
+part of that downstream statement.
 
 ### 6.4 Conclusion
 
@@ -1307,5 +1312,6 @@ is (4.9).  They supply exact local nullhomotopies and dimension corrections,
 but no global lift by themselves.  That boundary is the correct interface:
 Book 166 performs the supported cohomology calculation, Book 167 converts
 relations into supported obstructions, and Book 181 adds its separately
-stated restricted reduced-finiteness input.  The local deformation node is
-complete without importing any conclusion from those later stages.
+stated exact automorphic seed, from which Book 173 supplies whole-ring
+restricted finiteness.  The local deformation node is complete without
+importing any conclusion from those later stages.

@@ -202,15 +202,15 @@ flowchart LR
 | 171 | The Minimal Totally-Real Deformation--Hecke Problem | 69, 71, 85, 124, 127, 65, 138, 170, 141 |
 | 172 | Minimal Patching and $R=T$ over Totally Real Fields | 141, 143, 144, 145, 146, 152, 171 |
 | 173 | Minimal Modularity Lifting | 171, 172 |
-| 174 | One-Prime Type Complexes and Component Support | 6, 65, 67, 70, 122, 138, 139, 140, 152, 170, 141, 171, 172 |
-| 175 | One-Prime Nonminimal Patching and R=T | 109, 173, 138, 139, 140, 170, 174 |
+| 174 | One-Prime Type Complexes and Component Support | 6, 65, 67, 70, 122, 125, 138, 139, 140, 143, 152, 170, 141, 171, 172 |
+| 175 | One-Prime Nonminimal Patching and R=T | 67, 69, 109, 173, 138, 139, 140, 170, 174 |
 | 176 | Nonminimal Modularity Lifting | 109, 173, 138, 139, 140, 170, 175, 174 |
 | 177 | Potential Modularity of Two-Dimensional Representations | 104, 98, 127, 176, 154, 158, 142 |
 | 178 | Auxiliary Dihedral Data and Residual Potential Modularity | 104, 98, 127, 141, 175, 154, 142, 155, 156, 157 |
 | 179 | Compatible Systems of Galois Representations | 168, 141, 142 |
 | 180 | Brauer Induction and Descent of Automorphy | 24, 75, 98, 109, 168 |
 | 181 | Finite Image and the Balanced Minimal-Lift Argument | 57, 62, 64, 141, 164, 165, 166, 167, 173 |
-| 182 | Potential Automorphy and Galois Refinement of a Chosen Lift | 109, 127, 128, 168, 164, 173, 155, 178, 165, 181 |
+| 182 | Potential Automorphy and Galois Refinement of a Chosen Lift | 109, 127, 128, 153, 154, 155, 157, 164, 165, 168, 173, 176, 178, 181 |
 | 183 | Brauer Induction for Automorphy Families | 98, 108, 109, 127, 128, 142, 168, 180, 182 |
 | 184 | Brauer Characters and Effectivity of Compatible Families | 24, 57, 180, 183 |
 | 185 | Compatible Systems over the Base Field | 168, 180, 182, 183, 184 |
@@ -225,18 +225,56 @@ deliberately separate from the acyclic manuscript graph.
 
 - **Localized abelian Ihara:** vanishing of the localized noncongruence-character quotient
   required for saturated two-map Ihara; the current Ihara manuscript isolates but does not prove it.
-- **Type and node comparison:** the named type-coefficient extension, type-Ihara,
-  primitive-residue, node-uniformization, generic-support, and one-prime component-support
-  hypotheses used by the integral level-change and type-complex manuscripts.
-- **Exact acting orders and augmentation:** reduced-source support, faithful Hecke-order
-  equality, primary/companion augmentation, and global reducedness in the one-prime
-  nonminimal comparison.
-- **Several active places:** mixed Ihara exactness, product-residue comparison, simultaneous
-  component support, and joint faithful-order augmentation for the actual finite active set.
-- **Controlled residual automorphic seed:** the post-specialization clean seed, normal-closure
-  control, and bridge-readiness record required by the chosen-lift and controlled-top datum.
-- **Balanced-lift finiteness:** the exact automorphic seed and restricted reduced-finiteness
-  hypothesis used to obtain a horizontal characteristic-zero point of the hardly-ramified ring.
+- **Type and node comparison:** the typed parahoric extension and ramified nearby-cycle
+  theorem, the accompanying incidence and unit-order coarse-descent hypothesis,
+  crossed-coefficient type-Ihara vanishing, primitive-residue obstruction vanishing,
+  superspecial type-compatible node uniformization, and the nonminimal boundary-chart and
+  local-dimension theorem needed for one-prime component support. Relative to the separately
+  named localized abelian Ihara input, constant-coefficient generic support in the clean special
+  block is proved in Book 140 from Book 125 and is not another unresolved hypothesis. After the
+  typed filtration exists, Book 174 likewise proves the typed generic-residue kernel equality
+  from Book 125 and contracts it to equality of the integral faithful image orders; no separate
+  generic-support or faithful-order hypothesis remains at that interface.
+- **One-prime generic rigidity:** after the reduced comparison, the exact remaining theorem is
+  vertical torsion-freeness of the conductor-one global deformation ring together with
+  vanishing of every characteristic-zero enhanced tangent--Selmer group for the represented
+  fixed local conditions, including the line tangent at a monodromy-zero boundary point. Book
+  175 proves this is equivalent to global reducedness and full $R=T$.
+  Book 172 derives minimal acting-order augmentation only after minimal $R=T$; Book 174 proves
+  fixed-prime acting-order augmentation from the strict global twist and proves auxiliary
+  represented-ring, primary/companion complex, module, action, and pairing augmentation while
+  retaining only a surjection on auxiliary acting images; Book 175 makes that last surjection
+  injective after generic rigidity, equivalently full base $R=T$, with the strict ray twist
+  additionally retained for the scalar family. No separate one-prime
+  acting-order theorem remains in that faithful range.
+- **Several active places:** construction of the coherent global level cube, vanishing of its
+  mixed obstruction groups, derived product-residue comparison, simultaneous component
+  support, coherent joint ring--complex--module--action--pairing augmentation, and finite-set
+  reciprocity for the actual active set.  Fixed-prime faithful-order augmentation is formal
+  once the joint strict product twist exists; auxiliary acting-image injectivity follows after
+  full base $R=T$ and is not a separate input to the reduced finite-level comparison.
+- **Controlled residual automorphic seed:** actual paired-frame seeds over the base completions
+  at $2$ and $\ell$ required by complete splitting, rather than only after finite local
+  extension; a common moving presentation for the actual mixture of split and exact nonsplit
+  local packets; disjointness between the avoidance field and the constant field of that
+  presentation's Galois closure; after the resulting normal-top specialization, a
+  saturated path from the target eigensystem to a nonzero clean bottom minimal SP localization;
+  and the later all-elementary attachment-and-descent record, including distinguished
+  attachment of cyclic descent candidates over odd-degree fixed fields and a raw
+  dyadic SP carrier despite the minimal packet's lack of an eligible ramification place away
+  from two.  The lifting faces also require the separately named one-prime and several-place
+  inputs above.  The raw-to-global part of the Book 183 handoff is the separately named
+  uniform-local-preservation theorem below.  Once the common presentation and constant-field
+  certificate are supplied, Book 182 proves the remaining normal-closure control, proves Book
+  178's corrected relative-ray compatibility in the rational-base Frey case, takes the top
+  itself as seed field, makes upward transfer vacuous, and reduces the local and group-theoretic
+  descent checks to Book 109 while retaining the distinguished attachment that theorem needs
+  for each candidate cyclic descent.  Book 178's general totally-real-base ray hypothesis remains
+  separate.
+- **Balanced-lift finiteness:** no separate restricted reduced-finiteness hypothesis remains.
+  From the exact automorphic seed, Book 173 makes the whole restricted ring finite free and Book
+  181 derives finite scalar image, whole-ring finiteness, finite flatness, and a horizontal
+  characteristic-zero point.  Its sole unresolved arithmetic input is therefore the seed above.
 - **Uniform local preservation:** raw-to-global preservation of the signed special
   Weil--Deligne pair at every coefficient embedding used in the Brauer packet array.
 - **All-place coefficient extension $(\mathrm{AI}_2)$:** extension of the away-from-two
