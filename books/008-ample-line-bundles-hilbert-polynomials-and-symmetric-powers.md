@@ -938,7 +938,7 @@ high power.
 ### 10.1 Families of length $d$
 
 Fix an integer $d\geq0$.
-A closed subscheme $Z\subseteq X_T$ is a family of length $d$ over $T$ if $Z\to T$ is finite locally free of rank $d$. Every geometric fiber is zero-dimensional of scheme-theoretic length $d$. Rank is stronger than counting points: one nonreduced point can have length $d$.
+A closed subscheme $Z\subseteq X_T$ is a family of length $d$ over $T$ if $Z\to T$ is finite locally free of rank $d$. If $d>0$, every geometric fiber is zero-dimensional of scheme-theoretic length $d$. If $d=0$, finite local freeness of rank zero forces $Z$ to be the empty subscheme; in particular there are no nonempty fibers to which a dimension should be assigned. Rank is stronger than counting points: one nonreduced point can have length $d$.
 
 If $X\to S$ is separated, these families form a set-valued functor: an isomorphism between two closed subschemes over $X_T$ is unique. A tuple of sections produces the disjoint union of their graphs only while the graphs remain disjoint. When points collide, the reduced union loses points; the scheme-theoretic union may acquire a thickening and retain rank, but it need not remain flat. A length-$d$ family must retain the scheme structure and satisfy finite local freeness over the base.
 
@@ -1173,9 +1173,12 @@ cycle and carries exactly the same lift datum. Taking the product over $j$ prove
 
 Now let $D\subset C_T$ be any relative effective divisor. Apply the chart lemma near every point
 of $T$. Its monic coefficients give local morphisms to $\operatorname{Sym}^d(C)$. On overlaps the
-morphisms agree because their pullbacks of the monic equations cut out the same divisor; since the
-quotient is separated, they glue. This proves surjectivity. Conversely, on every divisor chart the
-coefficients are recovered uniquely from the pulled-back divisor, proving injectivity. Every step
+morphisms agree: after refining by the divisor charts, the common divisor has a unique
+open-and-closed decomposition, a unique monic equation on each piece, and the same uniquely
+determined étale lift datum. Thus both morphisms have identical chart coordinates and lifts.
+The local morphisms therefore glue by the sheaf property. This proves surjectivity. Conversely, on
+every divisor chart the coefficients are recovered uniquely from the pulled-back divisor, proving
+injectivity. Every step
 uses formation of a finite locally free algebra, idempotents, and monic equations, all of which
 commute with arbitrary base change. The result is therefore a natural bijection on all test
 schemes, not merely on geometric points.
@@ -1222,7 +1225,7 @@ by letting $\operatorname{Hilb}^P_{X/S}(T)$ be the set of closed subschemes $Z\s
 
 Pullback is scheme-theoretic inverse image. Flatness ensures that the inverse image remains a family with the same polynomial. Because a closed immersion has no nontrivial automorphisms over its ambient scheme, this is a functor of sets, not a category fibered in groupoids.
 
-For $P=d$ constant, write $\operatorname{Hilb}^d_{X/S}$. Its objects are exactly closed subschemes finite locally free of rank $d$ over $T$. Indeed, a projective flat finitely presented morphism with zero-dimensional fibers is finite, and the constant fiber length is the rank. Conversely finite locally free rank $d$ has polynomial $d$.
+For $P=d$ constant, write $\operatorname{Hilb}^d_{X/S}$. Its objects are exactly closed subschemes finite locally free of rank $d$ over $T$. For $d>0$, a projective flat finitely presented family with constant polynomial $d$ has zero-dimensional fibers and is finite, and the constant fiber length is its rank. For $d=0$, the zero Hilbert polynomial forces every fiber, and hence the flat family, to be empty, giving rank zero. Conversely finite locally free rank $d$ has polynomial $d$.
 
 The Hilbert functor does not classify quotients of arbitrary sheaves. It records closed subschemes through quotients $\mathcal O_{X_T}\twoheadrightarrow\mathcal O_Z$ whose kernels are ideals. That multiplicative ideal condition is the narrow feature used here.
 
@@ -1538,7 +1541,7 @@ This is the precise Hilbert apparatus needed for embedded curves: a fixed polyno
 
 Before using one of these parameter spaces, four distinctions prevent most errors.
 
-First, decide whether the object is an ordered tuple, a cycle, or an embedded finite subscheme. They are represented respectively by $X^d$, $\operatorname{Sym}^d(X)$, and $\operatorname{Hilb}^d(X)$. They always agree in degree one, and on a smooth relative curve they agree in every degree; outside that setting there is no general identification.
+First, decide whether the object is an ordered tuple, a cycle, or an embedded finite subscheme. They are represented respectively by $X^d$, $\operatorname{Sym}^d(X)$, and $\operatorname{Hilb}^d(X)$. In degrees zero and one these distinctions disappear. For $d\geq2$, however, $X^d$ remains the ordered parameter space even when $X$ is a smooth relative curve; only its quotient by $\mathfrak S_d$ is $\operatorname{Sym}^d(X)$. On a smooth relative curve it is the last two spaces, $\operatorname{Sym}^d(X)$ and $\operatorname{Hilb}^d(X)$, that agree in every degree. Outside that setting there is no general identification between cycles and embedded finite subschemes.
 
 Second, distinguish a functor from its representing scheme and from its universal family. A $T$-point of a Hilbert scheme is a subscheme of $X_T$; it is not a point of $X$.
 
@@ -1589,7 +1592,7 @@ $$
 \end{array}
 $$
 
-On a smooth relative curve, the last two entries in constant degree coincide with effective divisors, and the universal divisor makes the equality functorial.
+On a smooth relative curve, the last two entries in constant degree coincide with effective divisors, and the universal divisor makes the equality functorial. The first entry remains the ordered cover of the symmetric power (and is generally different for $d\geq2$); passing from it to the divisor parameter space requires quotienting by permutations.
 
 ### 14.2 The reusable theorem package
 
