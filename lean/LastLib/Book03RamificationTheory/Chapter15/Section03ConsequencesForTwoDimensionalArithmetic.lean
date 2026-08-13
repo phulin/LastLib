@@ -52,9 +52,10 @@ def chapter15FactorsThroughFiniteQuotient
     {k G V : Type*} [Semiring k] [Group G] [AddCommGroup V] [Module k V]
     (ρ : Representation k G V) : Prop :=
   ∃ (Q : Type*) (hQ : Group Q) (hQfinite : Finite Q),
-    (letI : Group Q := hQ
-     letI : Finite Q := hQfinite
-     ∃ (π : G →* Q) (ρQ : Representation k Q V), ρ = ρQ.comp π)
+     (letI : Group Q := hQ
+      letI : Finite Q := hQfinite
+      ∃ (π : G →* Q) (_hπ : Function.Surjective π)
+        (ρQ : Representation k Q V), ρ = ρQ.comp π)
 
 /-- The finite quotient is the only Galois layer needed by a finite representation. -/
 theorem chapter15_finite_image_representation_uses_finite_galois_layer
@@ -81,20 +82,14 @@ def chapter15PermutationRepresentation
     Representation k G (MonoidAlgebra k X) :=
   (Rep.ofMulAction k G X).ρ
 
-/-- The permutation conductor is the discriminant exponent of the corresponding field extension. -/
-theorem chapter15_permutation_conductor_recovers_discriminant
-    {A B G k : Type*} [CommRing A] [CommRing B]
-    [Algebra A B] [IsDedekindDomain A] [IsDedekindDomain B]
-    [Module.Finite A B] [Module.IsTorsionFree A B]
-    [Group G] [Finite G] [MulSemiringAction G B] [SMulCommClass G A B]
-    [Field k] (p : Ideal A) [p.IsPrime] [Finite (p.primesOver B)]
-    [FiniteDimensional k (MonoidAlgebra k (p.primesOver B))]
-    (P : Ideal B) [P.IsPrime] [P.LiesOver p]
-    (F : Chapter15LowerRamificationFiltration G)
-    (hbranches : (p.primesOver B).ncard = 1) :
-    chapter15ArtinConductor F
-        (chapter15PermutationRepresentation k G (p.primesOver B)) =
-      (chapter15DiscriminantExponent A B p : ℚ) := by
+/- A one-point branch set has zero permutation conductor.  It is not the
+embedding permutation representation used by the conductor--
+discriminant identity. -/
+theorem chapter15_one_branch_permutation_conductor_zero
+    {G k X : Type*} [Field k] [Group G] [Finite G] [MulAction G X] [Finite X]
+    [FiniteDimensional k (MonoidAlgebra k X)]
+    (F : Chapter15LowerRamificationFiltration G) (hX : Nat.card X = 1) :
+    chapter15ArtinConductor F (chapter15PermutationRepresentation k G X) = 0 := by
   sorry
 
 /-- A field discriminant is an ideal-valued invariant, distinct in kind from a model discriminant. -/

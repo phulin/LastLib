@@ -1,8 +1,15 @@
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Data.Nat.Factorial.Basic
 import Mathlib.MeasureTheory.Integral.Bochner.Set
 import Mathlib.NumberTheory.Harmonic.EulerMascheroni
 import Mathlib.NumberTheory.NumberField.Discriminant.Basic
+import Mathlib.NumberTheory.NumberField.InfinitePlace.TotallyRealComplex
+
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter02.Core
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter10.Section02FiniteFormulasForBTAndCT
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter09.Section01UniversalOdlyzkoPoitouInequalities
 
 namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter11
 
@@ -10,6 +17,9 @@ noncomputable section
 
 open MeasureTheory
 open Module NumberField NumberField.InfinitePlace
+open LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter02
+open LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter10
+open LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter09
 open scoped BigOperators
 
 /-!
@@ -27,10 +37,15 @@ abbrev chapter11Degree (K : Type*) [Field K] [NumberField K] : ℕ :=
 def chapter11RootDiscriminant (K : Type*) [Field K] [NumberField K] : ℝ :=
   NumberField.rootDiscr K
 
-theorem chapter11_root_discriminant_eq_canonical
+@[simp] theorem chapter11_root_discriminant_eq_canonical
     (K : Type*) [Field K] [NumberField K] :
     chapter11RootDiscriminant K = NumberField.rootDiscr K :=
   rfl
+
+theorem chapter11_root_discriminant_pos
+    (K : Type*) [Field K] [NumberField K] :
+    0 < chapter11RootDiscriminant K := by
+  sorry
 
 def chapter11RealProportion (K : Type*) [Field K] [NumberField K] : ℝ :=
   (NumberField.InfinitePlace.nrRealPlaces K : ℝ) /
@@ -147,10 +162,27 @@ theorem chapter11_explicit_formula_log_bound_eq_expression
         (chapter11RealProportion K) :=
   rfl
 
-/- LOCAL_DEPENDENCY_GUESS (9.1): Chapter 9's universal explicit-formula
-   theorem is not present in the baseline checkout.  This interface records
-   only that earlier analytic theorem, with its exact positive-support
-   hypothesis; it does not assume any finite-degree conclusion. -/
+/- The `Ici` integrals used in this chapter and the `Ioi` integrals used by
+   Chapter 9 differ only at the null endpoint.  These two wrapper bridges
+   keep the canonical Chapter 9 universal inequality usable here. -/
+theorem chapter11_root_discriminant_eq_chapter09
+    (K : Type*) [Field K] [NumberField K] :
+    chapter11RootDiscriminant K = chapter09RootDiscriminant K := by
+  sorry
+
+theorem chapter11_explicit_formula_log_bound_eq_chapter09
+    (K : Type*) [Field K] [NumberField K] (T : ℝ) :
+    chapter11ExplicitFormulaLogBound K T = chapter09UnconditionalExponent K T := by
+  sorry
+
+theorem chapter11_B_eq_chapter10_BT (T : ℝ) :
+    chapter11B T = chapter10BT T := by
+  sorry
+
+theorem chapter11_C_eq_chapter10_CT (T : ℝ) :
+    chapter11C T = chapter10CT T := by
+  sorry
+
 theorem chapter11_explicit_formula_log_root_discriminant_bound
     (K : Type*) [Field K] [NumberField K] (T : ℝ) (hT : 0 < T) :
     chapter11ExplicitFormulaLogBound K T ≤
@@ -176,7 +208,7 @@ theorem chapter11_explicit_formula_log_expression_mono_signature
   sorry
 
 theorem chapter11_explicit_formula_log_expression_ge_of_B_upper
-    (n : ℕ) (T α B₀ : ℝ) (hα : 0 ≤ α) (hB : chapter11B T ≤ B₀) :
+    (n : ℕ) (T α B₀ : ℝ) (hB : chapter11B T ≤ B₀) :
     Real.eulerMascheroniConstant + Real.log (8 * Real.pi) + α * (Real.pi / 2) -
         2 * T / (n : ℝ) - B₀ - α * chapter11C T ≤
       chapter11ExplicitFormulaLogExpression n T α := by

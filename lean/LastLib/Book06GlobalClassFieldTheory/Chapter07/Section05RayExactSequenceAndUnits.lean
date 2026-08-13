@@ -101,7 +101,7 @@ theorem ray_exact_sequence_card_formula
       Fintype.card (rayResidueSignGroup m) * Fintype.card (ClassGroup (𝓞 K)) := by
   sorry
 
-theorem positive_rank_units_can_reduce_the_ray_class_number
+theorem nontrivial_global_unit_image_can_reduce_the_ray_class_number
     (m : Modulus K)
     [Fintype (rayResidueSignGroup m)] [Fintype (idealRayClassGroup m)]
     [Fintype (ClassGroup (𝓞 K))]

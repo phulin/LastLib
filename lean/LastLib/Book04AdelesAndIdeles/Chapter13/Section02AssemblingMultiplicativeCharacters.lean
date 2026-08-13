@@ -153,7 +153,7 @@ theorem chapter13_idele_module_positive
 
 theorem chapter13_idele_module_continuous
     (K : Type*) [Field K] [NumberField K] :
-    Continuous (chapter13IdeleModule K) := by
+    Continuous (chapter13IdeleModuleHom K) := by
   sorry
 
 theorem chapter13_idele_module_principal
@@ -178,6 +178,23 @@ theorem chapter13_idele_class_module_apply
 theorem chapter13_idele_class_module_positive
     (K : Type*) [Field K] [NumberField K] (x : Chapter13IdeleClass K) :
     0 < chapter13IdeleClassModule K x := by
+  sorry
+
+theorem chapter13_idele_class_module_continuous
+    (K : Type*) [Field K] [NumberField K] :
+    Continuous (chapter13IdeleClassModule K) := by
+  sorry
+
+theorem chapter13_idele_module_surjective_positive
+    (K : Type*) [Field K] [NumberField K] :
+    ∀ r : ℝ, 0 < r → ∃ x : Chapter13Idele K,
+      chapter13IdeleModule K x = r := by
+  sorry
+
+theorem chapter13_idele_class_module_surjective_positive
+    (K : Type*) [Field K] [NumberField K] :
+    ∀ r : ℝ, 0 < r → ∃ x : Chapter13IdeleClass K,
+      chapter13IdeleClassModule K x = r := by
   sorry
 
 theorem chapter13_idele_module_has_infinite_image

@@ -343,10 +343,10 @@ lemma chapter07_padic_digit_limit_injective
   exact Nat.mul_right_cancel
     (pow_pos (Nat.Prime.pos (Fact.out : Nat.Prime p)) _) hmul
 
--- There are infinitely many compatible infinite digit strings with no rational representative.
-theorem chapter07_infinitely_many_nonrational_padic_digit_strings
+-- The compatible infinite digit strings with no rational representative are uncountable.
+theorem chapter07_nonrational_padic_digit_strings_uncountable
     (p : ℕ) [Fact p.Prime] :
-    Set.Infinite
+    ¬ Set.Countable
       {a : chapter07DigitString p |
         ¬ chapter07DigitStringRationallyRepresented p a} := by
   classical
@@ -409,7 +409,7 @@ theorem chapter07_infinitely_many_nonrational_padic_digit_strings
     · exact Or.inl hrep
     · exact Or.inr hrep
   have hcount : (Set.univ : Set (chapter07DigitString p)).Countable :=
-    (hT.union hSfin.countable).mono hU
+    (hT.union hSfin).mono hU
   exact (not_countable_univ (α := chapter07DigitString p)) hcount
 
 /-! ### 7.6. Examples: Laurent and power series -/
@@ -819,8 +819,8 @@ def chapter07PowerSeriesTruncation
     chapter07PowerSeriesRing k :=
   (PowerSeries.trunc n f : chapter07PowerSeriesRing k)
 
--- Power-series truncations stabilize each coefficient, the canonical X-adic statement.
-theorem chapter07_power_series_truncations_converge
+-- Power-series truncations stabilize each coefficient.
+theorem chapter07_power_series_truncations_coefficients_stabilize
     {k : Type*} [Field k] (f : chapter07PowerSeriesRing k) :
     ∀ d : ℕ, ∃ N : ℕ, ∀ n : ℕ, N ≤ n →
       PowerSeries.coeff d (chapter07PowerSeriesTruncation n f) = PowerSeries.coeff d f := by

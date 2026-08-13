@@ -1,4 +1,5 @@
 import LastLib.Book04AdelesAndIdeles.Chapter15.Section01MatricesOverTheAdeles
+import LastLib.Book04AdelesAndIdeles.Chapter09.Section01TheGlobalModuleAndDegree
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter15
 
@@ -71,8 +72,8 @@ theorem chapter15_principal_matrix_injective
   sorry
 
 theorem chapter15_principal_matrix_range_is_discrete
-    (n : ℕ) [NumberField K] :
-    IsDiscrete (Set.range (chapter15PrincipalMatrix (R := R) (K := K) n)) := by
+    (n : ℕ) {L : Type*} [Field L] [NumberField L] :
+    IsDiscrete (Set.range (chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n)) := by
   sorry
 
 /-- The diagonal map into the infinite multiplicative factors. -/
@@ -108,21 +109,46 @@ def chapter15PrincipalIdele : Kˣ →* Chapter15IdeleGroup R K where
     sorry
 
 /- LOCAL_DEPENDENCY_GUESS: the book's normalized idele module is not a named
-Mathlib object.  The structure records only the canonical multiplicative,
-continuous, product-formula interface needed by this chapter. -/
+Mathlib object.  The structure records the surjective, continuous,
+principal-trivial multiplicative interface needed by this chapter. -/
 structure Chapter15IdeleModuleData where
   toMonoidHom : Chapter15IdeleGroup R K →* ℝ≥0ˣ
+  surjective_toMonoidHom : Function.Surjective toMonoidHom
   principal_eq_one : ∀ x : Kˣ,
     toMonoidHom (chapter15PrincipalIdele (R := R) (K := K) x) = 1
   continuous_toMonoidHom : Continuous toMonoidHom
+
+/- The canonical full-idele model from Chapter 9 supplies the normalized module
+once the book-facing graph model is identified with units of the full adele ring. -/
+theorem chapter15_idele_group_homeomorph_full_adele_units_principal
+    (K : Type*) [Field K] [NumberField K] (x : Kˣ) :
+    chapter15_idele_group_homeomorph_full_adele_units (R := 𝓞 K) (K := K)
+        (chapter15PrincipalIdele (R := 𝓞 K) (K := K) x) =
+      LastLib.Book04AdelesAndIdeles.Chapter09.chapter09PrincipalIdele K x := by
+  sorry
+
+def chapter15CanonicalIdeleModuleData
+    (K : Type*) [Field K] [NumberField K] :
+    Chapter15IdeleModuleData (R := 𝓞 K) (K := K) where
+  toMonoidHom :=
+    (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleModuleHom K).comp
+      (chapter15_idele_group_homeomorph_full_adele_units (R := 𝓞 K) (K := K)).toMulEquiv.toMonoidHom
+  surjective_toMonoidHom := by
+    sorry
+  principal_eq_one := by
+    intro x
+    sorry
+  continuous_toMonoidHom := by
+    sorry
 
 /- LOCAL_DEPENDENCY_GUESS: the preceding ideles chapters provide the product
 formula construction of the normalized idele module.  This existence bridge
 keeps the determinant-one API usable before that canonical construction is
 reconciled into the shared project namespace. -/
-theorem chapter15_idele_module_data_exists [NumberField K] :
-    Nonempty (Chapter15IdeleModuleData (R := R) (K := K)) := by
-  sorry
+theorem chapter15_idele_module_data_exists
+    (K : Type*) [Field K] [NumberField K] :
+    Nonempty (Chapter15IdeleModuleData (R := 𝓞 K) (K := K)) := by
+  exact ⟨chapter15CanonicalIdeleModuleData K⟩
 
 /-! ### The determinant homomorphism -/
 
@@ -206,6 +232,18 @@ theorem chapter15_adelic_determinant_module_apply
       M.toMonoidHom (chapter15AdelicDeterminant n g) :=
   rfl
 
+theorem chapter15_adelic_determinant_module_continuous
+    (n : ℕ) [NumberField K]
+    (M : Chapter15IdeleModuleData (R := R) (K := K)) :
+    Continuous (chapter15AdelicDeterminantModule (R := R) (K := K) n M) := by
+  sorry
+
+theorem chapter15_adelic_determinant_module_surjective
+    (n : ℕ) (hn : 0 < n)
+    (M : Chapter15IdeleModuleData (R := R) (K := K)) :
+    Function.Surjective (chapter15AdelicDeterminantModule (R := R) (K := K) n M) := by
+  sorry
+
 theorem chapter15_adelic_determinant_module_principal
     (n : ℕ) (M : Chapter15IdeleModuleData (R := R) (K := K))
     (g : Matrix.GeneralLinearGroup (Fin n) K) :
@@ -278,11 +316,11 @@ instance chapter15DeterminantOneAutomorphicDoubleQuotient_topologicalSpace
 /- The higher-rank noncompactness warning is stated as a genuine topological
 negative result, rather than being silently generalized from rank one. -/
 theorem chapter15_higher_rank_determinant_one_quotient_not_compact
-    (n : ℕ) (hn : 1 < n) [NumberField K]
-    (M : Chapter15IdeleModuleData (R := R) (K := K)) :
-    ¬ CompactSpace
-      (chapter15DeterminantOneAutomorphicDoubleQuotient n M
-        (⊤ : Subgroup (Chapter15FiniteMatrixGroup n R K))) := by
+    (n : ℕ) (hn : 1 < n) {L : Type*} [Field L] [NumberField L] :
+    ¬ IsCompact (Set.univ : Set
+      (chapter15DeterminantOneAutomorphicDoubleQuotient (R := 𝓞 L) (K := L) n
+        (chapter15CanonicalIdeleModuleData L)
+        (chapter15StandardFiniteMatrixLevel (R := 𝓞 L) (K := L) n))) := by
   sorry
 
 /-! The source's warning about rank one is recorded here as an API boundary.  No

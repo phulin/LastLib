@@ -7,6 +7,7 @@ noncomputable section
 
 open Set NumberField
 open NumberField.InfinitePlace
+open LastLib.Book04AdelesAndIdeles.Chapter09
 open scoped BigOperators TensorProduct
 
 local instance (p : Nat.Primes) : Fact p.1.Prime := ⟨p.2⟩
@@ -92,8 +93,7 @@ abbrev chapter12UnitCircle := chapter12UnitCircleSubgroup
 
 abbrev chapter12GaussianProfiniteUnitGroup
     {K : Type*} [Field K] [NumberField K] [Algebra ℚ K] :=
-  ∀ v : IsDedekindDomain.HeightOneSpectrum (𝓞 K),
-    (v.adicCompletionIntegers K)ˣ
+  chapter12CanonicalFiniteUnitIdeles K
 
 structure Chapter12GaussianDiagonalUnitData
     {K : Type*} [Field K] [NumberField K] [Algebra ℚ K]
@@ -101,6 +101,24 @@ structure Chapter12GaussianDiagonalUnitData
   finiteUnitEmbedding : (𝓞 K)ˣ →*
     chapter12GaussianProfiniteUnitGroup (K := K)
   circleUnitValue : (𝓞 K)ˣ →* chapter12UnitCircle
+
+def chapter12GaussianCanonicalDiagonalUnitData
+    {K : Type*} [Field K] [NumberField K] [Algebra ℚ K]
+    (G : Chapter12GaussianFieldData K) :
+    Chapter12GaussianDiagonalUnitData G where
+  finiteUnitEmbedding :=
+    chapter09FiniteUnitSubtypeEmbedding K
+  circleUnitValue :=
+    { toFun := fun u =>
+        ⟨Units.map (G.complexEmbedding.comp (algebraMap (𝓞 K) K)) u, by
+          sorry⟩
+      map_one' := by
+        ext
+        simp
+      map_mul' := by
+        intro u v
+        ext
+        simp }
 
 def chapter12GaussianDiagonalUnitHom
     {K : Type*} [Field K] [NumberField K] [Algebra ℚ K]
@@ -132,18 +150,18 @@ abbrev chapter12GaussianNormOneClassCarrier
 
 theorem chapter12_gaussian_norm_one_class_is_diagonal_unit_quotient
     {K : Type*} [Field K] [NumberField K] [Algebra ℚ K]
-    (G : Chapter12GaussianFieldData K)
-    (M : Chapter12IdeleModuleData (𝓞 K) K)
-    (D : Chapter12GaussianDiagonalUnitData G) :
-    Nonempty (chapter12GaussianNormOneClassCarrier M ≃
-      chapter12GaussianDiagonalUnitQuotient D) := by
+    (G : Chapter12GaussianFieldData K) :
+    Nonempty (chapter12GaussianNormOneClassCarrier
+      (chapter12CanonicalIdeleModuleData K) ≃
+      chapter12GaussianDiagonalUnitQuotient
+        (chapter12GaussianCanonicalDiagonalUnitData G)) := by
   sorry
 
 theorem chapter12_gaussian_norm_one_diagonal_quotient_is_compact
     {K : Type*} [Field K] [NumberField K] [Algebra ℚ K]
-    (G : Chapter12GaussianFieldData K)
-    (D : Chapter12GaussianDiagonalUnitData G) :
-    IsCompact (Set.univ : Set (chapter12GaussianDiagonalUnitQuotient D)) := by
+    (G : Chapter12GaussianFieldData K) :
+    IsCompact (Set.univ : Set (chapter12GaussianDiagonalUnitQuotient
+      (chapter12GaussianCanonicalDiagonalUnitData G))) := by
   sorry
 
 /-! ## Prime behavior and scalar extension -/
@@ -168,14 +186,15 @@ theorem chapter12_gaussian_split_local_tensor_shape
 
 /- LOCAL_DEPENDENCY_GUESS: `E` is the canonical quadratic local factor of
    `K ⊗[ℚ] ℚ_[p]`; the pinned APIs do not yet expose its chosen carrier. -/
-theorem chapter12_gaussian_inert_or_ramified_local_tensor_shape
+theorem chapter12_gaussian_inert_local_tensor_shape
     {K E : Type*} [Field K] [Field E] [NumberField K]
     [Algebra ℚ K]
     (p : Nat.Primes) [Algebra ℚ_[p] E] [FiniteDimensional ℚ_[p] E]
+    [Algebra.Unramified ℚ_[p] E]
     (G : Chapter12GaussianFieldData K)
-    (hcongr : p.1 % 4 = 3 ∨ p.1 = 2) :
-    Module.finrank ℚ_[p] E = 2 →
-      chapter12TensorFieldShape K ℚ_[p] E := by
+    (hcongr : p.1 % 4 = 3)
+    (hdegree : Module.finrank ℚ_[p] E = 2) :
+    chapter12TensorFieldShape K ℚ_[p] E := by
   sorry
 
 /-- Scalar extension is the adelic identity used at split and nonsplit places. -/
@@ -184,17 +203,10 @@ abbrev chapter12AdeleScalarExtension
   K ⊗[ℚ] chapter12RationalAdeleRing
 
 theorem chapter12_gaussian_adelic_scalar_extension
-    {K : Type*} [Field K] [NumberField K] [Algebra ℚ K]
-    (G : Chapter12GaussianFieldData K) :
+    {K : Type*} [Field K] [NumberField K] [Algebra ℚ K] :
     Nonempty (chapter12AdeleRing (𝓞 K) K ≃+*
       chapter12AdeleScalarExtension (K := K)) := by
   sorry
-
-theorem chapter12_gaussian_split_scalar_extension_keeps_both_factors
-    {K F : Type*} [Field K] [Field F] [NumberField K] [Algebra ℚ K]
-    [Algebra ℚ F] (e : chapter12TensorAlgEquiv ℚ K F (F × F)) :
-    chapter12TensorSplitShape K F := by
-  exact ⟨e⟩
 
 end
 end LastLib.Book04AdelesAndIdeles.Chapter12

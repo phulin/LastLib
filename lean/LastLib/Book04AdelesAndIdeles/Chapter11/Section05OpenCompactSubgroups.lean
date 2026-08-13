@@ -61,10 +61,7 @@ theorem chapter11_additive_compact_open_subgroup_is_eventually_an_ideal_lattice
     (hopen : IsOpen (H : Set (Chapter11FiniteAdeleRing K))) :
     ∃ S : Finset (IsDedekindDomain.HeightOneSpectrum (𝓞 K)),
       ∀ x ∈ H, ∀ v, v ∉ S →
-        ∃ z : v.adicCompletionIntegers K,
-          (z : v.adicCompletion K) = x v ∧
-            z ∈ chapter11AdditiveLocalDepth
-              (A := v.adicCompletionIntegers K) 0 := by
+        x v ∈ (v.adicCompletionIntegers K : Set (v.adicCompletion K)) := by
   sorry
 
 theorem chapter11_one_plus_translation_has_multiplicative_defect

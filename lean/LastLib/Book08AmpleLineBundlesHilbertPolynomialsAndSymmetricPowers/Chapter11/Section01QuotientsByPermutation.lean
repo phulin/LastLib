@@ -1,3 +1,4 @@
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter03.Dependencies
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11.Dependencies
 
 namespace LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11
@@ -6,6 +7,7 @@ noncomputable section
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
 open RelativeScheme
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter03
 open scoped BigOperators Polynomial
 
 universe u v
@@ -68,38 +70,34 @@ theorem invariantAffineSubring_contains_coefficients {A B : Type u} [CommRing A]
       invariantAffineSubring (B := B) G := by
   sorry
 
-/- LOCAL_DEPENDENCY_GUESS: this instance should be supplied by the earlier
-   relative projective-space chapters once those chapters are elaborated. -/
 instance relativePower_quasiProjective {S : Scheme.{u}} (X : RelativeScheme S) (d : ℕ)
     [Chapter11QuasiProjectiveOver X] :
     Chapter11QuasiProjectiveOver (relativePower X d).carrier := by
   sorry
 
-/- LOCAL_DEPENDENCY_GUESS: quasi-projectivity is stable under the base changes
-   used by the book-facing slice interface. -/
 instance relativeBaseChange_quasiProjective {S : Scheme.{u}} (X T : RelativeScheme S)
     [Chapter11QuasiProjectiveOver X] :
     Chapter11QuasiProjectiveOver (RelativeScheme.baseChange X T) := by
   sorry
 
-/- LOCAL_DEPENDENCY_GUESS: add the proper/projective embedding field to the
-   earlier projective morphism interface when it becomes available. -/
 class Chapter11ProjectiveOver {S : Scheme.{u}} (X : RelativeScheme S)
     extends Chapter11QuasiProjectiveOver X where
-  proper : IsProper X.structuralMap
+  projective :
+    chapter03Projective X.structuralMap
 
 theorem finite_group_quotient_theorem {S : Scheme.{u}} {Y : RelativeScheme S}
     {G : Type v} [Finite G] [Group G] (act : RelativeAction Y G)
     [Chapter11QuasiProjectiveOver Y] :
     ∃ Q : RelativeCategoricalQuotient Y G act,
-      IsIntegralHom Q.quotientMap.hom ∧ IsFinite Q.quotientMap.hom ∧
-        Surjective Q.quotientMap.hom := by
+      Nonempty (Chapter11QuasiProjectiveOver Q.carrier) ∧
+        IsIntegralHom Q.quotientMap.hom ∧ IsFinite Q.quotientMap.hom ∧
+          Surjective Q.quotientMap.hom := by
   sorry
 
 theorem finite_group_quotient_categorical_universal_property
     {S : Scheme.{u}} {Y : RelativeScheme S} {G : Type v} [Finite G] [Group G]
     (act : RelativeAction Y G) [Chapter11QuasiProjectiveOver Y] :
-    ∃ (Q : RelativeCategoricalQuotient Y G act),
+    ∃ (Q : RelativeFiniteGroupQuotient Y G act),
       ∀ {Z : RelativeScheme S} (f : Y ⟶ Z),
         (∀ g, act.hom g ≫ f = f) →
           ∃! h : Q.carrier ⟶ Z, Q.quotientMap ≫ h = f := by
@@ -158,14 +156,21 @@ noncomputable def relativePowerBaseChangeComparison {S : Scheme.{u}}
   RelativePower.lift (relativePower (RelativeScheme.baseChange X T) d)
     (fun i => RelativeScheme.baseChangeHom ((relativePower X d).projection i) T)
 
+/- The comparison is induced by two finite-product universal properties, so it
+   is an isomorphism even before passing to the quotient. -/
+theorem relativePowerBaseChangeComparison_isIso {S : Scheme.{u}}
+    (X T : RelativeScheme S) (d : ℕ) :
+    IsIso (relativePowerBaseChangeComparison X T d) := by
+  sorry
+
 /-!
-The next theorem records the stronger statement for permutation quotients of
-powers.  It is intentionally separate from the general flat-base-change
-field: arbitrary invariant rings need not commute with arbitrary scalar
-extension, whereas elementary symmetric polynomials do.
+The next theorem records the comparison supplied by the flat-base-change
+field.  It is intentionally separate from the general quotient construction:
+arbitrary invariant rings need not commute with arbitrary scalar extension.
 -/
-theorem symmetricPower_arbitrary_base_change {S : Scheme.{u}} (X : RelativeScheme S)
+theorem symmetricPower_flat_base_change_comparison {S : Scheme.{u}} (X : RelativeScheme S)
     (d : ℕ) [Chapter11QuasiProjectiveOver X] (T : RelativeScheme S) :
+    Flat T.structuralMap →
     ∃ e : RelativeScheme.Iso
         (RelativeScheme.baseChange (symmetricPower X d) T)
         (symmetricPower (RelativeScheme.baseChange X T) d),

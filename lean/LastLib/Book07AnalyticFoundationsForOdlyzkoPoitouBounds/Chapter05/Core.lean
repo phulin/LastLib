@@ -76,6 +76,20 @@ structure Chapter05BasicallyAdmissible (F : ℝ → ℝ) : Prop where
   oneSidedDerivativeBV : Chapter05OneSidedDerivativeBV F
   originCondition : chapter05OriginCondition F
 
+/-! Basic admissibility makes the transform integrals available without
+repeating the compact-support argument at every use site. -/
+
+theorem chapter05_basically_admissible_integrable
+    {F : ℝ → ℝ} (hF : Chapter05BasicallyAdmissible F) :
+    Integrable F volume := by
+  sorry
+
+theorem chapter05_basically_admissible_laplace_integrable
+    {F : ℝ → ℝ} (hF : Chapter05BasicallyAdmissible F) (s : ℂ) :
+    Integrable
+      (fun x : ℝ => (F x : ℂ) * chapter05LaplaceKernel s x) volume := by
+  sorry
+
 /-! The common extra hypothesis used when a lower-bound argument discards the
 prime-side contribution. -/
 
@@ -107,7 +121,7 @@ structure Chapter05PositiveType (G : ℝ → ℝ) : Prop where
     (chapter05FourierTransform G t).im = 0 ∧
       0 ≤ (chapter05FourierTransform G t).re
 
-/-- Normalize a positive-type function at a specified nonzero value at the origin. -/
+/-- Normalize a function at a specified nonzero value at the origin. -/
 def chapter05NormalizeAtZero (G : ℝ → ℝ) (_hG0 : G 0 ≠ 0) : ℝ → ℝ :=
   fun x => G x / G 0
 

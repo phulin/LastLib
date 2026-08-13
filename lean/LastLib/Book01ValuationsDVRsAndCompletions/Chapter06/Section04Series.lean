@@ -1,4 +1,12 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter06.Section03CauchySequences
+import Mathlib.Analysis.Normed.Unbundled.RingSeminorm
+import Mathlib.NumberTheory.Padics.PadicIntegers
+import Mathlib.RingTheory.LaurentSeries
+import Mathlib.RingTheory.PowerSeries.Basic
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Order
+import Mathlib.Tactic.Ring
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter06
 
@@ -127,36 +135,52 @@ theorem chapter06_geometric_series
     (v : AbsoluteValue K ℝ) (_hv : IsNonarchimedean v)
     (_hcomplete : chapter06CompleteValuedSpace v) {x : K} (hx : v x < 1) :
     chapter06SeriesConverges v (fun n => x ^ n) (1 - x)⁻¹ := by
-  have hpow : chapter06TendsToZero v (fun n => x ^ n) := by
-    intro ε hε
-    have hev := (tendsto_pow_atTop_nhds_zero_of_lt_one (v.nonneg x) hx).eventually
-      (Iio_mem_nhds hε)
-    rcases (eventually_atTop.1 hev) with ⟨N, hN⟩
-    refine ⟨N, ?_⟩
-    intro n hn
-    simpa [v.map_pow] using hN n hn
   have hne : 1 - x ≠ 0 := by
     intro h
     have hx1 : x = 1 := (sub_eq_zero.mp h).symm
     subst x
     simp at hx
+  have hzero : chapter06TendsToZero v (fun n => x ^ n) := by
+    intro ε hε
+    obtain ⟨N, hN⟩ := exists_pow_lt_of_lt_one hε hx
+    refine ⟨N, ?_⟩
+    intro n hn
+    change v (x ^ n) < ε
+    rw [map_pow]
+    exact (pow_le_pow_of_le_one (v.nonneg x) hx.le hn).trans_lt hN
+  have hgeom : ∀ n : ℕ,
+      chapter06PartialSums (fun i => x ^ i) n * (1 - x) = 1 - x ^ n := by
+    intro n
+    induction n with
+    | zero => simp [chapter06PartialSums]
+    | succ n ih =>
+        have hpartial :
+            chapter06PartialSums (fun i => x ^ i) (n + 1) =
+              chapter06PartialSums (fun i => x ^ i) n + x ^ n := by
+          unfold chapter06PartialSums
+          rw [Finset.sum_range_succ]
+        rw [hpartial]
+        rw [add_mul, ih]
+        ring
+  have hinvpos : 0 < v ((1 - x)⁻¹) := v.pos (inv_ne_zero hne)
   intro ε hε
-  have hden : 0 < v ((1 - x)⁻¹) := v.pos (inv_ne_zero hne)
-  have hev := (tendsto_pow_atTop_nhds_zero_of_lt_one (v.nonneg x) hx).eventually
-    (Iio_mem_nhds (div_pos hε hden))
-  rcases (eventually_atTop.1 hev) with ⟨N, hN⟩
+  obtain ⟨N, hN⟩ := hzero (ε / v ((1 - x)⁻¹))
+    (div_pos hε hinvpos)
   refine ⟨N, ?_⟩
   intro n hn
-  have hgeom : chapter06PartialSums (fun n => x ^ n) n - (1 - x)⁻¹ =
-      -x ^ n * (1 - x)⁻¹ := by
-    simp only [chapter06PartialSums]
-    field_simp [hne]
-    rw [geom_sum_mul_neg]
-    ring
-  change v (chapter06PartialSums (fun n => x ^ n) n - (1 - x)⁻¹) < ε
-  rw [hgeom]
-  simp only [v.map_neg, v.map_mul, v.map_pow]
-  exact (lt_div_iff₀ hden).1 (hN n hn)
+  have hsum :
+      chapter06PartialSums (fun i => x ^ i) n - (1 - x)⁻¹ =
+        -x ^ n * (1 - x)⁻¹ := by
+    calc
+      chapter06PartialSums (fun i => x ^ i) n - (1 - x)⁻¹ =
+          (chapter06PartialSums (fun i => x ^ i) n * (1 - x) - 1) *
+            (1 - x)⁻¹ := by
+              field_simp [hne]
+      _ = (1 - x ^ n - 1) * (1 - x)⁻¹ := by rw [hgeom n]
+      _ = -x ^ n * (1 - x)⁻¹ := by ring
+  change v (chapter06PartialSums (fun i => x ^ i) n - (1 - x)⁻¹) < ε
+  rw [hsum, v.map_mul, v.map_neg]
+  exact (lt_div_iff₀ hinvpos).1 (hN n hn)
 
 /-- The principal-unit set of a local ring. -/
 def chapter06PrincipalUnitSet (A : Type*) [CommRing A] [IsLocalRing A] : Set A :=
@@ -361,24 +385,53 @@ theorem chapter06_padic_geometric_example
     {p : ℕ} [Fact p.Prime] {x : ℚ_[p]} (hx : ‖x‖ < 1) :
     chapter06SeriesConverges (NormedField.toAbsoluteValue ℚ_[p])
       (fun n => x ^ n) (1 - x)⁻¹ := by
-  apply chapter06_geometric_series (NormedField.toAbsoluteValue ℚ_[p])
-    (fun a b => IsUltrametricDist.norm_add_le_max a b)
-  · intro u hu
-    have hstd : CauchySeq u := by
-      rw [Metric.cauchySeq_iff]
-      intro ε hε
-      obtain ⟨N, hN⟩ := hu ε hε
-      refine ⟨N, ?_⟩
-      intro m hm n hn
-      simpa [dist_eq_norm, chapter06Distance, NormedField.toAbsoluteValue] using hN m n hm hn
-    obtain ⟨l, hl⟩ := cauchySeq_tendsto_of_complete hstd
-    refine ⟨l, ?_⟩
-    rw [Metric.tendsto_atTop] at hl
+  have hne : 1 - x ≠ 0 := by
+    intro h
+    have hx1 : x = 1 := (sub_eq_zero.mp h).symm
+    subst x
+    norm_num at hx
+  have hzero : chapter06TendsToZero (NormedField.toAbsoluteValue ℚ_[p])
+      (fun n => x ^ n) := by
     intro ε hε
-    obtain ⟨N, hN⟩ := hl ε hε
-    exact ⟨N, fun n hn => by
-      simpa [chapter06Distance, dist_eq_norm, NormedField.toAbsoluteValue] using hN n hn⟩
-  · simpa [NormedField.toAbsoluteValue] using hx
+    obtain ⟨N, hN⟩ := exists_pow_lt_of_lt_one hε hx
+    refine ⟨N, ?_⟩
+    intro n hn
+    change ‖x ^ n‖ < ε
+    rw [norm_pow]
+    exact (pow_le_pow_of_le_one (norm_nonneg x) hx.le hn).trans_lt hN
+  have hgeom : ∀ n : ℕ,
+      chapter06PartialSums (fun i => x ^ i) n * (1 - x) = 1 - x ^ n := by
+    intro n
+    induction n with
+    | zero => simp [chapter06PartialSums]
+    | succ n ih =>
+        have hpartial :
+            chapter06PartialSums (fun i => x ^ i) (n + 1) =
+              chapter06PartialSums (fun i => x ^ i) n + x ^ n := by
+          unfold chapter06PartialSums
+          rw [Finset.sum_range_succ]
+        rw [hpartial]
+        rw [add_mul, ih]
+        ring
+  have hinvpos : 0 < ‖(1 - x)⁻¹‖ := norm_pos_iff.mpr (inv_ne_zero hne)
+  intro ε hε
+  obtain ⟨N, hN⟩ := hzero (ε / ‖(1 - x)⁻¹‖)
+    (div_pos hε hinvpos)
+  refine ⟨N, ?_⟩
+  intro n hn
+  have hsum :
+      chapter06PartialSums (fun i => x ^ i) n - (1 - x)⁻¹ =
+        -x ^ n * (1 - x)⁻¹ := by
+    calc
+      chapter06PartialSums (fun i => x ^ i) n - (1 - x)⁻¹ =
+          (chapter06PartialSums (fun i => x ^ i) n * (1 - x) - 1) *
+            (1 - x)⁻¹ := by
+              field_simp [hne]
+      _ = (1 - x ^ n - 1) * (1 - x)⁻¹ := by rw [hgeom n]
+      _ = -x ^ n * (1 - x)⁻¹ := by ring
+  change ‖chapter06PartialSums (fun i => x ^ i) n - (1 - x)⁻¹‖ < ε
+  rw [hsum, norm_mul, norm_neg]
+  exact (lt_div_iff₀ hinvpos).1 (hN n hn)
 
 /-- The geometric expression `1+p⁻¹+p⁻²+⋯` cannot converge p-adically. -/
 theorem chapter06_padic_growing_geometric_series_diverges

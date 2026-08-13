@@ -48,7 +48,7 @@ theorem chapter15_mem_trace_dual_iff
     [IsScalarTower A B L] [IsScalarTower A K L]
     (x : L) :
     x ∈ chapter15TraceDualLattice A K B L ↔
-      ∀ y : B, algebraMap B L y ∈ (1 : Submodule B L) →
+      ∀ y : B,
         Algebra.trace K L (x * algebraMap B L y) ∈ Set.range (algebraMap A K) := by
   sorry
 

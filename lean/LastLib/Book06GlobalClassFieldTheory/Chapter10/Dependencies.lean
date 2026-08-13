@@ -2,6 +2,7 @@ import Mathlib.Algebra.Category.Grp.Basic
 import Mathlib.Data.NNReal.Basic
 import Mathlib.Data.ZMod.Units
 import Mathlib.FieldTheory.Galois.Profinite
+import Mathlib.FieldTheory.Galois.Abelian
 import Mathlib.GroupTheory.Abelianization.Defs
 import Mathlib.GroupTheory.FiniteIndexNormalSubgroup
 import Mathlib.GroupTheory.QuotientGroup.Basic
@@ -26,12 +27,12 @@ universe u v w
 /-!
 ## Shared interfaces for Chapter 10
 
-The preceding chapters of the global class-field-theory book are not present in
-this checkout. The records below are deliberately small book-facing interfaces
-for the idele class group, the finite Artin system, local reciprocity, and ray
-class fields. They expose canonical Mathlib groups and inverse limits without
-assuming any of the infinite reciprocity theorem that this chapter is meant to
-state.
+The preceding chapters expose the local and finite-level ingredients, but not a
+single Chapter 10-level interface for the idele class group, the compatible
+Artin system, local reciprocity squares, and ray class fields. The records below
+package those book-facing interfaces using canonical Mathlib groups and inverse
+limits without assuming any of the infinite reciprocity theorem that this
+chapter is meant to state.
 -/
 
 /- LOCAL_DEPENDENCY_GUESS: replace this open finite-index subgroup wrapper by
@@ -141,6 +142,13 @@ theorem chapter10ProfiniteCompletionEta_denseRange
     DenseRange (chapter10ProfiniteCompletionEta C) := by
   sorry
 
+/- The openness built into the indexing subgroups makes the canonical map
+continuous for the original idele-class topology. -/
+theorem chapter10ProfiniteCompletionEta_continuous
+    (C : Type u) [CommGroup C] [TopologicalSpace C] [IsTopologicalGroup C] :
+    Continuous (chapter10ProfiniteCompletionEta C) := by
+  sorry
+
 /- The projections are exposed as maps so later compatibility statements can
 refer to the finite quotients without unpacking the categorical limit. -/
 noncomputable def chapter10ProfiniteCompletionProjection
@@ -163,7 +171,7 @@ every element lies in a finite abelian Galois intermediate field. -/
 def chapter10IsAbelianFiniteGaloisExtension
     {K : Type u} {Kab : Type v} [Field K] [Field Kab] [Algebra K Kab]
     (L : FiniteGaloisIntermediateField K Kab) : Prop :=
-  ∀ σ τ : Gal(L / K), σ * τ = τ * σ
+  IsAbelianGalois K L
 
 structure Chapter10AbelianClosureData
     (K : Type u) (Kab : Type v) [Field K] [Field Kab] [Algebra K Kab]
@@ -171,11 +179,18 @@ structure Chapter10AbelianClosureData
   /-- The Galois group of `K^ab/K` is abelian. -/
   ambient_commutative : ∀ σ τ : Gal(Kab / K), σ * τ = τ * σ
   /-- The compositum is locally finite: every element belongs to a finite
-  abelian Galois subextension. -/
+    abelian Galois subextension. -/
   finite_abelian_subextension :
     ∀ x : Kab, ∃ L : FiniteGaloisIntermediateField K Kab,
       chapter10IsAbelianFiniteGaloisExtension L ∧
         x ∈ L.toIntermediateField
+  /-- Every finite abelian Galois extension of `K` embeds over `K` into the
+    chosen closure. This is the maximality clause distinguishing `K^ab` from
+    an arbitrary locally finite abelian extension. -/
+  contains_every_finite_abelian_extension :
+    ∀ (L : Type (max u v)) [Field L] [Algebra K L] [FiniteDimensional K L]
+      [IsAbelianGalois K L],
+      ∃ f : L →ₐ[K] Kab, Function.Injective f
 
 def chapter10AbelianClosureUnion
     {K : Type u} {Kab : Type v} [Field K] [Field Kab] [Algebra K Kab]
@@ -318,11 +333,13 @@ structure Chapter10FiniteReciprocityData
       ∃ L : FiniteGaloisIntermediateField K Kab,
         H.toSubgroup = (F.map L).ker
 
-/- A local-field warning is kept separate from the global completion API. -/
+/- The nonarchimedean local-field warning is kept separate from the global
+completion API. -/
 structure Chapter10LocalReciprocityScope
-    (Kv Gv : Type u) [Group Kv] [TopologicalSpace Kv]
-    [Group Gv] [TopologicalSpace Gv] where
+    (Kv : Type u) (Gv : Type v) [CommGroup Kv] [TopologicalSpace Kv]
+    [CommGroup Gv] [TopologicalSpace Gv] where
   reciprocity : Kv →* Gv
+  reciprocity_continuous : Continuous reciprocity
   dense_range : DenseRange reciprocity
   valuation_copy : Multiplicative ℤ →* Kv
   valuation_target : Gv →*
@@ -334,8 +351,8 @@ structure Chapter10LocalReciprocityScope
   not_surjective : ¬ Function.Surjective reciprocity
 
 theorem chapter10_local_reciprocity_dense_not_surjective
-    {Kv Gv : Type u} [Group Kv] [TopologicalSpace Kv]
-    [Group Gv] [TopologicalSpace Gv]
+    {Kv : Type u} {Gv : Type v} [CommGroup Kv] [TopologicalSpace Kv]
+    [CommGroup Gv] [TopologicalSpace Gv]
     (D : Chapter10LocalReciprocityScope Kv Gv) :
     DenseRange D.reciprocity ∧ ¬ Function.Surjective D.reciprocity :=
   ⟨D.dense_range, D.not_surjective⟩

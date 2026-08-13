@@ -81,8 +81,7 @@ theorem chapter14_nontrivial_purely_inseparable_has_no_galois_symmetry
 theorem chapter14_e_one_does_not_imply_unramified
     (residueSeparable : Prop) (hnot : ¬ residueSeparable) :
     ¬(1 = 1 ∧ residueSeparable) := by
-  exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.ramification_index_one_without_separable_residue_is_not_unramified
-    residueSeparable hnot
+  sorry
 
 abbrev chapter14KaehlerDifferential
     (A B : Type*) [CommRing A] [CommRing B] [Algebra A B] :=

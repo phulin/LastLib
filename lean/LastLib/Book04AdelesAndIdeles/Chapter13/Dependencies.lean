@@ -16,6 +16,7 @@ import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.Topology.Algebra.PontryaginDual
 import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
 import Mathlib.Topology.Algebra.RestrictedProduct.Units
+import LastLib.Book04AdelesAndIdeles.Chapter04.Section06AdelicTrace
 
 /-!
 # Chapter 13: shared interfaces
@@ -84,6 +85,36 @@ def chapter13FiniteIdeleCoordinate
   (RestrictedProduct.unitsEquiv
     (fun w : IsDedekindDomain.HeightOneSpectrum (𝓞 K) => w.adicCompletion K) x) v
 
+theorem chapter13PrincipalIdele_infinite_coordinate
+    (K : Type*) [Field K] [NumberField K] (a : Kˣ)
+    (v : NumberField.InfinitePlace K) :
+    (MulEquiv.piUnits
+      ((MulEquiv.prodUnits (chapter13PrincipalIdele K a)).1)) v =
+      Units.map (algebraMap K v.Completion) a := by
+  sorry
+
+theorem chapter13PrincipalIdele_finite_coordinate
+    (K : Type*) [Field K] [NumberField K]
+    (a : Kˣ) (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) :
+    chapter13FiniteIdeleCoordinate K
+        ((MulEquiv.prodUnits (chapter13PrincipalIdele K a)).2) v =
+      chapter13PrincipalFiniteIdeleValue K a v := by
+  sorry
+
+theorem chapter13FiniteIdeleCoordinate_principal
+    (K : Type*) [Field K] [NumberField K] (a : Kˣ)
+    (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) :
+    chapter13FiniteIdeleCoordinate K (chapter13PrincipalFiniteIdele K a) v =
+      chapter13PrincipalFiniteIdeleValue K a v := by
+  sorry
+
+theorem chapter13FiniteIdeleCoordinate_continuous
+    (K : Type*) [Field K] [NumberField K]
+    (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) :
+    Continuous (fun x : Chapter13FiniteIdele K =>
+      chapter13FiniteIdeleCoordinate K x v) := by
+  sorry
+
 /- The following local embeddings are the canonical single-place maps after transporting local
 units through the unit equivalences of the infinite and finite adele factors. -/
 
@@ -97,6 +128,109 @@ def chapter13FiniteLocalIdele
     (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K))
     (x : (v.adicCompletion K)ˣ) : Chapter13Idele K := by
   sorry
+
+theorem chapter13InfiniteLocalIdele_coordinate
+    (K : Type*) [Field K] [NumberField K]
+    (v : NumberField.InfinitePlace K) (x : (v.Completion)ˣ) :
+    (MulEquiv.piUnits
+      ((MulEquiv.prodUnits (chapter13InfiniteLocalIdele K v x)).1)) v = x := by
+  sorry
+
+theorem chapter13InfiniteLocalIdele_coordinate_off
+    (K : Type*) [Field K] [NumberField K]
+    (v w : NumberField.InfinitePlace K) (x : (v.Completion)ˣ) (hvw : w ≠ v) :
+    (MulEquiv.piUnits
+      ((MulEquiv.prodUnits (chapter13InfiniteLocalIdele K v x)).1)) w = 1 := by
+  sorry
+
+theorem chapter13InfiniteLocalIdele_finite_coordinate
+    (K : Type*) [Field K] [NumberField K]
+    (v : NumberField.InfinitePlace K) (x : (v.Completion)ˣ)
+    (w : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) :
+    chapter13FiniteIdeleCoordinate K
+        ((MulEquiv.prodUnits (chapter13InfiniteLocalIdele K v x)).2) w = 1 := by
+  sorry
+
+theorem chapter13InfiniteLocalIdele_one
+    (K : Type*) [Field K] [NumberField K]
+    (v : NumberField.InfinitePlace K) :
+    chapter13InfiniteLocalIdele K v 1 = 1 := by
+  sorry
+
+theorem chapter13InfiniteLocalIdele_mul
+    (K : Type*) [Field K] [NumberField K]
+    (v : NumberField.InfinitePlace K) (x y : (v.Completion)ˣ) :
+    chapter13InfiniteLocalIdele K v (x * y) =
+      chapter13InfiniteLocalIdele K v x * chapter13InfiniteLocalIdele K v y := by
+  sorry
+
+theorem chapter13InfiniteLocalIdele_continuous
+    (K : Type*) [Field K] [NumberField K]
+    (v : NumberField.InfinitePlace K) :
+    Continuous (chapter13InfiniteLocalIdele K v) := by
+  sorry
+
+def chapter13InfiniteLocalIdeleHom
+    (K : Type*) [Field K] [NumberField K]
+    (v : NumberField.InfinitePlace K) :
+    (v.Completion)ˣ →ₜ* Chapter13Idele K :=
+  { toMonoidHom :=
+      { toFun := chapter13InfiniteLocalIdele K v
+        map_one' := chapter13InfiniteLocalIdele_one K v
+        map_mul' := chapter13InfiniteLocalIdele_mul K v }
+    continuous_toFun := chapter13InfiniteLocalIdele_continuous K v }
+
+theorem chapter13FiniteLocalIdele_coordinate
+    (K : Type*) [Field K] [NumberField K]
+    (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) (x : (v.adicCompletion K)ˣ) :
+    chapter13FiniteIdeleCoordinate K
+        ((MulEquiv.prodUnits (chapter13FiniteLocalIdele K v x)).2) v = x := by
+  sorry
+
+theorem chapter13FiniteLocalIdele_coordinate_off
+    (K : Type*) [Field K] [NumberField K]
+    (v w : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) (x : (v.adicCompletion K)ˣ)
+    (hvw : w ≠ v) :
+    chapter13FiniteIdeleCoordinate K
+        ((MulEquiv.prodUnits (chapter13FiniteLocalIdele K v x)).2) w = 1 := by
+  sorry
+
+theorem chapter13FiniteLocalIdele_infinite_coordinate
+    (K : Type*) [Field K] [NumberField K]
+    (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) (x : (v.adicCompletion K)ˣ)
+    (w : NumberField.InfinitePlace K) :
+    (MulEquiv.piUnits
+      ((MulEquiv.prodUnits (chapter13FiniteLocalIdele K v x)).1)) w = 1 := by
+  sorry
+
+theorem chapter13FiniteLocalIdele_one
+    (K : Type*) [Field K] [NumberField K]
+    (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) :
+    chapter13FiniteLocalIdele K v 1 = 1 := by
+  sorry
+
+theorem chapter13FiniteLocalIdele_mul
+    (K : Type*) [Field K] [NumberField K]
+    (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) (x y : (v.adicCompletion K)ˣ) :
+    chapter13FiniteLocalIdele K v (x * y) =
+      chapter13FiniteLocalIdele K v x * chapter13FiniteLocalIdele K v y := by
+  sorry
+
+theorem chapter13FiniteLocalIdele_continuous
+    (K : Type*) [Field K] [NumberField K]
+    (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) :
+    Continuous (chapter13FiniteLocalIdele K v) := by
+  sorry
+
+def chapter13FiniteLocalIdeleHom
+    (K : Type*) [Field K] [NumberField K]
+    (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) :
+    (v.adicCompletion K)ˣ →ₜ* Chapter13Idele K :=
+  { toMonoidHom :=
+      { toFun := chapter13FiniteLocalIdele K v
+        map_one' := chapter13FiniteLocalIdele_one K v
+        map_mul' := chapter13FiniteLocalIdele_mul K v }
+    continuous_toFun := chapter13FiniteLocalIdele_continuous K v }
 
 def chapter13PrincipalIdeleSubgroup (K : Type*) [Field K] [NumberField K] :
     Subgroup (Chapter13Idele K) :=
@@ -132,6 +266,13 @@ def chapter13AdditiveAnnihilator {A : Type*} [NonUnitalNonAssocRing A]
       add_mem' := by sorry
       neg_mem' := by sorry }
 
+theorem chapter13_mem_additiveAnnihilator_iff
+    {A : Type*} [NonUnitalNonAssocRing A]
+    (ψ : AddChar A Circle) (H : AddSubgroup A) (y : A) :
+    y ∈ chapter13AdditiveAnnihilator ψ H ↔
+      ∀ x : H, ψ ((x : A) * y) = 1 :=
+  Iff.rfl
+
 abbrev Chapter13AdditiveDual (A : Type*) [AddCommGroup A] [TopologicalSpace A] :=
   Additive (PontryaginDual (Multiplicative A))
 
@@ -151,31 +292,59 @@ def chapter13RationalModIntegerCharacter : AddChar Chapter13QModZ Circle :=
 
 /-!
 `Chapter13RayClassSystem` is a book-facing inverse system of open finite-index subgroups of the
-idele class group.  The `cofinal` field is the exact interface needed for the conductor and
-directed-union statements; a later pass can identify its levels with the canonical ray class
-groups once the earlier Chapters 10--12 expose their idelic class-group API.
+idele class group.  The `cofinal` field supplies factorization through some level, while
+`least_level` records the additional least-level property needed for the conductor statement; a
+later pass can identify its levels with the canonical ray class groups once the earlier Chapters
+10--12 expose their idelic class-group API.
 -/
 
 /- DEPENDENCY_GUESS: identify `Chapter13RayClassSystem` with the ray-class levels and their
 canonical quotient maps from the earlier conductor chapters. -/
 
 structure Chapter13RayClassSystem (K : Type*) [Field K] [NumberField K]
-    (M : Type*) [Preorder M] where
+    (M : Type*) [PartialOrder M] where
   level : M → Subgroup (Chapter13IdeleClass K)
   level_open : ∀ m, IsOpen (level m : Set (Chapter13IdeleClass K))
   level_finite : ∀ m, Finite (Chapter13IdeleClass K ⧸ level m)
+  level_antitone : ∀ {m n}, m ≤ n → level n ≤ level m
   directed : ∀ m n, ∃ l, level l ≤ level m ∧ level l ≤ level n
   cofinal : ∀ H : Subgroup (Chapter13IdeleClass K),
-    IsOpen (H : Set (Chapter13IdeleClass K)) → ∃ m, level m ≤ H
+    IsOpen (H : Set (Chapter13IdeleClass K)) →
+      Finite (Chapter13IdeleClass K ⧸ H) → ∃ m, level m ≤ H
+  least_level : ∀ H : Subgroup (Chapter13IdeleClass K),
+    IsOpen (H : Set (Chapter13IdeleClass K)) →
+      Finite (Chapter13IdeleClass K ⧸ H) →
+        ∃ m, level m ≤ H ∧ ∀ n, level n ≤ H → m ≤ n
   realPlaces :
     M → Finset {v : NumberField.InfinitePlace K // NumberField.InfinitePlace.IsReal v}
+  realPlaces_monotone :
+    ∀ {m n}, m ≤ n → realPlaces m ⊆ realPlaces n
 
 abbrev Chapter13RayClassGroup {K : Type*} [Field K] [NumberField K]
-    {M : Type*} [Preorder M] (S : Chapter13RayClassSystem K M) (m : M) :=
+    {M : Type*} [PartialOrder M] (S : Chapter13RayClassSystem K M) (m : M) :=
   Chapter13IdeleClass K ⧸ S.level m
 
+def chapter13RayClassTransitionMap
+    (K : Type*) [Field K] [NumberField K]
+    {M : Type*} [PartialOrder M]
+    (S : Chapter13RayClassSystem K M) {m n : M} (hmn : m ≤ n) :
+    Chapter13RayClassGroup S n →* Chapter13RayClassGroup S m :=
+  QuotientGroup.map (S.level n) (S.level m) (MonoidHom.id _) (by
+    intro x hx
+    exact S.level_antitone hmn hx)
+
+theorem chapter13RayClassTransitionMap_apply
+    (K : Type*) [Field K] [NumberField K]
+    {M : Type*} [PartialOrder M]
+    (S : Chapter13RayClassSystem K M) {m n : M} (hmn : m ≤ n)
+    (x : Chapter13IdeleClass K) :
+    chapter13RayClassTransitionMap K S hmn
+        (QuotientGroup.mk' (S.level n) x) =
+      QuotientGroup.mk' (S.level m) x := by
+  sorry
+
 abbrev Chapter13RayClassCharacter {K : Type*} [Field K] [NumberField K]
-    {M : Type*} [Preorder M] (S : Chapter13RayClassSystem K M) (m : M) :=
+    {M : Type*} [PartialOrder M] (S : Chapter13RayClassSystem K M) (m : M) :=
   Chapter13RayClassGroup S m →* ℂˣ
 
 /-!
@@ -207,7 +376,15 @@ structure Chapter13RationalStandardCharacterData where
   finiteCoordinate_integral :
     ∀ x : Chapter13Adele ℚ,
       ∀ᶠ p in Filter.cofinite, ‖finiteCoordinate p x‖ ≤ 1
+  finiteCoordinate_continuous :
+    ∀ p, Continuous (finiteCoordinate p)
+  finiteCoordinate_additive :
+    ∀ p x y, finiteCoordinate p (x + y) =
+      finiteCoordinate p x + finiteCoordinate p y
   infinityCoordinate : Chapter13Adele ℚ → ℝ
+  infinityCoordinate_continuous : Continuous infinityCoordinate
+  infinityCoordinate_additive :
+    ∀ x y, infinityCoordinate (x + y) = infinityCoordinate x + infinityCoordinate y
   infinityCoordinate_principal :
     ∀ a : ℚ,
       infinityCoordinate (algebraMap ℚ (Chapter13Adele ℚ) a) = (a : ℝ)
@@ -224,8 +401,13 @@ structure Chapter13RationalStandardCharacterData where
             (finiteCoordinate p (algebraMap ℚ (Chapter13Adele ℚ) a))
 
 structure Chapter13AdelicTraceData (K : Type*) [Field K] [NumberField K] where
+  localTraceData :
+    LastLib.Book04AdelesAndIdeles.Chapter04.Chapter04AdelicTraceData ℚ K
   trace : Chapter13Adele K →+ Chapter13Adele ℚ
   trace_continuous : Continuous trace
+  trace_eq_localTraceData :
+    trace =
+      LastLib.Book04AdelesAndIdeles.Chapter04.chapter04AdelicTrace localTraceData
   trace_principal :
     ∀ a : K, trace (algebraMap K (Chapter13Adele K) a) =
       algebraMap ℚ (Chapter13Adele ℚ) (Algebra.trace ℚ K a)
@@ -239,6 +421,12 @@ structure Chapter13LocalSelfDualityData (F : Type*) [Field F] [TopologicalSpace 
   pairing_continuous : Continuous (Function.uncurry pairing)
   pairing_left_nondegenerate : ∀ x, (∀ y, pairing x y = 1) → x = 0
   pairing_right_nondegenerate : ∀ y, (∀ x, pairing x y = 1) → y = 0
+  /- The pairing map is the local character parametrization.  Nondegeneracy only gives
+  injectivity; surjectivity and openness are the genuinely additional local-duality inputs. -/
+  pairingMap : F →ₜ+ Chapter13AdditiveDual F
+  pairingMap_apply : ∀ y x, pairingMap y x = pairing x y
+  pairingMap_surjective : Function.Surjective pairingMap
+  pairingMap_isOpenMap : IsOpenMap pairingMap
 
 end
 end LastLib.Book04AdelesAndIdeles.Chapter13

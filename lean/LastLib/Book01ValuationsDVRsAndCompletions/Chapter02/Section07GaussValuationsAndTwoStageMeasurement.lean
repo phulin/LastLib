@@ -1,5 +1,21 @@
-import Mathlib
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter02.Section06TheTrivialValuationAndFailureModes
+import Mathlib.Algebra.Order.GroupWithZero.Basic
+import Mathlib.Algebra.Polynomial.Div
+import Mathlib.FieldTheory.RatFunc.Basic
+import Mathlib.RingTheory.HahnSeries.Basic
+import Mathlib.RingTheory.HahnSeries.Lex
+import Mathlib.RingTheory.HahnSeries.Valuation
+import Mathlib.RingTheory.Ideal.Quotient.Operations
+import Mathlib.RingTheory.LaurentSeries
+import Mathlib.RingTheory.Valuation.Basic
+import Mathlib.RingTheory.Valuation.Integers
+import Mathlib.RingTheory.Valuation.ValuationRing
+import Mathlib.Tactic.Abel
+import Mathlib.Tactic.Order
+import Mathlib.Tactic.Push
+import Mathlib.Tactic.Ring
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter02.Section02AdditiveValuations
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter02.Section01WhyTheValuesFormAGroup
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter02.Section03TheDecisiveEquality
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter02
 
@@ -738,6 +754,79 @@ theorem chapter02_gauss_valuation_on_quotients
   rw [hnum, hden]
   exact hmain
 
+theorem chapter02_gauss_valuation_on_rational_functions_is_additive_valuation
+    {K Γ Λ : Type*} [Field K]
+    [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
+    [AddCommGroup Λ] [LinearOrder Λ] [IsOrderedAddMonoid Λ]
+    (v : AddValuation K (WithTop Γ)) (e : Γ →+o Λ) (α : Λ) :
+    ∃ w : AddValuation (RatFunc K) (WithTop Λ),
+      ∀ x : RatFunc K,
+        w x = Chapter02GaussValuationOnRationalFunctions v e α x := by
+  let G : AddValuation (Polynomial K) (WithTop Λ) :=
+    AddValuation.of
+      (Chapter02GaussValuationFunction v e α)
+      (by simp [Chapter02GaussValuationFunction])
+      (by
+        rw [← Polynomial.C_1]
+        have hne : v (1 : K) ≠ (⊤ : WithTop Γ) :=
+          (AddValuation.ne_top_iff v).2 one_ne_zero
+        have hu : ∀ h : (0 : WithTop Γ) ≠ (⊤ : WithTop Γ),
+            (0 : WithTop Γ).untop h = (0 : Γ) := by
+          intro h
+          apply WithTop.coe_injective
+          exact WithTop.coe_untop (0 : WithTop Γ) h
+        rw [Chapter02GaussValuationFunction,
+          Polynomial.support_C one_ne_zero,
+          dif_pos (Finset.singleton_nonempty 0), Finset.inf'_singleton,
+          Chapter02WeightedCoefficientValue, Polynomial.coeff_C_zero,
+          dif_neg hne]
+        simp only [v.map_one, zero_nsmul, add_zero]
+        simp [hu])
+      (chapter02_gauss_valuation_sum_inequality v e α)
+      (chapter02_gauss_valuation_is_multiplicative v e α)
+  have hGtop {p : Polynomial K} : G p = (⊤ : WithTop Λ) ↔ p = 0 := by
+    constructor
+    · intro hp
+      by_contra hp0
+      obtain ⟨i, hi⟩ := Polynomial.support_nonempty.mpr hp0
+      have hpi : p.coeff i ≠ 0 := Polynomial.mem_support_iff.mp hi
+      have hWi :
+          Chapter02WeightedCoefficientValue v e α (p.coeff i) i ≠
+            (⊤ : WithTop Λ) := by
+        simp only [Chapter02WeightedCoefficientValue,
+          dif_neg ((AddValuation.ne_top_iff v).2 hpi)]
+        exact WithTop.coe_ne_top
+      have hle : G p ≤
+          Chapter02WeightedCoefficientValue v e α (p.coeff i) i := by
+        change Chapter02GaussValuationFunction v e α p ≤
+          Chapter02WeightedCoefficientValue v e α (p.coeff i) i
+        rw [Chapter02GaussValuationFunction,
+          dif_pos (Polynomial.support_nonempty.mpr hp0)]
+        exact Finset.inf'_le _ hi
+      exact (ne_of_lt (hle.trans_lt (lt_top_iff_ne_top.mpr hWi))) hp
+    · intro hp
+      subst p
+      exact G.map_zero
+  have hG_supp : AddValuation.supp G = (⊥ : Ideal (Polynomial K)) := by
+    ext p
+    simp only [AddValuation.mem_supp_iff, Ideal.mem_bot]
+    exact hGtop
+  obtain ⟨W, hW, _⟩ := chapter02_fraction_field_extension G hG_supp
+  let w : AddValuation (RatFunc K) (WithTop Λ) :=
+    AddValuation.comap (RatFunc.toFractionRingRingEquiv K).toRingHom W
+  refine ⟨w, ?_⟩
+  intro x
+  refine RatFunc.induction_on (P := fun x : RatFunc K =>
+    w x = Chapter02GaussValuationOnRationalFunctions v e α x) x ?_
+  intro p q hq
+  rw [chapter02_gauss_valuation_on_quotients v e α p q hq]
+  change W ((RatFunc.toFractionRingRingEquiv K)
+      (algebraMap (Polynomial K) (RatFunc K) p /
+        algebraMap (Polynomial K) (RatFunc K) q)) =
+    Chapter02GaussValuationFunction v e α p -
+      Chapter02GaussValuationFunction v e α q
+  simpa [G, RatFunc.toFractionRingRingEquiv] using hW.2 p q hq
+
 theorem chapter02_gauss_at_zero_is_coefficient_minimum
     {K Γ Λ : Type*} [Field K]
     [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
@@ -1203,6 +1292,46 @@ def Chapter02LaurentTAdicOrder {K : Type*} [Zero K]
     (f : LaurentSeries K) : WithTop ℤ := by
   classical
   exact if hf : f = 0 then ⊤ else (f.order : WithTop ℤ)
+
+theorem chapter02_laurent_T_adic_order_is_additive_valuation
+    {K : Type*} [Field K] :
+    ∃ w : AddValuation (LaurentSeries K) (WithTop ℤ),
+      ∀ f : LaurentSeries K, w f = Chapter02LaurentTAdicOrder f := by
+  let w : AddValuation (LaurentSeries K) (WithTop ℤ) :=
+    AddValuation.of
+      Chapter02LaurentTAdicOrder
+      (by simp [Chapter02LaurentTAdicOrder])
+      (by simp [Chapter02LaurentTAdicOrder])
+      (by
+        intro f g
+        by_cases hf : f = 0
+        · subst f
+          rw [zero_add]
+          simp [Chapter02LaurentTAdicOrder]
+        by_cases hg : g = 0
+        · subst g
+          rw [add_zero]
+          simp [Chapter02LaurentTAdicOrder]
+        by_cases hfg : f + g = 0
+        · simp [Chapter02LaurentTAdicOrder, hfg]
+        have hsum := HahnSeries.min_orderTop_le_orderTop_add (x := f) (y := g)
+        simpa only [Chapter02LaurentTAdicOrder, dif_neg hf, dif_neg hg,
+          dif_neg hfg, HahnSeries.order_eq_orderTop_of_ne_zero hf,
+          HahnSeries.order_eq_orderTop_of_ne_zero hg,
+          HahnSeries.order_eq_orderTop_of_ne_zero hfg, ← WithTop.coe_min,
+          WithTop.coe_le_coe] using hsum)
+      (by
+        intro f g
+        by_cases hf : f = 0
+        · subst f
+          simp [Chapter02LaurentTAdicOrder]
+        by_cases hg : g = 0
+        · subst g
+          simp [Chapter02LaurentTAdicOrder]
+        have hfg : f * g ≠ 0 := mul_ne_zero hf hg
+        simp only [Chapter02LaurentTAdicOrder, dif_neg hf, dif_neg hg,
+          dif_neg hfg, HahnSeries.order_mul hf hg, WithTop.coe_add])
+  exact ⟨w, fun f => rfl⟩
 
 theorem chapter02_two_stage_coarsening_is_T_adic_order
     {K Γ : Type*} [Field K]

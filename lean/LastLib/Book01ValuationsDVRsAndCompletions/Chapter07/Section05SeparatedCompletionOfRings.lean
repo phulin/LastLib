@@ -1,4 +1,6 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter07.Section04CompletionOfTheValuationRing
+import Mathlib.Topology.Algebra.IsUniformGroup.Constructions
+import Mathlib.Topology.Algebra.Ring.Basic
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter07
 
@@ -123,6 +125,34 @@ noncomputable def chapter07DvrUniformSpace
     UniformSpace A :=
   UniformSpace.comap (algebraMap A (FractionRing A))
     ((Valued.mk' ((IsDiscreteValuationRing.maximalIdeal A).valuation (FractionRing A))).toUniformSpace)
+
+-- The pulled-back valuation uniformity is compatible with the ring operations.
+noncomputable instance chapter07DvrUniformSpace_isUniformAddGroup
+    (A : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A] :
+    @IsUniformAddGroup A (chapter07DvrUniformSpace A) inferInstance := by
+  let K := FractionRing A
+  let v : Valuation K ℤᵐ⁰ := (IsDiscreteValuationRing.maximalIdeal A).valuation K
+  let : UniformSpace K := (Valued.mk' v).toUniformSpace
+  let : IsUniformAddGroup K := (Valued.mk' v).toIsUniformAddGroup
+  change @IsUniformAddGroup A
+    (UniformSpace.comap (algebraMap A K) (inferInstance : UniformSpace K)) inferInstance
+  exact IsUniformAddGroup.comap (algebraMap A K)
+
+noncomputable instance chapter07DvrUniformSpace_isTopologicalRing
+    (A : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A] :
+    @IsTopologicalRing A (chapter07DvrUniformSpace A).toTopologicalSpace inferInstance := by
+  let K := FractionRing A
+  let v : Valuation K ℤᵐ⁰ := (IsDiscreteValuationRing.maximalIdeal A).valuation K
+  let : UniformSpace K := (Valued.mk' v).toUniformSpace
+  let : TopologicalSpace K := (Valued.mk' v).toTopologicalSpace
+  let : IsUniformAddGroup K := (Valued.mk' v).toIsUniformAddGroup
+  let : UniformSpace A := chapter07DvrUniformSpace A
+  let : IsUniformAddGroup A := chapter07DvrUniformSpace_isUniformAddGroup A
+  let : ContinuousMul A := by
+    change @ContinuousMul A ((inferInstance : TopologicalSpace K).induced (algebraMap A K)) _
+    exact continuousMul_induced (algebraMap A K)
+  let : IsTopologicalSemiring A := ⟨⟩
+  exact ⟨⟩
 
 -- The standard DVR statement comparing metric and ideal-adic completion.
 set_option maxHeartbeats 800000 in

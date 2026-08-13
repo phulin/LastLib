@@ -69,16 +69,21 @@ theorem chapter07FourierTransform_im_eq_zero_of_even
     (chapter07FourierTransform f t).im = 0 := by
   sorry
 
-/- Positive type is the finite positive-semidefinite-kernel condition. -/
+/- Positive type is the continuous finite positive-semidefinite-kernel condition.
+   Continuity is needed for the Bochner/Fourier bridge below; integrability is
+   kept as an explicit hypothesis there because positive-definite examples such
+   as the cosine wave need not be integrable. -/
 def chapter07PositiveType (f : Chapter07TestFunction) : Prop :=
-  ∀ n : ℕ, ∀ x : Fin n → ℝ, ∀ c : Fin n → ℂ,
-    0 ≤ (∑ i, ∑ j, c i * star (c j) * (f (x i - x j) : ℂ)).re ∧
-      (∑ i, ∑ j, c i * star (c j) * (f (x i - x j) : ℂ)).im = 0
+  Continuous f ∧
+    ∀ n : ℕ, ∀ x : Fin n → ℝ, ∀ c : Fin n → ℂ,
+      0 ≤ (∑ i, ∑ j, c i * star (c j) * (f (x i - x j) : ℂ)).re ∧
+        (∑ i, ∑ j, c i * star (c j) * (f (x i - x j) : ℂ)).im = 0
 
 def chapter07FourierNonnegative (f : Chapter07TestFunction) : Prop :=
-  ∀ t : ℝ,
-    0 ≤ (chapter07FourierTransform f t).re ∧
-      (chapter07FourierTransform f t).im = 0
+  Integrable f ∧
+    ∀ t : ℝ,
+      0 ≤ (chapter07FourierTransform f t).re ∧
+        (chapter07FourierTransform f t).im = 0
 
 theorem chapter07_positiveType_mul
     (f g : Chapter07TestFunction)
@@ -110,6 +115,10 @@ theorem chapter07_fourierTransform_mul_eq_inv_two_pi_convolution
 
 def chapter07ZeroPartner (ρ : ℂ) : ℂ :=
   1 - star ρ
+
+theorem chapter07ZeroPartner_involutive (ρ : ℂ) :
+    chapter07ZeroPartner (chapter07ZeroPartner ρ) = ρ := by
+  sorry
 
 structure Chapter07ZeroSpectrum where
   support : Set ℂ

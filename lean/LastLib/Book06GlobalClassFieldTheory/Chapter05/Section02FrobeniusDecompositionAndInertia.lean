@@ -1,7 +1,8 @@
 import LastLib.Book06GlobalClassFieldTheory.Chapter05.Dependencies
+import LastLib.Book06GlobalClassFieldTheory.Chapter02.Dependencies
 import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.FieldTheory.Galois.Notation
-import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
+import Mathlib.GroupTheory.Index
 
 namespace LastLib.Book06GlobalClassFieldTheory.Chapter05
 
@@ -47,34 +48,29 @@ theorem chapter05_local_upper_ramification_range
 /-- Arithmetic Frobenius is the automorphism `x ↦ x^q` on the residue field. -/
 def chapter05ArithmeticFrobenius
     {k : Type uk} {k' : Type uk'} [Field k] [Field k'] [Algebra k k']
+    [Fintype k] [Finite k'] [Algebra.IsAlgebraic k k']
     (q : ℕ) (σ : Gal(k' / k)) : Prop :=
   ∀ x : k', σ x = x ^ q
 
 /-
-DEPENDENCY_GUESS: `Chapter05LocalOrder` packages the valuation and
-uniformizer decomposition expected from the local-field interface of the
-preceding chapters.  Its decomposition field is the bridge needed for the
-unramified local Artin formula.
+DEPENDENCY_GUESS: `Chapter05LocalOrder` is the local-field valuation
+interface provided by the preceding chapters.  Its decomposition field is
+the bridge needed for the unramified local Artin formula.
 -/
 /-- A local valuation vector used to state the unramified formula. -/
-structure Chapter05LocalOrder
-    (U : Type uU) [CommGroup U] where
-  ord : U → ℤ
-  ord_mul : ∀ x y, ord (x * y) = ord x + ord y
-  units : Subgroup U
-  units_iff_ord_zero : ∀ x, x ∈ units ↔ ord x = 0
-  uniformizer : U
-  ord_uniformizer : ord uniformizer = 1
-  unit_uniformizer_decomposition :
-    ∀ x, ∃ u : U, u ∈ units ∧ x = u * uniformizer ^ ord x
+abbrev Chapter05LocalOrder
+    (U : Type uU) [CommGroup U] (units : Subgroup U) :=
+  LastLib.Book06GlobalClassFieldTheory.Chapter02.Chapter02DiscreteValuationData U units
 
 /-- The local data at an unramified finite place, including the arithmetic
 Frobenius normalization. -/
 structure Chapter05UnramifiedPlaceProfile
     (U : Type uU) (G : Type uG) (k : Type uk) (k' : Type uk')
-    [CommGroup U] [CommGroup G] [Finite G] [Field k] [Field k'] [Algebra k k'] [Fintype k]
+    [CommGroup U] [CommGroup G] [Finite G] [Field k] [Field k'] [Algebra k k']
+    [Fintype k] [Finite k'] [Algebra.IsAlgebraic k k'] [FiniteDimensional k k']
     where
-  order : Chapter05LocalOrder U
+  units : Subgroup U
+  order : Chapter05LocalOrder U units
   localArtin : U →* G
   decomposition : Subgroup G
   inertia : Subgroup G
@@ -84,19 +80,21 @@ structure Chapter05UnramifiedPlaceProfile
   frobenius : G
   inertia_trivial : inertia = ⊥
   range_decomposition : Subgroup.map localArtin ⊤ = decomposition
-  range_units : Subgroup.map localArtin order.units = inertia
+  range_units : Subgroup.map localArtin units = inertia
   localArtin_uniformizer : localArtin order.uniformizer = frobenius
   arithmetic_frobenius : chapter05ArithmeticFrobenius q (residueAction frobenius)
 
 theorem chapter05_unramified_inertia_trivial
     {U : Type uU} {G : Type uG} {k : Type uk} {k' : Type uk'}
-    [CommGroup U] [CommGroup G] [Finite G] [Field k] [Field k'] [Algebra k k'] [Fintype k]
+    [CommGroup U] [CommGroup G] [Finite G] [Field k] [Field k'] [Algebra k k']
+    [Fintype k] [Finite k'] [Algebra.IsAlgebraic k k'] [FiniteDimensional k k']
     (D : Chapter05UnramifiedPlaceProfile U G k k') : D.inertia = ⊥ := by
   exact D.inertia_trivial
 
 theorem chapter05_unramified_arithmetic_frobenius
     {U : Type uU} {G : Type uG} {k : Type uk} {k' : Type uk'}
-    [CommGroup U] [CommGroup G] [Finite G] [Field k] [Field k'] [Algebra k k'] [Fintype k]
+    [CommGroup U] [CommGroup G] [Finite G] [Field k] [Field k'] [Algebra k k']
+    [Fintype k] [Finite k'] [Algebra.IsAlgebraic k k'] [FiniteDimensional k k']
     (D : Chapter05UnramifiedPlaceProfile U G k k') :
     chapter05ArithmeticFrobenius D.q (D.residueAction D.frobenius) := by
   exact D.arithmetic_frobenius
@@ -104,18 +102,20 @@ theorem chapter05_unramified_arithmetic_frobenius
 /-- At an unramified place the local symbol depends only on the valuation. -/
 theorem chapter05_unramified_local_artin_formula
     {U : Type uU} {G : Type uG} {k : Type uk} {k' : Type uk'}
-    [CommGroup U] [CommGroup G] [Finite G] [Field k] [Field k'] [Algebra k k'] [Fintype k]
+    [CommGroup U] [CommGroup G] [Finite G] [Field k] [Field k'] [Algebra k k']
+    [Fintype k] [Finite k'] [Algebra.IsAlgebraic k k'] [FiniteDimensional k k']
     (D : Chapter05UnramifiedPlaceProfile U G k k') (x : U) :
     D.localArtin x = D.frobenius ^ D.order.ord x := by
   sorry
 
 theorem chapter05_unramified_local_artin_units
     {U : Type uU} {G : Type uG} {k : Type uk} {k' : Type uk'}
-    [CommGroup U] [CommGroup G] [Finite G] [Field k] [Field k'] [Algebra k k'] [Fintype k]
+    [CommGroup U] [CommGroup G] [Finite G] [Field k] [Field k'] [Algebra k k']
+    [Fintype k] [Finite k'] [Algebra.IsAlgebraic k k'] [FiniteDimensional k k']
     (D : Chapter05UnramifiedPlaceProfile U G k k') {x : U}
-    (hx : x ∈ D.order.units) : D.localArtin x = 1 := by
+    (hx : x ∈ D.units) : D.localArtin x = 1 := by
   rw [chapter05_unramified_local_artin_formula D x]
-  rw [D.order.units_iff_ord_zero x] at hx
+  rw [D.order.unit_iff_ord_zero x] at hx
   simp [hx]
 
 /-- An unramified prime ideal has an ideal Frobenius only because its inertia
@@ -142,24 +142,33 @@ theorem chapter05_unramified_split_iff_norm_class
     chapter05SplitsCompletely frobenius ↔ classOfUniformizer ∈ normSubgroup := by
   sorry
 
-/-- The residue degree is the order of arithmetic Frobenius. -/
+/-- The residue degree of the displayed finite residue extension. -/
 def chapter05ResidueDegree
-    {G : Type uG} [Group G] [Finite G] (frobenius : G) : ℕ := orderOf frobenius
+    {U : Type uU} {G : Type uG} {k : Type uk} {k' : Type uk'}
+    [CommGroup U] [CommGroup G] [Finite G] [Field k] [Field k'] [Algebra k k']
+    [Fintype k] [Finite k'] [Algebra.IsAlgebraic k k'] [FiniteDimensional k k']
+    (_D : Chapter05UnramifiedPlaceProfile U G k k') : ℕ :=
+  Module.finrank k k'
 
 theorem chapter05_residue_degree_eq_frobenius_order
-    {G : Type uG} [Group G] [Finite G] (frobenius : G) :
-    chapter05ResidueDegree frobenius = orderOf frobenius := by
-  rfl
+    {U : Type uU} {G : Type uG} {k : Type uk} {k' : Type uk'}
+    [CommGroup U] [CommGroup G] [Finite G] [Field k] [Field k'] [Algebra k k']
+    [Fintype k] [Finite k'] [Algebra.IsAlgebraic k k'] [FiniteDimensional k k']
+    (D : Chapter05UnramifiedPlaceProfile U G k k') :
+    chapter05ResidueDegree D = orderOf D.frobenius := by
+  sorry
 
-/-- The number of primes above a place in a finite Galois extension. -/
+/-- The group-theoretic count of primes above a place, as the decomposition
+index.  Identifying this index with an actual place fibre is supplied by the
+valuation/decomposition interface of the preceding chapters. -/
 def chapter05NumberOfPrimesAbove
     {G : Type uG} [Group G] [Finite G] (D : Subgroup G) : ℕ :=
-  Nat.card G / Nat.card D
+  D.index
 
 theorem chapter05_number_of_primes_above_eq_index
     {G : Type uG} [Group G] [Finite G] (D : Subgroup G) :
     chapter05NumberOfPrimesAbove D = Nat.card G / Nat.card D := by
-  rfl
+  sorry
 
 /-- The positive component of the real local multiplicative group. -/
 def chapter05PositiveRealUnits : Subgroup ℝˣ where
@@ -176,6 +185,8 @@ structure Chapter05RealPlaceProfile (G : Type uG) [CommGroup G] [Finite G] where
   positive_killed : chapter05PositiveRealUnits ≤ localArtin.ker
   every_place_above_real : Prop
   place_becomes_complex : Prop
+  real_or_complex : every_place_above_real ∨ place_becomes_complex
+  not_both : ¬ (every_place_above_real ∧ place_becomes_complex)
   image_trivial_if_real :
     every_place_above_real → Subgroup.map localArtin ⊤ = ⊥
   image_order_two_if_complex :

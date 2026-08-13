@@ -60,12 +60,27 @@ def chapter05ResidueAutomorphismsOver
     apply φ.injective
     simpa using (hφ x).symm
 
-/-- The residue automorphism target agrees with the Galois group in the finite Galois case. -/
+/-- The residue automorphism target agrees with the Galois group. -/
 theorem residue_automorphisms_over_base_is_galois_group
     {k l : Type*} [Field k] [Field l] [Algebra k l] :
     Nonempty
       (chapter05ResidueAutomorphismsOver k l ≃* Gal(l / k)) := by
-  sorry
+  let e : chapter05ResidueAutomorphismsOver k l ≃* Gal(l / k) :=
+    { toFun := fun φ => AlgEquiv.ofRingEquiv (R := k) (f := φ.1) (fun x => φ.2 x)
+      invFun := fun σ => ⟨σ.toRingEquiv, fun x => σ.commutes x⟩
+      left_inv := by
+        intro φ
+        ext x
+        rfl
+      right_inv := by
+        intro σ
+        ext x
+        rfl
+      map_mul' := by
+        intro φ ψ
+        ext x
+        rfl }
+  exact ⟨e⟩
 
 /-- Restriction of a residue action to automorphisms over the base. -/
 def chapter05ResidueActionOverBase
@@ -84,7 +99,7 @@ theorem inertia_group_is_residue_action_kernel
     {F E : Type*} [Field F] [Field E] [Algebra F E]
     (A : ValuationSubring E) :
     chapter05InertiaGroup F A = MonoidHom.ker (chapter05ResidueAction F A) := by
-  sorry
+  rfl
 
 /-- Kernel membership is invisibility on every residue class. -/
 theorem inertia_mem_iff_residue_fixed
@@ -93,7 +108,16 @@ theorem inertia_mem_iff_residue_fixed
     σ ∈ chapter05InertiaGroup F A ↔
       ∀ x : IsLocalRing.ResidueField A,
         chapter05ResidueAction F A σ x = x := by
-  sorry
+  rw [inertia_group_is_residue_action_kernel]
+  constructor
+  · intro h x
+    change chapter05ResidueAction F A σ = 1 at h
+    have hx := congrArg (fun τ : RingAut (IsLocalRing.ResidueField A) => τ x) h
+    simpa using hx
+  · intro h
+    change chapter05ResidueAction F A σ = 1
+    ext x
+    simpa using h x
 
 /-- Reduction commutes with the residue action. -/
 theorem residue_action_commutes_with_reduction
@@ -101,7 +125,7 @@ theorem residue_action_commutes_with_reduction
     (A : ValuationSubring E) (σ : chapter05DecompositionGroup F A) (x : A) :
     IsLocalRing.residue A (σ • x) =
       chapter05ResidueAction F A σ (IsLocalRing.residue A x) := by
-  sorry
+  rfl
 
 /-- The first congruence condition is the elementary description of inertia. -/
 theorem inertia_iff_positive_valuation_displacement
@@ -111,7 +135,48 @@ theorem inertia_iff_positive_valuation_displacement
     σ ∈ chapter05InertiaGroup F w.toValuation.valuationSubring ↔
       ∀ x : w.toValuation.valuationSubring,
         w ((σ : Gal(L / F)) (x : L) - (x : L)) > 0 := by
-  sorry
+  have hval (z : WithTop ℤ) :
+      Multiplicative.ofAdd (OrderDual.toDual z) <
+          (1 : Multiplicative (WithTop ℤ)ᵒᵈ) ↔ 0 < z := by
+    change Multiplicative.ofAdd (OrderDual.toDual z) <
+        Multiplicative.ofAdd (OrderDual.toDual (0 : WithTop ℤ)) ↔ 0 < z
+    rw [Multiplicative.ofAdd_lt, OrderDual.toDual_lt_toDual]
+  rw [inertia_mem_iff_residue_fixed]
+  constructor
+  · intro h x
+    have hres : IsLocalRing.residue w.toValuation.valuationSubring (σ • x) =
+        IsLocalRing.residue w.toValuation.valuationSubring x := by
+      rw [residue_action_commutes_with_reduction, h]
+    have hzero : IsLocalRing.residue w.toValuation.valuationSubring ((σ • x) - x) = 0 := by
+      rw [map_sub, hres, sub_self]
+    have hmax : (σ • x) - x ∈
+        IsLocalRing.maximalIdeal w.toValuation.valuationSubring :=
+      (IsLocalRing.residue_eq_zero_iff _).mp hzero
+    have hv := (Valuation.mem_maximalIdeal_iff L w.toValuation).mp hmax
+    have := (hval (w ((σ : Gal(L / F)) (x : L) - (x : L)))).mp hv
+    exact this
+  · intro h x
+    obtain ⟨y, rfl⟩ := IsLocalRing.residue_surjective
+      (R := w.toValuation.valuationSubring) x
+    have hpos : w ((σ : Gal(L / F)) (y : L) - (y : L)) > 0 := h y
+    have hsmul : ((σ • y : w.toValuation.valuationSubring) : L) =
+        (σ : Gal(L / F)) (y : L) := rfl
+    have hpos' : 0 < w ((σ • y : w.toValuation.valuationSubring) - y) := by
+      rw [hsmul]
+      exact hpos
+    have hv : w.toValuation ((σ • y) - y) < 1 :=
+      (hval _).mpr hpos'
+    have hmax : (σ • y) - y ∈
+        IsLocalRing.maximalIdeal w.toValuation.valuationSubring :=
+      (Valuation.mem_maximalIdeal_iff L w.toValuation).mpr hv
+    have hzero : IsLocalRing.residue w.toValuation.valuationSubring ((σ • y) - y) = 0 :=
+      (IsLocalRing.residue_eq_zero_iff _).mpr hmax
+    have hres : IsLocalRing.residue w.toValuation.valuationSubring (σ • y) =
+        IsLocalRing.residue w.toValuation.valuationSubring y := by
+      apply sub_eq_zero.mp
+      simpa only [map_sub] using hzero
+    rw [← residue_action_commutes_with_reduction]
+    exact hres
 
 /- SOURCE_ISSUE: The surjectivity argument in §5.3 invokes Hensel's lemma
    after the chapter has introduced a possibly noncomplete global extension.
@@ -124,7 +189,14 @@ theorem residue_action_exact_sequence
     (ρ : D →* Q) (hρ : Function.Surjective ρ) :
     Function.MulExact (Subgroup.subtype (MonoidHom.ker ρ)) ρ ∧
       Function.Surjective ρ := by
-  sorry
+  constructor
+  · intro y
+    constructor
+    · intro hy
+      exact ⟨⟨y, hy⟩, rfl⟩
+    · rintro ⟨x, rfl⟩
+      exact x.2
+  · exact hρ
 
 /--
  In the complete local Galois situation, separability of the residue
@@ -166,26 +238,35 @@ theorem residue_exact_sequence_cardinality
     {D Q : Type*} [Group D] [Group Q] [Finite D] [Finite Q]
     (ρ : D →* Q) (hρ : Function.Surjective ρ) :
     Nat.card D = Nat.card (MonoidHom.ker ρ) * Nat.card Q := by
-  sorry
+  rw [← (MonoidHom.ker ρ).card_mul_index, Subgroup.index_ker,
+    MonoidHom.range_eq_top.mpr hρ]
+  simp
 
 /-- The residue quotient cannot recover the full residue degree in an inseparable case. -/
 theorem inseparable_residue_automorphism_group_is_strictly_smaller
     {k l : Type*} [Field k] [Field l] [Algebra k l]
     [FiniteDimensional k l] (hinsep : ¬Algebra.IsSeparable k l) :
     Nat.card (Gal(l / k)) < Module.finrank k l := by
-  sorry
+  have hle : Nat.card (Gal(l / k)) ≤ Module.finrank k l :=
+    by simpa only [Nat.card_eq_fintype_card] using
+      (AlgEquiv.card_le (F := k) (K := l))
+  have hne : Nat.card (Gal(l / k)) ≠ Module.finrank k l := by
+    intro heq
+    have hgal : IsGalois k l := IsGalois.of_card_aut_eq_finrank k l heq
+    exact hinsep hgal.to_isSeparable
+  exact lt_of_le_of_ne hle hne
 
 /-- Perfect residue fields make every finite residue extension separable. -/
 theorem perfect_residue_field_has_separable_finite_extensions
     {k l : Type*} [Field k] [Field l] [Algebra k l]
     [FiniteDimensional k l] [PerfectField k] :
     Algebra.IsSeparable k l := by
-  sorry
+  exact Algebra.IsAlgebraic.isSeparable_of_perfectField
 
 /-- A finite residue field is perfect, so it has no inseparability obstruction. -/
 theorem finite_residue_field_is_perfect
     (k : Type*) [Field k] [Finite k] : PerfectField k := by
-  sorry
+  infer_instance
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05

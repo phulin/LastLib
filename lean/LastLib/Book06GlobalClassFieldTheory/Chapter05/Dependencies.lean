@@ -2,9 +2,11 @@ import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.FieldTheory.Galois.Abelian
 import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.FieldTheory.Galois.Notation
+import Mathlib.FieldTheory.IsSepClosed
 import Mathlib.GroupTheory.Abelianization.Defs
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.LinearAlgebra.FiniteDimensional.Basic
+import Mathlib.NumberTheory.NumberField.Basic
 
 namespace LastLib.Book06GlobalClassFieldTheory.Chapter05
 
@@ -15,12 +17,13 @@ open scoped BigOperators
 /-!
 Shared interfaces for finite global reciprocity.
 
-The preceding adele and local class-field-theory chapters are not present in
-this checkout yet.  The structures below are deliberately small interfaces
-for their canonical outputs: an idele class group, an idele norm, local
-components, and the degree-zero cap-product calculation.  They are not
-claims that these objects are merely abstract groups; they are the minimum
-interfaces needed by the statements in this chapter.
+The preceding adele and local class-field-theory chapters expose canonical
+restricted-product, norm, and local reciprocity interfaces.  The structures
+below are deliberately small comparison interfaces for those outputs: an
+idele class group, an idele norm, local components, and the degree-zero
+cap-product calculation.  They are not intended to replace the canonical
+number-field constructions; the reconciliation bridge is recorded explicitly
+where a canonical earlier interface is not yet multiplicatively identified.
 
 DEPENDENCY_GUESS: `Chapter05ClassFormationInput` is the book-facing form of
 the degree-zero specialization of the Chapter 4 class-formation lemma.  When
@@ -114,7 +117,7 @@ theorem chapter05_norm_class_commutes
 structure Chapter05ClassFormationInput
     (K : Type uK) (L : Type uL)
     (I_K : Type uI) (I_L : Type uI') (C_K : Type uC) (C_L : Type uC')
-    [Field K] [Field L] [Algebra K L]
+    [Field K] [Field L] [NumberField K] [NumberField L] [Algebra K L]
     [CommGroup I_K] [CommGroup I_L] [CommGroup C_K] [CommGroup C_L]
     [FiniteDimensional K L] [IsGalois K L] where
   ideleNorm : I_L →* I_K
@@ -129,7 +132,7 @@ structure Chapter05ClassFormationInput
 def chapter05InputNormSubgroup
     {K : Type uK} {L : Type uL}
     {I_K : Type uI} {I_L : Type uI'} {C_K : Type uC} {C_L : Type uC'}
-    [Field K] [Field L] [Algebra K L]
+    [Field K] [Field L] [NumberField K] [NumberField L] [Algebra K L]
     [CommGroup I_K] [CommGroup I_L] [CommGroup C_K] [CommGroup C_L]
     [FiniteDimensional K L] [IsGalois K L]
     (X : Chapter05ClassFormationInput K L I_K I_L C_K C_L) : Subgroup C_K :=
@@ -138,7 +141,7 @@ def chapter05InputNormSubgroup
 def chapter05InputCapProductEquiv
     {K : Type uK} {L : Type uL}
     {I_K : Type uI} {I_L : Type uI'} {C_K : Type uC} {C_L : Type uC'}
-    [Field K] [Field L] [Algebra K L]
+    [Field K] [Field L] [NumberField K] [NumberField L] [Algebra K L]
     [CommGroup I_K] [CommGroup I_L] [CommGroup C_K] [CommGroup C_L]
     [FiniteDimensional K L] [IsGalois K L]
     (X : Chapter05ClassFormationInput K L I_K I_L C_K C_L) :
@@ -150,7 +153,7 @@ def chapter05InputCapProductEquiv
 def chapter05InputClassNormQuotientMap
     {K : Type uK} {L : Type uL}
     {I_K : Type uI} {I_L : Type uI'} {C_K : Type uC} {C_L : Type uC'}
-    [Field K] [Field L] [Algebra K L]
+    [Field K] [Field L] [NumberField K] [NumberField L] [Algebra K L]
     [CommGroup I_K] [CommGroup I_L] [CommGroup C_K] [CommGroup C_L]
     [FiniteDimensional K L] [IsGalois K L]
     (X : Chapter05ClassFormationInput K L I_K I_L C_K C_L) :
@@ -160,7 +163,7 @@ def chapter05InputClassNormQuotientMap
 noncomputable def chapter05InputGlobalArtin
     {K : Type uK} {L : Type uL}
     {I_K : Type uI} {I_L : Type uI'} {C_K : Type uC} {C_L : Type uC'}
-    [Field K] [Field L] [Algebra K L]
+    [Field K] [Field L] [NumberField K] [NumberField L] [Algebra K L]
     [CommGroup I_K] [CommGroup I_L] [CommGroup C_K] [CommGroup C_L]
     [FiniteDimensional K L] [IsGalois K L]
     (X : Chapter05ClassFormationInput K L I_K I_L C_K C_L) :
@@ -171,7 +174,7 @@ noncomputable def chapter05InputGlobalArtin
 noncomputable def chapter05InputIdeleArtin
     {K : Type uK} {L : Type uL}
     {I_K : Type uI} {I_L : Type uI'} {C_K : Type uC} {C_L : Type uC'}
-    [Field K] [Field L] [Algebra K L]
+    [Field K] [Field L] [NumberField K] [NumberField L] [Algebra K L]
     [CommGroup I_K] [CommGroup I_L] [CommGroup C_K] [CommGroup C_L]
     [FiniteDimensional K L] [IsGalois K L]
     (X : Chapter05ClassFormationInput K L I_K I_L C_K C_L) :
@@ -181,7 +184,7 @@ noncomputable def chapter05InputIdeleArtin
 theorem chapter05_input_global_artin_ker
     {K : Type uK} {L : Type uL}
     {I_K : Type uI} {I_L : Type uI'} {C_K : Type uC} {C_L : Type uC'}
-    [Field K] [Field L] [Algebra K L]
+    [Field K] [Field L] [NumberField K] [NumberField L] [Algebra K L]
     [CommGroup I_K] [CommGroup I_L] [CommGroup C_K] [CommGroup C_L]
     [FiniteDimensional K L] [IsGalois K L]
     (X : Chapter05ClassFormationInput K L I_K I_L C_K C_L) :
@@ -191,7 +194,7 @@ theorem chapter05_input_global_artin_ker
 theorem chapter05_input_global_artin_surjective
     {K : Type uK} {L : Type uL}
     {I_K : Type uI} {I_L : Type uI'} {C_K : Type uC} {C_L : Type uC'}
-    [Field K] [Field L] [Algebra K L]
+    [Field K] [Field L] [NumberField K] [NumberField L] [Algebra K L]
     [CommGroup I_K] [CommGroup I_L] [CommGroup C_K] [CommGroup C_L]
     [FiniteDimensional K L] [IsGalois K L]
     (X : Chapter05ClassFormationInput K L I_K I_L C_K C_L) :
@@ -201,7 +204,7 @@ theorem chapter05_input_global_artin_surjective
 theorem chapter05_input_norm_quotient_card
     {K : Type uK} {L : Type uL}
     {I_K : Type uI} {I_L : Type uI'} {C_K : Type uC} {C_L : Type uC'}
-    [Field K] [Field L] [Algebra K L]
+    [Field K] [Field L] [NumberField K] [NumberField L] [Algebra K L]
     [CommGroup I_K] [CommGroup I_L] [CommGroup C_K] [CommGroup C_L]
     [FiniteDimensional K L] [IsGalois K L]
     (X : Chapter05ClassFormationInput K L I_K I_L C_K C_L) :
@@ -212,26 +215,25 @@ theorem chapter05_input_norm_quotient_card
 /-
 DEPENDENCY_GUESS: `Chapter05NormLimitationData` stands for the canonical
 comparison between the level `L` and the commutator fixed field
-`L^[G, G]`.  The quotient-map equality should later be supplied by the
+`L^[G, G]`.  The common quotient map should later be supplied by the
 reconciled class-formation and local-compatibility interfaces.
 -/
-/-- A norm-limitation comparison: two levels have the same quotient map after
-the local decomposition data are identified. -/
+/-- A norm-limitation comparison: two levels have a common quotient map after
+  the local decomposition data are identified.  The common map is part of the
+  comparison; equality of the two norm kernels is the resulting conclusion. -/
 structure Chapter05NormLimitationData
     (C : Type uC) (Q : Type uQ) [CommGroup C] [CommGroup Q] where
   normSubgroupL : Subgroup C
   normSubgroupM : Subgroup C
-  quotientL : C →* Q
-  quotientM : C →* Q
-  quotientL_kernel : quotientL.ker = normSubgroupL
-  quotientM_kernel : quotientM.ker = normSubgroupM
-  quotient_maps_agree : quotientL = quotientM
+  quotient : C →* Q
+  quotientL_kernel : quotient.ker = normSubgroupL
+  quotientM_kernel : quotient.ker = normSubgroupM
 
 theorem chapter05_norm_limitation
     {C : Type uC} {Q : Type uQ} [CommGroup C] [CommGroup Q]
     (D : Chapter05NormLimitationData C Q) :
     D.normSubgroupL = D.normSubgroupM := by
-  rw [← D.quotientL_kernel, ← D.quotientM_kernel, D.quotient_maps_agree]
+  rw [← D.quotientL_kernel, ← D.quotientM_kernel]
 
 /-- A local multiplicative group, its units, and its local Artin map. -/
 structure Chapter05LocalArtinFamily

@@ -23,19 +23,24 @@ abbrev Chapter15GLnAdeles (n : ℕ) (R K : Type*) [CommRing R] [IsDedekindDomain
 def chapter15GlobalLevelSubgroup (n : ℕ)
     (Kf : Subgroup (Chapter15FiniteMatrixGroup n R K)) :
     Subgroup (Chapter15GLnAdeles n R K) where
-  carrier := {g | g.2 ∈ Kf}
-  one_mem' := Kf.one_mem
+  carrier := {g | g.1 = 1 ∧ g.2 ∈ Kf}
+  one_mem' := by
+    exact ⟨rfl, Kf.one_mem⟩
   mul_mem' := by
     intro g h hg hh
-    simpa using Kf.mul_mem hg hh
+    refine ⟨?_, Kf.mul_mem hg.2 hh.2⟩
+    rw [hg.1, hh.1]
+    simp
   inv_mem' := by
     intro g hg
-    simpa using Kf.inv_mem hg
+    refine ⟨?_, Kf.inv_mem hg.2⟩
+    rw [hg.1]
+    simp
 
 theorem chapter15_global_level_subgroup_mem_iff
     (n : ℕ) (Kf : Subgroup (Chapter15FiniteMatrixGroup n R K))
     (g : Chapter15GLnAdeles n R K) :
-    g ∈ chapter15GlobalLevelSubgroup n Kf ↔ g.2 ∈ Kf :=
+    g ∈ chapter15GlobalLevelSubgroup n Kf ↔ g.1 = 1 ∧ g.2 ∈ Kf :=
   Iff.rfl
 
 /-- An arbitrary all-place tuple of local invertible matrices satisfies the adelic tail condition. -/
@@ -88,10 +93,11 @@ theorem chapter15_finite_integral_matrix_group_is_closed
   sorry
 
 theorem chapter15_finite_integral_matrix_group_is_compact
-    (n : ℕ) [NumberField K] (v : Chapter15FinitePlace R) :
+    (n : ℕ) {L : Type*} [Field L] [NumberField L]
+    (v : Chapter15FinitePlace (𝓞 L)) :
     IsCompact
-      (chapter15FiniteMatrixIntegralSubgroup (R := R) (K := K) n v :
-        Set (Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion K))) := by
+      (chapter15FiniteMatrixIntegralSubgroup (R := 𝓞 L) (K := L) n v :
+        Set (Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion L))) := by
   sorry
 
 theorem chapter15_finite_integral_matrix_group_is_open
@@ -126,10 +132,10 @@ theorem chapter15_standard_finite_matrix_level_mem_iff
   Iff.rfl
 
 theorem chapter15_standard_finite_matrix_level_is_compact
-    (n : ℕ) [NumberField K] :
+    (n : ℕ) {L : Type*} [Field L] [NumberField L] :
     IsCompact
-      (chapter15StandardFiniteMatrixLevel (R := R) (K := K) n :
-        Set (Chapter15FiniteMatrixGroup n R K)) := by
+      (chapter15StandardFiniteMatrixLevel (R := 𝓞 L) (K := L) n :
+        Set (Chapter15FiniteMatrixGroup n (𝓞 L) L)) := by
   sorry
 
 theorem chapter15_standard_finite_matrix_level_is_open
@@ -142,8 +148,8 @@ theorem chapter15_standard_finite_matrix_level_is_open
 /-! ### Local compactness and rank one -/
 
 theorem chapter15_adelic_matrix_group_is_locally_compact
-    (n : ℕ) [NumberField K] :
-    LocallyCompactSpace (Chapter15GLnAdeles n R K) := by
+    (n : ℕ) {L : Type*} [Field L] [NumberField L] :
+    LocallyCompactSpace (Chapter15GLnAdeles n (𝓞 L) L) := by
   sorry
 
 theorem chapter15_adelic_matrix_group_is_locally_compact_of_ring_of_integers
@@ -156,18 +162,54 @@ def chapter15_rank_one_local_gl_is_multiplicative_group
     Matrix.GeneralLinearGroup (Fin 1) A ≃* Aˣ := by
   sorry
 
+/- The rank-one equivalence used in the adelic identification must also respect
+the local topologies. -/
+def chapter15_rank_one_local_gl_is_topological_multiplicative_group
+    (A : Type*) [CommRing A] [TopologicalSpace A] [IsTopologicalRing A] :
+    Matrix.GeneralLinearGroup (Fin 1) A ≃ₜ* Aˣ := by
+  sorry
+
 /- LOCAL_DEPENDENCY_GUESS: this is the book-facing rank-one identification of
 the restricted matrix construction with the graph-topologized idele group. -/
 def chapter15_rank_one_recovers_ideles
-    [NumberField K] :
-    Chapter15GLnAdeles 1 R K ≃* Chapter15IdeleGroup R K := by
+    (K : Type*) [Field K] [NumberField K] :
+    Chapter15GLnAdeles 1 (𝓞 K) K ≃ₜ* Chapter15IdeleGroup (𝓞 K) K := by
+  sorry
+
+theorem chapter15_idele_group_is_locally_compact
+    (K : Type*) [Field K] [NumberField K] :
+    LocallyCompactSpace (Chapter15IdeleGroup (𝓞 K) K) := by
+  sorry
+
+theorem chapter15_rank_one_recovers_ideles_principal
+    (K : Type*) [Field K] [NumberField K]
+    (g : Matrix.GeneralLinearGroup (Fin 1) K) :
+    chapter15_rank_one_recovers_ideles K
+        (chapter15PrincipalMatrix (R := 𝓞 K) (K := K) 1 g) =
+      chapter15PrincipalIdele (R := 𝓞 K) (K := K)
+        (chapter15_rank_one_local_gl_is_multiplicative_group K g) := by
   sorry
 
 /- The same identification on the finite standard level. -/
 def chapter15_rank_one_standard_level_recovers_finite_integral_ideles
-    [NumberField K] :
-    (chapter15StandardFiniteMatrixLevel (R := R) (K := K) 1 : Type _) ≃*
-      Chapter15FiniteIdeleGroup R K := by
+    (K : Type*) [Field K] [NumberField K] :
+    (chapter15StandardFiniteMatrixLevel (R := 𝓞 K) (K := K) 1 : Type _) ≃ₜ*
+      (chapter15StandardFiniteIdeleLevel (R := 𝓞 K) (K := K) : Type _) := by
+  sorry
+
+def chapter15_rank_one_finite_matrix_group_recovers_finite_ideles
+    (K : Type*) [Field K] [NumberField K] :
+    Chapter15FiniteMatrixGroup 1 (𝓞 K) K ≃ₜ*
+      Chapter15FiniteIdeleGroup (𝓞 K) K := by
+  sorry
+
+theorem chapter15_rank_one_finite_matrix_group_standard_level_image
+    (K : Type*) [Field K] [NumberField K] :
+    chapter15_rank_one_finite_matrix_group_recovers_finite_ideles K ''
+        (chapter15StandardFiniteMatrixLevel (R := 𝓞 K) (K := K) 1 :
+          Set (Chapter15FiniteMatrixGroup 1 (𝓞 K) K)) =
+      (chapter15StandardFiniteIdeleLevel (R := 𝓞 K) (K := K) :
+        Set (Chapter15FiniteIdeleGroup (𝓞 K) K)) := by
   sorry
 
 end

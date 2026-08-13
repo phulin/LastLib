@@ -9,7 +9,7 @@ open scoped BigOperators TensorProduct
 
 /-! # Book 4, Chapter 12, §12.5: Split places and norm components -/
 
-noncomputable instance chapter12LocalTensorProductRightAlgebra
+local instance chapter12LocalTensorProductRightAlgebra
     (K L Kv : Type*) [Field K] [Field L] [Field Kv]
     [Algebra K L] [Algebra K Kv] :
     Algebra Kv (L ⊗[K] Kv) :=
@@ -65,7 +65,7 @@ theorem chapter12_split_place_norm_surjective_by_first_coordinate
 
 structure Chapter12UnramifiedLocalNormData
     (K E : Type*) [Field K] [Field E] [Algebra K E]
-    [FiniteDimensional K E] where
+    [FiniteDimensional K E] [Algebra.Unramified K E] where
   degree : ℕ
   degree_eq_finrank : degree = Module.finrank K E
   base_valuation : AddValuation K (WithTop ℤ)
@@ -79,7 +79,7 @@ structure Chapter12UnramifiedLocalNormData
 
 def chapter12UnramifiedNormValuationMultiple
     {K E : Type*} [Field K] [Field E] [Algebra K E]
-    [FiniteDimensional K E]
+    [FiniteDimensional K E] [Algebra.Unramified K E]
     (P : Chapter12UnramifiedLocalNormData K E) (x : E) : Prop :=
   ∃ z : ℤ,
     P.base_valuation (Algebra.norm K x) =
@@ -87,14 +87,14 @@ def chapter12UnramifiedNormValuationMultiple
 
 theorem chapter12_inert_unramified_norm_valuations_are_multiples
     {K E : Type*} [Field K] [Field E] [Algebra K E]
-    [FiniteDimensional K E]
+    [FiniteDimensional K E] [Algebra.Unramified K E]
     (P : Chapter12UnramifiedLocalNormData K E) {x : E} (hx : x ≠ 0) :
     chapter12UnramifiedNormValuationMultiple P x := by
   sorry
 
 theorem chapter12_inert_unramified_norm_valuation_formula
     {K E : Type*} [Field K] [Field E] [Algebra K E]
-    [FiniteDimensional K E]
+    [FiniteDimensional K E] [Algebra.Unramified K E]
     (P : Chapter12UnramifiedLocalNormData K E) (x : E) (hx : x ≠ 0) :
     P.base_valuation (Algebra.norm K x) =
       (P.degree : WithTop ℤ) * P.extension_valuation x :=
@@ -106,9 +106,9 @@ def chapter12SplitNormImage {Kv : Type*} [CommMonoid Kv] (d : ℕ) : Set Kv :=
 
 def chapter12UnramifiedNormImage
     {K E : Type*} [Field K] [Field E] [Algebra K E]
-    [FiniteDimensional K E]
+    [FiniteDimensional K E] [Algebra.Unramified K E]
     (_P : Chapter12UnramifiedLocalNormData K E) : Set K :=
-  Set.range (Algebra.norm K : E → K)
+  {x | ∃ y : E, y ≠ 0 ∧ Algebra.norm K y = x}
 
 theorem chapter12_split_norm_image_is_all
     {Kv : Type*} [CommMonoid Kv] (d : ℕ) [NeZero d] :

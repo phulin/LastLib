@@ -11,6 +11,7 @@ namespace LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Cha
 
 open CategoryTheory CategoryTheory.Limits
 open AlgebraicGeometry
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
 
 noncomputable section
 
@@ -86,6 +87,13 @@ def chapter13GraphInBaseChangedProduct {S X Y : Scheme}
     (chapter13BaseChangeToTest xS T.toBase)
     (by sorry)
 
+theorem chapter13GraphInBaseChangedProduct_isClosedImmersion
+    {S X Y : Scheme} {xS : X ⟶ S} {yS : Y ⟶ S}
+    [IsSeparated yS] {T : Chapter13RelativeScheme S}
+    (u : Chapter13RelativeMorphism xS yS T) :
+    IsClosedImmersion (chapter13GraphInBaseChangedProduct u) := by
+  sorry
+
 /-- The projection from the base change of the fixed product to the base-changed source. -/
 def chapter13FixedProductBaseChangeToSource {S X Y : Scheme}
     (xS : X ⟶ S) (yS : Y ⟶ S) (T : Chapter13RelativeScheme S) :
@@ -133,42 +141,56 @@ def chapter13IsomorphismConditionOnFiber {Z X H : Scheme}
 theorem chapter13_proper_finite_presentation_isomorphism_locus_is_open
     {Z X H : Scheme} (p : Z ⟶ H) (q : X ⟶ H) (u : Z ⟶ X)
     (hu : u ≫ q = p) (hproper : IsProper u)
-    (hfinitePresentation : LocallyOfFinitePresentation u) :
+    (hfinitePresentation : LocallyOfFinitePresentation u)
+    (hflatP : Flat p) (hflatQ : Flat q) :
     Nonempty (Chapter13OpenLocusData H
       (chapter13IsomorphismConditionOnTest p q u hu)) := by
   sorry
 
 /-! ### Fixed Hilbert polynomial -/
 
-/-- A certificate that the graph has the selected polynomial in the chosen product embedding. -/
+/-- A certificate that the graph has the selected polynomial in the chosen relative-product embedding. -/
 structure Chapter13GraphPolynomialData {S X Y : Scheme}
-    (xS : X ⟶ S) (yS : Y ⟶ S) (L : Chapter13Polarization (chapter13RelativeProduct xS yS))
-    (P : Polynomial ℤ) (T : Chapter13RelativeScheme S)
+    (xS : X ⟶ S) (yS : Y ⟶ S)
+    (L : Chapter13Polarization (chapter13RelativeProductToBase xS yS))
+    (P : Chapter13NumericalPolynomial) (T : Chapter13RelativeScheme S)
     (u : Chapter13RelativeMorphism xS yS T) where
+  /-- The graph is closed in the relative product over the test scheme. -/
+  graph_closed : IsClosedImmersion (chapter13GraphInBaseChangedProduct u)
+  /-- The polarization used for the graph family after base change. -/
+  baseChangedPolarization : Chapter13Polarization
+    (chapter13BaseChangeToTest (chapter13RelativeProductToBase xS yS) T.toBase)
   certificate : Chapter13HilbertPolynomialCertificate
     (chapter13BaseChange xS T.toBase)
     (chapter13BaseChange (chapter13RelativeProductToBase xS yS) T.toBase)
     (chapter13GraphInBaseChangedProduct u)
+    (chapter13BaseChangeToTest (chapter13RelativeProductToBase xS yS) T.toBase)
+    baseChangedPolarization
+  /-- The test-scheme polarization is the pullback of the fixed one. -/
+  polarization_compatibility : Nonempty
+    ((chapter04PullbackLineBundle
+        (chapter13BaseChangeToSource (chapter13RelativeProductToBase xS yS) T.toBase)
+        L.lineBundle).sheaf ≅ baseChangedPolarization.lineBundle.sheaf)
   polynomial_eq : certificate.polynomial = P
 
 def chapter13GraphHasPolynomial {S X Y : Scheme}
     (xS : X ⟶ S) (yS : Y ⟶ S)
-    (L : Chapter13Polarization (chapter13RelativeProduct xS yS))
-    (P : Polynomial ℤ) (T : Chapter13RelativeScheme S)
+    (L : Chapter13Polarization (chapter13RelativeProductToBase xS yS))
+    (P : Chapter13NumericalPolynomial) (T : Chapter13RelativeScheme S)
     (u : Chapter13RelativeMorphism xS yS T) : Prop :=
   Nonempty (Chapter13GraphPolynomialData xS yS L P T u)
 
 /-- Relative morphisms whose graph belongs to the fixed polynomial-bounded problem. -/
 def chapter13GraphMorphismAtPolynomial {S X Y : Scheme}
     (xS : X ⟶ S) (yS : Y ⟶ S)
-    (L : Chapter13Polarization (chapter13RelativeProduct xS yS))
-    (P : Polynomial ℤ) (T : Chapter13RelativeScheme S) : Type :=
+    (L : Chapter13Polarization (chapter13RelativeProductToBase xS yS))
+    (P : Chapter13NumericalPolynomial) (T : Chapter13RelativeScheme S) : Type :=
   {u : Chapter13RelativeMorphism xS yS T // chapter13GraphHasPolynomial xS yS L P T u}
 
 /-! ### The graph condition on the Hilbert family -/
 
 def chapter13HilbertFamilyAt {S A : Scheme}
-    {aS : A ⟶ S} {L : Chapter13Polarization A} {P : Polynomial ℤ}
+    {aS : A ⟶ S} {L : Chapter13Polarization aS} {P : Chapter13NumericalPolynomial}
     (H : Chapter13HilbertSchemeData aS L P)
     (T : Chapter13RelativeScheme S)
     (t : Chapter13RelativeMap T H.represented.representative) :
@@ -179,14 +201,13 @@ def chapter13HilbertFamilyAt {S A : Scheme}
 base change and its closed embedding is the graph embedding. -/
 def chapter13HilbertFamilyIsGraph {S X Y : Scheme}
     (xS : X ⟶ S) (yS : Y ⟶ S)
-    (L : Chapter13Polarization (chapter13RelativeProduct xS yS))
-    (P : Polynomial ℤ)
+    (L : Chapter13Polarization (chapter13RelativeProductToBase xS yS))
+    (P : Chapter13NumericalPolynomial)
     (H : Chapter13HilbertSchemeData (chapter13RelativeProductToBase xS yS) L P)
     (T : Chapter13RelativeScheme S)
     (t : Chapter13RelativeMap T H.represented.representative) : Prop :=
   ∃ (u : Chapter13RelativeMorphism xS yS T),
     ∃ (_ : chapter13GraphHasPolynomial xS yS L P T u),
-      ∃ (_ : chapter13GraphProjectionCondition u),
       ∃ e : (chapter13HilbertFamilyAt H T t).scheme ≅ chapter13BaseChange xS T.toBase,
         e.hom ≫ chapter13GraphInBaseChangedProduct u =
             (chapter13HilbertFamilyAt H T t).inclusion ∧
@@ -196,8 +217,8 @@ def chapter13HilbertFamilyIsGraph {S X Y : Scheme}
 /-- The open graph locus inside a fixed-polynomial Hilbert scheme. -/
 structure Chapter13GraphParameterSpaceData {S X Y : Scheme}
     (xS : X ⟶ S) (yS : Y ⟶ S)
-    (L : Chapter13Polarization (chapter13RelativeProduct xS yS))
-    (P : Polynomial ℤ)
+    (L : Chapter13Polarization (chapter13RelativeProductToBase xS yS))
+    (P : Chapter13NumericalPolynomial)
     (H : Chapter13HilbertSchemeData (chapter13RelativeProductToBase xS yS) L P) where
   graphLocus : (chapter13HilbertScheme H).Opens
   graphLocus_represents : ∀ (T : Chapter13RelativeScheme S)
@@ -206,14 +227,19 @@ structure Chapter13GraphParameterSpaceData {S X Y : Scheme}
       ∃ q : Chapter13RelativeMap T
           (chapter13OpenRelativeScheme H.represented.representative graphLocus),
         q.map ≫ graphLocus.ι = t.map
+  /-- The open graph locus represents the fixed-polynomial morphism functor. -/
+  graph_morphisms : ∀ (T : Chapter13RelativeScheme S),
+    Chapter13RelativeMap T
+        (chapter13OpenRelativeScheme H.represented.representative graphLocus) ≃
+      chapter13GraphMorphismAtPolynomial xS yS L P T
   locallyFiniteType : LocallyOfFiniteType graphLocus.ι
   locallyFiniteTypeOverBase :
     LocallyOfFiniteType (graphLocus.ι ≫ H.represented.representative.toBase)
 
 def chapter13GraphParameterSpace {S X Y : Scheme}
     {xS : X ⟶ S} {yS : Y ⟶ S}
-    {L : Chapter13Polarization (chapter13RelativeProduct xS yS)}
-    {P : Polynomial ℤ}
+    {L : Chapter13Polarization (chapter13RelativeProductToBase xS yS)}
+    {P : Chapter13NumericalPolynomial}
     {H : Chapter13HilbertSchemeData (chapter13RelativeProductToBase xS yS) L P}
     (G : Chapter13GraphParameterSpaceData xS yS L P H) :
     Chapter13RelativeScheme S :=
@@ -221,8 +247,8 @@ def chapter13GraphParameterSpace {S X Y : Scheme}
 
 def chapter13GraphParameterSpaceToHilbert {S X Y : Scheme}
     {xS : X ⟶ S} {yS : Y ⟶ S}
-    {L : Chapter13Polarization (chapter13RelativeProduct xS yS)}
-    {P : Polynomial ℤ}
+    {L : Chapter13Polarization (chapter13RelativeProductToBase xS yS)}
+    {P : Chapter13NumericalPolynomial}
     {H : Chapter13HilbertSchemeData (chapter13RelativeProductToBase xS yS) L P}
     (G : Chapter13GraphParameterSpaceData xS yS L P H) :
     Chapter13RelativeMap (chapter13GraphParameterSpace G)
@@ -232,8 +258,8 @@ def chapter13GraphParameterSpaceToHilbert {S X Y : Scheme}
 
 theorem chapter13GraphParameterSpace_isOpen {S X Y : Scheme}
     {xS : X ⟶ S} {yS : Y ⟶ S}
-    {L : Chapter13Polarization (chapter13RelativeProduct xS yS)}
-    {P : Polynomial ℤ}
+    {L : Chapter13Polarization (chapter13RelativeProductToBase xS yS)}
+    {P : Chapter13NumericalPolynomial}
     {H : Chapter13HilbertSchemeData (chapter13RelativeProductToBase xS yS) L P}
     (G : Chapter13GraphParameterSpaceData xS yS L P H) :
     IsOpenImmersion (chapter13GraphParameterSpaceToHilbert G).map := by
@@ -242,8 +268,8 @@ theorem chapter13GraphParameterSpace_isOpen {S X Y : Scheme}
 
 theorem chapter13GraphParameterSpace_isLocallyFiniteType {S X Y : Scheme}
     {xS : X ⟶ S} {yS : Y ⟶ S}
-    {L : Chapter13Polarization (chapter13RelativeProduct xS yS)}
-    {P : Polynomial ℤ}
+    {L : Chapter13Polarization (chapter13RelativeProductToBase xS yS)}
+    {P : Chapter13NumericalPolynomial}
     {H : Chapter13HilbertSchemeData (chapter13RelativeProductToBase xS yS) L P}
     (G : Chapter13GraphParameterSpaceData xS yS L P H) :
     LocallyOfFiniteType (chapter13GraphParameterSpaceToHilbert G).map := by
@@ -252,8 +278,8 @@ theorem chapter13GraphParameterSpace_isLocallyFiniteType {S X Y : Scheme}
 
 theorem chapter13GraphParameterSpace_isLocallyFiniteTypeOverBase {S X Y : Scheme}
     {xS : X ⟶ S} {yS : Y ⟶ S}
-    {L : Chapter13Polarization (chapter13RelativeProduct xS yS)}
-    {P : Polynomial ℤ}
+    {L : Chapter13Polarization (chapter13RelativeProductToBase xS yS)}
+    {P : Chapter13NumericalPolynomial}
     {H : Chapter13HilbertSchemeData (chapter13RelativeProductToBase xS yS) L P}
     (G : Chapter13GraphParameterSpaceData xS yS L P H) :
     LocallyOfFiniteType
@@ -271,8 +297,8 @@ polynomial parameter space and does not assert a universal negative theorem.
 
 theorem chapter13_graph_condition_is_open
     {S X Y : Scheme} (xS : X ⟶ S) (yS : Y ⟶ S)
-    (L : Chapter13Polarization (chapter13RelativeProduct xS yS))
-    (P : Polynomial ℤ)
+    (L : Chapter13Polarization (chapter13RelativeProductToBase xS yS))
+    (P : Chapter13NumericalPolynomial)
     (H : Chapter13HilbertSchemeData (chapter13RelativeProductToBase xS yS) L P)
     (hXprojective : Chapter13ProjectiveMorphism xS)
     (hXflat : Flat xS)

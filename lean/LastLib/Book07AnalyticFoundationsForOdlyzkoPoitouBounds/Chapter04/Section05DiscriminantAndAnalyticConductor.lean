@@ -70,7 +70,7 @@ theorem chapter04_zero_counting_unit_band_bound_log_analytic_conductor
   sorry
 
 theorem chapter04_analytic_conductor_keeps_degree_and_discriminant_exponents
-    (K : Type*) [Field K] [NumberField K] {c t : ℝ} (_hc : 0 < c) :
+    (K : Type*) [Field K] [NumberField K] {c t : ℝ} :
     chapter04AnalyticConductorWithOffset K c t =
       chapter04AbsoluteDiscriminant K *
         Real.rpow (|t| + c) (chapter04Degree K : ℝ) := by

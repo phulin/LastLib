@@ -6,98 +6,120 @@ noncomputable section
 
 open scoped Topology
 
-universe u v w
-
 /-! ## 5.5. Weak approximation at arbitrary places -/
 
-variable {K : Type u} [Field K] [Algebra ℚ K] [FiniteDimensional ℚ K]
-variable {V : Type v} {Kv : V → Type w}
-variable [∀ v, Field (Kv v)] [∀ v, TopologicalSpace (Kv v)]
-variable {P : Chapter05PlaceSystem K V Kv}
-
 def chapter05SelectedFinitePlaces
-    (T : Finset V) : Finset V := by
+    (K : Type*) [Field K] [NumberField K]
+    (T : Finset (Chapter05Place K)) : Finset (Chapter05FinitePlace K) := by
   classical
-  exact T.filter (fun v => v ∈ P.finite)
+  exact T.filterMap (fun v => match v with
+    | Sum.inl w => some w
+    | Sum.inr _ => none)
 
 def chapter05SelectedArchimedeanPlaces
-    (T : Finset V) : Finset V := by
+    (K : Type*) [Field K] [NumberField K]
+    (T : Finset (Chapter05Place K)) : Finset (Chapter05InfinitePlace K) := by
   classical
-  exact T.filter (fun v => v ∈ P.archimedean)
+  exact T.filterMap (fun v => match v with
+    | Sum.inl _ => none
+    | Sum.inr w => some w)
 
 def chapter05FiniteCorrectionSet
-    (S : Finset {v // v ∈ P.finite}) (m : S → ℤ) : Set K :=
-  chapter05CorrectionSet Kv P.finite P.completionMap P.precision S m
+    (K : Type*) [Field K] [NumberField K]
+    (S : Finset (Chapter05FinitePlace K))
+    (m : ∀ v : S, ℤ) : Set K :=
+  {c |
+    (∀ v : S,
+      chapter05FiniteDiagonal K c v.1 ∈
+        LastLib.Book04AdelesAndIdeles.Chapter01.chapter01LocalNeighborhood
+          v.1 (m v)) ∧
+    (∀ v : Chapter05FinitePlace K, v ∉ (S : Set (Chapter05FinitePlace K)) →
+      chapter05FiniteDiagonal K c v ∈
+        (Chapter05FiniteLocalIntegerRing K v :
+          Set (Chapter05FiniteLocalField K v)))}
 
 theorem chapter05_finite_correction_set_is_fractional_ideal
-    (S : Finset {v // v ∈ P.finite}) (m : S → ℤ) :
-    chapter05IsFractionalIdealLike P.integerRing
-      (chapter05FiniteCorrectionSet (P := P) S m) := by
+    (K : Type*) [Field K] [NumberField K]
+    (S : Finset (Chapter05FinitePlace K)) (m : ∀ v : S, ℤ) :
+    ∃ I : FractionalIdeal (𝓞 K)⁰ K,
+      chapter05FiniteCorrectionSet K S m = (I : Set K) := by
   sorry
 
-/-! “An auxiliary rational prime lying below none of the selected finite
-    places” is represented by avoiding their residue characteristics. -/
+/-! An auxiliary rational prime is characterized canonically by vanishing
+finite-place order at each selected prime. -/
 
 def chapter05AuxiliaryPrimeAvoids
-    (S : Finset {v // v ∈ P.finite}) (ell : ℕ) : Prop :=
-  Nat.Prime ell ∧ ∀ v : S, ell ≠ P.residueCharacteristic v.1
+    (K : Type*) [Field K] [NumberField K]
+    (S : Finset (Chapter05FinitePlace K)) (ell : ℕ) : Prop :=
+  Nat.Prime ell ∧
+    ∀ v : S,
+      LastLib.Book04AdelesAndIdeles.Chapter01.chapter01Order v.1
+        (ell : K) = 0
 
 theorem chapter05_exists_auxiliary_prime
-    (S : Finset {v // v ∈ P.finite}) :
-    ∃ ell : ℕ, chapter05AuxiliaryPrimeAvoids (P := P) S ell := by
+    (K : Type*) [Field K] [NumberField K]
+    (S : Finset (Chapter05FinitePlace K)) :
+    ∃ ell : ℕ, chapter05AuxiliaryPrimeAvoids K S ell := by
   sorry
 
 def chapter05ScaledCorrectionSet
-    (S : Finset {v // v ∈ P.finite}) (m : S → ℤ)
+    (K : Type*) [Field K] [NumberField K]
+    (S : Finset (Chapter05FinitePlace K)) (m : ∀ v : S, ℤ)
     (ell s : ℕ) : Set K :=
-  {c : K |
-    ∃ d : K, d ∈ chapter05FiniteCorrectionSet (P := P) S m ∧
+  {c |
+    ∃ d : K, d ∈ chapter05FiniteCorrectionSet K S m ∧
       c = ((ell : K)⁻¹) ^ s * d}
 
 theorem chapter05_scaled_correction_preserves_finite_precision
-    (S : Finset {v // v ∈ P.finite}) (m : S → ℤ)
-    (ell s : ℕ) (hℓ : chapter05AuxiliaryPrimeAvoids (P := P) S ell)
-    {c : K} (hc : c ∈ chapter05ScaledCorrectionSet (P := P) S m ell s) :
-    c ∈ chapter05FiniteCorrectionSet (P := P) S m := by
+    (K : Type*) [Field K] [NumberField K]
+    (S : Finset (Chapter05FinitePlace K)) (m : ∀ v : S, ℤ)
+    (ell s : ℕ) (hℓ : chapter05AuxiliaryPrimeAvoids K S ell)
+    {c : K} (hc : c ∈ chapter05ScaledCorrectionSet K S m ell s) :
+    c ∈ chapter05FiniteCorrectionSet K S m := by
   sorry
 
-/-! The following bridge is the lattice-mesh assertion from the proof.  It is
-    weaker than the theorem below and is independently reusable for other
-    finite-place congruence problems. -/
+/-! The correction lattice is now the canonical mixed-space image of a
+fractional ideal; its mesh statement is the scaled-lattice statement from the
+source proof. -/
 
 theorem chapter05_correction_lattice_mesh
-    (hmesh : chapter05LatticeMesh P)
-    (S : Finset {v // v ∈ P.finite}) (m : S → ℤ)
-    (T : Finset {v // v ∈ P.archimedean})
-    (x : ∀ v : T, Kv v.1) (W : ∀ v : T, Set (Kv v.1))
-    (hW : ∀ v : T, W v ∈ 𝓝 (x v)) :
-    ∃ c : K,
-      c ∈ chapter05FiniteCorrectionSet (P := P) S m ∧
-      ∀ v : T, P.completionMap v.1 c ∈ W v := by
-  exact hmesh S m T x W hW
+    (K : Type*) [Field K] [NumberField K]
+    (I : Chapter05FractionalIdealGroup K) (ell : ℕ) (hℓ : 1 < ell)
+    (x : Chapter05MinkowskiSpace K)
+    (U : Set (Chapter05MinkowskiSpace K)) (hU : U ∈ 𝓝 x) :
+    ∃ s : ℕ, ∃ c : K,
+      c ∈ chapter05ScaledFractionalIdeal K I ell s ∧
+        chapter05MinkowskiEmbedding K c ∈ U := by
+  sorry
 
-theorem chapter05_place_system_lattice_mesh :
-    chapter05LatticeMesh P := by
-  exact P.lattice_mesh
+theorem chapter05_place_system_lattice_mesh
+    (K : Type*) [Field K] [NumberField K]
+    (I : Chapter05FractionalIdealGroup K) (ell : ℕ) (hℓ : 1 < ell) :
+    chapter05MinkowskiLatticeMesh K I ell := by
+  sorry
 
 /-!
 **Theorem 5.3 (weak approximation).** For every finite list of distinct
-places, the diagonal map has dense image in the selected local product.
+canonical places, the diagonal map has dense image in the selected local
+product.
 -/
 theorem chapter05_theorem_5_3_weak_approximation
-    (T : Finset V) :
-    chapter05WeakApproximationStatement P T := by
+    (K : Type*) [Field K] [NumberField K]
+    (T : Finset (Chapter05Place K)) :
+    chapter05WeakApproximationStatement K T := by
   sorry
 
 theorem chapter05_theorem_5_3_weak_approximation_dense
-    (T : Finset V) :
-    DenseRange (chapter05DiagonalAtPlaces P T) := by
+    (K : Type*) [Field K] [NumberField K]
+    (T : Finset (Chapter05Place K)) :
+    DenseRange (chapter05DiagonalAtPlaces K T) := by
   sorry
 
 theorem chapter05_weak_approximation_iff_dense_selected_diagonal
-    (T : Finset V) :
-    chapter05WeakApproximationStatement P T ↔
-      DenseRange (chapter05DiagonalAtPlaces P T) := by
+    (K : Type*) [Field K] [NumberField K]
+    (T : Finset (Chapter05Place K)) :
+    chapter05WeakApproximationStatement K T ↔
+      DenseRange (chapter05DiagonalAtPlaces K T) := by
   sorry
 
 end

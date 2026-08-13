@@ -1,4 +1,5 @@
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter14.Section02TheReusableTheoremPackage
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11.Dependencies
 
 /-!
 # Book 8, Chapter 14, §14.3: conclusion and boundary checklist
@@ -27,16 +28,19 @@ theorem chapter14_proper_immersion_is_closed_immersion
   sorry
 
 /- A graph datum keeps the canonical graph equations and separatedness explicit. -/
-structure Chapter14GraphData {X Y : Scheme} (u : X ⟶ Y) where
-  graph : X ⟶ Limits.prod X Y
-  targetSeparated : Y.IsSeparated
-  graph_is_graph_of_u :
-    graph ≫ Limits.prod.fst = 𝟙 X ∧ graph ≫ Limits.prod.snd = u
+structure Chapter14GraphData {X Y S : Scheme}
+    (x : X ⟶ S) (y : Y ⟶ S) (u : X ⟶ Y) where
+  graph : X ⟶ Limits.pullback x y
+  targetSeparated : IsSeparated y
+  overBase : u ≫ y = x
+  graph_fst : graph ≫ Limits.pullback.fst x y = 𝟙 X
+  graph_snd : graph ≫ Limits.pullback.snd x y = u
 
 /- LOCAL_DEPENDENCY_GUESS: the graph is the pullback of the diagonal of the separated
 target, hence the following closedness statement is stable under every base change. -/
 theorem chapter14_graph_of_a_map_to_a_separated_target_is_closed
-    {X Y : Scheme} {u : X ⟶ Y} (D : Chapter14GraphData u) :
+    {X Y S : Scheme} {x : X ⟶ S} {y : Y ⟶ S} {u : X ⟶ Y}
+    (D : Chapter14GraphData x y u) :
     IsClosedImmersion D.graph := by
   sorry
 
@@ -44,16 +48,21 @@ theorem chapter14_graph_of_a_map_to_a_separated_target_is_closed
 structure Chapter14EffectiveCartierDivisorData {C S P Z : Scheme}
     (f : C ⟶ S) (p : P ⟶ S)
     (D : Chapter14FiniteFlatFamilyData (Z := Z) f p) where
-  effectiveCartier : Prop
+  divisor :
+    LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11.EffectiveCartierDivisor
+      (Limits.pullback f p)
+  identification :
+    ∃ e : Z ≅ divisor.subscheme,
+      e.hom ≫ divisor.inclusion = D.ambientPullback
+  degree :
+    LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11.Chapter11FiniteLocallyFreeOfRank
+      (divisor.inclusion ≫ Limits.pullback.snd f p) D.rank
 
-/- SOURCE_ISSUE (§14.3): the conclusion says “smoothness of a curve turns finite
-   subschemes into Cartier divisors,” but finite flatness over the base is also
-   required.  A finite non-flat subscheme of a smooth relative curve need not
-   be an effective Cartier divisor; the smallest correction is “smoothness of
-   a curve turns finite flat subschemes into effective Cartier divisors.” -/
+/- The finite-flat hypothesis is part of `D`; it is not optional in the Cartier
+   divisor identification. -/
 /- LOCAL_DEPENDENCY_GUESS: smoothness in relative dimension one identifies finite flat
 subschemes with effective Cartier divisors; this is false without the smooth-curve boundary. -/
-theorem chapter14_smooth_relative_curve_turns_finite_subschemes_into_cartier_divisors
+theorem chapter14_smooth_relative_curve_turns_finite_flat_subschemes_into_cartier_divisors
     {C S P Z : Scheme} {f : C ⟶ S} {p : P ⟶ S}
     (curve : Chapter14SmoothRelativeCurveData f)
     (D : Chapter14FiniteFlatFamilyData (Z := Z) f p) :
@@ -61,39 +70,60 @@ theorem chapter14_smooth_relative_curve_turns_finite_subschemes_into_cartier_div
   sorry
 
 /-- A finite group action with a quasi-projective ambient scheme. -/
-structure Chapter14FiniteQuotientInput (Y : Scheme) where
+structure Chapter14FiniteQuotientInput {S Y : Scheme} (y : Y ⟶ S) where
   group : Type*
   groupStructure : Group group
   groupFinite : Finite group
-  action : group → (Y ⟶ Y)
-  action_is_group_action : Prop
-  quasiProjective : Prop
+  action : group → (Over.mk y ⟶ Over.mk y)
+  action_one : action 1 = 𝟙 (Over.mk y)
+  action_mul : ∀ g h, action (g * h) = action g ≫ action h
+  action_isIso : ∀ g, IsIso (action g)
+  quasiProjective : Chapter14QuasiProjectiveMorphismData y
+  finitePresentation : LocallyOfFinitePresentation y
 
-/- LOCAL_DEPENDENCY_GUESS: the invariant affine charts and their gluing give the finite
-categorical quotient for a finite action on a quasi-projective scheme. -/
+/- The quotient carrier is kept together with its categorical universal property;
+   finite and surjective are consequences, not the definition of a quotient. -/
+structure Chapter14FiniteGroupQuotientData
+    {S Y : Scheme} {y : Y ⟶ S} (D : Chapter14FiniteQuotientInput y) where
+  quotient : Over S
+  quotientMap : Over.mk y ⟶ quotient
+  invariant : ∀ g, D.action g ≫ quotientMap = quotientMap
+  universal : ∀ {Z : Over S} (h : Over.mk y ⟶ Z),
+    (∀ g, D.action g ≫ h = h) →
+      ∃! q : quotient ⟶ Z, quotientMap ≫ q = h
+  integral : IsIntegralHom quotientMap.left
+  finite : IsFinite quotientMap.left
+  surjective : Surjective quotientMap.left
+  quotientQuasiProjective : Chapter14QuasiProjectiveMorphismData quotient.hom
+
 noncomputable def chapter14FiniteGroupQuotient
-    {Y : Scheme} (D : Chapter14FiniteQuotientInput Y) : Scheme := by
+    {S Y : Scheme} {y : Y ⟶ S} (D : Chapter14FiniteQuotientInput y) :
+    Chapter14FiniteGroupQuotientData D := by
   sorry
 
 noncomputable def chapter14FiniteGroupQuotientMap
-    {Y : Scheme} (D : Chapter14FiniteQuotientInput Y) :
-    Y ⟶ chapter14FiniteGroupQuotient D := by
-  sorry
+    {S Y : Scheme} {y : Y ⟶ S} (D : Chapter14FiniteQuotientInput y) :
+    Over.mk y ⟶ (chapter14FiniteGroupQuotient D).quotient :=
+  (chapter14FiniteGroupQuotient D).quotientMap
 
 theorem chapter14_quasi_projective_finite_group_quotient_exists
-    {Y : Scheme} (D : Chapter14FiniteQuotientInput Y) :
-    IsFinite (chapter14FiniteGroupQuotientMap D) ∧
-      Surjective (chapter14FiniteGroupQuotientMap D) := by
-  sorry
+    {S Y : Scheme} {y : Y ⟶ S} (D : Chapter14FiniteQuotientInput y) :
+    IsFinite (chapter14FiniteGroupQuotientMap D).left ∧
+      Surjective (chapter14FiniteGroupQuotientMap D).left ∧
+        Nonempty (Chapter14QuasiProjectiveMorphismData
+          (chapter14FiniteGroupQuotient D).quotient.hom) := by
+  exact ⟨(chapter14FiniteGroupQuotient D).finite,
+    (chapter14FiniteGroupQuotient D).surjective,
+    ⟨(chapter14FiniteGroupQuotient D).quotientQuasiProjective⟩⟩
 
-/-! ## The six boundaries in the concluding checklist -/
+/-! ## The seven boundaries in the concluding checklist -/
 
 /-- Precise checklist of the hypotheses named in the conclusion. -/
 structure Chapter14BoundaryChecklist where
   noetherianFinitenessBoundsEquations : Prop
   properImmersionsAreClosed : Prop
   flatnessPreservesFiberPolynomial : Prop
-  smoothCurvesMakeFiniteSubschemesCartier : Prop
+  smoothCurvesMakeFiniteFlatSubschemesCartier : Prop
   separatedTargetsMakeGraphsClosed : Prop
   quasiProjectivityMakesFiniteQuotientsSchemes : Prop
   polarizationChosenForNonconstantHilbertPolynomial : Prop
@@ -110,7 +140,7 @@ def chapter14FlatLengthFamilyCondition
 /-- A polynomial is recorded together with the polarization relative to which it is measured. -/
 structure Chapter14PolarizedHilbertPolynomialData (X : Scheme) where
   polarization : Chapter14LineBundle X
-  polynomial : Polynomial ℚ
+  polynomial : Chapter14NumericalPolynomial
 
 /- The source's final uniformity slogan is represented by the reusable package rather than
 repeated as a second theorem with weaker hypotheses. -/

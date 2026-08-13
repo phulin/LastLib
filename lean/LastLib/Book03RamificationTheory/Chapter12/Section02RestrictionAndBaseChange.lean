@@ -1,10 +1,11 @@
 import LastLib.Book03RamificationTheory.Chapter12.Core
+import Mathlib.Data.Real.Basic
 
 namespace LastLib.Book03RamificationTheory.Chapter12
 
 noncomputable section
 
-universe uV
+universe u
 
 open scoped BigOperators
 
@@ -38,19 +39,19 @@ theorem chapter12_intersected_lower_group_coe
   sorry
 
 def chapter12RestrictionConductorSum
-    {G V : Type*} [Group G] [Fintype G]
-    [AddCommGroup V] [Module ℚ V] [FiniteDimensional ℚ V]
+    {E G V : Type*} [Field E] [Group G] [Fintype G]
+    [AddCommGroup V] [Module E V] [FiniteDimensional E V]
     (P : Chapter12RamificationProfile G) (H : Subgroup G)
-  (ρ : Representation ℚ G V) : ℚ :=
+    (ρ : Representation E G V) : E :=
   Finset.sum (Finset.range (P.bound + 1)) (fun i =>
-    ((Nat.card (H ⊓ P.lower i : Subgroup G) : ℚ) /
-        (Nat.card (H ⊓ P.lower 0 : Subgroup G) : ℚ)) *
-      (chapter12FixedSpaceCodimension (H ⊓ P.lower i) ρ : ℚ))
+    ((Nat.card (H ⊓ P.lower i : Subgroup G) : E) /
+        (Nat.card (H ⊓ P.lower 0 : Subgroup G) : E)) *
+      (chapter12FixedSpaceCodimension (H ⊓ P.lower i) ρ : E))
 
 theorem chapter12_fixed_space_codimension_intersection_eq_comap
-    {G V : Type*} [Group G] [Fintype G]
-    [AddCommGroup V] [Module ℚ V] [FiniteDimensional ℚ V]
-    (H : Subgroup G) (S : Subgroup G) (ρ : Representation ℚ G V) :
+    {E G V : Type*} [Field E] [Group G] [Fintype G]
+    [AddCommGroup V] [Module E V] [FiniteDimensional E V]
+    (H : Subgroup G) (S : Subgroup G) (ρ : Representation E G V) :
     chapter12FixedSpaceCodimension (H ⊓ S) ρ =
       chapter12FixedSpaceCodimension (S.comap H.subtype) (ρ.comp H.subtype) := by
   sorry
@@ -59,14 +60,14 @@ theorem chapter12_fixed_space_codimension_intersection_eq_comap
 range is the API form of the infinite sum because the profile records the
 eventual triviality bound. -/
 theorem chapter12_lower_subgroup_restriction_formula
-    {G H V : Type*} [Group G] [Fintype G] [AddCommGroup V] [Module ℚ V]
-    [FiniteDimensional ℚ V]
+    {E G H V : Type u} [Field E] [CharZero E] [Group G] [Fintype G]
+    [AddCommGroup V] [Module E V] [FiniteDimensional E V]
     (pG : Chapter12ConductorProfile G) (Hsub : Subgroup G)
     (pH : Chapter12ConductorProfile Hsub)
     (hprofile : pH.ramification =
       chapter12IntersectRamificationProfile pG.ramification Hsub)
-    (ρ : Representation ℚ G V) :
-    (pH.artinConductor _ (chapter12RestrictedRepresentation Hsub.subtype ρ) : ℚ) =
+    (ρ : Representation E G V) :
+    (pH.artinConductor _ (chapter12RestrictedRepresentation Hsub.subtype ρ) : E) =
       chapter12RestrictionConductorSum pG.ramification Hsub ρ := by
   sorry
 
@@ -74,16 +75,16 @@ theorem chapter12_lower_subgroup_restriction_formula
 upstairs conductor is represented by the explicit intersection/fixed-space
 ledger on the right-hand side. -/
 theorem chapter12_restriction_uses_intersection_fixed_spaces
-    {G V : Type*} [Group G] [Fintype G] [AddCommGroup V] [Module ℚ V]
-    [FiniteDimensional ℚ V]
+    {E G V : Type u} [Field E] [Group G] [Fintype G]
+    [AddCommGroup V] [Module E V] [FiniteDimensional E V]
     (pG : Chapter12ConductorProfile G) (Hsub : Subgroup G)
-    (ρ : Representation ℚ G V) :
+    (ρ : Representation E G V) :
     chapter12RestrictionConductorSum pG.ramification Hsub ρ =
       Finset.sum (Finset.range (pG.ramification.bound + 1)) (fun i =>
-        ((Nat.card (Hsub ⊓ pG.ramification.lower i : Subgroup G) : ℚ) /
-            (Nat.card (Hsub ⊓ pG.ramification.lower 0 : Subgroup G) : ℚ)) *
+        ((Nat.card (Hsub ⊓ pG.ramification.lower i : Subgroup G) : E) /
+            (Nat.card (Hsub ⊓ pG.ramification.lower 0 : Subgroup G) : E)) *
           (chapter12FixedSpaceCodimension
-            (Hsub ⊓ pG.ramification.lower i) ρ : ℚ)) := by
+            (Hsub ⊓ pG.ramification.lower i) ρ : E)) := by
   rfl
 
 /- Upper-numbering comparison data isolates the exact transition statements
@@ -92,8 +93,8 @@ structure Chapter12UnramifiedUpperComparison
     (G : Type*) [Group G] [Fintype G] (H : Subgroup G) where
   baseInertia : Subgroup G
   extensionInertia : Subgroup H
-  baseUpper : ℚ → Subgroup G
-  extensionUpper : ℚ → Subgroup H
+  baseUpper : ℝ → Subgroup G
+  extensionUpper : ℝ → Subgroup H
   inertia_eq : extensionInertia = baseInertia.comap H.subtype
   upper_eq : ∀ u, extensionUpper u = (baseUpper u).comap H.subtype
 
@@ -103,20 +104,20 @@ structure Chapter12TameUpperComparison
   ramificationIndex_pos : 0 < ramificationIndex
   baseInertia : Subgroup G
   extensionInertia : Subgroup H
-  baseUpper : ℚ → Subgroup G
-  extensionUpper : ℚ → Subgroup H
-  extensionInertia_le : extensionInertia ≤ baseInertia.comap H.subtype
+  baseUpper : ℝ → Subgroup G
+  extensionUpper : ℝ → Subgroup H
+  extensionInertia_eq : extensionInertia = baseInertia.comap H.subtype
   upper_eq : ∀ u, 0 < u →
-    extensionUpper ((ramificationIndex : ℚ) * u) =
+    extensionUpper ((ramificationIndex : ℝ) * u) =
       (baseUpper u).comap H.subtype
 
 /- A wild transition is deliberately recorded as a full Herbrand map instead
 of a degree-only scalar. -/
 structure Chapter12WildUpperComparison
     (G : Type*) [Group G] [Fintype G] (H : Subgroup G) where
-  herbrandTransition : ℚ → ℚ
-  baseUpper : ℚ → Subgroup G
-  extensionUpper : ℚ → Subgroup H
+  herbrandTransition : ℝ → ℝ
+  baseUpper : ℝ → Subgroup G
+  extensionUpper : ℝ → Subgroup H
   upper_eq : ∀ u, 0 < u →
     extensionUpper (herbrandTransition u) = (baseUpper u).comap H.subtype
 
@@ -125,32 +126,37 @@ which the preceding Herbrand API should eventually provide.  The change of
 variables is expressed for an abstract area, while the conductor values are
 connected to that area by the two displayed fields. -/
 structure Chapter12TameSwanAreaCompatibility
-    {G : Type*} [Group G] [Fintype G] {H : Subgroup G}
+    {G : Type u} [Group G] [Fintype G] {H : Subgroup G}
     (pK : Chapter12ConductorProfile G) (pM : Chapter12ConductorProfile H)
     (T : Chapter12TameUpperComparison G H) where
   baseArea :
-    ∀ (V : Type uV) [AddCommGroup V] [Module ℚ V] [FiniteDimensional ℚ V],
-      Representation ℚ G V → ℚ
+    ∀ {E : Type u} [Field E] [CharZero E]
+      (V : Type u) [AddCommGroup V] [Module E V] [FiniteDimensional E V],
+      Representation E G V → ℝ
   extensionArea :
-    ∀ (V : Type uV) [AddCommGroup V] [Module ℚ V] [FiniteDimensional ℚ V],
-      Representation ℚ H V → ℚ
+    ∀ {E : Type u} [Field E] [CharZero E]
+      (V : Type u) [AddCommGroup V] [Module E V] [FiniteDimensional E V],
+      Representation E H V → ℝ
   baseArea_eq_swan :
-    ∀ (V : Type uV) [AddCommGroup V] [Module ℚ V] [FiniteDimensional ℚ V]
-      (ρ : Representation ℚ G V),
-      baseArea V ρ = (pK.swanConductor V ρ : ℚ)
+    ∀ {E : Type u} [Field E] [CharZero E]
+      (V : Type u) [AddCommGroup V] [Module E V] [FiniteDimensional E V]
+      (ρ : Representation E G V),
+      baseArea (E := E) V ρ = (pK.swanConductor (E := E) V ρ : ℝ)
   extensionArea_eq_swan :
-    ∀ (V : Type uV) [AddCommGroup V] [Module ℚ V] [FiniteDimensional ℚ V]
-      (ρ : Representation ℚ H V),
-      extensionArea V ρ = (pM.swanConductor V ρ : ℚ)
+    ∀ {E : Type u} [Field E] [CharZero E]
+      (V : Type u) [AddCommGroup V] [Module E V] [FiniteDimensional E V]
+      (ρ : Representation E H V),
+      extensionArea (E := E) V ρ = (pM.swanConductor (E := E) V ρ : ℝ)
   change_of_variables :
-    ∀ (V : Type uV) [AddCommGroup V] [Module ℚ V] [FiniteDimensional ℚ V]
-      (ρ : Representation ℚ G V),
-      extensionArea V (ρ.comp H.subtype) =
-        (T.ramificationIndex : ℚ) * baseArea V ρ
+    ∀ {E : Type u} [Field E] [CharZero E]
+      (V : Type u) [AddCommGroup V] [Module E V] [FiniteDimensional E V]
+      (ρ : Representation E G V),
+      extensionArea (E := E) V (ρ.comp H.subtype) =
+        (T.ramificationIndex : ℝ) * baseArea (E := E) V ρ
 
 theorem chapter12_unramified_upper_groups_agree
     {G : Type*} [Group G] [Fintype G] {H : Subgroup G}
-    (U : Chapter12UnramifiedUpperComparison G H) (u : ℚ) :
+    (U : Chapter12UnramifiedUpperComparison G H) (u : ℝ) :
     U.extensionUpper u = (U.baseUpper u).comap H.subtype :=
   U.upper_eq u
 
@@ -162,22 +168,28 @@ theorem chapter12_unramified_inertia_groups_agree
 
 theorem chapter12_tame_herbrand_scaling
     {G : Type*} [Group G] [Fintype G] {H : Subgroup G}
-    (T : Chapter12TameUpperComparison G H) (u : ℚ) (hu : 0 < u) :
-    T.extensionUpper ((T.ramificationIndex : ℚ) * u) =
+    (T : Chapter12TameUpperComparison G H) (u : ℝ) (hu : 0 < u) :
+    T.extensionUpper ((T.ramificationIndex : ℝ) * u) =
       (T.baseUpper u).comap H.subtype :=
   T.upper_eq u hu
 
+theorem chapter12_tame_inertia_groups_agree
+    {G : Type*} [Group G] [Fintype G] {H : Subgroup G}
+    (T : Chapter12TameUpperComparison G H) :
+    T.extensionInertia = T.baseInertia.comap H.subtype :=
+  T.extensionInertia_eq
+
 theorem chapter12_wild_base_change_requires_herbrand_transition
     {G : Type*} [Group G] [Fintype G] {H : Subgroup G}
-    (W : Chapter12WildUpperComparison G H) (u : ℚ) (hu : 0 < u) :
+    (W : Chapter12WildUpperComparison G H) (u : ℝ) (hu : 0 < u) :
     W.extensionUpper (W.herbrandTransition u) =
       (W.baseUpper u).comap H.subtype :=
   W.upper_eq u hu
 
 /- Unramified base change leaves both conductor parts unchanged. -/
 theorem chapter12_unramified_base_change_conductors
-    {G V : Type*} [Group G] [Fintype G]
-    [AddCommGroup V] [Module ℚ V] [FiniteDimensional ℚ V]
+    {E G V : Type u} [Field E] [CharZero E] [Group G] [Fintype G]
+    [AddCommGroup V] [Module E V] [FiniteDimensional E V]
     {H : Subgroup G}
     (pK : Chapter12ConductorProfile G) (pM : Chapter12ConductorProfile H)
     (U : Chapter12UnramifiedUpperComparison G H)
@@ -186,7 +198,7 @@ theorem chapter12_unramified_base_change_conductors
     (hprofile : pM.ramification =
       chapter12IntersectRamificationProfile pK.ramification H)
     (hgroup : ∀ i, H ⊓ pK.ramification.lower i = pK.ramification.lower i)
-    (ρ : Representation ℚ G V) :
+    (ρ : Representation E G V) :
     pM.artinConductor _ (chapter12RestrictedRepresentation H.subtype ρ) =
         pK.artinConductor _ ρ ∧
     pM.swanConductor _ (chapter12RestrictedRepresentation H.subtype ρ) =
@@ -196,25 +208,25 @@ theorem chapter12_unramified_base_change_conductors
 /- In the tame case positive upper depth is rescaled by `e`, so Swan scales by
 `e`; the tame term is separately recomputed from the new inertia subgroup. -/
 theorem chapter12_tame_base_change_swan
-    {G V : Type*} [Group G] [Fintype G]
-    [AddCommGroup V] [Module ℚ V] [FiniteDimensional ℚ V]
+    {E G V : Type u} [Field E] [CharZero E] [Group G] [Fintype G]
+    [AddCommGroup V] [Module E V] [FiniteDimensional E V]
     {H : Subgroup G}
     (pK : Chapter12ConductorProfile G) (pM : Chapter12ConductorProfile H)
     (T : Chapter12TameUpperComparison G H)
     (C : Chapter12TameSwanAreaCompatibility pK pM T)
-    (ρ : Representation ℚ G V) :
+    (ρ : Representation E G V) :
     pM.swanConductor _ (chapter12RestrictedRepresentation H.subtype ρ) =
       T.ramificationIndex * pK.swanConductor _ ρ := by
   sorry
 
 theorem chapter12_tame_base_change_tame_term
-    {G V : Type*} [Group G] [Fintype G]
-    [AddCommGroup V] [Module ℚ V] [FiniteDimensional ℚ V]
+    {E G V : Type u} [Field E] [CharZero E] [Group G] [Fintype G]
+    [AddCommGroup V] [Module E V] [FiniteDimensional E V]
     {H : Subgroup G}
     (pM : Chapter12ConductorProfile H)
     (T : Chapter12TameUpperComparison G H)
     (hinertia : pM.ramification.inertia = T.extensionInertia)
-    (ρ : Representation ℚ G V) :
+    (ρ : Representation E G V) :
     pM.artinConductor _ (chapter12RestrictedRepresentation H.subtype ρ) =
       chapter12FixedSpaceCodimension T.extensionInertia
           (chapter12RestrictedRepresentation H.subtype ρ) +
@@ -226,16 +238,16 @@ theorem chapter12_tame_base_change_tame_term
 /- The tame change-of-variables statement in the source, displayed at the
 conductor level so it can be consumed without choosing an integration API. -/
 theorem chapter12_tame_change_of_variables_for_swan
-    {G V : Type*} [Group G] [Fintype G]
-    [AddCommGroup V] [Module ℚ V] [FiniteDimensional ℚ V]
+    {E G V : Type u} [Field E] [CharZero E] [Group G] [Fintype G]
+    [AddCommGroup V] [Module E V] [FiniteDimensional E V]
     {H : Subgroup G}
     (pK : Chapter12ConductorProfile G) (pM : Chapter12ConductorProfile H)
     (T : Chapter12TameUpperComparison G H)
     (C : Chapter12TameSwanAreaCompatibility pK pM T)
-    (ρ : Representation ℚ G V) :
-    (pM.swanConductor _ (chapter12RestrictedRepresentation H.subtype ρ) : ℚ) =
-      (T.ramificationIndex : ℚ) * (pK.swanConductor _ ρ : ℚ) := by
-  exact_mod_cast chapter12_tame_base_change_swan pK pM T C ρ
+    (ρ : Representation E G V) :
+    (pM.swanConductor _ (chapter12RestrictedRepresentation H.subtype ρ) : ℝ) =
+      (T.ramificationIndex : ℝ) * (pK.swanConductor _ ρ : ℝ) := by
+  sorry
 
 end
 end LastLib.Book03RamificationTheory.Chapter12

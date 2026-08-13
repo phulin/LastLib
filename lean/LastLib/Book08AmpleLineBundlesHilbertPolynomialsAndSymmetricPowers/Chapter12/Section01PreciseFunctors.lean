@@ -19,9 +19,18 @@ def chapter12HilbertFunctor
     TypeCat.ofHom (fun (Z : Chapter12HilbertFamily D H T.unop P) =>
       chapter12PullbackFamily D H (P := P) g.unop Z)
   map_id := by
-    sorry
+    intro X
+    ext Z
+    simpa using chapter12PullbackFamily_id D H Z
   map_comp := by
-    sorry
+    intro X Y Z f g
+    ext Z
+    change chapter12PullbackFamily D H ((f ≫ g).unop) Z =
+      chapter12PullbackFamily D H g.unop
+        (chapter12PullbackFamily D H f.unop Z)
+    rw [CategoryTheory.unop_comp]
+    symm
+    exact chapter12PullbackFamily_comp D H g.unop f.unop Z
 
 @[simp]
 theorem chapter12HilbertFunctor_obj
@@ -70,26 +79,38 @@ theorem chapter12ClosedFamily_ext
 theorem chapter12_constant_polynomial_iff_finite_locally_free
     (D : Chapter12ProjectiveFamilySetup)
     (H : Chapter12HilbertPolynomialTheory D)
-    (L : Chapter12FiberLengthTheory)
-    (K : Chapter12HilbertLengthCompatibility D H L)
+    (K : Chapter12HilbertLengthCompatibility D H)
     {T : Chapter12SchemeOver D.base} (d : ℕ)
     (Z : Chapter12ClosedFamily D T) :
-    (∀ t : Chapter12GeometricPoint T.left,
+      (∀ t : Chapter12GeometricPoint T.left,
       chapter12HasFiberHilbertPolynomial H Z t (chapter12ConstantPolynomial d)) ↔
-      Chapter12FiniteLocallyFreeRank L (chapter12FamilyProjection D T Z.ideal) d := by
+      Chapter12FiniteLocallyFreeRank (chapter12FamilyProjection D T Z.ideal) d := by
   sorry
 
 /-- The length-`d` Hilbert objects form the finite-locally-free subfunctor. -/
 noncomputable def chapter12_hilbertFamily_constant_polynomial_equiv
     (D : Chapter12ProjectiveFamilySetup)
     (H : Chapter12HilbertPolynomialTheory D)
-    (L : Chapter12FiberLengthTheory)
-    (K : Chapter12HilbertLengthCompatibility D H L)
+    (K : Chapter12HilbertLengthCompatibility D H)
     {T : Chapter12SchemeOver D.base} (d : ℕ) :
     Chapter12HilbertFamily D H T (chapter12ConstantPolynomial d) ≃
       {Z : Chapter12ClosedFamily D T //
-        Chapter12FiniteLocallyFreeRank L (chapter12FamilyProjection D T Z.ideal) d} := by
-  sorry
+        Chapter12FiniteLocallyFreeRank (chapter12FamilyProjection D T Z.ideal) d} := by
+  let hiff := chapter12_constant_polynomial_iff_finite_locally_free
+    D H K (T := T) d
+  refine
+    { toFun := fun Z =>
+        ⟨Z.closed, (hiff Z.closed).mp Z.fiber_polynomial⟩
+      invFun := fun Z =>
+        { closed := Z.1
+          fiber_polynomial := fun t =>
+            (K.polynomial_iff_fiber_length Z.1 t d).mpr (Z.2.rank t.basePoint) }
+      left_inv := ?_
+      right_inv := ?_ }
+  · intro Z
+    rfl
+  · intro Z
+    rfl
 
 /-- The quotient remembered by a Hilbert object has an ideal kernel. -/
 theorem chapter12_hilbertFamily_is_ideal_quotient
@@ -108,7 +129,8 @@ theorem chapter12_hilbertFunctor_map_id_family
     {T : Chapter12SchemeOver D.base}
     (Z : Chapter12HilbertFamily D H T P) :
     (chapter12HilbertFunctor D H P).map (𝟙 (Opposite.op T)) Z = Z := by
-  sorry
+  change chapter12PullbackFamily D H ((𝟙 (Opposite.op T)).unop) Z = Z
+  simpa using chapter12PullbackFamily_id D H Z
 
 end
 end LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter12

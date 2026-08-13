@@ -42,9 +42,22 @@ theorem chapter08_flattening_stratum
     (D : Chapter08FiberwiseHilbertData E)
     (B : Chapter08BaseChangeHilbertData E D)
     (hnoetherian : IsNoetherian F.family.S)
-    (hveryample : Chapter08RelativelyVeryAmple F.family.f F.lineBundle)
+    (hveryample : Chapter08RelativelyVeryAmple F.family.f F.lineBundle
+      F.lineBundle_invertible.is_invertible)
     (P : Chapter08NumericalPolynomial) :
     Nonempty (Chapter08FlatteningStratumData E D B P) := by
+  sorry
+
+/- The numerical flatness criterion uses the flattening theorem above.  It is
+   placed in this file so the formal dependency order matches that proof route;
+   the locally noetherian statement is obtained by applying the construction
+   on affine noetherian neighborhoods. -/
+theorem chapter08_numerical_flatness_iff
+    {F : Chapter08PolarizedFamily} (E : Chapter08FamilySheaf F)
+    (D : Chapter08FiberwiseHilbertData E)
+    (hred : IsReduced F.family.S) :
+    Chapter08FlatOver F.family.f E.sheaf ↔
+      Chapter08LocallyConstant (fun s => D.fiberPolynomial s) := by
   sorry
 
 /- Every point of the base lies on a stratum for some numerical polynomial. -/
@@ -53,7 +66,8 @@ theorem chapter08_flattening_strata_cover
     (D : Chapter08FiberwiseHilbertData E)
     (B : Chapter08BaseChangeHilbertData E D)
     (hnoetherian : IsNoetherian F.family.S)
-    (hveryample : Chapter08RelativelyVeryAmple F.family.f F.lineBundle) :
+    (hveryample : Chapter08RelativelyVeryAmple F.family.f F.lineBundle
+      F.lineBundle_invertible.is_invertible) :
     ∀ s : F.family.S,
       ∃ P : Chapter08NumericalPolynomial,
         ∃ H : Chapter08FlatteningStratumData E D B P,
@@ -66,38 +80,12 @@ theorem chapter08_flattening_strata_finite_on_quasi_compact_open
     (D : Chapter08FiberwiseHilbertData E)
     (B : Chapter08BaseChangeHilbertData E D)
     (hnoetherian : IsNoetherian F.family.S)
-    (hveryample : Chapter08RelativelyVeryAmple F.family.f F.lineBundle)
+    (hveryample : Chapter08RelativelyVeryAmple F.family.f F.lineBundle
+      F.lineBundle_invertible.is_invertible)
     (U : Set F.family.S) (hUopen : IsOpen U) (hUcompact : IsCompact U) :
     Set.Finite {P : Chapter08NumericalPolynomial |
       ∃ H : Chapter08FlatteningStratumData E D B P,
         Chapter08StratumMeets H.stratum U} := by
-  sorry
-
-/- The Fitting and multiplication conditions used to construct a stratum. -/
-structure Chapter08FittingStratumConstruction
-    {F : Chapter08PolarizedFamily} (E : Chapter08FamilySheaf F)
-    (D : Chapter08FiberwiseHilbertData E)
-    (B : Chapter08BaseChangeHilbertData E D)
-    (P : Chapter08NumericalPolynomial) where
-  regularityBound : ℕ
-  twist : ℕ
-  beyond_regularity : regularityBound ≤ twist
-  fittingRank : ℕ
-  fitting_rank_eq_polynomial : (fittingRank : ℤ) = P.value twist
-  fitting_ideal_locus : Prop
-  multiplication_compatibility : Prop
-  high_degree_graded_module_flat : Prop
-
-/- The construction fields are precisely the proof obligations for the
-   flattening-stratum universal property. -/
-theorem chapter08_flattening_from_fitting_construction
-    {F : Chapter08PolarizedFamily} (E : Chapter08FamilySheaf F)
-    (D : Chapter08FiberwiseHilbertData E)
-    (B : Chapter08BaseChangeHilbertData E D)
-    (hnoetherian : IsNoetherian F.family.S)
-    (P : Chapter08NumericalPolynomial)
-    (C : Chapter08FittingStratumConstruction E D B P) :
-    Nonempty (Chapter08FlatteningStratumData E D B P) := by
   sorry
 
 /- A named predicate makes explicit that the theorem only provides a locally
@@ -107,20 +95,20 @@ def Chapter08StratumIsOpen {S : Scheme} (D : Chapter08FlatteningStratum S) : Pro
 
 /- Flatness of a finitely presented family is locally persistent on the base. -/
 structure Chapter08FlatnessOpenProfile
-    {F : Chapter08PolarizedFamily} (E : Chapter08FamilySheaf F) where
-  neighborhood : F.family.S → Set F.family.S
-  neighborhood_open : ∀ s, IsOpen (neighborhood s)
-  point_mem_neighborhood : ∀ s, s ∈ neighborhood s
+    {F : Chapter08PolarizedFamily} (E : Chapter08FamilySheaf F)
+    (s : F.family.S) where
+  neighborhood : Set F.family.S
+  neighborhood_open : IsOpen neighborhood
+  point_mem_neighborhood : s ∈ neighborhood
   flat_on_neighborhood :
-    ∀ (s t : F.family.S), t ∈ neighborhood s →
-      Chapter08FlatOver F.family.f E.sheaf
+    ∀ t ∈ neighborhood, chapter08FlatAt F.family.f E.sheaf t
 
 /- LOCAL_DEPENDENCY_GUESS: this abstracts openness of the flat locus for the
    finitely presented family in the source warning. -/
 theorem chapter08_flatness_persists_on_open_neighborhood
     {F : Chapter08PolarizedFamily} (E : Chapter08FamilySheaf F)
-    (hflat : Chapter08FlatOver F.family.f E.sheaf) :
-    Nonempty (Chapter08FlatnessOpenProfile E) := by
+    (s : F.family.S) (hflat : chapter08FlatAt F.family.f E.sheaf s) :
+    Nonempty (Chapter08FlatnessOpenProfile E s) := by
   sorry
 
 end

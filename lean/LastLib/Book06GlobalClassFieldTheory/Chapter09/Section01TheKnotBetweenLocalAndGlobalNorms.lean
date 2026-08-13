@@ -10,6 +10,7 @@ idele-norm range along the diagonal embedding of `Kˣ`.
 -/
 def chapter09PrincipalNormSubgroup
     {K L I_K I_L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     [CommGroup I_K] [CommGroup I_L]
     (D : Chapter09IdeleNormData K L I_K I_L) : Subgroup Kˣ :=
   Subgroup.comap D.principalK D.ideleNorm.range
@@ -43,6 +44,7 @@ abbrev chapter09KnotGroup
 
 theorem chapter09_mem_principalNormSubgroup_iff
     {K L I_K I_L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     [CommGroup I_K] [CommGroup I_L]
     (D : Chapter09IdeleNormData K L I_K I_L) (x : Kˣ) :
     x ∈ chapter09PrincipalNormSubgroup D ↔
@@ -87,18 +89,21 @@ the norm subgroup is the range of the induced class norm.
 -/
 abbrev chapter09IdeleClassGroupK
     {K L I_K I_L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     [CommGroup I_K] [CommGroup I_L]
     (D : Chapter09IdeleNormData K L I_K I_L) : Type _ :=
   I_K ⧸ D.principalK.range
 
 abbrev chapter09IdeleClassGroupL
     {K L I_K I_L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     [CommGroup I_K] [CommGroup I_L]
     (D : Chapter09IdeleNormData K L I_K I_L) : Type _ :=
   I_L ⧸ D.principalL.range
 
 def chapter09ClassNormMap
     {K L I_K I_L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     [CommGroup I_K] [CommGroup I_L]
     (D : Chapter09IdeleNormData K L I_K I_L) :
     I_L →* chapter09IdeleClassGroupK D :=
@@ -106,6 +111,7 @@ def chapter09ClassNormMap
 
 def chapter09InducedClassNormMap
     {K L I_K I_L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     [CommGroup I_K] [CommGroup I_L]
     (D : Chapter09IdeleNormData K L I_K I_L) :
     chapter09IdeleClassGroupL D →* chapter09IdeleClassGroupK D :=
@@ -114,6 +120,7 @@ def chapter09InducedClassNormMap
 
 theorem chapter09_inducedClassNormMap_comp_quotient
     {K L I_K I_L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     [CommGroup I_K] [CommGroup I_L]
     (D : Chapter09IdeleNormData K L I_K I_L) :
     (chapter09InducedClassNormMap D).comp
@@ -123,6 +130,7 @@ theorem chapter09_inducedClassNormMap_comp_quotient
 
 def chapter09ClassNormGroup
     {K L I_K I_L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     [CommGroup I_K] [CommGroup I_L]
     (D : Chapter09IdeleNormData K L I_K I_L) :
     Subgroup (chapter09IdeleClassGroupK D) :=
@@ -130,6 +138,7 @@ def chapter09ClassNormGroup
 
 theorem chapter09_classNormGroup_eq_induced_range
     {K L I_K I_L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     [CommGroup I_K] [CommGroup I_L]
     (D : Chapter09IdeleNormData K L I_K I_L) :
     chapter09ClassNormGroup D = (chapter09InducedClassNormMap D).range := by
@@ -137,24 +146,28 @@ theorem chapter09_classNormGroup_eq_induced_range
 
 abbrev chapter09ClassNormQuotient
     {K L I_K I_L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     [CommGroup I_K] [CommGroup I_L]
     (D : Chapter09IdeleNormData K L I_K I_L) : Type _ :=
   chapter09IdeleClassGroupK D ⧸ chapter09ClassNormGroup D
 
 def chapter09ProductNormSubgroup
     {K L I_K I_L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     [CommGroup I_K] [CommGroup I_L]
     (D : Chapter09IdeleNormData K L I_K I_L) : Subgroup I_K :=
   D.principalK.range ⊔ D.ideleNorm.range
 
 abbrev chapter09ProductNormQuotient
     {K L I_K I_L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     [CommGroup I_K] [CommGroup I_L]
     (D : Chapter09IdeleNormData K L I_K I_L) : Type _ :=
   I_K ⧸ chapter09ProductNormSubgroup D
 
 theorem chapter09_class_norm_quotient_formula
     {K L I_K I_L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     [CommGroup I_K] [CommGroup I_L]
     (D : Chapter09IdeleNormData K L I_K I_L) :
     Nonempty (chapter09ClassNormQuotient D ≃* chapter09ProductNormQuotient D) := by
@@ -162,14 +175,16 @@ theorem chapter09_class_norm_quotient_formula
 
 noncomputable def chapter09_class_norm_quotient_equiv_product_quotient
     {K L I_K I_L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     [CommGroup I_K] [CommGroup I_L]
     (D : Chapter09IdeleNormData K L I_K I_L) :
     chapter09ClassNormQuotient D ≃*
       chapter09ProductNormQuotient D := by
-  sorry
+  exact Classical.choice (chapter09_class_norm_quotient_formula D)
 
 theorem chapter09_idele_class_exact_sequence
     {K L I_K I_L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     [CommGroup I_K] [CommGroup I_L]
     (D : Chapter09IdeleNormData K L I_K I_L) :
     chapter09GroupExact D.principalL

@@ -1,31 +1,13 @@
 import Mathlib.Analysis.Normed.Field.Basic
-import Mathlib.Analysis.Normed.Unbundled.RingSeminorm
-import Mathlib.RingTheory.AdicCompletion.Basic
-import Mathlib.RingTheory.AdicCompletion.Completeness
-import Mathlib.RingTheory.AdicCompletion.Topology
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Mathlib.RingTheory.LaurentSeries
-import Mathlib.RingTheory.PowerSeries.Basic
-import Mathlib.RingTheory.PowerSeries.WellKnown
-import Mathlib.NumberTheory.LocalField.Basic
-import Mathlib.NumberTheory.Padics.PadicIntegers
-import Mathlib.NumberTheory.Padics.ProperSpace
-import Mathlib.RingTheory.Valuation.Discrete.RankOne
-import Mathlib.Topology.Algebra.Ring.Compact
-import Mathlib.Topology.Algebra.Module.FiniteDimension
-import Mathlib.Topology.Algebra.Valued.LocallyCompact
-import Mathlib.Topology.MetricSpace.Pseudo.Defs
+import Mathlib.Topology.Algebra.Nonarchimedean.AdicTopology
 import Mathlib.Topology.UniformSpace.AbsoluteValue
-import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Order
 import Mathlib.Tactic.Ring
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter06
 
 open Set Filter Function
-open scoped BigOperators Pointwise Topology WithZero NNReal Valued PowerSeries
+open scoped BigOperators Pointwise Topology WithZero NNReal
 
 noncomputable section
 
@@ -377,7 +359,30 @@ theorem chapter06_isosceles_triangle
     (v : AbsoluteValue K ℝ) (hv : IsNonarchimedean v)
     {x y z : K} (hne : v (x - y) ≠ v (y - z)) :
     v (x - z) = max (v (x - y)) (v (y - z)) := by
-  simpa [sub_add_sub_cancel] using IsNonarchimedean.add_eq_max_of_ne hv hne
+  have hxy : v (x - z) ≤ max (v (x - y)) (v (y - z)) := by
+    simpa [chapter06Distance] using
+      (chapter06_strong_triangle_inequality v hv x y z)
+  have hyz : v (y - z) ≤ max (v (x - y)) (v (x - z)) := by
+    simpa only [chapter06Distance, v.map_sub] using
+      (chapter06_strong_triangle_inequality v hv y x z)
+  have hxy' : v (x - y) ≤ max (v (x - z)) (v (y - z)) := by
+    simpa only [chapter06Distance, v.map_sub] using
+      (chapter06_strong_triangle_inequality v hv x z y)
+  rcases lt_or_gt_of_ne hne with hlt | hgt
+  · have hzy : v (y - z) ≤ v (x - z) := by
+      by_contra hnot
+      have hlt' : v (x - z) < v (y - z) := lt_of_not_ge hnot
+      exact (not_lt_of_ge hyz) (max_lt hlt hlt')
+    have hupper : v (x - z) ≤ v (y - z) := by
+      simpa [max_eq_right (le_of_lt hlt)] using hxy
+    exact (max_eq_right (le_of_lt hlt)).symm ▸ le_antisymm hupper hzy
+  · have hzx : v (x - y) ≤ v (x - z) := by
+      by_contra hnot
+      have hlt' : v (x - z) < v (x - y) := lt_of_not_ge hnot
+      exact (not_lt_of_ge hxy') (max_lt hlt' hgt)
+    have hupper : v (x - z) ≤ v (x - y) := by
+      simpa [max_eq_left (le_of_lt hgt)] using hxy
+    exact (max_eq_left (le_of_lt hgt)).symm ▸ le_antisymm hupper hzx
 
 end Balls
 

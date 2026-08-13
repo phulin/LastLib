@@ -72,7 +72,7 @@ theorem chapter09ClassModuleSection_right_inverse
 
 theorem chapter09_idele_class_group_split
     (K : Type*) [Field K] [NumberField K] :
-    Nonempty (Chapter09IdeleClassGroup K ≃*
+    Nonempty (Chapter09IdeleClassGroup K ≃ₜ*
       chapter09ClassNormOne K × Chapter09PositiveReal) := by
   sorry
 

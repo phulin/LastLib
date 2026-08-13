@@ -1,5 +1,7 @@
-import LastLib.Book04AdelesAndIdeles.Chapter15.Section05AutomorphicFunctions
+import LastLib.Book04AdelesAndIdeles.Chapter15.Section04DoubleQuotientsAndLattices
+import LastLib.Book04AdelesAndIdeles.Chapter15.Section03CompactOpenLevel
 import Mathlib.MeasureTheory.Group.Measure
+import Mathlib.Topology.Algebra.Group.Quotient
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter15
 
@@ -29,9 +31,14 @@ theorem chapter15IdeleClassMap_kernel :
     (chapter15IdeleClassMap (R := R) (K := K)).ker =
       (chapter15PrincipalIdele (R := R) (K := K)).range := by sorry
 
+theorem chapter15_idele_class_group_is_locally_compact
+    (K : Type*) [Field K] [NumberField K] :
+    LocallyCompactSpace (Chapter15IdeleClassGroup (R := 𝓞 K) (K := K)) := by
+  sorry
+
 /-- The rank-one automorphic quotient with no finite level. -/
 abbrev Chapter15GL1NoLevelAutomorphicQuotient :=
-  chapter15MatrixAutomorphicDoubleQuotient (R := R) (K := K) 1 (⊤ :
+  chapter15MatrixAutomorphicDoubleQuotient (R := R) (K := K) 1 (⊥ :
     Subgroup (Chapter15FiniteMatrixGroup 1 R K))
 
 /- LOCAL_DEPENDENCY_GUESS: this is the canonical rank-one identification
@@ -39,9 +46,9 @@ between the matrix restricted product and the idele group; the quotient-level
 equivalence is stated separately so that the graph topology is not confused
 with the subspace topology on units of the adele ring. -/
 def chapter15_rank_one_automorphic_quotient_formula
-    [NumberField K] :
-    Chapter15GL1NoLevelAutomorphicQuotient (R := R) (K := K) ≃
-      Chapter15IdeleClassGroup (R := R) (K := K) := by
+    (K : Type*) [Field K] [NumberField K] :
+    Chapter15GL1NoLevelAutomorphicQuotient (R := 𝓞 K) (K := K) ≃ₜ
+      Chapter15IdeleClassGroup (R := 𝓞 K) (K := K) := by
   sorry
 
 /-! ### Hecke characters and one-dimensional automorphic representations -/
@@ -73,13 +80,12 @@ abbrev Chapter15OneDimensionalAutomorphicRepresentation :=
 structure Chapter15FiniteContinuousIdeleClassQuotient where
   quotient : Type*
   [quotientGroup : Group quotient]
-  quotient_topology : TopologicalSpace quotient
+  [quotient_topology : TopologicalSpace quotient]
+  [quotient_discrete : DiscreteTopology quotient]
   finite : Finite quotient
   quotientMap : Chapter15IdeleClassGroup (R := R) (K := K) →* quotient
   surjective : Function.Surjective quotientMap
-  continuous_quotientMap :
-    @Continuous (Chapter15IdeleClassGroup (R := R) (K := K)) quotient
-      inferInstance quotient_topology quotientMap
+  continuous_quotientMap : Continuous quotientMap
 
 /-- The finite-unit part of a ray level, with the standard tail outside its support. -/
 def chapter15FiniteIdeleRayLevel
@@ -142,15 +148,39 @@ structure Chapter15RayClassModulus where
   support : Finset (Chapter15FinitePlace R)
   exponent_zero_outside_support : ∀ v ∉ support, exponent v = 0
   archimedeanLevel : Subgroup (Chapter15ArchimedeanIdeleGroup K)
-  quotient_finite : Finite
+  archimedeanLevel_open :
+    IsOpen (archimedeanLevel : Set (Chapter15ArchimedeanIdeleGroup K))
+  [quotient_finite : Finite
     (Chapter15IdeleClassGroup (R := R) (K := K) ⧸
       chapter15RayClassSubgroup (R := R) (K := K)
-        archimedeanLevel support exponent)
+        archimedeanLevel support exponent)]
 
 abbrev Chapter15RayClassQuotient (m : Chapter15RayClassModulus (R := R) (K := K)) :=
   Chapter15IdeleClassGroup (R := R) (K := K) ⧸
     chapter15RayClassSubgroup (R := R) (K := K)
       m.archimedeanLevel m.support m.exponent
+
+instance chapter15RayClassQuotient_finite
+    (m : Chapter15RayClassModulus (R := R) (K := K)) :
+    Finite (Chapter15RayClassQuotient m) :=
+  m.quotient_finite
+
+theorem chapter15_ray_class_subgroup_is_open
+    {L : Type*} [Field L] [NumberField L]
+    (m : Chapter15RayClassModulus (R := 𝓞 L) (K := L)) :
+    IsOpen (chapter15RayClassSubgroup (R := 𝓞 L) (K := L)
+      m.archimedeanLevel m.support m.exponent :
+      Set (Chapter15IdeleClassGroup (R := 𝓞 L) (K := L))) := by
+  sorry
+
+theorem chapter15_ray_class_subgroups_are_cofinal
+    {L : Type*} [Field L] [NumberField L]
+    (H : Subgroup (Chapter15IdeleClassGroup (R := 𝓞 L) (K := L)))
+    (hH : IsOpen (H : Set (Chapter15IdeleClassGroup (R := 𝓞 L) (K := L)))) :
+    ∃ m : Chapter15RayClassModulus (R := 𝓞 L) (K := L),
+      chapter15RayClassSubgroup (R := 𝓞 L) (K := L)
+        m.archimedeanLevel m.support m.exponent ≤ H := by
+  sorry
 
 theorem chapter15_finite_order_Hecke_character_has_finite_range
     (χ : Chapter15HeckeCharacter (R := R) (K := K))
@@ -159,13 +189,13 @@ theorem chapter15_finite_order_Hecke_character_has_finite_range
   sorry
 
 theorem chapter15_finite_order_Hecke_character_factors_through_ray_class
-    [NumberField K]
-    (χ : Chapter15HeckeCharacter (R := R) (K := K))
+    {L : Type*} [Field L] [NumberField L]
+    (χ : Chapter15HeckeCharacter (R := 𝓞 L) (K := L))
     (hχ : chapter15FiniteOrderHeckeCharacter χ) :
-    ∃ m : Chapter15RayClassModulus (R := R) (K := K),
+    ∃ m : Chapter15RayClassModulus (R := 𝓞 L) (K := L),
       ∃ ψ : Chapter15RayClassQuotient m →* ℂˣ,
         χ.toMonoidHom = ψ.comp (QuotientGroup.mk'
-          (chapter15RayClassSubgroup (R := R) (K := K)
+          (chapter15RayClassSubgroup (R := 𝓞 L) (K := L)
             m.archimedeanLevel m.support m.exponent)) := by
   sorry
 
@@ -199,10 +229,10 @@ def chapter15ArchimedeanHeckeImage
   Set.range (chapter15ArchimedeanHeckeComponent (R := R) (K := K) χ)
 
 theorem chapter15_unitary_Hecke_characters_need_not_be_finite_order
-    [NumberField K] :
-    ∃ χ : Chapter15HeckeCharacter (R := R) (K := K),
+    {L : Type*} [Field L] [NumberField L] :
+    ∃ χ : Chapter15HeckeCharacter (R := 𝓞 L) (K := L),
       chapter15UnitaryHeckeCharacter χ ∧
-        (chapter15ArchimedeanHeckeImage (R := R) (K := K) χ).Infinite := by
+        (chapter15ArchimedeanHeckeImage (R := 𝓞 L) (K := L) χ).Infinite := by
   sorry
 
 theorem chapter15_infinite_archimedean_image_excludes_finite_order
@@ -221,7 +251,7 @@ theorem chapter15_infinite_archimedean_image_excludes_finite_reciprocity
 
 /-- A central character is a character of the center of the adelic matrix group. -/
 abbrev Chapter15CentralCharacter (n : ℕ) :=
-  Subgroup.center (Chapter15GLnAdeles n R K) →* ℂˣ
+  Subgroup.center (Chapter15GLnAdeles n R K) →ₜ* ℂˣ
 
 /-- A Haar measure record keeps the measure and its left-invariance witness together. -/
 structure Chapter15HaarMeasureData (G : Type*) [Group G] [TopologicalSpace G]

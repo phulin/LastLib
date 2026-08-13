@@ -7,7 +7,7 @@ noncomputable section
 open CategoryTheory
 open CategoryTheory.Limits
 
-universe u
+universe u v w
 
 /-!
 ## 10.1. Passing over all finite abelian extensions
@@ -33,18 +33,19 @@ theorem chapter10FiniteIndexTopology_generatedByOpenFiniteIndex
 /-- The target is given its natural profinite topology through the infinite
 Galois inverse limit. -/
 noncomputable def chapter10ProfiniteAbelianGaloisTarget
-    (K Kab : Type u) [Field K] [Field Kab] [Algebra K Kab]
-    [IsGalois K Kab] : ProfiniteGrp :=
+    (K : Type u) (Kab : Type v) [Field K] [Field Kab] [Algebra K Kab]
+    [IsGalois K Kab] (_A : Chapter10AbelianClosureData K Kab) : ProfiniteGrp :=
   InfiniteGalois.profiniteGalGrp K Kab
 
 theorem chapter10ProfiniteAbelianGaloisTarget_coe
-    (K Kab : Type u) [Field K] [Field Kab] [Algebra K Kab]
-    [IsGalois K Kab] :
-    (chapter10ProfiniteAbelianGaloisTarget K Kab : Type u) = Gal(Kab / K) :=
+    (K : Type u) (Kab : Type v) [Field K] [Field Kab] [Algebra K Kab]
+    [IsGalois K Kab] (A : Chapter10AbelianClosureData K Kab) :
+    (chapter10ProfiniteAbelianGaloisTarget K Kab A : Type v) = Gal(Kab / K) :=
   rfl
 
 noncomputable def chapter10_finite_reciprocity_identifies_quotient
-    {C K Kab : Type u} [CommGroup C] [TopologicalSpace C]
+    {C : Type u} {K : Type v} {Kab : Type w}
+    [CommGroup C] [TopologicalSpace C]
     [IsTopologicalGroup C] [Field K] [Field Kab] [Algebra K Kab]
     [IsGalois K Kab] (F : Chapter10FiniteArtinFamily C K Kab)
     (L : FiniteGaloisIntermediateField K Kab) :
@@ -52,7 +53,8 @@ noncomputable def chapter10_finite_reciprocity_identifies_quotient
   Chapter10FiniteArtinFamily.quotientEquiv F L
 
 theorem chapter10_finite_reciprocity_identifies_open_system
-    {C K Kab : Type u} [CommGroup C] [TopologicalSpace C]
+    {C : Type u} {K : Type v} {Kab : Type w}
+    [CommGroup C] [TopologicalSpace C]
     [IsTopologicalGroup C] [Field K] [Field Kab] [Algebra K Kab]
     [IsGalois K Kab] (F : Chapter10FiniteArtinFamily C K Kab)
     (R : Chapter10FiniteReciprocityData F) :
@@ -64,7 +66,8 @@ theorem chapter10_finite_reciprocity_identifies_open_system
 /-- The source-order formulation of compatibility with every finite abelian
 Artin map. -/
 theorem chapter10_global_artin_restricts_to_finite_artin
-    {C K Kab : Type u} [CommGroup C] [TopologicalSpace C]
+    {C : Type u} {K : Type v} {Kab : Type w}
+    [CommGroup C] [TopologicalSpace C]
     [IsTopologicalGroup C] [Field K] [Field Kab] [Algebra K Kab]
     [IsGalois K Kab] (F : Chapter10FiniteArtinFamily C K Kab)
     (L : FiniteGaloisIntermediateField K Kab) :
@@ -74,7 +77,8 @@ theorem chapter10_global_artin_restricts_to_finite_artin
 /-- Global Artin reciprocity, in the topology-sensitive inverse-limit form of
 Theorem 10.1. -/
 noncomputable def chapter10InfiniteReciprocityEquiv
-    {C K Kab : Type u} [CommGroup C] [TopologicalSpace C]
+    {C : Type u} {K : Type v} {Kab : Type w}
+    [CommGroup C] [TopologicalSpace C]
     [IsTopologicalGroup C] [Field K] [Field Kab] [Algebra K Kab]
     [IsGalois K Kab] (F : Chapter10FiniteArtinFamily C K Kab)
     (R : Chapter10FiniteReciprocityData F) :
@@ -82,7 +86,8 @@ noncomputable def chapter10InfiniteReciprocityEquiv
   sorry
 
 theorem chapter10InfiniteReciprocityEquiv_apply_eta
-    {C K Kab : Type u} [CommGroup C] [TopologicalSpace C]
+    {C : Type u} {K : Type v} {Kab : Type w}
+    [CommGroup C] [TopologicalSpace C]
     [IsTopologicalGroup C] [Field K] [Field Kab] [Algebra K Kab]
     [IsGalois K Kab] (F : Chapter10FiniteArtinFamily C K Kab)
     (R : Chapter10FiniteReciprocityData F) (c : C) :
@@ -91,7 +96,8 @@ theorem chapter10InfiniteReciprocityEquiv_apply_eta
   sorry
 
 noncomputable def chapter10CompletedFiniteArtinMap
-    {C K Kab : Type u} [CommGroup C] [TopologicalSpace C]
+    {C : Type u} {K : Type v} {Kab : Type w}
+    [CommGroup C] [TopologicalSpace C]
     [IsTopologicalGroup C] [Field K] [Field Kab] [Algebra K Kab]
     [IsGalois K Kab] (F : Chapter10FiniteArtinFamily C K Kab)
     (R : Chapter10FiniteReciprocityData F)
@@ -101,7 +107,8 @@ noncomputable def chapter10CompletedFiniteArtinMap
     (chapter10InfiniteReciprocityEquiv F R).toMulEquiv.toMonoidHom
 
 theorem chapter10CompletedFiniteArtinMap_apply_eta
-    {C K Kab : Type u} [CommGroup C] [TopologicalSpace C]
+    {C : Type u} {K : Type v} {Kab : Type w}
+    [CommGroup C] [TopologicalSpace C]
     [IsTopologicalGroup C] [Field K] [Field Kab] [Algebra K Kab]
     [IsGalois K Kab] (F : Chapter10FiniteArtinFamily C K Kab)
     (R : Chapter10FiniteReciprocityData F) (L : FiniteGaloisIntermediateField K Kab)

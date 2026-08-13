@@ -45,10 +45,9 @@ theorem chapter11CharacterAbelianization_spec
     (chapter11_galois_character_factors_through_abelianization ρ)
 
 def chapter11ProfiniteExtensionOf
-    {K G A : Type*} [Field K] [Group G] [CommGroup A]
-    [TopologicalSpace Kˣ] [TopologicalSpace G] [TopologicalSpace A]
-    [IsTopologicalGroup G] [IsTopologicalGroup A]
-    (_R : Chapter11ReciprocityData K G)
+    {K A : Type*} [Field K] [CommGroup A]
+    [TopologicalSpace Kˣ] [TopologicalSpace A]
+    [IsTopologicalGroup A]
     (χ : Kˣ →ₜ* A) : Prop :=
   ∃ F : Chapter11ProfiniteCompletion Kˣ →ₜ* A,
     ∀ x : Kˣ,
@@ -64,11 +63,14 @@ def chapter11FiniteIndexNeighborhoodCondition
         ∀ x ∈ H, χ x ∈ V
 
 theorem chapter11_profinite_extension_iff_finite_index_neighborhood_condition
-    {K G A : Type*} [Field K] [Group G] [CommGroup A]
-    [TopologicalSpace Kˣ] [TopologicalSpace G] [TopologicalSpace A]
-    [IsTopologicalGroup G] [IsTopologicalGroup A] [T2Space A]
-    (R : Chapter11ReciprocityData K G) (χ : Kˣ →ₜ* A) :
-    chapter11ProfiniteExtensionOf R χ ↔
+    {K A : Type*} [Field K] [CommGroup A]
+    [TopologicalSpace Kˣ]
+    [UniformSpace A] [IsUniformGroup A]
+    [IsTopologicalGroup A]
+    [T2Space A] [CompleteSpace A]
+    (χ : Kˣ →ₜ* A)
+    (hcofinal : chapter11OpenFiniteIndexCofinality (K := K)) :
+    chapter11ProfiniteExtensionOf χ ↔
       chapter11FiniteIndexNeighborhoodCondition χ := by
   sorry
 
@@ -227,12 +229,9 @@ def chapter11ComplexCounterexample
     (1 : D.unitGroup →ₜ* ℂˣ)
 
 theorem chapter11_complex_counterexample_not_galois
-    {K G : Type*} [Field K] [Group G] [TopologicalSpace Kˣ]
-    [TopologicalSpace G] [IsTopologicalGroup G]
-    (R : Chapter11ReciprocityData K G)
-    (D : Chapter11LocalFieldData K)
-    (hdiscrete : IsOpen (Set.range (fun r : ℤ => D.uniformizer ^ r))) :
-    ¬ chapter11ProfiniteExtensionOf R (chapter11ComplexCounterexample D) ∧
+    {K : Type*} [Field K] [TopologicalSpace Kˣ]
+    (D : Chapter11LocalFieldData K) :
+    ¬ chapter11ProfiniteExtensionOf (chapter11ComplexCounterexample D) ∧
       ¬ IsCompact (closure (Set.range (chapter11ComplexCounterexample D))) := by
   sorry
 

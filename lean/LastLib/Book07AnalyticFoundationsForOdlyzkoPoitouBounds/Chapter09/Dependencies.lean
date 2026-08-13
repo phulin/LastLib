@@ -11,6 +11,8 @@ import Mathlib.NumberTheory.NumberField.Discriminant.Basic
 import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
 import Mathlib.Order.LiminfLimsup
 
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.Dependencies
+
 namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter09
 
 open Filter MeasureTheory
@@ -21,10 +23,10 @@ noncomputable section
 /-!
 Shared interfaces for Chapter 9.
 
-The preceding Book 07 chapters are not imported here: in the global draft they
-are being developed in parallel.  The declarations below are the minimal
-book-facing surface needed by this chapter, and are deliberately thin over
-canonical Mathlib number-field and real-analysis objects.
+The preceding Book 07 chapters are otherwise developed in parallel.  The
+focused Chapter 6 dependency is imported only for the completed-zeta zero
+predicate; the declarations below remain the minimal book-facing surface
+needed by this chapter and are thin over canonical number-field objects.
 -/
 
 abbrev chapter09Degree (K : Type*) [Field K] [NumberField K] : ℕ :=
@@ -70,18 +72,31 @@ theorem chapter09_root_discriminant_pos
     0 < chapter09RootDiscriminant K := by
   sorry
 
+theorem chapter09_root_discriminant_eq_canonical
+    (K : Type*) [Field K] [NumberField K] :
+    chapter09RootDiscriminant K = NumberField.rootDiscr K := by
+  sorry
+
 theorem chapter09_real_proportion_mem_Icc
     (K : Type*) [Field K] [NumberField K] :
     chapter09RealProportion K ∈ Set.Icc (0 : ℝ) 1 := by
   sorry
 
-/- LOCAL_DEPENDENCY_GUESS: Chapters 4--8 supply the completed Dedekind-zeta
-zero set and its GRH interface.  This class is only that missing interface;
-it contains no explicit-formula conclusion and can be replaced by the
-canonical zero object when those chapters are merged. -/
+/- The nontrivial-zero support is tied to the completed-zeta function used by
+   the preceding analytic package.  This keeps possible boundary zeros in the
+   support; the source's unconditional strip-positivity argument explicitly
+   includes those endpoints.  Multiplicities and the functional-equation
+   package remain upstream data; this interface only supplies support. -/
+def chapter09NontrivialCompletedDedekindZetaZero
+    (K : Type*) [Field K] [NumberField K] (ρ : ℂ) : Prop :=
+  LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.chapter06Xi K ρ = 0
+
 class Chapter09ZetaZeroInterface
     (K : Type*) [Field K] [NumberField K] where
   nontrivialZeros : Set ℂ
+  nontrivialZeros_spec :
+    ∀ ρ, ρ ∈ nontrivialZeros ↔
+      chapter09NontrivialCompletedDedekindZetaZero K ρ
 
 def chapter09GRHOnZeros (zeros : Set ℂ) : Prop :=
   ∀ ρ ∈ zeros, ρ.re = 1 / 2
@@ -173,6 +188,9 @@ structure Chapter09NumberFieldModel where
   [field : Field K]
   [numberField : NumberField K]
   nontrivialZeros : Set ℂ
+  nontrivialZeros_spec :
+    ∀ ρ, ρ ∈ nontrivialZeros ↔
+      chapter09NontrivialCompletedDedekindZetaZero K ρ
 
 namespace Chapter09NumberFieldModel
 
@@ -193,6 +211,17 @@ def rootDiscriminant (M : Chapter09NumberFieldModel) : ℝ := by
 
 def satisfiesGRH (M : Chapter09NumberFieldModel) : Prop :=
   chapter09GRHOnZeros M.nontrivialZeros
+
+/- A model carries its zero set as data, whereas the fieldwise GRH theorem
+   consumes the chapter's zero-interface typeclass.  This constructor is the
+   non-circular bridge needed when applying that theorem to a model member. -/
+def zetaZeroInterface (M : Chapter09NumberFieldModel) :
+    Chapter09ZetaZeroInterface M.K := by
+  letI := M.field
+  letI := M.numberField
+  exact
+    { nontrivialZeros := M.nontrivialZeros
+      nontrivialZeros_spec := M.nontrivialZeros_spec }
 
 theorem degree_pos (M : Chapter09NumberFieldModel) : 0 < M.degree := by
   sorry

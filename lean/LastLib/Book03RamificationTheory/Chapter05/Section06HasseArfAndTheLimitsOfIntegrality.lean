@@ -47,7 +47,7 @@ structure Chapter05LocalGaloisUpperData
     ∀ n : ℕ,
       profile.lowerGroup (n : ℝ) =
         chapter05RamificationGroupInG (F := K)
-          vL.toValuation.valuationSubring n
+          vL.toValuation.valuationSubring (n + 1)
 
 namespace Chapter05LocalGaloisUpperData
 
@@ -58,7 +58,7 @@ theorem lower_canonical_at
     (D : Chapter05LocalGaloisUpperData K L) (n : ℕ) :
     D.profile.lowerGroup (n : ℝ) =
       chapter05RamificationGroupInG (F := K)
-        D.vL.toValuation.valuationSubring n := by
+        D.vL.toValuation.valuationSubring (n + 1) := by
   exact D.lower_canonical n
 
 end Chapter05LocalGaloisUpperData

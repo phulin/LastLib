@@ -14,9 +14,9 @@ open scoped BigOperators NumberField nonZeroDivisors Topology
 theorem chapter04_brauer_invariant_sequence
     {F : Type u} [Field F] [NumberField F]
     (D : Chapter04BrauerContext.{u, v} F)
-    (hlocal : Chapter04LocalBrauerBehavior D) :
+    (S : Chapter04BrauerInvariantSequenceData D) :
     chapter04BrauerInvariantExact D := by
-  sorry
+  exact S.exact_sequence
 
 /-- The complex local Brauer group vanishes. -/
 theorem chapter04_brauer_complex_eq_zero
@@ -28,7 +28,7 @@ theorem chapter04_brauer_complex_eq_zero
     Subsingleton (D.localBr (Sum.inr w)) := by
   exact hlocal.complex_zero w hw
 
-/-- At a real place the nonsplit quaternion class is the unique nonzero class of order two. -/
+/-- Every local Brauer class at a real place is killed by two. -/
 theorem chapter04_brauer_real_is_half_integer
     {F : Type u} [Field F] [NumberField F]
     (D : Chapter04BrauerContext.{u, v} F)
@@ -47,6 +47,18 @@ theorem chapter04_brauer_real_contains_half_integer
     ∃ x : D.localBr (Sum.inr w),
       D.invariant (Sum.inr w) x = chapter04QModZOfRat ((1 : ℚ) / 2) := by
   exact hlocal.real_half_class w hw
+
+/-- At a real place the invariant identifies the local Brauer group with its two-torsion range. -/
+theorem chapter04_brauer_real_is_two_torsion_equiv
+    {F : Type u} [Field F] [NumberField F]
+    (D : Chapter04BrauerContext.{u, v} F)
+    (hlocal : Chapter04LocalBrauerBehavior D)
+    (w : NumberField.InfinitePlace F)
+    (hw : NumberField.InfinitePlace.IsReal w) :
+    ∃ e : D.localBr (Sum.inr w) ≃+ chapter04QModZTorsion 2,
+      ∀ x, (e x : chapter04QModZ) = D.invariant (Sum.inr w) x := by
+  exact ⟨hlocal.real_invariant_equiv w hw,
+    hlocal.real_invariant_is_equiv w hw⟩
 
 /-- At a finite place the invariant identifies the local Brauer group with `ℚ / ℤ`. -/
 theorem chapter04_brauer_finite_is_QModZ
@@ -70,7 +82,7 @@ theorem chapter04_brauer_finite_invariant_is_the_identification
 /-- The ideal-counting function appearing in the source proof of the simple pole. -/
 def chapter04IdealCountingFunction
     (F : Type*) [Field F] [NumberField F] (X : ℝ) : ℝ :=
-  Nat.card {I : (Ideal (𝓞 F))⁰ //
+  Set.ncard {I : (Ideal (𝓞 F))⁰ |
     (Ideal.absNorm (I : Ideal (𝓞 F)) : ℝ) ≤ X}
 
 /-- A concrete `O`-bound used for the source's lattice-counting estimate. -/
@@ -120,6 +132,8 @@ class below keeps the separation lemma from hiding that dependency.
 class Chapter04EverywhereSplitPredicate
     (F E : Type*) [Field F] [Field E] [NumberField F] [Algebra F E] where
   splitsCompletelyAt : Chapter04Place F → Prop
+  splits_implies_finrank_one :
+    (∀ v : Chapter04Place F, splitsCompletelyAt v) → Module.finrank F E = 1
 
 def Chapter04SplitsAtEveryCompletion
     (F E : Type*) [Field F] [Field E] [NumberField F] [Algebra F E]
@@ -134,7 +148,9 @@ theorem chapter04_no_nontrivial_everywhere_split
     [Chapter04EverywhereSplitPredicate F E]
     (hdegree : 1 < Module.finrank F E) :
     ¬ Chapter04SplitsAtEveryCompletion F E := by
-  sorry
+  intro hsplit
+  rw [Chapter04EverywhereSplitPredicate.splits_implies_finrank_one hsplit] at hdegree
+  exact (Nat.lt_irrefl 1) hdegree
 
 /-! ### Finite-level compact support and Kummer interfaces -/
 
@@ -143,8 +159,9 @@ structure Chapter04FiniteSupportLevel (F : Type*) [Field F] [NumberField F] wher
   n : ℕ
   S : Finset (Chapter04Place F)
   contains_infinite : ∀ w : NumberField.InfinitePlace F, Sum.inr w ∈ S
-  places_above_n : Finset (Chapter04Place F)
-  contains_n_places : ∀ v, v ∈ places_above_n → v ∈ S
+  places_above_n : Chapter04Place F → Prop
+  places_above_n_finite : Set.Finite {v | places_above_n v}
+  contains_n_places : ∀ v, places_above_n v → v ∈ S
 
 /-- The finite-level Kummer/valuation row from (4.2). -/
 structure Chapter04KummerValuationData
@@ -158,6 +175,11 @@ structure Chapter04KummerValuationData
   [classGroupTorsionGroup : AddCommGroup classGroupTorsion]
   unitsMap : SUnitQuotient →+ H1Mu
   classMap : H1Mu →+ classGroupTorsion
+  unitsMap_injective : Function.Injective unitsMap
+  exactness : Function.Exact unitsMap classMap
+  classMap_surjective : Function.Surjective classMap
+  local_sequences : ∀ v : Chapter04Place F,
+    Nonempty (Chapter04LocalKummerValuationSequence (level := level) v)
 
 attribute [instance] Chapter04KummerValuationData.SUnitQuotientGroup
   Chapter04KummerValuationData.H1MuGroup
@@ -167,7 +189,6 @@ attribute [instance] Chapter04KummerValuationData.SUnitQuotientGroup
 structure Chapter04LocalKummerValuationSequence
     {F : Type u} [Field F] [NumberField F]
     {level : Chapter04FiniteSupportLevel F}
-    (K : Chapter04KummerValuationData F level)
     (v : Chapter04Place F) where
   U : Type u
   [uGroup : AddCommGroup U]
@@ -192,16 +213,16 @@ theorem chapter04_kummer_valuation_exact
     Function.Injective K.unitsMap ∧
       Function.Exact K.unitsMap K.classMap ∧
       Function.Surjective K.classMap := by
-  sorry
+  exact ⟨K.unitsMap_injective, K.exactness, K.classMap_surjective⟩
 
 /-- The same Kummer/valuation sequence is available at each local completion. -/
 theorem chapter04_local_kummer_valuation_exact
     {F : Type*} [Field F] [NumberField F]
     {level : Chapter04FiniteSupportLevel F}
-    (K : Chapter04KummerValuationData F level) :
+  (K : Chapter04KummerValuationData F level) :
     ∀ v : Chapter04Place F,
-      Nonempty (Chapter04LocalKummerValuationSequence K v) := by
-  sorry
+      Nonempty (Chapter04LocalKummerValuationSequence (level := level) v) := by
+  exact K.local_sequences
 
 /-- The perfect finite-level pairing (4.1), with the compact-support degree shift visible. -/
 structure Chapter04FiniteLevelPairing
@@ -216,15 +237,26 @@ structure Chapter04FiniteLevelPairing
   diagonal_orthogonality : ∀ i x y,
     isDiagonalX i x → isDiagonalY i y → pairing i x y = 0
 
+/-! Perfectness is the finite arithmetic-duality input, not a consequence of
+the existence of a pairing and an orthogonality predicate alone. -/
+structure Chapter04FiniteLevelPairingPerfectness
+    {G : Type u} [Group G]
+    (C : Chapter04CompactSupportAPI.{u, v} G)
+    (P : Chapter04DualCoefficientPair.{u, v} G)
+    (Q : Chapter04FiniteLevelPairing C P) where
+  perfect : ∀ i : ℤ,
+    chapter04PerfectPairing (Q.pairing i)
+
 theorem chapter04_finite_level_pairing_is_perfect
     {G : Type u} [Group G]
     (C : Chapter04CompactSupportAPI.{u, v} G)
     (P : Chapter04DualCoefficientPair.{u, v} G)
-    (Q : Chapter04FiniteLevelPairing C P) :
+    (Q : Chapter04FiniteLevelPairing C P)
+    (L : Chapter04FiniteLevelPairingPerfectness C P Q) :
     ∀ i : ℤ,
       chapter04PerfectPairing
         (Q.pairing i) := by
-  sorry
+  exact L.perfect
 
 /-- Diagonal global classes are orthogonal under the finite-level local sum. -/
 theorem chapter04_finite_level_diagonal_orthogonality
@@ -287,6 +319,10 @@ structure Chapter04DegreeTwoKummerData where
   [localBrauerGroup : AddCommGroup localBrauerTorsion]
   globalKummerMap : globalH →+ globalBrauerTorsion
   localKummerMap : localH →+ localBrauerTorsion
+  globalKummerEquiv : globalH ≃+ globalBrauerTorsion
+  localKummerEquiv : localH ≃+ localBrauerTorsion
+  globalKummerMap_eq_equiv : ∀ x, globalKummerMap x = globalKummerEquiv x
+  localKummerMap_eq_equiv : ∀ x, localKummerMap x = localKummerEquiv x
 
 attribute [instance] Chapter04DegreeTwoKummerData.globalHGroup
   Chapter04DegreeTwoKummerData.globalBrauerGroup
@@ -297,24 +333,24 @@ theorem chapter04_degree_two_Kummer_Brauer_identification
     (K : Chapter04DegreeTwoKummerData) :
     Nonempty (K.globalH ≃+ K.globalBrauerTorsion) ∧
       Nonempty (K.localH ≃+ K.localBrauerTorsion) := by
-  sorry
+  exact ⟨⟨K.globalKummerEquiv⟩, ⟨K.localKummerEquiv⟩⟩
 
 /-- The middle arrow in the degree-two row is the total local invariant. -/
 theorem chapter04_degree_two_arrow_is_total_invariant
     {F : Type u} [Field F] [NumberField F]
     (D : Chapter04BrauerContext.{u, v} F)
-    (hlocal : Chapter04LocalBrauerBehavior D) :
+    (S : Chapter04BrauerInvariantSequenceData D) :
     Function.Exact D.localization (chapter04BrauerInvariantSum D) := by
-  exact (chapter04_brauer_invariant_sequence D hlocal).2.1
+  exact (chapter04_brauer_invariant_sequence D S).2.1
 
 /-- Every finitely supported invariant family has finite exponent, so torsion rows assemble to the
 full Brauer invariant sequence. -/
 theorem chapter04_brauer_torsion_directed_union
     {F : Type u} [Field F] [NumberField F]
     (D : Chapter04BrauerContext.{u, v} F)
-    (hlocal : Chapter04LocalBrauerBehavior D) :
+    (S : Chapter04BrauerInvariantSequenceData D) :
     chapter04BrauerInvariantExact D := by
-  exact chapter04_brauer_invariant_sequence D hlocal
+  exact chapter04_brauer_invariant_sequence D S
 
 end
 

@@ -1,4 +1,10 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter02.Section05FromAdditiveToMultiplicativeSize
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter02.Section04EquivalenceAndNormalization
+import Mathlib.Analysis.Normed.Group.Basic
+import Mathlib.Topology.Algebra.InfiniteSum.Nonarchimedean
+import Mathlib.Topology.UniformSpace.Completion
+import Mathlib.Topology.UniformSpace.CompareReals
+import Mathlib.Tactic.NormNum
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter02
 
@@ -54,6 +60,29 @@ theorem chapter02_trivial_absolute_value_is_one_off_zero
     {K : Type*} [Field K] {x : K} (hx : x ≠ 0) :
     Chapter02TrivialAbsoluteValue x = 1 := by
   simp [Chapter02TrivialAbsoluteValue, hx]
+
+theorem chapter02_trivial_absolute_value_is_an_absolute_value
+    {K : Type*} [Field K] :
+    ∃ f : AbsoluteValue K ℝ,
+      ∀ x : K, f x = Chapter02TrivialAbsoluteValue x := by
+  let f : AbsoluteValue K ℝ :=
+    { toFun := Chapter02TrivialAbsoluteValue
+      map_mul' := by
+        intro x y
+        by_cases hx : x = 0 <;> by_cases hy : y = 0 <;>
+          simp [Chapter02TrivialAbsoluteValue, hx, hy]
+      nonneg' := by
+        intro x
+        by_cases hx : x = 0 <;> simp [Chapter02TrivialAbsoluteValue, hx]
+      eq_zero' := by
+        intro x
+        simp [Chapter02TrivialAbsoluteValue]
+      add_le' := by
+        intro x y
+        by_cases hx : x = 0 <;> by_cases hy : y = 0 <;>
+          by_cases hxy : x + y = 0 <;>
+            simp [Chapter02TrivialAbsoluteValue, hx, hy, hxy] }
+  exact ⟨f, fun x => rfl⟩
 
 def Chapter02TrivialDistance {K : Type*} [Field K] (x y : K) : ℝ := by
   classical
@@ -152,6 +181,18 @@ theorem chapter02_ultrametric_series_criterion
           intro i hi hiN
           exact Finset.disjoint_left.mp hdis
             (Finset.mem_insert_of_mem hi) hiN)
+
+theorem chapter02_ultrametric_series_criterion_iff
+    {K : Type*} [NormedAddCommGroup K] [CompleteSpace K]
+    (htri : ∀ x y : K, ‖x + y‖ ≤ max ‖x‖ ‖y‖) (u : ℕ → K) :
+    Summable u ↔
+      Filter.Tendsto (fun n => ‖u n‖) Filter.atTop (nhds 0) := by
+  constructor
+  · intro hu
+    rw [← Nat.cofinite_eq_atTop]
+    exact (tendsto_zero_iff_norm_tendsto_zero.mp hu.tendsto_cofinite_zero)
+  · intro hu
+    exact chapter02_ultrametric_series_criterion htri u hu
 
 end
 end LastLib.Book01ValuationsDVRsAndCompletions.Chapter02

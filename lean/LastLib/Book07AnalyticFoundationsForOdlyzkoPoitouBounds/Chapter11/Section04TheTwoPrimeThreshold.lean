@@ -1,4 +1,4 @@
-import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter11.Section03TheThresholdFiveFourthPower
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter11.Section02TheThresholdThreeSqrtThree
 
 namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter11
 
@@ -10,7 +10,7 @@ def chapter11TwoPrimeCeiling : ℝ :=
   Real.rpow 3 (3 / 2 : ℝ) * Real.rpow 2 (2 / 3 : ℝ)
 
 theorem chapter11_two_prime_ceiling_decimal_enclosure :
-    (8.248377821991616 : ℝ) < chapter11TwoPrimeCeiling ∧
+    (8.248377821991615 : ℝ) < chapter11TwoPrimeCeiling ∧
       chapter11TwoPrimeCeiling < 8.248377821991617 := by
   sorry
 

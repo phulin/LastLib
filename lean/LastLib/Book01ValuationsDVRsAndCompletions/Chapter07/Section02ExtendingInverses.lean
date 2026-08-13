@@ -42,7 +42,7 @@ def chapter07CauchyBoundedAwayFromZero
 lemma chapter07_inverse_terms_are_cauchy
     {K : Type*} [Field K] [UniformSpace K] [IsUniformAddGroup K]
     [IsTopologicalRing K]
-    (abv : AbsoluteValue K ℝ) [Chapter07NonarchimedeanStationarity K abv]
+    (abv : AbsoluteValue K ℝ) [Chapter07NonarchimedeanCompatibility K abv]
     (u : chapter07CauchySequence K)
     (hu : chapter07CauchyBoundedAwayFromZero abv u) :
     CauchySeq (fun n => (u.1 n)⁻¹) := by
@@ -50,7 +50,7 @@ lemma chapter07_inverse_terms_are_cauchy
   rw [cauchySeq_iff]
   intro V hV
   have hV' : V ∈ @uniformity K abv.uniformSpace := by
-    have heq := Chapter07NonarchimedeanStationarity.uniformSpace_eq
+    have heq := Chapter07NonarchimedeanCompatibility.uniformSpace_eq
       (K := K) (abv := abv)
     exact heq ▸ hV
   obtain ⟨ε, hε, hsubset⟩ :=
@@ -62,7 +62,7 @@ lemma chapter07_inverse_terms_are_cauchy
       ⟨ε * (c * c), hδ, subset_rfl⟩
   have hU : {p : K × K | abv (p.2 - p.1) < ε * (c * c)} ∈
       @uniformity K (inferInstance : UniformSpace K) := by
-    have heq := Chapter07NonarchimedeanStationarity.uniformSpace_eq
+    have heq := Chapter07NonarchimedeanCompatibility.uniformSpace_eq
       (K := K) (abv := abv)
     exact heq.symm ▸ hU'
   obtain ⟨N₀, hN₀⟩ := eventually_atTop.1 hc_event
@@ -101,7 +101,7 @@ lemma chapter07_inverse_terms_are_cauchy
 def chapter07CauchySequenceInverse
     {K : Type*} [Field K] [UniformSpace K] [IsUniformAddGroup K]
     [IsTopologicalRing K]
-    (abv : AbsoluteValue K ℝ) [Chapter07NonarchimedeanStationarity K abv]
+    (abv : AbsoluteValue K ℝ) [Chapter07NonarchimedeanCompatibility K abv]
     (u : chapter07CauchySequence K)
     (hu : chapter07CauchyBoundedAwayFromZero abv u) :
   chapter07CauchySequence K :=
@@ -111,36 +111,16 @@ def chapter07CauchySequenceInverse
 theorem chapter07_inverse_sequence_is_cauchy
     {K : Type*} [Field K] [UniformSpace K] [IsUniformAddGroup K]
     [IsTopologicalRing K]
-    (abv : AbsoluteValue K ℝ) [Chapter07NonarchimedeanStationarity K abv]
+    (abv : AbsoluteValue K ℝ) [Chapter07NonarchimedeanCompatibility K abv]
     (u : chapter07CauchySequence K)
     (hu : chapter07CauchyBoundedAwayFromZero abv u) :
     CauchySeq (fun n => (u.1 n)⁻¹) := by
   exact chapter07_inverse_terms_are_cauchy abv u hu
 
--- Inversion descends to the Cauchy quotient.
-def chapter07CauchyCompletionInverse
-    {K : Type*} [Field K] [UniformSpace K] [IsUniformAddGroup K]
-    [IsTopologicalRing K]
-    (abv : AbsoluteValue K ℝ) [Chapter07NonarchimedeanStationarity K abv]
-    (x : chapter07CauchyCompletion K) : chapter07CauchyCompletion K := by
-  classical
-  let u : chapter07CauchySequence K := Quotient.out x
-  by_cases hu : Tendsto u.1 (atTop : Filter ℕ) (𝓝 0)
-  · exact chapter07CauchyCompletionZero
-  · let hconst := chapter07_nonzero_cauchy_absolute_value_eventually_constant abv u hu
-    let c : ℝ := Classical.choose hconst
-    have hc : 0 < c := (Classical.choose_spec hconst).1
-    have hc_event : ∀ᶠ n in (atTop : Filter ℕ), abv (u.1 n) = c :=
-      (Classical.choose_spec hconst).2
-    have hc_event' : ∀ᶠ n in (atTop : Filter ℕ), c ≤ abv (u.1 n) :=
-      hc_event.mono (fun n hn => hn.ge)
-    exact chapter07CauchyClass
-      (chapter07CauchySequenceInverse abv u ⟨c, hc, hc_event'⟩)
-
 -- The inverse class is a two-sided inverse.
 theorem chapter07_cauchy_completion_nonzero_has_inverse
     {K : Type*} [Field K] [UniformSpace K] [IsUniformAddGroup K] [IsTopologicalRing K]
-    (abv : AbsoluteValue K ℝ) [Chapter07NonarchimedeanStationarity K abv]
+    (abv : AbsoluteValue K ℝ) [Chapter07NonarchimedeanCompatibility K abv]
     (x : chapter07CauchyCompletion K) (hx : x ≠ chapter07CauchyCompletionZero) :
     ∃ y : chapter07CauchyCompletion K,
       chapter07CauchyCompletionMul x y = chapter07CauchyCompletionOne ∧
@@ -181,17 +161,47 @@ theorem chapter07_cauchy_completion_nonzero_has_inverse
       linarith [hc]
     simp [hne]
 
--- Section 7.2: the Cauchy completion of a valued field is a field.
-theorem chapter07_valued_cauchy_completion_is_a_field
+-- A globally well-defined choice of inverse in the Cauchy quotient.
+noncomputable def chapter07CauchyCompletionInverse
+    {K : Type*} [Field K] [UniformSpace K] [IsUniformAddGroup K]
+    [IsTopologicalRing K]
+    (abv : AbsoluteValue K ℝ) [Chapter07NonarchimedeanCompatibility K abv]
+    (x : chapter07CauchyCompletion K) : chapter07CauchyCompletion K := by
+  classical
+  exact if hx : x = chapter07CauchyCompletionZero then
+    chapter07CauchyCompletionZero
+  else
+    Classical.choose (chapter07_cauchy_completion_nonzero_has_inverse abv x hx)
+
+-- The chosen inverse has the expected two-sided inverse equations.
+theorem chapter07_cauchy_completion_inverse_spec
+    {K : Type*} [Field K] [UniformSpace K] [IsUniformAddGroup K]
+    [IsTopologicalRing K]
+    (abv : AbsoluteValue K ℝ) [Chapter07NonarchimedeanCompatibility K abv]
+    (x : chapter07CauchyCompletion K)
+    (hx : x ≠ chapter07CauchyCompletionZero) :
+    chapter07CauchyCompletionMul x (chapter07CauchyCompletionInverse abv x) =
+        chapter07CauchyCompletionOne ∧
+      chapter07CauchyCompletionMul (chapter07CauchyCompletionInverse abv x) x =
+        chapter07CauchyCompletionOne := by
+  rw [chapter07CauchyCompletionInverse, dif_neg hx]
+  exact Classical.choose_spec (chapter07_cauchy_completion_nonzero_has_inverse abv x hx)
+
+-- Section 7.2: every nonzero class has a two-sided inverse for the
+-- termwise multiplication defined on the Cauchy quotient.  The quotient
+-- does not yet carry a `Field` instance in this file, so the theorem name
+-- records precisely the interface established here.
+theorem chapter07_valued_cauchy_completion_nonzero_has_two_sided_inverse
     {K : Type*} [Field K] [UniformSpace K] [IsUniformAddGroup K] [IsTopologicalRing K]
-    (abv : AbsoluteValue K ℝ) [Chapter07NonarchimedeanStationarity K abv] :
+    (abv : AbsoluteValue K ℝ) [Chapter07NonarchimedeanCompatibility K abv] :
     ∀ x : chapter07CauchyCompletion K,
       x ≠ chapter07CauchyCompletionZero →
-        ∃ y : chapter07CauchyCompletion K,
-          chapter07CauchyCompletionMul x y = chapter07CauchyCompletionOne ∧
-          chapter07CauchyCompletionMul y x = chapter07CauchyCompletionOne := by
+        chapter07CauchyCompletionMul x (chapter07CauchyCompletionInverse abv x) =
+            chapter07CauchyCompletionOne ∧
+          chapter07CauchyCompletionMul (chapter07CauchyCompletionInverse abv x) x =
+            chapter07CauchyCompletionOne := by
   intro x hx
-  exact chapter07_cauchy_completion_nonzero_has_inverse abv x hx
+  exact chapter07_cauchy_completion_inverse_spec abv x hx
 
 -- The valuation on the standard completion, obtained by extending the original valuation.
 noncomputable def chapter07CompletionValuation
@@ -216,10 +226,10 @@ noncomputable def chapter07CompletionValueGroupEquiv
       ValueGroup₀ (.ofClass (chapter07CompletionValuation K Γ₀)) :=
   Valued.valueGroup₀_equiv_extensionValuation
 
--- Discrete valuations have eventually constant values on nonzero Cauchy sequences.
-theorem chapter07_discrete_valuation_values_eventually_constant
+-- Valuations have eventually constant values on nonzero Cauchy sequences.
+theorem chapter07_valuation_values_eventually_constant
     {K Γ₀ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ₀]
-    [Valued K Γ₀] [hdiscrete : (Valued.v (R := K)).IsRankOneDiscrete]
+    [Valued K Γ₀]
     (u : chapter07CauchySequence K)
     (hu : ¬ Tendsto u.1 (atTop : Filter ℕ) (𝓝 0)) :
     ∃ c : Γ₀, c ≠ 0 ∧ ∀ᶠ n in (atTop : Filter ℕ), Valued.v (u.1 n) = c := by

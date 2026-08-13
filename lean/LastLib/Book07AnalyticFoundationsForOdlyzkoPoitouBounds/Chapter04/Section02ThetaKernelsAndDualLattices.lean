@@ -43,11 +43,11 @@ theorem chapter04_normalized_ideal_lattice_covolume_one
     (K : Type*) [Field K] [NumberField K]
     (a : Chapter04NonzeroFractionalIdeal K) :
     ∃ L : Submodule ℤ (chapter04MinkowskiSpace K),
-      ∃ hL : DiscreteTopology L,
+        ∃ hL : DiscreteTopology L,
         @IsZLattice ℝ _ (chapter04MinkowskiSpace K) _ _ L hL ∧
           (L : Set (chapter04MinkowskiSpace K)) =
             chapter04NormalizedIdealLattice K (a : Chapter04FractionalIdeal K) ∧
-          ZLattice.covolume (E := chapter04MinkowskiSpace K) L = 1 := by
+          chapter04SelfDualLatticeCovolume K L = 1 := by
   sorry
 
 theorem chapter04_normalized_lattice_dual_eq_coordinate_conjugate_dual_ideal
@@ -130,17 +130,50 @@ theorem chapter04_unit_fundamental_domain_normalized
     D.measure D.carrier = 1 := by
   exact D.normalized_volume
 
+/- The source leaves the positive orbit constant dependent on the chosen Haar
+   normalization.  Record its existence for the selected normalized domain,
+   then choose it for the continuation. -/
+theorem chapter04_theta_mellin_constant_exists
+    (K : Type*) [Field K] [NumberField K]
+    (D : Chapter04UnitFundamentalDomain K) :
+    ∃ c : ℝ, 0 < c ∧
+      ∀ (a : Chapter04NonzeroFractionalIdeal K) {s : ℂ}, 1 < s.re →
+        chapter04ThetaMellinIntegral K D
+            (a : Chapter04FractionalIdeal K) s =
+          (c : ℂ) *
+            (chapter04AbsoluteDiscriminant K : ℂ) ^ (s / 2) *
+              chapter04ArchimedeanFactor K s *
+                chapter04PartialZeta K (chapter04InverseIdealClass K a) s := by
+  sorry
+
+noncomputable def chapter04MellinConstant
+    (K : Type*) [Field K] [NumberField K]
+    (D : Chapter04UnitFundamentalDomain K) : ℝ :=
+  Classical.choose (chapter04_theta_mellin_constant_exists K D)
+
+theorem chapter04_mellin_constant_pos
+    (K : Type*) [Field K] [NumberField K]
+    (D : Chapter04UnitFundamentalDomain K) :
+    0 < chapter04MellinConstant K D := by
+  exact (Classical.choose_spec (chapter04_theta_mellin_constant_exists K D)).1
+
+theorem chapter04_mellin_constant_ne_zero
+    (K : Type*) [Field K] [NumberField K]
+    (D : Chapter04UnitFundamentalDomain K) :
+    chapter04MellinConstant K D ≠ 0 :=
+  (chapter04_mellin_constant_pos K D).ne'
+
 theorem chapter04_theta_mellin_eq_completed_partial_zeta
     (K : Type*) [Field K] [NumberField K]
     (D : Chapter04UnitFundamentalDomain K)
     (a : Chapter04NonzeroFractionalIdeal K)
     {s : ℂ} (hs : 1 < s.re) :
     chapter04ThetaMellinIntegral K D (a : Chapter04FractionalIdeal K) s =
-      (chapter04MellinConstant K : ℂ) *
+      (chapter04MellinConstant K D : ℂ) *
         (chapter04AbsoluteDiscriminant K : ℂ) ^ (s / 2) *
           chapter04ArchimedeanFactor K s *
             chapter04PartialZeta K (chapter04InverseIdealClass K a) s := by
-  sorry
+  exact (Classical.choose_spec (chapter04_theta_mellin_constant_exists K D)).2 a hs
 
 end
 

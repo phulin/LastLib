@@ -1,11 +1,24 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Section02InfiniteDigits
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Section01CompatibleFiniteApproximations
 import Mathlib.Analysis.SpecificLimits.Normed
+import Mathlib.Data.ZMod.Basic
+import Mathlib.Data.ZMod.QuotientRing
+import Mathlib.NumberTheory.Padics.PadicIntegers
+import Mathlib.NumberTheory.Padics.PadicNorm
+import Mathlib.NumberTheory.Padics.ProperSpace
+import Mathlib.NumberTheory.Padics.RingHoms
+import Mathlib.SetTheory.Cardinal.Continuum
+import Mathlib.Topology.MetricSpace.Perfect
+import Mathlib.Topology.Algebra.Ring.Compact
+import Mathlib.Tactic.FunProp
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Order
+import Mathlib.Tactic.Ring
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter08
 
 open Polynomial IsLocalRing
 open Filter
-open scoped BigOperators LaurentSeries Topology PowerSeries.WithPiTopology
+open scoped BigOperators Topology
 
 noncomputable section
 

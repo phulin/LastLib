@@ -1,3 +1,4 @@
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11.Dependencies
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11.Section04UniversalDivisorOnASmoothCurve
 
 namespace LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11
@@ -26,11 +27,19 @@ theorem symmetricPower_curve_base_change_iso {S : Scheme.{u}} (C : RelativeSchem
 theorem universalDivisor_proves_all_base_change {S : Scheme.{u}} (C : RelativeScheme S)
     (d : ℕ) [Chapter11SmoothQuasiProjectiveCurve C] :
     ∀ T : RelativeScheme S,
-      Nonempty (RelativeScheme.Iso
+      ∃ e : RelativeScheme.Iso
           (RelativeScheme.baseChange (symmetricPower C d) T)
-          (symmetricPower (RelativeScheme.baseChange C T) d)) := by
+          (symmetricPower (RelativeScheme.baseChange C T) d),
+        RelativeScheme.baseChangeHom (symmetricPowerMap C d) T ≫ e.hom =
+          relativePowerBaseChangeComparison C T d ≫
+            symmetricPowerMap (RelativeScheme.baseChange C T) d := by
   intro T
-  exact ⟨(symmetricPower_curve_base_change_iso C d T).choose⟩
+  exact symmetricPower_curve_base_change_iso C d T
+
+theorem symmetricPower_curve_smooth {S : Scheme.{u}} (C : RelativeScheme S) (d : ℕ)
+    [Chapter11SmoothQuasiProjectiveCurve C] :
+    SmoothOfRelativeDimension d (symmetricPower C d).structuralMap := by
+  sorry
 
 noncomputable def symmetricPowerAddition {S : Scheme.{u}} (C : RelativeScheme S)
     (d e : ℕ) [Chapter11SmoothQuasiProjectiveCurve C] :
@@ -41,13 +50,20 @@ noncomputable def symmetricPowerAddition {S : Scheme.{u}} (C : RelativeScheme S)
   let De := pullbackUniversalDivisor C P.carrier e P.snd
   let D : RelativeEffectiveCartierDivisor C P.carrier (d + e) :=
     { divisor := Dd.divisor.add De.divisor
-      finite_flat_rank := by sorry }
+      finite_flat_rank := relativeEffectiveCartierDivisor_add_rank d e Dd De }
   exact divisorToSymmetricPoint C P.carrier (d + e) D
 
 theorem symmetricPowerAddition_from_divisor_sum {S : Scheme.{u}}
     (C : RelativeScheme S) (d e : ℕ) [Chapter11SmoothQuasiProjectiveCurve C] :
     ∃ D : RelativeEffectiveCartierDivisor C
         (relativeProduct (symmetricPower C d) (symmetricPower C e)).carrier (d + e),
+      D.divisor =
+          (pullbackUniversalDivisor C
+            (relativeProduct (symmetricPower C d) (symmetricPower C e)).carrier d
+            (relativeProduct (symmetricPower C d) (symmetricPower C e)).fst).divisor.add
+            (pullbackUniversalDivisor C
+              (relativeProduct (symmetricPower C d) (symmetricPower C e)).carrier e
+              (relativeProduct (symmetricPower C d) (symmetricPower C e)).snd).divisor ∧
       Chapter11FiniteLocallyFreeOfRank
         (D.divisor.inclusion ≫
           pullback.snd C.structuralMap
@@ -62,13 +78,41 @@ noncomputable def relativeProduct_swap_iso {S : Scheme.{u}} (X Y : RelativeSchem
 noncomputable def symmetricPower_index_swap_iso {S : Scheme.{u}} (C : RelativeScheme S) (d e : ℕ)
     [Chapter11SmoothQuasiProjectiveCurve C] :
     RelativeScheme.Iso (symmetricPower C (d + e)) (symmetricPower C (e + d)) := by
-  sorry
+  rw [Nat.add_comm]
+  exact RelativeScheme.Iso.refl _
+
+noncomputable def symmetricPower_index_assoc_iso {S : Scheme.{u}} (C : RelativeScheme S)
+    (d e f : ℕ) [Chapter11SmoothQuasiProjectiveCurve C] :
+    RelativeScheme.Iso (symmetricPower C (d + (e + f)))
+      (symmetricPower C ((d + e) + f)) := by
+  rw [Nat.add_assoc]
+  exact RelativeScheme.Iso.refl _
+
+noncomputable def symmetricPower_zero_add_iso {S : Scheme.{u}} (C : RelativeScheme S)
+    (d : ℕ) [Chapter11SmoothQuasiProjectiveCurve C] :
+    RelativeScheme.Iso (symmetricPower C (0 + d)) (symmetricPower C d) := by
+  rw [Nat.zero_add]
+  exact RelativeScheme.Iso.refl _
+
+noncomputable def symmetricPower_add_zero_iso {S : Scheme.{u}} (C : RelativeScheme S)
+    (d : ℕ) [Chapter11SmoothQuasiProjectiveCurve C] :
+    RelativeScheme.Iso (symmetricPower C (d + 0)) (symmetricPower C d) := by
+  rw [Nat.add_zero]
+  exact RelativeScheme.Iso.refl _
 
 def Chapter11AdditionCommutativityStatement {S : Scheme.{u}} (C : RelativeScheme S)
     (d e : ℕ) [Chapter11SmoothQuasiProjectiveCurve C] : Prop :=
   ∃ eSwap : RelativeScheme.Iso
       (relativeProduct (symmetricPower C d) (symmetricPower C e)).carrier
       (relativeProduct (symmetricPower C e) (symmetricPower C d)).carrier,
+    eSwap.hom ≫ (relativeProduct (symmetricPower C e)
+      (symmetricPower C d)).fst =
+        (relativeProduct (symmetricPower C d)
+          (symmetricPower C e)).snd ∧
+    eSwap.hom ≫ (relativeProduct (symmetricPower C e)
+      (symmetricPower C d)).snd =
+        (relativeProduct (symmetricPower C d)
+          (symmetricPower C e)).fst ∧
     eSwap.hom ≫ symmetricPowerAddition C e d =
       symmetricPowerAddition C d e ≫ (symmetricPower_index_swap_iso C d e).hom
 
@@ -82,14 +126,14 @@ def Chapter11AdditionLeftUnitStatement {S : Scheme.{u}} (C : RelativeScheme S)
   ∃ e : RelativeScheme.Iso
       (relativeProduct (symmetricPower C 0) (symmetricPower C d)).carrier
       (symmetricPower C d),
-    HEq e.hom (symmetricPowerAddition C 0 d)
+    e.hom = symmetricPowerAddition C 0 d ≫ (symmetricPower_zero_add_iso C d).hom
 
 def Chapter11AdditionRightUnitStatement {S : Scheme.{u}} (C : RelativeScheme S)
     (d : ℕ) [Chapter11SmoothQuasiProjectiveCurve C] : Prop :=
   ∃ e : RelativeScheme.Iso
       (relativeProduct (symmetricPower C d) (symmetricPower C 0)).carrier
       (symmetricPower C d),
-    HEq e.hom (symmetricPowerAddition C d 0)
+    e.hom = symmetricPowerAddition C d 0 ≫ (symmetricPower_add_zero_iso C d).hom
 
 theorem symmetricPowerAddition_left_unit {S : Scheme.{u}} (C : RelativeScheme S)
     (d : ℕ) [Chapter11SmoothQuasiProjectiveCurve C] :
@@ -131,8 +175,28 @@ def Chapter11AdditionAssociativityStatement {S : Scheme.{u}} (C : RelativeScheme
         (symmetricPower C f)).carrier
       (relativeProduct (symmetricPower C d)
         (relativeProduct (symmetricPower C e) (symmetricPower C f)).carrier).carrier,
-    HEq (eAssoc.hom ≫ rightAssociatedAddition C d e f)
-      (leftAssociatedAddition C d e f)
+    eAssoc.hom ≫
+        (relativeProduct (symmetricPower C d)
+          (relativeProduct (symmetricPower C e) (symmetricPower C f)).carrier).fst =
+      (relativeProduct (relativeProduct (symmetricPower C d) (symmetricPower C e)).carrier
+        (symmetricPower C f)).fst ≫
+        (relativeProduct (symmetricPower C d) (symmetricPower C e)).fst ∧
+    eAssoc.hom ≫
+        (relativeProduct (symmetricPower C d)
+          (relativeProduct (symmetricPower C e) (symmetricPower C f)).carrier).snd ≫
+        (relativeProduct (symmetricPower C e) (symmetricPower C f)).fst =
+      (relativeProduct (relativeProduct (symmetricPower C d) (symmetricPower C e)).carrier
+        (symmetricPower C f)).fst ≫
+        (relativeProduct (symmetricPower C d) (symmetricPower C e)).snd ∧
+    eAssoc.hom ≫
+        (relativeProduct (symmetricPower C d)
+          (relativeProduct (symmetricPower C e) (symmetricPower C f)).carrier).snd ≫
+        (relativeProduct (symmetricPower C e) (symmetricPower C f)).snd =
+      (relativeProduct (relativeProduct (symmetricPower C d) (symmetricPower C e)).carrier
+        (symmetricPower C f)).snd ∧
+    eAssoc.hom ≫ rightAssociatedAddition C d e f ≫
+        (symmetricPower_index_assoc_iso C d e f).hom =
+      leftAssociatedAddition C d e f
 
 theorem symmetricPowerAddition_associative {S : Scheme.{u}} (C : RelativeScheme S)
     (d e f : ℕ) [Chapter11SmoothQuasiProjectiveCurve C] :
@@ -153,6 +217,11 @@ noncomputable def relativeProductBaseChangeComparison {S : Scheme.{u}}
     (RelativeScheme.baseChangeHom (relativeProduct (symmetricPower C d)
       (symmetricPower C e)).snd T ≫ (symmetricPower_curve_base_change_iso C e T).choose.hom)
 
+theorem relativeProductBaseChangeComparison_isIso {S : Scheme.{u}}
+    (C T : RelativeScheme S) (d e : ℕ) [Chapter11SmoothQuasiProjectiveCurve C] :
+    IsIso (relativeProductBaseChangeComparison C T d e) := by
+  sorry
+
 theorem symmetricPowerAddition_base_change {S : Scheme.{u}} (C : RelativeScheme S)
     (d e : ℕ) [Chapter11SmoothQuasiProjectiveCurve C] (T : RelativeScheme S) :
     RelativeScheme.baseChangeHom (symmetricPowerAddition C d e) T ≫
@@ -165,10 +234,64 @@ structure Chapter11GradedCommutativeMonoidScheme {S : Scheme.{u}} where
   component : ℕ → RelativeScheme S
   zero : RelativeScheme.Iso (component 0) (RelativeScheme.base S)
   add : ∀ (d e : ℕ), (relativeProduct (component d) (component e)).carrier ⟶ component (d + e)
-  leftUnit : ∀ (_d : ℕ), Prop
-  rightUnit : ∀ (_d : ℕ), Prop
-  commutative : ∀ (_d _e : ℕ), Prop
-  associative : ∀ (_d _e _f : ℕ), Prop
+  zeroAdd : ∀ d : ℕ, RelativeScheme.Iso (component (0 + d)) (component d)
+  addZero : ∀ d : ℕ, RelativeScheme.Iso (component (d + 0)) (component d)
+  addAssoc : ∀ d e f : ℕ,
+    RelativeScheme.Iso (component (d + (e + f))) (component ((d + e) + f))
+  addSwap : ∀ d e : ℕ,
+    RelativeScheme.Iso (component (d + e)) (component (e + d))
+  leftAssociated : ∀ d e f : ℕ,
+    (relativeProduct (relativeProduct (component d) (component e)).carrier
+      (component f)).carrier ⟶ component ((d + e) + f)
+  rightAssociated : ∀ d e f : ℕ,
+    (relativeProduct (component d)
+      (relativeProduct (component e) (component f)).carrier).carrier ⟶
+      component (d + (e + f))
+  leftUnit : ∀ d : ℕ,
+    ∃ e : RelativeScheme.Iso
+        (relativeProduct (component 0) (component d)).carrier (component d),
+      e.hom = add 0 d ≫ (zeroAdd d).hom
+  rightUnit : ∀ d : ℕ,
+    ∃ e : RelativeScheme.Iso
+        (relativeProduct (component d) (component 0)).carrier (component d),
+      e.hom = add d 0 ≫ (addZero d).hom
+  commutative : ∀ d e : ℕ,
+    ∃ eSwap : RelativeScheme.Iso
+        (relativeProduct (component d) (component e)).carrier
+        (relativeProduct (component e) (component d)).carrier,
+      eSwap.hom ≫ (relativeProduct (component e)
+        (component d)).fst = (relativeProduct (component d)
+          (component e)).snd ∧
+      eSwap.hom ≫ (relativeProduct (component e)
+        (component d)).snd = (relativeProduct (component d)
+          (component e)).fst ∧
+      eSwap.hom ≫ add e d = add d e ≫ (addSwap d e).hom
+  associative : ∀ d e f : ℕ,
+    ∃ eAssoc : RelativeScheme.Iso
+        (relativeProduct (relativeProduct (component d) (component e)).carrier
+          (component f)).carrier
+        (relativeProduct (component d)
+          (relativeProduct (component e) (component f)).carrier).carrier,
+      eAssoc.hom ≫
+          (relativeProduct (component d)
+            (relativeProduct (component e) (component f)).carrier).fst =
+        (relativeProduct (relativeProduct (component d) (component e)).carrier
+          (component f)).fst ≫ (relativeProduct (component d) (component e)).fst ∧
+      eAssoc.hom ≫
+          (relativeProduct (component d)
+            (relativeProduct (component e) (component f)).carrier).snd ≫
+          (relativeProduct (component e) (component f)).fst =
+        (relativeProduct (relativeProduct (component d) (component e)).carrier
+          (component f)).fst ≫ (relativeProduct (component d) (component e)).snd ∧
+      eAssoc.hom ≫
+          (relativeProduct (component d)
+            (relativeProduct (component e) (component f)).carrier).snd ≫
+          (relativeProduct (component e) (component f)).snd =
+        (relativeProduct (relativeProduct (component d) (component e)).carrier
+          (component f)).snd ∧
+      eAssoc.hom ≫ rightAssociated d e f ≫
+          (addAssoc d e f).hom =
+        leftAssociated d e f
 
 noncomputable def symmetricPowerGradedCommutativeMonoid {S : Scheme.{u}}
     (C : RelativeScheme S) [Chapter11SmoothQuasiProjectiveCurve C] :
@@ -176,10 +299,19 @@ noncomputable def symmetricPowerGradedCommutativeMonoid {S : Scheme.{u}}
   component := fun d => symmetricPower C d
   zero := symmetricPower_zero_iso C
   add := fun d e => symmetricPowerAddition C d e
-  leftUnit := fun d => Chapter11AdditionLeftUnitStatement C d
-  rightUnit := fun d => Chapter11AdditionRightUnitStatement C d
-  commutative := fun d e => Chapter11AdditionCommutativityStatement C d e
-  associative := fun d e f => Chapter11AdditionAssociativityStatement C d e f
+  zeroAdd := fun d => symmetricPower_zero_add_iso C d
+  addZero := fun d => symmetricPower_add_zero_iso C d
+  addAssoc := fun d e f => symmetricPower_index_assoc_iso C d e f
+  addSwap := fun d e => symmetricPower_index_swap_iso C d e
+  leftAssociated := fun d e f => leftAssociatedAddition C d e f
+  rightAssociated := fun d e f => rightAssociatedAddition C d e f
+  leftUnit := fun d => by
+    simpa [Chapter11AdditionLeftUnitStatement] using symmetricPowerAddition_left_unit C d
+  rightUnit := fun d => by
+    simpa [Chapter11AdditionRightUnitStatement] using symmetricPowerAddition_right_unit C d
+  commutative := fun d e => by
+    simpa [Chapter11AdditionCommutativityStatement] using symmetricPowerAddition_commutative C d e
+  associative := by sorry
 
 /- SOURCE_ISSUE: §11.5 says that the graded union is not finite type without
    spelling out the quasi-compactness distinction.  The formal statement uses
@@ -194,73 +326,22 @@ noncomputable def symmetricPowerDisjointUnionMap {S : Scheme.{u}}
     symmetricPowerDisjointUnion C ⟶ S :=
   Sigma.desc (fun d => (symmetricPower C d).structuralMap)
 
+theorem symmetricPower_disjoint_union_locally_of_finite_type {S : Scheme.{u}}
+    (C : RelativeScheme S) [Chapter11SmoothQuasiProjectiveCurve C] :
+    LocallyOfFiniteType (symmetricPowerDisjointUnionMap C) := by
+  sorry
+
 theorem symmetricPower_disjoint_union_not_finite_type {S : Scheme.{u}}
     (C : RelativeScheme S) [Chapter11SmoothQuasiProjectiveCurve C]
     (hC : Nonempty C.carrier) :
     ¬ Chapter11FiniteType (symmetricPowerDisjointUnionMap C) := by
   sorry
 
-/- SOURCE_ISSUE: the source says that for a nonsmooth curve the symmetric
-   power "represents cycles" and contrasts it with finite-flat subschemes,
-   but it does not define the relative cycle functor or state hypotheses under
-   which that functor is represented.  The local cycle record below is an
-   explicit provisional interface rather than a claim that it is canonical.
--/
-/-!
-For a nonsmooth curve the symmetric power remains the cycle space, while the
-Hilbert functor remembers embedded finite-flat structures.
--/
-
-structure RelativeFiniteFlatSubscheme {S : Scheme.{u}}
-    (X T : RelativeScheme S) (d : ℕ) where
-  carrier : Scheme.{u}
-  mapToBase : carrier ⟶ T.carrier
-  mapToX : carrier ⟶ pullback X.structuralMap T.structuralMap
-  over_base : mapToX ≫ pullback.snd X.structuralMap T.structuralMap = mapToBase
-  closed : IsClosedImmersion mapToX
-  finite_flat : Chapter11FiniteLocallyFreeOfRank mapToBase d
-
-structure Chapter11EffectiveDegreeDZeroCycle (X : Type u) (d : ℕ) where
-  cycle : X →₀ ℕ
-  degree : cycle.sum (fun _ n => n) = d
-
-def Chapter11CycleOfFiniteFlatSubscheme {S : Scheme.{u}}
-    {X T : RelativeScheme S} {d : ℕ}
-    (Z : RelativeFiniteFlatSubscheme X T d) :
-    Chapter11EffectiveDegreeDZeroCycle
-      (pullback (C := Scheme) X.structuralMap T.structuralMap) d := by
-  sorry
-
-def Chapter11SymmetricPowerRepresentsCycles {S : Scheme.{u}}
-    (C : RelativeScheme S) (d : ℕ) [Chapter11QuasiProjectiveOver C] : Prop :=
-    ∀ T : RelativeScheme S,
-    Nonempty ((T ⟶ symmetricPower C d) ≃
-      Chapter11EffectiveDegreeDZeroCycle
-        (pullback (C := Scheme) C.structuralMap T.structuralMap) d)
-
-theorem nonsmooth_symmetric_power_represents_cycles {S : Scheme.{u}}
-    (C : RelativeScheme S) (d : ℕ) [Chapter11QuasiProjectiveOver C]
-    (hC : ¬ SmoothOfRelativeDimension 1 C.structuralMap) :
-    Chapter11SymmetricPowerRepresentsCycles C d := by
-  sorry
-
-def Chapter11CycleForgetfulMap {S : Scheme.{u}} {C T : RelativeScheme S} (d : ℕ)
-    (Z : RelativeFiniteFlatSubscheme C T d) :
-    Chapter11EffectiveDegreeDZeroCycle
-      (pullback (C := Scheme) C.structuralMap T.structuralMap) d :=
-  Chapter11CycleOfFiniteFlatSubscheme Z
-
-def Chapter11SameCycleDifferentStructures {S : Scheme.{u}}
-    (C T : RelativeScheme S) (d : ℕ) : Prop :=
-  ∃ (Z₁ Z₂ : RelativeFiniteFlatSubscheme C T d),
-    Z₁ ≠ Z₂ ∧ Chapter11CycleForgetfulMap d Z₁ = Chapter11CycleForgetfulMap d Z₂
-
-theorem hilbert_retains_embedded_structure {S : Scheme.{u}}
-    (C T : RelativeScheme S) (d : ℕ)
-    (h : Chapter11SameCycleDifferentStructures C T d) :
-    ∃ Z₁ Z₂ : RelativeFiniteFlatSubscheme C T d,
-      Z₁ ≠ Z₂ ∧ Chapter11CycleForgetfulMap d Z₁ = Chapter11CycleForgetfulMap d Z₂ :=
-  h
+/- For a nonsmooth curve the symmetric power still exists as a categorical
+   quotient, but this chapter deliberately does not introduce a relative
+   cycle functor.  In particular, no identification with finite-flat
+   subschemes is asserted here: the Hilbert functor retains embedded
+   structure, while the cycle comparison requires a separate construction. -/
 
 end
 

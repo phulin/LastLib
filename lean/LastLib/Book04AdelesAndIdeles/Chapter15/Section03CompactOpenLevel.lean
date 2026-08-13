@@ -1,4 +1,4 @@
-import LastLib.Book04AdelesAndIdeles.Chapter15.Section02DiagonalPointsAndDeterminants
+import LastLib.Book04AdelesAndIdeles.Chapter15.Section01MatricesOverTheAdeles
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter15
 
@@ -12,27 +12,9 @@ open scoped RestrictedProduct
 variable {R K : Type*} [CommRing R] [IsDedekindDomain R] [Field K]
   [Algebra R K] [IsFractionRing R K]
 
-/-- A finite adelic matrix level together with its local factor description. -/
-structure Chapter15FiniteMatrixLevel (n : ℕ) where
-  localSubgroup : ∀ v : Chapter15FinitePlace R,
-    Subgroup (Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion K))
-  subgroup : Subgroup (Chapter15FiniteMatrixGroup n R K)
-  mem_iff : ∀ g, g ∈ subgroup ↔
-    ∀ v : Chapter15FinitePlace R, g v ∈ localSubgroup v
-  isCompact : IsCompact (subgroup : Set (Chapter15FiniteMatrixGroup n R K))
-  isOpen : IsOpen (subgroup : Set (Chapter15FiniteMatrixGroup n R K))
-  standard_outside_finite : ∃ S : Finset (Chapter15FinitePlace R),
-    ∀ v ∉ S, localSubgroup v = chapter15FiniteMatrixIntegralSubgroup n v
-
-theorem chapter15FiniteMatrixLevel_mem_iff
-    (n : ℕ) (L : Chapter15FiniteMatrixLevel (R := R) (K := K) n)
-    (g : Chapter15FiniteMatrixGroup n R K) :
-    g ∈ L.subgroup ↔ ∀ v, g v ∈ L.localSubgroup v :=
-  L.mem_iff g
-
 /-- The standard level as a level datum, not just its underlying subgroup. -/
 def chapter15StandardFiniteMatrixLevelData (n : ℕ) [NumberField K] :
-    Chapter15FiniteMatrixLevel (R := R) (K := K) n where
+    Chapter15FiniteMatrixLevel (R := 𝓞 K) (K := K) n where
   localSubgroup := fun v => chapter15FiniteMatrixIntegralSubgroup n v
   subgroup := chapter15StandardFiniteMatrixLevel n
   mem_iff := fun g => Iff.rfl
@@ -156,44 +138,40 @@ theorem chapter15_local_field_unit_congruence_subgroup_mem_iff_entries
 /-! ### The finite targets and compact-open consequences -/
 
 theorem chapter15_local_matrix_reduction_target_finite
-    (n : ℕ) (v : Chapter15FinitePlace R) (m : ℕ)
-    [Finite ((v.adicCompletionIntegers K) ⧸
-      (IsLocalRing.maximalIdeal (v.adicCompletionIntegers K)) ^ m)] :
+    (n : ℕ) {L : Type*} [Field L] [NumberField L]
+    (v : Chapter15FinitePlace (𝓞 L)) (m : ℕ) :
     Finite (Matrix.GeneralLinearGroup (Fin n)
-      ((v.adicCompletionIntegers K) ⧸
-        (IsLocalRing.maximalIdeal (v.adicCompletionIntegers K)) ^ m)) := by
-  infer_instance
+      ((v.adicCompletionIntegers L) ⧸
+        (IsLocalRing.maximalIdeal (v.adicCompletionIntegers L)) ^ m)) := by
+  sorry
 
 theorem chapter15_local_unit_reduction_target_finite
-    (v : Chapter15FinitePlace R) (m : ℕ)
-    [Finite ((v.adicCompletionIntegers K) ⧸
-      (IsLocalRing.maximalIdeal (v.adicCompletionIntegers K)) ^ m)] :
-    Finite (((v.adicCompletionIntegers K) ⧸
-      (IsLocalRing.maximalIdeal (v.adicCompletionIntegers K)) ^ m)ˣ) := by
-  infer_instance
+    {L : Type*} [Field L] [NumberField L]
+    (v : Chapter15FinitePlace (𝓞 L)) (m : ℕ) :
+    Finite (((v.adicCompletionIntegers L) ⧸
+      (IsLocalRing.maximalIdeal (v.adicCompletionIntegers L)) ^ m)ˣ) := by
+  sorry
 
 theorem chapter15_local_matrix_congruence_is_compact_open
-    (n : ℕ) [NumberField K] (v : Chapter15FinitePlace R) (m : ℕ)
-    [Finite ((v.adicCompletionIntegers K) ⧸
-      (IsLocalRing.maximalIdeal (v.adicCompletionIntegers K)) ^ m)] :
+    (n : ℕ) {L : Type*} [Field L] [NumberField L]
+    (v : Chapter15FinitePlace (𝓞 L)) (m : ℕ) :
     IsCompact
-        (chapter15LocalMatrixCongruenceSubgroup (R := R) (K := K) n v m :
-          Set (Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion K))) ∧
+        (chapter15LocalMatrixCongruenceSubgroup (R := 𝓞 L) (K := L) n v m :
+          Set (Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion L))) ∧
       IsOpen
-        (chapter15LocalMatrixCongruenceSubgroup (R := R) (K := K) n v m :
-          Set (Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion K))) := by
+        (chapter15LocalMatrixCongruenceSubgroup (R := 𝓞 L) (K := L) n v m :
+          Set (Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion L))) := by
   sorry
 
 theorem chapter15_local_field_unit_congruence_is_compact_open
-    [NumberField K] (v : Chapter15FinitePlace R) (m : ℕ)
-    [Finite ((v.adicCompletionIntegers K) ⧸
-      (IsLocalRing.maximalIdeal (v.adicCompletionIntegers K)) ^ m)] :
+    {L : Type*} [Field L] [NumberField L]
+    (v : Chapter15FinitePlace (𝓞 L)) (m : ℕ) :
     IsCompact
-        (chapter15LocalFieldUnitCongruenceSubgroup (R := R) (K := K) v m :
-          Set ((v.adicCompletion K)ˣ)) ∧
+        (chapter15LocalFieldUnitCongruenceSubgroup (R := 𝓞 L) (K := L) v m :
+          Set ((v.adicCompletion L)ˣ)) ∧
       IsOpen
-        (chapter15LocalFieldUnitCongruenceSubgroup (R := R) (K := K) v m :
-          Set ((v.adicCompletion K)ˣ)) := by
+        (chapter15LocalFieldUnitCongruenceSubgroup (R := 𝓞 L) (K := L) v m :
+          Set ((v.adicCompletion L)ˣ)) := by
   sorry
 
 /-! ### A principal congruence level at finitely many places -/
@@ -234,10 +212,11 @@ theorem chapter15_principal_congruence_local_unit_level_outside_support
   simp [chapter15PrincipalCongruenceLocalUnitLevel, hv]
 
 def chapter15PrincipalCongruenceMatrixLevelData
-    (n : ℕ) [NumberField K] (S : Finset (Chapter15FinitePlace R))
-    (m : Chapter15FinitePlace R → ℕ) :
-    Chapter15FiniteMatrixLevel (R := R) (K := K) n where
-  localSubgroup := chapter15PrincipalCongruenceLocalMatrixLevel n S m
+    (n : ℕ) [NumberField K] (S : Finset (Chapter15FinitePlace (𝓞 K)))
+    (m : Chapter15FinitePlace (𝓞 K) → ℕ) :
+    Chapter15FiniteMatrixLevel (R := 𝓞 K) (K := K) n where
+  localSubgroup := chapter15PrincipalCongruenceLocalMatrixLevel
+    (R := 𝓞 K) (K := K) n S m
   subgroup := by
     sorry
   mem_iff := by
@@ -276,13 +255,13 @@ def chapter15LocalUpperTriangularMatrixLevel
       (chapter15LocalMatrixReduction (R := R) (K := K) n v 1))
 
 def chapter15UpperTriangularFiniteMatrixLevelData
-    (n : ℕ) [NumberField K] (S : Finset (Chapter15FinitePlace R)) :
-    Chapter15FiniteMatrixLevel (R := R) (K := K) n where
+    (n : ℕ) [NumberField K] (S : Finset (Chapter15FinitePlace (𝓞 K))) :
+    Chapter15FiniteMatrixLevel (R := 𝓞 K) (K := K) n where
   localSubgroup := fun v => by
     classical
     by_cases hv : v ∈ S
-    · exact chapter15LocalUpperTriangularMatrixLevel n v
-    · exact chapter15FiniteMatrixIntegralSubgroup n v
+    · exact chapter15LocalUpperTriangularMatrixLevel (R := 𝓞 K) (K := K) n v
+    · exact chapter15FiniteMatrixIntegralSubgroup (R := 𝓞 K) (K := K) n v
   subgroup := by
     sorry
   mem_iff := by
@@ -304,9 +283,13 @@ def chapter15LevelRefines {n : ℕ}
 
 theorem chapter15_level_refines_iff_forgets_local_information
     {n : ℕ} (L₁ L₂ : Chapter15FiniteMatrixLevel (R := R) (K := K) n)
-    (h : chapter15LevelRefines L₁ L₂) :
-    ∀ g, g ∈ L₁.subgroup → g ∈ L₂.subgroup := by
-  exact h
+    : chapter15LevelRefines L₁ L₂ ↔
+      ∀ g, g ∈ L₁.subgroup → g ∈ L₂.subgroup := by
+  constructor
+  · intro h g hg
+    exact h hg
+  · intro h g hg
+    exact h g hg
 
 /- The right quotient at a larger level is therefore a coarser quotient; the
 actual quotient map is constructed after the double-coset type in §15.4. -/

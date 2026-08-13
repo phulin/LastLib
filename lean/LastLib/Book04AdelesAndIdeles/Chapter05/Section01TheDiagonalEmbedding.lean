@@ -7,151 +7,149 @@ noncomputable section
 open Filter
 open scoped Topology
 
-universe u v w z
-
 /-! ## 5.1. The diagonal embedding -/
 
-variable {K : Type u} [Field K] [Algebra ℚ K] [FiniteDimensional ℚ K]
-variable {V : Type v} {Kv : V → Type w}
-variable [∀ v, Field (Kv v)] [∀ v, TopologicalSpace (Kv v)]
-variable {A_f : Type z} {A : Type (max u z)}
-variable [CommRing A_f] [CommRing A]
-variable [TopologicalSpace A_f] [TopologicalSpace A]
-variable [IsTopologicalAddGroup A]
-variable {P : Chapter05PlaceSystem K V Kv}
+def chapter05FiniteLocalUnit
+    (K : Type*) [Field K] [NumberField K]
+    (v : Chapter05FinitePlace K) (x : Chapter05FiniteLocalField K v) : Prop :=
+  Valued.v x = 1
 
-variable (M : Chapter05AdeleModel P A_f A)
+/-! The diagonal maps are the canonical algebra maps into Mathlib's finite and
+full adele rings. -/
 
-/-- The diagonal ring homomorphism `K → A_K`. -/
-def chapter05Diagonal : K →+* A :=
-  M.fullDiagonal
+theorem chapter05Diagonal_apply
+    (K : Type*) [Field K] [NumberField K] (a : K) :
+    chapter05Diagonal K a = algebraMap K (Chapter05AdeleRing K) a := by
+  sorry
 
-/-- The finite diagonal ring homomorphism `K → A_{K,f}`. -/
-def chapter05FiniteDiagonal : K →+* A_f :=
-  M.finiteDiagonal
+theorem chapter05FiniteDiagonal_apply
+    (K : Type*) [Field K] [NumberField K] (a : K) :
+    chapter05FiniteDiagonal K a =
+      IsDedekindDomain.FiniteAdeleRing.algebraMap (𝓞 K) K a := by
+  sorry
 
-@[simp]
-theorem chapter05Diagonal_apply (a : K) :
-    chapter05Diagonal M a = M.fullDiagonal a :=
-  rfl
+theorem chapter05_diagonal_injective
+    (K : Type*) [Field K] [NumberField K] :
+    Function.Injective (chapter05Diagonal K) := by
+  sorry
 
-@[simp]
-theorem chapter05FiniteDiagonal_apply (a : K) :
-    chapter05FiniteDiagonal M a = M.finiteDiagonal a :=
-  rfl
+theorem chapter05_finite_diagonal_injective
+    (K : Type*) [Field K] [NumberField K] :
+    Function.Injective (chapter05FiniteDiagonal K) := by
+  sorry
 
-theorem chapter05_diagonal_injective :
-    Function.Injective (chapter05Diagonal M) := by
-  exact M.fullDiagonal_injective
-
-theorem chapter05_finite_diagonal_injective :
-    Function.Injective (chapter05FiniteDiagonal M) := by
-  exact M.finiteDiagonal_injective
-
-theorem chapter05_completion_map_injective (v : V) :
-    Function.Injective (P.completionMap v) := by
-  exact P.completionMap_injective v
+theorem chapter05_completion_map_injective
+    (K : Type*) [Field K] [NumberField K]
+    (v : Chapter05FinitePlace K) :
+    Function.Injective (NumberField.FinitePlace.embedding v) := by
+  sorry
 
 theorem chapter05_diagonal_components
-    (a : K) :
-    M.decomposition (chapter05Diagonal M a) =
-      (chapter05ArchimedeanDiagonal P a, chapter05FiniteDiagonal M a) := by
-  exact M.decomposition_diagonal a
+    (K : Type*) [Field K] [NumberField K] (a : K) :
+    chapter05Diagonal K a =
+      (chapter05InfiniteDiagonal K a, chapter05FiniteDiagonal K a) := by
+  sorry
 
-/- The following is the precise form of “at almost every finite place a is a
-   unit or zero”: zero is allowed at every place, while the nonzero components
-   are local units off a finite set. -/
 theorem chapter05_diagonal_is_integral_at_almost_all_finite_places
-    (a : K) :
-    ({v | v ∈ P.finite ∧
-      P.completionMap v a ∉ P.integral v} : Set V).Finite := by
-  exact P.global_integrality a
+    (K : Type*) [Field K] [NumberField K] (a : K) :
+    ({v : Chapter05FinitePlace K |
+      chapter05FiniteDiagonal K a v ∉
+        (Chapter05FiniteLocalIntegerRing K v :
+          Set (Chapter05FiniteLocalField K v))}).Finite := by
+  sorry
 
 theorem chapter05_diagonal_is_unit_or_zero_at_almost_all_finite_places
-    (a : K) :
-    ({v | v ∈ P.finite ∧ P.completionMap v a ≠ 0 ∧
-      P.completionMap v a ∉ P.unit v} : Set V).Finite := by
-  exact P.global_unit_or_zero_tail a
+    (K : Type*) [Field K] [NumberField K] (a : K) :
+    ({v : Chapter05FinitePlace K |
+      chapter05FiniteDiagonal K a v ≠ 0 ∧
+        ¬ chapter05FiniteLocalUnit K v (chapter05FiniteDiagonal K a v)} :
+      Set (Chapter05FinitePlace K)).Finite := by
+  sorry
 
 theorem chapter05_unit_or_zero_component_is_integral
-    (a : K) (v : V) (h : P.completionMap v a = 0 ∨
-      P.completionMap v a ∈ P.unit v) :
-    P.completionMap v a ∈ P.integral v := by
-  rcases h with hzero | hunit
-  · simp [hzero]
-  · exact P.unit_subset_integral v hunit
+    (K : Type*) [Field K] [NumberField K]
+    (v : Chapter05FinitePlace K) (x : Chapter05FiniteLocalField K v)
+    (h : x = 0 ∨ chapter05FiniteLocalUnit K v x) :
+    x ∈ (Chapter05FiniteLocalIntegerRing K v :
+      Set (Chapter05FiniteLocalField K v)) := by
+  sorry
 
 theorem chapter05_diagonal_integrality_iff
-    (a : K) :
-    a ∈ P.integerRing ↔
-      ∀ v : V, v ∈ P.finite →
-        P.completionMap v a ∈ P.integral v := by
-  exact P.integer_global_iff a
+    (K : Type*) [Field K] [NumberField K] (a : K) :
+    a ∈ (Chapter05RingOfIntegers K : Set K) ↔
+      ∀ v : Chapter05FinitePlace K,
+        chapter05FiniteDiagonal K a v ∈
+          (Chapter05FiniteLocalIntegerRing K v :
+            Set (Chapter05FiniteLocalField K v)) := by
+  sorry
 
-/-! A proper subset of the archimedean coordinates may fail to control a
-    global unit.  The witness is parameterized by the normalized local sizes,
-    since the preceding places chapter owns their construction. -/
+/-! A canonical formulation of the unit-escape warning.  The size is the
+normalized absolute value supplied by the infinite-place API, rather than a
+field of an ad hoc place system. -/
 
 structure Chapter05UnitEscapeWitness
-    (P : Chapter05PlaceSystem K V Kv) where
-  unit : K
-  unit_ne_zero : unit ≠ 0
-  unit_mem_integer : unit ∈ P.integerRing
-  inverse_mem_integer : unit⁻¹ ∈ P.integerRing
-  shrinkingPlace : {v // v ∈ P.archimedean}
-  growingPlace : {v // v ∈ P.archimedean}
-  size : ∀ v : {v // v ∈ P.archimedean}, Kv v.1 → ℝ
+    (K : Type*) [Field K] [NumberField K] where
+  unit : Kˣ
+  unit_ne_zero : (unit : K) ≠ 0
+  unit_mem_integer : (unit : K) ∈ (Chapter05RingOfIntegers K : Set K)
+  inverse_mem_integer : (unit⁻¹ : K) ∈ (Chapter05RingOfIntegers K : Set K)
+  shrinkingPlace : Chapter05InfinitePlace K
+  growingPlace : Chapter05InfinitePlace K
   size_nonnegative :
-    ∀ (v : {v // v ∈ P.archimedean}) (x : Kv v.1), 0 ≤ size v x
-  size_one : ∀ (v : {v // v ∈ P.archimedean}), size v 1 = 1
+    ∀ (v : Chapter05InfinitePlace K) (x : K), 0 ≤ v x
+  size_one : ∀ (v : Chapter05InfinitePlace K), v (1 : K) = 1
   size_mul :
-    ∀ (v : {v // v ∈ P.archimedean}) (x y : Kv v.1),
-      size v (x * y) = size v x * size v y
+    ∀ (v : Chapter05InfinitePlace K) (x y : K),
+      v (x * y) = v x * v y
   shrinking :
     Tendsto
-      (fun n : ℕ => size shrinkingPlace
-        (P.completionMap shrinkingPlace.1 (unit ^ n)))
-      atTop (𝓝 0)
+      (fun n : ℕ => shrinkingPlace ((unit : K) ^ n)) atTop (𝓝 0)
   growing :
     Tendsto
-      (fun n : ℕ => size growingPlace
-        (P.completionMap growingPlace.1 (unit ^ n)))
-      atTop atTop
+      (fun n : ℕ => growingPlace ((unit : K) ^ n)) atTop atTop
 
 def chapter05PartialArchimedeanControlWarning
-    (T : Finset {v // v ∈ P.archimedean}) : Prop :=
-  by
-    classical
-    exact ∃ w : Chapter05UnitEscapeWitness P,
-      w.shrinkingPlace ∉ T ∧ w.growingPlace ∉ T
+    (K : Type*) [Field K] [NumberField K]
+    (T : Finset (Chapter05InfinitePlace K)) : Prop :=
+  ∃ w : Chapter05UnitEscapeWitness K,
+    w.shrinkingPlace ∉ T ∧ w.growingPlace ∉ T
 
-/-! The two diagonal copies are identified with their ranges.  These range
-    declarations are useful to later quotient and closure statements. -/
+def chapter05DiagonalImage
+    (K : Type*) [Field K] [NumberField K] : Set (Chapter05AdeleRing K) :=
+  Set.range (chapter05Diagonal K)
 
-def chapter05DiagonalImage : Set A :=
-  Set.range (chapter05Diagonal M)
+def chapter05FiniteDiagonalImage
+    (K : Type*) [Field K] [NumberField K] :
+    Set (Chapter05FiniteAdeleRing K) :=
+  Set.range (chapter05FiniteDiagonal K)
 
-def chapter05FiniteDiagonalImage : Set A_f :=
-  Set.range (chapter05FiniteDiagonal M)
+theorem chapter05_diagonal_image_mem_iff
+    (K : Type*) [Field K] [NumberField K]
+    (x : Chapter05AdeleRing K) :
+    x ∈ chapter05DiagonalImage K ↔
+      ∃ a : K, chapter05Diagonal K a = x := by
+  sorry
 
-theorem chapter05_diagonal_image_mem_iff (x : A) :
-    x ∈ chapter05DiagonalImage M ↔ ∃ a : K, chapter05Diagonal M a = x := by
-  rfl
+theorem chapter05_finite_diagonal_image_mem_iff
+    (K : Type*) [Field K] [NumberField K]
+    (x : Chapter05FiniteAdeleRing K) :
+    x ∈ chapter05FiniteDiagonalImage K ↔
+      ∃ a : K, chapter05FiniteDiagonal K a = x := by
+  sorry
 
-theorem chapter05_finite_diagonal_image_mem_iff (x : A_f) :
-    x ∈ chapter05FiniteDiagonalImage M ↔
-      ∃ a : K, chapter05FiniteDiagonal M a = x := by
-  rfl
+theorem chapter05_diagonal_image_eq_principal_subgroup
+    (K : Type*) [Field K] [NumberField K] :
+    chapter05DiagonalImage K =
+      (NumberField.AdeleRing.principalSubgroup (𝓞 K) K :
+        Set (Chapter05AdeleRing K)) := by
+  sorry
 
-theorem chapter05_diagonal_image_eq_subgroup_carrier :
-    chapter05DiagonalImage M =
-      (chapter05FullDiagonalSubgroup M : Set A) := by
-  rfl
-
-theorem chapter05_finite_diagonal_image_eq_subgroup_carrier :
-    chapter05FiniteDiagonalImage M =
-      (chapter05FiniteDiagonalSubgroup M : Set A_f) := by
-  rfl
+theorem chapter05_finite_diagonal_image_eq_range_subgroup
+    (K : Type*) [Field K] [NumberField K] :
+    chapter05FiniteDiagonalImage K =
+      ((chapter05FiniteDiagonal K).range.toAddSubgroup :
+        Set (Chapter05FiniteAdeleRing K)) := by
+  sorry
 
 end
 

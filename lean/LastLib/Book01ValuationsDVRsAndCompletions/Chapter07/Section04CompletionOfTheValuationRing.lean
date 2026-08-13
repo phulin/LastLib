@@ -1,4 +1,4 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter07.Section03UniversalProperty
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter07.Section02ExtendingInverses
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter07
 
@@ -131,6 +131,131 @@ theorem chapter07_valuation_ring_closure_eq_completed_valuation_ring
   · intro x hx
     rw [chapter07_completed_valuation_ring_carrier] at hx
     exact chapter07_completed_unit_ball_is_approximated_by_integral_elements x hx
+
+-- Completion preserves the residue field of the valuation ring.
+theorem chapter07_completion_residue_field_equivalence
+    {K Γ₀ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ₀]
+    [Valued K Γ₀] :
+    ∃ e : (chapter07ValuationRing K Γ₀) ⧸
+          IsLocalRing.maximalIdeal (chapter07ValuationRing K Γ₀) ≃+*
+        (chapter07CompletedValuationRing K Γ₀) ⧸
+          IsLocalRing.maximalIdeal (chapter07CompletedValuationRing K Γ₀),
+      ∀ a : chapter07ValuationRing K Γ₀,
+        e (Ideal.Quotient.mk _ a) =
+          Ideal.Quotient.mk _
+            (chapter07ValuationRingCompletionRingHom (K := K) (Γ₀ := Γ₀) a) := by
+  let A := chapter07ValuationRing K Γ₀
+  let B := chapter07CompletedValuationRing K Γ₀
+  let mA : Ideal A := IsLocalRing.maximalIdeal A
+  let mB : Ideal B := IsLocalRing.maximalIdeal B
+  let f : A →+* B := chapter07ValuationRingCompletionRingHom (K := K) (Γ₀ := Γ₀)
+  have hmap : Ideal.map f mA ≤ mB := by
+    rw [Ideal.map_le_iff_le_comap]
+    intro a ha
+    apply (Valuation.mem_maximalIdeal_iff
+      (v := chapter07CompletionValuation K Γ₀)).2
+    have ha' := (Valuation.mem_maximalIdeal_iff
+      (v := (Valued.v : Valuation K Γ₀))).1 ha
+    change chapter07CompletionValuation K Γ₀
+      (((f a : B) : UniformSpace.Completion K)) < 1
+    change chapter07CompletionValuation K Γ₀
+      ((((a : A) : K) : UniformSpace.Completion K)) < 1
+    rw [chapter07_completion_valuation_apply_coe]
+    exact ha'
+  let g : A ⧸ mA →+* B ⧸ mB :=
+    Ideal.Quotient.lift mA ((Ideal.Quotient.mk mB).comp f) (by
+      intro a ha
+      apply Ideal.Quotient.eq_zero_iff_mem.mpr
+      exact (Ideal.map_le_iff_le_comap.mp hmap) ha)
+  have g_surj : Function.Surjective g := by
+    intro y
+    obtain ⟨b, rfl⟩ := Ideal.Quotient.mk_surjective y
+    have hbclosure : (b : UniformSpace.Completion K) ∈
+        closure (Set.range (@chapter07ValuationRingCompletionEmbedding K Γ₀ _ _ _)) := by
+      apply chapter07_completed_unit_ball_is_approximated_by_integral_elements
+      exact b.property
+    let U : Set (UniformSpace.Completion K) := {z |
+      (Valued.v : Valuation (UniformSpace.Completion K) Γ₀).restrict
+          (z - (b : UniformSpace.Completion K)) <
+        (1 : MonoidWithZeroHom.ValueGroup₀
+          (.ofClass (Valued.v : Valuation (UniformSpace.Completion K) Γ₀)))}
+    have hUopen : IsOpen U := by
+      have hball := Valued.isOpen_ball (UniformSpace.Completion K)
+        (1 : MonoidWithZeroHom.ValueGroup₀
+          (.ofClass (Valued.v : Valuation (UniformSpace.Completion K) Γ₀)))
+      have htop : Valued.valuedCompletion.toTopologicalSpace =
+          (UniformSpace.Completion.uniformSpace K).toTopologicalSpace := by
+        rfl
+      rw [htop] at hball
+      simpa [U] using hball.preimage (continuous_id.sub continuous_const)
+    have hUmem : U ∈ 𝓝 (b : UniformSpace.Completion K) := by
+      apply hUopen.mem_nhds
+      simp [U]
+    obtain ⟨z, hzU, ⟨a, rfl⟩⟩ :=
+      (mem_closure_iff_nhds.mp hbclosure) U hUmem
+    refine ⟨Ideal.Quotient.mk mA a, ?_⟩
+    rw [Ideal.Quotient.lift_mk]
+    rw [← sub_eq_zero]
+    apply Ideal.Quotient.eq_zero_iff_mem.mpr
+    apply (Valuation.mem_maximalIdeal_iff
+      (v := chapter07CompletionValuation K Γ₀)).2
+    have hrestrict : (Valued.v : Valuation (UniformSpace.Completion K) Γ₀).restrict
+        (chapter07ValuationRingCompletionEmbedding a - (b : UniformSpace.Completion K)) <
+        (1 : MonoidWithZeroHom.ValueGroup₀
+          (.ofClass (Valued.v : Valuation (UniformSpace.Completion K) Γ₀))) := by
+      change (Valued.v : Valuation (UniformSpace.Completion K) Γ₀).restrict
+        ((((a : A) : K) : UniformSpace.Completion K) -
+          (b : UniformSpace.Completion K)) < _ at hzU
+      exact hzU
+    have hlt' := (Valuation.restrict_lt_iff_lt_embedding
+      (v := (Valued.v : Valuation (UniformSpace.Completion K) Γ₀))).mp hrestrict
+    have hlt : (Valued.v : Valuation (UniformSpace.Completion K) Γ₀)
+        (chapter07ValuationRingCompletionEmbedding a -
+          (b : UniformSpace.Completion K)) < 1 := by
+      simpa [Valuation.embedding_restrict] using hlt'
+    change chapter07CompletionValuation K Γ₀
+      ((((f a : B) : B) : UniformSpace.Completion K) -
+        (b : UniformSpace.Completion K)) < 1
+    have hfa : (((f a : B) : B) : UniformSpace.Completion K) =
+        chapter07ValuationRingCompletionEmbedding a := by
+      rfl
+    simpa [show (Valued.v : Valuation (UniformSpace.Completion K) Γ₀) =
+      chapter07CompletionValuation K Γ₀ by rfl, hfa] using hlt
+  have g_inj : Function.Injective g := by
+    intro x y hxy
+    obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective x
+    obtain ⟨b, rfl⟩ := Ideal.Quotient.mk_surjective y
+    rw [← sub_eq_zero]
+    apply Ideal.Quotient.eq_zero_iff_mem.mpr
+    have hmemB : f a - f b ∈ mB := by
+      apply Ideal.Quotient.eq_zero_iff_mem.mp
+      rw [map_sub]
+      exact sub_eq_zero.mpr (by simpa [g] using hxy)
+    have hltB := (Valuation.mem_maximalIdeal_iff
+      (v := chapter07CompletionValuation K Γ₀)).1 hmemB
+    change chapter07CompletionValuation K Γ₀
+      ((((f a : B) : B) : UniformSpace.Completion K) -
+        (((f b : B) : B) : UniformSpace.Completion K)) < 1 at hltB
+    apply (Valuation.mem_maximalIdeal_iff
+      (v := (Valued.v : Valuation K Γ₀))).2
+    change (Valued.v : Valuation K Γ₀)
+      (((a : A) : K) - ((b : A) : K)) < 1
+    have hcoediff : (((f a : B) : B) : UniformSpace.Completion K) -
+        (((f b : B) : B) : UniformSpace.Completion K) =
+        (((((a : A) : K) - ((b : A) : K)) : K) : UniformSpace.Completion K) := by
+      change ((((a : A) : K) : UniformSpace.Completion K) -
+        (((b : A) : K) : UniformSpace.Completion K)) = _
+      symm
+      exact (UniformSpace.Completion.coeRingHom : K →+* UniformSpace.Completion K).map_sub _ _
+    rw [hcoediff, chapter07_completion_valuation_apply_coe] at hltB
+    exact hltB
+  let e := RingEquiv.ofBijective g ⟨g_inj, g_surj⟩
+  refine ⟨e, ?_⟩
+  intro a
+  change g (Ideal.Quotient.mk mA a) =
+    Ideal.Quotient.mk mB (f a)
+  rw [Ideal.Quotient.lift_mk]
+  rfl
 
 -- A uniformizer in the original valuation ring, bundled by Mathlib.
 def chapter07CompletedUniformizer

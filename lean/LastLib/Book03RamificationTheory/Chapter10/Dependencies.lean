@@ -3,7 +3,7 @@ import Mathlib.Algebra.Group.Subgroup.Finite
 import Mathlib.Data.Real.Basic
 import Mathlib.LinearAlgebra.Dimension.Finite
 import Mathlib.MeasureTheory.Integral.Bochner.Set
-import Mathlib.MeasureTheory.Measure.Haar.OfBasis
+import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 import Mathlib.RepresentationTheory.Invariants
 import Mathlib.RepresentationTheory.Maschke
 
@@ -17,18 +17,20 @@ open scoped BigOperators
 universe u v w
 
 /-!
-The preceding Book 3 chapters are not present in this checkout.  The following
-interfaces are therefore the smallest local dependency guess needed to expose
+The following interfaces expose the finite conductor-facing data needed by
 Chapter 10: a finite lower filtration, its upper reindexing, and a separable
-residue hypothesis.  The fields describe the usual ramification data rather
-than assuming any conductor identity.
+residue hypothesis.  They deliberately avoid importing the larger field and
+profinite constructions used by earlier chapters.  The ambient group is the
+omitted lower group `G₋₁`; the indexed `group 0` is inertia `G₀`, so it must
+not be identified with `⊤` in a quotient that has a nontrivial unramified part.
+The fields describe the usual ramification data rather than assuming any
+conductor identity.
 -/
 
 /-- A finite lower-numbered ramification filtration of a finite Galois quotient. -/
 structure LowerRamificationFiltration
     (G : Type u) [Group G] [Fintype G] where
   group : ℕ → Subgroup G
-  group_zero : group 0 = ⊤
   antitone : Antitone group
   normal : ∀ i, (group i).Normal
   cutoff : ℕ
@@ -38,8 +40,15 @@ namespace LowerRamificationFiltration
 
 variable {G : Type u} [Group G] [Fintype G]
 
-@[simp] theorem group_zero_eq_top (F : LowerRamificationFiltration G) :
-    F.group 0 = ⊤ := F.group_zero
+/- The lower index `-1` is the ambient Galois quotient and is therefore not
+   stored in the `ℕ`-indexed positive/inertial part of the filtration. -/
+def group_neg_one (_F : LowerRamificationFiltration G) : Subgroup G := ⊤
+
+@[simp] theorem group_neg_one_eq_top (F : LowerRamificationFiltration G) :
+    F.group_neg_one = ⊤ := rfl
+
+theorem group_zero_normal (F : LowerRamificationFiltration G) :
+    (F.group 0).Normal := F.normal 0
 
 theorem group_eq_bot_of_ge (F : LowerRamificationFiltration G)
     {i : ℕ} (hi : F.cutoff ≤ i) : F.group i = ⊥ :=
@@ -61,15 +70,13 @@ def weight (F : LowerRamificationFiltration G) (i : ℕ) : ℚ :=
 
 @[simp] theorem weight_zero (F : LowerRamificationFiltration G) :
     F.weight 0 = 1 := by
-  sorry
+  simp [weight]
 
 theorem weight_nonnegative (F : LowerRamificationFiltration G) (i : ℕ) :
     0 ≤ F.weight i := by
-  sorry
-
-theorem weight_eq_zero_of_ge (F : LowerRamificationFiltration G)
-    {i : ℕ} (hi : F.cutoff ≤ i) : F.weight i = 0 := by
-  sorry
+  classical
+  exact div_nonneg (Fintype.card (F.group i)).cast_nonneg
+    (Fintype.card (F.group 0)).cast_nonneg
 
 end LowerRamificationFiltration
 
@@ -93,7 +100,7 @@ structure UpperRamificationFiltration
     depth i < v → v ≤ depth (i + 1) → group v = lower.group (i + 1)
   group_antitone : Antitone group
   group_normal : ∀ v, (group v).Normal
-  group_trivial_after : ∀ {v : ℝ}, depth lower.cutoff ≤ v → group v = ⊥
+  group_trivial_after : ∀ {v : ℝ}, depth lower.cutoff < v → group v = ⊥
 
 namespace UpperRamificationFiltration
 
@@ -106,8 +113,8 @@ variable {lower : LowerRamificationFiltration G}
 @[simp] theorem group_zero_eq_lower_zero (U : UpperRamificationFiltration lower) :
     U.group 0 = lower.group 0 := U.group_zero
 
-theorem group_eq_bot_of_ge (U : UpperRamificationFiltration lower)
-    {v : ℝ} (hv : U.depth lower.cutoff ≤ v) : U.group v = ⊥ :=
+theorem group_eq_bot_of_gt (U : UpperRamificationFiltration lower)
+    {v : ℝ} (hv : U.depth lower.cutoff < v) : U.group v = ⊥ :=
   U.group_trivial_after hv
 
 @[ext] theorem ext {U U' : UpperRamificationFiltration lower}
@@ -209,7 +216,9 @@ structure FiniteQuotientRealization
     [FiniteDimensional E V]
     (ρ : FiniteImageRepresentation E G V)
     (Q : Type*) [Group Q] [Fintype Q] where
+  /-- A quotient is onto; unused points of `Q` would change the filtration data. -/
   quotient : G →* Q
+  quotient_surjective : Function.Surjective quotient
   action : Representation E Q V
   factorization : ρ.toRepresentation = action.comp quotient
   ramification : RamificationFiltration Q
@@ -224,11 +233,16 @@ variable {Q : Type*} [Group Q] [Fintype Q]
 
 theorem kernel_acts_trivially (R : FiniteQuotientRealization ρ Q) :
     ∀ g : G, g ∈ R.quotient.ker → ρ.toRepresentation g = LinearMap.id := by
-  sorry
+  intro g hg
+  rw [R.factorization]
+  have hgq : R.quotient g = 1 := hg
+  change R.action (R.quotient g) = LinearMap.id
+  rw [hgq]
+  exact R.action.map_one
 
 theorem factorization_apply (R : FiniteQuotientRealization ρ Q) (g : G) :
     ρ.toRepresentation g = R.action (R.quotient g) := by
-  sorry
+  simpa using congrArg (fun f : Representation E G V => f g) R.factorization
 
 @[ext] theorem ext {R S : FiniteQuotientRealization ρ Q}
     (hquotient : R.quotient = S.quotient) (haction : R.action = S.action)
@@ -253,24 +267,41 @@ namespace fixedSpace
 
 variable {E : Type u} {G : Type v} {V : Type w}
 variable [Field E] [Group G] [AddCommGroup V] [Module E V]
-  [FiniteDimensional E V]
 
 theorem mem_iff (ρ : Representation E G V) (H : Subgroup G) (v : V) :
     v ∈ fixedSpace ρ H ↔ ∀ h : H, ρ h v = v := by
-  sorry
+  simp [fixedSpace]
 
 theorem antitone {H K : Subgroup G} (ρ : Representation E G V)
     (hHK : H ≤ K) : fixedSpace ρ K ≤ fixedSpace ρ H := by
-  sorry
+  intro v hv
+  rw [mem_iff] at hv ⊢
+  intro h
+  simpa using hv ⟨h, hHK h.property⟩
 
 theorem top_of_trivial_on (ρ : Representation E G V) (H : Subgroup G)
     (h : ∀ g : H, ρ g = LinearMap.id) : fixedSpace ρ H = ⊤ := by
-  sorry
+  apply top_unique
+  intro v hv
+  rw [mem_iff]
+  intro g
+  simp [h g]
 
 theorem comp_eq_map {H : Type*} [Group H]
     (ρ : Representation E G V) (φ : H →* G) (S : Subgroup H) :
     fixedSpace (ρ.comp φ) S = fixedSpace ρ (S.map φ) := by
-  sorry
+  ext v
+  constructor
+  · intro hv
+    rw [mem_iff] at hv ⊢
+    intro y
+    rcases (Subgroup.mem_map.mp y.property) with ⟨x, hx, hxy⟩
+    have hx' := hv ⟨x, hx⟩
+    simpa [hxy] using hx'
+  · intro hv
+    rw [mem_iff] at hv ⊢
+    intro x
+    exact hv ⟨φ x, Subgroup.mem_map_of_mem φ x.property⟩
 
 end fixedSpace
 
@@ -304,11 +335,20 @@ variable [Field E] [Group G] [AddCommGroup V] [Module E V]
 
 theorem eq_zero_iff (ρ : Representation E G V) (H : Subgroup G) :
     fixedSpaceCodim ρ H = 0 ↔ fixedSpace ρ H = ⊤ := by
-  sorry
+  rw [fixedSpaceCodim, Submodule.finrank_quotient]
+  constructor
+  · intro h
+    apply Submodule.eq_top_iff_finrank_eq.mpr
+    exact Nat.le_antisymm (Submodule.finrank_le _) (Nat.sub_eq_zero_iff_le.mp h)
+  · intro h
+    rw [h, finrank_top, Nat.sub_self]
 
 theorem antitone {H K : Subgroup G} (ρ : Representation E G V)
     (hHK : H ≤ K) : fixedSpaceCodim ρ H ≤ fixedSpaceCodim ρ K := by
-  sorry
+  change Module.finrank E (V ⧸ fixedSpace ρ H) ≤
+    Module.finrank E (V ⧸ fixedSpace ρ K)
+  rw [Submodule.finrank_quotient, Submodule.finrank_quotient]
+  exact Nat.sub_le_sub_left (Submodule.finrank_mono (fixedSpace.antitone ρ hHK)) _
 
 theorem congr {ρ σ : Representation E G V} (hρ : ρ = σ) (H : Subgroup G) :
     fixedSpaceCodim ρ H = fixedSpaceCodim σ H := by
@@ -317,6 +357,41 @@ theorem congr {ρ σ : Representation E G V} (hρ : ρ = σ) (H : Subgroup G) :
 
 end fixedSpaceCodim
 
+@[simp] theorem fixedSpaceCodimRat_eq_zero_iff
+    {E : Type u} {G : Type v} {V : Type w}
+    [Field E] [Group G] [AddCommGroup V] [Module E V]
+    [FiniteDimensional E V]
+    (ρ : Representation E G V) (H : Subgroup G) :
+    fixedSpaceCodimRat ρ H = 0 ↔ fixedSpace ρ H = ⊤ := by
+  simpa [fixedSpaceCodimRat] using fixedSpaceCodim.eq_zero_iff ρ H
+
+theorem fixedSpaceCodimRat_nonnegative
+    {E : Type u} {G : Type v} {V : Type w}
+    [Field E] [Group G] [AddCommGroup V] [Module E V]
+    [FiniteDimensional E V]
+    (ρ : Representation E G V) (H : Subgroup G) :
+    0 ≤ fixedSpaceCodimRat ρ H := by
+  exact (fixedSpaceCodim ρ H).cast_nonneg
+
+@[simp] theorem fixedSpaceCodimReal_eq_zero_iff
+    {E : Type u} {G : Type v} {V : Type w}
+    [Field E] [Group G] [AddCommGroup V] [Module E V]
+    [FiniteDimensional E V]
+    (ρ : Representation E G V) (H : Subgroup G) :
+    fixedSpaceCodimReal ρ H = 0 ↔ fixedSpace ρ H = ⊤ := by
+  simpa [fixedSpaceCodimReal] using fixedSpaceCodim.eq_zero_iff ρ H
+
+theorem fixedSpaceCodimReal_nonnegative
+    {E : Type u} {G : Type v} {V : Type w}
+    [Field E] [Group G] [AddCommGroup V] [Module E V]
+    [FiniteDimensional E V]
+    (ρ : Representation E G V) (H : Subgroup G) :
+    0 ≤ fixedSpaceCodimReal ρ H := by
+  exact (fixedSpaceCodim ρ H).cast_nonneg
+
+/- The ambient type `G` represents `G₋₁`; these aliases therefore expose the
+   inertial groups used in the conductor formulas rather than the full
+   quotient group. -/
 def inertiaGroup {G : Type u} [Group G] [Fintype G]
     (F : RamificationFiltration G) : Subgroup G := F.lower.group 0
 
@@ -340,18 +415,71 @@ def upperDepthArea
     {E : Type u} {G : Type v} {V : Type w}
     [Field E] [Group G] [Fintype G] [AddCommGroup V] [Module E V]
     [FiniteDimensional E V]
-    (F : RamificationFiltration G) (ρ : Representation E G V) : ℝ :=
+  (F : RamificationFiltration G) (ρ : Representation E G V) : ℝ :=
   ∫ v in Set.Ici (0 : ℝ), upperFixedSpaceFunction F ρ v
 
-theorem upperDepthArea_congr_ae
+/-!
+The piecewise upper filtration is measurable and has bounded support on the
+nonnegative half-line.  This is the analytic support interface used by the
+Swan-as-area theorem; it is kept here because the representation type is not
+part of the filtration data itself.
+-/
+theorem upperFixedSpaceFunction_integrable_restrict
     {E : Type u} {G : Type v} {V : Type w}
     [Field E] [Group G] [Fintype G] [AddCommGroup V] [Module E V]
     [FiniteDimensional E V]
-    {F : RamificationFiltration G} {ρ : Representation E G V}
+    (F : RamificationFiltration G) (ρ : Representation E G V) :
+    Integrable (upperFixedSpaceFunction F ρ)
+      (volume.restrict (Set.Ici (0 : ℝ))) := by
+  have hanti : Antitone (upperFixedSpaceFunction F ρ) := by
+    intro v w hvw
+    unfold upperFixedSpaceFunction
+    change (fixedSpaceCodim ρ (F.upper.group w) : ℝ) ≤
+      (fixedSpaceCodim ρ (F.upper.group v) : ℝ)
+    exact_mod_cast fixedSpaceCodim.antitone ρ (F.upper.group_antitone hvw)
+  have hfixed_bot : fixedSpace ρ (⊥ : Subgroup G) = ⊤ := by
+    apply fixedSpace.top_of_trivial_on
+    intro g
+    have hg : (g : G) = 1 := by
+      exact congrArg Subtype.val (Subsingleton.elim g (1 : (⊥ : Subgroup G)))
+    rw [hg]
+    simpa only [Module.End.one_eq_id] using ρ.map_one
+  let B : ℝ := F.upper.depth F.lower.cutoff
+  have hB : 0 ≤ B := by
+    dsimp [B]
+    rw [← F.upper.depth_zero]
+    exact F.upper.depth_monotone (Nat.zero_le _)
+  have hzero : ∀ {v : ℝ}, B < v → upperFixedSpaceFunction F ρ v = 0 := by
+    intro v hv
+    rw [upperFixedSpaceFunction, F.upper.group_eq_bot_of_gt hv]
+    exact (fixedSpaceCodimReal_eq_zero_iff ρ (⊥ : Subgroup G)).2 hfixed_bot
+  have hbound : ∀ v : ℝ,
+      ‖upperFixedSpaceFunction F ρ v‖ ≤ (Module.finrank E V : ℝ) := by
+    intro v
+    change |fixedSpaceCodimReal ρ (F.upper.group v)| ≤ (Module.finrank E V : ℝ)
+    rw [abs_of_nonneg (fixedSpaceCodimReal_nonnegative ρ (F.upper.group v))]
+    change (fixedSpaceCodim ρ (F.upper.group v) : ℝ) ≤
+      (Module.finrank E V : ℝ)
+    exact_mod_cast Submodule.finrank_quotient_le (fixedSpace ρ (F.upper.group v))
+  have h_on : IntegrableOn (upperFixedSpaceFunction F ρ) (Set.Icc 0 B)
+      (volume.restrict (Set.Ici (0 : ℝ))) := by
+    refine IntegrableOn.of_bound (μ := volume.restrict (Set.Ici (0 : ℝ)))
+      (s := Set.Icc 0 B) ?_ ?_ (Module.finrank E V : ℝ) ?_
+    · rw [Measure.restrict_apply measurableSet_Icc]
+      exact (measure_mono Set.inter_subset_left).trans_lt measure_Icc_lt_top
+    · exact hanti.measurable.aestronglyMeasurable
+    · exact Filter.Eventually.of_forall hbound
+  apply h_on.integrable_of_ae_notMem_eq_zero
+  filter_upwards [ae_restrict_mem measurableSet_Ici] with v hv hnot
+  by_cases hvB : v ≤ B
+  · exact False.elim (hnot ⟨hv, hvB⟩)
+  · exact hzero (lt_of_not_ge hvB)
+
+theorem upperDepthArea_congr_ae
     {f g : ℝ → ℝ}
     (hfg : f =ᵐ[volume.restrict (Set.Ici (0 : ℝ))] g) :
     (∫ v in Set.Ici (0 : ℝ), f v) = ∫ v in Set.Ici (0 : ℝ), g v := by
-  sorry
+  exact integral_congr_ae hfg
 
 /-- A quotient map to which Herbrand's upper-numbering quotient theorem applies. -/
 structure HerbrandQuotientData

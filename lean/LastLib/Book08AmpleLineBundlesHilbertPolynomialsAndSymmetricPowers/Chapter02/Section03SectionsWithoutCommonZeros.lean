@@ -1,4 +1,4 @@
-import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02.Section02InvertibleQuotients
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02.Section01ProjectiveBundles
 import Mathlib.Algebra.Category.ModuleCat.Stalk
 
 namespace LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02
@@ -44,26 +44,11 @@ theorem chapter02_evaluation_map_is_the_sum_of_coordinate_sections
   rfl
 
 /-!
-The next predicate records generation in the stalk.  `Γgerm` is the canonical map from global
-sections to the stalk, and the span-equals-top condition is the scheme-theoretic meaning of a
+The following auxiliary predicate records only the weaker test on closed points.  It is not the
+definition of generation: nonclosed points can carry information that closed points do not detect.
+The `Γgerm` map is canonical, and the span-equals-top condition is the scheme-theoretic meaning of a
 section generating an invertible stalk.
 -/
-def chapter02SectionGerm
-    {X : Scheme.{u}} {M : X.Modules} (s : M.sections) (x : X) :=
-  (M.presheaf.Γgerm x) (s.1 (Opposite.op ⊤))
-
-def chapter02SectionGeneratesAt
-    {X : Scheme.{u}} {L : Chapter02LineBundle X}
-    (s : Chapter02LineBundleSections L) (x : X) : Prop :=
-  letI : Module
-      ↑(TopCat.Presheaf.stalk (X.ringCatSheaf.obj : TopCat.Presheaf RingCat X) x)
-      ↑(TopCat.Presheaf.stalk (L.carrier.val.presheaf : TopCat.Presheaf Ab X) x) := by
-    infer_instance
-  Submodule.span
-      ↑(TopCat.Presheaf.stalk (X.ringCatSheaf.obj : TopCat.Presheaf RingCat X) x)
-      ({chapter02SectionGerm s x} : Set
-        ↑(TopCat.Presheaf.stalk (L.carrier.val.presheaf : TopCat.Presheaf Ab X) x)) = ⊤
-
 def Chapter02ClosedPointwiseGeneration
     {X : Scheme.{u}} (L : Chapter02LineBundle X) {I : Type u}
     (s : I → Chapter02LineBundleSections L) : Prop :=
@@ -154,10 +139,10 @@ theorem chapter02_section_chart_is_open
 
 theorem chapter02_projective_chart_formula
     {K : Type u} [CommGroupWithZero K] {I : Type u}
-    (x : Chapter02CoordinateTuple K I) (i : I) (_hi : x i ≠ 0) :
-    ∀ j, chapter02CoordinateRatio x i j = x j / x i := by
+    (x : Chapter02CoordinateTuple K I) (i : I) (hi : x i ≠ 0) :
+    ∀ j, chapter02CoordinateRatio x i j * x i = x j := by
   intro j
-  rfl
+  exact chapter02CoordinateRatio_mul_denominator x i j hi
 
 /-!
 The ratio criterion used to test immersion is kept as a ring-level interface.  It says that, on a

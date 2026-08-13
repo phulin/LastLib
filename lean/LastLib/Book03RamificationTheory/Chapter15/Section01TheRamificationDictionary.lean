@@ -1,5 +1,6 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.Section05HigherRamificationBoundary
 import Mathlib.Algebra.Group.Equiv.TypeTags
+import Mathlib.Data.ZMod.Basic
 import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.LinearAlgebra.FiniteDimensional.Basic
@@ -89,10 +90,17 @@ def chapter15TameLayerIsCyclic
     chapter15_layer_normal F 0
   IsCyclic (chapter15Layer F 0)
 
+/- The tame layer is not merely cyclic: its order is prime to the residue
+   characteristic exponent. -/
+def chapter15TameLayerPrimeToCharacteristic
+    {G : Type*} [Group G] [Finite G]
+    (p : ℕ) (F : Chapter15LowerRamificationFiltration G) : Prop :=
+  Nat.Coprime p (Nat.card (chapter15Layer F 0))
+
 /--
-The positive-depth layers are modelled as additive vector spaces over a residue
-field of characteristic `p`.  `Additive` changes the multiplicative quotient
-notation into the additive group used by the standard ramification dictionary.
+The positive-depth layers are modelled as additive vector spaces over the prime
+field `ZMod p`.  `Additive` changes the multiplicative quotient notation into
+the additive group used by the standard ramification dictionary.
 -/
 def chapter15WildLayerIsAdditiveOver
     {G : Type uG} {k : Type*} [Group G] [Finite G] [Field k]
@@ -101,9 +109,15 @@ def chapter15WildLayerIsAdditiveOver
   1 ≤ i ∧
     ∃ V : Type uG, ∃ hV : AddCommGroup V,
       (letI : AddCommGroup V := hV
-       ∃ hM : Module k V,
-         (letI : Module k V := hM
+        ∃ hM : Module (ZMod p) V,
+          (letI : Module (ZMod p) V := hM
           Nonempty (Additive (chapter15Layer F i) ≃+ V)))
+
+/- Mathlib records characteristic zero as `CharP k 0`, whereas the book's
+characteristic exponent is `1` in that case. -/
+def chapter15CharacteristicExponent
+    (k : Type*) [Field k] (p : ℕ) : Prop :=
+  (p = 1 ∧ CharP k 0) ∨ (1 < p ∧ CharP k p)
 
 /--
 The structural part of the finite-Galois ramification dictionary.  The
@@ -112,13 +126,19 @@ cyclic/additive layer statements use it.
 -/
 structure Chapter15RamificationDictionary
     {G k l : Type*} [Group G] [Finite G] [Field k] [Field l]
-    [Algebra k l] (p : ℕ) [CharP k p]
+    [Algebra k l] (p : ℕ)
     (F : Chapter15LowerRamificationFiltration G) where
+  characteristic_exponent : chapter15CharacteristicExponent k p
   residue_extension_separable : Algebra.IsSeparable k l
   residue_symmetry : chapter15ResidueFieldSymmetry (k := k) (l := l) F
   tame_layer_cyclic : chapter15TameLayerIsCyclic F
+  tame_layer_prime_to_characteristic :
+    chapter15TameLayerPrimeToCharacteristic p F
   wild_layers_additive : ∀ i : ℕ, 1 ≤ i →
-    chapter15WildLayerIsAdditiveOver (k := k) p i F
+    (p = 1 ∧ F.group i = ⊥) ∨
+      ∃ hchar : CharP k p,
+        (letI : CharP k p := hchar
+         chapter15WildLayerIsAdditiveOver (k := k) p i F)
 
 /-- The lower ramification group from the earlier valuation-ring interface. -/
 abbrev chapter15LowerRamificationGroup
@@ -126,9 +146,9 @@ abbrev chapter15LowerRamificationGroup
     (A : ValuationSubring L) (i : ℕ) :
     Subgroup
       (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05DecompositionGroup K A) :=
-  LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05RamificationGroup K A i
+  LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05RamificationGroup K A (i + 1)
 
-/-- The inertia subgroup is the first lower ramification group. -/
+/-- In the zero-based Chapter 15 indexing, inertia is lower group `G₀`. -/
 abbrev chapter15InertiaGroup
     (K : Type*) {L : Type*} [Field K] [Field L] [Algebra K L]
     (A : ValuationSubring L) :
@@ -143,13 +163,13 @@ theorem chapter15_lower_ramification_group_mem_iff
     (σ :
       LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05DecompositionGroup K A) :
     σ ∈ chapter15LowerRamificationGroup K A i ↔
-      ∀ x : A, (σ • x - x) ∈ (IsLocalRing.maximalIdeal A) ^ i := by
+      ∀ x : A, (σ • x - x) ∈ (IsLocalRing.maximalIdeal A) ^ (i + 1) := by
   rfl
 
 theorem chapter15_first_lower_group_eq_inertia
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     (A : ValuationSubring L) :
-    chapter15LowerRamificationGroup K A 1 = chapter15InertiaGroup K A := by
+    chapter15LowerRamificationGroup K A 0 = chapter15InertiaGroup K A := by
   exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05FirstRamificationGroup_eq_inertia A
 
 /-- Lower numbering restricts to a subgroup by intersection with every lower group. -/
@@ -222,14 +242,15 @@ def chapter15DiscriminantDisplacementSum
     (F : Chapter15LowerRamificationFiltration G) (f : ℕ) : ℕ :=
   f * chapter15DifferentDisplacementSum F
 
-/-- The Herbrand function, extended by zero on negative inputs. -/
+/-- The Herbrand function, extended by the identity on negative inputs. -/
 noncomputable def chapter15HerbrandFunction
     {G : Type*} [Group G] [Finite G]
     (F : Chapter15LowerRamificationFiltration G) (u : ℝ) : ℝ :=
-  let t : ℝ := max u 0
-  let n : ℕ := Int.toNat ⌊t⌋
-  (∑ i ∈ Finset.range n, (chapter15IndexWeight F i : ℝ)) +
-    (t - n) * (chapter15IndexWeight F n : ℝ)
+  if u ≤ 0 then u else
+    let t : ℝ := u
+    let n : ℕ := Int.toNat ⌊t⌋
+    (∑ i ∈ Finset.range n, (chapter15IndexWeight F (i + 1) : ℝ)) +
+      (t - n) * (chapter15IndexWeight F (n + 1) : ℝ)
 
 /-- Upper break coordinates are the Herbrand values of lower break coordinates. -/
 def chapter15UpperBreak

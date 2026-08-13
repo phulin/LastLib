@@ -6,7 +6,7 @@ noncomputable section
 
 open CategoryTheory
 
-universe u
+universe u v w
 
 /-!
 ## 10.2. The connected component of the idele class group
@@ -136,19 +136,19 @@ theorem chapter10_intersection_openFiniteIndex_eq_identityComponent
   · exact chapter10_identityComponent_le_residualKernel
 
 theorem chapter10_identityComponent_le_completion_kernel
-    {C : Type u} [CommGroup C] [TopologicalSpace C] [T2Space C]
-    [IsTopologicalGroup C] (T : Chapter10IdeleClassTopologyData C) :
+    {C : Type u} [CommGroup C] [TopologicalSpace C]
+    [IsTopologicalGroup C] :
     chapter10IdentityComponent C ≤
       (chapter10ProfiniteCompletionEta C).ker := by
   sorry
 
 noncomputable def chapter10ComponentToCompletion
-    {C : Type u} [CommGroup C] [TopologicalSpace C] [T2Space C]
-    [IsTopologicalGroup C] (T : Chapter10IdeleClassTopologyData C) :
+    {C : Type u} [CommGroup C] [TopologicalSpace C]
+    [IsTopologicalGroup C] :
     chapter10IdeleClassComponentQuotient C →*
       chapter10ProfiniteCompletion C := by
   exact QuotientGroup.lift _ (chapter10ProfiniteCompletionEta C)
-    (chapter10_identityComponent_le_completion_kernel T)
+    chapter10_identityComponent_le_completion_kernel
 
 /- LOCAL_DEPENDENCY_GUESS: compactness of the component quotient and the
 finite-quotient separation above make the quotient-to-completion map a
@@ -175,15 +175,9 @@ theorem chapter10_component_quotient_is_complete
         (chapter10IdeleClassComponentQuotient C)) := by
   sorry
 
-/- SOURCE_ISSUE: In §10.2, the paragraph beginning “The dimension count can be
-upgraded to an irreducibility proof” introduces `G_M`, `R`, and `Γ_θ` without
-defining them, then asserts “Therefore ker Art_K = C_K^0” without a statement
-linking that representation-theoretic discussion to the Artin map. This is an
-unattached argument, not a valid proof of the preceding idele-class claim; the
-declarations below use the finite-quotient separation argument instead. -/
-
 theorem chapter10_globalArtinMap_kernel_eq_identityComponent
-    {C K Kab : Type u} [CommGroup C] [TopologicalSpace C] [T2Space C]
+    {C : Type u} {K : Type v} {Kab : Type w}
+    [CommGroup C] [TopologicalSpace C] [T2Space C]
     [IsTopologicalGroup C] [Field K] [Field Kab] [Algebra K Kab]
     [IsGalois K Kab] (T : Chapter10IdeleClassTopologyData C)
     (F : Chapter10FiniteArtinFamily C K Kab)
@@ -192,7 +186,8 @@ theorem chapter10_globalArtinMap_kernel_eq_identityComponent
   sorry
 
 theorem chapter10_globalArtinMap_surjective
-    {C K Kab : Type u} [CommGroup C] [TopologicalSpace C] [T2Space C]
+    {C : Type u} {K : Type v} {Kab : Type w}
+    [CommGroup C] [TopologicalSpace C] [T2Space C]
     [IsTopologicalGroup C] [Field K] [Field Kab] [Algebra K Kab]
     [IsGalois K Kab] (T : Chapter10IdeleClassTopologyData C)
     (F : Chapter10FiniteArtinFamily C K Kab)
@@ -201,7 +196,8 @@ theorem chapter10_globalArtinMap_surjective
   sorry
 
 noncomputable def chapter10GlobalArtinQuotientEquiv
-    {C K Kab : Type u} [CommGroup C] [TopologicalSpace C] [T2Space C]
+    {C : Type u} {K : Type v} {Kab : Type w}
+    [CommGroup C] [TopologicalSpace C] [T2Space C]
     [IsTopologicalGroup C] [Field K] [Field Kab] [Algebra K Kab]
     [IsGalois K Kab] (T : Chapter10IdeleClassTopologyData C)
     (F : Chapter10FiniteArtinFamily C K Kab)
@@ -210,7 +206,8 @@ noncomputable def chapter10GlobalArtinQuotientEquiv
   sorry
 
 theorem chapter10GlobalArtinQuotientEquiv_comp_quotientMap
-    {C K Kab : Type u} [CommGroup C] [TopologicalSpace C] [T2Space C]
+    {C : Type u} {K : Type v} {Kab : Type w}
+    [CommGroup C] [TopologicalSpace C] [T2Space C]
     [IsTopologicalGroup C] [Field K] [Field Kab] [Algebra K Kab]
     [IsGalois K Kab] (T : Chapter10IdeleClassTopologyData C)
     (F : Chapter10FiniteArtinFamily C K Kab)
@@ -220,7 +217,8 @@ theorem chapter10GlobalArtinQuotientEquiv_comp_quotientMap
   sorry
 
 theorem chapter10_global_reciprocity_scope_summary
-    {C K Kab : Type u} [CommGroup C] [TopologicalSpace C] [T2Space C]
+    {C : Type u} {K : Type v} {Kab : Type w}
+    [CommGroup C] [TopologicalSpace C] [T2Space C]
     [IsTopologicalGroup C] [Field K] [Field Kab] [Algebra K Kab]
     [IsGalois K Kab] (T : Chapter10IdeleClassTopologyData C)
     (F : Chapter10FiniteArtinFamily C K Kab)
@@ -230,7 +228,7 @@ theorem chapter10_global_reciprocity_scope_summary
       Nonempty (chapter10ProfiniteCompletion C ≃ₜ* Gal(Kab / K)) := by
   exact ⟨chapter10_globalArtinMap_kernel_eq_identityComponent T F R,
     chapter10_globalArtinMap_surjective T F R,
-    ⟨chapter10InfiniteReciprocityEquiv F R⟩⟩
+    ⟨chapter10InfiniteReciprocityEquiv (C := C) (K := K) (Kab := Kab) F R⟩⟩
 
 end
 

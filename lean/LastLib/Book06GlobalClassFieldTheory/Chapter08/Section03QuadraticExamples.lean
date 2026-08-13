@@ -89,6 +89,14 @@ theorem chapter08_imaginary_ordinary_and_narrow_hilbert_fields_coincide
 
 /-! The `ℚ(√-5)` calculation. -/
 
+theorem chapter08_minusFive_data_is_imaginary_quadratic
+    {K : Type u} [Field K] [Algebra ℚ K] [NumberField K]
+    (D : Chapter08MinusFiveData K) :
+    letI : Algebra.IsQuadraticExtension ℚ K := D.quadratic
+    chapter08ImaginaryQuadratic K := by
+  letI : Algebra.IsQuadraticExtension ℚ K := D.quadratic
+  exact D.noRealPlaces
+
 theorem chapter08_minusFive_minkowski_bound_value
     {K : Type u} [Field K] [Algebra ℚ K] [NumberField K]
     (_D : Chapter08MinusFiveData K) :
@@ -223,9 +231,9 @@ theorem chapter08_minusFive_hilbert_field_is_finite_unramified
     letI : NumberField W.H := W.numberFieldH
     letI : FiniteDimensional K W.H := W.finiteKH
     letI : IsAbelianGalois K W.H := W.abelianGaloisKH
-    letI : Algebra (𝓞 K) (𝓞 W.H) := inferInstance
+    letI : Algebra (𝓞 K) (𝓞 W.H) := W.algebraIntegralKH
     chapter08UnramifiedAtFinitePlaces K W.H := by
-  sorry
+  exact W.unramifiedAtFinite
 
 theorem chapter08_minusFive_hilbert_field_identification
     {K : Type u} [Field K] [Algebra ℚ K] [NumberField K]

@@ -17,22 +17,14 @@ structure Chapter08GenericFlatnessProfile
   dense : Dense denseOpen
   open_denseOpen : IsOpen denseOpen
   flat_on_denseOpen :
-    ∀ s ∈ denseOpen, Chapter08FlatOver F.family.f E.sheaf
+    ∀ s ∈ denseOpen, chapter08FlatAt F.family.f E.sheaf s
 
 /- LOCAL_DEPENDENCY_GUESS: generic flatness for coherent scheme modules is not
    exposed by the pinned imports in the form used by this chapter. -/
 theorem chapter08_generic_flatness_dense_open
-    {F : Chapter08PolarizedFamily} (E : Chapter08FamilySheaf F) :
-    Nonempty (Chapter08GenericFlatnessProfile E) := by
-  sorry
-
-/- The numerical flatness criterion over a reduced locally noetherian base. -/
-theorem chapter08_numerical_flatness_iff
     {F : Chapter08PolarizedFamily} (E : Chapter08FamilySheaf F)
-    (D : Chapter08FiberwiseHilbertData E)
     (hred : IsReduced F.family.S) :
-    Chapter08FlatOver F.family.f E.sheaf ↔
-      Chapter08LocallyConstant (fun s => D.fiberPolynomial s) := by
+    Nonempty (Chapter08GenericFlatnessProfile E) := by
   sorry
 
 /- The residue map from the dual numbers to their reduced quotient. -/

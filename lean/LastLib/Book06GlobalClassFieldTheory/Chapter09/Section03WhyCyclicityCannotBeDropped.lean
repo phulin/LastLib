@@ -3,7 +3,8 @@ import Mathlib.NumberTheory.Padics.PadicNumbers
 import Mathlib.RepresentationTheory.Homological.GroupCohomology.FiniteCyclic
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.NormNum.ModEq
-import LastLib.Book06GlobalClassFieldTheory.Chapter09.Section02TheHasseNormTheoremForCyclicExtensions
+import LastLib.Book06GlobalClassFieldTheory.Chapter01.Section03FourKindsOfNormAssertion
+import LastLib.Book06GlobalClassFieldTheory.Chapter09.Section01TheKnotBetweenLocalAndGlobalNorms
 
 namespace LastLib.Book06GlobalClassFieldTheory.Chapter09
 
@@ -87,26 +88,42 @@ noncomputable def chapter09_fundamental_class_shift_by_two
       groupCohomology F.shiftedModule 3 :=
   F.shift_by_two
 
-/- LOCAL_DEPENDENCY_GUESS: the following comparison is the canonical idele
+/- LOCAL_DEPENDENCY_GUESS: the following data package is the canonical idele
 resolution/local-decomposition realization of the exact sequence in Section
 9.1.  Mathlib has the cohomology, Shapiro, and Tate interfaces, but not this
-global idelic comparison theorem.
+global idelic comparison theorem.  Packaging the decomposition data together
+with its comparison prevents an arbitrary family of subgroups from being
+mistaken for the actual local decomposition groups of `L / K`.
 -/
-theorem chapter09_knot_cohomology_formula
-    {K L : Type} {I_K I_L : Type*} [Field K] [Field L] [Algebra K L]
+structure Chapter09KnotCohomologyRealization
+    {K L : Type} [Field K] [Field L] [Algebra K L]
     [NumberField K] [NumberField L] [FiniteDimensional K L]
     [IsGalois K L] [Fintype (Gal(L / K))]
-    [CommGroup I_K] [CommGroup I_L]
+    {I_K I_L : Type*} [CommGroup I_K] [CommGroup I_L]
     (D : Chapter09IdeleNormData K L I_K I_L)
-    (P : Chapter09DecompositionData (Gal(L / K)))
     [Finite (chapter09KnotGroup D)]
     [TopologicalSpace (chapter09KnotGroup D)]
     [IsTopologicalGroup (chapter09KnotGroup D)]
-    [DiscreteTopology (chapter09KnotGroup D)] :
-    Nonempty
-      (Additive (PontryaginDual (chapter09KnotGroup D)) ≃+
-        chapter09H3LocalizationKernel P) := by
-  sorry
+    [DiscreteTopology (chapter09KnotGroup D)] where
+  decompositionData : Chapter09DecompositionData (Gal(L / K))
+  comparison :
+    Additive (PontryaginDual (chapter09KnotGroup D)) ≃+
+      chapter09H3LocalizationKernel decompositionData
+
+noncomputable def chapter09_knot_cohomology_formula_at
+    {K L : Type} [Field K] [Field L] [Algebra K L]
+    [NumberField K] [NumberField L] [FiniteDimensional K L]
+    [IsGalois K L] [Fintype (Gal(L / K))]
+    {I_K I_L : Type*} [CommGroup I_K] [CommGroup I_L]
+    (D : Chapter09IdeleNormData K L I_K I_L)
+    [Finite (chapter09KnotGroup D)]
+    [TopologicalSpace (chapter09KnotGroup D)]
+    [IsTopologicalGroup (chapter09KnotGroup D)]
+    [DiscreteTopology (chapter09KnotGroup D)]
+    (R : Chapter09KnotCohomologyRealization D) :
+    Additive (PontryaginDual (chapter09KnotGroup D)) ≃+
+      chapter09H3LocalizationKernel R.decompositionData :=
+  R.comparison
 
 theorem chapter09_h3_cyclic_subgroup_vanishes
     {C : Type} [Group C] [Fintype C] [IsCyclic C] :
@@ -190,9 +207,11 @@ def chapter09BiquadraticRamifiedPrimes : Set ℕ :=
 
 /-!
 `finitePlaces` and `primeBelow` are an abstract presentation of the finite
-places used by the book.  In the canonical instance, `ramified_iff` says that
-the only ramified primes are 13 and 17, and the decomposition-group fields
-record the fact that every local degree is at most two and hence cyclic.
+places used by the book, with `place` locating them in the decomposition data.
+In the canonical instance, the ramification field
+identifies ramified primes with the primes dividing the recorded quadratic
+discriminants, and the decomposition-group field records that every local
+degree is at most two.  The resulting cyclicity is proved separately below.
 -/
 structure Chapter09BiquadraticLocalAnalysis
     (L : Type) [Field L] [Algebra ℚ L] [NumberField L]
@@ -204,14 +223,15 @@ structure Chapter09BiquadraticLocalAnalysis
   quadraticDiscriminants_eq :
     quadraticDiscriminants = chapter09BiquadraticDiscriminants
   finitePlaces : Type*
+  place : finitePlaces → P.places
   primeBelow : finitePlaces → ℕ
+  primeBelow_prime : ∀ v, Nat.Prime (primeBelow v)
   ramified : finitePlaces → Prop
-  ramified_iff :
-    ∀ v, ramified v ↔ primeBelow v = 13 ∨ primeBelow v = 17
-  decomposition_groups_cyclic :
-    ∀ v, IsCyclic (P.decompositionGroup v)
+  ramified_iff_discriminant_support :
+    ∀ v, ramified v ↔
+      ∃ d ∈ quadraticDiscriminants, (primeBelow v : ℤ) ∣ d
   decomposition_groups_card_le_two :
-    ∀ v, Nat.card (P.decompositionGroup v) ≤ 2
+    ∀ v : P.places, Nat.card (P.decompositionGroup v) ≤ 2
 
 theorem chapter09_biquadratic_only_13_17_ramify
     {L : Type} [Field L] [Algebra ℚ L] [NumberField L]
@@ -220,8 +240,19 @@ theorem chapter09_biquadratic_only_13_17_ramify
     (P : Chapter09DecompositionData (Gal(L / ℚ)))
     [Fintype (Gal(L / ℚ))]
     (A : Chapter09BiquadraticLocalAnalysis L E P) :
-    ∀ v, A.ramified v ↔ A.primeBelow v = 13 ∨ A.primeBelow v = 17 :=
-  A.ramified_iff
+    ∀ v, A.ramified v ↔ A.primeBelow v = 13 ∨ A.primeBelow v = 17 := by
+  sorry
+
+theorem chapter09_biquadratic_ramified_iff_discriminant_support
+    {L : Type} [Field L] [Algebra ℚ L] [NumberField L]
+    [FiniteDimensional ℚ L] [IsGalois ℚ L]
+    (E : Chapter09BiquadraticPresentation L)
+    (P : Chapter09DecompositionData (Gal(L / ℚ)))
+    [Fintype (Gal(L / ℚ))]
+    (A : Chapter09BiquadraticLocalAnalysis L E P) :
+    ∀ v, A.ramified v ↔
+      ∃ d ∈ A.quadraticDiscriminants, (A.primeBelow v : ℤ) ∣ d :=
+  A.ramified_iff_discriminant_support
 
 theorem chapter09_biquadratic_quadratic_discriminants
     {L : Type} [Field L] [Algebra ℚ L] [NumberField L]
@@ -240,8 +271,69 @@ theorem chapter09_biquadratic_decomposition_groups_are_cyclic
     (P : Chapter09DecompositionData (Gal(L / ℚ)))
     [Fintype (Gal(L / ℚ))]
     (A : Chapter09BiquadraticLocalAnalysis L E P) :
-    ∀ v, IsCyclic (P.decompositionGroup v) :=
-  A.decomposition_groups_cyclic
+    ∀ v, IsCyclic (P.decompositionGroup v) := by
+  sorry
+
+theorem chapter09_biquadratic_decomposition_groups_card_le_two
+    {L : Type} [Field L] [Algebra ℚ L] [NumberField L]
+    [FiniteDimensional ℚ L] [IsGalois ℚ L]
+    (E : Chapter09BiquadraticPresentation L)
+    (P : Chapter09DecompositionData (Gal(L / ℚ)))
+    [Fintype (Gal(L / ℚ))]
+    (A : Chapter09BiquadraticLocalAnalysis L E P) :
+    ∀ v, Nat.card (P.decompositionGroup v) ≤ 2 :=
+  A.decomposition_groups_card_le_two
+
+/-!
+The local algebra used by the displayed example is the canonical tensor
+product from Chapter 1, not an arbitrary family of monoids.  The
+decomposition-group/local-analysis package below records the remaining
+finite-place bridge; the norm failure itself is stated using the canonical
+element/local norm predicates from the same earlier interface.
+-/
+structure Chapter09CanonicalBiquadraticCounterexample where
+  L : Type
+  [field_L : Field L]
+  [numberField_L : NumberField L]
+  [algebra_L : Algebra ℚ L]
+  [finiteDimensional_L : FiniteDimensional ℚ L]
+  [galois_L : IsGalois ℚ L]
+  [fintype_galois_L : Fintype (Gal(L / ℚ))]
+  presentation : Chapter09BiquadraticPresentation L
+  decompositionData : Chapter09DecompositionData (Gal(L / ℚ))
+  localAnalysis : Chapter09BiquadraticLocalAnalysis L presentation decompositionData
+
+attribute [instance] Chapter09CanonicalBiquadraticCounterexample.field_L
+  Chapter09CanonicalBiquadraticCounterexample.numberField_L
+  Chapter09CanonicalBiquadraticCounterexample.algebra_L
+  Chapter09CanonicalBiquadraticCounterexample.finiteDimensional_L
+  Chapter09CanonicalBiquadraticCounterexample.galois_L
+  Chapter09CanonicalBiquadraticCounterexample.fintype_galois_L
+
+theorem chapter09_canonical_biquadratic_local_products
+    {L : Type} [Field L] [NumberField L] [Algebra ℚ L]
+    [FiniteDimensional ℚ L] :
+    ∀ v : LastLib.Book06GlobalClassFieldTheory.Chapter01.BookPlace ℚ,
+      LastLib.Book06GlobalClassFieldTheory.Chapter01.IsLocalProductAlgebra ℚ L v :=
+  LastLib.Book06GlobalClassFieldTheory.Chapter01.local_tensor_product_product_decomposition
+
+/- LOCAL_DEPENDENCY_GUESS: this is the canonical realization of the displayed
+biquadratic field, its decomposition groups, and its local tensor norms. -/
+theorem chapter09_canonical_biquadratic_counterexample_data :
+    Nonempty Chapter09CanonicalBiquadraticCounterexample := by
+  sorry
+
+noncomputable def chapter09CanonicalBiquadraticCounterexample :
+    Chapter09CanonicalBiquadraticCounterexample :=
+  Classical.choice chapter09_canonical_biquadratic_counterexample_data
+
+theorem chapter09_biquadratic_exists_local_not_global_norm_unconditional :
+    ∃ a : ℚ, a ≠ 0 ∧
+      LastLib.Book06GlobalClassFieldTheory.Chapter01.IsLocalElementNorm ℚ
+        chapter09CanonicalBiquadraticCounterexample.L a ∧
+      ¬ LastLib.Book06GlobalClassFieldTheory.Chapter01.IsElementNorm ℚ
+        chapter09CanonicalBiquadraticCounterexample.L a := by
+  sorry
 
 /-!
 The realization structure expresses the canonical compatibility between the
@@ -250,6 +342,7 @@ turn the order-two knot into an explicit local-but-not-global norm statement.
 -/
 structure Chapter09NormRealizationData
     (K L I_K I_L V : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     [CommGroup I_K] [CommGroup I_L]
     (K_v A_v : V → Type*)
     [∀ v, Monoid (K_v v)] [∀ v, Monoid (A_v v)] where
@@ -269,18 +362,14 @@ theorem chapter09_biquadratic_knot_has_order_two
     [NumberField L] [FiniteDimensional ℚ L] [IsGalois ℚ L]
     [Fintype (Gal(L / ℚ))]
     (E : Chapter09BiquadraticPresentation L)
-    (P : Chapter09DecompositionData (Gal(L / ℚ)))
     [CommGroup I_K] [CommGroup I_L]
     (D : Chapter09IdeleNormData ℚ L I_K I_L)
     [Finite (chapter09KnotGroup D)]
     [TopologicalSpace (chapter09KnotGroup D)]
     [IsTopologicalGroup (chapter09KnotGroup D)]
     [DiscreteTopology (chapter09KnotGroup D)]
-    [Finite (chapter09H3LocalizationKernel P)]
-    (A : Chapter09BiquadraticLocalAnalysis L E P)
-    (hdual : Nonempty
-      (Additive (PontryaginDual (chapter09KnotGroup D)) ≃+
-        chapter09H3LocalizationKernel P)) :
+    (R : Chapter09KnotCohomologyRealization D)
+    (A : Chapter09BiquadraticLocalAnalysis L E R.decompositionData) :
     Nat.card (chapter09KnotGroup D) = 2 := by
   sorry
 
@@ -290,7 +379,6 @@ theorem chapter09_biquadratic_exists_local_not_global_norm
     [CommGroup I_K] [CommGroup I_L]
     {K_v A_v : V → Type*}
     [∀ v, Monoid (K_v v)] [∀ v, Monoid (A_v v)]
-    (E : Chapter09BiquadraticPresentation L)
     (R : Chapter09NormRealizationData ℚ L I_K I_L V K_v A_v)
     [Finite (chapter09KnotGroup R.idele)]
     (hknot : Nat.card (chapter09KnotGroup R.idele) = 2) :

@@ -1,4 +1,4 @@
-import LastLib.Book04AdelesAndIdeles.Chapter16.Section03WhatHasNotBeenAsserted
+import LastLib.Book04AdelesAndIdeles.Chapter16.Dependencies
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter16
 

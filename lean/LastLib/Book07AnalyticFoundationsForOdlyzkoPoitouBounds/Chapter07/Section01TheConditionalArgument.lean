@@ -6,11 +6,12 @@ noncomputable section
 
 open MeasureTheory
 
-/- A GRH-admissible test function has the central-line symmetry needed to
-   identify the zero transform with the real Fourier transform, together with
-   Fourier positivity. -/
+/- A GRH-admissible test function packages Chapter 5's basic admissibility,
+   pointwise positivity for the prime term, and Fourier positivity for zeros. -/
 def chapter07GRHAdmissible (f : Chapter07TestFunction) : Prop :=
-  Integrable f ∧ chapter07Even f ∧ chapter07FourierNonnegative f
+  LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.Chapter05BasicallyAdmissible f ∧
+    chapter07PointwiseNonnegative f ∧
+    chapter07FourierNonnegative f
 
 theorem chapter07_zeroTransform_on_critical_line
     (f : Chapter07TestFunction) (hf : Integrable f)

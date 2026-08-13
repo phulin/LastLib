@@ -1,4 +1,5 @@
-import LastLib.Book04AdelesAndIdeles.Chapter16.Section01TwoRestrictedProductsTwoKindsOfGluing
+import LastLib.Book04AdelesAndIdeles.Chapter16.Dependencies
+import LastLib.Book04AdelesAndIdeles.Chapter13.Section06SelfDualityAndTheDiagonalAnnihilator
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter16
 
@@ -185,10 +186,11 @@ theorem chapter16_finite_order_idele_class_characters_factor_through_ray_class_g
     (K : Type*) [Field K] [NumberField K]
     (χ : Chapter16IdeleClassCharacter K)
     (hχ : ∃ n : ℕ, 0 < n ∧ ∀ x, χ x ^ n = 1) :
-    ∃ m : Chapter16Modulus K,
-      ∃ q : Chapter16IdeleClassGroup K →* Chapter16RayClassGroup K m,
-        ∃ χₘ : Chapter16RayClassGroup K m →* ℂˣ,
-          ∀ x, χ x = χₘ (q x) := by
+        ∃ m : Chapter16Modulus K,
+        ∃ q : Chapter16IdeleClassGroup K →* Chapter16RayClassGroup K m,
+          ∃ χₘ : Chapter16RayClassGroup K m →* ℂˣ,
+            Function.Surjective q ∧
+              ∀ x, χ x = χₘ (q x) := by
   sorry
 
 theorem chapter16_general_idele_class_characters_split_into_unitary_and_real_parts
@@ -209,9 +211,12 @@ def chapter16TraceCharacterPairing
   ψ (x * y)
 
 theorem chapter16_standard_trace_character_is_self_dual
-    (K : Type*) [Field K] [NumberField K] :
+    (K : Type*) [Field K] [NumberField K]
+    (D : LastLib.Book04AdelesAndIdeles.Chapter13.Chapter13AdelicTraceData K)
+    (S : LastLib.Book04AdelesAndIdeles.Chapter13.Chapter13AdelicDualityData K D) :
     ∃ ψ : AddChar (Chapter16AdeleRing K) Circle,
-      Continuous (ψ : Chapter16AdeleRing K → Circle) ∧
+      ψ = LastLib.Book04AdelesAndIdeles.Chapter13.chapter13StandardAdditiveCharacter K D ∧
+        Continuous (ψ : Chapter16AdeleRing K → Circle) ∧
       chapter16AdditiveAnnihilator ψ (Chapter16PrincipalAdeles K) =
           (Chapter16PrincipalAdeles K : Set (Chapter16AdeleRing K)) ∧
         (∃ e : Chapter16AdeleRing K ≃+
@@ -227,7 +232,11 @@ theorem chapter16_standard_trace_character_is_self_dual
 theorem chapter16_GL_n_is_a_restricted_product_with_compact_open_finite_levels
     (K : Type*) [Field K] [NumberField K]
     (n : Type*) [DecidableEq n] [Fintype n] :
-    chapter16HasCompactOpenFiniteLevel (Chapter16GeneralLinearAdeles K n) := by
+    Nonempty
+        (Chapter16GeneralLinearAdeles K n ≃
+          Matrix.GeneralLinearGroup n (NumberField.InfiniteAdeleRing K) ×
+            Chapter16FiniteGLnRestrictedProduct K n) ∧
+      chapter16HasCompactOpenFiniteLevel (Chapter16GeneralLinearAdeles K n) := by
   sorry
 
 theorem chapter16_GL_n_finite_levels_are_compact_open
@@ -254,7 +263,7 @@ theorem chapter16_rank_one_recovers_idele_class_characters
     ∃ e : Matrix.GeneralLinearGroup (Fin 1) (Chapter16AdeleRing K) ≃*
         Chapter16Ideles K,
       ∀ χ : Chapter16IdeleClassCharacter K,
-        ∃ χ₁ : Matrix.GeneralLinearGroup (Fin 1) (Chapter16AdeleRing K) →* ℂˣ,
+        ∃ χ₁ : Matrix.GeneralLinearGroup (Fin 1) (Chapter16AdeleRing K) →ₜ* ℂˣ,
           ∀ x, χ (QuotientGroup.mk' (chapter16PrincipalIdeles K) (e x)) = χ₁ x := by
   sorry
 

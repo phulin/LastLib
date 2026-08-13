@@ -1,5 +1,7 @@
 import LastLib.Book03RamificationTheory.Chapter14.Core
 import LastLib.Book03RamificationTheory.Chapter04.Dependencies
+import Mathlib.Algebra.CharP.Algebra
+import Mathlib.Algebra.Field.ULift
 import Mathlib.RepresentationTheory.Rep.Basic
 
 namespace LastLib.Book03RamificationTheory.Chapter14
@@ -8,9 +10,14 @@ noncomputable section
 
 open scoped BigOperators
 
+universe u
+
+instance chapter14ULiftRationalCharZero : CharZero (ULift.{u} ℚ) :=
+  charZero_of_injective_ringHom (ULift.ringEquiv.symm.toRingHom.injective)
+
 /-!
 ## 14.2. Normal closures and overcounting
--/
+-/ 
 
 /- LOCAL_DEPENDENCY_GUESS: the subgroup/fixed-field data are separated from a chosen embedding of the
 nongalois field.  The residue-separability field is deliberately a Prop: the
@@ -78,17 +85,21 @@ def chapter14RegularRepresentation
   (Rep.ofMulAction k G G).ρ
 
 def chapter14PermutationConductor
-    {G : Type*} [Group G] [Fintype G]
+    {G : Type u} [Group G] [Fintype G]
     (P : LastLib.Book03RamificationTheory.Chapter12.Chapter12ConductorProfile G)
     (H : Subgroup G) [Fintype (G ⧸ H)]
-    [FiniteDimensional ℚ (MonoidAlgebra ℚ (G ⧸ H))] : ℕ :=
-  P.artinConductor _ (chapter14PermutationRepresentation ℚ G (G ⧸ H))
+    [FiniteDimensional (ULift.{u} ℚ)
+      (MonoidAlgebra (ULift.{u} ℚ) (G ⧸ H))] : ℕ :=
+  P.artinConductor (E := ULift.{u} ℚ) _
+    (chapter14PermutationRepresentation (ULift.{u} ℚ) G (G ⧸ H))
 
 def chapter14RegularConductor
-    {G : Type*} [Group G] [Fintype G]
+    {G : Type u} [Group G] [Fintype G]
     (P : LastLib.Book03RamificationTheory.Chapter12.Chapter12ConductorProfile G)
-    [FiniteDimensional ℚ (MonoidAlgebra ℚ G)] : ℕ :=
-  P.artinConductor _ (chapter14RegularRepresentation ℚ G)
+    [FiniteDimensional (ULift.{u} ℚ)
+      (MonoidAlgebra (ULift.{u} ℚ) G)] : ℕ :=
+  P.artinConductor (E := ULift.{u} ℚ) _
+    (chapter14RegularRepresentation (ULift.{u} ℚ) G)
 
 theorem chapter14_coset_permutation_dimension
     {k G : Type*} [Field k] [Group G] (H : Subgroup G)
@@ -113,10 +124,12 @@ theorem chapter14_cubic_coset_card
 discriminants separate.  Its `distinct` field is the mathematically precise
 genericity condition; it is not silently inferred from the group orders. -/
 structure Chapter14GenericCubicOvercounting
-    (G : Type*) [Group G] [Finite G] [Fintype G]
+    (G : Type u) [Group G] [Finite G] [Fintype G]
     (H : Subgroup G) [Fintype (G ⧸ H)]
-    [FiniteDimensional ℚ (MonoidAlgebra ℚ (G ⧸ H))]
-    [FiniteDimensional ℚ (MonoidAlgebra ℚ G)]
+    [FiniteDimensional (ULift.{u} ℚ)
+      (MonoidAlgebra (ULift.{u} ℚ) (G ⧸ H))]
+    [FiniteDimensional (ULift.{u} ℚ)
+      (MonoidAlgebra (ULift.{u} ℚ) G)]
     (P : LastLib.Book03RamificationTheory.Chapter12.Chapter12ConductorProfile G) where
   group_card : Nat.card G = 6
   subgroup_card : Nat.card H = 2
@@ -129,10 +142,12 @@ structure Chapter14GenericCubicOvercounting
   discriminants_distinct : cubicDiscriminant ≠ closureDiscriminant
 
 theorem chapter14_generic_cubic_dimensions
-    {G : Type*} [Group G] [Finite G] [Fintype G]
+    {G : Type u} [Group G] [Finite G] [Fintype G]
     {H : Subgroup G} [Fintype (G ⧸ H)]
-    [FiniteDimensional ℚ (MonoidAlgebra ℚ (G ⧸ H))]
-    [FiniteDimensional ℚ (MonoidAlgebra ℚ G)]
+    [FiniteDimensional (ULift.{u} ℚ)
+      (MonoidAlgebra (ULift.{u} ℚ) (G ⧸ H))]
+    [FiniteDimensional (ULift.{u} ℚ)
+      (MonoidAlgebra (ULift.{u} ℚ) G)]
     {P : LastLib.Book03RamificationTheory.Chapter12.Chapter12ConductorProfile G}
     (D : Chapter14GenericCubicOvercounting G H P) :
     Nat.card (G ⧸ H) = 3 ∧
@@ -141,10 +156,12 @@ theorem chapter14_generic_cubic_dimensions
   sorry
 
 theorem chapter14_generic_cubic_conductors_are_not_equal
-    {G : Type*} [Group G] [Finite G] [Fintype G]
+    {G : Type u} [Group G] [Finite G] [Fintype G]
     {H : Subgroup G} [Fintype (G ⧸ H)]
-    [FiniteDimensional ℚ (MonoidAlgebra ℚ (G ⧸ H))]
-    [FiniteDimensional ℚ (MonoidAlgebra ℚ G)]
+    [FiniteDimensional (ULift.{u} ℚ)
+      (MonoidAlgebra (ULift.{u} ℚ) (G ⧸ H))]
+    [FiniteDimensional (ULift.{u} ℚ)
+      (MonoidAlgebra (ULift.{u} ℚ) G)]
     {P : LastLib.Book03RamificationTheory.Chapter12.Chapter12ConductorProfile G}
     (D : Chapter14GenericCubicOvercounting G H P) :
     chapter14PermutationConductor P H ≠ chapter14RegularConductor P := by
@@ -159,7 +176,7 @@ theorem chapter14_generic_cubic_conductors_are_not_equal
 /- The permutation conductor identity is only asserted after the selected
 normal closure has separable residue extension. -/
 theorem chapter14_permutation_conductor_recovers_intrinsic_different
-    {K M L : Type*} [Field K] [Field M] [Field L]
+    {K M L : Type u} [Field K] [Field M] [Field L]
     [Algebra K M] [Algebra K L] [Algebra M L] [IsScalarTower K M L]
     [FiniteDimensional K M] [FiniteDimensional K L] [Algebra.IsSeparable K M]
     [IsGalois K L]
@@ -168,14 +185,15 @@ theorem chapter14_permutation_conductor_recovers_intrinsic_different
     (P : LastLib.Book03RamificationTheory.Chapter12.Chapter12ConductorProfile
       (Gal(L / K)))
     [Fintype (Gal(L / K) ⧸ R.realization.subgroup)]
-    [FiniteDimensional ℚ
-      (MonoidAlgebra ℚ (Gal(L / K) ⧸ R.realization.subgroup))]
+    [FiniteDimensional (ULift.{u} ℚ)
+      (MonoidAlgebra (ULift.{u} ℚ)
+        (Gal(L / K) ⧸ R.realization.subgroup))]
     (hres : R.residue_extension_separable) :
     chapter14PermutationConductor P R.realization.subgroup = δ := by
   sorry
 
 theorem chapter14_permutation_conductor_independent_of_closure
-    {K M L₁ L₂ : Type*} [Field K] [Field M] [Field L₁] [Field L₂]
+    {K M L₁ L₂ : Type u} [Field K] [Field M] [Field L₁] [Field L₂]
     [Algebra K M] [Algebra K L₁] [Algebra K L₂]
     [Algebra M L₁] [Algebra M L₂]
     [IsScalarTower K M L₁] [IsScalarTower K M L₂]
@@ -192,10 +210,12 @@ theorem chapter14_permutation_conductor_independent_of_closure
       (Gal(L₂ / K)))
     [Fintype (Gal(L₁ / K) ⧸ R₁.realization.subgroup)]
     [Fintype (Gal(L₂ / K) ⧸ R₂.realization.subgroup)]
-    [FiniteDimensional ℚ
-      (MonoidAlgebra ℚ (Gal(L₁ / K) ⧸ R₁.realization.subgroup))]
-    [FiniteDimensional ℚ
-      (MonoidAlgebra ℚ (Gal(L₂ / K) ⧸ R₂.realization.subgroup))]
+    [FiniteDimensional (ULift.{u} ℚ)
+      (MonoidAlgebra (ULift.{u} ℚ)
+        (Gal(L₁ / K) ⧸ R₁.realization.subgroup))]
+    [FiniteDimensional (ULift.{u} ℚ)
+      (MonoidAlgebra (ULift.{u} ℚ)
+        (Gal(L₂ / K) ⧸ R₂.realization.subgroup))]
     (hres₁ : R₁.residue_extension_separable)
     (hres₂ : R₂.residue_extension_separable) :
     chapter14PermutationConductor P₁ R₁.realization.subgroup =

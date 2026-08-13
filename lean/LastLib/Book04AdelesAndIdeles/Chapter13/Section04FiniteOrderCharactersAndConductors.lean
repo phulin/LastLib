@@ -1,3 +1,4 @@
+import Mathlib.Analysis.Complex.Convex
 import LastLib.Book04AdelesAndIdeles.Chapter13.Section03UnitaryCharactersAndModulusTwists
 
 open scoped NumberField.AdeleRing RestrictedProduct
@@ -35,18 +36,35 @@ theorem chapter13_finite_image_kernel_open
     IsOpen (chapter13ClassCharacterKernel K χ : Set (Chapter13IdeleClass K)) := by
   sorry
 
+theorem chapter13_finite_order_kernel_quotient_finite
+    (K : Type*) [Field K] [NumberField K]
+    (χ : Chapter13ClassCharacter K)
+    (hχ : chapter13FiniteOrderClassCharacter K χ) :
+    Finite (Chapter13IdeleClass K ⧸ chapter13ClassCharacterKernel K χ) := by
+  sorry
+
 def chapter13PullbackRayCharacter
     (K : Type*) [Field K] [NumberField K]
-    {M : Type*} [Preorder M]
+    {M : Type*} [PartialOrder M]
     (S : Chapter13RayClassSystem K M) (m : M)
     (θ : Chapter13RayClassCharacter S m) : Chapter13ClassCharacter K :=
   { toMonoidHom :=
       θ.comp (QuotientGroup.mk' (S.level m))
     continuous_toFun := by sorry }
 
+theorem chapter13_pullback_ray_character_compatible_with_transition
+    (K : Type*) [Field K] [NumberField K]
+    {M : Type*} [PartialOrder M]
+    (S : Chapter13RayClassSystem K M) {m n : M} (hmn : m ≤ n)
+    (θ : Chapter13RayClassCharacter S m) :
+    chapter13PullbackRayCharacter K S m θ =
+      chapter13PullbackRayCharacter K S n
+        (θ.comp (chapter13RayClassTransitionMap K S hmn)) := by
+  sorry
+
 def chapter13FactorsThroughRayLevel
     (K : Type*) [Field K] [NumberField K]
-    {M : Type*} [Preorder M]
+    {M : Type*} [PartialOrder M]
     (S : Chapter13RayClassSystem K M)
   (χ : Chapter13ClassCharacter K) (m : M) : Prop :=
   ∃ θ : Chapter13RayClassCharacter S m,
@@ -54,7 +72,7 @@ def chapter13FactorsThroughRayLevel
 
 theorem chapter13_finite_order_character_factors_through_a_ray_level
     (K : Type*) [Field K] [NumberField K]
-    {M : Type*} [Preorder M]
+    {M : Type*} [PartialOrder M]
     (S : Chapter13RayClassSystem K M)
     (χ : Chapter13ClassCharacter K)
     (hχ : chapter13FiniteOrderClassCharacter K χ) :
@@ -63,7 +81,7 @@ theorem chapter13_finite_order_character_factors_through_a_ray_level
 
 theorem chapter13_ray_level_factorization_is_finite_order
     (K : Type*) [Field K] [NumberField K]
-    {M : Type*} [Preorder M]
+    {M : Type*} [PartialOrder M]
     (S : Chapter13RayClassSystem K M)
     (χ : Chapter13ClassCharacter K) (m : M)
     (hχ : chapter13FactorsThroughRayLevel K S χ m) :
@@ -72,7 +90,7 @@ theorem chapter13_ray_level_factorization_is_finite_order
 
 theorem chapter13_finite_order_characters_directed_union_of_ray_duals
     (K : Type*) [Field K] [NumberField K]
-    {M : Type*} [Preorder M]
+    {M : Type*} [PartialOrder M]
     (S : Chapter13RayClassSystem K M)
     (χ : Chapter13ClassCharacter K) :
     chapter13FiniteOrderClassCharacter K χ ↔
@@ -85,15 +103,15 @@ independent levelwise duals. -/
 
 def chapter13IsConductor
     (K : Type*) [Field K] [NumberField K]
-    {M : Type*} [Preorder M]
+    {M : Type*} [PartialOrder M]
     (S : Chapter13RayClassSystem K M)
     (χ : Chapter13ClassCharacter K) (m : M) : Prop :=
   chapter13FactorsThroughRayLevel K S χ m ∧
-    ∀ n, n < m → ¬ chapter13FactorsThroughRayLevel K S χ n
+    ∀ n, chapter13FactorsThroughRayLevel K S χ n → m ≤ n
 
 theorem chapter13_finite_order_character_has_conductor
     (K : Type*) [Field K] [NumberField K]
-    {M : Type*} [Preorder M] [WellFoundedLT M]
+    {M : Type*} [PartialOrder M]
     (S : Chapter13RayClassSystem K M)
     (χ : Chapter13ClassCharacter K)
     (hχ : chapter13FiniteOrderClassCharacter K χ) :
@@ -102,7 +120,7 @@ theorem chapter13_finite_order_character_has_conductor
 
 noncomputable def chapter13Conductor
     (K : Type*) [Field K] [NumberField K]
-    {M : Type*} [Preorder M] [WellFoundedLT M]
+    {M : Type*} [PartialOrder M]
     (S : Chapter13RayClassSystem K M)
     (χ : Chapter13ClassCharacter K)
     (hχ : chapter13FiniteOrderClassCharacter K χ) : M :=
@@ -110,7 +128,7 @@ noncomputable def chapter13Conductor
 
 theorem chapter13_conductor_specification
     (K : Type*) [Field K] [NumberField K]
-    {M : Type*} [Preorder M] [WellFoundedLT M]
+    {M : Type*} [PartialOrder M]
     (S : Chapter13RayClassSystem K M)
     (χ : Chapter13ClassCharacter K)
     (hχ : chapter13FiniteOrderClassCharacter K χ) :
@@ -129,7 +147,6 @@ theorem chapter13_connected_finite_order_character_trivial
   sorry
 
 theorem chapter13_complex_place_finite_order_character_trivial
-    [ConnectedSpace (ℂ)ˣ]
     (χ : (ℂ)ˣ →ₜ* ℂˣ)
     (hχ : ∃ n : ℕ, 0 < n ∧ ∀ x, χ x ^ n = 1) :
     χ = 1 := by
@@ -137,7 +154,6 @@ theorem chapter13_complex_place_finite_order_character_trivial
 
 theorem chapter13_real_sign_character_is_not_trivial
     (χ : ℝˣ →ₜ* ℂˣ)
-    (hχ : ∃ n : ℕ, 0 < n ∧ ∀ x, χ x ^ n = 1)
     (hsign : χ (-1) ≠ 1) :
     χ ≠ 1 := by
   sorry
@@ -147,8 +163,7 @@ def chapter13InfiniteImageCharacter
   Set.Infinite (Set.range χ)
 
 theorem chapter13_unitary_does_not_imply_finite_order
-    (K : Type*) [Field K] [NumberField K]
-    (D : Chapter13NormDirectionData K) :
+    (K : Type*) [Field K] [NumberField K] :
     ∃ χ : Chapter13ClassCharacter K,
       chapter13IsUnitaryCharacter χ ∧
         ¬ chapter13FiniteOrderClassCharacter K χ := by

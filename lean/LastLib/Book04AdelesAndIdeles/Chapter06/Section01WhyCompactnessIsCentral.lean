@@ -19,7 +19,8 @@ records exactly the two structural assertions used throughout the chapter. -/
 
 theorem chapter06_additive_lattice_iff
     {G : Type*} {H : Type*} [AddCommGroup G] [AddCommGroup H]
-    [TopologicalSpace H] (ι : G →+ H) :
+    [TopologicalSpace H] [IsTopologicalAddGroup H] [T2Space H]
+    (ι : G →+ H) :
     Chapter06AdditiveLattice ι ↔
       Chapter06DiscreteEmbedding ι ∧
         CompactSpace (H ⧸ chapter06ImageSubgroup ι) := Iff.rfl
@@ -31,7 +32,8 @@ theorem chapter06_adelic_diagonal_injective
 
 theorem chapter06_additive_lattice_of_discrete_and_cocompact
     {G : Type*} {H : Type*} [AddCommGroup G] [AddCommGroup H]
-    [TopologicalSpace H] (ι : G →+ H)
+    [TopologicalSpace H] [IsTopologicalAddGroup H] [T2Space H]
+    (ι : G →+ H)
     (hdiscrete : Chapter06DiscreteEmbedding ι)
     (hcocompact : CompactSpace (H ⧸ chapter06ImageSubgroup ι)) :
     Chapter06AdditiveLattice ι := by

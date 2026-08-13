@@ -23,8 +23,11 @@ abbrev Chapter15FunctionOnAutomorphicQuotient (n : ℕ)
 structure Chapter15AutomorphicConditions (n : ℕ)
     (F : Chapter15GLnAdeles n R K → ℂ) where
   regularity : Prop
+  regularity_holds : regularity
   growth : Prop
+  growth_holds : growth
   finiteness : Prop
+  finiteness_holds : finiteness
   cuspidality : Prop
 
 /-- An adelic automorphic function at a finite level, represented on the ambient group. -/
@@ -50,6 +53,32 @@ def chapter15AutomorphicFunctionPullback
   fun g => F (chapter15DoubleQuotientMk
     (chapter15PrincipalMatrix (R := R) (K := K) n).range
     (chapter15GlobalLevelSubgroup n Kf) g)
+
+def chapter15AutomorphicFunctionDescend
+    (n : ℕ) (Kf : Subgroup (Chapter15FiniteMatrixGroup n R K))
+    (F : Chapter15GLnAdeles n R K → ℂ)
+    (hleft : ∀ γ : Matrix.GeneralLinearGroup (Fin n) K, ∀ g,
+      F (chapter15PrincipalMatrix n γ * g) = F g)
+    (hright : ∀ g k, k ∈ chapter15GlobalLevelSubgroup n Kf →
+      F (g * k) = F g) :
+    Chapter15FunctionOnAutomorphicQuotient n Kf := by
+  sorry
+
+theorem chapter15AutomorphicFunctionDescend_pullback
+    (n : ℕ) (Kf : Subgroup (Chapter15FiniteMatrixGroup n R K))
+    (F : Chapter15GLnAdeles n R K → ℂ)
+    (hleft : ∀ γ : Matrix.GeneralLinearGroup (Fin n) K, ∀ g,
+      F (chapter15PrincipalMatrix n γ * g) = F g)
+    (hright : ∀ g k, k ∈ chapter15GlobalLevelSubgroup n Kf →
+      F (g * k) = F g) :
+    chapter15AutomorphicFunctionPullback n Kf
+        (chapter15AutomorphicFunctionDescend n Kf F hleft hright) = F := by
+  sorry
+
+theorem chapter15AutomorphicFunctionPullback_injective
+    (n : ℕ) (Kf : Subgroup (Chapter15FiniteMatrixGroup n R K)) :
+    Function.Injective (chapter15AutomorphicFunctionPullback (R := R) (K := K) n Kf) := by
+  sorry
 
 theorem chapter15AutomorphicFunctionPullback_left_invariant
     (n : ℕ) (Kf : Subgroup (Chapter15FiniteMatrixGroup n R K))

@@ -4,10 +4,10 @@ import Mathlib.Analysis.Calculus.ContDiff.Defs
 import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
 import Mathlib.MeasureTheory.Integral.Bochner.Set
 import Mathlib.NumberTheory.Harmonic.EulerMascheroni
-import Mathlib.NumberTheory.NumberField.DedekindZeta
 import Mathlib.NumberTheory.NumberField.Discriminant.Different
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter04.Section04PolesZerosAndGrowth
 
 namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter13
 
@@ -95,7 +95,10 @@ def chapter13CosineTransform (F : ℝ → ℝ) (t : ℝ) : ℝ :=
 
 /-- Positive type in the real-even convention used for test functions. -/
 def chapter13PositiveType (G : ℝ → ℝ) : Prop :=
-  ∀ t : ℝ, 0 ≤ chapter13CosineTransform G t
+  Function.Even G ∧
+    Continuous G ∧
+      Integrable G ∧
+        ∀ t : ℝ, 0 ≤ chapter13CosineTransform G t
 
 /-- The finite set of possible nonsmooth points of a basically admissible function. -/
 def chapter13PiecewiseC2 (F : ℝ → ℝ) : Prop :=
@@ -136,14 +139,19 @@ def chapter13UnconditionallyAdmissible (F : ℝ → ℝ) : Prop :=
         F = fun x => G x / Real.cosh (x / 2)
 
 /-!
-The nontrivial zero predicate is the minimum GRH interface needed here.  A
-preceding zeta chapter may replace it by its completed-zeta formulation;
-the open-strip formulation is equivalent once the functional equation and
-the pole/trivial-zero bookkeeping have been established.
+The nontrivial zero predicate is the minimum GRH interface needed here.  It is
+defined through the completed-zeta zero predicate from Chapter 4, rather than
+through Mathlib's raw `LSeries` representation of the Dedekind zeta function:
+the latter is defined to be zero away from its convergence region and is not
+the analytic continuation used by the explicit formula.  The completed-zeta
+predicate includes the closed critical strip, including possible boundary
+zeros; the point `s = 0` is excluded as part of the pole/trivial-zero
+bookkeeping.
 -/
 def chapter13NontrivialDedekindZetaZero
     (K : Type*) [Field K] [NumberField K] (s : ℂ) : Prop :=
-  NumberField.dedekindZeta K s = 0 ∧ 0 < s.re ∧ s.re < 1
+  LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter04.chapter04NontrivialZero K s ∧
+    0 ≤ s.re ∧ s.re ≤ 1 ∧ s ≠ 0
 
 def chapter13GRHFor (K : Type*) [Field K] [NumberField K] : Prop :=
   ∀ s : ℂ, chapter13NontrivialDedekindZetaZero K s → s.re = 1 / 2
@@ -208,6 +216,12 @@ theorem chapter13_global_log_rootDiscriminant_lower_bound
   · exact hF.lower_bound K
   · exact hF.lower_bound K (hGRH K)
 
+theorem chapter13_fieldwiseAnalyticBound_of_global
+    (F : ℝ → ℝ) (hF : chapter13GlobalAnalyticBound.{u} F) :
+    ∀ (K : Type u) [Field K] [NumberField K],
+      chapter13FieldwiseAnalyticBound F K := by
+  sorry
+
 theorem chapter13_logLowerBound_mono
     (F : ℝ → ℝ) {m n : ℕ} {α β : ℝ}
     (hA : 0 < chapter13A F) (hm : 0 < m) (hmn : m ≤ n)
@@ -252,19 +266,22 @@ theorem chapter13_threshold_principle_general
 /-- The relative discriminant ideal, obtained as the relative norm of the different. -/
 noncomputable def chapter13RelativeDiscriminantIdeal
     (F L : Type*) [Field F] [NumberField F] [Field L] [NumberField L]
-    [Algebra F L] [Module.Finite (𝓞 F) (𝓞 L)] : Ideal (𝓞 F) :=
+    [Algebra F L] [IsScalarTower ℚ F L]
+    [Module.Finite (𝓞 F) (𝓞 L)] : Ideal (𝓞 F) :=
   Ideal.relNorm (𝓞 F) (differentIdeal (𝓞 F) (𝓞 L))
 
 /-- The absolute norm of the relative discriminant ideal. -/
 noncomputable def chapter13RelativeDiscriminantNorm
     (F L : Type*) [Field F] [NumberField F] [Field L] [NumberField L]
-    [Algebra F L] [Module.Finite (𝓞 F) (𝓞 L)] : ℕ :=
+    [Algebra F L] [IsScalarTower ℚ F L]
+    [Module.Finite (𝓞 F) (𝓞 L)] : ℕ :=
   Ideal.absNorm (chapter13RelativeDiscriminantIdeal F L)
 
 /-- The relative different contribution after taking the absolute degree root. -/
 noncomputable def chapter13RelativeDifferentContribution
     (F L : Type*) [Field F] [NumberField F] [Field L] [NumberField L]
-    [Algebra F L] [Module.Finite (𝓞 F) (𝓞 L)] : ℝ :=
+    [Algebra F L] [IsScalarTower ℚ F L]
+    [Module.Finite (𝓞 F) (𝓞 L)] : ℝ :=
   Real.rpow (chapter13RelativeDiscriminantNorm F L : ℝ)
     ((chapter13Degree L : ℝ)⁻¹)
 
@@ -274,7 +291,8 @@ with the relative norm of the different identified with the relative
 discriminant ideal. -/
 theorem chapter13_rootDiscriminant_tower_formula
     (F L : Type*) [Field F] [NumberField F] [Field L] [NumberField L]
-    [Algebra F L] [Module.Finite (𝓞 F) (𝓞 L)] :
+    [Algebra F L] [IsScalarTower ℚ F L]
+    [Module.Finite (𝓞 F) (𝓞 L)] :
     chapter13RootDiscriminant L =
       chapter13RootDiscriminant F * chapter13RelativeDifferentContribution F L := by
   sorry
@@ -332,7 +350,8 @@ theorem chapter13_absolute_ceiling_from_local_costs_pos
 
 theorem chapter13_rootDiscriminant_eq_of_relative_discriminant_ideal_eq_one
     (F L : Type*) [Field F] [NumberField F] [Field L] [NumberField L]
-    [Algebra F L] [Module.Finite (𝓞 F) (𝓞 L)]
+    [Algebra F L] [IsScalarTower ℚ F L]
+    [Module.Finite (𝓞 F) (𝓞 L)]
     (hunramified : chapter13RelativeDiscriminantIdeal F L = 1) :
     chapter13RootDiscriminant L = chapter13RootDiscriminant F := by
   sorry

@@ -48,20 +48,71 @@ theorem chapter04_finite_relative_generators_of_quasiCompact
     chapter04LocallyFiniteRelativeGeneration f L := by
   sorry
 
-/- DEPENDENCY_GUESS: the standard `P¹` and its two named line bundles are not
-yet exposed by the preceding Book 8 files or pinned Mathlib.  This data record
-keeps only the underlying objects needed by the examples; the generation,
-separation, and identity assertions belong after a canonical `P¹` interface. -/
-structure Chapter04ProjectiveLineExample (K : Type u) [Field K] where
-  projectiveLine : Scheme.{u}
-  structureMap : projectiveLine ⟶ AlgebraicGeometry.Spec (.of K)
-  trivial : Chapter04LineBundle projectiveLine
-  tautological : Chapter04LineBundle projectiveLine
-  constant_section : trivial.sheaf.val.sections
-  constant_map : projectiveLine ⟶ projectiveLine
-  constant_map_over : constant_map ≫ structureMap = structureMap
-  constant_map_is_constant : chapter04UnderlyingConstant constant_map
-  basis : Fin 2 → tautological.sheaf.sections
+/-! The standard projective line is the rank-two canonical projective space
+from Chapter 2.  The following assertions expose the examples from the
+source without replacing their target schemes by arbitrary data. -/
+
+noncomputable def chapter04ProjectiveLineConstantSection
+    (K : Type u) [Field K] :
+    (chapter04ProjectiveLineTrivialLineBundle K).sheaf.sections :=
+  SheafOfModules.unitHomEquiv (chapter04ProjectiveLineTrivialLineBundle K).sheaf (𝟙 _)
+
+theorem chapter04_projective_line_trivial_constant_section_generates
+    (K : Type u) [Field K] :
+    Epi (((chapter04ProjectiveLineTrivialLineBundle K).sheaf.freeHomEquiv
+      (I := ULift.{u} (Fin 1))).symm
+      (fun _ : ULift.{u} (Fin 1) => chapter04ProjectiveLineConstantSection K)) := by
+  sorry
+
+theorem chapter04_projective_line_trivial_is_generated
+    (K : Type u) [Field K] :
+    chapter04GeneratedByRelativeGlobalSections
+      (chapter04ProjectiveLineStructureMap K)
+      (chapter04ProjectiveLineTrivialLineBundle K) := by
+  sorry
+
+theorem chapter04_projective_line_example_exists
+    (K : Type u) [Field K] :
+    Nonempty (Chapter04ProjectiveLineExample K) := by
+  sorry
+
+noncomputable def chapter04ProjectiveLineExample
+    (K : Type u) [Field K] : Chapter04ProjectiveLineExample K :=
+  Classical.choice (chapter04_projective_line_example_exists K)
+
+theorem chapter04_projective_line_constant_map_is_over
+    (K : Type u) [Field K] :
+    (chapter04ProjectiveLineExample K).constant_map ≫
+        chapter04ProjectivePointStructureMap K =
+      chapter04ProjectiveLineStructureMap K := by
+  sorry
+
+theorem chapter04_projective_line_constant_map_is_constant
+    (K : Type u) [Field K] :
+    chapter04UnderlyingConstant (chapter04ProjectiveLineExample K).constant_map := by
+  sorry
+
+theorem chapter04_projective_line_tautological_basis_generates
+    (K : Type u) [Field K] :
+    Epi (((chapter04ProjectiveLineTautologicalLineBundle K).sheaf.freeHomEquiv
+      (I := ULift.{u} (Fin 2))).symm
+      (fun i : ULift.{u} (Fin 2) => chapter04ProjectiveLineTautologicalBasis K i.down)) := by
+  sorry
+
+theorem chapter04_projective_line_tautological_identity_embedding
+    (K : Type u) [Field K] :
+    IsImmersion (𝟙 (chapter04ProjectiveLine K)) ∧
+      Nonempty ((chapter04ProjectiveLineTautologicalLineBundle K).sheaf ≅
+        (Scheme.Modules.pullback (𝟙 (chapter04ProjectiveLine K))).obj
+          (chapter04ProjectiveLineTautologicalLineBundle K).sheaf) := by
+  sorry
+
+theorem chapter04_projective_line_tautological_is_veryAmple
+    (K : Type u) [Field K] :
+    chapter04VeryAmple
+      (chapter04ProjectiveLineStructureMap K)
+      (chapter04ProjectiveLineTautologicalLineBundle K) := by
+  sorry
 
 end
 end LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04

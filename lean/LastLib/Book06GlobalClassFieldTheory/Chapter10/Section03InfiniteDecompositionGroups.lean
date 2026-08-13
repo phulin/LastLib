@@ -4,7 +4,7 @@ namespace LastLib.Book06GlobalClassFieldTheory.Chapter10
 
 noncomputable section
 
-universe u
+universe u v w x y z
 
 /-!
 ## 10.3. Infinite decomposition groups
@@ -14,26 +14,27 @@ universe u
 reciprocity map are supplied by the preceding local/global class-field
 chapters. The square below records only their functorial interface. -/
 structure Chapter10LocalGlobalReciprocitySquare
-    (C K Kab Kv Gv : Type u)
+    (C : Type u) (K : Type v) (Kab : Type w) (Kv : Type x) (Gv : Type y)
     [CommGroup C] [TopologicalSpace C] [IsTopologicalGroup C]
     [Field K] [Field Kab] [Algebra K Kab] [IsGalois K Kab]
-    [Field Kv] [Group Gv]
+  [Field Kv] [CommGroup Gv]
     (F : Chapter10FiniteArtinFamily C K Kab) where
+  /-- The local factor embeds into the idele class group. -/
   localEmbedding : Kvˣ →* C
+  localEmbedding_injective : Function.Injective localEmbedding
   localReciprocity : Kvˣ →* Gv
   decompositionMap : Gv →* Gal(Kab / K)
-  decompositionMap_injective : Function.Injective decompositionMap
   commutes :
     (decompositionMap.comp localReciprocity) =
       (chapter10GlobalArtinMap F).comp localEmbedding
 
 namespace Chapter10LocalGlobalReciprocitySquare
 
-variable {C K Kab Kv Gv : Type u}
-  [CommGroup C] [TopologicalSpace C] [IsTopologicalGroup C]
-  [Field K] [Field Kab] [Algebra K Kab] [IsGalois K Kab]
-  [Field Kv] [Group Gv]
-  {F : Chapter10FiniteArtinFamily C K Kab}
+  variable {C : Type u} {K : Type v} {Kab : Type w} {Kv : Type x} {Gv : Type y}
+    [CommGroup C] [TopologicalSpace C]
+    [IsTopologicalGroup C] [Field K] [Field Kab] [Algebra K Kab] [IsGalois K Kab]
+    [Field Kv] [CommGroup Gv]
+    {F : Chapter10FiniteArtinFamily C K Kab}
 
 def globalLocalArtin
     (S : Chapter10LocalGlobalReciprocitySquare C K Kab Kv Gv F) :
@@ -50,11 +51,6 @@ theorem commutative_square
     (S.decompositionMap.comp S.localReciprocity) =
       (chapter10GlobalArtinMap F).comp S.localEmbedding := by
   exact S.commutes
-
-theorem local_map_identifies_decomposition_group
-    (S : Chapter10LocalGlobalReciprocitySquare C K Kab Kv Gv F) :
-    Function.Injective S.decompositionMap :=
-  S.decompositionMap_injective
 
 end Chapter10LocalGlobalReciprocitySquare
 
@@ -81,81 +77,92 @@ theorem chapter10_decomposition_group_choice_independent_after_abelianization
 /- The local units and a finite-place uniformizer are recorded against the
 global inertia quotient. -/
 structure Chapter10FinitePlaceReciprocityData
-    (C K Kab Kv Gv : Type u)
+    (C : Type u) (K : Type v) (Kab : Type w) (Kv : Type x) (Gv : Type y)
     [CommGroup C] [TopologicalSpace C] [IsTopologicalGroup C]
     [Field K] [Field Kab] [Algebra K Kab] [IsGalois K Kab]
-    [Field Kv] [Group Gv]
+    [Field Kv] [CommGroup Gv]
     (F : Chapter10FiniteArtinFamily C K Kab)
     (S : Chapter10LocalGlobalReciprocitySquare C K Kab Kv Gv F) where
-  localUnits : Subgroup Kvˣ
+  /-- The normalized valuation on the local multiplicative group. -/
+  valuation : Kvˣ →* Multiplicative ℤ
   uniformizer : Kvˣ
+  uniformizer_valuation :
+    valuation uniformizer = Multiplicative.ofAdd 1
   globalInertia : Subgroup (Gal(Kab / K))
   [globalInertia_normal : globalInertia.Normal]
   units_map_to_inertia :
-    localUnits.map S.globalLocalArtin ≤ globalInertia
+    valuation.ker.map (Chapter10LocalGlobalReciprocitySquare.globalLocalArtin S) ≤ globalInertia
   arithmeticFrobenius : Gal(Kab / K) ⧸ globalInertia
   uniformizer_maps_to_arithmeticFrobenius :
-    QuotientGroup.mk' globalInertia (S.globalLocalArtin uniformizer) =
+    QuotientGroup.mk' globalInertia
+        (Chapter10LocalGlobalReciprocitySquare.globalLocalArtin S uniformizer) =
       arithmeticFrobenius
 
 attribute [instance] Chapter10FinitePlaceReciprocityData.globalInertia_normal
 
 theorem chapter10_units_map_to_global_inertia
-    {C K Kab Kv Gv : Type u}
+    {C : Type u} {K : Type v} {Kab : Type w} {Kv : Type x} {Gv : Type y}
     [CommGroup C] [TopologicalSpace C] [IsTopologicalGroup C]
     [Field K] [Field Kab] [Algebra K Kab] [IsGalois K Kab]
-    [Field Kv] [Group Gv]
+    [Field Kv] [CommGroup Gv]
     {F : Chapter10FiniteArtinFamily C K Kab}
     {S : Chapter10LocalGlobalReciprocitySquare C K Kab Kv Gv F}
     (P : Chapter10FinitePlaceReciprocityData C K Kab Kv Gv F S) :
-    P.localUnits.map S.globalLocalArtin ≤ P.globalInertia :=
+    P.valuation.ker.map (Chapter10LocalGlobalReciprocitySquare.globalLocalArtin S) ≤
+      P.globalInertia :=
   P.units_map_to_inertia
 
 theorem chapter10_uniformizer_maps_to_arithmetic_frobenius
-    {C K Kab Kv Gv : Type u}
+    {C : Type u} {K : Type v} {Kab : Type w} {Kv : Type x} {Gv : Type y}
     [CommGroup C] [TopologicalSpace C] [IsTopologicalGroup C]
     [Field K] [Field Kab] [Algebra K Kab] [IsGalois K Kab]
-    [Field Kv] [Group Gv]
+    [Field Kv] [CommGroup Gv]
     {F : Chapter10FiniteArtinFamily C K Kab}
     {S : Chapter10LocalGlobalReciprocitySquare C K Kab Kv Gv F}
     (P : Chapter10FinitePlaceReciprocityData C K Kab Kv Gv F S) :
-    QuotientGroup.mk' P.globalInertia (S.globalLocalArtin P.uniformizer) =
+    QuotientGroup.mk' P.globalInertia
+        (Chapter10LocalGlobalReciprocitySquare.globalLocalArtin S P.uniformizer) =
       P.arithmeticFrobenius :=
   P.uniformizer_maps_to_arithmeticFrobenius
 
 /- Complexification at a real place is a second precise compatibility datum;
 the square is the only part needed for its formal functoriality. -/
 structure Chapter10RealPlaceComplexificationData
-    (C K Kab Kv Gv : Type u)
+    (C : Type u) (K : Type v) (Kab : Type w) (Kv : Type x) (Gv : Type y)
     [CommGroup C] [TopologicalSpace C] [IsTopologicalGroup C]
     [Field K] [Field Kab] [Algebra K Kab] [IsGalois K Kab]
-    [Field Kv] [Group Gv]
+    [Field Kv] [CommGroup Gv]
     (F : Chapter10FiniteArtinFamily C K Kab)
-    (S : Chapter10LocalGlobalReciprocitySquare C K Kab Kv Gv F) where
-  localComplexification : ∀ v : NumberField.InfinitePlace K, v.IsReal → Gv
-  globalComplexification :
-    ∀ v : NumberField.InfinitePlace K, v.IsReal → Gal(Kab / K)
-  compatible : ∀ (v : NumberField.InfinitePlace K) (hv : v.IsReal),
-    S.decompositionMap (localComplexification v hv) = globalComplexification v hv
+    (S : Chapter10LocalGlobalReciprocitySquare C K Kab Kv Gv F)
+    (v : NumberField.InfinitePlace K) where
+  place_isReal : v.IsReal
+  /-- The local complexification is the image of the negative component under
+    local reciprocity, rather than an unrelated chosen element. -/
+  localComplexification : Gv
+  localComplexification_is_negative :
+    localComplexification = S.localReciprocity (-1 : Kvˣ)
+  globalComplexification : Gal(Kab / K)
+  compatible :
+    S.decompositionMap localComplexification = globalComplexification
 
 theorem chapter10_real_place_complexification_compatible
-    {C K Kab Kv Gv : Type u}
+    {C : Type u} {K : Type v} {Kab : Type w} {Kv : Type x} {Gv : Type y}
     [CommGroup C] [TopologicalSpace C] [IsTopologicalGroup C]
     [Field K] [Field Kab] [Algebra K Kab] [IsGalois K Kab]
-    [Field Kv] [Group Gv]
+    [Field Kv] [CommGroup Gv]
     {F : Chapter10FiniteArtinFamily C K Kab}
     {S : Chapter10LocalGlobalReciprocitySquare C K Kab Kv Gv F}
-    (R : Chapter10RealPlaceComplexificationData C K Kab Kv Gv F S)
-    (v : NumberField.InfinitePlace K) (hv : v.IsReal) :
-    S.decompositionMap (R.localComplexification v hv) = R.globalComplexification v hv :=
-  R.compatible v hv
+    {v : NumberField.InfinitePlace K}
+    (R : Chapter10RealPlaceComplexificationData C K Kab Kv Gv F S v) :
+    S.decompositionMap R.localComplexification = R.globalComplexification :=
+  R.compatible
 
 /-- Every global character restricts through the local reciprocity square. -/
 theorem chapter10_character_restriction_compatibility
-    {C K Kab Kv Gv A : Type u}
+    {C : Type u} {K : Type v} {Kab : Type w} {Kv : Type x} {Gv : Type y} {A : Type z}
     [CommGroup C] [TopologicalSpace C] [IsTopologicalGroup C]
     [Field K] [Field Kab] [Algebra K Kab] [IsGalois K Kab]
-    [Field Kv] [Group Gv] [Monoid A]
+    [Field Kv] [CommGroup Gv] [Monoid A]
     (F : Chapter10FiniteArtinFamily C K Kab)
     (S : Chapter10LocalGlobalReciprocitySquare C K Kab Kv Gv F)
     (χ : Gal(Kab / K) →* A) :

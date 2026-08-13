@@ -1,10 +1,11 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Section04FormalPowerSeries
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Section02InfiniteDigits
+import Mathlib.RingTheory.AdicCompletion.LocalRing
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter08
 
 open Polynomial IsLocalRing
 open Filter
-open scoped BigOperators LaurentSeries Topology PowerSeries.WithPiTopology
+open scoped BigOperators Topology
 
 noncomputable section
 
@@ -273,10 +274,8 @@ def Chapter08PrincipalUnitProductConverges
 
 -- Infinite products of principal units converge when a_n tends to zero adically. -/
 theorem chapter08_infinite_principal_unit_product_converges
-    {A : Type*} [CommRing A] [IsLocalRing A]
+    {A : Type*} [CommRing A]
     (I : Ideal A) (a : ℕ → A)
-    (_hI : I = IsLocalRing.maximalIdeal A)
-    (_ha : ∀ n : ℕ, a n ∈ I)
     (htends : Chapter08AdicTendsToZero I a) :
     ∃ x : AdicCompletion I A, Chapter08PrincipalUnitProductConverges I a x := by
   classical

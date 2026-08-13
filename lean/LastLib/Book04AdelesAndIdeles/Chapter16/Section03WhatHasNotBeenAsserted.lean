@@ -1,4 +1,5 @@
-import LastLib.Book04AdelesAndIdeles.Chapter16.Section02ExactHypothesesAndDurableConsequences
+import LastLib.Book04AdelesAndIdeles.Chapter16.Dependencies
+import LastLib.Book04AdelesAndIdeles.Chapter14.Section05ExactBoundaryOfNormPrinciple
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter16
 
@@ -48,7 +49,8 @@ def chapter16CyclicNormPrinciple
     {ι K L : Type*} [Field K] [Field L]
     (Kloc : ι → Type*) (Lloc : ι → Type*)
     [∀ i, Group (Kloc i)] [∀ i, Group (Lloc i)]
-    [Algebra K L] [FiniteDimensional K L]
+    [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
+    [IsCyclic Gal(L / K)]
     (D : Chapter16LocalNormData ι K L Kloc Lloc) : Prop :=
   ∀ x : K,
     (∀ i, D.toLocalK x i ∈ (D.localNorm i).range) →
@@ -62,14 +64,12 @@ source, not an unconditional norm principle for arbitrary extensions.
 -/
 
 theorem chapter16_cyclic_hasse_norm_theorem
-    (ι K L : Type*) [Field K] [NumberField K] [Field L] [NumberField L]
-    (Kloc : ι → Type*) (Lloc : ι → Type*)
-    [∀ i, Group (Kloc i)] [∀ i, Group (Lloc i)]
+    {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L]
     [Algebra K L] [FiniteDimensional K L]
     [IsGalois K L] [IsCyclic Gal(L / K)]
-    (D : Chapter16LocalNormData ι K L Kloc Lloc) :
-    chapter16CyclicNormPrinciple Kloc Lloc D := by
-  sorry
+    (N : LastLib.Book04AdelesAndIdeles.Chapter14.Chapter14AdelicNormInterface K L) :
+    Subsingleton (LastLib.Book04AdelesAndIdeles.Chapter14.chapter14KnotGroup N) := by
+  exact LastLib.Book04AdelesAndIdeles.Chapter14.chapter14_hasse_norm_theorem N
 
 /-!
 No declaration of a reciprocity homomorphism is made here, and the finite ray

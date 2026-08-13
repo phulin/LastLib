@@ -13,6 +13,7 @@ import Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90
 import Mathlib.RepresentationTheory.Homological.GroupCohomology.Shapiro
 import Mathlib.RepresentationTheory.Homological.TateCohomology.Basic
 import Mathlib.Topology.Algebra.PontryaginDual
+import LastLib.Book06GlobalClassFieldTheory.Chapter01.Dependencies
 
 namespace LastLib.Book06GlobalClassFieldTheory.Chapter09
 
@@ -24,22 +25,26 @@ norm as a monoid hom on the field itself, so this is the canonical unit-group
 version used by the declarations below.
 -/
 def chapter09FieldNormUnitHom
-    (K L : Type*) [Field K] [Field L] [Algebra K L] : Lˣ →* Kˣ :=
+    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] : Lˣ →* Kˣ :=
   Units.map (Algebra.norm K (S := L))
 
 @[simp]
 theorem chapter09FieldNormUnitHom_apply
-    (K L : Type*) [Field K] [Field L] [Algebra K L] (x : Lˣ) :
+    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] (x : Lˣ) :
     ((chapter09FieldNormUnitHom K L x : Kˣ) : K) = Algebra.norm K (x : L) := by
   rfl
 
 /-!
-Earlier chapters do not yet provide an idele group/class-group construction.
-This small interface records exactly the maps needed by the knot and norm
-quotients, without committing those quotients to a particular implementation.
+ Earlier chapters expose concrete idele and idele-class constructions.  This
+ small interface records exactly the maps needed by the knot and norm
+ quotients, so the abstract statements below can also be reused with other
+ implementations of the same maps.
 -/
 structure Chapter09IdeleNormData
     (K L I_K I_L : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     [CommGroup I_K] [CommGroup I_L] where
   principalK : Kˣ →* I_K
   principalL : Lˣ →* I_L
@@ -49,6 +54,32 @@ structure Chapter09IdeleNormData
   norm_compatibility :
     ideleNorm.comp principalL =
       principalK.comp (chapter09FieldNormUnitHom K L)
+
+/-!
+The concrete Book 6 idele model from Chapter 1 can be fed into the abstract
+norm interface used in this chapter.  Keeping this bridge here prevents later
+results from having to duplicate the canonical principal-idèle and
+componentwise norm maps.
+-/
+noncomputable def chapter09IdeleNormDataOfGlobalNormInterface
+    {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L]
+    (N : LastLib.Book06GlobalClassFieldTheory.Chapter01.GlobalNormInterface K L) :
+    Chapter09IdeleNormData K L
+      (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleGroup K)
+      (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleGroup L) := by
+  refine ⟨
+    LastLib.Book06GlobalClassFieldTheory.Chapter01.principalIdele,
+    LastLib.Book06GlobalClassFieldTheory.Chapter01.principalIdele,
+    LastLib.Book06GlobalClassFieldTheory.Chapter01.componentwiseIdeleNorm N,
+    LastLib.Book06GlobalClassFieldTheory.Chapter01.principalIdele_injective,
+    LastLib.Book06GlobalClassFieldTheory.Chapter01.principalIdele_injective,
+    ?_⟩
+  apply MonoidHom.ext
+  intro y
+  simpa [chapter09FieldNormUnitHom,
+    LastLib.Book06GlobalClassFieldTheory.Chapter01.fieldNormUnits] using
+    N.principal_compatibility_apply y
 
 /-!
 The source repeatedly uses exact sequences of groups.  This is a deliberately

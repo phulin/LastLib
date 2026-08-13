@@ -70,7 +70,7 @@ theorem chapter04LowerGroup_mono_anti {G : Type u} [Group G]
 /-- A jump of the integer lower filtration. -/
 def chapter04LowerBreak {G : Type u} [Group G]
     (F : Chapter04LowerFiltration G) (i : ℤ) : Prop :=
-  chapter04LowerGroup F i ≠ chapter04LowerGroup F (i + 1)
+  0 ≤ i ∧ chapter04LowerGroup F i ≠ chapter04LowerGroup F (i + 1)
 
 /-- Restrict a lower filtration to a subgroup.  The resulting groups are
 subgroups of the subgroup type, while `map subtype` recovers their ambient

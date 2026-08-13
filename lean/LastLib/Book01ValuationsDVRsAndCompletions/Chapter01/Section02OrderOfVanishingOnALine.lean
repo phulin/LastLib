@@ -1,9 +1,17 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter01.Section01ALocalQuestion
+import Mathlib.Algebra.Polynomial.RingDivision
+import Mathlib.NumberTheory.Padics.PadicNorm
+import Mathlib.NumberTheory.Padics.PadicNumbers
+import Mathlib.RingTheory.Coprime.Lemmas
+import Mathlib.RingTheory.Int.Basic
+import Mathlib.RingTheory.UniqueFactorizationDomain.Multiplicity
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.Ring
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter01
 
-open scoped Polynomial RatFunc nonZeroDivisors
+open scoped Polynomial nonZeroDivisors
 open Set Function Ideal
 open scoped BigOperators
 
@@ -21,9 +29,8 @@ Completions*.  The declarations below follow Sections 1.1--1.5 in order. -/
 
 section PrimeAdicModel
 
-/-- A `p`-free presentation of a rational number, retaining the exponent and
-the unit fraction.  The exponent is the canonical part of the presentation;
-`a` and `b` themselves are only determined up to a common `p`-free factor. -/
+/-- The canonical `p`-free presentation of a nonzero rational number.  The
+exponent and the reduced numerator/denominator are all normalized. -/
 structure PrimeAdicDecomposition (p : ℕ) (x : ℚ) where
   exponent : ℤ
   numerator : ℤ
@@ -32,6 +39,8 @@ structure PrimeAdicDecomposition (p : ℕ) (x : ℚ) where
   denominator_ne_zero : denominator ≠ 0
   numerator_p_free : ¬(p : ℤ) ∣ numerator
   denominator_p_free : ¬(p : ℤ) ∣ denominator
+  numerator_denominator_coprime : IsCoprime numerator denominator
+  denominator_pos : 0 < denominator
   equation : x = (p : ℚ) ^ exponent * (numerator : ℚ) / (denominator : ℚ)
 
 /-- The usual integer-valued `p`-adic order on rationals. -/
@@ -52,63 +61,51 @@ def pAdicMultiplicativeValuation (p : ℕ) [Fact p.Prime] :
 theorem exists_primeAdicDecomposition {p : ℕ} (hp : p.Prime) {x : ℚ}
     (hx : x ≠ 0) : Nonempty (PrimeAdicDecomposition p x) := by
   classical
-  let _ : Fact p.Prime := ⟨hp⟩
-  have hn : x.num ≠ 0 := Rat.num_ne_zero.mpr hx
-  have hd : (x.den : ℤ) ≠ 0 := by exact_mod_cast Rat.den_nz x
-  have hprime : Prime (p : ℤ) := Nat.prime_iff_prime_int.1 hp
-  obtain ⟨m, a, ha, hma⟩ := WfDvdMonoid.max_power_factor hn hprime.irreducible
-  obtain ⟨n, b, hb, hnb⟩ := WfDvdMonoid.max_power_factor hd hprime.irreducible
-  have hfm : FiniteMultiplicity (p : ℤ) x.num :=
-    FiniteMultiplicity.of_prime_left hprime hn
-  have hfd : FiniteMultiplicity (p : ℤ) (x.den : ℤ) :=
-    FiniteMultiplicity.of_prime_left hprime hd
-  have hm : multiplicity (p : ℤ) x.num = m := by
-    apply (hfm.multiplicity_eq_iff).2
-    refine ⟨⟨a, hma⟩, ?_⟩
-    intro hpow
-    obtain ⟨c, hc⟩ := hpow
-    apply ha
-    refine ⟨c, ?_⟩
-    apply mul_left_cancel₀ (pow_ne_zero m (show (p : ℤ) ≠ 0 by exact_mod_cast hp.ne_zero))
-    calc
-      (p : ℤ) ^ m * a = x.num := hma.symm
-      _ = (p : ℤ) ^ (m + 1) * c := hc
-      _ = (p : ℤ) ^ m * ((p : ℤ) * c) := by
-        rw [pow_succ]
-        ring
-  have hn' : multiplicity (p : ℤ) (x.den : ℤ) = n := by
-    apply (hfd.multiplicity_eq_iff).2
-    refine ⟨⟨b, hnb⟩, ?_⟩
-    intro hpow
-    obtain ⟨c, hc⟩ := hpow
-    apply hb
-    refine ⟨c, ?_⟩
-    apply mul_left_cancel₀ (pow_ne_zero n (show (p : ℤ) ≠ 0 by exact_mod_cast hp.ne_zero))
-    calc
-      (p : ℤ) ^ n * b = (x.den : ℤ) := hnb.symm
-      _ = (p : ℤ) ^ (n + 1) * c := hc
-      _ = (p : ℤ) ^ n * ((p : ℤ) * c) := by
-        rw [pow_succ]
-        ring
+  have hnum : x.num ≠ 0 := Rat.num_ne_zero.mpr hx
+  have hden : (x.den : ℤ) ≠ 0 := by exact_mod_cast x.den_nz
+  have hpint : Prime (p : ℤ) := Nat.prime_iff_prime_int.1 hp
+  obtain ⟨m, a, ha, hma⟩ := WfDvdMonoid.max_power_factor hnum hpint.irreducible
+  obtain ⟨n, b, hb, hnb⟩ :=
+    WfDvdMonoid.max_power_factor hden hpint.irreducible
   have ha0 : a ≠ 0 := by
     intro ha0
-    apply hn
+    apply hnum
     rw [hma, ha0, mul_zero]
   have hb0 : b ≠ 0 := by
     intro hb0
-    apply hd
+    apply hden
     rw [hnb, hb0, mul_zero]
+  have hadvd : a ∣ x.num := by
+    rw [hma]
+    exact dvd_mul_left _ _
+  have hbdvd : b ∣ (x.den : ℤ) := by
+    rw [hnb]
+    exact dvd_mul_left _ _
+  have hcop : IsCoprime a b :=
+    (Rat.isCoprime_num_den x).mono hadvd hbdvd
+  have hpnp : 0 < (p : ℤ) ^ n := pow_pos (by exact_mod_cast hp.pos) _
+  have hprod : 0 < (p : ℤ) ^ n * b := by
+    rw [← hnb]
+    exact_mod_cast x.pos
+  have hbpos : 0 < b := by
+    rcases (mul_pos_iff.mp hprod) with ⟨_, h⟩ | ⟨h, _⟩
+    · exact h
+    · exact False.elim ((not_lt_of_ge (le_of_lt hpnp)) h)
   let e : ℤ := (m : ℤ) - (n : ℤ)
-  refine ⟨⟨e, a, b, ha0, hb0, ha, hb, ?_⟩⟩
-  calc
-    x = Rat.divInt x.num x.den := (Rat.num_divInt_den x).symm
-    _ = Rat.divInt ((p : ℤ) ^ m * a) ((p : ℤ) ^ n * b) := by rw [hma, hnb]
-    _ = (p : ℚ) ^ e * (a : ℚ) / (b : ℚ) := by
-      rw [Rat.divInt_eq_div]
-      norm_num [Int.cast_mul, Int.cast_pow]
-      dsimp [e]
-      rw [zpow_natCast_sub_natCast₀ (by exact_mod_cast hp.ne_zero) m n]
-      field_simp [ha0, hb0]
+  refine ⟨⟨e, a, b, ha0, hb0, ha, hb, hcop, hbpos, ?_⟩⟩
+  · dsimp [e]
+    calc
+      x = (x.num : ℚ) / (x.den : ℚ) := Rat.num_div_den x |>.symm
+      _ = (((p : ℤ) ^ m * a : ℤ) : ℚ) /
+          (((p : ℤ) ^ n * b : ℤ) : ℚ) := by
+        rw [hma]
+        congr 1
+        exact_mod_cast hnb
+      _ = (p : ℚ) ^ ((m : ℤ) - (n : ℤ)) * (a : ℚ) / (b : ℚ) := by
+        push_cast
+        rw [zpow_natCast_sub_natCast₀ (by exact_mod_cast hp.ne_zero) m n]
+        field_simp [show (p : ℚ) ≠ 0 by exact_mod_cast hp.ne_zero,
+          show (b : ℚ) ≠ 0 by exact_mod_cast hb0]
 
 /-- The exponent in every `p`-free presentation is the `p`-adic order. -/
 theorem primeAdicDecomposition_exponent_eq_pAdicOrder {p : ℕ} (hp : p.Prime)
@@ -149,9 +146,7 @@ theorem primeAdicDecomposition_exponent_eq_pAdicOrder {p : ℕ} (hp : p.Prime)
       ring
     _ = pAdicOrder p x := hxval'.symm
 
-/-- The exponent and the `p`-free rational unit are unique. The presentation
-by an integer numerator and denominator is understood up to their usual
-common rescaling, so the invariant unit is the rational fraction itself. -/
+/-- The exponent and the `p`-free rational unit are unique. -/
 theorem primeAdicDecomposition_unique_exponent_and_unit {p : ℕ} (hp : p.Prime)
     {x : ℚ} (hx : x ≠ 0) {d e : PrimeAdicDecomposition p x} :
     d.exponent = e.exponent ∧
@@ -180,6 +175,21 @@ theorem primeAdicDecomposition_unique_exponent_and_unit {p : ℕ} (hp : p.Prime)
   refine ⟨hexp, ?_⟩
   rw [hexp] at heq
   exact mul_left_cancel₀ (zpow_ne_zero _ (by exact_mod_cast hp.ne_zero)) heq
+
+/-- The normalized numerator and denominator are unique as well. -/
+theorem primeAdicDecomposition_unique {p : ℕ} (hp : p.Prime)
+    {x : ℚ} (hx : x ≠ 0) {d e : PrimeAdicDecomposition p x} :
+    d.exponent = e.exponent ∧ d.numerator = e.numerator ∧
+      d.denominator = e.denominator := by
+  have hunit := primeAdicDecomposition_unique_exponent_and_unit hp hx
+    (d := d) (e := e)
+  have hcopd : Nat.Coprime d.numerator.natAbs d.denominator.natAbs :=
+    (Int.isCoprime_iff_nat_coprime).mp d.numerator_denominator_coprime
+  have hcope : Nat.Coprime e.numerator.natAbs e.denominator.natAbs :=
+    (Int.isCoprime_iff_nat_coprime).mp e.numerator_denominator_coprime
+  have hnumden := Rat.div_int_inj d.denominator_pos e.denominator_pos
+    hcopd hcope hunit.2
+  exact ⟨hunit.1, hnumden⟩
 
 /-- Multiplication adds `p`-adic orders. -/
 theorem pAdicOrder_mul {p : ℕ} (hp : p.Prime) {x y : ℚ}
@@ -211,6 +221,21 @@ theorem pAdicOrderWithTop_add {p : ℕ} (hp : p.Prime) (x y : ℚ) :
   have h := padicValRat.min_le_padicValRat_add (p := p) hxy
   simpa [pAdicOrderWithTop, pAdicOrder, hx, hy, hxy] using
     (WithTop.coe_le_coe.mpr h)
+
+/-! The total version records the zero cases in the multiplicative valuation
+law, rather than requiring separate nonzero hypotheses. -/
+theorem pAdicOrderWithTop_mul {p : ℕ} (hp : p.Prime) (x y : ℚ) :
+    pAdicOrderWithTop p (x * y) =
+      pAdicOrderWithTop p x + pAdicOrderWithTop p y := by
+  by_cases hx : x = 0
+  · subst x
+    simp [pAdicOrderWithTop]
+  by_cases hy : y = 0
+  · subst y
+    simp [pAdicOrderWithTop]
+  have hxy : x * y ≠ 0 := mul_ne_zero hx hy
+  simpa [pAdicOrderWithTop, hx, hy, hxy] using
+    congrArg (fun z : ℤ => (z : WithTop ℤ)) (pAdicOrder_mul hp hx hy)
 
 /-- The ordinary integer form of the triangle inequality when the sum is
 nonzero. -/

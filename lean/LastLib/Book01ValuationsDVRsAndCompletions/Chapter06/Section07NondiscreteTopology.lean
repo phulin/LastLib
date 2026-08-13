@@ -1,5 +1,12 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter06.Section01BallsAndTheStrongTriangleInequality
+import Mathlib.RingTheory.AdicCompletion.Basic
+import Mathlib.RingTheory.AdicCompletion.Completeness
+import Mathlib.RingTheory.AdicCompletion.Topology
+import Mathlib.RingTheory.DiscreteValuationRing.Basic
+import Mathlib.Topology.Algebra.Valued.NormedValued
 import Mathlib.Topology.UniformSpace.Completion
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.NormNum
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter06
 
@@ -117,7 +124,7 @@ theorem chapter06_maximalIdeal_idempotent_of_factors
     rw [← hxy]
     simpa [pow_two] using (Ideal.mul_mem_mul hy hz)
 
-/-- In a divisible value group, positive values can be split into smaller positive values. -/
+/-- A value-splitting condition for positive values. -/
 def chapter06PositiveValueSplitting (v : Valuation K Γ₀) [v.RankOne] : Prop :=
   ∀ x : K, 0 < v x → v x < 1 →
     ∃ y z : K, 0 < v y ∧ 0 < v z ∧ v y < 1 ∧ v z < 1 ∧ v x = v y * v z
@@ -228,8 +235,8 @@ theorem chapter06_dense_value_range_and_idempotence_obstruct_power_cofinality
     exact (not_lt_of_ge hlow.le) hy'
   exact chapter06_idempotent_maximalIdeal_not_power_cofinal v hid hnot
 
-/-- The valuation topology may be strictly finer than the `𝔪`-adic topology. -/
-theorem chapter06_nondiscrete_madic_topology_can_be_coarser
+/-- Failure of power cofinality forces the valuation and `𝔪`-adic topologies to differ. -/
+theorem chapter06_nondiscrete_madic_topology_not_equal_of_not_power_cofinal
     (v : Valuation K Γ₀) [v.RankOne]
     (hnotcofinal : ¬ chapter06PowersCofinalAmongValuationNeighborhoods v) :
     TopologicalSpace.induced ((↑) : v.valuationSubring → K)
@@ -289,7 +296,8 @@ def chapter06AdicCompletionTopology
     (@Pi.topologicalSpace ℕ
       (fun n : ℕ => A ⧸ (m ^ n • (⊤ : Submodule A A))) (fun _ => ⊥))
 
-/-- A topological equivalence between the valuation-ring completion and the adic completion. -/
+/-- A topological identification of the valuation-ring completion with the adic completion,
+    compatible with the dense maps from the original ring. -/
 structure Chapter06ValuationCompletionIdentification
     {A : Subring K} (v : AbsoluteValue K ℝ) (m : Ideal A) where
   toEquiv : chapter06ValuationCompletion (A := A) v ≃ AdicCompletion m A
@@ -304,6 +312,12 @@ structure Chapter06ValuationCompletionIdentification
       (@UniformSpace.Completion.uniformSpace A
         (UniformSpace.comap ((↑) : A → K) v.uniformSpace)).toTopologicalSpace
       toEquiv.symm
+  commutes_with_completion :
+    ∀ a : A,
+      toEquiv ((a : @UniformSpace.Completion A
+        (UniformSpace.comap ((↑) : A → K) v.uniformSpace)) :
+        chapter06ValuationCompletion (A := A) v) =
+        AdicCompletion.of m A a
 
 /-- A proposition recording an identification of valuation and adic completions. -/
 def chapter06ValuationCompletionIsAdic
@@ -691,6 +705,9 @@ theorem chapter06_completion_is_inverse_limit_under_discrete_or_cofinal
     toEquiv := e.toEquiv
     continuous_toEquiv := ?_
     continuous_inv := ?_
+    commutes_with_completion := by
+      intro a
+      exact AbstractCompletion.compare_coe cpkg pkg a
   }⟩
   · rw [← htop]
     change @Continuous (UniformSpace.Completion A) C

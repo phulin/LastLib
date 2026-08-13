@@ -102,21 +102,31 @@ theorem chapter11_general_ray_class_computation_is_controlled_by_finite_data
       Function.Surjective (chapter11RayClassToOrdinaryClassHom m) := by
   sorry
 
-theorem chapter11_exists_ray_class_projection_of_le
+theorem chapter11_ray_unit_subgroup_anti_mono_of_le
     {m n : RayModulus K} (h : RayModulus.LE m n) :
-    ∃ f : chapter11RayClassGroup n →* chapter11RayClassGroup m,
-      Function.Surjective f := by
+    chapter11RayUnitSubgroup n ≤ chapter11RayUnitSubgroup m := by
   sorry
 
-noncomputable def chapter11RayClassProjectionOfLE
+def chapter11RayClassProjectionOfLE
     {m n : RayModulus K} (h : RayModulus.LE m n) :
-    chapter11RayClassGroup n →* chapter11RayClassGroup m :=
-  Classical.choose (chapter11_exists_ray_class_projection_of_le h)
+    chapter11RayClassGroup n →* chapter11RayClassGroup m := by
+  refine QuotientGroup.map
+    (chapter11PrincipalIdeleSubgroup (K := K) ⊔ chapter11RayUnitSubgroup n)
+    (chapter11PrincipalIdeleSubgroup (K := K) ⊔ chapter11RayUnitSubgroup m)
+    (MonoidHom.id _) ?_
+  simpa only [Subgroup.comap_id] using
+    (sup_le_sup le_rfl (chapter11_ray_unit_subgroup_anti_mono_of_le h))
 
 theorem chapter11RayClassProjectionOfLE_surjective
     {m n : RayModulus K} (h : RayModulus.LE m n) :
     Function.Surjective (chapter11RayClassProjectionOfLE h) := by
-  exact (Classical.choose_spec (chapter11_exists_ray_class_projection_of_le h))
+  sorry
+
+theorem chapter11_exists_ray_class_projection_of_le
+    {m n : RayModulus K} (h : RayModulus.LE m n) :
+    ∃ f : chapter11RayClassGroup n →* chapter11RayClassGroup m,
+      Function.Surjective f := by
+  refine ⟨chapter11RayClassProjectionOfLE h, chapter11RayClassProjectionOfLE_surjective h⟩
 
 def chapter11RayModulusSingleFiniteStep
     (m n : RayModulus K)
@@ -130,7 +140,7 @@ theorem chapter11_ray_tower_step_kernel_is_locally_controlled
     {m n : RayModulus K}
     (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K))
     (hstep : chapter11RayModulusSingleFiniteStep m n v)
-    (hn : 0 < n.finiteExponent v) :
+    (hm : 0 < m.finiteExponent v) :
     ∃ f :
         (chapter11RayClassProjectionOfLE hstep.1).ker →*
           chapter11MultiplicativeLocalLayer
@@ -143,14 +153,14 @@ theorem chapter11_local_principal_unit_layer_is_the_additive_residue_field
     Nonempty
       (chapter11MultiplicativeLocalLayer
           (A := v.adicCompletionIntegers K) n ≃*
-        Multiplicative (IsLocalRing.ResidueField (v.adicCompletionIntegers K))) := by
+        Multiplicative (Additive (IsLocalRing.ResidueField (v.adicCompletionIntegers K)))) := by
   sorry
 
 noncomputable def chapter11LocalPrincipalUnitLayerEquiv
     (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) {n : ℕ} (hn : 0 < n) :
     chapter11MultiplicativeLocalLayer
         (A := v.adicCompletionIntegers K) n ≃*
-      Multiplicative (IsLocalRing.ResidueField (v.adicCompletionIntegers K)) :=
+      Multiplicative (Additive (IsLocalRing.ResidueField (v.adicCompletionIntegers K))) :=
   Classical.choice (chapter11_local_principal_unit_layer_is_the_additive_residue_field v hn)
 
 end

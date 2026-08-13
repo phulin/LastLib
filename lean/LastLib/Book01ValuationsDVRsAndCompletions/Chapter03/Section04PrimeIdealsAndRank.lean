@@ -39,9 +39,9 @@ noncomputable def valuationPrimeSpectrum_equiv_coarsenings (A : ValuationSubring
     PrimeSpectrum A ≃ {S : ValuationSubring K // A ≤ S} :=
   ValuationSubring.primeSpectrumEquiv A
 
-theorem coarsenings_correspond_to_prime_ideals (A : ValuationSubring K) :
-    Nonempty ((PrimeSpectrum A)ᵒᵈ ≃o {S : ValuationSubring K // A ≤ S}) :=
-  ⟨valuationPrimeSpectrum_orderEquiv A⟩
+noncomputable def coarsenings_correspond_to_prime_ideals (A : ValuationSubring K) :
+    (PrimeSpectrum A)ᵒᵈ ≃o {S : ValuationSubring K // A ≤ S} :=
+  valuationPrimeSpectrum_orderEquiv A
 
 /- Rank one is the nontrivial Archimedean case. -/
 

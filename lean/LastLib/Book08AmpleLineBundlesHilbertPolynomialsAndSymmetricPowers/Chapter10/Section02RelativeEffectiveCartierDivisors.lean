@@ -1,4 +1,7 @@
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10.Dependencies
+import Mathlib.Algebra.Category.ModuleCat.Sheaf.PullbackFree
+import Mathlib.AlgebraicGeometry.Morphisms.QuasiCompact
+import Mathlib.AlgebraicGeometry.Morphisms.QuasiSeparated
 import Mathlib.RingTheory.MvPolynomial
 
 namespace LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10
@@ -12,18 +15,16 @@ universe u
 
 /-! ## 10.2. Relative effective Cartier divisors -/
 
-def Chapter10LocallyRegularPrincipal {X : Scheme}
-    (D : Chapter10ClosedSubscheme X) : Prop :=
-  ∀ U : X.affineOpens, ∃ a : Γ(X, U),
-    D.ideal U = Ideal.span {a} ∧ IsRegular a
-
-structure Chapter10EffectiveCartierDivisor (X : Scheme) where
-  ideal : Chapter10ClosedSubscheme X
-  locallyRegularPrincipal : Chapter10LocallyRegularPrincipal ideal
-
 def chapter10EffectiveCartierDivisorAsClosedSubscheme {X : Scheme}
     (D : Chapter10EffectiveCartierDivisor X) : Chapter10ClosedSubscheme X :=
   D.ideal
+
+/- LOCAL_DEPENDENCY_GUESS (10.2): the pinned Mathlib snapshot has the
+  local-freeness predicate but not the inverse-line-bundle constructor for a
+  Cartier divisor.  Restricting the operation to effective Cartier divisors
+  records the weakest domain needed by the source's `𝓘_D⁻¹` construction. -/
+class Chapter10IdealDualAPI (X : Scheme) where
+  inverseIdeal : Chapter10EffectiveCartierDivisor X → Chapter10LineBundle X
 
 theorem chapter10_effectiveCartierDivisor_ext {X : Scheme}
     (D E : Chapter10EffectiveCartierDivisor X) (h : D.ideal = E.ideal) : D = E := by
@@ -41,61 +42,96 @@ the construction is already present in Mathlib.
 `Chapter10SectionVanishingIdealAPI` stand for the missing construction of
 `𝓘_D⁻¹` and the ideal of a section of an invertible sheaf. -/
 
-class Chapter10SectionVanishingIdealAPI (X : Scheme) where
+class Chapter10SectionVanishingIdealAPI (X : Scheme) [Chapter10IdealDualAPI X] where
   vanishingIdeal : ∀ {L : Chapter10LineBundle X},
     Chapter10LineBundleSection L → Chapter10ClosedSubscheme X
+  canonicalSection : ∀ D : Chapter10EffectiveCartierDivisor X,
+    Chapter10LineBundleSection (Chapter10IdealDualAPI.inverseIdeal D)
+  canonicalSection_vanishingIdeal : ∀ D : Chapter10EffectiveCartierDivisor X,
+    vanishingIdeal (canonicalSection D) = D.ideal
 
-def chapter10SectionVanishingIdeal {X : Scheme} [Chapter10SectionVanishingIdealAPI X]
+def chapter10SectionVanishingIdeal {X : Scheme} [Chapter10IdealDualAPI X]
+    [Chapter10SectionVanishingIdealAPI X]
     {L : Chapter10LineBundle X} (s : Chapter10LineBundleSection L) :
     Chapter10ClosedSubscheme X :=
   Chapter10SectionVanishingIdealAPI.vanishingIdeal s
 
 structure Chapter10CartierLineBundleData {X : Scheme}
     (D : Chapter10EffectiveCartierDivisor X)
-    [Chapter10SectionVanishingIdealAPI X] [Chapter10IdealDualAPI X] where
-  lineBundle : Chapter10LineBundle X
-  lineBundle_is_inverseIdeal :
-    lineBundle = Chapter10IdealDualAPI.inverseIdeal D.ideal
-  canonicalSection : Chapter10LineBundleSection lineBundle
+    [Chapter10IdealDualAPI X] [Chapter10SectionVanishingIdealAPI X] where
+  canonicalSection :
+    Chapter10LineBundleSection (Chapter10IdealDualAPI.inverseIdeal D)
+  canonicalSection_eq :
+    canonicalSection = Chapter10SectionVanishingIdealAPI.canonicalSection D
   vanishingIdeal_eq : chapter10SectionVanishingIdeal canonicalSection = D.ideal
 
 theorem chapter10_effectiveCartier_has_lineBundle {X : Scheme}
     (D : Chapter10EffectiveCartierDivisor X)
-    [Chapter10SectionVanishingIdealAPI X] [Chapter10IdealDualAPI X] :
-    Nonempty (Chapter10CartierLineBundleData D) := by
-  sorry
+    [Chapter10IdealDualAPI X] [Chapter10SectionVanishingIdealAPI X] :
+    Nonempty (Chapter10CartierLineBundleData D) :=
+  ⟨{ canonicalSection := Chapter10SectionVanishingIdealAPI.canonicalSection D
+     canonicalSection_eq := rfl
+     vanishingIdeal_eq := Chapter10SectionVanishingIdealAPI.canonicalSection_vanishingIdeal D }⟩
 
 noncomputable def chapter10OofD {X : Scheme} (D : Chapter10EffectiveCartierDivisor X)
-    [Chapter10SectionVanishingIdealAPI X] [Chapter10IdealDualAPI X] : Chapter10LineBundle X :=
-  (Classical.choice (chapter10_effectiveCartier_has_lineBundle D)).lineBundle
+    [Chapter10IdealDualAPI X] : Chapter10LineBundle X :=
+  Chapter10IdealDualAPI.inverseIdeal D
 
 noncomputable def chapter10OofD_section {X : Scheme} (D : Chapter10EffectiveCartierDivisor X)
-    [Chapter10SectionVanishingIdealAPI X] [Chapter10IdealDualAPI X] :
+    [Chapter10IdealDualAPI X] [Chapter10SectionVanishingIdealAPI X] :
     Chapter10LineBundleSection (chapter10OofD D) :=
-  (Classical.choice (chapter10_effectiveCartier_has_lineBundle D)).canonicalSection
+  Chapter10SectionVanishingIdealAPI.canonicalSection D
 
 theorem chapter10OofD_section_vanishingIdeal {X : Scheme}
     (D : Chapter10EffectiveCartierDivisor X)
-    [Chapter10SectionVanishingIdealAPI X] [Chapter10IdealDualAPI X] :
+    [Chapter10IdealDualAPI X] [Chapter10SectionVanishingIdealAPI X] :
     chapter10SectionVanishingIdeal (chapter10OofD_section D) = D.ideal := by
-  sorry
+  exact Chapter10SectionVanishingIdealAPI.canonicalSection_vanishingIdeal D
 
-theorem chapter10OofD_is_inverseIdeal {X : Scheme}
+def chapter10OofD_is_inverseIdeal {X : Scheme}
     (D : Chapter10EffectiveCartierDivisor X)
-    [Chapter10SectionVanishingIdealAPI X] [Chapter10IdealDualAPI X] :
-    chapter10OofD D = Chapter10IdealDualAPI.inverseIdeal D.ideal := by
-  sorry
+    [Chapter10IdealDualAPI X] :
+    Chapter10LineBundleIso (chapter10OofD D)
+      (Chapter10IdealDualAPI.inverseIdeal D) :=
+  chapter10_lineBundleIso_refl _
+
+/-!
+The quotient in the Cartier sequence is the pushforward of the structure
+sheaf of the closed subscheme.  Using the canonical map induced by the
+closed immersion prevents the exact-sequence witness from becoming an
+unrelated short exact sequence merely carrying `D` as a parameter.
+-/
+noncomputable def chapter10CartierQuotientModule {X : Scheme}
+    (D : Chapter10EffectiveCartierDivisor X) : X.Modules :=
+  (Scheme.Modules.pushforward D.ideal.subschemeι).obj
+    (chapter10StructureSheaf D.ideal.subscheme)
+
+noncomputable def chapter10CartierQuotient {X : Scheme}
+    (D : Chapter10EffectiveCartierDivisor X) :
+    chapter10StructureSheaf X ⟶ chapter10CartierQuotientModule D :=
+  SheafOfModules.unitToPushforwardObjUnit D.ideal.subschemeι.toRingCatSheafHom
+
+noncomputable def chapter10CartierOminusD {X : Scheme}
+    (D : Chapter10EffectiveCartierDivisor X) : X.Modules :=
+  kernel (chapter10CartierQuotient D)
+
+noncomputable def chapter10CartierInclusion {X : Scheme}
+    (D : Chapter10EffectiveCartierDivisor X) :
+    chapter10CartierOminusD D ⟶ chapter10StructureSheaf X :=
+  kernel.ι (chapter10CartierQuotient D)
+
+theorem chapter10_cartier_inclusion_comp_quotient {X : Scheme}
+    (D : Chapter10EffectiveCartierDivisor X) :
+    chapter10CartierInclusion D ≫ chapter10CartierQuotient D = 0 :=
+  kernel.condition _
 
 structure Chapter10CartierExactSequence {X : Scheme}
     (D : Chapter10EffectiveCartierDivisor X) where
-  OminusD : X.Modules
-  OD : X.Modules
-  inclusion : OminusD ⟶ chapter10StructureSheaf X
-  quotient : chapter10StructureSheaf X ⟶ OD
-  comp_zero : inclusion ≫ quotient = 0
-  mono_inclusion : Mono inclusion
-  epi_quotient : Epi quotient
-  exact : (ShortComplex.mk inclusion quotient comp_zero).Exact
+  comp_zero : chapter10CartierInclusion D ≫ chapter10CartierQuotient D = 0
+  mono_inclusion : Mono (chapter10CartierInclusion D)
+  epi_quotient : Epi (chapter10CartierQuotient D)
+  exact : (ShortComplex.mk (chapter10CartierInclusion D)
+    (chapter10CartierQuotient D) comp_zero).Exact
 
 theorem chapter10_cartier_exact_sequence_exists {X : Scheme}
     (D : Chapter10EffectiveCartierDivisor X) :
@@ -127,19 +163,17 @@ theorem chapter10_relativeDivisor_degree {C T : Scheme} {c : C ⟶ T} {d : ℕ}
     Chapter10FiberLength (chapter10RelativeDivisorProjection D) t = d := by
   exact D.finiteLocallyFree.rank t
 
-/- SOURCE_ISSUE (10.2, "If `C → T` is flat, fiber length `d` plus the Cartier
-condition implies finite local freeness"): fiberwise finite length and the
-Cartier/local-flatness argument do not by themselves imply that the closed
-subscheme is finite over a non-proper base.  The smallest correction is to add
-properness of the divisor over `T` (equivalently, in the intended proper-curve
-setting, assume the ambient curve is proper). -/
-
 theorem chapter10_cartier_fiber_length_implies_finiteLocallyFree
-    {C T : Scheme} (c : C ⟶ T) [Flat c]
+    {C T : Scheme} (c : C ⟶ T) [Flat c] [LocallyOfFinitePresentation c] [QuasiCompact c]
+    [QuasiSeparated c]
     (D : Chapter10EffectiveCartierDivisor C) (d : ℕ)
     [IsProper (D.ideal.subschemeι ≫ c)]
     (hfiber : ∀ t : T,
-      Scheme.Hom.finrank (D.ideal.subschemeι ≫ c) t = d) :
+      Chapter10FiniteLocallyFreeProfile
+        ((D.ideal.comap (c.fiberι t)).subschemeι ≫ c.fiberToSpecResidueField t) d)
+    (hfiber_cartier : ∀ t : T,
+      Chapter10LocallyRegularPrincipal
+        (D.ideal.comap (c.fiberι t))) :
     Chapter10FiniteLocallyFreeProfile (D.ideal.subschemeι ≫ c) d := by
   sorry
 

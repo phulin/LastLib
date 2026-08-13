@@ -15,17 +15,110 @@ inclusion-reversing order statement.  The field of an open subgroup is the
 compositum already defined in Dependencies.lean.
 -/
 
+/- A ray field is the finite abelian extension attached to a particular open
+   ray subgroup of the canonical idele class group.  Its extension data keep
+   the local Artin maps and the norm subgroup tied to the same field. -/
+structure Chapter06RayClassField
+    (K : Type*) [Field K] [NumberField K]
+    (H : Chapter06OpenFiniteIndexSubgroup
+      (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleClassGroup K)) where
+  field : Type
+  [fieldField : Field field]
+  [fieldNumberField : NumberField field]
+  [fieldAlgebra : Algebra K field]
+  [fieldFinite : FiniteDimensional K field]
+  [fieldAbelianGalois : IsAbelianGalois K field]
+  data : Chapter06FiniteAbelianExtensionData K field
+  norm_eq : chapter06CanonicalNormSubgroup data = H.subgroup
+
+abbrev chapter06RayClassFieldNormSubgroup
+    {K : Type*} [Field K] [NumberField K]
+    {H : Chapter06OpenFiniteIndexSubgroup
+      (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleClassGroup K)}
+    (R : Chapter06RayClassField K H) :=
+  letI : Field R.field := R.fieldField
+  letI : NumberField R.field := R.fieldNumberField
+  letI : Algebra K R.field := R.fieldAlgebra
+  letI : FiniteDimensional K R.field := R.fieldFinite
+  letI : IsAbelianGalois K R.field := R.fieldAbelianGalois
+  chapter06CanonicalNormSubgroup R.data
+
+def chapter06RayClassFieldLocalArtin
+    {K : Type*} [Field K] [NumberField K]
+    {H : Chapter06OpenFiniteIndexSubgroup
+      (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleClassGroup K)}
+    (R : Chapter06RayClassField K H)
+    (v : LastLib.Book06GlobalClassFieldTheory.Chapter01.BookPlace K) :=
+  letI : Field R.field := R.fieldField
+  letI : NumberField R.field := R.fieldNumberField
+  letI : Algebra K R.field := R.fieldAlgebra
+  letI : FiniteDimensional K R.field := R.fieldFinite
+  letI : IsAbelianGalois K R.field := R.fieldAbelianGalois
+  chapter06CanonicalLocalArtin R.data v
+
+def chapter06RayClassFieldLocalArtinGalois
+    {K : Type*} [Field K] [NumberField K]
+    {H : Chapter06OpenFiniteIndexSubgroup
+      (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleClassGroup K)}
+    (R : Chapter06RayClassField K H)
+    (v : LastLib.Book06GlobalClassFieldTheory.Chapter01.BookPlace K) :=
+  letI : Field R.field := R.fieldField
+  letI : NumberField R.field := R.fieldNumberField
+  letI : Algebra K R.field := R.fieldAlgebra
+  letI : FiniteDimensional K R.field := R.fieldFinite
+  letI : IsAbelianGalois K R.field := R.fieldAbelianGalois
+  chapter06CanonicalLocalArtinGalois R.data v
+
+/- The existence input is deliberately separated from the finite extension
+   data: the earlier chapter supplies the open-subgroup norm realization,
+   while the local Artin/class-formation bridge is supplied by the preceding
+   reciprocity interface. -/
+theorem chapter06_ray_class_field_existence
+    {K : Type*} [Field K] [NumberField K]
+    (H : Chapter06OpenFiniteIndexSubgroup
+      (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleClassGroup K))
+    (hExist :
+      LastLib.Book06GlobalClassFieldTheory.Chapter01.EveryOpenFiniteIndexSubgroupIsAClassNorm K)
+    (enrich :
+      ∀ R : LastLib.Book06GlobalClassFieldTheory.Chapter01.ClassFieldNormRealization
+          K H.subgroup,
+        letI : Field R.L := R.field_L
+        letI : NumberField R.L := R.numberField_L
+        letI : Algebra K R.L := R.algebra_K_L
+        letI : FiniteDimensional K R.L := R.finiteDimensional_K_L
+        letI : IsAbelianGalois K R.L := R.abelianGalois_K_L
+        Nonempty (Chapter06FiniteAbelianExtensionEnrichment K R.L R.normData)) :
+    Nonempty (Chapter06RayClassField K H) := by
+  sorry
+
+/- Maximality is stated against the actual Artin kernel of another finite
+   abelian extension, so the ray-field comparison cannot be satisfied by an
+   unrelated abstract quotient. -/
+theorem chapter06_ray_class_field_maximality
+    {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L] [IsAbelianGalois K L]
+    {H : Chapter06OpenFiniteIndexSubgroup
+      (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleClassGroup K)}
+    (R : Chapter06RayClassField K H)
+    (E : Chapter06FiniteAbelianExtensionData K L)
+    (h : H.subgroup ≤
+      (chapter06CanonicalClassArtinGalois E).ker) :
+    chapter06RayClassFieldNormSubgroup R ≤ chapter06CanonicalNormSubgroup E := by
+  sorry
+
 /- The norm subgroup of a finite abelian extension, with its topological
    finiteness conditions supplied separately by the existence theorem. -/
 abbrev chapter06NormSubgroupOfExtension
-    {K Ks C : Type*} [Field K] [Field Ks] [Algebra K Ks]
+    {K Ks C : Type*} [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
     [CommGroup C]
     (E : Chapter06FiniteAbelianExtension K Ks C) : Subgroup C :=
   chapter06NormSubgroup E.normMap
 
 /- An explicit witness for all assertions in the global existence theorem. -/
 structure Chapter06GlobalExistenceCorrespondence
-    (K Ks C : Type*) [Field K] [Field Ks] [Algebra K Ks]
+    (K Ks C : Type*) [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
     [CommGroup C] [TopologicalSpace C]
     (A : Chapter06CharacterFieldAssignment K Ks C) where
   extensionOfOpen :
@@ -77,20 +170,23 @@ structure Chapter06GlobalExistenceCorrespondence
 /- A character realization tagged with the field selected by the
    compositum assignment. -/
 structure Chapter06AssignedCharacterRealization
-    (K Ks C : Type*) [Field K] [Field Ks] [Algebra K Ks]
-    [CommGroup C]
+    (K Ks C : Type*) [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
+    [CommGroup C] [TopologicalSpace C]
     (A : Chapter06CharacterFieldAssignment K Ks C)
     (χ : C →* ℂˣ) where
   realization : Chapter06FiniteCharacterRealization K Ks C χ
   field_eq_assignment :
     realization.reciprocity.extension.field = A.fieldOfCharacter χ
 
-/- The standard construction from the character-field assignment and the
-   character realization lemma.  The realization hypothesis is exactly the
-   input supplied by Sections 6.2 and 6.3 for each finite quotient
-   character. -/
+/- LOCAL_DEPENDENCY_GUESS: individual character realizations do not by
+   themselves supply the finite reciprocity witness for a compositum or the
+   recovery of an arbitrary represented extension.  The theorem below is kept
+   as the source-facing construction interface until those two lattice-level
+   inputs are exposed explicitly. -/
 theorem chapter06_global_existence_from_character_realizations
-    {K Ks C : Type*} [Field K] [Field Ks] [Algebra K Ks]
+    {K Ks C : Type*} [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
     [CommGroup C] [TopologicalSpace C]
     (A : Chapter06CharacterFieldAssignment K Ks C)
     (realize :
@@ -102,7 +198,8 @@ theorem chapter06_global_existence_from_character_realizations
 
 /- Theorem 6.3. -/
 theorem chapter06_theorem_6_3_global_existence
-    {K Ks C : Type*} [Field K] [Field Ks] [Algebra K Ks]
+    {K Ks C : Type*} [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
     [CommGroup C] [TopologicalSpace C]
     (A : Chapter06CharacterFieldAssignment K Ks C)
     (realize :
@@ -112,18 +209,20 @@ theorem chapter06_theorem_6_3_global_existence
     Nonempty (Chapter06GlobalExistenceCorrespondence K Ks C A) :=
   chapter06_global_existence_from_character_realizations A realize
 
-theorem chapter06_global_existence_quotient_galois
-    {K Ks C : Type*} [Field K] [Field Ks] [Algebra K Ks]
+def chapter06_global_existence_quotient_galois
+    {K Ks C : Type*} [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
     [CommGroup C] [TopologicalSpace C]
     (A : Chapter06CharacterFieldAssignment K Ks C)
     (G : Chapter06GlobalExistenceCorrespondence K Ks C A)
     (H : Chapter06OpenFiniteIndexSubgroup C) :
-    Nonempty ((C ⧸ H.subgroup) ≃*
-      Gal((G.extensionOfOpen H).field / K)) :=
-  ⟨G.quotient_galois H⟩
+    (C ⧸ H.subgroup) ≃*
+      Gal((G.extensionOfOpen H).field / K) :=
+  G.quotient_galois H
 
 theorem chapter06_global_existence_index_formula
-    {K Ks C : Type*} [Field K] [Field Ks] [Algebra K Ks]
+    {K Ks C : Type*} [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
     [CommGroup C] [TopologicalSpace C]
     (A : Chapter06CharacterFieldAssignment K Ks C)
     (G : Chapter06GlobalExistenceCorrespondence K Ks C A)
@@ -133,7 +232,8 @@ theorem chapter06_global_existence_index_formula
   G.quotient_index_degree H
 
 theorem chapter06_compositum_triviality_iff
-    {K Ks C : Type*} [Field K] [Field Ks] [Algebra K Ks]
+    {K Ks C : Type*} [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
     [CommGroup C] [TopologicalSpace C]
     (A : Chapter06CharacterFieldAssignment K Ks C)
     (G : Chapter06GlobalExistenceCorrespondence K Ks C A)
@@ -143,7 +243,8 @@ theorem chapter06_compositum_triviality_iff
   sorry
 
 theorem chapter06_global_existence_inclusion_reversal
-    {K Ks C : Type*} [Field K] [Field Ks] [Algebra K Ks]
+    {K Ks C : Type*} [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
     [CommGroup C] [TopologicalSpace C]
     (A : Chapter06CharacterFieldAssignment K Ks C)
     (G : Chapter06GlobalExistenceCorrespondence K Ks C A)
@@ -190,7 +291,8 @@ theorem chapter06_kernel_of_continuous_finite_quotient_is_open
 /- The norm and field assignments are inverse on the represented finite
    abelian extensions and open finite-index subgroups. -/
 theorem chapter06_global_existence_left_inverse
-    {K Ks C : Type*} [Field K] [Field Ks] [Algebra K Ks]
+    {K Ks C : Type*} [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
     [CommGroup C] [TopologicalSpace C]
     (A : Chapter06CharacterFieldAssignment K Ks C)
     (G : Chapter06GlobalExistenceCorrespondence K Ks C A)
@@ -199,7 +301,8 @@ theorem chapter06_global_existence_left_inverse
   G.left_inverse H
 
 theorem chapter06_global_existence_right_inverse
-    {K Ks C : Type*} [Field K] [Field Ks] [Algebra K Ks]
+    {K Ks C : Type*} [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
     [CommGroup C] [TopologicalSpace C]
     (A : Chapter06CharacterFieldAssignment K Ks C)
     (G : Chapter06GlobalExistenceCorrespondence K Ks C A)

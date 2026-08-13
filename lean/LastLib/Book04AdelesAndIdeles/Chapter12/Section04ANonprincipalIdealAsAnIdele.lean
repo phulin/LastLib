@@ -67,13 +67,6 @@ theorem chapter12_minus_five_class_group_element_has_order_two
 
 /-! ## The single-place finite idele -/
 
-def chapter12UniformizerAt
-    {R K : Type*} [CommRing R] [IsDedekindDomain R] [Field K]
-    [Algebra R K] [IsFractionRing R K]
-    (p : IsDedekindDomain.HeightOneSpectrum R)
-    (π : p.adicCompletionIntegers K) : Prop :=
-  π ≠ 0 ∧ ¬IsUnit π
-
 structure Chapter12SinglePlaceFiniteIdele
     {R K : Type*} [CommRing R] [IsDedekindDomain R] [Field K]
     [Algebra R K] [IsFractionRing R K]
@@ -95,16 +88,6 @@ theorem chapter12_single_place_finite_idele_mem_ideal
     (h : Chapter12SinglePlaceFiniteIdele D p π) :
     D.idealOf h.x = (p.asIdeal : FractionalIdeal R⁰ K) := by
   exact h.ideal_eq
-
-theorem chapter12_single_place_finite_idele_exists
-    {R K : Type*} [CommRing R] [IsDedekindDomain R] [Field K]
-    [Algebra R K] [IsFractionRing R K]
-    (D : Chapter12FiniteIdeleIdealData R K)
-    (p : IsDedekindDomain.HeightOneSpectrum R)
-    (π : p.adicCompletionIntegers K)
-    (hπ : chapter12UniformizerAt p π) :
-    Nonempty (Chapter12SinglePlaceFiniteIdele D p π) := by
-  sorry
 
 theorem chapter12_nonprincipal_idele_cannot_be_principal
     {R K : Type*} [CommRing R] [IsDedekindDomain R] [Field K]

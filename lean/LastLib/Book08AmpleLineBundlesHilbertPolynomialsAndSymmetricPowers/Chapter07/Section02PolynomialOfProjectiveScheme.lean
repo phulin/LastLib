@@ -35,6 +35,9 @@ structure Chapter07ClosedSubschemeOfProjectiveSpace
   Z : Scheme.{u}
   inclusion : Z ⟶ chapter07ProjectiveSpace k r
   closedImmersion : IsClosedImmersion inclusion
+  structureMap : Z ⟶ chapter07BaseScheme k
+  overBase :
+    inclusion ≫ chapter07ProjectiveSpaceToBase k r = structureMap
 
 /-!
 The cohomological additivity input is stated separately from exactness.  It
@@ -75,17 +78,19 @@ structure Chapter07ClosedSubschemeHilbertData
     (k : Type u) [Field k]
     (C : Chapter07PolarizedScheme k) where
   subscheme : Chapter07ClosedSubschemeOfProjectiveSpace k
-  /- LOCAL_DEPENDENCY_GUESS: preceding projective-scheme chapters should
-  supply the canonical identification of this closed subscheme with C.X. -/
-  underlyingIdentification : C.X ≅ subscheme.Z
+  ambientIdentification : C.X ≅ chapter07ProjectiveSpace k subscheme.r
+  ambientIdentification_overBase :
+    ambientIdentification.hom ≫ chapter07ProjectiveSpaceToBase k subscheme.r =
+      C.structureMap
   ambient : Chapter07HilbertSetup k C
   ideal : Chapter07HilbertSetup k C
   structureSheaf : Chapter07HilbertSetup k C
   idealSequence : Chapter07ShortExactSequence ideal.F ambient.F structureSheaf.F
-  /- LOCAL_DEPENDENCY_GUESS: these representation fields should become the
-  canonical identifications with O_{P^r}, I_Z, and O_Z. -/
-  ambientRepresentsProjectiveSpace : Prop
-  idealRepresentsIdealSheaf : Prop
+  idealInjection_mono : Mono idealSequence.injection
+  closedStructureSheaf : Chapter07CoherentSheaf subscheme.Z
+  structureSheafPushforward :
+    structureSheaf.F.sheaf ≅
+      (Scheme.Modules.pushforward subscheme.inclusion).obj closedStructureSheaf.sheaf
   ambientPolynomial :
     chapter07HilbertPolynomial ambient =
       chapter07ProjectiveSpaceHilbertPolynomial subscheme.r
@@ -93,7 +98,6 @@ structure Chapter07ClosedSubschemeHilbertData
       chapter07EulerCharacteristic ambient n =
       chapter07EulerCharacteristic ideal n +
         chapter07EulerCharacteristic structureSheaf n
-  structureRepresentsStructureSheaf : Prop
 
 theorem chapter07_closed_subscheme_hilbert_polynomial
     {k : Type u} [Field k]
@@ -119,11 +123,12 @@ structure Chapter07HypersurfaceHilbertData
     (C : Chapter07PolarizedScheme k) where
   closedSubscheme : Chapter07ClosedSubschemeHilbertData k C
   degree : ℕ
+  degreePositive : 0 < degree
   idealPolynomial :
     chapter07HilbertPolynomial closedSubscheme.ideal =
       chapter07BinomialPolynomial closedSubscheme.subscheme.r degree
-  /- LOCAL_DEPENDENCY_GUESS: replace this marker by the preceding chapter's
-  canonical ideal-sheaf/hypersurface-degree interface. -/
+  /- LOCAL_DEPENDENCY_GUESS: replace this marker by the preceding projective
+  ideal API's concrete homogeneous-equation certificate. -/
   idealIsHypersurfaceOfDegree : Prop
 
 theorem chapter07_hypersurface_hilbert_polynomial
@@ -176,7 +181,8 @@ structure Chapter07ZeroDimensionalHilbertData
     {C : Chapter07PolarizedScheme k} where
   setup : Chapter07HilbertSetup k C
   length : ℕ
-  supportDimensionZero : Prop
+  supportDimension : Chapter07SupportDimensionCertificate setup.F
+  supportDimension_zero : supportDimension.dimension = 0
   eulerCharacteristic_eq_length : ∀ n : ℕ,
     chapter07EulerCharacteristic setup n = (length : ℤ)
 
@@ -192,11 +198,11 @@ structure Chapter07DoubledPointHilbertData
     {C : Chapter07PolarizedScheme k} where
   doubled : Chapter07ZeroDimensionalHilbertData (k := k) (C := C)
   reducedSupport : Chapter07ZeroDimensionalHilbertData (k := k) (C := C)
+  thickeningSequence :
+    Chapter07ShortExactSequence reducedSupport.setup.F doubled.setup.F
+      reducedSupport.setup.F
   doubledLength : doubled.length = 2
   reducedLength : reducedSupport.length = 1
-  /- LOCAL_DEPENDENCY_GUESS: replace this marker by the canonical nilpotent
-  thickening/reduction morphism when the scheme-theoretic point API lands. -/
-  isNilpotentThickening : Prop
 
 theorem chapter07_doubled_point_hilbert_polynomials
     {k : Type u} [Field k]

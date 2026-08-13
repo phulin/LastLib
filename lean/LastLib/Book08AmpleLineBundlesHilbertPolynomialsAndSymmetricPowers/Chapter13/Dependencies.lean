@@ -8,6 +8,7 @@ import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
 import Mathlib.AlgebraicGeometry.Morphisms.Finite
 import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
 import Mathlib.AlgebraicGeometry.Morphisms.Flat
+import Mathlib.AlgebraicGeometry.Morphisms.FlatRank
 import Mathlib.AlgebraicGeometry.Morphisms.Proper
 import Mathlib.AlgebraicGeometry.Morphisms.SchemeTheoreticallyDominant
 import Mathlib.AlgebraicGeometry.Morphisms.Separated
@@ -19,6 +20,10 @@ import Mathlib.CategoryTheory.Limits.Shapes.Pullback.HasPullback
 import Mathlib.Data.Fin.Basic
 import Mathlib.Algebra.Polynomial.Basic
 import Mathlib.Data.Sym.Basic
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02.Section01ProjectiveBundles
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Dependencies
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter08.Dependencies
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11.Dependencies
 
 /-!
 # Chapter 13: universal constructions for later geometry
@@ -36,6 +41,9 @@ namespace LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Cha
 
 open CategoryTheory CategoryTheory.Limits
 open AlgebraicGeometry
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter08
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
 
 noncomputable section
 
@@ -65,6 +73,15 @@ def chapter13RelativeMapComp {S : Scheme}
     Chapter13RelativeMap T V where
   map := f.map ≫ g.map
   over := by rw [Category.assoc, g.over, f.over]
+
+/-! A scheme isomorphism over the fixed base. -/
+
+structure Chapter13RelativeIso {S : Scheme}
+    (T U : Chapter13RelativeScheme S) where
+  hom : Chapter13RelativeMap T U
+  inv : Chapter13RelativeMap U T
+  hom_inv_id : hom.map ≫ inv.map = 𝟙 T.scheme
+  inv_hom_id : inv.map ≫ hom.map = 𝟙 U.scheme
 
 @[simp]
 theorem chapter13RelativeMapId_map {S : Scheme} (T : Chapter13RelativeScheme S) :
@@ -147,50 +164,62 @@ def chapter13OpenRelativeScheme {S : Scheme}
 /-! ## Book-facing line bundles and projective embeddings -/
 
 /-
-LOCAL_DEPENDENCY_GUESS: the preceding Book 08 chapters are expected to provide
-the preferred ample-line-bundle and relative-projective-space interfaces.  The
-pinned Mathlib tree has the sheaf-theoretic locally-free predicate but no
-book-level relative ample bundle or projective morphism package, so these
-fields are deliberately explicit replacement points.
+The preceding chapters supply the canonical invertible-sheaf, ampleness, and
+projective-space interfaces used here.
 -/
 
 /-- A rank-one locally free sheaf together with the book's ampleness datum. -/
-structure Chapter13Polarization (X : Scheme) where
-  lineBundle : X.Modules
-  locallyFree : SheafOfModules.IsLocallyFree lineBundle
-  rank : ℕ
-  rank_eq_one : rank = 1
-  ample : Prop
+abbrev chapter13RankOneSheaf {X : Scheme} (lineBundle : X.Modules) : Prop :=
+  chapter04IsInvertible lineBundle
+
+structure Chapter13Polarization {X S : Scheme} (f : X ⟶ S) where
+  lineBundle : Chapter04LineBundle X
+  ample : chapter04Ample f lineBundle
 
 /-- The relative projective-space datum needed to define a projective morphism. -/
 structure Chapter13RelativeProjectiveSpaceData (S : Scheme) (n : ℕ) where
-  scheme : Scheme
-  toBase : scheme ⟶ S
-  isProjectiveSpace : Prop
+  bundle : Chapter04ProjectiveBundle S
+  /-- Identification with the canonical `ℙ^n_S`, over the base. -/
+  isProjectiveSpace : Nonempty
+    { e : bundle.space ≅ chapter02ProjectiveSpace S n //
+      e.hom ≫ chapter02ProjectiveSpaceProjection S n = bundle.projection }
+
+abbrev Chapter13RelativeProjectiveSpaceData.scheme
+    {S : Scheme} {n : ℕ} (P : Chapter13RelativeProjectiveSpaceData S n) : Scheme :=
+  P.bundle.space
+
+abbrev Chapter13RelativeProjectiveSpaceData.toBase
+    {S : Scheme} {n : ℕ} (P : Chapter13RelativeProjectiveSpaceData S n) :
+    P.scheme ⟶ S :=
+  P.bundle.projection
 
 /-- A closed embedding into a relative projective space. -/
 def Chapter13ProjectiveMorphism {X S : Scheme} (f : X ⟶ S) : Prop :=
-  ∃ (n : ℕ) (P : Chapter13RelativeProjectiveSpaceData S n)
-    (i : X ⟶ P.scheme), IsClosedImmersion i ∧ i ≫ P.toBase = f
+  chapter04Projective f
 
 /-! ## Hilbert-polynomial certificates and relative families -/
 
-/-- A Hilbert function certificate for a closed embedding into a fixed ambient scheme.
+/-- A numerical Hilbert-function certificate for a map into a polarized ambient scheme.
 
-The eventual equality is intentionally stated over `ℤ`; a later Hilbert-polynomial
-API can replace this bridge by its canonical normalization without changing the
-family and representability interfaces.
+Closedness is recorded by the surrounding family or graph data.  The Hilbert
+function is integer-valued, while the polynomial uses the canonical
+integer-valued-over-`ℚ` normalization from Chapter 8.
 -/
+abbrev Chapter13NumericalPolynomial := Chapter08NumericalPolynomial
+
 structure Chapter13HilbertPolynomialCertificate
-    (Z A : Scheme) (i : Z ⟶ A) where
+    {S : Scheme} (Z A : Scheme) (i : Z ⟶ A) (aS : A ⟶ S)
+    (L : Chapter13Polarization aS) where
   hilbertFunction : ℕ → ℤ
-  polynomial : Polynomial ℤ
+  /-- A Hilbert function is a dimension, hence is nonnegative in every degree. -/
+  hilbertFunction_nonnegative : ∀ n, 0 ≤ hilbertFunction n
+  polynomial : Chapter13NumericalPolynomial
   agrees_eventually : ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
-    hilbertFunction n = polynomial.eval (n : ℤ)
+    hilbertFunction n = polynomial.value n
 
 /-- A flat proper finitely presented closed family in a base change of an ambient scheme. -/
 structure Chapter13FlatClosedFamily {S X : Scheme} (xS : X ⟶ S)
-    (L : Chapter13Polarization X) (P : Polynomial ℤ)
+    (L : Chapter13Polarization xS) (P : Chapter13NumericalPolynomial)
     (T : Chapter13RelativeScheme S) where
   scheme : Scheme
   projection : scheme ⟶ T.scheme
@@ -202,7 +231,7 @@ structure Chapter13FlatClosedFamily {S X : Scheme} (xS : X ⟶ S)
   proper : IsProper projection
   projective : Chapter13ProjectiveMorphism projection
   hilbert : Chapter13HilbertPolynomialCertificate
-      scheme (chapter13BaseChange xS T.toBase) inclusion
+      scheme X (inclusion ≫ chapter13BaseChangeToSource xS T.toBase) xS L
   hilbert_polynomial : hilbert.polynomial = P
 
 /-- A contravariant functor on the category of schemes over a fixed base. -/
@@ -229,28 +258,47 @@ structure Chapter13RepresentedRelativePresheaf {S : Scheme}
 
 /-- Hilbert representability data for one fixed ambient polarization and polynomial. -/
 structure Chapter13HilbertSchemeData {S X : Scheme} (xS : X ⟶ S)
-    (L : Chapter13Polarization X) (P : Polynomial ℤ) where
+    (L : Chapter13Polarization xS) (P : Chapter13NumericalPolynomial) where
   functor : Chapter13RelativePresheaf S
+  familyPullback : {T U : Chapter13RelativeScheme S} →
+    Chapter13RelativeMap T U →
+      Chapter13FlatClosedFamily xS L P U →
+        Chapter13FlatClosedFamily xS L P T
+  familyPullback_id : ∀ {T : Chapter13RelativeScheme S}
+    (x : Chapter13FlatClosedFamily xS L P T),
+    familyPullback (chapter13RelativeMapId T) x = x
+  familyPullback_comp : ∀ {T U V : Chapter13RelativeScheme S}
+    (f : Chapter13RelativeMap T U) (g : Chapter13RelativeMap U V)
+    (x : Chapter13FlatClosedFamily xS L P V),
+    familyPullback f (familyPullback g x) =
+      familyPullback (chapter13RelativeMapComp f g) x
   classifies : ∀ T : Chapter13RelativeScheme S,
     functor.obj T ≃ Chapter13FlatClosedFamily xS L P T
+  classifies_naturality : ∀ {T U : Chapter13RelativeScheme S}
+    (f : Chapter13RelativeMap T U) (x : functor.obj U),
+    classifies T (functor.map f x) =
+      familyPullback f (classifies U x)
   represented : Chapter13RepresentedRelativePresheaf functor
+  projective : Chapter13ProjectiveMorphism represented.representative.toBase
+  finitePresentation :
+    LocallyOfFinitePresentation represented.representative.toBase
 
 /-- The representing relative scheme underlying a Hilbert-scheme datum. -/
 def chapter13HilbertScheme {S X : Scheme} {xS : X ⟶ S}
-    {L : Chapter13Polarization X} {P : Polynomial ℤ}
+    {L : Chapter13Polarization xS} {P : Chapter13NumericalPolynomial}
     (H : Chapter13HilbertSchemeData xS L P) : Scheme :=
   H.represented.representative.scheme
 
 /-- Its structure morphism to the base. -/
 def chapter13HilbertSchemeToBase {S X : Scheme} {xS : X ⟶ S}
-    {L : Chapter13Polarization X} {P : Polynomial ℤ}
+    {L : Chapter13Polarization xS} {P : Chapter13NumericalPolynomial}
     (H : Chapter13HilbertSchemeData xS L P) :
     chapter13HilbertScheme H ⟶ S :=
   H.represented.representative.toBase
 
 /-- The universal flat closed family supplied by representability. -/
 def chapter13UniversalHilbertFamily {S X : Scheme} {xS : X ⟶ S}
-    {L : Chapter13Polarization X} {P : Polynomial ℤ}
+    {L : Chapter13Polarization xS} {P : Chapter13NumericalPolynomial}
     (H : Chapter13HilbertSchemeData xS L P) :
     Chapter13FlatClosedFamily xS L P H.represented.representative :=
   H.classifies _ ((H.represented.equiv _).symm (chapter13RelativeMapId _))
@@ -259,9 +307,19 @@ def chapter13UniversalHilbertFamily {S X : Scheme} {xS : X ⟶ S}
 
 /-- A universal family with the properties used by the closed-locus criteria. -/
 structure Chapter13UniversalFamilyData (H X : Scheme) where
+  base : Scheme
+  parameterToBase : H ⟶ base
+  ambientToBase : X ⟶ base
   family : Scheme
   projection : family ⟶ H
   map : family ⟶ X
+  map_over : map ≫ ambientToBase = projection ≫ parameterToBase
+  familyToProduct : family ⟶ chapter13RelativeProduct ambientToBase parameterToBase
+  familyToProduct_fst :
+    familyToProduct ≫ chapter13RelativeProduct_fst ambientToBase parameterToBase = map
+  familyToProduct_snd :
+    familyToProduct ≫ chapter13RelativeProduct_snd ambientToBase parameterToBase = projection
+  closed : IsClosedImmersion familyToProduct
   flat : Flat projection
   finitePresentation : LocallyOfFinitePresentation projection
   proper : IsProper projection
@@ -290,6 +348,7 @@ def chapter13InvariantUnder {H X : Scheme}
     (T : Scheme) (t : T ⟶ H) : Prop :=
   ∃ q : chapter13UniversalFamilyBaseChange U t ⟶
       chapter13UniversalFamilyBaseChange U t,
+    q ≫ pullback.snd U.projection t = pullback.snd U.projection t ∧
     q ≫ chapter13UniversalFamilyBaseChangedMap U t =
       chapter13UniversalFamilyBaseChangedMap U t ≫ σ
 
@@ -297,14 +356,16 @@ def chapter13InvariantUnder {H X : Scheme}
 def chapter13Incidence {H X Z : Scheme}
     (U : Chapter13UniversalFamilyData H X) (j : Z ⟶ X)
     (T : Scheme) (t : T ⟶ H) : Prop :=
-  Nonempty ↑(pullback (C := Scheme)
-    (chapter13UniversalFamilyBaseChangedMap U t) j)
+  IsSchemeTheoreticallyDominant
+    (pullback.fst (chapter13UniversalFamilyBaseChangedMap U t) j ≫
+      pullback.snd U.projection t)
 
 /-- Avoidance of a fixed closed subscheme. -/
 def chapter13Avoids {H X Z : Scheme}
     (U : Chapter13UniversalFamilyData H X) (j : Z ⟶ X)
     (T : Scheme) (t : T ⟶ H) : Prop :=
-  ¬ chapter13Incidence U j T t
+  IsEmpty ↑(pullback (C := Scheme)
+    (chapter13UniversalFamilyBaseChangedMap U t) j)
 
 /-- Smoothness of all geometric fibers of a family. -/
 def chapter13SmoothFibers {Z T : Scheme} (p : Z ⟶ T) : Prop :=
@@ -397,6 +458,13 @@ theorem chapter13LocallyClosedLocus_isLocallyClosed {H : Scheme}
     IsOpenImmersion L.locus.ι ∧ IsClosedImmersion L.ideal.subschemeι := by
   constructor <;> infer_instance
 
+theorem chapter13LocallyClosedLocus_isImmersion {H : Scheme}
+    {Q : ∀ T : Scheme, (T ⟶ H) → Prop}
+    (L : Chapter13LocallyClosedLocusData H Q) :
+    IsImmersion (chapter13LocallyClosedLocusι L) := by
+  change IsImmersion (L.locus.ι ≫ L.ideal.subschemeι)
+  infer_instance
+
 /-- Vanishing of a sheaf morphism, the coefficient-ideal formulation of an equation. -/
 def chapter13SheafEquation {H : Scheme} {A B : H.Modules} (φ : A ⟶ B) : Prop :=
   φ = 0
@@ -456,28 +524,51 @@ structure Chapter13FiniteLengthSubscheme {S : Scheme}
   toTest : scheme ⟶ T.scheme
   inclusion : scheme ⟶ chapter13BaseChange X.toBase T.toBase
   inclusion_over : inclusion ≫ chapter13BaseChangeToTest X.toBase T.toBase = toTest
-  finite : IsFinite inclusion
-  flat : Flat toTest
-  length : ℕ
-  length_eq : length = d
+  closed : IsClosedImmersion inclusion
+  [finite : IsFinite toTest]
+  [flat : Flat toTest]
+  finitePresentation : LocallyOfFinitePresentation toTest
+  length_eq : ∀ t, toTest.finrank t = d
 
-/-- An effective divisor family, with the Cartier/effectivity condition kept explicit. -/
-/-
-LOCAL_DEPENDENCY_GUESS: the pinned Mathlib tree has no relative Cartier-divisor
-family interface, so `effectiveCartier` is the replacement point that later
-curve-specific code should strengthen.
--/
+/- A closed immersion is effective Cartier when it is, up to isomorphism of its
+   source, the subscheme cut out by an ideal sheaf which is locally generated by
+   a non-zero-divisor.  This uses the canonical ideal-sheaf predicate supplied
+   by the preceding symmetric-power chapter. -/
+def chapter13IsEffectiveCartier {S : Scheme}
+    {X T : Chapter13RelativeScheme S} {d : ℕ}
+    (F : Chapter13FiniteLengthSubscheme X T d) : Prop :=
+  ∃ I : (chapter13BaseChange X.toBase T.toBase).IdealSheafData,
+    ∃ e : I.subscheme ≅ F.scheme,
+      e.hom ≫ F.inclusion = I.subschemeι ∧ I.IsEffectiveCartier
+
+/-- An effective divisor family with the canonical Cartier condition. -/
 structure Chapter13EffectiveDivisorFamily {S : Scheme}
     (X T : Chapter13RelativeScheme S) (d : ℕ) where
   finiteLength : Chapter13FiniteLengthSubscheme X T d
-  effectiveCartier : Prop
+  effectiveCartier : chapter13IsEffectiveCartier finiteLength
 
 /-- Representability data for the relative symmetric power. -/
 structure Chapter13RelativeSymmetricPowerData {S : Scheme}
     (X : Chapter13RelativeScheme S) (d : ℕ) where
   functor : Chapter13RelativePresheaf S
+  familyPullback : {T U : Chapter13RelativeScheme S} →
+    Chapter13RelativeMap T U →
+      Chapter13EffectiveDivisorFamily X U d →
+        Chapter13EffectiveDivisorFamily X T d
+  familyPullback_id : ∀ {T : Chapter13RelativeScheme S}
+    (x : Chapter13EffectiveDivisorFamily X T d),
+    familyPullback (chapter13RelativeMapId T) x = x
+  familyPullback_comp : ∀ {T U V : Chapter13RelativeScheme S}
+    (f : Chapter13RelativeMap T U) (g : Chapter13RelativeMap U V)
+    (x : Chapter13EffectiveDivisorFamily X V d),
+    familyPullback f (familyPullback g x) =
+      familyPullback (chapter13RelativeMapComp f g) x
   classifies : ∀ T : Chapter13RelativeScheme S,
     functor.obj T ≃ Chapter13EffectiveDivisorFamily X T d
+  classifies_naturality : ∀ {T U : Chapter13RelativeScheme S}
+    (f : Chapter13RelativeMap T U) (x : functor.obj U),
+    classifies T (functor.map f x) =
+      familyPullback f (classifies U x)
   represented : Chapter13RepresentedRelativePresheaf functor
 
 def chapter13RelativeSymmetricPower {S : Scheme}
@@ -486,10 +577,18 @@ def chapter13RelativeSymmetricPower {S : Scheme}
     Chapter13RelativeScheme S :=
   D.represented.representative
 
+/-- The universal effective divisor obtained by evaluating the represented functor at its
+representative and the identity map. -/
+def chapter13UniversalRelativeSymmetricPowerDivisor {S : Scheme}
+    {X : Chapter13RelativeScheme S} {d : ℕ}
+    (D : Chapter13RelativeSymmetricPowerData X d) :
+    Chapter13EffectiveDivisorFamily X (chapter13RelativeSymmetricPower D) d :=
+  D.classifies _ ((D.represented.equiv _).symm (chapter13RelativeMapId _))
+
 /-- A polarization-aware Hilbert problem; the polarization is part of the input. -/
-structure Chapter13PolarizedHilbertProblem (X : Scheme) where
-  polarization : Chapter13Polarization X
-  polynomial : Polynomial ℤ
+structure Chapter13PolarizedHilbertProblem {X S : Scheme} (f : X ⟶ S) where
+  polarization : Chapter13Polarization f
+  polynomial : Chapter13NumericalPolynomial
 
 end
 

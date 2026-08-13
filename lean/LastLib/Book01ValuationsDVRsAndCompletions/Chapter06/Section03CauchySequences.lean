@@ -1,9 +1,13 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter06.Section02ContinuityOfAlgebraicOperations
+import Mathlib.Algebra.Order.Ring.IsNonarchimedean
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Order
+import Mathlib.Tactic.Ring
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter06
 
 open Set Filter Function
-open scoped BigOperators Pointwise Topology WithZero NNReal Valued PowerSeries
+open scoped BigOperators Pointwise Topology WithZero NNReal Valued
 
 noncomputable section
 
@@ -87,19 +91,23 @@ theorem chapter06_consecutive_increment_tail_bound
     chapter06Distance v (x m) (x n) ≤
       (Finset.Ico n m).sup' hs
         (fun i => chapter06Distance v (x (i + 1)) (x i)) := by
-  change v (x m - x n) ≤ _
-  have hsum : ∀ k, n ≤ k →
-      (Finset.sum (Finset.Ico n k) (fun i => x (i + 1) - x i)) = x k - x n := by
-    intro k hk
-    induction k, hk using Nat.le_induction with
-    | base => simp
-    | succ k hk ih =>
-        rw [Finset.sum_Ico_succ_top hk, ih]
-        ring
-  rw [← hsum m hnm.le]
-  change v (Finset.sum (Finset.Ico n m) (fun i => x (i + 1) - x i)) ≤
-    (Finset.Ico n m).sup' hs (fun i => v (x (i + 1) - x i))
-  exact IsNonarchimedean.apply_sum_le_sup hv hs
+  have hsum : x m - x n =
+      Finset.sum (Finset.Ico n m) (fun i => x (i + 1) - x i) := by
+    calc
+      x m - x n = (x m - x 0) - (x n - x 0) := by ring
+      _ = (Finset.sum (Finset.range m) (fun i => x (i + 1) - x i)) -
+          (Finset.sum (Finset.range n) (fun i => x (i + 1) - x i)) := by
+        rw [Finset.sum_range_sub, Finset.sum_range_sub]
+      _ = Finset.sum (Finset.Ico n m) (fun i => x (i + 1) - x i) :=
+        (Finset.sum_Ico_eq_sub (fun i => x (i + 1) - x i) hnm.le).symm
+  calc
+    chapter06Distance v (x m) (x n) = v (x m - x n) := rfl
+    _ = v (Finset.sum (Finset.Ico n m) (fun i => x (i + 1) - x i)) := by
+      rw [hsum]
+    _ ≤ (Finset.Ico n m).sup' hs
+        (fun i => chapter06Distance v (x (i + 1)) (x i)) := by
+      simpa only [chapter06Distance] using
+        (IsNonarchimedean.apply_sum_le_sup hv hs)
 
 /-- Vanishing consecutive differences imply that a sequence is Cauchy. -/
 theorem chapter06_cauchy_of_consecutive_differences_tend_to_zero

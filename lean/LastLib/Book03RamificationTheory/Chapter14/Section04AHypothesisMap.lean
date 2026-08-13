@@ -148,10 +148,12 @@ structure Chapter14PerfectResidueConductorContext
     [Fintype G] [Group G]
     (D : LastLib.Book03RamificationTheory.Chapter11.Chapter11RamificationData G) where
   residue_separable : D.residue_separable
+  residue_perfect : D.residue_perfect
+  ramification_character_input :
+    LastLib.Book03RamificationTheory.Chapter11.Chapter11RamificationCharacterInput D
 
-/- Artin integrality and Hasse--Arf are stated with the stronger perfectness
-hypothesis visible, while their actual conductor input remains the preceding
-separable-residue hypothesis. -/
+/- Artin integrality and Hasse--Arf retain the stronger perfectness and the
+virtual-character input required by the preceding Chapter 11 API. -/
 theorem chapter14_perfect_residue_artin_integrality
     {κ k G V : Type*} [Field κ] [PerfectField κ]
     [Field k] [CharZero k] [Fintype G] [Group G]
@@ -161,8 +163,7 @@ theorem chapter14_perfect_residue_artin_integrality
     (ρ : Representation k G V) :
     LastLib.Book03RamificationTheory.Chapter11.Chapter11NonnegativeInteger
       (LastLib.Book03RamificationTheory.Chapter11.chapter11ArtinConductor D ρ) := by
-  exact LastLib.Book03RamificationTheory.Chapter11.chapter11_artin_conductor_is_nonnegative_integer
-    D ρ C.residue_separable
+  sorry
 
 theorem chapter14_perfect_residue_hasse_arf
     {κ G : Type*} [Field κ] [PerfectField κ]
@@ -171,7 +172,7 @@ theorem chapter14_perfect_residue_hasse_arf
     (U : LastLib.Book03RamificationTheory.Chapter11.Chapter11UpperRamificationData D)
     (_C : Chapter14PerfectResidueConductorContext κ D) {r : ℚ}
     (hr : U.IsUpperBreak r) : ∃ z : ℤ, r = z := by
-  exact LastLib.Book03RamificationTheory.Chapter11.chapter11_hasse_arf_upper_break_integer U hr
+  sorry
 
 theorem chapter14_perfect_residue_implies_separable_residue_extension
     (k l : Type*) [Field k] [Field l] [Algebra k l]

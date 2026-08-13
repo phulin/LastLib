@@ -1,5 +1,8 @@
 import LastLib.Book06GlobalClassFieldTheory.Chapter06.Dependencies
 
+/- The local dual subgroup and pointwise Kummer support keep the restricted
+   product pairing finite without collapsing unramified valuation classes. -/
+
 namespace LastLib.Book06GlobalClassFieldTheory.Chapter06
 
 open scoped BigOperators
@@ -40,8 +43,14 @@ structure Chapter06LocalCupPairingData
     [∀ v, AddCommGroup (HMu v)]
     [∀ v, AddCommGroup (HBr v)]
     [∀ v, AddCommGroup (HTate v)] where
+  positive : 0 < n
   kind : ι → Chapter06PlaceKind
   unramified : ∀ v, AddSubgroup (HLocal v)
+  /- At an unramified finite place, the local pairing vanishes when both
+     entries are unramified.  It does not vanish for an arbitrary Kummer
+     class: an unramified character can pair nontrivially with a valuation
+     class. -/
+  unramifiedDual : ∀ v, AddSubgroup (HMu v)
   localCupProduct : ∀ v, HLocal v →+ HMu v →+ HBr v
   localInvariant : ∀ v, HBr v →+ Chapter06OneOverNModOne n
   pairing : ∀ v, HLocal v →+ HMu v →+ Chapter06OneOverNModOne n
@@ -49,7 +58,7 @@ structure Chapter06LocalCupPairingData
     ∀ v c a, pairing v c a = localInvariant v (localCupProduct v c a)
   perfect : ∀ v, Function.Bijective (pairing v)
   unramified_pairing_zero :
-    ∀ v c, c ∈ unramified v → ∀ a, pairing v c a = 0
+    ∀ v c, c ∈ unramified v → ∀ a, a ∈ unramifiedDual v → pairing v c a = 0
   real_place_uses_tate :
     ∀ v, kind v = Chapter06PlaceKind.real →
       Nonempty (HLocal v ≃+ HTate v)
@@ -107,11 +116,10 @@ def chapter06AdmissibleFinitePlaceSet
 structure Chapter06FiniteSArithmeticDuality
     (G A : Type*) (ι : Type*) (HLocal : ι → Type*) (HMuGlobal : Type*)
     [Group G] [AddCommGroup A]
+    [TopologicalSpace G] [TopologicalSpace A] [IsTopologicalAddGroup A]
     [∀ v, AddCommGroup (HLocal v)] [AddCommGroup HMuGlobal]
     (S : Finset ι) where
-  globalH1 : Type
-  [globalH1AddCommGroup : AddCommGroup globalH1]
-  localization : globalH1 →+ (∀ v : S, HLocal v)
+  localization : Chapter06ContinuousACharacter G A →+ (∀ v : S, HLocal v)
   lambda : (∀ v : S, HLocal v) →+ (HMuGlobal →+ Chapter06QModZ)
   exact_at_middle :
     Chapter06ExactAtMiddle localization lambda
@@ -120,7 +128,9 @@ structure Chapter06FiniteSArithmeticDuality
    compact-support arithmetic-duality calculation from Chapter 4, Section
    4.1.  No earlier LastLib file in this worktree exposes that calculation,
    so this is an explicit replacement interface rather than a restatement of
-   Theorem 6.1. -/
+   Theorem 6.1.  Its global term is now the chapter's actual continuous
+   character group.  The comparison fields in the calculation record the
+   identification of its finite-S maps with the restricted-product maps. -/
 
 /- The local finite calculation includes all archimedean places, all places
    above n, and all exceptional places of the chosen local family. -/
@@ -128,16 +138,30 @@ structure Chapter06FiniteSLocalCalculation
     (G A : Type*) (ι : Type*) (n : ℕ)
     (HLocal HMu HBr HTate : ι → Type*) (HMuGlobal : Type*)
     [Group G] [AddCommGroup A]
+    [TopologicalSpace G] [TopologicalSpace A] [IsTopologicalAddGroup A]
     [∀ v, AddCommGroup (HLocal v)]
     [∀ v, AddCommGroup (HMu v)]
     [∀ v, AddCommGroup (HBr v)]
     [∀ v, AddCommGroup (HTate v)] [AddCommGroup HMuGlobal]
     (D : Chapter06LocalCupPairingData ι n HLocal HMu HBr HTate)
     (placesAboveN : ι → Prop)
+    (kummerRestriction : ∀ v, HMuGlobal →+ HMu v)
+    (localization :
+      Chapter06ContinuousACharacter G A →+
+        Chapter06RestrictedProduct ι HLocal D.unramified)
     (c : Chapter06RestrictedProduct ι HLocal D.unramified)
     (S : Finset ι) where
   admissible : chapter06AdmissibleFinitePlaceSet D c placesAboveN S
   duality : Chapter06FiniteSArithmeticDuality G A ι HLocal HMuGlobal S
+  /- The finite calculation is a model of the actual localization and
+     pairing, not an unrelated exact sequence with the same source types. -/
+  localization_agrees :
+    ∀ x v, duality.localization x v = localization x v
+  lambda_agrees :
+    ∀ z a, (∀ v, kummerRestriction v a ∉ D.unramifiedDual v → v ∈ S) →
+      duality.lambda z a =
+      ∑ v : S, chapter06InvariantTargetInclusion n
+        (D.pairing v (z v) (kummerRestriction v a))
 
 /- Restriction of a restricted-product family to a finite set S.  These maps
    are the transition maps used when the finite calculation is enlarged. -/
@@ -206,6 +230,8 @@ structure Chapter06FiniteLocalGlobalCharacterData
   archimedean_finite : Set.Finite {v | localData.kind v ≠ Chapter06PlaceKind.finite}
   placesAboveN_finite : Set.Finite {v | placesAboveN v}
   kummerRestriction : ∀ v, HMuGlobal →+ HMu v
+  kummer_support_finite :
+    ∀ a, Set.Finite {v | kummerRestriction v a ∉ localData.unramifiedDual v}
   localizationAt : ∀ v, Chapter06ContinuousACharacter G A →+ HLocal v
   localization :
     Chapter06ContinuousACharacter G A →+
@@ -216,7 +242,8 @@ structure Chapter06FiniteLocalGlobalCharacterData
     Chapter06ComponentSeparation G A ι HLocal localizationAt
   finite_level_duality :
     ∀ c S, chapter06AdmissibleFinitePlaceSet localData c placesAboveN S →
-      Nonempty (Chapter06FiniteSArithmeticDuality G A ι HLocal HMuGlobal S)
+      Nonempty (Chapter06FiniteSLocalCalculation G A ι n HLocal HMu HBr HTate
+        HMuGlobal localData placesAboveN kummerRestriction localization c S)
 
 theorem chapter06_admissible_finite_place_set_exists
     {G A : Type*} {ι : Type*} {n : ℕ}
@@ -248,13 +275,20 @@ def chapter06LocalGlobalLambdaValue
       G A ι n HLocal HMu HBr HTate HMuGlobal)
     (c : Chapter06RestrictedProduct ι HLocal D.localData.unramified)
     (a : HMuGlobal) : Chapter06QModZ :=
-  chapter06RestrictedProductSum c
-    (fun v cv =>
-      chapter06InvariantTargetInclusion n
-        (D.localData.pairing v cv (D.kummerRestriction v a)))
-    (by
-      intro v cv hcv
-      simp [D.localData.unramified_pairing_zero v cv hcv])
+  let s : Set ι := {v |
+    c v ∉ D.localData.unramified v ∨
+      D.kummerRestriction v a ∉ D.localData.unramifiedDual v}
+  let hs : s.Finite := by
+    have hu :
+        ({v | c v ∉ D.localData.unramified v} ∪
+          {v | D.kummerRestriction v a ∉ D.localData.unramifiedDual v}).Finite :=
+      Set.Finite.union c.property (D.kummer_support_finite a)
+    apply Set.Finite.subset hu
+    intro v hv
+    simpa only [s, Set.mem_union, Set.mem_ofPred_eq] using hv
+  hs.toFinset.sum (fun v =>
+    chapter06InvariantTargetInclusion n
+      (D.localData.pairing v (c v) (D.kummerRestriction v a)))
 
 /- The global dual localization functional. -/
 noncomputable def chapter06LocalGlobalLambda
@@ -282,6 +316,26 @@ noncomputable def chapter06LocalGlobalLambda
     ext a
     sorry
 
+@[simp]
+theorem chapter06LocalGlobalLambda_apply
+    {G A : Type*} {ι : Type*} {n : ℕ}
+    {HLocal HMu HBr HTate : ι → Type*} {HMuGlobal : Type*}
+    [Group G] [AddCommGroup A]
+    [TopologicalSpace G] [TopologicalSpace A] [IsTopologicalAddGroup A]
+    [∀ v, AddCommGroup (HLocal v)]
+    [∀ v, AddCommGroup (HMu v)]
+    [∀ v, AddCommGroup (HBr v)]
+    [∀ v, AddCommGroup (HTate v)] [AddCommGroup HMuGlobal]
+    (D : Chapter06FiniteLocalGlobalCharacterData
+      G A ι n HLocal HMu HBr HTate HMuGlobal)
+    (c : Chapter06RestrictedProduct ι HLocal D.localData.unramified)
+    (a : HMuGlobal) :
+    chapter06LocalGlobalLambda D c a = chapter06LocalGlobalLambdaValue D c a :=
+  rfl
+
+/- The remaining finite-level arithmetic-duality calculation is supplied as
+   data in `D.finite_level_duality`; its comparison with the global maps is
+   recorded by `Chapter06FiniteSLocalCalculation`. -/
 /- Exactness at the middle and injectivity of localization. -/
 theorem chapter06_finite_local_global_duality
     {G A : Type*} {ι : Type*} {n : ℕ}

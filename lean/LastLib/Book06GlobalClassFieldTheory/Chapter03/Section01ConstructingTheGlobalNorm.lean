@@ -13,7 +13,7 @@ open scoped BigOperators RestrictedProduct
 
 def chapter03_local_tensor_product_decomposition
     {K L V : Type*} [Field K] [Field L] [Field V]
-    [Algebra K L] [Algebra K V]
+    [Algebra K L] [Algebra K V] [FiniteDimensional K L]
     (W : Type*) [Fintype W] (E : W → Type*) [∀ w, CommRing (E w)]
     (T : Chapter03TensorProductDecomposition K L V W E) :
     TensorProduct K L V ≃+* (∀ w, E w) :=
@@ -27,7 +27,7 @@ theorem chapter03_norm_component
     (v : Chapter03Place K) :
     chapter03IdeleNorm N y v =
       (N.above v).prod (fun w => N.localNorm v w (y w)) := by
-  sorry
+  exact chapter03IdeleNorm_apply N y v
 
 theorem chapter03_norm_output_is_an_idele
     {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
@@ -50,7 +50,10 @@ theorem chapter03_eventually_unramified_and_integral
         (∀ w ∈ N.above v, y w ∈ (S_L.localFactor w).unit) ∧
         (∀ w ∈ N.above v,
           N.localNorm v w (y w) ∈ (S_K.localFactor v).unit) := by
-  sorry
+  filter_upwards [N.eventually_finite_unramified,
+    chapter03_eventually_above_mem_unit N y,
+    chapter03_eventually_localNorm_mem_unit N y] with v hv hy hnorm
+  exact ⟨hv.1, hv.2, hy, hnorm⟩
 
 theorem chapter03_ideleNorm_continuous
     {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
@@ -77,7 +80,8 @@ theorem chapter03_classNorm_principal
         (QuotientGroup.mk' (chapter03PrincipalSubgroup S_L)
           (chapter03PrincipalIdeleHom S_L a)) =
       QuotientGroup.mk' (chapter03PrincipalSubgroup S_K)
-        (chapter03PrincipalIdeleHom S_K (Units.map (Algebra.norm K (S := L)) a)) := by
+        (chapter03PrincipalIdeleHom S_K
+          (LastLib.Book06GlobalClassFieldTheory.Chapter01.fieldNormUnits K L a)) := by
   rw [chapter03ClassNorm_mk, chapter03_ideleNorm_principal]
 
 theorem chapter03_ideleNorm_module_identity
@@ -117,7 +121,20 @@ theorem chapter03_classNorm_tower_compatibility
     (chapter03ClassNorm T.norm_L_over_K).comp
         (chapter03ClassNorm T.norm_M_over_L) =
       chapter03ClassNorm T.norm_M_over_K := by
-  sorry
+  apply QuotientGroup.monoidHom_ext
+  ext z
+  change chapter03ClassNorm T.norm_L_over_K
+      (chapter03ClassNorm T.norm_M_over_L
+        (QuotientGroup.mk' (chapter03PrincipalSubgroup S_M) z)) =
+    chapter03ClassNorm T.norm_M_over_K
+      (QuotientGroup.mk' (chapter03PrincipalSubgroup S_M) z)
+  rw [chapter03ClassNorm_mk, chapter03ClassNorm_mk, chapter03ClassNorm_mk]
+  have hnorm := congrArg
+    (fun f : Chapter03Ideles S_M →* Chapter03Ideles S_K => f z)
+    (chapter03_ideleNorm_tower_compatibility T)
+  simpa only [MonoidHom.comp_apply] using congrArg
+    (fun x : Chapter03Ideles S_K =>
+      QuotientGroup.mk' (chapter03PrincipalSubgroup S_K) x) hnorm
 
 end
 end LastLib.Book06GlobalClassFieldTheory.Chapter03

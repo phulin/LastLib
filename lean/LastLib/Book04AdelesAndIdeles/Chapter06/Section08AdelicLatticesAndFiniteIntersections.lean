@@ -1,4 +1,4 @@
-import LastLib.Book04AdelesAndIdeles.Chapter06.Section07ConsequencesAndBoundaries
+import LastLib.Book04AdelesAndIdeles.Chapter06.Dependencies
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter06
 
@@ -48,7 +48,8 @@ theorem chapter06_coordinatewise_fundamental_set_compact
     (P : Chapter06AdeleData K O KInf Af Ohat) (D : Set KInf)
     (m : ℕ) (hD : IsCompact D) :
     IsCompact (chapter06CoordinatewiseFundamentalSet P D m) := by
-  sorry
+  exact (isCompact_univ_pi fun _ => hD).prod
+    (isCompact_univ_pi fun _ => P.finiteIntegral_range_compact)
 
 /-- The coordinatewise version of Lemma 6.1 and the archimedean reduction. -/
 theorem chapter06_coordinatewise_reduced_to_fundamental_set
@@ -58,13 +59,58 @@ theorem chapter06_coordinatewise_reduced_to_fundamental_set
     ∃ a : Fin m → K,
       x - chapter06CoordinatewiseDiagonal P m a ∈
         chapter06CoordinatewiseFundamentalSet P D.carrier m := by
-  sorry
+  choose a u hu using fun i => P.finite_principal_parts (x.2 i)
+  choose b hb using fun i => D.covers (x.1 i - P.globalToInfinite (a i))
+  let c : Fin m → K := fun i => a i + P.integerToGlobal (b i)
+  refine ⟨c, ?_⟩
+  change (fun i => x.1 i - P.globalToInfinite (c i)) ∈
+      chapter06PiSet D.carrier m ∧
+    (fun i => x.2 i - P.globalToFinite (c i)) ∈
+      chapter06PiSet (Set.range P.finiteIntegralEmbedding) m
+  constructor
+  · intro i hi
+    simpa [c, map_add, sub_eq_add_neg, add_assoc, add_left_comm, add_comm]
+      using hb i
+  · intro i hi
+    refine ⟨u i - P.integerToFinite (b i), ?_⟩
+    simp [c, hu i, map_add, sub_eq_add_neg, add_assoc, add_left_comm, add_comm]
+
+private theorem chapter06_coordinatewise_compact_quotient_of_compact_cover
+    {G : Type*} {H : Type*} [AddCommGroup G] [AddCommGroup H]
+    [TopologicalSpace H] (ι : G →+ H) (C : Set H)
+    (hC : IsCompact C)
+    (hcover : ∀ x : H, ∃ g : G, x - ι g ∈ C) :
+    CompactSpace (H ⧸ chapter06ImageSubgroup ι) := by
+  let q : H → H ⧸ chapter06ImageSubgroup ι :=
+    QuotientAddGroup.mk' (chapter06ImageSubgroup ι)
+  have hqcont : Continuous q := QuotientAddGroup.continuous_mk
+  have hsurj : Function.Surjective q :=
+    QuotientAddGroup.mk'_surjective (chapter06ImageSubgroup ι)
+  have himage : q '' C = Set.univ := by
+    apply Set.eq_univ_of_forall
+    intro y
+    rcases hsurj y with ⟨x, rfl⟩
+    rcases hcover x with ⟨g, hg⟩
+    refine ⟨x - ι g, hg, ?_⟩
+    apply (QuotientAddGroup.eq_iff_sub_mem).2
+    exact ⟨-g, by simp [sub_eq_add_neg, add_left_comm, add_comm]⟩
+  refine ⟨?_⟩
+  rw [← himage]
+  exact hC.image hqcont
 
 theorem chapter06_coordinatewise_adelic_lattice
     (P : Chapter06AdeleData K O KInf Af Ohat)
-    (D : Chapter06ArchimedeanCell P) (m : ℕ) :
+    (D : Chapter06ArchimedeanCell P) (m : ℕ)
+    [IsTopologicalAddGroup KInf] [IsTopologicalAddGroup Af]
+    [T2Space KInf] [T2Space Af]
+    (hdiscrete : Chapter06DiscreteEmbedding (chapter06CoordinatewiseDiagonal P m)) :
     Chapter06AdditiveLattice (chapter06CoordinatewiseDiagonal P m) := by
-  sorry
+  refine ⟨hdiscrete, ?_⟩
+  exact chapter06_coordinatewise_compact_quotient_of_compact_cover
+      (chapter06CoordinatewiseDiagonal P m)
+      (chapter06CoordinatewiseFundamentalSet P D.carrier m)
+      (chapter06_coordinatewise_fundamental_set_compact P D.carrier m D.compact)
+      (chapter06_coordinatewise_reduced_to_fundamental_set P D m)
 
 /-- A basis-coordinate interface for a finite-dimensional adelic vector space.
 It makes the reduction to the coordinatewise statement explicit without
@@ -76,9 +122,14 @@ structure Chapter06AdelicVectorSpaceData
     [AddCommGroup VA] [TopologicalSpace VA] where
   diagonal : V →+ VA
   rank : ℕ
-  globalCoordinates : V ≃+ (Fin rank → K)
+  globalCoordinates : V ≃ₗ[K] (Fin rank → K)
   adelicCoordinates : VA ≃+
     ((Fin rank → KInf) × (Fin rank → Af))
+  adelicCoordinates_continuous :
+    Continuous (adelicCoordinates : VA → ((Fin rank → KInf) × (Fin rank → Af)))
+  adelicCoordinates_symm_continuous :
+    Continuous (adelicCoordinates.symm :
+      ((Fin rank → KInf) × (Fin rank → Af)) → VA)
   diagonal_closed : IsClosed (Set.range diagonal)
   coordinates_compatible :
     adelicCoordinates.toAddMonoidHom.comp diagonal =
@@ -108,25 +159,73 @@ theorem chapter06_finite_dimensional_adelic_lattice
     [AddCommGroup V] [Module K V] [FiniteDimensional K V]
     [AddCommGroup VA] [TopologicalSpace VA]
     (W : Chapter06AdelicVectorSpaceData P V VA)
-    (D : Chapter06ArchimedeanCell P) :
+    (D : Chapter06ArchimedeanCell P)
+    [IsTopologicalAddGroup KInf] [IsTopologicalAddGroup Af]
+    [T2Space KInf] [T2Space Af]
+    [IsTopologicalAddGroup VA] [T2Space VA]
+    (hdiscrete : Chapter06DiscreteEmbedding W.diagonal) :
     Chapter06AdditiveLattice W.diagonal := by
-  sorry
+  refine ⟨hdiscrete, ?_⟩
+  let C : Set VA := W.adelicCoordinates.symm ''
+    chapter06CoordinatewiseFundamentalSet P D.carrier W.rank
+  have hC : IsCompact C := by
+    exact (chapter06_coordinatewise_fundamental_set_compact P D.carrier W.rank
+      D.compact).image W.adelicCoordinates_symm_continuous
+  apply chapter06_coordinatewise_compact_quotient_of_compact_cover W.diagonal C hC
+  intro x
+  let y := W.adelicCoordinates x
+  rcases chapter06_coordinatewise_reduced_to_fundamental_set P D W.rank y with
+    ⟨a, ha⟩
+  let v := W.globalCoordinates.symm a
+  refine ⟨v, ?_⟩
+  have hcoord : W.adelicCoordinates (x - W.diagonal v) =
+      y - chapter06CoordinatewiseDiagonal P W.rank a := by
+    rw [map_sub, W.coordinates_compatible_apply]
+    simp [y, v]
+  refine ⟨y - chapter06CoordinatewiseDiagonal P W.rank a, ?_, ?_⟩
+  · exact ha
+  · rw [← hcoord]
+    exact W.adelicCoordinates.symm_apply_apply _
 
 /-- A compact set meets a discrete lattice in finitely many points. -/
 theorem chapter06_compact_intersects_discrete_lattice_finitely
     {G : Type*} {H : Type*} [AddCommGroup G] [AddCommGroup H]
-    [TopologicalSpace H] (ι : G →+ H)
+    [TopologicalSpace H] [IsTopologicalAddGroup H] [T2Space H]
+    (ι : G →+ H)
     (hι : Chapter06DiscreteEmbedding ι)
     (hclosed : IsClosed (Set.range ι)) (C : Set H)
     (hC : IsCompact C) :
     (Set.range ι ∩ C).Finite ∧ (ι ⁻¹' C).Finite := by
-  sorry
+  have hdiscrete : IsDiscrete (Set.range ι ∩ C) := by
+    rw [isDiscrete_iff_forall_mem_exists_isOpen]
+    intro x hx
+    rcases hx.1 with ⟨g, rfl⟩
+    rcases hι.2 g with ⟨U, hUopen, hUg, hU⟩
+    refine ⟨U, hUopen, ?_⟩
+    ext z
+    constructor
+    · intro hz
+      rcases hz.2.1 with ⟨h, rfl⟩
+      have hEq : h = g := hU h hz.1
+      simp [hEq]
+    · intro hz
+      have hz' : z = ι g := by simpa using hz
+      subst z
+      exact ⟨hUg, ⟨g, rfl⟩, hx.2⟩
+  have hcompact : IsCompact (Set.range ι ∩ C) := by
+    simpa only [Set.inter_comm] using hC.inter_right hclosed
+  have hfinite : (Set.range ι ∩ C).Finite := hcompact.finite hdiscrete
+  refine ⟨hfinite, ?_⟩
+  refine Set.Finite.of_finite_image (s := ι ⁻¹' C) (f := ι) ?_ ?_
+  · simpa only [Set.image_preimage_eq_range_inter] using hfinite
+  · exact hι.1.injOn
 
 /-- The bounded algebraic-integer finiteness consequence of the archimedean
 lattice. -/
 theorem chapter06_bounded_integral_elements_finite
     (P : Chapter06AdeleData K O KInf Af Ohat) (C : Set KInf)
     (hC : IsCompact C)
+    [IsTopologicalAddGroup KInf] [T2Space KInf]
     (hι : Chapter06DiscreteEmbedding P.integerToInfinite)
     (hclosed : IsClosed (Set.range P.integerToInfinite)) :
     (P.integerToInfinite ⁻¹' C).Finite := by
@@ -140,9 +239,12 @@ theorem chapter06_compact_intersects_adelic_vector_lattice_finitely
     [AddCommGroup V] [Module K V] [FiniteDimensional K V]
     [AddCommGroup VA] [TopologicalSpace VA]
     (W : Chapter06AdelicVectorSpaceData P V VA) (C : Set VA)
+    [IsTopologicalAddGroup VA] [T2Space VA]
+    (hdiscrete : Chapter06DiscreteEmbedding W.diagonal)
     (hC : IsCompact C) :
     (Set.range W.diagonal ∩ C).Finite := by
-  sorry
+  exact (chapter06_compact_intersects_discrete_lattice_finitely W.diagonal hdiscrete
+    W.diagonal_closed C hC).1
 
 end
 

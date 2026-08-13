@@ -3,6 +3,7 @@ import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapte
 namespace LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09
 
 open AlgebraicGeometry CategoryTheory
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
 
 noncomputable section
 
@@ -23,7 +24,7 @@ def chapter09FamilyPowerPushforward {S : Scheme}
   (Scheme.Modules.pushforward F.map).obj (chapter09LineBundlePower L n).module
 
 def chapter09LocallyFreeModule {S : Scheme} (E : S.Modules) : Prop :=
-  E.IsLocallyFree
+  chapter04FiniteLocallyFree E
 
 def chapter09FiberAmbientDimension {S : Scheme}
     [Chapter09ModuleRankTheory S] (E : S.Modules) (s : S) : ℕ :=
@@ -36,9 +37,9 @@ theorem chapter09_family_rank_eq_fiber_hilbert_polynomial
     [Chapter09ModuleRankTheory S]
     (L : Chapter09LineBundle F.curve)
     [Chapter09FiberHilbertPolynomialTheory F.map L]
-    (s : S) (n : ℕ) :
-    chapter09ModuleRank (chapter09FamilyPowerPushforward F L n) s =
-      chapter09FiberHilbertPolynomial F.map L s n := by
+    : ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n → ∀ s : S,
+      (chapter09ModuleRank (chapter09FamilyPowerPushforward F L n) s : ℤ) =
+        (chapter09FiberHilbertPolynomial F.map L s).value n := by
   sorry
 
 theorem chapter09_family_rank_constant_on_connected_components
@@ -69,7 +70,6 @@ theorem chapter09_uniform_embedding_in_a_projective_flat_family
     {S : Scheme} [IsNoetherian S]
     (F : Chapter09ProjectiveFlatCurveFamily S)
     [Chapter09LineBundleTensorTheory F.curve]
-    [Chapter09RelativePositivityTheory F.map]
     (L : Chapter09LineBundle F.curve)
     (hL : chapter09RelativelyAmple F.map L) :
     ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
@@ -77,8 +77,9 @@ theorem chapter09_uniform_embedding_in_a_projective_flat_family
       chapter09PushforwardCommutesWithBaseChange F.map
         (chapter09LineBundlePower L n).module ∧
       ∃ E : Chapter09EvaluationWitness F.map
+          (chapter09LineBundlePower L n)
           (chapter09FamilyPowerPushforward F L n),
-        E.isEvaluationMap ∧ IsClosedImmersion E.map := by
+        IsClosedImmersion E.map := by
   sorry
 
 structure Chapter09NonFlatRankJumpWitness where
@@ -89,9 +90,17 @@ structure Chapter09NonFlatRankJumpWitness where
   finitePresentation : LocallyOfFinitePresentation map
   notFlat : ¬ Flat map
   lineBundle : Chapter09LineBundle curve
+  tensorTheory : Chapter09LineBundleTensorTheory curve
+  power : ℕ
   completeLinearSystem : base.Modules
+  completeLinearSystemIso :
+    letI := tensorTheory
+    completeLinearSystem ≅
+      (Scheme.Modules.pushforward map).obj
+        (chapter09LineBundlePower lineBundle power).module
+  rankTheory : Chapter09ModuleRankTheory base
   rank : base → ℕ
-  rank_is_fiber_rank : Prop
+  rank_is_fiber_rank : ∀ s, rank s = rankTheory.rank completeLinearSystem s
   ranks_jump : ∃ s t, rank s ≠ rank t
   completeLinearSystemNotVectorBundle : ¬ completeLinearSystem.IsLocallyFree
 

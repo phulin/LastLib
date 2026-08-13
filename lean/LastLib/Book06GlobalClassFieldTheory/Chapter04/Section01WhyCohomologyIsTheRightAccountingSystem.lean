@@ -56,6 +56,13 @@ theorem chapter04_tate_degree_zero_is_norm_quotient
         chapter04AddNormQuotient (chapter04NormToInvariants M)) := by
   sorry
 
+noncomputable def chapter04TateDegreeZeroNormQuotientEquiv
+    {G : Type} [Group G] [Fintype G]
+    (M : Chapter04GModule.{0, 0} G) :
+    chapter04TateH M 0 ≃+
+      chapter04AddNormQuotient (chapter04NormToInvariants M) :=
+  Classical.choice (chapter04_tate_degree_zero_is_norm_quotient M)
+
 /-- The negative degree-two Tate group of the trivial module is the abelianization. -/
 theorem chapter04_tate_degree_neg_two_is_abelianization
     (G : Type) [Group G] [Fintype G] :
@@ -64,11 +71,17 @@ theorem chapter04_tate_degree_neg_two_is_abelianization
         Additive (Abelianization G)) := by
   sorry
 
+noncomputable def chapter04TateDegreeNegTwoAbelianizationEquiv
+    (G : Type) [Group G] [Fintype G] :
+    chapter04TateH (chapter04TrivialGModule G) (-2) ≃+
+      Additive (Abelianization G) :=
+  Classical.choice (chapter04_tate_degree_neg_two_is_abelianization G)
+
 theorem chapter04_fundamental_class_restriction_normalization
     {G : Type} [Group G] [Fintype G]
     (U : Chapter04FundamentalClass (G := G))
     (H : Subgroup G) :
-    U.invariant H (U.restrict H U.u) =
+    U.invariant H (chapter04RestrictTwoClass U.C H U.u) =
       chapter04QModZOfRat ((1 : ℚ) / Nat.card H) := by
   exact U.invariant_normalization H
 

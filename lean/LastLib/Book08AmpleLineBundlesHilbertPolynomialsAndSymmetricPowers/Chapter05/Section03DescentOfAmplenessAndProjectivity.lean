@@ -1,4 +1,5 @@
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter05.Dependencies
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Section05TensorPowersAndOperations
 
 /-!
 # 5.3 Descent of ampleness and projectivity
@@ -31,6 +32,7 @@ theorem ample_faithfullyFlat_descent
 
 theorem projectivity_descent_with_polarization
     {X S S' : Scheme.{u}} (f : X ⟶ S) (g : S' ⟶ S) (L : LineBundle X)
+    (hfqc : QuasiCompact f) (hfqs : QuasiSeparated f)
     (hproper : IsProper f) (hfp : LocallyOfFinitePresentation f)
     (hgff : IsFaithfullyFlat g) (hgqc : QuasiCompact g)
     (hL : IsAmple (baseChangeToBase f g) (baseChangeLineBundle f g L)) :
@@ -39,6 +41,7 @@ theorem projectivity_descent_with_polarization
 theorem projectivity_descent_from_upstairs_polarized_data
     {X S S' : Scheme.{u}} (f : X ⟶ S) (g : S' ⟶ S) (L : LineBundle X)
     (M : LineBundle (baseChange f g)) (hM : IsBaseChangeOf f g L M)
+    (hfqc : QuasiCompact f) (hfqs : QuasiSeparated f)
     (hproper : IsProper f) (hfp : LocallyOfFinitePresentation f)
     (hgff : IsFaithfullyFlat g) (hgqc : QuasiCompact g)
     (hMample : IsAmple (baseChangeToBase f g) M) :

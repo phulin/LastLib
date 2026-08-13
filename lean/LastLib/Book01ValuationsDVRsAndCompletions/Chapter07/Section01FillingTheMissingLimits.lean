@@ -1,3 +1,4 @@
+import Mathlib.Algebra.Order.Archimedean.Basic
 import Mathlib.Algebra.Module.PID
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Data.ZMod.QuotientRing
@@ -29,6 +30,7 @@ import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Order
+import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter07
@@ -837,6 +839,14 @@ theorem chapter07_cauchy_constant_embedding_injective
     simpa [chapter07CauchyConstant, chapter07CauchyEquivalent] using h
   exact (tendsto_nhds_unique hlim tendsto_const_nhds).symm
 
+/- The nonarchimedean absolute-value hypotheses needed by the metric arguments. -/
+class Chapter07NonarchimedeanCompatibility
+    (K : Type*) [Field K] [UniformSpace K] [IsUniformAddGroup K]
+    (abv : AbsoluteValue K ℝ) : Prop where
+  nonarchimedean : ∀ x y : K, abv (x + y) ≤ max (abv x) (abv y)
+  compatible : Continuous (abv : K → ℝ)
+  uniformSpace_eq : (inferInstance : UniformSpace K) = abv.uniformSpace
+
 /- A discrete nonarchimedean absolute value compatible with the given uniformity. -/
 class Chapter07NonarchimedeanStationarity
     (K : Type*) [Field K] [UniformSpace K] [IsUniformAddGroup K]
@@ -847,10 +857,18 @@ class Chapter07NonarchimedeanStationarity
   compatible : Continuous (abv : K → ℝ)
   uniformSpace_eq : (inferInstance : UniformSpace K) = abv.uniformSpace
 
+instance chapter07NonarchimedeanStationarity.compatibility
+    (K : Type*) [Field K] [UniformSpace K] [IsUniformAddGroup K]
+    (abv : AbsoluteValue K ℝ) [h : Chapter07NonarchimedeanStationarity K abv] :
+    Chapter07NonarchimedeanCompatibility K abv where
+  nonarchimedean := h.nonarchimedean
+  compatible := h.compatible
+  uniformSpace_eq := h.uniformSpace_eq
+
 lemma chapter07_absolute_value_uniformContinuous
     {K : Type*} [Field K] [UniformSpace K] [IsUniformAddGroup K]
     (abv : AbsoluteValue K ℝ)
-    [Chapter07NonarchimedeanStationarity K abv] :
+    [Chapter07NonarchimedeanCompatibility K abv] :
     UniformContinuous (abv : K → ℝ) := by
   have h' : @UniformContinuous K ℝ abv.uniformSpace _ abv := by
     let : UniformSpace K := abv.uniformSpace
@@ -865,7 +883,7 @@ lemma chapter07_absolute_value_uniformContinuous
       (by
         rw [← abv.map_neg]
         simpa [Set.mem_ofPred_eq, sub_eq_add_neg, add_comm] using hxy)
-  have heq := Chapter07NonarchimedeanStationarity.uniformSpace_eq
+  have heq := Chapter07NonarchimedeanCompatibility.uniformSpace_eq
     (K := K) (abv := abv)
   rw [← heq] at h'
   exact h'
@@ -874,7 +892,7 @@ lemma chapter07_absolute_value_uniformContinuous
 def chapter07CauchyAbsoluteValue
     {K : Type*} [Field K] [UniformSpace K] [IsUniformAddGroup K]
     (abv : AbsoluteValue K ℝ)
-    [Chapter07NonarchimedeanStationarity K abv] :
+    [Chapter07NonarchimedeanCompatibility K abv] :
     chapter07CauchyCompletion K → ℝ := by
   refine Quotient.lift
     (fun u : chapter07CauchySequence K =>
@@ -889,7 +907,7 @@ def chapter07CauchyAbsoluteValue
   have hlv := hv'.tendsto_limUnder
   change Tendsto (fun n => u.1 n - v.1 n) atTop (𝓝 0) at huv
   have hdiff : Tendsto (fun n => abv (u.1 n - v.1 n)) atTop (𝓝 0) := by
-    have h := ((Chapter07NonarchimedeanStationarity.compatible
+    have h := ((Chapter07NonarchimedeanCompatibility.compatible
       (K := K) (abv := abv)).tendsto (0 : K)).comp huv
     have h' : Tendsto (fun n => abv (u.1 n - v.1 n)) atTop
         (𝓝 (abv 0)) :=
@@ -910,7 +928,7 @@ def chapter07CauchyAbsoluteValue
 -- Section 7.1: the extension has the displayed representative formula.
 theorem chapter07_cauchy_absolute_value_formula
     {K : Type*} [Field K] [UniformSpace K] [IsUniformAddGroup K]
-    (abv : AbsoluteValue K ℝ) [Chapter07NonarchimedeanStationarity K abv]
+    (abv : AbsoluteValue K ℝ) [Chapter07NonarchimedeanCompatibility K abv]
     (u : chapter07CauchySequence K) :
     chapter07CauchyAbsoluteValue abv (chapter07CauchyClass u) =
       limUnder (atTop : Filter ℕ) (fun n => abv (u.1 n)) := by
@@ -931,7 +949,7 @@ theorem chapter07_cauchy_absolute_value_limit_zero
 -- The absolute value of a zero-limit representative is zero in the quotient.
 theorem chapter07_cauchy_absolute_value_of_zero_limit
     {K : Type*} [Field K] [UniformSpace K] [IsUniformAddGroup K]
-    (abv : AbsoluteValue K ℝ) [Chapter07NonarchimedeanStationarity K abv]
+    (abv : AbsoluteValue K ℝ) [Chapter07NonarchimedeanCompatibility K abv]
     (u : chapter07CauchySequence K)
     (hu : Tendsto u.1 (atTop : Filter ℕ) (𝓝 0))
     (habv : Continuous (abv : K → ℝ)) :
@@ -952,14 +970,14 @@ def chapter07EventuallyConstantAbsoluteValue
 theorem chapter07_nonzero_cauchy_absolute_value_eventually_constant
     {K : Type*} [Field K] [UniformSpace K] [IsUniformAddGroup K]
     (abv : AbsoluteValue K ℝ)
-    [Chapter07NonarchimedeanStationarity K abv]
+    [Chapter07NonarchimedeanCompatibility K abv]
     (u : chapter07CauchySequence K)
     (hu : ¬ Tendsto u.1 (atTop : Filter ℕ) (𝓝 0)) :
     chapter07EventuallyConstantAbsoluteValue abv u := by
   have habs : ¬ Tendsto (fun n => abv (u.1 n)) atTop (𝓝 (0 : ℝ)) := by
     intro habs
     apply hu
-    have heq := Chapter07NonarchimedeanStationarity.uniformSpace_eq
+    have heq := Chapter07NonarchimedeanCompatibility.uniformSpace_eq
       (K := K) (abv := abv)
     have hconv : @Tendsto ℕ K u.1 atTop
         (@nhds K abv.uniformSpace.toTopologicalSpace (0 : K)) := by
@@ -996,7 +1014,7 @@ theorem chapter07_nonzero_cauchy_absolute_value_eventually_constant
   have hrel' : {p : K × K | abv (p.2 - p.1) < ε} ∈
       @uniformity K abv.uniformSpace :=
     (AbsoluteValue.hasBasis_uniformity abv).mem_iff.2 ⟨ε, hε, subset_rfl⟩
-  have heq := Chapter07NonarchimedeanStationarity.uniformSpace_eq
+  have heq := Chapter07NonarchimedeanCompatibility.uniformSpace_eq
     (K := K) (abv := abv)
   have hrel : {p : K × K | abv (p.2 - p.1) < ε} ∈
       @uniformity K (inferInstance : UniformSpace K) := heq.symm ▸ hrel'
@@ -1018,7 +1036,7 @@ theorem chapter07_nonzero_cauchy_absolute_value_eventually_constant
     calc
       abv (u.1 n) = abv ((u.1 n - u.1 N₀) + u.1 N₀) := by ring_nf
       _ ≤ max (abv (u.1 n - u.1 N₀)) c :=
-        Chapter07NonarchimedeanStationarity.nonarchimedean
+        Chapter07NonarchimedeanCompatibility.nonarchimedean
           (K := K) (abv := abv) _ _
       _ = c := max_eq_right hsmall.le
   have hge : c ≤ abv (u.1 n) := by
@@ -1030,7 +1048,7 @@ theorem chapter07_nonzero_cauchy_absolute_value_eventually_constant
         c = abv (u.1 N₀) := rfl
         _ = abv ((u.1 N₀ - u.1 n) + u.1 n) := by ring_nf
         _ ≤ max (abv (u.1 N₀ - u.1 n)) (abv (u.1 n)) :=
-          Chapter07NonarchimedeanStationarity.nonarchimedean
+          Chapter07NonarchimedeanCompatibility.nonarchimedean
             (K := K) (abv := abv) _ _
     by_contra h
     have hlt : abv (u.1 n) < c := lt_of_not_ge h
@@ -1040,7 +1058,7 @@ theorem chapter07_nonzero_cauchy_absolute_value_eventually_constant
 -- The extended absolute value is independent of the representative.
 theorem chapter07_cauchy_absolute_value_representative_independent
     {K : Type*} [Field K] [UniformSpace K] [IsUniformAddGroup K]
-    (abv : AbsoluteValue K ℝ) [Chapter07NonarchimedeanStationarity K abv]
+    (abv : AbsoluteValue K ℝ) [Chapter07NonarchimedeanCompatibility K abv]
     (u v : chapter07CauchySequence K)
     (h : chapter07CauchyEquivalent K u v) :
     chapter07CauchyAbsoluteValue abv (chapter07CauchyClass u) =
@@ -1067,31 +1085,29 @@ structure Chapter07CauchyCompletionModel
 theorem chapter07_cauchy_quotient_complete
     {K : Type*} [Field K] [UniformSpace K] [IsUniformAddGroup K]
     (abv : AbsoluteValue K ℝ)
-    [Chapter07NonarchimedeanStationarity K abv] :
+    [Chapter07NonarchimedeanCompatibility K abv] :
     Nonempty (Chapter07CauchyCompletionModel K) := by
-  obtain ⟨q, hqpos, hqone, hqrepr⟩ :=
-    Chapter07NonarchimedeanStationarity.discrete (K := K) (abv := abv)
   let S : ℕ → SetRel K K := fun n =>
-    {p | abv (p.2 - p.1) < q ^ n}
+    {p | abv (p.2 - p.1) < 1 / (n + 1 : ℝ)}
   have hS_basis_abv : (@uniformity K abv.uniformSpace).HasBasis
-      (fun _ : ℕ => True) S := by
+      (fun n : ℕ => n ≤ n) S := by
     refine ⟨fun U => ?_⟩
     constructor
     · intro hU
       obtain ⟨ε, hε, hsub⟩ :=
         (AbsoluteValue.hasBasis_uniformity abv).mem_iff.mp hU
-      obtain ⟨n, hn⟩ := exists_pow_lt_of_lt_one hε hqone
-      exact ⟨n, trivial, fun x hx => hsub (lt_of_lt_of_le hx hn.le)⟩
+      obtain ⟨n, hn⟩ := exists_nat_one_div_lt hε
+      exact ⟨n, le_rfl, fun x hx => hsub (lt_of_lt_of_le hx hn.le)⟩
     · rintro ⟨n, -, hsub⟩
       exact mem_of_superset
-        ((AbsoluteValue.hasBasis_uniformity abv).mem_iff.mpr ⟨q ^ n,
-          pow_pos hqpos n, subset_rfl⟩) hsub
+        ((AbsoluteValue.hasBasis_uniformity abv).mem_iff.mpr ⟨1 / (n + 1 : ℝ),
+          by positivity, subset_rfl⟩) hsub
   have habv_eq : (@uniformity K (inferInstance : UniformSpace K)) =
       @uniformity K abv.uniformSpace := by
     exact congrArg (fun u : UniformSpace K => u.uniformity)
-      (Chapter07NonarchimedeanStationarity.uniformSpace_eq (K := K) (abv := abv))
+      (Chapter07NonarchimedeanCompatibility.uniformSpace_eq (K := K) (abv := abv))
   have hS_basis : (@uniformity K (inferInstance : UniformSpace K)).HasBasis
-      (fun _ : ℕ => True) S := by
+      (fun n : ℕ => n ≤ n) S := by
     rw [habv_eq]
     exact hS_basis_abv
   let : IsCountablyGenerated (@uniformity K (inferInstance : UniformSpace K)) :=

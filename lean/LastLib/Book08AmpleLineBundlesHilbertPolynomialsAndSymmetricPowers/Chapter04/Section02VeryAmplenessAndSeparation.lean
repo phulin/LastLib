@@ -31,7 +31,8 @@ theorem chapter04_section_system_restriction_agrees_with_pullback_data
     {f : X ⟶ AlgebraicGeometry.Spec (.of K)} {L : Chapter04LineBundle X}
     (V : Chapter04FiniteSectionSystem K f L)
     (Z : Chapter04LengthTwoClosedSubscheme K f) (i : V.I) :
-    V.restriction Z i = chapter04PullbackSectionMap Z.inclusion L.sheaf (V.sectionMap i) :=
+    V.restriction Z i =
+      (chapter04PullbackSectionData Z.inclusion L.sheaf).map (V.sectionMap i) :=
   V.restriction_eq Z i
 
 /-- Separation of points and tangent directions is surjectivity on every length-two subscheme. -/
@@ -39,16 +40,64 @@ theorem chapter04_separates_length_two_of_restriction_surjective
     {K : Type u} [Field K] {X : Scheme.{u}}
     {f : X ⟶ AlgebraicGeometry.Spec (.of K)} {L : Chapter04LineBundle X}
     (V : Chapter04FiniteSectionSystem K f L)
-    (hV : chapter04SeparatesLengthTwo V) :
+    (hV : chapter04SeparatesLengthTwoOverBase V) :
     ∀ Z : Chapter04LengthTwoClosedSubscheme K f,
       Function.Surjective (V.restriction Z) :=
   hV
 
-/- DEPENDENCY_GUESS: the immersion criterion and its converse are withheld
-until the pullback-section bridge is canonical and the section system carries
-its base changes to every field extension.  With the current data-only bridge,
-the displayed restriction maps could be unrelated to geometric restriction,
-so the two implications would not be sound declarations. -/
+/-! An induced projective map records the canonical pullback of the ambient
+coordinate sections, so its immersion criterion is a statement about the
+given section system rather than about unrelated restriction functions. -/
+structure Chapter04InducedSectionSystemMap
+    {K : Type u} [Field K] {X : Scheme.{u}}
+    {f : X ⟶ AlgebraicGeometry.Spec (.of K)} {L : Chapter04LineBundle X}
+    (V : Chapter04FiniteSectionSystem K f L) where
+  projectiveBundle : Chapter04ProjectiveBundle (AlgebraicGeometry.Spec (.of K))
+  map : X ⟶ projectiveBundle.space
+  over : map ≫ projectiveBundle.projection = f
+  pullback_iso : L.sheaf ≅
+    (Scheme.Modules.pullback map).obj projectiveBundle.tautological
+  coordinateSections : V.I → projectiveBundle.tautological.val.sections
+  coordinate_sections_generate :
+    Epi (projectiveBundle.tautological.freeHomEquiv.symm coordinateSections)
+  section_compatibility : ∀ i,
+    SheafOfModules.sectionsMap pullback_iso.symm.hom
+      ((chapter04PullbackSectionData map projectiveBundle.tautological).map
+        (coordinateSections i)) = V.sectionMap i
+
+theorem chapter04_induced_section_system_map_exists
+    {K : Type u} [Field K] {X : Scheme.{u}}
+    {f : X ⟶ AlgebraicGeometry.Spec (.of K)} {L : Chapter04LineBundle X}
+    (V : Chapter04FiniteSectionSystem K f L)
+    (hV : chapter04SectionSystemGenerates V) :
+    Nonempty (Chapter04InducedSectionSystemMap V) := by
+  sorry
+
+noncomputable def chapter04InducedSectionSystemMap
+    {K : Type u} [Field K] {X : Scheme.{u}}
+    {f : X ⟶ AlgebraicGeometry.Spec (.of K)} {L : Chapter04LineBundle X}
+    (V : Chapter04FiniteSectionSystem K f L)
+    (hV : chapter04SectionSystemGenerates V) :
+    Chapter04InducedSectionSystemMap V :=
+  Classical.choice (chapter04_induced_section_system_map_exists V hV)
+
+theorem chapter04_induced_section_system_map_isImmersion_iff
+    {K : Type u} [Field K] {X : Scheme.{u}}
+    {f : X ⟶ AlgebraicGeometry.Spec (.of K)} {L : Chapter04LineBundle X}
+    (V : Chapter04FiniteSectionSystem K f L)
+    (w : Chapter04InducedSectionSystemMap V) :
+    IsImmersion w.map ↔
+      chapter04SectionSystemGenerates V ∧ chapter04SeparatesLengthTwo V := by
+  sorry
+
+theorem chapter04_induced_section_system_map_isClosedImmersion_of_proper
+    {K : Type u} [Field K] {X : Scheme.{u}}
+    {f : X ⟶ AlgebraicGeometry.Spec (.of K)} {L : Chapter04LineBundle X}
+    [IsProper f] (V : Chapter04FiniteSectionSystem K f L)
+    (w : Chapter04InducedSectionSystemMap V)
+    (hV : chapter04SectionSystemGenerates V ∧ chapter04SeparatesLengthTwo V) :
+    IsClosedImmersion w.map := by
+  sorry
 
 /-- A proper family turns the locally closed immersion from very ampleness into a closed immersion. -/
 theorem chapter04_veryAmple_closed_immersion_of_proper
@@ -79,7 +128,7 @@ theorem chapter04_separates_length_two_iff_all_length_two_at
     {K : Type u} [Field K] {X : Scheme.{u}}
     {f : X ⟶ AlgebraicGeometry.Spec (.of K)} {L : Chapter04LineBundle X}
     (V : Chapter04FiniteSectionSystem K f L) :
-    chapter04SeparatesLengthTwo V ↔
+    chapter04SeparatesLengthTwoOverBase V ↔
       ∀ Z, chapter04SeparatesLengthTwoAt V Z := by
   rfl
 

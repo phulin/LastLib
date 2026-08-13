@@ -73,7 +73,7 @@ theorem chapter12_quadratic_nonsquare_at_odd_prime_is_unramified_field
     chapter12TensorFieldShape K ℚ_[p] E := by
   sorry
 
-theorem chapter12_quadratic_odd_prime_local_trichotomy
+theorem chapter12_quadratic_odd_prime_residue_dichotomy
     {K : Type*} [Field K] [NumberField K] [Algebra ℚ K]
     (Q : Chapter12QuadraticFieldData K) (p : Nat.Primes)
     (_hpodd : p.1 ≠ 2) (_hpd : ¬((p.1 : ℤ) ∣ Q.d)) :
@@ -83,17 +83,17 @@ theorem chapter12_quadratic_odd_prime_local_trichotomy
 
 /-! ## Ramification, the dyadic place, and integral tensors -/
 
-theorem chapter12_quadratic_prime_dividing_discriminant_ramifies
+theorem chapter12_quadratic_discriminant_support_iff
     {K : Type*} [Field K] [NumberField K] [Algebra ℚ K]
-    (Q : Chapter12QuadraticFieldData K) (p : ℕ)
-    (_hp : p.Prime) (hdisc : p ∣ (chapter12QuadraticDiscriminant Q.d).natAbs) :
-    chapter12QuadraticRamifiedAt Q.d p := by
-  exact hdisc
+    (Q : Chapter12QuadraticFieldData K) (p : ℕ) :
+    chapter12QuadraticDiscriminantSupport Q.d p ↔
+      p ∣ (chapter12QuadraticDiscriminant Q.d).natAbs := by
+  rfl
 
 def chapter12QuadraticTwoAdicBehavior (d : ℤ) :
     Chapter12QuadraticLocalBehavior := by
   classical
-  exact if chapter12QuadraticRamifiedAt d 2 then .ramified
+  exact if chapter12QuadraticDiscriminantSupport d 2 then .ramified
     else if ∃ a : ZMod 8, a ^ 2 = (d : ZMod 8) then .split else .inert
 
 theorem chapter12_quadratic_two_adic_trichotomy
@@ -110,8 +110,7 @@ abbrev chapter12QuadraticAdelicScalarExtension
   K ⊗[ℚ] chapter12RationalAdeleRing
 
 theorem chapter12_quadratic_adelic_scalar_extension
-    {K : Type*} [Field K] [NumberField K] [Algebra ℚ K]
-    (Q : Chapter12QuadraticFieldData K) :
+    {K : Type*} [Field K] [NumberField K] [Algebra ℚ K] :
     Nonempty (chapter12AdeleRing (𝓞 K) K ≃+*
       chapter12QuadraticAdelicScalarExtension (K := K)) := by
   sorry
@@ -166,7 +165,7 @@ theorem chapter12_complex_place_has_degree_two_normalization
   hv.mult_eq_two
 
 theorem chapter12_quadratic_product_formula_is_sign_uniform
-    {K : Type*} [Field K] [NumberField K] (_Q : Chapter12QuadraticFieldData K)
+    {K : Type*} [Field K] [NumberField K]
     (x : K) :
     ‖algebraMap K (chapter12InfiniteAdeleRing K) x‖ =
       |Algebra.norm ℚ x| :=

@@ -50,31 +50,32 @@ theorem chapter06_open_subgroup_is_character_kernel_intersection
 /- A single finite character realization, including its faithful cyclic
 Galois character and the finite reciprocity witness for its field. -/
 structure Chapter06FiniteCharacterRealization
-    (K Ks C : Type*) [Field K] [Field Ks] [Algebra K Ks]
-    [CommGroup C] (χ : C →* ℂˣ) where
+    (K Ks C : Type*) [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
+    [CommGroup C] [TopologicalSpace C] (χ : C →* ℂˣ) where
   reciprocity : Chapter06FiniteReciprocityWitness K Ks C
   cyclic : IsCyclic (Gal(reciprocity.extension.field / K))
   galoisCharacter : Gal(reciprocity.extension.field / K) →* ℂˣ
   faithful : Function.Injective galoisCharacter
   factorization : χ = galoisCharacter.comp reciprocity.artin
+  continuous_character : Continuous χ
 
 /- A faithful character does not enlarge the kernel of the reciprocity map. -/
 theorem chapter06_finite_character_realization_kernel
-    {K Ks C : Type*} [Field K] [Field Ks] [Algebra K Ks]
-    [CommGroup C] {χ : C →* ℂˣ}
+    {K Ks C : Type*} [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
+    [CommGroup C] [TopologicalSpace C] {χ : C →* ℂˣ}
     (R : Chapter06FiniteCharacterRealization K Ks C χ) :
     χ.ker = R.reciprocity.artin.ker := by
   sorry
 
-/- The character method: if every lifted quotient character is realized by a
-cyclic field, then the intersection of the corresponding kernels is H. -/
+/- Finite character duality already identifies the intersection of all lifted
+   quotient-character kernels with H.  Character realizations are used later
+   to construct the corresponding compositum, not to prove this group lemma. -/
 theorem chapter06_character_realizations_recover_open_subgroup
-    {K Ks C : Type*} [Field K] [Field Ks] [Algebra K Ks]
+    {C : Type*}
     [CommGroup C] [TopologicalSpace C]
-    (H : Chapter06OpenFiniteIndexSubgroup C)
-    (_realize :
-      ∀ χ ∈ chapter06LiftedQuotientCharacters H,
-        Chapter06FiniteCharacterRealization K Ks C χ) :
+    (H : Chapter06OpenFiniteIndexSubgroup C) :
     ⨅ χ ∈ chapter06LiftedQuotientCharacters H, χ.ker = H.subgroup := by
   rw [← chapter06_open_subgroup_is_character_kernel_intersection H]
 
@@ -82,13 +83,12 @@ theorem chapter06_character_realizations_recover_open_subgroup
 compositum and the equality of its Artin kernel with the character
 intersection. -/
 theorem chapter06_compositum_norm_subgroup_is_the_starting_subgroup
-    {K Ks C : Type*} [Field K] [Field Ks] [Algebra K Ks]
+    {K Ks C : Type*} [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
     [CommGroup C] [TopologicalSpace C]
     (H : Chapter06OpenFiniteIndexSubgroup C)
-    (A : Chapter06CharacterFieldAssignment K Ks C)
     (R :
       Chapter06FiniteReciprocityWitness K Ks C)
-    (_hfield : R.extension.field = chapter06FieldOfOpenSubgroup H A)
     (hkernel :
       R.artin.ker =
         ⨅ χ ∈ chapter06LiftedQuotientCharacters H, χ.ker) :

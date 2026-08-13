@@ -3,6 +3,7 @@ import Mathlib.Algebra.Category.ModuleCat.Presheaf.Sheafification
 import Mathlib.Algebra.Category.ModuleCat.Sheaf.Generators
 import Mathlib.Algebra.Category.ModuleCat.Sheaf.LocallyFree
 import Mathlib.Algebra.Category.ModuleCat.Stalk
+import Mathlib.CategoryTheory.Sites.SheafCohomology.Basic
 import Mathlib.AlgebraicGeometry.AffineScheme
 import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
@@ -18,6 +19,7 @@ import Mathlib.AlgebraicGeometry.ResidueField
 import Mathlib.RingTheory.Length
 import Mathlib.RingTheory.PicardGroup
 import Mathlib.Topology.Sheaves.LocallySurjective
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02.Section01ProjectiveBundles
 
 namespace LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
 
@@ -25,32 +27,17 @@ noncomputable section
 
 open CategoryTheory Limits TopologicalSpace
 open AlgebraicGeometry
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02
 open scoped AlgebraicGeometry
 
 universe u v
 
 /-!
-The preceding chapters of Book 8 are not populated in this checkout.  This file
-therefore keeps the chapter-facing interfaces small: evaluation is the counit
-of the pullback/pushforward adjunction, generation is local surjectivity of the
-corresponding sheaf map, and tensor products are obtained from Mathlib's
-presheaf tensor product followed by sheafification.  Dependency guesses for
-the missing canonical bridges are isolated below.
+Evaluation is the counit of the pullback/pushforward adjunction, tensor products
+use Mathlib's presheaf tensor product followed by sheafification, and the
+field-extension and cohomology interfaces below are tied to canonical earlier
+Book 8 constructions rather than to unrelated choices at each use.
 -/
-
-/- DEPENDENCY_GUESS: pinned Mathlib does not yet expose relative projective
-bundles as a single book-facing construction.  The projective-bundle interface
-below therefore records both its universal quotient and its universal
-property; a later pass can identify this interface with relative Proj. -/
-
-/- DEPENDENCY_GUESS: pinned Mathlib has no coherent cohomology object for
-schemes.  `Chapter04CohomologyContext` is the additive-group-valued interface
-used until the canonical projective cohomology API is available. -/
-
-/- DEPENDENCY_GUESS: the additive and field-valued scalar structures on the
-natural global-section type are not yet packaged through the scheme morphism
-to `Spec K`; the finite section system therefore exposes both structures
-explicitly. -/
 
 /-! ### Evaluation and invertible sheaves -/
 
@@ -63,7 +50,8 @@ theorem chapter04SheafSurjective_iff_stalkwise
     chapter04SheafSurjective φ ↔
       ∀ x : X, Function.Surjective
         ((TopCat.Presheaf.stalkFunctor Ab x).map φ.mapPresheaf) := by
-  sorry
+  change TopCat.Presheaf.IsLocallySurjective φ.mapPresheaf ↔ _
+  exact TopCat.Presheaf.locally_surjective_iff_surjective_on_stalks φ.mapPresheaf
 
 /-- The relative evaluation map `f* f_* M ⟶ M`. -/
 noncomputable def chapter04EvaluationMap
@@ -77,28 +65,18 @@ noncomputable def chapter04EvaluationMap
       (Scheme.Modules.pullbackPushforwardAdjunction f).counit.app M :=
   rfl
 
-/- DEPENDENCY_GUESS: the pinned module-sheaf API has no named map from global
-sections to sections on an arbitrary pullback.  Isolate that missing bridge
-in one data structure so finite-section statements cannot choose unrelated
-maps independently for each test subscheme. -/
-structure Chapter04PullbackSectionData
-    {X Y : Scheme.{u}} (g : Y ⟶ X) (M : X.Modules) where
-  map : M.val.sections → ((Scheme.Modules.pullback g).obj M).val.sections
-
-theorem chapter04_pullback_section_data_exists
-    {X Y : Scheme.{u}} (g : Y ⟶ X) (M : X.Modules) :
-    Nonempty (Chapter04PullbackSectionData g M) := by
-  sorry
+/-! The preceding projective-bundle chapter supplies the canonical section map
+through the structure-sheaf comparison and the pullback of the unit morphism.
+Re-export that interface here so restriction maps cannot be chosen
+independently for each length-two subscheme. -/
+abbrev Chapter04PullbackSectionData
+    {X Y : Scheme.{u}} (g : Y ⟶ X) (M : X.Modules) :=
+  Chapter02PullbackSectionData g M
 
 noncomputable def chapter04PullbackSectionData
     {X Y : Scheme.{u}} (g : Y ⟶ X) (M : X.Modules) :
-    Chapter04PullbackSectionData g M :=
-  Classical.choice (chapter04_pullback_section_data_exists g M)
-
-noncomputable def chapter04PullbackSectionMap
-    {X Y : Scheme.{u}} (g : Y ⟶ X) (M : X.Modules) :
-    M.val.sections → ((Scheme.Modules.pullback g).obj M).val.sections :=
-  (chapter04PullbackSectionData g M).map
+  Chapter04PullbackSectionData g M :=
+  chapter02PullbackSectionData g M
 
 /-- The finite locally free rank-one condition for a line bundle. -/
 def chapter04IsInvertible {X : Scheme.{u}} (M : X.Modules) : Prop :=
@@ -111,6 +89,14 @@ def chapter04IsInvertible {X : Scheme.{u}} (M : X.Modules) : Prop :=
             (R := X.presheaf) M.val x
       Module.Invertible (X.presheaf.stalk x)
         (M.presheaf.stalk x)
+
+/-- The canonical rank-one local-generator interface from Chapter 2 supplies the
+    stalkwise invertible-sheaf interface used by this chapter. -/
+theorem chapter04_isInvertible_of_chapter02Invertible
+    {X : Scheme.{u}} {M : X.Modules}
+    (hM : Chapter02InvertibleModule M) :
+    chapter04IsInvertible M := by
+  sorry
 
 /-- A line bundle, represented by an invertible module sheaf. -/
 structure Chapter04LineBundle (X : Scheme.{u}) where
@@ -225,6 +211,65 @@ noncomputable def chapter04PullbackCompositionIso
       (Scheme.Modules.pullback f).obj ((Scheme.Modules.pullback g).obj M) :=
   (Scheme.Modules.pullbackComp f g).symm.app M
 
+noncomputable def chapter04PullbackIdentityIso
+    {X : Scheme.{u}} (M : X.Modules) :
+    (Scheme.Modules.pullback (𝟙 X)).obj M ≅ M :=
+  (Scheme.Modules.pullbackId X).app M
+
+/-- Functoriality laws for the canonical pullback of global sections. -/
+structure Chapter04PullbackSectionFunctoriality
+    {X : Scheme.{u}} (M : X.Modules) where
+  map_id : ∀ s : M.val.sections,
+    SheafOfModules.sectionsMap (chapter04PullbackIdentityIso M).hom
+        ((chapter04PullbackSectionData (𝟙 X) M).map s) = s
+  map_comp :
+    ∀ {Y Z : Scheme.{u}} (g : Y ⟶ X) (h : Z ⟶ Y) (s : M.val.sections),
+      (chapter04PullbackSectionData (h ≫ g) M).map s =
+        SheafOfModules.sectionsMap (chapter04PullbackCompositionIso h g M).inv
+          ((chapter04PullbackSectionData h ((Scheme.Modules.pullback g).obj M)).map
+            ((chapter04PullbackSectionData g M).map s))
+
+theorem chapter04_pullback_section_functoriality_exists
+    {X : Scheme.{u}} (M : X.Modules) :
+    Nonempty (Chapter04PullbackSectionFunctoriality M) := by
+  sorry
+
+theorem chapter04PullbackSectionFunctoriality
+    {X : Scheme.{u}} (M : X.Modules) :
+    Chapter04PullbackSectionFunctoriality M := by
+  sorry
+
+/-! A field homomorphism gives the canonical scheme-theoretic field extension
+and its pullback.  The preceding functoriality laws apply to these maps and to
+composites of them. -/
+def chapter04FieldExtensionMap
+    {K L : Type u} [Field K] [Field L] (φ : K →+* L) :
+    AlgebraicGeometry.Spec (.of L) ⟶ AlgebraicGeometry.Spec (.of K) :=
+  AlgebraicGeometry.Spec.map (CommRingCat.ofHom φ)
+
+abbrev chapter04FieldExtensionBaseChange
+    {K L : Type u} [Field K] [Field L] {X : Scheme.{u}}
+    (f : X ⟶ AlgebraicGeometry.Spec (.of K)) (φ : K →+* L) : Scheme.{u} :=
+  Limits.pullback f (chapter04FieldExtensionMap φ)
+
+def chapter04FieldExtensionPullbackMap
+    {K L : Type u} [Field K] [Field L] {X : Scheme.{u}}
+    (f : X ⟶ AlgebraicGeometry.Spec (.of K)) (φ : K →+* L) :
+    chapter04FieldExtensionBaseChange f φ ⟶ X :=
+  Limits.pullback.fst f (chapter04FieldExtensionMap φ)
+
+def chapter04FieldExtensionStructureMap
+    {K L : Type u} [Field K] [Field L] {X : Scheme.{u}}
+    (f : X ⟶ AlgebraicGeometry.Spec (.of K)) (φ : K →+* L) :
+    chapter04FieldExtensionBaseChange f φ ⟶ AlgebraicGeometry.Spec (.of L) :=
+  Limits.pullback.snd f (chapter04FieldExtensionMap φ)
+
+noncomputable def chapter04FieldExtensionPullbackSectionData
+    {K L : Type u} [Field K] [Field L] {X : Scheme.{u}}
+    (f : X ⟶ AlgebraicGeometry.Spec (.of K)) (φ : K →+* L) (M : X.Modules) :
+    Chapter04PullbackSectionData (chapter04FieldExtensionPullbackMap f φ) M :=
+  chapter04PullbackSectionData (chapter04FieldExtensionPullbackMap f φ) M
+
 /-- Base change of a quotient class, with its target normalized along composition. -/
 noncomputable def chapter04PullbackQuotientClassAlong
     {S T U : Scheme.{u}} (f : T ⟶ S) (h : U ⟶ T) {E : S.Modules} :
@@ -298,13 +343,48 @@ noncomputable def chapter04ProjectiveBundleTautological
   { sheaf := P.tautological
     isInvertible := P.tautological_isInvertible }
 
-/- DEPENDENCY_GUESS: relative Proj supplies the following existence result for
-a finite locally free module.  The interface keeps the module as a field so
-that it remains usable before a canonical relative-Proj object is wired in. -/
+/-! Canonical relative-Proj bundles carry the following compatibility between
+their universal quotient and quotient-valued universal property. -/
+def chapter04ProjectiveBundleUniversalQuotientCompatible
+    {S : Scheme.{u}} (P : Chapter04ProjectiveBundle S) : Prop :=
+  ∀ {T : Scheme.{u}} (u : T ⟶ P.space),
+    ∃ p : Chapter04InvertibleQuotientPair
+        ((Scheme.Modules.pullback (u ≫ P.projection)).obj P.E),
+      P.universal_equiv (u ≫ P.projection) ⟨u, rfl⟩ =
+          chapter04QuotientClassMk p ∧
+        ∃ e : p.line.sheaf ≅ (Scheme.Modules.pullback u).obj P.tautological,
+          p.quotient ≫ e.hom =
+          (chapter04PullbackCompositionIso u P.projection P.E).hom ≫
+              (Scheme.Modules.pullback u).map P.universalQuotient
+
+/-! Existence for finite locally free modules is retained in the source-facing
+bundle interface; the companion theorem below also supplies the canonical
+universal-quotient compatibility. -/
+
 theorem chapter04_relative_projective_bundle_exists
     {S : Scheme.{u}} (E : S.Modules) (hE : chapter04FiniteLocallyFree E) :
     ∃ P : Chapter04ProjectiveBundle S, P.E = E := by
   sorry
+
+/-- The relative-Proj existence interface supplies the displayed universal
+quotient compatibility, not merely an unrelated universal equivalence. -/
+structure Chapter04CanonicalProjectiveBundle
+    (S : Scheme.{u}) (E : S.Modules) where
+  bundle : Chapter04ProjectiveBundle S
+  bundle_eq : bundle.E = E
+  universalQuotientCompatible :
+    chapter04ProjectiveBundleUniversalQuotientCompatible bundle
+
+theorem chapter04_relative_projective_bundle_exists_with_universal_quotient_compatible
+    {S : Scheme.{u}} (E : S.Modules) (hE : chapter04FiniteLocallyFree E) :
+    Nonempty (Chapter04CanonicalProjectiveBundle S E) := by
+  sorry
+
+noncomputable def chapter04CanonicalProjectiveBundle
+    {S : Scheme.{u}} (E : S.Modules) (hE : chapter04FiniteLocallyFree E) :
+    Chapter04CanonicalProjectiveBundle S E :=
+  Classical.choice
+    (chapter04_relative_projective_bundle_exists_with_universal_quotient_compatible E hE)
 
 abbrev Chapter04ProjectiveBundlePoint
     {S T : Scheme.{u}} (P : Chapter04ProjectiveBundle S) (f : T ⟶ S) :=
@@ -317,12 +397,14 @@ theorem chapter04_projective_bundle_universal_equiv_injective
   exact (P.universal_equiv f).injective h
 
 /-!
-The universal equivalence is required to be induced by the displayed
-universal quotient, up to the canonical pullback comparison.  This is the
-book-facing bridge to the usual relative-Proj universal property.
+The following bridge is the compatibility condition supplied by the canonical
+relative-Proj construction.  It is kept as an explicit hypothesis so that the
+interim projective-bundle record cannot silently identify an arbitrary
+equivalence with the displayed universal quotient.
 -/
 theorem chapter04_projective_bundle_universal_point_is_pullback_universal_quotient
-    {S T : Scheme.{u}} (P : Chapter04ProjectiveBundle S) (u : T ⟶ P.space) :
+    {S T : Scheme.{u}} (P : Chapter04ProjectiveBundle S) (u : T ⟶ P.space)
+    (hcompat : chapter04ProjectiveBundleUniversalQuotientCompatible P) :
     ∃ p : Chapter04InvertibleQuotientPair
         ((Scheme.Modules.pullback (u ≫ P.projection)).obj P.E),
       P.universal_equiv (u ≫ P.projection) ⟨u, rfl⟩ =
@@ -331,7 +413,7 @@ theorem chapter04_projective_bundle_universal_point_is_pullback_universal_quotie
         p.quotient ≫ e.hom =
           (chapter04PullbackCompositionIso u P.projection P.E).hom ≫
             (Scheme.Modules.pullback u).map P.universalQuotient := by
-  sorry
+  exact hcompat u
 
 /-- A relative projective-space witness for very ampleness. -/
 structure Chapter04VeryAmpleWitness
@@ -370,7 +452,8 @@ def chapter04FiniteRelativeGenerationOn
 /-- Relative generation by finitely many sections, locally on the base. -/
 def chapter04LocallyFiniteRelativeGeneration
     {X S : Scheme.{u}} (f : X ⟶ S) (L : Chapter04LineBundle X) : Prop :=
-  ∀ s : S, ∃ U : S.Opens, s ∈ U ∧ chapter04FiniteRelativeGenerationOn f L U
+  ∀ s : S, ∃ U : S.Opens, s ∈ U ∧ IsAffineOpen U ∧
+    chapter04FiniteRelativeGenerationOn f L U
 
 /-- The locus on which a local section generates the stalk of a module sheaf. -/
 def chapter04SectionGeneratesAt
@@ -408,12 +491,52 @@ structure Chapter04AmpleWitness
   base_open_cover : ∀ s : S, ∃ i, s ∈ base_open i
   J : I → Type u
   chart : ∀ i, J i → Chapter04AffineNonvanishingSection f L (base_open i)
-  chart_cover : ∀ x : X, ∃ i j, x ∈ (chart i j).locus
+  chart_cover : ∀ i (x : X), x ∈ f ⁻¹ᵁ (base_open i) → ∃ j, x ∈ (chart i j).locus
 
 /-- Relative ampleness in the affine-open definition used in Chapter 4. -/
 def chapter04Ample
     {X S : Scheme.{u}} (f : X ⟶ S) (L : Chapter04LineBundle X) : Prop :=
   Nonempty (Chapter04AmpleWitness f L)
+
+/-! ### Canonical projective line interfaces -/
+
+abbrev chapter04ProjectiveLine (K : Type u) [Field K] : Scheme.{u} :=
+  chapter02ProjectiveSpace (AlgebraicGeometry.Spec (.of K)) 1
+
+abbrev chapter04ProjectiveLineStructureMap (K : Type u) [Field K] :
+    chapter04ProjectiveLine K ⟶ AlgebraicGeometry.Spec (.of K) :=
+  chapter02ProjectiveSpaceProjection (AlgebraicGeometry.Spec (.of K)) 1
+
+abbrev chapter04ProjectivePoint (K : Type u) [Field K] : Scheme.{u} :=
+  chapter02ProjectiveSpace (AlgebraicGeometry.Spec (.of K)) 0
+
+abbrev chapter04ProjectivePointStructureMap (K : Type u) [Field K] :
+    chapter04ProjectivePoint K ⟶ AlgebraicGeometry.Spec (.of K) :=
+  chapter02ProjectiveSpaceProjection (AlgebraicGeometry.Spec (.of K)) 0
+
+noncomputable def chapter04ProjectiveLineTrivialLineBundle
+    (K : Type u) [Field K] : Chapter04LineBundle (chapter04ProjectiveLine K) :=
+  chapter04TrivialLineBundle (chapter04ProjectiveLine K)
+
+noncomputable def chapter04ProjectiveLineTautologicalLineBundle
+    (K : Type u) [Field K] : Chapter04LineBundle (chapter04ProjectiveLine K) :=
+  { sheaf :=
+      (chapter02ProjectiveSpaceTwistingLine (AlgebraicGeometry.Spec (.of K)) 1).carrier
+    isInvertible :=
+      chapter04_isInvertible_of_chapter02Invertible
+        (chapter02ProjectiveSpaceTwistingLine (AlgebraicGeometry.Spec (.of K)) 1).invertible }
+
+noncomputable def chapter04ProjectiveLineTautologicalBasis
+    (K : Type u) [Field K] :
+    Fin 2 → (chapter04ProjectiveLineTautologicalLineBundle K).sheaf.sections :=
+  chapter02ProjectiveSpaceCoordinates (AlgebraicGeometry.Spec (.of K)) 1
+
+structure Chapter04ProjectiveLineExample (K : Type u) [Field K] where
+  constant_map : chapter04ProjectiveLine K ⟶ chapter04ProjectivePoint K
+  constant_map_over :
+    constant_map ≫ chapter04ProjectivePointStructureMap K =
+      chapter04ProjectiveLineStructureMap K
+  constant_map_is_constant : chapter04UnderlyingConstant constant_map
 
 /-! ### Length-two subschemes and the field criterion -/
 
@@ -425,6 +548,33 @@ noncomputable def chapter04SchemeLength
   letI : Module K Γ(Z, ⊤) :=
     Module.compHom _ (((Scheme.ΓSpecIso (.of K)).inv ≫ g.appTop).hom)
   Module.length K Γ(Z, ⊤)
+
+/-- The additive-group structure on global sections of a module sheaf. -/
+noncomputable instance chapter04SectionsAddCommGroup
+    {Z : Scheme.{u}} (M : Z.Modules) : AddCommGroup M.val.sections := by
+  sorry
+
+/-- The module structure of global sections over the ring of global functions. -/
+@[instance_reducible]
+noncomputable def chapter04SectionsModuleOverGlobalSections
+    {Z : Scheme.{u}} (M : Z.Modules)
+    [addCommGroup : AddCommGroup M.val.sections] :
+    Module (Γ(Z, ⊤)) M.val.sections := by
+  sorry
+
+/-- Sections of a module sheaf on a scheme over a field carry the scalar action
+    induced by the structure morphism. -/
+@[instance_reducible]
+noncomputable def chapter04SectionsModuleOverField
+    {K : Type u} [Field K] {Z : Scheme.{u}}
+    (g : Z ⟶ AlgebraicGeometry.Spec (.of K)) (M : Z.Modules)
+    [addCommGroup : AddCommGroup M.val.sections] :
+    Module K M.val.sections := by
+  letI : Module (Γ(Z, ⊤)) M.val.sections :=
+    chapter04SectionsModuleOverGlobalSections M
+  letI := g.appTop.hom.toAlgebra
+  exact Module.compHom M.val.sections
+    (((Scheme.ΓSpecIso (.of K)).inv ≫ g.appTop).hom)
 
 /-- A closed subscheme of length two in a scheme over a field. -/
 structure Chapter04LengthTwoClosedSubscheme
@@ -447,6 +597,10 @@ structure Chapter04FiniteSectionSystem
   [moduleI : Module K I]
   [addCommGroupSections : AddCommGroup L.sheaf.val.sections]
   [moduleSections : Module K L.sheaf.val.sections]
+  addCommGroupSections_canonical :
+    addCommGroupSections = chapter04SectionsAddCommGroup L.sheaf
+  moduleSections_canonical :
+    moduleSections = chapter04SectionsModuleOverField f L.sheaf
   finite : Module.Finite K I
   sectionMap : I →ₗ[K] L.sheaf.val.sections
   section_injective : Function.Injective sectionMap
@@ -454,15 +608,49 @@ structure Chapter04FiniteSectionSystem
   restriction : ∀ Z : Chapter04LengthTwoClosedSubscheme K f,
     I → ((Scheme.Modules.pullback Z.inclusion).obj L.sheaf).val.sections
   restriction_eq : ∀ (Z : Chapter04LengthTwoClosedSubscheme K f) (i : I),
-    restriction Z i = chapter04PullbackSectionMap Z.inclusion L.sheaf (sectionMap i)
+    restriction Z i =
+      (chapter04PullbackSectionData Z.inclusion L.sheaf).map (sectionMap i)
 
-/-- The restriction-surjectivity form of separation of points and tangent directions. -/
-def chapter04SeparatesLengthTwo
+/-- The restriction-surjectivity form of separation over the original field. -/
+def chapter04SeparatesLengthTwoOverBase
     {K : Type u} [Field K] {X : Scheme.{u}}
     {f : X ⟶ AlgebraicGeometry.Spec (.of K)} {L : Chapter04LineBundle X}
     (V : Chapter04FiniteSectionSystem K f L) : Prop :=
   ∀ Z : Chapter04LengthTwoClosedSubscheme K f,
     Function.Surjective (V.restriction Z)
+
+/-- The restriction map of a section system after a field extension. -/
+noncomputable def chapter04FieldExtensionRestriction
+    {K K' : Type u} [Field K] [Field K'] {X : Scheme.{u}}
+    (f : X ⟶ AlgebraicGeometry.Spec (.of K)) (L : Chapter04LineBundle X)
+    (V : Chapter04FiniteSectionSystem K f L) (φ : K →+* K')
+    (Z : Chapter04LengthTwoClosedSubscheme K'
+      (chapter04FieldExtensionStructureMap f φ)) (i : V.I) :
+    (((Scheme.Modules.pullback Z.inclusion).obj
+      ((Scheme.Modules.pullback (chapter04FieldExtensionPullbackMap f φ)).obj L.sheaf)).val).sections :=
+  (chapter04PullbackSectionData Z.inclusion
+      ((Scheme.Modules.pullback (chapter04FieldExtensionPullbackMap f φ)).obj L.sheaf)).map
+    ((chapter04FieldExtensionPullbackSectionData f φ L.sheaf).map (V.sectionMap i))
+
+/-- Separation of points and tangent directions after every field extension.
+
+    The span formulation is the scalar-extension form of surjectivity of
+    `V ⊗ K' → H⁰(Z, L|_Z)`. -/
+def chapter04SeparatesLengthTwo
+    {K : Type u} [Field K] {X : Scheme.{u}}
+    {f : X ⟶ AlgebraicGeometry.Spec (.of K)} {L : Chapter04LineBundle X}
+    (V : Chapter04FiniteSectionSystem K f L) : Prop :=
+  chapter04SeparatesLengthTwoOverBase V ∧
+    ∀ (K' : Type u) [Field K'] (φ : K →+* K')
+      (Z : Chapter04LengthTwoClosedSubscheme K'
+        (chapter04FieldExtensionStructureMap f φ)),
+      let M :=
+        ((Scheme.Modules.pullback Z.inclusion).obj
+          ((Scheme.Modules.pullback (chapter04FieldExtensionPullbackMap f φ)).obj L.sheaf))
+      letI : AddCommGroup M.val.sections := chapter04SectionsAddCommGroup M
+      letI : Module K' M.val.sections :=
+        chapter04SectionsModuleOverField Z.structureMap M
+      Submodule.span K' (Set.range (chapter04FieldExtensionRestriction f L V φ Z)) = ⊤
 
 /-! ### Serre interfaces -/
 
@@ -478,9 +666,49 @@ structure Chapter04CoherentIdealSheaf (X : Scheme.{u}) where
   quasiCoherent : carrier.IsQuasicoherent
   finiteType : carrier.IsFiniteType
 
-/-- A book-facing higher-cohomology interface, pending the project cohomology API. -/
+/-! ### Canonical coherent cohomology -/
+
+noncomputable def chapter04Cohomology
+    {X : Scheme.{u}} (F : X.Modules) (i : ℕ) : AddCommGrpCat.{u + 1} := by
+  letI : CategoryTheory.HasExt.{u + 1}
+      (Sheaf (Opens.grothendieckTopology X) AddCommGrpCat.{u}) :=
+    CategoryTheory.HasExt.standard _
+  exact CategoryTheory.Sheaf.H'
+    ((SheafOfModules.toSheaf X.ringCatSheaf).obj F) i (⊤ : X.Opens)
+
+/-! The context fixes the canonical cohomology object and records its
+functoriality in coefficient sheaves together with the canonical pushforward
+base-change comparison. -/
 structure Chapter04CohomologyContext (X : Scheme.{u}) where
-  H : X.Modules → ℕ → ModuleCat.{u} ℤ
+  map : ∀ {F G : X.Modules} (_φ : F ⟶ G) (i : ℕ),
+    chapter04Cohomology F i ⟶ chapter04Cohomology G i
+  map_id : ∀ (F : X.Modules) (i : ℕ), map (𝟙 F) i = 𝟙 _
+  map_comp : ∀ {F G H : X.Modules} (φ : F ⟶ G) (ψ : G ⟶ H) (i : ℕ),
+    map (φ ≫ ψ) i = map φ i ≫ map ψ i
+  pushforward_baseChange :
+    ∀ {Y : Scheme.{u}} (g : Y ⟶ X) (F : Y.Modules) (i : ℕ),
+      Nonempty (chapter04Cohomology F i ≅
+        chapter04Cohomology ((Scheme.Modules.pushforward g).obj F) i)
+
+abbrev Chapter04CohomologyContext.H
+    {X : Scheme.{u}} (_C : Chapter04CohomologyContext X)
+    (F : X.Modules) (i : ℕ) : AddCommGrpCat.{u + 1} :=
+  chapter04Cohomology F i
+
+noncomputable def chapter04CanonicalCohomologyContext (X : Scheme.{u}) :
+    Chapter04CohomologyContext X :=
+  { map := by
+      sorry
+    map_id := by
+      sorry
+    map_comp := by
+      sorry
+    pushforward_baseChange := by
+      sorry }
+
+def chapter04CohomologyVanishes
+    {X : Scheme.{u}} (F : X.Modules) (i : ℕ) : Prop :=
+  ∀ x : chapter04Cohomology F i, x = 0
 
 def Chapter04CohomologyContext.Vanishes
     {X : Scheme.{u}} (C : Chapter04CohomologyContext X)

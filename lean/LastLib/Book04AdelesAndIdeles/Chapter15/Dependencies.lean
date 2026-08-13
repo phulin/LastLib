@@ -3,6 +3,7 @@ import Mathlib.RingTheory.ClassGroup.Basic
 import Mathlib.RingTheory.FractionalIdeal.Operations
 import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
 import Mathlib.Topology.Algebra.RestrictedProduct.Units
+import Mathlib.Topology.Algebra.ContinuousMonoidHom
 import Mathlib.Topology.Algebra.Group.Matrix
 import Mathlib.LinearAlgebra.FiniteDimensional.Basic
 import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Basic
@@ -127,6 +128,41 @@ abbrev Chapter15FiniteIdeleGroup (R K : Type*) [CommRing R] [IsDedekindDomain R]
     [(v.adicCompletion K)ˣ,
       chapter15FiniteUnitIntegralSubgroup (R := R) (K := K) v]
 
+/-- The finite standard integral idele level. -/
+def chapter15StandardFiniteIdeleLevel :
+    Subgroup (Chapter15FiniteIdeleGroup R K) where
+  carrier := {g | ∀ v : Chapter15FinitePlace R,
+    g v ∈ chapter15FiniteUnitIntegralSubgroup v}
+  one_mem' := by
+    intro v
+    exact (chapter15FiniteUnitIntegralSubgroup v).one_mem
+  mul_mem' := by
+    intro g h hg hh v
+    exact (chapter15FiniteUnitIntegralSubgroup v).mul_mem (hg v) (hh v)
+  inv_mem' := by
+    intro g hg v
+    exact (chapter15FiniteUnitIntegralSubgroup v).inv_mem (hg v)
+
+/-! ### Shared finite matrix levels -/
+
+/-- A finite adelic matrix level together with its local factor description. -/
+structure Chapter15FiniteMatrixLevel (n : ℕ) where
+  localSubgroup : ∀ v : Chapter15FinitePlace R,
+    Subgroup (Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion K))
+  subgroup : Subgroup (Chapter15FiniteMatrixGroup n R K)
+  mem_iff : ∀ g, g ∈ subgroup ↔
+    ∀ v : Chapter15FinitePlace R, g v ∈ localSubgroup v
+  isCompact : IsCompact (subgroup : Set (Chapter15FiniteMatrixGroup n R K))
+  isOpen : IsOpen (subgroup : Set (Chapter15FiniteMatrixGroup n R K))
+  standard_outside_finite : ∃ S : Finset (Chapter15FinitePlace R),
+    ∀ v ∉ S, localSubgroup v = chapter15FiniteMatrixIntegralSubgroup n v
+
+theorem chapter15FiniteMatrixLevel_mem_iff
+    (n : ℕ) (L : Chapter15FiniteMatrixLevel (R := R) (K := K) n)
+    (g : Chapter15FiniteMatrixGroup n R K) :
+    g ∈ L.subgroup ↔ ∀ v, g v ∈ L.localSubgroup v :=
+  L.mem_iff g
+
 /-- The idele group, equipped with the graph/restricted-product topology. -/
 abbrev Chapter15IdeleGroup (R K : Type*) [CommRing R] [IsDedekindDomain R]
     [Field K] [Algebra R K] [IsFractionRing R K] :=
@@ -204,13 +240,13 @@ number-field finiteness of the infinite places, but not this book-facing
 equivalence as a named declaration. -/
 def chapter15_restricted_matrix_group_equiv_product
     (n : ℕ) [NumberField K] :
-    Chapter15RestrictedAdelicMatrixGroup n R K ≃*
+    Chapter15RestrictedAdelicMatrixGroup n R K ≃ₜ*
       Chapter15AdelicMatrixGroup n R K := by
   sorry
 
 def chapter15_restricted_idele_group_equiv_product
     [NumberField K] :
-    Chapter15RestrictedIdeleGroup R K ≃*
+    Chapter15RestrictedIdeleGroup R K ≃ₜ*
       Chapter15IdeleGroup R K := by
   sorry
 
@@ -220,11 +256,24 @@ def chapter15_finite_idele_group_equiv_finite_adele_units :
       (IsDedekindDomain.FiniteAdeleRing R K)ˣ := by
   sorry
 
+def chapter15_finite_idele_group_homeomorph_finite_adele_units
+    [NumberField K] :
+    Chapter15FiniteIdeleGroup R K ≃ₜ*
+      (IsDedekindDomain.FiniteAdeleRing R K)ˣ := by
+  sorry
+
 /- The underlying multiplicative groups agree with units of the full adele
 ring; the topology on the graph model is kept separate. -/
 def chapter15_idele_group_equiv_full_adele_units
     [NumberField K] :
     Chapter15IdeleGroup R K ≃* Chapter15AdeleUnitGroup R K := by
+  sorry
+
+/- The graph/restricted-product topology agrees with the induced unit topology
+on the canonical full adele ring. -/
+def chapter15_idele_group_homeomorph_full_adele_units
+    [NumberField K] :
+    Chapter15IdeleGroup R K ≃ₜ* Chapter15AdeleUnitGroup R K := by
   sorry
 
 /-! ### Generic predicates used by later sections -/

@@ -29,23 +29,26 @@ theorem chapter04_unramified_cyclic_invariant_normalization
 /-- Restriction multiplies a local Brauer invariant by the extension degree (4.4). -/
 theorem chapter04_local_invariant_restriction_formula
     {B₀ B₁ : Type*} [AddCommGroup B₀] [AddCommGroup B₁]
-    (D : Chapter04LocalBrauerMapData B₀ B₁) (α : B₀) :
+    (D : Chapter04LocalBrauerMapData B₀ B₁)
+    (L : Chapter04LocalBrauerMapLaws D) (α : B₀) :
     D.inv₁ (D.res α) = D.degree • D.inv₀ α := by
-  sorry
+  exact L.restriction_formula α
 
 /-- Corestriction preserves the normalized local invariant (4.5). -/
 theorem chapter04_local_invariant_corestriction_formula
     {B₀ B₁ : Type*} [AddCommGroup B₀] [AddCommGroup B₁]
-    (D : Chapter04LocalBrauerMapData B₀ B₁) (β : B₁) :
+    (D : Chapter04LocalBrauerMapData B₀ B₁)
+    (L : Chapter04LocalBrauerMapLaws D) (β : B₁) :
     D.inv₀ (D.cor β) = D.inv₁ β := by
-  sorry
+  exact L.corestriction_formula β
 
 /-- The local projection formula, before applying the invariant. -/
 theorem chapter04_local_corestriction_restriction_formula
     {B₀ B₁ : Type*} [AddCommGroup B₀] [AddCommGroup B₁]
-    (D : Chapter04LocalBrauerMapData B₀ B₁) (α : B₀) :
+    (D : Chapter04LocalBrauerMapData B₀ B₁)
+    (L : Chapter04LocalBrauerMapLaws D) (α : B₀) :
     D.cor (D.res α) = D.degree • α := by
-  sorry
+  exact L.projection_formula α
 
 /-- Restriction and corestriction are transitive in a tower of local fields. -/
 structure Chapter04LocalBrauerTowerData
@@ -54,6 +57,7 @@ structure Chapter04LocalBrauerTowerData
   first : Chapter04LocalBrauerMapData B₀ B₁
   second : Chapter04LocalBrauerMapData B₁ B₂
   composite : Chapter04LocalBrauerMapData B₀ B₂
+  degree_mul : composite.degree = second.degree * first.degree
   restriction_transitive : ∀ x : B₀,
     composite.res x = second.res (first.res x)
   corestriction_transitive : ∀ z : B₂,
@@ -82,10 +86,16 @@ structure Chapter04FiniteEtaleBrauerData (I : Type u) [Fintype I] where
   branch : I → Type u
   [branchGroup : ∀ i, AddCommGroup (branch i)]
   degree : I → ℕ
+  positive_degree : ∀ i, 0 < degree i
   res : ∀ i, base →+ branch i
   cor : ∀ i, branch i →+ base
   invBase : base →+ chapter04QModZ
   invBranch : ∀ i, branch i →+ chapter04QModZ
+  corestriction_sum_formula : ∀ β : ∀ i, branch i,
+    invBase (∑ i, cor i (β i)) = ∑ i, invBranch i (β i)
+  restriction_sum_formula : ∀ α : base,
+    (∑ i, invBranch i (res i α)) =
+      (∑ i, degree i) • invBase α
 
 attribute [instance] Chapter04FiniteEtaleBrauerData.baseGroup
   Chapter04FiniteEtaleBrauerData.branchGroup
@@ -95,7 +105,7 @@ theorem chapter04_finite_etale_corestriction_sum_formula
     {I : Type*} [Fintype I]
     (D : Chapter04FiniteEtaleBrauerData I) (β : ∀ i, D.branch i) :
     D.invBase (∑ i, D.cor i (β i)) = ∑ i, D.invBranch i (β i) := by
-  sorry
+  exact D.corestriction_sum_formula β
 
 /-- The finite étale restriction sum formula (4.7). -/
 theorem chapter04_finite_etale_restriction_sum_formula
@@ -103,11 +113,12 @@ theorem chapter04_finite_etale_restriction_sum_formula
     (D : Chapter04FiniteEtaleBrauerData I) (α : D.base) :
     (∑ i, D.invBranch i (D.res i α)) =
       (∑ i, D.degree i) • D.invBase α := by
-  sorry
+  exact D.restriction_sum_formula α
 
 /-- The degree sum for the completions of a finite global extension. -/
 structure Chapter04CompletionBranchDegrees (I : Type*) [Fintype I] where
   branchDegree : I → ℕ
+  positive_branchDegree : ∀ i, 0 < branchDegree i
   totalDegree : ℕ
   degree_sum : ∑ i, branchDegree i = totalDegree
 
@@ -124,9 +135,9 @@ infinite-place summand, real and complex terms are included by construction. -/
 theorem chapter04_global_invariant_sequence
     {F : Type u} [Field F] [NumberField F]
     (D : Chapter04BrauerContext.{u, v} F)
-    (hlocal : Chapter04LocalBrauerBehavior D) :
+    (S : Chapter04BrauerInvariantSequenceData D) :
     chapter04BrauerInvariantExact D := by
-  sorry
+  exact S.exact_sequence
 
 end
 

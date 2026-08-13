@@ -29,7 +29,7 @@ theorem chapter08_quadratic_artin_character_is_product_of_local_hilbert_characte
     (x : Kˣ) :
     letI : Fintype Q.place := Q.placeFintype
     Q.globalCharacter x = ∏ v, Q.localCharacter v x := by
-  exact Q.global_eq_product x
+  sorry
 
 theorem chapter08_quadratic_local_character_is_hilbert_symbol
     {K : Type u} [Field K]
@@ -44,34 +44,36 @@ theorem chapter08_quadratic_hilbert_symbol_principal_idele_product_formula
     (a b : Kˣ) :
     letI : Fintype Q.place := Q.placeFintype
     ∏ v, Q.hilbertSymbol v a b = 1 := by
-  exact Q.hilbert_product_formula a b
+  sorry
 
 /-! Over `ℚ`, the odd-prime local value is the Legendre symbol. -/
 
 def chapter08RationalQuadraticUniformizerArtinValue
-    (d : ℤ) (p : ℕ) [Fact p.Prime] : ℤ :=
+    (d : ℤ) (p : ℕ) [Fact p.Prime]
+    (hpd : ¬(p : ℤ) ∣ 2 * d) : ℤ :=
   legendreSym p d
 
 theorem chapter08_rational_quadratic_uniformizer_artin_value
     (d : ℤ) (p : ℕ) [Fact p.Prime] (_hpd : ¬(p : ℤ) ∣ 2 * d) :
-    chapter08RationalQuadraticUniformizerArtinValue d p =
+    chapter08RationalQuadraticUniformizerArtinValue d p _hpd =
       legendreSym p d := by
   rfl
 
 /-- The finite discriminant modulus, with a real sign component for negative discriminant. -/
-def chapter08QuadraticCharacterModulus (Δ : ℤ) : Chapter08Modulus ℚ where
+def chapter08QuadraticCharacterModulus (Δ : ℤ) (hΔ : Δ ≠ 0) : Chapter08Modulus ℚ where
   finitePart := Ideal.span {(Int.natAbs Δ : 𝓞 ℚ)}
+  finitePart_ne_bot := by sorry
   infinitePart := if Δ < 0 then Finset.univ else ∅
 
 theorem chapter08_quadratic_character_modulus_has_discriminant_finite_part
-    (Δ : ℤ) :
-    (chapter08QuadraticCharacterModulus Δ).finitePart =
+    (Δ : ℤ) (hΔ : Δ ≠ 0) :
+    (chapter08QuadraticCharacterModulus Δ hΔ).finitePart =
       Ideal.span {(Int.natAbs Δ : 𝓞 ℚ)} := by
   rfl
 
 theorem chapter08_quadratic_character_modulus_has_real_sign_exactly_for_negative_discriminant
-    (Δ : ℤ) :
-    (chapter08QuadraticCharacterModulus Δ).infinitePart =
+    (Δ : ℤ) (hΔ : Δ ≠ 0) :
+    (chapter08QuadraticCharacterModulus Δ hΔ).infinitePart =
       if Δ < 0 then Finset.univ else ∅ := by
   rfl
 
@@ -81,22 +83,26 @@ structure Chapter08QuadraticArtinConductorData
     (L : Type u) [Field L] [Algebra ℚ L] [NumberField L]
     [FiniteDimensional ℚ L] [IsAbelianGalois ℚ L] (Δ : ℤ) where
   extension : Chapter08AbelianExtensionData ℚ L
+  relativeDegree : Module.finrank ℚ L = 2
   fieldDiscriminant : NumberField.discr L = Δ
+  discriminant_ne_zero : Δ ≠ 0
   conductor_eq_discriminant :
-    extension.conductor = chapter08QuadraticCharacterModulus Δ
+    extension.conductor = chapter08QuadraticCharacterModulus Δ discriminant_ne_zero
 
 theorem chapter08_quadratic_artin_character_has_field_discriminant_modulus
     {L : Type u} [Field L] [Algebra ℚ L] [NumberField L]
     [FiniteDimensional ℚ L] [IsAbelianGalois ℚ L]
     {Δ : ℤ} (Q : Chapter08QuadraticArtinConductorData L Δ) :
-    Q.extension.conductor = chapter08QuadraticCharacterModulus Δ := by
+    Q.extension.conductor =
+      chapter08QuadraticCharacterModulus Δ Q.discriminant_ne_zero := by
   exact Q.conductor_eq_discriminant
 
 theorem chapter08_quadratic_artin_character_conductor_divides_discriminant_modulus
     {L : Type u} [Field L] [Algebra ℚ L] [NumberField L]
     [FiniteDimensional ℚ L] [IsAbelianGalois ℚ L]
     {Δ : ℤ} (Q : Chapter08QuadraticArtinConductorData L Δ) :
-    chapter08ConductorDivides Q.extension (chapter08QuadraticCharacterModulus Δ) := by
+    chapter08ConductorDivides Q.extension
+      (chapter08QuadraticCharacterModulus Δ Q.discriminant_ne_zero) := by
   rw [chapter08ConductorDivides, Q.conductor_eq_discriminant]
 
 /- LOCAL_DEPENDENCY_GUESS: the four local computations used in the textbook
@@ -119,8 +125,6 @@ structure Chapter08QuadraticReciprocityLocalValues
   atInfinity_eq_one : atInfinity = 1
   awayFactor : ℤ
   awayFactor_eq_one : awayFactor = 1
-  global_product_formula :
-    awayFactor * atP * atQ * atTwo * atInfinity = 1
 
 theorem chapter08_hilbert_symbol_at_p_is_legendre_symbol
     {p q : ℕ} [Fact p.Prime] [Fact q.Prime]
@@ -150,7 +154,7 @@ theorem chapter08_quadratic_reciprocity_local_product_is_one
     {p q : ℕ} [Fact p.Prime] [Fact q.Prime]
     (V : Chapter08QuadraticReciprocityLocalValues p q) :
   V.atP * V.atQ * V.atTwo * V.atInfinity = 1 := by
-  simpa [V.awayFactor_eq_one] using V.global_product_formula
+  sorry
 
 theorem chapter08_quadratic_reciprocity
     {p q : ℕ} [Fact p.Prime] [Fact q.Prime]

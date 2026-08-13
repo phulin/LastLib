@@ -10,6 +10,7 @@ by the product and composition statements.
 namespace LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter03
 
 open CategoryTheory Limits AlgebraicGeometry
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter01
 
 noncomputable section
 
@@ -33,7 +34,7 @@ theorem chapter03_relativeProjectiveBundle_baseChange
     Nonempty (Chapter03RelativeProjectiveBundle T ((Scheme.Modules.pullback g).obj E)) := by
   sorry
 
-/-- The base-change comparison for the provisional relative projective-bundle interface. -/
+/-- The base-change comparison for the canonical relative projective-bundle interface. -/
 theorem chapter03_relativeProjectiveBundle_baseChange_compatibility
     (g : T ⟶ S) (E : S.Modules) (hE : chapter03FiniteLocallyFree E)
     (P : Chapter03RelativeProjectiveBundle S E) :
@@ -71,16 +72,15 @@ theorem chapter03_quasiProjective_product (f : X ⟶ S) (g : Y ⟶ S)
     chapter03QuasiProjective (chapter03ProductOver f g) := by
   sorry
 
-/--
-`LOCAL_DEPENDENCY_GUESS`: Mathlib does not currently expose the relative tensor product of two
-sheaves of modules in the form needed for the Segre map, so the tensor-product module and its
-finite-local-freeness fact are kept as a named interface here.
--/
+/-- A finite locally free model for the tensor product of two sheaves.
+
+The preceding chapter supplies the book-facing sheaf tensor operation.  The explicit isomorphism
+keeps this interface tied to that operation instead of recording an unconstrained proposition. -/
 structure Chapter03TensorProductModule (S : Scheme.{u})
     (E F : S.Modules) where
   module : S.Modules
   finiteLocallyFree : chapter03FiniteLocallyFree module
-  identifiesWithTensorProduct : Prop
+  tensorProductIso : module ≅ chapter01SheafTensor E F
 
 /-- The data of the relative Segre immersion. -/
 structure Chapter03SegreData {S : Scheme.{u}} {E F : S.Modules}
@@ -91,9 +91,6 @@ structure Chapter03SegreData {S : Scheme.{u}} {E F : S.Modules}
   embedding : Limits.pullback P.projection Q.projection ⟶ B.carrier
   isClosedImmersion : IsClosedImmersion embedding
   overBase : embedding ≫ B.projection = chapter03ProductOver P.projection Q.projection
-  universalQuotientIsTensorProduct : Prop
-  coordinateEntriesAreProducts : Prop
-  twoByTwoMinorsCutOutImage : Prop
 
 /-- The Segre map is a closed immersion into the projective bundle of the tensor product. -/
 theorem chapter03_segre_embedding (S : Scheme.{u}) (E F : S.Modules)

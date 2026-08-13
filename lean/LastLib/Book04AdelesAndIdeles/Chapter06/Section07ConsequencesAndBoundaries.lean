@@ -1,4 +1,4 @@
-import LastLib.Book04AdelesAndIdeles.Chapter06.Section06AdditiveHaarMeasureAndCovolume
+import LastLib.Book04AdelesAndIdeles.Chapter06.Section03ACompactFundamentalSet
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter06
 
@@ -21,6 +21,8 @@ in this number-field proof. -/
 theorem chapter06_additive_local_global_compactness
     (P : Chapter06AdeleData K O KInf Af Ohat)
     (D : Chapter06ArchimedeanCell P)
+    [IsTopologicalAddGroup KInf] [IsTopologicalAddGroup Af]
+    [T2Space KInf] [T2Space Af]
     (hdiscrete : Chapter06DiscreteEmbedding (chapter06Diagonal P)) :
     Chapter06DiscreteEmbedding (chapter06Diagonal P) ∧
       CompactSpace (Chapter06AdeleQuotient P) := by
@@ -37,7 +39,19 @@ theorem chapter06_finite_adelic_quotient_not_hausdorff
     (P : Chapter06AdeleData K O KInf Af Ohat)
     [IsTopologicalAddGroup Af] [T2Space Af] :
     ¬ T2Space (Af ⧸ chapter06ImageSubgroup P.globalToFinite) := by
-  sorry
+  intro hT2
+  let _ : T2Space (Af ⧸ chapter06ImageSubgroup P.globalToFinite) := hT2
+  have hclosed : IsClosed
+      (chapter06ImageSubgroup P.globalToFinite : Set Af) :=
+    (QuotientAddGroup.t1Space_iff).1
+      (inferInstance : T1Space (Af ⧸ chapter06ImageSubgroup P.globalToFinite))
+  have hclosed_range : IsClosed (Set.range P.globalToFinite) := by
+    simpa [chapter06ImageSubgroup] using hclosed
+  apply P.finite_diagonal_not_surjective
+  calc
+    Set.range P.globalToFinite = closure (Set.range P.globalToFinite) :=
+      hclosed_range.closure_eq.symm
+    _ = Set.univ := P.finite_diagonal_dense.closure_eq
 
 abbrev chapter06CountableUnrestrictedRealProduct : Type := ℕ → ℝ
 
@@ -45,7 +59,15 @@ abbrev chapter06CountableUnrestrictedRealProduct : Type := ℕ → ℝ
 locally compact. -/
 theorem chapter06_countable_unrestricted_real_product_not_locally_compact :
     ¬ LocallyCompactSpace chapter06CountableUnrestrictedRealProduct := by
-  sorry
+  intro hcompact
+  let _ : LocallyCompactSpace chapter06CountableUnrestrictedRealProduct := hcompact
+  let _ : FiniteDimensional ℝ chapter06CountableUnrestrictedRealProduct :=
+    FiniteDimensional.of_locallyCompactSpace ℝ
+  let v : ℕ → chapter06CountableUnrestrictedRealProduct :=
+    fun n => Pi.single n (1 : ℝ)
+  have hli : LinearIndependent ℝ v := by
+    simpa [v] using Pi.linearIndependent_single_one ℕ ℝ
+  exact (Module.Finite.not_linearIndependent_of_infinite v) hli
 
 end
 

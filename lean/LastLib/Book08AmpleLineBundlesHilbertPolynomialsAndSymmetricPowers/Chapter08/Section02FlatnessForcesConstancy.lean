@@ -10,20 +10,32 @@ noncomputable section
 
 /-! ## 8.2 Flatness forces constancy -/
 
+/- Once a Serre profile is available, its high-degree pushforwards determine the
+   fiber polynomials, and hence all Euler-characteristic values. -/
+theorem chapter08_hilbert_function_locally_constant_of_serre_profile
+    {F : Chapter08PolarizedFamily} (E : Chapter08FamilySheaf F)
+    (D : Chapter08FiberwiseHilbertData E)
+    (H : Chapter08SerreVanishingProfile E D) (n : ℕ) :
+    Chapter08LocallyConstant (fun s => chapter08FiberEulerCharacteristic D s n) := by
+  sorry
+
 /- The pointwise local constancy statement for the Euler-characteristic values
    used in the proof of the constancy theorem. -/
 theorem chapter08_hilbert_function_locally_constant
     {F : Chapter08PolarizedFamily} (E : Chapter08FamilySheaf F)
     (D : Chapter08FiberwiseHilbertData E)
+    (Hbase : Chapter08SerreVanishingBaseChangeData E D)
     (hflat : Chapter08FlatOver F.family.f E.sheaf) (n : ℕ) :
-    Chapter08LocallyConstant (fun s => D.eulerCharacteristic s n) := by
-  sorry
+    Chapter08LocallyConstant (fun s => chapter08FiberEulerCharacteristic D s n) := by
+  obtain ⟨H⟩ := chapter08_serre_vanishing_and_base_change E D Hbase hflat
+  exact chapter08_hilbert_function_locally_constant_of_serre_profile E D H n
 
 /- If the sheaf is flat over the base, its fiber Hilbert polynomial is locally
    constant. -/
 theorem chapter08_hilbert_polynomial_locally_constant
     {F : Chapter08PolarizedFamily} (E : Chapter08FamilySheaf F)
     (D : Chapter08FiberwiseHilbertData E)
+    (Hbase : Chapter08SerreVanishingBaseChangeData E D)
     (hflat : Chapter08FlatOver F.family.f E.sheaf) :
     Chapter08LocallyConstant (fun s => D.fiberPolynomial s) := by
   sorry
@@ -45,6 +57,7 @@ theorem chapter08_fiber_polynomial_eq_of_values
 theorem chapter08_fiber_hilbert_polynomial_constant_on_connected_base
     {F : Chapter08PolarizedFamily} (E : Chapter08FamilySheaf F)
     (D : Chapter08FiberwiseHilbertData E)
+    (Hbase : Chapter08SerreVanishingBaseChangeData E D)
     (hflat : Chapter08FlatOver F.family.f E.sheaf)
     (hconnected : _root_.IsConnected (Set.univ : Set F.family.S)) :
     ∀ s t : F.family.S, D.fiberPolynomial s = D.fiberPolynomial t := by
@@ -55,6 +68,7 @@ theorem chapter08_fiber_hilbert_polynomial_constant_on_connected_base
 theorem chapter08_fiber_hilbert_polynomial_constant_on_connected_set
     {F : Chapter08PolarizedFamily} (E : Chapter08FamilySheaf F)
     (D : Chapter08FiberwiseHilbertData E)
+    (Hbase : Chapter08SerreVanishingBaseChangeData E D)
     (hflat : Chapter08FlatOver F.family.f E.sheaf)
     {C : Set F.family.S} (hconnected : _root_.IsConnected C) :
     ∀ s ∈ C, ∀ t ∈ C, D.fiberPolynomial s = D.fiberPolynomial t := by

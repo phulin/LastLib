@@ -1,4 +1,4 @@
-import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter07.Section03TheUnconditionalArgument
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter07.Dependencies
 
 namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter07
 
@@ -106,7 +106,8 @@ def chapter07Triangle (T : ℝ) (x : ℝ) : ℝ :=
   max 0 (1 - |x| / T)
 
 theorem chapter07_autocorrelation_positiveType
-    (g : Chapter07TestFunction) (hg : Integrable g) :
+    (g : Chapter07TestFunction) (hg : Integrable g)
+    (hg2 : Integrable (fun x : ℝ => g x ^ 2)) :
     chapter07PositiveType (chapter07Autocorrelation g) := by
   sorry
 
@@ -152,9 +153,9 @@ theorem chapter07_triangle_primePowerSupport_finite
    is replaced by a smooth certificate in the next chapter. -/
 def chapter07SmoothApproximation
     (F H : Chapter07TestFunction) (ε : ℝ) : Prop :=
-  ContDiff ℝ ∞ H ∧ HasCompactSupport H ∧ Integrable H ∧ chapter07Even H ∧
+    ContDiff ℝ ∞ H ∧ HasCompactSupport H ∧ Integrable H ∧ chapter07Even H ∧
     chapter07PointwiseNonnegative H ∧ chapter07PositiveType H ∧
-    ∀ x, |H x - F x| ≤ ε
+    H 0 = 1 ∧ ∀ x, |H x - F x| ≤ ε
 
 theorem chapter07_triangle_smoothing_interface
     (T ε : ℝ) (hT : 0 < T) (hε : 0 < ε) :

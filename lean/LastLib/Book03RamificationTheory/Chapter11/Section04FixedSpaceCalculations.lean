@@ -1,4 +1,4 @@
-import LastLib.Book03RamificationTheory.Chapter11.Section03AdditivityAndExactSequences
+import LastLib.Book03RamificationTheory.Chapter11.Section02ArtinsIntegrality
 
 namespace LastLib.Book03RamificationTheory.Chapter11
 
@@ -24,15 +24,15 @@ def Chapter11TameOneNontrivialLine
     {k G V : Type*} [Field k] [Fintype G] [Group G]
     [AddCommGroup V] [Module k V] [FiniteDimensional k V]
     (D : Chapter11RamificationData G) (ρ : Representation k G V) : Prop :=
-  ∃ (L₁ L₂ : Submodule k V) (χ : G →* kˣ),
+    ∃ (L₁ L₂ : Submodule k V) (χ : D.inertia →* kˣ),
     Module.finrank k V = 2 ∧
       Module.finrank k L₁ = 1 ∧ Module.finrank k L₂ = 1 ∧
       L₁ ⊔ L₂ = ⊤ ∧ L₁ ⊓ L₂ = ⊥ ∧
       (∀ σ : D.inertia, ∀ x : V, x ∈ L₁ →
-        ρ σ x = (χ (σ : G) : k) • x) ∧
+        ρ σ x = (χ σ : k) • x) ∧
       (∀ σ : D.inertia, ∀ x : V, x ∈ L₂ → ρ σ x = x) ∧
       (∀ σ : D.lower 1, ρ σ = LinearMap.id) ∧
-      ∃ σ : D.inertia, χ (σ : G) ≠ 1
+      ∃ σ : D.inertia, χ σ ≠ 1
 
 def Chapter11TameNoFixedVectors
     {k G V : Type*} [Field k] [Fintype G] [Group G]
@@ -67,9 +67,7 @@ theorem chapter11_two_dimensional_tame_fixed_space_zero_conductor_two
     chapter11ArtinConductor D ρ = 2 := by
   sorry
 
-/- SOURCE_ISSUE: Section 11.4 says “let `χ` be a nontrivial one-dimensional
-  character” and then uses `V` without introducing the representation carried
-  by `χ`.  The declarations below use the canonical correction
+/- The source's `V_χ` is represented canonically by
   `chapter11OneDimensionalRepresentation χ`. -/
 
 /-! The wild cyclic one-break laboratory. -/

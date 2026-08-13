@@ -11,9 +11,12 @@ import Mathlib.NumberTheory.NumberField.ClassNumber
 import Mathlib.NumberTheory.NumberField.ProductFormula
 import Mathlib.NumberTheory.NumberField.Units.DirichletTheorem
 import Mathlib.Topology.Algebra.Constructions
+import Mathlib.Topology.Algebra.ContinuousMonoidHom
+import Mathlib.Topology.Algebra.Group.Basic
 import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
 import Mathlib.Topology.Algebra.RestrictedProduct.Units
+import LastLib.Book04AdelesAndIdeles.Chapter08.Section81
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter09
 
@@ -58,6 +61,17 @@ noncomputable instance chapter09AdicCompletionMeasurableSpace
     MeasurableSpace (v.adicCompletion K) :=
   borel _
 
+noncomputable instance chapter09AdeleBorelSpace
+    (K : Type*) [Field K] [NumberField K] :
+    BorelSpace (Chapter09Adele K) :=
+  ⟨rfl⟩
+
+noncomputable instance chapter09AdicCompletionBorelSpace
+    (K : Type*) [Field K] [NumberField K]
+    (v : HeightOneSpectrum (𝓞 K)) :
+    BorelSpace (v.adicCompletion K) :=
+  ⟨rfl⟩
+
 /-- Ideles are the units of the full adele ring. -/
 abbrev Chapter09Idele (K : Type*) [Field K] [NumberField K] :=
   (Chapter09Adele K)ˣ
@@ -65,11 +79,37 @@ abbrev Chapter09Idele (K : Type*) [Field K] [NumberField K] :=
 /-- The positive real multiplicative group, represented canonically by units of `ℝ≥0`. -/
 abbrev Chapter09PositiveReal : Type := ℝ≥0ˣ
 
+/-- Ideal class groups are used with their discrete topology in the finite-image
+statements of this chapter. -/
+noncomputable instance chapter09ClassGroupTopologicalSpace
+    (K : Type*) [Field K] [NumberField K] :
+    TopologicalSpace (ClassGroup (𝓞 K)) := ⊥
+
+noncomputable instance chapter09ClassGroupDiscreteTopology
+    (K : Type*) [Field K] [NumberField K] :
+    DiscreteTopology (ClassGroup (𝓞 K)) where
+  eq_bot := rfl
+
 /-- The canonical product decomposition of a full idele into its infinite and finite parts. -/
 def chapter09IdeleProductEquiv
     (K : Type*) [Field K] [NumberField K] :
     Chapter09Idele K ≃* (Chapter09InfiniteAdele K)ˣ × (Chapter09FiniteAdele K)ˣ :=
   MulEquiv.prodUnits
+
+/-- The product decomposition also respects the unit-group topologies. -/
+def chapter09IdeleProductContinuousEquiv
+    (K : Type*) [Field K] [NumberField K] :
+    Chapter09Idele K ≃ₜ*
+      (Chapter09InfiniteAdele K)ˣ × (Chapter09FiniteAdele K)ˣ where
+  __ := chapter09IdeleProductEquiv K
+  continuous_toFun :=
+    (Homeomorph.prodUnits :
+      (Chapter09Adele K)ˣ ≃ₜ
+        (Chapter09InfiniteAdele K)ˣ × (Chapter09FiniteAdele K)ˣ).continuous
+  continuous_invFun :=
+    (Homeomorph.prodUnits :
+      (Chapter09Adele K)ˣ ≃ₜ
+        (Chapter09InfiniteAdele K)ˣ × (Chapter09FiniteAdele K)ˣ).symm.continuous
 
 /-! ### Local absolute-value factors -/
 
@@ -195,29 +235,20 @@ def chapter09FinitePrincipalIdele
 
 def chapter09FiniteUnitIdeles
     (K : Type*) [Field K] [NumberField K] :
-    Subgroup (Chapter09FiniteAdele K)ˣ where
-  carrier := {x | ∀ v : HeightOneSpectrum (𝓞 K),
-    chapter09NormUnit
-      ((RestrictedProduct.unitsEquiv
-        (fun v : HeightOneSpectrum (𝓞 K) => v.adicCompletion K) x) v) = 1}
-  one_mem' := by sorry
-  mul_mem' := by
-    sorry
-  inv_mem' := by
-    sorry
+  Subgroup (Chapter09FiniteAdele K)ˣ :=
+  LastLib.Book04AdelesAndIdeles.Chapter08.chapter08FiniteIntegralUnits (K := K)
 
 /-!
-`Chapter09IdeleIdealData` is the one boundary with Chapter 8.  Its map is the
-canonical finite-idele-to-ideal-class map developed there.  The fields record
-only its functoriality, the triviality on principal ideles, and the already
-proved representation of every ideal class, together with the canonical
-kernel description by principal finite ideles and finite unit ideles; they do
-not contain any compactness conclusion.
+`Chapter09IdeleIdealData` is the one boundary with Chapter 8.  It records the
+finite-idele-to-ideal-class interface needed below: functoriality, triviality
+on principal ideles, representation of every ideal class, and the kernel
+description by principal finite ideles and finite unit ideles.  It contains no
+compactness conclusion.  The canonical number-field instance below is built
+from the preceding chapter's valuation-to-ideal map.
 -/
 
-/- LOCAL_DEPENDENCY_GUESS: Chapter 8's ideal map is represented here by its
-group-homomorphic class-valued interface until the preceding chapter is
-merged. -/
+/- LOCAL_DEPENDENCY_BRIDGE: keep the preceding chapter's ideal construction
+behind this small class-valued interface until it is available here. -/
 structure Chapter09IdeleIdealData
     (K : Type*) [Field K] [NumberField K] where
   idealClassMap : (Chapter09FiniteAdele K)ˣ →* ClassGroup (𝓞 K)
@@ -228,6 +259,34 @@ structure Chapter09IdeleIdealData
     idealClassMap.ker =
       (chapter09FinitePrincipalIdele K).range ⊔ chapter09FiniteUnitIdeles K
   surjective : Function.Surjective idealClassMap
+
+/-! The preceding chapter already constructs the valuation-vector-to-ideal map.
+The generic structure above remains useful as a small book-facing interface,
+but the number-field specialization used by the unconditional compactness
+statements below must be tied to that canonical construction rather than left
+as an uninstantiated parameter. -/
+
+noncomputable def chapter09CanonicalIdeleIdealData
+    (K : Type*) [Field K] [NumberField K] : Chapter09IdeleIdealData K where
+  idealClassMap :=
+    (ClassGroup.mk K).comp
+      (LastLib.Book04AdelesAndIdeles.Chapter08.chapter08FiniteIdeleIdealMap K)
+  principal_is_trivial := by
+    sorry
+  kernel_eq_principal_mul_units := by
+    sorry
+  surjective := by
+    sorry
+
+theorem chapter09FiniteUnitIdeles_mem_iff
+    {K : Type*} [Field K] [NumberField K]
+    {x : (Chapter09FiniteAdele K)ˣ} :
+    x ∈ chapter09FiniteUnitIdeles K ↔
+      ∀ v : HeightOneSpectrum (𝓞 K),
+        chapter09NormUnit
+          ((RestrictedProduct.unitsEquiv
+            (fun v : HeightOneSpectrum (𝓞 K) => v.adicCompletion K) x) v) = 1 := by
+  sorry
 
 abbrev Chapter09IdeleClassGroup
     (K : Type*) [Field K] [NumberField K] :=
@@ -241,6 +300,18 @@ theorem chapter09NormOneIdeles_mem_iff
     {K : Type*} [Field K] [NumberField K] {x : Chapter09Idele K} :
     x ∈ chapter09NormOneIdeles K ↔ chapter09IdeleModuleHom K x = 1 := by
   rfl
+
+theorem chapter09PrincipalIdele_module_eq_one
+    {K : Type*} [Field K] [NumberField K] (a : Kˣ) :
+    chapter09IdeleModule (chapter09PrincipalIdele K a) = 1 := by
+  sorry
+
+theorem chapter09PrincipalIdele_degree_eq_zero
+    {K : Type*} [Field K] [NumberField K] (a : Kˣ) :
+    -Real.log (((chapter09IdeleModule (chapter09PrincipalIdele K a) :
+      Chapter09PositiveReal) : ℝ≥0) : ℝ) = 0 := by
+  rw [chapter09PrincipalIdele_module_eq_one]
+  simp
 
 def chapter09NormOnePrincipalIdele
     (K : Type*) [Field K] [NumberField K] :
@@ -285,47 +356,36 @@ theorem chapter09ClassNormOne_mem_iff
 /-! ### The ideal-class map on the idele class group -/
 
 def chapter09IdeleClassIdealClassMap
-    (K : Type*) [Field K] [NumberField K]
-    (D : Chapter09IdeleIdealData K) :
+    (K : Type*) [Field K] [NumberField K] :
     Chapter09IdeleClassGroup K →* ClassGroup (𝓞 K) :=
   QuotientGroup.lift (chapter09PrincipalIdeleSubgroup K)
-    (D.idealClassMap.comp (chapter09FiniteIdelePartHom K)) (by
+    ((chapter09CanonicalIdeleIdealData K).idealClassMap.comp
+      (chapter09FiniteIdelePartHom K)) (by
       intro x hx
       rcases hx with ⟨a, rfl⟩
-      simpa [chapter09FinitePrincipalIdele] using D.principal_is_trivial a)
+      simpa [chapter09FinitePrincipalIdele] using
+        (chapter09CanonicalIdeleIdealData K).principal_is_trivial a)
 
 @[simp]
 theorem chapter09IdeleClassIdealClassMap_apply
     {K : Type*} [Field K] [NumberField K]
-    (D : Chapter09IdeleIdealData K) (x : Chapter09Idele K) :
-    chapter09IdeleClassIdealClassMap K D (QuotientGroup.mk x) =
-      D.idealClassMap (chapter09FiniteIdelePartHom K x) := by
+    (x : Chapter09Idele K) :
+    chapter09IdeleClassIdealClassMap K (QuotientGroup.mk x) =
+      (chapter09CanonicalIdeleIdealData K).idealClassMap
+        (chapter09FiniteIdelePartHom K x) := by
   rfl
 
 def chapter09NormOneClassIdealClassMap
-    (K : Type*) [Field K] [NumberField K]
-    (D : Chapter09IdeleIdealData K) :
+    (K : Type*) [Field K] [NumberField K] :
     chapter09ClassNormOne K →* ClassGroup (𝓞 K) :=
-  (chapter09IdeleClassIdealClassMap K D).comp (chapter09ClassNormOne K).subtype
+  (chapter09IdeleClassIdealClassMap K).comp (chapter09ClassNormOne K).subtype
 
 theorem chapter09NormOneClassIdealClassMap_apply
     {K : Type*} [Field K] [NumberField K]
-    (D : Chapter09IdeleIdealData K) (x : chapter09ClassNormOne K) :
-    chapter09NormOneClassIdealClassMap K D x =
-      chapter09IdeleClassIdealClassMap K D x.1 :=
+    (x : chapter09ClassNormOne K) :
+    chapter09NormOneClassIdealClassMap K x =
+      chapter09IdeleClassIdealClassMap K x.1 :=
   rfl
-
-theorem chapter09PrincipalIdele_module_eq_one
-    {K : Type*} [Field K] [NumberField K] (a : Kˣ) :
-    chapter09IdeleModule (chapter09PrincipalIdele K a) = 1 := by
-  sorry
-
-theorem chapter09PrincipalIdele_degree_eq_zero
-    {K : Type*} [Field K] [NumberField K] (a : Kˣ) :
-    -Real.log (((chapter09IdeleModule (chapter09PrincipalIdele K a) :
-      Chapter09PositiveReal) : ℝ≥0) : ℝ) = 0 := by
-  rw [chapter09PrincipalIdele_module_eq_one]
-  simp
 
 noncomputable def chapter09NormOneClassGroup_equiv_classNormOne
     {K : Type*} [Field K] [NumberField K] :

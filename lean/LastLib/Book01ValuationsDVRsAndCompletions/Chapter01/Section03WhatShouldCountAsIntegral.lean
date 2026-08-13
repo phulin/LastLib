@@ -1,4 +1,11 @@
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter01.Section01ALocalQuestion
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter01.Section02OrderOfVanishingOnALine
+import Mathlib.RingTheory.Localization.Basic
+import Mathlib.RingTheory.Valuation.Basic
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Order
+import Mathlib.Tactic.Ring
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter01
 

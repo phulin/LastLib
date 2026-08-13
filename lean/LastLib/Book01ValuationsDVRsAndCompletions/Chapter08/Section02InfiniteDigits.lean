@@ -1,10 +1,16 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Section01CompatibleFiniteApproximations
+import Mathlib.RingTheory.DiscreteValuationRing.Basic
+import Mathlib.RingTheory.PowerSeries.Basic
+import Mathlib.RingTheory.PowerSeries.Trunc
+import Mathlib.RingTheory.PowerSeries.WellKnown
+import Mathlib.Tactic.Order
+import Mathlib.Tactic.Ring
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter08
 
 open Polynomial IsLocalRing
 open Filter
-open scoped BigOperators LaurentSeries Topology PowerSeries.WithPiTopology
+open scoped BigOperators Topology PowerSeries.WithPiTopology
 
 noncomputable section
 
@@ -578,7 +584,8 @@ theorem chapter08_digit_expansion_set_bijection
 def Chapter08CoefficientwiseAdd {A : Type*} [Add A]
     (d e : ℕ → A) : ℕ → A := fun n => d n + e n
 
-/-- The raw coefficientwise multiplication suggested by a digit sequence. -/
+/-- The raw pointwise multiplication suggested by a digit sequence; this is not the
+formal Cauchy product used for multiplication of formal power series. -/
 def Chapter08CoefficientwiseMul {A : Type*} [Mul A]
     (d e : ℕ → A) : ℕ → A := fun n => d n * e n
 
@@ -777,7 +784,7 @@ theorem chapter08_equal_characteristic_formal_series_model
     {A k : Type*} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
     [Field k] (I : Ideal A) (π : A)
     (hI : I = Ideal.span {π})
-    (hcomplete : IsAdicComplete I A)
+    [hcomplete : IsAdicComplete I A]
     (sectionData : Chapter08CoefficientFieldSection A k I) :
     Nonempty (Chapter08FormalSeriesModel A k I π sectionData) := by
   classical

@@ -13,15 +13,6 @@ open Polynomial
 
 /-! ## 7.3. Degree, dimension, and examples -/
 
-/- LOCAL_DEPENDENCY_GUESS: the preceding coherent-sheaf chapters should
-replace the certificate field below by their canonical support and Krull
-dimension API.  The dimension is deliberately attached to the sheaf, not to
-the polarization, so the later invariance statement is meaningful. -/
-structure Chapter07SupportDimensionCertificate
-    {X : Scheme.{u}} (F : Chapter07CoherentSheaf X) where
-  dimension : ℕ
-  isSupportDimension : Prop
-
 def Chapter07NonzeroCoherentSheaf
     {X : Scheme.{u}} (F : Chapter07CoherentSheaf X) : Prop :=
   ¬ IsZero F.sheaf
@@ -61,6 +52,26 @@ structure Chapter07HyperplaneSection
   isHyperplaneSection : Prop
   isGeneral : Prop
 
+/-! The colon/kernel correction in the general hyperplane argument is carried
+by an explicit lower-dimensional error profile.  The Euler relation is the
+cohomological content of the restriction sequence; the support disjunction
+is the dimension estimate used for the error polynomial. -/
+structure Chapter07HyperplaneRestrictionData
+    {k : Type u} [Field k]
+    {C : Chapter07PolarizedScheme k}
+    (H : Chapter07HyperplaneSection C)
+    (S R : Chapter07HilbertSetup k C) (d : ℕ) where
+  error : Chapter07HilbertSetup k C
+  eulerRelation : ∀ n : ℕ,
+    chapter07EulerCharacteristic S n -
+        chapter07EulerCharacteristic S (n - 1) =
+      chapter07EulerCharacteristic R n -
+        chapter07EulerCharacteristic error n
+  errorLowerDimensional :
+    IsZero error.F.sheaf ∨
+      ∃ D : Chapter07SupportDimensionCertificate error.F,
+        ¬ IsZero error.F.sheaf ∧ D.dimension < d
+
 def chapter07FiniteDifference (P : Polynomial ℚ) : Polynomial ℚ :=
   P - P.comp (Polynomial.X - Polynomial.C 1)
 
@@ -78,9 +89,8 @@ theorem chapter07_hyperplane_finite_difference
     (d : ℕ)
     (hDim : ∃ D : Chapter07SupportDimensionCertificate S.F,
       D.dimension = d)
-    /- LOCAL_DEPENDENCY_GUESS: replace this proposition by the canonical
-    restriction exact sequence and its lower-dimensional support certificate. -/
-    (hRestriction : Prop) :
+    (hRestriction :
+      Nonempty (Chapter07HyperplaneRestrictionData H S R d)) :
     ∃ E : Polynomial ℚ,
       (E = 0 ∨ E.natDegree < d) ∧
         chapter07FiniteDifference (chapter07HilbertPolynomial S) =
@@ -119,11 +129,13 @@ structure Chapter07UnionHilbertData
   intersection : Chapter07HilbertSetup k C
   middle : Chapter07HilbertSetup k C
   exactSequence : Chapter07ShortExactSequence union.F middle.F intersection.F
+  euler_additive : ∀ n : ℕ,
+    chapter07EulerCharacteristic middle n =
+      chapter07EulerCharacteristic union n +
+        chapter07EulerCharacteristic intersection n
   middlePolynomial :
     chapter07HilbertPolynomial middle =
       chapter07HilbertPolynomial left + chapter07HilbertPolynomial right
-  representsUnion : Prop
-  representsIntersection : Prop
 
 theorem chapter07_union_hilbert_polynomial_inclusion_exclusion
     {k : Type u} [Field k]

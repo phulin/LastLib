@@ -59,7 +59,7 @@ noncomputable def chapter04CompletedPartialZetaForIdeal
     (K : Type*) [Field K] [NumberField K]
     (D : Chapter04UnitFundamentalDomain K)
     (a : Chapter04NonzeroFractionalIdeal K) (s : ℂ) : ℂ :=
-  (chapter04MellinConstant K : ℂ)⁻¹ *
+  (chapter04MellinConstant K D : ℂ)⁻¹ *
     (chapter04ThetaMellinTail K D (a : Chapter04FractionalIdeal K) s +
       chapter04ThetaMellinTail K D
         (chapter04DualFractionalIdeal K (a : Chapter04FractionalIdeal K)) (1 - s) +
@@ -177,11 +177,32 @@ noncomputable def chapter04SumCompletedPartialZeta
     (D : Chapter04UnitFundamentalDomain K) (s : ℂ) : ℂ :=
   ∑' C : ClassGroup (𝓞 K), chapter04CompletedPartialZetaContinuation K D C s
 
+noncomputable def chapter04ChosenUnitFundamentalDomain
+    (K : Type*) [Field K] [NumberField K] : Chapter04UnitFundamentalDomain K :=
+  Classical.choice (chapter04_exists_unit_fundamental_domain K)
+
+/- The global completion is the continuation obtained from one fixed
+   normalized unit fundamental domain.  The representative-independence
+   theorem below concerns the ideal representative inside each class; domain
+   independence would require an additional Haar-measure comparison theorem. -/
+noncomputable def chapter04CompletedDedekindZeta
+    (K : Type*) [Field K] [NumberField K] (s : ℂ) : ℂ :=
+  chapter04SumCompletedPartialZeta K
+    (chapter04ChosenUnitFundamentalDomain K) s
+
 theorem chapter04_sum_completed_partial_zeta_eq_completed_dedekind_zeta
     (K : Type*) [Field K] [NumberField K]
-    (D : Chapter04UnitFundamentalDomain K) (s : ℂ) :
-    chapter04SumCompletedPartialZeta K D s =
+    (s : ℂ) :
+    chapter04SumCompletedPartialZeta K
+        (chapter04ChosenUnitFundamentalDomain K) s =
       chapter04CompletedDedekindZeta K s := by
+  rfl
+
+theorem chapter04_completed_dedekind_zeta_agrees_on_euler_half_plane
+    (K : Type*) [Field K] [NumberField K]
+    {s : ℂ} (hs : 1 < s.re) :
+    chapter04CompletedDedekindZeta K s =
+      chapter04EulerCompletedDedekindZeta K s := by
   sorry
 
 theorem chapter04_completed_dedekind_zeta_meromorphic
@@ -222,11 +243,38 @@ theorem chapter04_rational_theta_poisson
       u⁻¹ ^ (1 / 2 : ℝ) * chapter04RationalTheta u⁻¹ := by
   sorry
 
-noncomputable def chapter04RationalThetaMellin (s : ℂ) : ℂ :=
+/- The raw Mellin integral is only defined by convergence in the Euler
+   half-plane.  It is kept separate from the meromorphic continuation used
+   by the functional equation below. -/
+noncomputable def chapter04RationalThetaMellinIntegral (s : ℂ) : ℂ :=
   (1 / 2 : ℂ) *
     ∫ u in Set.Ioi (0 : ℝ),
       ((chapter04RationalTheta u - 1 : ℝ) : ℂ) *
         ((u : ℂ) ^ (s / 2) / (u : ℂ)) ∂volume
+
+noncomputable def chapter04RationalThetaMellinTail (s : ℂ) : ℂ :=
+  (1 / 2 : ℂ) *
+    ∫ u in Set.Ioi (1 : ℝ),
+      ((chapter04RationalTheta u - 1 : ℝ) : ℂ) *
+        ((u : ℂ) ^ (s / 2) / (u : ℂ)) ∂volume
+
+/- Splitting the raw integral at one and applying theta inversion defines the
+   entire continuation. -/
+noncomputable def chapter04RationalThetaMellin (s : ℂ) : ℂ :=
+  chapter04RationalThetaMellinTail s +
+    chapter04RationalThetaMellinTail (1 - s) +
+      chapter04ZeroVectorCorrection s
+
+theorem chapter04_rational_theta_mellin_continuation_eq_integral
+    {s : ℂ} (hs : 1 < s.re) :
+    chapter04RationalThetaMellin s = chapter04RationalThetaMellinIntegral s := by
+  sorry
+
+theorem chapter04_rational_theta_mellin_integral_eq_completed_riemann_zeta
+    {s : ℂ} (hs : 1 < s.re) :
+    chapter04RationalThetaMellinIntegral s =
+      (Real.pi : ℂ) ^ (-s / 2) * Complex.Gamma (s / 2) * riemannZeta s := by
+  sorry
 
 theorem chapter04_rational_theta_mellin_eq_completed_riemann_zeta
     {s : ℂ} (hs : 1 < s.re) :

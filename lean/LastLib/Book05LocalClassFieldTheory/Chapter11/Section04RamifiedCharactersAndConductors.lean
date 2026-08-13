@@ -1,5 +1,4 @@
 import LastLib.Book05LocalClassFieldTheory.Chapter11.Dependencies
-import LastLib.Book05LocalClassFieldTheory.Chapter11.Section01ExactTopologicalStatement
 import LastLib.Book05LocalClassFieldTheory.Chapter11.Section03UnramifiedCharacters
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter11
@@ -46,6 +45,7 @@ theorem chapter11_conductor_minimal
 structure Chapter11GaloisRamificationFiltration
     (G : Type*) [Group G] where
   group : ℕ → Subgroup G
+  group_succ_le : ∀ n, group (n + 1) ≤ group n
 
 def chapter11GaloisConductor
     {G A : Type*} [Group G] [CommGroup A]
@@ -93,6 +93,15 @@ theorem chapter11_finite_image_has_finite_conductor
     chapter11ConductorExists D χ := by
   sorry
 
+theorem chapter11_unit_restriction_finite_image_has_finite_conductor
+    {K A : Type*} [Field K] [CommGroup A]
+    [TopologicalSpace Kˣ] [TopologicalSpace A] [T2Space A]
+    [IsTopologicalGroup A]
+    (D : Chapter11LocalFieldData K) (χ : Kˣ →ₜ* A)
+    (hχ : (Set.range (fun u : D.unitGroup => χ (u : Kˣ))).Finite) :
+    chapter11ConductorExists D χ := by
+  sorry
+
 theorem chapter11_infinite_unit_image_has_no_finite_conductor
     {K A : Type*} [Field K] [CommGroup A]
     [TopologicalSpace Kˣ] [TopologicalSpace A]
@@ -119,8 +128,18 @@ theorem chapter11_unit_image_membership_iff
 def chapter11ResidueDegreeOfCharacter
     {K A : Type*} [Field K] [CommGroup A]
     [TopologicalSpace Kˣ] [TopologicalSpace A]
-    (D : Chapter11LocalFieldData K) (χ : Kˣ →ₜ* A) : ℕ :=
+    (D : Chapter11LocalFieldData K) (χ : Kˣ →ₜ* A)
+    (_hχ : chapter11FiniteImage χ) : ℕ :=
   orderOf (QuotientGroup.mk' (chapter11UnitImage D χ 0) (χ D.uniformizer))
+
+theorem chapter11_residue_degree_of_character_eq_subgroup
+    {K A : Type*} [Field K] [CommGroup A]
+    [TopologicalSpace Kˣ] [TopologicalSpace A]
+    (D : Chapter11LocalFieldData K) (χ : Kˣ →ₜ* A)
+    (hχ : chapter11FiniteImage χ) :
+    chapter11ResidueDegreeOfCharacter D χ hχ =
+      chapter11ResidueDegreeOfSubgroup D (chapter11CharacterKernel χ) := by
+  sorry
 
 theorem chapter11_conductor_zero_iff_unramified
     {K A : Type*} [Field K] [CommGroup A]

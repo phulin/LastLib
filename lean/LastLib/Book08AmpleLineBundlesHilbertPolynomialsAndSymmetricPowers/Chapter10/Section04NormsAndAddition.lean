@@ -15,7 +15,8 @@ def chapter10EffectiveCartierDivisorAdd {X : Scheme}
     (D E : Chapter10EffectiveCartierDivisor X) :
     Chapter10EffectiveCartierDivisor X :=
   { ideal := D.ideal * E.ideal
-    locallyRegularPrincipal := by sorry }
+    locallyRegularPrincipal := by sorry
+    closed := by infer_instance }
 
 instance {X : Scheme} : Add (Chapter10EffectiveCartierDivisor X) where
   add := chapter10EffectiveCartierDivisorAdd
@@ -31,7 +32,7 @@ theorem chapter10_add_locally_is_cut_out_by_product {X : Scheme}
 
 theorem chapter10_add_local_generator_product {X : Scheme}
     (D E : Chapter10EffectiveCartierDivisor X) :
-    ∀ U : X.affineOpens, ∃ a b : Γ(X, U),
+    ∀ x : X, ∃ U : X.affineOpens, x ∈ U.1 ∧ ∃ a b : Γ(X, U),
       D.ideal.ideal U = Ideal.span {a} ∧ E.ideal.ideal U = Ideal.span {b} ∧
         (D + E).ideal.ideal U = Ideal.span {a * b} ∧ IsRegular (a * b) := by
   sorry
@@ -52,17 +53,12 @@ theorem chapter10_add_degree {C T : Scheme} {c : C ⟶ T} {d e : ℕ}
   intro t
   sorry
 
-/- LOCAL_DEPENDENCY_GUESS (10.4): `Chapter10PicardOperations` is the explicit
-  placeholder for the tensor and inverse operations on invertible sheaves.
-  The displayed isomorphism below is the book-facing comparison that the
-  eventual Picard implementation must prove. -/
-
-theorem chapter10_O_add_is_tensor {X : Scheme}
+def chapter10_O_add_is_tensor {X : Scheme}
     (D E : Chapter10EffectiveCartierDivisor X)
-    [Chapter10SectionVanishingIdealAPI X] [Chapter10IdealDualAPI X]
+    [Chapter10IdealDualAPI X]
     [Chapter10PicardOperations X] :
     Chapter10LineBundleIso (chapter10OofD (D + E))
-      (Chapter10PicardOperations.tensor (chapter10OofD D) (chapter10OofD E)) := by
+      (chapter10PicardTensor (chapter10OofD D) (chapter10OofD E)) := by
   sorry
 
 /-!
@@ -76,38 +72,36 @@ noncomputable def chapter10PushforwardModule {Z T : Scheme} (q : Z ⟶ T)
   (Scheme.Modules.pushforward q).obj M
 
 noncomputable def chapter10DeterminantLine {Z T : Scheme} (q : Z ⟶ T)
-    [Chapter10DeterminantLineAPI q] (M : Z.Modules) : Chapter10LineBundle T :=
-  Chapter10DeterminantLineAPI.determinant (q := q) (chapter10PushforwardModule q M)
+    [Chapter10DeterminantLineAPI q] (M : Chapter10LineBundle Z) : Chapter10LineBundle T :=
+  Chapter10DeterminantLineAPI.determinant (q := q) M
 
 noncomputable def chapter10Norm {Z T : Scheme} (q : Z ⟶ T)
     [Chapter10PicardOperations T] [Chapter10DeterminantLineAPI q]
     (M : Chapter10LineBundle Z) : Chapter10LineBundle T :=
-  Chapter10PicardOperations.tensor
-    (chapter10DeterminantLine q M.module)
+  chapter10PicardTensor
+    (chapter10DeterminantLine q M)
     (Chapter10PicardOperations.dual
-      (chapter10DeterminantLine q (chapter10StructureSheaf Z)))
+      (chapter10DeterminantLine q (chapter10StructureSheafLineBundle Z)))
 
 theorem chapter10_norm_determinant_formula {Z T : Scheme} (q : Z ⟶ T)
     [Chapter10PicardOperations T] [Chapter10DeterminantLineAPI q]
     (M : Chapter10LineBundle Z) :
     chapter10Norm q M =
-      Chapter10PicardOperations.tensor
-        (chapter10DeterminantLine q M.module)
+        chapter10PicardTensor
+        (chapter10DeterminantLine q M)
         (Chapter10PicardOperations.dual
-          (chapter10DeterminantLine q (chapter10StructureSheaf Z))) :=
+          (chapter10DeterminantLine q (chapter10StructureSheafLineBundle Z))) :=
   rfl
 
 noncomputable def chapter10PullbackLineBundle {X Y : Scheme} (f : X ⟶ Y)
-    [Chapter10LineBundlePullbackAPI f] (L : Chapter10LineBundle Y) :
+    (L : Chapter10LineBundle Y) :
     Chapter10LineBundle X :=
-  Chapter10LineBundlePullbackAPI.pullback f L
+  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09.chapter09PullbackLineBundle f L
 
-theorem chapter10_norm_commutes_baseChange {Z T T' : Scheme} (q : Z ⟶ T) (g : T' ⟶ T)
+def chapter10_norm_commutes_baseChange {Z T T' : Scheme} (q : Z ⟶ T) (g : T' ⟶ T)
     [Chapter10PicardOperations T] [Chapter10PicardOperations T']
     [Chapter10DeterminantLineAPI q]
     [Chapter10DeterminantLineAPI (pullback.snd q g)]
-    [Chapter10LineBundlePullbackAPI g]
-    [Chapter10LineBundlePullbackAPI (pullback.fst q g)]
     (M : Chapter10LineBundle Z) :
     Chapter10LineBundleIso
       (chapter10PullbackLineBundle g (chapter10Norm q M))
@@ -115,13 +109,13 @@ theorem chapter10_norm_commutes_baseChange {Z T T' : Scheme} (q : Z ⟶ T) (g : 
         (chapter10PullbackLineBundle (pullback.fst q g) M)) := by
   sorry
 
-theorem chapter10_norm_commutes_tensor_product {Z T : Scheme} (q : Z ⟶ T)
+def chapter10_norm_commutes_tensor_product {Z T : Scheme} (q : Z ⟶ T)
     [Chapter10PicardOperations Z] [Chapter10PicardOperations T]
     [Chapter10DeterminantLineAPI q]
     (M N : Chapter10LineBundle Z) :
     Chapter10LineBundleIso (chapter10Norm q
-      (Chapter10PicardOperations.tensor M N))
-      (Chapter10PicardOperations.tensor (chapter10Norm q M) (chapter10Norm q N)) := by
+      (chapter10PicardTensor M N))
+      (chapter10PicardTensor (chapter10Norm q M) (chapter10Norm q N)) := by
   sorry
 
 structure Chapter10UniversalDivisor {C P : Scheme} (p : C ⟶ P) (d : ℕ) where
@@ -130,10 +124,9 @@ structure Chapter10UniversalDivisor {C P : Scheme} (p : C ⟶ P) (d : ℕ) where
     Chapter10FiniteLocallyFreeProfile (divisor.ideal.subschemeι ≫ p) d
 
 noncomputable def chapter10NormAlongUniversalDivisor {C P : Scheme} (p : C ⟶ P) (d : ℕ)
-    [Chapter10SectionVanishingIdealAPI C] [Chapter10IdealDualAPI C]
+    [Chapter10IdealDualAPI C]
     [Chapter10PicardOperations P]
     (U : Chapter10UniversalDivisor p d)
-    [Chapter10LineBundlePullbackAPI U.divisor.ideal.subschemeι]
     [Chapter10DeterminantLineAPI (U.divisor.ideal.subschemeι ≫ p)] :
     Chapter10LineBundle P :=
   chapter10Norm (U.divisor.ideal.subschemeι ≫ p)
@@ -145,10 +138,9 @@ noncomputable def chapter10NormAlongUniversalDivisor {C P : Scheme} (p : C ⟶ P
   is introduced by the surrounding book chapters. -/
 
 theorem chapter10_norm_along_universal_divisor_is_norm {C P : Scheme} (p : C ⟶ P)
-    (d : ℕ) [Chapter10SectionVanishingIdealAPI C] [Chapter10IdealDualAPI C]
+    (d : ℕ) [Chapter10IdealDualAPI C]
     [Chapter10PicardOperations P]
     (U : Chapter10UniversalDivisor p d)
-    [Chapter10LineBundlePullbackAPI U.divisor.ideal.subschemeι]
     [Chapter10DeterminantLineAPI (U.divisor.ideal.subschemeι ≫ p)] :
     chapter10NormAlongUniversalDivisor p d U =
       chapter10Norm (U.divisor.ideal.subschemeι ≫ p)

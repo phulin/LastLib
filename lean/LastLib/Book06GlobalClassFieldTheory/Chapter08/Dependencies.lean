@@ -12,6 +12,8 @@ import Mathlib.NumberTheory.RamificationInertia.Unramified
 import Mathlib.RingTheory.ClassGroup.Basic
 import Mathlib.RingTheory.FractionalIdeal.Inverse
 import Mathlib.Tactic.NormNum
+import LastLib.Book06GlobalClassFieldTheory.Chapter07.Section02IdealTheoreticRayClasses
+import LastLib.Book06GlobalClassFieldTheory.Chapter07.Section05RayExactSequenceAndUnits
 
 namespace LastLib.Book06GlobalClassFieldTheory.Chapter08
 
@@ -22,27 +24,26 @@ open scoped nonZeroDivisors
 
 open scoped BigOperators
 open NumberField
+open LastLib.Book06GlobalClassFieldTheory.Chapter07
 
 /-! ## Shared interfaces for §§8.1--8.5
 
-The preceding global class-field chapters have not yet been assigned a Lean
-implementation in this repository.  The structures below are deliberately
-small interfaces for those missing declarations.  They retain the canonical
-Mathlib types where they exist (number fields, integral ideals, Galois groups,
-class groups, cyclotomic extensions, and Legendre symbols), while leaving only
-the genuinely global idelic constructions abstract.
+The preceding global class-field chapters provide the modulus, ray-class, and
+conductor interfaces used here.  The structures below retain those canonical
+objects and leave only the genuinely missing global identifications abstract.
 -/
 
 universe u v w x y z
 
-/-- A real infinite place, retaining the proof that the place is real. -/
-abbrev Chapter08RealPlace (K : Type u) [Field K] :=
-  {w : NumberField.InfinitePlace K // NumberField.InfinitePlace.IsReal w}
+/-! The real-place and modulus interfaces already have canonical definitions in
+Chapter 7.  Keep the chapter-facing names as abbreviations so that the
+statements below use the nonzero finite-part invariant and the established
+finite-place exponent API. -/
+abbrev Chapter08RealPlace (K : Type u) [Field K] [NumberField K] :=
+  RealPlace K
 
-/-- The finite and infinite parts of a modulus. -/
-structure Chapter08Modulus (K : Type u) [Field K] [NumberField K] where
-  finitePart : Ideal (𝓞 K)
-  infinitePart : Finset (Chapter08RealPlace K)
+abbrev Chapter08Modulus (K : Type u) [Field K] [NumberField K] :=
+  Modulus K
 
 /-- Divisibility of the finite part together with inclusion of real places. -/
 def chapter08ModulusDivides
@@ -50,6 +51,11 @@ def chapter08ModulusDivides
     (m₁ m₂ : Chapter08Modulus K) : Prop :=
   m₁.finitePart ∣ m₂.finitePart ∧
     ∀ w ∈ m₁.infinitePart, w ∈ m₂.infinitePart
+
+theorem chapter08_modulusDivides_iff_canonical
+    {K : Type u} [Field K] [NumberField K]
+    {m₁ m₂ : Chapter08Modulus K} :
+    chapter08ModulusDivides m₁ m₂ ↔ m₁ ≤ m₂ := Iff.rfl
 
 @[refl] theorem chapter08_modulusDivides_refl
     {K : Type u} [Field K] [NumberField K]
@@ -65,10 +71,20 @@ theorem chapter08_modulusDivides_trans
     chapter08ModulusDivides m₁ m₃ := by
   exact ⟨dvd_trans h₁₂.1 h₂₃.1, fun w hw => h₂₃.2 w (h₁₂.2 w hw)⟩
 
+theorem chapter08_modulusDivides_finiteExponent_le
+    {K : Type u} [Field K] [NumberField K]
+    {m₁ m₂ : Chapter08Modulus K}
+    (h : chapter08ModulusDivides m₁ m₂)
+    (v : NumberField.FinitePlace K) :
+    m₁.finiteExponent v ≤ m₂.finiteExponent v := by
+  exact Modulus.finiteExponent_le_of_divides
+    ((chapter08_modulusDivides_iff_canonical).mp h) v
+
 /-- The ordinary (finite) trivial modulus. -/
 def chapter08TrivialModulus
     (K : Type u) [Field K] [NumberField K] : Chapter08Modulus K where
   finitePart := ⊤
+  finitePart_ne_bot := by simp
   infinitePart := ∅
 
 /-- The ordinary ideal class group of a number field. -/
@@ -84,6 +100,7 @@ noncomputable def chapter08ClassNumber
 def chapter08NarrowModulus
     (K : Type u) [Field K] [NumberField K] : Chapter08Modulus K where
   finitePart := ⊤
+  finitePart_ne_bot := by simp
   infinitePart := Finset.univ
 
 /-- A finite prime is away from the finite part of a modulus. -/
@@ -124,11 +141,12 @@ structure Chapter08RayClassPresentation
   unitsSubgroup : Subgroup C
   rayClassPresentation :
     (I ⧸ principalSubgroup) ≃* (C ⧸ unitsSubgroup)
+  /-- The ideal-side presentation is the canonical ray-class group for the
+  selected modulus.  This prevents an arbitrary quotient presentation from
+  being mistaken for the ray class group. -/
+  canonicalIdealRayClassEquiv :
+    (I ⧸ principalSubgroup) ≃* idealRayClassGroup modulus
   idealClass : Ideal (𝓞 K) → I
-  idealClass_eq_one_iff :
-    ∀ {p : Ideal (𝓞 K)}, chapter08PrimeAwayFromModulus modulus p →
-      (QuotientGroup.mk' principalSubgroup (idealClass p) = 1 ↔
-        ∃ a : 𝓞 K, chapter08PrincipalRayCondition modulus p a)
 
 /-- The ray class group in the ideal presentation. -/
 def chapter08RayClassGroup
@@ -136,6 +154,13 @@ def chapter08RayClassGroup
     [CommGroup I] [CommGroup C]
     (R : Chapter08RayClassPresentation K I C) : Type v :=
   I ⧸ R.principalSubgroup
+
+theorem chapter08_rayClassGroup_canonical_equiv
+    {K : Type u} {I : Type v} {C : Type w} [Field K] [NumberField K]
+    [CommGroup I] [CommGroup C]
+    (R : Chapter08RayClassPresentation K I C) :
+    chapter08RayClassGroup R ≃* idealRayClassGroup R.modulus :=
+  R.canonicalIdealRayClassEquiv
 
 instance chapter08RayClassGroupCommGroup
     {K : Type u} {I : Type v} {C : Type w} [Field K] [NumberField K]
@@ -171,12 +196,14 @@ def chapter08RayClassOfIdeal
 
 /-- A finite abelian extension together with its conductor modulus. -/
 structure Chapter08AbelianExtensionData
-    (K : Type u) (L : Type v) [Field K] [NumberField K] [Field L] [Algebra K L]
+    (K : Type u) (L : Type v) [Field K] [NumberField K] [Field L] [NumberField L]
+    [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L] where
   conductor : Chapter08Modulus K
 
 def chapter08ConductorDivides
-    {K : Type u} {L : Type v} [Field K] [NumberField K] [Field L] [Algebra K L]
+    {K : Type u} {L : Type v} [Field K] [NumberField K] [Field L] [NumberField L]
+    [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     (E : Chapter08AbelianExtensionData K L)
     (m : Chapter08Modulus K) : Prop :=
@@ -188,7 +215,7 @@ Frobenius compatibility are kept as separate fields, so the ray factorization
 below does not assume the desired splitting criterion. -/
 structure Chapter08GlobalArtinData
     (K : Type u) (L : Type v) (I : Type w) (C : Type x) [Field K] [NumberField K]
-    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L]
     [IsAbelianGalois K L] [CommGroup I] [CommGroup C]
     (R : Chapter08RayClassPresentation K I C)
     (E : Chapter08AbelianExtensionData K L) where
@@ -224,7 +251,7 @@ structure Chapter08GlobalArtinData
 /-- The idele Artin map after killing the ray units. -/
 def chapter08IdeleArtinFactor
     {K : Type u} {L : Type v} {I : Type w} {C : Type x} [Field K] [NumberField K]
-    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L]
     [IsAbelianGalois K L] [CommGroup I] [CommGroup C]
     (R : Chapter08RayClassPresentation K I C)
     (E : Chapter08AbelianExtensionData K L)
@@ -238,7 +265,7 @@ def chapter08IdeleArtinFactor
 /-- The Artin map on the ideal group, obtained from the ray presentation. -/
 def chapter08ArtinMap
     {K : Type u} {L : Type v} {I : Type w} {C : Type x} [Field K] [NumberField K]
-    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L]
     [IsAbelianGalois K L] [CommGroup I] [CommGroup C]
     (R : Chapter08RayClassPresentation K I C)
     (E : Chapter08AbelianExtensionData K L)
@@ -252,7 +279,7 @@ def chapter08ArtinMap
 /-- The Artin map factors through the ray class quotient. -/
 def chapter08ArtinFactor
     {K : Type u} {L : Type v} {I : Type w} {C : Type x} [Field K] [NumberField K]
-    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L]
     [IsAbelianGalois K L] [CommGroup I] [CommGroup C]
     (R : Chapter08RayClassPresentation K I C)
     (E : Chapter08AbelianExtensionData K L)
@@ -264,7 +291,7 @@ def chapter08ArtinFactor
 
 theorem chapter08_artin_map_surjective
     {K : Type u} {L : Type v} {I : Type w} {C : Type x} [Field K] [NumberField K]
-    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L]
     [IsAbelianGalois K L] [CommGroup I] [CommGroup C]
     (R : Chapter08RayClassPresentation K I C)
     (E : Chapter08AbelianExtensionData K L)
@@ -275,7 +302,7 @@ theorem chapter08_artin_map_surjective
 
 theorem chapter08_artin_map_kernel_contains_principal
     {K : Type u} {L : Type v} {I : Type w} {C : Type x} [Field K] [NumberField K]
-    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L]
     [IsAbelianGalois K L] [CommGroup I] [CommGroup C]
     (R : Chapter08RayClassPresentation K I C)
     (E : Chapter08AbelianExtensionData K L)
@@ -286,7 +313,7 @@ theorem chapter08_artin_map_kernel_contains_principal
 
 theorem chapter08_artin_factor_comp_quotientMap
     {K : Type u} {L : Type v} {I : Type w} {C : Type x} [Field K] [NumberField K]
-    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L]
     [IsAbelianGalois K L] [CommGroup I] [CommGroup C]
     (R : Chapter08RayClassPresentation K I C)
     (E : Chapter08AbelianExtensionData K L)
@@ -298,7 +325,7 @@ theorem chapter08_artin_factor_comp_quotientMap
 
 theorem chapter08_artin_map_eq_arithmetic_frobenius
     {K : Type u} {L : Type v} {I : Type w} {C : Type x} [Field K] [NumberField K]
-    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L]
     [IsAbelianGalois K L] [CommGroup I] [CommGroup C]
     (R : Chapter08RayClassPresentation K I C)
     (E : Chapter08AbelianExtensionData K L)
@@ -314,7 +341,7 @@ theorem chapter08_artin_map_eq_arithmetic_frobenius
 def chapter08SplitsCompletely
     (K : Type u) (L : Type v) [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
-    [Algebra (𝓞 K) (𝓞 L)]
+    [FiniteDimensional K L] [Algebra (𝓞 K) (𝓞 L)]
     (p : Ideal (𝓞 K)) [p.IsPrime] : Prop :=
   ∀ P : p.primesOver (𝓞 L),
     P.1.ramificationIdx (𝓞 K) = 1 ∧ P.1.inertiaDeg (𝓞 K) = 1
@@ -355,8 +382,9 @@ strictly weaker than the splitting criterion and is the natural input for the
 subfield statement in §8.1. -/
 structure Chapter08RaySubfieldData
     (K : Type u) (L : Type v) (I : Type w) (C : Type x) [Field K] [NumberField K]
-    [Field L] [Algebra K L] [FiniteDimensional K L]
-    [IsAbelianGalois K L] [CommGroup I] [CommGroup C]
+    [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L]
+    [IsAbelianGalois K L]
+    [CommGroup I] [CommGroup C]
     (R : Chapter08RayClassPresentation K I C) where
   correspondingSubgroup : Subgroup (chapter08RayClassGroup R)
   quotientGaloisEquiv :
@@ -376,19 +404,13 @@ structure Chapter08RayClassFieldData
   [carrierFinite : FiniteDimensional K carrier]
   [carrierAbelianGalois : IsAbelianGalois K carrier]
   artinEquiv : chapter08RayClassGroup R ≃* Gal(carrier / K)
-  maximal :
-    ∀ (L : Type y) [Field L] [NumberField L] [Algebra K L]
-      [Algebra (𝓞 K) (𝓞 L)] [FiniteDimensional K L] [IsAbelianGalois K L],
-      (E : Chapter08AbelianExtensionData K L) →
-      chapter08ConductorDivides E R.modulus →
-      chapter08ExtensionContained K L carrier
 
 /-! ## Hilbert and narrow Hilbert field interfaces -/
 
 /- LOCAL_DEPENDENCY_GUESS: the existence theorem for the ordinary and narrow
 Hilbert class fields is not in the pinned Mathlib tree.  These structures
-package the canonical field, Galois, maximality, and class-group interfaces;
-the section files only project or compare those fields. -/
+package the canonical field, Galois, and class-group interfaces; maximality is
+kept as a separate theorem in the section file. -/
 structure Chapter08HilbertClassFieldData
     (K : Type u) [Field K] [NumberField K] where
   carrier : Type v
@@ -400,12 +422,6 @@ structure Chapter08HilbertClassFieldData
   classGroupEquiv : ClassGroup (𝓞 K) ≃* Gal(carrier / K)
   unramifiedAtFinite : chapter08UnramifiedAtFinitePlaces K carrier
   realPlacesStayReal : chapter08RealPlacesStayReal K carrier
-  maximal :
-    ∀ (L : Type w) [Field L] [NumberField L] [Algebra K L]
-      [Algebra (𝓞 K) (𝓞 L)] [FiniteDimensional K L] [IsAbelianGalois K L],
-      chapter08UnramifiedAtFinitePlaces K L →
-      chapter08RealPlacesStayReal K L →
-      chapter08ExtensionContained K L carrier
 
 abbrev chapter08HilbertClassField
     {K : Type u} [Field K] [NumberField K]
@@ -413,7 +429,7 @@ abbrev chapter08HilbertClassField
   H.carrier
 
 abbrev Chapter08RealSignGroup
-    (K : Type u) [Field K] :=
+    (K : Type u) [Field K] [NumberField K] :=
   Multiplicative (Chapter08RealPlace K → ZMod 2)
 
 def chapter08RealQuadraticUnitSignPattern
@@ -445,6 +461,7 @@ structure Chapter08NarrowClassGroupData
     ∀ u, unitSign u = Multiplicative.ofAdd (chapter08RealQuadraticSignMap K u)
   forgetSigns : carrier →* ClassGroup (𝓞 K)
   forgetSigns_surjective : Function.Surjective forgetSigns
+  canonicalEquiv : carrier ≃* NarrowClassGroup K
   kernelEquivSignQuotient :
     forgetSigns.ker ≃* (Chapter08RealSignGroup K ⧸ MonoidHom.range unitSign)
 
@@ -452,6 +469,12 @@ abbrev chapter08NarrowClassGroup
     {K : Type u} [Field K] [NumberField K]
     (N : Chapter08NarrowClassGroupData K) : Type v :=
   N.carrier
+
+theorem chapter08_narrowClassGroup_canonical_equiv
+    {K : Type u} [Field K] [NumberField K]
+    (N : Chapter08NarrowClassGroupData K) :
+    chapter08NarrowClassGroup N ≃* NarrowClassGroup K :=
+  N.canonicalEquiv
 
 instance chapter08NarrowClassGroupCommGroup
     {K : Type u} [Field K] [NumberField K]
@@ -473,11 +496,6 @@ structure Chapter08NarrowHilbertClassFieldData
   [carrierAbelianGalois : IsAbelianGalois K carrier]
   narrowClassGroupEquiv : chapter08NarrowClassGroup N ≃* Gal(carrier / K)
   unramifiedAtFinite : chapter08UnramifiedAtFinitePlaces K carrier
-  maximalFiniteUnramified :
-    ∀ (L : Type w) [Field L] [NumberField L] [Algebra K L]
-      [Algebra (𝓞 K) (𝓞 L)] [FiniteDimensional K L] [IsAbelianGalois K L],
-      chapter08UnramifiedAtFinitePlaces K L →
-      chapter08ExtensionContained K L carrier
 
 abbrev chapter08NarrowHilbertClassField
     {K : Type u} [Field K] [NumberField K]
@@ -518,6 +536,8 @@ def chapter08HasUnitNormMinusOne
 /-- A number-field presentation of `ℚ(√-5)`. -/
 structure Chapter08MinusFiveData
     (K : Type u) [Field K] [Algebra ℚ K] [NumberField K] where
+  quadratic : Algebra.IsQuadraticExtension ℚ K
+  noRealPlaces : ∀ _v : Chapter08RealPlace K, False
   omega : 𝓞 K
   omega_square :
     (algebraMap (𝓞 K) K omega) ^ 2 = (-5 : K)
@@ -551,6 +571,7 @@ structure Chapter08MinusFiveHilbertWitness
   [numberFieldH : NumberField H]
   [finiteKH : FiniteDimensional K H]
   [abelianGaloisKH : IsAbelianGalois K H]
+  [algebraIntegralKH : Algebra (𝓞 K) (𝓞 H)]
   relativeDegree : Module.finrank K H = 2
   i : H
   sqrtFive : H
@@ -565,6 +586,7 @@ structure Chapter08MinusFiveHilbertWitness
   absoluteDiscriminant : NumberField.discr H = (400 : ℤ)
   relativeDiscriminant : Ideal (𝓞 K)
   relativeDiscriminantNorm : Ideal.absNorm relativeDiscriminant = 1
+  unramifiedAtFinite : chapter08UnramifiedAtFinitePlaces K H
 
 abbrev chapter08MinusFiveHilbertField
     {K : Type u} [Field K] [Algebra ℚ K] [NumberField K]
@@ -574,13 +596,12 @@ abbrev chapter08MinusFiveHilbertField
 
 /-! ## Rational ray and cyclotomic interfaces -/
 
-def chapter08RationalRayModulus (m : ℕ) : Chapter08Modulus ℚ where
-  finitePart := Ideal.span {(m : 𝓞 ℚ)}
-  infinitePart := Finset.univ
+def chapter08RationalRayModulus (m : ℕ) (hm : m ≠ 0) : Chapter08Modulus ℚ :=
+  rationalNarrowModulus m hm
 
-def chapter08RationalRayModulusWithoutInfinity (m : ℕ) : Chapter08Modulus ℚ where
-  finitePart := Ideal.span {(m : 𝓞 ℚ)}
-  infinitePart := ∅
+def chapter08RationalRayModulusWithoutInfinity
+    (m : ℕ) (hm : m ≠ 0) : Chapter08Modulus ℚ :=
+  rationalFiniteModulus m hm
 
 instance chapter08_rational_prime_ideal_isPrime
     (p : ℕ) [Fact p.Prime] :
@@ -610,6 +631,9 @@ structure Chapter08CyclotomicData
     (m : ℕ) (F : Type u) [Field F] [Algebra ℚ F]
     [NumberField F] [IsCyclotomicExtension {m} ℚ F] where
   complexConjugation : Gal(F / ℚ)
+  complexConjugation_on_root :
+    complexConjugation (IsCyclotomicExtension.zeta m ℚ F) =
+      (IsCyclotomicExtension.zeta m ℚ F)⁻¹
 
 def chapter08CyclotomicRoot
     {m : ℕ} {F : Type u} [Field F] [Algebra ℚ F]
@@ -643,12 +667,19 @@ structure Chapter08CyclotomicConductorProfile
   [localPlaceFintype : Fintype localPlace]
   primeIndex : localPlace → ℕ
   primeIndex_prime : ∀ v : localPlace, (primeIndex v).Prime
+  primeIndex_covers_divisors :
+    ∀ {p : ℕ}, p.Prime → p ∣ m → ∃ v : localPlace, primeIndex v = p
   principalUnitDepth : localPlace → ℕ
   principalUnitDepth_spec :
     ∀ v : localPlace, principalUnitDepth v = padicValNat (primeIndex v) m
   localSystem :
     ∀ _v : localPlace,
       Chapter08LocalPrincipalUnitSystem.{u, v} (Gal(F / ℚ))
+  principalUnitDepth_killed :
+    ∀ v : localPlace,
+      let S := localSystem v
+      letI : CommGroup S.unitGroup := S.unitGroupCommGroup
+      S.principalUnit (principalUnitDepth v) ≤ S.localArtin.ker
   conductor : Chapter08Modulus ℚ
   writtenModulus : Chapter08Modulus ℚ
 
@@ -656,8 +687,10 @@ structure Chapter08CyclotomicConductorProfile
 a dependent package because Lean cannot quantify typeclass instances directly
 inside an ordinary existential. -/
 structure Chapter08CyclotomicContainmentData
-    (L : Type u) [Field L] [Algebra ℚ L] where
+    (L : Type u) [Field L] [Algebra ℚ L] [NumberField L]
+    [FiniteDimensional ℚ L] [IsAbelianGalois ℚ L] where
   conductorIndex : ℕ
+  conductorIndex_pos : 0 < conductorIndex
   carrier : Type v
   [carrierField : Field carrier]
   [carrierAlgebra : Algebra ℚ carrier]
@@ -671,22 +704,18 @@ structure Chapter08CyclotomicContainmentData
 abbrev Chapter08QuadraticSign := Multiplicative (ZMod 2)
 
 /- LOCAL_DEPENDENCY_GUESS: the global/local Hilbert-symbol map is not a
-pinned Mathlib declaration.  This finite-place product interface is exactly
-what is needed for the final product-formula calculation. -/
+pinned Mathlib declaration.  This records the local symbol maps and the
+quadratic parameter; the global product formula remains a theorem of §8.5. -/
 structure Chapter08QuadraticHilbertProductData
     (K : Type u) [Field K] where
   place : Type v
   [placeFintype : Fintype place]
   hilbertSymbol : place → Kˣ → Kˣ → Chapter08QuadraticSign
   quadraticParameter : Kˣ
-  hilbert_product_formula :
-    ∀ a b : Kˣ, ∏ v, hilbertSymbol v a b = 1
   localCharacter : place → Kˣ →* Chapter08QuadraticSign
   localCharacter_eq_hilbertSymbol :
     ∀ v x, localCharacter v x = hilbertSymbol v x quadraticParameter
   globalCharacter : Kˣ →* Chapter08QuadraticSign
-  global_eq_product :
-    ∀ x : Kˣ, globalCharacter x = ∏ v, localCharacter v x
 
 def chapter08LegendreSymbolAt
     (p : ℕ) [Fact p.Prime] (a : ℤ) : ℤ :=

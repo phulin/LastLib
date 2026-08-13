@@ -1,6 +1,6 @@
 import LastLib.Book05LocalClassFieldTheory.Chapter11.Dependencies
+import Mathlib.FieldTheory.Galois.Abelian
 import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.Topology.DiscreteSubset
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter11
 
@@ -9,12 +9,6 @@ noncomputable section
 open scoped Topology
 
 /-! ## 11.2. Finite-order characters and cyclic extensions -/
-
-def chapter11CharacterKernel
-    {K A : Type*} [Field K] [CommGroup A]
-    [TopologicalSpace Kˣ] [TopologicalSpace A]
-    (χ : Kˣ →ₜ* A) : Subgroup Kˣ :=
-  χ.toMonoidHom.ker
 
 theorem chapter11_character_kernel_open_finite_index
     {K A : Type*} [Field K] [CommGroup A] [Finite A]
@@ -40,11 +34,6 @@ noncomputable def chapter11_character_quotient_equiv_image
       MonoidHom.mrange χ.toMonoidHom :=
   chapter11CharacterQuotientImageEquiv χ
 
-def chapter11NormGroup
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] : Subgroup Kˣ :=
-  (chapter11NormHom K L).range
-
 theorem chapter11_norm_group_membership_iff
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] (x : Kˣ) :
@@ -52,26 +41,27 @@ theorem chapter11_norm_group_membership_iff
       ∃ y : Lˣ, chapter11NormHom K L y = x := by
   sorry
 
-def chapter11FiniteAbelianExtension
+abbrev chapter11FiniteAbelianExtension
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] : Prop :=
-  ∀ σ τ : Gal(L / K), σ * τ = τ * σ
+  IsAbelianGalois K L
 
 def chapter11CharacterCutsOutExtension
     {K L A : Type*} [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [CommGroup A]
+    [FiniteDimensional K L] [IsGalois K L] [CommGroup A]
     [TopologicalSpace Kˣ] [TopologicalSpace A]
     (χ : Kˣ →ₜ* A) : Prop :=
-  chapter11CharacterKernel χ = chapter11NormGroup K L
+  chapter11FiniteAbelianExtension K L ∧
+    chapter11CharacterKernel χ = chapter11NormGroup K L
 
 theorem chapter11_extension_norm_group_is_character_kernel
     {K L A : Type*} [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [CommGroup A]
+    [FiniteDimensional K L] [IsGalois K L] [CommGroup A]
     [TopologicalSpace Kˣ] [TopologicalSpace A]
     (χ : Kˣ →ₜ* A)
     (hχ : chapter11CharacterCutsOutExtension (K := K) (L := L) χ) :
     chapter11NormGroup K L = chapter11CharacterKernel χ := by
-  exact hχ.symm
+  exact hχ.2.symm
 
 theorem chapter11_finite_character_gives_cyclic_extension
     {K A : Type*} [Field K] [CommGroup A] [Finite A] [IsCyclic A]
@@ -95,8 +85,11 @@ theorem chapter11_finite_character_norm_index
 theorem chapter11_cyclic_extension_embedding_gives_character
     {K L A : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] [CommGroup A] [Finite A]
-    [TopologicalSpace Kˣ] [TopologicalSpace A] [DiscreteTopology A]
-    (habelian : chapter11FiniteAbelianExtension K L)
+    [TopologicalSpace Kˣ] [TopologicalSpace A]
+    [TopologicalSpace (Gal(L / K))] [DiscreteTopology (Gal(L / K))]
+    [DiscreteTopology A]
+    (hcyclic : IsCyclic (Gal(L / K)))
+    (B : Chapter11FiniteArtinData K L)
     (ι : Gal(L / K) →* A) (hι : Function.Injective ι) :
     ∃ χ : Kˣ →ₜ* A,
       chapter11CharacterKernel χ = chapter11NormGroup K L ∧
@@ -109,16 +102,16 @@ def chapter11FaithfulCharacterChoice
 
 theorem chapter11_extension_only_remembers_the_kernel
     {K L A : Type*} [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [CommGroup A]
+    [FiniteDimensional K L] [IsGalois K L] [CommGroup A]
     [TopologicalSpace Kˣ] [TopologicalSpace A]
     (χ : Kˣ →ₜ* A)
     (hχ : chapter11CharacterCutsOutExtension (K := K) (L := L) χ) :
     chapter11CharacterKernel χ = chapter11NormGroup K L := by
-  exact hχ
+  exact hχ.2
 
 theorem chapter11_extension_kernel_invariant_under_character_choice
     {K L A : Type*} [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [CommGroup A]
+    [FiniteDimensional K L] [IsGalois K L] [CommGroup A]
     [TopologicalSpace Kˣ] [TopologicalSpace A]
     (χ₁ χ₂ : Kˣ →ₜ* A)
     (hker : chapter11CharacterKernel χ₁ = chapter11CharacterKernel χ₂) :

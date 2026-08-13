@@ -1,5 +1,7 @@
 import Mathlib.Data.Fintype.Order
+import Mathlib.FieldTheory.Galois.Abelian
 import LastLib.Book05LocalClassFieldTheory.Chapter05.Core
+import LastLib.Book05LocalClassFieldTheory.Chapter05.Section03ClassFormation
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter05
 
@@ -15,8 +17,14 @@ abbrev chapter05MaximalAbelianField
   chapter05MaximalAbelianSubextension K L
 
 theorem chapter05_norm_limitation
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [IsGalois K L] :
+    (K L : Type) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L]
+    [Fintype (Gal(L / K))]
+    [IsAbelianGalois K (chapter05MaximalAbelianField K L)]
+    [Fintype (Gal(chapter05MaximalAbelianField K L / K))]
+    (D : Chapter05LocalClassFormationData K L)
+    (DM : Chapter05LocalClassFormationData K
+      (chapter05MaximalAbelianField K L)) :
     chapter05NormSubgroup K L =
       chapter05NormSubgroup K (chapter05MaximalAbelianField K L) := by
   sorry
@@ -27,25 +35,39 @@ def chapter05NormIndex
   Nat.card (chapter05NormQuotient K L)
 
 theorem chapter05_norm_index_eq_maximal_abelian_degree
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    (K L : Type) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
-    [Finite (chapter05NormQuotient K L)] :
+    [Fintype (Gal(L / K))]
+    [IsAbelianGalois K (chapter05MaximalAbelianField K L)]
+    [Fintype (Gal(chapter05MaximalAbelianField K L / K))]
+    [Finite (chapter05NormQuotient K L)]
+    (D : Chapter05LocalClassFormationData K L)
+    (DM : Chapter05LocalClassFormationData K
+      (chapter05MaximalAbelianField K L)) :
     chapter05NormIndex K L =
       Module.finrank K (chapter05MaximalAbelianField K L) := by
   sorry
 
 theorem chapter05_norm_index_eq_abelianization_card
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    (K L : Type) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
-    [Finite (chapter05NormQuotient K L)] :
+    [Fintype (Gal(L / K))]
+    [Finite (chapter05NormQuotient K L)]
+    (D : Chapter05LocalClassFormationData K L) :
     chapter05NormIndex K L =
       Nat.card (chapter05Abelianization (Gal(L / K))) := by
   sorry
 
 theorem chapter05_norm_limitation_index_formula
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    (K L : Type) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
-    [Finite (chapter05NormQuotient K L)] :
+    [Fintype (Gal(L / K))]
+    [IsAbelianGalois K (chapter05MaximalAbelianField K L)]
+    [Fintype (Gal(chapter05MaximalAbelianField K L / K))]
+    [Finite (chapter05NormQuotient K L)]
+    (D : Chapter05LocalClassFormationData K L)
+    (DM : Chapter05LocalClassFormationData K
+      (chapter05MaximalAbelianField K L)) :
     Nat.card (chapter05NormQuotient K L) =
       Module.finrank K (chapter05MaximalAbelianField K L) ∧
       Nat.card (chapter05NormQuotient K L) =
@@ -53,10 +75,11 @@ theorem chapter05_norm_limitation_index_formula
   sorry
 
 theorem chapter05_abelian_norm_index_eq_extension_degree
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    (K L : Type) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
     [Fintype (Gal(L / K))] [CommGroup (Gal(L / K))]
-    [Finite (chapter05NormQuotient K L)] :
+    [Finite (chapter05NormQuotient K L)]
+    (D : Chapter05LocalClassFormationData K L) :
     chapter05NormIndex K L = Module.finrank K L := by
   sorry
 

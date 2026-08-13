@@ -13,7 +13,9 @@ universe u
 theorem chapter08_hilbert_modulus_is_trivial
     {K : Type u} [Field K] [NumberField K] :
     chapter08TrivialModulus K =
-      { finitePart := (⊤ : Ideal (𝓞 K)), infinitePart := ∅ } := by
+      { finitePart := (⊤ : Ideal (𝓞 K)),
+        finitePart_ne_bot := by simp,
+        infinitePart := ∅ } := by
   rfl
 
 noncomputable def chapter08_hilbert_galois_group_equiv_class_group

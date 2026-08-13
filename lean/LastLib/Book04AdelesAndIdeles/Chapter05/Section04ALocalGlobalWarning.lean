@@ -6,17 +6,10 @@ noncomputable section
 
 open scoped Topology
 
-universe u v w
-
 /-! ## 5.4. A local--global warning -/
 
-variable {K : Type u} [Field K] [Algebra ℚ K] [FiniteDimensional ℚ K]
-variable {V : Type v} {Kv : V → Type w}
-variable [∀ v, Field (Kv v)] [∀ v, TopologicalSpace (Kv v)]
-variable {P : Chapter05PlaceSystem K V Kv}
-
-/-! The source uses the real conic as a warning before discussing subtler
-    Hasse-principle failures. -/
+/-! The real conic in the source is an elementary warning before the genuine
+Hasse-principle counterexample. -/
 
 def chapter05RealConicEquation (x y : ℝ) : Prop :=
   x ^ 2 + y ^ 2 = (-1 : ℝ)
@@ -25,57 +18,62 @@ theorem chapter05_real_conic_has_no_real_point :
     ¬ ∃ x y : ℝ, chapter05RealConicEquation x y := by
   sorry
 
-/- LOCAL_DEPENDENCY_GUESS: the later algebraic-geometry API should replace
-    this lightweight affine-equation interface when a concrete variety is
-    selected.
+/- SOURCE_ISSUE (§5.4, paragraph beginning “The diagonal embedding records
+compatibility”): the source says “while subtler varieties can have points over
+every completion and none over $K$” but names no variety and gives no
+local-point predicate.  The smallest mathematical repair is the named Selmer
+plane cubic below, with its projective nontriviality condition stated
+explicitly. -/
 
-SOURCE_ISSUE: “subtler varieties can have points over every completion and
-none over `K`” gives no variety, equation, or hypotheses on the local-point
-functor.  The smallest principled accommodation is the parameterized
-obstruction interface below; a concrete counterexample should replace it in
-the later fixup pass. -/
+def chapter05SelmerPlaneCubicEquation
+    {F : Type*} [Ring F] (x : Fin 3 → F) : Prop :=
+  3 * x 0 ^ 3 + 4 * x 1 ^ 3 + 5 * x 2 ^ 3 = 0
 
-/-! The source does not name a particular counterexample for the second
-    warning.  This structure records exactly what “points over every
-    completion but no global point” means, without inventing an equation. -/
+def chapter05SelmerPlaneCubic (x : Fin 3 → ℚ) : Prop :=
+  chapter05SelmerPlaneCubicEquation x
 
-structure Chapter05LocalGlobalObstruction
-    (P : Chapter05PlaceSystem K V Kv) where
-  arity : ℕ
-  equation : (Fin arity → K) → Prop
-  localEquation : ∀ v : V, (Fin arity → Kv v) → Prop
-  global_to_local :
-    ∀ (v : V) (x : Fin arity → K), equation x →
-      localEquation v (fun i => P.completionMap v (x i))
-  every_completion_has_point :
-    ∀ v : V, ∃ x : Fin arity → Kv v, localEquation v x
-  has_no_global_point : ¬ ∃ x : Fin arity → K, equation x
+def chapter05SelmerPlaneCubicLocalPoint
+    (v : Chapter05Place ℚ) : Prop :=
+  ∃ x : Fin 3 → Chapter05LocalField ℚ v,
+    chapter05SelmerPlaneCubicEquation x ∧ ∃ i, x i ≠ 0
 
-def chapter05HasLocalGlobalObstruction : Prop :=
-  Nonempty (Chapter05LocalGlobalObstruction P)
+def chapter05SelmerPlaneCubicGlobalPoint : Prop :=
+  ∃ x : Fin 3 → ℚ,
+    chapter05SelmerPlaneCubic x ∧ ∃ i, x i ≠ 0
 
-/- The source asserts that such obstructions exist but does not specify an
-   equation.  The predicate above is the proof-ready interface for that
-   assertion; a later chapter can instantiate it with a concrete variety. -/
+theorem chapter05_selmer_plane_cubic_has_point_over_every_completion :
+    ∀ v : Chapter05Place ℚ, chapter05SelmerPlaneCubicLocalPoint v := by
+  sorry
 
-/-! A precise tail predicate isolates the hypothesis that is absent from weak
-    approximation and present in strong approximation. -/
+theorem chapter05_selmer_plane_cubic_has_no_global_point :
+    ¬ chapter05SelmerPlaneCubicGlobalPoint := by
+  sorry
 
-def chapter05IntegralTailCondition (S : Set V) (a : K) : Prop :=
-  ∀ v : V, v ∉ S → v ∈ P.finite →
-    P.completionMap v a ∈ P.integral v
+def chapter05IntegralTailCondition
+    (K : Type*) [Field K] [NumberField K]
+    (S : Set (Chapter05FinitePlace K)) (a : K) : Prop :=
+  ∀ v : Chapter05FinitePlace K, v ∉ S →
+    chapter05FiniteDiagonal K a v ∈
+      (Chapter05FiniteLocalIntegerRing K v :
+        Set (Chapter05FiniteLocalField K v))
 
-theorem chapter05_global_elements_have_finite_nonintegral_tail (a : K) :
-    ({v | v ∈ P.finite ∧ P.completionMap v a ∉ P.integral v} : Set V).Finite := by
-  exact P.global_integrality a
+theorem chapter05_global_elements_have_finite_nonintegral_tail
+    (K : Type*) [Field K] [NumberField K] (a : K) :
+    ({v : Chapter05FinitePlace K |
+      chapter05FiniteDiagonal K a v ∉
+        (Chapter05FiniteLocalIntegerRing K v :
+          Set (Chapter05FiniteLocalField K v))}).Finite := by
+  sorry
 
 theorem chapter05_strong_tail_is_an_almost_everywhere_requirement
-    (S : Set V) (a : K) (hS :
-      ∀ v : V, v ∈ P.finite → v ∉ S →
-        P.completionMap v a ∈ P.integral v) :
-    chapter05IntegralTailCondition (P := P) S a := by
-  intro v hvS hvfinite
-  exact hS v hvfinite hvS
+    (K : Type*) [Field K] [NumberField K]
+    (S : Set (Chapter05FinitePlace K)) (a : K)
+    (hS : ∀ v : Chapter05FinitePlace K, v ∉ S →
+      chapter05FiniteDiagonal K a v ∈
+        (Chapter05FiniteLocalIntegerRing K v :
+          Set (Chapter05FiniteLocalField K v))) :
+    chapter05IntegralTailCondition K S a := by
+  sorry
 
 end
 

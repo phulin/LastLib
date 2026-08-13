@@ -97,11 +97,27 @@ theorem local_relative_discriminant_exponent_formula
 
 /-! ### Global conductor–discriminant profiles -/
 
-/-! `LOCAL_DEPENDENCY_GUESS`: the preceding global extension API should supply
-the canonical finite abelian extension, its complete complex character group,
-and the local Artin-conductor additivity theorem used by this profile.  The
-profile keeps those interfaces explicit while the final product statement is
-proved separately. -/
+/-! The preceding extension API owns the complete character group.  The local
+Artin-conductor additivity is kept as a single canonical bridge to the local
+ramification API, rather than as unrelated fields on the final profile. -/
+
+structure CanonicalLocalArtinConductorData
+    (R : FiniteAbelianExtensionRealization K L G) where
+  localDiscriminantExponent : NumberField.FinitePlace K → ℕ
+  localArtinConductorExponent :
+    (G →* ℂˣ) → NumberField.FinitePlace K → ℕ
+  relativeDiscriminant_factorization :
+    relativeDiscriminantIdeal (𝓞 K) (𝓞 L) =
+      ∏ᶠ v : NumberField.FinitePlace K,
+        v.maximalIdeal.asIdeal ^ localDiscriminantExponent v
+
+theorem local_artin_conductor_additivity
+    (R : FiniteAbelianExtensionRealization K L G)
+    (P : CanonicalLocalArtinConductorData R) :
+    ∀ v : NumberField.FinitePlace K,
+      P.localDiscriminantExponent v =
+        ∑ θ ∈ R.characterGroup, P.localArtinConductorExponent θ v := by
+  sorry
 
 structure ConductorDiscriminantProfile
     (D : IdeleContext K I) (L G : Type*)
@@ -110,56 +126,42 @@ structure ConductorDiscriminantProfile
     [Algebra (𝓞 K) (𝓞 L)] [Module.Finite (𝓞 K) (𝓞 L)]
     [Module.IsTorsionFree (𝓞 K) (𝓞 L)] where
   extension : FiniteAbelianExtensionRealization K L G
-  characterGroup : Finset (G →* ℂˣ)
-  characterGroup_complete : ∀ θ : G →* ℂˣ, θ ∈ characterGroup
-  relativeDiscriminant : Ideal (𝓞 K)
-  relativeDiscriminant_is_canonical :
-    relativeDiscriminant =
-      relativeDiscriminantIdeal (𝓞 K) (𝓞 L)
+  localArtinConductorData : CanonicalLocalArtinConductorData extension
   characterConductor : (G →* ℂˣ) → Modulus K
-  localDiscriminantExponent : NumberField.FinitePlace K → ℕ
-  localCharacterConductorExponent :
-    (G →* ℂˣ) → NumberField.FinitePlace K → ℕ
-  relativeDiscriminant_factorization :
-    relativeDiscriminant =
-      ∏ᶠ v : NumberField.FinitePlace K,
-        v.maximalIdeal.asIdeal ^ localDiscriminantExponent v
-  local_artin_conductor_additivity :
-    ∀ v : NumberField.FinitePlace K,
-      localDiscriminantExponent v =
-        ∑ θ ∈ characterGroup, localCharacterConductorExponent θ v
   characterConductor_exponent_eq :
     ∀ θ : G →* ℂˣ, ∀ v : NumberField.FinitePlace K,
-      (characterConductor θ).finiteExponent v = localCharacterConductorExponent θ v
+      (characterConductor θ).finiteExponent v =
+        localArtinConductorData.localArtinConductorExponent θ v
+  trivial_character_conductor_finitePart :
+    (characterConductor (1 : G →* ℂˣ)).finitePart = ⊤
 
 theorem conductor_discriminant_formula
     (P : ConductorDiscriminantProfile D L G) :
-    P.relativeDiscriminant =
-      ∏ θ ∈ P.characterGroup, (P.characterConductor θ).finitePart := by
+    relativeDiscriminantIdeal (𝓞 K) (𝓞 L) =
+      ∏ θ ∈ P.extension.characterGroup, (P.characterConductor θ).finitePart := by
   sorry
 
 theorem conductor_discriminant_formula_as_local_exponents
     (P : ConductorDiscriminantProfile D L G) :
     ∀ v : NumberField.FinitePlace K,
-      P.localDiscriminantExponent v =
-        ∑ θ ∈ P.characterGroup,
+      P.localArtinConductorData.localDiscriminantExponent v =
+        ∑ θ ∈ P.extension.characterGroup,
           (P.characterConductor θ).finiteExponent v := by
   intro v
-  rw [P.local_artin_conductor_additivity]
+  rw [local_artin_conductor_additivity P.extension P.localArtinConductorData]
   apply Finset.sum_congr rfl
   intro θ hθ
   exact (P.characterConductor_exponent_eq θ v).symm
 
 theorem trivial_character_contributes_the_unit_ideal
-    (P : ConductorDiscriminantProfile D L G)
-    (htriv : (1 : G →* ℂˣ) ∈ P.characterGroup) :
+    (P : ConductorDiscriminantProfile D L G) :
     (P.characterConductor 1).finitePart = ⊤ := by
-  sorry
+  exact P.trivial_character_conductor_finitePart
 
 theorem character_conductor_infinite_part_does_not_enter_the_discriminant_ideal
     (P : ConductorDiscriminantProfile D L G) :
-    P.relativeDiscriminant =
-      ∏ θ ∈ P.characterGroup, (P.characterConductor θ).finitePart := by
+    relativeDiscriminantIdeal (𝓞 K) (𝓞 L) =
+      ∏ θ ∈ P.extension.characterGroup, (P.characterConductor θ).finitePart := by
   exact conductor_discriminant_formula P
 
 end

@@ -2,6 +2,7 @@ import LastLib.Book03RamificationTheory.Chapter04.Section01PassingToAnIntermedia
 import LastLib.Book03RamificationTheory.Chapter04.Section02WhyQuotientsNeedANewScale
 import LastLib.Book03RamificationTheory.Chapter04.Section03RealLowerIndices
 import LastLib.Book03RamificationTheory.Chapter04.Section04HerbrandFunction
+import LastLib.Book03RamificationTheory.Chapter04.Section05UpperReindexingForASubgroup
 
 namespace LastLib.Book03RamificationTheory.Chapter04
 

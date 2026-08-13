@@ -1,4 +1,4 @@
-import LastLib.Book04AdelesAndIdeles.Chapter15.Section03CompactOpenLevel
+import LastLib.Book04AdelesAndIdeles.Chapter15.Section02DiagonalPointsAndDeterminants
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter15
 
@@ -21,12 +21,29 @@ def chapter15FiniteMatrixInclusion (n : ℕ) :
   map_one' := by sorry
   map_mul' g h := by sorry
 
+theorem chapter15_global_level_subgroup_eq_finite_matrix_inclusion_range
+    (n : ℕ) (Kf : Subgroup (Chapter15FiniteMatrixGroup n R K)) :
+    chapter15GlobalLevelSubgroup n Kf =
+      (chapter15FiniteMatrixInclusion (R := R) (K := K) n).range := by
+  sorry
+
 /-- The basic automorphic parameter space at finite level. -/
 def chapter15MatrixAutomorphicDoubleQuotient (n : ℕ)
     (Kf : Subgroup (Chapter15FiniteMatrixGroup n R K)) :=
   Chapter15DoubleQuotient
     (chapter15PrincipalMatrix (R := R) (K := K) n).range
     (chapter15GlobalLevelSubgroup n Kf)
+
+instance chapter15MatrixAutomorphicDoubleQuotient_topologicalSpace
+    (n : ℕ) (Kf : Subgroup (Chapter15FiniteMatrixGroup n R K)) :
+    TopologicalSpace
+      (chapter15MatrixAutomorphicDoubleQuotient (R := R) (K := K) n Kf) := by
+  change TopologicalSpace
+    (Quotient
+      (chapter15DoubleCosetSetoid
+        (chapter15PrincipalMatrix (R := R) (K := K) n).range
+        (chapter15GlobalLevelSubgroup n Kf)))
+  infer_instance
 
 theorem chapter15MatrixAutomorphicDoubleQuotient_mk_eq_iff
     (n : ℕ) (Kf : Subgroup (Chapter15FiniteMatrixGroup n R K))
@@ -63,8 +80,8 @@ def chapter15DoubleQuotientMapOfLevelRefinement
         (chapter15GlobalLevelSubgroup n K₂) x y).2
       refine ⟨γ, hγ, k, ?_, heq⟩
       apply (chapter15_global_level_subgroup_mem_iff n K₂ k).2
-      apply hK
-      exact (chapter15_global_level_subgroup_mem_iff n K₁ k).1 hk)
+      rcases (chapter15_global_level_subgroup_mem_iff n K₁ k).1 hk with ⟨h∞, hk₁⟩
+      exact ⟨h∞, hK hk₁⟩)
 
 theorem chapter15DoubleQuotientMapOfLevelRefinement_mk
     (n : ℕ) {K₁ K₂ : Subgroup (Chapter15FiniteMatrixGroup n R K)}
@@ -193,7 +210,8 @@ abbrev Chapter15VectorFractionalIdealQuotient
       (chapter15VectorFractionalIdealPower n J).subtype
 
 theorem chapter15_vector_fractional_ideal_quotient_finite
-    (n : ℕ) (I J : Chapter15FractionalIdeal R K) (hIJ : I ≤ J) :
+    (n : ℕ) {L : Type*} [Field L] [NumberField L]
+    (I J : Chapter15FractionalIdeal (𝓞 L) L) (hIJ : I ≤ J) :
     Finite (Chapter15VectorFractionalIdealQuotient n I J) := by
   sorry
 
@@ -290,21 +308,6 @@ theorem chapter15_rank_one_idele_lattice_is_fractional_ideal
     ∃ I : Chapter15FractionalIdeal R K, I ≠ 0 ∧
       (I : Submodule R K) = chapter15FiniteIdeleLattice g := by
   sorry
-
-/-- The finite idele standard integral level. -/
-def chapter15StandardFiniteIdeleLevel :
-    Subgroup (Chapter15FiniteIdeleGroup R K) where
-  carrier := {g | ∀ v : Chapter15FinitePlace R,
-    g v ∈ chapter15FiniteUnitIntegralSubgroup v}
-  one_mem' := by
-    intro v
-    exact (chapter15FiniteUnitIntegralSubgroup v).one_mem
-  mul_mem' := by
-    intro g h hg hh v
-    exact (chapter15FiniteUnitIntegralSubgroup v).mul_mem (hg v) (hh v)
-  inv_mem' := by
-    intro g hg v
-    exact (chapter15FiniteUnitIntegralSubgroup v).inv_mem (hg v)
 
 def chapter15FiniteIdeleClassDoubleQuotient :=
   Chapter15DoubleQuotient

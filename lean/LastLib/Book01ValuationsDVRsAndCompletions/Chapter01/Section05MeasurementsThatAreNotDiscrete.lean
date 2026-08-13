@@ -1,4 +1,9 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter01.Section04LocalizationsOfDedekindDomains
+import Mathlib.RingTheory.LaurentSeries
+import Mathlib.RingTheory.Valuation.Basic
+import Mathlib.RingTheory.DiscreteValuationRing.TFAE
+import Mathlib.RingTheory.Bezout
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.NormNum
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter01
 
@@ -95,7 +100,7 @@ theorem puiseuxValueSet_eq_univ (M : PuiseuxValuationModel (k := k) (K := K)) :
 /-- Rank one is expressed here by the Archimedean ordering property. -/
 def IsChapterRankOneOrderedGroup (Γ : Type*) [AddCommGroup Γ] [LinearOrder Γ]
     [IsOrderedAddMonoid Γ] : Prop :=
-  ∀ a b : Γ, 0 < a → 0 < b → ∃ n : ℕ, a ≤ n • b
+  ∀ a b : Γ, 0 < a → 0 < b → ∃ n : ℕ, 0 < n ∧ a ≤ n • b
 
 /-- Discreteness means that the positive cone has a least element. -/
 def IsChapterDiscreteOrderedGroup (Γ : Type*) [AddCommGroup Γ] [LinearOrder Γ]
@@ -107,9 +112,11 @@ theorem rational_value_group_is_rank_one :
     IsChapterRankOneOrderedGroup ℚ := by
   intro a b ha hb
   obtain ⟨n, hn⟩ := exists_nat_ge (a / b)
-  refine ⟨n, ?_⟩
-  norm_num [nsmul_eq_mul]
-  exact (div_le_iff₀ hb).mp hn
+  refine ⟨n, ?_, ?_⟩
+  · have hnq : (0 : ℚ) < n := lt_of_lt_of_le (div_pos ha hb) hn
+    exact_mod_cast hnq
+  · norm_num [nsmul_eq_mul]
+    exact (div_le_iff₀ hb).mp hn
 
 /-- The rational value group has no least positive element. -/
 theorem rational_value_group_has_no_least_positive :

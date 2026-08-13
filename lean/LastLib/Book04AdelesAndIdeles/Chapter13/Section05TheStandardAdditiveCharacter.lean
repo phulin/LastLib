@@ -71,6 +71,11 @@ theorem chapter13RationalStandardCharacter_finite_principal_support
     Set.Finite {p | (D.padic p).principalPart (D.finiteCoordinate p x) ≠ 0} := by
   sorry
 
+theorem chapter13RationalStandardCharacter_finite_character_support
+    (D : Chapter13RationalStandardCharacterData) (x : Chapter13Adele ℚ) :
+    Set.Finite {p | (D.padic p).principalCharacter (D.finiteCoordinate p x) ≠ 1} := by
+  sorry
+
 theorem chapter13RationalStandardAdditiveCharacter_trivial_on_diagonal
     (D : Chapter13RationalStandardCharacterData) (a : ℚ) :
     chapter13RationalStandardAdditiveCharacter D
@@ -97,15 +102,15 @@ def chapter13RationalCharacterWithOneFiniteSignChanged
     (p : {p : ℕ // Nat.Prime p}) : AddChar (Chapter13Adele ℚ) Circle :=
   { toFun := fun x =>
       chapter13RationalStandardAdditiveCharacter D x *
-        (D.padic p).principalCharacter (D.finiteCoordinate p x)⁻¹ *
-        (D.padic p).principalCharacter (D.finiteCoordinate p x)⁻¹
+        ((D.padic p).principalCharacter (D.finiteCoordinate p x))⁻¹ *
+        ((D.padic p).principalCharacter (D.finiteCoordinate p x))⁻¹
     map_zero_eq_one' := by sorry
     map_add_eq_mul' := by sorry }
 
 def chapter13RationalCharacterWithRealSignChanged
     (D : Chapter13RationalStandardCharacterData) : AddChar (Chapter13Adele ℚ) Circle :=
   { toFun := fun x =>
-      D.psiInfinity (D.infinityCoordinate x)⁻¹ *
+      (D.psiInfinity (D.infinityCoordinate x))⁻¹ *
         ∏ᶠ p, (D.padic p).principalCharacter (D.finiteCoordinate p x)
     map_zero_eq_one' := by sorry
     map_add_eq_mul' := by sorry }
@@ -176,6 +181,13 @@ theorem chapter13_local_annihilator_is_inverse_different
     chapter13TraceDual tr O R = chapter13LocalInverseDifferent tr O R :=
   rfl
 
+theorem chapter13_mem_local_inverse_different_iff
+    {L F : Type*} [NonUnitalNonAssocRing L] [AddCommGroup F]
+    (tr : L →+ F) (O : Set L) (R : Set F) (y : L) :
+    y ∈ chapter13LocalInverseDifferent tr O R ↔
+      ∀ x, x ∈ O → tr (x * y) ∈ R :=
+  Iff.rfl
+
 theorem chapter13_local_inverse_different_is_additive_subgroup
     {L F : Type*} [NonUnitalNonAssocRing L] [AddCommGroup F]
     (tr : L →+ F) (O : AddSubgroup L) (R : AddSubgroup F) :
@@ -193,6 +205,13 @@ theorem chapter13_global_inverse_different_is_trace_dual
       {y | ∀ x : 𝓞 K, ∃ z : ℤ,
         Algebra.trace ℚ K (y * (x : K)) = (z : ℚ)} :=
   rfl
+
+theorem chapter13_mem_global_inverse_different_iff
+    (K : Type*) [Field K] [NumberField K] (y : K) :
+    y ∈ chapter13GlobalInverseDifferent K ↔
+      ∀ x : 𝓞 K, ∃ z : ℤ,
+        Algebra.trace ℚ K (y * (x : K)) = (z : ℚ) :=
+  Iff.rfl
 
 def chapter13FiniteSelfDualMeasureScale (q : ℝ) (d : ℕ) : ℝ :=
   Real.rpow q (-(d : ℝ) / 2)

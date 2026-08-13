@@ -1,5 +1,6 @@
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10.Section01FamiliesOfLength
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10.Section02RelativeEffectiveCartierDivisors
+import Mathlib.CategoryTheory.NatIso
 
 namespace LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10
 
@@ -69,6 +70,38 @@ theorem chapter10_smooth_curve_length_and_divisor_functors_agree
     Nonempty (Chapter10FamilyOfLength c t d ≃
       Chapter10RelativeDivisorOnBaseChange c t d) :=
   ⟨chapter10_length_d_family_divisor_equiv c t d⟩
+
+noncomputable def chapter10RelativeDivisorBaseChange
+    {C S T T' : Scheme} (c : C ⟶ S) [Chapter10SmoothRelativeCurve c]
+    (t : T ⟶ S) (u : T' ⟶ T) (d : ℕ)
+    (D : Chapter10RelativeDivisorOnBaseChange c t d) :
+    Chapter10RelativeDivisorOnBaseChange c (u ≫ t) d :=
+  chapter10FamilyToRelativeDivisor c (u ≫ t) d
+    (chapter10FamilyBaseChange c t u d
+      (chapter10RelativeDivisorToFamily c t d D))
+
+def chapter10RelativeDivisorFunctor {C S : Scheme} (c : C ⟶ S)
+    [Chapter10SmoothRelativeCurve c] (d : ℕ) :
+    (Over S)ᵒᵖ ⥤ Type u where
+  obj T := Chapter10RelativeDivisorOnBaseChange c T.unop.hom d
+  map := fun {T U} (f : T ⟶ U) =>
+    TypeCat.ofHom (fun D : Chapter10RelativeDivisorOnBaseChange c T.unop.hom d => by
+      simpa only [Over.w] using
+        (chapter10RelativeDivisorBaseChange c T.unop.hom f.unop.left d D))
+  map_id := by
+    intro T
+    sorry
+  map_comp := by
+    intro T U V f g
+    sorry
+
+noncomputable def chapter10_length_d_family_divisor_functors_natIso
+    {C S : Scheme} (c : C ⟶ S) [Chapter10SmoothRelativeCurve c] (d : ℕ) :
+    chapter10FamilyFunctor c d ≅ chapter10RelativeDivisorFunctor c d := by
+  refine NatIso.ofComponents (fun T => ?_) ?_
+  · exact (chapter10_length_d_family_divisor_equiv c T.unop.hom d).toIso
+  · intro T U f
+    sorry
 
 /-!
 The preceding equivalence is where smoothness is used.  The node model from

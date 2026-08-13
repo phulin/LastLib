@@ -20,7 +20,7 @@ def chapter11ArtinClassFunction
 
 /-- The normalized character pairing, with the inverse convention used by the source. -/
 def chapter11CharacterPairing
-    {k G V : Type*} [Field k] [Fintype G] [Group G]
+    {k G V : Type*} [Field k] [CharZero k] [Fintype G] [Group G]
     [AddCommGroup V] [Module k V] [FiniteDimensional k V]
     (A : G → k) (ρ : Representation k G V) : k :=
   (Fintype.card G : k)⁻¹ *
@@ -28,7 +28,7 @@ def chapter11CharacterPairing
 
 /-- The averaging operator for a subgroup, written in the same coordinates as the source. -/
 def chapter11AveragingProjector
-    {k G V : Type*} [Field k] [Fintype G] [Group G]
+    {k G V : Type*} [Field k] [CharZero k] [Fintype G] [Group G]
     [AddCommGroup V] [Module k V]
     (ρ : Representation k G V) (H : Subgroup G) : V →ₗ[k] V := by
   classical

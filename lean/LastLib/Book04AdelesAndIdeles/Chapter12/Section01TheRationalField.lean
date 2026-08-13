@@ -5,6 +5,7 @@ namespace LastLib.Book04AdelesAndIdeles.Chapter12
 noncomputable section
 
 open Filter Set NumberField
+open LastLib.Book04AdelesAndIdeles.Chapter09
 open scoped BigOperators NNReal RestrictedProduct
 
 /-! # Book 4, Chapter 12, §12.1: The rational field -/
@@ -102,6 +103,7 @@ def chapter12RationalFiniteValuationExponent
     (x : chapter12RationalIdeles) (p : Chapter12RationalPrime) : ℤ :=
   let v := (Rat.HeightOneSpectrum.primesEquiv (R := ℤ)).symm p
   let z := Valued.v (x.1.2 v)
+  -- `Valued.v` uses `WithZero.exp (-ord)`; the book's ideal exponent is `ord`.
   if hz : z = 0 then 0 else -(WithZero.unzero hz).toAdd
 
 /- A finite valuation profile is the precise finite-product datum in the text. -/
@@ -136,7 +138,9 @@ def chapter12RationalFinitePartAfterDivision
 def chapter12RationalFinitePartIsUnit
     (x : chapter12RationalIdeles) (q : ℚ) : Prop :=
   ∀ v : IsDedekindDomain.HeightOneSpectrum ℤ,
-    IsUnit (chapter12RationalFinitePartAfterDivision x q v)
+    ∃ u : (v.adicCompletionIntegers ℚ)ˣ,
+      algebraMap (v.adicCompletionIntegers ℚ) (v.adicCompletion ℚ) u =
+        chapter12RationalFinitePartAfterDivision x q v
 
 /-- The real coordinate of a rational idele in a chosen one-place portrait. -/
 def chapter12RationalRealCoordinate
@@ -184,13 +188,6 @@ theorem chapter12_rational_normalized_real_coordinate_pos
     0 < chapter12RationalNormalizedRealCoordinate P x q := by
   sorry
 
-theorem chapter12_rational_finite_coordinates_become_units
-    (x : chapter12RationalIdeles) (q : ℚ)
-    (hfinite : chapter12RationalFinitePartIsUnit x q) :
-    ∀ v : IsDedekindDomain.HeightOneSpectrum ℤ,
-      IsUnit (chapter12RationalFinitePartAfterDivision x q v) := by
-  exact hfinite
-
 /-! ## The rational idele class portraits -/
 
 /-- A finite-place unit coordinate in the rational finite ideles. -/
@@ -208,38 +205,33 @@ theorem chapter12_rational_finite_unit_coordinates_iff
           algebraMap (v.adicCompletionIntegers ℚ) (v.adicCompletion ℚ) u = x.1 v :=
   Iff.rfl
 
+/- The class portrait uses Mathlib's canonical `𝓞 ℚ` model.  The explicit
+   finite-place portraits above retain the more convenient `ℤ` model; the
+   equivalence between those two models is not definitionally transparent. -/
 abbrev chapter12RationalClassTarget :=
-  ℝ≥0ˣ × chapter12RationalProfiniteUnitGroup
+  ℝ≥0ˣ × chapter12CanonicalFiniteUnitIdeles ℚ
 
 structure Chapter12RationalClassPortrait
-    (M : Chapter12IdeleModuleData ℤ ℚ) where
-  equivalence : chapter12IdeleClassGroup ℤ ℚ ≃* chapter12RationalClassTarget
+    (M : Chapter12IdeleModuleData (𝓞 ℚ) ℚ) where
+  equivalence : chapter12IdeleClassGroup (𝓞 ℚ) ℚ ≃* chapter12RationalClassTarget
   first_coordinate_is_module :
-    ∀ x : chapter12RationalIdeles,
-      (equivalence (chapter12IdeleClassMk ℤ ℚ x)).1 =
+    ∀ x : chapter12Ideles (𝓞 ℚ) ℚ,
+      (equivalence (chapter12IdeleClassMk (𝓞 ℚ) ℚ x)).1 =
         chapter12IdeleModuleUnit M x
 
-theorem chapter12_rational_finite_coordinate_is_profinite_unit
-    (M : Chapter12IdeleModuleData ℤ ℚ)
-    (P : Chapter12RationalClassPortrait M)
-    (x : chapter12RationalIdeles) :
-    ∃ u : chapter12RationalProfiniteUnitGroup,
-      (P.equivalence (chapter12IdeleClassMk ℤ ℚ x)).2 = u := by
-  exact ⟨_, rfl⟩
-
-theorem chapter12_rational_idele_class_group_portrait
-    (M : Chapter12IdeleModuleData ℤ ℚ) :
-    Nonempty (Chapter12RationalClassPortrait M) := by
+theorem chapter12_rational_idele_class_group_portrait :
+    Nonempty (Chapter12RationalClassPortrait
+      (chapter12CanonicalIdeleModuleData ℚ)) := by
   sorry
 
 abbrev chapter12RationalNormOneClassCarrier
-    (M : Chapter12IdeleModuleData ℤ ℚ) :=
-  {c : chapter12IdeleClassGroup ℤ ℚ // c ∈ chapter12NormOneIdeleClasses M}
+    (M : Chapter12IdeleModuleData (𝓞 ℚ) ℚ) :=
+  {c : chapter12IdeleClassGroup (𝓞 ℚ) ℚ // c ∈ chapter12NormOneIdeleClasses M}
 
-theorem chapter12_rational_norm_one_class_group_portrait
-    (M : Chapter12IdeleModuleData ℤ ℚ) :
-    Nonempty (chapter12RationalNormOneClassCarrier M ≃
-      chapter12RationalProfiniteUnitGroup) := by
+theorem chapter12_rational_norm_one_class_group_portrait :
+    Nonempty (chapter12RationalNormOneClassCarrier
+      (chapter12CanonicalIdeleModuleData ℚ) ≃
+      chapter12CanonicalFiniteUnitIdeles ℚ) := by
   sorry
 
 def chapter12RationalGlobalUnitValues : Set ℤ :=

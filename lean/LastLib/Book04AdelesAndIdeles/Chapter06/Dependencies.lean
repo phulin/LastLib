@@ -1,11 +1,14 @@
 import Mathlib.Data.Complex.Basic
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Analysis.Complex.Norm
 import Mathlib.MeasureTheory.Constructions.BorelSpace.Complex
 import Mathlib.Data.Real.Basic
 import Mathlib.Algebra.Group.Subgroup.Ker
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.LinearAlgebra.FiniteDimensional.Basic
+import Mathlib.LinearAlgebra.StdBasis
 import Mathlib.MeasureTheory.Measure.Haar.Basic
+import Mathlib.MeasureTheory.Measure.Haar.Unique
 import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.Topology.Algebra.Module.FiniteDimension
 import Mathlib.Topology.Instances.Real.Lemmas
@@ -15,16 +18,17 @@ namespace LastLib.Book04AdelesAndIdeles.Chapter06
 noncomputable section
 
 open Set MeasureTheory Topology
-open scoped ENNReal
+open scoped BigOperators ENNReal
 
 universe uK uO uInf uFin uHat uG uPlace uV uVA
 
 /-!
-The preceding Book 4 chapters are not present in this checkout.  This file is
-therefore a deliberately small local dependency guess: it records the
-canonical number-field maps and the compact integral finite part that the
-chapter consumes.  It does not package any of the compactness results proved
-below as an assumption.
+The preceding Book 4 chapters provide canonical carriers in their own
+namespaces.  This file keeps a deliberately small explicit adapter so the
+chapter can state its quotient arguments without duplicating those carriers;
+the adapter records the number-field maps and compact integral finite part
+needed here, but does not package any compactness result proved below as an
+assumption.
 -/
 
 /-- The number-field data used by the compact additive quotient.
@@ -55,6 +59,10 @@ structure Chapter06AdeleData
     ∀ a : K,
       (∃ u : Ohat, finiteIntegralEmbedding u = globalToFinite a) ↔
         ∃ o : O, integerToGlobal o = a
+  /-- The principal-parts decomposition supplied by strong approximation. -/
+  finite_principal_parts :
+    ∀ x : Af, ∃ a : K, ∃ u : Ohat,
+      x = globalToFinite a + finiteIntegralEmbedding u
   finiteIntegral_embedding :
     IsEmbedding finiteIntegralEmbedding
   finiteIntegral_range_compact :
@@ -167,13 +175,42 @@ def chapter06AdeleQuotientMap
       Chapter06AdeleQuotient P :=
   QuotientAddGroup.mk' (chapter06GlobalSubgroup P)
 
+@[simp] theorem chapter06AdeleQuotientMap_apply
+    (P : Chapter06AdeleData K O KInf Af Ohat)
+    (x : Chapter06FullAdele KInf Af) :
+    chapter06AdeleQuotientMap P x =
+      QuotientAddGroup.mk' (chapter06GlobalSubgroup P) x := rfl
+
+@[simp] theorem chapter06AdeleQuotientMap_eq_iff
+    (P : Chapter06AdeleData K O KInf Af Ohat)
+    (x y : Chapter06FullAdele KInf Af) :
+    chapter06AdeleQuotientMap P x = chapter06AdeleQuotientMap P y ↔
+      x - y ∈ chapter06GlobalSubgroup P := by
+  change QuotientAddGroup.mk' (chapter06GlobalSubgroup P) x =
+      QuotientAddGroup.mk' (chapter06GlobalSubgroup P) y ↔ _
+  exact QuotientAddGroup.eq_iff_sub_mem
+
+theorem chapter06AdeleQuotientMap_ker
+    (P : Chapter06AdeleData K O KInf Af Ohat) :
+    AddMonoidHom.ker (chapter06AdeleQuotientMap P) =
+      chapter06GlobalSubgroup P := by
+  change AddMonoidHom.ker (QuotientAddGroup.mk'
+      (chapter06GlobalSubgroup P)) = chapter06GlobalSubgroup P
+  exact QuotientAddGroup.ker_mk' _
+
+theorem chapter06AdeleQuotientMap_surjective
+    (P : Chapter06AdeleData K O KInf Af Ohat) :
+    Function.Surjective (chapter06AdeleQuotientMap P) := by
+  exact QuotientAddGroup.mk'_surjective (chapter06GlobalSubgroup P)
+
 /-- Forget the integral condition in the finite coordinate. -/
 def chapter06IntegralGluingToAdele
     (P : Chapter06AdeleData K O KInf Af Ohat) :
     (KInf × Ohat) →+ Chapter06FullAdele KInf Af where
   toFun x := (x.1, P.finiteIntegralEmbedding x.2)
   map_zero' := by simp
-  map_add' x y := by sorry
+  map_add' x y := by
+    apply Prod.ext <;> simp
 
 @[simp] theorem chapter06IntegralGluingToAdele_apply
     (P : Chapter06AdeleData K O KInf Af Ohat) (x : KInf × Ohat) :
@@ -185,6 +222,12 @@ def chapter06IntegralGluingMap
     (P : Chapter06AdeleData K O KInf Af Ohat) :
     (KInf × Ohat) →+ Chapter06AdeleQuotient P :=
   (chapter06AdeleQuotientMap P).comp (chapter06IntegralGluingToAdele P)
+
+@[simp] theorem chapter06IntegralGluingMap_apply
+    (P : Chapter06AdeleData K O KInf Af Ohat) (x : KInf × Ohat) :
+    chapter06IntegralGluingMap P x =
+      chapter06AdeleQuotientMap P
+        (x.1, P.finiteIntegralEmbedding x.2) := rfl
 
 /-- A compact archimedean cell for the algebraic-integer lattice. -/
 structure Chapter06ArchimedeanCell
@@ -227,6 +270,19 @@ def chapter06FundamentalSetQuotientMap
     chapter06FundamentalSetSubtype P D → Chapter06AdeleQuotient P :=
   fun x => chapter06AdeleQuotientMap P x.1
 
+@[simp] theorem chapter06FundamentalSetQuotientMap_apply
+    (P : Chapter06AdeleData K O KInf Af Ohat) (D : Set KInf)
+    (x : chapter06FundamentalSetSubtype P D) :
+    chapter06FundamentalSetQuotientMap P D x =
+      chapter06AdeleQuotientMap P x.1 := rfl
+
+@[simp] theorem mem_chapter06FundamentalSet_iff
+    (P : Chapter06AdeleData K O KInf Af Ohat) (D : Set KInf)
+    (x : Chapter06FullAdele KInf Af) :
+    x ∈ chapter06FundamentalSet P D ↔
+      x.1 ∈ D ∧ ∃ u : Ohat, P.finiteIntegralEmbedding u = x.2 := by
+  rfl
+
 end AdeleData
 
 /-- A discrete embedding of an additive group into a topological additive group. -/
@@ -247,37 +303,51 @@ def Chapter06CompactFundamentalSet
 /-- A topological-group lattice: discrete with compact quotient. -/
 def Chapter06AdditiveLattice
     {G : Type uG} {H : Type uVA} [AddCommGroup G] [AddCommGroup H]
-    [TopologicalSpace H] (ι : G →+ H) : Prop :=
+    [TopologicalSpace H] [IsTopologicalAddGroup H] [T2Space H]
+    (ι : G →+ H) : Prop :=
   Chapter06DiscreteEmbedding ι ∧
     CompactSpace (H ⧸ chapter06ImageSubgroup ι)
 
-/-- The module-theoretic lattice notion used for comparison in §6.8. -/
+/-- The module-theoretic lattice notion used for comparison in §6.8.
+
+The finite generation is over the integral coefficient ring `R`, while
+fullness is measured after extending scalars to the ambient field `F`.
+Using `Submodule.span R` here would force an `R`-submodule to be `⊤`, and
+would therefore not describe an integral lattice in an `F`-vector space.
+The fullness witness is required to act by a nonzero scalar in `F`; this
+avoids making the condition vacuous when the coefficient map is not injective. -/
 def Chapter06ModuleLattice
-    (R V : Type*) [Semiring R] [AddCommMonoid V] [Module R V]
+    (R F V : Type*) [CommRing R] [Field F] [AddCommGroup V]
+    [Algebra R F] [Module F V] [Module R V] [IsScalarTower R F V]
     (L : Submodule R V) : Prop :=
-  Module.Finite R L ∧ Submodule.span R (L : Set V) = ⊤
+  Module.Finite R L ∧
+    ∀ v : V, ∃ a : R, (algebraMap R F a) ≠ 0 ∧
+      (algebraMap R F a) • v ∈ L
 
 /-- The local additive module relation for a Haar measure. -/
 def Chapter06LocalMeasureModule
     (F : Type*) [Field F] [MeasurableSpace F]
     (μ : Measure F) (size : F → ℝ≥0∞) : Prop :=
-  ∀ a : Fˣ,
-    Measure.map (fun x : F => (a : F) * x) μ = size (a : F) • μ
+  ∀ a : F, a ≠ 0 →
+    Measure.map (fun x : F => a * x) μ = size a • μ
 
-/-- Translation invariance and nonzero-ness, isolated from Mathlib's Haar API. -/
+/-- A regular Borel additive Haar measure, exposed through Mathlib's canonical
+Haar predicate and the regularity convention used by the source. -/
 def Chapter06IsAdditiveHaarMeasure
     (G : Type*) [AddCommGroup G] [TopologicalSpace G] [MeasurableSpace G]
+    [BorelSpace G]
     (μ : Measure G) : Prop :=
-  μ ≠ 0 ∧
-    (∀ g : G, Measure.map (fun x : G => x + g) μ = μ) ∧
-    (∀ C : Set G, IsCompact C → μ C ≠ ⊤) ∧
-    (∀ U : Set G, IsOpen U → U.Nonempty → 0 < μ U)
+  Measure.IsAddHaarMeasure μ ∧ Measure.Regular μ
 
 /-- The local product formula interface used by the volume argument. -/
 def Chapter06ProductFormula
     (K Place : Type*) [Field K]
-    (_size : Place → K → ℝ≥0∞) (adelicProduct : K → ℝ≥0∞) : Prop :=
-  ∀ a : Kˣ, adelicProduct (a : K) = 1
+    (size : Place → K → ℝ≥0∞) (adelicProduct : K → ℝ≥0∞) : Prop := by
+  classical
+  exact ∀ a : K, a ≠ 0 → ∃ S : Finset Place,
+    (∀ v, v ∉ S → size v a = 1) ∧
+      (adelicProduct a = ∏ v ∈ S, size v a) ∧
+      adelicProduct a = 1
 
 /-- Ordinary real/planar covolume in the Minkowski normalization. -/
 def chapter06OrdinaryCovolume (r₂ : ℕ) (dK : ℝ) : ℝ :=
@@ -298,14 +368,30 @@ def chapter06SelfDualComplexMeasureScale : ℝ≥0∞ := 2
 def chapter06SelfDualGlobalScaling (r₂ : ℕ) : ℝ≥0∞ :=
   (2 : ℝ≥0∞) ^ r₂
 
-/-- The finite self-dual normalization is forced away from the different, but
-the chapter intentionally does not identify the masses at the exceptional
-places with the ordinary normalization. -/
+/-- The local mass forced by self-duality at a finite place with residue-field
+cardinality `q` and different exponent `d`. -/
+def chapter06FiniteSelfDualMass (q d : ℕ) : ℝ≥0∞ :=
+  ENNReal.ofReal (Real.rpow (q : ℝ) (-((d : ℝ) / 2)))
+
+@[simp] theorem chapter06FiniteSelfDualMass_apply (q d : ℕ) :
+    chapter06FiniteSelfDualMass q d =
+      ENNReal.ofReal (Real.rpow (q : ℝ) (-((d : ℝ) / 2))) :=
+  rfl
+
+/- The `Place` index in this adapter is intended to range over finite places. -/
 structure Chapter06SelfDualFiniteNormalization (Place : Type*) where
   different : Set Place
+  different_finite : different.Finite
+  residueCardinality : Place → ℕ
+  residueCardinality_pos : ∀ v, 0 < residueCardinality v
+  differentExponent : Place → ℕ
   integralMass : Place → ℝ≥0∞
   integralMass_eq_one_off_different :
     ∀ v, v ∉ different → integralMass v = 1
+  integralMass_eq_self_dual_on_different :
+    ∀ v, v ∈ different →
+      integralMass v =
+        chapter06FiniteSelfDualMass (residueCardinality v) (differentExponent v)
 
 /-! A restricted-product measure profile whose fields are the preceding
 Minkowski and local normalizations, leaving the covolume calculation below as
@@ -341,9 +427,27 @@ def chapter06AdelicProductMeasure
     Measure (Chapter06FullAdele KInf Af) :=
   M.infiniteMeasure.prod M.finiteMeasure
 
-def chapter06AdelicQuotientCovolume
+/- The data below only evaluates the product measure on the displayed set.
+   A quotient covolume additionally needs a quotient Haar measure and a
+   genuine measurable fundamental-domain hypothesis, so keep the formal
+   quantity honest at this layer. -/
+def chapter06AdelicFundamentalSetMass
     (M : Chapter06AdelicMeasureData P D) : ℝ≥0∞ :=
   chapter06AdelicProductMeasure M (chapter06FundamentalSet P D)
+
+/- The quotient Haar measure is separate analytic input.  The quotient-volume
+   record deliberately does not assume that its value is the prequotient set
+   mass; that fundamental-domain identification belongs to the theorem using
+   this record. -/
+structure Chapter06AdelicQuotientVolumeData
+    (M : Chapter06AdelicMeasureData P D) where
+  quotientVolume : ℝ≥0∞
+
+def chapter06AdelicQuotientCovolume
+    {P : Chapter06AdeleData K O KInf Af Ohat} {D : Set KInf}
+    (M : Chapter06AdelicMeasureData P D)
+    (Q : Chapter06AdelicQuotientVolumeData M) : ℝ≥0∞ :=
+  Q.quotientVolume
 
 end AdelicMeasureData
 

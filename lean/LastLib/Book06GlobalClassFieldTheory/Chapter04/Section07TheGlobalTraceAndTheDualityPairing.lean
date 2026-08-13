@@ -93,7 +93,7 @@ theorem chapter04_compact_support_trace_has_finite_coefficient_range
     (P : Chapter04DualCoefficientPair.{u, v} G)
     (z : chapter04CompactSupportH C P.μn 3) :
     chapter04CompactSupportTrace C P.μn z ∈ chapter04QModZTorsion P.n := by
-  sorry
+  exact C.trace_torsion P.μn P.n P.nμn z
 
 /-! ### The global compact-support pairing -/
 
@@ -102,18 +102,33 @@ structure Chapter04GlobalCompactPairingData
     {G : Type u} [Group G]
     (C : Chapter04CompactSupportAPI.{u, v} G)
     (P : Chapter04DualCoefficientPair.{u, v} G) where
+  cup : ∀ r : ℤ,
+    chapter04CompactSupportH C P.M r →
+      chapter04GlobalH C P.Mdual (3 - r) →
+        chapter04CompactSupportH C P.μn 3
   pairing : ∀ r : ℤ,
     chapter04CompactSupportH C P.M r →
       chapter04GlobalH C P.Mdual (3 - r) → chapter04QModZ
-  trace_realization : Prop
+  pairing_eq_trace : ∀ r x y,
+    pairing r x y = chapter04CompactSupportTrace C P.μn (cup r x y)
+
+/-! Perfectness is a separate global-duality input.  A pairing record and a
+trace-realization marker alone do not imply it. -/
+structure Chapter04GlobalCompactPairingPerfectness
+    {G : Type u} [Group G]
+    (C : Chapter04CompactSupportAPI.{u, v} G)
+    (P : Chapter04DualCoefficientPair.{u, v} G)
+    (Q : Chapter04GlobalCompactPairingData C P) where
+  perfect : ∀ r : ℤ, chapter04PerfectPairing (Q.pairing r)
 
 theorem chapter04_global_compact_support_pairing_is_perfect
     {G : Type u} [Group G]
     (C : Chapter04CompactSupportAPI.{u, v} G)
     (P : Chapter04DualCoefficientPair.{u, v} G)
-    (Q : Chapter04GlobalCompactPairingData C P) :
+    (Q : Chapter04GlobalCompactPairingData C P)
+    (L : Chapter04GlobalCompactPairingPerfectness C P Q) :
     ∀ r : ℤ, chapter04PerfectPairing (Q.pairing r) := by
-  sorry
+  exact L.perfect
 
 /-! Perfectness here is deliberately a separate theorem from the trace construction.  For arbitrary
 finite coefficients it is the further global duality theorem mentioned in the source; the special

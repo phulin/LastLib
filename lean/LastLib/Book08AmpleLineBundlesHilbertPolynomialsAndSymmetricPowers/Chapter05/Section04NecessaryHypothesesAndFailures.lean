@@ -1,4 +1,7 @@
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter05.Dependencies
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter05.Section03DescentOfAmplenessAndProjectivity
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Section03AffineOpenAmpleness
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Section05TensorPowersAndOperations
 
 /-!
 # 5.4 Necessary hypotheses and failures
@@ -55,12 +58,8 @@ theorem veryAmple_positive_power_after_faithfullyFlat_baseChange_implies_ample
       IsVeryAmple (baseChangeToBase f g) (baseChangeLineBundle f g (P.power n))) :
     IsAmple f L := by sorry
 
-/- SOURCE_ISSUE (§5.4): “For example, $\mathcal O_{\mathbf P^1}(2)$ is very ample while
-$\mathcal O_{\mathbf P^1}(1)$ is also very ample, but on other varieties a square can embed when
-the original bundle has too few sections.”  The displayed pair does not witness the warning
-because both bundles are very ample; the final clause is also underspecified without a variety and
-bundle.  Minimal replacement: “On an elliptic curve, a line bundle of degree 2 need not be very
-ample, whereas its square has degree 4 and is very ample.” -/
+/- This predicate records the corrected §5.4 warning: on an elliptic curve, a line bundle of degree
+2 need not be very ample, whereas its square has degree 4 and is very ample. -/
 def PowerRootSeparationFailureIsTheRelevantObstruction {X S : Scheme.{u}}
     (f : X ⟶ S) (L : LineBundle X) (P : LineBundlePowers L) : Prop :=
     PowerRootSeparationFailure f L P

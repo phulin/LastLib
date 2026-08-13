@@ -1,5 +1,6 @@
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10.Dependencies
-import Mathlib.RingTheory.AdjoinRoot
+import Mathlib.CategoryTheory.Comma.Over.Basic
+import Mathlib.RingTheory.Polynomial.Quotient
 
 namespace LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10
 
@@ -24,6 +25,12 @@ theorem chapter10FamilyOfLength_rank {X S T : Scheme} (q : X ⟶ S) (t : T ⟶ S
     (Z : Chapter10FamilyOfLength q t d) (y : T) :
     Chapter10FiberLength (chapter10FamilyProjection q t Z.1) y = d := by
   exact Z.2.rank y
+
+theorem chapter10_familyOfLength_ext {X S T : Scheme} (q : X ⟶ S) (t : T ⟶ S)
+    (d : ℕ) (Z W : Chapter10FamilyOfLength q t d)
+    (h : Z.1.ideal = W.1.ideal) : Z = W := by
+  apply Subtype.ext
+  exact (chapter10_closedSubscheme_ext).2 h
 
 theorem chapter10FamilyOfLength_geometricFiber_isArtinian {X S T : Scheme}
     (q : X ⟶ S) (t : T ⟶ S) (d : ℕ) (Z : Chapter10FamilyOfLength q t d) (y : T) :
@@ -56,6 +63,12 @@ def chapter10FamilyBaseChange {X S T T' : Scheme} (q : X ⟶ S) (t : T ⟶ S)
     Chapter10FamilyOfLength q (u ≫ t) d :=
   ⟨Z.1.comap (chapter10BaseChangeMap q t u), by sorry⟩
 
+theorem chapter10FamilyBaseChange_ideal {X S T T' : Scheme} (q : X ⟶ S) (t : T ⟶ S)
+    (u : T' ⟶ T) (d : ℕ) (Z : Chapter10FamilyOfLength q t d) :
+    (chapter10FamilyBaseChange q t u d Z).1 =
+      Z.1.comap (chapter10BaseChangeMap q t u) :=
+  rfl
+
 theorem chapter10FamilyBaseChange_rank {X S T T' : Scheme} (q : X ⟶ S) (t : T ⟶ S)
     (u : T' ⟶ T) (d : ℕ) (Z : Chapter10FamilyOfLength q t d) (y : T') :
     Chapter10FiberLength
@@ -65,9 +78,9 @@ theorem chapter10FamilyBaseChange_rank {X S T T' : Scheme} (q : X ⟶ S) (t : T 
 
 /-!
 The functor is written on the over-category of `S`, so the source's phrase
-"set-valued functor" has an explicit domain.  The separatedness assumption is
-kept on the book-facing alias because it is what makes the moduli interpretation
-set-valued via uniqueness of maps between closed subschemes over `X_T`.
+"set-valued functor" has an explicit domain.  A closed subscheme is already a
+canonical ideal-sheaf presentation, so no separatedness assumption is needed
+for this type-valued functor.  Separatedness is used below for graph unions.
 -/
 
 def chapter10FamilyFunctor {X S : Scheme} (q : X ⟶ S) (d : ℕ) :
@@ -86,8 +99,8 @@ def chapter10FamilyFunctor {X S : Scheme} (q : X ⟶ S) (d : ℕ) :
     ext Z
     sorry
 
-def chapter10SeparatedFamilyFunctor {X S : Scheme} (q : X ⟶ S) (d : ℕ)
-    [IsSeparated q] : (Over S)ᵒᵖ ⥤ Type u :=
+def chapter10SeparatedFamilyFunctor {X S : Scheme} (q : X ⟶ S) [IsSeparated q] (d : ℕ)
+    : (Over S)ᵒᵖ ⥤ Type u :=
   chapter10FamilyFunctor q d
 
 structure Chapter10FamilyIsomorphism {X S T : Scheme} {q : X ⟶ S} {t : T ⟶ S} {d : ℕ}
@@ -96,7 +109,7 @@ structure Chapter10FamilyIsomorphism {X S T : Scheme} {q : X ⟶ S} {t : T ⟶ S
   over : hom.hom ≫ W.1.subschemeι = Z.1.subschemeι
 
 theorem chapter10_family_isomorphism_unique {X S T : Scheme} (q : X ⟶ S) (t : T ⟶ S)
-    (d : ℕ) [IsSeparated q] (Z W : Chapter10FamilyOfLength q t d)
+    (d : ℕ) (Z W : Chapter10FamilyOfLength q t d)
     (α β : Chapter10FamilyIsomorphism Z W) : α = β := by
   sorry
 
@@ -117,8 +130,30 @@ def Chapter10GraphsPairwiseDisjoint {X S T : Scheme} {q : X ⟶ S} {t : T ⟶ S}
 def Chapter10GraphCollision {X S T : Scheme} {q : X ⟶ S} {t : T ⟶ S}
     {ι : Type u} (sections : ι → Chapter10RelativeSection q t) : Prop :=
   ∃ i j, i ≠ j ∧
-    (Set.range (chapter10SectionGraph (sections i)) ∩
+      (Set.range (chapter10SectionGraph (sections i)) ∩
       Set.range (chapter10SectionGraph (sections j))).Nonempty
+
+def chapter10SectionGraphIdeal {X S T : Scheme} {q : X ⟶ S} {t : T ⟶ S}
+    [IsSeparated q]
+    (s : Chapter10RelativeSection q t) : Chapter10ClosedSubscheme (pullback q t) :=
+  (chapter10SectionGraph s).ker
+
+def chapter10GraphUnionIdeal {X S T : Scheme} {q : X ⟶ S} {t : T ⟶ S}
+    {ι : Type u} (sections : ι → Chapter10RelativeSection q t) [Fintype ι] [IsSeparated q] :
+    Chapter10ClosedSubscheme (pullback q t) :=
+  ⨅ i, chapter10SectionGraphIdeal (sections i)
+
+/-!
+The disjoint union of graphs is still a family over the base, so the
+parameter object must remember that its support is the union of the graphs.
+Returning only an unrelated length-`card ι` family would not formalize the
+construction in the source.
+-/
+structure Chapter10DisjointGraphFamilyData {X S T : Scheme} (q : X ⟶ S) (t : T ⟶ S)
+    {ι : Type u} (sections : ι → Chapter10RelativeSection q t) [Fintype ι] [IsSeparated q] where
+  family : Chapter10FamilyOfLength q t (Fintype.card ι)
+  ideal_eq_graph_union :
+    family.1.ideal = (chapter10GraphUnionIdeal sections).ideal
 
 theorem chapter10_graph_collision_not_pairwise_disjoint {X S T : Scheme}
     {q : X ⟶ S} {t : T ⟶ S} {ι : Type u}
@@ -128,9 +163,10 @@ theorem chapter10_graph_collision_not_pairwise_disjoint {X S T : Scheme}
   sorry
 
 theorem chapter10_disjoint_graphs_give_family {X S T : Scheme} (q : X ⟶ S) (t : T ⟶ S)
-    {ι : Type u} [Fintype ι] (sections : ι → Chapter10RelativeSection q t)
+    {ι : Type u} [Fintype ι] [IsSeparated q]
+    (sections : ι → Chapter10RelativeSection q t)
     (h : Chapter10GraphsPairwiseDisjoint sections) :
-    Nonempty (Chapter10FamilyOfLength q t (Fintype.card ι)) := by
+    Nonempty (Chapter10DisjointGraphFamilyData q t sections) := by
   sorry
 
 /-!
@@ -138,14 +174,16 @@ The predicate below is the scheme-theoretic content of the warning that a
 collision cannot retain multiplicity inside a reduced union: the replacement
 family must carry a non-reduced infinitesimal thickening.
 -/
-def Chapter10InfinitesimalThickening {X : Scheme}
-    (Z : Chapter10ClosedSubscheme X) : Prop :=
-  ¬ IsReduced Z.subscheme
+def Chapter10InfinitesimalThickening {X S T : Scheme}
+    {q : X ⟶ S} {t : T ⟶ S} {d : ℕ}
+    (Z : Chapter10FamilyOfLength q t d) : Prop :=
+  ∃ y : T, ¬ IsReduced ((chapter10FamilyProjection q t Z.1).fiber y)
 
 structure Chapter10CollisionMultiplicityData {X S T : Scheme} (q : X ⟶ S) (t : T ⟶ S)
     {ι : Type u} (sections : ι → Chapter10RelativeSection q t) [Fintype ι] where
+  collision : Chapter10GraphCollision sections
   family : Chapter10FamilyOfLength q t (Fintype.card ι)
-  thickening : Chapter10InfinitesimalThickening family.1
+  thickening : Chapter10InfinitesimalThickening family
   support_eq_graphs :
     family.1.support.carrier =
       ⋃ i, Set.range (chapter10SectionGraph (sections i))

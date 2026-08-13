@@ -2,6 +2,7 @@ import Mathlib.Analysis.SpecialFunctions.Complex.Circle
 import Mathlib.Data.Finsupp.Basic
 import Mathlib.Data.Sign.Basic
 import Mathlib.Data.ZMod.Basic
+import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.NumberTheory.NumberField.AdeleRing
 import Mathlib.NumberTheory.NumberField.ClassNumber
 import Mathlib.NumberTheory.NumberField.Completion.InfinitePlace
@@ -11,7 +12,12 @@ import Mathlib.RingTheory.DedekindDomain.Factorization
 import Mathlib.RingTheory.FractionalIdeal.Operations
 import Mathlib.RingTheory.Ideal.Quotient.Operations
 import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+import Mathlib.Topology.Algebra.Group.Quotient
+import Mathlib.Topology.Algebra.Group.Units
+import Mathlib.Topology.Algebra.IsOpenUnits
 import Mathlib.Topology.Algebra.RestrictedProduct.Units
+import Mathlib.Topology.Instances.Sign
+import LastLib.Book04AdelesAndIdeles.Chapter09.Dependencies
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter11
 
@@ -98,6 +104,18 @@ theorem le_trans {m n r : RayModulus K} : LE m n → LE n r → LE m r := by
 
 theorem le_antisymm {m n : RayModulus K} : LE m n → LE n m → m = n := by
   sorry
+
+instance : _root_.LE (RayModulus K) := ⟨RayModulus.LE⟩
+
+instance : PartialOrder (RayModulus K) where
+  le := RayModulus.LE
+  le_refl := fun m => RayModulus.le_refl m
+  le_trans := by
+    intro m n r hmn hnr
+    exact RayModulus.le_trans hmn hnr
+  le_antisymm := by
+    intro m n hmn hnm
+    exact RayModulus.le_antisymm hmn hnm
 
 theorem finiteExponent_support_finite (m : RayModulus K) :
     (m.finiteExponent.support : Set (IsDedekindDomain.HeightOneSpectrum (𝓞 K))).Finite := by
@@ -295,7 +313,8 @@ def chapter11RayGenerator (m : RayModulus K) (a : Kˣ) : Prop :=
       chapter11FiniteGlobalComponent K v a ∈
         chapter11FiniteLocalUnitGroup K v (m.finiteExponent v)) ∧
     ∀ v (hv : v ∈ m.infinitePart),
-      chapter11RealGlobalComponent K v (m.infinitePart_isReal v hv) a = 1
+      chapter11RealSignHom
+          (chapter11RealGlobalComponent K v (m.infinitePart_isReal v hv) a) = 1
 
 def chapter11RayPrincipalIdealSubgroup (m : RayModulus K) :
   Subgroup (Chapter11IdealGroup m) where
@@ -317,10 +336,10 @@ abbrev chapter11IdealRayClassGroup (m : RayModulus K) :=
 
 /-!
 `LOCAL_DEPENDENCY_GUESS`: `Chapter11IdeleIdealMap` is a narrow local dependency
-guess for the canonical
-idele-to-fractional-ideal map developed in the preceding book chapters.  Its
-kernel and principal-image equations are the only properties used here; this
-keeps the chapter independent of a guessed name for that earlier declaration.
+interface for the canonical idele-to-fractional-ideal map developed in the
+preceding book chapters.  In addition to its kernel and principal-image
+equations, the local-unit/count bridge is recorded explicitly because the ray
+normalization argument needs it at the modulus primes.
 -/
 structure Chapter11IdeleIdealMap (K : Type*) [Field K] [NumberField K] where
   toIdeal : Chapter11IdeleGroup K →* Chapter11FractionalIdealUnitGroup K
@@ -329,11 +348,48 @@ structure Chapter11IdeleIdealMap (K : Type*) [Field K] [NumberField K] where
       toPrincipalIdeal (𝓞 K) K a
   kernel_eq_full_finite_units :
     toIdeal.ker = chapter11FullFiniteUnitSubgroup (K := K)
+  count_eq_zero_of_local_unit :
+    ∀ (x : Chapter11IdeleGroup K)
+      (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) (n : ℕ),
+      chapter11IdeleFiniteComponent K v x ∈
+        chapter11FiniteLocalUnitGroup K v n →
+      FractionalIdeal.count K v
+        (toIdeal x : FractionalIdeal (𝓞 K)⁰ K) = 0
   surjective : Function.Surjective toIdeal
 
+/-! The preceding chapters already provide the canonical finite-idele ideal map.
+The specialization below keeps the ray-class API source-facing while making its
+ideal-theoretic bridge an actual number-field construction rather than an
+uninstantiated parameter. -/
+noncomputable def chapter11CanonicalIdeleIdealMap
+    (K : Type*) [Field K] [NumberField K] : Chapter11IdeleIdealMap K where
+  toIdeal :=
+    (LastLib.Book04AdelesAndIdeles.Chapter08.chapter08FiniteIdeleIdealMap K).comp
+      (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09FiniteIdelePartHom K)
+  map_principal := by
+    intro a
+    sorry
+  kernel_eq_full_finite_units := by
+    sorry
+  count_eq_zero_of_local_unit := by
+    intro x v n hx
+    sorry
+  surjective := by
+    sorry
+
+/- A ray normalizer only imposes the congruence conditions at the finite
+places in the modulus and the selected real signs.  It must not require the
+whole normalized idele to be a finite unit: doing so would force an arbitrary
+idele's finite ideal to be principal, which is not true in general. -/
 def Chapter11RayNormalizer (m : RayModulus K)
     (x : Chapter11IdeleGroup K) (a : Kˣ) : Prop :=
-  chapter11PrincipalIdeleHom (K := K) a * x ∈ chapter11RayUnitSubgroup m
+  (∀ v, m.finiteExponent v ≠ 0 →
+      chapter11IdeleFiniteComponent K v
+        (chapter11PrincipalIdeleHom (K := K) a * x) ∈
+        chapter11FiniteLocalUnitGroup K v (m.finiteExponent v)) ∧
+    ∀ v (hv : v ∈ m.infinitePart),
+      chapter11RealSignComponent K v (m.infinitePart_isReal v hv)
+        (chapter11PrincipalIdeleHom (K := K) a * x) = 1
 
 abbrev chapter11RayResidueGroup (m : RayModulus K) :=
   (𝓞 K ⧸ m.finiteIdeal)ˣ

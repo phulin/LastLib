@@ -9,16 +9,18 @@ import Mathlib.AlgebraicGeometry.Morphisms.Proper
 import Mathlib.AlgebraicGeometry.Morphisms.QuasiFinite
 import Mathlib.AlgebraicGeometry.Morphisms.Separated
 import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
 import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.Algebra.Category.ModuleCat.Sheaf.LocallyFree
 import Mathlib.CategoryTheory.Abelian.Exact
-import Mathlib.CategoryTheory.Comma.Over.Basic
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09.Dependencies
 
 namespace LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10
 
 noncomputable section
 
 open AlgebraicGeometry CategoryTheory Limits SheafOfModules TopologicalSpace
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09
 
 universe u
 
@@ -30,7 +32,22 @@ keeps those four pieces together instead of introducing a competing notion of
 rank.
 -/
 
-abbrev Chapter10ClosedSubscheme (X : Scheme) := X.IdealSheafData
+/-!
+The finite-flat and Cartier predicates were introduced in Chapter 9. Reuse
+those chapter interfaces here rather than creating definitionally similar
+records with a separate notion of the same data.
+-/
+abbrev Chapter10ClosedSubscheme (X : Scheme) := Chapter09ClosedSubscheme X
+
+abbrev Chapter10FiniteLocallyFreeProfile {X Y : Scheme} (q : X ⟶ Y) (d : ℕ) :=
+  Chapter09FiniteLocallyFreeProfile q d
+
+abbrev Chapter10LocallyRegularPrincipal {X : Scheme}
+    (D : Chapter10ClosedSubscheme X) : Prop :=
+  Chapter09LocallyRegularPrincipal D
+
+abbrev Chapter10EffectiveCartierDivisor (X : Scheme) :=
+  Chapter09EffectiveCartierDivisor X
 
 noncomputable def chapter10ClosedSubschemeCarrier {X : Scheme}
     (Z : Chapter10ClosedSubscheme X) : Scheme :=
@@ -66,17 +83,21 @@ theorem chapter10_closedSubscheme_comap_support {X Y : Scheme}
     (I.comap f).support = I.support.preimage f.continuous := by
   simp
 
-structure Chapter10FiniteLocallyFreeProfile {X Y : Scheme} (q : X ⟶ Y) (d : ℕ) : Prop where
-  finite : IsFinite q
-  flat : Flat q
-  locallyOfFinitePresentation : LocallyOfFinitePresentation q
-  rank : ∀ y : Y, Scheme.Hom.finrank q y = d
-
 abbrev Chapter10FiniteLocallyFree {X Y : Scheme} (q : X ⟶ Y) (d : ℕ) :=
   Chapter10FiniteLocallyFreeProfile q d
 
 def Chapter10FiniteLocallyFreeMorphism {X Y : Scheme} (q : X ⟶ Y) : Prop :=
-  ∃ d : ℕ, Chapter10FiniteLocallyFreeProfile q d
+  IsFinite q ∧ Flat q ∧ LocallyOfFinitePresentation q
+
+theorem chapter10_finiteLocallyFreeProfile_to_morphism {X Y : Scheme}
+    {q : X ⟶ Y} {d : ℕ} (h : Chapter10FiniteLocallyFreeProfile q d) :
+    Chapter10FiniteLocallyFreeMorphism q :=
+  ⟨h.finite, h.flat, h.locallyOfFinitePresentation⟩
+
+theorem chapter10_finiteLocallyFreeMorphism_rank_isLocallyConstant {X Y : Scheme}
+    {q : X ⟶ Y} (h : Chapter10FiniteLocallyFreeMorphism q) :
+    IsLocallyConstant (Scheme.Hom.finrank q) := by
+  exact @Scheme.Hom.isLocallyConstant_finrank _ _ q h.2.1 h.1 h.2.2
 
 abbrev Chapter10FiberLength {X Y : Scheme} (q : X ⟶ Y) (y : Y) : ℕ :=
   Scheme.Hom.finrank q y
@@ -122,46 +143,62 @@ def chapter10BaseChangeMap {X S T T' : Scheme} (q : X ⟶ S) (t : T ⟶ S) (u : 
 def chapter10StructureSheaf (X : Scheme) : X.Modules :=
   SheafOfModules.unit X.ringCatSheaf
 
+abbrev Chapter10LineBundle (X : Scheme.{u}) := Chapter09LineBundle X
+
 /-!
-`IsLocallyFree` is already the canonical pinned-Mathlib predicate.  The
-rank-one clause records the usual one-generator local presentation, rather
-than replacing it with an opaque proposition.
+The norm compares the determinant of a line bundle with the determinant of the
+structure sheaf.  Keep the latter as a book-facing line bundle rather than
+allowing the determinant interface to accept arbitrary module sheaves.
 -/
+noncomputable def chapter10StructureSheafLineBundle (X : Scheme.{u}) :
+    Chapter10LineBundle X :=
+  chapter09StructureSheafLineBundle X
 
-def Chapter10RankOne {X : Scheme.{u}} (M : Scheme.Modules X) : Prop :=
-  ∃ q : M.LocalGeneratorsData.{u}, q.IsLocallyFreeData ∧
-    ∀ i : q.I, Nonempty ((q.generators i).I ≃ Unit)
-
-structure Chapter10LineBundle (X : Scheme.{u}) where
-  module : X.Modules
-  locallyFree : module.IsLocallyFree
-  rankOne : Chapter10RankOne module
+@[ext]
+theorem chapter10_lineBundle_ext {X : Scheme} {L M : Chapter10LineBundle X}
+    (h : L.module = M.module) : L = M := by
+  cases L
+  cases M
+  cases h
+  rfl
 
 abbrev Chapter10LineBundleSection {X : Scheme} (L : Chapter10LineBundle X) :=
   chapter10StructureSheaf X ⟶ L.module
 
-def Chapter10LineBundleIso {X : Scheme} (L M : Chapter10LineBundle X) : Prop :=
-  Nonempty (L.module ≅ M.module)
+abbrev Chapter10LineBundleIso {X : Scheme}
+    (L M : Chapter10LineBundle X) := Chapter09LineBundleIso L M
 
-/- LOCAL_DEPENDENCY_GUESS (10.2, 10.4): the pinned Mathlib snapshot has the
-  local-freeness predicate but not yet the Picard/tensor and inverse-line-bundle
-  constructors used by the textbook.  These explicit operations are the
-  smallest book-facing interface needed by the Cartier and norm statements;
-  their coherence and comparison with sheaf tensor products belong in the
-  later dependency/fixup pass. -/
-class Chapter10PicardOperations (X : Scheme) where
-  tensor : Chapter10LineBundle X → Chapter10LineBundle X → Chapter10LineBundle X
+def chapter10_lineBundleIso_refl {X : Scheme} (L : Chapter10LineBundle X) :
+    Chapter10LineBundleIso L L :=
+  ⟨Iso.refl L.module⟩
+
+def chapter10_lineBundleIso_symm {X : Scheme}
+    {L M : Chapter10LineBundle X} (h : Chapter10LineBundleIso L M) :
+    Chapter10LineBundleIso M L := by
+  exact ⟨h.hom.symm⟩
+
+def chapter10_lineBundleIso_trans {X : Scheme}
+    {L M N : Chapter10LineBundle X} (hLM : Chapter10LineBundleIso L M)
+    (hMN : Chapter10LineBundleIso M N) : Chapter10LineBundleIso L N := by
+  exact ⟨hLM.hom.trans hMN.hom⟩
+
+/- LOCAL_DEPENDENCY_GUESS (10.4): the pinned Mathlib snapshot does not expose
+  the inverse operation needed by the norm formula. Chapter 9 already
+  supplies the canonical tensor theory, including its module-level comparison
+  and coherence laws; only dualization remains a Chapter 10 interface. -/
+class Chapter10PicardOperations (X : Scheme) extends Chapter09LineBundleTensorTheory X where
   dual : Chapter10LineBundle X → Chapter10LineBundle X
+  dual_module_iso : ∀ L,
+    LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04Tensor
+        (dual L).module L.module ≅ chapter10StructureSheaf X
 
-class Chapter10IdealDualAPI (X : Scheme) where
-  inverseIdeal : X.IdealSheafData → Chapter10LineBundle X
+def chapter10PicardTensor {X : Scheme} [Chapter10PicardOperations X]
+    (L M : Chapter10LineBundle X) : Chapter10LineBundle X :=
+  Chapter09LineBundleTensorTheory.tensor L M
 
 class Chapter10DeterminantLineAPI {X Y : Scheme} (q : X ⟶ Y) where
   finiteLocallyFree : Chapter10FiniteLocallyFreeMorphism q
-  determinant : Y.Modules → Chapter10LineBundle Y
-
-class Chapter10LineBundlePullbackAPI {X Y : Scheme} (f : X ⟶ Y) where
-  pullback : Chapter10LineBundle Y → Chapter10LineBundle X
+  determinant : Chapter10LineBundle X → Chapter10LineBundle Y
 
 end
 

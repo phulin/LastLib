@@ -1,4 +1,4 @@
-import LastLib.Book03RamificationTheory.Chapter11.Section02ArtinsIntegrality
+import LastLib.Book03RamificationTheory.Chapter11.Dependencies
 
 namespace LastLib.Book03RamificationTheory.Chapter11
 

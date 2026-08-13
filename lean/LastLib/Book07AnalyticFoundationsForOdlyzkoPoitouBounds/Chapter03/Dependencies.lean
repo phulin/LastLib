@@ -1,12 +1,18 @@
 import Mathlib.Analysis.Complex.Basic
+import Mathlib.NumberTheory.EulerProduct.DirichletLSeries
 import Mathlib.NumberTheory.NumberField.DedekindZeta
+import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 import Mathlib.NumberTheory.LSeries.RiemannZeta
+import Mathlib.NumberTheory.LSeries.Deriv
 import Mathlib.LinearAlgebra.Dimension.DivisionRing
+import Mathlib.NumberTheory.Padics.HeightOneSpectrum
 import Mathlib.NumberTheory.RamificationInertia.Inertia
 import Mathlib.NumberTheory.RamificationInertia.Ramification
 import Mathlib.RingTheory.DedekindDomain.Factorization
 import Mathlib.RingTheory.Ideal.Norm.AbsNorm
 import Mathlib.Topology.Algebra.InfiniteSum.UniformOn
+import Mathlib.Topology.Algebra.InfiniteSum.Real
+import Mathlib.Topology.Algebra.InfiniteSum.Constructions
 
 namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter03
 
@@ -33,7 +39,10 @@ abbrev Chapter03IntegralIdeal (K : Type*) [Field K] [NumberField K] : Type _ :=
 abbrev Chapter03PrimeIdeal (K : Type*) [Field K] [NumberField K] : Type _ :=
   IsDedekindDomain.HeightOneSpectrum (𝓞 K)
 
-/-- A prime-power index consists of a prime ideal and a positive exponent. -/
+/-- A prime-power index consists of a prime ideal and a zero-based exponent index.
+
+The corresponding positive exponent is `m + 1`; using `ℕ` here keeps the
+prime-power series in its canonical zero-based indexing. -/
 abbrev Chapter03PrimePower (K : Type*) [Field K] [NumberField K] : Type _ :=
   Chapter03PrimeIdeal K × ℕ
 
@@ -103,6 +112,14 @@ theorem chapter03_prime_ideal_isPrime {K : Type*} [Field K] [NumberField K]
 theorem chapter03_prime_ideal_ne_bot {K : Type*} [Field K] [NumberField K]
     (P : Chapter03PrimeIdeal K) : P.asIdeal ≠ ⊥ :=
   P.ne_bot
+
+/-- A height-one prime of the ring of integers has norm strictly larger than one.
+
+This shared normalization bridge lets the Euler-product sections use the
+finite-place API without importing a later section of the chapter. -/
+theorem chapter03_prime_ideal_norm_gt_one {K : Type*} [Field K] [NumberField K]
+    (P : Chapter03PrimeIdeal K) : 1 < chapter03PrimeIdealNorm P := by
+  exact NumberField.HeightOneSpectrum.one_lt_absNorm P
 
 /-- The Euler factor attached to a height-one prime. -/
 def chapter03EulerFactor {K : Type*} [Field K] [NumberField K]
@@ -188,6 +205,45 @@ theorem chapter03_prime_ideal_ext
     {K : Type*} [Field K] [NumberField K]
     (P Q : Chapter03PrimeIdeal K) (hPQ : P.asIdeal = Q.asIdeal) : P = Q :=
   IsDedekindDomain.HeightOneSpectrum.ext hPQ
+
+/-- The canonical indexing of the height-one primes of `𝓞 ℚ` by rational primes. -/
+noncomputable def chapter03RationalPrimeIdealEquiv :
+    Chapter03PrimeIdeal ℚ ≃ Nat.Primes :=
+  Rat.HeightOneSpectrum.primesEquiv (R := 𝓞 ℚ)
+
+theorem chapter03_rational_prime_ideal_norm_eq_equiv
+    (P : Chapter03PrimeIdeal ℚ) :
+    chapter03PrimeIdealNorm P =
+      (chapter03RationalPrimeIdealEquiv P : ℕ) := by
+  change Ideal.absNorm P.asIdeal = Rat.HeightOneSpectrum.natGenerator P
+  have hnorm :
+      Ideal.absNorm P.asIdeal =
+        Ideal.absNorm (P.asIdeal.map (Rat.IsIntegralClosure.intEquiv (𝓞 ℚ))) := by
+    rw [Ideal.absNorm_eq_index, Ideal.absNorm_eq_index]
+    have hsub :
+        (P.asIdeal.map (Rat.IsIntegralClosure.intEquiv (𝓞 ℚ))).toAddSubgroup =
+          AddSubgroup.map
+            ((Rat.IsIntegralClosure.intEquiv (𝓞 ℚ)).toAddEquiv : (𝓞 ℚ) ≃+ ℤ)
+            P.asIdeal.toAddSubgroup := by
+      ext y
+      constructor
+      · intro hy
+        rcases (Ideal.mem_map_of_equiv (Rat.IsIntegralClosure.intEquiv (𝓞 ℚ)) y).mp hy with
+          ⟨x, hx, rfl⟩
+        exact AddSubgroup.mem_map_of_mem _ hx
+      · intro hy
+        rcases hy with ⟨x, hx, rfl⟩
+        exact Ideal.mem_map_of_mem _ hx
+    rw [hsub]
+    exact (AddSubgroup.index_map_equiv P.asIdeal.toAddSubgroup
+      (Rat.IsIntegralClosure.intEquiv (𝓞 ℚ)).toAddEquiv).symm
+  calc
+    Ideal.absNorm P.asIdeal =
+        Ideal.absNorm (P.asIdeal.map (Rat.IsIntegralClosure.intEquiv (𝓞 ℚ))) := hnorm
+    _ = Ideal.absNorm (Ideal.span {(Rat.HeightOneSpectrum.natGenerator P : ℤ)}) := by
+      rw [Rat.HeightOneSpectrum.span_natGenerator]
+    _ = Rat.HeightOneSpectrum.natGenerator P := by
+      simp
 
 /-- The Gaussian-field predicate used for the explicit `ℚ(i)` example. -/
 def chapter03IsGaussianField (K : Type*) [Field K] [NumberField K] : Prop :=

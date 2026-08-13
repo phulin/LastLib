@@ -45,11 +45,15 @@ theorem chapter12_tower_discriminant_exponent_expansion
 homomorphisms.  The transitivity equivalence is the representation-theoretic
 interface needed before applying the conductor formula. -/
 theorem chapter12_induction_representation_transitive
-    {G H L V : Type*} [Group G] [Fintype G] [Group H] [Fintype H]
-    [Group L] [Fintype L] [AddCommGroup V] [Module ℚ V]
-    (ιHG : H →* G) (ιLH : L →* H) (ιLG : L →* G)
+    {E G H L V : Type*} [Field E] [CharZero E] [Group G] [Fintype G]
+    [Group H] [Fintype H]
+    [Group L] [Fintype L] [AddCommGroup V] [Module E V]
+    [FiniteDimensional E V]
+    (ιHG : H →* G) (hιHG : Function.Injective ιHG)
+    (ιLH : L →* H) (hιLH : Function.Injective ιLH)
+    (ιLG : L →* G)
     (hcomp : ιHG.comp ιLH = ιLG)
-    (ρ : Representation ℚ L V) :
+    (ρ : Representation E L V) :
     Nonempty
       ((Representation.ind ιHG (Representation.ind ιLH ρ)).Equiv
         (Representation.ind ιLG ρ)) := by

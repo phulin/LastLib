@@ -68,8 +68,12 @@ noncomputable def chapter04ArchimedeanFactor
   chapter04GammaReal s ^ chapter04RealPlaces K *
     chapter04GammaComplex s ^ chapter04ComplexPlaces K
 
-/-- The completed Dedekind zeta function in the book's normalization. -/
-noncomputable def chapter04CompletedDedekindZeta
+/-- The Euler-half-plane completion formula in the book's normalization.
+
+This is the expression that agrees with the eventual meromorphic completion
+only for `1 < Re s`.  The globally defined completion is constructed from the
+theta Mellin continuation in Section 4.3. -/
+noncomputable def chapter04EulerCompletedDedekindZeta
     (K : Type*) [Field K] [NumberField K] (s : ℂ) : ℂ :=
   (chapter04AbsoluteDiscriminant K : ℂ) ^ (s / 2) *
     chapter04ArchimedeanFactor K s * chapter03DedekindZeta K s
@@ -159,6 +163,14 @@ noncomputable def chapter04SelfDualMeasure
     (K : Type*) [Field K] [NumberField K] :
     Measure (chapter04MinkowskiSpace K) :=
   ((2 : ℝ≥0∞) ^ chapter04ComplexPlaces K) • volume
+
+/- The lattice covolume used in the theta/Poisson normalization is measured
+   with `chapter04SelfDualMeasure`, rather than with ordinary product volume.
+   The latter differs by `2 ^ r₂` in the complex coordinates. -/
+noncomputable def chapter04SelfDualLatticeCovolume
+    (K : Type*) [Field K] [NumberField K]
+    (L : Submodule ℤ (chapter04MinkowskiSpace K)) : ℝ :=
+  (2 : ℝ) ^ chapter04ComplexPlaces K * ZLattice.covolume L
 
 noncomputable def chapter04FractionalIdealImage
     (K : Type*) [Field K] [NumberField K]
@@ -279,7 +291,7 @@ noncomputable instance chapter04ArchimedeanScalingMeasurableSpace
     (K : Type*) [Field K] [NumberField K] :
     MeasurableSpace (Chapter04ArchimedeanScaling K) :=
   MeasurableSpace.comap (fun y => y.scale)
-    (⊤ : MeasurableSpace (InfinitePlace K → ℝ))
+    (borel (InfinitePlace K → ℝ))
 
 abbrev chapter04Y (K : Type*) [Field K] [NumberField K] :=
   Chapter04ArchimedeanScaling K
@@ -351,12 +363,11 @@ theorem chapter04_y_action_mul
       chapter04YAction K y (chapter04YAction K z x) := by
   sorry
 
-theorem chapter04_y_action_inv_isometry
+theorem chapter04_y_action_inv_left_inverse
     (K : Type*) [Field K] [NumberField K]
     (y : chapter04Y K) (x : chapter04MinkowskiSpace K) :
-    chapter04MinkowskiNormSq K
-        (chapter04YAction K (chapter04YInv K y) x) =
-      chapter04MinkowskiNormSq K x := by
+    chapter04YAction K (chapter04YInv K y)
+        (chapter04YAction K y x) = x := by
   sorry
 
 /-- The determinant-scale coordinate factor `t^(1/n)`. -/
@@ -465,6 +476,12 @@ structure Chapter04UnitFundamentalDomain
     measure (chapter04YInv K '' s) = measure s
   unit_fundamental : ∀ y : chapter04Y K, ∃ u : (𝓞 K)ˣ, ∃ p ∈ carrier,
     y = chapter04YMul K (chapter04UnitScaling K u) p
+  unit_fundamental_unique :
+    ∀ {u v : (𝓞 K)ˣ} {p q : chapter04Y K},
+      p ∈ carrier → q ∈ carrier →
+        chapter04YMul K (chapter04UnitScaling K u) p =
+          chapter04YMul K (chapter04UnitScaling K v) q →
+            p = q
 
 noncomputable def chapter04ThetaAverage
     (K : Type*) [Field K] [NumberField K]
@@ -483,26 +500,6 @@ noncomputable def chapter04ThetaMellinIntegral
     (∫ y in D.carrier,
       ((chapter04Theta K a t y - 1 : ℝ) : ℂ) *
         chapter04MellinKernel s t ∂D.measure) ∂volume
-
-/- DEPENDENCY_GUESS: The source leaves `c_K` dependent on Haar normalization
-   and roots of unity.  This draft fixes the remaining normalization by the
-   canonical torsion order; the later fixup pass should replace this body if
-   the project chooses a different angular/Haar convention. -/
-/- The positive orbit multiplicity left unspecified by the source's Haar
-   convention. -/
-noncomputable def chapter04MellinConstant
-    (K : Type*) [Field K] [NumberField K] : ℝ :=
-  NumberField.Units.torsionOrder K
-
-theorem chapter04_mellin_constant_pos
-    (K : Type*) [Field K] [NumberField K] :
-    0 < chapter04MellinConstant K := by
-  exact Nat.cast_pos.mpr (NumberField.Units.torsionOrder_pos K)
-
-theorem chapter04_mellin_constant_ne_zero
-    (K : Type*) [Field K] [NumberField K] :
-    chapter04MellinConstant K ≠ 0 :=
-  (chapter04_mellin_constant_pos K).ne'
 
 noncomputable def chapter04PartialZeta
     (K : Type*) [Field K] [NumberField K]

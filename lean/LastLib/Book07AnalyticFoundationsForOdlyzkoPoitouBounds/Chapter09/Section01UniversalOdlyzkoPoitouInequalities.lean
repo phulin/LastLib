@@ -86,6 +86,18 @@ theorem chapter09_grh_archimedean_C_tendsto :
     Tendsto chapter09GRHCT atTop (𝓝 0) := by
   sorry
 
+/- The signature coefficient used by the threshold comparison is
+   nonnegative for the two triangular test functions. -/
+theorem chapter09_unconditional_archimedean_C_lt_pi_div_two
+    {T : ℝ} (hT : 0 < T) :
+    chapter09CT T < Real.pi / 2 := by
+  sorry
+
+theorem chapter09_grh_archimedean_C_lt_pi_div_two
+    {T : ℝ} (hT : 0 < T) :
+    chapter09GRHCT T < Real.pi / 2 := by
+  sorry
+
 theorem chapter09_grh_universal_odlyzko_poitou_bound
     (K : Type*) [Field K] [NumberField K]
     [Chapter09ZetaZeroInterface K]
@@ -164,11 +176,12 @@ theorem chapter09_finite_grh_certificate_has_evaluated_test_function
 theorem chapter09_finite_grh_certificate_gives_bound
     (K : Type*) [Field K] [NumberField K]
     [Chapter09ZetaZeroInterface K]
-    (C : Chapter09FiniteGRHCertificate K) (α : ℝ) :
+    (C : Chapter09FiniteGRHCertificate K) :
     Real.exp
         (chapter09EulerMascheroni + Real.log (8 * Real.pi) +
-          α * (Real.pi / 2) -
-          4 * C.poleIntegral / (chapter09Degree K : ℝ) - C.B - α * C.C) ≤
+          chapter09RealProportion K * (Real.pi / 2) -
+          4 * C.poleIntegral / (chapter09Degree K : ℝ) - C.B -
+          chapter09RealProportion K * C.C) ≤
       chapter09RootDiscriminant K := by
   sorry
 
@@ -265,6 +278,7 @@ noncomputable def chapter09Threshold (U α₀ : ℝ) : ℕ :=
 
 theorem chapter09_threshold_principle
     {U α₀ : ℝ}
+    (hUpos : 0 < U)
     (hU : U < chapter09UnconditionalAsymptoticConstant α₀) :
     ∀ (K : Type*) [Field K] [NumberField K],
       chapter09RootDiscriminant K ≤ U →
@@ -299,6 +313,7 @@ noncomputable def chapter09GRHThreshold (U α₀ : ℝ) : ℕ :=
 
 theorem chapter09_grh_threshold_principle
     {U α₀ : ℝ}
+    (hUpos : 0 < U)
     (hU : U < chapter09GRHAsymptoticConstant α₀) :
     ∀ (K : Type*) [Field K] [NumberField K]
       [Chapter09ZetaZeroInterface K],
@@ -310,22 +325,24 @@ theorem chapter09_grh_threshold_principle
 
 def chapter09StrictUnconditionalThresholdCondition
     (U α₀ : ℝ) : Prop :=
-  U < chapter09UnconditionalAsymptoticConstant α₀
+  0 < U ∧ U < chapter09UnconditionalAsymptoticConstant α₀
 
 def chapter09StrictGRHThresholdCondition (U α₀ : ℝ) : Prop :=
-  U < chapter09GRHAsymptoticConstant α₀
+  0 < U ∧ U < chapter09GRHAsymptoticConstant α₀
 
 theorem chapter09_unconditional_equality_is_not_strict_threshold
     (α₀ : ℝ) :
     ¬ chapter09StrictUnconditionalThresholdCondition
       (chapter09UnconditionalAsymptoticConstant α₀) α₀ := by
-  exact lt_irrefl _
+  intro h
+  exact (lt_irrefl _ h.2)
 
 theorem chapter09_grh_equality_is_not_strict_threshold
     (α₀ : ℝ) :
     ¬ chapter09StrictGRHThresholdCondition
       (chapter09GRHAsymptoticConstant α₀) α₀ := by
-  exact lt_irrefl _
+  intro h
+  exact (lt_irrefl _ h.2)
 
 end
 

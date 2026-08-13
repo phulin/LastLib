@@ -44,11 +44,11 @@ def chapter15ResidueDegree
 def chapter15DisplacementProfile
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     (A : ValuationSubring L)
-    (σ :
+  (σ :
       LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05DecompositionGroup K A) :
     ℕ → Prop :=
   fun i =>
-    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05HigherCongruence A i σ
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05HigherCongruence A (i + 1) σ
 
 @[simp]
 theorem chapter15_displacement_profile_iff
@@ -67,7 +67,7 @@ structure Chapter15TameCharacterData
     (F : Chapter15LowerRamificationFiltration G)
     (C : Type*) [Group C] [Finite C] where
   character : chapter15Layer F 0 →* C
-  surjective : Function.Surjective character
+  injective : Function.Injective character
   cyclic : IsCyclic C
 
 /-- Hilbert's different formula in a ring-level lower-group interface. -/
@@ -75,28 +75,29 @@ def chapter15RingLowerRamificationGroup
     {G B : Type*} [Group G] [CommRing B] [MulSemiringAction G B]
     (P : Ideal B) (i : ℕ)
     (hstable : ∀ g : G, ∀ x : B,
-      x ∈ P ^ i ↔ g • x ∈ P ^ i) : Subgroup G := by
+      x ∈ P ^ (i + 1) ↔ g • x ∈ P ^ (i + 1)) : Subgroup G := by
   refine
-    { carrier := {g | ∀ x : B, g • x - x ∈ P ^ i}
+    { carrier := {g | ∀ x : B, g • x - x ∈ P ^ (i + 1)}
       one_mem' := by
         intro x
         simp
       mul_mem' := by
         intro g h hg hh x
-        have h₁ : g • (h • x - x) ∈ P ^ i :=
+        have h₁ : g • (h • x - x) ∈ P ^ (i + 1) :=
           (hstable g (h • x - x)).mp (hh x)
-        have h₂ : g • x - x ∈ P ^ i := hg x
+        have h₂ : g • x - x ∈ P ^ (i + 1) := hg x
         have hrewrite : g • h • x - x =
             g • (h • x - x) + (g • x - x) := by
           rw [smul_sub]
           exact (sub_add_sub_cancel _ _ _).symm
         rw [mul_smul, hrewrite]
-        exact (P ^ i).add_mem h₁ h₂
+        exact (P ^ (i + 1)).add_mem h₁ h₂
       inv_mem' := by
         intro g hg x
-        have h₁ : g⁻¹ • (g • x - x) ∈ P ^ i :=
+        have h₁ : g⁻¹ • (g • x - x) ∈ P ^ (i + 1) :=
           (hstable g⁻¹ (g • x - x)).mp (hg x)
-        have h₂ : -(g⁻¹ • (g • x - x)) ∈ P ^ i := (P ^ i).neg_mem h₁
+        have h₂ : -(g⁻¹ • (g • x - x)) ∈ P ^ (i + 1) :=
+          (P ^ (i + 1)).neg_mem h₁
         simpa [smul_sub, smul_smul] using h₂ }
 
 /-- Hilbert's formula identifies the different exponent with accumulated displacement. -/
@@ -104,11 +105,15 @@ theorem chapter15_hilbert_different_formula
     {A B G : Type*} [CommRing A] [IsDomain A] [CommRing B]
     [Algebra A B] [IsIntegrallyClosed A] [IsDedekindDomain B]
     [Module.Finite A B] [Module.IsTorsionFree A B]
+    [Algebra.IsSeparable (FractionRing A) (FractionRing B)]
     [Group G] [Finite G] [MulSemiringAction G B]
     [SMulCommClass G A B] [IsGaloisGroup G A B]
-    (P : Ideal B) (F : Chapter15LowerRamificationFiltration G)
+    (p : Ideal A) [p.IsMaximal]
+    (P : Ideal B) [P.IsPrime] [P.IsMaximal] [P.LiesOver p]
+    [Algebra.IsSeparable (A ⧸ p) (B ⧸ P)]
+    (F : Chapter15LowerRamificationFiltration G)
     (hstable : ∀ i : ℕ, ∀ g : G, ∀ x : B,
-      x ∈ P ^ i ↔ g • x ∈ P ^ i)
+      x ∈ P ^ (i + 1) ↔ g • x ∈ P ^ (i + 1))
     (hF : ∀ i : ℕ,
       F.group i = chapter15RingLowerRamificationGroup P i (hstable i)) :
     chapter15DifferentExponent A B P =
@@ -169,7 +174,7 @@ theorem chapter15_different_exponent_tower
     [Module.IsTorsionFree B C]
     [Algebra.IsSeparable (FractionRing A) (FractionRing C)]
     (p : Ideal A) (P : Ideal B) (Q : Ideal C)
-    [p.IsPrime] [P.IsPrime] [Q.IsPrime]
+    [p.IsPrime] [p.IsMaximal] [P.IsPrime] [P.IsMaximal] [Q.IsPrime] [Q.IsMaximal]
     [P.LiesOver p] [Q.LiesOver P] :
     chapter15DifferentExponent A C Q =
       chapter15DifferentExponent B C Q +
@@ -189,6 +194,7 @@ theorem chapter15_discriminant_exponent_eq_residue_degree_mul_different
     {A B : Type*} [CommRing A] [CommRing B]
     [Algebra A B] [IsDedekindDomain A] [IsDedekindDomain B]
     [Module.Finite A B] [Module.IsTorsionFree A B]
+    [Algebra.IsSeparable (FractionRing A) (FractionRing B)]
     (p : Ideal A) (P : Ideal B) [p.IsPrime] [p.IsMaximal]
     [P.IsPrime] [P.LiesOver p]
     (hbranches : (p.primesOver B).ncard = 1) :

@@ -33,19 +33,20 @@ theorem chapter04_degree_zero_corestriction_is_norm
   exact D.corestriction_is_norm
 
 /-- The global Brauer localization/corestriction square (4.18). -/
-structure Chapter04BrauerLocalizationCompatibilityData (I : Type u) where
+structure Chapter04BrauerLocalizationCompatibilityData (I J : Type u) where
   globalE : Type u
   [globalEGroup : AddCommGroup globalE]
   globalF : Type u
   [globalFGroup : AddCommGroup globalF]
   localE : I → Type u
   [localEGroup : ∀ i, AddCommGroup (localE i)]
-  localF : I → Type u
-  [localFGroup : ∀ i, AddCommGroup (localF i)]
-  localizationE : globalE →+ (∀ i, localE i)
-  localizationF : globalF →+ (∀ i, localF i)
+  localF : J → Type u
+  [localFGroup : ∀ j, AddCommGroup (localF j)]
+  localizationE : globalE →+ chapter04LocalBrauerSum I localE
+  localizationF : globalF →+ chapter04LocalBrauerSum J localF
   globalCorestriction : globalE →+ globalF
-  localCorestriction : (∀ i, localE i) →+ (∀ i, localF i)
+  localCorestriction : chapter04LocalBrauerSum I localE →+
+    chapter04LocalBrauerSum J localF
   localization_commutes :
     localizationF.comp globalCorestriction = localCorestriction.comp localizationE
 
@@ -55,7 +56,7 @@ attribute [instance] Chapter04BrauerLocalizationCompatibilityData.globalEGroup
   Chapter04BrauerLocalizationCompatibilityData.localFGroup
 
 theorem chapter04_brauer_corestriction_localization_commutes
-    {I : Type*} (D : Chapter04BrauerLocalizationCompatibilityData I)
+    {I J : Type*} (D : Chapter04BrauerLocalizationCompatibilityData I J)
     (x : D.globalE) :
     D.localizationF (D.globalCorestriction x) =
       D.localCorestriction (D.localizationE x) := by
@@ -67,18 +68,18 @@ theorem chapter04_brauer_corestriction_localization_commutes
 structure Chapter04AdelicNormData (I : Type u) [Fintype I] where
   localE : I → Type u
   [localEGroup : ∀ i, CommGroup (localE i)]
-  localF : I → Type u
-  [localFGroup : ∀ i, CommGroup (localF i)]
-  localNorm : ∀ i, localE i →* localF i
-  adelicNorm : (∀ i, localE i) →* (∀ i, localF i)
+  localF : Type u
+  [localFGroup : CommGroup localF]
+  localNorm : ∀ i, localE i →* localF
+  adelicNorm : (∀ i, localE i) →* localF
   adelic_norm_formula : ∀ y,
-    adelicNorm y = fun i => localNorm i (y i)
+    adelicNorm y = ∏ i, localNorm i (y i)
   EPrincipal : Type u
   [ePrincipalGroup : CommGroup EPrincipal]
   FPrincipal : Type u
   [fPrincipalGroup : CommGroup FPrincipal]
   principalE : EPrincipal →* (∀ i, localE i)
-  principalF : FPrincipal →* (∀ i, localF i)
+  principalF : FPrincipal →* localF
   fieldNorm : EPrincipal →* FPrincipal
   principal_norm_formula :
     (adelicNorm.comp principalE) = (principalF.comp fieldNorm)
@@ -91,7 +92,7 @@ attribute [instance] Chapter04AdelicNormData.localEGroup
 theorem chapter04_adelic_norm_is_product_of_local_norms
     {I : Type*} [Fintype I]
     (D : Chapter04AdelicNormData I) (y : ∀ i, D.localE i) :
-    D.adelicNorm y = fun i => D.localNorm i (y i) := by
+    D.adelicNorm y = ∏ i, D.localNorm i (y i) := by
   exact D.adelic_norm_formula y
 
 theorem chapter04_adelic_norm_preserves_principal_ideles
@@ -104,22 +105,18 @@ theorem chapter04_adelic_norm_preserves_principal_ideles
 
 /-- Finite-index induction and coinduction have the same underlying module. -/
 structure Chapter04FiniteIndexInductionCoinductionData where
-  induced : Type u
-  [inducedAddGroup : AddCommGroup induced]
-  coinduced : Type u
-  [coinducedAddGroup : AddCommGroup coinduced]
+  induced : ModuleCat ℤ
+  coinduced : ModuleCat ℤ
   cosetRepresentatives : Type u
   [fintypeCosetRepresentatives : Fintype cosetRepresentatives]
-  induction_coinduction_equiv : induced ≃+ coinduced
+  induction_coinduction_iso : induced ≅ coinduced
 
-attribute [instance] Chapter04FiniteIndexInductionCoinductionData.inducedAddGroup
-  Chapter04FiniteIndexInductionCoinductionData.coinducedAddGroup
-  Chapter04FiniteIndexInductionCoinductionData.fintypeCosetRepresentatives
+attribute [instance] Chapter04FiniteIndexInductionCoinductionData.fintypeCosetRepresentatives
 
 theorem chapter04_finite_index_induction_is_coinduction
     (D : Chapter04FiniteIndexInductionCoinductionData) :
-    Nonempty (D.induced ≃+ D.coinduced) := by
-  exact ⟨D.induction_coinduction_equiv⟩
+    Nonempty (D.induced ≅ D.coinduced) := by
+  exact ⟨D.induction_coinduction_iso⟩
 
 /- The canonical Shapiro declaration is used directly from pinned Mathlib. -/
 theorem chapter04_shapiro_coinduced

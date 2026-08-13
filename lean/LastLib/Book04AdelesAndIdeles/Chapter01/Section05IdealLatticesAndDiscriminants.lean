@@ -55,9 +55,11 @@ theorem chapter01_integral_ideal_lattice_covolume
         (E := chapter01MinkowskiSpace K)
         (NumberField.mixedEmbedding.idealLattice K (FractionalIdeal.mk0 K I)) =
       ((Ideal.absNorm (I : Ideal (𝓞 K)) : ℚ) : ℝ) *
-        (2⁻¹ : ℝ) ^ chapter01ComplexPlaceCount K *
+          (2⁻¹ : ℝ) ^ chapter01ComplexPlaceCount K *
           Real.sqrt |chapter01Discriminant K| := by
-  sorry
+  simpa [chapter01ComplexPlaceCount, chapter01Discriminant,
+    FractionalIdeal.coe_mk0, FractionalIdeal.coeIdeal_absNorm] using
+    (NumberField.mixedEmbedding.covolume_idealLattice K (FractionalIdeal.mk0 K I))
 
 theorem chapter01_fractional_basis_determinant_abs_norm
     (I : chapter01FractionalIdealGroup K)

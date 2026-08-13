@@ -13,7 +13,7 @@ universe uK uL uI uI' uC uC'
 
 variable {K : Type uK} {L : Type uL}
 variable {I_K : Type uI} {I_L : Type uI'} {C_K : Type uC} {C_L : Type uC'}
-variable [Field K] [Field L] [Algebra K L]
+variable [Field K] [Field L] [NumberField K] [NumberField L] [Algebra K L]
 variable [CommGroup I_K] [CommGroup I_L] [CommGroup C_K] [CommGroup C_L]
 variable [FiniteDimensional K L]
 
@@ -84,6 +84,7 @@ noncomputable def chapter05_finite_global_reciprocity_abelian
 /-- In the abelian case the norm quotient has the degree of the extension. -/
 theorem chapter05_finite_global_reciprocity_abelian_index
     [IsAbelianGalois K L]
+    [Fintype (Gal(L / K))]
     (X : Chapter05ClassFormationInput K L I_K I_L C_K C_L) :
     Nat.card (C_K ⧸ chapter05InputNormSubgroup X) = Module.finrank K L := by
   sorry

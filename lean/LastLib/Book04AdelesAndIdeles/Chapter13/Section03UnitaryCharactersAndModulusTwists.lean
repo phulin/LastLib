@@ -40,7 +40,12 @@ def chapter13NormOneSubgroup (K : Type*) [Field K] [NumberField K] :
     Subgroup (Chapter13IdeleClass K) :=
   (chapter13IdeleClassModule K).ker
 
+/- The norm-one class group is the kernel itself.  Its quotient is the positive
+   magnitude direction, so keep the two objects distinct in the interface. -/
 abbrev Chapter13NormOneClass (K : Type*) [Field K] [NumberField K] :=
+  chapter13NormOneSubgroup K
+
+abbrev Chapter13PositiveNormQuotient (K : Type*) [Field K] [NumberField K] :=
   Chapter13IdeleClass K ⧸ chapter13NormOneSubgroup K
 
 theorem chapter13_norm_one_iff_module_one
@@ -58,7 +63,7 @@ before those chapters are merged. -/
 structure Chapter13NormDirectionData (K : Type*) [Field K] [NumberField K] where
   normOne_compact : IsCompact (chapter13NormOneSubgroup K : Set (Chapter13IdeleClass K))
   quotient_equiv :
-    Chapter13NormOneClass K ≃ₜ* ℝ≥0ˣ
+    Chapter13PositiveNormQuotient K ≃ₜ* ℝ≥0ˣ
   quotient_module :
     ∀ x : Chapter13IdeleClass K,
       (((quotient_equiv (QuotientGroup.mk' (chapter13NormOneSubgroup K) x) : ℝ≥0ˣ) : ℝ≥0) : ℝ) =
@@ -76,7 +81,7 @@ theorem chapter13_character_absolute_value_factors_through_norm_one_quotient
     (K : Type*) [Field K] [NumberField K]
     (D : Chapter13NormDirectionData K)
     (χ : Chapter13ClassCharacter K) :
-    ∃ f : Chapter13NormOneClass K →ₜ* ℝ,
+    ∃ f : Chapter13PositiveNormQuotient K →ₜ* ℝ,
       ∀ x : Chapter13IdeleClass K,
         f (QuotientGroup.mk' (chapter13NormOneSubgroup K) x) =
           chapter13CharacterAbsoluteValue K χ x := by
@@ -127,7 +132,6 @@ theorem chapter13CharacterUnitaryPart_apply
 
 theorem chapter13CharacterUnitaryPart_is_unitary
     (K : Type*) [Field K] [NumberField K]
-    (D : Chapter13NormDirectionData K)
     (χ : Chapter13ClassCharacter K) (σ : ℝ)
     (hσ : ∀ x, chapter13CharacterAbsoluteValue K χ x =
       chapter13RealModulusPower (chapter13IdeleClassModule K x) σ) :
@@ -196,7 +200,6 @@ theorem chapter13_rational_class_character_decomposes_on_product
 theorem chapter13_finite_character_factors_through_finite_quotient
     {F Q : Type*} [CommGroup F] [CommGroup Q]
     (q : F →* Q) (hsurj : Function.Surjective q) (χ : F →* ℂˣ)
-    (hχ : ∃ n : ℕ, 0 < n ∧ ∀ x, χ x ^ n = 1)
     (hq : ∀ x, q x = 1 → χ x = 1) :
     ∃ θ : Q →* ℂˣ, θ.comp q = χ := by
   sorry

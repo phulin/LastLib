@@ -1,4 +1,23 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.Section02LeadingTermsAndDigits
+import Mathlib.Algebra.Module.DedekindDomain
+import Mathlib.Algebra.Module.PID
+import Mathlib.RingTheory.DedekindDomain.AdicValuation
+import Mathlib.RingTheory.DedekindDomain.Dvr
+import Mathlib.RingTheory.DedekindDomain.Factorization
+import Mathlib.RingTheory.DiscreteValuationRing.Basic
+import Mathlib.RingTheory.FractionalIdeal.Basic
+import Mathlib.RingTheory.FractionalIdeal.Inverse
+import Mathlib.RingTheory.FractionalIdeal.Operations
+import Mathlib.RingTheory.LocalRing.Length
+import Mathlib.RingTheory.Localization.AtPrime.Basic
+import Mathlib.RingTheory.Localization.AtPrime.Extension
+import Mathlib.RingTheory.RamificationInertia.Ramification
+import Mathlib.RingTheory.Valuation.Basic
+import Mathlib.RingTheory.Valuation.ValuationRing
+import Mathlib.RingTheory.Valuation.Discrete.Basic
+import Mathlib.RingTheory.Valuation.Discrete.IsDiscreteValuationRing
+import Mathlib.RingTheory.Valuation.Discrete.RankOne
+import Mathlib.Tactic.Order
+import Mathlib.Tactic.Ring
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter05
 
@@ -617,7 +636,8 @@ def chapterLocalizedIdealExponentAtPrime (v : HeightOneSpectrum R)
   ∃ m : ℕ, n = (m : ℤ) ∧
     J = IsLocalRing.maximalIdeal (Localization.AtPrime v.asIdeal) ^ m
 
-/-- Book §5.3: localization at `𝔭` projects the global exponent vector to its `𝔭` coordinate. -/
+/-- Book §5.3: integral-ideal localization projects the global exponent vector
+    to its `𝔭` coordinate. -/
 theorem chapter_localization_projects_global_exponent
     (v : HeightOneSpectrum R) (I : Ideal R) (hI : I ≠ ⊥) :
     chapterLocalizedIdealExponentAtPrime (R := R) v
@@ -665,11 +685,15 @@ theorem chapter_localization_projects_global_exponent
 
 /-- The projection statement written directly as `val_𝔭(I)`. -/
 theorem chapter_localization_exponent_is_p_coordinate
-    (v : HeightOneSpectrum R)
-    (I : FractionalIdeal (nonZeroDivisors R) K) :
-    chapterGlobalIdealExponentVector (R := R) (K := K) I v =
-      chapterGlobalIdealExponent (R := R) (K := K) v I := by
-  rfl
+    (v : HeightOneSpectrum R) (I : Ideal R) (hI : I ≠ ⊥) :
+    ∃ m : ℕ,
+      chapterGlobalIdealExponentVector (R := R) (K := K)
+          (I : FractionalIdeal (nonZeroDivisors R) K) v = (m : ℤ) ∧
+        chapterLocalizeIdealAtPrime (R := R) v I =
+          IsLocalRing.maximalIdeal (Localization.AtPrime v.asIdeal) ^ m := by
+  rcases chapter_localization_projects_global_exponent
+      (R := R) (K := K) v I hI with ⟨m, hm, hlocal⟩
+  exact ⟨m, hm, hlocal⟩
 
 end DedekindLocalizationProjection
 

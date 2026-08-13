@@ -408,42 +408,14 @@ theorem chapter10_valuation_extension_exists
   · intro hx
     exact hW ⟨x, hx⟩
 
-/-- The algebraic case of the extension theorem. -/
+/-- Compatibility wrapper for the extension theorem; algebraicity is not needed. -/
 theorem chapter10_algebraic_valuation_extension_exists
     {K L Γ₀ : Type*} [Field K] [Field L] [Algebra K L]
-    [Algebra.IsAlgebraic K L]
     [LinearOrderedCommGroupWithZero Γ₀]
     (v : Valuation K Γ₀) :
     ∃ W : ValuationSubring L,
-      Chapter10ContractsTo v.valuationSubring.toSubring W.toSubring := by
-  let f : v.valuationSubring →+* L :=
-    (algebraMap K L).comp v.valuationSubring.subtype
-  obtain ⟨W, hW, hlocal⟩ := IsLocalRing.exists_factor_valuationRing f
-  let fW := f.codRestrict W.toSubring hW
-  refine ⟨W, ?_⟩
-  intro x
-  constructor
-  · intro hx
-    by_cases hxV : x ∈ v.valuationSubring
-    · exact hxV
-    · have hx0 : x ≠ 0 := by
-        intro hx0
-        exact hxV (hx0 ▸ v.valuationSubring.zero_mem)
-      have hxinv : x⁻¹ ∈ v.valuationSubring :=
-        (v.valuationSubring.mem_or_inv_mem x).resolve_left hxV
-      have hunit_img : IsUnit (fW ⟨x⁻¹, hxinv⟩) := by
-        apply isUnit_iff_exists_inv.mpr
-        refine ⟨⟨algebraMap K L x, hx⟩, ?_⟩
-        apply Subtype.ext
-        simp [fW, f, hx0]
-      have hunit_src : IsUnit (⟨x⁻¹, hxinv⟩ : v.valuationSubring) :=
-        (isUnit_map_iff fW _).mp hunit_img
-      obtain ⟨a, ha⟩ := isUnit_iff_exists_inv.mp hunit_src
-      have hax : (a : K) = x :=
-        (eq_of_inv_mul_eq_one (congrArg Subtype.val ha)).symm
-      exact hax ▸ a.property
-  · intro hx
-    exact hW ⟨x, hx⟩
+      Chapter10ContractsTo v.valuationSubring.toSubring W.toSubring :=
+  chapter10_valuation_extension_exists v
 
 end
 

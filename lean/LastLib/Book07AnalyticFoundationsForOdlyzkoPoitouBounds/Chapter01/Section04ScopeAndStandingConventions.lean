@@ -1,5 +1,5 @@
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01.Section03TheShapeOfAUsefulLowerBound
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01.Dependencies
 
 namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01
 
@@ -58,7 +58,19 @@ theorem chapter01ZeroWindow_conjugation_mem_iff
     (Z : Chapter01ZeroMultiplicity) (T : ℝ) (z : ℂ) :
     star z ∈ chapter01ZeroWindow Z T ↔
       z ∈ chapter01ZeroWindow Z T := by
-  sorry
+  rw [chapter01ZeroWindow_mem_iff, chapter01ZeroWindow_mem_iff]
+  have hm := Z.multiplicity_conjugation z
+  constructor
+  · rintro ⟨hm', hT⟩
+    refine ⟨?_, ?_⟩
+    · rw [hm] at hm'
+      exact hm'
+    · simpa using hT
+  · rintro ⟨hm', hT⟩
+    refine ⟨?_, ?_⟩
+    · rw [hm]
+      exact hm'
+    · simpa using hT
 
 noncomputable def chapter01SymmetricZeroPartialSum
     (Z : Chapter01ZeroMultiplicity) (F : ℂ → ℂ) (T : ℝ) : ℂ :=

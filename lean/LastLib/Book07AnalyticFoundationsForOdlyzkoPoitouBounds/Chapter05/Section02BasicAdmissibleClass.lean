@@ -1,4 +1,5 @@
 import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.Core
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter04.Section05DiscriminantAndAnalyticConductor
 
 namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05
 
@@ -6,6 +7,7 @@ noncomputable section
 
 open Set MeasureTheory Filter
 open scoped BigOperators Topology
+open LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter04
 
 /-! ## 5.2. The basic admissible class -/
 
@@ -84,54 +86,38 @@ theorem chapter05_basically_admissible_fourier_decay
       ‖chapter05FourierTransform F t‖ ≤ C / (1 + |t|) ^ 2 := by
   sorry
 
-/-
-DEPENDENCY_GUESS: The reconciled Chapter 4 draft should expose the nontrivial
-zero enumeration for `ξ_K`, including multiplicity, critical-strip location,
-local finiteness, and the unit-band estimate corresponding to (4.4).  This
-local interface records only those analytic facts needed to turn the decay
-above into convergence; it is intended to be replaced by that earlier API.
--/
-structure Chapter05ZeroCountingInterface (D : ℝ) (n : ℕ) where
-  discriminantLower : 1 ≤ D
-  degreePositive : 0 < n
-  zero : ℕ → ℂ
-  criticalStrip : ∀ k : ℕ, 0 ≤ (zero k).re ∧ (zero k).re ≤ 1
-  locallyFinite : ∀ T : ℝ, 0 ≤ T →
-    Set.Finite {k : ℕ | |(zero k).im| ≤ T}
-  unitBandBound : ∃ C : ℝ, 0 ≤ C ∧ ∀ T : ℝ, 0 ≤ T →
-    ((Set.ncard {k : ℕ |
-      T < |(zero k).im| ∧ |(zero k).im| ≤ T + 1} : ℕ) : ℝ) ≤
-      C * (Real.log D + (n : ℝ) * Real.log (T + 3))
-
-/-- The convergent sum over an enumeration in which zeros are repeated with
-their multiplicities.  Under the local-finiteness/counting interface this is
-the value of the symmetric zero sum. -/
+/-- The convergent sum over the Chapter 4 zero set, weighted by analytic
+multiplicity. -/
 noncomputable def chapter05SymmetricZeroSum
-    {D : ℝ} {n : ℕ} (Z : Chapter05ZeroCountingInterface D n)
-    (F : ℝ → ℝ) : ℂ :=
-  ∑' k : ℕ, chapter05BilateralLaplaceTransform F (Z.zero k)
+    (K : Type*) [Field K] [NumberField K] (F : ℝ → ℝ) : ℂ :=
+  ∑' ρ : ℂ,
+    (chapter04ZeroMultiplicity K ρ : ℂ) *
+      chapter05BilateralLaplaceTransform F ρ
 
 /-- The finite symmetric truncation at height `T`; the zero value for negative
 `T` keeps the definition total. -/
 noncomputable def chapter05SymmetricZeroPartialSum
-    {D : ℝ} {n : ℕ} (Z : Chapter05ZeroCountingInterface D n)
+    (K : Type*) [Field K] [NumberField K]
     (F : ℝ → ℝ) (T : ℝ) : ℂ :=
-  if hT : 0 ≤ T then
-    Finset.sum (Z.locallyFinite T hT).toFinset
-      (fun k => chapter05BilateralLaplaceTransform F (Z.zero k))
+  if _hT : 0 ≤ T then
+    Finset.sum (chapter04_zero_band_finite K T).toFinset
+      (fun ρ => (chapter04ZeroMultiplicity K ρ : ℂ) *
+        chapter05BilateralLaplaceTransform F ρ)
   else 0
 
 theorem chapter05_symmetric_zero_sum_summable
-    {D : ℝ} {n : ℕ} (Z : Chapter05ZeroCountingInterface D n)
+    (K : Type*) [Field K] [NumberField K]
     {F : ℝ → ℝ} (hF : Chapter05BasicallyAdmissible F) :
-    Summable (fun k : ℕ => chapter05BilateralLaplaceTransform F (Z.zero k)) := by
+    Summable (fun ρ : ℂ =>
+      (chapter04ZeroMultiplicity K ρ : ℂ) *
+        chapter05BilateralLaplaceTransform F ρ) := by
   sorry
 
 theorem chapter05_symmetric_zero_sum_converges
-    {D : ℝ} {n : ℕ} (Z : Chapter05ZeroCountingInterface D n)
+    (K : Type*) [Field K] [NumberField K]
     {F : ℝ → ℝ} (hF : Chapter05BasicallyAdmissible F) :
-    Tendsto (chapter05SymmetricZeroPartialSum Z F) atTop
-      (𝓝 (chapter05SymmetricZeroSum Z F)) := by
+    Tendsto (chapter05SymmetricZeroPartialSum K F) atTop
+      (𝓝 (chapter05SymmetricZeroSum K F)) := by
   sorry
 
 end

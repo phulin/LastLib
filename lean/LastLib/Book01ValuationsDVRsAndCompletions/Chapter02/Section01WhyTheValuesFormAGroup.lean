@@ -15,6 +15,7 @@ import Mathlib.Tactic.Abel
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Order
 import Mathlib.Tactic.Push
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter02

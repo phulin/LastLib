@@ -20,7 +20,7 @@ theorem chapter04_veryAmple_implies_ample
 
 /-- Over a quasi-compact base, a quasi-compact finite-type ample family has a positive power with a projective-space immersion. -/
 theorem chapter04_ample_has_quasiProjective_power
-    {X S : Scheme.{u}} (f : X ⟶ S) [CompactSpace S] [QuasiCompact f]
+    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact (𝟙 S)] [QuasiCompact f]
     [LocallyOfFiniteType f] [QuasiSeparated f]
     (L : Chapter04LineBundle X) (hL : chapter04Ample f L) :
     ∃ d : ℕ, 0 < d ∧ chapter04VeryAmple f (chapter04LineBundleTensorPower L d) := by
@@ -38,7 +38,7 @@ theorem chapter04_veryAmple_is_quasiProjective
   exact ⟨L, hL⟩
 
 theorem chapter04_ample_power_gives_quasiProjective_immersion
-    {X S : Scheme.{u}} (f : X ⟶ S) [CompactSpace S] [QuasiCompact f]
+    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact (𝟙 S)] [QuasiCompact f]
     [LocallyOfFiniteType f] [QuasiSeparated f]
     (L : Chapter04LineBundle X) (hL : chapter04Ample f L) :
     ∃ d : ℕ, 0 < d ∧

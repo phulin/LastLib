@@ -4,3 +4,6 @@ import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapte
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11.Section03ConfigurationSpaces
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11.Section04UniversalDivisorOnASmoothCurve
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11.Section05SymmetricPowersAndBaseChange
+
+/- The aggregator follows the dependency order from quotients through
+   configuration spaces, the universal divisor, and base-change coherence. -/

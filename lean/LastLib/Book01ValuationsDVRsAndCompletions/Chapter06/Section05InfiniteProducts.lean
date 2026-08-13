@@ -1,9 +1,10 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter06.Section03CauchySequences
+import Mathlib.Tactic.Ring
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter06
 
 open Set Filter Function
-open scoped BigOperators Pointwise Topology WithZero NNReal Valued PowerSeries
+open scoped BigOperators Pointwise Topology WithZero NNReal Valued
 
 noncomputable section
 
@@ -38,59 +39,61 @@ theorem chapter06_product_tail_minus_one_bound
     v (chapter06ProductTail a n m - 1) ≤
       (Finset.Ico n m).sup' hs (fun i => v (a i)) := by
   classical
-  have hunit : ∀ i ∈ Finset.Ico n m, v (1 + a i) = 1 := by
+  have hfactor : ∀ i : ℕ, v (a i) < 1 → v (1 + a i) = 1 := by
     intro i hi
-    have hi' := hsmall i hi
-    have hi'' : v (a i) < v (1 : K) := by simpa using hi'
-    simpa using IsNonarchimedean.add_eq_left_of_lt hv hi''
-  have hmain : ∀ (s : Finset ℕ) (hs : s.Nonempty),
-      s ⊆ Finset.Ico n m → (∀ i ∈ s, v (a i) < 1) →
-      v ((Finset.prod s (fun i => 1 + a i)) - 1) ≤ s.sup' hs
-        (fun i => v (a i)) := by
-    intro s hs
-    induction s using Finset.induction_on with
-    | empty =>
-        exact (Finset.not_nonempty_empty hs).elim
-    | @insert i s his ih =>
-        intro hsubset hsmall'
-        have hiI : i ∈ Finset.Ico n m := hsubset (Finset.mem_insert_self i s)
-        have hunit_s : ∀ j ∈ s, v (1 + a j) = 1 := fun j hj =>
-          hunit j (hsubset (Finset.mem_insert_of_mem hj))
-        have hprod_s : v (Finset.prod s (fun j => 1 + a j)) = 1 := by
-          rw [map_prod]
-          apply Finset.prod_eq_one
-          intro j hj
-          exact hunit_s j hj
-        by_cases hsne : s.Nonempty
-        · have hsmall_s : ∀ j ∈ s, v (a j) < 1 := fun j hj => hsmall' j
-            (Finset.mem_insert_of_mem hj)
-          have hind := ih hsne (fun j hj => hsubset (Finset.mem_insert_of_mem hj)) hsmall_s
-          have hid : (Finset.prod (insert i s) (fun j => 1 + a j)) - 1 =
-              a i * (Finset.prod s (fun j => 1 + a j)) +
-                ((Finset.prod s (fun j => 1 + a j)) - 1) := by
-            rw [Finset.prod_insert his]
+    have hlocal : chapter06Distance v (1 + a i) 1 < v 1 := by
+      change v ((1 + a i) - 1) < v 1
+      simpa using hi
+    simpa using
+      (chapter06_abs_value_locally_constant_at_nonzero v hv
+        (x := (1 : K)) (y := 1 + a i) one_ne_zero hlocal)
+  have hprod : ∀ t : Finset ℕ, (∀ i ∈ t, v (a i) < 1) →
+      v (Finset.prod t (fun i => (1 + a i))) = 1 := by
+    intro t ht
+    rw [map_prod]
+    apply Finset.prod_eq_one
+    intro i hi
+    exact hfactor i (ht i hi)
+  have hbound : ∀ (t : Finset ℕ) (ht : t.Nonempty),
+      (∀ i ∈ t, v (a i) < 1) →
+        v (Finset.prod t (fun i => (1 + a i)) - 1) ≤
+          t.sup' ht (fun i => v (a i)) := by
+    intro t ht
+    induction t using Finset.induction_on with
+    | empty => exact (Finset.not_nonempty_empty ht).elim
+    | @insert i t hi ih =>
+        intro hti
+        by_cases htn : t.Nonempty
+        · have htail := ih htn (fun j hj => hti j (Finset.mem_insert_of_mem hj))
+          have hdecomp :
+              Finset.prod (insert i t) (fun j => (1 + a j)) - 1 =
+                a i * Finset.prod t (fun j => (1 + a j)) +
+                  (Finset.prod t (fun j => (1 + a j)) - 1) := by
+            rw [Finset.prod_insert hi]
             ring
+          rw [hdecomp]
           calc
-            v ((Finset.prod (insert i s) (fun j => 1 + a j)) - 1) ≤
-                max (v (a i * (Finset.prod s (fun j => 1 + a j))))
-                  (v ((Finset.prod s (fun j => 1 + a j)) - 1)) := by
-              rw [hid]
-              exact hv _ _
+            v (a i * Finset.prod t (fun j => (1 + a j)) +
+                (Finset.prod t (fun j => (1 + a j)) - 1)) ≤
+                max (v (a i * Finset.prod t (fun j => (1 + a j))))
+                  (v (Finset.prod t (fun j => (1 + a j)) - 1)) := hv _ _
+            _ = max (v (a i) * v (Finset.prod t (fun j => (1 + a j))))
+                  (v (Finset.prod t (fun j => (1 + a j)) - 1)) := by
+              rw [v.map_mul]
             _ = max (v (a i))
-                (v ((Finset.prod s (fun j => 1 + a j)) - 1)) := by
-              rw [v.map_mul, hprod_s, mul_one]
-            _ ≤ (insert i s).sup' hs (fun j => v (a j)) := by
-              exact max_le
-                (Finset.le_sup' (fun j : ℕ => v (a j))
-                  (Finset.mem_insert_self i s))
-                (hind.trans (Finset.sup'_mono
-                  (fun j : ℕ => v (a j))
-                  (fun j hj => Finset.mem_insert_of_mem hj) hsne))
-        · have hse : s = ∅ := Finset.not_nonempty_iff_eq_empty.mp hsne
-          subst s
-          simp [Finset.prod_singleton, Finset.sup'_singleton]
-  simpa [chapter06ProductTail] using
-    hmain (Finset.Ico n m) hs (Subset.rfl) hsmall
+                  (v (Finset.prod t (fun j => (1 + a j)) - 1)) := by
+              rw [hprod t (fun j hj => hti j (Finset.mem_insert_of_mem hj))]
+              simp
+            _ ≤ max (v (a i)) (t.sup' htn (fun j => v (a j))) :=
+              max_le (le_max_left _ _)
+                (htail.trans (le_max_right _ _))
+            _ = (insert i t).sup' (by simp) (fun j => v (a j)) := by
+              simp [Finset.sup'_insert, htn]
+        · have hte : t = ∅ := Finset.not_nonempty_iff_eq_empty.mp htn
+          subst t
+          simp
+  unfold chapter06ProductTail
+  exact hbound (Finset.Ico n m) hs hsmall
 
 /-- Eventually, factors in a product with `aₙ → 0` are units of absolute value one. -/
 theorem chapter06_eventual_product_factors_are_units
@@ -100,9 +103,13 @@ theorem chapter06_eventual_product_factors_are_units
   obtain ⟨N, hN⟩ := hzero 1 zero_lt_one
   refine ⟨N, ?_⟩
   intro n hn
-  have hn' := hN n hn
-  have hn'' : v (a n) < v (1 : K) := by simpa using hn'
-  exact ⟨hn', by simpa using IsNonarchimedean.add_eq_left_of_lt hv hn''⟩
+  refine ⟨hN n hn, ?_⟩
+  have hlocal : chapter06Distance v (1 + a n) 1 < v 1 := by
+    change v ((1 + a n) - 1) < v 1
+    simpa using hN n hn
+  simpa using
+    (chapter06_abs_value_locally_constant_at_nonzero v hv
+      (x := (1 : K)) (y := 1 + a n) one_ne_zero hlocal)
 
 /-- In a complete nonarchimedean field, `aₙ → 0` makes the product converge. -/
 theorem chapter06_infinite_product_converges_of_terms_tend_to_zero

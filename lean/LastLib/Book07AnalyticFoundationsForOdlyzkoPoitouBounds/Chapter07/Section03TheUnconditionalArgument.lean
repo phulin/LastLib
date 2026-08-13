@@ -15,8 +15,11 @@ theorem chapter07FOfG_eq_div_cosh (G : Chapter07TestFunction) :
 
 def chapter07UnconditionalAdmissible (F : Chapter07TestFunction) : Prop :=
   ∃ G : Chapter07TestFunction,
-    F = chapter07FOfG G ∧ Integrable G ∧ chapter07Even G ∧
-      chapter07PositiveType G
+    F = chapter07FOfG G ∧
+      LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.Chapter05BasicallyAdmissible F ∧
+      Integrable G ∧
+      chapter07Even G ∧ chapter07PointwiseNonnegative G ∧
+        chapter07PositiveType G
 
 def chapter07PairedZeroContribution
     (G : Chapter07TestFunction) (β γ : ℝ) : ℝ :=

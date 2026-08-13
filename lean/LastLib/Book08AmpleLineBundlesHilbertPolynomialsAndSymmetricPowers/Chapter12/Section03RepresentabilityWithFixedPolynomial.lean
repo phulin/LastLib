@@ -11,7 +11,9 @@ open scoped BigOperators
 
 /-- One summand in a Gotzmann binomial expansion. -/
 def chapter12GotzmannTerm (a i n : ℕ) : ℚ :=
-  (Nat.choose (n + a - i) a : ℚ)
+  ((Finset.prod (Finset.range a)
+      (fun j => (((n + a : ℤ) - (i : ℤ) - (j : ℤ)) : ℤ)) : ℤ) : ℚ) /
+    (Nat.factorial a : ℚ)
 
 /-- The displayed binomial expansion of a numerical Hilbert polynomial. -/
 structure Chapter12GotzmannExpansion
@@ -21,19 +23,19 @@ structure Chapter12GotzmannExpansion
   monotone : ∀ i j : Fin length, i.1 ≤ j.1 → a j ≤ a i
   bounded : ∀ i : Fin length, a i ≤ r
   expansion : ∀ n : ℕ,
-    P.eval (n : ℚ) = ∑ i : Fin length, chapter12GotzmannTerm (a i) i.1 n
+    P.eval n = ∑ i : Fin length, chapter12GotzmannTerm (a i) i.1 n
 
 /- The occurrence hypothesis in Gotzmann's theorem is kept separate from the
   binomial expansion it produces. -/
 structure Chapter12NumericalHilbertPolynomialRealization
     (P : Chapter12NumericalPolynomial) (r : ℕ) where
   coefficientRing : Type*
-  [coefficientRing_commRing : CommRing coefficientRing]
+  [coefficientRing_field : Field coefficientRing]
   ideal : Chapter12SaturatedHomogeneousIdeal coefficientRing r P
   ideal_has_polynomial :
     chapter12HasHomogeneousHilbertPolynomial ideal.ideal P
 
-attribute [instance] Chapter12NumericalHilbertPolynomialRealization.coefficientRing_commRing
+attribute [instance] Chapter12NumericalHilbertPolynomialRealization.coefficientRing_field
 
 def chapter12IsNumericalHilbertPolynomial (P : Chapter12NumericalPolynomial)
     (r : ℕ) : Prop :=
@@ -67,7 +69,7 @@ theorem chapter12_gotzmann_length_is_unique
 theorem chapter12_gotzmann_regular_bound
     (P : Chapter12NumericalPolynomial) (r : ℕ)
     (hP : chapter12IsNumericalHilbertPolynomial P r)
-    {A : Type*} [CommRing A]
+    {A : Type*} [Field A]
     (I : Chapter12SaturatedHomogeneousIdeal A r P)
     (hI : chapter12HasHomogeneousHilbertPolynomial I.ideal P) :
     chapter12IsMRegular I.ideal (chapter12GotzmannLength P r hP) ∧
@@ -78,7 +80,7 @@ theorem chapter12_gotzmann_regular_bound
 theorem chapter12_gotzmann_regular_bound_characteristic_free
     (P : Chapter12NumericalPolynomial) (r : ℕ)
     (hP : chapter12IsNumericalHilbertPolynomial P r)
-    {A : Type*} [CommRing A]
+    {A : Type*} [Field A]
     (I : Chapter12SaturatedHomogeneousIdeal A r P)
     (hI : chapter12HasHomogeneousHilbertPolynomial I.ideal P) :
     chapter12IsMRegular I.ideal (chapter12GotzmannLength P r hP) := by
@@ -97,6 +99,16 @@ structure Chapter12HilbertRepresentingScheme
     (T ⟶ Over.mk structureMap) ≃ Chapter12HilbertFamily D H T P
   universalFamily :
     Chapter12HilbertFamily D H (Over.mk structureMap) P
+  /-- The displayed universal family is the family represented by the
+      identity map of the representing scheme. -/
+  universalFamily_is_representing_identity :
+    representingEquivalence (Over.mk structureMap) (𝟙 (Over.mk structureMap)) =
+      universalFamily
+  representingEquivalence_natural :
+    ∀ {T U : Chapter12SchemeOver D.base} (g : T ⟶ U)
+      (f : U ⟶ Over.mk structureMap),
+      representingEquivalence T (g ≫ f) =
+        chapter12PullbackFamily D H g (representingEquivalence U f)
 
 attribute [instance] Chapter12HilbertRepresentingScheme.finitePresentation
 
@@ -191,7 +203,7 @@ theorem chapter12HilbertRepresentingEquivalence_natural
     chapter12HilbertRepresentingEquivalence D H P T (g ≫ f) =
       chapter12PullbackFamily D H g
         (chapter12HilbertRepresentingEquivalence D H P U f) := by
-  sorry
+  exact (chapter12HilbertRepresentingScheme D H P).representingEquivalence_natural g f
 
 /-- Containment of homogeneous ideals is the closed condition for `Z ⊂ X`. -/
 def chapter12HomogeneousIdealContains
@@ -217,8 +229,13 @@ structure Chapter12ClosedAmbientHilbertLocus
   carrier : Scheme
   inclusion : carrier ⟶ chapter12HilbertScheme D H P
   closed : IsClosedImmersion inclusion
-  universal_ideal_contains_ambient_ideal : Prop
-  containment_equations_start_at_common_regularity_bound : Prop
+  common_regularity_bound : ℕ
+  universal_family : Chapter12HilbertFamily D H
+    (Over.mk (inclusion ≫ chapter12HilbertSchemeMap D H P)) P
+  ambient_ideal : (chapter12BaseChange D
+    (Over.mk (inclusion ≫ chapter12HilbertSchemeMap D H P))).IdealSheafData
+  universal_ideal_contains_ambient_ideal :
+    chapter12IdealSheafContains ambient_ideal universal_family.closed.ideal
 
 theorem chapter12_closed_ambient_hilbert_locus_exists
     (D : Chapter12ProjectiveFamilySetup)

@@ -3,80 +3,20 @@ import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapte
 /-!
 ## 3.1 Definitions that survive change of base
 
-The first structure below is the one deliberately provisional interface in this draft.  The
-preceding projective-bundle chapter should replace it by the canonical relative `Proj` together
-with its universal quotient and base-change comparison.
+The shared relative projective-bundle and projective/quasi-projective interfaces are supplied by
+`Dependencies.lean`; this section records the source-order definitions and elementary bridges.
 -/
 
 namespace LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter03
 
 open CategoryTheory Limits AlgebraicGeometry
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02
 
 noncomputable section
 
 universe u
 
 variable {X Y S T : Scheme.{u}}
-
-/-- A finite locally free sheaf of modules on a scheme.
-
-This is the sheaf-theoretic form of a finite-rank projective bundle. -/
-def chapter03FiniteLocallyFree (E : S.Modules) : Prop :=
-  SheafOfModules.IsLocallyFree E ∧ SheafOfModules.IsFiniteType E
-
-/--
-`LOCAL_DEPENDENCY_GUESS`: the preceding chapter is expected to provide the relative projective
-bundle attached to a finite locally free module.  Only its scheme and structure morphism are
-needed for the definitions in this chapter; the universal quotient is intentionally not asserted
-here until that earlier API is available.
--/
-structure Chapter03RelativeProjectiveBundle (S : Scheme.{u}) (E : S.Modules) where
-  carrier : Scheme.{u}
-  projection : carrier ⟶ S
-
-/--
-`LOCAL_DEPENDENCY_GUESS`: existence of the relative projective bundle of a finite locally free
-module.  This declaration is a placeholder for the canonical construction from the preceding
-chapter, not an additional primitive assumption in the intended final API.
--/
-theorem chapter03_relativeProjectiveBundle_exists
-    (S : Scheme.{u}) (E : S.Modules) (hE : chapter03FiniteLocallyFree E) :
-    Nonempty (Chapter03RelativeProjectiveBundle S E) := by
-  sorry
-
-/-- A chosen relative projective bundle, pending replacement by the canonical preceding-chapter
-construction. -/
-noncomputable def chapter03RelativeProjectiveBundle
-    (S : Scheme.{u}) (E : S.Modules) (hE : chapter03FiniteLocallyFree E) :
-    Chapter03RelativeProjectiveBundle S E :=
-  Classical.choice (chapter03_relativeProjectiveBundle_exists S E hE)
-
-/-- A global projective presentation of a morphism. -/
-structure Chapter03ProjectivePresentation (f : X ⟶ S) where
-  module : S.Modules
-  finiteLocallyFree : chapter03FiniteLocallyFree module
-  ambient : Chapter03RelativeProjectiveBundle S module
-  embedding : X ⟶ ambient.carrier
-  isClosedImmersion : IsClosedImmersion embedding
-  overBase : embedding ≫ ambient.projection = f
-
-/-- A global quasi-projective presentation of a morphism. -/
-structure Chapter03QuasiProjectivePresentation (f : X ⟶ S) where
-  module : S.Modules
-  finiteLocallyFree : chapter03FiniteLocallyFree module
-  ambient : Chapter03RelativeProjectiveBundle S module
-  immersion : X ⟶ ambient.carrier
-  isImmersion : IsImmersion immersion
-  overBase : immersion ≫ ambient.projection = f
-
-/-- A morphism is projective when it admits a closed immersion into a relative projective bundle. -/
-def chapter03Projective (f : X ⟶ S) : Prop :=
-  Nonempty (Chapter03ProjectivePresentation f)
-
-/-- A morphism is quasi-projective when it admits a locally closed immersion into a relative
-projective bundle. -/
-def chapter03QuasiProjective (f : X ⟶ S) : Prop :=
-  Nonempty (Chapter03QuasiProjectivePresentation f)
 
 /-- The presentation form of projectivity. -/
 theorem chapter03_projective_iff_exists_presentation (f : X ⟶ S) :
@@ -93,16 +33,16 @@ theorem chapter03_projective_of_presentation (f : X ⟶ S)
     (E : S.Modules) (hE : chapter03FiniteLocallyFree E)
     (P : Chapter03RelativeProjectiveBundle S E) (i : X ⟶ P.carrier)
     (hi : IsClosedImmersion i) (overBase : i ≫ P.projection = f) :
-    chapter03Projective f :=
-  ⟨⟨E, hE, P, i, hi, overBase⟩⟩
+    chapter03Projective f := by
+  sorry
 
 /-- Constructor for the quasi-projective predicate from its presentation data. -/
 theorem chapter03_quasiProjective_of_presentation (f : X ⟶ S)
     (E : S.Modules) (hE : chapter03FiniteLocallyFree E)
     (P : Chapter03RelativeProjectiveBundle S E) (i : X ⟶ P.carrier)
     (hi : IsImmersion i) (overBase : i ≫ P.projection = f) :
-    chapter03QuasiProjective f :=
-  ⟨⟨E, hE, P, i, hi, overBase⟩⟩
+    chapter03QuasiProjective f := by
+  sorry
 
 /-- Eliminator for a projective presentation. -/
 theorem chapter03_projective_elim (f : X ⟶ S) {Q : Prop}
@@ -138,8 +78,16 @@ theorem chapter03_trivialModule_finiteLocallyFree (S : Scheme.{u}) (r : ℕ) :
 /-- The chosen relative projective space of rank `r`. -/
 noncomputable def chapter03ProjectiveSpaceBundle (S : Scheme.{u}) (r : ℕ) :
     Chapter03RelativeProjectiveBundle S (chapter03TrivialModule S r) :=
-  chapter03RelativeProjectiveBundle S (chapter03TrivialModule S r)
-    (chapter03_trivialModule_finiteLocallyFree S r)
+  { module :=
+    chapter02FreeQuasiCoherentModule S (Chapter02ProjectiveSpaceIndex r)
+    module_carrier := rfl
+    finiteLocallyFree := chapter03_trivialModule_finiteLocallyFree S r
+    canonical :=
+      { finiteLocallyFree := chapter03_trivialModule_finiteLocallyFree S r
+        data :=
+          (chapter02ProjectiveSpaceData S (Chapter02ProjectiveSpaceIndex r)).bundle
+        proper := by sorry
+        finite_presentation := by sorry } }
 
 /-- The relative projective space `ℙ^r_S`, as supplied by the preceding projective-bundle API. -/
 noncomputable def chapter03ProjectiveSpace (S : Scheme.{u}) (r : ℕ) : Scheme.{u} :=

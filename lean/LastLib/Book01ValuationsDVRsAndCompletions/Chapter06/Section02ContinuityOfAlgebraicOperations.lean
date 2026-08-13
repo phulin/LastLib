@@ -1,9 +1,13 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter06.Section01BallsAndTheStrongTriangleInequality
+import Mathlib.Topology.Algebra.Valued.ValuedField
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Ring
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter06
 
 open Set Filter Function
-open scoped BigOperators Pointwise Topology WithZero NNReal Valued PowerSeries
+open scoped BigOperators Pointwise Topology WithZero NNReal Valued
 
 noncomputable section
 
@@ -94,25 +98,43 @@ theorem chapter06_inversion_continuous_away_from_zero
       chapter06Distance v y x < δ →
         chapter06Distance v y⁻¹ x⁻¹ < ε := by
   intro ε hε
+  let δ : ℝ := min (v x) (ε * (v x) ^ 2)
   have hxpos : 0 < v x := v.pos hx
-  let δ : ℝ := min (v x) (ε * (v x * v x))
-  have hδ : 0 < δ := lt_min hxpos (mul_pos hε (mul_pos hxpos hxpos))
+  have hδ : 0 < δ := by
+    dsimp [δ]
+    exact lt_min hxpos (mul_pos hε (sq_pos_of_pos hxpos))
   refine ⟨δ, hδ, ?_⟩
-  intro y hy
+  intro y hxy
+  have hδx : δ ≤ v x := min_le_left _ _
   have hy0 : y ≠ 0 := by
-    intro hy0
+    intro hy
     subst y
-    have : v x < δ := by simpa [chapter06Distance, v.map_neg] using hy
-    exact (not_lt_of_ge (min_le_left _ _)) this
-  change v (y - x) < δ at hy
-  have hyx : v (y - x) < v x := lt_of_lt_of_le hy (min_le_left _ _)
-  have hval : v y = v x := by
-    calc
-      v y = v ((y - x) + x) := by rw [sub_add_cancel]
-      _ = v x := IsNonarchimedean.add_eq_right_of_lt hv hyx
-  rw [chapter06_inversion_difference_formula v hy0 hx, hval]
+    have : v x < δ := by
+      simpa [chapter06Distance, v.map_neg] using hxy
+    exact (not_lt_of_ge hδx) this
+  have hxyv : v (y - x) < v x := by
+    exact (show v (y - x) < δ by simpa [chapter06Distance] using hxy).trans_le hδx
+  have hy_le : v y ≤ v x := by
+    have h := chapter06_strong_triangle_inequality v hv y x 0
+    have h' : v y ≤ max (v (y - x)) (v x) := by
+      simpa [chapter06Distance] using h
+    exact h'.trans_eq (max_eq_right hxyv.le)
+  have hx_le : v x ≤ v y := by
+    have h := chapter06_strong_triangle_inequality v hv x y 0
+    have h' : v x ≤ max (v (x - y)) (v y) := by
+      simpa [chapter06Distance] using h
+    by_contra hnot
+    have hy_lt : v y < v x := lt_of_not_ge hnot
+    have hxyv' : v (x - y) < v x := by
+      simpa only [v.map_sub] using hxyv
+    exact (not_lt_of_ge h') (max_lt hxyv' hy_lt)
+  have hyv : v y = v x := le_antisymm hy_le hx_le
+  rw [chapter06_inversion_difference_formula v hy0 hx, hyv]
   apply (div_lt_iff₀ (mul_pos hxpos hxpos)).2
-  exact lt_of_lt_of_le hy (min_le_right _ _)
+  calc
+    chapter06Distance v y x < δ := hxy
+    _ ≤ ε * (v x) ^ 2 := min_le_right _ _
+    _ = ε * (v x * v x) := by ring
 
 /-- Sufficient closeness to a nonzero point forces equality of absolute values. -/
 theorem chapter06_abs_value_locally_constant_at_nonzero
@@ -121,9 +143,21 @@ theorem chapter06_abs_value_locally_constant_at_nonzero
     (hxy : chapter06Distance v y x < v x) :
     v y = v x := by
   change v (y - x) < v x at hxy
-  calc
-    v y = v ((y - x) + x) := by rw [sub_add_cancel]
-    _ = v x := IsNonarchimedean.add_eq_right_of_lt hv hxy
+  have hy_le : v y ≤ v x := by
+    have h := chapter06_strong_triangle_inequality v hv y x 0
+    have h' : v y ≤ max (v (y - x)) (v x) := by
+      simpa [chapter06Distance] using h
+    exact h'.trans_eq (max_eq_right hxy.le)
+  have hx_le : v x ≤ v y := by
+    have h := chapter06_strong_triangle_inequality v hv x y 0
+    have h' : v x ≤ max (v (x - y)) (v y) := by
+      simpa [chapter06Distance] using h
+    by_contra hnot
+    have hy_lt : v y < v x := lt_of_not_ge hnot
+    have hxy' : v (x - y) < v x := by
+      simpa only [v.map_sub] using hxy
+    exact (not_lt_of_ge h') (max_lt hxy' hy_lt)
+  exact le_antisymm hy_le hx_le
 
 /-- The absolute value is continuous for its induced topology. -/
 theorem chapter06_absolute_value_continuous (v : AbsoluteValue K ℝ) :

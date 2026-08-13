@@ -1,4 +1,5 @@
 import Mathlib.Algebra.Category.ModuleCat.ChangeOfRings
+import Mathlib.Algebra.Category.ModuleCat.Sheaf.Generators
 import Mathlib.Algebra.Category.ModuleCat.Sheaf.LocallyFree
 import Mathlib.AlgebraicGeometry.Fiber
 import Mathlib.AlgebraicGeometry.GammaSpecAdjunction
@@ -16,6 +17,7 @@ import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.AlgebraicGeometry.Restrict
 import Mathlib.RingTheory.Flat.FaithfullyFlat.Descent
 import Mathlib.RingTheory.RingHom.Flat
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Dependencies
 
 /-!
 # Chapter 5: base change and descent
@@ -43,29 +45,21 @@ def IsFaithfullyFlat {S T : Scheme.{u}} (g : T ⟶ S) : Prop :=
 def IsFpqcCover {S T : Scheme.{u}} (g : T ⟶ S) : Prop :=
   IsFaithfullyFlat g ∧ QuasiCompact g
 
-/- LOCAL_DEPENDENCY_GUESS: The pinned Mathlib API has locally free sheaves but no rank-one
-invertible-sheaf predicate.  The following is the direct local-triviality interface needed for a
-line bundle. -/
-def IsInvertibleSheaf (X : Scheme.{u}) (M : X.Modules) : Prop :=
-  ∃ (ι : Type u) (U : ι → X.Opens),
-    iSup U = ⊤ ∧
-      ∀ i, Nonempty
-        (M.restrict (U i).ι ≅ SheafOfModules.unit (U i).toScheme.ringCatSheaf)
+/- The preceding chapter supplies the book-facing line-bundle interface.  Reusing it is important
+for coherence: the tensor powers, affine-open definition of ampleness, and projective-bundle
+tautological sheaf must all refer to the same invertible-sheaf object. -/
+abbrev IsInvertibleSheaf (X : Scheme.{u}) (M : X.Modules) : Prop :=
+  Chapter04.chapter04IsInvertible M
 
-structure LineBundle (X : Scheme.{u}) where
-  sheaf : X.Modules
-  invertible : IsInvertibleSheaf X sheaf
+abbrev LineBundle (X : Scheme.{u}) := Chapter04.Chapter04LineBundle X
+
+abbrev LineBundle.sheaf {X : Scheme.{u}} (L : LineBundle X) : X.Modules :=
+  Chapter04.Chapter04LineBundle.sheaf L
 
 instance {X : Scheme.{u}} : Coe (LineBundle X) X.Modules := ⟨LineBundle.sheaf⟩
 
-noncomputable def LineBundle.trivial (X : Scheme.{u}) : LineBundle X where
-  sheaf := SheafOfModules.unit X.ringCatSheaf
-  invertible := by
-    refine ⟨X.Opens, (fun U => U), ?_, ?_⟩
-    · apply le_antisymm le_top
-      exact le_iSup (fun U : X.Opens => U) ⊤
-    · intro U
-      exact ⟨Scheme.Modules.restrictUnitIso U.ι⟩
+noncomputable def LineBundle.trivial (X : Scheme.{u}) : LineBundle X :=
+  Chapter04.chapter04TrivialLineBundle X
 
 def LineBundle.Isomorphic {X : Scheme.{u}} (L M : LineBundle X) : Prop :=
   Nonempty (L.sheaf ≅ M.sheaf)
@@ -94,9 +88,8 @@ theorem lineBundle_isomorphic_trans {X : Scheme.{u}} {L M N : LineBundle X}
   exact ⟨eLM ≪≫ eMN⟩
 
 noncomputable def LineBundle.pullback {X Y : Scheme.{u}} (L : LineBundle Y) (f : X ⟶ Y) :
-    LineBundle X where
-  sheaf := (Scheme.Modules.pullback f).obj L.sheaf
-  invertible := by sorry
+    LineBundle X :=
+  Chapter04.chapter04PullbackLineBundle f L
 
 @[simp]
 theorem LineBundle.pullback_sheaf {X Y : Scheme.{u}} (L : LineBundle Y) (f : X ⟶ Y) :
@@ -109,41 +102,66 @@ theorem lineBundle_pullback_comp {X Y Z : Scheme.{u}} (L : LineBundle Z)
     (f : X ⟶ Y) (g : Y ⟶ Z) :
     ((L.pullback g).pullback f).Isomorphic (L.pullback (f ≫ g)) := by sorry
 
-/- LOCAL_DEPENDENCY_GUESS: Earlier book chapters are expected to supply tensor products of line
-bundles.  Since the pinned Mathlib sheaf category does not yet expose that monoidal interface,
-this chapter records the minimum coherent power data it consumes. -/
+theorem lineBundle_isomorphic_pullback {X Y : Scheme.{u}} {L M : LineBundle Y}
+    (hLM : L.Isomorphic M) (f : X ⟶ Y) :
+    (L.pullback f).Isomorphic (M.pullback f) := by sorry
+
+noncomputable def LineBundle.tensorPower {X : Scheme.{u}} (L : LineBundle X) (n : ℕ) :
+    LineBundle X :=
+  Chapter04.chapter04LineBundleTensorPower L n
+
+/- Pullback compatibility is the coherence bridge used when a power system is transported to a
+base change. -/
+theorem lineBundle_pullback_tensorPower {X Y : Scheme.{u}} (L : LineBundle Y)
+    (f : X ⟶ Y) (n : ℕ) :
+    ((L.tensorPower n).pullback f).Isomorphic ((L.pullback f).tensorPower n) := by sorry
+
+/- A power system must identify every indexed object with the actual tensor power.  Merely
+specifying degrees zero and one would allow an unrelated bundle in every higher degree and would
+make the positive-power descent assertions vacuous. -/
 structure LineBundlePowers {X : Scheme.{u}} (L : LineBundle X) where
   power : ℕ → LineBundle X
-  power_zero : (power 0).Isomorphic (LineBundle.trivial X)
-  power_one : (power 1).Isomorphic L
+  power_iso : ∀ n, (power n).Isomorphic (L.tensorPower n)
 
 noncomputable def LineBundlePowers.pullback {X Y : Scheme.{u}} {L : LineBundle Y}
     (P : LineBundlePowers L) (f : X ⟶ Y) : LineBundlePowers (L.pullback f) where
   power n := (P.power n).pullback f
-  power_zero := by sorry
-  power_one := by sorry
+  power_iso := by sorry
 
-/- LOCAL_DEPENDENCY_GUESS: This is the earlier-chapter projective-bundle interface abstracted to
-the fields actually used here.  Its `rank` field records finite-dimensionality locally on the
-base; a later reconciliation should identify it with the canonical relative Proj construction. -/
-structure RelativeProjectiveBundleData (S : Scheme.{u}) where
-  /- The finite rank fields are intentional: dropping them permits the possibly infinite-rank
-  ambient projective bundle mentioned in §5.2, but no finite-dimensional conclusion. -/
-  ambient : Scheme.{u}
-  projection : ambient ⟶ S
-  tautological : LineBundle ambient
-  rank : S → ℕ
-  rank_pos : ∀ x, 0 < rank x
-  rank_locally_constant : ∀ x, ∃ U : S.Opens, x ∈ U ∧
-    ∀ y : S, y ∈ U → rank y = rank x
+/- Reuse the preceding chapter's projective-bundle interface.  In particular, the ambient object
+carries the finite locally free module, its structure morphism, and its tautological line bundle;
+the source-order `ambient` name below is only a vocabulary adapter. -/
+abbrev RelativeProjectiveBundleData (S : Scheme.{u}) :=
+  Chapter04.Chapter04ProjectiveBundle S
+
+abbrev RelativeProjectiveBundleData.ambient {S : Scheme.{u}}
+    (P : RelativeProjectiveBundleData S) : Scheme.{u} :=
+  P.space
+
+abbrev RelativeProjectiveBundleData.projection {S : Scheme.{u}}
+    (P : RelativeProjectiveBundleData S) : P.ambient ⟶ S :=
+  Chapter04.Chapter04ProjectiveBundle.projection P
+
+noncomputable def RelativeProjectiveBundleData.baseChange
+    {S T : Scheme.{u}} (P : RelativeProjectiveBundleData S) (g : T ⟶ S) :
+    RelativeProjectiveBundleData T where
+  E := (Scheme.Modules.pullback g).obj P.E
+  finiteLocallyFree := by sorry
+  space := pullback (Chapter04.Chapter04ProjectiveBundle.projection P) g
+  projection := pullback.snd (Chapter04.Chapter04ProjectiveBundle.projection P) g
+  tautological :=
+    (Scheme.Modules.pullback
+      (pullback.fst (Chapter04.Chapter04ProjectiveBundle.projection P) g)).obj P.tautological
+  tautological_isInvertible := by sorry
+  projection_isProper := by sorry
 
 def IsFiniteDimensionalLocallyOnBase {S : Scheme.{u}}
     (P : RelativeProjectiveBundleData S) : Prop :=
-  ∀ x, ∃ U : S.Opens, x ∈ U ∧ ∀ y : S, y ∈ U → P.rank y = P.rank x
+  P.finiteLocallyFree
 
 theorem relativeProjectiveBundleData_finiteDimensional {S : Scheme.{u}}
     (P : RelativeProjectiveBundleData S) : IsFiniteDimensionalLocallyOnBase P :=
-  P.rank_locally_constant
+  P.finiteLocallyFree
 
 structure RelativeImmersionWitness {X S : Scheme.{u}} (f : X ⟶ S) where
   projectiveBundle : RelativeProjectiveBundleData S
@@ -151,41 +169,37 @@ structure RelativeImmersionWitness {X S : Scheme.{u}} (f : X ⟶ S) where
   over : embedding ≫ projectiveBundle.projection = f
   immersion : IsImmersion embedding
 
-structure RelativeClosedImmersionWitness {X S : Scheme.{u}} (f : X ⟶ S) where
-  projectiveBundle : RelativeProjectiveBundleData S
-  embedding : X ⟶ projectiveBundle.ambient
-  over : embedding ≫ projectiveBundle.projection = f
-  closedImmersion : IsClosedImmersion embedding
+abbrev RelativeClosedImmersionWitness {X S : Scheme.{u}} (f : X ⟶ S) :=
+  Chapter04.Chapter04ProjectiveWitness f
 
-structure RelativeVeryAmpleWitness {X S : Scheme.{u}} (f : X ⟶ S) (L : LineBundle X) where
-  projectiveBundle : RelativeProjectiveBundleData S
-  embedding : X ⟶ projectiveBundle.ambient
-  over : embedding ≫ projectiveBundle.projection = f
-  immersion : IsImmersion embedding
-  pullback_iso : L.Isomorphic (projectiveBundle.tautological.pullback embedding)
+abbrev RelativeClosedImmersionWitness.embedding {X S : Scheme.{u}} {f : X ⟶ S}
+    (w : RelativeClosedImmersionWitness f) : X ⟶ w.projectiveBundle.space :=
+  w.map
 
-def IsVeryAmple {X S : Scheme.{u}} (f : X ⟶ S) (L : LineBundle X) : Prop :=
-  Nonempty (RelativeVeryAmpleWitness f L)
+abbrev RelativeVeryAmpleWitness {X S : Scheme.{u}} (f : X ⟶ S) (L : LineBundle X) :=
+  Chapter04.Chapter04VeryAmpleWitness f L
+
+abbrev RelativeVeryAmpleWitness.embedding {X S : Scheme.{u}} {f : X ⟶ S}
+    {L : LineBundle X} (w : RelativeVeryAmpleWitness f L) : X ⟶ w.projectiveBundle.space :=
+  w.map
+
+abbrev IsVeryAmple {X S : Scheme.{u}} (f : X ⟶ S) (L : LineBundle X) : Prop :=
+  Chapter04.chapter04VeryAmple f L
 
 def IsQuasiProjectiveMorphism {X S : Scheme.{u}} (f : X ⟶ S) : Prop :=
   Nonempty (RelativeImmersionWitness f)
 
-def IsProjectiveMorphism {X S : Scheme.{u}} (f : X ⟶ S) : Prop :=
-  Nonempty (RelativeClosedImmersionWitness f)
+abbrev IsProjectiveMorphism {X S : Scheme.{u}} (f : X ⟶ S) : Prop :=
+  Chapter04.chapter04Projective f
 
-structure RelativeAmpleWitness {X S : Scheme.{u}} (f : X ⟶ S) (L : LineBundle X) where
-  powers : LineBundlePowers L
-  index : Type u
-  opens : index → S.Opens
-  cover : iSup opens = ⊤
-  power : index → ℕ
-  positive : ∀ i, 0 < power i
-  local_veryAmple : ∀ i,
-    IsVeryAmple (f ∣_ (opens i))
-      ((powers.power (power i)).pullback ((f ⁻¹ᵁ (opens i)).ι))
+/- Use the affine nonvanishing definition from Chapter 4 rather than replacing ampleness by a
+cover of the base on which some power is very ample.  The latter is only equivalent under extra
+finite-presentation hypotheses and is not the source definition. -/
+abbrev RelativeAmpleWitness {X S : Scheme.{u}} (f : X ⟶ S) (L : LineBundle X) :=
+  Chapter04.Chapter04AmpleWitness f L
 
-def IsAmple {X S : Scheme.{u}} (f : X ⟶ S) (L : LineBundle X) : Prop :=
-  Nonempty (RelativeAmpleWitness f L)
+abbrev IsAmple {X S : Scheme.{u}} (f : X ⟶ S) (L : LineBundle X) : Prop :=
+  Chapter04.chapter04Ample f L
 
 theorem isVeryAmple_congr {X S : Scheme.{u}} (f : X ⟶ S)
     {L M : LineBundle X} (hLM : L.Isomorphic M) :
@@ -229,6 +243,7 @@ structure FiniteSectionFamily {X : Scheme.{u}} (M : X.Modules) where
   index : Type u
   finite_index : Finite index
   sections : index → Γ(M, ⊤)
+  generates : Epi (M.freeHomEquiv.symm sections)
 
 def IsFiberwiseVeryAmple {X S : Scheme.{u}} (f : X ⟶ S) (L : LineBundle X) : Prop :=
   ∀ s, IsVeryAmple (f.fiberToSpecResidueField s) (L.pullback (f.fiberι s))

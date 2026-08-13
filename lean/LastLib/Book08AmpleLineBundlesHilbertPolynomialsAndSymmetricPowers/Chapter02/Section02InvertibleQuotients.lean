@@ -1,4 +1,5 @@
-import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02.Section01ProjectiveBundles
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02.Dependencies
+import Mathlib.AlgebraicGeometry.Morphisms.QuasiSeparated
 
 namespace LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02
 
@@ -126,22 +127,19 @@ theorem chapter02_projective_bundle_universal_property_base_change
         ((chapter02UniversalBaseChangeData P f g).pointMap u) := by
   exact (chapter02UniversalBaseChangeData P f g).commutes u
 
-/-!
-An `E` of finite locally free rank `r+1` gives a projective, finitely presented morphism.  The
-projective-morphism predicate uses Mathlib's `IsClosedImmersion` and the relative projective-bundle
-package, so it also covers nontrivial finite locally free bundles over the base.
+/-! An `E` of finite locally free rank `r+1` gives a projective, finitely presented morphism.  The
+projective-morphism predicate uses Mathlib's `IsClosedImmersion` and the shared relative
+projective-bundle interface, so it also covers nontrivial finite locally free bundles over the base.
+
+The finite locally free condition itself is declared in `Dependencies.lean` so later chapters can
+reuse the same interface without importing this section.
 -/
-def Chapter02ProjectiveMorphism {S X : Scheme.{u}} (f : X ⟶ S) : Prop :=
-  ∃ (E : Chapter02QuasiCoherentModule S) (r : ℕ),
-    Chapter02LocallyFreeRank E.carrier (r + 1) ∧
-      ∃ P : Chapter02ProjectiveBundleData S E,
-        ∃ i : X ⟶ P.scheme, i ≫ P.projection = f ∧ IsClosedImmersion i
 
 def Chapter02FiniteTypeMorphism {S X : Scheme.{u}} (f : X ⟶ S) : Prop :=
   QuasiCompact f ∧ LocallyOfFiniteType f
 
 def Chapter02FinitePresentationMorphism {S X : Scheme.{u}} (f : X ⟶ S) : Prop :=
-  QuasiCompact f ∧ LocallyOfFinitePresentation f
+  QuasiCompact f ∧ QuasiSeparated f ∧ LocallyOfFinitePresentation f
 
 theorem chapter02_projective_bundle_is_projective_and_finitely_presented
     {S : Scheme.{u}} {E : Chapter02QuasiCoherentModule S}

@@ -51,6 +51,15 @@ noncomputable def normalizedElement (v : Valuation K ℤᵐ⁰) (π : K)
     ← WithZero.exp_log hxv0]
   simp [discreteUnitValue]
 
+theorem normalizedElement_isUnit (v : Valuation K ℤᵐ⁰) (π : K)
+    (hπ : IsUniformizerFor v π) {x : K} (hx : x ≠ 0) :
+    IsUnit (normalizedElement v π hπ x hx) := by
+  apply (valuationRingOf_isUnit_iff v _).2
+  dsimp [normalizedElement]
+  rw [v.map_mul, map_zpow₀, hπ.2, ← WithZero.exp_zsmul,
+    ← WithZero.exp_log (v.ne_zero_iff.mpr hx)]
+  simp [discreteUnitValue]
+
 /-- The angular component, with zero sent to zero. -/
 noncomputable def angularComponent (v : Valuation K ℤᵐ⁰) (π : K)
     (hπ : IsUniformizerFor v π) (x : K) : residueFieldOf v := by
@@ -103,6 +112,13 @@ theorem angularComponent_eq_reduction_of_normalizedElement
     (v : Valuation K ℤᵐ⁰) (π : K) (hπ : IsUniformizerFor v π) {x : K} (hx : x ≠ 0) :
     angularComponent v π hπ x = residueMapOf v (normalizedElement v π hπ x hx) := by
   simp only [angularComponent, dif_neg hx]
+
+theorem angularComponent_ne_zero (v : Valuation K ℤᵐ⁰) (π : K)
+    (hπ : IsUniformizerFor v π) {x : K} (hx : x ≠ 0) :
+    angularComponent v π hπ x ≠ 0 := by
+  rw [angularComponent_eq_reduction_of_normalizedElement v π hπ hx]
+  exact (IsLocalRing.residue_ne_zero_iff_isUnit _).2
+    (normalizedElement_isUnit v π hπ hx)
 
 theorem angularComponent_mul (v : Valuation K ℤᵐ⁰) (π : K)
     (hπ : IsUniformizerFor v π) (x y : K) :
@@ -198,48 +214,80 @@ theorem angularComponent_parameter_change
 
 /- A local associated-graded-symbol interface records the coordinate change above. -/
 
+/- The parameter belongs to a coordinate presentation.  Omitting it would identify
+   all residue coefficients of a fixed value after quotienting by units, and would
+   therefore lose the leading term that the associated graded construction is meant
+   to retain. -/
+structure LeadingTermCoordinateData (v : Valuation K ℤᵐ⁰) where
+  parameter : K
+  parameter_isUniformizer : IsUniformizerFor v parameter
+  value : ℤ
+  residue : residueFieldOf v
+
 def leadingTermCoordinateRelation (v : Valuation K ℤᵐ⁰)
-    (p q : ℤ × residueFieldOf v) : Prop :=
-  p.1 = q.1 ∧ ∃ u : (residueFieldOf v)ˣ,
-    q.2 = (u : residueFieldOf v) ^ (-p.1) * p.2
+    (p q : LeadingTermCoordinateData v) : Prop :=
+  p.value = q.value ∧ ∃ u : (valuationRingOf v)ˣ,
+    q.parameter = ((u : valuationRingOf v) : K) * p.parameter ∧
+      q.residue = (residueUnitOf v u) ^ (-p.value) * p.residue
 
 noncomputable def leadingTermCoordinateSetoid (v : Valuation K ℤᵐ⁰) :
-    Setoid (ℤ × residueFieldOf v) :=
+    Setoid (LeadingTermCoordinateData v) :=
   { r := leadingTermCoordinateRelation v
     iseqv := by
       constructor
-      · rintro ⟨a, b⟩
-        exact ⟨rfl, 1, by simp⟩
-      · rintro ⟨a, b⟩ ⟨a', b'⟩ ⟨ha, u, hu⟩
-        refine ⟨ha.symm, u⁻¹, ?_⟩
-        rw [hu, ← ha]
-        have hpow : ((u⁻¹ : (residueFieldOf v)ˣ) : residueFieldOf v) ^ (-(a : ℤ)) *
-            (u : residueFieldOf v) ^ (-(a : ℤ)) = 1 := by
+      · intro p
+        refine ⟨rfl, 1, ?_, ?_⟩
+        · simp
+        · simp [residueUnitOf]
+      · intro p q hpq
+        rcases hpq with ⟨hpq_value, u, hpq_parameter, hpq_residue⟩
+        refine ⟨hpq_value.symm, u⁻¹, ?_, ?_⟩
+        · rw [hpq_parameter]
+          have huinv :
+              (((u⁻¹ : (valuationRingOf v)ˣ) : valuationRingOf v) : K) *
+                  ((u : valuationRingOf v) : K) = 1 := by
+            exact congrArg (fun z : valuationRingOf v => (z : K)) u.inv_val
+          rw [← mul_assoc, huinv, one_mul]
+        · rw [hpq_residue, ← hpq_value]
+          have hu_residue : residueUnitOf v (u⁻¹) = (residueUnitOf v u)⁻¹ := by
+            simp [residueUnitOf]
+          have hu_residue_val :
+              (residueUnitOf v (u⁻¹) : residueFieldOf v) =
+                (residueUnitOf v u : residueFieldOf v)⁻¹ := by
+            rw [hu_residue, Units.val_inv_eq_inv_val]
+          rw [hu_residue_val, ← mul_assoc, ← mul_zpow]
+          simp
+      · intro p q r hpq hqr
+        rcases hpq with ⟨hpq_value, u, hpq_parameter, hpq_residue⟩
+        rcases hqr with ⟨hqr_value, w, hqr_parameter, hqr_residue⟩
+        refine ⟨hpq_value.trans hqr_value, w * u, ?_, ?_⟩
+        · rw [hqr_parameter, hpq_parameter]
+          simp [mul_assoc]
+        · rw [hqr_residue, hpq_residue, ← hpq_value]
+          have hwu_residue : residueUnitOf v (w * u) =
+              residueUnitOf v w * residueUnitOf v u := by
+            simp [residueUnitOf]
+          rw [hwu_residue, Units.val_mul]
           calc
-            ((u⁻¹ : (residueFieldOf v)ˣ) : residueFieldOf v) ^ (-(a : ℤ)) *
-                (u : residueFieldOf v) ^ (-(a : ℤ)) =
-                (((u⁻¹ : (residueFieldOf v)ˣ) ^ (-(a : ℤ)) *
-                    u ^ (-(a : ℤ)) : (residueFieldOf v)ˣ) : residueFieldOf v) := by
-              rw [Units.val_mul, Units.val_zpow_eq_zpow_val,
-                Units.val_zpow_eq_zpow_val, Units.val_inv_eq_inv_val]
-            _ = 1 := by
-              rw [← mul_zpow]
-              simp
-        rw [← mul_assoc, hpow, one_mul]
-      · rintro ⟨a, b⟩ ⟨a', b'⟩ ⟨a'', b''⟩ ⟨ha, u, hu⟩ ⟨ha', w, hw⟩
-        refine ⟨ha.trans ha', w * u, ?_⟩
-        change a = a' at ha
-        change a' = a'' at ha'
-        rw [hw, hu, ← ha]
-        simp [mul_zpow, mul_assoc, mul_comm]
-  }
+            ((residueUnitOf v w : residueFieldOf v) ^ (-p.value) *
+                ((residueUnitOf v u : residueFieldOf v) ^ (-p.value) *
+                  p.residue)) =
+                ((residueUnitOf v w : residueFieldOf v) ^ (-p.value) *
+                  (residueUnitOf v u : residueFieldOf v) ^ (-p.value)) *
+                  p.residue := by ring
+            _ = ((residueUnitOf v w : residueFieldOf v) *
+                (residueUnitOf v u : residueFieldOf v)) ^ (-p.value) *
+                p.residue := by rw [mul_zpow] }
 
 abbrev intrinsicLeadingTermClass (v : Valuation K ℤᵐ⁰) :=
   Quotient (leadingTermCoordinateSetoid v)
 
 noncomputable def leadingTermCoordinate (v : Valuation K ℤᵐ⁰) (π : K)
-    (hπ : IsUniformizerFor v π) (x : Kˣ) : ℤ × residueFieldOf v :=
-  (discreteUnitValue v x, angularComponent v π hπ (x : K))
+    (hπ : IsUniformizerFor v π) (x : Kˣ) : LeadingTermCoordinateData v :=
+  { parameter := π
+    parameter_isUniformizer := hπ
+    value := discreteUnitValue v x
+    residue := angularComponent v π hπ (x : K) }
 
 noncomputable def associatedGradedSymbol (v : Valuation K ℤᵐ⁰) (π : K)
     (hπ : IsUniformizerFor v π) (x : Kˣ) : intrinsicLeadingTermClass v :=
@@ -273,7 +321,7 @@ theorem associatedGradedSymbol_parameter_independent
     exact hπ₂
   apply Quotient.sound
   dsimp [associatedGradedSymbol, leadingTermCoordinate]
-  refine ⟨rfl, residueUnitOf v u, ?_⟩
+  refine ⟨rfl, u, hπrel, ?_⟩
   have hmk : Units.mk0 (x : K) x.ne_zero = x := by
     apply Units.ext
     rfl
@@ -459,6 +507,13 @@ theorem laurentSeries_angularComponent_is_first_coefficient
 theorem padicResidueEquiv_exists (p : ℕ) [Fact p.Prime] :
     Nonempty (residueFieldOf (pValuation p) ≃+* ZMod p) := by
   exact pValuationResidueField_equiv_finiteField p
+
+theorem pValuation_isUniformizer (p : ℕ) [Fact p.Prime] :
+    IsUniformizerFor (pValuation p) (p : ℚ) := by
+  refine ⟨?_, ?_⟩
+  · exact_mod_cast (Fact.out : p.Prime).ne_zero
+  · simp [pValuation]
+
 noncomputable def padicResidueEquiv (p : ℕ) [Fact p.Prime] :
     residueFieldOf (pValuation p) ≃+* ZMod p :=
   letI : IsLocalRing (pValuationRing p) := valuationRingOf_isLocal (pValuation p)
@@ -472,14 +527,14 @@ noncomputable def padicResidueEquiv (p : ℕ) [Fact p.Prime] :
     (q.symm.trans (Int.quotientSpanNatEquivZMod p))
 
 theorem padic_angularComponent_formula (p : ℕ) [Fact p.Prime]
-    (hp : IsUniformizerFor (pValuation p) (p : ℚ))
     (n : ℤ) (a b : ℤ) (ha : a ≠ 0) (hb : b ≠ 0)
     (hpa : ¬ (p : ℤ) ∣ a) (hpb : ¬ (p : ℤ) ∣ b) :
     padicResidueEquiv p
-        (angularComponent (pValuation p) (p : ℚ) hp
+        (angularComponent (pValuation p) (p : ℚ) (pValuation_isUniformizer p)
           (((p : ℚ) ^ n) * (a : ℚ) / (b : ℚ))) =
       (a : ZMod p) * (b : ZMod p)⁻¹ := by
   classical
+  let hp := pValuation_isUniformizer p
   let : IsLocalRing (pValuationRing p) := valuationRingOf_isLocal (pValuation p)
   let : (pPrimeIdeal p).IsMaximal := by
     change (Ideal.span ({(p : ℤ)} : Set ℤ)).IsMaximal

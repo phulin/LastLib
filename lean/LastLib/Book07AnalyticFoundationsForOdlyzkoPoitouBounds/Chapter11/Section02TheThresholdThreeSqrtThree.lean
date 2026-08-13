@@ -1,4 +1,4 @@
-import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter11.Section01TheThresholdFour
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter11.Dependencies
 
 namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter11
 

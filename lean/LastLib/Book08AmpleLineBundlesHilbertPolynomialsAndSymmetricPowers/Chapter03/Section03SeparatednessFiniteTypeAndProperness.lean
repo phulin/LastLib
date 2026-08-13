@@ -114,13 +114,6 @@ theorem chapter03_quasiProjective_locallyOfFiniteType (f : X ⟶ S)
     (hf : chapter03QuasiProjective f) : LocallyOfFiniteType f := by
   sorry
 
-/-
-SOURCE_ISSUE: The source sentence says that every quasi-projective morphism is “finite type”.
-With the definition here, an immersion into a finite-type projective bundle is only guaranteed to
-be locally of finite type: an arbitrary open immersion need not be quasi-compact.  The minimal
-correction is to add `QuasiCompact f` (or to say “locally of finite type”).
--/
-
 /-- A quasi-compact quasi-projective morphism has finite type. -/
 theorem chapter03_quasiProjective_finiteType (f : X ⟶ S)
     (hf : chapter03QuasiProjective f) (hq : QuasiCompact f) :
@@ -138,7 +131,7 @@ theorem chapter03_finitelyPresented_of_projectivePresentation
 /-- A quasi-projective presentation with a finitely presented immersion is finitely presented. -/
 theorem chapter03_finitelyPresented_of_quasiProjectivePresentation
     (f : X ⟶ S) (P : Chapter03QuasiProjectivePresentation f)
-    [LocallyOfFinitePresentation P.immersion]
+    [LocallyOfFinitePresentation P.embedding]
     [LocallyOfFinitePresentation P.ambient.projection] (hq : QuasiCompact f) :
     chapter03FinitelyPresented f := by
   sorry

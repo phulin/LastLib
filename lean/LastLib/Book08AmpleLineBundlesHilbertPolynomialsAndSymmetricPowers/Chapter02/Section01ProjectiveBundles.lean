@@ -1,4 +1,5 @@
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02.Dependencies
+import Mathlib.RingTheory.MvPolynomial.Homogeneous
 
 namespace LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02
 
@@ -84,16 +85,29 @@ abbrev chapter02ProjectiveSpaceCoordinates (S : Scheme.{u}) (r : ℕ) :
 abbrev chapter02PolynomialRing (R : Type u) [CommSemiring R] (r : ℕ) :=
   MvPolynomial (Fin (r + 1)) R
 
-/- LOCAL_DEPENDENCY_GUESS: the standard internal grading of the polynomial ring. -/
+/-!
+The pinned Mathlib API contains the standard homogeneous grading of a multivariate polynomial
+ring.  Use it directly rather than choosing an arbitrary `GradedAlgebra`: the affine `Proj`
+model below is meant to be the ordinary projective space, so its grading must be the total-degree
+grading.
+-/
 theorem chapter02_polynomial_grading_exists
     (R : Type u) [CommRing R] (r : ℕ) :
     Nonempty (Chapter02GradedAlgebra R (chapter02PolynomialRing R r)) := by
-  sorry
+  exact ⟨{
+    component := fun d =>
+      MvPolynomial.homogeneousSubmodule (σ := Fin (r + 1)) (R := R) d
+    graded := MvPolynomial.gradedAlgebra
+  }⟩
 
 noncomputable def chapter02PolynomialGradedAlgebra
     (R : Type u) [CommRing R] (r : ℕ) :
     Chapter02GradedAlgebra R (chapter02PolynomialRing R r) :=
-  Classical.choice (chapter02_polynomial_grading_exists R r)
+  {
+    component := fun d =>
+      MvPolynomial.homogeneousSubmodule (σ := Fin (r + 1)) (R := R) d
+    graded := MvPolynomial.gradedAlgebra
+  }
 
 def chapter02ProjectiveSpaceOverRing
     (R : Type u) [CommRing R] (r : ℕ) : Scheme.{u} :=
@@ -128,6 +142,8 @@ structure Chapter02StandardAffineCover
     (P : Chapter02ProjectiveSpaceData S I) where
   chart : I → P.bundle.scheme.Opens
   affine : ∀ i, IsAffineOpen (chart i)
+  chart_is_coordinate : ∀ i, (chart i : Set P.bundle.scheme) =
+    {x | chapter02SectionGeneratesAt (P.coordinateSections i) x}
   cover : ∀ x : P.bundle.scheme, ∃ i, x ∈ chart i
 
 /- LOCAL_DEPENDENCY_GUESS: the positive-degree basic opens of relative Proj give this finite cover. -/
@@ -182,8 +198,10 @@ theorem chapter02_projective_bundle_fiber_is_projective_space
     (r : ℕ) (hE : Chapter02LocallyFreeRank E.carrier (r + 1))
     (P : Chapter02ProjectiveBundleData S E) :
     ∀ s : S,
-      Nonempty (P.projection.fiber s ≅
-        chapter02ProjectiveSpaceOverRing (S.residueField s) r) := by
+      ∃ e : P.projection.fiber s ≅
+          chapter02ProjectiveSpaceOverRing (S.residueField s) r,
+        e.hom ≫ chapter02ProjectiveSpaceOverRingProjection (S.residueField s) r =
+          P.projection.fiberToSpecResidueField s := by
   sorry
 
 end

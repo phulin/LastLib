@@ -1,4 +1,4 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section03SemilocalDedekindStructure
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section02FinitenessHypotheses
 
 universe u v
 
@@ -34,8 +34,9 @@ def chapter11InertiaDegree (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
 
 /-- The local factorization `π B_P = P_P^e`. -/
 theorem chapter11_local_uniformizer_factorization
-    (A B : Type*) [CommRing A] [IsDomain A] [CommRing B]
+    (A B : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A] [CommRing B]
     [Algebra A B] [IsDedekindDomain B] (m : Ideal A) (π : A)
+    (_hm : m = IsLocalRing.maximalIdeal A)
     (hπ : chapter11IsUniformizer A m π) (P : Ideal B) [P.IsPrime] [P.LiesOver m]
     (_hm0 : m ≠ ⊥) (hP0 : P ≠ ⊥)
     (hI0 : Ideal.map (algebraMap A (Localization.AtPrime P)) m ≠ ⊥) :
@@ -66,7 +67,8 @@ theorem chapter11_local_uniformizer_factorization
 theorem chapter11_global_ideal_factorization
     (A B : Type*) [CommRing A] [IsDomain A] [CommRing B]
     [Algebra A B] [IsDedekindDomain B] [Algebra.IsIntegral A B]
-    [Module.IsTorsionFree A B] (m : Ideal A) [m.IsMaximal] (hm0 : m ≠ ⊥) :
+    [Module.IsTorsionFree A B] [Module.Finite A B]
+    (m : Ideal A) [m.IsMaximal] (hm0 : m ≠ ⊥) :
     Ideal.map (algebraMap A B) m =
       ∏ P ∈ m.primesOver B, P ^ P.ramificationIdx A := by
   exact Ideal.map_algebraMap_eq_finsetProd_pow hm0
@@ -120,7 +122,7 @@ abbrev chapter11PrimePowerLayer (B : Type*) [CommRing B] (P : Ideal B) (i : ℕ)
 copy of the residue field. -/
 theorem chapter11_prime_power_layer_is_a_residue_line
     (B : Type*) [CommRing B] [IsDedekindDomain B] (P : Ideal B)
-    [P.IsPrime] [P.IsMaximal] [P.IsPrincipal] (e i : ℕ) (_hi : i < e)
+    [P.IsPrime] [P.IsMaximal] [P.IsPrincipal] (i : ℕ)
     (hP0 : P ≠ ⊥) :
     Nonempty
       (chapter11PrimePowerLayer B P i ≃+

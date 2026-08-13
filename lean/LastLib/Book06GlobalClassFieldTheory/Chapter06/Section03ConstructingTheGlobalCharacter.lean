@@ -1,5 +1,8 @@
 import LastLib.Book06GlobalClassFieldTheory.Chapter06.Section02FiniteLocalGlobalCharacterSequence
 
+/- The local-to-global product below is indexed by the pointwise finite
+   Kummer support supplied by Section 6.2's duality data. -/
+
 namespace LastLib.Book06GlobalClassFieldTheory.Chapter06
 
 open scoped BigOperators
@@ -25,6 +28,7 @@ structure Chapter06FiniteOrderCoordinate
   coordinate : C →* Multiplicative (Chapter06A n)
   realization : Multiplicative (Chapter06A n) →* ℂˣ
   realizes : χ = realization.comp coordinate
+  faithful_realization : Function.Injective realization
   image_identification :
     Nonempty (MonoidHom.range χ ≃* MonoidHom.range coordinate)
 
@@ -51,7 +55,8 @@ noncomputable def chapter06ExponentialOfInvariant
    is the exponential of the invariant pairing and localEvaluation is the
    corresponding local character value. -/
 structure Chapter06CharacterLocalReciprocityData
-    (K Ks : Type*) [Field K] [Field Ks] [Algebra K Ks]
+    (K Ks : Type*) [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
     (ι : Type*) (n : ℕ)
     (HLocal HMu HBr HTate : ι → Type*)
     [∀ v, AddCommGroup (HLocal v)]
@@ -81,25 +86,36 @@ structure Chapter06CharacterLocalReciprocityData
     ∀ v c a, exponentialEvaluation v c a = localEvaluation v c a
   unramified_evaluation_one :
     ∀ v c, c ∈ D.localData.unramified v → ∀ a,
+      D.kummerRestriction v a ∈ D.localData.unramifiedDual v →
       localEvaluation v c (D.kummerRestriction v a) = 1
   principal_product :
     ∀ a : Chapter06H1Mu K n,
-      chapter06RestrictedProductProduct localCharacter
-        (fun v cv => localEvaluation v cv (D.kummerRestriction v a))
-        (by
-          intro v cv hcv
-          exact unramified_evaluation_one v cv hcv a) = 1
+      let s : Set ι := {v |
+        localCharacter v ∉ D.localData.unramified v ∨
+          D.kummerRestriction v a ∉ D.localData.unramifiedDual v}
+      let hs : s.Finite := by
+        have hu :
+            ({v | localCharacter v ∉ D.localData.unramified v} ∪
+              {v | D.kummerRestriction v a ∉ D.localData.unramifiedDual v}).Finite :=
+          Set.Finite.union localCharacter.property (D.kummer_support_finite a)
+        apply Set.Finite.subset hu
+        intro v hv
+        simpa only [s, Set.mem_union, Set.mem_ofPred_eq] using hv
+      hs.toFinset.prod (fun v =>
+        localEvaluation v (localCharacter v) (D.kummerRestriction v a)) = 1
 
 /- LOCAL_DEPENDENCY_GUESS: The localEvaluation and exponentialEvaluation
    fields package the compatibility of the finite reciprocity map with the
    local cup-product invariant and norm-residue symbol.  The earlier
    chapters in this worktree do not yet expose a canonical local Artin map,
-   so this is the weakest interface needed to prove orthogonality. -/
+   so this is the weakest interface needed to prove orthogonality; the
+   pointwise Kummer support field makes the displayed product finite. -/
 
 /- The product of the local reciprocity values is trivial on every global
    Kummer class, hence the local family is orthogonal to the global dual. -/
 theorem chapter06_idele_character_is_orthogonal
-    {K Ks : Type*} [Field K] [Field Ks] [Algebra K Ks]
+    {K Ks : Type*} [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
     {ι : Type*} {n : ℕ}
     {HLocal HMu HBr HTate : ι → Type*}
     [∀ v, AddCommGroup (HLocal v)]
@@ -123,7 +139,8 @@ theorem chapter06_idele_character_is_orthogonal
 /- The exact sequence gives a unique global degree-one class with these
    local restrictions. -/
 theorem chapter06_unique_global_class_with_local_restrictions
-    {K Ks : Type*} [Field K] [Field Ks] [Algebra K Ks]
+    {K Ks : Type*} [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
     {ι : Type*} {n : ℕ}
     {HLocal HMu HBr HTate : ι → Type*}
     [∀ v, AddCommGroup (HLocal v)]
@@ -148,36 +165,45 @@ theorem chapter06_unique_global_class_with_local_restrictions
 /- Fixed field of a complex-valued finite-image Galois character. -/
 noncomputable def chapter06FixedFieldOfComplexCharacter
     {K Ks : Type*} [Field K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
     (ψ : Gal(Ks / K) →* ℂˣ) : IntermediateField K Ks :=
   IntermediateField.fixedField ψ.ker
 
-/- The cyclic finite extension cut out by a global A_n-character. -/
+/- The finite cyclic extension cut out by a global A_n-character.  Reciprocity
+   is deliberately not stored here: it is a separate global Artin input, and
+   putting it into this field-theoretic package would make the fixed-field
+   construction circular. -/
 structure Chapter06CyclicCharacterField
     (K Ks : Type*) [Field K] [Field Ks] [Algebra K Ks]
-    [Chapter06IdeleClassGroup K] (n : ℕ)
+    [IsGalois K Ks] [IsSepClosed Ks]
+    (n : ℕ)
     [TopologicalSpace (Chapter06A n)]
     [IsTopologicalAddGroup (Chapter06A n)]
     (c : Chapter06H1A (Chapter06AbsoluteGaloisGroup K Ks) n) where
-  extension : Chapter06FiniteCyclicExtension K Ks (Chapter06C K)
+  field : IntermediateField K Ks
+  [finite : FiniteDimensional K field]
+  [abelian : IsAbelianGalois K field]
+  [galoisFinite : Finite (Gal(field / K))]
+  cyclic : IsCyclic (Gal(field / K))
   field_eq_fixed :
-    extension.extension.field = chapter06FixedFieldOfCharacter c.toMul.1
-  restriction :
-    Gal(Ks / K) →* Gal(extension.extension.field / K)
+    field = chapter06FixedFieldOfCharacter c.toMul.1
+  surjective_restriction :
+    Function.Surjective
+      (chapter06AbelianGaloisRestriction (K := K) field abelian)
   galoisCharacter :
-    Gal(extension.extension.field / K) →* Multiplicative (Chapter06A n)
+    Gal(field / K) →* Multiplicative (Chapter06A n)
   faithful : Function.Injective galoisCharacter
   factorization :
-    c.toMul.1 = galoisCharacter.comp restriction
+    c.toMul.1 =
+      galoisCharacter.comp
+        (chapter06AbelianGaloisRestriction (K := K) field abelian)
   degree_eq_image :
-    chapter06GaloisDegree (K := K) (L := extension.extension.field) =
+    chapter06GaloisDegree (K := K) (L := field) =
       Nat.card (MonoidHom.range c.toMul.1)
-  reciprocity : Chapter06FiniteReciprocityWitness K Ks (Chapter06C K)
-  reciprocity_field :
-    reciprocity.extension.field = extension.extension.field
 
 theorem chapter06_global_class_fixed_field_is_cyclic
     {K Ks : Type*} [Field K] [Field Ks] [Algebra K Ks]
-    [Chapter06IdeleClassGroup K] (n : ℕ)
+    [IsGalois K Ks] [IsSepClosed Ks] (n : ℕ)
     [TopologicalSpace (Chapter06A n)]
     [IsTopologicalAddGroup (Chapter06A n)]
     (c : Chapter06H1A (Chapter06AbsoluteGaloisGroup K Ks) n) :
@@ -188,25 +214,28 @@ theorem chapter06_global_class_fixed_field_is_cyclic
    in Lemma 6.2.  It uses a C-valued finite reciprocity witness and a
    faithful character of its finite Galois group. -/
 def chapter06GaloisCharacterCorresponds
-    {K Ks : Type*} [Field K] [Field Ks] [Algebra K Ks]
+    {K Ks : Type*} [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
     [Chapter06IdeleClassGroup K]
     (χ : Chapter06IdeleClassCharacter K)
     (ψ : Chapter06ContinuousFiniteImageCharacter
       (Chapter06AbsoluteGaloisGroup K Ks) ℂˣ) : Prop :=
   ∃ (R : Chapter06FiniteReciprocityWitness K Ks (Chapter06C K))
     (_cyclic : IsCyclic (Gal(R.extension.field / K)))
-    (bar : Gal(R.extension.field / K) →* ℂˣ)
-    (restriction :
-      Gal(Ks / K) →* Gal(R.extension.field / K)),
+    (bar : Gal(R.extension.field / K) →* ℂˣ),
     R.extension.field = chapter06FixedFieldOfComplexCharacter ψ.hom ∧
       Function.Injective bar ∧
-      ψ.hom = bar.comp restriction ∧
+      Function.Surjective
+        (chapter06FiniteExtensionRestriction R.extension) ∧
+      ψ.hom =
+        bar.comp (chapter06FiniteExtensionRestriction R.extension) ∧
       χ.hom = bar.comp R.artin ∧
       Nonempty (MonoidHom.range χ.hom ≃* MonoidHom.range ψ.hom) ∧
       χ.hom.ker = chapter06NormSubgroup R.extension.normMap
 
 theorem chapter06_galois_character_correspondence_kernel
-    {K Ks : Type*} [Field K] [Field Ks] [Algebra K Ks]
+    {K Ks : Type*} [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
     [Chapter06IdeleClassGroup K]
     (χ : Chapter06IdeleClassCharacter K)
     (ψ : Chapter06ContinuousFiniteImageCharacter
@@ -215,11 +244,13 @@ theorem chapter06_galois_character_correspondence_kernel
     ∃ R : Chapter06FiniteReciprocityWitness K Ks (Chapter06C K),
       χ.hom.ker = chapter06NormSubgroup R.extension.normMap := by
   rcases h with
-    ⟨R, cyclic, bar, restriction, hfield, hbar, hψ, hχ, himage, hnorm⟩
+    ⟨R, cyclic, bar, hfield, hbar, hrestriction, hψ, hχ,
+      himage, hnorm⟩
   exact ⟨R, hnorm⟩
 
 theorem chapter06_character_image_orders_agree
-    {K Ks : Type*} [Field K] [Field Ks] [Algebra K Ks]
+    {K Ks : Type*} [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
     [Chapter06IdeleClassGroup K]
     (χ : Chapter06IdeleClassCharacter K)
     (ψ : Chapter06ContinuousFiniteImageCharacter
@@ -227,30 +258,18 @@ theorem chapter06_character_image_orders_agree
     (h : chapter06GaloisCharacterCorresponds χ ψ) :
     Nonempty (MonoidHom.range χ.hom ≃* MonoidHom.range ψ.hom) := by
   rcases h with
-    ⟨R, cyclic, bar, restriction, hfield, hbar, hψ, hχ, himage, hnorm⟩
+    ⟨R, cyclic, bar, hfield, hbar, hrestriction, hψ, hχ,
+      himage, hnorm⟩
   exact himage
 
 /- Lemma 6.2: every continuous finite-order idele-class character has a
    unique finite-image character of the absolute Galois group. -/
 theorem chapter06_lemma_6_2_character_existence
-    {K Ks : Type*} [Field K] [Field Ks] [Algebra K Ks]
+    {K Ks : Type*} [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
     [Chapter06IdeleClassGroup K]
-    {ι : Type*} {n : ℕ}
-    {HLocal HMu HBr HTate : ι → Type*}
-    [∀ v, AddCommGroup (HLocal v)]
-    [∀ v, AddCommGroup (HMu v)]
-    [∀ v, AddCommGroup (HBr v)]
-    [∀ v, AddCommGroup (HTate v)]
-    [TopologicalSpace (Chapter06A n)]
-    [IsTopologicalAddGroup (Chapter06A n)]
     (χ : Chapter06IdeleClassCharacter K)
-    (coordinate :
-      Chapter06FiniteOrderCoordinate (Chapter06C K) n χ.hom)
-    (D : Chapter06FiniteLocalGlobalCharacterData
-      (Chapter06AbsoluteGaloisGroup K Ks) (Chapter06A n) ι n
-      HLocal HMu HBr HTate (Chapter06H1Mu K n))
-    (R : Chapter06CharacterLocalReciprocityData
-      K Ks ι n HLocal HMu HBr HTate χ coordinate D) :
+    :
     ∃! ψ : Chapter06ContinuousFiniteImageCharacter
         (Chapter06AbsoluteGaloisGroup K Ks) ℂˣ,
       chapter06GaloisCharacterCorresponds χ ψ := by
@@ -278,6 +297,7 @@ structure Chapter06RootOfUnitySelfDuality
     [∀ v, AddCommGroup (HLocal v)]
     [∀ v, AddCommGroup (HMu v)]
     (U : ∀ v, AddSubgroup (HLocal v)) where
+  positive : 0 < n
   primitive_root :
     ∃ ζ : Chapter06CartierDual K n, orderOf ζ = n
   self_duality :
@@ -310,12 +330,9 @@ theorem chapter06_without_roots_of_unity_uses_twisted_dual
       Additive (Chapter06CartierDual K n) :=
   rfl
 
-/- SOURCE_ISSUE: Section 6.3 says that, after identifying the image of χ
-   with a subgroup of A_n, Lemma 6.2 gives a unique finite-image character
-   of G_K.  The text does not say whether uniqueness is meant for the
-   intrinsic C-valued character or for the chosen coordinate and its n.
-   This API makes the coordinate explicit and states uniqueness for the
-   intrinsic C-valued Galois character. -/
+/- The coordinate, the local duality data, and the finite reciprocity witness
+   are proof data for the construction; the theorem above states uniqueness
+   only for the intrinsic C-valued Galois character. -/
 
 end
 

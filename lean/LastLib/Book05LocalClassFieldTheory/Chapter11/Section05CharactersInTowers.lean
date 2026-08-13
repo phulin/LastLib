@@ -11,6 +11,7 @@ open scoped Topology
 
 def chapter11RestrictedGaloisCharacter
     {K L Gₖ Gₗ A : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [Algebra.IsSeparable K L]
     [Group Gₖ] [Group Gₗ] [CommGroup A]
     [TopologicalSpace Kˣ] [TopologicalSpace Lˣ]
     [TopologicalSpace Gₖ] [TopologicalSpace Gₗ] [TopologicalSpace A]
@@ -23,15 +24,17 @@ def chapter11RestrictedGaloisCharacter
 
 def chapter11NormPullbackCharacter
     {K L A : Type*} [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [CommGroup A]
+    [FiniteDimensional K L] [Algebra.IsSeparable K L] [CommGroup A]
     [TopologicalSpace Kˣ] [TopologicalSpace Lˣ]
     [TopologicalSpace A] [IsTopologicalGroup A]
+    (hcont : Continuous (chapter11NormHom K L))
     (χₖ : Kˣ →ₜ* A) : Lˣ →ₜ* A :=
-  χₖ.comp (chapter11ContinuousNormHom K L)
+  χₖ.comp (chapter11ContinuousNormHom K L hcont)
 
 theorem chapter11_restriction_of_galois_character_corresponds_to_norm
     {K L Gₖ Gₗ A : Type*} [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [Group Gₖ] [Group Gₗ] [CommGroup A]
+    [FiniteDimensional K L] [Algebra.IsSeparable K L]
+    [Group Gₖ] [Group Gₗ] [CommGroup A]
     [TopologicalSpace Kˣ] [TopologicalSpace Lˣ]
     [TopologicalSpace Gₖ] [TopologicalSpace Gₗ] [TopologicalSpace A]
     [IsTopologicalGroup Gₖ] [IsTopologicalGroup Gₗ] [IsTopologicalGroup A]
@@ -43,18 +46,20 @@ theorem chapter11_restriction_of_galois_character_corresponds_to_norm
     (hcompat : chapter11NormRestrictionCompatibility Rₖ Rₗ T) :
     (chapter11ContinuousCharacterEquiv (A := A) Rₗ)
         (chapter11RestrictedGaloisCharacter Rₖ T χₖ) =
-      chapter11NormPullbackCharacter χₖ := by
+      chapter11NormPullbackCharacter T.norm_continuous χₖ := by
   sorry
 
 def chapter11RestrictedMultiplicativeCharacter
     {K L A : Type*} [Field K] [Field L] [Algebra K L]
     [CommGroup A] [TopologicalSpace Kˣ] [TopologicalSpace Lˣ]
     [TopologicalSpace A] [IsTopologicalGroup A]
+    (hcont : Continuous (chapter11MultiplicativeInclusion K L))
     (χₗ : Lˣ →ₜ* A) : Kˣ →ₜ* A :=
-  χₗ.comp (chapter11ContinuousMultiplicativeInclusion K L)
+  χₗ.comp (chapter11ContinuousMultiplicativeInclusion K L hcont)
 
 def chapter11TransferredGaloisCharacter
     {K L Gₖ Gₗ A : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [Algebra.IsSeparable K L]
     [Group Gₖ] [Group Gₗ] [CommGroup A]
     [TopologicalSpace Kˣ] [TopologicalSpace Lˣ]
     [TopologicalSpace Gₖ] [TopologicalSpace Gₗ] [TopologicalSpace A]
@@ -69,6 +74,7 @@ def chapter11TransferredGaloisCharacter
 
 theorem chapter11_restriction_of_multiplicative_character_corresponds_to_transfer
     {K L Gₖ Gₗ A : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [Algebra.IsSeparable K L]
     [Group Gₖ] [Group Gₗ] [CommGroup A]
     [TopologicalSpace Kˣ] [TopologicalSpace Lˣ]
     [TopologicalSpace Gₖ] [TopologicalSpace Gₗ] [TopologicalSpace A]
@@ -80,12 +86,13 @@ theorem chapter11_restriction_of_multiplicative_character_corresponds_to_transfe
     (χₗ : Lˣ →ₜ* A)
     (hcompat : chapter11TransferInclusionCompatibility Rₖ Rₗ T) :
     chapter11TransferredGaloisCharacter Rₖ Rₗ T χₗ =
-      chapter11RestrictedMultiplicativeCharacter χₗ := by
+      chapter11RestrictedMultiplicativeCharacter T.inclusion_continuous χₗ := by
   sorry
 
 theorem chapter11_norm_restriction_and_transfer_inclusion_dictionary
     {K L Gₖ Gₗ A : Type*} [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [Group Gₖ] [Group Gₗ] [CommGroup A]
+    [FiniteDimensional K L] [Algebra.IsSeparable K L]
+    [Group Gₖ] [Group Gₗ] [CommGroup A]
     [TopologicalSpace Kˣ] [TopologicalSpace Lˣ]
     [TopologicalSpace Gₖ] [TopologicalSpace Gₗ] [TopologicalSpace A]
     [IsTopologicalGroup Gₖ] [IsTopologicalGroup Gₗ] [IsTopologicalGroup A]
@@ -98,20 +105,17 @@ theorem chapter11_norm_restriction_and_transfer_inclusion_dictionary
     (hₜ : chapter11TransferInclusionCompatibility Rₖ Rₗ T) :
     ((chapter11ContinuousCharacterEquiv (A := A) Rₗ)
         (chapter11RestrictedGaloisCharacter Rₖ T χₖ) =
-      chapter11NormPullbackCharacter χₖ) ∧
+      chapter11NormPullbackCharacter T.norm_continuous χₖ) ∧
       (chapter11TransferredGaloisCharacter Rₖ Rₗ T χₗ =
-        chapter11RestrictedMultiplicativeCharacter χₗ) := by
+        chapter11RestrictedMultiplicativeCharacter T.inclusion_continuous χₗ) := by
   constructor
   · exact chapter11_restriction_of_galois_character_corresponds_to_norm
       Rₖ Rₗ T χₖ hₙ
   · exact chapter11_restriction_of_multiplicative_character_corresponds_to_transfer
       Rₖ Rₗ T χₗ hₜ
 
-/- SOURCE_ISSUE: the source says, "Let `L/K` be finite separable" and then
-  writes `G_L ↪ G_K`.  Finite separability alone does not choose compatible
-  separable closures, hence does not canonically define that map.  The
-  declarations above make the required restriction and transfer maps
-  explicit through `Chapter11TowerData`. -/
+/- The chosen embedding and compatible separable closures are represented by
+  the explicit restriction and transfer maps in `Chapter11TowerData`. -/
 
 end
 end LastLib.Book05LocalClassFieldTheory.Chapter11

@@ -1,4 +1,13 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section06FiniteExtensionsOfCompleteFields
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section04RamificationIndexAndResidueDegree
+import Mathlib.Algebra.Algebra.Subalgebra.Lattice
+import Mathlib.FieldTheory.Separable
+import Mathlib.NumberTheory.Padics.PadicIntegers
+import Mathlib.RingTheory.DiscreteValuationRing.Basic
+import Mathlib.RingTheory.LaurentSeries
+import Mathlib.RingTheory.PowerSeries.Basic
+import Mathlib.RingTheory.Polynomial.Eisenstein.Criterion
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Order
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
 
@@ -46,7 +55,11 @@ def Chapter10ProfileRealizedByData
 def Chapter10TotallyRamified (p : Chapter10FiniteExtensionProfile) : Prop :=
   p.ramificationIndex = p.degree ∧ p.residueDegree = 1
 
-/-- The numerical part of an unramified profile. -/
+/-- The numerical part of an unramified profile.
+
+This predicate deliberately does not assert separability of the residue
+extension; `Chapter10UnramifiedBranch` is the branch-level predicate below.
+-/
 def Chapter10Unramified (p : Chapter10FiniteExtensionProfile) : Prop :=
   p.ramificationIndex = 1 ∧ p.residueDegree = p.degree
 
@@ -62,6 +75,26 @@ def Chapter10ValueScaling
     (vK : AddValuation K (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ)) (n : ℕ) : Prop :=
   ∀ x : K, x ≠ 0 → vL (algebraMap K L x) = n • vK x
+
+/-- Separability of the residue-field extension attached to a valuation branch. -/
+def Chapter10ResidueExtensionIsSeparable
+    {K L ΓK ΓL : Type*} [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero ΓK]
+    [LinearOrderedCommGroupWithZero ΓL]
+    (v : Valuation K ΓK) (w : Valuation L ΓL)
+    [Valuation.HasExtension v w] : Prop :=
+  ∀ x : Chapter10ResidueField w, IsSeparable (Chapter10ResidueField v) x
+
+/-- The intrinsic unramified condition for a specified valuation branch. -/
+def Chapter10UnramifiedBranch
+    {K L ΓK ΓL : Type*} [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero ΓK]
+    [LinearOrderedCommGroupWithZero ΓL] [FiniteDimensional K L]
+    (v : Valuation K ΓK) (w : Valuation L ΓL)
+    (h : v.IsEquiv (w.comap (algebraMap K L)))
+    (d : Chapter10HeterogeneousExtensionData v w h) : Prop := by
+  letI : Valuation.HasExtension v w := ⟨h⟩
+  exact d.ramificationIndex = 1 ∧ Chapter10ResidueExtensionIsSeparable v w
 
 /-- The Laurent-series valuation used in the equal-characteristic model. -/
 def Chapter10LaurentSeriesValuation (k : Type*) [Field k] :
@@ -100,8 +133,7 @@ theorem chapter10_equal_characteristic_totally_ramified_profile
     (hvK : Chapter10DiscreteAddValuation vK)
     (hvL : Chapter10DiscreteAddValuation vL)
     (hext : vK.IsEquiv (vL.comap (algebraMap K L)))
-    (ht : vK t = 1) (hu : vL u = 1)
-    (hscale : Chapter10ValueScaling vK vL n) :
+    (ht : vK t = 1) (hu : vL u = 1) :
     ∃ d : Chapter10HeterogeneousExtensionData vK vL hext,
       ∃ p : Chapter10FiniteExtensionProfile,
         Chapter10ProfileRealizedByData d p ∧
@@ -112,7 +144,8 @@ theorem chapter10_equal_characteristic_totally_ramified_profile
 /-- Constant-field extensions have e = 1 and residue degree equal to the field degree. -/
 theorem chapter10_constant_field_extension_profile
     {k k' : Type*} [Field k] [Field k'] [Algebra k k'] [FiniteDimensional k k']
-    (n : ℕ) (hn : n = Module.finrank k k') :
+    (n : ℕ) (hn : n = Module.finrank k k')
+    (_hseparable : Algebra.IsSeparable k k') :
     ∃ p : Chapter10FiniteExtensionProfile,
       p.degree = n ∧ p.ramificationIndex = 1 ∧
         p.residueDegree = Module.finrank k k' ∧ Chapter10Unramified p := by
@@ -379,6 +412,7 @@ theorem chapter10_eisenstein_totally_ramified_profile
     (hvK : Chapter10DiscreteAddValuation vK)
     (hvL : Chapter10DiscreteAddValuation vL)
     (hext : vK.IsEquiv (vL.comap (algebraMap K L)))
+    (hA : vK.Integers A)
     (hπ : vK (algebraMap A K π) = 1)
     (hscale : Chapter10ValueScaling vK vL P.natDegree) :
     ∃ d : Chapter10HeterogeneousExtensionData vK vL hext,
@@ -422,6 +456,7 @@ theorem chapter10_unramified_lift_profile
           Irreducible P ∧
           p.degree = f ∧ p.ramificationIndex = 1 ∧
           p.residueDegree = f ∧ Chapter10Unramified p ∧
+          Chapter10UnramifiedBranch v w hext d ∧
             (P.map res).Separable := by
   sorry
 
@@ -430,6 +465,13 @@ theorem chapter10_padic_uniformizer_value
     {p : ℕ} [Fact p.Prime] :
     Padic.valuation (p : ℚ_[p]) = 1 := by
   exact Padic.valuation_p
+
+/-- The standard p-adic integers are the bounded elements for the additive
+p-adic valuation. -/
+theorem chapter10_padic_integers_are_add_valuation_integers
+    {p : ℕ} [Fact p.Prime] :
+    (Padic.addValuation (p := p)).Integers (ℤ_[p]) := by
+  sorry
 
 /-- The p-adic Eisenstein setup is the preceding theorem with π = p. -/
 theorem chapter10_padic_eisenstein_profile
@@ -468,9 +510,11 @@ theorem chapter10_padic_eisenstein_profile
     simpa using (Padic.addValuation.apply hp0).trans
       (by
         convert chapter10_padic_uniformizer_value (p := p) using 1; simp)
+  have hA : (Padic.addValuation (p := p)).Integers (ℤ_[p]) :=
+    chapter10_padic_integers_are_add_valuation_integers (p := p)
   exact chapter10_eisenstein_totally_ramified_profile
     (A := ℤ_[p]) (K := ℚ_[p]) (L := L) P (p : ℤ_[p]) α
-    hE hroot hgen hdegree (Padic.addValuation (p := p)) vL hvK hvL hext hπ hscale
+    hE hroot hgen hdegree (Padic.addValuation (p := p)) vL hvK hvL hext hA hπ hscale
 
 end
 

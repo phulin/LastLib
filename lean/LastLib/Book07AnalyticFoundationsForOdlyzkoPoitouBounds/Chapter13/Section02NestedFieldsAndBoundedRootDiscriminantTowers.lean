@@ -158,22 +158,24 @@ theorem chapter13_tower_stabilization
     ⟨N, hN⟩
   exact chapter13_tower_stabilizes_of_uniform_degree_cap T hN
 
-/- A tower whose successive relative different ideals are trivial has
-   constant root discriminant, by the relative formula in Dependencies. -/
+/- The analytic compatibility package records the constant-root-discriminant
+   consequence of a stepwise unramified tower.  The arithmetic unramifiedness
+   predicate itself is supplied separately by the relative discriminant API. -/
 def chapter13ConstantRootDiscriminantTower
     {Ω : Type*} [Field Ω] [Algebra ℚ Ω]
     (T : Chapter13NestedFieldTower Ω) : Prop :=
   ∀ j, chapter13TowerRootDiscriminant T (j + 1) =
     chapter13TowerRootDiscriminant T j
 
-def chapter13UnramifiedTowerAboveThreshold
+def chapter13ConstantRootDiscriminantTowerAboveThreshold
     {Ω : Type*} [Field Ω] [Algebra ℚ Ω]
     (T : Chapter13NestedFieldTower Ω) (U α₀ : ℝ) : Prop :=
   chapter13ConstantRootDiscriminantTower T ∧
     chapter13TowerRootDiscriminant T 0 ≤ U ∧
     (∀ j, α₀ ≤ chapter13TowerRealProportion T j) ∧
     4 * Real.pi * Real.exp
-      (Real.eulerMascheroniConstant + α₀) ≤ U
+      (Real.eulerMascheroniConstant + α₀) ≤
+        chapter13TowerRootDiscriminant T 0
 
 theorem chapter13_constant_rootDiscriminant_tower_below_ceiling
     {Ω : Type*} [Field Ω] [Algebra ℚ Ω]
@@ -183,10 +185,10 @@ theorem chapter13_constant_rootDiscriminant_tower_below_ceiling
     ∀ j, chapter13TowerRootDiscriminant T j ≤ U := by
   sorry
 
-theorem chapter13_unramified_tower_compatibility_gives_uniform_bounds
+theorem chapter13_constant_rootDiscriminant_tower_compatibility_gives_uniform_bounds
     {Ω : Type*} [Field Ω] [Algebra ℚ Ω]
     (T : Chapter13NestedFieldTower Ω) {U α₀ : ℝ}
-    (hcompat : chapter13UnramifiedTowerAboveThreshold T U α₀) :
+    (hcompat : chapter13ConstantRootDiscriminantTowerAboveThreshold T U α₀) :
     chapter13TowerBoundedBy T U α₀ := by
   rcases hcompat with ⟨hconstant, hzero, halpha, _⟩
   refine fun j => ⟨?_, halpha j⟩
@@ -196,7 +198,7 @@ theorem chapter13_unramified_tower_compatibility_gives_uniform_bounds
 /- The source's final statement is a compatibility warning conditional on the
 existence of an infinite unramified tower, not an existence assertion.  The
 precise compatibility condition is recorded in
-`chapter13UnramifiedTowerAboveThreshold`. -/
+`chapter13ConstantRootDiscriminantTowerAboveThreshold`. -/
 
 end
 

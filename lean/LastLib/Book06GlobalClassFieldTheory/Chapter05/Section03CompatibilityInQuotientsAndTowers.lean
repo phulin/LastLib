@@ -16,14 +16,6 @@ book-facing interface for the finite abelian extension lattice and its open
 idele norm subgroups.  The reconciled existence/classification API should
 replace this interface; its operations are compositum/intersection and its
 norm map is the actual idelic norm subgroup.
-
-SOURCE_ISSUE: In Section 5.3, the sentence “Hence inclusion of fields reverses
-inclusion of norm subgroups” followed by an `\Longleftrightarrow` asserts the
-converse before the existence/classification theorem of Chapter 6.  The
-restriction square proves the forward implication; the converse needs the
-injectivity of the field-to-norm assignment and should be deferred to Chapter
-6.  Suggested replacement: “If `E ⊆ L`, then
-`N_{L/K} C_L ⊆ N_{E/K} C_E`; the converse is proved in Chapter 6.”
 -/
 
 universe uC uC' uC'' uG uG' uE uUK uUL
@@ -71,7 +63,8 @@ structure Chapter05TowerNormData
   transitive : normEK.comp normLE = normLK
   normSubgroupE : Subgroup C_K
   normSubgroupL : Subgroup C_K
-  normSubgroup_inclusion : normSubgroupL ≤ normSubgroupE
+  normSubgroupE_eq_range : normSubgroupE = Subgroup.map normEK ⊤
+  normSubgroupL_eq_range : normSubgroupL = Subgroup.map normLK ⊤
 
 theorem chapter05_idele_norms_are_transitive
     {C_K : Type uC} {C_E : Type uC'} {C_L : Type uC''}
@@ -85,7 +78,7 @@ theorem chapter05_tower_norm_subgroups_reverse_inclusion
     [CommGroup C_K] [CommGroup C_E] [CommGroup C_L]
     (T : Chapter05TowerNormData C_K C_E C_L) :
     T.normSubgroupL ≤ T.normSubgroupE := by
-  exact T.normSubgroup_inclusion
+  sorry
 
 /-- The field/norm order interface used by the finite abelian class-field
 lattice.  `fieldLe E L` means `E ⊆ L`. -/

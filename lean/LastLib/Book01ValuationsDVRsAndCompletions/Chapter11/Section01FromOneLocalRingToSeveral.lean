@@ -170,11 +170,6 @@ def chapter11IsJapanese (R : Type u) [CommRing R] [IsDomain R] : Prop :=
 class Chapter11CompleteDVR (A : Type u) [CommRing A] [IsDomain A]
     [IsDiscreteValuationRing A] : Prop where
   isAdicComplete : IsAdicComplete (IsLocalRing.maximalIdeal A) A
-  normalization_finite :
-    ∀ (K L : Type u) [Field K] [Field L] [Algebra A K]
-      [IsFractionRing A K] [Algebra K L] [Algebra A L]
-      [IsScalarTower A K L] [FiniteDimensional K L],
-      Module.Finite A (integralClosure A L)
 
 /-- The interface used for the phrase “complete DVR” in the finiteness discussion. -/
 def chapter11IsCompleteDVR (A : Type*) [CommRing A] [IsDomain A]
@@ -214,7 +209,65 @@ def chapter11AwayModel (R S A B : Type*) [CommRing R] [CommRing S] [CommRing A]
 /-- A prime of `S` not lying over `p` disappears after localizing away from `p`. -/
 def chapter11PrimeDisappearsAwayFrom (R S : Type*) [CommRing R] [CommRing S] [Algebra R S]
     (p : Ideal R) (Q : Ideal S) : Prop :=
-  ¬Q.LiesOver p
+  Q.IsPrime ∧ ¬Q.LiesOver p
+
+/-! The following interfaces state the localization identities used in the
+Dedekind-domain description.  The finite normalization and the two integral
+closure structures are explicit so that these results do not reduce to the
+predicate wrappers above. -/
+
+/-- The normalization after localizing a Dedekind domain is its base change. -/
+theorem chapter11_base_change_model_of_integral_closure
+    (R S A B K L : Type*) [CommRing R] [IsDedekindDomain R]
+    [CommRing S] [IsDomain S] [CommRing A] [IsDomain A]
+    [CommRing B] [IsDomain B] [Field K] [Field L]
+    [Algebra R S] [Algebra R A] [Algebra R B]
+    [Algebra R K] [IsFractionRing R K] [Algebra K L]
+    [Algebra R L] [IsScalarTower R K L]
+    [Algebra A B] [Algebra A L] [Algebra B L]
+    [IsScalarTower A B L] [IsScalarTower R A L]
+    [IsScalarTower R B L] [Algebra S L] [IsScalarTower R S L]
+    [IsIntegralClosure S R L] [IsIntegralClosure B A L]
+    [FiniteDimensional K L]
+    (p : Ideal R) [p.IsPrime] [p.IsMaximal]
+    [IsLocalization p.primeCompl A] (hp0 : p ≠ (⊥ : Ideal R))
+    (hfinite : Module.Finite R S) :
+    chapter11BaseChangeModel R S A B := by
+  sorry
+
+/-- The same finite normalization is the normalization of `S` away from `p`. -/
+theorem chapter11_away_model_of_integral_closure
+    (R S A B K L : Type*) [CommRing R] [IsDedekindDomain R]
+    [CommRing S] [IsDomain S] [CommRing A] [IsDomain A]
+    [CommRing B] [IsDomain B] [Field K] [Field L]
+    [Algebra R S] [Algebra R A] [Algebra R B]
+    [Algebra R K] [IsFractionRing R K] [Algebra K L]
+    [Algebra R L] [IsScalarTower R K L]
+    [Algebra A B] [Algebra A L] [Algebra B L]
+    [IsScalarTower A B L] [IsScalarTower R A L]
+    [IsScalarTower R B L] [Algebra S L] [IsScalarTower R S L]
+    [IsIntegralClosure S R L] [IsIntegralClosure B A L]
+    [FiniteDimensional K L]
+    (p : Ideal R) [p.IsPrime] [p.IsMaximal]
+    [IsLocalization p.primeCompl A] (hp0 : p ≠ (⊥ : Ideal R))
+    (hfinite : Module.Finite R S) :
+    chapter11AwayModel R S A B p := by
+  sorry
+
+/-- A nonzero prime of the normalization away from `p` maps to the unit ideal. -/
+theorem chapter11_prime_disappears_away_from
+    (R S K L : Type*) [CommRing R] [IsDedekindDomain R]
+    [CommRing S] [IsDomain S] [Field K] [Field L]
+    [Algebra R S] [Algebra R K] [IsFractionRing R K]
+    [Algebra K L] [Algebra R L] [IsScalarTower R K L]
+    [Algebra S L] [IsScalarTower R S L]
+    [IsIntegralClosure S R L] [FiniteDimensional K L]
+    (p : Ideal R) [p.IsPrime] [p.IsMaximal]
+    (hp0 : p ≠ (⊥ : Ideal R)) (hfinite : Module.Finite R S)
+    (Q : Ideal S) (hQ : chapter11PrimeDisappearsAwayFrom R S p Q)
+    (hQ0 : Q ≠ (⊥ : Ideal S)) :
+    Ideal.map (algebraMap S (chapter11AwayLocalization R S p)) Q = ⊤ := by
+  sorry
 
 /-- A valuation extension is expressed using Mathlib's equivalence relation on valuations. -/
 def chapter11ValuationExtensionAt (K L : Type*) [CommRing K] [CommRing L] [Algebra K L]
@@ -254,7 +307,7 @@ theorem chapter11_branch_labels_valuation_extensions
     [CommRing B] [IsDomain B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L] [IsFractionRing A K]
-    [FiniteDimensional K L] [Algebra.IsSeparable K L]
+    [FiniteDimensional K L]
     [IsIntegralClosure B A L]
     (hAinj : Function.Injective (algebraMap A K))
     (hKinj : Function.Injective (algebraMap K L))
@@ -270,192 +323,150 @@ theorem chapter11_branch_labels_valuation_extensions
       chapter11ValuationExtensionAt K L vK vL ∧
         chapter11ValuationCenter B L P vL ι ∧
         ∀ b : B, (ι b : L) = algebraMap B L b := by
-  let S := chapter11BranchLocalization B P
-  let : Algebra.IsIntegral A B := IsIntegralClosure.isIntegral_algebra A L
-  let : Module.IsTorsionFree A L :=
-    Module.isTorsionFree_iff_algebraMap_injective.mpr (by
-      intro x y hxy
+  classical
+  let _ : IsFractionRing B L :=
+    IsIntegralClosure.isFractionRing_of_finite_extension A K L B
+  let S := Localization.AtPrime P
+  have hSreg : ∀ y : P.primeCompl, (y : B) ∈ B⁰ :=
+    fun y => (Ideal.primeCompl_le_nonZeroDivisors P) y.2
+  let φ : S →+* L :=
+    IsLocalization.lift (M := P.primeCompl) (S := S) (g := algebraMap B L) (by
+      intro y
+      apply isUnit_iff_ne_zero.mpr
+      exact map_ne_zero_of_mem_nonZeroDivisors (algebraMap B L)
+        (IsIntegralClosure.algebraMap_injective B A L) (hSreg y))
+  let _ : Algebra S L := φ.toAlgebra
+  let _ : IsScalarTower B S L := by
+    apply IsScalarTower.of_algebraMap_eq'
+    apply RingHom.ext
+    intro b
+    change algebraMap B L b = φ (algebraMap B S b)
+    symm
+    exact IsLocalization.lift_eq (M := P.primeCompl) (S := S) (g := algebraMap B L) _ b
+  let _ : IsScalarTower A S L := by
+    apply IsScalarTower.of_algebraMap_eq'
+    apply RingHom.ext
+    intro a
+    rw [IsScalarTower.algebraMap_apply A B L]
+    simp only [RingHom.coe_comp, Function.comp_apply]
+    rw [IsScalarTower.algebraMap_apply A B S,
+      ← IsScalarTower.algebraMap_apply B S L]
+  let _ : IsFractionRing S L :=
+    IsFractionRing.isFractionRing_of_isDomain_of_isLocalization P.primeCompl S L
+  let vL : Valuation L ℤᵐ⁰ := (IsDiscreteValuationRing.maximalIdeal S).valuation L
+  let e : S ≃+* vL.valuationSubring :=
+    IsDiscreteValuationRing.equivValuationSubring
+  have he : ∀ s : S, (e s : L) = algebraMap S L s := by
+    intro s
+    rfl
+  let vA : Valuation K ℤᵐ⁰ := (IsDiscreteValuationRing.maximalIdeal A).valuation K
+  have hvKle : vA.valuationSubring ≤ vK.valuationSubring := by
+    change vA.valuationSubring.toSubring ≤ vK.valuationSubring.toSubring
+    rw [← IsDiscreteValuationRing.map_algebraMap_eq_valuationSubring]
+    intro x hx
+    rcases Subring.mem_map.mp hx with ⟨a, -, rfl⟩
+    change (algebraMap A K a : K) ∈ vK.valuationSubring
+    rw [← hιA a]
+    exact (ιA a).property
+  have hιAinj : Function.Injective ιA := by
+    intro x y hxy
+    apply hAinj
+    calc
+      algebraMap A K x = (ιA x : K) := (hιA x).symm
+      _ = (ιA y : K) := congrArg Subtype.val hxy
+      _ = algebraMap A K y := hιA y
+  have hm0 : m ≠ (⊥ : Ideal A) := by
+    rw [hm]
+    intro h
+    apply IsDiscreteValuationRing.not_isField A
+    exact (IsLocalRing.isField_iff_maximalIdeal_eq).2 h
+  have hvKtop : vK.valuationSubring ≠ ⊤ := by
+    intro htop
+    have hmax : IsLocalRing.maximalIdeal vK.valuationSubring =
+        (⊥ : Ideal vK.valuationSubring) := by
+      rw [htop]
+      exact IsLocalRing.maximalIdeal_eq_bot
+    apply hm0
+    calc
+      m = (IsLocalRing.maximalIdeal vK.valuationSubring).comap ιA := hcenter
+      _ = (⊥ : Ideal A) := by
+        rw [hmax]
+        exact Ideal.comap_bot_of_injective ιA hιAinj
+  have hvKeq : vA.valuationSubring = vK.valuationSubring :=
+    ValuationSubring.eq_of_le_of_ne_top vA.valuationSubring hvKle hvKtop
+  have hvLtop : (vL.comap (algebraMap K L)).valuationSubring ≠ ⊤ := by
+    intro htop
+    let : P.LiesOver m := hP.2.2
+    obtain ⟨a, ha0⟩ :=
+      Submodule.nonzero_mem_of_bot_lt (bot_lt_iff_ne_bot.mpr hm0)
+    have haP : algebraMap A B (a : A) ∈ P :=
+      (Ideal.mem_of_liesOver P m (a : A)).mp a.property
+    have haSmax : algebraMap B S (algebraMap A B (a : A)) ∈
+        IsLocalRing.maximalIdeal S :=
+      (IsLocalization.AtPrime.to_map_mem_maximal_iff S P _).2 haP
+    have haVLmax : e (algebraMap B S (algebraMap A B (a : A))) ∈
+        IsLocalRing.maximalIdeal vL.valuationSubring := by
+      rw [IsLocalRing.mem_maximalIdeal, map_mem_nonunits_iff e,
+        ← IsLocalRing.mem_maximalIdeal]
+      exact haSmax
+    have haLlt : vL (algebraMap A L (a : A)) < 1 := by
+      have hlt := (Valuation.mem_maximalIdeal_iff L vL).mp haVLmax
+      rw [he] at hlt
+      simpa [IsScalarTower.algebraMap_apply A B L,
+        IsScalarTower.algebraMap_apply B S L] using hlt
+    have haL0 : algebraMap A L (a : A) ≠ 0 := by
+      intro hzero
+      apply ha0
+      apply Subtype.ext
       apply hAinj
       apply hKinj
-      simpa only [IsScalarTower.algebraMap_apply A K L] using hxy)
-  let : Module.IsTorsionFree A B := IsIntegralClosure.isTorsionFree A L
-  let : IsFractionRing B L :=
-    IsIntegralClosure.isFractionRing_of_finite_extension A K L B
-  have hPcomp : P.primeCompl ≤ (nonZeroDivisors B).comap (RingHom.id B) := by
+      simpa [IsScalarTower.algebraMap_apply A K L] using hzero
+    have hinv_mem :
+        (algebraMap K L ((algebraMap A K (a : A))⁻¹)) ∈ vL.valuationSubring := by
+      have hmem :
+          (algebraMap A K (a : A))⁻¹ ∈
+            (vL.comap (algebraMap K L)).valuationSubring := by
+        rw [htop]
+        simp
+      exact hmem
+    have hinv_le : vL (algebraMap K L ((algebraMap A K (a : A))⁻¹)) ≤ 1 :=
+      (Valuation.mem_valuationSubring_iff _ _).mp hinv_mem
+    have hinv_le' : vL (algebraMap A L (a : A))⁻¹ ≤ 1 := by
+      simpa [map_inv₀, IsScalarTower.algebraMap_apply A K L] using hinv_le
+    exact (not_lt_of_ge hinv_le') ((vL.val_lt_one_iff haL0).mp haLlt)
+  have hvLle : vA.valuationSubring ≤ (vL.comap (algebraMap K L)).valuationSubring := by
+    change vA.valuationSubring.toSubring ≤ (vL.comap (algebraMap K L)).valuationSubring.toSubring
+    rw [← IsDiscreteValuationRing.map_algebraMap_eq_valuationSubring]
     intro x hx
-    change x ∈ nonZeroDivisors B
-    exact P.primeCompl_le_nonZeroDivisors hx
-  let alg : S →+* L :=
-    IsLocalization.map L (RingHom.id B) hPcomp
-  let : Algebra S L := alg.toAlgebra
-  let : IsScalarTower B S L := by
-    apply IsScalarTower.of_algebraMap_eq'
-    change algebraMap B L = alg.comp (algebraMap B S)
-    simp [alg]
-  let : IsFractionRing S L :=
-    IsFractionRing.isFractionRing_of_isDomain_of_isLocalization P.primeCompl S L
-  let vL : Valuation L ℤᵐ⁰ :=
-    (IsDiscreteValuationRing.maximalIdeal S).valuation L
-  let eS : S ≃+* vL.valuationSubring :=
-    IsDiscreteValuationRing.equivValuationSubring (A := S) (K := L)
+    rcases Subring.mem_map.mp hx with ⟨a, -, rfl⟩
+    change vL (algebraMap K L (algebraMap A K a)) ≤ 1
+    rw [← IsScalarTower.algebraMap_apply A K L,
+      IsScalarTower.algebraMap_apply A S L]
+    apply (Valuation.mem_valuationSubring_iff _ _).mp
+    rw [← he]
+    exact (e (algebraMap A S a)).property
+  have hvLeq : vA.valuationSubring = (vL.comap (algebraMap K L)).valuationSubring :=
+    ValuationSubring.eq_of_le_of_ne_top vA.valuationSubring hvLle hvLtop
   let ι : B →+* vL.valuationSubring :=
-    eS.toRingHom.comp (algebraMap B S)
-  have hι : ∀ b : B, (ι b : L) = algebraMap B L b := by
-    intro b
-    change algebraMap S L (algebraMap B S b) = algebraMap B L b
-    rw [← IsScalarTower.algebraMap_apply B S L]
-  have hmaxS :
-      (IsLocalRing.maximalIdeal S).map eS.toRingHom =
-        IsLocalRing.maximalIdeal vL.valuationSubring := by
-    exact IsLocalRing.map_ringEquiv_maximalIdeal eS
-  have hcomapS :
-      (IsLocalRing.maximalIdeal vL.valuationSubring).comap eS.toRingHom =
-        IsLocalRing.maximalIdeal S := by
-    rw [← hmaxS]
-    exact Ideal.comap_map_of_bijective _ eS.bijective
-  have hcenterL : chapter11ValuationCenter B L P vL ι := by
-    change P = (IsLocalRing.maximalIdeal vL.valuationSubring).comap ι
-    rw [show ι = eS.toRingHom.comp (algebraMap B S) by rfl,
-      ← Ideal.comap_comap, hcomapS]
-    change P = (IsLocalRing.maximalIdeal S).under B
-    exact (Localization.AtPrime.under_maximalIdeal (I := P)).symm
-  have hvKring :
-      vK.valuationSubring.toSubring =
-        Subring.map (algebraMap A K) (⊤ : Subring A) := by
-    apply le_antisymm
-    · intro x hx
-      obtain ⟨a, ha⟩ | ⟨a, ha⟩ := ValuationRing.isInteger_or_isInteger A x
-      · rw [Subring.mem_map]
-        exact ⟨a, Subring.mem_top _, ha⟩
-      · by_cases hx0 : x = 0
-        · rw [hx0]
-          exact (Subring.zero_mem _)
-        by_cases hua : IsUnit a
-        · obtain ⟨u, hu⟩ := hua
-          rw [Subring.mem_map]
-          refine ⟨(↑(u⁻¹) : A), Subring.mem_top _, ?_⟩
-          calc
-            algebraMap A K (↑(u⁻¹) : A) = (algebraMap A K (↑u : A))⁻¹ := by
-              simp
-            _ = (algebraMap A K a)⁻¹ := by rw [hu]
-            _ = x := by rw [ha]; simp
-        · have ham : a ∈ IsLocalRing.maximalIdeal A := by
-            rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
-            exact hua
-          have ham' : a ∈ m := by rw [hm]; exact ham
-          have haW : ιA a ∈ IsLocalRing.maximalIdeal vK.valuationSubring := by
-            have haW' : a ∈ (IsLocalRing.maximalIdeal vK.valuationSubring).comap ιA := by
-              rw [← hcenter]
-              exact ham'
-            exact haW'
-          have hlt : vK (x⁻¹) < 1 := by
-            rw [← ha, ← hιA a]
-            exact (Valuation.mem_maximalIdeal_iff (K := K) vK).mp haW
-          have hxpos : 0 < vK x := (vK.pos_iff).mpr hx0
-          have hxgt : 1 < vK x :=
-            (inv_lt_one₀ hxpos).mp (by simpa only [map_inv₀] using hlt)
-          exact (False.elim ((not_lt_of_ge hx) hxgt))
-    · intro x hx
-      rw [Subring.mem_map] at hx
-      obtain ⟨a, -, ha⟩ := hx
-      have haW : (ιA a : K) ∈ vK.valuationSubring := (ιA a).property
-      change x ∈ vK.valuationSubring
-      rw [← ha, ← hιA a]
-      exact haW
-  have hvAring :
-      ((IsDiscreteValuationRing.maximalIdeal A).valuation K).valuationSubring.toSubring =
-        Subring.map (algebraMap A K) (⊤ : Subring A) := by
-    exact (IsDiscreteValuationRing.map_algebraMap_eq_valuationSubring
-      (A := A) (K := K)).symm
-  have hvKeq :
-      vK.IsEquiv ((IsDiscreteValuationRing.maximalIdeal A).valuation K) := by
-    apply (Valuation.isEquiv_iff_valuationSubring vK _).mpr
-    apply ValuationSubring.ext
-    intro x
-    change x ∈ vK.valuationSubring.toSubring ↔
-      x ∈ ((IsDiscreteValuationRing.maximalIdeal A).valuation K).valuationSubring.toSubring
-    rw [hvKring, hvAring]
-  have hvLring :
-      (vL.comap (algebraMap K L)).valuationSubring.toSubring =
-        Subring.map (algebraMap A K) (⊤ : Subring A) := by
-    apply le_antisymm
-    · intro x hx
-      obtain ⟨a, ha⟩ | ⟨a, ha⟩ := ValuationRing.isInteger_or_isInteger A x
-      · rw [Subring.mem_map]
-        exact ⟨a, Subring.mem_top _, ha⟩
-      · by_cases hx0 : x = 0
-        · rw [hx0]
-          exact (Subring.zero_mem _)
-        by_cases hua : IsUnit a
-        · obtain ⟨u, hu⟩ := hua
-          rw [Subring.mem_map]
-          refine ⟨(↑(u⁻¹) : A), Subring.mem_top _, ?_⟩
-          calc
-            algebraMap A K (↑(u⁻¹) : A) = (algebraMap A K (↑u : A))⁻¹ := by
-              simp
-            _ = (algebraMap A K a)⁻¹ := by rw [hu]
-            _ = x := by rw [ha]; simp
-        · have ham : a ∈ IsLocalRing.maximalIdeal A := by
-            rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
-            exact hua
-          have ham' : a ∈ m := by rw [hm]; exact ham
-          have habP : algebraMap A B a ∈ P := by
-            let : P.LiesOver m := hP.2.2
-            exact (Ideal.mem_of_liesOver P m a).mp ham'
-          have hamS : algebraMap B S (algebraMap A B a) ∈
-              IsLocalRing.maximalIdeal S := by
-            rw [← Localization.AtPrime.map_eq_maximalIdeal]
-            exact Ideal.mem_map_of_mem _ habP
-          have haW : ι (algebraMap A B a) ∈
-              IsLocalRing.maximalIdeal vL.valuationSubring := by
-            rw [show ι (algebraMap A B a) =
-              eS (algebraMap B S (algebraMap A B a)) by rfl]
-            rw [← hmaxS]
-            exact Ideal.mem_map_of_mem _ hamS
-          have hlt : vL ((algebraMap A L) a) < 1 := by
-            rw [IsScalarTower.algebraMap_apply A B L a, ← hι]
-            exact (Valuation.mem_maximalIdeal_iff (K := L) vL).mp haW
-          have hxval : vL (algebraMap K L x) ≤ 1 := hx
-          have hxpos : 0 < vL (algebraMap K L x) := by
-            apply (vL.pos_iff).mpr
-            intro hzero
-            apply hx0
-            apply hKinj
-            simpa using hzero
-          have hxinval' : vL ((algebraMap K L x)⁻¹) < 1 := by
-            calc
-              vL ((algebraMap K L x)⁻¹) = vL (algebraMap A L a) := by
-                congr 1
-                calc
-                  (algebraMap K L x)⁻¹ = algebraMap K L (x⁻¹) := by simp
-                  _ = algebraMap K L (algebraMap A K a) := by rw [← ha]
-                  _ = algebraMap A L a := by
-                    rw [IsScalarTower.algebraMap_apply A K L]
-              _ < 1 := hlt
-          have hxinval : (vL (algebraMap K L x))⁻¹ < 1 := by
-            simpa only [map_inv₀] using hxinval'
-          have hxgt : 1 < vL (algebraMap K L x) :=
-            (inv_lt_one₀ hxpos).mp hxinval
-          exact False.elim ((not_lt_of_ge hxval) hxgt)
-    · intro x hx
-      rw [Subring.mem_map] at hx
-      obtain ⟨a, -, ha⟩ := hx
-      have hval : vL (algebraMap A L a) ≤ 1 := by
-        rw [IsScalarTower.algebraMap_apply A B L a, ← hι]
-        exact (ι (algebraMap A B a)).property
-      change vL (algebraMap K L x) ≤ 1
-      rw [← ha, ← IsScalarTower.algebraMap_apply A K L]
-      exact hval
-  have hvLeq :
-      vK.IsEquiv (vL.comap (algebraMap K L)) := by
-    apply (Valuation.isEquiv_iff_valuationSubring vK _).mpr
-    apply ValuationSubring.ext
-    intro x
-    change x ∈ vK.valuationSubring.toSubring ↔
-      x ∈ (vL.comap (algebraMap K L)).valuationSubring.toSubring
-    rw [hvKring, hvLring]
-  refine ⟨vL, ι, ?_, hcenterL, hι⟩
-  exact hvLeq
+    e.toRingHom.comp (algebraMap B S)
+  refine ⟨vL, ι, ?_, ?_, ?_⟩
+  · change vK.IsEquiv (vL.comap (algebraMap K L))
+    apply (Valuation.isEquiv_iff_valuationSubring vK (vL.comap (algebraMap K L))).2
+    calc
+      vK.valuationSubring = vA.valuationSubring := hvKeq.symm
+      _ = (vL.comap (algebraMap K L)).valuationSubring := hvLeq
+  · ext b
+    change b ∈ P ↔ e (algebraMap B S b) ∈ IsLocalRing.maximalIdeal vL.valuationSubring
+    rw [IsLocalRing.mem_maximalIdeal, map_mem_nonunits_iff e,
+      ← IsLocalRing.mem_maximalIdeal]
+    exact (IsLocalization.AtPrime.to_map_mem_maximal_iff S P _).symm
+  · intro b
+    calc
+      (ι b : L) = (e (algebraMap B S b) : L) := rfl
+      _ = algebraMap S L (algebraMap B S b) := he _
+      _ = algebraMap B L b := by
+        exact IsLocalization.lift_eq (M := P.primeCompl) (S := S)
+          (g := algebraMap B L) _ b
 
 set_option maxHeartbeats 3000000 in
 /-- Conversely, a valuation ring containing the normalization has a center at a branch. -/
@@ -469,8 +480,7 @@ theorem chapter11_valuation_ring_converse
     (_hAinj : Function.Injective (algebraMap A K))
     (_hKinj : Function.Injective (algebraMap K L))
     (m : Ideal A) (hm : m = IsLocalRing.maximalIdeal A)
-    (W : ValuationSubring L) (vK : Valuation K W.ValueGroup)
-    (_hext : vK.IsEquiv (W.valuation.comap (algebraMap K L)))
+    (W : ValuationSubring L)
     (ι : B →+* W.valuation.valuationSubring)
     (hι : ∀ x : B, (ι x : L) = algebraMap B L x)
     (ιA : A →+* W.valuation.valuationSubring)
@@ -514,6 +524,172 @@ theorem chapter11_branch_localization_is_dvr
     IsDiscreteValuationRing (chapter11BranchLocalization B P) := by
   exact IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain B hP0 (Localization.AtPrime P)
 
+set_option maxHeartbeats 5000000 in
+/-- A valuation center on a Dedekind branch identifies the branch localization
+with the displayed valuation ring. -/
+theorem chapter11_branch_center_gives_localization_equiv
+    (B L : Type*) [CommRing B] [Field L] [Algebra B L]
+    [IsFractionRing B L] [IsDedekindDomain B]
+    {Γ : Type*} [LinearOrderedCommGroupWithZero Γ]
+    (P : Ideal B) [P.IsPrime] [P.IsMaximal] (hP0 : P ≠ (⊥ : Ideal B))
+    (vL : Valuation L Γ) (ι : B →+* vL.valuationSubring)
+    (hι : ∀ b : B, (ι b : L) = algebraMap B L b)
+    (hcenter : chapter11ValuationCenter B L P vL ι) :
+    ∃ e : Localization P.primeCompl ≃+* vL.valuationSubring,
+      ∀ b : B,
+        e (Localization.mk b ⟨1, P.primeCompl.one_mem⟩) = ι b := by
+  classical
+  let S := Localization.AtPrime P
+  let : IsDiscreteValuationRing S :=
+    chapter11_branch_localization_is_dvr B P hP0
+  let φ : S →+* L :=
+    IsLocalization.lift (M := P.primeCompl) (S := S) (g := algebraMap B L) (by
+      intro y
+      apply isUnit_iff_ne_zero.mpr
+      exact map_ne_zero_of_mem_nonZeroDivisors (algebraMap B L)
+        (IsFractionRing.injective B L) (Ideal.primeCompl_le_nonZeroDivisors P y.2))
+  let _ : Algebra S L := φ.toAlgebra
+  let _ : IsScalarTower B S L := by
+    apply IsScalarTower.of_algebraMap_eq'
+    apply RingHom.ext
+    intro b
+    change algebraMap B L b = φ (algebraMap B S b)
+    symm
+    exact IsLocalization.lift_eq (M := P.primeCompl) (S := S)
+      (g := algebraMap B L) _ b
+  let : IsFractionRing S L :=
+    IsFractionRing.isFractionRing_of_isDomain_of_isLocalization P.primeCompl S L
+  let v₀ : Valuation L ℤᵐ⁰ := (IsDiscreteValuationRing.maximalIdeal S).valuation L
+  let e₀ : S ≃+* v₀.valuationSubring :=
+    by simpa [v₀] using (IsDiscreteValuationRing.equivValuationSubring :
+      S ≃+* ((IsDiscreteValuationRing.maximalIdeal S).valuation L).valuationSubring)
+  have he₀ : ∀ s : S, (e₀ s : L) = φ s := by
+    intro s
+    rfl
+  let ψ : S →+* vL.valuationSubring :=
+    IsLocalization.lift (M := P.primeCompl) (S := S) (g := ι) (by
+      intro y
+      have hymax : ι (y : B) ∉ IsLocalRing.maximalIdeal vL.valuationSubring := by
+        intro hymax
+        have hyP : (y : B) ∈ P := by
+          have hycomap : (y : B) ∈
+              (IsLocalRing.maximalIdeal vL.valuationSubring).comap ι := hymax
+          rwa [← hcenter] at hycomap
+        exact y.2 hyP
+      exact IsLocalRing.notMem_maximalIdeal.mp hymax)
+  have hψφ : vL.valuationSubring.subtype.comp ψ = φ := by
+    apply IsLocalization.ringHom_ext P.primeCompl
+    apply RingHom.ext
+    intro b
+    simp only [RingHom.comp_apply]
+    rw [ValuationSubring.subtype_apply]
+    rw [IsLocalization.lift_eq (M := P.primeCompl) (S := S) (g := ι),
+      IsLocalization.lift_eq (M := P.primeCompl) (S := S) (g := algebraMap B L)]
+    exact hι b
+  have hψφ_apply (s : S) :
+      (ψ s : L) = φ s := by
+    exact RingHom.congr_fun hψφ s
+  have he₀_apply (s : S) :
+      (e₀ s : L) = φ s := he₀ s
+  have hle : v₀.valuationSubring ≤ vL.valuationSubring := by
+    intro z hz
+    rcases e₀.surjective ⟨z, hz⟩ with ⟨s, hs⟩
+    have hz' : z = (ψ s : L) := by
+      calc
+        z = (e₀ s : L) := by simpa using congrArg Subtype.val hs.symm
+        _ = (ψ s : L) := by rw [he₀_apply, hψφ_apply]
+    rw [hz']
+    exact (ψ s).property
+  have hιinj : Function.Injective ι := by
+    intro x y hxy
+    apply IsFractionRing.injective B L
+    calc
+      algebraMap B L x = (ι x : L) := (hι x).symm
+      _ = (ι y : L) := congrArg Subtype.val hxy
+      _ = algebraMap B L y := hι y
+  have hWtop : vL.valuationSubring ≠ ⊤ := by
+    intro htop
+    have hmax : IsLocalRing.maximalIdeal vL.valuationSubring =
+        (⊥ : Ideal vL.valuationSubring) := by
+      rw [htop]
+      exact IsLocalRing.maximalIdeal_eq_bot
+    apply hP0
+    calc
+      P = (IsLocalRing.maximalIdeal vL.valuationSubring).comap ι := hcenter
+      _ = (⊥ : Ideal B) := by
+        rw [hmax]
+        exact Ideal.comap_bot_of_injective ι hιinj
+  have hvaluationSubring : v₀.valuationSubring = vL.valuationSubring := by
+    exact ValuationSubring.eq_of_le_of_ne_top v₀.valuationSubring hle hWtop
+  have hφinj : Function.Injective φ := by
+    change Function.Injective (algebraMap S L)
+    exact IsFractionRing.injective S L
+  have hψinj : Function.Injective ψ := by
+    intro x y hxy
+    apply hφinj
+    calc
+      φ x = (ψ x : L) := (hψφ_apply x).symm
+      _ = (ψ y : L) := congrArg Subtype.val hxy
+      _ = φ y := hψφ_apply y
+  have hψsurj : Function.Surjective ψ := by
+    intro z
+    have hz₀ : (z : L) ∈ v₀.valuationSubring := by
+      rw [hvaluationSubring]
+      exact z.property
+    let z₀ : v₀.valuationSubring := ⟨z, hz₀⟩
+    rcases e₀.surjective z₀ with ⟨s, hs⟩
+    refine ⟨s, ?_⟩
+    apply Subtype.ext
+    calc
+      (ψ s : L) = φ s := hψφ_apply s
+      _ = (e₀ s : L) := (he₀_apply s).symm
+      _ = (z₀ : L) := congrArg Subtype.val hs
+      _ = (z : L) := rfl
+  let e : S ≃+* vL.valuationSubring :=
+    RingEquiv.ofBijective ψ ⟨hψinj, hψsurj⟩
+  have he (s : S) : (e s : L) = φ s := by
+    change (ψ s : L) = φ s
+    exact hψφ_apply s
+  refine ⟨e, ?_⟩
+  intro b
+  apply Subtype.ext
+  calc
+    (e (Localization.mk b ⟨1, P.primeCompl.one_mem⟩) : L) =
+        (e (algebraMap B S b) : L) := by
+          have hmk : Localization.mk b ⟨1, P.primeCompl.one_mem⟩ =
+              algebraMap B S b := Localization.mk_one_eq_algebraMap b
+          rw [hmk]
+    _ = φ (algebraMap B S b) := he _
+    _ = algebraMap B L b := by
+      rw [IsLocalization.lift_eq (M := P.primeCompl) (S := S) (g := algebraMap B L)]
+    _ = (ι b : L) := (hι b).symm
+
+/-! A finite integral normalization of a DVR is Dedekind without a
+separability assumption.  The standard trace-dual theorem supplies the
+finite case separately; this interface records the normalization argument
+needed when finiteness is already available. -/
+theorem chapter11_finite_normalization_is_dedekind
+    (A K L B : Type*) [CommRing A] [IsDomain A]
+    [IsDiscreteValuationRing A] [Field K] [Field L] [CommRing B]
+    [Algebra A K] [IsFractionRing A K] [Algebra K L]
+    [Algebra A L] [IsScalarTower A K L] [FiniteDimensional K L]
+    [Algebra A B] [Algebra B L] [IsScalarTower A B L]
+    [IsIntegralClosure B A L] (hfinite : Module.Finite A B) :
+    IsDedekindDomain B := by
+  let : IsDedekindDomain A :=
+    ((IsDiscreteValuationRing.TFAE A (IsDiscreteValuationRing.not_isField A)).out 0 2).mp
+      (inferInstance : IsDiscreteValuationRing A)
+  let : IsDomain B := (IsIntegralClosure.algebraMap_injective B A L).isDomain
+  let : IsNoetherianRing B := IsNoetherianRing.of_finite A B
+  let : IsFractionRing B L :=
+    IsIntegralClosure.isFractionRing_of_finite_extension A K L B
+  let : Algebra.IsIntegral A B := IsIntegralClosure.isIntegral_algebra A L
+  refine (isDedekindDomain_iff (A := B) L).2
+    ⟨inferInstance, inferInstance, Ring.DimensionLEOne.of_isIntegral A B, ?_⟩
+  intro x hx
+  refine ⟨IsIntegralClosure.mk' B x (isIntegral_trans (R := A) _ hx), ?_⟩
+  exact IsIntegralClosure.algebraMap_mk' _ _ _
+
 /-- The normalization is semilocal once its maximal ideals above `m` are finite. -/
 def chapter11IsSemilocal (B : Type*) [CommRing B] : Prop :=
   ∃ s : Finset (Ideal B), ∀ P : Ideal B, P.IsMaximal ↔ P ∈ (s : Set (Ideal B))
@@ -525,7 +701,7 @@ theorem chapter11_finite_normalization_is_semilocal_dedekind
     [IsDiscreteValuationRing A] [Field K] [Field L] [CommRing B]
     [IsDomain B] [LinearOrderedCommGroupWithZero ΓK]
     [Algebra A K] [IsFractionRing A K] [Algebra K L] [Algebra A L]
-    [IsScalarTower A K L] [FiniteDimensional K L] [Algebra.IsSeparable K L]
+    [IsScalarTower A K L] [FiniteDimensional K L]
     [Algebra A B] [Algebra B L] [IsScalarTower A B L]
     [IsIntegralClosure B A L]
     (_hAinj : Function.Injective (algebraMap A K))
@@ -548,464 +724,413 @@ theorem chapter11_finite_normalization_is_semilocal_dedekind
             P.IsMaximal ∧ P.LiesOver (IsLocalRing.maximalIdeal A) ∧
               Nonempty (Chapter11ValuationBranchCorrespondence B L P vL)) := by
   classical
-  let : IsDedekindDomain A :=
-    ((IsDiscreteValuationRing.TFAE A (IsDiscreteValuationRing.not_isField A)).out 0 2).mp
-      (inferInstance : IsDiscreteValuationRing A)
   let : IsDedekindDomain B :=
-    IsIntegralClosure.isDedekindDomain A K L B
+    chapter11_finite_normalization_is_dedekind A K L B hfinite
   let : IsFractionRing B L :=
     IsIntegralClosure.isFractionRing_of_finite_extension A K L B
-  have hmax0 : IsLocalRing.maximalIdeal A ≠ (⊥ : Ideal A) :=
-    IsDiscreteValuationRing.not_a_field A
-  have hmax_over : ∀ P : Ideal B, P.IsMaximal →
-      P.LiesOver (IsLocalRing.maximalIdeal A) := by
-    intro P hP
-    let : P.IsMaximal := hP
-    have hunder : (P.under A).IsMaximal := Ideal.IsMaximal.under A P
-    exact ⟨(IsLocalRing.eq_maximalIdeal hunder).symm⟩
-  have hbranch_max : ∀ P : Ideal B,
-      P.IsPrime ∧ P.LiesOver (IsLocalRing.maximalIdeal A) → P.IsMaximal := by
-    intro P hP
-    let : P.IsPrime := hP.1
-    let : P.LiesOver (IsLocalRing.maximalIdeal A) := hP.2
-    apply Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := A) (S := B) P
-    change (P.under A).IsMaximal
-    rw [← P.over_def (IsLocalRing.maximalIdeal A)]
+  let m : Ideal A := IsLocalRing.maximalIdeal A
+  let : m.IsMaximal := by
+    dsimp [m]
     exact IsLocalRing.maximalIdeal.isMaximal A
-  have hmax_finite : {P : Ideal B | P.IsMaximal}.Finite := by
-    have hfinite_primes : (IsLocalRing.maximalIdeal A).primesOver B |>.Finite :=
-      Algebra.QuasiFinite.finite_primesOver (IsLocalRing.maximalIdeal A)
-    exact hfinite_primes.subset (by
-      intro (P : Ideal B) hP
-      exact ⟨hP.isPrime, hmax_over P hP⟩)
-  have hsemi : chapter11IsSemilocal B := by
-    refine ⟨hmax_finite.toFinset, ?_⟩
+  let : m.IsPrime := inferInstance
+  let : Fintype (m.primesOver B) :=
+    Set.Finite.fintype (Algebra.QuasiFinite.finite_primesOver m)
+  have hm0 : m ≠ (⊥ : Ideal A) := by
+    dsimp [m]
+    exact IsDiscreteValuationRing.not_a_field A
+  have hmaxiff : ∀ P : Ideal B,
+      P.IsMaximal ↔ P.IsPrime ∧ P.LiesOver m := by
     intro P
     constructor
     · intro hP
-      exact hmax_finite.mem_toFinset.mpr hP
-    · intro hP
-      exact hmax_finite.mem_toFinset.mp hP
-  have hmax_iff : ∀ P : Ideal B,
-      P.IsMaximal ↔ P.IsPrime ∧ P.LiesOver (IsLocalRing.maximalIdeal A) := by
+      let : P.IsMaximal := hP
+      have hcomp : P.comap (algebraMap A B) = IsLocalRing.maximalIdeal A :=
+        IsLocalRing.eq_maximalIdeal
+          (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal P)
+      exact ⟨hP.isPrime, ⟨by simpa [m] using hcomp.symm⟩⟩
+    · rintro ⟨hPprime, hPover⟩
+      let : P.IsPrime := hPprime
+      let : P.LiesOver m := hPover
+      exact hPprime.isMaximal
+        (Ideal.ne_bot_of_liesOver_of_ne_bot hm0 P)
+  let s : Finset (Ideal B) :=
+    Finset.univ.image (fun q : m.primesOver B => (q : Ideal B))
+  have hsemilocal : chapter11IsSemilocal B := by
+    refine ⟨s, ?_⟩
     intro P
     constructor
     · intro hP
-      exact ⟨hP.isPrime, hmax_over P hP⟩
-    · exact hbranch_max P
-  have hloc : ∀ (P : Ideal B) [P.IsPrime],
+      refine Finset.mem_image.mpr
+        ⟨⟨P, ⟨hP.isPrime, (hmaxiff P).mp hP |>.2⟩⟩,
+          Finset.mem_univ _, rfl⟩
+    · intro hP
+      rcases Finset.mem_image.mp hP with ⟨q, -, rfl⟩
+      exact (hmaxiff q.1).mpr ⟨q.2.1, q.2.2⟩
+  have hlocal : ∀ (P : Ideal B) [P.IsPrime],
       P.IsMaximal → IsDiscreteValuationRing (chapter11BranchLocalization B P) := by
-    intro P _ hP
-    have hP0 : P ≠ (⊥ : Ideal B) := by
-      intro hPbot
-      subst P
-      have hL := hmax_over (⊥ : Ideal B) hP
-      have hcomp : (⊥ : Ideal B).comap (algebraMap A B) =
-          IsLocalRing.maximalIdeal A := hL.over.symm
-      rw [Ideal.comap_bot_of_injective (algebraMap A B)
-        (FaithfulSMul.algebraMap_injective A B)] at hcomp
-      exact hmax0 hcomp.symm
-    exact IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain B hP0
-      (Localization.AtPrime P)
-  have hcorr_of_center (P : Ideal B) (hPprime : P.IsPrime)
-      (hP0 : P ≠ (⊥ : Ideal B))
-      {ΓL : Type v} [LinearOrderedCommGroupWithZero ΓL]
-      (vL : Valuation L ΓL) (ι : B →+* vL.valuationSubring)
-      (hι : ∀ x : B, (ι x : L) = algebraMap B L x)
-      (hcenter : chapter11ValuationCenter B L P vL ι) :
-      Nonempty (Chapter11ValuationBranchCorrespondence B L P vL) := by
-    let p₁ : IsDedekindDomain.HeightOneSpectrum B :=
-      IsDedekindDomain.HeightOneSpectrum.mk P hPprime hP0
-    let S : ValuationSubring L :=
-      IsDedekindDomain.HeightOneSpectrum.valuationSubringAtPrime L p₁
-    have hSle : S ≤ vL.valuationSubring := by
-      intro z hz
-      change z ∈ S.toSubring at hz
-      rw [show S.toSubring =
-        (Localization.subalgebra.ofField L P.primeCompl P.primeCompl_le_nonZeroDivisors).toSubring by
-          rfl] at hz
-      obtain ⟨b, s, hs, hzs⟩ := hz
-      have hιs : ι s ∉ IsLocalRing.maximalIdeal vL.valuationSubring := by
-        intro hmem
-        apply hs
-        have hsP : s ∈ P := by
-          rw [hcenter]
-          exact hmem
-        exact hsP
-      have hιsunit : IsUnit (ι s) := by
-        rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff] at hιs
-        exact Classical.not_not.mp hιs
-      obtain ⟨y, hy⟩ := (isUnit_iff_exists_inv.mp hιsunit)
-      have hinv : (algebraMap B L s)⁻¹ ∈ vL.valuationSubring := by
-        have hyL : algebraMap B L s * (y : L) = 1 := by
-          simpa [hι s] using congrArg (fun z : vL.valuationSubring => (z : L)) hy
-        have hs0 : algebraMap B L s ≠ 0 := by
-          intro hs0
-          apply hιsunit.ne_zero
-          apply Subtype.ext
-          simpa [hι s] using hs0
-        have hyval : (y : L) = (algebraMap B L s)⁻¹ := by
-          rw [← one_div]
-          exact (eq_div_iff hs0).2 (by simpa [mul_comm] using hyL)
-        rw [← hyval]
-        exact SetLike.coe_mem _
-      have hb : algebraMap B L b ∈ vL.valuationSubring := by
-        rw [← hι b]
-        exact (ι b).property
-      rw [hzs]
-      exact vL.valuationSubring.toSubring.mul_mem hb hinv
-    have htop : vL.valuationSubring ≠ ⊤ := by
-      intro htop
-      apply hP0
-      have hmax_top : IsLocalRing.maximalIdeal vL.valuationSubring = ⊥ := by
-        rw [htop]
-        exact IsLocalRing.maximalIdeal_eq_bot
-      rw [hcenter, hmax_top]
-      exact Ideal.comap_bot_of_injective ι (by
-        intro x y hxy
-        apply IsFractionRing.injective B L
-        simpa [hι x, hι y] using congrArg Subtype.val hxy)
-    have hEq : S = vL.valuationSubring :=
-      ValuationSubring.eq_of_le_of_ne_top S hSle htop
-    let W₀ : Subalgebra B L :=
-      Localization.subalgebra.ofField L P.primeCompl P.primeCompl_le_nonZeroDivisors
-    have hS₀ : S.toSubring = W₀.toSubring := by
-      dsimp [W₀]
-      simpa [S, p₁] using
-        (IsDedekindDomain.HeightOneSpectrum.valuationSubringAtPrime_toSubring p₁ (K := L))
-    have hmemS₀ (x : W₀) : (x : L) ∈ S := by
-      change (x : L) ∈ S.toSubring
-      rw [hS₀]
-      exact x.property
-    let g : W₀ →ₐ[B] S :=
-      { toFun := fun x => ⟨x, hmemS₀ x⟩
-        map_zero' := by ext; rfl
-        map_one' := by ext; rfl
-        map_add' := by intro x y; ext; rfl
-        map_mul' := by intro x y; ext; rfl
-        commutes' := by intro b; ext; rfl }
-    have hg : Function.Bijective g := by
-      constructor
-      · intro x y hxy
+    intro P _ hPmax
+    let : P.IsMaximal := hPmax
+    have hPover : P.LiesOver m := (hmaxiff P).mp hPmax |>.2
+    let : P.LiesOver m := hPover
+    exact chapter11_branch_localization_is_dvr B P
+      (Ideal.ne_bot_of_liesOver_of_ne_bot hm0 P)
+  refine ⟨inferInstance, hsemilocal, ?_, hlocal, ?_⟩
+  · intro P
+    simpa [m] using hmaxiff P
+  · intro ΓL _ vL
+    constructor
+    · intro hext
+      have hcenter_exists :
+          ∃ P : Ideal B, chapter11Branch A B m P ∧
+            ∃ ι : B →+* vL.valuationSubring,
+              chapter11ValuationCenter B L P vL ι ∧
+                ∀ b : B, (ι b : L) = algebraMap B L b := by
+        let W : ValuationSubring L := vL.valuationSubring
+        have hWext : vK.IsEquiv (W.valuation.comap (algebraMap K L)) := by
+          simpa [W] using hext.trans (Valuation.IsEquiv.comap (algebraMap K L)
+            (Valuation.isEquiv_valuation_valuationSubring vL))
+        have hmemA : ∀ a : A, algebraMap A L a ∈ W := by
+          intro a
+          change vL (algebraMap A L a) ≤ 1
+          have ha : vK (algebraMap A K a) ≤ 1 := by
+            have ha' : vK (ιA a : K) ≤ 1 :=
+              (Valuation.mem_valuationSubring_iff vK (ιA a : K)).mp (ιA a).property
+            simpa [hιA a] using ha'
+          have ha' : vK (algebraMap A K a) ≤ vK 1 := by simpa using ha
+          have hv : vK (algebraMap A K a) ≤ vK 1 ↔
+              vL (algebraMap K L (algebraMap A K a)) ≤ vL (algebraMap K L 1) := by
+            simpa [W, Valuation.comap_apply] using hWext (algebraMap A K a) 1
+          have hv' := hv.mp ha'
+          simpa [IsScalarTower.algebraMap_apply A K L] using hv'
+        let ιA' : A →+* W.valuation.valuationSubring :=
+          (RingHom.codRestrict (algebraMap A L) W.valuation.valuationSubring
+            (by simpa [W] using hmemA))
+        have hιA' : ∀ a : A, (ιA' a : L) = algebraMap A L a := by
+          intro a
+          rfl
+        have hcenter' : chapter11ValuationCenter A L m W.valuation ιA' := by
+          change m = (IsLocalRing.maximalIdeal W.valuation.valuationSubring).comap ιA'
+          change m = (IsLocalRing.maximalIdeal vK.valuationSubring).comap ιA at hcenter
+          have hlt_equiv : ∀ a : A,
+              vK (algebraMap A K a) < vK 1 ↔
+                W.valuation (algebraMap A L a) < W.valuation 1 := by
+            intro a
+            have hxy : vK (algebraMap A K a) ≤ vK 1 ↔
+                W.valuation (algebraMap A L a) ≤ W.valuation 1 := by
+              simpa [IsScalarTower.algebraMap_apply A K L] using
+                (hWext (algebraMap A K a) 1)
+            have hyx : W.valuation (algebraMap A L a) ≤ W.valuation 1 ↔
+                vK (algebraMap A K a) ≤ vK 1 := hxy.symm
+            have hyx' : W.valuation 1 ≤ W.valuation (algebraMap A L a) ↔
+                vK 1 ≤ vK (algebraMap A K a) := by
+              simpa [IsScalarTower.algebraMap_apply A K L] using
+                (hWext 1 (algebraMap A K a)).symm
+            constructor
+            · intro h
+              rw [lt_iff_le_not_ge] at h ⊢
+              exact ⟨hxy.mp h.1, fun h' => h.2 (hyx'.mp h')⟩
+            · intro h
+              rw [lt_iff_le_not_ge] at h ⊢
+              exact ⟨hyx.mp h.1, fun h' => h.2 (hyx'.mpr h')⟩
+          apply Ideal.ext
+          intro a
+          constructor
+          · intro ha
+            have haK : ιA a ∈ IsLocalRing.maximalIdeal vK.valuationSubring := by
+              exact (show a ∈ (IsLocalRing.maximalIdeal vK.valuationSubring).comap ιA from
+                hcenter ▸ ha)
+            have hltK : vK (algebraMap A K a) < vK 1 := by
+              rw [← hιA a]
+              simpa using (Valuation.mem_maximalIdeal_iff (K := K) vK).mp haK
+            have hltW : W.valuation (algebraMap A L a) < W.valuation 1 :=
+              (hlt_equiv a).mp (by simpa using hltK)
+            exact (Valuation.mem_maximalIdeal_iff (K := L) W.valuation).mpr
+              (by simpa [hιA' a] using hltW)
+          · intro ha
+            have hltW : W.valuation (algebraMap A L a) < 1 := by
+              have hltW' := (Valuation.mem_maximalIdeal_iff (K := L) W.valuation).mp ha
+              simpa [hιA' a] using hltW'
+            have hltK : vK (algebraMap A K a) < vK 1 :=
+              (hlt_equiv a).mpr (by simpa using hltW)
+            have haK : ιA a ∈ IsLocalRing.maximalIdeal vK.valuationSubring := by
+              apply (Valuation.mem_maximalIdeal_iff (K := K) vK).mpr
+              simpa [hιA a] using hltK
+            exact hcenter ▸ haK
+        let ιA_W : A →+* W :=
+          RingHom.codRestrict (algebraMap A L) W hmemA
+        have hιA_W : ∀ a : A, (ιA_W a : L) = algebraMap A L a := by
+          intro a
+          rfl
+        let _ : Algebra A W := ιA_W.toAlgebra
+        let _ : IsScalarTower A W L := by
+          apply IsScalarTower.of_algebraMap_eq'
+          apply RingHom.ext
+          intro a
+          exact hιA_W a
+        have hmemB : ∀ b : B, algebraMap B L b ∈ W := by
+          intro b
+          have hb : IsIntegral A b := Algebra.IsIntegral.isIntegral (R := A) b
+          have hbW : IsIntegral W (algebraMap B L b) := by
+            exact hb.map_of_comp_eq (algebraMap A W) (algebraMap B L) (by
+              apply RingHom.ext
+              intro a
+              calc
+                (algebraMap W L) (algebraMap A W a) = algebraMap A L a := hιA_W a
+                _ = algebraMap B L (algebraMap A B a) :=
+                  IsScalarTower.algebraMap_apply A B L a)
+          have hInt : W.valuation.Integers W := by
+            refine { hom_inj := Subtype.val_injective, map_le_one := ?_, exists_of_le_one := ?_ }
+            · intro x
+              have hx : (x : L) ∈ W.valuation.valuationSubring := by
+                simpa only [ValuationSubring.valuationSubring_valuation] using x.property
+              exact (Valuation.mem_valuationSubring_iff W.valuation _).mp hx
+            · intro r hr
+              have hrW : r ∈ W := by
+                simpa only [ValuationSubring.valuationSubring_valuation] using
+                  (Valuation.mem_valuationSubring_iff W.valuation _).mpr hr
+              exact ⟨⟨r, hrW⟩, rfl⟩
+          have hval : W.valuation (algebraMap B L b) ≤ 1 :=
+            (Valuation.Integers.isIntegral_iff_v_le_one hInt).mp hbW
+          simpa only [ValuationSubring.valuationSubring_valuation] using
+            (Valuation.mem_valuationSubring_iff W.valuation _).mpr hval
+        let ιB : B →+* W.valuation.valuationSubring :=
+          RingHom.codRestrict (algebraMap B L) W.valuation.valuationSubring
+            (by simpa only [ValuationSubring.valuationSubring_valuation] using hmemB)
+        have hιB : ∀ b : B, (ιB b : L) = algebraMap B L b := by
+          intro b
+          rfl
+        have hconv := chapter11_valuation_ring_converse
+          A B K L _hAinj hKinj m rfl W ιB hιB ιA' hιA' hcenter'
+        rcases hconv with ⟨P, hP, hPcenter⟩
+        let ιB' : B →+* vL.valuationSubring :=
+          RingHom.codRestrict (algebraMap B L) vL.valuationSubring
+            (by simpa [W] using hmemB)
+        have hιB' : ∀ b : B, (ιB' b : L) = algebraMap B L b := by
+          intro b
+          rfl
+        have hVeq : vL.IsEquiv W.valuation := by
+          simpa [W] using (Valuation.isEquiv_valuation_valuationSubring vL)
+        have hltVeq : ∀ b : B,
+            W.valuation (algebraMap B L b) < W.valuation 1 ↔
+              vL (algebraMap B L b) < vL 1 := by
+          intro b
+          have hxy : vL (algebraMap B L b) ≤ vL 1 ↔
+              W.valuation (algebraMap B L b) ≤ W.valuation 1 := by
+            simpa using hVeq (algebraMap B L b) 1
+          have hyx : W.valuation 1 ≤ W.valuation (algebraMap B L b) ↔
+              vL 1 ≤ vL (algebraMap B L b) := by
+            simpa using (hVeq 1 (algebraMap B L b)).symm
+          constructor
+          · intro h
+            rw [lt_iff_le_not_ge] at h ⊢
+            exact ⟨hxy.mpr h.1, fun h' => h.2 (hyx.mpr h')⟩
+          · intro h
+            rw [lt_iff_le_not_ge] at h ⊢
+            exact ⟨hxy.mp h.1, fun h' => h.2 (hyx.mp h')⟩
+        have hPcenter' : chapter11ValuationCenter B L P vL ιB' := by
+          change P = (IsLocalRing.maximalIdeal vL.valuationSubring).comap ιB'
+          change P = (IsLocalRing.maximalIdeal W.valuation.valuationSubring).comap ιB at hPcenter
+          apply Ideal.ext
+          intro b
+          constructor
+          · intro hb
+            have hbW : ιB b ∈ IsLocalRing.maximalIdeal W.valuation.valuationSubring := by
+              have hbP : b ∈
+                  (IsLocalRing.maximalIdeal W.valuation.valuationSubring).comap ιB := by
+                rw [← hPcenter]
+                exact hb
+              exact hbP
+            have hltW : W.valuation (algebraMap B L b) < W.valuation 1 := by
+              have hlt := (Valuation.mem_maximalIdeal_iff (K := L) W.valuation).mp hbW
+              simpa [hιB b] using hlt
+            have hltV : vL (algebraMap B L b) < vL 1 := (hltVeq b).mp hltW
+            apply (Valuation.mem_maximalIdeal_iff (K := L) vL).mpr
+            simpa [hιB' b] using hltV
+          · intro hb
+            have hltV : vL (algebraMap B L b) < vL 1 := by
+              have hlt := (Valuation.mem_maximalIdeal_iff (K := L) vL).mp hb
+              simpa [hιB' b] using hlt
+            have hltW : W.valuation (algebraMap B L b) < W.valuation 1 :=
+              (hltVeq b).mpr hltV
+            have hbW : ιB b ∈ IsLocalRing.maximalIdeal W.valuation.valuationSubring := by
+              apply (Valuation.mem_maximalIdeal_iff (K := L) W.valuation).mpr
+              simpa [hιB b] using hltW
+            rw [hPcenter]
+            exact hbW
+        refine ⟨P, ?_, ?_⟩
+        · simpa [m] using hP
+        · exact ⟨ιB', hPcenter', hιB'⟩
+      rcases hcenter_exists with ⟨P, hP, ι, hιcenter, hι⟩
+      let : P.IsPrime := hP.1
+      let : P.IsMaximal := hP.2.1
+      let : P.LiesOver m := hP.2.2
+      have hP0 : P ≠ (⊥ : Ideal B) :=
+        Ideal.ne_bot_of_liesOver_of_ne_bot hm0 P
+      obtain ⟨e, he⟩ := chapter11_branch_center_gives_localization_equiv
+        B L P hP0 vL ι hι hιcenter
+      let c : Chapter11ValuationBranchCorrespondence B L P vL :=
+        { prime := hP.1
+          embedding := ι
+          embedding_compatible := hι
+          center := hιcenter
+          localizationEquiv := e
+          localizationEquiv_on_B := he }
+      refine ⟨P, ⟨hP.2.1, hP.2.2, ⟨c⟩⟩, ?_⟩
+      intro Q hQ
+      rcases hQ.2.2 with ⟨cQ⟩
+      have hιEq : cQ.embedding = c.embedding := by
+        apply RingHom.ext
+        intro b
         apply Subtype.ext
-        exact congrArg (fun z : S => (z : L)) hxy
-      · intro y
-        refine ⟨⟨y, ?_⟩, ?_⟩
-        · change (y : L) ∈ W₀.toSubring
-          rw [← hS₀]
-          exact y.property
-        · rfl
-    let eSub : W₀ ≃ₐ[B] S := AlgEquiv.ofBijective g hg
-    let : Algebra B S := inferInstance
-    let : IsLocalization P.primeCompl W₀ :=
-      Localization.subalgebra.isLocalization_ofField L P.primeCompl
-        P.primeCompl_le_nonZeroDivisors
-    let : IsLocalization P.primeCompl S :=
-      IsLocalization.isLocalization_of_algEquiv P.primeCompl eSub
-    let f : S →+* vL.valuationSubring :=
-      ValuationSubring.inclusion S vL.valuationSubring hSle
-    have hf : Function.Bijective f := by
-      constructor
-      · intro x y hxy
-        apply Subtype.ext
-        exact congrArg (fun z : vL.valuationSubring => (z : L)) hxy
-      · intro y
-        refine ⟨⟨y, ?_⟩, ?_⟩
-        · rw [hEq]
-          exact y.property
-        · rfl
-    let eEq : S ≃+* vL.valuationSubring := RingEquiv.ofBijective f hf
-    let e₀ : Localization.AtPrime P ≃ₐ[B] S :=
-      IsLocalization.algEquiv P.primeCompl (Localization.AtPrime P) S
-    let e : Localization.AtPrime P ≃+* vL.valuationSubring :=
-      e₀.toRingEquiv.trans eEq
-    refine ⟨{
-      prime := hPprime
-      embedding := ι
-      embedding_compatible := hι
-      center := hcenter
-      localizationEquiv := e
-      localizationEquiv_on_B := ?_ }⟩
-    intro x
-    change e (Localization.mk x ⟨1, P.primeCompl.one_mem⟩) = ι x
-    apply Subtype.ext
-    change ((e₀.toRingEquiv.trans eEq)
-        (Localization.mk x ⟨1, P.primeCompl.one_mem⟩) : L) = (ι x : L)
-    change (eEq (e₀ (Localization.mk x ⟨1, P.primeCompl.one_mem⟩)) : L) = (ι x : L)
-    have he₀x : e₀ (Localization.mk x ⟨1, P.primeCompl.one_mem⟩) = algebraMap B S x := by
-      rw [← e₀.commutes]
-      rfl
-    rw [he₀x]
-    dsimp [eEq, f, ValuationSubring.inclusion]
-    have hf' : Function.Bijective (Subring.inclusion hSle) := by
-      constructor
-      · exact Subring.inclusion_injective hSle
-      · intro y
-        refine ⟨⟨y, ?_⟩, ?_⟩
-        · rw [hEq]
-          exact y.property
-        · rfl
-    rw [RingEquiv.ofBijective_apply (Subring.inclusion hSle) hf']
-    rw [Subring.coe_inclusion]
-    rw [hι x]
-    change ((algebraMap B S x : S) : L) = algebraMap B L x
-    rw [← ValuationSubring.algebraMap_apply S]
-    rw [← IsScalarTower.algebraMap_apply B S L]
-  refine ⟨inferInstance, hsemi, hmax_iff, hloc, ?_⟩
-  intro ΓL _ vL
-  constructor
-  · intro hext
-    have hring : vK.valuationSubring =
-        (vL.comap (algebraMap K L)).valuationSubring :=
-      (Valuation.isEquiv_iff_valuationSubring vK _).mp hext
-    have hA_mem : ∀ a : A, algebraMap A L a ∈ vL.valuationSubring := by
-      intro a
-      have ha : algebraMap A K a ∈ vK.valuationSubring := by
+        calc
+          (cQ.embedding b : L) = algebraMap B L b := cQ.embedding_compatible b
+          _ = (c.embedding b : L) := (c.embedding_compatible b).symm
+      calc
+        Q = (IsLocalRing.maximalIdeal vL.valuationSubring).comap cQ.embedding := cQ.center
+        _ = (IsLocalRing.maximalIdeal vL.valuationSubring).comap c.embedding := by rw [hιEq]
+        _ = P := c.center.symm
+    · intro hdata
+      rcases hdata with ⟨P, ⟨hPmax, hPover, ⟨c⟩⟩, _⟩
+      let : P.IsPrime := c.prime
+      let : P.IsMaximal := hPmax
+      have hP0 : P ≠ (⊥ : Ideal B) :=
+        Ideal.ne_bot_of_liesOver_of_ne_bot hm0 P
+      let vA : Valuation K ℤᵐ⁰ := (IsDiscreteValuationRing.maximalIdeal A).valuation K
+      have hvAle : vA.valuationSubring ≤ vK.valuationSubring := by
+        change vA.valuationSubring.toSubring ≤ vK.valuationSubring.toSubring
+        rw [← IsDiscreteValuationRing.map_algebraMap_eq_valuationSubring]
+        intro x hx
+        rcases Subring.mem_map.mp hx with ⟨a, -, rfl⟩
+        change (algebraMap A K a : K) ∈ vK.valuationSubring
         rw [← hιA a]
         exact (ιA a).property
-      have ha' : algebraMap A K a ∈
+      have hιAinj : Function.Injective ιA := by
+        intro x y hxy
+        apply _hAinj
+        calc
+          algebraMap A K x = (ιA x : K) := (hιA x).symm
+          _ = (ιA y : K) := congrArg Subtype.val hxy
+          _ = algebraMap A K y := hιA y
+      have hvKtop : vK.valuationSubring ≠ ⊤ := by
+        intro htop
+        have hmax : IsLocalRing.maximalIdeal vK.valuationSubring =
+            (⊥ : Ideal vK.valuationSubring) := by
+          rw [htop]
+          exact IsLocalRing.maximalIdeal_eq_bot
+        apply hm0
+        have hcenter_eq : IsLocalRing.maximalIdeal A =
+            (IsLocalRing.maximalIdeal vK.valuationSubring).comap ιA := by
+          exact hcenter
+        calc
+          m = (IsLocalRing.maximalIdeal vK.valuationSubring).comap ιA := by
+            simpa [m] using hcenter_eq
+          _ = (⊥ : Ideal A) := by
+            rw [hmax]
+            exact Ideal.comap_bot_of_injective ιA hιAinj
+      have hvKeq : vA.valuationSubring = vK.valuationSubring :=
+        ValuationSubring.eq_of_le_of_ne_top vA.valuationSubring hvAle hvKtop
+      have hvLle : vA.valuationSubring ≤
           (vL.comap (algebraMap K L)).valuationSubring := by
-        rw [← hring]
-        exact ha
-      change vL (algebraMap A L a) ≤ 1
-      rw [IsScalarTower.algebraMap_apply A K L]
-      exact ha'
-    let hA : A →+* vL.valuationSubring :=
-      (algebraMap A L).codRestrict vL.valuationSubring hA_mem
-    have hAcompat : ∀ a : A, (hA a : L) = algebraMap A L a := by
-      intro a
-      rfl
-    let : Algebra A vL.valuationSubring := hA.toAlgebra
-    let : IsScalarTower A vL.valuationSubring L := by
-      apply IsScalarTower.of_algebraMap_eq'
-      apply RingHom.ext
-      intro a
-      change algebraMap A L a = (algebraMap vL.valuationSubring L) (hA a)
-      exact (hAcompat a).symm
-    have hB_mem : ∀ b : B, algebraMap B L b ∈ vL.valuationSubring := by
-      intro b
-      have hbA : IsIntegral A (algebraMap B L b) := by
-        exact IsIntegral.map (IsScalarTower.toAlgHom A B L)
-          (Algebra.IsIntegral.isIntegral (R := A) b)
-      have hbW : IsIntegral vL.valuationSubring (algebraMap B L b) := by
-        apply IsIntegral.map_of_comp_eq hA (RingHom.id L)
-        apply RingHom.ext
+        change vA.valuationSubring.toSubring ≤
+          (vL.comap (algebraMap K L)).valuationSubring.toSubring
+        rw [← IsDiscreteValuationRing.map_algebraMap_eq_valuationSubring]
+        intro x hx
+        rcases Subring.mem_map.mp hx with ⟨a, -, rfl⟩
+        change vL (algebraMap K L (algebraMap A K a)) ≤ 1
+        rw [← IsScalarTower.algebraMap_apply A K L]
+        have haW : (c.embedding (algebraMap A B a) : L) ∈ vL.valuationSubring :=
+          (c.embedding (algebraMap A B a)).property
+        have haVal : vL (c.embedding (algebraMap A B a) : L) ≤ 1 :=
+          (Valuation.mem_valuationSubring_iff vL _).mp haW
+        simpa [c.embedding_compatible (algebraMap A B a),
+          IsScalarTower.algebraMap_apply A B L] using haVal
+      let : P.LiesOver m := hPover
+      let ιA0 : A →+* (vL.comap (algebraMap K L)).valuationSubring :=
+        RingHom.codRestrict (algebraMap A K)
+          (vL.comap (algebraMap K L)).valuationSubring (by
+            intro a
+            have haA : algebraMap A K a ∈ vA.valuationSubring := by
+              change algebraMap A K a ∈ vA.valuationSubring.toSubring
+              rw [← IsDiscreteValuationRing.map_algebraMap_eq_valuationSubring]
+              exact ⟨a, Subring.mem_top _, rfl⟩
+            exact hvLle haA)
+      have hιA0 : ∀ a : A, (ιA0 a : K) = algebraMap A K a := by
         intro a
-        change (algebraMap vL.valuationSubring L) (hA a) = algebraMap A L a
-        exact hAcompat a
-        exact hbA
-      exact (Valuation.Integers.isIntegral_iff_v_le_one
-        (Valuation.valuationSubring.integers vL)).mp hbW
-    let ι : B →+* vL.valuationSubring :=
-      (algebraMap B L).codRestrict vL.valuationSubring hB_mem
-    have hι : ∀ b : B, (ι b : L) = algebraMap B L b := by
-      intro b
-      rfl
-    let P : Ideal B :=
-      (IsLocalRing.maximalIdeal vL.valuationSubring).comap ι
-    have hPprime : P.IsPrime := by
-      dsimp [P]
-      exact Ideal.comap_isPrime _ _
-    have hPover : P.LiesOver (IsLocalRing.maximalIdeal A) := by
-      have hcomp : ι.comp (algebraMap A B) = hA := by
-        apply RingHom.ext
-        intro a
-        apply Subtype.ext
-        change algebraMap B L (algebraMap A B a) = algebraMap A L a
-        rw [IsScalarTower.algebraMap_apply A B L]
-      have hlt_equiv : ∀ a : A,
-          vK (algebraMap A K a) < 1 ↔ vL (algebraMap A L a) < 1 := by
-        intro a
-        simpa only [Valuation.comap_apply, IsScalarTower.algebraMap_apply A K L] using
-          (hext.lt_one_iff_lt_one (x := algebraMap A K a))
-      have hcomap : P.comap (algebraMap A B) =
-          IsLocalRing.maximalIdeal A := by
+        rfl
+      have hιA0inj : Function.Injective ιA0 := by
+        intro x y hxy
+        apply _hAinj
+        exact congrArg Subtype.val hxy
+      have hbasecenter :
+          (IsLocalRing.maximalIdeal (vL.comap (algebraMap K L)).valuationSubring).comap
+              ιA0 = m := by
         apply Ideal.ext
         intro a
         constructor
         · intro ha
-          change ι (algebraMap A B a) ∈
-            IsLocalRing.maximalIdeal vL.valuationSubring at ha
+          change ιA0 a ∈
+            IsLocalRing.maximalIdeal (vL.comap (algebraMap K L)).valuationSubring at ha
           have hltL : vL (algebraMap A L a) < 1 := by
-            rw [IsScalarTower.algebraMap_apply A B L, ← hι]
-            exact (Valuation.mem_maximalIdeal_iff (K := L) vL).mp ha
-          have hltK : vK (algebraMap A K a) < 1 := (hlt_equiv a).mpr hltL
-          have haV : ιA a ∈ IsLocalRing.maximalIdeal vK.valuationSubring := by
-            apply (Valuation.mem_maximalIdeal_iff (K := K) vK).mpr
-            rw [hιA a]
-            exact hltK
-          rw [hcenter]
-          exact haV
-        · intro ha
-          have haV : ιA a ∈ IsLocalRing.maximalIdeal vK.valuationSubring := by
-            have haV' : a ∈
-                (IsLocalRing.maximalIdeal vK.valuationSubring).comap ιA := by
-              rw [← hcenter]
-              exact ha
-            exact haV'
-          have hltK : vK (algebraMap A K a) < 1 := by
-            apply (Valuation.mem_maximalIdeal_iff (K := K) vK).mp at haV
-            rw [hιA a] at haV
-            exact haV
-          have hltL : vL (algebraMap A L a) < 1 := (hlt_equiv a).mp hltK
-          have haW : hA a ∈ IsLocalRing.maximalIdeal vL.valuationSubring := by
+            have hlt :=
+              (Valuation.mem_maximalIdeal_iff (K := K)
+                (vL.comap (algebraMap K L)) (a := ιA0 a)).mp ha
+            rw [hιA0 a] at hlt
+            simpa [Valuation.comap_apply, IsScalarTower.algebraMap_apply A K L] using hlt
+          have hmaxL : c.embedding (algebraMap A B a) ∈
+              IsLocalRing.maximalIdeal vL.valuationSubring := by
             apply (Valuation.mem_maximalIdeal_iff (K := L) vL).mpr
-            rw [hAcompat a]
-            exact hltL
-          change (ι.comp (algebraMap A B)) a ∈
-            IsLocalRing.maximalIdeal vL.valuationSubring
-          rw [hcomp]
-          exact haW
-      exact ⟨hcomap.symm⟩
-    have hPmax : P.IsMaximal := hbranch_max P ⟨hPprime, hPover⟩
-    have hP0 : P ≠ (⊥ : Ideal B) := by
-      intro hPbot
-      apply hmax0
-      have hcomp : (⊥ : Ideal B).comap (algebraMap A B) =
-          IsLocalRing.maximalIdeal A := by
-        simpa only [hPbot, Ideal.under_def] using hPover.over.symm
-      rw [Ideal.comap_bot_of_injective (algebraMap A B)
-        (FaithfulSMul.algebraMap_injective A B)] at hcomp
-      exact hcomp.symm
-    have hcenterP : chapter11ValuationCenter B L P vL ι := by
-      exact rfl
-    have hcorr : Nonempty (Chapter11ValuationBranchCorrespondence B L P vL) := by
-      exact hcorr_of_center P hPprime hP0 (ΓL := ΓL) vL ι hι hcenterP
-    refine ⟨P, ⟨hPmax, hPover, hcorr⟩, ?_⟩
-    intro Q hQ
-    rcases hQ.2.2 with ⟨cQ⟩
-    have hemb : cQ.embedding = ι := by
-      apply RingHom.ext
-      intro b
-      apply Subtype.ext
+            simpa [c.embedding_compatible (algebraMap A B a),
+              IsScalarTower.algebraMap_apply A B L] using hltL
+          have haP : algebraMap A B a ∈ P := by
+            have haComap : algebraMap A B a ∈
+                (IsLocalRing.maximalIdeal vL.valuationSubring).comap c.embedding := hmaxL
+            exact Eq.mpr (congrArg (fun I : Ideal B => algebraMap A B a ∈ I) c.center)
+              haComap
+          exact (Ideal.mem_of_liesOver P m a).mpr haP
+        · intro ha
+          have haP : algebraMap A B a ∈ P :=
+            (Ideal.mem_of_liesOver P m a).mp ha
+          have hmaxL : c.embedding (algebraMap A B a) ∈
+              IsLocalRing.maximalIdeal vL.valuationSubring := by
+            have haComap : algebraMap A B a ∈
+                (IsLocalRing.maximalIdeal vL.valuationSubring).comap c.embedding :=
+              Eq.mp (congrArg (fun I : Ideal B => algebraMap A B a ∈ I) c.center) haP
+            exact haComap
+          have hltL : vL (algebraMap A L a) < 1 := by
+            have hlt := (Valuation.mem_maximalIdeal_iff (K := L) vL).mp hmaxL
+            simpa [c.embedding_compatible (algebraMap A B a),
+              IsScalarTower.algebraMap_apply A B L] using hlt
+          have hltK : (vL.comap (algebraMap K L)) (algebraMap A K a) < 1 := by
+            simpa [Valuation.comap_apply, IsScalarTower.algebraMap_apply A K L] using hltL
+          have haK : ιA0 a ∈
+              IsLocalRing.maximalIdeal (vL.comap (algebraMap K L)).valuationSubring :=
+            (Valuation.mem_maximalIdeal_iff (K := K)
+              (vL.comap (algebraMap K L)) (a := ιA0 a)).mpr hltK
+          change ιA0 a ∈
+            IsLocalRing.maximalIdeal (vL.comap (algebraMap K L)).valuationSubring
+          exact haK
+      have hvLtop : (vL.comap (algebraMap K L)).valuationSubring ≠ ⊤ := by
+        intro htop
+        have hmaxW : IsLocalRing.maximalIdeal
+            (vL.comap (algebraMap K L)).valuationSubring =
+              (⊥ : Ideal (vL.comap (algebraMap K L)).valuationSubring) := by
+          rw [htop]
+          exact IsLocalRing.maximalIdeal_eq_bot
+        have hmax : (IsLocalRing.maximalIdeal
+            (vL.comap (algebraMap K L)).valuationSubring).comap
+              ιA0 = (⊥ : Ideal A) := by
+          rw [hmaxW]
+          exact Ideal.comap_bot_of_injective ιA0 hιA0inj
+        apply hm0
+        exact hbasecenter.symm.trans hmax
+      have hvLeq : vA.valuationSubring =
+          (vL.comap (algebraMap K L)).valuationSubring :=
+        ValuationSubring.eq_of_le_of_ne_top vA.valuationSubring hvLle hvLtop
+      apply (Valuation.isEquiv_iff_valuationSubring vK
+        (vL.comap (algebraMap K L))).mpr
       calc
-        (cQ.embedding b : L) = algebraMap B L b := cQ.embedding_compatible b
-        _ = (ι b : L) := (hι b).symm
-    calc
-      Q = (IsLocalRing.maximalIdeal vL.valuationSubring).comap cQ.embedding := cQ.center
-      _ = (IsLocalRing.maximalIdeal vL.valuationSubring).comap ι := by rw [hemb]
-      _ = P := hcenterP.symm
-  · intro h
-    rcases h with ⟨P, hPdata, hPuniq⟩
-    rcases hPdata with ⟨hPmax, hPover, ⟨cP⟩⟩
-    let : P.IsPrime := cP.prime
-    let : P.IsMaximal := hPmax
-    let : P.LiesOver (IsLocalRing.maximalIdeal A) := hPover
-    have hvKring :
-        vK.valuationSubring.toSubring =
-          Subring.map (algebraMap A K) (⊤ : Subring A) := by
-      apply le_antisymm
-      · intro x hx
-        obtain ⟨a, ha⟩ | ⟨a, ha⟩ := ValuationRing.isInteger_or_isInteger A x
-        · rw [Subring.mem_map]
-          exact ⟨a, Subring.mem_top _, ha⟩
-        · by_cases hx0 : x = 0
-          · rw [hx0]
-            exact Subring.zero_mem _
-          by_cases hua : IsUnit a
-          · obtain ⟨u, hu⟩ := hua
-            rw [Subring.mem_map]
-            refine ⟨(↑(u⁻¹) : A), Subring.mem_top _, ?_⟩
-            calc
-              algebraMap A K (↑(u⁻¹) : A) = (algebraMap A K (↑u : A))⁻¹ := by simp
-              _ = (algebraMap A K a)⁻¹ := by rw [hu]
-              _ = x := by rw [ha]; simp
-          · have ham : a ∈ IsLocalRing.maximalIdeal A := by
-              rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
-              exact hua
-            have haW : ιA a ∈ IsLocalRing.maximalIdeal vK.valuationSubring := by
-              have haW' : a ∈
-                  (IsLocalRing.maximalIdeal vK.valuationSubring).comap ιA := by
-                rw [← hcenter]
-                exact ham
-              exact haW'
-            have hlt : vK (x⁻¹) < 1 := by
-              rw [← ha, ← hιA a]
-              exact (Valuation.mem_maximalIdeal_iff (K := K) vK).mp haW
-            have hxpos : 0 < vK x := (vK.pos_iff).mpr hx0
-            have hxgt : 1 < vK x :=
-              (inv_lt_one₀ hxpos).mp (by simpa only [map_inv₀] using hlt)
-            exact False.elim ((not_lt_of_ge hx) hxgt)
-      · intro x hx
-        rw [Subring.mem_map] at hx
-        obtain ⟨a, -, ha⟩ := hx
-        have haW : (ιA a : K) ∈ vK.valuationSubring := (ιA a).property
-        change x ∈ vK.valuationSubring
-        rw [← ha, ← hιA a]
-        exact haW
-    have hvLring :
-        (vL.comap (algebraMap K L)).valuationSubring.toSubring =
-          Subring.map (algebraMap A K) (⊤ : Subring A) := by
-      apply le_antisymm
-      · intro x hx
-        obtain ⟨a, ha⟩ | ⟨a, ha⟩ := ValuationRing.isInteger_or_isInteger A x
-        · rw [Subring.mem_map]
-          exact ⟨a, Subring.mem_top _, ha⟩
-        · by_cases hx0 : x = 0
-          · rw [hx0]
-            exact Subring.zero_mem _
-          by_cases hua : IsUnit a
-          · obtain ⟨u, hu⟩ := hua
-            rw [Subring.mem_map]
-            refine ⟨(↑(u⁻¹) : A), Subring.mem_top _, ?_⟩
-            calc
-              algebraMap A K (↑(u⁻¹) : A) = (algebraMap A K (↑u : A))⁻¹ := by simp
-              _ = (algebraMap A K a)⁻¹ := by rw [hu]
-              _ = x := by rw [ha]; simp
-          · have ham : a ∈ IsLocalRing.maximalIdeal A := by
-              rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
-              exact hua
-            have habP : algebraMap A B a ∈ P :=
-              (Ideal.mem_of_liesOver P (IsLocalRing.maximalIdeal A) a).mp ham
-            have haW : cP.embedding (algebraMap A B a) ∈
-                IsLocalRing.maximalIdeal vL.valuationSubring := by
-              have : algebraMap A B a ∈
-                  (IsLocalRing.maximalIdeal vL.valuationSubring).comap cP.embedding := by
-                rw [← cP.center]
-                exact habP
-              exact this
-            have hlt : vL (algebraMap A L a) < 1 := by
-              rw [IsScalarTower.algebraMap_apply A B L,
-                ← cP.embedding_compatible (algebraMap A B a)]
-              exact (Valuation.mem_maximalIdeal_iff (K := L) vL).mp haW
-            have hxval : vL (algebraMap K L x) ≤ 1 := hx
-            have hxpos : 0 < vL (algebraMap K L x) := by
-              apply (vL.pos_iff).mpr
-              intro hzero
-              apply hx0
-              apply hKinj
-              simpa using hzero
-            have hxinval' : vL ((algebraMap K L x)⁻¹) < 1 := by
-              calc
-                vL ((algebraMap K L x)⁻¹) = vL (algebraMap A L a) := by
-                  congr 1
-                  calc
-                    (algebraMap K L x)⁻¹ = algebraMap K L (x⁻¹) := by simp
-                    _ = algebraMap K L (algebraMap A K a) := by rw [← ha]
-                    _ = algebraMap A L a := by
-                      rw [IsScalarTower.algebraMap_apply A K L]
-                _ < 1 := hlt
-            have hxinval : (vL (algebraMap K L x))⁻¹ < 1 := by
-              simpa only [map_inv₀] using hxinval'
-            have hxgt : 1 < vL (algebraMap K L x) :=
-              (inv_lt_one₀ hxpos).mp hxinval
-            exact False.elim ((not_lt_of_ge hxval) hxgt)
-      · intro x hx
-        rw [Subring.mem_map] at hx
-        obtain ⟨a, -, ha⟩ := hx
-        have hval : vL (algebraMap A L a) ≤ 1 := by
-          rw [IsScalarTower.algebraMap_apply A B L,
-            ← cP.embedding_compatible (algebraMap A B a)]
-          exact (cP.embedding (algebraMap A B a)).property
-        change vL (algebraMap K L x) ≤ 1
-        rw [← ha, ← IsScalarTower.algebraMap_apply A K L]
-        exact hval
-    apply (Valuation.isEquiv_iff_valuationSubring vK _).mpr
-    apply ValuationSubring.ext
-    intro z
-    change z ∈ vK.valuationSubring.toSubring ↔
-      z ∈ (vL.comap (algebraMap K L)).valuationSubring.toSubring
-    rw [hvKring, hvLring]
+        vK.valuationSubring = vA.valuationSubring := hvKeq.symm
+        _ = (vL.comap (algebraMap K L)).valuationSubring := hvLeq
 
 
 /-- In the finite normalization, maximal ideals are exactly the primes above the base maximal ideal. -/
@@ -1013,7 +1138,7 @@ theorem chapter11_maximal_ideals_are_precisely_branches
     (A K L : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
     [Field K] [Field L] [Algebra A K] [IsFractionRing A K]
     [Algebra K L] [Algebra A L] [IsScalarTower A K L]
-    [FiniteDimensional K L] [Algebra.IsSeparable K L]
+    [FiniteDimensional K L]
     (hAinj : Function.Injective (algebraMap A K))
     (hKinj : Function.Injective (algebraMap K L))
     (hfinite : Module.Finite A (chapter11IntegralClosure A L)) :
@@ -1026,7 +1151,8 @@ theorem chapter11_maximal_ideals_are_precisely_branches
     change IsIntegralClosure (integralClosure A L) A L
     infer_instance
   let : IsDedekindDomain (chapter11IntegralClosure A L) :=
-    integralClosure.isDedekindDomain A K L
+    chapter11_finite_normalization_is_dedekind A K L
+      (chapter11IntegralClosure A L) hfinite
   let : FaithfulSMul A (chapter11IntegralClosure A L) :=
     (faithfulSMul_iff_algebraMap_injective A (chapter11IntegralClosure A L)).mpr
       (by

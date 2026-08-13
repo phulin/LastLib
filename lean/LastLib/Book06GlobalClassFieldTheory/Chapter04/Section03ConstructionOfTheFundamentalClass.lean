@@ -20,9 +20,11 @@ structure Chapter04PlaceSystem (G W V : Type*) [Group G] where
   is_archimedean : W → Prop
   is_ramified : W → Prop
   represents_class_group_generator : W → Prop
-  finite_generating_set : ∃ S : Finset W,
-    (∀ g w, w ∈ S → action g w ∈ S) ∧
-      (∀ w ∈ S, decomposition w ≤ ⊤)
+  finite_archimedean_places : Set.Finite {w | is_archimedean w}
+  finite_ramified_places : Set.Finite {w | is_ramified w}
+  finite_class_group_generators :
+    Set.Finite {w | represents_class_group_generator w}
+  decomposition_groups_generate : (⨆ w : W, decomposition w) = ⊤
 
 /-- The four source-order requirements on the chosen `S_L`: archimedean places, ramified places,
 class-group generators, and decomposition groups generating `G`. -/
@@ -87,12 +89,16 @@ theorem chapter04_S_unit_valuation_exact
 /-- The finite-level Tate sequence supplied by the local fundamental classes. -/
 structure Chapter04CanonicalSUnitSequence
     {G : Type} {W : Type w} [Group G] [Fintype G]
-    {S : Finset W} (V : Chapter04SUnitValuationData (G := G) S) where
+    {V : Type z} (P : Chapter04PlaceSystem G W V)
+    (S : Chapter04LargePlaceSet G W V P)
+    (valuation : Chapter04SUnitValuationData (G := G) S.S) where
   lattice : Chapter04GModule.{0, 0} G
-  sequence : Chapter04TwoExtension V.units lattice
+  sequence : Chapter04TwoExtension valuation.units lattice
+  lattice_identification : lattice.V ≃+ chapter04XS S.S
   localFundamentalClass : W → chapter04QModZ
-  localCondition : Prop
-  enlargementCompatible : ∀ T : Finset W, S ⊆ T → Prop
+  localFundamentalClass_normalization : ∀ w,
+    localFundamentalClass w =
+      chapter04QModZOfRat ((1 : ℚ) / Nat.card (P.decomposition w))
 
 /-- The S-unit sequence can be built from local fundamental classes once the S-class group vanishes
 and the selected decomposition groups generate the finite Galois group. -/
@@ -101,7 +107,7 @@ theorem chapter04_canonical_S_unit_sequence
     (P : Chapter04PlaceSystem G W V)
     (S : Chapter04LargePlaceSet G W V P)
     (valuation : Chapter04SUnitValuationData (G := G) S.S) :
-    Nonempty (Chapter04CanonicalSUnitSequence valuation) := by
+    Nonempty (Chapter04CanonicalSUnitSequence P S valuation) := by
   sorry
 
 /-- Enlarging the finite set until the S-class group vanishes and the decomposition groups generate
@@ -117,11 +123,7 @@ the idele-class quotient. -/
 structure Chapter04GlobalFundamentalExtension
     {G : Type} [Group G] [Fintype G] where
   ideleClasses : Chapter04GModule.{0, 0} G
-  A : Chapter04GModule.{0, 0} G
-  B : Chapter04GModule.{0, 0} G
   sequence : Chapter04TwoExtension ideleClasses (chapter04TrivialGModule G)
-  fundamentalClass : chapter04TateH ideleClasses 2
-  independentOfPlaceSet : Prop
 
 /-- The splicing construction produces the global fundamental extension. -/
 theorem chapter04_splice_global_fundamental_extension
@@ -129,7 +131,7 @@ theorem chapter04_splice_global_fundamental_extension
     (P : Chapter04PlaceSystem G W V)
     (S : Chapter04LargePlaceSet G W V P)
     (valuation : Chapter04SUnitValuationData (G := G) S.S)
-    (localSequence : Chapter04CanonicalSUnitSequence valuation) :
+    (localSequence : Chapter04CanonicalSUnitSequence P S valuation) :
     Nonempty (Chapter04GlobalFundamentalExtension (G := G)) := by
   sorry
 
@@ -140,13 +142,13 @@ theorem chapter04_splice_supplies_fundamental_class
     (P : Chapter04PlaceSystem G W V)
     (S : Chapter04LargePlaceSet G W V P)
     (valuation : Chapter04SUnitValuationData (G := G) S.S)
-    (localSequence : Chapter04CanonicalSUnitSequence valuation) :
+    (localSequence : Chapter04CanonicalSUnitSequence P S valuation) :
     Nonempty (Chapter04FundamentalClass (G := G)) := by
   sorry
 
-/-! The resulting class is independent of the auxiliary finite set of places.  This is retained as
-the `independentOfPlaceSet` output of the splicing construction above; there is intentionally no
-lemma claiming it for an arbitrary record whose field has not been constructed. -/
+/-! Independence of the auxiliary finite set is a property of the splicing construction, not an
+unrelated proposition stored in every extension record.  The construction theorem above is the
+interface at which that comparison is supplied. -/
 
 /-- Restriction of the canonical extension to a subgroup gives the corresponding intermediate
 field normalization. -/
@@ -154,7 +156,7 @@ theorem chapter04_restricted_fundamental_class_has_intermediate_normalization
     {G : Type} [Group G] [Fintype G]
     (U : Chapter04FundamentalClass (G := G))
     (H : Subgroup G) :
-    U.invariant H (U.restrict H U.u) =
+    U.invariant H (chapter04RestrictTwoClass U.C H U.u) =
       chapter04QModZOfRat ((1 : ℚ) / Nat.card H) := by
   exact U.invariant_normalization H
 

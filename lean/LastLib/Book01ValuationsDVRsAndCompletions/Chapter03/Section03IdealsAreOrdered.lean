@@ -297,7 +297,7 @@ theorem valueCut_without_least_gives_nonprincipal_ideal
 
 theorem integer_upward_closed_nonnegative_set_has_least (S : Set ℤ)
     (hne : S.Nonempty) (hnonneg : S ⊆ Set.Ici 0)
-    hasLeastValue S := by
+    : hasLeastValue S := by
   classical
   rcases Int.exists_least_of_bdd
       (P := fun z : ℤ => z ∈ S)

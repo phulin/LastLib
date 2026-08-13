@@ -1,4 +1,4 @@
-import LastLib.Book04AdelesAndIdeles.Chapter06.Section01WhyCompactnessIsCentral
+import LastLib.Book04AdelesAndIdeles.Chapter06.Dependencies
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter06
 
@@ -27,13 +27,13 @@ def chapter06FiniteAdeleSum
         x = P.globalToFinite a + P.finiteIntegralEmbedding u := Iff.rfl
 
 /-- Lemma 6.1: every finite adele has one global principal part and an
-integral remainder.  The preceding strong-approximation statement is the
-only dependency hidden by the proof placeholder. -/
+    integral remainder.  The preceding strong-approximation statement is
+    recorded in the adapter data. -/
 theorem chapter06_finite_principal_parts
     (P : Chapter06AdeleData K O KInf Af Ohat) (x : Af) :
     ∃ a : K, ∃ u : Ohat,
       x = P.globalToFinite a + P.finiteIntegralEmbedding u := by
-  sorry
+  exact P.finite_principal_parts x
 
 /-- The additive set equality form of Lemma 6.1. -/
 theorem chapter06_finite_adele_sum_eq_univ

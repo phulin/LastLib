@@ -96,12 +96,13 @@ def FinitePlaceUnramifiedAt
 def FinitePlaceNontrivialTameAt
     (A : AbelianArtinData (K := K) (I := I) D G)
     (v : NumberField.FinitePlace K) : Prop :=
-  extensionConductorExponent A v = 1
+  finiteUnitFiltration v 1 ≤ A.finiteLocalNorm v ∧
+    ¬finiteUnitFiltration v 0 ≤ A.finiteLocalNorm v
 
 def FinitePlaceWildAt
     (A : AbelianArtinData (K := K) (I := I) D G)
     (v : NumberField.FinitePlace K) : Prop :=
-  2 ≤ extensionConductorExponent A v
+  ¬finiteUnitFiltration v 1 ≤ A.finiteLocalNorm v
 
 theorem extensionConductorExponent_zero_iff_unramified
     (A : AbelianArtinData (K := K) (I := I) D G)
@@ -112,12 +113,14 @@ theorem extensionConductorExponent_zero_iff_unramified
 theorem extensionConductorExponent_one_iff_nontrivial_tame
     (A : AbelianArtinData (K := K) (I := I) D G)
     (v : NumberField.FinitePlace K) :
-    extensionConductorExponent A v = 1 ↔ FinitePlaceNontrivialTameAt A v := Iff.rfl
+    extensionConductorExponent A v = 1 ↔ FinitePlaceNontrivialTameAt A v := by
+  sorry
 
 theorem extensionConductorExponent_ge_two_iff_wild
     (A : AbelianArtinData (K := K) (I := I) D G)
     (v : NumberField.FinitePlace K) :
-    2 ≤ extensionConductorExponent A v ↔ FinitePlaceWildAt A v := Iff.rfl
+    2 ≤ extensionConductorExponent A v ↔ FinitePlaceWildAt A v := by
+  sorry
 
 /-! `A.finiteLocalNorm` is the local norm interface.  The following bridges
 state the usual local interpretation of the three cases and are left for the
@@ -166,6 +169,11 @@ structure FiniteOrderIdeleClassCharacter (D : IdeleContext K I) where
   toHom : ideleClassGroup D →* ℂˣ
   finiteOrder : ∃ n : ℕ, 0 < n ∧ ∀ c, (toHom c) ^ n = 1
   continuous : Continuous toHom
+  finiteConductor_support :
+    ∃ S : Finset (NumberField.FinitePlace K),
+      ∀ {v : NumberField.FinitePlace K}, v ∉ S →
+        ∀ u, u ∈ finiteUnitFiltration v 0 →
+          toHom ((ideleClassQuotient D) ((D.finiteComponent v) u)) = 1
   finiteConductor_nonempty :
     ∀ v : NumberField.FinitePlace K,
       Set.Nonempty {n : ℕ |
@@ -239,8 +247,10 @@ def extensionGroupCharacter (A : AbelianArtinData (K := K) (I := I) D G)
     { toHom := θ.comp A.classArtin
       finiteOrder := ?_
       continuous := ?_
+      finiteConductor_support := ?_
       finiteConductor_nonempty := ?_ }
   · sorry
+  · exact A.classArtin_character_continuous θ
   · sorry
   · intro v
     sorry

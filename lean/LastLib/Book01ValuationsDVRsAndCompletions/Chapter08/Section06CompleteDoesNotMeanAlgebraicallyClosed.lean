@@ -1,10 +1,13 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Section05UnitsAndPrincipalUnits
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Section03ThePadicIntegersAndNumbers
+import Mathlib.RingTheory.Henselian
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Order
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter08
 
 open Polynomial IsLocalRing
 open Filter
-open scoped BigOperators LaurentSeries Topology PowerSeries.WithPiTopology
+open scoped Topology
 
 noncomputable section
 

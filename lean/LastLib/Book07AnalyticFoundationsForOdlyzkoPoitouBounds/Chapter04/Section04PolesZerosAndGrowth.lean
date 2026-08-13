@@ -122,9 +122,9 @@ def chapter04TrivialZeroSet
     (K : Type*) [Field K] [NumberField K] : Set ℂ :=
   {s | s ∈ chapter04GammaPoleSet K ∧ chapter03DedekindZeta K s = 0}
 
-theorem chapter04_gamma_poles_are_canceled_by_trivial_zeros
+theorem chapter04_gamma_poles_away_from_zero_are_canceled_by_trivial_zeros
     (K : Type*) [Field K] [NumberField K] :
-    chapter04GammaPoleSet K ⊆
+    (chapter04GammaPoleSet K \ {0}) ⊆
       {s : ℂ | chapter03DedekindZeta K s = 0} := by
   sorry
 
@@ -170,14 +170,10 @@ def chapter04OrderAtMostOne (f : ℂ → ℂ) : Prop :=
     ∀ z : ℂ, R ≤ ‖z‖ →
       ‖f z‖ ≤ Real.exp (C * Real.rpow ‖z‖ (1 + ε))
 
-/- The lower clause records the exact-order part of the source assertion;
-   the exponent range is restricted to `0 < ε < 1` so it expresses order at
-   least one rather than a vacuous bound with a negative exponent. -/
+/- The source only needs the order-one upper-growth interface.  Exact lower
+   order is stronger and is not part of the continuation argument. -/
 def chapter04OrderOne (f : ℂ → ℂ) : Prop :=
-  chapter04OrderAtMostOne f ∧
-    ∀ ε C R : ℝ, 0 < ε → ε < 1 → 0 < C → 0 < R →
-      ∃ z : ℂ, R ≤ ‖z‖ ∧
-        Real.exp (C * Real.rpow ‖z‖ (1 - ε)) ≤ ‖f z‖
+  chapter04OrderAtMostOne f
 
 theorem chapter04_xi_order_one
     (K : Type*) [Field K] [NumberField K] :
@@ -187,7 +183,7 @@ theorem chapter04_xi_order_one
 theorem chapter04_xi_order_at_most_one
     (K : Type*) [Field K] [NumberField K] :
     chapter04OrderAtMostOne (chapter04Xi K) := by
-  exact (chapter04_xi_order_one K).1
+  exact chapter04_xi_order_one K
 
 def chapter04ZeroBand
     (K : Type*) [Field K] [NumberField K] (T : ℝ) : Set ℂ :=

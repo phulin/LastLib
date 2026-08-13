@@ -5,6 +5,7 @@ namespace LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Cha
 noncomputable section
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11
 
 /-! ## 12.4. The finite-length Hilbert scheme -/
 
@@ -29,13 +30,16 @@ theorem chapter12FiniteLengthHilbertScheme_is_projective
 theorem chapter12FiniteLengthUniversalFamily_is_finite_locally_free
     (D : Chapter12ProjectiveFamilySetup)
     (H : Chapter12HilbertPolynomialTheory D)
-    (L : Chapter12FiberLengthTheory)
-    (K : Chapter12HilbertLengthCompatibility D H L) (d : ℕ) :
-    Chapter12FiniteLocallyFreeRank L
+    (K : Chapter12HilbertLengthCompatibility D H) (d : ℕ) :
+    Chapter12FiniteLocallyFreeRank
       (chapter12FamilyProjection D
         (Over.mk (chapter12FiniteLengthHilbertSchemeMap D H d))
         (chapter12UniversalFamily D H (chapter12ConstantPolynomial d)).closed.ideal) d := by
-  sorry
+  apply
+    (chapter12_constant_polynomial_iff_finite_locally_free D H K d
+      (chapter12UniversalFamily D H (chapter12ConstantPolynomial d)).closed).mp
+  intro t
+  exact (chapter12UniversalFamily D H (chapter12ConstantPolynomial d)).fiber_polynomial t
 
 /- The following interface packages the uniqueness-of-representers argument
   used to remove dependence on a chosen projective embedding. -/
@@ -107,6 +111,29 @@ structure Chapter12QuasiProjectiveCompletion {X S : Scheme} (f : X ⟶ S) where
 
 attribute [instance] Chapter12QuasiProjectiveCompletion.open_is_open
 
+/-- A finite-length closed family over a test scheme, using Mathlib's
+canonical finite-rank function. -/
+structure Chapter12FiniteLengthClosedFamily
+    {X S : Scheme} (f : X ⟶ S) (T : Chapter12SchemeOver S) (d : ℕ) where
+  ideal : (pullback f T.hom).IdealSheafData
+  flat : Flat (ideal.subschemeι ≫ pullback.snd f T.hom)
+  finitePresentation : LocallyOfFinitePresentation
+    (ideal.subschemeι ≫ pullback.snd f T.hom)
+  finiteLocallyFree : Chapter11FiniteLocallyFreeOfRank
+    (ideal.subschemeι ≫ pullback.snd f T.hom) d
+
+structure Chapter12FiniteLengthOpenLocusBaseChange
+    {X S : Scheme} (f : X ⟶ S)
+    (C : Chapter12QuasiProjectiveCompletion f) (d : ℕ)
+    (T : Scheme) (g : T ⟶ S) where
+  carrier : Scheme
+  map : carrier ⟶ T
+  iso : pullback (C.completionMap) g ≅ carrier
+  iso_over : iso.hom ≫ map = pullback.snd C.completionMap g
+  represents : ∀ U : Over T,
+    (U ⟶ Over.mk map) ≃
+      Chapter12FiniteLengthClosedFamily (pullback.snd f g) U d
+
 /-- The open locus in the finite-length Hilbert scheme of a projective completion. -/
 structure Chapter12FiniteLengthOpenLocus
     {X S : Scheme} (f : X ⟶ S)
@@ -119,12 +146,13 @@ structure Chapter12FiniteLengthOpenLocus
   openLocusMap : openLocus ⟶ S
   openLocus_over : inclusion ≫ ambientMap = openLocusMap
   inclusion_is_open : IsOpenImmersion inclusion
-  universal_family_finite : Prop
-  boundary_intersection_image_closed : Prop
-  universal_family_lies_in_X : Prop
-  represents_finite_length_families_in_X : Prop
+  universal_family : Chapter12FiniteLengthClosedFamily f (Over.mk openLocusMap) d
+  represents_finite_length_families_in_X : ∀ T : Chapter12SchemeOver S,
+    (T ⟶ Over.mk openLocusMap) ≃
+      Chapter12FiniteLengthClosedFamily f T d
   quasi_projective_over_base : chapter12IsQuasiProjectiveMorphism openLocusMap
-  arbitrary_base_change : Prop
+  arbitrary_base_change : ∀ (T : Scheme) (g : T ⟶ S),
+    Chapter12FiniteLengthOpenLocusBaseChange f C d T g
 
 attribute [instance] Chapter12FiniteLengthOpenLocus.inclusion_is_open
 
@@ -147,11 +175,12 @@ theorem chapter12_quasi_projective_finite_length_locus_is_open
       (chapter12QuasiProjectiveFiniteLengthOpenLocus f C d).inclusion := by
   exact (chapter12QuasiProjectiveFiniteLengthOpenLocus f C d).inclusion_is_open
 
-theorem chapter12_quasi_projective_finite_length_locus_base_change
+noncomputable def chapter12_quasi_projective_finite_length_locus_base_change
     {X S : Scheme} (f : X ⟶ S)
     (C : Chapter12QuasiProjectiveCompletion f) (d : ℕ) :
-    (chapter12QuasiProjectiveFiniteLengthOpenLocus f C d).arbitrary_base_change := by
-  sorry
+    ∀ (T : Scheme) (g : T ⟶ S),
+      Chapter12FiniteLengthOpenLocusBaseChange f C d T g := by
+  exact (chapter12QuasiProjectiveFiniteLengthOpenLocus f C d).arbitrary_base_change
 
 /-- The reduced-geometric-fiber locus inside a finite-length Hilbert scheme. -/
 def chapter12GeometricFiber (D : Chapter12ProjectiveFamilySetup)
@@ -170,6 +199,15 @@ def chapter12HasReducedGeometricFibers
     {T : Chapter12SchemeOver D.base} (Z : Chapter12ClosedFamily D T) : Prop :=
   ∀ t : Chapter12GeometricPoint T.left, chapter12GeometricFiberIsReduced D Z t
 
+structure Chapter12ReducedFiniteLengthFamily
+    (D : Chapter12ProjectiveFamilySetup)
+    (T : Chapter12SchemeOver D.base) (d : ℕ) where
+  closed : Chapter12ClosedFamily D T
+  finiteLocallyFree : Chapter12FiniteLocallyFreeRank
+    (chapter12FamilyProjection D T closed.ideal) d
+  reduced : ∀ t : Chapter12GeometricPoint T.left,
+    IsReduced (chapter12GeometricFiber D closed t)
+
 /-- A configuration-space quotient for a smooth family. -/
 structure Chapter12UnorderedConfigurationSpace
     (D : Chapter12ProjectiveFamilySetup) (d r : ℕ) where
@@ -179,10 +217,18 @@ structure Chapter12UnorderedConfigurationSpace
   unorderedMap : unordered ⟶ D.base
   quotient : ordered ⟶ unordered
   quotient_over_base : quotient ≫ unorderedMap = orderedMap
-  free_locus : Prop
-  finite_etale_quotient : Prop
-  classifies_unordered_reduced_families : Prop
-  relative_dimension : chapter12HasRelativeDimension unorderedMap r
+  freeLocus : Scheme
+  freeLocusToOrdered : freeLocus ⟶ ordered
+  freeLocus_open : IsOpenImmersion freeLocusToOrdered
+  freeLocusToUnordered : freeLocus ⟶ unordered
+  freeLocus_quotient : freeLocusToOrdered ≫ quotient = freeLocusToUnordered
+  freeLocus_over_base : freeLocusToUnordered ≫ unorderedMap =
+    freeLocusToOrdered ≫ orderedMap
+  finite_etale_quotient : Chapter11FiniteEtaleOfDegree freeLocusToUnordered
+    (Nat.factorial d)
+  classifies_unordered_reduced_families : ∀ T : Chapter12SchemeOver D.base,
+    (T ⟶ Over.mk unorderedMap) ≃ Chapter12ReducedFiniteLengthFamily D T d
+  relative_dimension : chapter12HasRelativeDimension unorderedMap (d * r)
 
 /-- The open reduced locus and its identification with unordered configurations. -/
 structure Chapter12ReducedHilbertLocus
@@ -191,7 +237,8 @@ structure Chapter12ReducedHilbertLocus
   carrier : Scheme
   inclusion : carrier ⟶ chapter12FiniteLengthHilbertScheme D H d
   inclusion_is_open : IsOpenImmersion inclusion
-  reduced_fiber_condition : Prop
+  reduced_family : Chapter12ReducedFiniteLengthFamily D
+    (Over.mk (inclusion ≫ chapter12FiniteLengthHilbertSchemeMap D H d)) d
   configuration : Chapter12UnorderedConfigurationSpace D d r
   configuration_iso : carrier ≅ configuration.unordered
   iso_over_base : configuration_iso.hom ≫ configuration.unorderedMap =
@@ -210,13 +257,21 @@ theorem chapter12_reduced_locus_is_unordered_configuration
 /-- The collision/tangent-direction comparison for two points on the affine plane. -/
 structure Chapter12AffinePlaneHilbertCollision (k : Type*) [Field k] where
   affinePlane : Scheme
-  affinePlane_is_A2 : Prop
+  affinePlane_identification : affinePlane ≅
+    AlgebraicGeometry.Spec (.of (MvPolynomial (Fin 2) k))
   hilbertTwo : Scheme
   cycleTwo : Scheme
   hilbertToCycle : hilbertTwo ⟶ cycleTwo
   collisionLocus : Scheme
-  tangentDirection : Prop
-  cycle_forgets_tangent_direction : Prop
+  collisionLocusToHilbert : collisionLocus ⟶ hilbertTwo
+  collisionLocusToCycle : collisionLocus ⟶ cycleTwo
+  collisionLocus_over_hilbert : collisionLocusToHilbert ≫ hilbertToCycle =
+    collisionLocusToCycle
+  tangentDirectionScheme : Scheme
+  tangentDirectionToCollision : tangentDirectionScheme ⟶ collisionLocus
+  tangentDirectionToCycle : tangentDirectionScheme ⟶ cycleTwo
+  cycle_forgets_tangent_direction : tangentDirectionToCycle =
+    tangentDirectionToCollision ≫ collisionLocusToCycle
   hilbertToCycle_not_isomorphism : ¬ IsIso hilbertToCycle
 
 theorem chapter12_affine_plane_hilbert_two_collision

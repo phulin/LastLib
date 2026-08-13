@@ -34,7 +34,7 @@ theorem chapter16_idele_unit_tail_iff_eventually_isUnit
     (K : Type*) [Field K] [NumberField K] (x : Chapter16Ideles K) :
     chapter16IdeleUnitTail K x ↔
       ∀ᶠ v : HeightOneSpectrum (𝓞 K) in Filter.cofinite,
-        IsUnit ((x : Chapter16AdeleRing K).2 v) := by
+        chapter16LocalCompletionUnit K v ((x : Chapter16AdeleRing K).2 v) := by
   sorry
 
 theorem chapter16_additive_quotient_is_the_compact_gluing_space

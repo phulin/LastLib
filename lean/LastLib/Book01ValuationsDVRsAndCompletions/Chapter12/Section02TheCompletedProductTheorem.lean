@@ -65,7 +65,10 @@ theorem completed_product_decomposition
       ∀ (q : Ideal B), q.IsPrime → q.LiesOver m → ∃ i, P i = q)
     (hP_distinct : Function.Injective P)
     [Algebra (AdicCompletion m A) (B ⊗[A] AdicCompletion m A)]
-    [∀ i, Algebra (AdicCompletion m A) (branchCompletion B (P i))] :
+    [∀ i, Algebra A (branchCompletion B (P i))]
+    [∀ i, Algebra (AdicCompletion m A) (branchCompletion B (P i))]
+    [∀ i, IsScalarTower A B (branchCompletion B (P i))]
+    [∀ i, IsScalarTower A (AdicCompletion m A) (branchCompletion B (P i))] :
     hasCompletedAlgebraProduct A B (AdicCompletion m A)
       (fun i => branchCompletion B (P i)) := by
   sorry
@@ -90,8 +93,7 @@ theorem finite_precision_branch_indexing
 theorem compatible_branch_projector_idempotents
     {R ι : Type*} [CommRing R] [Fintype ι] [DecidableEq ι]
     (I : Ideal R) (J : ι → Ideal R)
-    (hcrt : Chapter12CompatibleCRTSystem I J)
-    (_hcofinal : ∀ i, adicFiltrationsCofinal I (J i)) :
+    (hcrt : Chapter12CompatibleCRTSystem I J) :
     ∃ e : ι → IdempotentElement (AdicCompletion I R),
       (∀ i j, i ≠ j → (e i).1 * (e j).1 = 0) ∧
         (∑ i, (e i).1) = 1 ∧
@@ -195,10 +197,11 @@ def isCompleteDVR (R : Type*) [CommRing R] : Prop :=
   Nonempty (Chapter12CompleteDVRData R)
 
 /-- The completed branch factors are complete DVRs and finite free over the
-    completed base. -/
+    completed base.  Normality records that `B` is the finite normalization. -/
 theorem completed_branch_factors_are_complete_DVR_and_finite_free
     {A B : Type*} [CommRing A] [CommRing B] [IsDomain A] [IsDomain B]
-    [IsDiscreteValuationRing A] [Algebra A B] [Algebra.IsIntegral A B]
+    [IsIntegrallyClosed B] [IsDiscreteValuationRing A] [Algebra A B]
+    [Algebra.IsIntegral A B]
     {g : ℕ} (m : Ideal A) (π : A) (P : Fin g → Ideal B) (e : Fin g → ℕ)
     [m.IsMaximal] [hprime : ∀ i, (P i).IsPrime]
     [hmax : ∀ i, (P i).IsMaximal]
@@ -223,7 +226,8 @@ theorem completed_branch_factors_are_complete_DVR_and_finite_free
     Normality records that the branch localizations are the normalized ones. -/
 theorem completed_product_field_decomposition
     {A B : Type*} [CommRing A] [CommRing B] [IsDomain A] [IsDomain B]
-    [IsDiscreteValuationRing A] [Algebra A B] [Algebra.IsIntegral A B]
+    [IsIntegrallyClosed B] [IsDiscreteValuationRing A] [Algebra A B]
+    [Algebra.IsIntegral A B]
     {g : ℕ} (m : Ideal A) (π : A) (P : Fin g → Ideal B) (e : Fin g → ℕ)
     [m.IsMaximal] [hprime : ∀ i, (P i).IsPrime]
     [hmax : ∀ i, (P i).IsMaximal]
@@ -238,8 +242,14 @@ theorem completed_product_field_decomposition
       ∀ (q : Ideal B), q.IsPrime → q.LiesOver m → ∃ i, P i = q)
     (hP_distinct : Function.Injective P)
     [Algebra (AdicCompletion m A) (B ⊗[A] AdicCompletion m A)]
+    [∀ i, Algebra A (branchCompletion B (P i))]
     [∀ i, Algebra (AdicCompletion m A) (branchCompletion B (P i))]
+    [∀ i, IsScalarTower A B (branchCompletion B (P i))]
+    [∀ i, IsScalarTower A (AdicCompletion m A) (branchCompletion B (P i))]
     [Algebra (FractionRing A) (FractionRing B)]
+    [Algebra A (FractionRing B)]
+    [IsScalarTower A B (FractionRing B)]
+    [IsScalarTower A (FractionRing A) (FractionRing B)]
     [Algebra (FractionRing A) (completionFractionField A m)]
     :
     Nonempty
@@ -247,12 +257,11 @@ theorem completed_product_field_decomposition
         (∀ i, branchFractionField B (P i))) := by
   sorry
 
-/-- If the base is already complete, the tensor product has only one branch. -/
+/-- If a finite product of fields is a domain, it has only one factor. -/
 theorem complete_base_has_one_completed_factor
     {g : ℕ} {L : Fin g → Type*} [∀ i, Field (L i)]
-    (hfield : IsField (∀ i, L i)) (hg : 0 < g) : g = 1 := by
-  let _ : IsField (∀ i, L i) := hfield
-  let _ : IsDomain (∀ i, L i) := hfield.isDomain
+    (hdomain : IsDomain (∀ i, L i)) (hg : 0 < g) : g = 1 := by
+  let _ : IsDomain (∀ i, L i) := hdomain
   have hsub : ∀ i j : Fin g, i = j := by
     intro i j
     by_contra hij

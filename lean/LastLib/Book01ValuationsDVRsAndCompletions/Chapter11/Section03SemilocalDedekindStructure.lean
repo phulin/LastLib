@@ -1,4 +1,4 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section02FinitenessHypotheses
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section01FromOneLocalRingToSeveral
 
 universe u v
 
@@ -42,17 +42,16 @@ structure Chapter11BranchData (A B : Type*) [CommRing A] [CommRing B] [Algebra A
 normalization branches.  The stronger localization equivalence is packaged in
 `Chapter11ValuationBranchCorrespondence` and in the finite-normalization
 correspondence theorem above. -/
-theorem chapter11_every_extension_is_one_of_the_branch_localizations
+theorem chapter11_every_extension_has_a_unique_branch_center
     (A B K L : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
     [CommRing B] [IsDomain B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsIntegralClosure B A L]
-    [FiniteDimensional K L] [Algebra.IsSeparable K L] [Module.Finite A B]
+    [FiniteDimensional K L] [Module.Finite A B]
     [Algebra.IsIntegral A B] [Module.IsTorsionFree A B] [FaithfulSMul A B]
     (hAinj : Function.Injective (algebraMap A K))
     (hKinj : Function.Injective (algebraMap K L))
-    (_hbranches : chapter11IsSemilocal B)
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
     (hext : chapter11ValuationExtensionAt K L vK vL)
     (ιA : A →+* vK.valuationSubring)
@@ -191,7 +190,6 @@ theorem chapter11_every_extension_is_one_of_the_branch_localizations
     rfl
   have hconv := chapter11_valuation_ring_converse
     A B K L hAinj hKinj (IsLocalRing.maximalIdeal A) rfl W
-      (W.valuation.comap (algebraMap K L)) (Valuation.IsEquiv.refl)
       ιB hιB ιA' hιA' hcenter'
   rcases hconv with ⟨P, hP, hPcenter⟩
   have hVeq : vL.IsEquiv W.valuation := by

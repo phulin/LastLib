@@ -26,12 +26,6 @@ theorem chapter05_laplace_reflection
       chapter05BilateralLaplaceTransform F (1 - s) := by
   sorry
 
-/-
-SOURCE_ISSUE: The source sentence “If `F` has compact support, `Φ_F` is
-entire” omits the regularity/measurability needed for an arbitrary function
-with compact support.  The minimal usable correction is continuity together
-with compact support, as stated here.
--/
 theorem chapter05_laplace_entire_of_continuous_compactSupport
     {F : ℝ → ℝ} (hContinuous : Continuous F)
     (hCompactSupport : HasCompactSupport F) :

@@ -13,11 +13,8 @@ import Mathlib.RingTheory.Valuation.Discrete.RankOne
 import Mathlib.Topology.Algebra.Ring.Compact
 import Mathlib.Topology.Algebra.Module.FiniteDimension
 import Mathlib.Topology.Algebra.Valued.LocallyCompact
-import Mathlib.Topology.MetricSpace.Pseudo.Defs
-import Mathlib.Topology.UniformSpace.AbsoluteValue
 import Mathlib.Tactic.Abel
 import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Order
 import Mathlib.Tactic.Ring

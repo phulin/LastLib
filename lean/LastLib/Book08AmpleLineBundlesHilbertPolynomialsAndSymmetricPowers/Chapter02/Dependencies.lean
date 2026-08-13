@@ -1,11 +1,15 @@
 import Mathlib.Algebra.Category.ModuleCat.Sheaf.Free
 import Mathlib.Algebra.Category.ModuleCat.Sheaf.LocallyFree
 import Mathlib.Algebra.Category.ModuleCat.Sheaf.Quasicoherent
+import Mathlib.Algebra.Category.ModuleCat.Presheaf.Monoidal
+import Mathlib.Algebra.Category.ModuleCat.Presheaf.Sheafification
+import Mathlib.Algebra.Category.ModuleCat.Stalk
 import Mathlib.Algebra.Category.Grp.Limits
 import Mathlib.AlgebraicGeometry.Fiber
 import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
 import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
 import Mathlib.AlgebraicGeometry.Morphisms.Immersion
+import Mathlib.AlgebraicGeometry.Morphisms.Proper
 import Mathlib.AlgebraicGeometry.Morphisms.QuasiCompact
 import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Basic
@@ -119,6 +123,36 @@ line bundle, and universal quotient used in the book.  The existence theorem is 
 dependency not supplied by pinned Mathlib: affine `Proj` is available, but relative `Proj_S(Sym E)`
 and its universal quotient are not.
 -/
+
+noncomputable def chapter02PullbackCompositionIso
+    {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (M : Z.Modules) :
+    ((Scheme.Modules.pullback (f ≫ g)).obj M) ≅
+      (Scheme.Modules.pullback f).obj ((Scheme.Modules.pullback g).obj M) :=
+  (Scheme.Modules.pullbackComp f g).symm.app M
+
+/-!
+Pulling an invertible quotient through a composite uses the canonical comparison between composite
+pullback and iterated pullback.  This is placed before the representability package so its
+naturality field can state the required base-change compatibility without referring forward to a
+later section.
+-/
+def chapter02PullbackInvertibleQuotientPairAlongComposition
+    {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) {E : Z.Modules}
+    (p : Chapter02InvertibleQuotientPair ((Scheme.Modules.pullback g).obj E)) :
+    Chapter02InvertibleQuotientPair ((Scheme.Modules.pullback (f ≫ g)).obj E) where
+  line := chapter02PullbackLineBundle f p.line
+  quotient :=
+    (chapter02PullbackCompositionIso f g E).hom ≫
+      (Scheme.Modules.pullback f).map p.quotient
+  quotient_is_epi := by sorry
+
+def chapter02ProjectiveBundlePointPostcompose
+    {S T U Z : Scheme.{u}} (projection : Z ⟶ S) (f : T ⟶ S) (g : U ⟶ T)
+    (u : {u : T ⟶ Z // u ≫ projection = f}) :
+    {u : U ⟶ Z // u ≫ projection = g ≫ f} :=
+  ⟨g ≫ u.1, by
+    simpa [Category.assoc] using congrArg (fun h => g ≫ h) u.2⟩
+
 structure Chapter02ProjectiveBundleData
     (S : Scheme.{u}) (E : Chapter02QuasiCoherentModule S) where
   scheme : Scheme.{u}
@@ -131,6 +165,16 @@ structure Chapter02ProjectiveBundleData
   universalProperty : ∀ {T : Scheme.{u}} (f : T ⟶ S),
     {u : T ⟶ scheme // u ≫ projection = f} ≃
       Chapter02InvertibleQuotientClass ((Scheme.Modules.pullback f).obj E.carrier)
+  /-- The representing equivalence is natural under base change of test schemes. -/
+  universalProperty_natural :
+    ∀ {T U : Scheme.{u}} (f : T ⟶ S) (g : U ⟶ T)
+      (u : {u : T ⟶ scheme // u ≫ projection = f}),
+      ∃ p : Chapter02InvertibleQuotientPair ((Scheme.Modules.pullback f).obj E.carrier),
+        universalProperty f u = chapter02QuotientClassMk p ∧
+          universalProperty (g ≫ f)
+              (chapter02ProjectiveBundlePointPostcompose projection f g u) =
+            chapter02QuotientClassMk
+              (chapter02PullbackInvertibleQuotientPairAlongComposition g f p)
   /-- The universal equivalence is normalized by the displayed universal quotient. -/
   universalProperty_compatible :
     ∀ {T : Scheme.{u}} (f : T ⟶ S)
@@ -184,26 +228,90 @@ def chapter02ProjectiveBundleMapOver
     (f : T ⟶ S) (u : T ⟶ chapter02ProjectiveBundle S E) : Prop :=
   u ≫ chapter02ProjectiveBundleProjection S E = f
 
-noncomputable def chapter02PullbackCompositionIso
-    {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (M : Z.Modules) :
-    ((Scheme.Modules.pullback (f ≫ g)).obj M) ≅
-      (Scheme.Modules.pullback f).obj ((Scheme.Modules.pullback g).obj M) :=
-  (Scheme.Modules.pullbackComp f g).symm.app M
+/-!
+The arbitrary quasi-coherent relative Proj above is deliberately not assumed to be of finite type.
+For the finite locally free case, this package keeps the canonical universal quotient together
+with the morphism properties needed by later projective and quasi-projective constructions.
+-/
+
+def Chapter02FiniteLocallyFreeModule {S : Scheme.{u}}
+    (E : Chapter02QuasiCoherentModule S) : Prop :=
+  E.carrier.IsLocallyFree ∧ E.carrier.IsFiniteType
 
 /-!
-The canonical comparison also transports an invertible quotient along a composite.  Keeping this
-pair-level map explicit prevents later quotient-class maps from silently choosing unrelated
-representatives.
+This is the canonical finite relative projective-bundle interface.  The `data` field is the
+universal quotient package, while the last two fields expose the standard finiteness properties of
+the finite locally free construction without replacing it by an unrelated ambient scheme.
 -/
-def chapter02PullbackInvertibleQuotientPairAlongComposition
-    {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) {E : Z.Modules}
-    (p : Chapter02InvertibleQuotientPair ((Scheme.Modules.pullback g).obj E)) :
-    Chapter02InvertibleQuotientPair ((Scheme.Modules.pullback (f ≫ g)).obj E) where
-  line := chapter02PullbackLineBundle f p.line
-  quotient :=
-    (chapter02PullbackCompositionIso f g E).hom ≫
-      (Scheme.Modules.pullback f).map p.quotient
-  quotient_is_epi := by sorry
+structure Chapter02RelativeProjectiveBundle
+    (S : Scheme.{u}) (E : Chapter02QuasiCoherentModule S) where
+  finiteLocallyFree : Chapter02FiniteLocallyFreeModule E
+  data : Chapter02ProjectiveBundleData S E
+  proper : IsProper data.projection
+  finite_presentation : LocallyOfFinitePresentation data.projection
+
+abbrev Chapter02RelativeProjectiveBundle.carrier
+    {S : Scheme.{u}} {E : Chapter02QuasiCoherentModule S}
+    (P : Chapter02RelativeProjectiveBundle S E) : Scheme.{u} :=
+  P.data.scheme
+
+abbrev Chapter02RelativeProjectiveBundle.projection
+    {S : Scheme.{u}} {E : Chapter02QuasiCoherentModule S}
+    (P : Chapter02RelativeProjectiveBundle S E) : P.carrier ⟶ S :=
+  P.data.projection
+
+abbrev Chapter02RelativeProjectiveBundle.twistingLineBundle
+    {S : Scheme.{u}} {E : Chapter02QuasiCoherentModule S}
+    (P : Chapter02RelativeProjectiveBundle S E) :
+    Chapter02LineBundle P.carrier :=
+  P.data.twistingLineBundle
+
+abbrev Chapter02RelativeProjectiveBundle.universalQuotient
+    {S : Scheme.{u}} {E : Chapter02QuasiCoherentModule S}
+    (P : Chapter02RelativeProjectiveBundle S E) :
+    (Scheme.Modules.pullback P.projection).obj E.carrier ⟶
+      P.twistingLineBundle.carrier :=
+  P.data.universalQuotient
+
+/- LOCAL_DEPENDENCY_GUESS: finite locally free relative Proj is proper and finitely presented. -/
+theorem chapter02_finite_relative_projective_bundle_exists
+    (S : Scheme.{u}) (E : Chapter02QuasiCoherentModule S)
+    (hE : Chapter02FiniteLocallyFreeModule E) :
+    Nonempty (Chapter02RelativeProjectiveBundle S E) := by
+  sorry
+
+noncomputable def chapter02FiniteRelativeProjectiveBundle
+    (S : Scheme.{u}) (E : Chapter02QuasiCoherentModule S)
+    (hE : Chapter02FiniteLocallyFreeModule E) :
+    Chapter02RelativeProjectiveBundle S E :=
+  Classical.choice (chapter02_finite_relative_projective_bundle_exists S E hE)
+
+/-!
+Quasi-projectivity is represented by a locally closed immersion into one of the canonical finite
+relative projective bundles.  Keeping the presentation as data makes the ambient bundle and its
+universal quotient available to quotient constructions that consume this interface.
+-/
+structure Chapter02ProjectivePresentation
+    {X S : Scheme.{u}} (f : X ⟶ S) where
+  module : Chapter02QuasiCoherentModule S
+  ambient : Chapter02RelativeProjectiveBundle S module
+  embedding : X ⟶ ambient.carrier
+  isClosedImmersion : IsClosedImmersion embedding
+  overBase : embedding ≫ ambient.projection = f
+
+def Chapter02ProjectiveMorphism {X S : Scheme.{u}} (f : X ⟶ S) : Prop :=
+  Nonempty (Chapter02ProjectivePresentation f)
+
+structure Chapter02QuasiProjectivePresentation
+    {X S : Scheme.{u}} (f : X ⟶ S) where
+  module : Chapter02QuasiCoherentModule S
+  ambient : Chapter02RelativeProjectiveBundle S module
+  embedding : X ⟶ ambient.carrier
+  isImmersion : IsImmersion embedding
+  overBase : embedding ≫ ambient.projection = f
+
+def Chapter02QuasiProjectiveMorphism {X S : Scheme.{u}} (f : X ⟶ S) : Prop :=
+  Nonempty (Chapter02QuasiProjectivePresentation f)
 
 /-!
 Mathlib's `free` sheaf gives the canonical free module and its global-section equivalence.  The
@@ -220,6 +328,15 @@ noncomputable def chapter02ZeroSection {S : Scheme.{u}} (M : S.Modules) : M.sect
     intro X Y f
     exact (M.val.map f).hom.map_zero)
 
+/-- Addition of global sections, exposed because the pinned presheaf API does not register it as a
+pointwise `Add` instance on `SheafOfModules.sections`. -/
+noncomputable def chapter02AddSection {S : Scheme.{u}} (M : S.Modules)
+    (s t : M.sections) : M.sections :=
+  M.val.sectionsMk (fun X => s.1 X + t.1 X) (by
+    intro X Y f
+    rw [← M.val.sections_property s f, ← M.val.sections_property t f]
+    exact (M.val.map f).hom.map_add _ _)
+
 /-!
 Pullback of global sections is a useful book-facing bridge.  The actual construction depends on
 the inverse-image/sheafification implementation, which is not exposed as a named map in the
@@ -228,7 +345,15 @@ statements.
 -/
 structure Chapter02PullbackSectionData
     {S T : Scheme.{u}} (f : T ⟶ S) (M : S.Modules) where
+  /-- The structure-sheaf comparison used to pull a section back. -/
+  unitComparison :
+    (Scheme.Modules.pullback f).obj (SheafOfModules.unit S.ringCatSheaf) ≅
+      SheafOfModules.unit T.ringCatSheaf
   map : M.sections → ((Scheme.Modules.pullback f).obj M).sections
+  map_spec : ∀ s,
+    ((Scheme.Modules.pullback f).obj M).unitHomEquiv.symm (map s) =
+      unitComparison.inv ≫
+        (Scheme.Modules.pullback f).map (M.unitHomEquiv.symm s)
 
 /- LOCAL_DEPENDENCY_GUESS: canonical pullback on global sections. -/
 theorem chapter02_pullback_section_data_exists
@@ -242,15 +367,33 @@ noncomputable def chapter02PullbackSectionData
   Classical.choice (chapter02_pullback_section_data_exists f M)
 
 /-!
-The pinned checkout has no monoidal structure for sheaves of modules.  This is the minimal
-book-facing tensor-power carrier needed for `L^d` in homogeneous evaluation statements; later
-proof work should replace it by the actual sheaf tensor powers and coherence.
+The pinned checkout has no packaged monoidal functor for sheaves of modules, but its presheaf tensor
+product and sheafification are available.  Expose that construction here and require the power
+carrier to be compatible with it; later proof work can add the usual coherence lemmas.
 -/
+noncomputable def chapter02Tensor
+    {S : Scheme.{u}} (M N : S.Modules) : S.Modules :=
+  (PresheafOfModules.sheafification (𝟙 S.ringCatSheaf.obj)).obj
+    (PresheafOfModules.Monoidal.tensorObj M.val N.val)
+
+/-
+The recursive carrier records the bracketing used for tensor powers.  The separate power data
+below adds the invertibility and comparison isomorphisms without allowing an unrelated sheaf to
+be selected in a higher degree.
+-/
+noncomputable def chapter02TensorPower
+    {S : Scheme.{u}} (M : S.Modules) : ℕ → S.Modules
+  | 0 => SheafOfModules.unit S.ringCatSheaf
+  | d + 1 => chapter02Tensor (chapter02TensorPower M d) M
+
 structure Chapter02LineBundlePowerData {S : Scheme.{u}} (L : Chapter02LineBundle S) where
   power : ℕ → S.Modules
   power_invertible : ∀ d, Chapter02InvertibleModule (power d)
   power_zero : power 0 ≅ SheafOfModules.unit S.ringCatSheaf
   power_one : power 1 ≅ L.carrier
+  power_tensor : ∀ m n, chapter02Tensor (power m) (power n) ≅ power (m + n)
+  /-- The indexed carriers are the recursively defined tensor powers of the line bundle. -/
+  power_is_tensorPower : ∀ d, power d = chapter02TensorPower L.carrier d
 
 /- LOCAL_DEPENDENCY_GUESS: tensor powers of an invertible sheaf. -/
 theorem chapter02_line_bundle_power_data_exists
@@ -269,6 +412,117 @@ def chapter02LineBundlePowerBundle
     {S : Scheme.{u}} (L : Chapter02LineBundle S) (d : ℕ) : Chapter02LineBundle S where
   carrier := chapter02LineBundlePower L d
   invertible := (chapter02LineBundlePowerData L).power_invertible d
+
+/-!
+The homogeneous evaluation in Section 2.4 needs the two operations that are implicit in the
+geometric phrase ``multiply sections'' and ``let a base coefficient act on a section''.  The pinned
+sheaf API exposes the tensor sheaf and section maps, but not these global-section operations as a
+single canonical declaration.  Keep them as named construction interfaces here so the evaluation
+laws are stated against fixed operations rather than against arbitrary functions.
+-/
+
+/- LOCAL_DEPENDENCY_GUESS: multiplication of sections of two tensor powers. -/
+structure Chapter02PowerSectionProductData
+    {S : Scheme.{u}} (L : Chapter02LineBundle S) (m n : ℕ) where
+  product :
+    (chapter02LineBundlePowerBundle L m).carrier.sections →
+      (chapter02LineBundlePowerBundle L n).carrier.sections →
+        (chapter02LineBundlePowerBundle L (m + n)).carrier.sections
+
+theorem chapter02_power_section_product_data_exists
+    {S : Scheme.{u}} (L : Chapter02LineBundle S) (m n : ℕ) :
+    Nonempty (Chapter02PowerSectionProductData L m n) := by
+  sorry
+
+noncomputable def chapter02PowerSectionProduct
+    {S : Scheme.{u}} (L : Chapter02LineBundle S) (m n : ℕ) :
+    (chapter02LineBundlePowerBundle L m).carrier.sections →
+      (chapter02LineBundlePowerBundle L n).carrier.sections →
+        (chapter02LineBundlePowerBundle L (m + n)).carrier.sections :=
+  (Classical.choice (chapter02_power_section_product_data_exists L m n)).product
+
+/- LOCAL_DEPENDENCY_GUESS: scalar action of coefficients from a base scheme on power sections. -/
+structure Chapter02BaseScalarActionData
+    (R : Type u) [CommRing R] (I : Type u) {T : Scheme.{u}}
+    (f : T ⟶ AlgebraicGeometry.Spec (CommRingCat.of R))
+    (q : Chapter02InvertibleQuotientPair
+      (chapter02FreeQuasiCoherentModule T I).carrier) (d : ℕ) where
+  action :
+    R → (chapter02LineBundlePowerBundle q.line d).carrier.sections →
+      (chapter02LineBundlePowerBundle q.line d).carrier.sections
+
+theorem chapter02_base_scalar_action_data_exists
+    (R : Type u) [CommRing R] (I : Type u) {T : Scheme.{u}}
+    (f : T ⟶ AlgebraicGeometry.Spec (CommRingCat.of R))
+    (q : Chapter02InvertibleQuotientPair
+      (chapter02FreeQuasiCoherentModule T I).carrier) (d : ℕ) :
+    Nonempty (Chapter02BaseScalarActionData R I f q d) := by
+  sorry
+
+noncomputable def chapter02BaseScalarAction
+    (R : Type u) [CommRing R] (I : Type u) {T : Scheme.{u}}
+    (f : T ⟶ AlgebraicGeometry.Spec (CommRingCat.of R))
+    (q : Chapter02InvertibleQuotientPair
+      (chapter02FreeQuasiCoherentModule T I).carrier) (d : ℕ) :
+    R → (chapter02LineBundlePowerBundle q.line d).carrier.sections →
+      (chapter02LineBundlePowerBundle q.line d).carrier.sections :=
+  (Classical.choice (chapter02_base_scalar_action_data_exists R I f q d)).action
+
+/-!
+An isomorphism of line bundles transports every chosen tensor power.  The degree-zero and
+degree-one fields pin this transport to the unit and the original line, so evaluation data can
+compare equivalent quotient representatives in the same target family.
+-/
+structure Chapter02LineBundlePowerTransportData
+    {S : Scheme.{u}} {L M : Chapter02LineBundle S}
+    (e : L.carrier ≅ M.carrier) where
+  map : ∀ d,
+    (chapter02LineBundlePowerBundle L d).carrier ≅
+      (chapter02LineBundlePowerBundle M d).carrier
+  map_zero :
+    map 0 =
+      (chapter02LineBundlePowerData L).power_zero ≪≫
+        (chapter02LineBundlePowerData M).power_zero.symm
+  map_one :
+    map 1 =
+      (chapter02LineBundlePowerData L).power_one ≪≫ e ≪≫
+        (chapter02LineBundlePowerData M).power_one.symm
+
+/- LOCAL_DEPENDENCY_GUESS: equivalent line bundles admit chosen power isomorphisms with the
+displayed degree-zero and degree-one normalizations. -/
+theorem chapter02_line_bundle_power_transport_exists
+    {S : Scheme.{u}} {L M : Chapter02LineBundle S}
+    (e : L.carrier ≅ M.carrier) :
+    Nonempty (Chapter02LineBundlePowerTransportData e) := by
+  sorry
+
+noncomputable def chapter02LineBundlePowerTransport
+    {S : Scheme.{u}} {L M : Chapter02LineBundle S}
+    (e : L.carrier ≅ M.carrier) (d : ℕ) :
+    (chapter02LineBundlePowerBundle L d).carrier ≅
+      (chapter02LineBundlePowerBundle M d).carrier :=
+  (Classical.choice (chapter02_line_bundle_power_transport_exists e)).map d
+
+/-!
+The stalkwise formulation of a section being a generator is shared by the standard projective
+charts and the later generation discussion.  Keeping it before the section files avoids making a
+chart depend on a later subsection merely for its defining predicate.
+-/
+def chapter02SectionGerm
+    {X : Scheme.{u}} {M : X.Modules} (s : M.sections) (x : X) :=
+  (M.presheaf.Γgerm x) (s.1 (Opposite.op ⊤))
+
+def chapter02SectionGeneratesAt
+    {X : Scheme.{u}} {L : Chapter02LineBundle X}
+    (s : L.carrier.sections) (x : X) : Prop :=
+  letI : Module
+      ↑(TopCat.Presheaf.stalk (X.ringCatSheaf.obj : TopCat.Presheaf RingCat X) x)
+      ↑(TopCat.Presheaf.stalk (L.carrier.val.presheaf : TopCat.Presheaf Ab X) x) := by
+    infer_instance
+  Submodule.span
+      ↑(TopCat.Presheaf.stalk (X.ringCatSheaf.obj : TopCat.Presheaf RingCat X) x)
+      ({chapter02SectionGerm s x} : Set
+        ↑(TopCat.Presheaf.stalk (L.carrier.val.presheaf : TopCat.Presheaf Ab X) x)) = ⊤
 
 /-!
 `Chapter02GradedAlgebra` is a small wrapper around Mathlib's canonical `GradedAlgebra` class.  The
@@ -300,16 +554,26 @@ noncomputable def chapter02GradedAlgebraToSpec
       (CommRingCat.ofHom
         ((GradedRing.projZeroRingHom' G.component).comp (algebraMap R A)))
 
-/- LOCAL_DEPENDENCY_GUESS: the pinned API has `SymmetricAlgebra` but no canonical internal grading. -/
+/-!
+The pinned API has `SymmetricAlgebra` but no canonical internal grading.  The generator condition
+below prevents the fallback interface from choosing an unrelated grading: the canonical copy of
+the module must have degree one.  The existence theorem remains the single missing construction.
+-/
+structure Chapter02SymmetricAlgebraGradingData
+    (R M : Type u) [CommRing R] [AddCommGroup M] [Module R M] where
+  graded : Chapter02GradedAlgebra R (SymmetricAlgebra R M)
+  generator_mem_degree_one :
+    ∀ m : M, SymmetricAlgebra.ι R M m ∈ graded.component 1
+
 theorem chapter02_symmetric_algebra_grading_exists
     (R M : Type u) [CommRing R] [AddCommGroup M] [Module R M] :
-    Nonempty (Chapter02GradedAlgebra R (SymmetricAlgebra R M)) := by
+    Nonempty (Chapter02SymmetricAlgebraGradingData R M) := by
   sorry
 
 noncomputable def chapter02SymmetricAlgebraGrading
     (R M : Type u) [CommRing R] [AddCommGroup M] [Module R M] :
     Chapter02GradedAlgebra R (SymmetricAlgebra R M) :=
-  Classical.choice (chapter02_symmetric_algebra_grading_exists R M)
+  (Classical.choice (chapter02_symmetric_algebra_grading_exists R M)).graded
 
 def chapter02SymmetricAlgebraProj
     (R M : Type u) [CommRing R] [AddCommGroup M] [Module R M] : Scheme.{u} :=

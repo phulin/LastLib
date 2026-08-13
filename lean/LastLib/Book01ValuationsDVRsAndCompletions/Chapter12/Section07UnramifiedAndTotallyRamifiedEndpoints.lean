@@ -36,11 +36,12 @@ def foundationalTotallyRamified (f : ℕ) : Prop :=
 /-- The two endpoint degree allocations in a defectless complete extension. -/
 theorem endpoint_degree_allocations
     (degree e f : ℕ) (hdegree : degree = e * f)
-    (hunramified : e = 1) (htotallyRamified : f = 1) :
-    degree = f ∧ degree = e := by
+    : (e = 1 → degree = f) ∧ (f = 1 → degree = e) := by
   constructor
-  · simpa [hunramified] using hdegree
-  · simpa [htotallyRamified] using hdegree
+  · intro hunramified
+    simpa [hunramified] using hdegree
+  · intro htotallyRamified
+    simpa [htotallyRamified] using hdegree
 
 /-- A monic irreducible separable residue polynomial prescribes the unramified
     branch invariants after a monic lift and a chosen root. -/
@@ -88,7 +89,7 @@ def eisensteinExpansion
     {n : ℕ} (Pi : L) (a : Fin n → K) : L :=
   ∑ i, algebraMap K L (a i) * Pi ^ (i : ℕ)
 
-/-- Coefficients are integral exactly when they lie in the base localization ring. -/
+/-- Coefficients are integral exactly when they lie in the base ring. -/
 def coefficientsAreIntegral
     {A K : Type*} [CommRing A] [Field K] [Algebra A K]
     {n : ℕ} (a : Fin n → K) : Prop :=
@@ -438,7 +439,6 @@ theorem eisenstein_root_is_uniformizer_and_totally_ramified
     (hf : IsEisensteinAt π f) (hroot : aeval Pi f = 0)
     (hdegree : f.natDegree = n)
     (hgenerates : Algebra.adjoin K ({Pi} : Set L) = ⊤)
-    (hvaluation : v Pi = Valuation.IsRankOneDiscrete.generator v)
     (hbaseIntegers : vK.Integers A)
     (hbaseValuationRing :
       (vK.valuationSubring : Set K) = Set.range (algebraMap A K))
@@ -449,7 +449,11 @@ theorem eisenstein_root_is_uniformizer_and_totally_ramified
           (IsLocalRing.maximalIdeal v.valuationSubring) = n ∧
       chapterResidueDegree vK.valuationSubring v.valuationSubring
           (IsLocalRing.maximalIdeal v.valuationSubring) = 1 ∧
-      ∀ a : K, v (algebraMap K L a) = (vK a) ^ n := by
+      ∀ a : K,
+        (vK (algebraMap A K π) = (Valuation.IsRankOneDiscrete.generator vK : Γ) ∧
+          (Valuation.IsRankOneDiscrete.generator vK : Γ) =
+            (Valuation.IsRankOneDiscrete.generator v : Γ)) →
+          v (algebraMap K L a) = (vK a) ^ n := by
   sorry
 
 /-- The residue field does not change in an Eisenstein extension. -/

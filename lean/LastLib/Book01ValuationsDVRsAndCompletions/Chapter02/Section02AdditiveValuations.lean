@@ -1,4 +1,11 @@
-import Mathlib
+import Mathlib.Algebra.Order.GroupWithZero.Basic
+import Mathlib.FieldTheory.RatFunc.Basic
+import Mathlib.RingTheory.Ideal.Quotient.Operations
+import Mathlib.RingTheory.Localization.FractionRing
+import Mathlib.RingTheory.Valuation.Basic
+import Mathlib.RingTheory.Valuation.Extension
+import Mathlib.RingTheory.Valuation.ExtendToLocalization
+import Mathlib.RingTheory.Valuation.Quotient
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter02
 
@@ -14,8 +21,8 @@ chapter-local names for the constructions that are specific to the exposition.
 noncomputable section
 
 open Set Function
-open scoped BigOperators LaurentSeries
-open HahnSeries Polynomial
+open scoped BigOperators
+open Polynomial
 
 /-! # Book 1, Chapter 2, Section 2.2: Additive Valuations
 -/
@@ -73,7 +80,7 @@ theorem chapter02_support_absorbs_multiplication
 
 theorem chapter02_support_product_characterization
     {R Γ : Type*} [CommRing R] [LinearOrderedAddCommMonoidWithTop Γ]
-    [Nontrivial (Multiplicative Γᵒᵈ)] [NoZeroDivisors (Multiplicative Γᵒᵈ)]
+    [Nontrivial (Multiplicative Γᵒᵈ)]
     (v : AddValuation R Γ) (x y : R) :
     x * y ∈ Chapter02Support v ↔
       x ∈ Chapter02Support v ∨ y ∈ Chapter02Support v := by
@@ -95,7 +102,7 @@ theorem chapter02_support_product_characterization
 
 theorem chapter02_support_is_prime
     {R Γ : Type*} [CommRing R] [LinearOrderedAddCommMonoidWithTop Γ]
-    [Nontrivial (Multiplicative Γᵒᵈ)] [NoZeroDivisors (Multiplicative Γᵒᵈ)]
+    [Nontrivial (Multiplicative Γᵒᵈ)]
     (v : AddValuation R Γ) :
     (Chapter02Support v).IsPrime := by
   let _ : Nontrivial Γ := ‹Nontrivial (Multiplicative Γᵒᵈ)›
@@ -122,7 +129,7 @@ theorem chapter02_support_is_prime
 
 theorem chapter02_field_support_is_zero
     {K Γ : Type*} [Field K] [LinearOrderedAddCommMonoidWithTop Γ]
-    [Nontrivial (Multiplicative Γᵒᵈ)] [NoZeroDivisors (Multiplicative Γᵒᵈ)]
+    [Nontrivial (Multiplicative Γᵒᵈ)]
     (v : AddValuation K Γ) : Chapter02Support v = ⊥ := by
   let _ : Nontrivial Γ := ‹Nontrivial (Multiplicative Γᵒᵈ)›
   ext x
@@ -191,6 +198,21 @@ theorem chapter02_field_valuation_restricts_to_units
   intro x hx
   rfl
 
+theorem chapter02_field_unit_value_hom_satisfies_sum_inequality
+    {K Γ : Type*} [Field K] [AddCommGroup Γ] [LinearOrder Γ]
+    [IsOrderedAddMonoid Γ] [Nontrivial Γ]
+    (v : AddValuation K (WithTop Γ)) :
+    Chapter02UnitHomSumInequality (Chapter02FieldUnitValueHom v) := by
+  intro x y hx hy hxy
+  have hxv : v x ≠ (⊤ : WithTop Γ) := (AddValuation.ne_top_iff v).2 hx
+  have hyv : v y ≠ (⊤ : WithTop Γ) := (AddValuation.ne_top_iff v).2 hy
+  have hxyv : v (x + y) ≠ (⊤ : WithTop Γ) :=
+    (AddValuation.ne_top_iff v).2 hxy
+  change min ((v x).untop hxv) ((v y).untop hyv) ≤
+    (v (x + y)).untop hxyv
+  apply WithTop.coe_le_coe.mp
+  simpa only [WithTop.coe_untop, WithTop.coe_min] using v.map_add x y
+
 theorem chapter02_unit_hom_converse
     {K Γ : Type*} [Field K] [AddCommGroup Γ] [LinearOrder Γ]
     [IsOrderedAddMonoid Γ]
@@ -246,7 +268,7 @@ def Chapter02SupportQuotientValuation
 
 theorem chapter02_support_quotient_is_a_domain
     {R Γ : Type*} [CommRing R] [LinearOrderedAddCommMonoidWithTop Γ]
-    [Nontrivial (Multiplicative Γᵒᵈ)] [NoZeroDivisors (Multiplicative Γᵒᵈ)]
+    [Nontrivial (Multiplicative Γᵒᵈ)]
     (v : AddValuation R Γ) :
     IsDomain (R ⧸ Chapter02Support v) := by
   rw [Ideal.Quotient.isDomain_iff_prime]

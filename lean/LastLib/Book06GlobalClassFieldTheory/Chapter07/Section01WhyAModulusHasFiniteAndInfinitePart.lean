@@ -50,13 +50,13 @@ theorem finite_component_lies_in_ray_idele_subgroup
     (D : IdeleContext K I) (m : Modulus K) (v : NumberField.FinitePlace K) :
     Subgroup.map (D.finiteComponent v)
         (finiteUnitFiltration v (m.finiteExponent v)) ≤ rayIdeleSubgroup D m := by
-  sorry
+  exact D.finiteComponent_mem_rayUnits m v
 
 theorem infinite_component_lies_in_ray_idele_subgroup
     (D : IdeleContext K I) (m : Modulus K) (v : NumberField.InfinitePlace K) :
     Subgroup.map (D.infiniteComponent v) (infiniteUnitSubgroup m v) ≤
       rayIdeleSubgroup D m := by
-  sorry
+  exact D.infiniteComponent_mem_rayUnits m v
 
 theorem ray_unit_subgroup_is_open_and_closed
     (D : IdeleContext K I) (m : Modulus K) :

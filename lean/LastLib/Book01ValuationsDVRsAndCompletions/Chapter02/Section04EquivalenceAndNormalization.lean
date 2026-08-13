@@ -1,6 +1,8 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter02.Section01WhyTheValuesFormAGroup
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter02.Section02AdditiveValuations
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter02.Section03TheDecisiveEquality
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Order
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter02
 
@@ -218,7 +220,7 @@ theorem chapter02_normalized_valuation_uses_unit_step
     {K Γ : Type*} [Field K]
     [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
     (e : Γ ≃+o ℤ) (v : AddValuation K (WithTop Γ))
-    {x : K} {π : Γ} (_hx : x ≠ 0)
+    {x : K} {π : Γ}
     (hπ : 0 < π) (hleast : ∀ γ : Γ, 0 < γ → π ≤ γ)
     (hv : v x = (π : WithTop Γ)) :
     Chapter02NormalizedValuation e v x = (1 : WithTop ℤ) := by
@@ -340,7 +342,7 @@ def Chapter02CoarsenedValuation
 theorem chapter02_convex_subgroup_gives_ordered_quotient
     {Γ Λ : Type*} [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
     [AddCommGroup Λ] [LinearOrder Λ] [IsOrderedAddMonoid Λ]
-    (H : AddSubgroup Γ) (_hH : Chapter02ConvexAddSubgroup H)
+    (H : AddSubgroup Γ)
     (q : Γ →+o Λ) (hq : Function.Surjective q)
     (hker : ∀ γ : Γ, q γ = 0 ↔ γ ∈ H)
     (horder : ∀ a b : Γ, q a ≤ q b ↔
@@ -398,8 +400,7 @@ theorem chapter02_coarsening_is_composition_with_quotient
     {K Γ Λ : Type*} [Field K]
     [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
     [AddCommGroup Λ] [LinearOrder Λ] [IsOrderedAddMonoid Λ]
-    (H : AddSubgroup Γ) (q : Γ →+o Λ)
-    (_hQ : Chapter02ConvexQuotientInterface H q)
+    (q : Γ →+o Λ)
     (v : AddValuation K (WithTop Γ)) :
     ∀ x : K, Chapter02CoarsenedValuation q v x =
       (if h : v x = ⊤ then ⊤ else (q ((v x).untop h) : WithTop Λ)) := by
@@ -465,7 +466,7 @@ theorem chapter02_lex_quotient_is_an_ordered_convex_quotient :
     Chapter02ConvexQuotientInterface Chapter02LexSecondCoordinateSubgroup
       Chapter02LexFirstCoordinate := by
   apply chapter02_convex_subgroup_gives_ordered_quotient
-    Chapter02LexSecondCoordinateSubgroup chapter02_lex_second_coordinate_is_convex
+    Chapter02LexSecondCoordinateSubgroup
     Chapter02LexFirstCoordinate
     (chapter02_lex_quotient_remembers_first_coordinate).1
     (chapter02_lex_quotient_remembers_first_coordinate).2

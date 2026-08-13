@@ -34,7 +34,7 @@ def chapter05CyclotomicFrobeniusUnit
 /-- The cyclotomic Frobenius action on a chosen primitive root. -/
 theorem chapter05_cyclotomic_frobenius_action
     (m p : ℕ) [NeZero m] (K : Type*) [Field K] [NumberField K]
-    [IsCyclotomicExtension {m} ℚ K] (hpm : Nat.Coprime p m)
+    [IsCyclotomicExtension {m} ℚ K] (hp : Nat.Prime p) (hpm : Nat.Coprime p m)
     (σ : Gal(K / ℚ))
     (hσ : chapter05CyclotomicGaloisUnitsEquiv m K σ =
       chapter05CyclotomicFrobeniusUnit m p hpm) :
@@ -52,19 +52,19 @@ theorem chapter05_cyclotomic_frobenius_unit_eq_one_iff
 /-- At a prime away from the conductor, the cyclotomic ideal Frobenius is the
 class of `p` modulo `m`. -/
 def chapter05CyclotomicIdealFrobeniusClass
-    (m p : ℕ) [NeZero m] (hpm : Nat.Coprime p m) : (ZMod m)ˣ :=
+    (m p : ℕ) [NeZero m] (_hp : Nat.Prime p) (hpm : Nat.Coprime p m) : (ZMod m)ˣ :=
   chapter05CyclotomicFrobeniusUnit m p hpm
 
 theorem chapter05_cyclotomic_split_completely_iff
-    (m p : ℕ) [NeZero m] (hpm : Nat.Coprime p m) :
-    chapter05CyclotomicIdealFrobeniusClass m p hpm = 1 ↔
+    (m p : ℕ) [NeZero m] (hp : Nat.Prime p) (hpm : Nat.Coprime p m) :
+    chapter05CyclotomicIdealFrobeniusClass m p hp hpm = 1 ↔
       Nat.ModEq m p 1 := by
   exact chapter05_cyclotomic_frobenius_unit_eq_one_iff m p hpm
 
 /-- Ideal Frobenius is only defined in this finite-level model away from the
 conductor. -/
 def chapter05CyclotomicIdealFrobeniusDefined (m p : ℕ) : Prop :=
-  Nat.Coprime p m
+  Nat.Prime p ∧ Nat.Coprime p m
 
 theorem chapter05_cyclotomic_ideal_frobenius_undefined_at_conductor
     {m p : ℕ} (hp : Nat.Prime p) (hpm : p ∣ m) :

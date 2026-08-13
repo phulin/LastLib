@@ -33,6 +33,11 @@ theorem chapter09_discrete_arithmetic_quotient_has_finite_image
   exact chapter09_finite_range_of_continuous_map_from_compact_to_discrete
     Q.map Q.continuous_map
 
+theorem chapter09NormOneClassIdealClassMap_continuous
+    (K : Type*) [Field K] [NumberField K] :
+    Continuous (chapter09NormOneClassIdealClassMap K) := by
+  sorry
+
 theorem chapter09_ideal_class_group_is_finite
     (K : Type*) [Field K] [NumberField K] :
     Finite (ClassGroup (𝓞 K)) := by
@@ -44,11 +49,11 @@ theorem chapter09_ideal_class_group_is_finite_as_set
   exact Set.toFinite _
 
 theorem chapter09_normOne_class_maps_to_finite_ideal_class_group
-    (K : Type*) [Field K] [NumberField K]
-    (D : Chapter09IdeleIdealData K) :
-    (Set.range (chapter09NormOneClassIdealClassMap K D)).Finite := by
-  exact Set.Finite.subset (chapter09_ideal_class_group_is_finite_as_set K)
-    (Set.subset_univ _)
+    (K : Type*) [Field K] [NumberField K] :
+    (Set.range (chapter09NormOneClassIdealClassMap K)).Finite := by
+  exact chapter09_finite_range_of_continuous_map_from_compact_to_discrete
+    (chapter09NormOneClassIdealClassMap K)
+    (chapter09NormOneClassIdealClassMap_continuous K)
 
 abbrev Chapter09ArchMagnitudeQuotient
     (K : Type*) [Field K] [NumberField K] :=

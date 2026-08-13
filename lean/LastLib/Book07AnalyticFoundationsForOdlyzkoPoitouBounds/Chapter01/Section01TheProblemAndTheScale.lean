@@ -48,7 +48,8 @@ theorem chapter01RootDiscriminant_def
 theorem chapter01RootDiscriminant_eq_canonical
     (K : Type*) [Field K] [NumberField K] :
     chapter01RootDiscriminant K = NumberField.rootDiscr K := by
-  sorry
+  rw [chapter01RootDiscriminant_def, NumberField.rootDiscr_def]
+  simp [chapter01AbsoluteDiscriminant, chapter01Degree, Int.cast_abs]
 
 end
 

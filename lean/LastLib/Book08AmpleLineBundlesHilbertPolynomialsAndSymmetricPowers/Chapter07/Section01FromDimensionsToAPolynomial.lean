@@ -27,6 +27,18 @@ theorem chapter07_polynomial_eq_of_eventually_equal
     P = Q := by
   sorry
 
+/-! A finite-difference profile is the numerical form of the support
+filtration argument.  The Newton basis gives an integer-valued polynomial on
+all of `ℤ`, not merely on the nonnegative subsequence. -/
+theorem chapter07_polynomial_exists_of_vanishing_forward_differences
+    (f : ℤ → ℤ) (d : ℕ)
+    (h : ∀ n : ℤ,
+      chapter07IteratedForwardDifference d f n = 0) :
+    ∃ P : Polynomial ℚ,
+      Chapter07IntegerValuedOnIntegers P ∧
+        ∀ n : ℤ, P.eval (n : ℚ) = (f n : ℚ) := by
+  sorry
+
 /-!
 The Hilbert-polynomial theorem is stated with both the Euler characteristic
 and the Hilbert function.  The latter equality is redundant after the first
@@ -84,6 +96,13 @@ theorem chapter07_hilbert_polynomial_matches_function_eventually
     Chapter07PolynomialMatchesEventually (chapter07HilbertPolynomial S)
       (fun n : ℕ => (chapter07HilbertFunction S n : ℤ)) := by
   exact (chapter07_hilbert_polynomial_spec S).2.2
+
+theorem chapter07_hilbert_polynomial_eq_zero_of_zero_sheaf
+    {k : Type u} [Field k]
+    {C : Chapter07PolarizedScheme k}
+    (S : Chapter07HilbertSetup k C) (hzero : IsZero S.F.sheaf) :
+    chapter07HilbertPolynomial S = 0 := by
+  sorry
 
 theorem chapter07_hilbert_polynomial_unique
     {k : Type u} [Field k]

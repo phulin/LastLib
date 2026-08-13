@@ -23,6 +23,8 @@ structure Chapter04LocalCupProductData
   cup : ∀ r : ℤ,
     H P.M r → H P.Mdual (2 - r) → H P.μn 2
   invariant : H P.μn 2 →+ chapter04QModZ
+  denominator : ∀ (r : ℤ) (x : H P.M r) (y : H P.Mdual (2 - r)),
+    invariant (cup r x y) ∈ chapter04QModZTorsion P.n
 
 attribute [instance] Chapter04LocalCupProductData.hGroup
 
@@ -42,14 +44,12 @@ theorem chapter04_local_numerical_pairing_has_denominator
     (Q : Chapter04LocalCupProductData P) (r : ℤ)
     (x : Q.H P.M r) (y : Q.H P.Mdual (2 - r)) :
     chapter04LocalNumericalPairing Q r x y ∈ chapter04QModZTorsion P.n := by
-  sorry
+  change Q.invariant (Q.cup r x y) ∈ chapter04QModZTorsion P.n
+  exact Q.denominator r x y
 
 /-! Tate cohomology is retained at real places in all degrees.  Complex places contribute the zero
-pairing; this is a convention on the local cohomology realization, not permission to discard the
-real summands from the global invariant row. -/
-structure Chapter04ArchimedeanPairingConvention where
-  realTateAllDegrees : Prop
-  complexPairingZero : Prop
+pairing; this convention belongs to the local cohomology realization represented by `H` above.
+It is intentionally not encoded as an unrelated proposition-valued record. -/
 
 /-- Abstract projection data for the local restriction/corestriction adjunction. -/
 structure Chapter04LocalPairingAdjunctionData where
@@ -146,13 +146,18 @@ structure Chapter04LocalAnMuIdentificationData
   [characterGroup : AddCommGroup CharacterQuotient]
   H1Mu_equiv_Kummer : D.H1Mu ≃+ KummerQuotient
   H1A_equiv_Characters : D.H1A ≃+ CharacterQuotient
+  evaluation : CharacterQuotient → KummerQuotient → chapter04QModZ
+  evaluation_perfect : chapter04PerfectPairing evaluation
+  pairing_compatibility : ∀ c a,
+    D.pairing c a = evaluation (H1A_equiv_Characters c) (H1Mu_equiv_Kummer a)
 
 attribute [instance] Chapter04LocalAnMuIdentificationData.kummerGroup
   Chapter04LocalAnMuIdentificationData.characterGroup
 
 /-- Local reciprocity and Kummer theory make the `Aₙ`--`μₙ` pairing perfect. -/
 theorem chapter04_local_A_n_mu_n_pairing_is_perfect
-    (D : Chapter04LocalAnMuPairingData) :
+    (D : Chapter04LocalAnMuPairingData)
+    (I : Chapter04LocalAnMuIdentificationData D) :
     chapter04PerfectPairing D.pairing := by
   sorry
 

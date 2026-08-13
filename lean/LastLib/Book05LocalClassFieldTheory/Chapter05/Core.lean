@@ -1,4 +1,3 @@
-import Mathlib.Algebra.BrauerGroup.Defs
 import Mathlib.Algebra.Group.Subgroup.ZPowers.Basic
 import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
 import Mathlib.FieldTheory.Galois.Basic
@@ -195,6 +194,19 @@ structure Chapter05TopRestrictionTateIso
       (Rep.res (⊤ : Subgroup G).subtype A) r ≅
       chapter05TateCohomology G A r
 
+/- LOCAL_DEPENDENCY_GUESS: the cap product at the top subgroup has a
+   restricted trivial coefficient module in its source.  The existing
+   top-restriction witness is indexed by the coefficient module of the
+   fundamental class, so the trivial-coefficient change of subgroup must be
+   exposed separately before the cap map can be composed with the degree
+   minus-two homology identification. -/
+structure Chapter05TopRestrictionTrivialTateIso
+    (G : Type) [Group G] [Fintype G] where
+  iso : ∀ r : ℤ,
+    chapter05TateCohomology (⊤ : Subgroup G)
+      (Rep.res (⊤ : Subgroup G).subtype (Rep.trivial ℤ G ℤ)) r ≅
+      chapter05TateCohomology G (Rep.trivial ℤ G ℤ) r
+
 structure Chapter05FundamentalTwoClass
     (G : Type) [Group G] [Fintype G] (A : Rep ℤ G) where
   /- The normalization is supplied by the local invariant system, whose
@@ -219,6 +231,52 @@ structure Chapter05TwoExtension
   regular_exact :
     (ShortComplex.mk projection (Rep.standardComplex.ε ℤ G)
       projection_augmentation).Exact
+  /- The two short exact stages of the two-extension.  The original maps are
+     retained above for the book-facing `0 → A → middle → ℤ[G] → ℤ → 0`
+     presentation; these fields expose the kernel of augmentation needed by
+     the canonical long exact sequence in Tate cohomology. -/
+  kernel : Rep ℤ G
+  middle_to_kernel : middle ⟶ kernel
+  kernel_to_regular : kernel ⟶ Rep.ofMulAction ℤ G (Fin 1 → G)
+  middle_to_kernel_comp : middle_to_kernel ≫ kernel_to_regular = projection
+  left_comp_zero : inclusion ≫ middle_to_kernel = 0
+  right_comp_zero : kernel_to_regular ≫ Rep.standardComplex.ε ℤ G = 0
+  left_shortExact :
+    (ShortComplex.mk inclusion middle_to_kernel left_comp_zero).ShortExact
+  right_shortExact :
+    (ShortComplex.mk kernel_to_regular (Rep.standardComplex.ε ℤ G)
+      right_comp_zero).ShortExact
+
+/- The degree-two connecting morphism attached to the two short exact stages
+   of a two-extension.  Restriction to a subgroup is performed before taking
+   Tate cohomology, so this is the precise map used by Tate--Nakayama. -/
+noncomputable def chapter05TwoExtensionConnecting
+    {G : Type} [Group G] [Fintype G] {A : Rep ℤ G}
+    (T : Chapter05TwoExtension G A) (H : Subgroup G) (r : ℤ) :
+    chapter05TateCohomology H (Rep.trivial ℤ H ℤ) r ⟶
+      chapter05TateCohomology H (Rep.res H.subtype A) (r + 2) := by
+  let left : ShortComplex (Rep ℤ H) :=
+    (ShortComplex.mk T.inclusion T.middle_to_kernel T.left_comp_zero).map
+      (Rep.resFunctor H.subtype)
+  let right : ShortComplex (Rep ℤ H) :=
+    (ShortComplex.mk T.kernel_to_regular (Rep.standardComplex.ε ℤ G)
+      T.right_comp_zero).map (Rep.resFunctor H.subtype)
+  let trivialRestrictionIso :
+      Rep.res H.subtype (Rep.trivial ℤ G ℤ) ≅ Rep.trivial ℤ H ℤ :=
+    Rep.mkIso (Representation.Equiv.mk (LinearEquiv.refl ℤ ℤ) (by
+      intro h
+      ext
+      simp))
+  have hleft : left.ShortExact := by
+    exact (Rep.shortExact_res H.subtype).2 T.left_shortExact
+  have hright : right.ShortExact := by
+    exact (Rep.shortExact_res H.subtype).2 T.right_shortExact
+  change
+    tateCohomology (Rep.trivial ℤ H ℤ) r ⟶
+      tateCohomology (Rep.res H.subtype A) (r + 2)
+  simpa [left, right, add_assoc] using
+    ((tateCohomologyFunctor r).map trivialRestrictionIso.inv ≫
+      TateCohomology.δ hright r ≫ TateCohomology.δ hleft (r + 1))
 
 end
 

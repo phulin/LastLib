@@ -46,13 +46,13 @@ def Chapter09NonarchimedeanComplete
   @CompleteSpace K (Chapter09ValuationUniformSpace v)
 
 /-- A sequence of values tends to infinity in the ordered-value sense. -/
-def TendsToTop {Γ : Type*} [Preorder Γ] (s : ℕ → Γ) : Prop :=
-  ∀ γ : Γ, ∃ N : ℕ, ∀ n : ℕ, N ≤ n → γ ≤ s n
+def TendsToTop {Γ : Type*} [Preorder Γ] [OrderTop Γ] (s : ℕ → Γ) : Prop :=
+  ∀ γ : Γ, γ ≠ ⊤ → ∃ N : ℕ, ∀ n : ℕ, N ≤ n → γ ≤ s n
 
 /- Cofinality needed to turn valuation doubling into convergence to the top. -/
 def Chapter09DoublingCofinal {Γ : Type*}
     [LinearOrderedAddCommGroupWithTop Γ] (q : Γ) : Prop :=
-  ∀ γ : Γ, ∃ n : ℕ, γ ≤ (2 ^ n) • q
+  ∀ γ : Γ, γ ≠ ⊤ → ∃ n : ℕ, γ ≤ (2 ^ n) • q
 
 /- Cofinality restricted to values represented by nonzero field elements. -/
 private def Chapter09ImageDoublingCofinal {K Γ : Type*} [Field K]
@@ -1010,7 +1010,10 @@ theorem hensel_newton_form_of_doubling_cofinal {K Γ : Type*} [Field K]
     exact LinearOrderedAddCommGroupWithTop.sub_pos.mpr (Or.inl hineq)
   obtain ⟨a, haA, hfa, hdisp, hderivA⟩ :=
     hensel_newton_data v A hA f hf a₀ ha₀ hineq hderiv hcomplete
-      (fun γ _ => hcofinal γ)
+      (fun γ hγ => hcofinal γ (by
+        rcases hγ with ⟨x, hx, hxγ⟩
+        rw [← hxγ]
+        exact (AddValuation.ne_top_iff v).mpr hx))
   have hdisp' : v (a - a₀) = s + q₀ := by
     simpa [s, q₀] using hdisp
   have hstrict : s < v (a - a₀) := by
@@ -1116,6 +1119,279 @@ theorem hensel_newton_form_of_doubling_cofinal {K Γ : Type*} [Field K]
   exact hs hstop
 
 
+private instance rank_one_value_group_mul_archimedean {K Γ : Type*} [Field K]
+    [LinearOrderedAddCommGroupWithTop Γ] (v : AddValuation K Γ)
+    [Valuation.RankOne v.toValuation] :
+    MulArchimedean (MonoidWithZeroHom.ValueGroup₀ (.ofClass v.toValuation)) :=
+  MulArchimedean.comap (Valuation.RankOne.hom v.toValuation).toMonoidHom
+    (Valuation.RankOne.strictMono v.toValuation)
+
+private theorem rank_one_image_doubling_cofinal {K Γ : Type*} [Field K]
+    [LinearOrderedAddCommGroupWithTop Γ] (v : AddValuation K Γ)
+    [Valuation.RankOne v.toValuation] (q : Γ) (hq : 0 < q)
+    (hqimage : q ≠ ⊤ → ∃ z : K, z ≠ 0 ∧ v z = q) :
+    Chapter09ImageDoublingCofinal v q := by
+  let G := MonoidWithZeroHom.ValueGroup₀ (.ofClass v.toValuation)
+  intro γ hγ
+  rcases hγ with ⟨x, hx0, rfl⟩
+  by_cases hqtop : q = ⊤
+  · exact ⟨0, by simp [hqtop]⟩
+  obtain ⟨z, hz0, hzq⟩ := hqimage hqtop
+  let hxv : G := v.toValuation.restrict x
+  let hzv : G := v.toValuation.restrict z
+  have hxv0 : hxv ≠ 0 := by
+    dsimp [hxv]
+    exact v.toValuation.restrict.ne_zero_iff.mpr hx0
+  have hzv0 : hzv ≠ 0 := by
+    dsimp [hzv]
+    exact v.toValuation.restrict.ne_zero_iff.mpr hz0
+  let ξ : Gˣ := Units.mk0 hxv hxv0
+  let η : Gˣ := Units.mk0 hzv hzv0
+  have hηlt : η < 1 := by
+    change hzv < (1 : G)
+    dsimp [hzv]
+    rw [Valuation.restrict_lt_iff_lt_embedding]
+    change Multiplicative.ofAdd (OrderDual.toDual (v z)) <
+      Multiplicative.ofAdd (OrderDual.toDual (0 : Γ))
+    rw [hzq]
+    change OrderDual.toDual q < OrderDual.toDual (0 : Γ)
+    change (0 : Γ) < q
+    exact hq
+  obtain ⟨m, hm⟩ := exists_pow_lt hηlt ξ
+  have hm' : hzv ^ m < hxv := by
+    change (η : G) ^ m < (ξ : G) at hm
+    simpa [η, ξ] using hm
+  have hmval : v.toValuation (z ^ m) < v.toValuation x := by
+    calc
+      v.toValuation (z ^ m) =
+          MonoidWithZeroHom.ValueGroup₀.embedding (hzv ^ m) := by
+        rw [show hzv ^ m = (v.toValuation.restrict z) ^ m by rfl]
+        rw [← map_pow, Valuation.embedding_restrict]
+      _ < MonoidWithZeroHom.ValueGroup₀.embedding hxv :=
+        MonoidWithZeroHom.ValueGroup₀.embedding_strictMono hm'
+      _ = v.toValuation x := by
+        rw [show hxv = v.toValuation.restrict x by rfl,
+          Valuation.embedding_restrict]
+  have hmadd : v x < m • q := by
+    change Multiplicative.ofAdd (OrderDual.toDual (v (z ^ m))) <
+      Multiplicative.ofAdd (OrderDual.toDual (v x)) at hmval
+    have hmdual : OrderDual.toDual (v (z ^ m)) <
+        OrderDual.toDual (v x) := by simpa using hmval
+    have hmadd' : v x < v (z ^ m) := (OrderDual.toDual_lt).mp hmdual
+    simpa [hzq, v.map_pow] using hmadd'
+  have hmle : m ≤ 2 ^ m := Nat.lt_two_pow_self.le
+  exact ⟨m, hmadd.le.trans (nsmul_le_nsmul_left hq.le hmle)⟩
+
+
+private theorem hensel_strict_root_exact_displacement {K Γ : Type*} [Field K]
+    [LinearOrderedAddCommGroupWithTop Γ] (v : AddValuation K Γ)
+    (A : Subring K) (hA : IsValuationSubring A v) (f : K[X])
+    (hf : PolynomialCoefficientsInSubring A f) (a₀ : K) (ha₀ : a₀ ∈ A)
+    (hderiv : v (f.derivative.eval a₀) ≠ ⊤)
+    (b : K) (hb : b ∈ A) (hfb : f.eval b = 0)
+    (hstrict : v (b - a₀) > v (f.derivative.eval a₀)) :
+    v (b - a₀) = v (f.eval a₀) - v (f.derivative.eval a₀) := by
+  let s : Γ := v (f.derivative.eval a₀)
+  have hs : s ≠ ⊤ := by simpa [s] using hderiv
+  by_cases hba : b = a₀
+  · subst b
+    rw [hfb]
+    rw [sub_self, v.map_zero, sub_eq_add_neg, top_add]
+  · have hne : b - a₀ ≠ 0 := sub_ne_zero.mpr hba
+    have hmem_h : b - a₀ ∈ A := A.sub_mem hb ha₀
+    have hTaylorIntegral : ∀ (p : K[X]), PolynomialCoefficientsInSubring A p →
+        ∀ (x y : K), x ∈ A → y ∈ A → ∃ g : A,
+          p.eval (x + y) = p.eval x + y * p.derivative.eval x + y ^ 2 * (g : K) := by
+      intro p hp x y hx hy
+      let hpcoeff : (p.coeffs : Set K) ⊆ A := by
+        intro c hc
+        rcases (Polynomial.mem_coeffs_iff.mp hc) with ⟨n, hn, rfl⟩
+        exact hp n
+      let pA : A[X] := p.toSubring A hpcoeff
+      obtain ⟨g, hg⟩ := taylor_second_order pA ⟨x, hx⟩ ⟨y, hy⟩
+      refine ⟨g, ?_⟩
+      have hmap := congrArg (fun z : A => (z : K)) hg
+      have hpmap : pA.map (Subring.subtype A) = p := by
+        exact Polynomial.map_toSubring p A hpcoeff
+      have heval (z : A) : ((pA.eval z : A) : K) = p.eval (z : K) := by
+        have h := Polynomial.eval_map_apply (p := pA) (Subring.subtype A) z
+        rw [hpmap] at h
+        exact h.symm
+      have hdermap : pA.derivative.map (Subring.subtype A) = p.derivative := by
+        rw [← Polynomial.derivative_map, hpmap]
+      have hderval (z : A) : ((pA.derivative.eval z : A) : K) =
+          p.derivative.eval (z : K) := by
+        have h := Polynomial.eval_map_apply (p := pA.derivative) (Subring.subtype A) z
+        rw [hdermap] at h
+        exact h.symm
+      calc
+        p.eval (x + y) = ((pA.eval (⟨x, hx⟩ + ⟨y, hy⟩) : A) : K) := by
+          simpa using (heval (⟨x, hx⟩ + ⟨y, hy⟩)).symm
+        _ = ((pA.eval ⟨x, hx⟩ + ⟨y, hy⟩ *
+            pA.derivative.eval ⟨x, hx⟩ +
+            ⟨y, hy⟩ ^ 2 * g : A) : K) := hmap
+        _ = p.eval x + y * p.derivative.eval x + y ^ 2 * (g : K) := by
+          simp [heval, hderval, Subring.coe_add, Subring.coe_mul]
+    obtain ⟨g, hg⟩ := hTaylorIntegral f hf a₀ (b - a₀) ha₀ hmem_h
+    have hrootrel : 0 = f.eval a₀ + (b - a₀) * f.derivative.eval a₀ +
+        (b - a₀) ^ 2 * (g : K) := by
+      calc
+        0 = f.eval b := hfb.symm
+        _ = f.eval (a₀ + (b - a₀)) := by rw [show a₀ + (b - a₀) = b by ring]
+        _ = f.eval a₀ + (b - a₀) * f.derivative.eval a₀ +
+            (b - a₀) ^ 2 * (g : K) := hg
+    have hg_nonneg : 0 ≤ v (g : K) := (hA _).mp g.property
+    have hprodgt : s < v ((b - a₀) * (g : K)) := by
+      rw [v.map_mul]
+      exact hstrict.trans_le (le_add_of_nonneg_right hg_nonneg)
+    have hneval : v (f.derivative.eval a₀) ≠ v ((b - a₀) * (g : K)) := by
+      exact ne_of_lt (by simpa [s] using hprodgt)
+    have hsumval : v (f.derivative.eval a₀ + (b - a₀) * (g : K)) = s := by
+      calc
+        v (f.derivative.eval a₀ + (b - a₀) * (g : K)) =
+            min (v (f.derivative.eval a₀)) (v ((b - a₀) * (g : K))) :=
+          valuation_unequal_value_rigidity v hneval
+        _ = s := by rw [show v (f.derivative.eval a₀) = s by rfl,
+          min_eq_left (le_of_lt hprodgt)]
+    have hfactor : (b - a₀) *
+        (f.derivative.eval a₀ + (b - a₀) * (g : K)) = -(f.eval a₀) := by
+      have hsumzero : f.eval a₀ + ((b - a₀) * f.derivative.eval a₀ +
+          (b - a₀) ^ 2 * (g : K)) = 0 := by
+        simpa [add_assoc] using hrootrel.symm
+      calc
+        (b - a₀) * (f.derivative.eval a₀ + (b - a₀) * (g : K)) =
+            (b - a₀) * f.derivative.eval a₀ +
+              (b - a₀) ^ 2 * (g : K) := by ring
+        _ = -(f.eval a₀) := eq_neg_of_add_eq_zero_right hsumzero
+    have hvaleq : v (f.eval a₀) = v (b - a₀) + s := by
+      calc
+        v (f.eval a₀) = v (-(f.eval a₀)) := by rw [v.map_neg]
+        _ = v ((b - a₀) *
+            (f.derivative.eval a₀ + (b - a₀) * (g : K))) := by rw [hfactor]
+        _ = v (b - a₀) + s := by rw [v.map_mul, hsumval]
+    calc
+      v (b - a₀) = (v (b - a₀) + s) - s := by
+        simpa only [sub_eq_add_neg] using
+          (LinearOrderedAddCommGroupWithTop.add_neg_cancel_right_of_ne_top hs
+            (v (b - a₀))).symm
+      _ = v (f.eval a₀) - s := by rw [hvaleq]
+      _ = v (f.eval a₀) - v (f.derivative.eval a₀) := by rfl
+
+
+private theorem hensel_newton_form_of_image_doubling_cofinal {K Γ : Type*} [Field K]
+    [LinearOrderedAddCommGroupWithTop Γ] (v : AddValuation K Γ)
+    (A : Subring K) (hA : IsValuationSubring A v) (f : K[X])
+    (hf : PolynomialCoefficientsInSubring A f) (a₀ : K) (ha₀ : a₀ ∈ A)
+    (hineq : v (f.eval a₀) > v (f.derivative.eval a₀) + v (f.derivative.eval a₀))
+    (hderiv : v (f.derivative.eval a₀) ≠ ⊤)
+    (hcomplete : Chapter09NonarchimedeanComplete v)
+    (hcofinal : Chapter09ImageDoublingCofinal v
+      (valuationExcess v f (v (f.derivative.eval a₀)) a₀)) :
+    ∃! a : K,
+      a ∈ A ∧ f.eval a = 0 ∧ v (a - a₀) > v (f.derivative.eval a₀) := by
+  let s : Γ := v (f.derivative.eval a₀)
+  let q₀ : Γ := v (f.eval a₀) - (s + s)
+  have hs : s ≠ ⊤ := by simpa [s] using hderiv
+  have hq₀pos : 0 < q₀ := by
+    dsimp [q₀, s]
+    exact LinearOrderedAddCommGroupWithTop.sub_pos.mpr (Or.inl hineq)
+  obtain ⟨a, haA, hfa, hdisp, hderivA⟩ :=
+    hensel_newton_data v A hA f hf a₀ ha₀ hineq hderiv hcomplete
+      (fun γ hγ => hcofinal γ hγ)
+  have hdisp' : v (a - a₀) = s + q₀ := by
+    simpa [s, q₀] using hdisp
+  have hstrict : s < v (a - a₀) := by
+    rw [hdisp']
+    simpa using (add_lt_add_iff_right_of_ne_top hs).2 hq₀pos
+  refine ⟨a, ⟨haA, hfa, hstrict⟩, ?_⟩
+  intro b hb
+  by_contra hab
+  have hne : b - a ≠ 0 := sub_ne_zero.mpr hab
+  have hba_val : s < v (b - a) := by
+    have h1 : s < v (b - a₀) := hb.2.2
+    have h2 : s < v (-(a - a₀)) := by
+      rw [v.map_neg]
+      exact hstrict
+    calc
+      s < min (v (b - a₀)) (v (-(a - a₀))) := (lt_min_iff).2 ⟨h1, h2⟩
+      _ ≤ v ((b - a₀) + (-(a - a₀))) :=
+        valuation_strong_triangle v (b - a₀) (-(a - a₀))
+      _ = v (b - a) := by congr 1 ; ring
+  have hTaylorIntegral : ∀ (p : K[X]), PolynomialCoefficientsInSubring A p →
+      ∀ (x y : K), x ∈ A → y ∈ A → ∃ g : A,
+        p.eval (x + y) = p.eval x + y * p.derivative.eval x + y ^ 2 * (g : K) := by
+    intro p hp x y hx hy
+    let hpcoeff : (p.coeffs : Set K) ⊆ A := by
+      intro c hc
+      rcases (Polynomial.mem_coeffs_iff.mp hc) with ⟨n, hn, rfl⟩
+      exact hp n
+    let pA : A[X] := p.toSubring A hpcoeff
+    obtain ⟨g, hg⟩ := taylor_second_order pA ⟨x, hx⟩ ⟨y, hy⟩
+    refine ⟨g, ?_⟩
+    have hmap := congrArg (fun z : A => (z : K)) hg
+    have hpmap : pA.map (Subring.subtype A) = p := by
+      exact Polynomial.map_toSubring p A hpcoeff
+    have heval (z : A) : ((pA.eval z : A) : K) = p.eval (z : K) := by
+      have h := Polynomial.eval_map_apply (p := pA) (Subring.subtype A) z
+      rw [hpmap] at h
+      exact h.symm
+    have hdermap : pA.derivative.map (Subring.subtype A) = p.derivative := by
+      rw [← Polynomial.derivative_map, hpmap]
+    have hderval (z : A) : ((pA.derivative.eval z : A) : K) =
+        p.derivative.eval (z : K) := by
+      have h := Polynomial.eval_map_apply (p := pA.derivative) (Subring.subtype A) z
+      rw [hdermap] at h
+      exact h.symm
+    calc
+      p.eval (x + y) = ((pA.eval (⟨x, hx⟩ + ⟨y, hy⟩) : A) : K) := by
+        simpa using (heval (⟨x, hx⟩ + ⟨y, hy⟩)).symm
+      _ = ((pA.eval ⟨x, hx⟩ + ⟨y, hy⟩ *
+          pA.derivative.eval ⟨x, hx⟩ +
+          ⟨y, hy⟩ ^ 2 * g : A) : K) := hmap
+      _ = p.eval x + y * p.derivative.eval x + y ^ 2 * (g : K) := by
+        simp [heval, hderval, Subring.coe_add, Subring.coe_mul]
+  have hmem_h : b - a ∈ A := A.sub_mem hb.1 haA
+  obtain ⟨g, hg⟩ := hTaylorIntegral f hf a (b - a) haA hmem_h
+  have hrootrel : 0 = (b - a) * f.derivative.eval a +
+      (b - a) ^ 2 * (g : K) := by
+    calc
+      0 = f.eval b := hb.2.1.symm
+      _ = f.eval (a + (b - a)) := by rw [show a + (b - a) = b by ring]
+      _ = f.eval a + (b - a) * f.derivative.eval a +
+          (b - a) ^ 2 * (g : K) := hg
+      _ = (b - a) * f.derivative.eval a + (b - a) ^ 2 * (g : K) := by
+        rw [hfa]
+        simp
+  have hfactor : (b - a) *
+      (f.derivative.eval a + (b - a) * (g : K)) = 0 := by
+    calc
+      (b - a) * (f.derivative.eval a + (b - a) * (g : K)) =
+          (b - a) * f.derivative.eval a + (b - a) ^ 2 * (g : K) := by ring
+      _ = 0 := hrootrel.symm
+  have hsumzero : f.derivative.eval a + (b - a) * (g : K) = 0 := by
+    rcases (mul_eq_zero.mp hfactor) with hzero | hsum
+    · exact (hne hzero).elim
+    · exact hsum
+  have hg_nonneg : 0 ≤ v (g : K) := (hA _).mp g.property
+  have hprodgt : s < v ((b - a) * (g : K)) := by
+    rw [v.map_mul]
+    exact hba_val.trans_le (le_add_of_nonneg_right hg_nonneg)
+  have hneval : v (f.derivative.eval a) ≠ v ((b - a) * (g : K)) := by
+    rw [hderivA]
+    exact ne_of_lt hprodgt
+  have hsumval : v (f.derivative.eval a + (b - a) * (g : K)) = s := by
+    calc
+      v (f.derivative.eval a + (b - a) * (g : K)) =
+          min (v (f.derivative.eval a)) (v ((b - a) * (g : K))) :=
+        valuation_unequal_value_rigidity v hneval
+      _ = s := by rw [hderivA, min_eq_left (le_of_lt hprodgt)]
+  have hstop : s = ⊤ := by
+    calc
+      s = v (f.derivative.eval a + (b - a) * (g : K)) := hsumval.symm
+      _ = ⊤ := by rw [hsumzero, v.map_zero]
+  exact hs hstop
+
+
 /-- The valuation form of Hensel's lemma for a complete rank-one valuation. -/
 theorem hensel_newton_form {K Γ : Type*} [Field K]
     [LinearOrderedAddCommGroupWithTop Γ] (v : AddValuation K Γ)
@@ -1124,11 +1400,43 @@ theorem hensel_newton_form {K Γ : Type*} [Field K]
     (hf : PolynomialCoefficientsInSubring A f) (a₀ : K) (ha₀ : a₀ ∈ A)
     (hineq : v (f.eval a₀) > v (f.derivative.eval a₀) + v (f.derivative.eval a₀))
     (hcomplete : Chapter09NonarchimedeanComplete v) :
-    ∃! a : K,
-      f.eval a = 0 ∧
-        v (a - a₀) > v (f.derivative.eval a₀) ∧
-        v (a - a₀) = v (f.eval a₀) - v (f.derivative.eval a₀) := by
-  sorry
+    (∃! a : K,
+      a ∈ A ∧ f.eval a = 0 ∧
+        v (a - a₀) > v (f.derivative.eval a₀)) ∧
+      ∀ a : K, a ∈ A → f.eval a = 0 →
+        v (a - a₀) > v (f.derivative.eval a₀) →
+          v (a - a₀) = v (f.eval a₀) - v (f.derivative.eval a₀) := by
+  have hderiv : v (f.derivative.eval a₀) ≠ ⊤ := by
+    intro htop
+    rw [htop, top_add] at hineq
+    exact (not_lt_of_ge le_top) hineq
+  let s : Γ := v (f.derivative.eval a₀)
+  let q₀ : Γ := v (f.eval a₀) - (s + s)
+  have hq₀pos : 0 < q₀ := by
+    dsimp [q₀, s]
+    exact LinearOrderedAddCommGroupWithTop.sub_pos.mpr (Or.inl hineq)
+  have hqimage : q₀ ≠ ⊤ → ∃ z : K, z ≠ 0 ∧ v z = q₀ := by
+    intro hqtop
+    have heval_top : v (f.eval a₀) ≠ ⊤ := by
+      intro heval_top
+      apply hqtop
+      dsimp [q₀]
+      rw [sub_eq_add_neg, heval_top, top_add]
+    have heval0 : f.eval a₀ ≠ 0 := (AddValuation.ne_top_iff v).mp heval_top
+    have hderiv0 : f.derivative.eval a₀ ≠ 0 :=
+      (AddValuation.ne_top_iff v).mp hderiv
+    refine ⟨f.eval a₀ * (f.derivative.eval a₀)⁻¹ *
+      (f.derivative.eval a₀)⁻¹, by simp [heval0, hderiv0], ?_⟩
+    rw [v.map_mul, v.map_mul, AddValuation.map_inv]
+    simp [q₀, s, sub_eq_add_neg, add_assoc]
+  have hcofinal : Chapter09ImageDoublingCofinal v q₀ :=
+    rank_one_image_doubling_cofinal v q₀ hq₀pos hqimage
+  have huniq :=
+    hensel_newton_form_of_image_doubling_cofinal v A hA f hf a₀ ha₀ hineq hderiv
+      hcomplete hcofinal
+  refine ⟨huniq, ?_⟩
+  intro a ha hfa hstrict
+  exact hensel_strict_root_exact_displacement v A hA f hf a₀ ha₀ hderiv a ha hfa hstrict
 
 /-- The exact displacement in the valuation Newton form under explicit cofinality. -/
 theorem hensel_newton_exact_displacement_of_doubling_cofinal {K Γ : Type*} [Field K]
@@ -1156,11 +1464,12 @@ theorem hensel_newton_exact_displacement {K Γ : Type*} [Field K]
     (hineq : v (f.eval a₀) > v (f.derivative.eval a₀) + v (f.derivative.eval a₀))
     (hcomplete : Chapter09NonarchimedeanComplete v) :
     ∃ a : K,
-      f.eval a = 0 ∧
+      a ∈ A ∧ f.eval a = 0 ∧
         v (a - a₀) = v (f.eval a₀) - v (f.derivative.eval a₀) := by
-  obtain ⟨a, ha, _⟩ :=
+  obtain ⟨huniq, hexact⟩ :=
     hensel_newton_form v A hA f hf a₀ ha₀ hineq hcomplete
-  exact ⟨a, ha.1, ha.2.2⟩
+  obtain ⟨a, ha, _⟩ := huniq
+  exact ⟨a, ha.1, ha.2.1, hexact a ha.1 ha.2.1 ha.2.2⟩
 
 /-- The Newton corrections tend to the top of the value group. -/
 theorem valuation_newton_corrections_tend_to_top_of_doubling_cofinal {K Γ : Type*} [Field K]
@@ -1182,8 +1491,14 @@ theorem valuation_newton_corrections_tend_to_top_of_doubling_cofinal {K Γ : Typ
   have hq₀ : 0 < q₀ := by
     dsimp [q₀, s]
     exact LinearOrderedAddCommGroupWithTop.sub_pos.mpr (Or.inl hineq)
-  intro γ
-  obtain ⟨N, hN⟩ := hcofinal (γ - s)
+  intro γ hγ
+  have hγs : γ - s ≠ ⊤ := by
+    intro htop
+    rw [sub_eq_add_neg, LinearOrderedAddCommGroupWithTop.add_eq_top] at htop
+    rcases htop with hγtop | hneg
+    · exact hγ hγtop
+    · exact hs (LinearOrderedAddCommGroupWithTop.neg_eq_top.mp hneg)
+  obtain ⟨N, hN⟩ := hcofinal (γ - s) hγs
   refine ⟨N, fun n hn => ?_⟩
   have hpow : 2 ^ N ≤ 2 ^ n := by
     exact Nat.pow_le_pow_right (by norm_num) hn
@@ -1226,7 +1541,61 @@ theorem valuation_newton_corrections_tend_to_top {K Γ : Type*} [Field K]
     (hcomplete : Chapter09NonarchimedeanComplete v) :
     TendsToTopInValueGroupImage v
       (fun n => v (newtonIterate f a₀ (n + 1) - newtonIterate f a₀ n)) := by
-  sorry
+  have _hcomplete := hcomplete
+  have hderiv : v (f.derivative.eval a₀) ≠ ⊤ := by
+    intro htop
+    rw [htop, top_add] at hineq
+    exact (not_lt_of_ge le_top) hineq
+  let s : Γ := v (f.derivative.eval a₀)
+  let q₀ : Γ := v (f.eval a₀) - (s + s)
+  have hs : s ≠ ⊤ := by simpa [s] using hderiv
+  have hq₀pos : 0 < q₀ := by
+    dsimp [q₀, s]
+    exact LinearOrderedAddCommGroupWithTop.sub_pos.mpr (Or.inl hineq)
+  have hqimage : q₀ ≠ ⊤ → ∃ z : K, z ≠ 0 ∧ v z = q₀ := by
+    intro hqtop
+    have heval_top : v (f.eval a₀) ≠ ⊤ := by
+      intro heval_top
+      apply hqtop
+      dsimp [q₀]
+      rw [sub_eq_add_neg, heval_top, top_add]
+    have heval0 : f.eval a₀ ≠ 0 := (AddValuation.ne_top_iff v).mp heval_top
+    have hderiv0 : f.derivative.eval a₀ ≠ 0 :=
+      (AddValuation.ne_top_iff v).mp hderiv
+    refine ⟨f.eval a₀ * (f.derivative.eval a₀)⁻¹ *
+      (f.derivative.eval a₀)⁻¹, by simp [heval0, hderiv0], ?_⟩
+    rw [v.map_mul, v.map_mul, AddValuation.map_inv]
+    simp [q₀, s, sub_eq_add_neg, add_assoc]
+  have hcofinal : Chapter09ImageDoublingCofinal v q₀ :=
+    rank_one_image_doubling_cofinal v q₀ hq₀pos hqimage
+  dsimp [TendsToTopInValueGroupImage]
+  intro γ hγ
+  rcases hγ with ⟨x, hx0, hxγ⟩
+  have hγs_image : ∃ y : K, y ≠ 0 ∧ v y = γ - s := by
+    have hderiv0 : f.derivative.eval a₀ ≠ 0 :=
+      (AddValuation.ne_top_iff v).mp hderiv
+    refine ⟨x * (f.derivative.eval a₀)⁻¹, by simp [hx0, hderiv0], ?_⟩
+    rw [v.map_mul, AddValuation.map_inv, hxγ]
+    simp [s, sub_eq_add_neg]
+  obtain ⟨N, hN⟩ := hcofinal (γ - s) hγs_image
+  refine ⟨N, fun n hn => ?_⟩
+  have hpow : 2 ^ N ≤ 2 ^ n := by
+    exact Nat.pow_le_pow_right (by norm_num) hn
+  have hsmul : (2 ^ N) • q₀ ≤ (2 ^ n) • q₀ :=
+    nsmul_le_nsmul_left hq₀pos.le hpow
+  have hγ' : γ ≤ s + (2 ^ n) • q₀ := by
+    calc
+      γ = s + (γ - s) := by
+        simpa [sub_eq_add_neg, add_comm, add_left_comm, add_assoc] using
+          (LinearOrderedAddCommGroupWithTop.add_neg_cancel_left_of_ne_top hs γ).symm
+      _ ≤ s + (2 ^ N) • q₀ := by
+        simpa [valuationExcess, add_comm] using add_le_add_left hN s
+      _ ≤ s + (2 ^ n) • q₀ := by
+        simpa [add_comm] using add_le_add_left hsmul s
+  have hnstep := valuation_newton_induction v A hA f hf a₀ ha₀ hineq hderiv n
+  rw [hnstep.2.2]
+  apply hγ'.trans
+  simpa [s, q₀, valuationExcess, add_comm] using add_le_add_left hnstep.2.1 s
 
 /-- The strict Newton inequality is the error being smaller than the square of the derivative. -/
 def StrictNewtonCondition {K Γ : Type*} [Field K]
@@ -1241,13 +1610,31 @@ def IsMultipleResidueApproximation {A : Type*} [CommRing A] [IsLocalRing A]
     f.derivative.eval a₀ ∈ IsLocalRing.maximalIdeal A
 
 /-- A multiple approximation can split into two distinct exact roots. -/
-theorem quadratic_multiple_approximation_can_split {K : Type*} [Field K]
-    (c : K) (hc : c ≠ 0) (hcneg : c ≠ -c) :
-    quadraticPolynomial (c ^ 2) = (X - C c) * (X + C c) ∧
+theorem quadratic_multiple_approximation_can_split
+    {A : Type*} [CommRing A] [IsLocalRing A]
+    (c : A) (hcneg : c ≠ -c)
+    (hcmax : c ∈ IsLocalRing.maximalIdeal A) :
+    IsMultipleResidueApproximation (quadraticPolynomial (c ^ 2)) 0 ∧
+      quadraticPolynomial (c ^ 2) = (X - C c) * (X + C c) ∧
       (quadraticPolynomial (c ^ 2)).eval c = 0 ∧
       (quadraticPolynomial (c ^ 2)).eval (-c) = 0 ∧ c ≠ -c := by
-  have _hc := hc
-  refine ⟨?_, ?_, ?_, hcneg⟩
+  have hc2 : c ^ 2 ∈ IsLocalRing.maximalIdeal A := by
+    rw [pow_two]
+    exact (IsLocalRing.maximalIdeal A).mul_mem_left c hcmax
+  refine ⟨?_, ?_, ?_, ?_, hcneg⟩
+  · unfold IsMultipleResidueApproximation
+    constructor
+    · have heval : (quadraticPolynomial (c ^ 2)).eval (0 : A) = -(c ^ 2) := by
+        simp [quadraticPolynomial]
+      rw [heval]
+      exact (IsLocalRing.maximalIdeal A).neg_mem hc2
+    · have hderiv : (quadraticPolynomial (c ^ 2)).derivative.eval (0 : A) = 0 := by
+        simp only [quadraticPolynomial, derivative_sub, derivative_X_pow,
+          derivative_C, eval_mul, eval_C, eval_X, Nat.cast_ofNat,
+          eval_pow, sub_zero]
+        norm_num
+      rw [hderiv]
+      exact (IsLocalRing.maximalIdeal A).zero_mem
   · simp [quadraticPolynomial]
     ring
   · simp [quadraticPolynomial]
@@ -1257,11 +1644,17 @@ theorem quadratic_multiple_approximation_can_split {K : Type*} [Field K]
 theorem strict_newton_condition_is_essential :
     ¬ StrictNewtonCondition (Padic.addValuation (p := 2))
         (quadraticPolynomial (2 : ℚ_[2])) 0 ∧
+      Padic.addValuation (p := 2)
+          ((quadraticPolynomial (2 : ℚ_[2])).eval 0) > 0 ∧
       ¬ ∃ x : ℚ_[2], x ^ 2 = (2 : ℚ_[2]) := by
   constructor
   · intro h
     have h' := h
     simp [StrictNewtonCondition, quadraticPolynomial] at h'
+  constructor
+  · norm_num [quadraticPolynomial, Padic.addValuation,
+      AddValuation.of_apply, Padic.addValuationDef,
+      Padic.valuation_intCast]
   · exact padic_x_sq_sub_p_has_no_root 2
 
 end

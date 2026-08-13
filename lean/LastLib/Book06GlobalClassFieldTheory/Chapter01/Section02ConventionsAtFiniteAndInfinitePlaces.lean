@@ -1,4 +1,4 @@
-import LastLib.Book06GlobalClassFieldTheory.Chapter01.Section01OneGaloisActionSeenAtEveryPlace
+import LastLib.Book06GlobalClassFieldTheory.Chapter01.Dependencies
 
 namespace LastLib.Book06GlobalClassFieldTheory.Chapter01
 
@@ -69,23 +69,22 @@ theorem geometricFrobeniusAction_inverse {k : Type*} [Field k]
 /- The local reciprocity normalization at a finite place. -/
 structure FiniteReciprocityNormalization
     (F : Type uF) (k : Type*) [Field F] [Field k] [Fintype k]
-    (rec : Fˣ →* Field.absoluteGaloisGroupAbelianization F) where
+    where
+  reciprocity : Fˣ →* Field.absoluteGaloisGroupAbelianization F
+  valuation : AddValuation F (WithTop ℤ)
   uniformizer : Fˣ
-  uniformizer_spec : Prop
-  unramifiedPart : Type uF
-  [unramifiedPartField : Field unramifiedPart]
-  [unramifiedPartAlgebra : Algebra F unramifiedPart]
-  restrictionToUnramified :
-    Field.absoluteGaloisGroupAbelianization F →*
-      (unramifiedPart ≃ₐ[F] unramifiedPart)
-  arithmeticFrobeniusUnramified : unramifiedPart ≃ₐ[F] unramifiedPart
-  uniformizer_restriction_arithmetic :
-    restrictionToUnramified (rec uniformizer) = arithmeticFrobeniusUnramified
+  uniformizer_spec : valuation (uniformizer : F) = (1 : WithTop ℤ)
   residueAction : Field.absoluteGaloisGroupAbelianization F →* (k ≃+* k)
+  unitSubgroup : Subgroup Fˣ
+  inertia : Subgroup (Field.absoluteGaloisGroupAbelianization F)
+  unit_image_eq_inertia :
+    (reciprocity.comp unitSubgroup.subtype).range = inertia
+  unramified : Prop
+  unramified_iff_inertia_trivial : unramified ↔ inertia = ⊥
   q : ℕ
   q_card : q = Fintype.card k
   arithmetic_uniformizer : ∀ x : k,
-    residueAction (rec uniformizer) x = arithmeticFrobeniusAction k q x
+    residueAction (reciprocity uniformizer) x = arithmeticFrobeniusAction k q x
 
 /- LOCAL_DEPENDENCY_GUESS: this is the local reciprocity map and its finite
 normalization, awaiting the local class-field interfaces. -/
@@ -97,7 +96,8 @@ structure LocalReciprocityData (K : Type*) [Field K] [NumberField K] where
   finite_normalization : ∀ v : FinitePlaceIndex K,
     FiniteReciprocityNormalization
       (BookPlace.completion (Sum.inl v)) (FinitePlaceResidueField v)
-      (localReciprocity (Sum.inl v))
+  finite_reciprocity_agrees : ∀ v : FinitePlaceIndex K,
+    (finite_normalization v).reciprocity = localReciprocity (Sum.inl v)
 
 theorem finite_local_reciprocity_uses_arithmetic_frobenius
     {K : Type*} [Field K] [NumberField K]
@@ -105,7 +105,7 @@ theorem finite_local_reciprocity_uses_arithmetic_frobenius
     letI : Fintype (FinitePlaceResidueField v) := R.residueFintype v
     ∀ x : FinitePlaceResidueField v,
       (R.finite_normalization v).residueAction
-          ((R.localReciprocity (Sum.inl v))
+          ((R.finite_normalization v).reciprocity
             (R.finite_normalization v).uniformizer) x =
         x ^ (R.finite_normalization v).q := by
   sorry
@@ -129,17 +129,13 @@ theorem complex_finite_extension_is_trivial
   sorry
 
 /- The complex local reciprocity map is trivial. -/
-def trivialLocalReciprocity (F : Type*) [Field F] :
-    Fˣ →* Field.absoluteGaloisGroupAbelianization F :=
-  1
-
 def complexLocalReciprocity :
     ℂˣ →* Field.absoluteGaloisGroupAbelianization ℂ :=
-  trivialLocalReciprocity ℂ
+  1
 
 theorem complex_local_reciprocity_trivial (x : ℂˣ) :
     complexLocalReciprocity x = 1 := by
-  simp [complexLocalReciprocity, trivialLocalReciprocity]
+  simp [complexLocalReciprocity]
 
 /- The real local quotient kills positive units and detects the sign. -/
 def positiveRealUnitSubgroup : Subgroup ℝˣ where
@@ -165,8 +161,14 @@ def realLocalReciprocity : ℝˣ →* Gal(ℂ / ℝ) := by
 def realComplexConjugation : Gal(ℂ / ℝ) :=
   RCLike.conjAe
 
+structure RealLocalReciprocityQuotientEquivalence where
+  equiv : RealLocalReciprocityQuotient ≃* Gal(ℂ / ℝ)
+  compatible : ∀ u : ℝˣ,
+    equiv (QuotientGroup.mk' positiveRealUnitSubgroup u) =
+      realLocalReciprocity u
+
 theorem real_local_reciprocity_quotient_equiv :
-    Nonempty (RealLocalReciprocityQuotient ≃* Gal(ℂ / ℝ)) := by
+    Nonempty RealLocalReciprocityQuotientEquivalence := by
   sorry
 
 theorem real_positive_unit_killed (u : ℝˣ)
@@ -211,7 +213,7 @@ theorem real_infinite_place_may_ramify
 /- A modulus may contain finite places and real infinite places, but never a
 complex infinite place. -/
 structure BookModulus (K : Type*) [Field K] [NumberField K] where
-  finitePart : Finset (FinitePlaceIndex K)
+  finitePart : FinitePlaceIndex K →₀ ℕ
   infinitePart : Finset (InfinitePlaceIndex K)
   infinitePart_real : ∀ v ∈ infinitePart,
     NumberField.InfinitePlace.IsReal v
@@ -236,26 +238,12 @@ theorem modulus_real_places_are_permitted
     NumberField.InfinitePlace.IsReal v :=
   m.infinitePart_real v hv
 
-/- The componentwise idele norm is the norm homomorphism in the shared global
-norm interface. -/
-def componentwiseIdeleNorm
-    {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L]
-    [Algebra K L] [FiniteDimensional K L]
-    (N : GlobalNormInterface K L) : BookIdeleGroup L →* BookIdeleGroup K :=
-  N.ideleNorm
-
-theorem componentwiseIdeleNorm_eq_interface
-    {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L]
-    [Algebra K L] [FiniteDimensional K L]
-    (N : GlobalNormInterface K L) :
-    componentwiseIdeleNorm N = N.ideleNorm :=
-  rfl
-
 def ideleNormClassImage
-    {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L]
+  {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L]
     [Algebra K L] [FiniteDimensional K L]
     (N : GlobalNormInterface K L) : Set (C_K K) :=
-  Set.range (fun x : BookIdeleGroup L => classQuotient (N.ideleNorm x))
+  Set.range (fun x : BookIdeleGroup L =>
+    classQuotient (componentwiseIdeleNorm N x))
 
 theorem ideleNormClassImage_eq_classNormGroup
     {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L]

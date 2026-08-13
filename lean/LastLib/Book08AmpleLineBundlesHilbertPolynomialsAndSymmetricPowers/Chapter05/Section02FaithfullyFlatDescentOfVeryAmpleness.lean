@@ -55,14 +55,14 @@ theorem affine_degree_zero_sections_base_change
     letI : Module A Γ((P.power n).sheaf, ⊤) := Module.compHom _ A_to_X
     letI : Module A' Γ((baseChangeLineBundle f g (P.power n)).sheaf, ⊤) :=
       Module.compHom _ A'_to_X'
-    Nonempty
-      ((ModuleCat.extendScalars φ).obj
-        (ModuleCat.of A Γ((P.power n).sheaf, ⊤)) ≅
-        ModuleCat.of A' Γ((baseChangeLineBundle f g (P.power n)).sheaf, ⊤)) := by sorry
+    ((ModuleCat.extendScalars φ).obj
+      (ModuleCat.of A Γ((P.power n).sheaf, ⊤)) ≅
+      ModuleCat.of A' Γ((baseChangeLineBundle f g (P.power n)).sheaf, ⊤)) := by sorry
 
 theorem veryAmple_faithfullyFlat_descent
     {X S S' : Scheme.{u}} (f : X ⟶ S) (g : S' ⟶ S) (L : LineBundle X)
     (hfqc : QuasiCompact f) (hfqs : QuasiSeparated f)
+    (hfp : LocallyOfFinitePresentation f)
     (hgff : IsFaithfullyFlat g) (hgqc : QuasiCompact g)
     (hL : IsVeryAmple (baseChangeToBase f g) (baseChangeLineBundle f g L)) :
     IsVeryAmple f L := by sorry
@@ -71,17 +71,22 @@ theorem veryAmple_faithfullyFlat_descent_of_descended_line_bundle
     {X S S' : Scheme.{u}} (f : X ⟶ S) (g : S' ⟶ S) (L : LineBundle X)
     (M : LineBundle (baseChange f g)) (hM : IsBaseChangeOf f g L M)
     (hfqc : QuasiCompact f) (hfqs : QuasiSeparated f)
+    (hfp : LocallyOfFinitePresentation f)
     (hgff : IsFaithfullyFlat g) (hgqc : QuasiCompact g)
     (hMvery : IsVeryAmple (baseChangeToBase f g) M) :
     IsVeryAmple f L := by sorry
 
 theorem immersion_iff_faithfullyFlat_baseChange
     {X S S' : Scheme.{u}} (f : X ⟶ S) (g : S' ⟶ S)
+    (hfqc : QuasiCompact f) (hfqs : QuasiSeparated f)
+    (hfp : LocallyOfFinitePresentation f)
     (hgff : IsFaithfullyFlat g) (hgqc : QuasiCompact g) :
     IsImmersion f ↔ IsImmersion (baseChangeToBase f g) := by sorry
 
 theorem immersion_faithfullyFlat_descent
     {X S S' : Scheme.{u}} (f : X ⟶ S) (g : S' ⟶ S)
+    (hfqc : QuasiCompact f) (hfqs : QuasiSeparated f)
+    (hfp : LocallyOfFinitePresentation f)
     (hgff : IsFaithfullyFlat g) (hgqc : QuasiCompact g)
     (h : IsImmersion (baseChangeToBase f g)) :
     IsImmersion f := by sorry

@@ -1,4 +1,4 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section05SplittingPatterns
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section02FinitenessHypotheses
 
 universe u v
 
@@ -74,7 +74,8 @@ theorem chapter11_length_value_of_base_uniformizer
     (A B : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
     [CommRing B] [IsDedekindDomain B]
     [Algebra A B]
-    (m : Ideal A) (π : A) (hπ : chapter11IsUniformizer A m π)
+    (m : Ideal A) (π : A) (_hm : m = IsLocalRing.maximalIdeal A)
+    (hπ : chapter11IsUniformizer A m π)
     (P : Ideal B) [P.IsPrime] [P.IsMaximal] [P.LiesOver m] :
     chapter11LocalLengthValue B P (algebraMap A B π) = P.ramificationIdx A := by
   rw [chapter11LocalLengthValue]
@@ -162,9 +163,9 @@ theorem chapter11_length_as_base_module_is_e_f
       rw [hS, hres]
       simp
 
-/-- The localized length is additive on nonzero integral elements, as a
-normalized discrete valuation must be. -/
-theorem chapter11_length_value_is_a_discrete_valuation
+/-- The localized length is additive on nonzero integral elements; this is the
+multiplicative part of the associated normalized discrete valuation. -/
+theorem chapter11_length_value_is_additive_on_products
     (B : Type*) [CommRing B] [IsDedekindDomain B]
     (P : Ideal B) [P.IsPrime] [P.IsMaximal]
     (x y : B) (hx : x ≠ 0) (hy : y ≠ 0) :

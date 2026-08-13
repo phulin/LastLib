@@ -61,7 +61,7 @@ threshold with only quasi-compactness of `f`.  A uniform threshold also needs
 quasi-compactness of the base; this declaration records that missing hypothesis. -/
 /-- Over a quasi-compact base, a fixed invertible twist does not affect ampleness in sufficiently high powers. -/
 theorem chapter04_ample_eventually_tensor_twist
-    {X S : Scheme.{u}} (f : X ⟶ S) [CompactSpace S] [QuasiCompact f] [IsSeparated f]
+    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact (𝟙 S)] [QuasiCompact f] [IsSeparated f]
     (L M : Chapter04LineBundle X) (hL : chapter04Ample f L) :
     ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
       chapter04Ample f
@@ -70,7 +70,7 @@ theorem chapter04_ample_eventually_tensor_twist
 
 /-- Every sufficiently high power of an ample bundle is relatively very ample. -/
 theorem chapter04_ample_eventually_veryAmple_power
-    {X S : Scheme.{u}} (f : X ⟶ S) [CompactSpace S] [QuasiCompact f]
+    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact (𝟙 S)] [QuasiCompact f]
     [LocallyOfFiniteType f] [QuasiSeparated f]
     (L : Chapter04LineBundle X) (hL : chapter04Ample f L) :
     ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
@@ -79,7 +79,7 @@ theorem chapter04_ample_eventually_veryAmple_power
 
 /-- Over a quasi-compact base, an ample line bundle on a quasi-compact finite-type family has a very ample power. -/
 theorem chapter04_ample_has_veryAmple_power
-    {X S : Scheme.{u}} (f : X ⟶ S) [CompactSpace S] [QuasiCompact f]
+    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact (𝟙 S)] [QuasiCompact f]
     [LocallyOfFiniteType f]
     [QuasiSeparated f]
     (L : Chapter04LineBundle X) (hL : chapter04Ample f L) :
@@ -88,7 +88,7 @@ theorem chapter04_ample_has_veryAmple_power
 
 /-- If the family is proper, a sufficiently high ample power gives a closed projective embedding. -/
 theorem chapter04_proper_ample_has_closed_projective_power
-    {X S : Scheme.{u}} (f : X ⟶ S) [CompactSpace S] [IsProper f] [QuasiCompact f]
+    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact (𝟙 S)] [IsProper f] [QuasiCompact f]
     (L : Chapter04LineBundle X) (hL : chapter04Ample f L) :
     ∃ d : ℕ, 0 < d ∧
       ∃ w : Chapter04VeryAmpleWitness f (chapter04LineBundleTensorPower L d),
@@ -101,7 +101,7 @@ immersions, so the exponent can be chosen uniformly rather than separately
 for one power.
 -/
 theorem chapter04_proper_ample_eventually_closed_projective_power
-    {X S : Scheme.{u}} (f : X ⟶ S) [CompactSpace S] [IsProper f] [QuasiCompact f]
+    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact (𝟙 S)] [IsProper f] [QuasiCompact f]
     [QuasiSeparated f]
     (L : Chapter04LineBundle X) (hL : chapter04Ample f L) :
     ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
@@ -110,7 +110,7 @@ theorem chapter04_proper_ample_eventually_closed_projective_power
   sorry
 
 theorem chapter04_proper_ample_is_projective
-    {X S : Scheme.{u}} (f : X ⟶ S) [CompactSpace S] [IsProper f] [QuasiCompact f]
+    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact (𝟙 S)] [IsProper f] [QuasiCompact f]
     (L : Chapter04LineBundle X) (hL : chapter04Ample f L) :
     chapter04Projective f := by
   sorry
@@ -133,7 +133,8 @@ theorem chapter04_ample_pullback_of_finite
 /-- A constant pullback can become the trivial bundle on a proper non-affine fibre. -/
 theorem chapter04_constant_pullback_can_destroy_ample
     {K : Type u} [Field K] {X Y : Scheme.{u}}
-    (f : X ⟶ AlgebraicGeometry.Spec (.of K)) (g : Y ⟶ X) [IsProper (g ≫ f)]
+    (f : X ⟶ AlgebraicGeometry.Spec (.of K)) (g : Y ⟶ X)
+    [IsProper (g ≫ f)]
     (L : Chapter04LineBundle X) (hL : chapter04Ample f L)
     (hconstant : chapter04UnderlyingConstant g)
     (htrivial : chapter04LineBundleIsomorphic

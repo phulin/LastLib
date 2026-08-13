@@ -36,37 +36,48 @@ theorem chapter04_serre_coherent_ideal_criterion
         chapter04EventuallyTwistGenerated f I.carrier L := by
   sorry
 
-/-- Eventual vanishing of all positive higher cohomology groups in a chosen cohomology API. -/
+/-- Eventual vanishing of all positive canonical higher cohomology groups. -/
 def chapter04EventuallyHigherCohomologyVanishes
-    {X S : Scheme.{u}} (C : Chapter04CohomologyContext X)
-    (_f : X ⟶ S) (F : X.Modules) (L : Chapter04LineBundle X) : Prop :=
+    {X S : Scheme.{u}} (_f : X ⟶ S) (F : X.Modules) (L : Chapter04LineBundle X) : Prop :=
   ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
     ∀ i : ℕ, 0 < i →
-      C.Vanishes (chapter04TwistedModule F L n) i
+      chapter04CohomologyVanishes (chapter04TwistedModule F L n) i
 
-/-!
-The pinned checkout does not provide a canonical coherent-cohomology object.
-Consequently the vanishing assertion is exposed as a proposition rather than
-as a theorem about an arbitrary type-valued placeholder.  The latter would be
-false: a context may assign a nonzero module to every positive degree.
--/
+/-- The forward Serre-vanishing statement for a projective ample family. -/
 def chapter04SerreVanishingStatement
-    {X S : Scheme.{u}} (C : Chapter04CohomologyContext X)
-    (f : X ⟶ S) [IsAffine S] [IsNoetherian S]
+    {X S : Scheme.{u}} (f : X ⟶ S) [IsAffine S] [IsNoetherian S]
+    [IsNoetherian X] [QuasiCompact f] [IsSeparated f]
+    (_hproj : chapter04Projective f) (L : Chapter04LineBundle X)
+    (_hL : chapter04Ample f L) : Prop :=
+  ∀ F : X.Modules, chapter04FiniteTypeQuasiCoherent F →
+    chapter04EventuallyHigherCohomologyVanishes f F L
+
+/-- The forward Serre-vanishing implication for the canonical cohomology context. -/
+theorem chapter04_serre_vanishing_forward
+    {X S : Scheme.{u}} (f : X ⟶ S) [IsAffine S] [IsNoetherian S]
     [IsNoetherian X] [QuasiCompact f] [IsSeparated f]
     (hproj : chapter04Projective f) (L : Chapter04LineBundle X)
-    (hL : chapter04Ample f L) : Prop :=
-  ∀ F : X.Modules, chapter04FiniteTypeQuasiCoherent F →
-    chapter04EventuallyHigherCohomologyVanishes C f F L
+    (hL : chapter04Ample f L) :
+    ∀ F : X.Modules, chapter04FiniteTypeQuasiCoherent F →
+      chapter04EventuallyHigherCohomologyVanishes f F L := by
+  sorry
+
+/-- Serre vanishing for every finite-type quasi-coherent coefficient sheaf. -/
+theorem chapter04_serre_vanishing
+    {X S : Scheme.{u}} (f : X ⟶ S) [IsAffine S] [IsNoetherian S]
+    [IsNoetherian X] [QuasiCompact f] [IsSeparated f]
+    (hproj : chapter04Projective f) (L : Chapter04LineBundle X)
+    (hL : chapter04Ample f L) :
+    chapter04SerreVanishingStatement f hproj L hL := by
+  sorry
 
 /-- The converse Serre criterion, with the projective and noetherian hypotheses made explicit. -/
 theorem chapter04_serre_ampleness_converse
-    {X S : Scheme.{u}} (C : Chapter04CohomologyContext X)
-    (f : X ⟶ S) [IsAffine S] [IsNoetherian S]
+    {X S : Scheme.{u}} (f : X ⟶ S) [IsAffine S] [IsNoetherian S]
     [IsNoetherian X] [QuasiCompact f] [IsSeparated f]
     (hproj : chapter04Projective f) (L : Chapter04LineBundle X)
     (hvanish : ∀ F : X.Modules, chapter04FiniteTypeQuasiCoherent F →
-      chapter04EventuallyHigherCohomologyVanishes C f F L)
+      chapter04EventuallyHigherCohomologyVanishes f F L)
     (hideal : ∀ I : Chapter04CoherentIdealSheaf X,
       chapter04EventuallyTwistGenerated f I.carrier L) :
     chapter04Ample f L := by

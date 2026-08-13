@@ -1,8 +1,14 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter01.Section03WhatShouldCountAsIntegral
+import Mathlib.RingTheory.DedekindDomain.AdicValuation
+import Mathlib.RingTheory.DedekindDomain.Dvr
+import Mathlib.RingTheory.DedekindDomain.Factorization
+import Mathlib.RingTheory.FractionalIdeal.Basic
+import Mathlib.RingTheory.Localization.Basic
+import Mathlib.Tactic.Order
+import Mathlib.Tactic.Ring
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter01
 
-open scoped Polynomial RatFunc nonZeroDivisors
+open scoped Polynomial nonZeroDivisors
 open Set Function Ideal
 open scoped BigOperators
 
@@ -37,7 +43,7 @@ def dedekindExponent (P : IsDedekindDomain.HeightOneSpectrum A) (x : K) : ℤ :=
 def chapterPrincipalFractionalIdeal (x : K) : FractionalIdeal A⁰ K :=
   FractionalIdeal.spanSingleton A⁰ x
 
-private theorem dedekindExponent_valuation
+theorem dedekindExponent_valuation
     (P : IsDedekindDomain.HeightOneSpectrum A) {x : K} (hx : x ≠ 0) :
     P.valuation K x = WithZero.exp (-(dedekindExponent P x)) := by
   obtain ⟨a, d, hd, hxrep⟩ := IsFractionRing.div_surjective A x
@@ -266,7 +272,7 @@ def chapterHeightOneSpectrumOfPrime (P : Ideal A) [P.IsPrime] (hP : P ≠ ⊥) :
 /-- The localization at a nonzero prime is a discrete valuation ring. -/
 theorem dedekind_localization_at_nonzero_prime_isDVR (P : Ideal A) [P.IsPrime]
     (hP : P ≠ ⊥) :
-    IsDiscreteValuationRing (chapterLocalizationAtPrime A P) := by
+    IsDiscreteValuationRing (Localization P.primeCompl) := by
   exact IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain
     A hP (Localization P.primeCompl)
 

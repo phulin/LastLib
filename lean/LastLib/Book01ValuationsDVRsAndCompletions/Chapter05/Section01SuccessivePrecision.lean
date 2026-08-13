@@ -58,8 +58,11 @@ def chapterLeadingDigit (x : A) : IsLocalRing.ResidueField A :=
 
 /-- Book §5.1, displayed precision assertion. -/
 theorem chapter_reduction_mod_maximalIdeal_is_leading_digit (x : A) :
-    chapterLeadingDigit A x = IsLocalRing.residue A x := by
-  rfl
+    Ideal.quotEquivOfEq (show IsLocalRing.maximalIdeal A ^ 1 =
+      IsLocalRing.maximalIdeal A by simp) (chapterReduction A 1 x) =
+      chapterLeadingDigit A x := by
+  simp [chapterReduction, chapterLeadingDigit]
+  exact (IsLocalRing.residue_def x).symm
 
 /-- Book §5.1: the `n`th precision quotient is `A / 𝔪^n`. -/
 theorem chapter_precision_is_power_quotient (n : ℕ) (x : A) :

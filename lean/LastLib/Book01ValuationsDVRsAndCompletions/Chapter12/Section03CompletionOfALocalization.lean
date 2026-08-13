@@ -29,7 +29,7 @@ abbrev completedLocalization
     (Ideal.map (algebraMap R (Localization.AtPrime p)) p)
     (Localization.AtPrime p)
 
-/-- The fraction field of the localization at `p`. -/
+/-- The fraction field of the completed localization at `p`. -/
 abbrev localizationFractionField
     (R : Type u) [CommRing R] (p : Ideal R) [p.IsPrime] : Type u :=
   FractionRing (completedLocalization R p)
@@ -39,6 +39,9 @@ theorem dedekind_local_completion_product
     {R S : Type*} [CommRing R] [CommRing S]
     [IsDedekindDomain R] [IsDedekindDomain S] [Algebra R S]
     [Algebra (FractionRing R) (FractionRing S)]
+    [Algebra R (FractionRing S)]
+    [IsScalarTower R S (FractionRing S)]
+    [IsScalarTower R (FractionRing R) (FractionRing S)]
     [Algebra.IsSeparable (FractionRing R) (FractionRing S)]
     {g : ℕ} (p : Ideal R) [p.IsPrime] (P : Fin g → Ideal S)
     (hp : p ≠ ⊥)
@@ -60,6 +63,9 @@ theorem dedekind_local_fraction_field_product
     {g : ℕ} (p : Ideal R) [p.IsPrime] (P : Fin g → Ideal S)
     (hp : p ≠ ⊥)
     [Algebra (FractionRing R) (FractionRing S)]
+    [Algebra R (FractionRing S)]
+    [IsScalarTower R S (FractionRing S)]
+    [IsScalarTower R (FractionRing R) (FractionRing S)]
     [Algebra.IsSeparable (FractionRing R) (FractionRing S)]
     [Algebra (FractionRing R) (localizationFractionField R p)]
     (hfinite : Module.Finite R S) (hfree : Module.Free R S)

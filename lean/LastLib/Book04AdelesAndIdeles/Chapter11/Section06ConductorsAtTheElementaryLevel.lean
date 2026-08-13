@@ -73,13 +73,19 @@ theorem chapter11_real_finite_order_character_factors_through_sign
     ∃ ε : SignTypeˣ →* ℂˣ, ∀ x, ψ x = ε (chapter11RealSignHom x) := by
   sorry
 
+theorem chapter11_complex_finite_order_character_is_trivial_on_positive_real_axis
+    (ψ : ℂˣ →* ℂˣ) (hcontinuous : Continuous ψ)
+    (hfinite : ∃ n : ℕ, 0 < n ∧ ∀ x, ψ x ^ n = 1) :
+    ∀ x : ℂˣ, 0 < (x : ℂ).re → (x : ℂ).im = 0 → ψ x = 1 := by
+  sorry
+
 theorem chapter11_complex_finite_order_character_is_trivial
     (ψ : ℂˣ →* ℂˣ) (hcontinuous : Continuous ψ)
     (hfinite : ∃ n : ℕ, 0 < n ∧ ∀ x, ψ x ^ n = 1) :
-    ψ = 1 := by
+    ∀ x : ℂˣ, ψ x = 1 := by
   sorry
 
-def chapter11RealSignClassEmbedding (K : Type*) [Field K] [NumberField K]
+def chapter11RealSignClassHom (K : Type*) [Field K] [NumberField K]
     (v : NumberField.InfinitePlace K)
     (hv : NumberField.InfinitePlace.IsReal v) :
     SignTypeˣ →* Chapter11IdeleClassGroup K := by
@@ -90,7 +96,7 @@ def chapter11CharacterDetectsRealSign
     (v : NumberField.InfinitePlace K)
     (hv : NumberField.InfinitePlace.IsReal v) : Prop :=
   ∃ s : SignTypeˣ, s ≠ 1 ∧
-    χ.toMonoidHom (chapter11RealSignClassEmbedding K v hv s) ≠ 1
+    χ.toMonoidHom (chapter11RealSignClassHom K v hv s) ≠ 1
 
 theorem chapter11_conductor_real_part_iff_sign_is_detected
     (χ : Chapter11FiniteOrderIdeleClassCharacter K)

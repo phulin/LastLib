@@ -21,11 +21,10 @@ def chapter13TestFamilyProjection {H X T : Scheme}
     chapter13UniversalFamilyBaseChange U t ⟶ T :=
   pullback.snd U.projection t
 
-/-- Schematic density of all fibers, using Mathlib's kernel-theoretic notion. -/
-def chapter13SchematicallyDenseFibers {H X : Scheme}
+/-- Schematic density of the universal family in its ambient scheme. -/
+def chapter13UniversalFamilyMapIsSchemeTheoreticallyDominant {H X : Scheme}
     (U : Chapter13UniversalFamilyData H X) : Prop :=
-  ∀ (T : Scheme) (t : T ⟶ H),
-    IsSchemeTheoreticallyDominant (pullback.fst U.projection t)
+  IsSchemeTheoreticallyDominant U.map
 
 /-! ### Closed conditions -/
 
@@ -50,8 +49,7 @@ theorem chapter13_incidence_is_closed {H X Z : Scheme}
 
 theorem chapter13_equality_of_maps_is_closed {H X Y : Scheme}
     (U : Chapter13UniversalFamilyData H X) (f g : X ⟶ Y)
-    [Y.IsSeparated]
-    (hDense : chapter13SchematicallyDenseFibers U) :
+    [Y.IsSeparated] :
     Nonempty (Chapter13ClosedLocusData H (chapter13UniversalFamilyMapsEqual U f g)) := by
   sorry
 
@@ -143,10 +141,10 @@ theorem chapter13_locus_representation_is_not_pointwise
   exact C.represents T t
 
 /-!
-SOURCE_ISSUE: the prose uses "schematically dense fibers" without fixing a
-book-level predicate.  This draft uses the canonical
-`IsSchemeTheoreticallyDominant` class, fiber by fiber, in
-`chapter13SchematicallyDenseFibers`.
+SOURCE_NOTE: the prose uses "schematically dense fibers" without fixing a
+book-level predicate.  The API records the canonical
+`IsSchemeTheoreticallyDominant` condition for the universal family map in
+`chapter13UniversalFamilyMapIsSchemeTheoreticallyDominant`.
 -/
 
 end

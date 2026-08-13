@@ -13,7 +13,6 @@ import Mathlib.RingTheory.FractionalIdeal.Operations
 import Mathlib.RingTheory.FractionalIdeal.Inverse
 import Mathlib.RingTheory.LocalRing.ResidueField.Defs
 import Mathlib.Topology.Algebra.Module.Basic
-
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter01.Section04LocalizationsOfDedekindDomains
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter01

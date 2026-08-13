@@ -16,6 +16,7 @@ import Mathlib.Topology.Algebra.RestrictedProduct.Units
 import Mathlib.Data.NNReal.Basic
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import LastLib.Book04AdelesAndIdeles.Chapter09.Dependencies
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter12
 
@@ -23,16 +24,16 @@ noncomputable section
 
 open Filter Set
 open NumberField
+open LastLib.Book04AdelesAndIdeles.Chapter09
 open scoped BigOperators NNReal RestrictedProduct TensorProduct nonZeroDivisors
 
 /-!
 Shared interfaces for Book 4, Chapter 12.
 
 Mathlib supplies the finite and infinite adele rings and the restricted-product
-unit equivalence.  The preceding book chapters in this repository do not yet
-export the idele module, the valuation-to-ideal map, or ray-class detection
-maps, so those interfaces are recorded explicitly here.  They contain only
-the canonical data needed by the portraits below.
+unit equivalence.  The preceding idele chapters supply canonical number-field
+module and valuation-to-ideal APIs; the generic portrait interfaces below keep
+explicit data where a model-independent ray-level bridge is still needed.
 -/
 
 /-! ## Canonical adelic and idelic carriers -/
@@ -174,9 +175,9 @@ theorem chapter12_principal_idele_hom_apply
 
 /-! ## The book-facing module and finite-place ideal interfaces -/
 
-/- LOCAL_DEPENDENCY_GUESS: the preceding idele-module chapter is not yet
-   exported under a stable LastLib name.  The fields below are the canonical
-   module and product-formula data, without encoding a later conclusion. -/
+/- The generic fields below retain a book-facing interface for arbitrary
+   Dedekind models; number-field portraits use the canonical specialization
+   `chapter12CanonicalIdeleModuleData` above. -/
 structure Chapter12IdeleModuleData
     (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
     [Algebra R K] [IsFractionRing R K] where
@@ -196,6 +197,27 @@ def chapter12IdeleModuleUnit
     (M : Chapter12IdeleModuleData R K) (x : chapter12Ideles R K) : ℝ≥0ˣ :=
   Units.mk0 (M.module x) (M.module_ne_zero x)
 
+/-! The number-field module is already available from the preceding idele
+chapter.  Keep the generic data structure above for interfaces over a
+Dedekind model, but use this canonical specialization for portraits of a
+number field. -/
+
+def chapter12CanonicalIdeleModuleData
+    (K : Type*) [Field K] [NumberField K] :
+    Chapter12IdeleModuleData (𝓞 K) K where
+  module := (Units.coeHom ℝ≥0).comp (chapter09IdeleModuleHom K)
+  principal_one := by
+    intro u
+    sorry
+  module_ne_zero := by
+    intro x
+    exact Units.ne_zero _
+
+/-- The finite-unit factor in the canonical number-field idele decomposition. -/
+abbrev chapter12CanonicalFiniteUnitIdeles
+    (K : Type*) [Field K] [NumberField K] :=
+  (chapter09FiniteUnitIdeles K : Type)
+
 def chapter12NormOneIdeleClasses
     {R K : Type*} [CommRing R] [IsDedekindDomain R] [Field K]
     [Algebra R K] [IsFractionRing R K]
@@ -214,10 +236,21 @@ theorem chapter12_mem_norm_one_idele_classes_iff
         M.module x = 1 ∧ chapter12IdeleClassMk R K x = c :=
   Iff.rfl
 
+/- A local uniformizer is a nonzero element of the completed integer ring with
+valuation `WithZero.exp (-1)`.  Merely requiring a nonzero nonunit would also
+allow higher powers of a uniformizer and is not sufficient for a single-place
+idele. -/
+def chapter12UniformizerAt
+    {R K : Type*} [CommRing R] [IsDedekindDomain R] [Field K]
+    [Algebra R K] [IsFractionRing R K]
+    (p : IsDedekindDomain.HeightOneSpectrum R)
+    (π : p.adicCompletionIntegers K) : Prop :=
+  π ≠ 0 ∧ Valued.v (π : p.adicCompletion K) = WithZero.exp (-1 : ℤ)
+
 /- LOCAL_DEPENDENCY_GUESS: this interface is the valuation-vector-to-fractional-
-   ideal map used by the ideal/idele dictionary.  Its multiplicativity and
-   principal normalization are stated as reusable fields rather than assumed
-   ad hoc in the nonprincipal-ideal example. -/
+ideal map used by the ideal/idele dictionary.  Its multiplicativity and
+principal normalization are stated as reusable fields rather than assumed
+ad hoc in the nonprincipal-ideal example. -/
 structure Chapter12FiniteIdeleIdealData
     (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
     [Algebra R K] [IsFractionRing R K] where
@@ -329,9 +362,10 @@ inductive Chapter12QuadraticLocalBehavior
   | ramified
   deriving DecidableEq, Repr
 
-/- LOCAL_DEPENDENCY_GUESS: this book-facing predicate awaits the canonical
-   finite-place ramification interface for quadratic number fields. -/
-def chapter12QuadraticRamifiedAt (d : ℤ) (p : ℕ) : Prop :=
+/- LOCAL_DEPENDENCY_GUESS: this is only the discriminant-support predicate;
+   identifying it with local ramification needs the canonical finite-place
+   ramification interface for quadratic number fields. -/
+def chapter12QuadraticDiscriminantSupport (d : ℤ) (p : ℕ) : Prop :=
   p ∣ (chapter12QuadraticDiscriminant d).natAbs
 
 /- The normalized product formula supplied by Mathlib for infinite adeles. -/

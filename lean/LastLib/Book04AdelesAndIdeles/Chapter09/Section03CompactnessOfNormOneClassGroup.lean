@@ -28,17 +28,15 @@ theorem chapter09_archimedean_unit_quotient_compact
 idele representative.  The following interface is the precise reduction
 statement used in the compactness proof; it contains no compactness claim. -/
 structure Chapter09FiniteClassRepresentativeData
-    (K : Type*) [Field K] [NumberField K]
-    (D : Chapter09IdeleIdealData K) where
+    (K : Type*) [Field K] [NumberField K] where
   representatives : Fin (Fintype.card (ClassGroup (𝓞 K))) → (Chapter09FiniteAdele K)ˣ
   represents_every_class :
     ∀ c : ClassGroup (𝓞 K), ∃ i,
-      D.idealClassMap (representatives i) = c
+      (chapter09CanonicalIdeleIdealData K).idealClassMap (representatives i) = c
 
 theorem chapter09_finite_class_representatives_exist
-    (K : Type*) [Field K] [NumberField K]
-    (D : Chapter09IdeleIdealData K) :
-    Nonempty (Chapter09FiniteClassRepresentativeData K D) := by
+    (K : Type*) [Field K] [NumberField K] :
+    Nonempty (Chapter09FiniteClassRepresentativeData K) := by
   sorry
 
 theorem chapter09_normOne_class_compact
@@ -52,10 +50,11 @@ noncomputable instance chapter09CompactSpaceClassNormOne
 
 theorem chapter09_normOne_class_has_compact_representatives
     (K : Type*) [Field K] [NumberField K] :
-    ∃ S : Set (chapter09ClassNormOne K), IsCompact S ∧
-      ∀ x : chapter09ClassNormOne K, ∃ s ∈ S, s = x := by
-  exact ⟨Set.univ, chapter09_normOne_class_compact K,
-    fun x => ⟨x, Set.mem_univ _, rfl⟩⟩
+    ∃ S : Set (chapter09NormOneIdeles K), IsCompact S ∧
+      ∀ x : chapter09ClassNormOne K, ∃ s ∈ S,
+        chapter09NormOneClassGroup_equiv_classNormOne (K := K)
+            (QuotientGroup.mk s) = x := by
+  sorry
 
 /- Finite local units are profinite, while the archimedean logarithmic part is
 compact only after quotienting by the global unit lattice.  This is the API

@@ -1,4 +1,4 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section04FactorizationOfTheMaximalIdeal
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section06LocalizationAndResidues
 import Mathlib.LinearAlgebra.Charpoly.ToMatrix
 import Mathlib.RingTheory.DedekindDomain.Different
 
@@ -291,10 +291,12 @@ theorem chapter11_monic_polynomials_with_same_endpoint_coefficients
 coefficients in higher degree. -/
 theorem chapter11_trace_norm_are_insufficient_in_higher_degree
     (A : Type*) [CommRing A] [Nontrivial A] (n : ℕ) (hn : 3 ≤ n) :
-    ∃ c d : chapter11MonicCoefficientProfile A n, c ≠ d ∧ c 0 = d 0 := by
+    ∃ c d : chapter11MonicCoefficientProfile A n,
+      c ≠ d ∧ c 0 = d 0 ∧
+        c ⟨n, Nat.lt_succ_self n⟩ = d ⟨n, Nat.lt_succ_self n⟩ := by
   rcases chapter11_higher_degree_trace_norm_omit_intermediate_coefficients A n hn with
-    ⟨c, d, h0, _, hcd⟩
-  exact ⟨c, d, hcd, h0⟩
+    ⟨c, d, h0, hn, hcd⟩
+  exact ⟨c, d, hcd, h0, hn⟩
 
 end
 end LastLib.Book01ValuationsDVRsAndCompletions.Chapter11

@@ -2,19 +2,9 @@ import Mathlib.Algebra.Polynomial.Div
 import Mathlib.Algebra.Polynomial.RingDivision
 import Mathlib.FieldTheory.RatFunc.Basic
 import Mathlib.FieldTheory.RatFunc.AsPolynomial
-import Mathlib.RingTheory.DedekindDomain.AdicValuation
-import Mathlib.RingTheory.DedekindDomain.Dvr
-import Mathlib.RingTheory.DedekindDomain.Factorization
-import Mathlib.RingTheory.FractionalIdeal.Basic
-import Mathlib.RingTheory.Localization.Basic
-import Mathlib.RingTheory.LaurentSeries
-import Mathlib.RingTheory.HahnSeries.Basic
 import Mathlib.RingTheory.Valuation.Basic
-import Mathlib.NumberTheory.Padics.PadicNorm
-import Mathlib.NumberTheory.Padics.PadicNumbers
 import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Order
 import Mathlib.Tactic.Ring
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter01
@@ -44,6 +34,13 @@ for nonzero polynomials, where Mathlib's `multiplicity` is the largest exponent
 of `X` dividing the polynomial. -/
 def ordZeroPolynomial (f : k[X]) : ℕ :=
   multiplicity (Polynomial.X : k[X]) f
+
+/-- The total order at the origin, assigning infinite order to the zero
+polynomial. -/
+def ordZeroPolynomialWithTop (f : k[X]) : WithTop ℕ :=
+  by
+    classical
+    exact if f = 0 then ⊤ else (ordZeroPolynomial f : WithTop ℕ)
 
 /-- A polynomial factorization at the origin, with its regular factor recorded. -/
 structure ZeroOrderFactorization (f : k[X]) where
@@ -539,6 +536,22 @@ theorem ordZeroRatFuncWithTop_add {x y : RatFunc k} :
   simpa [ordZeroRatFuncWithTop, hx, hy, hxy] using
     (WithTop.coe_le_coe.mpr h)
 
+/-! The total version records the zero cases in the multiplicative valuation
+law, rather than requiring separate nonzero hypotheses. -/
+theorem ordZeroRatFuncWithTop_mul {x y : RatFunc k} :
+    ordZeroRatFuncWithTop (x * y) =
+      ordZeroRatFuncWithTop x + ordZeroRatFuncWithTop y := by
+  classical
+  by_cases hx : x = 0
+  · subst x
+    simp [ordZeroRatFuncWithTop]
+  by_cases hy : y = 0
+  · subst y
+    simp [ordZeroRatFuncWithTop]
+  have hxy : x * y ≠ 0 := mul_ne_zero hx hy
+  simpa [ordZeroRatFuncWithTop, hx, hy, hxy] using
+    congrArg (fun z : ℤ => (z : WithTop ℤ)) (ordZeroRatFunc_mul hx hy)
+
 /-- If two nonzero rational functions have different orders, their sum has the
 smaller order; unequal orders cannot cancel. -/
 theorem ordZeroRatFunc_add_of_ne {x y : RatFunc k} (hx : x ≠ 0) (hy : y ≠ 0)
@@ -748,13 +761,25 @@ theorem ordZeroRatFunc_sign_classification {x : RatFunc k} (hx : x ≠ 0) :
 def ordAtPolynomial (a : k) (f : k[X]) : ℕ :=
   multiplicity (Polynomial.X - Polynomial.C a : k[X]) f
 
+/-- The total order at `a`, assigning infinite order to the zero polynomial. -/
+def ordAtPolynomialWithTop (a : k) (f : k[X]) : WithTop ℕ :=
+  by
+    classical
+    exact if f = 0 then ⊤ else (ordAtPolynomial a f : WithTop ℕ)
+
 /-- The rational-function order at `a`, using numerator and denominator. -/
 def ordAtRatFunc (a : k) (x : RatFunc k) : ℤ :=
   by
     classical
     exact if x = 0 then 0 else
-    (multiplicity (Polynomial.X - Polynomial.C a : k[X]) x.num : ℤ) -
+      (multiplicity (Polynomial.X - Polynomial.C a : k[X]) x.num : ℤ) -
       (multiplicity (Polynomial.X - Polynomial.C a : k[X]) x.denom : ℤ)
+
+/-- The total order at `a`, assigning infinite order to the zero function. -/
+def ordAtRatFuncWithTop (a : k) (x : RatFunc k) : WithTop ℤ :=
+  by
+    classical
+    exact if x = 0 then ⊤ else (ordAtRatFunc a x : WithTop ℤ)
 
 /-- Translating the coordinate identifies order at `a` with order at the origin. -/
 theorem ordAtPolynomial_eq_ordZero_after_translation (a : k) (f : k[X]) :

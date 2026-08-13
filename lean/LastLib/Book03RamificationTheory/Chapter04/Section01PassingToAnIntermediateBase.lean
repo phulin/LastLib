@@ -15,6 +15,7 @@ structure Chapter04StandingGaloisResidueData
     [Algebra K L] [Algebra k l] : Prop where
   finite_galois_extension : FiniteDimensional K L
   galois_extension : IsGalois K L
+  finite_residue_extension : FiniteDimensional k l
   separable_residue_extension : Algebra.IsSeparable k l
 
 /-- The fixed field used for the subgroup `H ≤ Gal(L / K)`. -/

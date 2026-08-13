@@ -1,4 +1,15 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.Section01SuccessivePrecision
+import Mathlib.Algebra.Module.PID
+import Mathlib.LinearAlgebra.Dimension.Finite
+import Mathlib.RingTheory.AdicCompletion.Basic
+import Mathlib.RingTheory.AdicCompletion.Completeness
+import Mathlib.RingTheory.DiscreteValuationRing.Basic
+import Mathlib.RingTheory.Filtration
+import Mathlib.RingTheory.Localization.AtPrime.Basic
+import Mathlib.RingTheory.Localization.AtPrime.Extension
+import Mathlib.RingTheory.Polynomial.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter05
 
@@ -129,11 +140,13 @@ theorem chapterInitialForm_eq_factorization {x : A} (hx : x ≠ 0)
     Polynomial.C (IsLocalRing.residue A (u : A)) * Polynomial.X ^ n
   rw [hn, huu]
 
-/-- Book §5.2, displayed associated-graded identification `gr_𝔪(A) ≅ k[T]`.
+/- Book §5.2, the underlying graded-vector-space identification
+   `gr_𝔪(A) ≅ k[T]`.
 
 The direct sum is the external associated-graded object; the componentwise
 condition records the chosen polynomial realization and sends the class of
-the uniformizer to `T`.
+the uniformizer to `T`.  The ring-level strengthening is recorded by
+`chapter_associated_graded_ring_model_exists` below.
 -/
 theorem chapter_associated_graded_equiv_polynomial :
     ∃ e : chapterAssociatedGradedObject (A := A) ≃ₗ[IsLocalRing.ResidueField A]
@@ -363,6 +376,162 @@ theorem chapterGradedPieceMultiplication_apply (i j : ℕ) (a b : A) :
   change chapterLayerMultiplicationMap (A := A) π hπ (i + j)
       (Ideal.Quotient.mk _ (a * b)) = _
   exact chapterLayerMultiplicationMap_apply (A := A) π hπ (i + j) (a * b)
+
+/- The componentwise multiplication is compatible with the polynomial model.
+   This is the ring-level bridge needed when the external direct sum is
+   assembled into the associated graded ring. -/
+theorem chapter_associated_graded_component_product_compatibility
+    (i j : ℕ) (a b : A) :
+    chapterGradedInclusion (A := A) π hπ (i + j)
+        (chapterGradedPieceMultiplication (A := A) π hπ i j
+          (chapterLayerRepresentative (A := A) π hπ i a)
+          (chapterLayerRepresentative (A := A) π hπ j b)) =
+      chapterGradedInclusion (A := A) π hπ i
+        (chapterLayerRepresentative (A := A) π hπ i a) *
+      chapterGradedInclusion (A := A) π hπ j
+        (chapterLayerRepresentative (A := A) π hπ j b) := by
+  rw [chapterGradedPieceMultiplication_apply (A := A) π hπ i j a b]
+  have hIncl (n : ℕ) (c : A) :
+      chapterGradedInclusion (A := A) π hπ n
+          (chapterLayerRepresentative (A := A) π hπ n c) =
+        Polynomial.C (IsLocalRing.residue A c) * Polynomial.X ^ n := by
+    have hA :
+        (↑((chapterLayerMultiplicationEquiv (A := A) π hπ n).symm
+            (chapterLayerRepresentative (A := A) π hπ n c)) :
+            A ⧸ (IsLocalRing.maximalIdeal A : Submodule A A)) =
+          Submodule.Quotient.mk c := by
+      apply congrArg (fun z : A ⧸ (IsLocalRing.maximalIdeal A : Ideal A) =>
+        (z : A ⧸ (IsLocalRing.maximalIdeal A : Submodule A A)))
+      apply (chapterLayerMultiplicationEquiv (A := A) π hπ n).injective
+      rw [(chapterLayerMultiplicationEquiv (A := A) π hπ n).apply_symm_apply]
+      symm
+      exact chapterLayerMultiplicationMap_apply (A := A) π hπ n c
+    simp only [chapterGradedInclusion, LinearMap.comp_apply]
+    change (Submodule.liftQ _ _ _)
+      (↑((chapterLayerMultiplicationEquiv (A := A) π hπ n).symm
+        (chapterLayerRepresentative (A := A) π hπ n c)) :
+        A ⧸ (IsLocalRing.maximalIdeal A : Submodule A A)) = _
+    rw [hA]
+    rfl
+  rw [hIncl, hIncl, hIncl]
+  rw [map_mul, pow_add]
+  rw [Polynomial.C_mul]
+  rw [← pow_add]
+  ring
+
+/- A ring-level associated-graded model carrying the component and product
+   identifications.  The ring structure on the external direct sum is part of
+   this book-facing interface because the canonical direct-sum API supplies
+   only its additive and module structure. -/
+structure ChapterAssociatedGradedRingModel where
+  [commRing : CommRing (chapterAssociatedGradedObject (A := A))]
+  ringEquiv : chapterAssociatedGradedObject (A := A) ≃+*
+    chapterAssociatedGradedRing (A := A)
+  component : ∀ (n : ℕ) (x : chapterGradedPiece A n),
+    ringEquiv (DirectSum.of (fun i : ℕ => chapterGradedPiece A i) n x) =
+      chapterGradedInclusion (A := A) π hπ n x
+  product : ∀ (i j : ℕ) (x : chapterGradedPiece A i)
+      (y : chapterGradedPiece A j),
+    ringEquiv (DirectSum.of (fun n : ℕ => chapterGradedPiece A n) (i + j)
+      (chapterGradedPieceMultiplication (A := A) π hπ i j x y)) =
+      ringEquiv (DirectSum.of (fun n : ℕ => chapterGradedPiece A n) i x) *
+        ringEquiv (DirectSum.of (fun n : ℕ => chapterGradedPiece A n) j y)
+  uniformizer :
+    ringEquiv (DirectSum.of (fun i : ℕ => chapterGradedPiece A i) 1
+      (chapterUniformizerLayerClass (A := A) π hπ)) =
+      chapterInitialFormUniformizer (A := A) π hπ
+
+/- The associated graded object admits the ring structure asserted in §5.2. -/
+theorem chapter_associated_graded_ring_model_exists :
+    Nonempty (ChapterAssociatedGradedRingModel (A := A) π hπ) := by
+  classical
+  obtain ⟨e, hecomponent, heuniformizer⟩ :=
+    chapter_associated_graded_equiv_polynomial (A := A) (π := π) (hπ := hπ)
+  let mulO : chapterAssociatedGradedObject (A := A) →
+      chapterAssociatedGradedObject (A := A) →
+        chapterAssociatedGradedObject (A := A) :=
+    fun x y => e.symm (e x * e y)
+  let oneO : chapterAssociatedGradedObject (A := A) := e.symm 1
+  let powO : chapterAssociatedGradedObject (A := A) → ℕ →
+      chapterAssociatedGradedObject (A := A) := fun x n => e.symm ((e x) ^ n)
+  let natCastO : ℕ → chapterAssociatedGradedObject (A := A) := fun n => e.symm n
+  let intCastO : ℤ → chapterAssociatedGradedObject (A := A) := fun n => e.symm n
+  let : Mul (chapterAssociatedGradedObject (A := A)) := ⟨mulO⟩
+  let : One (chapterAssociatedGradedObject (A := A)) := ⟨oneO⟩
+  let : Pow (chapterAssociatedGradedObject (A := A)) ℕ := ⟨powO⟩
+  let : NatCast (chapterAssociatedGradedObject (A := A)) := ⟨natCastO⟩
+  let : IntCast (chapterAssociatedGradedObject (A := A)) := ⟨intCastO⟩
+  let : CommRing (chapterAssociatedGradedObject (A := A)) :=
+    e.injective.commRing e e.map_zero
+      (by change e (e.symm 1) = 1; rw [e.apply_symm_apply])
+      (by intro x y; exact e.map_add x y)
+      (by intro x y; change e (e.symm (e x * e y)) = e x * e y; rw [e.apply_symm_apply])
+      (by intro x; exact e.map_neg x)
+      (by intro x y; exact e.map_sub x y)
+      (by
+        intro n x
+        simpa only [Nat.cast_smul_eq_nsmul] using
+          e.map_smul (n : IsLocalRing.ResidueField A) x)
+      (by
+        intro n x
+        rw [← Int.cast_smul_eq_zsmul (IsLocalRing.ResidueField A) n x]
+        rw [← Int.cast_smul_eq_zsmul (IsLocalRing.ResidueField A) n (e x)]
+        exact e.map_smul (n : IsLocalRing.ResidueField A) x)
+      (by intro x n; change e (e.symm ((e x) ^ n)) = (e x) ^ n; rw [e.apply_symm_apply])
+      (by intro n; change e (e.symm n) = n; rw [e.apply_symm_apply])
+      (by intro n; change e (e.symm n) = n; rw [e.apply_symm_apply])
+  let f : chapterAssociatedGradedObject (A := A) →+*
+      chapterAssociatedGradedRing (A := A) :=
+    { toFun := e
+      map_zero' := e.map_zero
+      map_one' := by change e (e.symm 1) = 1; rw [e.apply_symm_apply]
+      map_add' := e.map_add
+      map_mul' := by
+        intro x y
+        change e (e.symm (e x * e y)) = e x * e y
+        rw [e.apply_symm_apply] }
+  let er : chapterAssociatedGradedObject (A := A) ≃+*
+      chapterAssociatedGradedRing (A := A) :=
+    RingEquiv.ofBijective f e.bijective
+  have hrep (n : ℕ) (x : chapterGradedPiece A n) :
+      ∃ a : A, x = chapterLayerRepresentative (A := A) π hπ n a := by
+    obtain ⟨z, rfl⟩ :=
+      Submodule.Quotient.mk_surjective (chapterGradedPieceDenominator A n) x
+    have hz : (z : A) ∈ Ideal.span {π ^ n} := by
+      rw [← chapter_maximalIdeal_pow_eq_uniformizer_span A π hπ n]
+      exact z.property
+    obtain ⟨a, ha⟩ := Ideal.mem_span_singleton.mp hz
+    refine ⟨a, ?_⟩
+    apply (Submodule.Quotient.eq (chapterGradedPieceDenominator A n)).2
+    change (z : A) - a * π ^ n ∈
+      (IsLocalRing.maximalIdeal A ^ (n + 1) : Ideal A)
+    rw [ha]
+    have hz : π ^ n * a - a * π ^ n = 0 := by ring
+    rw [hz]
+    exact Ideal.zero_mem _
+  refine ⟨{ ringEquiv := er, component := ?_, product := ?_, uniformizer := ?_ }⟩
+  · intro n x
+    change e (DirectSum.of (fun i : ℕ => chapterGradedPiece A i) n x) =
+      chapterGradedInclusion (A := A) π hπ n x
+    exact hecomponent n x
+  · intro i j x y
+    obtain ⟨a, rfl⟩ := hrep i x
+    obtain ⟨b, rfl⟩ := hrep j y
+    change e (DirectSum.of (fun n : ℕ => chapterGradedPiece A n) (i + j)
+        (chapterGradedPieceMultiplication (A := A) π hπ i j
+          (chapterLayerRepresentative (A := A) π hπ i a)
+          (chapterLayerRepresentative (A := A) π hπ j b))) =
+      e (DirectSum.of (fun n : ℕ => chapterGradedPiece A n) i
+          (chapterLayerRepresentative (A := A) π hπ i a)) *
+        e (DirectSum.of (fun n : ℕ => chapterGradedPiece A n) j
+          (chapterLayerRepresentative (A := A) π hπ j b))
+    rw [hecomponent, hecomponent, hecomponent]
+    exact chapter_associated_graded_component_product_compatibility
+      (A := A) π hπ i j a b
+  · change e (DirectSum.of (fun i : ℕ => chapterGradedPiece A i) 1
+        (chapterUniformizerLayerClass (A := A) π hπ)) =
+      chapterInitialFormUniformizer (A := A) π hπ
+    exact heuniformizer
 
 /-- Book §5.2: initial forms multiply. -/
 theorem chapter_initial_form_mul {x y : A} (hx : x ≠ 0) (hy : y ≠ 0) :

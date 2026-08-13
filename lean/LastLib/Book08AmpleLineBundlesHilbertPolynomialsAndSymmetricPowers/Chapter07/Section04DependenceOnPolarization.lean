@@ -119,9 +119,11 @@ theorem chapter07_fixed_polarization_is_part_of_hilbert_moduli_data
     Chapter07FixedHilbertPolynomialCondition M.object M.targetPolynomial := by
   exact M.satisfiesTarget
 
-theorem chapter07_polarizations_can_change_leading_coefficients :
-    ∃ P Q : Polynomial ℚ,
-      P.natDegree = Q.natDegree ∧ P.leadingCoeff ≠ Q.leadingCoeff := by
+theorem chapter07_polarizations_can_change_leading_coefficients
+    (P : Polynomial ℚ) (hP : P ≠ 0) (hpositive : 0 < P.natDegree) :
+    ∃ q : ℕ, 1 < q ∧
+      (chapter07PowerPolynomial P q).natDegree = P.natDegree ∧
+        (chapter07PowerPolynomial P q).leadingCoeff ≠ P.leadingCoeff := by
   sorry
 
 theorem chapter07_finite_length_has_intrinsic_hilbert_polynomial

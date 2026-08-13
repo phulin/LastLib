@@ -62,12 +62,12 @@ def chapter14TameAtResidueCharacteristic
 
 theorem chapter14_numerical_tame_iff_coprime_of_separable_residue
     (residueSeparable : Prop) (e p : ℕ)
-    (hres : residueSeparable) (hp : p ≠ 0) :
+    (hres : residueSeparable) :
     chapter14TameAtResidueCharacteristic residueSeparable e p ↔
       Nat.Coprime e p := by
   simp [chapter14TameAtResidueCharacteristic,
     LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05TameAtResidueCharacteristic,
-    hres, hp]
+    hres]
 
 /- SOURCE_ISSUE: The source says, “A finite separable extension $M/K$ with
 separable residue extension is tame exactly when
@@ -82,13 +82,13 @@ def chapter14DefectlessTameExtension
 
 theorem chapter14_defectless_tame_iff_coprime
     (defectless residueSeparable : Prop) (e p : ℕ)
-    (hdefectless : defectless) (hres : residueSeparable) (hp : p ≠ 0) :
+    (hdefectless : defectless) (hres : residueSeparable) :
     chapter14DefectlessTameExtension defectless residueSeparable e p ↔
       Nat.Coprime e p := by
   simp [chapter14DefectlessTameExtension,
     chapter14TameAtResidueCharacteristic,
     LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05TameAtResidueCharacteristic,
-    hdefectless, hres, hp]
+    hdefectless, hres]
 
 /- LOCAL_DEPENDENCY_GUESS: stability of tame extensions under compositum and
 subextension should provide the numerical equivalence below for a normal
@@ -100,13 +100,12 @@ theorem chapter14_tame_closure_iff_of_coprime_equivalence
     (baseE closureE p : ℕ)
     (hbase : baseResidueSeparable)
     (hclosure : closureResidueSeparable)
-    (hp : p ≠ 0)
     (hcoprime : Nat.Coprime baseE p ↔ Nat.Coprime closureE p) :
     chapter14TameAtResidueCharacteristic baseResidueSeparable baseE p ↔
       chapter14TameAtResidueCharacteristic closureResidueSeparable closureE p := by
   simp [chapter14TameAtResidueCharacteristic,
     LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05TameAtResidueCharacteristic,
-    hbase, hclosure, hp, hcoprime]
+    hbase, hclosure, hcoprime]
 
 /- A finite separable extension without normality has a smaller automorphism
 group than its field degree.  This is the precise replacement for treating

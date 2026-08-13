@@ -1,4 +1,9 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Section03ThePadicIntegersAndNumbers
+import Mathlib.RingTheory.LaurentSeries
+import Mathlib.RingTheory.PowerSeries.Basic
+import Mathlib.RingTheory.PowerSeries.Trunc
+import Mathlib.RingTheory.PowerSeries.WellKnown
+import Mathlib.Tactic.Order
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter08
 
@@ -27,8 +32,8 @@ abbrev Chapter08FormalLaurentSeries (k : Type*) [Field k] := LaurentSeries k
 
 /-- The truncation inverse limit for the polynomial variable X. -/
 abbrev Chapter08FormalPowerSeriesInverseLimit (k : Type*) [Field k] :=
-  Chapter08CompatibleFamily (MvPolynomial PUnit.{1} k)
-    (MvPolynomial.idealOfVars PUnit.{1} k)
+  Chapter08CompatibleFamily (MvPolynomial Unit k)
+    (MvPolynomial.idealOfVars Unit k)
 
 theorem chapter08_power_series_inverse_limit
     (k : Type*) [Field k] :
@@ -36,8 +41,8 @@ theorem chapter08_power_series_inverse_limit
   classical
     obtain ⟨e, he⟩ :=
     chapter08_inverse_limit_ring_equiv
-      (MvPolynomial.idealOfVars PUnit.{1} k)
-  let c := MvPowerSeries.toAdicCompletionAlgEquiv PUnit.{1} k
+      (MvPolynomial.idealOfVars Unit k)
+  let c := MvPowerSeries.toAdicCompletionAlgEquiv Unit k
   exact ⟨c.toRingEquiv.trans e⟩
 
 /-- Constants give the canonical coefficient-field embedding into formal power series. -/
@@ -69,19 +74,19 @@ def Chapter08CommonLaurentLowerBound
     {k : Type*} [Field k] (u : ℕ → Chapter08FormalLaurentSeries k) : Prop :=
   ∃ L : ℤ, ∀ n : ℕ, ∀ d : ℤ, d < L → (u n).coeff d = 0
 
--- The coefficientwise construction gives a common lower-bounded Laurent series limit. -/
+/-- A Cauchy sequence of Laurent series has coefficientwise stabilization and a common
+lower-bounded Laurent-series limit. -/
 theorem chapter08_laurent_series_cauchy_coefficient_construction
     (k : Type*) [Field k] (u : ℕ → Chapter08FormalLaurentSeries k)
-    (_hu : Chapter08LaurentCoefficientwiseCauchy u)
-    (_hL : Chapter08CommonLaurentLowerBound u)
     (hC : CauchySeq u) :
     ∃ x : Chapter08FormalLaurentSeries k,
       (∀ d : ℤ, ∃ N : ℕ, ∀ n : ℕ, N ≤ n → (u n).coeff d = x.coeff d) ∧
+        Chapter08CommonLaurentLowerBound u ∧
         Tendsto u atTop (𝓝 x) := by
   classical
   let hℱ : Cauchy (atTop.map u) := hC
   let x : Chapter08FormalLaurentSeries k := LaurentSeries.Cauchy.limit hℱ
-  refine ⟨x, ?_, ?_⟩
+  refine ⟨x, ?_, ?_, ?_⟩
   · intro d
     have heq := LaurentSeries.Cauchy.coeff_eventually_equal hℱ (D := d + 1)
     have heq' : ∀ᶠ n in atTop, ∀ d', d' < d + 1 →
@@ -92,6 +97,45 @@ theorem chapter08_laurent_series_cauchy_coefficient_construction
     rcases (eventually_atTop.1 heq') with ⟨N, hN⟩
     refine ⟨N, fun n hn => ?_⟩
     exact (hN n hn d (by omega)).symm
+  · have hsingle : ∀ z : Chapter08FormalLaurentSeries k, ∃ L : ℤ,
+        ∀ d : ℤ, d < L → z.coeff d = 0 := by
+      intro z
+      by_cases hz : z = 0
+      · refine ⟨0, ?_⟩
+        intro d hd
+        simp [hz]
+      · refine ⟨z.order, ?_⟩
+        intro d hd
+        exact HahnSeries.coeff_eq_zero_of_lt_order hd
+    obtain ⟨Le, hLe⟩ := LaurentSeries.Cauchy.exists_lb_eventual_support hℱ
+    have hev : ∀ᶠ n : ℕ in atTop,
+        ∀ d : ℤ, d < Le → (u n).coeff d = 0 := by
+      change u ⁻¹' {f : Chapter08FormalLaurentSeries k |
+        ∀ d : ℤ, d < Le → f.coeff d = 0} ∈ atTop
+      exact hLe
+    have hprefix_all : ∀ N : ℕ, ∃ L : ℤ, ∀ n : ℕ, n < N →
+        ∀ d : ℤ, d < L → (u n).coeff d = 0 := by
+      intro N
+      induction N with
+      | zero =>
+          refine ⟨0, ?_⟩
+          intro n hn
+          omega
+      | succ N ih =>
+          obtain ⟨L, hL⟩ := ih
+          obtain ⟨L', hL'⟩ := hsingle (u N)
+          refine ⟨min L L', ?_⟩
+          intro n hn d hd
+          rcases Nat.lt_or_eq_of_le (Nat.le_of_lt_succ hn) with hn' | rfl
+          · exact hL n hn' d (lt_of_lt_of_le hd (min_le_left _ _))
+          · exact hL' d (lt_of_lt_of_le hd (min_le_right _ _))
+    obtain ⟨N, hN⟩ := eventually_atTop.1 hev
+    obtain ⟨Lp, hLp⟩ := hprefix_all N
+    refine ⟨min Lp Le, ?_⟩
+    intro n d hd
+    by_cases hn : n < N
+    · exact hLp n hn d (lt_of_lt_of_le hd (min_le_left _ _))
+    · exact hN n (Nat.le_of_not_gt hn) d (lt_of_lt_of_le hd (min_le_right _ _))
   · intro U hU
     have h := LaurentSeries.Cauchy.eventually_mem_nhds hℱ hU
     change u ⁻¹' U ∈ atTop

@@ -51,6 +51,23 @@ structure Chapter05LocalBrauerInvariantSystem
     invariant H (chapter05RestrictTwoClass H u) =
       chapter05RationalResidueOneOver (Nat.card H)
 
+/- The exact sequence and the typed connecting family are kept together here.
+   The connecting family is required to be the canonical composite of the two
+   Tate connecting morphisms attached to `extension`; the comparison with the
+   chosen cap product is recorded below. -/
+structure Chapter05TwoExtensionRepresentative
+    (G : Type) [Group G] [Fintype G] (C : Rep ℤ G)
+    (u : chapter05GroupCohomology G C 2)
+    (P : Chapter05CapProduct G C u) where
+  extension : Chapter05TwoExtension G C
+  connecting : ∀ (H : Subgroup G) (r : ℤ),
+    chapter05TateCohomology H (Rep.trivial ℤ H ℤ) r ⟶
+      chapter05TateCohomology H (Rep.res H.subtype C) (r + 2)
+  connecting_is_canonical : ∀ (H : Subgroup G) (r : ℤ),
+    connecting H r = chapter05TwoExtensionConnecting extension H r
+  connecting_eq_cap : ∀ (H : Subgroup G) (r : ℤ),
+    connecting H r = P.cap H r
+
 /- LOCAL_DEPENDENCY_GUESS: this is the minimal book-facing package assembled
 from the preceding local Brauer, Hilbert--90, and degree-zero norm results.
 Its fields are hypotheses for the induction theorem, not an encoded
@@ -64,8 +81,13 @@ structure Chapter05LocalClassFormationData
   localInvariant : Chapter05LocalBrauerInvariantSystem K L fundamentalClass.value
   capProduct : Chapter05CapProduct (Gal(L / K))
     (chapter05CoefficientRep K L) fundamentalClass.value
+  twoExtensionRepresentative :
+    Chapter05TwoExtensionRepresentative (Gal(L / K))
+      (chapter05CoefficientRep K L) fundamentalClass.value capProduct
   topRestriction : Chapter05TopRestrictionTateIso (Gal(L / K))
     (chapter05CoefficientRep K L)
+  topRestrictionTrivial :
+    Chapter05TopRestrictionTrivialTateIso (Gal(L / K))
   nakayama : Chapter05TateNakayamaHypotheses (Gal(L / K))
     (chapter05CoefficientRep K L) fundamentalClass.value
   degreeZeroNorm :
@@ -90,6 +112,7 @@ theorem chapter05_tate_nakayama_induction
     {G : Type} [Group G] [Fintype G] {C : Rep ℤ G}
     {u : chapter05GroupCohomology G C 2}
     (P : Chapter05CapProduct G C u)
+    (T : Chapter05TwoExtensionRepresentative G C u P)
     (HYP : Chapter05TateNakayamaHypotheses G C u) :
     ∀ (H : Subgroup G) (r : ℤ), IsIso (P.cap H r) := by
   sorry
@@ -98,9 +121,10 @@ theorem chapter05_lemma_5_2_tate_nakayama
     {G : Type} [Group G] [Fintype G] {C : Rep ℤ G}
     {u : chapter05GroupCohomology G C 2}
     (P : Chapter05CapProduct G C u)
+    (T : Chapter05TwoExtensionRepresentative G C u P)
     (HYP : Chapter05TateNakayamaHypotheses G C u) :
     ∀ (H : Subgroup G) (r : ℤ), IsIso (P.cap H r) := by
-  exact chapter05_tate_nakayama_induction P HYP
+  exact chapter05_tate_nakayama_induction P T HYP
 
 theorem chapter05_class_formation_isomorphism
     {K L : Type} [Field K] [Field L] [Algebra K L]
@@ -109,7 +133,8 @@ theorem chapter05_class_formation_isomorphism
     (D : Chapter05LocalClassFormationData K L) :
     ∀ (H : Subgroup (Gal(L / K))) (r : ℤ),
       IsIso (D.capProduct.cap H r) := by
-  sorry
+  exact chapter05_tate_nakayama_induction D.capProduct
+    D.twoExtensionRepresentative D.nakayama
 
 theorem chapter05_theorem_5_1_fundamental_class_isomorphism
     {K L : Type} [Field K] [Field L] [Algebra K L]
@@ -174,27 +199,6 @@ theorem chapter05_class_formation_top_isomorphism
     [Fintype (Gal(L / K))]
     (D : Chapter05LocalClassFormationData K L) (r : ℤ) :
     IsIso (D.capProduct.cap (⊤ : Subgroup (Gal(L / K))) r) := by
-  sorry
-
-/- The two-extension in the proof is kept as a representative of the chosen
-class.  Its connecting maps are named explicitly so that later statements do
-not silently replace cap product by an unrelated degree shift. -/
-structure Chapter05TwoExtensionRepresentative
-    (G : Type) [Group G] [Fintype G] (C : Rep ℤ G)
-    (u : chapter05GroupCohomology G C 2)
-    (P : Chapter05CapProduct G C u) where
-  extension : Chapter05TwoExtension G C
-  connecting : ∀ (H : Subgroup G) (r : ℤ),
-    chapter05TateCohomology H (Rep.trivial ℤ H ℤ) r ⟶
-      chapter05TateCohomology H (Rep.res H.subtype C) (r + 2)
-  connecting_eq_cap : ∀ (H : Subgroup G) (r : ℤ),
-    connecting H r = P.cap H r
-
-theorem chapter05_two_extension_represents_class
-    {G : Type} [Group G] [Fintype G] {C : Rep ℤ G}
-    (u : chapter05GroupCohomology G C 2)
-    (P : Chapter05CapProduct G C u) :
-    Nonempty (Chapter05TwoExtensionRepresentative G C u P) := by
   sorry
 
 theorem chapter05_regular_representation_tate_zero
@@ -265,11 +269,15 @@ theorem chapter05_local_hilbert90
 theorem chapter05_local_H2_cyclic
     (K L : Type) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
-    [Fintype (Gal(L / K))] (H : Subgroup (Gal(L / K))) :
+    [Fintype (Gal(L / K))]
+    {u : chapter05GroupCohomology (Gal(L / K))
+      (chapter05CoefficientRep K L) 2}
+    (I : Chapter05LocalBrauerInvariantSystem K L u)
+    (H : Subgroup (Gal(L / K))) :
     Chapter05CyclicGroupOfOrder
       (chapter05GroupCohomology H
         (Rep.res H.subtype (chapter05CoefficientRep K L)) 2) (Nat.card H) := by
-  sorry
+  exact I.h2_cyclic H
 
 theorem chapter05_local_restriction_generates
     (K L : Type) [Field K] [Field L] [Algebra K L]

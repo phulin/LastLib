@@ -1,5 +1,6 @@
 import LastLib.Book04AdelesAndIdeles.Chapter07.Dependencies
 import LastLib.Book04AdelesAndIdeles.Chapter07.Section02TheIdeleGroup
+import Mathlib.Topology.Algebra.ProperAction.Basic
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter07
 
@@ -39,7 +40,7 @@ theorem chapter07PrincipalIdeleEmbedding_apply_finite
     (a : Kˣ) (v : chapter07FinitePlace R) :
     (chapter07PrincipalIdeleEmbedding R K a).1.2 v =
       algebraMap K (chapter07LocalField R K v) a := by
-  sorry
+  rfl
 
 @[simp]
 theorem chapter07FinitePrincipalIdeleEmbedding_apply
@@ -60,35 +61,45 @@ theorem chapter07_principal_idele_embedding_injective
     (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
     [Algebra R K] [IsFractionRing R K] [NumberField K] :
     Function.Injective (chapter07PrincipalIdeleEmbedding R K) := by
-  sorry
+  intro a b h
+  obtain ⟨v⟩ := (inferInstance : Nonempty (NumberField.InfinitePlace K))
+  apply Units.ext
+  apply (FaithfulSMul.algebraMap_injective K (v.Completion))
+  simpa using congrArg (fun z : chapter07IdeleGroup R K => z.1.1 v) h
 
 theorem chapter07_principal_ideles_are_discrete
     (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
-    [Algebra R K] [IsFractionRing R K] [NumberField K] :
+    [Algebra R K] [IsFractionRing R K] [NumberField K]
+    [Module.Finite ℤ R] [Module.Free ℤ R] :
     IsDiscrete (chapter07PrincipalIdeleSubgroup R K :
       Set (chapter07IdeleGroup R K)) := by
   sorry
 
 theorem chapter07_principal_ideles_are_closed
     (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
-    [Algebra R K] [IsFractionRing R K] [NumberField K] :
+    [Algebra R K] [IsFractionRing R K] [NumberField K]
+    [Module.Finite ℤ R] [Module.Free ℤ R] :
     IsClosed (chapter07PrincipalIdeleSubgroup R K :
       Set (chapter07IdeleGroup R K)) := by
   sorry
 
 theorem chapter07_finite_principal_ideles_are_not_dense
     (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
-    [Algebra R K] [IsFractionRing R K] [NumberField K] :
+    [Algebra R K] [IsFractionRing R K] [NumberField K]
+    [Module.Finite ℤ R] [Module.Free ℤ R] :
     ¬ DenseRange (chapter07FinitePrincipalIdeleEmbedding R K) := by
   sorry
 
 theorem chapter07_finite_principal_ideles_have_finite_order_restrictions
     (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
-    [Algebra R K] [IsFractionRing R K] [NumberField K]
+    [Algebra R K] [IsFractionRing R K]
     (a : Kˣ) :
     ∀ᶠ v : chapter07FinitePlace R in cofinite,
       Valued.v ((chapter07FinitePrincipalIdeleEmbedding R K a).1 v) = 1 := by
-  sorry
+  have ha : IsUnit ((chapter07FinitePrincipalIdeleEmbedding R K a :
+      chapter07FiniteAdeleRing R K)) :=
+    (chapter07FinitePrincipalIdeleEmbedding R K a).isUnit
+  exact (IsDedekindDomain.FiniteAdeleRing.isUnit_iff.mp ha).2
 
 /-- The idele class group `C_K = A_K^× / K^×`. -/
 abbrev chapter07IdeleClassGroup
@@ -112,51 +123,61 @@ theorem chapter07_idele_class_group_is_topological_group
     (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
     [Algebra R K] [IsFractionRing R K] :
     IsTopologicalGroup (chapter07IdeleClassGroup R K) := by
-  sorry
+  infer_instance
 
 theorem chapter07_idele_class_projection_kernel
     (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
     [Algebra R K] [IsFractionRing R K] :
     (chapter07IdeleClassProjection R K).ker =
       chapter07PrincipalIdeleSubgroup R K := by
-  sorry
+  exact QuotientGroup.ker_mk' _
 
 theorem chapter07_idele_class_group_is_locally_compact
     (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
-    [Algebra R K] [IsFractionRing R K] [NumberField K] :
+    [Algebra R K] [IsFractionRing R K] [NumberField K]
+    [Module.Finite ℤ R] [Module.Free ℤ R] :
     LocallyCompactSpace (chapter07IdeleClassGroup R K) := by
-  sorry
+  exact @QuotientGroup.instLocallyCompactSpace
+    (chapter07IdeleGroup R K) inferInstance inferInstance inferInstance
+    (chapter07_idele_group_is_locally_compact R K)
+    (chapter07PrincipalIdeleSubgroup R K)
 
 theorem chapter07_idele_class_group_is_hausdorff
     (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
-    [Algebra R K] [IsFractionRing R K] [NumberField K] :
+    [Algebra R K] [IsFractionRing R K] [NumberField K]
+    [Module.Finite ℤ R] [Module.Free ℤ R] :
     T2Space (chapter07IdeleClassGroup R K) := by
-  sorry
+  exact @QuotientGroup.instT2Space
+    (chapter07IdeleGroup R K) inferInstance inferInstance inferInstance
+    (chapter07PrincipalIdeleSubgroup R K)
+    (chapter07_principal_ideles_are_closed R K)
 
 /-- The quotient's positive-size witness.  The usual construction is the product of normalized
 local absolute values; the product formula makes it trivial on principal ideles. -/
 structure Chapter07IdeleClassSizeWitness
     (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
     [Algebra R K] [IsFractionRing R K] where
-  size : chapter07IdeleClassGroup R K →* ℝ≥0
+  size : chapter07IdeleClassGroup R K →* ℝ≥0ˣ
   continuous_size : Continuous size
   nontrivial : ∃ c : chapter07IdeleClassGroup R K, size c ≠ 1
 
 theorem chapter07_idele_class_group_has_positive_size
     (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
-    [Algebra R K] [IsFractionRing R K] [NumberField K] :
+    [Algebra R K] [IsFractionRing R K] [NumberField K]
+    [Module.Finite ℤ R] [Module.Free ℤ R] :
     Nonempty (Chapter07IdeleClassSizeWitness R K) := by
   sorry
 
 theorem chapter07_idele_class_group_not_compact
     (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
-    [Algebra R K] [IsFractionRing R K] [NumberField K] :
+    [Algebra R K] [IsFractionRing R K] [NumberField K]
+    [Module.Finite ℤ R] [Module.Free ℤ R] :
     ¬ CompactSpace (chapter07IdeleClassGroup R K) := by
   sorry
 
 theorem chapter07_idele_class_group_not_compact_from_positive_size
     (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
-    [Algebra R K] [IsFractionRing R K] [NumberField K]
+    [Algebra R K] [IsFractionRing R K]
     (w : Chapter07IdeleClassSizeWitness R K) :
     ¬ CompactSpace (chapter07IdeleClassGroup R K) := by
   sorry

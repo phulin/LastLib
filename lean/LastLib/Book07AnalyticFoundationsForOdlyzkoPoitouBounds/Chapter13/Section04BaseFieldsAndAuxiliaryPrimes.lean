@@ -14,7 +14,7 @@ open scoped BigOperators NumberField
 extension, expressed through the relative different. -/
 theorem chapter13_relative_rootDiscriminant_formula
     (F L : Type*) [Field F] [NumberField F] [Field L] [NumberField L]
-    [Algebra F L] [Module.Finite F L]
+    [Algebra F L] [IsScalarTower ℚ F L] [Module.Finite F L]
     [Module.Finite (𝓞 F) (𝓞 L)] :
     chapter13RootDiscriminant L =
       chapter13RootDiscriminant F *
@@ -69,8 +69,8 @@ theorem chapter13_absolute_degree_cap_from_base_field_ceiling
     (hC : chapter13C f ≤ Real.pi / 2)
     (hmargin : chapter13LogLowerBound f N α₀ >
       Real.log (chapter13AbsoluteCeilingFromLocalCosts F P))
-    (hanalytic : chapter13GlobalAnalyticBound.{u} f)
     (L : Type u) [Field L] [NumberField L]
+    (hanalytic : chapter13FieldwiseAnalyticBound f L)
     (hceil : chapter13RootDiscriminant L ≤
       chapter13AbsoluteCeilingFromLocalCosts F P)
     (hα : α₀ ≤ chapter13RealProportion L) :
@@ -92,8 +92,8 @@ theorem chapter13_base_field_ceiling_gives_relative_cap
     (hC : chapter13C f ≤ Real.pi / 2)
     (hmargin : chapter13LogLowerBound f N α₀ >
       Real.log (chapter13AbsoluteCeilingFromLocalCosts F P))
-    (hanalytic : chapter13GlobalAnalyticBound.{u} f)
     (L : Type u) [Field L] [NumberField L]
+    (hanalytic : chapter13FieldwiseAnalyticBound f L)
     [Algebra F L] [Algebra ℚ F] [Algebra ℚ L] [IsScalarTower ℚ F L]
     (hceil : chapter13RootDiscriminant L ≤
       chapter13AbsoluteCeilingFromLocalCosts F P)
@@ -101,7 +101,7 @@ theorem chapter13_base_field_ceiling_gives_relative_cap
     (Module.finrank F L : ℝ) < N / (chapter13Degree F : ℝ) := by
   have hdegree : chapter13Degree L < N := by
     exact chapter13_absolute_degree_cap_from_base_field_ceiling
-      F P α₀ N f hα₀ hα₀' hN hC hmargin hanalytic L hceil hα
+      F P α₀ N f hα₀ hα₀' hN hC hmargin L hanalytic hceil hα
   exact chapter13_relative_degree_cap_from_absolute_degree_cap F L hdegree
 
 end

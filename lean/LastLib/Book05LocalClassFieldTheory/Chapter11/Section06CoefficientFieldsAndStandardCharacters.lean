@@ -55,7 +55,11 @@ structure Chapter11FinitePAdicCoefficientData
 theorem chapter11_finite_padic_extension_has_coefficient_unit_data
     (p : ℕ) [Fact p.Prime] {E : Type*} [Field E]
     [Algebra (ℚ_[p]) E] [FiniteDimensional (ℚ_[p]) E]
-    [TopologicalSpace Eˣ] :
+    [TopologicalSpace Eˣ]
+    (hlocal :
+      ∃ v : Eˣ →* Multiplicative ℤ,
+        Continuous v ∧ IsCompact (v.ker : Set Eˣ) ∧
+          TotallyDisconnectedSpace v.ker ∧ T2Space v.ker) :
     Nonempty (Chapter11FinitePAdicCoefficientData p E) := by
   sorry
 
@@ -117,7 +121,8 @@ theorem chapter11_E_valued_characters_are_classified_by_unit_characters
 
 theorem chapter11_complex_galois_character_has_finite_image
     {G : Type*} [Group G] [TopologicalSpace G]
-    [IsTopologicalGroup G] [CompactSpace G] [TotallyDisconnectedSpace G]
+    [IsTopologicalGroup G] [T2Space G] [CompactSpace G]
+    [TotallyDisconnectedSpace G]
     (ρ : G →ₜ* ℂˣ) :
     chapter11FiniteImage ρ := by
   sorry
@@ -125,7 +130,8 @@ theorem chapter11_complex_galois_character_has_finite_image
 noncomputable def chapter11ComplexFiniteImageCharacterEquiv
     {K G : Type*} [Field K] [Group G]
     [TopologicalSpace Kˣ] [TopologicalSpace G]
-    [IsTopologicalGroup G] [CompactSpace G] [TotallyDisconnectedSpace G]
+    [IsTopologicalGroup G] [T2Space G] [CompactSpace G]
+    [TotallyDisconnectedSpace G]
     (R : Chapter11ReciprocityData K G) :
     {ρ : G →ₜ* ℂˣ // chapter11FiniteImage ρ} ≃
       {χ : Kˣ →ₜ* ℂˣ // chapter11FiniteImage χ} := by
@@ -140,7 +146,9 @@ theorem chapter11_complex_quasicharacter_with_nonfinite_parameter_is_not_galois
     {K : Type*} [Field K] [TopologicalSpace Kˣ]
     (D : Chapter11LocalFieldData K) (α : ℂˣ)
     (hα : ¬ IsOfFinOrder α) :
-    ¬ chapter11FiniteImage (chapter11ComplexUnramifiedQuasicharacter D α) := by
+    ¬ chapter11ProfiniteExtensionOf
+        (chapter11ComplexUnramifiedQuasicharacter D α) ∧
+      ¬ chapter11FiniteImage (chapter11ComplexUnramifiedQuasicharacter D α) := by
   sorry
 
 /-!
@@ -156,10 +164,15 @@ structure Chapter11PrimeToResidueCyclotomicData
     (D : Chapter11LocalFieldData K) (R : Chapter11ReciprocityData K G)
     where
   residueCharacteristic : ℕ
+  residueCharacteristic_prime : Nat.Prime residueCharacteristic
   coefficientPrime : ℕ
+  coefficientPrime_prime : Nat.Prime coefficientPrime
   primes_distinct : coefficientPrime ≠ residueCharacteristic
   residueCardinality : ℕ
+  residueCardinalityMap : ℕ → A
   parameter : A
+  parameter_eq_residueCardinalityMap :
+    parameter = residueCardinalityMap residueCardinality
   character : TopologicalAbelianization G →ₜ* A
   trivial_on_units :
     ∀ u : D.unitGroup,
@@ -199,12 +212,19 @@ structure Chapter11PadicCyclotomicFormulaData
   character : (ℚ_[p])ˣ →ₜ* A
   unitPart : (ℚ_[p])ˣ →* (ℤ_[p])ˣ
   unitCharacter : (ℤ_[p])ˣ →ₜ* A
-  character_eq_unit_part :
-    ∀ x : (ℚ_[p])ˣ,
-      character x = (unitCharacter (unitPart x))⁻¹
+  character_on_units :
+    ∀ u : (ℤ_[p])ˣ,
+      character (chapter11PadicUnitInclusion p u) = (unitCharacter u)⁻¹
   unitPart_on_units :
     ∀ u : (ℤ_[p])ˣ,
       unitPart (chapter11PadicUnitInclusion p u) = u
+  unitPart_on_prime_unit_decomposition :
+    ∀ (r : ℤ) (u : (ℤ_[p])ˣ),
+      unitPart
+          (chapter11PadicPrimeUnit p ^ r * chapter11PadicUnitInclusion p u) = u
+  unit_decomposition :
+    ∀ x : (ℚ_[p])ˣ, ∃ (r : ℤ) (u : (ℤ_[p])ˣ),
+      x = chapter11PadicPrimeUnit p ^ r * chapter11PadicUnitInclusion p u
   prime_is_trivial : character (chapter11PadicPrimeUnit p) = 1
 
 theorem chapter11_padic_cyclotomic_formula_Qp
@@ -235,16 +255,18 @@ def chapter11PadicNormPullbackCharacter
     [Algebra (ℚ_[p]) K] [FiniteDimensional (ℚ_[p]) K]
     [CommGroup A] [TopologicalSpace Kˣ] [TopologicalSpace A]
     [IsTopologicalGroup A]
+    (hcont : Continuous (chapter11NormHom (ℚ_[p]) K))
     (C : Chapter11PadicCyclotomicFormulaData p A) : Kˣ →ₜ* A :=
-  C.character.comp (chapter11ContinuousNormHom (ℚ_[p]) K)
+  C.character.comp (chapter11ContinuousNormHom (ℚ_[p]) K hcont)
 
 theorem chapter11_padic_cyclotomic_formula_finite_extension
     {p : ℕ} {K A : Type*} [Fact p.Prime] [Field K]
     [Algebra (ℚ_[p]) K] [FiniteDimensional (ℚ_[p]) K]
     [CommGroup A] [TopologicalSpace Kˣ] [TopologicalSpace A]
     [IsTopologicalGroup A]
+    (hcont : Continuous (chapter11NormHom (ℚ_[p]) K))
     (C : Chapter11PadicCyclotomicFormulaData p A) (x : Kˣ) :
-    chapter11PadicNormPullbackCharacter C x =
+    chapter11PadicNormPullbackCharacter hcont C x =
       (C.unitCharacter
       (C.unitPart (chapter11NormHom (ℚ_[p]) K x)))⁻¹ := by
   sorry
@@ -254,11 +276,13 @@ theorem chapter11_padic_cyclotomic_formula_finite_extension_standard
     [Algebra (ℚ_[p]) K] [FiniteDimensional (ℚ_[p]) K]
     [TopologicalSpace Kˣ] [TopologicalSpace (ℚ_[p])ˣ]
     [TopologicalSpace (ℤ_[p])ˣ] [IsTopologicalGroup (ℤ_[p])ˣ]
+    (hcont : Continuous (chapter11NormHom (ℚ_[p]) K))
     (χp : (ℚ_[p])ˣ →ₜ* (ℤ_[p])ˣ)
     (unitPart : (ℚ_[p])ˣ →* (ℤ_[p])ˣ)
     (hunitPart : ∀ y : (ℚ_[p])ˣ, χp y = (unitPart y)⁻¹)
     (χK : Kˣ →ₜ* (ℤ_[p])ˣ)
-    (hcompat : χK = χp.comp (chapter11ContinuousNormHom (ℚ_[p]) K))
+    (hcompat :
+      χK = χp.comp (chapter11ContinuousNormHom (ℚ_[p]) K hcont))
     (x : Kˣ) :
     χK x = (unitPart (chapter11NormHom (ℚ_[p]) K x))⁻¹ := by
   sorry
@@ -281,7 +305,8 @@ noncomputable def chapter11FiniteCharacterGaloisCounterpart
     [IsTopologicalGroup A] [T2Space A] [CompactSpace A]
     [TotallyDisconnectedSpace A]
     (R : Chapter11ReciprocityData K (Chapter11GaloisGroup K))
-    (χ : Kˣ →ₜ* A) : Chapter11GaloisGroup K →ₜ* A :=
+    (χ : Kˣ →ₜ* A) (_hχ : chapter11FiniteImage χ) :
+    Chapter11GaloisGroup K →ₜ* A :=
   (chapter11ContinuousCharacterEquiv R).symm χ
 
 def chapter11FiniteCharacterFixedField
@@ -290,9 +315,10 @@ def chapter11FiniteCharacterFixedField
     [IsTopologicalGroup A] [T2Space A] [CompactSpace A]
     [TotallyDisconnectedSpace A]
     (R : Chapter11ReciprocityData K (Chapter11GaloisGroup K))
-    (χ : Kˣ →ₜ* A) : IntermediateField K (AlgebraicClosure K) :=
+    (χ : Kˣ →ₜ* A) (hχ : chapter11FiniteImage χ) :
+    IntermediateField K (AlgebraicClosure K) :=
   chapter11FixedFieldOfGaloisCharacter
-    (chapter11FiniteCharacterGaloisCounterpart R χ)
+    (chapter11FiniteCharacterGaloisCounterpart R χ hχ)
 
 theorem chapter11_finite_character_fixed_field_is_kernel_fixed_field
     {K A : Type*} [Field K] [CommGroup A]
@@ -300,10 +326,10 @@ theorem chapter11_finite_character_fixed_field_is_kernel_fixed_field
     [IsTopologicalGroup A] [T2Space A] [CompactSpace A]
     [TotallyDisconnectedSpace A]
     (R : Chapter11ReciprocityData K (Chapter11GaloisGroup K))
-    (χ : Kˣ →ₜ* A) :
-    chapter11FiniteCharacterFixedField R χ =
+    (χ : Kˣ →ₜ* A) (hχ : chapter11FiniteImage χ) :
+    chapter11FiniteCharacterFixedField R χ hχ =
       chapter11FixedFieldOfGaloisCharacter
-        (chapter11FiniteCharacterGaloisCounterpart R χ) := by
+        (chapter11FiniteCharacterGaloisCounterpart R χ hχ) := by
   rfl
 
 /- LOCAL_DEPENDENCY_GUESS: the merged class-field API must identify the
@@ -313,21 +339,30 @@ theorem chapter11_finite_character_recovers_extension_invariants
     {K A : Type*} [Field K] [CommGroup A] [Finite A]
     [TopologicalSpace Kˣ] [TopologicalSpace A] [DiscreteTopology A]
     (C : Chapter11ClassFieldExistenceData K)
-    (D : Chapter11LocalFieldData K) (χ : Kˣ →ₜ* A)
+    (χ : Kˣ →ₜ* A)
     (hχ : chapter11FiniteImage χ) :
     ∃ e : C.extension,
       C.normGroup e = chapter11CharacterKernel χ ∧
-        C.degree e = Nat.card (Set.range χ) ∧
-          C.residueDegree e = chapter11ResidueDegreeOfCharacter D χ := by
+          C.degree e = Nat.card (Set.range χ) ∧
+          C.residueDegree e =
+            chapter11ResidueDegreeOfCharacter C.localFieldData χ hχ := by
   sorry
 
 theorem chapter11_finite_character_recovers_ramification_images
-    {K A : Type*} [Field K] [CommGroup A]
-    [TopologicalSpace Kˣ] [TopologicalSpace A]
-    (D : Chapter11LocalFieldData K) (χ : Kˣ →ₜ* A) (n : ℕ) :
-    chapter11UnitImage D χ n =
-      (D.unitFiltration n).map χ.toMonoidHom := by
-  rfl
+    {K G A : Type*} [Field K] [Group G] [CommGroup A]
+    [TopologicalSpace Kˣ] [TopologicalSpace G] [TopologicalSpace A]
+    [IsTopologicalGroup G] [IsTopologicalGroup A] [T2Space A]
+    [CompactSpace A] [TotallyDisconnectedSpace A]
+    (D : Chapter11LocalFieldData K) (R : Chapter11ReciprocityData K G)
+    (F : Chapter11GaloisRamificationFiltration (TopologicalAbelianization G))
+    (χ : Kˣ →ₜ* A)
+    (hfiltration :
+      ∀ n, F.group n = (D.unitFiltration n).map R.reciprocity.toMonoidHom)
+    (n : ℕ) :
+    (F.group n).map
+        (chapter11CorrespondingAbelianGaloisCharacter R χ).toMonoidHom =
+      chapter11UnitImage D χ n := by
+  sorry
 
 end
 end LastLib.Book05LocalClassFieldTheory.Chapter11

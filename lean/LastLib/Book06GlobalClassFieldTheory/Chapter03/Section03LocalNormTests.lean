@@ -5,7 +5,7 @@ namespace LastLib.Book06GlobalClassFieldTheory.Chapter03
 noncomputable section
 
 open Filter Set
-open scoped BigOperators RestrictedProduct
+open scoped BigOperators RestrictedProduct IsMulCommutative
 
 /-!
 ## 3.3. Local norm tests and the global kernel
@@ -70,7 +70,7 @@ theorem chapter03_isIdeleElementNorm_iff_mem_ideleNormSubgroup
     (N : Chapter03NormData S_K S_L) (a : Units K) :
     chapter03IsIdeleElementNorm N a ↔
       chapter03PrincipalIdeleHom S_K a ∈ chapter03IdeleNormSubgroup N := by
-  sorry
+  rfl
 
 theorem chapter03_principal_idele_norm_iff_local
     {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
@@ -78,7 +78,104 @@ theorem chapter03_principal_idele_norm_iff_local
     {S_K : Chapter03FieldIdeleData K} {S_L : Chapter03FieldIdeleData L}
     (N : Chapter03NormData S_K S_L) (a : Units K) :
     chapter03IsIdeleElementNorm N a ↔ chapter03IsLocalElementNorm N a := by
-  sorry
+  classical
+  constructor
+  · rintro ⟨y, hy⟩ v
+    let z : Chapter03LocalNormFiber N v := fun w => y w.1
+    refine ⟨z, ?_⟩
+    have hv := congrArg (fun x : Chapter03Ideles S_K => x v) hy
+    rw [chapter03LocalNormAt_apply]
+    rw [Finset.univ_eq_attach]
+    simp only [z]
+    exact (Finset.prod_attach (N.above v)
+      (fun w => N.localNorm v w (y w))).trans (by
+        simpa [chapter03IdeleNorm_apply] using hv)
+  · intro hlocal
+    let good : Chapter03Place K → Prop := fun v =>
+      S_K.finitePlace v ∧ N.unramified v ∧
+        S_K.embedding v a ∈ (S_K.localFactor v).unit
+    have hgood : ∀ᶠ v in cofinite, good v := by
+      filter_upwards [N.eventually_finite_unramified,
+        S_K.embedding_eventually_mem_unit a] with v hv hx
+      exact ⟨hv.1, hv.2, hx⟩
+    have hunit_vector : ∀ v, good v →
+        ∃ z : Chapter03LocalNormFiber N v,
+          (∀ w, z w ∈ (S_L.localFactor w.1).unit) ∧
+            chapter03LocalNormAt N v z = S_K.embedding v a := by
+      intro v hv
+      let w₀ : {w // w ∈ N.above v} :=
+        ⟨Classical.choose (N.above_nonempty v),
+          Classical.choose_spec (N.above_nonempty v)⟩
+      let y₀ : (S_L.localFactor w₀.1).carrier :=
+        Classical.choose (N.localNorm_units_surjective hv.1 hv.2.1 w₀.1 w₀.2
+          (S_K.embedding v a) hv.2.2)
+      have hy₀ := Classical.choose_spec (N.localNorm_units_surjective hv.1 hv.2.1 w₀.1 w₀.2
+        (S_K.embedding v a) hv.2.2)
+      let z : Chapter03LocalNormFiber N v := fun w =>
+        if h : w = w₀ then h ▸ y₀ else 1
+      refine ⟨z, ?_, ?_⟩
+      · intro w
+        by_cases h : w = w₀
+        · subst w
+          simpa [z] using hy₀.1
+        · simp [z, h]
+      · rw [chapter03LocalNormAt_apply]
+        rw [Finset.prod_eq_single_of_mem w₀ (Finset.mem_univ w₀)]
+        · simpa [z] using hy₀.2
+        · intro w hw hne
+          simp [z, hne]
+    let z : ∀ v, Chapter03LocalNormFiber N v := fun v =>
+      if hv : good v then Classical.choose (hunit_vector v hv)
+      else Classical.choose (hlocal v)
+    have hz : ∀ v, chapter03LocalNormAt N v (z v) = S_K.embedding v a := by
+      intro v
+      by_cases hv : good v
+      · simpa [z, hv] using (Classical.choose_spec (hunit_vector v hv)).2
+      · simpa [z, hv] using (Classical.choose_spec (hlocal v))
+    have hbelow : Filter.Tendsto N.below cofinite cofinite :=
+      Filter.Tendsto.cofinite_of_finite_preimage_singleton (fun v => by
+        refine (N.above v).finite_toSet.subset ?_
+        intro w hw
+        exact (N.mem_above_iff v w).2 (by simpa using hw))
+    let y : Chapter03Ideles S_L :=
+      ⟨fun w => z (N.below w)
+          ⟨w, (N.mem_above_iff (N.below w) w).2 rfl⟩, by
+        have hgood' : ∀ᶠ w in cofinite, good (N.below w) := hbelow hgood
+        filter_upwards [hgood'] with w hw
+        have hunit := (Classical.choose_spec
+          (hunit_vector (N.below w) hw)).1
+          ⟨w, (N.mem_above_iff (N.below w) w).2 rfl⟩
+        have hzgood : z (N.below w) =
+            Classical.choose (hunit_vector (N.below w) hw) := by
+          exact dif_pos hw
+        rw [hzgood]
+        exact hunit⟩
+    refine ⟨y, ?_⟩
+    apply RestrictedProduct.ext
+    intro v
+    rw [chapter03IdeleNorm_apply]
+    calc
+      (N.above v).prod (fun w => N.localNorm v w (y w)) =
+          (N.above v).attach.prod
+            (fun w => N.localNorm v w.1 (z v w)) := by
+        rw [← Finset.prod_attach (N.above v)
+          (fun w => N.localNorm v w (y w))]
+        apply Finset.prod_congr rfl
+        intro w _
+        rcases w with ⟨w, hwmem⟩
+        have hwbelow : N.below w = v :=
+          (N.mem_above_iff v w).1 hwmem
+        change N.localNorm v w
+            (z (N.below w)
+              ⟨w, (N.mem_above_iff (N.below w) w).2 rfl⟩) =
+          N.localNorm v w (z v ⟨w, hwmem⟩)
+        cases hwbelow
+        rfl
+      _ = S_K.embedding v a := by
+        have hv := hz v
+        rw [chapter03LocalNormAt_apply] at hv
+        rw [Finset.univ_eq_attach] at hv
+        exact hv
 
 /-- The field norm on global units, as the multiplicative homomorphism used by principal
 idèles. -/
@@ -87,7 +184,7 @@ noncomputable def chapter03ElementNorm
     [Algebra K L] [FiniteDimensional K L]
     {S_K : Chapter03FieldIdeleData K} {S_L : Chapter03FieldIdeleData L}
     (_N : Chapter03NormData S_K S_L) : Units L →* Units K :=
-  Units.map (Algebra.norm K (S := L))
+  LastLib.Book06GlobalClassFieldTheory.Chapter01.fieldNormUnits K L
 
 def chapter03ElementNormSubgroup
     {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
@@ -103,7 +200,7 @@ theorem chapter03_elementNorm_mem_iff
     (N : Chapter03NormData S_K S_L) (a : Units K) :
     a ∈ chapter03ElementNormSubgroup N ↔
       ∃ b : Units L, chapter03ElementNorm N b = a := by
-  sorry
+  rfl
 
 /- A class norm is intentionally a separate predicate from an element norm. -/
 def chapter03IsClassNorm
@@ -119,7 +216,7 @@ theorem chapter03_isClassNorm_iff_mem_normClassSubgroup
     {S_K : Chapter03FieldIdeleData K} {S_L : Chapter03FieldIdeleData L}
     (N : Chapter03NormData S_K S_L) (c : Chapter03ClassGroup S_K) :
     chapter03IsClassNorm N c ↔ c ∈ chapter03NormClassSubgroup N := by
-  sorry
+  rfl
 
 @[simp] theorem chapter03_principal_class_is_identity
     {K : Type*} [Field K] [NumberField K]
@@ -136,7 +233,9 @@ theorem chapter03_principal_class_is_classNorm
     chapter03IsClassNorm N
       (QuotientGroup.mk' (chapter03PrincipalSubgroup S_K)
         (chapter03PrincipalIdeleHom S_K a)) := by
-  sorry
+  refine ⟨1, ?_⟩
+  rw [map_one]
+  exact (chapter03_principal_class_is_identity a).symm
 
 /-!
 The theorem below records the local norm test for principal elements.  Its proof uses the
@@ -162,6 +261,7 @@ theorem chapter03_principal_idele_is_norm_iff_local_test
 theorem chapter03_local_reciprocity_kills_norm
     {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
     [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
+    [IsMulCommutative (Gal(L / K))]
     {S_K : Chapter03FieldIdeleData K} {S_L : Chapter03FieldIdeleData L}
     {N : Chapter03NormData S_K S_L}
     (A : Chapter03ArtinReciprocityData N) (v : Chapter03Place K)
@@ -178,7 +278,15 @@ theorem chapter03_artin_norm_idele
     {N : Chapter03NormData S_K S_L}
     (A : Chapter03ArtinReciprocityData N) (y : Chapter03Ideles S_L) :
     A.globalArtin (chapter03IdeleNorm N y) = 1 := by
-  sorry
+  obtain ⟨s, hs, hprod⟩ := A.globalArtin_local_product (chapter03IdeleNorm N y)
+  rw [hprod]
+  apply Finset.prod_eq_one
+  intro v hv
+  rw [chapter03IdeleNorm_apply]
+  rw [map_prod]
+  apply Finset.prod_eq_one
+  intro w hw
+  exact A.local_norm_trivial v w hw (y w)
 
 theorem chapter03_classNorm_range_le_artin_kernel
     {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
@@ -188,7 +296,12 @@ theorem chapter03_classNorm_range_le_artin_kernel
     {N : Chapter03NormData S_K S_L}
     (A : Chapter03ArtinReciprocityData N) :
     (chapter03ClassNorm N).range ≤ (chapter03ClassArtin A).ker := by
-  sorry
+  intro c hc
+  rcases hc with ⟨d, rfl⟩
+  obtain ⟨y, rfl⟩ := QuotientGroup.mk'_surjective
+    (chapter03PrincipalSubgroup S_L) d
+  rw [MonoidHom.mem_ker, chapter03ClassNorm_mk, chapter03ClassArtin_mk]
+  exact chapter03_artin_norm_idele A y
 
 /- The reverse inclusion is deliberately absent: it is the global norm theorem deferred to the
 class-formation argument, and it cannot be proved by independent coordinatewise tests. -/

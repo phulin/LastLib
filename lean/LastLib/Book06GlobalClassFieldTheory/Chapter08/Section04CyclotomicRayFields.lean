@@ -16,18 +16,18 @@ theorem chapter08_rational_ordinary_class_group_is_trivial :
 
 theorem chapter08_rational_ray_group_with_infinity
     {I C : Type u} [CommGroup I] [CommGroup C]
-    (m : ℕ) (hm : 2 < m) (R : Chapter08RayClassPresentation ℚ I C)
-    (hmod : R.modulus = chapter08RationalRayModulus m) :
-    Nonempty (chapter08RayClassGroup R ≃*
-      chapter08RationalRayGroup m) := by
+    (m : ℕ) (hm0 : m ≠ 0) (hm : 2 < m)
+    (R : Chapter08RayClassPresentation ℚ I C)
+    (hmod : R.modulus = chapter08RationalRayModulus m hm0) :
+    chapter08RayClassGroup R ≃* chapter08RationalRayGroup m := by
   sorry
 
 theorem chapter08_rational_ray_group_without_infinity
     {I C : Type u} [CommGroup I] [CommGroup C]
-    (m : ℕ) (hm : 2 < m) (R : Chapter08RayClassPresentation ℚ I C)
-    (hmod : R.modulus = chapter08RationalRayModulusWithoutInfinity m) :
-    Nonempty (chapter08RayClassGroup R ≃*
-      chapter08RationalRayGroupWithoutInfinity m) := by
+    (m : ℕ) (hm0 : m ≠ 0) (hm : 2 < m)
+    (R : Chapter08RayClassPresentation ℚ I C)
+    (hmod : R.modulus = chapter08RationalRayModulusWithoutInfinity m hm0) :
+    chapter08RayClassGroup R ≃* chapter08RationalRayGroupWithoutInfinity m := by
   sorry
 
 /- The two rational calculations are the book-facing form of the positivity
@@ -42,11 +42,11 @@ theorem chapter08_rational_infinity_positivity_retains_sign
 noncomputable def chapter08_rational_maximal_real_subfield_is_the_no_infinity_field
     {I C I₀ C₀ : Type u} [CommGroup I] [CommGroup C]
     [CommGroup I₀] [CommGroup C₀]
-    (m : ℕ) (hm : 2 < m)
+    (m : ℕ) (hm0 : m ≠ 0) (hm : 2 < m)
     (R : Chapter08RayClassPresentation ℚ I C)
     (R₀ : Chapter08RayClassPresentation ℚ I₀ C₀)
-    (hmod : R.modulus = chapter08RationalRayModulus m)
-    (hmod₀ : R₀.modulus = chapter08RationalRayModulusWithoutInfinity m) :
+    (hmod : R.modulus = chapter08RationalRayModulus m hm0)
+    (hmod₀ : R₀.modulus = chapter08RationalRayModulusWithoutInfinity m hm0) :
     chapter08RayClassGroup R₀ ≃*
       chapter08RationalRayGroupWithoutInfinity m := by
   sorry
@@ -68,20 +68,23 @@ theorem chapter08_cyclotomic_root_is_primitive
 
 theorem chapter08_cyclotomic_degree
     {m : ℕ} {F : Type u} [Field F] [Algebra ℚ F]
-    [NumberField F] [IsCyclotomicExtension {m} ℚ F] :
+    [NumberField F] [FiniteDimensional ℚ F]
+    [IsCyclotomicExtension {m} ℚ F] :
     Module.finrank ℚ F = Nat.totient m := by
   sorry
 
 theorem chapter08_cyclotomic_unramified_away_from_m
     {m p : ℕ} {F : Type u} [Field F] [Algebra ℚ F]
-    [NumberField F] [IsCyclotomicExtension {m} ℚ F]
+    [NumberField F] [FiniteDimensional ℚ F]
+    [IsCyclotomicExtension {m} ℚ F]
     [Fact p.Prime] (hpm : ¬p ∣ m) :
     Algebra.IsUnramifiedIn (𝓞 F) (Ideal.span {(p : ℤ)}) := by
   sorry
 
 theorem chapter08_cyclotomic_real_place_complexifies
     {m : ℕ} {F : Type u} [Field F] [Algebra ℚ F]
-    [NumberField F] [IsCyclotomicExtension {m} ℚ F]
+    [NumberField F] [FiniteDimensional ℚ F]
+    [IsCyclotomicExtension {m} ℚ F]
     (hm : 2 < m) :
     ¬chapter08RealPlacesStayReal ℚ F := by
   sorry
@@ -94,17 +97,17 @@ theorem chapter08_cyclotomic_local_artin_is_trivial_on_principal_units
       let S := P.localSystem v
       letI : CommGroup S.unitGroup := S.unitGroupCommGroup
       S.principalUnit (P.principalUnitDepth v) ≤ S.localArtin.ker := by
-  sorry
+  exact P.principalUnitDepth_killed
 
 theorem chapter08_cyclotomic_conductor_divides_written_modulus
     {m : ℕ} {F : Type u} [Field F] [Algebra ℚ F]
     [NumberField F] [IsCyclotomicExtension {m} ℚ F]
     [IsAbelianGalois ℚ F]
-    (hm : 2 < m) (P : Chapter08CyclotomicConductorProfile m F hm)
+    (hm0 : m ≠ 0) (hm : 2 < m) (P : Chapter08CyclotomicConductorProfile m F hm)
     (E : Chapter08AbelianExtensionData ℚ F)
     (hconductor : E.conductor = P.conductor)
-    (hwritten : P.writtenModulus = chapter08RationalRayModulus m) :
-    chapter08ConductorDivides E (chapter08RationalRayModulus m) := by
+    (hwritten : P.writtenModulus = chapter08RationalRayModulus m hm0) :
+    chapter08ConductorDivides E (chapter08RationalRayModulus m hm0) := by
   sorry
 
 theorem chapter08_cyclotomic_ray_field_contains_cyclotomic_field
@@ -114,8 +117,8 @@ theorem chapter08_cyclotomic_ray_field_contains_cyclotomic_field
     {I C : Type u} [CommGroup I] [CommGroup C]
     (R : Chapter08RayClassPresentation ℚ I C)
     (Rfield : Chapter08RayClassFieldData ℚ R)
-    (hm : 2 < m)
-    (hmod : R.modulus = chapter08RationalRayModulus m)
+    (hm0 : m ≠ 0) (hm : 2 < m)
+    (hmod : R.modulus = chapter08RationalRayModulus m hm0)
     (E : Chapter08AbelianExtensionData ℚ F)
     (hcond : chapter08ConductorDivides E R.modulus) :
     letI : Field Rfield.carrier := Rfield.carrierField
@@ -130,10 +133,10 @@ theorem chapter08_ray_class_field_degree_is_totient
     {m : ℕ} {I C : Type u} [CommGroup I] [CommGroup C]
     (R : Chapter08RayClassPresentation ℚ I C)
     (Rfield : Chapter08RayClassFieldData ℚ R)
-    (hmod : R.modulus = chapter08RationalRayModulus m)
+    (hm0 : m ≠ 0)
+    (hmod : R.modulus = chapter08RationalRayModulus m hm0)
     (hm : 2 < m)
-    (hray : Nonempty (chapter08RayClassGroup R ≃*
-      chapter08RationalRayGroup m)) :
+    (hray : chapter08RayClassGroup R ≃* chapter08RationalRayGroup m) :
     letI : Field Rfield.carrier := Rfield.carrierField
     letI : Algebra ℚ Rfield.carrier := Rfield.carrierAlgebra
     letI : NumberField Rfield.carrier := Rfield.carrierNumberField
@@ -149,8 +152,8 @@ theorem chapter08_cyclotomic_field_is_the_full_ray_class_field
     {I C : Type u} [CommGroup I] [CommGroup C]
     (R : Chapter08RayClassPresentation ℚ I C)
     (Rfield : Chapter08RayClassFieldData ℚ R)
-    (hm : 2 < m)
-    (hmod : R.modulus = chapter08RationalRayModulus m)
+    (hm0 : m ≠ 0) (hm : 2 < m)
+    (hmod : R.modulus = chapter08RationalRayModulus m hm0)
     (E : Chapter08AbelianExtensionData ℚ F)
     (hcond : chapter08ConductorDivides E R.modulus)
     (hdegreeRay :
@@ -173,10 +176,10 @@ theorem chapter08_cyclotomic_no_infinity_field_is_maximal_real_subfield
     {m : ℕ} {F : Type u} [Field F] [Algebra ℚ F]
     [NumberField F] [IsCyclotomicExtension {m} ℚ F]
     {I C : Type u} [CommGroup I] [CommGroup C]
-    (D : Chapter08CyclotomicData m F) (hm : 2 < m)
+    (D : Chapter08CyclotomicData m F) (hm0 : m ≠ 0) (hm : 2 < m)
     (R₀ : Chapter08RayClassPresentation ℚ I C)
     (R₀field : Chapter08RayClassFieldData ℚ R₀)
-    (hmod : R₀.modulus = chapter08RationalRayModulusWithoutInfinity m) :
+    (hmod : R₀.modulus = chapter08RationalRayModulusWithoutInfinity m hm0) :
     letI : Field R₀field.carrier := R₀field.carrierField
     letI : Algebra ℚ R₀field.carrier := R₀field.carrierAlgebra
     letI : NumberField R₀field.carrier := R₀field.carrierNumberField
@@ -190,17 +193,18 @@ theorem chapter08_written_modulus_covers_the_two_mod_four_case
     {m : ℕ} (hm : m % 4 = 2)
     {F : Type u} [Field F] [Algebra ℚ F]
     [NumberField F] [IsCyclotomicExtension {m} ℚ F]
-    (hmgt : 2 < m)
+    (hm0 : m ≠ 0) (hmgt : 2 < m)
     (P : Chapter08CyclotomicConductorProfile m F hmgt)
-    (hwritten : P.writtenModulus = chapter08RationalRayModulus m) :
-    chapter08ModulusDivides P.conductor (chapter08RationalRayModulus m) := by
+    (hwritten : P.writtenModulus = chapter08RationalRayModulus m hm0) :
+    chapter08ModulusDivides P.conductor (chapter08RationalRayModulus m hm0) := by
   sorry
 
 /-! The complete-splitting congruence. -/
 
 theorem chapter08_cyclotomic_prime_splits_completely_iff_congruent_one
     {m p : ℕ} {F : Type u} [Field F] [Algebra ℚ F]
-    [NumberField F] [IsCyclotomicExtension {m} ℚ F]
+    [NumberField F] [FiniteDimensional ℚ F]
+    [IsCyclotomicExtension {m} ℚ F]
     [IsAbelianGalois ℚ F] [Fact p.Prime] (hm : 2 < m)
     (hpm : ¬p ∣ m) :
     chapter08SplitsCompletely ℚ F (Ideal.span {(p : 𝓞 ℚ)}) ↔

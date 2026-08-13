@@ -1,4 +1,5 @@
 import Mathlib.FieldTheory.AbsoluteGaloisGroup
+import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.GroupTheory.OrderOfElement
 import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
 import Mathlib.RingTheory.Norm.Basic
@@ -7,6 +8,7 @@ import Mathlib.Topology.Algebra.ContinuousMonoidHom
 import Mathlib.Topology.Algebra.Group.TopologicalAbelianization
 import Mathlib.Topology.Algebra.Group.Units
 import Mathlib.Topology.Algebra.OpenSubgroup
+import LastLib.Book05LocalClassFieldTheory.Chapter10.Dependencies
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter11
 
@@ -18,12 +20,11 @@ open scoped Topology
 /-!
 Shared interfaces for Chapter 11.
 
-The preceding Book 5 chapters are not present in this checkout.  The
-interfaces marked `LOCAL_DEPENDENCY_GUESS` are therefore the smallest
-book-facing interfaces needed below.  Their fields are deliberately
-canonical constructions (the local unit filtration, reciprocity, and the
-finite abelian existence theorem), rather than propositions tailored to one
-of the conclusions of this chapter.
+The preceding Book 5 chapters expose concrete field-side APIs.  The
+interfaces marked `LOCAL_DEPENDENCY_GUESS` are therefore small book-facing
+wrappers for the topological and character-theoretic statements needed below.
+Their fields are deliberately canonical constructions or earlier theorems,
+rather than propositions tailored to one of the conclusions of this chapter.
 -/
 
 abbrev Chapter11GaloisGroup (K : Type*) [Field K] := Field.absoluteGaloisGroup K
@@ -44,10 +45,16 @@ def chapter11FiniteImage
     (χ : X →ₜ* A) : Prop := (Set.range χ).Finite
 
 def chapter11FiniteOrderCharacter
-    {X A : Type*} [Monoid X] [Monoid A]
+    {X A : Type*} [Group X] [CommGroup A]
     [TopologicalSpace X] [TopologicalSpace A]
     (χ : X →ₜ* A) : Prop :=
   chapter11FiniteImage χ
+
+def chapter11CharacterKernel
+    {K A : Type*} [Field K] [CommGroup A]
+    [TopologicalSpace Kˣ] [TopologicalSpace A]
+    (χ : Kˣ →ₜ* A) : Subgroup Kˣ :=
+  χ.toMonoidHom.ker
 
 /-- The quotient map to the topological abelianization. -/
 def chapter11AbelianizationMap
@@ -77,6 +84,9 @@ structure Chapter11LocalFieldData
     ∀ u : unitGroup, valuation (u : Kˣ) = Multiplicative.ofAdd 0
   /-- The algebraic decomposition `ℤ × O_Kˣ ≃ Kˣ`. -/
   decomposition : (Multiplicative ℤ × unitGroup) ≃* Kˣ
+  /-- The decomposition is a homeomorphism for the local-field topology. -/
+  decomposition_continuous : Continuous decomposition
+  decomposition_symm_continuous : Continuous decomposition.symm
   decomposition_apply :
     ∀ r : Multiplicative ℤ, ∀ u : unitGroup,
       decomposition (r, u) = uniformizer ^ r.toAdd * (u : Kˣ)
@@ -88,6 +98,27 @@ structure Chapter11LocalFieldData
   unitFiltration_basis :
     ∀ s ∈ 𝓝 (1 : Kˣ), ∃ n, (unitFiltration n : Set Kˣ) ⊆ s
   unitGroup_compact : IsCompact (unitGroup : Set Kˣ)
+
+/-!
+The abstract profinite completion forgets the original topology on `Kˣ`.
+When it is compared with continuous characters for that topology, one needs
+the local-field fact that ordinary neighborhoods contain open finite-index
+subgroups. Keeping this as a separate hypothesis makes the completion
+criterion valid for the intended local-field instances without baking an
+unrelated finite-index assertion into the decomposition record.
+-/
+def chapter11OpenFiniteIndexCofinality
+    {K : Type*} [Field K] [TopologicalSpace Kˣ] : Prop :=
+  ∀ V : Set Kˣ, V ∈ 𝓝 (1 : Kˣ) →
+    ∃ H : Subgroup Kˣ,
+      IsOpen (H : Set Kˣ) ∧ H.FiniteIndex ∧ (H : Set Kˣ) ⊆ V
+
+def chapter11ResidueDegreeOfSubgroup
+    {K : Type*} [Field K] [TopologicalSpace Kˣ]
+    (D : Chapter11LocalFieldData K) (H : Subgroup Kˣ) : ℕ :=
+  orderOf (QuotientGroup.mk'
+    (D.unitGroup.map (QuotientGroup.mk' H))
+    (QuotientGroup.mk' H D.uniformizer))
 
 abbrev Chapter11UnitGroup
     {K : Type*} [Field K] [TopologicalSpace Kˣ]
@@ -117,6 +148,8 @@ structure Chapter11ReciprocityData
     ∀ x : Kˣ,
       reciprocity x = completionEquiv
         (ProfiniteGrp.ProfiniteCompletion.etaFn (GrpCat.of Kˣ) x)
+  /-- The local-field topology is cofinal with the finite-index topology. -/
+  openFiniteIndexCofinality : chapter11OpenFiniteIndexCofinality (K := K)
 
 /-!
 The two Frobenius/inertia facts used in §11.3 are kept separate from the
@@ -150,17 +183,24 @@ changing the character statements below.
   extension/norm-group construction from Book 5, Chapters 6--10. -/
 class Chapter11ClassFieldExistenceData
     (K : Type*) [Field K] [TopologicalSpace Kˣ] where
+  localFieldData : Chapter11LocalFieldData K
   extension : Type*
   normGroup : extension → Subgroup Kˣ
+  normGroup_finiteIndex : ∀ e : extension, (normGroup e).FiniteIndex
   degree : extension → ℕ
   cyclic : extension → Prop
   residueDegree : extension → ℕ
+  cyclic_iff_quotient_isCyclic :
+    ∀ e : extension, cyclic e ↔ IsCyclic (Kˣ ⧸ normGroup e)
   realizes :
     ∀ H : Subgroup Kˣ, IsOpen (H : Set Kˣ) → H.FiniteIndex →
       ∃ e : extension, normGroup e = H
   degree_eq_index :
-    ∀ (e : extension) [_h : (normGroup e).FiniteIndex],
-      degree e = (normGroup e).index
+    ∀ (e : extension), degree e = (normGroup e).index
+  residueDegree_eq_subgroup :
+    ∀ (e : extension),
+      residueDegree e =
+        chapter11ResidueDegreeOfSubgroup localFieldData (normGroup e)
 
 /-!
 Tower compatibility is stated on chosen topological models of the two Galois
@@ -172,6 +212,8 @@ operations in the source dictionary.
   closure and the finite-index transfer construction. -/
 structure Chapter11TowerData
     (K L Gₖ Gₗ : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [Algebra.IsSeparable K L]
+    [TopologicalSpace Kˣ] [TopologicalSpace Lˣ]
     [Group Gₖ] [Group Gₗ]
     [TopologicalSpace Gₖ] [TopologicalSpace Gₗ]
     [IsTopologicalGroup Gₖ] [IsTopologicalGroup Gₗ] where
@@ -181,6 +223,10 @@ structure Chapter11TowerData
     TopologicalAbelianization Gₗ →ₜ* TopologicalAbelianization Gₖ
   transferAb :
     TopologicalAbelianization Gₖ →ₜ* TopologicalAbelianization Gₗ
+  norm_continuous :
+    Continuous (Units.map (Algebra.norm K) : Lˣ → Kˣ)
+  inclusion_continuous :
+    Continuous (Units.map (algebraMap K L).toMonoidHom : Kˣ → Lˣ)
   restrictionAb_compatibility :
     restrictionAb.comp (chapter11AbelianizationMap Gₗ) =
       (chapter11AbelianizationMap Gₖ).comp restriction
@@ -188,14 +234,34 @@ structure Chapter11TowerData
 def chapter11NormHom
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] : Lˣ →* Kˣ :=
-  Units.map (Algebra.norm K)
+  LastLib.Book05LocalClassFieldTheory.Chapter10.chapter10NormHom K L
+
+def chapter11NormGroup
+    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] : Subgroup Kˣ :=
+  LastLib.Book05LocalClassFieldTheory.Chapter10.chapter10NormSubgroup K L
+
+/-!
+Finite reciprocity is the earlier-chapter input needed to turn an embedding of
+a finite abelian Galois group into a continuous multiplicative character.
+-/
+structure Chapter11FiniteArtinData
+    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L]
+    [TopologicalSpace Kˣ] [TopologicalSpace (Gal(L / K))]
+    [DiscreteTopology (Gal(L / K))] where
+  reciprocity : Kˣ →ₜ* Gal(L / K)
+  reciprocity_surjective : Function.Surjective reciprocity
+  kernel_eq_norm :
+    reciprocity.toMonoidHom.ker = chapter11NormGroup K L
 
 def chapter11ContinuousNormHom
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L]
-    [TopologicalSpace Lˣ] [TopologicalSpace Kˣ] : Lˣ →ₜ* Kˣ :=
+    [TopologicalSpace Lˣ] [TopologicalSpace Kˣ]
+    (hcont : Continuous (chapter11NormHom K L)) : Lˣ →ₜ* Kˣ :=
   { toMonoidHom := chapter11NormHom K L
-    continuous_toFun := by sorry }
+    continuous_toFun := hcont }
 
 def chapter11MultiplicativeInclusion
     (K L : Type*) [Field K] [Field L] [Algebra K L] : Kˣ →* Lˣ :=
@@ -203,32 +269,36 @@ def chapter11MultiplicativeInclusion
 
 def chapter11ContinuousMultiplicativeInclusion
     (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [TopologicalSpace Kˣ] [TopologicalSpace Lˣ] : Kˣ →ₜ* Lˣ :=
+    [TopologicalSpace Kˣ] [TopologicalSpace Lˣ]
+    (hcont : Continuous (chapter11MultiplicativeInclusion K L)) : Kˣ →ₜ* Lˣ :=
   { toMonoidHom := chapter11MultiplicativeInclusion K L
-    continuous_toFun := by sorry }
+    continuous_toFun := hcont }
 
 def chapter11NormRestrictionCompatibility
     {K L Gₖ Gₗ : Type*} [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L]
+    [FiniteDimensional K L] [Algebra.IsSeparable K L]
     [Group Gₖ] [Group Gₗ] [TopologicalSpace Kˣ] [TopologicalSpace Lˣ]
     [TopologicalSpace Gₖ] [TopologicalSpace Gₗ] [IsTopologicalGroup Gₖ]
     [IsTopologicalGroup Gₗ]
-    (Rₖ : Chapter11ReciprocityData K Gₖ)
-    (Rₗ : Chapter11ReciprocityData L Gₗ)
-    (T : Chapter11TowerData K L Gₖ Gₗ) : Prop :=
+  (Rₖ : Chapter11ReciprocityData K Gₖ)
+  (Rₗ : Chapter11ReciprocityData L Gₗ)
+  (T : Chapter11TowerData K L Gₖ Gₗ) : Prop :=
   T.restrictionAb.comp Rₗ.reciprocity =
-    Rₖ.reciprocity.comp (chapter11ContinuousNormHom K L)
+    Rₖ.reciprocity.comp
+      (chapter11ContinuousNormHom K L T.norm_continuous)
 
 def chapter11TransferInclusionCompatibility
     {K L Gₖ Gₗ : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [Algebra.IsSeparable K L]
     [Group Gₖ] [Group Gₗ] [TopologicalSpace Kˣ] [TopologicalSpace Lˣ]
     [TopologicalSpace Gₖ] [TopologicalSpace Gₗ] [IsTopologicalGroup Gₖ]
     [IsTopologicalGroup Gₗ]
-    (Rₖ : Chapter11ReciprocityData K Gₖ)
-    (Rₗ : Chapter11ReciprocityData L Gₗ)
-    (T : Chapter11TowerData K L Gₖ Gₗ) : Prop :=
+  (Rₖ : Chapter11ReciprocityData K Gₖ)
+  (Rₗ : Chapter11ReciprocityData L Gₗ)
+  (T : Chapter11TowerData K L Gₖ Gₗ) : Prop :=
   T.transferAb.comp Rₖ.reciprocity =
-    Rₗ.reciprocity.comp (chapter11ContinuousMultiplicativeInclusion K L)
+    Rₗ.reciprocity.comp
+      (chapter11ContinuousMultiplicativeInclusion K L T.inclusion_continuous)
 
 /- A local coefficient-field unit group, used in §§11.1 and 11.6. -/
 structure Chapter11CoefficientUnitData

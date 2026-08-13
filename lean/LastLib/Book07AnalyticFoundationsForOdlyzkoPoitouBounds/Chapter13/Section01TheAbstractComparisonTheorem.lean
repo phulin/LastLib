@@ -24,7 +24,8 @@ theorem chapter13_abstract_comparison_theorem
     (hmargin :
       Real.eulerMascheroniConstant + Real.log (8 * Real.pi) + α₀ * (Real.pi / 2) -
           4 * chapter13A F / (N : ℝ) - chapter13B F - α₀ * chapter13C F > Real.log U)
-    (hanalytic : chapter13GlobalAnalyticBound.{u} F) :
+    (hanalytic : ∀ (K : Type u) [Field K] [NumberField K],
+      chapter13FieldwiseAnalyticBound F K) :
     ∀ (K : Type u) [Field K] [NumberField K],
       chapter13RootDiscriminant K ≤ U →
       α₀ ≤ chapter13RealProportion K →
@@ -39,7 +40,7 @@ theorem chapter13_degree_lt_of_discriminant_ceiling
     (hC : chapter13C F ≤ Real.pi / 2)
     (hmargin : chapter13LogLowerBound F N α₀ > Real.log U)
     {K : Type u} [Field K] [NumberField K]
-    (hanalytic : chapter13GlobalAnalyticBound.{u} F)
+    (hanalytic : chapter13FieldwiseAnalyticBound F K)
     (hceil : chapter13RootDiscriminant K ≤ U)
     (hα : α₀ ≤ chapter13RealProportion K) :
     chapter13Degree K < N := by

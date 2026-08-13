@@ -14,16 +14,14 @@ open NumberField IsDedekindDomain
 sequence below uses `chapter09NormOneClassIdealClassMap`, the map descended to
 the norm-one idele class group. -/
 def chapter09NormOneIdealClassMap
-    (K : Type*) [Field K] [NumberField K]
-    (D : Chapter09IdeleIdealData K) :
+    (K : Type*) [Field K] [NumberField K] :
     chapter09NormOneIdeles K →* ClassGroup (𝓞 K) :=
-  D.idealClassMap.comp
+  (chapter09CanonicalIdeleIdealData K).idealClassMap.comp
     ((chapter09FiniteIdelePartHom K).comp (chapter09NormOneIdeles K).subtype)
 
 theorem chapter09NormOneIdealClassMap_surjective
-    (K : Type*) [Field K] [NumberField K]
-    (D : Chapter09IdeleIdealData K) :
-    Function.Surjective (chapter09NormOneIdealClassMap K D) := by
+    (K : Type*) [Field K] [NumberField K] :
+    Function.Surjective (chapter09NormOneIdealClassMap K) := by
   sorry
 
 def chapter09ArchFiniteToClassNormOne
@@ -41,14 +39,13 @@ theorem chapter09ArchFiniteToClassNormOne_apply
   rfl
 
 def chapter09CompactKernel_short_exact
-    (K : Type*) [Field K] [NumberField K]
-    (D : Chapter09IdeleIdealData K) :
+    (K : Type*) [Field K] [NumberField K] :
       Chapter09ShortExactGroup
       (Chapter09ArchFiniteUnitKernel K) (chapter09ClassNormOne K)
         (ClassGroup (𝓞 K)) := by
   refine
     { left := chapter09ArchFiniteToClassNormOne K
-      right := chapter09NormOneClassIdealClassMap K D
+      right := chapter09NormOneClassIdealClassMap K
       left_injective := ?_
       exact := ?_
       right_surjective := ?_ }
@@ -57,17 +54,15 @@ def chapter09CompactKernel_short_exact
   · sorry
 
 theorem chapter09_compact_kernel_over_class_group
-    (K : Type*) [Field K] [NumberField K]
-    (D : Chapter09IdeleIdealData K) :
+    (K : Type*) [Field K] [NumberField K] :
     Function.MulExact (chapter09ArchFiniteToClassNormOne K)
-      (chapter09NormOneClassIdealClassMap K D) := by
-  exact (chapter09CompactKernel_short_exact K D).exact
+      (chapter09NormOneClassIdealClassMap K) := by
+  exact (chapter09CompactKernel_short_exact K).exact
 
 theorem chapter09NormOneClassIdealClassMap_surjective
-    (K : Type*) [Field K] [NumberField K]
-    (D : Chapter09IdeleIdealData K) :
-    Function.Surjective (chapter09NormOneClassIdealClassMap K D) := by
-  exact (chapter09CompactKernel_short_exact K D).right_surjective
+    (K : Type*) [Field K] [NumberField K] :
+    Function.Surjective (chapter09NormOneClassIdealClassMap K) := by
+  exact (chapter09CompactKernel_short_exact K).right_surjective
 
 theorem chapter09ArchFiniteUnitKernel_compact
     (K : Type*) [Field K] [NumberField K] :

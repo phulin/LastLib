@@ -1,12 +1,14 @@
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.Ring.Subring.Units
 import Mathlib.FieldTheory.Galois.Basic
+import Mathlib.GroupTheory.Index
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.NumberTheory.NumberField.ClassNumber
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 import Mathlib.NumberTheory.NumberField.Completion.InfinitePlace
 import Mathlib.NumberTheory.NumberField.FractionalIdeal
 import Mathlib.RingTheory.ClassGroup.Basic
+import Mathlib.RingTheory.DedekindDomain.Factorization
 import Mathlib.RingTheory.DedekindDomain.Different
 import Mathlib.RingTheory.FractionalIdeal.Inverse
 import Mathlib.RingTheory.Ideal.Norm.RelNorm
@@ -14,6 +16,7 @@ import Mathlib.RingTheory.Ideal.Quotient.Operations
 import Mathlib.RingTheory.Multiplicity
 import Mathlib.RingTheory.Valuation.ValuationSubring
 import Mathlib.Topology.Algebra.Group.Quotient
+import LastLib.Book06GlobalClassFieldTheory.Chapter06.Section04ClassificationByOpenSubgroups
 
 /-!
 # Chapter 7: shared interfaces
@@ -193,16 +196,18 @@ theorem infiniteUnitSubgroup_eq_top_of_not_selected
 /-! ### Idele and Artin dependency interfaces -/
 
 /-!
-`IdeleContext` is the one intentionally provisional interface in this chapter.
-Earlier chapter files in the repository do not yet expose one canonical global
-idele object, so all later definitions factor through these principal and local
-component homomorphisms, together with the valuation map and its principal
-compatibility.  The global product/restricted-product laws belong to the
-earlier global API.
+`IdeleContext` remains the local-component interface used by the chapter, but
+the class-field statements below also retain an explicit bridge to the
+canonical global existence and norm--Artin API from Chapter 6.  The full
+ray-unit subgroup is supplied as part of this dependency interface: it cannot
+be reconstructed as an algebraic supremum of the individual local images,
+since a restricted product also contains arbitrary simultaneous local
+components.
 -/
 structure IdeleContext (K I : Type*) [Field K] [NumberField K]
     [CommGroup I] [TopologicalSpace I] [IsTopologicalGroup I] where
   principal : Kˣ →* I
+  principal_injective : Function.Injective principal
   finiteComponent :
     ∀ v : NumberField.FinitePlace K,
       (v.maximalIdeal.adicCompletion K)ˣ →* I
@@ -213,6 +218,30 @@ structure IdeleContext (K I : Type*) [Field K] [NumberField K]
     I →* (FractionalIdeal (𝓞 K)⁰ K)ˣ
   principal_toPrincipalIdeal :
     ideleToFractionalIdeal.comp principal = toPrincipalIdeal (𝓞 K) K
+  rayUnits : Modulus K → Subgroup I
+  rayUnits_antitone :
+    ∀ {m n : Modulus K}, m ≤ n → rayUnits n ≤ rayUnits m
+  finiteComponent_mem_rayUnits :
+    ∀ (m : Modulus K) (v : NumberField.FinitePlace K),
+      Subgroup.map (finiteComponent v) (finiteUnitFiltration v (m.finiteExponent v)) ≤
+        rayUnits m
+  infiniteComponent_mem_rayUnits :
+    ∀ (m : Modulus K) (v : NumberField.InfinitePlace K),
+      Subgroup.map (infiniteComponent v) (infiniteUnitSubgroup m v) ≤ rayUnits m
+  rayUnits_isOpen : ∀ m, IsOpen (rayUnits m : Set I)
+  rayUnits_isClosed : ∀ m, IsClosed (rayUnits m : Set I)
+  rayClassSubgroup_isOpen :
+    ∀ m, IsOpen
+      (Subgroup.map (QuotientGroup.mk' principal.range) (rayUnits m) :
+        Set (I ⧸ principal.range))
+  rayClassSubgroup_isClosed :
+    ∀ m, IsClosed
+      (Subgroup.map (QuotientGroup.mk' principal.range) (rayUnits m) :
+        Set (I ⧸ principal.range))
+  rayClassGroup_finite :
+    ∀ m, Finite
+      ((I ⧸ principal.range) ⧸
+        Subgroup.map (QuotientGroup.mk' principal.range) (rayUnits m))
 
 variable {K I : Type*} [Field K] [NumberField K]
   [CommGroup I] [TopologicalSpace I] [IsTopologicalGroup I]
@@ -233,10 +262,7 @@ theorem ideleClassQuotient_ker (D : IdeleContext K I) :
 
 /-- The subgroup of ideles specified by the finite and infinite parts of a modulus. -/
 def rayIdeleSubgroup (D : IdeleContext K I) (m : Modulus K) : Subgroup I :=
-  (⨆ v : NumberField.FinitePlace K,
-      Subgroup.map (D.finiteComponent v) (finiteUnitFiltration v (m.finiteExponent v))) ⊔
-    (⨆ v : NumberField.InfinitePlace K,
-      Subgroup.map (D.infiniteComponent v) (infiniteUnitSubgroup m v))
+  D.rayUnits m
 
 def rayClassSubgroup (D : IdeleContext K I) (m : Modulus K) :
     Subgroup (ideleClassGroup D) :=
@@ -260,29 +286,76 @@ def rayClassGroup_equiv_ideleQuotient (D : IdeleContext K I) (m : Modulus K) :
     rayClassGroup D m ≃* ideleQuotientByPrincipalAndUnits D m := by
   sorry
 
-/-! These are the topology and finiteness bridges used in Section 7.1.  They
-are the precise places where the preceding global idele topology and the
-finite-index theorem will be plugged in during the fixup pass. -/
+/-! These are the topology and finiteness bridges used in Section 7.1.  The
+preceding global idele API supplies them through `IdeleContext`. -/
 
 theorem rayIdeleSubgroup_isOpen (D : IdeleContext K I) (m : Modulus K) :
     IsOpen (rayIdeleSubgroup D m : Set I) := by
-  sorry
+  exact D.rayUnits_isOpen m
 
 theorem rayIdeleSubgroup_isClosed (D : IdeleContext K I) (m : Modulus K) :
     IsClosed (rayIdeleSubgroup D m : Set I) := by
-  sorry
+  exact D.rayUnits_isClosed m
 
 theorem rayClassSubgroup_isOpen (D : IdeleContext K I) (m : Modulus K) :
     IsOpen (rayClassSubgroup D m : Set (ideleClassGroup D)) := by
-  sorry
+  exact D.rayClassSubgroup_isOpen m
 
 theorem rayClassSubgroup_isClosed (D : IdeleContext K I) (m : Modulus K) :
     IsClosed (rayClassSubgroup D m : Set (ideleClassGroup D)) := by
-  sorry
+  exact D.rayClassSubgroup_isClosed m
 
 theorem rayClassGroup_finite (D : IdeleContext K I) (m : Modulus K) :
     Finite (rayClassGroup D m) := by
-  sorry
+  exact D.rayClassGroup_finite m
+
+/-! ### Canonical global existence bridge -/
+
+/- The preceding global-existence correspondence is parameterized by a chosen
+   separable closure and character-field assignment.  Keeping that choice in
+   one package makes the Chapter 7 ray-field API depend on the canonical
+   correspondence rather than on an unrelated quotient witness. -/
+structure CanonicalGlobalExistenceData (K : Type*) [Field K] [NumberField K] where
+  Ks : Type
+  [fieldKs : Field Ks]
+  [algebraKs : Algebra K Ks]
+  [isGaloisKs : IsGalois K Ks]
+  [isSepClosedKs : IsSepClosed Ks]
+  assignment :
+    LastLib.Book06GlobalClassFieldTheory.Chapter06.Chapter06CharacterFieldAssignment
+      K Ks (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleClassGroup K)
+  correspondence :
+    LastLib.Book06GlobalClassFieldTheory.Chapter06.Chapter06GlobalExistenceCorrespondence
+      K Ks (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleClassGroup K)
+      assignment
+
+attribute [instance] CanonicalGlobalExistenceData.fieldKs
+  CanonicalGlobalExistenceData.algebraKs CanonicalGlobalExistenceData.isGaloisKs
+  CanonicalGlobalExistenceData.isSepClosedKs
+
+/- The ray quotient is identified with the quotient indexed by the same open
+   subgroup on the canonical idele class group.  This is the precise bridge
+   needed before invoking Chapter 6 existence and inclusion reversal. -/
+structure CanonicalRayClassFieldBridge
+    (D : IdeleContext K I) (m : Modulus K) where
+  canonicalSubgroup :
+    LastLib.Book06GlobalClassFieldTheory.Chapter06.Chapter06OpenFiniteIndexSubgroup
+      (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleClassGroup K)
+  /-- Identification of the abstract idele class group with the canonical one. -/
+  canonicalClassGroupEquiv :
+    ideleClassGroup D ≃*
+      LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleClassGroup K
+  rayQuotientEquiv :
+    rayClassGroup D m ≃*
+      (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleClassGroup K ⧸
+        canonicalSubgroup.subgroup)
+  /-- The quotient identification is induced by the class-group identification. -/
+  quotient_map_commutes :
+    rayQuotientEquiv.toMonoidHom.comp
+        (QuotientGroup.mk' (rayClassSubgroup D m)) =
+      (QuotientGroup.mk' canonicalSubgroup.subgroup).comp
+        canonicalClassGroupEquiv.toMonoidHom
+  globalExistence : CanonicalGlobalExistenceData K
 
 /-! ### Artin and extension presentations -/
 
@@ -293,6 +366,8 @@ structure AbelianArtinData (D : IdeleContext K I) (G : Type*)
   artin : I →* G
   classArtin : ideleClassGroup D →* G
   classArtin_factor : classArtin.comp (ideleClassQuotient D) = artin
+  classArtin_character_continuous :
+    ∀ θ : G →* ℂˣ, Continuous (θ.comp classArtin)
   finiteLocalNorm :
     ∀ v : NumberField.FinitePlace K,
       Subgroup ((v.maximalIdeal.adicCompletion K)ˣ)
@@ -303,7 +378,37 @@ structure AbelianArtinData (D : IdeleContext K I) (G : Type*)
   finiteNorm_nonempty :
     ∀ v : NumberField.FinitePlace K,
       Set.Nonempty {n : ℕ | finiteUnitFiltration v n ≤ finiteLocalNorm v}
+  finiteArtinSupport : Finset (NumberField.FinitePlace K)
+  finiteLocalArtin_trivial_outside_support :
+    ∀ {v : NumberField.FinitePlace K}, v ∉ finiteArtinSupport →
+      ∀ u, u ∈ finiteUnitFiltration v 0 →
+        (artin.comp (D.finiteComponent v)) u = 1
   complexified : RealPlace K → Prop
+  infiniteArtin_trivial_at_complex_places :
+    ∀ {v : NumberField.InfinitePlace K}, ¬v.IsReal →
+      ∀ x, (artin.comp (D.infiniteComponent v)) x = 1
+  infiniteArtin_trivial_on_real_positive :
+    ∀ (v : RealPlace K) (x : v.1.Completionˣ),
+      x ∈ realPositiveUnitSubgroup v →
+        (artin.comp (D.infiniteComponent v.1)) x = 1
+  infiniteArtin_trivial_at_uncomplexified_real :
+    ∀ (v : RealPlace K), ¬complexified v →
+      ∀ x, (artin.comp (D.infiniteComponent v.1)) x = 1
+  complexified_iff_real_sign_nontrivial :
+    ∀ v : RealPlace K,
+      complexified v ↔
+        (artin.comp (D.infiniteComponent v.1)) (-1 : v.1.Completionˣ) ≠ 1
+  /-- The restricted-product step: local triviality on every component of a
+  ray-unit subgroup implies triviality on the whole subgroup. -/
+  rayUnits_killed_of_local_triviality :
+    ∀ (m : Modulus K),
+      (∀ v : NumberField.FinitePlace K,
+        Subgroup.map (D.finiteComponent v)
+            (finiteUnitFiltration v (m.finiteExponent v)) ≤ artin.ker) →
+      (∀ v : NumberField.InfinitePlace K,
+        Subgroup.map (D.infiniteComponent v)
+            (infiniteUnitSubgroup m v) ≤ artin.ker) →
+      D.rayUnits m ≤ artin.ker
 
 def artinKernel {D : IdeleContext K I}
     (A : AbelianArtinData (K := K) (I := I) D G) : Subgroup (ideleClassGroup D) :=
@@ -311,8 +416,11 @@ def artinKernel {D : IdeleContext K I}
 
 structure FiniteAbelianExtensionRealization
     (K L G : Type*) [Field K] [NumberField K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [IsGalois K L] [CommGroup G] [Fintype G] where
+    [NumberField L] [FiniteDimensional K L] [IsGalois K L] [CommGroup G] [Fintype G] where
   galoisEquiv : G ≃* Gal(L / K)
+  /-- The actual complete character group of this finite abelian extension. -/
+  characterGroup : Finset (G →* ℂˣ)
+  characterGroup_complete : ∀ θ : G →* ℂˣ, θ ∈ characterGroup
 
 end
 

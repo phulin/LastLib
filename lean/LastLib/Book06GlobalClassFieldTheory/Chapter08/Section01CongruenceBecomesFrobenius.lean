@@ -11,7 +11,8 @@ universe u
 /-! ## 8.1. Congruence becomes Frobenius -/
 
 theorem chapter08_conductor_divides_iff_modulus_divides
-    {K L : Type u} [Field K] [NumberField K] [Field L] [Algebra K L]
+    {K L : Type u} [Field K] [NumberField K] [Field L] [NumberField L]
+    [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     (E : Chapter08AbelianExtensionData K L)
     (m : Chapter08Modulus K) :
@@ -21,7 +22,7 @@ theorem chapter08_conductor_divides_iff_modulus_divides
 /-- The ideal-group Artin map is the restriction of global reciprocity. -/
 theorem chapter08_ideal_group_artin_surjective
     {K L I C : Type u} [Field K] [NumberField K]
-    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L]
     [IsAbelianGalois K L] [CommGroup I] [CommGroup C]
     (R : Chapter08RayClassPresentation K I C)
     (E : Chapter08AbelianExtensionData K L)
@@ -32,7 +33,7 @@ theorem chapter08_ideal_group_artin_surjective
 
 theorem chapter08_prime_away_from_modulus_is_in_artin_domain
     {K L I C : Type u} [Field K] [NumberField K]
-    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L]
     [IsAbelianGalois K L] [CommGroup I] [CommGroup C]
     (R : Chapter08RayClassPresentation K I C)
     (E : Chapter08AbelianExtensionData K L)
@@ -44,7 +45,7 @@ theorem chapter08_prime_away_from_modulus_is_in_artin_domain
 
 theorem chapter08_idele_representative_has_divisor_and_unit_tail
     {K L I C : Type u} [Field K] [NumberField K]
-    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L]
     [IsAbelianGalois K L] [CommGroup I] [CommGroup C]
     (R : Chapter08RayClassPresentation K I C)
     (E : Chapter08AbelianExtensionData K L)
@@ -57,7 +58,7 @@ theorem chapter08_idele_representative_has_divisor_and_unit_tail
 /-- At a prime away from the modulus, the ideal-group map is arithmetic Frobenius. -/
 theorem chapter08_ideal_group_artin_prime_eq_arithmetic_frobenius
     {K L I C : Type u} [Field K] [NumberField K]
-    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L]
     [IsAbelianGalois K L] [CommGroup I] [CommGroup C]
     (R : Chapter08RayClassPresentation K I C)
     (E : Chapter08AbelianExtensionData K L)
@@ -69,7 +70,7 @@ theorem chapter08_ideal_group_artin_prime_eq_arithmetic_frobenius
 
 theorem chapter08_ideal_group_artin_prime_eq_arithmetic_frobenius_of_prime_away
     {K L I C : Type u} [Field K] [NumberField K]
-    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L]
     [IsAbelianGalois K L] [CommGroup I] [CommGroup C]
     (R : Chapter08RayClassPresentation K I C)
     (E : Chapter08AbelianExtensionData K L)
@@ -85,7 +86,7 @@ theorem chapter08_ideal_group_artin_prime_eq_arithmetic_frobenius_of_prime_away
 /-- The principal ray subgroup is killed by the Artin map. -/
 theorem chapter08_principal_ray_subgroup_in_artin_kernel
     {K L I C : Type u} [Field K] [NumberField K]
-    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L]
     [IsAbelianGalois K L] [CommGroup I] [CommGroup C]
     (R : Chapter08RayClassPresentation K I C)
     (E : Chapter08AbelianExtensionData K L)
@@ -97,7 +98,7 @@ theorem chapter08_principal_ray_subgroup_in_artin_kernel
 /-- The Artin map factors through the ray class group. -/
 theorem chapter08_artin_factors_through_ray_class_group
     {K L I C : Type u} [Field K] [NumberField K]
-    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L]
     [IsAbelianGalois K L] [CommGroup I] [CommGroup C]
     (R : Chapter08RayClassPresentation K I C)
     (E : Chapter08AbelianExtensionData K L)
@@ -120,8 +121,8 @@ theorem chapter08_full_ray_class_factor_isomorphism
     letI : NumberField F.carrier := F.carrierNumberField
     letI : FiniteDimensional K F.carrier := F.carrierFinite
     letI : IsAbelianGalois K F.carrier := F.carrierAbelianGalois
-    Nonempty (chapter08RayClassGroup R ≃* Gal(F.carrier / K)) := by
-  exact ⟨F.artinEquiv⟩
+    chapter08RayClassGroup R ≃* Gal(F.carrier / K) := by
+  exact F.artinEquiv
 
 /-- A prime away from the modulus splits completely in the full ray field exactly when
 its ray class is trivial. -/
@@ -151,17 +152,15 @@ theorem chapter08_ray_class_trivial_iff_principal_congruence
     (hp : chapter08PrimeAwayFromModulus R.modulus p) :
     chapter08RayClassOfIdeal R p = 1 ↔
       ∃ a : 𝓞 K, chapter08PrincipalRayCondition R.modulus p a := by
-  change QuotientGroup.mk' R.principalSubgroup (R.idealClass p) = 1 ↔ _
-  exact (R.idealClass_eq_one_iff (p := p)) hp
+  sorry
 
 /-- For a subfield corresponding to a ray subgroup, complete splitting is subgroup membership. -/
 theorem chapter08_subfield_splitting_iff_ray_class_mem
     {K L I C : Type u} [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L]
-    [IsAbelianGalois K L] [CommGroup I] [CommGroup C]
+    [IsAbelianGalois K L] [Algebra (𝓞 K) (𝓞 L)] [CommGroup I] [CommGroup C]
     (R : Chapter08RayClassPresentation K I C)
     (S : Chapter08RaySubfieldData K L I C R)
-    [Algebra (𝓞 K) (𝓞 L)]
     {p : Ideal (𝓞 K)} [p.IsPrime]
     (hp : chapter08PrimeAwayFromModulus R.modulus p) :
     chapter08SplitsCompletely K L p ↔

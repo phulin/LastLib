@@ -1,5 +1,15 @@
-import Mathlib
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter02.Section04EquivalenceAndNormalization
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.Normed.Field.Ultra
+import Mathlib.Data.Real.Embedding
+import Mathlib.NumberTheory.Padics.PadicNumbers
+import Mathlib.NumberTheory.Ostrowski
+import Mathlib.Analysis.AbsoluteValue.Equivalence
+import Mathlib.RingTheory.Valuation.Basic
+import Mathlib.Topology.UniformSpace.AbsoluteValue
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.NormNum.Prime
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter02
 
@@ -15,8 +25,8 @@ chapter-local names for the constructions that are specific to the exposition.
 noncomputable section
 
 open Set Function
-open scoped BigOperators LaurentSeries
-open HahnSeries Polynomial
+open scoped BigOperators
+open Polynomial
 
 /-! # Book 1, Chapter 2, Section 2.5: From Additive to Multiplicative Size
 -/
@@ -204,6 +214,31 @@ def Chapter02IsUltrametricAbsoluteValue {K : Type*} [Ring K]
     (f : K → ℝ) : Prop :=
   ∀ x y : K, f (x + y) ≤ max (f x) (f y)
 
+theorem chapter02_padic_absolute_value_is_an_ultrametric_absolute_value
+    (p : ℕ) [Fact p.Prime] :
+    ∃ f : AbsoluteValue ℚ ℝ,
+      (∀ x : ℚ, f x = Chapter02PadicAbsoluteValue p x) ∧
+        Chapter02IsUltrametricAbsoluteValue (f : ℚ → ℝ) := by
+  refine ⟨Rat.AbsoluteValue.padic p, ?_, ?_⟩
+  · intro x
+    by_cases hx : x = 0
+    · simp [hx, Chapter02PadicAbsoluteValue]
+    · rw [Rat.AbsoluteValue.padic_eq_padicNorm, padicNorm.eq_zpow_of_nonzero hx]
+      simp only [Chapter02PadicAbsoluteValue, if_neg hx]
+      have hv : -(padicValRat p x : ℝ) = ((-padicValRat p x : ℤ) : ℝ) := by
+        norm_num
+      rw [hv]
+      calc
+        ((↑p : ℚ) ^ (-padicValRat p x) : ℚ) =
+            (p : ℝ) ^ (-padicValRat p x : ℤ) := by
+              exact Rat.cast_zpow (p : ℚ) (-padicValRat p x)
+        _ = Real.rpow (p : ℝ) ((-padicValRat p x : ℤ) : ℝ) :=
+          (Real.rpow_intCast (p : ℝ) (-padicValRat p x)).symm
+  · intro x y
+    change (padicNorm p (x + y) : ℝ) ≤
+      max (padicNorm p x : ℝ) (padicNorm p y : ℝ)
+    exact_mod_cast (padicNorm.nonarchimedean (p := p) (q := x) (r := y))
+
 def Chapter02LogarithmicValueFromAbsoluteValue
     {K : Type*} [Field K] (c : ℝ) (_hc : 0 < c) (_hc1 : c < 1)
     (f : K → ℝ) (x : K) : WithTop ℝ := by
@@ -300,6 +335,88 @@ theorem chapter02_ultrametric_absolute_value_gives_additive_value
     rw [hw x]
     rfl
 
+theorem chapter02_real_size_from_valuation_is_an_absolute_value
+    {K : Type*} [Field K] {c : ℝ} (hc : 0 < c) (hc1 : c < 1)
+    (v : AddValuation K (WithTop ℝ)) :
+    ∃ f : AbsoluteValue K ℝ,
+      ∀ x : K, f x = Chapter02RealSizeFromValuation c hc hc1 v x := by
+  let g : K → ℝ := Chapter02RealSizeFromValuation c hc hc1 v
+  have hnonneg : ∀ x : K, 0 ≤ g x := by
+    intro x
+    classical
+    by_cases hx : v x = (⊤ : WithTop ℝ)
+    · simp [g, Chapter02RealSizeFromValuation, hx]
+    · simp only [g, Chapter02RealSizeFromValuation, dif_neg hx]
+      exact Real.rpow_nonneg hc.le _
+  have heqzero : ∀ x : K, g x = 0 ↔ x = 0 := by
+    intro x
+    by_cases hx : x = 0
+    · subst x
+      simp [g, Chapter02RealSizeFromValuation]
+    · have hxv : v x ≠ (⊤ : WithTop ℝ) := (AddValuation.ne_top_iff v).2 hx
+      constructor
+      · intro hzero
+        have hpos : 0 < g x := by
+          simp only [g, Chapter02RealSizeFromValuation, dif_neg hxv]
+          exact Real.rpow_pos_of_pos hc _
+        exact False.elim ((ne_of_gt hpos) hzero)
+      · intro hzero
+        exact (hx hzero).elim
+  let f : AbsoluteValue K ℝ :=
+    { toFun := g
+      map_mul' := by
+        intro x y
+        exact chapter02_real_size_is_multiplicative hc hc1 v x y
+      nonneg' := hnonneg
+      eq_zero' := heqzero
+      add_le' := by
+        intro x y
+        exact (chapter02_real_size_is_ultrametric hc hc1 v x y).trans
+          (max_le_add_of_nonneg (hnonneg x) (hnonneg y)) }
+  exact ⟨f, fun x => rfl⟩
+
+def Chapter02EquivalentAbsoluteValues
+    {K : Type*} [Field K] (f g : AbsoluteValue K ℝ) : Prop :=
+  f.IsEquiv g
+
+theorem chapter02_absolute_value_equivalence_iff_positive_power
+    {K : Type*} [Field K] (f g : AbsoluteValue K ℝ) :
+    Chapter02EquivalentAbsoluteValues f g ↔
+      ∃ r : ℝ, 0 < r ∧ (f · ^ r) = g := by
+  exact AbsoluteValue.isEquiv_iff_exists_rpow_eq
+
+theorem chapter02_absolute_value_equivalence_iff_same_topology
+    {K : Type*} [Field K] (f g : AbsoluteValue K ℝ) :
+    Chapter02EquivalentAbsoluteValues f g ↔
+      IsHomeomorph (WithAbs.congr f g (.refl K)) := by
+  exact AbsoluteValue.isEquiv_iff_isHomeomorph f g
+
+theorem chapter02_absolute_value_is_ultrametric_iff_integer_bound
+    {K : Type*} [Field K] (f : AbsoluteValue K ℝ) :
+    Chapter02IsUltrametricAbsoluteValue (f : K → ℝ) ↔
+      ∀ n : ℤ, f (n : K) ≤ 1 := by
+  let _ := f.toNormedField
+  change (∀ x y : K, ‖x + y‖ ≤ max ‖x‖ ‖y‖) ↔
+    ∀ n : ℤ, ‖(n : K)‖ ≤ 1
+  constructor
+  · intro h
+    have hna : IsNonarchimedean (norm : K → ℝ) := by
+      intro x y
+      change ‖x + y‖ ≤ max ‖x‖ ‖y‖
+      exact h x y
+    intro n
+    exact hna.apply_intCast_le_one
+  · intro h
+    have hn : ∀ n : ℕ, ‖(n : K)‖ ≤ 1 := by
+      intro n
+      simpa only [Int.cast_natCast] using h (n : ℤ)
+    have hmetric : IsUltrametricDist K :=
+      isUltrametricDist_iff_forall_norm_natCast_le_one.mpr hn
+    have hna : IsNonarchimedean (norm : K → ℝ) :=
+      hmetric.isNonarchimedean_norm
+    intro x y
+    exact hna x y
+
 def Chapter02PositiveValueRescaling
     {K : Type*} [Field K] (v w : K → WithTop ℝ) : Prop := by
   classical
@@ -308,7 +425,6 @@ def Chapter02PositiveValueRescaling
 
 theorem chapter02_changing_the_base_rescales_values
     {K : Type*} [Field K] (f : AbsoluteValue K ℝ)
-    (_hf : Chapter02IsUltrametricAbsoluteValue (f : K → ℝ))
     {c d : ℝ} (hc : 0 < c) (hc1 : c < 1) (hd : 0 < d) (hd1 : d < 1) :
     Chapter02PositiveValueRescaling
       (fun x => Chapter02LogarithmicValueFromAbsoluteValue c hc hc1 (f : K → ℝ) x)

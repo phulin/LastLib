@@ -111,6 +111,11 @@ def chapter16AdditiveTail (K : Type*) [Field K] [NumberField K]
   ∀ᶠ v : HeightOneSpectrum (𝓞 K) in Filter.cofinite,
     x v ∈ v.adicCompletionIntegers K
 
+def chapter16LocalCompletionUnit (K : Type*) [Field K] [NumberField K]
+    (v : HeightOneSpectrum (𝓞 K)) (x : v.adicCompletion K) : Prop :=
+  ∃ u : (v.adicCompletionIntegers K)ˣ,
+    ((u : v.adicCompletionIntegers K) : v.adicCompletion K) = x
+
 def chapter16IdeleUnitTail (K : Type*) [Field K] [NumberField K]
     (x : Chapter16Ideles K) : Prop :=
   ∀ᶠ v : HeightOneSpectrum (𝓞 K) in Filter.cofinite,
@@ -139,7 +144,7 @@ def chapter16IdeleModule (K : Type*) [Field K] [NumberField K] :
 
 def chapter16IdeleDegree (K : Type*) [Field K] [NumberField K]
     (x : Chapter16Ideles K) : ℝ :=
-  Real.log (chapter16IdeleModuleValue K x)
+  -Real.log (chapter16IdeleModuleValue K x)
 
 def chapter16IdeleDegreeHom (K : Type*) [Field K] [NumberField K] :
     Chapter16Ideles K →* Multiplicative ℝ where
@@ -357,6 +362,12 @@ structure Chapter16ExtensionNormData
   finiteNorm : Chapter16FiniteIdeles L →* Chapter16FiniteIdeles K
   idealNorm : FractionalIdeal (𝓞 L)⁰ L →* FractionalIdeal (𝓞 K)⁰ K
   principalNorm : Lˣ →* Kˣ
+  principalNorm_is_fieldNorm :
+    principalNorm = Units.map (Algebra.norm K (S := L))
+  finiteProjection_compatibility :
+    ∀ x : Chapter16Ideles L,
+      chapter16FiniteIdeleProjection K (adeleNorm x) =
+        finiteNorm (chapter16FiniteIdeleProjection L x)
 
 def chapter16ExtensionNormCompatible
     {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L]
@@ -372,7 +383,11 @@ def chapter16ExtensionNormCompatible
       chapter16PrincipalFiniteIdeleHom K (N.principalNorm a)) ∧
   (∀ x : Chapter16FiniteIdeles L,
     N.idealNorm (chapter16FiniteIdeleFractionalIdeal L x) =
-      chapter16FiniteIdeleFractionalIdeal K (N.finiteNorm x))
+      chapter16FiniteIdeleFractionalIdeal K (N.finiteNorm x)) ∧
+  N.principalNorm = Units.map (Algebra.norm K (S := L)) ∧
+  (∀ x : Chapter16Ideles L,
+    chapter16FiniteIdeleProjection K (N.adeleNorm x) =
+      N.finiteNorm (chapter16FiniteIdeleProjection L x))
 
 def chapter16HasCompactOpenFiniteLevel (G : Type*) [Group G] [TopologicalSpace G] : Prop :=
   ∃ U : Subgroup G, IsOpen (U : Set G) ∧ IsCompact (U : Set G)

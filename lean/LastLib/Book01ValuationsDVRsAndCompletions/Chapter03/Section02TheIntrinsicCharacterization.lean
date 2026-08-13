@@ -139,9 +139,9 @@ def criterionUnitSubgroup (V : Subring K) : Subgroup Kˣ :=
 abbrev criterionUnitQuotient (V : Subring K) :=
   Kˣ ⧸ criterionUnitSubgroup V
 
-theorem criterionValueGroup_is_quotient_by_units (V : Subring K)
+noncomputable def criterionValueGroup_is_quotient_by_units (V : Subring K)
     (hV : HasValuationSubringCriterion V) :
-    Nonempty ((criterionValueGroup V hV)ˣ ≃* criterionUnitQuotient V) := by
+    (criterionValueGroup V hV)ˣ ≃* criterionUnitQuotient V := by
   classical
   let A := criterionValuationSubring V hV
   let φ : Kˣ →* (A.ValueGroup)ˣ :=
@@ -209,11 +209,34 @@ theorem criterionValueGroup_is_quotient_by_units (V : Subring K)
         simpa [uA] using A.valuation_unit uA
       simpa [φ] using huval
   let e := QuotientGroup.quotientKerEquivOfSurjective φ hφ
-  exact ⟨e.symm.trans (QuotientGroup.quotientMulEquivOfEq hker)⟩
+  exact e.symm.trans (QuotientGroup.quotientMulEquivOfEq hker)
 
 def criterionComparison (V : Subring K) (_hV : HasValuationSubringCriterion V)
     (x y : K) : Prop :=
   x / y ∈ V
+
+theorem criterionComparison_iff_reconstructedValuation_le
+    (V : Subring K) (hV : HasValuationSubringCriterion V) {x y : K} (hy : y ≠ 0) :
+    criterionComparison V hV x y ↔
+      criterionReconstructedValuation V hV x ≤ criterionReconstructedValuation V hV y := by
+  change x / y ∈ V ↔ _
+  change x / y ∈ criterionValuationSubring V hV ↔ _
+  change x / y ∈ criterionValuationSubring V hV ↔
+    (criterionValuationSubring V hV).valuation x ≤
+      (criterionValuationSubring V hV).valuation y
+  constructor
+  · intro h
+    have hv := (ValuationSubring.valuation_le_one_iff
+      (criterionValuationSubring V hV) (x / y)).mpr h
+    rw [map_div₀, div_le_one₀
+      ((criterionValuationSubring V hV).valuation.pos_iff.mpr hy)] at hv
+    exact hv
+  · intro h
+    apply (ValuationSubring.valuation_le_one_iff
+      (criterionValuationSubring V hV) (x / y)).mp
+    rw [map_div₀, div_le_one₀
+      ((criterionValuationSubring V hV).valuation.pos_iff.mpr hy)]
+    exact h
 
 theorem criterionComparison_unit_invariant (V : Subring K)
     (hV : HasValuationSubringCriterion V) (x y : K) (a b : Vˣ) :

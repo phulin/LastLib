@@ -16,7 +16,7 @@ noncomputable section
 /-!
 # Chapter 4: Discrete valuation rings
 
-This file is a statement-generation pass for Sections 4.1--4.3 of Book 1.  The
+This chapter formalizes Sections 4.1--4.3 of Book 1.  The
 zero-extended multiplicative target `ℤᵐ⁰` is used for Mathlib valuations; its
 nonzero part is the additive integer-valued valuation `Kˣ → ℤ` from the prose.
 -/
@@ -185,8 +185,7 @@ theorem dvr_ideal_power_inf_max
 
 /-- Products of principal powers add exponents. -/
 theorem dvr_ideal_power_mul_add
-    (A : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
-    {π : A} (_hπ : Chapter04Uniformizer A π) (a b : ℕ) :
+    (A : Type*) [CommRing A] {π : A} (a b : ℕ) :
     chapter04IdealPower A π a * chapter04IdealPower A π b =
       chapter04IdealPower A π (a + b) := by
   simp [chapter04IdealPower, Ideal.span_singleton_mul_span_singleton, pow_add]

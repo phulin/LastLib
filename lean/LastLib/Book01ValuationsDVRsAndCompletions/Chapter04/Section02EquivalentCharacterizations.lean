@@ -10,7 +10,7 @@ noncomputable section
 /-!
 # Chapter 4: Discrete valuation rings
 
-This file is a statement-generation pass for Sections 4.1--4.3 of Book 1.  The
+This chapter formalizes Sections 4.1--4.3 of Book 1.  The
 zero-extended multiplicative target `ℤᵐ⁰` is used for Mathlib valuations; its
 nonzero part is the additive integer-valued valuation `Kˣ → ℤ` from the prose.
 -/

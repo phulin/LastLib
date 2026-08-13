@@ -8,11 +8,9 @@ open scoped BigOperators Pointwise
 
 /-! ## 4.2. Why quotients require a new scale -/
 
-/- SOURCE_ISSUE (4.2): The source says that the Herbrand change of coordinates
-   "accelerates whenever the ramification group becomes smaller," but the
-   displayed definition in §4.4 has slope `|G_t| / |G_0|`, so the clock slows
-   (and §4.4 says so explicitly).  Replace "accelerates" with "slows" or
-   "compresses lower depth". -/
+/- SOURCE_NOTE (4.2): The source uses the consistent formulation that the
+   Herbrand clock slows, or compresses lower depth, when the ramification group
+   becomes smaller; this agrees with the slope `|G_t| / |G_0|` in §4.4. -/
 
 /-- The lower group obtained by the tempting, but generally invalid, naive
 quotient operation.  It is retained as a named candidate so that later

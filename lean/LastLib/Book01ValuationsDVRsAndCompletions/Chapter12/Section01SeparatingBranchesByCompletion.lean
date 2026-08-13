@@ -59,7 +59,7 @@ chapter; proofs are postponed.
 /-! # Book 1, Chapter 12, Section 12.1: Separating Branches by Completion
 -/
 
-/-! ## Common completion and branch interfaces -/
+/-! ## 12.1--12.2. Separating branches and finite precision -/
 
 /-- The `I`-adic quotient used at finite precision. -/
 abbrev adicQuotient (R : Type u) [CommRing R] (I : Ideal R) (n : ℕ) : Type u :=
@@ -401,8 +401,7 @@ theorem completion_product_of_finite_precision_crt
     {R ι : Type*} [CommRing R] [Finite ι]
     (I : Ideal R) (J : ι → Ideal R)
     (hcrt : Chapter12CompatibleCRTSystem I J)
-    (_hcofinal : ∀ i, adicFiltrationsCofinal I (J i)) :
-    Nonempty
+    : Nonempty
       (AdicCompletion I R ≃+* (∀ i, AdicCompletion (J i) R)) := by
   classical
   let _ : Fintype ι := Fintype.ofFinite ι

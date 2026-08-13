@@ -29,8 +29,8 @@ def Chapter02IsHomogeneousIdeal
   exact I.IsHomogeneous G.component
 
 /-!
-This structure is definitionally equivalent to a homogeneous ideal in Mathlib after installing
-`G.graded`, while retaining the book's explicit ideal field.
+This structure packages a Mathlib homogeneous ideal together with the induced quotient grading
+needed by the projective-spectrum construction.
 -/
 structure Chapter02HomogeneousIdealData
     {R A : Type u} [CommSemiring R] [CommRing A] [Algebra R A]
@@ -44,11 +44,45 @@ structure Chapter02HomogeneousIdealData
       x ∈ quotientGrading.component d ↔
         ∃ a : A, a ∈ G.component d ∧ Ideal.Quotient.mk ideal a = x
 
+/-!
+The data structure above records the quotient grading explicitly because that construction is not
+yet exposed by the pinned projective-spectrum API.  Keep a constructor-level interface for the
+actual mathematical input (a homogeneous ideal); returning a prebuilt `Chapter02HomogeneousIdealData`
+is materially stronger than asking callers to supply the desired quotient grading themselves.
+-/
+theorem chapter02_homogeneous_ideal_data_exists
+    {R A : Type u} [CommSemiring R] [CommRing A] [Algebra R A]
+    {G : Chapter02GradedAlgebra R A} (I : Ideal A)
+    (hI : Chapter02IsHomogeneousIdeal G I) :
+    Nonempty {J : Chapter02HomogeneousIdealData G // J.ideal = I} := by
+  sorry
+
+noncomputable def chapter02HomogeneousIdealDataOf
+    {R A : Type u} [CommSemiring R] [CommRing A] [Algebra R A]
+    {G : Chapter02GradedAlgebra R A} (I : Ideal A)
+    (hI : Chapter02IsHomogeneousIdeal G I) :
+    Chapter02HomogeneousIdealData G :=
+  (Classical.choice (chapter02_homogeneous_ideal_data_exists I hI)).1
+
+theorem chapter02_homogeneous_ideal_data_of_ideal
+    {R A : Type u} [CommSemiring R] [CommRing A] [Algebra R A]
+    {G : Chapter02GradedAlgebra R A} (I : Ideal A)
+    (hI : Chapter02IsHomogeneousIdeal G I) :
+    (chapter02HomogeneousIdealDataOf I hI).ideal = I := by
+  exact (Classical.choice (chapter02_homogeneous_ideal_data_exists I hI)).2
+
 def chapter02HomogeneousIdealToIdeal
     {R A : Type u} [CommSemiring R] [CommRing A] [Algebra R A]
     {G : Chapter02GradedAlgebra R A}
     (I : Chapter02HomogeneousIdealData G) : Ideal A :=
   I.ideal
+
+theorem chapter02_homogeneous_ideal_to_ideal_data_of
+    {R A : Type u} [CommSemiring R] [CommRing A] [Algebra R A]
+    {G : Chapter02GradedAlgebra R A} (I : Ideal A)
+    (hI : Chapter02IsHomogeneousIdeal G I) :
+    chapter02HomogeneousIdealToIdeal (chapter02HomogeneousIdealDataOf I hI) = I := by
+  exact chapter02_homogeneous_ideal_data_of_ideal I hI
 
 theorem chapter02_homogeneous_ideal_is_homogeneous
     {R A : Type u} [CommSemiring R] [CommRing A] [Algebra R A]
@@ -172,33 +206,122 @@ The value of a homogeneous polynomial on a quotient is the only sheaf-tensor ope
 for the pointwise statement.  It is a named interface so that the later tensor-power API can
 replace it without changing the `V_+(I)` point type.
 -/
+def chapter02PolynomialCoordinate
+    (R : Type u) [CommRing R] (r : ℕ) (i : Fin (r + 1)) :
+    Chapter02PolynomialHomogeneousPolynomial R r 1 :=
+  ⟨MvPolynomial.X i, by
+    change MvPolynomial.X i ∈
+      MvPolynomial.homogeneousSubmodule (σ := Fin (r + 1)) (R := R) 1
+    exact (MvPolynomial.mem_homogeneousSubmodule 1 (MvPolynomial.X i)).2
+      (MvPolynomial.isHomogeneous_X (R := R) i)⟩
+
+def chapter02PolynomialQuotientCoordinateSection
+    (R : Type u) [CommRing R] (r : ℕ)
+    {T : Scheme.{u}}
+    (q : Chapter02InvertibleQuotientPair
+      (chapter02FreeQuasiCoherentModule T (Chapter02ProjectiveSpaceIndex r)).carrier)
+    (i : Fin (r + 1)) : q.line.carrier.sections :=
+  SheafOfModules.sectionsMap q.quotient
+    (SheafOfModules.freeSection (R := T.ringCatSheaf) (ULift.up i))
+
 structure Chapter02PolynomialHomogeneousEvaluation
     (R : Type u) [CommRing R] (r : ℕ)
-    (G : Chapter02GradedAlgebra R (chapter02PolynomialRing R r))
     {T : Scheme.{u}} (f : T ⟶ chapter02Spec R)
     (q : Chapter02InvertibleQuotientPair
       (chapter02FreeQuasiCoherentModule T (Chapter02ProjectiveSpaceIndex r)).carrier) where
-  value : ∀ d, Chapter02HomogeneousPolynomial G d →
+  /-- The section products used by this evaluation are part of its construction data. -/
+  powerSectionProductData : ∀ m n,
+    Chapter02PowerSectionProductData q.line m n
+  /-- The scalar actions used by this evaluation are part of its construction data. -/
+  baseScalarActionData : ∀ d,
+    Chapter02BaseScalarActionData R (Chapter02ProjectiveSpaceIndex r) f q d
+  /-- The degreewise evaluation of homogeneous polynomials in the quotient line. -/
+  value : ∀ d, Chapter02PolynomialHomogeneousPolynomial R r d →
     (chapter02LineBundlePowerBundle q.line d).carrier.sections
+  /-- Evaluation sends a zero homogeneous polynomial to the zero section. -/
+  value_zero : ∀ d (F : Chapter02PolynomialHomogeneousPolynomial R r d),
+    F.1 = 0 →
+      value d F = chapter02ZeroSection (chapter02LineBundlePowerBundle q.line d).carrier
+  /-- Evaluation is additive in each homogeneous degree. -/
+  value_add : ∀ d (F G H : Chapter02PolynomialHomogeneousPolynomial R r d),
+    H.1 = F.1 + G.1 →
+      value d H =
+        chapter02AddSection (chapter02LineBundlePowerBundle q.line d).carrier
+          (value d F) (value d G)
+  /-- Evaluation uses the base coefficient action on homogeneous sections. -/
+  value_smul : ∀ d (c : R) (F H : Chapter02PolynomialHomogeneousPolynomial R r d),
+    H.1 = c • F.1 →
+      value d H =
+        (baseScalarActionData d).action c (value d F)
+  /-- Evaluation is multiplicative across homogeneous degrees. -/
+  value_mul : ∀ m n (F : Chapter02PolynomialHomogeneousPolynomial R r m)
+      (G : Chapter02PolynomialHomogeneousPolynomial R r n)
+      (H : Chapter02PolynomialHomogeneousPolynomial R r (m + n)),
+    H.1 = F.1 * G.1 →
+      value (m + n) H =
+        (powerSectionProductData m n).product (value m F) (value n G)
+  /-- The constant polynomial `1` evaluates to the unit section in degree zero. -/
+  value_one : ∀ F : Chapter02PolynomialHomogeneousPolynomial R r 0,
+    F.1 = 1 →
+      value 0 F =
+        SheafOfModules.sectionsMap
+          (chapter02LineBundlePowerData q.line).power_zero.inv
+          ((SheafOfModules.unit T.ringCatSheaf).unitHomEquiv (𝟙 _))
+  /-- Degree-one evaluation is the quotient's coordinate section, transported to `L¹`. -/
+  value_on_coordinate : ∀ i,
+    value 1 (chapter02PolynomialCoordinate R r i) =
+      SheafOfModules.sectionsMap
+        (chapter02LineBundlePowerData q.line).power_one.inv
+        (chapter02PolynomialQuotientCoordinateSection R r q i)
 
 /- LOCAL_DEPENDENCY_GUESS: evaluation of homogeneous polynomials in the quotient sections. -/
 theorem chapter02_polynomial_homogeneous_evaluation_exists
     (R : Type u) [CommRing R] (r : ℕ)
-    (G : Chapter02GradedAlgebra R (chapter02PolynomialRing R r))
     {T : Scheme.{u}} (f : T ⟶ chapter02Spec R)
     (q : Chapter02InvertibleQuotientPair
       (chapter02FreeQuasiCoherentModule T (Chapter02ProjectiveSpaceIndex r)).carrier) :
-    Nonempty (Chapter02PolynomialHomogeneousEvaluation R r G f q) := by
+    Nonempty (Chapter02PolynomialHomogeneousEvaluation R r f q) := by
   sorry
+
+/-!
+The point condition must use one graded evaluation family for all representatives of a quotient
+class.  Its transport field is the compatibility that makes vanishing independent of the chosen
+line-bundle presentation.
+-/
+structure Chapter02PolynomialHomogeneousEvaluationFamily
+    (R : Type u) [CommRing R] (r : ℕ)
+    {T : Scheme.{u}} (f : T ⟶ chapter02Spec R) where
+  evaluation : ∀ q : Chapter02InvertibleQuotientPair
+      (chapter02FreeQuasiCoherentModule T (Chapter02ProjectiveSpaceIndex r)).carrier,
+    Chapter02PolynomialHomogeneousEvaluation R r f q
+  /-- Equivalent quotient representatives admit a compatible transport of all evaluations. -/
+  transport : ∀ {q q'}
+      (h : chapter02QuotientPairEquivalent q q'),
+      ∃ τ : Chapter02LineBundlePowerTransportData (Classical.choose h),
+        ∀ (d : ℕ) (F : Chapter02PolynomialHomogeneousPolynomial R r d),
+          SheafOfModules.sectionsMap (τ.map d).hom ((evaluation q).value d F) =
+            (evaluation q').value d F
+
+/- LOCAL_DEPENDENCY_GUESS: the quotient-compatible graded evaluation family exists. -/
+theorem chapter02_polynomial_homogeneous_evaluation_family_exists
+    (R : Type u) [CommRing R] (r : ℕ)
+    {T : Scheme.{u}} (f : T ⟶ chapter02Spec R) :
+    Nonempty (Chapter02PolynomialHomogeneousEvaluationFamily R r f) := by
+  sorry
+
+noncomputable def chapter02PolynomialHomogeneousEvaluationFamily
+    (R : Type u) [CommRing R] (r : ℕ)
+    {T : Scheme.{u}} (f : T ⟶ chapter02Spec R) :
+    Chapter02PolynomialHomogeneousEvaluationFamily R r f :=
+  Classical.choice (chapter02_polynomial_homogeneous_evaluation_family_exists R r f)
 
 noncomputable def chapter02PolynomialHomogeneousEvaluation
     (R : Type u) [CommRing R] (r : ℕ)
-    (G : Chapter02GradedAlgebra R (chapter02PolynomialRing R r))
     {T : Scheme.{u}} (f : T ⟶ chapter02Spec R)
     (q : Chapter02InvertibleQuotientPair
       (chapter02FreeQuasiCoherentModule T (Chapter02ProjectiveSpaceIndex r)).carrier) :
-    Chapter02PolynomialHomogeneousEvaluation R r G f q :=
-  Classical.choice (chapter02_polynomial_homogeneous_evaluation_exists R r G f q)
+    Chapter02PolynomialHomogeneousEvaluation R r f q :=
+  (chapter02PolynomialHomogeneousEvaluationFamily R r f).evaluation q
 
 /-- A quotient-class point on `V_+(I)`, with all homogeneous elements of `I` evaluating to zero. -/
 structure Chapter02PolynomialVPlusPoint
@@ -209,12 +332,12 @@ structure Chapter02PolynomialVPlusPoint
     Chapter02InvertibleQuotientClass
       (chapter02FreeQuasiCoherentModule T (Chapter02ProjectiveSpaceIndex r)).carrier
   vanishes_on_ideal :
-    ∃ q : Chapter02InvertibleQuotientPair
+    ∀ q : Chapter02InvertibleQuotientPair
         (chapter02FreeQuasiCoherentModule T (Chapter02ProjectiveSpaceIndex r)).carrier,
-      chapter02QuotientClassMk q = quotientClass ∧
+      chapter02QuotientClassMk q = quotientClass →
         ∀ d (F : Chapter02PolynomialHomogeneousPolynomialInIdeal R r I d),
-          (chapter02PolynomialHomogeneousEvaluation R r
-            (chapter02PolynomialGradedAlgebra R r) f q).value d ⟨F.1, F.2.2⟩ =
+          ((chapter02PolynomialHomogeneousEvaluationFamily R r f).evaluation q).value
+              d ⟨F.1, F.2.2⟩ =
             chapter02ZeroSection (chapter02LineBundlePowerBundle q.line d).carrier
 
 abbrev Chapter02PolynomialVPlusPointOver
@@ -286,8 +409,11 @@ abbrev chapter02VeroneseStandardTarget (S : Scheme.{u}) (r d : ℕ) : Scheme.{u}
 /- LOCAL_DEPENDENCY_GUESS: reindexing a free projective bundle along the finite-coordinate equivalence. -/
 theorem chapter02_veronese_target_reindexed_standard_projective_space
     (S : Scheme.{u}) (r d : ℕ) :
-    Nonempty (chapter02VeroneseTarget S r d ≅
-      chapter02VeroneseStandardTarget S r d) := by
+    ∃ e : chapter02VeroneseTarget S r d ≅
+        chapter02VeroneseStandardTarget S r d,
+      e.hom ≫ chapter02ProjectiveSpaceProjection S
+          (chapter02VeroneseTargetDimension r d) =
+        (chapter02VeroneseTargetData S r d).bundle.projection := by
   sorry
 
 /- LOCAL_DEPENDENCY_GUESS: multiplication of sections in the tensor powers constructs monomial sections. -/
@@ -326,15 +452,16 @@ noncomputable def chapter02VeroneseCoordinateData
 
 structure Chapter02VeroneseMapData
     (S : Scheme.{u}) (r d : ℕ) where
-  source : Chapter02ProjectiveSpaceData S (Chapter02ProjectiveSpaceIndex r)
-  coordinateData : Chapter02VeroneseCoordinateData S r d source
-  map : source.bundle.scheme ⟶ (chapter02VeroneseTargetData S r d).bundle.scheme
+  coordinateData : Chapter02VeroneseCoordinateData S r d
+    (chapter02ProjectiveSpaceData S (Chapter02ProjectiveSpaceIndex r))
+  map : chapter02ProjectiveSpace S r ⟶ (chapter02VeroneseTargetData S r d).bundle.scheme
   over : map ≫ (chapter02VeroneseTargetData S r d).bundle.projection =
-    source.bundle.projection
+    chapter02ProjectiveSpaceProjection S r
   pullbackTwistingLineIso :
     (Scheme.Modules.pullback map).obj
         (chapter02VeroneseTargetData S r d).bundle.twistingLineBundle.carrier ≅
-      (chapter02LineBundlePowerBundle source.bundle.twistingLineBundle d).carrier
+      (chapter02LineBundlePowerBundle
+        (chapter02ProjectiveSpaceTwistingLine S r) d).carrier
   coordinate_pullback :
     ∀ a : chapter02VeroneseTargetIndex r d,
       SheafOfModules.sectionsMap pullbackTwistingLineIso.hom
@@ -353,7 +480,7 @@ noncomputable def chapter02VeroneseMapData (S : Scheme.{u}) (r d : ℕ) :
   Classical.choice (chapter02_veronese_map_data_exists S r d)
 
 abbrev chapter02VeroneseMap (S : Scheme.{u}) (r d : ℕ) :
-    (chapter02VeroneseMapData S r d).source.bundle.scheme ⟶
+    chapter02ProjectiveSpace S r ⟶
       (chapter02VeroneseTargetData S r d).bundle.scheme :=
   (chapter02VeroneseMapData S r d).map
 
@@ -361,15 +488,15 @@ theorem chapter02_veronese_map_is_over
     (S : Scheme.{u}) (r d : ℕ) :
     chapter02VeroneseMap S r d ≫
         (chapter02VeroneseTargetData S r d).bundle.projection =
-      (chapter02VeroneseMapData S r d).source.bundle.projection :=
+      chapter02ProjectiveSpaceProjection S r :=
   (chapter02VeroneseMapData S r d).over
 
 noncomputable def chapter02_veronese_pullback_of_twisting_line
     (S : Scheme.{u}) (r d : ℕ) :
-    (Scheme.Modules.pullback (chapter02VeroneseMap S r d)).obj
+      (Scheme.Modules.pullback (chapter02VeroneseMap S r d)).obj
         (chapter02VeroneseTargetData S r d).bundle.twistingLineBundle.carrier ≅
       (chapter02LineBundlePowerBundle
-        (chapter02VeroneseMapData S r d).source.bundle.twistingLineBundle d).carrier :=
+        (chapter02ProjectiveSpaceTwistingLine S r) d).carrier :=
   (chapter02VeroneseMapData S r d).pullbackTwistingLineIso
 
 theorem chapter02_veronese_map_is_closed_immersion

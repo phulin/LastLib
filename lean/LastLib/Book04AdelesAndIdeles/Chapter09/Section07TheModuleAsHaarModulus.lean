@@ -45,7 +45,7 @@ theorem chapter09HaarModulus_apply
 
 theorem chapter09_additive_haar_scaling
     (K : Type*) [Field K] [NumberField K]
-    (μ : Measure (Chapter09Adele K)) [μ.IsAddHaarMeasure]
+    (μ : Measure (Chapter09Adele K)) [μ.IsAddHaarMeasure] [Measure.Regular μ]
     (x : Chapter09Idele K) :
     ∀ s : Set (Chapter09Adele K), MeasurableSet s →
       μ (chapter09IdeleMulAddEquiv K x '' s) =
@@ -54,7 +54,7 @@ theorem chapter09_additive_haar_scaling
 
 theorem chapter09_normOne_iff_additive_haar_preserving
     (K : Type*) [Field K] [NumberField K]
-    (μ : Measure (Chapter09Adele K)) [μ.IsAddHaarMeasure]
+    (μ : Measure (Chapter09Adele K)) [μ.IsAddHaarMeasure] [Measure.Regular μ]
     (x : Chapter09Idele K) :
     chapter09HaarModulus K x = 1 ↔
       Measure.map (chapter09IdeleMulAddEquiv K x) μ = μ := by
@@ -62,7 +62,7 @@ theorem chapter09_normOne_iff_additive_haar_preserving
 
 theorem chapter09_normOne_is_exactly_volume_preserving
     (K : Type*) [Field K] [NumberField K]
-    (μ : Measure (Chapter09Adele K)) [μ.IsAddHaarMeasure] :
+    (μ : Measure (Chapter09Adele K)) [μ.IsAddHaarMeasure] [Measure.Regular μ] :
     ∀ x : Chapter09Idele K,
       x ∈ chapter09NormOneIdeles K ↔
         Measure.map (chapter09IdeleMulAddEquiv K x) μ = μ := by
@@ -105,10 +105,10 @@ theorem chapter09_multiplicative_haar_units_are_normalized_almost_everywhere
     (K : Type*) [Field K] [NumberField K]
     (μ : ∀ v : HeightOneSpectrum (𝓞 K), Measure (v.adicCompletion K))
     (hμ : chapter09FiniteMultiplicativeHaarNormalization K μ) :
-    ∀ᶠ v : HeightOneSpectrum (𝓞 K) in Filter.cofinite,
+    ({v : HeightOneSpectrum (𝓞 K) |
       μ v (Set.range (fun u : (v.adicCompletionIntegers K)ˣ =>
-        (u : v.adicCompletion K))) = 1 :=
-  hμ
+        (u : v.adicCompletion K))) ≠ 1}).Finite := by
+  exact Filter.eventually_cofinite.mp hμ
 
 end
 
