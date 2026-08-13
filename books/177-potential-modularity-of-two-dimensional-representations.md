@@ -236,7 +236,7 @@ A **pre-specialization two-prime datum** consists of the following information.
 7. A finite Galois avoidance field containing the full residual cutout fields and every cyclotomic, component, pairing, and self-twist field whose intersection would invalidate a later step.
 8. A selected auxiliary level-raising place satisfying the joint target, auxiliary, and constant-field Frobenius conditions of (3.7)--(3.8), with its lower residual automorphic class, invariant line, sign, determinant, and generic conductor-one special face.
 
-Items 1--8 precede specialization. They are not consequences of the first three conditions on $\bar\rho$. Book 157 constructs the paired-frame space and its local-open package from its admissible moduli datum. The character, coefficient, and localization choices in items 2--4 and 8 are supplied explicitly below from Book 98 and the globally upstream finite-quotient prime-selection theorem; no conclusion of a later potential-modularity book is used. Post-specialization cleanability is not included here, because the actual bad-place set is known only after the specialized abelian variety exists. The curve carrier is likewise not assumed: once lifting has retained the selected special place, Section 9.2 constructs it from Books 104 and 127.
+Items 1--8 precede specialization. They are not consequences of the first three conditions on $\bar\rho$. Book 158 constructs the paired-frame space and its local-open package from its admissible moduli datum. The character, coefficient, and localization choices in items 2--4 and 8 are supplied explicitly below from Book 98 and the globally upstream finite-quotient prime-selection theorem; no conclusion of a later potential-modularity book is used. Post-specialization cleanability is not included here, because the actual bad-place set is known only after the specialized abelian variety exists. The curve carrier is likewise not assumed: once lifting has retained the selected special place, Section 9.2 constructs it from Books 104 and 127.
 
 ## 3. The dihedral automorphic seed
 
@@ -285,7 +285,7 @@ The order of construction prevents a coefficient-field circle.
 
 First choose the CM extension, the finite ray data, and the protected determinant and irreducibility witnesses. Next choose $q\geq7$ outside the target ramification set and every finite exceptional set, and build $\Theta$ with the required finite-flat branches at $q$. Only then choose a place of the actual character-value field above $q$ and form $\bar\sigma$ over its actual residue field.
 
-After both residual coefficient fields are fixed, choose the totally real multiplication field $M$, the primes $\lambda$ and $\mathfrak q$, and the inverse-different polarization line as part of Book 157's admissible two-prime coefficient datum. The residue maps must receive the two actual finite coefficient fields, the rational primes must be unramified in $M$, and the chosen levels must satisfy Book 157's full-product monodromy criterion. These are explicit algebraic conditions on the datum, not a conclusion imported from a later two-prime theorem. Choosing $M$ before the character-value field exists would silently change the residue field of the auxiliary representation.
+After both residual coefficient fields are fixed, choose the totally real multiplication field $M$, the primes $\lambda$ and $\mathfrak q$, and the inverse-different polarization line as part of Book 158's admissible two-prime coefficient datum. The residue maps must receive the two actual finite coefficient fields, the rational primes must be unramified in $M$, and the chosen levels must satisfy Book 158's full-product monodromy criterion. These are explicit algebraic conditions on the datum, not a conclusion imported from a later two-prime theorem. Choosing $M$ before the character-value field exists would silently change the residue field of the auxiliary representation.
 
 At places above $q$, the local characters of $\Theta$ must give the named paired finite-flat model. At places above $\ell$, the auxiliary prime-to-$\ell$ module must occur on the same good-reduction seed that carries $\mathcal G_{v,\lambda}$. Conversely, the target module must be unramified at places above $q$ in the clean good-reduction construction and must match the actual prime-to-$q$ Frobenius module of the auxiliary local seed. These are simultaneous local-model conditions, not consequences of the inequality $q\ne\ell$.
 
@@ -388,7 +388,7 @@ An $L$-point of $X$ is an actual Hilbert--Blumenthal abelian variety over $L$ wi
 
 ### 4.3 Fineness, smoothness, and dimension
 
-Book 157 proves the fine-space theorem for the exact datum just described. The deformation calculation is worth recalling because it explains why the two frames do not overdetermine the problem. De Rham cohomology splits as
+Book 158 proves the fine-space theorem for the exact datum just described. The deformation calculation is worth recalling because it explains why the two frames do not overdetermine the problem. De Rham cohomology splits as
 
 $$
 H^1_{\mathrm{dR}}(A)=\bigoplus_\tau H_\tau,
@@ -416,7 +416,7 @@ This argument says nothing about a full-level integral model in residue characte
 
 The untwisted Hilbert--Blumenthal space can have several geometric and arithmetic components, indexed by polarization, orientation, and finite determinant data. The pre-specialization datum selects one component defined over the working totally real field and requires every local seed to lie on its twist. Local points on different components cannot be combined by intersecting their neighborhoods.
 
-On the selected component, Book 157's monodromy hypothesis gives the full product (4.4). Connected components of the frame cover are the orbits of geometric fundamental-group monodromy on one fiber. Full product monodromy acts transitively, so the cover is geometrically connected. Separate surjectivity to the two factors would not suffice: a graph of a common quotient can project surjectively to both factors while having several orbits.
+On the selected component, Book 158's monodromy hypothesis gives the full product (4.4). Connected components of the frame cover are the orbits of geometric fundamental-group monodromy on one fiber. Full product monodromy acts transitively, so the cover is geometrically connected. Separate surjectivity to the two factors would not suffice: a graph of a common quotient can project surjectively to both factors while having several orbits.
 
 Twisting changes only arithmetic descent and becomes trivial over $\overline F$. Hence the selected twist remains geometrically connected. The exact geometric output is
 
@@ -898,7 +898,7 @@ $$
 
 The left side is irreducible. Indeed, a characteristic-zero invariant line would meet a stable lattice in a saturated rank-one submodule and reduce to a line in $A[\lambda]$, contradicting (7.2) and preservation of absolute irreducibility. Hence the semisimplification sign on the left can be removed, and (9.4) also makes the right side irreducible.
 
-This argument uses Corollary 11.2 of the companion Chebotarev development, Book 167, which the critical proof spine declares globally upstream. Book 127 supplies the family and its Frobenius polynomials; it does not prove density. No theorem from Books 178--180, and in particular no compatible-system assembly or Brauer descent, is used.
+This argument uses Corollary 11.2 of the companion Chebotarev development, Book 154, which the critical proof spine declares globally upstream. Book 127 supplies the family and its Frobenius polynomials; it does not prove density. No theorem from Books 178--180, and in particular no compatible-system assembly or Brauer descent, is used.
 
 ### 9.4 The exact residual member
 
@@ -1086,8 +1086,8 @@ The proof uses the following earlier books, with no enlargement of their conclus
 | Book 127 | compact-curve packet decomposition, rank-two extraction, determinant and Frobenius normalization, the weak family, and stable lattices | no surface realization or density theorem; integral finite-flat comparison is obtained from $A$, not from an arbitrary curve lattice |
 | Book 176 | literal conditional Theorem 7.1 for the scalar-twist family, the separately conditional generic and $q_v\equiv-1$ reduced-image argument of Section 7.1, and conditional finite-set Theorem 9.1 | every applicable Ihara, type, support, reciprocity, ray, augmentation, mixed-exactness, product-residue, and joint-support hypothesis is retained; source reducedness is not required for pointwise modularity |
 | Book 153 | Moret--Bailly specialization with local opens, total reality, splitting, and linear disjointness | no Galois or solvable conclusion |
-| Book 157 | the fine smooth geometrically connected paired-frame moduli space and its admissible local opens | both frames and both pairings must occur on the same object and component |
-| Book 167, the globally upstream companion Chebotarev development | finite-quotient prime selection in Section 3.4 and Corollary 11.2 in Sections 8.5 and 9.3 | density recognizes existing data and supplies no carrier, lattice, or local compatibility |
+| Book 158 | the fine smooth geometrically connected paired-frame moduli space and its admissible local opens | both frames and both pairings must occur on the same object and component |
+| Book 154, the globally upstream companion Chebotarev development | finite-quotient prime selection in Section 3.4 and Corollary 11.2 in Sections 8.5 and 9.3 | density recognizes existing data and supplies no carrier, lattice, or local compatibility |
 
 Ordinary foundational inputs are finite-flat group schemes, polarization pairings, Schur's lemma, stable lattices, Nakayama's lemma, and elementary field-disjointness calculations. Book 109 is consulted only to state why descent is unavailable; no theorem from it enters Theorem 10.1. The source-closed direct row for the argument is therefore
 

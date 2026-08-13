@@ -76,8 +76,8 @@ particular, Book 181 proves the chosen-lift implication conditional on its seed;
 construct either that seed or its controlled refinement.  This volume therefore cannot assert
 the desired potential-automorphy theorem.  Its status is **NOT READY**.
 
-The obstruction is not local deformation theory.  Books 163--164 give the primitive
-signed-special residual chart and its represented minimal deformation condition.  Books 165--166 give the supported cohomology and balanced presentation.  Those results do not make
+The obstruction is not local deformation theory.  Books 164--165 give the primitive
+signed-special residual chart and its represented minimal deformation condition.  Books 166--167 give the supported cohomology and balanced presentation.  Those results do not make
 the required automorphic module nonzero.  Patching begins only after that module exists.
 
 ### 1.3 The chosen lift supplied by Book 181
@@ -245,7 +245,7 @@ local conditions are:
   $w\mid\ell$; and
 * the unramified condition at every other finite place.
 
-This is the SP condition of Books 163--164, transported by the split local
+This is the SP condition of Books 164--165, transported by the split local
 identifications.  It is represented.  One does not define it by the open generic-fibre
 condition $N\ne0$; nonvanishing for the chosen point follows from the integral equation
 $\bar N\ne0$.
@@ -499,7 +499,7 @@ exponent one.  It retains the chosen finite-flat lattice at $w\mid\ell$ and is u
 every other finite place.
 
 **Proof.**  The finite coefficient and residue-field extension used to normalize the Book 181
-point merely scalar-extends the controlled seed: Book 164's represented local conditions and
+point merely scalar-extends the controlled seed: Book 165's represented local conditions and
 Book 173's clean comparison are stable under that coefficient change.  It does not require a
 second carrier.  Lemma 3.1 supplies the full and cyclotomic image hypotheses over $F$.  Complete
 splitting gives the clean coefficient-prime condition and, by Lemma 2.2, the exact named SP
@@ -687,7 +687,7 @@ seed theorem still assumes a fully compatible corrected relative ray datum, incl
 diagonal ideal intersection and capitulation relation.  That compatibility is item 2 of the
 seven-item witness; it is not proved merely by the inverse-branch unit calculation.
 
-Book 154 proves Galois-refined approximation after a **Galois approximation datum** for the
+Book 155 proves Galois-refined approximation after a **Galois approximation datum** for the
 given variety has been supplied.  Its $S_5/S_4$ calculation proves that such a datum would have
 a solvable point stabilizer.  Its universal symmetric family supplies a datum for an affine
 coefficient space.  Neither result constructs the required full-monodromy presentation and
@@ -751,7 +751,7 @@ argument dependency-closed.
 
 **Required Theorem 7.1 (controlled exact SP residual seed).**  Let $\ell\geq7$ and let
 $\bar\rho:G_{\mathbf Q}\to\operatorname{GL}_2(k)$ be the primitive signed-special Frey
-residual representation of Book 163, satisfying the determinant, finite-flat, absolute
+residual representation of Book 164, satisfying the determinant, finite-flat, absolute
 irreducibility, cyclotomic absolute irreducibility, and other global image hypotheses required
 by Book 173.  Given a finite Galois avoidance field $D$, finitely many prescribed split places, and an
 even-index solvable-bridge group datum $(\Gamma,J)$, construct a controlled exact SP residual
@@ -824,13 +824,13 @@ failure to construct the minimal residual seed itself.
 |---|---|---|
 | Book 109 | prime-cyclic ascent on an exhibited extension-complete selected chain, and descent on exhibited antecedent-complete selected chains with the required fiber saturation | either direction from solvability alone |
 | Books 127--128 and 168 | weight-two coefficient attachment and the SP local comparison in their explicitly stated range | an automatic all-coefficient SP comparison for an arbitrary packet |
-| Book 163 | the primitive residual Frey SP tuple, intrinsic line, sign, and conductor-one record used in the FLT specialization | a characteristic-zero chosen lift or automorphic seed |
+| Book 164 | the primitive residual Frey SP tuple, intrinsic line, sign, and conductor-one record used in the FLT specialization | a characteristic-zero chosen lift or automorphic seed |
 | Book 173 | exact minimal $R=\mathbb T$ and automorphy of every point of a clean minimal deformation problem | existence of the exact residual automorphic localization |
 | Book 175 | a local change at a previously named place under its exact clean augmentation hypotheses | simultaneous lowering at the unknown extra bad primes of a specialization |
 | Book 177 | a conditional two-prime potential-modularity route and point-field control in its admitted range | an unconditional clean seed or controlled normal closure |
-| Book 154 | Galois-refined approximation from a supplied Galois approximation datum | that datum for the paired-frame moduli problem |
+| Book 155 | Galois-refined approximation from a supplied Galois approximation datum | that datum for the paired-frame moduli problem |
 | Book 178 | conditional residual potential modularity for a fixed seven-item two-prime-admissible witness; after lifting, proof of final compact-carrier eligibility | construction of the corrected relative ray datum, a specialization satisfying item 7's literal singleton condition, or the exact minimal Book 173 SP seed |
-| Books 164--166 | the SP local deformation problem, supported cohomology, and balanced presentation | a horizontal point or a nonzero exact automorphic module |
+| Books 165--167 | the SP local deformation problem, supported cohomology, and balanced presentation | a horizontal point or a nonzero exact automorphic module |
 | Book 181 | under $(\mathrm{Seed}_{\mathrm{SP}}^{181})$, finite-flatness of the balanced global SP ring and the normalized primitive SP point used here | construction of its seed, normal-closure control, or the controlled seed required in Section 4 |
 
 Book 181 now genuinely supplies the chosen point conditional on its exact seed; this volume no
@@ -843,12 +843,12 @@ For the conditional theorem actually proved here, the honest direct dependency r
 
 $$
 \boxed{
-182\mid 109,127,128,168,163,173,154,178,164,181.}
+182\mid 109,127,128,168,164,173,155,178,165,181.}
 \tag{8.1}
 $$
 
-Books 175 and 177 are background to the seed-construction audit inherited through Books 178 and 181 and need not be direct edges here.  Books 165--166 are direct inputs to Book 181, but
-transitive for this volume.  Book 164 is retained because this volume directly identifies the
+Books 175 and 177 are background to the seed-construction audit inherited through Books 178 and 181 and need not be direct edges here.  Books 166--167 are direct inputs to Book 181, but
+transitive for this volume.  Book 165 is retained because this volume directly identifies the
 represented local SP problem; it could be made transitive by treating all local identifications
 as part of the Book 181 export.
 

@@ -1032,7 +1032,7 @@ verified.
 **Proof.** Book 180's Clifford restriction in Section 5.1, applied constituentwise after
 passing to the normal core, together with the averaging argument in Section 3.1 shows that the
 restriction on the left is semisimple. By (6.4d), the two representations have equal
-characteristic polynomials at all finite places outside one finite set. Book 154, Theorem 4.3,
+characteristic polynomials at all finite places outside one finite set. Book 154, Theorem 9.1,
 gives the required Chebotarev density, so continuity makes their traces equal on all of
 $G_{F_D}$. Book 180, Theorem 8.1 (Brauer--Nesbitt), now identifies the two semisimple
 representations. $\square$

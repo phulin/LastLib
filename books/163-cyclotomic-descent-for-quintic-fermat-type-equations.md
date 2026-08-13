@@ -80,7 +80,7 @@ Equivalently, the only integer solutions of $X^5+Y^5=Z^5$ have a zero
 coordinate. The equivalence uses only the oddness of the exponent: in (1.1), move
 $z^5$ to the other side and put $Z=-z$.
 
-Book 161, *Quintic Cyclotomic Units and Kummer Arithmetic*, established the arithmetic
+Book 162, *Quintic Cyclotomic Units and Kummer Arithmetic*, established the arithmetic
 of
 
 $$
@@ -222,7 +222,7 @@ $$
 \tag{2.1}
 $$
 
-Book 161 proves that $\mathcal O$ is a principal ideal domain and that
+Book 162 proves that $\mathcal O$ is a principal ideal domain and that
 $\mathfrak p$ is the unique prime above $5$. The exact element identity is
 
 $$
@@ -327,7 +327,7 @@ element prime to $\lambda$ is **primary** when it is congruent to a nonzero rati
 integer modulo $\lambda^2$. Every $\lambda$-adic unit has a unique associate
 $\zeta^kA$ that is primary.
 
-We will use two exact consequences from Book 161.
+We will use two exact consequences from Book 162.
 
 **Primary-unit criterion.** A unit congruent to a rational integer modulo
 $\lambda^2$ is real. Thus it is $\pm\eta^n$.
@@ -735,7 +735,7 @@ consequence of $\lambda^5$-divisibility are
 | $4$ | $4a\equiv0$ | excluded by the first case |
 
 The rational-coordinate test in the two asymmetric rows uses the valuation formula
-from Book 161. If
+from Book 162. If
 
 $$
 C_0+C_1\lambda+C_2\lambda^2+C_3\lambda^3
@@ -1007,7 +1007,7 @@ K^+=\mathbf Q(\sqrt5),
 \tag{5.1}
 $$
 
-Book 161 identifies the ring of integers as
+Book 162 identifies the ring of integers as
 
 $$
 \mathcal O^+=\mathbf Z[\eta]
@@ -1225,7 +1225,7 @@ v_5(T)=v_5(S^2/5)=7+10v_5(a).
 \tag{5.12}
 $$
 
-Book 161 proves that $\pi=\sqrt5$ is an associate of $\lambda^2$. Consequently
+Book 162 proves that $\pi=\sqrt5$ is an associate of $\lambda^2$. Consequently
 
 $$
 v_{\mathfrak p}(T\pi)
@@ -1240,7 +1240,7 @@ modulo $\lambda^3$ has characteristic five, and the inverse of $2$ is represente
 the ordinary integer $3$.
 
 Every fifth power is rational modulo $\lambda^4$, so (5.11) makes $u$ rational
-modulo $\lambda^3$. The fifth-power unit criterion from Book 161 says that $u$ is a
+modulo $\lambda^3$. The fifth-power unit criterion from Book 162 says that $u$ is a
 fifth power. Since $u$ is real, (5.3) shows directly that its $\eta$-exponent is
 divisible by five; its fifth root may be chosen in $\mathcal O^+$. Absorbing that root
 into $\beta$, we obtain the exact equation
@@ -2375,7 +2375,7 @@ an equation for every transition and a strict positive-integer measure.
 
 ### 9.4 Dependency closure
 
-The proof has one direct mathematical dependency: Book 161. Its imported statements
+The proof has one direct mathematical dependency: Book 162. Its imported statements
 are limited and can be listed exactly.
 
 1. The quartic cyclotomic ring is $\mathcal O=\mathbf Z[\zeta]$, is a PID, and has
@@ -2389,7 +2389,7 @@ are limited and can be listed exactly.
    of $U+\zeta V$ is $F(U,V)$.
 
 Each imported assertion is used with the same hypotheses and normalization as in Book
-161. In particular, class number one is used only after prime-ideal exponents have
+162. In particular, class number one is used only after prime-ideal exponents have
 been isolated, and the fifth-power unit criterion is used only for a unit already
 known to accompany an ideal fifth power.
 
@@ -2411,7 +2411,7 @@ can serve as the independent coefficient-five endpoint for the later global asse
 
 The first case has been proved twice: by the nonzero fifth-power residues modulo $25$
 and by primary cyclotomic normalization followed by a conjugate-difference calculation.
-The second case begins with the exact Book 161 factor
+The second case begins with the exact Book 162 factor
 
 $$
 x+\zeta y=\lambda A^5.
@@ -2459,7 +2459,7 @@ $$
 is impossible. Hence Fermat's equation at exponent five has only the trivial integer
 solutions, and the same is true over $\mathbf Q$ and for every exponent divisible by
 five. This completes the coefficient-five boundary using only the cyclotomic
-arithmetic of Book 161 and the explicit descent developed here.
+arithmetic of Book 162 and the explicit descent developed here.
 
 The endpoint is therefore genuinely classical and self-contained relative to its
 declared prerequisite: the exceptional prime is measured, every unit is accounted

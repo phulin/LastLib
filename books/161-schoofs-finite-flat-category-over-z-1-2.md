@@ -113,7 +113,7 @@ At an odd prime $q\ne3$, the integer $3$ is a unit in $\mathbf Z_q$. A finite lo
 
 At $2$ there is no integral fiber because $2$ is inverted. We choose an inertia group $I_2\subset G_{\mathbf Q}$ and its wild subgroup $P_2$. Different choices are conjugate, so the conditions below are independent of the choice.
 
-The prerequisite results used later enter with exactly these hypotheses. Books 2--3 supply finite extensions of $\mathbf Q_2$ and $\mathbf Q_3$, lower and upper ramification groups, Herbrand's quotient theorem, and the integrality of abelian upper breaks for finite Galois extensions of local fields with perfect residue field. Book 17 supplies finite etale descent over the henselian DVRs $\mathbf Z_q$. Books 28, 34, and 42 supply saturated closure, represented quotients, coefficient actions, and the generic-module dictionary, while Book 34 supplies Cartier duality. Book 51 proves the order-three classification over the unramified mixed-characteristic DVR $\mathbf Z_3$. Book 29 proves the fppf Kummer sequence, including residue characteristic three, and Book 55 proves the finite-level criterion for a $3$-divisible system. Book 56, Theorems 6.1, 7.1, and 14.2 supply the local finite-flat upper-break, different, and global root-discriminant bounds used in Chapter 4. Book 159, Theorem 15.2 supplies the combined unconditional degree cutoffs after importing the certified analytic calculation from Book 7. The reciprocity conventions and ray exact sequences of Books 5--6 explain the surrounding class-field picture, but the exact small abelian exclusions needed here are proved directly in Chapter 5. No later classification result is used as an input.
+The prerequisite results used later enter with exactly these hypotheses. Books 2--3 supply finite extensions of $\mathbf Q_2$ and $\mathbf Q_3$, lower and upper ramification groups, Herbrand's quotient theorem, and the integrality of abelian upper breaks for finite Galois extensions of local fields with perfect residue field. Book 17 supplies finite etale descent over the henselian DVRs $\mathbf Z_q$. Books 28, 34, and 42 supply saturated closure, represented quotients, coefficient actions, and the generic-module dictionary, while Book 34 supplies Cartier duality. Book 51 proves the order-three classification over the unramified mixed-characteristic DVR $\mathbf Z_3$. Book 29 proves the fppf Kummer sequence, including residue characteristic three, and Book 55 proves the finite-level criterion for a $3$-divisible system. Book 56, Theorems 6.1, 7.1, and 14.2 supply the local finite-flat upper-break, different, and global root-discriminant bounds used in Chapter 4. Book 160, Theorem 15.2 supplies the combined unconditional degree cutoffs after importing the certified analytic calculation from Book 7. The reciprocity conventions and ray exact sequences of Books 5--6 explain the surrounding class-field picture, but the exact small abelian exclusions needed here are proved directly in Chapter 5. No later classification result is used as an input.
 
 ### 1.3 The odd-tame condition
 
@@ -445,7 +445,7 @@ The general ceiling applies unchanged to a finite direct sum of exponent-three o
 
 ### 4.5 The unconditional degree cutoff
 
-The combined cutoff in Book 159, Theorem 15.2 uses Book 7's certified test function
+The combined cutoff in Book 160, Theorem 15.2 uses Book 7's certified test function
 
 $$
 F_6(x)=\frac{(1-|x|/6)_+}{\cosh(x/2)}
@@ -470,7 +470,7 @@ $$
 \boxed{[L:\mathbf Q]\le33.}
 $$
 
-In the cubic-inertia case, Book 159, Theorem 15.2 gives
+In the cubic-inertia case, Book 160, Theorem 15.2 gives
 
 $$
 \operatorname{rd}(L)<3^{3/2}2^{2/3}

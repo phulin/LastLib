@@ -395,7 +395,7 @@ $k_s$. This proves (2.7) without requiring either residue field to contain the o
 For (2.8), the inverse-different formula gives $\mathfrak c^\vee=\mathcal O_E$, and the standard
 alternating determinant form makes $L$ self-dual. Since $p$ and $s$ are unramified in $E$ and
 $N$ is prime to them, neither prime divides the different, polarization line, lattice index, or
-level. Book 156 proves that the corrected source (2.8a) becomes, after a geometric choice of a
+level. Book 157 proves that the corrected source (2.8a) becomes, after a geometric choice of a
 primitive $N$th root, one fixed-pairing orientation of the principal level for $L$; it also
 proves that the tensor component is defined over $\mathbf Q$. On that component the arithmetic
 group contains the principal congruence subgroup $\Gamma(N)$. Chinese remaindering elementary
@@ -508,7 +508,7 @@ approximation is clean.
 6. in the ordinary specialization form, all local completion algebras have the common-degree
    moving-family presentations required by Book 153, and their common degree $d$ is chosen so
    that $d[K:\mathbf Q]$ is even; in the closure-controlled form, a full Galois approximation
-   datum is supplied as in Book 154 and $[G:J][K:\mathbf Q]$ is even. In either form the
+   datum is supplied as in Book 155 and $[G:J][K:\mathbf Q]$ is even. In either form the
    completion algebra at $v_0$ has exactly one distinguished degree-one factor carrying the
    special seed, while every other factor carries a good minimal seed;
 7. after specialization, the actual bad set of $A$, the local conditions of
@@ -532,7 +532,7 @@ approximation is clean.
    central character.
 
 Items 1--6 are pre-specialization construction clauses. Item 7 is a post-specialization
-verification clause and is not an input to the approximation theorem. Book 156 places the
+verification clause and is not an input to the approximation theorem. Book 157 places the
 corrected tensor seeds on one arithmetic component, and product monodromy proves the twist over
 that component geometrically connected. The local geometry verifies item 5 in its stated good,
 ordinary, local--local, and split-semistable ranges. Item 7 is the exact boundary of the lifting
@@ -1139,7 +1139,7 @@ two selected prime ideals have full product monodromy. This is a conclusion of t
 choice, not a later genericity assumption.
 
 The resulting determinant-condition, $\mathfrak c$-polarized functor is the corrected fine
-scheme $H^\natural$ of relative dimension $[E:\mathbf Q]$. Book 156 proves that its tensor
+scheme $H^\natural$ of relative dimension $[E:\mathbf Q]$. Book 157 proves that its tensor
 component $H^{\mathrm{ten}}$ is defined over $\mathbf Q$, contains every tensor seed used
 below, and has the product monodromy of Theorem 2.1. Fine level is essential: without it the
 natural object has stabilizers, and a universal abelian scheme need not exist on a coarse
@@ -1211,7 +1211,7 @@ supposed frame cover empty.
 
 On $H^{\mathrm{ten}}$, simultaneous reduction of the arithmetic group at $\mathfrak l$ and
 $\mathfrak q$ is the product (6.3), by Theorem 2.1 and the corrected-level comparison of
-Book 156. Therefore the standard two-prime cover acts transitively on its fiber and is
+Book 157. Therefore the standard two-prime cover acts transitively on its fiber and is
 geometrically connected.
 
 The arithmetic twist by $V_{\mathfrak l}\times V_{\mathfrak q}$ becomes standard after base
@@ -1224,7 +1224,7 @@ twisting does not provide a rational point.
 Geometric components of a general Hilbert moduli space are indexed by determinant classes in a
 narrow adelic quotient, and a constant oriented auxiliary level can even remove all real
 points. Those variants are not needed here. The tensor choice (6.0) and corrected source
-(1.4) select the $\mathbf Q$-defined component $H^{\mathrm{ten}}$, and Book 156 puts every
+(1.4) select the $\mathbf Q$-defined component $H^{\mathrm{ten}}$, and Book 157 puts every
 real, good, ordinary, local--local, and semistable tensor seed used below on it. What remains is
 to keep all local neighborhoods on its one twist $Y^{\mathrm{ten}}$.
 
@@ -1260,7 +1260,7 @@ $Y^{\mathrm{ten}}$ is the subject of Chapter 7.
 
 ### 7.1 Real places
 
-At a real place, Book 156's corrected level has a tensor point; the constant oriented level
+At a real place, Book 157's corrected level has a tensor point; the constant oriented level
 discarded in Section 6.5 need not have any real point. Complex conjugation acts on the torsion
 of a polarized weight-two object with eigenvalues $1$ and $-1$. Both $\bar\rho$ and $\bar r$
 are odd, so each has determinant $-1$.
@@ -1537,7 +1537,7 @@ place $w_0\mid v_0$ and all other places above $v_0$ are on the prescribed good 
 $K'$ is linearly disjoint from $D_{\mathrm{av}}$, and, in the Galois
 form, the normal closure is disjoint from $D_{\mathrm{av}}$ and has the prescribed group and
 core-free stabilizer $J$. If the supplied datum is a solvable bridge datum, then $J$ is
-solvable and the upper extension comes with the prime-cyclic tower of Book 154; solvability is
+solvable and the upper extension comes with the prime-cyclic tower of Book 155; solvability is
 not a conclusion for an arbitrary Galois approximation datum.
 
 **Proof.** In the ordinary form, apply simultaneous Moret--Bailly approximation to the smooth
@@ -1956,7 +1956,7 @@ apply density and an elementary stable-lattice argument at $\mathfrak l$.
 **Proof.** At every place $v$ of good reduction, prime to the coefficient characteristics, the
 $\mathcal O_E$-action commutes with Frobenius. The $E$-linear reduced characteristic polynomial
 of that actual Frobenius endomorphism, by Book 35's construction already imported through Book
-155, therefore gives one polynomial
+156, therefore gives one polynomial
 
 $$
 P_{A,v}(X)=X^2-a_v(A)X+q_v\in E[X]
@@ -2202,10 +2202,10 @@ ledger. The present one-prime theorem does not contain such a route.
 
 ### 13.1 The prerequisite interfaces
 
-The declared direct prerequisites are Books 98, 104, 127, 141, 153--156, and 175. Book
+The declared direct prerequisites are Books 98, 104, 127, 141, 153--157, and 175. Book
 175 in turn exposes the load-bearing interfaces from Books 139--140 and 174; they are not
 treated as stronger than their stated hypotheses, and its descent clause exposes Book 109's
-admissible cyclic interface. Book 98 imports global reciprocity from Book 6, while Book 155
+admissible cyclic interface. Book 98 imports global reciprocity from Book 6, while Book 156
 imports Book 35's reduced characteristic polynomial for endomorphisms of abelian schemes. The
 proof uses these prerequisites in distinct roles.
 
@@ -2219,7 +2219,8 @@ ray-subgroup compatibility hypotheses are retained.
 used. Kronecker's theorem makes every ratio $u/u^\sigma$ a root of unity; reduction at one
 split prime detects the resulting finite group, and elementary character extension produces
 the inverse branch. This proves the unit correction, not the separate capitulation-intersection
-compatibility assumed by Theorem 4.2. Chebotarev is taken from Book 154. No Kummer congruence
+compatibility assumed by Theorem 4.2. Chebotarev is taken from its actual source, Book 154; Book
+155 supplies the Galois and solvable approximation refinements. No Kummer congruence
 theorem or later congruence-subgroup result is an undeclared input.
 
 **Compact carrier and weight-two Galois realization.** Book 104 first transfers a totally
@@ -2256,10 +2257,10 @@ antecedent-complete, and where applicable fiber-saturated certificates. The pres
 verified geometrically rather than inferred from ordinary approximation, and group solvability
 does not supply those arithmetic certificates.
 
-**Two-prime Hilbert--Blumenthal moduli.** Books 155--156 supply the determinant-condition fine
+**Two-prime Hilbert--Blumenthal moduli.** Books 156--157 supply the determinant-condition fine
 scheme, ordered polarization, inverse-different pairing line, corrected Tate-twisted auxiliary
 source, two special-linear frame torsors, the $\mathbf Q$-defined tensor component, and full
-product monodromy. The constant oriented level rejected by Book 156 is not used. All bad-prime
+product monodromy. The constant oriented level rejected by Book 157 is not used. All bad-prime
 and neatness exclusions are retained.
 
 **Local Hilbert--Blumenthal geometry.** Real, good, ordinary, nonordinary finite-flat, and

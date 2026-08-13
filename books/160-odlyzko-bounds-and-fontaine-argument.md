@@ -27,7 +27,7 @@ This book owns the collision between two earlier packages; it does not own eithe
 internal proof.  Book 7 is the canonical source for the Dedekind functional equation, the
 Weil--Poitou explicit formula, unconditional zero positivity, test functions, rational numerical
 certificates, and analytic degree cutoffs.  Book 56 is the canonical source for finite-flat upper
-breaks, differents, coefficient/model stability, and global root-discriminant ceilings.  Book 158
+breaks, differents, coefficient/model stability, and global root-discriminant ceilings.  Book 159
 supplies the general cutout-field and three-adic coefficient ledger.
 
 For a field $L$ cut out by a finite action, arithmetic supplies
@@ -107,7 +107,7 @@ N\mathfrak a\leq
 \tag{2.1}
 $$
 
-This is the exact former Book 159 statement, now an imported compatibility alias.  Its convex-body
+This is the exact established statement, now an imported compatibility alias.  Its convex-body
 proof, including the complex-place covolume factor, belongs to Book 7, §2.2.
 
 ### 2.2 Root form and monotonicity
@@ -194,7 +194,7 @@ F(m\log N\mathfrak p).
 $$
 
 The zero sum is symmetric and the prime sum is finite for compactly supported $F$.  This theorem
-is an exact import under the former Book 159 locator.  Book 7, §§6.2--6.5 owns the contour proof,
+is an exact import under the established locator.  Book 7, §§6.2--6.5 owns the contour proof,
 the factor of two in the prime term, the gamma calculation, and the limiting argument for
 nonsmooth kernels.
 
@@ -373,7 +373,7 @@ $$
 \quad\Longrightarrow\quad [K:\mathbf Q]\leq33.
 $$
 
-This derived row is retained here because Book 160 needs the broad odd-tame ceiling, whereas Book
+This derived row is retained here because Book 161 needs the broad odd-tame ceiling, whereas Book
 7's reusable table records the sharper standard thresholds.
 
 ## 8. Imported threshold principle
@@ -390,7 +390,7 @@ $$
 
 imply $[K:\mathbf Q]<N(U,\alpha_0)$.
 
-This is the former Book 159 locator, now an exact compatibility import.  Book 7 chooses a rational
+This is the established locator, now an exact compatibility import.  Book 7 chooses a rational
 $T$ so the infinite-degree side of (6.2) exceeds $\log U$ and then chooses $N$ so the pole cost
 $2T/N$ fits in the remaining rationally certified gap.  Equality with the asymptotic constant is
 insufficient.
@@ -490,7 +490,7 @@ $$
 m(J)=\min\{m\geq1:3^m\in J\}.
 $$
 
-Then $T/JT$ is killed by $3^{m(J)}$.  Book 158, Chapter 13 records the detailed coefficient-ring,
+Then $T/JT$ is killed by $3^{m(J)}$.  Book 159, Chapter 13 records the detailed coefficient-ring,
 cutout-field, and auxiliary-place bookkeeping.  The cases used here are:
 
 | Module/field | Actual exponent | Coefficient-prime factor | Additional dyadic factor |
@@ -747,7 +747,7 @@ $n<N(U,\alpha_0)$.  Under GRH the corresponding asymptotic threshold is
 $8\pi e^{\gamma+\alpha_0\pi/2}$.  This conditional sentence is not used in Theorems 15.2 or
 15.3.
 
-This is the exact source statement imported under the established Book 159 locator.  Its proof is
+This is the exact source statement imported under the established locator.  Its proof is
 Book 7, Chapters 4, 6, 7, and 8; the two threshold consequences are Book 7, §§9.2--9.5.
 
 ### 15.2 Combined finite-flat cutoff
@@ -817,7 +817,7 @@ fixed exponent category, and the group-theoretic analysis of the remaining small
 
 The ownership boundary is now sharp.  Book 7 proves and certifies the analytic lower bounds.  Book
 56 proves the finite-flat upper-break, different, model-stability, and global-ceiling package.
-Book 158 carries the general field calculus and detailed coefficient ledger.  This book combines
+Book 159 carries the general field calculus and detailed coefficient ledger.  This book combines
 those inputs: it produces the degree-$20$ two-prime cutoff, excludes faithful images of orders
 $24$ and $48$, states the fixed-exponent Fontaine criterion, and records exactly why the same
 argument cannot be applied to a growing full torsion tower.

@@ -1233,9 +1233,11 @@ $3^r$ with $r>1$.
 
 ### 9.2 What Book 188 may use
 
-The branch-independent input to the three-adic endgame is now exactly present. Book 188 may
-apply its finite-level Schoof identity and coefficient-tower argument to $(T,\{\mathcal G_n\})$.
-Its conditional reducibility theorem then produces
+The branch-independent input to the three-adic endgame is now exactly present. Book 161,
+Theorem 10.1 supplies the finite-level Schoof identity after the membership check above. Book
+188 imports Book 161's category, simple objects, Ext calculation, and canonical filtration, then
+applies its own $\mathcal O$-adic coefficient-tower and saturation argument to
+$(T,\{\mathcal G_n\})$. Its conditional reducibility theorem then produces
 
 $$
 0\longrightarrow\mathcal O(1)
@@ -1382,20 +1384,21 @@ The proof uses the following sources directly.
 | Book 42 | marked finite-flat models, schematic closure, represented quotients, coefficient actions, and finite-etale models | Proposition 4.2 and the local-to-global model calculus | no extension is called finite flat from its endpoints alone |
 | Book 54 | integral Fontaine--Laffaille realization, full faithfulness over $\mathbf Z_3$, admissible coefficient quotients, exact compatible systems, and coefficient-dual normalization | Chapters 3 and 5 | rational Hodge labels do not select a lattice, and coefficient duality is not silently identified with Cartier self-duality |
 | Book 129 | saturated geometric intersections, exact closure towers, commensurability transfer, coefficient change, and the fixed-three handoff | the geometric route and the proof architecture of Chapters 3--5 | no canonical geometric carrier or integral projector is claimed |
+| Book 161 | the Schoof category, its classification and filtration theorem, and the finite-level coefficient trace identity | Section 9 handoff and Theorem 10.2's Schoof-ready output | it does not select the coefficient place or construct the named tower |
 | Book 185 | the actual coefficient-descended member, determinant, purity at its good primes, and the full signed SP pair at two | the rational starting object and dyadic local data | no coefficient-prime comparison, clean support, lattice, or tower is imported |
 
 Accordingly the proposed direct dependency row is
 
 $$
-\boxed{187\mid 3,\ 42,\ 54,\ 129,\ 185.}
+\boxed{187\mid 3,\ 42,\ 54,\ 129,\ 161,\ 185.}
 \tag{11.1}
 $$
 
-Books 128 and 168 are transitive sources for the packet comparison records used inside Books 183--185 and explain the coefficient-prime boundary. Books 163--164 establish the Frey
+Books 128 and 168 are transitive sources for the packet comparison records used inside Books 183--185 and explain the coefficient-prime boundary. Books 164--165 establish the Frey
 provenance and deformation-theoretic meaning of the signed SP line. Books 183--184 construct
 the SP packet array and prove rational effectivity. None is a separate direct proof input after
-the packaged theorem of Book 185 is assumed. Book 160 is an earlier comparative source and is
-not a prerequisite of Theorems 10.1--10.2; Book 188 is the downstream consumer.
+the packaged theorem of Book 185 is assumed. Book 161 is the actual category and classification
+source named in the Schoof-ready handoff; Book 188 is the downstream application layer.
 
 ### 11.2 Exact blocker audit
 
@@ -1485,9 +1488,10 @@ $(\mathrm U)$.
 **Attack: the dyadic line should be globalized before Schoof.** It is only $D_2$-stable.
 Globalizing it would assume the later classification's conclusion.
 
-**Attack: Book 160 constructs or later consumes this tower.** It does neither. Book 160 is an
-earlier comparative treatment. This book constructs its named tower from Books 42, 54, and 129,
-and Book 188 consumes that tower.
+**Attack: citing Book 161 constructs the tower.** It does not. This book constructs its named
+tower from Books 42, 54, and 129 and verifies membership in Book 161's category. Book 161 then
+supplies the actual classification and finite-level identity; Book 188 consumes both the tower
+and that imported theorem package.
 
 ## 12. Conclusion and readiness
 

@@ -52,7 +52,7 @@ $$
 
 which is absolutely irreducible and odd, has determinant
 $\bar\chi_\ell$, is unramified outside $\{2,\ell\}$, has the
-minimal-special Frey condition SP from Book 164 at $2$, and is
+minimal-special Frey condition SP from Book 165 at $2$, and is
 coefficient-linearly finite flat at $\ell$.
 
 Put
@@ -67,7 +67,7 @@ The last identification uses the trace pairing. It is valid because $2$
 is invertible in $k$; it is also the reason that fixed-determinant
 factor sets take values in $M$, rather than in the full adjoint module.
 
-Book 164, Theorem 4.1, constructs the represented global deformation functor
+Book 165, Theorem 4.1, constructs the represented global deformation functor
 $D^{\mathrm{hr,SP}}$ of strict-equivalence classes of lifts with determinant
 $\chi_\ell$, the SP condition at $2$, the coefficient-linear finite-flat
 condition at $\ell$, and no ramification elsewhere. Throughout, write
@@ -102,7 +102,7 @@ $$
 be the exact orthogonal for local Tate duality, not merely a subspace of the
 expected dimension.
 
-Book 165 constructs the supported mapping fiber
+Book 166 constructs the supported mapping fiber
 $C^\bullet_{\mathrm{hr}}(\mathbf Q,M)$, proves the perfect pairing
 
 $$
@@ -439,7 +439,7 @@ there.
 
 ### 4.1 The dyadic SP and coefficient-prime inputs
 
-The local statements used here are the exact outputs of Book 164, Theorem
+The local statements used here are the exact outputs of Book 165, Theorem
 6.1 and Sections 5.1--5.2.
 
 For the Frey minimal-special condition, after a fixed residual normalization,
@@ -472,7 +472,7 @@ $$
 H^0(\mathbf Q_2,M)=H^0(\mathbf Q_2,M')=0. \tag{4.4}
 $$
 
-Book 164's adjoint calculation, equivalently local duality and the
+Book 165's adjoint calculation, equivalently local duality and the
 away-from-$\ell$ Euler formula applied to (4.4), gives the full vanishing
 
 $$
@@ -790,7 +790,7 @@ arguments would introduce the graded minus sign; no reversal is made in
 (5.6).
 
 Formula (5.6) is well defined because
-$\operatorname{loc}_v(y)\in L_v^\perp$. Book 165's supported
+$\operatorname{loc}_v(y)\in L_v^\perp$. Book 166's supported
 Poitou--Tate theorem gives the exact segment
 
 $$
@@ -1071,7 +1071,7 @@ H^0(G_{\mathbf Q,S},M')=0. \tag{7.6}
 $$
 
 Thus the finite-flat $+1$ and the real $-1$ cancel, while the SP term
-is zero. Book 165's exact Greenberg--Wiles identity yields
+is zero. Book 166's exact Greenberg--Wiles identity yields
 
 $$
 \dim_kH^1_{\mathrm{hr}}(\mathbf Q,M)
@@ -1136,7 +1136,7 @@ The complete output of this book that Book 181 may use is the following
 package, and no more.
 
 1. $R_{\mathrm{hr}}$ represents the Frey-SP fixed-determinant
-   hardly-ramified problem constructed in Book 164.
+   hardly-ramified problem constructed in Book 165.
 2. Its relative tangent dimension is
    $t=\dim_kH^1_{\mathrm{hr}}(\mathbf Q,M)$.
 3. For a minimal power-series presentation, the relation ideal is generated
@@ -1161,15 +1161,15 @@ Only the following prior results carry mathematical weight here.
 
 | source | exact input used | hypothesis matched here |
 |---|---|---|
-| Book 164, Theorem 6.1 and Sections 5.1--5.2 | represented global Frey-SP functor; SP and finite-flat local lift groupoids; $L_2=0$; SP eigenvalues $2,4$; finite-flat liftability and $\dim L_\ell=h_\ell$ | $\ell\geq7$; nonzero SP monodromy with intrinsic line and named sign; actual coefficient-linear finite-flat model; cyclotomic determinant |
-| Book 165 | positive local complexes; supported duality; the exact Poitou--Tate sequence; Greenberg--Wiles balance | $S=\{2,\ell,\infty\}$; finite modules; exact local orthogonals; complete real convention; $M'=M^*(1)$ |
+| Book 165, Theorem 6.1 and Sections 5.1--5.2 | represented global Frey-SP functor; SP and finite-flat local lift groupoids; $L_2=0$; SP eigenvalues $2,4$; finite-flat liftability and $\dim L_\ell=h_\ell$ | $\ell\geq7$; nonzero SP monodromy with intrinsic line and named sign; actual coefficient-linear finite-flat model; cyclotomic determinant |
+| Book 166 | positive local complexes; supported duality; the exact Poitou--Tate sequence; Greenberg--Wiles balance | $S=\{2,\ell,\infty\}$; finite modules; exact local orthogonals; complete real convention; $M'=M^*(1)$ |
 | standard complete-local algebra | Nakayama, Krull intersection, the generalized principal ideal theorem, and representability over inverse limits | complete Noetherian local rings and the minimal presentation (1.7) |
 
 The factor-set calculation, supported obstruction, completeness proof,
 relation-socle construction, pro-Artinian effectiveness, and relation
 injection are proved in this book. Global Brauer reciprocity is not reproved:
 it enters once, through the already-established Poitou--Tate theorem of Book
-165. No general number-field or idelic detour is needed for the stated
+166. No general number-field or idelic detour is needed for the stated
 deformation problem.
 
 ### 8.2 Sign, degree, and variance ledger

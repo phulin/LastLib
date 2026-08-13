@@ -961,7 +961,7 @@ $$
 [\ell]^*x-\ell x\in\ell I^2+I^\ell\quad(x\in I).
 $$
 
-This is the exact earlier statement, imported under the former Book 158 locator.  Book 56 proves
+This is the exact earlier statement, imported under the established locator.  Book 56 proves
 it by the characteristic-$\ell$ Frobenius factorization in the augmentation filtration.
 
 **Theorem 7.2 (imported torsion-free congruence ball; Book 56, Theorem 4.2).** If $\mathcal G$ is
@@ -1116,7 +1116,7 @@ the actual exponent, are preserved under restriction and extension of coefficien
 coefficient quotients and Galois subquotients, finite direct sums, Cartier duality, and every
 generic term of a supplied faithfully flat exact sequence of finite-flat models.
 
-This is the exact statement of Book 56, Theorem 8.1, imported under the former Book 158 locator.
+This is the exact statement of Book 56, Theorem 8.1, imported under the established locator.
 For field calculations, quotient compatibility of upper numbering and intersections of kernels
 give the inclusions and compositum assertions just recorded.
 
@@ -1924,8 +1924,8 @@ $d=d(L/K)$. Then:
    new absolute ramification index. Descent in the reverse direction requires effective integral
    descent data.
 
-This is the exact six-part package of Book 56, Theorem 14.1, imported under the established Book
-158 locator.  Its proof and all model-stability assertions belong to Book 56.  In particular,
+This is the exact six-part package of Book 56, Theorem 14.1, imported under the established
+locator.  Its proof and all model-stability assertions belong to Book 56.  In particular,
 clause 5 does not assert that arbitrary generic extensions of finite-flat endpoints are finite
 flat.
 
@@ -1955,7 +1955,7 @@ The same ceiling holds for every subfield of $L$.  At a fixed exponent it also h
 finite compositum of fields cut out by modules whose direct sum retains the stated local models
 and auxiliary cutoffs.
 
-This is the exact statement of Book 56, Theorem 14.2, imported under the established Book 158
+This is the exact statement of Book 56, Theorem 14.2, imported under the established
 locator; its proof belongs there.  When the actual upper filtration is known, the sharper integral
 cost retained in §§4.3 and 11.1 of this book may replace the coarse term $1+R_v$.
 

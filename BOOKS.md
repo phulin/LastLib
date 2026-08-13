@@ -704,59 +704,7 @@ available from the current manuscript.
    main theorem turns prescribed local points on a moduli space into a global point over a
    controlled totally real extension.
 
-154. **Galois and Solvable Refinements of Arithmetic Approximation** — Control normal closures,
-   local completion data, elementary and solvable subfields, mutual disjointness, and the compatible
-   families of fields required for Brauer descent. Do not infer these refinements from ordinary
-   Moret–Bailly alone.
-
-155. **Hilbert--Blumenthal Moduli and Two-Prime Level Covers** — Construct fine polarized
-   real-multiplication moduli, determinant conditions, auxiliary neat level, paired torsion frames,
-   twists, components, and geometric monodromy.
-
-156. **Local Geometry of Hilbert--Blumenthal Moduli** — Construct real, good, ordinary,
-   nonordinary finite-flat, and semistable local points; prove openness and persistence of the exact
-   local conditions used in Moret–Bailly specialization.
-
-157. **Moduli Constructions for Potential Modularity** — Develop Hilbert–Blumenthal moduli with two-prime level structure. Study twisted torsion
-   frames, polarizations, determinant conditions, representability, connected components, geometric
-   monodromy, and the real, good, ordinary, finite-flat, and semistable local loci. Prove that the
-   resulting cover is smooth and geometrically connected under the hypotheses used in residual
-   potential modularity.
-
-158. **Discriminants of Galois Representations** — Develop the general cutout-field, tower,
-   compositum, conductor, matrix, lattice, and detailed three-adic exponent calculus. Import the
-   canonical finite-flat upper-break, different, and model-stability package from Book 56 under
-   compatibility locators. The numerical three-adic ceilings apply only to the displayed modeled
-   modules and do not make arbitrary generic extensions finite flat.
-
-159. **Odlyzko Bounds and Fontaine's Argument** — Import the canonical Odlyzko--Poitou formula
-   and certified analytic cutoffs from Book 7 and combine them with Book 56's finite-flat ceilings
-   and Book 158's three-adic ledger. Prove the degree-$20$, order-$24/48$, and fixed-exponent
-   Fontaine criteria while retaining the growing-tower warning. Representation classification
-   still requires separate group-theoretic and integral input.
-
-160. **Schoof's Finite-Flat Category over $\mathbf Z[1/2]$** — Classify the finite-flat exponent-three category over $\mathbf Z[1/2]$ under the stated tame dyadic and finite-flat coefficient-prime hypotheses. The resulting cyclotomic-line exact sequence retains the genuine Kummer extension direction and applies only to an actual compatible integral tower.
-
-161. **Quintic Cyclotomic Units and Kummer Arithmetic** — Work in $\mathbf Q(\zeta_5)$ and
-   prove its ring of integers, discriminant, and class-number-one theorem from the cyclotomic
-   polynomial, the index calculation, and Minkowski's bound. Determine the prime above five, its
-   valuations, conjugation, units and cyclotomic units, norms, and associates, and prove the
-   fifth-power, Kummer, and coprimality lemmas needed for Diophantine descent.
-
-162. **Cyclotomic Descent for Quintic Fermat-Type Equations** — Develop first- and second-case
-   descent in fifth cyclotomic fields, valuation control at the prime above 5, primitive-factor
-   decompositions, and well-founded norm descent. Conclude with Fermat's Last Theorem for exponent
-   five, leaving the modularity-lifting argument to begin at coefficient primes at least seven.
-
-163. **The Frey Curve: Arithmetic Reduction and the Exact Modular-Method Handoff** — Reduce a putative Fermat solution to exponent five or a prime exponent at least seven, carry out the exponent-three and exponent-four descents, and compute the Frey curve's reduction, residual representation, and signed special deformation datum. The volume is an arithmetic handoff: it does not claim the later conditional modularity, compatible-family, or three-adic steps have closed Fermat's Last Theorem.
-
-164. **Local Conditions for Hardly-Ramified Minimal Deformations** — Construct the local and global hardly-ramified deformation functors for the signed Frey special condition at two and coefficient-linear finite flatness at $\ell\ge7$. The local rings and tangent dimensions are proved without a hidden hypothesis, but no global finite or characteristic-zero point is produced.
-
-165. **Supported Galois Cohomology and Selmer Calculations** — Build the supported global cohomology complex, its Poitou--Tate duality, and the exact equality of tangent and supported-obstruction dimensions for the hardly-ramified problem. Relation bounds and lift existence belong to the next stages.
-
-166. **Relation Obstructions and Poitou--Tate Corrections** — Inject the dual minimal relation space into the correctly supported obstruction group and deduce that the number of relations is at most the number of variables. The balanced presentation does not by itself prove flatness, finiteness, a complete intersection, or a characteristic-zero point.
-
-167. **The Chebotarev Density Theorem** — Develop Frobenius conjugacy classes and Dirichlet
+154. **The Chebotarev Density Theorem** — Develop Frobenius conjugacy classes and Dirichlet
    density, then use ray partial zeta functions, Poisson–Mellin analysis, finite-order Hecke
    characters, and logarithmic Euler products to prove the required pole, holomorphy, and
    nonvanishing statements at one. Prove abelian density by character orthogonality and full
@@ -765,7 +713,64 @@ available from the current manuscript.
    representation-transport interfaces, without claiming effective bounds or general Artin
    holomorphy.
 
-168. **Compatible Coefficient Systems and Purity** — Organize the curve constructions into a pure weakly compatible coefficient system and algebraic local records. Strict bad-place compatibility is concluded only where raw-to-global local preservation and the required return maps are known; the all-embedding Frey-special record remains a named hypothesis for later descent.
+155. **Galois and Solvable Refinements of Arithmetic Approximation** — Control normal closures,
+   local completion data, elementary and solvable subfields, mutual disjointness, and the compatible
+   families of fields required for Brauer descent. Import the full density and prime-selection
+   package from Book 154 rather than reproving Chebotarev, and do not infer the Galois refinements
+   from ordinary Moret–Bailly alone.
+
+156. **Hilbert--Blumenthal Moduli and Two-Prime Level Covers** — Construct fine polarized
+   real-multiplication moduli, determinant conditions, auxiliary neat level, paired torsion frames,
+   twists, components, and geometric monodromy.
+
+157. **Local Geometry of Hilbert--Blumenthal Moduli** — Construct real, good, ordinary,
+   nonordinary finite-flat, and semistable local points; prove openness and persistence of the exact
+   local conditions used in Moret–Bailly specialization.
+
+158. **Moduli Constructions for Potential Modularity** — Apply Books 156--157 to the target and
+   auxiliary residual representations. Match their determinant lines to one corrected
+   Hilbert--Blumenthal tensor component, construct the smooth geometrically connected two-prime
+   realization space, and export its simultaneous local opens and avoidance datum without
+   redeveloping the underlying moduli or local geometry.
+
+159. **Discriminants of Galois Representations** — Develop the general cutout-field, tower,
+   compositum, conductor, matrix, lattice, and detailed three-adic exponent calculus. Import the
+   canonical finite-flat upper-break, different, and model-stability package from Book 56 under
+   compatibility locators. The numerical three-adic ceilings apply only to the displayed modeled
+   modules and do not make arbitrary generic extensions finite flat.
+
+160. **Odlyzko Bounds and Fontaine's Argument** — Import the canonical Odlyzko--Poitou formula
+   and certified analytic cutoffs from Book 7 and combine them with Book 56's finite-flat ceilings
+   and Book 159's three-adic ledger. Prove the degree-$20$, order-$24/48$, and fixed-exponent
+   Fontaine criteria while retaining the growing-tower warning. Representation classification
+   still requires separate group-theoretic and integral input.
+
+161. **Schoof's Finite-Flat Category over $\mathbf Z[1/2]$** — Classify the finite-flat exponent-three category over $\mathbf Z[1/2]$ under the stated tame dyadic and finite-flat coefficient-prime hypotheses. The resulting cyclotomic-line exact sequence retains the genuine Kummer extension direction and applies only to an actual compatible integral tower.
+
+162. **Quintic Cyclotomic Units and Kummer Arithmetic** — Work in $\mathbf Q(\zeta_5)$ and
+   prove its ring of integers, discriminant, and class-number-one theorem from the cyclotomic
+   polynomial, the index calculation, and Minkowski's bound. Determine the prime above five, its
+   valuations, conjugation, units and cyclotomic units, norms, and associates, and prove the
+   fifth-power, Kummer, and coprimality lemmas needed for Diophantine descent.
+
+163. **Cyclotomic Descent for Quintic Fermat-Type Equations** — Develop first- and second-case
+   descent in fifth cyclotomic fields, valuation control at the prime above 5, primitive-factor
+   decompositions, and well-founded norm descent. Conclude with Fermat's Last Theorem for exponent
+   five, leaving the modularity-lifting argument to begin at coefficient primes at least seven.
+
+164. **The Frey Curve: Arithmetic Reduction and the Exact Modular-Method Handoff** — Reduce a putative Fermat solution to exponent five or a prime exponent at least seven, carry out the exponent-three and exponent-four descents, and compute the Frey curve's reduction, residual representation, and signed special deformation datum. The volume is an arithmetic handoff: it does not claim the later conditional modularity, compatible-family, or three-adic steps have closed Fermat's Last Theorem.
+
+165. **Local Conditions for Hardly-Ramified Minimal Deformations** — Construct the local and global hardly-ramified deformation functors for the signed Frey special condition at two and coefficient-linear finite flatness at $\ell\ge7$. The local rings and tangent dimensions are proved without a hidden hypothesis, but no global finite or characteristic-zero point is produced.
+
+166. **Supported Galois Cohomology and Selmer Calculations** — Build the supported global cohomology complex, its Poitou--Tate duality, and the exact equality of tangent and supported-obstruction dimensions for the hardly-ramified problem. Relation bounds and lift existence belong to the next stages.
+
+167. **Relation Obstructions and Poitou--Tate Corrections** — Inject the dual minimal relation space into the correctly supported obstruction group and deduce that the number of relations is at most the number of variables. The balanced presentation does not by itself prove flatness, finiteness, a complete intersection, or a characteristic-zero point.
+
+168. **Compatible Coefficient Systems and Purity** — Import Book 127's curve-carried weak family,
+   determinant, good-place purity, and lattice boundaries. Prove coefficient-conjugation and
+   carrier independence, strict local compatibility where raw-to-global preservation and return
+   maps are supplied, and the resulting bad-place purity and conductor independence; retain the
+   all-embedding Frey-special record as a named later hypothesis.
 
 169. **The Eisenstein Ideal** — Develop the Eisenstein ideal at prime level, calculate its exact index, and study the cuspidal
    specialization, admissible finite group schemes, completed Hecke piece, and Eisenstein descent.
@@ -779,13 +784,21 @@ available from the current manuscript.
 
 172. **Minimal Patching and $R=T$ over Totally Real Fields** — Carry out minimal Taylor--Wiles patching from the exact deformation--Hecke datum and deep-level modules. The $R=T$ conclusion retains adequacy, support, freeness, augmentation, and branch-realization hypotheses and is not reused to justify its own inputs.
 
-173. **Minimal Modularity Lifting** — State and prove the minimal modularity-lifting theorem for the clean totally real deformation--Hecke datum assembled by the preceding infrastructure. Its conclusion is conditional on the exact automorphic seed, local realizations, support, and Taylor--Wiles hypotheses; it does not manufacture those inputs for the Frey representation.
+173. **Minimal Modularity Lifting** — Import the minimal deformation--Hecke comparison and
+   Taylor--Wiles $R=T$ theorem from Books 171--172, then deduce that every characteristic-zero
+   minimal point is the exact integral representation of a parallel-weight-two automorphic
+   packet. Retain coefficient descent, the prime-five boundary, and every represented local
+   hypothesis without repeating patching.
 
 174. **One-Prime Type Complexes and Component Support** — Build the enhanced one-prime type complexes and prove the stated component-support conclusions under the named TIC, type-Ihara, primitive-residue, node-uniformization, support, and augmentation hypotheses. The result is one-place and topological unless the separately stated faithful-order conditions are supplied.
 
 175. **One-Prime Nonminimal Patching and R=T** — Derive the finite-level one-prime nonminimal comparison and pointwise modularity from the exact type-complex package. Full $R=T$ needs global reducedness and exact augmentation, and the theorem gives neither a patched reduced comparison nor a simultaneous finite-set result.
 
-176. **Nonminimal Modularity Lifting** — Prove a conditional one-active-place nonminimal modularity comparison in the selected special and tame-type range. Abelian and type Ihara, node uniformization, generic and component support, reducedness, faithful-order augmentation, and every intermediate hypothesis remain explicit; no simultaneous finite-set theorem is claimed.
+176. **Nonminimal Modularity Lifting** — Import the conditional one-prime Ihara, type-complex,
+   component-support, reduced-$R=T$, and pointwise modularity packages from Books 139, 174, and
+   175. Isolate the mixed obstruction at two places and prove the finite-set pointwise conclusion
+   under the explicit face, cube, mixed-exactness, product-residue, joint-support, simultaneous-
+   augmentation, and reciprocity hypotheses; pairwise one-prime inputs do not supply them.
 
 177. **Potential Modularity of Two-Dimensional Representations** — Construct the paired-frame potential-modularity bridge and prove its residual automorphy conclusion only for a lifting-admissible specialization. Localized Ihara, the actual multi-place mixed exactness, product-residue comparison, joint support, and faithful-order augmentation are unresolved, so the advertised unconditional existence theorem is not ready.
 
@@ -805,8 +818,13 @@ available from the current manuscript.
 
 185. **Compatible Systems over the Base Field** — Assemble the effective constituents into a coefficient-descended compatible family over the base field, carrying the rational signed special record at two. All-place assembly retains the characteristic-two absolute-irreducibility hypothesis of Book 184; without it, the construction still covers every coefficient place away from two, including those above three. The construction remains conditional on the controlled top datum and provides no crystallinity, finite-flat lattice, or coefficient-prime comparison at three.
 
-186. **Changing the Coefficient Prime while Keeping the Frey Special Place** — Select the coefficient-three member of an already assembled compatible family and transport the full rational special Weil--Deligne record at two. The theorem does not prove residual absolute irreducibility, crystallinity or finite flatness at three, or primitivity of residual monodromy for a chosen lattice.
+186. **Changing the Coefficient Prime while Keeping the Frey Special Place** — Select the coefficient-three member of an already assembled compatible family and transport the full rational special Weil--Deligne record at two. Hand the named member to Book 187's integral construction and Book 161's actual category/classification input as applied by Book 188; do not infer crystallinity, finite flatness, or residual monodromy primitivity.
 
-187. **The Fixed-Three Integral Local Theory** — Develop the fixed-three integral local theory that would turn the rational member into one named all-level finite-flat lattice and measure its residual dyadic thickness. Its conclusion requires a missing coefficient-prime source theorem, such as a proved crystalline comparison or good geometric carrier, and is therefore conditional.
+187. **The Fixed-Three Integral Local Theory** — Develop the fixed-three integral local theory that would turn the rational member into one named all-level finite-flat lattice, measure its residual dyadic thickness, and verify that every level lies in Book 161's Schoof category. The conclusion requires the missing coefficient-prime and clean-support certificates and is therefore conditional.
 
-188. **Hardly Ramified $3$-adic Representations** — Analyze the selected three-adic Frey member using the conditional finite-flat tower and dyadic signed-special line of Book 187. Prove the root-discriminant ceiling, degree-$20$ cutoff, class-field and extension devissage, global cyclotomic line, and pure-Frobenius trace contradiction. The implication is complete, but the unconditional FLT spine still requires the controlled SP seed, the characteristic-two irreducibility certificate for all-place assembly, coefficient-prime crystallinity at three, and clean support away from two and three.
+188. **Hardly Ramified $3$-adic Representations** — Verify that Book 187's signed-special tower
+   satisfies Book 161's category hypotheses and import its simple-object, Ext, filtration, and
+   finite-level trace theorems. Prove the new $\mathcal O$-adic inverse-limit and saturation step,
+   identify the global cyclotomic line with the local SP line, and derive the pure-good-prime
+   contradiction. The implication is complete, while the audited upstream certificates remain
+   conditional.

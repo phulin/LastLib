@@ -1554,7 +1554,7 @@ Book 113 supplies the integral modular-form lattice, all-cusp $q$-expansion, reg
 
 Book 114 supplies the integral correspondence action on Jacobians and Néron models, covariance and Rosati adjunction, the good-prime Eichler--Shimura polynomial, and the Néron cotangent lattice. The polynomial is used only at $q\nmid N\ell$.
 
-Book 167 supplies the finite Chebotarev statement used in Section 6.2: every conjugacy class in the finite quotient cut out by a radical layer and $\bar\chi_\ell$ occurs as arithmetic Frobenius at some $q\nmid N\ell$. Density transports an operator identity to that finite quotient; it is not used to infer a stable flag from traces.
+Book 154 supplies the finite Chebotarev statement used in Section 6.2: every conjugacy class in the finite quotient cut out by a radical layer and $\bar\chi_\ell$ occurs as arithmetic Frobenius at some $q\nmid N\ell$. Density transports an operator identity to that finite quotient; it is not used to infer a stable flag from traces.
 
 Book 131 supplies the pointed Albanese map, optimal quotient formalism, prime-level Néron geometry, and the distinction between finite subgroup schemes, rational points, and components. Its selected-quotient statements have the same incoming $U_N$ convention. We also retain its distinction between the rational-support quotient and the winding quotient; no winding-ideal finiteness theorem is imported.
 
@@ -1570,7 +1570,7 @@ Book 147 supplies the strict local conditions, atomic calculations, cartesian de
 
 Book 148 supplies the outward-cusp orientation $\sigma=w_N\rho$, the unit relation between its point-level parameter and the standard parameter at $\infty$, and the completed-local-ring criterion separating sections under a formal immersion. We do **not** import an exact-kernel Lie argument or a whole-lattice primitivity assertion from it. Lemma 9.1 and Section 9.4 prove the required quotient cotangent direction inside this book, and Section 10 applies the general criterion only at odd good primes for rational section separation.
 
-Books 132--134 and 146--148 are the specialist proof volumes feeding this capstone. None imports Book 169: their dependency chain runs $132\to133\to134\to146\to147\to148$ (with additional earlier prerequisites), and Book 169 only assembles their established outputs. Book 167 is an additional independent input. All these sources precede Book 169, so the current numerical order is topological. Thus no conclusion in this book is imported through a path that returns to Book 169.
+Books 132--134 and 146--148 are the specialist proof volumes feeding this capstone. None imports Book 169: their dependency chain runs $132\to133\to134\to146\to147\to148$ (with additional earlier prerequisites), and Book 169 only assembles their established outputs. Book 154 is an additional independent input. All these sources precede Book 169, so the current numerical order is topological. Thus no conclusion in this book is imported through a path that returns to Book 169.
 
 All hypotheses match. The level is prime and the character is trivial. The coefficient prime satisfies $\ell\mid n_N$, hence $\ell\ne N$. Torsion group schemes are considered over $\mathbf Z[1/N]$, where the two ambient Néron models are abelian schemes. Formal immersion is taken at $p\ne N$, and rational section separation at odd $p$. No assertion depends on a smooth model for the generic optimal kernel.
 

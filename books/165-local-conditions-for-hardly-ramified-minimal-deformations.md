@@ -26,7 +26,7 @@
   - [4.3 The global tangent space](#43-the-global-tangent-space)
   - [4.4 What local smoothness does and does not prove](#44-what-local-smoothness-does-and-does-not-prove)
   - [4.5 Coefficient extension and compatible finite levels](#45-coefficient-extension-and-compatible-finite-levels)
-- [5. Exact interfaces to Books 165--166 and 181](#5-exact-interfaces-to-books-165--166-and-181)
+- [5. Exact interfaces to Books 166--167 and 181](#5-exact-interfaces-to-books-166--167-and-181)
   - [5.1 Input to supported cohomology](#51-input-to-supported-cohomology)
   - [5.2 Input to relation obstructions](#52-input-to-relation-obstructions)
   - [5.3 Input to the balanced lift argument](#53-input-to-the-balanced-lift-argument)
@@ -61,7 +61,7 @@ Artinian coefficient ring we must have a functorial and closed condition, an
 honest representing ring in the framed convention, a calculated tangent
 subspace, and an effective lifting theorem.  Those are the inputs consumed by
 supported cohomology, relation-obstruction theory, and the balanced minimal-lift
-argument in Books 165--166 and 181.
+argument in Books 166--167 and 181.
 
 ### 1.2 Coefficients and conventions
 
@@ -174,7 +174,7 @@ $$
 a^\ell+b^\ell=c^\ell,
 $$
 
-Book 163, Sections 3.1 and 4.3, take $a$ to be the even leg and give
+Book 164, Sections 3.1 and 4.3, take $a$ to be the even leg and give
 
 $$
 m_2=v_2(\Delta_{\min})=2\ell v_2(a)-8.
@@ -182,7 +182,7 @@ $$
 
 Thus $m_2\equiv-8\not\equiv0\pmod\ell$ for $\ell\geq7$, and the
 Tate-curve inertia formula gives the nonzero matrix $m_2e_{12}$ in a Tate
-basis, as recorded in Book 163, Section 5.2.  A residual diagonal change of
+basis, as recorded in Book 164, Section 5.2.  A residual diagonal change of
 basis then normalizes it to the $\bar N=e_{12}$ of (1.6).  The local theorem
 below needs only this nonvanishing; it does not reuse any later lifting
 conclusion.
@@ -1028,7 +1028,7 @@ These statements do not imply that a global lift exists.  Given an ambient
 global lift, moving both local restrictions into their admissible torsors is
 a global localization problem.  A global factor-set obstruction can remain,
 and compatible local corrections need not come from one global correction.
-Books 165--166 introduce supported cohomology precisely to retain those
+Books 166--167 introduce supported cohomology precisely to retain those
 two defects.
 
 ### 4.5 Coefficient extension and compatible finite levels
@@ -1058,11 +1058,11 @@ $2$ and $\ell$, so its completions at the selected places are literally
 $\mathbf Q_2$ and $\mathbf Q_\ell$ and the local problems above are
 unchanged.
 
-## 5. Exact interfaces to Books 165--166 and 181
+## 5. Exact interfaces to Books 166--167 and 181
 
 ### 5.1 Input to supported cohomology
 
-For the Frey-SP specialization, Book 165 uses the following data and no
+For the Frey-SP specialization, Book 166 uses the following data and no
 stronger local assertion.  Let
 
 $$
@@ -1105,13 +1105,13 @@ H^0(G_{\mathbf Q,S},M(1))=0. \tag{5.4}
 $$
 
 These are exactly the local and endpoint inputs for the Greenberg--Wiles
-and supported-duality calculation.  Book 165 defines the dual local
+and supported-duality calculation.  Book 166 defines the dual local
 condition at $\ell$ as the exact Tate orthogonal $L_\ell^\perp$; this book
 does not relabel that orthogonal as another finite-flat deformation functor.
 
 ### 5.2 Input to relation obstructions
 
-For its Frey-SP specialization, Book 166 needs nonlinear local conditions,
+For its Frey-SP specialization, Book 167 needs nonlinear local conditions,
 not only the subspaces in Section 5.1.  The precise exports are:
 
 1. the framed dyadic and coefficient-prime conditions are represented by
@@ -1128,7 +1128,7 @@ mapping fiber.  Nothing here identifies supported degree two with ordinary
 global $H^2$, and nothing here proves that every tuple of local corrections
 comes from a global correction.
 
-The possible nonscalar local centralizer at $\ell$ causes no gap.  Book 166
+The possible nonscalar local centralizer at $\ell$ causes no gap.  Book 167
 uses the represented framed ring (3.20), while the global unframed ring is
 justified by global absolute irreducibility.  A nonexistent local coarse
 ring is never inserted into a fiber product.
@@ -1146,7 +1146,7 @@ Book 181 receives:
 - stability under finite extension of coefficient rings;
 - preservation of both local problems after restriction to a totally real
   field split completely at $2$ and $\ell$;
-- the tangent and obstruction inputs already passed through Books 165--166.
+- the tangent and obstruction inputs already passed through Books 166--167.
 
 Book 181 treats its additional restricted reduced-finiteness hypothesis
 **(RF)** separately.  This book exports only the Galois local conditions and
@@ -1166,7 +1166,7 @@ This book does not prove any of the following:
 
 In particular, a downstream statement that allows an additional dyadic
 branch must source that branch from its own local theorem.  The interface of
-this book to Books 165--166 and 181 is exactly the Frey-special specialization
+this book to Books 166--167 and 181 is exactly the Frey-special specialization
 recorded in Sections 5.1--5.3; no different local profile may be substituted
 for the conductor-one Frey transvection.
 
@@ -1271,13 +1271,13 @@ The proof uses only foundational mathematics and books preceding this one.
 | Books 63 and 66 | strict equivalence, tangent and obstruction theory, scalar-centralizer representability, and closed global quotients | Sections 1.4, 2.4, 3.4, and 4.2 |
 | Book 67, Theorem 7.1 | closed and liftable nonzero-monodromy minimal condition | Section 2.4 |
 | Book 68, Theorems 2.3, 9.1--9.2, 14.3, 16.1, and 17.1 | coefficient change, finite-flat classification, representability, liftability, tangent dimensions, and smooth rings | Chapter 3 |
-| Book 163, Sections 3.1, 4.3, and 5.2 | normalized Frey equation, dyadic discriminant and sign, and nonzero residual monodromy | Section 1.3 |
+| Book 164, Sections 3.1, 4.3, and 5.2 | normalized Frey equation, dyadic discriminant and sign, and nonzero residual monodromy | Section 1.3 |
 
 The key normal forms, tangent dimensions, and obstruction distinctions are
 reproved in this book after the deep integral classifications are imported.
 Book 68 discharges the lower-level integral inputs on closure, Raynaud
 rigidity, and Fontaine--Laffaille theory; this book invokes its packaged
-theorems rather than silently strengthening them.  No result from Books 165--166 or 181 is used to prove Theorem 6.1.  Those books consume the outputs
+theorems rather than silently strengthening them.  No result from Books 166--167 or 181 is used to prove Theorem 6.1.  Those books consume the outputs
 listed in Chapter 5.
 
 There is therefore no hidden conditional theorem in the local package.
@@ -1305,7 +1305,7 @@ case.
 These local conditions cut out the universal global quotient whose tangent
 is (4.9).  They supply exact local nullhomotopies and dimension corrections,
 but no global lift by themselves.  That boundary is the correct interface:
-Book 165 performs the supported cohomology calculation, Book 166 converts
+Book 166 performs the supported cohomology calculation, Book 167 converts
 relations into supported obstructions, and Book 181 adds its separately
 stated restricted reduced-finiteness input.  The local deformation node is
 complete without importing any conclusion from those later stages.

@@ -172,20 +172,20 @@ unconditional dependency-spine column must not be promoted while the named hypot
 | 151 | Deep-Level Quaternionic Modules and Diamond Actions | [x] | [x] | — | — |
 | 152 | Hilbert Irreducibility and Arithmetic Approximation | [x] | [x] | — | — |
 | 153 | Moret–Bailly’s Theorem | [x] | [x] | — | — |
-| 154 | Galois and Solvable Refinements of Arithmetic Approximation | [x] | [x] | — | — |
-| 155 | Hilbert--Blumenthal Moduli and Two-Prime Level Covers | [x] | [x] | — | — |
-| 156 | Local Geometry of Hilbert--Blumenthal Moduli | [x] | [x] | — | — |
-| 157 | Moduli Constructions for Potential Modularity | [x] | [x] | — | — |
-| 158 | Discriminants of Galois Representations | [x] | [x] | — | — |
-| 159 | Odlyzko Bounds and Fontaine's Argument | [x] | [x] | — | — |
-| 160 | Schoof's Finite-Flat Category over $\mathbf Z[1/2]$ | [x] | [x] | — | — |
-| 161 | Quintic Cyclotomic Units and Kummer Arithmetic | [x] | [x] | — | — |
-| 162 | Cyclotomic Descent for Quintic Fermat-Type Equations | [x] | [x] | — | — |
-| 163 | The Frey Curve: Arithmetic Reduction and the Exact Modular-Method Handoff | [x] | [x] | [x] | — |
-| 164 | Local Conditions for Hardly-Ramified Minimal Deformations | [x] | [x] | [x] | — |
-| 165 | Supported Galois Cohomology and Selmer Calculations | [x] | [x] | [x] | — |
-| 166 | Relation Obstructions and Poitou--Tate Corrections | [x] | [x] | [x] | — |
-| 167 | The Chebotarev Density Theorem | [x] | [x] | — | — |
+| 154 | The Chebotarev Density Theorem | [x] | [x] | — | — |
+| 155 | Galois and Solvable Refinements of Arithmetic Approximation | [x] | [x] | — | — |
+| 156 | Hilbert--Blumenthal Moduli and Two-Prime Level Covers | [x] | [x] | — | — |
+| 157 | Local Geometry of Hilbert--Blumenthal Moduli | [x] | [x] | — | — |
+| 158 | Moduli Constructions for Potential Modularity | [x] | [x] | — | — |
+| 159 | Discriminants of Galois Representations | [x] | [x] | — | — |
+| 160 | Odlyzko Bounds and Fontaine's Argument | [x] | [x] | — | — |
+| 161 | Schoof's Finite-Flat Category over $\mathbf Z[1/2]$ | [x] | [x] | — | — |
+| 162 | Quintic Cyclotomic Units and Kummer Arithmetic | [x] | [x] | — | — |
+| 163 | Cyclotomic Descent for Quintic Fermat-Type Equations | [x] | [x] | — | — |
+| 164 | The Frey Curve: Arithmetic Reduction and the Exact Modular-Method Handoff | [x] | [x] | [x] | — |
+| 165 | Local Conditions for Hardly-Ramified Minimal Deformations | [x] | [x] | [x] | — |
+| 166 | Supported Galois Cohomology and Selmer Calculations | [x] | [x] | [x] | — |
+| 167 | Relation Obstructions and Poitou--Tate Corrections | [x] | [x] | [x] | — |
 | 168 | Compatible Coefficient Systems and Purity | [x] | [x] | [x] | — |
 | 169 | The Eisenstein Ideal | [x] | [x] | — | — |
 | 170 | Hecke-Valued Galois Representations and Nonminimal Reciprocity | [x] | [x] | — | — |

@@ -24,10 +24,10 @@
    - [A valid direct certificate](#62-a-valid-direct-certificate)
    - [The admissible-place ledger](#63-the-admissible-place-ledger)
 7. [Prime-switch theorem](#7-prime-switch-theorem)
-8. [Handoff to Books 187--188 and comparison with Book 160](#8-handoff-to-books-187--188-and-comparison-with-book-160)
+8. [Handoff to Books 187--188 and Book 161](#8-handoff-to-books-187--188-and-book-161)
    - [Book 187: coefficient-prime integrality](#81-book-187-coefficient-prime-integrality)
    - [Book 188: the residual input](#82-book-188-the-residual-input)
-   - [Book 160: earlier comparative source](#83-book-160-earlier-comparative-source)
+   - [Book 161: the actual classification source](#83-book-161-the-actual-classification-source)
 9. [Hostile proof and dependency audit](#9-hostile-proof-and-dependency-audit)
    - [Local mathematics](#91-local-mathematics)
    - [Coefficients and compatibility](#92-coefficients-and-compatibility)
@@ -57,7 +57,7 @@ would change a special parameter into an unramified one.
 Nothing here reconstructs compatible-family theory, automorphic descent, integral
 $3$-adic Hodge theory, or a classification of finite-flat group schemes. Those are
 dependency boundaries. The final sections state exactly what is handed to Books 187--188
-and distinguish the earlier comparative role of Book 160.
+and distinguish Book 161's actual category/classification role in the endgame.
 
 The existence of the collection used below is conditional on the controlled SP top datum
 of Books 182--185. In particular, the current dependency spine does not construct the
@@ -621,7 +621,7 @@ with the rational monodromy line gives the saturated sequence (5.3). Formula
 (5.4) is the integral form of nonzero tame monodromy, and reduction gives the
 criterion (5.7). No other conclusion is used. $\square$
 
-## 8. Handoff to Books 187--188 and comparison with Book 160
+## 8. Handoff to Books 187--188 and Book 161
 
 ### 8.1 Book 187: coefficient-prime integrality
 
@@ -672,11 +672,11 @@ requires absolute irreducibility, the certificate of Section 6.2 or an exact
 replacement must be present. The rational equality $a_2(V)=1$ supplies none of
 these three residual assertions by itself.
 
-### 8.3 Book 160: earlier comparative source
+### 8.3 Book 161: the actual classification source
 
-Book 160 is an earlier treatment of the relevant finite-flat category and its
-classification argument. It is a comparative source, not a downstream consumer of
-the place $\nu$, the lattice $T$, or the output of Book 188. The later route keeps the
+Book 161 proves the finite-flat category and classification theorem that Book 188 applies to
+the tower produced by Book 187. It does not select the place $\nu$ or the lattice $T$, so those
+must still be fixed by the present handoff and Book 187. The later route keeps the
 rational facts
 
 $$
@@ -689,8 +689,8 @@ a_2(V)=1.
 \tag{8.4}
 $$
 
-attached to the single member selected in this book. Neither comparison with Book 160
-nor the separate argument of Book 188 permits one to replace $\nu$, descend coefficients,
+attached to the single member selected in this book. Applying Book 161 inside Book 188 does not
+permit one to replace $\nu$, descend coefficients,
 change $T$, or upgrade a split residual local extension to a nonsplit one.
 
 The dependency direction is therefore
@@ -700,9 +700,9 @@ $$
 \longrightarrow
 \text{Book 187 named integral lattice}
 \longrightarrow
-\text{Book 188 checked residual input},
-\qquad
-\text{Book 160 is earlier comparative material}.
+\text{Book 161 category/classification applied in Book 188}
+\longrightarrow
+\text{Book 188 $\mathcal O$-adic line and contradiction}.
 \tag{8.5}
 $$
 
@@ -789,8 +789,8 @@ The optional minimal-support assertion additionally imports the separate certifi
 $(\mathrm U)$ for the selected member. The theorem does not import a later finite-flat theorem, residual classification, or final
 FLT contradiction. It also does not import $(\mathrm{AI}_2)$, because no coefficient-two
 member is used. Books 187--188 receive the outputs in that order and do not feed
-assumptions backward into the proof; Book 160 is earlier comparative material, not a
-later handoff.
+assumptions backward into the proof. Book 161 is the actual category/classification input used
+after Book 187 has constructed the named tower; it is not an input to Theorem 7.1 itself.
 
 ## 10. Mechanical audit
 

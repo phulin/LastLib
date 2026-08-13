@@ -29,7 +29,7 @@
   - [6.3 An independent exact-sequence check](#63-an-independent-exact-sequence-check)
 - [7. The theorem and the downstream contract](#7-the-theorem-and-the-downstream-contract)
   - [7.1 Supported hardly-ramified balance](#71-supported-hardly-ramified-balance)
-  - [7.2 Interface to Books 166 and 181](#72-interface-to-books-166-and-181)
+  - [7.2 Interface to Books 167 and 181](#72-interface-to-books-167-and-181)
   - [7.3 Scope boundary](#73-scope-boundary)
 - [8. Source-closure audit](#8-source-closure-audit)
   - [8.1 Direct dependency ledger](#81-direct-dependency-ledger)
@@ -40,7 +40,7 @@
 This book has one task. It constructs the supported cochain complex for the
 hardly-ramified fixed-determinant deformation problem over $\mathbf Q$,
 identifies its degree-one and degree-two groups, and proves their dimensions
-are equal. The construction is the cohomological input used by Books 166 and 181. No presentation theorem, automorphy argument, finiteness theorem, or
+are equal. The construction is the cohomological input used by Books 167 and 181. No presentation theorem, automorphy argument, finiteness theorem, or
 characteristic-zero lifting theorem is proved here.
 
 ### 1.1 Standing hardly-ramified data
@@ -57,7 +57,7 @@ be continuous and satisfy all of the following conditions.
 1. $\det\bar\rho=\bar\chi_\ell$.
 2. $\bar\rho$ is absolutely irreducible and odd.
 3. $\bar\rho$ is unramified outside $\{2,\ell\}$.
-4. At $2$, the Frey-special datum from Book 164 is fixed: the
+4. At $2$, the Frey-special datum from Book 165 is fixed: the
    nonzero-monodromy minimal-special profile with its intrinsic line and
    named sign (SP).
 5. At $\ell$, the restriction is the generic fibre of a
@@ -158,7 +158,7 @@ H^1(G_{\mathbf Q,S},M')\longrightarrow
 \right). \tag{1.10}
 $$
 
-Book 164, Theorem 4.1 and Section 4.3, prove that (1.9) is the tangent space
+Book 165, Theorem 4.1 and Section 4.3, prove that (1.9) is the tangent space
 of the represented global hardly-ramified fixed-determinant functor. The
 supported complex below does not replace that tangent calculation; it
 extends the same kernel into adjacent cohomological degrees.
@@ -206,7 +206,7 @@ particular, the ambient group at $\ell$ is not assumed unobstructed.
 
 ### 2.1 The dyadic Frey-special profile
 
-The residual inertial representation in the SP condition of Book 164,
+The residual inertial representation in the SP condition of Book 165,
 Sections 2.1--2.2, has the form
 
 $$
@@ -256,7 +256,7 @@ $$
 H^0(\mathbf Q_2,M)=H^0(\mathbf Q_2,M')=0. \tag{2.8}
 $$
 
-The nonzero-monodromy normal form of Book 164 gives the fixed-determinant
+The nonzero-monodromy normal form of Book 165 gives the fixed-determinant
 unframed SP tangent directly, and it is zero. Thus
 
 $$
@@ -306,7 +306,7 @@ $$
 h_\ell^0(M)=h_\ell-1. \tag{2.15}
 $$
 
-Book 164, Theorem 3.1 and its tangent calculation in Section 3.3, proves that
+Book 165, Theorem 3.1 and its tangent calculation in Section 3.3, proves that
 the fixed-determinant coefficient-linear finite-flat tangent over
 $\mathbf Z_\ell$ satisfies
 
@@ -366,10 +366,10 @@ $$
 $$
 
 No vanishing of $H^2(\mathbf Q_\ell,M)$ has been used or proved. The exact
-statement is (2.19). Book 164, Section 3.4, proves instead that the
+statement is (2.19). Book 165, Section 3.4, proves instead that the
 obstruction map for the constrained finite-flat local functor is zero: every
 admissible object lifts through a small extension. This distinction is
-required by Book 166.
+required by Book 167.
 
 ### 2.3 The real place and global invariants
 
@@ -501,7 +501,7 @@ $$
 
 The Selmer kernel uses subspaces of $H^1$, whereas an obstruction class
 needs cochains and local nullhomotopies. We now give the precise complexes
-used in Books 166 and 181.
+used in Books 167 and 181.
 
 ### 3.1 Positive local complexes
 
@@ -831,7 +831,7 @@ not canonically their direct sum.
 
 Equation (4.15) is a cohomological statement. The assertion that actual
 deformation-lifting factor sets define complete obstruction classes in this
-group requires the affine local lift-torsor argument of Book 166 and is not
+group requires the affine local lift-torsor argument of Book 167 and is not
 assumed here.
 
 ## 5. Poitou--Tate and supported duality
@@ -1123,9 +1123,9 @@ Statement 5 follows from (2.28)--(2.30) and (5.6). The local ledger (2.31)
 and Greenberg--Wiles prove (6.7); combining it with (5.5) proves Statement
 6. $\square$
 
-### 7.2 Interface to Books 166 and 181
+### 7.2 Interface to Books 167 and 181
 
-Book 166 may use exactly the following outputs, with no additional
+Book 167 may use exactly the following outputs, with no additional
 cohomological hypothesis.
 
 1. The positive local complex is (3.4), including its degree-zero
@@ -1138,12 +1138,12 @@ cohomological hypothesis.
 5. Supported degree two is dual to the exact-orthogonal Selmer group by
    (5.5), and its dimension equals the tangent dimension by (6.10).
 
-Book 166 supplies what is deliberately not proved here: it constructs the
+Book 167 supplies what is deliberately not proved here: it constructs the
 factor-set plus local-nullhomotopy class, proves that its vanishing is
 equivalent to an admissible global lift, and injects the dual minimal
 relation space into supported degree two.
 
-Book 181 may then combine the relation injection from Book 166 with (6.10)
+Book 181 may then combine the relation injection from Book 167 with (6.10)
 to obtain a balanced presentation. Its later finiteness, flatness,
 complete-intersection, horizontal-component, and characteristic-zero-point
 arguments are logically downstream and are not inputs to this book.
@@ -1156,7 +1156,7 @@ downstream.
 ### 7.3 Scope boundary
 
 The following branches are intentionally absent because they are not used
-in the Books 166 and 181 hardly-ramified lift:
+in the Books 167 and 181 hardly-ramified lift:
 
 - auxiliary-prime changes of Selmer structure;
 - strict/relaxed comparison sequences unrelated to $\{2,\ell,\infty\}$;
@@ -1187,7 +1187,7 @@ matched below.
 | Book 32, *Global Galois Cohomology and Selmer Groups*, Sections 1, 3, 6, 9, and 13.3 | $G_{\mathbf Q,S}$, finiteness, Selmer kernels, exact orthogonal structures, and the adjoint-tangent dictionary | $S$ contains infinity, $\ell$, and every ramified finite place; fixed determinant uses $M=\operatorname{ad}^0\bar\rho$ |
 | Book 33, *Poitou--Tate Duality*, Sections 5, 6, 8, and 9 | complete real convention, compactly supported duality, (5.1), global Euler characteristic, and Greenberg--Wiles | finite coefficients; exact local annihilators; complete Tate cochains at real places |
 | Book 69, *Global Deformation Problems*, Sections 7--9 | fixed-determinant adjoint tangents, the mapping-fibre shape of constrained obstruction theory, and the distinction between ambient and constrained local $H^2$ | global Schur representation; $\ell\nmid2$; locally liftable conditions with their actual tangent subspaces |
-| Book 164, *Local Conditions for Hardly-Ramified Minimal Deformations*, Theorems 2.2, 3.1, 4.1, and 6.1, and Sections 5.1--5.2 | SP line and Frobenius eigenvalues, $L_2=0$, $\dim L_\ell=h_\ell$, local liftability, and the global tangent kernel | $\ell\ge7$; nonzero SP monodromy with intrinsic line and named sign; coefficient-linear finite flatness over $\mathbf Z_\ell$, weights $\{0,1\}$, cyclotomic determinant |
+| Book 165, *Local Conditions for Hardly-Ramified Minimal Deformations*, Theorems 2.2, 3.1, 4.1, and 6.1, and Sections 5.1--5.2 | SP line and Frobenius eigenvalues, $L_2=0$, $\dim L_\ell=h_\ell$, local liftability, and the global tangent kernel | $\ell\ge7$; nonzero SP monodromy with intrinsic line and named sign; coefficient-linear finite flatness over $\mathbf Z_\ell$, weights $\{0,1\}$, cyclotomic determinant |
 
 Cone calculations, the differential check (4.6), and the passage from an
 exact sequence to an alternating dimension identity are proved explicitly
@@ -1200,15 +1200,15 @@ The dependency graph is
 ```text
 Books 24 and 30--33 --- cochains, Euler formulas, local/global duality ---+
 Book 69 -------- deformation tangent and obstruction shape --------+--> Theorem 7.1
-Book 164 ------- local conditions and the dimension ledger --------+         |
+Book 165 ------- local conditions and the dimension ledger --------+         |
                                                                            v
-                                                                 Books 166 and 181
+                                                                 Books 167 and 181
 ```
 
-Every incoming edge comes from a book numbered below 165. Books 166 and 181
+Every incoming edge comes from a book numbered below 166. Books 167 and 181
 occur only as consumers in Section 7.2; no result from either is used to
 prove Theorem 7.1. The SP local deformation theorem's own earlier
-dependencies are discharged inside Book 164, so this book uses Book 164 as
+dependencies are discharged inside Book 165, so this book uses Book 165 as
 its direct source rather than reopening its transitive local inputs.
 
 The hypotheses also close under every use:
@@ -1226,5 +1226,5 @@ The hypotheses also close under every use:
   (3.13), (5.1), and (5.5).
 
 Thus the proof of (6.10) is source-closed, noncircular, and contains every
-local, global, real, and coefficient-prime term on which Books 166 and 181
+local, global, real, and coefficient-prime term on which Books 167 and 181
 depend.

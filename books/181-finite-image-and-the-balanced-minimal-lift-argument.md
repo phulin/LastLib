@@ -274,7 +274,7 @@ $N_A$ has rank one and (2.8) is a direct-summand line over every $A$. Nonzero mo
 an open condition being inserted into a functor: it is forced on every lift by the nonzero
 residual matrix.
 
-Book 164 proves the strict normal form
+Book 165 proves the strict normal form
 
 $$
 N_A=e_{12},
@@ -325,7 +325,7 @@ $M'=M(1)$, the cyclotomic twist multiplies the eigenvalue by another $2$, giving
 $4$. Since $\ell\geq7$, neither eigenvalue is $1$. Thus
 $H^0(\mathbf Q_2,M)=H^0(\mathbf Q_2,M')=0$. Local Tate duality exchanges these two invariant
 groups with the respective degree-two groups, and the away-from-$\ell$ local Euler
-characteristic then kills degree one. Hence Book 164's full result is
+characteristic then kills degree one. Hence Book 165's full result is
 
 $$
 H^i(\mathbf Q_2,M)=0\quad(i=0,1,2),
@@ -347,7 +347,7 @@ coefficient-linear finite locally free group scheme, equivalently of the selecte
 weight-$\{0,1\}$ filtered object. This condition includes cyclotomic determinant and is stable
 under coefficient change and quotient.
 
-Book 164 proves that the framed fixed-determinant condition is represented and liftable. To
+Book 165 proves that the framed fixed-determinant condition is represented and liftable. To
 interpret its tangent formula, put
 
 $$
@@ -396,7 +396,7 @@ with determinant $\chi_\ell$, the SP condition at $2$, and the coefficient-linea
 finite-flat condition at $\ell$. The source group builds in unramifiedness away from
 $\{2,\ell\}$.
 
-Book 164 proves that this functor is represented by a complete Noetherian local
+Book 165 proves that this functor is represented by a complete Noetherian local
 $\mathcal O$-algebra
 
 $$
@@ -527,7 +527,7 @@ L_2=0,
 $$
 
 and let $L_v^\perp\subseteq H^1(\mathbf Q_v,M')$ be the exact annihilator under local Tate
-duality. Book 165 constructs local positive complexes $U_v^+(M)$ that realize the actual
+duality. Book 166 constructs local positive complexes $U_v^+(M)$ that realize the actual
 liftable conditions, not just subspaces having the same dimension. With complete Tate cochains
 at the real place, the supported complex has the schematic form
 
@@ -646,7 +646,7 @@ $$
 and let $\mathfrak n=(\varpi,X_1,\ldots,X_t)$. The number of variables is exactly $t$ because
 the dual of the relative cotangent space is (2.16).
 
-Here is the small-extension class used by Book 166. Let
+Here is the small-extension class used by Book 167. Let
 $A'\twoheadrightarrow A$ have kernel $I$ with $\mathfrak m_{A'}I=0$, and let
 $\rho_A$ be an admissible deformation. Choose matrix lifts $\widetilde\rho(g)$ and use
 $2\in k^\times$ to normalize their determinants to the fixed character. Their failure to be
@@ -764,7 +764,7 @@ $$
 \tag{3.13}
 $$
 
-This is the full unconditional output of Books 164--166. It does not prove coefficient
+This is the full unconditional output of Books 165--167. It does not prove coefficient
 injectivity, finiteness, flatness, reducedness, a horizontal prime, or a characteristic-zero
 point.
 
@@ -808,7 +808,7 @@ automorphic module satisfying these clauses is asserted to exist until a witness
 package has been supplied.
 
 Complete splitting is used for more than notation. It identifies every completion at a place
-above $2$ or $\ell$ with the local field for which Books 164--166 computed the condition. Thus
+above $2$ or $\ell$ with the local field for which Books 165--167 computed the condition. Thus
 restriction retains the nonzero monodromy matrix, intrinsic line, sign, and selected finite-flat
 model without a ramified-base-change descent problem. The two irreducibility clauses put the
 restricted representation in the Schur and adequate range used by the minimal theorem.
@@ -863,7 +863,7 @@ will enter the descent argument. We use the stronger established theorem because
 available source of (4.2). No reduced-finiteness or reduced-support assertion is manufactured
 inside this book.
 
-Book 164's forward-looking ledger called the anticipated extra input $(\mathrm{RF})$. In the
+Book 165's forward-looking ledger called the anticipated extra input $(\mathrm{RF})$. In the
 present formulation there is no second restricted-finiteness hypothesis: the sole new
 arithmetic hypothesis is $(\mathrm{Seed}_{\mathrm{SP}})$, and Proposition 4.1 derives the
 stronger whole-ring statement (4.2) from it. Finiteness only of
@@ -1100,7 +1100,7 @@ already belongs to the closed subfunctor.
 kills $I$. Injectivity therefore implies that $U\to T$ kills $I$, so it factors through
 $R=U/I$. $\square$
 
-Book 164 constructs the global SP and finite-flat problem exactly as such a closed quotient of
+Book 165 constructs the global SP and finite-flat problem exactly as such a closed quotient of
 the unrestricted fixed-determinant ring, using represented framed local quotients. Lemma 6.1
 therefore applies to (6.4). It avoids any unjustified attempt to descend a finite-flat group
 scheme directly through an arbitrary subring.
@@ -1486,7 +1486,7 @@ normalization cannot move the point to a monodromy-zero boundary.
 ### 10.3 Finite flatness at the coefficient prime
 
 For every $n\geq1$, reduce (10.1) modulo the $n$th power of the maximal ideal of
-$\mathcal O'$. Book 164's coefficient-extension and quotient compatibility supplies the
+$\mathcal O'$. Book 165's coefficient-extension and quotient compatibility supplies the
 selected coefficient-linear finite locally free model for
 
 $$
@@ -1515,7 +1515,7 @@ under $(\mathrm{Seed}_{\mathrm{SP}})$.
 
 ### 11.1 The Frey input
 
-The criterion is reusable, but its intended first input is concrete. Book 163 proves that a
+The criterion is reusable, but its intended first input is concrete. Book 164 proves that a
 normalized primitive Fermat solution of prime exponent $p\geq7$ produces a representation
 
 $$
@@ -1537,7 +1537,7 @@ $$
 and, if desired, enlarging the coefficient DVR. Proposition 2.1 supplies the cyclotomic
 absolute irreducibility needed for the automorphic theorem directly from that dyadic SP datum.
 
-The adjective “exact” here carries arithmetic content. Book 163 computes the dyadic
+The adjective “exact” here carries arithmetic content. Book 164 computes the dyadic
 discriminant valuation modulo $p$ and shows that the residual tame parameter does not vanish;
 after the chosen basis, inertia contains
 
@@ -1548,7 +1548,7 @@ $$
 rather than only a representation whose conductor is bounded by one. Split or nonsplit
 multiplicative reduction supplies the named quotient sign. The intrinsic line is simultaneously
 $\ker e_{12}$ and $\operatorname{im}e_{12}$. At the coefficient prime, the finite-flat model
-is coefficient-linear, so it is the integral local condition represented in Book 164, not only
+is coefficient-linear, so it is the integral local condition represented in Book 165, not only
 a statement about Hodge--Tate weights after inverting $p$. These are exactly the pieces used in
 Sections 2.2--2.4.
 
@@ -1609,11 +1609,11 @@ Selmer, and automorphic analysis.
 The mathematically direct row for the reusable conditional theorem is
 
 $$
-\boxed{181\mid 57,62,64,141,164,165,166,173.}
+\boxed{181\mid 57,62,64,141,164,165,166,167,173.}
 \tag{12.1}
 $$
 
-The FLT specialization in Section 11.1 additionally uses Book 163 for the Frey residual datum.
+The FLT specialization in Section 11.1 additionally uses Book 164 for the Frey residual datum.
 The exact use and boundary of each source are as follows.
 
 | Source | Result used here | Boundary retained |
@@ -1623,16 +1623,16 @@ The exact use and boundary of each source are as follows.
 | Book 64 | minimal presentations, relation modules, dimension, regular sequences, Cohen--Macaulayness, finite-map dimension, and finite flat implies free | balance alone gives only a lower bound; every equality is proved in Chapter 8 |
 | Book 173 | minimal $R=\mathbb T$, finite freeness, and complete intersection for an exact clean datum | it is conditional on every clause of $(\mathrm{Seed}_{\mathrm{SP}})$ and does not construct that datum |
 | Book 141 | cyclotomic restriction dichotomy | the resulting quadratic induction is excluded by primitive dyadic inertia in Proposition 2.1 |
-| Book 164 | represented SP local and global conditions, $L_2=0$, dyadic adjoint vanishing, finite-flat liftability, and tangent formula | it proves no global finiteness |
-| Book 165 | supported mapping fibre, duality, and equality of tangent and supported-obstruction dimensions | it supplies no relation or finiteness theorem |
-| Book 166 | complete supported obstruction and injection of the dual conormal relation space | it gives $r\leq t$, not equality, flatness, or a point |
-| Book 163 | exact Frey residual datum for Section 11.1 | application input only; it does not construct the automorphic seed |
+| Book 165 | represented SP local and global conditions, $L_2=0$, dyadic adjoint vanishing, finite-flat liftability, and tangent formula | it proves no global finiteness |
+| Book 166 | supported mapping fibre, duality, and equality of tangent and supported-obstruction dimensions | it supplies no relation or finiteness theorem |
+| Book 167 | complete supported obstruction and injection of the dual conormal relation space | it gives $r\leq t$, not equality, flatness, or a point |
+| Book 164 | exact Frey residual datum for Section 11.1 | application input only; it does not construct the automorphic seed |
 
-The FLT specialization in Section 11.1 additionally uses Book 163, so the exact
+The FLT specialization in Section 11.1 additionally uses Book 164, so the exact
 manuscript-wide repository row is
 
 $$
-181\mid57,62,64,141,163,164,165,166,173.
+181\mid57,62,64,141,164,165,166,167,173.
 \tag{12.2}
 $$
 
@@ -1671,7 +1671,7 @@ $(\mathrm{Seed}_{\mathrm{SP}})$.
 Equivalently, the missing arithmetic theorem can be stated without reference to the proof of
 this book:
 
-**Missing theorem (clean Frey-SP carrier).** For every Frey residual datum of Book 163 with
+**Missing theorem (clean Frey-SP carrier).** For every Frey residual datum of Book 164 with
 $p\geq7$, there is an even-degree totally real field $F$ in which $2$ and $p$ split completely,
 which preserves absolute irreducibility before and after adjoining $\zeta_p$, and on which the
 restricted datum occurs in an exact nonzero parallel-weight-two definite-quaternionic

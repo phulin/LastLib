@@ -462,715 +462,162 @@ the one-prime theorem and stops before a simultaneous finite-set conclusion.
 
 ## 4. Saturated Ihara theory and integral level change
 
+Chapters 4--7 are an import boundary. Book 139 owns the constant-coefficient tree kernel and
+conditional saturated Ihara package; Book 174 owns the actual typed incidence complexes,
+primitive residues, enhanced component support, and strict augmentation; Book 175 owns the
+finite-level reduced one-prime comparison and characteristic-zero modularity. The present book
+uses those packages to formulate the new several-place problem in Chapters 8--9.
+
 ### 4.1 The exact residual kernel
 
-The local tree calculates relations between the two degeneracy maps, but the arithmetic
-quotient of that tree has first cohomology. Let $\Gamma^v$ be the norm-one $S$-arithmetic
-group at the changing place, let $\Delta$ denote the component-routing quotient, and let
-
-$$
-H^1_{\mathrm{cong}}(\Gamma^v,k)
-\subseteq H^1(\Gamma^v,k)
-\tag{4.1}
-$$
-
-be the subgroup of characters continuous for the congruence topology. Put
-
-$$
-H^1_{\mathrm{nc}}(\Gamma^v,k)
-=H^1(\Gamma^v,k)/H^1_{\mathrm{cong}}(\Gamma^v,k).
-\tag{4.2}
-$$
-
-Book 139 proves, after the component and central routing has been performed, the exact formula
-
-$$
-\ker(d_v\otimes k)_{\mathfrak m}
-\simeq
-\left(H^1_{\mathrm{nc}}(\Gamma^v,k)^\Delta\right)_{\mathfrak m}.
-\tag{4.3}
-$$
-
-The congruence-continuous part is Eisenstein and vanishes at the chosen non-Eisenstein
-localization. Formula (4.3) shows why non-Eisensteinness alone is not enough: an abstract
-finite character need not be continuous for the congruence topology.
+Book 139, Theorem 6.1 identifies the residual constant-coefficient kernel with the localized
+arithmetic congruence-character module. It is not zero by formal tree contractibility.
 
 ### 4.2 The abelian Ihara hypothesis
 
-The required additional input is the explicit vanishing
-
-$$
-\mathbf I(v,\mathfrak m):
-\qquad
-\left(H^1_{\mathrm{nc}}(\Gamma^v,k)^\Delta\right)_{\mathfrak m}=0.
-\tag{4.4}
-$$
-
-We call (4.4) the **abelian Ihara hypothesis**. It is not part of the definition in Chapter 3.
-It would follow from the appropriate localized abelian commensurator theorem, or from another
-argument proving precisely the group in (4.4) zero. The tree, strong approximation, and
-non-Eisenstein localization do not prove it from the currently declared sources.
-
-For the flag resolution used by Book 174, one needs a finite family of such statements. If
-$D$ ranges over the constant-coefficient vertex, edge, permutation, and adjoint-companion
-curves with the actual tame spectator tuple and auxiliary level, the hypothesis is
-
-$$
-({\rm AIH}_{\mathscr F}):
-\qquad
-\left(H^1_{\mathrm{nc}}(\Gamma_D^v,k)^{\Delta_D}\right)_{\mathfrak m_D}=0
-\quad\text{for every }D\in\mathscr F_v(Q).
-\tag{4.4a}
-$$
-
-This is the first gap in proof order for the constant rows. Every later use of constant
-“Ihara injectivity,” “saturated old image,” or the corrected normalization filtration is
-conditional on (4.4a) with the actual spectator data. It does not imply the type-coefficient
-injectivity introduced in Chapter 5.
+The vanishing $({\rm AIH}_{\mathscr F})$ must hold at every actual constant flag level used in
+the construction. Under it, Book 139, Theorems 7.1, 10.2, 12.1, and 14.1 give saturation,
+component control, new-quotient duality, and the exact Gram package. None is a typed Ihara
+theorem.
 
 ### 4.3 Consequences after the hypothesis is supplied
 
-Assume (4.4) for one constant-coefficient curve. Then (4.3) makes its residual degeneracy map
-injective. Let
-$M$ and $N$ be finite free $\mathcal O$-modules and let $d:M^{\oplus2}\to N$ be the integral
-map. If $d\otimes k$ is injective, a maximal minor of $d$ is a unit. Elementary row and column
-operations split off an identity block. Consequently
-
-$$
-0\longrightarrow M^{\oplus2}
-\xrightarrow{d}N\longrightarrow Q\longrightarrow0
-\tag{4.5}
-$$
-
-is exact with $Q$ finite free. Thus residual injectivity gives integral saturation; no
-determinant calculation is used for that step.
-
-Book 139 also identifies the orthogonal new lattice with $Q^\vee$, computes the Gram operator
-(2.4), and relates the graph monodromy pairing to the Néron component group. Book 140 adds the
-node-uniformization and generic-support hypotheses required to identify the graph lattice with
-the definite quaternionic lattice and to identify their faithful integral Hecke orders.
-
-The generic signed level-raising theorem further assumes
-
-$$
-q_v\not\equiv\pm1\pmod\ell.
-\tag{4.6}
-$$
-
-This is the first row of Section 2.4. It is not a hypothesis for the scalar-twist family,
-which instead belongs to $q_v\equiv1\pmod\ell$ and requires the enhanced type construction of
-Book 174.
-
-More explicitly, assume the conditional node-uniformization and generic-support hypotheses of
-Book 140 and specialize the central operator to $S_v=1$; the general central branch is obtained
-by the corresponding integral square-root normalization. Assume an integral separated sign
-$\varepsilon$ and
-
-$$
-a_v-\varepsilon(q_v+1)\in\mathfrak m.
-\tag{4.6a}
-$$
-
-Assume the localized residual lower carrier contains a primitive vector for the chosen
-away-from-$v$ residue character and that the $U_v$ action and local type have Book 140's
-normalization. Choose a primitive lift $x_0$ of that vector and put
-$x_\varepsilon=(x_0,-\varepsilon x_0)$ in the old plane. Then
-$G_vx_\varepsilon\in\varpi(M^{\oplus2})^\vee$. Saturation of $d$ and perfect duality make
-$d^*:N\to(M^{\oplus2})^\vee$ surjective, so choose $z\in N$ with
-
-$$
-d^*z=\varpi^{-1}G_vx_\varepsilon.
-\tag{4.6b}
-$$
-
-The integral vector
-
-$$
-y=d(x_\varepsilon)-\varpi z
-\tag{4.6c}
-$$
-
-lies in $\ker d^*$. Its reduction is $d(x_\varepsilon)$, which is nonzero by residual Ihara
-injectivity. Thus the congruence produces a genuine nonzero residual new class. The integral
-$W_v$-projector puts it in the $W_v=-\varepsilon$ block, which is the
-$U_v=\varepsilon$ block on the new quotient; finite flatness of the faithful new order then
-supplies a characteristic-zero special packet. The proof order matters:
-Ihara gives nonvanishing, saturation gives the integral correction, and the Gram congruence
-is used only afterward.
+Only after $({\rm AIH}_{\mathscr F})$ is supplied may a constant old image be called primitive
+and its quotient finite free. Book 174 separately requires $({\rm TIC}_v)$ and
+$({\rm TIH}_{\mathscr F})$ for the primary and companion type shadows.
 
 ### 4.4 Component and branch corrections
 
-Saturation does not make every finite semistable correction disappear. There are at least
-three different modules:
-
-$$
-\begin{array}{c|c}
-\text{module}&\text{meaning}\\ \hline
-\operatorname{coker}G_v&\text{old--new Gram congruence}\\
-\operatorname{coker}\mu_\Gamma&\text{Néron component discriminant}\\
-\mathcal C_{\mathrm{br},v}
-=\operatorname{coker}\bigl(1-(F_v^*)^2\bigr)
-&\text{normalized-branch Smith correction}.
-\end{array}
-\tag{4.7}
-$$
-
-The first is compatible with a signed congruence factor only after a primitive branch has
-been selected. The second is a cokernel of graph monodromy. The third measures whether the
-bottom graph lattice remains primitive in the normalized quotient. They can have related
-support without being the same module or multiplicative correction factors.
-
-Level raising uses a nonunit Gram factor to create a new residual class. Level lowering is
-different: it requires zero residual monodromy together with separate control of both the
-component group and $\mathcal C_{\mathrm{br},v}$. The one-prime modularity theorem below
-retains these modules; it never deduces their vanishing from (4.4).
-
-Here is the exact clean lowering implication. Let $\mathfrak n$ be a non-Eisenstein maximal
-ideal occurring in the new quotient. Assume the applicable constant or typed Ihara and
-incidence hypotheses, and:
-
-1. $\mathfrak n$ is stable under the Hecke adjoint and the residual new block pairs perfectly
-   with its adjoint block;
-2. residual monodromy is zero on the full $\mathfrak n$-block, not merely on its
-   semisimplification;
-3. the component obstruction has no residual torsion:
-   $$
-   \operatorname{coker}(\mu_\Gamma)[\varpi]_{\mathfrak n}=0;
-   $$
-4. the independent branch obstruction has no residual torsion:
-   $$
-   \mathcal C_{\mathrm{br},v}[\varpi]_{\mathfrak n}=0;
-   $$
-5. the normalization middle piece is exactly the two lower-level branches, without
-   stabilizer or coefficient torsion; and
-6. the block is nonzero and no scalar, self-twist, or vexing identification merges it with an
-   Eisenstein or different adjoint block.
-
-Then the contracted away-from-$v$ residual eigensystem occurs at hyperspecial level and has a
-characteristic-zero lower-level branch after coefficient extension. Indeed, conditions 3--4
-make the graph monodromy map injective after reduction, so condition 2 kills the top graph
-piece. Perfect adjoint duality kills the bottom graph piece. If the lower localization were
-zero, condition 5 would kill the middle piece as well, contradicting condition 6.
-
-This lowers an eigensystem; it does not turn the same characteristic-zero new packet into a
-lower-level packet. Fixed-prime scalar augmentation is different again: it untwists a
-character while retaining the line-special monodromy closure. At a typed scalar or vexing
-place, all type-incidence, type-Ihara, primitive-residue, and adjoint-block hypotheses must be
-verified for this lowering argument, together with typed node uniformization if the carrier
-is switched to the definite side; the constant theorem does not supply them.
+Book 139's Néron component module and branch Smith correction remain in the corrected
+filtration. They are not identified with coefficient-base Tor and are not discarded when the
+typed complex is formed.
 
 ## 5. The one-prime type complex
 
 ### 5.1 Primary and companion lattices
 
-At $q_v\equiv1\pmod\ell$, the two old Frobenius roots can collide, so an ordered root
-projector is unavailable. Book 174 replaces it by an actual line-enhanced coefficient system.
-The primary Steinberg lattice is a quotient of the finite flag permutation lattice by
-constants; the companion is the augmentation kernel. In bases indexed by all flags except one,
-their pairing matrix is the identity. Hence the pairing is perfect without division by
-$q_v+1$.
-
-At $q_v\equiv-1\pmod\ell$, the two lattices reduce to opposite nonsplit extensions. The full
-primary--companion construction remains meaningful, but one cannot discard one signed factor
-unless an integral sign block has independently been shown to be a direct summand. This is why
-the complex (3.4), rather than a rational eigenspace, is the basic object.
-
-Book 174 does not transfer endpoint injectivity from constant coefficients by a formal
-diagram chase. It first assumes $({\rm TIC}_v)$: the quotient-primary and
-augmentation-companion systems, their pull and norm maps, their adjunction, and their nearby
-cycles extend through the actual parahoric incidence model. It then assumes the independent
-crossed-coefficient condition $({\rm TIH}_{\mathscr F})$. For every residual primary or
-companion coefficient object $\overline W$ in the actual flag diagram, this condition is
-
-$$
-\ker\!\left(
-H^1(\Gamma_{D,0}^v,\overline W)\oplus
-H^1(\Gamma_{D,1}^v,\overline W)
-\longrightarrow H^1(\Gamma_{D,e}^v,\overline W)
-\right)_{\mathfrak m_D}^{\Delta_D}=0.
-\tag{5.0}
-$$
-
-A cocycle with coefficients in $\overline W$ is a crossed homomorphism, so the arithmetic
-character calculation of Book 139 does not prove (5.0). The constant family
-$({\rm AIH}_{\mathscr F})$ and the type family $({\rm TIH}_{\mathscr F})$ are both retained.
+The actual primary and companion sheaves, their flag representations, and the coefficient-one
+incidence maps are those of Book 174, Chapters 3--4. For later compatibility we denote the
+resulting strict complexes by $C_v^+$ and $C_v^-$.
 
 ### 5.2 The incidence complex and its Tor term
 
-Assume $({\rm TIC}_v)$ and $({\rm TIH}_{\mathscr F})$ at every actual shadow. Then $d_v$ in
-(3.4) is a split injection over the relevant complete local coefficient algebra $A$. Its
-cokernel
-
-$$
-N_v^{\mathrm{new}}=\operatorname{coker}d_v
-\tag{5.1}
-$$
-
-is finite projective and
-
-$$
-C_v^{\mathrm{pri}}\simeq N_v^{\mathrm{new}}[-1].
-\tag{5.2}
-$$
-
-For an arbitrary $A$-algebra $B$, the universal-coefficient sequence is
-
-$$
-0\longrightarrow
-H^0(C_v^{\mathrm{pri}})\otimes_AB
-\longrightarrow
-H^0(C_v^{\mathrm{pri}}\otimes_A^LB)
-\longrightarrow
-\operatorname{Tor}_1^A(N_v^{\mathrm{new}},B)
-\longrightarrow0.
-\tag{5.3}
-$$
-
-The degree-one group is $N_v^{\mathrm{new}}\otimes_AB$. Equation (5.3) identifies the exact
-specialization defect. One must not replace the complex by its generic new quotient before
-the Tor term has been proved zero.
-
-In the one-prime type construction the quotient is projective over the face algebra, so the
-Tor group vanishes for the specified one-prime augmentations. This assertion is stronger than
-$\mathcal O$-freeness: the relevant Tor is over the character or acting base.
+**Imported theorem 5.1.** Under $({\rm TIC}_v)$ and
+$({\rm TIH}_{\mathscr F})$, Book 174, Theorem 5.2 proves split amplitude and projectivity of the
+one-prime new cohomology over the declared coefficient base. Consequently all coefficient-base
+Tor vanishes. This does not imply the mixed two-place vanishing defined in Chapter 8.
 
 ### 5.3 The scalar-twist face
 
-In the scalar regime let $\Lambda_v$ and $\boldsymbol\chi_v$ be as in (3.2). Scalar twisting
-gives a represented identity
-
-$$
-R_v^{\mathrm{sp},2}
-\simeq
-R_v^{\mathrm{sp},1}
-\widehat\otimes_{\mathcal O}\Lambda_v,
-\tag{5.4}
-$$
-
-with determinant (3.3). Augmentation $\epsilon_v:\Lambda_v\to\mathcal O$ gives
-
-$$
-R_v^{\mathrm{sp},2}
-\widehat\otimes_{\Lambda_v,\epsilon_v}\mathcal O
-\simeq R_v^{\mathrm{sp},1}.
-\tag{5.5}
-$$
-
-The type complexes, primary--companion pairings, graph residues, and named Hecke actions have
-the same exact augmentation. Moreover the faithful acting order satisfies
-
-$$
-\mathbb T_v^{(2)}
-\simeq\Lambda_v\otimes_{\mathcal O}\mathbb T_v^{(1)},
-\qquad
-\mathbb T_v^{(2)}/\mathfrak a_v\mathbb T_v^{(2)}
-\simeq\mathbb T_v^{(1)},
-\tag{5.6}
-$$
-
-where $\mathfrak a_v=\ker\epsilon_v$. The proof uses group-basis coefficient extraction, not
-an inference from exact module augmentation.
-
-Every nontrivial character factor in (5.4) with nonzero specialized monodromy has conductor
-two by (2.6); the augmentation face with nonzero monodromy has conductor one. The represented
-closure also contains monodromy-zero boundary points. The enhancement and the determinant
-square persist on both sides.
+Book 174, Chapter 9 constructs the strict scalar-twist identity only after an effective global
+ray quotient and the exact determinant-square identity have been supplied. A character fiber of
+a group algebra is not assumed flat.
 
 ### 5.4 Support is not faithfulness
 
-The nodewise incidence calculation alone does not prove that the global type residue is
-primitive. Book 174 assumes $({\rm PRI}_{\rm type})$: after localization and residual
-specialization, the extreme primary and companion residue sequences remain exact without an
-extra snake-lemma class from the nonsemisimple flag rows. Typed graph--definite comparison
-further assumes $({\rm NU}_{\rm type})$, including coefficient actions, unit stabilizer
-weights, routing, and coefficient-one scale.
-
-The support datum $({\rm SUP}_v)$ is separate again. It retains the actual Taylor--Wiles
-shadows with Book 141's split-regular detector input, a nonzero lower boundary carrier,
-singularity of the correct same-coefficient Gram block, the full scalar or two-sign boundary
-chart, uniqueness of the named component at each boundary prime, and equality of the local
-dimensions used in the depth argument. Under
-$({\rm TIC}_v)$, $({\rm TIH}_{\mathscr F})$, and $({\rm SUP}_v)$, Book 174 proves that the
-patched and finite-level primary--companion complexes meet every generic point of every named
-one-prime component.
-
-For a finite module $M$ over a noetherian ring $P$,
+Book 174, Theorem 8.3 gives full topological support under the separate five-clause datum
+$({\rm SUP}_v)$. For a noetherian source $R$ and carrier $M$ this says only
 
 $$
-\operatorname{Supp}_P(M)=V(\operatorname{Ann}_P M).
+\operatorname{Ann}_R(M)\subseteq\sqrt{(0)}.
 \tag{5.7}
 $$
 
-Full support therefore implies only
-
-$$
-\sqrt{\operatorname{Ann}_P M}=\sqrt{(0)}.
-\tag{5.8}
-$$
-
-If $P$ is nonreduced, this need not be faithfulness. For example,
-$k[\epsilon]/(\epsilon^2)$ acts on $k$ with full support and nonzero annihilator
-$(\epsilon)$. Reducedness of the exact source, or an independent theorem controlling its
-nilradical, is a separate input to the ring equality.
+It does not kill nilpotents or prove a full ring equality.
 
 ## 6. The conditional one-prime R=T theorem
 
 ### 6.1 The explicit comparison hypotheses
 
-We now state the inputs without hiding any of them in the geometric datum. They have different
-logical roles.
+For compatibility with earlier citations, the one-prime package consists of the following
+separate inputs, in exactly the sense of Books 174--175:
 
-1. $({\rm AUT}_v)$ is the actual automorphic localization of Section 3.3 together with the
-   residual and coefficient-prime data of Section 3.1.
-2. $({\rm TYPE}_v)$ means $({\rm TIC}_v)$ and
-   $({\rm TIH}_{\mathscr F})$ for every actual primary and companion shadow and spectator
-   tuple.
-3. $({\rm SUP}_v)$ is the five-clause one-boundary datum of Book 174: marked finite shadows
-   satisfying Book 141's split-regular detector input, a nonzero lower minimal boundary
-   carrier, singularity of the correct same-coefficient Gram block, the exact selected boundary
-   chart with a unique named component through each witness, and equality of the local
-   dimensions used in the depth argument.
-4. $({\rm REC}_v)$ is the Book 170 reciprocity package on the actual finite carrier: integral
-   Galois realization and exact local--global compatibility on every generic factor,
-   all-Artinian finite-flat factorization above $\ell$, semisimplicity of the generic Hecke
-   action, and generation of the faithful image by the verified trace, determinant, tame,
-   line, sign, and diamond operators. No operator outside the proved trace or structural
-   order is silently adjoined.
-5. $({\rm RAY}_v)$, used for the scalar family, is an effective global ray quotient together
-   with the strict twist identities (5.4)--(5.6) and determinant square (3.3).
-6. $({\rm AUG}_Q)$, used when descending an auxiliary patch, is exact auxiliary augmentation
-   on represented deformation rings, complexes, pairings, deformation actions, and faithful
-   acting orders. Module augmentation alone is not the last assertion.
+1. $({\rm AUT}_v)$: the actual non-Eisenstein primary--companion automorphic localization;
+2. $({\rm TYPE}_v)$: $({\rm TIC}_v)$ and $({\rm TIH}_{\mathscr F})$ at every retained shadow;
+3. $({\rm SUP}_v)$: the marked boundary, unique-component, nonzero-carrier, and depth datum of
+   Book 174;
+4. $({\rm REC}_v)$: one order-valued representation on every generic branch, all-Artinian
+   factorization through the represented local conditions, and generation of the faithful order
+   by the verified operators;
+5. $({\rm RAY}_v)$ for a scalar family: an effective global ray quotient, strict twist
+   identities, and the determinant square; and
+6. $({\rm AUG}_Q)$ when auxiliary patching is used: exact augmentation of deformation rings,
+   complexes, pairings, actions, and faithful acting orders.
 
-The core finite-level comparison uses items 1--4; the conductor-two scalar comparison adds
-item 5, and a comparison obtained through auxiliary descent adds item 6. Three further inputs
-belong to the richer integral level-change and component package: the finite constant family
-$({\rm AIH}_{\mathscr F})$ for Book 139's corrected constant rows,
-$({\rm PRI}_{\rm type})$ for coefficient-one extreme type residues, and
-$({\rm NU}_{\rm type})$ when a switched graph--definite carrier is used. They are required
-where Chapters 4--5 invoke those conclusions, but they are not retroactively inferred from
-the core comparison. If the core faithful carrier itself is moved to the definite side, all
-of these applicable comparison hypotheses must be added; otherwise the core theorem remains
-on the curve-new primary--companion carrier.
-
-Under $({\rm TYPE}_v)$, Book 174 gives a strict primary--companion complex whose new
-cohomology is projective over the declared coefficient base. Under $({\rm SUP}_v)$ it gives
-full topological support on the selected global deformation ring at patched and retained
-finite levels. Under $({\rm REC}_v)$, Book 170 gives at finite level a canonical surjection
-
-$$
-f:R^{\mathrm{nm}}\twoheadrightarrow\mathbb T^{\mathrm{nm}},
-\tag{6.1}
-$$
-
-and the target is the faithful image on that carrier. These conclusions are conditional on
-the named items. In particular, neither full support nor source reducedness is part of the
-geometric datum.
+The richer curve-to-definite component comparison additionally retains
+$({\rm AIH}_{\mathscr F})$, $({\rm PRI}_{\rm type})$, and, when used,
+$({\rm NU}_{\rm type})$. Those hypotheses are not folded into $({\rm SUP}_v)$.
 
 ### 6.2 Full support and the reduced image
 
-The precise commutative algebra needed here does not assume that the source is reduced.
-
-**Lemma 6.1 (full support and a reduced faithful image).** Let $R$ be noetherian, let $M$ be
-a finite $R$-module, and let $T$ be the image of $R$ in $\operatorname{End}(M)$. If
-
-$$
-\operatorname{Supp}_R(M)=\operatorname{Spec}R
-\tag{6.2}
-$$
-
-and $T$ is reduced, then
+**Lemma 6.1 (full support and reduced image; compatibility alias).** This is Book 175,
+Lemma 4.1. If $R$ is noetherian, $M$ is finite with full support, and the faithful acting image
+$T$ is reduced, then
 
 $$
-\ker(R\twoheadrightarrow T)=\sqrt{(0)}
-\quad\text{and}\quad
-R_{\mathrm{red}}\xrightarrow{\sim}T.
+\ker(R\twoheadrightarrow T)=\sqrt{(0)},\qquad R_{\rm red}\simeq T.
 \tag{6.3}
 $$
 
-**Proof.** Put $I=\operatorname{Ann}_R(M)$. Full support gives
-$V(I)=\operatorname{Spec}R$, so $I$ is contained in every prime and hence
-$I\subseteq\sqrt{(0)}$. Conversely, a nilpotent element of $R$ maps to a nilpotent element
-of the reduced ring $T$ and therefore maps to zero. Thus $\sqrt{(0)}\subseteq I$. Since $T$
-is the faithful image on $M$, the kernel is exactly $I$. $\square$
-
-The finite Hecke order in Section 6.1 is reduced. It acts on a finite free
-$\mathcal O$-carrier and so is $\mathcal O$-torsion-free; after inverting $\varpi$, generic
-semisimplicity embeds it into the product of its characteristic-zero packet fields. A
-nilpotent in the order is zero in that product and hence is $\mathcal O$-torsion; it must
-already be zero. This argument does not automatically apply to an abstract patched
-inverse-limit acting algebra.
-
 ### 6.3 The reduced comparison and the full-equality criterion
 
-**Theorem 6.2 (conditional finite-level one-prime reduced $R=T$).** Assume
-$({\rm AUT}_v)$, $({\rm TYPE}_v)$, $({\rm SUP}_v)$, and $({\rm REC}_v)$, adding
-$({\rm RAY}_v)$ in the scalar family and $({\rm AUG}_Q)$ when an auxiliary patch is
-descended. At the empty auxiliary level, and at every retained finite auxiliary level for
-which these hypotheses hold, reciprocity induces a canonical isomorphism
+**Theorem 6.2 (conditional finite-level one-prime reduced $R=T$; compatibility alias).** Under
+the six applicable inputs in Section 6.1, Book 175, Theorem 4.2 gives
 
 $$
-\boxed{
-\bigl(R^{\mathrm{nm}}\bigr)_{\mathrm{red}}
-\xrightarrow{\sim}\mathbb T^{\mathrm{nm}}.
-}
+\boxed{(R^{\rm nm})_{\rm red}\xrightarrow{\sim}\mathbb T^{\rm nm}.}
 \tag{6.4}
 $$
 
-In the scalar family this gives both
+The finite Hecke order is reduced because it is $\mathcal O$-torsion-free with semisimple reduced
+generic fiber. No reducedness of an abstract patched acting image is inferred.
 
-$$
-\bigl(R^{\mathrm{sp},1}\bigr)_{\mathrm{red}}
-\xrightarrow{\sim}\mathbb T^{\mathrm{sp},1}
-\quad\text{and}\quad
-\bigl(R_{\Lambda_v}^{\mathrm{sp},2}\bigr)_{\mathrm{red}}
-\xrightarrow{\sim}\mathbb T_{\Lambda_v}^{\mathrm{sp},2}.
-\tag{6.5}
-$$
-
-**Proof strategy.** The type theorem supplies full topological support, while reciprocity
-supplies the faithful reduced image. Lemma 6.1 then identifies the possible kernel exactly,
-rather than assuming it absent.
-
-**Proof.** On the direct sum of the primary and companion finite carriers, the kernel of
-(6.1) is the source annihilator because the target is its faithful image. Hypothesis
-$({\rm SUP}_v)$ gives (6.2) at each retained finite level. The finite target is reduced by
-the torsion-free semisimple-generic embedding above. Lemma 6.1 proves (6.4), hence (6.5).
-$\square$
-
-At patched level, Book 174 still gives
-
-$$
-\operatorname{Ann}_{R_\infty}H^*(C_\infty)
-\subseteq\sqrt{(0)}.
-\tag{6.5a}
-$$
-
-Let $\mathbb T_\infty$ be the actual image of $R_\infty$ on the patched carrier. If
-$\mathbb T_\infty$ is independently known to be reduced, Lemma 6.1 gives
-$(R_\infty)_{\rm red}\simeq\mathbb T_\infty$. If instead $R_\infty$ is independently known
-to be reduced, (6.5a) makes the action faithful and gives the full equality
-$R_\infty\simeq\mathbb T_\infty$. No preceding source proves either reducedness statement
-for this line-special patched problem.
-
-**Corollary 6.3 (full finite-level one-prime equality criterion).** Under the scalar
-finite-level hypotheses of Theorem 6.2, the following are equivalent:
-
-1. $R^{\mathrm{sp},1}$ is reduced;
-2. $R^{\mathrm{sp},1}\xrightarrow{\sim}\mathbb T^{\mathrm{sp},1}$;
-3. $R_{\Lambda_v}^{\mathrm{sp},2}\xrightarrow{\sim}\mathbb T_{\Lambda_v}^{\mathrm{sp},2}$.
-
-**Proof.** The equivalence of 1 and 2 is (6.5), since the target is reduced. Equations
-(5.4) and (5.6) identify the map in 3 with the map in 2 tensored with $\Lambda_v$.
-The group algebra is finite free and faithfully flat over $\mathcal O$, so the tensor map is
-injective exactly when the conductor-one map is injective. $\square$
-
-The local chart $R_0[[m]]$ can be reduced while its global quotient is nonreduced.
-Equidimensionality, Cohen--Macaulayness, and a reduced Hecke image do not rule out a nilpotent
-thickening in the source. No theorem in the declared source chain proves this global
-reducedness. Thus (6.4)--(6.5), not an unconditional full equality, are the source-closed
-finite-level conclusions. The patched alternatives are exactly those stated after (6.5a).
-No congruence length or cotangent determinant is used to kill either kernel.
+**Corollary 6.3 (full equality criterion; compatibility alias).** Book 175, Corollary 4.3 says
+that the finite-level comparison is a full isomorphism exactly when the selected global source is
+reduced. Local-chart reducedness and minimal $R=T$ do not imply that condition.
 
 ### 6.4 Descent to finite level and fixed characters
 
-Book 174 proves full support again at each retained finite level. Theorem 6.2 can therefore
-be applied directly after auxiliary augmentation. This avoids the generally unsafe
-assumption that taking a reduced quotient commutes with quotienting by an augmentation ideal.
-Projectivity of the one-prime new module shows that the carrier has no higher coefficient-base
-Tor; exactness of the acting image remains the separate marked hypothesis in Section 6.1.
-
-In the scalar-twist case let
-$\chi:\Delta_v\to\mathcal O_\chi^\times$ be a character valued in a finite extension DVR.
-The map $\Lambda_v\to\mathcal O_\chi$ is usually not flat, so (6.6) is not obtained by
-blindly tensoring (6.5). Strict twisting instead gives
-
-$$
-R^{\mathrm{sp},2}_\chi
-\simeq R^{\mathrm{sp},1}\widehat\otimes_{\mathcal O}\mathcal O_\chi,
-\qquad
-\mathbb T^{\mathrm{sp},2}_\chi
-\simeq\mathbb T^{\mathrm{sp},1}\otimes_{\mathcal O}\mathcal O_\chi.
-\tag{6.5b}
-$$
-
-Let $K$ be the kernel of the conductor-one comparison. By Theorem 6.2, $K$ is the
-nilradical, hence is a nilpotent ideal because the source is noetherian. The extension
-$\mathcal O_\chi/\mathcal O$ is finite free, so the kernel after the base change (6.5b) is
-$K\otimes_{\mathcal O}\mathcal O_\chi$ and remains nilpotent. The target in (6.5b) is
-$\mathcal O_\chi$-torsion-free with reduced generic fiber: in characteristic zero the tensor
-of the finite separable packet algebras is again a product of finite separable algebras.
-Thus the target is reduced. Its kernel contains every source nilpotent and, being itself
-nilpotent, is contained in the source nilradical. Therefore
-
-$$
-\bigl(R^{\mathrm{sp},2}_\chi\bigr)_{\mathrm{red}}
-\xrightarrow{\sim}
-\mathbb T^{\mathrm{sp},2}_\chi.
-\tag{6.6}
-$$
-
-For $\chi\ne1$, a point with nonzero monodromy has conductor two; for $\chi=1$, such a point
-has conductor one. The determinant specializes to $\delta^{(1)}\chi^2$ in both deformation
-and automorphic problems. If the conductor-one source is reduced, Corollary 6.3 upgrades
-(6.6) and all of its character fibers to full equalities.
+Book 175, Chapter 5 proves the conditional patched criterion and exact augmentation boundary.
+Its Chapter 6 treats scalar and vexing fibers without commuting reduction through a nonflat
+character quotient. Those conclusions are imported with their source-reducedness limitations.
 
 ## 7. The modularity-lifting conclusion
 
 ### 7.1 The one-prime theorem
 
-We now state the arithmetic theorem supplied by the selected conductor-two scalar family. It
-does not require the global deformation ring to be reduced.
-
-**Theorem 7.1 (conditional one-prime nonminimal modularity lifting).** Let the residual,
-coefficient-prime, unchanged local, and automorphic data satisfy Chapter 3. Let
-$v\nmid\ell$ satisfy $q_v\equiv1\pmod\ell$, and choose an actual global quotient
-$\Delta_v$, the enhanced line and $W_v$-sign, and the scalar-twist determinant (3.3). Assume
-$({\rm AUT}_v)$, $({\rm TYPE}_v)$, $({\rm SUP}_v)$, $({\rm REC}_v)$, and
-$({\rm RAY}_v)$, as defined in Section 6.1, and also $({\rm AUG}_Q)$ if the finite problem is
-obtained by auxiliary descent.
-
-Let $\mathcal O'/\mathcal O$ be finite and let
-
-$$
-\rho:G_F\longrightarrow\operatorname{GL}_2(\mathcal O')
-\tag{7.0}
-$$
-
-be a characteristic-zero point of the exact represented deformation problem on a retained
-nontrivial character fiber. Assume that $\rho$ has nonzero rank-one monodromy at $v$. Then
-$\rho$ is attached to a cuspidal
-parallel-weight-two automorphic representation with the same determinant, the integral
-finite-flat condition above $\ell$, every unchanged named local component, and the selected
-line, sign, scalar character, and special component at $v$. Its conductor exponent at $v$ is
-two.
-
-**Proof strategy.** A point of a deformation ring over a domain kills the nilradical.
-The reduced comparison therefore places the point on the faithful Hecke order; the type
-carrier and the order-valued Galois representation then recover the exact automorphic packet.
-
-**Proof.** Universality gives
-$x_\rho:R_\chi^{\mathrm{sp},2}\to\mathcal O'$. Since $\mathcal O'$ is a domain,
-$x_\rho$ factors through the reduced quotient. Equation (6.6) identifies that quotient with
-$\mathbb T_\chi^{\mathrm{sp},2}$. The resulting Hecke character occurs in the actual
-primary--companion carrier because this order is its faithful image. The type construction
-gives the selected local packet, while Book 170's Hecke-valued representation and the
-universal property identify its Galois representation with $\rho$. Formula (2.6), the
-nontrivial conductor-one scalar character, and the assumed nonzero monodromy give conductor
-exponent two. $\square$
-
-For the trivial character, the same proof gives a conductor-one line-special modularity
-statement when monodromy is nonzero. For a generic unramified-to-special change or a
-$q_v\equiv-1$ full block, the formal reduced-image argument remains valid if all the named
-type, support, augmentation, and reciprocity hypotheses of Section 6.1 have been independently
-proved for that exact problem. Books 139 and 174 do not turn those other regimes into the
-selected conductor-two scalar theorem.
+**Theorem 7.1 (conditional one-prime nonminimal modularity lifting; compatibility alias).** This
+is Book 175, Theorem 7.1. Under the exact Section 6.1 hypotheses, every characteristic-zero point
+of the represented one-prime problem is attached to a cuspidal parallel-weight-two automorphic
+representation with the same determinant, coefficient-prime finite-flat condition, unchanged
+local components, and selected line, sign, scalar character, and special component. At a
+nontrivial scalar-character fiber with nonzero monodromy, the conductor exponent is two.
 
 ### 7.2 Recovery of an automorphic representation
 
-The factorization used in the proof is
-
-$$
-R_\chi^{\mathrm{sp},2}
-\longrightarrow
-\bigl(R_\chi^{\mathrm{sp},2}\bigr)_{\mathrm{red}}
-\xrightarrow{\sim}\mathbb T_\chi^{\mathrm{sp},2}
-\longrightarrow\mathcal O'.
-\tag{7.0a}
-$$
-
-After inverting $\varpi$, the last character selects a characteristic-zero factor of the
-finite reduced Hecke algebra and hence an eigenpacket in the actual primary or companion
-carrier.
-
-At every good place,
-
-$$
-\operatorname{charpol}(\rho(\Phi_w);X)
-=X^2-x(T_w)X+q_wx(S_w).
-\tag{7.1}
-$$
-
-The same polynomial belongs to the Galois representation attached to the selected
-parallel-weight-two packet. Frobenius density and Brauer--Nesbitt identify the
-characteristic-zero representations. To identify their integral lattices, scale an
-intertwiner so that it maps one stable $\mathcal O'$-lattice into the other but not into its
-$\varpi'$-multiple. Its reduction has nonzero image. Residual absolute irreducibility makes
-that image the whole residual module, and Nakayama's lemma makes the lattice map an
-isomorphism.
-
-The bad-place conclusions do not follow from (7.1). They follow because the map (3.5) was
-defined only after the Hecke-valued representation had been shown to factor through every
-represented local condition on all Artinian quotients. At places above $\ell$, this is the
-integral finite-flat condition, not merely a statement about rational Hodge--Tate weights.
+A point over a DVR kills the nilradical and therefore factors through (6.4). The actual faithful
+carrier and Book 170's order-valued representation recover the eigenpacket and its Galois
+representation. Bad-place conclusions come from prior integral local factorization, not from
+good Frobenius traces.
 
 ### 7.3 Coefficient extension
 
-Types, residual roots, and tame character values may require a finite extension
-$\mathcal O'/\mathcal O$. Every represented local problem used here is required to commute
-with that extension after the chosen residual factor has been selected. Primary and companion
-lattices, pairings, complexes, and faithful orders base-change as well.
-
-An isomorphism whose ordinary scalar extension has been proved descends by faithful flatness.
-For the reduced comparison, it is safer to apply Lemma 6.1 directly to the
-coefficient-extended represented problem: support and the torsion-free generic embedding both
-base-change, whereas formation of a reduced quotient is not silently commuted with every
-ramified base change. Fitting ideals extend. Raw uniformizer-normalized lengths scale by the
-ramification index and must not be reported as unchanged numbers.
-
-Coefficient extension does not change $F$, $q_v$, the local conductor, or the congruence in
-Section 2.4. In particular, enlarging coefficients cannot create a nontrivial $\ell$-power
-character of $k_v^\times$ when $q_v\not\equiv1\pmod\ell$.
+Book 175 retains coefficient extension only after selecting the residual factor and base-changing
+every represented local problem, type lattice, pairing, complex, and faithful order. Raw
+uniformizer lengths scale with ramification.
 
 ### 7.4 Solvable base change and descent
 
-The class-field-theoretic reduction used in the FLT strategy chooses a finite solvable Galois
-extension with prescribed finite Galois completions at finitely many places and with
-prescribed linear disjointness. This construction can simplify local conditions and preserve
-residual image, but it does not supply automorphy or any Ihara statement.
-
-Before applying Theorem 7.1 over such an extension $L/F$, one must recheck cyclotomic
-absolute irreducibility, the coefficient-prime unramified and finite-flat conditions, the
-exact represented local components, stabilizer orders, the effective global ray quotient,
-and every instance of the hypotheses in Section 6.1 over $L$. If a local residue degree is
-$f$, the scalar congruence is tested using $q_v^f$, not the original cardinality.
-
-The restricted problem must also still have exactly one active fixed nonminimal place for
-Theorem 7.1. If several places of $L$ above a base place acquire active conditions, they are a
-finite-set problem: all but one must be placed in genuinely verified spectator conditions, an
-ordered chain must be proved, or the simultaneous hypotheses of Theorem 9.1 must be supplied.
-Solvable base change does not turn those several places into a single edge.
-
-Automorphy over $L$ does not descend merely from Galois invariance. Book 109 applies through a
-prime-cyclic tower only when the restricted Galois representation stays irreducible, cyclic
-base change and its image criterion apply at every step, strong multiplicity one and Galois
-attachment are compatible, the full local parameters have admissible antecedents, and the
-representation already defined over the lower field selects the quotient-character
-correction. Under those hypotheses, recursive cyclic descent returns an automorphic
-representation over $F$ with the required local data.
-
-Thus the Skinner--Wiles class-field-theoretic construction supplies a controlled solvable
-field; the one-prime theorem supplies automorphy over that field; and solvable descent returns
-to the base only after its independent hypotheses have been verified.
+Book 175, Section 7.3 imports solvable descent only after irreducibility, local antecedents,
+image criteria, and cyclic descent are checked at every step. Splitting one base place into
+several active places creates the finite-set problem below.
 
 ### 7.5 Exact exceptional boundaries
 
-The theorem begins at $\ell=7$ because that is the uniform residual-image range of the
-declared Taylor--Wiles package. It makes no assertion at five from absolute irreducibility
-alone. At two, sign idempotents and the fixed-determinant tangent complex change; at three,
-the available uniform image and type arguments also require replacement.
-
-An Eisenstein or reducible residual localization is excluded. In that setting the tree can
-have degree-zero or character kernels, and traces do not determine extension classes. A
-primitive wild type is excluded because the integral primary--companion and incidence models
-used here have not been constructed for it.
-
-At $q_v\equiv1$, root collision is handled only by the represented enhanced line and type
-system. At $q_v\equiv-1$, the full matrix and both extension orientations are retained. A
-single signed congruence factor is not asserted. If the selected source is not reduced, full
-support identifies the annihilator with its nilradical; Theorem 6.2 still proves the reduced
-comparison and Theorem 7.1 still proves characteristic-zero modularity, but full $R=T$ is not
-asserted.
+The one-prime theorem remains conditional in the scalar line-special range, starts uniformly at
+$\ell\ge7$, excludes Eisenstein and primitive-wild localizations, and proves only reduced
+finite-level $R=T$ unless global source reducedness is independently known. These are source
+boundaries, not new hypotheses invented here.
 
 ## 8. Two places and the first mixed obstruction
 
@@ -1551,7 +998,7 @@ $$
 $$
 
 Within Books 138--141, 151, 163, and 170--176, Books 141, 151, and 171--172 enter transitively through the type-support
-and one-prime patching packages. Book 163 is a downstream arithmetic synthesis, not a proof
+and one-prime patching packages. Book 164 is a downstream arithmetic synthesis, not a proof
 source. The mixed reduction (8.3)--(8.10) is proved here; its missing vanishing, product
 residue, and joint support are not imported from a later consumer.
 

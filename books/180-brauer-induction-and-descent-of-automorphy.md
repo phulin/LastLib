@@ -1909,7 +1909,7 @@ interfaces, but only the compatible packet-system output of Book 168 is a direct
 conditional arithmetic template. Books 128--129 become relevant only when a later application
 asserts bad-place or integral local properties.
 
-Books 154--156 and 178--179 are not prerequisites. They construct field packages, moduli data, residual
+Books 155--157 and 178--179 are not prerequisites. They construct field packages, moduli data, residual
 potential automorphy, and compatible-system organization used elsewhere in the FLT chain. In
 particular, ordinary or Galois-refined approximation does not prove the automorphic selector
 hypotheses of Section 8.1.

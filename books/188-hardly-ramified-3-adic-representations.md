@@ -422,754 +422,172 @@ nonzero, but a particular exponent-three subquotient is allowed to have trivial 
 
 ## 3. Finite-flat devissage and torsion fields
 
+Book 161 owns the Schoof category and its classification. Chapters 3--7 verify that the supplied
+SP coefficient tower satisfies that theorem's hypotheses and then import its conclusions. They
+do not repeat the root-discriminant, class-field, Ext, or filtration proofs.
+
 ### 3.1 The modeled levels
 
-Put $R=\mathbf Z[1/2]$. Each $\mathcal G_n/R$ is already supplied; this book does not glue it.
-The relevant exact operations are performed inside these supplied middle objects.
-
-If $W'\subset T_n$ is stable, its saturated schematic closure in $\mathcal G_n$ is finite
-locally free. The represented quotient is finite locally free as well. Coefficient endomorphisms
-preserving $W'$ preserve its closure. Thus a composition series of the finite generic module can
-be realized as a composition series of finite-flat group schemes.
-
-The direction is important. We start with a finite-flat middle object and take its subobjects and
-quotients. We never infer that an arbitrary generic extension is finite flat merely because its
-two endpoints possess models.
-
-At every odd $q\ne3$, a finite locally free group of $3$-power order over $\mathbf Z_q$ is
-finite etale. Hence every generic subquotient is unramified at $q$. At $3$, the closure retains
-an actual finite-flat model over $\mathbf Z_3$. At $2$, Section 2.4 controls the generic inertia.
-
-### 3.2 Simple factors have exponent three
-
-Let $S$ be a nonzero simple factor occurring in a composition series of some $\mathcal G_n$.
-The generic group $S(\overline{\mathbf Q})$ is a nonzero finite abelian $3$-group. Its subgroup
-killed by $3$ is nonzero. Saturated closure gives a nonzero subobject of $S$, so simplicity makes
-it all of $S$. Therefore
+For every $n$, the supplied $\mathcal G_n/\mathbf Z[1/2]$ is finite locally free of $3$-power
+order and has generic module $T_n$. It is unramified at every odd prime other than $3$; its marked
+model at $3$ supplies the required finite-flat local datum. Section 2.3 shows that tame inertia
+at $2$ has odd $3$-power image. Hence
 
 $$
-[3]_S=0.
+\boxed{\mathcal G_n\in\mathcal S}
 \tag{3.1}
 $$
 
-The generic points of $S$ form an irreducible finite-dimensional $\mathbf F_3$-representation.
-By Section 2.4 its inertia at $2$ is trivial or cyclic of order three. This reduction to exponent
-three is the legitimate fixed-base return in Fontaine's argument.
+for the Schoof category $\mathcal S$ of Book 161, Section 1.4. The $A_n$-action is part of the
+marked model, the reduction maps are coefficient-linear, and $T_n$ is free of rank two over
+$A_n$. This is the SP-specific tower verification needed before the classification may be cited.
+
+### 3.2 Simple factors have exponent three
+
+Book 161, Theorem 6.2 says that the simple objects of $\mathcal S$ are
+$C=\underline{\mathbf Z/3\mathbf Z}$ and $M=\mu_3$. Thus every composition factor is killed by
+$3$ and Section 2.4 supplies its exact dyadic inertia boundary. We do not apply a fixed-exponent
+discriminant bound to the full fields $\mathbf Q(T_n)$.
 
 ### 3.3 The field cut out by an exponent-three factor
 
-Let $W$ be any modeled exponent-three subquotient and define
-
-$$
-L=\mathbf Q(W)
-=\overline{\mathbf Q}^{\ker(G_{\mathbf Q}\to\operatorname{Aut}_{\mathbf F_3}(W))}.
-\tag{3.2}
-$$
-
-Then $L/\mathbf Q$ is finite Galois, and
-
-$$
-\operatorname{Gal}(L/\mathbf Q)
-\simeq\operatorname{im}(G_{\mathbf Q}\mid W).
-\tag{3.3}
-$$
-
-It is unramified outside $\{2,3\}$. Its local representation at $3$ has an actual finite-flat
-model over $\mathbf Z_3$. At $2$, inertia has order $1$ or $3$. These are all the inputs of the
-two-prime field bound in Books 158--159.
-
-The same statement applies to a finite direct sum of modeled exponent-three subquotients. The
-product of their models is finite flat at $3$. Since tame inertia is procyclic and every summand
-has exponent-three image, the image on the direct sum still has order at most three. Therefore a
-finite compositum of their cutout fields pays the dyadic cost only once.
+The field and local-model analysis of such a factor is Book 161, Chapters 4--6. It combines the
+finite-flat bound at $3$, the trivial-or-cubic tame inertia alternative at $2$, and the certified
+global degree cutoff. No independent torsion-field classification is performed here.
 
 ### 3.4 Why the full tower is different
 
-If
-
-$$
-e_{\mathcal O}=v_\varpi(3),
-\qquad
-m(n)=\left\lceil\frac n{e_{\mathcal O}}\right\rceil,
-\tag{3.4}
-$$
-
-then $T_n$ is killed by $3^{m(n)}$, not generally by $3^n$. The finite-flat root-discriminant
-bound at level $n$ contains the factor
-
-$$
-3^{m(n)+1/2},
-\tag{3.5}
-$$
-
-before the dyadic contribution. It grows with $n$.
-
-This growth is necessary. The cyclotomic quotients $\mu_{3^n}$ are finite flat at every level,
-while the root discriminants of $\mathbf Q(\zeta_{3^n})$ grow. Uniform bounds on successive
-matrix-kernel orders do not control ramification depth. Consequently the degree-$20$ cutoff below
-is applied only to modeled modules killed by $3$ and their finite products, never to the full
-$\varpi^n$-torsion field.
+The inertia image on $T_n$ can have order growing with $n$, and cyclotomic layers show that no
+uniform root-discriminant ceiling exists for the full tower. Book 161 works with composition
+factors and finite extensions instead; this book follows that fixed-exponent mechanism exactly.
 
 ## 4. The exact root-discriminant ceiling
 
 ### 4.1 The contribution at three
 
-Let $L_3/\mathbf Q_3$ be the local field cut out by $W$. Since $W$ is killed by $3$ and has an
-actual finite-flat model over $\mathbf Z_3$, the finite-flat ramification theorem of Book 158
-gives
-
-$$
-G_{\mathbf Q_3}^u\text{ acts trivially on }W
-\qquad(u>1/2).
-\tag{4.1}
-$$
-
-Let $e_3$ be the local ramification index and $d_3$ the different exponent. The upper-numbering
-form of Hilbert's formula gives
-
-$$
-\frac{d_3}{e_3}
-=1-\frac1{e_3}
-+\int_0^\infty
-\left(1-\frac1{|G^u|}\right)du.
-\tag{4.2}
-$$
-
-The integral is supported in an interval of length at most $1/2$ and its integrand is at most
-one. Therefore
-
-$$
-\boxed{\frac{d_3}{e_3}<1+\frac12=\frac32.}
-\tag{4.3}
-$$
-
-The strict inequality comes from $1-1/e_3<1$. It does not assert that a break at $1/2$ is
-forbidden; an endpoint has measure zero in (4.2).
+For an exponent-three subquotient, the finite-flat different bound is imported through Book 161,
+Chapter 4 from Books 56 and 159 with the unramified base $\mathbf Q_3$.
 
 ### 4.2 The contribution at two
 
-If the inertia image at $2$ is trivial, then $d_2/e_2=0$. If it has order three, the extension
-is tame and
-
-$$
-e_2=3,
-\qquad
-d_2=e_2-1=2,
-\qquad
-\boxed{\frac{d_2}{e_2}=\frac23.}
-\tag{4.4}
-$$
-
-An unramified residue extension changes neither $e_2$ nor $d_2/e_2$. The exponent is not
-multiplied by the dimension of $W$ or by the number of primes above $2$. After taking the
-absolute degree root, the local normalized ratio is exactly the exponent of $2$.
+The only possibilities are trivial or cyclic cubic tame inertia by (2.14). Book 161 computes the
+corresponding dyadic contribution without upgrading the trivial case to the cubic case.
 
 ### 4.3 The global inequality and its numerical certificate
 
-Because $L/\mathbf Q$ is Galois and ramified only at $2$ and $3$,
-
-$$
-\operatorname{rd}(L)
-=2^{d_2/e_2}3^{d_3/e_3}.
-\tag{4.5}
-$$
-
-Equations (4.3)--(4.4) give
-
-$$
-\boxed{
-\operatorname{rd}(L)<3^{3/2}2^{2/3}
-=8.248377821991616\ldots .
-}
-\tag{4.6}
-$$
-
-When dyadic inertia is trivial, the factor $2^{2/3}$ is omitted; using (4.6) remains a valid
-uniform upper bound.
-
-Book 159 certifies the matching unconditional Odlyzko--Poitou inequality. With support parameter
-$6$, it proves for every number field of degree $d$
-
-$$
-\log\operatorname{rd}(L)>
-\gamma+\log(8\pi)-\frac{12}{d}-1.10356.
-\tag{4.7}
-$$
-
-At $d=21$, the right side satisfies
-
-$$
-\gamma+\log(8\pi)-\frac{12}{21}-1.10356
->2.126398521002197,
-\tag{4.8}
-$$
-
-whereas
-
-$$
-\log(3^{3/2}2^{2/3})
-<2.110016553375462.
-\tag{4.9}
-$$
-
-The lower bound in (4.7) increases with $d$. Hence (4.6) and (4.7) are incompatible for every
-$d\ge21$.
+The certified root-discriminant inequalities and degree cutoffs are Book 161, Chapter 4. Their
+analytic certificate belongs to Books 7 and 159 and is not reproduced here.
 
 ### 4.4 The finite-image consequence
 
-We have proved the exact finite-image statement used below.
+The consequence used by the category proof is exactly Book 161's bounded residual torsion-field
+statement. It applies to killed-by-three factors, not to $\mathbf Q(T_n)$ for arbitrary $n$.
 
-**Proposition 4.1 (two-prime exponent-three cutoff).** Every modeled exponent-three subquotient
-$W$ of the SP tower satisfies
-
-$$
-\boxed{
-[\mathbf Q(W):\mathbf Q]
-=|\operatorname{im}(G_{\mathbf Q}\mid W)|
-\le20.
-}
-\tag{4.10}
-$$
-
-The same degree bound holds for every finite compositum of fields cut out by a finite collection
-of such subquotients.
-
-The proposition does not say that the field is abelian or that the representation splits. The
-field
-
-$$
-\mathbf Q(\zeta_3,\sqrt[3]{2})
-\tag{4.11}
-$$
-
-has degree six and satisfies the same local restrictions. It is the genuine nonsplit Kummer
-example that the later extension calculation must retain.
+**Proposition 4.1 (two-prime exponent-three cutoff; compatibility alias).** This is Book 161,
+Proposition 4.1 specialized to the trivial-or-cubic dyadic row: every modeled exponent-three
+subquotient has cutout-field degree at most twenty.
 
 ## 5. The class-field calculation
 
 ### 5.1 Abelian subfields over the rationals
 
-Let $L=\mathbf Q(W)$ as above and let $A/\mathbf Q$ be an abelian subextension. At $2$, tame
-inertia in an abelian quotient is trivial. Indeed, if $\tau$ is a tame generator and $F_2$ is
-arithmetic Frobenius, then
-
-$$
-F_2\tau F_2^{-1}=\tau^2.
-\tag{5.1}
-$$
-
-In an abelian quotient (5.1) gives $\tau=\tau^2$, hence $\tau=1$.
-
-At $3$, upper breaks pass to quotients, so every positive upper break of $A/\mathbf Q$ is at
-most $1/2$. Hasse--Arf says that the breaks of an abelian extension are integers. There is
-therefore no positive break. The remaining tame inertia has order dividing
-$|\mathbf F_3^\times|=2$.
-
-Let $I_3$ be the inertia subgroup in $\operatorname{Gal}(A/\mathbf Q)$. Its fixed field is
-unramified at every finite prime: there is no ramification at $2$, all ramification at $3$ has
-been removed, and no other prime ramifies. Minkowski's discriminant theorem rules out a
-nontrivial number field of absolute discriminant one. Thus the fixed field is $\mathbf Q$, and
-
-$$
-[A:\mathbf Q]=|I_3|\le2.
-\tag{5.2}
-$$
-
-The only quadratic field whose fundamental discriminant is supported at $3$ is
-
-$$
-K_0=\mathbf Q(\zeta_3)=\mathbf Q(\sqrt{-3}).
-\tag{5.3}
-$$
-
-Consequently every abelian subfield of $L$ is $\mathbf Q$ or $K_0$.
+The exclusion of unwanted abelian subfields is imported from Book 161, Chapter 5.
 
 ### 5.2 The quadratic field and its ray groups
 
-The ring of integers of $K_0$ is $\mathbf Z[\zeta_3]$, and its discriminant is $-3$. Its
-Minkowski class bound is
-
-$$
-\frac{2\sqrt3}{\pi}<2,
-\tag{5.4}
-$$
-
-so its class number is one.
-
-Let
-
-$$
-\lambda=1-\zeta_3
-\tag{5.5}
-$$
-
-be the unique prime above $3$. For every $m\ge1$,
-
-$$
-|(\mathcal O_{K_0}/\lambda^m)^\times|
-=2\cdot3^{m-1}.
-\tag{5.6}
-$$
-
-The global unit $-1$ maps to the nontrivial element of
-$(\mathcal O_{K_0}/\lambda)^\times\simeq\mathbf F_3^\times$. Since the ordinary class group is
-trivial, the ray exact sequence
-
-$$
-\mathcal O_{K_0}^\times
-\longrightarrow(\mathcal O_{K_0}/\lambda^m)^\times
-\longrightarrow\operatorname{Cl}_{\lambda^m}(K_0)
-\longrightarrow\operatorname{Cl}(K_0)
-\longrightarrow1
-\tag{5.7}
-$$
-
-shows that every $\lambda^m$-ray class group is a $3$-group. In particular, there is no
-nontrivial prime-to-three abelian extension of $K_0$ ramified only at $\lambda$.
-
-At the prime above $2$, the residue field is $\mathbf F_4$, because $2$ is inert in $K_0$.
-Tame abelian inertia there has order dividing $4-1=3$. Hence a prime-to-three abelian quotient
-of an extension of $K_0$ satisfying our local conditions is unramified above $2$. Combining this
-with (5.7) excludes every nontrivial prime-to-three abelian quotient.
+Book 161 performs the required exact ray calculation, including the local-unit quotient and the
+distinction between ramification at $2$ and at $3$.
 
 ### 5.3 Solvability and the commutator
 
-Let
-
-$$
-G=\operatorname{Gal}(L/\mathbf Q).
-\tag{5.8}
-$$
-
-By Proposition 4.1, $|G|\le20$. Every group of order at most twenty is solvable. For
-completeness, an elementary Sylow induction proves this. Prime-power groups are solvable. At the
-remaining possible orders $6,10,14,15,18,$ and $20$, a largest Sylow subgroup is normal except
-for the possible order-$12$ case. For order $12$, either a Sylow $3$-subgroup is normal or
-conjugation on the four Sylow $3$-subgroups maps the group nontrivially into the solvable group
-$S_4$; the kernel has smaller order and is solvable by induction. Thus $G$ is solvable.
-
-If $G$ is nontrivial, its abelianization is nontrivial: a nontrivial solvable perfect group would
-have a constant derived series and could not reach the identity. Section 5.1 therefore gives
-
-$$
-G^{\mathrm{ab}}\simeq C_2.
-\tag{5.9}
-$$
-
-Put
-
-$$
-H=[G,G].
-\tag{5.10}
-$$
-
-Then $H=\operatorname{Gal}(L/K_0)$ and $|H|=|G|/2\le10$. The maximal abelian quotient of $H$
-cuts out an abelian extension of $K_0$. Section 5.2 shows that it has no prime-to-three quotient.
-Thus $H^{\mathrm{ab}}$ is a $3$-group.
-
-If $H\ne1$, solvability makes $H^{\mathrm{ab}}$ nontrivial, so $3$ divides $|H|$. With
-$|H|\le10$, the possibilities relevant to a nontrivial $3$-primary abelianization are
-$3,6,$ and $9$. A group of order six is either cyclic, with abelianization $C_6$, or isomorphic
-to $S_3$, with abelianization $C_2$. Neither is possible. Hence
-
-$$
-H=1
-\quad\text{or}\quad
-H\text{ is a }3\text{-group of order }3\text{ or }9.
-\tag{5.11}
-$$
-
-Now suppose $W$ is simple. A finite $3$-group acting on a nonzero vector space in
-characteristic three has a nonzero fixed vector. One proves this by choosing a central element
-$z$ of order three, observing that
-
-$$
-(z-1)^3=z^3-1=0,
-\tag{5.12}
-$$
-
-and inducting on the group order. Since $H$ is normal, $W^H$ is $G$-stable. Simplicity gives
-$W^H=W$. The action defining $L$ is faithful, so $H=1$.
-
-It follows that the faithful image of a simple $W$ is trivial or $C_2$.
+The degree cutoff and group-theoretic commutator argument are part of the same Book 161 proof.
+No stronger solvability statement for the full coefficient tower is asserted.
 
 ### 5.4 The two simple factors
 
-Over $\mathbf F_3$, the two irreducible characters of $C_2$ are the trivial character and the
-mod-$3$ cyclotomic character $\bar\chi_3$. Therefore a simple generic module is
-one-dimensional and is isomorphic to
-
-$$
-\mathbf F_3
-\quad\text{or}\quad
-\mathbf F_3(1).
-\tag{5.13}
-$$
-
-The order-three finite-flat classification over the unramified DVR $\mathbf Z_3$ identifies
-their integral models. The trivial generic character has the etale model
-
-$$
-C=\underline{\mathbf Z/3\mathbf Z},
-\tag{5.14}
-$$
-
-and Cartier duality identifies the cyclotomic model as
-
-$$
-M=\mu_3.
-\tag{5.15}
-$$
-
-They are nonisomorphic: their special fibers at $3$ are respectively etale and connected. We
-have proved, for every object arising in the SP tower, that its simple factors are exactly $C$
-and $M$.
+**Imported theorem 5.1.** Book 161, Theorem 6.2 identifies the only simple objects as $C$ and
+$M$, exchanged by Cartier duality. This conclusion includes the global integral-model
+identification, not merely the two generic characters.
 
 ## 6. Extensions and the ordered filtration
 
 ### 6.1 The extension convention
 
-Write $\operatorname{Ext}^1(B,A)$ for extensions
-
-$$
-0\longrightarrow A\longrightarrow E\longrightarrow B\longrightarrow0
-\tag{6.1}
-$$
-
-inside the finite-flat category over $R=\mathbf Z[1/2]$ with the local conditions inherited
-from the SP tower. The order of the arguments matters. The Kummer extension has multiplicative
-subgroup and constant quotient, so it lies in $\operatorname{Ext}^1(C,M)$. The reverse group
-$\operatorname{Ext}^1(M,C)$ is the one that must vanish.
+We retain Book 161's convention that $\operatorname{Ext}^1(B,A)$ classifies
+$0\to A\to E\to B\to0$.
 
 ### 6.2 Pure extensions
 
-Consider an extension of $C$ by $C$. Over $\mathbf Z_3$, both endpoints are finite etale, and
-the middle term is finite etale as a torsor under a finite etale group. Its generic action is
-unramified at $3$ and at every other odd prime.
-
-Any Galois action inducing the identity on the named subgroup and quotient has $3$-power image.
-A nontrivial quotient of that image would cut out a cyclic cubic extension of $\mathbf Q$
-unramified at every odd prime and at most tamely ramified at $2$. Equation (5.1) makes an abelian
-tame extension at $2$ unramified. Minkowski then excludes the field. Thus the middle generic
-group is constant.
-
-The only extension classes of the underlying cyclic group by itself are generated under Baer
-sum by
-
-$$
-0\longrightarrow C
-\xrightarrow{\ 3\ }
-\underline{\mathbf Z/9\mathbf Z}
-\longrightarrow C
-\longrightarrow0.
-\tag{6.2}
-$$
-
-Hence
-
-$$
-\operatorname{Ext}^1(C,C)\simeq\mathbf Z/3\mathbf Z.
-\tag{6.3}
-$$
-
-Cartier duality reverses exact sequences and exchanges $C$ and $M$, so
-
-$$
-\operatorname{Ext}^1(M,M)\simeq\mathbf Z/3\mathbf Z,
-\tag{6.4}
-$$
-
-generated by
-
-$$
-0\longrightarrow\mu_3
-\longrightarrow\mu_9
-\xrightarrow{(\cdot)^3}\mu_3
-\longrightarrow0.
-\tag{6.5}
-$$
-
-Inductively, an object all of whose simple factors are $C$ is constant. Dually, an object all of
-whose simple factors are $M$ is of multiplicative type.
+The constant-by-constant and multiplicative-by-multiplicative calculations are Book 161,
+Chapter 7. They allow larger constant or multiplicative blocks and do not imply semisimplicity.
 
 ### 6.3 The surviving Kummer direction
 
-Consider
-
-$$
-0\longrightarrow M\longrightarrow E\longrightarrow C\longrightarrow0.
-\tag{6.6}
-$$
-
-Multiplication by $3$ on $E$ factors through a morphism $C\to M$, which is zero on generic
-characters. Hence $E$ is killed by $3$. Pulling (6.6) back along the section
-$1\in C(R)$ gives a $\mu_3$-torsor, and conversely that torsor reconstructs the extension.
-The contracted-third-power trivialization introduces no additional choice here because
-$\mu_3(R)=\{1\}$.
-Since $\operatorname{Pic}(R)=0$, the fppf Kummer sequence gives
-
-$$
-\operatorname{Ext}^1(C,M)
-\simeq H^1(R,\mu_3)
-\simeq R^\times/R^{\times3}.
-\tag{6.7}
-$$
-
-Now
-
-$$
-R^\times=\{\pm2^m:m\in\mathbf Z\},
-\tag{6.8}
-$$
-
-and $-1$ is a cube. Thus
-
-$$
-\boxed{
-\operatorname{Ext}^1(C,M)\simeq\mathbf Z/3\mathbf Z[2].
-}
-\tag{6.9}
-$$
-
-The class of $2$ is finite flat at $3$ because $2$ is a $3$-adic unit, and it has tame cubic
-inertia at $2$. Its generic splitting field is (4.11). This is why the final integral sequence
-need not split.
+Book 161 identifies $\operatorname{Ext}^1(C,M)$ with the permitted Kummer direction generated by
+$2$. The resulting extension need not split.
 
 ### 6.4 Vanishing in the reverse direction
 
-Now consider
-
-$$
-0\longrightarrow C\longrightarrow E\longrightarrow M\longrightarrow0.
-\tag{6.10}
-$$
-
-As before, multiplication by $3$ factors through a morphism $M\to C$, which is zero. Thus $E$
-is killed by $3$.
-
-First base change to $\mathbf Z_3$. The connected--etale sequence of $E$ has connected part
-$E^0$ of rank three. Indeed the image of $E^0$ in the connected quotient $M$ cannot be trivial,
-because then the faithfully flat map $E\to M$ would factor through an etale component group.
-It is therefore surjective. Its kernel is connected and lies in the etale subgroup $C$, so the
-kernel is trivial. Hence
-
-$$
-E^0\xrightarrow{\sim}M
-\tag{6.11}
-$$
-
-and (6.10) splits over $\mathbf Z_3$.
-
-On generic fibers, (6.10) is measured by
-
-$$
-H^1(\mathbf Q,\mathbf F_3(-1))
-=H^1(\mathbf Q,\mathbf F_3(1)),
-\tag{6.12}
-$$
-
-because $\bar\chi_3^{-1}=\bar\chi_3$. Ramification outside $\{2,3\}$ and Kummer theory place
-the class in
-
-$$
-\langle[2],[3]\rangle
-\subset\mathbf Q^\times/\mathbf Q^{\times3}.
-\tag{6.13}
-$$
-
-The two classes remain independent in
-$\mathbf Q_3^\times/\mathbf Q_3^{\times3}$. Valuation separates $[3]$ from units. To see that
-$[2]$ is nonzero, replace it by $[-2]$ and suppose $-2=x^3$. Then $x\equiv1\pmod3$, so
-$x^3\equiv1\pmod9$, whereas $-2\equiv7\pmod9$. Similarly $[4]$ is nonzero because a cube
-congruent to $1$ modulo $3$ is $1$ modulo $9$, not $4$. Thus no nonzero power of $[2]$ is
-trivial.
-
-The local splitting (6.11) makes the localization of (6.13) zero, so both coefficients vanish.
-The generic extension is split. Its global Galois-equivariant section is unique because
-$\operatorname{Hom}(M,C)=0$. At $3$, the section supplied by (6.11) has this generic fiber
-(the local Hom group also vanishes), and at every other odd prime finite-etale descent extends
-the generic section uniquely. These local sections glue over the Dedekind base. Therefore
-(6.10) splits globally, and
-
-$$
-\boxed{\operatorname{Ext}^1(M,C)=0.}
-\tag{6.14}
-$$
-
-The complete table is
-
-$$
-\begin{array}{c|cc}
-\operatorname{Ext}^1(B,A)&B=C&B=M\\
-\hline
-A=C&\mathbf F_3[\underline{\mathbf Z/9}]&0\\
-A=M&\mathbf F_3[E_2]&\mathbf F_3[\mu_9].
-\end{array}
-\tag{6.15}
-$$
+Book 161 proves $\operatorname{Ext}^1(M,C)=0$ globally over $\mathbf Z[1/2]$; a local splitting
+at $3$ alone would not justify the filtration exchange.
 
 ### 6.5 Sorting a composition series
 
-Call two adjacent factors an inversion when a constant factor lies below a multiplicative
-factor. The corresponding two-step subquotient has the form
+**Imported theorem 6.1.** Book 161, Theorems 9.1--9.2 sort every object of $\mathcal S$ and give
+the functorial canonical sequence
 
 $$
-0\longrightarrow C\longrightarrow X\longrightarrow M\longrightarrow0.
-\tag{6.16}
+0\longrightarrow G^{\rm m}\longrightarrow G\longrightarrow G^{\rm c}\longrightarrow0,
+\tag{6.1}
 $$
 
-By (6.14), $X\simeq C\times M$. Replace the lower factor $C$ by the other direct factor $M$,
-take its saturated inverse image in the original object, and form the represented quotient. This
-exchanges the adjacent factors inside the finite-flat category.
-
-Every exchange lowers the finite inversion number. Repetition therefore terminates and gives an
-exact sequence
-
-$$
-0\longrightarrow G^{\mathrm m}
-\longrightarrow G
-\longrightarrow G^{\mathrm c}
-\longrightarrow0,
-\tag{6.17}
-$$
-
-where $G^{\mathrm m}$ is of multiplicative type and $G^{\mathrm c}$ is constant.
-
-The subgroup is canonical. Any morphism from a multiplicative-type object to a constant object
-is zero: over $\mathbf Z_3$ its source has connected special fiber and its target is etale, and
-generic-fiber faithfulness globalizes the vanishing. Hence every multiplicative subgroup of $G$
-lies in $G^{\mathrm m}$. It is the unique maximal multiplicative subgroup, so (6.17) is functorial
-for every morphism and every coefficient endomorphism.
+with multiplicative subgroup and constant quotient. The sequence is not claimed to split.
 
 ## 7. The finite-coefficient identity
 
 ### 7.1 The canonical augmentation submodule
 
-Fix $n$ and write
+For the $A_n$-module $T_n$, put
 
 $$
-A=A_n,
-\qquad
-W=T_n,
-\qquad
-\rho_n:G_{\mathbf Q}\to\operatorname{GL}_A(W).
+N_n=\sum_{g\in G_{\mathbf Q}}(\rho_n(g)-1)T_n.
 \tag{7.1}
 $$
 
-The object $\mathcal G_n$ carries the full $A$-action, and $W$ is free of rank two over $A$.
-The determinant is
-
-$$
-\det\rho_n=\chi_3\pmod{\varpi^n}.
-\tag{7.2}
-$$
-
-Apply (6.17) to $\mathcal G_n$ and define
-
-$$
-N_n=\sum_{g\in G_{\mathbf Q}}(\rho_n(g)-1)W.
-\tag{7.3}
-$$
-
-The sum is a finite $A$-submodule because $W$ is noetherian. The constant quotient in (6.17)
-shows that $N_n$ lies in the generic points of the multiplicative block. Galois acts trivially
-on $W/N_n$.
-
-On the geometric points of a multiplicative $3$-primary group, Galois acts by the cyclotomic
-character. This is clear on $\mu_{3^a}$ and hence on finite products. Therefore
-
-$$
-\rho_n(h)x=\chi_3(h)x
-\qquad(x\in N_n).
-\tag{7.4}
-$$
-
-Neither $N_n$ nor $W/N_n$ is asserted to be free at this isolated level.
+By (3.1), the coefficient action, and the determinant $\chi_3$, all hypotheses of Book 161,
+Section 10.1 hold. The canonical filtration makes $G_{\mathbf Q}$ trivial on $T_n/N_n$ and
+cyclotomic on $N_n$.
 
 ### 7.2 The cross relation
 
-The image of $\rho_n(g)-1$ lies in $N_n$, and (7.4) identifies the action on that image. Hence
+Book 161, equation (10.4), gives for all $g,h$
 
 $$
-\boxed{
-(\rho_n(h)-\chi_3(h))(\rho_n(g)-1)=0
-\qquad(g,h\in G_{\mathbf Q}).
-}
+(\rho_n(h)-\chi_3(h))(\rho_n(g)-1)=0.
 \tag{7.5}
 $$
 
-This relation retains extension data. Knowing only that every simple factor is $C$ or $M$ would
-give the semisimplified characters but would not imply (7.5).
+This relation controls the extension and is stronger than an equality of semisimplified
+characters.
 
 ### 7.3 Cayley--Hamilton and trace
 
-Fix $g$ and put
+**Imported theorem 7.1.** Book 161, Theorem 10.1 applies over the finite local coefficient ring
+$A_n$ and proves
 
 $$
-f=\rho_n(g),
-\qquad
-d=\det f=\chi_3(g)\in A^\times.
+\operatorname{tr}\rho_n(g)=1+\chi_3(g)
+\qquad(g\in G_{\mathbf Q}).
 \tag{7.6}
 $$
 
-Taking $h=g$ in (7.5) gives
-
-$$
-(f-d)(f-1)=0,
-\tag{7.7}
-$$
-
-or
-
-$$
-f^2-(1+d)f+d=0.
-\tag{7.8}
-$$
-
-Cayley--Hamilton on the free rank-two $A$-module $W$ gives
-
-$$
-f^2-(\operatorname{tr}f)f+d=0.
-\tag{7.9}
-$$
-
-Subtracting (7.8) from (7.9) and multiplying by $f^{-1}$ yields
-
-$$
-\boxed{
-\operatorname{tr}\rho_n(g)=1+\chi_3(g)
-\quad\text{in }A_n.
-}
-\tag{7.10}
-$$
-
-The determinant hypothesis is used exactly at (7.6). Odd-tame membership and the simple-factor
-classification alone would not identify the second scalar in the characteristic polynomial.
+The theorem requires no freeness of $N_n$ or of its quotient.
 
 ### 7.4 The residual orientation
 
-At $n=1$, the $k$-vector space $T_1$ has dimension two. The subspace $N_1$ is neither zero nor
-all of $T_1$.
-
-If $N_1=0$, the action is trivial and its determinant is $1$, contradicting
-$\bar\chi_3(c)=-1$ for complex conjugation $c$. If $N_1=T_1$, equation (7.4) makes every
-element act by the scalar $\bar\chi_3$; its determinant is then
-$\bar\chi_3^2=1$, giving the same contradiction at $c$.
-
-Thus $N_1$ is a line and
-
-$$
-0\longrightarrow k(1)
-\longrightarrow T_1
-\longrightarrow k
-\longrightarrow0.
-\tag{7.11}
-$$
-
-The sequence is oriented but can split. If it is nonsplit, its class is a scalar multiple of
-the $2$-Kummer direction from (6.9). The rational condition $N_2\ne0$ does not force that scalar
-to be nonzero for an arbitrary global lattice; the integral thickness in (2.8) can postpone the
-first nontrivial dyadic reduction.
+At level one, Book 161, Section 10.5 identifies $N_1$ as the cyclotomic line and the quotient as
+the trivial line; the extension class may be the nonsplit Kummer class of $2$. This orientation,
+not residual splitting, is what the $\mathcal O$-adic passage uses.
 
 ## 8. The integral cyclotomic line
 
@@ -1385,7 +803,7 @@ purity is a separate and indispensable compatible-family input.
 
 ### 9.4 The Frey endpoint
 
-Book 163 supplies the residual signed-SP Frey datum and states the downstream contract. Book 185
+Book 164 supplies the residual signed-SP Frey datum and states the downstream contract. Book 185
 conditionally supplies an absolutely irreducible compatible member with the rational SP record
 and pure good polynomials. Book 187 conditionally supplies the all-level tower. Once those
 antecedents exist, Theorem 1.1 gives two contradictions:
@@ -1405,34 +823,24 @@ The proof uses the following mathematical sources directly.
 
 | Source | Exact input | Use here |
 |---|---|---|
-| Books 2--3 | local Galois groups, tame return, upper numbering, Hilbert's different formula, Hasse--Arf | Sections 2, 4, and 5 |
-| Books 5--6 | local and global reciprocity, the existence theorem, and ray exact sequences | the abelian exclusions in Section 5 |
-| Book 17 | finite-etale descent over henselian odd local bases | local uniqueness and gluing of the reverse splitting |
-| Book 29 | fppf Kummer theory | the mixed extension calculation in Section 6 |
-| Books 28, 34, and 42 | saturated closure, represented quotients, finite-flat generic modules, and coefficient actions | the exact devissage in Sections 3 and 6 |
-| Book 34 | Cartier duality | the multiplicative simple factor and pure extensions |
-| Book 51 | order-three finite-flat classification over $\mathbf Z_3$ | identification of $C$ and $M$ |
-| Book 158 | the exponent-three upper-break and root-discriminant bounds | (4.1)--(4.6) |
-| Book 159 | the unconditional degree-$21$ numerical certificate | (4.7)--(4.10) |
+| Book 161, Theorems 6.2, 9.1--9.2, and 10.1 | the Schoof category, simple objects, Ext asymmetry, canonical multiplicative--constant filtration, and finite-level cross and trace identities | Chapters 3--7 and the input to the $\mathcal O$-adic passage |
 | Book 185, Theorem 9.1 | determinant, rational SP pair, cofinite common good polynomials, and purity | the rational local record and Section 9 |
 | Book 187, Theorem 10.2 | the conditional clean-support, coefficient-linear all-level tower over $\mathbf Z[1/2]$ | the sole integral input at and away from $3$ |
 
-For (5.7), the ray-group calculation is carried out in Section 5, while ray-class-field existence
-and global reciprocity are imported from Book 6. The calculation of a ray quotient alone does not
-identify an extension field; that identification uses the existence theorem and reciprocity law.
+Books 2--6, 17, 28--29, 34, 42, 51, and 159--160 enter transitively through Book 161's proved
+classification package. Book 188 does not reopen their local discriminant, ray-class, Hopf-order,
+or extension calculations.
 
-Book 163 is the Frey provenance and downstream consumer contract, not a proof input to the
+Book 164 is the Frey provenance and downstream consumer contract, not a proof input to the
 bounded representation-theoretic theorem. Books 40--41 concern descent and heights and are not
-used here. Book 160 gives a broader monograph treatment of the finite-flat category, but no
-theorem of Book 160 is needed here: the SP-specific degree-$20$ classification and trace argument
-have been proved above.
+used here. Book 161 is the actual classification source, not comparative background.
 
 The recommended direct dependency row is
 
 $$
 \boxed{
 188\mid
-2,3,5,6,17,28,29,34,42,51,158,159,185,187.
+161,185,187.
 }
 \tag{10.1}
 $$
@@ -1498,7 +906,7 @@ reverse group $\operatorname{Ext}^1(M,C)$ vanishes. Therefore the final integral
 declared split.
 
 **Coefficient action.** The $A_n$-action is retained on every finite-flat model. It is what makes
-Cayley--Hamilton a rank-two identity over $A_n$ and produces (7.10) for ramified coefficient
+Cayley--Hamilton a rank-two identity over $A_n$ and produces (7.6) for ramified coefficient
 fields as well.
 
 **Limit.** The proof does not lift a chosen residual vector. It passes the cross relation through
@@ -1507,22 +915,17 @@ rank-one $K$-span.
 
 **Good prime.** The final prime lies in Book 185's certified cofinite good set. The argument does
 not assume that $5$ is outside the exceptional set. The inequality is valid for every certified
-prime $q>1$. In particular, Book 163's illustrative downstream choice of $5$ is not imported as
+prime $q>1$. In particular, Book 164's illustrative downstream choice of $5$ is not imported as
 an unproved local certificate.
 
 ### 10.4 Conclusion
 
-The signed-special local record supplies exactly the residual ramification needed by Fontaine's
-argument. Every exponent-three subquotient has trivial or cubic tame inertia at $2$ and an actual
-finite-flat model at $3$. Its field therefore has root discriminant below
-$3^{3/2}2^{2/3}$ and degree at most twenty. Class field theory over $\mathbf Q$ and
-$\mathbf Q(\zeta_3)$ then reduces every simple factor to the constant group or $\mu_3$.
-
-The asymmetric mixed extension calculation sorts all multiplicative factors below all constant
-factors without discarding the genuine Kummer class of $2$. With coefficients retained, that
-ordered filtration gives the finite-level cross relation. Separated passage through the tower
-produces an actual saturated cyclotomic line in $T$, and hence semisimplification
-$1\oplus\chi_3$.
+The signed-special local record verifies that every supplied coefficient level lies in Book
+161's Schoof category. Book 161 then supplies the fixed-exponent discriminant and class-field
+classification, the constant and multiplicative simple objects, the asymmetric Ext calculation,
+the ordered filtration, and the finite-level cross relation. The new argument here passes those
+finite coefficient identities through the $\mathcal O$-adic tower, proves saturation, and matches
+the resulting global cyclotomic line with the signed local SP line.
 
 At any prime in the certified pure good set, the trace is simultaneously $1+q$ and bounded in
 absolute value by $2\sqrt q$, an impossibility. Thus the bounded conditional theorem of this book

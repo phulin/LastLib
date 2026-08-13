@@ -113,7 +113,7 @@ L_I=I\oplus I,
 \tag{1.1a}
 $$
 
-Unlike the constant paired orientation in Book 155, the auxiliary level source used here is the finite etale local system
+Unlike the constant paired orientation in Book 156, the auxiliary level source used here is the finite etale local system
 
 $$
 \mathscr L_{I,N}^{\natural}
@@ -156,7 +156,7 @@ $$
 \tag{1.1d}
 $$
 
-is an isometry. No separate orientation from a constant line to a Tate twist occurs. Chapter 4 proves that this functor is a smooth fine scheme and that, geometrically, it is the fixed-pairing orientation subfunctor of the principal-level scheme of Book 155. From Section 3.5 onward, $H_I^{\mathrm{ten}}\subset H_I^{\natural}$ denotes the single component containing the tensor locus. The two-prime twist $Y_I^{\mathrm{ten}}\to H_I^{\mathrm{ten}}$ additionally carries pairing-preserving isomorphisms
+is an isometry. No separate orientation from a constant line to a Tate twist occurs. Chapter 4 proves that this functor is a smooth fine scheme and that, geometrically, it is the fixed-pairing orientation subfunctor of the principal-level scheme of Book 156. From Section 3.5 onward, $H_I^{\mathrm{ten}}\subset H_I^{\natural}$ denotes the single component containing the tensor locus. The two-prime twist $Y_I^{\mathrm{ten}}\to H_I^{\mathrm{ten}}$ additionally carries pairing-preserving isomorphisms
 
 $$
 \alpha_{\mathfrak p}:V_{\mathfrak p}\xrightarrow{\sim}A[\mathfrak p],
@@ -461,7 +461,7 @@ After base change to an algebraic closure and a choice of primitive $N$th root, 
 
 **Proposition 3.2 (the tensor component).** The component $H_I^{\mathrm{ten}}$ is defined over $\mathbf Q$. Every real, good, ordinary, supersingular, and Tate tensor seed constructed in this book, with the tensor-induced corrected auxiliary level, lies on this component. For monodromy-admissible $\mathfrak p$ and $\mathfrak q$, the determinant-compatible two-prime twist over it is smooth and geometrically connected.
 
-**Proof.** The curve $\mathcal M_N^{\natural}$ and the morphism (3.12) are defined over $\mathbf Q$. If $C$ is the unique geometric component containing the connected image, then for every $\sigma\in G_{\mathbf Q}$ the component $\sigma C$ contains the same image, because (3.12) is equivariant. Components are disjoint, so $\sigma C=C$; the open-and-closed component therefore descends to $\mathbf Q$. Each tensor seed is, by construction, the image of its elliptic seed with (3.11), proving the second assertion. Over an algebraic closure the corrected auxiliary level becomes one fixed-pairing orientation of the principal level for the lattice $I\oplus I$. Book 155's simultaneous congruence theorem on that geometric component therefore gives full
+**Proof.** The curve $\mathcal M_N^{\natural}$ and the morphism (3.12) are defined over $\mathbf Q$. If $C$ is the unique geometric component containing the connected image, then for every $\sigma\in G_{\mathbf Q}$ the component $\sigma C$ contains the same image, because (3.12) is equivariant. Components are disjoint, so $\sigma C=C$; the open-and-closed component therefore descends to $\mathbf Q$. Each tensor seed is, by construction, the image of its elliptic seed with (3.11), proving the second assertion. Over an algebraic closure the corrected auxiliary level becomes one fixed-pairing orientation of the principal level for the lattice $I\oplus I$. Book 156's simultaneous congruence theorem on that geometric component therefore gives full
 
 $$
 \operatorname{SL}_2(k_{\mathfrak p})
@@ -514,7 +514,7 @@ For a more flexible analytic description, choose positive real numbers $y_\tau$ 
 
 ### 4.3 The cyclotomic-split auxiliary level
 
-We first record why the literal Book 155 level cannot be retained. Its auxiliary orientation includes an isomorphism
+We first record why the literal Book 156 level cannot be retained. Its auxiliary orientation includes an isomorphism
 
 $$
 \delta_{\mathfrak n}:
@@ -524,15 +524,15 @@ $$
 \tag{4.2a}
 $$
 
-Complex conjugation acts trivially on the source and by $-1$ on the cyclotomic target. If (4.2a) were equivariant, every element in its image would satisfy $x=-x$. For $N\geq3$ the subgroup killed by $2$ is a proper subgroup of the target, so no isomorphism can have this property. Consequently the literal full paired auxiliary-level scheme $H_{\mathfrak c,\mathfrak n}$ of Book 155 has no real points.
+Complex conjugation acts trivially on the source and by $-1$ on the cyclotomic target. If (4.2a) were equivariant, every element in its image would satisfy $x=-x$. For $N\geq3$ the subgroup killed by $2$ is a proper subgroup of the target, so no isomorphism can have this property. Consequently the literal full paired auxiliary-level scheme $H_{\mathfrak c,\mathfrak n}$ of Book 156 has no real points.
 
 The correction is (1.1b), not a choice of a root of unity. Complex conjugation acts trivially on its first summand and by inversion on its second. Its determinant is already $(I^2/NI^2)(1)$, so an isometry to $A[N]$ requests no impossible orientation.
 
-**Theorem 4.1 (corrected principal level).** The functor $H_I^{\natural}$ is represented by a smooth quasi-projective fine scheme of relative dimension $d$ over the good base and carries a universal tuple. After base change to an algebraic closure and a choice of primitive $N$th root, it is isomorphic to the fixed-pairing orientation subfunctor of Book 155's principal-level scheme for the PEL lattice $L_I=I\oplus I$. It has a real tensor point, and Book 155's geometric component and two-prime product-monodromy assertions hold on each resulting geometric component.
+**Theorem 4.1 (corrected principal level).** The functor $H_I^{\natural}$ is represented by a smooth quasi-projective fine scheme of relative dimension $d$ over the good base and carries a universal tuple. After base change to an algebraic closure and a choice of primitive $N$th root, it is isomorphic to the fixed-pairing orientation subfunctor of Book 156's principal-level scheme for the PEL lattice $L_I=I\oplus I$. It has a real tensor point, and Book 156's geometric component and two-prime product-monodromy assertions hold on each resulting geometric component.
 
-**Proof.** The local system $\mathscr L_{I,N}^{\natural}$ is finite etale where $N$ is invertible, and (1.1c) is perfect because $I$ is invertible. Its isometry sheaf to $A[N]$ is therefore a finite etale level sheaf on the unlevelled PEL stack. Choose over an algebraic closure a primitive $N$th root of unity. This trivializes the Tate-twisted second summand and the value line, turning (1.1b)--(1.1c) into the constant paired lattice $(L_I/NL_I,\psi_I)$ with one fixed value-line orientation in Book 155. Thus the corrected problem becomes exactly that open-and-closed orientation subfunctor.
+**Proof.** The local system $\mathscr L_{I,N}^{\natural}$ is finite etale where $N$ is invertible, and (1.1c) is perfect because $I$ is invertible. Its isometry sheaf to $A[N]$ is therefore a finite etale level sheaf on the unlevelled PEL stack. Choose over an algebraic closure a primitive $N$th root of unity. This trivializes the Tate-twisted second summand and the value line, turning (1.1b)--(1.1c) into the constant paired lattice $(L_I/NL_I,\psi_I)$ with one fixed value-line orientation in Book 156. Thus the corrected problem becomes exactly that open-and-closed orientation subfunctor.
 
-An automorphism preserving $\eta_{\mathfrak n}^{\natural}$ acts trivially on $A[N]$. The principal-congruence torsion-freeness argument for $N\geq3$ makes it the identity. The PEL stack is therefore a scheme with a universal object. The level sheaf is finite etale, so it adds no infinitesimal deformation; lifting one Hodge line for every embedding gives smoothness of relative dimension $d$, exactly as for Book 155. Quasi-projectivity follows from the same polarized Hilbert parameter construction.
+An automorphism preserving $\eta_{\mathfrak n}^{\natural}$ acts trivially on $A[N]$. The principal-congruence torsion-freeness argument for $N\geq3$ makes it the identity. The PEL stack is therefore a scheme with a universal object. The level sheaf is finite etale, so it adds no infinitesimal deformation; lifting one Hodge line for every embedding gives smoothness of relative dimension $d$, exactly as for Book 156. Quasi-projectivity follows from the same polarized Hilbert parameter construction.
 
 For the curve $E=\mathbf C/(\mathbf Z+i\mathbf Z)$, let $P$ be the class of $1/N$. It spans a constant cyclic subgroup, while the class of $i/N$ spans its anti-invariant complement. The map
 
@@ -577,7 +577,7 @@ The real points of a smooth variety form a real manifold. Connected components a
 
 Sign conditions are also open: positivity of a real number survives a small perturbation, and the positive cone in $F\otimes\mathbf R\simeq\mathbf R^d$ is the open orthant. Consequently polarization positivity, orientation of every half-plane, and the real component label remain fixed in a sufficiently small neighborhood.
 
-This proves the archimedean input for totally real specialization: one supplies this nonempty open at every real place. Supplying it at only one real place does not prevent other embeddings of the eventual field from becoming complex. The literal Book 155 level remains empty over $\mathbf R$; all downstream uses in this book are of the corrected scheme $H_I^{\natural}$ and its tensor component.
+This proves the archimedean input for totally real specialization: one supplies this nonempty open at every real place. Supplying it at only one real place does not prevent other embeddings of the eventual field from becoming complex. The literal Book 156 level remains empty over $\mathbf R$; all downstream uses in this book are of the corrected scheme $H_I^{\natural}$ and its tensor component.
 
 ## 5. Good integral points away from the level primes
 
@@ -1574,7 +1574,7 @@ The local package fails in recognizable ways.
 
 **Wrong determinant.** If (9.2) is absent, the paired twist is empty even if the unpaired representations are isomorphic.
 
-**Reverting to the literal Book 155 orientation.** Its constant value line cannot be identified over $\mathbf R$ with its cyclotomic twist. The corrected source (1.1b) is essential; using the obsolete orientation would make the real row empty again.
+**Reverting to the literal Book 156 orientation.** Its constant value line cannot be identified over $\mathbf R$ with its cyclotomic twist. The corrected source (1.1b) is essential; using the obsolete orientation would make the real row empty again.
 
 **Wrong external component.** Theorem 3.3 covers the catalog because its PEL data are auxiliary. An application that externally fixes a nonsquare narrow polarization class cannot substitute a tensor seed from $Y_I^{\mathrm{ten}}$.
 

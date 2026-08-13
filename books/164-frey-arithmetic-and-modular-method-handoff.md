@@ -50,7 +50,7 @@ This book isolates one reusable piece of the proof of Fermat's Last Theorem: the
 
 There are two branches, and keeping them separate is essential.
 
-1. Exponent $5$ is already eliminated by the independent descent proved in Book 162.
+1. Exponent $5$ is already eliminated by the independent descent proved in Book 163.
 2. For every prime exponent $p\ge 7$, a normalized primitive solution produces a Frey curve whose mod-$p$ representation is absolutely irreducible, finite flat at $p$, and special of a prescribed sign at $2$.
 
 The second branch is the Frey residual/deformation spine. Book 150 applies exactly in its natural range $p\ge 7$; it is not asked to prove anything at exponent $5$.
@@ -92,7 +92,7 @@ $$
 $$
 Then one of the following reductions applies.
 
-- If $5\mid n$, the solution contradicts the exponent-$5$ theorem of Book 162.
+- If $5\mid n$, the solution contradicts the exponent-$5$ theorem of Book 163.
 - If $3\mid n$, the solution contradicts the elementary exponent-$3$ descent proved below.
 - If $4\mid n$, the solution contradicts the elementary exponent-$4$ descent proved below.
 - Otherwise some prime $p\ge 7$ divides $n$, and the solution gives a primitive triple
@@ -164,7 +164,7 @@ $$
 $$
 Thus a solution at exponent $n$ produces one at exponent $p$. If $4\mid n$, the same observation produces a solution at exponent $4$.
 
-It remains to remove exponents $3,4,5$. The exponent-$5$ case is imported from Book 162; the other two are included so that the elementary reduction is complete.
+It remains to remove exponents $3,4,5$. The exponent-$5$ case is imported from Book 163; the other two are included so that the elementary reduction is complete.
 
 ### 2.2. Exponent three
 
@@ -362,13 +362,13 @@ contradicting the minimality of $Z$. $\square$
 
 We use the following accepted result exactly once.
 
-**Theorem 2.3 (Book 162).**
+**Theorem 2.3 (Book 163).**
 There are no nonzero integers $X,Y,Z$ satisfying
 $$
   X^5+Y^5+Z^5=0.
 $$
 
-Book 162 proves this theorem by descent in $\mathbf Z[\zeta_5]$. Its proof, including the ramified prime above $5$, the unit calculation, and the class-number-one input, is independent of the Frey-curve argument here. No result from Book 150 is used for exponent $5$.
+Book 163 proves this theorem by descent in $\mathbf Z[\zeta_5]$. Its proof, including the ramified prime above $5$, the unit calculation, and the class-number-one input, is independent of the Frey-curve argument here. No result from Book 150 is used for exponent $5$.
 
 ### 2.5. The exact prime-exponent split
 
@@ -852,7 +852,7 @@ $$
   \bar\rho\text{ is irreducible over }\mathbf F_p.
   \tag{6.7}
 $$
-The lower bound $p\ge7$ is essential to this invocation. Exponent $5$ has already been discharged by Book 162 and never enters this argument.
+The lower bound $p\ge7$ is essential to this invocation. Exponent $5$ has already been discharged by Book 163 and never enters this argument.
 
 ### 6.4. From irreducible to absolutely irreducible
 
@@ -1049,7 +1049,7 @@ integral-lattice hypotheses exist.
 
 Assuming a Fermat solution, the arithmetic completed in this book produces:
 
-- no exponent-$5$ branch, by Book 162;
+- no exponent-$5$ branch, by Book 163;
 - for the only remaining prime exponents $p\ge7$, the exact residual datum of Section 7.2;
 - the precise signed SP deformation condition in which any later lift must lie.
 
@@ -1142,9 +1142,9 @@ The proof uses the following earlier books directly.
 | 44 | Tate uniformization, the residual inertia formula, the conductor criterion, and the canonical coefficient-prime finite-flat Kummer model | Sections 5.2 and 6.2 |
 | 45 | rank-two torsion, the Weil pairing, good-reduction Frobenius, and finite flatness of torsion for good reduction | Sections 5.1 and 6.1 |
 | 150 | semistable full-two residual irreducibility for every prime $p\ge7$ | Section 6.3 |
-| 162 | the complete exponent-$5$ descent | Sections 2.4--2.5 |
+| 163 | the complete exponent-$5$ descent | Sections 2.4--2.5 |
 
-Book 161 supplies cyclotomic foundations to Book 162, but no theorem from it is invoked directly here. Likewise the prerequisites internal to Books 43--45 and 150 remain transitive dependencies, not extra direct imports.
+Book 162 supplies cyclotomic foundations to Book 163, but no theorem from it is invoked directly here. Likewise the prerequisites internal to Books 43--45 and 150 remain transitive dependencies, not extra direct imports.
 
 The later deformation books consume the datum of Section 7. The later three-adic endgame consumes the stronger package listed in Section 8.2. They are downstream consumers, not foundations for the arithmetic theorem proved here.
 
@@ -1154,7 +1154,7 @@ consumers.
 | Downstream book | Interface checked |
 |---|---|
 | 173 and 176 | coefficient primes are in the range at least $7$, with finite-flat coefficient-prime and special dyadic conditions |
-| 164 | the residual matrices, intrinsic monodromy line, fixed sign, and global hardly-ramified deformation datum are exactly those of Section 7 |
+| 165 | the residual matrices, intrinsic monodromy line, fixed sign, and global hardly-ramified deformation datum are exactly those of Section 7 |
 | 181 | the balanced minimal-lift input begins with the same absolutely irreducible signed SP residual datum |
 | 188 | only the conditional three-adic package-to-trace contradiction recorded in Section 8.2 is used for orientation |
 
