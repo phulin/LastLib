@@ -177,7 +177,7 @@ $$
 \mathbf Q(i)\otimes_{\mathbf Q}\mathbf Q_5\cong \mathbf Q_5\times\mathbf Q_5.
 $$
 
-Each factor is one local branch. A finite extension of the already complete field is a field and therefore has only one branch.
+Each factor is one local branch. A finite extension of the already complete field is a field, and completeness (equivalently, henselianity) forces its valuation to have only one branch.
 
 ### 1.3 Completeness of the extension
 

@@ -381,7 +381,7 @@ Projective is relative. The affine line over a field is not proper over that fie
 
 Nor does every fiberwise projective morphism become projective. Fiberwise embeddings can require ranks and degrees that vary without a uniform bound, and their line bundles may fail to glue. Under finite presentation over a noetherian quasi-compact base, a single relatively ample line bundle supplies the needed uniformity; without it, fiberwise information is too weak.
 
-Finally, a proper morphism may possess a line bundle whose restriction to every fiber is ample while the bundle is not relatively ample if quasi-compactness or finite-presentation conditions are abandoned. Relative positivity is a uniform statement near points of the base, not a collection of unrelated fiberwise statements.
+Finally, a proper morphism may possess a line bundle whose restriction to every fiber is ample while the bundle is not relatively ample if the needed finite-presentation and uniformity conditions are abandoned. Relative positivity is a uniform statement near points of the base, not a collection of unrelated fiberwise statements.
 
 ## 4. Very ample and ample invertible sheaves
 
@@ -460,7 +460,7 @@ Conversely, under the same projective morphism over a noetherian affine base, if
 
 If $\mathcal L$ is ample, every positive power $\mathcal L^d$ is ample: replace each defining section by a power. Conversely, if $\mathcal L^d$ is ample for one $d>0$, then $\mathcal L$ is ample because sufficiently large powers in each residue class modulo $d$ are obtained by tensoring with one of finitely many fixed powers.
 
-If $f:X\to S$ is quasi-compact and separated, $\mathcal L$ is $f$-ample, and $\mathcal M$ is invertible, then $\mathcal L^n\otimes\mathcal M$ is $f$-ample for all sufficiently large $n$. Apply the generation criterion to the finitely many twists needed to generate $\mathcal M$ and its inverse. In particular, in this relative context ampleness is insensitive to a bounded twist at high degree.
+If $S$ is quasi-compact, $f:X\to S$ is quasi-compact and separated, $\mathcal L$ is $f$-ample, and $\mathcal M$ is invertible, then $\mathcal L^n\otimes\mathcal M$ is $f$-ample for all sufficiently large $n$. Apply the generation criterion on a finite affine cover of $S$ to the finitely many twists needed to generate $\mathcal M$ and its inverse. In particular, in this quasi-compact relative context ampleness is insensitive to a bounded twist at high degree.
 
 If $S$ is quasi-compact and $X\to S$ is of finite type and quasi-compact, all sufficiently large
 powers of an ample $\mathcal L$ are relatively very ample. If $X\to S$ is proper, each such power
@@ -479,7 +479,7 @@ If $\mathcal L$ and $\mathcal M$ are ample relative to $S$, then $\mathcal L\oti
 
 ### 5.1 Pullback of positivity
 
-Let $g:T\to S$. If $\mathcal L$ is very ample for $X\to S$, then $\mathcal L_T$ is very ample for $X_T\to T$: base change the chosen immersion. If $\mathcal L$ is ample, then $\mathcal L_T$ is ample. For the latter statement, base change of an affine nonvanishing open is affine, and the pulled-back sections cover.
+Let $g:T\to S$. If $\mathcal L$ is very ample for $X\to S$, then $\mathcal L_T$ is very ample for $X_T\to T$: base change the chosen immersion. If $\mathcal L$ is ample, then $\mathcal L_T$ is ample. For the latter statement, an affine nonvanishing open over an affine base open remains affine after pullback to an affine open of $T$, and the pulled-back sections cover.
 
 These claims require no flatness. They should be distinguished from cohomological base change, where flatness or vanishing hypotheses matter. Positivity is visible on explicit affine charts and therefore survives arbitrary scalar extension.
 
@@ -526,7 +526,7 @@ faithfully flat base change: an arbitrarily chosen bundle upstairs need not carr
 The form needed in this curriculum retains the polarization and is therefore the following safe
 statement.
 
-**Projectivity descent with a polarization.** Let $f:X\to S$ be proper and of finite presentation, and let $\mathcal L$ be a line bundle on $X$. If some fpqc base change makes $\mathcal L$ relatively ample, then $\mathcal L$ is relatively ample and $f$ is projective.
+**Projectivity descent with a polarization.** Let $S$ be quasi-compact, let $f:X\to S$ be proper and of finite presentation, and let $\mathcal L$ be a line bundle on $X$. If some fpqc base change makes $\mathcal L$ relatively ample, then $\mathcal L$ is relatively ample and $f$ is projective.
 
 This polarized form records the datum used in moduli problems and avoids concealing an obstruction
 in the Picard group.
@@ -701,7 +701,7 @@ $$
 P_Z(n)=\binom{n+r}{r}-P_{\mathcal I_Z}(n).
 $$
 
-If $Z$ is a hypersurface of degree $e$, then
+If $Z$ is a hypersurface cut out by a nonzero homogeneous equation of degree $e>0$, then
 
 $$
 P_Z(n)=\binom{n+r}{r}-\binom{n+r-e}{r}.
@@ -719,13 +719,21 @@ $$
 \frac{\deg_{\mathcal L}(\mathcal F)}{d!}t^d
 $$
 
-for a positive integer $\deg_{\mathcal L}(\mathcal F)$. A general hyperplane gives a finite-difference relation
+for a positive integer $\deg_{\mathcal L}(\mathcal F)$. A hyperplane with defining section $\ell$ gives the exact sequence
 
 $$
-P_{\mathcal F}(n)-P_{\mathcal F}(n-1)=P_{\mathcal F|_H}(n)
+0\to(0:_{\mathcal F}\ell)(n-1)\to\mathcal F(n-1)
+\xrightarrow{\ell}\mathcal F(n)\to\mathcal F|_H(n)\to0,
 $$
 
-up to contributions supported in lower dimension. Induction ends with the total length of a zero-dimensional sheaf, proving both assertions.
+and hence the finite-difference relation
+
+$$
+P_{\mathcal F}(n)-P_{\mathcal F}(n-1)
+=P_{\mathcal F|_H}(n)-P_{(0:_{\mathcal F}\ell)}(n-1).
+$$
+
+After extending an arbitrary ground field if necessary, one may choose $\ell$ to avoid the associated points of the top-dimensional support; the kernel term is then supported in lower dimension. Hilbert polynomials and their leading terms are unchanged by field extension. Induction ends with the total length of a zero-dimensional sheaf, proving both assertions.
 
 Thus a finite scheme of length $d$ has constant polynomial $d$. A projective curve has $P(n)=en+c$, with $e$ its degree in the chosen embedding. Projective space has polynomial $\binom{n+r}{r}$. For a union one computes by the exact sequence
 
@@ -773,8 +781,8 @@ the next section. Locally on a connected component, let the common polynomial be
 of $S$ then belongs set-theoretically to the flattening stratum $S_P$. Thus the locally closed
 immersion $S_P\hookrightarrow S$ has all of $S$ as its underlying image. It is consequently a
 closed immersion defined by a nilpotent ideal. Reducedness forces that ideal to vanish, so
-$S_P=S$, which is precisely flatness of $\mathcal F$ over $S$. This argument also explains exactly
-why reducedness, rather than an associated-point condition, is the boundary.
+$S_P=S$, which is precisely flatness of $\mathcal F$ over $S$. This argument also explains why
+reducedness is a clean sufficient boundary for this numerical converse.
 
 Reducedness matters. On $\operatorname{Spec}k[\epsilon]/(\epsilon^2)$ there is only one topological fiber. The module $k$ has a constant one-point fiber but is not flat. Fiber polynomials cannot see an infinitesimal direction when the base has no second point in that direction.
 

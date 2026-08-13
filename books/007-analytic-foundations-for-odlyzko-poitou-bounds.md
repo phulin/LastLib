@@ -1230,7 +1230,215 @@ T&A_T&B_T&C_T\\
 \tag{10.6}
 $$
 
-The omitted series contribution is at most $(2/T)(1+T)e^{-5T}/(1-e^{-2T})$, below $1.1\cdot10^{-7}$ even in the first row. The Taylor step is a parameterized certificate: for each reduced rational argument $y$ and reserved interval width $\delta>0$, retain an $M$ for which the explicit remainder bound in (10.1), (10.2), or the alternating exponential series is $<\delta$. Thus no fixed term count is asserted without its reduced argument and width.
+We now give the finite ledger behind every row of (10.6). This is deliberately more
+detailed than the displayed precision: it makes the table reproducible using integer
+arithmetic alone. Every terminating decimal below denotes the corresponding exact
+rational number, and every comparison can therefore be checked by cross-multiplication.
+
+Write
+
+$$
+E_j(x)=\sum_{r=0}^j\frac{(-x)^r}{r!},
+\qquad
+L_M(y)=2\sum_{r=0}^M\frac{y^{2r+1}}{2r+1}.
+$$
+
+Our term-count convention is inclusive: $E_{33}$ retains degrees $0$ through $33$,
+and $L_M$ retains $M+1$ terms. Taylor's theorem with its one-sided sign gives
+
+$$
+E_{33}(x)<e^{-x}<E_{32}(x),
+\qquad
+E_{32}(x)-E_{33}(x)=\frac{x^{33}}{33!}.
+\tag{10.6a}
+$$
+
+Before squaring, the corresponding outward rational exponential boxes are
+
+$$
+\begin{array}{c|c|c}
+T&e^{-T/2}\text{ box}&\text{reserved width}\\
+\hline
+17/5&[0.18268352405273465022,0.18268352405273465023]&10^{-20}\\
+9/2&[0.10539922456186433678,0.10539922456186433679]&10^{-20}\\
+6&[0.04978706836786394297,0.04978706836786394299]&2\cdot10^{-20}.
+\end{array}
+$$
+
+For the two logarithms needed in (10.5), if $q=e^{-T}$, the reduced arguments are
+
+$$
+\log\coth(T/2)=L(q),
+\qquad
+\log(1+q)=L\left(\frac{q}{2+q}\right),
+\tag{10.6b}
+$$
+
+where $L(y)=\log((1+y)/(1-y))$. The following are the exact rational argument
+boxes obtained by applying (10.6a) at $x=T/2$, squaring, and rounding outward.
+Each $q$-box has reserved width $10^{-12}$.
+
+$$
+\begin{array}{c|c|c|c}
+T&x=T/2&q^-<q<q^+&u^-<q/(2+q)<u^+\\
+\hline
+17/5&17/10&
+\dfrac{834331749}{25000000000},\;
+\dfrac{33373269961}{10^{12}}&
+\dfrac{834331749}{50834331749},\;
+\dfrac{33373269961}{2033373269961}\\[3mm]
+9/2&9/4&
+\dfrac{5554498269}{500000000000},\;
+\dfrac{11108996539}{10^{12}}&
+\dfrac{5554498269}{1005554498269},\;
+\dfrac{11108996539}{2011108996539}\\[3mm]
+6&3&
+\dfrac{154922011}{62500000000},\;
+\dfrac{2478752177}{10^{12}}&
+\dfrac{154922011}{125154922011},\;
+\dfrac{2478752177}{2002478752177}.
+\end{array}
+\tag{10.6c}
+$$
+
+In each interval column the first rational is the lower endpoint and the second is
+the upper endpoint. For reference, the $q$-boxes are respectively
+
+$$
+[0.033373269960,0.033373269961],\quad
+[0.011108996538,0.011108996539],\quad
+[0.002478752176,0.002478752177].
+$$
+
+The term counts and analytic remainder bounds are as follows. In the
+$R_{\coth}$ column we use (10.1) with $M=4$ and argument $q^+$; in the
+$R_+$ column we use it with $M=3$ and argument $u^+$. The exponential
+column is the exact gap in (10.6a), before squaring.
+
+$$
+\begin{array}{c|c|c|c|c|c|c}
+T&M_{\exp}&E_{32}-E_{33}&M_{\coth}&R_{\coth}&M_+&R_+\\
+\hline
+17/5&33&<4.636\cdot10^{-30}&4&<1.042\cdot10^{-17}&3&<1.922\cdot10^{-17}\\
+9/2&33&<4.824\cdot10^{-26}&4&<5.783\cdot10^{-23}&3&<1.065\cdot10^{-21}\\
+6&33&<6.403\cdot10^{-22}&4&<3.947\cdot10^{-30}&3&<1.517\cdot10^{-27}.
+\end{array}
+\tag{10.6d}
+$$
+
+Evaluating those finite sums at the directed endpoints in (10.6c) gives the
+following rational elementary-function boxes. Their widths are the reserves carried
+through (10.6i); the analytic remainders in (10.6d) are already included.
+
+$$
+\begin{array}{c|c|c|c|c}
+T&L_{\coth}^-<\log\coth(T/2)<L_{\coth}^+&\text{width}&
+L_+^-<\log(1+e^{-T})<L_+^+&\text{width}\\
+\hline
+17/5&0.0667713367053918<\cdots<0.0667713367073941&2.0023\cdot10^{-12}&
+0.0328284704245497<\cdots<0.0328284704255176&9.679\cdot10^{-13}\\
+9/2&0.0222189071164060<\cdots<0.0222189071184064&2.0004\cdot10^{-12}&
+0.0110477448483541<\cdots<0.0110477448493432&9.891\cdot10^{-13}\\
+6&0.0049575145053572<\cdots<0.0049575145073573&2.0001\cdot10^{-12}&
+0.0024756851370657<\cdots<0.0024756851380633&9.976\cdot10^{-13}.
+\end{array}
+\tag{10.6e}
+$$
+
+The constants shared by all three rows have their own finite counts. For $\log2$,
+take the reduced argument $y=1/3$ and $M=20$ in (10.1). Then
+
+$$
+R_{20}<1.595\cdot10^{-22},
+\qquad
+0.6931471805599453094<\log2<0.6931471805599453095.
+\tag{10.6f}
+$$
+
+For (10.2), retain $j=0,\ldots,12$ in the alternating series for
+$\arctan(1/5)$ and $j=0,\ldots,3$ for $\arctan(1/239)$. The first omitted
+terms give the total Machin remainder
+
+$$
+\frac{16}{27\cdot5^{27}}+\frac4{9\cdot239^9}
+<7.972\cdot10^{-20}.
+\tag{10.6g}
+$$
+
+The resulting interval is contained in the rational $10^{-15}$-wide $\pi$-box
+in (10.4), which is the box carried in the following arithmetic.
+
+For completeness, keeping $k=0,1$ in (8.5) means retaining the rational function
+
+$$
+S_1(q)=(1+T)q+\frac{1+3T}{9}q^3.
+$$
+
+After the factor $2/T$ is included, the omitted positive tail is bounded, using
+$q^+$, by
+
+$$
+\rho_T=\frac2T\frac{(1+T)(q^+)^5}{1-(q^+)^2}.
+$$
+
+The row-specific rational bounds are
+
+$$
+\begin{array}{c|c|c}
+T&S_1(q^-)<S_1(q)<S_1(q^+)&\rho_T\\
+\hline
+17/5&0.1468886442205<S_1(q)<0.1468886442250&<1.072709\cdot10^{-7}\\
+9/2&0.0611016897264<S_1(q)<0.0611016897320&<4.136261\cdot10^{-10}\\
+6&0.0173512973841<S_1(q)<0.0173512973912&<2.183459\cdot10^{-13}.
+\end{array}
+\tag{10.6h}
+$$
+
+Here is the directed endpoint calculation. Let $\ell_2^\pm$, $p^\pm$,
+$L_{\coth}^\pm$, and $L_+^\pm$ denote the rational bounds just recorded, and put
+
+$$
+H^-=\frac T2-\ell_2^++L_+^-,
+\qquad
+H^+=\frac T2-\ell_2^-+L_+^+.
+$$
+
+Then exact rational arithmetic gives
+
+$$
+\begin{aligned}
+B_T^-&=\ell_2^-+\frac{(p^-)^2}{4T}+L_{\coth}^-
+-\frac2T S_1(q^+)-\rho_T,\\
+B_T^+&=\ell_2^++\frac{(p^+)^2}{4T}+L_{\coth}^+
+-\frac2T S_1(q^-),\\
+C_T^-&=\frac{p^-}{2}-\frac2T H^+,
+\qquad
+C_T^+=\frac{p^+}{2}-\frac2T H^-.
+\end{aligned}
+\tag{10.6i}
+$$
+
+The deliberately rounded outward output boxes, together with their reserved widths,
+are
+
+$$
+\begin{array}{c|c|c|c|c}
+T&B_T^-<B_T<B_T^+&B_T^+-B_T^-&C_T^-<C_T<C_T^+&C_T^+-C_T^-\\
+\hline
+17/5&1.3992195311<B_T<1.3992196384&1.073\cdot10^{-7}&
+0.9592190974622<C_T<0.9592190974628&6\cdot10^{-13}\\
+9/2&1.2365211363<B_T<1.2365211368&5\cdot10^{-10}&
+0.8739516315551<C_T<0.8739516315557&6\cdot10^{-13}\\
+6&1.1035544459<B_T<1.1035544460&10^{-10}&
+0.8010201586021<C_T<0.8010201586026&5\cdot10^{-13}.
+\end{array}
+\tag{10.6j}
+$$
+
+These tighter intervals imply every entry of (10.6). More importantly, (10.6a)--
+(10.6j) specify every reduced argument, retained term count, one-sided analytic
+remainder, geometric-series tail, input reserve, and output reserve. No quadrature,
+machine transcendental value, or network-fetched constant is part of the certificate.
 
 ### 10.3 Tail bounds and interval propagation
 

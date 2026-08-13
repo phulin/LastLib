@@ -709,7 +709,7 @@ K/\mathcal O_K\cong
 \mathbf A_{K,f}/\widehat{\mathcal O}_K.
 $$
 
-This is an isomorphism of abstract additive groups, or a topological isomorphism if the left side is given the transported discrete topology. It is not the quotient topology obtained from the dense subspace $K\subset\mathbf A_{K,f}$; that topology is not discrete. Keeping this distinction explicit prevents density from being confused with the discrete principal-parts quotient.
+This is also a topological isomorphism for the quotient topology on $K/\mathcal O_K$: the subgroup $\mathcal O_K=K\cap\widehat{\mathcal O}_K$ is open in the subspace topology on $K$, so both quotients are discrete. Density of $K$ in $\mathbf A_{K,f}$ is fully compatible with this discrete principal-parts quotient.
 
 This identity is the additive counterpart of the idele-to-ideal exact sequence, but its right side is not an ideal group. Addition permits cancellation among principal parts, and $K/\mathcal O_K$ is generally a torsion group rather than a free abelian group on primes.
 
@@ -754,7 +754,7 @@ $$
 
 The preceding section shows that this topology is independent of $M$: any two lattices contain nonzero integral multiples of one another, so their localizations agree outside finitely many primes. After choosing a basis, $V(\mathbf A_K)$ is topologically $\mathbf A_K^{\dim V}$, but the lattice formulation is basis-free.
 
-Every $K$-linear map $T:V\to W$ extends continuously to adelic points. Indeed, after multiplying one lattice by a nonzero integer, $T$ carries it into a lattice of $W$, so the local maps preserve the distinguished integral subgroups almost everywhere. Kernels commute with this extension because finite-dimensional scalar extension is exact. Images of invertible maps are open and closed, as they are coordinatewise isomorphisms.
+For finite-dimensional $K$-vector spaces $V$ and $W$, every $K$-linear map $T:V\to W$ extends continuously to adelic points. Indeed, after multiplying one lattice by a nonzero integer, $T$ carries it into a lattice of $W$, so the local maps preserve the distinguished integral subgroups almost everywhere. Kernels commute with this extension because finite-dimensional scalar extension is exact. Images of invertible maps are open and closed, as they are coordinatewise isomorphisms.
 
 This modest piece of adelic linear algebra is the reason matrices with entries in $\mathbf A_K$ can later act coherently at all places. It also clarifies why a global integral structure, even when suppressed from notation, underlies every restricted product of vector spaces.
 
@@ -776,7 +776,7 @@ The contrast is not paradoxical. Finite approximation can meet any finite collec
 
 **Theorem 5.1 (strong approximation away from infinity).** The diagonal image of $K$ is dense in $\mathbf A_{K,f}$.
 
-**Proof.** Let $x=(x_v)$ and let $U=\prod U_v$ be a basic neighborhood of $x$. There is a finite set $S$ such that $U_v=x_v+\mathcal O_v$ outside $S$, while for $v\in S$ the set $U_v$ contains $x_v+\mathfrak p_v^{m_v}$ for some integer $m_v$. Finite approximation supplies $a\in K$ satisfying these finitely many congruences and integral-difference conditions elsewhere. Then the diagonal adele $a$ belongs to $U$. $\square$
+**Proof.** Let $x=(x_v)$ and let $U=\prod U_v$ be a basic neighborhood of $x$. Enlarge the finite exceptional set $S$ to contain every place where $x_v$ is nonintegral. Then $U_v=x_v+\mathcal O_v$ outside $S$, while for $v\in S$ the set $U_v$ contains $x_v+\mathfrak p_v^{m_v}$ for some integer $m_v$. Finite approximation supplies $a\in K$ satisfying these finitely many congruences and integral-difference conditions elsewhere. Then the diagonal adele $a$ belongs to $U$. $\square$
 
 The theorem fails for the full adeles. Indeed, a discrete nontrivial subgroup cannot be dense in a nondiscrete Hausdorff group. More concretely, finite congruences can force a rational number into a desired residue class, but simultaneously confining all its archimedean conjugates to a tiny box may leave no lattice point.
 
@@ -1087,7 +1087,7 @@ The idele topology is exactly the subspace topology on the image of this graph. 
 
 ### 7.3 Additive and multiplicative information
 
-An additive adele records local values with bounded denominators almost everywhere. It supports addition even when some components vanish. An idele forbids zero everywhere and demands valuation zero almost everywhere. It therefore supplies a finitely supported integer vector
+An additive adele records local values with bounded denominators almost everywhere. It supports addition even when some components vanish. An idele has no zero coordinate and demands valuation zero almost everywhere. It therefore supplies a finitely supported integer vector
 
 $$
 (\operatorname{ord}_v(x_v))_{v<\infty}.
@@ -1095,7 +1095,7 @@ $$
 
 This vector is invisible if one retains only the additive topology near zero, but it is exactly the datum from which a fractional ideal is built.
 
-Neither construction contains the other as a topological group in a harmless way. The idele group embeds continuously into the additive adele ring, but the induced topology is coarser. The additive group cannot be recovered by adjoining a zero to the ideles: zeros may occur in arbitrary local coordinates, and addition interacts with them in a way no one-point compactification captures.
+Neither construction contains the other as a topological group in a harmless way. The underlying-set map from the idele group to the additive adele ring is continuous and injective, but the induced topology is coarser than the idele topology. The additive group cannot be recovered by adjoining a zero to the ideles: zeros may occur in arbitrary local coordinates, and addition interacts with them in a way no one-point compactification captures.
 
 ### 7.4 Open and maximal compact subgroups
 
@@ -1541,7 +1541,7 @@ $$
 \longrightarrow1.
 $$
 
-The global unit acts diagonally on the two numerator factors. The left group is compact. Its finite factor is compact; the kernel of the archimedean logarithm is compact; and the remaining logarithmic hyperplane becomes compact modulo the Dirichlet unit lattice. Thus $C_K^1$ is assembled from a connected archimedean torus-like part, a profinite local-unit part, and finitely many ideal classes, with global units gluing the first two.
+The global unit acts diagonally on the two numerator factors. The left group is compact. Its finite factor is compact; the kernel of the archimedean logarithm is compact; and the remaining logarithmic hyperplane becomes compact modulo the Dirichlet unit lattice. Thus $C_K^1$ is assembled from a compact archimedean torus-and-sign part, a profinite local-unit part, and finitely many ideal classes, with global units gluing the first two.
 
 The description is structural rather than a canonical direct product. Choosing ideal representatives splits the finite set only noncanonically, and choosing fundamental units splits the logarithmic lattice only after choices. The exact sequence retains all canonical information without pretending those choices are natural.
 
@@ -1697,7 +1697,7 @@ The adelic norm therefore refines both the field norm and the ideal norm and mak
 
 ### 10.4 Local conditions versus a global norm
 
-Suppose $b\in K^\times$ is a global norm from $L^\times$. Then $b$ is a norm from $L_w$ after passing to every completion and multiplying over $w\mid v$. Thus local norm conditions are necessary.
+Suppose $b\in K^\times$ is a global norm from $L^\times$. After passing to a completion $K_v$, it lies in the image of the product norm from $\prod_{w\mid v}L_w^\times$. Thus local norm conditions are necessary.
 
 The adelic norm packages those local conditions exactly. If
 
@@ -2850,9 +2850,9 @@ $$
 $$
 
 The corresponding global fractional ideals $\mathfrak a\subseteq\mathfrak b$ then satisfy
-$\mathfrak a^n\subseteq\Lambda(g_f)\subseteq\mathfrak b^n$. The quotient
-$\mathfrak b^n/\mathfrak a^n$ is finite, so the intermediate module $\Lambda(g_f)$ is finitely
-generated; containing $\mathfrak a^n$ shows that it spans $K^n$. This proves that no finiteness or
+$\mathfrak a^{\oplus n}\subseteq\Lambda(g_f)\subseteq\mathfrak b^{\oplus n}$. The quotient
+$\mathfrak b^{\oplus n}/\mathfrak a^{\oplus n}$ is finite, so the intermediate module $\Lambda(g_f)$ is finitely
+generated; containing $\mathfrak a^{\oplus n}$ shows that it spans $K^n$. This proves that no finiteness or
 spanning assertion was hidden in the local definition.
 
 For $n=1$, $\Lambda(g_f)$ is the fractional ideal $\mathfrak a(g_f)$ of Section 8.1: the condition

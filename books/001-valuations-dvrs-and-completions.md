@@ -617,7 +617,7 @@ $$
 
 Choose $s_0$ modulo $\pi$, divide $x-s_0$ by $\pi$, and repeat. Uniqueness follows by inspecting the first differing coefficient. Infinite expansions require completeness; arbitrary infinite base-$p$ strings generally do not represent elements of $\mathbf Z_{(p)}$.
 
-If $|k|=q<\infty$, then $|A/(\pi^n)|=q^n$. The quotient is Artinian local, with ideals $(\overline\pi^i)$, and $\overline\pi$ has nilpotence index $n$.
+If $|k|=q<\infty$, then $|A/(\pi^n)|=q^n$ for $n\geq0$. For $n\geq1$, the quotient is Artinian local, with ideals $(\overline\pi^i)$, and $\overline\pi$ has nilpotence index $n$.
 
 ### 5.3 Fractional ideals and precision
 
@@ -628,7 +628,8 @@ Every nonzero fractional ideal equals $\mathfrak m^n=(\pi^n)$ for a unique $n\in
 Multiplication shifts the filtration exactly:
 
 $$
-x\mathfrak m^n=\mathfrak m^{n+v(x)}.
+x\mathfrak m^n=\mathfrak m^{n+v(x)}
+\qquad(x\in K^\times,\ n\in\mathbf Z).
 $$
 
 Thus units preserve precision, maximal-ideal elements gain it, and negative-valued elements lose digits. Ramification indices will measure this shift between two valuation filtrations.
@@ -679,7 +680,7 @@ $$
 \operatorname{length}_A(M/TM)=v(\det T).
 $$
 
-This turns a multiplicative invariant into the size of a filtered quotient. For multiplication by an element $x$ on an integral lattice in a finite field extension, $\det T$ is the field norm. For multiplication by the base uniformizer on a rank-$r$ free module, the length is $r$. These two readings will account for residue degrees and ramification indices in Chapters 10 and 11.
+This turns a multiplicative invariant into the size of a filtered quotient. If $E/K$ is a finite field extension and a full $A$-lattice $M\subset E$ is stable under multiplication by $x\in E^\times$, the induced endomorphism has determinant $N_{E/K}(x)$. For multiplication by the base uniformizer on a rank-$r$ free module, the length is $r$. These two readings will account for residue degrees and ramification indices in Chapters 10 and 11.
 
 Not every torsion-free module over an arbitrary valuation ring behaves this cleanly. The diagonal decomposition and finite-length calculation use both discreteness and finite generation. This is another reason DVRs, rather than general valuation rings, are the natural integral objects for finite-dimensional local arithmetic.
 
@@ -804,7 +805,7 @@ The fields $\mathbf Q_p$ and finite extensions of it are locally compact. The fi
 
 For a rank-one nondiscrete valuation, choose an embedding of the value group in $\mathbf R$ and an associated absolute value. Balls now occur at a dense range of radii. The valuation ring is still the closed unit ball and its maximal ideal the open unit ball, but powers of a single ideal need not form a neighborhood basis. Indeed, the maximal ideal may satisfy $\mathfrak m^2=\mathfrak m$: every positive value can be split into two smaller positive values when the value group is divisible.
 
-Thus the $\mathfrak m$-adic topology can be much coarser than the valuation topology outside the discrete setting. Statements identifying completion with $\varprojlim A/\mathfrak m^n$ require a discrete valuation, or more generally a chosen ideal whose powers are cofinal among valuation neighborhoods.
+Thus the $\mathfrak m$-adic topology can be much coarser than the valuation topology outside the discrete setting. Statements identifying completion with $\varprojlim A/\mathfrak m^n$ require a discrete valuation, or more generally a chosen ideal whose powers are valuation-open and form a neighborhood basis of zero.
 
 ## 7. Completion
 

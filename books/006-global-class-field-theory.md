@@ -483,7 +483,246 @@ $$
 
 Since $H^0(F,A_n)=A_n$, the middle arrow in (4.3) is exactly the sum of the local invariants. Perfectness also says that its left kernel is zero. We have therefore proved the theorem on $n$-torsion. Every Brauer class and every finitely supported family of local invariants has finite exponent, so taking the directed union over $n$ proves exactness of the displayed sequence. Finally, two finite places carrying $r$ and $-r$ show directly that the sum map is onto. $\square$
 
-The same calculation in degree one will be used in the existence theorem. It retains, rather than suppresses, the extra orthogonality condition responsible for the exceptional $2$-primary Grunwald--Wang cases.
+We record the degree-one consequence in the form needed later. This also makes precise
+where the Grunwald--Wang condition lives. Let $S$ be a finite set of places, use Tate
+groups at its real places, and put
+
+$$
+\begin{aligned}
+\mathcal L_{n,S}&=\prod_{v\in S}H^1(K_v,A_n),\\
+D_{n,S}&=\ker\left(
+H^1(K,\mu_n)\longrightarrow
+\prod_{v\notin S}H^1(K_v,\mu_n)
+\right)\\
+&=\frac{P(n,S)}{K^{\times n}},
+\qquad
+P(n,S)=\{a\in K^\times:a\in K_v^{\times n}\text{ for every }v\notin S\}.
+\end{aligned}
+\tag{4.W1}
+$$
+
+For $c_S=(c_v)_{v\in S}$ define
+
+$$
+\Omega_{n,S}(c_S)([a])
+=\sum_{v\in S}\operatorname{inv}_v(c_v\smile a_v).
+\tag{4.W2}
+$$
+
+The value is independent of the representative of $[a]$. The degree-one row of the
+compact-support duality calculation is the exact sequence
+
+$$
+H^1(K,A_n)\longrightarrow\mathcal L_{n,S}
+\xrightarrow{\ \Omega_{n,S}\ }
+\operatorname{Hom}(D_{n,S},\mathbf Q/\mathbf Z)
+\longrightarrow0.
+\tag{4.W3}
+$$
+
+Equivalently, the image of global localization is the explicitly defined subgroup
+
+$$
+\mathcal L_{n,S}^{\mathrm{glob}}
+=\left\{c_S:\sum_{v\in S}\operatorname{inv}_v(c_v\smile a_v)=0
+\text{ for every }[a]\in D_{n,S}\right\},
+\tag{4.W4}
+$$
+
+and the induced pairing
+
+$$
+\mathcal L_{n,S}/\mathcal L_{n,S}^{\mathrm{glob}}
+\ \times\ D_{n,S}\longrightarrow\mathbf Q/\mathbf Z
+$$
+
+is perfect. Thus the perfectness assertion is about this quotient and this annihilator;
+it is not an assertion that arbitrary degree-one local data are global.
+
+Here is the elementary calculation of $D_{n,S}$. It is included both to identify the
+exceptional class and to fix all hypotheses. Choose compatible primitive $2^r$th roots
+of unity and write
+
+$$
+\eta_r=\zeta_{2^r}+\zeta_{2^r}^{-1}\qquad(r\geq2).
+$$
+
+There is a largest $s=s(K)\geq2$ for which $\eta_s\in K$, because $K$ has finite
+degree. Set
+
+$$
+b_K=2+\eta_s,
+\qquad
+S_0(K)=\{v:-1,b_K,-b_K\notin K_v^{\times2}\}.
+\tag{4.W5}
+$$
+
+The set $S_0(K)$ consists only of places above $2$. Indeed,
+
+$$
+K(\zeta_{2^{s+1}})=K(i,\sqrt{b_K}),
+$$
+
+so the three displayed square classes are the three quadratic subfields of this first
+cyclotomic layer. At a nondyadic finite place the layer is unramified and its local
+decomposition group is cyclic, not the Klein four group; at a real place $b_K$ is
+positive under the corresponding embedding, and at a complex place every element is
+a square. Thus at every place outside $2$ at least
+one of the three elements is a square.
+
+Write $n=2^\nu m$ with $m$ odd. We call $(K,n,S)$ **Wang-special** precisely when
+
+$$
+\nu\geq s+1,
+\qquad
+-1,b_K,-b_K\notin K^{\times2},
+\qquad
+S_0(K)\subseteq S.
+\tag{4.W6}
+$$
+
+The first two conditions in (4.W6) are equivalently the familiar cyclotomic
+hypothesis that $K(\zeta_{2^\nu})/K$ is noncyclic; the formulation in square
+classes also identifies the bottom noncyclic layer and the relevant local places.
+
+In that case put
+
+$$
+a_W(n)=b_K^{n/2}.
+\tag{4.W7}
+$$
+
+The exact power-defect calculation is
+
+$$
+D_{n,S}=
+\begin{cases}
+\{1\},& (K,n,S)\text{ is not Wang-special},\\[2mm]
+\{1,[a_W(n)]\},& (K,n,S)\text{ is Wang-special}.
+\end{cases}
+\tag{4.W8}
+$$
+
+We prove the calculation. First suppose (4.W6) holds. Since
+$a_W(n)^2=b_K^n$, its class has order at most two. If $v\notin S_0(K)$,
+one of the following three explicit $n$th roots exists:
+
+$$
+\begin{array}{c|c}
+\text{square available in }K_v&\text{an }n\text{th root of }a_W(n)\\
+\hline
+b_K&r,\quad r^2=b_K,\\
+-b_K&r,\quad r^2=-b_K,\\
+-1&1+\zeta_{2^s}.
+\end{array}
+\tag{4.W9}
+$$
+
+For the second row, $n/2$ is even. For the third, $i\in K_v$ and
+$\eta_s\in K_v$ imply $\zeta_{2^s}\in K_v$, while
+
+$$
+(1+\zeta_{2^s})^2=\zeta_{2^s}b_K,
+\qquad
+2^s\mid n/2;
+$$
+
+hence $(1+\zeta_{2^s})^n=b_K^{n/2}$. This proves that $[a_W(n)]$ is
+locally trivial off $S_0(K)$. It is nontrivial globally and at every
+$v\in S_0(K)$. For if $x^n=b_K^{n/2}$, then
+
+$$
+\xi=x^2/b_K\in\mu_{n/2}.
+$$
+
+The odd-order part of $\xi$ is a square. Because $-1$ is not a square, the
+$2$-primary roots of unity in the field in question are only $\{\pm1\}$.
+Consequently the square class of $\xi$ is $1$ or $-1$, which would make
+$b_K$ or $-b_K$ a square, a contradiction.
+
+It remains to show that there is no other class. Let $a\in P(n,S)$ and pass to
+$K'=K(\mu_n)$. The element $a$ is an $n$th power in almost every completion
+of $K'$. Since $\mu_n\subset K'$, the Kummer extension
+$K'(a^{1/n})/K'$ therefore splits at almost every place. The simple-pole
+separation argument proved above forces it to be trivial: deleting finitely many
+Euler factors, all nonzero at $s=1$, does not change the order of the zeta pole. Choosing
+$\beta^n=a$ in $K'$ gives the cocycle
+
+$$
+z_\sigma=\sigma(\beta)/\beta\in\mu_n
+\qquad(\sigma\in\operatorname{Gal}(K'/K)).
+\tag{4.W10}
+$$
+
+Thus the remaining question is a finite cyclotomic descent calculation. We spell it
+out. Split (4.W10) into its prime-primary parts. For an odd prime $p$, adjoining
+$\zeta_p$ has degree prime to $p$, so taking the norm kills the first descent
+obstruction. Above it the successive $p$-power cyclotomic layers are cyclic. Their
+intermediate root fields are therefore linearly ordered; the local-power hypothesis
+makes the smallest one split at almost every place, and the simple-pole separation
+argument makes it trivial. For $p=2$, all layers above
+$K(\zeta_{2^{s+1}})$ have cyclic kernel. If $\nu\leq s$, the entire relevant
+cyclotomic extension is cyclic and the ordered-root-field argument already finishes
+the descent. We may therefore assume $\nu\geq s+1$; the same argument removes the
+cyclic kernel above $K(\zeta_{2^{s+1}})$. At that bottom layer, the Galois group
+is cyclic if one of $-1,b_K,-b_K$ is a square, and the ordered-root-field argument
+then finishes. Otherwise it is the Klein four group. Let $c$ be cyclotomic
+inversion, $c(\zeta_{2^{s+1}})=\zeta_{2^{s+1}}^{-1}$, and let $t$ send
+$\zeta_{2^{s+1}}$ to
+$-\zeta_{2^{s+1}}$. After a coboundary has normalized the cyclic layers, it is
+enough to calculate on $\mu_{2^{s+1}}$. Put $\zeta=\zeta_{2^{s+1}}$ and write
+$z_c=\zeta^r$, $z_t=\zeta^q$. The actions are
+
+$$
+c(\zeta)=\zeta^{-1},
+\qquad
+t(\zeta)=\zeta^{1+2^s}.
+$$
+
+The cocycle relations for $t^2=1$ and $ct=tc$ say respectively
+
+$$
+q(2+2^s)\equiv0,
+\qquad
+2q+2^sr\equiv0
+\pmod {2^{s+1}}.
+$$
+
+Because $1+2^{s-1}$ is odd, these congruences say $q\in\{0,2^s\}$ and
+$r$ is even. A coboundary defined by $\zeta^h$ changes
+
+$$
+(r,q)\longmapsto(r-2h,q+2^sh).
+$$
+
+Choose $h$ to make $r=0$. The remaining coboundaries that preserve $r=0$
+do not change $q$, so exactly the following two classes remain:
+
+$$
+\begin{array}{c|c|c|c}
+&z_c&z_t&\text{Kummer representative}\\
+\hline
+\text{trivial}&1&1&1,\\
+\text{Wang}&1&-1&b_K^{n/2}.
+\end{array}
+\tag{4.W11}
+$$
+
+For the last row take $\beta=\sqrt{b_K}=\eta_{s+1}$; it is fixed by $c$,
+negated by $t$, and satisfies $\beta^n=b_K^{n/2}$. The congruence calculation
+shows conversely that multiplication by a coboundary reduces every solution to
+one of the two rows. This is the entire noncyclic
+calculation; the cyclic kernels already removed above introduce no further row.
+The second row restricts nontrivially precisely where the bottom decomposition group
+is Klein four, namely at the places in $S_0(K)$. It therefore survives localization
+away from $S$ exactly when $S_0(K)\subseteq S$. This proves (4.W8), including all
+nonexceptional alternatives.
+
+Finally, (4.W3) follows directly from the degree-one perfect pairing: the annihilator
+of the global image in the finite local product is the localization of $D_{n,S}$,
+and finite perfect duality identifies the cokernel with its character group. This
+derivation uses local reciprocity, Kummer theory, and the already proved finite
+duality calculation, but not the global existence theorem.
 
 ### 4.3 Construction of the fundamental class
 
@@ -1131,7 +1370,92 @@ Enlarging $S$ adds the unramified local terms on both sides. Passing to the dire
 
 It remains to prove injectivity on the left. If a global character is trivial in every completion, the cyclic extension $E/K$ that it cuts out has every decomposition group trivial. The split-everywhere separation fact proved in Section 4.2 gives $E=K$. Hence the character is trivial and localization is injective. $\square$
 
-The theorem is the exact safe replacement for an unrestricted Grunwald assertion. A family of local cyclic characters globalizes if and only if it is orthogonal to every global Kummer class. In the special $2$-primary situation discovered by Wang, that orthogonality contains an extra nonzero global class; dropping it gives a false local-prescription theorem. Our existence argument starts with an idele class character, for which orthogonality is automatic, so it encounters no exceptional case.
+We can now state the exact Grunwald--Wang alternative rather than merely warn that
+one exists. Let $S$ be finite, let
+
+$$
+c_v\in H^1(K_v,A_n)\qquad(v\in S),
+$$
+
+and suppose that the least common multiple of the orders of the $c_v$ is $n$.
+Via local reciprocity these are the additive forms of prescribed local cyclic
+characters. If $(K,n,S)$ is Wang-special in the precise sense of (4.W6), define
+the **Wang sign at $v$** by
+
+$$
+\epsilon_v(c_v)
+=\exp\left(2\pi i\operatorname{inv}_v
+\bigl(c_v\smile a_W(n)_v\bigr)\right)\in\{+1,-1\}.
+\tag{6.W1}
+$$
+
+The value is a sign because $[a_W(n)]$ has order two. It is $+1$ away from
+$S_0(K)$, and local reciprocity gives the equally concrete formula
+
+$$
+\epsilon_v(c_v)
+=\jmath_n\!\left(c_v(\operatorname{rec}_{K_v}(a_W(n)))\right).
+\tag{6.W2}
+$$
+
+The complete alternative is as follows.
+
+- If $(K,n,S)$ is not Wang-special, every prescribed tuple $(c_v)_{v\in S}$
+  is the localization of a class in $H^1(K,A_n)$.
+
+- If $(K,n,S)$ is Wang-special, such a class exists if and only if
+
+  $$
+  \prod_{v\in S_0(K)}\epsilon_v(c_v)=+1.
+  \tag{6.W3}
+  $$
+
+- If the product in (6.W3) is $-1$, no exponent-$n$ global character has the
+  prescribed localizations. After the canonical inclusion
+  $A_n\hookrightarrow A_{2n}$, $x\mapsto2x$, the same local characters are the
+  localizations of a global $A_{2n}$-valued character. Every such character has
+  order exactly $2n$. Thus the exceptional replacement is degree $2n$, not an
+  unspecified failure or an unspecified extra class.
+
+Taking fixed fields translates this verbatim into the extension form: the resulting
+field is cyclic of degree $n$ in the unobstructed case and of degree $2n$ in the
+obstructed case, and its completion at $v\in S$ is the cyclic extension cut out by
+$\ker c_v$.
+
+Indeed, the finite-support exact sequence (4.W3) says that the only functionals
+to test are the classes in $D_{n,S}$. Formula (4.W8) makes that group either zero
+or $\langle[a_W(n)]\rangle$, and (6.W1) turns its single nonzero functional into
+the product (6.W3). In the obstructed case the exceptional class at level $2n$ is
+
+$$
+a_W(2n)=b_K^n=a_W(n)^2.
+$$
+
+Every embedded local character therefore evaluates trivially on it: its Wang sign
+is the square of the old sign. Applying (4.W3) at level $2n$ produces the global
+class. Its order is a multiple of the least common multiple $n$ of the local
+orders and divides $2n$; it cannot have order $n$, by the failed sign test, so its
+order is $2n$.
+
+This proof is not using the existence theorem that follows. It uses the finite
+duality calculation of Section 4.2, the explicit cyclotomic descent (4.W8), and
+local reciprocity. In particular, for $K=\mathbf Q$, $n=8$, and $S=\{2\}$ one
+has $s=2$, $b_K=2$, $S_0(K)=\{2\}$, and
+
+$$
+a_W(8)=2^4=16.
+$$
+
+Thus the familiar obstruction is exactly the sign obtained by evaluating the
+prescribed $2$-adic character on $16$.
+
+The all-place family used in our existence argument has a different and simpler
+source. It comes from an idele class character. For every $a\in K^\times$, the
+product of its local evaluations is the value of that character on the principal
+idele $(a)_v$, hence is $1$. Equivalently,
+$\lambda((c_v))(a)=0$ for every global Kummer class $a$. This proves automatic
+orthogonality directly; it does not assume that the Wang class is absent, nor does
+it appeal to the global field whose existence is about to be proved.
 
 ### 6.3 Constructing the global character
 
@@ -1691,7 +2015,7 @@ Thus the three frequently quoted formulations have different scopes. The map $C_
 
 ### 10.3 Infinite decomposition groups
 
-For each place $v$, the embedding $K_v^\times\to C_K$ followed by infinite reciprocity agrees with local reciprocity and the inclusion of a decomposition group:
+For each place $v$, the embedding $K_v^\times\to C_K$ followed by infinite reciprocity agrees with local reciprocity and the map induced by a decomposition-group embedding:
 
 $$
 \begin{array}{ccc}
