@@ -1009,6 +1009,10 @@ not contain the inverse image of any special-fiber Zariski open, as Counterexamp
 An application using this repair must construct the same local slice through the special packet
 with a smooth proper model and verify that its permitted good locus contains such a $W$; separate
 good and special neighborhoods do not imply it.
+If that model and open are first constructed for a local cutting tuple before Step 1, the
+application must also prove that they persist on a congruence neighborhood of that tuple.
+Otherwise weak approximation may replace the local curve by a global cut for which Lemma 5.2D's
+hypotheses have not been verified.
 
 **Corollary 5.2E (singleton mixed-packet moving under a saturation hypothesis).**  In the
 simultaneous setup of Lemma 5.2A, suppose every packet without a fixed exceptional factor may be

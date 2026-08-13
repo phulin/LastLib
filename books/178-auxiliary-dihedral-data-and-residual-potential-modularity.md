@@ -609,6 +609,10 @@ the actual slice.  Book 154, Lemma 5.2D would also make (2.12a) automatic if tha
 smooth proper integral model whose allowed good factors contained every tube above a nonempty
 special-fiber Zariski open; Book 154, Corollary 5.2E turns either verified repair into the common
 presentation, but the present local package does not construct such an integral slice.
+Book 157, Section 13.2A records the exact stable integral connecting-slice assertion
+$(\mathrm{ICS})_{v_0,Z}$ and proves that it would discharge this condition through Book 154,
+Corollary 5.2E.  It also records that no prior source proves that assertion; this reference is a
+conditional handoff, not a construction of the slice.
 Thus item 6 retains (2.12a); it can be discharged by one of these geometric repairs, by its
 restricted sufficient condition (2.12), or by another proved simultaneous presentation of the
 singleton mixed packet.  Equal ranks, Hensel lifting, local realizability, and arbitrary norm factors in one residue tube do

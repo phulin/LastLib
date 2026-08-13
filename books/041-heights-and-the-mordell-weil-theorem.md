@@ -67,7 +67,9 @@
     - [Level fields and integral moduli points](#132-level-fields-and-integral-moduli-points)
     - [The missing arithmetic height bound](#133-the-missing-arithmetic-height-bound)
     - [Why integrality is not a substitute](#134-why-integrality-is-not-a-substitute)
-    - [Exact prerequisite ledger](#135-exact-prerequisite-ledger)
+    - [The descent half after Northcott](#135-the-descent-half-after-northcott)
+    - [Zarhin cancellation and Jordan--Zassenhaus](#136-zarhin-cancellation-and-jordan--zassenhaus)
+    - [The first source-closure boundary](#137-the-first-source-closure-boundary)
 14. [From Faltings finiteness to finite isogeny classes](#14-from-faltings-finiteness-to-finite-isogeny-classes)
     - [Good reduction is preserved by isogeny](#141-good-reduction-is-preserved-by-isogeny)
     - [The finite-isogeny-class consequence](#142-the-finite-isogeny-class-consequence)
@@ -146,9 +148,10 @@ The second half of the book asks a different height question. It replaces a poin
 the moduli point of $A$, replaces the Néron--Tate metric by the metrized Hodge line, and seeks a
 uniform height bound from prescribed good reduction. Once Faltings--Shafarevich finiteness is
 available, Tate's stable-lattice argument gives rational Tate-module semisimplicity. Chapters
-11--16 prove every implication after finite isogeny classes and identify the exact height,
-compactification, slope, factor-cancellation, and descent inputs absent from the present
-prerequisites; they do not disguise those missing deep inputs as an application of ordinary
+11--16 prove every implication after finite isogeny classes and identify the exact
+semistable-reduction, compactification, metric, and slope inputs absent from the present
+prerequisites. They also prove finite polarized $K$-descent and integral factor cancellation
+after Northcott; they do not disguise the remaining height inputs as an application of ordinary
 Northcott finiteness.
 
 ## 2. Absolute values and projective height
@@ -1521,7 +1524,7 @@ The Faltings--Tate route separates into four implications:
 $$
 \begin{array}{c}
 \text{arithmetic height bound on polarized moduli}
-+\text{ Zarhin factor cancellation and }K\text{-descent}
++\text{ polarized descent and integral Zarhin factor cancellation}
 \Longrightarrow \text{Faltings--Shafarevich finiteness},\\
 \text{Faltings--Shafarevich finiteness}
 \Longrightarrow \text{finiteness of each }K\text{-isogeny class},\\
@@ -1533,10 +1536,11 @@ $$
 \tag{11.5}
 $$
 
-The last three arrows are algebraic and are proved completely in Chapters 14--16. The first
-arrow contains two parts of the deep Faltings input: the numerical height bound and the
-factor-cancellation/descent passage from the stabilized principally polarized objects back to
-the original abelian varieties. Chapters 12--13 identify both at theorem level. The distinction prevents a
+The last three arrows are algebraic and are proved completely in Chapters 14--16. In the first
+arrow, Chapters 12--13 prove polarized descent and the integral factor-cancellation passage
+from the stabilized principally polarized objects back to the original abelian varieties. The
+remaining input is the deep numerical height bound, whose exact semistable, compactification,
+metric, and slope components are isolated below. This distinction prevents a
 moduli point that is merely integral outside finitely many primes from being declared to have
 bounded height.
 
@@ -1605,6 +1609,56 @@ Néron model over $\mathcal O_L$ at places where reduction improves. Their index
 conductor. Accordingly the naive value $h_F(A/K)$ need not be invariant before semistable
 reduction.
 
+The comparison can be stated without any ambiguity about lattices. Let $R'/R$ be a finite
+extension of discrete valuation rings, let $\mathcal A$ and $\mathcal A'$ be the Néron models
+of $A/K$ and $A_{K'}/K'$, and let
+
+$$
+h:\mathcal A\times_RR'\longrightarrow\mathcal A'
+$$
+
+be the canonical base-change morphism of Book 38. Pullback at the identity is a map between
+free $R'$-modules of the same rank,
+
+$$
+h_e^*:e'^*\Omega^1_{\mathcal A'/R'}
+\longrightarrow
+e^*\Omega^1_{\mathcal A/R}\otimes_RR'. \tag{12.4a}
+$$
+
+It is an isomorphism on generic fibers, hence injective, and its finite cokernel measures the
+failure of invariant differentials to commute with ramified base change. Taking determinants
+gives the exact comparison needed in (12.3). Thus the relevant semistable theorem is not the
+vague assertion that Néron models are functorial; it is the following integral statement:
+
+$$
+\boxed{(\mathrm{SHB})\quad
+A/K\text{ semistable }\Longrightarrow h_e^*\text{ in (12.4a) is an isomorphism}
+\text{ for every finite }K'/K.} \tag{12.4b}
+$$
+
+The good-reduction case is already available and is worth proving separately. If $A$ extends
+to an abelian scheme $\mathcal B/R$, then $\mathcal B_{R'}$ is again an abelian scheme. By the
+good-reduction theorem for Néron models it is the Néron model of $A_{K'}$. Relative
+differentials of a smooth morphism commute with arbitrary base change, so
+
+$$
+e'^*\Omega^1_{\mathcal B_{R'}/R'}
+\simeq e^*\Omega^1_{\mathcal B/R}\otimes_RR'. \tag{12.4c}
+$$
+
+Consequently (12.4b) is proved at every good place, including for ramified $R'/R$. The
+unramified case is also formal, without a reduction hypothesis. If $R'/R$ is finite étale,
+$\mathcal A_{R'}$ has the Néron mapping property over $R'$. Indeed, a smooth $R'$-scheme is
+smooth over $R$; extend its generic-fiber map uniquely to $\mathcal A$ over $R$, and pair
+that extension with its structural map to $\operatorname{Spec}R'$ to obtain the unique map to
+$\mathcal A_{R'}$. Hence $\mathcal A_{R'}\simeq\mathcal A'$, and (12.4a) is an isomorphism.
+
+The unproved content of $(\mathrm{SHB})$ is therefore exactly ramified base change in the
+semiabelian, nonproper case. Book 38 proves that the whole Néron model can change under
+ramified base change; its component-group calculation neither implies nor contradicts the
+determinant-lattice equality (12.4b).
+
 If $A$ becomes semistable over $L$, define its stable height by
 
 $$
@@ -1612,13 +1666,23 @@ h_F^{\mathrm{st}}(A)=h_F(A_L/L).
 \tag{12.5}
 $$
 
-Assume the semistable Hodge-lattice base-change theorem recorded in Section 13.5. Once
-semistability holds, that theorem identifies invariant differentials after every further finite
-base change, while the archimedean terms repeat with total local degree. Formula (2.2) then
-proves that (12.5) is independent of a further extension. Making (12.5) available for every
-abelian variety requires both potential semistable reduction and this Hodge-lattice
-base-change theorem. Neither is a consequence of the Néron-model construction in Book 38;
-both remain among the specialized prerequisites recorded in Section 13.5.
+Assume $(\mathrm{PSR})$ as formulated in Section 13.7 and $(\mathrm{SHB})$. Once
+semistability holds, (12.4b) identifies the finite-place determinant lattices after every
+further finite base
+change, while the archimedean terms repeat with total local degree. Formula (2.2) then proves
+that (12.5) is independent of a further extension. If $L_1$ and $L_2$ are two semistable
+fields, apply the same argument over a common finite extension. This proves independence of
+the original choice as well.
+
+There is no hidden globalization step in that argument. Only finitely many places are bad.
+Choose a finite Galois local extension giving semistable reduction at each of them. Book 2,
+Theorem 14.1 realizes these as selected completions of one number-field extension; after taking
+its Galois closure, every completion over each selected place contains an isomorphic copy of
+the prescribed local field. The persistence clause in $(\mathrm{PSR})$ then gives one global
+semistable field. Thus $(\mathrm{PSR})$ supplies the field, $(\mathrm{SHB})$ supplies equality
+of the local lattices, and the local-degree formula supplies invariance of the normalized
+Arakelov degree. What is missing from the earlier books is $(\mathrm{PSR})$ and the ramified
+semistable case of $(\mathrm{SHB})$. They are recorded exactly in Section 13.7.
 
 ### 12.3 The isogeny formula
 
@@ -1742,8 +1806,9 @@ $$
 $$
 
 The polarized version fixes a polarization type and asserts finiteness of polarized
-isomorphism classes. The unpolarized statement follows in the full Faltings proof by Zarhin's
-trick together with the integral cancellation and descent argument for the resulting factors.
+isomorphism classes. Once the required moduli-height bound is supplied, the unpolarized
+statement follows here by Zarhin's trick, polarized descent, and integral cancellation for the
+resulting factors.
 Neither the polarization nor the cancellation may be discarded: an arbitrary abelian variety
 need not carry a principal polarization over $K$, and an isogeny-class statement is not an
 isomorphism-class statement.
@@ -1888,20 +1953,12 @@ height and the arithmetic boundary term.
 
 Given (13.4), Lemma 12.1 gives finitely many $L$-isomorphism classes of principally polarized
 $Z(A)_L$ with level, as $L$ ranges over the finite list in Section 13.2. This stabilized
-polarized finiteness is not yet (13.1): one must remove level, descend from $L$ to $K$, and
-recover only finitely many $K$-isomorphism classes of the factors $A$. Let
-$(\mathrm{ZC})_{K,g}$ denote the integral Zarhin factor-cancellation and descent theorem making
-exactly that passage. The formal implication is therefore
-
-$$
-(\mathrm{FH})_{K,S,g}+(\mathrm{ZC})_{K,g}
-\Longrightarrow(\mathrm{FS})_{K,S,g}
-\tag{13.5}
-$$
-
-Neither input on the left is proved here. The compactification, metric comparison, and slope
-estimates below are needed to establish $(\mathrm{FH})$; factor cancellation and descent are a
-separate post-Northcott input.
+polarized finiteness is not yet (13.1). There are two subsequent questions, and they should
+not be conflated. First, do finitely many polarized objects over the finitely many level fields
+give finitely many polarized objects over $K$? Section 13.5 proves that they do. Second, does
+finiteness of the stabilized varieties $Z(A)$ imply finiteness of their direct factors $A$?
+Section 13.6 proves that integral cancellation statement by establishing the required lattice
+theorem over the order $\operatorname{End}_K(Z(A))$.
 
 The height part, (13.4), comes in the Faltings proof from arithmetic intersection
 theory on a toroidal compactification of Siegel moduli. One extends the Hodge bundle with its
@@ -1937,32 +1994,433 @@ Nor does the isogeny formula repair the problem. Inequality (12.10) contains
 $\log\deg f$, and no preceding theorem bounds the least degree of an isogeny to every member
 of the class. Assuming such a bound is another form of assuming isogeny finiteness.
 
-### 13.5 Exact prerequisite ledger
+### 13.5 The descent half after Northcott
 
-The earlier books provide projective heights and Northcott, quasi-projective PEL moduli with
-theta frames, coherent Hodge bundles, abelian schemes and their quotients, Néron models, and
-polarizations. They do not provide the following specialized package:
+Northcott produces objects over the level fields. Returning the stabilized polarized objects
+to $K$ is not the difficult cancellation step. We prove that descent finiteness now.
 
-1. potential semistable reduction for arbitrary abelian varieties, with the base-change
-   formula for the Hodge lattice;
-2. a toroidal or comparably strong arithmetic compactification of Siegel moduli carrying the
-   canonical extension of the Hodge and theta bundles;
-3. arithmetic intersection theory and arithmetic Riemann--Roch or Hilbert--Samuel in the
-   dimension needed on that compactification;
-4. the uniform archimedean theta-norm and nonarchimedean boundary estimates which prove
-   (12.12) and the slope bound (13.4); and
-5. the integral Zarhin factor-cancellation argument passing from the principally polarized
-   stabilized objects to unpolarized $K$-isomorphism classes.
+**Lemma 13.2 (finite polarized automorphism group).** If $(B,\lambda)$ is a polarized abelian
+variety over a number field $L$, then
 
-These are not general formal foundations such as tensor products, projective embeddings, or
-ordinary Riemann--Roch on a curve. Together they are the deep Faltings finiteness proof. None is
-proved in Chapters 1--12, and the catalog before this volume contains no source for the package.
-Consequently this book does **not** assert (13.4), $(\mathrm{ZC})$, (13.1), or unconditional
-Tate-module semisimplicity. The remaining chapters prove every implication after
-$(\mathrm{FS})$, and in fact need only $(\mathrm{IF})$. Thus $(\mathrm{IF})$ is the first
-irreducible arithmetic hypothesis in the Tate argument. The standard uniform route to it remains
-conditional on the two-part Faltings--Shafarevich package in (13.5), rather than on the numerical
-height bound alone.
+$$
+\operatorname{Aut}_L(B,\lambda)
+=\{u\in\operatorname{Aut}_L(B):u^\vee\lambda u=\lambda\}
+\tag{13.8}
+$$
+
+is finite.
+
+**Proof.** It is enough to prove finiteness after an algebraic closure. Choose an ample line
+bundle inducing $\lambda$. Twisting it by a suitable element of $\operatorname{Pic}^0(B)$
+makes it symmetric: the required element exists because multiplication by two on the dual
+abelian variety is surjective. Rigidify the result at the identity and call it $L_0$. Any
+other symmetric rigidified line bundle inducing the same polarization differs from $L_0$ by a
+symmetric element of
+$\operatorname{Pic}^0(B)$. In $\operatorname{Pic}^0(B)$, pullback by $[-1]$ is inversion, so
+such a difference is two-torsion. The possible differences therefore form the finite group
+$B^\vee[2]$. The group in (13.8) permutes this finite set of inducing bundles, and it is enough
+to show that the stabilizer of $L_0$ is finite.
+
+Choose $n$ so that $L_0^n$ is very ample. A group automorphism preserving $L_0$ acts
+faithfully through a projective transformation of the resulting embedded copy of $B$: if the
+projective transformation is the identity on the complete linear system, it is the identity
+on $B$. These transformations form a closed finite-type subgroup $H$ of the projective
+linear group, cut out by preserving the homogeneous ideal of the embedded $B$ and fixing its
+identity point.
+An infinitesimal element of $H$ gives a global vector field on $B$ vanishing at the identity.
+Translation trivializes the tangent bundle of an abelian variety, so every global vector
+field is translation invariant and is determined by its value at the identity. The vector
+field is therefore zero. Thus $H$ has zero-dimensional tangent space at the identity. In
+characteristic zero a finite-type group scheme with this property is zero-dimensional, and a
+zero-dimensional closed subgroup of a projective linear group is finite. Hence the stabilizer
+of $L_0$, and then the full group (13.8), is finite. $\square$
+
+**Proposition 13.3 (finite polarized descent).** Let $M/K$ be a finite extension and let
+$\mathscr P$ be a finite set of polarized abelian varieties over $M$. Up to polarized
+$K$-isomorphism, only finitely many polarized abelian varieties $(B,\lambda)/K$ have
+$(B,\lambda)_M$ isomorphic to a member of $\mathscr P$.
+
+**Proof.** Replacing $M$ by its Galois closure only enlarges the field over which the
+isomorphism is required, so assume that $M/K$ is Galois with group $G$. Fix one member of
+$\mathscr P$. If it has no $K$-form there is nothing to count; otherwise choose one form
+$(B_0,\lambda_0)/K$. For another form $(B,\lambda)$ and an $M$-isomorphism
+
+$$
+\psi:(B,\lambda)_M\xrightarrow{\sim}(B_0,\lambda_0)_M,
+$$
+
+comparison of $\psi$ with its $G$-conjugates gives a nonabelian cocycle
+
+$$
+c_\sigma=\psi\,{}^\sigma\!\psi^{-1}
+\in\operatorname{Aut}_M((B_0,\lambda_0)_M),
+\qquad
+c_{\sigma\tau}=c_\sigma\,{}^\sigma c_\tau. \tag{13.9}
+$$
+
+Changing $\psi$ changes the cocycle by a coboundary. Conversely, if two such cocycles are
+cohomologous, the corresponding adjusted $M$-isomorphism is $G$-invariant and therefore
+descends coefficient by coefficient to a polarized $K$-isomorphism. Thus the set of forms
+injects into the nonabelian cohomology set
+
+$$
+H^1\bigl(G,\operatorname{Aut}_M((B_0,\lambda_0)_M)\bigr).
+$$
+
+The automorphism group is finite by Lemma 13.2, and $G$ is finite, so even the set of all maps
+from $G$ to that automorphism group is finite. Hence the cocycle set and its quotient are
+finite. Taking the finite union over $\mathscr P$ proves the proposition. $\square$
+
+Apply this to the output of $(\mathrm{FH})$. There are finitely many level fields. Over each
+one, Northcott gives finitely many triples $(Z,\lambda_Z,\alpha_N)$, and forgetting level gives
+finitely many polarized pairs. Proposition 13.3 therefore proves
+
+$$
+(\mathrm{FH})_{K,S,g}\Longrightarrow
+\left\{
+\begin{array}{c}
+\text{only finitely many polarized $K$-isomorphism classes}\\
+\text{among the stabilized pairs $(Z(A),\lambda_Z)$}
+\end{array}
+\right\}. \tag{13.10}
+$$
+
+This removes the level and level-field descent issue completely. It does not recover $A$ from
+$Z(A)$.
+
+### 13.6 Zarhin cancellation and Jordan--Zassenhaus
+
+For an abelian variety $B/K$, define the exact remaining assertion
+
+$$
+(\mathrm{FC})_{B/K}:\quad
+\#\{A/K:\text{there is a $C/K$ with }B\simeq_K A\times C\}/\simeq_K<\infty.
+\tag{13.11}
+$$
+
+If (13.10) gives stabilized varieties $B_1,\ldots,B_r$, then every original $A$ is a direct
+factor of one $B_i$, because
+
+$$
+Z(A)=A\times\bigl(A^3\times(A^\vee)^4\bigr).
+$$
+
+Consequently
+
+$$
+(\mathrm{FH})_{K,S,g}
++(\mathrm{FC})_{B_i/K}\text{ for }1\leq i\leq r
+\Longrightarrow(\mathrm{FS})_{K,S,g}. \tag{13.12}
+$$
+
+Write $(\mathrm{ZC})_K$ for the assertion that $(\mathrm{FC})_{B/K}$ holds for every abelian
+variety $B/K$. For the dimension-$g$ Shafarevich problem only the stabilized varieties of
+dimension $8g$ are needed. Notice that this is about actual products and actual
+$K$-isomorphism classes. Poincaré reducibility supplies complements only up to isogeny and
+therefore does not prove (13.11).
+
+There is an exact algebraic reduction of (13.11). Put
+
+$$
+\Gamma=\operatorname{End}_K(B),
+\qquad E=\Gamma\otimes_{\mathbf Z}\mathbf Q.
+\tag{13.13}
+$$
+
+Book 36 proves that $\Gamma$ is finite free over $\mathbf Z$ and that $E$ is a
+finite-dimensional semisimple $\mathbf Q$-algebra. If $B\simeq A\times C$, then
+
+$$
+P_A=\operatorname{Hom}_K(B,A)
+$$
+
+is a direct summand of the regular right $\Gamma$-module $\Gamma$; the right action is
+precomposition. Moreover $A\mapsto P_A$ is fully faithful on direct factors of $B$. To verify
+this rather than cite Morita language, choose inclusion and projection maps
+$i_A:A\to B$ and $p_A:B\to A$. If
+
+$$
+\varphi:P_A\longrightarrow P_{A'}
+$$
+
+is right $\Gamma$-linear, put $f=\varphi(p_A)i_A:A\to A'$. Every $h:B\to A$ satisfies
+
+$$
+h=p_A(i_Ah),
+$$
+
+and hence
+
+$$
+\varphi(h)=\varphi(p_A)(i_Ah)=fh.
+$$
+
+Thus $\varphi$ is postcomposition by the unique map $f$. An isomorphism of the modules
+$P_A$ and $P_{A'}$ therefore gives a $K$-isomorphism $A\simeq A'$.
+
+After tensoring with $\mathbf Q$, the modules $P_A\otimes\mathbf Q$ are direct summands of the
+regular semisimple $E$-module. There are only finitely many possible rational isomorphism
+types, because each simple constituent occurs with multiplicity bounded by its multiplicity
+in $E$. The exact remaining arithmetic assertion is therefore
+
+$$
+\boxed{(\mathrm{DS})_\Gamma:\quad
+\text{the regular right $\Gamma$-module has only finitely many
+direct-summand isomorphism types}.} \tag{13.14}
+$$
+
+This condition is equivalent to $(\mathrm{FC})_{B/K}$. We have proved the implication from
+$(\mathrm{DS})_\Gamma$ to $(\mathrm{FC})_{B/K}$. Conversely, a direct summand of the regular
+module is $e\Gamma$ for an idempotent $e\in\Gamma$. The abelian subvarieties $e(B)$ and
+$(1-e)(B)$ give an actual product decomposition: the maps
+
+$$
+B\longrightarrow e(B)\times(1-e)(B),\qquad x\longmapsto(ex,(1-e)x),
+$$
+
+and addition are inverse. Under the fully faithful functor above, $e(B)$ corresponds to
+$e\Gamma$. Thus finiteness of the factors gives finiteness of all direct summand types.
+
+We now prove a stronger theorem from which (13.14) follows. The only geometric input is the
+elementary compactness of normalized Euclidean lattices. We record the precise form needed in
+the argument.
+
+**Lemma 13.4 (normalized lattice compactness).** Fix a Euclidean space $V$ of dimension $n$
+and a number $\epsilon>0$. Let $\Lambda_j\subset V$ be full lattices of covolume one such
+that every nonzero $x\in\Lambda_j$ has $\lVert x\rVert\geq\epsilon$. After passing to a
+subsequence, each $\Lambda_j$ has a basis
+
+$$
+b_{j,1},\ldots,b_{j,n}
+$$
+
+for which every sequence $b_{j,i}$ converges and the limiting vectors form a basis of $V$.
+
+**Proof.** We first prove, by induction on $n$, that such a lattice has a basis all of whose
+vectors have norm at most a constant $M(n,\epsilon)$. A volume-pigeonhole argument gives a
+dimension-dependent upper bound for the length of a shortest vector when the covolume is one.
+Indeed, in fixed orthonormal coordinates the box $[-1,1]^n$ has volume $2^n>1$. Any
+measurable set of volume greater than the covolume has two points with the same image modulo
+$\Lambda$: cut it by translates of a fundamental parallelepiped and compare total volumes.
+Their difference is a nonzero lattice vector in $[-2,2]^n$, of norm at most $2\sqrt n$.
+Thus a shortest vector $v$ has
+
+$$
+\epsilon\leq a=\lVert v\rVert\leq c_n.
+$$
+
+The vector $v$ is primitive, since otherwise dividing it by a nontrivial integer would give a
+shorter lattice vector. Let $\pi:V\to v^\perp$ be orthogonal projection. Then $\pi\Lambda$ is
+a lattice of covolume $1/a$: extend the primitive vector $v$ to a basis of $\Lambda$ and
+compute the volume after orthogonal projection. If $0\ne y\in\pi\Lambda$, choose a lift
+$z\in\Lambda$ and
+subtract an integral multiple of $v$ so that the component of $z$ along $v$ has absolute
+value at most $a/2$. Minimality of $v$ gives $\lVert z\rVert\geq a$, whence
+
+$$
+\lVert y\rVert^2\geq a^2-\frac{a^2}{4}=\frac{3a^2}{4}.
+$$
+
+After scaling $\pi\Lambda$ by $a^{1/(n-1)}$, it has covolume one and shortest-vector length
+at least
+
+$$
+\frac{\sqrt3}{2}\epsilon^{\,n/(n-1)}.
+$$
+
+The induction hypothesis gives a uniformly bounded basis of the scaled projected lattice.
+Undo the scaling and lift each basis vector to $\Lambda$, again choosing its component along
+$v$ in the interval $[-a/2,a/2]$. Together with $v$, these lifts form a basis because
+$\Lambda\cap\mathbf Rv=\mathbf Zv$. The bounds on $a$ give the required uniform bound on
+all its vectors. The case $n=1$ is immediate.
+
+Choose these bounded bases for the $\Lambda_j$ and write their vectors as the columns of
+matrices in one fixed orthonormal basis of $V$. A bounded sequence of matrices has a convergent
+subsequence. Every determinant has absolute value one, so the limiting determinant also has
+absolute value one. Its columns are therefore a basis, which proves the lemma. $\square$
+
+The stronger order-lattice assertion is
+
+$$
+\boxed{(\mathrm{JZ})_\Gamma:\quad
+\begin{array}{l}
+\text{for every fixed finite-dimensional right $E$-module $W$, there are only finitely}\\
+\text{many isomorphism classes of right $\Gamma$-lattices $P$ with
+$P\otimes\mathbf Q\simeq W$.}
+\end{array}} \tag{13.15}
+$$
+
+Here a $\Gamma$-lattice in $W$ means a full free $\mathbf Z$-submodule stable under the right
+action of $\Gamma$.
+
+**Theorem 13.5 (Jordan--Zassenhaus).** Let $\Gamma$ be an order in a finite-dimensional
+semisimple $\mathbf Q$-algebra $E$. Then $(\mathrm{JZ})_\Gamma$ holds.
+
+**Proof.** Choose an $E$-isomorphism from the rationalization of each lattice to $W$; its
+image is a $\Gamma$-stable lattice inside the one fixed rational vector space $W$. It is
+therefore enough to count embedded lattices up to abstract $\Gamma$-module isomorphism.
+
+We first treat a simple right $E$-module $W$. Fix an inner product on
+$W_{\mathbf R}=W\otimes_{\mathbf Q}\mathbf R$, and let $n=\dim_{\mathbf R}W_{\mathbf R}$.
+Choose a $\mathbf Z$-basis $\gamma_1,\ldots,\gamma_s$ of $\Gamma$. For every nonzero
+$y\in W$ the simplicity of $W$ gives $yE=W$, so $y\Gamma$ is a full lattice in $W$.
+The same holds for $x=ty$ with $t>0$. Among the vectors $x\gamma_i$ one can then choose $n$
+which are linearly independent. Hadamard's determinant bound, applied to the finitely many
+possible choices, gives one constant $C$ such that
+
+$$
+\operatorname{covol}(x\Gamma)\leq C\lVert x\rVert^n
+\qquad(x=ty, t>0, 0\ne y\in W).
+$$
+
+More explicitly, the chosen $n$ vectors generate a sublattice of $x\Gamma$, so the covolume
+of $x\Gamma$ is no larger than their parallelepiped volume; each of their norms is at most a
+fixed operator-norm constant times $\lVert x\rVert$.
+
+Suppose, toward a contradiction, that $L_j\subset W$ are pairwise nonisomorphic
+$\Gamma$-lattices. Multiply $L_j$ by a positive real scalar $t_j$ so that
+$\Lambda_j=t_jL_j$ has covolume one. If $x=t_jy$ is a nonzero shortest vector of
+$\Lambda_j$, then $x\Gamma\subseteq\Lambda_j$ is a full sublattice. Hence
+
+$$
+1\leq[\Lambda_j:x\Gamma]
+=\operatorname{covol}(x\Gamma)
+\leq C\lVert x\rVert^n.
+$$
+
+Thus all nonzero vectors of all $\Lambda_j$ have norm at least $C^{-1/n}$. Lemma 13.4 gives,
+after passage to a subsequence, bases $b_{j,1},\ldots,b_{j,n}$ converging to a basis of
+$W_{\mathbf R}$. For each $\gamma_i$, the matrix of right multiplication by $\gamma_i$ in
+the $j$-th basis has integral entries. These matrices converge, because the basis matrices
+and their inverses converge. A convergent sequence of integral matrices is eventually
+constant; after one further subsequence, this holds simultaneously for all $\gamma_i$.
+
+Write $b_{j,r}=t_j\ell_{j,r}$. Then $\ell_{j,1},\ldots,\ell_{j,n}$ is a basis of $L_j$, and
+the action matrices of every $\gamma_i$ in these bases are the same. Sending
+$\ell_{j,r}$ to $\ell_{k,r}$ is therefore an isomorphism of right $\Gamma$-modules. This
+contradicts the choice of the $L_j$ and proves (13.15) when $W$ is simple.
+
+We pass to general $W$ by induction on $\dim_{\mathbf Q}W$. The zero and simple cases are
+settled. Otherwise choose a nonzero proper $E$-submodule $U\subset W$. For a
+$\Gamma$-lattice $L\subset W$, put
+
+$$
+N=L\cap U,
+\qquad Q=L/N\subset W/U.
+$$
+
+Clearing denominators in bases shows that $N$ and $Q$ are full $\Gamma$-lattices in $U$ and
+$W/U$. Both rational modules have smaller dimension, so induction leaves only finitely many
+possibilities for the isomorphism classes of $N$ and $Q$.
+
+It remains to show that fixed lattices $N$ and $Q$ have only finitely many extension classes.
+Choose a surjection $F=\Gamma^m\twoheadrightarrow Q$ and write $R$ for its kernel. The ring
+$\Gamma$ and the modules $F,R,N,Q$ are finite free over $\mathbf Z$; in particular, $R$ is
+finitely generated. Pulling an extension of $Q$ by $N$ back to the free module $F$ makes it
+split. The component in the original middle module of a chosen splitting, restricted to
+$R$, lands in $N$ because $R$ maps to zero in $Q$. It identifies the extension class with an
+element of
+
+$$
+\operatorname{Hom}_\Gamma(R,N)\big/
+\operatorname{res}\operatorname{Hom}_\Gamma(F,N).
+$$
+
+Conversely, pushing out $R\hookrightarrow F$ along a homomorphism $R\to N$ constructs the
+extension, and changing the chosen splitting adds a restricted map from $F$. Thus this quotient
+is exactly the set of extension classes, with its usual abelian-group law. It is a finitely
+generated abelian group because both Hom groups are.
+
+After tensoring with $\mathbf Q$, the sequence
+
+$$
+0\longrightarrow R_{\mathbf Q}\longrightarrow E^m
+\longrightarrow Q_{\mathbf Q}\longrightarrow0
+$$
+
+splits: $E$ is semisimple. Every $E$-linear map
+$R_{\mathbf Q}\to N_{\mathbf Q}$ therefore extends to $E^m$. Clearing denominators shows
+that some nonzero integer multiple of every map $R\to N$ is the restriction of a
+$\Gamma$-linear map $F\to N$. The displayed quotient is consequently torsion. A finitely
+generated torsion abelian group is finite, so there are only finitely many possible middle
+modules $L$. This completes the induction and the proof. $\square$
+
+**Corollary 13.6 (integral Zarhin cancellation).** For every abelian variety $B/K$,
+$(\mathrm{FC})_{B/K}$ holds. Consequently $(\mathrm{ZC})_K$ holds and
+
+$$
+(\mathrm{FH})_{K,S,g}\Longrightarrow(\mathrm{FS})_{K,S,g}.
+$$
+
+**Proof.** The regular semisimple $E$-module has only finitely many rational direct-summand
+types. Applied to each one, Theorem 13.5 proves $(\mathrm{DS})_\Gamma$. Its equivalence with
+$(\mathrm{FC})_{B/K}$ proves the first assertion for every $B/K$. Proposition 13.3 and
+Northcott then give the displayed implication through (13.10)--(13.12). $\square$
+
+### 13.7 The first source-closure boundary
+
+We can now state every missing input in dependency order. The earlier books provide projective
+heights and Northcott, quasi-projective PEL moduli with theta frames, coherent Hodge bundles,
+abelian schemes and their quotients, Néron models, and polarizations. They do not provide:
+
+1. **Potential semistable reduction $(\mathrm{PSR})$.** Every abelian variety over a
+   characteristic-zero complete discretely valued field becomes semistable after a finite
+   extension, and semistability persists under every further finite extension. Together with
+   the globalization argument in Section 12.2, this produces one number field over which a
+   given abelian variety is semistable everywhere. Without this package, (12.5) is not defined
+   for every abelian variety and comparison over a common extension is not justified.
+2. **Semistable Hodge base change $(\mathrm{SHB})$.** The integral map (12.4a) is an
+   isomorphism once the source is semistable. Section 12.2 proves every good-reduction case
+   and every unramified base change, but the ramified semiabelian nonproper case is absent.
+3. **The arithmetic Siegel compactification interface $(\mathrm{SC})_{g,N}$.** One needs a
+   proper toroidal model of the fine Siegel moduli scheme over the relevant ring of integers,
+   a controlled boundary divisor, a semiabelian extension of the universal family, and
+   canonical extensions of the Hodge and theta lines compatible with changes of cone
+   decomposition and base field. The quasi-projective parameter scheme of Book 13 supplies
+   none of these boundary extensions.
+4. **The metrized comparison $(\mathrm{MC})_{g,N}$.** Fixed tensor powers of the extended
+   theta/moduli line and Hodge line must be compared, including the $L^2$ metric (12.2), with
+   explicit logarithmic boundary error. Its numerical output is the two-sided version of
+   (12.12). An algebraic line-bundle identity alone does not control the archimedean norm.
+5. **The slope and boundary estimate $(\mathrm{SB})_{K,S,g}$.** Arithmetic
+   Hilbert--Samuel or arithmetic Riemann--Roch on the compactification must give one constant
+   $C(K,S,g)$ such that the stable Hodge degree together with every boundary multiplicity
+   occurring in (12.12) is at most $C(K,S,g)$. This is the assertion that turns support on
+   $S$ into a numerical bound and hence proves $(\mathrm{FH})$.
+
+The strict first missing theorem in the permitted dependency chain is $(\mathrm{PSR})$. Even
+if potential semistable reduction is supplied separately, $(\mathrm{SHB})$ is still needed to
+make stable height independent of the chosen field; even after both are granted, the first
+global height theorem is $(\mathrm{SC})_{g,N}$, followed by $(\mathrm{MC})$ and
+$(\mathrm{SB})$. None follows from ordinary Riemann--Roch on a curve or from coherent base
+change for a proper family. Arithmetic Green metrics, arithmetic intersection products on a
+higher-dimensional compactification, and their slope inequalities have not been constructed
+in Chapters 1--12.
+
+What has been proved here is correspondingly exact: Hodge base change at good places and under
+unramified extensions, all level-field and moduli-Northcott reductions, finite polarized
+$K$-descent after Northcott, the full Jordan--Zassenhaus theorem (13.15), and hence integral
+factor cancellation $(\mathrm{ZC})_K$.
+
+What has not been proved is $(\mathrm{PSR})$ in this dependency range, $(\mathrm{SHB})$ at a
+genuinely semistable bad place, or any of $(\mathrm{SC})$, $(\mathrm{MC})$, and
+$(\mathrm{SB})$. Consequently this book does **not** assert $(\mathrm{FH})$, (13.1), or
+unconditional Tate-module semisimplicity. It does assert $(\mathrm{ZC})_K$. The remaining
+chapters prove every implication after $(\mathrm{FS})$, and in fact need only $(\mathrm{IF})$.
+Thus $(\mathrm{IF})$ is the first irreducible arithmetic hypothesis in the Tate argument,
+while the standard uniform route to it stops at the height inputs just listed.
+
+For reference, the complete conditional chain proved by the reductions in this chapter is
+
+$$
+[(\mathrm{PSR})+(\mathrm{SHB})+(\mathrm{SC})+(\mathrm{MC})+(\mathrm{SB})]
+\Longrightarrow(\mathrm{FH})
+\Longrightarrow(\mathrm{FS}). \tag{13.16}
+$$
+
+The first implication summarizes the stated output of the compactification and arithmetic
+slope packages; the second is Corollary 13.6. Thus no descent or direct-factor theorem remains
+hidden after a hypothetical height theorem.
 
 ## 14. From Faltings finiteness to finite isogeny classes
 
@@ -2026,9 +2484,9 @@ $$
 $$
 
 The Tate argument below uses exactly (14.3). Thus a future source may close the gap either by
-proving the full height-and-cancellation package (13.5), by proving Faltings--Shafarevich
-finiteness directly, or by proving (14.3) for the particular carrier Jacobians. No stronger
-theorem is silently required.
+proving the height inputs isolated in Section 13.7, by proving Faltings--Shafarevich finiteness
+directly, or by proving (14.3) for the particular carrier Jacobians. No stronger theorem is
+silently required.
 
 ## 15. Tate lattices and semisimplicity
 
@@ -2320,20 +2778,21 @@ that property. Consequently a raw multiplicity representation equals its global
 semisimplification and a locally computed nonzero monodromy operator is not lost merely by
 passing to that semisimplification.
 
-The full implication chain, with its unproved initial premises displayed, is
+The full implication chain, with its one unproved initial premise displayed, is
 
 $$
-[(\mathrm{FH})+(\mathrm{ZC})]\Longrightarrow(\mathrm{FS})
+(\mathrm{FH})\Longrightarrow(\mathrm{FS})
 \Longrightarrow(\mathrm{IF})
 \Longrightarrow(\mathrm{TS})
 \Longrightarrow(\mathrm{SS}_{\mathrm{array}}).
 \tag{16.8}
 $$
 
-Every arrow beginning with $(\mathrm{FS})\Rightarrow(\mathrm{IF})$ is proved here. The initial
-arrow is available only after the compactification, height comparison, and slope estimates that
-produce $(\mathrm{FH})$, and the separate theorem $(\mathrm{ZC})$, have been supplied; neither
-input is established by the available prior books. Thus (16.7) remains conditional.
+Every displayed arrow is proved here. The first is Corollary 13.6; in particular, its descent
+and cancellation components are unconditional. What
+the available prior books do not establish is the premise $(\mathrm{FH})$, which still requires
+the compactification, height comparison, and slope estimates of Section 13.7. Thus (16.7)
+remains conditional.
 In particular, it would be incorrect to remove the packet-carrier ambient semisimplicity
 blocker merely on the strength of the Tate lattice argument.
 
@@ -2370,7 +2829,7 @@ $$
 \begin{array}{c}
 \text{metrized Hodge line}+\text{arithmetic boundary estimates}
 \Rightarrow(\mathrm{FH}),\\
-(\mathrm{FH})+(\mathrm{ZC})+\text{moduli Northcott}
+(\mathrm{FH})+\text{proved Northcott, descent, and cancellation}
 \Rightarrow(\mathrm{FS})\Rightarrow(\mathrm{IF}),\\
 (\mathrm{IF})\Rightarrow\text{finitely many stable Tate-lattice types},\\
 \text{Tate's radical-length lemma}\Rightarrow(\mathrm{TS})
@@ -2393,14 +2852,17 @@ The conventions used throughout are:
 | absolute projective height | $[K:\mathbf Q]^{-1}\sum_v n_v\log\max_i|x_i|_v$ |
 | canonical height | $\widehat h_L=\lim q^{-2r}h_L\circ[q^r]$ |
 | Faltings metric | (12.2), fixed up to one dimension-dependent additive constant |
-| stable Faltings height | normalized Arakelov degree after semistable reduction |
+| stable Faltings height | normalized Arakelov degree after semistable reduction; field-independence uses $(\mathrm{SHB})$ |
 | finite isogeny input | $(\mathrm{IF})_{A/K}$ in (14.3) |
 | proved Tate output | $(\mathrm{IF})_{A/K}\Rightarrow(\mathrm{TS})_{A,K,\ell}$ |
-| unresolved uniform source | $(\mathrm{FH})_{K,S,g}$, $(\mathrm{ZC})_{K,g}$, and the package in Section 13.5 |
+| proved factor theorem | Jordan--Zassenhaus in Theorem 13.5 and $(\mathrm{ZC})_K$ in Corollary 13.6 |
+| unresolved uniform source | $(\mathrm{FH})_{K,S,g}$ and the exact height inputs in Section 13.7 |
 
 Changing $L$ to $L^r$ multiplies the canonical point height by $r$. Extending a field does
 not change an absolute projective height, and it does not change the stable Faltings height once
-semistability has been reached. These are separate assertions with separate proofs.
+semistability has been reached provided $(\mathrm{SHB})$ holds. The projective statement is
+proved in Section 2.2; the semistable Hodge-lattice statement remains one of the exact inputs
+in Section 13.7.
 
 ### 17.3 Conclusion
 
@@ -2418,10 +2880,11 @@ spaces then inherit semisimplicity exactly as required by the packet-carrier arr
 The remaining gap is not Hom--Tate linear algebra. The first exact arithmetic input is finite
 isogeny classes. The standard uniform source is the Faltings--Shafarevich package: the arithmetic
 height bound on Siegel moduli, with its semistable Hodge theory, compactification, metrized
-Hodge/theta comparison, and slope and boundary estimates, together with the separate Zarhin
-factor-cancellation and $K$-descent theorem. The existing height machine proves what follows
-from a bound; it does not prove that bound from $S$-integrality or recover the original factors.
-Until that package is supplied by a prior volume or proved here in full,
+Hodge/theta comparison, and slope and boundary estimates. Proposition 13.3 proves descent of
+the finitely many stabilized polarized objects from the level fields to $K$, while Theorem
+13.5 and Corollary 13.6 prove integral Zarhin factor cancellation. The existing height machine
+proves what follows from a bound; it does not prove that bound from $S$-integrality. Until the
+remaining height package is supplied by a prior volume or proved here in full,
 Faltings--Shafarevich finiteness remains unproved, while rational Tate-module semisimplicity and
 $(\mathrm{SS}_{\mathrm{array}})$ are available only conditionally on the finite-isogeny-class
 input, not as unconditional conclusions of the present corpus.

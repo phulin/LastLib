@@ -1134,12 +1134,22 @@ could be imposed afterward.  Book 154, Lemma 5.2D gives another complete repair:
 same local slice with a smooth proper integral model and prove that the permitted good factors
 contain all tubes over a nonempty special-fiber Zariski open.  Relative Riemann--Roch then makes
 the degree-indexed allowed-good Abel image the whole Jacobian in every sufficiently large
-degree.  Book 154, Corollary 5.2E proves that either repair, once verified on the actual slice,
-would give the required common moving presentation.  No audited source verifies the
-integral-slice hypotheses for the actual special packet, proves the coset-complete good-packet
-statement, proves (6.3a) for the restricted route, or constructs a different evaluation
-presentation.  This is the first remaining
-pre-specialization moduli theorem.
+degree.  Book 157, Section 13.2A names the exact version needed here as the stable integral
+connecting-slice assertion $(\mathrm{ICS})_{v_0,Z}$: a finite-type projective
+model compatible with the cusp germ and good interior, a smooth proper relative
+complete-intersection curve through the
+special germ and one good base germ, a nonempty special-fiber good open, and stability under the
+coefficient approximation in Book 154, Step 1.  Its Proposition 13.2A proves conditionally from
+Book 154, Corollary 5.2E that, together with the repeatability, flexibility, and realized
+normal-closure hypotheses stated there, this assertion gives the required common presentation,
+with the unique special factor, every added factor good minimal, the exact frames and
+components, the split certificate packets, and avoidance of $Z$ all retained.
+
+No audited source proves $(\mathrm{ICS})_{v_0,Z}$ for the actual special packet, proves the
+coset-complete good-packet statement, proves (6.3a) for the restricted route, or constructs a
+different evaluation presentation.  Thus $(\mathrm{ICS})_{v_0,Z}$, or one of those alternative
+moving repairs, is the first remaining pre-specialization moduli theorem; naming it does not
+discharge Required Moving Theorem 6.3.
 
 The obstruction is not removed merely by taking $n$ highly divisible.  Divisibility kills
 $n([\mathcal A]-e[P])$ in the finite quotient $J_{v_0}(\mathbf Q_{v_0})/G_{v_0}$, but it leaves
@@ -1172,6 +1182,21 @@ fiber has the dense allowed-good open required by Book 154, Lemma 5.2D.  Likewis
 smaller neat level does not make arbitrary extension-valued packets share one source torsion
 module.  Thus the elliptic-source device aligns the arithmetic component and auxiliary level;
 it does not prove the singleton moving presentation.
+
+Nor do the general geometric books fill this gap.  Book 8 represents the
+fixed-Hilbert-polynomial curve problem but gives no integral point of the open slicing locus;
+over the finite residue field, geometric nonemptiness of that locus would not itself give such
+a point.  Book 153 proves generic Bertini over an infinite characteristic-zero field, not
+relative Bertini over a DVR with a
+prescribed boundary germ and smooth special fiber.  Books 9--10 begin with an already supplied
+relative curve or projective datum.  Book 156 supplies the smooth quasi-projective interior and
+finite etale frame covers.  Although that interior has a bare projective closure, Book 157's
+completed Mumford chart is not identified with the completion of such a model along its
+boundary or joined to the good interior there, and Book 158
+exports the resulting point-centered opens and avoidance datum without adding such a model.
+These are precisely the missing existence steps isolated in $(\mathrm{ICS})_{v_0,Z}$, so
+Hilbert schemes, symmetric powers, and the FLT blueprint's Moret--Bailly theorem cannot be used
+to manufacture the slice without circularity.
 
 The nontrivial-stabilizer version of Book 155 would additionally require a special
 $S_5/S_4$ evaluation presentation on the paired-frame moduli space.  Proposition 4.1 replaces

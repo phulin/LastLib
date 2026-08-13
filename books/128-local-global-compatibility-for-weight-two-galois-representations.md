@@ -1592,9 +1592,10 @@ the Jacobians of the actual packet carriers. Book 41, Theorem 15.3 and Corollary
 this instance from finiteness of the $K$-isogeny class of each carrier Jacobian, using Tate's
 stable-lattice and Jacobson-radical argument. Those finite isogeny classes are the exact
 application-specific arithmetic input. Book 41's standard uniform source is
-Faltings--Shafarevich finiteness, whose moduli route still needs both the arithmetic height
-package and the separate Zarhin factor-cancellation/$K$-descent theorem. Thus the formal
-Tate-module reduction is proved, but $(\mathrm{TS})$ is not unconditional in the present
+Faltings--Shafarevich finiteness, whose moduli route still needs the arithmetic height
+package. Book 41 proves finite polarized $K$-descent and the separate Zarhin
+factor-cancellation step. Thus the formal Tate-module reduction is proved, but
+$(\mathrm{TS})$ is not unconditional in the present
 corpus. Book 36, Section 15.4 correctly warns that semisimplicity of the isogeny category alone
 does not imply semisimplicity of the Galois module, and the Hecke algebra's semisimplicity acts
 in the commuting factor rather than on $G_E$.
@@ -2157,7 +2158,7 @@ exact finite-isogeny-class hypothesis and its unresolved Faltings--Shafarevich s
 | split-Iwahori basic carrier at $v$ | parity-compatible selected $W$ for Book 104 with $v\notin W$, then the Book 125 curve packet | an eligible carrier ramified at $v$ does not supply split-Iwahori geometry there; basic attachment alone does not supply the required non-common-norm parahoric PEL comparison |
 | split-Iwahori basic carrier when $v$ is the only eligible place | in odd degree, $W=\varnothing$ works; in even degree the present construction has no eligible $W$ avoiding $v$ | even after the basic carrier exists, the raw theorem still requires the supplied PEL-exact parahoric ledger |
 | any nonzero-monodromy bad parameter for $\rho_{\Pi,\lambda}$ in the residual-irreducible FLT range | stable lattice with absolutely irreducible residual reduction | without irreducibility, global semisimplification can erase local monodromy |
-| any nonzero-monodromy bad parameter for $\rho_{\Pi,\lambda}$ outside that range | $(\mathrm R_u)$; Proposition 9.4 reduces it to semisimplicity of the ambient curve $H^1$, and Book 41 reduces that to finite isogeny classes | those finite isogeny classes are not proved; Book 41's standard Faltings--Shafarevich route still lacks its height and Zarhin cancellation/descent inputs, and Hecke or isogeny-category semisimplicity does not replace them |
+| any nonzero-monodromy bad parameter for $\rho_{\Pi,\lambda}$ outside that range | $(\mathrm R_u)$; Proposition 9.4 reduces it to semisimplicity of the ambient curve $H^1$, and Book 41 reduces that to finite isogeny classes | those finite isogeny classes are not proved; Book 41's standard Faltings--Shafarevich route still lacks its moduli-height inputs, though its finite polarized descent and Zarhin cancellation steps are proved, and Hecke or isogeny-category semisimplicity does not replace the height theorem |
 | tame principal parameter | two character lines, ordering where needed, $N=0$, and both return scalars; Lemma 3.2 then gives raw-to-global passage | inertia alone forgets unramified characters and the boundary constituent |
 | tame scalar-special parameter | scalar tame type, $N\ne0$, and kernel Frobenius | type alone does not distinguish $N=0$ from $N\ne0$ |
 | tame dihedral parameter | tame quadratic cover, two character lines, exchange, return maps, $N=0$; Lemma 3.2 then gives raw-to-global passage | inertial characters leave an unramified ambiguity |
@@ -2178,7 +2179,7 @@ finite application-specific instance of $(\mathrm{TS})$ for the actual curve car
 all their raw multiplicity spaces globally semisimple, uniformly over coefficient embeddings,
 and hence proves $(\mathrm R_u)$ without using monodromy. Book 41 proves this implication from
 finite carrier-isogeny classes; its explicitly missing Faltings--Shafarevich
-height-and-cancellation source prevents an
+moduli-height source prevents an
 unconditional ambient theorem. For tame principal, scalar-special, and dihedral places,
 Chapters 7--8 are recognition criteria; they require the stated geometric type and return-map
 data and do not construct those data for an arbitrary packet. The separate raw-to-global
@@ -2208,7 +2209,7 @@ that range, $(\mathrm R_u)$ remains the exact conditional boundary for nonzero m
 semisimplicity hypothesis of Proposition 9.4 is supplied. That proposition reduces the
 uniform problem to $(\mathrm{TS})$ for the carrier Jacobians, and Book 41 proves the further
 reduction to finite isogeny classes while retaining the Faltings--Shafarevich
-height-and-cancellation gate; neither argument
+moduli-height gate; neither argument
 invokes a later compatible family or infers semisimplicity from the special line. Tame
 descent recognizes principal, scalar-special, and dihedral parameters only
 after the exact character lines, exchange maps, and Frobenius returns have

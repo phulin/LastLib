@@ -167,7 +167,7 @@ flowchart LR
 | 136 | Mumford Representations and Exact Genus-Two Jacobian Arithmetic | 37, 135 |
 | 137 | Explicit Two-Descent on Genus-Two Jacobians | 40, 136 |
 | 138 | Integral Local Types and Type Lattices | 51, 53, 54, 73, 74, 75, 76 |
-| 139 | Ihara Theory and Saturated Degeneracy Maps on Shimura Curves | 16, 38, 39, 124, 118, 122 |
+| 139 | Ihara Theory and Saturated Degeneracy Maps on Shimura Curves | 16, 24, 38, 39, 124, 118, 122 |
 | 140 | Integral Level Change and Jacquet--Langlands Comparison | 80, 85, 104, 125, 139 |
 | 141 | Dickson Classification and Adequate Residual Image | 3, 6, 45, 42, 24 |
 | 142 | The Chebotarev Density Theorem | 2, 3, 4, 5, 6, 7, 17, 21, 23, 24 |
@@ -185,7 +185,7 @@ flowchart LR
 | 154 | Moret–Bailly’s Theorem | 8, 9, 10, 40, 41, 58, 153 |
 | 155 | Galois and Solvable Refinements of Arithmetic Approximation | 2, 6, 153, 154, 142 |
 | 156 | Hilbert--Blumenthal Moduli and Two-Prime Level Covers | 17, 10, 13, 35, 55, 115, 116 |
-| 157 | Local Geometry of Hilbert--Blumenthal Moduli | 2, 37, 58, 60, 43, 44, 51, 54, 154, 156 |
+| 157 | Local Geometry of Hilbert--Blumenthal Moduli | 2, 8, 37, 58, 60, 43, 44, 51, 54, 154, 155, 156 |
 | 158 | Moduli Constructions for Potential Modularity | 156, 157 |
 | 159 | Discriminants of Galois Representations | 3, 56 |
 | 160 | Odlyzko Bounds and Fontaine's Argument | 7, 56, 159 |
@@ -224,8 +224,12 @@ These conditions are assumptions or missing source theorems, not dependency node
 the one interface explicitly marked closed below. The list is deliberately separate from the
 acyclic manuscript graph so that the closed record cannot be mistaken for a remaining blocker.
 
-- **Localized abelian Ihara:** vanishing of the localized noncongruence-character quotient
-  required for saturated two-map Ihara; the current Ihara manuscript isolates but does not prove it.
+- **Localized abelian Ihara:** vanishing, at every actual routed constant-coefficient level, of
+  the localized $\Delta$-invariant sum of transgression kernels on the $K_c^v$-invariant
+  continuous odd-primary characters of the full profinite congruence kernels. Book 139 proves
+  that this is exactly the noncongruence-character quotient required for saturated two-map
+  Ihara, but proves neither that vanishing nor the separate centrality, comparison, and
+  metaplectic-computation inputs that could imply it.
 - **Type and node comparison:** the typed parahoric extension and ramified nearby-cycle
   theorem, the accompanying incidence and unit-order coarse-descent hypothesis,
   crossed-coefficient type-Ihara vanishing, primitive-residue obstruction vanishing,
@@ -256,8 +260,10 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   full base $R=T$ and is not a separate input to the reduced finite-level comparison.
 - **Controlled residual automorphic seed:** the degree-indexed allowed-good Abel condition in
   the existing curve--pencil route, its one-tube finite Picard-quotient specialization, a
-  coset-complete compensating-good-packet theorem, the smooth-integral-slice/dense-good-open
-  saturation criterion, or another common moving presentation, for the actual packet having one
+  coset-complete compensating-good-packet theorem, Book 157's stable integral connecting-slice
+  assertion $(\mathrm{ICS})_{v_0,Z}$ (the smooth-integral-slice/dense-good-open saturation
+  criterion made stable under the global cutting-section approximation), or another common
+  moving presentation, for the actual packet having one
   distinguished special factor and all remaining factors good; after the resulting normal-top
   specialization, a
   saturated path from the target eigensystem to a nonzero clean bottom minimal SP localization;
@@ -275,7 +281,9 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   Frobenius values at $2$, $3$, and $\ell$; it then constructs the exact paired Frey/auxiliary frames
   over $\mathbf Q_2$, $\mathbf Q_3$, and $\mathbf Q_\ell$ by adapting the local elliptic seeds and neat source.
   It forces constant-field avoidance with split Chebotarev certificate primes.  The first
-  remaining pre-specialization input is the singleton common presentation.  Once that is
+  remaining pre-specialization input is the singleton common presentation; Book 157,
+  Section 13.2A gives the conditional implication from $(\mathrm{ICS})_{v_0,Z}$ but no audited
+  source proves that slice theorem.  Once the presentation is
   supplied, Book 182 proves the remaining
   normal-closure control, applies Book 178's corrected relative-ray compatibility in the
   rational-base Frey case, and takes the top
@@ -300,12 +308,14 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   $(\mathrm{SS}_{\mathrm{array}})$. It also proves the Faltings-height isogeny formula and the
   formal moduli-Northcott reductions. The first exact arithmetic input is finiteness of the
   carrier Jacobians' $K$-isogeny classes. A standard uniform source is
-  Faltings--Shafarevich finiteness. Book 41's moduli route to that theorem has two separate
-  unresolved parts: the arithmetic Siegel compactification, stable-Hodge base-change formula,
-  metrized Hodge/theta comparison, and slope/boundary estimates needed for the moduli-height
-  bound, and the Zarhin factor-cancellation/$K$-descent theorem needed after Northcott. Potential
-  semistable reduction itself is proved later in Book 61, but that does not supply these height
-  and cancellation inputs. The blocker therefore cannot honestly be removed.
+  Faltings--Shafarevich finiteness. Book 41 proves finite polarized $K$-descent after
+  Northcott, normalized-lattice compactness, Jordan--Zassenhaus for orders in semisimple
+  rational algebras, direct-summand finiteness, and hence integral Zarhin cancellation. Its
+  moduli route still lacks the arithmetic Siegel compactification, ramified semistable Hodge
+  base-change formula, metrized Hodge/theta comparison, and slope/boundary estimates needed for
+  the moduli-height bound. Potential semistable reduction, including persistence after further
+  finite extension, is proved later in Book 61, but that does not supply these arithmetic
+  height inputs. The blocker therefore cannot honestly be removed.
   This is separate from constructing the raw dyadic carriers. At $q=2$ the conditional theorem
   proves global semisimplicity but does not extend the prime-to-coefficient Weil--Deligne
   comparison at the dyadic base place; Book 184's $(\mathrm{AI}_2)$ remains a separate

@@ -210,7 +210,8 @@ actual smooth projective curve carriers and supply $(\mathrm{SS}_{\mathrm{array}
 present theorem does not itself prove that stronger ambient semisimplicity hypothesis. Book 41
 proves it from finite isogeny classes of the carrier Jacobians. Those classes are the exact
 arithmetic input; its standard uniform source is the unresolved Faltings--Shafarevich
-height-and-cancellation package.
+moduli-height package. Book 41 proves the subsequent finite polarized descent and integral
+factor-cancellation steps.
 
 We call (1.1)--(1.6), complete splitting, and these exact range hypotheses a
 **controlled SP top datum**. Book 182 exports this datum only conditionally on its controlled
@@ -872,7 +873,7 @@ Rational Tate-module semisimplicity $(\mathrm{TS})$ for the Jacobians of these c
 sufficient theorem for the hypothesis. Book 41, Theorem 15.3 and Corollary 16.1 prove it from
 finiteness of their $K$-isogeny classes, and Section 16.2 proves the coefficient and
 multiplicity-space passage. Neither those classes nor Book 41's standard
-Faltings--Shafarevich height-and-cancellation source is proved. This proposition closes the raw-to-global reduction without using
+Faltings--Shafarevich moduli-height source is proved. This proposition closes the raw-to-global reduction without using
 the signed Brauer class, effectivity, or the later assembled family.
 
 The distinguished member satisfies
@@ -1858,7 +1859,7 @@ $$
 
 | Source | Input used here | Strengthening not made |
 |---|---|---|
-| Book 41 | finite-isogeny-class $\Rightarrow$ Tate semisimplicity $\Rightarrow$ curve-$H^1$ semisimplicity, including finite coefficient extension and multiplicity extraction | finite isogeny classes are the exact input; the standard uniform Faltings--Shafarevich route retains separate height and Zarhin cancellation/descent gaps |
+| Book 41 | finite-isogeny-class $\Rightarrow$ Tate semisimplicity $\Rightarrow$ curve-$H^1$ semisimplicity, including finite coefficient extension and multiplicity extraction | finite isogeny classes are the exact input; the standard uniform Faltings--Shafarevich route retains the moduli-height gap, while finite polarized descent and Zarhin cancellation are proved |
 | Book 98 | finite-order Hecke avatars of the Brauer characters, with reciprocity, norm pullback, and conjugation | no higher-rank automorphic induction across $F_H/\mathbf Q$ |
 | Books 108--109 | selected prime-cyclic descent and base change, antecedent-complete saturated fibers, local-parameter restriction, and tower independence in the admissible range | no transfer along an inadmissible tower and no nonsolvable descent |
 | Books 127--128 and 168 | the weight-two packet realizations, covariant arithmetic normalization, coefficient conjugates, algebraic good data, the conditional raw SP comparison, and reduction of its uniform raw-to-global passage to $(\mathrm{SS}_{\mathrm{array}})$ | no construction of a missing carrier, no proof of Book 41's finite-isogeny-class input, no comparison at the coefficient residue characteristic, and no packet lattice after semisimplification |

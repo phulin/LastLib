@@ -76,6 +76,7 @@
 - [13. The Moret--Bailly local package](#13-the-moret--bailly-local-package)
   - [13.1 The input ledger](#131-the-input-ledger)
   - [13.2 The local construction theorem](#132-the-local-construction-theorem)
+  - [13.2A The stable integral connecting-slice boundary](#132a-the-stable-integral-connecting-slice-boundary)
   - [13.3 Passing from neighborhoods to every conjugate](#133-passing-from-neighborhoods-to-every-conjugate)
   - [13.4 Failure modes](#134-failure-modes)
 - [14. Conclusion](#14-conclusion)
@@ -1692,6 +1693,174 @@ fiber contains a dense open of allowed good points.  Such a slice would invoke B
 invoke Lemma 5.2B.  Neither geometric assertion follows from Theorem 13.1's point-centered
 neighborhoods.
 
+### 13.2A The stable integral connecting-slice boundary
+
+We isolate the exact first theorem missing from the integral-slice route.  This is more than
+the existence of one curve over the local field.  Book 154 first approximates the local cutting
+sections by one global tuple.  The integral property must therefore hold on a congruence
+neighborhood of the local tuple, so that it survives that approximation.
+
+Let $v$ be a finite place of the global base field and let $k$ be its completion.  Assume that
+$v$ satisfies all the good-model exclusions of Section 5.1, in particular that it lies away
+from the two coefficient primes and every auxiliary level prime.  Let $R$ be the valuation ring
+of $k$ and $\kappa$ its residue field.  Suppose the two prescribed frame systems
+are unramified over $k$ and have the determinant-compatible trivializations used at the special
+place.  The good Hilbert--Blumenthal problem and its paired frame twist then have the smooth
+integral model of Section 5.1,
+
+$$
+\mathcal Y^{\mathrm{good}}/R
+$$
+
+on the interior.  Fix a split semistable point in the tensor-cusp chart,
+
+$$
+y_{\mathrm{sp}}\in (Y\setminus Z)(k)
+$$
+
+with its exact frames, enhanced line, sign, and a point-centered special neighborhood
+$V_{\mathrm{sp}}\subset (Y\setminus Z)(k)$.  Also fix a good integral point
+$y_{\mathrm{good}}\in(Y\setminus Z)(k)$
+on the same framed component.
+
+Call the following assertion $(\mathrm{ICS})_{v,Z}$, the **stable integral connecting-slice
+assertion**.
+
+1. The projective closure and very ample bundle chosen in Book 154, Step 1 have a
+   finite-presentation $R$-model $\overline{\mathcal Y}$ and a relatively very ample extension,
+   with $\mathcal Y^{\mathrm{good}}$ contained as an open.  There is a tuple of relative
+   cutting sections drawn from the scalar extension of that same finite-dimensional global
+   coefficient space.  Their intersection is a smooth proper geometrically connected relative
+   curve
+   $$
+   \mathcal C/R.
+   $$
+2. A dense open $C^\circ\subset \mathcal C_k$ of the generic fiber maps to $Y\setminus Z$.
+   It contains distinct $k$-points $T$ and $P$, with $T$ mapping into $V_{\mathrm{sp}}$ and
+   $P$ mapping into a good integral neighborhood of $y_{\mathrm{good}}$.  The map is an
+   immersion near both points.  The closure of $T$ is allowed to meet the boundary of
+   $\overline{\mathcal Y}$ on the special fiber; this is how the semistable condition is
+   retained.
+3. There is a nonempty (hence dense) Zariski-open
+   $$
+   W\subset \mathcal C_\kappa
+   $$
+   on which the map factors through $\mathcal Y^{\mathrm{good}}_\kappa$ and avoids the closure
+   of $Z$, and it contains the specialization of $P$.  It is disjoint from the specializations
+   of the finite set $\mathcal C_k\setminus C^\circ$.  Thus every closed point of
+   $\mathcal C_k$ whose closure has special fiber contained in $W$ belongs to $C^\circ$ and
+   carries good minimal reduction, the same two paired frames, the chosen auxiliary level, and
+   the same arithmetic component.
+
+These clauses have the stability needed in Book 154; this is why clause 1 includes the global
+coefficient space.  The tuple defines an $R$-point of a finite-type coefficient parameter.
+Book 8, Sections 13.2--13.3 make the smooth geometrically connected curve locus open there.
+After restricting to one sufficiently small congruence class, the reductions of all cutting
+sections are unchanged, so the special-fiber curve and $W$ are unchanged.  Book 154, Step 1's
+full-rank Jacobian argument continues the marked points $T$ and $P$ under a small change of the
+tuple, and their images remain in their point-centered neighborhoods.  Consequently clauses
+1--3 persist on a nonempty congruence neighborhood, and the global cutting tuple selected by
+weak approximation may be required to have a smooth integral model with the same special-fiber
+curve and good open.
+
+A curve defined only over $k$ would not suffice: it need not be represented in the global
+coefficient space and hence need not survive Book 154's approximation.  The finite-type
+integral presentation in clause 1 is what proves, rather than merely assumes, stability.  The
+formal cusp chart by itself is not such a presentation.
+
+**Proposition 13.2A (conditional closure of the singleton moving input).**  Consider a
+simultaneous approximation problem on $Y\setminus Z$ with one special place $v_0$.  Suppose
+$(\mathrm{ICS})_{v_0,Z}$ holds there, every other exact packet may be repeated wholesale, and
+every remaining split packet is flexible in the sense of Book 154, Lemma 5.2.  Assume also
+that any requested equivariant normal-closure local behavior is realized by the chosen local
+parameters.  Then those packets admit one simultaneous moving-family presentation.  Its fiber
+at $v_0$ has exactly one
+degree-one factor in $V_{\mathrm{sp}}$, every other factor is good minimal, all paired frames
+and component labels and all assigned equivariant normal-closure local fibers are retained, and
+every flexible split packet, including a certificate packet, remains split with all sheets in
+its assigned open.  The common degree satisfies any prescribed finite divisibility condition
+(in particular compatible required evenness), and the evaluation avoids $Z$.
+
+**Proof.**  In Book 154, Step 1, impose the congruence neighborhood just constructed at $v_0$
+while approximating the cutting sections at all other places.  After base change to $k$, the
+resulting global curve has a nearby smooth proper model, good open, and marked points satisfying
+clauses 1--3; relabel them $\mathcal C,W,T,P$.  Apply Book 154, Lemma 5.2D on this actual slice.
+For every sufficiently large degree,
+every Jacobian class is then represented by a reduced divisor, disjoint from the marked special
+point, all of whose residue-field factors have closure in $W$.  Clause 3 puts every such factor
+in $C^\circ$ and makes it an allowed good minimal point of the same framed twist.  Hence, for
+the pencil bundle $\mathcal A$ and every sufficiently large $n$,
+
+$$
+n([\mathcal A]-e[P])-[T-P]
+\in \mathscr R^{\mathrm{good}}_{v_0,ne-1}.
+$$
+
+This is Book 154, (5.4g), and implies its full varying-special condition (5.4g').  The special
+point occurs once, while reducedness and disjointness keep it from reappearing in the good
+divisor.
+
+Book 154, Lemma 5.2A puts every wholesale-repeatable packet in a sufficiently large arithmetic
+progression of exponents.  The remaining split packets are flexible instances of Lemma 5.2.
+Choose the global ample bundle as in Book 154, Lemma 5.2A, with degree divisible by every
+wholesale packet degree and by any prescribed finite divisor (in particular by $2$ when an even
+common degree is required).  Since the integral slice makes every sufficiently large exponent
+available at $v_0$, choose one exponent in the common progression and apply Corollary 5.2E.
+Weak approximation of the two pencil sections retains all factorwise neighborhoods;
+on the resulting fixed presentation, Book 155, Proposition 5.2 supplies parameter
+neighborhoods retaining its assumed equivariant normal-closure fibers (and hence all quotient
+finite etale algebras), while the evaluation neighborhoods retain the frames and component
+labels.  As in Book 154, Step 3, remove the branch values and the images
+of the finite global complement of the curve open mapping to $Y\setminus Z$.  The resulting
+evaluation family lies in $Y\setminus Z$; clause 3 ensures that the selected $v_0$-fiber is
+disjoint from that complement and that every selected good factor lies in $C^\circ$.  This
+gives the asserted common presentation. $\square$
+
+Thus $(\mathrm{ICS})_{v_0,Z}$ discharges the one-special/all-other-good moving input, with no
+remaining Picard congruence, in any later application satisfying the other hypotheses of the
+proposition.  The presently established sources do not prove $(\mathrm{ICS})_{v_0,Z}$.  The
+first absent reusable input in this route is a theorem identifying a finite-type projective
+model with the required cusp germ and good interior and producing the stable relative slice
+with the three clauses above.
+
+Here is the source audit.
+
+- Theorem 8.1 constructs the Mumford family over the completed boundary algebra
+  $R'[[t_1,\ldots,t_d]]$ and Theorem 8.2 constructs a point-centered valuation shell.  They do
+  not identify that completed chart with the boundary completion of one projective
+  finite-presentation $R$-model containing $\mathcal Y^{\mathrm{good}}$, or algebraize a curve
+  crossing from its boundary point into a special-fiber open of the good interior.  Indeed every
+  point in the prescribed shell has
+  $v(t_i)>0$ for all $i$ and therefore reduces to the deepest boundary stratum; shrinking that
+  shell cannot produce the inverse image of a good special-fiber open.
+- Book 8 represents fixed-polynomial curve families by a Hilbert scheme.  Representability
+  supplies a parameter space and its universal family; it does not prove that the open locus
+  expressing clauses 1--3 has an $R$-point.  In particular an open in a parameter space over
+  the finite field $\kappa$ need not have a $\kappa$-point merely because it is geometrically
+  nonempty.  A bare projective closure of the already quasi-projective integral model is also
+  standard; it supplies neither compatibility with the completed cusp chart nor the required
+  smooth crossing slice.
+- Book 153's Bertini argument is over an infinite characteristic-zero field and controls the
+  generic curve.  It contains no relative Bertini theorem over a DVR with finite residue field,
+  prescribed boundary section, smooth special fiber, and incidence with the good interior.
+  Books 9 and 10 respectively control divisors on an already supplied relative curve and the
+  descent of already supplied projective data; neither is an existence theorem for this slice.
+- Proposition 4.1A puts the unperturbed tensor seeds on one twisted modular curve.  Even if its
+  standard good integral compactification is used as the initial slice, it is not an avoidance
+  repair in the higher-dimensional Hilbert case: the prescribed proper closed set $Z$ is
+  allowed to contain the entire tensor locus.  A theorem that Hecke translates or deformations
+  of that curve meet all the prescribed point-centered neighborhoods while escaping $Z$ is not
+  among the audited sources.
+
+The relative symmetric powers used in the Abel argument start only after the curve has been
+produced.  The finite-length Hilbert or configuration space of $Y$ does carry a universal
+incidence family without choosing a curve, but Book 8 does not make that parameter space an
+open of affine space or prove weak approximation on it.  Producing a rational affine subfamily
+with geometrically integral incidence that meets all the prescribed local configurations is
+exactly the alternative common moving presentation still being sought.  Book 154's
+Moret--Bailly theorem consumes such a presentation; applying it to the Hilbert or configuration
+space merely repeats the same problem and is circular.
+
 ### 13.3 Passing from neighborhoods to every conjugate
 
 An arithmetic approximation theorem uses (13.1) in one of two ways. If a place is required to split completely, the local algebra is a product of copies of $K_{0,v}$ and every conjugate point is required to lie in $\Omega_v$. If a prescribed field extension $K_v'/K_{0,v}$ is part of the seed, the local algebra must contain that factor and the point is evaluated in $Y(K_v')$.
@@ -1777,7 +1946,7 @@ The semistable construction is genuinely $d$-dimensional. The period lattice $\m
 
 Ordinary reduction is open by partial Hasse invariants. Nonordinary reduction is retained on an open residue tube despite being closed in the special fiber. Semistability is retained in the full-dimensional chart by fixed positive valuation shells. Exact torsion representations and both frames are locally constant through finite etale isomorphism schemes, after only the completion extensions explicitly allowed in the datum. Proposition 3.2 and Theorem 12.1 ensure that every intersection is witnessed on the same geometrically connected twist.
 
-Finally, good reduction, ordinary or local--local type, semistability, toric rank, and finite flatness survive finite extension. Splitness can improve, frames need not descend, and valuations rescale. Theorem 13.1 and Corollary 13.2 therefore provide all five nonempty local-open inputs required by simultaneous Moret--Bailly specialization in the unramified odd-prime, monodromy-admissible catalog range; an exact singleton mixed packet still needs Book 154's separate moving-presentation criterion. The remaining qualifications—an externally fixed nonsquare polarization class, a dyadic coefficient prime, an unramified-only frame not realized over an unramified field, or two incompatible prescribed Tate Kummer classes—are explicit changes of scope, not unresolved dependencies of the local package proved here.
+Finally, good reduction, ordinary or local--local type, semistability, toric rank, and finite flatness survive finite extension. Splitness can improve, frames need not descend, and valuations rescale. Theorem 13.1 and Corollary 13.2 therefore provide all five nonempty local-open inputs required by simultaneous Moret--Bailly specialization in the unramified odd-prime, monodromy-admissible catalog range; an exact singleton mixed packet still needs Book 154's separate moving-presentation criterion, with $(\mathrm{ICS})_{v_0,Z}$ of Section 13.2A one sufficient but presently unproved input. The remaining qualifications—an externally fixed nonsquare polarization class, a dyadic coefficient prime, an unramified-only frame not realized over an unramified field, or two incompatible prescribed Tate Kummer classes—are explicit changes of scope, not unresolved dependencies of the local package proved here.
 
 For a fixed smooth geometrically connected twist, Proposition 9.3 additionally gives
 base-field points at all sufficiently large good places.  This uniform statement is designed

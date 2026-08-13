@@ -27,6 +27,7 @@
    - [The Mayer--Vietoris sequence](#52-the-mayer--vietoris-sequence)
    - [The kernel of the two degeneracy restrictions](#53-the-kernel-of-the-two-degeneracy-restrictions)
    - [Hecke action on arithmetic characters](#54-hecke-action-on-arithmetic-characters)
+   - [The full profinite congruence kernel](#55-the-full-profinite-congruence-kernel)
 6. [The geometric Ihara criterion](#6-the-geometric-ihara-criterion)
    - [Complex uniformization and comparison](#61-complex-uniformization-and-comparison)
    - [The degeneracy map as restriction](#62-the-degeneracy-map-as-restriction)
@@ -127,7 +128,7 @@ $$
 
 The kernel of $\delta$ can contain a finite subgroup even if its tangent map is injective. Such a subgroup is harmless at a non-Eisenstein localization only after its Hecke action has been calculated. Declaring the kernel finite is not enough: its order may be divisible by $\ell$, and its reduction may then create exactly the kernel in (1.2).
 
-The tree calculation below identifies the entire residual kernel exactly. It also proves that the part coming from congruence-continuous characters of the norm-one arithmetic group is Eisenstein. Reduced norm, the center, and the component set are incorporated separately through component routing, central-character twists, and tame descent. What the calculation does not prove from the stated catalog hypotheses is that every abstract finite character of the $S$-arithmetic group is congruence-continuous, or the weaker assertion that the remaining characters have Eisenstein Hecke transfer. That distinction is decisive. The integral saturation and component package is therefore proved under the exact residual vanishing condition isolated in Section 6.4; Section 14 records why removing that condition requires a new arithmetic theorem.
+The tree calculation below identifies the entire residual kernel exactly. It also proves that the part coming from congruence-continuous characters of the norm-one arithmetic group is Eisenstein. Reduced norm, the center, and the component set are incorporated separately through component routing, central-character twists, and tame descent. The full profinite completion maps onto the congruence completion, and inflation--restriction identifies the remaining quotient with the kernel of transgression on invariant characters of that congruence kernel. What the calculation does not prove from the stated catalog hypotheses is that this transgression kernel vanishes, or the weaker assertion that its localized routed part has Eisenstein Hecke transfer. That distinction is decisive. The integral saturation and component package is therefore proved under the exact residual vanishing condition isolated in Section 6.4; Section 14 records why removing that condition requires a new arithmetic theorem at every level actually used downstream.
 
 ### 1.3 The geometric mechanism
 
@@ -159,13 +160,13 @@ There is a second, logically independent Smith module. Projecting the old image 
 
 ### 1.4 Dependency boundary
 
-Six earlier books supply the exact imported facts.
+Seven earlier books supply the exact imported facts.
 
-Book 16 supplies the normalization sequence of a nodal curve, graph homology, weighted monodromy pairings, their discriminant groups, subdivision invariance, and functoriality under finite maps. Book 38 supplies Néron models, extension of Jacobian homomorphisms, identity components, component maps, and the Raynaud description of a semistable Jacobian. Book 39 supplies integral pull--norm correspondences, adjunction, specialization, and the intersection- and graph-lattice formulas for their component actions. Book 124 supplies the two Shimura degeneracy maps with the right-double-coset orientation, their adjoints, and the exact old-level Gram formalism; it explicitly does not supply saturation. Book 118 supplies rank-one strong approximation for the simply connected norm-one quaternion group, with the required archimedean noncompactness and arbitrary compact-open conditions at every finite place. Book 122 supplies the parahoric PEL model, the chart $xy=\pi_v$, strict semistability, the graph description of monodromy, and Hecke functoriality away from $v$; it explicitly makes integral conclusions conditional on saturation.
+Book 16 supplies the normalization sequence of a nodal curve, graph homology, weighted monodromy pairings, their discriminant groups, subdivision invariance, and functoriality under finite maps. Book 24 supplies continuous cohomology of profinite groups and the five-term inflation--restriction sequence with transgression. Book 38 supplies Néron models, extension of Jacobian homomorphisms, identity components, component maps, and the Raynaud description of a semistable Jacobian. Book 39 supplies integral pull--norm correspondences, adjunction, specialization, and the intersection- and graph-lattice formulas for their component actions. Book 124 supplies the two Shimura degeneracy maps with the right-double-coset orientation, their adjoints, and the exact old-level Gram formalism; it explicitly does not supply saturation. Book 118 supplies rank-one strong approximation for the simply connected norm-one quaternion group, with the required archimedean noncompactness and arbitrary compact-open conditions at every finite place. Book 122 supplies the parahoric PEL model, the chart $xy=\pi_v$, strict semistability, the graph description of monodromy, and Hecke functoriality away from $v$; it explicitly makes integral conclusions conditional on saturation.
 
-No listed prerequisite computes the prime-to-small-prime abelianization of the norm-one $S$-arithmetic group or the action of its good-place commensurators. In particular Book 118 proves strong approximation, which gives density and the one-edge tree quotient, but not a congruence-subgroup property and not continuity of an abstract finite character for the congruence topology.
+No listed prerequisite computes the prime-to-small-prime abelianization of the norm-one $S$-arithmetic group or the action of its good-place commensurators. Book 24 identifies what inflation--restriction would require but proves no arithmetic vanishing for the kernel in (5.21). In particular Book 118 proves strong approximation, which gives density and the one-edge tree quotient, but not a congruence-subgroup property and not continuity of an abstract finite character for the congruence topology.
 
-The new work here is the specialization of strong approximation to the tree quotient, the exact Bass--Serre and Mayer--Vietoris calculation, the good-place calculation on congruence-continuous norm-one characters with the separate norm and component routing, the precise isolation of the noncongruence character obstruction, the conditional primitive-image and torsion-free-quotient theorems, and their synthesis with the monodromy, component, and branch-correction sequences. No rational old--new decomposition, later level-change theorem, or later automorphic comparison is used to conceal the unresolved arithmetic condition.
+The new work here is the specialization of strong approximation to the tree quotient, the exact Bass--Serre and Mayer--Vietoris calculation, the good-place calculation on congruence-continuous norm-one characters with the separate norm and component routing, the full-profinite inflation--restriction identification of the noncongruence obstruction, the conditional primitive-image and torsion-free-quotient theorems, and their synthesis with the monodromy, component, and branch-correction sequences. No rational old--new decomposition, later level-change theorem, or later automorphic comparison is used to conceal the unresolved arithmetic condition.
 
 ## 2. The clean Shimura-curve datum
 
@@ -693,7 +694,7 @@ H^1_{\mathrm{nc}}(\Gamma_c,A)
 =H^1(\Gamma_c,A)/H^1_{\mathrm{cong}}(\Gamma_c,A). \tag{5.9}
 $$
 
-On the stable union these modules are summed over $c$; write the resulting modules as $\mathcal H^1(A)$, $\mathcal H^1_{\mathrm{cong}}(A)$, and $\mathcal H^1_{\mathrm{nc}}(A)$. The quotient in (5.9) measures only failure of congruence continuity. No finiteness or centrality assertion about the congruence kernel is being made.
+On the stable union these modules are summed over $c$; write the resulting modules as $\mathcal H^1(A)$, $\mathcal H^1_{\mathrm{cong}}(A)$, and $\mathcal H^1_{\mathrm{nc}}(A)$. In the routed formulas below, $H^1_*(\Gamma^v,A)$ is shorthand for the corresponding componentwise direct sum $\mathcal H^1_*(A)$ with its routing and $\Delta$-action; it is not the cohomology of a product of the $\Gamma_c$. The quotient in (5.9) measures only failure of congruence continuity. No finiteness or centrality assertion about the congruence kernel is being made.
 
 Let $w\notin\Sigma$, and let $h_w$ be the finite adele whose $w$-component is $\operatorname{diag}(\varpi_w,1)$ and whose other components are $1$. It belongs to the ambient quaternionic similitude group, not in general to $H(F)$. Thus it must not be used to conjugate a diagonal rational arithmetic group.
 
@@ -810,13 +811,159 @@ $$
 
 Condition (5.18) is equivalent to $T_w=(q_w+1)P_w$ by (5.13). Condition (5.19) says that the two abelianized leg maps agree after component routing and implies (5.18). Lemma 5.2 proves the dual equality after restriction to the congruence-continuous character submodule, so every possible failure is carried by $\mathcal H^1_{\mathrm{nc}}(A)$.
 
-Neither the one-edge quotient nor strong approximation proves (5.18) or (5.19) on that quotient. Density only says that each $\Gamma_c$ and the kernel of a finite-index abstract character have specified closures; it does not identify the character with a continuous character of those closures. Thus the precise missing uniform input is an abelian commensurator theorem, not a full congruence-subgroup property:
+Neither the one-edge quotient nor strong approximation proves (5.18) or (5.19) on the
+noncongruence quotient.  To identify that quotient exactly, one must compare the full
+profinite and congruence completions.
 
-The logical gap already appears in the elementary dense embedding $\mathbf Z\hookrightarrow\mathbf Z_p$. If $r\ne p$, reduction $\mathbf Z\to\mathbf Z/r\mathbf Z$ is an abstract finite character, but it is not continuous for the topology induced from $\mathbf Z_p$: its kernel $r\mathbf Z$ is dense because $r$ is a unit in $\mathbf Z_p$. Therefore neither density nor approximation of finitely many local multiplication tables can show that an arbitrary finite character is congruence-continuous. In particular, an argument that makes a local error arbitrarily small and then declares its value zero in an unrelated abstract finite quotient has already assumed the desired conclusion.
+### 5.5 The full profinite congruence kernel
 
-> For the norm-one $S$-arithmetic component family (5.7), prove (5.18) for every good $w$ and every finite $\ell$-primary coefficient module, or at least prove it on the $\Delta$-invariant noncongruence quotient localized at the chosen non-Eisenstein maximal ideal.
+Fix a routed component $c$.  The **full profinite completion** of its abstract
+$S$-arithmetic group is
 
-This statement is not supplied by Books 16, 38--39, 118, 122, or 124. Replacing it by the claim that the whole congruence kernel is finite central and $2$-primary would be strictly stronger and would not be a proof from the declared dependencies.
+$$
+\widehat\Gamma_c
+=\varprojlim_{\substack{N\triangleleft\Gamma_c\\ [\Gamma_c:N]<\infty}}\Gamma_c/N.
+\tag{5.20}
+$$
+
+This is not the pro-$\ell$ completion and not the closure obtained by remembering only
+adelic congruence quotients.  The compact totally disconnected group $K_c^v$ is profinite.
+The dense embedding $\Gamma_c\hookrightarrow K_c^v$ from
+(5.7) extends uniquely to a continuous surjection
+
+$$
+\rho_c:\widehat\Gamma_c\twoheadrightarrow K_c^v.
+$$
+
+Surjectivity follows because the image is compact, hence closed, and contains the dense
+image of $\Gamma_c$.  Define the congruence kernel for this exact component and away-from-$v$
+level by
+
+$$
+C_c=\ker(\rho_c).
+$$
+
+Thus there is an exact sequence of profinite groups
+
+$$
+1\longrightarrow C_c\longrightarrow\widehat\Gamma_c
+\xrightarrow{\rho_c}K_c^v\longrightarrow1. \tag{5.21}
+$$
+
+Both the full completion and the level $K_c^v$ matter in this definition.  A congruence
+kernel formed with a different omitted set of places, a different tame spectator level, or
+the group $B^\times$ in place of $H=\operatorname{SL}_1(B)$ is not automatically the kernel
+in (5.21).
+
+**Proposition 5.4 (inflation--restriction description of the obstruction).** Let $A$ be a
+finite $\ell$-primary $\mathcal O$-module, given the discrete topology and trivial action.
+Continuous inflation--restriction for (5.21) gives a natural exact sequence
+
+$$
+0\longrightarrow \operatorname{Hom}_{\rm cont}(K_c^v,A)
+\xrightarrow{\operatorname{inf}} \operatorname{Hom}_{\rm cont}(\widehat\Gamma_c,A)
+\xrightarrow{\operatorname{res}} \operatorname{Hom}_{\rm cont}(C_c,A)^{K_c^v}
+\xrightarrow{\operatorname{tg}_{c,A}}H^2_{\rm cont}(K_c^v,A)
+\xrightarrow{\operatorname{inf}}H^2_{\rm cont}(\widehat\Gamma_c,A),
+\tag{5.22}
+$$
+
+where $\operatorname{tg}_{c,A}$ is transgression.  Consequently restriction to $C_c$
+induces a canonical isomorphism
+
+$$
+H^1_{\rm nc}(\Gamma_c,A)
+\xrightarrow{\ \sim\ }
+\ker\!\left(
+\operatorname{Hom}_{\rm cont}(C_c,A)^{K_c^v}
+\xrightarrow{\operatorname{tg}_{c,A}}H^2_{\rm cont}(K_c^v,A)
+\right). \tag{5.23}
+$$
+
+**Proof.** Every homomorphism from $\Gamma_c$ to the finite group $A$ factors through a
+finite quotient, so the universal property of the full profinite completion gives
+
+$$
+\operatorname{Hom}(\Gamma_c,A)
+=\operatorname{Hom}_{\rm cont}(\widehat\Gamma_c,A).
+$$
+
+Under this equality, inflation from $K_c^v$ is restriction of continuous congruence
+characters along the dense map $\Gamma_c\to K_c^v$.  The continuous Hochschild--Serre
+five-term sequence of Book 24, Chapter 6, applied to (5.21), is therefore (5.22).  The action
+of $K_c^v$ on $\operatorname{Hom}_{\rm cont}(C_c,A)$ is well defined: two lifts differ by an
+element of $C_c$, and inner conjugation by $C_c$ acts trivially on homomorphisms to the
+abelian group $A$.  Exactness identifies the cokernel of inflation with the image of restriction, and
+that image with the kernel of transgression.  The cokernel of inflation is exactly the
+definition (5.9) of $H^1_{\rm nc}(\Gamma_c,A)$. $\square$
+
+Summing over the stable routed component orbit gives
+
+$$
+\mathcal H^1_{\rm nc}(A)
+\simeq
+\bigoplus_c
+\ker\!\left(
+\operatorname{Hom}_{\rm cont}(C_c,A)^{K_c^v}
+\xrightarrow{\operatorname{tg}_{c,A}}H^2_{\rm cont}(K_c^v,A)
+\right). \tag{5.24}
+$$
+
+The component transitions and the fine-cover descent group permute the extensions (5.21).
+Thus (5.24) is $\Delta$-equivariant.  The Hecke action on its right side is the one transported
+through (5.23); concretely it is induced by the same restriction, conjugation, and
+corestriction maps used in (5.12)--(5.15).  No centrality assumption on $C_c$ is used.
+
+Formula (5.23) separates three assertions which are often conflated.
+
+First, density proves the surjection $\widehat\Gamma_c\twoheadrightarrow K_c^v$, but says
+nothing about its kernel.  The elementary dense embedding
+$\mathbf Z\hookrightarrow\mathbf Z_p$ already shows the problem: if $r\ne p$, reduction
+$\mathbf Z\to\mathbf Z/r\mathbf Z$ is an abstract finite character whose kernel is dense in
+$\mathbf Z_p$, so it is not continuous for the topology induced from $\mathbf Z_p$.  Here
+$\widehat{\mathbf Z}=\prod_q\mathbf Z_q\twoheadrightarrow\mathbf Z_p$ has kernel
+$\prod_{q\ne p}\mathbf Z_q$, and the missing mod-$r$ character is visible on its
+$\mathbf Z_r$ factor.
+
+Second, finiteness and centrality do not by themselves settle (5.23).  If $C_c$ is finite of
+order prime to $\ell$, then $\operatorname{Hom}(C_c,A)=0$, which is sufficient and does not
+require centrality.  But a finite central kernel may have $\ell$-torsion, and then the
+transgression depends on the extension class.  Centrality merely makes the $K_c^v$-action in
+(5.23) trivial; the obstruction is still
+$\ker[\operatorname{Hom}_{\rm cont}(C_c,A)\to H^2_{\rm cont}(K_c^v,A)]$.  As abstract
+profinite extensions, for example,
+take $C=K=A=\mathbf Z/\ell\mathbf Z$.  The split extension
+$C\times K\twoheadrightarrow K$ has zero transgression and nonzero noncongruence characters.
+For the nonsplit central extension
+
+$$
+0\longrightarrow \ell\mathbf Z/\ell^2\mathbf Z
+\longrightarrow\mathbf Z/\ell^2\mathbf Z
+\longrightarrow\mathbf Z/\ell\mathbf Z\longrightarrow0,
+$$
+
+every homomorphism from the middle group to $A$ kills the kernel, so transgression is
+injective and the noncongruence quotient is zero.  The abstract kernel and quotient are the
+same in the two examples; finite centrality alone cannot distinguish the answers.  Showing
+that the arithmetic extension (5.21) belongs to a more restrictive class would itself require
+an additional arithmetic theorem.
+
+Third, a proposed metaplectic route must supply every comparison it uses.  One would need a
+centrality theorem for the exact $S$-congruence extension (5.21) of the simply connected
+group $H$, with $v$ omitted and the actual compact open $K_c^v$; a theorem comparing the
+relevant continuous character group of $C_c$ with a correctly normalized metaplectic kernel,
+in the injective direction needed to kill odd-primary characters; and a computation showing
+that the target of that comparison has no $\ell$-primary part.  Roots of unity, local
+symbol normalizations, the omitted-place set, and passage to every finite-index tame, ray, and
+auxiliary spectator level must all be checked.  Only such a chain could justify a conclusion
+such as ``the relevant character group is $2$-primary.''  Strong approximation supplies none
+of centrality, metaplectic comparison, or the odd-primary computation, and no such chain occurs
+among Books 16, 24, 38--39, 118, 122, and 124.
+
+The exact abelian input at one level is therefore the vanishing of the transgression kernel in
+(5.23), or only of its $\Delta$-invariant non-Eisenstein localization when that is all the
+application uses.  This is weaker than asserting that the entire congruence kernel is finite,
+central, and $2$-primary.
 
 ## 6. The geometric Ihara criterion
 
@@ -914,6 +1061,21 @@ $$
 \longrightarrow0. \tag{6.8}
 $$
 
+Writing $c$ over the stable routed component orbit, Proposition 5.4 identifies the last term
+without any hypothesis on the size or center of the congruence kernels:
+
+$$
+H^1_{\mathrm{nc}}(\Gamma^v,A)^\Delta
+\simeq
+\left(
+\bigoplus_c
+\ker\!\left[
+\operatorname{Hom}_{\rm cont}(C_c,A)^{K_c^v}
+\xrightarrow{\operatorname{tg}_{c,A}}H^2_{\rm cont}(K_c^v,A)
+\right]
+\right)^\Delta. \tag{6.8a}
+$$
+
 This is the strongest unconditional Eisenstein-kernel statement supplied by the declared sources. Continuous characters of division-place, coefficient-place, and bad-level compact factors occur in the first term. Reduced norm and the component set do not create characters of the fixed norm-one group: they route that first term between connected-component factors through $P_w$, producing the twists (2.2)--(2.3). Ineffective central units are divided out, while the effective norm-squareclass and fine-cover descent is carried by $\Delta$. Since $\ell\nmid|\Delta|$, averaging is exact and $H^i(\Delta,A)=0$ for $i>0$, so no additional degree-one character appears. If $\ell\mid|\Delta|$, the assertion is deliberately excluded. Only the $\Delta$-invariant noncongruence quotient of the norm-one character module remains in the clean range.
 
 For $A=\mathbf Z/\ell^n\mathbf Z$, Kummer theory identifies
@@ -931,16 +1093,31 @@ Let $\mathfrak m$ be non-Eisenstein in the sense of Section 2.4. Localizing (6.8
 $$
 \ker(d_k)_{\mathfrak m}
 \simeq \bigl(H^1(\Gamma^v,k)^\Delta\bigr)_{\mathfrak m}
-\simeq \bigl(H^1_{\mathrm{nc}}(\Gamma^v,k)^\Delta\bigr)_{\mathfrak m}. \tag{6.10}
+\simeq \bigl(H^1_{\mathrm{nc}}(\Gamma^v,k)^\Delta\bigr)_{\mathfrak m}
+\simeq
+\left(
+\left(
+\bigoplus_c
+\ker\!\left[
+\operatorname{Hom}_{\rm cont}(C_c,k)^{K_c^v}
+\xrightarrow{\operatorname{tg}_{c,k}}H^2_{\rm cont}(K_c^v,k)
+\right]
+\right)^\Delta
+\right)_{\mathfrak m}. \tag{6.10}
 $$
 
-The middle isomorphism uses (6.6), and the last uses Proposition 5.3. Hence the following are equivalent:
+The first isomorphism uses (6.6), the second uses Proposition 5.3, and the last is (6.8a).
+Hence the following are equivalent:
 
 $$
 \begin{array}{c}
 (d_k)_{\mathfrak m}\text{ is injective},\\
 \bigl(H^1(\Gamma^v,k)^\Delta\bigr)_{\mathfrak m}=0,\\
-\bigl(H^1_{\mathrm{nc}}(\Gamma^v,k)^\Delta\bigr)_{\mathfrak m}=0.
+\bigl(H^1_{\mathrm{nc}}(\Gamma^v,k)^\Delta\bigr)_{\mathfrak m}=0,\\
+\displaystyle
+\left(
+\left(\bigoplus_c\ker[\operatorname{tg}_{c,k}]\right)^\Delta
+\right)_{\mathfrak m}=0.
 \end{array} \tag{6.11}
 $$
 
@@ -2169,7 +2346,8 @@ We collect the exact source-closed implication proved in this book. The extra hy
    $$
    \bigl(H^1_{\mathrm{nc}}(\Gamma^v,k)^\Delta\bigr)_{\mathfrak m}=0,
    $$
-   equivalently any of the conditions in (6.11).
+   equivalently any of the conditions in (6.11), including vanishing of the localized
+   $\Delta$-invariant transgression kernel for the full profinite congruence kernels $C_c$.
 
 Put
 
@@ -2250,7 +2428,7 @@ In particular the localized old image is primitive and the integral new quotient
 
 **Proof.** The lattice graph at $v$ is a tree by Proposition 4.1. Strong approximation, Theorem 4.2, makes its quotient by the $S$-arithmetic group a single edge. The tree Mayer--Vietoris sequence therefore gives the exact kernel and cokernel sequence (6.5). Complex uniformization and cohomological comparison identify its two restriction maps with $\pi_0^*$ and $\pi_1^*$.
 
-Proposition 5.3 makes the congruence-continuous norm-one character submodule Eisenstein, including its division-, coefficient-, and bad-level local factors; reduced norm, central action, and component routing give the declared twists. Exact prime-to-$\ell$ descent then takes $\Delta$-invariants. Non-Eisenstein localization kills the resulting congruence submodule. Formula (6.10) identifies the remaining kernel with $\bigl(H^1_{\mathrm{nc}}(\Gamma^v,k)^\Delta\bigr)_{\mathfrak m}$, which is zero by hypothesis 8. This proves clause 1 without any assertion about the full congruence kernel.
+Proposition 5.3 makes the congruence-continuous norm-one character submodule Eisenstein, including its division-, coefficient-, and bad-level local factors; reduced norm, central action, and component routing give the declared twists. Exact prime-to-$\ell$ descent then takes $\Delta$-invariants. Non-Eisenstein localization kills the resulting congruence submodule. Proposition 5.4 identifies the remaining noncongruence quotient with the kernel of transgression on the $K_c^v$-invariant continuous characters of the full profinite congruence kernels. Formula (6.10) identifies the remaining geometric kernel with the localized $\Delta$-invariant sum of those transgression kernels, which is zero by hypothesis 8. This proves clause 1 without assuming that a congruence kernel is finite or central.
 
 The two cohomology modules are finite free over $\mathcal O$ by the Riemann-surface cell calculation of Section 7.1. Lemma 3.1 applied to the localized map now proves injectivity and saturation, hence clauses 2 and 3. Perfect Poincaré duality and Lemma 3.2 prove clause 4. Pull--norm adjunction and the right-double-coset calculation prove clause 5.
 
@@ -2262,24 +2440,25 @@ Correspondence extension, graph adjunction, and descent preserve each constructi
 
 ### 14.3 Hypothesis and dependency ledger
 
-The logical use of the six direct prerequisites is exact.
+The logical use of the seven direct prerequisites is exact.
 
 | Source | Imported result | Hypotheses retained | Work done here |
 |---|---|---|---|
 | Book 16 | nodal normalization, graph cycles, weighted pairing, discriminant component group, subdivision, finite-map adjunction | semistable curve; geometric graph; thickness and signed descent retained | application to the Iwahori quotient and separation of the graph discriminant from the branch correction |
+| Book 24 | continuous profinite cohomology, inflation, restriction, transgression, and the five-term exact sequence | profinite extension; finite discrete continuous coefficients | application to the full profinite-to-congruence extension and identification (5.23) |
 | Book 38 | Néron mapping property, identity component, component group, semistable Jacobian, unramified base change | excellent DVR; henselianity where reduction is used; perfect residue field for fixed-point notation | identification of the ambient component term in the localized monodromy-cokernel sequence |
 | Book 39 | extension of pull--norm correspondences, transpose, specialization, graph and intersection maps | smooth proper generic curves; regular models; controlled resolved correspondence | simultaneous Hecke action and adjunction on the new and component lattices |
 | Book 124 | Shimura degeneracy maps, right-coset orientation, component routing, old map, adjoints, Gram matrix framework | stable component union; fine or tame descent; unnormalized operators | exact tree criterion and, under (6.11), geometric injectivity and saturation, which Book 124 explicitly leaves open |
 | Book 118 | rank-one strong approximation for simply connected quaternion norm-one groups | a noncompact archimedean factor; arbitrary finite compact-open conditions | exact specialization to the one-edge quotient in Theorem 4.2 |
 | Book 122 | rank-two parahoric PEL model, $xy=\pi_v$, strict semistability, graph monodromy, Hecke functoriality | verified flat incidence local model; neat level; prime-to-$v$ coefficients | integral quotient filtration, normalized branch map, and its Smith correction |
-| Abelian Ihara condition | explicit additional hypothesis, not an imported theorem | vanishing of $\bigl(H^1_{\mathrm{nc}}(\Gamma^v,k)^\Delta\bigr)_{\mathfrak m}$ | exact point at which the conditional residual theorem becomes injective |
+| Abelian Ihara condition | explicit additional hypothesis, not an imported theorem | vanishing of $\bigl(H^1_{\mathrm{nc}}(\Gamma^v,k)^\Delta\bigr)_{\mathfrak m}$, equivalently of the localized $\Delta$-invariant transgression kernel in (6.10) | exact point at which the conditional residual theorem becomes injective |
 
-The tree Mayer--Vietoris sequence, the local-factor calculation on congruence-continuous arithmetic characters, the exact noncongruence obstruction, the conditional saturation criterion, and the branch Smith calculation are proved here. Strong approximation is imported only from Book 118. No congruence-kernel theorem, automorphic decomposition, multiplicity-one theorem, local newvector theorem, or modularity argument is invoked.
+The tree Mayer--Vietoris sequence, the local-factor calculation on congruence-continuous arithmetic characters, the full-profinite inflation--restriction identification of the exact noncongruence obstruction, the conditional saturation criterion, and the branch Smith calculation are proved here. Strong approximation is imported only from Book 118. No centrality theorem for the congruence kernel, metaplectic-kernel comparison or computation, automorphic decomposition, multiplicity-one theorem, local newvector theorem, or modularity argument is invoked.
 
 The mathematical direct-dependency row is therefore
 
 $$
-139\mid 16,38,39,124,118,122. \tag{14.1}
+139\mid 16,24,38,39,124,118,122. \tag{14.1}
 $$
 
 The first seven hypotheses of Theorem 14.1 do not currently imply hypothesis 8 from those sources. A proof of (5.18) on the localized noncongruence quotient, an exact computation of (5.19), or a different theorem proving the last vanishing in (6.10) would close the catalog objective. Strong approximation alone cannot do so.
@@ -2288,16 +2467,116 @@ The first seven hypotheses of Theorem 14.1 do not currently imply hypothesis 8 f
 
 The theorem proves the clean full-Iwahori two-map statement conditional on the exact abelian Ihara condition. It does not assert that condition from the geometric and strong-approximation hypotheses alone.
 
-The single missing arithmetic theorem can now be named without strengthening it.
-
-**Missing arithmetic theorem $({\rm AC}^{\rm loc}_\ell)$ (localized odd-primary abelian congruence).** For every datum satisfying hypotheses 1--7 of Theorem 14.1, including every fixed tame spectator level needed downstream, one has
+The missing arithmetic input must be stated on the levels which the argument actually routes
+through.  Let $\mathscr R$ be a finite family of constant-coefficient degeneracy rows.  An
+element $R\in\mathscr R$ records the changing place $v_R$, the actual tame, ray, and auxiliary
+spectator level away from $v_R$, the full Hecke-stable component orbit, its prime-to-$\ell$
+descent group $\Delta_R$, and its localized maximal ideal $\mathfrak m_R$.  For every component
+$c$ in that orbit put
 
 $$
-\bigl(H^1_{\mathrm{nc}}(\Gamma^v,k)^\Delta\bigr)_{\mathfrak m}=0.
-\tag{14.2}
+\Gamma_{R,c}=H_R(F_R)\cap K_{R,c}^{v_R},
+\qquad
+C_{R,c}=\ker\!\left(\widehat\Gamma_{R,c}\twoheadrightarrow K_{R,c}^{v_R}\right).
 $$
 
-This theorem is not proved here. At one fixed datum it is exactly $({\rm AIH})_{v,\mathfrak m}$, hence is equivalent to residual Ihara injectivity by (6.10)--(6.11). A full odd-primary abelian congruence-subgroup property would assert $H^1_{\mathrm{nc}}(\Gamma^v,A)=0$ before localization for every finite $\ell$-primary $A$; it would imply (14.2), but is strictly stronger than the theorem actually needed. Likewise, centrality or $2$-primary finiteness of the entire congruence kernel would be stronger. The minimal missing assertion is the localized vanishing (14.2), not either of those global claims.
+As in Sections 5.4 and 6.3, the shorthand
+$H^1_{\rm nc}(\Gamma_R^{v_R},-)$ means the direct sum of the componentwise groups, with the
+routing and $\Delta_R$-action retained; it is not the cohomology of an unmentioned product.
+
+Checking only one nominal base row is not enough: changing a spectator tuple changes
+$K_{R,c}^{v_R}$ and hence the displayed extension, quotient action, transgression map, and
+Hecke localization.  Even when a finite-index comparison identifies the underlying
+congruence kernels, it does not by itself identify the routed localized transgression kernels
+in (14.2).
+
+**Missing arithmetic theorem $({\rm AC}^{\rm loc}_\ell)_{\mathscr R}$ (localized
+odd-primary abelian congruence).** For every $R\in\mathscr R$, with residue field $k_R$, one
+has
+
+$$
+\left(
+\left(
+\bigoplus_c
+\ker\!\left[
+\operatorname{Hom}_{\rm cont}(C_{R,c},k_R)^{K_{R,c}^{v_R}}
+\xrightarrow{\operatorname{tg}_{R,c,k_R}}
+H^2_{\rm cont}(K_{R,c}^{v_R},k_R)
+\right]
+\right)^{\Delta_R}
+\right)_{\mathfrak m_R}=0. \tag{14.2}
+$$
+
+This is the exact localized statement needed by the catalog.  Proposition 5.4 identifies
+(14.2) with
+
+$$
+\bigl(H^1_{\rm nc}(\Gamma_R^{v_R},k_R)^{\Delta_R}\bigr)_{\mathfrak m_R}=0,
+$$
+
+so at one fixed row it is precisely $({\rm AIH})_{v_R,\mathfrak m_R}$, not a new geometric
+hypothesis under another name.
+
+A clean sufficient arithmetic theorem, still only abelian and only for the actual routed
+family, is the following stronger statement:
+
+$$
+({\rm AC}^{\rm ab}_\ell)_{\mathscr R}:\qquad
+\ker\!\left[
+\operatorname{Hom}_{\rm cont}(C_{R,c},A)^{K_{R,c}^{v_R}}
+\xrightarrow{\operatorname{tg}_{R,c,A}}
+H^2_{\rm cont}(K_{R,c}^{v_R},A)
+\right]=0 \tag{14.2a}
+$$
+
+for every $R\in\mathscr R$, every routed component $c$, and every finite $\ell$-primary
+trivial module $A$.  Equivalently, every finite $\ell$-primary additive character of every
+$\Gamma_{R,c}$ is congruence-continuous for the displayed completion.  Requiring the analogous
+statement for every permissible odd $\ell$ and its routed family gives the uniform
+odd-primary theorem.  It is much weaker than a full
+congruence-subgroup property: it concerns only abelian finite quotients and only the specified
+finite routed family.  It is stronger than the localized residue-field statement (14.2).
+
+There is also a transparent, centrality-free congruence-kernel theorem which is sufficient for
+(14.2a):
+
+$$
+({\rm CK}^{\rm ab}_\ell)_{\mathscr R}:\qquad
+\operatorname{Hom}_{\rm cont}(C_{R,c},A)=0 \tag{14.2b}
+$$
+
+for every $R,c$, and $A$ as above.  Equivalently, the topological abelianization
+$C_{R,c}/\overline{[C_{R,c},C_{R,c}]}$ has trivial maximal pro-$\ell$ quotient.  Requiring
+this for every permissible odd $\ell$ and its routed family says exactly that the corresponding
+congruence kernels have no nontrivial finite odd-primary abelian quotient; it says nothing
+about their nonabelian finite quotients and does not assume centrality.
+
+**Proposition 14.2 (congruence input implies the routed saturated Ihara package).** Assume
+hypotheses 1--7 of Theorem 14.1 at every $R\in\mathscr R$.  Then
+$({\rm CK}^{\rm ab}_\ell)_{\mathscr R}$ implies
+$({\rm AC}^{\rm ab}_\ell)_{\mathscr R}$, which in turn implies
+$({\rm AC}^{\rm loc}_\ell)_{\mathscr R}$.  Either the latter condition, or the same finite list
+of $({\rm AIH})_{v_R,\mathfrak m_R}$ vanishings stated directly, implies residual injectivity,
+integral saturation of the old image, and freeness of the new quotient at every routed row.
+
+**Proof.** Apply Proposition 5.4 componentwise.  Condition (14.2b) kills the entire character
+group containing the transgression kernel, so it implies (14.2a).  Condition (14.2a) makes
+every summand in (14.2) zero before taking $\Delta_R$-invariants or localizing, so it implies
+(14.2).  Formula (6.10) then makes the residual two-degeneracy kernel zero at each $R$.
+Section 7.1 gives finite
+free source and target lattices, and Lemma 3.1 turns residual injectivity into injectivity with
+saturated image.  The quotient is finite torsion-free over the coefficient DVR and hence free,
+as in Theorem 7.1.  Applying the remaining parts of Theorem 14.1 row by row gives the component,
+monodromy, and branch statements with their stated independent hypotheses. $\square$
+
+None of (14.2), (14.2a), and (14.2b) is proved here.  A theorem that every $C_{R,c}$ is finite
+of $2$-power order would imply (14.2b) for odd $\ell$; centrality is not needed for that
+implication.  Finiteness and centrality without the $2$-primary conclusion still permit
+odd-primary characters and do not control transgression.  Deriving the needed odd-primary
+character vanishing by the proposed metaplectic route would require the centrality and
+comparison prerequisites listed after Proposition 5.4 for every exact routed extension,
+followed by the relevant metaplectic computation.  None of those inputs is among the declared
+dependencies.  The minimal unresolved assertion remains (14.2).
 
 At an Eisenstein maximal ideal, the congruence arithmetic character module can survive. At a non-Eisenstein ideal, the noncongruence quotient in (6.10) is the separate possible kernel. At a nonneat quotient with $\ell$-divisible stabilizers, group cohomology of the stabilizer can add another kernel. Once (6.11) and tame descent hold, $q_v\equiv1\pmod\ell$ affects only the integral choice of an ordered $U_v$ branch, while $q_v\equiv-1\pmod\ell$ can make both signed Gram factors nonunits.
 
@@ -2329,7 +2608,16 @@ The two degeneracy maps are deceptively simple. They come from the two endpoints
 
 The Bruhat--Tits tree turns the two pullbacks into a Mayer--Vietoris map. On the norm-one cover its kernel is not guessed from dimensions: it is exactly the first cohomology of the group with the $v$-level removed, and its cokernel is the next explicit $H^2$ kernel. Exact prime-to-$\ell$ descent takes the corresponding $\Delta$-invariants on the original curve. In degree one the obstruction consists of additive arithmetic characters. Strong approximation embeds the congruence-continuous ones densely into the compact product. Division-place tori, coefficient-place factors, and bad-level factors are retained inside that module, while norms, centers, and components are retained through routing and descent; the transfer formula makes the resulting congruence submodule Eisenstein.
 
-An abstract finite character need not be congruence-continuous. The unresolved quotient on the original curve is $\bigl(H^1_{\mathrm{nc}}(\Gamma^v,k)^\Delta\bigr)_{\mathfrak m}$, and residual Ihara is equivalent to its vanishing. This is the exact point at which the catalog objective presently needs a new abelian commensurator or localized $H^1$ theorem. A full congruence-subgroup property is neither assumed nor substituted for it.
+An abstract finite character need not be congruence-continuous.  The full profinite completion
+maps onto the congruence completion with kernel $C_c$, and inflation--restriction identifies
+the unresolved quotient with the kernel of transgression on
+$\operatorname{Hom}_{\rm cont}(C_c,k)^{K_c^v}$.  After component descent and localization this
+is exactly $\bigl(H^1_{\mathrm{nc}}(\Gamma^v,k)^\Delta\bigr)_{\mathfrak m}$, so residual Ihara is
+equivalent to its vanishing.  This is the exact point at which the catalog objective presently
+needs the routed theorem $({\rm AC}^{\rm loc}_\ell)_{\mathscr R}$, or a stronger abelian
+congruence theorem implying it.  A full congruence-subgroup property is neither assumed nor
+substituted for it, and finite centrality without odd-primary or transgression control is not
+enough.
 
 Once the abelian Ihara condition supplies residual injectivity, elementary divisor theory does the integral work. The old image is saturated, its quotient is free, and perfect duality identifies the orthogonal new lattice with the dual of that quotient. This remains true when the Gram determinant is a nonunit. The nonunit then records a genuine old--new congruence rather than torsion caused by a defective lattice.
 
@@ -2379,4 +2667,4 @@ $$
 
 Each finite module now has one source and one meaning. Under (6.11), the old quotient has no torsion. The failure of orthogonal splitting is measured by the Gram congruence. The Néron component group is the graph discriminant. The possible failure of the bottom graph copy to be primitive is $\mathcal C_{\mathrm{br},v}$. Before (6.11), the additional module is the localized noncongruence character group in (6.10); non-Eisenstein localization alone has not removed it.
 
-Thus the geometric, linear-algebraic, and component parts of saturated Ihara theory are complete, and their downstream interfaces are exact. The full catalog theorem for the stated range is not source-closed until the localized odd-primary vanishing $({\rm AC}^{\rm loc}_\ell)$ in (14.2) is proved by additional arithmetic input. The abelian commensurator identity (5.18) would suffice, but is stronger than that minimal localized theorem.
+Thus the geometric, linear-algebraic, and component parts of saturated Ihara theory are complete, and their downstream interfaces are exact. The full catalog theorem for the stated range is not source-closed until the routed localized odd-primary vanishing $({\rm AC}^{\rm loc}_\ell)_{\mathscr R}$ in (14.2) is proved by additional arithmetic input. The componentwise abelian theorem (14.2a), for example through the no-odd-primary-abelian-quotient theorem (14.2b), or the routed abelian commensurator identities (5.18), would suffice, but each is stronger than that minimal localized theorem.

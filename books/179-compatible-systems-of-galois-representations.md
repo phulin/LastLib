@@ -184,8 +184,8 @@ $$
 Book 41 supplies the exact Faltings--Tate reduction used by the geometric examples: finite
 isogeny classes imply finitely many stable Tate-lattice types, and Tate's Jacobson-radical
 argument then proves rational semisimplicity. It identifies finite isogeny classes as the exact
-arithmetic input and the unresolved Faltings--Shafarevich height-and-cancellation package as a
-standard uniform source. Book 168 supplies the coefficient-indexed
+arithmetic input and the unresolved Faltings--Shafarevich moduli-height package as a standard
+uniform source. Book 168 supplies the coefficient-indexed
 systems attached to already constructed
 parallel-weight-two packets: common algebraic Frobenius polynomials, determinants, purity,
 coefficient conjugation, and the full Frobenius-semisimple Weil--Deligne pair exactly in its
@@ -204,13 +204,15 @@ abelian variety }A/K\text{ over a number field and every }\ell.}
 $$
 
 Book 41, Theorem 15.3 proves $(\mathrm{TS})$ from finiteness of the $K$-isogeny class of $A$
-and proves every subsequent curve-cohomology and coefficient-factor implication. Its Section
-13.5 shows why its standard uniform Faltings--Shafarevich source is incomplete: the arithmetic
+and proves every subsequent curve-cohomology and coefficient-factor implication. Section 13.7
+of that book shows why its standard uniform Faltings--Shafarevich source is incomplete: the arithmetic
 Siegel compactification, stable-Hodge base-change and metrized Hodge/theta slope/boundary
-estimates needed for the moduli-height bound, and the separate Zarhin factor-cancellation and
-$K$-descent theorem are not available. Potential semistable reduction itself is proved in Book
-61, but it does not supply those missing height and cancellation steps. Book 168 isolates the finite
-carrier instance as the exact sufficient input for uniform raw-to-global local preservation.
+estimates needed for the moduli-height bound are not available. Book 41 does prove finite
+polarized descent from the level fields back to $K$ and proves the integral Zarhin direct-factor
+theorem by Jordan--Zassenhaus finiteness for lattices over an endomorphism order. Potential
+semistable reduction itself is proved in Book 61, but it does not supply the missing height
+steps. Book 168 isolates the finite carrier instance as the exact sufficient input for uniform
+raw-to-global local preservation.
 Thus (1.4) is conditional on the explicit finite-isogeny-class hypothesis, not an unexplained
 external theorem and not a conclusion of the other three books.
 
@@ -1610,7 +1612,7 @@ $$
 
 The conditional theorem $(\mathrm{TS})$ from Section 1.4 supplies the semisimplicity required in
 Section 3.1. Book 41 proves it from finite isogeny classes, but neither those classes nor their
-standard Faltings--Shafarevich height-and-cancellation source is a conclusion of the current
+standard Faltings--Shafarevich moduli-height source is a conclusion of the current
 corpus. Without them,
 the good Frobenius polynomials would still define a compatible collection, but the collection
 would meet our definition only after taking global semisimplifications, and the original
