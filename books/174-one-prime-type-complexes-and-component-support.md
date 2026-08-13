@@ -1498,7 +1498,7 @@ an intersection of local conditions.
 The exact direct-dependency row is therefore
 
 ```text
-174 | 6, 65, 67, 70, 122, 138, 139, 140, 151, 170, 141, 171, 172
+174 | 6, 65, 67, 70, 122, 138, 139, 140, 152, 170, 141, 171, 172
 ```
 
 Book 139's transitive geometric prerequisites are Books 16, 38--39, 118, 122, and 124. Their
