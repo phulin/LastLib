@@ -246,8 +246,8 @@ and monodromy-admissible in the precise sense of Book 156, Theorem 12.1.
 ### 4.4 A two-prime datum in degree two
 
 When $M$ is real quadratic and both primes have residue degree one, the output is a surface with
-deck group $\operatorname{SL}_2(k_{\mathfrak p})\times
-\operatorname{SL}_2(k_{\mathfrak q})$; it is not a product of modular curves.
+deck group $\operatorname{SL}_2(k_{\mathfrak p})\times\operatorname{SL}_2(k_{\mathfrak q})$;
+it is not a product of modular curves.
 
 ## 5. The Hilbert--Blumenthal moduli datum
 
