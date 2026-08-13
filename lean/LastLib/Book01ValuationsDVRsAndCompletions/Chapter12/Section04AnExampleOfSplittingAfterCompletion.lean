@@ -1,4 +1,4 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Dependencies
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section02TheCompletedProductTheorem
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
 
@@ -21,6 +21,37 @@ chapter; proofs are postponed.
 -/
 
 /-! ## 12.4. Primitive elements, factorization, and projectors -/
+
+/-! Transport data makes the invariance statements independent of a choice of
+presentation of the base and branch rings. -/
+structure Chapter12BranchInvariantTransport
+    {A B Ahat Bhat : Type*} [CommRing A] [CommRing B]
+    [CommRing Ahat] [CommRing Bhat] [Algebra A B] [Algebra Ahat Bhat]
+    (p : Ideal A) (P : Ideal B) (phat : Ideal Ahat) (Phat : Ideal Bhat) where
+  source_prime : P.IsPrime
+  target_prime : Phat.IsPrime
+  source_liesOver : P.LiesOver p
+  target_liesOver : Phat.LiesOver phat
+  baseEquiv : A ≃+* Ahat
+  branchEquiv : B ≃+* Bhat
+  baseIdeal_map : Ideal.map baseEquiv.toRingHom p = phat
+  branchIdeal_map : Ideal.map branchEquiv.toRingHom P = Phat
+  scalar_compatibility : ∀ a b,
+    branchEquiv (algebraMap A B a * b) =
+      algebraMap Ahat Bhat (baseEquiv a) * branchEquiv b
+
+/-- Completion preserves the branch's intrinsic `e` and `f`. -/
+theorem completed_branch_preserves_ef
+    {A B Ahat Bhat : Type*} [CommRing A] [CommRing B] [CommRing Ahat] [CommRing Bhat]
+    [Algebra A B] [Algebra Ahat Bhat]
+    (p : Ideal A) (P : Ideal B) (phat : Ideal Ahat) (Phat : Ideal Bhat)
+    (transport : Chapter12BranchInvariantTransport p P phat Phat)
+    (e f : ℕ)
+    (he : chapterRamificationIndex A B P = e)
+    (hf : chapterResidueDegree A B P = f) :
+    chapterRamificationIndex Ahat Bhat Phat = e ∧
+      chapterResidueDegree Ahat Bhat Phat = f := by
+  sorry
 
 /-- The completed polynomial quotient associated to a polynomial over a field. -/
 abbrev completedPolynomialQuotient

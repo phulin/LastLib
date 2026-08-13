@@ -1,4 +1,4 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Dependencies
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Section03LiftingFactorizations
 import Mathlib.RingTheory.Algebraic.Defs
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions
@@ -26,6 +26,28 @@ an arbitrary additive valuation.
 -/
 
 /-! ## 9.4 Henselian local rings -/
+
+/-- The simple-residue-root lifting property. -/
+def SimpleResidueRootLiftingProperty (A : Type*) [CommRing A] [IsLocalRing A] : Prop :=
+  ∀ (f : A[X]) (a₀ : ResidueRing A), f.Monic →
+    (residuePolynomial f).eval a₀ = 0 →
+    IsUnit ((residuePolynomial f).derivative.eval a₀) →
+    ∃! a : A, f.eval a = 0 ∧ residueClass a = a₀
+
+/-- The coprime-factorization lifting property used as the book's primary
+definition of henselianity. -/
+def HenselianFactorizationProperty (A : Type*) [CommRing A] [IsLocalRing A] : Prop :=
+  ∀ (f : A[X]) (g₀ h₀ : Polynomial (ResidueRing A)), f.Monic →
+    g₀.Monic → h₀.Monic → IsCoprime g₀ h₀ → residuePolynomial f = g₀ * h₀ →
+    ∃! gh : A[X] × A[X], IsFactorizationLift f g₀ h₀ gh.1 gh.2
+
+/-- The chapter's book-facing henselian predicate. -/
+abbrev IsHenselianLocalRingChapter09 (A : Type*) [CommRing A] [IsLocalRing A] : Prop :=
+  HenselianFactorizationProperty A
+
+/-- Complete and separated maximal-ideal-adic local rings. -/
+def IsMaximalIdealAdicallyCompleteSeparated (A : Type*) [CommRing A] [IsLocalRing A] : Prop :=
+  IsAdicComplete (IsLocalRing.maximalIdeal A) A
 
 /-- A residue root is the linear factor `X-ā`. -/
 theorem simple_residue_root_iff_linear_factor {A : Type*} [CommRing A] [IsLocalRing A]

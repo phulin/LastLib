@@ -1,4 +1,3 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Dependencies
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section03IntegralElementsAreBounded
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Section06AlgebraicConsequences
 
@@ -23,6 +22,35 @@ chapter; proofs are postponed.
 -/
 
 /-! ## 12.5. Henselian uniqueness -/
+
+/-- Valuation extensions with a fixed target value group.  This auxiliary
+interface is used by Book 2's branch bookkeeping. -/
+def ValuationExtension
+    {K Γ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ]
+    (v : Valuation K Γ) (E : Type*) [Field E] [Algebra K E] : Type _ :=
+  {w : Valuation E Γ // v.IsEquiv (w.comap (algebraMap K E))}
+
+/-- The canonical heterogeneous extension type introduced in Chapter 10. -/
+abbrev HeterogeneousValuationExtension
+    {K Γ : Type u} [Field K] [LinearOrderedCommGroupWithZero Γ]
+    (v : Valuation K Γ) (E : Type u) [Field E] [Algebra K E] :=
+  Chapter10.Chapter10HeterogeneousValuationExtension E v
+
+/-- The prime center in the integral closure determined by an extension. -/
+def heterogeneousValuationCenter
+    {K E Γ : Type u} [Field K] [Field E]
+    [LinearOrderedCommGroupWithZero Γ] [Algebra K E]
+    (v : Valuation K Γ) [Algebra v.valuationSubring E]
+    (W : HeterogeneousValuationExtension v E) :
+    Set (integralClosure v.valuationSubring E) :=
+  {x | letI : LinearOrderedCommGroupWithZero W.valueGroup := W.orderedValueGroup
+    W.valuation (algebraMap (integralClosure v.valuationSubring E) E x) < 1}
+
+/-- Uniqueness of the canonical Chapter 10 extension object. -/
+abbrev hasUniqueValuationExtension
+    {K Γ : Type u} [Field K] [LinearOrderedCommGroupWithZero Γ]
+    (v : Valuation K Γ) (E : Type u) [Field E] [Algebra K E] : Prop :=
+  Chapter10.Chapter10HasUniqueValuationExtension (L := E) v
 
 
 /-- Uniqueness for every algebraic extension. -/

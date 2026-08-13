@@ -1,4 +1,4 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Dependencies
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Section04HenselianLocalRings
 import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Valuation.Basic
 import Mathlib.RingTheory.Valuation.ValuationRing

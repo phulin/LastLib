@@ -108,28 +108,218 @@ def adicFiltrationsCofinal {R : Type*} [CommRing R]
   (∀ n : ℕ, ∃ m : ℕ, I ^ m ≤ J ^ n) ∧
     (∀ n : ℕ, ∃ m : ℕ, J ^ m ≤ I ^ n)
 
+/-! Cofinal adic filtrations have the same inverse-limit completion. -/
+theorem adic_completion_equiv_of_cofinal_filtrations
+    {R : Type*} [CommRing R] (I J : Ideal R)
+    (hcofinal : adicFiltrationsCofinal I J) :
+    Nonempty (AdicCompletion I R ≃+* AdicCompletion J R) := by
+  classical
+  let cIJ : ℕ → ℕ := fun n => Classical.choose (hcofinal.1 n)
+  have hcIJ (n : ℕ) : I ^ cIJ n ≤ J ^ n :=
+    Classical.choose_spec (hcofinal.1 n)
+  let a : ℕ → ℕ := fun n =>
+    Nat.rec (max 0 (cIJ 0))
+      (fun n k => max k (max (n + 1) (cIJ (n + 1)))) n
+  have hca (n : ℕ) : cIJ n ≤ a n := by
+    induction n with
+    | zero => exact le_max_right _ _
+    | succ n ih =>
+        change cIJ (n + 1) ≤ max (a n) (max (n + 1) (cIJ (n + 1)))
+        exact le_trans (le_max_right _ _) (le_max_right _ _)
+  have hna (n : ℕ) : n ≤ a n := by
+    induction n with
+    | zero => exact Nat.zero_le _
+    | succ n ih =>
+        change n + 1 ≤ max (a n) (max (n + 1) (cIJ (n + 1)))
+        exact le_trans (le_max_left _ _) (le_max_right _ _)
+  have haa (n : ℕ) : a n ≤ a (n + 1) := by
+    change a n ≤ max (a n) (max (n + 1) (cIJ (n + 1)))
+    exact le_max_left _ _
+  have hmono_a : Monotone a := monotone_nat_of_le_succ haa
+  have ha (n : ℕ) : I ^ a n ≤ J ^ n := by
+    exact (Ideal.pow_le_pow_right (hca n)).trans (hcIJ n)
+  let factorMap (S T : Ideal R) (hST : S ≤ T) :
+      R ⧸ S →+* R ⧸ T :=
+    Ideal.Quotient.factor hST
+  have factorMap_comp (S T U : Ideal R) (hST : S ≤ T) (hTU : T ≤ U)
+      (x : R ⧸ S) :
+      factorMap T U hTU (factorMap S T hST x) =
+        factorMap S U (hST.trans hTU) x := by
+    simp [factorMap]
+  have htrans (L : Ideal R) {m n : ℕ} (hmn : m ≤ n)
+      (x : AdicCompletion L R) :
+      Ideal.Quotient.factorPow L hmn (AdicCompletion.evalₐ L n x) =
+        AdicCompletion.evalₐ L m x := by
+    have htop (k : ℕ) : (L ^ k • (⊤ : Ideal R)) = L ^ k := by
+      ext y
+      simp
+    have hle (k : ℕ) : L ^ k ≤ L ^ k • (⊤ : Ideal R) := by
+      rw [htop k]
+    apply (Ideal.quotientEquivAlgOfEq R (htop m)).symm.injective
+    change Ideal.Quotient.factor (hle m)
+        (Ideal.Quotient.factorPow L hmn (AdicCompletion.evalₐ L n x)) =
+      Ideal.Quotient.factor (hle m) (AdicCompletion.evalₐ L m x)
+    rw [AdicCompletion.factor_evalₐ_eq_eval L x (by rw [htop m])]
+    rw [← AdicCompletion.factor_eval_eq_evalₐ L x (by rw [htop n])]
+    change _ = x.val m
+    rw [← x.property hmn]
+    rw [AdicCompletion.eval_apply]
+    induction x.val n using Quotient.inductionOn' with
+    | _ r => rfl
+  let f : ∀ n, AdicCompletion I R →+* R ⧸ J ^ n := fun n =>
+    (factorMap (I ^ a n) (J ^ n) (ha n)).comp
+      (AdicCompletion.evalₐ I (a n)).toRingHom
+  have hf {m n : ℕ} (hmn : m ≤ n) :
+      (Ideal.Quotient.factorPow J hmn).comp (f n) = f m := by
+    apply RingHom.ext
+    intro x
+    have hamn : a m ≤ a n := hmono_a hmn
+    have hjmn : J ^ n ≤ J ^ m := Ideal.pow_le_pow_right hmn
+    dsimp [f]
+    have hJmap : Ideal.Quotient.factorPow J hmn =
+        factorMap (J ^ n) (J ^ m) hjmn := by
+      rfl
+    rw [hJmap]
+    calc
+      factorMap (J ^ n) (J ^ m) hjmn
+          (factorMap (I ^ a n) (J ^ n) (ha n)
+            (AdicCompletion.evalₐ I (a n) x)) =
+        factorMap (I ^ a n) (J ^ m) (ha n |>.trans hjmn)
+          (AdicCompletion.evalₐ I (a n) x) := by
+        rw [factorMap_comp]
+      _ =
+          factorMap (I ^ a m) (J ^ m) (ha m)
+            (factorMap (I ^ a n) (I ^ a m)
+              (Ideal.pow_le_pow_right hamn)
+              (AdicCompletion.evalₐ I (a n) x)) := by
+        rw [factorMap_comp]
+      _ = factorMap (I ^ a m) (J ^ m) (ha m)
+          (AdicCompletion.evalₐ I (a m) x) := by
+        have hImap : Ideal.Quotient.factorPow I hamn =
+            factorMap (I ^ a n) (I ^ a m)
+              (Ideal.pow_le_pow_right hamn) := by
+          rfl
+        rw [← hImap, htrans I hamn x]
+  let cJI : ℕ → ℕ := fun n => Classical.choose (hcofinal.2 n)
+  have hcJI (n : ℕ) : J ^ cJI n ≤ I ^ n :=
+    Classical.choose_spec (hcofinal.2 n)
+  let b : ℕ → ℕ := fun n =>
+    Nat.rec (max 0 (cJI 0))
+      (fun n k => max k (max (n + 1) (cJI (n + 1)))) n
+  have hcb (n : ℕ) : cJI n ≤ b n := by
+    induction n with
+    | zero => exact le_max_right _ _
+    | succ n ih =>
+        change cJI (n + 1) ≤ max (b n) (max (n + 1) (cJI (n + 1)))
+        exact le_trans (le_max_right _ _) (le_max_right _ _)
+  have hnb (n : ℕ) : n ≤ b n := by
+    induction n with
+    | zero => exact Nat.zero_le _
+    | succ n ih =>
+        change n + 1 ≤ max (b n) (max (n + 1) (cJI (n + 1)))
+        exact le_trans (le_max_left _ _) (le_max_right _ _)
+  have hbb (n : ℕ) : b n ≤ b (n + 1) := by
+    change b n ≤ max (b n) (max (n + 1) (cJI (n + 1)))
+    exact le_max_left _ _
+  have hmono_b : Monotone b := monotone_nat_of_le_succ hbb
+  have hb (n : ℕ) : J ^ b n ≤ I ^ n := by
+    exact (Ideal.pow_le_pow_right (hcb n)).trans (hcJI n)
+  let g : ∀ n, AdicCompletion J R →+* R ⧸ I ^ n := fun n =>
+    (factorMap (J ^ b n) (I ^ n) (hb n)).comp
+      (AdicCompletion.evalₐ J (b n)).toRingHom
+  have hg {m n : ℕ} (hmn : m ≤ n) :
+      (Ideal.Quotient.factorPow I hmn).comp (g n) = g m := by
+    apply RingHom.ext
+    intro x
+    have hbmn : b m ≤ b n := hmono_b hmn
+    have himn : I ^ n ≤ I ^ m := Ideal.pow_le_pow_right hmn
+    dsimp [g]
+    have hImap : Ideal.Quotient.factorPow I hmn =
+        factorMap (I ^ n) (I ^ m) himn := by
+      rfl
+    rw [hImap]
+    calc
+      factorMap (I ^ n) (I ^ m) himn
+          (factorMap (J ^ b n) (I ^ n) (hb n)
+            (AdicCompletion.evalₐ J (b n) x)) =
+        factorMap (J ^ b n) (I ^ m) (hb n |>.trans himn)
+          (AdicCompletion.evalₐ J (b n) x) := by
+        rw [factorMap_comp]
+      _ =
+          factorMap (J ^ b m) (I ^ m) (hb m)
+            (factorMap (J ^ b n) (J ^ b m)
+              (Ideal.pow_le_pow_right hbmn)
+              (AdicCompletion.evalₐ J (b n) x)) := by
+        rw [factorMap_comp]
+      _ = factorMap (J ^ b m) (I ^ m) (hb m)
+          (AdicCompletion.evalₐ J (b m) x) := by
+        have hJmap : Ideal.Quotient.factorPow J hbmn =
+            factorMap (J ^ b n) (J ^ b m)
+              (Ideal.pow_le_pow_right hbmn) := by
+          rfl
+        rw [← hJmap, htrans J hbmn x]
+  let F : AdicCompletion I R →+* AdicCompletion J R :=
+    AdicCompletion.liftRingHom J f hf
+  let G : AdicCompletion J R →+* AdicCompletion I R :=
+    AdicCompletion.liftRingHom I g hg
+  have hGF (x : AdicCompletion I R) : G (F x) = x := by
+    apply AdicCompletion.ext_evalₐ
+    intro n
+    rw [show G = AdicCompletion.liftRingHom I g hg by rfl]
+    rw [AdicCompletion.evalₐ_liftRingHom]
+    dsimp [g]
+    rw [show F = AdicCompletion.liftRingHom J f hf by rfl]
+    rw [AdicCompletion.evalₐ_liftRingHom]
+    dsimp [f]
+    rw [factorMap_comp]
+    have hnab : n ≤ a (b n) := (hnb n).trans (hna (b n))
+    have hmap : Ideal.Quotient.factorPow I hnab =
+        factorMap (I ^ a (b n)) (I ^ n)
+          (Ideal.pow_le_pow_right hnab) := by
+      rfl
+    rw [← hmap, htrans I hnab x]
+  have hFG (x : AdicCompletion J R) : F (G x) = x := by
+    apply AdicCompletion.ext_evalₐ
+    intro n
+    rw [show F = AdicCompletion.liftRingHom J f hf by rfl]
+    rw [AdicCompletion.evalₐ_liftRingHom]
+    dsimp [f]
+    rw [show G = AdicCompletion.liftRingHom I g hg by rfl]
+    rw [AdicCompletion.evalₐ_liftRingHom]
+    dsimp [g]
+    rw [factorMap_comp]
+    have hban : n ≤ b (a n) := (hna n).trans (hnb (a n))
+    have hmap : Ideal.Quotient.factorPow J hban =
+        factorMap (J ^ b (a n)) (J ^ n)
+          (Ideal.pow_le_pow_right hban) := by
+      rfl
+    rw [← hmap, htrans J hban x]
+  have hbij : Function.Bijective F := by
+    constructor
+    · intro x y hxy
+      calc
+        x = G (F x) := (hGF x).symm
+        _ = G (F y) := congrArg G hxy
+        _ = y := hGF y
+    · intro z
+      exact ⟨G z, hFG z⟩
+  exact ⟨RingEquiv.ofBijective F hbij⟩
+
 /-- Positivity is exactly what makes the subsequence `n ↦ n * e` cofinal. -/
 def positiveExponent {e : ℕ} : Prop := 0 < e
 
-/-- A ring-theoretic formulation of “the completed product is an algebra product”. -/
-def hasCompletedRingProduct (A B Ahat : Type*) [CommRing A] [CommRing B]
-    [CommRing Ahat] [Algebra A B] [Algebra A Ahat] {ι : Type*}
-    (C : ι → Type*) [∀ i, CommRing (C i)] : Prop :=
-  Nonempty (B ⊗[A] Ahat ≃+* (∀ i, C i))
-
-/-- The same product assertion, remembering the `Ahat`-algebra structures. -/
-def hasCompletedAlgebraProduct (A B Ahat : Type*) [CommRing A] [CommRing B]
-    [CommRing Ahat] [Algebra A B] [Algebra A Ahat]
-    [Algebra Ahat (B ⊗[A] Ahat)] {ι : Type*}
-    (C : ι → Type*) [∀ i, CommRing (C i)] [∀ i, Algebra Ahat (C i)] : Prop :=
-  Nonempty (B ⊗[A] Ahat ≃ₐ[Ahat] (∀ i, C i))
-
-/-! Idempotents are used below to record the branch projectors. -/
-
+/-! Idempotents are used by the finite-product and henselian interfaces. -/
 abbrev IdempotentElement (R : Type*) [Monoid R] : Type _ :=
   {e : R // e * e = e}
 
-/-! ## 12.1--12.2. Separating branches and finite precision -/
+/-! The finite-level CRT data used to pass to inverse limits. -/
+structure Chapter12CompatibleCRTSystem
+    {R ι : Type*} [CommRing R] [Finite ι]
+    (I : Ideal R) (J : ι → Ideal R) where
+  equiv : ∀ n : ℕ, (R ⧸ I ^ n) ≃+* (∀ i, R ⧸ (J i) ^ n)
+  compatible : ∀ (n : ℕ) (x : R),
+    equiv n (Ideal.Quotient.mk (I ^ n) x) =
+      fun i => Ideal.Quotient.mk ((J i) ^ n) x
 
 /-- Chinese remainder at the inverse-limit level, using Mathlib's quotient CRT. -/
 noncomputable def chapterChineseRemainderEquiv
@@ -205,15 +395,6 @@ theorem positive_multiples_are_cofinal (e : ℕ) (he : positiveExponent (e := e)
   intro n
   exact ⟨n, Nat.le_mul_of_pos_right n he⟩
 
-
-/-- A finite-level CRT system with the actual representative compatibility. -/
-structure Chapter12CompatibleCRTSystem
-    {R ι : Type*} [CommRing R] [Finite ι]
-    (I : Ideal R) (J : ι → Ideal R) where
-  equiv : ∀ n : ℕ, (R ⧸ I ^ n) ≃+* (∀ i, R ⧸ (J i) ^ n)
-  compatible : ∀ (n : ℕ) (x : R),
-    equiv n (Ideal.Quotient.mk (I ^ n) x) =
-      fun i => Ideal.Quotient.mk ((J i) ^ n) x
 
 /-- The finite-product CRT is compatible with passing to inverse limits. -/
 theorem completion_product_of_finite_precision_crt

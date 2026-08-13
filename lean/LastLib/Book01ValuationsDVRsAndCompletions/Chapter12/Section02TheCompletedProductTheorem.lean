@@ -20,6 +20,30 @@ chapter; proofs are postponed.
 /-! # Book 1, Chapter 12, Section 12.2: The Completed Product Theorem
 -/
 
+/-- A ring-theoretic formulation of “the completed product is an algebra product”. -/
+def hasCompletedRingProduct (A B Ahat : Type*) [CommRing A] [CommRing B]
+    [CommRing Ahat] [Algebra A B] [Algebra A Ahat] {ι : Type*}
+    (C : ι → Type*) [∀ i, CommRing (C i)] : Prop :=
+  Nonempty (B ⊗[A] Ahat ≃+* (∀ i, C i))
+
+/-- The same product assertion, remembering the `Ahat`-algebra structures. -/
+def hasCompletedAlgebraProduct (A B Ahat : Type*) [CommRing A] [CommRing B]
+    [CommRing Ahat] [Algebra A B] [Algebra A Ahat]
+    [Algebra Ahat (B ⊗[A] Ahat)] {ι : Type*}
+    (C : ι → Type*) [∀ i, CommRing (C i)] [∀ i, Algebra Ahat (C i)] : Prop :=
+  Nonempty (B ⊗[A] Ahat ≃ₐ[Ahat] (∀ i, C i))
+
+/-! Ramification labels used in the completed degree formula. -/
+def chapterRamificationIndex
+    (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
+    (P : Ideal B) : ℕ :=
+  P.ramificationIdx A
+
+def chapterResidueDegree
+    (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
+    (P : Ideal B) : ℕ :=
+  P.inertiaDeg A
+
 /--
 The completed product decomposition from Theorem 12.1.  The branch factors
 are the completions of the localizations at the primes `P i`.
@@ -195,51 +219,8 @@ theorem completed_branch_factors_are_complete_DVR_and_finite_free
     Module.Free (AdicCompletion m A) (branchCompletion B (P i)) := by
   sorry
 
-/-- The intrinsic ramification index attached to a prime of an algebra. -/
-def chapterRamificationIndex
-    (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
-    (P : Ideal B) : ℕ :=
-  P.ramificationIdx A
-
-/-- The intrinsic residue/inertia degree attached to a prime of an algebra. -/
-def chapterResidueDegree
-    (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
-    (P : Ideal B) : ℕ :=
-  P.inertiaDeg A
-
-/-- Branch transport data carries the base and branch ideals through actual
-ring equivalences compatible with the algebra structures. -/
-structure Chapter12BranchInvariantTransport
-    {A B Ahat Bhat : Type*} [CommRing A] [CommRing B]
-    [CommRing Ahat] [CommRing Bhat] [Algebra A B] [Algebra Ahat Bhat]
-    (p : Ideal A) (P : Ideal B) (phat : Ideal Ahat) (Phat : Ideal Bhat) where
-  source_prime : P.IsPrime
-  target_prime : Phat.IsPrime
-  source_liesOver : P.LiesOver p
-  target_liesOver : Phat.LiesOver phat
-  baseEquiv : A ≃+* Ahat
-  branchEquiv : B ≃+* Bhat
-  baseIdeal_map : Ideal.map baseEquiv.toRingHom p = phat
-  branchIdeal_map : Ideal.map branchEquiv.toRingHom P = Phat
-  scalar_compatibility : ∀ a b,
-    branchEquiv (algebraMap A B a * b) =
-      algebraMap Ahat Bhat (baseEquiv a) * branchEquiv b
-
-/-- Completion preserves the branch's intrinsic `e` and `f`. -/
-theorem completed_branch_preserves_ef
-    {A B Ahat Bhat : Type*} [CommRing A] [CommRing B] [CommRing Ahat] [CommRing Bhat]
-    [Algebra A B] [Algebra Ahat Bhat]
-    (p : Ideal A) (P : Ideal B) (phat : Ideal Ahat) (Phat : Ideal Bhat)
-    (transport : Chapter12BranchInvariantTransport p P phat Phat)
-    (e f : ℕ)
-    (he : chapterRamificationIndex A B P = e)
-    (hf : chapterResidueDegree A B P = f) :
-    chapterRamificationIndex Ahat Bhat Phat = e ∧
-      chapterResidueDegree Ahat Bhat Phat = f := by
-  sorry
-
-
-/-- The fraction-field decomposition after inverting the base uniformizer. -/
+/-- The fraction-field decomposition after inverting the base uniformizer.
+    Normality records that the branch localizations are the normalized ones. -/
 theorem completed_product_field_decomposition
     {A B : Type*} [CommRing A] [CommRing B] [IsDomain A] [IsDomain B]
     [IsDiscreteValuationRing A] [Algebra A B] [Algebra.IsIntegral A B]
@@ -298,41 +279,6 @@ theorem complete_base_has_one_completed_factor
     Fintype.card_le_one_iff_subsingleton.mpr ⟨hsub⟩
   have hle : g ≤ 1 := by simpa using hcard
   omega
-
-/-- A valuation on an algebraic extension extending `v`, up to Mathlib equivalence. -/
-def ValuationExtension
-    {K Γ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ]
-    (v : Valuation K Γ) (E : Type*) [Field E] [Algebra K E] : Type _ :=
-  {w : Valuation E Γ // v.IsEquiv (w.comap (algebraMap K E))}
-
-/-- A valuation extension whose ordered value group is part of the data. -/
-structure HeterogeneousValuationExtension
-    {K Γ : Type u} [Field K] [LinearOrderedCommGroupWithZero Γ]
-    (v : Valuation K Γ) (E : Type u) [Field E] [Algebra K E] where
-  valueGroup : Type u
-  [orderedValueGroup : LinearOrderedCommGroupWithZero valueGroup]
-  valuation : Valuation E valueGroup
-  isExtension : v.IsEquiv (valuation.comap (algebraMap K E))
-
-/-- The center of a heterogeneous valuation on the integral closure. -/
-def heterogeneousValuationCenter
-    {K E Γ : Type u} [Field K] [Field E]
-    [LinearOrderedCommGroupWithZero Γ] [Algebra K E]
-    (v : Valuation K Γ) [Algebra v.valuationSubring E]
-    (W : HeterogeneousValuationExtension v E) :
-    Set (integralClosure v.valuationSubring E) :=
-  {x | letI : LinearOrderedCommGroupWithZero W.valueGroup := W.orderedValueGroup
-    W.valuation (algebraMap (integralClosure v.valuationSubring E) E x) < 1}
-
-/-- Uniqueness of an extension to one field, up to equivalence. -/
-def hasUniqueValuationExtension
-    {K Γ : Type u} [Field K] [LinearOrderedCommGroupWithZero Γ]
-    (v : Valuation K Γ) (E : Type u) [Field E] [Algebra K E] : Prop :=
-  Nonempty (HeterogeneousValuationExtension v E) ∧
-    ∀ W₁ W₂ : HeterogeneousValuationExtension v E,
-      (letI : LinearOrderedCommGroupWithZero W₁.valueGroup := W₁.orderedValueGroup
-       letI : LinearOrderedCommGroupWithZero W₂.valueGroup := W₂.orderedValueGroup
-       W₁.valuation.IsEquiv W₂.valuation)
 
 /-- In the one-branch complete case the defectless equality is `[L : K] = e f`. -/
 theorem complete_one_branch_fundamental_equality

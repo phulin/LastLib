@@ -1,4 +1,5 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section05UniqueExtensionAndHenselianity
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section01SeparatingBranchesByCompletion
 import Mathlib.Topology.Algebra.InfiniteSum.Nonarchimedean
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
