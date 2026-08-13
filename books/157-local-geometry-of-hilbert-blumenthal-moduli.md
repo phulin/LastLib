@@ -55,6 +55,7 @@
   - [9.3 Good-prime solvability](#93-good-prime-solvability)
   - [9.4 Coefficient-prime solvability](#94-coefficient-prime-solvability)
   - [9.5 Simultaneous frames](#95-simultaneous-frames)
+  - [9.6 Base-field points at sufficiently large good places](#96-base-field-points-at-sufficiently-large-good-places)
 - [10. Openness of the exact local conditions](#10-openness-of-the-exact-local-conditions)
   - [10.1 Three different meanings of openness](#101-three-different-meanings-of-openness)
   - [10.2 Good and ordinary loci](#102-good-and-ordinary-loci)
@@ -550,6 +551,82 @@ $$
 Tensoring (4.2b) with $I$ gives (1.1d) on $E\otimes I$. This is the promised real point. Finally, geometric isomorphism of the auxiliary levels identifies their arithmetic stabilizers after conjugation. The determinant component calculation and simultaneous reduction onto the two special-linear factors are therefore unchanged. $\square$
 
 The same correction is integral away from $N$. Both summands of (1.1b) are finite etale, and a corrected level on a good special fiber lifts uniquely through nilpotent thickenings. At a Tate cusp the constant summand is represented by a chosen $N$th root of the period and the cyclotomic summand by toric $N$-torsion; Section 8.5 builds both into the algebraized chart.
+
+There is a second correction which is useful when a later application requires points over
+specified base completions rather than after completion extension.  The source of the neat
+level is auxiliary; it need not be the split module (1.1b).
+
+**Proposition 4.1A (elliptic-source rigidification).**  Let $K_0$ be a number field, let
+$E_*/K_0$ be an elliptic curve, and let $N\geq3$ be invertible on the base under
+consideration.  Put
+
+$$
+\mathscr L_{I,N}^{E_*}=E_*[N]\otimes_{\mathbf Z/N\mathbf Z}I/NI,
+\tag{4.2c}
+$$
+
+with the alternating form induced by the Weil pairing and multiplication
+$I/NI\otimes I/NI\to I^2/NI^2$.  Replace (1.1d) by a paired isomorphism
+
+$$
+\eta_N^{E_*}:\mathscr L_{I,N}^{E_*}\xrightarrow{\sim}A[N].
+\tag{4.2d}
+$$
+
+Then this functor is a smooth quasi-projective fine scheme of relative dimension $d$.  It has
+a $K_0$-point given by $E_*\otimes I$ and the identity frame.  The geometric component
+$H_I^{E_*,\mathrm{ten}}$ containing the image of the corresponding twisted modular curve is
+defined over $K_0$.  Every tensor point $B\otimes I$ carrying a paired isomorphism
+$E_*[N]\simeq B[N]$ lies on this component.  On it the prime-level and two-prime frame covers
+have exactly the geometric monodromy asserted in Book 156, Theorems 10.2 and 11.2; in
+particular every determinant-compatible two-prime arithmetic twist is geometrically connected.
+
+**Proof.**  The local system (4.2c) is finite etale and its pairing is perfect.  Over
+$\overline K_0$, choose a paired basis of $E_*[N]$.  This identifies (4.2c) with one
+fixed-pairing orientation of the constant principal-level lattice.  Consequently the new
+functor is an arithmetic twist of the same geometric level scheme used in Theorem 4.1.
+Representability, fineness, smoothness, and relative dimension follow by the identical
+finite-etale descent and deformation argument.  The identity on $E_*[N]$, tensored with $I$,
+gives the displayed $K_0$-point.
+
+The determinant-compatible twist of the full-level modular curve by $E_*[N]$ is geometrically
+the usual connected fixed-pairing modular curve.  Its tensor morphism is defined over $K_0$.
+Hence the unique Hilbert component containing its connected image is Galois-stable and descends
+to $K_0$.  A tensor point equipped with (4.2d) is a point of that same twisted modular curve,
+so it lies on the descended component.  Geometrically the auxiliary-level stabilizer is merely
+a conjugate of the principal congruence subgroup $\Gamma(N)$.  The simultaneous elementary-
+matrix reductions used in Book 156 are therefore unchanged.  They give the same special-linear
+monodromy at each prime and the same product monodromy at two primes.  Finally an arithmetic
+twist changes only descent, so Book 156, Corollary 11.3 gives geometric connectedness. $\square$
+
+The point of Proposition 4.1A is not to assert that an arbitrary local elliptic curve has the
+split level (1.1b).  It lets the auxiliary source be selected after finitely many base-field
+tensor seeds have been chosen.  The following elementary approximation supplies such a source.
+
+**Lemma 4.1B (one elliptic source for finitely many local seeds).**  Let $K_0$ be a number
+field, let $S$ be finite, and for each $v\in S$ let $B_v/K_{0,v}$ be an elliptic curve.  Fix
+$N\geq3$ prime to the residue characteristics in $S$.  There is an elliptic curve $E_*/K_0$
+and paired isomorphisms
+
+$$
+E_*[N]|_{G_{K_{0,v}}}\simeq B_v[N]
+\qquad(v\in S).
+\tag{4.2e}
+$$
+
+The curve $E_*$ may simultaneously be required to lie in any prescribed sufficiently small
+local neighborhoods of the $B_v$ in the smooth Weierstrass parameter space.  Thus every
+locally constant generic torsion invariant and every open reduction condition imposed on those
+neighborhoods is retained.
+
+**Proof.**  Choose general Weierstrass equations for the $B_v$.  The nonzero-discriminant locus
+in the affine five-coefficient space is smooth and open.  Over it the paired $N$-torsion
+isomorphism scheme from the fixed fiber $B_v[N]$ to the universal fiber is finite etale and has
+the identity point above the chosen equation.  Proposition 2.3 gives a local section on a
+sufficiently small coefficient neighborhood.  Weak approximation in the five coefficients
+chooses one tuple in $K_0^5$ inside every such neighborhood and outside the discriminant
+hypersurface.  Its curve is $E_*$.  Evaluating the local sections gives (4.2e), with pairings
+preserved because the isomorphism schemes were paired. $\square$
 
 ### 4.4 Odd involutions and paired frames
 
@@ -1239,6 +1316,51 @@ This order prevents a common circular argument. We do not prove the intersection
 
 The finite-splitting argument also applies to a semistable seed. Choose $q_0=q_N^N$ so the corrected auxiliary level is already present on the boundary chart. Since $N$ is prime to $p$ and $q$, raising to the $N$th power is an automorphism of every relevant residual Kummer quotient; this restriction loses no prescribed compatible pair of $p$- and $q$-Kummer classes. Pass to a finite extension splitting both prescribed local systems and both seed torsion modules. Symplectic bases give simultaneous frames. Theorem 8.2 then gives an ambient semistable neighborhood. If $V_{\mathfrak p}$ was finite flat, its restriction remains finite flat. If the seed's own one-motive $p$-torsion is required to be finite flat over the unramified starting field, impose (8.21) before extending. Exact valuations rescale by $e(L/K)$, so only divisibility and semistability, not the original normalized exponents, are claimed to persist.
 
+### 9.6 Base-field points at sufficiently large good places
+
+The finite-extension clauses above are essential at a fixed small place.  They do not imply
+that base-field points are scarce at all good places.  For a fixed geometrically connected
+twist, a curve and the Hasse--Weil bound give a uniform large-residue-field statement which is
+useful for constant-field certificates.
+
+**Proposition 9.3 (large-good-place base-field solvability).**  Let $K_0$ be a number field and
+let $U/K_0$ be a smooth geometrically connected quasi-projective variety of positive dimension.
+There are a finite set $S_U$ of finite places and a constant $Q_U$ such that
+
+$$
+U(K_{0,v})\ne\varnothing
+\qquad
+(v\notin S_U,\ |k_v|>Q_U).
+\tag{9.4}
+$$
+
+Every such point has a nonempty full-dimensional analytic neighborhood.  The assertion applies
+in particular to the complement of a proper closed subset of an elliptic-source or
+cyclotomic-split determinant-compatible two-prime twist.
+
+**Proof.**  The empty-local-set case of Book 154, Lemma 5.2 slices out a geometrically integral
+curve $C\subset U$.  Let $\overline C$ be its smooth projective normalization, let $g$ be its
+genus, and let $b$ be the number of geometric points in
+$\overline C\setminus C$.  Spread $\overline C$, its open $C$, and the map to $U$ over the
+integers outside a finite set.  After enlarging that set, every special fiber of
+$\overline C$ is smooth and geometrically connected and the boundary has at most $b$ geometric
+points.  The Hasse--Weil bound of Book 37 gives
+
+$$
+\#\overline C(k_v)\geq |k_v|+1-2g|k_v|^{1/2}.
+$$
+
+For $|k_v|$ larger than a constant depending only on $g$ and $b$, the right side exceeds $b$.
+There is therefore a $k_v$-point of $C$.  It is a smooth point of the spread-out model, so
+Theorem 2.2 lifts it to an $\mathcal O_{K_{0,v}}$-point and hence to a point of $U(K_{0,v})$.
+Proposition 2.1 supplies the analytic neighborhood.  Replacing $U$ at the outset by the
+complement of a proper closed subset proves the last assertion. $\square$
+
+This proposition is deliberately asymmetrical.  It permits certificate primes to be selected
+after a fixed twist has been constructed, because Chebotarev classes contain arbitrarily large
+good primes.  It says nothing about the small prescribed places $2$, $p$, or $q$; at those
+places an exact base-completion point remains a separate realization problem.
+
 ## 10. Openness of the exact local conditions
 
 ### 10.1 Three different meanings of openness
@@ -1632,6 +1754,11 @@ $$
 
 made the principal level compatible with complex conjugation while leaving its geometric paired-level scheme and product monodromy unchanged. The real tensor point therefore carries the auxiliary level and both odd residual frames over $\mathbf R$.
 
+When prescribed finite-place tensor seeds must remain over their base completions, Proposition
+4.1A permits the neat source to be $E_*[N]\otimes I/NI$ instead.  Lemma 4.1B chooses one
+$E_*/K_0$ whose $N$-torsion matches finitely many such seeds.  This changes only arithmetic
+descent of the auxiliary level: the geometric component and two-prime monodromy are unchanged.
+
 The tensor polarization restriction was resolved exactly rather than ignored. Proposition 3.2 places every constructed seed on one $\mathbf Q$-defined component. Theorem 3.3 proves that every catalog problem in which PEL data are auxiliary may choose $I=\mathcal O_F$ and $\mathfrak c=\mathfrak d_F^{-1}$, so all five seed types occur on that component. An externally prescribed nonsquare narrow polarization class remains a different problem and is outside the stated reduction.
 
 The semistable construction is genuinely $d$-dimensional. The period lattice $\mathfrak d_F^{-1}$, a regular cone containing the tensor valuation, and a periodic polyhedral decomposition give a proper polarized Mumford formal quotient. The polarized Raynaud-quotient construction of Book 60 and the ample formal algebraization theorem of Book 58 turn it into the projective algebraic family of Theorem 8.1. Its $\mathcal O_F$-action, ordered polarization, determinant condition, corrected $N$-level, and boundary one-motive are constructed on the same chart. Its Kodaira--Spencer map is an isomorphism in all $d$ directions, and the multivariable finite-flat condition is the intrinsic inclusion (8.21).
@@ -1639,3 +1766,8 @@ The semistable construction is genuinely $d$-dimensional. The period lattice $\m
 Ordinary reduction is open by partial Hasse invariants. Nonordinary reduction is retained on an open residue tube despite being closed in the special fiber. Semistability is retained in the full-dimensional chart by fixed positive valuation shells. Exact torsion representations and both frames are locally constant through finite etale isomorphism schemes, after only the completion extensions explicitly allowed in the datum. Proposition 3.2 and Theorem 12.1 ensure that every intersection is witnessed on the same geometrically connected twist.
 
 Finally, good reduction, ordinary or local--local type, semistability, toric rank, and finite flatness survive finite extension. Splitness can improve, frames need not descend, and valuations rescale. Theorem 13.1 and Corollary 13.2 therefore provide all five nonempty local-open inputs required by simultaneous Moret--Bailly specialization in the unramified odd-prime, monodromy-admissible catalog range. The remaining qualifications—an externally fixed nonsquare polarization class, a dyadic coefficient prime, an unramified-only frame not realized over an unramified field, or two incompatible prescribed Tate Kummer classes—are explicit changes of scope, not unresolved dependencies of the package proved here.
+
+For a fixed smooth geometrically connected twist, Proposition 9.3 additionally gives
+base-field points at all sufficiently large good places.  This uniform statement is designed
+for auxiliary Chebotarev certificates; it makes no descent assertion at a prescribed small
+place.

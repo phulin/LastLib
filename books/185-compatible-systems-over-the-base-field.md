@@ -1408,16 +1408,78 @@ The defining specialization property of $B_{\mathrm{gen}}$ therefore says that i
 $q$ acts trivially on $r_\lambda$. Taking $\lambda=\nu$ gives $(\mathrm U)$. No Frobenius-density,
 Chebotarev, or Brauer--Nesbitt argument occurs. $\square$
 
-Conversely, the local-complement route above supplies a replacement common bad set supported
-at two if it is carried out at every prime of $S_0\setminus\{2\}$: construct $D_q$, compare it with an actually
-unramified local realization away from coefficient characteristic, and use (8.6) to prove
-that its finite inertia is trivial and $N_q=0$. At $q\ne\ell$ the distinguished original
-member supplies that test; at the old coefficient prime $q=\ell$, one must instead use the
-spherical automorphic local parameter and a prime-to-$q$ realization. This is a finite
-all-auxiliary local theorem, not an almost-all Frobenius theorem. The current packet input does
-not establish that full range, so Proposition 8.1 is a proved reduction rather than an
-unconditional support claim. After replacing $B_{\mathrm{gen}}$ by that certified smaller set,
-this is exactly $(\mathrm{Cond}_2)$.
+The exact finite replacement for the source-facing theorem is useful enough to name.  Keep
+the distinguished place $\lambda_0\mid\ell$ and fix $\nu\mid3$.  Let
+$S_{\mathrm{aux}}(\nu)$ be the subset of $S_0\setminus\{2,3\}$ at which Sections 7.2 and
+8.3 have not already proved $r_\nu$ unramified, and let $S_{\mathrm{rem}}\subseteq S_0$ be
+the analogous residual common bad set after every already certified family-level removal.
+
+The **selected auxiliary comparison certificate** $(\mathrm{AUX}_\nu)$ consists of the
+following finite data.
+
+- For every $q\in S_{\mathrm{aux}}(\nu)\setminus\{\ell\}$, the algebraic packet pairs defining $D_q$
+  exist and (8.6) holds both at $\lambda_0$ and at $\nu$.
+- If $\ell\in S_{\mathrm{aux}}(\nu)$, the local packet factors entering the positive display
+  at every place above $\ell$ are spherical, the finite quotient characters are locally
+  trivial, the resulting algebraic complement $D_\ell$ is unramified, and (8.6) holds at
+  $\nu$.
+
+The **family auxiliary comparison certificate** $(\mathrm{AUX}_{\mathrm{all}})$ requires,
+for every $q\in S_{\mathrm{rem}}\setminus\{2\}$, an algebraic $D_q$ for which (8.6) holds at every
+already constructed coefficient place $\lambda$ with $q_\lambda\ne q$.  It also requires an
+unramified tester: at $q\ne\ell$ this is the distinguished member at $\lambda_0$, and at
+$q=\ell$ it is the spherical algebraic packet calculation just described.
+
+**Proposition 8.2 (finite auxiliary reduction).** The certificate
+$(\mathrm{AUX}_\nu)$ proves $(\mathrm U)$ for $r_\nu$.  The certificate
+$(\mathrm{AUX}_{\mathrm{all}})$ proves $(\mathrm{Cond}_2)$.
+
+**Proof.** Let $q\in S_{\mathrm{aux}}(\nu)\setminus\{\ell\}$.  By (1.3), the distinguished realization
+$r_{\lambda_0}\simeq\rho$ is unramified at $q$.  Its comparison with $D_q$ forces the finite
+inertia matrices of $D_q$ to be the identity and its monodromy matrix to be zero.  The
+comparison at $\nu$ then makes $r_\nu$ unramified at $q$.  If $\ell$ belongs to
+$S_{\mathrm{aux}}(\nu)$, the second clause of
+$(\mathrm{AUX}_\nu)$ says directly that $D_\ell$ is unramified, and its comparison at $\nu$
+gives the same conclusion.  Every other prime was excluded from
+$S_{\mathrm{aux}}(\nu)$ precisely because its unramifiedness was already proved.  The prime
+$3$ is the selected coefficient characteristic and is excluded from $(\mathrm U)$.
+This proves the first assertion.
+
+For $(\mathrm{AUX}_{\mathrm{all}})$, use the same test at every
+$q\in S_{\mathrm{rem}}\setminus\{2,\ell\}$.  Notice that it also handles $q=3$ when that
+prime remains, since
+$\lambda_0\mid\ell$ and $\ell\ne3$.  At $q=\ell$ use the supplied spherical calculation.
+Thus every remaining $D_q$ with $q\ne2$ is unramified.  Equation (8.6) then makes every member away
+from its own coefficient characteristic unramified at $q$; primes outside
+$S_{\mathrm{rem}}$ were already certified.  Shrinking the defining common bad set to
+$\{2\}$ gives $(\mathrm{Cond}_2)$. $\square$
+
+The two certificates identify the first missing local theorem precisely.  At a spherical
+place it is the complete good-place comparison, including the integral model, component, and
+hyperspecial ledger.  At a tame principal or dihedral place it is the actual finite descent
+complex with its type projector, zero-monodromy calculation, character or exchange lines,
+Frobenius return maps, and raw-to-global passage.  Those are the hypotheses of the recognition
+theorems of Books 128 and 168; neither the automorphic type name nor the global Brauer
+cancellation supplies them.
+
+It is not possible to replace these finite checks by the claim that every auxiliary place is
+spherical.  A rational prime ramified in the nontrivial controlled top cannot split completely
+there.  At a nonsplit cyclic descent, an extension of a spherical top parameter can be a tame
+principal-series or selected tame-dihedral parameter, and a quotient-character correction can
+also be ramified.  Local Mackey induction then retains that ramification in the positive and
+negative displaying terms.  Only the genuine rank-two complement is expected to cancel it.
+
+Nor does equality of the good Frobenius polynomials prove the missing comparisons.  The
+exceptional prime $q$ is absent from that polynomial ledger, so the ledger contains no matrix
+for its inertia or monodromy.  Chebotarev and Brauer--Nesbitt compare two already existing
+semisimple representations over one coefficient topology.  Here the $\lambda_0$-adic and
+$\nu$-adic trace functions take limits in different completions; equality of their algebraic
+values on a dense set of Frobenius elements supplies no common continuous trace function on
+all of $G_{\mathbf Q}$.  Even after finite inertia is known, an inertial type or a Frobenius
+semisimplification does not recover the monodromy operator.  Thus
+$(\mathrm{AUX}_\nu)$ is a finite all-required-primes local theorem, while
+$(\mathrm{AUX}_{\mathrm{all}})$ is its family-wide form; the current packet input proves
+neither one.
 
 ### 8.4 The common special pair
 
@@ -1571,14 +1633,17 @@ R_{\mathfrak B,\lambda}^+
 $$
 
 can use denominators. Even after stable lattices are chosen in all three rational summands, the
-intersection with $r_\lambda$ need not be saturated and reduction need not preserve the direct
-sum. Modular representations of the finite quotient can have nonsplit extensions.
+chosen lattices need not form an integral direct sum, and reduction need not preserve the
+decomposition.  The contraction of an ambient lattice with the rational summand is saturated,
+but this book has supplied no finite-flat tower on the ambient positive lattice from which its
+closures could be taken.  Modular representations of the finite quotient can have nonsplit
+extensions.
 
 Accordingly, no finite-flat quotient, compatible transition map, integral special line, or
-residual conductor is asserted here. The fixed-three integral theory begins only after a
-three-adic member has been selected and a stable lattice has been chosen. Rational nonzero
-monodromy survives coefficient extension; its reduction modulo a chosen lattice is a separate
-question.
+residual conductor is asserted here. The fixed-three integral theory selects its own stable
+lattice after the three-adic member and, on the geometric route, finite-flat positive ambient
+towers have been supplied. Rational nonzero monodromy survives coefficient extension; its
+reduction modulo a chosen lattice is a separate question.
 
 ## 9. The complete base-field assembly theorem
 
@@ -1892,7 +1957,19 @@ from a Weil--Deligne statement at $2$.
 **A common finite bad set is not conductor support at two.** The weakly compatible family is
 actually unramified outside $S_0$ away from coefficient characteristic, but this does not
 prove $(\mathrm{Cond}_2)$. Proposition 8.1 uses the stronger support theorem only after it is
-supplied; it never removes a prime from almost-all Frobenius equality.
+supplied, while Proposition 8.2 requires the actual finite local comparisons. Neither removes
+a prime from almost-all Frobenius equality.
+
+**The auxiliary packet factors are not all spherical.** A prime ramified in the controlled
+top cannot split completely there, and nonsplit cyclic descent can produce tame principal or
+dihedral factors from a spherical top factor.  The positive and negative local Mackey terms
+may therefore remain ramified even when their genuine complement is unramified.
+
+**Frobenius density does not compare different coefficient-adic limits.** Brauer--Nesbitt
+applies to two existing semisimple representations in one coefficient topology.  Algebraic
+agreement on the common good Frobenius set does not provide one continuous trace function on
+inertia simultaneously valued in $E_{\lambda_0}$ and $E_\nu$, and it contains no monodromy
+matrix at an exceptional prime.
 
 **Rational cancellation is not reduced integrally.** No lattice or quotient tower is part of
 Theorem 9.1. The rational line $\mathscr L_2$ is not declared saturated in an as-yet unchosen
@@ -1904,7 +1981,9 @@ The manuscript proves the catalogued assembly: coefficient descent, Brauer indep
 continuity, common Frobenius polynomials, determinant, purity, restriction recovery,
 conjugation, the distinguished member, and the global place-indexed compatible system. The SP
 record at $2$ is carried as a full Weil--Deligne pair with nonzero rank-one monodromy, line,
-sign, and conductor one. Integral refinement is excluded explicitly.
+sign, and conductor one. Proposition 8.2 proves the finite selected-member and family-wide
+auxiliary support reductions without claiming their local-comparison premises. Integral
+refinement is excluded explicitly.
 
 Every substantial premise is either the conditional controlled SP top datum of Book 182, the
 explicit additional hypothesis $(\mathrm{AI}_2)$, the abstract representation-theoretic toolkit
@@ -1963,7 +2042,11 @@ Conditional on both the controlled SP top datum and $(\mathrm{AI}_2)$, the all-p
 complete at the rational level. Its final boundary is exact: the SP line exists over the
 coefficient field, but no integral lattice, finite-flat quotient, or transition tower has been
 chosen or inferred. Nor has the conductor-support premise $(\mathrm{Cond}_2)$ been proved;
-only Proposition 8.1's reduction from that premise to minimal memberwise support is complete.
+Proposition 8.1 proves that it implies the selected-member support statement, and Proposition
+8.2 reduces the selected and family-wide support conclusions to the exact finite auxiliary
+local-comparison certificates $(\mathrm{AUX}_\nu)$ and $(\mathrm{AUX}_{\mathrm{all}})$.
+Those certificates remain unproved.
+
 The missing upstream construction of the controlled seed and the separate bridge-readiness
 data, as well as the separate coefficient-two irreducibility hypothesis, remain outside this
 theorem. Without $(\mathrm{AI}_2)$, only the partial assembly away from coefficient

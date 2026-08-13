@@ -26,6 +26,7 @@
    - [Residual irreducibility and cyclotomic irreducibility](#45-residual-irreducibility-and-cyclotomic-irreducibility)
    - [Finite flatness at the auxiliary prime](#46-finite-flatness-at-the-auxiliary-prime)
    - [The controlled dihedral-seed theorem](#47-the-controlled-dihedral-seed-theorem)
+   - [Protected Frobenius correction](#48-protected-frobenius-correction)
 5. [An auxiliary level-raising place](#5-an-auxiliary-level-raising-place)
    - [The Frobenius relation](#51-the-frobenius-relation)
    - [Selecting the prime](#52-selecting-the-prime)
@@ -188,7 +189,19 @@ whose determinant pairing takes values in $(\mathcal O_E/N\mathcal O_E)(1)$. It 
 constant oriented module $\mathcal O_E^2/N$. The component is always the
 $\mathbf Q$-defined tensor component $H^{\mathrm{ten}}$ of the corrected space
 $H^\natural$. This convention is load-bearing at real places and in the product-monodromy
-argument.
+argument.  In the Frey-adapted base-completion refinement, the explicitly permitted replacement
+is
+
+$$
+E_*[N]\otimes_{\mathbf Z/N\mathbf Z}\mathcal O_E/N\mathcal O_E,
+\tag{1.4a}
+$$
+
+with $E_*/\mathbf Q$ selected by Book 157, Lemma 4.1B.  Book 157, Proposition 4.1A proves that
+this is an arithmetic twist of the same geometric neat-level scheme, defines its own
+$\mathbf Q$-tensor component, and leaves product monodromy unchanged.  Every occurrence of
+“corrected auxiliary source” below allows (1.4a) only when that refinement is explicitly
+invoked.
 
 ### 1.3 What must be chosen
 
@@ -214,7 +227,9 @@ Galois approximation datum has been supplied.
 There is already a pre-specialization ray boundary. Lemma 4.1 cancels the CM ray-unit
 obstruction by inverse branch characters, but does not by itself settle every relative
 ray-class or capitulation relation forced by the determinant restriction. Theorem 4.2 therefore
-starts from a corrected relative ray datum whose full compatibility has been verified.
+starts from a corrected relative ray datum whose full compatibility has been verified.  Lemma
+4.1A verifies this extra relation when the base is $\mathbf Q$; it remains a hypothesis over a
+general totally real base.
 
 There is a further boundary at modularity lifting. Absolute irreducibility and matching residual
 torsion do not make a lift automorphic. The available theorem has named local components and
@@ -346,7 +361,7 @@ with the following simultaneous properties.
    L=\mathcal O_E^2,
    \tag{2.8}
    $$
-   and a neat level $N\geq3$ prime to $ps$, use the corrected source
+   and a neat level $N\geq3$ prime to $2ps$, use the corrected source
    $$
    \mathscr L_N^\natural
    =(\mathcal O_E/N\mathcal O_E)
@@ -359,6 +374,10 @@ with the following simultaneous properties.
    \operatorname{SL}_2(k_{\mathfrak p})\times
    \operatorname{SL}_2(k_{\mathfrak s}).
    $$
+   In the rational-base refinement, if finitely many $\mathbf Q_v$-tensor seeds have already
+   been selected, one may instead choose $E_*/\mathbf Q$ by Book 157, Lemma 4.1B and use the elliptic source
+   $E_*[N]\otimes_{\mathbf Z/N\mathbf Z}\mathcal O_E/N\mathcal O_E$.  The resulting tensor
+   component is still defined over $\mathbf Q$ and has the same displayed product monodromy.
 3. Under (2.7) and the canonical generators of the two copies of
    $\mathfrak c^\vee\otimes k_{\mathfrak r}=k_{\mathfrak r}$, the maps (2.6) become specified
    determinant-line isomorphisms
@@ -401,7 +420,9 @@ proves that the tensor component is defined over $\mathbf Q$. On that component 
 group contains the principal congruence subgroup $\Gamma(N)$. Chinese remaindering elementary
 upper and lower unipotents modulo $N$, $\mathfrak p$, and $\mathfrak s$ proves surjectivity onto
 the displayed product. Thus both primes are monodromy-admissible, with no exceptional set chosen
-before them. Finally $\mathfrak c^\vee=\mathcal O_E$ identifies each polarization coefficient
+before them.  For the optional elliptic source, Book 157, Proposition 4.1A identifies the same
+geometric congruence subgroup and Lemma 4.1B supplies the asserted simultaneous local matching;
+only the arithmetic descent datum changes. Finally $\mathfrak c^\vee=\mathcal O_E$ identifies each polarization coefficient
 line with its residue field; composing with (2.6)--(2.7) gives (2.9). $\square$
 
 We will apply Theorem 2.1 with $p=\ell$, $k_p=k$, $s=q$, and $k_s=k_\psi$ only after the
@@ -497,9 +518,11 @@ approximation is clean.
 2. a corrected relative ray datum satisfying the compatibility hypothesis of Theorem 4.2 has
    been supplied, and the resulting dihedral seed has cyclotomic determinant, cyclotomic
    absolute irreducibility, and clean finite-flat local behavior at $q$ over its actual residue
-   field $k_\psi$;
+   field $k_\psi$; when $K=\mathbf Q$, Lemma 4.1A supplies the relative-compatibility part from
+   determinant-compatible local branch factors; any finitely many exact residual branch pairs
+   at additional split places, with the same determinant, may then be imposed by Lemma 4.3;
 3. Theorem 2.1 has then produced $E$, $\mathfrak l$, $\mathfrak q$, the tensor polarization,
-   self-dual lattice, corrected source $\mathscr L_N^\natural$, both determinant-line
+   self-dual lattice, a corrected cyclotomic-split or elliptic source, both determinant-line
    identifications, and simultaneous monodromy admissibility;
 4. the determinant-compatible two-prime twist over the $\mathbf Q$-defined tensor component
    has a smooth geometrically connected twist $Y^{\mathrm{ten}}$ over $K$;
@@ -543,6 +566,23 @@ degree and the retained special factor let Books 104 and 127 construct the carri
 final lifted packet in Chapter 11. The exact compact residual localization required by
 $({\rm AUT}_{w_0})$ is already part of item 7; it is not inferred from torsion or from the
 eventual carrier.
+
+Book 154, Lemma 5.2A makes item 6 automatic for every nonsplit packet which the application
+permits to be repeated wholesale.  It does not make the one-special-factor clause automatic.
+On the local curve used by its pencil construction, if $S$ is the distinguished special point,
+$P$ is a repeatable good point, $\mathcal A$ has degree $e$, and $G_{v_0}$ is the open subgroup
+of the local Jacobian generated by differences of allowed good points, that construction
+requires
+
+$$
+n([\mathcal A]-e[P])-[S-P]\in G_{v_0}
+\tag{2.12}
+$$
+
+for one common allowed exponent $n$.  Divisibility kills the first term in the finite quotient
+but not the fixed second term.  Thus item 6 retains either (2.12) for the curve--pencil route or
+another proved simultaneous presentation of the singleton mixed packet.  Equal ranks, Hensel
+lifting, and local realizability do not supply it.
 
 ## 3. Choosing the auxiliary prime
 
@@ -718,7 +758,7 @@ when its proposed values agree on every intersection of these subgroups and henc
 character of $R$. Triviality on diagonal ray units is the unit part of this check; it does not
 by itself settle a possible capitulation relation between a $K$-ideal and a principal
 $M$-ideal. Theorem 4.2 retains this full compatibility after the inverse-branch correction
-rather than inferring it from the unit calculation.
+rather than inferring it from the unit calculation; Lemma 4.1A proves it when $K=\mathbf Q$.
 
 ### 4.4 The inverse-branch ray-class lemma
 
@@ -813,6 +853,29 @@ unit subgroups and does not alter their inertial characters, while every protect
 prime-to-$q$ value still reduces injectively. Theorem 2.1 constructs the separate, unramified
 real-multiplication field from the actual residue field left after this extension.
 
+Over the rational base the remaining relative compatibility is automatic.  This special case
+is recorded here because later Frey constructions need to prescribe additional split local
+branch factors before the character is globalized.
+
+**Lemma 4.1A (rational-base relative-ray compatibility).**  Take $K=\mathbf Q$ and write
+$M/\mathbf Q$ for the CM quadratic field.  Include the conductor of $\eta_{M/\mathbf Q}$ and
+the real sign in the modulus, and prescribe determinant-compatible branch pairs.  Then the
+inverse-branch correction of Lemma 4.1 is compatible on the full subgroup $R$ of Section 4.3.
+
+**Proof.**  The diagonal fractional-ideal group of $\mathbf Q$ is principal.  If a diagonal
+ideal becomes equal to a ray-principal $M$-ideal, two generators differ by a global unit.
+Equivalently, the diagonal idele map $C_{\mathbf Q}\to C_M$ is injective: if a rational idele
+is represented by $a\in M^\times$, conjugation gives $a=a^\sigma$, hence
+$a\in\mathbf Q^\times$.  Changing an ideal generator changes the relation by a ray unit.
+
+The corrected principal and local rules agree on ray units by Lemma 4.1.  On rational
+principal ideles they agree with the diagonal determinant rule because the modulus contains the
+quadratic conductor and the real sign resolves the only rational-unit ambiguity.  Each inverse
+branch pair is trivial on the diagonal $\mathbf Q_v^\times$, so the correction preserves this
+agreement.  The ray exact sequence shows that these exhaust the relations between the
+principal, diagonal, and local-unit subgroups.  Thus the proposed values define a character of
+$R$. $\square$
+
 ### 4.5 Residual irreducibility and cyclotomic irreducibility
 
 For a coefficient prime $\mathfrak Q\mid q$, put
@@ -863,7 +926,9 @@ $$
 $$
 
 where $\theta_w$ is finite order and unramified. The ray-class extension step can change a
-uniformizer value, so the proof does not silently replace $\theta_w$ by $1$. After a finite
+uniformizer value, so the proof does not silently replace $\theta_w$ by $1$.  Lemma 4.3 below
+uses a separate protected anti-cyclotomic Grunwald twist when an application needs specified
+residual uniformizer values at split places.  After a finite
 unramified extension killing its reduction, the residual local module is the generic fiber of
 
 $$
@@ -933,7 +998,99 @@ $\bar\epsilon_q^2=1$ on $G_K$. Since $q$ is unramified in $K$, one has
 $K\cap\mathbf Q(\zeta_q)=\mathbf Q$, so $\bar\epsilon_q(G_K)=\mathbf F_q^\times$; this is
 impossible for $q\geq7$. $\square$
 
-Let $k_\psi=\mathcal O_{C_\psi}/\mathfrak Q$. Apply Theorem 2.1 to
+### 4.8 Protected Frobenius correction
+
+The extension step in Theorem 4.2 does not by itself control unramified uniformizer values.
+They can nevertheless be corrected *after* that step without changing the determinant.  The
+extra input is the exact Grunwald--Wang alternative of Book 6, not smoothness of a moduli
+space.
+
+**Lemma 4.3 (protected anti-cyclotomic Grunwald correction).**  Fix the embedding
+$\overline{\mathbf Q}\hookrightarrow\overline{\mathbf Q}_q$.  Let $M/K$ be quadratic with
+involution $\sigma$, let $P$ be a finite $\sigma$-stable set of places of $M$, and let $S$ be
+a finite set of finite places of $K$, disjoint from the places below $P$ and from those above
+$q$, which split in $M$.  For each $v\in S$ choose one branch $w\mid v$ and a finite local
+character
+
+$$
+\bar\delta_v:G_{K_v}\longrightarrow\overline{\mathbf F}_q^\times.
+\tag{4.16}
+$$
+
+There is a finite-order Hecke character $\nu$ of $M$, of order prime to $q$, such that
+
+$$
+\nu|_{C_K}=1,
+\qquad
+\bar\nu_w=\bar\delta_v,
+\qquad
+\bar\nu_{w^\sigma}=\bar\delta_v^{-1},
+\qquad
+\nu_u=1\quad(u\in P).
+\tag{4.17}
+$$
+
+Here the two split completions are identified with $K_v$, bars mean reduction through the
+fixed $q$-adic embedding, and the inverse character on the conjugate branch is transported by
+$\sigma$.  No restriction is asserted on the finite set of new ramified places outside
+$P\cup\{w,w^\sigma:v\in S\}$.
+
+**Proof.**  Every value in (4.16) has order prime to $q$.  Lift it through the Teichmuller map
+to a complex root of unity using the fixed embeddings, and call the resulting local character
+$\delta_v:K_v^\times\to\boldsymbol\mu_{q'}$.  Let $n$ be the least common multiple of the
+orders of these characters.  If $n=1$, take $\nu=1$.  Otherwise prescribe a local character
+$\theta_w=\delta_v$ and $\theta_{w^\sigma}=1$ at the two branches over each $v\in S$, and
+prescribe $\theta_u=1$ at every $u\in P$.  Include conjugates of all these places in the local
+set.
+
+Book 6, Section 6.2's exact Grunwald--Wang alternative, applied over $M$, globalizes these full
+local characters to a finite-order global character $\theta$.  In the Wang-special case it
+may replace exponent $n$ by $2n$, but it preserves the prescribed local characters.  Since
+$q$ is odd and $(n,q)=1$, the order of $\theta$ is still prime to $q$.  Through global class
+field theory regard $\theta$ as a finite-order Hecke character and put
+
+$$
+\nu=\theta/\theta^\sigma.
+\tag{4.18}
+$$
+
+On the diagonal image of $C_K$, conjugation is the identity, so the two factors in (4.18) are
+equal and $\nu|_{C_K}=1$.  At $w$ the conjugate factor is the prescribed trivial character at
+$w^\sigma$, whereas at $w^\sigma$ the quotient is the inverse transported character.  Both
+factors are trivial at $P$, which proves all of (4.17).  The order of $\nu$ divides that of a
+product of two prime-to-$q$ characters, so it is prime to $q$ and reduction preserves the
+specified values. $\square$
+
+Apply the lemma to the character $\psi_0$ produced by Theorem 4.2.  At a split place $v$, let
+$(\bar\alpha_v,\bar\beta_v)$ be any desired pair of residual branch characters whose product
+equals the determinant of $\bar r_0|_{G_{K_v}}$.  After labeling the two branches, put
+
+$$
+\bar\delta_v=\bar\alpha_v/\bar\chi_{0,w}.
+\tag{4.19}
+$$
+
+Equality of the two determinants says that the required correction on $w^\sigma$ is exactly
+$\bar\delta_v^{-1}$.  Put in $P$ every auxiliary-prime place, the protected
+conjugate-ratio witness, and every previously protected local factor away from $S$.  Replacing
+$\psi_0$ by
+
+$$
+\psi=\psi_0\nu
+\tag{4.20}
+$$
+
+therefore realizes the exact residual branch pairs at all $v\in S$.  Because
+$\nu|_{C_K}=1$, equation (4.4), the infinity type, and the induction determinant are unchanged.
+Because $\nu$ is exactly trivial at $P$, ordinary finite flatness at $q$, the protected
+inertial distinctions, and the cyclotomic-irreducibility witness are unchanged.  The proof of
+the adjoint-twist vanishing in Theorem 4.2 depends only on absolute irreducibility and the
+cyclotomic determinant, so it applies to the corrected representation as well.  The finitely
+many new ramified places of $\nu$ are listed in the later local and avoidance ledgers.
+
+Enlarge $C_\psi$ to contain the values of the corrected character (4.20), retain the place
+induced by the fixed embedding, and put $k_\psi=\mathcal O_{C_\psi}/\mathfrak Q$. Apply
+Theorem 2.1 to
 $\bar\rho$ over $k$ and $\bar r$ over $k_\psi$. Only now fix the resulting field $E$, primes
 $\mathfrak l,\mathfrak q$, Hilbert--Blumenthal tensor datum, and determinant-line orientations. Under the
 residue isomorphism $k_{\mathfrak q}\simeq k_\psi$, the second prescribed local system is
@@ -1131,16 +1288,17 @@ L=\mathcal O_E^2.
 \tag{6.0}
 $$
 
-Take the corrected auxiliary source $\mathscr L_N^\natural$ of (1.4), with $N\geq3$ prime to
-$\ell q$. Put into $\Sigma$
+Take either the corrected auxiliary source $\mathscr L_N^\natural$ of (1.4) or the
+elliptic-source replacement permitted by Theorem 2.1, with $N\geq3$ prime to $2\ell q$.
+Write $H^{\mathrm{aux}}$ for the chosen version. Put into $\Sigma$
 every rational prime dividing the discriminant of $E$, the numerator or denominator of
 $\mathfrak c$, the level, a self-duality index, or a component-lattice denominator. Theorem 2.1
 and the standard tensor component ensure that $\ell$ and $q$ lie outside $\Sigma$ and that the
 two selected prime ideals have full product monodromy. This is a conclusion of the simultaneous
 choice, not a later genericity assumption.
 
-The resulting determinant-condition, $\mathfrak c$-polarized functor is the corrected fine
-scheme $H^\natural$ of relative dimension $[E:\mathbf Q]$. Book 157 proves that its tensor
+The resulting determinant-condition, $\mathfrak c$-polarized functor is a corrected fine
+scheme of relative dimension $[E:\mathbf Q]$. Book 157 proves that its tensor
 component $H^{\mathrm{ten}}$ is defined over $\mathbf Q$, contains every tensor seed used
 below, and has the product monodromy of Theorem 2.1. Fine level is essential: without it the
 natural object has stabilizers, and a universal abelian scheme need not exist on a coarse
@@ -1224,8 +1382,8 @@ twisting does not provide a rational point.
 
 Geometric components of a general Hilbert moduli space are indexed by determinant classes in a
 narrow adelic quotient, and a constant oriented auxiliary level can even remove all real
-points. Those variants are not needed here. The tensor choice (6.0) and corrected source
-(1.4) select the $\mathbf Q$-defined component $H^{\mathrm{ten}}$, and Book 157 puts every
+points. Those variants are not needed here. The tensor choice (6.0) and either corrected source
+allowed in Section 6.1 select a $\mathbf Q$-defined component $H^{\mathrm{ten}}$, and Book 157 puts every
 real, good, ordinary, local--local, and semistable tensor seed used below on it. What remains is
 to keep all local neighborhoods on its one twist $Y^{\mathrm{ten}}$.
 
@@ -2050,7 +2208,8 @@ control, transfer automorphy to the specialized abelian variety at $q$, and read
 at $\ell$.
 
 **Proof.** Item 2 supplies $M$ and the compatible corrected relative ray datum; Theorem 4.2
-then supplies $\psi$, $C_\psi$, and $\bar r$. Theorem 2.1 supplies the simultaneous
+then supplies $\psi$, $C_\psi$, and $\bar r$, and Lemma 4.3 supplies any exact protected split
+branch pairs included in that item. Theorem 2.1 supplies the simultaneous
 real-multiplication coefficient datum. Proposition 5.1 states the exact
 conditional special residual localization. Chapters 6 and 7 construct the smooth geometrically
 connected twist and nonempty local neighborhoods on one arithmetic component. By the definition
@@ -2206,10 +2365,11 @@ ledger. The present one-prime theorem does not contain such a route.
 
 ### 13.1 The prerequisite interfaces
 
-The declared direct prerequisites are Books 98, 104, 127, 141, 142, 154--157, and 175. Book
+The declared direct prerequisites are Books 6, 98, 104, 127, 141, 142, 154--157, and 175. Book
 175 in turn exposes the load-bearing interfaces from Books 139--140 and 174; they are not
 treated as stronger than their stated hypotheses, and its descent clause exposes Book 109's
-admissible cyclic interface. Book 98 imports global reciprocity from Book 6, while Book 156
+admissible cyclic interface. Book 6 supplies the exact Grunwald--Wang alternative used in
+Lemma 4.3, while Book 98 supplies the Hecke-character interface and Book 156
 imports Book 35's reduced characteristic polynomial for endomorphisms of abelian schemes. The
 proof uses these prerequisites in distinct roles.
 
@@ -2222,8 +2382,12 @@ ray-subgroup compatibility hypotheses are retained.
 **CM anti-unit correction.** Lemma 4.1 is proved here in precisely the CM range in which it is
 used. Kronecker's theorem makes every ratio $u/u^\sigma$ a root of unity; reduction at one
 split prime detects the resulting finite group, and elementary character extension produces
-the inverse branch. This proves the unit correction, not the separate capitulation-intersection
-compatibility assumed by Theorem 4.2. Chebotarev is taken from its actual source, Book 142; Book
+the inverse branch. This proves the unit correction. Lemma 4.1A separately proves the
+capitulation-intersection compatibility over $\mathbf Q$; Theorem 4.2 retains it over a general
+base.  Lemma 4.3 separately uses Book 6 to globalize full local characters and forms
+$\theta/\theta^\sigma$; the Wang exception only doubles a prime-to-$q$ exponent, so it neither
+changes the determinant nor erases protected residual values. Chebotarev is taken from its
+actual source, Book 142; Book
 155 supplies the Galois and solvable approximation refinements. No Kummer congruence
 theorem or later congruence-subgroup result is an undeclared input.
 
@@ -2279,6 +2443,7 @@ completion algebra.
 | simultaneous coefficients | both actual residual fields; distinct odd primes; weak approximation; Hilbert--Blumenthal tensor choice | one totally real $E$ receiving both fields, unramified and monodromy-admissible at both primes, with determinant lines |
 | dihedral construction | CM quadratic field; full relative ray-subgroup compatibility, including ray units and diagonal $K$-ideal intersections; determinant (4.4); type $(1,0)$; prime-to-$q$ witnesses | cuspidal weight-two induction with controlled residual representation |
 | inverse-branch correction | CM quadratic extension; prime-to-$q$ ray-unit obstruction; triviality on diagonal $K$-units; protected witness | the finite anti-unit group is detected at one split prime, and inverse auxiliary characters cancel the obstruction |
+| protected Frobenius correction | finitely many split places away from $q$; determinant-compatible residual branch pairs; a $\sigma$-stable protected set; exact Grunwald--Wang, including its possible exponent doubling | an anti-cyclotomic finite-order twist, trivial on $C_K$ and the protected places, imposing the full residual local characters |
 | residual irreducibility | conjugate ratio nontrivial after reduction | absolute irreducibility of $\bar r$ |
 | cyclotomic adequacy | $q\geq7$; absolute irreducibility on $G_{K(\zeta_q)}$ | adequate cyclotomic image |
 | level raising | relation (5.1); $q_{v_0}\equiv1\pmod q$; scalar line; primary sign; full applicable $({\rm AIH}_{\mathscr F})$ family and independent typed rows; saturated maps; normalized branch correction; non-Eisenstein localization | conditional exact line-special residual occurrence |
@@ -2319,7 +2484,8 @@ $\Pi_A$.
 No later-numbered congruence-subgroup, simultaneous semistable-carrier, or finite-set lifting
 manuscript is used. Such a source either depends on this book or lies after it and therefore
 cannot close Proposition 5.1 or the post-specialization cleanability clause without a dependency
-cycle. A future repair must construct the compatible relative ray datum of Theorem 4.2, place
+cycle. Outside the rational-base case of Lemma 4.1A, a future repair must construct the
+compatible relative ray datum of Theorem 4.2; in every case it must place
 the abelian-Ihara family and the remaining exact one-prime type, support, reciprocity, ray, and
 augmentation certificates in an acyclic prior source, and then either produce a specialization
 with singleton active set or prove an actual finite-set theorem and enlarge the admissibility
@@ -2368,7 +2534,9 @@ The two-prime method succeeds because it assigns one task to each prime. At $q$,
 Hecke character constructed from a supplied compatible corrected relative ray datum over a CM
 field gives an explicit dihedral rank-two representation. Its infinity type gives parallel
 weight two; its diagonal restriction fixes the determinant; ray data control conductor and local
-inertia; and a conjugate-ratio witness survives both reduction and cyclotomic restriction. A
+inertia; a conjugate-ratio witness survives both reduction and cyclotomic restriction; and the
+protected anti-cyclotomic Grunwald correction can impose exact residual split branch characters
+without changing those data. A
 carefully selected scalar prime gives the numerical, enhanced-line, and sign data for the
 special localization. The exact integral localization remains conditional
 first on the abelian-Ihara family and then on the independent typed-Ihara, support,
@@ -2376,7 +2544,8 @@ reciprocity, ray, augmentation, and faithful-carrier inputs of the one-prime the
 
 At $\ell$, the original residual representation is placed on the same polarized abelian variety.
 The determinant-compatible two-prime cover remembers both torsion systems exactly. The
-corrected Tate-twisted auxiliary level and tensor choice give one $\mathbf Q$-defined arithmetic
+corrected cyclotomic-split or elliptic-source auxiliary level and tensor choice give one
+$\mathbf Q$-defined arithmetic
 component, and product monodromy makes its twist geometrically connected. Real, ordinary,
 local--local, good, and semistable tensor seeds produce genuine open neighborhoods on that one
 piece.
@@ -2403,12 +2572,13 @@ The proved conclusion is therefore a conditional transfer theorem with an exact 
 $\ell\geq7$, every two-prime admissible weight-two residual datum becomes automorphic over a
 controlled finite totally real field. Simultaneous coefficient realization, the correction of
 the ray-unit part of a supplied compatible relative datum, determinant lines, components,
-normal closures, the unramified auxiliary frame, and cross-prime integrality are proved on that
-domain.
+normal closures, protected exact split Frobenius branches, the unramified auxiliary frame, and
+cross-prime integrality are proved on that domain.
 
 The catalog objective is stronger: every weight-two residual datum in the stated range must be
-shown to admit the complete package. Before lifting, one must construct the compatible corrected
-relative ray datum retained by Theorem 4.2; Lemma 4.1 proves only its unit relation. At the
+shown to admit the complete package. Before lifting over a general totally real base, one must
+construct the compatible corrected relative ray datum retained by Theorem 4.2; Lemma 4.1 proves
+only its unit relation, while Lemma 4.1A closes the rational-base case. At the
 lifting boundary, the first missing prior result is the abelian Ihara family used by Proposition
 5.1. Granting it does not discharge the independent
 $({\rm TYPE})$, $({\rm SUP})$, $({\rm REC})$, $({\rm RAY})$, augmentation, and
