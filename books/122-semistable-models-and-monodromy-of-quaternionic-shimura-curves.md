@@ -49,6 +49,7 @@
   - [9.5 The bad-prime Eichler--Shimura theorem](#95-the-bad-prime-eichler--shimura-theorem)
   - [9.6 The degeneracy complex and its boundary](#96-the-degeneracy-complex-and-its-boundary)
   - [9.7 Functorial monodromy and projectors](#97-functorial-monodromy-and-projectors)
+  - [9.8 Principal and ray towers over the parahoric diagram](#98-principal-and-ray-towers-over-the-parahoric-diagram)
 - [10. The semistable curve theorem](#10-the-semistable-curve-theorem)
   - [10.1 Statement](#101-statement)
   - [10.2 Scope and failure modes](#102-scope-and-failure-modes)
@@ -164,15 +165,15 @@ All generic curves and all coefficient fields in the packet theorem have charact
 
 ### 1.4 Dependency ledger
 
-Books 11--12 and 16 supply normalization, blowups and regular models, and graph/component-group algebra. Book 22 supplies the strict-semistable nearby-cycle and weight complexes. Book 37 supplies the Frobenius--Verschiebung formalism, purity, and duality used to identify global strata. Book 35 supplies quotients by finite locally free subgroups and descended polarizations. Book 76 supplies the selected special Weil--Deligne normalization used to compare the Iwahori scalar with geometric Frobenius. Book 118 supplies the exact common-norm Hodge-lift obstruction that makes the direct mixed-signature input conditional. Book 119 supplies the exact direct rational tensors, generic PEL curve, and generic parahoric datum. Book 121 supplies the projective good vertex at odd places, its integral filtration-lifting theorem, universal family, and, at two, the characteristic-independent toric obstruction and flat-closure properness argument once an exact integral functor has been constructed.
+Books 10--12 supply effective finite descent, normalization, blowups, and regular models; Book 16 supplies graph/component-group algebra. Book 17 supplies the finite-etale common refinement and effective Galois closure on the generic diagram. Book 22 supplies the strict-semistable nearby-cycle and weight complexes, including the full tame ramified strict-node complex. Book 37 supplies the Frobenius--Verschiebung formalism, purity, and duality used to identify global strata. Book 35 supplies quotients by finite locally free subgroups and descended polarizations. Book 58 supplies faithful flatness and exactness of completion and the distinction between completing a known proper model and algebraizing an abstract formal space. Book 70 supplies the maximal-Cohen--Macaulay freeness criterion over a regular local ring and the warning that it fails over a singular target. Book 76 supplies the selected special Weil--Deligne normalization used to compare the Iwahori scalar with geometric Frobenius. Book 118 supplies the exact common-norm Hodge-lift obstruction that makes the direct mixed-signature input conditional. Book 119 supplies the exact direct rational tensors, generic PEL curve, and generic parahoric datum. Book 121 supplies the projective good vertex at odd places, its integral filtration-lifting theorem, universal family, and, at two, the characteristic-independent toric obstruction and flat-closure properness argument once an exact integral functor has been constructed.
 
 The exact direct dependency row is
 
 $$
-\boxed{122\mid 11,12,16,22,35,37,76,118,119,121}.           \tag{1.6}
+\boxed{122\mid 10,11,12,16,17,22,35,37,58,70,76,118,119,121}. \tag{1.6}
 $$
 
-There are ten direct dependencies. The right-double-coset, transpose, central, and degree conventions are chosen to agree with Book 124 and are rederived in Section 9.3 for the residue-prime span. The packet theorem is a characteristic-zero statement conditional only on the already isolated curve packet described in its hypotheses; it imports no Ihara saturation, level-raising theorem, deformation theorem, or modularity-lifting theorem.
+There are fourteen direct dependencies. The right-double-coset, transpose, central, and degree conventions are chosen to agree with Book 124 and are rederived in Section 9.3 for the residue-prime span. The packet theorem is a characteristic-zero statement conditional only on the already isolated curve packet described in its hypotheses; it imports no Ihara saturation, level-raising theorem, deformation theorem, or modularity-lifting theorem.
 
 The downstream compatibility audit is as follows. Book 124 deliberately leaves a
 level-prime polynomial open; (9.8) uses its incoming right-action convention and proves
@@ -1086,6 +1087,16 @@ up to the same harmless Frobenius-twist parameterizations used in Chapter 4. Wit
 
 On the common Hasse set the two restrictions agree in the unique admissible local-local subgroup. Equations (9.4)--(9.6), together with (4.8), are the geometric degeneracy data needed for level comparison.
 
+Both $d_0$ and $d_1$ are finite locally free of degree $q+1$. Indeed, they are projective and
+generically finite of that degree. Theorem 4.3 gives the whole special fiber as the two stated
+reduced branches, with no vertical component, and (9.4)--(9.6) restrict either map on each
+normalized branch to an identity or a relative Frobenius. These restrictions are finite, so
+every geometric special-fiber fiber is finite; the generic fibers are finite as well. Hence the
+maps are proper and quasi-finite, and therefore finite. Locally the source and target are
+regular surfaces. The source ring is Cohen--Macaulay over the regular target ring, and a target
+system of parameters is a source regular sequence. The finite module is consequently maximal
+Cohen--Macaulay and hence free. Its rank is the generic degree $q+1$.
+
 ### 9.3 The actual residue-prime correspondence
 
 Return to either local situation of Section 1.3 and now write $v$ for the selected
@@ -1465,6 +1476,217 @@ If $e$ exists only after coefficient extension, rational ranks are unchanged. If
 
 At the bad prime itself, a degeneracy correspondence changes the lattice chain and need not be finite etale. Its integral extension is the explicit PEL isogeny diagram (9.3)--(9.6), not a consequence of the prime-to-$p$ construction.
 
+### 9.8 Principal and ray towers over the parahoric diagram
+
+Later type coefficients use objectwise normal principal levels at $v$, a common effective
+Galois closure of their finite generic diagram, and, in the scalar family, a global ray
+character ramified at $v$.  There are four different assertions here: existence
+of the normalized tower, flatness of its objects over the fine base models, identification of
+the lifted legs on one common normalization, and the completed stabilizer calculation.  The
+first three follow from normalization and integrality; the last requires the principal local
+model.
+
+Let $a\in\{0,1,e\}$ denote the two adjacent vertex levels and their oriented edge level.  Write
+$\mathscr X^a$ for the corresponding fine integral models; thus the vertex models are smooth
+and the edge model is the regular semistable curve of Theorem 4.1.  At each object choose an
+open principal subgroup normal in that object's compact level and include the fixed fine
+prime-to-$v$ level. Choose a finite common refinement for the finitely many retained degeneracy
+and Hecke legs whose chosen fine integral base maps are finite, and take the effective finite
+Galois closure of this entire generic diagram
+(componentwise, a common finite separable algebra).  Thus
+
+$$
+Y^a_\eta\longrightarrow X^a_\eta                              \tag{9.26}
+$$
+
+denotes the same effective generic cover equipped with its map to the $a$th quotient, not three
+unrelated choices of normal closure.  If a global ray extension $K'/K$ is
+used, take the fiber product of (9.26) with $K'$ before normalization.  Define
+$\mathscr Y^a$ to be the normalization of $\mathscr X^a$ in that finite generic algebra.  This
+definition, rather than a nominal quotient by a compact open with a central kernel, is the
+**actual principal/ray tower**.
+
+Such a common algebra exists because the diagram is finite: intersect the finitely many
+principal subgroups only to obtain a common refinement, take the finite normal closure of the
+resulting separable function-field extensions, and take the finite orbit of the selected
+generic component union.  We do **not** assert that one open compact subgroup is normal in both
+adjacent maximal parahorics: taking a core in one group does not preserve normality in the
+other, so an intersection-of-cores argument does not establish that assertion.  The common
+object is the effective Galois closure of actual principal-level covers, so “common” is a
+construction, not an equality imposed on independently chosen normal closures.
+
+**Proposition 9.2 (common normalization and flat lifted legs).** Each
+$\mathscr Y^a\to\mathscr X^a$ is finite locally free. Every degeneracy or Hecke map whose
+chosen fine integral base leg is finite, and which is generically compatible with the chosen
+principal level, extends uniquely to a finite map between the corresponding normalizations.
+These extensions commute with composition, the deck action,
+residue Galois, and transpose on the generic fiber.  Along each finite leg of the fine
+vertex--edge diagram, the lift on the common normalization is canonically an isomorphism; in
+particular all principal top-level degeneracy legs are finite flat.
+
+**Proof.** The fine models are excellent, so finiteness of normalization in a finite generic
+algebra is the normalization theorem of Book 11.  Work at a point of $\mathscr X^a$.  Its local
+ring $A$ is regular of dimension at most two.  A local factor $B$ of the normalization is normal
+and finite over $A$, has the same dimension, and is Cohen--Macaulay: in dimension two this is
+Serre's $S_2$ condition, while dimensions zero and one are immediate.  A regular system of
+parameters of $A$ is a system of parameters of $B$ because $B/A$ is finite, hence is a
+$B$-regular sequence.  Thus $B$ is maximal Cohen--Macaulay as an $A$-module.  Auslander--Buchsbaum
+over the regular local ring $A$ makes $B$ free.  This proves finite local freeness objectwise.
+
+For extension of a map, take an affine target $\operatorname{Spec}A$ and its finite inverse
+image $\operatorname{Spec}C$ in the source base model.  An element of the target normalization
+is integral over $A$; its generic pullback is therefore integral over $C$ and lies in the source
+normalization.  This gives the unique ring map.  The source normalization is already finite as
+an $A$-module, hence also finite over the target normalization.  Uniqueness on the schematically
+dense generic fiber proves composition and equivariance.
+
+For a leg using the common generic algebra $L$, more is true.  Because $C$ is integral over
+$A$, an element of $L$ is integral over $A$ if and only if it is integral over $C$: one
+direction uses $A\subset C$, and the other is transitivity of integrality.  Hence the two
+integral closures inside $L$ are the same ring.  The lifted leg is therefore an isomorphism.
+The argument applies componentwise to a finite generic algebra and to either embedding used by
+the two oriented legs. $\square$
+
+The finiteness of the fine integral base leg is essential to this extension argument. A
+generic Hecke leg whose chosen integral closure is only proper and has a contracted vertical
+fiber is not covered by Proposition 9.2; it must instead be treated by the graph/regular-
+domination construction of Section 9.3, or replaced by a separately proved finite Stein
+factor. Generic finiteness alone does not make an arbitrary proper integral model finite: the
+blowup of $\operatorname{Spec}k[x,y]$ at the origin is normal, proper, and birational over the
+normal affine plane, but its exceptional curve prevents the map from being finite. Normalizing
+both models in their common function field leaves this nonfinite blowup unchanged.
+
+The common-algebra condition is essential.  If one instead chooses unrelated generic
+extensions at two levels, normality does **not** make the induced finite comparison flat.  Over
+a field $k$ of characteristic different from two, with
+
+$$
+A=k[[u,v,w]]/(uv-w^2)\subset B=k[[s,t]],
+\quad u=s^2, v=t^2, w=st,                                \tag{9.27}
+$$
+
+both complete surfaces are normal and $B/A$ is finite, but the anti-invariant summand is a
+nonfree maximal Cohen--Macaulay $A$-module. Concretely, the generic rank is two whereas
+
+$$
+B/(u,v,w)B=k[[s,t]]/(s^2,st,t^2)
+$$
+
+has $k$-dimension three, so $B$ cannot be free, hence cannot be finite flat over the local ring
+$A$. Normality, equidimensionality, and generic etaleness therefore cannot compare separately
+chosen towers.  The actual construction avoids this defect by normalizing every fine object in
+one common generic algebra; it does not infer flatness for an arbitrary map of normal models.
+
+There is also an immediate annular consequence.  Once a point of the common normalization is
+known to lie above a node on both sides of a fine leg, the lifted map is an isomorphism of its
+completed local model.  Its annular expansion index is therefore one.  What normalization
+alone does not decide is which completed points are node-to-node, which are routed to smooth
+branch strata, or what their decomposition groups are.
+
+The ray factor is completely controlled.  Let $R'/R$ be the integral extension cut out by the
+local part of the global ray quotient, of ramification index $r$.  On a smooth chart its
+ray-only normalization is the ordinary base change.  At a node it is
+
+$$
+R'[[x,y]]/(xy-u(\pi')^r).                                  \tag{9.28}
+$$
+
+This ring is a hypersurface, hence $S_2$, and is regular in codimension one; it is therefore
+normal.  Thus the ray-only normalization is exactly base change by $R'/R$.  It is finite
+locally free, both ray-only degeneracy maps remain finite locally free by base change, and
+resolving (9.28) inserts the equivariant chain of Section 5.2.  This does not assert that
+normalization of a principal algebra commutes with ramified tensor product: the combined
+principal/ray normalization is the object already covered by Proposition 9.2, and it may not
+be the raw base change of the principal normalization.  For the associated tautological
+rank-one coefficient, Book 22, formula (3.11) gives
+
+$$
+R\Psi(\mathcal L\otimes A(\boldsymbol\chi_v))
+\simeq R\Psi(\mathcal L)\otimes A(\boldsymbol\chi_v),       \tag{9.29}
+$$
+
+with diagonal full inertia action.  Hence the ray character preserves every pull, trace,
+normalization, Hecke-routing, and adjunction map.  No unramifiedness of the character is being
+asserted: it is geometrically constant because it is pulled back from the trait.  This
+statement applies to an automorphic determinant system only after the effective global ray
+datum identifies that system with this component/trait pullback.  Such an identification is
+part of the global ray hypothesis; a nominal local determinant character does not prove it.
+
+It remains to identify the principal factor at a node.  The remaining statement is now a local
+algebraic-geometric theorem, not an unspecified nearby-cycle formalism.
+
+**Required local theorem $({\rm PNS}_v)$ (principal node and stabilizer theorem).** Let
+
+$$
+A_e=\widehat{R^{\rm sh}}[[x,y]]/(xy-\pi)
+$$
+
+be the completed edge ring at a local-local PEL point, let $A_0,A_1$ be the completed smooth
+vertex rings at its two images, and choose a finite decomposition orbit $\widetilde x$ in the
+common normalization above that edge point.  Let $B_e$ be completion along $\widetilde x$ and
+let $B_0,B_1$ be completion of the same finite set in the two isomorphic lifted top objects.
+Then $B_e\simeq B_0\simeq B_1$.  These are selected semilocal factors; $B_i$ is not the
+completion along every point over the vertex image.  The required assertions are:
+
+1. the normalization branches, conductor points, decomposition and inertia groups of $B_e$ are
+   the vertex, edge, and oriented-flag stabilizers inside the effective Galois closure of the
+   actual principal quotients.  The node-to-node completed tubes are identified as admissible
+   tame annuli over the strict base annulus; this includes the homomorphism from the oriented
+   tame annular group and its actions on the two ordered
+   endpoints.  It also records the wild annular inertia: on each node-to-node coefficient
+   module it proves that wild inertia is trivial before the tame procyclic complex is used;
+   any sheet on which wild inertia is nontrivial must instead be carried, with its full
+   decomposition action, by a completed source smooth over the trait in the
+   normalization-component term of clause 2.  Proper nearby-cycle pushforward then supplies
+   its full branch complex.  The resulting node-to-branch generization chain maps are
+   identified; no branch with uncomputed monodromy is replaced by an underived module;
+2. for each oriented flag incidence contributing to an extreme residue, exactly one
+   stabilizer-quotient sheet, of scheme-theoretic multiplicity one, is node-to-node.  Every
+   other generic flag sheet is assigned, with its scheme-theoretic multiplicity and
+   decomposition action, to the stated normalization-component stratum. This routing is
+   compatible with every retained residue-prime Hecke leg treated by the graph/regular-
+   domination construction of Section 9.3, including its transpose. On the identified
+   node-to-node sheets lying over the finite parahoric base legs, Proposition 9.2 then proves,
+   rather than assumes, expansion index one.
+
+This is an exact finite-level theorem.  It can equivalently be proved by constructing the full
+Drinfeld level structure on the active height-two $\pi$-divisible group, taking the Stein
+factors of the length-one and length-two PEL flag schemes, and calculating their complete local
+rings from the universal display (4.4).  The equality with the normalization in (9.26), not
+mere equality of characteristic-zero points, is part of the assertion.
+
+It is enough to prove the displayed algebra after completed strict henselization.  All modules
+in question are finite, completion is faithfully flat, and equality of two finite subalgebras
+together with the decomposition action is reflected by that completion.  This is completion of
+the already constructed proper normalization, where Book 58 applies.  It is not an invocation of formal
+GAGA to manufacture an algebraic tower from one isolated formal node.  If one instead starts
+from an abstract Drinfeld formal moduli space, algebraizing it requires the compatible proper
+polarized global datum of Book 58; a complete local equation alone does not supply that datum.
+
+Once $({\rm PNS}_v)$ is known, no further ramified nearby-cycle theorem is missing.  For a
+finite-free representation $W$ of the principal quotient, the decomposition group in clause 1
+gives its actual tame annular action.  Let $H_x$ be the prime-to-$\ell$ kernel, put
+$M_x=W^{H_x}$, and write $T_x$ for the remaining pro-$\ell$ generator.  The same clause proves
+that wild inertia is trivial on the node-to-node module.  Book 22, Theorem 3.2 then gives the
+full complex
+
+$$
+[M_x\xrightarrow{T_x-1}M_x]                               \tag{9.30}
+$$
+
+with the residue-Galois action (3.6).  Combining it with the branch complexes and
+generization maps gives the normalization--conductor homotopy fiber (3.10).  Clause 2 and
+(3.8) make both unsigned extreme expansion coefficients equal to $1$; the only signs are those
+from the chosen oriented endpoint difference. They place all remaining sheets in the middle
+normalization term. The same formulas make
+finite-flat trace adjoint to pull on the contragredient representation and commute with every
+retained Hecke route.  Thus $({\rm PNS}_v)$ is the first unresolved theorem in proof order:
+Books 118--122 construct one parahoric subgroup and the length-two generic correspondence, but
+outside $({\rm PNS}_v)$ they give neither a Drinfeld full-level integral moduli presentation nor
+the completed stabilizer calculation for the principal normalization required by its two
+clauses.  In particular, they do not prove that the principal coefficient is
+tame at a node merely because the selected automorphic type is called tame.
+
 ## 10. The semistable curve theorem
 
 ### 10.1 Statement
@@ -1502,13 +1724,21 @@ one-step Iwahori chain (2.3). Then:
     $U_v^2=S_v$ and $U_v^t=S_v^{-1}U_v$;
 11. the two bad-prime degeneracy routes restrict as identity/Frobenius and
     Frobenius/identity on the branch normalizations, after the required dual-chain
-    identification; and
+    identification;
 12. for a characteristic-zero multiplicity-one packet in the curve range with
     $\Pi_v=\operatorname{St}\otimes\mu_v$, the normalization-component packet term is
     zero, both graph multiplicities are one, $N$ has rank one, and geometric Frobenius
     on the invariant graph line is the automorphic new-line scalar
     $u_v=\mu_v(\Phi)$ in the raw unnormalized, uncentered weight-two convention; the
-    centered Book 76 kernel root is $q^{-1/2}u_v$.
+    centered Book 76 kernel root is $q^{-1/2}u_v$; and
+13. normalization of the fine vertex--edge diagram in one supplied compatible common finite
+    generic principal/ray algebra is finite locally free over each fine object, and every
+    retained generic leg whose fine integral base leg is finite extends uniquely. Along such a
+    fine finite leg the common
+    normalizations are canonically identical.  The ray-only axis and its geometrically constant
+    coefficient are explicit; the wild/tame stabilizer ledger, generization maps, and node
+    routing are exactly the still-required theorem $({\rm PNS}_v)$, after which expansion one
+    follows from the common-normalization isomorphism.
 
 **Proof.** The dyadic vertex construction, Proposition 2.1, Theorem 2.2, and
 Proposition 2.3 prove projective representability and transfer the exact integral local
@@ -1519,7 +1749,8 @@ statement 4. Chapter 5 proves statement 5. The graph nearby-cycle calculation in
 Chapter 6 proves statement 6. Chapter 8 proves statements 7--8. Naturality of
 prime-to-$p$ isogenies and functoriality of nearby cycles prove statement 9.
 Sections 9.3--9.4 prove statement 10, Section 9.2 proves statement 11, and
-Theorem 9.1 proves statement 12. $\square$
+Theorem 9.1 proves statement 12.  Proposition 9.2 and the calculation following it prove
+statement 13 and its stated boundary. $\square$
 
 ### 10.2 Scope and failure modes
 
@@ -1540,6 +1771,14 @@ polarization type and is not a second hyperspecial model. Dropping that distinct
 invalidates both the Hilbert-scheme construction and the degeneracy routes.
 
 At coarse level, fixed points can create quotient singularities. Nearby cycles are then computed equivariantly on a fine cover or stack. After nonsplit descent, branch exchange acts with a sign on oriented edges. A lisse coefficient system satisfies (6.10); a sheaf ramified along the special fiber does not.
+
+Objectwise finite local freeness alone would not prove flatness of a comparison between
+separately chosen normalizations.  Proposition 9.2 proves it for the actual diagram by the
+stronger common-algebra argument: the lifted legs are isomorphisms.  That argument still says
+nothing about whether a node coefficient is tame.  The latter assertion requires
+$({\rm PNS}_v)$, including the actual complete local decomposition groups and wild-inertia
+ledger.  The ray projection formula applies only to the component/trait-pulled coefficient
+identified by an effective global ray datum.
 
 The equality $\operatorname{rank}N=b_1(\Gamma)$ is rational. Integral cokernels use the thickness matrix and saturation of the chosen lattice. A rational Hecke projector with an $\ell$-denominator does not select a canonical integral lattice. The packet theorem is likewise in characteristic zero and concerns the raw curve carrier; it is not an integral Ihara statement and is not a raw-to-global theorem. The geometric degeneracy complex remains input to any Ihara lemma or level-raising theorem, not a proof of either.
 

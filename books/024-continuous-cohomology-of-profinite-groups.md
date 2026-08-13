@@ -89,6 +89,7 @@
     - [$\ell$-adic lattices and vector spaces](#124-ell-adic-lattices-and-vector-spaces)
     - [Products and matrix actions](#125-products-and-matrix-actions)
     - [A procyclic comparison across topologies](#126-a-procyclic-comparison-across-topologies)
+    - [The strict procyclic lattice complex](#126a-the-strict-procyclic-lattice-complex)
     - [Exact sequences in the topological setting](#127-exact-sequences-in-the-topological-setting)
     - [Algebraic groups and their possible quotient topologies](#128-algebraic-groups-and-their-possible-quotient-topologies)
 13. [Cohomological dimension and the normal-subgroup spectral sequence](#13-cohomological-dimension-and-the-normal-subgroup-spectral-sequence)
@@ -2131,6 +2132,137 @@ $\mathbf Z_\ell\to\mathbf Q_\ell$ are again determined by the image of $1$, but 
 be any element of $\mathbf Q_\ell$. Hence
 $H^1_{\mathrm{cts}}(G,V)\simeq\mathbf Q_\ell$. These three answers—finite level, profinite
 lattice, and vector space—fit together only because their topologies were kept explicit.
+
+### 12.6A The strict procyclic lattice complex
+
+The preceding calculations determine groups.  Nearby-cycle calculations also need a functorial
+complex, including the action of an element which conjugates a procyclic generator.  The finite
+cyclic periodic resolution is the wrong complex when the cyclic quotient has $\ell$-power
+order: its higher terms disappear only after passage to the torsion-free procyclic group.
+
+Let $\Lambda$ be the integers in a finite extension of $\mathbf Q_\ell$, let
+$\Gamma\simeq\mathbf Z_\ell$ have topological generator $\gamma$, and let $M$ be a finite free
+$\Lambda$-module with continuous $\Gamma$-action.  Write $T$ for the action of $\gamma$.
+
+**Proposition 12.1 (strict procyclic complex).** In the continuous derived category of compact
+$\Lambda$-modules there is a functorial model
+
+$$
+R\Gamma_{\rm cts}(\Gamma,M)
+\simeq
+K_\Gamma(M):=[M\xrightarrow{\ T-1\ }M],                 \tag{12.18}
+$$
+
+with the terms in degrees zero and one.  In particular,
+
+$$
+H^0=\ker(T-1),\qquad H^1=\operatorname{coker}(T-1),
+\qquad H^i=0\quad(i\ge2).                                \tag{12.19}
+$$
+
+The terms of (12.18), rather than its cohomology, are finite free.  Thus (12.18) remains a
+perfect complex when $T-1$ has nonprimitive image and $H^1$ has $\ell$-torsion.
+
+**Proof.** The completed group algebra is
+
+$$
+\Lambda[[\Gamma]]\simeq\Lambda[[X]],\qquad \gamma\longmapsto1+X.
+$$
+
+The augmentation has the length-one topologically free resolution
+
+$$
+0\longrightarrow\Lambda[[\Gamma]]
+\xrightarrow{\ \gamma-1\ }\Lambda[[\Gamma]]
+\longrightarrow\Lambda\longrightarrow0.                 \tag{12.20}
+$$
+
+Indeed, under the displayed power-series identification the first map is multiplication by
+$X$, which is injective, and its cokernel is evaluation at $X=0$.  A rank-one topologically
+free compact $\Lambda[[\Gamma]]$-module is projective for continuous equivariant Hom: a module
+map out of it is determined by the image of $1$, and that image lifts across a continuous
+surjection.  The resulting module map is continuous by the universal property of the
+completed group algebra.  Applying
+$\operatorname{Hom}^{\rm cts}_{\Lambda[[\Gamma]]}(-,M)$ to (12.20) gives (12.18).  This also
+shows functoriality and proves (12.19). $\square$
+
+There is an equally important semidirect-product formula.  For $a\in\mathbf Z_\ell^\times$ put
+
+$$
+[a]_T=\frac{T^a-1}{T-1}
+=\sum_{n\ge1}\binom an(T-1)^{n-1},                        \tag{12.21}
+$$
+
+where the right side is evaluated continuously in the completed group algebra.  Let $A$ be a
+$\Lambda$-linear automorphism of $M$ satisfying
+
+$$
+ATA^{-1}=T^a.                                               \tag{12.22}
+$$
+
+The series in (12.21) converges because continuity of the $\mathbf Z_\ell$-action makes
+$T-1$ topologically nilpotent: some power of $T-1$ lies in
+$\ell\operatorname{End}_\Lambda(M)$.
+
+Then the automorphism which acts by $A$ in degree zero and by
+
+$$
+A[a^{-1}]_T                                                \tag{12.23}
+$$
+
+in degree one is a chain automorphism of (12.18).  The check is the exact identity
+
+$$
+A[a^{-1}]_T(T-1)=A(T^{a^{-1}}-1)=(T-1)A.                  \tag{12.24}
+$$
+
+This is the continuous-cochain conjugation action, not an optional normalization.  If $T=1$,
+the degree-one factor is $a^{-1}A$.  Thus an arithmetic Frobenius satisfying
+$\phi\gamma\phi^{-1}=\gamma^q$ acts on the degree-one constant-coefficient term by $q^{-1}$,
+as required for a $(-1)$ Tate twist; geometric Frobenius acts by $q$.
+
+The same model fixes the relevant chain maps, but one must distinguish the pro-$\ell$ group
+from a full tame covering degree. If a homomorphism sends a source generator to the $e$th
+power of a target generator, restriction is the chain map
+
+$$
+K(T)\longrightarrow K(T^e),\qquad
+(f^0,f^1)=(1,[e]_T),                                      \tag{12.25}
+$$
+
+and the adjoint norm chain map is
+
+$$
+K(T^e)\longrightarrow K(T),\qquad
+(c^0,c^1)=([e]_T,1).                                      \tag{12.26}
+$$
+
+Both assertions follow from $(T^e-1)=[e]_T(T-1)$. When $e$ is a power of $\ell$ and the
+source is identified with the index-$e$ subgroup $e\Gamma$, these are the usual restriction
+and corestriction maps. For a general integer $e$, (12.26) is still the displayed adjoint norm,
+but it is not corestriction for the pro-$\ell$ group alone: multiplication by the
+prime-to-$\ell$ part of $e$ is an automorphism of $\mathbf Z_\ell$. The two maps are adjoint under the evaluation pairing
+with the contragredient module after the canonical orientation identification of the dual
+strict complex; this is not termwise matrix transposition.  For expansion index one every entry in (12.25)--(12.26) is
+literally $1$.  Reversing the chosen generator replaces $T$ by $T^{-1}$; the resulting chain
+isomorphism is the identity in degree zero and $-T^{-1}$ in degree one, which is the origin of
+the orientation sign.
+
+Finally, if a tame procyclic group has a closed prime-to-$\ell$ kernel $H$ and maximal
+pro-$\ell$ quotient $\Gamma$, take $H$-invariants first.  Every finite quotient of $H$ has unit
+order in $\Lambda$, so averaging is compatible through the inverse system and invariants are
+exact.  Consequently the full tame complex is (12.18) with $M$ replaced by the finite-free
+direct summand $M^H$.  This reduction does not average over an additional flag or stabilizer
+group whose order may be divisible by $\ell$.
+
+Under a finite map of full tame groups, however, the source invariant summand can be larger:
+writing $eH$ for the image of $H$ under multiplication by $e$, it is $M^{eH}$ rather than necessarily
+$M^H$. Restriction and transfer must then be inserted between these two summands before using
+the procyclic complexes. For instance, away from residue characteristics two and three, a
+rank-one order-two tame character over $\mathbf Z_3$ has $M^H=0$, while its degree-two
+pullback is trivial and has $M^{2H}=M$. Thus
+(12.25)--(12.26) give the full annular pull--trace formulas on one common module only when the
+prime-to-$\ell$ invariant summand is unchanged; expansion index one is always in this range.
 
 ### 12.7 Exact sequences in the topological setting
 

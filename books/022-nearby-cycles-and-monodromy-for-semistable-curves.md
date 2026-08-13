@@ -16,6 +16,7 @@
    - [3.2 The exterior-algebra theorem](#32-the-exterior-algebra-theorem)
    - [3.3 Curves: smooth points and nodes](#33-curves-smooth-points-and-nodes)
    - [3.4 What fails outside strict semistability](#34-what-fails-outside-strict-semistability)
+   - [3.5 Tame ramified coefficients at a strict node](#35-tame-ramified-coefficients-at-a-strict-node)
 [4. Inertia: tame, wild, and finite parts](#4-inertia-tame-wild-and-finite-parts)
    - [4.1 The tame character](#41-the-tame-character)
    - [4.2 Unipotence in a strict semistable model](#42-unipotence-in-a-strict-semistable-model)
@@ -382,6 +383,176 @@ For the local family $xy=\pi$, the Milnor fiber is an annulus. Its one-dimension
 Three nearby local equations should not be confused. The equation $xy=\pi^a$ has reduced nodal special fiber but singular total space for $a>1$; resolving it replaces one weighted edge by a chain of $a$ unit edges. Rationally the shape of monodromy is unchanged, but the integral operator is multiplied by $a$. The equation $x_1^{m_1}\cdots x_r^{m_r}=\pi$ has a normal-crossings support with multiplicities. Its inertia action can have a nontrivial finite tame semisimple part determined by the $m_i$. Finally, an arbitrary singularity may carry wild vanishing cycles and need not be described by an exterior algebra.
 
 Strict semistability excludes all three complications: the total space is regular, component multiplicities are one, and wild inertia is trivial. Later descent statements recover finite and wild parts only by explicitly recording the extension over which strict semistability appears.
+
+### 3.5 Tame ramified coefficients at a strict node
+
+The warning after (3.2) has an exact replacement. It is useful precisely when a coefficient
+system comes from residue-prime level and therefore does not extend lisse across the model.
+Let $\Lambda$ be the integers in a finite extension of $\mathbf Q_\ell$. At a strict geometric
+node $x$, choose an orientation of
+
+$$
+\widehat{\mathcal O}_{X,x}^{\rm sh}\simeq
+\widehat{R^{\rm sh}}[[u,v]]/(uv-\pi)                       \tag{3.4}
+$$
+
+from the $u$-branch to the $v$-branch. The maximal pro-$\ell$ quotient of the geometric tame
+fundamental group of the generic annulus is $\Gamma_x\simeq\mathbf Z_\ell(1)$. Choose a
+topological generator $\gamma_x$; the branch orientation fixes the convention under which
+reversal replaces it by $\gamma_x^{-1}$, but does not by itself trivialize
+$\mathbf Z_\ell(1)$. Let $\mathcal L$ be a finite-free lisse $\Lambda$-sheaf on the
+generic fiber whose geometric monodromy on this annulus is tame. After taking the exact
+invariants of the prime-to-$\ell$ kernel $H_x$ on its fiber $W_x$, put
+$M_x=W_x^{H_x}$ and let $T_x$ be the action of $\gamma_x$.
+
+**Theorem 3.2 (full tame strict-node complex).** Relative to the chosen generator, there is a
+canonical, functorial quasi-isomorphism
+
+$$
+(R\Psi\mathcal L)_x
+\simeq
+K_x(\mathcal L):=
+[M_x\xrightarrow{\ T_x-1\ }M_x],                          \tag{3.5}
+$$
+
+in degrees zero and one. The second copy of $M_x$ carries the conjugation action, not a
+silently chosen copy of the first. More precisely, if $g$ acts on $M_x$ by $A_g$ and
+
+$$
+g\gamma_xg^{-1}=\gamma_x^{a(g)},
+\qquad a(g)\in\mathbf Z_\ell^\times,
+$$
+
+then $g$ acts in the two degrees of (3.5) by
+
+$$
+A_g,\qquad A_g[a(g)^{-1}]_{T_x},                            \tag{3.6}
+$$
+
+where $[a]_T=(T^a-1)/(T-1)$ in the completed group algebra. Consequently
+
+$$
+(R^0\Psi\mathcal L)_x=\ker(T_x-1),
+\qquad
+(R^1\Psi\mathcal L)_x=\operatorname{coker}(T_x-1),         \tag{3.7}
+$$
+
+with the action induced by (3.6). When $T_x=1$, the second term is
+$M_x(-1)$ and (3.5) recovers (3.3). In general the cohomology in (3.7) may have
+$\ell$-torsion even though both terms of the strict complex are finite free.
+
+**Proof.** Formula (2.2) identifies the stalk with cohomology of the geometric generic annulus.
+The tame $K(\pi,1)$ comparison in the prime-to-$p$ coefficient range identifies the cohomology
+of this tame local system with continuous cohomology of the tame fundamental group, which is
+the prime-to-$p$ procyclic Kummer group. The kernel of its
+maximal pro-$\ell$ quotient acts through a finite group of order prime to $\ell$ on $W_x$:
+the image is finite because $\operatorname{GL}(W_x)$ has an open pro-$\ell$ subgroup. Averaging
+therefore takes its invariants exactly, producing $M_x$, and leaves the procyclic group
+$\Gamma_x$. Its completed
+group algebra is $\Lambda[[\Gamma_x]]\simeq\Lambda[[X]]$, with $\gamma_x-1=X$, so
+$0\to\Lambda[[X]]\xrightarrow{X}\Lambda[[X]]\to\Lambda\to0$ is the length-one topologically
+free augmentation resolution. Applying continuous equivariant Hom gives (3.5). Identity
+$A_g[a(g)^{-1}]_{T_x}(T_x-1)=(T_x-1)A_g$ proves (3.6). This calculation is compatible at every finite coefficient quotient;
+the transition maps on the two finite-free terms are surjective, so the derived inverse limit
+introduces no $\varprojlim^1$ term. $\square$
+
+Three pieces of functoriality will be used later. Consider a finite admissible map of strict
+annuli of expansion index $e$. If pullback does not enlarge the prime-to-$\ell$ invariant
+summand, identify that common summand with $M_x$ and choose generators so that the source action
+is $T_x^e$. Pull and trace on (3.5) are then respectively
+
+$$
+(1,[e]_{T_x})
+\quad\text{and}\quad
+([e]_{T_x},1).                                              \tag{3.8}
+$$
+
+They are adjoint for the evaluation pairing with the contragredient coefficient after the
+canonical orientation identification of the dual strict complex; this is not termwise matrix
+transposition. At expansion index one the extreme maps have coefficient $1$, not the global
+degree of the finite map.
+Reversing the node orientation replaces the degree-one term by $-T_x^{-1}$ times itself. These
+statements follow from the chain identity
+$T_x^e-1=[e]_{T_x}(T_x-1)$; hence they commute with the full inertia and
+residue-Galois actions in (3.6), not merely with their semisimplifications.
+
+The invariant-summand qualification cannot be omitted. In general the target and source terms
+are $W_x^{H_x}$ and $W_x^{eH_x}$, where $eH_x$ denotes the image of $H_x$ under multiplication by $e$, and
+pull and trace include the corresponding inclusion and transfer;
+they are not maps between two copies of one $M_x$. For example, in residue characteristic
+different from two and three, over $\mathbf Z_3$ a rank-one tame character of order two has
+zero prime-to-$3$ invariants, whereas its pullback by a
+degree-two annular map is trivial and has rank-one invariants. The same-module display (3.8)
+therefore does not apply to that map. It always applies at expansion index one, which is the
+case used for the node-to-node sheets below.
+
+The stalk complex is only one part of the normalization filtration.  Let
+$\nu:\widetilde Y\to Y$ be the normalization near $x$, let $i:x\hookrightarrow Y$, and let
+$\mathcal C_{\rm br}$ be the full nearby-cycle complex on the two normalized branches.  Write
+$C_u,C_v$ for its two conductor fibers.  A constructible complex has generization chain maps
+
+$$
+g_u:K_x(\mathcal L)\longrightarrow C_u,
+\qquad
+g_v:K_x(\mathcal L)\longrightarrow C_v.                  \tag{3.9}
+$$
+
+On the local nodal star it is recovered by the normalization--conductor homotopy fiber
+
+$$
+\operatorname{Fib}\!\left(
+ R\nu_*\mathcal C_{\rm br}\oplus i_*K_x(\mathcal L)
+ \xrightarrow{\ (\operatorname{res}_u,\operatorname{res}_v)-(g_u,g_v)\ }
+ i_*(C_u\oplus C_v)
+\right).                                                   \tag{3.10}
+$$
+
+Indeed, away from the conductor both $i_*$-terms vanish, so the fiber is
+$R\nu_*\mathcal C_{\rm br}$, which is the original complex because $\nu$ is an isomorphism
+there.  At $x$ the displayed arrow is the split surjection
+
+$$
+C_u\oplus C_v\oplus K_x(\mathcal L)\longrightarrow C_u\oplus C_v,
+\qquad (c_u,c_v,k)\longmapsto(c_u-g_u(k),c_v-g_v(k)).
+$$
+
+Its kernel is the graph of $(g_u,g_v)$ and is canonically $K_x(\mathcal L)$.  Hence the natural
+map from the constructible complex to (3.10) is a quasi-isomorphism on every geometric stalk.
+This proves the recollement formula and shows that it is equivariant for every action preserving
+the two generization maps.
+
+This formula fixes both variance and cohomological degree.  For constant coefficients,
+$C_u=C_v=M_x$ and each $g_i$ is the identity in degree zero and zero in degree one.  Formula
+(3.10) then gives the usual normalization resolution in degree zero and the independent
+node term $M_x(-1)$ in degree one.  Thus the oriented cellular boundary and the ramified
+coefficient differential $T_x-1$ are different arrows in one derived totalization; the latter
+is not placed one degree beyond the geometric vanishing term.  If a branch itself retains
+monodromy, its full complex remains inside $\mathcal C_{\rm br}$ rather than being replaced by
+an underived module.
+
+With a finite tower, $C_u,C_v,K_x$ and the maps $g_i$ are formed from the actual branch and
+node decomposition groups.  Formula (3.10) therefore retains stabilizers rather than replacing
+them by the cardinality of a flag orbit.  Pull, trace, and branch reversal act on (3.10)
+through (3.8) when the invariant summand is unchanged, and otherwise through the general
+inclusion/transfer maps just described, together with the corresponding branch maps. Thus the
+normalization filtration is functorial before taking invariants or Hecke quotients.
+
+There is one important geometrically constant exception to the warning. Let $A$ be a finite
+free $\Lambda$-algebra and let $A(\chi)$ be a rank-one $A$-module with a continuous character of
+$G_K$, pulled back from the generic point of the trait. For every bounded constructible
+$\mathcal K$ on $X_{\bar\eta}$ there is a canonical projection-formula isomorphism
+
+$$
+R\Psi(\mathcal K\otimes_A A(\chi))
+\simeq R\Psi(\mathcal K)\otimes_A A(\chi),                 \tag{3.11}
+$$
+
+with diagonal inertia and residue-Galois action. Indeed $A(\chi)$ is constant on the
+geometric generic fiber used in (2.2), and it is finite free, so tensoring commutes with that
+stalk cohomology and with gluing. The projection formula makes (3.11) compatible with proper
+pushforward, pull, and trace. A global ray character is of this form. A local system obtained
+from a residue-prime principal-level cover is generally not: its geometric annular monodromy is
+$T_x$, and (3.5), not (3.11) with $T_x$ suppressed, is the required calculation.
 
 ## 4. Inertia: tame, wild, and finite parts
 

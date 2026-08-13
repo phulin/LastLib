@@ -1342,6 +1342,17 @@ $$
 
 The first forgets the subgroup in (8.1). The second takes the quotient and transports the PEL datum. Finite local freeness follows from the Cohen--Macaulay criterion: $\mathscr C$ is regular, hence Cohen--Macaulay; $\mathscr X$ is regular; the maps are finite with equidimensional fibers; and the generic degree is $q_v+1$. Thus the source local ring is maximal Cohen--Macaulay over the target regular local ring and therefore free.
 
+This argument proves finite local freeness of the two maps between the **fine parahoric base
+models**.  It remains valid after a finite-flat ray base change.  It does not prove flatness of
+an arbitrary comparison between separately chosen normalizations: normal singular targets do
+not make maximal Cohen--Macaulay modules free.  Book 122, Proposition 9.2 instead normalizes
+the entire finite diagram in one common generic algebra; integrality then identifies the
+normalizations along each finite base leg, so the lifted top maps are isomorphisms.  Its local
+theorem $({\rm PNS}_v)$ is still needed to calculate the completed decomposition groups,
+wild/tame annular action, generization maps, and node routing (which then forces expansion one)
+for ramified type coefficients.  The constant-coefficient Ihara theorem in this book uses neither that principal
+normalization nor $({\rm PNS}_v)$.
+
 The special restrictions can be read on the ordinary locus. The active height-two group has a connected rank-$q_v$ direction and an étale rank-$q_v$ direction. Quotient by the connected direction is relative Frobenius; polarization identifies the other direction with its dual. Taking closures gives the two branches of (8.5).
 
 **Proposition 8.2 (branch table).** After the canonical Frobenius-twist identifications of the normalized branches with the hyperspecial special curve, the restrictions of the degeneracy maps are

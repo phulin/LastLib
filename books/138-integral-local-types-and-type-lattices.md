@@ -51,6 +51,7 @@
   - [9.2 Evaluation and saturation](#92-evaluation-and-saturation)
   - [9.3 Adjoint selection](#93-adjoint-selection)
   - [9.4 Why an idempotent can fail](#94-why-an-idempotent-can-fail)
+  - [9.5 From a type lattice to a parahoric coefficient complex](#95-from-a-type-lattice-to-a-parahoric-coefficient-complex)
 - [10. Ordered principal deformation conditions](#10-ordered-principal-deformation-conditions)
   - [10.1 Tame generators and framed objects](#101-tame-generators-and-framed-objects)
   - [10.2 The rigid prime-to-$\ell$ case](#102-the-rigid-prime-to-ell-case)
@@ -1155,6 +1156,87 @@ lies in $R[\Gamma]$ and selects the same summand as (9.5). If $\ell\mid|\Gamma|$
 
 The remedy is not to pretend that the denominator is harmless. One retains the explicit type lattice, the Hom and evaluation maps, the companion lattice, and the saturation or a two-term comparison complex. This works equally for a congruence-tame principal type whose character group has $\ell$-power order and for the Steinberg boundary $\ell\mid Q+1$.
 
+### 9.5 From a type lattice to a parahoric coefficient complex
+
+A stable lattice is not yet a sheaf on a bad integral model.  This distinction is harmless on
+the characteristic-zero tower and decisive at residue-prime parahoric level.  We record the
+exact interface for the quotient and augmentation Steinberg pair, since it is the pair used by
+the one-prime complex.
+
+Put $G=\operatorname{GL}_2(k_F)$ and let $B\subset G$ be the upper triangular Borel.  On the
+generic fine hyperspecial curve, the actual Iwahori degeneracy cover has fiber $G/B$.  Hence its
+direct image of the constant sheaf is the permutation system
+
+$$
+P_R=R[G/B].                                                 \tag{9.8}
+$$
+
+The unit and trace on the finite-etale generic cover are respectively the constant-vector and
+augmentation maps, so their quotient and kernel are exactly
+$\operatorname{St}^+_R$ and $\operatorname{St}^-_R$.  On the edge level, Mackey restriction is
+the actual two-orbit decomposition
+
+$$
+\operatorname{Res}^{G}_{B}R[G/B]
+\simeq R\oplus R[B/(B\cap sBs^{-1})],                      \tag{9.9}
+$$
+
+where the first summand is the fixed endpoint and the second, of rank $Q$, is the moving
+length-two flag orbit.  Thus (9.8)--(9.9) are realized by the length-one and length-two PEL flag
+schemes, not by $Q+1$ formal copies of the base curve.
+
+On generic fibers, applying associated-sheaf descent to
+
+$$
+0\to R\mathbf1\to P_R\to\operatorname{St}_R^+\to0,
+\qquad
+0\to\operatorname{St}_R^-\to P_R\xrightarrow{\rm aug}R\to0
+                                                                    \tag{9.10}
+$$
+
+is exact because the torsor is etale-locally trivial.  The two rows split as sequences of
+underlying $R$-modules and are perfectly transposed by the dot product.  No assertion about
+invariants of $G$, $B$, or a flag stabilizer is used.
+
+There is no analogous stalkwise argument on the bad special fiber.  For example, if a
+degree-$Q+1$ finite-flat flag cover has one geometric point of length $Q+1$ over a local-local
+point, the etale pushforward of the constant sheaf has one rank-one stalk and the pull--trace
+composite on that stalk is multiplication by $Q+1$.  When $\ell\mid Q+1$, its trace is not a
+surjection over $R$.  Consequently neither an underived special-fiber pushforward nor the
+phrase “finite flat” proves that the second row of (9.10) remains exact.  This is the geometric
+form of the nonbanal extension in Section 5.4.
+
+The correct integral object is a constructible **complex**.  Normalize the fine vertex--edge
+diagram in the effective finite Galois closure of its objectwise generic principal covers and
+retain the actual branch and flag decomposition
+groups.  For a supplied tame annular module, Book 22, Theorem 3.2 gives
+
+$$
+K_x(W)=[W^{H_x}\xrightarrow{\ T_x-1\ }W^{H_x}],            \tag{9.11}
+$$
+
+where $H_x$ is the prime-to-$\ell$ kernel of geometric annular monodromy and $T_x$ is its
+pro-$\ell$ generator.  Insert (9.11), the full branch complexes, and their generization maps
+in Book 22's normalization--conductor homotopy fiber (3.10), and totalize with the two exact
+rows (9.10).  The terms are finite free even when the cohomology of $T_x-1$ has torsion.  Pull
+and trace on the expansion-one node sheets are the explicit norm maps of Book 22, (3.8), and the companion uses the
+contragredient action.  This produces the normalization filtration, residue-Galois action, and
+adjunction without a rational type projector once the actual principal data have been
+identified.
+
+Book 122, Proposition 9.2 constructs this normalized principal/ray tower objectwise and proves
+its object maps finite locally free and its lifted top legs isomorphisms.  Its ray factor is geometrically constant and therefore
+twists (9.11) diagonally by Book 22, (3.11).  What remains for the principal factor is precisely
+Book 122's local theorem $({\rm PNS}_v)$: identification of the common normalization's complete
+local decomposition groups, branch stabilizers, and node routing
+compatible with (9.9), including proof that wild annular inertia is trivial on every
+node-to-node coefficient module and routing of any genuinely wild sheet through its full
+normalization-component complex, represented by a completed smooth source and proper
+pushforward.  The representation theory in this book supplies (9.10) but
+cannot prove that algebraic-geometric theorem.  In particular, a characteristic-zero
+occurrence theorem for $\operatorname{St}$ or a principal type determines neither $T_x$ nor
+the wild-inertia action in (9.11).
+
 ## 10. Ordered principal deformation conditions
 
 ### 10.1 Tame generators and framed objects
@@ -1617,9 +1699,16 @@ The constructions can now be assembled into the precise package promised by the 
 
 7. A controlled fixed nonminimal datum consists of the inertial and monodromy label, primary lattice, adjoint companion, named deformation condition and component or stratified chart, and every required ordering, newness condition, or sign. Its associated characteristic-zero locus matches the representations selected by the enhanced type datum; a monodromy-zero boundary divisor is retained but is not relabelled Steinberg. Conductor is a consequence of this datum, not a substitute for it.
 
-8. Primitive wild supercuspidal types, ramified quadratic types in residue characteristic two, and general congruent dihedral component calculations are excluded. No assertion about their lattices, reduction multiplicities, or deformation smoothness follows from this theorem.
+8. On the characteristic-zero parahoric tower, the quotient and augmentation Steinberg rows
+   are the actual unit/trace rows of the projective-line flag cover.  Their bad-fiber extension
+   is the normalization--conductor complex of Section 9.5 once $({\rm PNS}_v)$ supplies the
+   completed principal stabilizers, wild/tame ledger, branch generization maps, and node
+   routing; expansion one then follows from common normalization.  The strict terms are finite free and preserve residue Galois, pull, trace, and
+   adjunction; the representation rows alone do not prove $({\rm PNS}_v)$.
 
-**Proof.** Parts 1--3 are Theorems 4.2, 5.2, 6.1--6.2, and 7.3 together with the perfect pairings (4.6), (5.6), and (7.5). Part 4 is Chapter 8 and the finite free base-change results of Chapter 3. Part 5 is Proposition 9.1 and Lemma 3.3. Part 6 is Theorems 10.1--10.2 and 11.1, Proposition 11.2, and Theorem 12.3. Part 7 is Definition (13.1) and Theorem 13.1, including the rectifier reconciliation of Proposition 12.2. Part 8 is the boundary proved in Sections 7.5 and 12.4. $\square$
+9. Primitive wild supercuspidal types, ramified quadratic types in residue characteristic two, and general congruent dihedral component calculations are excluded. No assertion about their lattices, reduction multiplicities, or deformation smoothness follows from this theorem.
+
+**Proof.** Parts 1--3 are Theorems 4.2, 5.2, 6.1--6.2, and 7.3 together with the perfect pairings (4.6), (5.6), and (7.5). Part 4 is Chapter 8 and the finite free base-change results of Chapter 3. Part 5 is Proposition 9.1 and Lemma 3.3. Part 6 is Theorems 10.1--10.2 and 11.1, Proposition 11.2, and Theorem 12.3. Part 7 is Definition (13.1) and Theorem 13.1, including the rectifier reconciliation of Proposition 12.2.  Part 8 is Section 9.5, with precisely its displayed conditional input. Part 9 is the boundary proved in Sections 7.5 and 12.4. $\square$
 
 ### 14.2 Hypothesis and failure ledger
 
@@ -1641,7 +1730,7 @@ Every hypothesis in the main theorem has a visible job.
 | explicit companion | integral adjunction | generic self-duality forgets extension orientation |
 | named component and ordering | exact deformation problem | inertial semisimplification can merge different loci |
 
-The direct prerequisites enter with matching hypotheses. The local representation theory of $\mathrm{GL}_2(F)$ supplies the characteristic-zero principal, special, and tame dihedral classification, newvectors, conductors, exact intertwining, and the selected local correspondence; it explicitly excludes primitive wild construction. The small-height finite-flat theory supplies schematic closure, duality, and the warning that a generic representation does not determine an integral model. The torsion Fontaine--Laffaille theory supplies exactness and full faithfulness only for weights $[0,1]$, $\ell>2$, perfect residue field, and an unramified base. Its integral equivalence and base-change theorem supplies compatible finite-flat quotients under those same hypotheses. No result from a later book is used as a proof input.
+The direct prerequisites enter with matching hypotheses. The local representation theory of $\mathrm{GL}_2(F)$ supplies the characteristic-zero principal, special, and tame dihedral classification, newvectors, conductors, exact intertwining, and the selected local correspondence; it explicitly excludes primitive wild construction. The small-height finite-flat theory supplies schematic closure, duality, and the warning that a generic representation does not determine an integral model. The torsion Fontaine--Laffaille theory supplies exactness and full faithfulness only for weights $[0,1]$, $\ell>2$, perfect residue field, and an unramified base. Its integral equivalence and base-change theorem supplies compatible finite-flat quotients under those same hypotheses. Books 17 and 21 supply finite-etale associated covers and exact lisse-sheaf descent. Book 22 supplies the strict procyclic node complex, and Book 122 supplies the objectwise finite-flat common normalization, its isomorphic lifted top legs, and the ray factor; Section 9.5 retains its unproved local theorem $({\rm PNS}_v)$ rather than importing its stabilizer and wild/tame calculation. No result from a later book is used as a proof input.
 
 Several tempting shortcuts are therefore invalid:
 

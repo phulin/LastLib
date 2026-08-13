@@ -1886,7 +1886,34 @@ $$
 
 are rank one over the coefficient field. Intersecting with the integral fixed module and saturating gives primitive rank-one $\mathcal O$-lattices, well defined up to a unit.
 
-The graph-node construction with coefficients in $\Lambda_v^\dagger$ is valid only when the type sheaf extends over the full incidence model, pull and norm preserve it, every finite stabilizer order is a unit, and a type-specific residual Ihara theorem makes the selected old image primitive. The edge module is then a vector-valued definite function module. A primitive extreme-residue theorem is also needed to obtain the typed graph filtration. Book 174, Proposition 6.3 later proves, from those typed inputs and Book 125's component-routed semisimple decomposition on the common principal cover, that the curve-new and graph generic Hecke kernels agree. Thus typed generic support is not a further independent hypothesis. None of the preceding typed integral assertions follows from the constant-coefficient abelian Ihara condition.
+The graph-node construction with coefficients in $\Lambda_v^\dagger$ is valid only when the type sheaf extends over the full incidence model, pull and norm preserve it, every coarse-descent stabilizer order is a unit, and a type-specific residual Ihara theorem makes the selected old image primitive. The edge module is then a vector-valued definite function module. A primitive extreme-residue theorem is also needed to obtain the typed graph filtration.
+
+The extension condition has a sharper downstream form. Book 122, Proposition 9.2 constructs the
+actual normalization in the effective common Galois closure of the residue-prime
+principal/ray diagram and proves every object
+finite locally free; integrality identifies the lifted top legs, while its base Iwahori
+degeneracy maps were already finite locally free. Book 22,
+Theorem 3.2 computes a supplied tame annular coefficient by
+$[M\xrightarrow{T-1}M]$, with residue Galois, invariant-stable pull--trace (in particular the
+expansion-one case used here), and normalization homotopy-fiber totalization, while a global
+ray character twists this complex diagonally. The remaining first
+theorem is Book 122's $({\rm PNS}_v)$: the completed Drinfeld-level/Stein-factor identification
+of the common normalization's decomposition and
+inertia groups, the triviality of wild annular inertia on node-to-node coefficient modules
+(with every genuinely wild sheet retained in the normalization-component term), oriented
+tame annular monodromy, flag stabilizers, and node routing; the common-normalization
+isomorphism then forces expansion index one. Thus “the type sheaf extends” must retain
+$({\rm PNS}_v)$; it is not proved by the generic stable lattice or by objectwise finite
+flatness of the normalization.
+
+Book 174, Proposition 6.3 later proves, from $({\rm PNS}_v)$ and its other typed inputs and
+Book 125's component-routed semisimple decomposition on the common principal cover, that the
+curve-new and graph generic Hecke kernels agree. Thus typed generic support is not a further
+independent hypothesis. None of the preceding typed integral assertions follows from the
+constant-coefficient abelian Ihara condition. In particular, at a coalesced special flag a
+trace may be multiplication by $q_v+1$ on a rank-one stalk; if
+$\ell\mid q_v+1$, an underived pushforward row is not exact. The strict procyclic complex, not
+the adjective “finite flat,” carries that defect.
 
 The unit ambiguity in a primitive local generator does not alter the global image order. Both sides remain images of the same abstract Hecke algebra, and Lemma 3.2 compares kernels rather than chosen basis vectors.
 
@@ -1927,7 +1954,7 @@ At the semistable Iwahori prime used for the basic level-raising theorem, the ne
 
 ### 13.4 Boundaries of the selected theorem
 
-The basic one-prime semistable theorem includes the unramified special family at Iwahori level. Ramified special twists, unramified quadratic depth-zero packets, and tame positive-depth dihedral packets are included only in the conditional type-enhanced variant of Section 13.1, with its extension, pull--norm, stabilizer, type-Ihara, and primitive-residue hypotheses imposed. Book 174, Proposition 6.3 derives the resulting generic-residue kernel equality from that filtration and Book 125 rather than imposing it separately.
+The basic one-prime semistable theorem includes the unramified special family at Iwahori level. Ramified special twists, unramified quadratic depth-zero packets, and tame positive-depth dihedral packets are included only in the conditional type-enhanced variant of Section 13.1, with $({\rm PNS}_v)$, pull--norm, unit-order coarse descent, type-Ihara, and primitive-residue hypotheses imposed. Book 174, Proposition 6.3 derives the resulting generic-residue kernel equality from that filtration and Book 125 rather than imposing it separately.
 
 It excludes primitive wild packets and ramified dyadic positive-depth packets. The local character and type-lattice comparison used in Chapter 4 is not proved there. It also excludes a type projector that exists only after inverting $\varpi$: applying such a projector to a saturated full cohomology lattice can create a nonsaturated intersection.
 
@@ -2112,10 +2139,12 @@ The logical sources and retained hypotheses are as follows.
 | node uniformization | superspecial nodes identified with the switched definite class set, including routing, weights, and coefficient-one scale | an explicit external hypothesis for the chosen PEL datum | integral graph--definite lattice map |
 
 The direct-dependency audit adds Book 125's source for the generic-support proof to the local
-Jacquet--Langlands, Hecke, global Jacquet--Langlands, and Ihara sources. The exact current row is
+Jacquet--Langlands, Hecke, global Jacquet--Langlands, and Ihara sources.  The conditional typed
+interface in Chapter 13 also directly uses Book 22's ramified node complex, Book 122's normalized
+tower reduction, and Book 138's primary--companion lattices. The exact current row is
 
 $$
-140\mid80,85,104,125,139.
+140\mid22,80,85,104,122,125,138,139.
 \tag{15.1a}
 $$
 
@@ -2127,7 +2156,7 @@ The downstream interface is equally exact.
 |---|---|---|
 | Book 176 | one-prime special raising/lowering and common away-from-$v$ acting order | (1.5d), node uniformization, Book 125's component-routing source condition, both finite modules in (8.3a), and Section 11.4 before using a scalar as an augmented congruence ideal |
 | Book 170 | free $Q$, equality of faithful inner-form trace orders, and geometric lowering criterion | freeness and order equality are conditional on abelian Ihara; lowering requires both $\Phi[\varpi]=0$ and $\mathcal C_{\mathrm{br},v}[\varpi]=0$ |
-| Book 174 | coefficient-one constant graph--definite map $X_v\simeq S^\dagger$ | Book 140 does not give $\operatorname{gr}_0Q=X_v^\vee$; a type-coefficient primitive residue or bottom-lattice statement must be proved independently, together with type-Ihara |
+| Book 174 | coefficient-one constant graph--definite map $X_v\simeq S^\dagger$ | Book 140 does not give $\operatorname{gr}_0Q=X_v^\vee$; the typed variant must retain $({\rm PNS}_v)$, type-Ihara, and a type-coefficient primitive residue or bottom-lattice statement |
 | Book 175 | no inner-form order index and the signed Gram Smith factor | the factor is an augmented congruence ideal only under Section 11.4; scalar/vexing refinements and all fixed-prime Tor/augmentation statements require the separate Book 174 hypotheses |
 
 In particular, no downstream patching or reciprocity argument can retroactively prove (1.5d), delete $\mathcal C_{\mathrm{br},v}$, or turn the conditional several-prime discussion into a theorem.

@@ -150,7 +150,7 @@ flowchart LR
 | 119 | Quaternionic PEL Functors and Representability | 10, 13, 65, 35, 115, 118 |
 | 120 | Uniformization, Components, and Hecke Descent for Shimura Curves | 58, 39, 118, 119 |
 | 121 | Good Integral Models of Quaternionic Shimura Curves | 15, 58, 19, 35, 36, 61, 55, 118, 119 |
-| 122 | Semistable Models and Monodromy of Quaternionic Shimura Curves | 11, 12, 16, 22, 35, 37, 76, 118, 119, 121 |
+| 122 | Semistable Models and Monodromy of Quaternionic Shimura Curves | 10, 11, 12, 16, 17, 22, 35, 37, 58, 70, 76, 118, 119, 121 |
 | 123 | Modular and Shimura Curves | 110, 111, 112, 114, 115, 116, 118, 119, 121, 122, 120 |
 | 124 | Hecke Correspondences on Curves and Jacobians | 39, 83, 84, 114, 120, 123 |
 | 125 | Automorphic Decomposition of Shimura-Curve $H^1$ | 21, 47, 36, 96, 104, 87, 124, 118, 119, 120 |
@@ -166,9 +166,9 @@ flowchart LR
 | 135 | Genus-Two Curves, Jacobians, and Abel--Jacobi Geometry | 9, 37, 25, 41, 130 |
 | 136 | Mumford Representations and Exact Genus-Two Jacobian Arithmetic | 37, 135 |
 | 137 | Explicit Two-Descent on Genus-Two Jacobians | 40, 136 |
-| 138 | Integral Local Types and Type Lattices | 51, 53, 54, 73, 74, 75, 76 |
+| 138 | Integral Local Types and Type Lattices | 17, 21, 22, 51, 53, 54, 73, 74, 75, 76, 122 |
 | 139 | Ihara Theory and Saturated Degeneracy Maps on Shimura Curves | 16, 24, 38, 39, 124, 118, 122 |
-| 140 | Integral Level Change and Jacquet--Langlands Comparison | 80, 85, 104, 125, 139 |
+| 140 | Integral Level Change and Jacquet--Langlands Comparison | 22, 80, 85, 104, 122, 125, 138, 139 |
 | 141 | Dickson Classification and Adequate Residual Image | 3, 6, 45, 42, 24 |
 | 142 | The Chebotarev Density Theorem | 2, 3, 4, 5, 6, 7, 17, 21, 23, 24 |
 | 143 | Taylor–Wiles Primes | 5, 6, 33, 69, 141, 142 |
@@ -202,15 +202,15 @@ flowchart LR
 | 171 | The Minimal Totally-Real Deformation--Hecke Problem | 69, 71, 85, 124, 127, 65, 138, 170, 141 |
 | 172 | Minimal Patching and $R=T$ over Totally Real Fields | 141, 143, 144, 145, 146, 152, 171 |
 | 173 | Minimal Modularity Lifting | 171, 172 |
-| 174 | One-Prime Type Complexes and Component Support | 6, 65, 67, 70, 122, 125, 138, 139, 140, 143, 152, 170, 141, 171, 172 |
-| 175 | One-Prime Nonminimal Patching and R=T | 67, 69, 109, 173, 138, 139, 140, 170, 174 |
+| 174 | One-Prime Type Complexes and Component Support | 6, 17, 21, 22, 65, 67, 70, 122, 125, 138, 139, 140, 141, 143, 152, 170, 171, 172 |
+| 175 | One-Prime Nonminimal Patching and R=T | 67, 69, 109, 138, 139, 140, 143, 170, 171, 172, 173, 174 |
 | 176 | Nonminimal Modularity Lifting | 109, 173, 138, 139, 140, 170, 175, 174 |
 | 177 | Potential Modularity of Two-Dimensional Representations | 104, 98, 127, 176, 154, 158, 142 |
 | 178 | Auxiliary Dihedral Data and Residual Potential Modularity | 6, 104, 98, 127, 141, 175, 154, 142, 155, 156, 157 |
 | 179 | Compatible Systems of Galois Representations | 41, 168, 141, 142 |
 | 180 | Brauer Induction and Descent of Automorphy | 24, 75, 98, 109, 168 |
 | 181 | Finite Image and the Balanced Minimal-Lift Argument | 57, 62, 64, 141, 164, 165, 166, 167, 173 |
-| 182 | Potential Automorphy and Galois Refinement of a Chosen Lift | 6, 44, 109, 127, 128, 142, 153, 154, 155, 157, 164, 165, 168, 173, 176, 178, 181 |
+| 182 | Potential Automorphy and Galois Refinement of a Chosen Lift | 6, 44, 61, 109, 118, 121, 122, 124, 125, 127, 128, 142, 153, 154, 155, 157, 164, 165, 168, 173, 176, 178, 181 |
 | 183 | Brauer Induction for Automorphy Families | 41, 98, 108, 109, 127, 128, 142, 168, 180, 182 |
 | 184 | Brauer Characters and Effectivity of Compatible Families | 24, 57, 180, 183 |
 | 185 | Compatible Systems over the Base Field | 168, 180, 182, 183, 184 |
@@ -230,9 +230,17 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   that this is exactly the noncongruence-character quotient required for saturated two-map
   Ihara, but proves neither that vanishing nor the separate centrality, comparison, and
   metaplectic-computation inputs that could imply it.
-- **Type and node comparison:** the typed parahoric extension and ramified nearby-cycle
-  theorem, the accompanying incidence and unit-order coarse-descent hypothesis,
-  crossed-coefficient type-Ihara vanishing, primitive-residue obstruction vanishing,
+- **Type and node comparison:** objectwise normalization of the actual principal/ray tower,
+  the ray factor, and the full procyclic ramified strict-node complex for a supplied tame
+  annular module are proved in Books 122,
+  22, and 174; the common-normalization lemma makes the lifted principal legs isomorphisms.
+  The first remaining theorem is $({\rm PNS}_v)$: completed Drinfeld-level/Stein-factor
+  identification of decomposition and inertia groups, the wild/tame annular ledger, oriented tame monodromy,
+  flag stabilizers, generization maps, and node routing compatible with the retained
+  residue-prime Hecke graph; the common-normalization isomorphism
+  then forces node expansion index one. Together with the
+  accompanying unit-order coarse-descent hypothesis, it implies $({\rm TPE}_v)$. The later
+  unresolved inputs are crossed-coefficient type-Ihara vanishing, primitive-residue obstruction vanishing,
   superspecial type-compatible node uniformization, and the nonminimal boundary-chart and
   local-dimension theorem needed for one-prime component support. Relative to the separately
   named localized abelian Ihara input, constant-coefficient generic support in the clean special
@@ -240,16 +248,25 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   typed filtration exists, Book 174 likewise proves the typed generic-residue kernel equality
   from Book 125 and contracts it to equality of the integral faithful image orders; no separate
   generic-support or faithful-order hypothesis remains at that interface.
-- **One-prime generic rigidity:** after the reduced comparison, the exact remaining theorem is
-  vertical torsion-freeness of the conductor-one global deformation ring together with
-  vanishing of every characteristic-zero enhanced tangent--Selmer group for the represented
-  fixed local conditions, including the line tangent at a monodromy-zero boundary point. Book
-  175 proves this is equivalent to global reducedness and full $R=T$.
+- **One-prime generic rigidity:** for Book 175's scalar-residual line-special problem, after
+  the reduced comparison it uses the balanced enhanced obstruction presentation and finiteness
+  to prove vertical torsion-freeness of the
+  conductor-one global deformation ring. The line remains compulsory in the residual complex;
+  at a monodromy-zero characteristic-zero point its tangent is uniquely determined by the
+  distinct Frobenius characters. Book 175 identifies vanishing of every characteristic-zero
+  enhanced tangent--Selmer group with global reducedness and full $R=T$. Under the coherent
+  unpadded $({\rm AUX}_Q)$ system, it then proves that vanishing: the enhanced balanced count
+  gives an absolute regular source with the same $q$ variables as the diamond source, and Book
+  174's nonzero module free over the diamond source makes the equal-variable action faithful.
+  Thus the patched ring is regular and the finite conductor-one ring satisfies full $R=T$.
+  Without a coherent
+  auxiliary system, the branchwise torsion-cotangent theorem isolated in Corollary 4.4a is the
+  exact alternative input; finite flatness and topological support alone do not imply it.
   Book 172 derives minimal acting-order augmentation only after minimal $R=T$; Book 174 proves
   fixed-prime acting-order augmentation from the strict global twist and proves auxiliary
   represented-ring, primary/companion complex, module, action, and pairing augmentation while
-  retaining only a surjection on auxiliary acting images; Book 175 makes that last surjection
-  injective after generic rigidity, equivalently full base $R=T$, with the strict ray twist
+  retaining only a surjection on auxiliary acting images; Book 175's balanced patch supplies
+  generic rigidity and then makes that last surjection injective, with the strict ray twist
   additionally retained for the scalar family. No separate one-prime
   acting-order theorem remains in that faithful range.
 - **Several active places:** construction of the coherent global level cube, vanishing of its
@@ -268,9 +285,12 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   specialization, a
   saturated path from the target eigensystem to a nonzero clean bottom minimal SP localization;
   and the later controlled raw-local record, including a raw dyadic SP carrier in the
-  remaining even-degree minimal case and the actual principal/dihedral descent complexes,
-  type and exchange lines, trivial-wild-inertia and zero-monodromy calculations, and Frobenius return maps at the retained
-  auxiliary primes. Book 128, Lemma 3.2 then gives their raw-to-global comparisons formally.
+  remaining even-degree minimal case.  Full principal/dihedral descent complexes, type and
+  exchange lines, tameness, zero monodromy, and Frobenius return maps at retained auxiliary
+  primes remain a separate stronger automorphic-type problem.  Equivariant conductor and
+  invariant-Frobenius independence construct the weaker unramified Galois pairs and remove
+  the type geometry from the clean-support path. Book 128, Lemma 3.2 gives the
+  zero-monodromy raw-to-global comparison formally.
   Book 182 now constructs parity-complete basic carriers and attachment for
   the cyclic descent candidates, including odd-degree fixed fields.  The lifting faces also
   require the separately named one-prime and several-place inputs above. Once actual raw SP
@@ -361,24 +381,21 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   Tate-module semisimplicity is unnecessary for this fixed-three substatement
   because Book 129 transfers the finite-flat tower from the raw plane to its semisimplification
   by subquotients.
-- **Clean support $(\mathrm U)$ / conductor support $(\mathrm{Cond}_2)$:** Book 185,
-  Proposition 8.2 isolates the finite selected-member certificate
-  $(\mathrm{AUX}_\nu)$ and its family-wide form $(\mathrm{AUX}_{\mathrm{all}})$. At
-  $q\ne\ell$ the algebraic local complement must be compared with both the unramified
-  distinguished $\ell$-adic member and the selected three-adic member; at $q=\ell$ one uses
-  the spherical algebraic packet calculation and a prime-to-$\ell$ realization. The first
-  certificate proves $(\mathrm U)$, while the second proves $(\mathrm{Cond}_2)$ and hence
-  $(\mathrm U)$ by Proposition 8.1. Under $(\mathrm{AVCar}_{3,\ell}^+)$, Book 187's simultaneous
-  good-carrier choice already removes $q=\ell$ for the selected member. Ramified
-  controlled-top primes can acquire tame principal or dihedral descent factors, so the
-  auxiliary packets cannot all be declared spherical.
-  Their actual descent complexes, type lines, trivial wild inertia, zero monodromy, exchange, and Frobenius return
-  maps are not supplied by the current packet input. Book 128, Lemma 3.2 makes raw-to-global
-  passage automatic after $N=0$ is proved, so ambient semisimplicity is not a separate AUX
-  input. Equality of
-  almost-all Frobenius polynomials is not a substitute. These data are the auxiliary-local
-  clause of the controlled attachment geometry already required before Book 183, not a new
-  post-assembly or integral Brauer-effectivity theorem.
+- **Auxiliary Galois comparison and clean support:** Book 61, Proposition 12.3 makes both the
+  Artin conductor and the inertia-invariant Frobenius polynomial of an actual Jacobian Hecke
+  multiplicity factor coefficient-independent. Book 182, Proposition 7.2B anchors them at the
+  distinguished irreducible raw member and treats the old coefficient prime through the split
+  unitary good cover; Book 128, Lemma 3.2 passes the unramified pair to the elementary global
+  semisimplification.  Algebraic twisting and Weil induction give every local Mackey pair.
+  Book 185, Proposition 8.3 combines these pairs with the actual effective direct-sum identity
+  and Krull--Schmidt cancellation to prove $(\mathrm{AUX}_{\mathrm{all}})$ and
+  $(\mathrm{AUX}_\nu)$, hence $(\mathrm{Cond}_2)$ and $(\mathrm U)$ by Propositions 8.2--8.1.
+  Book 184's local induction conductor formula gives an independent support check.  What
+  remains open is Book 182's stronger automorphic-type theorem: type/exchange lines and
+  normalized return maps require the actual principal/dihedral descent complexes, and at a
+  cyclic principal row even tameness needs a separate field ledger. Local Clifford theory
+  controls the irreducible dihedral row but does not prevent wild quotient characters.
+  Equality of almost-all Frobenius polynomials remains no substitute for this type geometry.
 
 Consequently the final conditional-FLT spine is **not unconditionally closed**. No review or
 catalog status may be read as claiming otherwise.

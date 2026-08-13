@@ -139,11 +139,14 @@ The unconditional algebra in this book has two parts. First, once the exact one-
 geometric, reciprocity, and support hypotheses are stated separately, a short annihilator
 argument identifies the reduced finite-level deformation ring with the faithful finite Hecke
 order. This is enough for characteristic-zero modularity because a map to a DVR kills
-nilpotents. At patched level the same support argument controls the annihilator only up to the
-nilradical: a patched reduced comparison additionally requires the patched acting image to be
-reduced, while a full patched equality follows if the patched deformation source is reduced.
-Neither reducedness assertion is supplied by the present source chain. Full finite-level
-scheme-theoretic $R=T$ likewise requires the selected global deformation ring to be reduced.
+nilpotents. In the scalar-residual line-special range, Book 175 now closes the
+scheme-theoretic one-prime comparison when the coherent clean unpadded auxiliary system is
+retained: its enhanced balanced presentation has the same number of absolute variables as the
+diamond source, and equal-variable rigidity makes the patched one-prime action faithful. Exact
+marked augmentation then gives full finite-level $R=T$ and
+all characteristic-zero enhanced tangent--Selmer vanishings. Without such a coherent
+auxiliary system, global reducedness, equivalently the branchwise torsion-cotangent condition,
+remains the exact alternative input.
 Second, for a finite ordered cube the total complex is reduced formally to successive
 quotient-new cubes. For two places its first homology is identified exactly with a mixed Ihara
 kernel; for three or more places the later kernels live on iterated-new quotients.
@@ -544,6 +547,11 @@ It does not kill nilpotents or prove a full ring equality.
 
 ## 6. The conditional one-prime R=T theorem
 
+The compatibility aliases in this chapter concern the scalar-residual line-special problem of
+Book 175, hence $q_v\equiv1\pmod\ell$. They do not upgrade the generic distinct-root row or the
+$q_v\equiv-1\pmod\ell$ vexing row of Section 2.4; those ranges require their own balanced
+presentation, supported module, and coherent auxiliary theorem.
+
 ### 6.1 The explicit comparison hypotheses
 
 For compatibility with earlier citations, the one-prime package consists of the following
@@ -562,8 +570,9 @@ separate inputs, in exactly the sense of Books 174--175:
 6. $({\rm AUX}_Q)$ when auxiliary patching is used: clean auxiliary torsors and exact
    augmentation of represented rings, primary and companion complexes, modules, actions, and
    pairings, with zero positive diamond-algebra Tor. The faithful acting-order quotient is a
-   canonical surjection; Book 175 derives its injectivity from $({\rm GR}_v)$, equivalently
-   from base global reducedness and full $R=T$, rather than assuming it here.
+   canonical surjection at each isolated level. For a coherent unpadded system at every depth,
+   Book 175, Proposition 5.2 proves $({\rm GR}_v)$ and full base $R=T$ by equal-variable rigidity;
+   Corollary 4.5 then derives injectivity of the acting-order quotient rather than assuming it.
 
 The richer curve-to-definite component comparison additionally retains
 $({\rm AIH}_{\mathscr F})$, $({\rm PRI}_{\rm type})$, and, when used,
@@ -597,11 +606,29 @@ generic fiber. No reducedness of an abstract patched acting image is inferred.
 that the finite-level comparison is a full isomorphism exactly when the selected global source is
 reduced. Local-chart reducedness and minimal $R=T$ do not imply that condition.
 
+**Corollary 6.3a (balanced coherent scalar one-prime $R=T$; compatibility alias).** If the
+$({\rm AUX}_Q)$ systems in Section 6.1 form the coherent unpadded tower at every depth, Book
+175, Proposition 5.2 proves
+
+$$
+R_\infty^{\rm nm}=\mathbb T_\infty^{\rm nm},
+\qquad
+R^{\rm nm}=\mathbb T^{\rm nm}.
+\tag{6.5}
+$$
+
+The patched ring is regular, its primary module is nonzero finite free over it, and the finite
+ring is a finite free complete intersection over $\mathcal O$. Every characteristic-zero
+enhanced fixed-condition tangent--Selmer group vanishes, including the line term at a
+monodromy-zero point. The strict ray twist transports the statement to the scalar family and
+every retained fixed-character fiber.
+
 ### 6.4 Descent to finite level and fixed characters
 
-Book 175, Chapter 5 proves the conditional patched criterion and exact augmentation boundary.
-Its Chapter 6 treats scalar and vexing fibers without commuting reduction through a nonflat
-character quotient. Those conclusions are imported with their source-reducedness limitations.
+Book 175, Chapter 5 proves the balanced coherent patch theorem and the exact augmentation
+boundary. Its Chapter 6 treats scalar and vexing fibers without commuting reduction through a
+nonflat character quotient. Without a coherent auxiliary tower, only the reduced comparison
+and the source-reducedness criterion of Corollary 6.3 are available.
 
 ## 7. The modularity-lifting conclusion
 
@@ -635,10 +662,12 @@ several active places creates the finite-set problem below.
 
 ### 7.5 Exact exceptional boundaries
 
-The one-prime theorem remains conditional in the scalar line-special range, starts uniformly at
-$\ell\ge7$, excludes Eisenstein and primitive-wild localizations, and proves only reduced
-finite-level $R=T$ unless global source reducedness is independently known. These are source
-boundaries, not new hypotheses invented here.
+The scalar line-special one-prime theorem remains conditional, starts uniformly at
+$\ell\ge7$, and excludes Eisenstein and primitive-wild localizations. It proves reduced
+finite-level $R=T$ from the base one-prime ledger, and full patched and finite $R=T$ when the
+coherent unpadded $({\rm AUX}_Q)$ tower is also retained. In the absence of that tower, global
+source reducedness remains the exact alternative. These are source boundaries, not new hypotheses
+invented here.
 
 ## 8. Several places and the mixed obstructions
 
@@ -1126,7 +1155,8 @@ generator. Formation of the acting image has acquired a kernel. The auxiliary pa
 through Book 174 proves represented-ring, primary and companion complex, module, action,
 pairing, and Tor-compatible augmentation for a clean one-active-place problem, but only a
 canonical surjection on acting images. Book 175 proves that surjection injective from base
-generic rigidity, equivalently from global reducedness and full base $R=T$. The same
+generic rigidity, equivalently from global reducedness and full base $R=T$, and its balanced
+coherent patch proves that generic rigidity rather than assuming it. The same
 two-surjection argument is formal for a finite active set once a full base equality for that
 set has already been proved. Before such faithfulness is known, (8.28) shows that exact
 acting-image augmentation is neither a consequence of module augmentation nor an input needed
@@ -1405,7 +1435,7 @@ The direct mathematical sources used here have the following roles and retained 
 | Book 140 | conditional one-prime integral level change, node/definite comparison, equality of faithful orders, signed Gram calculation, and the constant generic-support/common-kernel deduction from Book 125 plus the corrected filtration | still requires datum-specific node uniformization, Book 125's component-routing source condition, and the separate abelian Ihara input; proves no unconditional several-prime theorem; keeps the branch Smith correction separate |
 | Book 170 | order-valued Galois representation, factorization through represented local conditions, and the surjection (3.5) | requires every generic branch, integral coefficient-prime realization, reduced generic order, exact trace generation, and the conditional Book 140 comparison whenever used |
 | Book 174 | enhanced one-prime type complex, typed generic-residue kernel equality from Book 125 after the typed filtration, scalar $q\equiv1$ family, primitive residue, one-prime support, exact fixed-prime augmentation, and auxiliary represented-ring/complex/module/pairing augmentation | $({\rm TIC}_v)$, $({\rm TIH}_{\mathscr F})$, $({\rm PRI}_{\rm type})$, $({\rm NU}_{\rm type})$, Book 125 applicability on the routed common cover, and $({\rm SUP}_v)$ retain their stated roles; support is topological and only one-place; auxiliary acting-order augmentation is only a surjection |
-| Book 175 | finite-level reduced one-prime comparison, pointwise characteristic-zero modularity in the scalar family, and, under $({\rm AUX}_Q)$ and the scalar ray twist when applicable, exact auxiliary acting-order augmentation after generic rigidity | full finite-level $R=T$ and auxiliary acting-order injectivity require the equivalent global reducedness/generic-rigidity condition; no patched reduced comparison follows without reducedness of the patched image, and no finite-set theorem is supplied |
+| Book 175 | in the scalar line-special range, finite-level reduced one-prime comparison, finite flatness from the balanced enhanced presentation, pointwise characteristic-zero modularity, and, under a coherent unpadded $({\rm AUX}_Q)$ tower, equal-variable full patched and finite $R=T$, all enhanced characteristic-zero tangent--Selmer vanishings, and exact auxiliary acting-order augmentation; the ray twist transports these to the scalar family | without a coherent auxiliary tower, full equality is equivalent to the isolated branchwise torsion-cotangent theorem; no theorem for the generic or vexing rows and no simultaneous finite-set theorem is supplied |
 
 The exact direct-dependency row is
 
@@ -1439,9 +1469,11 @@ The proof order is rigid:
 6. Lemma 6.1 identifies the finite-level kernel with the nilradical and proves reduced
    $R=T$;
 7. characteristic-zero modularity follows because points over domains kill that nilradical;
-8. finite-level source reducedness, if independently supplied, upgrades that comparison to
-   full $R=T$, whereas a patched reduced comparison first needs a reduced patched acting
-   image and a full patched equality needs a reduced patched source; and
+8. for one active scalar line-special place, a coherent unpadded balanced $({\rm AUX}_Q)$
+   tower invokes Book 175's equal-variable argument and upgrades the comparison to full patched
+   and finite $R=T$;
+   without that tower, source reducedness is the exact alternative, while for several active
+   places the separate joint nilpotent problem remains; and
 9. numerical consequences are derived only after the relevant comparison has been proved.
 
 Thus no later ring equality proves an earlier Ihara or support statement, and no determinant
@@ -1487,16 +1519,19 @@ $({\rm AUT}_v)$, $({\rm TPE}_v)$ through $({\rm TIC}_v)$,
 $({\rm TIH}_{\mathscr F})$,
 $({\rm SUP}_v)$, $({\rm REC}_v)$, and $({\rm RAY}_v)$, with
 $({\rm AUX}_Q)$ whenever an auxiliary patch is used. Under $({\rm AUX}_Q)$ the represented
-rings, both adjoint complexes, modules, actions, and pairings augment exactly; the acting-order
-map is only a surjection until $({\rm GR}_v)$, equivalently full base $R=T$, is supplied. The
+rings, both adjoint complexes, modules, actions, and pairings augment exactly. At an isolated
+auxiliary level the acting-order map is initially only a surjection. If these data form the
+coherent unpadded tower at every depth, Book 175, Proposition 5.2 proves $({\rm GR}_v)$ and
+full base $R=T$ by equal-variable rigidity, after which the acting-order map is injective. The
 finite-level reduced comparison may instead be applied directly after augmentation and does
-not require that injectivity. Thus Theorem 7.1 remains
-conditional even if (10.1) is proved. Conversely, once this core list is supplied, its formal
-reduced comparison does not require one to smuggle $({\rm AIH}_{\mathscr F})$ or
+not require that injectivity. Thus Theorem 7.1 remains conditional on the core geometric and
+reciprocity inputs even if (10.1) is proved. Conversely, once this core list is supplied, its
+formal reduced comparison does not require one to smuggle $({\rm AIH}_{\mathscr F})$ or
 $({\rm PRI}_{\rm type})$ into the word “support.” An argument formulated only for separated
 roots does not supply the $q_v\equiv1\pmod\ell$ enhanced-line case.
 
-The additional one-prime hypothesis for full finite-level scheme-theoretic $R=T$ is precisely
+Without the coherent auxiliary tower, the additional one-prime hypothesis for full
+finite-level scheme-theoretic $R=T$ is precisely
 
 $$
 R^{\mathrm{sp},1}\text{ is reduced}.
@@ -1504,9 +1539,12 @@ R^{\mathrm{sp},1}\text{ is reduced}.
 $$
 
 Neither local reducedness of the special chart nor minimal $R=T$ proves (10.1a).
-At patched level, reduced $R=T$ instead requires the actual patched acting image to be
-reduced; full patched $R=T$ follows from reducedness of the patched deformation ring or an
-independent theorem killing its annihilator. The existing source chain proves neither.
+Equivalently one may supply Book 175's branchwise torsion-cotangent theorem. With the coherent
+unpadded balanced tower, however, Proposition 5.2 proves (10.1a), the full patched equality,
+and every
+enhanced characteristic-zero tangent--Selmer vanishing without assuming reducedness of either
+patched ring. The flat dual-number countermodel in Book 175 shows why finite flatness and
+topological support alone would not suffice.
 
 For two or more places, the intended geometric route must first construct $({\rm FACE}_P)$ and
 the actual derived global cube $({\rm CUBE}_P)$ at every spectator tuple and auxiliary shadow.
@@ -1547,8 +1585,10 @@ strict scalar twist, auxiliary control, and reciprocity hypotheses identify the
 deformation-to-Hecke kernel with the nilradical. This proves reduced one-prime $R=T$ and hence
 characteristic-zero modularity. Constant Ihara, primitive residue, and node uniformization
 enter exactly when their richer level-change and component conclusions are invoked. Global
-finite-level reducedness is the exact extra input for full finite-level $R=T$; patched
-reducedness has the separate boundary recorded in Section 6.3.
+finite-level reducedness is the exact extra input for full finite-level $R=T$ if no coherent
+auxiliary tower is available. In the scalar line-special range, when that tower is retained,
+Book 175's equal-variable theorem proves full patched and finite one-prime $R=T$ and all
+enhanced tangent--Selmer vanishings without a reducedness hypothesis.
 
 The local arithmetic has a sharp division. Generic level raising with
 $q_v\not\equiv\pm1\pmod\ell$ produces a conductor-one special packet. A scalar
@@ -1563,5 +1603,6 @@ mixed conclusions, not definitions. Theorem 9.1 proves the finite-set modularity
 when the actual face package, derived global cube, mixed exactness, product residue, joint
 support, simultaneous augmentation, and finite-set reciprocity are all supplied. Pairwise
 one-prime data do not supply those hypotheses. The source chain therefore gives a bounded
-conditional one-prime theorem and an exact conditional finite-set interface without
+conditional but scheme-theoretically full scalar line-special one-prime theorem in the
+coherent auxiliary range, together with an exact conditional finite-set interface, without
 pretending that the unresolved geometric inputs are already available.

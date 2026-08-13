@@ -21,11 +21,11 @@
    - [The reduced one-prime theorem](#42-the-reduced-one-prime-theorem)
    - [The exact obstruction to full R=T](#43-the-exact-obstruction-to-full-rt)
    - [Why the tame direction cannot kill the obstruction](#44-why-the-tame-direction-cannot-kill-the-obstruction)
-   - [Generic rigidity: the exact remaining theorem](#45-generic-rigidity-the-exact-remaining-theorem)
+   - [Generic rigidity: flatness and the exact remaining theorem](#45-generic-rigidity-flatness-and-the-exact-remaining-theorem)
 5. [What patching and augmentation do prove](#5-what-patching-and-augmentation-do-prove)
    - [The two-term complex and its Tor term](#51-the-two-term-complex-and-its-tor-term)
    - [Amplitude after Book 174](#52-amplitude-after-book-174)
-   - [The conditional patched R=T criterion](#53-the-conditional-patched-rt-criterion)
+   - [Balanced patched rigidity](#53-balanced-patched-rigidity)
    - [Fixed-prime and auxiliary augmentation](#54-fixed-prime-and-auxiliary-augmentation)
    - [Fixed characters and coefficient extension](#55-fixed-characters-and-coefficient-extension)
 6. [Scalar and vexing branches](#6-scalar-and-vexing-branches)
@@ -39,7 +39,7 @@
    - [Solvable descent](#73-solvable-descent)
 8. [Dependency, circularity, and normalization audit](#8-dependency-circularity-and-normalization-audit)
    - [Direct prerequisite ledger](#81-direct-prerequisite-ledger)
-   - [The first unsupported step in the full theorem](#82-the-first-unsupported-step-in-the-full-theorem)
+   - [The original circular step and its repair](#82-the-original-circular-step-and-its-repair)
    - [No finite-set or hidden-support argument](#83-no-finite-set-or-hidden-support-argument)
    - [Frobenius, determinant, and variance](#84-frobenius-determinant-and-variance)
 9. [Conclusion](#9-conclusion)
@@ -125,7 +125,7 @@ hypotheses, supplies the compatible Hecke-valued representation and hence the ca
 surjections to faithful Hecke images. These two conditional facts determine the finite-level
 kernels up to nilpotents.
 
-The result proved below is
+Without using an auxiliary patch, the first result proved below is
 
 $$
 \bigl(R^{\mathrm{sp},1}\bigr)_{\mathrm{red}}
@@ -141,19 +141,34 @@ characteristic-zero point on either the conductor-one face or a nontrivial condu
 fiber is automorphic, because a homomorphism to a discrete valuation ring kills nilpotents.
 
 A full finite-level scheme-theoretic equality follows if the relevant global line-special
-deformation ring is reduced. Section 4.5 identifies this condition exactly with a
-generic-rigidity theorem: vertical torsion-freeness of the global deformation ring and
-vanishing of the enhanced fixed-condition tangent--Selmer group at every characteristic-zero
-point. On the nonzero-monodromy locus this is the ordinary exact-condition adjoint Selmer
-group; at the boundary it also retains the infinitesimal line.
-Once this theorem holds, $({\rm AUX}_Q)$—and $({\rm RAY}_v)$ for the scalar family—forces
-auxiliary acting-order augmentation by a diagram of surjections; injectivity is not a second
-arithmetic hypothesis. Likewise, the patched comparison is a
-full equality if the actual patched deformation ring is reduced, or if an independent theorem
-kills the annihilator scheme-theoretically. No prior book proves the generic-rigidity or
-patched nilpotent-control statement for this scalar line-special global problem. The full
-$R=T$ assertion is therefore isolated as a conditional criterion, not presented as an
-unconditional consequence of minimal patching.
+deformation ring is reduced. Section 4.5 proves vertical torsion-freeness from the balanced
+enhanced obstruction presentation and the already established finiteness of the ring. It then
+identifies reducedness exactly with the remaining generic-rigidity theorem: vanishing of the
+enhanced fixed-condition tangent--Selmer group at every characteristic-zero point. The line is
+essential in the residual complex. At a characteristic-zero monodromy-zero point, however,
+the two line characters differ by the nonzero scalar $q_v-1$, so the flag tangent is uniquely
+determined by the cocycle rather than supplying an additional direction.
+Section 5.3 then proves that vanishing, rather than assuming it, when the coherent unpadded
+$({\rm AUX}_Q)$ system in $({\rm SUP}_v)$ is retained at every depth. The balanced enhanced
+calculation gives an absolute deformation source with $q$ variables; the $q$ ordered diamond
+directions give a scalar source of the same dimension. The nonzero module is free over the
+diamond source, so the equal-variable argument injects the regular deformation source into its
+action image. It follows that
+
+$$
+R_\infty^{\mathrm{sp},1}=\mathbb T_\infty^{\mathrm{sp},1},
+\qquad
+R^{\mathrm{sp},1}=\mathbb T^{\mathrm{sp},1},
+\tag{1.6}
+$$
+
+and hence every characteristic-zero enhanced tangent--Selmer group vanishes. This proof does
+not identify the conductor-one augmentation with the neutral minimal problem and does not
+assume a reduced patched ring. Under $({\rm RAY}_v)$ it transports to the scalar family and
+all fixed-character fibers. It also makes auxiliary acting-order augmentation exact by the
+diagram of surjections in Corollary 4.5. If no coherent auxiliary system is available, the
+branchwise cross-cotangent condition of Corollary 4.4a remains the exact alternative input;
+flatness and topological support alone do not imply it.
 
 ## 2. Arithmetic datum and conventions
 
@@ -319,7 +334,9 @@ prime on each global component lies over the generic point of its lower componen
 other component; and (5) the scalar source and selected patched ring have the same local
 dimension there. This is the precise hypothesis of Book 174's support theorem. It is not
 inferred from the existence of a reciprocity surjection or from a characteristic-zero packet
-count.
+count. The dual group in clause (1) is the one recomputed from the enhanced local condition
+complex (4.7f''), with its exact homotopy orthogonal; it is not the ordinary dual Selmer group
+obtained by forgetting the flag.
 
 **$({\rm REC}_v)$ (reciprocity and the correct order).** On the direct sum of the actual
 primary and companion new modules, let $\mathbb T$ be the image of the declared good trace
@@ -353,6 +370,15 @@ represented rings, primary and companion complexes, new modules, actions, and pa
 zero positive diamond-algebra Tor. It gives a canonical surjection on faithful acting images,
 not injectivity of that surjection. Section 4.5 derives the missing injectivity from generic
 rigidity; it is not assumed here and is not inferred formally from module augmentation.
+In Proposition 5.2 an **unpadded system** means that at depth $N$ the set has exactly $q$, the
+common dimension in (5.6b), rather than a padded larger number, of ordered primes killing the
+recomputed enhanced dual group. If
+$({\rm AUX}_Q)$ holds for those sets at every depth, Book 174's marked finite-shadow patching,
+using the diagonal stabilization of Book 172, retains the complete quotient ideals, module
+bases, structural diamond maps, deformation actions, pairings, and exact ring/module
+augmentation sequences in one coherent subsequence. Thus coherence is a formal output of the
+marked patch, not an assumed arithmetic transition between the unrelated prime sets. Isolated
+instances of Proposition 9.1 do not by themselves supply this tower.
 
 On the curve-new carrier, the corrected normalized-branch filtration and primitive extreme
 residues are needed only if one also invokes their component or lowering consequences. Then
@@ -672,10 +698,12 @@ $$
 $$
 
 It gives a patched reduced comparison only if the patched acting image is independently known
-to be reduced. Since no preceding book establishes that assertion for the present inverse
-limit, Theorem 4.2 deliberately makes no patched reducedness claim. Section 5.3 gives the
-different sufficient condition actually needed for a full patched equality: reducedness of
-the patched deformation ring itself.
+to be reduced. Theorem 4.2 deliberately makes no patched reducedness claim from support.
+Section 5.3 instead retains the coherent unpadded auxiliary system and proves a full patched
+equality
+from the sharp absolute generator count and the faithful diamond-scalar action; it assumes
+neither reducedness of the patched acting image nor reducedness of the patched deformation
+ring.
 
 ### 4.3 The exact obstruction to full R=T
 
@@ -712,14 +740,16 @@ and faithful flatness says that this module vanishes exactly when $\ker(f_1)$ va
 Surjectivity is already known.
 $\square$
 
-The missing condition is global reducedness. The local ring $R_0[[m]]$ in (3.2) is reduced
+At this stage the missing condition is global reducedness. The local ring $R_0[[m]]$ in (3.2) is reduced
 when $R_0$ is reduced, but a global quotient of a reduced power-series source can be
 nonreduced. Equidimensionality and a reduced generic Hecke algebra do not rule out such a
 nilpotent thickening. No prior theorem proves that the global ring
 $R^{\mathrm{sp},1}$ is reduced.
 
-Consequently Corollary 4.3 is a reusable criterion, not a proof of the catalog's full
-scheme-theoretic $R=T$ assertion.
+Consequently Corollary 4.3 by itself is a reusable criterion. Proposition 5.2 proves its
+hypothesis from the coherent unpadded balanced auxiliary patch; without that patch, reducedness
+is not
+a consequence of the local chart or of the reduced comparison.
 
 ### 4.4 Why the tame direction cannot kill the obstruction
 
@@ -744,7 +774,7 @@ scalar family, proving only topological support there, and then augmenting to th
 conductor-one problem. Nor can it replace that conductor-one problem by the neutral minimal
 ring used as a boundary anchor in Book 174.
 
-### 4.5 Generic rigidity: the exact remaining theorem
+### 4.5 Generic rigidity: flatness and the exact remaining theorem
 
 The phrase *global reducedness* can be replaced by a precise arithmetic statement. Put
 
@@ -768,6 +798,188 @@ $$
 $$
 
 proves the assertion. Thus $R_E=R[1/\varpi]$ is an Artinian $E$-algebra.
+
+The coefficient-torsion part of generic rigidity is already forced by this finiteness and the
+balanced enhanced obstruction calculation.  We first isolate the commutative algebra.  This is
+the finite-flat endpoint of the balanced Böckle-presentation argument; it is included here
+because it is sensitive to the coefficient parameter and does not use $R=T$.
+
+**Lemma 4.3a (a finite balanced presentation is coefficient-flat).** Let $A$ be a nonzero
+complete noetherian local $\mathcal O$-algebra with residue field finite over $k$.  Suppose
+$A$ is finite over $\mathcal O$ and has a presentation
+
+$$
+A\simeq
+\mathcal O[[X_1,\ldots,X_h]]/(f_1,\ldots,f_r),
+\qquad r\leq h.
+\tag{4.7a}
+$$
+
+Then $r=h$, the sequence
+
+$$
+f_1,\ldots,f_h,\varpi
+\tag{4.7b}
+$$
+
+is regular in $\mathcal O[[X_1,\ldots,X_h]]$, and $A$ is finite free over $\mathcal O$.
+
+**Proof.** Put $P=\mathcal O[[X_1,\ldots,X_h]]$ and
+$J=(f_1,\ldots,f_r,\varpi)$.  Since $A/\varpi A$ is a nonzero finite local algebra over the
+residue field, $J$ is $\mathfrak m_P$-primary.  Hence
+
+$$
+h+1=\operatorname{ht}(\mathfrak m_P)
+\leq r+1
+$$
+
+by the generalized principal ideal theorem.  Thus $h\leq r$, and the assumed opposite
+inequality gives $r=h$.  The regular local ring $P$ is Cohen--Macaulay, so the
+$\mathfrak m_P$-primary list (4.7b), whose length is $\dim P=h+1$, is a system of parameters
+and hence a regular sequence.  In particular $\varpi$ is a nonzerodivisor on
+$P/(f_1,\ldots,f_h)=A$.  A finite torsion-free module over a DVR is free. $\square$
+
+We now verify that the presentation hypothesis is the one belonging to the represented
+line-special problem, rather than to a coarse condition that forgets the flag.
+
+**Proposition 4.3b (vertical torsion-freeness of the conductor-one ring).** Under the
+hypotheses of Theorem 4.2, the structural map
+
+$$
+R^{\mathrm{sp},1}\longrightarrow R^{\mathrm{sp},1}[1/\varpi]
+\tag{4.7c}
+$$
+
+is injective.  More precisely, $R^{\mathrm{sp},1}$ is a finite free relative complete
+intersection over $\mathcal O$.
+
+**Proof.** The clean lower problem used in $({\rm SUP}_v)$ has the effective local condition
+complexes and balanced global obstruction calculation of Books 69 and 171--172.  Replacing its
+condition at $v$ by the represented scalar line-special condition does not change the virtual
+local defect, but this must be checked on the enhanced complex.
+
+Use the scalar chart of Book 174, equations (7.6)--(7.8), and fix the two line characters and
+the determinant branch.  The latter determines the common unramified scalar $a$, because
+$2a$ is a unit.  In the fixed ambient frame every enhanced special lift is then described by
+three freely liftable parameters
+
+$$
+b\quad\text{(unramified upper extension)},\qquad
+m\quad\text{(tame monodromy)},\qquad
+z\quad\text{(the line)},
+\tag{4.7d}
+$$
+
+through
+
+$$
+N(z)=
+\begin{pmatrix}-mz&m\\-mz^2&mz\end{pmatrix},
+\qquad
+F(z)=
+\begin{pmatrix}
+q_va-bz&b\\
+z((q_v-1)a-bz)&a+bz
+\end{pmatrix}.
+\tag{4.7e}
+$$
+
+Here $F=\rho(\phi_v)$ is arithmetic Frobenius, as in Book 174's local chart; the
+geometric-Frobenius convention (2.5) is obtained by inversion.
+
+These formulas satisfy the tame relation identically, and conversely an adapted generator of
+the retained line puts every lift uniquely in this form.  Thus this framed enhanced local
+condition is formally smooth of relative dimension three.  It also supplies the complete
+small-extension lifting and difference-torsor data required in Book 69: lift $b,m,z$
+arbitrarily, and compare two lifts coordinatewise.  No tangent-subspace shortcut is being used.
+The reductions of $b$ and $m$ are exactly the exceptional unramified and tame Kummer
+directions mentioned in Book 174, (7.10); neither has been deleted. Integrally, an upper
+strict change of adapted vector changes $b$ by a multiple of $q_v-1$, but this is a gauge
+action on the smooth framed chart, not an additional local equation.
+
+At the scalar residual point, trace-zero infinitesimal conjugation has dimension three.  Its
+map to the three coordinates in (4.7d) has rank one: the lower-left entry moves $z$, while a
+commutator with the scalar residual representation is zero. In particular, the integral
+$(q_v-1)$-multiple just noted has zero residual derivative and is correctly retained in this
+complex. Its kernel is the two-dimensional
+trace-zero parabolic preserving the residual line.  Consequently the enhanced local condition
+complex has
+
+$$
+\dim_k H^0(\mathcal U_v^\bullet)=2,
+\qquad
+\dim_k H^1(\mathcal U_v^\bullet)=2,
+\qquad
+\chi(\mathcal U_v^\bullet)=0.
+\tag{4.7f}
+$$
+
+The pure residual flag direction is present before quotienting, but it is accompanied by the
+corresponding change in the infinitesimal automorphism term.  Deleting the flag would therefore
+give the wrong complex even though the virtual number in (4.7f) happens to be zero. Equivalently,
+in Book 69's partially framed convention the contribution is computed before local quotienting:
+
+$$
+\dim_k t_v^{\square,\mathrm{enh}}-\dim_k\operatorname{ad}^0\bar\rho
+=3-3=0.
+\tag{4.7f'}
+$$
+
+This form keeps the full comparison frame and is the one used in the Taylor--Wiles generator
+count.
+
+For clarity, form the enhanced deformation complex before taking cohomology. At $v$ its local
+condition term is the two-term complex
+
+$$
+\mathcal U_v^\bullet=
+[\operatorname{ad}^0\bar\rho\longrightarrow
+k\!\cdot b\oplus k\!\cdot m\oplus k\!\cdot z],
+\tag{4.7f''}
+$$
+
+whose arrow is infinitesimal conjugation of the representation and line. Insert this term,
+with the effective condition complexes at the other places, into Book 69's mapping fiber from
+global cochains to the forbidden local quotients. Its degree-one cohomology is the tangent of
+the represented global pair $(\rho,L)$ modulo simultaneous strict conjugation. The explicit
+coordinate lifting above proves the required small-extension lifting and difference-torsor
+axioms at $v$; hence degree two is a complete effective obstruction space, rather than a
+formal tangent-subspace surrogate.
+The dual local condition is the homotopy orthogonal of (4.7f'') under the local Tate pairing,
+not the annihilator of a prematurely chosen subspace of ordinary $H^1$. Because
+$\mathcal U_v^\bullet$ is a finite perfect two-term complex, Book 69's perfect cone duality
+applies and identifies the dual of the global degree-two term with the recomputed enhanced
+dual group used in $({\rm SUP}_v)$.
+
+All other finite places retain the neutral effective complexes of the clean lower datum. The
+finite-flat places above $\ell$ contribute $+[F:\mathbf Q]$, the odd real places contribute
+$-[F:\mathbf Q]$, and (2.1)--(2.2) remove degree-zero global automorphisms and the dual
+degree-three endpoint. The Euler characteristic of this mapping fiber is therefore zero,
+because (4.7f) contributes zero at $v$. Thus, writing it as $C_{\mathcal E}^\bullet$,
+
+$$
+0=\chi(C_{\mathcal E}^\bullet)
+=-\dim_kH^1(C_{\mathcal E}^\bullet)
++\dim_kH^2(C_{\mathcal E}^\bullet).
+\tag{4.7f'''}
+$$
+
+Poitou--Tate duality for the complex consequently makes its tangent and complete-obstruction
+spaces have the same dimension, say $h$. Book 69's
+effective relation-obstruction map gives a presentation
+
+$$
+R\simeq\mathcal O[[X_1,\ldots,X_h]]/(f_1,\ldots,f_r),
+\qquad r\leq h.
+\tag{4.7g}
+$$
+
+This is the enhanced problem: the local term used to obtain (4.7g) is (4.7f), not an ordinary
+subspace of $H^1(F_v,\operatorname{ad}^0\bar\rho)$.
+
+The paragraph preceding Lemma 4.3a proved that $R$ is finite over $\mathcal O$.  Apply that
+lemma to (4.7g).  It makes $\varpi$ a nonzerodivisor and proves the asserted finite freeness and
+complete-intersection statement. $\square$
 
 Let $x$ be any maximal point of $R_E$, with residue field $E_x$, and let $\rho_x$ and
 $L_x\subset V_x$ be the corresponding representation and retained line at $v$. The line must
@@ -823,14 +1035,47 @@ endomorphisms. Consequently infinitesimal changes of representative are exactly 
 coboundaries, so the identification is independent of the chosen presentation. This is Book
 69's tangent--Selmer calculation with Book 67's enhanced-line term retained.
 
-On the locus where monodromy is nonzero,
-$L_x=\operatorname{im}N_x=\ker N_x$. Its infinitesimal motion is then determined by the
-motion of $N_x$, so forgetting $\lambda$ identifies the enhanced group with the ordinary
-adjoint Selmer group for the exact special local tangent. At a monodromy-zero boundary point
-this need not be true, and global reducedness requires the enhanced group, not the smaller
-ordinary group.
+The enhancement cannot be deleted in the residual presentation, but it introduces no
+independent characteristic-zero tangent, even at the monodromy-zero boundary. Indeed the two
+line characters at every point $x$ are $q_va_x$ and $a_x$. Since $q_v>1$ is an integer and
+$a_x$ is a unit,
 
-Define the remaining arithmetic assertion as follows:
+$$
+(q_v-1)a_x\in E_x^\times.
+\tag{4.8a}
+$$
+
+Let $F_x$ act by $q_va_x$ on $L_x$ and by $a_x$ on $V_x/L_x$. Projecting the linearized
+eigenline equation to $V_x/L_x$ gives
+
+$$
+((q_v-1)a_x)\lambda
+=u_x\operatorname{pr}_{V_x/L_x}\bigl(c(\phi_v)|_{L_x}\bigr),
+\qquad u_x\in E_x^\times,
+\tag{4.8b}
+$$
+
+where $u_x=q_va_x$ for the convention
+$\rho_\epsilon(g)=(1+\epsilon c(g))\rho_x(g)$; the inverse convention changes this harmless
+unit and its sign. Thus
+$\lambda$ is uniquely determined by the local cocycle. When $N_x\ne0$, the same conclusion
+also follows from $L_x=\operatorname{im}N_x=\ker N_x$; when $N_x=0$, equation (4.8b) supplies
+the missing argument. Hence forgetting $\lambda$ identifies the enhanced group with the
+ordinary adjoint Selmer group for the **exact closed special tangent at every
+characteristic-zero point**. This does not justify forgetting the line integrally or
+residually: modulo $\varpi$, $q_v-1=0$ and (4.8b) no longer determines $\lambda$.
+
+Define the remaining arithmetic assertion as
+
+$$
+({\rm ASV}_v):\qquad
+H^{1,\mathrm{enh}}_{\mathcal E_x}
+(F,\operatorname{ad}^0\rho_x)=0
+\quad\text{for every maximal point }x\text{ of }R_E.
+\tag{4.8c}
+$$
+
+For compatibility with the intrinsic formulation, put
 
 $$
 ({\rm GR}_v):
@@ -844,42 +1089,86 @@ H^{1,\mathrm{enh}}_{\mathcal E_x}
 \tag{4.9}
 $$
 
-The first clause is vertical torsion-freeness. The second is rigidity of every generic
-enhanced fixed-condition point; it uses the exact line and local equations, not merely a
-conductor label or an ordinary Selmer group that forgets the flag.
+The first clause is vertical torsion-freeness and is now Proposition 4.3b. It remains in the
+definition so that $({\rm GR}_v)$ keeps its intrinsic ring-theoretic meaning under base change.
+The second clause is $({\rm ASV}_v)$, the exact remaining arithmetic assertion. It is rigidity
+of every generic enhanced fixed-condition point; by (4.8b) it may equivalently be computed
+with the ordinary cocycle for the exact closed special tangent, including at $m=0$, but not
+with a condition specified only by conductor.
 
 **Theorem 4.4 (generic rigidity is exactly full $R=T$).** Under the hypotheses of
 Theorem 4.2, the following are equivalent:
 
-1. $({\rm GR}_v)$ holds;
-2. $R^{\mathrm{sp},1}$ is reduced;
-3. the canonical map
+1. $({\rm ASV}_v)$ holds;
+2. $({\rm GR}_v)$ holds;
+3. $R^{\mathrm{sp},1}$ is reduced;
+4. the canonical map
    $R^{\mathrm{sp},1}\xrightarrow{\sim}\mathbb T^{\mathrm{sp},1}$ is an isomorphism.
 
 If $({\rm RAY}_v)$ also holds, these are equivalent to the full scalar-family equality in
 Corollary 4.3.
 
-**Proof.** Assume $({\rm GR}_v)$. By (4.8), every local Artin factor $A_x$ of $R_E$ has
+**Proof.** Proposition 4.3b makes statements 1 and 2 equivalent. Assume $({\rm ASV}_v)$.
+By (4.8), every local Artin factor $A_x$ of $R_E$ has
 zero Zariski tangent space. If $\mathfrak n_x$ is its maximal ideal, then
 $\mathfrak n_x/\mathfrak n_x^2=0$. Nakayama's lemma gives $\mathfrak n_x=0$, so every
 $A_x$ is its residue field. Hence $R_E$ is a product of finite field extensions of $E$ and is
-reduced. The first clause of (4.9) and Lemma 4.1a now show that $R$ is reduced.
+reduced. Proposition 4.3b and Lemma 4.1a now show that $R$ is reduced.
 
-The equivalence of statements 2 and 3 is Theorem 4.2. If statement 3 holds, then $R=T$ is
+The equivalence of statements 3 and 4 is Theorem 4.2. If statement 4 holds, then $R=T$ is
 $\mathcal O$-torsion-free. Its generic fiber is a finite reduced algebra in characteristic
 zero, hence a product of finite separable fields and has zero tangent space at every maximal
-point. Equation (4.8) gives the enhanced tangent--Selmer vanishing in (4.9). Thus statement 3
-implies
-$({\rm GR}_v)$, completing the cycle of implications. The scalar-family assertion is
-Corollary 4.3. $\square$
+point. Equation (4.8) gives $({\rm ASV}_v)$, completing the cycle of implications. The
+scalar-family assertion is Corollary 4.3. $\square$
 
-Theorem 4.4 identifies the first external arithmetic theorem exactly, once the prior
-localization, typed-complex, support, and reciprocity inputs have been supplied: prove the two
-clauses of $({\rm GR}_v)$ for the represented conductor-one global problem. The preceding books
-prove neither clause. They cannot be recovered from support, local reducedness, or generic
-packet semisimplicity. Nor can one replace vanishing of the enhanced group at every maximal
-point by generic smoothness on a dense open: a finite Artin algebra is reduced only when the
-maximal ideal in every local factor vanishes. The maps
+There is an equivalent integral formulation that identifies the precise output required from
+any automorphic adjoint-Selmer or cross-determinant theorem.  For a maximal point $x$, enlarge
+coefficients so that its field $E_x$ has valuation ring $\mathcal O_x$ and let
+
+$$
+\lambda_x:R\widehat\otimes_{\mathcal O}\mathcal O_x
+\longrightarrow\mathcal O_x
+$$
+
+be the integral branch map.  Put $\mathfrak p_x=\ker\lambda_x$ and
+
+$$
+\Phi_x^{\rm Gal}=\mathfrak p_x/\mathfrak p_x^2.
+\tag{4.9a}
+$$
+
+**Corollary 4.4a (the exact branchwise cotangent target).** Under the hypotheses of
+Theorem 4.2, the following are equivalent:
+
+1. $({\rm ASV}_v)$;
+2. $\Phi_x^{\rm Gal}$ is a torsion $\mathcal O_x$-module for every $x$;
+3. $\operatorname{Fitt}_{\mathcal O_x}^0(\Phi_x^{\rm Gal})\ne0$ for every $x$.
+
+Consequently it is enough to construct, before using $R=T$, an injection of
+$\Phi_x^{\rm Gal}$ into a finite automorphic congruence module, or a determinant comparison
+that makes its zeroth Fitting ideal nonzero. This is the exact reusable
+**cross-cotangent theorem** needed by a proof that does not retain the coherent auxiliary
+patch. Proposition 5.2 supplies the same vanishing simultaneously at all branches by a
+different, global equal-variable argument.
+
+**Proof.** Finite scalar extension and separability give
+
+$$
+\Phi_x^{\rm Gal}\otimes_{\mathcal O_x}E_x
+\simeq\mathfrak m_x/\mathfrak m_x^2.
+\tag{4.9b}
+$$
+
+Equations (4.8) and (4.9b) identify the dual of this generic fiber with the enhanced
+tangent--Selmer group.  Thus it vanishes exactly when $\Phi_x^{\rm Gal}$ is torsion.  For a
+finite module over a DVR, torsion is equivalent to a nonzero zeroth Fitting ideal. $\square$
+
+Theorem 4.4 and Proposition 4.3b identify the exact additional theorem required before the
+coherent auxiliary patch is invoked: prove the characteristic-zero exact-condition adjoint
+Selmer vanishing in (4.9) at every point. It cannot be recovered from support, local
+reducedness, adequacy, or generic packet semisimplicity alone. Nor can one replace vanishing at
+every maximal point by generic smoothness on a dense open: a finite Artin algebra is reduced
+only when the maximal ideal in every local factor vanishes. The maps
 
 $$
 \mathcal O[\eta]/(\eta^2)\twoheadrightarrow\mathcal O,
@@ -888,10 +1177,13 @@ $$
 \tag{4.10}
 $$
 
-show the two independent failures: the first source is vertically torsion-free but has a
-nonreduced generic fiber, while the second has reduced generic fiber but nonzero vertical
-torsion. In both examples the kernel is nilpotent and the target carrier has full topological
-support over the source.
+show the two logically independent failures before Proposition 4.3b is used. The first source
+is a finite flat balanced complete intersection but has a nonreduced generic fiber; it proves
+that the remaining Selmer theorem needs genuinely global input. The second has reduced generic
+fiber but nonzero vertical torsion; its presentation has one variable and needs two relations, so it is excluded
+precisely by the balanced relation bound. In both examples the kernel is nilpotent and the
+target carrier has full topological support over the source. Neither example carries the
+equal-dimensional faithful diamond action used in Proposition 5.2.
 
 **Corollary 4.5 (exact auxiliary acting-order augmentation).** Assume $({\rm AUX}_Q)$ and
 $({\rm GR}_v)$. For $i=2$, assume $({\rm RAY}_v)$ as well. Let
@@ -1050,78 +1342,169 @@ $$
 with $M_{\infty,v}^{\mathrm{sp},i}$ finite free over the corresponding scalar base. This is an
 output of Book 174's one-prime patching, not a new consequence of minimal $R=T$.
 
-### 5.3 The conditional patched R=T criterion
+### 5.3 Balanced patched rigidity
 
-The finite-level reduced comparison did not require a reduced patched algebra. For a full
-patched equality, the correct nilpotent-sensitive statement is the following.
+The balanced calculation used for Proposition 4.3b supplies more than coefficient flatness
+when the coherent unpadded auxiliary system is retained. It gives an absolute regular source
+with exactly as many variables as the diamond source. The equal-variable argument of Book 172 can
+therefore be run on the one-prime new module itself; it never identifies the conductor-one
+augmentation with the neutral minimal problem.
 
-**Proposition 5.2 (conditional patched one-prime $R=T$).** Let $S_\infty$ be the local scalar
-patching source, let $R_\infty^{\mathrm{sp},i}$ be the noetherian patched deformation ring,
-and let $M_\infty^{\mathrm{sp},i}$ be the nonzero module in (5.6). Assume the marked
-deformation action has full topological support:
+**Proposition 5.2 (balanced patched one-prime $R=T$).** Assume the hypotheses of Theorem 4.2
+on the base problem and every retained auxiliary shadow, and assume $({\rm AUX}_Q)$ at every
+Taylor--Wiles depth for the unpadded sets used by $({\rm SUP}_v)$.
+Let $\mathbb T_\infty^{\mathrm{sp},1}$ be the actual image of the patched deformation action
+on the primary new module (equivalently, after the proof, on the primary--companion sum). Then,
+for the conductor-one problem,
 
 $$
-\operatorname{Supp}_{R_\infty^{\mathrm{sp},i}}
-M_\infty^{\mathrm{sp},i}
-=\operatorname{Spec}R_\infty^{\mathrm{sp},i}.
+R_\infty^{\mathrm{sp},1}
+=\mathbb T_\infty^{\mathrm{sp},1},
+\qquad
+R^{\mathrm{sp},1}=\mathbb T^{\mathrm{sp},1}.
 \tag{5.6a}
 $$
 
-Let $\mathbb T_\infty^{\mathrm{sp},i}$ be the actual image of
-$R_\infty^{\mathrm{sp},i}$ on the total primary--companion patched carrier. If
+The patched ring is regular and finite free over its diamond source, the patched primary
+module is nonzero finite free over it, and
+the finite conductor-one ring is a finite free complete intersection over $\mathcal O$.
+Consequently $({\rm ASV}_v)$ and $({\rm GR}_v)$ hold.  If $({\rm RAY}_v)$ also holds, the
+same full equalities hold for the patched and finite scalar family and every retained
+fixed-character fiber, and every characteristic-zero enhanced fixed-condition tangent space
+on those fibers vanishes.
+
+**Proof.** Let
 
 $$
-({\rm RED}_\infty^i):
-\qquad R_\infty^{\mathrm{sp},i}\text{ is reduced},
+q=\dim_k H^1_{\mathcal E}^{\mathrm{enh}}
+(F,\operatorname{ad}^0\bar\rho)
+=\dim_k H^2_{\mathcal E}^{\mathrm{enh}}
+(F,\operatorname{ad}^0\bar\rho)
 \tag{5.6b}
 $$
 
-then the canonical map is an isomorphism:
+be the common tangent and complete-obstruction dimension from the balanced calculation in the
+proof of Proposition 4.3b; the notation refers to the enhanced mapping fiber constructed after
+(4.7f''). Clause 1 of $({\rm SUP}_v)$, together with the unpadded-system clause of
+$({\rm AUX}_Q)$, supplies a set $Q_N$ of exactly $q$ Taylor--Wiles primes at every depth
+killing the recomputed enhanced dual group, while retaining the flag and the two type rows.
+In particular, applicability of Book 143's split detector to this exact enhanced dual group is
+part of the stated auxiliary hypothesis; it is not inferred by forgetting the flag. Each
+ordered auxiliary condition contributes one local diamond direction.
+The enhanced Poitou--Tate count of Proposition 4.3b, combined with Book 143's
+one-dimensional local auxiliary change and the killed enhanced dual group, then makes the
+auxiliary tangent dimension exactly $q$. Topological Nakayama therefore gives, after the
+common coordinates have been marked, a surjection from the regular domain
 
 $$
-R_\infty^{\mathrm{sp},i}
-\xrightarrow{\sim}\mathbb T_\infty^{\mathrm{sp},i}.
+P=\mathcal O[[X_1,\ldots,X_q]]
+\twoheadrightarrow R_{Q_N,v}^{\mathrm{sp},1}
 \tag{5.6c}
 $$
 
-If auxiliary augmentation independently identifies the quotient of the patched acting image
-with the finite faithful acting order, then (5.6c) descends to a full finite-level $R=T$
-equality. In the base generic-rigidity route, Corollary 4.5 proves this acting-order
-identification from $({\rm AUX}_Q)$ and $({\rm GR}_v)$; it is not an extra assumption there.
-
-**Proof strategy.** Patching is used to produce a genuine module and the support statement.
-Reducedness is then used once, at the annihilator.
-
-**Proof.** Because $S_\infty$ acts through the structural map to
-$R_\infty^{\mathrm{sp},i}$ and $M_\infty^{\mathrm{sp},i}$ is finite over $S_\infty$, it is
-finite over $R_\infty^{\mathrm{sp},i}$. Equation (5.6a) gives
+at every retained depth.  As in Book 172, patch the complete quotient ideals rather than an
+unjustified fixed list of equations.  This gives
 
 $$
-\operatorname{Ann}_{R_\infty^{\mathrm{sp},i}}
-M_\infty^{\mathrm{sp},i}
-\subseteq\sqrt{(0)}.
+R_\infty^{\mathrm{sp},1}=P/I_\infty.
+\tag{5.6d}
 $$
 
-Hypothesis (5.6b) makes the right side zero. Thus the primary summand is faithful, so the
-action on the larger primary--companion carrier is faithful as well. The kernel of the map to
-its actual image is therefore zero, proving (5.6c). Quotienting an isomorphism by the marked
-auxiliary ideal remains an isomorphism. When the two quotients have been identified with the
-represented finite ring and its faithful acting order as stated, this is the claimed finite
-comparison. $\square$
+The auxiliary diamond source is
 
-Under $({\rm RAY}_v)$, the patched conductor-two comparison is the tensor product of the
-conductor-one comparison with $\Lambda_v$. Hence a patched equality for $i=1$ implies one for
-$i=2$ without separately proving that $R_\infty^{\mathrm{sp},2}$ is reduced; conversely,
-faithful flatness of $\Lambda_v/\mathcal O$ detects the conductor-one kernel. The tame variable
-transports whatever answer holds on the line-special face.
+$$
+S_\infty=\mathcal O[[Z_1,\ldots,Z_q]].
+\tag{5.6e}
+$$
 
-The proposition does not prove $({\rm RED}_\infty^i)$. Local reducedness of the enhanced chart,
-equidimensionality, Cohen--Macaulayness, and reducedness of a finite Hecke order do not imply
-reducedness of a global patched quotient. One may replace (5.6b) by an independent theorem
-that the displayed annihilator is zero, but calling that theorem “support” would hide the
-nilpotent issue. Lemma 4.1a gives one concrete way to verify (5.6b): prove that the actual
-patched ring is $\mathcal O$-torsion-free and that its generic fiber is reduced. Neither
-property is imported here merely from the local chart or the dimension calculation.
+Write $\mathfrak a_\infty=(Z_1,\ldots,Z_q)\subset S_\infty$, and use the same symbol
+below for the ideal generated by its image under the structural map to a patched ring. It need
+not be the ideal $(X_1,\ldots,X_q)$ in the absolute source $P$.
+
+Book 174's split-amplitude theorem, its marked finite-shadow construction, and
+$({\rm AUX}_Q)$ patch the primary new modules, their bases, and their deformation actions.
+Equation (5.6) becomes
+
+$$
+M_\infty^{\mathrm{sp},1}\simeq S_\infty^{\oplus r}
+\qquad(r>0).
+\tag{5.6f}
+$$
+
+Here $r>0$ is Book 174's nonzero boundary witness under $({\rm SUP}_v)$, transported through
+the split injection. Let
+
+$$
+A_\infty=\operatorname{im}\left(
+P\longrightarrow R_\infty^{\mathrm{sp},1}
+\longrightarrow
+\operatorname{End}_{S_\infty}(M_\infty^{\mathrm{sp},1})
+\right).
+\tag{5.6g}
+$$
+
+It is finite over $S_\infty$.  Auxiliary local--global compatibility identifies the composite
+$S_\infty\to P\to A_\infty$ with scalar multiplication on (5.6f), so it is injective.  Hence
+
+$$
+\dim A_\infty=\dim S_\infty=q+1=\dim P.
+\tag{5.6h}
+$$
+
+The ring $P$ is a noetherian local domain.  Any nonzero kernel of $P\twoheadrightarrow
+A_\infty$ would have positive height and make the quotient have dimension at most $q$,
+contradicting (5.6h).  Therefore
+
+$$
+P\xrightarrow{\sim}A_\infty,
+\qquad I_\infty=0,
+\qquad R_\infty^{\mathrm{sp},1}=P.
+\tag{5.6i}
+$$
+
+This kills nilpotents directly from the regular source; topological component support is not
+being promoted to faithfulness.
+
+Since $A_\infty=P$ is finite and local over $S_\infty$, the ideal
+$\mathfrak m_{S_\infty}P$ is $\mathfrak m_P$-primary, so depth of a finite $P$-module may be
+computed over either local ring. The regular ring $P$ therefore has depth $q+1$ over
+$S_\infty$, and Auslander--Buchsbaum over the regular ring $S_\infty$ makes $P$ finite free
+over $S_\infty$. Equation (5.6f) has depth $q+1$ over $P$, and Auslander--Buchsbaum over the
+regular ring $P$ makes $M_\infty^{\mathrm{sp},1}$ finite free of positive rank over $P$. The
+exact finite-level augmentations in $({\rm AUX}_Q)$, retained in the marked inverse-limit
+quotient sequences as in Book 172, give
+
+$$
+R_\infty^{\mathrm{sp},1}/\mathfrak a_\infty
+R_\infty^{\mathrm{sp},1}\simeq R^{\mathrm{sp},1},
+\qquad
+M_\infty^{\mathrm{sp},1}/\mathfrak a_\infty
+M_\infty^{\mathrm{sp},1}\simeq M^{\mathrm{sp},1}.
+\tag{5.6j}
+$$
+
+Quotienting the free $R_\infty^{\mathrm{sp},1}$-module therefore makes
+$M^{\mathrm{sp},1}$ a nonzero free $R^{\mathrm{sp},1}$-module. Its deformation action is
+faithful. The order in $({\rm REC}_v)$ is defined on the primary--companion sum, but its
+kernel is the intersection of the two summand kernels and is therefore already zero on the
+primary summand. Hence the canonical surjection $R^{\mathrm{sp},1}\twoheadrightarrow
+\mathbb T^{\mathrm{sp},1}$ is injective and hence an isomorphism.  Notice that no acting-image
+augmentation was used in this descent; its injectivity follows afterward from Corollary 4.5.
+
+The action image in (5.6g) is therefore the declared
+$\mathbb T_\infty^{\mathrm{sp},1}$. Theorem 4.4 now gives $({\rm ASV}_v)$ and
+$({\rm GR}_v)$. Under $({\rm RAY}_v)$, equations (3.3), (3.5), and (3.6), at every finite
+shadow and hence after patching, tensor these equalities with $\Lambda_v$; strict character
+specialization then gives every fixed-character equality. The generic fiber of each resulting
+faithful order is reduced, so the fixed-character version of (4.8) also gives the asserted
+enhanced tangent--Selmer vanishing. $\square$
+
+Without a coherent unpadded balanced auxiliary system, full support plus an independently
+reduced patched ring would still make the patched action faithful. That support-only criterion is
+valid but weaker: local reducedness, Cohen--Macaulayness, or a reduced finite Hecke order alone
+does not prove reducedness of an abstract patched quotient. Proposition 5.2 avoids that gap by
+starting with the regular domain $P$ and proving that its action kernel is zero by the exact
+variable count.
 
 ### 5.4 Fixed-prime and auxiliary augmentation
 
@@ -1147,11 +1530,16 @@ because cohomology happens to specialize exactly.
 
 For auxiliary augmentation, Proposition 9.1 therefore stops at the canonical surjection on
 acting images. Corollary 4.5 proves that this surjection is an isomorphism under
-$({\rm GR}_v)$, with $({\rm RAY}_v)$ also retained for the scalar family: the augmented deformation ring surjects onto the augmented acting order and
-then onto the faithful base order, while the composite is the full base $R=T$ isomorphism.
-This also proves the augmented acting order reduced; no separate reduced-source hypothesis is
-needed. Without $({\rm GR}_v)$ or another proof that the base deformation action is faithful,
-injectivity remains genuinely unavailable.
+$({\rm GR}_v)$, with $({\rm RAY}_v)$ also retained for the scalar family: the augmented
+deformation ring surjects onto the augmented acting order and then onto the faithful base
+order, while the composite is the full base $R=T$ isomorphism. Proposition 5.2 supplies
+$({\rm GR}_v)$ whenever the coherent unpadded balanced $({\rm AUX}_Q)$ system is retained, so
+exact
+acting-image augmentation is a conclusion in that range, not an additional patching
+hypothesis. This also proves the augmented acting order reduced; no separate reduced-source
+hypothesis is needed. For an isolated auxiliary level not belonging to such a coherent system,
+Corollary 4.5 still requires $({\rm GR}_v)$ or another proof that the base deformation action
+is faithful.
 
 Reduced comparison can be applied directly at every finite auxiliary level, where full support
 is already known. It is therefore unnecessary, and generally unsafe, to assume that reduction
@@ -1347,7 +1735,9 @@ It explicitly constructs no pre-$R=T$ chain map from a Galois cotangent complex 
 automorphic Gram complex. Consequently (6.6) is not called a local cotangent determinant,
 an augmented congruence ideal, or a determinant-line comparison here. Any such conclusion
 requires the additional primitive rank-one, isolation, and cross-determinant hypotheses of
-the relevant numerical theorem. Independently, the normalized-branch Smith module and the
+the relevant numerical theorem. Corollary 4.4a states the minimal exact output: it is enough
+to make the zeroth Fitting ideal of every branchwise Galois cotangent nonzero. Equality (6.9)
+inside the reduced Hecke order does not do that. Independently, the normalized-branch Smith module and the
 Néron graph component group remain distinct and need not vanish merely because the full
 degeneracy image is saturated.
 
@@ -1473,32 +1863,38 @@ contracting a conductor ideal.
 
 ### 8.1 Direct prerequisite ledger
 
-The declared dependency row is $67,69,109,173,138,139,140,170,174$. Their exact roles after the
-audit are as follows.
+The declared dependency row is
+$67,69,109,138,139,140,143,170,171,172,173,174$. Their exact roles after the audit are as
+follows.
 
 | Book | Result used | Boundary retained |
 |---|---|---|
-| 67, *Local Deformation Conditions Away from $\ell$* | the enhanced-line tangent term and its linearized special equations in Section 8.4 | at coincident line characters or zero monodromy, the flag direction cannot be replaced by an ordinary local $H^1$ subspace |
-| 69, *Global Deformation Problems* | the global cocycle, coboundary, and ordinary tangent--Selmer assembly used in (4.8) | it supplies no enhanced-line term and no tangent vanishing; Book 67 supplies the former and $({\rm GR}_v)$ asks for the latter |
+| 67, *Local Deformation Conditions Away from $\ell$* | the enhanced-line tangent term and the linearized special equations used in (4.7d)--(4.7f) and (4.8b) | the flag cannot be replaced residually by an ordinary local $H^1$ subspace; it becomes determined by Frobenius only after inverting $\varpi$ |
+| 69, *Global Deformation Problems* | the global mapping-fiber obstruction presentation and the cocycle--coboundary tangent assembly | the enhanced local complex must be inserted with both its degree-zero automorphisms and degree-one tangent; it supplies no characteristic-zero tangent vanishing |
 | 109, *Solvable Base Change and Descent* | recursive cyclic descent selected by an extending irreducible arithmetic representation | used only after top-field automorphy; invariance under a noncyclic solvable group is not enough |
 | 173, *Minimal Modularity Lifting* | comparison point for the neutral minimal theorem and its finite-flat range | its equality is not applied to $R^{\mathrm{sp},1}$; the scalar Kummer and line-special directions do not satisfy that identification |
 | 138, *Integral Local Types and Type Lattices* | enhanced special line, primary and companion lattices, primitive type occurrence, Frobenius conventions | at $q_v\equiv1$ a line enhancement replaces old-root separation; local lattices alone do not prove global support |
 | 139, *Ihara Theory and Saturated Degeneracy Maps on Shimura Curves* | residual two-map Ihara injectivity and primitive saturation | conditional on the abelian Ihara hypothesis; full-map saturation does not create a scalar selected summand |
 | 140, *Integral Level Change and Jacquet--Langlands Comparison* | node, graph, component-group, normalized Smith comparisons, and constant-coefficient generic support in the clean special block | datum-specific node uniformization and the typed extension remain separate; branch correction and the Néron component group are distinct; typed generic support is instead derived in Book 174 after its typed filtration |
+| 143, *Taylor--Wiles Primes* | the split-detector and prime-selection mechanism, the sharp auxiliary tangent count, and represented-ring augmentation | applicability to the recomputed enhanced dual group and the resulting exactly $q$ ordered killing primes are retained explicitly in the unpadded $({\rm AUX}_Q)$ hypothesis; prime selection alone supplies no automorphic module |
 | 170, *Hecke-Valued Galois Representations and Nonminimal Reciprocity* | the order-valued representation, named local factorization, trace generation, and the surjections (3.13) | every generic branch and every structural generator must be accounted for; a pseudorepresentation alone is insufficient |
+| 171--172, *Minimal Deformation--Hecke Problem* and *Minimal Patching* | the unchanged clean local balance ledger, marked finite-shadow quotient patching, and equal-variable rigidity over the regular absolute and diamond sources | the minimal $R=T$ equality is not applied to the conductor-one ring; the enhanced local defect and the nonminimal module are recomputed here and in Book 174 |
 | 174, *One-Prime Type Complexes and Component Support* | scalar chart, twist identities, projective primary--companion complexes, conditional full named-component support, Proposition 6.3 typed generic-kernel and integral faithful-order equality, exact fixed-prime augmentation, and Proposition 9.1 auxiliary augmentation on both adjoint sides | the typed parahoric extension, type-Ihara, primitive-residue, node, Book 125 routing, and boundary chart inputs retain their stated roles; auxiliary acting-image augmentation is only a surjection there; no global reducedness or nonminimal $R=T$ is asserted |
 
 The proof of Theorem 4.2 uses Books 170 and 174 directly, with Books 138--140 supplying the
-hypotheses built into Book 174. Books 67 and 69 enter only in the enhanced tangent equivalence
-of Theorem 4.4. Book 173
+hypotheses built into Book 174. Books 67 and 69 enter both the balanced enhanced presentation
+of Proposition 4.3b and the tangent equivalence of Theorem 4.4. Book 173
 is not an augmented-fiber $R=T$ input, and Book 109 is used only for the final descent
 statement. Book 152's torsor and module augmentation enter transitively through Book 174;
 Proposition 9.1 turns them into exact primary--companion augmentation, while Corollary 4.5
-derives acting-image injectivity only after $({\rm GR}_v)$.
-Books 141 and 171--172 likewise enter transitively through Book 174's Taylor--Wiles and lower-boundary
-support datum; none is used here to manufacture nonminimal support or reducedness.
+derives acting-image injectivity after $({\rm GR}_v)$. Book 143 and Books 171--172 are direct
+sources for Proposition 5.2's sharp auxiliary count and equal-variable argument. Their
+mechanics are applied to the enhanced problem only after (4.7f)--(4.7f') recompute its local
+defect and Book 174 supplies its nonzero free module. No minimal nonminimal ring map and no
+minimal $R=T$ equality is imported. Book 141 still enters transitively through the detector
+clause of Book 143 and $({\rm SUP}_v)$.
 
-### 8.2 The first unsupported step in the full theorem
+### 8.2 The original circular step and its repair
 
 The original full-equality route first fails at the assertion
 
@@ -1516,11 +1912,17 @@ minimal complex. Book 173 does not prove an equality for the scalar conductor-on
 ring with its Kummer directions. Book 170 independently warns that minimal and sign-selected
 special functors need not be related by a ring map.
 
-After replacing (8.1) by the correct augmentation (5.5), Book 174 supplies amplitude under
-$({\rm TYPE}_v)$ and full support under $({\rm SUP}_v)$. Once
+After replacing (8.1) by the correct augmentation (5.5), Book 174 supplies a nonzero module
+free over the diamond source under $({\rm TYPE}_v)$ and $({\rm SUP}_v)$. The balanced enhanced
+calculation (4.7f)--(4.7g), rather than the neutral minimal equality, supplies the regular
+absolute source of the same dimension. With the coherent unpadded $({\rm AUX}_Q)$ system retained,
+Proposition 5.2 applies equal-variable rigidity to those two sources and proves the full
+patched and finite equalities.
+
+If that coherent auxiliary system is not available, then after
 $({\rm AUT}_v)$, $({\rm TYPE}_v)$, $({\rm SUP}_v)$, and $({\rm REC}_v)$ have actually been
-verified, together with $({\rm RAY}_v)$ for the scalar family, the remaining gap in a full
-finite-level $R=T$ proof is
+verified, together with $({\rm RAY}_v)$ for the scalar family, the exact alternative input for
+a full finite-level $R=T$ proof is
 
 $$
 ({\rm GR}_v),
@@ -1530,12 +1932,15 @@ R^{\mathrm{sp},1}\text{ is reduced}.
 $$
 
 Local reducedness of (3.2), expected dimension, Cohen--Macaulayness, and reducedness of the
-Hecke image do not prove (8.2) for the global quotient. Theorem 4.4 proves both directions of
-the equivalence: the first exact external arithmetic theorem is vertical torsion-freeness plus
-vanishing of every characteristic-zero enhanced tangent--Selmer group with the represented
-local equations. At nonzero monodromy this is the ordinary exact-condition adjoint Selmer
-group; at a zero-monodromy boundary point it also records the flag tangent. Theorems 4.2 and
-7.1 are the strongest unconditional conclusions available without it.
+Hecke image do not prove (8.2) for the global quotient. Proposition 4.3b separately proves
+vertical torsion-freeness from the balanced enhanced presentation and finiteness. Theorem 4.4
+therefore reduces (8.2) to one exact external arithmetic theorem: vanishing of every
+characteristic-zero tangent--Selmer group with the represented local equations. The enhanced
+line is retained in forming that group. At nonzero monodromy it is determined by $N_x$, and at
+a zero-monodromy point (4.8b) shows that it is determined by the distinct characteristic-zero
+Frobenius eigenvalues. Corollary 4.4a is the exact branchwise cross-cotangent formulation of
+this alternative. The flat dual-number example (4.10) shows why balance, finite flatness, and
+support without the coherent scalar action cannot replace it.
 
 There are earlier blockers to an unconditional arithmetic application. For the finite reduced
 comparison itself, they are the actual localization $({\rm AUT}_v)$; the independent type
@@ -1544,13 +1949,13 @@ $({\rm SUP}_v)$; branchwise reciprocity and exact generation in $({\rm REC}_v)$;
 effective ray quotient $({\rm RAY}_v)$ when the scalar family is used. The finite family
 $({\rm AIH}_{\mathscr F})$ is additionally required whenever the constant-coefficient
 level-change or normalized-residue package is invoked; it does not replace the typed
-hypotheses. Under $({\rm AUX}_Q)$, auxiliary primary and companion augmentation is already
-Proposition 9.1 of Book 174. Its acting-image quotient is not needed to apply Lemma 4.1 directly at
-a retained finite level; Corollary 4.5 makes that quotient exact under $({\rm GR}_v)$. If one
-instead tries to descend only a patched equality without $({\rm GR}_v)$, an independent
-identification of the patched acting quotient is still required. Books 139 and 174 give
-precise conditional implications after the applicable inputs are supplied; they do not prove
-those inputs from the bare residual representation.
+hypotheses. Under a coherent unpadded $({\rm AUX}_Q)$ system, auxiliary primary and companion
+augmentation is Proposition 9.1 of Book 174 and Proposition 5.2 supplies $({\rm GR}_v)$;
+Corollary 4.5 then makes the acting-image quotient exact. At an isolated auxiliary level the
+acting-image quotient is not needed to apply Lemma 4.1 directly, but its injectivity still
+requires base faithfulness. Books 139 and 174 give precise conditional implications after the
+applicable inputs are supplied; they do not prove those inputs from the bare residual
+representation.
 
 ### 8.3 No finite-set or hidden-support argument
 
@@ -1617,23 +2022,36 @@ the finite-level kernel is exactly the nilradical, yielding the reduced comparis
 
 Every characteristic-zero deformation point kills that nilradical, so the reduced theorem
 proves the one-prime finite-flat modularity statement needed by the arithmetic application.
-What the imported source chain does not prove is $({\rm GR}_v)$: vertical torsion-freeness of
-the conductor-one global ring and vanishing of its enhanced fixed-condition tangent--Selmer
-groups at all characteristic-zero points. Theorem 4.4 proves that this assertion is equivalent to
-global reducedness and to full $R=T$. The scalar family is the
-tensor product of the conductor-one line-special problem with $\Lambda_v$ on both deformation
-and Hecke sides, so it carries any nilpotent kernel with it. At finite level,
-$R^{\mathrm{sp},1}$ is reduced if and only if the canonical comparison is a full equality;
-Corollary 4.5 then forces exact auxiliary acting-order augmentation under $({\rm AUX}_Q)$ and,
-for the scalar family, $({\rm RAY}_v)$, so no separate reduced-source or faithful-order
-hypothesis remains. At patched level, Proposition 5.2 gives
-the full equality under the separately named $({\rm RED}_\infty)$ hypothesis, but descent from
-that route still needs an independently identified acting quotient unless $({\rm GR}_v)$ is
-also known.
+Proposition 4.3b proves the vertical torsion-freeness clause of $({\rm GR}_v)$. The enhanced
+definition checks the line at every point, while (4.8b) proves that no independent
+flag direction survives at the monodromy-zero boundary. Theorem 4.4 identifies vanishing of
+all exact fixed-condition adjoint tangent--Selmer groups with global reducedness and full
+$R=T$.
+
+Proposition 5.2 proves that vanishing under the coherent unpadded balanced $({\rm AUX}_Q)$
+system. Its
+regular source $P=\mathcal O[[X_1,\ldots,X_q]]$ and diamond source
+$S_\infty=\mathcal O[[Z_1,\ldots,Z_q]]$ have the same dimension; the nonzero
+$S_\infty$-free primary module makes the scalar map faithful, so any nonzero action kernel in
+the domain $P$ would lower dimension. Hence the patched ring is $P$, the module is free over
+it, and exact marked augmentation makes the finite conductor-one action faithful. This proves
+full patched and finite $R=T$ without assuming patched reducedness, acting-image augmentation,
+or the desired Selmer vanishing. The scalar family is then the tensor product with
+$\Lambda_v$ on both deformation and Hecke sides. Corollary 4.5 consequently forces exact
+auxiliary acting-order augmentation, so no separate reduced-source or faithful-order
+hypothesis remains in the coherent range.
+
+Without a coherent auxiliary system, Corollary 4.4a remains the precise alternative: a
+branchwise Galois cotangent must be shown torsion, for example by an independent automorphic
+cross-cotangent theorem. The flat dual-number countermodel proves that finite flatness and
+topological support alone cannot give this conclusion.
 
 Accordingly, this book's bounded conditional theorem is **READY**: under the exact named
-arithmetic hypotheses it proves the reduced one-prime comparisons, strict character
-specialization, pointwise conductor-one and conductor-two modularity, and the precise
-conditional full $R=T$ criterion. The stronger unconditional catalog assertion remains
-unproved, first at the arithmetic localization/type/support inputs above and, even after those
-are granted, at global nilpotent control.
+arithmetic hypotheses it proves the reduced one-prime comparisons, vertical finite flatness,
+strict character specialization, and pointwise conductor-one and conductor-two modularity.
+When the coherent unpadded $({\rm AUX}_Q)$ system is retained, it also proves full patched and
+finite
+one-prime $R=T$, every characteristic-zero enhanced tangent--Selmer vanishing, and exact
+auxiliary acting-order augmentation. The unconditional arithmetic application remains blocked
+at the separately named localization, type-incidence, type-Ihara, boundary-chart/support,
+reciprocity, and effective ray/auxiliary inputs; no finite-set theorem is asserted here.

@@ -185,9 +185,8 @@ integer. Weak compatibility alone is insufficient for this chapter.
 
 ### 2.3 Ramification away from two
 
-Book 185 gives the common pure polynomials outside $S$, but it does not automatically remove
-every auxiliary prime in $S$. For a candidate place $\nu\mid3$, the additional
-minimal-support conclusion uses the separate clean-support certificate
+Book 185 gives the common pure polynomials outside $S$ and separately proves the clean-support
+statement
 
 $$
 (\mathrm U)\qquad
@@ -196,16 +195,17 @@ r_\nu\text{ is unramified at every rational prime }v\ne2,3
 \tag{2.9}
 $$
 
-Only the finitely many auxiliary primes left by Book 185 require new checks. This certificate
-is an input, not a consequence of equality at the cofinite set of good Frobenius classes. In
-particular, removal of the old coefficient prime $p$ must be certified by the actual local
-record at $p$ for $r_\nu$; it is not deduced from $p$'s role in the original member.
-
-Book 185, Proposition 8.1 gives the exact source-facing reduction: if the common bad-place
-set of the genuine descended realization is supported at two
-($(\mathrm{Cond}_2)$), then its actual unramified-specialization theorem gives
-$(\mathrm U)$ for every $\nu\mid3$. The support-at-two premise is an additional arithmetic
-conductor theorem; the existence of some common finite bad set does not prove it.
+This is not a consequence of equality at the cofinite set of good Frobenius classes.  Book
+185, Proposition 8.3 proves it by a different argument: equivariant conductor and
+invariant-Frobenius independence anchor every elementary raw packet at the distinguished
+irreducible member; Book 128, Lemma 3.2 passes its unramified pair to the elementary
+semisimplification; and actual Brauer direct-sum cancellation constructs the common rank-two
+local complement.  The distinguished member makes that complement unramified away from $2$
+and the old coefficient prime, and the split unitary good cover treats that old prime.  Thus
+Book 185 proves $(\mathrm{AUX}_{\mathrm{all}})$ and $(\mathrm{AUX}_\nu)$,
+$(\mathrm{Cond}_2)$, and then $(\mathrm U)$
+for every $\nu\mid3$.  The argument also supplies an exceptional-prime Galois Frobenius
+polynomial, but not its weight-one purity or an automorphic-type identification.
 
 ## 3. The special parameter at two
 
@@ -352,7 +352,8 @@ Every root of the algebraic polynomial $P_v\in E[X]$ has complex absolute value 
 under every complex embedding. Separately, the clean-support certificate $(\mathrm U)$ says that
 $V$ is unramified at all $v\ne2,3$, including the finitely many auxiliary primes not covered
 by the certified good set. It does not manufacture a pure common polynomial at one of those
-auxiliary primes.
+auxiliary primes: Book 185 supplies the common unramified Galois polynomial there, but not the
+separate weight-one purity assertion.
 
 In addition,
 
@@ -575,7 +576,7 @@ For each $\nu\mid3$, record the following without conflation:
 | $K$ and $k$ | factorization of $3\mathcal O_E$ |
 | existence of $V=r_\nu$ | the actual family (2.1) |
 | good Frobenius polynomials and purity | Book 185's certified set $v\notin S$ |
-| clean support outside $\{2,3\}$ | the separate certificate $(\mathrm U)$ |
+| clean support outside $\{2,3\}$ | Book 185, Propositions 8.3 and 8.1 |
 | special record at $2$ | strong compatibility (4.6) |
 | residual representation | a named stable lattice |
 | absolute irreducibility or image | a direct calculation or an exact imported theorem |
@@ -590,9 +591,8 @@ and assuming that all places above it behave alike.
 ## 7. Prime-switch theorem
 
 **Theorem 7.1 (Frey special record at coefficient prime three).** Assume the rational input
-contract of Sections 2.1--2.2, and choose a place $\nu\mid3$ of the final coefficient
-field. Let $V=r_\nu$. The additional minimal-support assertion below is conditional on
-$(\mathrm U)$ for this $\nu$.
+contract of Sections 2.1--2.3, and choose a place $\nu\mid3$ of the final coefficient
+field. Let $V=r_\nu$.
 
 Then:
 
@@ -600,8 +600,8 @@ Then:
    $\det V=\chi_3$; it is not obtained by tensoring the original $p$-adic member
    with $E_\nu$.
 2. At every certified good prime $v\notin S$ with $v\ne3$, it has the common
-   polynomial $P_v$, whose roots are pure of weight one. Under $(\mathrm U)$ it is
-   unramified outside $\{2,3\}$.
+   polynomial $P_v$, whose roots are pure of weight one. It is unramified outside
+   $\{2,3\}$.
 3. Its Frobenius-semisimple Weil--Deligne pair at $2$ is
    $D_2\otimes_EE_\nu$.
 4. Its monodromy is nonzero of rank one. The line
@@ -640,8 +640,9 @@ $$
 $$
 
 together with the rational ramification statement and the special line at $2$.
-Here the ramification statement is the assumed certificate $(\mathrm U)$, not a
-consequence of weak compatibility. Book 187's task is separate from Theorem 7.1:
+Here the ramification statement is Book 185's Galois auxiliary-comparison theorem, independently
+checked by its conductor calculation, and is not a consequence of weak compatibility. Book
+187's task is separate from Theorem 7.1:
 it must be supplied with its coefficient-prime certificate $(\mathrm C_3)$ and may then
 construct or identify a global stable lattice with the needed finite-flat quotient system and
 return that same named lattice $T$. Neither the target Hodge labels in (8.1) nor the rational
@@ -796,8 +797,8 @@ The first bullet already includes Book 183's prior raw-to-global preservation ce
 chapter cannot use the selected coefficient-$3$ member, or the final family containing it, to
 prove that upstream certificate.
 
-The optional minimal-support assertion additionally imports the separate certificate
-$(\mathrm U)$ for the selected member. The theorem does not import a later finite-flat theorem, residual classification, or final
+The support assertion imports Book 185, Proposition 8.3 through the rational family package.
+The theorem does not import a later finite-flat theorem, residual classification, or final
 FLT contradiction. It also does not import $(\mathrm{AI}_2)$, because no coefficient-two
 member is used. Books 187--188 receive the outputs in that order and do not feed
 assumptions backward into the proof. Book 161 is the actual category/classification input used
@@ -811,7 +812,7 @@ Every occurrence of a residual representation is attached either to a named
 lattice or explicitly marked as a semisimplification. Every claim at the base
 place $3$ is deferred to a coefficient-prime certificate. Every conductor claim
 states whether it is rational or residual. The clean-support assertion is visibly
-conditional on $(\mathrm U)$, the prime-three route is independent of $(\mathrm{AI}_2)$, and
+derived from Book 185's equivariant Galois-comparison theorem, the prime-three route is independent of $(\mathrm{AI}_2)$, and
 the missing controlled seed remains an upstream hypothesis. Pure weight one is recorded
 separately from the Frobenius constant term and determinant.
 

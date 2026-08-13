@@ -86,7 +86,8 @@ all of the required post-specialization lower faces and clean minimal support.  
 elementary descent ledger.  Proposition 7.2A now supplies basic all-coefficient attachment for
 every candidate packet and its cyclic compatibility, so Book 109 can select the
 quotient-character correction once the candidate is automorphic.  The raw SP geometry,
-auxiliary-place return data, and uniform raw-to-global preservation remain separate.  Book 181
+automorphic auxiliary type/return data, and uniform nonzero-monodromy raw-to-global preservation
+remain separate; Proposition 7.2B supplies the weaker unramified Galois pairs away from two.  Book 181
 still proves the chosen-lift implication only conditional on the arithmetic seed.  This volume
 therefore cannot assert the desired potential-automorphy theorem.  Its status is **NOT READY**.
 
@@ -621,17 +622,18 @@ actual curve carrier in every relevant coefficient characteristic.  The rational
 theorem $(\mathrm{TS})$ for their Jacobians is sufficient, but the current dependency chain
 does not prove it.  These conditions are exactly why Book 183 calls its top packet “selected.”
 
-At every retained auxiliary prime, the same certificate must be strict enough for the later
-finite support test.  A spherical row includes the complete good model and hyperspecial
-comparison.  A principal or tame-dihedral row includes the actual descended finite
-nearby-cycle complex, type and exchange lines, the proof that $N=0$, every Frobenius return map,
-at the distinguished coefficient and at each auxiliary coefficient later retained. Book 128,
-Lemma 3.2 then gives raw-to-global passage formally from $N=0$. These are the data called $(\mathrm{AUX}_\nu)$ and
-$(\mathrm{AUX}_{\mathrm{all}})$ after assembly in Book 185.  Books 128 and 168 recognize the
-local parameter from such data but do not construct the geometric complex, lines, or return
-maps.  They therefore belong to this
-controlled attachment interface before Book 183, not to a new theorem derived from the Brauer
-complement afterward.
+For a full automorphic local-type statement at every retained auxiliary prime, a spherical row
+still needs the complete good comparison, while a principal or tame-dihedral row needs the
+actual descended nearby-cycle complex, type and exchange lines, zero monodromy, and every
+Frobenius return map.  Books 128 and 168 recognize the local parameter from such data but do
+not construct it.  The Galois auxiliary comparison is weaker and is source-closed.  Section
+7.3 uses equivariant conductor and invariant-Frobenius independence for the actual Jacobian
+Hecke factors to construct a common unramified algebraic pair for every untwisted elementary
+packet member away from two.  Algebraic finite twisting and Weil induction then construct the
+full local Mackey objects.  Book 185 combines them with the actual effective Brauer
+decomposition and proves $(\mathrm{AUX}_{\mathrm{all}})$, hence
+$(\mathrm{AUX}_\nu)$, $(\mathrm{Cond}_2)$, and the support conclusion.  These Galois
+comparisons do not identify the automorphic principal or dihedral type.
 
 This volume does not construct the elementary packets.  That is the subject of Book 183.  It
 only identifies the certificates which must accompany $\pi_M$ so that Book 183 may construct
@@ -1384,13 +1386,27 @@ For the normal-top seed, there is no ascent ledger: $F=M$.  At the distinguished
 the local and group-theoretic part of the downward ledger reduces once Theorem 5.1 has produced
 the minimal packet.
 Every place above $2$ or $\ell$ splits at every intermediate step; the dyadic special factor is
-therefore unchanged.  Every other finite factor is spherical.  In a nonsplit cyclic step, the
-extensions of such a spherical parameter are principal-series or selected tame-dihedral
-factors.  Indeed, local Clifford theory makes every irreducible rank-two extension across a
-prime cyclic quotient dihedral, and it can occur only across a quadratic step; away from two a
-ramified quadratic step is tame.  The only omitted rank-two boundary is therefore ramified
-dyadic, which complete splitting excludes.  This proves extension-completeness for the whole
-fixed-determinant fiber, not merely for the extension selected by $\rho$.
+therefore unchanged.  Every other finite factor at the top is spherical.  Local Clifford
+theory does control the **irreducible** rank-two extensions of such a factor: an irreducible
+extension across a prime cyclic quotient is dihedral, can occur only across a quadratic step,
+and a ramified quadratic step away from two is tame.  It does not make the reducible extension
+fiber tame.  If $L/K$ is a wildly ramified cyclic extension of degree equal to the residue
+characteristic and $\psi$ is a nontrivial character of $\operatorname{Gal}(L/K)$, then for
+unramified $\alpha,\beta$ the principal pair
+
+$$
+(\alpha\psi)\oplus(\beta\psi^{-1})
+$$
+
+restricts to a spherical pair over $L$ and has the same fixed determinant $\alpha\beta$, but
+has nontrivial wild inertia over $K$.  Thus the cyclic descent ledger proves only
+principal-or-dihedral extension-completeness.  Calling every principal row tame additionally
+requires, at each actual local step, that wild inertia have trivial image in the cyclic
+quotient, equivalently that the relevant local ramification index be prime to the residue
+characteristic.  Proposition 4.1 imposes complete splitting at the named sensitive primes; it
+does not prove this condition at every prime ramified in the normal top.  The first local
+boundary is therefore the actual field-tameness ledger, not only ramified dyadic dihedral
+descent.
 Quotient-character twists remain in the same selected families.  The real weight-two discrete
 series supplies the strongly cuspidal comparison factor.  Closure-level avoidance preserves
 absolute irreducibility of $\bar\rho|_{G_M}$; the stable lattice therefore forces
@@ -1440,6 +1456,27 @@ basic quaternionic packet.  The carrier is split at every place above $3\ell$, a
 is spherical there, so hyperspecial level may be chosen at those places.  Book 127, Theorem
 8.1 and Book 168, Theorem 12.1 attach the full semisimple coefficient family.
 
+There is also a complete rational good-place comparison at every place above $\ell$.  For each
+of the finitely many carriers, choose the imaginary quadratic field in Book 118, Proposition
+8.3 nonsplit at the finite ramification of $B$ and split at $\ell$.  These simultaneous local
+conditions are exactly the arrangement recorded after that proposition.  Enlarge the derived
+level by the harmless central signs and apply Book 118, Corollary 10.3A with
+$S=\{\ell\}$.  It gives, after an extension unramified above $\ell$, a finite surjective map
+
+$$
+Y\longrightarrow X
+\tag{7.7a}
+$$
+
+from the unitary PEL curve to the basic carrier, with both levels hyperspecial above $\ell$.
+Book 121, Theorem 11.2 makes $Y$ smooth and proper there.  Pullback and trace on Jacobians
+satisfy $f_*f^*=(\deg f)$, so $H^1(X)$ is a rational direct summand of $H^1(Y)$.  It is
+therefore unramified after the displayed unramified base change, hence already unramified
+because that base change does not alter inertia.  Every packet multiplicity factor is
+unramified at places above $\ell$ for coefficients of different residue characteristic.
+This proves the spherical comparison needed at the distinguished rational prime without
+asserting that the direct basic curve itself represents a PEL functor over the trait.
+
 For a candidate cyclic base change or quotient twist, compare the two attached semisimple
 representations at the density-one set of unramified places.  The automorphic Hecke identities
 give respectively restriction or tensoring by the finite character.  Chebotarev and
@@ -1457,20 +1494,90 @@ factor and cannot satisfy the dyadically tensor-split ledger.  A raw SP carrier 
 requires an eligible odd set away from two and a non-common-norm parahoric comparison, or a
 different geometric construction.
 
-The same controlled geometric theorem must cover the retained auxiliary primes.  At a
-principal or tame-dihedral auxiliary place, Books 128 and 168 provide recognition theorems,
-not construction theorems.  For every actual carrier they require the descended finite
-nearby-cycle complex, the relevant type lines, the proof that $N=0$, the exchange maps, and
-every Frobenius return map.  They also require the raw-to-global comparison at the
-distinguished coefficient and, for the final all-place statement, at each retained auxiliary
-coefficient.  Book 128, Lemma 3.2 now proves that comparison automatically once the displayed
-zero-monodromy calculation exists.  The remaining geometric clauses are precisely the auxiliary-local part of the controlled
-all-elementary attachment datum already needed before Book 183; they are not a new theorem
-that may first be introduced after Brauer assembly.
+For the support-at-two application, the full principal/dihedral parameter is stronger than
+necessary.  The geometric origin of the packet gives a shorter coefficient-independence
+argument which must be kept separate from local Langlands recognition.
 
-**Required Theorem 7.3 (controlled auxiliary tame geometry).** For the finite list of actual
-basic carriers and every retained nonspherical auxiliary place $v\nmid2\ell$, construct a fine
-tame-level model which becomes strict semistable over a named finite tame extension and carries
+**Proposition 7.2B (distinguished unramified-pair anchor).**  For every actual basic carrier in
+Proposition 7.2A, let $W^{\mathrm{raw}}_{H,\tau}$ be its rank-two Hecke multiplicity space and
+let $r_{H,\tau}$ be its global semisimplification.  If $w$ lies above a rational prime
+$q\ne2$ and the residue characteristic of $\tau$ differs from $q$, then
+
+$$
+W^{\mathrm{raw}}_{H,\tau}|_{G_{(F_H)_w}}
+\quad\hbox{and}\quad
+r_{H,\tau}|_{G_{(F_H)_w}}
+\quad\hbox{are unramified}.                 \tag{7.7b}
+$$
+
+Moreover, over the common packet field there is an unramified algebraic
+Frobenius-semisimple pair $D_{H,w}$ such that
+
+$$
+\operatorname{WD}_w(r_{H,\tau})^{\mathrm{F\text{-}ss}}
+\simeq D_{H,w}\otimes_\tau\Omega
+\qquad(q\ne q(\tau)).                         \tag{7.7d}
+$$
+
+This assertion identifies the Galois Frobenius return polynomial.  It does not identify a
+ramified automorphic inertial type at $w$.
+
+**Proof.**  First suppose $q\ne\ell$.  At the distinguished embedding, the global
+semisimplification of $W^{\mathrm{raw}}_{H,\iota_0}$ is
+$\rho|_{G_{F_H}}$, which is absolutely irreducible because its restriction to $G_M$ is.
+The raw multiplicity space has dimension two.  A representation whose semisimplification is
+an irreducible representation of the same dimension has one Jordan--Holder factor and is
+itself irreducible.  Hence
+
+$$
+W^{\mathrm{raw}}_{H,\iota_0}\simeq\rho|_{G_{F_H}}. \tag{7.7c}
+$$
+
+The right side is unramified at $w$ by (1.3).
+
+Let $J_H$ be the Jacobian of the carrier and let $C_H$ be the finite semisimple rational
+Hecke image used in the double-centralizer extraction of Books 125 and 127.  Generic Hecke
+correspondences act on $J_H$ up to isogeny, and the selected raw factor is, up to the harmless
+dual and Tate normalization, the multiplicity space (12.12a) of Book 61.  Book 61,
+Proposition 12.3 makes its Artin conductor and inertia-invariant Frobenius polynomial at $w$
+independent of the coefficient place.
+Equation (7.7c) makes that conductor zero at $\iota_0$; it is therefore zero for every
+$\tau$ away from the residue characteristic of $w$.  Thus the raw factor is unramified.
+The common polynomial in Book 61, (12.12b) defines $D_{H,w}$.  Its monodromy is zero, so Book
+128, Lemma 3.2 identifies this Frobenius-semisimple local pair with that of its global
+semisimplification, proving (7.7d).
+
+If $q=\ell$, the unitary-cover argument (7.7a) already makes the entire $H^1$ of the basic
+carrier unramified at $w$ for every coefficient of different residue characteristic.
+Subspaces, multiplicity spaces, and global semisimplifications remain unramified.  Book 61,
+Proposition 12.3 supplies their common Frobenius polynomial, and the same definition gives
+$D_{H,w}$.  This proves (7.7b)--(7.7d). $\square$
+
+The proposition is compatible with field restriction and coefficient extension.  If a term is
+subsequently twisted by a finite quotient character, the underlying packet factor remains
+unramified and its local conductor is twice the conductor of that character.  Its algebraic
+pair is $D_{H,w}\otimes\theta_w$, and Weil induction is algebraic.  Thus the full local Mackey
+objects used in Book 185 exist at every prime away from two and every coefficient place away
+from that prime.  They supply the local input to Book 185's actual direct-sum cancellation,
+which proves the auxiliary comparison certificates and support conclusion.  This does not
+prove that a ramified automorphic type is the local
+Langlands type of the packet factor.
+
+The stronger assertion identifying every retained automorphic local parameter still requires
+controlled geometry.  At a principal or tame-dihedral auxiliary place, Books 128 and 168
+provide recognition theorems, not construction theorems.  For every actual carrier they
+require the descended finite nearby-cycle complex, the relevant type lines, the proof that
+$N=0$, the exchange maps, and every Frobenius return map.  Book 128, Lemma 3.2 gives the
+raw-to-global comparison once zero monodromy is known.  Proposition 7.2B shows, however, that
+none of these type-identification data is needed for the Galois auxiliary comparisons:
+equivariant conductor and Frobenius independence already construct unramified algebraic
+packet pairs.  The two goals must not be bundled together.
+
+**Required Theorem 7.3 (controlled auxiliary tame geometry).** First verify, for the finite
+list of actual basic carriers and every retained nonspherical auxiliary place
+$v\nmid2\ell$, that the selected local cyclic quotient has trivial wild-inertia image.  For
+each row satisfying that ledger, construct a fine tame-level model which becomes strict
+semistable over a named finite tame extension and carries
 the finite descent action, full component routing, packet projector, and selected local type
 projector on its equivariant nearby-cycle complex. Prove that wild inertia acts trivially on
 the selected rank-two packet part, and on that part prove:
@@ -1491,12 +1598,70 @@ Theorems 7.1 and 8.1 and
 Lemma 3.2 then identify the same principal or dihedral pair on the globally semisimplified
 attachment at all those coefficient places.
 
-The first unresolved clause is the fine tame-level model with its equivariant extension of the
-packet and type projectors. Book 122 constructs the signed descent formalism after such a model
-exists, while Books 128 and 168 reconstruct the parameter after its lines, zero monodromy, and
-return maps have been computed; none constructs this model for the actual retained carrier.
-Thus Required Theorem 7.3 is controlled attachment geometry, not an AUX theorem created after
-Book 185 and not a consequence of integral Brauer cancellation.
+Three clauses admit formal reductions once the displayed model and its coefficient ledger
+exist.  If the semistable field is tame, then $P_{F_{H,v}}$ is contained in the inertia group
+over that field.  Strict semistability makes wild inertia trivial on the constant
+nearby-cycle complex; the separate field quotient and $({\rm PNS}_v)$ coefficient ledgers make
+it trivial on the selected node-to-node type module.  Only after both checks is trivial wild
+inertia on the projected packet automatic.  If the principal inertia
+characters are distinct, $N$ commutes with inertia, preserves the two one-dimensional
+eigenspaces, and is nilpotent on each, so $N=0$.  The same argument after restriction to the
+quadratic field proves $N=0$ in the dihedral row with distinct inducing lines.  Thus the
+independent restriction--Gysin calculation is needed only at the equal-inertia principal
+boundary (or wherever the asserted line distinction fails).  Finally, determinant plus one
+return scalar can determine the second scalar in rank two, and in the dihedral exchange basis
+$j^2$ is determined by the exchange matrix and its determinant.  An inertial type by itself
+still determines no return scalar, so at least one normalized return calculation remains
+load-bearing.
+
+The source boundary here is categorical, not terminological.  Books 72--76 construct the
+smooth principal/dihedral representations, their type and newvector data, Weil--Deligne
+parameters, and the selected local Langlands dictionary.  Books 77--84 construct the
+quaternionic representation theory, local Jacquet--Langlands dictionary, orders, and Hecke
+actions.  Books 92--104 supply the global multiplicity-one, trace-formula, automorphic
+induction, and Jacquet--Langlands inputs which identify already existing automorphic packets.
+These are the actual LLC/JL and automorphic inputs; none extends a type projector across a bad
+integral model or computes nearby cycles.  That geometric task begins in Books 118--122 and
+124--125.  Books 127--129 and 168 then attach and recognize a Galois parameter from supplied
+cohomological lines, exchange maps, monodromy, and return scalars; they do not manufacture
+those local geometric data.  Thus importing the local LLC/JL theorem cannot close
+$({\rm PNS}_v)$, while proving $({\rm PNS}_v)$ would still leave the stated recognition step
+to those books.
+
+There are consequently two successive unresolved clauses.  The first is the field-theoretic
+tameness ledger just stated; the wildly ramified principal example above shows that it is not a
+consequence of local Clifford theory.  If that ledger is supplied, the first geometric clause
+is the residue-prime fine model with an equivariant extension of both the packet and type
+projectors.  Book 61 gives stable reduction only after an unspecified finite separable
+extension.  Book 124 extends a generic Jacobian correspondence to the Neron model, but does not
+make its closure finite on a bad curve model or compute its action on nearby-cycle strata.
+Book 122, Proposition 9.2 now constructs the actual common generic principal/ray diagram,
+normalizes every fine vertex and edge object in that algebra, proves objectwise finite local
+freeness and isomorphic lifted top legs, and computes the geometrically constant ray factor.
+Its first exact unresolved input is nevertheless the principal node and stabilizer theorem
+$({\rm PNS}_v)$: the Drinfeld-level/Stein-factor completed rings, decomposition and wild/tame
+annular inertia, node-to-node routing, and generization maps.  In particular, $({\rm PNS}_v)$
+must prove wild inertia trivial on every node-to-node coefficient module; a genuinely wild
+sheet must instead retain its full decomposition action in the normalization-component
+complex.  Only then does Book 22's tame two-term complex apply, with expansion one supplied by
+the common-normalization isomorphism.  Books 128 and 168 reconstruct the parameter only after
+the resulting lines and return maps have been supplied.  Thus the full theorem is not
+source-closed, and $({\rm PNS}_v)$ is its first geometric obstruction after the separate
+field-tameness ledger.
+
+Required Theorem 7.3 must not be identified with either
+$(\mathrm{AUX}_\nu)$ or $(\mathrm{AUX}_{\mathrm{all}})$ in Book 185.  Its statement omits
+the spherical rows and asks for strictly stronger automorphic type data on the nonspherical
+rows.  Proposition 7.2B already constructs the common unramified Galois pair in both kinds of
+row, and Book 185 proves the auxiliary certificates from those pairs.  In particular, any
+claim that the same packet factor has a genuinely ramified principal or dihedral
+local-Langlands parameter must first be reconciled with (7.7d): it cannot simultaneously be
+the unramified Galois pair furnished there.  The unresolved theorem is an automorphic
+type-identification theorem, not a prerequisite for the Galois auxiliary comparison.  As
+currently worded, any retained row whose prescribed parameter is genuinely ramified is not
+merely unproved: its asserted identification is incompatible with (7.7d).  Such a row must be
+eliminated, relabelled spherical, or shown to concern a different factor before the geometric
+problem is even posed.
 
 Finally, once an actual raw carrier is supplied, the uniform preservation problem has no further
 packet-theoretic reduction hidden inside it.  Book 128, Proposition 9.4 and Book 168,
@@ -1512,21 +1677,21 @@ the present source chain therefore does not close this arithmetic input.  At coe
 characteristic two, global semisimplicity still follows from the same input, but the
 prime-to-coefficient local comparison does not produce a dyadic Weil--Deligne pair.
 
-Consequently the exact later bridge theorem is now a **controlled raw-carrier,
-auxiliary-local-geometry, and ambient-semisimplicity theorem**.  Basic all-coefficient
-attachment and its cyclic compatibility are supplied by Proposition 7.2A.  The missing theorem
-must construct the raw dyadic SP carriers in the cases just isolated; construct, at every
-retained principal or dihedral auxiliary prime, the actual descent/type/return-map data and
-the zero-monodromy calculation required by Books 128 and 168; and supply
+Consequently the exact later bridge theorem needed for the packet array and support-at-two
+conclusion is now a **controlled raw-carrier and ambient-semisimplicity theorem**.  Basic
+all-coefficient attachment and its cyclic compatibility are supplied by Proposition 7.2A,
+and Proposition 7.2B supplies every auxiliary unramified algebraic Galois pair.  The missing bridge theorem
+must construct the raw dyadic SP carriers in the cases just isolated and supply
 $(\mathrm{SS}_{\mathrm{array}})$, or directly the weaker interface-level conclusion that all
 raw packet multiplicity spaces are globally semisimple.  The last clause proves
 raw-to-semisimple preservation for the nonzero-monodromy SP pair at every coefficient embedding
-of residue characteristic different from two; it is not needed for the zero-monodromy AUX rows
-and is not supplied by abstract Brauer descent.  This theorem must not be
+of residue characteristic different from two and is not supplied by abstract Brauer descent.
+Required Theorem 7.3 remains the separate stronger local-parameter theorem; it is not needed
+to obtain the clean support.  The bridge theorem must not be
 bundled into Required Theorem 7.1 or used to obscure the earlier failure to construct the
 minimal residual seed itself.  It must also be strictly prior to Book 183: the elementary
 packet array, its effectivity, and the descended compatible system cannot be used backward to
-prove the local geometry or ambient semisimplicity hypotheses which that array consumes.
+prove the raw SP geometry or ambient semisimplicity hypotheses which that array consumes.
 
 ## 8. Dependency, circularity, and downstream audit
 
@@ -1537,6 +1702,8 @@ prove the local geometry or ambient semisimplicity hypotheses which that array c
 | Book 6 | the exact Grunwald--Wang alternative, including preservation of prescribed local characters after the possible exponent doubling | the protected anti-cyclotomic construction or its determinant calculation |
 | Book 44 | the Tate-curve torsion sequence and Kummer extension class | a simultaneous paired-frame point on the Hilbert--Blumenthal twist |
 | Book 109 | prime-cyclic ascent on an exhibited extension-complete selected chain, and descent on exhibited antecedent-complete selected chains with the required fiber saturation and attached arithmetic representations | attachment of candidate cyclic descents, or either direction from solvability alone |
+| Books 61 and 124--125 | equivariant coefficient-independence of Artin conductors and inertia-invariant Frobenius polynomials for Hecke multiplicity factors, and extension of generic Hecke correspondences to Jacobians and Neron models | an identification of an automorphic tame type, an action on nearby-cycle strata, or any type-theoretic normalized return map |
+| Book 122 | the common normalized principal/ray vertex--edge diagram, objectwise finite local freeness, isomorphic lifted top legs, and the ray factor | $({\rm PNS}_v)$: the completed principal Drinfeld/Stein-factor rings, stabilizers, wild/tame annular ledger, node routing, or generization maps |
 | Books 127--128 and 168 | parity-complete basic one-split attachment in degree at least two; the SP and tame local recognition criteria; automatic zero-monodromy raw-to-global passage; reduction of uniform nonzero-monodromy preservation to $(\mathrm{SS}_{\mathrm{array}})$ for the actual carriers | the non-common-norm PEL-exact parahoric comparison needed for any raw SP carrier, the additional away-from-two ramification set in the even-degree minimal case, construction of auxiliary descent/type/return maps, the ambient semisimplicity input needed for SP, or a comparison at the coefficient residue characteristic |
 | Book 164 | the primitive residual Frey SP tuple, intrinsic line, sign, and conductor-one record used in the FLT specialization | a characteristic-zero chosen lift or automorphic seed |
 | Book 173 | exact minimal $R=\mathbb T$ and automorphy of every point of a clean minimal deformation problem | existence of the exact residual automorphic localization |
@@ -1563,7 +1730,7 @@ For the conditional theorem actually proved here, the honest direct dependency r
 
 $$
 \boxed{
-182\mid 6,44,109,127,128,142,153,154,155,157,164,165,168,173,176,178,181.}
+182\mid 6,44,61,109,118,121,122,124,125,127,128,142,153,154,155,157,164,165,168,173,176,178,181.}
 \tag{8.1}
 $$
 
@@ -1578,8 +1745,12 @@ export.
 
 Equation (8.1) does not make the result unconditional.  To mark Book 182 **READY**, a new
 strictly prior result must prove Required Moving Theorem 6.3 and Required Theorem 7.1; a prior
-controlled raw-carrier, auxiliary-local-geometry, and ambient-semisimplicity theorem of Section
-7.3 is also required.  Those results belong in their natural
+controlled raw-carrier and ambient-semisimplicity theorem of Section 7.3 is also required for
+the downstream packet array.  The separate strong-local claim labelled Required Theorem 7.3
+must first remove or relabel every ramified row incompatible with (7.7d); any surviving
+automorphic-type claim additionally needs the field-tameness ledger and $({\rm PNS}_v)$
+geometry isolated there.  Those
+results belong in their natural
 prior owners; no book number may be put in a slot merely because it states the conclusion
 conditionally.
 
@@ -1610,7 +1781,7 @@ $$
 \\ \Downarrow \\
 \text{Book 109: distinguished-coefficient elementary descents selected by }\rho
 \\ \Downarrow \\
-\text{raw SP/AUX carriers, return maps, and }(\mathrm{SS}_{\mathrm{array}})
+\text{raw SP carriers and }(\mathrm{SS}_{\mathrm{array}})
 \\ \Downarrow \\
 (M,\rho,\pi_M,\text{certificates})\text{ is the controlled SP top datum}
 \\ \Downarrow \\
@@ -1618,6 +1789,11 @@ $$
 \end{array}
 \tag{8.2}
 $$
+
+After Proposition 7.2A, Proposition 7.2B and Book 185's algebraic local cancellation run on
+this main branch, prove the Galois AUX certificates, and yield clean support.  Required Theorem 7.3 is a parallel stronger branch from
+the actual carriers to full auxiliary local--global compatibility; it is not an input to the
+support arrow.
 
 Neither patching nor transfer may be moved above the missing-seed line.
 
@@ -1685,18 +1861,17 @@ Section 7.3 reduces the local and group-theoretic descent checks using the exten
 and the split minimal local support.  Proposition 7.2A supplies the basic carrier and
 distinguished/all-coefficient attachment for every candidate cyclic descent, including the
 odd-degree elementary fields, and proves cyclic base-change and twist compatibility.  The
-remaining later bridge blocker is therefore the controlled raw-carrier,
-auxiliary-local-geometry, and ambient-semisimplicity theorem: current sources do not construct
+remaining later bridge blocker is therefore the controlled raw-carrier and
+ambient-semisimplicity theorem: current sources do not construct
 the non-common-norm PEL-exact parahoric comparison needed for the raw SP carrier (and in the
-even-degree minimal case also lack an eligible ramification set away from two), do not construct
-the actual principal/dihedral descent complexes, type lines, exchange and Frobenius return maps
-at every retained auxiliary prime, and do not prove $(\mathrm{SS}_{\mathrm{array}})$ for the
-actual carrier Jacobians.  Books 128 and 168 recognize the auxiliary parameters from those
-data; Book 128, Lemma 3.2 proves their zero-monodromy raw-to-global passage without the last
-input. Ambient semisimplicity remains needed to preserve the nonzero-monodromy SP pair at each
-allowed coefficient embedding. This controlled local-geometry clause is part of the attachment theorem already
-needed before Book 183, not a new topic after assembly.  It is separate from Required Theorem
-7.1 and from the normal-closure construction.
+even-degree minimal case also lack an eligible ramification set away from two), and do not prove $(\mathrm{SS}_{\mathrm{array}})$ for the
+actual carrier Jacobians.  Books 128 and 168 recognize the automorphic type parameters from those
+data, but Proposition 7.2B and the algebraic Galois cancellation of Book 185 prove the AUX
+certificates and clean support without them.  Ambient semisimplicity remains needed to preserve the nonzero-monodromy SP pair at each
+allowed coefficient embedding.  The stronger principal/dihedral type, exchange, and return-map
+identification remains exactly Required Theorem 7.3, with the tameness and spherical
+qualifications recorded above; it is separate from the bridge consumed by Book 183, from
+Required Theorem 7.1, and from the normal-closure construction.
 
 Accordingly,
 

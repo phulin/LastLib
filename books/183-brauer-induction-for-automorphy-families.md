@@ -263,7 +263,12 @@ $\pi_H$ over $F_H=M^H$ with the following properties.
    dyadic place and every coefficient embedding of residue characteristic different from two,
    the full local pair is a scalar extension of that algebraic pair. In particular its
    monodromy is nonzero of rank one, its invariant line and sign are retained, and its Artin
-   conductor exponent is one.
+   conductor exponent is one.  At every finite place $w\nmid2$ there is an unramified
+   algebraic Frobenius-semisimple pair $D_{H,w}$ whose scalar extension is the local pair of
+   $r_{H,\tau}$ whenever the residue characteristic of $\tau$ differs from that of $w$.
+   This latter assertion is Book 182, Proposition 7.2B; it comes from equivariant conductor
+   and invariant-Frobenius independence and does not identify an automorphic type at $w$.
+   Any proposed ramified type would have to be reconciled with this unramified Galois pair.
 6. For any integral Brauer relation for $1_\Gamma$, the twisted packet realizations give a
    signed induced class of virtual rank two and virtual determinant cyclotomic. At $\iota_0$
    it is exactly $[\rho]$. At each good rational prime its Frobenius characteristic series is
@@ -884,6 +889,28 @@ r_{H,\iota_0}\simeq\rho|_{G_{F_H}}
 $$
 
 after one finite scalar extension. We suppress that harmless common extension in the notation.
+
+Book 182, Proposition 7.2B applies to the same actual carrier and rational Hecke block used in
+this construction.  It therefore gives
+
+$$
+r_{H,\tau}|_{G_{(F_H)_w}}\text{ unramified}
+\qquad(w\nmid2q(\tau)).                         \tag{6.4i}
+$$
+
+More precisely, if $w\nmid2$ lies above the rational prime $q$, it supplies an unramified pair
+$D_{H,w}$ over the common packet field such that
+
+$$
+\operatorname{WD}_w(r_{H,\tau})^{\mathrm{F\text{-}ss}}
+\simeq D_{H,w}\otimes_\tau\Omega
+\qquad(q\ne q(\tau)).                          \tag{6.4j}
+$$
+
+The assertion uses coefficient-independent Artin conductors and invariant-Frobenius
+polynomials of the raw Jacobian multiplicity spaces, followed by Book 128, Lemma 3.2.  It
+supplies the Galois Frobenius return polynomial but no identification of a ramified
+automorphic type.
 
 ### 6.3 Determinants and coefficient conjugation
 
@@ -1700,15 +1727,19 @@ characteristic-zero effectivity and cancellation may later be applied.
 
 ### 10.4 Other finite places and the coefficient-prime boundary
 
-For a finite $v\ne2$ whose residue characteristic differs from that of $\tau$, the packet
-array retains exactly the local Weil--Deligne pairs in the proved attachment range. Restriction
-through a field extension keeps the monodromy operator and restricts the Weil action. Finite
-twisting multiplies the Weil action and leaves the nilpotent operator unchanged. Finite
-induction is governed by (10.1).
+For every finite $v\ne2$, (6.4j) gives a common unramified algebraic pair for each untwisted
+elementary packet factor, and it compares with every coefficient realization away from residue
+characteristic $v$.  This is a Galois comparison, not an automorphic local-type comparison.
+Restriction through a field extension keeps the monodromy operator and restricts the Weil
+action. Finite twisting multiplies the Weil action and leaves the nilpotent operator unchanged.
+Finite induction is governed by (10.1).
 
-At a place outside $S_0$ every summand is unramified. At a prime in $S_0$, the full local
-Mackey expression, rather than the good polynomial, is the record. Auxiliary ramification in
-positive and negative terms is not declared canceled: cancellation is an effectivity question.
+At a place outside $S_0$ every summand is unramified. At a prime in $S_0$, the finite Brauer
+character or the field induction can still ramify the positive and negative terms.  Twisting
+the pairs in (6.4j) and applying algebraic Weil induction gives their common algebraic local
+Galois Mackey objects at every such prime.  Auxiliary ramification in positive and negative
+terms is not declared canceled here:
+cancellation is an effectivity question in Books 184--185.
 
 If the local residue characteristic equals the coefficient residue characteristic, the
 prime-to-coefficient Weil--Deligne comparison does not apply. The packet theorem may separately
@@ -1767,8 +1798,10 @@ top datum. Then there are:
 
   computed by the residue-degree formula (9.6) at coefficient embeddings of residue
   characteristic different from $p$, together with the Frobenius-power recurrence (6.4b);
-  and
-- at $2$, the common algebraic SP pair with nonzero rank-one monodromy, invariant line,
+- the common unramified algebraic pairs (6.4j) for every untwisted elementary packet at every
+  finite place away from $2$, including unramifiedness (6.4i) at every coefficient place of
+  different residue characteristic;
+- and, at $2$, the common algebraic SP pair with nonzero rank-one monodromy, invariant line,
   sign $\varepsilon_2$, and conductor exponent one, as a virtual local record for every
   coefficient embedding away from residue characteristic two.
 
@@ -1795,7 +1828,9 @@ multiplicity one proves chain independence and conjugation compatibility.
 
 Chapter 6 applies the earlier packet theorem separately to the finitely many $\pi_H$ and forms
 one coefficient ledger. The distinguished determinant forces every algebraic central
-multiplier to be trivial, giving (6.6). Chapter 7 proves the overlap by two routes. Actual
+multiplier to be trivial, giving (6.6).  Book 182's equivariant conductor and
+invariant-Frobenius theorem gives the common unramified pair (6.4j) at every place away from
+two. Chapter 7 proves the overlap by two routes. Actual
 base change gives (7.1) on an admissible tower. In every case, equality at $\iota_0$, the
 residue-degree recurrence, injectivity of $\iota_0$, density, and Brauer--Nesbitt give (6.4a).
 This yields the Hom-ready conjugate intersection formula.
@@ -1865,7 +1900,7 @@ $$
 | Books 127--128 and 168 | the weight-two packet realizations, covariant arithmetic normalization, coefficient conjugates, algebraic good data, the conditional raw SP comparison, and reduction of its uniform raw-to-global passage to $(\mathrm{SS}_{\mathrm{array}})$ | no construction of a missing carrier, no proof of Book 41's finite-isogeny-class input, no comparison at the coefficient residue characteristic, and no packet lattice after semisimplification |
 | Book 142 | the Chebotarev density input used to recognize representations from their good Frobenius traces | no assertion that the field-theoretic towers satisfy automorphic selectors |
 | Book 180 | monomiality, the elementary projector and integral Brauer relation, induction/tensor/Mackey/determinant formulas, prime-cyclic refinement, the cyclic Clifford torsor, and Brauer--Nesbitt recognition | no packet construction, overlap identity, Gram positivity, or coefficient family is imported |
-| Book 182 | the exact conditional controlled SP datum: $\rho$, $M$, the distinguished top realization, the SP record, and the finite descent-and-attachment ledger | the missing controlled residual automorphic seed and bridge-readiness theorem are not supplied unconditionally |
+| Book 182 | the exact conditional controlled SP datum: $\rho$, $M$, the distinguished top realization, the SP record, the finite descent-and-attachment ledger, and the common unramified elementary Galois pairs away from two | the missing controlled residual automorphic seed and bridge-readiness theorem are not supplied unconditionally, and no automorphic principal/dihedral type comparison is imported |
 
 The controlled datum supplies the hypotheses and certificates needed to apply the finite packet
 attachment results; Books 127--128 and 168 supply the attachment and local-comparison theorems
