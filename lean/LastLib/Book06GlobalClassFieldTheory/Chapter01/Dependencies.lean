@@ -1,6 +1,7 @@
 import Mathlib.Algebra.Exact.Basic
 import Mathlib.Algebra.GroupWithZero.Basic
 import Mathlib.Algebra.DirectSum.Module
+import Mathlib.Data.Finsupp.Defs
 import Mathlib.FieldTheory.AbsoluteGaloisGroup
 import Mathlib.FieldTheory.Galois.Abelian
 import Mathlib.GroupTheory.Commutator.Basic
@@ -11,8 +12,10 @@ import Mathlib.NumberTheory.NumberField.AdeleRing
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
 import Mathlib.NumberTheory.NumberField.ProductFormula
+import Mathlib.RingTheory.Norm.Defs
 import Mathlib.RingTheory.RootsOfUnity.Basic
 import Mathlib.RingTheory.TensorProduct.Finite
+import Mathlib.RingTheory.Valuation.Basic
 import Mathlib.Topology.Algebra.Constructions
 import Mathlib.Topology.Algebra.Group.Quotient
 
@@ -23,6 +26,9 @@ open scoped BigOperators NumberField
 noncomputable section
 
 universe uK
+
+abbrev GroupAbelianization (G : Type*) [Group G] :=
+  Abelianization G
 
 /-!
 Shared interfaces for Chapter 1.
@@ -58,6 +64,13 @@ def principalIdeleSubgroup (K : Type*) [Field K] [NumberField K] :
 
 abbrev BookIdeleClassGroup (K : Type*) [Field K] [NumberField K] :=
   BookIdeleGroup K ⧸ principalIdeleSubgroup K
+
+/-! The standard book-facing names are shared by every section.  Keeping them
+in the dependency leaf avoids making later sections import earlier prose
+sections merely to recover these aliases. -/
+abbrev I_K (K : Type*) [Field K] [NumberField K] := BookIdeleGroup K
+
+abbrev C_K (K : Type*) [Field K] [NumberField K] := BookIdeleClassGroup K
 
 instance bookIdeleClassGroupCommGroup
     (K : Type*) [Field K] [NumberField K] :
@@ -105,6 +118,49 @@ def bookIdeleComponent {K : Type*} [Field K] [NumberField K]
   match v with
   | Sum.inl w => (x : BookAdeleRing K).2 w
   | Sum.inr w => (x : BookAdeleRing K).1 w
+
+def bookIdeleUnitComponent {K : Type*} [Field K] [NumberField K]
+    (x : BookIdeleGroup K) (v : BookPlace K) : (BookPlace.completion v)ˣ := by
+  cases v with
+  | inl w =>
+      exact
+        { val := (x : BookAdeleRing K).2 w
+          inv := ((x⁻¹ : BookIdeleGroup K) : BookAdeleRing K).2 w
+          val_inv := congrArg (fun a : BookAdeleRing K => a.2 w) x.val_inv
+          inv_val := congrArg (fun a : BookAdeleRing K => a.2 w) x.inv_val }
+  | inr w =>
+      exact
+        { val := (x : BookAdeleRing K).1 w
+          inv := ((x⁻¹ : BookIdeleGroup K) : BookAdeleRing K).1 w
+          val_inv := congrArg (fun a : BookAdeleRing K => a.1 w) x.val_inv
+          inv_val := congrArg (fun a : BookAdeleRing K => a.1 w) x.inv_val }
+
+def bookPlaceUnitEmbedding {K : Type*} [Field K] [NumberField K]
+    (v : BookPlace K) : Kˣ →* (BookPlace.completion v)ˣ :=
+  Units.map (algebraMap K (BookPlace.completion v))
+
+def bookFinitePlaceUnitSubgroup {K : Type*} [Field K] [NumberField K]
+    (v : FinitePlaceIndex K) : Subgroup (BookPlace.completion (Sum.inl v))ˣ :=
+  (Units.map (algebraMap (v.adicCompletionIntegers K) (v.adicCompletion K)).toMonoidHom).range
+
+abbrev finitePlaceUnitSubgroup {K : Type*} [Field K] [NumberField K]
+    (v : FinitePlaceIndex K) : Subgroup (BookPlace.completion (Sum.inl v))ˣ :=
+  bookFinitePlaceUnitSubgroup v
+
+def bookPlaceUnitSubgroup {K : Type*} [Field K] [NumberField K]
+    (v : BookPlace K) : Subgroup (BookPlace.completion v)ˣ :=
+  match v with
+  | Sum.inl w => bookFinitePlaceUnitSubgroup w
+  | Sum.inr _ => ⊤
+
+def bookPlaceIsFinite {K : Type*} [Field K] [NumberField K]
+    (v : BookPlace K) : Prop := ∃ w : FinitePlaceIndex K, v = Sum.inl w
+
+/- The integral-unit subgroup at a finite place, viewed in its completion. -/
+def finitePlaceUnitSet {K : Type*} [Field K] [NumberField K]
+    (v : FinitePlaceIndex K) : Set (BookPlace.completion (Sum.inl v)) :=
+  Set.range (fun u : (v.adicCompletionIntegers K)ˣ =>
+    algebraMap (v.adicCompletionIntegers K) (v.adicCompletion K) (u : v.adicCompletionIntegers K))
 
 /-! ### The idelic module and its class quotient -/
 
@@ -177,38 +233,98 @@ theorem classModule_surjective {K : Type*} [Field K] [NumberField K] :
 
 /-! ### Global norm and finite-level reciprocity interfaces -/
 
-def IsFiniteAbelianExtension (K L : Type*) [Field K] [Field L]
-    [Algebra K L] [FiniteDimensional K L] [IsAbelianGalois K L] : Prop :=
+/- The field norm on units is the canonical multiplicative norm used by the
+idele norm and by the element-norm predicates later in the chapter. -/
+noncomputable def fieldNormUnits
+    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] : Lˣ →* Kˣ :=
+  Units.map (Algebra.norm K (S := L))
+
+@[simp]
+theorem fieldNormUnits_apply
+    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] (y : Lˣ) :
+    ((fieldNormUnits K L y : Kˣ) : K) = Algebra.norm K (y : L) := by
+  rfl
+
+def IsFiniteAbelianExtension (K L : Type*) [Field K] [NumberField K]
+    [Field L] [NumberField L] [Algebra K L] : Prop :=
   FiniteDimensional K L ∧ IsAbelianGalois K L
 
-/- LOCAL_DEPENDENCY_GUESS: this is the missing componentwise norm interface
-from the adelic/local class-field chapters.  Its compatibility field is the
-minimal condition needed to descend from ideles to idelic classes. -/
+/- The canonical maximal abelian subextension is the fixed field of the
+commutator subgroup; norm limitation compares this field with the original
+Galois extension over the same base. -/
+def globalMaximalAbelianSubextension
+    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] : IntermediateField K L :=
+  IntermediateField.fixedField (commutator (Gal(L / K)))
+
+/- LOCAL_DEPENDENCY_GUESS: the earlier restricted-product and local class-field
+interfaces supply these componentwise maps and their unit-tail properties.
+The idele map below is constructed from the local factors rather than being a
+free continuous homomorphism. -/
 structure GlobalNormInterface (K L : Type*) [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L] where
-  ideleNorm : BookIdeleGroup L →* BookIdeleGroup K
-  principal_compatibility :
-    ∀ y : Lˣ, ∃ x : Kˣ,
-      ideleNorm (principalIdele y) = principalIdele x
+  above : ∀ _v : BookPlace K, Finset (BookPlace L)
+  above_nonempty : ∀ v, (above v).Nonempty
+  below : BookPlace L → BookPlace K
+  mem_above_iff :
+    ∀ (v : BookPlace K) (w : BookPlace L), w ∈ above v ↔ below w = v
+  localNorm : ∀ (v : BookPlace K) (w : BookPlace L),
+    (BookPlace.completion w)ˣ →* (BookPlace.completion v)ˣ
+  principal_norm_component :
+    ∀ (a : Lˣ) (v : BookPlace K),
+      (above v).prod (fun w => localNorm v w (bookPlaceUnitEmbedding w a)) =
+        bookPlaceUnitEmbedding v (fieldNormUnits K L a)
+  localNorm_continuous :
+    ∀ (v : BookPlace K) (w : BookPlace L), Continuous (localNorm v w)
+  localNorm_maps_units :
+    ∀ (v : BookPlace K) (w : BookPlace L), w ∈ above v →
+      Set.MapsTo (localNorm v w)
+        (bookPlaceUnitSubgroup w : Set (BookPlace.completion w)ˣ)
+        (bookPlaceUnitSubgroup v : Set (BookPlace.completion v)ˣ)
+  unramified : BookPlace K → Prop
+  eventually_finite_unramified :
+    ∀ᶠ v in Filter.cofinite, bookPlaceIsFinite v ∧ unramified v
+  localNorm_units_surjective :
+    ∀ {v : BookPlace K} (_hv : bookPlaceIsFinite v) (_hu : unramified v)
+      (w : BookPlace L) (_hw : w ∈ above v)
+      (x : (BookPlace.completion v)ˣ),
+      x ∈ bookPlaceUnitSubgroup v →
+        ∃ y : (BookPlace.completion w)ˣ,
+          y ∈ bookPlaceUnitSubgroup w ∧ localNorm v w y = x
+
+noncomputable def componentwiseIdeleNorm
+    {K L : Type*} [Field K] [NumberField K]
+    [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L]
+    (N : GlobalNormInterface K L) : BookIdeleGroup L →* BookIdeleGroup K := by
+  sorry
+
+theorem GlobalNormInterface.principal_compatibility_apply
+    {K L : Type*} [Field K] [NumberField K]
+    [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L]
+    (N : GlobalNormInterface K L) (y : Lˣ) :
+    componentwiseIdeleNorm N (principalIdele y) =
+      principalIdele (fieldNormUnits K L y) := by
+  sorry
 
 noncomputable def classNorm {K L : Type*} [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L]
     (N : GlobalNormInterface K L) :
-    BookIdeleClassGroup L →* BookIdeleClassGroup K :=
+  BookIdeleClassGroup L →* BookIdeleClassGroup K :=
   QuotientGroup.lift (principalIdeleSubgroup L)
-    ((classQuotient (K := K)).comp N.ideleNorm) (by
+    ((classQuotient (K := K)).comp (componentwiseIdeleNorm N)) (by
       intro x hx
       rcases hx with ⟨y, rfl⟩
-      rcases N.principal_compatibility y with ⟨z, hz⟩
       rw [MonoidHom.mem_ker]
-      change classQuotient (N.ideleNorm (principalIdele y)) = 1
-      rw [hz]
-      exact classQuotient_principal z)
+      change classQuotient (componentwiseIdeleNorm N (principalIdele y)) = 1
+      rw [N.principal_compatibility_apply y]
+      exact classQuotient_principal (fieldNormUnits K L y))
 
 def ideleNormGroup {K L : Type*} [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L]
     (N : GlobalNormInterface K L) : Subgroup (BookIdeleGroup K) :=
-  N.ideleNorm.range
+  (componentwiseIdeleNorm N).range
 
 def classNormGroup {K L : Type*} [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L]
@@ -229,6 +345,42 @@ structure ClassFieldNormRealization
   normData : GlobalNormInterface K L
   norm_eq : classNormGroup normData = H
 
+/- Componentwise transitivity is recorded at the local level and then lifted
+to the idele maps.  This is the tower law for the canonical norm interface. -/
+structure GlobalNormTowerInterface
+    (K L M : Type*) [Field K] [NumberField K]
+    [Field L] [NumberField L] [Field M] [NumberField M]
+    [Algebra K L] [Algebra L M] [Algebra K M]
+    [FiniteDimensional K L] [FiniteDimensional L M] [FiniteDimensional K M]
+    [IsScalarTower K L M] where
+  norm_L_over_K : GlobalNormInterface K L
+  norm_M_over_L : GlobalNormInterface L M
+  norm_M_over_K : GlobalNormInterface K M
+  localNorm_product_transitive :
+    ∀ (v : BookPlace K) (y : BookIdeleGroup M),
+      (norm_L_over_K.above v).prod
+          (fun w => norm_L_over_K.localNorm v w
+            ((norm_M_over_L.above w).prod
+              (fun z => norm_M_over_L.localNorm w z
+                (bookIdeleUnitComponent y z)))) =
+        (norm_M_over_K.above v).prod
+          (fun z => norm_M_over_K.localNorm v z
+            (bookIdeleUnitComponent y z))
+  fieldNorm_transitive :
+    (fieldNormUnits K L).comp (fieldNormUnits L M) = fieldNormUnits K M
+
+theorem componentwiseIdeleNorm_transitive
+    {K L M : Type*} [Field K] [NumberField K]
+    [Field L] [NumberField L] [Field M] [NumberField M]
+    [Algebra K L] [Algebra L M] [Algebra K M]
+    [FiniteDimensional K L] [FiniteDimensional L M] [FiniteDimensional K M]
+    [IsScalarTower K L M]
+    (T : GlobalNormTowerInterface K L M) :
+    (componentwiseIdeleNorm T.norm_L_over_K).comp
+        (componentwiseIdeleNorm T.norm_M_over_L) =
+      componentwiseIdeleNorm T.norm_M_over_K := by
+  sorry
+
 def principalTimesIdeleNormGroup {K L : Type*} [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L]
     (N : GlobalNormInterface K L) : Subgroup (BookIdeleGroup K) :=
@@ -243,22 +395,53 @@ theorem classNormGroup_eq_principal_times_norm_quotient
         (principalTimesIdeleNormGroup N)) := by
   sorry
 
-/- LOCAL_DEPENDENCY_GUESS: the local symbols have been multiplied into a
-single finite-level homomorphism; the principal relation is retained as a
-field so the quotient construction is explicit. -/
+/- The global Artin map is constructed from the local reciprocity family and
+its finite unit tail.  It is not an independent homomorphism field. -/
+noncomputable def finiteLevelGlobalArtin
+    {K L : Type*} [Field K] [NumberField K]
+    [Field L] [NumberField L] [Algebra K L]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+    (localArtin : ∀ v : BookPlace K,
+      (BookPlace.completion v)ˣ →* GroupAbelianization (Gal(L / K)))
+    (finite_product :
+      ∀ x : BookIdeleGroup K, ∃ s : Finset (BookPlace K),
+        ∀ v ∉ s, localArtin v (bookIdeleUnitComponent x v) = 1) :
+    BookIdeleGroup K →* GroupAbelianization (Gal(L / K)) := by
+  sorry
+
 structure FiniteLevelArtinData (K L : Type*) [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L] where
-  localProduct : BookIdeleGroup K →* Gal(L / K)
+  localArtin : ∀ v : BookPlace K,
+    (BookPlace.completion v)ˣ →* GroupAbelianization (Gal(L / K))
+  decomposition : ∀ _v : BookPlace K,
+    Subgroup (GroupAbelianization (Gal(L / K)))
+  local_artin_range : ∀ v, (localArtin v).range = decomposition v
+  ramified : Finset (BookPlace K)
+  local_units_killed_outside_ramification :
+    ∀ {v : BookPlace K}, v ∉ ramified → ∀ u,
+      u ∈ bookPlaceUnitSubgroup v → localArtin v u = 1
+  finite_product :
+    ∀ x : BookIdeleGroup K, ∃ s : Finset (BookPlace K),
+      ∀ v ∉ s, localArtin v (bookIdeleUnitComponent x v) = 1
   principal_trivial :
-    ∀ a : Kˣ, localProduct (principalIdele a) = 1
+    ∀ a : Kˣ,
+      finiteLevelGlobalArtin localArtin finite_product (principalIdele a) = 1
+
+noncomputable def FiniteLevelArtinData.globalArtin
+    {K L : Type*} [Field K] [NumberField K]
+    [Field L] [NumberField L] [Algebra K L]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+    (A : FiniteLevelArtinData K L) :
+    BookIdeleGroup K →* GroupAbelianization (Gal(L / K)) :=
+  finiteLevelGlobalArtin A.localArtin A.finite_product
 
 noncomputable def classArtin {K L : Type*} [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     (A : FiniteLevelArtinData K L) :
-    BookIdeleClassGroup K →* Gal(L / K) :=
-  QuotientGroup.lift (principalIdeleSubgroup K) A.localProduct (by
+    BookIdeleClassGroup K →* GroupAbelianization (Gal(L / K)) :=
+  QuotientGroup.lift (principalIdeleSubgroup K) A.globalArtin (by
     intro x hx
     rcases hx with ⟨a, rfl⟩
     exact A.principal_trivial a)
@@ -284,9 +467,6 @@ structure AdditiveShortExact (A B C : Type*) [AddCommGroup A] [AddCommGroup B]
 
 abbrev RationalModuloIntegers :=
   ℚ ⧸ AddSubgroup.zmultiples (1 : ℚ)
-
-abbrev GroupAbelianization (G : Type*) [Group G] :=
-  G ⧸ commutator G
 
 end
 end LastLib.Book06GlobalClassFieldTheory.Chapter01
