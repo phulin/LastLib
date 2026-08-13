@@ -809,73 +809,115 @@ i_{G/H}(\bar\sigma)
 \tag{5.1}
 $$
 
-We first justify the identity rather than treating the norm slogan as a proof. Choose the mixed
-integral generator used in Hilbert's formula below: $B=A[\alpha]$, and every nontrivial
-$\gamma\in G$ satisfies
+We first prove (5.1) without making any assertion about cancellation in a sum of elementary
+symmetric functions. Put
 
 $$
-v_L(\gamma\alpha-\alpha)=i_G(\gamma).
+H_0=H\cap G_0,
+\qquad M_0=L^{H_0},
+\qquad h=|H_0|.
 $$
 
-For $x\in B$, form its $H$-orbit polynomial
+The residue-separability hypothesis made at the start of Chapter 4 identifies $H_0$ with the
+inertia group of $L/M$. Consequently $e(L/M)=h$ and $M_0/M$ is unramified. If the coset
+$\sigma H$ does not meet $G_0$, both sides of (5.1) are zero. Otherwise replace $\sigma$ by a
+lift in $G_0$. Then $i_G(\sigma\tau)=0$ for $\tau\in H\setminus H_0$. Moreover a uniformizer
+of $M$ is also a uniformizer of the unramified extension $M_0/M$, so the uniformizer test for
+inertial displacement gives
 
 $$
-F_x(T)=\prod_{\tau\in H}(T-\tau x)\in\mathcal O_M[T].
+i_{G/H}(\bar\sigma)=i_{G/H_0}(\sigma H_0).
 $$
 
-Apply $\sigma$ to its coefficients and compare the two multisets of roots. Expansion of the
-elementary symmetric functions gives, for every $x$, the inequality obtained by replacing the
-least coefficient displacement downstairs by the sum of the root displacements upstairs.
-Conversely, translate the chosen $\alpha$ by an arbitrary element of $B$ and apply the same
-comparison to all coefficients of the resulting orbit polynomials. Since $B=A[\alpha]$, those
-coefficients separate every element of the fixed ring $B^H=\mathcal O_M$; choosing one with
-least displacement reverses the inequality. With $x=\alpha$, no cancellation occurs among the
-least terms, because each conjugate difference has its prescribed value. The two inequalities
-give
+It remains to handle the totally ramified extension $L/M_0$ of degree $h$. Choose a
+uniformizer $\pi$ of $L$. Its orbit polynomial
 
 $$
-e(L/M)i_{G/H}(\bar\sigma)
-=\sum_{\tau\in H}v_L(\sigma\tau(\alpha)-\alpha).
+f(T)=\prod_{\tau\in H_0}(T-\tau\pi)
+=T^h+a_{h-1}T^{h-1}+\cdots+a_0\in\mathcal O_{M_0}[T]
 $$
 
-On the right, $\sigma\tau$ ranges through the coset $\sigma H$ and the chosen generator realizes
-every $i_G(\sigma\tau)$, proving (5.1). This coefficient calculation is the algebraic form of
-the norm argument: multiplication combines displacements, valuation turns the product into a
-sum, and restriction from $L$ to $M$ contributes $e(L/M)$.
-
-Now use the exact discrete layer-counting identity
-
-$$
-i_G(\gamma)=\sum_{j\geq0}
-\mathbf 1_{\{\gamma\in G_j\}}
-$$
-
-for every $\gamma\ne1$; both sides are zero when $\gamma$ is noninertial. Thus
+is the minimal polynomial of $\pi$ over $M_0$ and is Eisenstein. In particular $a_0$ is a
+uniformizer of $M_0$. Write $r=i_{G/H_0}(\sigma H_0)$. By the definition of displacement,
+$v_{M_0}(\sigma a_j-a_j)\geq r$ for every $j$, while the uniformizer test applied to $a_0$
+gives equality for $j=0$. Since $H_0$ is normal, applying $\sigma$ to the coefficients of
+$f$ permutes the roots into the coset $\sigma H_0$. Evaluation at $\pi$ therefore gives
 
 $$
-i_{G/H}(\bar\sigma)
-=\frac1{|H\cap G_0|}
-\sum_{j\geq0}|\sigma H\cap G_j|.
+\begin{aligned}
+\prod_{\tau\in H_0}(\pi-\sigma\tau\pi)
+&=(\sigma f)(\pi)-f(\pi)\\
+&=\sum_{j=0}^{h-1}(\sigma a_j-a_j)\pi^j.
+\end{aligned}
+$$
+
+The constant term on the last line has $L$-valuation $hr$. Every term with $j\geq1$ has
+valuation at least $hr+j$. Thus the constant term is the unique term of least valuation, which
+rules out cancellation for a concrete reason. Taking valuations in the displayed identity and
+using the uniformizer formula for the inertial elements $\sigma\tau$ yields
+
+$$
+h\,i_{G/H_0}(\sigma H_0)
+=\sum_{\tau\in H_0}i_G(\sigma\tau).
+$$
+
+Together with the unramified comparison above and the zero terms from $H\setminus H_0$, this
+proves (5.1).
+
+We next pass from displacement to filtrations. Let $Q=G/H$, let $c=\sigma H$ be a nonidentity
+inertial coset, and put
+
+$$
+n=\max_{\tau\in H}i_G(\sigma\tau).
+$$
+
+For $1\leq j\leq n-1$, the intersection $\sigma H\cap G_j$ is nonempty and hence is a coset
+of $H\cap G_j$; for $j\geq n$ it is empty. Expanding each displacement into its integral
+layers in (5.1) gives the exact threshold identity
+
+$$
+i_Q(c)-1
+=\frac1{|H_0|}\sum_{j=1}^{n-1}|H\cap G_j|
+=\varphi_{L/M}(n-1).
 \tag{5.2}
 $$
 
-Scan the lower filtration one constant interval at a time. Whenever $\sigma H\cap G_j$ is
-nonempty, it is a coset of $H\cap G_j$ and therefore has size $|H\cap G_j|$; otherwise its
-contribution is zero. Passing one lower layer upstairs advances the upper clock by
-$|G_j|/|G_0|$. Give the candidate image layer $G_jH/H$ the quotient increment
-$|G_jH/H|/|G_0H/H|$. The ratio of the upstairs increment to this candidate increment is exactly
-$|H\cap G_j|/|H\cap G_0|$, the weight in (5.2). Equation (5.2) says that these candidate
-increments cross precisely the integer displacement thresholds of the actual quotient
-filtration. Induction over the finitely many constant intervals therefore shows that the coset
-reaches a given quotient depth precisely when it meets $G_{\psi(v)}$. Equivalently,
+Thus, as the real lower parameter $u$ crosses the threshold $n-1$, the coset $c$ leaves
+$G_uH/H$ exactly when it leaves the lower filtration of $Q$ at parameter
+$\varphi_{L/M}(u)$. The endpoint convention in Section 4.3 agrees on both sides, so the
+threshold identity, applied to every nonidentity coset, proves
 
 $$
-\bar\sigma\in(G/H)^v
-\quad\Longleftrightarrow\quad
-\sigma H\cap G^v\ne\varnothing.
+Q_{\varphi_{L/M}(u)}=G_uH/H
+\qquad(u\geq0).
 $$
 
-This is the assertion $(G/H)^v=G^vH/H$. $\square$
+For completeness, the last identity also gives the required relation between the three Herbrand
+clocks. Away from their finitely many breaks, its derivative and the subgroup formula
+$H_u=H\cap G_u$ give
+
+$$
+\begin{aligned}
+\frac{d}{du}\bigl(\varphi_{M/K}(\varphi_{L/M}(u))\bigr)
+&=\frac{|G_uH/H|}{|G_0H/H|}\frac{|H_u|}{|H_0|}\\
+&=\frac{|G_u|}{|G_0|}
+=\varphi_{L/K}'(u).
+\end{aligned}
+$$
+
+Both continuous functions vanish at $0$, so
+$\varphi_{L/K}=\varphi_{M/K}\circ\varphi_{L/M}$. Given $v\geq0$, put
+$u=\psi_{L/K}(v)$ and use the lower-group identity:
+
+$$
+Q^v
+=Q_{\varphi_{L/M}(u)}
+=G_uH/H
+=G^vH/H.
+$$
+
+For $-1\leq v<0$ the assertion is immediate from the decomposition groups, and at $v=0$ it
+is the elementary quotient formula for inertia. This proves the theorem. $\square$
 
 The proof's decisive feature is weighted counting, not a miraculous reindexing. Lower numbering asks for raw depth in the top valuation; upper numbering divides each depth interval by the index already lost. That correction is exactly what a quotient needs.
 
@@ -967,11 +1009,12 @@ Upper breaks are generally rational numbers. The central integrality theorem is 
 
 No finiteness of the residue field is required, but perfection rules out the imperfect-residue refinements for which the classical statement is not the correct one. For nonabelian extensions, fractional upper breaks can occur. Lower breaks remain integers by definition, but they are not quotient-compatible.
 
-The arithmetic heart is the following lemma.
+The arithmetic heart is the following lemma. The valuations in its proof are normalized by
+$v_E(E^\times)=v_F(F^\times)=\mathbf Z$, so $v_E|_{F^\times}=|C|v_F$.
 
 **Lemma 5.3 (cyclic Hasse--Arf lemma).** Let $E/F$ be a cyclic totally ramified Galois
-extension, with group $C$, separable residue extension, and perfect residue field downstairs. If
-$b$ is its last lower break, then
+extension of complete discretely valued fields. Assume that the common residue field is perfect.
+If $C=\operatorname{Gal}(E/F)$ and $b$ is the last lower break, then
 
 $$
 \boxed{
@@ -980,13 +1023,16 @@ $$
 $$
 
 **Proof.** The summands are integers, but divisibility by $|C|$ is not termwise. We first prove
-the ramification-number congruence that supplies the divisibility. Let $A$ be a complete DVR
-with perfect residue field of characteristic $p>0$, let $\pi$ be a uniformizer, and let $\sigma$
-be an automorphism of finite $p$-power order acting trivially on the residue field. As long as
-$\sigma^{p^r}\ne1$, put
+the precise ramification-number statement needed below.
+
+**Ramification-number congruence.** Let $A$ be a complete DVR with perfect residue field
+$\kappa$ of characteristic $p>0$. Let $\theta$ be a finite-order automorphism of
+$\operatorname{Frac}(A)$ which preserves $A$, induces the identity on $\kappa$, and for which
+the extension over the fixed field of $\langle\theta\rangle$ is totally ramified. For a
+uniformizer $\pi$, assume that $\theta^{p^r}\ne1$, and put
 
 $$
-q_r=v_A(\sigma^{p^r}(\pi)-\pi)-1.
+q_r=v_A(\theta^{p^r}(\pi)-\pi)-1.
 $$
 
 Then
@@ -996,114 +1042,191 @@ q_r\equiv q_{r-1}\pmod {p^r}\qquad(r\geq1).
 \tag{5.4}
 $$
 
-Here is the coefficient calculation. For $D_r=\sigma^{p^r}-1$ and every $n\geq1$, expansion of
-$\sigma^{p^r}(\pi^n)-\pi^n$ shows
+We prove the congruence through local fixed-point multiplicities. This formulation is important
+in mixed characteristic: ordinary order in a power-series variable is not the valuation after
+specializing that variable to a ramified uniformizer.
+
+We use the following local form of the periodic-point divisibility lemma. Let $R$ be a complete
+one-dimensional regular local ring and let $u$ be a continuous automorphism. For $n\geq1$ put
 
 $$
-D_r(\mathfrak m_A^n)\subseteq\mathfrak m_A^{n+q_r},
-\qquad
-D_r(\pi^n)\equiv n c_r\pi^{n+q_r}
-\pmod{\mathfrak m_A^{n+q_r+1}},
+J_n=(u^n(x)-x:x\in R).
 $$
 
-where $c_r$ is the nonzero leading residue of $D_r(\pi)/\pi^{q_r+1}$. Apply these two formulas
-successively to the exact operator identity
+If $J_n$ has finite colength, define the local fixed-point multiplicity
+$\lambda(n)=\operatorname{length}_R(R/J_n)$. If $J_d$ has finite colength for every $d\mid n$,
+then
 
 $$
-D_r=(1+D_{r-1})^p-1
-=pD_{r-1}+\binom p2D_{r-1}^2+\cdots+D_{r-1}^p.
+n\ \bigm|\ \sum_{d\mid n}\mu(n/d)\lambda(d),
+\tag{*}
 $$
 
-At the first graded degree that survives, the displayed leading-term formula makes the
-coefficient of a word of length $h$ equal to
-$n(n+q_{r-1})\cdots(n+(h-1)q_{r-1})c_{r-1}^h$.
-Group the terms in the $p^r$-fold iterate by cyclic rotation. An orbit of full period has $p^r$
-equal leading residues and disappears in the associated graded ring. An orbit of period $p^a$
-with $a<r$ is a $p^{r-a}$-fold repetition of the contribution already encountered at stage $a$;
-the induction hypothesis places its first possible surviving degree in the same congruence
-class. Since the residue field is perfect, extracting the $p$th roots needed to pass from a
-repeated block to its primitive block does not alter its degree. Induction on $r$ therefore says
-that the first nonzero degree has the form
+where $\mu$ is the ordinary Moebius function.
+
+Here is the multiplicity argument behind $(*)$. The fixed subscheme of $u^d$ at the closed
+point is cut out by $J_d$, and its intersection multiplicity with the diagonal is
+$\lambda(d)$. Only a finite jet is involved: once $N>\max_{d\mid n}\lambda(d)$, all these
+lengths are already computed modulo the $N$th power of the maximal ideal. Adjoin independent
+parameters to that finite jet and pass to the generic point of the parameter ring. Weierstrass
+division by a local parameter then replaces each fixed scheme by a finite flat scheme of the
+same degree $\lambda(d)$. After inverting the finitely many discriminants and resultants, the
+fixed points are simple, and a point common to the fixed schemes for $u^a$ and $u^b$ is a fixed
+point of $u^{\gcd(a,b)}$. Neither inversion changes a degree: varying the constant coefficient
+separates distinct roots, while varying the linear coefficient makes each intersection
+transverse, so the excluded discriminants and resultants are not identically zero. This is the
+generic-splitting proof of invariance of a local intersection multiplicity. The parameter
+extension is faithfully flat, so the integer lengths in the original ring are unchanged.
+
+In this split situation, inclusion--exclusion shows that
 
 $$
-q_{r-1}+1+p^r h
+\sum_{d\mid n}\mu(n/d)\lambda(d)
 $$
 
-for some $h\geq0$. It is $q_r+1$, proving (5.4). This calculation is independent of the chosen
-uniformizer: replacing $\pi$ by another parameter multiplies the first nonzero graded
-coefficient by a unit.
-
-If $C_1=1$, then $b=0$ and the sum is empty. Assume henceforth that $C_1\ne1$, so the
-residue characteristic is a prime $p$. Write $|C|=mp^s$, where $m$ is prime to $p$ and $p^s$
-is the wild order. The tame-character and higher-graded-piece injections show that the positive cyclic
-groups drop by one factor $p$ at a time. Write their positive breaks as
+is exactly the number of points of least period $n$ specializing to the original closed point.
+The automorphism permutes those points in free orbits of length $n$. Their number is therefore
+divisible by $n$. Constancy of the finite-flat degrees under specialization proves $(*)$ with
+all original intersection multiplicities, including nonreduced ones. For $n=p^r$, the only
+nonzero Moebius terms are the two divisors $p^r$ and $p^{r-1}$, and hence
 
 $$
-b_1<\cdots<b_s=b.
+p^r\mid\lambda(p^r)-\lambda(p^{r-1}).
+\tag{**}
 $$
 
-Thus $|C_i|=p^s$ for $1\leq i\leq b_1$, and
-$|C_i|=p^{s-j+1}$ for $b_{j-1}<i\leq b_j$.
-
-Choose generators $\tau$ of the tame factor of order $m$ and $\sigma$ of the wild factor. If
-$q=v_E(\sigma^{p^r}(\pi_E)-\pi_E)-1$ is any positive break, write
-
-$$
-\tau(\pi_E)\equiv\zeta\pi_E\pmod{\mathfrak m_E^2},
-$$
-
-where $\zeta$ has order $m$. Since $\tau$ commutes with $\sigma^{p^r}$, comparison of the first
-nonzero terms in
+We now identify these intrinsic multiplicities in the DVR $A$. Let $B$ be the valuation ring
+in the fixed field of $\langle\theta\rangle$. By the total-ramification hypothesis, a
+uniformizer $\pi$ generates $A$ over $B$: its minimal polynomial has degree
+$[\operatorname{Frac}(A):\operatorname{Frac}(B)]$ and is Eisenstein. Since every element of
+$A$ is a polynomial in $\pi$ with coefficients in $B$, polynomial division gives, for every
+$n$ with $\theta^n\ne1$,
 
 $$
-\tau(\sigma^{p^r}(\pi_E)-\pi_E)
-=\sigma^{p^r}(\tau(\pi_E))-\tau(\pi_E)
+J_n=(\theta^n(x)-x:x\in A)
+=(\theta^n(\pi)-\pi).
 $$
 
-gives $\zeta^{q+1}=\zeta$, hence $m\mid q$. In particular,
+Indeed, $P(\theta^n\pi)-P(\pi)$ is divisible by $\theta^n\pi-\pi$ for every
+$P\in B[T]$, and the reverse inclusion follows by taking $x=\pi$. Consequently
 
 $$
-m\mid b_1.
+\lambda(n)
+=\operatorname{length}_A A/(\theta^n\pi-\pi)
+=v_A(\theta^n\pi-\pi).
 $$
 
-Moreover $b_j=q_{j-1}$ for the chosen wild generator. Formula (5.4) gives
-$p^{j-1}\mid b_j-b_{j-1}$, while the preceding tame calculation gives
-$m\mid b_j-b_{j-1}$. Since $(m,p)=1$,
+Applying $(**)$ gives
 
 $$
-mp^{j-1}\mid b_j-b_{j-1}
-\qquad(2\leq j\leq s).
+p^r\mid(q_r+1)-(q_{r-1}+1),
+$$
+
+which is (5.4). This also proves independence of the chosen uniformizer: $\lambda(n)$ is the
+length of the coordinate-free fixed ideal $J_n$.
+
+We now apply the congruence. If $C_1=1$, then $b=0$ and the sum is empty. Assume
+$C_1\ne1$, so the residue characteristic is a prime $p$. Write $|C|=mp^s$, where $m$ is
+prime to $p$, and let $P=C_1$ be the wild subgroup. Since $C$ is cyclic, so is $P$; choose a
+generator $\sigma$ of $P$ and put
+
+$$
+q_r=v_E(\sigma^{p^r}(\pi_E)-\pi_E)-1
+\qquad(0\leq r<s).
+$$
+
+For an automorphism $\eta$ in wild inertia, write
+$\eta(\pi_E)=\pi_E+c\pi_E^{q+1}$ modulo $\mathfrak m_E^{q+2}$. If $p\nmid a$, summing the
+first terms of the $a$ iterates gives
+
+$$
+\eta^a(\pi_E)-\pi_E
+\equiv ac\pi_E^{q+1}\pmod {\mathfrak m_E^{q+2}},
+$$
+
+so $i(\eta^a)=i(\eta)$. On the other hand, the same sum for $a=p$ has zero leading
+coefficient in the residue field, so $i(\eta^p)>i(\eta)$ whenever $\eta^p\ne1$. It follows that
+$q_0<\cdots<q_{s-1}$ and that the positive lower groups are exactly
+
+$$
+C_i=\langle\sigma^{p^r}\rangle
+\quad\text{for}\quad q_{r-1}<i\leq q_r,
+\qquad q_{-1}=0.
 \tag{5.5}
 $$
 
-Finally,
+Thus no unproved assertion that a cyclic group loses one $p$-factor at each break is being used.
+
+It remains to include the tame factor. Choose an element $\tau\in C$ whose image generates
+$C/C_1$, of order $m$, and write
 
 $$
-\frac1{|C|}\sum_{i=1}^{b_s}|C_i|
-=\frac{b_1}{m}
-+\sum_{j=2}^s\frac{b_j-b_{j-1}}{mp^{j-1}},
+\tau(\pi_E)\equiv\zeta\pi_E\pmod{\mathfrak m_E^2};
 $$
 
-and every term on the right is integral by (5.5). Therefore
+$\zeta$ has exact order $m$ by the tame-character injection. If
+$q=q_r$ and
+$\sigma^{p^r}(\pi_E)-\pi_E\equiv c\pi_E^{q+1}$ modulo
+$\mathfrak m_E^{q+2}$, commutativity of $C$ gives two expansions of the same element:
 
 $$
-|C|\mid\sum_{i=1}^{b}|C_i|.
+\begin{aligned}
+\tau(\sigma^{p^r}(\pi_E)-\pi_E)
+&\equiv c\zeta^{q+1}\pi_E^{q+1},\\
+\sigma^{p^r}(\tau(\pi_E))-\tau(\pi_E)
+&\equiv \zeta c\pi_E^{q+1}.
+\end{aligned}
 $$
 
-The prime-to-residue-characteristic part contributes only the break at $0$; perfection ensures
-that the graded coefficient calculation has no inseparable residue obstruction. This proves
-(5.3). $\square$
+Hence $\zeta^q=1$, and therefore $m\mid q_r$ for every $r$. The congruence (5.4) gives
+$p^r\mid q_r-q_{r-1}$ for $r\geq1$; since $m$ divides both endpoints and $(m,p)=1$,
 
-Now let $\chi$ be a one-dimensional character of an abelian ramification group, quotient by its kernel, and discard the unramified stage, which contributes nothing to the conductor. The resulting cyclic inertial action is faithful. If its last lower break is $b$, then its conductor, written in lower numbering, is
+$$
+mp^r\mid q_r-q_{r-1}.
+\tag{5.6}
+$$
+
+Finally (5.5) gives
+
+$$
+\frac1{|C|}\sum_{i=1}^{b}|C_i|
+=\frac{q_0}{m}
++\sum_{r=1}^{s-1}\frac{q_r-q_{r-1}}{mp^r},
+$$
+
+and every term is integral by $m\mid q_0$ and (5.6). This proves the lemma. $\square$
+
+Now let $\chi$ be a one-dimensional character of an abelian ramification group, quotient by its
+kernel, and discard the unramified stage, which contributes nothing to the conductor. The
+resulting cyclic inertial action is faithful. If its last lower break is $b$, then its conductor,
+written in lower numbering, is
 
 $$
 a(\chi)
 =1+\frac1{|C|}\sum_{i=1}^{b}|C_i|.
 $$
 
-The cyclic lemma makes this an integer. On the other hand, the upper-integral form of the same conductor is $1+r$, where $r=\varphi_C(b)$ is its largest upper break. Hence $r$ is an integer.
+The cyclic lemma makes this an integer. On the other hand, change variables from lower to upper
+numbering in the conductor sum. The faithful character has no fixed vector precisely through its
+largest upper break $r=\varphi_C(b)$, so
 
-Finally suppose $G$ itself is abelian and $G^r\ne G^{r+}$. Characters separate points of the finite abelian quotient $G^r/G^{r+}$, so there is a character trivial on $G^{r+}$ and nontrivial on $G^r$. Its largest break is exactly $r$, and the preceding paragraph proves $r\in\mathbf Z$. This proves the theorem. The same cyclic input will be used in Chapter 11, together with induction of characters, to prove integrality of the total Swan conductor even when individual breaks of a nonabelian representation are fractional.
+$$
+a(\chi)=1+\int_0^\infty
+\operatorname{codim}\chi^{C^v}\,dv
+=1+\int_0^r1\,dv
+=1+r.
+$$
+
+Hence $r$ is an integer.
+
+Finally suppose $G$ itself is abelian and $G^r\ne G^{r+}$ for a positive break $r$. A
+nontrivial character of $G^r/G^{r+}$ extends to a character of the finite abelian group
+$G/G^{r+}$. The resulting character of $G$ is trivial on $G^{r+}$ and nontrivial on $G^r$, so
+its largest break is exactly $r$. The preceding paragraph proves $r\in\mathbf Z$. The remaining
+possible breaks, $-1$ and $0$, are already integers. This proves the theorem. The same cyclic
+input will be used in Chapter 11, together with induction of characters, to prove integrality of
+the total Swan conductor even when individual breaks of a nonabelian representation are
+fractional.
 
 ## 6. Ramification in infinite Galois extensions
 
@@ -2343,19 +2466,19 @@ $$
 \sum_\chi a(\chi)=(p-1)(m+1),
 $$
 
-which equals the discriminant exponent because the extension is totally ramified. The same number arose from the derivative, from Hilbert's group count, and from the regular representation. Agreement among four computations is a useful diagnostic for index conventions.
+which equals the discriminant exponent because the extension is totally ramified. Hilbert's group count and the regular representation give the same number, and the integral-generator derivative formula recovers it after such a generator is chosen. Agreement among these computations is a useful diagnostic for index conventions.
 
 In the tame cyclic case of degree $e$, each of the $e-1$ nontrivial characters has conductor $1$. Their sum is $e-1$, the tame discriminant exponent.
 
 ### 13.5 Discriminants of fields cut out by representations
 
-Let $\rho$ have finite image $G$, let $L/K$ be its fixed field, and assume that this extension has separable residue extension. The discriminant of $L/K$ is not generally equal to the conductor of $V$: the regular representation sees every element of $G$, whereas $V$ may have many fixed directions. What is true under this standing classical hypothesis is
+Let $\rho:G_K\to\operatorname{GL}(V)$ be continuous with finite image $G$, let $L/K$ be the fixed field of $\ker\rho$, and assume that this extension has separable residue extension. The resulting action of $G=\operatorname{Gal}(L/K)$ on $V$ is faithful. The discriminant of $L/K$ is not generally equal to the conductor of $V$: the regular representation sees every element of $G$, whereas $V$ may have many fixed directions. What is true under this standing classical hypothesis is
 
 $$
 \delta(L/K)=a_K(E[G]).
 $$
 
-If $V$ is faithful, its upper breaks detect exactly where the finite quotient becomes trivial, so they bound the breaks of $L/K$. Turning those break bounds into a discriminant bound uses
+The upper breaks of $V$ detect exactly where the finite quotient becomes trivial, so they bound the breaks of $L/K$. Turning those break bounds into a discriminant bound uses
 
 $$
 \delta(L/K)=f(L/K)\sum_{i\geq0}(|G_i|-1)
