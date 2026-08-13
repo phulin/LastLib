@@ -775,13 +775,25 @@ some fixed $d\geq2$ their total length is less than $1$ for all large $j$, so a 
 in $[j,j+1]$; increasing $d$ and decreasing a positive constant $a$ handles the finitely many
 initial intervals.
 
-On this sequence
+The partial-fraction expansion of the logarithmic derivative, together with (4.4), now gives
 
 $$
-\frac{\xi_K'}{\xi_K}(\sigma+iT_j)=O\bigl(\log(D_K(T_j+3)^n)^2\bigr)
+\frac{\xi_K'}{\xi_K}(\sigma\mathbin{\pm}iT_j)
+=O\left((T_j+3)^d\log(Q_K(T_j))^2\right)
 $$
 
-uniformly for $1-c\leq\sigma\leq c$. Repeated integration by parts in the definition of $\Phi_F$ gives $\Phi_F(\sigma+iT)=O_F(T^{-M})$ for every $M$. Hence $E_{T_j}\to0$.
+uniformly for $1-c\leq\sigma\leq c$. Indeed, each zero in a fixed-height band contributes
+at most the reciprocal of the separation distance, while (4.4) bounds the number of such zeros
+logarithmically; the remaining part of the partial-fraction expansion has the usual logarithmic
+bound. The estimate on the lower edge follows as well from the conjugation symmetry of $\xi_K$.
+The displayed bound is deliberately coarse, but it records the inverse-polynomial loss that
+cannot be discarded.
+
+Repeated integration by parts in the definition of $\Phi_F$ gives
+$\Phi_F(\sigma+iT)=O_{F,M}(T^{-M})$ for every $M$, uniformly in the same strip. Taking $M>d$
+(and increasing it once more if necessary to absorb the logarithmic factor) shows that the
+integrand on each horizontal edge tends uniformly to zero. Since those edges have fixed length
+$2c-1$, it follows that $E_{T_j}\to0$.
 
 The functional equation and evenness give
 
@@ -876,7 +888,7 @@ the $\sinh$ kernel at zero, and compact support handles the prime sum. Formula (
 
 Four checks expose most errors in (6.1): the prime term and zero term have positive signs; the pole term enters with a minus sign and is therefore a nonpositive finite-degree penalty when $F\geq0$; and the extra real-place constant is $\pi/2$. The factor $8\pi$ is tied to the completion in §4.1. Altering one convention without recomputing the other fails the asymptotic checks in Chapter 9.
 
-There is a fifth, more conceptual check. Set aside the prime and zero sums and let an unconditional triangular support grow with the degree. The remaining constant must tend to $\log(4\pi)+\gamma+\alpha$. If it tends instead to $\log(8\pi)+\gamma+\alpha$, the universal $B$-loss was omitted. If the coefficient of $\alpha$ tends to $\pi/2$, the $C$-loss was omitted. This limiting check simultaneously tests the gamma constants, both kernels, and their signature multiplicities.
+There is a fifth, more conceptual check. Set aside the prime and zero sums and let an unconditional triangular support $T=T(n)$ grow with the degree in the regime $T(n)\to\infty$ and $T(n)/n\to0$, as in §9.2. The remaining constant must tend to $\log(4\pi)+\gamma+\alpha$. If it tends instead to $\log(8\pi)+\gamma+\alpha$, the universal $B$-loss was omitted. If the coefficient of $\alpha$ tends to $\pi/2$, the $C$-loss was omitted. This limiting check simultaneously tests the gamma constants, both kernels, and their signature multiplicities.
 
 Contour shifts also have a diagnostic failure mode. Shifting $-\zeta_K'/\zeta_K$ alone would cross the pole of $\zeta_K$ and all trivial zeros individually. Using $\xi_K$ packages the trivial zeros into gamma factors and the poles into $s(s-1)$. The resulting pole integral is not optional: deleting it produces a bound that is implausibly strong in degree one. The completed function is therefore not merely elegant notation; it is the device that makes every residue visible exactly once.
 
