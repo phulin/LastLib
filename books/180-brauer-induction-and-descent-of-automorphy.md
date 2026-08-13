@@ -1133,7 +1133,10 @@ Euler factors. None of the items implies the others.
 
 In automorphic applications, a packet $\pi_H$ gives $V_{H,\tau}=r_{\pi_H,\tau}$.
 Constructing all such packets, proving overlap on nonnormal intersection fields, and verifying
-uniform local data are arithmetic theorems outside this template.
+uniform local data are arithmetic theorems outside this template. In particular, this abstract
+descent starts from the semisimple $V_{H,\tau}$ and supplied local objects; it has no operation
+which recovers a nilpotent monodromy operator erased when a raw geometric representation is
+globally semisimplified.
 
 ### 6.2 Finite characters and termwise operations
 
@@ -1915,11 +1918,16 @@ particular, ordinary or Galois-refined approximation does not prove the automorp
 hypotheses of Section 8.1.
 
 The FLT application is not presently unconditional. Book 183's controlled SP top datum still
-requires the controlled residual automorphic seed isolated as missing in Book 182. Moreover,
-Book 168 transfers the full SP parameter to a coefficient member only in its proved
-residual-irreducibility range; it does not give the all-embedding special local assertion needed
-for a uniform elementary array. These are blockers to supplying the diagram of Section 6.1,
-not conclusions of the abstract theory and not additional direct dependencies of this book.
+requires the controlled residual automorphic seed isolated as missing in Book 182. For
+raw-to-global preservation, Book 168 now proves the complete formal reduction: semisimplicity
+of the ambient $H^1$ for every actual curve carrier, denoted
+$(\mathrm{SS}_{\mathrm{array}})$, transfers the full signed SP pair, including $N$, at every
+allowed coefficient embedding. Rational Tate-module semisimplicity $(\mathrm{TS})$ for the
+carrier Jacobians is sufficient, but is not proved in the current book dependency chain. The
+abstract Brauer formalism here cannot supply that missing arithmetic theorem, and it gives no
+Weil--Deligne comparison at a base place equal to the coefficient residue characteristic.
+These are blockers to supplying the diagram of Section 6.1, not conclusions of the abstract
+theory and not additional direct dependencies of this book.
 
 The correct topological placement is after Books 109 and 168 and before Books 183--185.
 The downstream division of labor is exact:

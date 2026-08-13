@@ -61,7 +61,8 @@ and distinguish Book 161's actual category/classification role in the endgame.
 
 The existence of the collection used below is conditional on the controlled SP top datum
 of Books 182--185. In particular, the current dependency spine does not construct the
-required controlled residual automorphic seed. The result of this chapter is therefore a
+required controlled residual automorphic seed, every raw dyadic carrier, or the ambient
+semisimplicity certificate needed for uniform raw-to-global preservation. The result of this chapter is therefore a
 bounded implication from the assembled rational data, not an unconditional construction of
 that data.
 
@@ -199,6 +200,12 @@ Only the finitely many auxiliary primes left by Book 185 require new checks. Thi
 is an input, not a consequence of equality at the cofinite set of good Frobenius classes. In
 particular, removal of the old coefficient prime $p$ must be certified by the actual local
 record at $p$ for $r_\nu$; it is not deduced from $p$'s role in the original member.
+
+Book 185, Proposition 8.1 gives the exact source-facing reduction: if the common bad-place
+set of the genuine descended realization is supported at two
+($(\mathrm{Cond}_2)$), then its actual unramified-specialization theorem gives
+$(\mathrm U)$ for every $\nu\mid3$. The support-at-two premise is an additional arithmetic
+conductor theorem; the existence of some common finite bad set does not prove it.
 
 ## 3. The special parameter at two
 
@@ -784,6 +791,10 @@ Theorem 7.1 imports only:
 - full strong local compatibility at $2$; and
 - identification of the distinguished member's dyadic pair as
   $\operatorname{Sp}_2(\varepsilon)$.
+
+The first bullet already includes Book 183's prior raw-to-global preservation certificate. This
+chapter cannot use the selected coefficient-$3$ member, or the final family containing it, to
+prove that upstream certificate.
 
 The optional minimal-support assertion additionally imports the separate certificate
 $(\mathrm U)$ for the selected member. The theorem does not import a later finite-flat theorem, residual classification, or final

@@ -36,6 +36,7 @@
    - [Good and special places](#72-good-and-special-places)
    - [Finite and tame dihedral types](#73-finite-and-tame-dihedral-types)
    - [Strict compatibility theorem](#74-strict-compatibility-theorem)
+   - [Ambient semisimplicity and uniform passage](#75-ambient-semisimplicity-and-uniform-passage)
 8. [Purity at bad places](#8-purity-at-bad-places)
    - [The monodromy filtration](#81-the-monodromy-filtration)
    - [Special parameters](#82-special-parameters)
@@ -85,7 +86,7 @@ At a bad place, a characteristic polynomial is not enough. Inertia can be finite
 
 The purpose of this book is to assemble the representations attached to all coefficient conjugates of a weight-two packet into one weakly compatible system. We prove independence from the chosen algebraic embedding, from harmless enlargements of the coefficient field, from the scalar used to normalize a polarization, and, for semisimple members, from the eligible curve carrier. We prove good-place purity of weight one.
 
-At bad places there are two different outputs. In the split one-step Iwahori special range, the preceding semistable-curve theorem actually constructs the graph line, nonzero monodromy, and raw unnormalized $U_v$ return scalar. By contrast, the tame principal, scalar-special after descent, and tame dihedral statements are recognition criteria: they identify a parameter only after the type lines, monodromy branch, and every Frobenius return map have been supplied. Passing any raw parameter to the globally semisimplified family requires the local-preservation identity below. The preceding local-comparison book proves that identity at a coefficient place whose stable lattice has absolutely irreducible residual reduction; it does not prove it simultaneously at every coefficient place.
+At bad places there are two different outputs. In the split one-step Iwahori special range, the preceding semistable-curve theorem actually constructs the graph line, nonzero monodromy, and raw unnormalized $U_v$ return scalar. By contrast, the tame principal, scalar-special after descent, and tame dihedral statements are recognition criteria: they identify a parameter only after the type lines, monodromy branch, and every Frobenius return map have been supplied. Passing any raw parameter to the globally semisimplified family requires the local-preservation identity below. The preceding local-comparison book proves that identity at a coefficient place whose stable lattice has absolutely irreducible residual reduction and reduces its uniform version to semisimplicity of the ambient curve cohomology. The reduction is complete, but the required Tate-module semisimplicity theorem is not proved in the present dependency chain.
 
 ### 1.2 Standing fields and conventions
 
@@ -146,7 +147,7 @@ $$
 \operatorname{WD}_v(\widetilde\rho_\lambda)^{\mathrm{F\!-\!ss}}. \tag{1.6}
 $$
 
-We call (1.6) the **local-preservation condition** at $(v,\lambda)$; it is exactly $(\mathrm R_u)$ in the preceding local-comparison book, after matching the local place. It follows if the raw global representation is already semisimple. More concretely, if a stable lattice in the two-dimensional member has absolutely irreducible residual reduction, then the characteristic-zero member is absolutely irreducible, the raw representation is already irreducible, and (1.6) holds at every $v\nmid\ell(\lambda)$. This closes the passage for the distinguished residual-irreducible FLT member. It is a place-by-place argument and supplies no uniform assertion for all $\lambda$.
+We call (1.6) the **local-preservation condition** at $(v,\lambda)$; it is exactly $(\mathrm R_u)$ in the preceding local-comparison book, after matching the local place. It follows if the raw global representation is already semisimple. More concretely, if a stable lattice in the two-dimensional member has absolutely irreducible residual reduction, then the characteristic-zero member is absolutely irreducible, the raw representation is already irreducible, and (1.6) holds at every $v\nmid\ell(\lambda)$. This closes the passage for the distinguished residual-irreducible FLT member. It is a place-by-place argument and supplies no uniform assertion for all $\lambda$. Book 128, Proposition 9.4 gives the coefficient-uniform alternative: semisimplicity of the ambient $H^1$ of each actual curve carrier makes every extracted raw multiplicity representation semisimple after every finite coefficient extension.
 
 These inputs do not yet constitute a compatible-system theorem. We must organize coefficient embeddings, show that all local data have a common algebraic model, and separate rational compatibility from integral choices.
 
@@ -583,6 +584,49 @@ If the raw two-dimensional representation were reducible, a nonzero proper stabl
 This corollary is not an independence-of-$\lambda$ theorem. Absolute irreducibility of one residual member does not prove it for the reductions at every other coefficient place.
 No semisimplicity theorem for abelian varieties or for raw curve cohomology is being used here; in particular, the argument does not hide a Faltings input.
 
+### 7.5 Ambient semisimplicity and uniform passage
+
+The uniform problem has a precise ambient reduction. For the finite collection of actual smooth
+projective curve carriers $C_i/E_i$ used to construct the packet family, impose
+
+$$
+\boxed{(\mathrm{SS}_{\mathrm{array}})\quad
+H^1_{\mathrm{et}}((C_i)_{\overline E_i},\mathbf Q_\ell)
+\text{ is semisimple as a }\mathbf Q_\ell[G_{E_i}]\text{-module}
+\text{ for every relevant }i\text{ and }\ell.}
+\tag{7.9}
+$$
+
+**Proposition 7.6 (uniform raw-to-global passage).** Under
+$(\mathrm{SS}_{\mathrm{array}})$, every raw multiplicity representation extracted from these
+carriers is globally semisimple after every displayed coefficient embedding. Hence (1.6)
+holds for every $v\nmid\ell(\lambda)$, and every algebraic raw pair constructed in Theorem 7.4
+is the full Frobenius-semisimple Weil--Deligne pair of the corresponding semisimple member.
+
+**Proof.** Apply Book 128, Proposition 9.4 to each carrier and each coefficient
+characteristic. Scalar extension, the rational packet idempotent, the selected split central
+idempotent, and the Morita evaluation map preserve semisimplicity. Thus
+$\widetilde\rho_\lambda\simeq\rho_\lambda$ globally for every realization. Restriction to a
+decomposition group then preserves the actual representation, so formation of the
+Weil--Deligne pair preserves finite inertia and the nilpotent operator $N$ as well as the
+Frobenius return scalar. This does not make the local restriction semisimple: global
+semisimplicity is compatible with unipotent local inertia and nonzero monodromy. $\square$
+
+For each $C_i$, Book 36, (10.12) identifies the representation in (7.9) with
+$V_\ell(\operatorname{Jac}(C_i))(-1)$ in the covariant convention, equivalently with its dual
+through the principal polarization. Therefore the rational Tate-module
+semisimplicity statement $(\mathrm{TS})$ isolated in Book 128, (9.6), is sufficient for
+$(\mathrm{SS}_{\mathrm{array}})$. None of the books in the present dependency row proves
+$(\mathrm{TS})$ or its finite carrier instance. Semisimplicity of the Hecke algebra and
+semisimplicity of the isogeny category do not imply the required Galois-module statement.
+
+This reduction is uniform over all embeddings above a fixed coefficient characteristic and
+uses no local special-line argument, so it is noncircular. It also makes the raw global
+$2$-adic representation semisimple if the ambient theorem is supplied at $\ell=2$. It does
+not extend the prime-to-coefficient Weil--Deligne comparison to $v\mid\ell(\lambda)$; in
+particular, at a dyadic base place the signed special pair is obtained here only from
+coefficient places away from two.
+
 ## 8. Purity at bad places
 
 ### 8.1 The monodromy filtration
@@ -972,7 +1016,7 @@ $$
 \simeq D_v\otimes_EE_\lambda. \tag{12.5}
 $$
 
-If one of these packages is available at every finite $v$ and (1.6) holds at every bad $v$, the semisimple family is strictly compatible away from the varying coefficient residue characteristic. Corollary 7.5 supplies (1.6) at a coefficient place with absolutely irreducible residual reduction. It does not supply it uniformly in $\lambda$. At a bad finite-monodromy place, purity of weight one also needs the separate return-map weight hypothesis of Theorem 8.2; the constructed special pair is already pure by Section 8.2.
+If one of these packages is available at every finite $v$ and (1.6) holds at every bad $v$, the semisimple family is strictly compatible away from the varying coefficient residue characteristic. Corollary 7.5 supplies (1.6) at a coefficient place with absolutely irreducible residual reduction. Proposition 7.6 supplies it uniformly from $(\mathrm{SS}_{\mathrm{array}})$, whose ambient arithmetic input is not proved here. At a bad finite-monodromy place, purity of weight one also needs the separate return-map weight hypothesis of Theorem 8.2; the constructed special pair is already pure by Section 8.2.
 
 **Local invariants.** In the range of (12.5), the local Euler polynomial, Artin and Swan conductor, and monodromy rank are independent of $\lambda$; normalized epsilon factors are coefficientwise realizations of one algebraic value. The global prime-to-$\lambda$ conductor ideal
 
@@ -1030,7 +1074,7 @@ $$
 
 It has determinant $\chi_\lambda$ and, at a good place, arithmetic-Frobenius polynomial $X^2-t_vX+q_v$. At a dyadic special place the untwisted geometric eigenvalues are $\beta_v$ on $\ker N$ and $2\beta_v$ on the quotient. Since $\beta_v=\beta_v^{-1}$, arithmetic Frobenius on $\rho^{\mathrm{cov}}_\lambda$ acts by $\beta_v$ on the quotient and by $2\beta_v$ on the monodromy line. This is the SP sign and line convention consumed downstream.
 
-The prior books neither supply the extra eligible set away from two from the dyadic hypotheses alone nor prove item 5 simultaneously for every allowed coefficient place. An all-embedding SP assertion therefore requires the additional carrier just stated and (1.6) for every allowed $\lambda$, or another theorem proving global semisimplicity or absolute irreducibility of every member.
+The prior books neither supply the extra eligible set away from two from the dyadic hypotheses alone nor prove item 5 simultaneously for every allowed coefficient place. Once the additional carrier just stated exists, Proposition 7.6 proves all formal reductions for an SP assertion at every coefficient embedding of residue characteristic different from two: it remains to supply $(\mathrm{SS}_{\mathrm{array}})$, for example through $(\mathrm{TS})$ for the carrier Jacobian. That arithmetic semisimplicity input is not proved in this dependency chain.
 
 **Proof.** A dyadic singleton satisfies Book 104's odd nonempty selected ramification condition, so Theorem 12.1 gives item 1. Proposition 7.2 explains why that carrier fails the dyadic tensor ledger and proves item 2. Under the added away-from-two carrier hypothesis, Proposition 7.1 constructs every raw special pair, and Section 8.2 proves its purity from $\beta_v^2=1$. Proposition 10.3 identifies the semisimple systems obtained from the different eligible carriers. Corollary 7.5 proves the final transfer exactly at the residual-irreducible coefficient places. Twisting, then inverting geometric Frobenius, gives the final covariant formulas. $\square$
 
@@ -1077,17 +1121,18 @@ begins after a rational member has been constructed.
 | constructed raw split-Iwahori special pair | Book 122, *Semistable Models and Monodromy of Quaternionic Shimura Curves*, assembled in Book 128 | split quaternion algebra at $v$; complete odd-split or dyadically tensor-split direct PEL ledger, including splitting at every dyadic factor in the latter case; component support; multiplicity one; raw unnormalized $U_v$ | it proves $(\mathrm B_v)$ and rank-one $N$ on the raw multiplicity space, but not raw-to-global passage; ramifying the carrier at another dyadic place violates its dyadic ledger |
 | tame principal, scalar-special, or dihedral parameter | Book 128, *Local--Global Compatibility for Weight-Two Galois Representations* | $v\nmid\ell$; the actual descent complex, type lines, monodromy branch, exchange maps, and every Frobenius return map | these are recognition criteria; they construct none of the missing tame return data for an arbitrary packet and cover no primitive wild row |
 | strict bad parameter at one residual-irreducible coefficient place | Book 128, Lemmas 9.1--9.2 and Corollary 9.3 | a stable lattice with absolutely irreducible residual reduction at that $\lambda$ | the argument is coefficient-place by coefficient-place and gives no uniform all-$\lambda$ SP record |
+| uniform raw-to-global passage for the actual carrier array | Book 128, Proposition 9.4, and Proposition 7.6 | $(\mathrm{SS}_{\mathrm{array}})$; it follows from rational Tate-module semisimplicity $(\mathrm{TS})$ for the carrier Jacobians | all coefficient extensions and packet factors are handled formally, but the present dependency chain does not prove the ambient semisimplicity input; no comparison at $v\mid\ell$ follows |
 | bad-place purity | Section 8 from the identified algebraic pair | special shape plus determinant closes the special row; finite-monodromy rows require the return-map absolute values such as (8.7) | determinant, finite inertia, and algebraicity do not prove finite-type weight one |
 | semisimple carrier independence | Chebotarev density and Brauer--Nesbitt, applied in Proposition 10.3 | two already constructed semisimple representations with the same split-packet good polynomials | no raw extension, canonical intertwiner, or integral lattice is compared |
 
-No theorem about later finite-flat quotients is used. Book 129 can construct a chosen all-level finite-flat tower only after a member has its own good-reduction abelian bridge and low-ramification hypotheses; it neither synchronizes coefficient places nor proves the SP pair. Book 183 therefore correctly retains a **controlled SP top datum** requiring the SP local object as well as local preservation at every coefficient place. Books 184--185 propagate that datum through characteristic-zero effectivity and base-field assembly but do not create it. Book 187 likewise treats its SP family as an input and cannot repair its absence. Even degree and complete dyadic splitting provide several eligible dyadic places for the automorphic curve construction, but they do not close the raw geometric SP carrier problem: Book 122 requires a carrier ramified at an odd nonempty eligible set away from two. Uniform all-embedding raw-to-global preservation and the separate coefficient-prime integral bridge remain additional boundaries.
+No theorem about later finite-flat quotients is used. Book 129 can construct a chosen all-level finite-flat tower only after a member has its own good-reduction abelian bridge and low-ramification hypotheses; it neither synchronizes coefficient places nor proves the SP pair. Book 183 therefore correctly retains a **controlled SP top datum** requiring the SP local object as well as local preservation at every coefficient place away from two. Books 184--185 propagate that datum through characteristic-zero effectivity and base-field assembly but do not create it. Book 187 likewise treats its SP family as an input and cannot repair its absence. Even degree and complete dyadic splitting provide several eligible dyadic places for the automorphic curve construction, but they do not close the raw geometric SP carrier problem: Book 122 requires a carrier ramified at an odd nonempty eligible set away from two. After such carriers are supplied, Proposition 7.6 reduces uniform prime-to-two raw-to-global preservation exactly to $(\mathrm{SS}_{\mathrm{array}})$; the missing arithmetic source is $(\mathrm{TS})$ for their Jacobians. The coefficient-prime integral bridge remains a separate boundary.
 
 The downstream contract is therefore:
 
 | Consumer | May use from this book | Must not infer |
 |---|---|---|
 | Book 129 | a rational raw packet plane, its semisimplification, determinant, and existence of placewise stable lattices | a canonical rank-two cohomological summand, coefficient-prime finite flatness, or one lattice across coefficient places |
-| Book 183 | the constructed weak packet systems, coefficient conjugation, determinant, good purity, and the conditional algebraic SP pair | the all-embedding SP pair unless its controlled top datum supplies local preservation for every coefficient embedding |
+| Book 183 | the constructed weak packet systems, coefficient conjugation, determinant, good purity, the conditional algebraic SP pair, and the reduction of uniform preservation to $(\mathrm{SS}_{\mathrm{array}})$ | the SP pair at every prime-to-two coefficient embedding unless its controlled top datum supplies preservation directly or supplies the missing ambient semisimplicity input |
 | Books 184--185 | the packet systems and local objects already present in Book 183's controlled array | effectivity, base-field descent, or a new local comparison merely from good polynomials; those books prove their own characteristic-zero conclusions |
 | Book 187 | a rational SP member only after Books 183--185 have actually produced it | the missing SP family, a three-adic good-reduction bridge, a stable lattice, or an all-level finite-flat tower |
 
@@ -1143,7 +1188,7 @@ The following checks should accompany every use of the theorem.
 4. The determinant is $\chi_\lambda^{-1}\eta_\lambda$, not $\chi_\lambda\eta_\lambda$.
 5. Good-place purity means modulus $q_v^{1/2}$ for every complex conjugate; bad-place purity is the separate monodromy-graded assertion of Theorem 8.2.
 6. A special parameter has Frobenius eigenvalues $\beta_v$ and $q_v\beta_v$, with $N$ mapping the second line to the first.
-7. The local comparison computes the raw pair; strict compatibility of $\rho_\lambda$ also requires (1.6) and is asserted only for $v\nmid\ell(\lambda)$. Absolute residual irreducibility at that coefficient place proves (1.6), but not at the other coefficient places.
+7. The local comparison computes the raw pair; strict compatibility of $\rho_\lambda$ also requires (1.6) and is asserted only for $v\nmid\ell(\lambda)$. Absolute residual irreducibility proves (1.6) at one coefficient place; $(\mathrm{SS}_{\mathrm{array}})$ proves it uniformly, but its sufficient Tate-module input $(\mathrm{TS})$ is not supplied here.
 8. Inertial type plus conductor does not determine Frobenius return maps or monodromy.
 9. Coefficient conjugation acts on $t_v$, $s_v$, $\eta$, and every local type value together.
 10. A rational compatible system supplies stable lattices but not canonical integral direct summands.
@@ -1155,11 +1200,11 @@ These tests catch the most common sign, twist, and scope errors before they ente
 
 The construction gives one coherent semisimple weakly compatible family. Its good Frobenius polynomials live in the good-polynomial field and survive every coefficient completion. Its determinant is fixed globally, and every complex conjugate of every good root has the expected absolute value. At every place covered by the geometric local comparison, the complete Frobenius-semisimple Weil--Deligne pair of the raw cohomological family is independent of the coefficient place.
 
-Three load-bearing assertions remain logically separate. First, Book 122 does construct $(\mathrm B_v)$ and the raw special pair in its exact split one-step Iwahori range, whereas Book 128's tame principal, scalar-special, and dihedral rows merely recognize data that must already have been supplied. Second, Book 128 identifies the raw and globally semisimplified members at a coefficient place with absolutely irreducible residual reduction, but no prior theorem proves this simultaneously for every coefficient place. Third, finite-monodromy return maps have not in general been proved to have the complex absolute values required for bad-place purity; the special row has no such gap because its shape and determinant force a finite-order kernel scalar.
+Three load-bearing assertions remain logically separate. First, Book 122 does construct $(\mathrm B_v)$ and the raw special pair in its exact split one-step Iwahori range, whereas Book 128's tame principal, scalar-special, and dihedral rows merely recognize data that must already have been supplied. Second, Book 128 identifies the raw and globally semisimplified members at a coefficient place with absolutely irreducible residual reduction. Proposition 7.6 now proves every reduction needed to do so simultaneously: the exact remaining theorem is $(\mathrm{SS}_{\mathrm{array}})$, supplied for example by rational Tate-module semisimplicity $(\mathrm{TS})$ for the actual carrier Jacobians. The current sources do not prove that theorem. Third, finite-monodromy return maps have not in general been proved to have the complex absolute values required for bad-place purity; the special row has no such gap because its shape and determinant force a finite-order kernel scalar.
 
-For the FLT SP carrier problem, another dyadic special place supplies a compact curve carrier but not the dyadically tensor-split carrier required for the raw SP calculation: ramification at that auxiliary dyadic place violates Book 122's complete splitting hypothesis. The raw stage is closed only after an odd nonempty eligible ramification set away from two and the rest of the dyadic tensor ledger are supplied. The all-embedding SP record assumed by Book 183 is still not closed even then, because the residual-irreducibility argument applies only at the coefficient places where that residual hypothesis is known. The theorem also makes no comparison at the coefficient residue characteristic, constructs no globally canonical lattice, proves no integral self-duality at denominator primes, and produces no finite-flat quotient. It does not identify a quaternionic constituent from good eigenvalues unless the requisite isolating data are already present.
+For the FLT SP carrier problem, another dyadic special place supplies a compact curve carrier but not the dyadically tensor-split carrier required for the raw SP calculation: ramification at that auxiliary dyadic place violates Book 122's complete splitting hypothesis. The raw stage is closed only after an odd nonempty eligible ramification set away from two and the rest of the dyadic tensor ledger are supplied. Even then the prime-to-two all-embedding SP record assumed by Book 183 is conditional on $(\mathrm{SS}_{\mathrm{array}})$, because the residual-irreducibility argument applies only at the coefficient places where that residual hypothesis is known. This is now an exact arithmetic input rather than an unresolved coefficient-book reduction. The theorem also makes no comparison at the coefficient residue characteristic, constructs no globally canonical lattice, proves no integral self-duality at denominator primes, and produces no finite-flat quotient. It does not identify a quaternionic constituent from good eigenvalues unless the requisite isolating data are already present.
 
-Thus the good-polynomial, determinant, conjugation, and weight-bound inputs are complete. The distinguished residual-irreducible member has the proved SP comparison only when the away-from-two eligible carrier and dyadic tensor ledger are supplied. Uniform strict SP compatibility across all coefficient places remains an explicit hypothesis for the later changing-prime assembly.
+Thus the good-polynomial, determinant, conjugation, and weight-bound inputs are complete. The distinguished residual-irreducible member has the proved SP comparison only when the away-from-two eligible carrier and dyadic tensor ledger are supplied. Uniform strict SP compatibility at every coefficient place away from residue characteristic two follows formally from $(\mathrm{SS}_{\mathrm{array}})$, but that ambient semisimplicity input remains an explicit hypothesis for the later changing-prime assembly. The coefficient-two dyadic comparison is not part of this conclusion.
 
 ### 13.4 Conclusion
 
@@ -1179,4 +1224,4 @@ $$
 
 Smooth proper geometry gives good-place weight one, including every complex conjugate of every root. Nearby-cycle geometry supplies the finer raw bad-place package: finite inertia, nilpotent monodromy, and Frobenius return maps. These data are algebraic before a coefficient place is chosen.
 
-The boundary is exact. When the eligible carrier and complete split-Iwahori ledger are available, the special pair is geometrically constructed, and absolute residual irreducibility proves its passage to the semisimple member at the coefficient place where that residual condition holds. Passing it at every coefficient place still requires (1.6) there. Finite-monodromy bad purity still requires the return-map weight. Rational compatibility does not synchronize integral lattices, and coefficient-residue-characteristic comparisons require separate hypotheses. Subject to these boundaries, coefficient embeddings, polarization scalars, splitting fields, and eligible curve carriers alter presentations but not the semisimple good compatible data.
+The boundary is exact. When the eligible carrier and complete split-Iwahori ledger are available, the special pair is geometrically constructed, and absolute residual irreducibility proves its passage to the semisimple member at the coefficient place where that residual condition holds. Proposition 7.6 proves passage at every allowed coefficient embedding from $(\mathrm{SS}_{\mathrm{array}})$; the irreducible unsourced theorem is rational Tate-module semisimplicity for the actual carrier Jacobians. Finite-monodromy bad purity still requires the return-map weight. Rational compatibility does not synchronize integral lattices, and coefficient-residue-characteristic comparisons require separate hypotheses. Subject to these boundaries, coefficient embeddings, polarization scalars, splitting fields, and eligible curve carriers alter presentations but not the semisimple good compatible data.

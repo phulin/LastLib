@@ -90,9 +90,9 @@ $$
 \tag{1.1}
 $$
 
-The last sequence gives a trace identity at every good Frobenius. A prime is used only when
-Book 185 certifies both its common algebraic polynomial and weight-one purity. There is no need
-to name the prime $5$.
+The last sequence gives a trace identity at every good Frobenius. A prime is used only when the
+restricted away-from-two conclusion of Book 185 certifies both its common algebraic polynomial
+and weight-one purity. There is no need to name the prime $5$.
 
 ### 1.2 The exact input
 
@@ -179,9 +179,9 @@ $$
 
 is the characteristic polynomial of $\rho(\operatorname{Frob}_q)$ after applying
 $\iota_\nu$, and every root of $P_q$ has complex absolute value $\sqrt q$ under every
-complex embedding. Book 185 supplies such records for every $q$ outside its finite certified
-exceptional set. Book 187's clean-support certificate is stronger: it is needed for (1.6), not
-merely for choosing one $q$.
+complex embedding. The restricted Book 185 conclusion supplies such records for every $q$
+outside its finite certified exceptional set. Book 187's clean-support certificate is stronger:
+it is needed for (1.6), not merely for choosing one $q$.
 
 ### 1.3 The reusable theorem
 
@@ -234,15 +234,16 @@ SP local record. It does not need a residual nonzero-monodromy assertion for the
 
 ### 1.4 What is conditional upstream
 
-Book 185, Theorem 9.1, conditionally supplies the actual compatible family, the cyclotomic
-determinant, the pure polynomials outside a finite set, and the rational SP pair (1.8)--(1.10).
-It does not supply a lattice or coefficient-prime finite flatness.
+The restricted conclusion of Book 185, Theorem 9.1, conditionally supplies the actual
+away-from-two collection, the cyclotomic determinant, the pure polynomials outside a finite
+set, and the rational SP pair (1.8)--(1.10). Book 186 selects its member at $\nu\mid3$ and
+records explicitly that this selection does not use $(\mathrm{AI}_2)$. Neither book supplies a
+lattice or coefficient-prime finite flatness.
 
-The full all-finite-place form of Book 185, Theorem 9.1, also assumes Book 184's
-$(\mathrm{AI}_2)$. Book 185 records the same conclusions place by place for coefficient places
-away from $2$ without that hypothesis, but Book 187, Theorem 10.2, is currently stated under the
-full conditional base-field theorem. Thus $(\mathrm{AI}_2)$ remains part of the present upstream
-antecedent.
+Book 187, Theorem 10.2, is stated from precisely that selected away-from-two member. Its proof
+uses no coefficient place above two. Consequently Book 184's $(\mathrm{AI}_2)$ is not part of
+the coefficient-three antecedent in this book; it is needed only for the stronger all-finite-
+coefficient-place form of Book 185.
 
 Book 187, Theorem 10.2, conditionally supplies (1.6)--(1.7). Its hypotheses include both the
 coefficient-prime certificate $(\mathrm C_3)$ and the clean-support certificate $(\mathrm U)$.
@@ -714,8 +715,8 @@ contradiction treats either input sign uniformly.
 
 ### 9.1 One certified good prime
 
-Book 185, Theorem 9.1, supplies a finite exceptional set $S$ and, for every prime
-$q\notin S$, a polynomial
+The restricted conclusion of Book 185, Theorem 9.1, supplies a finite exceptional set $S$ and,
+for every prime $q\notin S$, a polynomial
 
 $$
 P_q(X)=X^2-a_qX+q\in E[X]
@@ -803,10 +804,11 @@ purity is a separate and indispensable compatible-family input.
 
 ### 9.4 The Frey endpoint
 
-Book 164 supplies the residual signed-SP Frey datum and states the downstream contract. Book 185
-conditionally supplies an absolutely irreducible compatible member with the rational SP record
-and pure good polynomials. Book 187 conditionally supplies the all-level tower. Once those
-antecedents exist, Theorem 1.1 gives two contradictions:
+Book 164 supplies the residual signed-SP Frey datum and states the downstream contract. The
+restricted Book 185 conclusion conditionally supplies an absolutely irreducible member at
+$\nu\mid3$ with the rational SP record and pure good polynomials. Book 187 conditionally
+supplies the all-level tower. Once those antecedents exist, Theorem 1.1 gives two
+contradictions:
 
 1. the line in (8.8) contradicts absolute irreducibility; and
 2. any certified prime (9.2) contradicts weight-one purity.
@@ -824,7 +826,7 @@ The proof uses the following mathematical sources directly.
 | Source | Exact input | Use here |
 |---|---|---|
 | Book 161, Theorems 6.2, 9.1--9.2, and 10.1 | the Schoof category, simple objects, Ext asymmetry, canonical multiplicative--constant filtration, and finite-level cross and trace identities | Chapters 3--7 and the input to the $\mathcal O$-adic passage |
-| Book 185, Theorem 9.1 | determinant, rational SP pair, cofinite common good polynomials, and purity | the rational local record and Section 9 |
+| restricted conclusion of Book 185, Theorem 9.1 | determinant, rational SP pair, cofinite common good polynomials, and purity at the selected place above three | the rational local record and Section 9; no coefficient-two member is used |
 | Book 187, Theorem 10.2 | the conditional clean-support, coefficient-linear all-level tower over $\mathbf Z[1/2]$ | the sole integral input at and away from $3$ |
 
 Books 2--6, 17, 28--29, 34, 42, 51, and 159--160 enter transitively through Book 161's proved
@@ -853,18 +855,20 @@ unconditionally by the spine.
 1. **Controlled SP top datum.** Book 185, Theorem 9.1, assumes the controlled SP packet-array
    datum used by Books 183--184. Book 185's own audit records that the current Book 182 does not
    unconditionally supply the controlled residual automorphic seed.
-2. **Coefficient-two irreducibility $(\mathrm{AI}_2)$.** Book 184 assumes that its top-packet
-   realization is absolutely irreducible at every coefficient place of residue characteristic
-   $2$. The full Book 185 theorem cited by Book 187 retains this hypothesis. Book 185 supplies a
-   restricted place-by-place conclusion for $\lambda\nmid2$ without it, but Book 187's current
-   packaged theorem has not weakened its stated input to that restricted conclusion.
-3. **Coefficient-prime certificate $(\mathrm C_3)$.** Even after the conditional Book 185
-   member is granted, Book 187 requires a proof that the selected member at $\nu\mid3$ is
-   crystalline over $\mathbf Q_3$ of Hodge type $(0,1)$. Book 185 does not prove this.
-4. **Clean-support certificate $(\mathrm U)$.** Book 187 also requires actual unramifiedness at
-   every prime in the finite auxiliary set left by Book 185. Weak compatibility does not remove
-   those primes. Without these finite checks, the local tower at $3$ cannot be glued over
-   $\mathbf Z[1/2]$.
+2. **Coefficient-three integral source $(\mathrm{IC}_3)$.** Even after the conditional Book
+   185 member is granted, an arithmetic theorem must supply the selected flat companion (or a
+   weaker direct crystalline carrier). Book 187, Proposition 2.1 proves
+   $(\mathrm{IC}_3)\Rightarrow(\mathrm C_3)$, and its later chapters construct the named
+   tower. Book 185 does not prove the premise.
+3. **Conductor support $(\mathrm{Cond}_2)$.** Book 185, Proposition 8.1 proves that support of
+   the genuine family's common bad set at two implies the clean-support certificate
+   $(\mathrm U)$. For the coefficient-three route it is enough instead to prove actual
+   unramifiedness of the selected member at every prime in the finite auxiliary set. Weak
+   compatibility does not remove those primes. Without one of these arithmetic inputs, the
+   local tower at $3$ cannot be glued over $\mathbf Z[1/2]$.
+
+The omitted all-place hypothesis $(\mathrm{AI}_2)$ is deliberately not on this list: every
+object used in Books 186--188 has coefficient characteristic three.
 
 No additional blocker occurs inside Book 188 once Book 187, Theorem 10.2, and one prime from Book
 185's already certified cofinite good set are supplied.
@@ -885,6 +889,10 @@ bound is used only after passing to a subquotient killed by $3$.
 **Coefficient prime.** Crystallinity is not treated as finite flatness of an arbitrary lattice.
 The only coefficient-prime input is the actual tower exported conditionally by Book 187,
 Theorem 10.2. Every level is $\varpi^n$, not merely $3^n$.
+
+**Coefficient two.** No member at a coefficient place above two occurs. The rational base place
+$2$ is compared with the selected three-adic member, so it lies in the prime-to-coefficient
+range. The all-place hypothesis $(\mathrm{AI}_2)$ cannot affect this argument.
 
 **Support.** A global model over $\mathbf Z[1/2]$ is used only under Book 187's clean-support
 certificate. No auxiliary prime is removed from equality of almost all Frobenius traces.
@@ -913,10 +921,10 @@ fields as well.
 all separated coefficient levels, forms the algebraic augmentation submodule, and saturates its
 rank-one $K$-span.
 
-**Good prime.** The final prime lies in Book 185's certified cofinite good set. The argument does
-not assume that $5$ is outside the exceptional set. The inequality is valid for every certified
-prime $q>1$. In particular, Book 164's illustrative downstream choice of $5$ is not imported as
-an unproved local certificate.
+**Good prime.** The final prime lies in the restricted Book 185 conclusion's certified cofinite
+good set. The argument does not assume that $5$ is outside the exceptional set. The inequality
+is valid for every certified prime $q>1$. In particular, Book 164's illustrative downstream
+choice of $5$ is not imported as an unproved local certificate.
 
 ### 10.4 Conclusion
 
@@ -936,6 +944,6 @@ $$
 \tag{10.2}
 $$
 
-The unconditional FLT dependency spine is not ready for the four upstream reasons listed in
+The unconditional FLT dependency spine is not ready for the three upstream reasons listed in
 Section 10.2. That upstream status does not weaken the proved implication from the exact tower to
 the contradiction.

@@ -215,7 +215,7 @@ flowchart LR
 | 184 | Brauer Characters and Effectivity of Compatible Families | 24, 57, 180, 183 |
 | 185 | Compatible Systems over the Base Field | 168, 180, 182, 183, 184 |
 | 186 | Changing the Coefficient Prime while Keeping the Frey Special Place | 185 |
-| 187 | The Fixed-Three Integral Local Theory | 3, 42, 54, 129, 161, 185 |
+| 187 | The Fixed-Three Integral Local Theory | 3, 42, 54, 129, 161, 185, 186 |
 | 188 | Hardly Ramified $3$-adic Representations | 161, 185, 187 |
 
 ## Named unresolved theorem hypotheses
@@ -263,8 +263,9 @@ deliberately separate from the acyclic manuscript graph.
   attachment of cyclic descent candidates over odd-degree fixed fields and a raw
   dyadic SP carrier despite the minimal packet's lack of an eligible ramification place away
   from two.  The lifting faces also require the separately named one-prime and several-place
-  inputs above.  The raw-to-global part of the Book 183 handoff is the separately named
-  uniform-local-preservation theorem below.  Once the common presentation and constant-field
+  inputs above.  Once actual raw carriers exist, Books 128, 168, and 183 close the formal
+  raw-to-global reduction; the remaining arithmetic input is the separately named
+  packet-carrier ambient semisimplicity theorem below.  Once the common presentation and constant-field
   certificate are supplied, Book 182 proves the remaining normal-closure control, proves Book
   178's corrected relative-ray compatibility in the rational-base Frey case, takes the top
   itself as seed field, makes upward transfer vacuous, and reduces the local and group-theoretic
@@ -275,17 +276,53 @@ deliberately separate from the acyclic manuscript graph.
   From the exact automorphic seed, Book 173 makes the whole restricted ring finite free and Book
   181 derives finite scalar image, whole-ring finiteness, finite flatness, and a horizontal
   characteristic-zero point.  Its sole unresolved arithmetic input is therefore the seed above.
-- **Uniform local preservation:** raw-to-global preservation of the signed special
-  Weil--Deligne pair at every coefficient embedding used in the Brauer packet array.
-- **All-place coefficient extension $(\mathrm{AI}_2)$:** extension of the away-from-two
-  compatible collection to a member at every finite coefficient place, including places above
-  two. The coefficient-three route does not use this hypothesis, but the all-place system does.
-- **Coefficient-three integral source:** crystallinity of the selected three-adic member with
-  Hodge type $\{0,1\}$, or an equivalent proved good geometric/strongly-divisible carrier,
-  together with a named global lattice whose dyadic monodromy thickness is primitive when needed.
-- **Clean support $(\mathrm U)$:** actual unramifiedness of the selected three-adic member at
-  every rational prime other than two and three, including each auxiliary prime left in the
-  finite exceptional set; equality of almost-all Frobenius polynomials is not a substitute.
+- **Packet-carrier ambient semisimplicity $(\mathrm{SS}_{\mathrm{array}})$:** for every actual
+  smooth projective curve carrier used in the finite Brauer packet array and every relevant
+  coefficient characteristic $q$, its rational $H^1_{\mathrm{et}}$ is semisimple as a global
+  Galois module. Books 128, 168, and 183 prove that this input survives finite coefficient
+  extension, packet idempotents, and Morita extraction, so each raw multiplicity representation
+  equals its global semisimplification. It therefore preserves the complete signed special
+  Weil--Deligne pair, including nonzero $N$, its line, and its Frobenius sign, at every
+  coefficient embedding with $q\ne2$. Rational Tate-module semisimplicity $(\mathrm{TS})$ for
+  the Jacobians of the actual carriers is sufficient, but the current corpus only invokes that
+  theorem in Book 179 and neither proves it nor records a prior source for it. This is separate
+  from constructing the raw dyadic carriers. At $q=2$ it proves global semisimplicity but does
+  not extend the prime-to-coefficient Weil--Deligne comparison at the dyadic base place; Book
+  184's $(\mathrm{AI}_2)$ remains a separate effectivity gate.
+- **Coefficient-two top-packet irreducibility $(\mathrm{AI}_2)$:** absolute irreducibility in
+  characteristic zero of the already existing top-packet realization at every coefficient
+  place of residue characteristic two. It is a uniform sufficient input for the Mackey Gram
+  calculation at residue characteristic two and hence for Book 185's all-place effectivity;
+  it is not a scalar extension or completion of the away-from-two collection. Relation by
+  relation, the exact numerical input is norm one for the signed class at residue characteristic two
+  $(\mathrm N_2(\mathfrak B))$; the existing proof obtains it from coefficient-independence of
+  the finitely many self-twist Hom dimensions $(\mathrm G_2(\mathfrak B))$. A sufficient
+  natural source theorem would be coefficient-prime semistable SP compatibility with nonzero
+  monodromy for the top packet, which implies $(\mathrm{AI}_2)$, but Books 128 and 168 do not
+  prove it. The coefficient-three route through Books 186--188 uses only places away from two
+  and does not use this hypothesis.
+- **Coefficient-three integral source $(\mathrm{IC}_3)$:** a flat integral companion for the
+  selected three-adic member over a finite free local $\mathbf Z_3$-order, with every open-ideal
+  quotient represented by a finite-flat group over $\mathbf Z_3$. Book 54's stable-lattice
+  equivalence and coefficient-idempotent decomposition prove from this that the selected
+  member is crystalline of Hodge type $\{0,1\}$; Book 187, Proposition 2.1, spells out the
+  reduction and then constructs a named global lattice and all coefficient quotients. A direct
+  good-reduction geometric carrier or a direct crystalline comparison is an alternative
+  sufficient source. In the audited formal source, this is the coefficient-three
+  specialization of the integral-models-away clause of
+  the compatible-family arithmetic core, whose existence theorem is admitted rather than
+  proved. Book 188 does not require primitive residual dyadic monodromy for the resulting
+  lattice.
+- **Clean support $(\mathrm U)$ / conductor support $(\mathrm{Cond}_2)$:** the source-facing
+  arithmetic theorem says that the common bad-place set of the actual genuine Brauer
+  realization is supported at two. Its already proved specialization property then makes the
+  selected coefficient-three member unramified at every rational prime other than two and
+  three; Book 185, Proposition 8.1, gives this reduction. Alternatively, the selected-member
+  conclusion follows by proving actual unramifiedness at each auxiliary prime left in the
+  finite exceptional set; the full local-complement comparison gives the corresponding
+  family-level statement. Equality of almost-all Frobenius polynomials is not a substitute.
+  This conductor clause is independent of $(\mathrm{IC}_3)$ and is also only a field of the
+  admitted compatible-family arithmetic core in the audited source.
 
 Consequently the final conditional-FLT spine is **not unconditionally closed**. No review or
 catalog status may be read as claiming otherwise.

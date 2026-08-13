@@ -197,6 +197,17 @@ residue characteristic different from two and do not produce an all-finite-place
 system. Thus $(\mathrm{AI}_2)$ is a standing hypothesis whenever this book says ``every
 coefficient place.''
 
+The name “all-place” must not obscure the logical role of this hypothesis. The elementary
+top-packet realization at a place above two already exists and is continuous and semisimple;
+$(\mathrm{AI}_2)$ asserts its characteristic-zero absolute irreducibility. It is used in Book
+184 to make the coefficient-two Mackey Gram calculation effective, after which this book
+descends the surviving constituent to the completion. It is not a scalar-extension map from an
+odd completion, a coefficient-prime local--global compatibility theorem, or a statement about
+the reduction of any lattice. Book 184 records the exact relation-specific norm-one gate
+$(\mathrm N_2(\mathfrak B))$, the structured finite Hom condition
+$(\mathrm G_2(\mathfrak B))$ used to prove it, and the sufficient but presently missing
+coefficient-prime SP comparison $(\mathrm{CP\!\!-SP}_2)$.
+
 Fix for the moment an integral Brauer relation
 
 $$
@@ -1288,6 +1299,12 @@ $$
 Both finite inertia and $N$ are present in (8.3). It is not an equality of conductor integers
 or local Euler factors.
 
+Equation (8.2) is an upstream input, not a consequence of the assembled family. For the SP
+packet terms it is supplied by Book 183's direct local-preservation certificates or by its
+ambient-semisimplicity reduction. The cancellation in (8.3) and the Krull--Schmidt argument
+below can transport and cancel already identified full pairs; they cannot be used backward to
+prove that a raw packet pair survived global semisimplification.
+
 ### 8.2 An effective local complement
 
 Weil--Deligne representations form a Krull--Schmidt category for direct sums. For the finitely
@@ -1356,6 +1373,51 @@ formal consequence of a signed conductor sum. Let $S$ be $S_0$ with only those a
 removed for which the common unramified polynomial and its weight-one purity have both been
 certified. The common support ledger may be smaller than $S$, but this convention avoids
 claiming a pure polynomial outside the range proved by the packet input.
+
+There is a sharper source-facing conductor input which should be separated from this
+prime-by-prime construction. Let $B_{\mathrm{gen}}$ be a common finite bad-place set for the
+actual genuine rank-two realization, with the property that for every coefficient place
+$\lambda$ the representation $r_\lambda$ is unramified at every rational prime
+$q\notin B_{\mathrm{gen}}$ with $q\ne q_\lambda$. The additional arithmetic assertion is
+
+$$
+(\mathrm{Cond}_2)\qquad B_{\mathrm{gen}}\subseteq\{2\}.
+\tag{Cond2}
+$$
+
+This assertion is stronger than weak compatibility: weak compatibility supplies some common
+finite set, whereas $(\mathrm{Cond}_2)$ proves that every displayed auxiliary prime cancels in
+the actual genuine representation.
+
+For the restricted construction without $(\mathrm{AI}_2)$, the same definition and argument
+are used only for the already constructed places $\lambda\nmid2$. Nothing in the reduction
+below constructs or quantifies over a missing base-field member above two.
+
+**Proposition 8.1 (support-at-two reduction).** Assume $(\mathrm{Cond}_2)$. Then every member
+$r_\lambda$ is unramified at every rational prime outside
+$\{2,q_\lambda\}$. In particular, for every selected place $\nu\mid3$,
+
+$$
+r_\nu\text{ is unramified outside }\{2,3\}.
+\tag{U}
+$$
+
+**Proof.** Let $q\ne2,q_\lambda$. The first inequality and $(\mathrm{Cond}_2)$ give
+$q\notin B_{\mathrm{gen}}$; the second puts $q$ away from the coefficient characteristic.
+The defining specialization property of $B_{\mathrm{gen}}$ therefore says that inertia at
+$q$ acts trivially on $r_\lambda$. Taking $\lambda=\nu$ gives $(\mathrm U)$. No Frobenius-density,
+Chebotarev, or Brauer--Nesbitt argument occurs. $\square$
+
+Conversely, the local-complement route above supplies a replacement common bad set supported
+at two if it is carried out at every prime of $S_0\setminus\{2\}$: construct $D_q$, compare it with an actually
+unramified local realization away from coefficient characteristic, and use (8.6) to prove
+that its finite inertia is trivial and $N_q=0$. At $q\ne\ell$ the distinguished original
+member supplies that test; at the old coefficient prime $q=\ell$, one must instead use the
+spherical automorphic local parameter and a prime-to-$q$ realization. This is a finite
+all-auxiliary local theorem, not an almost-all Frobenius theorem. The current packet input does
+not establish that full range, so Proposition 8.1 is a proved reduction rather than an
+unconditional support claim. After replacing $B_{\mathrm{gen}}$ by that certified smaller set,
+this is exactly $(\mathrm{Cond}_2)$.
 
 ### 8.4 The common special pair
 
@@ -1630,9 +1692,10 @@ The collection (9.1), together with (9.2) and the local objects in their declare
 coefficient-descended compatible system over $\mathbf Q$.
 
 Without $(\mathrm{AI}_2)$, the same construction and conclusions hold place by place for
-$\lambda\nmid2$, including at every $\nu\mid3$, but no member above $2$ is thereby constructed.
-That restricted collection is not the all-finite-place compatible system asserted in this
-theorem.
+$\lambda\nmid2$, including at every $\nu\mid3$, but no effective base-field member above $2$
+is thereby constructed. The elementary top-packet member above two still exists, as explained
+in Section 1.2; it is not the desired Brauer complement over $\mathbf Q$. That restricted
+collection is not the all-finite-place compatible system asserted in this theorem.
 
 ### 9.2 Proof
 
@@ -1733,7 +1796,7 @@ $$
 | Book 168 | coefficient systems and algebraic local objects attached to the already constructed weight-two packets, including determinant, purity, and coefficient transport | no base-field family, canonical lattice, or moving-prime integral conclusion |
 | Book 180 | multiplicity-one coefficient descent, coefficient cocycle effectivity, presentation comparison, induction/Mackey/tensor formulas, and Brauer--Nesbitt recognition | no packet overlap, positivity verification, or SP local object is imported |
 | Book 182 | the conditional controlled SP top datum and its explicit controlled-seed and bridge-readiness boundaries | this book does not make that datum unconditional |
-| Book 183 | selected elementary packets, exact elementary and conjugate-intersection identities, integral Brauer classes, determinant and local Mackey formulas, common virtual polynomials, purity, and the algebraic SP pair | no virtual class is called effective and no inadmissible automorphic transfer is inserted |
+| Book 183 | selected elementary packets, exact elementary and conjugate-intersection identities, integral Brauer classes, determinant and local Mackey formulas, common virtual polynomials, purity, and the algebraic SP pair with its prior local-preservation certificate | no virtual class is called effective, no inadmissible automorphic transfer is inserted, and the later assembly is not a proof of raw packet preservation |
 | Book 184 | under the explicit additional hypothesis $(\mathrm{AI}_2)$, the application-specific coefficient-independent Gram matrix, all-place norm-one positivity, actual characteristic-zero cancellation, coefficient covariance, and scalar relation independence | no completion-valued model or assembled family is imported; without $(\mathrm{AI}_2)$ only coefficient places away from two are available |
 
 The work retained here is the assembly itself. Chapter 2 places every finite packet and character
@@ -1758,6 +1821,22 @@ The construction withstands the following failure tests.
 $(\mathrm{AI}_2)$, exactly as Book 184 does. Without that hypothesis, Sections 2--8 assemble
 only the members with $q_\lambda\ne2$; they do not manufacture a place above two from trace
 data or from a coefficient-prime SP statement that Book 183 never supplied.
+
+**Rational irreducibility is not coefficient-prime compatibility.** Even under
+$(\mathrm{AI}_2)$, the member at $\lambda\mid2$ receives no semistable, de Rham, Hodge--Tate,
+crystalline, finite-flat, or SP assertion at the rational place $2$. Once effectivity and
+completion descent have produced the continuous representation, compactness supplies some
+stable lattice. That lattice is not canonical, no signed integral cancellation has been
+proved, and its characteristic-two reduction is not asserted to be irreducible or to retain
+nonzero monodromy.
+
+If the stronger $(\mathrm{CP\!\!-SP}_2)$ theorem were supplied, it would do two jobs. Book
+184's reduction would use its nonzero monodromy to prove $(\mathrm{AI}_2)$ and hence
+effectivity. After assembly, restriction recovery over $M$ and complete splitting of $2$ in
+$M/\mathbf Q$ would identify the selected dyadic decomposition group with
+$G_{\mathbf Q_2}$, transporting that coefficient-prime SP comparison to the assembled
+two-adic member. This extra local conclusion would come from $(\mathrm{CP\!\!-SP}_2)$, not
+from $(\mathrm{AI}_2)$, weak compatibility, or the assembly formalism.
 
 **A trace field is not silently called a field of definition.** The coefficient ledger first
 splits the finite realization algebras of the elementary terms. The new rank-two constituent is
@@ -1801,9 +1880,19 @@ pure top packet and is checked under every coefficient conjugation.
 inertia and nonzero rank-one $N$. Its line and sign are named before the conductor-one formula
 is calculated. No zero-monodromy finite-type branch occurs in the theorem.
 
+**Final-family assembly is not used to prove a packet input.** Local Krull--Schmidt
+cancellation begins with the actual packet pairs in (8.2). The existence, irreducibility, or
+SP record of the resulting base-field member cannot certify those premises retroactively;
+Book 183's independent raw-to-global certificate must already be in force.
+
 **Prime-to-coefficient local theory is not applied at the coefficient prime.** Equation (8.11)
 excludes $\lambda\mid2$. The prime-switch interface makes no claim at the new base place $3$
 from a Weil--Deligne statement at $2$.
+
+**A common finite bad set is not conductor support at two.** The weakly compatible family is
+actually unramified outside $S_0$ away from coefficient characteristic, but this does not
+prove $(\mathrm{Cond}_2)$. Proposition 8.1 uses the stronger support theorem only after it is
+supplied; it never removes a prime from almost-all Frobenius equality.
 
 **Rational cancellation is not reduced integrally.** No lattice or quotient tower is part of
 Theorem 9.1. The rational line $\mathscr L_2$ is not declared saturated in an as-yet unchosen
@@ -1873,7 +1962,9 @@ $$
 Conditional on both the controlled SP top datum and $(\mathrm{AI}_2)$, the all-place assembly is
 complete at the rational level. Its final boundary is exact: the SP line exists over the
 coefficient field, but no integral lattice, finite-flat quotient, or transition tower has been
-chosen or inferred. The missing upstream construction of the controlled seed and the separate
-bridge-readiness data, as well as the separate coefficient-two irreducibility hypothesis,
-remain outside this theorem. Without $(\mathrm{AI}_2)$, only the partial assembly away from
-coefficient characteristic two is proved.
+chosen or inferred. Nor has the conductor-support premise $(\mathrm{Cond}_2)$ been proved;
+only Proposition 8.1's reduction from that premise to minimal memberwise support is complete.
+The missing upstream construction of the controlled seed and the separate bridge-readiness
+data, as well as the separate coefficient-two irreducibility hypothesis, remain outside this
+theorem. Without $(\mathrm{AI}_2)$, only the partial assembly away from coefficient
+characteristic two is proved.

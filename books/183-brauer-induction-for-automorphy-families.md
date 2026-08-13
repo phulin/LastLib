@@ -199,9 +199,15 @@ rank one; Frobenius on the raw invariant graph line is the selected special scal
 local pair agrees with the pair of the globally semisimplified realization at every coefficient
 place away from residue characteristic two. These are respectively the special scalar and
 local-preservation hypotheses built into the controlled datum. The return scalar and pair are
-required to have one algebraic model before completion. Thus the later all-embedding SP record
-is an exact attachment hypothesis, not an inference from the distinguished realization or from
-conductor one.
+required to have one algebraic model before completion. Thus the later SP record at every
+embedding away from residue characteristic two is an exact attachment hypothesis, not an
+inference from the distinguished realization or from conductor one.
+
+The preservation clause may be certified in either of two ways with the same interface output:
+it may be supplied directly for every packet and coefficient place, or the datum may list all
+actual smooth projective curve carriers and supply $(\mathrm{SS}_{\mathrm{array}})$ of Book
+168, (7.9). In the second form Book 168, Proposition 7.6 proves the preservation clause. The
+present theorem does not itself prove that stronger ambient semisimplicity hypothesis.
 
 We call (1.1)--(1.6), complete splitting, and these exact range hypotheses a
 **controlled SP top datum**. Book 182 exports this datum only conditionally on its controlled
@@ -839,6 +845,30 @@ This is a construction from each $\pi_H$, not an assumption that $\rho$ already 
 compatible system. Nor have the representations (6.3) been assembled into a system on
 $G_{\mathbf Q}$. They live on different Galois groups and are linked only by the identities
 proved below.
+
+**Proposition 6.1 (ambient certificate for the finite packet array).** Suppose the controlled
+datum lists the actual smooth projective curve carrier used for every packet $\pi_H$ and that
+$(\mathrm{SS}_{\mathrm{array}})$ holds for those carriers. Then, for every coefficient
+embedding $\tau$, the raw multiplicity representation defining $r_{H,\tau}$ is already
+globally semisimple. Consequently, for every dyadic $w$ and every $\tau$ of residue
+characteristic different from two, its full signed special Weil--Deligne pair is the scalar
+realization of the common raw algebraic pair. In particular, nonzero rank-one monodromy, its
+kernel line, and the Frobenius sign all survive global semisimplification.
+
+**Proof.** Book 128, Proposition 9.4 applies to each actual carrier. Semisimplicity survives
+finite coefficient extension and passage to the Galois-stable Hecke block. The Morita
+evaluation isomorphism writes that block as a finite direct sum of copies of the raw
+multiplicity representation, so the latter is semisimple and equals its global
+semisimplification. This argument applies simultaneously to every embedding above each
+coefficient characteristic and uses no local monodromy claim. Restricting the resulting global
+isomorphism to $G_{(F_H)_w}$ preserves the actual local representation, hence the
+Weil--Deligne operator $N$, its line, and its Frobenius scalar. The final restriction on
+$\tau$ is exactly the prime-to-coefficient range of the geometric local comparison. $\square$
+
+Rational Tate-module semisimplicity $(\mathrm{TS})$ for the Jacobians of these carriers is a
+sufficient theorem for the hypothesis. It is not proved by the current dependency row. This
+proposition closes the raw-to-global reduction without using the signed Brauer class,
+effectivity, or the later assembled family.
 
 The distinguished member satisfies
 
@@ -1575,7 +1605,7 @@ Because $2$ splits completely in $M$, it splits completely in every $F_H$. Every
 above $2$ is $\mathbf Q_2$, and every finite quotient character used in the packet descent or
 in the Brauer relation is locally trivial.
 
-The uniform special scalar and local-preservation hypotheses in the controlled datum supply one
+The uniform special scalar and local-preservation certificates in the controlled datum supply one
 algebraic local object over $K$ in the arithmetic covariant normalization,
 
 $$
@@ -1602,7 +1632,8 @@ $(\varepsilon_2,2\varepsilon_2)$ on quotient and line. This accounts for both th
 (1.4) and the cyclotomic determinant; no sign is chosen from a square after completion.
 
 For every $H$, every dyadic place $w$ of $F_H$, and every coefficient embedding $\tau$ whose
-residue characteristic is not two, the controlled local-preservation certificates allow the
+residue characteristic is not two, the controlled local-preservation certificates—supplied
+directly or deduced from $(\mathrm{SS}_{\mathrm{array}})$ by Proposition 6.1—allow the
 special comparison of Book 128, Theorem 12.1, and Book 168, Theorem 12.1 and Corollary 12.2, to
 be applied, giving
 
@@ -1824,7 +1855,7 @@ $$
 |---|---|---|
 | Book 98 | finite-order Hecke avatars of the Brauer characters, with reciprocity, norm pullback, and conjugation | no higher-rank automorphic induction across $F_H/\mathbf Q$ |
 | Books 108--109 | selected prime-cyclic descent and base change, antecedent-complete saturated fibers, local-parameter restriction, and tower independence in the admissible range | no transfer along an inadmissible tower and no nonsolvable descent |
-| Books 127--128 and 168 | the weight-two packet realizations, covariant arithmetic normalization, coefficient conjugates, algebraic good data, and the conditional raw-to-semisimple SP comparison in its stated range | no automatic all-embedding SP comparison and no packet lattice after semisimplification |
+| Books 127--128 and 168 | the weight-two packet realizations, covariant arithmetic normalization, coefficient conjugates, algebraic good data, the conditional raw SP comparison, and reduction of its uniform raw-to-global passage to $(\mathrm{SS}_{\mathrm{array}})$ | no construction of a missing carrier, no proof of ambient Tate-module semisimplicity, no comparison at the coefficient residue characteristic, and no packet lattice after semisimplification |
 | Book 142 | the Chebotarev density input used to recognize representations from their good Frobenius traces | no assertion that the field-theoretic towers satisfy automorphic selectors |
 | Book 180 | monomiality, the elementary projector and integral Brauer relation, induction/tensor/Mackey/determinant formulas, prime-cyclic refinement, the cyclic Clifford torsor, and Brauer--Nesbitt recognition | no packet construction, overlap identity, Gram positivity, or coefficient family is imported |
 | Book 182 | the exact conditional controlled SP datum: $\rho$, $M$, the distinguished top realization, the SP record, and the finite descent-and-attachment ledger | the missing controlled residual automorphic seed and bridge-readiness theorem are not supplied unconditionally |
@@ -1833,8 +1864,12 @@ The controlled datum supplies the hypotheses and certificates needed to apply th
 attachment results; Books 127--128 and 168 supply the attachment and local-comparison theorems
 actually applied in Chapters 6 and 10. In particular, the special scalar equality and
 raw-to-semisimple local-preservation identity must be available for every constructed packet and
-every coefficient place away from two. If either clause is absent, the distinguished
-$\ell$-adic SP pair does not determine monodromy or its sign at another embedding.
+every coefficient place away from two. Proposition 6.1 proves the latter from
+$(\mathrm{SS}_{\mathrm{array}})$ and shows that coefficient extension, packet projection, and
+Morita extraction introduce no further obstruction. The current sources do not prove that
+ambient semisimplicity statement for the carrier Jacobians. If either the raw special clause or
+this preservation certificate is absent, the distinguished $\ell$-adic SP pair does not
+determine monodromy or its sign at another embedding.
 
 The application-specific work retained here is substantial: construction and conjugation of the
 selected elementary packets, the nonnormal overlap theorem, the coefficient ledger, the signed

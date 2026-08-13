@@ -175,7 +175,7 @@ All representations are continuous. A characteristic-zero member of a compatible
 
 ### 1.4 The prerequisite boundary
 
-This volume has three direct inputs, and only three:
+This volume has three direct **book** inputs:
 
 $$
 \boxed{179\mid 168,\ 141,\ 142.} \tag{1.3}
@@ -187,6 +187,21 @@ coefficient conjugation, and the full Frobenius-semisimple Weil--Deligne pair ex
 proved local range. Book 141 supplies the finite-subgroup classification and adequacy criteria
 used by the large-image wrapper in Chapter 16. Book 142 supplies Chebotarev density and the
 dense-Frobenius uniqueness step used throughout the compatibility calculus.
+
+There is also one external arithmetic theorem used only when Chapter 12 keeps the original
+geometric Tate modules rather than replacing them by their global semisimplifications:
+
+$$
+\boxed{(\mathrm{TS})\quad
+V_\ell(A)\text{ is semisimple as a }\mathbf Q_\ell[G_K]\text{-module for every
+abelian variety }A/K\text{ over a number field and every }\ell.}
+\tag{1.4}
+$$
+
+None of the three books in (1.3) proves $(\mathrm{TS})$. Book 168 instead isolates the finite
+carrier instance as the exact sufficient input for uniform raw-to-global local preservation.
+Thus the dependency display is a complete book-dependency row, not a proof of the separately
+named arithmetic theorem.
 
 The arithmetic-Frobenius normalization is fixed here. If Book 168 writes geometric Frobenius
 $\Phi_v$ and
@@ -1582,7 +1597,13 @@ $$
 V_\ell(A)=T_\ell(A)\otimes_{\mathbf Z_\ell}\mathbf Q_\ell. \tag{12.1}
 $$
 
-The semisimplicity theorem for rational Tate modules of abelian varieties over number fields supplies the semisimplicity required in Section 3.1. This is a genuine input. Without it, the good Frobenius polynomials would still define a compatible collection, but the collection would meet our definition only after taking global semisimplifications, and the original geometric lattices would have to be retained separately.
+The external theorem $(\mathrm{TS})$ from Section 1.4 supplies the semisimplicity required in
+Section 3.1. This is a genuine input, not a conclusion of Books 168, 141, or 142. Without it,
+the good Frobenius polynomials would still define a compatible collection, but the collection
+would meet our definition only after taking global semisimplifications, and the original
+geometric lattices would have to be retained separately. Applied to Jacobians of the actual
+Shimura-curve carriers, the same theorem is precisely the sufficient input in Book 168,
+Proposition 7.6; this observation does not prove it inside the current corpus.
 
 The coefficient field is $\mathbf Q$, so there is one coefficient place for every $\ell$. Let $S_A$ be the finite set of bad-reduction places. At $v\notin S_A$ and $v\nmid\ell$, good reduction gives unramifiedness and
 

@@ -72,7 +72,7 @@ $$
 \\ \Downarrow \\
 \rho|_{G_M}\text{ is automorphic by the exact minimal }R=\mathbb T\text{ theorem}
 \\ \Downarrow \\
-\text{the distinguished attachment-and-descent and all-coefficient SP certificates remain}.
+\text{the all-coefficient attachment and prime-to-two SP certificates remain}.
 \end{array}
 \tag{1.2}
 $$
@@ -560,8 +560,11 @@ The top packet eventually delivered to Book 183 needs a second, finite ledger.  
 elementary subgroup $H\leq\Gamma$, at least one prime-cyclic descent chain from $M$ to $M^H$
 must satisfy Book 109's descent-admissibility and fiber-saturation hypotheses.  Every corrected
 packet along those chains must lie in the all-coefficient weight-two attachment range of Books 127--128 and 168.  At the dyadic places, their special-scalar and raw-to-semisimple local-preservation
-hypotheses must be verified uniformly.  Those conditions are exactly why Book 183 calls its
-top packet “selected.”
+hypotheses must be verified uniformly.  Book 168, Proposition 7.6 reduces the latter
+requirement to $(\mathrm{SS}_{\mathrm{array}})$, semisimplicity of the ambient $H^1$ of each
+actual curve carrier in every relevant coefficient characteristic.  The rational Tate-module
+theorem $(\mathrm{TS})$ for their Jacobians is sufficient, but the current dependency chain
+does not prove it.  These conditions are exactly why Book 183 calls its top packet “selected.”
 
 This volume does not construct the elementary packets.  That is the subject of Book 183.  It
 only identifies the certificates which must accompany $\pi_M$ so that Book 183 may construct
@@ -1103,8 +1106,9 @@ array still requires a Galois-attachment certificate for every candidate cyclic 
 addition to the admissibility and fiber-saturation checks above.
 
 The full Book 183 interface is stronger still.  Each corrected packet must have a curve-attached
-family at every coefficient embedding and the same algebraic dyadic SP pair must survive the
-raw-to-semisimple passage uniformly.  The present sources do not prove this.  First, some
+family at every coefficient embedding and, at embeddings of residue characteristic different
+from two, the same algebraic dyadic SP pair must survive the raw-to-semisimple passage
+uniformly.  There are three logically separate obligations.  First, some
 elementary fixed fields necessarily have odd degree in the normal-top construction: a Sylow
 $2$-subgroup $P\leq\Gamma$ is elementary, $[\Gamma:P]$ is odd, and the $S_5$ quotient makes
 that index greater than one.  More generally, every even-order top group has an elementary
@@ -1120,21 +1124,36 @@ selected tame-dihedral factors, but that does not furnish an away-from-two facto
 packet.  A dyadic special factor gives a general curve carrier in the even-degree range, but a
 carrier ramified at any dyadic factor fails the dyadically tensor-split ledger recorded in Book 168,
 Corollary 12.2.  Its raw SP construction instead requires an odd nonempty eligible ramification
-set away from $2$, and this minimal packet has no such place.  Third, even if that
-raw carrier were supplied, Book 168 passes the raw SP pair to the globally semisimplified
-member from absolute residual irreducibility only coefficient place by coefficient place; the
-current argument proves it at the distinguished coefficient, not at every coefficient place.
+set away from $2$, and this minimal packet has no such place.
 
-Consequently the exact later bridge theorem is an **all-elementary attachment, descent, and
-uniform-SP theorem**.  It must supply distinguished-coefficient attachment, with cyclic
+Third, once an actual raw carrier is supplied, the uniform preservation problem has no further
+packet-theoretic reduction hidden inside it.  Book 128, Proposition 9.4 and Book 168,
+Proposition 7.6 prove that $(\mathrm{SS}_{\mathrm{array}})$ makes every raw multiplicity
+representation globally semisimple after every displayed coefficient embedding.  Hence the
+global semisimplification is the raw representation itself, and restriction preserves the
+entire signed special Weil--Deligne pair, including nonzero $N$.  The sufficient universal
+input is rational Tate-module semisimplicity $(\mathrm{TS})$ for the Jacobians of the actual
+carriers.  Book 179 invokes that theorem for abelian-variety examples but does not prove it or
+include a prior source for it; the present source chain therefore does not close this arithmetic
+input.  At coefficient characteristic two, global semisimplicity still follows from the same
+input, but the prime-to-coefficient local comparison does not produce a dyadic
+Weil--Deligne pair.
+
+Consequently the exact later bridge theorem is an **all-elementary attachment, descent,
+raw-carrier, and ambient-semisimplicity theorem**.  It must supply distinguished-coefficient attachment, with cyclic
 base-change and twist compatibility, for the candidate descent packets so that Book 109 can
 select the corrections; provide the missing odd-degree carriers; construct a raw dyadic SP
 carrier without a pre-existing eligible place away from $2$ (or give another attachment
-construction); and prove raw-to-semisimple local preservation at every
-coefficient place.  This later theorem must not be bundled into Required Theorem 7.1 or used to
+construction); and supply $(\mathrm{SS}_{\mathrm{array}})$, or directly the weaker
+interface-level conclusion that all raw packet multiplicity spaces are globally semisimple.
+The last clause proves
+raw-to-semisimple local preservation at every coefficient embedding of residue characteristic
+different from two; it is not supplied by abstract Brauer descent.  This later theorem must not be bundled
+into Required Theorem 7.1 or used to
 obscure the earlier failure to construct the minimal residual seed itself.  It must also be
 strictly prior to Book 183: the elementary packet array, its effectivity, and the descended
-compatible system cannot be used backward to prove the attachment or uniform-SP hypotheses
+compatible system cannot be used backward to prove the attachment, carrier, or ambient
+semisimplicity hypotheses
 which that array consumes.
 
 ## 8. Dependency, circularity, and downstream audit
@@ -1144,7 +1163,7 @@ which that array consumes.
 | Source | Legitimate use here | What it does not supply |
 |---|---|---|
 | Book 109 | prime-cyclic ascent on an exhibited extension-complete selected chain, and descent on exhibited antecedent-complete selected chains with the required fiber saturation and attached arithmetic representations | attachment of candidate cyclic descents, or either direction from solvability alone |
-| Books 127--128 and 168 | weight-two coefficient attachment and the SP local comparison in their explicitly stated range | an automatic all-coefficient SP comparison for an arbitrary packet |
+| Books 127--128 and 168 | weight-two coefficient attachment and the SP local comparison in their explicitly stated range; reduction of uniform raw-to-global preservation to $(\mathrm{SS}_{\mathrm{array}})$ for the actual carriers | odd-degree or otherwise missing carriers, a raw SP carrier for the minimal top packet, the ambient semisimplicity input itself, or a comparison at the coefficient residue characteristic |
 | Book 164 | the primitive residual Frey SP tuple, intrinsic line, sign, and conductor-one record used in the FLT specialization | a characteristic-zero chosen lift or automorphic seed |
 | Book 173 | exact minimal $R=\mathbb T$ and automorphy of every point of a clean minimal deformation problem | existence of the exact residual automorphic localization |
 | Book 175 | a local change at a previously named place under its exact clean augmentation hypotheses | simultaneous lowering at the unknown extra bad primes of a specialization |
@@ -1155,7 +1174,7 @@ which that array consumes.
 | Book 155 | equivariant local constancy and the regular ordered-quintic torsor | the paired-frame constant-field certificate or any automorphic lifting and lowering on the specialized top |
 | Book 157 | point-centered opens around simultaneous paired-frame seeds and persistence after permitted extension | descent of coefficient-prime or semistable frame points from a proper completion extension to $\mathbf Q_2$ or $\mathbf Q_\ell$ as required by complete splitting |
 | Book 178 | conditional residual potential modularity for a fixed seven-item two-prime-admissible witness; after lifting, proof of final compact-carrier eligibility; its inverse-branch lemma, completed over $\mathbf Q$ by Lemma 6.1 here | over a general base, the capitulation part of the corrected relative ray datum; a specialization satisfying item 7's literal singleton condition; or the exact minimal Book 173 SP seed |
-| Book 180 | integral Brauer and Clifford identities for supplied representations, characters, and packet data | construction or attachment of any elementary fixed-field packet, or the all-embedding SP comparison |
+| Book 180 | integral Brauer and Clifford identities for supplied representations, characters, and packet data | construction or attachment of any elementary fixed-field packet, a raw SP carrier, or the ambient semisimplicity theorem needed before the all-embedding SP comparison |
 | Books 165--167 | the SP local deformation problem, supported cohomology, and balanced presentation | a horizontal point or a nonzero exact automorphic module |
 | Book 181 | under $(\mathrm{Seed}_{\mathrm{SP}}^{181})$, finite-flatness of the balanced global SP ring and the normalized primitive SP point used here | construction of its seed, normal-closure control, or the controlled seed required in Section 4 |
 
@@ -1173,10 +1192,11 @@ $$
 \tag{8.1}
 $$
 
-Book 175 is a transitive input through Book 178.  Books 177 and 180 are comparative background
-for the seed and downstream bridge audits; Book 180's abstract machinery is consumed by Book
-183 only after the packets exist.  Neither is used in the conditional proof, so neither is a
-direct edge here.  Books 166--167 are direct inputs to Book 181, but transitive for this volume.
+Book 175 is a transitive input through Book 178.  Books 177, 179, and 180 are comparative
+background for the seed and downstream bridge audits.  Book 179 names $(\mathrm{TS})$ as an
+external input but does not prove it; Book 180's abstract machinery is consumed by Book 183
+only after the packets exist.  None is used in the conditional proof, so none is a direct edge
+here.  Books 166--167 are direct inputs to Book 181, but transitive for this volume.
 Book 165 is retained because this volume directly identifies the represented local SP problem;
 it could be made transitive by treating all local identifications as part of the Book 181
 export.
@@ -1184,7 +1204,7 @@ export.
 Equation (8.1) does not make the result unconditional.  To mark Book 182 **READY**, a new
 strictly prior result must prove Required Local Theorem 6.2, Required Moving Input 6.3a, the
 constant-field certificate, and Required Theorem 7.1; a prior all-elementary attachment,
-descent, and uniform-SP theorem of Section 7.3 is also required.  Those results belong in their natural
+descent, raw-carrier, and ambient-semisimplicity theorem of Section 7.3 is also required.  Those results belong in their natural
 prior owners; no book number may be put in a slot merely because it states the conclusion
 conditionally.
 
@@ -1214,7 +1234,7 @@ $$
 \\ \Downarrow \\
 \text{Book 109: distinguished-coefficient elementary descents selected by }\rho
 \\ \Downarrow \\
-\text{all-coefficient attachment and uniform-SP completion}
+\text{all-coefficient attachment, raw carriers, and }(\mathrm{SS}_{\mathrm{array}})
 \\ \Downarrow \\
 (M,\rho,\pi_M,\text{certificates})\text{ is the controlled SP top datum}
 \\ \Downarrow \\
@@ -1282,12 +1302,14 @@ After that seed exists, Books 181 and 173 make the chosen lift automorphic direc
 Section 7.3 reduces the local and group-theoretic descent checks using the extension of $\rho$
 and the split minimal local support, but Book 109 still needs distinguished Galois attachment
 for each candidate cyclic descent before $\rho$ can select its correction.  The remaining later
-bridge blocker is therefore the all-elementary attachment, descent, and uniform-SP theorem:
-current sources do not cover every
-odd-degree fixed field in the needed one-split curve range, do not construct the dyadically
-split raw SP carrier from a minimal packet with no eligible place away from $2$, and do not
-preserve the raw SP pair at every coefficient embedding.  This is separate from Required
-Theorem 7.1 and from the normal-closure construction.
+bridge blocker is therefore the all-elementary attachment, descent, raw-carrier, and
+ambient-semisimplicity theorem: current sources do not cover every odd-degree fixed field in
+the needed one-split curve range, do not construct the dyadically split raw SP carrier from a
+minimal packet with no eligible place away from $2$, and do not prove
+$(\mathrm{SS}_{\mathrm{array}})$ for the actual carrier Jacobians.  Books 128 and 168 prove
+that this last input, once supplied, preserves the full raw SP pair at every allowed coefficient
+embedding; no further “uniform local preservation” lemma remains.  This is separate from
+Required Theorem 7.1 and from the normal-closure construction.
 
 Accordingly,
 
