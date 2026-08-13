@@ -1196,10 +1196,17 @@ $$
 
 and every term is integral by $m\mid q_0$ and (5.6). This proves the lemma. $\square$
 
-Now let $\chi$ be a one-dimensional character of an abelian ramification group, quotient by its
-kernel, and discard the unramified stage, which contributes nothing to the conductor. The
-resulting cyclic inertial action is faithful. If its last lower break is $b$, then its conductor,
-written in lower numbering, is
+Now let $\chi$ be a one-dimensional character of an abelian ramification group. If $\chi$ is
+trivial on inertia, then it is unramified and
+
+$$
+a(\chi)=0,
+$$
+
+even when its Frobenius character is nontrivial. Suppose instead that $\chi$ is nontrivial on
+inertia. Quotient by its kernel and discard the unramified quotient, which contributes nothing
+to the conductor. The resulting cyclic inertial action $C$ is faithful. If its last lower break
+is $b\geq0$, then its conductor, written in lower numbering, is
 
 $$
 a(\chi)
@@ -1217,7 +1224,9 @@ a(\chi)=1+\int_0^\infty
 =1+r.
 $$
 
-Hence $r$ is an integer.
+Hence $r$ is an integer. For a tame but inertially nontrivial character one has $b=r=0$, and
+the formula gives $a(\chi)=1$. Thus the last-break formula applies only in the inertially
+nontrivial case; the unramified case is the separate value $0$ above.
 
 Finally suppose $G$ itself is abelian and $G^r\ne G^{r+}$ for a positive break $r$. A
 nontrivial character of $G^r/G^{r+}$ extends to a character of the finite abelian group
