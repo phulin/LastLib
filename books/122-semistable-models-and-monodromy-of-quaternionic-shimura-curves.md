@@ -165,15 +165,15 @@ All generic curves and all coefficient fields in the packet theorem have charact
 
 ### 1.4 Dependency ledger
 
-Books 10--12 supply effective finite descent, normalization, blowups, and regular models; Book 16 supplies graph/component-group algebra. Book 17 supplies the finite-etale common refinement and effective Galois closure on the generic diagram. Book 22 supplies the strict-semistable nearby-cycle and weight complexes, including the full tame ramified strict-node complex. Book 37 supplies the Frobenius--Verschiebung formalism, purity, and duality used to identify global strata. Book 35 supplies quotients by finite locally free subgroups and descended polarizations. Book 58 supplies faithful flatness and exactness of completion and the distinction between completing a known proper model and algebraizing an abstract formal space. Book 70 supplies the maximal-Cohen--Macaulay freeness criterion over a regular local ring and the warning that it fails over a singular target. Book 76 supplies the selected special Weil--Deligne normalization used to compare the Iwahori scalar with geometric Frobenius. Book 118 supplies the exact common-norm Hodge-lift obstruction that makes the direct mixed-signature input conditional. Book 119 supplies the exact direct rational tensors, generic PEL curve, and generic parahoric datum. Book 121 supplies the projective good vertex at odd places, its integral filtration-lifting theorem, universal family, and, at two, the characteristic-independent toric obstruction and flat-closure properness argument once an exact integral functor has been constructed.
+Books 10--12 supply effective finite descent, normalization, blowups, and regular models; Book 13 supplies the divisor definition of a bad-characteristic Drinfeld basis; Book 16 supplies graph/component-group algebra. Book 17 supplies the finite-etale common refinement and effective Galois closure on the generic diagram. Book 22 supplies the strict-semistable nearby-cycle and weight complexes, including the tame strict-node complex and exact reduction by a finite wild image. Book 37 supplies the Frobenius--Verschiebung formalism, purity, and duality used to identify global strata. Book 35 supplies quotients by finite locally free subgroups and descended polarizations. Book 58 supplies faithful flatness and exactness of completion and the distinction between completing a known proper model and algebraizing an abstract formal space. Book 70 supplies the maximal-Cohen--Macaulay freeness criterion over a regular local ring and the warning that it fails over a singular target. Book 76 supplies the selected special Weil--Deligne normalization used to compare the Iwahori scalar with geometric Frobenius. Book 118 supplies the exact common-norm Hodge-lift obstruction that makes the direct mixed-signature input conditional. Book 119 supplies the exact direct rational tensors, generic PEL curve, and generic parahoric datum. Book 121 supplies the projective good vertex at odd places, its integral filtration-lifting theorem, universal family, and, at two, the characteristic-independent toric obstruction and flat-closure properness argument once an exact integral functor has been constructed.
 
 The exact direct dependency row is
 
 $$
-\boxed{122\mid 10,11,12,16,17,22,35,37,58,70,76,118,119,121}. \tag{1.6}
+\boxed{122\mid 10,11,12,13,16,17,22,35,37,58,70,76,118,119,121}. \tag{1.6}
 $$
 
-There are fourteen direct dependencies. The right-double-coset, transpose, central, and degree conventions are chosen to agree with Book 124 and are rederived in Section 9.3 for the residue-prime span. The packet theorem is a characteristic-zero statement conditional only on the already isolated curve packet described in its hypotheses; it imports no Ihara saturation, level-raising theorem, deformation theorem, or modularity-lifting theorem.
+There are fifteen direct dependencies. The right-double-coset, transpose, central, and degree conventions are chosen to agree with Book 124 and are rederived in Section 9.3 for the residue-prime span. The packet theorem is a characteristic-zero statement conditional only on the already isolated curve packet described in its hypotheses; it imports no Ihara saturation, level-raising theorem, deformation theorem, or modularity-lifting theorem.
 
 The downstream compatibility audit is as follows. Book 124 deliberately leaves a
 level-prime polynomial open; (9.8) uses its incoming right-action convention and proves
@@ -1612,6 +1612,681 @@ statement applies to an automorphic determinant system only after the effective 
 datum identifies that system with this component/trait pullback.  Such an identification is
 part of the global ray hypothesis; a nominal local determinant character does not prove it.
 
+#### The Drinfeld tower and the unavoidable wild ledger
+
+The principal factor can be sharpened before stating the remaining theorem.  This also gives a
+test which any proposed proof must pass.  Complete at a local-local point of the good vertex and
+factor off the deformation-etale spectator tensors.  This does not assert that every spectator
+level cover is unramified; those factors must be restored in the actual common normalization.
+Write
+
+$$
+A^{(0)}=\widehat{R^{\rm sh}}[[t]]
+$$
+
+for the universal deformation ring of the active one-dimensional height-two formal
+$\mathcal O_{F_v}$-module $G$, with residue field $k_v$ of cardinality $q$.  The display
+(4.4) has the following coefficient-level upgrade.  First linearize the Teichmuller action by
+the Reynolds coordinate
+$(q-1)^{-1}\sum_{a\in k_v^\times}a^{-1}[\widetilde a]_G(Z)$.  The usual strict-coordinate
+recursion can then be performed equivariantly.  It removes every homogeneous degree which is
+not a power of the residue characteristic: the intermediate binomial coefficients in degree
+$n$ generate the unit ideal unless $n$ is such a power.  Commutation with the linear
+Teichmuller action also removes $T^{p^r}$ unless $a^{p^r}=a$ for every $a\in k_v$,
+equivalently unless $[k_v:\mathbf F_p]\mid r$.  Thus only powers of $q$ remain.  At degree
+$q^r$, order the new unknowns as the strict-coordinate coefficient, the formal-law
+coefficient, and the coefficient of $[\pi]_G$.  Linearizing
+$[\pi]_G(F_G(S,T))=F_G([\pi]_G(S),[\pi]_G(T))$ modulo the maximal ideal gives a triangular
+system: after the coboundary coordinate has been removed, every diagonal entry is a power of
+the coefficient of $Z^{q^2}$ in the special $\pi$-series.  Height two makes that coefficient a
+unit.  The degree-$q$ coefficient is the sole free deformation parameter; the display (4.4)
+identifies it with $t$ up to a unit, and all later coefficients are forced inductively.  Thus
+no division by $\pi$ occurs.  Weierstrass preparation then gives the required degree-$q^2$
+divisor.
+After absorbing units, this gives a compatible $q$-typical coordinate in which, as a divisor
+of degree $q^2$ and modulo $\pi$, multiplication has the form
+
+$$
+[\pi]_G(Z)\equiv tZ^q+Z^{q^2}\pmod\pi                   \tag{9.29a}
+$$
+
+up to units in the two displayed coefficients.  The same recursion says that the coefficient
+of $Z$ in the Weierstrass polynomial is $\pi$ times a unit, the coefficient of $Z^q$ is $t$
+times a unit modulo $\pi$, and its specialization at $(\pi,t)$ is $Z^{q^2}$.  Those three
+coefficient statements, rather than a chosen exact polynomial formula, are what will be used.
+
+They suffice to prove the first Drinfeld normalization theorem rather than leave it as an
+input.
+
+**Proposition 9.3 $({\rm DLB}_1)$ (level-one Drinfeld-basis normalization).**  Let
+$D_1$ be the complete local ring representing a full Drinfeld $\pi$-basis
+
+$$
+\varphi:k_v^2\longrightarrow G[\pi]
+$$
+
+at the point where all its geometric values coalesce.  Then $D_1$ is regular of dimension two,
+finite flat over $A^{(0)}$, the two universal values
+
+$$
+X=\varphi(e_1),\qquad Y=\varphi(e_2)
+$$
+
+are a regular system of parameters, and the canonical generic map identifies $D_1$ with the
+completed normalization of the good vertex in the generic principal $K_v(\pi)$-cover.
+
+**Proof.**  The Drinfeld-basis functor is a closed subfunctor of $G[\pi]^2$, so its complete
+local representing ring $D_1$ is finite over $A^{(0)}$.  Its generic fiber is the ordinary
+full-basis cover and is nonempty.  At the closed height-two fiber every section of the formal
+group is zero and the divisor is $q^2[0]$, so there is only one geometric Drinfeld-basis point.
+The finite closure of every generic component therefore meets that point.  Hence its complete
+local ring $D_1$ has Krull dimension two.  It is generated over $A^{(0)}$ by the universal
+values $X,Y$.
+
+In $D_1[[Z]]$ the divisor definition is the identity
+
+$$
+\operatorname{div}([\pi]_G(Z))
+=\sum_{a\in k_v^2}[z_a],
+\qquad
+z_a=[\widetilde a_1]_G(X)+_G[\widetilde a_2]_G(Y).
+$$
+
+Set $X=Y=0$.  The right side becomes the length-$q^2$ divisor $q^2[0]$.  Comparing the
+unique monic Weierstrass polynomials makes the left polynomial equal to $Z^{q^2}$; comparing
+its linear coefficient gives $\pi=0$ in
+$D_1/(X,Y)$.  After that, comparison of the $Z^q$ coefficient in (9.29a) gives $t=0$.
+Conversely the zero homomorphism at $(\pi,t)$ is a Drinfeld basis because the special
+height-two divisor is $q^2[0]$.  Therefore
+
+$$
+D_1/(X,Y)=\bar k.
+$$
+
+The maximal ideal of $D_1$ is generated by $X,Y$.  A noetherian local ring of dimension two
+whose maximal ideal has two generators is regular.  Thus $D_1$ is a regular domain and $X,Y$
+are a regular system of parameters.  Since it is finite over the regular ring $A^{(0)}$ of the
+same dimension, the parameters of $A^{(0)}$ form a system of parameters in $D_1$;
+Cohen--Macaulayness and Auslander--Buchsbaum make $D_1$ finite free over $A^{(0)}$.
+
+Finally, after inverting $\pi$, a Drinfeld basis is an ordinary basis, so the generic algebra
+is exactly the local generic principal $K_v(\pi)$-algebra.  The finite ring $D_1$ is normal.
+It is therefore the integral closure of $A^{(0)}$ in that algebra, and completion gives the
+claimed normalization. $\square$
+
+For
+$a=(a_1,a_2)\in k_v^2$ put
+
+$$
+z_a=[\widetilde a_1]_G(X)+_G[\widetilde a_2]_G(Y),
+$$
+
+where Teichmuller representatives are used.  The Drinfeld divisor identity and its derivative
+at the zero section give, for units $u,u'$,
+
+$$
+\pi
+=u\prod_{0\ne a\in k_v^2}z_a
+=u'\prod_{L\in\mathbf P^1(k_v)}z_L^{q-1}.                \tag{9.29b}
+$$
+
+Here $z_L$ is any $z_a$ with $a$ spanning $L$; changing $a$ multiplies it by a unit.  Moreover
+
+$$
+z_a\equiv a_1X+a_2Y\pmod{(X,Y)^2}.                        \tag{9.29c}
+$$
+
+Consequently the reduced special fiber of $D_1$ has $q+1$ distinct smooth branches through
+the closed point, indexed by $\mathbf P^1(k_v)$, and every branch occurs in the divisor of
+$\pi$ with multiplicity $q-1$.  At $q=2$ it is a reduced three-branch crossing; for $q>2$ it
+also has vertical multiplicities.  In particular the raw principal normalization is neither a
+strict node nor smooth over the trait.  Book 22's strict-node complex cannot be applied to it
+before taking the appropriate Stein factor and wild invariants.
+The normalization of its reduced special fiber has conductor preimages
+$c_L$, one on each branch.  The group $G_1$ below acts transitively on the set
+$\{c_L\}_{L\in\mathbf P^1(k_v)}$, and the stabilizer of $c_L$ is the same line stabilizer as
+the branch.  These $q+1$ tangent directions are exactly the $q+1$ oriented edges leaving the
+vertex $[\Lambda_0]$ in the Bruhat--Tits tree; choosing $L$ chooses the adjacent Iwahori edge.
+Blowing up the closed point separates the strict transforms, but the exceptional curve occurs
+in the total transform of $\pi$ with multiplicity
+
+$$
+(q+1)(q-1)=q^2-1,
+$$
+
+while each strict transform still has multiplicity $q-1$.  Both integers are prime to the
+residue characteristic, so a tame base change can repair these divisor multiplicities, but it
+does not erase the wild unipotent deck action calculated below.  This is the precise
+distinction between taming a normal-crossings divisor and declaring the principal cover tame.
+
+The same equations determine the first decomposition ledger.  Put
+
+$$
+G_1=\operatorname{GL}_2(k_v).
+$$
+
+This is the active group before fixing a determinant/Weil-pairing component.  If the chosen
+PEL component cuts it down, every group below is intersected with that effective subgroup and
+the determinant orbit is retained in the already separated ray/component factor.  The
+unipotent group $U_L$, and hence the wild calculation, is unchanged.
+
+The closed Drinfeld point has decomposition group $G_1$.  The branch $z_L=0$ has decomposition
+group the line stabilizer $B_L$.  For $L=k_ve_1$, write
+
+$$
+B_L=\left\{
+\begin{pmatrix}a&b\\0&d\end{pmatrix}:a,d\in k_v^\times, b\in k_v
+\right\},
+\qquad
+U_L=\left\{
+\begin{pmatrix}1&b\\0&1\end{pmatrix}:b\in k_v
+\right\}.                                                \tag{9.29d}
+$$
+
+On the reduced branch, $w=\varphi(e_2)$ satisfies
+$w\mapsto[\widetilde d]_G(w)$.  Hence the inertia subgroup is the kernel of the quotient
+character $B_L\to k_v^\times$, $\left(\begin{smallmatrix}a&b\\0&d\end{smallmatrix}\right)
+\mapsto d$, its wild subgroup is exactly $U_L$, and its remaining inertia quotient has order
+$q-1$.  The wild group fixes the reduced branch pointwise but is not trivial on the generic
+principal cover.  Indeed, restricting (9.29a) to the generic point of that branch gives
+
+$$
+t=-u_Lw^{q(q-1)}                                           \tag{9.29e}
+$$
+
+in its residue function field, for a unit $u_L$.  The $q$-part is purely inseparable after
+reduction.  Thus the fact that the visible vertical multiplicity in (9.29b) is $q-1$ does not
+make the principal cover tame; the wild $U_L$-action is hidden by inseparable residue.
+
+There is also an exact Stein-factor consequence.  Proposition 9.3, normality, and the generic
+fixed-field description give
+
+$$
+D_1^{G_1}=A^{(0)},
+\qquad
+D_1^{B_L}=A_e=\widehat{R^{\rm sh}}[[x,y]]/(xy-\pi),       \tag{9.29f}
+$$
+
+where the second ring is the generic cyclic-line, or Iwahori, quotient belonging to $L$.
+Indeed invariants in a normal finite algebra are the integral closure in the fixed field, and
+the right sides are already normal.  Formula (9.29f) explains how a strict node can be a
+stabilizer Stein factor of a wild many-branch principal normalization.
+More explicitly, after absorbing units, its two parameters pull back as
+
+$$
+x\longmapsto\prod_{0\ne a\in L}z_a,
+\qquad
+y\longmapsto\prod_{a\notin L}z_a,
+\qquad xy=\pi.
+$$
+
+The first divisor is the single branch $L$ with multiplicity $q-1$; the second is the union of
+the other $q$ branches, each with that multiplicity.  Thus this is a quotient equation,
+not an assertion that the full-level source itself has only two branches.
+
+For the coefficient systems used later this ledger has a particularly clean consequence.  Let
+
+$$
+P=\mathcal O[\mathbf P^1(k_v)],
+\qquad s_L=\sum_{M\ne L}e_M.
+$$
+
+The group $U_L$ fixes $e_L$ and acts regularly on the affine complement.  Since
+$q=|U_L|$ is a unit in the coefficient DVR, wild invariants are exact and
+
+$$
+P^{U_L}=\mathcal Oe_L\oplus\mathcal Os_L,                 \tag{9.29g}
+$$
+
+$$
+(P/\mathcal O\mathbf1)^{U_L}
+=\mathcal O\,(e_L\bmod\mathbf1),
+\qquad
+(\ker\operatorname{aug})^{U_L}
+=\mathcal O\,(e_L-q^{-1}s_L).                             \tag{9.29h}
+$$
+
+The two generators in (9.29h) pair to $1$.  The diagonal tame quotient fixes both lines.  Thus
+the principal cover is wild, while the extreme quotient and augmentation **modules after
+wild invariants** are geometrically unramified on the annulus.  Book 22, (3.12)--(3.14), rather
+than a declaration that the cover is tame, is the correct passage to its procyclic complex.
+For any common generic Galois refinement dominating $D_1$, the two representations are
+inflated from $G_1$, so their intrinsic geometric annular monodromy still has wild image
+$U_L$ and the deeper generic kernel acts trivially.  Hence the same invariant lines result
+before the deeper branch geometry is known.  This does not identify the wild subgroup of a
+selected higher special-fiber valuation or assert that its map onto $U_L$ is surjective; that
+valuation-theoretic statement is part of $({\rm HDB}_v)$.
+Any global ray character remains as the external diagonal inertia action of (9.29).
+
+The finite flag routing itself is already visible in Sections 9.3--9.4.  Under the Bruhat
+decomposition
+
+$$
+\operatorname{Res}^{G_1}_{B_L}P
+\simeq\mathcal Oe_L\oplus\mathcal O[B_L/(B_L\cap sB_Ls^{-1})],
+                                                                  \tag{9.29i}
+$$
+
+Put $T_L=B_L\cap sB_Ls^{-1}$.  The same fixed-field argument as in (9.29f) identifies
+$D_1^{T_L}$ with the selected completed Stein factor of the normalized length-two PEL flag
+closure of Section 9.3: its generic fiber is the moving $B_L/T_L$-cover, and both rings are
+the integral closure in that field.  Thus the following incidence calculation is an actual
+level-one Stein-factor calculation, rather than a count of characteristic-zero flags.
+
+The fixed summand is the identity Iwahori sheet and is node-to-node with multiplicity and
+expansion indices one.  The moving orbit is indexed by $a\in k_v$.
+Equations (9.11)--(9.12) prove that $a=0$ has
+completed ring $\widehat{R^{\rm sh}}[[x,y]]/(xy-\pi)$, both branch maps are the identity in
+the ordered coordinates, and its scheme-theoretic multiplicity and both expansion indices are
+one.  For every $a\ne0$ a coordinate is a unit, the completed source is smooth, and the sheet
+belongs to the normalization-component term.  Hence the node-to-branch generization maps on
+the $a=0$ strict-node sheet, restricted to either constant extreme line in (9.29h), are the two
+identity maps in degree zero and zero in the independent vanishing degree.  The other
+level-one geometric maps are the ordinary restrictions from their smooth branch sources.
+This does not yet identify the full generization maps after a higher principal kernel or a
+ramified spectator factor is restored.  The level-one routing is compatible with $U_v$ and
+its transpose by (9.13)--(9.15), and with prime-to-$v$ Hecke routes because those isogenies
+commute with the active Drinfeld basis.
+
+The actual common principal algebra of (9.26) can lie deeper than this first layer.  A basis at
+one vertex does not automatically give a basis on the quotient height-two group at the
+adjacent vertex; a common Galois closure can require compatible higher Drinfeld division
+points.  The following calculation both exhibits the depth jump and proves the active
+higher-level normalization.  In the basis of (2.2), put
+
+$$
+K_0(1)=1+\pi M_2(\mathcal O_{F_v}),
+\qquad
+K_1(1)=
+\begin{pmatrix}1&0\\0&\pi^{-1}\end{pmatrix}
+K_0(1)
+\begin{pmatrix}1&0\\0&\pi\end{pmatrix}.
+$$
+
+Then
+
+$$
+K_0(1)\cap K_1(1)=
+\left\{
+\begin{pmatrix}
+1+\pi a&\pi^2b\\
+\pi c&1+\pi d
+\end{pmatrix}:a,b,c,d\in\mathcal O_{F_v}
+\right\},                                                \tag{9.29j}
+$$
+
+and $K_0(2)=1+\pi^2M_2(\mathcal O_{F_v})$ is contained in this intersection.  Thus full
+Drinfeld level $\pi^2$ at the first vertex dominates both level-one vertex covers, whereas
+level $\pi$ at that vertex does not.  Taking the effective Galois core for the whole finite
+diagram can force a still deeper but finite $K_0(n)$.  Formula (9.29j) is only the generic
+subgroup calculation, but the same Drinfeld argument identifies the active integral closure.
+
+For $n\ge1$, let $D_n$ be the complete local ring of a full Drinfeld $\pi^n$-basis at the
+point where all basis values coalesce, and write $X_n,Y_n$ for the values on a chosen basis.
+The functor is finite over $A^{(0)}$, and its generic fiber is the full $K_0(n)$-cover.  The
+map to level one sends
+
+$$
+X\longmapsto[\pi^{n-1}]_G(X_n),
+\qquad
+Y\longmapsto[\pi^{n-1}]_G(Y_n).
+$$
+
+Consequently $\pi,t\in(X_n,Y_n)$ by Proposition 9.3.  Hence $D_n/(X_n,Y_n)=\bar k$, the
+maximal ideal of the two-dimensional finite local ring $D_n$ is generated by $X_n,Y_n$, and
+the argument of Proposition 9.3 proves
+
+$$
+D_n\text{ regular and finite free over }A^{(0)},
+\qquad
+D_n=\operatorname{Nor}_{\operatorname{Frac}D_n}(A^{(0)}).
+                                                                  \tag{9.29k}
+$$
+
+This proves the compatible **active** Drinfeld normalization at every finite depth, not only
+at depth one.  More generally, if an active principal generic factor $L$ is an intermediate
+field in $\operatorname{Frac}D_n$ and $H$ is its fixing subgroup, then
+
+$$
+\operatorname{Nor}_{L}(A^{(0)})=D_n^H.                    \tag{9.29l}
+$$
+
+Indeed invariants of a normal domain under a finite group are normal and have the stated
+fixed field.  Formula (9.29j) puts every finite collection of adjacent active principal
+covers inside such a $D_n$, so (9.29l), together with Proposition 9.2, identifies their
+common active vertex--edge normalization.  Moreover $D_n^H$ is finite free over $A^{(0)}$:
+it is a two-dimensional normal local ring, hence Cohen--Macaulay, and the
+Auslander--Buchsbaum argument of Proposition 9.3 applies.  No invertibility of $|H|$ is used
+here.  Regularity is asserted for $D_n$, not for the quotient ring $D_n^H$, which can have
+quotient singularities.
+
+What (9.29k)--(9.29l) do not identify is the special-fiber valuation tree of $D_n^H$ above
+the $q+1$ branches of $D_1$, its higher wild kernel decomposition groups and generization
+maps, or a possibly ramified spectator/ray compositum.  Nor do they identify the strict
+transforms used by a proper nonfinite flag leg with the corresponding invariant-ring strata.
+The obstruction is visible in the equations, not merely in missing terminology.  If
+$z_{a,n}=[\widetilde a_1]_G(X_n)+_G[\widetilde a_2]_G(Y_n)$ and
+$z_{a,1}=[\pi^{n-1}]_G(z_{a,n})$, then on the closed height-two base
+
+$$
+z_{a,1}\equiv u_{a,n}z_{a,n}^{q^{2(n-1)}}\pmod{(\pi,t)}   \tag{9.29m}
+$$
+
+for a unit $u_{a,n}$.  Thus all higher valuations above a fixed level-one branch have the same
+reduced tangent direction and coalesce with a large purely inseparable thickness.  Neither
+the tangent cone nor the set of Bruhat--Tits neighbors can recover their decomposition groups
+or say which strict transform a proper flag correspondence meets.
+For the two coefficient representations which factor through $G_1$, however, the complete
+level-one **node-annular and boundary-stabilizer** ledger can already be written without
+resolving (9.29m).  Continue
+with $L=k_ve_1$ and put
+
+$$
+I_L=\ker(B_L\xrightarrow{d}k_v^\times)
+=U_L\rtimes A_L,
+\qquad
+A_L=\left\{\begin{pmatrix}a&0\\0&1\end{pmatrix}:a\in k_v^\times\right\}.
+                                                                  \tag{9.29n}
+$$
+
+As in (9.29d), a determinant- or component-fixed problem replaces $I_L,A_L$ by their
+intersections with the effective group; $U_L$ is unchanged, and a removed diagonal character
+is retained in the external component/ray action.
+
+After the residue-field quotient $d$ is removed, the connected geometric annular cover has
+finite image $I_L$.  Let $\widetilde A_L$ be the procyclic tame annular group acting through
+$A_L$, and let $\widetilde I_L$ be its extension by $U_L$; this notation avoids replacing a
+pro-$\ell$ annular group by finite-group cohomology when $\ell\mid q-1$.  The closure meets the
+branch $L$ at one endpoint with finite stabilizer $I_L$.  At the
+other endpoint it meets the affine complement transitively; for $M=k_ve_2$ the stabilizer is
+$A_L$, and $I_L/A_L$ is the set of its $q$ branches.  Therefore, for any finite-free
+$G_1$-module $W$, the node complex and the two boundary stabilizers are
+
+$$
+K_L(W)=R\Gamma_{\rm cont}(\widetilde I_L,W)
+       \simeq R\Gamma_{\rm cont}(\widetilde A_L,W^{U_L}),
+\qquad (D_L,D_M)=(I_L,A_L).                               \tag{9.29o}
+$$
+
+The stabilizer restriction supplies the coefficient inclusion
+
+$$
+W^{U_L}\lhook\joinrel\longrightarrow W.                  \tag{9.29p}
+$$
+
+The node formula retains any $\ell$-part of $A_L$ in the procyclic complex; no averaging by
+$q-1$ is being used.  Equations (9.29o)--(9.29p) do **not** identify the two conductor
+complexes or promote the coefficient inclusion to a generization chain map.  Indeed, for the
+trivial module the two conductor complexes in Book 22, (3.10), are the coefficient module in
+degree zero, whereas replacing either of them by
+$R\Gamma_{\rm cont}(\widetilde A_L,\mathcal O)$ would add a spurious degree-one class.  Thus
+the annular group-cohomology formula belongs at the node only.  Residue Galois transports the
+boundary-stabilizer calculation among the $q$ complementary branches.  A deeper active
+principal kernel acts trivially on $W$, so the intrinsic node complex and boundary coefficient
+modules are unchanged; a global ray character tensors them diagonally by (9.29).
+
+The complementary summand is integral and explicit.  Let
+
+$$
+Q_L=\ker\!\left(
+\operatorname{aug}:\mathcal O[\mathbf P^1(k_v)\setminus\{L\}]
+\longrightarrow\mathcal O\right).
+$$
+
+Because $U_L$ acts regularly on the affine complement and $q$ is a unit in $\mathcal O$,
+averaging over $U_L$ gives $A_L$-stable decompositions
+
+$$
+\operatorname{St}_v^+
+=\mathcal O(e_L\bmod\mathbf1)\oplus Q_L,
+\qquad
+\operatorname{St}_v^-
+=\mathcal O(e_L-q^{-1}s_L)\oplus Q_L,
+\qquad Q_L^{U_L}=0.                                      \tag{9.29q}
+$$
+
+Thus the node complex for either row is exactly the constant extreme-line complex.  On that
+constant line Book 22, (3.10), gives the conductor term in degree zero and generization equal
+to the identity in degree zero and zero in the independent vanishing degree.  The summand
+$Q_L$ has no node contribution and is routed to the moving normalization-component term, but
+its full conductor complex is not $R\Gamma_{\rm cont}(\widetilde A_L,Q_L)$ merely from the
+stabilizer calculation.  Determining that branch complex and its generization is part of
+$({\rm HDB}_v)$.  This is the exact level-one wild/node ledger without calling the principal
+cover tame or discarding the branch term.
+
+There is one further exact higher-level factorization.  Put
+$V_n=(\mathcal O_{F_v}/\pi^n)^2$ and let $V_n^{\rm prim}=V_n\setminus\pi V_n$.  For
+$c\in V_n^{\rm prim}$ write $z_{c,n}=\varphi_n(c)$.  If $\bar c\ne0$ is its reduction, the
+Drinfeld divisor for $[\pi^{n-1}]_G$ evaluated at $z_{c,n}$ gives
+
+$$
+z_{\bar c,1}
+=u_c\prod_{b\in\pi V_n}z_{c-b,n}.
+$$
+
+Multiplying over $0\ne\bar c\in k_v^2$ and using (9.29b) yields
+
+$$
+\pi
+=u_n\prod_{c\in V_n^{\rm prim}}z_{c,n}
+=u_n'\prod_{\lambda\in\mathbf P^1(\mathcal O_{F_v}/\pi^n)}
+ z_{\lambda,n}^{q^{n-1}(q-1)}.                           \tag{9.29r}
+$$
+
+Each $z_{c,n}$ has nonzero linear term
+$\bar c_1X_n+\bar c_2Y_n$, hence is a regular parameter and cuts a smooth prime divisor;
+unit multiples of $c$ give associate parameters.  The converse follows at the generic point
+of $(z_{c,n})$.  There $\pi=0$ but $t\ne0$: if $t$ also lay in this height-one prime, finiteness
+over $A^{(0)}$ would make the one-dimensional quotient finite over the zero-dimensional ring
+$A^{(0)}/(\pi,t)$, a contradiction.  Thus the formal module has height one.  Over an algebraic
+closure its $\pi^n$-torsion has $q^n$ geometric points, each with connected multiplicity
+$q^n$.  The Drinfeld divisor identity makes $V_n$ surject onto those points, so its kernel has
+order $q^n$.  Since it contains the primitive vector $c$, that kernel is exactly the free line
+$(\mathcal O_{F_v}/\pi^n)c$.  Hence a second primitive $d$ vanishes generically on this divisor
+if and only if $d=uc$ for a unit $u$.
+
+Consequently the reduced special fiber of $D_n$ has exactly
+
+$$
+\#\mathbf P^1(\mathcal O_{F_v}/\pi^n)=q^{n-1}(q+1)
+$$
+
+smooth branches, each of Cartier multiplicity $q^{n-1}(q-1)$.  The group
+$G_n=\operatorname{GL}_2(\mathcal O_{F_v}/\pi^n)$ acts transitively, and the decomposition
+group of the branch $\lambda$ is its line stabilizer $B_{n,\lambda}$.  For
+$\lambda=(\mathcal O_{F_v}/\pi^n)e_1$, put $R_n=\mathcal O_{F_v}/\pi^n$.  At the branch
+generic point, $w=Y_n$ is a primitive point of the height-one $\pi^n$-torsion and
+
+$$
+B_{n,\lambda}
+=\left\{\begin{pmatrix}a&b\\0&d\end{pmatrix}:a,d\in R_n^\times, b\in R_n\right\},
+\qquad w\longmapsto[d]_G(w).
+$$
+
+Since $X_n,Y_n$ are parameters, the normalized reduced branch has complete local ring
+$\bar k[[w]]$.  Thus its residue function field is generated by $w$ over the fixed base
+field.  The action on the cyclic group generated by $w$ is faithful because $w$ has exact
+$\pi^n$-order.  Hence the raw branch inertia and its wild subgroup are
+
+$$
+I_{n,\lambda}=\ker(d)
+=\left\{\begin{pmatrix}a&b\\0&1\end{pmatrix}:a\in R_n^\times, b\in R_n\right\},
+\quad
+P_{n,\lambda}
+=\left\{\begin{pmatrix}a&b\\0&1\end{pmatrix}:a\in1+\pi R_n, b\in R_n\right\},
+\quad
+I_{n,\lambda}/P_{n,\lambda}\simeq k_v^\times.             \tag{9.29s}
+$$
+
+Thus $|P_{n,\lambda}|=q^{2n-1}$, and reduction maps it onto the level-one $U_L$.  For $n>1$
+even the visible Cartier multiplicity $q^{n-1}(q-1)$ has a wild $q^{n-1}$-part.  Distinct
+lifts of one level-one line have the same tangent, exactly as (9.29m) predicts.
+
+The inseparable part of this ledger is also numerical, not conjectural.  Let $\kappa_\lambda$
+be the residue function field of the branch.  The full generic cover has degree
+
+$$
+|G_n|=q^{4n-3}(q-1)^2(q+1).
+$$
+
+There are $q^{n-1}(q+1)$ branches, all with ramification index
+$q^{n-1}(q-1)$.  The rank-specialization formula for the finite-free
+$A^{(0)}$-algebra $D_n$, followed by the decomposition--inertia exact sequence after
+henselizing the height-one base valuation, therefore gives
+
+$$
+\begin{aligned}
+e_\lambda&=q^{n-1}(q-1),\\
+[\kappa_\lambda:\bar k((t))]&=q^{2n-1}(q-1),\\
+[\kappa_\lambda:\bar k((t))]_{\rm sep}
+ &=|B_{n,\lambda}/I_{n,\lambda}|=q^{n-1}(q-1),\\
+[\kappa_\lambda:\bar k((t))]_{\rm insep}&=q^n.
+\end{aligned}                                             \tag{9.29t}
+$$
+
+Thus $|I_{n,\lambda}|=e_\lambda
+[\kappa_\lambda:\bar k((t))]_{\rm insep}$: the subgroup with
+$a\in1+\pi R_n$ supplies the wild part of the normal ramification, while the additive
+$b$-subgroup is visible in the inseparable residue thickness.  In particular
+
+$$
+[\kappa_\lambda^{B_{n,\lambda}}:\bar k((t))]=q^n
+$$
+
+is purely inseparable.  Already at $n=1$, normalization of a reduced branch followed by
+$B_L$-invariants is therefore a purely inseparable degree-$q$ extension of the reduced branch
+of $D_1^{G_1}=A^{(0)}$.  This is an explicit counterexample to commuting wild invariants with
+reduction and branch normalization; it is why the invariant surface ring alone does not give
+the downstairs conductor ledger.
+
+There is nevertheless a complete raw higher **node-annular and boundary-stabilizer ledger**
+over the strict Iwahori Stein factor.  Let $\rho_n:G_n\to G_1$ be reduction and put
+
+$$
+\widehat B_{n,L}=\rho_n^{-1}(B_L).
+$$
+
+The fixed-field calculation gives
+
+$$
+D_n^{\ker\rho_n}=D_1,
+\qquad D_n^{\widehat B_{n,L}}=D_1^{B_L}=A_e.              \tag{9.29u}
+$$
+
+Fix the branch $\lambda=R_ne_1$ over the $L$-endpoint and a geometric residue embedding there.
+The connected geometric annular image is then $I_{n,\lambda}$.  At the opposite endpoint its
+branches are the $q^n$ lines $R_n(r,1)$, $r\in R_n$; the affine action
+$r\mapsto ar+b$ is transitive.  The stabilizer of $R_ne_2$ and its wild subgroup are
+
+$$
+A_{n,\lambda}=\left\{\begin{pmatrix}a&0\\0&1\end{pmatrix}:a\in R_n^\times\right\},
+\qquad
+A^1_{n,\lambda}=\left\{\begin{pmatrix}a&0\\0&1\end{pmatrix}:a\in1+\pi R_n\right\}.
+                                                               \tag{9.29v}
+$$
+
+Both $P_{n,\lambda}$ and $A^1_{n,\lambda}$ are $p$-groups, and
+
+$$
+I_{n,\lambda}/P_{n,\lambda}\simeq
+A_{n,\lambda}/A^1_{n,\lambda}\simeq k_v^\times.
+$$
+
+Let $\widetilde C_n$ denote the tame procyclic annular group acting through this common finite
+quotient.  For every finite-free $G_n$-module $W$, Book 22, (3.12)--(3.14), gives the node
+complex, while the stabilizer calculation gives the two boundary coefficient modules
+
+$$
+\begin{aligned}
+K_{n,\lambda}(W)
+ &\simeq R\Gamma_{\rm cont}(\widetilde C_n,W^{P_{n,\lambda}}),\\
+M_{n,\lambda}(W)&=W^{P_{n,\lambda}},
+\qquad M_{n,\mu}(W)=W^{A^1_{n,\lambda}},
+\qquad \mu=R_ne_2.
+\end{aligned}                                             \tag{9.29w}
+$$
+
+The boundary stabilizer inclusion is
+
+$$
+W^{P_{n,\lambda}}\lhook\joinrel\longrightarrow
+W^{A^1_{n,\lambda}},                                     \tag{9.29x}
+$$
+
+and residue Galois transports it among the $q^n$ moving branches.  No averaging by $q-1$ is
+implicit in the node formula: its $\ell$-part remains in the procyclic complex.  Just as at
+level one, (9.29w)--(9.29x) do not identify either full conductor complex or the generization
+chain maps; the trivial-module test above forbids replacing those conductor terms by a second
+copy of the procyclic node complex.  If $W$ is inflated from $G_1$, then
+$P_{n,\lambda}$ has image $U_L$ and $A^1_{n,\lambda}$ acts trivially, so (9.29w)--(9.29x)
+recover (9.29o)--(9.29p) at the level of the node complex and boundary modules.  This proves
+that the deeper active kernel does not change that intrinsic node ledger for the two
+level-one Steinberg rows, while retaining the full wild stabilizer ledger for a genuine
+depth-$n$ coefficient.
+
+For an intermediate active ring $D_n^H$, its height-one branches are the $H$-orbits on
+$\mathbf P^1(R_n)$.  For a representative $\lambda$, the decomposition group of
+$D_n/D_n^H$ is $H_\lambda=H\cap B_{n,\lambda}$; the raw decomposition group over
+$A^{(0)}$ remains $B_{n,\lambda}$.  If $H$ is normal, the decomposition group in the quotient
+$G_n/H$ is the image of the stabilizer of the $H$-orbit.  These statements determine the
+branch set and all raw active stabilizers, but the strict containment exhibited after
+(9.29t) shows that they do not determine the reduced residue field after wild descent, its
+downstairs Cartier multiplicity, or the full complex carried by a proper component-routed
+source.
+
+The proper routing itself can nevertheless be completed for the retained residue-prime
+correspondence.
+
+**Proposition 9.4 (node routing on the actual common factor).**  Normalize the length-two flag
+closure of Section 9.3 in the same actual common principal/ray algebra as its two targets.  Over
+the inverse image of a fine node, its unique node-to-node strict transform is the $a=0$ sheet
+of (9.11)--(9.12).  On every selected common-normalization factor both legs of that sheet are
+isomorphisms of completed rings.  Its scheme-theoretic correspondence multiplicity and both
+expansion indices are one.  Every $a\ne0$ sheet, and every contracted vertical flag stratum,
+is routed to the normalization-component term.  This routing commutes with residue Frobenius,
+$U_v$, $U_v^t$, and every retained prime-to-$v$ Hecke route.
+
+**Proof.**  Section 9.4 computes the whole fine fiber.  At $a=0$ both projections have
+completed strict-node ring $xy=\pi$, are quasi-finite, and have local length one.  At each
+$a\ne0$ point a coordinate is a unit, the source is smooth, at least one image lies in a
+smooth branch stratum, and the same eliminated-variable calculation makes the noncontracted
+projection germs quasi-finite of local length one.  Any positive-dimensional special flag
+fiber has both images in smooth strata.  Hence the non-quasi-finite locus of either proper
+projection has closed image disjoint from the relevant target nodes.  After deleting those
+closed images, both projections are proper and quasi-finite, hence finite.
+
+On these finite neighborhoods, the proof of Proposition 9.2 applies verbatim: source and
+target have been normalized in the same generic algebra, and integrality over either of two
+finite integral base rings is equivalent.  Thus the selected completed normalization rings
+are canonically identical along each leg.  In particular no point above an $a\ne0$ or
+contracted fine stratum can become node-to-node, while the $a=0$ generic sheet remains reduced
+of multiplicity one and its two lifted maps are isomorphisms.  Expansion one follows from the
+completed-ring identity.  Generic equivariance and uniqueness of normalization give the deck,
+residue-Galois, Hecke, and transpose compatibilities. $\square$
+
+Proposition 9.4 determines the proper strict-transform **routing** and coefficient one.  It
+does not calculate the reduced branch field or the full nearby-cycle complex carried by a
+component-routed common-normalization source; those are precisely where wild reduction can
+fail to commute with invariants.
+
+**First remaining local input $({\rm HDB}_v)$ (higher Drinfeld branch-complex descent).**  For the
+selected $n,H$ in (9.29l), a selected $H$-orbit of raw branches, and the actual normalized
+spectator/ray compositum, identify the reduced residue subfield inside the corresponding raw
+fixed field, its Cartier multiplicity, and the resulting decomposition and inertia sequence.
+Equivalently, calculate exactly the failure of wild invariants to commute with reduction which
+is measured in the full-level case by the purely inseparable factor in (9.29t).  Starting from
+the node complex and boundary modules in (9.29w)--(9.29x), construct the raw conductor
+complexes and generization chain maps, and then descend them through the selected intermediate
+and spectator/ray normalization.  On a regular domination of
+the proper residue-prime legs, identify the full complexes on the component-routed sources and
+their proper pushforward and transpose maps; Proposition 9.4 has already fixed the strict
+transform routing and all node-to-node multiplicities.  Normality, (9.29r), and the projective-line orbit
+calculation determine the finite rings and branches; (9.29s)--(9.29x) determine the raw active
+stabilizers, residue degrees, node-annular complexes, and boundary coefficient maps.  They do
+not determine the branch complexes or generization chain maps, even before intermediate or
+spectator descent; the strict wild invariant/reduction discrepancy after (9.29t), amplified by
+(9.29m), is the first additional obstruction.
+
 It remains to identify the principal factor at a node.  The remaining statement is now a local
 algebraic-geometric theorem, not an unspecified nearby-cycle formalism.
 
@@ -1630,14 +2305,17 @@ completion along every point over the vertex image.  The required assertions are
 
 1. the normalization branches, conductor points, decomposition and inertia groups of $B_e$ are
    the vertex, edge, and oriented-flag stabilizers inside the effective Galois closure of the
-   actual principal quotients.  The node-to-node completed tubes are identified as admissible
-   tame annuli over the strict base annulus; this includes the homomorphism from the oriented
+   actual principal quotients.  For each node-to-node **stabilizer-quotient** tube, the actual
+   wild subgroup is identified and its geometric quotient is an admissible tame annulus over
+   the strict base annulus; this includes the homomorphism from the oriented
    tame annular group and its actions on the two ordered
    endpoints.  It also records the wild annular inertia: on each node-to-node coefficient
-   module it proves that wild inertia is trivial before the tame procyclic complex is used;
-   any sheet on which wild inertia is nontrivial must instead be carried, with its full
-   decomposition action, by a completed source smooth over the trait in the
-   normalization-component term of clause 2.  Proper nearby-cycle pushforward then supplies
+   module it first takes the exact wild invariants of Book 22, (3.12)--(3.14), and proves that
+   the resulting module is the routed extreme line before the tame procyclic complex is used;
+   every non-wild-invariant coefficient summand which does not survive on that extreme line
+   must instead be carried, with its full decomposition action and without a smoothness or
+   tameness assertion, by its actual completed branch source in the normalization-component
+   term of clause 2.  Proper nearby-cycle pushforward from a regular domination then supplies
    its full branch complex.  The resulting node-to-branch generization chain maps are
    identified; no branch with uncomputed monodromy is replaced by an underived module;
 2. for each oriented flag incidence contributing to an extreme residue, exactly one
@@ -1648,6 +2326,11 @@ completion along every point over the vertex image.  The required assertions are
    domination construction of Section 9.3, including its transpose. On the identified
    node-to-node sheets lying over the finite parahoric base legs, Proposition 9.2 then proves,
    rather than assumes, expansion index one.
+
+Proposition 9.4 proves the sheet classification, common-factor routing, multiplicity one,
+expansion one, and retained Hecke/transpose compatibility in clause 2.  What clause 2 still
+imports from clause 1 is the full decomposition action and nearby-cycle complex on each
+component-routed source after wild intermediate/spectator descent.
 
 This is an exact finite-level theorem.  It can equivalently be proved by constructing the full
 Drinfeld level structure on the active height-two $\pi$-divisible group, taking the Stein
@@ -1665,9 +2348,10 @@ polarized global datum of Book 58; a complete local equation alone does not supp
 
 Once $({\rm PNS}_v)$ is known, no further ramified nearby-cycle theorem is missing.  For a
 finite-free representation $W$ of the principal quotient, the decomposition group in clause 1
-gives its actual tame annular action.  Let $H_x$ be the prime-to-$\ell$ kernel, put
-$M_x=W^{H_x}$, and write $T_x$ for the remaining pro-$\ell$ generator.  The same clause proves
-that wild inertia is trivial on the node-to-node module.  Book 22, Theorem 3.2 then gives the
+first gives its actual wild subgroup $P_x$.  Take the exact invariants $W^{P_x}$ of Book 22,
+(3.12)--(3.13); this is not a claim that the cover is tame.  Let $H_x$ be the prime-to-$\ell$
+kernel in the remaining tame group, put $M_x=(W^{P_x})^{H_x}$, and write $T_x$ for the
+remaining pro-$\ell$ generator.  Book 22, (3.14), then gives the
 full complex
 
 $$
@@ -1680,12 +2364,18 @@ generization maps gives the normalization--conductor homotopy fiber (3.10).  Cla
 from the chosen oriented endpoint difference. They place all remaining sheets in the middle
 normalization term. The same formulas make
 finite-flat trace adjoint to pull on the contragredient representation and commute with every
-retained Hecke route.  Thus $({\rm PNS}_v)$ is the first unresolved theorem in proof order:
-Books 118--122 construct one parahoric subgroup and the length-two generic correspondence, but
-outside $({\rm PNS}_v)$ they give neither a Drinfeld full-level integral moduli presentation nor
-the completed stabilizer calculation for the principal normalization required by its two
-clauses.  In particular, they do not prove that the principal coefficient is
-tame at a node merely because the selected automorphic type is called tame.
+retained Hecke route.  Proposition 9.3 proves the level-one ring assertion $({\rm DLB}_1)$.
+Equations (9.29k)--(9.29l) also prove the active normalization and intermediate invariant rings
+at every finite depth, while (9.29r)--(9.29x) prove the full-level higher branch, inertia,
+residue-degree, node-annular, and boundary-stabilizer ledger.  Thus the first unresolved part
+of $({\rm PNS}_v)$ in proof order is $({\rm HDB}_v)$: construction of the raw branch conductor
+complexes and generization maps, their descent through the selected wild intermediate and
+spectator/ray compositum, and the strict transforms for the proper residue-prime legs.
+Equations (9.29b)--(9.29i) and (9.29n)--(9.29q) prove the level-one stabilizer, wild-invariant,
+multiplicity-one, and constant-line generization consequences on the level-one Stein factor;
+Proposition 9.4 promotes the residue-prime routing, coefficient one, expansion one, and
+transpose compatibility to the actual common factor.  In particular, the
+principal cover is genuinely wild even though its selected extreme invariant lines are tame.
 
 ## 10. The semistable curve theorem
 
@@ -1736,9 +2426,18 @@ one-step Iwahori chain (2.3). Then:
     retained generic leg whose fine integral base leg is finite extends uniquely. Along such a
     fine finite leg the common
     normalizations are canonically identical.  The ray-only axis and its geometrically constant
-    coefficient are explicit; the wild/tame stabilizer ledger, generization maps, and node
-    routing are exactly the still-required theorem $({\rm PNS}_v)$, after which expansion one
-    follows from the common-normalization isomorphism.
+    coefficient are explicit.  Proposition 9.3 proves the level-one Drinfeld-basis
+    normalization $({\rm DLB}_1)$; (9.29k)--(9.29l) identify every active finite-depth
+    normalization and intermediate ring; (9.29r)--(9.29x) compute the raw higher branches,
+    inertia, inseparable residue degree, node-annular complexes, and boundary stabilizers; and equations (9.29b)--(9.29i) and
+    (9.29n)--(9.29q) force the level-one branch stabilizers, exact
+    wild invariants of the two Steinberg rows, unique multiplicity-one flag sheet,
+    and constant-line generization maps.  Proposition 9.4 promotes the flag routing,
+    multiplicity and expansion one, and residue-prime Hecke/transpose route to the actual
+    common factor.  What remains in
+    $({\rm PNS}_v)$ begins with $({\rm HDB}_v)$: construction of the raw conductor complexes
+    and generization maps, wild branch descent through the selected intermediate and
+    spectator/ray compositum, and the full proper pushforward on the component-routed sources.
 
 **Proof.** The dyadic vertex construction, Proposition 2.1, Theorem 2.2, and
 Proposition 2.3 prove projective representability and transfer the exact integral local
@@ -1775,9 +2474,18 @@ At coarse level, fixed points can create quotient singularities. Nearby cycles a
 Objectwise finite local freeness alone would not prove flatness of a comparison between
 separately chosen normalizations.  Proposition 9.2 proves it for the actual diagram by the
 stronger common-algebra argument: the lifted legs are isomorphisms.  That argument still says
-nothing about whether a node coefficient is tame.  The latter assertion requires
-$({\rm PNS}_v)$, including the actual complete local decomposition groups and wild-inertia
-ledger.  The ray projection formula applies only to the component/trait-pulled coefficient
+nothing by itself about the completed Drinfeld strata.  Proposition 9.3 and
+(9.29k)--(9.29l) identify the active normalization rings, while (9.29b)--(9.29e) show that the
+level-one principal cover is wild and has a many-branch special fiber; only its exact
+$U_L$-invariants give the two tame extreme lines in (9.29h), and (9.29n)--(9.29q) retain the
+moving branch stabilizer and coefficient module without replacing its full complex by a
+second node complex.  Equations (9.29r)--(9.29x) further compute the raw higher branch,
+inertia, residue-degree, node-annular, and boundary-stabilizer ledger.  Constructing the raw
+conductor/generization complexes, descending them through the wild intermediate and
+spectator/ray normalization, and calculating the full proper nearby-cycle pushforward on
+every component-routed source still requires $({\rm HDB}_v)$;
+Proposition 9.4 already fixes the actual common-factor strict-transform routing and node
+multiplicities.  The ray projection formula applies only to the component/trait-pulled coefficient
 identified by an effective global ray datum.
 
 The equality $\operatorname{rank}N=b_1(\Gamma)$ is rational. Integral cokernels use the thickness matrix and saturation of the chosen lattice. A rational Hecke projector with an $\ell$-denominator does not select a canonical integral lattice. The packet theorem is likewise in characteristic zero and concerns the raw curve carrier; it is not an integral Ihara statement and is not a raw-to-global theorem. The geometric degeneracy complex remains input to any Ihara lemma or level-raising theorem, not a proof of either.

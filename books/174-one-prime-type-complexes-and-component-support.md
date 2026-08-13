@@ -130,11 +130,22 @@ assertion is injectivity of $u_D$ in (5.0d).  Proposition 6.0 likewise proves pr
 residue in the projector range and isolates (6.0d) as the nonbanal filtered-cofiber comparison.  The first missing theorem in
 proof order occurs even earlier: Section 3.4 reduces the typed parahoric extension to the principal-node and
 stabilizer theorem $({\rm PNS}_v)$. Normalization of the actual tower, its ray factor, and the
-full procyclic ramified nearby-cycle complex are proved; the unproved step is the completed
-Drinfeld-level/Stein-factor calculation identifying principal stabilizers, the wild/tame
-annular ledger, and node routing (after which common normalization forces expansion one).  Thus the procyclic formula is proved for the tame
-module which $({\rm PNS}_v)$ must actually identify; it is not a proof that every principal
-cover is tame.
+finite-wild/procyclic ramified nearby-cycle complex are proved.  Book 122, Proposition 9.3
+proves $({\rm DLB}_1)$, and (9.29k)--(9.29l) prove the active full-Drinfeld normalization at
+every finite depth and its intermediate invariant rings.  Equations (9.29r)--(9.29x) further
+compute the raw higher branch set, inertia, inseparable residue degree, node-annular complexes,
+and boundary stabilizers.  Equations (9.29b)--(9.29i),
+(9.29n)--(9.29q), and Lemma 3.0A force the level-one stabilizers, exact wild-invariant
+extreme lines, node routing, constant-extreme-line generization, multiplicity one,
+and retained level-one Hecke route.  The first
+unproved assertion is $({\rm HDB}_v)$, the compatible higher branch-complex **descent**
+theorem: construction of the raw conductor complexes and generization maps, the failure of
+wild invariants to commute with reduced branch normalization in the selected intermediate and
+spectator/ray compositum, and the full proper pushforward on component-routed sources.  Book
+122, Proposition 9.4 already
+proves actual-common-factor node routing, multiplicity and expansion one, and
+Hecke/transpose compatibility.
+The raw principal cover is explicitly wild.
 Book 140 lists the same extension, pull--norm, and type-specific residual inputs. Its
 constant-coefficient generic-support equality is proved in Book 140, Section 8.3, from Book
 125. Proposition 6.3 below proves the typed generic-residue comparison from Book 125 after the
@@ -461,24 +472,118 @@ the prime-to-$\ell$ invariant summand is unchanged, pull and trace have chain en
 $(1,[e]_{T_x})$ and $([e]_{T_x},1)$, respectively. These formulas are adjoint on the
 contragredient lattice and are equivariant for (3.10c).
 
-This paragraph is a functorial calculation, not yet an assertion that the principal-tower
-fiber is tame.  That assertion, and the identification of $W,H_x,T_x$ with the actual
-principal stabilizer data, is part of $({\rm PNS}_v)$ below.
+This paragraph is a functorial calculation, not by itself an identification of the actual wild
+subgroup, $W,H_x,T_x$, or their principal stabilizers.  Book 122, (9.29b)--(9.29e), shows that
+the level-one principal fiber is generally wild, and (9.29n)--(9.29q) identify its exact
+wild-invariant ledger.  Equations (9.29r)--(9.29x) identify the corresponding raw full-level
+higher groups, node complexes, and boundary modules.  $({\rm PNS}_v)$ must construct and
+descend the branch complexes and their generization maps on the actual common
+intermediate/spectator branches, not assert that the cover is tame.
 
 What remains is exactly Book 122's local theorem $({\rm PNS}_v)$. In completed local rings it
 identifies the common normalization's decomposition and inertia groups, oriented annular
 homomorphisms, and branch modules with
 the actual vertex--edge--flag stabilizers,
-proves wild annular inertia trivial on every node-to-node coefficient module, identifies those
+identifies the wild annular subgroup and proves that its exact invariants on every routed
+node-to-node coefficient module are the lines in Lemma 3.0A, identifies those
 node-to-node points with a unique multiplicity-one sheet for each extreme flag incidence, and
 routes every other sheet, with its full decomposition action and
 multiplicity, through the normalization-component term.  The common-normalization
 isomorphism then proves expansion index one on the identified node sheets.  It also identifies the branch
-generization chain maps and proves that every genuinely wild routed sheet has a completed
-source smooth over the trait, so proper nearby-cycle pushforward supplies its full branch
-complex. This is the first unresolved
-algebraic-geometric theorem. It is a Drinfeld full-level/Stein-factor calculation for the
+generization chain maps and proves that every non-wild-invariant routed summand is supplied,
+with no smoothness or tameness assertion, by its actual completed branch source; proper
+nearby-cycle pushforward from a regular domination supplies its full branch complex. This is the first unresolved
+algebraic-geometric theorem. It is a Drinfeld branch-complex/Stein-factor calculation for the
 active height-two $\pi_v$-divisible group, not another theorem about abstract nearby cycles.
+
+Book 122, Proposition 9.3 proves $({\rm DLB}_1)$, and (9.29k)--(9.29l) prove all active finite
+Drinfeld normalization rings.  The level-one divisor equation forces a $q+1$-branch crossing with wild
+unipotent inertia; the raw principal cover is not a tame node.  The following calculation shows
+that the selected two coefficient rows nevertheless have tame node modules after exact wild
+invariants.
+
+**Lemma 3.0A (forced wild invariants and flag routing).**  Choose a
+factor of the actual common principal completion above Book 122's level-one Drinfeld
+completion.  Such a map is forced by normalization because the common generic algebra
+dominates the level-one principal subfield used by the two coefficient representations.
+Book 122, (9.29f)--(9.29i), then identifies its level-one vertex, edge, and flag Stein factors.
+For a branch $L\in\mathbf P^1(k_v)$ let $U_L$ be the unipotent radical of its Borel stabilizer
+and put $s_L=\sum_{M\ne L}e_M$.  Then
+
+$$
+P_v^{U_L}=\mathcal Oe_L\oplus\mathcal Os_L,               \tag{3.10d}
+$$
+
+$$
+(\operatorname{St}_v^+)^{U_L}
+=\mathcal O(e_L\bmod\mathbf1),
+\qquad
+(\operatorname{St}_v^-)^{U_L}
+=\mathcal O(e_L-q^{-1}s_L).                               \tag{3.10e}
+$$
+
+The two displayed generators pair to $1$, and the remaining diagonal tame quotient fixes both.
+The intrinsic geometric annular monodromy of these coefficient modules has wild image $U_L$;
+the deeper generic kernel acts trivially because the modules are inflated from level one.
+Consequently its exact wild invariants are (3.10e), and the node-annular complexes are the strict procyclic
+complexes of Book 22, (3.12)--(3.14), with any global ray action added diagonally; this
+conclusion does not assert that the principal cover is tame.  Book 122, (9.29s)--(9.29x),
+identifies the wild subgroup, node-annular complex, and boundary stabilizer modules for a
+selected branch of the raw full Drinfeld ring $D_n$.  Constructing its conductor complexes and
+generization maps and descending them through $D_n^H$ and the actual spectator/ray compositum
+belongs to $({\rm HDB}_v)$.
+
+The fixed Bruhat orbit is the identity Iwahori sheet and is node-to-node with multiplicity and
+expansion indices one.  On the moving Bruhat orbit, the sheet $a=0$ in Book 122,
+(9.11)--(9.12), is the unique
+node-to-node sheet.  Its saturated completed ring is $xy=\pi$, both ordered branch maps are
+the identity, and its multiplicity and expansion indices are one.  On either constant extreme
+line in (3.10e), its two generization maps are identity in degree zero and zero on the
+independent vanishing term.  Every $a\ne0$ sheet
+has a unit incidence coordinate and a smooth completed source, so its full complex is in the
+normalization-component term.  These assertions commute with $U_v$, $U_v^t$, and residue
+Frobenius on the level-one Stein factor by Book 122, (9.13)--(9.15), and with every
+prime-to-$v$ retained Hecke route.  Book 122, Proposition 9.4 promotes this routing,
+multiplicity and expansion one, and Hecke/transpose compatibility to the actual deeper common
+factor.  What remains in $({\rm PNS}_v)$ is the full branch complex and proper pushforward on
+each component-routed source after wild descent.
+For the full level-one coefficient module, Book 122, (9.29n)--(9.29p), identifies only the
+node complex, the two boundary stabilizers, and the coefficient inclusion
+$W^{U_L}\hookrightarrow W$.  It expressly does not identify the full conductor complexes or
+turn that inclusion into a generization chain map: doing so by a second copy of procyclic
+group cohomology already fails for the trivial coefficient.  Thus no averaging by $q-1$ or
+underived replacement of the moving branch is implicit here.
+In fact (9.29q) splits either Steinberg row as its extreme line plus the integral augmentation
+module $Q_L$ of the affine $U_L$-orbit.  The latter has no $U_L$-invariants, vanishes from the
+node complex, and survives in the moving conductor branch complex which $({\rm HDB}_v)$ must
+calculate.
+
+**Proof.**  The group $U_L\simeq(k_v,+)$ fixes $L$ and acts simply transitively on its affine
+complement.  Hence (3.10d).  Its order $q$ is a unit in $\mathcal O$ because $v\nmid\ell$, so
+wild invariants are exact.  Taking invariants in the quotient and augmentation rows gives
+(3.10e); the augmentation of $e_L-q^{-1}s_L$ is zero, and the flag-basis dot product with
+$e_L$ is one.  The Borel preserves $L$ and permutes its complement, so its diagonal quotient
+fixes both generators.  The monodromy representation itself factors through the level-one
+annular quotient, whose wild image is $U_L$; the deeper generic kernel therefore acts
+trivially.  Book 22, Section 3.6, now gives the full node-annular complex after wild
+invariants.  The remaining statements are the saturated incidence calculation, the explicit
+stabilizer restriction (9.29n)--(9.29p), and the variance check of Book 122, Sections 9.3--9.4.
+Book 122, Proposition 9.4 supplies the actual-common-factor promotion by restricting the proper
+flag legs to their finite loci around the nodes and applying common normalization there.
+$\square$
+
+Thus wild triviality on the two extreme lines, coefficient one, the constant-extreme-line
+conductor/generization map,
+multiplicity one, and the level-one residue-prime route are no longer independent parts of the
+black box.  Book 122, (9.29j), makes the first depth jump explicit, while (9.29k)--(9.29l)
+identify the resulting active normalization and its intermediate rings.  Equations
+(9.29r)--(9.29x) give the raw higher branch/inertia/residue, node-annular, and boundary-module
+ledger and exhibit the purely inseparable obstruction to commuting branch normalization with
+wild invariants.  The unresolved content of $({\rm PNS}_v)$ begins with $({\rm HDB}_v)$, the
+higher branch-complex **descent** comparison: the raw conductor complexes and generization
+maps, their passage to the selected intermediate and ramified spectator/ray compositum, and
+their full proper pushforward on the component-routed sources.  Proposition 9.4 has already identified the
+strict-transform routing and node coefficients.
 
 **Typed conclusion $({\rm TPE}_v)$ (typed parahoric extension and local comparison).** The
 following conclusions hold for the selected quotient/augmentation Steinberg systems.
@@ -504,9 +609,12 @@ entire principal normalization algebra.
 **Proof.** Proposition 9.2 of Book 122 supplies the actual normalized diagram and objectwise
 finite local freeness; its common-normalization lemma makes the lifted interlevel maps
 isomorphisms, hence finite flat. Under $({\rm PNS}_v)$ its local decomposition modules are the
-asserted stabilizer modules.  Its wild/tame clause first proves
-that the node-to-node modules lie in the range of Book 22.  Take exact invariants only under
-$H_x$, whose finite image has order prime to $\ell$. The averaging idempotent is $A_Q$-linear,
+asserted stabilizer modules.  Its wild/tame clause first identifies
+the actual wild group $P_x$.  Take $P_x$-invariants by Book 22, (3.12)--(3.13); its finite
+$p$-power image has unit order because $v\nmid\ell$.  Lemma 3.0A identifies the resulting
+extreme lines for the two Steinberg rows, while every noninvariant routed summand remains in
+its full branch complex.  Next take exact invariants under
+$H_x$, whose finite image has order prime to $\ell$. The averaging idempotents are $A_Q$-linear,
 so each invariant module is a finite projective $A_Q$-summand of the original free module and
 is finite free because $A_Q$ is complete local. Apply (3.10b) termwise to
 (3.6)--(3.7).  Apply the same rows to the branch complexes and to the generization maps
@@ -2177,11 +2285,11 @@ an intersection of local conditions.
 | Book 6 | effective global ray quotient and unit compatibility | no arbitrary local character is globalized |
 | Book 17 | effective finite-etale principal covers, common refinements, and Galois closures | it constructs the generic cover, not its bad-fiber stabilizers |
 | Book 21 | exact descent of finite-free representations to lisse coefficient sheaves | lisse generic descent does not extend the sheaf across the parahoric fiber |
-| Book 22 | the full tame strict-node complex, semidirect residue-Galois action, normalization totalization, invariant-stable pull--trace (including every expansion-one sheet used here), and geometrically constant ray projection formula | it computes a supplied annular monodromy representation; it does not identify the principal PEL decomposition groups |
+| Book 22 | the full tame strict-node complex, exact reduction by finite wild image, semidirect residue-Galois action, normalization totalization, invariant-stable pull--trace (including every expansion-one sheet used here), and geometrically constant ray projection formula | it computes a supplied annular monodromy representation after its wild group is identified; it does not identify the principal PEL decomposition groups |
 | Book 65 | perfect complexes, derived base change, Tor, and determinant conventions | applies only after strict projective models exist |
 | Book 67 | represented enhanced special matrix-and-line condition and exceptional tangent directions | the flag and Kummer directions remain at scalar points |
 | Book 70 | depth, support, annihilator radicals, and Fitting cautions | topological support is not faithfulness |
-| Book 122 | parahoric incidence model, node chart, finite-flat base degeneracy maps, actual objectwise finite-flat common principal/ray normalization, isomorphic lifted top legs, and reduction of the typed extension to $({\rm PNS}_v)$ | the completed principal-level Stein factors, wild/tame annular ledger, stabilizers, generization maps, and node routing remain $({\rm PNS}_v)$; expansion one then follows from the common-normalization isomorphism |
+| Book 122 | parahoric incidence model, node chart, finite-flat base degeneracy maps, actual objectwise finite-flat common principal/ray normalization, isomorphic lifted top legs, the proved level-one theorem $({\rm DLB}_1)$, all active finite-depth Drinfeld normalization/invariant rings (9.29k)--(9.29l), the explicit level-one divisor/Bruhat/node ledger, the raw higher branch/inertia/residue/node-annular and boundary-stabilizer ledger (9.29r)--(9.29x), and Proposition 9.4's actual-common-factor routing, multiplicity/expansion one, and Hecke/transpose compatibility | $({\rm PNS}_v)$ must still construct the raw conductor complexes and generization maps, descend them through the wild intermediate and spectator/ray normalization, and calculate full proper pushforward on component-routed sources |
 | Book 138 | quotient primary and augmentation companion lattices, twists, type labels, and the derived parahoric coefficient-complex interface | its representation rows do not prove $({\rm PNS}_v)$; outside the integral-projector range they do not by themselves prove the filtered-cofiber comparison (6.0d) |
 | Book 139 | Theorem 14.1 under localized $({\rm AIH})_{v,\mathfrak m}$ and its corrected branch filtration | this book assumes the finite family $({\rm AIH}_{\mathscr F})$; Book 139 neither proves it nor extends it to type coefficients |
 | Book 125 | characteristic-zero packet decomposition and semisimplicity for the full component-routing algebra on the common principal cover | Proposition 6.3 uses it only after the typed integral filtration has been proved; it supplies no typed extension or residue lattice |
@@ -2209,7 +2317,7 @@ The earlier gaps have the following exact status.
 
 | interface | status in this book |
 |---|---|
-| primary/companion type control on curves | Book 22 proves the full tame ramified strict-node formalism and Book 122 constructs the actual normalized tower and ray factor; the first remaining geometric theorem is $({\rm PNS}_v)$, including the wild/tame annular ledger which puts the node-to-node principal module in that formalism; it then implies $({\rm TPE}_v)$. Proposition 5.0 proves both type-Ihara endpoints in the integral-projector range and proves the companion endpoint in all ranges; only the nonbanal quotient-new injection in (5.0d) remains |
+| primary/companion type control on curves | Book 22 proves the strict-node formalism and exact finite-wild reduction, while Book 122 constructs the normalized tower and ray factor, proves $({\rm DLB}_1)$, identifies every active finite-depth normalization ring, and computes the raw higher branch/inertia/residue/node-annular and boundary-stabilizer ledger.  Its explicit divisor, stabilizer, and Bruhat equations prove the wild-invariant extreme lines, unique node sheet, and constant-extreme-line generization; Proposition 9.4 promotes routing, multiplicity and expansion one, and Hecke/transpose compatibility to the actual common factor.  $({\rm PNS}_v)$ still requires $({\rm HDB}_v)$ to construct the raw conductor/generization complexes, descend them through the selected wild intermediate and spectator/ray normalization, and calculate the full proper pushforward on component-routed sources; it then implies $({\rm TPE}_v)$. Proposition 5.0 proves both type-Ihara endpoints in the integral-projector range and proves the companion endpoint in all ranges; only the nonbanal quotient-new injection in (5.0d) remains |
 | primitive type residues | Proposition 6.0 proves them in the integral-projector range.  In the nonbanal range Proposition 3.1 gives nodewise coefficients $\pm1$, but global primitivity is the filtered-cofiber comparison (6.0d), equivalently the obstruction vanishing (6.0c); the switched definite comparison further requires the flagged node classification of Lemma 6.1A |
 | faithful acting-image augmentation | fixed-prime augmentation is proved in Sections 9.1--9.3 by a genuine global twist and coefficient extraction; Proposition 9.1 proves auxiliary represented-ring, primary/companion complex, module, and pairing augmentation, while (9.13) remains only a surjection on auxiliary acting images until the base action is known faithful |
 | cross determinant | unavailable and not claimed: (10.7) is only equality of principal scalar equations in the faithful Hecke order, not a chain map or determinant-line comparison |
@@ -2218,7 +2326,7 @@ The broader failure audit is as follows.
 
 | test | result |
 |---|---|
-| constant étale flag cover is used at the bad integral model | pass: Section 3.4 uses the normalized principal tower and the procyclic complex $[M\xrightarrow{T-1}M]$; it isolates $({\rm PNS}_v)$ for the actual stabilizer and node-routing calculation, derives expansion one only after that routing, and never replaces the special fiber by $q+1$ copies |
+| constant étale flag cover is used at the bad integral model | pass: Section 3.4 uses the normalized principal tower and the finite-wild/procyclic node complex $[M\xrightarrow{T-1}M]$; Book 122, Proposition 9.4 proves actual-common-factor node routing and expansion one, while $({\rm HDB}_v)$ remains for the raw conductor/generization complexes, wild intermediate/spectator branch descent, and the component-routed complexes; the special fiber is never replaced by $q+1$ copies |
 | exactness is obtained by averaging over a group of nonunit order | pass: descent and the integral flag rows use no averaging |
 | perfect cohomology is confused with projective cohomology | pass: Lemma 4.2 uses residual fiber concentration and a minimal complex |
 | Book 139 is treated as unconditional or as a blanket type-Ihara theorem | pass: constant terms use $({\rm AIH}_{\mathscr F})$; Proposition 5.0 passes to type terms only through the integral projector or the nonbanal injectivity in (5.0d) |
@@ -2256,16 +2364,17 @@ source-closed.
 
 | interface | source-closure verdict | first exact obstruction or proof |
 |---|---|---|
-| type-coefficient extension | reduced to one local theorem | the actual common normalized tower is constructed, objectwise finite flat, its lifted top legs are isomorphisms, and the ray and supplied-tame procyclic nearby-cycle factors are proved; the first obstruction is $({\rm PNS}_v)$, the completed principal Drinfeld-level/Stein-factor wild/tame ledger, stabilizer, generization, and node-routing theorem; expansion one follows on every routed node-to-node sheet |
+| type-coefficient extension | reduced to $({\rm HDB}_v)$ | the actual common normalized tower is constructed, objectwise finite flat, its lifted top legs are isomorphisms, and the ray and finite-wild/procyclic node factors are proved.  Proposition 9.3 of Book 122 proves $({\rm DLB}_1)$; (9.29k)--(9.29l) prove every active finite-depth normalization and intermediate invariant ring; (9.29r)--(9.29x) compute the raw higher branches, inertia, residue degrees, node-annular complexes, and boundary stabilizers; and (9.29b)--(9.29i), (9.29n)--(9.29q), and Lemma 3.0A give the level-one stabilizers, wild-invariant lines, and constant-extreme-line generization.  Proposition 9.4 promotes node routing, multiplicity and expansion one, and Hecke/transpose compatibility to the actual common factor.  The first remaining $({\rm PNS}_v)$ assertion $({\rm HDB}_v)$ constructs the raw conductor/generization complexes, descends them through the selected intermediate and spectator/ray normalization, and supplies full proper pushforward on component-routed sources |
 | type-Ihara | proved except for one nonbanal endpoint after $({\rm PNS}_v)$ | Proposition 5.0 proves the augmentation companion in every range and both endpoints when $q+1$ is a unit.  For $q\equiv-1\pmod\ell$, the exact remaining theorem is injectivity of $u_D:\mathcal Q_D(k)\to\mathcal Q_D(\overline P)$ in (5.0d) |
 | primitive residue | proved in the integral-projector range; nonbanal filtered cofiber blocked | Proposition 6.0 proves vanishing when $q+1$ is a unit.  For $q\equiv-1\pmod\ell$, the exact remaining theorem is that (6.0d) is a quasi-isomorphism in degrees $1,2$, equivalently $\operatorname{Ob}_{\rm PRI}(v)=0$ |
 | node uniformization | blocked at one geometric classification | Book 140 still requires the superspecial PEL classification. Lemma 6.1A proves that if it is formulated as an equivalence of flagged node groupoids, transport of the quotient/augmentation stabilizer representations and coefficient-one pairing is formal, not a second theorem |
 | generic support | proved in the constant clean special block, and proved for the typed block after the already isolated type inputs | Book 140, Section 8.3 proves the constant equality; Proposition 6.3 uses Book 125's semisimple component-routed decomposition and (6.7)--(6.9) to prove the typed generic kernel equality and integral faithful-order equality, without adding a new hypothesis |
 | one-prime component support | after $({\rm PNS}_v)$ through $({\rm TIC}_v)$ and $({\rm TIH}_{\mathscr F})$, blocked only at the nonminimal boundary comparison | the boundary carrier and nonzero boundary class are proved in Sections 8.2--8.3; the remaining input is $({\rm BCD}_v)$, the completed boundary-chart and local-dimension theorem |
 
-In particular, the first irreducible theorem is still $({\rm PNS}_v)$, not an unspecified
-ramified nearby-cycle theorem. Supplying it would imply $({\rm TPE}_v)$ and prove the
-coefficient-one local residue.  In the projector range the algebra above then removes
+In particular, $({\rm DLB}_1)$ and the active higher normalization rings are proved, not
+hypotheses.  The first irreducible assertion inside $({\rm PNS}_v)$ is now
+$({\rm HDB}_v)$ just isolated.  Supplying it would finish
+$({\rm PNS}_v)$ and imply $({\rm TPE}_v)$.  In the projector range the algebra above then removes
 type-Ihara and primitive residue as later hypotheses.  In the nonbanal range it does not by
 itself force (5.0d), (6.0d), the flagged superspecial classification, or the later support
 theorem.

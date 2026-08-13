@@ -608,15 +608,22 @@ would make (2.12a) automatic in high degree, but no prior result constructs such
 the actual slice.  Book 154, Lemma 5.2D would also make (2.12a) automatic if that slice had a
 smooth proper integral model whose allowed good factors contained every tube above a nonempty
 special-fiber Zariski open; Book 154, Corollary 5.2E turns either verified repair into the common
-presentation, but the present local package does not construct such an integral slice.
+presentation.  The present local package constructs that integral slice after a compatible
+finite-type framed joining model has been supplied, but it does not construct the joining model.
 Book 157, Section 13.2A records the exact stable integral connecting-slice assertion
 $(\mathrm{ICS})_{v_0,Z}$ and proves that it would discharge this condition through Book 154,
-Corollary 5.2E.  It also records that no prior source proves that assertion; this reference is a
-conditional handoff, not a construction of the slice.
-Thus item 6 retains (2.12a); it can be discharged by one of these geometric repairs, by its
+Corollary 5.2E.  Its Lemmas 13.2A.1--13.2A.2 now prove the finite-residue relative Bertini,
+complete-intersection, and coefficient-stability steps.  The remaining geometric input is the
+finite-type framed joining theorem $(\mathrm{FTJ})_{v_0,Z}$, which must put the normalized
+paired-frame cusp completion and the good interior in one smooth projective model.  No prior
+source proves that theorem.  The literal stronger clause requiring a good $k$-point to reduce
+inside the allowed special-fiber open also needs Book 157, (13.21); the weaker form actually
+used by Book 154, Lemma 5.2D does not.  This reference therefore remains a conditional handoff,
+and item 6 retains (2.12a).  It can be discharged by one of these geometric repairs, by its
 restricted sufficient condition (2.12), or by another proved simultaneous presentation of the
-singleton mixed packet.  Equal ranks, Hensel lifting, local realizability, and arbitrary norm factors in one residue tube do
-not supply it; Book 154, Counterexample 5.2C gives a local counterexample.
+singleton mixed packet.  Equal ranks, Hensel lifting, local realizability, and arbitrary norm
+factors in one residue tube do not supply it; Book 154, Counterexample 5.2C gives a local
+counterexample.
 
 ## 3. Choosing the auxiliary prime
 
@@ -1481,6 +1488,25 @@ is finite étale.
 If the proposed finite-flat module is not realized by a Hilbert--Blumenthal seed of the selected polarization
 type, finite flatness alone does not create a point. This is one of the explicit admissibility
 checks.
+
+There is a sharper boundary when the target module is the finite-flat residual torsion of a
+Tate curve at $\ell$.  Book 157, Proposition 8.4A shows that its selected model is ordinary,
+so a local--local seed cannot realize it, and that the multiplicative Tate curve does not give
+a finite-flat characteristic-zero tower.  If the application forbids a local extension, it
+must first construct a good ordinary seed over the stated base completion.  The auxiliary
+branch at that same place should then be prescribed to equal the prime-to-$\ell$ torsion of
+this seed.  Lemma 4.3 permits exactly that determinant-compatible correction at a split place.
+A branch pair fixed earlier from the multiplicative Tate semisimplification need not have the
+good seed's Frobenius polynomial.  Thus the order
+
+$$
+\text{one-prime good seed}\quad\longrightarrow\quad
+\text{auxiliary branch correction}\quad\longrightarrow\quad
+\text{two-frame point}                                      \tag{7.1a}
+$$
+
+is load-bearing.  This section's extension-valued admissibility statement proves neither the
+first arrow over the original completion nor descent of the resulting point.
 
 ### 7.3 The auxiliary coefficient prime
 

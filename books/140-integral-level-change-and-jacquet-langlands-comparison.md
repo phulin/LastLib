@@ -1941,10 +1941,18 @@ expansion-one case used here), and normalization homotopy-fiber totalization, wh
 ray character twists this complex diagonally. The remaining first
 theorem is Book 122's $({\rm PNS}_v)$: the completed Drinfeld-level/Stein-factor identification
 of the common normalization's decomposition and
-inertia groups, the triviality of wild annular inertia on node-to-node coefficient modules
-(with every genuinely wild sheet retained in the normalization-component term), oriented
-tame annular monodromy, flag stabilizers, and node routing; the common-normalization
-isomorphism then forces expansion index one. Thus “the type sheaf extends” must retain
+inertia groups.  Proposition 9.3 there proves $({\rm DLB}_1)$, and (9.29k)--(9.29l) prove
+every active finite-depth normalization and intermediate invariant ring.  Equations
+(9.29r)--(9.29x) compute the raw higher branch, inertia, inseparable-residue, node-annular, and
+boundary-stabilizer ledger.  Equations (9.29b)--(9.29i) and (9.29n)--(9.29q) take exact wild unipotent invariants rather than calling the cover tame and
+prove the extreme lines, flag routing, constant-extreme-line generization, multiplicity one, and
+the level-one residue-prime Hecke route.  Book 122, Proposition 9.4 promotes routing,
+multiplicity and expansion one, and Hecke/transpose compatibility to the actual common factor.
+The first missing assertion is $({\rm HDB}_v)$, the compatible higher
+branch-complex descent theorem constructing the raw conductor complexes and generization maps,
+then passing through the selected wild intermediate and spectator/ray normalization and the full proper pushforward on
+component-routed sources for the residue-prime correspondence.
+Thus “the type sheaf extends” must retain
 $({\rm PNS}_v)$; it is not proved by the generic stable lattice or by objectwise finite
 flatness of the normalization.
 

@@ -59,9 +59,11 @@ anti-cyclotomic Grunwald correction to prescribe the exact unramified Frobenius 
 three retained small completions.  Proposition 6.2A then constructs paired-frame seeds over
 $\mathbf Q_2$, $\mathbf Q_3$, and $\mathbf Q_\ell$ themselves by adapting the local elliptic
 seeds and neat source.  In the multiplicative-$\ell$ branch its Tate seed realizes only the
-finite-flat residual $\ell$-torsion, not the full characteristic-zero finite-flat condition;
-the good ordinary/local--local replacement $(\mathrm{FF}^{\rm base}_\ell)$ is an additional
-prior input there.  The next pre-specialization issue, after that replacement when necessary,
+finite-flat residual $\ell$-torsion, not the full characteristic-zero finite-flat condition.
+Lemma 6.2B below shows that the frozen auxiliary frame can obstruct any good replacement;
+Book 157 supplies the good ordinary one-prime seed $(\mathrm{Ord}^{\rm base}_\ell)$, followed
+here by Proposition 6.2C's retargeting of the auxiliary branch.  The next pre-specialization
+issue, after that corrected replacement when necessary,
 is Book 178, item 6's one-special, all-other-good packet: it must
 occur in one simultaneous moving presentation and satisfy the full allowed-good Abel condition
 (6.3a'), or the restricted norm--Abel congruence (6.3a).  Once that presentation exists,
@@ -514,13 +516,15 @@ produces the simultaneous coefficient-prime frames only after a finite local ext
 Section 13.3 explicitly forbids descending such a point to the original completion.  Since the
 controlled top must split completely at $2$, $3$, and $\ell$, Proposition 4.1 therefore needs actual
 paired-frame points over $\mathbf Q_2$, $\mathbf Q_3$, and $\mathbf Q_\ell$, not points over recorded proper
-extensions.  Book 178 constructs its distinguished special seed over its base completion, but
-no earlier moduli theorem proves these three simultaneous base-field frame assertions for the
-Frey and auxiliary systems.  Theorem 6.2 first repairs the exact auxiliary Frobenius branches
-by Book 178's character-theoretic correction.  Proposition 6.2A then repairs the local geometry
-at the paired-torsion level by changing the local elliptic seeds and neat source; it does not
-contradict Book 157's no-descent warning.  In the multiplicative-$\ell$ branch, the additional
-characteristic-zero finite-flat replacement is exactly (6.2g).
+extensions.  Book 178 constructs its distinguished special seed over its base completion but
+does not by itself prove these three simultaneous base-field frame assertions for the Frey and
+auxiliary systems.  In the good-reduction branch, Theorem 6.2 first repairs the exact
+auxiliary Frobenius branches and Proposition 6.2A then repairs the local geometry at the
+paired-torsion level by changing the local elliptic seeds and neat source.  In the
+multiplicative-$\ell$ branch that order cannot produce the characteristic-zero point: Book 157
+first supplies $(\mathrm{Ord}^{\rm base}_\ell)$, after which Proposition 6.2C reselects the
+auxiliary prime and branch.  Neither construction contradicts Book 157's no-descent warning.  The
+corrected characteristic-zero conclusion is (6.2g).
 
 Geometric integrality of $T_0$ does not force $C=K$: a regular non-Galois function-field
 extension can acquire constants in its Galois closure.  Full regularity of the closure is a
@@ -895,7 +899,7 @@ active place.  The same conclusion holds at $3$ or $\ell$ whenever Proposition 6
 multiplicative Tate row there: the residual $q$-frame is unramified but the full auxiliary-adic
 Tate module is special.  All such places must appear in the actual auxiliary lifting record
 together with $w_0$ and any later members of $B(A)$.  In the multiplicative-$\ell$ branch,
-however, the coefficient-prime defect identified in (6.2g) must be repaired by a good
+however, the coefficient-prime defect repaired by corrected (6.2g) must be removed by a good
 finite-flat replacement before the later target path can even be formed; that replacement
 also removes $\ell$ from the auxiliary-$q$ active set.
 
@@ -1140,25 +1144,143 @@ finite flatness of $E_F[\ell]$ in the multiplicative case but explicitly does no
 reduction; Book 165's represented condition is imposed compatibly on all Artinian quotients.
 No Book 140 edge can repair this at the coefficient prime.
 
-In that branch the full seed route therefore needs the additional base-completion assertion
+There are two further restrictions on a replacement which the old phrase “good ordinary or
+local--local” misses.  First, Book 157, Proposition 8.4A shows that the selected Tate
+$\ell$-torsion model has a multiplicative connected line and an etale quotient.  Raynaud
+rigidity over $\mathbf Z_\ell$ makes that model unique.  Any good realization of the selected
+model is therefore ordinary; a local--local replacement is impossible.  Second, keeping the
+already frozen auxiliary row in (6.2b) is generally incompatible with good reduction.
+
+**Lemma 6.2B (Weil obstruction to the frozen multiplicative auxiliary row).**  Put
+$p=\ell$, let $f=[k:\mathbf F_p]$, and retain at $p$ the multiplicative auxiliary row
 
 $$
-({\rm FF}^{\rm base}_\ell):\quad
+\bar r|_{G_{\mathbf Q_p}}
+\simeq(\eta\oplus\eta\bar\chi_q)\otimes k_q.                  \tag{6.2h}
+$$
+
+Let $g=[k_q:\mathbf F_q]$ and let $E$, $\mathfrak p\mid p$, and
+$\mathfrak q\mid q$ be produced by Book 178, Theorem 2.1, so
+$[E:\mathbf Q]=d=\max(f,g)$ and $N\mathfrak q=q^g$.  If a good
+Hilbert--Blumenthal abelian variety over $\mathbf Q_p$ with real multiplication by
+$\mathcal O_E$ carried the exact $\mathfrak q$-frame (6.2h), there would be an
+$a\in\mathcal O_E$ such that, with $s=\eta(\operatorname{Frob}_p)\in\{1,-1\}$,
+
+$$
+a\equiv s(p+1)\pmod{\mathfrak q},
+\qquad |\tau(a)|\leq2\sqrt p\quad(\tau:E\hookrightarrow\mathbf R).       \tag{6.2i}
+$$
+
+Consequently no such good point exists if
+
+$$
+q>(p+1+2\sqrt p)^f.                                         \tag{6.2j}
+$$
+
+**Proof.**  Reduce the good abelian scheme modulo $p$ and let $\pi$ be arithmetic
+Frobenius.  The $E$-linear Frobenius polynomial is
+$X^2-aX+p$: the polarization gives determinant $p$, and the real-multiplication trace is
+integral.  Book 37's weight-one bound applied under every real embedding gives the second
+part of (6.2i).  The exact auxiliary frame gives the first part, because (6.2h) has
+Frobenius trace $s(1+p)$ and determinant $p$.
+
+The algebraic integer $c=a-s(p+1)$ is nonzero, since $p+1>2\sqrt p$, and
+$\mathfrak q\mid(c)$.  Hence
+
+$$
+q^g\leq|N_{E/\mathbf Q}(c)|
+\leq(p+1+2\sqrt p)^d.                                      \tag{6.2k}
+$$
+
+If $g\leq f$, (6.2j) gives $q^g\geq q>(p+1+2\sqrt p)^f$ and $d=f$.  If
+$g\geq f$, it gives $q^g>(p+1+2\sqrt p)^g$ and $d=g$.  Both contradict (6.2k).
+$\square$
+
+Thus the former two-frame assertion was not merely missing a base-field descent proof: for
+perfectly permissible large choices of $q$ its proposed local space is empty.  The auxiliary
+prime must be chosen *after* a one-prime good seed, and its branch at $p$ must be retargeted.
+Write $\mathcal G_F/\mathbf Z_\ell$ for the selected finite-flat Frey $\ell$-torsion model,
+with its $k$-coefficient structure.  For the elliptic-source tensor route used here, the
+one-prime datum needed before $q$ is chosen is
+
+$$
+({\rm Ord}^{\rm base}_\ell):\quad
 \begin{gathered}
-\text{construct a point of }Y^{\mathrm{ten}}(\mathbf Q_\ell)\text{ in a good ordinary or
-local--local tube,}\\
-\text{carrying both exact paired frames, the selected finite-flat }\ell\text{-model, the
-common auxiliary level,}\\
-\text{the required tensor component, and avoidance of }Z.
-\end{gathered}
-\tag{6.2g}
+\text{construct a principally polarized good ordinary elliptic scheme }
+\mathcal B_\ell/\mathbf Z_\ell,\\
+\text{together with a paired isomorphism }
+\mathcal B_\ell[\ell]\otimes_{\mathbf F_\ell}k
+\simeq\mathcal G_F
+\text{ to the selected Frey finite-flat model,}\\
+\text{including its intrinsic line, Kummer class, and split or nonsplit sign.}
+\end{gathered}                                                \tag{6.2g_{\rm ord}}
 $$
 
-Book 178, Section 7.2 treats realization by such a Hilbert--Blumenthal seed as an explicit
-admissibility check and allows a recorded local extension; it does not construct the required
-point over $\mathbf Q_\ell$ itself.  Proposition 6.2A supplies (6.2g) in the good-reduction
-branch, but not in the multiplicative branch.  In the latter branch (6.2g) is earlier than the
-moving-presentation problem below.
+Book 157, Proposition 8.4B and Lemma 8.4B.1 prove this input over $\mathbf Q_\ell$; the lemma
+constructs its trace-one finite-field seed from Book 117's ring-class reciprocity and
+potential-good-reduction package.  Proposition 8.4A also shows necessity for an
+elliptic seed: its trace must be $1$ in the split case and $-1$ in the nonsplit case, the
+latter being the unramified quadratic twist of the former.  Book 164, Section 6.2 supplies the
+other hypothesis of Proposition 8.4B: the Frey Tate valuation is divisible by $\ell$, so after
+removing an $\ell$th power its selected model is represented by a unit Kummer class.
+An independently constructed non-tensor Hilbert--Blumenthal one-prime seed could replace this
+elliptic input, but no audited source constructs one over $\mathbf Q_\ell$ with the selected
+integral frame; it would be a different base-field realization theorem.
+
+**Proposition 6.2C (retargeted paired-frame seed).**  Use
+$({\rm Ord}^{\rm base}_\ell)$ supplied by Book 157, Proposition 8.4B and Lemma 8.4B.1, and
+choose $q$ only afterward, outside the previous finite
+exclusion set and away from the discriminant of the good Frobenius polynomial of
+$\mathcal B_\ell$.  Choose a finite temporary field over $\mathbf F_q$ in which this polynomial
+has two distinct roots.  Run the character-construction part of Theorem 6.2: first Book 178,
+Theorem 4.2, and then its Lemma 4.3, prescribing at $\ell$ the two resulting unramified branch
+characters.  Enlarge the corrected character-value field as required and let $k_q$ be its
+actual residue field.  Only now use $k_q$ as the $q$-residue input to Book 178, Theorem 2.1,
+with the determinant orientation induced by the Weil pairing.  The prescribed roots and
+branch characters persist under this scalar extension, and over the final field the local condition is
+
+$$
+\bar r|_{G_{\mathbf Q_\ell}}
+\simeq\mathcal B_\ell[q]\otimes_{\mathbf F_q}k_q              \tag{6.2l}
+$$
+
+instead of (6.2h), while retaining the multiplicative branch pairs at $2$ and at every other
+place where they are required.  Then the proof of Proposition 6.2A, repeated with
+$B_\ell=\mathcal B_\ell\otimes\mathbf Q_\ell$, produces
+
+$$
+({\rm FF}^{\rm base}_\ell)_{\rm corrected}:\quad
+\begin{gathered}
+\text{a point of }Y^{\mathrm{ten}}(\mathbf Q_\ell)\text{ in a good ordinary tube, carrying}\\
+\text{both exact paired frames, the selected finite-flat }\ell\text{-model, the common neat
+level,}\\
+\text{the required tensor component, and avoidance of }Z.
+\end{gathered}                                                \tag{6.2g}
+$$
+
+**Proof.**  The two roots of the good Frobenius polynomial define the desired unramified
+branch characters at the split place above $\ell$.  Their product is $\bar\chi_q$ by the
+Weil pairing, so they satisfy the determinant hypothesis of Book 178, Lemma 4.3; that lemma
+changes neither the protected places nor auxiliary-prime finite flatness.  At $\ell$ the
+tensor point $B_\ell\otimes\mathcal O_E$ now carries the exact $\ell$-frame by
+$(\mathrm{Ord}^{\rm base}_\ell)$ and the exact $q$-frame by (6.2l).  At $2$, $3$, and the
+other retained places run Proposition 6.2A's same Tate or good-seed construction for this
+newly selected $q$.
+
+Book 157, Lemma 4.1B chooses one global elliptic neat source matching these finitely many
+local seeds at level $N$, and Proposition 4.1A puts all tensor points on the same
+$\mathbf Q$-defined component.  The $\ell$-adic point is good ordinary, so every level of its
+$\ell$-divisible group is finite flat.  Its paired residual frame extends to the selected
+integral model uniquely by Raynaud full faithfulness, retaining the intrinsic line and sign.
+Finally the frame schemes are finite etale and the good ordinary tube is open; a small
+point-centered perturbation retains both frames, the neat level, and the component while
+escaping the proper closed subset $Z$. $\square$
+
+Book 178, Section 7.2 alone allows a recorded local extension and therefore does not prove
+$(\mathrm{Ord}^{\rm base}_\ell)$ over the original completion; Book 157 now supplies it.
+Proposition 6.2C proves all the *second-frame*, determinant, line/sign, neat-level, component,
+and avoidance clauses.  Below, every reference to (6.2g) means this corrected, retargeted
+conclusion.  It is earlier than the moving-presentation problem below.
 
 **Required Moving Theorem 6.3 (the singleton mixed packet).**  Starting from the split points
 of Proposition 6.2A, with the $\ell$-adic point replaced by (6.2g) when required, the flexible
@@ -1236,12 +1358,19 @@ normal-closure hypotheses stated there, this assertion gives the required common
 with the unique special factor, every added factor good minimal, the exact frames and
 components, the split certificate packets, and avoidance of $Z$ all retained.
 
-No audited source proves $(\mathrm{ICS})_{v_0,Z}$ for the actual special packet, proves the
+Book 157, Lemmas 13.2A.1--13.2A.2 prove the finite-residue relative Bertini,
+complete-intersection, and coefficient-stability parts of this assertion.  They reduce its
+remaining geometric content to the finite-type framed joining theorem
+$(\mathrm{FTJ})_{v_0,Z}$: one smooth projective model must contain the good interior and have
+the normalized paired-frame Mumford chart as the selected boundary completion.  No audited
+source proves that joining theorem for the actual special packet, proves the
 coset-complete good-packet statement, proves (6.3a) for the restricted route, or constructs a
-different evaluation presentation.  Thus $(\mathrm{ICS})_{v_0,Z}$, or one of those alternative
-moving repairs, is the first remaining pre-specialization moduli theorem after (6.2g) has been
-supplied when necessary; naming it does not
-discharge Required Moving Theorem 6.3.
+different evaluation presentation.  The literal stronger form of $(\mathrm{ICS})$ also needs
+the residue-point condition in Book 157, (13.21), which properness of $Z$ does not imply; the
+weaker form sufficient for Book 154 has no such condition.  Thus
+$(\mathrm{FTJ})_{v_0,Z}$, or one of those alternative moving repairs, is the first remaining
+pre-specialization moduli theorem after (6.2g) has been supplied when necessary; naming the
+slice does not discharge Required Moving Theorem 6.3.
 
 The obstruction is not removed merely by taking $n$ highly divisible.  Divisibility kills
 $n([\mathcal A]-e[P])$ in the finite quotient $J_{v_0}(\mathbf Q_{v_0})/G_{v_0}$, but it leaves
@@ -1269,24 +1398,24 @@ but Proposition 6.2A must perturb them in the full Hilbert component to avoid th
 closed set $Z$.  The tensor locus may itself lie in $Z$, and no audited theorem produces a
 rational or weak-approximation subvariety through all of the resulting point-centered tubes.
 Book 157's good residue tubes and full-dimensional Mumford boundary chart are separate local
-neighborhood results; they do not construct one smooth proper integral slice whose special
-fiber has the dense allowed-good open required by Book 154, Lemma 5.2D.  Likewise, choosing a
+neighborhood results.  Its Section 13.2A now constructs the smooth proper integral slice with
+the required dense allowed-good open after a compatible smooth projective joining model has
+been supplied; it does not construct that joining model.  Likewise, choosing a
 smaller neat level does not make arbitrary extension-valued packets share one source torsion
 module.  Thus the elliptic-source device aligns the arithmetic component and auxiliary level;
 it does not prove the singleton moving presentation.
 
-Nor do the general geometric books fill this gap.  Book 8 represents the
-fixed-Hilbert-polynomial curve problem but gives no integral point of the open slicing locus;
-over the finite residue field, geometric nonemptiness of that locus would not itself give such
-a point.  Book 153 proves generic Bertini over an infinite characteristic-zero field, not
-relative Bertini over a DVR with a
-prescribed boundary germ and smooth special fiber.  Books 9--10 begin with an already supplied
+Nor do the general geometric books fill the remaining gap.  Book 8 represents the
+fixed-Hilbert-polynomial curve problem but does not construct a framed toroidal joining model.
+Book 153 proves generic Bertini over an infinite characteristic-zero field; Book 157,
+Lemmas 13.2A.1--13.2A.2 now supply the finite-field count and relative lifting once the model
+exists.  Books 9--10 begin with an already supplied
 relative curve or projective datum.  Book 156 supplies the smooth quasi-projective interior and
 finite etale frame covers.  Although that interior has a bare projective closure, Book 157's
 completed Mumford chart is not identified with the completion of such a model along its
 boundary or joined to the good interior there, and Book 158
 exports the resulting point-centered opens and avoidance datum without adding such a model.
-These are precisely the missing existence steps isolated in $(\mathrm{ICS})_{v_0,Z}$, so
+This is precisely the missing existence step isolated in $(\mathrm{FTJ})_{v_0,Z}$, so
 Hilbert schemes, symmetric powers, and the FLT blueprint's Moret--Bailly theorem cannot be used
 to manufacture the slice without circularity.
 
@@ -1316,8 +1445,6 @@ unmet tasks:
 
 $$
 \begin{array}{ll}
-\text{coefficient-prime local input:}&
-\text{in the multiplicative-}\ell\text{ branch, prove }({\rm FF}^{\rm base}_\ell);\\
 \text{moving-family input:}&
 \text{prove Required Moving Theorem 6.3; on a fixed slice, prove (6.3a'); }\\
 \text{generic Book 178 boundary:}&
@@ -1330,10 +1457,12 @@ $$
 \tag{6.3}
 $$
 
-The order inside either route is exact.  Lemma 6.1 closes the rational-base ray datum, Theorem
-6.2 supplies the exact unramified branches, and Proposition 6.2A closes the three small-place paired
-frames; in the multiplicative-$\ell$ branch, (6.2g) must then replace its Tate point before the
-target finite-flat condition is available.  Proposition 4.2
+The order inside either route is exact.  Lemma 6.1 closes the rational-base ray datum.  In the
+good-$\ell$ branch, Theorem 6.2 supplies the exact unramified branches and Proposition 6.2A
+closes the three small-place paired frames.  In the multiplicative-$\ell$ branch,
+Book 157's $({\rm Ord}^{\rm base}_\ell)$ seed precedes the final choice of $q$; Proposition
+6.2C then re-runs the branch correction and supplies (6.2g).  Only after that is the target
+finite-flat condition available.  Proposition 4.2
 closes the constant-field certificate once Required Moving Theorem 6.3 supplies the
 presentation.  The ordered-chain or finite-set data are verified only after the actual bad
 set is known.  The target residual eigensystem must then be connected to the bottom minimal SP
@@ -1712,10 +1841,11 @@ compatible corrected relative ray datum.  For the Frey application over $\mathbf
 imports that compatibility.  Book 178, Theorem 4.2 by itself protects inertia but does not
 prescribe the unramified uniformizer values needed in (6.2b); Theorem 6.2 supplies them by
 Book 178, Lemma 4.3, and Proposition 6.2A constructs the three small base-completion points.
-In the multiplicative-$\ell$ branch, (6.2g) is the first unresolved pre-specialization
-assertion because the Tate point is not a characteristic-zero finite-flat point.  In the
-good-reduction-at-$\ell$ branch, Proposition 6.2A supplies that clause and Required Moving
-Theorem 6.3 is the first unresolved pre-specialization assertion.
+In the multiplicative-$\ell$ branch, Book 157 supplies $(\mathrm{Ord}^{\rm base}_\ell)$ and
+Proposition 6.2C supplies the corrected (6.2g).  The Tate point is not a
+characteristic-zero finite-flat point, and Lemma 6.2B rules out retaining its frozen auxiliary
+branch for an arbitrary large $q$.  Thus, as in the good-reduction-at-$\ell$ branch, Required
+Moving Theorem 6.3 is the first unresolved pre-specialization assertion.
 Book
 154's norm--Abel extension handles every packet which may be repeated wholesale, but the
 one-special-factor condition leaves the degree-indexed Abel condition (6.3a'); (6.3a) is its
@@ -2095,8 +2225,8 @@ prove the raw SP geometry or ambient semisimplicity hypotheses which that array 
 | Book 153 | simultaneous connected specialization for the integral top cover and its avoidance-field base change | the local seed, singleton moving presentation, or any automorphic support |
 | Book 154 | construction of a simultaneous moving presentation for flexible split packets and for exact packets repeatable wholesale; the exact allowed-good criterion and coset-complete or integral-open sufficient repairs | one repair hypothesis or (6.3a') for Book 178's actual one-special packet, or post-specialization automorphic support |
 | Book 155 | equivariant local constancy and the regular ordered-quintic torsor | the singleton moving presentation or any automorphic lifting and lowering on the specialized top |
-| Book 157 | elliptic-source rigidification, one global neat source matching finitely many local seeds, large-good-place base points, point-centered opens, and persistence after permitted extension | descent of an arbitrary preassigned coefficient-prime or semistable frame point, or the good finite-flat $\mathbf Q_\ell$ replacement (6.2g) in the multiplicative-Frey branch; Theorem 6.2 and Proposition 6.2A instead alter the freely chosen auxiliary character, local elliptic seeds, and neat source |
-| Book 178 | conditional residual potential modularity on its exact seven-item domain; after an independently certified auxiliary lifting has produced the packet, proof of final compact-carrier eligibility, target-prime stable-lattice comparison, and a nonzero upper target localization on its $w_0$-ramified carrier; its inverse-branch lemma, completed over $\mathbf Q$ by Lemma 6.1 here; and the protected anti-cyclotomic Grunwald correction imposing exact split residual branch values | the Frey auxiliary lifting itself, because Proposition 6.2A forces dyadic active places and rules out item 7's literal singleton; the good $\mathbf Q_\ell$ finite-flat replacement (6.2g) in the multiplicative-Frey branch; an integral switch from the original carrier to the path-compatible carrier; over a general base the capitulation part of the corrected relative ray datum; any actual target-lowering edge; or the exact minimal Book 173 SP seed |
+| Book 157 | elliptic-source rigidification, one global neat source matching finitely many local seeds, large-good-place base points, point-centered opens, persistence after permitted extension, the Tate level--tower obstruction and ordinary rigidity, the trace-one CM finite-field seed, and the resulting Serre--Tate construction of $(\mathrm{Ord}^{\rm base}_\ell)$ | descent of an arbitrary preassigned coefficient-prime or semistable frame point outside the constructed seed range |
+| Book 178 | conditional residual potential modularity on its exact seven-item domain; after an independently certified auxiliary lifting has produced the packet, proof of final compact-carrier eligibility, target-prime stable-lattice comparison, and a nonzero upper target localization on its $w_0$-ramified carrier; its inverse-branch lemma, completed over $\mathbf Q$ by Lemma 6.1 here; and the protected anti-cyclotomic Grunwald correction imposing exact split residual branch values, which retargets the $\ell$-branch in Proposition 6.2C | the Frey auxiliary lifting itself, because Proposition 6.2A forces dyadic active places and rules out item 7's literal singleton; the one-prime good ordinary seed $(\mathrm{Ord}^{\rm base}_\ell)$ in the multiplicative-Frey branch; an integral switch from the original carrier to the path-compatible carrier; over a general base the capitulation part of the corrected relative ray datum; any actual target-lowering edge; or the exact minimal Book 173 SP seed |
 | Book 180 | integral Brauer and Clifford identities for supplied representations, characters, and packet data | construction or attachment of any elementary fixed-field packet, a raw SP carrier, or the ambient semisimplicity theorem needed before the all-embedding SP comparison |
 | Books 165--167 | the SP local deformation problem, supported cohomology, and balanced presentation | a horizontal point or a nonzero exact automorphic module |
 | Book 181 | under $(\mathrm{Seed}_{\mathrm{SP}}^{181})$, use of Book 173's finite restricted minimal ring to prove finite scalar image, Carayol trace descent, whole-ring finite flatness, and the normalized primitive SP point used here | construction of its seed, normal-closure control, or the controlled seed required in Section 4; its point is not a proof source for Book 173 |
@@ -2111,7 +2241,7 @@ For the conditional theorem actually proved here, the honest direct dependency r
 
 $$
 \boxed{
-182\mid 6,44,61,104,109,118,121,122,124,125,127,128,140,142,153,154,155,157,164,165,168,173,176,178,181.}
+182\mid 6,37,44,61,104,109,118,121,122,124,125,127,128,140,142,153,154,155,157,164,165,168,173,176,178,181.}
 \tag{8.1}
 $$
 
@@ -2121,14 +2251,14 @@ is a transitive input through Book 178.  Books 177, 179, and 180 are comparative
 background for the seed and downstream bridge audits.  Book 179 names $(\mathrm{TS})$ as an
 external input but does not prove it; Book 180's abstract machinery is consumed by Book 183
 only after the packets exist.  None is used in the conditional proof, so none is a direct edge
-here.  Books 166--167 are direct inputs to Book 181, but transitive for this volume.
+here.  Book 37 is direct because Lemma 6.2B uses its embeddingwise Weil bound.  Books
+166--167 are direct inputs to Book 181, but transitive for this volume.
 Book 165 is retained because this volume directly identifies the represented local SP problem;
 it could be made transitive by treating all local identifications as part of the Book 181
 export.
 
 Equation (8.1) does not make the result unconditional.  To mark Book 182 **READY**, a new
-strictly prior result must prove (6.2g) in the multiplicative-$\ell$ branch, Required Moving
-Theorem 6.3, and Required Theorem 7.1; a prior
+strictly prior result must prove Required Moving Theorem 6.3 and Required Theorem 7.1; a prior
 controlled raw-carrier and ambient-semisimplicity theorem of Section 7.3 is also required for
 the downstream packet array.  The separate strong-local claim labelled Required Theorem 7.3
 must first remove or relabel every ramified row incompatible with (7.7d); any surviving
@@ -2146,8 +2276,9 @@ $$
 \begin{array}{c}
 \text{primitive residual SP datum}
 \\ \Downarrow \\
-\text{Lemma 6.1; Theorem 6.2; Proposition 6.2A; }({\rm FF}^{\rm base}_\ell)
-\text{ when required;}\\
+\text{Lemma 6.1; in the good-}\ell\text{ branch, Theorem 6.2 and Proposition 6.2A;}\\[-2pt]
+\text{in the multiplicative-}\ell\text{ branch, Book 157's }({\rm Ord}^{\rm base}_\ell)
+\Longrightarrow\text{ retargeted Theorem 6.2 and Proposition 6.2C;}\\
 \text{Book 154 Lemma 5.2A; Required Moving Theorem 6.3; Proposition 4.2}
 \\ \Downarrow \\
 \text{Proposition 4.1: normal Galois top with }F=M\text{ and }J=1
@@ -2233,13 +2364,16 @@ Over a general base Book 178 still correctly retains full relative-ray compatibi
 rational Frey application, Lemma 6.1 imports that compatibility from its inverse-branch
 correction and the determinant-compatible local choices.  Book 178, Theorem 4.2 alone does not
 prescribe the unramified uniformizer values of the auxiliary residual character, but its Lemma
-4.3 supplies the protected anti-cyclotomic Grunwald correction.  Theorem 6.2 consequently
-constructs the exact branches, and Proposition 6.2A constructs simultaneous paired-frame seeds
-over $\mathbf Q_2$, $\mathbf Q_3$, and $\mathbf Q_\ell$ themselves without local extension or potential
-modularity.  If the Frey curve is multiplicative at $\ell$, however, its Tate point supplies
-only the residual finite-flat model; the good finite-flat base point (6.2g) is the first
-remaining pre-specialization assertion.  Once that clause is supplied---or in the
-good-reduction-at-$\ell$ branch---Required Moving Theorem 6.3 is the next remaining assertion;
+4.3 supplies the protected anti-cyclotomic Grunwald correction.  In the good-$\ell$ branch,
+Theorem 6.2 consequently constructs the exact branches and Proposition 6.2A constructs
+simultaneous paired-frame seeds over $\mathbf Q_2$, $\mathbf Q_3$, and $\mathbf Q_\ell$ themselves
+without local extension or potential modularity.  If the Frey curve is multiplicative at
+$\ell$, Proposition 6.2A's preliminary Tate point supplies only the residual finite-flat
+model.  The requisite coefficient-prime assertion is the
+one-prime seed $(\mathrm{Ord}^{\rm base}_\ell)$, which Book 157, Proposition 8.4B and Lemma
+8.4B.1 now supply; Proposition 6.2C then gives the retargeted good finite-flat base point
+(6.2g).  Thus, as in the good-reduction-at-$\ell$ branch, Required Moving Theorem 6.3 is the
+next remaining assertion;
 after its presentation exists, Proposition 4.2 closes constant-field avoidance.  The theorem's
 precise form in the existing curve--pencil
 construction is the full singleton Abel condition (6.3a'), with (6.3a) only for a one-tube

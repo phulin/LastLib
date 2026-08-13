@@ -150,7 +150,7 @@ flowchart LR
 | 119 | Quaternionic PEL Functors and Representability | 10, 13, 65, 35, 115, 118 |
 | 120 | Uniformization, Components, and Hecke Descent for Shimura Curves | 58, 39, 118, 119 |
 | 121 | Good Integral Models of Quaternionic Shimura Curves | 15, 58, 19, 35, 36, 61, 55, 118, 119 |
-| 122 | Semistable Models and Monodromy of Quaternionic Shimura Curves | 10, 11, 12, 16, 17, 22, 35, 37, 58, 70, 76, 118, 119, 121 |
+| 122 | Semistable Models and Monodromy of Quaternionic Shimura Curves | 10, 11, 12, 13, 16, 17, 22, 35, 37, 58, 70, 76, 118, 119, 121 |
 | 123 | Modular and Shimura Curves | 110, 111, 112, 114, 115, 116, 118, 119, 121, 122, 120 |
 | 124 | Hecke Correspondences on Curves and Jacobians | 39, 83, 84, 114, 120, 123 |
 | 125 | Automorphic Decomposition of Shimura-Curve $H^1$ | 21, 47, 36, 96, 104, 87, 124, 118, 119, 120 |
@@ -185,7 +185,7 @@ flowchart LR
 | 154 | Moret–Bailly’s Theorem | 8, 9, 10, 40, 41, 58, 153 |
 | 155 | Galois and Solvable Refinements of Arithmetic Approximation | 2, 6, 153, 154, 142 |
 | 156 | Hilbert--Blumenthal Moduli and Two-Prime Level Covers | 17, 10, 13, 35, 55, 115, 116 |
-| 157 | Local Geometry of Hilbert--Blumenthal Moduli | 2, 8, 37, 58, 60, 43, 44, 51, 54, 154, 155, 156 |
+| 157 | Local Geometry of Hilbert--Blumenthal Moduli | 2, 8, 37, 58, 60, 43, 44, 45, 51, 52, 54, 55, 117, 154, 155, 156 |
 | 158 | Moduli Constructions for Potential Modularity | 156, 157 |
 | 159 | Discriminants of Galois Representations | 3, 56 |
 | 160 | Odlyzko Bounds and Fontaine's Argument | 7, 56, 159 |
@@ -210,7 +210,7 @@ flowchart LR
 | 179 | Compatible Systems of Galois Representations | 41, 168, 141, 142 |
 | 180 | Brauer Induction and Descent of Automorphy | 24, 75, 98, 109, 168 |
 | 181 | Finite Image and the Balanced Minimal-Lift Argument | 57, 62, 64, 141, 164, 165, 166, 167, 173 |
-| 182 | Potential Automorphy and Galois Refinement of a Chosen Lift | 6, 44, 61, 104, 109, 118, 121, 122, 124, 125, 127, 128, 140, 142, 153, 154, 155, 157, 164, 165, 168, 173, 176, 178, 181 |
+| 182 | Potential Automorphy and Galois Refinement of a Chosen Lift | 6, 37, 44, 61, 104, 109, 118, 121, 122, 124, 125, 127, 128, 140, 142, 153, 154, 155, 157, 164, 165, 168, 173, 176, 178, 181 |
 | 183 | Brauer Induction for Automorphy Families | 41, 98, 108, 109, 127, 128, 142, 168, 180, 182 |
 | 184 | Brauer Characters and Effectivity of Compatible Families | 24, 57, 180, 183 |
 | 185 | Compatible Systems over the Base Field | 168, 180, 182, 183, 184 |
@@ -231,14 +231,20 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   Ihara, but proves neither that vanishing nor the separate centrality, comparison, and
   metaplectic-computation inputs that could imply it.
 - **Type and node comparison:** objectwise normalization of the actual principal/ray tower,
-  the ray factor, and the full procyclic ramified strict-node complex for a supplied tame
-  annular module are proved in Books 122,
+  the ray factor, and the finite-wild/procyclic ramified strict-node complex are proved in Books 122,
   22, and 174; the common-normalization lemma makes the lifted principal legs isomorphisms.
-  The first remaining theorem is $({\rm PNS}_v)$: completed Drinfeld-level/Stein-factor
-  identification of decomposition and inertia groups, the wild/tame annular ledger, oriented tame monodromy,
-  flag stabilizers, generization maps, and node routing compatible with the retained
-  residue-prime Hecke graph; the common-normalization isomorphism
-  then forces node expansion index one. Together with the
+  Book 122, Proposition 9.3 proves the level-one Drinfeld-basis normalization, and
+  (9.29k)--(9.29l) prove every active finite-depth normalization and intermediate invariant
+  ring.  Equations (9.29r)--(9.29x) compute the raw higher branches, inertia, inseparable
+  residue degrees, node-annular complexes, and boundary stabilizers.  Its level-one divisor,
+  stabilizer, and Bruhat calculations give the exact wild-invariant extreme lines,
+  constant-extreme-line generization, and unique
+  multiplicity-one node sheet; Proposition 9.4 promotes routing, multiplicity and expansion
+  one, and Hecke/transpose compatibility to the actual common factor.  The first remaining part of $({\rm PNS}_v)$ is
+  $({\rm HDB}_v)$, the compatible higher branch-complex descent theorem: construction of the
+  raw conductor complexes and generization maps, descent through the selected wild intermediate
+  and spectator/ray normalization, and the full proper pushforward on the component-routed sources of the retained
+  residue-prime Hecke graph. Together with the
   accompanying unit-order coarse-descent hypothesis, it implies $({\rm TPE}_v)$. The later
   type algebra has now been reduced further.  Under those geometric hypotheses and the named
   abelian-Ihara family, for the actual quotient/augmentation flag pair, when $q_v+1$ is a
@@ -305,9 +311,16 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   criterion made stable under the global cutting-section approximation), or another common
   moving presentation, for the actual packet having one
   distinguished special factor and all remaining factors good; in the multiplicative-$\ell$
-  Frey branch, the additional good ordinary/local--local $\mathbf Q_\ell$ point
-  $({\rm FF}^{\rm base}_\ell)$ carrying both exact frames, because the Tate seed realizes only
-  the residual finite-flat $\ell$-torsion and Book 140 cannot change level at the coefficient
+  Frey branch, the one-prime good ordinary $\mathbf Q_\ell$ seed
+  $({\rm Ord}^{\rm base}_\ell)$ carrying the exact selected $\ell$-model.  Book 157,
+  Proposition 8.4B constructs it by Serre--Tate theory, and Lemma 8.4B.1 constructs the
+  trace-one finite-field seed from Book 117's ring-class reciprocity and
+  potential-good-reduction package.
+  Book 182, Lemma 6.2B shows that the formerly frozen multiplicative auxiliary branch may be
+  incompatible with every good seed; Proposition 6.2C therefore reselects $q$ and retargets
+  that branch, after which it constructs corrected $({\rm FF}^{\rm base}_\ell)$ with both
+  exact frames, neat level, component, and avoidance.  The Tate seed itself realizes only the
+  residual finite-flat $\ell$-torsion and Book 140 cannot change level at the coefficient
   prime; after the resulting normal-top
   specialization, actual auxiliary-prime lifting certificates and an ordered target-prime path
   whose every current edge satisfies Book 140's
@@ -346,12 +359,16 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   anti-cyclotomic Grunwald correction lets Book 182 impose the exact unramified auxiliary
   Frobenius values at $2$, $3$, and $\ell$; it then constructs the exact paired Frey/auxiliary frames
   over $\mathbf Q_2$, $\mathbf Q_3$, and $\mathbf Q_\ell$ by adapting the local elliptic seeds and neat source.
-  In the multiplicative-$\ell$ branch, $({\rm FF}^{\rm base}_\ell)$ is the first remaining
-  pre-specialization input; in the good-reduction branch it is already supplied.  After that,
-  the next input is the singleton common presentation.  Book 182 forces constant-field
+  In the multiplicative-$\ell$ branch, Book 157 supplies $({\rm Ord}^{\rm base}_\ell)$ and
+  Book 182, Proposition 6.2C then supplies corrected $({\rm FF}^{\rm base}_\ell)$.  In the
+  good-reduction branch Proposition 6.2A supplies the coefficient-prime point directly.  Thus
+  in both branches the first remaining pre-specialization input is the singleton common
+  presentation.  Book 182 forces constant-field
   avoidance with split Chebotarev certificate primes once that presentation exists.  Book 157,
-  Section 13.2A gives the conditional implication from $(\mathrm{ICS})_{v_0,Z}$ but no audited
-  source proves that slice theorem.  Once the presentation is
+  Section 13.2A proves the finite-residue relative slicing and gives the conditional implication
+  from $(\mathrm{ICS})_{v_0,Z}$, but no audited source proves the finite-type framed joining
+  theorem $(\mathrm{FTJ})_{v_0,Z}$ and hence no source proves $(\mathrm{ICS})_{v_0,Z}$ itself.
+  Once the presentation is
   supplied, Book 182 proves the remaining
   normal-closure control, applies Book 178's corrected relative-ray compatibility in the
   rational-base Frey case, and takes the top

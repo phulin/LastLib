@@ -1227,13 +1227,20 @@ identified.
 Book 122, Proposition 9.2 constructs this normalized principal/ray tower objectwise and proves
 its object maps finite locally free and its lifted top legs isomorphisms.  Its ray factor is geometrically constant and therefore
 twists (9.11) diagonally by Book 22, (3.11).  What remains for the principal factor is precisely
-Book 122's local theorem $({\rm PNS}_v)$: identification of the common normalization's complete
-local decomposition groups, branch stabilizers, and node routing
-compatible with (9.9), including proof that wild annular inertia is trivial on every
-node-to-node coefficient module and routing of any genuinely wild sheet through its full
-normalization-component complex, represented by a completed smooth source and proper
-pushforward.  The representation theory in this book supplies (9.10) but
-cannot prove that algebraic-geometric theorem.  In particular, a characteristic-zero
+Book 122's local theorem $({\rm PNS}_v)$.  Proposition 9.3 proves $({\rm DLB}_1)$, and
+(9.29k)--(9.29l) prove every active finite-depth normalization and intermediate invariant
+ring, and (9.29r)--(9.29x) compute the raw higher branch, inertia, inseparable-residue,
+node-annular, and boundary-stabilizer ledger.  Equations (9.29b)--(9.29i) and (9.29n)--(9.29q) of Book 122 identify
+the wild unipotent branch group, take its exact invariants by Book 22, (3.12)--(3.14), and
+prove the unique multiplicity-one node sheet and the constant-extreme-line generization.  Book 122,
+Proposition 9.4 promotes the routing, multiplicity and expansion one, and Hecke/transpose route
+to the actual common factor.  The first missing assertion is now the compatible higher
+branch-complex descent theorem $({\rm HDB}_v)$: construction of the raw conductor complexes
+and generization maps, descent through the selected wild intermediate and spectator/ray
+normalization, and the full proper pushforward on component-routed sources in the actual
+common normalization.
+The representation theory in this book supplies (9.10) but cannot prove that
+algebraic-geometric theorem.  In particular, a characteristic-zero
 occurrence theorem for $\operatorname{St}$ or a principal type determines neither $T_x$ nor
 the wild-inertia action in (9.11).
 
@@ -1702,8 +1709,18 @@ The constructions can now be assembled into the precise package promised by the 
 8. On the characteristic-zero parahoric tower, the quotient and augmentation Steinberg rows
    are the actual unit/trace rows of the projective-line flag cover.  Their bad-fiber extension
    is the normalization--conductor complex of Section 9.5 once $({\rm PNS}_v)$ supplies the
-   completed principal stabilizers, wild/tame ledger, branch generization maps, and node
-   routing; expansion one then follows from common normalization.  The strict terms are finite free and preserve residue Galois, pull, trace, and
+   completed principal branch identifications.  Book 122 proves $({\rm DLB}_1)$ and every
+   active finite-depth normalization ring and the raw higher
+   branch/inertia/residue/node-annular and boundary-stabilizer ledger; its explicit Drinfeld
+   divisor and Bruhat equations force the wild-invariant extreme lines,
+   constant-extreme-line generization, unique node routing,
+   multiplicity one, and level-one residue-prime Hecke compatibility.  Proposition 9.4 of
+   Book 122 promotes the routing, multiplicity and expansion one, and Hecke/transpose route to
+   the actual common factor.  The remaining higher branch-complex descent theorem constructs
+   the raw conductor complexes and generization maps, descends them through the wild
+   intermediate/spectator factors, and supplies their full proper pushforward on the
+   component-routed sources.
+   The strict terms are finite free and preserve residue Galois, pull, trace, and
    adjunction; the representation rows alone do not prove $({\rm PNS}_v)$.
 
 9. Primitive wild supercuspidal types, ramified quadratic types in residue characteristic two, and general congruent dihedral component calculations are excluded. No assertion about their lattices, reduction multiplicities, or deformation smoothness follows from this theorem.
@@ -1730,7 +1747,7 @@ Every hypothesis in the main theorem has a visible job.
 | explicit companion | integral adjunction | generic self-duality forgets extension orientation |
 | named component and ordering | exact deformation problem | inertial semisimplification can merge different loci |
 
-The direct prerequisites enter with matching hypotheses. The local representation theory of $\mathrm{GL}_2(F)$ supplies the characteristic-zero principal, special, and tame dihedral classification, newvectors, conductors, exact intertwining, and the selected local correspondence; it explicitly excludes primitive wild construction. The small-height finite-flat theory supplies schematic closure, duality, and the warning that a generic representation does not determine an integral model. The torsion Fontaine--Laffaille theory supplies exactness and full faithfulness only for weights $[0,1]$, $\ell>2$, perfect residue field, and an unramified base. Its integral equivalence and base-change theorem supplies compatible finite-flat quotients under those same hypotheses. Books 17 and 21 supply finite-etale associated covers and exact lisse-sheaf descent. Book 22 supplies the strict procyclic node complex, and Book 122 supplies the objectwise finite-flat common normalization, its isomorphic lifted top legs, and the ray factor; Section 9.5 retains its unproved local theorem $({\rm PNS}_v)$ rather than importing its stabilizer and wild/tame calculation. No result from a later book is used as a proof input.
+The direct prerequisites enter with matching hypotheses. The local representation theory of $\mathrm{GL}_2(F)$ supplies the characteristic-zero principal, special, and tame dihedral classification, newvectors, conductors, exact intertwining, and the selected local correspondence; it explicitly excludes primitive wild construction. The small-height finite-flat theory supplies schematic closure, duality, and the warning that a generic representation does not determine an integral model. The torsion Fontaine--Laffaille theory supplies exactness and full faithfulness only for weights $[0,1]$, $\ell>2$, perfect residue field, and an unramified base. Its integral equivalence and base-change theorem supplies compatible finite-flat quotients under those same hypotheses. Books 17 and 21 supply finite-etale associated covers and exact lisse-sheaf descent. Book 22 supplies the strict procyclic node complex and exact finite-wild reduction, and Book 122 supplies the objectwise finite-flat common normalization, its isomorphic lifted top legs, the ray factor, proved $({\rm DLB}_1)$, all active finite-depth normalization rings, and the raw higher branch/inertia/residue/node-annular and boundary-stabilizer ledger. Section 9.5 retains only $({\rm HDB}_v)$, the raw branch-complex construction, wild branch descent, and proper-correspondence theorem inside its unproved local theorem $({\rm PNS}_v)$. No result from a later book is used as a proof input.
 
 Several tempting shortcuts are therefore invalid:
 

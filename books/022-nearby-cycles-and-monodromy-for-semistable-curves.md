@@ -17,6 +17,7 @@
    - [3.3 Curves: smooth points and nodes](#33-curves-smooth-points-and-nodes)
    - [3.4 What fails outside strict semistability](#34-what-fails-outside-strict-semistability)
    - [3.5 Tame ramified coefficients at a strict node](#35-tame-ramified-coefficients-at-a-strict-node)
+   - [3.6 Finite wild image before the tame complex](#36-finite-wild-image-before-the-tame-complex)
 [4. Inertia: tame, wild, and finite parts](#4-inertia-tame-wild-and-finite-parts)
    - [4.1 The tame character](#41-the-tame-character)
    - [4.2 Unipotence in a strict semistable model](#42-unipotence-in-a-strict-semistable-model)
@@ -553,6 +554,59 @@ stalk cohomology and with gluing. The projection formula makes (3.11) compatible
 pushforward, pull, and trace. A global ray character is of this form. A local system obtained
 from a residue-prime principal-level cover is generally not: its geometric annular monodromy is
 $T_x$, and (3.5), not (3.11) with $T_x$ suppressed, is the required calculation.
+
+### 3.6 Finite wild image before the tame complex
+
+There is one extension of Theorem 3.2 which is formal but must be stated separately.  It does
+not make a wild cover tame.  Let $P_x$ be the wild geometric annular group and let $W$ be a
+finite-free $\Lambda$-module with continuous annular action.  Since $P_x$ is pro-$p$ and
+$p\ne\ell$, its image in $\operatorname{GL}(W)$ is finite: an open subgroup of
+$\operatorname{GL}(W)$ is pro-$\ell$, so its intersection with a pro-$p$ image is trivial.
+Every finite quotient of $P_x$ has unit order in $\Lambda$.  Averaging on the finite quotients,
+compatibly through the inverse system, therefore gives
+
+$$
+R\Gamma(P_x,W)=W^{P_x}                                    \tag{3.12}
+$$
+
+in degree zero.  The continuous Hochschild--Serre complex for
+
+$$
+1\longrightarrow P_x\longrightarrow\Pi_x
+\longrightarrow\Pi_x/P_x\longrightarrow1
+$$
+
+then gives a functorial identity
+
+$$
+R\Gamma(\Pi_x,W)
+\simeq R\Gamma(\Pi_x/P_x,W^{P_x}).                        \tag{3.13}
+$$
+
+Now take the exact invariants of the prime-to-$\ell$ kernel $H_x$ in the tame quotient and put
+
+$$
+M_x=(W^{P_x})^{H_x}.
+$$
+
+If $T_x$ denotes the remaining pro-$\ell$ generator, the full annular complex is
+
+$$
+R\Gamma(\Pi_x,W)
+\simeq[M_x\xrightarrow{\ T_x-1\ }M_x].                  \tag{3.14}
+$$
+
+All residue-Galois actions in (3.6) preserve $W^{P_x}$ because wild inertia is
+characteristic in inertia.  Pull and trace preserve (3.13) provided the corresponding wild
+groups and invariant summands are carried to one another; after that reduction their entries
+are exactly those of (3.8), with the same invariant-summand qualification.  In particular, if
+$W^{P_x}=0$, the node-annular complex is zero.  This does not discard $W$: its
+non-wild-invariant part has no ordinary node-annular cohomology, while the full branch
+complexes and their generization maps in (3.10) are still retained.  Formula (3.14) by itself
+does not compute a Swan conductor or identify the geometric stratum carrying a routed
+summand.  Thus
+(3.12)--(3.14) are a derived wild-invariant reduction, not permission to call the principal
+cover, its normalization, or its branch geometry tame.
 
 ## 4. Inertia: tame, wild, and finite parts
 
