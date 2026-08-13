@@ -620,11 +620,11 @@ semisimplicity statement $(\mathrm{TS})$ isolated in Book 128, (9.6), is suffici
 $(\mathrm{SS}_{\mathrm{array}})$. Book 41, Theorem 15.3 and Corollary 16.1 prove
 $(\mathrm{TS})$ for these Jacobians from finiteness of their $K$-isogeny classes, and Section
 16.2 proves the coefficient, idempotent, and multiplicity-space passage used here. Book 41 does
-not prove those finite isogeny classes. Its standard uniform route requires the arithmetic
-Siegel compactification, stable-Hodge base-change and metrized slope/boundary estimates for the
-moduli-height bound. Book 41 proves the subsequent finite polarized $K$-descent and Zarhin
-factor-cancellation steps. Semisimplicity of the Hecke algebra and semisimplicity of the
-isogeny category do not replace that gate.
+not prove those finite isogeny classes. Its standard uniform route still retains the
+semistable-reduction, ramified Hodge-base-change, arithmetic toroidal compactification,
+integral metrized Hodge--theta, and determinant-slope interfaces. Book 41 does prove the
+subsequent finite polarized $K$-descent and Zarhin factor-cancellation steps. Semisimplicity of
+the Hecke algebra and semisimplicity of the isogeny category do not replace that gate.
 
 This reduction is uniform over all embeddings above a fixed coefficient characteristic and
 uses no local special-line argument, so it is noncircular. It also makes the raw global

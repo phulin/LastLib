@@ -62,12 +62,14 @@ seeds and neat source.  In the multiplicative-$\ell$ branch its Tate seed realiz
 finite-flat residual $\ell$-torsion, not the full characteristic-zero finite-flat condition.
 Lemma 6.2B below shows that the frozen auxiliary frame can obstruct any good replacement;
 Book 157 supplies the good ordinary one-prime seed $(\mathrm{Ord}^{\rm base}_\ell)$, followed
-here by Proposition 6.2C's retargeting of the auxiliary branch.  The next pre-specialization
-issue, after that corrected replacement when necessary,
-is Book 178, item 6's one-special, all-other-good packet: it must
-occur in one simultaneous moving presentation and satisfy the full allowed-good Abel condition
-(6.3a'), or the restricted norm--Abel congruence (6.3a).  Once that presentation exists,
-Proposition 4.2 forces constant-field disjointness by the previously chosen large split
+here by Proposition 6.2C's retargeting of the auxiliary branch.  Book 178, item 6's
+one-special, all-other-good packet must then occur in one simultaneous moving presentation.
+Book 157 proves the Kummer normalization, equivariant fan, finite-field Bertini, and stable DVR
+slicing needed for the integral-open route, but its Required Theorem 13.2B.3 still has to build
+and descend the fan-dependent toroidal joining model.  Thus Required Moving Theorem 6.3 below,
+or an alternative repair of the allowed-good Abel condition (6.3a'), remains the next
+pre-specialization input.  Once that presentation exists, Proposition 4.2 forces constant-field
+disjointness by the previously chosen large split
 Chebotarev certificate primes.  After that, adjoin an independent
 ordered-quintic torsor and use the normal top as the field of definition.
 The resulting arithmetic problem has a finite active set over that top and still requires
@@ -532,9 +534,10 @@ sufficient special case of (4.1b), but it is stronger than necessary.  Book 154 
 $T_0/H_0$ for flexible split packets, and Lemma 5.2A extends this to exact packets which may be
 repeated wholesale.  It does not construct Book 178's singleton special packet.  Full symmetric
 geometric monodromy would imply $C=K$, but it is unnecessary: Proposition 4.2 below forces only
-the required intersection.  Thus the sole surviving field-geometric obligation is the actual
-mixed moving presentation.  Once it is supplied, Propositions 4.1--4.2 prove every other
-normal-closure and upward-bridge assertion.
+the required intersection.  Book 157, Proposition 13.2B.4 and Corollary 13.2B.5 give the needed
+integral-open implication only conditional on its Required Theorem 13.2B.3.  Required Moving
+Theorem 6.3 therefore remains open.  Once it is supplied, Propositions 4.1--4.2 prove every
+other normal-closure and upward-bridge assertion.
 
 The constant-field input can be forced without computing the generic permutation group.  It
 must be imposed while the moving presentation is constructed, not after its Galois closure has
@@ -682,8 +685,8 @@ $(\mathrm{Seed}_{\mathrm{SP}}^{181})$.  Thus this single controlled seed both en
 to construct the chosen lift and enables Book 173 to make its restriction automorphic.
 Proposition 4.1 constructs the field diagram with $F=M$ once Theorem 6.2 and Proposition 6.2A
 have supplied the split base-completion packets, (6.2g) has supplied the good coefficient-prime
-replacement in the multiplicative-$\ell$ branch, Required Moving Theorem
-6.3 supplies the presentation, and Proposition 4.2 verifies (4.1b).  After those
+replacement in the multiplicative-$\ell$ branch, Required Moving Theorem 6.3 supplies the presentation, and
+Proposition 4.2 verifies (4.1b).  After those
 pre-specialization inputs, the missing object is its arithmetic part: a certified
 post-specialization path to the clean minimal SP localization, including the bottom structural
 ledger.  Proposition 7.1A proves exact nonzero occurrence from that path.
@@ -1292,7 +1295,9 @@ geometrically integral finite étale cover $T_0/H_0$, with evaluation to
 $Y^{\mathrm{ten}}\setminus Z$, whose local fibers and point-centered neighborhoods realize all
 those cycles simultaneously.  At every place declared split the fiber must be split with all
 its evaluated sheets in the assigned open; at every remaining controlled place the pulled-back
-normal-closure sheets must retain their assigned local behavior.
+normal-closure sheets must retain their assigned local behavior.  For the nonsplit Book 178
+packets, this means the scalar extensions of the assigned factorwise conditions to every sheet
+above the packet; no independently prescribed decomposition homomorphism is being assumed.
 
 Book 154, Lemma 5.2 constructs the flexible split packets, and Lemma 5.2A now constructs every
 exact nonsplit packet which may be repeated wholesale.  Repeating a complete Book 178 packet
@@ -1358,19 +1363,38 @@ normal-closure hypotheses stated there, this assertion gives the required common
 with the unique special factor, every added factor good minimal, the exact frames and
 components, the split certificate packets, and avoidance of $Z$ all retained.
 
-Book 157, Lemmas 13.2A.1--13.2A.2 prove the finite-residue relative Bertini,
-complete-intersection, and coefficient-stability parts of this assertion.  They reduce its
-remaining geometric content to the finite-type framed joining theorem
-$(\mathrm{FTJ})_{v_0,Z}$: one smooth projective model must contain the good interior and have
-the normalized paired-frame Mumford chart as the selected boundary completion.  No audited
-source proves that joining theorem for the actual special packet, proves the
-coset-complete good-packet statement, proves (6.3a) for the restricted route, or constructs a
-different evaluation presentation.  The literal stronger form of $(\mathrm{ICS})$ also needs
-the residue-point condition in Book 157, (13.21), which properness of $Z$ does not imply; the
-weaker form sufficient for Book 154 has no such condition.  Thus
-$(\mathrm{FTJ})_{v_0,Z}$, or one of those alternative moving repairs, is the first remaining
-pre-specialization moduli theorem after (6.2g) has been supplied when necessary; naming the
-slice does not discharge Required Moving Theorem 6.3.
+At $v_0$, Book 178 chose the place away from $N\ell q$ and the discriminant of $E$,
+with both prescribed residual systems and their determinant trivializations unramified and with
+the framed Tate parameter already defined over the assigned completion.  Book 157, Lemma
+13.2B.1 therefore computes the required paired-frame Kummer normalization for the actual
+special packet, and Lemma 13.2B.2 constructs a regular projective equivariant fan for those
+normalized lattices.  Its finite-field Bertini and DVR slicing lemmas also prove the slicing
+part of the integral-open repair.  What remains is Book 157, Required Theorem 13.2B.3: construct
+the algebraic cusp embeddings and modifications for that chosen fan, glue them to the good
+interior, prove the completed-local comparison, and descend the model and an ample bundle.  A
+Hilbert closure is not a substitute for this comparison.
+
+Conditional on that fan-dependent toroidal theorem, Book 157, Proposition 13.2B.4 and
+Corollary 13.2B.5 give the weaker form of $(\mathrm{ICS})_{v_0,Z}$ required by Book 154.  The
+stronger marked-$P$ clause is not needed here, so the separate residue-point condition of Book
+157, (13.21) would not be part of this application.  Proposition 13.2A would then combine the
+integral-open singleton with every wholesale-repeatable packet and every flexible split packet
+at one sufficiently large common exponent, and Book 154, Corollary 5.2E would produce the
+common pencil.  This is a conditional implication; it does not prove Required Moving Theorem
+6.3.
+
+The normal-sheet clause creates no further geometric existence theorem once such a presentation
+has been supplied.  At a selected local parameter, its incidence fiber algebra is the prescribed
+product of completion factors.  Normalize a sufficiently small parameter neighborhood in the
+generic Galois closure and remove its branch locus.  Every point of the resulting fiber maps to
+one of those factors after a finite separable scalar extension, and its evaluated moduli point
+is the same scalar extension of the selected packet point.  Good, ordinary, local--local,
+semistable, paired-frame, component-open, and avoidance conditions persist under that extension
+by Book 157, Chapter 11; determinant and frame identities persist by base change.  Book 155,
+Proposition 5.2 then retains the whole finite etale Galois fiber equivariantly after shrinking.
+Thus the realized normal-sheet hypothesis in Book 157, Proposition 13.2A is a formal reduction
+for the packets used here.  It does not construct the missing presentation or realize an
+arbitrary independently prescribed decomposition homomorphism.
 
 The obstruction is not removed merely by taking $n$ highly divisible.  Divisibility kills
 $n([\mathcal A]-e[P])$ in the finite quotient $J_{v_0}(\mathbf Q_{v_0})/G_{v_0}$, but it leaves
@@ -1381,8 +1405,9 @@ quotient.  Moret--Bailly approximation starts only after a common presentation h
 constructed, so invoking it here would be circular.  Book 154, Counterexample 5.2C gives an
 explicit elliptic-curve residue-disk counterexample for the whole special tube which persists
 after arbitrary finite-degree good factors drawn from the chosen good tube: their norm classes
-stay in the reduction kernel while every special point has nonzero reduction.  Thus the missing
-assertion cannot be inferred from local realizability or high degree alone.
+stay in the reduction kernel while every special point has nonzero reduction.  Thus Required
+Moving Theorem 6.3 cannot be inferred from local realizability or high degree alone; its
+integral-open saturation is load-bearing.
 
 Changing the line bundle does not make the issue formal.  It replaces $b$ in the finite
 congruence, and choosing it by prescribed local Picard classes would require a new finite weak
@@ -1398,26 +1423,25 @@ but Proposition 6.2A must perturb them in the full Hilbert component to avoid th
 closed set $Z$.  The tensor locus may itself lie in $Z$, and no audited theorem produces a
 rational or weak-approximation subvariety through all of the resulting point-centered tubes.
 Book 157's good residue tubes and full-dimensional Mumford boundary chart are separate local
-neighborhood results.  Its Section 13.2A now constructs the smooth proper integral slice with
-the required dense allowed-good open after a compatible smooth projective joining model has
-been supplied; it does not construct that joining model.  Likewise, choosing a
+neighborhood results.  Its Section 13.2B constructs the normalized fan data but leaves the
+compatible smooth projective joining model as Required Theorem 13.2B.3; Section 13.2A constructs
+the smooth proper integral slice with the required dense allowed-good open only after that model
+is supplied.  Likewise, choosing a
 smaller neat level does not make arbitrary extension-valued packets share one source torsion
 module.  Thus the elliptic-source device aligns the arithmetic component and auxiliary level;
 it does not prove the singleton moving presentation.
 
-Nor do the general geometric books fill the remaining gap.  Book 8 represents the
+The general geometric books alone do not fill the joining step.  Book 8 represents the
 fixed-Hilbert-polynomial curve problem but does not construct a framed toroidal joining model.
 Book 153 proves generic Bertini over an infinite characteristic-zero field; Book 157,
 Lemmas 13.2A.1--13.2A.2 now supply the finite-field count and relative lifting once the model
 exists.  Books 9--10 begin with an already supplied
 relative curve or projective datum.  Book 156 supplies the smooth quasi-projective interior and
-finite etale frame covers.  Although that interior has a bare projective closure, Book 157's
-completed Mumford chart is not identified with the completion of such a model along its
-boundary or joined to the good interior there, and Book 158
-exports the resulting point-centered opens and avoidance datum without adding such a model.
-This is precisely the missing existence step isolated in $(\mathrm{FTJ})_{v_0,Z}$, so
-Hilbert schemes, symmetric powers, and the FLT blueprint's Moret--Bailly theorem cannot be used
-to manufacture the slice without circularity.
+finite etale frame covers.  A bare projective or Hilbert closure still would not identify Book
+157's completed Mumford chart with its boundary or realize its chosen fan.  Book 157, Lemmas
+13.2B.1--13.2B.2 perform the normalization and regular-projective fan construction; Required
+Theorem 13.2B.3 is the remaining cusp-gluing, completion, ample-algebraization, and twist-descent
+interface.  Only after that theorem do its DVR slicing and Book 154's Moret--Bailly engine apply.
 
 The nontrivial-stabilizer version of Book 155 would additionally require a special
 $S_5/S_4$ evaluation presentation on the paired-frame moduli space.  Proposition 4.1 replaces
@@ -1446,7 +1470,8 @@ unmet tasks:
 $$
 \begin{array}{ll}
 \text{moving-family input:}&
-\text{prove Required Moving Theorem 6.3; on a fixed slice, prove (6.3a'); }\\
+\text{prove Required Moving Theorem 6.3, for example by supplying Book 157's }(\mathrm{TCG})_\Sigma
+\text{ or another repair;}\\
 \text{generic Book 178 boundary:}&
 \text{the literal }P_{\mathrm{nm}}=\{w_0\}\text{ route is unavailable for the Frey dyadic seed;}\\
 \text{auxiliary-}q\text{ lifting:}&
@@ -1462,9 +1487,9 @@ good-$\ell$ branch, Theorem 6.2 supplies the exact unramified branches and Propo
 closes the three small-place paired frames.  In the multiplicative-$\ell$ branch,
 Book 157's $({\rm Ord}^{\rm base}_\ell)$ seed precedes the final choice of $q$; Proposition
 6.2C then re-runs the branch correction and supplies (6.2g).  Only after that is the target
-finite-flat condition available.  Proposition 4.2
-closes the constant-field certificate once Required Moving Theorem 6.3 supplies the
-presentation.  The ordered-chain or finite-set data are verified only after the actual bad
+finite-flat condition available.  Once Required Moving Theorem 6.3 is supplied, Proposition 4.2
+closes the constant-field certificate from its presentation.  The ordered-chain or
+finite-set data are verified only after the actual bad
 set is known.  The target residual eigensystem must then be connected to the bottom minimal SP
 face by actual certified edges.  Proposition 7.1A proves nonvanishing at every lower face and
 at the bottom, so those nonvanishing assertions are not further inputs.  Within a face
@@ -1845,12 +1870,10 @@ In the multiplicative-$\ell$ branch, Book 157 supplies $(\mathrm{Ord}^{\rm base}
 Proposition 6.2C supplies the corrected (6.2g).  The Tate point is not a
 characteristic-zero finite-flat point, and Lemma 6.2B rules out retaining its frozen auxiliary
 branch for an arbitrary large $q$.  Thus, as in the good-reduction-at-$\ell$ branch, Required
-Moving Theorem 6.3 is the first unresolved pre-specialization assertion.
-Book
-154's norm--Abel extension handles every packet which may be repeated wholesale, but the
-one-special-factor condition leaves the degree-indexed Abel condition (6.3a'); (6.3a) is its
-one-tube specialization.  Proposition 4.2 then makes the
-constant-field certificate automatic.  After that presentation, the first unresolved
+Moving Theorem 6.3 remains the next pre-specialization assertion.  Book 157 reduces its
+integral-open route to Required Theorem 13.2B.3; it does not prove the fan-dependent toroidal
+joining.  If that theorem or another moving repair supplies the presentation, Proposition 4.2
+makes the constant-field certificate automatic.  After that presentation, the first unresolved
 constant-row assertion in the actual lifting comparison is (6.1).  A localized
 Ihara theorem proving that finite family does not produce the
 independent type, localization, support, reciprocity, ray, augmentation, and faithful-order
@@ -1887,7 +1910,7 @@ structural ledger.  Book 176 compares a supplied auxiliary-prime global cube and
 pointwise modularity from its hypotheses; it manufactures neither kind of target-prime edge.
 Thus the exact missing assertion is existence of $({\rm CLP}_{\mathrm{SP}})(M,A)$, not a
 separate assumption that its bottom is nonzero.  Normal-closure geometry is no longer an
-additional blocker after Required Moving Theorem 6.3.
+additional blocker once Required Moving Theorem 6.3 is supplied.
 
 ### 7.3 The later bridge-readiness obligation
 
@@ -2147,16 +2170,20 @@ make its closure finite on a bad curve model or compute its action on nearby-cyc
 Book 122, Proposition 9.2 now constructs the actual common generic principal/ray diagram,
 normalizes every fine vertex and edge object in that algebra, proves objectwise finite local
 freeness and isomorphic lifted top legs, and computes the geometrically constant ray factor.
-Its first exact unresolved input is nevertheless the principal node and stabilizer theorem
-$({\rm PNS}_v)$: the Drinfeld-level/Stein-factor completed rings, decomposition and wild/tame
-annular inertia, node-to-node routing, and generization maps.  In particular, $({\rm PNS}_v)$
-must prove wild inertia trivial on every node-to-node coefficient module; a genuinely wild
-sheet must instead retain its full decomposition action in the normalization-component
-complex.  Only then does Book 22's tame two-term complex apply, with expansion one supplied by
-the common-normalization isomorphism.  Books 128 and 168 reconstruct the parameter only after
-the resulting lines and return maps have been supplied.  Thus the full theorem is not
-source-closed, and $({\rm PNS}_v)$ is its first geometric obstruction after the separate
-field-tameness ledger.
+Proposition 9.3 and (9.29k)--(9.29x) prove the active Drinfeld normalization and raw branch
+ledger, while Proposition 9.5 computes the invariant residue fields, Cartier multiplicities
+and active groups and reduces every arithmetic compositum to the actual factorization of
+$T^c-\bar u^{-1}$ over its residue-compositum field and true intersection field.  The
+principal node and stabilizer theorem $({\rm PNS}_v)$ nevertheless remains unresolved.  Its
+$({\rm HDB}_v)$ input must complete that Kummer/residue/intersection ledger and construct the
+branch complexes and generization maps; its separate $({\rm RGC}_v)$ input must construct the
+oriented restriction--Gysin correspondence on component-routed and contracted terms.  A
+genuinely wild sheet must retain its full decomposition action in the normalization-component
+complex.  Only after these inputs does Book 22's tame two-term complex apply, with expansion
+one on the routed node sheet supplied by the common-normalization isomorphism.  Books 128 and
+168 reconstruct the parameter only after the resulting lines and return maps have been
+supplied.  Thus the full theorem is not source-closed, and $({\rm PNS}_v)$ is its first
+geometric obstruction after the separate field-tameness ledger.
 
 Required Theorem 7.3 must not be identified with either
 $(\mathrm{AUX}_\nu)$ or $(\mathrm{AUX}_{\mathrm{all}})$ in Book 185.  Its statement omits
@@ -2213,7 +2240,7 @@ prove the raw SP geometry or ambient semisimplicity hypotheses which that array 
 | Book 104 | rational selected global Jacquet--Langlands; placement of the upper split packet on a path-compatible one-split carrier ramified at a retained dyadic SP place; forward transfer of the final path-carrier packet back to the split group; and, in even degree, inverse transfer of that final minimal split packet to the algebra ramified at every real place and no finite place | an integral comparison between either pair of carrier lattices, or any clean Book 173 structural hypothesis |
 | Book 109 | prime-cyclic ascent on an exhibited extension-complete selected chain, and descent on exhibited antecedent-complete selected chains with the required fiber saturation and attached arithmetic representations | attachment of candidate cyclic descents, or either direction from solvability alone |
 | Books 61 and 124--125 | equivariant coefficient-independence of Artin conductors and inertia-invariant Frobenius polynomials for Hecke multiplicity factors, extension of generic Hecke correspondences to Jacobians and Neron models, and Book 125's rational packet occurrence in curve $H^1$ with its saturated ambient packet lattice | an integral rank-two Morita factor or carrier switch, an identification of an automorphic tame type, an action on nearby-cycle strata, or any type-theoretic normalized return map |
-| Book 122 | the common normalized principal/ray vertex--edge diagram, objectwise finite local freeness, isomorphic lifted top legs, and the ray factor | $({\rm PNS}_v)$: the completed principal Drinfeld/Stein-factor rings, stabilizers, wild/tame annular ledger, node routing, or generization maps |
+| Book 122 | the common normalized principal/ray vertex--edge diagram, objectwise finite local freeness, isomorphic lifted top legs, ray factor, active Drinfeld normalization and raw branch ledger, and Proposition 9.5's invariant-field/Cartier/group and normalized-compositum reduction | $({\rm PNS}_v)$ still needs $({\rm HDB}_v)$ for the actual Kummer branch/conductor ledger and $({\rm RGC}_v)$ for the oriented restriction--Gysin correspondence; the proved direct image is not itself an untwisted trace |
 | Book 140 | one-step integral level lowering: a nonzero current new block has nonzero hyperspecial contraction under the displayed abelian-Ihara, saturation, duality, full-monodromy, component, branch, normalization, and nonexceptional hypotheses | construction of any of those hypotheses on an actual specialization, or simultaneous several-place exactness |
 | Books 127--128 and 168 | parity-complete basic one-split attachment in degree at least two; the SP and tame local recognition criteria; automatic zero-monodromy raw-to-global passage; reduction of uniform nonzero-monodromy preservation to $(\mathrm{SS}_{\mathrm{array}})$ for the actual carriers | the non-common-norm PEL-exact parahoric comparison needed for any raw SP carrier, the additional away-from-two ramification set in the even-degree minimal case, construction of auxiliary descent/type/return maps, the ambient semisimplicity input needed for SP, or a comparison at the coefficient residue characteristic |
 | Book 164 | the primitive residual Frey SP tuple, intrinsic line, sign, and conductor-one record used in the FLT specialization | a characteristic-zero chosen lift or automorphic seed |
@@ -2223,9 +2250,9 @@ prove the raw SP geometry or ambient semisimplicity hypotheses which that array 
 | Book 177 | a conditional two-prime potential-modularity route, point-field control in its admitted range, and nonzero upper target localization from the exact packet lattice | an integral switch at the carrier's finite ramification place, any certified target-lowering edge, an unconditional clean seed, or controlled normal closure |
 | Book 142 | Chebotarev classes at arbitrarily large primes | base-field points on the twist or a moving presentation containing their split packets |
 | Book 153 | simultaneous connected specialization for the integral top cover and its avoidance-field base change | the local seed, singleton moving presentation, or any automorphic support |
-| Book 154 | construction of a simultaneous moving presentation for flexible split packets and for exact packets repeatable wholesale; the exact allowed-good criterion and coset-complete or integral-open sufficient repairs | one repair hypothesis or (6.3a') for Book 178's actual one-special packet, or post-specialization automorphic support |
+| Book 154 | construction of a simultaneous moving presentation for flexible split packets and exact packets repeatable wholesale; the exact allowed-good criterion and coset-complete or integral-open sufficient repairs | the framed toroidal joining model, a repair hypothesis for the actual singleton packet, or post-specialization automorphic support |
 | Book 155 | equivariant local constancy and the regular ordered-quintic torsor | the singleton moving presentation or any automorphic lifting and lowering on the specialized top |
-| Book 157 | elliptic-source rigidification, one global neat source matching finitely many local seeds, large-good-place base points, point-centered opens, persistence after permitted extension, the Tate level--tower obstruction and ordinary rigidity, the trace-one CM finite-field seed, and the resulting Serre--Tate construction of $(\mathrm{Ord}^{\rm base}_\ell)$ | descent of an arbitrary preassigned coefficient-prime or semistable frame point outside the constructed seed range |
+| Book 157 | elliptic-source rigidification, one global neat source matching finitely many local seeds, large-good-place base points, point-centered opens, persistence after permitted extension, the Tate level--tower obstruction and ordinary rigidity, the trace-one CM finite-field seed and resulting Serre--Tate construction of $(\mathrm{Ord}^{\rm base}_\ell)$, paired-frame Kummer normalization, an equivariant regular projective fan, and finite-field/DVR slicing conditional on a joining model | Required Theorem 13.2B.3, which must construct and descend the fan-dependent toroidal cusp embeddings, completed-local comparisons, and ample joining model; the singleton moving presentation; descent of an arbitrary preassigned frame point outside the constructed seed range; or post-specialization automorphic support |
 | Book 178 | conditional residual potential modularity on its exact seven-item domain; after an independently certified auxiliary lifting has produced the packet, proof of final compact-carrier eligibility, target-prime stable-lattice comparison, and a nonzero upper target localization on its $w_0$-ramified carrier; its inverse-branch lemma, completed over $\mathbf Q$ by Lemma 6.1 here; and the protected anti-cyclotomic Grunwald correction imposing exact split residual branch values, which retargets the $\ell$-branch in Proposition 6.2C | the Frey auxiliary lifting itself, because Proposition 6.2A forces dyadic active places and rules out item 7's literal singleton; the one-prime good ordinary seed $(\mathrm{Ord}^{\rm base}_\ell)$ in the multiplicative-Frey branch; an integral switch from the original carrier to the path-compatible carrier; over a general base the capitulation part of the corrected relative ray datum; any actual target-lowering edge; or the exact minimal Book 173 SP seed |
 | Book 180 | integral Brauer and Clifford identities for supplied representations, characters, and packet data | construction or attachment of any elementary fixed-field packet, a raw SP carrier, or the ambient semisimplicity theorem needed before the all-embedding SP comparison |
 | Books 165--167 | the SP local deformation problem, supported cohomology, and balanced presentation | a horizontal point or a nonzero exact automorphic module |
@@ -2257,8 +2284,9 @@ Book 165 is retained because this volume directly identifies the represented loc
 it could be made transitive by treating all local identifications as part of the Book 181
 export.
 
-Equation (8.1) does not make the result unconditional.  To mark Book 182 **READY**, a new
-strictly prior result must prove Required Moving Theorem 6.3 and Required Theorem 7.1; a prior
+Equation (8.1) does not make the result unconditional.  To mark Book 182 **READY**, a strictly
+prior result must prove Book 157, Required Theorem 13.2B.3 (or another genuine repair of
+Required Moving Theorem 6.3), and a strictly prior result must prove Required Theorem 7.1; a prior
 controlled raw-carrier and ambient-semisimplicity theorem of Section 7.3 is also required for
 the downstream packet array.  The separate strong-local claim labelled Required Theorem 7.3
 must first remove or relabel every ramified row incompatible with (7.7d); any surviving
@@ -2279,7 +2307,7 @@ $$
 \text{Lemma 6.1; in the good-}\ell\text{ branch, Theorem 6.2 and Proposition 6.2A;}\\[-2pt]
 \text{in the multiplicative-}\ell\text{ branch, Book 157's }({\rm Ord}^{\rm base}_\ell)
 \Longrightarrow\text{ retargeted Theorem 6.2 and Proposition 6.2C;}\\
-\text{Book 154 Lemma 5.2A; Required Moving Theorem 6.3; Proposition 4.2}
+\text{Book 154 Lemma 5.2A; Book 157 Required Theorem 13.2B.3; Required Moving Theorem 6.3; Proposition 4.2}
 \\ \Downarrow \\
 \text{Proposition 4.1: normal Galois top with }F=M\text{ and }J=1
 \\ \Downarrow \\
@@ -2348,7 +2376,7 @@ and cannot repair the gap found here.
 Book 181 now genuinely constructs the chosen primitive SP lift under its explicit
 $(\mathrm{Seed}_{\mathrm{SP}}^{181})$ hypothesis, and Proposition 3.2 makes that lift automorphic
 over Book 181's uncontrolled seed field.  Proposition 4.1 proves the field-theoretic
-refinement once (6.2g), when required, and Required Moving Theorem 6.3 supply the actual mixed
+refinement once (6.2g), when required, and Required Moving Theorem 6.3 supplies the actual mixed
 local moving cover;
 Proposition 4.2 then forces its Galois-closure constant field to satisfy
 $C\cap D=\mathbf Q$.  Multiplying that closure by an independent ordered-quintic torsor and
@@ -2356,9 +2384,11 @@ specializing the top together with its $D$-base change then gives an even-degree
 normal top with $F=M$, $J=1$, split sensitive places, and closure-level avoidance.
 Consequently no moduli-specific $S_5/S_4$ presentation and no upward solvable base change
 remain after that input.  Book 154 constructs flexible split and wholesale-repeatable exact
-packets, but it does not prove the allowed-good Abel condition (6.3a'), coset completeness, the
-integral-open slice hypothesis, or the restricted fixed-offset congruence (6.3a) for the actual
-singleton special packet.
+packets.  Book 157 proves the Kummer-normalization, fan, finite-field Bertini, and DVR-slicing
+parts of the integral-open route, but Required Theorem 13.2B.3 still has to construct the
+fan-dependent toroidal joining model.  Consequently the allowed-good Abel condition (6.3a')
+and Required Moving Theorem 6.3 remain open unless that theorem, coset completeness, the
+restricted congruence (6.3a), or another common presentation is supplied.
 
 Over a general base Book 178 still correctly retains full relative-ray compatibility.  For the
 rational Frey application, Lemma 6.1 imports that compatibility from its inverse-branch
@@ -2372,13 +2402,11 @@ $\ell$, Proposition 6.2A's preliminary Tate point supplies only the residual fin
 model.  The requisite coefficient-prime assertion is the
 one-prime seed $(\mathrm{Ord}^{\rm base}_\ell)$, which Book 157, Proposition 8.4B and Lemma
 8.4B.1 now supply; Proposition 6.2C then gives the retargeted good finite-flat base point
-(6.2g).  Thus, as in the good-reduction-at-$\ell$ branch, Required Moving Theorem 6.3 is the
-next remaining assertion;
-after its presentation exists, Proposition 4.2 closes constant-field avoidance.  The theorem's
-precise form in the existing curve--pencil
-construction is the full singleton Abel condition (6.3a'), with (6.3a) only for a one-tube
-good packet and Book 154's two geometric saturation criteria as sufficient repairs.  The
-localized abelian Ihara family (6.1) is then the first missing
+(6.2g).  In both branches Required Moving Theorem 6.3 is the next unresolved
+pre-specialization assertion; after a presentation is supplied, Proposition 4.2 closes
+constant-field avoidance.  The desired curve--pencil route uses the full singleton Abel
+condition (6.3a'), whose integral-open proof is conditional on Book 157, Required Theorem
+13.2B.3.  The localized abelian Ihara family (6.1) is the next missing
 constant row in the lifting comparison, and it does not imply the other edge certificates or
 the bottom structural ledger.  Moreover, Proposition 6.2A forces every dyadic place into the
 auxiliary-$q$ active set, so Book 178's literal singleton item 7 cannot be the Frey lifting

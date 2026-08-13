@@ -69,7 +69,7 @@ flowchart LR
 | 38 | Néron Models and Component Groups | 11, 16, 25, 35 |
 | 39 | Integral Correspondences on Curves and Jacobians | 12, 16, 38, 36 |
 | 40 | Descent and Weak Mordell--Weil for Abelian Varieties | 29, 35, 30, 32 |
-| 41 | Heights, Mordell--Weil, and the Faltings--Tate Reduction | 2, 4, 8, 13, 15, 35, 36, 38, 40 |
+| 41 | Heights, Mordell--Weil, and the Faltings--Tate Reduction | 2, 4, 8, 10, 11, 12, 13, 15, 25, 35, 36, 38, 40 |
 | 42 | Finite-Flat Galois Representations | 2, 28, 34, 17 |
 | 43 | Elliptic Curves over DVRs | 1, 2, 11 |
 | 44 | Tate Curves and Multiplicative Reduction | 2, 43 |
@@ -185,7 +185,7 @@ flowchart LR
 | 154 | Moret–Bailly’s Theorem | 8, 9, 10, 40, 41, 58, 153 |
 | 155 | Galois and Solvable Refinements of Arithmetic Approximation | 2, 6, 153, 154, 142 |
 | 156 | Hilbert--Blumenthal Moduli and Two-Prime Level Covers | 17, 10, 13, 35, 55, 115, 116 |
-| 157 | Local Geometry of Hilbert--Blumenthal Moduli | 2, 8, 37, 58, 60, 43, 44, 45, 51, 52, 54, 55, 117, 154, 155, 156 |
+| 157 | Local Geometry of Hilbert--Blumenthal Moduli | 2, 8, 37, 43, 44, 45, 51, 52, 54, 55, 58, 60, 117, 154, 155, 156 |
 | 158 | Moduli Constructions for Potential Modularity | 156, 157 |
 | 159 | Discriminants of Galois Representations | 3, 56 |
 | 160 | Odlyzko Bounds and Fontaine's Argument | 7, 56, 159 |
@@ -221,7 +221,7 @@ flowchart LR
 ## Named unresolved theorem hypotheses
 
 These conditions are assumptions or missing source theorems, not dependency nodes, except for
-the one interface explicitly marked closed below. The list is deliberately separate from the
+the interfaces explicitly marked closed below. The list is deliberately separate from the
 acyclic manuscript graph so that the closed record cannot be mistaken for a remaining blocker.
 
 - **Localized abelian Ihara:** vanishing, at every actual routed constant-coefficient level, of
@@ -240,12 +240,16 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   stabilizer, and Bruhat calculations give the exact wild-invariant extreme lines,
   constant-extreme-line generization, and unique
   multiplicity-one node sheet; Proposition 9.4 promotes routing, multiplicity and expansion
-  one, and Hecke/transpose compatibility to the actual common factor.  The first remaining part of $({\rm PNS}_v)$ is
-  $({\rm HDB}_v)$, the compatible higher branch-complex descent theorem: construction of the
-  raw conductor complexes and generization maps, descent through the selected wild intermediate
-  and spectator/ray normalization, and the full proper pushforward on the component-routed sources of the retained
-  residue-prime Hecke graph. Together with the
-  accompanying unit-order coarse-descent hypothesis, it implies $({\rm TPE}_v)$. The later
+  one, and Hecke/transpose compatibility to the actual common factor.  Proposition 9.5
+  calculates the reduced invariant branch fields, Cartier multiplicities and group filtrations,
+  and reduces the normalized spectator/ray compositum to the residue-field factorization of
+  $T^c-\bar u^{-1}$ and the actual local intersection field.  It does not compute those
+  Kummer factors on every routed branch.  The remaining $({\rm HDB}_v)$ input is that Kummer,
+  conductor and generization ledger; the separate $({\rm RGC}_v)$ input is the oriented
+  restriction--Gysin correspondence on noncontracted and contracted component terms.
+  Consequently $({\rm PNS}_v)$, and hence Book 174's $({\rm TPE}_v)$ reduction, remain
+  conditional; unit-order coarse descent remains the separate
+  $({\rm TIC}_v)$ input. The later
   type algebra has now been reduced further.  Under those geometric hypotheses and the named
   abelian-Ihara family, for the actual quotient/augmentation flag pair, when $q_v+1$ is a
   coefficient unit the integral flag idempotent makes type-Ihara and primitive residue direct
@@ -304,13 +308,20 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   realization, and exact trace/structural generation have been verified; its reduced-order
   argument then supplies the all-Artinian factorizations.  Those joint inputs do not follow
   from separate one-prime carriers.
-- **Controlled residual automorphic seed:** the degree-indexed allowed-good Abel condition in
-  the existing curve--pencil route, its one-tube finite Picard-quotient specialization, a
-  coset-complete compensating-good-packet theorem, Book 157's stable integral connecting-slice
-  assertion $(\mathrm{ICS})_{v_0,Z}$ (the smooth-integral-slice/dense-good-open saturation
-  criterion made stable under the global cutting-section approximation), or another common
-  moving presentation, for the actual packet having one
-  distinguished special factor and all remaining factors good; in the multiplicative-$\ell$
+- **Controlled residual automorphic seed:** Book 157 proves the paired-frame Kummer
+  normalization, a simultaneous regular projective equivariant fan, finite-field Bertini with
+  imposed jets, and stable DVR slicing.  It does not prove the finite-type framed joining
+  theorem $(\mathrm{FTJ})_{v_0,Z}$.  Its Required Theorem 13.2B.3,
+  $(\mathrm{TCG})_\Sigma$, must still construct the algebraic cusp embeddings and modifications
+  for the chosen fan, glue them to the good interior, identify the completed normalized charts,
+  and descend the twist and an ample bundle.  Conditional on that theorem, the weaker
+  $(\mathrm{ICS})_{v_0,Z}$ needed by Book 154 gives the degree-indexed allowed-good Abel
+  condition.  Book 182, Required Moving Theorem 6.3 would then combine it with the repeatable
+  and flexible packets to give the common moving presentation; its normal-sheet clause has been
+  reduced to persistence after scalar extension and introduces no independent presentation.
+  The literal marked-good-section form additionally retains Book 157's explicit finite-residue
+  rational-point condition, but that stronger form is not used.
+  In the multiplicative-$\ell$
   Frey branch, the one-prime good ordinary $\mathbf Q_\ell$ seed
   $({\rm Ord}^{\rm base}_\ell)$ carrying the exact selected $\ell$-model.  Book 157,
   Proposition 8.4B constructs it by Serre--Tate theory, and Lemma 8.4B.1 constructs the
@@ -361,15 +372,11 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   over $\mathbf Q_2$, $\mathbf Q_3$, and $\mathbf Q_\ell$ by adapting the local elliptic seeds and neat source.
   In the multiplicative-$\ell$ branch, Book 157 supplies $({\rm Ord}^{\rm base}_\ell)$ and
   Book 182, Proposition 6.2C then supplies corrected $({\rm FF}^{\rm base}_\ell)$.  In the
-  good-reduction branch Proposition 6.2A supplies the coefficient-prime point directly.  Thus
-  in both branches the first remaining pre-specialization input is the singleton common
-  presentation.  Book 182 forces constant-field
-  avoidance with split Chebotarev certificate primes once that presentation exists.  Book 157,
-  Section 13.2A proves the finite-residue relative slicing and gives the conditional implication
-  from $(\mathrm{ICS})_{v_0,Z}$, but no audited source proves the finite-type framed joining
-  theorem $(\mathrm{FTJ})_{v_0,Z}$ and hence no source proves $(\mathrm{ICS})_{v_0,Z}$ itself.
-  Once the presentation is
-  supplied, Book 182 proves the remaining
+  good-reduction branch Proposition 6.2A supplies the coefficient-prime point directly.  In
+  both branches Book 182, Required Moving Theorem 6.3 remains conditional on Book 157's
+  $(\mathrm{TCG})_\Sigma$ or another genuine moving repair.  Once that presentation is
+  supplied, Book 182 forces constant-field avoidance with split Chebotarev certificate primes
+  and proves the remaining
   normal-closure control, applies Book 178's corrected relative-ray compatibility in the
   rational-base Frey case, and takes the top
   itself as seed field, makes upward transfer vacuous, and reduces the local and group-theoretic
@@ -395,12 +402,12 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   carrier Jacobians' $K$-isogeny classes. A standard uniform source is
   Faltings--Shafarevich finiteness. Book 41 proves finite polarized $K$-descent after
   Northcott, normalized-lattice compactness, Jordan--Zassenhaus for orders in semisimple
-  rational algebras, direct-summand finiteness, and hence integral Zarhin cancellation. Its
-  moduli route still lacks the arithmetic Siegel compactification, ramified semistable Hodge
-  base-change formula, metrized Hodge/theta comparison, and slope/boundary estimates needed for
-  the moduli-height bound. Potential semistable reduction, including persistence after further
-  finite extension, is proved later in Book 61, but that does not supply these arithmetic
-  height inputs. The blocker therefore cannot honestly be removed.
+  rational algebras, direct-summand finiteness, and hence integral Zarhin cancellation. Its new
+  internal sketches do not yet prove potential semistable reduction, persistence and ramified
+  semistable Hodge base change, the arithmetic toroidal Siegel compactification, or the integral
+  metrized Hodge--theta comparison from the permitted earlier sources. The arithmetic
+  Hilbert--Samuel determinant-slope/boundary estimate (13.3r) is separately and correctly marked
+  unresolved. The blocker therefore cannot honestly be narrowed to (13.3r) alone or removed.
   This is separate from constructing the raw dyadic carriers. At $q=2$ the conditional theorem
   proves global semisimplicity but does not extend the prime-to-coefficient Weil--Deligne
   comparison at the dyadic base place; Book 184's $(\mathrm{AI}_2)$ remains a separate

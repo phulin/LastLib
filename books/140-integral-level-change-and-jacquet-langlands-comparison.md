@@ -1938,25 +1938,23 @@ degeneracy maps were already finite locally free. Book 22,
 Theorem 3.2 computes a supplied tame annular coefficient by
 $[M\xrightarrow{T-1}M]$, with residue Galois, invariant-stable pull--trace (in particular the
 expansion-one case used here), and normalization homotopy-fiber totalization, while a global
-ray character twists this complex diagonally. The remaining first
-theorem is Book 122's $({\rm PNS}_v)$: the completed Drinfeld-level/Stein-factor identification
-of the common normalization's decomposition and
-inertia groups.  Proposition 9.3 there proves $({\rm DLB}_1)$, and (9.29k)--(9.29l) prove
+ray character twists this complex diagonally.  Proposition 9.3 of Book 122 proves
+$({\rm DLB}_1)$, and (9.29k)--(9.29l) prove
 every active finite-depth normalization and intermediate invariant ring.  Equations
 (9.29r)--(9.29x) compute the raw higher branch, inertia, inseparable-residue, node-annular, and
 boundary-stabilizer ledger.  Equations (9.29b)--(9.29i) and (9.29n)--(9.29q) take exact wild unipotent invariants rather than calling the cover tame and
 prove the extreme lines, flag routing, constant-extreme-line generization, multiplicity one, and
 the level-one residue-prime Hecke route.  Book 122, Proposition 9.4 promotes routing,
 multiplicity and expansion one, and Hecke/transpose compatibility to the actual common factor.
-The first missing assertion is $({\rm HDB}_v)$, the compatible higher
-branch-complex descent theorem constructing the raw conductor complexes and generization maps,
-then passing through the selected wild intermediate and spectator/ray normalization and the full proper pushforward on
-component-routed sources for the residue-prime correspondence.
-Thus “the type sheaf extends” must retain
-$({\rm PNS}_v)$; it is not proved by the generic stable lattice or by objectwise finite
-flatness of the normalization.
+Proposition 9.5 computes the invariant branch fields, Cartier multiplicities and active group
+filtrations, and reduces the normalized spectator/ray compositum to its actual Kummer
+factorization and intersection field.  The remaining $({\rm HDB}_v)$ must compute those
+Kummer factors and the conductor/generization complexes; $({\rm RGC}_v)$ must construct the
+oriented restriction--Gysin correspondence on component-routed and contracted terms.  Thus
+“the type sheaf extends” remains conditional on $({\rm PNS}_v)$, not a consequence merely of
+the generic stable lattice or objectwise finite flatness of the normalization.
 
-Book 174, Proposition 6.3 later proves, from $({\rm PNS}_v)$ and its other typed inputs and
+Book 174, Proposition 6.3 later proves, from the assumed $({\rm PNS}_v)$ and its other typed inputs and
 Book 125's component-routed semisimple decomposition on the common principal cover, that the
 curve-new and graph generic Hecke kernels agree. Thus typed generic support is not a further
 independent hypothesis. Apart from the quotient/augmentation projector deductions in the
@@ -2005,7 +2003,15 @@ At the semistable Iwahori prime used for the basic level-raising theorem, the ne
 
 ### 13.4 Boundaries of the selected theorem
 
-The basic one-prime semistable theorem includes the unramified special family at Iwahori level. Ramified special twists, unramified quadratic depth-zero packets, and tame positive-depth dihedral packets are included only in the conditional type-enhanced variant of Section 13.1, with $({\rm PNS}_v)$, pull--norm, unit-order coarse descent, and the applicable type-Ihara and primitive-residue inputs imposed.  For Book 174's quotient/augmentation pair the latter two are automatic in the $q_v+1$-unit range and reduce to its explicit nonbanal maps otherwise; no such deduction is asserted here for arbitrary compact types. Book 174, Proposition 6.3 derives the resulting generic-residue kernel equality from that filtration and Book 125 rather than imposing it separately.
+The basic one-prime semistable theorem includes the unramified special family at Iwahori level.
+Ramified special twists, unramified quadratic depth-zero packets, and tame positive-depth
+dihedral packets are included only in the conditional type-enhanced variant of Section 13.1,
+imposing Book 122's $({\rm PNS}_v)$, pull--norm, unit-order coarse descent, and
+the applicable type-Ihara and primitive-residue inputs.  For Book 174's
+quotient/augmentation pair the latter two are automatic in the $q_v+1$-unit range and reduce
+to its explicit nonbanal maps otherwise; no such deduction is asserted here for arbitrary
+compact types. Book 174, Proposition 6.3 derives the resulting generic-residue kernel equality
+from that filtration and Book 125 rather than imposing it separately.
 
 It excludes primitive wild packets and ramified dyadic positive-depth packets. The local character and type-lattice comparison used in Chapter 4 is not proved there. It also excludes a type projector that exists only after inverting $\varpi$: applying such a projector to a saturated full cohomology lattice can create a nonsaturated intersection.
 
@@ -2229,7 +2235,7 @@ The downstream interface is equally exact.
 |---|---|---|
 | Book 176 | one-prime special raising/lowering and common away-from-$v$ acting order | (1.5d), node uniformization, Book 125's component-routing source condition, both finite modules in (8.3a), and Section 11.4 before using a scalar as an augmented congruence ideal |
 | Book 170 | free $Q$, equality of faithful inner-form trace orders, and geometric lowering criterion | freeness and order equality are conditional on abelian Ihara; lowering requires both $\Phi[\varpi]=0$ and $\mathcal C_{\mathrm{br},v}[\varpi]=0$ |
-| Book 174 | coefficient-one constant graph--definite map $X_v\simeq S^\dagger$ | Book 140 does not give $\operatorname{gr}_0Q=X_v^\vee$; the typed variant retains $({\rm AIH}_{\mathscr F})$, $({\rm PNS}_v)$, unit-order coarse descent, and the flagged node-groupoid form of node uniformization, together, only in the nonbanal quotient/augmentation range, with the quotient-new and filtered-cofiber assertions (5.0d), (6.0d) |
+| Book 174 | coefficient-one constant graph--definite map $X_v\simeq S^\dagger$ | Book 140 does not give $\operatorname{gr}_0Q=X_v^\vee$; the typed variant retains Book 122's conditional $({\rm PNS}_v)$, $({\rm AIH}_{\mathscr F})$, unit-order coarse descent, and the flagged node-groupoid form of node uniformization, together, only in the nonbanal quotient/augmentation range, with the quotient-new and filtered-cofiber assertions (5.0d), (6.0d) |
 | Book 175 | no inner-form order index and the signed Gram Smith factor | the factor is an augmented congruence ideal only under Section 11.4; scalar/vexing refinements and all fixed-prime Tor/augmentation statements require the separate Book 174 hypotheses |
 
 In particular, no downstream patching or reciprocity argument can retroactively prove (1.5d), delete $\mathcal C_{\mathrm{br},v}$, or turn the conditional several-prime discussion into a theorem.

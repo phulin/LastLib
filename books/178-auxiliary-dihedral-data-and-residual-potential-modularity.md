@@ -608,21 +608,19 @@ would make (2.12a) automatic in high degree, but no prior result constructs such
 the actual slice.  Book 154, Lemma 5.2D would also make (2.12a) automatic if that slice had a
 smooth proper integral model whose allowed good factors contained every tube above a nonempty
 special-fiber Zariski open; Book 154, Corollary 5.2E turns either verified repair into the common
-presentation.  The present local package constructs that integral slice after a compatible
-finite-type framed joining model has been supplied, but it does not construct the joining model.
-Book 157, Section 13.2A records the exact stable integral connecting-slice assertion
-$(\mathrm{ICS})_{v_0,Z}$ and proves that it would discharge this condition through Book 154,
-Corollary 5.2E.  Its Lemmas 13.2A.1--13.2A.2 now prove the finite-residue relative Bertini,
-complete-intersection, and coefficient-stability steps.  The remaining geometric input is the
-finite-type framed joining theorem $(\mathrm{FTJ})_{v_0,Z}$, which must put the normalized
-paired-frame cusp completion and the good interior in one smooth projective model.  No prior
-source proves that theorem.  The literal stronger clause requiring a good $k$-point to reduce
-inside the allowed special-fiber open also needs Book 157, (13.21); the weaker form actually
-used by Book 154, Lemma 5.2D does not.  This reference therefore remains a conditional handoff,
-and item 6 retains (2.12a).  It can be discharged by one of these geometric repairs, by its
-restricted sufficient condition (2.12), or by another proved simultaneous presentation of the
-singleton mixed packet.  Equal ranks, Hensel lifting, local realizability, and arbitrary norm
-factors in one residue tube do not supply it; Book 154, Counterexample 5.2C gives a local
+presentation.  Book 157, Lemmas 13.2A.1--13.2A.2 prove the finite-residue relative Bertini,
+complete-intersection, and coefficient-stability steps.  Its Lemmas 13.2B.1--13.2B.2 normalize
+the paired-frame division monomials and construct a regular projective equivariant fan.  They do
+not construct algebraic cusp embeddings for that fan, glue them to the good interior, identify
+the resulting completions, or descend an ample bundle.  Those claims are isolated as Book 157,
+Required Theorem 13.2B.3.  Conditional on that theorem, Proposition 13.2B.4 gives
+$(\mathrm{FTJ})_{v_0,Z}$, Corollary 13.2B.5 gives the weaker form of
+$(\mathrm{ICS})_{v_0,Z}$ used by Book 154, and Book 154, Corollary 5.2E proves (2.12a) in every
+sufficiently large compatible degree.  Without it, item 6 remains an input.
+The literal stronger clause requiring a good $k$-point to reduce inside the allowed
+special-fiber open still needs Book 157, (13.21), but it is not used here.  Equal ranks, Hensel
+lifting, local realizability, and arbitrary norm
+factors in one residue tube do not by themselves supply it; Book 154, Counterexample 5.2C gives a local
 counterexample.
 
 ## 3. Choosing the auxiliary prime

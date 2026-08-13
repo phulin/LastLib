@@ -205,13 +205,13 @@ $$
 
 Book 41, Theorem 15.3 proves $(\mathrm{TS})$ from finiteness of the $K$-isogeny class of $A$
 and proves every subsequent curve-cohomology and coefficient-factor implication. Section 13.7
-of that book shows why its standard uniform Faltings--Shafarevich source is incomplete: the arithmetic
-Siegel compactification, stable-Hodge base-change and metrized Hodge/theta slope/boundary
-estimates needed for the moduli-height bound are not available. Book 41 does prove finite
-polarized descent from the level fields back to $K$ and proves the integral Zarhin direct-factor
-theorem by Jordan--Zassenhaus finiteness for lattices over an endomorphism order. Potential
-semistable reduction itself is proved in Book 61, but it does not supply the missing height
-steps. Book 168 isolates the finite carrier instance as the exact sufficient input for uniform
+of that book shows why its standard uniform Faltings--Shafarevich source is incomplete. Its
+uniform route still retains potential semistability, ramified Hodge base change, the arithmetic
+toroidal Siegel compactification, the integral metrized Hodge--theta comparison, and the
+determinant-slope estimate (13.3r). Book 41 does prove finite polarized descent from the level
+fields back to $K$ and the integral Zarhin direct-factor theorem by Jordan--Zassenhaus
+finiteness for lattices over an endomorphism order.
+Book 168 isolates the finite carrier instance as the exact sufficient input for uniform
 raw-to-global local preservation.
 Thus (1.4) is conditional on the explicit finite-isogeny-class hypothesis, not an unexplained
 external theorem and not a conclusion of the other three books.

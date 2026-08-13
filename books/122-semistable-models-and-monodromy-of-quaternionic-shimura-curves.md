@@ -1614,7 +1614,7 @@ part of the global ray hypothesis; a nominal local determinant character does no
 
 #### The Drinfeld tower and the unavoidable wild ledger
 
-The principal factor can be sharpened before stating the remaining theorem.  This also gives a
+The principal factor can be sharpened before stating the full theorem.  This also gives a
 test which any proposed proof must pass.  Complete at a local-local point of the good vertex and
 factor off the deformation-etale spectator tensors.  This does not assert that every spectator
 level cover is unramified; those factors must be restored in the actual common normalization.
@@ -1853,9 +1853,10 @@ than a declaration that the cover is tame, is the correct passage to its procycl
 For any common generic Galois refinement dominating $D_1$, the two representations are
 inflated from $G_1$, so their intrinsic geometric annular monodromy still has wild image
 $U_L$ and the deeper generic kernel acts trivially.  Hence the same invariant lines result
-before the deeper branch geometry is known.  This does not identify the wild subgroup of a
-selected higher special-fiber valuation or assert that its map onto $U_L$ is surjective; that
-valuation-theoretic statement is part of $({\rm HDB}_v)$.
+before the deeper branch geometry is known.  This does not yet identify the wild subgroup of a
+selected higher special-fiber valuation or assert that its map onto $U_L$ is surjective; the
+raw valuation-theoretic calculation is supplied by Proposition 9.5 below, while the arithmetic
+compositum and conductor maps remain in the ledger following that proposition.
 Any global ray character remains as the external diagonal inertia action of (9.29).
 
 The finite flag routing itself is already visible in Sections 9.3--9.4.  Under the Bruhat
@@ -2050,8 +2051,9 @@ constant line Book 22, (3.10), gives the conductor term in degree zero and gener
 to the identity in degree zero and zero in the independent vanishing degree.  The summand
 $Q_L$ has no node contribution and is routed to the moving normalization-component term, but
 its full conductor complex is not $R\Gamma_{\rm cont}(\widetilde A_L,Q_L)$ merely from the
-stabilizer calculation.  Determining that branch complex and its generization is part of
-$({\rm HDB}_v)$.  This is the exact level-one wild/node ledger without calling the principal
+stabilizer calculation.  Determining that branch complex and its generization is part of the
+remaining Kummer branch ledger below.  This is the exact level-one wild/node ledger without
+calling the principal
 cover tame or discarding the branch term.
 
 There is one further exact higher-level factorization.  Put
@@ -2215,9 +2217,10 @@ $$
 
 and residue Galois transports it among the $q^n$ moving branches.  No averaging by $q-1$ is
 implicit in the node formula: its $\ell$-part remains in the procyclic complex.  Just as at
-level one, (9.29w)--(9.29x) do not identify either full conductor complex or the generization
-chain maps; the trivial-module test above forbids replacing those conductor terms by a second
-copy of the procyclic node complex.  If $W$ is inflated from $G_1$, then
+level one, (9.29w)--(9.29x) by themselves do not identify either full conductor complex or the
+generization chain maps; the trivial-module test above forbids replacing those conductor terms
+by a second copy of the procyclic node complex.  Those endpoint complexes remain in
+$({\rm HDB}_v)$.  If $W$ is inflated from $G_1$, then
 $P_{n,\lambda}$ has image $U_L$ and $A^1_{n,\lambda}$ acts trivially, so (9.29w)--(9.29x)
 recover (9.29o)--(9.29p) at the level of the node complex and boundary modules.  This proves
 that the deeper active kernel does not change that intrinsic node ledger for the two
@@ -2228,11 +2231,10 @@ For an intermediate active ring $D_n^H$, its height-one branches are the $H$-orb
 $\mathbf P^1(R_n)$.  For a representative $\lambda$, the decomposition group of
 $D_n/D_n^H$ is $H_\lambda=H\cap B_{n,\lambda}$; the raw decomposition group over
 $A^{(0)}$ remains $B_{n,\lambda}$.  If $H$ is normal, the decomposition group in the quotient
-$G_n/H$ is the image of the stabilizer of the $H$-orbit.  These statements determine the
-branch set and all raw active stabilizers, but the strict containment exhibited after
-(9.29t) shows that they do not determine the reduced residue field after wild descent, its
-downstairs Cartier multiplicity, or the full complex carried by a proper component-routed
-source.
+$G_n/H$ is the image of the stabilizer of the $H$-orbit.  The invariant-ring calculation in
+Proposition 9.5 below determines the reduced residue field and Cartier multiplicity; in
+particular it keeps, rather than suppresses, the strict wild invariant--reduction discrepancy
+exhibited after (9.29t).
 
 The proper routing itself can nevertheless be completed for the retained residue-prime
 correspondence.
@@ -2265,30 +2267,436 @@ completed-ring identity.  Generic equivariance and uniqueness of normalization g
 residue-Galois, Hecke, and transpose compatibilities. $\square$
 
 Proposition 9.4 determines the proper strict-transform **routing** and coefficient one.  It
-does not calculate the reduced branch field or the full nearby-cycle complex carried by a
-component-routed common-normalization source; those are precisely where wild reduction can
-fail to commute with invariants.
+does not by itself calculate the reduced branch field or the full nearby-cycle complex carried
+by a component-routed common-normalization source.  The next proposition supplies the part
+which follows from the Drinfeld invariant rings: the reduced active branch, its Cartier
+multiplicity and groups, and the exact local reduction of a normalized compositum to a Kummer
+factorization.  It does **not** calculate the Kummer unit classes or the resulting branch
+complexes.
 
-**First remaining local input $({\rm HDB}_v)$ (higher Drinfeld branch-complex descent).**  For the
-selected $n,H$ in (9.29l), a selected $H$-orbit of raw branches, and the actual normalized
-spectator/ray compositum, identify the reduced residue subfield inside the corresponding raw
-fixed field, its Cartier multiplicity, and the resulting decomposition and inertia sequence.
-Equivalently, calculate exactly the failure of wild invariants to commute with reduction which
-is measured in the full-level case by the purely inseparable factor in (9.29t).  Starting from
-the node complex and boundary modules in (9.29w)--(9.29x), construct the raw conductor
-complexes and generization chain maps, and then descend them through the selected intermediate
-and spectator/ray normalization.  On a regular domination of
-the proper residue-prime legs, identify the full complexes on the component-routed sources and
-their proper pushforward and transpose maps; Proposition 9.4 has already fixed the strict
-transform routing and all node-to-node multiplicities.  Normality, (9.29r), and the projective-line orbit
-calculation determine the finite rings and branches; (9.29s)--(9.29x) determine the raw active
-stabilizers, residue degrees, node-annular complexes, and boundary coefficient maps.  They do
-not determine the branch complexes or generization chain maps, even before intermediate or
-spectator descent; the strict wild invariant/reduction discrepancy after (9.29t), amplified by
-(9.29m), is the first additional obstruction.
+For $\lambda=R_ne_1$, write
 
-It remains to identify the principal factor at a node.  The remaining statement is now a local
-algebraic-geometric theorem, not an unspecified nearby-cycle formalism.
+$$
+a,d:B_{n,\lambda}\longrightarrow R_n^\times,\qquad
+\begin{pmatrix}a&b\\0&d\end{pmatrix}\longmapsto a,d,
+$$
+
+and put
+
+$$
+U_{n,\lambda}=\ker(a,d)
+=\left\{\begin{pmatrix}1&b\\0&1\end{pmatrix}:b\in R_n\right\}.
+                                                               \tag{9.29y}
+$$
+
+For a subgroup $H\subset G_n$, set
+
+$$
+H_\lambda=H\cap B_{n,\lambda},\quad
+J_\lambda=H\cap I_{n,\lambda},\quad
+U_{H,\lambda}=H\cap U_{n,\lambda},\quad
+A_{H,\lambda}=a(J_\lambda),\quad
+D_{H,\lambda}=d(H_\lambda).                               \tag{9.29z}
+$$
+
+The letter $D$ in $D_{H,\lambda}$ denotes the lower-right residue action and not the
+Drinfeld ring.  Write $|U_{H,\lambda}|=p^s$ and
+$m_n=q^{n-1}(q-1)$.
+
+**Proposition 9.5 (invariant branches and normalized-compositum reduction).**  Let
+$\mathfrak p_\lambda=(z_{\lambda,n})\subset D_n$, let
+$\kappa_\lambda=\operatorname{Frac}(D_n/\mathfrak p_\lambda)$, and let
+$\mathfrak p_{H\lambda}=\mathfrak p_\lambda\cap D_n^H$.  Then the following assertions hold.
+
+1.  Inside $\kappa_\lambda=\bar k((w))$, the function field of the normalized reduced branch
+    of $D_n^H$ belonging to the $H$-orbit of $\lambda$ is
+
+    $$
+    \kappa_{H\lambda}
+      =\bigl(\kappa_\lambda^{D_{H,\lambda}}\bigr)^{p^s}.
+                                                                  \tag{9.30}
+    $$
+
+    Here $F^{p^s}$ means the image of the $s$-fold absolute Frobenius of the
+    one-variable field $F$.  Moreover
+
+    $$
+    \begin{aligned}
+    e(D_n/D_n^H;\lambda)&=|A_{H,\lambda}|,\\
+    \operatorname{mult}_{\mathfrak p_{H\lambda}}(\pi)
+       &=\frac{m_n}{|A_{H,\lambda}|},\\
+    [\kappa_\lambda:\kappa_{H\lambda}]_{\rm sep}
+       &=|D_{H,\lambda}|,\\
+    [\kappa_\lambda:\kappa_{H\lambda}]_{\rm insep}
+       &=|U_{H,\lambda}|.
+    \end{aligned}                                               \tag{9.31}
+    $$
+
+    Thus reduction followed by $H$-invariants misses precisely the Frobenius subfield of
+    degree $|U_{H,\lambda}|$; it is an equality only when the translation subgroup
+    $U_{H,\lambda}$ is trivial.
+
+2.  The decomposition and inertia filtration for $D_n/D_n^H$ at this branch is
+
+    $$
+    1\longrightarrow J_\lambda\longrightarrow H_\lambda
+      \xrightarrow{\,d\,}D_{H,\lambda}\longrightarrow1,
+    \qquad
+    1\longrightarrow U_{H,\lambda}\longrightarrow J_\lambda
+      \xrightarrow{\,a\,}A_{H,\lambda}\longrightarrow1.       \tag{9.32}
+    $$
+
+    If $\overline A_{H,\lambda}$ denotes reduction in $k_v^\times$, the wild subgroup in this
+    upward extension and its tame quotient are
+
+    $$
+    P_{H,\lambda}=H\cap P_{n,\lambda},\qquad
+    J_\lambda/P_{H,\lambda}\simeq\overline A_{H,\lambda}.
+                                                                  \tag{9.32a}
+    $$
+
+    If $H\triangleleft G_n$, the descended cover $D_n^H/A^{(0)}$ has, at the chosen
+    $H$-orbit, decomposition and inertia groups
+
+    $$
+    \overline B_\lambda=B_{n,\lambda}/H_\lambda,
+    \qquad
+    \overline I_\lambda=I_{n,\lambda}/J_\lambda,              \tag{9.33}
+    $$
+
+    with exact filtration
+
+    $$
+    1\to U_{n,\lambda}/U_{H,\lambda}\to\overline I_\lambda
+      \to R_n^\times/A_{H,\lambda}\to1.                      \tag{9.34}
+    $$
+
+    Its wild subgroup and tame quotient are
+
+    $$
+    \overline P_\lambda
+      =P_{n,\lambda}/(H\cap P_{n,\lambda}),\qquad
+    \overline I_\lambda/\overline P_\lambda
+      \simeq k_v^\times/\overline A_{H,\lambda}.             \tag{9.34a}
+    $$
+
+    Its ramification index, separable residue degree, and inseparable residue degree are,
+    respectively,
+
+    $$
+    \frac{m_n}{|A_{H,\lambda}|},\qquad
+    \frac{m_n}{|D_{H,\lambda}|},\qquad
+    \frac{q^n}{|U_{H,\lambda}|}.                              \tag{9.35}
+    $$
+
+    For nonnormal $H$, the same formulas hold in the decomposition groupoid, with stabilizers
+    rather than quotient groups.
+
+3.  The spectator/ray compositum has the following exact local form.  Let $\mathcal V_0$ be
+    the henselian DVR at the underlying base branch, with uniformizer $\pi$, residue field
+    $\kappa_0$, and fraction field $K_{\mathrm{br}}$.  Let $\mathcal V$ be the henselian DVR of one
+    descended active branch, finite over $\mathcal V_0$, put
+    $L_{H\lambda}=\operatorname{Frac}(\mathcal V)$, and write $\tau$ and $\kappa$ for its
+    uniformizer and residue field.  Then
+
+    $$
+    \pi=u\tau^m,\qquad u\in\mathcal V^\times,
+    \qquad m=\frac{m_n}{|A_{H,\lambda}|}.
+                                                                  \tag{9.36}
+    $$
+
+    Let $R^\dagger$ be one arithmetic spectator/ray henselian trait factor over
+    $\mathcal V_0$, put
+    $K^\dagger=\operatorname{Frac}(R^\dagger)$, and write $\varpi$ and $k^\dagger$ for its
+    uniformizer and residue field, with
+    $\pi=v\varpi^r$ for $v\in(R^\dagger)^\times$.  The selected arithmetic factor
+    $K^\dagger/K_{\mathrm{br}}$ is tame, so in particular $r$ is prime to $p$.  Put
+    $c=\gcd(m,r)$, $m=cm_0$, $r=cr_0$, and first choose a field factor $\kappa_j$ of the
+    reduced residue compositum
+
+    $$
+    (\kappa\otimes_{\kappa_0} k^\dagger)_{\rm red}.
+                                                                  \tag{9.36a}
+    $$
+
+    Let $\bar u_j$ be the image in $\kappa_j^\times$ of the residue of $u/v$.  Factor the
+    separable polynomial
+
+    $$
+    T^c-\bar u_j^{-1}=\prod_\alpha F_{j,\alpha}(T)
+                                                                  \tag{9.36b}
+    $$
+
+    into monic irreducibles over $\kappa_j$.  The normalized base change has one arithmetic
+    branch for each pair $(j,\alpha)$, and that branch has residue field
+
+    $$
+    \kappa_{j,\alpha}
+       =\kappa_j[T]/(F_{j,\alpha}),                              \tag{9.36c}
+    $$
+
+    ramification index $r/c$ over $\mathcal V$, and Cartier multiplicity $m/c$ over
+    $R^\dagger$.  Over a separable closure (9.36b) has $c$ linear factors, but over the actual
+    residue field the number of branches is the number of irreducible factors, not necessarily
+    $c$, and their residue extensions cannot be omitted.
+
+    For the generic factor corresponding to $(j,\alpha)$, choose its embedding
+    $\iota_{j,\alpha}:L_{H\lambda}\hookrightarrow\Omega$ and view $K^\dagger$ in the same
+    separable closure $\Omega$ of the henselian base field $K_{\mathrm{br}}$.
+    Set
+
+    $$
+    E_{H\lambda,j,\alpha}
+      =\iota_{j,\alpha}(L_{H\lambda})\cap K^\dagger.            \tag{9.37}
+    $$
+
+    If both extensions are Galois, the decomposition group of the selected compositum factor
+    is the compatible-pair group
+
+    $$
+    D_{H\lambda,j,\alpha}^\dagger
+      \simeq
+      \operatorname{Stab}_{(j,\alpha)}\!\left(
+        D(\iota_{j,\alpha}(L_{H\lambda})/K_{\mathrm{br}})
+        \times_{\operatorname{Gal}(E_{H\lambda,j,\alpha}/K_{\mathrm{br}})}
+        D(K^\dagger/K_{\mathrm{br}})\right),                  \tag{9.37a}
+    $$
+
+    where the action on $(j,\alpha)$ is the action on the residue-compositum and Kummer
+    factors.  Its inertia group is
+
+    $$
+    I_{H\lambda,j,\alpha}^\dagger
+      =D_{H\lambda,j,\alpha}^\dagger\cap
+        \bigl(I(\iota_{j,\alpha}(L_{H\lambda})/K_{\mathrm{br}})
+              \times I(K^\dagger/K_{\mathrm{br}})\bigr).     \tag{9.37b}
+    $$
+
+    Thus the fiber product is over the **actual intersection field** (with its unramified and
+    ramified parts), not over an abstract cyclic group of order $c$.  Since the arithmetic
+    ramification is tame, its wild inertia is trivial and
+    $E_{H\lambda,j,\alpha}/K_{\mathrm{br}}$ is tame;
+    hence the active wild subgroup restricts trivially to $E_{H\lambda,j,\alpha}$.  It fixes the
+    residue-compositum and the prime-to-$p$ Hensel factor in (9.36b), so it survives on the
+    selected compatible factor.  For nonnormal $H$, the same statement is made in the common Galois closure with
+    decomposition stabilizers.  Only when (9.36b) splits linearly over the selected residue
+    factor and $E_{H\lambda,j,\alpha}$ is the full common tame subextension of degree $c$ may one replace
+    (9.37a) by the shorter fiber-product notation over $C_c$.
+
+The proposition stops at this reduction.  In particular, neither the equality
+$c=\gcd(m,r)$ nor geometric splitting after strict henselization determines the arithmetic
+branches.  The following is the exact unfinished ledger.
+
+**Remaining Kummer branch ledger $({\rm KBL}_v)$.**  For every selected $H$-orbit, every
+deformation-etale spectator sheet, and every arithmetic spectator/ray factor:
+
+1. descend the branch to its actual residue field, list every field factor $\kappa_j$ in
+   (9.36a), compute the Kummer class
+   $[\bar u_j]\in\kappa_j^\times/(\kappa_j^\times)^c$, and factor
+   $T^c-\bar u_j^{-1}$ as in (9.36b);
+2. record each residue extension $\kappa_{j,\alpha}/\kappa_j$, its residue-Frobenius orbit,
+   the local intersection field $E_{H\lambda,j,\alpha}$ for the corresponding generic factor, and all
+   restriction maps in (9.37a)--(9.37b); the integer $c$ is not a substitute for this field
+   data;
+3. repeat the calculation for the divisorial valuations and conductor endpoints created by
+   the chosen equivariant regular domination, including the Kummer classes of the monomial
+   blowup ratios and the stabilizers of the actual factors; and
+4. from those factors construct the full branch nearby-cycle complexes
+   $\mathcal C_v(W)$, their conductor fibers $C_{e,v}(W)$, and the generization chain maps
+   $K_e(W)\to C_{e,v}(W)$, with residue Galois and tame inertia.  The raw inclusions in
+   (9.29x) give only coefficient maps.  They do not prove
+   $C_{e,v}(W)=W^{P_{e,v}}[0]$; that degree-zero formula is available only after the relevant
+   Kummer cover has actually been shown to be a geometric disc with no retained branch
+   monodromy.
+
+Completing this ledger and proving its compatibility with intermediate and spectator/ray
+descent is the remaining local input $({\rm HDB}_v)$ (higher Drinfeld branch-complex descent).
+The purely inseparable invariant-ring discrepancy is already computed in (9.30)--(9.35), but
+it does not determine the prime-to-$p$ Kummer factors above it.
+
+There is a formal, correctly typed pushforward once $({\rm HDB}_v)$ has supplied those
+complexes.  Let $f=(g\circ h)_{\bar s}:\widetilde Z_{\bar s}\to X_{\bar s}$ be a proper leg of
+an equivariant regular domination, let $C_v$ be a normalized source component, and write
+$f_v=f|_{C_v}$.  Put
+
+$$
+\mathcal K_X(W)=R\Psi_X(Rg_{\bar\eta *}\mathcal L_W).
+$$
+
+Book 22, (2.8) and (3.10), give
+
+$$
+\mathcal K_X(W)
+ \simeq Rf_*\mathcal N_{\widetilde Z}(W),                    \tag{9.38}
+$$
+
+and the right side is the sheaf-valued homotopy fiber
+
+$$
+\operatorname{Fib}\!\left(
+ \bigoplus_v Rf_{v*}\mathcal C_v(W)
+ \oplus\bigoplus_e i_{f(e)*}K_e(W)
+ \longrightarrow
+ \bigoplus_{e\ni v}i_{f(e)*}C_{e,v}(W)
+\right).                                                     \tag{9.39}
+$$
+
+Here $i_{f(e)}:\{f(e)\}\hookrightarrow X_{\bar s}$.  If $f_v$ contracts $C_v$ to a point
+$x$, then $f_v=i_x\circ p_v$ and
+
+$$
+Rf_{v*}\mathcal C_v(W)
+ =i_{x*}R\Gamma(C_v,\mathcal C_v(W)).                         \tag{9.40}
+$$
+
+If $f_v$ is not contracted, its term remains $Rf_{v*}\mathcal C_v(W)$; it may be replaced by
+a finite pushforward only on a locus where finiteness has been proved.  In particular an
+unlocated complex $R\Gamma(C_v,-)$ is not a component contribution on the target.
+
+The direct image (9.38) is not a trace.  Properness gives only the duality counit
+$Rf_*f^!\to\mathrm{id}$, not an untwisted arrow $Rf_*f^*\to\mathrm{id}$.  The exact second
+remaining input is therefore the following.
+
+**Required restriction--Gysin/correspondence theorem $({\rm RGC}_v)$.**  For the two proper
+legs $f_0,f_1$ of a common equivariant regular domination, construct a degree-zero
+cohomological correspondence
+
+$$
+c_{01}:f_0^*\mathcal K_X(W)\longrightarrow f_1^!\mathcal K_X(W)       \tag{9.41}
+$$
+
+for the full normalization--conductor complex just defined, extending the oriented generic
+finite correspondence.  Prove that on a noncontracted finite component it is restriction
+followed by the oriented finite trace, whereas on a component contracted to a point it is the
+appropriate restriction--Gysin map through the term (9.40), with the codimension shift, Tate
+twist, inseparable degree and refined intersection multiplicity retained.  Prove independence
+of the chosen domination, compatibility with the maps in (9.39), residue Frobenius and retained
+prime-to-$v$ Hecke routes, and prove that the construction with the two legs exchanged is
+adjoint.  Proposition 9.4 already supplies coefficient and expansion one on the unique
+node-to-node sheet; it does not construct (9.41) on the component-routed or contracted terms.
+
+**Proof of Proposition 9.5.**  We prove the three assertions of the proposition.  The ledgers following it are
+explicitly not part of the proposition.
+
+On the branch $\lambda=R_ne_1$, use $z=X_n$ and $w=Y_n$.  The upper-triangular action has the
+exact form
+
+$$
+z\longmapsto[a]_G(z),\qquad
+w\longmapsto[b]_G(z)+_G[d]_G(w).                            \tag{9.42}
+$$
+
+Consequently $U_{H,\lambda}$ fixes the divisorial parameter $z$ and acts trivially on
+$\kappa_\lambda$.  More is visible directly.  In the height-one completed DVR form the orbit
+invariant
+
+$$
+\Xi_{U_H}(w)=
+ \prod_{u\in U_{H,\lambda}}u(w),
+ \qquad
+ u=\begin{pmatrix}1&b(u)\\0&1\end{pmatrix},\quad
+ u(w)=[b(u)]_G(z)+_G w.
+$$
+
+Translation by an element of $U_{H,\lambda}$ permutes the factors, while reduction modulo
+$z$ gives
+
+$$
+\overline{\Xi_{U_H}(w)}=w^{|U_{H,\lambda}|}=w^{p^s}.
+$$
+
+The extension obtained by quotienting by $U_{H,\lambda}$ has ramification index one because
+$z$ itself is a fixed uniformizer.  The invariant height-one ring is finite (the rings are
+excellent normalizations), so the length formula for this finite extension of DVRs has no
+missing defect factor.  Its residue extension is consequently purely inseparable of degree
+$|U_{H,\lambda}|$.  The displayed orbit invariant puts
+$\bar k((w^{p^s}))$ in the lower residue field, and
+$[\bar k((w)): \bar k((w^{p^s}))]=p^s$; hence the lower residue field is exactly
+$\bar k((w^{p^s}))$.  Next,
+$J_\lambda/U_{H,\lambda}$ injects through $a$ into $R_n^\times$.  At the height-one generic
+point, $z$ is a primitive point of the connected height-one $\pi^n$-torsion.  The factorization
+(9.29r) is its Eisenstein--Lubin--Tate factorization.  For
+$A=A_{H,\lambda}$ the orbit norm
+
+$$
+\Theta_A(z)=\prod_{\alpha\in A}[\widetilde\alpha]_G(z)
+$$
+
+is invariant and has $z$-valuation $|A|$.  Dividing the primitive-vector factorization
+(9.29r) into $A$-orbits and applying Weierstrass division by $\Theta_A$ gives
+
+$$
+\widehat{\mathcal O}_{U}^{\vphantom A}
+  =\bigoplus_{i=0}^{|A|-1}
+    \bigl(\widehat{\mathcal O}_{U}^{A}\bigr)z^i,
+$$
+
+where $\widehat{\mathcal O}_{U}$ is the height-one complete DVR after the
+$U_{H,\lambda}$-quotient; coefficient comparison in the remainder gives the directness.
+Thus $\Theta_A$ is a uniformizer downstairs and the invariant value group has index $|A|$.
+This step is totally ramified of degree $|A_{H,\lambda}|$ and does not change the residue
+field.  Finally
+$H_\lambda/J_\lambda$ acts faithfully and separably on $w$ through $D_{H,\lambda}$, by the
+exact-order argument preceding (9.29s).  It contributes the separable residue degree
+$|D_{H,\lambda}|$ and no ramification.  Reduction of the $a$-character identifies the
+$p$-Sylow row (9.32a).
+
+The normalized branch field is therefore a subfield of
+$\kappa_\lambda^{D_{H,\lambda}}$ over which the latter has purely inseparable degree
+$|U_{H,\lambda}|=p^s$.  A one-variable function field over the perfect field $\bar k$ has
+$p$-rank one.  The $p^s$th power of every element lies in the lower field, while the
+$p^s$-Frobenius image already has index $p^s$; equality of degrees therefore identifies the
+lower field with that Frobenius image.  This proves (9.30)--(9.32).  Since
+$v_\lambda(\pi)=m_n$ by (9.29r), restriction of
+normalized valuations gives
+
+$$
+m_n=e(D_n/D_n^H;\lambda)\,
+      v_{\mathfrak p_{H\lambda}}(\pi),
+$$
+
+which proves the Cartier formula.  When $H$ is normal, taking the two quotients of the exact
+upper-triangular filtration gives (9.33)--(9.35); reduction of the $a$-character gives the
+wild/tame row (9.34a).  This also recovers (9.29t) at $H=G_n$ and
+the level-one multiplicity $q-1$ at $H=\ker(G_n\to G_1)$, two independent checks on the
+formula.  At $H=1$ it returns $\kappa_\lambda$ and multiplicity $m_n$; at $H=G_n$ it says
+explicitly
+
+$$
+\bar k((t))
+  =\bigl(\kappa_\lambda^{R_n^\times}\bigr)^{q^n},
+$$
+
+which is the strict invariant--reduction discrepancy recorded after (9.29t).
+
+For the compositum, the deformation-etale spectator factor becomes a product only after the
+appropriate residue embedding is chosen; its arithmetic field of definition is retained in
+$R^\dagger$.  In $\mathcal V\otimes_{\mathcal V_0}R^\dagger$, (9.36) gives
+
+$$
+\tau^m=(u/v)^{-1}\varpi^r.
+$$
+
+Every extension of the resulting valuation makes
+$T=\tau^{m_0}/\varpi^{r_0}$ a unit satisfying
+$T^c=(u/v)^{-1}$.  Because $p\nmid c$, Hensel factorization identifies its unramified factors
+with the irreducible factors of $T^c-\bar u_j^{-1}$ over each residue-compositum field
+$\kappa_j$.  On the factor indexed by $(j,\alpha)$, normalized valuations satisfy
+
+$$
+v(\tau)=r_0,\qquad v(\varpi)=m_0.
+$$
+
+Bezout for $(m_0,r_0)=1$ produces a uniformizer of value one, proving the two ramification and
+Cartier assertions and the residue formula (9.36c).  Finally, the standard restriction map for
+two Galois fields in one separable closure identifies the Galois group of their compositum with
+the compatible pairs over their intersection.  Intersecting with the two inertia groups gives
+(9.37b).  Tameness of $K^\dagger/K_{\mathrm{br}}$ makes its wild inertia and the wild inertia of the
+intersection trivial.  This proves part 3 and the proposition. $\square$
+
+Thus Proposition 9.5 preserves the invariant-field, Cartier and group calculations, but it
+reduces rather than solves the arithmetic Kummer, conductor and correspondence problems.
+The principal node theorem consequently remains an input.
 
 **Required local theorem $({\rm PNS}_v)$ (principal node and stabilizer theorem).** Let
 
@@ -2315,8 +2723,8 @@ completion along every point over the vertex image.  The required assertions are
    every non-wild-invariant coefficient summand which does not survive on that extreme line
    must instead be carried, with its full decomposition action and without a smoothness or
    tameness assertion, by its actual completed branch source in the normalization-component
-   term of clause 2.  Proper nearby-cycle pushforward from a regular domination then supplies
-   its full branch complex.  The resulting node-to-branch generization chain maps are
+   term of clause 2.  The typed proper direct image (9.39) from a regular domination then
+   supplies its full branch contribution.  The resulting node-to-branch generization chain maps are
    identified; no branch with uncomputed monodromy is replaced by an underived module;
 2. for each oriented flag incidence contributing to an extreme residue, exactly one
    stabilizer-quotient sheet, of scheme-theoretic multiplicity one, is node-to-node.  Every
@@ -2327,18 +2735,24 @@ completion along every point over the vertex image.  The required assertions are
    node-to-node sheets lying over the finite parahoric base legs, Proposition 9.2 then proves,
    rather than assumes, expansion index one.
 
-Proposition 9.4 proves the sheet classification, common-factor routing, multiplicity one,
-expansion one, and retained Hecke/transpose compatibility in clause 2.  What clause 2 still
-imports from clause 1 is the full decomposition action and nearby-cycle complex on each
-component-routed source after wild intermediate/spectator descent.
+Proposition 9.4 proves the sheet classification, common-factor routing, multiplicity one and
+expansion one.  Proposition 9.5 proves the raw invariant branch fields, Cartier multiplicities
+and active group filtrations, and reduces each arithmetic normalized compositum to
+(9.36a)--(9.37b).  What is still imported in clause 1 is $({\rm HDB}_v)$, namely the completed
+$({\rm KBL}_v)$ calculation and the full branch complexes and generization maps.  Clause 2
+also imports $({\rm RGC}_v)$ for the component-routed and contracted restriction--Gysin maps,
+their transpose and their compatibility with the typed direct image (9.39).  Neither input is
+proved here.
 
-This is an exact finite-level theorem.  It can equivalently be proved by constructing the full
-Drinfeld level structure on the active height-two $\pi$-divisible group, taking the Stein
-factors of the length-one and length-two PEL flag schemes, and calculating their complete local
-rings from the universal display (4.4).  The equality with the normalization in (9.26), not
-mere equality of characteristic-zero points, is part of the assertion.
+This is an exact finite-level statement.  Its remaining algebraic branch part could be proved
+by constructing the full Drinfeld level structure on the active height-two $\pi$-divisible
+group, taking the Stein factors of the length-one and length-two PEL flag schemes, and
+calculating their complete local rings from the universal display (4.4).  The equality with the
+normalization in (9.26), not mere equality of characteristic-zero points, is part of that
+assertion.  The correspondence part additionally requires the orientation (9.41); complete
+local rings alone do not supply it.
 
-It is enough to prove the displayed algebra after completed strict henselization.  All modules
+For the displayed finite algebra it is enough to work after completed strict henselization.  All modules
 in question are finite, completion is faithfully flat, and equality of two finite subalgebras
 together with the decomposition action is reflected by that completion.  This is completion of
 the already constructed proper normalization, where Book 58 applies.  It is not an invocation of formal
@@ -2355,7 +2769,7 @@ remaining pro-$\ell$ generator.  Book 22, (3.14), then gives the
 full complex
 
 $$
-[M_x\xrightarrow{T_x-1}M_x]                               \tag{9.30}
+[M_x\xrightarrow{T_x-1}M_x]                               \tag{9.43}
 $$
 
 with the residue-Galois action (3.6).  Combining it with the branch complexes and
@@ -2365,17 +2779,15 @@ from the chosen oriented endpoint difference. They place all remaining sheets in
 normalization term. The same formulas make
 finite-flat trace adjoint to pull on the contragredient representation and commute with every
 retained Hecke route.  Proposition 9.3 proves the level-one ring assertion $({\rm DLB}_1)$.
-Equations (9.29k)--(9.29l) also prove the active normalization and intermediate invariant rings
-at every finite depth, while (9.29r)--(9.29x) prove the full-level higher branch, inertia,
-residue-degree, node-annular, and boundary-stabilizer ledger.  Thus the first unresolved part
-of $({\rm PNS}_v)$ in proof order is $({\rm HDB}_v)$: construction of the raw branch conductor
-complexes and generization maps, their descent through the selected wild intermediate and
-spectator/ray compositum, and the strict transforms for the proper residue-prime legs.
-Equations (9.29b)--(9.29i) and (9.29n)--(9.29q) prove the level-one stabilizer, wild-invariant,
-multiplicity-one, and constant-line generization consequences on the level-one Stein factor;
-Proposition 9.4 promotes the residue-prime routing, coefficient one, expansion one, and
-transpose compatibility to the actual common factor.  In particular, the
-principal cover is genuinely wild even though its selected extreme invariant lines are tame.
+Equations (9.29k)--(9.29l) prove the active normalization and intermediate invariant rings at
+every finite depth, while (9.29r)--(9.29x) prove the full-level higher branch, inertia,
+residue-degree, node-annular, and boundary-stabilizer ledger.  Proposition 9.5 adds the exact
+wild invariant-ring residue field, Cartier multiplicity and the normalized-compositum
+factorization rule.  It leaves the actual Kummer factors, their conductor/generization
+complexes and the oriented component correspondence to $({\rm HDB}_v)$ and $({\rm RGC}_v)$.
+Proposition 9.4 supplies the residue-prime routing and unit node coefficients.  In particular,
+the principal cover is genuinely wild even though its selected extreme invariant lines are
+tame.
 
 ## 10. The semistable curve theorem
 
@@ -2434,10 +2846,13 @@ one-step Iwahori chain (2.3). Then:
     wild invariants of the two Steinberg rows, unique multiplicity-one flag sheet,
     and constant-line generization maps.  Proposition 9.4 promotes the flag routing,
     multiplicity and expansion one, and residue-prime Hecke/transpose route to the actual
-    common factor.  What remains in
-    $({\rm PNS}_v)$ begins with $({\rm HDB}_v)$: construction of the raw conductor complexes
-    and generization maps, wild branch descent through the selected intermediate and
-    spectator/ray compositum, and the full proper pushforward on the component-routed sources.
+    common factor.  Proposition 9.5 computes the reduced invariant branch fields, Cartier
+    multiplicities and group filtrations, and reduces every normalized spectator/ray
+    compositum to the factorization (9.36b) over its actual residue-compositum field.  What
+    remains in $({\rm PNS}_v)$ is $({\rm HDB}_v)$, the exact Kummer ledger
+    $({\rm KBL}_v)$ and the resulting conductor/generization complexes, together with
+    $({\rm RGC}_v)$, the oriented restriction--Gysin correspondence on component-routed and
+    contracted sources.
 
 **Proof.** The dyadic vertex construction, Proposition 2.1, Theorem 2.2, and
 Proposition 2.3 prove projective representability and transfer the exact integral local
@@ -2448,8 +2863,8 @@ statement 4. Chapter 5 proves statement 5. The graph nearby-cycle calculation in
 Chapter 6 proves statement 6. Chapter 8 proves statements 7--8. Naturality of
 prime-to-$p$ isogenies and functoriality of nearby cycles prove statement 9.
 Sections 9.3--9.4 prove statement 10, Section 9.2 proves statement 11, and
-Theorem 9.1 proves statement 12.  Proposition 9.2 and the calculation following it prove
-statement 13 and its stated boundary. $\square$
+Theorem 9.1 proves statement 12.  Propositions 9.2--9.5 prove statement 13 and its stated
+boundary. $\square$
 
 ### 10.2 Scope and failure modes
 
@@ -2480,12 +2895,16 @@ level-one principal cover is wild and has a many-branch special fiber; only its 
 $U_L$-invariants give the two tame extreme lines in (9.29h), and (9.29n)--(9.29q) retain the
 moving branch stabilizer and coefficient module without replacing its full complex by a
 second node complex.  Equations (9.29r)--(9.29x) further compute the raw higher branch,
-inertia, residue-degree, node-annular, and boundary-stabilizer ledger.  Constructing the raw
-conductor/generization complexes, descending them through the wild intermediate and
-spectator/ray normalization, and calculating the full proper nearby-cycle pushforward on
-every component-routed source still requires $({\rm HDB}_v)$;
-Proposition 9.4 already fixes the actual common-factor strict-transform routing and node
-multiplicities.  The ray projection formula applies only to the component/trait-pulled coefficient
+inertia, residue-degree, node-annular, and boundary-stabilizer ledger.  Proposition 9.5
+computes the reduced invariant branch fields, Cartier multiplicities and active groups.  Its
+normalized-compositum formula shows exactly what is still missing: the Kummer classes and
+factorizations over the actual residue-compositum fields, their local intersection fields,
+and their conductor/generization complexes.  Those data are $({\rm HDB}_v)$.  Even after they
+are known, the proper direct image (9.39) is not an untwisted trace; $({\rm RGC}_v)$ must
+construct the component restriction--Gysin correspondence and its orientation.  Proposition
+9.4 fixes the actual common-factor strict-transform routing and node multiplicities, but
+$({\rm PNS}_v)$ remains conditional on these two inputs.  The ray projection formula applies
+only to the component/trait-pulled coefficient
 identified by an effective global ray datum.
 
 The equality $\operatorname{rank}N=b_1(\Gamma)$ is rational. Integral cokernels use the thickness matrix and saturation of the chosen lattice. A rational Hecke projector with an $\ell$-denominator does not select a canonical integral lattice. The packet theorem is likewise in characteristic zero and concerns the raw curve carrier; it is not an integral Ihara statement and is not a raw-to-global theorem. The geometric degeneracy complex remains input to any Ihara lemma or level-raising theorem, not a proof of either.
