@@ -1,4 +1,4 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section03CompletionOfALocalization
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Dependencies
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
 
@@ -80,8 +80,7 @@ theorem primitive_tensor_polynomial_model
 theorem completed_polynomial_factorization_product
     {K : Type*} [Field K] {g : ℕ} (f : K[X]) (factors : Fin g → K[X])
     (hfactor : f = ∏ i, factors i)
-    (hpair : Pairwise (fun i j => IsCoprime (factors i) (factors j)))
-    (_hirr : ∀ i, Irreducible (factors i)) :
+    (hpair : Pairwise (fun i j => IsCoprime (factors i) (factors j))) :
     Nonempty
       ((K[X] ⧸ Ideal.span {f}) ≃+*
         (∀ i, K[X] ⧸ Ideal.span {factors i})) := by
@@ -106,92 +105,6 @@ theorem irreducible_completed_factor_is_field
     Ideal.Quotient.field (Ideal.span ({f} : Set K[X]))
   exact Field.toIsField _
 
-
-/-- A coprime factorization of a residue polynomial lifts over a henselian ring. -/
-theorem henselian_coprime_factor_lift
-    {A : Type*} [CommRing A] (I : Ideal A) [HenselianRing A I]
-    (f : A[X]) (gbar hbar : (A ⧸ I)[X])
-    (hf : f.Monic)
-    (hbar_monic : gbar.Monic ∧ hbar.Monic)
-    (hbar_coprime : IsCoprime gbar hbar)
-    (hfactor : f.map (Ideal.Quotient.mk I) = gbar * hbar) :
-    ∃ g h : A[X], g.Monic ∧ h.Monic ∧ g * h = f ∧
-      g.map (Ideal.Quotient.mk I) = gbar ∧
-      h.map (Ideal.Quotient.mk I) = hbar := by
-  sorry
-
-/-- The coprime factor lift is unique once the residue factors and degrees are fixed. -/
-theorem henselian_coprime_factor_lift_unique
-    {A : Type*} [CommRing A] (I : Ideal A) [HenselianRing A I]
-    (f : A[X]) (gbar hbar : (A ⧸ I)[X])
-    (g₁ h₁ g₂ h₂ : A[X])
-    (hbar_coprime : IsCoprime gbar hbar)
-    (h₁spec : g₁.Monic ∧ h₁.Monic ∧ g₁ * h₁ = f ∧
-      g₁.map (Ideal.Quotient.mk I) = gbar ∧ h₁.map (Ideal.Quotient.mk I) = hbar)
-    (h₂spec : g₂.Monic ∧ h₂.Monic ∧ g₂ * h₂ = f ∧
-      g₂.map (Ideal.Quotient.mk I) = gbar ∧ h₂.map (Ideal.Quotient.mk I) = hbar) :
-    g₁ = g₂ ∧ h₁ = h₂ := by
-  classical
-  by_cases hA : Nontrivial A
-  · let _ : Nontrivial A := hA
-    have hI : I ≠ ⊤ := by
-      intro htop
-      have hmem : (1 : A) ∈ Ideal.jacobson (⊥ : Ideal A) :=
-        (inferInstance : HenselianRing A I).jac (by simp [htop])
-      have hz : IsUnit (0 : A) := by
-        simpa using (Ideal.mem_jacobson_bot.mp hmem (-1 : A))
-      exact not_isUnit_zero hz
-    let _ : Nontrivial (A ⧸ I) := Ideal.Quotient.nontrivial_iff.mpr hI
-    have hmain : g₁ = g₂ ∧ h₁ = h₂ := by
-      let q : A →+* (A ⧸ I) := Ideal.Quotient.mk I
-      have hgbar : gbar.Monic := by
-        rw [← h₁spec.2.2.2.1]
-        exact h₁spec.1.map q
-      have hhbar : hbar.Monic := by
-        rw [← h₁spec.2.2.2.2]
-        exact h₁spec.2.1.map q
-      have hresbar : IsUnit (gbar.resultant hbar) :=
-        (Polynomial.isUnit_resultant_iff_isCoprime hgbar).2 hbar_coprime
-      let _ : IsLocalHom q := isLocalHom_of_le_jacobson_bot I
-        (inferInstance : HenselianRing A I).jac
-      have hresmap : q (g₁.resultant h₂) = gbar.resultant hbar := by
-        rw [← h₁spec.2.2.2.1, ← h₂spec.2.2.2.2]
-        rw [← Polynomial.resultant_map_map g₁ h₂ g₁.natDegree h₂.natDegree q]
-        rw [h₁spec.1.natDegree_map, h₂spec.2.1.natDegree_map]
-      have hres : IsUnit (g₁.resultant h₂) := by
-        apply IsUnit.of_map q
-        rw [hresmap]
-        exact hresbar
-      have hcop : IsCoprime g₁ h₂ :=
-        (Polynomial.isUnit_resultant_iff_isCoprime h₁spec.1).1 hres
-      have hdiv : g₁ ∣ g₂ * h₂ := by
-        refine ⟨h₁, ?_⟩
-        exact h₂spec.2.2.1.trans h₁spec.2.2.1.symm
-      have hgdiv : g₁ ∣ g₂ := hcop.dvd_of_dvd_mul_right hdiv
-      have hdeq : g₂.natDegree = g₁.natDegree := by
-        calc
-          g₂.natDegree = (g₂.map q).natDegree :=
-            (h₂spec.1.natDegree_map q).symm
-          _ = gbar.natDegree := by rw [h₂spec.2.2.2.1]
-          _ = (g₁.map q).natDegree := by rw [h₁spec.2.2.2.1]
-          _ = g₁.natDegree := h₁spec.1.natDegree_map q
-      have hdeg : g₂.natDegree ≤ g₁.natDegree := hdeq.le
-      have hgeq : g₂ = g₁ :=
-        Polynomial.eq_of_monic_of_dvd_of_natDegree_le h₁spec.1 h₂spec.1 hgdiv hdeg
-      have hgeq' : g₁ = g₂ := hgeq.symm
-      refine ⟨hgeq', ?_⟩
-      apply sub_eq_zero.mp
-      have hmul : g₁ * (h₁ - h₂) = 0 := by
-        rw [mul_sub, h₁spec.2.2.1, ← h₂spec.2.2.1, hgeq, sub_self]
-      by_contra hne
-      have hlead : g₁.leadingCoeff * (h₁ - h₂).leadingCoeff ≠ 0 := by
-        simp [h₁spec.1.leadingCoeff, Polynomial.leadingCoeff_ne_zero.mpr hne]
-      have hleadmul := Polynomial.leadingCoeff_mul' hlead
-      rw [hmul] at hleadmul
-      exact hlead hleadmul.symm
-    exact hmain
-  · let _ : Subsingleton A := not_nontrivial_iff_subsingleton.mp hA
-    exact ⟨Subsingleton.elim _ _, Subsingleton.elim _ _⟩
 
 /-- The split quadratic algebra used for the explicit idempotent example. -/
 abbrev quadraticSplitAlgebra (R : Type*) [CommRing R] (_a _b : R) : Type _ :=
@@ -225,13 +138,64 @@ def quadraticQuotientProjectorB {R : Type*} [Field R] (a b : R) (_h : a ≠ b) :
     quadraticSplitQuotient R a b :=
   Ideal.Quotient.mk _ ((b - a)⁻¹ • (X - C a))
 
-/-- The projector identities `e_a²=e_a`, `e_b²=e_b`, `e_ae_b=0`, `e_a+e_b=1`. -/
+/-- The quotient projector identities `e_a²=e_a`, `e_b²=e_b`, `e_ae_b=0`,
+    and `e_a+e_b=1`. -/
 theorem quadratic_projector_relations
     {R : Type*} [Field R] (a b : R) (h : a ≠ b) :
-    let ea := quadraticProjectorA a b h
-    let eb := quadraticProjectorB a b h
+    let ea := quadraticQuotientProjectorA a b h
+    let eb := quadraticQuotientProjectorB a b h
     ea * ea = ea ∧ eb * eb = eb ∧ ea * eb = 0 ∧ ea + eb = 1 := by
-  simp [quadraticProjectorA, quadraticProjectorB]
+  let I : Ideal R[X] := Ideal.span {X - C a}
+  let J : Ideal R[X] := Ideal.span {X - C b}
+  have hcop : IsCoprime I J := by
+    dsimp [I, J]
+    exact (Ideal.isCoprime_span_singleton_iff _ _).2
+      (isCoprime_X_sub_C_of_isUnit_sub (sub_ne_zero.mpr h).isUnit)
+  have hmul : I * J =
+      Ideal.span {((X - C a) * (X - C b) : R[X])} := by
+    dsimp [I, J]
+    rw [Ideal.span_singleton_mul_span_singleton]
+  let e : quadraticSplitQuotient R a b ≃+* R × R :=
+    (Ideal.quotEquivOfEq hmul.symm).trans
+      ((Ideal.quotientMulEquivQuotientProd I J hcop).trans
+        (RingEquiv.prodCongr
+          (Polynomial.quotientSpanXSubCAlgEquiv a).toRingEquiv
+          (Polynomial.quotientSpanXSubCAlgEquiv b).toRingEquiv))
+  have heval (p : R[X]) :
+      e (Ideal.Quotient.mk
+          (Ideal.span {((X - C a) * (X - C b) : R[X])}) p) =
+        (p.eval a, p.eval b) := by
+    simp [e, I, J, Prod.map,
+      Ideal.quotientMulEquivQuotientProd_fst,
+      Ideal.quotientMulEquivQuotientProd_snd]
+  have hea : e (quadraticQuotientProjectorA a b h) = (1, 0) := by
+    rw [quadraticQuotientProjectorA, heval]
+    apply Prod.ext
+    · rw [Polynomial.eval_smul, Polynomial.eval_sub, Polynomial.eval_X,
+        Polynomial.eval_C]
+      simpa [smul_eq_mul] using inv_mul_cancel₀ (sub_ne_zero.mpr h)
+    · rw [Polynomial.eval_smul, Polynomial.eval_sub, Polynomial.eval_X,
+        Polynomial.eval_C]
+      simp
+  have heb : e (quadraticQuotientProjectorB a b h) = (0, 1) := by
+    rw [quadraticQuotientProjectorB, heval]
+    apply Prod.ext
+    · rw [Polynomial.eval_smul, Polynomial.eval_sub, Polynomial.eval_X,
+        Polynomial.eval_C]
+      simp
+    · rw [Polynomial.eval_smul, Polynomial.eval_sub, Polynomial.eval_X,
+        Polynomial.eval_C]
+      simpa [smul_eq_mul] using inv_mul_cancel₀ (sub_ne_zero.mpr h.symm)
+  dsimp
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · apply e.injective
+    simp [map_mul, hea]
+  · apply e.injective
+    simp [map_mul, heb]
+  · apply e.injective
+    simp [map_mul, hea, heb]
+  · apply e.injective
+    simp [map_add, hea, heb]
 
 
 /-- The explicit projectors identify the two factors of the split quadratic algebra. -/

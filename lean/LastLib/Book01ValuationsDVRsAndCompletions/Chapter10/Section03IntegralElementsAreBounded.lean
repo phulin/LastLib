@@ -2,7 +2,9 @@ import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section02ExistenceBy
 import Mathlib.LinearAlgebra.Charpoly.BaseChange
 import Mathlib.LinearAlgebra.Eigenspace.Charpoly
 import Mathlib.LinearAlgebra.Eigenspace.Minpoly
+import Mathlib.LinearAlgebra.Complex.FiniteDimensional
 import Mathlib.RingTheory.Polynomial.IsIntegral
+import Mathlib.RingTheory.Ideal.GoingUp
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
 
@@ -57,11 +59,10 @@ theorem chapter10_integral_closure_subset_bounded
 
 /-- The field-theoretic valuative criterion for integrality.
 
-The wrapper is instantiated with a value group in the same universe as `L`.
-Every valuation on a field is equivalent to one with this universe-level
-choice (for example, its generated value group), which avoids quantifying a
-single accidentally smaller universe while retaining the field-theoretic
-intersection criterion.
+The wrapper is instantiated with the canonical value group in the universe of
+`L`.  Every valuation ring on `L` has an equivalent canonical valuation with
+this universe-level choice, so this avoids omitting any bounded elements while
+keeping the field-theoretic intersection criterion usable.
 -/
 theorem chapter10_integral_closure_valuative_criterion
     {K : Type u10K} {L : Type u10L} {Γ₀ : Type u10Γ}
@@ -302,6 +303,144 @@ theorem chapter10_unique_extension_makes_integral_closure_valuation_ring
     rw [hEq] at hxW₀'
     exact hxW₀'
 
+/-! ### Extension centers
+
+These results belong here, after maximal domination and the valuative
+criterion.  They used to be forward declarations in Chapter 9. -/
+
+/-- Finite-dimensional integral closure gives the extension-center
+correspondence between valuation classes and primes over the base center. -/
+theorem chapter10_finite_extension_prime_valuation_correspondence
+    {A B : Type*} {K : Type u10K} {L : Type u10L} {Γ : Type u10Γ}
+    [CommRing A] [IsDomain A] [ValuationRing A] [IsIntegrallyClosed A]
+    [Field K] [Algebra A K] [IsFractionRing A K]
+    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Algebra A L] [IsScalarTower A K L]
+    [CommRing B] [Algebra A B] [Algebra B L] [IsScalarTower A B L]
+    [IsIntegralClosure B A L]
+    [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ)
+    (hA : vK.Integers A) :
+    Chapter10ExtensionPrimeCorrespondence (A := A) (B := B) (L := L) vK := by
+  sorry
+
+/-- Factorization-form henselianity makes the center over the base maximal
+ideal unique in every finite integral extension. -/
+theorem chapter10_henselian_valuation_ring_has_unique_prime_above
+    {A B : Type*} {K : Type u10K} {L : Type u10L} {Γ : Type u10Γ}
+    [CommRing A] [IsDomain A] [ValuationRing A] [IsIntegrallyClosed A]
+    [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Algebra A K] [IsFractionRing A K]
+    [CommRing B] [Algebra A B] [Algebra B L]
+    [Algebra A L] [IsScalarTower A K L] [IsScalarTower A B L]
+    [IsIntegralClosure B A L]
+    [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ)
+    (hA : vK.Integers A)
+    (hH : Chapter10IsHenselianValuedField vK) :
+    Chapter10HasUniquePrimeAbove (A := A) (B := B) := by
+  sorry
+
+/-- The correspondence transfers uniqueness between its two parameter
+spaces. -/
+theorem chapter10_unique_prime_iff_unique_valuation_extension
+    {A B : Type*} {K : Type u10K} {L : Type u10L} {Γ : Type u10Γ}
+    [CommRing A] [IsLocalRing A] [CommRing B] [Algebra A B]
+    [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ)
+    (hcor : Chapter10ExtensionPrimeCorrespondence
+      (A := A) (B := B) (L := L) vK) :
+    (Chapter10HasUniquePrimeAbove (A := A) (B := B) ↔
+      Chapter10HasUniqueValuationExtension (L := L) vK) := by
+  obtain ⟨e⟩ := hcor
+  constructor
+  · rintro ⟨P, hP, hPuniq⟩
+    let y₀ : {P : Ideal B // Chapter10PrimeAboveMaximal (A := A) (B := B) P} :=
+      ⟨P, hP⟩
+    obtain ⟨W₀, hW₀⟩ := Quotient.exists_rep (e.symm y₀)
+    refine ⟨⟨W₀⟩, ?_⟩
+    intro W₁ W₂
+    have hq :
+        Quotient.mk (Chapter10ValuationExtensionSetoid (L := L) vK) W₁ =
+          Quotient.mk (Chapter10ValuationExtensionSetoid (L := L) vK) W₂ := by
+      apply e.injective
+      apply Subtype.ext
+      exact
+        (hPuniq _ (e (Quotient.mk (Chapter10ValuationExtensionSetoid (L := L) vK) W₁)).property).trans
+          (hPuniq _ (e (Quotient.mk (Chapter10ValuationExtensionSetoid (L := L) vK) W₂)).property).symm
+    exact Quotient.exact hq
+  · rintro ⟨⟨W₀⟩, hWuniq⟩
+    let y₀ := e (Quotient.mk (Chapter10ValuationExtensionSetoid (L := L) vK) W₀)
+    refine ⟨y₀.1, y₀.2, ?_⟩
+    intro P hP
+    let y : {P : Ideal B // Chapter10PrimeAboveMaximal (A := A) (B := B) P} :=
+      ⟨P, hP⟩
+    obtain ⟨q, hq⟩ := e.surjective y
+    obtain ⟨W, hW⟩ := Quotient.exists_rep q
+    have qeq : q = Quotient.mk (Chapter10ValuationExtensionSetoid (L := L) vK) W₀ :=
+      hW.symm.trans (Quotient.sound (hWuniq W W₀))
+    exact congrArg Subtype.val (hq.symm.trans (congrArg e qeq))
+
+/-- A henselian valued field has a unique center and hence a unique valuation
+branch in every finite extension. -/
+theorem chapter10_henselian_valued_field_has_unique_prime_and_extension
+    {A B : Type*} {K : Type u10K} {L : Type u10L} {Γ : Type u10Γ}
+    [CommRing A] [IsDomain A] [ValuationRing A] [IsIntegrallyClosed A]
+    [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Algebra A K] [IsFractionRing A K]
+    [CommRing B] [Algebra A B] [Algebra B L]
+    [Algebra A L] [IsScalarTower A K L] [IsScalarTower A B L]
+    [IsIntegralClosure B A L]
+    [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ)
+    (hA : vK.Integers A)
+    (hH : Chapter10IsHenselianValuedField vK) :
+    Chapter10HasUniquePrimeAbove (A := A) (B := B) ∧
+      Chapter10HasUniqueValuationExtension (L := L) vK := by
+  have hcor := chapter10_finite_extension_prime_valuation_correspondence
+    (A := A) (B := B) (K := K) (L := L) vK hA
+  have hprime := chapter10_henselian_valuation_ring_has_unique_prime_above
+    (A := A) (B := B) (K := K) (L := L) vK hA hH
+  exact ⟨hprime,
+    (chapter10_unique_prime_iff_unique_valuation_extension vK hcor).mp hprime⟩
+
+/-- A finite integral extension has finitely many nonempty centers above the
+base maximal ideal. -/
+theorem chapter10_finite_extension_primes_above_are_finite
+    {A B : Type*} [CommRing A] [IsDomain A] [IsLocalRing A]
+    [CommRing B] [IsDomain B] [Algebra A B] [Module.Finite A B]
+    [Algebra.IsIntegral A B] [FaithfulSMul A B] :
+    Set.Finite {P : Ideal B |
+      Chapter10PrimeAboveMaximal (A := A) (B := B) P} ∧
+      Nonempty {P : Ideal B //
+        Chapter10PrimeAboveMaximal (A := A) (B := B) P} := by
+  let m : Ideal A := IsLocalRing.maximalIdeal A
+  have heq : {P : Ideal B | Chapter10PrimeAboveMaximal (A := A) (B := B) P} =
+      m.primesOver B := by
+    ext P
+    constructor
+    · rintro ⟨hprime, hcomap⟩
+      exact ⟨hprime, ⟨hcomap.symm⟩⟩
+    · rintro ⟨hprime, hover⟩
+      exact ⟨hprime, hover.over.symm⟩
+  constructor
+  · rw [heq]
+    exact Algebra.QuasiFinite.finite_primesOver m
+  · obtain ⟨P, hPmax, hPover⟩ :=
+      Ideal.exists_maximal_ideal_liesOver_of_isIntegral (S := B) m
+    exact ⟨⟨P, hPmax.isPrime, hPover.over.symm⟩⟩
+
+/-- Algebraic uniqueness is proved here from finite-subextension centers. -/
+theorem chapter10_henselian_valuation_has_unique_branch
+    {K : Type u10K} {L : Type u10L} {Γ₀ : Type u10Γ}
+    {Γ₁ Γ₂ : Type*} [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero Γ₀]
+    [LinearOrderedCommGroupWithZero Γ₁]
+    [LinearOrderedCommGroupWithZero Γ₂] [Algebra.IsAlgebraic K L]
+    (v : Valuation K Γ₀) (hH : Chapter10IsHenselianValuedField v)
+    (w₁ : Valuation L Γ₁) (w₂ : Valuation L Γ₂)
+    (h₁ : v.IsEquiv (w₁.comap (algebraMap K L)))
+    (h₂ : v.IsEquiv (w₂.comap (algebraMap K L))) :
+    w₁.IsEquiv w₂ := by
+  sorry
+
 /-- All coefficients of the characteristic polynomial, trace, and norm are integral. -/
 def Chapter10CharacteristicPolynomialIntegral
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -386,19 +525,36 @@ theorem chapter10_integral_element_characteristic_data
 /-- A cancellation example witnessing that the norm alone is not a converse. -/
 structure Chapter10NormCancellationExample
     (A K L : Type*) [CommRing A] [Field K] [Field L]
-    [Algebra A K] [Algebra A L] [Algebra K L] [FiniteDimensional K L] where
+    [Algebra A K] [Algebra A L] [Algebra K L] [IsScalarTower A K L]
+    [FiniteDimensional K L] where
   x : L
   norm_mem : ∃ a : A, Algebra.norm K x = algebraMap A K a
   not_integral : ¬ IsIntegral A x
 
+/-- A concrete finite-field-extension witness that the norm condition is not a
+converse to integrality.  The witness is intentionally packaged separately
+from the generic counterexample schema above, so the negative statement below
+does not merely assume that a witness has been supplied by a caller. -/
+theorem chapter10_concrete_norm_cancellation_example :
+    Nonempty (Chapter10NormCancellationExample ℤ ℝ ℂ) := by
+  sorry
+
 theorem chapter10_norm_alone_is_not_a_converse
     {A K L : Type*} [CommRing A] [Field K] [Field L]
-    [Algebra A K] [Algebra A L] [Algebra K L] [FiniteDimensional K L]
+    [Algebra A K] [Algebra A L] [Algebra K L] [IsScalarTower A K L]
+    [FiniteDimensional K L]
     (exampleData : Chapter10NormCancellationExample A K L) :
     ¬ (∀ x : L, (∃ a : A, Algebra.norm K x = algebraMap A K a) →
       IsIntegral A x) := by
   intro h
   exact exampleData.not_integral (h exampleData.x exampleData.norm_mem)
+
+/-- The norm-only integrality test fails already for `ℤ ⊂ ℝ ⊂ ℂ`. -/
+theorem chapter10_norm_alone_is_not_a_converse_concrete :
+    ¬ (∀ x : ℂ, (∃ a : ℤ, Algebra.norm ℝ x = algebraMap ℤ ℝ a) →
+      IsIntegral ℤ x) := by
+  exact chapter10_norm_alone_is_not_a_converse
+    (exampleData := Classical.choice chapter10_concrete_norm_cancellation_example)
 
 end
 

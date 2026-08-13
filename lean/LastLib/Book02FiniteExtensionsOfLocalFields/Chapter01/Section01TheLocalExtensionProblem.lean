@@ -71,7 +71,8 @@ theorem chapter01_complete_field_is_henselian
     (vK : Valuation K Γ)
     (hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal vK.valuationSubring)
       vK.valuationSubring) :
-    HenselianLocalRing vK.valuationSubring := by
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.HenselianFactorizationProperty
+      vK.valuationSubring := by
   exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.complete_separated_local_ring_is_henselian
     hcomplete
 
@@ -81,7 +82,9 @@ theorem chapter01_henselian_discrete_field_unique_extension
     [Algebra.IsAlgebraic K L]
     [LinearOrderedCommGroupWithZero Γ]
     (vK : Valuation K Γ) [Valuation.IsRankOneDiscrete vK]
-    (hH : HenselianLocalRing vK.valuationSubring) :
+    (hH :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.HenselianFactorizationProperty
+        vK.valuationSubring) :
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.hasUniqueValuationExtension vK L := by
   have hiff :=
     List.TFAE.out

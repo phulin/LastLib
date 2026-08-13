@@ -136,38 +136,22 @@ theorem final_fraction_field_degree_formula
         Module.finrank R S := Ideal.sum_ramification_inertia_eq_finrank p S
     _ = Module.finrank (FractionRing R) (FractionRing S) := hfrac
 
-/-- A complete or henselian base has one valuation branch in a finite algebraic extension. -/
+/-- A factorization-henselian base has one valuation branch in an algebraic extension.
+Completeness enters through `complete_nonarchimedean_field_is_henselian`, so
+this synthesis theorem does not repeat a topology-to-algebra conversion. -/
 theorem complete_or_henselian_base_has_one_branch
     {K Γ E : Type u} [Field K] [Field E]
     [LinearOrderedCommGroupWithZero Γ] [Algebra K E]
     (v : Valuation K Γ)
     [Algebra.IsAlgebraic K E]
-    (hbase : HenselianLocalRing v.valuationSubring ∨
-      IsAdicComplete (IsLocalRing.maximalIdeal v.valuationSubring)
-        v.valuationSubring) :
+    (hbase : Chapter09.HenselianFactorizationProperty v.valuationSubring) :
     ∃ W : HeterogeneousValuationExtension v E,
       ∀ W' : HeterogeneousValuationExtension v E,
         (letI : LinearOrderedCommGroupWithZero W.valueGroup := W.orderedValueGroup
          letI : LinearOrderedCommGroupWithZero W'.valueGroup := W'.orderedValueGroup
         W'.valuation.IsEquiv W.valuation) := by
-  have hhenselian : HenselianLocalRing v.valuationSubring := by
-    rcases hbase with hh | hc
-    · exact hh
-    · have hring : HenselianRing v.valuationSubring
-          (IsLocalRing.maximalIdeal v.valuationSubring) :=
-        @IsAdicComplete.henselianRing v.valuationSubring _
-          (IsLocalRing.maximalIdeal v.valuationSubring) hc
-      exact {
-        is_henselian := by
-          intro f hf a₀ hfa hunit
-          have hmap : IsUnit
-              (Ideal.Quotient.mk (IsLocalRing.maximalIdeal v.valuationSubring)
-                (f.derivative.eval a₀)) :=
-            IsUnit.map (Ideal.Quotient.mk (IsLocalRing.maximalIdeal v.valuationSubring)) hunit
-          obtain ⟨a, ha, hres⟩ := hring.is_henselian f hf a₀ hfa hmap
-          exact ⟨a, ha, hres⟩ }
   have hUnique : hasUniqueExtensionToEveryAlgebraicField v :=
-    ((henselian_uniqueness_criterion v).out 0 1).mp hhenselian
+    ((henselian_uniqueness_criterion v).out 0 1).mp hbase
   have hunique : hasUniqueValuationExtension v E := hUnique E
   rcases hunique with ⟨⟨W⟩, hW⟩
   refine ⟨W, ?_⟩
@@ -177,13 +161,16 @@ theorem complete_or_henselian_base_has_one_branch
 /-- Concrete data for the final local arithmetic dictionary. -/
 structure Chapter12LocalArithmeticDictionary
     {A K B L : Type*} [CommRing A] [Field K] [CommRing B] [Field L]
-    [IsLocalRing A] [Algebra A K] [Algebra A B] [Algebra K L] [Algebra B L]
+    [IsLocalRing A] [Algebra A K] [Algebra A B] [Algebra A L]
+    [Algebra K L] [Algebra B L]
+    [IsScalarTower A K L] [IsScalarTower A B L]
     (P : Ideal B) [P.IsPrime]
     (v : Valuation K ℤᵐ⁰) (w : Valuation L ℤᵐ⁰) where
   baseMaximalIdeal : Ideal A
   baseMaximalIdeal_eq : baseMaximalIdeal = IsLocalRing.maximalIdeal A
   extension : v.IsEquiv (w.comap (algebraMap K L))
   prime_isMaximal : P.IsMaximal
+  branch_liesOver : P.LiesOver (IsLocalRing.maximalIdeal A)
   center : ∀ x : B, x ∈ P ↔ w (algebraMap B L x) < 1
   localizationMap : B →+* branchLocalization B P
   completionMap : branchLocalization B P →+* branchCompletion B P
@@ -192,11 +179,14 @@ structure Chapter12LocalArithmeticDictionary
 /-- The final dictionary links valuation, ring, residue, precision, completion, and branches. -/
 theorem local_arithmetic_dictionary
     {A K B L : Type*} [CommRing A] [Field K] [CommRing B] [Field L]
-    [IsLocalRing A] [Algebra A K] [Algebra A B] [Algebra K L] [Algebra B L]
+    [IsLocalRing A] [Algebra A K] [Algebra A B] [Algebra A L]
+    [Algebra K L] [Algebra B L]
+    [IsScalarTower A K L] [IsScalarTower A B L]
     (P : Ideal B) [P.IsPrime]
     (v : Valuation K ℤᵐ⁰) (w : Valuation L ℤᵐ⁰)
     (hext : v.IsEquiv (w.comap (algebraMap K L)))
     (hP : P.IsMaximal)
+    (hP_liesOver : P.LiesOver (IsLocalRing.maximalIdeal A))
     (hcenter : ∀ x : B, x ∈ P ↔ w (algebraMap B L x) < 1) :
     Nonempty (Chapter12LocalArithmeticDictionary (A := A) (K := K) (B := B) (L := L) P v w) := by
   refine ⟨{
@@ -204,6 +194,7 @@ theorem local_arithmetic_dictionary
     baseMaximalIdeal_eq := rfl
     extension := hext
     prime_isMaximal := hP
+    branch_liesOver := hP_liesOver
     center := hcenter
     localizationMap := algebraMap B (branchLocalization B P)
     completionMap := algebraMap (branchLocalization B P) (branchCompletion B P)

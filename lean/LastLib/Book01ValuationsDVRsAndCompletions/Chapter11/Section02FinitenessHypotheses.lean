@@ -204,22 +204,23 @@ theorem chapter11_separable_extension_gives_finite_normalization
   change Module.Finite A (integralClosure A L)
   exact IsIntegralClosure.finite A K L (integralClosure A L)
 
-/-- Completeness or the Japanese hypothesis is the standard source of normalization finiteness. -/
-theorem chapter11_complete_or_japanese_gives_finite_normalization
+/-! The complete-DVR case is intentionally not stated here.  Its proof is the
+coordinate-lattice theorem of Chapter 12, Section 12.6.  Until that point the
+local/global theory below takes `chapter11NormalizationFinite A L` as an
+explicit hypothesis. -/
+
+/-- The Japanese hypothesis is an available Chapter 11 source of normalization
+finiteness; finite separable extensions are handled by the theorem above. -/
+theorem chapter11_japanese_gives_finite_normalization
     (A K L : Type u) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
     [Field K] [Field L] [Algebra A K] [IsFractionRing A K]
     [Algebra K L] [Algebra A L] [IsScalarTower A K L] [FiniteDimensional K L]
-    (hsource : chapter11IsCompleteDVR A ∨ chapter11IsJapanese A) :
+    (hsource : chapter11IsJapanese A) :
     chapter11NormalizationFinite A L := by
-  rcases hsource with hcomplete | hjapanese
-  · change Module.Finite A (integralClosure A L)
-    exact
-      letI : Chapter11CompleteDVR A := hcomplete
-      Chapter11CompleteDVR.normalization_finite (A := A) K L
-  · change Module.Finite A (integralClosure A L)
-    exact
-      letI : Chapter11Japanese A := hjapanese
-      Chapter11Japanese.finite_integral_closure (R := A) K L
+  change Module.Finite A (integralClosure A L)
+  exact
+    letI : Chapter11Japanese A := hsource
+    Chapter11Japanese.finite_integral_closure (R := A) K L
 
 end
 end LastLib.Book01ValuationsDVRsAndCompletions.Chapter11

@@ -49,7 +49,7 @@ theorem finite_integral_closure_is_free
   have hstruct := finite_complete_extension_valuation_ring vK vL hcomplete
   let : Module.Finite vK.valuationSubring vL.valuationSubring := hstruct.1
   let : Module.Free vK.valuationSubring vL.valuationSubring := hstruct.2.1
-  have hclosure := complete_extension_unit_ball_is_integral_closure vK vL
+  have hclosure := complete_extension_unit_ball_is_integral_closure vK vL hstruct.1
   let : IsFractionRing vK.valuationSubring K :=
     (Valuation.valuationSubring.integers vK).isFractionRing
   let : IsFractionRing vL.valuationSubring L :=

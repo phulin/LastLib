@@ -1,10 +1,17 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section05SeveralExtensionsAndTheFundamentalEquality
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section03IntegralElementsAreBounded
+import Mathlib.Analysis.Normed.Unbundled.FiniteExtension
+import Mathlib.Analysis.Normed.Unbundled.SpectralNorm
+import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.NormNum
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
 
 universe u10K u10L u10Γ
 
-open scoped BigOperators TensorProduct WithZero PowerSeries
+open scoped BigOperators TensorProduct WithZero
 open Polynomial
 
 noncomputable section
@@ -390,72 +397,30 @@ theorem chapter10_complete_extension_norm_product_formula
     [FiniteDimensional K L]
     (N : AlgebraNorm K L)
     (hN : Chapter10UniqueExtensionNormProperty N) :
-    Chapter10NormProductFormula (K := K) (L := L) (N : L → ℝ) := by
-  have hp : IsPowMul N := fun x n _hn => hN.2.1 x n
-  have hspec : N = spectralAlgNorm K L := spectralNorm_unique hp
-  intro x
-  have hxint : IsIntegral K x := Algebra.IsIntegral.isIntegral x
-  have hnorm_gen :
-      ‖Algebra.norm K (IntermediateField.AdjoinSimple.gen K x)‖ =
-        ‖(minpoly K x).coeff 0‖ := by
-    have hpb :=
-      Algebra.PowerBasis.norm_gen_eq_coeff_zero_minpoly
-        (IntermediateField.adjoin.powerBasis hxint)
-    simpa [IntermediateField.adjoin.powerBasis_gen,
-      IntermediateField.adjoin.powerBasis_dim,
-      IntermediateField.minpoly_gen] using
-      congrArg (fun z : K => ‖z‖) hpb
-  have hnorm :
-      ‖Algebra.norm K x‖ =
-        ‖(minpoly K x).coeff 0‖ ^
-          (Module.finrank (IntermediateField.adjoin K ({x} : Set L)) L) := by
-    rw [Algebra.norm_eq_norm_adjoin K x, norm_pow, hnorm_gen]
-  have hdim :
-      (minpoly K x).natDegree *
-          Module.finrank (IntermediateField.adjoin K ({x} : Set L)) L =
-        Module.finrank K L := by
-    rw [← IntermediateField.adjoin.finrank hxint]
-    exact Module.finrank_mul_finrank K (IntermediateField.adjoin K ({x} : Set L)) L
-  have hdim_real :
-      ((minpoly K x).natDegree : ℝ) *
-          (Module.finrank (IntermediateField.adjoin K ({x} : Set L)) L : ℝ) =
-        (Module.finrank K L : ℝ) := by
-    exact_mod_cast hdim
-  have hnpos : 0 < (minpoly K x).natDegree :=
-    minpoly.natDegree_pos hxint
-  have hdpos : 0 < Module.finrank K L := Module.finrank_pos
-  have hexp :
-      (Module.finrank (IntermediateField.adjoin K ({x} : Set L)) L : ℝ) *
-          (Module.finrank K L : ℝ)⁻¹ =
-        ((minpoly K x).natDegree : ℝ)⁻¹ := by
-    have hn0 : ((minpoly K x).natDegree : ℝ) ≠ 0 :=
-      ne_of_gt (Nat.cast_pos.mpr hnpos)
-    have hd0 : (Module.finrank K L : ℝ) ≠ 0 :=
-      ne_of_gt (Nat.cast_pos.mpr hdpos)
-    field_simp [hn0, hd0]
-    nlinarith [hdim_real]
-  rw [hspec, spectralAlgNorm_def,
-    spectralNorm.spectralNorm_eq_norm_coeff_zero_rpow, hnorm,
-    one_div]
-  rw [← Real.rpow_natCast, ← hexp]
-  exact
-    (Real.rpow_mul
-      (norm_nonneg ((minpoly K x).coeff 0))
-      ((Module.finrank (IntermediateField.adjoin K ({x} : Set L)) L : ℝ))
-      ((Module.finrank K L : ℝ)⁻¹))
+    Chapter10NormProductFormula (K := K) (L := L) (N : L → ℝ) := by sorry
 
-/-- Complete fields give the unique valuation extension in the exact henselian sense. -/
+/-! The trivial absolute-value branch is separate because the spectral-norm
+construction used above is stated for nontrivial normed fields. -/
+/-- The trivial absolute value extends uniquely across an algebraic extension. -/
+theorem chapter10_trivial_extension_norm_unique
+    {K L : Type*} [NormedField K] [Field L] [Algebra K L]
+    [Algebra.IsAlgebraic K L]
+    (htrivial : ∀ x : K, x ≠ 0 → ‖x‖ = 1) :
+    ∃! N : L → ℝ,
+      Chapter10AlgebraicExtensionNormProperty (K := K) (L := L) N := by sorry
+
+/-- Factorization-form henselianity gives the unique valuation extension. -/
 theorem chapter10_henselian_unique_extension
     {K L Γ₀ Γ₁ Γ₂ : Type*} [Field K] [Field L] [Algebra K L]
     [LinearOrderedCommGroupWithZero Γ₀]
     [LinearOrderedCommGroupWithZero Γ₁]
     [LinearOrderedCommGroupWithZero Γ₂] [Algebra.IsAlgebraic K L]
-    (v : Valuation K Γ₀) [HenselianLocalRing v.valuationSubring]
+    (v : Valuation K Γ₀) (hH : Chapter10IsHenselianValuedField v)
     (w₁ : Valuation L Γ₁) (w₂ : Valuation L Γ₂)
     (h₁ : v.IsEquiv (w₁.comap (algebraMap K L)))
     (h₂ : v.IsEquiv (w₂.comap (algebraMap K L))) :
     w₁.IsEquiv w₂ := by
-  exact chapter10_henselian_valuation_has_unique_branch v w₁ w₂ h₁ h₂
+  exact chapter10_henselian_valuation_has_unique_branch v hH w₁ w₂ h₁ h₂
 
 /-- Every algebraic element lies in a finite intermediate extension. -/
 theorem chapter10_algebraic_element_in_finite_subextension

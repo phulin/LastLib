@@ -47,9 +47,9 @@ theorem chapter01_finite_extension_prime_valuation_correspondence
     [IsIntegralClosure B A L]
     [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ)
     (hA : vK.Integers A) :
-    LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.ExtensionPrimeCorrespondence
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ExtensionPrimeCorrespondence
       (A := A) (B := B) (L := L) vK := by
-  exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.finite_extension_prime_valuation_correspondence
+  exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_finite_extension_prime_valuation_correspondence
     vK hA
 
 /-- The prime/valuation correspondence turns uniqueness of a branch into
@@ -59,13 +59,13 @@ theorem chapter01_unique_prime_iff_unique_valuation_extension
     [CommRing B] [Algebra A B] [Field K] [Field L] [Algebra K L]
     [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ)
     (hcor :
-      LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.ExtensionPrimeCorrespondence
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ExtensionPrimeCorrespondence
         (A := A) (B := B) (L := L) vK) :
-    (LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.HasUniquePrimeAbove
+    (LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10HasUniquePrimeAbove
         (A := A) (B := B) ↔
-      LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.HasUniqueValuationExtension
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10HasUniqueValuationExtension
         (L := L) vK) := by
-  exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.unique_prime_iff_unique_valuation_extension
+  exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_unique_prime_iff_unique_valuation_extension
     vK hcor
 
 /-- A heterogeneous extension is discrete when its own value group is discrete. -/
@@ -202,9 +202,10 @@ def chapter01TwoInequivalentValuationExtensions
     {K L ΓK : Type*} [Field K] [Field L] [Algebra K L]
     [LinearOrderedCommGroupWithZero ΓK] (vK : Valuation K ΓK) : Prop :=
   ∃ w₁ w₂ :
-      LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Chapter09ValuationExtension (L := L) vK,
-    ¬ LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Chapter09ValuationExtensionEquivalent
-      (L := L) vK w₁ w₂
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10HeterogeneousValuationExtension
+        L vK,
+    ¬ LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ValuationExtensionsEquivalent
+      vK w₁ w₂
 
 /-- `X² + 1` has two distinct roots modulo `5`. -/
 theorem chapter01_gaussian_mod_five_has_two_distinct_roots

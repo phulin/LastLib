@@ -1,10 +1,17 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section03IntegralElementsAreBounded
+import Mathlib.RingTheory.Valuation.Basic
+import Mathlib.RingTheory.Valuation.ValuationRing
+import Mathlib.RingTheory.Valuation.Extension
+import Mathlib.LinearAlgebra.Dimension.Finite
+import Mathlib.GroupTheory.QuotientGroup.Basic
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
 
 universe u10K u10L u10Γ
 
-open scoped BigOperators TensorProduct WithZero PowerSeries
+open scoped BigOperators TensorProduct WithZero
 open Polynomial
 
 noncomputable section
@@ -47,27 +54,30 @@ noncomputable def Chapter10RamificationIndex
 
 /-- The residue degree of an extension. -/
 noncomputable def Chapter10ResidueDegree
-    {K L Γ₀ : Type*} [Field K] [Field L] [Algebra K L]
-    [LinearOrderedCommGroupWithZero Γ₀]
+    {K L ΓK ΓL : Type*} [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero ΓK]
+    [LinearOrderedCommGroupWithZero ΓL]
     [FiniteDimensional K L]
-    (v : Valuation K Γ₀) (w : Valuation L Γ₀)
+    (v : Valuation K ΓK) (w : Valuation L ΓL)
     [Valuation.HasExtension v w] : ℕ :=
   Module.finrank (Chapter10ResidueField v) (Chapter10ResidueField w)
 
 /-- The residue homomorphism induced by an extending valuation. -/
 def Chapter10ResidueFieldMap
-    {K L Γ₀ : Type*} [Field K] [Field L] [Algebra K L]
-    [LinearOrderedCommGroupWithZero Γ₀]
-    (v : Valuation K Γ₀) (w : Valuation L Γ₀)
+    {K L ΓK ΓL : Type*} [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero ΓK]
+    [LinearOrderedCommGroupWithZero ΓL]
+    (v : Valuation K ΓK) (w : Valuation L ΓL)
     [Valuation.HasExtension v w] :
     Chapter10ResidueField v →+* Chapter10ResidueField w :=
   IsLocalRing.ResidueField.map (algebraMap v.valuationSubring w.valuationSubring)
 
 /-- The residue map induced by an extending valuation is injective. -/
 theorem chapter10_residue_field_map_injective
-    {K L Γ₀ : Type*} [Field K] [Field L] [Algebra K L]
-    [LinearOrderedCommGroupWithZero Γ₀]
-    (v : Valuation K Γ₀) (w : Valuation L Γ₀)
+    {K L ΓK ΓL : Type*} [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero ΓK]
+    [LinearOrderedCommGroupWithZero ΓL]
+    (v : Valuation K ΓK) (w : Valuation L ΓL)
     [Valuation.HasExtension v w] :
     Function.Injective (Chapter10ResidueFieldMap v w) := by
   intro a b hab
@@ -1365,6 +1375,23 @@ theorem chapter10_single_extension_fundamental_inequality
     simpa [Chapter10RamificationIndex, Chapter10ResidueDegree, Q, d,
       Nat.card_eq_fintype_card] using hcard
 
+/-!
+The branch interface deliberately permits the base and extension valuations to
+use different ordered value groups.  The same `ef ≤ [L : K]` statement is
+therefore needed at that interface; the homogeneous theorem above is not a
+substitute because it requires an equality of value values in one codomain.
+-/
+/-- The fundamental inequality for a heterogeneous valuation branch. -/
+theorem chapter10_heterogeneous_single_extension_fundamental_inequality
+    {K L ΓK ΓL : Type*} [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero ΓK]
+    [LinearOrderedCommGroupWithZero ΓL] [FiniteDimensional K L]
+    (v : Valuation K ΓK) (w : Valuation L ΓL)
+    (h : v.IsEquiv (w.comap (algebraMap K L)))
+    (d : Chapter10HeterogeneousExtensionData v w h) :
+    d.ramificationIndex * d.residueDegree ≤ Module.finrank K L := by
+  sorry
+
 /-- Normalized discrete additive valuations. -/
 def Chapter10DiscreteAddValuation {K : Type*} [Field K]
     (v : AddValuation K (WithTop ℤ)) : Prop :=
@@ -1487,17 +1514,12 @@ theorem chapter10_normalized_restriction_formula
 theorem chapter10_uniformizer_relation
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     (v : AddValuation K (WithTop ℤ)) (w : AddValuation L (WithTop ℤ))
-    (π : K) (Pi : L) (e : ℕ)
-    (he : 0 < e) (hπ : v π = 1) (hPi : w Pi = 1)
-    (hv : Chapter10DiscreteAddValuation v)
-    (hw : Chapter10DiscreteAddValuation w)
+    (π : K) (Pi : L) (e : ℕ) (he : 0 < e)
+    (hπ : v π = 1) (hPi : w Pi = 1)
     (hscale : ∀ x : K, x ≠ 0 →
       w (algebraMap K L x) = e • v x) :
     ∃ u : L, Chapter10AddValuationUnit w u ∧
-      algebraMap K L π = u * Pi ^ e := by
-  have _ := he
-  have _ := hv
-  have _ := hw
+      algebraMap K L π = u * Pi ^ e ∧ 0 < e := by
   have hπ0 : π ≠ 0 := by
     intro h
     subst π
@@ -1508,7 +1530,7 @@ theorem chapter10_uniformizer_relation
     simp at hPi
   have hpow0 : Pi ^ e ≠ 0 := pow_ne_zero _ hPi0
   let u : L := algebraMap K L π / Pi ^ e
-  refine ⟨u, ?_, (div_mul_cancel₀ _ hpow0).symm⟩
+  refine ⟨u, ?_, (div_mul_cancel₀ _ hpow0).symm, he⟩
   constructor
   · have hmap0 : algebraMap K L π ≠ 0 := by
       simpa using (RingHom.injective (algebraMap K L)).ne hπ0

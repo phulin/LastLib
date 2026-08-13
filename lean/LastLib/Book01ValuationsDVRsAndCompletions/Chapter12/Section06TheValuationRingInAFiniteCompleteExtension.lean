@@ -1,4 +1,4 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section05UniqueExtensionAndHenselianity
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Dependencies
 import Mathlib.Analysis.Normed.Module.FiniteDimension
 import Mathlib.Analysis.Normed.Operator.BoundedLinearMaps
 
@@ -304,7 +304,21 @@ theorem determinant_trick_for_finite_algebra
     [Module.Finite A C] (x : C) : IsIntegral A x := by
   exact IsIntegral.of_finite A x
 
-/-- The valuation unit ball is the integral closure of the base valuation ring. -/
+/-- The finite-dimensional lattice comparison makes the extended unit ball finite. -/
+theorem complete_extension_unit_ball_is_finite
+    {K L Γ : Type*} [Field K] [Field L]
+    [LinearOrderedCommGroupWithZero Γ] [Algebra K L]
+    (vK : Valuation K Γ) (w : Valuation L Γ)
+    [vK.HasExtension w] [Valuation.IsRankOneDiscrete vK]
+    [Valuation.IsRankOneDiscrete w] [Module.Finite K L]
+    (hcomplete : IsAdicComplete
+      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring) :
+    Module.Finite vK.valuationSubring w.valuationSubring := by
+  sorry
+
+/-- Once the preceding lattice theorem supplies module finiteness, the
+determinant trick identifies the valuation unit ball with the integral
+closure. -/
 theorem complete_extension_unit_ball_is_integral_closure
     {K L Γ : Type*} [Field K] [Field L]
     [LinearOrderedCommGroupWithZero Γ] [Algebra K L]
@@ -312,11 +326,10 @@ theorem complete_extension_unit_ball_is_integral_closure
     [vK.HasExtension w] [Algebra vK.valuationSubring L]
     [IsScalarTower vK.valuationSubring K L]
     [IsScalarTower vK.valuationSubring w.valuationSubring L]
-    /- Formal correction: finiteness of the valuation-ring extension is the
-       missing hypothesis for the reverse integral-closure inclusion. -/
-    [Module.Finite vK.valuationSubring w.valuationSubring] :
+    (hfinite : Module.Finite vK.valuationSubring w.valuationSubring) :
     (w.valuationSubring : Set L) =
       {x : L | IsIntegral vK.valuationSubring x} := by
+  letI := hfinite
   ext x
   constructor
   · intro hx
@@ -330,18 +343,6 @@ theorem complete_extension_unit_ball_is_integral_closure
   · intro hx
     have hx' : IsIntegral w.valuationSubring x := hx.tower_top
     exact (Valuation.valuationSubring.integers w).isIntegral_iff_v_le_one.mp hx'
-
-/-- The finite-dimensional lattice comparison makes the extended unit ball finite. -/
-theorem complete_extension_unit_ball_is_finite
-    {K L Γ : Type*} [Field K] [Field L]
-    [LinearOrderedCommGroupWithZero Γ] [Algebra K L]
-    (vK : Valuation K Γ) (w : Valuation L Γ)
-    [vK.HasExtension w] [Valuation.IsRankOneDiscrete vK]
-    [Valuation.IsRankOneDiscrete w] [Module.Finite K L]
-    (hcomplete : IsAdicComplete
-      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring) :
-    Module.Finite vK.valuationSubring w.valuationSubring := by
-  sorry
 
 /-- The valuation ring in a finite complete extension is torsion-free over the base. -/
 theorem complete_extension_unit_ball_is_torsion_free

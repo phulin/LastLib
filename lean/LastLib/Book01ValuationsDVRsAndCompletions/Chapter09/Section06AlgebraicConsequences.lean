@@ -132,212 +132,22 @@ theorem padic_x_sq_sub_p_irreducible_but_reduction_repeated (p : ℕ) [Fact p.Pr
 
 /-- Henselianity is the hypothesis needed to lift a coprime residue factorization. -/
 theorem henselianity_lifts_coprime_residue_factorization
-    {A : Type*} [CommRing A] [HenselianLocalRing A]
+    {A : Type*} [CommRing A] [IsLocalRing A]
+    (hH : HenselianFactorizationProperty A)
     (f : A[X]) (g₀ h₀ : Polynomial (ResidueRing A))
     (hf : f.Monic) (hg₀ : g₀.Monic) (hh₀ : h₀.Monic)
     (hcop : IsCoprime g₀ h₀) (hred : residuePolynomial f = g₀ * h₀) :
     ∃! gh : A[X] × A[X], IsFactorizationLift f g₀ h₀ gh.1 gh.2 := by
-  have hsimple : SimpleResidueRootLiftingProperty A :=
-    (henselian_iff_simple_residue_root_lifting (A := A)).mp
-      (show IsHenselianLocalRingChapter09 A from by
-        change HenselianLocalRing A
-        exact inferInstance)
-  exact (henselian_factorization_by_successive_linear_lifts hsimple)
-    f g₀ h₀ hf hg₀ hh₀ hcop hred
+  exact hH f g₀ h₀ hf hg₀ hh₀ hcop hred
 
-/-- A prime of an extension ring lying above the maximal ideal. -/
-def PrimeAboveMaximal {A B : Type*} [CommRing A] [IsLocalRing A]
-    [CommRing B] [Algebra A B] (P : Ideal B) : Prop :=
-  P.IsPrime ∧ P.comap (algebraMap A B) = IsLocalRing.maximalIdeal A
-
-/-- A valuation on `L` extends the valuation on `K` up to Mathlib's equivalence relation. -/
-def IsValuationExtension {K L ΓK ΓL : Type*} [Field K] [Field L]
-    [LinearOrderedCommGroupWithZero ΓK] [LinearOrderedCommGroupWithZero ΓL]
-    [Algebra K L]
-    (vK : Valuation K ΓK) (vL : Valuation L ΓL) : Prop :=
-  vK.IsEquiv (vL.comap (algebraMap K L))
-
-/- A valuation extension may require a genuinely larger ordered value group. -/
-structure Chapter09ValuationExtension
-    {K : Type uK} {L : Type uL} {ΓK : Type uΓ} [Field K] [Field L]
-    [LinearOrderedCommGroupWithZero ΓK] [Algebra K L]
-    (vK : Valuation K ΓK) where
-  ΓL : Type (max (max uK uL) uΓ)
-  [valueGroup : LinearOrderedCommGroupWithZero ΓL]
-  valuation : Valuation L ΓL
-  isExtension : IsValuationExtension vK valuation
-
-def Chapter09ValuationExtensionEquivalent
-    {K L ΓK : Type*} [Field K] [Field L]
-    [LinearOrderedCommGroupWithZero ΓK] [Algebra K L]
-    (vK : Valuation K ΓK)
-    (w₁ w₂ : Chapter09ValuationExtension (L := L) vK) : Prop := by
-  letI := w₁.valueGroup
-  letI := w₂.valueGroup
-  exact w₁.valuation.IsEquiv w₂.valuation
-
-def Chapter09ValuationExtensionSetoid
-    {K L ΓK : Type*} [Field K] [Field L]
-    [LinearOrderedCommGroupWithZero ΓK] [Algebra K L]
-    (vK : Valuation K ΓK) : Setoid (Chapter09ValuationExtension (L := L) vK) where
-  r := Chapter09ValuationExtensionEquivalent (L := L) vK
-  iseqv := by
-    constructor
-    · intro w
-      unfold Chapter09ValuationExtensionEquivalent
-      exact fun _ _ => Iff.rfl
-    · intro w₁ w₂ h
-      unfold Chapter09ValuationExtensionEquivalent at h ⊢
-      exact fun x y => Iff.symm (h x y)
-    · intro w₁ w₂ w₃ h₁₂ h₂₃
-      unfold Chapter09ValuationExtensionEquivalent at h₁₂ h₂₃ ⊢
-      exact fun x y => Iff.trans (h₁₂ x y) (h₂₃ x y)
-
-abbrev Chapter09ValuationExtensionClass
-    {K L ΓK : Type*} [Field K] [Field L]
-    [LinearOrderedCommGroupWithZero ΓK] [Algebra K L]
-    (vK : Valuation K ΓK) : Type _ :=
-  Quotient (Chapter09ValuationExtensionSetoid (L := L) vK)
-/-- The prime/valuation correspondence, expressed as an equivalence of the two parameter spaces. -/
-def ExtensionPrimeCorrespondence {A B K L ΓK : Type*} [CommRing A] [IsLocalRing A]
-    [CommRing B] [Algebra A B] [Field K] [Field L] [Algebra K L]
-    [LinearOrderedCommGroupWithZero ΓK] (vK : Valuation K ΓK) : Prop :=
-  Nonempty
-    ((Chapter09ValuationExtensionClass (L := L) vK ≃
-        {P : Ideal B // PrimeAboveMaximal (A := A) (B := B) P}))
-
-/-- There is exactly one extension valuation in the chosen value group. -/
-def HasUniqueValuationExtension {K L ΓK : Type*} [Field K] [Field L]
-    [LinearOrderedCommGroupWithZero ΓK] [Algebra K L]
-    (vK : Valuation K ΓK) : Prop :=
-  ∃ w : Chapter09ValuationExtension (L := L) vK,
-    ∀ w' : Chapter09ValuationExtension (L := L) vK,
-      Chapter09ValuationExtensionEquivalent (L := L) vK w w'
-
-/-- There is exactly one prime of the extension ring above the maximal ideal. -/
-def HasUniquePrimeAbove {A B : Type*} [CommRing A] [IsLocalRing A]
-    [CommRing B] [Algebra A B] : Prop :=
-  ∃! P : Ideal B, PrimeAboveMaximal (A := A) (B := B) P
-
-/-- A valued field is henselian when its valuation ring is a henselian local ring. -/
-def IsHenselianValuedField {K Γ : Type*} [Field K]
-    [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ) : Prop :=
-  HenselianLocalRing vK.valuationSubring
-
-/-- For a finite extension, primes above the maximal ideal correspond to valuation extensions.
-The base ring is required to be the ring of integers of the chosen valuation. -/
-theorem finite_extension_prime_valuation_correspondence
-    {A B K L Γ : Type*} [CommRing A] [IsDomain A]
-    [ValuationRing A] [IsIntegrallyClosed A]
-    [Field K] [Algebra A K] [IsFractionRing A K]
-    [Field L] [Algebra K L] [FiniteDimensional K L]
-    [Algebra A L] [IsScalarTower A K L]
-    [CommRing B] [Algebra A B] [Algebra B L] [IsScalarTower A B L]
-    [IsIntegralClosure B A L]
-    [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ)
-    (hA : vK.Integers A) :
-    ExtensionPrimeCorrespondence (A := A) (B := B) (L := L) vK := by
-  sorry
-
-/-- The correspondence transfers uniqueness of a prime to uniqueness of the extension valuation. -/
-theorem unique_prime_iff_unique_valuation_extension
-    {A B K L Γ : Type*} [CommRing A] [IsLocalRing A]
-    [CommRing B] [Algebra A B] [Field K] [Field L] [Algebra K L]
-    [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ)
-    (hcor : ExtensionPrimeCorrespondence (A := A) (B := B) (L := L) vK) :
-    (HasUniquePrimeAbove (A := A) (B := B) ↔
-      HasUniqueValuationExtension (L := L) vK) := by
-  obtain ⟨e⟩ := hcor
-  constructor
-  · rintro ⟨P, hP, hPuniq⟩
-    let y₀ : {P : Ideal B // PrimeAboveMaximal (A := A) (B := B) P} := ⟨P, hP⟩
-    obtain ⟨q₀, hq₀⟩ := e.surjective y₀
-    obtain ⟨w₀, hw₀⟩ := Quotient.exists_rep q₀
-    have hy₀ : e (Quotient.mk (Chapter09ValuationExtensionSetoid (L := L) vK) w₀) = y₀ := by
-      exact (congrArg e hw₀).trans hq₀
-    refine ⟨w₀, ?_⟩
-    intro w
-    have hy :
-        e (Quotient.mk (Chapter09ValuationExtensionSetoid (L := L) vK) w) =
-          e (Quotient.mk (Chapter09ValuationExtensionSetoid (L := L) vK) w₀) := by
-      apply Subtype.ext
-      exact (hPuniq _ (e (Quotient.mk (Chapter09ValuationExtensionSetoid (L := L) vK) w)).property).trans
-        (hPuniq _ (e (Quotient.mk (Chapter09ValuationExtensionSetoid (L := L) vK) w₀)).property).symm
-    have hq :
-        Quotient.mk (Chapter09ValuationExtensionSetoid (L := L) vK) w =
-          Quotient.mk (Chapter09ValuationExtensionSetoid (L := L) vK) w₀ := e.injective hy
-    have hrel : Chapter09ValuationExtensionEquivalent (L := L) vK w₀ w := by
-      exact (Chapter09ValuationExtensionSetoid (L := L) vK).iseqv.symm
-        (Quotient.exact hq)
-    exact hrel
-  · rintro ⟨w₀, hw₀⟩
-    let y₀ := e (Quotient.mk (Chapter09ValuationExtensionSetoid (L := L) vK) w₀)
-    refine ⟨y₀.1, y₀.2, ?_⟩
-    intro P hP
-    let y : {P : Ideal B // PrimeAboveMaximal (A := A) (B := B) P} := ⟨P, hP⟩
-    obtain ⟨q, hq⟩ := e.surjective y
-    obtain ⟨w, hw⟩ := Quotient.exists_rep q
-    have hrel := hw₀ w
-    have hqeq :
-        Quotient.mk (Chapter09ValuationExtensionSetoid (L := L) vK) w₀ =
-          Quotient.mk (Chapter09ValuationExtensionSetoid (L := L) vK) w := by
-      exact Quotient.sound hrel
-    have hy :
-        y₀ = e (Quotient.mk (Chapter09ValuationExtensionSetoid (L := L) vK) w) :=
-      congrArg e hqeq
-    have hwy :
-        e (Quotient.mk (Chapter09ValuationExtensionSetoid (L := L) vK) w) = y :=
-      (congrArg e hw).trans hq
-    have hyy : y₀ = y := hy.trans hwy
-    exact congrArg Subtype.val hyy.symm
-
-/-- A henselian valued field has one prime above the maximal ideal in every finite extension.
-The base ring is required to be the ring of integers of the chosen valuation. -/
-theorem henselian_valued_field_has_unique_prime_and_extension
-    {A B K L Γ : Type*} [CommRing A] [IsDomain A]
-    [ValuationRing A] [IsIntegrallyClosed A]
-    [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
-    [Algebra A K] [IsFractionRing A K]
-    [CommRing B] [Algebra A B] [Algebra B L]
-    [Algebra A L] [IsScalarTower A K L] [IsScalarTower A B L]
-    [IsIntegralClosure B A L]
-    [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ)
-    (hA : vK.Integers A)
-    (hH : IsHenselianValuedField vK) :
-    HasUniquePrimeAbove (A := A) (B := B) ∧ HasUniqueValuationExtension (L := L) vK := by
-  sorry
-
-/-- The finite integral extension has a finite nonempty set of primes above the maximal ideal. -/
-theorem finite_extension_primes_above_are_finite
-    {A B : Type*} [CommRing A] [IsDomain A] [IsLocalRing A]
-    [CommRing B] [IsDomain B] [Algebra A B] [Module.Finite A B]
-    [IsIntegralClosure B A B] [FaithfulSMul A B] :
-    Set.Finite {P : Ideal B | PrimeAboveMaximal (A := A) (B := B) P} ∧
-      Nonempty {P : Ideal B // PrimeAboveMaximal (A := A) (B := B) P} := by
-  let m : Ideal A := IsLocalRing.maximalIdeal A
-  have heq : {P : Ideal B | PrimeAboveMaximal (A := A) (B := B) P} =
-      m.primesOver B := by
-    ext P
-    constructor
-    · rintro ⟨hprime, hcomap⟩
-      exact ⟨hprime, ⟨hcomap.symm⟩⟩
-    · rintro ⟨hprime, hover⟩
-      exact ⟨hprime, hover.over.symm⟩
-  constructor
-  · rw [heq]
-    exact Algebra.QuasiFinite.finite_primesOver m
-  · obtain ⟨P, hPmax, hPover⟩ :=
-      exists_maximal_ideal_liesOver_of_isIntegral (S := B) m
-    refine ⟨⟨P, ?_⟩⟩
-    exact ⟨hPmax.isPrime, hPover.over.symm⟩
-
-/-- A complete rank-one valued field has a henselian valuation ring. -/
-theorem complete_valued_field_is_henselian
+/-- A complete rank-one valued field satisfies Mathlib's simple-root
+henselianity.  The factorization-form theorem is stated separately below. -/
+theorem complete_valued_field_has_simple_root_henselianity
     {K Γ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ]
     (vK : Valuation K Γ)
     [Valuation.RankOne vK]
     (hcomplete : @CompleteSpace K (Valued.mk' vK).toUniformSpace) :
-    IsHenselianValuedField vK := by
+    HenselianLocalRing vK.valuationSubring := by
   change HenselianLocalRing vK.valuationSubring
   let v : AddValuation K (Additive Γ)ᵒᵈ := Valuation.toAddValuation vK
   have hv_equiv : vK.IsEquiv v.toValuation := by
@@ -442,10 +252,11 @@ theorem complete_valued_field_is_henselian
     have hfa_val' := hfa_val
     rw [hfa_eval] at hfa_val'
     simpa only [add_zero] using hfa_val'
-  obtain ⟨a, ha, _⟩ := @hensel_newton_form K (Additive Γ)ᵒᵈ _ _ v hrank
+  obtain ⟨huniq, _hexact⟩ := @hensel_newton_form K (Additive Γ)ᵒᵈ _ _ v hrank
     vK.valuationSubring.toSubring hA fK hfcoeff (a₀ : K) a₀.property hineq hcomplete'
-  have hroot := ha.1
-  have hstrict := ha.2.1
+  obtain ⟨a, ha, _ha_unique⟩ := huniq
+  have hroot := ha.2.1
+  have hstrict := ha.2.2
   have hderivK_val : v (fK.derivative.eval (a₀ : K)) = 0 := by
     rw [hderiv_eval, hderiv_val]
   have ha_val : v a ≥ 0 := by
@@ -475,6 +286,18 @@ theorem complete_valued_field_is_henselian
       change 0 < OrderDual.toDual (Additive.ofMul (vK (a - (a₀ : K)))) at hdiff
       exact hdiff
     simpa [a'] using hdiffK
+
+/-- A complete rank-one valued field has the book's factorization-form
+henselianity.  This is the remaining metric factorization theorem for Chapter
+9; unlike the former generic simple-root-to-factorization stub, its proof can
+be developed entirely from the approximation machinery of this chapter. -/
+theorem complete_valued_field_is_henselian
+    {K Γ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ]
+    (vK : Valuation K Γ)
+    [Valuation.RankOne vK]
+    (hcomplete : @CompleteSpace K (Valued.mk' vK).toUniformSpace) :
+    IsHenselianLocalRingChapter09 vK.valuationSubring := by
+  sorry
 
 end
 end Chapter09

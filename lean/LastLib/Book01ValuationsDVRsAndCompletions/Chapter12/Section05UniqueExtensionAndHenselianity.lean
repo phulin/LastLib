@@ -1,4 +1,6 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section04AnExampleOfSplittingAfterCompletion
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Dependencies
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section03IntegralElementsAreBounded
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Section06AlgebraicConsequences
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
 
@@ -45,80 +47,6 @@ def allFiniteIntegralClosuresAreLocal
     [IsScalarTower v.valuationSubring K E],
     IsLocalRing (integralClosure v.valuationSubring E)
 
-/-- A finite product of local rings, allowing the factors to vary with the index. -/
-structure Chapter12FiniteLocalProductData (C : Type u) [CommRing C] where
-  index : Type u
-  [finite_index : Fintype index]
-  factor : index → Type u
-  [factor_ring : ∀ i, CommRing (factor i)]
-  [factor_local : ∀ i, IsLocalRing (factor i)]
-  equivalence : Nonempty (C ≃+* (∀ i, factor i))
-
-def IsFiniteProductOfLocalRings (C : Type u) [CommRing C] : Prop :=
-  Nonempty (Chapter12FiniteLocalProductData C)
-
-/-- Every finite commutative algebra is a product of local rings. -/
-def allFiniteAlgebrasAreLocalProducts
-    (A : Type u) [CommRing A] : Prop :=
-  ∀ (C : Type u) [CommRing C] [Algebra A C] [Module.Finite A C],
-    IsFiniteProductOfLocalRings C
-
-/-- The extension of the base maximal ideal to a finite algebra. -/
-def baseMaximalIdealExtension
-    (A C : Type*) [CommRing A] [CommRing C] [Algebra A C] [IsLocalRing A] : Ideal C :=
-  (IsLocalRing.maximalIdeal A).map (algebraMap A C)
-
-/-- Reduction of an idempotent modulo the extended maximal ideal. -/
-def idempotentReduction
-    (A C : Type*) [CommRing A] [CommRing C] [Algebra A C] [IsLocalRing A]
-    (e : IdempotentElement C) :
-    IdempotentElement (C ⧸ baseMaximalIdealExtension A C) :=
-  ⟨Ideal.Quotient.mk _ e.1, by
-    change Ideal.Quotient.mk _ (e.1 * e.1) = Ideal.Quotient.mk _ e.1
-    rw [e.2]⟩
-
-/-- Idempotents lift uniquely over a henselian local base. -/
-theorem henselian_idempotent_lifting
-    (A C : Type*) [CommRing A] [CommRing C] [Algebra A C]
-    [Module.Finite A C] [HenselianLocalRing A] :
-    Function.Bijective (idempotentReduction A C) := by
-  sorry
-
-/-- An idempotent in the Jacobson radical is zero. -/
-theorem idempotent_in_jacobson_is_zero
-    {C : Type*} [CommRing C] (z : C)
-    (hz : z * z = z) (hzJ : z ∈ Ideal.jacobson (⊥ : Ideal C)) :
-    z = 0 := by
-  classical
-  by_cases hC : Nontrivial C
-  · let _ : Nontrivial C := hC
-    have hu : IsUnit (1 - z) := by
-      convert (Ideal.mem_jacobson_bot.mp hzJ) (-1) using 1; ring
-    have hprod : z * (1 - z) = 0 := by
-      rw [mul_sub, mul_one, hz, sub_self]
-    exact hu.mul_right_cancel (by simpa using hprod)
-  · let _ : Subsingleton C := not_nontrivial_iff_subsingleton.mp hC
-    exact Subsingleton.elim z 0
-
-
-/-- The complementary projector argument produces orthogonal primitive idempotents. -/
-theorem henselian_finite_algebra_has_orthogonal_idempotents
-    (A C : Type*) [CommRing A] [CommRing C] [Algebra A C]
-    [Module.Finite A C] [HenselianLocalRing A] :
-    ∃ n : ℕ, 0 < n ∧ ∃ e : Fin n → IdempotentElement C,
-      (∀ i j, i ≠ j → (e i).1 * (e j).1 = 0) ∧
-      (∑ i, (e i).1) = 1 ∧
-      (∀ i (z : C), z * z = z → z * (e i).1 = z →
-        z = 0 ∨ z = (e i).1) := by
-  sorry
-
-/-- Henselian finite algebras split into local factors. -/
-theorem henselian_finite_algebra_is_local_product
-    (A C : Type*) [CommRing A] [CommRing C] [Algebra A C]
-    [Module.Finite A C] [HenselianLocalRing A] :
-    IsFiniteProductOfLocalRings C := by
-  sorry
-
 /-- The center of an extension valuation on an integral closure. -/
 def extendedValuationCenter
     {E Γ : Type*} [Field E] [LinearOrderedCommGroupWithZero Γ]
@@ -139,6 +67,7 @@ theorem integral_closure_lies_in_extension_valuation_ring
 theorem integral_closure_maximal_ideals_are_valuation_centers
     {K E Γ : Type*} [Field K] [Field E]
     [LinearOrderedCommGroupWithZero Γ] [Algebra K E]
+    [Algebra.IsAlgebraic K E]
     (v : Valuation K Γ) (w : Valuation E Γ) [v.HasExtension w]
     [Algebra v.valuationSubring E]
     [IsScalarTower v.valuationSubring K E]
@@ -146,7 +75,89 @@ theorem integral_closure_maximal_ideals_are_valuation_centers
     extendedValuationCenter w (integralClosure v.valuationSubring E) =
       (IsLocalRing.maximalIdeal (integralClosure v.valuationSubring E) :
         Set (integralClosure v.valuationSubring E)) := by
-  sorry
+  let C := integralClosure v.valuationSubring E
+  have bounded (x : C) : w (x : E) ≤ 1 := by
+    have hxint : IsIntegral v.valuationSubring (x : E) := by
+      exact x.property
+    have hxtop : IsIntegral w.valuationSubring (x : E) := by
+      refine IsIntegral.map_of_comp_eq
+        (algebraMap v.valuationSubring w.valuationSubring) (RingHom.id E) ?_ hxint
+      ext a
+      change algebraMap w.valuationSubring E
+          (algebraMap v.valuationSubring w.valuationSubring a) =
+        algebraMap v.valuationSubring E a
+      change ((algebraMap v.valuationSubring w.valuationSubring a :
+          w.valuationSubring) : E) = algebraMap v.valuationSubring E a
+      calc
+        ((algebraMap v.valuationSubring w.valuationSubring a :
+            w.valuationSubring) : E) = algebraMap K E (a : K) :=
+          Valuation.HasExtension.coe_algebraMap_valuationSubring_eq v w a
+        _ = algebraMap v.valuationSubring E a := by
+          rw [IsScalarTower.algebraMap_apply v.valuationSubring K E]
+          rfl
+    have hxmem : (x : E) ∈ w.valuationSubring := by
+      change (x : E) ∈ w.valuationSubring.toSubring
+      exact LocalSubring.mem_of_isMax_of_isIntegral
+        (R := w.valuationSubring.toLocalSubring)
+        w.valuationSubring.isMax_toLocalSubring hxtop
+    exact hxmem
+  let P : Ideal C :=
+    { carrier := {x | w (x : E) < 1}
+      zero_mem' := by simp
+      add_mem' := by
+        intro x y hx hy
+        exact (w.map_add _ _).trans_lt (max_lt hx hy)
+      smul_mem' := by
+        intro x y hy
+        change w ((x : E) * (y : E)) < 1
+        rw [mul_comm]
+        rw [map_mul]
+        exact Left.mul_lt_one_of_lt_of_le hy (bounded x) }
+  have hPprime : P.IsPrime := by
+    rw [Ideal.isPrime_iff]
+    constructor
+    · intro htop
+      have hone : (1 : C) ∈ P := by rw [htop]; trivial
+      change w (1 : E) < 1 at hone
+      simp at hone
+    · intro x y hxy
+      by_cases hx : x ∈ P
+      · exact Or.inl hx
+      · right
+        by_contra hy
+        have hxle : w (x : E) ≤ 1 := bounded x
+        have hyle : w (y : E) ≤ 1 := bounded y
+        have hxeq : w (x : E) = 1 := le_antisymm hxle (le_of_not_gt hx)
+        have hyeq : w (y : E) = 1 := le_antisymm hyle (le_of_not_gt hy)
+        change w ((x : E) * (y : E)) < 1 at hxy
+        rw [map_mul, hxeq, hyeq, one_mul] at hxy
+        exact (lt_irrefl 1) hxy
+  have hPprime' : P.IsPrime := hPprime
+  have hcomap : P.comap (algebraMap v.valuationSubring C) =
+      IsLocalRing.maximalIdeal v.valuationSubring := by
+    ext a
+    have hcomp : algebraMap C E (algebraMap v.valuationSubring C a) =
+        algebraMap v.valuationSubring E a := by
+      rw [IsScalarTower.algebraMap_apply v.valuationSubring C E]
+    change w (algebraMap C E (algebraMap v.valuationSubring C a)) < 1 ↔
+      a ∈ IsLocalRing.maximalIdeal v.valuationSubring
+    rw [hcomp]
+    have hmap : algebraMap v.valuationSubring E a =
+        algebraMap K E (a : K) := by
+      rw [IsScalarTower.algebraMap_apply v.valuationSubring K E]
+      rfl
+    rw [hmap]
+    rw [Valuation.HasExtension.val_map_lt_one_iff v w]
+    rw [ValuationSubring.valuation_lt_one_iff]
+    simpa using
+      (Valuation.isEquiv_valuation_valuationSubring v).lt_one_iff_lt_one
+        (x := (a : K))
+  have hPmax : P.IsMaximal := by
+    exact @Ideal.isMaximal_of_isIntegral_of_isMaximal_comap _ _ _ _ _ _ P hPprime'
+      (hcomap.symm ▸ IsLocalRing.maximalIdeal.isMaximal _)
+  have hPeq : P = IsLocalRing.maximalIdeal C := IsLocalRing.eq_maximalIdeal hPmax
+  have hPeqSet := congrArg (fun I : Ideal C => (I : Set C)) hPeq
+  simpa [P, C, extendedValuationCenter] using hPeqSet
 
 /-- The extension-center correspondence has both the valuation and maximal-ideal directions. -/
 theorem integral_closure_extension_center_correspondence
@@ -165,14 +176,22 @@ theorem integral_closure_extension_center_correspondence
         P.IsMaximal → P.LiesOver (IsLocalRing.maximalIdeal v.valuationSubring) →
           ∃ W : HeterogeneousValuationExtension v E,
               (P : Set (integralClosure v.valuationSubring E)) =
-                heterogeneousValuationCenter v W) := by
+                heterogeneousValuationCenter v W) ∧
+      (∀ W₁ W₂ : HeterogeneousValuationExtension v E,
+        heterogeneousValuationCenter v W₁ = heterogeneousValuationCenter v W₂ →
+          (letI : LinearOrderedCommGroupWithZero W₁.valueGroup :=
+             W₁.orderedValueGroup
+           letI : LinearOrderedCommGroupWithZero W₂.valueGroup :=
+             W₂.orderedValueGroup
+           W₁.valuation.IsEquiv W₂.valuation)) := by
   sorry
 
 
 /-- Two extensions to a finite field remain distinct after extension to an algebraic closure. -/
 theorem distinct_finite_extensions_remain_distinct_in_algebraic_closure
     {K E Γ : Type u} [Field K] [Field E]
-    [LinearOrderedCommGroupWithZero Γ] [Algebra K E] [Algebra.IsAlgebraic K E]
+    [LinearOrderedCommGroupWithZero Γ] [Algebra K E]
+    [FiniteDimensional K E]
     (v : Valuation K Γ)
     (w₁ w₂ : HeterogeneousValuationExtension v E)
     (hne : ¬ (letI : LinearOrderedCommGroupWithZero w₁.valueGroup :=
@@ -204,7 +223,7 @@ theorem henselian_uniqueness_criterion
     {K Γ : Type u} [Field K] [LinearOrderedCommGroupWithZero Γ]
     (v : Valuation K Γ) :
     List.TFAE
-      [HenselianLocalRing v.valuationSubring,
+      [Chapter09.HenselianFactorizationProperty v.valuationSubring,
        hasUniqueExtensionToEveryAlgebraicField v,
        hasUniqueExtensionToAlgebraicClosure v,
        allFiniteIntegralClosuresAreLocal v] := by
@@ -213,14 +232,16 @@ theorem henselian_uniqueness_criterion
 /-- Completeness supplies the henselian property for a complete valued field. -/
 theorem complete_nonarchimedean_field_is_henselian
     {K Γ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ]
-    [Valued K Γ] [CompleteSpace K] :
-    HenselianLocalRing (Valued.v (R := K)).valuationSubring := by
-  sorry
+    (v : Valuation K Γ) [Valuation.RankOne v]
+    (hcomplete : @CompleteSpace K (Valued.mk' v).toUniformSpace) :
+    Chapter09.HenselianFactorizationProperty v.valuationSubring := by
+  exact Chapter09.complete_valued_field_is_henselian v hcomplete
 
 /-- Henselianity alone is the weaker condition used for uniqueness statements. -/
 def HenselianButNotAdicallyComplete
     (R : Type*) [CommRing R] [IsLocalRing R] : Prop :=
-  HenselianLocalRing R ∧ ¬ IsAdicComplete (IsLocalRing.maximalIdeal R) R
+  Chapter09.HenselianFactorizationProperty R ∧
+    ¬ IsAdicComplete (IsLocalRing.maximalIdeal R) R
 
 end
 

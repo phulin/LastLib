@@ -1,3 +1,4 @@
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Dependencies
 import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Valuation.Basic
 import Mathlib.RingTheory.Valuation.ValuationRing
@@ -61,6 +62,97 @@ def Chapter10ValuationExtension {K L Γ₀ Δ₀ : Type*}
     [LinearOrderedCommGroupWithZero Δ₀]
     (v : Valuation K Γ₀) (w : Valuation L Δ₀) : Prop :=
   Valuation.HasExtension v w
+
+/-- A valuation extension may use a genuinely different ordered value group.
+This is the canonical heterogeneous extension type for the rest of Book 1. -/
+structure Chapter10HeterogeneousValuationExtension
+    {K : Type u10K} (L : Type u10L) {ΓK : Type u10Γ}
+    [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero ΓK]
+    (vK : Valuation K ΓK) where
+  valueGroup : Type (max (max u10K u10L) u10Γ)
+  [orderedValueGroup : LinearOrderedCommGroupWithZero valueGroup]
+  valuation : Valuation L valueGroup
+  isExtension : vK.IsEquiv (valuation.comap (algebraMap K L))
+
+instance {K : Type u10K} {L : Type u10L} {ΓK : Type u10Γ}
+    [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero ΓK]
+    {vK : Valuation K ΓK}
+    (W : Chapter10HeterogeneousValuationExtension L vK) :
+    LinearOrderedCommGroupWithZero W.valueGroup :=
+  W.orderedValueGroup
+
+/-- Equivalence of extensions is equivalence of their valuations, not equality
+of chosen value groups or normalizations. -/
+def Chapter10ValuationExtensionsEquivalent
+    {K : Type u10K} {L : Type u10L} {ΓK : Type u10Γ}
+    [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero ΓK]
+    (vK : Valuation K ΓK)
+    (W₁ W₂ : Chapter10HeterogeneousValuationExtension L vK) : Prop :=
+  W₁.valuation.IsEquiv W₂.valuation
+
+def Chapter10ValuationExtensionSetoid
+    {K : Type u10K} {L : Type u10L} {ΓK : Type u10Γ}
+    [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero ΓK]
+    (vK : Valuation K ΓK) :
+    Setoid (Chapter10HeterogeneousValuationExtension L vK) where
+  r := Chapter10ValuationExtensionsEquivalent vK
+  iseqv := by
+    constructor
+    · intro W
+      exact fun _ _ => Iff.rfl
+    · intro W₁ W₂ h
+      exact fun x y => Iff.symm (h x y)
+    · intro W₁ W₂ W₃ h₁₂ h₂₃
+      exact fun x y => Iff.trans (h₁₂ x y) (h₂₃ x y)
+
+abbrev Chapter10ValuationExtensionClass
+    {K : Type u10K} {L : Type u10L} {ΓK : Type u10Γ}
+    [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero ΓK]
+    (vK : Valuation K ΓK) :=
+  Quotient (Chapter10ValuationExtensionSetoid (L := L) vK)
+
+/-- A prime of an integral extension centered over the base maximal ideal. -/
+def Chapter10PrimeAboveMaximal
+    {A B : Type*} [CommRing A] [IsLocalRing A]
+    [CommRing B] [Algebra A B] (P : Ideal B) : Prop :=
+  P.IsPrime ∧ P.comap (algebraMap A B) = IsLocalRing.maximalIdeal A
+
+/-- Valuation branches and primes above the base maximal ideal correspond. -/
+def Chapter10ExtensionPrimeCorrespondence
+    {A B : Type*} {K : Type u10K} {L : Type u10L} {ΓK : Type u10Γ}
+    [CommRing A] [IsLocalRing A] [CommRing B] [Algebra A B]
+    [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero ΓK]
+    (vK : Valuation K ΓK) : Prop :=
+  Nonempty
+    (Chapter10ValuationExtensionClass (L := L) vK ≃
+      {P : Ideal B // Chapter10PrimeAboveMaximal (A := A) (B := B) P})
+
+def Chapter10HasUniqueValuationExtension
+    {K : Type u10K} {L : Type u10L} {ΓK : Type u10Γ}
+    [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero ΓK]
+    (vK : Valuation K ΓK) : Prop :=
+  Nonempty (Chapter10HeterogeneousValuationExtension L vK) ∧
+    ∀ W₁ W₂ : Chapter10HeterogeneousValuationExtension L vK,
+      Chapter10ValuationExtensionsEquivalent vK W₁ W₂
+
+def Chapter10HasUniquePrimeAbove
+    {A B : Type*} [CommRing A] [IsLocalRing A]
+    [CommRing B] [Algebra A B] : Prop :=
+  ∃! P : Ideal B, Chapter10PrimeAboveMaximal (A := A) (B := B) P
+
+/-- A valued field is henselian in the factorization sense fixed in Chapter 9. -/
+def Chapter10IsHenselianValuedField
+    {K : Type u10K} {ΓK : Type u10Γ} [Field K]
+    [LinearOrderedCommGroupWithZero ΓK]
+    (vK : Valuation K ΓK) : Prop :=
+  Chapter09.HenselianFactorizationProperty vK.valuationSubring
 
 /-! A valuation on an extension is allowed to use its own ordered value group. -/
 

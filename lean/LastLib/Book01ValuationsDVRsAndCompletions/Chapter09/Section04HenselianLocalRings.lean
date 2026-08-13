@@ -1,4 +1,5 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Section03LiftingFactorizations
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Dependencies
+import Mathlib.RingTheory.Algebraic.Defs
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions
 namespace Chapter09
@@ -26,23 +27,6 @@ an arbitrary additive valuation.
 
 /-! ## 9.4 Henselian local rings -/
 
-/-- Chapter-specific name for Mathlib's henselian local-ring class. -/
-def IsHenselianLocalRingChapter09 (A : Type*) [CommRing A] : Prop :=
-  HenselianLocalRing A
-
-/-- The simple-residue-root lifting property. -/
-def SimpleResidueRootLiftingProperty (A : Type*) [CommRing A] [IsLocalRing A] : Prop :=
-  ∀ (f : A[X]) (a₀ : ResidueRing A), f.Monic →
-    (residuePolynomial f).eval a₀ = 0 →
-    IsUnit ((residuePolynomial f).derivative.eval a₀) →
-    ∃! a : A, f.eval a = 0 ∧ residueClass a = a₀
-
-/-- The coprime-factorization lifting property. -/
-def HenselianFactorizationProperty (A : Type*) [CommRing A] [IsLocalRing A] : Prop :=
-  ∀ (f : A[X]) (g₀ h₀ : Polynomial (ResidueRing A)), f.Monic →
-    g₀.Monic → h₀.Monic → IsCoprime g₀ h₀ → residuePolynomial f = g₀ * h₀ →
-    ∃! gh : A[X] × A[X], IsFactorizationLift f g₀ h₀ gh.1 gh.2
-
 /-- A residue root is the linear factor `X-ā`. -/
 theorem simple_residue_root_iff_linear_factor {A : Type*} [CommRing A] [IsLocalRing A]
     (f : A[X]) (a₀ : ResidueRing A) :
@@ -61,14 +45,7 @@ theorem simple_residue_root_iff_linear_factor {A : Type*} [CommRing A] [IsLocalR
     have hroot := (Polynomial.dvd_iff_isRoot.mp hdvd)
     simpa [Polynomial.IsRoot] using hroot
 
-/-- Simple-residue-root lifting implies coprime factorization lifting. -/
-theorem henselian_factorization_by_successive_linear_lifts
-    {A : Type*} [CommRing A] [IsLocalRing A]
-    (hroot : SimpleResidueRootLiftingProperty A) :
-    HenselianFactorizationProperty A := by
-  sorry
-
-/-- Conversely, a factorization lift applied to `X-ā` gives simple-root lifting. -/
+/-- A factorization lift applied to `X-ā` gives simple-root lifting. -/
 theorem simple_root_lifting_by_linear_factorization
     {A : Type*} [CommRing A] [IsLocalRing A]
     (hfactor : HenselianFactorizationProperty A) :
@@ -152,13 +129,12 @@ theorem simple_root_lifting_by_linear_factorization
   exact (IsLocalRing.eq_of_eval_eq_zero_of_not_isUnit_sub
     (f := f) (a := a) (b := b) hfa hb.1 habunit hunit_a).symm
 
-/-- Mathlib's henselian local-ring property is equivalent to simple-root lifting. -/
-theorem henselian_iff_simple_residue_root_lifting {A : Type*} [CommRing A]
+/-- Mathlib's henselian local-ring class is equivalent to simple-root lifting. -/
+theorem mathlib_henselian_iff_simple_residue_root_lifting {A : Type*} [CommRing A]
     [IsLocalRing A] :
-    IsHenselianLocalRingChapter09 A ↔ SimpleResidueRootLiftingProperty A := by
+    HenselianLocalRing A ↔ SimpleResidueRootLiftingProperty A := by
   constructor
   · intro hH
-    change HenselianLocalRing A at hH
     intro f a₀ hf hroot hsimple
     obtain ⟨a₀', ha₀'⟩ := Ideal.Quotient.mk_surjective a₀
     have hfa : f.eval a₀' ∈ IsLocalRing.maximalIdeal A := by
@@ -209,7 +185,6 @@ theorem henselian_iff_simple_residue_root_lifting {A : Type*} [CommRing A]
     exact (IsLocalRing.eq_of_eval_eq_zero_of_not_isUnit_sub
       (f := f) (a := a) (b := b) ha hb.1 habunit hunit_a).symm
   · intro hroot
-    change HenselianLocalRing A
     refine { toIsLocalRing := inferInstance, is_henselian := ?_ }
     intro f hf a₀ hfa hunit
     have hroot' : (residuePolynomial f).eval (residueClass a₀) = 0 := by
@@ -229,26 +204,29 @@ theorem henselian_iff_simple_residue_root_lifting {A : Type*} [CommRing A]
     rw [map_sub, hres]
     simp
 
-/-- Factorization-form and simple-root henselianity agree for local rings. -/
+/-- Book-henselian rings satisfy Mathlib's simple-root interface.
+
+The converse is intentionally absent: it is the missing generic factorization
+theorem that previously made Chapter 9 depend on an unproved Mathlib TODO. -/
+theorem factorization_henselian_implies_mathlib_henselian
+    {A : Type*} [CommRing A] [IsLocalRing A]
+    (hfactor : IsHenselianLocalRingChapter09 A) :
+    HenselianLocalRing A :=
+  (mathlib_henselian_iff_simple_residue_root_lifting (A := A)).mpr
+    (simple_root_lifting_by_linear_factorization hfactor)
+
+/-- The chapter-specific henselian predicate is definitionally the
+factorization-lifting property. -/
 theorem henselian_iff_factorization_lifting {A : Type*} [CommRing A]
     [IsLocalRing A] :
     IsHenselianLocalRingChapter09 A ↔ HenselianFactorizationProperty A := by
-  constructor
-  · intro hH
-    exact henselian_factorization_by_successive_linear_lifts
-      ((henselian_iff_simple_residue_root_lifting (A := A)).mp hH)
-  · intro hfactor
-    exact (henselian_iff_simple_residue_root_lifting (A := A)).mpr
-      (simple_root_lifting_by_linear_factorization hfactor)
+  rfl
 
-/-- Complete and separated maximal-ideal-adic local rings. -/
-def IsMaximalIdealAdicallyCompleteSeparated (A : Type*) [CommRing A] [IsLocalRing A] : Prop :=
-  IsAdicComplete (IsLocalRing.maximalIdeal A) A
-
-/-- Completeness and separatedness imply henselianity. -/
-theorem complete_separated_local_ring_is_henselian {A : Type*} [CommRing A]
+/-- Adic completeness supplies Mathlib's simple-root henselian class. -/
+theorem complete_separated_local_ring_has_simple_root_henselianity
+    {A : Type*} [CommRing A]
     [IsLocalRing A] (hA : IsMaximalIdealAdicallyCompleteSeparated A) :
-    IsHenselianLocalRingChapter09 A := by
+    HenselianLocalRing A := by
   unfold IsMaximalIdealAdicallyCompleteSeparated at hA
   have hring : HenselianRing A (IsLocalRing.maximalIdeal A) :=
     @IsAdicComplete.henselianRing A _ (IsLocalRing.maximalIdeal A) hA
@@ -263,67 +241,22 @@ theorem complete_separated_local_ring_is_henselian {A : Type*} [CommRing A]
         exact ⟨a, ha, hres⟩ }
   exact hH
 
-/-- Complete DVRs are henselian. -/
+/-- Complete separated local rings satisfy the book's factorization form of
+Hensel's lemma.  Its eventual proof should run the coefficientwise correction
+argument in the adic topology; it must not be obtained from an assumed generic
+simple-root-to-factorization bridge. -/
+theorem complete_separated_local_ring_is_henselian
+    {A : Type*} [CommRing A] [IsLocalRing A]
+    (hA : IsMaximalIdealAdicallyCompleteSeparated A) :
+    IsHenselianLocalRingChapter09 A := by
+  sorry
+
+/-- Complete DVRs satisfy the book's factorization-form definition directly
+by the successive-precision theorem of Section 9.3. -/
 theorem complete_DVR_is_henselian {A : Type*} [CommRing A] [IsDomain A]
     [CompleteDVR A] : IsHenselianLocalRingChapter09 A := by
-  apply complete_separated_local_ring_is_henselian
-  unfold IsMaximalIdealAdicallyCompleteSeparated
-  infer_instance
-
-/-- The algebraic property of being henselian without the topological completeness property. -/
-def IsHenselianButNotComplete (A : Type*) [CommRing A] [IsLocalRing A] : Prop :=
-  HenselianLocalRing A ∧ ¬ IsMaximalIdealAdicallyCompleteSeparated A
-
-/-- A henselian DVR need not be complete; this records an actual example interface. -/
-structure Chapter09HenselianNoncompleteDVRExample where
-  A : Type*
-  [commRing : CommRing A]
-  [domain : IsDomain A]
-  [dvr : IsDiscreteValuationRing A]
-  henselian : IsHenselianLocalRingChapter09 A
-  not_adically_complete : ¬ IsMaximalIdealAdicallyCompleteSeparated A
-
-theorem henselian_DVR_need_not_be_complete
-    : Nonempty Chapter09HenselianNoncompleteDVRExample.{u} := by
-  sorry
-/-- A minimal local interface for the henselization of a local ring. -/
-def IsHenselizationOf {A H : Type*} [CommRing A] [IsLocalRing A]
-    [CommRing H] [IsLocalRing H] [Algebra A H] : Prop :=
-  HenselianLocalRing H ∧ IsLocalHom (algebraMap A H) ∧
-    Function.Injective (algebraMap A H) ∧
-    (∀ x : H, IsIntegral A x) ∧
-    ∀ (B : Type*) [CommRing B] [IsLocalRing B] [Algebra A B]
-      [HenselianLocalRing B],
-      ∃! φ : H →+* B, IsLocalHom φ ∧ φ.comp (algebraMap A H) = algebraMap A B
-/-- The universal-property part of henselization: maps to henselian local rings are unique. -/
-def HasHenselizationUniversalProperty {A H : Type*} [CommRing A] [IsLocalRing A]
-    [CommRing H] [IsLocalRing H] [Algebra A H] : Prop :=
-  ∀ (B : Type*) [CommRing B] [IsLocalRing B] [Algebra A B]
-    [HenselianLocalRing B],
-    ∃! φ : H →+* B, IsLocalHom φ ∧ φ.comp (algebraMap A H) = algebraMap A B
-
-/-- An adic completion interface, kept abstract so the chapter remains self-contained. -/
-def IsAdicCompletionOf {A C : Type*} [CommRing A] [IsLocalRing A]
-    [CommRing C] [Algebra A C] : Prop :=
-  IsAdicComplete (IsLocalRing.maximalIdeal A) C ∧
-    Function.Injective (algebraMap A C)
-    ∧ ∀ (B : Type*) [CommRing B] [IsLocalRing B] [Algebra A B]
-      [IsAdicComplete
-        ((IsLocalRing.maximalIdeal A).map (algebraMap A B)) B],
-      ∃! φ : C →+* B, IsLocalHom φ ∧ φ.comp (algebraMap A C) = algebraMap A B
-
-/-- A strict embedding records that an algebraic henselization can be smaller than its completion. -/
-def IsStrictRingEmbedding {R S : Type*} [NonAssocSemiring R] [NonAssocSemiring S]
-    (φ : R →+* S) : Prop :=
-  Function.Injective φ ∧ ¬ Function.Surjective φ
-
-/-- Henselization elements are algebraic over the original local ring. -/
-theorem henselization_adds_algebraic_solutions {A H : Type*} [CommRing A] [IsLocalRing A]
-    [CommRing H] [IsLocalRing H] [Algebra A H]
-    (hH : IsHenselizationOf (A := A) (H := H)) :
-    HenselianLocalRing H ∧ ∀ x : H, IsIntegral A x := by
-  rcases hH with ⟨hHens, hlocal, hinj, hint, hUniversal⟩
-  exact ⟨hHens, hint⟩
+  intro f g₀ h₀ hf hg₀ hh₀ hcop hred
+  exact hensel_factorization f g₀ h₀ hf hg₀ hh₀ hcop hred
 
 end
 end Chapter09
