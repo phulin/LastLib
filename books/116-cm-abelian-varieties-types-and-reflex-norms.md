@@ -351,7 +351,7 @@ For a CM algebra $\prod K_i$, a type is a disjoint union of types $\Phi_i$ on it
 
 ### 3.5 Examples in degrees two and four
 
-If $K$ is imaginary quadratic, $\Sigma_K=\{\varphi,\bar\varphi\}$ and there are two types, exchanged by conjugation. Once $K\subset\mathbf C$ is fixed, the usual type is $\{\operatorname{id}}$. It yields the familiar elliptic curve $\mathbf C/\mathfrak a$ for a fractional ideal $\mathfrak a$.
+If $K$ is imaginary quadratic, $\Sigma_K=\{\varphi,\bar\varphi\}$ and there are two types, exchanged by conjugation. Once $K\subset\mathbf C$ is fixed, the usual type is $\{\operatorname{id}\}$. It yields the familiar elliptic curve $\mathbf C/\mathfrak a$ for a fractional ideal $\mathfrak a$.
 
 Let $K=\mathbf Q(\zeta_5)$. Its embeddings are
 

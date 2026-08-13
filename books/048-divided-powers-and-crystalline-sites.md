@@ -436,7 +436,7 @@ $$
 The condition includes $JB\subseteq K$ and
 
 $$
-\delta_n(f(x))=f(\gamma_n(x))qquad(x\in J).
+\delta_n(f(x))=f(\gamma_n(x))\qquad(x\in J).
 $$
 
 If $B\twoheadrightarrow R$ is to model a thickening over $A$, the ideal $K$ will usually contain both $JB$ and the kernel of $B\to R$. Compatibility is therefore a gluing condition between pre-existing divided powers from the base and newly adjoined divided powers normal to $R$.

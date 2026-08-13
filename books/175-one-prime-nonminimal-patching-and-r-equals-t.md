@@ -664,8 +664,7 @@ $({\rm RAY}_v)$, the following are equivalent:
 
 1. $R^{\mathrm{sp},1}$ is reduced;
 2. $R^{\mathrm{sp},1}\xrightarrow{\sim}\mathbb T^{\mathrm{sp},1}$;
-3. $R_{\Lambda_v}^{\mathrm{sp},2}\xrightarrow{\sim}
-   \mathbb T_{\Lambda_v}^{\mathrm{sp},2}$.
+3. $R_{\Lambda_v}^{\mathrm{sp},2}\xrightarrow{\sim}\mathbb T_{\Lambda_v}^{\mathrm{sp},2}$.
 
 When these conditions hold, every fixed-character comparison obtained from (3.3) and (3.6)
 by the coefficient changes of Chapter 5 is also a full equality. An auxiliary-level full

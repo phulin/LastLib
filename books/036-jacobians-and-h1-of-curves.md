@@ -1473,7 +1473,7 @@ The deeper positivity properties of Rosati are not needed here. For later corres
 An **isogeny** $\varphi:A\to B$ is a surjective homomorphism with finite kernel. For abelian varieties of equal dimension, each of the following implies the others: $\varphi$ is an isogeny; $\ker\varphi$ is finite; $\varphi$ is finite and dominant. Its degree is
 
 $$
-\deg\varphi=\operatorname{rank}(ker\varphi), \tag{15.4}
+\deg\varphi=\operatorname{rank}(\ker\varphi), \tag{15.4}
 $$
 
 the scheme-theoretic rank, not the number of geometric kernel points. It is separable exactly when its kernel is étale; then the geometric kernel has $\deg\varphi$ points. Purely inseparable isogenies show why geometric counting is unsafe in positive characteristic.

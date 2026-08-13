@@ -587,7 +587,7 @@ For every coefficient object $\overline W$ in the residual primary or companion 
 let
 
 $$
-K_D(\overline W)=ker\!\left(
+K_D(\overline W)=\ker\!\left(
 H^1(\Gamma_{D,0}^v,\overline W)\oplus
 H^1(\Gamma_{D,1}^v,\overline W)
 \longrightarrow H^1(\Gamma_{D,e}^v,\overline W)
@@ -1257,8 +1257,9 @@ augmentation would not imply (9.7).
 The same strict identities transport component support at the patched level and at every
 retained finite auxiliary level. Write $R^{(i)}$ and $C_v^{(i),+}$ for either corresponding
 pair. If the conductor-one complex has full support under $({\rm SUP}_v)$, then for a prime
-$\mathfrak P$ of $R^{(2)}\simeq
-R^{(1)}\widehat\otimes_{\mathcal O}\Lambda_v$, with contraction $\mathfrak p$ to $R^{(1)}$,
+$\mathfrak P$ of
+$R^{(2)}\simeq R^{(1)}\widehat\otimes_{\mathcal O}\Lambda_v$,
+with contraction $\mathfrak p$ to $R^{(1)}$,
 
 $$
 C_v^{(2),+}\otimes_{R^{(2)}}^L k(\mathfrak P)

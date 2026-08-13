@@ -345,7 +345,7 @@ The limit is independent of the chosen affinoid presentation. Its kernel is the 
 Define
 
 $$
-A^\circ=\{f:\{f^m:m\geq0\}\text{ is bounded}\},qquad
+A^\circ=\{f:\{f^m:m\geq0\}\text{ is bounded}\},\qquad
 A^{\circ\circ}=\{f:f^m\to0\}.
 $$
 
@@ -434,7 +434,7 @@ This property proves that the algebra depends only on the subset $U$, not on the
 Two elementary domains generate the useful examples. A **Weierstrass domain** has the form
 
 $$
-\{x:|f_i(x)|\leq1\},qquad
+\{x:|f_i(x)|\leq1\},\qquad
 A\langle f_1,\ldots,f_m\rangle
 =A\langle S_1,\ldots,S_m\rangle/(S_i-f_i).
 $$
@@ -444,14 +444,14 @@ This notation becomes nontrivial when the bound is $|a|$: adjoining $f_i/a$ cuts
 A **Laurent domain** imposes both upper and lower bounds:
 
 $$
-|f_i|\leq1,qquad |g_j|\geq1.
+|f_i|\leq1,\qquad |g_j|\geq1.
 $$
 
 Its algebra adjoins the $f_i$ and inverses $g_j^{-1}$ as bounded coordinates. For example,
 
 $$
 \{r\leq|T|\leq1\}
-=\operatorname{Sp}K\langle T,U\rangle/(TU-a),qquad |a|=r.
+=\operatorname{Sp}K\langle T,U\rangle/(TU-a),\qquad |a|=r.
 $$
 
 The two closed subdomains $|T|\leq|a|$ and $|T|\geq|a|$ cover the unit disc. They are not open in the ordinary topology at the circle $|T|=|a|$, but they form an admissible cover. This is the simplest evidence that the analytic topology must be more flexible than point-set openness.
@@ -612,7 +612,7 @@ Finite generation is essential. For an infinite module, tensor product need not 
 **Theorem 6.1 (affinoid coherence).** If $X=\operatorname{Sp}A$, the functors
 
 $$
-M\longmapsto\widetilde M,qquad
+M\longmapsto\widetilde M,\qquad
 \mathcal F\longmapsto\Gamma(X,\mathcal F)
 $$
 
@@ -1002,7 +1002,7 @@ $$
 with $e\geq1$. Its entire affine generic fiber is the closed annulus $|\pi|^e\leq|X|\leq1$. The node itself is cut out in the special fiber by $X=Y=0$, so its tube requires
 
 $$
-|X|<1,qquad |Y|<1.
+|X|<1,\qquad |Y|<1.
 $$
 
 Using $|X||Y|=|\pi|^e$, this becomes the open annulus

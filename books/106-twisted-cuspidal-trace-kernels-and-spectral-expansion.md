@@ -199,7 +199,7 @@ The determinant-one quotient is
 $$
 X_E^1=G_E(E)\backslash G_E(\mathbf A_E)^1,
 \qquad
-G_E(\mathbf A_E)^1={g:|\det g|_{\mathbf A_E}=1\}.
+G_E(\mathbf A_E)^1=\{g:|\det g|_{\mathbf A_E}=1\}.
 \tag{1.1}
 $$
 

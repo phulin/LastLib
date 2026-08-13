@@ -672,7 +672,7 @@ At every finite place the local integrals are the degree-two integrals already c
 
 ### 5.4 The unramified degree-two factor
 
-Suppose $v$ is finite, $psi_v$ has conductor $\mathcal O_v$, and $\pi_v$ and $\chi_v$ are unramified. Since every multiplicative shell has volume one, (4.2) gives
+Suppose $v$ is finite, $\psi_v$ has conductor $\mathcal O_v$, and $\pi_v$ and $\chi_v$ are unramified. Since every multiplicative shell has volume one, (4.2) gives
 
 $$
 \begin{aligned}

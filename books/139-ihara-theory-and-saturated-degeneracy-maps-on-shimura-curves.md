@@ -447,7 +447,7 @@ Their homothety classes are adjacent. The stabilizer of $[L_0]$ in $\operatornam
 The two vertex types are the parity of
 
 $$
-v(\det g)pmod2
+v(\det g)\pmod2
 $$
 
 for an element carrying $[L_0]$ to the vertex. The group $\operatorname{SL}_2(K)$ preserves type, is transitive on vertices of either fixed type, and is transitive on edges. The full projective group can exchange the types.

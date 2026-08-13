@@ -261,7 +261,7 @@ chosen lattice remain identified after restriction.
 An isomorphism
 
 $$
-\bar r_{\pi,\lambda}^{\mathrm{ss}}simeq\bar\rho|_{G_K}
+\bar r_{\pi,\lambda}^{\mathrm{ss}}\simeq\bar\rho|_{G_K}
 \tag{3.1}
 $$
 

@@ -392,7 +392,7 @@ If $V_\lambda$ is one dimensional, every full $\mathcal O_E$-lattice in it is a 
 This gives the right formulation of a canonical newform lattice. The intersection $L_\lambda=M_E\cap V_\lambda$ is canonical inside the fixed ambient $M_E$. Choosing a nonzero vector $f_\lambda\in V_\lambda$ identifies it with a fractional ideal
 
 $$
-\mathfrak a_\lambda={a\in E:af_\lambda\in L_\lambda\}. \tag{5.2}
+\mathfrak a_\lambda=\{a\in E:af_\lambda\in L_\lambda\}. \tag{5.2}
 $$
 
 Replacing $f_\lambda$ by $cf_\lambda$ replaces $\mathfrak a_\lambda$ by $c^{-1}\mathfrak a_\lambda$. Thus the module and its ideal class are intrinsic; a generator is not, unless the ideal is principal and a unit normalization is chosen. A Whittaker condition such as first coefficient $1$ can choose a vector over $E$, but it does not force the corresponding lattice to be free on that vector at every coefficient prime.

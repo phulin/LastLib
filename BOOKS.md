@@ -723,17 +723,25 @@ available from the current manuscript.
    resulting cover is smooth and geometrically connected under the hypotheses used in residual
    potential modularity.
 
-158. **Discriminants of Galois Representations** — Relate finite Galois modules to their cutout fields and derive exact local and global discriminant bounds from upper ramification and supplied finite-flat models. The numerical three-adic ceilings apply only to the displayed modeled modules and do not make arbitrary generic extensions finite flat.
+158. **Discriminants of Galois Representations** — Develop the general cutout-field, tower,
+   compositum, conductor, matrix, lattice, and detailed three-adic exponent calculus. Import the
+   canonical finite-flat upper-break, different, and model-stability package from Book 56 under
+   compatibility locators. The numerical three-adic ceilings apply only to the displayed modeled
+   modules and do not make arbitrary generic extensions finite flat.
 
-159. **Odlyzko Bounds and Fontaine's Argument** — Prove explicit Odlyzko--Poitou lower bounds and combine them with the finite-flat upper bounds to obtain bounded-degree and stabilization criteria. The decisive certificates are unconditional in their stated signature ranges, but representation classification still requires separate group-theoretic and integral input.
+159. **Odlyzko Bounds and Fontaine's Argument** — Import the canonical Odlyzko--Poitou formula
+   and certified analytic cutoffs from Book 7 and combine them with Book 56's finite-flat ceilings
+   and Book 158's three-adic ledger. Prove the degree-$20$, order-$24/48$, and fixed-exponent
+   Fontaine criteria while retaining the growing-tower warning. Representation classification
+   still requires separate group-theoretic and integral input.
 
 160. **Schoof's Finite-Flat Category over $\mathbf Z[1/2]$** — Classify the finite-flat exponent-three category over $\mathbf Z[1/2]$ under the stated tame dyadic and finite-flat coefficient-prime hypotheses. The resulting cyclotomic-line exact sequence retains the genuine Kummer extension direction and applies only to an actual compatible integral tower.
 
-161. **Quintic Cyclotomic Units and Kummer Arithmetic** — Work in Q(ζ₅), taking the
-   description of its ring of integers, discriminant, and class-number-one theorem as starting
-   points. Determine the prime above five, its valuations, conjugation, units and cyclotomic units,
-   norms, and associates, and prove the fifth-power, Kummer, and coprimality lemmas needed for
-   Diophantine descent.
+161. **Quintic Cyclotomic Units and Kummer Arithmetic** — Work in $\mathbf Q(\zeta_5)$ and
+   prove its ring of integers, discriminant, and class-number-one theorem from the cyclotomic
+   polynomial, the index calculation, and Minkowski's bound. Determine the prime above five, its
+   valuations, conjugation, units and cyclotomic units, norms, and associates, and prove the
+   fifth-power, Kummer, and coprimality lemmas needed for Diophantine descent.
 
 162. **Cyclotomic Descent for Quintic Fermat-Type Equations** — Develop first- and second-case
    descent in fifth cyclotomic fields, valuation control at the prime above 5, primitive-factor

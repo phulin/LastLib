@@ -1643,8 +1643,8 @@ c_1^{\mathrm{dR}}(\mathcal P)
 $$
 
 Theorem 11.1 applied to $A\times A^\vee$, together with
-$\mathcal H^1_{\mathrm{dR}}(A\times A^\vee/S)=
-\mathcal H^1_{\mathrm{dR}}(A/S)\oplus\mathcal H^1_{\mathrm{dR}}(A^\vee/S)$, gives the degree-two
+$\mathcal H^1_{\mathrm{dR}}(A\times A^\vee/S)=\mathcal H^1_{\mathrm{dR}}(A/S)\oplus\mathcal H^1_{\mathrm{dR}}(A^\vee/S)$,
+gives the degree-two
 Kunneth decomposition. It places the normalized class entirely in
 
 $$

@@ -642,8 +642,8 @@ $$
 \tag{4.6}
 $$
 
-The quotient map factors strictly through $L_0/p^nL_0\twoheadrightarrow
-M$. Its kernel is admissible: it is the strict quotient
+The quotient map factors strictly through $L_0/p^nL_0\twoheadrightarrow M$.
+Its kernel is admissible: it is the strict quotient
 $a(L_1)/p^nL_0$, with the induced filtered structure, and the closure
 properties of the admissible category proved in Book 53 apply. Exactness
 from that book therefore gives an injection of geometric
@@ -1436,8 +1436,9 @@ C^\vee_A\simeq C^\vee_B\otimes_BB^\vee_A
 \tag{12.7}
 $$
 
-as the adjoint form of $\operatorname{Hom}_A(C,A)\simeq
-\operatorname{Hom}_B(C,\operatorname{Hom}_A(B,A))$. Tensor with $M$.
+as the adjoint form of
+$\operatorname{Hom}_A(C,A)\simeq\operatorname{Hom}_B(C,\operatorname{Hom}_A(B,A))$.
+Tensor with $M$.
 Ground-field base change commutes because all coefficient modules are
 constant for Witt Frobenius. Finally, tensor--Hom adjunction and
 finite-projective biduality give

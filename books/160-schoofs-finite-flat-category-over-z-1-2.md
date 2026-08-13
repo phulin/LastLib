@@ -113,7 +113,7 @@ At an odd prime $q\ne3$, the integer $3$ is a unit in $\mathbf Z_q$. A finite lo
 
 At $2$ there is no integral fiber because $2$ is inverted. We choose an inertia group $I_2\subset G_{\mathbf Q}$ and its wild subgroup $P_2$. Different choices are conjugate, so the conditions below are independent of the choice.
 
-The prerequisite results used later enter with exactly these hypotheses. Books 2--3 supply finite extensions of $\mathbf Q_2$ and $\mathbf Q_3$, lower and upper ramification groups, Herbrand's quotient theorem, and the integrality of abelian upper breaks for finite Galois extensions of local fields with perfect residue field. Book 17 supplies finite etale descent over the henselian DVRs $\mathbf Z_q$. Books 28, 34, and 42 supply saturated closure, represented quotients, coefficient actions, and the generic-module dictionary, while Book 34 supplies Cartier duality. Book 51 proves the order-three classification over the unramified mixed-characteristic DVR $\mathbf Z_3$. Book 29 proves the fppf Kummer sequence, including residue characteristic three, and Book 55 proves the finite-level criterion for a $3$-divisible system. Books 158--159 prove the finite-flat ramification estimate and the unconditional discriminant certificates used in Chapter 4. The reciprocity conventions and ray exact sequences of Books 5--6 explain the surrounding class-field picture, but the exact small abelian exclusions needed here are proved directly in Chapter 5. No later classification result is used as an input.
+The prerequisite results used later enter with exactly these hypotheses. Books 2--3 supply finite extensions of $\mathbf Q_2$ and $\mathbf Q_3$, lower and upper ramification groups, Herbrand's quotient theorem, and the integrality of abelian upper breaks for finite Galois extensions of local fields with perfect residue field. Book 17 supplies finite etale descent over the henselian DVRs $\mathbf Z_q$. Books 28, 34, and 42 supply saturated closure, represented quotients, coefficient actions, and the generic-module dictionary, while Book 34 supplies Cartier duality. Book 51 proves the order-three classification over the unramified mixed-characteristic DVR $\mathbf Z_3$. Book 29 proves the fppf Kummer sequence, including residue characteristic three, and Book 55 proves the finite-level criterion for a $3$-divisible system. Book 56, Theorems 6.1, 7.1, and 14.2 supply the local finite-flat upper-break, different, and global root-discriminant bounds used in Chapter 4. Book 159, Theorem 15.2 supplies the combined unconditional degree cutoffs after importing the certified analytic calculation from Book 7. The reciprocity conventions and ray exact sequences of Books 5--6 explain the surrounding class-field picture, but the exact small abelian exclusions needed here are proved directly in Chapter 5. No later classification result is used as an input.
 
 ### 1.3 The odd-tame condition
 
@@ -396,13 +396,13 @@ This factor is paid once. The number of primes above $2$ and the dimension of $V
 
 ### 4.3 The finite-flat contribution at three
 
-The finite-flat ramification theorem for a module killed by $3$ over the unramified local field $\mathbf Q_3$ says
+Book 56, Theorem 6.1, specialized to a module killed by $3$ over the unramified local field $\mathbf Q_3$, says
 
 $$
 G_{\mathbf Q_3}^u\text{ acts trivially for }u>\frac12.
 $$
 
-Hilbert's different formula in upper numbering then gives
+Book 56, Theorem 7.1 then gives
 
 $$
 \frac{d_3}{e_3}<1+\frac12=\frac32.
@@ -445,7 +445,7 @@ The general ceiling applies unchanged to a finite direct sum of exponent-three o
 
 ### 4.5 The unconditional degree cutoff
 
-The explicit Odlyzko--Poitou calculation established earlier uses the test function
+The combined cutoff in Book 159, Theorem 15.2 uses Book 7's certified test function
 
 $$
 F_6(x)=\frac{(1-|x|/6)_+}{\cosh(x/2)}
@@ -470,7 +470,7 @@ $$
 \boxed{[L:\mathbf Q]\le33.}
 $$
 
-In the cubic-inertia case, the previously certified comparison at degree $21$ gives
+In the cubic-inertia case, Book 159, Theorem 15.2 gives
 
 $$
 \operatorname{rd}(L)<3^{3/2}2^{2/3}
@@ -835,7 +835,7 @@ Multiplication by $3$ on $E$ kills the subgroup and the quotient, so it factors 
 Pull (7.4) back along the section $1\in C(R)$. Its inverse image is an $M$-torsor. Conversely, an $M$-torsor $P$ together with the canonical trivialization of its third contracted power constructs a cyclic extension of $C$ by $M$. This gives
 
 $$
-\operatorname{Ext}^1_{\mathcal S}(C,M)simeq
+\operatorname{Ext}^1_{\mathcal S}(C,M)\simeq
 H^1_{\mathrm{fppf}}(R,\mu_3).
 \tag{7.5}
 $$
@@ -891,7 +891,7 @@ The sign contributes nothing because $-1=(-1)^3$. Consequently
 
 $$
 \boxed{
-\operatorname{Ext}^1_{\mathcal S}(C,M)simeq\mathbf Z/3\mathbf Z,
+\operatorname{Ext}^1_{\mathcal S}(C,M)\simeq\mathbf Z/3\mathbf Z,
 }
 \tag{7.6}
 $$
@@ -982,8 +982,8 @@ $$
 For every $n\ge1$, Kummer theory and $\operatorname{Pic}(R)=0$ give
 
 $$
-H^1(R,\mu_{3^n})simeq
-R^\times/R^{\times3^n}simeq\mathbf Z/3^n\mathbf Z,
+H^1(R,\mu_{3^n})\simeq
+R^\times/R^{\times3^n}\simeq\mathbf Z/3^n\mathbf Z,
 \tag{8.1}
 $$
 
@@ -1075,7 +1075,7 @@ Its $3^n$-torsion group $E_q[3^n]$ consists fppf-locally of pairs
 
 $$
 (i,x),\qquad
-i\in\mathbf Z/3^n\mathbf Z,qquad
+i\in\mathbf Z/3^n\mathbf Z,\qquad
 x^{3^n}=q^i,
 $$
 
@@ -1394,7 +1394,7 @@ $$
 After tensoring with $\mathbf Q_3$,
 
 $$
-(T\otimes\mathbf Q_3)^{\mathrm{ss}}simeq
+(T\otimes\mathbf Q_3)^{\mathrm{ss}}\simeq
 \mathbf Q_3\oplus\mathbf Q_3(1).
 \tag{11.4}
 $$

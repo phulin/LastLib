@@ -311,7 +311,7 @@ This specialized eta-quotient criterion follows from the two transformations $\e
 Its expansion has rational coefficients. To apply the holomorphic q-expansion principle without concealing the pole, choose $M$ large enough that multiplication by the pullback of $\Delta^M$ clears the poles of both $v_p$ and $1$ at every cusp. The two sections
 
 $$
-\Delta^Mv_p,qquad \Delta^M
+\Delta^Mv_p,\qquad \Delta^M
 $$
 
 then lie in rationally defined powers of the Hodge line, and their quotient is $v_p$. For every $\sigma\in\operatorname{Aut}(\mathbf C/\mathbf Q)$, the sections $\sigma(\Delta^Mv_p)$ and $\Delta^Mv_p$ have the same expansion at the rational cusp $\infty$. Their difference is a holomorphic section with zero expansion, so q-expansion injectivity makes it zero. Since $\Delta^M$ is rational, $\sigma(v_p)=v_p$. Hence $v_p$ lies in the rational function field of the coarse curve; rationality has not been inferred merely from one formal series.

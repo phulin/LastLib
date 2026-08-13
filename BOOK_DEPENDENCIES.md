@@ -155,7 +155,7 @@ flowchart LR
 | 124 | Hecke Correspondences on Curves and Jacobians | 39, 83, 84, 114, 120, 123 |
 | 125 | Automorphic Decomposition of Shimura-Curve $H^1$ | 21, 47, 36, 96, 104, 87, 124, 118, 119, 120 |
 | 126 | Galois Representations from Weight-Two Shimura-Curve Cohomology | 17, 21, 47, 115, 125 |
-| 127 | Galois Representations Attached to Weight-Two Automorphic Forms | 104, 125, 126 |
+| 127 | Galois Representations Attached to Weight-Two Automorphic Forms | 37, 104, 125, 126 |
 | 128 | Local--Global Compatibility for Weight-Two Galois Representations | 22, 61, 75, 76, 104, 121, 122, 125, 126 |
 | 129 | Galois Lattices and Finite-Flat Closures in Abelian Tate Modules | 35, 26, 27, 28, 34, 42, 45, 52, 53, 54, 125, 126 |
 | 130 | Modular Curves $X_0(N)$ and $X_1(N)$ | 110, 111, 112, 113 |
@@ -187,8 +187,8 @@ flowchart LR
 | 156 | Local Geometry of Hilbert--Blumenthal Moduli | 2, 58, 60, 43, 44, 51, 54, 153, 155 |
 | 157 | Moduli Constructions for Potential Modularity | 155, 156 |
 | 158 | Discriminants of Galois Representations | 3, 56 |
-| 159 | Odlyzko Bounds and Fontaine's Argument | 7, 158 |
-| 160 | Schoof's Finite-Flat Category over $\mathbf Z[1/2]$ | 2, 3, 17, 29, 28, 34, 42, 51, 55, 158, 159 |
+| 159 | Odlyzko Bounds and Fontaine's Argument | 7, 56, 158 |
+| 160 | Schoof's Finite-Flat Category over $\mathbf Z[1/2]$ | 2, 3, 17, 28, 29, 34, 42, 51, 55, 56, 159 |
 | 161 | Quintic Cyclotomic Units and Kummer Arithmetic | 1, MATHLIB |
 | 162 | Cyclotomic Descent for Quintic Fermat-Type Equations | 161 |
 | 163 | The Frey Curve: Arithmetic Reduction and the Exact Modular-Method Handoff | 43, 44, 45, 150, 162 |
@@ -216,7 +216,7 @@ flowchart LR
 | 185 | Compatible Systems over the Base Field | 168, 180, 182, 183, 184 |
 | 186 | Changing the Coefficient Prime while Keeping the Frey Special Place | 185 |
 | 187 | The Fixed-Three Integral Local Theory | 3, 42, 54, 129, 185 |
-| 188 | Hardly Ramified $3$-adic Representations | 2, 3, 5, 6, 17, 28, 29, 34, 42, 51, 158, 159, 185, 187, CFT |
+| 188 | Hardly Ramified $3$-adic Representations | 2, 3, 5, 6, 17, 28, 29, 34, 42, 51, 158, 159, 185, 187 |
 
 ## Named unresolved theorem hypotheses
 
@@ -239,9 +239,15 @@ deliberately separate from the acyclic manuscript graph.
   hypothesis used to obtain a horizontal characteristic-zero point of the hardly-ramified ring.
 - **Uniform local preservation:** raw-to-global preservation of the signed special
   Weil--Deligne pair at every coefficient embedding used in the Brauer packet array.
+- **All-place coefficient extension $(\mathrm{AI}_2)$:** extension of the away-from-two
+  compatible collection to a member at every finite coefficient place, including places above
+  two. The coefficient-three route does not use this hypothesis, but the all-place system does.
 - **Coefficient-three integral source:** crystallinity of the selected three-adic member with
   Hodge type $\{0,1\}$, or an equivalent proved good geometric/strongly-divisible carrier,
   together with a named global lattice whose dyadic monodromy thickness is primitive when needed.
+- **Clean support $(\mathrm U)$:** actual unramifiedness of the selected three-adic member at
+  every rational prime other than two and three, including each auxiliary prime left in the
+  finite exceptional set; equality of almost-all Frobenius polynomials is not a substitute.
 
 Consequently the final conditional-FLT spine is **not unconditionally closed**. No review or
 catalog status may be read as claiming otherwise.

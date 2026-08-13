@@ -888,12 +888,12 @@ The implication needed here is precise:
 
 $$
 \begin{array}{c}
-E/\mathbf Q\text{ has full rational two-torsion}\
+E/\mathbf Q\text{ has full rational two-torsion}\\
 \text{and }P\in E(\mathbf Q)\text{ has order }7
 \end{array}
 \Longrightarrow
 \begin{array}{c}
-(t,z)\in C_7(\mathbf Q),\t\notin\{0,1,\infty\}.
+(t,z)\in C_7(\mathbf Q),t\notin\{0,1,\infty\}.
 \end{array}
 \tag{10.2}
 $$

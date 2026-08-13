@@ -417,7 +417,7 @@ Equation (3.7) is our primary direction check. If global reciprocity were normal
 Let $K$ be imaginary quadratic and let $\Phi=\{\iota\}$. Then $E=K$ and $r_\Phi$ is the identity. The predicted formula is
 
 $$
-A(\mathfrak a)^\operatorname{Frob}_{\mathfrak p}
+A(\mathfrak a)^{\operatorname{Frob}_{\mathfrak p}}
 \simeq A(\mathfrak p^{-1}\mathfrak a) \tag{3.8}
 $$
 

@@ -1231,7 +1231,7 @@ The proof is direct: insert (10.1), integrate over a fundamental region, and let
 Equation (10.2) has a decisive consequence. If an $L^2$ automorphic function is orthogonal to every right translate of every pseudo-Eisenstein series, its constant term vanishes in every cusp chart; hence it is cuspidal. Conversely every cusp form is orthogonal to all pseudo-Eisenstein series. Therefore
 
 $$
-L^2_{\mathrm{cusp},\omega}^{\perp}
+\bigl(L^2_{\mathrm{cusp},\omega}\bigr)^{\perp}
 =\overline{\operatorname{span}\{R(g)\Theta_\varphi\}}.
 \tag{10.3}
 $$
@@ -1390,7 +1390,7 @@ There is no third type. In particular, no complementary-series interval appears 
 1. a wave packet of unitary rank-one Eisenstein series induced from unitary pairs $(\chi_1,\chi_2)$ with $\chi_1\chi_2=\omega$;
 2. a one-dimensional residual character $\eta\circ\det$ with $\eta^2=\omega$.
 
-The two classes are mutually orthogonal after wave-packet integration, and their closed span is $L^2_{\mathrm{cusp},\omega}^{\perp}$ within the fixed data.
+The two classes are mutually orthogonal after wave-packet integration, and their closed span is $\bigl(L^2_{\mathrm{cusp},\omega}\bigr)^{\perp}$ within the fixed data.
 
 **Proof.** Equation (10.3) identifies the noncuspidal closed subspace with the closure of pseudo-Eisenstein series. Equation (10.5) writes each generator as a Mellin integral in the convergence chamber. Theorem 8.1 permits contour motion to the unitary axis. Theorem 9.1 identifies every crossed residue with (11.2), yielding (10.6). Unitarity of normalized intertwining and the Maass--Selberg identity give orthogonality of disjoint unitary parameter packets; character orthogonality separates distinct residues. Taking closures proves the assertion. $\square$
 

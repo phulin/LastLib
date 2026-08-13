@@ -265,7 +265,7 @@ $$
 \boxed{
 r_{1,\tau}:G_M\longrightarrow\operatorname{GL}_2(\Omega)
 \text{ is absolutely irreducible whenever }q(\tau)=2.}
-\tag{\mathrm{AI}_2}
+\tag{$\mathrm{AI}_2$}
 $$
 
 Here $r_{1,\tau}$ is the realization of the top packet $\pi_M$. This is a rational

@@ -357,7 +357,7 @@ base-change statement is used.
 Let a flat finitely presented group scheme $G\to S_0$ act on an $S_0$-scheme $X$. The quotient stack $[X/G]$ assigns to $T$ the groupoid of pairs
 
 $$
-(P,u),\qquad P\to T\text{ a right }G_T\text{-torsor},qquad
+(P,u),\qquad P\to T\text{ a right }G_T\text{-torsor},\qquad
 u:P\to X_T,
 $$
 
@@ -847,8 +847,8 @@ not assume that an arbitrarily chosen bundle descends.
 An isomorphism $f:(A,\iota,\lambda,\eta K)\to(A',\iota',\lambda',\eta'K)$ satisfies
 
 $$
-f\iota(b)=\iota'(b)f,qquad
-f^\vee\lambda'f=\lambda,qquad
+f\iota(b)=\iota'(b)f,\qquad
+f^\vee\lambda'f=\lambda,\qquad
 f(\eta K)=\eta'K.
 $$
 

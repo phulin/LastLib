@@ -421,14 +421,14 @@ for all but finitely many $v$, then $\pi\simeq\rho$.
 Let
 
 $$
-T_v=\mathbf1_{K_v\operatorname{diag}(\varpi_v,1)K_v},qquad
+T_v=\mathbf1_{K_v\operatorname{diag}(\varpi_v,1)K_v},\qquad
 S_v=\mathbf1_{K_v(\varpi_vI_2)K_v},
 $$
 
 with $\operatorname{vol}(K_v)=1$. On the spherical line their eigenvalues are
 
 $$
-q_v^{1/2}(\alpha_v+\beta_v),qquad \alpha_v\beta_v.
+q_v^{1/2}(\alpha_v+\beta_v),\qquad \alpha_v\beta_v.
 \tag{3.6}
 $$
 
@@ -1136,7 +1136,7 @@ $$
 given by
 
 $$
-D_{\mathfrak p,0}\phi=\phi,qquad
+D_{\mathfrak p,0}\phi=\phi,\qquad
 D_{\mathfrak p,1}\phi=R(t_\mathfrak p)\phi.
 \tag{8.3}
 $$
@@ -1433,7 +1433,7 @@ which is exactly (7.7). Linear independence follows adelically from distinct fir
 The oldspace at level $N$ is generated already by the two images from each immediate level $N/p$:
 
 $$
-h(z)\longmapsto h(z),qquad
+h(z)\longmapsto h(z),\qquad
 h(z)\longmapsto h(pz).
 \tag{10.8}
 $$
@@ -1463,7 +1463,7 @@ It is not $2^r$ dimensional. Although two degeneracy maps are available at each 
 For an unramified representation raised to level $p^2$, the three local basis vectors are $v_0,v_1,v_2$. The two images from level $p$ are
 
 $$
-\operatorname{span}(v_0,v_1),qquad
+\operatorname{span}(v_0,v_1),\qquad
 \operatorname{span}(v_1,v_2),
 $$
 

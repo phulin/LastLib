@@ -1564,7 +1564,7 @@ $$
 There is a precise lattice formulation. Put
 
 $$
-P_\lambda=e_\lambda M={e_\lambda m:m\in M\}\subseteq e_\lambda M_K.
+P_\lambda=e_\lambda M=\{e_\lambda m:m\in M\}\subseteq e_\lambda M_K.
 $$
 
 Projection to the distinguished summand has kernel $M^c$, and therefore induces a canonical isomorphism

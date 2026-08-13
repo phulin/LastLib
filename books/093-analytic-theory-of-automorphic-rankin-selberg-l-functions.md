@@ -1783,7 +1783,7 @@ the boundary. No assertion that the Euler product itself converges at $s=1$ is b
 For two local trace sums
 
 $$
-A_{v,r}=\alpha_{1,v}^r+\alpha_{2,v}^r,qquad
+A_{v,r}=\alpha_{1,v}^r+\alpha_{2,v}^r,\qquad
 B_{v,r}=\beta_{1,v}^r+\beta_{2,v}^r,
 $$
 

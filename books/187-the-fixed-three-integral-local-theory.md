@@ -1394,8 +1394,8 @@ $$
 Books 128 and 168 are transitive sources for the packet comparison records used inside Books 183--185 and explain the coefficient-prime boundary. Books 163--164 establish the Frey
 provenance and deformation-theoretic meaning of the signed SP line. Books 183--184 construct
 the SP packet array and prove rational effectivity. None is a separate direct proof input after
-the packaged theorem of Book 185 is assumed. Books 160 and 188 are downstream consumers, not
-prerequisites of Theorems 10.1--10.2.
+the packaged theorem of Book 185 is assumed. Book 160 is an earlier comparative source and is
+not a prerequisite of Theorems 10.1--10.2; Book 188 is the downstream consumer.
 
 ### 11.2 Exact blocker audit
 
@@ -1485,8 +1485,9 @@ $(\mathrm U)$.
 **Attack: the dyadic line should be globalized before Schoof.** It is only $D_2$-stable.
 Globalizing it would assume the later classification's conclusion.
 
-**Attack: Book 160 can be used to construct the tower.** The direction is opposite. This book
-constructs the tower using Books 42, 54, and 129; Books 160 and 188 consume it.
+**Attack: Book 160 constructs or later consumes this tower.** It does neither. Book 160 is an
+earlier comparative treatment. This book constructs its named tower from Books 42, 54, and 129,
+and Book 188 consumes that tower.
 
 ## 12. Conclusion and readiness
 

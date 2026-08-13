@@ -179,7 +179,7 @@ $\mathcal O_F$, maximal ideal $\mathfrak p_F=(\varpi_F)$, residue field $k_F$, a
 $q_F=|k_F|$.  Let $L/F$ be cyclic of degree $d$ with generator $\sigma$.  Write
 
 $$
-e=e(L/F),\qquad f=f(L/F),\qquad d=ef,qquad q_L=q_F^f.
+e=e(L/F),\qquad f=f(L/F),\qquad d=ef,\qquad q_L=q_F^f.
 $$
 
 Set
@@ -2572,7 +2572,7 @@ second bump and subtracting its contribution from the first gives a triangular b
 rank-two germ module over the ring of smooth functions of $u$: multiplying the two bumps by
 smooth invariant coefficients prescribes the full Taylor germs, not merely their first two
 numbers.
-On the twisted complex slice the transverse equation is $1-c\bar{phantom{x}}$; its real
+On the twisted complex slice the transverse equation is $1-c\bar{\phantom{x}}$; its real
 determinant is $1-c\bar c$, the ordinary equation in $u$.  The orbit Jacobians and their germ
 modules therefore agree.  Solve the resulting triangular $2\times2$ system over
 $C^\infty(u)$ for the full endpoint germs of the sine quotient.  The interior pieces then glue

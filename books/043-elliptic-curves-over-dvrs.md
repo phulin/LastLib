@@ -1241,7 +1241,7 @@ Let $\Gamma_0$ be the geometric component met by $O$. A section meets $\Gamma_0$
 Translation by $P$ on the generic curve extends to an automorphism of $\mathcal X$: apply the uniqueness of the minimal regular model to the generic automorphism and then to its inverse. It therefore permutes the geometric components. The components actually met by $K$-sections form a finite group
 
 $$
-\Phi_E^{\mathrm{sec}}={\tau_P(\Gamma_0):P\in E(K)\},
+\Phi_E^{\mathrm{sec}}=\{\tau_P(\Gamma_0):P\in E(K)\},
 $$
 
 with $\tau_P(\Gamma_0)+\tau_Q(\Gamma_0)=\tau_{P+Q}(\Gamma_0)$. This is well defined because two sections meet the same identity translate exactly when their difference lies in $E_0(K)$. Consequently reduction gives the exact sequence

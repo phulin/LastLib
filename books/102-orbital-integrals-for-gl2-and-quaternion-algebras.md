@@ -814,7 +814,7 @@ It is useful to see the two quaternionic cases in cyclic coordinates. Write
 
 $$
 D=L\oplus L\Pi,
-\qquad \Pi a=a^\sigma\Pi,qquad \Pi^2=\varpi,
+\qquad \Pi a=a^\sigma\Pi,\qquad \Pi^2=\varpi,
 $$
 
 with $L/F$ unramified quadratic. If $\delta\in\mathcal O_L^\times$ has residue outside $k^\times$, then $F[\delta]=L$. Since $v_D(L^\times)=2\mathbf Z$, the two valuation representatives $1$ and $\Pi$ survive in $L^\times\backslash D^\times/\mathcal O_D^\times$. Both conjugates remain units, so the orbital integral is $2$.

@@ -1041,7 +1041,7 @@ $$
 \Gamma\subset C\times_SD
 $$
 
-finite locally free over both factors. Restricting the line bundle $\mathcal O(\Gamma)$ to $C\times\{d}$ gives a family of divisor classes on $C$, hence a morphism $D\to\operatorname{Pic}_{C/S}$. After subtracting the class at a base point, the Albanese theorem extends it uniquely to a homomorphism
+finite locally free over both factors. Restricting the line bundle $\mathcal O(\Gamma)$ to $C\times\{d\}$ gives a family of divisor classes on $C$, hence a morphism $D\to\operatorname{Pic}_{C/S}$. After subtracting the class at a base point, the Albanese theorem extends it uniquely to a homomorphism
 
 $$
 J_D\longrightarrow J_C. \tag{11.6}

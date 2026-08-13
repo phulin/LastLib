@@ -1052,7 +1052,7 @@ $$
 Taking determinants gives the Hasse map
 
 $$
-\operatorname{Ha}(A):det\omega_{A/S}
+\operatorname{Ha}(A):\det\omega_{A/S}
 \longrightarrow F_S^*\det\omega_{A/S}. \tag{13.2}
 $$
 

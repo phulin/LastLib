@@ -102,7 +102,7 @@ Complex representations are smooth. When coefficients are changed, the coefficie
 For a finite extension $L/F$, set
 
 $$
-U_L^0=\mathcal O_L^\times,qquad U_L^r=1+\mathfrak p_L^r\quad(r\geq1),
+U_L^0=\mathcal O_L^\times,\qquad U_L^r=1+\mathfrak p_L^r\quad(r\geq1),
 $$
 
 and for a smooth character $\xi$ of $L^\times$ set
@@ -143,7 +143,7 @@ $$
 Then $\mathcal O_D$ is the unique maximal order of $D$, $\mathfrak P_D$ is its unique maximal two-sided ideal, and
 
 $$
-U_D^0=\mathcal O_D^\times,qquad U_D^r=1+\mathfrak P_D^r\quad(r\geq1)
+U_D^0=\mathcal O_D^\times,\qquad U_D^r=1+\mathfrak P_D^r\quad(r\geq1)
 $$
 
 is a normal filtration of $G$. Conjugation invariance follows immediately from invariance of the reduced norm. This normality has a strong consequence used later: if an irreducible representation has one nonzero $U_D^r$-fixed vector, then $U_D^r$ acts trivially on the whole representation.
@@ -175,16 +175,16 @@ Since central elements have even $D$-valuation, only two valuation classes remai
 Let $F_2/F$ be the unramified quadratic extension, with Frobenius $\sigma$. There is a model
 
 $$
-D=F_2\oplus F_2\Pi_D,qquad
-\Pi_D^2=\varpi,qquad
+D=F_2\oplus F_2\Pi_D,\qquad
+\Pi_D^2=\varpi,\qquad
 \Pi_D a=\sigma(a)\Pi_D.
 $$
 
 After multiplying $\Pi_D$ by a unit one can always arrange the displayed square. In this model
 
 $$
-\mathcal O_D=\mathcal O_{F_2}\oplus\mathcal O_{F_2}\Pi_D,qquad
-\mathfrak P_D=\Pi_D\mathcal O_D,qquad
+\mathcal O_D=\mathcal O_{F_2}\oplus\mathcal O_{F_2}\Pi_D,\qquad
+\mathfrak P_D=\Pi_D\mathcal O_D,\qquad
 \mathcal O_D/\mathfrak P_D\simeq k_2,
 $$
 
@@ -552,7 +552,7 @@ $$
 Put $J=E^\times U_D^1$. Because $E^\times\cap U_D^1=U_E^1$, the rule
 
 $$
-\lambda_\theta(eu)=\theta(e),qquad e\in E^\times, u\in U_D^1,
+\lambda_\theta(eu)=\theta(e),\qquad e\in E^\times, u\in U_D^1,
 $$
 
 is well defined. The subgroup $J$ is normal of index two in $G$, and conjugation by $\Pi_D$ changes $\lambda_\theta$ to $\lambda_{\theta^\sigma}$.
@@ -585,7 +585,7 @@ $$
 and
 
 $$
-\Theta(g)=0,qquad g\notin J.
+\Theta(g)=0,\qquad g\notin J.
 $$
 
 At a central element $z$, the value is $2\theta(z)$ in direct normalization. These formulas also show that the construction depends on the unordered orbit $\{\theta,\theta^\sigma\}$.

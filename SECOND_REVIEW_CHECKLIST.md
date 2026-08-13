@@ -144,10 +144,10 @@ unconditional dependency-spine column must not be promoted while the named hypot
 | 123 | Modular and Shimura Curves | [x] | [x] | — | — |
 | 124 | Hecke Correspondences on Curves and Jacobians | [x] | [x] | — | — |
 | 125 | Automorphic Decomposition of Shimura-Curve $H^1$ | [x] | [x] | — | — |
-| 126 | Galois Representations from Weight-Two Shimura-Curve Cohomology | [x] | [ ] | — | — |
-| 127 | Galois Representations Attached to Weight-Two Automorphic Forms | [x] | [ ] | — | — |
-| 128 | Local--Global Compatibility for Weight-Two Galois Representations | [x] | [ ] | — | — |
-| 129 | Galois Lattices and Finite-Flat Closures in Abelian Tate Modules | [x] | [ ] | — | — |
+| 126 | Galois Representations from Weight-Two Shimura-Curve Cohomology | [x] | [x] | [x] | — |
+| 127 | Galois Representations Attached to Weight-Two Automorphic Forms | [x] | [x] | [x] | — |
+| 128 | Local--Global Compatibility for Weight-Two Galois Representations | [x] | [x] | [x] | — |
+| 129 | Galois Lattices and Finite-Flat Closures in Abelian Tate Modules | [x] | [x] | [x] | — |
 | 130 | Modular Curves $X_0(N)$ and $X_1(N)$ | [x] | [x] | — | — |
 | 131 | Jacobians of Modular Curves | [x] | [x] | — | — |
 | 132 | Eisenstein Series, Congruences, and the Eisenstein Ideal | [x] | [x] | — | — |
@@ -157,7 +157,7 @@ unconditional dependency-spine column must not be promoted while the named hypot
 | 136 | Mumford Representations and Exact Genus-Two Jacobian Arithmetic | [x] | [x] | — | — |
 | 137 | Explicit Two-Descent on Genus-Two Jacobians | [x] | [x] | — | — |
 | 138 | Integral Local Types and Type Lattices | [x] | [x] | — | — |
-| 139 | Ihara Theory and Saturated Degeneracy Maps on Shimura Curves | [x] | [ ] | — | — |
+| 139 | Ihara Theory and Saturated Degeneracy Maps on Shimura Curves | [x] | [x] | [x] | — |
 | 140 | Integral Level Change and Jacquet--Langlands Comparison | [x] | [x] | — | — |
 | 141 | Dickson Classification and Adequate Residual Image | [x] | [x] | — | — |
 | 142 | Taylor–Wiles Primes | [x] | [x] | — | — |

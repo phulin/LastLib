@@ -43,26 +43,26 @@
    - [Reflex field](#83-reflex-field)
    - [Components and the curve case](#84-components-and-the-curve-case)
    - [CM tori in a quaternion algebra](#85-cm-tori-in-a-quaternion-algebra)
-10. [Reciprocity morphisms](#10-reciprocity-morphisms)
-    - [The toric construction](#101-the-toric-construction)
-    - [Special-point reciprocity](#102-special-point-reciprocity)
-    - [Variance and normalization](#103-variance-and-normalization)
-    - [Passage to components](#104-passage-to-components)
-11. [Canonical models](#11-canonical-models)
-    - [Definition by arithmetic special points](#111-definition-by-arithmetic-special-points)
-    - [Uniqueness](#112-uniqueness)
-    - [Existence in the two families](#113-existence-in-the-two-families)
-    - [Effective descent](#114-effective-descent)
-12. [Level descent and functoriality](#12-level-descent-and-functoriality)
-    - [The tower over the reflex field](#121-the-tower-over-the-reflex-field)
-    - [Finite quotients and non-neat level](#122-finite-quotients-and-non-neat-level)
-    - [Morphisms and Hecke translations](#123-morphisms-and-hecke-translations)
-    - [Descent of connected components](#124-descent-of-connected-components)
-13. [The FLT package](#13-the-flt-package)
-    - [Shimura curves and the parity check](#131-shimura-curves-and-the-parity-check)
-    - [A reusable canonical-model theorem](#132-a-reusable-canonical-model-theorem)
-    - [Hypothesis ledger](#133-hypothesis-ledger)
-    - [Conclusion](#134-conclusion)
+9. [Reciprocity morphisms](#9-reciprocity-morphisms)
+    - [The toric construction](#91-the-toric-construction)
+    - [Special-point reciprocity](#92-special-point-reciprocity)
+    - [Variance and normalization](#93-variance-and-normalization)
+    - [Passage to components](#94-passage-to-components)
+10. [Canonical models](#10-canonical-models)
+    - [Definition by arithmetic special points](#101-definition-by-arithmetic-special-points)
+    - [Uniqueness](#102-uniqueness)
+    - [Existence in the two families](#103-existence-in-the-two-families)
+    - [Effective descent](#104-effective-descent)
+11. [Level descent and functoriality](#11-level-descent-and-functoriality)
+    - [The tower over the reflex field](#111-the-tower-over-the-reflex-field)
+    - [Finite quotients and non-neat level](#112-finite-quotients-and-non-neat-level)
+    - [Morphisms and Hecke translations](#113-morphisms-and-hecke-translations)
+    - [Descent of connected components](#114-descent-of-connected-components)
+12. [The FLT package](#12-the-flt-package)
+    - [Shimura curves and the parity check](#121-shimura-curves-and-the-parity-check)
+    - [A reusable canonical-model theorem](#122-a-reusable-canonical-model-theorem)
+    - [Hypothesis ledger](#123-hypothesis-ledger)
+    - [Conclusion](#124-conclusion)
 
 ## 1. The bridge from real domains to arithmetic varieties
 
@@ -643,7 +643,7 @@ r_{(G,X)}:\operatorname{Res}_{E/\mathbf Q}\mathbf G_m
 \longrightarrow T.                                                    \tag{6.4}
 $$
 
-Its construction is given in Chapter 10. Choose an idele $s$ representing the desired Artin element with positive component at every real place of $E$. On the component quotient (6.3), arithmetic reciprocity acts by
+Its construction is given in Chapter 9. Choose an idele $s$ representing the desired Artin element with positive component at every real place of $E$. On the component quotient (6.3), arithmetic reciprocity acts by
 
 $$
 [t]^{\operatorname{Art}_E(s)}=[r_{(G,X)}(s_f)t].                     \tag{6.5}
@@ -807,7 +807,7 @@ $$
 
 On determinants, (7.7) and the weight identity give the action (6.5) on the narrow class quotient. Thus special-point reciprocity and the independent component computation agree.
 
-The ambient reflex field in (7.4) is $\mathbf Q$, but the CM point usually has reflex field $E(\Phi)$ strictly larger than $\mathbf Q$. There is no conflict. The whole Hilbert variety descends to $\mathbf Q$; one special point is defined over an abelian extension of its own CM reflex field. Norm compatibility (10.4) converts the latter Galois action into the former action on connected components.
+The ambient reflex field in (7.4) is $\mathbf Q$, but the CM point usually has reflex field $E(\Phi)$ strictly larger than $\mathbf Q$. There is no conflict. The whole Hilbert variety descends to $\mathbf Q$; one special point is defined over an abelian extension of its own CM reflex field. Norm compatibility (9.4) converts the latter Galois action into the former action on connected components.
 
 ## 8. Quaternionic data
 
@@ -950,30 +950,30 @@ $$
 
 By Book 117, arithmetic reciprocity acts by left multiplication with (8.10). The quaternion algebra changes the admissible tori, the component quotient, and compactness; it does not introduce a new inverse into CM reciprocity.
 
-## 10. Reciprocity morphisms
+## 9. Reciprocity morphisms
 
 The reflex field of the ambient datum governs the whole variety; the larger reflex field of a special point governs its individual Galois orbit. Both actions arise from the same operation on cocharacters. This chapter constructs the relevant torus morphisms and proves their compatibility with the adelic quotient and its component set.
 
-### 10.1 The toric construction
+### 9.1 The toric construction
 
 Let $(T,\{h\})$ be a toric Shimura datum. Since $T$ is commutative, the conjugacy class contains only $h$. Put $E=E(T,h)$. The cocharacter $\mu_h$ is fixed by $\Gamma_E$. As in the reflex-norm construction of Book 116, there is a unique Galois-equivariant map
 
 $$
 (r_h)_*:X_*\bigl(\operatorname{Res}_{E/\mathbf Q}\mathbf G_m\bigr)
-\longrightarrow X_*(T)                                               \tag{10.1}
+\longrightarrow X_*(T)                                               \tag{9.1}
 $$
 
 that sends the basis cocharacter corresponding to the chosen embedding $E\hookrightarrow\mathbf C$ to $\mu_h$. It defines
 
 $$
-r_h:\operatorname{Res}_{E/\mathbf Q}\mathbf G_m\longrightarrow T,   \tag{10.2}
+r_h:\operatorname{Res}_{E/\mathbf Q}\mathbf G_m\longrightarrow T,   \tag{9.2}
 $$
 
 the **reciprocity morphism** of the special point.
 
 Existence and uniqueness follow exactly from the permutation-lattice argument: every embedding is $\sigma$ times the chosen one, equivariance forces its image to be $\sigma\mu_h$, and this is independent of the lift because $\Gamma_E$ fixes $\mu_h$.
 
-If $j:T\to G$ sends $h$ into $X$, the reciprocity morphism in $G$ is $j\circ r_h$. This functoriality is immediate from (10.1). In a CM realization it is precisely the reflex norm of the CM type followed by the ambient torus embedding.
+If $j:T\to G$ sends $h$ into $X$, the reciprocity morphism in $G$ is $j\circ r_h$. This functoriality is immediate from (9.1). In a CM realization it is precisely the reflex norm of the CM type followed by the ambient torus embedding.
 
 For the ambient datum itself, apply the same construction after projecting to $G^{\mathrm{ab}}$. The conjugacy class of
 
@@ -994,44 +994,44 @@ is the diagonal embedding. On finite ideles, a rational idele is extended to eve
 
 The ambient map generally contains less information than $r_h$ for a special point. Abelianization forgets the position of the CM torus inside the derived group. It is nevertheless exactly the information needed for connected components, because strong approximation has already erased the derived finite adelic coordinate there.
 
-### 10.2 Special-point reciprocity
+### 9.2 Special-point reciprocity
 
-**Theorem 10.1.** Let $x=[h,g]\in\operatorname{Sh}_K(G,X)(\mathbf C)$ be special in one of the selected Hilbert or quaternionic data, with its compatible PEL-exact realization directly or through the chosen central modification. Let $T=\operatorname{MT}(h)$ and let $E(h)$ be its reflex field. For $s\in\mathbf A_{E(h)}^\times$, the canonical Galois action is
+**Theorem 9.1.** Let $x=[h,g]\in\operatorname{Sh}_K(G,X)(\mathbf C)$ be special in one of the selected Hilbert or quaternionic data, with its compatible PEL-exact realization directly or through the chosen central modification. Let $T=\operatorname{MT}(h)$ and let $E(h)$ be its reflex field. For $s\in\mathbf A_{E(h)}^\times$, the canonical Galois action is
 
 $$
 x^{\operatorname{Art}_{E(h)}(s)}
-=[h,r_h(s_f)g].                                                       \tag{10.3}
+=[h,r_h(s_f)g].                                                       \tag{9.3}
 $$
 
 The right side depends only on the idele class and is compatible with changing level and with morphisms of Shimura data.
 
 **Proof strategy.** Realize the torus as the Mumford--Tate torus of a polarized CM Hodge structure and invoke the CM comparison theorem, then check principal ideles and level directly.
 
-**Proof.** In each selected family, the compatible PEL-exact realization, directly or on the chosen central modification, identifies $h$ with the Hodge structure on a polarized CM abelian variety, possibly with a product CM algebra and prescribed endomorphisms. Book 117 proves that arithmetic Artin acts on its finite adelic lattice by the reflex norm, giving exactly (10.3) in the quotient convention (1.1).
+**Proof.** In each selected family, the compatible PEL-exact realization, directly or on the chosen central modification, identifies $h$ with the Hodge structure on a polarized CM abelian variety, possibly with a product CM algebra and prescribed endomorphisms. Book 117 proves that arithmetic Artin acts on its finite adelic lattice by the reflex norm, giving exactly (9.3) in the quotient convention (1.1).
 
-If $s$ is replaced by $as$ with $a\in E(h)^\times$, then $\operatorname{Art}(a)=1$. The toric reflex construction sends $a$ to $r_h(a)\in T(\mathbf Q)$, and left multiplication by that rational point identifies the two right-hand representatives. If $s$ changes within the open subgroup mapping into $gKg^{-1}\cap T(\mathbf A_f)$, the level coset is unchanged. Thus the formula depends only on the appropriate idele class. For a morphism $f:G\to G'$, applying $f$ to (10.3) and using $r_{f(h)}=f\circ r_h$ proves functoriality. Projection of $gK'$ to $gK$ proves level compatibility. $\square$
+If $s$ is replaced by $as$ with $a\in E(h)^\times$, then $\operatorname{Art}(a)=1$. The toric reflex construction sends $a$ to $r_h(a)\in T(\mathbf Q)$, and left multiplication by that rational point identifies the two right-hand representatives. If $s$ changes within the open subgroup mapping into $gKg^{-1}\cap T(\mathbf A_f)$, the level coset is unchanged. Thus the formula depends only on the appropriate idele class. For a morphism $f:G\to G'$, applying $f$ to (9.3) and using $r_{f(h)}=f\circ r_h$ proves functoriality. Projection of $gK'$ to $gK$ proves level compatibility. $\square$
 
 The theorem is not a definition disguised as a proof. The Galois action on the abelian variety is algebraic, whereas $r_h$ was built from a Hodge cocharacter. Their equality is the substantive CM reciprocity theorem proved in Book 117.
 
-### 10.3 Variance and normalization
+### 9.3 Variance and normalization
 
-There are three equivalent ways to write (10.3), and mixing them causes an inverse error.
+There are three equivalent ways to write (9.3), and mixing them causes an inverse error.
 
 Our double quotient uses $G(\mathbf Q)$ on the left and the level coset on the right. A finite adelic element $t$ changes the lattice by the inverse transform, so the CM ideal action $t*A$ is represented by $[h,tg]$. Hence arithmetic Frobenius corresponds to $r_h(\pi)g$.
 
 If one instead encodes a level structure as a right trivialization and lets $G(\mathbf A_f)$ act on the right, the same geometric operation is written $g\mapsto gt^{-1}$. Likewise, geometric Artin reciprocity replaces $s$ by $s^{-1}$. Either change introduces one inverse; making both changes introduces two and returns to the displayed direction.
 
-The quickest test is a CM elliptic curve. For an unramified prime $\mathfrak p$ of its reflex field, arithmetic Frobenius sends the lattice class to the inverse reflex ideal, as in Book 117. Formula (10.3) has precisely that effect. A convention predicting the direct ideal instead has one inverse misplaced.
+The quickest test is a CM elliptic curve. For an unramified prime $\mathfrak p$ of its reflex field, arithmetic Frobenius sends the lattice class to the inverse reflex ideal, as in Book 117. Formula (9.3) has precisely that effect. A convention predicting the direct ideal instead has one inverse misplaced.
 
-### 10.4 Passage to components
+### 9.4 Passage to components
 
 Special-point reciprocity lives in a maximal torus of $G$, while a component remembers only the maximal abelian quotient of $G$. Projecting the former to the latter must agree with the ambient reflex map, or pointwise and componentwise descent would conflict.
 
-Project (10.3) through $\nu:G\to G^{\mathrm{ab}}$. For a special point $h$, functoriality of cocharacters gives
+Project (9.3) through $\nu:G\to G^{\mathrm{ab}}$. For a special point $h$, functoriality of cocharacters gives
 
 $$
 \nu\circ r_h
-=r_{(G,X)}\circ N_{E(h)/E(G,X)}                                     \tag{10.4}
+=r_{(G,X)}\circ N_{E(h)/E(G,X)}                                     \tag{9.4}
 $$
 
 on ideles, with the evident interpretation if the fields are embedded conjugately.
@@ -1042,27 +1042,27 @@ $$
 (N_{E(h)/E})_*e_\tau=e_{\tau|_E};
 $$
 
-the sum over extensions occurs on the contravariant character lattice, not on this cocharacter basis. The right side of (10.4) therefore sends $e_\tau$ to $\tau(\nu\mu_h)$. By the defining equivariance of the special reciprocity map, the left side has the same value. Equality on every $e_\tau$ proves equality of torus morphisms. $\square$
+the sum over extensions occurs on the contravariant character lattice, not on this cocharacter basis. The right side of (9.4) therefore sends $e_\tau$ to $\tau(\nu\mu_h)$. By the defining equivariance of the special reciprocity map, the left side has the same value. Equality on every $e_\tau$ proves equality of torus morphisms. $\square$
 
-Global reciprocity is norm-functorial, so (10.4) shows that the action of $\operatorname{Gal}(\overline{\mathbf Q}/E(h))$ on the component containing $x$ is the restriction of the ambient action (6.5). This agreement is crucial: canonical descent of points and canonical descent of components are not two unrelated prescriptions.
+Global reciprocity is norm-functorial, so (9.4) shows that the action of $\operatorname{Gal}(\overline{\mathbf Q}/E(h))$ on the component containing $x$ is the restriction of the ambient action (6.5). This agreement is crucial: canonical descent of points and canonical descent of components are not two unrelated prescriptions.
 
-## 11. Canonical models
+## 10. Canonical models
 
 We now pass from a rule on CM points to an algebraic variety over the reflex field. The proof has two distinct parts. Density makes the rule unique. Existence comes from a symplectic algebraization and effective descent; CM reciprocity identifies the resulting descent datum with the required arithmetic rule.
 
-### 11.1 Definition by arithmetic special points
+### 10.1 Definition by arithmetic special points
 
 Let $E=E(G,X)$. A **canonical model** of $\operatorname{Sh}_K(G,X)$ is a normal quasi-projective variety $S_K/E$ together with an isomorphism
 
 $$
 S_K\otimes_{E,\iota}\mathbf C
-\simeq\operatorname{Sh}_K(G,X)(\mathbf C)                             \tag{11.1}
+\simeq\operatorname{Sh}_K(G,X)(\mathbf C)                             \tag{10.1}
 $$
 
 of complex algebraic varieties such that for every special point $x=[h,g]$, every $\sigma\in\operatorname{Gal}(\overline{\mathbf Q}/E(h))$, and every idele $s$ with $\operatorname{Art}_{E(h)}(s)=\sigma|_{E(h)^{\mathrm{ab}}}$,
 
 $$
-\sigma(x)=[h,r_h(s_f)g].                                              \tag{11.2}
+\sigma(x)=[h,r_h(s_f)g].                                              \tag{10.2}
 $$
 
 The formula is interpreted after base change to $\overline{\mathbf Q}$. It determines the field of definition of $x$ from an open idele-class stabilizer. If $T=\operatorname{MT}(h)$, put
@@ -1077,20 +1077,20 @@ and
 
 $$
 U_x=E(h)^\times C_{x,f}E(h)_\infty^{\times,0}/E(h)^\times
-\subset\mathbf A_{E(h)}^\times/E(h)^\times.                       \tag{11.3}
+\subset\mathbf A_{E(h)}^\times/E(h)^\times.                       \tag{10.3}
 $$
 
 The connected archimedean factor is present because $r_h$ uses only $s_f$. By global class field theory, $U_x$ cuts out a finite abelian extension of $E(h)$.
 
 Normality is part of the definition because the construction at coarse level uses normalization and because equality of rational maps is then controlled in codimension one. Quasi-projectivity permits effective finite Galois descent.
 
-### 11.2 Uniqueness
+### 10.2 Uniqueness
 
 A rule on a sparse set of algebraic points would not determine a variety. The decisive geometric input is that CM points are dense in these domains, so agreement with reciprocity propagates from special points to every algebraic morphism.
 
 We need a density statement.
 
-**Lemma 11.1 (density of special points).** In each Hilbert or quaternionic domain considered here, special points are analytically dense in every connected component and hence Zariski dense in every algebraic component.
+**Lemma 10.1 (density of special points).** In each Hilbert or quaternionic domain considered here, special points are analytically dense in every connected component and hence Zariski dense in every algebraic component.
 
 **Proof strategy.** Construct one special point in each component, then use rational conjugates. This makes both rationality and density explicit and avoids the unjustified claim that a nearby rational endomorphism automatically has a CM centralizer compatible with every prescribed tensor.
 
@@ -1098,21 +1098,21 @@ We need a density statement.
 
 Now the groups occurring here have weak approximation at the archimedean places. For $\operatorname{Res}_{F/\mathbf Q}\operatorname{GL}_2$ and $\operatorname{Res}_{F/\mathbf Q}B^\times$ this is ordinary additive weak approximation in the ambient matrix or quaternion algebra, since invertibility is open. Hence $G(\mathbf Q)\cap G(\mathbf R)^+$ is dense in $G(\mathbf R)^+$. The rational conjugates $q h_0q^{-1}$ are still special and are dense in the orbit $X^+$. Repeating the construction in each component proves analytic density. An algebraic closed subset is analytically closed; if it contained all special points, analytic density would force it to contain the whole component. Thus the special points are Zariski dense as well. $\square$
 
-**Theorem 11.2 (uniqueness).** A canonical model, if it exists, is unique up to a unique $E$-isomorphism compatible with (11.1).
+**Theorem 10.2 (uniqueness).** A canonical model, if it exists, is unique up to a unique $E$-isomorphism compatible with (10.1).
 
-**Proof.** Let $S$ and $S'$ be two models. Their chosen complex identifications give a complex-algebraic isomorphism $f_\mathbf C:S_\mathbf C\to S'_\mathbf C$. Every special point is $\overline{\mathbf Q}$-rational by (11.2), and $f_\mathbf C$ carries it to the correspondingly labelled special point. If $\tau\in\operatorname{Aut}(\mathbf C/\overline{\mathbf Q})$, then $f_\mathbf C$ and ${}^\tau f_\mathbf C$ agree on all special points. Lemma 11.1 makes those points dense, so the two morphisms agree. The graph of $f_\mathbf C$ is therefore fixed by $\operatorname{Aut}(\mathbf C/\overline{\mathbf Q})$ and descends to $\overline{\mathbf Q}$. Since its equations use finitely many algebraic coefficients, it is defined over a finite extension $L/E$.
+**Proof.** Let $S$ and $S'$ be two models. Their chosen complex identifications give a complex-algebraic isomorphism $f_\mathbf C:S_\mathbf C\to S'_\mathbf C$. Every special point is $\overline{\mathbf Q}$-rational by (10.2), and $f_\mathbf C$ carries it to the correspondingly labelled special point. If $\tau\in\operatorname{Aut}(\mathbf C/\overline{\mathbf Q})$, then $f_\mathbf C$ and ${}^\tau f_\mathbf C$ agree on all special points. Lemma 10.1 makes those points dense, so the two morphisms agree. The graph of $f_\mathbf C$ is therefore fixed by $\operatorname{Aut}(\mathbf C/\overline{\mathbf Q})$ and descends to $\overline{\mathbf Q}$. Since its equations use finitely many algebraic coefficients, it is defined over a finite extension $L/E$.
 
-For $\sigma\in\operatorname{Gal}(L/E)$, the maps $f$ and ${}^\sigma f$ have the same value on every special point: both values are forced by (11.2). Density gives ${}^\sigma f=f$. Faithfully flat Galois descent therefore produces an $E$-morphism $S\to S'$. Apply the same argument to $f_\mathbf C^{-1}$; the two descended composites become the identity over $\mathbf C$ and hence are the identity over $E$. Thus the descended map is an isomorphism. Any two such isomorphisms agree on the dense special set and are equal. $\square$
+For $\sigma\in\operatorname{Gal}(L/E)$, the maps $f$ and ${}^\sigma f$ have the same value on every special point: both values are forced by (10.2). Density gives ${}^\sigma f=f$. Faithfully flat Galois descent therefore produces an $E$-morphism $S\to S'$. Apply the same argument to $f_\mathbf C^{-1}$; the two descended composites become the identity over $\mathbf C$ and hence are the identity over $E$. Thus the descended map is an isomorphism. Any two such isomorphisms agree on the dense special set and are equal. $\square$
 
-### 11.3 Existence in the two families
+### 10.3 Existence in the two families
 
 The existence argument uses the following algebraization lemma, proved here in the form needed.
 
-**Lemma 11.3 (PEL-exact algebraization).** Let $(G,X)$ be one of the two data above. Suppose either that there is a faithful symplectic representation
+**Lemma 10.3 (PEL-exact algebraization).** Let $(G,X)$ be one of the two data above. Suppose either that there is a faithful symplectic representation
 
 $$
 \rho:(G,X)\longrightarrow
-(\operatorname{GSp}(V,\psi),\mathfrak H_g^\pm)                       \tag{11.4}
+(\operatorname{GSp}(V,\psi),\mathfrak H_g^\pm)                       \tag{10.4}
 $$
 
 whose Hodge types on $V$ are $(-1,0)$ and $(0,-1)$ and which is **PEL-exact** in the following sense: there are a semisimple rational algebra $D$, a positive involution $*$, and a determinant polynomial such that $G$ is exactly the group of $D$-linear similitudes of $(V,\psi)$ and $X$ is exactly the positive Hodge locus with that determinant polynomial. Alternatively, suppose $(G,X)$ admits a central modification $(G^\natural,X^\natural)$ with this property, the same adjoint datum and reflex field, and an isogeny on derived groups. At a sufficiently small neat level, $\operatorname{Sh}_K(G,X)(\mathbf C)$ has a normal quasi-projective algebraization. In the direct case it is an open-and-closed union in a fine PEL scheme; in the central-modification case it is obtained from finitely many such components by finite central quotients.
@@ -1145,43 +1145,43 @@ For the common-norm Hilbert group, the rational multiplier makes the symplectic 
 
 For the realizations retained in the FLT route, that exactness is a calculation, not a new hypothesis hidden in terminology. In the Hilbert case the commutant of the $F$-action on $F^2$ gives precisely the common-determinant similitude group. In the quaternion trace-pairing construction, left and right multiplication are mutual commutants; imposing right-$B^{\mathrm{op}}$ linearity, the adjoint involution, and a rational multiplier recovers exactly the common-norm group of Book 115. A tensor-corestriction realization is used only after quotienting or detecting its recorded finite central kernel, so its stabilizer is the stated central modification rather than a larger orthogonal group. The determinant polynomial then selects exactly the Hodge conjugacy class computed in Chapters 7--8.
 
-**Theorem 11.4 (existence of canonical models).** For every sufficiently small neat compact open $K$ and every Hilbert or quaternionic datum of Chapters 7--8 satisfying the PEL-exact or central-modification hypothesis of Lemma 11.3, that algebraization admits a canonical model over $E(G,X)$. It satisfies (11.2).
+**Theorem 10.4 (existence of canonical models).** For every sufficiently small neat compact open $K$ and every Hilbert or quaternionic datum of Chapters 7--8 satisfying the PEL-exact or central-modification hypothesis of Lemma 10.3, that algebraization admits a canonical model over $E(G,X)$. It satisfies (10.2).
 
 **Proof strategy.** First descend over a finite Galois extension by transporting the algebraic tensor data. Then identify the descent action on a dense set of CM points using Book 117. The cocycle follows on that dense set and hence everywhere.
 
-**Proof.** Choose a finite Galois extension $L/E(G,X)$ that splits the determinant labels, defines the finitely many geometric components, and dominates the fields used by the PEL-exact central modification. Lemma 11.3 gives a normal quasi-projective $L$-model $S_{K,L}$. We first construct algebraic descent maps without appealing to their desired values on points.
+**Proof.** Choose a finite Galois extension $L/E(G,X)$ that splits the determinant labels, defines the finitely many geometric components, and dominates the fields used by the PEL-exact central modification. Lemma 10.3 gives a normal quasi-projective $L$-model $S_{K,L}$. We first construct algebraic descent maps without appealing to their desired values on points.
 
-The moduli locus used in Lemma 11.3 is specified by two kinds of equations. The endomorphism, adjoint, and polarization tensors are rational and hence unchanged by Galois. The determinant condition says that for every element $a$ of the acting semisimple algebra, its characteristic polynomial on the Lie bundle is
+The moduli locus used in Lemma 10.3 is specified by two kinds of equations. The endomorphism, adjoint, and polarization tensors are rational and hence unchanged by Galois. The determinant condition says that for every element $a$ of the acting semisimple algebra, its characteristic polynomial on the Lie bundle is
 
 $$
-P_a(T)=\prod_{\varphi}(T-\varphi(a))^{r_\varphi},                   \tag{11.5}
+P_a(T)=\prod_{\varphi}(T-\varphi(a))^{r_\varphi},                   \tag{10.5}
 $$
 
 where the multiplicity tuple $(r_\varphi)$ is encoded by $\mu_h$. Its coefficients are fixed by the stabilizer of the cocharacter conjugacy class and hence lie in $E(G,X)$. For quaternionic data, the active-place indicator replaces $(r_\varphi)$ after a splitting. Thus Galois transports the PEL component union according to the same permutation of labels by which it transports the analytic component set.
 
-Transport of the universal polarized abelian variety, its tensors, and its level gives algebraic isomorphisms on the PEL-exact cover. They commute with the finite effective deck groups used in Lemma 11.3, so normal finite quotient descent gives
+Transport of the universal polarized abelian variety, its tensors, and its level gives algebraic isomorphisms on the PEL-exact cover. They commute with the finite effective deck groups used in Lemma 10.3, so normal finite quotient descent gives
 
 $$
-\phi_\sigma:S_{K,L}^\sigma\longrightarrow S_{K,L}.                 \tag{11.6}
+\phi_\sigma:S_{K,L}^\sigma\longrightarrow S_{K,L}.                 \tag{10.6}
 $$
 
 Because transport of coefficients is associative, these maps satisfy
 
 $$
-\phi_{\sigma\tau}=\phi_\sigma\circ{}^\sigma\!\phi_\tau           \tag{11.7}
+\phi_{\sigma\tau}=\phi_\sigma\circ{}^\sigma\!\phi_\tau           \tag{10.7}
 $$
 
 on the fine PEL scheme and therefore on its normal finite quotients. Thus they form an algebraic Galois descent datum on $S_{K,L}$.
 
-It remains to identify this algebraically constructed datum as the canonical one. Let $x=[h,g]$ be special. Its symplectic realization is a polarized CM abelian variety with the tensors and level used above. Book 117 proves that transport by $\operatorname{Art}_{E(h)}(s)$ is the reflex transform $r_h(s_f)$, respecting precisely those tensors, the polarization multiplier, and the level. Hence (11.6) acts on every special point by (11.2). Lemma 11.1 shows that no different descent isomorphism could have the same property. Proposition 11.5 makes the descent effective, producing $S_K/E$. $\square$
+It remains to identify this algebraically constructed datum as the canonical one. Let $x=[h,g]$ be special. Its symplectic realization is a polarized CM abelian variety with the tensors and level used above. Book 117 proves that transport by $\operatorname{Art}_{E(h)}(s)$ is the reflex transform $r_h(s_f)$, respecting precisely those tensors, the polarization multiplier, and the level. Hence (10.6) acts on every special point by (10.2). Lemma 10.1 shows that no different descent isomorphism could have the same property. Proposition 10.5 makes the descent effective, producing $S_K/E$. $\square$
 
 There is no circular appeal to the desired canonical model in this proof. The initial algebraization comes from the complex moduli interpretation; CM reciprocity determines its Galois descent; density supplies equality and the cocycle; only then is the model over $E$ formed.
 
-### 11.4 Effective descent
+### 10.4 Effective descent
 
 For completeness, we record the descent step used above.
 
-**Proposition 11.5.** Let $L/E$ be finite Galois and let $Y/L$ be quasi-projective with isomorphisms
+**Proposition 10.5.** Let $L/E$ be finite Galois and let $Y/L$ be quasi-projective with isomorphisms
 
 $$
 \phi_\sigma:{}^\sigma Y\longrightarrow Y
@@ -1191,20 +1191,20 @@ satisfying the cocycle identity. Then there is a quasi-projective $Y_0/E$, uniqu
 
 **Proof.** Choose an ample line bundle $\mathcal L$ on $Y$. The tensor product of its finitely many Galois transports, pulled back by the $\phi_\sigma$, has a natural linearization after taking a further positive tensor power to remove the scalar cocycle. A sufficiently large power embeds $Y$ equivariantly into a projective space over $L$ carrying a semilinear Galois action. Galois-invariant homogeneous coordinates descend the projective space and the invariant homogeneous ideal descends the closure of $Y$. An invariant affine complement descends as well, producing a quasi-projective $E$-scheme $Y_0$. Base change recovers $Y$ by faithful flatness. Local rings descend faithfully flatly, so integral closedness and smoothness descend. Uniqueness follows because morphisms satisfying the descent compatibility descend on affine covers. $\square$
 
-Applied to Theorem 11.4, this proposition shows that the word “descent” is literal. It is not merely a prescription for Galois orbits of complex points.
+Applied to Theorem 10.4, this proposition shows that the word “descent” is literal. It is not merely a prescription for Galois orbits of complex points.
 
-## 12. Level descent and functoriality
+## 11. Level descent and functoriality
 
 A canonical model is most useful as part of a compatible tower. Level changes, finite quotients, morphisms of data, and Hecke translations must all descend. The reciprocity characterization makes the proof uniform.
 
-### 12.1 The tower over the reflex field
+### 11.1 The tower over the reflex field
 
 Passing to a smaller compact open remembers more level structure. Canonical models should preserve this forgetful relation over the reflex field, not only after embedding into $\mathbf C$.
 
-Let $K'\subset K$ lie in the cofinal system of sufficiently small neat levels covered by Theorem 11.4. The analytic map (5.3) sends a special point $[h,gK']$ to $[h,gK]$. By (10.3), Galois conjugation before or after this projection gives the same result. The uniqueness theorem therefore descends (5.3) to an $E(G,X)$-morphism
+Let $K'\subset K$ lie in the cofinal system of sufficiently small neat levels covered by Theorem 10.4. The analytic map (5.3) sends a special point $[h,gK']$ to $[h,gK]$. By (9.3), Galois conjugation before or after this projection gives the same result. The uniqueness theorem therefore descends (5.3) to an $E(G,X)$-morphism
 
 $$
-S_{K'}\longrightarrow S_K.                                          \tag{12.1}
+S_{K'}\longrightarrow S_K.                                          \tag{11.1}
 $$
 
 For $K''\subset K'\subset K$, the two possible composites agree over $\mathbf C$ and hence over $E$. Thus the canonical models form an inverse system indexed by compact open levels.
@@ -1217,21 +1217,21 @@ $$
 
 Uniqueness yields an $E$-morphism between the corresponding levels. This elementary associativity is why the side convention fixed in Chapter 1 matters.
 
-### 12.2 Finite quotients and non-neat level
+### 11.2 Finite quotients and non-neat level
 
-Let $K$ be arbitrary and choose a sufficiently small neat normal $K'\triangleleft K$ in the cofinal system of Theorem 11.4. The finite group $\Delta=K/K'$ acts algebraically on $S_{K'}$ over $E$ by the descended right action. Define
+Let $K$ be arbitrary and choose a sufficiently small neat normal $K'\triangleleft K$ in the cofinal system of Theorem 10.4. The finite group $\Delta=K/K'$ acts algebraically on $S_{K'}$ over $E$ by the descended right action. Define
 
 $$
-S_K=S_{K'}/\Delta,                                                     \tag{12.2}
+S_K=S_{K'}/\Delta,                                                     \tag{11.2}
 $$
 
 taking the normal finite categorical quotient.
 
 The result is independent of $K'$. If $K_1'$ and $K_2'$ are two choices, their intersection is neat and normal; quotienting first to either intermediate level and then by the remaining finite group gives the same normalization of the common function field. Its complex points are (1.1), including the finite stabilizers.
 
-Formula (11.2) descends because the $\Delta$-action commutes with reciprocity. Thus (12.2) is the canonical model at non-neat level. It can have quotient singularities, and a universal abelian variety need not descend through stabilizers. The variety itself does descend; representability of a particular moduli functor is a separate assertion.
+Formula (10.2) descends because the $\Delta$-action commutes with reciprocity. Thus (11.2) is the canonical model at non-neat level. It can have quotient singularities, and a universal abelian variety need not descend through stabilizers. The variety itself does descend; representability of a particular moduli functor is a separate assertion.
 
-### 12.3 Morphisms and Hecke translations
+### 11.3 Morphisms and Hecke translations
 
 Let
 
@@ -1242,36 +1242,36 @@ $$
 be a morphism and suppose $f(K)\subset K'$. Analytically it induces
 
 $$
-[h,g]\longmapsto[f\circ h,f(g)].                                     \tag{12.3}
+[h,g]\longmapsto[f\circ h,f(g)].                                     \tag{11.3}
 $$
 
-The reflex-field inclusion is $E(G',X')\subseteq E(G,X)$. After base change to $E(G,X)$, (12.3) descends canonically.
+The reflex-field inclusion is $E(G',X')\subseteq E(G,X)$. After base change to $E(G,X)$, (11.3) descends canonically.
 
-**Proof.** For a special $h$, functoriality gives $r_{f(h)}=f\circ r_h$. Applying (10.3) shows that (12.3) commutes with Galois on all special points. These are dense, so the analytic algebraic map is compatible with the descent data everywhere. Effective descent yields the required morphism. $\square$
+**Proof.** For a special $h$, functoriality gives $r_{f(h)}=f\circ r_h$. Applying (9.3) shows that (11.3) commutes with Galois on all special points. These are dense, so the analytic algebraic map is compatible with the descent data everywhere. Effective descent yields the required morphism. $\square$
 
 The same proof applies to Hecke translations and to finite correspondences attached to $KaK$. Hence all Hecke correspondences in the generic Shimura tower are defined over the reflex field. This does not assert extension over integral models or a good-prime Eichler--Shimura relation; those require additional geometry.
 
-### 12.4 Descent of connected components
+### 11.4 Descent of connected components
 
 The component formula (6.5) now has a geometric interpretation. Let $C$ be a geometric connected component of $S_K\otimes_E\overline{\mathbf Q}$. Its stabilizer in $\operatorname{Gal}(\overline{\mathbf Q}/E)$ is the inverse image, under Artin reciprocity, of the subgroup (6.6). Therefore $C$ descends to the corresponding finite abelian extension $E_C/E$.
 
-**Proof.** Every component contains a special point by Lemma 11.1. For such a point, projection of special reciprocity to $G^{\mathrm{ab}}$ is (6.5) by (10.4). Hence an automorphism fixes the component exactly when its reciprocity element fixes the class in (6.3). The stabilizer is open, so its fixed field is finite. Since the component is open and closed after base change, its idempotent in the finite étale algebra of components is fixed by that stabilizer and descends to $E_C$. $\square$
+**Proof.** Every component contains a special point by Lemma 10.1. For such a point, projection of special reciprocity to $G^{\mathrm{ab}}$ is (6.5) by (9.4). Hence an automorphism fixes the component exactly when its reciprocity element fixes the class in (6.3). The stabilizer is open, so its fixed field is finite. Since the component is open and closed after base change, its idempotent in the finite étale algebra of components is fixed by that stabilizer and descends to $E_C$. $\square$
 
 For Hilbert data this recovers an action on narrow ideal classes. For the basic quaternionic group it gives the narrow quotient $F_+^\times\backslash\mathbf A_{F,f}^\times/\operatorname{Nrd}(K)$: orientation supplies the split-place signs and the rational norm theorem supplies the Hamiltonian signs. A quaternionic central modification instead uses its own exact quotient (8.8). In each case the connected canonical model over $E_C$ is obtained by selecting one idempotent, not by pretending the component was already defined over $E$.
 
-## 13. The FLT package
+## 12. The FLT package
 
 The preceding constructions can now be read as one decision procedure. Real and finite ramification select a quaternionic curve; the Hodge cocharacter selects the reflex field; and reciprocity descends the entire adelic tower.
 
-### 13.1 Shimura curves and the parity check
+### 12.1 Shimura curves and the parity check
 
 Let $F$ be totally real. A quaternion algebra has an even total number of ramified places. To obtain a Shimura curve, choose $B/F$ split at exactly one real place and ramified at the other $d-1$ real places. If $d-1$ has the wrong parity, include one finite ramified place compatible with the packet and local correspondence. The resulting domain has dimension one and reflex field the embedded copy of $F$ singled out by the split place. Thus parity is handled inside the quaternionic ramification ledger rather than by changing the geometric dimension.
 
 The symplectic representation has an independent parity issue. For a tensor of $d$ alternating two-dimensional representations, the tensor form is alternating when $d$ is odd and symmetric when $d$ is even. Book 115 proves this sign and supplies hyperbolic enlargement in the even case. That repair changes the auxiliary abelian variety but neither the adjoint domain nor the reciprocity morphism. Confusing geometric dimension with representation dimension is therefore a serious error: a one-dimensional Shimura curve can map to a high-dimensional Siegel space.
 
-### 13.2 A reusable canonical-model theorem
+### 12.2 A reusable canonical-model theorem
 
-**Theorem 13.1 (FLT Shimura package).** Let $(G,X)$ be one of the following:
+**Theorem 12.1 (FLT Shimura package).** Let $(G,X)$ be one of the following:
 
 1. the Hilbert datum for $\operatorname{Res}_{F/\mathbf Q}\operatorname{GL}_2$;
 2. a quaternionic datum for $\operatorname{Res}_{F/\mathbf Q}B^\times$, or a connected central modification to which its adjoint Hodge map lifts, with at least one split real place.
@@ -1284,7 +1284,7 @@ Assume in case 2 that the selected rational group, or a central modification wit
   \dim X=\begin{cases}
   [F:\mathbf Q],&\text{Hilbert},\\
   |\Sigma|,&\text{quaternionic};
-  \end{cases}                                                         \tag{13.1}
+  \end{cases}                                                         \tag{12.1}
   $$
 
 - its reflex field is respectively $\mathbf Q$ or the stabilizer field of $\Sigma$;
@@ -1294,18 +1294,18 @@ Assume in case 2 that the selected rational group, or a central modification wit
 - for every level there is a unique canonical model over the reflex field, characterized by
 
   $$
-  [h,g]^{\operatorname{Art}_{E(h)}(s)}=[h,r_h(s_f)g]                  \tag{13.2}
+  [h,g]^{\operatorname{Art}_{E(h)}(s)}=[h,r_h(s_f)g]                  \tag{12.2}
   $$
 
   at every special point;
 - level maps, morphisms of data, and Hecke translations descend over the appropriate reflex field;
 - geometric components descend over the finite abelian extensions determined by the ambient reciprocity map on (6.3).
 
-**Proof.** Propositions 7.1 and 8.1 verify the axioms and dimensions. Sections 7.3 and 8.3 compute the reflex fields from Definition 4.1. Proposition 5.1 gives neat levels. Lemma 11.3 gives algebraization, Theorem 11.4 and Proposition 11.5 give canonical descent, and Section 12 treats arbitrary level and functoriality. Theorem 6.1 computes components, while Section 12.4 identifies their fields of definition. Finally, Theorem 10.1 gives (13.2). $\square$
+**Proof.** Propositions 7.1 and 8.1 verify the axioms and dimensions. Sections 7.3 and 8.3 compute the reflex fields from Definition 4.1. Proposition 5.1 gives neat levels. Lemma 10.3 gives algebraization, Theorem 10.4 and Proposition 10.5 give canonical descent, and Section 11 treats arbitrary level and functoriality. Theorem 6.1 computes components, while Section 10.4 identifies their fields of definition. Finally, Theorem 9.1 gives (12.2). $\square$
 
 This theorem deliberately stops at the generic canonical model. Smooth or semistable integral models, extension of correspondences at bad primes, and cohomological realizations require local geometric hypotheses not present in a rational Shimura datum.
 
-### 13.3 Hypothesis ledger
+### 12.3 Hypothesis ledger
 
 The central statements depend on different hypotheses, and none should be carried into another column silently.
 
@@ -1326,7 +1326,7 @@ Two boundary cases deserve emphasis. At non-neat level, a coarse canonical varie
 
 The dependency chain is now closed. Adèles and ray quotients provide the topology and finite class groups. Rank-two inner forms and symplectic representations provide the groups and polarized embeddings. CM types provide reflex norms, and CM reciprocity proves the special-point Galois formula. Every further conclusion in this book follows from those inputs and the descent arguments supplied here.
 
-### 13.4 Conclusion
+### 12.4 Conclusion
 
 A Shimura datum is the precise interface between Hodge theory and arithmetic groups. The Deligne torus turns a complex structure into a cocharacter; the three Shimura axioms turn its real conjugacy class into a Hermitian symmetric domain. Finite adèles add level, and neatness turns arithmetic orbifolds into manifolds without changing the cofinal tower.
 

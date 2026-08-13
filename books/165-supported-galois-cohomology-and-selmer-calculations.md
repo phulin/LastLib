@@ -38,14 +38,14 @@
 ## 1. The exact problem and its output
 
 This book has one task. It constructs the supported cochain complex for the
-hardly-ramified fixed-determinant deformation problem over \(\mathbf Q\),
+hardly-ramified fixed-determinant deformation problem over $\mathbf Q$,
 identifies its degree-one and degree-two groups, and proves their dimensions
 are equal. The construction is the cohomological input used by Books 166 and 181. No presentation theorem, automorphy argument, finiteness theorem, or
 characteristic-zero lifting theorem is proved here.
 
 ### 1.1 Standing hardly-ramified data
 
-Let \(\ell\geq 7\), let \(k\) be a finite field of characteristic \(\ell\),
+Let $\ell\geq 7$, let $k$ be a finite field of characteristic $\ell$,
 and let
 
 $$
@@ -54,15 +54,15 @@ $$
 
 be continuous and satisfy all of the following conditions.
 
-1. \(\det\bar\rho=\bar\chi_\ell\).
-2. \(\bar\rho\) is absolutely irreducible and odd.
-3. \(\bar\rho\) is unramified outside \(\{2,\ell\}\).
-4. At \(2\), the Frey-special datum from Book 164 is fixed: the
+1. $\det\bar\rho=\bar\chi_\ell$.
+2. $\bar\rho$ is absolutely irreducible and odd.
+3. $\bar\rho$ is unramified outside $\{2,\ell\}$.
+4. At $2$, the Frey-special datum from Book 164 is fixed: the
    nonzero-monodromy minimal-special profile with its intrinsic line and
    named sign (SP).
-5. At \(\ell\), the restriction is the generic fibre of a
-   coefficient-linear finite-flat model over \(\mathbf Z_\ell\), of weights
-   \(\{0,1\}\) and cyclotomic determinant.
+5. At $\ell$, the restriction is the generic fibre of a
+   coefficient-linear finite-flat model over $\mathbf Z_\ell$, of weights
+   $\{0,1\}$ and cyclotomic determinant.
 
 Set
 
@@ -72,9 +72,9 @@ S=\{2,\ell,\infty\},
 G_{\mathbf Q,S}=\operatorname{Gal}(\mathbf Q_S/\mathbf Q). \tag{1.2}
 $$
 
-All finite ramification is therefore already controlled by \(G_{\mathbf
-Q,S}\). At finite primes outside \(S\), the implicit condition on both
-modules is unramified; these prime-to-\(\ell\) subspaces are exact local Tate
+All finite ramification is therefore already controlled by $G_{\mathbf Q,S}$.
+At finite primes outside $S$, the implicit condition on both
+modules is unramified; these prime-to-$\ell$ subspaces are exact local Tate
 orthogonals. There is no auxiliary-prime branch in this book.
 
 ### 1.2 Coefficients and local conditions
@@ -85,8 +85,8 @@ $$
 M=\operatorname{ad}^0\bar\rho. \tag{1.3}
 $$
 
-Because \(2\in k^\times\), trace splits the full adjoint and the trace
-pairing is perfect on \(M\):
+Because $2\in k^\times$, trace splits the full adjoint and the trace
+pairing is perfect on $M$:
 
 $$
 \operatorname{ad}\bar\rho=kI\oplus M,
@@ -107,12 +107,12 @@ H^i(\mathbf Q_v,M)\times H^{2-i}(\mathbf Q_v,M')
 \longrightarrow k. \tag{1.6}
 $$
 
-For vector spaces, \((-)^*\) denotes \(\operatorname{Hom}_k(-,k)\). The
+For vector spaces, $(-)^*$ denotes $\operatorname{Hom}_k(-,k)$. The
 finite-group Pontryagin duals in Poitou--Tate are identified with these
-\(k\)-linear duals through the finite-field trace; rescaling the resulting
+$k$-linear duals through the finite-field trace; rescaling the resulting
 local invariant does not change an orthogonal subspace. Arithmetic
-Frobenius is used. At \(2\), therefore, a Tate twist multiplies a Frobenius
-eigenvalue by \(2\).
+Frobenius is used. At $2$, therefore, a Tate twist multiplies a Frobenius
+eigenvalue by $2$.
 
 The hardly-ramified tangent conditions are
 
@@ -126,7 +126,7 @@ $$
 
 The coefficient-prime condition in (1.7) is the subspace of exact
 coefficient-linear finite-flat self-extensions. It is not the unramified
-subspace. For every finite \(v\), define the dual condition by the exact
+subspace. For every finite $v$, define the dual condition by the exact
 annihilator
 
 $$
@@ -135,7 +135,7 @@ L_v^\perp
 \langle x,y\rangle_v=0\text{ for all }x\in L_v\}. \tag{1.8}
 $$
 
-At infinity ordinary \(H^1\) and modified \(H^1\) are both zero, so the
+At infinity ordinary $H^1$ and modified $H^1$ are both zero, so the
 orthogonal degree-one condition is also zero.
 
 The two Selmer groups are
@@ -189,7 +189,7 @@ $$
 
 The group on the left is defined by a mapping fibre in Chapter 4. Equation
 (1.11), rather than a premature identification with ordinary global
-\(H^2\), is the reason it has the correct size.
+$H^2$, is the reason it has the correct size.
 
 ## 2. The complete local ledger
 
@@ -202,7 +202,7 @@ h_S^i(N)=\dim_kH^i(G_{\mathbf Q,S},N). \tag{2.1}
 $$
 
 Every local dimension used later is calculated in this chapter. In
-particular, the ambient group at \(\ell\) is not assumed unobstructed.
+particular, the ambient group at $\ell$ is not assumed unobstructed.
 
 ### 2.1 The dyadic Frey-special profile
 
@@ -231,7 +231,7 @@ $$
 $$
 
 A trace-zero endomorphism commuting with a nonzero rank-one nilpotent is a
-multiple of that nilpotent. Hence the line (2.4) in \(\bar V\) and the
+multiple of that nilpotent. Hence the line (2.4) in $\bar V$ and the
 adjoint inertia-invariant line are distinct objects, with
 
 $$
@@ -240,7 +240,7 @@ M^{I_2}=k\bar N,
 \phi(\bar N)=2\bar N. \tag{2.6}
 $$
 
-After the Tate twist, Frobenius acts by \(4\) on \((M')^{I_2}\). Thus the
+After the Tate twist, Frobenius acts by $4$ on $(M')^{I_2}$. Thus the
 two relevant eigenvalues are
 
 $$
@@ -250,7 +250,7 @@ $$
 \end{array} \tag{2.7}
 $$
 
-For \(\ell\ge7\), neither is \(1\). It follows that
+For $\ell\ge7$, neither is $1$. It follows that
 
 $$
 H^0(\mathbf Q_2,M)=H^0(\mathbf Q_2,M')=0. \tag{2.8}
@@ -273,13 +273,13 @@ $$
 H^2(\mathbf Q_2,M)=H^2(\mathbf Q_2,M')=0. \tag{2.11}
 $$
 
-Since \(2\ne\ell\), the prime-to-coefficient local Euler formula is
+Since $2\ne\ell$, the prime-to-coefficient local Euler formula is
 
 $$
 h_2^0(N)-h_2^1(N)+h_2^2(N)=0. \tag{2.12}
 $$
 
-Apply it to \(M\) and \(M'\). Equations (2.8) and (2.11) yield the complete
+Apply it to $M$ and $M'$. Equations (2.8) and (2.11) yield the complete
 dyadic vanishing
 
 $$
@@ -289,7 +289,7 @@ H^i(\mathbf Q_2,M)=H^i(\mathbf Q_2,M')=0
 $$
 
 In particular, the ambient and SP degree-one spaces have the same underlying
-zero vector space at \(2\); the SP deformation condition still retains its
+zero vector space at $2$; the SP deformation condition still retains its
 full nonlinear data.
 
 ### 2.2 The coefficient prime
@@ -308,7 +308,7 @@ $$
 
 Book 164, Theorem 3.1 and its tangent calculation in Section 3.3, proves that
 the fixed-determinant coefficient-linear finite-flat tangent over
-\(\mathbf Z_\ell\) satisfies
+$\mathbf Z_\ell$ satisfies
 
 $$
 \dim_kL_\ell
@@ -350,7 +350,7 @@ $$
 =h_\ell^0(M')+2. \tag{2.21}
 $$
 
-The right side is also \(\dim_kL_\ell^\perp\), by perfect middle-degree
+The right side is also $\dim_kL_\ell^\perp$, by perfect middle-degree
 local duality. Equivalently,
 
 $$
@@ -365,7 +365,7 @@ $$
 +\bigl(\dim L_\ell^\perp-h_\ell^0(M')\bigr)=3. \tag{2.23}
 $$
 
-No vanishing of \(H^2(\mathbf Q_\ell,M)\) has been used or proved. The exact
+No vanishing of $H^2(\mathbf Q_\ell,M)$ has been used or proved. The exact
 statement is (2.19). Book 164, Section 3.4, proves instead that the
 obstruction map for the constrained finite-flat local functor is zero: every
 admissible object lifts through a small extension. This distinction is
@@ -373,8 +373,8 @@ required by Book 166.
 
 ### 2.3 The real place and global invariants
 
-Oddness gives eigenvalues \(1\) and \(-1\) for complex conjugation on
-\(\bar V\). Conjugation on \(M\) fixes the traceless diagonal line and
+Oddness gives eigenvalues $1$ and $-1$ for complex conjugation on
+$\bar V$. Conjugation on $M$ fixes the traceless diagonal line and
 negates the two off-diagonal lines. Consequently
 
 $$
@@ -387,9 +387,9 @@ $$
 h_\infty^0(M')=2. \tag{2.25}
 $$
 
-Because \(2\in k^\times\), averaging contracts every positive-degree
-ordinary cochain and the complete Tate complex of \(G_{\mathbf R}\simeq
-C_2\). Thus
+Because $2\in k^\times$, averaging contracts every positive-degree
+ordinary cochain and the complete Tate complex of $G_{\mathbf R}\simeq C_2$.
+Thus
 
 $$
 H^i(\mathbf R,M)=H^i(\mathbf R,M')=0\quad(i>0),
@@ -444,8 +444,8 @@ v&\dim L_v&h_v^0(M)&\dim L_v-h_v^0(M)\\ \hline
 \end{array} \tag{2.31}
 $$
 
-As a dual consistency check, the corresponding corrections for \(M'\) are
-\(0\), \(+2\), and \(-2\): use (2.22) at \(\ell\) and (2.25) at infinity.
+As a dual consistency check, the corresponding corrections for $M'$ are
+$0$, $+2$, and $-2$: use (2.22) at $\ell$ and (2.25) at infinity.
 They also sum to zero, as they must after interchanging the two Selmer
 structures.
 
@@ -471,7 +471,7 @@ are perfect. In particular, the dual coefficient-prime condition is the
 exact annihilator in (1.8), not a condition guessed from the phrase
 “finite flat.”
 
-Since the ambient degree-one groups at \(2\) and infinity vanish, the two
+Since the ambient degree-one groups at $2$ and infinity vanish, the two
 structures reduce explicitly to
 
 $$
@@ -499,13 +499,13 @@ $$
 
 ## 3. Cochain models for support
 
-The Selmer kernel uses subspaces of \(H^1\), whereas an obstruction class
+The Selmer kernel uses subspaces of $H^1$, whereas an obstruction class
 needs cochains and local nullhomotopies. We now give the precise complexes
 used in Books 166 and 181.
 
 ### 3.1 Positive local complexes
 
-For a finite \(v\in S\), let
+For a finite $v\in S$, let
 
 $$
 C_v^\bullet(M)=C^\bullet(G_{\mathbf Q_v},M) \tag{3.1}
@@ -525,7 +525,7 @@ $$
 Z_{L_v}^1(M)=\{z\in Z_v^1(M):[z]\in L_v\}. \tag{3.3}
 $$
 
-Since \(B_v^1(M)\subseteq Z_{L_v}^1(M)\), there is a canonical two-term
+Since $B_v^1(M)\subseteq Z_{L_v}^1(M)$, there is a canonical two-term
 positive complex
 
 $$
@@ -533,7 +533,7 @@ U_v^+(M):
 C_v^0(M)\xrightarrow{d}Z_{L_v}^1(M), \tag{3.4}
 $$
 
-in degrees \(0\) and \(1\), mapping to \(C_v^\bullet(M)\). Its cohomology is
+in degrees $0$ and $1$, mapping to $C_v^\bullet(M)$. Its cohomology is
 
 $$
 H^0(U_v^+(M))=H^0(\mathbf Q_v,M),
@@ -545,22 +545,22 @@ $$
 
 Retaining degree zero is essential: it records changes of local
 rigidification. Choosing one cocycle representative of each class in
-\(L_v\) would not give a canonical subcomplex.
+$L_v$ would not give a canonical subcomplex.
 
 At infinity use the complete Tate complex
-\(\widetilde C_\infty^\bullet(M)\). It is acyclic by (2.26), and we take
+$\widetilde C_\infty^\bullet(M)$. It is acyclic by (2.26), and we take
 
 $$
 U_\infty^+(M)=0. \tag{3.6}
 $$
 
 This loses no supported cohomology. The ordinary invariant correction
-\(-h_\infty^0(M)\) belongs to the Euler formula, not to the acyclic complete
+$-h_\infty^0(M)$ belongs to the Euler formula, not to the acyclic complete
 local complex.
 
 ### 3.2 Quotient local complexes
 
-For finite \(v\), define
+For finite $v$, define
 
 $$
 U_v^-(M)=\operatorname{Cone}
@@ -607,7 +607,7 @@ possibly nonzero coefficient-prime group in (2.19).
 
 ### 3.3 The local duality check
 
-Apply (3.4) to \(M'\) and \(L_v^\perp\). Exact orthogonality and local Tate
+Apply (3.4) to $M'$ and $L_v^\perp$. Exact orthogonality and local Tate
 duality give perfect pairings
 
 $$
@@ -619,7 +619,7 @@ H^2(U_v^-(M))\times H^0(U_v^+(M'))\longrightarrow k. \tag{3.14}
 $$
 
 These pair every nonzero cohomology group in complementary local degree
-two. Equivalently, in the derived category of \(k\)-vector spaces,
+two. Equivalently, in the derived category of $k$-vector spaces,
 
 $$
 U_v^-(M)
@@ -628,7 +628,7 @@ $$
 
 To justify the descent of the cup product, the composite pairing on the two
 positive complexes is null in the derived category: its only possible
-middle cohomology pairing is \(L_v\times L_v^\perp\), which is zero by
+middle cohomology pairing is $L_v\times L_v^\perp$, which is zero by
 definition. Over a field, the complexes split into their cohomology and
 contractible summands, so the nullhomotopy and (3.15) exist without an
 additional local theorem. The induced perfect pairings (3.13)--(3.14), which
@@ -696,7 +696,7 @@ H^i_{\mathcal L}(\mathbf Q,M)
 =H^i(C_{\mathcal L}^\bullet(\mathbf Q,M)), \tag{4.7}
 $$
 
-and use the subscript \(\mathrm{hr}\) when \(\mathcal L\) is the structure
+and use the subscript $\mathrm{hr}$ when $\mathcal L$ is the structure
 in (1.7).
 
 The equivalent single-cone form is
@@ -776,7 +776,7 @@ $$
 \end{aligned} \tag{4.11}
 $$
 
-For \(\mathcal L=\mathcal L_{\mathrm{hr}}\), the first kernel in (4.11) is
+For $\mathcal L=\mathcal L_{\mathrm{hr}}$, the first kernel in (4.11) is
 exactly (1.9), so supported degree one is the hardly-ramified Selmer group.
 Using the dyadic and real vanishings, (4.11) specializes to
 
@@ -798,7 +798,7 @@ coefficient-prime degree-two group has not been discarded.
 
 ### 4.3 What supported degree two contains
 
-Return to \(\mathcal L=\mathcal L_{\mathrm{hr}}\), and let
+Return to $\mathcal L=\mathcal L_{\mathrm{hr}}$, and let
 
 $$
 \operatorname{loc}_s:
@@ -838,7 +838,7 @@ assumed here.
 
 ### 5.1 The exact sequence with its endpoint
 
-For any finite local structure \(\mathcal L=(L_v)\) of the present form,
+For any finite local structure $\mathcal L=(L_v)$ of the present form,
 Poitou--Tate gives
 
 $$
@@ -855,7 +855,7 @@ $$
 $$
 
 The map from the local quotient to the dual Selmer dual is explicit. For
-\((c_v)_v\) in the quotient and \(y\) in the dual Selmer group, it is
+$(c_v)_v$ in the quotient and $y$ in the dual Selmer group, it is
 
 $$
 (c_v)_v\longmapsto
@@ -864,8 +864,8 @@ $$
 \right). \tag{5.2}
 $$
 
-Changing \(c_v\) by an element of \(L_v\) does not change (5.2), precisely
-because \(\operatorname{loc}_v(y)\in L_v^\perp\). Global reciprocity kills
+Changing $c_v$ by an element of $L_v$ does not change (5.2), precisely
+because $\operatorname{loc}_v(y)\in L_v^\perp$. Global reciprocity kills
 the image of a global class, and Poitou--Tate perfectness says that there is
 no additional kernel.
 
@@ -875,7 +875,7 @@ surjective.
 
 ### 5.2 Perfect supported duality
 
-Here is the comparison with all shifts visible. For \(M'\) and the exact
+Here is the comparison with all shifts visible. For $M'$ and the exact
 orthogonal structure, (4.8b) is
 
 $$
@@ -884,7 +884,7 @@ C_{\mathcal L^\perp}^\bullet(M')\longrightarrow
 \bigoplus_{v\in S}U_v^+(M')\longrightarrow.
 $$
 
-Apply \(R\!\operatorname{Hom}_k(-,k)\), shift by \(-3\), and rotate once.
+Apply $R\!\operatorname{Hom}_k(-,k)$, shift by $-3$, and rotate once.
 The resulting triangle begins
 
 $$
@@ -897,8 +897,8 @@ R\!\operatorname{Hom}_k\left(\bigoplus_vU_v^+(M'),k\right)[-2]
 $$
 
 Compactly supported global duality identifies the middle term with
-\(C_S^\bullet(M)\). The local comparison (3.15) identifies the third term
-with \(Q_{\mathcal L}^\bullet(M)\). These identifications give a morphism
+$C_S^\bullet(M)$. The local comparison (3.15) identifies the third term
+with $Q_{\mathcal L}^\bullet(M)$. These identifications give a morphism
 from the defining triangle
 
 $$
@@ -925,7 +925,7 @@ H^i_{\mathcal L}(\mathbf Q,M)
 \simeq H^{3-i}_{\mathcal L^\perp}(\mathbf Q,M')^*. \tag{5.4}
 $$
 
-The degree shift is \(3\): local Tate duality has complementary degree \(2\),
+The degree shift is $3$: local Tate duality has complementary degree $2$,
 and the global localization fibre contributes one more degree.
 
 In the decisive degree,
@@ -968,7 +968,7 @@ $$
 \end{aligned} \tag{5.7}
 $$
 
-Comparing (4.12), with \(H^3_{\mathrm{hr}}=0\), and (5.7) identifies their
+Comparing (4.12), with $H^3_{\mathrm{hr}}=0$, and (5.7) identifies their
 middle extensions and recovers (5.5). It also gives the two compatible
 short exact sequences
 
@@ -987,14 +987,14 @@ $$
 $$
 
 Thus the cokernel of degree-one localization need not be the whole dual
-Selmer dual. The possible \(\Sha_S^2(M)\) quotient is exactly the additional
+Selmer dual. The possible $\Sha_S^2(M)$ quotient is exactly the additional
 piece retained by supported degree two.
 
 ## 6. Euler characteristics and exact balance
 
 ### 6.1 Euler formulas with every exceptional term
 
-For a finite \(k[G_{\mathbf Q_p}]\)-module \(N\), the local Euler formulas
+For a finite $k[G_{\mathbf Q_p}]$-module $N$, the local Euler formulas
 needed here are
 
 $$
@@ -1009,20 +1009,20 @@ h_\ell^0(N)-h_\ell^1(N)+h_\ell^2(N)
 =-\dim_kN. \tag{6.2}
 $$
 
-For \(M\) over \(\mathbf Q\), the global formula is
+For $M$ over $\mathbf Q$, the global formula is
 
 $$
 h_S^0(M)-h_S^1(M)+h_S^2(M)
 =-\dim_kM+h_\infty^0(M). \tag{6.3}
 $$
 
-Equations (2.24), (2.28), and \(\dim M=3\) reduce this to
+Equations (2.24), (2.28), and $\dim M=3$ reduce this to
 
 $$
 h_S^1(M)-h_S^2(M)=2. \tag{6.4}
 $$
 
-The \(+h_\infty^0(M)\) in (6.3) and the \(-\dim M\) in (6.2) are both
+The $+h_\infty^0(M)$ in (6.3) and the $-\dim M$ in (6.2) are both
 essential. Omitting the first loses the real correction; using (6.1) at the
 coefficient prime loses the three-dimensional mixed-characteristic bulk.
 
@@ -1041,7 +1041,7 @@ h_S^0(M)-h_S^0(M')
 \end{aligned} \tag{6.5}
 $$
 
-At infinity the summand in (6.5) uses ordinary \(H^0(\mathbf R,M)\), even
+At infinity the summand in (6.5) uses ordinary $H^0(\mathbf R,M)$, even
 though the complete local complex is acyclic.
 
 For the hardly-ramified structure, (2.28), (2.30), and (2.31) give
@@ -1059,7 +1059,7 @@ $$
 $$
 
 The cancellation is independent of the local centralizer dimension
-\(h_\ell\): (2.16) and (2.15) increase together.
+$h_\ell$: (2.16) and (2.15) increase together.
 
 ### 6.3 An independent exact-sequence check
 
@@ -1082,7 +1082,7 @@ $$
 $$
 
 This second computation checks simultaneously that the coefficient-prime
-quotient has the correct dimension, the ambient \(H^2\) term has not been
+quotient has the correct dimension, the ambient $H^2$ term has not been
 discarded, and the global real correction has already been included in
 (6.4).
 
@@ -1108,20 +1108,20 @@ and equality holds under every hypothesis of this book.
 
 ### 7.1 Supported hardly-ramified balance
 
-**Theorem 7.1.** Under the hypotheses of Section 1.1, let \(M\), \(M'\),
-and \(\mathcal L_{\mathrm{hr}}\) be given by (1.3)--(1.8). Then:
+**Theorem 7.1.** Under the hypotheses of Section 1.1, let $M$, $M'$,
+and $\mathcal L_{\mathrm{hr}}$ be given by (1.3)--(1.8). Then:
 
 1. the mapping fibre (4.3) is defined with differential (4.5);
 2. its degree-one cohomology is the Selmer kernel (1.9);
 3. its degree-two cohomology fits into (4.15);
 4. supported duality gives the perfect duality (5.5);
-5. \(H^0_{\mathrm{hr}}=H^3_{\mathrm{hr}}=0\); and
+5. $H^0_{\mathrm{hr}}=H^3_{\mathrm{hr}}=0$; and
 6. the exact balance (6.10) holds.
 
 **Proof.** Statements 1--3 are (4.3)--(4.15). Statement 4 is (5.5), and
 Statement 5 follows from (2.28)--(2.30) and (5.6). The local ledger (2.31)
 and Greenberg--Wiles prove (6.7); combining it with (5.5) proves Statement
-6. \(\square\)
+6. $\square$
 
 ### 7.2 Interface to Books 166 and 181
 
@@ -1132,7 +1132,7 @@ cohomological hypothesis.
    automorphisms.
 2. The quotient complex is the unshifted cone (3.7).
 3. The supported mapping fibre and its sign are (4.3)--(4.5).
-4. The coefficient-prime ambient \(H^2\) is retained as in (2.19) and
+4. The coefficient-prime ambient $H^2$ is retained as in (2.19) and
    (3.11); only the constrained finite-flat obstruction map is known to
    vanish.
 5. Supported degree two is dual to the exact-orthogonal Selmer group by
@@ -1159,17 +1159,17 @@ The following branches are intentionally absent because they are not used
 in the Books 166 and 181 hardly-ramified lift:
 
 - auxiliary-prime changes of Selmer structure;
-- strict/relaxed comparison sequences unrelated to \(\{2,\ell,\infty\}\);
+- strict/relaxed comparison sequences unrelated to $\{2,\ell,\infty\}$;
 - coefficient-field and controlling-set variation protocols;
 - small-characteristic extensions of the theorem;
 - scalar or local-shape case catalogues beyond the symbolic parameter
-  \(h_\ell\);
+  $h_\ell$;
 - relation bounds, deformation-ring dimension estimates, automorphy, and
   lift extraction.
 
 The sole warning about excluded characteristics needed in the proof is
 already visible in (2.7): the dyadic invariant calculation excludes
-characteristics \(2\) and \(3\). The stated Frey range \(\ell\ge7\) is
+characteristics $2$ and $3$. The stated Frey range $\ell\ge7$ is
 therefore more than sufficient for this calculation.
 
 ## 8. Source-closure audit
@@ -1181,13 +1181,13 @@ matched below.
 
 | source | exact input used here | hypotheses matched here |
 |---|---|---|
-| Book 24, *Continuous Cohomology of Profinite Groups*, Chapters 2, 3, and 7 | continuous cochains, low-degree cocycles, cup products, and signs | finite discrete continuous \(k\)-modules |
-| Book 30, *Local Galois Cohomology*, Sections 4, 6, and 8 | Frobenius description of unramified classes, local cohomological dimension, and both local Euler formulas | \(2\ne\ell\) for (2.12); mixed characteristic at \(\ell\) for (2.18) |
-| Book 31, *Tate Local Duality*, Sections 5, 8, and 10 | perfect pairings, \(H^2(M)\simeq H^0(M')^*\), and quotient--orthogonal duality | finite local modules and \(M'=M^*(1)\) |
-| Book 32, *Global Galois Cohomology and Selmer Groups*, Sections 1, 3, 6, 9, and 13.3 | \(G_{\mathbf Q,S}\), finiteness, Selmer kernels, exact orthogonal structures, and the adjoint-tangent dictionary | \(S\) contains infinity, \(\ell\), and every ramified finite place; fixed determinant uses \(M=\operatorname{ad}^0\bar\rho\) |
+| Book 24, *Continuous Cohomology of Profinite Groups*, Chapters 2, 3, and 7 | continuous cochains, low-degree cocycles, cup products, and signs | finite discrete continuous $k$-modules |
+| Book 30, *Local Galois Cohomology*, Sections 4, 6, and 8 | Frobenius description of unramified classes, local cohomological dimension, and both local Euler formulas | $2\ne\ell$ for (2.12); mixed characteristic at $\ell$ for (2.18) |
+| Book 31, *Tate Local Duality*, Sections 5, 8, and 10 | perfect pairings, $H^2(M)\simeq H^0(M')^*$, and quotient--orthogonal duality | finite local modules and $M'=M^*(1)$ |
+| Book 32, *Global Galois Cohomology and Selmer Groups*, Sections 1, 3, 6, 9, and 13.3 | $G_{\mathbf Q,S}$, finiteness, Selmer kernels, exact orthogonal structures, and the adjoint-tangent dictionary | $S$ contains infinity, $\ell$, and every ramified finite place; fixed determinant uses $M=\operatorname{ad}^0\bar\rho$ |
 | Book 33, *Poitou--Tate Duality*, Sections 5, 6, 8, and 9 | complete real convention, compactly supported duality, (5.1), global Euler characteristic, and Greenberg--Wiles | finite coefficients; exact local annihilators; complete Tate cochains at real places |
-| Book 69, *Global Deformation Problems*, Sections 7--9 | fixed-determinant adjoint tangents, the mapping-fibre shape of constrained obstruction theory, and the distinction between ambient and constrained local \(H^2\) | global Schur representation; \(\ell\nmid2\); locally liftable conditions with their actual tangent subspaces |
-| Book 164, *Local Conditions for Hardly-Ramified Minimal Deformations*, Theorems 2.2, 3.1, 4.1, and 6.1, and Sections 5.1--5.2 | SP line and Frobenius eigenvalues, \(L_2=0\), \(\dim L_\ell=h_\ell\), local liftability, and the global tangent kernel | \(\ell\ge7\); nonzero SP monodromy with intrinsic line and named sign; coefficient-linear finite flatness over \(\mathbf Z_\ell\), weights \(\{0,1\}\), cyclotomic determinant |
+| Book 69, *Global Deformation Problems*, Sections 7--9 | fixed-determinant adjoint tangents, the mapping-fibre shape of constrained obstruction theory, and the distinction between ambient and constrained local $H^2$ | global Schur representation; $\ell\nmid2$; locally liftable conditions with their actual tangent subspaces |
+| Book 164, *Local Conditions for Hardly-Ramified Minimal Deformations*, Theorems 2.2, 3.1, 4.1, and 6.1, and Sections 5.1--5.2 | SP line and Frobenius eigenvalues, $L_2=0$, $\dim L_\ell=h_\ell$, local liftability, and the global tangent kernel | $\ell\ge7$; nonzero SP monodromy with intrinsic line and named sign; coefficient-linear finite flatness over $\mathbf Z_\ell$, weights $\{0,1\}$, cyclotomic determinant |
 
 Cone calculations, the differential check (4.6), and the passage from an
 exact sequence to an alternating dimension identity are proved explicitly
@@ -1213,14 +1213,14 @@ its direct source rather than reopening its transitive local inputs.
 
 The hypotheses also close under every use:
 
-- \(\ell\ge7\) makes \(2\) invertible, excludes both eigenvalues in (2.7)
-  from \(1\), and makes the real complete complex acyclic.
+- $\ell\ge7$ makes $2$ invertible, excludes both eigenvalues in (2.7)
+  from $1$, and makes the real complete complex acyclic.
 - Absolute irreducibility is used only for the global invariant (2.28) and
   the fixed-determinant global problem.
 - The Frey-special dyadic profile proves (2.8), hence the separate global
   twisted-invariant vanishing (2.30).
 - Coefficient-linear finite flatness supplies (2.16) and constrained local
-  liftability, but is never used to assert ambient \(H^2=0\).
+  liftability, but is never used to assert ambient $H^2=0$.
 - Oddness supplies exactly the real invariant dimension (2.24).
 - Exact local orthogonality, not equality of dimensions alone, supplies
   (3.13), (5.1), and (5.5).

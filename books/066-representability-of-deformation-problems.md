@@ -2048,7 +2048,7 @@ Assume $\mathcal O'[[X_1,\ldots,X_r]]$ is complete Noetherian local and that the
 $$
 R_{\mathcal O'}
 \simeq
-\mathcal O'[[X_1,\ldots,X_r]]/overline{I\mathcal O'[[\mathbf X]]}.
+\mathcal O'[[X_1,\ldots,X_r]]/\overline{I\mathcal O'[[\mathbf X]]}.
 $$
 
 The closure records the topology; it is redundant in the Noetherian target. This formula is
@@ -2175,7 +2175,7 @@ quotient and completed base-change operations commute:
 $$
 (R/I_\delta)\widehat\otimes_{\mathcal O}\mathcal O'
 \simeq
-(R\widehat\otimes_{\mathcal O}\mathcal O')/overline{I_\delta R'}.
+(R\widehat\otimes_{\mathcal O}\mathcal O')/\overline{I_\delta R'}.
 $$
 
 With a larger residue field, the same canonical comparison map as in Section 19.5 exists for the

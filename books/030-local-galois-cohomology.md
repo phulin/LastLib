@@ -201,7 +201,7 @@ is a discrete $\ell$-primary torsion module.
 The distinction changes answers. For trivial action,
 
 $$
-H^1(\mathbf Z_\ell,\mathbf Z_\ell)simeq\mathbf Z_\ell
+H^1(\mathbf Z_\ell,\mathbf Z_\ell)\simeq\mathbf Z_\ell
 $$
 
 with the profinite topology on the target, whereas the same abstract group declared discrete has no nonzero continuous homomorphism from $\mathbf Z_\ell$. Finite coefficients sit safely in both worlds, but inverse limits require the natural profinite topology.
@@ -487,7 +487,7 @@ $$
 The last zero follows from $H^2(G_k,M^{I_K})=0$. In particular,
 
 $$
-H^1_{\mathrm{ur}}(K,M)simeq H^1(G_k,M^{I_K}).
+H^1_{\mathrm{ur}}(K,M)\simeq H^1(G_k,M^{I_K}).
 $$
 
 ### 4.2 Frobenius description
@@ -509,7 +509,7 @@ H^0(K,M)=\ker(\varphi-1:M^{I_K}\to M^{I_K}), \tag{4.2}
 $$
 
 $$
-H^1_{\mathrm{ur}}(K,M)simeq
+H^1_{\mathrm{ur}}(K,M)\simeq
 M^{I_K}/(\varphi-1)M^{I_K}. \tag{4.3}
 $$
 
@@ -557,7 +557,7 @@ $$
 where $I_{K,\ell}\simeq\mathbf Z_\ell(1)$ is the pro-$\ell$ tame factor and the superscript records descent under the remaining tame factors. When all inertia acts trivially, this simplifies canonically to
 
 $$
-H^1(I_K,M)\simeq\operatorname{Hom}_{\mathrm{cts}}(\mathbf Z_\ell(1),M)simeq M(-1). \tag{4.7}
+H^1(I_K,M)\simeq\operatorname{Hom}_{\mathrm{cts}}(\mathbf Z_\ell(1),M)\simeq M(-1). \tag{4.7}
 $$
 
 Under this identification arithmetic Frobenius acts on $M(-1)$: if it acts on $M$ by $A$, it acts on $H^1(I_K,M)$ by $q^{-1}A$. The inverse factor comes from precomposing a homomorphism with $\varphi^{-1}\tau\varphi=\tau^{q^{-1}}$.
@@ -720,8 +720,8 @@ Because $q$ is a unit in $R$, multiplication by $b=\alpha q^{-1}-1$ has the same
 cokernel length as multiplication by $\alpha-q$. Hence
 
 $$
-\operatorname{length}H^0=s,qquad
-\operatorname{length}H^2=t,qquad
+\operatorname{length}H^0=s,\qquad
+\operatorname{length}H^2=t,\qquad
 \operatorname{length}H^1=s+t.
 $$
 
@@ -743,7 +743,7 @@ $$
 The degree-two calculation will show
 
 $$
-H^2(K,\mu_n)\simeq\operatorname{Br}(K)[n]simeq\mathbf Z/n\mathbf Z. \tag{5.6}
+H^2(K,\mu_n)\simeq\operatorname{Br}(K)[n]\simeq\mathbf Z/n\mathbf Z. \tag{5.6}
 $$
 
 When $(n,p)=1$, their orders are therefore
@@ -1660,7 +1660,7 @@ $$
 When the action on inertia has finite image—as happens for an unramified representation and more generally for many finite-image examples—inflation–restriction gives
 
 $$
-H^1_{\mathrm{ur}}(K,V)simeq
+H^1_{\mathrm{ur}}(K,V)\simeq
 V^{I_K}/(\varphi-1)V^{I_K}. \tag{10.6}
 $$
 
@@ -1863,7 +1863,7 @@ $$
 Under the exact sequence (4.1), this arrow is an isomorphism onto the Frobenius-invariant tame term. When inertia acts trivially,
 
 $$
-H^1_{\mathrm{tame}}/H^1_{\mathrm{ur}}simeq M(-1)^{\varphi=1}. \tag{11.1}
+H^1_{\mathrm{tame}}/H^1_{\mathrm{ur}}\simeq M(-1)^{\varphi=1}. \tag{11.1}
 $$
 
 A nonzero element exists precisely when Frobenius on $M$ has eigenvalue $q$ in the semisimple one-dimensional case. The relation $\varphi\tau\varphi^{-1}=\tau^q$ forces this eigenvalue; it is not an arbitrary convention.
@@ -1900,7 +1900,7 @@ An “unramified class” is a torsor class restricting trivially to inertia, an
 carries a Frobenius action. From (4.3),
 
 $$
-H^1_{\mathrm{ur}}(K,\mu_n)simeq
+H^1_{\mathrm{ur}}(K,\mu_n)\simeq
 \mu_n/(\varphi-1)\mu_n,
 $$
 

@@ -887,16 +887,16 @@ $$
 Put $U=\mathcal W'/\varpi\mathcal W$. The reductions of the two adjacent lattices have filtrations with factors
 
 $$
-\mathcal W/\varpi\mathcal W:quad
+\mathcal W/\varpi\mathcal W:\quad
 U,\ \mathcal W/\mathcal W',
 $$
 
 and
 
 $$
-\mathcal W'/\varpi\mathcal W':quad
+\mathcal W'/\varpi\mathcal W':\quad
 \mathcal W'/\varpi\mathcal W=U,\
-\varpi\mathcal W/\varpi\mathcal W'simeq\mathcal W/\mathcal W'.
+\varpi\mathcal W/\varpi\mathcal W'\simeq\mathcal W/\mathcal W'.
 $$
 
 All terms are Galois stable. Thus the two reductions have the same Jordan--Holder factors, and iteration along the chain proves the claim.

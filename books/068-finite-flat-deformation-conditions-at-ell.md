@@ -287,7 +287,7 @@ It sends $j(v)$ to $j(bv)$, so it preserves $\mathcal H$. On the generic fiber o
 
 $$
 T_{b+c}=T_b+T_c,\qquad
-T_{bc}=T_bT_c,qquad T_1=1
+T_{bc}=T_bT_c,\qquad T_1=1
 $$
 
 hold because they are the corresponding scalar identities on $V_A$. Generic-fiber faithfulness makes them hold on $\mathcal H$. Hence $b\mapsto T_b|_{\mathcal H}$ is the required action. $\square$

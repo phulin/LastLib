@@ -1401,14 +1401,12 @@ reducible residual representation.
 
 ### 10.1 Direct dependencies
 
-The proof uses the following mathematical sources directly. The status of the companion formal
-Class Field Theory development is recorded separately below.
+The proof uses the following mathematical sources directly.
 
 | Source | Exact input | Use here |
 |---|---|---|
 | Books 2--3 | local Galois groups, tame return, upper numbering, Hilbert's different formula, Hasse--Arf | Sections 2, 4, and 5 |
 | Books 5--6 | local and global reciprocity, the existence theorem, and ray exact sequences | the abelian exclusions in Section 5 |
-| Class Field Theory development | implemented ray-class groups, the unit and right-hand ray exact sequences, and ray-class finiteness | the formal arithmetic counterpart of (5.7) |
 | Book 17 | finite-etale descent over henselian odd local bases | local uniqueness and gluing of the reverse splitting |
 | Book 29 | fppf Kummer theory | the mixed extension calculation in Section 6 |
 | Books 28, 34, and 42 | saturated closure, represented quotients, finite-flat generic modules, and coefficient actions | the exact devissage in Sections 3 and 6 |
@@ -1419,11 +1417,9 @@ Class Field Theory development is recorded separately below.
 | Book 185, Theorem 9.1 | determinant, rational SP pair, cofinite common good polynomials, and purity | the rational local record and Section 9 |
 | Book 187, Theorem 10.2 | the conditional clean-support, coefficient-linear all-level tower over $\mathbf Z[1/2]$ | the sole integral input at and away from $3$ |
 
-The companion Class Field Theory development currently implements ray-class groups, the unit and
-right-hand ray exact sequences, and ray-class finiteness. Its ray-class-field existence and global
-reciprocity declarations remain in `BlueprintStubs`. It therefore corroborates the arithmetic in
-(5.7) and is counted only for those implemented ray-class results, not as a proved source for the
-extension-field identification; that mathematical input is taken from Book 6.
+For (5.7), the ray-group calculation is carried out in Section 5, while ray-class-field existence
+and global reciprocity are imported from Book 6. The calculation of a ray quotient alone does not
+identify an extension field; that identification uses the existence theorem and reciprocity law.
 
 Book 163 is the Frey provenance and downstream consumer contract, not a proof input to the
 bounded representation-theoretic theorem. Books 40--41 concern descent and heights and are not
@@ -1436,7 +1432,7 @@ The recommended direct dependency row is
 $$
 \boxed{
 188\mid
-2,3,5,6,17,28,29,34,42,51,158,159,185,187,\mathrm{CFT}.
+2,3,5,6,17,28,29,34,42,51,158,159,185,187.
 }
 \tag{10.1}
 $$

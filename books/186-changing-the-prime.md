@@ -1,5 +1,40 @@
 # Changing the Coefficient Prime while Keeping the Frey Special Place
 
+## Contents
+
+1. [Scope](#1-scope)
+2. [Input contract](#2-input-contract)
+   - [The family and its coefficient field](#21-the-family-and-its-coefficient-field)
+   - [The exact local record at two](#22-the-exact-local-record-at-two)
+   - [Ramification away from two](#23-ramification-away-from-two)
+3. [The special parameter at two](#3-the-special-parameter-at-two)
+   - [The monodromy line](#31-the-monodromy-line)
+   - [The conductor is one](#32-the-conductor-is-one)
+4. [Selecting the coefficient place above three](#4-selecting-the-coefficient-place-above-three)
+   - [Prime versus place](#41-prime-versus-place)
+   - [The rational companion](#42-the-rational-companion)
+   - [What local--global compatibility is doing](#43-what-local--global-compatibility-is-doing)
+5. [Lattices and the integral special line](#5-lattices-and-the-integral-special-line)
+   - [A stable lattice and its saturated line](#51-a-stable-lattice-and-its-saturated-line)
+   - [Integral monodromy thickness](#52-integral-monodromy-thickness)
+   - [The residual line and sign](#53-the-residual-line-and-sign)
+   - [Changing the lattice](#54-changing-the-lattice)
+6. [Residual image at the selected place](#6-residual-image-at-the-selected-place)
+   - [What compatibility does not prove](#61-what-compatibility-does-not-prove)
+   - [A valid direct certificate](#62-a-valid-direct-certificate)
+   - [The admissible-place ledger](#63-the-admissible-place-ledger)
+7. [Prime-switch theorem](#7-prime-switch-theorem)
+8. [Handoff to Books 187--188 and comparison with Book 160](#8-handoff-to-books-187--188-and-comparison-with-book-160)
+   - [Book 187: coefficient-prime integrality](#81-book-187-coefficient-prime-integrality)
+   - [Book 188: the residual input](#82-book-188-the-residual-input)
+   - [Book 160: earlier comparative source](#83-book-160-earlier-comparative-source)
+9. [Hostile proof and dependency audit](#9-hostile-proof-and-dependency-audit)
+   - [Local mathematics](#91-local-mathematics)
+   - [Coefficients and compatibility](#92-coefficients-and-compatibility)
+   - [Integral and residual boundaries](#93-integral-and-residual-boundaries)
+   - [Dependency boundary](#94-dependency-boundary)
+10. [Mechanical audit](#10-mechanical-audit)
+
 ## 1. Scope
 
 This chapter performs one operation. Starting with the rank-two compatible collection that
@@ -21,7 +56,8 @@ would change a special parameter into an unramified one.
 
 Nothing here reconstructs compatible-family theory, automorphic descent, integral
 $3$-adic Hodge theory, or a classification of finite-flat group schemes. Those are
-dependency boundaries. The final sections state exactly what is handed to Books 160 and 187--188.
+dependency boundaries. The final sections state exactly what is handed to Books 187--188
+and distinguish the earlier comparative role of Book 160.
 
 The existence of the collection used below is conditional on the controlled SP top datum
 of Books 182--185. In particular, the current dependency spine does not construct the
@@ -585,7 +621,7 @@ with the rational monodromy line gives the saturated sequence (5.3). Formula
 (5.4) is the integral form of nonzero tame monodromy, and reduction gives the
 criterion (5.7). No other conclusion is used. $\square$
 
-## 8. Handoff to Books 160 and 187--188
+## 8. Handoff to Books 187--188 and comparison with Book 160
 
 ### 8.1 Book 187: coefficient-prime integrality
 
@@ -636,11 +672,12 @@ requires absolute irreducibility, the certificate of Section 6.2 or an exact
 replacement must be present. The rational equality $a_2(V)=1$ supplies none of
 these three residual assertions by itself.
 
-### 8.3 Book 160: no change of object
+### 8.3 Book 160: earlier comparative source
 
-Book 160 receives the output of Book 188 for the same place $\nu$ and the same
-lattice $T$ returned by Book 187. It may combine that output with the rational
-facts
+Book 160 is an earlier treatment of the relevant finite-flat category and its
+classification argument. It is a comparative source, not a downstream consumer of
+the place $\nu$, the lattice $T$, or the output of Book 188. The later route keeps the
+rational facts
 
 $$
 \det V=\chi_3,
@@ -652,9 +689,9 @@ a_2(V)=1.
 \tag{8.4}
 $$
 
-It may not silently replace $\nu$, descend coefficients, change $T$, or upgrade
-a split residual local extension to a nonsplit one. Any such change requires a
-new comparison.
+attached to the single member selected in this book. Neither comparison with Book 160
+nor the separate argument of Book 188 permits one to replace $\nu$, descend coefficients,
+change $T$, or upgrade a split residual local extension to a nonsplit one.
 
 The dependency direction is therefore
 
@@ -663,9 +700,9 @@ $$
 \longrightarrow
 \text{Book 187 named integral lattice}
 \longrightarrow
-\text{Book 188 checked residual input}
-\longrightarrow
-\text{Book 160 final use}.
+\text{Book 188 checked residual input},
+\qquad
+\text{Book 160 is earlier comparative material}.
 \tag{8.5}
 $$
 
@@ -751,8 +788,9 @@ Theorem 7.1 imports only:
 The optional minimal-support assertion additionally imports the separate certificate
 $(\mathrm U)$ for the selected member. The theorem does not import a later finite-flat theorem, residual classification, or final
 FLT contradiction. It also does not import $(\mathrm{AI}_2)$, because no coefficient-two
-member is used. Books 160 and 187--188 receive outputs in that order and do not feed
-assumptions backward into the proof.
+member is used. Books 187--188 receive the outputs in that order and do not feed
+assumptions backward into the proof; Book 160 is earlier comparative material, not a
+later handoff.
 
 ## 10. Mechanical audit
 

@@ -1246,7 +1246,10 @@ then trace and determinant record the unordered pair of characters at good place
 
 ### 12.4 Dependency and hypothesis ledger
 
-The proof uses the following prior mathematical packages. Books 127 and 129 are interface checks, not proof inputs: Book 127 depends on this compatible-system assembly, while Book 129 begins only after the rational member has been constructed.
+The proof uses the following prior mathematical packages. Books 127 and 129 are interface checks,
+not proof inputs. Book 127 is an earlier, narrower packet-family construction from its own stated
+sources and does not depend on this book; Book 129 begins only after a rational member has been
+constructed.
 
 | Conclusion in this book | Established source | Hypotheses retained here | Boundary |
 |---|---|---|---|

@@ -699,7 +699,7 @@ has two graded pieces isomorphic to $\mathbf Z/2\mathbf Z$, yet its middle objec
 A double complex $C^{p,q}$ has $d_h:C^{p,q}\to C^{p+1,q}$ and $d_v:C^{p,q}\to C^{p,q+1}$. We take commuting raw differentials and define the total differential by
 
 $$
-d(x)=d_hx+(-1)^p d_vx,qquad x\in C^{p,q}.
+d(x)=d_hx+(-1)^p d_vx,\qquad x\in C^{p,q}.
 $$
 
 The cross terms cancel, so $d^2=0$. One could instead require anticommuting differentials and omit the sign; mixing the conventions is fatal.

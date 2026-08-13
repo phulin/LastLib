@@ -146,7 +146,7 @@ $$
 \chi_\lambda(\Phi_u)=q_u^{-1}. \tag{2.4}
 $$
 
-Thus $L_\lambda(1)$ has geometric-Frobenius eigenvalue $q_u^{-1}$, while $L_\lambda(-1)$ has eigenvalue $q_u$. Untwisted $H^1$ of a smooth projective curve is pure of weight one: its geometric-Frobenius roots have complex absolute value $q_u^{1/2}$.
+Thus $L_\lambda(1)$ has geometric-Frobenius eigenvalue $q_u^{-1}$, while $L_\lambda(-1)$ has eigenvalue $q_u$. By the curve case of the Weil bounds proved in Book 37, untwisted $H^1$ of a smooth projective curve is pure of weight one: its geometric-Frobenius roots have complex absolute value $q_u^{1/2}$.
 
 At corresponding places $u$ of the reflex field and $v$ of $F$, the simple polynomial (1.1) is asserted only when the local reflex identification gives equal residue fields. If the residue degree is $f$, restriction replaces roots $\alpha_v,\beta_v$ by $\alpha_v^f,\beta_v^f$; it does not leave the same polynomial unchanged.
 
@@ -403,7 +403,7 @@ The determinant in Lemma 5.1 will come from the global pairing in Chapter 6. Thi
 
 ### 5.4 Purity at a good place
 
-At a good place, $W_{\Pi,\lambda}$ is a multiplicity factor of smooth projective curve $H^1$. Every complex embedding of each geometric-Frobenius root therefore has absolute value
+At a good place, $W_{\Pi,\lambda}$ is a multiplicity factor of smooth projective curve $H^1$. Book 37's curve Weil theorem therefore gives, for every complex embedding of each geometric-Frobenius root,
 
 $$
 |\iota(\alpha_u)|=q_u^{1/2}. \tag{5.4}
@@ -633,7 +633,7 @@ For the basic group, the component multiplier, its reflex-reciprocity covariance
 
 Choose $S$ to contain every place excluded by the good-place list. Smooth proper base change gives unramifiedness outside $S$ and away from the coefficient residue characteristic. The special-fiber correspondence gives (5.2), while the determinant gives (6.5). Lemma 5.1 produces the characteristic polynomial even for scalar Frobenius.
 
-All of these operations are defined from one rational Hecke block, one center embedding, and one global splitting field. Repeating them at every completion gives weak compatibility. Smooth projective curve purity gives weight one at the good places. Twisting by $L_\lambda(1)$ gives part 6 by (2.8) and (6.8). Finally, compactness of the image of a continuous representation gives a stable lattice. Section 7.3 explains why none of the stronger integral or bad-place conclusions follows. The moreover clause is Book 104, Theorem 9.2 followed by this construction; Section 8.3 checks its exact image and the noncircular dependency order. $\square$
+All of these operations are defined from one rational Hecke block, one center embedding, and one global splitting field. Repeating them at every completion gives weak compatibility. Book 37's curve Weil theorem gives weight one at the good places. Twisting by $L_\lambda(1)$ gives part 6 by (2.8) and (6.8). Finally, compactness of the image of a continuous representation gives a stable lattice. Section 7.3 explains why none of the stronger integral or bad-place conclusions follows. The moreover clause is Book 104, Theorem 9.2 followed by this construction; Section 8.3 checks its exact image and the noncircular dependency order. $\square$
 
 ### 8.3 The exact FLT bridge and the eligibility boundary
 
@@ -671,13 +671,15 @@ The proofs in this book use exactly the following prior-book outputs.
 
 **Book 125, Automorphic Decomposition of Shimura-Curve $H^1$.** It supplies the compact one-split curve, its component descent, the common geometric and adelic Hecke action, exact noncharacter parallel-weight-two decomposition, multiplicity one, the finite semisimple Hecke image, coefficient and Schur-field distinctions, the rank-two multiplicity calculation, Hodge types, the basic-group determinant datum, the complete good-place relation, and the saturated ambient packet lattice with its denominator warnings.
 
-**Book 126, Galois Representations from Weight-Two Shimura-Curve Cohomology.** It supplies the continuous Hom extraction, canonical semisimplification, coefficient-field behavior, factored determinant and duality, parity, the scalar-Frobenius upgrade, good-place purity, and the boundary between rational extraction and integral Morita theory.
+**Book 126, Galois Representations from Weight-Two Shimura-Curve Cohomology.** It supplies the continuous Hom extraction, canonical semisimplification, coefficient-field behavior, factored determinant and duality, parity, the scalar-Frobenius upgrade, and the boundary between rational extraction and integral Morita theory.
+
+**Book 37, Weights and Weil Bounds for Curves and Abelian Varieties.** Its curve Weil theorem supplies purity of smooth proper $H^1$ and hence the weight-one bounds for the extracted multiplicity factor. Book 126 deliberately does not prove or import this purity statement.
 
 **Book 104, Global Jacquet--Langlands.** Its totally definite theorem supplies the split cusp form (8.2). For even-degree $F$, the compatible unitary central character, and one active real place, its compact one-split inverse theorem supplies (8.3) exactly when an odd nonempty finite set $W$ of selected special or selected tame-dihedral places has been chosen. It preserves the central character, multiplicity, and good right-convolution Hecke polynomials. Its proof does not use Shimura-curve cohomology, Book 125, Book 126, or the Galois extraction of this book.
 
 Finite-dimensional semisimple algebra, Jordan--Holder theory, Cayley--Hamilton, and the existence of a stable lattice for a continuous representation of a profinite group are ordinary foundational inputs. No density theorem, later local--global compatibility theorem, compatible-system theorem, or finite-flat quotient theorem is used in a proof.
 
-The dependency order is therefore Book 104's trace-theoretic construction of $\Pi_B$, then Book 125's decomposition of the resulting curve packet, then Book 126's cohomological extraction, and finally the assembly in Theorem 8.1. No step uses the desired Galois representation to prove the preceding automorphic transfer, so the argument is noncircular.
+The dependency order is therefore Book 104's trace-theoretic construction of $\Pi_B$, Book 125's decomposition of the resulting curve packet, Book 126's cohomological extraction, Book 37's independent purity theorem, and finally the assembly in Theorem 8.1. No step uses the desired Galois representation to prove the preceding automorphic transfer, so the argument is noncircular.
 
 ### 9.2 Claims deliberately not made
 

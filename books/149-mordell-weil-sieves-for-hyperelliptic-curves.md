@@ -850,8 +850,8 @@ It is useful to attach a witness to each discarded coset. For a prime $p$,
 the witness can be the image of the representative, generators of
 $N\rho_p(\Gamma)$, the complete list $X_p$, and the row-reduced congruence
 showing empty intersection. Such witnesses make the direction of every map
-visible and prevent a condition computed in $J(\mathbf F_p)/NJ(\mathbf
-F_p)$ from being confused with one computed modulo $N\rho_p(\Gamma)$.
+visible and prevent a condition computed in $J(\mathbf F_p)/NJ(\mathbf F_p)$
+from being confused with one computed modulo $N\rho_p(\Gamma)$.
 
 For an accounted survivor, the witness consists of the known point, its
 exact global Abel class, and the terminal reason. When the terminal reason is
@@ -1168,7 +1168,7 @@ The complete special-fiber point list is
 
 $$
 \begin{aligned}
-C_{13}(\mathbf F_{17})={&\infty^+,\infty^-,
+C_{13}(\mathbf F_{17})=\{&\infty^+,\infty^-,
 (0,\pm1),(1,0),(6,\pm6),(8,0),\\
 &(12,\pm2),(13,\pm8),(15,0),(16,\pm1)\},
 \end{aligned} \tag{10.11}

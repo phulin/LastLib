@@ -186,7 +186,7 @@ $$
 \boxed{
 r_{1,\tau}:G_M\longrightarrow\operatorname{GL}_2(\Omega_\tau)
 \text{ is absolutely irreducible whenever }q(\tau)=2.}
-\tag{\mathrm{AI}_2}
+\tag{$\mathrm{AI}_2$}
 $$
 
 This is a rational characteristic-zero hypothesis about the coefficient-two realization of the
@@ -504,8 +504,8 @@ The first objects come from already existing automorphic packets over elementary
 second are ordinary finite inductions. The third are conclusions of the norm-one theorem. None
 is a family of rank-two representations on $G_{\mathbf Q}$ indexed by the places of $E$.
 
-This distinction prevents a circular shortcut. One cannot say that the $S_{\mathfrak
-B,\lambda,j}$ are compatible and then use compatibility to descend them. The descent will come
+This distinction prevents a circular shortcut. One cannot say that the
+$S_{\mathfrak B,\lambda,j}$ are compatible and then use compatibility to descend them. The descent will come
 from the signed equality (2.7), and compatibility will be proved afterward from algebraic
 Frobenius and local records.
 

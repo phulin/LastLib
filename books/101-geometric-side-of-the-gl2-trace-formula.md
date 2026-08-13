@@ -1749,7 +1749,7 @@ bounded norm through lattice points.
 We also need an upper, rather than lower, regulator bound.  In fixed degree it follows by the
 quantitative form of Dirichlet's box argument.  Embed $\mathcal O_E$ as a lattice of covolume
 $2^{-r_2(E)}|D_E|^{1/2}$.  Apply the pigeonhole proof of the unit theorem in an archimedean box
-whose side lengths are $exp(C|D_E|^{C_0})$, subdivided by a fundamental cell of that lattice
+whose side lengths are $\exp(C|D_E|^{C_0})$, subdivided by a fundamental cell of that lattice
 and by the finitely many ideal classes just bounded.  Two elements in the same cell and ideal
 class have a quotient which is a unit; its logarithm vector has norm at most
 $C|D_E|^{C_0}$.  After one unit has been found, perform the same argument in the quotient by

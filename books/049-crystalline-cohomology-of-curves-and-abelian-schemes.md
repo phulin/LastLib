@@ -404,7 +404,7 @@ Let $g:(S',J',\gamma')\to(S,J,\gamma)$ be a morphism of finite-level PD bases, p
 $$
 Lg_{\mathrm{cris}}^*Rf_{\mathrm{cris},*}\mathcal E
 \xrightarrow{\sim}
-Rf'_{\mathrm{cris},*}Lg_{mathrm{cris}}^*\mathcal E. \tag{5.1}
+Rf'_{\mathrm{cris},*}Lg_{\mathrm{cris}}^*\mathcal E. \tag{5.1}
 $$
 
 On an affine base this reads

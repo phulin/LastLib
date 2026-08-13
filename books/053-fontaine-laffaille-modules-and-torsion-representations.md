@@ -1024,7 +1024,7 @@ Moreover lengths are preserved as in (6.6).
 For a free object $L$, exactness applied to (3.6) gives
 
 $$
-0\to T(L/p^n)	o T(L/p^{m+n})	o T(L/p^m)\to0,
+0\to T(L/p^n)\to T(L/p^{m+n})\to T(L/p^m)\to0,
 \tag{8.4}
 $$
 
