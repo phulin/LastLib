@@ -25,7 +25,62 @@ theorem chapter04_zero_vector_correction_integral
     (∫ t in Set.Ioo (0 : ℝ) 1,
       ((t⁻¹ - 1 : ℝ) : ℂ) * chapter04MellinKernel s t ∂volume) =
       chapter04ZeroVectorCorrection s := by
-  sorry
+  have hs0 : s ≠ 0 := by
+    intro h
+    rw [h] at hs
+    norm_num at hs
+  have hs1 : s ≠ 1 := by
+    intro h
+    rw [h] at hs
+    norm_num at hs
+  have hsm2 : -1 < (s - 2).re := by
+    norm_num [Complex.sub_re]
+    linarith
+  have hsm1 : -1 < (s - 1).re := by
+    norm_num [Complex.sub_re]
+    linarith
+  unfold chapter04ZeroVectorCorrection chapter04MellinKernel
+  rw [← integral_Ioc_eq_integral_Ioo, ← intervalIntegral.integral_of_le zero_le_one]
+  have hcongr :
+      (∫ t : ℝ in 0..1,
+        ((t⁻¹ - 1 : ℝ) : ℂ) *
+          (if 0 < t then (t : ℂ) ^ s / (t : ℂ) else 0)) =
+      ∫ t : ℝ in 0..1, ((t : ℂ) ^ (s - 2) - (t : ℂ) ^ (s - 1)) := by
+    apply intervalIntegral.integral_congr_ae
+    refine (volume.ae_ne (0 : ℝ)).mono ?_
+    intro t ht0 ht
+    rw [Set.uIoc_of_le zero_le_one] at ht
+    rw [if_pos ht.1, Complex.ofReal_sub, Complex.ofReal_inv]
+    have hpow1 : (t : ℂ) ^ s / (t : ℂ) = (t : ℂ) ^ (s - 1) := by
+      calc
+        (t : ℂ) ^ s / (t : ℂ) = (t : ℂ) ^ s / (t : ℂ) ^ (1 : ℂ) := by
+          rw [Complex.cpow_one]
+        _ = (t : ℂ) ^ (s - 1) := by
+          exact (Complex.cpow_sub s 1
+            (Complex.ofReal_ne_zero.mpr ht.1.ne')).symm
+    have hpow2 : (t : ℂ) ^ (s - 2) =
+        (t : ℂ) ^ (s - 1) / (t : ℂ) := by
+      calc
+        (t : ℂ) ^ (s - 2) = (t : ℂ) ^ ((s - 1) - 1) := by
+          apply congrArg (fun z : ℂ => (t : ℂ) ^ z)
+          ring
+        _ = (t : ℂ) ^ (s - 1) / (t : ℂ) ^ (1 : ℂ) :=
+          Complex.cpow_sub (s - 1) 1
+            (Complex.ofReal_ne_zero.mpr ht.1.ne')
+        _ = (t : ℂ) ^ (s - 1) / (t : ℂ) := by rw [Complex.cpow_one]
+    rw [hpow1, hpow2]
+    field_simp
+    ac_rfl
+  rw [hcongr,
+    intervalIntegral.integral_sub
+      (intervalIntegral.intervalIntegrable_cpow' hsm2)
+      (intervalIntegral.intervalIntegrable_cpow' hsm1),
+    integral_cpow (Or.inl hsm2), integral_cpow (Or.inl hsm1)]
+  have hsm1ne : s - 1 ≠ 0 := sub_ne_zero.mpr hs1
+  have he1 : s - 2 + 1 = s - 1 := by ring
+  have he2 : s - 1 + 1 = s := sub_add_cancel s 1
+  rw [he1, he2]
+  simp [Complex.zero_cpow hsm1ne, Complex.zero_cpow hs0]
 
 theorem chapter04_theta_mellin_split_at_one
     (K : Type*) [Field K] [NumberField K]

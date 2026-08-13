@@ -97,10 +97,10 @@ theorem chapter06_prime_contribution_eq_nested_sum
   sorry
 
 /-
-DEPENDENCY_GUESS: the absent Chapter 4 draft supplies the canonical
-`Chapter06ZetaAnalyticPackage`; the explicit formula below is stated with
-that package as an explicit input until the global reconciliation pass can
-replace it by the earlier completed-zeta API.
+Chapter 4 supplies the canonical completed-zeta and zero data.  The package
+parametrization below remains useful for the contour proof, while
+`chapter06CanonicalZetaAnalyticPackage` exposes the source theorem without an
+extra caller-supplied analytic package.
 -/
 theorem chapter06_weil_poitou_explicit_formula
     (K : Type*) [Field K] [NumberField K]
@@ -109,6 +109,15 @@ theorem chapter06_weil_poitou_explicit_formula
     Real.log (chapter06AbsoluteDiscriminant K) =
       chapter06ExplicitFormulaRightHandSide K P.zeros F := by
   sorry
+
+theorem chapter06_weil_poitou_explicit_formula_canonical
+    (K : Type*) [Field K] [NumberField K] {F : ℝ → ℝ}
+    (hF : Chapter06BasicallyAdmissible F) :
+    Real.log (chapter06AbsoluteDiscriminant K) =
+      chapter06ExplicitFormulaRightHandSide K
+        (chapter06CanonicalZetaAnalyticPackage K).zeros F := by
+  exact chapter06_weil_poitou_explicit_formula K
+    (chapter06CanonicalZetaAnalyticPackage K) hF
 
 theorem chapter06_weil_poitou_explicit_formula_expanded
     (K : Type*) [Field K] [NumberField K]

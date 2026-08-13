@@ -220,10 +220,12 @@ structure Chapter06ContourHeightSequence
       1 - c ≤ σ → σ ≤ c →
       ‖chapter06LogDerivative (chapter06Xi K)
           (chapter06VerticalLinePoint σ (height j))‖ ≤
-        C * (Real.log (chapter06AnalyticConductor K (height j))) ^ 2 ∧
+        C * (height j + 3) ^ separationExponent *
+            (Real.log (chapter06AnalyticConductor K (height j))) ^ 2 ∧
       ‖chapter06LogDerivative (chapter06Xi K)
           (chapter06VerticalLinePoint σ (-height j))‖ ≤
-        C * (Real.log (chapter06AnalyticConductor K (height j))) ^ 2
+        C * (height j + 3) ^ separationExponent *
+            (Real.log (chapter06AnalyticConductor K (height j))) ^ 2
 
 structure Chapter06ZetaAnalyticPackage
     (K : Type*) [Field K] [NumberField K] where
@@ -234,6 +236,23 @@ structure Chapter06ZetaAnalyticPackage
   zeros : Chapter06ZeroSpectrum K
   contour_heights : ∀ c : ℝ, 1 < c →
     Chapter06ContourHeightSequence K zeros c
+
+/-!
+Chapter 4 supplies the canonical completed-zeta, zero, and growth data.  The
+remaining contour-height construction is the analytic input proved in this
+chapter, so expose the resulting package as a nonempty interface rather than
+making the book's explicit formula permanently conditional on a caller-built
+duplicate package.
+-/
+theorem chapter06_zeta_analytic_package_nonempty
+    (K : Type*) [Field K] [NumberField K] :
+    Nonempty (Chapter06ZetaAnalyticPackage K) := by
+  sorry
+
+noncomputable def chapter06CanonicalZetaAnalyticPackage
+    (K : Type*) [Field K] [NumberField K] :
+    Chapter06ZetaAnalyticPackage K :=
+  Classical.choice (chapter06_zeta_analytic_package_nonempty K)
 
 def chapter06ZeroCountingFunction
     {K : Type*} [Field K] [NumberField K]

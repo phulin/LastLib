@@ -16,7 +16,10 @@ theorem chapter09_finite_range_of_continuous_map_from_compact_to_discrete
     [TopologicalSpace H] [DiscreteTopology H]
     (f : G →* H) (hf : Continuous f) :
     (Set.range f).Finite := by
-  sorry
+  have hcompact : IsCompact (Set.range f) := by
+    rw [← Set.image_univ]
+    exact isCompact_univ.image hf
+  exact hcompact.finite_of_discrete
 
 structure Chapter09DiscreteArithmeticQuotient
     (G : Type*) [Group G] [TopologicalSpace G]

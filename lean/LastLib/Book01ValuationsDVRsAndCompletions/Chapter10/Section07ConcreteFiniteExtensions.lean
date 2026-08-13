@@ -144,25 +144,40 @@ theorem chapter10_equal_characteristic_totally_ramified_profile
 /-- Constant-field extensions have e = 1 and residue degree equal to the field degree. -/
 theorem chapter10_constant_field_extension_profile
     {k k' : Type*} [Field k] [Field k'] [Algebra k k'] [FiniteDimensional k k']
-    (n : ℕ) (hn : n = Module.finrank k k')
-    (_hseparable : Algebra.IsSeparable k k') :
-    ∃ p : Chapter10FiniteExtensionProfile,
-      p.degree = n ∧ p.ramificationIndex = 1 ∧
-        p.residueDegree = Module.finrank k k' ∧ Chapter10Unramified p := by
-  subst n
-  let d := Module.finrank k k'
-  refine ⟨{ degree := d, ramificationIndex := 1, residueDegree := d }, rfl, rfl, rfl, ?_⟩
-  exact ⟨rfl, rfl⟩
+    [Algebra (LaurentSeries k) (LaurentSeries k')]
+    [FiniteDimensional (LaurentSeries k) (LaurentSeries k')]
+    [IsScalarTower k (LaurentSeries k) (LaurentSeries k')]
+    (hseparable : Algebra.IsSeparable k k')
+    (h : (Chapter10LaurentSeriesValuation k).IsEquiv
+      ((Chapter10LaurentSeriesValuation k').comap
+        (algebraMap (LaurentSeries k) (LaurentSeries k')))) :
+    ∃ d : Chapter10HeterogeneousExtensionData
+        (Chapter10LaurentSeriesValuation k)
+        (Chapter10LaurentSeriesValuation k') h,
+      ∃ p : Chapter10FiniteExtensionProfile,
+        Chapter10ProfileRealizedByData d p ∧
+          p.degree = Module.finrank k k' ∧ p.ramificationIndex = 1 ∧
+          p.residueDegree = Module.finrank k k' ∧ Chapter10Unramified p ∧
+          Chapter10UnramifiedBranch
+            (Chapter10LaurentSeriesValuation k)
+            (Chapter10LaurentSeriesValuation k') h d := by
+  sorry
 
 /-- Combining a constant extension and a totally ramified extension gives ef. -/
 theorem chapter10_combined_equal_characteristic_profile
-    {e f : ℕ} (he : 0 < e) (hf : 0 < f) :
+    {e f : ℕ} {K L ΓK ΓL : Type*} [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero ΓK]
+    [LinearOrderedCommGroupWithZero ΓL] [FiniteDimensional K L]
+    (v : Valuation K ΓK) (w : Valuation L ΓL)
+    (h : v.IsEquiv (w.comap (algebraMap K L)))
+    (d : Chapter10HeterogeneousExtensionData v w h)
+    (he : 0 < e) (hf : 0 < f)
+    (hdegree : Module.finrank K L = e * f)
+    (heq : d.ramificationIndex = e) (hfq : d.residueDegree = f) :
     ∃ p : Chapter10FiniteExtensionProfile,
-      p.degree = e * f ∧ p.ramificationIndex = e ∧
-        p.residueDegree = f := by
-  have _ := he
-  have _ := hf
-  exact ⟨{ degree := e * f, ramificationIndex := e, residueDegree := f }, rfl, rfl, rfl⟩
+      Chapter10ProfileRealizedByData d p ∧ p.degree = e * f ∧
+        p.ramificationIndex = e ∧ p.residueDegree = f := by
+  sorry
 
 /-- A local polynomial criterion spelling out the Eisenstein coefficient conditions. -/
 def Chapter10EisensteinAtUniformizer {A : Type*} [CommRing A]

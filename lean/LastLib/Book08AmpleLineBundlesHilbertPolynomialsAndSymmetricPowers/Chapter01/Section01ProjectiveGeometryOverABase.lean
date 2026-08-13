@@ -288,6 +288,27 @@ noncomputable def chapter01PolynomialProj
   letI := G.graded
   exact AlgebraicGeometry.«Proj» G.grading
 
+/-! The degree-zero projection is the canonical structure morphism of an
+ordinary Proj.  The extra ring hom records a chosen base algebra, which is
+needed when the degree-zero part is only canonically isomorphic to that base
+ring (as for a polynomial presentation). -/
+noncomputable def chapter01ProjToBase
+    {R A : Type u} [CommRing R] [CommRing A]
+    (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜]
+    (baseMap : R →+* A) :
+    AlgebraicGeometry.«Proj» 𝒜 ⟶ AlgebraicGeometry.Spec (CommRingCat.of R) := by
+  exact AlgebraicGeometry.Proj.toSpecZero 𝒜 ≫
+    AlgebraicGeometry.Spec.map
+      (CommRingCat.ofHom
+        ((GradedRing.projZeroRingHom' 𝒜).comp baseMap))
+
+noncomputable def chapter01ProjToDegreeZero
+    {A : Type*} [CommRing A]
+    (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜] :
+    AlgebraicGeometry.«Proj» 𝒜 ⟶
+      AlgebraicGeometry.Spec (CommRingCat.of (𝒜 0)) :=
+  AlgebraicGeometry.Proj.toSpecZero 𝒜
+
 noncomputable def chapter01PolynomialChartRing
     {k : Type*} [CommRing k] {r : ℕ} {w : Fin (r + 1) → ℕ}
     (G : Chapter01PolynomialGradingData k r w) (i : Fin (r + 1)) : CommRingCat := by
@@ -2055,6 +2076,11 @@ structure Chapter01ProjectivePresentationClosedImmersionData
         (chapter01ProjClosedSubschemeInterface (𝒜 := G.grading)) ideal)
   embedding : AlgebraicGeometry.«Proj» 𝒜 ⟶ chapter01PolynomialProj G
   embedding_closed : IsClosedImmersion embedding
+  /-- The presentation is an embedding over the degree-zero coefficient ring. -/
+  embedding_over :
+    embedding ≫ chapter01ProjToBase G.grading
+        (algebraMap (𝒜 0) (MvPolynomial (Fin (r + 1)) (𝒜 0))) =
+      chapter01ProjToDegreeZero 𝒜
   embedding_factorization :
     identification.hom ≫
         (Chapter01ProjClosedSubschemeInterface.inclusion
@@ -2073,9 +2099,12 @@ theorem chapter01_projective_presentation_closed_immersion
     {r : ℕ} {G : Chapter01PolynomialGradingData (𝒜 0) r (fun _ => 1)}
     (P : Chapter01DegreeOnePolynomialPresentation 𝒜 G) :
     ∃ ι : AlgebraicGeometry.«Proj» 𝒜 ⟶ chapter01PolynomialProj G,
-      IsClosedImmersion ι := by
+      IsClosedImmersion ι ∧
+        ι ≫ chapter01ProjToBase G.grading
+            (algebraMap (𝒜 0) (MvPolynomial (Fin (r + 1)) (𝒜 0))) =
+          chapter01ProjToDegreeZero 𝒜 := by
   rcases chapter01_projective_presentation_closed_immersion_data 𝒜 P with ⟨D⟩
-  exact ⟨D.embedding, D.embedding_closed⟩
+  exact ⟨D.embedding, D.embedding_closed, D.embedding_over⟩
 
 end
 

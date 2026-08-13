@@ -111,18 +111,17 @@ theorem chapter12_ideal_map_forgets_local_unit_changes
     chapter12SameFiniteIdeleValuation D x y :=
   hxy
 
-/- The ray-level refinement is intentionally conditional: the ordinary ideal
-   map cannot see a local unit, while a chosen ray map can. -/
-theorem chapter12_ray_quotient_detects_a_local_unit_change
+/- A ray invariant refines the ordinary ideal invariant: equal ray values
+   force equal valuation ideals. -/
+theorem chapter12_ray_quotient_refines_ideal_valuation
     {R K : Type*} [CommRing R] [IsDedekindDomain R] [Field K]
     [Algebra R K] [IsFractionRing R K]
     (D : Chapter12RayDetectionData R K)
     {x y : chapter12FiniteIdeles R K}
-    (hxy : D.idealData.idealOf x = D.idealData.idealOf y)
-    (hray : D.rayMap x ≠ D.rayMap y) :
-    chapter12SameFiniteIdeleValuation D.idealData x y ∧
-      D.rayMap x ≠ D.rayMap y := by
-  exact ⟨hxy, hray⟩
+    (hray : D.rayMap x = D.rayMap y) :
+    chapter12SameFiniteIdeleValuation D.idealData x y := by
+  change D.idealData.idealOf x = D.idealData.idealOf y
+  exact D.rayMap_sees_ideal x y hray
 
 end
 end LastLib.Book04AdelesAndIdeles.Chapter12

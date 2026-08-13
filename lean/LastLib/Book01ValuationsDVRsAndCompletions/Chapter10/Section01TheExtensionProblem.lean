@@ -125,8 +125,14 @@ def Chapter10PrimeAboveMaximal
 /-- Valuation branches and primes above the base maximal ideal correspond. -/
 def Chapter10ExtensionPrimeCorrespondence
     {A B : Type*} {K : Type u10K} {L : Type u10L} {ΓK : Type u10Γ}
-    [CommRing A] [IsLocalRing A] [CommRing B] [Algebra A B]
-    [Field K] [Field L] [Algebra K L]
+    [CommRing A] [IsDomain A] [ValuationRing A]
+    [IsIntegrallyClosed A]
+    [Field K] [Field L] [CommRing B] [Algebra A B] [Algebra B L]
+    [Algebra A L]
+    [IsScalarTower A B L] [IsIntegralClosure B A L]
+    [Algebra A K] [IsFractionRing A K]
+    [Algebra K L] [FiniteDimensional K L]
+    [IsScalarTower A K L]
     [LinearOrderedCommGroupWithZero ΓK]
     (vK : Valuation K ΓK) : Prop :=
   Nonempty

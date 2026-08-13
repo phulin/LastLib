@@ -70,8 +70,7 @@ theorem chapter11_one_plus_translation_has_multiplicative_defect
   sorry
 
 theorem chapter11_local_multiplicative_layer_is_additive_layer
-    {A : Type*} [CommRing A] [IsLocalRing A] [IsDomain A]
-    [IsPrincipalIdealRing A] {n : ℕ} (hn : 0 < n) :
+    {A : Type*} [CommRing A] [IsLocalRing A] {n : ℕ} (hn : 0 < n) :
     Nonempty
       (chapter11MultiplicativeLocalLayer (A := A) n ≃*
         Multiplicative (chapter11AdditiveLocalLayer (A := A) n)) := by
@@ -86,8 +85,10 @@ theorem chapter11_archimedean_maximal_compact_factor_is_compact
     CompactSpace (Chapter11ArchimedeanMaximalCompact K) := by
   sorry
 
-structure Chapter11MagnitudeDirection {G : Type*} [TopologicalSpace G] where
+structure Chapter11MagnitudeDirection {G : Type*} [Group G] [TopologicalSpace G] where
   toFun : ℝ → G
+  map_zero' : toFun 0 = 1
+  map_add' : ∀ x y, toFun (x + y) = toFun x * toFun y
   closedEmbedding : Topology.IsClosedEmbedding toFun
 
 def chapter11ContainsMagnitudeDirection {G : Type*} [Group G] [TopologicalSpace G]

@@ -236,6 +236,60 @@ theorem chapter12_mem_norm_one_idele_classes_iff
         M.module x = 1 ∧ chapter12IdeleClassMk R K x = c :=
   Iff.rfl
 
+/-- The module descends to the idele class group because it is trivial on
+principal ideles. -/
+def chapter12IdeleClassModule
+    {R K : Type*} [CommRing R] [IsDedekindDomain R] [Field K]
+    [Algebra R K] [IsFractionRing R K]
+    (M : Chapter12IdeleModuleData R K) :
+    chapter12IdeleClassGroup R K →* ℝ≥0 :=
+  QuotientGroup.lift (chapter12PrincipalIdeleSubgroup R K)
+    M.module (by
+      intro x hx
+      rcases hx with ⟨u, rfl⟩
+      exact M.principal_one u)
+
+@[simp]
+theorem chapter12IdeleClassModule_apply
+    {R K : Type*} [CommRing R] [IsDedekindDomain R] [Field K]
+    [Algebra R K] [IsFractionRing R K]
+    (M : Chapter12IdeleModuleData R K) (x : chapter12Ideles R K) :
+    chapter12IdeleClassModule M (chapter12IdeleClassMk R K x) = M.module x :=
+  rfl
+
+/-- The norm-one classes form the kernel of the descended idele module. -/
+def chapter12NormOneIdeleClassSubgroup
+    {R K : Type*} [CommRing R] [IsDedekindDomain R] [Field K]
+    [Algebra R K] [IsFractionRing R K]
+    (M : Chapter12IdeleModuleData R K) :
+    Subgroup (chapter12IdeleClassGroup R K) :=
+  (chapter12IdeleClassModule M).ker
+
+@[simp]
+theorem chapter12NormOneIdeleClassSubgroup_mem_iff
+    {R K : Type*} [CommRing R] [IsDedekindDomain R] [Field K]
+    [Algebra R K] [IsFractionRing R K]
+    (M : Chapter12IdeleModuleData R K)
+    {c : chapter12IdeleClassGroup R K} :
+    c ∈ chapter12NormOneIdeleClassSubgroup M ↔
+      chapter12IdeleClassModule M c = 1 :=
+  Iff.rfl
+
+theorem chapter12NormOneIdeleClasses_eq_subgroup_carrier
+    {R K : Type*} [CommRing R] [IsDedekindDomain R] [Field K]
+    [Algebra R K] [IsFractionRing R K]
+    (M : Chapter12IdeleModuleData R K) :
+    chapter12NormOneIdeleClasses M =
+      (chapter12NormOneIdeleClassSubgroup M : Set (chapter12IdeleClassGroup R K)) := by
+  sorry
+
+/-- A group carrier for the norm-one part of the idele class group. -/
+abbrev chapter12NormOneIdeleClassCarrier
+    {R K : Type*} [CommRing R] [IsDedekindDomain R] [Field K]
+    [Algebra R K] [IsFractionRing R K]
+    (M : Chapter12IdeleModuleData R K) :=
+  ↥(chapter12NormOneIdeleClassSubgroup M)
+
 /- A local uniformizer is a nonzero element of the completed integer ring with
 valuation `WithZero.exp (-1)`.  Merely requiring a nonzero nonunit would also
 allow higher powers of a uniformizer and is not sufficient for a single-place
@@ -247,10 +301,10 @@ def chapter12UniformizerAt
     (π : p.adicCompletionIntegers K) : Prop :=
   π ≠ 0 ∧ Valued.v (π : p.adicCompletion K) = WithZero.exp (-1 : ℤ)
 
-/- LOCAL_DEPENDENCY_GUESS: this interface is the valuation-vector-to-fractional-
-ideal map used by the ideal/idele dictionary.  Its multiplicativity and
-principal normalization are stated as reusable fields rather than assumed
-ad hoc in the nonprincipal-ideal example. -/
+/- The generic interface is the valuation-vector-to-fractional-ideal map used
+by the ideal/idele dictionary.  Its multiplicativity and principal
+normalization are stated as reusable fields rather than assumed ad hoc in the
+nonprincipal-ideal example. -/
 structure Chapter12FiniteIdeleIdealData
     (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
     [Algebra R K] [IsFractionRing R K] where
@@ -259,6 +313,24 @@ structure Chapter12FiniteIdeleIdealData
   map_mul : ∀ x y, idealOf (x * y) = idealOf x * idealOf y
   principal : ∀ u : Kˣ, idealOf (chapter12PrincipalFiniteIdeleHom R K u) =
     FractionalIdeal.spanSingleton R⁰ (u : K)
+
+/- The preceding chapter already supplies the valuation-product map for the
+canonical number-field model.  This specialization keeps the generic
+interface useful for other Dedekind models while giving the portraits a
+proof-ready canonical choice. -/
+noncomputable def chapter12CanonicalFiniteIdeleIdealData
+    (K : Type*) [Field K] [NumberField K] :
+    Chapter12FiniteIdeleIdealData (𝓞 K) K where
+  idealOf :=
+    (Units.coeHom (FractionalIdeal (𝓞 K)⁰ K)).comp
+      (LastLib.Book04AdelesAndIdeles.Chapter08.chapter08FiniteIdeleIdealMap K)
+  map_one := by simp
+  map_mul := by
+    intro x y
+    simp
+  principal := by
+    intro u
+    sorry
 
 def chapter12IdeleIdeal
     {R K : Type*} [CommRing R] [IsDedekindDomain R] [Field K]
@@ -338,11 +410,11 @@ def chapter12TensorFieldShape (K F E : Type*) [Field K] [Field F] [Field E]
 
 def chapter12IntegralTensorSplitShape (A B : Type*) [CommRing A] [CommRing B]
     [Algebra ℤ A] [Algebra ℤ B] : Prop :=
-  Nonempty (A ⊗[ℤ] B ≃+* B × B)
+  Nonempty (chapter12TensorAlgEquiv ℤ A B (B × B))
 
 def chapter12IntegralTensorQuadraticFieldShape (A B E : Type*) [CommRing A]
     [CommRing B] [CommRing E] [Algebra ℤ A] [Algebra ℤ B] [Algebra B E] : Prop :=
-  Nonempty (A ⊗[ℤ] B ≃+* E)
+  Nonempty (chapter12TensorAlgEquiv ℤ A B E)
 
 /- A predicate spelling out the squarefree quadratic input. -/
 def chapter12SquarefreeInteger (d : ℤ) : Prop :=

@@ -1,5 +1,8 @@
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02.Section03SectionsWithoutCommonZeros
 import Mathlib.Algebra.MvPolynomial.Eval
+import Mathlib.Data.Finite.Vector
+import Mathlib.Data.Finsupp.Multiset
+import Mathlib.Data.Sym.Card
 import Mathlib.RingTheory.Ideal.Quotient.Operations
 
 namespace LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02
@@ -370,7 +373,9 @@ def Chapter02MonomialIndex (r d : ℕ) :=
 /- LOCAL_DEPENDENCY_GUESS: exponent vectors of fixed total degree form a finite type. -/
 theorem chapter02_monomial_index_finite (r d : ℕ) :
     Finite (Chapter02MonomialIndex r d) := by
-  sorry
+  change Finite {a : Fin (r + 1) →₀ ℕ // a.sum (fun _ n => n) = d}
+  exact Finite.of_equiv (Sym (Fin (r + 1)) d)
+    (Sym.equivNatSum (Fin (r + 1)) d)
 
 noncomputable instance chapter02_monomial_index_fintype (r d : ℕ) :
     Fintype (Chapter02MonomialIndex r d) := by
@@ -379,19 +384,27 @@ noncomputable instance chapter02_monomial_index_fintype (r d : ℕ) :
 
 theorem chapter02_monomial_index_cardinality (r d : ℕ) :
     Fintype.card (Chapter02MonomialIndex r d) = Nat.choose (r + d) d := by
-  sorry
+  have e : Sym (Fin (r + 1)) d ≃ Chapter02MonomialIndex r d :=
+    Sym.equivNatSum (Fin (r + 1)) d
+  rw [← Fintype.card_congr e]
+  rw [Sym.card_sym_eq_choose]
+  simp
 
 def chapter02VeroneseTargetDimension (r d : ℕ) : ℕ :=
   Nat.choose (r + d) d - 1
 
 theorem chapter02_veronese_target_dimension_succ (r d : ℕ) :
     chapter02VeroneseTargetDimension r d + 1 = Nat.choose (r + d) d := by
-  sorry
+  simpa [chapter02VeroneseTargetDimension] using
+    Nat.sub_add_cancel (Nat.succ_le_iff.mpr (Nat.choose_pos (Nat.le_add_left d r)))
 
 theorem chapter02_veronese_target_index_reindexing (r d : ℕ) :
     Nonempty (Chapter02MonomialIndex r d ≃
       Fin (chapter02VeroneseTargetDimension r d + 1)) := by
-  sorry
+  refine ⟨?_⟩
+  simpa [chapter02_monomial_index_cardinality,
+    chapter02_veronese_target_dimension_succ] using
+    (Fintype.equivFin (Chapter02MonomialIndex r d))
 
 abbrev chapter02VeroneseTargetIndex (r d : ℕ) : Type u :=
   ULift.{u} (Chapter02MonomialIndex r d)
@@ -577,13 +590,40 @@ theorem chapter02_veronese_quadratic_relation_maps_to_zero
     (h : Chapter02VeroneseQuadraticRelationPredicate r d a b c e) :
     chapter02VeroneseMonomialRingHom R r d
         (chapter02VeroneseQuadraticRelation R r d a b c e) = 0 := by
-  sorry
+  simp only [chapter02VeroneseQuadraticRelation, map_sub]
+  apply sub_eq_zero.mpr
+  have h_eval (s : Chapter02MonomialIndex r d →₀ ℕ) :
+      chapter02VeroneseMonomialRingHom R r d
+          (MvPolynomial.monomial s (1 : R)) =
+        MvPolynomial.monomial (s.sum (fun i n => n • i.1)) (1 : R) := by
+    simp only [chapter02VeroneseMonomialRingHom, MvPolynomial.aeval_monomial,
+      map_one, one_mul]
+    simp_rw [MvPolynomial.monomial_pow]
+    simpa using
+      (MvPolynomial.monomial_finsupp_sum_index s (fun i n => n • i.1) (1 : R)).symm
+  rw [h_eval, h_eval]
+  congr 1
+  have hab :
+      (Finsupp.single a 1 + Finsupp.single b 1).sum (fun i n => n • i.1) =
+        a.1 + b.1 := by
+    rw [Finsupp.sum_add_index' (fun _ => by simp)
+      (fun _ m n => by rw [add_smul])]
+    simp
+  have hce :
+      (Finsupp.single c 1 + Finsupp.single e 1).sum (fun i n => n • i.1) =
+        c.1 + e.1 := by
+    rw [Finsupp.sum_add_index' (fun _ => by simp)
+      (fun _ m n => by rw [add_smul])]
+    simp
+  rw [hab, hce, h]
 
 theorem chapter02_veronese_image_ideal_le_kernel
     (R : Type u) [CommRing R] (r d : ℕ) :
     chapter02VeroneseImageIdeal R r d ≤
       RingHom.ker (chapter02VeroneseMonomialRingHom R r d).toRingHom := by
-  sorry
+  apply Ideal.span_le.2
+  rintro F ⟨a, b, c, e, h, rfl⟩
+  exact chapter02_veronese_quadratic_relation_maps_to_zero R r d a b c e h
 
 /- LOCAL_DEPENDENCY_GUESS: the quadratic toric relations generate the full Veronese kernel. -/
 theorem chapter02_veronese_image_ideal_eq_kernel

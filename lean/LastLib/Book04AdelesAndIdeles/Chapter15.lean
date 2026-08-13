@@ -4,3 +4,5 @@ import LastLib.Book04AdelesAndIdeles.Chapter15.Section03CompactOpenLevel
 import LastLib.Book04AdelesAndIdeles.Chapter15.Section04DoubleQuotientsAndLattices
 import LastLib.Book04AdelesAndIdeles.Chapter15.Section05AutomorphicFunctions
 import LastLib.Book04AdelesAndIdeles.Chapter15.Section06RankOneMeetingPoint
+
+/-! Chapter 15 is assembled from its chronological section leaves. -/

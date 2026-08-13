@@ -85,11 +85,10 @@ theorem chapter06_contour_identity
   sorry
 
 /-
-SOURCE_ISSUE (books/007-analytic-foundations-for-odlyzko-poitou-bounds.md:§6.2):
-the phrase “by a fixed inverse-polynomial distance” does not specify the
-polynomial exponent or its positive constant.  The minimal correction is the
-explicit `separationExponent`/`separationConstant` data in
-`Chapter06ContourHeightSequence`.
+SOURCE_NOTE (books/007-analytic-foundations-for-odlyzko-poitou-bounds.md:§6.2):
+the source constructs the inverse-polynomial exponent and positive constant
+in the displayed height-selection argument.  The Lean interface records that
+data explicitly in `Chapter06ContourHeightSequence`.
 -/
 theorem chapter06_contour_height_sequence_available
     (K : Type*) [Field K] [NumberField K]

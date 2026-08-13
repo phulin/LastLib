@@ -34,8 +34,17 @@ def chapter09HaarModulus
     (K : Type*) [Field K] [NumberField K] :
     Chapter09Idele K →* ℝ≥0 where
   toFun x := (chapter09IdeleModuleHom K x : ℝ≥0)
-  map_one' := by sorry
-  map_mul' x y := by sorry
+  map_one' := by
+    change ((chapter09IdeleModuleHom K (1 : Chapter09Idele K) :
+      Chapter09PositiveReal) : ℝ≥0) = 1
+    rw [(chapter09IdeleModuleHom K).map_one]
+    rfl
+  map_mul' x y := by
+    change ((chapter09IdeleModuleHom K (x * y) : Chapter09PositiveReal) : ℝ≥0) =
+      (chapter09IdeleModuleHom K x : ℝ≥0) *
+        (chapter09IdeleModuleHom K y : ℝ≥0)
+    rw [(chapter09IdeleModuleHom K).map_mul]
+    rfl
 
 @[simp]
 theorem chapter09HaarModulus_apply

@@ -81,7 +81,10 @@ theorem chapter02_sections_generate_is_stable_under_base_change
     {I : Type u} (s : I → Chapter02LineBundleSections L)
     (h : Chapter02SectionsGenerate L s) :
     Chapter02PullbackEvaluationIsEpi g L s := by
-  sorry
+  exact @Functor.map_epi _ _ _ _ (Scheme.Modules.pullback g)
+    (Functor.preservesEpimorphisms_of_adjunction
+      (Scheme.Modules.pullbackPushforwardAdjunction g))
+    _ _ (chapter02EvaluationMap L s) h
 
 /-!
 The projective-bundle theorem turns a generating tuple into a unique map to projective space.

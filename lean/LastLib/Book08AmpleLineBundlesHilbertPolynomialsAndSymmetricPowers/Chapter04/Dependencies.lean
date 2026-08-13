@@ -73,11 +73,6 @@ abbrev Chapter04PullbackSectionData
     {X Y : Scheme.{u}} (g : Y ⟶ X) (M : X.Modules) :=
   Chapter02PullbackSectionData g M
 
-noncomputable def chapter04PullbackSectionData
-    {X Y : Scheme.{u}} (g : Y ⟶ X) (M : X.Modules) :
-  Chapter04PullbackSectionData g M :=
-  chapter02PullbackSectionData g M
-
 /-- The finite locally free rank-one condition for a line bundle. -/
 def chapter04IsInvertible {X : Scheme.{u}} (M : X.Modules) : Prop :=
     SheafOfModules.IsLocallyFree M ∧ SheafOfModules.IsFiniteType M ∧
@@ -216,6 +211,39 @@ noncomputable def chapter04PullbackIdentityIso
     (Scheme.Modules.pullback (𝟙 X)).obj M ≅ M :=
   (Scheme.Modules.pullbackId X).app M
 
+/-!
+The section maps must be chosen coherently.  Choosing a
+`Chapter02PullbackSectionData` independently for each morphism does not imply the
+identity and composition laws below, so the selected data is obtained from one
+bundled system carrying those laws.
+-/
+structure Chapter04PullbackSectionDataSystem where
+  data : ∀ {X Y : Scheme.{u}} (g : Y ⟶ X) (M : X.Modules),
+    Chapter04PullbackSectionData g M
+  map_id : ∀ {X : Scheme.{u}} (M : X.Modules) (s : M.val.sections),
+    SheafOfModules.sectionsMap (chapter04PullbackIdentityIso M).hom
+        ((data (𝟙 X) M).map s) = s
+  map_comp :
+    ∀ {X Y Z : Scheme.{u}} (g : Y ⟶ X) (h : Z ⟶ Y)
+      (M : X.Modules) (s : M.val.sections),
+      (data (h ≫ g) M).map s =
+        SheafOfModules.sectionsMap (chapter04PullbackCompositionIso h g M).inv
+          ((data h ((Scheme.Modules.pullback g).obj M)).map
+            ((data g M).map s))
+
+theorem chapter04_pullback_section_data_system_exists :
+    Nonempty Chapter04PullbackSectionDataSystem := by
+  sorry
+
+noncomputable def chapter04CanonicalPullbackSectionDataSystem :
+    Chapter04PullbackSectionDataSystem :=
+  Classical.choice chapter04_pullback_section_data_system_exists
+
+noncomputable def chapter04PullbackSectionData
+    {X Y : Scheme.{u}} (g : Y ⟶ X) (M : X.Modules) :
+  Chapter04PullbackSectionData g M :=
+  chapter04CanonicalPullbackSectionDataSystem.data g M
+
 /-- Functoriality laws for the canonical pullback of global sections. -/
 structure Chapter04PullbackSectionFunctoriality
     {X : Scheme.{u}} (M : X.Modules) where
@@ -232,12 +260,16 @@ structure Chapter04PullbackSectionFunctoriality
 theorem chapter04_pullback_section_functoriality_exists
     {X : Scheme.{u}} (M : X.Modules) :
     Nonempty (Chapter04PullbackSectionFunctoriality M) := by
-  sorry
+  exact ⟨{
+    map_id := chapter04CanonicalPullbackSectionDataSystem.map_id M
+    map_comp := by
+      intro Y Z g h s
+      exact chapter04CanonicalPullbackSectionDataSystem.map_comp g h M s }⟩
 
 theorem chapter04PullbackSectionFunctoriality
     {X : Scheme.{u}} (M : X.Modules) :
     Chapter04PullbackSectionFunctoriality M := by
-  sorry
+  exact Classical.choice (chapter04_pullback_section_functoriality_exists M)
 
 /-! A field homomorphism gives the canonical scheme-theoretic field extension
 and its pullback.  The preceding functoriality laws apply to these maps and to

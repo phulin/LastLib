@@ -79,9 +79,16 @@ theorem chapter11_mod_five_quadratic_character_values :
         chapter11QuadraticCharacterModFive a = (-1 : SignTypeˣ)) := by
   sorry
 
+def chapter11SignToComplexHom : SignTypeˣ →* ℂˣ :=
+  Units.map (SignType.castHom : SignType →*₀ ℂ).toMonoidHom
+
 theorem chapter11_mod_five_quadratic_character_has_finite_conductor :
-    ∃ χ : Chapter11FiniteOrderIdeleClassCharacter ℚ,
-      chapter11Conductor χ =
+    ∃ e : chapter11RationalRayClassGroup 5 (Nat.zero_lt_succ 4) .omitted ≃* (ZMod 5)ˣ,
+      chapter11Conductor
+          (chapter11CharacterOfRayClassHom
+            (chapter11RationalModulus 5 (Nat.zero_lt_succ 4) .omitted)
+            (chapter11SignToComplexHom.comp
+              (chapter11QuadraticCharacterModFive.comp e))) =
         chapter11RationalModulus 5 (Nat.zero_lt_succ 4) .omitted := by
   sorry
 
@@ -142,10 +149,10 @@ theorem chapter11_ray_tower_step_kernel_is_locally_controlled
     (hstep : chapter11RayModulusSingleFiniteStep m n v)
     (hm : 0 < m.finiteExponent v) :
     ∃ f :
-        (chapter11RayClassProjectionOfLE hstep.1).ker →*
-          chapter11MultiplicativeLocalLayer
-            (A := v.adicCompletionIntegers K) (m.finiteExponent v),
-      Function.Injective f := by
+        chapter11MultiplicativeLocalLayer
+            (A := v.adicCompletionIntegers K) (m.finiteExponent v) →*
+          (chapter11RayClassProjectionOfLE hstep.1).ker,
+      Function.Surjective f := by
   sorry
 
 theorem chapter11_local_principal_unit_layer_is_the_additive_residue_field

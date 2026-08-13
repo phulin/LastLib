@@ -79,8 +79,7 @@ theorem chapter04_ample_eventually_veryAmple_power
 /-- Over a quasi-compact base, an ample line bundle on a quasi-compact finite-type family has a very ample power. -/
 theorem chapter04_ample_has_veryAmple_power
     {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact (𝟙 S)] [QuasiCompact f]
-    [LocallyOfFiniteType f]
-    [QuasiSeparated f]
+    [LocallyOfFiniteType f] [QuasiSeparated f]
     (L : Chapter04LineBundle X) (hL : chapter04Ample f L) :
     ∃ d : ℕ, 0 < d ∧ chapter04VeryAmple f (chapter04LineBundleTensorPower L d) := by
   sorry

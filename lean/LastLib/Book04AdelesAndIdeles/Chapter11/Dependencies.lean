@@ -46,6 +46,67 @@ abbrev Chapter11IdeleGroup (K : Type*) [Field K] [NumberField K] :=
 abbrev Chapter11FiniteIdeleGroup (K : Type*) [Field K] [NumberField K] :=
   (Chapter11FiniteAdeleRing K)ˣ
 
+/-! The unit group of a restricted product needs its graph topology: the
+finite tail must control both a unit and its inverse.  The ambient unit
+subspace topology on the finite adele ring is too coarse for this purpose.
+Chapter 8 already packages the required finite graph topology, so reuse it
+here rather than introducing a second local model. -/
+@[instance_reducible]
+noncomputable def chapter11FiniteIdeleGraphTopology
+    (K : Type*) [Field K] [NumberField K] :
+    TopologicalSpace (Chapter11FiniteIdeleGroup K) :=
+  LastLib.Book04AdelesAndIdeles.Chapter08.chapter08FiniteIdeleGraphTopology K
+
+noncomputable instance chapter11FiniteIdeleTopologicalSpace
+    (K : Type*) [Field K] [NumberField K] :
+  TopologicalSpace (Chapter11FiniteIdeleGroup K) :=
+  chapter11FiniteIdeleGraphTopology K
+
+noncomputable instance chapter11AdicCompletionUnitOpenFact
+    (K : Type*) [Field K] [NumberField K] :
+    Fact (∀ v : IsDedekindDomain.HeightOneSpectrum (𝓞 K),
+      IsOpen ((Submonoid.ofClass (v.adicCompletionIntegers K)).units :
+        Set ((v.adicCompletion K)ˣ))) := ⟨by
+  intro v
+  exact Submonoid.isOpen_units
+    (Valued.isOpen_valuationSubring (v.adicCompletion K))⟩
+
+noncomputable instance chapter11FiniteIdeleTopologicalGroup
+    (K : Type*) [Field K] [NumberField K] :
+    @IsTopologicalGroup (Chapter11FiniteIdeleGroup K)
+      (chapter11FiniteIdeleGraphTopology K) Units.instGroup := by
+  exact topologicalGroup_induced
+    (RestrictedProduct.unitsEquiv
+      (𝓕 := Filter.cofinite)
+      (B := fun v : IsDedekindDomain.HeightOneSpectrum (𝓞 K) =>
+        v.adicCompletionIntegers K)
+      (fun v : IsDedekindDomain.HeightOneSpectrum (𝓞 K) =>
+        v.adicCompletion K))
+
+/-! Transport the product of the archimedean unit topology and the finite
+graph topology across the canonical decomposition of a full idele. -/
+@[instance_reducible]
+noncomputable def chapter11IdeleGraphTopology
+    (K : Type*) [Field K] [NumberField K] :
+    TopologicalSpace (Chapter11IdeleGroup K) := by
+  letI : TopologicalSpace (Chapter11FiniteIdeleGroup K) :=
+    chapter11FiniteIdeleGraphTopology K
+  exact TopologicalSpace.induced
+    (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K)
+    inferInstance
+
+noncomputable instance chapter11IdeleTopologicalSpace
+    (K : Type*) [Field K] [NumberField K] :
+    TopologicalSpace (Chapter11IdeleGroup K) :=
+  chapter11IdeleGraphTopology K
+
+noncomputable instance chapter11IdeleTopologicalGroup
+    (K : Type*) [Field K] [NumberField K] :
+    @IsTopologicalGroup (Chapter11IdeleGroup K)
+      (chapter11IdeleGraphTopology K) Units.instGroup := by
+  exact topologicalGroup_induced
+    (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K)
+
 abbrev Chapter11OrdinaryClassGroup (K : Type*) [Field K] [NumberField K] :=
   ClassGroup (𝓞 K)
 

@@ -1,4 +1,5 @@
 import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter04.Section03ContinuationAndFunctionalEquation
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter03.Section02EulerProducts
 
 namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter04
 
@@ -47,7 +48,18 @@ theorem chapter04_xi_conjugation_symmetry
 theorem chapter04_xi_not_identically_zero
     (K : Type*) [Field K] [NumberField K] :
     ¬(∀ s : ℂ, chapter04Xi K s = 0) := by
-  sorry
+  intro hzero
+  have hxi2 : chapter04Xi K (2 : ℂ) ≠ 0 := by
+    rw [chapter04Xi,
+      chapter04_completed_dedekind_zeta_agrees_on_euler_half_plane K (by norm_num)]
+    simp only [chapter04EulerCompletedDedekindZeta, chapter04PoleFactor,
+      chapter04ArchimedeanFactor, chapter04GammaReal, chapter04GammaComplex]
+    norm_num [Complex.cpow_eq_zero_iff, chapter03_dedekind_zeta_ne_zero]
+    exact ⟨(chapter04_absolute_discriminant_pos K).ne',
+      chapter03_dedekind_zeta_ne_zero K (by
+        change (1 : ℝ) < 2
+        norm_num)⟩
+  exact hxi2 (hzero 2)
 
 def chapter04NontrivialZero
     (K : Type*) [Field K] [NumberField K] (ρ : ℂ) : Prop :=
@@ -97,7 +109,51 @@ theorem chapter04_nontrivial_zero_in_critical_strip
     (K : Type*) [Field K] [NumberField K] {ρ : ℂ}
     (hρ : chapter04NontrivialZero K ρ) :
     chapter04CriticalStrip ρ := by
-  sorry
+  have hxi_ne : ∀ z : ℂ, 1 < z.re → chapter04Xi K z ≠ 0 := by
+    intro z hz
+    have hz0 : z ≠ 0 := by
+      intro hz0
+      rw [hz0] at hz
+      norm_num at hz
+    have hz1 : z - 1 ≠ 0 := by
+      intro hz1
+      have : z = 1 := sub_eq_zero.mp hz1
+      rw [this] at hz
+      norm_num at hz
+    have hdisc : (chapter04AbsoluteDiscriminant K : ℂ) ≠ 0 :=
+      Complex.ofReal_ne_zero.mpr (chapter04_absolute_discriminant_pos K).ne'
+    have hpi : (Real.pi : ℂ) ≠ 0 :=
+      Complex.ofReal_ne_zero.mpr Real.pi_ne_zero
+    have htwo_pi : (2 : ℂ) * (Real.pi : ℂ) ≠ 0 :=
+      mul_ne_zero (by norm_num) hpi
+    have hhalf : 0 < (z / 2).re := by
+      norm_num [Complex.div_re]
+      linarith
+    have hgamma_half : Complex.Gamma (z / 2) ≠ 0 :=
+      Complex.Gamma_ne_zero_of_re_pos hhalf
+    have hgamma : Complex.Gamma z ≠ 0 :=
+      Complex.Gamma_ne_zero_of_re_pos (lt_trans zero_lt_one hz)
+    have hzeta : chapter03DedekindZeta K z ≠ 0 :=
+      chapter03_dedekind_zeta_ne_zero K (by
+        change (1 : ℝ) < z.re
+        exact hz)
+    rw [chapter04Xi,
+      chapter04_completed_dedekind_zeta_agrees_on_euler_half_plane K hz]
+    simp only [chapter04PoleFactor, chapter04EulerCompletedDedekindZeta,
+      chapter04ArchimedeanFactor, chapter04GammaReal, chapter04GammaComplex]
+    simp [Complex.cpow_eq_zero_iff, hdisc, hpi, htwo_pi, hz0, hz1,
+      hgamma_half, hgamma, hzeta]
+  rcases lt_or_ge ρ.re 0 with hleft | hnonneg
+  · have hpartner_re : 1 < (1 - ρ).re := by
+      norm_num [Complex.sub_re]
+      linarith
+    have hpartner : chapter04Xi K (1 - ρ) = 0 := by
+      rw [← chapter04_xi_functional_equation K ρ]
+      exact hρ
+    exact (hxi_ne (1 - ρ) hpartner_re) hpartner |>.elim
+  · rcases lt_or_ge 1 ρ.re with hright | hle
+    · exact (hxi_ne ρ hright hρ) |>.elim
+    · exact ⟨hnonneg, hle⟩
 
 /-- The functional-equation/conjugation partner used by later zero sums. -/
 def chapter04ZeroPartner (ρ : ℂ) : ℂ :=
@@ -209,7 +265,53 @@ theorem chapter04_residues_at_zero_and_one_are_opposite
     (K : Type*) [Field K] [NumberField K] :
     chapter04ResidueAt (chapter04CompletedDedekindZeta K) 0 =
       -chapter04ResidueAt (chapter04CompletedDedekindZeta K) 1 := by
-  sorry
+  let f : ℂ → ℂ := chapter04CompletedDedekindZeta K
+  let g : ℂ → ℂ := fun z => 1 - z
+  have hf : Meromorphic f := by
+    exact chapter04_completed_dedekind_zeta_meromorphic K
+  have horder : meromorphicOrderAt f 1 = (-1 : ℤ) := by
+    exact (chapter04_completed_dedekind_zeta_simple_poles K).2.1
+  have hcomp : f ∘ g = f := by
+    funext z
+    exact (chapter04_completed_dedekind_zeta_functional_equation K z).symm
+  have hg : AnalyticAt ℂ g 0 := by
+    fun_prop
+  have hg_nc : ¬EventuallyConst g (nhds (0 : ℂ)) := by
+    simp only [eventuallyConst_iff_analyticOrderAt_sub_eq_top]
+    have hneg : analyticOrderAt (fun z : ℂ => -z) 0 = (1 : ℕ∞) := by
+      apply (by fun_prop : AnalyticAt ℂ (fun z : ℂ => -z) 0).analyticOrderAt_eq_natCast.mpr
+      refine ⟨fun _ => (-1 : ℂ), by fun_prop, by norm_num, ?_⟩
+      filter_upwards [] with z
+      simp
+    rw [show (g · - g 0) = (fun z : ℂ => -z) by
+      funext z
+      simp [g], hneg]
+    exact ENat.one_ne_top
+  have hfactor :
+      meromorphicTrailingCoeffAt (g · - g 0) (0 : ℂ) = (-1 : ℂ) := by
+    have hfun : (g · - g 0) = -(fun z : ℂ => z) := by
+      funext z
+      simp [g]
+    rw [hfun, meromorphicTrailingCoeffAt_neg]
+    have hid : meromorphicTrailingCoeffAt (fun z : ℂ => z) (0 : ℂ) = (1 : ℂ) := by
+      simpa using
+        (meromorphicTrailingCoeffAt_id_sub_const (x := (0 : ℂ)) (y := (0 : ℂ)))
+    rw [hid]
+  have hcomp_coeff :=
+    MeromorphicAt.meromorphicTrailingCoeffAt_comp
+      (f := f) (x := (0 : ℂ)) (g := g)
+      (by simpa [g] using hf 1) hg hg_nc
+  change meromorphicTrailingCoeffAt f 0 =
+    -meromorphicTrailingCoeffAt f 1
+  calc
+    meromorphicTrailingCoeffAt f 0 =
+        meromorphicTrailingCoeffAt (f ∘ g) 0 := by rw [hcomp]
+    _ = meromorphicTrailingCoeffAt (g · - g 0) 0 ^
+          (meromorphicOrderAt f (g 0)).untop₀ •
+          meromorphicTrailingCoeffAt f (g 0) := hcomp_coeff
+    _ = -meromorphicTrailingCoeffAt f 1 := by
+      rw [hfactor, show g 0 = 1 by simp [g], horder]
+      norm_num
 
 theorem chapter04_residue_at_one_is_positive_real
     (K : Type*) [Field K] [NumberField K] :

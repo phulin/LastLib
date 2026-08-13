@@ -29,6 +29,7 @@ structure Chapter15AutomorphicConditions (n : ℕ)
   finiteness : Prop
   finiteness_holds : finiteness
   cuspidality : Prop
+  cuspidality_holds : cuspidality
 
 /-- An adelic automorphic function at a finite level, represented on the ambient group. -/
 structure Chapter15AutomorphicFunction (n : ℕ)

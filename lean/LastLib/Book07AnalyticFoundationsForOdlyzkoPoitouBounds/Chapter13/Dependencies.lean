@@ -19,7 +19,9 @@ universe u
 
 open MeasureTheory
 open NumberField
-open scoped BigOperators NumberField
+open scoped BigOperators NumberField Topology
+open LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01
+open LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter09
 
 /-!
 ## Interfaces inherited from the analytic chapters
@@ -52,19 +54,26 @@ noncomputable abbrev chapter13AbsoluteDiscriminant
 
 theorem chapter13_degree_pos
     (K : Type*) [Field K] [NumberField K] : 0 < chapter13Degree K := by
-  sorry
+  exact
+    LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01.chapter01Degree_pos K
 
 theorem chapter13_realProportion_nonneg
     (K : Type*) [Field K] [NumberField K] : 0 ≤ chapter13RealProportion K := by
-  sorry
+  exact
+    LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01.chapter01RealProportion_nonneg K
 
 theorem chapter13_realProportion_le_one
     (K : Type*) [Field K] [NumberField K] : chapter13RealProportion K ≤ 1 := by
-  sorry
+  exact
+    LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01.chapter01RealProportion_le_one K
 
 theorem chapter13_rootDiscriminant_pos
     (K : Type*) [Field K] [NumberField K] : 0 < chapter13RootDiscriminant K := by
-  sorry
+  change 0 <
+    LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01.chapter01RootDiscriminant K
+  rw [LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01.chapter01RootDiscriminant_def]
+  exact Real.rpow_pos_of_pos
+    (LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01.chapter01AbsoluteDiscriminant_pos K) _
 
 @[simp]
 theorem chapter13_rootDiscriminant_eq_canonical
@@ -195,7 +204,42 @@ theorem chapter13A_pos_of_admissible
     (F : ℝ → ℝ)
     (hF : chapter13UnconditionallyAdmissible F ∨ chapter13GRHAdmissible F) :
     0 < chapter13A F := by
-  sorry
+  have hBasic : chapter13BasicallyAdmissible F := by
+    rcases hF with hF | hF
+    · exact hF.1
+    · exact hF.1
+  rcases hBasic with ⟨hEven, hcont, hcompact, hzero, hpiecewise, hvariation, hint⟩
+  have hnonneg : ∀ x : ℝ, 0 ≤ F x := by
+    rcases hF with hF | hF
+    · rcases hF.2 with ⟨G, hGeven, hGnonneg, hGpositive, hGF⟩
+      intro x
+      rw [hGF]
+      exact div_nonneg (hGnonneg x) (Real.cosh_pos _).le
+    · exact hF.2.1
+  have hcosh : Continuous (fun x : ℝ => Real.cosh (x / 2)) :=
+    Real.continuous_cosh.comp (continuous_id.div_const 2)
+  have hfcont : Continuous (fun x : ℝ => F x * Real.cosh (x / 2)) :=
+    hcont.mul hcosh
+  have hfcompact : HasCompactSupport (fun x : ℝ => F x * Real.cosh (x / 2)) :=
+    hcompact.mul_right
+  have hfint : IntegrableOn (fun x : ℝ => F x * Real.cosh (x / 2)) (Set.Ioi 0) :=
+    (hfcont.integrable_of_hasCompactSupport hfcompact).integrableOn
+  have hnhds : {x : ℝ | 0 < F x} ∈ 𝓝 (0 : ℝ) := by
+    exact (isOpen_lt continuous_const hcont).mem_nhds (by simp [hzero])
+  obtain ⟨δ, hδ, hball⟩ := Metric.mem_nhds_iff.mp hnhds
+  have hsupport : Set.Ioo (0 : ℝ) δ ⊆
+      Function.support (fun x : ℝ => F x * Real.cosh (x / 2)) ∩ Set.Ioi 0 := by
+    intro x hx
+    have hxball : x ∈ Metric.ball (0 : ℝ) δ := by
+      rw [Metric.mem_ball, Real.dist_eq]
+      simpa [abs_of_pos hx.1] using hx.2
+    have hxF : 0 < F x := hball hxball
+    have hxf : 0 < F x * Real.cosh (x / 2) := mul_pos hxF (Real.cosh_pos _)
+    exact ⟨Function.mem_support.mpr hxf.ne', hx.1⟩
+  change 0 < ∫ x in Set.Ioi (0 : ℝ), F x * Real.cosh (x / 2)
+  apply (setIntegral_pos_iff_support_of_nonneg_ae
+    (ae_of_all _ (fun x => mul_nonneg (hnonneg x) (Real.cosh_pos _).le)) hfint).2
+  exact ((Measure.measure_Ioo_pos volume).2 hδ).trans_le (measure_mono hsupport)
 
 /- The source theorem makes one global choice: either the unconditional
    estimate is used for every field, or GRH is assumed for every field under
@@ -229,20 +273,37 @@ theorem chapter13_fieldwiseAnalyticBound_of_global
     (F : ℝ → ℝ) (hF : chapter13GlobalAnalyticBound.{u} F) :
     ∀ (K : Type u) [Field K] [NumberField K],
       chapter13FieldwiseAnalyticBound F K := by
-  sorry
+  intro K _ _
+  rcases hF with hF | ⟨hF, hGRH⟩
+  · exact Or.inl hF
+  · exact Or.inr ⟨hF, hGRH K⟩
 
 theorem chapter13_logLowerBound_mono
     (F : ℝ → ℝ) {m n : ℕ} {α β : ℝ}
     (hA : 0 < chapter13A F) (hm : 0 < m) (hmn : m ≤ n)
     (hC : chapter13C F ≤ Real.pi / 2) (hα : α ≤ β) :
     chapter13LogLowerBound F m α ≤ chapter13LogLowerBound F n β := by
-  sorry
+  unfold chapter13LogLowerBound
+  have hmR : 0 < (m : ℝ) := by exact_mod_cast hm
+  have hmnR : (m : ℝ) ≤ (n : ℝ) := by exact_mod_cast hmn
+  have hpole : 4 * chapter13A F / (n : ℝ) ≤ 4 * chapter13A F / (m : ℝ) := by
+    apply div_le_div_of_nonneg_left
+    · positivity
+    · exact hmR
+    · exact hmnR
+  have hcoeff : 0 ≤ Real.pi / 2 - chapter13C F := by linarith
+  have hsignature : α * (Real.pi / 2 - chapter13C F) ≤
+      β * (Real.pi / 2 - chapter13C F) :=
+    mul_le_mul_of_nonneg_right hα hcoeff
+  nlinarith
 
 theorem chapter13_log_rootDiscriminant_le_of_ceiling
     (K : Type*) [Field K] [NumberField K] {U : ℝ}
     (hU : 0 < U) (hceil : chapter13RootDiscriminant K ≤ U) :
     Real.log (chapter13RootDiscriminant K) ≤ Real.log U := by
-  sorry
+  exact Real.strictMonoOn_log.monotoneOn
+    (show chapter13RootDiscriminant K ∈ Set.Ioi 0 from chapter13_rootDiscriminant_pos K)
+    (show U ∈ Set.Ioi 0 from hU) hceil
 
 /- The focused Chapter 9 threshold theorem is bridged here to the canonical
    Chapter 13 degree, real-proportion, and root-discriminant interfaces.  The
@@ -259,7 +320,38 @@ theorem chapter13_threshold_principle
       (Real.eulerMascheroniConstant + α₀))
     (hα₀ : 0 ≤ α₀) (hα₀' : α₀ ≤ 1) :
     chapter13HasUnconditionalDegreeCap U α₀ := by
-  sorry
+  by_cases hαneg : α₀ < 0
+  · exact False.elim ((not_lt_of_ge hα₀) hαneg)
+  by_cases hαgt : 1 < α₀
+  · exact False.elim ((not_lt_of_ge hα₀') hαgt)
+  by_cases hUpos : 0 < U
+  · have hU9 : U <
+        chapter09UnconditionalAsymptoticConstant α₀ := by
+      simpa [chapter09UnconditionalAsymptoticConstant,
+        chapter09EulerMascheroni] using hU
+    refine ⟨chapter09Threshold U α₀, ?_⟩
+    intro K _ _ hceil hα
+    have hceil9 : chapter09RootDiscriminant K ≤ U := by
+      rw [chapter09_root_discriminant_eq_canonical K]
+      rw [chapter13_rootDiscriminant_eq_canonical K] at hceil
+      exact hceil
+    have hα9 : α₀ ≤ chapter09RealProportion K := by
+      change α₀ ≤ (NumberField.InfinitePlace.nrRealPlaces K : ℝ) /
+        (Module.finrank ℚ K : ℝ)
+      change α₀ ≤ (NumberField.InfinitePlace.nrRealPlaces K : ℝ) /
+        (Module.finrank ℚ K : ℝ) at hα
+      exact hα
+    have h9 :=
+      chapter09_threshold_principle hUpos hU9 K hceil9 hα9
+    simpa [chapter13Degree,
+      chapter09Degree] using h9
+  · refine ⟨1, ?_⟩
+    intro K _ _ hceil hα
+    exfalso
+    have hroot : 0 < chapter13RootDiscriminant K := chapter13_rootDiscriminant_pos K
+    have hceil' : chapter13RootDiscriminant K ≤ 0 :=
+      hceil.trans (le_of_not_gt hUpos)
+    linarith [hroot, hceil']
 
 /- LOCAL_DEPENDENCY_GUESS: The source's tower statement uses the threshold
    inequality without
@@ -270,7 +362,28 @@ theorem chapter13_threshold_principle_general
     {U α₀ : ℝ} (hU : U < 4 * Real.pi * Real.exp
       (Real.eulerMascheroniConstant + α₀)) :
     chapter13HasUnconditionalDegreeCap U α₀ := by
-  sorry
+  by_cases hαneg : α₀ < 0
+  · have hexp : Real.exp
+        (Real.eulerMascheroniConstant + α₀) ≤
+        Real.exp Real.eulerMascheroniConstant := by
+      apply Real.exp_le_exp.mpr
+      linarith
+    have hU0 : U < 4 * Real.pi * Real.exp Real.eulerMascheroniConstant := by
+      have hmul := mul_le_mul_of_nonneg_left hexp (by positivity : 0 ≤ 4 * Real.pi)
+      exact lt_of_lt_of_le hU (by simpa using hmul)
+    obtain ⟨N, hN⟩ := chapter13_threshold_principle (α₀ := (0 : ℝ))
+      (by simpa using hU0)
+      (by norm_num) (by norm_num)
+    refine ⟨N, ?_⟩
+    intro K _ _ hceil hα
+    apply hN K hceil
+    exact chapter13_realProportion_nonneg K
+  by_cases hαgt : 1 < α₀
+  · refine ⟨1, ?_⟩
+    intro K _ _ hceil hα
+    exfalso
+    linarith [hα, chapter13_realProportion_le_one K]
+  · exact chapter13_threshold_principle hU (le_of_not_gt hαneg) (le_of_not_gt hαgt)
 
 /-! ### Canonical relative discriminant and local-cost interfaces -/
 
@@ -305,7 +418,9 @@ theorem chapter13_rootDiscriminant_tower_formula
     [Module.Finite (𝓞 F) (𝓞 L)] :
     chapter13RootDiscriminant L =
       chapter13RootDiscriminant F * chapter13RelativeDifferentContribution F L := by
-  sorry
+  simpa [chapter13RootDiscriminant, chapter13RelativeDifferentContribution,
+    chapter13RelativeDiscriminantNorm, chapter13Degree] using
+    (chapter01_rootDiscriminant_transitivity F L)
 
 /- The earlier chapter supplies the canonical finite-place unramified
    predicate and its relative-different characterization.  Re-export the
@@ -377,13 +492,24 @@ theorem chapter13_finite_place_norm_pos
     {F : Type*} [Field F] [NumberField F]
     (v : NumberField.FinitePlace F) :
     0 < chapter13FinitePlaceNorm v := by
-  sorry
+  change 0 < (Ideal.absNorm v.maximalIdeal.asIdeal : ℝ)
+  exact_mod_cast
+    (lt_trans Nat.zero_lt_one
+      (NumberField.HeightOneSpectrum.one_lt_absNorm v.maximalIdeal))
 
 theorem chapter13_absolute_ceiling_from_local_costs_pos
     (F : Type*) [Field F] [NumberField F]
     (P : Chapter13LocalDifferentCostProfile F) :
     0 < chapter13AbsoluteCeilingFromLocalCosts F P := by
-  sorry
+  rw [chapter13_absolute_ceiling_from_local_costs_eq_product]
+  have hroot : 0 < chapter13RootDiscriminant F := chapter13_rootDiscriminant_pos F
+  have hprod : 0 < ∏ i : P.index,
+      Real.rpow (chapter13FinitePlaceNorm (P.place i))
+        (P.cost i / (chapter13Degree F : ℝ)) := by
+    apply Finset.prod_pos
+    intro i hi
+    exact Real.rpow_pos_of_pos (chapter13_finite_place_norm_pos (P.place i)) _
+  exact mul_pos hroot hprod
 
 theorem chapter13_rootDiscriminant_eq_of_relative_discriminant_ideal_eq_one
     (F L : Type*) [Field F] [NumberField F] [Field L] [NumberField L]
@@ -391,20 +517,39 @@ theorem chapter13_rootDiscriminant_eq_of_relative_discriminant_ideal_eq_one
     [Module.Finite (𝓞 F) (𝓞 L)]
     (hunramified : chapter13RelativeDiscriminantIdeal F L = 1) :
     chapter13RootDiscriminant L = chapter13RootDiscriminant F := by
-  sorry
+  have hnorm : chapter13RelativeDiscriminantNorm F L = 1 := by
+    change Ideal.absNorm (chapter13RelativeDiscriminantIdeal F L) = 1
+    rw [hunramified]
+    simp
+  rw [chapter13_rootDiscriminant_tower_formula F L]
+  simp [chapter13RelativeDifferentContribution, hnorm]
 
 theorem chapter13_absolute_degree_eq_base_degree_mul_relative_degree
     (F L : Type*) [Field F] [NumberField F] [Field L] [NumberField L]
     [Algebra F L] [Algebra ℚ F] [Algebra ℚ L] [IsScalarTower ℚ F L] :
     chapter13Degree L = chapter13Degree F * Module.finrank F L := by
-  sorry
+  let : Algebra ℚ F := DivisionRing.toRatAlgebra
+  let : Algebra ℚ L := DivisionRing.toRatAlgebra
+  let : IsScalarTower ℚ F L :=
+    IsScalarTower.of_algebraMap_eq (fun x => by simp)
+  simpa [chapter13Degree, chapter01Degree] using
+    (Module.finrank_mul_finrank ℚ F L).symm
 
 theorem chapter13_relative_degree_lt_of_absolute_degree_lt
     (F L : Type*) [Field F] [NumberField F] [Field L] [NumberField L]
     [Algebra F L] [Algebra ℚ F] [Algebra ℚ L] [IsScalarTower ℚ F L]
     {N : ℕ} (hN : chapter13Degree L < N) :
     (Module.finrank F L : ℝ) < N / (chapter13Degree F : ℝ) := by
-  sorry
+  have hdegree := chapter13_absolute_degree_eq_base_degree_mul_relative_degree F L
+  have hdegreeR : (chapter13Degree L : ℝ) =
+      (chapter13Degree F : ℝ) * (Module.finrank F L : ℝ) := by
+    exact_mod_cast hdegree
+  have hFpos : 0 < (chapter13Degree F : ℝ) := by
+    exact_mod_cast chapter13_degree_pos F
+  have hNR : (chapter13Degree L : ℝ) < (N : ℝ) := by
+    exact_mod_cast hN
+  apply (lt_div_iff₀ hFpos).2
+  nlinarith
 
 end
 

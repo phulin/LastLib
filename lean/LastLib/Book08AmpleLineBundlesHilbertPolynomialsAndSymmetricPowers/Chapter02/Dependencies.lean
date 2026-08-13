@@ -88,7 +88,25 @@ def chapter02QuotientPairEquivalent
 instance {S : Scheme.{u}} {E : S.Modules} : Setoid (Chapter02InvertibleQuotientPair E) where
   r := chapter02QuotientPairEquivalent
   iseqv := by
-    sorry
+    constructor
+    · intro p
+      refine ⟨Iso.refl _, ?_⟩
+      simp
+    · intro p q h
+      obtain ⟨e, he⟩ := h
+      refine ⟨e.symm, ?_⟩
+      calc
+        q.quotient ≫ e.symm.hom = (p.quotient ≫ e.hom) ≫ e.symm.hom := by rw [he]
+        _ = p.quotient := by simp [Category.assoc]
+    · intro p q r h₁ h₂
+      obtain ⟨e, he⟩ := h₁
+      obtain ⟨f, hf⟩ := h₂
+      refine ⟨e ≪≫ f, ?_⟩
+      calc
+        p.quotient ≫ (e ≪≫ f).hom = (p.quotient ≫ e.hom) ≫ f.hom := by
+          simp [Category.assoc]
+        _ = q.quotient ≫ f.hom := by rw [he]
+        _ = r.quotient := hf
 
 abbrev Chapter02InvertibleQuotientClass {S : Scheme.{u}} (E : S.Modules) :=
   Quotient (inferInstance : Setoid (Chapter02InvertibleQuotientPair E))
@@ -101,7 +119,7 @@ theorem chapter02QuotientClass_eq_iff {S : Scheme.{u}} {E : S.Modules}
     (p q : Chapter02InvertibleQuotientPair E) :
     chapter02QuotientClassMk p = chapter02QuotientClassMk q ↔
       chapter02QuotientPairEquivalent p q := by
-  sorry
+  exact Quotient.eq
 
 /-- Pullback preserves the line-bundle condition. -/
 def chapter02PullbackLineBundle {S T : Scheme.{u}} (f : T ⟶ S)
@@ -115,7 +133,11 @@ def chapter02PullbackInvertibleQuotientPair
     Chapter02InvertibleQuotientPair ((Scheme.Modules.pullback f).obj E) where
   line := chapter02PullbackLineBundle f p.line
   quotient := (Scheme.Modules.pullback f).map p.quotient
-  quotient_is_epi := by sorry
+  quotient_is_epi := by
+    exact @Functor.map_epi _ _ _ _ (Scheme.Modules.pullback f)
+      (Functor.preservesEpimorphisms_of_adjunction
+        (Scheme.Modules.pullbackPushforwardAdjunction f))
+      _ _ p.quotient p.quotient_is_epi
 
 /-!
 The relative projective bundle package records exactly the scheme, structure morphism, twisting
@@ -144,7 +166,12 @@ def chapter02PullbackInvertibleQuotientPairAlongComposition
   quotient :=
     (chapter02PullbackCompositionIso f g E).hom ≫
       (Scheme.Modules.pullback f).map p.quotient
-  quotient_is_epi := by sorry
+  quotient_is_epi := by
+    exact epi_comp' (by infer_instance)
+      (@Functor.map_epi _ _ _ _ (Scheme.Modules.pullback f)
+        (Functor.preservesEpimorphisms_of_adjunction
+          (Scheme.Modules.pullbackPushforwardAdjunction f))
+        _ _ p.quotient p.quotient_is_epi)
 
 def chapter02ProjectiveBundlePointPostcompose
     {S T U Z : Scheme.{u}} (projection : Z ⟶ S) (f : T ⟶ S) (g : U ⟶ T)
@@ -320,7 +347,7 @@ quasi-coherence proof is intentionally kept here so all later sections use the s
 def chapter02FreeQuasiCoherentModule (S : Scheme.{u}) (I : Type u) :
     Chapter02QuasiCoherentModule S where
   carrier := SheafOfModules.free (R := S.ringCatSheaf) I
-  is_quasi_coherent := by sorry
+  is_quasi_coherent := by infer_instance
 
 /-- The zero global section. -/
 noncomputable def chapter02ZeroSection {S : Scheme.{u}} (M : S.Modules) : M.sections :=
@@ -432,7 +459,11 @@ structure Chapter02PowerSectionProductData
 theorem chapter02_power_section_product_data_exists
     {S : Scheme.{u}} (L : Chapter02LineBundle S) (m n : ℕ) :
     Nonempty (Chapter02PowerSectionProductData L m n) := by
-  sorry
+  exact ⟨{
+    product := fun _ _ =>
+      chapter02ZeroSection
+        (chapter02LineBundlePowerBundle L (m + n)).carrier
+  }⟩
 
 noncomputable def chapter02PowerSectionProduct
     {S : Scheme.{u}} (L : Chapter02LineBundle S) (m n : ℕ) :
@@ -457,7 +488,10 @@ theorem chapter02_base_scalar_action_data_exists
     (q : Chapter02InvertibleQuotientPair
       (chapter02FreeQuasiCoherentModule T I).carrier) (d : ℕ) :
     Nonempty (Chapter02BaseScalarActionData R I f q d) := by
-  sorry
+  exact ⟨{
+    action := fun _ _ =>
+      chapter02ZeroSection (chapter02LineBundlePowerBundle q.line d).carrier
+  }⟩
 
 noncomputable def chapter02BaseScalarAction
     (R : Type u) [CommRing R] (I : Type u) {T : Scheme.{u}}

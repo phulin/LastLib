@@ -75,7 +75,26 @@ theorem chapter13_absolute_degree_cap_from_base_field_ceiling
       chapter13AbsoluteCeilingFromLocalCosts F P)
     (hα : α₀ ≤ chapter13RealProportion L) :
     chapter13Degree L < N := by
-  sorry
+  by_cases hαneg : α₀ < 0
+  · exact False.elim ((not_lt_of_ge hα₀) hαneg)
+  by_cases hαgt : 1 < α₀
+  · exact False.elim ((not_lt_of_ge hα₀') hαgt)
+  have hA : 0 < chapter13A f := by
+    rcases hanalytic with h | ⟨h, _⟩
+    · exact chapter13A_pos_of_admissible f (Or.inl h.admissible)
+    · exact chapter13A_pos_of_admissible f (Or.inr h.admissible)
+  by_contra hnot
+  have hNL : N ≤ chapter13Degree L := Nat.le_of_not_gt hnot
+  have hmono := chapter13_logLowerBound_mono f hA hN hNL hC hα
+  have hlow := chapter13_log_rootDiscriminant_lower_bound f L hanalytic
+  have hlogceil : Real.log (chapter13RootDiscriminant L) ≤
+      Real.log (chapter13AbsoluteCeilingFromLocalCosts F P) :=
+    Real.strictMonoOn_log.monotoneOn
+      (show chapter13RootDiscriminant L ∈ Set.Ioi 0 from
+        chapter13_rootDiscriminant_pos L)
+      (show chapter13AbsoluteCeilingFromLocalCosts F P ∈ Set.Ioi 0 from
+        chapter13_absolute_ceiling_from_local_costs_pos F P) hceil
+  linarith
 
 theorem chapter13_relative_degree_cap_from_absolute_degree_cap
     (F L : Type*) [Field F] [NumberField F] [Field L] [NumberField L]

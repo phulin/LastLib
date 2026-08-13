@@ -312,7 +312,8 @@ criterion.  They used to be forward declarations in Chapter 9. -/
 correspondence between valuation classes and primes over the base center. -/
 theorem chapter10_finite_extension_prime_valuation_correspondence
     {A B : Type*} {K : Type u10K} {L : Type u10L} {Γ : Type u10Γ}
-    [CommRing A] [IsDomain A] [ValuationRing A] [IsIntegrallyClosed A]
+    [CommRing A] [IsDomain A] [ValuationRing A]
+    [IsIntegrallyClosed A]
     [Field K] [Algebra A K] [IsFractionRing A K]
     [Field L] [Algebra K L] [FiniteDimensional K L]
     [Algebra A L] [IsScalarTower A K L]
@@ -343,8 +344,14 @@ theorem chapter10_henselian_valuation_ring_has_unique_prime_above
 spaces. -/
 theorem chapter10_unique_prime_iff_unique_valuation_extension
     {A B : Type*} {K : Type u10K} {L : Type u10L} {Γ : Type u10Γ}
-    [CommRing A] [IsLocalRing A] [CommRing B] [Algebra A B]
-    [Field K] [Field L] [Algebra K L]
+    [CommRing A] [IsDomain A] [ValuationRing A]
+    [IsIntegrallyClosed A]
+    [Field K] [Field L]
+    [CommRing B] [Algebra A B] [Algebra B L] [Algebra A L]
+    [IsScalarTower A B L] [IsIntegralClosure B A L]
+    [Algebra A K] [IsFractionRing A K]
+    [Algebra K L] [FiniteDimensional K L]
+    [IsScalarTower A K L]
     [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ)
     (hcor : Chapter10ExtensionPrimeCorrespondence
       (A := A) (B := B) (L := L) vK) :
@@ -383,7 +390,8 @@ theorem chapter10_unique_prime_iff_unique_valuation_extension
 branch in every finite extension. -/
 theorem chapter10_henselian_valued_field_has_unique_prime_and_extension
     {A B : Type*} {K : Type u10K} {L : Type u10L} {Γ : Type u10Γ}
-    [CommRing A] [IsDomain A] [ValuationRing A] [IsIntegrallyClosed A]
+    [CommRing A] [IsDomain A] [ValuationRing A]
+    [IsIntegrallyClosed A]
     [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
     [Algebra A K] [IsFractionRing A K]
     [CommRing B] [Algebra A B] [Algebra B L]

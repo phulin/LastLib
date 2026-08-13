@@ -1,5 +1,6 @@
 import LastLib.Book04AdelesAndIdeles.Chapter15.Section04DoubleQuotientsAndLattices
 import LastLib.Book04AdelesAndIdeles.Chapter15.Section03CompactOpenLevel
+import LastLib.Book04AdelesAndIdeles.Chapter11.Section04FinitenessOfRayClassGroups
 import Mathlib.MeasureTheory.Group.Measure
 import Mathlib.Topology.Algebra.Group.Quotient
 
@@ -138,38 +139,55 @@ instance chapter15RayClassSubgroup_normal
     (m : Chapter15FinitePlace R → ℕ) :
     (chapter15RayClassSubgroup (R := R) (K := K) Ainf S m).Normal := by sorry
 
-/- LOCAL_DEPENDENCY_GUESS: the preceding ray-class chapter identifies the
-appropriate archimedean sign subgroup and proves finiteness of the resulting
-quotient.  The local finite part is explicit here, so the interface cannot
-silently replace a ray level by an arbitrary subgroup of the class group. -/
-/-- A ray-class modulus with an explicit finite local level and archimedean level. -/
-structure Chapter15RayClassModulus where
-  exponent : Chapter15FinitePlace R → ℕ
-  support : Finset (Chapter15FinitePlace R)
-  exponent_zero_outside_support : ∀ v ∉ support, exponent v = 0
-  archimedeanLevel : Subgroup (Chapter15ArchimedeanIdeleGroup K)
-  archimedeanLevel_open :
-    IsOpen (archimedeanLevel : Set (Chapter15ArchimedeanIdeleGroup K))
-  [quotient_finite : Finite
-    (Chapter15IdeleClassGroup (R := R) (K := K) ⧸
-      chapter15RayClassSubgroup (R := R) (K := K)
-        archimedeanLevel support exponent)]
+/- The canonical ray-modulus data are supplied by the preceding ray-class
+chapter.  Keeping that type here prevents quotient finiteness from being
+smuggled in as a field of the modulus itself. -/
+structure Chapter15RayClassModulus (K : Type*) [Field K] [NumberField K] where
+  underlying : LastLib.Book04AdelesAndIdeles.Chapter11.RayModulus K
 
-abbrev Chapter15RayClassQuotient (m : Chapter15RayClassModulus (R := R) (K := K)) :=
-  Chapter15IdeleClassGroup (R := R) (K := K) ⧸
-    chapter15RayClassSubgroup (R := R) (K := K)
-      m.archimedeanLevel m.support m.exponent
+/- The explicit finite-level constructions above remain useful as local
+interfaces.  For the class-group quotient, however, use the canonical ray
+unit subgroup transported across the graph/full-idele homeomorphism. -/
+/- The transport uses the same full adele-unit model as Chapter 11, so this
+quotient is tied to the canonical ray class construction rather than to an
+arbitrary open subgroup chosen with a finiteness proof. -/
+def chapter15CanonicalIdeleRayLevel
+    (K : Type*) [Field K] [NumberField K]
+    (m : Chapter15RayClassModulus K) :
+    Subgroup (Chapter15IdeleGroup (𝓞 K) K) :=
+  (LastLib.Book04AdelesAndIdeles.Chapter11.chapter11RayUnitSubgroup m.underlying).comap
+    (chapter15_idele_group_homeomorph_full_adele_units
+      (R := 𝓞 K) (K := K)).toMulEquiv.toMonoidHom
+
+def chapter15CanonicalRayClassSubgroup
+    (K : Type*) [Field K] [NumberField K]
+    (m : Chapter15RayClassModulus K) :
+    Subgroup (Chapter15IdeleClassGroup (R := 𝓞 K) (K := K)) :=
+  Subgroup.map (chapter15IdeleClassMap (R := 𝓞 K) (K := K))
+    (chapter15CanonicalIdeleRayLevel K m)
+
+instance chapter15CanonicalRayClassSubgroup_normal
+    (K : Type*) [Field K] [NumberField K]
+    (m : Chapter15RayClassModulus K) :
+    (chapter15CanonicalRayClassSubgroup K m).Normal := by
+  sorry
+
+abbrev Chapter15RayClassQuotient
+    (K : Type*) [Field K] [NumberField K]
+    (m : Chapter15RayClassModulus K) :=
+  Chapter15IdeleClassGroup (R := 𝓞 K) (K := K) ⧸
+    chapter15CanonicalRayClassSubgroup K m
 
 instance chapter15RayClassQuotient_finite
-    (m : Chapter15RayClassModulus (R := R) (K := K)) :
-    Finite (Chapter15RayClassQuotient m) :=
-  m.quotient_finite
+    (K : Type*) [Field K] [NumberField K]
+    (m : Chapter15RayClassModulus K) :
+    Finite (Chapter15RayClassQuotient K m) := by
+  sorry
 
 theorem chapter15_ray_class_subgroup_is_open
     {L : Type*} [Field L] [NumberField L]
-    (m : Chapter15RayClassModulus (R := 𝓞 L) (K := L)) :
-    IsOpen (chapter15RayClassSubgroup (R := 𝓞 L) (K := L)
-      m.archimedeanLevel m.support m.exponent :
+    (m : Chapter15RayClassModulus L) :
+    IsOpen (chapter15CanonicalRayClassSubgroup L m :
       Set (Chapter15IdeleClassGroup (R := 𝓞 L) (K := L))) := by
   sorry
 
@@ -177,9 +195,8 @@ theorem chapter15_ray_class_subgroups_are_cofinal
     {L : Type*} [Field L] [NumberField L]
     (H : Subgroup (Chapter15IdeleClassGroup (R := 𝓞 L) (K := L)))
     (hH : IsOpen (H : Set (Chapter15IdeleClassGroup (R := 𝓞 L) (K := L)))) :
-    ∃ m : Chapter15RayClassModulus (R := 𝓞 L) (K := L),
-      chapter15RayClassSubgroup (R := 𝓞 L) (K := L)
-        m.archimedeanLevel m.support m.exponent ≤ H := by
+      ∃ m : Chapter15RayClassModulus L,
+      chapter15CanonicalRayClassSubgroup L m ≤ H := by
   sorry
 
 theorem chapter15_finite_order_Hecke_character_has_finite_range
@@ -192,11 +209,10 @@ theorem chapter15_finite_order_Hecke_character_factors_through_ray_class
     {L : Type*} [Field L] [NumberField L]
     (χ : Chapter15HeckeCharacter (R := 𝓞 L) (K := L))
     (hχ : chapter15FiniteOrderHeckeCharacter χ) :
-    ∃ m : Chapter15RayClassModulus (R := 𝓞 L) (K := L),
-      ∃ ψ : Chapter15RayClassQuotient m →* ℂˣ,
+      ∃ m : Chapter15RayClassModulus L,
+      ∃ ψ : Chapter15RayClassQuotient L m →* ℂˣ,
         χ.toMonoidHom = ψ.comp (QuotientGroup.mk'
-          (chapter15RayClassSubgroup (R := 𝓞 L) (K := L)
-            m.archimedeanLevel m.support m.exponent)) := by
+          (chapter15CanonicalRayClassSubgroup L m)) := by
   sorry
 
 /- The finite-order condition is the part directly visible in finite abelian

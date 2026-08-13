@@ -1,4 +1,5 @@
 import LastLib.Book04AdelesAndIdeles.Chapter12.Core
+import Mathlib.NumberTheory.NumberField.Discriminant.Different
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter12
 
@@ -90,6 +91,15 @@ theorem chapter12_quadratic_discriminant_support_iff
       p ∣ (chapter12QuadraticDiscriminant Q.d).natAbs := by
   rfl
 
+/- The book's discriminant-support assertion is a ramification statement, not
+   merely the unfolding of the support predicate. -/
+theorem chapter12_quadratic_discriminant_support_iff_not_isUnramifiedIn
+    {K : Type*} [Field K] [NumberField K] [Algebra ℚ K]
+    (Q : Chapter12QuadraticFieldData K) (p : Nat.Primes) :
+    chapter12QuadraticDiscriminantSupport Q.d p.1 ↔
+      ¬Algebra.IsUnramifiedIn (𝓞 K) (Ideal.span {(p.1 : ℤ)}) := by
+  sorry
+
 def chapter12QuadraticTwoAdicBehavior (d : ℤ) :
     Chapter12QuadraticLocalBehavior := by
   classical
@@ -98,9 +108,14 @@ def chapter12QuadraticTwoAdicBehavior (d : ℤ) :
 
 theorem chapter12_quadratic_two_adic_trichotomy
     (d : ℤ) :
-    chapter12QuadraticTwoAdicBehavior d = .split ∨
-      chapter12QuadraticTwoAdicBehavior d = .inert ∨
-      chapter12QuadraticTwoAdicBehavior d = .ramified := by
+    (chapter12QuadraticTwoAdicBehavior d = .ramified ∧
+        chapter12QuadraticDiscriminantSupport d 2) ∨
+      (chapter12QuadraticTwoAdicBehavior d = .split ∧
+        ¬chapter12QuadraticDiscriminantSupport d 2 ∧
+        ∃ a : ZMod 8, a ^ 2 = (d : ZMod 8)) ∨
+      (chapter12QuadraticTwoAdicBehavior d = .inert ∧
+        ¬chapter12QuadraticDiscriminantSupport d 2 ∧
+        ¬∃ a : ZMod 8, a ^ 2 = (d : ZMod 8)) := by
   sorry
 
 /-! ## The global adelic scalar-extension identity -/
@@ -126,16 +141,23 @@ theorem chapter12_quadratic_integral_base_is_padic_integer
     Nonempty (ℤ_[p] ≃A[ℤ] chapter12QuadraticIntegralBaseAt p) := by
   sorry
 
-/- LOCAL_DEPENDENCY_GUESS: `E` below is the canonical integral local factor
-   for `K` at each rational prime; the stable earlier chapter API does not yet
-   expose its chosen carrier or the finite bad-place theorem. -/
+/- The family `E` is the supplied integral local factor.  Since the stable
+   earlier-chapter API does not choose its carrier, record the properties that
+   make it the unramified quadratic factor away from a finite bad set rather
+   than allowing an arbitrary unrelated family of rings. -/
 theorem chapter12_quadratic_integral_tensor_products_are_split_or_unramified_almost_everywhere
     {K : Type*} [Field K] [NumberField K] [Algebra ℚ K]
     (Q : Chapter12QuadraticFieldData K)
     (E : Nat.Primes → Type*)
     [∀ p, CommRing (E p)]
+    [∀ p, IsDomain (E p)]
     [∀ p, Algebra (chapter12QuadraticIntegralBaseAt p) (E p)]
-    [∀ p, Algebra ℤ (E p)] :
+    [∀ p, Algebra ℤ (E p)]
+    (S₀ : Finset Nat.Primes)
+    (hE_unramified : ∀ p, p ∉ S₀ →
+      Algebra.Unramified (chapter12QuadraticIntegralBaseAt p) (E p))
+    (hE_basis : ∀ p, p ∉ S₀ →
+      Nonempty (Module.Basis (Fin 2) (chapter12QuadraticIntegralBaseAt p) (E p))) :
     ∃ S : Finset Nat.Primes, ∀ p : Nat.Primes, p ∉ S →
       chapter12IntegralTensorSplitShape (𝓞 K) (chapter12QuadraticIntegralBaseAt p) ∨
         chapter12IntegralTensorQuadraticFieldShape (𝓞 K)

@@ -226,11 +226,11 @@ theorem chapter12_rational_idele_class_group_portrait :
 
 abbrev chapter12RationalNormOneClassCarrier
     (M : Chapter12IdeleModuleData (𝓞 ℚ) ℚ) :=
-  {c : chapter12IdeleClassGroup (𝓞 ℚ) ℚ // c ∈ chapter12NormOneIdeleClasses M}
+  chapter12NormOneIdeleClassCarrier M
 
 theorem chapter12_rational_norm_one_class_group_portrait :
     Nonempty (chapter12RationalNormOneClassCarrier
-      (chapter12CanonicalIdeleModuleData ℚ) ≃
+      (chapter12CanonicalIdeleModuleData ℚ) ≃*
       chapter12CanonicalFiniteUnitIdeles ℚ) := by
   sorry
 

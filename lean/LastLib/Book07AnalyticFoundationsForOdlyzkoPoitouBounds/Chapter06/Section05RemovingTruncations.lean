@@ -70,11 +70,9 @@ theorem chapter06_symmetric_zero_value_independent_of_heights
   sorry
 
 /-
-SOURCE_ISSUE (books/007-analytic-foundations-for-odlyzko-poitou-bounds.md:§6.5):
-“smooth by even convolution with a nonnegative compactly supported approximate
-identity, then correct the value at zero by a factor tending to one” leaves
-the topology, mass normalization, concentration property, and correction
-factor unspecified.  The minimal usable interface is
+SOURCE_NOTE (books/007-analytic-foundations-for-odlyzko-poitou-bounds.md:§6.5):
+the source gives the standard convolution-and-normalization construction
+informally.  The minimal usable interface is
 `chapter06ApproximateIdentity` together with the explicit smoothed functions
 and origin-correction factor below.
 -/

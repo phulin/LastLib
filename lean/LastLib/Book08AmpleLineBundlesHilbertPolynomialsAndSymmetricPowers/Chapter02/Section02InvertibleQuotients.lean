@@ -109,7 +109,62 @@ theorem chapter02_universal_base_change_data_exists
     {S T U : Scheme.{u}} {E : Chapter02QuasiCoherentModule S}
     (P : Chapter02ProjectiveBundleData S E) (f : T ⟶ S) (g : U ⟶ T) :
     Nonempty (Chapter02UniversalBaseChangeData P f g) := by
-  sorry
+  have pullback_equiv :
+      ∀ {p q : Chapter02InvertibleQuotientPair
+          ((Scheme.Modules.pullback f).obj E.carrier)},
+        chapter02QuotientPairEquivalent p q →
+          chapter02QuotientPairEquivalent
+            (chapter02PullbackInvertibleQuotientPairAlongComposition g f p)
+            (chapter02PullbackInvertibleQuotientPairAlongComposition g f q) := by
+    intro p q hpq
+    obtain ⟨e, he⟩ := hpq
+    refine ⟨(Scheme.Modules.pullback g).mapIso e, ?_⟩
+    dsimp [chapter02PullbackInvertibleQuotientPairAlongComposition,
+      chapter02PullbackModule]
+    change
+      ((chapter02PullbackCompositionIso g f E.carrier).hom ≫
+          (Scheme.Modules.pullback g).map p.quotient) ≫
+        (Scheme.Modules.pullback g).map e.hom =
+      (chapter02PullbackCompositionIso g f E.carrier).hom ≫
+        (Scheme.Modules.pullback g).map q.quotient
+    rw [Category.assoc, ← (Scheme.Modules.pullback g).map_comp, he]
+  let underlyingClassMap :
+      Chapter02InvertibleQuotientClass ((Scheme.Modules.pullback f).obj E.carrier) →
+        Chapter02InvertibleQuotientClass ((Scheme.Modules.pullback (g ≫ f)).obj E.carrier) :=
+    Quotient.lift
+      (fun p => chapter02QuotientClassMk
+        (chapter02PullbackInvertibleQuotientPairAlongComposition g f p))
+      (by
+        intro p q hpq
+        exact Quotient.sound (pullback_equiv hpq))
+  have underlyingClassMap_mk (p : Chapter02InvertibleQuotientPair
+      ((Scheme.Modules.pullback f).obj E.carrier)) :
+      underlyingClassMap (chapter02QuotientClassMk p) =
+        chapter02QuotientClassMk
+          (chapter02PullbackInvertibleQuotientPairAlongComposition g f p) := by
+    exact Quotient.lift_mk _ _ _
+  refine ⟨{
+    pointMap := fun u => chapter02ProjectiveBundlePointPostcompose P.projection f g u
+    pointMap_eq_comp := by
+      intro u
+      rfl
+    classMap := by
+      simpa [chapter02PullbackModule] using underlyingClassMap
+    classMap_is_pullback := by
+      intro p
+      change Chapter02InvertibleQuotientPair
+        ((Scheme.Modules.pullback f).obj E.carrier) at p
+      simpa [chapter02PullbackModule] using underlyingClassMap_mk p
+    commutes := by
+      intro u
+      obtain ⟨p, hp, hnatural⟩ := P.universalProperty_natural f g u
+      change underlyingClassMap (P.universalProperty f u) =
+        P.universalProperty (g ≫ f)
+          (chapter02ProjectiveBundlePointPostcompose P.projection f g u)
+      rw [hp]
+      rw [underlyingClassMap_mk]
+      exact hnatural.symm
+  }⟩
 
 noncomputable def chapter02UniversalBaseChangeData
     {S T U : Scheme.{u}} {E : Chapter02QuasiCoherentModule S}

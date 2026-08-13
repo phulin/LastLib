@@ -169,7 +169,7 @@ theorem chapter02CoordinateRatio_mul_denominator
     {K : Type u} [CommGroupWithZero K] {I : Type u}
     (x : Chapter02CoordinateTuple K I) (i j : I) (hi : x i ≠ 0) :
     chapter02CoordinateRatio x i j * x i = x j := by
-  sorry
+  exact div_mul_cancel₀ (x j) hi
 
 /-!
 The transition statement is kept as a reusable chart-level interface: after choosing a nonzero

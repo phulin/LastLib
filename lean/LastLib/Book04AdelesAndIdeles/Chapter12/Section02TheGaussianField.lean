@@ -146,13 +146,13 @@ abbrev chapter12GaussianDiagonalUnitQuotient
 abbrev chapter12GaussianNormOneClassCarrier
     {K : Type*} [Field K] [NumberField K] [Algebra ℚ K]
     (M : Chapter12IdeleModuleData (𝓞 K) K) :=
-  {c : chapter12IdeleClassGroup (𝓞 K) K // c ∈ chapter12NormOneIdeleClasses M}
+  chapter12NormOneIdeleClassCarrier M
 
 theorem chapter12_gaussian_norm_one_class_is_diagonal_unit_quotient
     {K : Type*} [Field K] [NumberField K] [Algebra ℚ K]
     (G : Chapter12GaussianFieldData K) :
     Nonempty (chapter12GaussianNormOneClassCarrier
-      (chapter12CanonicalIdeleModuleData K) ≃
+      (chapter12CanonicalIdeleModuleData K) ≃*
       chapter12GaussianDiagonalUnitQuotient
         (chapter12GaussianCanonicalDiagonalUnitData G)) := by
   sorry

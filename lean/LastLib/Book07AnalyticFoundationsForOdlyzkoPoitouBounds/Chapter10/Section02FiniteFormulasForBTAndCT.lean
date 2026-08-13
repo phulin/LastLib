@@ -70,11 +70,6 @@ theorem chapter10_C_finite_formula
       Real.pi / 2 - (2 / T) * Real.log (Real.cosh (T / 2)) := by
   sorry
 
-/- SOURCE_ISSUE (books/007-analytic-foundations-for-odlyzko-poitou-bounds.md:§10.2, (10.6)):
-  the numerical table gives decimal enclosures but does not specify the reduced arguments,
-  retained Taylor term counts, or reserved interval widths needed to reproduce the directed
-  arithmetic.  The smallest correction is to append those finite ledger values for each row. -/
-
 theorem chapter10_B_series_tail_bound
     {T : ℝ} (hT : 0 < T) (m : ℕ) :
     0 ≤ chapter10BSeriesTail T m ∧

@@ -36,8 +36,17 @@ def chapter09ClassModule_short_exact
       left_injective := ?_
       exact := ?_
       right_surjective := ?_ }
-  · sorry
-  · sorry
+  · intro x y h
+    exact Subtype.ext h
+  · intro y
+    change chapter09IdeleClassModule K y = 1 ↔
+      y ∈ Set.range (chapter09ClassNormOneInclusion K)
+    constructor
+    · intro h
+      exact ⟨⟨y, h⟩, rfl⟩
+    · rintro ⟨z, hz⟩
+      rw [← hz]
+      exact z.property
   · exact chapter09ClassModule_surjective K
 
 /- The splitting is stated as a choice-dependent section.  At a real place its
