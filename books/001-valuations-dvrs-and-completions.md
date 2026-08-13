@@ -1228,7 +1228,7 @@ Root lifting is not merely a numerical algorithm. Combined with integral closedn
 
 Let $A$ be a DVR with fraction field $K$. If a monic $f\in A[X]$ has irreducible reduction, then $f$ is irreducible over $K$. Indeed, a factorization of a monic polynomial over $K$ into monic factors has coefficients integral over $A$: the roots of each factor are among the roots of $f$, hence integral, and the factor coefficients are elementary symmetric functions of them. Since a DVR is integrally closed, the factors lie in $A[X]$, and their reductions would factor $\overline f$. The converse fails because reduction can acquire repeated factors. More generally, the same argument works for any integrally closed local domain; henselianity becomes relevant when one asks to lift a factorization from the residue field.
 
-More importantly, henselianity controls extensions of the valuation. For a finite field extension $L/K$, primes of the integral closure above $\mathfrak m$ correspond to extensions of the valuation. Over a henselian field there is exactly one such prime, hence exactly one extension. Completeness implies henselianity and therefore yields uniqueness. The remaining chapters make this statement precise, include the hypotheses under which existence and finiteness hold, and quantify what happens when there are several primes.
+More importantly, henselianity controls extensions of the valuation. For a finite field extension $L/K$, primes of the integral closure above $\mathfrak m$ correspond to extensions of the valuation. Over a henselian field there is exactly one such prime, hence exactly one extension. Completeness implies henselianity and therefore yields uniqueness. The next chapter proves this implication before using it, includes the hypotheses under which existence and finiteness hold, and quantifies what happens when there are several primes.
 
 ## 10. Valuations in algebraic extensions
 
@@ -1319,6 +1319,72 @@ $$
 This identity is the valuative criterion for integrality in this field-theoretic form. “Integral” means “bounded at every extension of the chosen place.” If there is a unique extension, the integral closure is itself its valuation ring, provided the extension is algebraic and the contraction is fixed.
 
 For finite extensions of a discretely valued field, algebraic boundedness also admits a norm test in favorable situations. If $x$ is integral, its characteristic polynomial has coefficients in $A$, so its trace and norm lie in $A$. The converse from norm alone is false: cancellation among conjugate valuations can hide a pole. One must control all conjugates or all extended valuations.
+
+We can now prove the part of the henselian uniqueness criterion needed later in this chapter. First we isolate the bridge between valuation extensions and integral closure.
+
+**Extension-center lemma.** Let $E/K$ be algebraic and let $B$ be the integral closure of $A$ in $E$. Then
+
+$$
+W\longmapsto\mathfrak m_W\cap B
+$$
+
+is a bijection from valuation rings $W$ of $E$ extending $A$ to maximal ideals of $B$ above $\mathfrak m_A$; the inverse sends $\mathfrak P$ to $B_{\mathfrak P}$.
+
+**Proof.** Every such $W$ contains $B$, because elements of $B$ are integral over $A\subset W$ and valuation rings are integrally closed. Its maximal ideal therefore has a center $\mathfrak P=\mathfrak m_W\cap B$ above $\mathfrak m_A$, and localization gives $B_{\mathfrak P}\subseteq W$.
+
+Conversely, fix a maximal ideal $\mathfrak P$ of $B$ above $\mathfrak m_A$. The maximal-domination construction in the proof of Theorem 10.1, begun with the local domain $B_{\mathfrak P}$ in place of $A$, produces a valuation ring $W\subset E$ dominating $B_{\mathfrak P}$; write $w$ for its valuation. Its maximal ideal contracts to $\mathfrak m_A$ on $A$. Moreover $W\cap K=A$: if $c\in K\setminus A$, then $c^{-1}\in\mathfrak m_A\subset\mathfrak m_W$, so $c$ cannot also belong to $W$. Thus $W$ extends the original valuation.
+
+We prove that $W=B_{\mathfrak P}$. Take $0\ne z\in W$. Choose a nonzero relation
+
+$$
+b_0+b_1z+\cdots+b_nz^n=0
+$$
+
+by starting with an equation over $K$ and dividing all its coefficients by one having least $v$-value. Then every $b_i$ lies in $A$ and at least one is a unit. Let $j$ be the largest index for which $b_j\in A^\times$. In fact $j\geq1$: if $j=0$, then in $W$ the constant term would have value zero and every other term positive value, which is impossible in a zero sum. Set
+
+$$
+y=b_j+b_{j+1}z+\cdots+b_nz^{n-j}.
+$$
+
+We claim that both $y$ and $zy$ lie in $B$. By the valuative criterion for integrality just proved, it is enough to check boundedness in every valuation ring $U$ of $E$ extending $A$. Write $u$ for its additive valuation. If $u(z)\geq0$, then every term of $y$ after $b_j$ has positive value, by the maximal choice of $j$, while $u(b_j)=0$. Hence $u(y)=0$ and $u(zy)\geq0$. If $u(z)<0$, divide the displayed relation by $z^j$ to obtain
+
+$$
+y=-\sum_{i<j}b_i z^{i-j}.
+$$
+
+Every term on the right has value at least $(j-i)(-u(z))\geq-u(z)$. Therefore
+
+$$
+u(y)\geq-u(z)>0,
+\qquad
+u(zy)\geq0.
+$$
+
+This proves $y,zy\in B$. For the particular ring $W$, we have $w(z)\geq0$, so the first case also shows that $y$ is a unit of $W$. Consequently $y\notin\mathfrak P$, and
+
+$$
+z=\frac{zy}{y}\in B_{\mathfrak P}.
+$$
+
+Thus $W\subseteq B_{\mathfrak P}$; the reverse inclusion was built into the construction, so equality holds. Applying the same conclusion to any valuation ring centered at $\mathfrak P$ proves uniqueness, while distinct centers plainly give distinct rings. $\square$
+
+**Henselian uniqueness lemma.** If $A$ is henselian, then the valuation of $K$ has a unique extension, up to equivalence, to every algebraic extension of $K$. Equivalently, for every finite extension $E/K$, the integral closure of $A$ in $E$ is local.
+
+**Proof.** First let $E/K$ be finite, with integral closure $B$. Suppose $B$ had distinct maximal ideals $\mathfrak P$ and $\mathfrak Q$. Choose $x\in\mathfrak P\setminus\mathfrak Q$. Its minimal polynomial $q\in K[X]$ lies in $A[X]$: the element $x$ is integral, the coefficients of $q$ are integral over $A$, and $A$ is integrally closed. Moreover
+
+$$
+A[x]\cong A[X]/(q).
+$$
+
+The contractions of $\mathfrak P$ and $\mathfrak Q$ give two distinct maximal ideals of $A[x]$, so the residue algebra
+
+$$
+A[x]/\mathfrak m_AA[x]\cong k[X]/(\overline q)
+$$
+
+is not local. Therefore $\overline q$ has at least two distinct monic irreducible factors. Grouping their powers gives a coprime factorization $\overline q=\overline g_0\overline h_0$ with both factors nonconstant. Henselianity lifts it to $q=gh$ in $A[X]$, contradicting irreducibility of $q$ over $K$. Thus $B$ is local.
+
+The extension-center lemma now gives a unique extension on every finite field extension. Theorem 10.1 supplies existence on an arbitrary algebraic extension, and any two extensions agree because their restrictions agree on every finite subextension. $\square$
 
 ### 10.4 Ramification index and residue degree
 
@@ -1450,9 +1516,9 @@ $$
 |x|_L=|N_{L/K}(x)|_K^{1/[L:K]}.
 $$
 
-**Proof roadmap.** Completeness gives Hensel factor lifting, and the henselian uniqueness criterion converts that lifting property into uniqueness of the algebraic extension of the valuation. Theorem 12.2 proves this criterion from the extension-center lemma; it is independent of the norm formula used here. After uniqueness is established, automorphisms preserve the value automatically. Norm transitivity separates the separable and purely inseparable cases and yields the formula. Finite-dimensional norm equivalence then identifies the valuation topology with the complete vector-space topology constructed above.
+**Proof roadmap.** Completeness gives Hensel factor lifting, and the henselian uniqueness lemma of Section 10.3 converts that lifting property into uniqueness of the algebraic extension of the valuation. After uniqueness is established, automorphisms preserve the value automatically. Norm transitivity separates the separable and purely inseparable cases and yields the formula. Finite-dimensional norm equivalence then identifies the valuation topology with the complete vector-space topology constructed above.
 
-**Proof.** For the trivial absolute value, algebraicity forces the only extension to remain trivial. Indeed, in the monic minimal equation of a nonzero algebraic element, the nonzero base coefficients all have size $1$. If the element had size less than $1$, the constant term would be the unique largest term; if it had size greater than $1$, the leading term would be the unique largest term. Either case is impossible in a zero sum. In the nontrivial case, Section 9.4 proves that the valuation ring is henselian. The henselian uniqueness criterion, Theorem 12.2, therefore gives a unique extension ring in every algebraic field; existence also follows independently from Theorem 10.1. The forward reference is only to the algebraic equivalence between factor lifting and unique extension, not to any assertion about norms or completeness of finite-dimensional spaces.
+**Proof.** For the trivial absolute value, algebraicity forces the only extension to remain trivial. Indeed, in the monic minimal equation of a nonzero algebraic element, the nonzero base coefficients all have size $1$. If the element had size less than $1$, the constant term would be the unique largest term; if it had size greater than $1$, the leading term would be the unique largest term. Either case is impossible in a zero sum. In the nontrivial case, Section 9.4 proves that the valuation ring is henselian. The henselian uniqueness lemma of Section 10.3 therefore gives a unique extension ring in every algebraic field; existence also follows independently from Theorem 10.1.
 
 We must still show that the real scale of the given absolute value extends uniquely, rather than only up to equivalence. Put
 
@@ -1930,69 +1996,11 @@ We can now collect the exact uniqueness statements.
 
 For a complete nonarchimedean valued field these conditions hold.
 
-**Proof roadmap.** Two elementary bridges do the work. First, extensions of a valuation to an algebraic field are indexed by maximal ideals of the integral closure. Second, if the integral closure in every finite field is local, the irreducible factors of a monic polynomial can be sorted uniquely according to coprime factors of its reduction.
+**Proof roadmap.** Section 10.3 already proved that henselianity makes every finite integral closure local and every algebraic valuation extension unique. For the converse, locality sorts the irreducible factors of a monic polynomial uniquely according to coprime factors of its reduction.
 
-**Proof.** We first isolate the extension-center lemma. Let $E/K$ be algebraic and let $B$ be the integral closure of $A$ in $E$. Then
+**Proof.** The extension-center lemma of Section 10.3 shows that condition 4 is equivalent to uniqueness on every finite extension. Uniqueness on all finite subextensions is the same as uniqueness on every algebraic extension, so conditions 2 and 4 are equivalent. The henselian uniqueness lemma of that section proves $1\Rightarrow2$ (and directly $1\Rightarrow4$).
 
-$$
-W\longmapsto\mathfrak m_W\cap B
-$$
-
-is a bijection from valuation rings $W$ of $E$ extending $A$ to maximal ideals of $B$ above $\mathfrak m_A$; the inverse sends $\mathfrak P$ to $B_{\mathfrak P}$.
-
-Every such $W$ contains $B$, because elements of $B$ are integral over $A\subset W$ and valuation rings are integrally closed. Its maximal ideal therefore has a center $\mathfrak P=\mathfrak m_W\cap B$ above $\mathfrak m_A$, and localization gives $B_{\mathfrak P}\subseteq W$.
-
-Conversely, fix a maximal ideal $\mathfrak P$ of $B$ above $\mathfrak m_A$. The maximal-domination construction in the proof of Theorem 10.1, begun with the local domain $B_{\mathfrak P}$ in place of $A$, produces a valuation ring $W\subset E$ dominating $B_{\mathfrak P}$; write $w$ for its valuation. Its maximal ideal contracts to $\mathfrak m_A$ on $A$. Moreover $W\cap K=A$: if $c\in K\setminus A$, then $c^{-1}\in\mathfrak m_A\subset\mathfrak m_W$, so $c$ cannot also belong to $W$. Thus $W$ extends the original valuation.
-
-We prove that $W=B_{\mathfrak P}$. Take $0\ne z\in W$. Choose a nonzero relation
-
-$$
-b_0+b_1z+\cdots+b_nz^n=0
-$$
-
-by starting with an equation over $K$ and dividing all its coefficients by one having least $v$-value. Then every $b_i$ lies in $A$ and at least one is a unit. Let $j$ be the largest index for which $b_j\in A^\times$. In fact $j\geq1$: if $j=0$, then in $W$ the constant term would have value zero and every other term positive value, which is impossible in a zero sum. Set
-
-$$
-y=b_j+b_{j+1}z+\cdots+b_nz^{n-j}.
-$$
-
-We claim that both $y$ and $zy$ lie in $B$. By Section 10.3 it is enough to check boundedness in every valuation ring $U$ of $E$ extending $A$. Write $u$ for its additive valuation. If $u(z)\geq0$, then every term of $y$ after $b_j$ has positive value, by the maximal choice of $j$, while $u(b_j)=0$. Hence $u(y)=0$ and $u(zy)\geq0$. If $u(z)<0$, divide the displayed relation by $z^j$ to obtain
-
-$$
-y=-\sum_{i<j}b_i z^{i-j}.
-$$
-
-Every term on the right has value at least $(j-i)(-u(z))\geq-u(z)$. Therefore
-
-$$
-u(y)\geq-u(z)>0,
-\qquad
-u(zy)\geq0.
-$$
-
-This proves $y,zy\in B$. For the particular ring $W$, we have $w(z)\geq0$, so the first case also shows that $y$ is a unit of $W$. Consequently $y\notin\mathfrak P$, and
-
-$$
-z=\frac{zy}{y}\in B_{\mathfrak P}.
-$$
-
-Thus $W\subseteq B_{\mathfrak P}$; the reverse inclusion was built into the construction, so equality holds. Applying the same conclusion to any valuation ring centered at $\mathfrak P$ proves uniqueness, while distinct centers plainly give distinct rings. This proves the extension-center lemma.
-
-Assume 1 and let $E/K$ be finite, with integral closure $B$. Suppose $B$ had distinct maximal ideals $\mathfrak P$ and $\mathfrak Q$. Choose $x\in\mathfrak P\setminus\mathfrak Q$. Its minimal polynomial $q\in K[X]$ lies in $A[X]$: the element $x$ is integral, the coefficients of $q$ are integral over $A$, and $A$ is integrally closed. Moreover
-
-$$
-A[x]\cong A[X]/(q).
-$$
-
-The contractions of $\mathfrak P$ and $\mathfrak Q$ give two distinct maximal ideals of $A[x]$, so the residue algebra
-
-$$
-A[x]/\mathfrak m_AA[x]\cong k[X]/(\overline q)
-$$
-
-is not local. Therefore $\overline q$ has at least two distinct monic irreducible factors. Grouping their powers gives a coprime factorization $\overline q=\overline g_0\overline h_0$ with both factors nonconstant. Henselianity lifts it to $q=gh$ in $A[X]$, contradicting irreducibility of $q$ over $K$. Thus $B$ is local and 1 implies 4.
-
-By the extension-center lemma, 4 is equivalent to uniqueness on every finite extension. Uniqueness on all finite subextensions is the same as uniqueness on every algebraic extension, so 4 and 2 are equivalent. Condition 2 implies 3 by taking a fixed algebraic closure. Conversely, if two extensions existed on a finite field $E$, Theorem 10.1 would extend both to the fixed algebraic closure, where their restrictions to $E$ would remain distinct. Hence 3 implies 2.
+Condition 2 implies 3 by taking a fixed algebraic closure. Conversely, if two extensions existed on a finite field $E$, Theorem 10.1 would extend both to the fixed algebraic closure, where their restrictions to $E$ would remain distinct. Hence 3 implies 2.
 
 It remains to recover henselianity from 4. Let $f\in A[X]$ be monic and suppose
 
