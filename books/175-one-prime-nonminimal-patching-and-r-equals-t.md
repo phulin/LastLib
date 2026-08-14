@@ -123,9 +123,11 @@ topological support of the primary and companion type complexes on the named con
 and conductor-two deformation rings. Book 170, under its separate clean trace-order
 hypotheses, supplies the compatible Hecke-valued representation and hence the canonical
 surjections to faithful Hecke images. These two conditional facts determine the finite-level
-kernels up to nilpotents. The support hypothesis still contains $({\rm BCD}_v)$: the compatible
-completed boundary diagram, regular-sequence assertion, and relative formal smoothness stated
-in Section 2.4. They are not consequences of the other inputs in this book.
+kernels up to nilpotents. Book 174 already constructs the simultaneous marked common-boundary
+quotient diagram. The support hypothesis still contains the narrower $({\rm BCD}_v)$:
+regularity of the named lower boundary block and relative formal smoothness of the special
+relaxation, as stated in Section 2.4. Those transversality assertions are not consequences of
+the other inputs in this book.
 
 Without using an auxiliary patch, the first result proved below is
 
@@ -150,8 +152,8 @@ enhanced fixed-condition tangent--Selmer group at every characteristic-zero poin
 essential in the residual complex. At a characteristic-zero monodromy-zero point, however,
 the two line characters differ by the nonzero scalar $q_v-1$, so the flag tangent is uniquely
 determined by the cocycle rather than supplying an additional direction.
-Section 5.3 then proves that vanishing, rather than assuming it, when the coherent unpadded
-$({\rm AUX}_Q)$ system in $({\rm SUP}_v)$ is retained at every depth. The balanced enhanced
+Section 5.3 then proves that vanishing, rather than assuming it, when a coherent unpadded
+$({\rm AUX}_Q)$ system is separately retained at every depth. The balanced enhanced
 calculation gives an absolute deformation source with $q$ variables; the $q$ ordered diamond
 directions give a scalar source of the same dimension. The nonzero module is free over the
 diamond source, so the equal-variable argument injects the regular deformation source into its
@@ -331,13 +333,14 @@ $v$, kill the dual Selmer group, satisfy Book 141's split-regular detector input
 both maps, both type rows, the flag, sign, determinant, and companion pairing in every finite
 shadow; (2) the lower clean minimal problem has a nonzero patched module free over its regular
 scalar source; (3) the full same-coefficient Gram block is singular at each declared boundary
-prime; (4) the lower boundary block is transverse and the special relaxation is relatively
-formally smooth at every selected completion, with both quotient maps retained in the same
-completed diagram; and (5) the resulting local dimension equality and one-component routing
-hold there. Section 2.4 gives the exact completed-ring formulation and proves that clause (5)
-follows from clause (4). Thus the unresolved mathematical input is the compatible completed
-quotient diagram together with the regular-sequence and formal-smoothness assertions in clause
-(4), including their full scalar-block form. It is not inferred from a reciprocity surjection
+prime; (4) in Book 174's already constructed common completed quotient diagram, the lower
+boundary block is transverse and the special relaxation is relatively formally smooth at
+every selected completion; and (5) the resulting local dimension equality and one-component
+routing hold there. Section 2.4 gives the exact completed-ring formulation and proves that
+clause (5) follows from clause (4). Thus the unresolved mathematical input is the
+regular-sequence and formal-smoothness assertions in clause (4), including their full
+scalar-block form. The common quotient diagram is a proved marked-patching output, not part of
+that remainder. Transversality is not inferred from a reciprocity surjection
 or a characteristic-zero packet count. The dual group in clause (1) is the one recomputed from
 the enhanced local condition complex (4.7f''), with its exact homotopy orthogonal; it is not
 the ordinary dual Selmer group obtained by forgetting the flag.
@@ -378,15 +381,21 @@ represented rings, primary and companion complexes, new modules, actions, and pa
 zero positive diamond-algebra Tor. It gives a canonical surjection on faithful acting images,
 not injectivity of that surjection. Section 4.5 derives the missing injectivity from generic
 rigidity; it is not assumed here and is not inferred formally from module augmentation.
-In Proposition 5.2 an **unpadded system** means that at depth $N$ the set has exactly $q$, the
-common dimension in (5.6b), rather than a padded larger number, of ordered primes killing the
-recomputed enhanced dual group. If
-$({\rm AUX}_Q)$ holds for those sets at every depth, Book 174's marked finite-shadow patching,
-using the diagonal stabilization of Book 172, retains the complete quotient ideals, module
-bases, structural diamond maps, deformation actions, pairings, and exact ring/module
-augmentation sequences in one coherent subsequence. Thus coherence is a formal output of the
-marked patch, not an assumed arithmetic transition between the unrelated prime sets. Isolated
-instances of Proposition 9.1 do not by themselves supply this tower.
+In Proposition 5.2 an **unpadded system** means that at depth $N$ there is a clean auxiliary
+shadow with exactly $q$, the common dimension in (5.6b), rather than a padded larger number,
+of ordered primes killing the recomputed enhanced dual group. These shadows must satisfy
+$({\rm AUX}_Q)$, carry uniformly bounded free ranks and all of the marked action and
+augmentation diagrams used below, and exist at every depth. Once that arithmetic family is
+given, Book 174's finite-shadow patching and Book 172's diagonal stabilization retain the
+complete quotient ideals, module bases, structural diamond maps, deformation actions,
+pairings, and exact ring/module augmentation sequences in one coherent subsequence. Thus
+coherence of the finite shadows is a formal output; existence of the clean exactly-$q$ shadows
+is an additional arithmetic hypothesis, not a transition manufactured between unrelated
+prime sets. In particular, the common boundary patch used to prove $({\rm SUP}_v)$ may be
+padded. It is not automatically the unpadded system of Proposition 5.2. If one insists on a
+single system serving both purposes, one must separately require exactly $q$ common primes at
+every depth that kill every relevant dual group and retain the full boundary diagram.
+Isolated instances of Proposition 9.1 do not by themselves supply either family.
 
 On the curve-new carrier, the corrected normalized-branch filtration and primitive extreme
 residues are needed only if one also invokes their component or lowering consequences. Then
@@ -425,21 +434,26 @@ B=\widehat{(R_\infty^{\mathrm{sp},1})_{\mathfrak q}}.
 \tag{2.9}
 $$
 
-At finite level, the represented inclusions of conditions give quotient maps. The first part
-of $({\rm BCD}_v)$ requires them to survive in one compatible completed diagram
+At finite level, the represented inclusions of conditions give quotient maps. Book 174,
+(8.2d)--(8.2e), places the lower, boundary, and special problems in one marked finite-shadow
+patch and proves that the two quotient maps survive in the compatible completed diagram
 
 $$
 A\twoheadrightarrow D\twoheadleftarrow B.
 \tag{2.10}
 $$
 
-There is no asserted map from $A$ to $B$. Let $S$ be the corresponding completed regular
-scalar source for the lower problem. The lower theorem makes $A$ a regular local domain finite
-flat over $S$. The relative Cartier-switch assertion at this completion is the conjunction of
-the following two statements.
+There is no asserted map from $A$ to $B$. The diagram is a proved common-quotient statement;
+it supplies neither a reverse section nor transversality. Let $S$ be the corresponding
+completed regular scalar source for the lower problem. The lower theorem makes $A$ a regular
+local domain finite flat over $S$. The same marked quotient construction identifies the
+kernel of $A\twoheadrightarrow D$ with the named lower boundary block. The remaining relative
+Cartier-switch assertion at this completion is the conjunction of the following two
+statements.
 
-1. There is an integer $s\geq1$ and an $A$-regular sequence
-   $\mathbf u=(u_1,\ldots,u_s)$ such that
+1. The named boundary block has length $s\geq1$ and its displayed generators
+   $\mathbf u=(u_1,\ldots,u_s)$ form an $A$-regular sequence. The already proved quotient
+   identification has the form
 
    $$
    D\simeq A/(u_1,\ldots,u_s).
@@ -550,12 +564,12 @@ blocks, so it also proves the scalar-block statement. $\square$
 
 The proposition proves the local dimension equality and component routing once the two
 transversality statements are known. It does not prove those statements from the other named
-hypotheses. The available change-of-condition results give the finite-level quotient maps, and
-the general deformation theory gives a criterion for relative formal smoothness, but no cited
-result supplies the compatible completed diagram (2.10), proves that $\mathbf u$ remains
-regular in $A$, or proves that the actual relative obstruction map vanishes. Accordingly
-$({\rm BCD}_v)$, and hence every support or comparison theorem that assumes $({\rm SUP}_v)$,
-remains conditional on (2.10)--(2.12).
+hypotheses. Book 174 supplies the compatible completed quotient diagram (2.10) and the named
+quotient ideals. General deformation theory supplies a criterion for relative formal
+smoothness. No cited result proves that $\mathbf u$ remains regular in $A$ or that the actual
+relative obstruction map vanishes and a section exists. Accordingly $({\rm BCD}_v)$, and
+hence every support or comparison theorem that assumes $({\rm SUP}_v)$, remains conditional
+on the regularity assertion in (2.11) and on (2.12), not on the existence of (2.10).
 
 The theorem excludes the following cases:
 
@@ -705,7 +719,8 @@ The patched complexes have the analogous full support. This is support on every 
 component, deduced in Book 174 from the five explicit boundary and depth clauses recalled
 above. It is not a generic packet count. In the present theorem it is a conditional imported
 conclusion, because $({\rm SUP}_v)$ is not established by the residual datum alone and its
-$({\rm BCD}_v)$ clause remains exactly (2.10)--(2.12).
+$({\rm BCD}_v)$ clause remains exactly the regularity assertion in (2.11) together with
+(2.12), over the proved quotient diagram (2.10).
 
 Equation (3.10) is topological. If $I$ is the annihilator of the total cohomology, it says
 
@@ -1048,9 +1063,13 @@ condition is formally smooth of relative dimension three.  It also supplies the 
 small-extension lifting and difference-torsor data required in Book 69: lift $b,m,z$
 arbitrarily, and compare two lifts coordinatewise.  No tangent-subspace shortcut is being used.
 The reductions of $b$ and $m$ are exactly the exceptional unramified and tame Kummer
-directions mentioned in Book 174, (7.10); neither has been deleted. Integrally, an upper
-strict change of adapted vector changes $b$ by a multiple of $q_v-1$, but this is a gauge
-action on the smooth framed chart, not an additional local equation.
+directions mentioned in Book 174, (7.10); neither has been deleted. In that residual tangent
+calculation the displayed relation $(1-q_v)x=0$ is zero in $k$ because
+$q_v\equiv1\pmod\ell$. It is not an integral equation $(q_v-1)m=0$: the integral
+Frobenius eigenratio in (4.7e) is exactly $q_v$, so the tame relation holds identically for
+every $m$. Integrally, an upper strict change of adapted vector changes $b$ by a multiple of
+$q_v-1$, but this is a gauge action on the smooth framed chart, not an additional local
+equation.
 
 At the scalar residual point, trace-zero infinitesimal conjugation has dimension three.  Its
 map to the three coordinates in (4.7d) has rank one: the lower-left entry moves $z$, while a
@@ -1500,14 +1519,17 @@ output of Book 174's one-prime patching, not a new consequence of minimal $R=T$.
 ### 5.3 Balanced patched rigidity
 
 The balanced calculation used for Proposition 4.3b supplies more than coefficient flatness
-when the coherent unpadded auxiliary system is retained. It gives an absolute regular source
-with exactly as many variables as the diamond source. The equal-variable argument of Book 172 can
-therefore be run on the one-prime new module itself; it never identifies the conductor-one
-augmentation with the neutral minimal problem.
+when the separately hypothesized coherent unpadded auxiliary system is retained. It gives an
+absolute regular source with exactly as many variables as the diamond source. The
+equal-variable argument of Book 172 can therefore be run on the one-prime new module itself;
+it never identifies the conductor-one augmentation with the neutral minimal problem.
 
 **Proposition 5.2 (balanced patched one-prime $R=T$).** Assume the hypotheses of Theorem 4.2
-on the base problem and every retained auxiliary shadow, and assume $({\rm AUX}_Q)$ at every
-Taylor--Wiles depth for the unpadded sets used by $({\rm SUP}_v)$.
+on the base problem. At every Taylor--Wiles depth, assume $({\rm TYPE}_v)$ and
+$({\rm AUX}_Q)$ for the unpadded system specified in Section 2.3, including the represented
+deformation actions and auxiliary local--global compatibility retained there. This unpadded
+system need not be the potentially padded common-boundary system used to establish
+$({\rm SUP}_v)$.
 Let $\mathbb T_\infty^{\mathrm{sp},1}$ be the actual image of the patched deformation action
 on the primary new module (equivalently, after the proof, on the primary--companion sum). Then,
 for the conductor-one problem,
@@ -1540,9 +1562,9 @@ $$
 
 be the common tangent and complete-obstruction dimension from the balanced calculation in the
 proof of Proposition 4.3b; the notation refers to the enhanced mapping fiber constructed after
-(4.7f''). Clause 1 of $({\rm SUP}_v)$, together with the unpadded-system clause of
-$({\rm AUX}_Q)$, supplies a set $Q_N$ of exactly $q$ Taylor--Wiles primes at every depth
-killing the recomputed enhanced dual group, while retaining the flag and the two type rows.
+(4.7f''). The unpadded-system clause of $({\rm AUX}_Q)$ supplies a set $Q_N$ of exactly $q$
+Taylor--Wiles primes at every depth killing the recomputed enhanced dual group, while
+retaining the flag and the two type rows.
 In particular, applicability of Book 143's split detector to this exact enhanced dual group is
 part of the stated auxiliary hypothesis; it is not inferred by forgetting the flag. Each
 ordered auxiliary condition contributes one local diamond direction.
@@ -1586,8 +1608,8 @@ M_\infty^{\mathrm{sp},1}\simeq S_\infty^{\oplus r}
 \tag{5.6f}
 $$
 
-Here $r>0$ is Book 174's nonzero boundary witness under $({\rm SUP}_v)$, transported through
-the split injection. Let
+Here $r>0$ follows from exact auxiliary module augmentation: the unpadded module specializes
+to the nonzero base primary module in $({\rm AUT}_v)$, so its free rank cannot be zero. Let
 
 $$
 A_\infty=\operatorname{im}\left(
@@ -2100,7 +2122,8 @@ There are earlier blockers to an unconditional arithmetic application. For the f
 comparison itself, they are the actual localization $({\rm AUT}_v)$; the independent type
 hypotheses $({\rm TIC}_v)$ and $({\rm TIH}_{\mathscr F})$; the five boundary-and-depth clauses
 $({\rm SUP}_v)$, including the unresolved regular-sequence and formal-smoothness statements
-(2.10)--(2.12); branchwise reciprocity and exact generation in $({\rm REC}_v)$; and the
+in (2.11)--(2.12), but not the already proved common quotient diagram (2.10); branchwise
+reciprocity and exact generation in $({\rm REC}_v)$; and the
 effective ray quotient $({\rm RAY}_v)$ when the scalar family is used. The finite family
 $({\rm AIH}_{\mathscr F})$ is additionally required whenever the constant-coefficient
 level-change or normalized-residue package is invoked; it does not replace the typed
@@ -2176,11 +2199,11 @@ the finite-level kernel is exactly the nilradical, yielding the reduced comparis
 (4.4), and (5.9).
 
 Here $({\rm SUP}_v)$ still includes the conditional relative Cartier-switch input
-$({\rm BCD}_v)$. Its unproved content is exactly the compatible completed diagram, the
-regularity of the lower boundary block, and the formally smooth section of the special
-relaxation in (2.10)--(2.12). Proposition 2.1 proves the local dimension equality, component
-routing, and the full scalar-block analogue from those assertions; it does not remove them as
-hypotheses.
+$({\rm BCD}_v)$. Book 174 supplies the compatible completed quotient diagram (2.10). The
+unproved content is exactly regularity of the named lower boundary block and the formally
+smooth section of the special relaxation in (2.11)--(2.12). Proposition 2.1 proves the local
+dimension equality, component routing, and the full scalar-block analogue from those
+transversality assertions; it does not remove them as hypotheses.
 
 Every characteristic-zero deformation point kills that nilradical, so the reduced theorem
 proves the one-prime finite-flat modularity statement needed by the arithmetic application.
@@ -2190,9 +2213,9 @@ flag direction survives at the monodromy-zero boundary. Theorem 4.4 identifies v
 all exact fixed-condition adjoint tangent--Selmer groups with global reducedness and full
 $R=T$.
 
-Proposition 5.2 proves that vanishing under the coherent unpadded balanced $({\rm AUX}_Q)$
-system. Its
-regular source $P=\mathcal O[[X_1,\ldots,X_q]]$ and diamond source
+Proposition 5.2 proves that vanishing under the separately supplied coherent, unpadded,
+balanced $({\rm AUX}_Q)$ system. Its regular source
+$P=\mathcal O[[X_1,\ldots,X_q]]$ and diamond source
 $S_\infty=\mathcal O[[Z_1,\ldots,Z_q]]$ have the same dimension; the nonzero
 $S_\infty$-free primary module makes the scalar map faithful, so any nonzero action kernel in
 the domain $P$ would lower dimension. Hence the patched ring is $P$, the module is free over
@@ -2211,10 +2234,13 @@ topological support alone cannot give this conclusion.
 Accordingly, this book's bounded theorem is **CONDITIONAL**: under the exact named
 arithmetic hypotheses it proves the reduced one-prime comparisons, vertical finite flatness,
 strict character specialization, and pointwise conductor-one and conductor-two modularity.
-When the coherent unpadded $({\rm AUX}_Q)$ system is retained, it also proves full patched and
-finite
-one-prime $R=T$, every characteristic-zero enhanced tangent--Selmer vanishing, and exact
-auxiliary acting-order augmentation. The unconditional arithmetic application remains blocked
-at the separately named localization, type-incidence, type-Ihara, relative Cartier-switch
-transversality and support,
-reciprocity, and effective ray/auxiliary inputs; no finite-set theorem is asserted here.
+When the separate coherent unpadded $({\rm AUX}_Q)$ system is retained, it also proves full
+patched and finite one-prime $R=T$, every characteristic-zero enhanced tangent--Selmer
+vanishing, and exact auxiliary acting-order augmentation. Here the additional arithmetic
+input is the existence at every depth of clean exactly-$q$ shadows killing the enhanced dual
+group, with effective diamond torsors, ordered-root local compatibility, uniformly bounded
+free modules, and the marked ring/action/augmentation diagrams; diagonal compactness supplies
+coherence only after those shadows exist. The unconditional arithmetic application remains
+blocked at the separately named localization, type-incidence, type-Ihara, relative
+Cartier-switch transversality and support, reciprocity, and effective ray/auxiliary inputs; no
+finite-set theorem is asserted here.
