@@ -53,7 +53,7 @@ theorem chapter09_regular_model_is_regular_surface
     {B : Chapter09ExcellentDedekindBase S K}
     {C : Chapter09SmoothProjectiveCurve K}
     (X : Chapter09RegularProjectiveModel B C) :
-    Chapter04RegularSurface X.carrier := by
+    Chapter09RegularSurface X.carrier := by
   sorry
 
 /- The resolution input is exposed in the same form as the preceding chapter's theorem, so a

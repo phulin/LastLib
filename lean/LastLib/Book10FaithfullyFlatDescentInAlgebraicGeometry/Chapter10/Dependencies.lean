@@ -1,4 +1,5 @@
 import Mathlib.AlgebraicGeometry.Fiber
+import Mathlib.AlgebraicGeometry.Cover.QuasiCompact
 import Mathlib.AlgebraicGeometry.Morphisms.Affine
 import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
 import Mathlib.AlgebraicGeometry.Morphisms.Descent
@@ -10,6 +11,7 @@ import Mathlib.AlgebraicGeometry.Morphisms.FlatMono
 import Mathlib.AlgebraicGeometry.Morphisms.FormallyUnramified
 import Mathlib.AlgebraicGeometry.Morphisms.Immersion
 import Mathlib.AlgebraicGeometry.Morphisms.IsIso
+import Mathlib.AlgebraicGeometry.Morphisms.LocalFlatDescent
 import Mathlib.AlgebraicGeometry.Morphisms.OpenImmersion
 import Mathlib.AlgebraicGeometry.Morphisms.Proper
 import Mathlib.AlgebraicGeometry.Morphisms.QuasiCompact
@@ -52,19 +54,16 @@ structure Chapter10FpqcCover {S T : Scheme.{u}} (p : T ⟶ S) : Prop where
   flat : Flat p
   quasiCompact : QuasiCompact p
 
-attribute [instance] Chapter10FpqcCover.surjective Chapter10FpqcCover.flat
-  Chapter10FpqcCover.quasiCompact
-
 /-- A family of flat morphisms with finite control over every quasi-compact open of the base. -/
 structure Chapter10FpqcCoverFamily (S : Scheme.{u}) (I : Type v) where
   source : I → Scheme.{u}
   map : ∀ i, source i ⟶ S
   flat : ∀ i, Flat (map i)
-  jointlySurjective : ∀ s : S, ∃ i (x : source i), map i x = s
+  jointlySurjective : ∀ s : S, ∃ i, ∃ x : source i, map i x = s
   finiteControl : ∀ (U : S.Opens), IsCompact (U : Set S) →
     ∃ (F : Finset I) (V : ∀ i, (source i).Opens),
       (∀ i, i ∈ F → IsCompact (V i : Set (source i))) ∧
-        (U : Set S) ⊆ ⋃ i ∈ F, (map i).base '' (V i : Set (source i))
+      (U : Set S) = ⋃ i ∈ F, (map i).base '' (V i : Set (source i))
 
 /-- A jointly surjective fppf family. -/
 structure Chapter10FppfCoverFamily (S : Scheme.{u}) (I : Type v) where
@@ -72,7 +71,7 @@ structure Chapter10FppfCoverFamily (S : Scheme.{u}) (I : Type v) where
   map : ∀ i, source i ⟶ S
   flat : ∀ i, Flat (map i)
   locallyOfFinitePresentation : ∀ i, LocallyOfFinitePresentation (map i)
-  jointlySurjective : ∀ s : S, ∃ i (x : source i), map i x = s
+  jointlySurjective : ∀ s : S, ∃ i, ∃ x : source i, map i x = s
 
 /-- The morphism property underlying the single-morphism fpqc convention. -/
 abbrev chapter10FpqcMorphismProperty : MorphismProperty Scheme.{u} :=
@@ -84,11 +83,15 @@ def chapter10IsFpqc {S T : Scheme.{u}} (p : T ⟶ S) : Prop :=
 
 theorem chapter10FpqcCover_iff {S T : Scheme.{u}} (p : T ⟶ S) :
     Chapter10FpqcCover p ↔ chapter10IsFpqc p := by
-  sorry
+  constructor
+  · rintro ⟨hsurj, hflat, hqc⟩
+    exact ⟨hsurj, hflat, hqc⟩
+  · rintro ⟨hsurj, hflat, hqc⟩
+    exact ⟨hsurj, hflat, hqc⟩
 
 /-- A quasi-compact, surjective, flat morphism gives a singleton family cover. -/
 def chapter10SingletonFpqcFamily {S T : Scheme.{u}} (p : T ⟶ S)
-    (hp : Chapter10FpqcCover p) : Chapter10FpqcCoverFamily S PUnit.{v} where
+    (hp : Chapter10FpqcCover p) : Chapter10FpqcCoverFamily S PUnit.{v + 1} where
   source _ := T
   map _ := p
   flat _ := hp.flat
@@ -97,13 +100,73 @@ def chapter10SingletonFpqcFamily {S T : Scheme.{u}} (p : T ⟶ S)
     exact ⟨PUnit.unit, x, hx⟩
   finiteControl := by
     intro U hU
-    sorry
+    refine ⟨{PUnit.unit}, (fun _ => p ⁻¹ᵁ U), ?_, ?_⟩
+    · intro i hi
+      simpa using hp.quasiCompact.isCompact_preimage (U : Set S) U.2 hU
+    ·
+      ext s
+      constructor
+      · intro hs
+        obtain ⟨x, rfl⟩ := hp.surjective.surj s
+        refine Set.mem_iUnion.2 ⟨PUnit.unit, ?_⟩
+        refine Set.mem_iUnion.2 ⟨Finset.mem_singleton_self _, ?_⟩
+        exact ⟨x, hs, rfl⟩
+      · intro hs
+        obtain ⟨i, hs⟩ := Set.mem_iUnion.1 hs
+        obtain ⟨hi, hs⟩ := Set.mem_iUnion.1 hs
+        obtain ⟨x, hx, rfl⟩ := hs
+        exact hx
 
 /-- Every fppf covering family is fpqc in the family sense. -/
-theorem chapter10_fppfFamily_is_fpqc
+def chapter10_fppfFamily_is_fpqc
     {S : Scheme.{u}} {I : Type v} (𝒞 : Chapter10FppfCoverFamily S I) :
     Chapter10FpqcCoverFamily S I := by
-  sorry
+  classical
+  refine
+    { source := 𝒞.source
+      map := 𝒞.map
+      flat := 𝒞.flat
+      jointlySurjective := 𝒞.jointlySurjective
+      finiteControl := ?_ }
+  intro U hU
+  have hopen : ∀ i, IsOpenMap (𝒞.map i) := by
+    intro i
+    have : Flat (𝒞.map i) := 𝒞.flat i
+    have : LocallyOfFinitePresentation (𝒞.map i) := 𝒞.locallyOfFinitePresentation i
+    exact (𝒞.map i).isOpenMap
+  have hcovered : IsCompactOpenCovered (fun i => 𝒞.map i) (U : Set S) :=
+    IsCompactOpenCovered.of_isOpenMap
+      (fun i => (𝒞.map i).continuous)
+      hopen
+      (fun x hx => by
+        obtain ⟨i, y, hy⟩ := 𝒞.jointlySurjective x
+        exact ⟨i, y, hy⟩)
+      U.2 hU
+  obtain ⟨F, hF, V, hV, hUV⟩ := hcovered
+  let V' : ∀ i, (𝒞.source i).Opens := fun i =>
+    if hi : i ∈ F then V i hi else ⟨∅, isOpen_empty⟩
+  let F' : Finset I := hF.toFinset
+  refine ⟨F', V', ?_, ?_⟩
+  · intro i hi
+    have hi' : i ∈ F := by simpa [F'] using hi
+    dsimp [V']
+    rw [dif_pos hi']
+    exact hV i hi'
+  · rw [← hUV]
+    ext x
+    simp only [Set.mem_iUnion]
+    constructor
+    · rintro ⟨i, hi, y, hy, hxy⟩
+      refine ⟨i, ?_, y, ?_, hxy⟩
+      · simpa [F'] using hi
+      · dsimp [V']
+        rw [dif_pos hi]
+        exact hy
+    · rintro ⟨i, hi, y, hy, hxy⟩
+      have hi' : i ∈ F := by simpa [F'] using hi
+      refine ⟨i, hi', y, ?_, hxy⟩
+      dsimp [V'] at hy
+      simpa [dif_pos hi'] using hy
 
 /-- The affine singleton form of faithful flatness. -/
 def chapter10FaithfullyFlatRingHom {R S : Type u} [CommRing R] [CommRing S]
@@ -113,7 +176,14 @@ def chapter10FaithfullyFlatRingHom {R S : Type u} [CommRing R] [CommRing S]
 theorem chapter10_affine_fpqc_iff_faithfullyFlat
     {R S : CommRingCat.{u}} (φ : R ⟶ S) :
     chapter10IsFpqc (Spec.map φ) ↔ φ.hom.FaithfullyFlat := by
-  sorry
+  change Surjective (Spec.map φ) ∧ Flat (Spec.map φ) ∧ QuasiCompact (Spec.map φ) ↔ _
+  constructor
+  · rintro ⟨hsurj, hflat, _⟩
+    exact (flat_and_surjective_SpecMap_iff φ).1 ⟨hflat, hsurj⟩
+  · intro h
+    have h' : Flat (Spec.map φ) ∧ Surjective (Spec.map φ) :=
+      (flat_and_surjective_SpecMap_iff φ).2 h
+    exact ⟨h'.2, h'.1, inferInstance⟩
 
 /-! ## Schemes over a base and pullback notation -/
 
@@ -144,6 +214,59 @@ abbrev chapter10BaseChangeToSource {X S T : Scheme.{u}} (f : X ⟶ S) (p : T ⟶
 abbrev chapter10BaseChangeMorphism {X S T : Scheme.{u}} (f : X ⟶ S) (p : T ⟶ S) :
     chapter10BaseChange f p ⟶ T :=
   pullback.snd f p
+
+/-! The finite-control clause is exactly what is needed to reflect quasi-compactness. -/
+theorem chapter10_quasiCompact_descends_from_family_aux {S : Scheme.{u}} {I : Type v}
+    (𝒞 : Chapter10FpqcCoverFamily S I) {X : Scheme.{u}}
+    (f : X ⟶ S)
+    (hf : ∀ i, QuasiCompact (chapter10BaseChangeMorphism f (𝒞.map i))) :
+    QuasiCompact f := by
+  constructor
+  intro U hU hUc
+  let U' : S.Opens := ⟨U, hU⟩
+  obtain ⟨F, V, hV, hUV⟩ := 𝒞.finiteControl U' hUc
+  change IsCompact (f.base ⁻¹' (U' : Set S))
+  rw [hUV]
+  simp only [Set.preimage_iUnion]
+  apply F.isCompact_biUnion
+  intro i hi
+  have hpre : f.base ⁻¹' ((𝒞.map i).base '' (V i : Set (𝒞.source i))) =
+      (pullback.fst f (𝒞.map i)).base ''
+        ((pullback.snd f (𝒞.map i)).base ⁻¹' (V i : Set (𝒞.source i))) := by
+    ext x
+    constructor
+    · rintro ⟨y, hy, hxy⟩
+      obtain ⟨z, hz₁, hz₂⟩ :=
+        Scheme.Pullback.exists_preimage_pullback (f := f) (g := 𝒞.map i) x y hxy.symm
+      refine ⟨z, ?_, ?_⟩
+      · simpa [hz₂] using hy
+      · simp [hz₁]
+    · rintro ⟨z, hz, hzx⟩
+      refine ⟨pullback.snd f (𝒞.map i) z, ?_, ?_⟩
+      · exact hz
+      · have hc := congrArg (fun k : pullback f (𝒞.map i) ⟶ S => k z)
+          (pullback.condition : pullback.fst f (𝒞.map i) ≫ f =
+            pullback.snd f (𝒞.map i) ≫ 𝒞.map i)
+        calc
+          (𝒞.map i) (pullback.snd f (𝒞.map i) z) =
+              (pullback.snd f (𝒞.map i) ≫ 𝒞.map i) z := by
+                rw [Scheme.Hom.comp_apply]
+          _ = (pullback.fst f (𝒞.map i) ≫ f) z := hc.symm
+          _ = f (pullback.fst f (𝒞.map i) z) := by rw [Scheme.Hom.comp_apply]
+          _ = f x := by rw [hzx]
+  rw [hpre]
+  exact IsCompact.image
+    ((hf i).isCompact_preimage (V i : Set (𝒞.source i)) (V i).2 (hV i hi))
+    (pullback.fst f (𝒞.map i)).continuous
+
+theorem chapter10_quasiCompact_descends {X S T : Scheme.{u}} (f : X ⟶ S) (p : T ⟶ S)
+    (hp : Chapter10FpqcCover p)
+    (hf : QuasiCompact (chapter10BaseChangeMorphism f p)) :
+    QuasiCompact f := by
+  let 𝒞 : Chapter10FpqcCoverFamily S PUnit.{1} := chapter10SingletonFpqcFamily p hp
+  apply chapter10_quasiCompact_descends_from_family_aux 𝒞 f
+  rintro ⟨⟩
+  simpa [𝒞, chapter10SingletonFpqcFamily] using hf
 
 @[simp, reassoc]
 theorem chapter10BaseChange_condition {X S T : Scheme.{u}} (f : X ⟶ S) (p : T ⟶ S) :
@@ -181,17 +304,17 @@ theorem chapter10DoubleOverlap_condition {S T : Scheme.{u}} (p : T ⟶ S) :
 /-- The canonical comparison between the two iterated pullbacks of an object over `S` to the
 double overlap. -/
 noncomputable def chapter10DoubleOverlapComparison {S T : Scheme.{u}} (p : T ⟶ S)
-    (X : Chapter10SchemeOver S) :
+  (X : Chapter10SchemeOver S) :
     (Over.pullback (chapter10DoubleOverlapFirst p)).obj (chapter10BaseChangeOver p X) ≅
       (Over.pullback (chapter10DoubleOverlapSecond p)).obj (chapter10BaseChangeOver p X) := by
   exact
-    ((Over.pullbackComp (chapter10DoubleOverlapFirst p) p).hom.app
-        (chapter10OverObject X)).symm ≪≫
+    (Over.pullbackComp (chapter10DoubleOverlapFirst p) p).symm.app
+        (chapter10OverObject X) ≪≫
       eqToIso (congrArg
         (fun q : chapter10DoubleOverlap p ⟶ S =>
           (Over.pullback q).obj (chapter10OverObject X))
         (chapter10DoubleOverlap_condition p)) ≪≫
-      (Over.pullbackComp (chapter10DoubleOverlapSecond p) p).hom.app
+      (Over.pullbackComp (chapter10DoubleOverlapSecond p) p).app
         (chapter10OverObject X)
 
 /-- The two chosen overlap objects, exposed so subsequent equalities do not rely on definitional
@@ -254,12 +377,35 @@ structure Chapter10MorphismDescentData {S T : Scheme.{u}} (p : T ⟶ S)
 /-- The equalizer fork for morphisms over a faithfully flat cover. -/
 noncomputable def chapter10HomEqualizerFork {S T : Scheme.{u}}
     (p : T ⟶ S) (X Y : Chapter10SchemeOver S) :
-    Fork (fun u : chapter10BaseChangeOver p X ⟶ chapter10BaseChangeOver p Y =>
+    Fork (C := Type u)
+      (X := chapter10BaseChangeOver p X ⟶ chapter10BaseChangeOver p Y)
+      (Y := chapter10OverlapFirstObject p X ⟶ chapter10OverlapFirstObject p Y)
+      (↾fun u : chapter10BaseChangeOver p X ⟶ chapter10BaseChangeOver p Y =>
         chapter10OverlapFirstHom p u)
-      (fun u : chapter10BaseChangeOver p X ⟶ chapter10BaseChangeOver p Y =>
+      (↾fun u : chapter10BaseChangeOver p X ⟶ chapter10BaseChangeOver p Y =>
         chapter10OverlapSecondHomTransported p u) :=
-  Fork.ofι (fun f : chapter10OverHom X Y => chapter10BaseChangeOverHom p f) (by
-    sorry)
+  Fork.ofι (↾fun f : chapter10OverHom X Y => chapter10BaseChangeOverHom p f) (by
+    apply ConcreteCategory.hom_ext
+    intro f
+    change (Over.pullback (chapter10DoubleOverlapFirst p)).map ((Over.pullback p).map f) =
+      (chapter10DoubleOverlapComparison p X).hom ≫
+        (Over.pullback (chapter10DoubleOverlapSecond p)).map ((Over.pullback p).map f) ≫
+          (chapter10DoubleOverlapComparison p Y).inv
+    rw [← Functor.comp_map (Over.pullback p)
+      (Over.pullback (chapter10DoubleOverlapFirst p)) f]
+    rw [← NatIso.naturality_1 (Over.pullbackComp (chapter10DoubleOverlapFirst p) p) f]
+    simp only [chapter10DoubleOverlapComparison, Iso.trans_hom, Iso.trans_inv]
+    simp only [Iso.app_hom, Iso.app_inv]
+    simp only [Category.assoc]
+    rw [← Functor.comp_map (Over.pullback p)
+      (Over.pullback (chapter10DoubleOverlapSecond p)) f]
+    rw [NatIso.naturality_2_assoc (Over.pullbackComp (chapter10DoubleOverlapSecond p) p) f]
+    have he := NatIso.naturality_2
+      (eqToIso (congrArg (fun q : chapter10DoubleOverlap p ⟶ S =>
+        Over.pullback q) (chapter10DoubleOverlap_condition p))) f
+    simp only [Iso.symm_hom, Iso.symm_inv, cancel_epi]
+    rw [← he]
+    simp only [eqToIso.hom, eqToIso.inv, Category.assoc, eqToHom_app])
 
 /-! ## Morphism properties used by the table -/
 
@@ -310,11 +456,11 @@ def chapter10StableUnderBaseChange (P : MorphismProperty Scheme.{u}) : Prop :=
 
 /-- Locality on the source, target, or both sides of a morphism. -/
 def chapter10LocalOnSource (P : MorphismProperty Scheme.{u}) : Prop :=
-  ∀ {X Y : Scheme.{u}} (f : X ⟶ Y) (𝒰 : X.OpenCover),
+  ∀ {X Y : Scheme.{u}} (f : X ⟶ Y) (𝒰 : X.OpenCover.{u}),
     P f ↔ ∀ i, P (𝒰.f i ≫ f)
 
 def chapter10LocalOnTarget (P : MorphismProperty Scheme.{u}) : Prop :=
-  ∀ {X Y : Scheme.{u}} (f : X ⟶ Y) (𝒰 : Y.OpenCover),
+  ∀ {X Y : Scheme.{u}} (f : X ⟶ Y) (𝒰 : Y.OpenCover.{u}),
     P f ↔ ∀ i, P (chapter10BaseChangeMorphism f (𝒰.f i))
 
 def chapter10LocalOnSourceAndTarget (P : MorphismProperty Scheme.{u}) : Prop :=

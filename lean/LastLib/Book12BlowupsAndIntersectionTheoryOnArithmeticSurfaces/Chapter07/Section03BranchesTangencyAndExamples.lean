@@ -1,6 +1,10 @@
+import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+
 import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter07.Dependencies
 
 namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter07
+
+noncomputable section
 
 universe u v
 
@@ -109,12 +113,27 @@ def Chapter07IntegralCurve {A : Type u} [CommRing A]
     (C : Chapter07LocalEffectiveCartierCurve A) : Prop :=
   IsDomain (Chapter07CurveRing C)
 
+/- The second equation is restricted to the first curve before a branch order is
+computed.  A branch of the normalization therefore has source `A/(f)`, not
+the ambient surface ring `A`. -/
+def Chapter07RestrictedEquation
+    {A : Type u} [CommRing A]
+    (C D : Chapter07LocalEffectiveCartierCurve A) : Chapter07CurveRing C :=
+  Ideal.Quotient.mk (Ideal.span ({C.equation} : Set A)) D.equation
+
+def Chapter07CurveRingMap
+    {A : Type u} [CommRing A]
+    (C : Chapter07LocalEffectiveCartierCurve A) :
+    A →+* Chapter07CurveRing C :=
+  Ideal.Quotient.mk (Ideal.span ({C.equation} : Set A))
+
 /- LOCAL_DEPENDENCY_GUESS: the normalization chapters should replace this
 finite-algebra package by their canonical normalization and point-over-x API. -/
 /-- A finite normalization of the local curve ring. -/
 structure Chapter07FiniteNormalization
     {A : Type u} [CommRing A]
     (C : Chapter07LocalEffectiveCartierCurve A) where
+  integral : Chapter07IntegralCurve C
   normalization : Type v
   commRingNormalization : CommRing normalization
   algebraNormalization :
@@ -135,8 +154,21 @@ structure Chapter07FiniteNormalization
     letI : CommRing normalization := commRingNormalization
     IsIntegrallyClosed normalization
 
-/-- A branch of a finite normalization, with its DVR order and residue degree exposed. -/
-structure Chapter07NormalizationBranch {A : Type u} [CommRing A] (g : A) where
+noncomputable def Chapter07FiniteNormalizationMap
+    {A : Type u} [CommRing A]
+    {C : Chapter07LocalEffectiveCartierCurve A}
+    (N : Chapter07FiniteNormalization.{u, v} C) :
+    letI : CommRing N.normalization := N.commRingNormalization
+    Chapter07CurveRing C →+* N.normalization := by
+  letI : CommRing N.normalization := N.commRingNormalization
+  letI : Algebra (Chapter07CurveRing C) N.normalization := N.algebraNormalization
+  exact algebraMap _ _
+
+/-- A branch of a finite normalization, with its DVR order and residue extension exposed. -/
+structure Chapter07NormalizationBranch
+    {R : Type u} [CommRing R] [IsLocalRing R]
+    {A : Type u} [CommRing A]
+    (baseMap : R →+* A) (g : A) where
   valuationRing : Type v
   commRingValuationRing : CommRing valuationRing
   map :
@@ -148,31 +180,112 @@ structure Chapter07NormalizationBranch {A : Type u} [CommRing A] (g : A) where
   restriction_eq_map :
     letI : CommRing valuationRing := commRingValuationRing
     restrictedEquation = map g
+  domain :
+    letI : CommRing valuationRing := commRingValuationRing
+    IsDomain valuationRing
   dvr :
     letI : CommRing valuationRing := commRingValuationRing
+    letI : IsDomain valuationRing := domain
     IsDiscreteValuationRing valuationRing
   order : ℕ
   order_eq_addVal :
     letI : CommRing valuationRing := commRingValuationRing
+    letI : IsDomain valuationRing := domain
+    letI : IsDiscreteValuationRing valuationRing := dvr
     order = (IsDiscreteValuationRing.addVal valuationRing restrictedEquation).toNat
-  residueDegree : ℕ
+  map_from_base_local :
+    letI : CommRing valuationRing := commRingValuationRing
+    letI : IsDomain valuationRing := domain
+    letI : IsDiscreteValuationRing valuationRing := dvr
+    IsLocalHom (map.comp baseMap)
+  residueField_finite :
+    letI : CommRing valuationRing := commRingValuationRing
+    letI : IsDomain valuationRing := domain
+    letI : IsDiscreteValuationRing valuationRing := dvr
+    letI : IsLocalHom (map.comp baseMap) := map_from_base_local
+    letI : Algebra (IsLocalRing.ResidueField R)
+        (IsLocalRing.ResidueField valuationRing) :=
+      RingHom.toAlgebra (IsLocalRing.ResidueField.map (map.comp baseMap))
+    FiniteDimensional (IsLocalRing.ResidueField R)
+      (IsLocalRing.ResidueField valuationRing)
+
+noncomputable def Chapter07NormalizationBranch.residueDegree
+    {R : Type u} [CommRing R] [IsLocalRing R]
+    {A : Type u} [CommRing A] {baseMap : R →+* A} {g : A}
+    (B : Chapter07NormalizationBranch.{u, v} baseMap g) : ℕ := by
+  letI : CommRing B.valuationRing := B.commRingValuationRing
+  letI : IsDomain B.valuationRing := B.domain
+  letI : IsDiscreteValuationRing B.valuationRing := B.dvr
+  letI : IsLocalHom (B.map.comp baseMap) := B.map_from_base_local
+  letI : Algebra (IsLocalRing.ResidueField R)
+      (IsLocalRing.ResidueField B.valuationRing) :=
+    RingHom.toAlgebra (IsLocalRing.ResidueField.map (B.map.comp baseMap))
+  letI : FiniteDimensional (IsLocalRing.ResidueField R)
+      (IsLocalRing.ResidueField B.valuationRing) := B.residueField_finite
+  exact Module.finrank (IsLocalRing.ResidueField R)
+    (IsLocalRing.ResidueField B.valuationRing)
+
+theorem Chapter07NormalizationBranch.residueDegree_pos
+    {R : Type u} [CommRing R] [IsLocalRing R]
+    {A : Type u} [CommRing A] {baseMap : R →+* A} {g : A}
+    (B : Chapter07NormalizationBranch.{u, v} baseMap g) :
+    0 < B.residueDegree := by
+  sorry
+
+def Chapter07BranchLiesOverClosedPoint
+    {A : Type u} [CommRing A] [IsLocalRing A]
+    (C : Chapter07LocalEffectiveCartierCurve A)
+    {g : Chapter07CurveRing C}
+    (B : Chapter07NormalizationBranch.{u, v} (Chapter07CurveRingMap C) g) : Prop := by
+  letI : CommRing B.valuationRing := B.commRingValuationRing
+  letI : IsDomain B.valuationRing := B.domain
+  letI : IsDiscreteValuationRing B.valuationRing := B.dvr
+  exact ∀ a ∈ IsLocalRing.maximalIdeal A,
+    B.map (Chapter07CurveRingMap C a) ∈
+      IsLocalRing.maximalIdeal B.valuationRing
+
+def Chapter07BranchFactorsThroughNormalization
+    {A : Type u} [CommRing A] [IsLocalRing A]
+    (C : Chapter07LocalEffectiveCartierCurve A)
+    (N : Chapter07FiniteNormalization.{u, v} C)
+    {g : Chapter07CurveRing C}
+    (B : Chapter07NormalizationBranch.{u, v} (Chapter07CurveRingMap C) g) : Prop := by
+  exact ∃ φ :
+      letI : CommRing N.normalization := N.commRingNormalization
+      letI : CommRing B.valuationRing := B.commRingValuationRing
+      N.normalization →+* B.valuationRing,
+    letI : CommRing N.normalization := N.commRingNormalization
+    letI : CommRing B.valuationRing := B.commRingValuationRing
+    B.map = φ.comp (Chapter07FiniteNormalizationMap N)
 
 /-- The finite set of branches above the chosen point in a finite normalization. -/
 structure Chapter07NormalizationBranchFamily
     {A : Type u} [CommRing A] [IsLocalRing A]
     (C D : Chapter07LocalEffectiveCartierCurve A) where
-  normalization : Chapter07FiniteNormalization C
+  normalization : Chapter07FiniteNormalization.{u, v} C
   branches : Type v
   finiteBranches : Fintype branches
+  branch : branches →
+    Chapter07NormalizationBranch.{u, v} (Chapter07CurveRingMap C)
+      (Chapter07RestrictedEquation C D)
   abovePoint : branches → Prop
-  branch : ∀ q, Chapter07NormalizationBranch D.equation
-  branch_factors_through_curve :
-    ∀ q, (branch q).map C.equation = 0
+  abovePoint_specification :
+    ∀ q, abovePoint q ↔ Chapter07BranchLiesOverClosedPoint C (branch q)
+  branch_over_normalization :
+    ∀ q, Chapter07BranchFactorsThroughNormalization C normalization (branch q)
+  branch_injective : Function.Injective branch
+  exhaustive_abovePoint :
+    ∀ B : Chapter07NormalizationBranch.{u, v} (Chapter07CurveRingMap C)
+      (Chapter07RestrictedEquation C D),
+      Chapter07BranchFactorsThroughNormalization C normalization B →
+      Chapter07BranchLiesOverClosedPoint C B →
+      ∃ q, abovePoint q ∧ B = branch q
 
 noncomputable def Chapter07NormalizationBranchContribution
     {A : Type u} [CommRing A] [IsLocalRing A]
     {C D : Chapter07LocalEffectiveCartierCurve A}
     (F : Chapter07NormalizationBranchFamily C D) : ℕ := by
+  classical
   letI := F.finiteBranches
   exact ∑ q : F.branches,
     if F.abovePoint q then (F.branch q).order * (F.branch q).residueDegree else 0
@@ -189,4 +302,5 @@ theorem chapter07_local_intersection_eq_normalization_branch_sum
       Chapter07NormalizationBranchContribution F := by
   sorry
 
+end
 end LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter07

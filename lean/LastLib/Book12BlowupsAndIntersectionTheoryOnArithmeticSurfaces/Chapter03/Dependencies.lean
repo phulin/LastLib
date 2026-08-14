@@ -17,9 +17,9 @@ import Mathlib.RingTheory.ReesAlgebra
 import Mathlib.RingTheory.RingHom.Flat
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter01.Section01ProjectiveGeometryOverABase
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Dependencies
-import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11.Dependencies
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09.Dependencies
 import LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter07.Section04LocalityAndProjectivity
-import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter02
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter02.Section03LocalizationPowersAndIntegralClosure
 
 namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter03
 
@@ -31,12 +31,11 @@ open AlgebraicGeometry CategoryTheory CategoryTheory.Limits Set TopologicalSpace
 open Polynomial
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter01
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
-open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11
 open LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter07
 open LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter02
 open scoped AlgebraicGeometry BigOperators
 
-/-!
+/-! 
 ## Shared interfaces for Chapter 3
 
 The pinned scheme library has the absolute graded `Proj` construction, while the relative blowup
@@ -54,19 +53,46 @@ The affine equivalences identify the local section algebra with the ordinary Ree
 restriction field is intentionally retained because the pinned relative-section API does not yet
 package this comparison as a natural isomorphism of sheaf-valued graded algebras.
 -/
+/- A ring equivalence on affine sections is not enough to identify two relative
+graded algebras: it must preserve the homogeneous pieces. -/
+structure Chapter03AffineReesEquivalence
+    {X : Scheme.{u}} (I : Chapter03CoherentIdeal X)
+    (algebra : Chapter01RelativeGradedAlgebra X) (U : X.affineOpens) where
+  ringEquiv : (algebra.sections U).carrier ≃+*
+    Chapter02ReesAlgebra (Γ(X, U.1)) (I.ideal.ideal U)
+  homogeneous :
+    ∀ (n : ℕ) (x : (algebra.sections U).carrier),
+      x ∈ algebra.grading U n ↔
+        ringEquiv x ∈ (chapter02ReesGradingData (I.ideal.ideal U)).component n
+  /-- The affine comparison is over the degree-zero structure ring, not merely a ring
+  equivalence between the two total algebras. -/
+  degree_zero_compatibility :
+    ∀ r : Γ(X, U.1),
+      ringEquiv (algebra.degree_zero_map U r) =
+        algebraMap (Γ(X, U.1))
+          (Chapter02ReesAlgebra (Γ(X, U.1)) (I.ideal.ideal U)) r
+
 structure Chapter03RelativeReesData
     {X : Scheme.{u}} (I : Chapter03CoherentIdeal X) where
   algebra : Chapter01RelativeGradedAlgebra X
   degree_zero_is_structure_sheaf :
     Chapter01RelativeDegreeZeroIsStructureSheaf algebra
   generated_in_degree_one :
-    Chapter01RelativeGeneratedInDegreeOneByFiniteType algebra
+    chapter01RelativeLocallyGeneratedInDegreeOneByFiniteType algebra
   affine_rees_equivalence :
     ∀ U : X.affineOpens,
-      (algebra.sections U).carrier ≃+*
-        Chapter02ReesAlgebra (Γ(X, U.1)) (I.ideal.ideal U)
-  /- LOCAL_DEPENDENCY_GUESS (3.1): the affine Rees equivalences glue and commute with restriction. -/
-  affine_rees_equivalence_restriction : Prop
+      Chapter03AffineReesEquivalence I algebra U
+  /- The restriction maps on the two affine presentations are required to be
+  intertwined by a ring map on Rees algebras.  Packaging the map explicitly
+  prevents this field from degenerating to an unrelated proposition. -/
+  affine_rees_equivalence_restriction :
+    ∀ {U V : X.affineOpens} (i : U.1 ⟶ V.1),
+      ∃ ρ :
+          Chapter02ReesAlgebra (Γ(X, V.1)) (I.ideal.ideal V) →+*
+            Chapter02ReesAlgebra (Γ(X, U.1)) (I.ideal.ideal U),
+        ∀ x : (algebra.sections V).carrier,
+          (affine_rees_equivalence U).ringEquiv (algebra.restriction i x) =
+            ρ ((affine_rees_equivalence V).ringEquiv x)
 
 /- LOCAL_DEPENDENCY_GUESS (3.1): the sheafified Rees algebra of a coherent ideal admits the
 relative graded presentation above on a noetherian scheme. -/
@@ -89,6 +115,20 @@ structure Chapter03BlowupPresentation
   comparison : relative_proj.scheme ≅ canonical_blowup.carrier
   comparison_over :
     comparison.hom ≫ canonical_blowup.projection = relative_proj.projection
+  /-- The relative-Proj projection is projective over the original base. -/
+  projective : Chapter07IsProjectiveMorphism relative_proj.projection
+  /-- Away from the center, the relative-Proj projection is an isomorphism. -/
+  off_center : IsIso (relative_proj.projection ∣_ I.ideal.support.compl)
+  /-- Birationality is asserted only under the integral and nowhere-dense hypotheses. -/
+  birational :
+    ∀ _hX : IsIntegral X, Dense ((I.ideal.support : Set X)ᶜ) →
+      Chapter07Birational relative_proj.projection
+  /-- The tautological ideal on the relative-Proj carrier. -/
+  tautologicalIdeal : Chapter03CoherentIdeal relative_proj.scheme
+  tautological_ideal_eq_pullback :
+    tautologicalIdeal.ideal = I.ideal.comap relative_proj.projection
+  tautological_isInvertible :
+    Chapter07IsInvertibleIdeal tautologicalIdeal.ideal
 
 /- LOCAL_DEPENDENCY_GUESS (3.1): the relative Proj of the sheafified Rees algebra carries the
 canonical universal-blowup comparison over the base. -/

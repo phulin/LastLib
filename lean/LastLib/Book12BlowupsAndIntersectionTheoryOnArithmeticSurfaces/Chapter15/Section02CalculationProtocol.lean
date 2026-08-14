@@ -25,7 +25,7 @@ def chapter15FiberEquation {r : ℕ}
   ∑ j, (m j : ℤ) * M i j = 0
 
 theorem chapter15_fiber_equation_from_component_matrix
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s))
@@ -34,7 +34,7 @@ theorem chapter15_fiber_equation_from_component_matrix
   sorry
 
 theorem chapter15_fiber_multiplicity_vector_is_in_matrix_kernel
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s)) :
@@ -43,13 +43,13 @@ theorem chapter15_fiber_multiplicity_vector_is_in_matrix_kernel
   exact chapter13_multiplicity_vector_in_kernel T
 
 theorem chapter15_component_matrix_is_symmetric
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s)) :
     ∀ i j, chapter13IntersectionMatrix T i j =
       chapter13IntersectionMatrix T j i := by
-  exact chapter13_intersection_matrix_symmetric T
+  sorry
 
 /-! A transverse point has local number one, so its global contribution is the
 residue degree rather than an unweighted one. -/

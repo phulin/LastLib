@@ -6,6 +6,7 @@ namespace LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter0
 noncomputable section
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
 open scoped AlgebraicGeometry
 
 universe u v
@@ -21,8 +22,6 @@ theorem chapter06_excellent_normalization_is_finite
     (hqc : QuasiCompact (chapter06GenericPointMap X₀))
     (hqs : QuasiSeparated (chapter06GenericPointMap X₀)) :
     IsFinite (chapter06RelativeNormalizationMap hqc hqs) := by
-  letI := hqc
-  letI := hqs
   exact Chapter06ExcellentDedekindBase.finite_normalization X₀ f hft hqc hqs
 
 theorem chapter06_relativeNormalization_morphism_is_integral
@@ -30,8 +29,9 @@ theorem chapter06_relativeNormalization_morphism_is_integral
     (hqc : QuasiCompact (chapter06GenericPointMap X₀))
     (hqs : QuasiSeparated (chapter06GenericPointMap X₀)) :
     IsIntegralHom (chapter06RelativeNormalizationMap hqc hqs) := by
-  letI := hqc
-  letI := hqs
+  change IsIntegralHom (chapter06GenericPointMap X₀).fromNormalization
+  let := hqc
+  let := hqs
   infer_instance
 
 theorem chapter06_relativeNormalization_is_integral
@@ -39,14 +39,15 @@ theorem chapter06_relativeNormalization_is_integral
     (hqc : QuasiCompact (chapter06GenericPointMap X₀))
     (hqs : QuasiSeparated (chapter06GenericPointMap X₀)) :
     IsIntegral (chapter06RelativeNormalization hqc hqs) := by
-  letI := hqc
-  letI := hqs
+  let := hqc
+  let := hqs
+  change IsIntegral (chapter06GenericPointMap X₀).normalization
   infer_instance
 
 structure Chapter06NormalizedClosureData
     (R : Type u) [CommRing R] [IsDedekindDomain R]
     (C : Chapter06SmoothProjectiveCurve R)
-    (X₀ : Chapter06Model R C) where
+    (X₀ : Chapter06ProjectiveModel R C) where
   genericPoint_quasiCompact : QuasiCompact (chapter06GenericPointMap X₀.carrier)
   genericPoint_quasiSeparated : QuasiSeparated (chapter06GenericPointMap X₀.carrier)
   finite : IsFinite
@@ -63,30 +64,40 @@ structure Chapter06NormalizedClosureData
 noncomputable def chapter06NormalModelFromNormalizedClosure
     (R : Type u) [CommRing R] [IsDedekindDomain R]
     (C : Chapter06SmoothProjectiveCurve R)
-    (X₀ : Chapter06Model R C)
+    (X₀ : Chapter06ProjectiveModel R C)
     (D : Chapter06NormalizedClosureData R C X₀) : Chapter06NormalModel R C :=
-  { toChapter06Model :=
-      { carrier := chapter06RelativeNormalization
-          D.genericPoint_quasiCompact D.genericPoint_quasiSeparated
-        structureMap :=
-          chapter06RelativeNormalizationMap
-              D.genericPoint_quasiCompact D.genericPoint_quasiSeparated ≫ X₀.structureMap
+  { toChapter06ProjectiveModel :=
+      { toChapter06ProperModel :=
+          { toChapter06Model :=
+              { carrier := chapter06RelativeNormalization
+                  D.genericPoint_quasiCompact D.genericPoint_quasiSeparated
+                structureMap :=
+                  chapter06RelativeNormalizationMap
+                      D.genericPoint_quasiCompact D.genericPoint_quasiSeparated ≫
+                    X₀.structureMap
+                locallyOfFiniteType := by
+                  let := D.finite
+                  let := X₀.locallyOfFiniteType
+                  infer_instance
+                quasiCompact := by
+                  let := D.finite
+                  infer_instance
+                flat := D.flat
+                integral := by
+                  exact chapter06_relativeNormalization_is_integral
+                    D.genericPoint_quasiCompact D.genericPoint_quasiSeparated
+                genericFiber := D.genericFiber }
+            proper := by
+              let := D.finite
+              infer_instance }
         projective := by
-          sorry
-        proper := by
-          sorry
-        locallyOfFiniteType := by
-          sorry
-        flat := D.flat
-        integral := by
-          sorry
-        genericFiber := D.genericFiber }
+          sorry }
     normal := D.normal }
 
 theorem chapter06_normalizedClosure_is_finite
     (R : Type u) [CommRing R] [IsDedekindDomain R]
     (C : Chapter06SmoothProjectiveCurve R)
-    (X₀ : Chapter06Model R C)
+    (X₀ : Chapter06ProjectiveModel R C)
     (D : Chapter06NormalizedClosureData R C X₀) :
     IsFinite
       (chapter06RelativeNormalizationMap
@@ -96,7 +107,7 @@ theorem chapter06_normalizedClosure_is_finite
 theorem chapter06_normalizedClosure_generic_fiber_is_C
     (R : Type u) [CommRing R] [IsDedekindDomain R]
     (C : Chapter06SmoothProjectiveCurve R)
-    (X₀ : Chapter06Model R C)
+    (X₀ : Chapter06ProjectiveModel R C)
     (D : Chapter06NormalizedClosureData R C X₀) :
     Nonempty (Chapter06GenericFiberIdentification R C
       (chapter06RelativeNormalizationMap
@@ -106,7 +117,7 @@ theorem chapter06_normalizedClosure_generic_fiber_is_C
 theorem chapter06_normalizedClosure_is_normal
     (R : Type u) [CommRing R] [IsDedekindDomain R]
     (C : Chapter06SmoothProjectiveCurve R)
-    (X₀ : Chapter06Model R C)
+    (X₀ : Chapter06ProjectiveModel R C)
     (D : Chapter06NormalizedClosureData R C X₀) :
     chapter06IsNormal
       (chapter06RelativeNormalization
@@ -116,34 +127,69 @@ theorem chapter06_normalizedClosure_is_normal
 theorem chapter06_normalizedClosure_is_flat
     (R : Type u) [CommRing R] [IsDedekindDomain R]
     (C : Chapter06SmoothProjectiveCurve R)
-    (X₀ : Chapter06Model R C)
+    (X₀ : Chapter06ProjectiveModel R C)
     (D : Chapter06NormalizedClosureData R C X₀) :
     Flat
       (chapter06RelativeNormalizationMap
         D.genericPoint_quasiCompact D.genericPoint_quasiSeparated ≫ X₀.structureMap) :=
   D.flat
 
+noncomputable def chapter06NormalizedClosureGenericFiberMap
+    (R : Type u) [CommRing R] [IsDedekindDomain R]
+    (C : Chapter06SmoothProjectiveCurve R)
+    (X₀ : Chapter06ProjectiveModel R C)
+    (D : Chapter06NormalizedClosureData R C X₀) :
+    chapter06GenericFiber
+        (chapter06RelativeNormalizationMap
+            D.genericPoint_quasiCompact D.genericPoint_quasiSeparated ≫
+          X₀.structureMap)
+        (chapter06GenericBaseMap R) ⟶
+      chapter06GenericFiber X₀.structureMap (chapter06GenericBaseMap R) :=
+  pullback.lift
+    (pullback.fst
+        (chapter06RelativeNormalizationMap
+            D.genericPoint_quasiCompact D.genericPoint_quasiSeparated ≫
+          X₀.structureMap)
+        (chapter06GenericBaseMap R) ≫
+      chapter06RelativeNormalizationMap
+        D.genericPoint_quasiCompact D.genericPoint_quasiSeparated)
+    (pullback.snd
+      (chapter06RelativeNormalizationMap
+          D.genericPoint_quasiCompact D.genericPoint_quasiSeparated ≫
+        X₀.structureMap)
+      (chapter06GenericBaseMap R)) (by
+        simpa only [Category.assoc] using
+          (pullback.condition :
+            pullback.fst
+                (chapter06RelativeNormalizationMap
+                    D.genericPoint_quasiCompact D.genericPoint_quasiSeparated ≫
+                  X₀.structureMap)
+                (chapter06GenericBaseMap R) ≫
+              (chapter06RelativeNormalizationMap
+                  D.genericPoint_quasiCompact D.genericPoint_quasiSeparated ≫
+                X₀.structureMap) =
+            pullback.snd
+                (chapter06RelativeNormalizationMap
+                    D.genericPoint_quasiCompact D.genericPoint_quasiSeparated ≫
+                  X₀.structureMap)
+                (chapter06GenericBaseMap R) ≫
+              chapter06GenericBaseMap R))
+
 theorem chapter06_normalization_of_smooth_generic_fiber_is_an_isomorphism
     (R : Type u) [CommRing R] [IsDedekindDomain R]
     (C : Chapter06SmoothProjectiveCurve R)
-    (X₀ : Chapter06Model R C)
+    (X₀ : Chapter06ProjectiveModel R C)
     (D : Chapter06NormalizedClosureData R C X₀) :
-    Nonempty (Chapter06GenericFiberIdentification R C
-      (chapter06RelativeNormalizationMap
-        D.genericPoint_quasiCompact D.genericPoint_quasiSeparated ≫ X₀.structureMap)) := by
+    IsIso (chapter06NormalizedClosureGenericFiberMap R C X₀ D) := by
   sorry
 
-/-! The phrase “remains flat” is exposed with the actual flatness datum used
-by the model constructor; it is not inferred from dominance alone. -/
-theorem chapter06_normalizedClosure_flatness_requires_a_base_flatness_argument
-    {X S : Scheme.{u}} (f : X ⟶ S) (hflat : Flat f) : Flat f :=
-  hflat
-
 structure Chapter06RestrictionIdentification
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
     (X₁ : Chapter06NormalModel R C)
     (M : Chapter06SmoothProjectiveOpenModel R C) where
-  iso : (X₁.carrier ⁻¹ᵁ M.open).toScheme ≅ M.carrier
-  over : iso.hom ≫ M.structureMap = X₁.structureMap ∣_ M.open
+  iso : (X₁.structureMap ⁻¹ᵁ M.baseOpen).toScheme ≅ M.carrier
+  over : iso.hom ≫ M.structureMap = X₁.structureMap ∣_ M.baseOpen
 
 def chapter06IsRegular (X : Scheme.{u}) : Prop :=
   ∀ x : X, IsRegularLocalRing (X.presheaf.stalk x)
@@ -151,24 +197,28 @@ def chapter06IsRegular (X : Scheme.{u}) : Prop :=
 structure Chapter06RegularOpenModel
     (R : Type u) [CommRing R] [IsDedekindDomain R]
     (C : Chapter06SmoothProjectiveCurve R) where
-  open : (Chapter06BaseScheme R).Opens
-  open_nonempty : open ≠ ⊥
-  complement_finite : Set.Finite ((open : Set (Chapter06BaseScheme R))ᶜ)
+  baseOpen : (Chapter06BaseScheme R).Opens
+  open_nonempty : baseOpen ≠ ⊥
+  complement_finite : Set.Finite ((baseOpen : Set (Chapter06BaseScheme R))ᶜ)
   carrier : Scheme.{u}
-  structureMap : carrier ⟶ open.toScheme
+  structureMap : carrier ⟶ baseOpen.toScheme
   regular : chapter06IsRegular carrier
-  genericMap : Spec (.of (FractionRing R)) ⟶ open.toScheme
-  genericMap_over : genericMap ≫ open.ι = chapter06GenericBaseMap R
+  genericMap : Spec (.of (FractionRing R)) ⟶ baseOpen.toScheme
+  genericMap_over : genericMap ≫ baseOpen.ι = chapter06GenericBaseMap R
   genericFiber : Chapter06GenericFiberIdentification R C
-    (structureMap ≫ open.ι)
+    (structureMap ≫ baseOpen.ι)
 
 structure Chapter06RegularOpenRestrictionIdentification
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
     (X₁ : Chapter06NormalModel R C)
     (M : Chapter06RegularOpenModel R C) where
-  iso : (X₁.carrier ⁻¹ᵁ M.open).toScheme ≅ M.carrier
-  over : iso.hom ≫ M.structureMap = X₁.structureMap ∣_ M.open
+  iso : (X₁.structureMap ⁻¹ᵁ M.baseOpen).toScheme ≅ M.carrier
+  over : iso.hom ≫ M.structureMap = X₁.structureMap ∣_ M.baseOpen
 
 theorem chapter06_smooth_open_model_is_normal
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
     (M : Chapter06SmoothProjectiveOpenModel R C) :
     chapter06IsNormal M.carrier := by
   sorry
@@ -208,7 +258,6 @@ theorem chapter06_restriction_of_projective_model_is_projective
 
 theorem chapter06_prescribed_regular_open_model_is_projective
     (R : Type u) [CommRing R] [IsDedekindDomain R]
-    [Chapter06ExcellentDedekindBase R]
     (C : Chapter06SmoothProjectiveCurve R)
     (M : Chapter06RegularOpenModel R C)
     (hprescribed : ∃ X₁ : Chapter06NormalModel R C,

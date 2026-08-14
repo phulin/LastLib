@@ -1,4 +1,5 @@
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.Section03Transitivity
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section07NormsAndIdeals
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section06TheValuationRingInAFiniteCompleteExtension
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04
 
@@ -75,6 +76,7 @@ theorem chapter04_principal_quotient_length
     [Module.IsTorsionFree A B] [Algebra.IsIntegral A B]
     (P : Ideal B) [P.IsPrime] [P.IsMaximal]
     [P.LiesOver (IsLocalRing.maximalIdeal A)] (x : B) (r f : ℕ)
+    (_hx0 : x ≠ 0)
     (hx : LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11LocalLengthValue B P x = r)
     (hf : P.inertiaDeg A = f) :
     (Module.length A

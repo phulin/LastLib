@@ -37,6 +37,21 @@ theorem chapter10_AT_eq_chapter09_unconditional_pole_integral
     chapter10AT T = chapter09UnconditionalPoleIntegral T := by
   sorry
 
+/- The GRH triangle has a different pole integral; retain it explicitly so the
+   two alternatives in (8.4) are both available from the certified-numerics
+   chapter. -/
+def chapter10GRHAT (T : ℝ) : ℝ :=
+  chapter09GRHPoleIntegral T
+
+theorem chapter10_GRHAT_eq_chapter09_grh_pole_integral (T : ℝ) :
+    chapter10GRHAT T = chapter09GRHPoleIntegral T :=
+  rfl
+
+theorem chapter10_GRHAT_formula
+    {T : ℝ} (hT : 0 < T) :
+    chapter10GRHAT T = 4 / T * (Real.cosh (T / 2) - 1) := by
+  sorry
+
 theorem chapter10_coth_eq_chapter08_coth (x : ℝ) :
     chapter10Coth x = chapter08Coth x :=
   rfl
@@ -100,6 +115,24 @@ theorem chapter10_alternating_exp_remainder_bound
     0 ≤ (-1 : ℝ) ^ (M + 1) * chapter10AlternatingExpRemainder r M ∧
       (-1 : ℝ) ^ (M + 1) * chapter10AlternatingExpRemainder r M ≤
         r ^ (M + 1) / (Nat.factorial (M + 1) : ℝ) := by
+  sorry
+
+theorem chapter10_alternating_exp_remainder_strict
+    {r : ℝ} (hr : 0 < r) {M : ℕ} (hM : r < (M + 2 : ℕ)) :
+    0 < (-1 : ℝ) ^ (M + 1) * chapter10AlternatingExpRemainder r M ∧
+      (-1 : ℝ) ^ (M + 1) * chapter10AlternatingExpRemainder r M <
+        r ^ (M + 1) / (Nat.factorial (M + 1) : ℝ) := by
+  sorry
+
+theorem chapter10_alternating_exp_partial_sum_gap (x : ℝ) :
+    chapter10AlternatingExpPartialSum x 32 -
+        chapter10AlternatingExpPartialSum x 33 =
+      x ^ 33 / (Nat.factorial 33 : ℝ) := by
+  sorry
+
+theorem chapter10_exp_33_32_bounds {x : ℝ} (hx : 0 < x) :
+    chapter10AlternatingExpPartialSum x 33 < Real.exp (-x) ∧
+      Real.exp (-x) < chapter10AlternatingExpPartialSum x 32 := by
   sorry
 
 structure Chapter10RationalInterval where

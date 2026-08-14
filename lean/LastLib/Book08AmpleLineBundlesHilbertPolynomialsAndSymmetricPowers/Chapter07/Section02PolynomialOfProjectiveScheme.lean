@@ -82,6 +82,10 @@ structure Chapter07ClosedSubschemeHilbertData
   ambientIdentification_overBase :
     ambientIdentification.hom ≫ chapter07ProjectiveSpaceToBase k subscheme.r =
       C.structureMap
+  ambientPolarization :
+    C.L.sheaf ≅
+      (Scheme.Modules.pullback ambientIdentification.hom).obj
+        (chapter07ProjectiveSpaceTautologicalLineBundle k subscheme.r).sheaf
   ambient : Chapter07HilbertSetup k C
   ideal : Chapter07HilbertSetup k C
   structureSheaf : Chapter07HilbertSetup k C
@@ -90,7 +94,8 @@ structure Chapter07ClosedSubschemeHilbertData
   closedStructureSheaf : Chapter07CoherentSheaf subscheme.Z
   structureSheafPushforward :
     structureSheaf.F.sheaf ≅
-      (Scheme.Modules.pushforward subscheme.inclusion).obj closedStructureSheaf.sheaf
+      (Scheme.Modules.pushforward
+        (subscheme.inclusion ≫ ambientIdentification.inv)).obj closedStructureSheaf.sheaf
   ambientPolynomial :
     chapter07HilbertPolynomial ambient =
       chapter07ProjectiveSpaceHilbertPolynomial subscheme.r
@@ -124,12 +129,10 @@ structure Chapter07HypersurfaceHilbertData
   closedSubscheme : Chapter07ClosedSubschemeHilbertData k C
   degree : ℕ
   degreePositive : 0 < degree
-  idealPolynomial :
-    chapter07HilbertPolynomial closedSubscheme.ideal =
-      chapter07BinomialPolynomial closedSubscheme.subscheme.r degree
-  /- LOCAL_DEPENDENCY_GUESS: replace this marker by the preceding projective
-  ideal API's concrete homogeneous-equation certificate. -/
-  idealIsHypersurfaceOfDegree : Prop
+  ideal_euler_characteristic_shift : ∀ n : ℕ,
+    chapter07EulerCharacteristicAtInteger closedSubscheme.ideal (n : ℤ) =
+      chapter07EulerCharacteristicAtInteger closedSubscheme.ambient
+        ((n : ℤ) - (degree : ℤ))
 
 theorem chapter07_hypersurface_hilbert_polynomial
     {k : Type u} [Field k]
@@ -168,8 +171,7 @@ theorem chapter07_plane_curve_hilbert_polynomial_eval
     {k : Type u} [Field k]
     {C : Chapter07PolarizedScheme k}
     (D : Chapter07HypersurfaceHilbertData k C)
-    (hplane : D.closedSubscheme.subscheme.r = 2) (n : ℕ)
-    (hn : D.degree ≤ n) :
+    (hplane : D.closedSubscheme.subscheme.r = 2) (n : ℕ) :
     (chapter07HilbertPolynomial D.closedSubscheme.structureSheaf).eval (n : ℚ) =
       (D.degree : ℚ) * n + 1 -
         (((D.degree : ℚ) - 1) * ((D.degree : ℚ) - 2) / 2) := by

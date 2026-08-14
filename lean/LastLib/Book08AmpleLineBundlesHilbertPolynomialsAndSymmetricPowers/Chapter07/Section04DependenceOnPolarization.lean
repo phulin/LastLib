@@ -38,12 +38,18 @@ theorem chapter07_power_polynomial_integer_valued
   sorry
 
 theorem chapter07_hilbert_polynomial_of_tensor_power
-    {P Q : Polynomial ℚ} (q : ℕ) (_hq : 0 < q)
-    (h : ∃ N : ℕ, ∀ n : ℕ, N ≤ n →
-      Q.eval (n : ℚ) = P.eval ((q * n : ℕ) : ℚ)) :
-    Q = P.comp (Polynomial.C (q : ℚ) * Polynomial.X) := by
-  simpa [chapter07PowerPolynomial] using
-    chapter07_polynomial_reparametrization_of_eventual_power_relation q h
+    {k : Type u} [Field k]
+    {C : Chapter07PolarizedScheme k}
+    (S T : Chapter07HilbertSetup k C) (q : ℕ) (_hq : 0 < q)
+    (hTwist :
+      ∀ (i n : ℕ), Nonempty (
+        (forget₂ (ModuleCat.{u + 1} k) AddCommGrpCat.{u + 1}).obj
+            (T.cohomology i (n : ℤ)) ≅
+          LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04Cohomology
+            (chapter07TwistedSheaf S.F (q * n)) i)) :
+    chapter07HilbertPolynomial T =
+      chapter07PowerPolynomial (chapter07HilbertPolynomial S) q := by
+  sorry
 
 theorem chapter07_power_polynomial_degree
     (P : Polynomial ℚ) (q : ℕ) (hq : 0 < q) (hP : P ≠ 0) :
@@ -64,6 +70,17 @@ def Chapter07SupportHasDimension
     {X : Scheme.{u}} (F : Chapter07CoherentSheaf X) (d : ℕ) : Prop :=
   ∃ D : Chapter07SupportDimensionCertificate F, D.dimension = d
 
+theorem chapter07_support_has_dimension_iff
+    {X : Scheme.{u}} (F : Chapter07CoherentSheaf X) (d : ℕ) :
+    Chapter07SupportHasDimension F d ↔
+      LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04SheafHasSupportDimension
+        F.sheaf d := by
+  constructor
+  · rintro ⟨D, hD⟩
+    simpa [hD] using D.dimension_has_supportDimension
+  · intro hD
+    exact ⟨{ dimension := d, dimension_has_supportDimension := hD }, rfl⟩
+
 theorem chapter07_support_dimension_independent_of_polarization
     {k : Type u} [Field k]
     {X : Scheme.{u}} (F : Chapter07CoherentSheaf X)
@@ -78,6 +95,7 @@ theorem chapter07_curve_linear_coefficient_is_polarized_degree
     {C : Chapter07PolarizedScheme k}
     (S : Chapter07HilbertSetup k C)
     (D : Chapter07SupportDimensionCertificate S.F)
+    (hDimensionData : Chapter07HilbertPolynomialDimensionCertificate S D)
     (hcurve : D.dimension = 1)
     (hF : Chapter07NonzeroCoherentSheaf S.F) :
     ∃ e : ℕ, 0 < e ∧

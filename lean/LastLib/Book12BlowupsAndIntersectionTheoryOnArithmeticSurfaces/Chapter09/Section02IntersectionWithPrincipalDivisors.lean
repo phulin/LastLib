@@ -39,7 +39,7 @@ theorem chapter09_principal_divisor_coeff_eq_order
     (X : Chapter09RegularNoetherianIntegralSurface)
     [P : Chapter09PrincipalDivisorTheory X]
     (f : Chapter09NonzeroRationalFunction X) (C : Chapter09PrimeCurve X) :
-    P.principal f C = C.order f.1 := by
+    P.principal f C = C.order f := by
   exact P.principal_coeff_order f C
 
 theorem chapter09_principal_divisor_mem_principalSubgroup
@@ -110,6 +110,17 @@ theorem chapter09_principal_divisor_degree_zero
   intro f
   exact T.principal_degree_zero f
 
+/- The degree used by the proper-curve interface is the canonical
+residue-weighted degree of its zero-cycle, rather than an unrelated integer
+valued functional. -/
+theorem chapter09_proper_curve_degree_eq_zeroCycleDegree
+    {k : Type u} [Field k] (C : Chapter09ProperCurveOverField k)
+    [T : Chapter09ProperCurveDivisorTheory C]
+    (z : Chapter09CurveDivisor C) :
+    T.degree z =
+      chapter09ZeroCycleDegree C.structureMap z (T.residueFieldDegrees_finite z) := by
+  sorry
+
 theorem chapter09_principal_divisor_degree_zero_explicit
     {k : Type u} [Field k] (C : Chapter09ProperCurveOverField k)
     [T : Chapter09ProperCurveDivisorTheory C]
@@ -162,6 +173,15 @@ theorem chapter09_intersection_with_principal_divisor_invariant
     chapter09VerticalIntersection (X := X) (P := P) D C := by
   exact I.principal_invariance D f C
 
+theorem chapter09_principal_divisor_intersection_with_vertical_curve_zero
+    (X : Chapter09RegularNoetherianIntegralSurface)
+    (P : Chapter09PrincipalDivisorTheory X)
+    [I : Chapter09VerticalIntersectionTheory X P]
+    (f : Chapter09NonzeroRationalFunction X)
+    (C : Chapter09VerticalCurve X) :
+    chapter09VerticalIntersection (X := X) (P := P) (P.principal f) C = 0 := by
+  sorry
+
 theorem chapter09_vertical_intersection_respects_rational_equivalence
     (X : Chapter09RegularNoetherianIntegralSurface)
     (P : Chapter09PrincipalDivisorTheory X)
@@ -177,58 +197,52 @@ theorem chapter09_vertical_intersection_respects_rational_equivalence
 
 def chapter09VerticalDivisorIntersection
     {X : Chapter09RegularNoetherianIntegralSurface}
-    {P : Chapter09PrincipalDivisorTheory X}
-    [V : Chapter09VerticalDivisorPairingTheory X P]
+    [V : Chapter09VerticalDivisorPairingTheory X]
     (D E : Chapter09WeilDivisor X) : ℤ :=
   V.pairing D E
 
 theorem chapter09_vertical_divisor_intersection_add_left
     (X : Chapter09RegularNoetherianIntegralSurface)
-    (P : Chapter09PrincipalDivisorTheory X)
-    [V : Chapter09VerticalDivisorPairingTheory X P]
+    [V : Chapter09VerticalDivisorPairingTheory X]
     (D E F : Chapter09WeilDivisor X) :
-    chapter09VerticalDivisorIntersection (X := X) (P := P) (D + E) F =
-      chapter09VerticalDivisorIntersection (X := X) (P := P) D F +
-        chapter09VerticalDivisorIntersection (X := X) (P := P) E F := by
+    chapter09VerticalDivisorIntersection (X := X) (D + E) F =
+      chapter09VerticalDivisorIntersection (X := X) D F +
+        chapter09VerticalDivisorIntersection (X := X) E F := by
   exact V.pairing_add_left D E F
 
 theorem chapter09_vertical_divisor_intersection_add_right
     (X : Chapter09RegularNoetherianIntegralSurface)
-    (P : Chapter09PrincipalDivisorTheory X)
-    [V : Chapter09VerticalDivisorPairingTheory X P]
+    [V : Chapter09VerticalDivisorPairingTheory X]
     (D E F : Chapter09WeilDivisor X) :
-    chapter09VerticalDivisorIntersection (X := X) (P := P) D (E + F) =
-      chapter09VerticalDivisorIntersection (X := X) (P := P) D E +
-        chapter09VerticalDivisorIntersection (X := X) (P := P) D F := by
+    chapter09VerticalDivisorIntersection (X := X) D (E + F) =
+      chapter09VerticalDivisorIntersection (X := X) D E +
+        chapter09VerticalDivisorIntersection (X := X) D F := by
   exact V.pairing_add_right D E F
 
 @[simp]
 theorem chapter09_vertical_divisor_intersection_zero_left
     (X : Chapter09RegularNoetherianIntegralSurface)
-    (P : Chapter09PrincipalDivisorTheory X)
-    [V : Chapter09VerticalDivisorPairingTheory X P]
+    [V : Chapter09VerticalDivisorPairingTheory X]
     (D : Chapter09WeilDivisor X) :
-    chapter09VerticalDivisorIntersection (X := X) (P := P) 0 D = 0 := by
+    chapter09VerticalDivisorIntersection (X := X) 0 D = 0 := by
   exact V.pairing_zero_left D
 
 @[simp]
 theorem chapter09_vertical_divisor_intersection_zero_right
     (X : Chapter09RegularNoetherianIntegralSurface)
-    (P : Chapter09PrincipalDivisorTheory X)
-    [V : Chapter09VerticalDivisorPairingTheory X P]
+    [V : Chapter09VerticalDivisorPairingTheory X]
     (D : Chapter09WeilDivisor X) :
-    chapter09VerticalDivisorIntersection (X := X) (P := P) D 0 = 0 := by
+    chapter09VerticalDivisorIntersection (X := X) D 0 = 0 := by
   exact V.pairing_zero_right D
 
 theorem chapter09_vertical_divisor_intersection_symmetric
     (X : Chapter09RegularNoetherianIntegralSurface)
-    (P : Chapter09PrincipalDivisorTheory X)
-    [V : Chapter09VerticalDivisorPairingTheory X P]
+    [V : Chapter09VerticalDivisorPairingTheory X]
     (D E : Chapter09WeilDivisor X)
     (hD : chapter09IsVerticalDivisor D)
     (hE : chapter09IsVerticalDivisor E) :
-    chapter09VerticalDivisorIntersection (X := X) (P := P) D E =
-      chapter09VerticalDivisorIntersection (X := X) (P := P) E D := by
+    chapter09VerticalDivisorIntersection (X := X) D E =
+      chapter09VerticalDivisorIntersection (X := X) E D := by
   exact V.pairing_symmetric_on_vertical D E hD hE
 
 /-! ### The boundary warning -/
@@ -238,44 +252,45 @@ any boundary quotient. -/
 theorem chapter09_principal_intersection_zeroCycle_is_boundaryAware
     (X : Chapter09RegularNoetherianIntegralSurface)
     (P : Chapter09PrincipalDivisorTheory X)
+    [Z : Chapter09ZeroCycleRationalEquivalenceTheory X.carrier]
     [T : Chapter09PrincipalIntersectionCycleTheory X P] :
-    T.principalIntersectionRationallyTrivial ∧
-      T.boundaryContributionsRetained ∧ T.horizontalBoundaryMayBeNonzero := by
-  exact ⟨T.principalIntersectionRationallyTrivial,
-    T.boundaryContributionsRetained, T.horizontalBoundaryMayBeNonzero⟩
+    ∀ (D : Chapter09WeilDivisor X)
+      (f : Chapter09NonzeroRationalFunction X),
+      ∀ h : chapter09NoCommonPrimeComponents D (P.principal f),
+      Z.rationallyEquivalent
+        (chapter09PrincipalIntersectionCycle (X := X) (P := P) D f h) 0 := by
+  intro D f h
+  exact T.principalIntersectionRationallyTrivial D f h
 
 /-- A cycle supported over a base point can carry a nonzero residue-weighted
 degree.  This is the precise boundary datum that must be retained for a
 horizontal principal intersection. -/
 def chapter09HorizontalPrincipalBoundaryWarning
-    {X S : Scheme.{u}} (f : X ⟶ S) (s : S) (z : Chapter09ZeroCycle X) : Prop :=
-  chapter09ZeroCycleSupportedOver f s z ∧ chapter09ZeroCycleDegree f z ≠ 0
+    {X S : Scheme.{u}} (f : X ⟶ S) (s : S) (z : Chapter09ZeroCycle X)
+    (hfinite : chapter09ZeroCycleResidueDegreesFinite f z) : Prop :=
+  chapter09ZeroCycleSupportedOver f s z ∧ chapter09ZeroCycleDegree f z hfinite ≠ 0
 
 theorem chapter09_horizontal_principal_boundary_warning_is_explicit
     {X S : Scheme.{u}} (f : X ⟶ S) (s : S) (z : Chapter09ZeroCycle X)
-    (h : chapter09HorizontalPrincipalBoundaryWarning f s z) :
-    chapter09ZeroCycleDegree f z ≠ 0 := by
+    (hfinite : chapter09ZeroCycleResidueDegreesFinite f z)
+    (h : chapter09HorizontalPrincipalBoundaryWarning f s z hfinite) :
+    chapter09ZeroCycleDegree f z hfinite ≠ 0 := by
   exact h.2
 
 /- A base-uniformizer boundary is the positive-degree special case of the
 generic warning above.  The local-Dedekind uniformizer and its closed-fiber
 cycle are supplied by the arithmetic model using this interface. -/
 def chapter09PositiveHorizontalBoundaryWarning
-    {X S : Scheme.{u}} (f : X ⟶ S) (s : S) (z : Chapter09ZeroCycle X) : Prop :=
-  chapter09ZeroCycleSupportedOver f s z ∧ 0 < chapter09ZeroCycleDegree f z
+    {X S : Scheme.{u}} (f : X ⟶ S) (s : S) (z : Chapter09ZeroCycle X)
+    (hfinite : chapter09ZeroCycleResidueDegreesFinite f z) : Prop :=
+  chapter09ZeroCycleSupportedOver f s z ∧ 0 < chapter09ZeroCycleDegree f z hfinite
 
 theorem chapter09_positive_horizontal_boundary_has_nonzero_degree
     {X S : Scheme.{u}} (f : X ⟶ S) (s : S) (z : Chapter09ZeroCycle X)
-    (h : chapter09PositiveHorizontalBoundaryWarning f s z) :
-    chapter09ZeroCycleDegree f z ≠ 0 := by
+    (hfinite : chapter09ZeroCycleResidueDegreesFinite f z)
+    (h : chapter09PositiveHorizontalBoundaryWarning f s z hfinite) :
+    chapter09ZeroCycleDegree f z hfinite ≠ 0 := by
   exact ne_of_gt h.2
-
-theorem chapter09_principal_intersection_boundary_terms_are_retained
-    (X : Chapter09RegularNoetherianIntegralSurface)
-    (P : Chapter09PrincipalDivisorTheory X)
-    [T : Chapter09PrincipalIntersectionCycleTheory X P] :
-    T.boundaryContributionsRetained := by
-  exact T.boundaryContributionsRetained
 
 end
 

@@ -41,7 +41,7 @@ theorem chapter04_naive_quotient_membership_iff
     QuotientGroup.mk' H g ∈ chapter04NaiveQuotientLowerGroup F H i ↔
       ∃ a : G, a ∈ chapter04LowerGroup F i ∧
         QuotientGroup.mk' H a = QuotientGroup.mk' H g := by
-  sorry
+  rfl
 
 /-- A mismatch witness proves that naive quotienting is not the normalized
 downstairs lower filtration.  This is deliberately a conditional interface:

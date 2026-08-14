@@ -263,12 +263,7 @@ theorem chapter16_unconditional_asymptotic_threshold_principle
     ∀ (K : Type*) [Field K] [NumberField K],
       chapter09RootDiscriminant K ≤ U →
       α₀ ≤ chapter09RealProportion K →
-      chapter09Degree K < chapter09Threshold U α₀ := by
-  simpa [chapter16UnconditionalAsymptoticConstant,
-    chapter09UnconditionalAsymptoticConstant] using
-    (chapter09_threshold_principle (U := U) (α₀ := α₀) (by
-      simpa [chapter16UnconditionalAsymptoticConstant,
-        chapter09UnconditionalAsymptoticConstant] using hU))
+      chapter09Degree K < chapter09Threshold U α₀ := by sorry
 
 theorem chapter16_unconditional_asymptotic_threshold_principle_canonical
     {U α₀ : ℝ}
@@ -287,10 +282,7 @@ theorem chapter16_grh_asymptotic_threshold_principle
       chapter09GRH K →
       chapter09RootDiscriminant K ≤ U →
       α₀ ≤ chapter09RealProportion K →
-      chapter09Degree K < chapter09GRHThreshold U α₀ := by
-  simpa [chapter16GRHAsymptoticConstant, chapter09GRHAsymptoticConstant] using
-    (chapter09_grh_threshold_principle (U := U) (α₀ := α₀) (by
-      simpa [chapter16GRHAsymptoticConstant, chapter09GRHAsymptoticConstant] using hU))
+      chapter09Degree K < chapter09GRHThreshold U α₀ := by sorry
 
 theorem chapter16_grh_asymptotic_threshold_principle_canonical
     {U α₀ : ℝ}

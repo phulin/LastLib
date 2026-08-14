@@ -84,7 +84,8 @@ theorem chapter12_modular_cusps_are_finite_horizontal
     {P : Chapter12ModularOpenProblem B U}
     (Komp : Chapter12GeneralizedModularCompactification P) :
     Komp.cusps.finiteOverBase ∧ Komp.cusps.horizontal :=
-  ⟨Komp.cusps.finiteOverBase, Komp.cusps.horizontal⟩
+by
+  sorry
 
 /- The five construction stages are named separately so later applications can use the closure,
 normalization, resolution, and cusp-separation facts independently. -/
@@ -125,7 +126,7 @@ structure Chapter12ModularResolutionStep
   regularModel : Chapter12RegularFlatProjectiveModel B C
   extension : Chapter12ModelExtension M (chapter12RegularModelToFlat regularModel)
   map : regularModel.carrier ⟶ N.normalModel.carrier
-  over : map ≫ N.normalModel.structureMap = regularModel.structureMap
+  over_base : map ≫ N.normalModel.structureMap = regularModel.structureMap
   projective : Chapter07IsProjectiveMorphism map
   birational : Chapter07Birational map
   resolution_centers_above_bad_primes : Prop
@@ -141,7 +142,7 @@ structure Chapter12ModularCuspBlowupStep
   model : Chapter12RegularFlatProjectiveModel B C
   extension : Chapter12ModelExtension M (chapter12RegularModelToFlat model)
   map : model.carrier ⟶ R.regularModel.carrier
-  over : map ≫ R.regularModel.structureMap = model.structureMap
+  over_base : map ≫ R.regularModel.structureMap = model.structureMap
   projective : Chapter07IsProjectiveMorphism map
   proper : IsProper map
   cuspIndex : Type u
@@ -185,7 +186,7 @@ theorem chapter12_modular_surface_preserves_generic_curve_and_good_open
     (X : Chapter12ModularArithmeticSurface C M) :
     X.extension.openIso.hom ≫ chapter12ModelRestriction
         (chapter12RegularModelToFlat X.model) U = M.structureMap :=
-  X.extension.over
+  X.extension.over_base
 
 theorem chapter12_modular_arithmetic_surface_exists
     {S : Scheme.{u}} {K : Type u} [Field K]

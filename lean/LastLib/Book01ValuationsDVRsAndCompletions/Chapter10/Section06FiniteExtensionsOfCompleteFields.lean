@@ -6,6 +6,7 @@ import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
+import Mathlib.RingTheory.Norm.Transitivity
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
 
@@ -383,6 +384,49 @@ theorem chapter10_automorphism_preserves_unique_norm
   simpa [spectralAlgNorm_def] using
     (spectralNorm_eq_of_equiv (K := K) (L := L) σ x).symm
 
+/-- K-automorphisms preserve the unique extension norm on an arbitrary
+algebraic extension, not only on finite subextensions. -/
+theorem chapter10_algebraic_automorphism_preserves_unique_norm
+    {K L : Type*} [NontriviallyNormedField K] [CompleteSpace K]
+    [IsUltrametricDist K] [Field L] [Algebra K L]
+    [Algebra.IsAlgebraic K L]
+    (N : AlgebraNorm K L)
+    (hN : Chapter10UniqueExtensionNormProperty N)
+    (σ : L ≃ₐ[K] L) :
+    ∀ x : L, N (σ x) = N x := by
+  let Nσ : AlgebraNorm K L :=
+    { toFun := fun x => N (σ x)
+      map_zero' := by simp
+      add_le' := by
+        intro x y
+        simpa using (map_add_le_add N (σ x) (σ y))
+      neg' := by
+        intro x
+        simp
+      mul_le' := by
+        intro x y
+        simpa using (map_mul_le_mul N (σ x) (σ y))
+      smul' := by
+        intro k x
+        rw [map_smul]
+        exact map_smul_eq_mul N k (σ x)
+      eq_zero_of_map_eq_zero' := by
+        intro x hx
+        apply σ.injective
+        simpa using (eq_zero_of_map_eq_zero N hx) }
+  have hp : IsPowMul N := fun x n _hn => hN.2.1 x n
+  have hpσ : IsPowMul Nσ := by
+    intro x n hn
+    change N (σ (x ^ n)) = N (σ x) ^ n
+    rw [map_pow]
+    exact hN.2.1 (σ x) n
+  have hspec : N = spectralAlgNorm K L := spectralNorm_unique hp
+  have hspecσ : Nσ = spectralAlgNorm K L := spectralNorm_unique hpσ
+  intro x
+  have hx : Nσ x = N x := by
+    rw [hspecσ, hspec]
+  exact hx
+
 /-- Norm/product formula for a finite extension. -/
 def Chapter10NormProductFormula
     {K L : Type*} [NormedField K] [Field L] [Algebra K L]
@@ -397,7 +441,76 @@ theorem chapter10_complete_extension_norm_product_formula
     [FiniteDimensional K L]
     (N : AlgebraNorm K L)
     (hN : Chapter10UniqueExtensionNormProperty N) :
-    Chapter10NormProductFormula (K := K) (L := L) (N : L → ℝ) := by sorry
+    Chapter10NormProductFormula (K := K) (L := L) (N : L → ℝ) := by
+  have hp : IsPowMul N := fun x n _hn => hN.2.1 x n
+  have hspec : N = spectralAlgNorm K L := spectralNorm_unique hp
+  have hdimpos : 0 < Module.finrank K L := Module.finrank_pos
+  intro x
+  rw [hspec]
+  by_cases hx : x = 0
+  · subst x
+    simpa [spectralAlgNorm_def, hdimpos.ne'] using
+      (spectralNorm_zero (K := K) (L := L))
+  let F : IntermediateField K L := IntermediateField.adjoin K ({x} : Set L)
+  have hxint : IsIntegral K x := IsIntegral.of_finite K x
+  have hFdim : Module.finrank K F = (minpoly K x).natDegree := by
+    exact IntermediateField.adjoin.finrank hxint
+  have htower :
+      Module.finrank K F * Module.finrank F L = Module.finrank K L :=
+    Module.finrank_mul_finrank K F L
+  have hFpos : 0 < Module.finrank K F := by
+    rw [hFdim]
+    exact minpoly.natDegree_pos hxint
+  have hLpos : 0 < Module.finrank F L := Module.finrank_pos
+  have hnorm_adjoin :
+      Algebra.norm K x =
+        Algebra.norm K (IntermediateField.AdjoinSimple.gen K x) ^
+          Module.finrank F L := by
+    simpa [F] using (Algebra.norm_eq_norm_adjoin K x)
+  have hnorm_coeff :
+      ‖Algebra.norm K x‖ =
+        ‖(minpoly K x).coeff 0‖ ^ Module.finrank F L := by
+    have hgen := Algebra.PowerBasis.norm_gen_eq_coeff_zero_minpoly
+      (IntermediateField.adjoin.powerBasis hxint)
+    have hgen' :
+        Algebra.norm K (IntermediateField.AdjoinSimple.gen K x) =
+          (-1 : K) ^ (minpoly K x).natDegree * (minpoly K x).coeff 0 := by
+      simpa [IntermediateField.minpoly_gen] using hgen
+    rw [hnorm_adjoin, norm_pow, hgen']
+    simp [norm_mul, norm_pow]
+  have hspectral :
+      spectralAlgNorm K L x =
+        ‖(minpoly K x).coeff 0‖ ^
+          (1 / (minpoly K x).natDegree : ℝ) := by
+    simpa [spectralAlgNorm_def] using
+      (spectralNorm.spectralNorm_eq_norm_coeff_zero_rpow
+        (K := K) (L := L) x)
+  have hexp :
+      (Module.finrank F L : ℝ) * (Module.finrank K L : ℝ)⁻¹ =
+        (Module.finrank K F : ℝ)⁻¹ := by
+    rw [← htower, Nat.cast_mul]
+    field_simp [hFpos.ne', hLpos.ne']
+  have hrpow :
+      Real.rpow (‖(minpoly K x).coeff 0‖ ^ Module.finrank F L)
+          (Module.finrank K L : ℝ)⁻¹ =
+        ‖(minpoly K x).coeff 0‖ ^ (Module.finrank K F : ℝ)⁻¹ := by
+    calc
+      Real.rpow (‖(minpoly K x).coeff 0‖ ^ Module.finrank F L)
+          (Module.finrank K L : ℝ)⁻¹ =
+          Real.rpow
+            (Real.rpow ‖(minpoly K x).coeff 0‖ (Module.finrank F L : ℝ))
+            (Module.finrank K L : ℝ)⁻¹ := by
+              congr 1
+              exact (Real.rpow_natCast _ _).symm
+      _ = Real.rpow ‖(minpoly K x).coeff 0‖
+          ((Module.finrank F L : ℝ) * (Module.finrank K L : ℝ)⁻¹) :=
+        (Real.rpow_mul (norm_nonneg _) _ _).symm
+      _ = ‖(minpoly K x).coeff 0‖ ^ (Module.finrank K F : ℝ)⁻¹ := by
+        rw [hexp]
+        rfl
+  rw [hspectral, hnorm_coeff, hrpow]
+  congr 1
+  rw [hFdim, one_div]
 
 /-! The trivial absolute-value branch is separate because the spectral-norm
 construction used above is stated for nontrivial normed fields. -/
@@ -407,7 +520,112 @@ theorem chapter10_trivial_extension_norm_unique
     [Algebra.IsAlgebraic K L]
     (htrivial : ∀ x : K, x ≠ 0 → ‖x‖ = 1) :
     ∃! N : L → ℝ,
-      Chapter10AlgebraicExtensionNormProperty (K := K) (L := L) N := by sorry
+      Chapter10AlgebraicExtensionNormProperty (K := K) (L := L) N := by
+  classical
+  let N₀ : L → ℝ := fun x => if x = 0 then 0 else 1
+  have hN₀ : Chapter10AlgebraicExtensionNormProperty (K := K) (L := L) N₀ := by
+    refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+    · simp [N₀]
+    · simp [N₀]
+    · intro x
+      by_cases hx : x = 0 <;> simp [N₀, hx]
+    · intro x
+      simp [N₀]
+    · intro x y
+      by_cases hx : x = 0 <;> by_cases hy : y = 0 <;>
+        simp [N₀, hx, hy]
+    · intro x y
+      by_cases hxy : x + y = 0
+      · by_cases hx : x = 0 <;> by_cases hy : y = 0 <;>
+          simp [N₀, hxy, hx, hy]
+      · by_cases hx : x = 0 <;> by_cases hy : y = 0 <;>
+          simp [N₀, hxy, hx, hy]
+    · intro x
+      by_cases hx : x = 0
+      · simp [N₀, hx]
+      · simp [N₀, hx, htrivial x hx]
+  refine ⟨N₀, hN₀, ?_⟩
+  intro N' hN'
+  funext x
+  rcases hN' with ⟨h0, h1, hpos, hzero, hmul, hadd, hext⟩
+  have hpow : ∀ y : L, ∀ n : ℕ, N' (y ^ n) = (N' y) ^ n := by
+    intro y n
+    induction n with
+    | zero => simp [h1]
+    | succ n ih =>
+        rw [pow_succ, hmul, ih, pow_succ]
+  have hneg_one : N' (-1) = 1 := by
+    calc
+      N' (-1) = N' (algebraMap K L (-1)) := by simp
+      _ = ‖(-1 : K)‖ := hext (-1)
+      _ = 1 := htrivial (-1) (by norm_num)
+  have hneg : ∀ y : L, N' (-y) = N' y := by
+    intro y
+    calc
+      N' (-y) = N' ((-1) * y) := by rw [neg_one_mul]
+      _ = N' (-1) * N' y := hmul (-1) y
+      _ = N' y := by rw [hneg_one, one_mul]
+  let f : AlgebraNorm K L :=
+    { toFun := N'
+      map_zero' := h0
+      add_le' := by
+        intro y z
+        refine (hadd y z).trans ?_
+        rw [max_le_iff]
+        exact ⟨le_add_of_nonneg_right (hpos z), le_add_of_nonneg_left (hpos y)⟩
+      neg' := hneg
+      smul' := by
+        intro k y
+        rw [Algebra.smul_def, hmul, hext]
+      mul_le' := by
+        intro y z
+        rw [hmul]
+      eq_zero_of_map_eq_zero' := by
+        intro y hy
+        exact (hzero y).mp hy }
+  have hfpow : IsPowMul f := by
+    intro y n hn
+    exact hpow y n
+  have hfna : IsNonarchimedean f := by
+    intro y z
+    exact hadd y z
+  have hle_one : ∀ y : L, y ≠ 0 → IsAlgebraic K y → N' y ≤ 1 := by
+    intro y hy hyalg
+    let p := minpoly K y
+    have hp : p.Monic := minpoly.monic hyalg.isIntegral
+    have hroot : aeval y p = 0 := minpoly.aeval K y
+    have hbound : f y ≤ spectralValue p :=
+      norm_root_le_spectralValue hfpow hfna hp hroot
+    have hcoeff : ∀ n : ℕ, ‖p.coeff n‖ ≤ 1 := by
+      intro n
+      by_cases hn : p.coeff n = 0
+      · simp [hn]
+      · rw [htrivial (p.coeff n) hn]
+    have hspec : spectralValue p ≤ 1 :=
+      (spectralValue_le_one_iff hp).2 hcoeff
+    have hbound' : N' y ≤ spectralValue p := by
+      change N' y ≤ spectralValue p at hbound
+      exact hbound
+    exact hbound'.trans hspec
+  by_cases hx : x = 0
+  · simp [N₀, hx, h0]
+  have hxalg : IsAlgebraic K x := Algebra.IsAlgebraic.isAlgebraic (R := K) x
+  have hx_le : N' x ≤ 1 := hle_one x hx hxalg
+  have hinv_le : N' x⁻¹ ≤ 1 :=
+    hle_one x⁻¹ (inv_ne_zero hx) hxalg.inv
+  have hmul_inv : N' x * N' x⁻¹ = 1 := by
+    calc
+      N' x * N' x⁻¹ = N' (x * x⁻¹) := (hmul x x⁻¹).symm
+      _ = N' 1 := by rw [mul_inv_cancel₀ hx]
+      _ = 1 := h1
+  have hx_ge : 1 ≤ N' x := by
+    calc
+      1 = N' x * N' x⁻¹ := hmul_inv.symm
+      _ ≤ N' x * 1 :=
+        mul_le_mul_of_nonneg_left hinv_le (hpos x)
+      _ = N' x := mul_one _
+  have hx_eq : N' x = 1 := le_antisymm hx_le hx_ge
+  simpa [N₀, hx] using hx_eq
 
 /-- Factorization-form henselianity gives the unique valuation extension. -/
 theorem chapter10_henselian_unique_extension

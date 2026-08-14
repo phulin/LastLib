@@ -1,4 +1,4 @@
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.Section04TheValuationOfANorm
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section07NormsAndIdeals
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04
 

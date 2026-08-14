@@ -23,17 +23,17 @@ import Mathlib.CategoryTheory.Monoidal.Cartesian.Mod
 import Mathlib.CategoryTheory.Monoidal.Cartesian.Over
 import Mathlib.CategoryTheory.Sites.Descent.DescentData
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
-import Mathlib.LinearAlgebra.LinearIndependent
+import Mathlib.LinearAlgebra.LinearIndependent.Basic
 import Mathlib.RingTheory.Flat.FaithfullyFlat.Descent
 import Mathlib.RingTheory.MvPolynomial.Basic
 import Mathlib.Topology.NoetherianSpace
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Dependencies
-import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter05.Dependencies
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10.Dependencies
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10.Section02RelativeEffectiveCartierDivisors
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter14.Dependencies
 import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter02.Section01CoveringFamilies
 import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter02.Section02SingleCoversAndAffineReduction
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter11.Section01TheoremAndHypotheses
 
 /-!
 ## Chapter 16 dependencies
@@ -49,7 +49,7 @@ namespace LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter16
 noncomputable section
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits Topology
-open scoped AlgebraicGeometry
+open scoped AlgebraicGeometry BigOperators
 
 universe u v w
 
@@ -67,6 +67,11 @@ abbrev Chapter16FpqcCoveringFamily {S : Scheme.{u}} {I : Type v}
 theorem chapter16_fpqcMorphism_iff {S T : Scheme.{u}} (p : T ⟶ S) :
     Chapter16FpqcMorphism p ↔ Flat p ∧ QuasiCompact p ∧ Surjective p := Iff.rfl
 
+theorem chapter16_fpqcMorphism_to_chapter11
+    {S T : Scheme.{u}} {p : T ⟶ S} (hp : Chapter16FpqcMorphism p) :
+    LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter11.Scheme.IsFpqcMorphism p := by
+  exact ⟨hp.1, hp.2.2, hp.2.1⟩
+
 abbrev Chapter16FiniteLocallyFreeProfile {X Y : Scheme.{u}} (q : X ⟶ Y) (d : ℕ) :=
   LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10.Chapter10FiniteLocallyFreeProfile
     q d
@@ -75,23 +80,56 @@ abbrev Chapter16FiniteLocallyFreeMorphism {X Y : Scheme.{u}} (q : X ⟶ Y) : Pro
   LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10.Chapter10FiniteLocallyFreeMorphism
     q
 
+/- A finite locally free cover is the stronger hypothesis used by the norm argument in Section 15.3;
+the fpqc predicate alone is not enough for that construction. -/
+structure Chapter16FiniteLocallyFreeSurjectiveCover {S T : Scheme.{u}} (g : T ⟶ S) : Prop where
+  finiteLocallyFree : Chapter16FiniteLocallyFreeMorphism g
+  surjective : Surjective g
+
 abbrev Chapter16LineBundle (X : Scheme.{u}) :=
-  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter05.LineBundle X
+  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Chapter04LineBundle X
+
+namespace Chapter16LineBundle
+
+def Isomorphic {X : Scheme.{u}} (L M : Chapter16LineBundle X) : Prop :=
+  Nonempty (L.sheaf ≅ M.sheaf)
+
+end Chapter16LineBundle
+
+noncomputable def chapter16BaseChangeLineBundle
+    {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S) (L : Chapter16LineBundle X) :
+    Chapter16LineBundle (pullback f g) :=
+  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04PullbackLineBundle
+    (pullback.fst f g) L
+
+/- The canonical scheme morphism obtained by base-changing a morphism over the common base. -/
+noncomputable def chapter16BaseChangeMorphism
+    {A B S T : Scheme.{u}} (fA : A ⟶ S) (fB : B ⟶ S) (g : T ⟶ S)
+    (lambda : A ⟶ B) (over : lambda ≫ fB = fA) :
+    pullback fA g ⟶ pullback fB g :=
+  pullback.map fA g fB g lambda (𝟙 T) (𝟙 S)
+    (by simpa using over.symm) (by simp)
+
+def Chapter16IsBaseChangeOf
+    {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S) (L : Chapter16LineBundle X)
+    (M : Chapter16LineBundle (pullback f g)) : Prop :=
+  M.Isomorphic (chapter16BaseChangeLineBundle f g L)
 
 abbrev Chapter16IsAmple {X S : Scheme.{u}} (f : X ⟶ S) (L : Chapter16LineBundle X) : Prop :=
-  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter05.IsAmple f L
+  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04Ample f L
 
 abbrev Chapter16IsProjectiveMorphism {X S : Scheme.{u}} (f : X ⟶ S) : Prop :=
-  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter05.IsProjectiveMorphism f
+  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04Projective f
 
 /-! ### Fixed coefficient algebras -/
 
-/- The involution is written out rather than relying on a competing `StarRing` wrapper.  In the
- applications the carrier is finite as a `ℤ`-module; this is weaker and more useful than making the
+/- The involution is written out rather than relying on a competing `StarRing` wrapper.  PEL
+ applications allow a noncommutative coefficient algebra, so the carrier only needs a `Ring`.  In
+ the applications it is finite as a `ℤ`-module; this is weaker and more useful than making the
  underlying type finite. -/
 structure Chapter16FiniteAlgebraWithInvolution where
   carrier : Type u
-  [ring : CommRing carrier]
+  [ring : Ring carrier]
   finite : Module.Finite ℤ carrier
   star : carrier → carrier
   star_zero : star 0 = 0
@@ -104,41 +142,39 @@ namespace Chapter16FiniteAlgebraWithInvolution
 
 variable (O : Chapter16FiniteAlgebraWithInvolution)
 
-instance : CommRing O.carrier := O.ring
-
-@[simp] theorem star_zero : O.star 0 = 0 := O.star_zero
-
-@[simp] theorem star_one : O.star 1 = 1 := O.star_one
-
-theorem star_add (a b : O.carrier) : O.star (a + b) = O.star a + O.star b := O.star_add a b
-
-theorem star_mul (a b : O.carrier) : O.star (a * b) = O.star b * O.star a := O.star_mul a b
-
-@[simp] theorem star_star (a : O.carrier) : O.star (O.star a) = a := O.star_star a
+instance : Ring O.carrier := O.ring
 
 end Chapter16FiniteAlgebraWithInvolution
 
 /-! ### Basic descent certificates -/
 
 /-!
-The overlap isomorphism and cocycle are kept as book-facing fields because the canonical
-pullback-whiskering of an arbitrary structured object is not a single Mathlib structure.  The
-carrier map and the overlap maps are nevertheless concrete scheme morphisms, so this record can be
-refined without changing any theorem statements.
+The canonical Chapter 11 scheme datum supplies the actual overlap maps and cocycle.  The carrier
+and its map to the cover are retained here together with an isomorphism to that canonical object,
+so structured descent records can use the book-facing carrier without replacing the descent data by
+an unstructured proposition.
 -/
 structure Chapter16SchemeDescentDatum {S T : Scheme.{u}} (g : T ⟶ S) where
   cover : Chapter16FpqcMorphism g
   carrier : Scheme.{u}
   structureMap : carrier ⟶ T
-  overlap : Scheme.{u} := pullback g g
-  overlapFst : overlap ⟶ T := pullback.fst g g
-  overlapSnd : overlap ⟶ T := pullback.snd g g
-  overlapIso :
-    pullback structureMap overlapFst ≅ pullback structureMap overlapSnd
-  overlapIsoOver :
-    overlapIso.hom ≫ pullback.snd structureMap overlapSnd =
-      pullback.snd structureMap overlapFst
-  cocycle : Prop
+  canonical :
+    LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter11.SchemeDescent.Data
+      (ι := PUnit.{u + 1}) (S := S) (X := fun _ : PUnit.{u + 1} => T)
+      (fun _ : PUnit.{u + 1} => g)
+  canonical_matches :
+    Nonempty
+      (canonical.obj PUnit.unit ≅ Over.mk structureMap)
+
+theorem chapter16_schemeDescentDatum_effective
+    {S T : Scheme.{u}} {g : T ⟶ S}
+    (D : Chapter16SchemeDescentDatum g) :
+    Nonempty
+      (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter11.SchemeDescent.Effective
+        (fun _ : PUnit.{u + 1} => g) D.canonical) := by
+  exact
+    LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter11.SchemeDescent.singleton_effective_of_fpqc
+      g (chapter16_fpqcMorphism_to_chapter11 D.cover) D.canonical
 
 /- The canonical Mathlib descent-data object remains available for functors whose structured
  objects have already been packaged as a pseudofunctor. -/
@@ -157,18 +193,20 @@ structure Chapter16EulerCharacteristicData where
   dimension : ℕ → ℕ
   cohomologicalBound : ℕ
   vanishesAbove : ∀ i, cohomologicalBound < i → dimension i = 0
+  cohomologyModel : ℕ → Type u
+  cohomologyBasis : ∀ i, Nonempty (cohomologyModel i ≃ Fin (dimension i))
 
 def chapter16EulerCharacteristic (C : Chapter16EulerCharacteristicData) : ℤ :=
-  ∑ i in Finset.range (C.cohomologicalBound + 1),
-    (-1 : ℤ) ^ i * (C.dimension i : ℤ)
+  Finset.sum (Finset.range (C.cohomologicalBound + 1))
+    (fun i => (-1 : ℤ) ^ i * (C.dimension i : ℤ))
 
 def chapter16ArithmeticGenus (C : Chapter16EulerCharacteristicData) : ℤ :=
   1 - chapter16EulerCharacteristic C
 
 theorem chapter16_euler_characteristic_formula (C : Chapter16EulerCharacteristicData) :
     chapter16EulerCharacteristic C =
-      ∑ i in Finset.range (C.cohomologicalBound + 1),
-        (-1 : ℤ) ^ i * (C.dimension i : ℤ) := rfl
+      Finset.sum (Finset.range (C.cohomologicalBound + 1))
+        (fun i => (-1 : ℤ) ^ i * (C.dimension i : ℤ)) := rfl
 
 theorem chapter16_euler_characteristic_congr
     (C D : Chapter16EulerCharacteristicData)
@@ -188,6 +226,9 @@ theorem chapter16_arithmetic_genus_congr
 structure Chapter16ComponentIndex (X : Scheme.{u}) (m : ℕ) where
   component : Fin m → Set X
   nonempty : ∀ i, (component i).Nonempty
+  closed : ∀ i, IsClosed (component i)
+  irreducible : ∀ i, IsIrreducible (component i)
+  maximal : ∀ i Z, IsClosed Z → IsIrreducible Z → component i ⊆ Z → Z ⊆ component i
   pairwise_distinct : Pairwise (fun i j => component i ≠ component j)
   covers : (Set.univ : Set X) = ⋃ i, component i
 
@@ -212,13 +253,18 @@ structure Chapter16PlaneNodeModel (X : Scheme.{u}) (k : Type u)
     Spec (CommRingCat.of
       (MvPolynomial (Fin 2) k ⧸
         Ideal.span ({MvPolynomial.X 0 * MvPolynomial.X 1} : Set (MvPolynomial (Fin 2) k))))
-  pointInImage : point ∈ Set.range neighborhoodMap
+  node_preimage : neighborhood
+  node_preimage_maps_to_point : neighborhoodMap node_preimage = point
+  node_preimage_is_origin :
+    Ideal.Quotient.mk _ (MvPolynomial.X 0) ∈ (model.hom node_preimage).asIdeal ∧
+      Ideal.Quotient.mk _ (MvPolynomial.X 1) ∈ (model.hom node_preimage).asIdeal
 
 structure Chapter16FiberComponentData (X : Scheme.{u}) (m : ℕ) where
   index : Chapter16ComponentIndex X m
   next : Fin m → Fin m
   next_bijective : Function.Bijective next
-  incidence : Prop
+  incidence : Fin m → Fin m → Prop
+  incidence_iff_next : ∀ i j, incidence i j ↔ j = next i ∨ i = next j
 
 /-! ### Linear algebra used by determinant and pairing conditions -/
 
@@ -235,8 +281,9 @@ def Chapter16Isotropic {R M : Type u} [CommRing R] [AddCommGroup M] [Module R M]
 structure Chapter16SimilitudePairing (R M : Type u)
     [CommRing R] [AddCommGroup M] [Module R M] where
   pairing : M →ₗ[R] (M →ₗ[R] R)
+  referencePairing : M →ₗ[R] (M →ₗ[R] R)
   factor : R
-  similitude : Prop
+  similitude : ∀ x y, pairing x y = factor * referencePairing x y
 
 /- LOCAL_DEPENDENCY_GUESS: a sheaf-level Lie algebra is not exposed by the pinned Mathlib API in a
  form shared by the earlier chapters.  The module-level record below keeps finite freeness and the
@@ -244,8 +291,11 @@ structure Chapter16SimilitudePairing (R M : Type u)
 structure Chapter16LieDeterminantData (O : Chapter16FiniteAlgebraWithInvolution)
     (R M : Type u) [CommRing R] [AddCommGroup M] [Module R M]
     [Module.Free R M] [Module.Finite R M] where
-  lieModule : M
   action : O.carrier → Module.End R M
+  action_zero : action 0 = 0
+  action_one : action 1 = 1
+  action_add : ∀ a b, action (a + b) = action a + action b
+  action_mul : ∀ a b, action (a * b) = action a * action b
   prescribed : O.carrier → Polynomial R
   characteristic_polynomial : ∀ a, (action a).charpoly = prescribed a
 

@@ -44,6 +44,14 @@ def FiberwiseProjectiveButNotGloballyFinite {X S : Scheme.{u}} (f : X ⟶ S) : P
 def FiberwiseVeryAmpleButNotUniform {X S : Scheme.{u}} (f : X ⟶ S) (L : LineBundle X) : Prop :=
   IsFiberwiseVeryAmple f L ∧ ¬ IsVeryAmple f L
 
+/- A proper morphism can still exhibit the gap between fiberwise and relative positivity when
+the finite-presentation and uniformity hypotheses are absent. -/
+structure ProperFiberwiseAmpleButNotRelativelyAmple {X S : Scheme.{u}}
+    (f : X ⟶ S) (L : LineBundle X) : Prop where
+  proper : IsProper f
+  fiberwise_ample : IsFiberwiseAmple f L
+  not_relatively_ample : ¬ IsAmple f L
+
 theorem veryAmple_after_positive_power_implies_ample
     {X S : Scheme.{u}} (f : X ⟶ S) (L : LineBundle X) (P : LineBundlePowers L)
     (h : IsVeryAmpleAfterPositivePower f L P) :

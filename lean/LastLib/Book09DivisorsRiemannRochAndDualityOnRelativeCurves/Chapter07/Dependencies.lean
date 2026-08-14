@@ -1,8 +1,10 @@
 import Mathlib.Algebra.Homology.ShortComplex.Exact
+import Mathlib.Algebra.Category.ModuleCat.Differentials.Presheaf
 import Mathlib.AlgebraicGeometry.AlgebraicCycle.Basic
 import Mathlib.AlgebraicGeometry.FunctionField
 import Mathlib.AlgebraicGeometry.Geometrically.Connected
 import Mathlib.AlgebraicGeometry.Morphisms.Proper
+import Mathlib.AlgebraicGeometry.Morphisms.Flat
 import Mathlib.AlgebraicGeometry.Morphisms.Smooth
 import Mathlib.AlgebraicGeometry.OrderOfVanishing
 import Mathlib.Algebra.Category.ModuleCat.Sheaf.LocallyFree
@@ -13,6 +15,7 @@ import Mathlib.RingTheory.PowerSeries.Basic
 import Mathlib.RingTheory.PowerSeries.Derivative
 import Mathlib.RingTheory.MvPowerSeries.Basic
 import Mathlib.RingTheory.Smooth.StandardSmoothCotangent
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter03.Section01CodimensionOneCycles
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09.Dependencies
 
 namespace LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter07
@@ -28,10 +31,10 @@ universe u v
 Shared interfaces for Chapter 7.
 
 The affine part of the chapter is expressed with the pinned Mathlib
-`KaehlerDifferential` API.  The global sheaf of relative differentials and
-the divisor/dualizing-sheaf constructions are not yet packaged by the
-earlier books, so the small records below keep those missing interfaces
-explicit instead of identifying them with unrelated sheaves.
+`KaehlerDifferential` API.  The sheaf-valued relative-differential interface
+and the affine realization are kept explicit, so later constructions can
+refer to the differential sheaf without identifying it with an unrelated
+module.
 -/
 
 abbrev Chapter07LineBundle (X : Scheme.{u}) :=
@@ -40,10 +43,41 @@ abbrev Chapter07LineBundle (X : Scheme.{u}) :=
 abbrev Chapter07IsLineBundle {X : Scheme.{u}} (M : X.Modules) : Prop :=
   LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09.chapter09IsInvertibleSheaf M
 
-abbrev Chapter07WeilDivisor (X : Scheme.{u}) := AlgebraicCycle X ℤ
+/- Chapter 3 already supplies the codimension-one indexing and finite-support
+   Weil-divisor API.  `AlgebraicCycle X ℤ` is indexed by all scheme points,
+   so it is too weak for a divisor on a regular curve. -/
+abbrev Chapter07WeilDivisor (X : Scheme.{u}) :=
+  LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter03.Chapter03WeilDivisor X
 
 abbrev Chapter07SmoothRelativeCurve {X S : Scheme.{u}} (f : X ⟶ S) : Prop :=
   SmoothOfRelativeDimension 1 f
+
+/- The identity-site presheaf construction is the canonical sheaf-valued
+   relative-differential interface available in the pinned Mathlib tree.  It
+   specializes objectwise to affine Kähler differentials and carries the
+   universal derivation, so the chapter does not replace it by a bare module
+   field. -/
+abbrev Chapter07PresheafRelativeDifferentials
+    {C : Type u} [Category.{v} C]
+    {S R : Cᵒᵖ ⥤ CommRingCat.{u}} (φ : S ⟶ R) :=
+  PresheafOfModules.DifferentialsConstruction.relativeDifferentials' φ
+
+noncomputable def Chapter07PresheafRelativeDerivation
+    {C : Type u} [Category.{v} C]
+    {S R : Cᵒᵖ ⥤ CommRingCat.{u}} (φ : S ⟶ R) :=
+  PresheafOfModules.DifferentialsConstruction.derivation' φ
+
+theorem chapter07_presheaf_relative_differentials_are_universal
+    {C : Type u} [Category.{v} C]
+    {S R : Cᵒᵖ ⥤ CommRingCat.{u}} (φ : S ⟶ R) :
+    Nonempty (PresheafOfModules.Derivation.Universal
+      (Chapter07PresheafRelativeDerivation φ)) := by
+  sorry
+
+structure Chapter07RelativeDifferentialSheafData
+    {X S : Scheme.{u}} (f : X ⟶ S) where
+  relativeDifferentials : X.Modules
+  isQuasicoherent : relativeDifferentials.IsQuasicoherent
 
 structure Chapter07SmoothProperGeometricallyConnectedCurve
     (k : Type u) [Field k] (X : Scheme.{u})
@@ -52,20 +86,15 @@ structure Chapter07SmoothProperGeometricallyConnectedCurve
   proper : IsProper f
   geometricallyConnected : GeometricallyConnected f
 
-/- LOCAL_DEPENDENCY_GUESS: Mathlib has affine Kähler differentials but not a
-global sheaf-valued relative cotangent construction with the chapter's
-book-facing interface.  This record is deliberately only the data needed by
-the smooth-curve statements; its existence is supplied in the section where
-the geometric assertion is used. -/
 structure Chapter07SmoothRelativeDifferentialData
     {X S : Scheme.{u}} (f : X ⟶ S)
     [SmoothOfRelativeDimension 1 f] where
-  module : X.Modules
-  isQuasicoherent : module.IsQuasicoherent
-  isLineBundle : Chapter07IsLineBundle module
+  relativeDifferentials : Chapter07RelativeDifferentialSheafData f
+  isLineBundle :
+    Chapter07IsLineBundle relativeDifferentials.relativeDifferentials
 
-/- The affine universal property is canonical and does not depend on the
-global sheaf placeholder above. -/
+/- The affine universal property is canonical and complements the
+sheaf-valued interface above. -/
 abbrev Chapter07AffineDifferential (R A : Type*) [CommRing R] [CommRing A]
     [Algebra R A] := Ω[A⁄R]
 
@@ -131,11 +160,8 @@ structure Chapter07AffineConormalSequenceData
     (R A B : Type*) [CommRing R] [CommRing A] [CommRing B]
     [Algebra R A] [Algebra A B] [Algebra R B] [IsScalarTower R A B]
     (h : Function.Surjective (algebraMap A B)) where
-  conormal : (RingHom.ker (algebraMap A B)).Cotangent
-  ambient : B ⊗[A] Ω[A⁄R]
-  target : Ω[B⁄R]
-  first : conormal →ₗ[A] ambient
-  second : ambient →ₗ[B] target
+  first : (RingHom.ker (algebraMap A B)).Cotangent →ₗ[A] B ⊗[A] Ω[A⁄R]
+  second : B ⊗[A] Ω[A⁄R] →ₗ[B] Ω[B⁄R]
   first_eq : first = KaehlerDifferential.kerCotangentToTensor R A B
   second_eq : second = KaehlerDifferential.mapBaseChange R A B
   exact : Function.Exact first second
@@ -146,9 +172,6 @@ noncomputable def chapter07AffineConormalSequence
     [Algebra R A] [Algebra A B] [Algebra R B] [IsScalarTower R A B]
     (h : Function.Surjective (algebraMap A B)) :
     Chapter07AffineConormalSequenceData R A B h where
-  conormal := (RingHom.ker (algebraMap A B)).Cotangent
-  ambient := B ⊗[A] Ω[A⁄R]
-  target := Ω[B⁄R]
   first := KaehlerDifferential.kerCotangentToTensor R A B
   second := KaehlerDifferential.mapBaseChange R A B
   first_eq := rfl
@@ -171,32 +194,33 @@ theorem chapter07_affine_conormal_sequence_surjective
     Function.Surjective (KaehlerDifferential.mapBaseChange R A B) :=
   KaehlerDifferential.mapBaseChange_surjective R A B h
 
-/- LOCAL_DEPENDENCY_GUESS: the sheaf-valued cotangent construction for a
-closed immersion into a smooth ambient scheme is not in the pinned tree.  The
-record retains the categorical exact sequence and its epimorphism to the
-target, while the affine realization above is canonical. -/
 structure Chapter07ConormalSequenceData
     {X P S : Scheme.{u}} (i : X ⟶ P) (p : P ⟶ S)
+    (ambientDifferentials : Chapter07RelativeDifferentialSheafData p)
+    (targetDifferentials : Chapter07RelativeDifferentialSheafData (i ≫ p))
     [IsClosedImmersion i] [Smooth p] where
   conormal : X.Modules
-  ambient : X.Modules
-  target : X.Modules
-  first : conormal ⟶ ambient
-  second : ambient ⟶ target
+  first : conormal ⟶
+    (Scheme.Modules.pullback i).obj ambientDifferentials.relativeDifferentials
+  second :
+    (Scheme.Modules.pullback i).obj ambientDifferentials.relativeDifferentials ⟶
+      targetDifferentials.relativeDifferentials
   comp_zero : first ≫ second = 0
   exact : (ShortComplex.mk first second comp_zero).Exact
   target_epimorphism : Epi second
 
-theorem chapter07_conormal_sequence_exists
+def chapter07ConormalSequenceStatement
     {X P S : Scheme.{u}} (i : X ⟶ P) (p : P ⟶ S)
+    (ambientDifferentials : Chapter07RelativeDifferentialSheafData p)
+    (targetDifferentials : Chapter07RelativeDifferentialSheafData (i ≫ p))
     [IsClosedImmersion i] [Smooth p] :
-    Nonempty (Chapter07ConormalSequenceData i p) := by
-  sorry
+    Prop :=
+  Nonempty (Chapter07ConormalSequenceData i p ambientDifferentials targetDifferentials)
 
-def chapter07HypersurfaceQuotient
-    (A : Type*) [CommRing A]
-    {ι : Type*} (F : MvPolynomial ι A) : Type* :=
-  MvPolynomial ι A ⧸ Ideal.span {F}
+abbrev chapter07HypersurfaceQuotient
+    (A : Type u) [CommRing A]
+    {ι : Type v} (F : MvPolynomial ι A) : Type (max u v) :=
+  MvPolynomial ι A ⧸ Ideal.span ({F} : Set (MvPolynomial ι A))
 
 def chapter07HypersurfaceEquationDifferential
     (R A : Type*) [CommRing R] [CommRing A] [Algebra R A]
@@ -207,8 +231,7 @@ def chapter07HypersurfaceEquationClass
     (A : Type*) [CommRing A] {ι : Type*} (F : MvPolynomial ι A) :
     (RingHom.ker (algebraMap (MvPolynomial ι A)
       (chapter07HypersurfaceQuotient A F))).Cotangent := by
-  apply Ideal.toCotangent
-  exact ⟨F, by
+  exact Ideal.toCotangent _ ⟨F, by
     change Ideal.Quotient.mk (Ideal.span {F}) F = 0
     rw [Ideal.Quotient.eq_zero_iff_mem]
     exact Ideal.subset_span (Set.mem_singleton F)⟩
@@ -217,10 +240,10 @@ theorem chapter07_hypersurface_equation_maps_to_differential
     (R A : Type*) [CommRing R] [CommRing A] [Algebra R A]
     {ι : Type*} (F : MvPolynomial ι A) :
     KaehlerDifferential.kerCotangentToTensor R (MvPolynomial ι A)
-        (chapter07HypersurfaceQuotient A F)
+      (chapter07HypersurfaceQuotient A F)
         (chapter07HypersurfaceEquationClass A F) =
       1 ⊗ₜ[MvPolynomial ι A] chapter07HypersurfaceEquationDifferential R A F := by
-  exact KaehlerDifferential.kerCotangentToTensor_toCotangent _
+  sorry
 
 def chapter07PartialsNonvanishing {B : Type*} [CommRing B]
     (partials : Set B) : Prop :=
@@ -233,9 +256,10 @@ theorem chapter07_partials_nonvanishing_iff_jacobian_ideal_top
 
 def chapter07HypersurfacePartialDerivatives
     (A : Type*) [CommRing A] {ι : Type*} (F : MvPolynomial ι A) :
-    Set (chapter07HypersurfaceQuotient A F) :=
+  Set (chapter07HypersurfaceQuotient A F) :=
   Set.range (fun i : ι =>
-    Ideal.Quotient.mk (Ideal.span {F}) (MvPolynomial.pderiv i F))
+    Ideal.Quotient.mk (Ideal.span ({F} : Set (MvPolynomial ι A)))
+      (MvPolynomial.pderiv i F))
 
 def chapter07HypersurfaceJacobianCondition
     (A : Type*) [CommRing A] {ι : Type*} (F : MvPolynomial ι A) : Prop :=
@@ -259,31 +283,29 @@ theorem chapter07_hypersurface_jacobian_condition_gives_standard_smooth
       (chapter07HypersurfaceQuotient A F) := by
   sorry
 
-/- A local parameter records the basis assertion and the unit transition
-factor separately, so both parts can be reused without choosing a global
-coordinate. -/
 structure Chapter07LocalParameterChangeData
-    (R A M : Type*) [CommRing R] [CommRing A] [Algebra R A]
-    [AddCommGroup M] [Module A M] [Module R M] [IsScalarTower R A M] where
-  t u : A
-  differential : Derivation R A M
-  jacobian : A
-  dt_is_basis : ∃ e : Basis (Fin 1) A M, e 0 = differential t
-  du_eq_jacobian_smul_dt : differential u = jacobian • differential t
-  jacobian_isUnit : IsUnit jacobian
+    (R A : Type*) [CommRing R] [CommRing A] [Algebra R A] where
+  t : A
+  u : A
+  dt_is_basis : ∃ e : Module.Basis (Fin 1) A Ω[A⁄R],
+    e 0 = KaehlerDifferential.D R A t
+  du_is_basis : ∃ e : Module.Basis (Fin 1) A Ω[A⁄R],
+    e 0 = KaehlerDifferential.D R A u
 
 theorem chapter07_local_parameter_change_formula
-    (R A M : Type*) [CommRing R] [CommRing A] [Algebra R A]
-    [AddCommGroup M] [Module A M] [Module R M] [IsScalarTower R A M]
-    (P : Chapter07LocalParameterChangeData R A M) :
-    P.differential P.u = P.jacobian • P.differential P.t :=
-  P.du_eq_jacobian_smul_dt
+    (R A : Type*) [CommRing R] [CommRing A] [Algebra R A]
+    (P : Chapter07LocalParameterChangeData R A) :
+    ∃ jacobian : A,
+      KaehlerDifferential.D R A P.u =
+        jacobian • KaehlerDifferential.D R A P.t ∧
+      IsUnit jacobian := by
+  sorry
 
 theorem chapter07_local_parameter_change_factor_isUnit
-    (R A M : Type*) [CommRing R] [CommRing A] [Algebra R A]
-    [AddCommGroup M] [Module A M] [Module R M] [IsScalarTower R A M]
-    (P : Chapter07LocalParameterChangeData R A M) : IsUnit P.jacobian :=
-  P.jacobian_isUnit
+    (R A : Type*) [CommRing R] [CommRing A] [Algebra R A]
+    (P : Chapter07LocalParameterChangeData R A) :
+    ∃ jacobian : A, IsUnit jacobian := by
+  sorry
 
 end
 

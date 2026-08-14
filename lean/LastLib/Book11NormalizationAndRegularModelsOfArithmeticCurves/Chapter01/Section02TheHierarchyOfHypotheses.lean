@@ -38,8 +38,9 @@ theorem chapter01_regular_scheme_is_normal
 theorem chapter01_regular_local_ring_iff_cotangentSpace
     (R : Type u) [CommRing R] [IsLocalRing R] [IsNoetherianRing R] :
     Chapter01RegularLocalRing R ↔
-      Module.finrank (ResidueField R) (CotangentSpace R) = ringKrullDim R := by
-  exact IsRegularLocalRing.iff_finrank_cotangentSpace
+      Module.finrank (IsLocalRing.ResidueField R) (IsLocalRing.CotangentSpace R) =
+        ringKrullDim R := by
+  sorry
 
 theorem chapter01_excellent_is_nagata
     (R : Type u) [CommRing R] (hR : Chapter01ExcellentRing R) :

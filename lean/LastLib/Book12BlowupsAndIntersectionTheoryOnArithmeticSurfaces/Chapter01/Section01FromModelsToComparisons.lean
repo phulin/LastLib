@@ -16,16 +16,17 @@ universe u v
 theorem chapter01_book11_constructs_regular_proper_model
     {K : Type u} [Field K]
     (C : Chapter13SmoothProjectiveCurve K)
-    (S : Chapter13ExcellentDedekindScheme)
-    (η : AlgebraicGeometry.Spec (CommRingCat.of K) ⟶ S.carrier) :
+    (S : Chapter13ExcellentDedekindScheme K)
+    (η : AlgebraicGeometry.Spec (CommRingCat.of K) ⟶ S.carrier)
+    (hη : η = chapter13GenericPointMap S) :
     Nonempty (Chapter13RegularProperModel C S η) :=
-  chapter13_regular_proper_model_exists C S η
+  chapter13_regular_proper_model_exists C S η hη
 
 /-- The regular proper model retains the prescribed generic curve. -/
 theorem chapter01_regular_proper_model_has_the_same_generic_curve
     {K : Type u} [Field K]
     {C : Chapter13SmoothProjectiveCurve K}
-    {S : Chapter13ExcellentDedekindScheme}
+    {S : Chapter13ExcellentDedekindScheme K}
     {η : AlgebraicGeometry.Spec (CommRingCat.of K) ⟶ S.carrier}
     (M : Chapter13RegularProperModel C S η) :
     Nonempty (pullback M.structureMap η ≅ C.carrier) :=
@@ -50,8 +51,8 @@ theorem chapter01_point_blowup_preserves_generic_fiber
     {p : Chapter01SurfacePoint X}
     (b : Chapter01PointBlowup p) :
     b.genericFiberIso.hom ≫
-        pullback.snd b.target.structureMap (chapter01GenericPointMap B) =
-      pullback.snd X.structureMap (chapter01GenericPointMap B) :=
+        pullback.snd X.structureMap (chapter01GenericPointMap B) =
+      pullback.snd b.target.structureMap (chapter01GenericPointMap B) :=
   b.genericFiberIso_over
 
 /-- A finite component-indexed symmetric integer matrix for a special fiber. -/

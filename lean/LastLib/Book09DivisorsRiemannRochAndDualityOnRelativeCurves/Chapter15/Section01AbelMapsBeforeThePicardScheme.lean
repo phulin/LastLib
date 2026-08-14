@@ -1,10 +1,13 @@
 import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter15.Dependencies
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter04.Section04TheDivisorPicardCorrespondence
 
 namespace LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter15
 
 noncomputable section
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
+open LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter04
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11
 
@@ -20,27 +23,22 @@ explicit.  The construction of the line bundle of a Cartier divisor is a
 local dependency guess because it is not exposed by the pinned sheaf API.
 -/
 
-/- LOCAL_DEPENDENCY_GUESS: the pinned project does not yet identify the inverse
-   ideal of an effective Cartier divisor with an invertible module.  This
-   witness is the book-facing interface for the canonical sheaf O(D). -/
-structure Chapter15DivisorLineBundleWitness {X : Scheme.{u}}
-    (D : Chapter15EffectiveCartierDivisor X) where
-  lineBundle : Chapter15LineBundle X
-  canonical_construction : Prop
-  canonical_construction_proof : canonical_construction
+/- The inverse ideal is the canonical coefficient module for a divisor.  The
+   construction is named here because the pinned sheaf API does not expose its
+   invertibility proof as a reusable definition. -/
+noncomputable def chapter15InverseIdealModule {X : Scheme.{u}}
+    (D : Chapter15EffectiveCartierDivisor X) : X.Modules := by
+  sorry
 
 def Chapter15IsDivisorLineBundle {X : Scheme.{u}}
   (D : Chapter15EffectiveCartierDivisor X)
     (L : Chapter15LineBundle X) : Prop :=
-  ∃ w : Chapter15DivisorLineBundleWitness D, w.lineBundle = L ∧
-    w.canonical_construction
+  Nonempty (L.module ≅ chapter15InverseIdealModule D)
 
-/- LOCAL_DEPENDENCY_GUESS: existence of the invertible sheaf O(D) is standard
-   for an effective Cartier divisor, but no earlier LastLib declaration
-   packages the dual ideal sheaf. -/
 noncomputable def chapter15DivisorLineBundle {X : Scheme.{u}}
     (D : Chapter15EffectiveCartierDivisor X) : Chapter15LineBundle X :=
-  (Classical.choice (show Nonempty (Chapter15DivisorLineBundleWitness D) by sorry)).lineBundle
+  { module := chapter15InverseIdealModule D
+    isInvertible := by sorry }
 
 theorem chapter15_divisorLineBundle_is_divisorLineBundle {X : Scheme.{u}}
     (D : Chapter15EffectiveCartierDivisor X) :
@@ -62,10 +60,62 @@ def Chapter15LineBundleHasDegree {S : Scheme.{u}}
     (d : ℤ) : Prop :=
   chapter15LineBundleDegree C T L = d
 
-def Chapter15PicardPoints {S : Scheme.{u}} (C : RelativeScheme S)
+/- The earlier relative-Picard relation is stated for the Chapter 4
+   line-bundle wrapper.  This bridge keeps the Chapter 15 wrapper in the
+   public API while reusing that canonical relation. -/
+noncomputable def chapter15AsBook09Chapter04LineBundle {X : Scheme.{u}}
+    (L : Chapter15LineBundle X) :
+    LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter04.Chapter04LineBundle X :=
+  { sheaf := L.module
+    isInvertible := by sorry }
+
+abbrev Chapter15PicardRawPoints {S : Scheme.{u}} (C : RelativeScheme S)
     (T : RelativeScheme S) (d : ℤ) :=
   {L : Chapter15LineBundle (pullback C.structuralMap T.structuralMap) //
     Chapter15LineBundleHasDegree C T L d}
+
+def chapter15PicardRawEquivalent {S : Scheme.{u}} (C : RelativeScheme S)
+    (T : RelativeScheme S) (d : ℤ)
+    (L M : Chapter15PicardRawPoints C T d) : Prop :=
+  chapter04RelativePicardRelation
+    (pullback.snd C.structuralMap T.structuralMap)
+    (chapter15AsBook09Chapter04LineBundle L.1)
+    (chapter15AsBook09Chapter04LineBundle M.1)
+
+def chapter15PicardRawPointsSetoid {S : Scheme.{u}} (C : RelativeScheme S)
+    (T : RelativeScheme S) (d : ℤ) : Setoid (Chapter15PicardRawPoints C T d) where
+  r := chapter15PicardRawEquivalent C T d
+  iseqv :=
+    { refl := by
+        intro L
+        exact chapter04_relativePicardRelation_refl _ _
+      symm := by
+        intro L M h
+        exact chapter04_relativePicardRelation_symm _ h
+      trans := by
+        intro L M N hLM hMN
+        exact chapter04_relativePicardRelation_trans _ hLM hMN }
+
+/- The relative Picard functor quotients degree-d line bundles by the
+   fiberwise equivalence relation, rather than retaining a chosen
+   representative. -/
+abbrev Chapter15PicardPoints {S : Scheme.{u}} (C : RelativeScheme S)
+    (T : RelativeScheme S) (d : ℤ) :=
+  Quotient (chapter15PicardRawPointsSetoid C T d)
+
+noncomputable def chapter15PicardRepresentativeData {S : Scheme.{u}}
+    (C : RelativeScheme S) (T : RelativeScheme S) (d : ℤ)
+    (P : Chapter15PicardPoints C T d) : Chapter15PicardRawPoints C T d :=
+  Quotient.out P
+
+theorem chapter15PicardPoints_eq_iff {S : Scheme.{u}} (C : RelativeScheme S)
+    (T : RelativeScheme S) (d : ℤ)
+    (L M : Chapter15PicardRawPoints C T d) :
+    (Quotient.mk (chapter15PicardRawPointsSetoid C T d) L :
+      Chapter15PicardPoints C T d) =
+      Quotient.mk (chapter15PicardRawPointsSetoid C T d) M ↔
+      chapter15PicardRawEquivalent C T d L M := by
+  sorry
 
 structure Chapter15RelativePicardFunctorData {S : Scheme.{u}}
     (C : RelativeScheme S) (d : ℤ) where
@@ -74,8 +124,9 @@ structure Chapter15RelativePicardFunctorData {S : Scheme.{u}}
   restriction_lineBundle : ∀ {T U : RelativeScheme S} (u : U ⟶ T)
     (L : Chapter15PicardPoints C T d),
     Nonempty (Chapter15LineBundleIso
-      (chapter15PullbackLineBundle (chapter15CurveBaseChangeMap u) L.1)
-      (restriction u L).1)
+      (chapter15PullbackLineBundle (chapter15CurveBaseChangeMap u)
+        (chapter15PicardRepresentativeData C T d L).1)
+      (chapter15PicardRepresentativeData C U d (restriction u L)).1)
   restriction_id : ∀ (T : RelativeScheme S)
     (L : Chapter15PicardPoints C T d), restriction (𝟙 T) L = L
   restriction_comp : ∀ {T U V : RelativeScheme S}
@@ -112,17 +163,13 @@ structure Chapter15UniversalDivisorLineBundleData {S : Scheme.{u}}
       Chapter15LineBundle (pullback C.structuralMap T.structuralMap)
   divisor_lineBundle : ∀ (T : RelativeScheme S)
     (D : Chapter15RelativeEffectiveCartierDivisor C T d),
-    Chapter15IsDivisorLineBundle D.divisor (lineBundle T D)
+    Nonempty ((lineBundle T D).module ≅ chapter15InverseIdealModule D.divisor)
   restriction_iso : ∀ {T U : RelativeScheme S} (u : U ⟶ T)
     (D : Chapter15RelativeEffectiveCartierDivisor C T d),
     Nonempty (Chapter15LineBundleIso
       (chapter15PullbackLineBundle (chapter15CurveBaseChangeMap u)
         (lineBundle T D))
       (lineBundle U (divisorRestriction d u D)))
-  restriction_identity_coherence : Prop
-  restriction_identity_coherence_proof : restriction_identity_coherence
-  restriction_composition_coherence : Prop
-  restriction_composition_coherence_proof : restriction_composition_coherence
 
 /- LOCAL_DEPENDENCY_GUESS: this is the standard divisor-to-line-bundle
    construction and its naturality, separated from the Picard representability
@@ -156,7 +203,8 @@ structure Chapter15AbelMapData {S : Scheme.{u}}
   universal_lineBundle : ∀ (T : RelativeScheme S)
     (f : T ⟶ symmetricPower C d),
     Nonempty (Chapter15LineBundleIso
-      ((picard.equivalence T (f ≫ abelMap)).1)
+      ((chapter15PicardRepresentativeData C T (d : ℤ)
+        (picard.equivalence T (f ≫ abelMap))).1)
       ((chapter15UniversalDivisorLineBundle C d).lineBundle T
         (universalDivisorEquiv C T d f)))
 
@@ -228,31 +276,44 @@ theorem chapter15_abel_same_image_iff_linearly_equivalent
       Chapter15DivisorLinearEquivalent D.divisor E.divisor := by
   sorry
 
-/- Projective-space fiber convention.  The sections are kept as a genuine
-   finite-dimensional k-module object, while the pinned projective-bundle API
-   is not yet connected to relative Picard fibers. -/
+/- Projective-space fiber convention.  The coefficient modules and the fiber
+   are now tied to the earlier H0 and projective-bundle interfaces. -/
+noncomputable def chapter15H0Module {k : Type u} [Field k]
+    (C : Chapter15ProperSmoothIntegralCurve k)
+    (L : Chapter15LineBundle C.curve.carrier) : ModuleCat k := by
+  sorry
+
+noncomputable def chapter15DualH0Module {k : Type u} [Field k]
+    (C : Chapter15ProperSmoothIntegralCurve k)
+    (L : Chapter15LineBundle C.curve.carrier) : ModuleCat k := by
+  sorry
+
+noncomputable def chapter15ProjectiveFiberBundle {k : Type u} [Field k]
+    (C : Chapter15ProperSmoothIntegralCurve k)
+    (L : Chapter15LineBundle C.curve.carrier) :
+    Chapter04ProjectiveBundle (chapter15FieldBase k) := by
+  sorry
+
+def Chapter15HasNonzeroH0 {k : Type u} [Field k]
+    (C : Chapter15ProperSmoothIntegralCurve k)
+    (L : Chapter15LineBundle C.curve.carrier) : Prop :=
+  ∃ s : (chapter15H0Module C L : Type u), s ≠ 0
+
 structure Chapter15ProjectiveBundleFiber {k : Type u} [Field k]
     (C : Chapter15ProperSmoothIntegralCurve k)
     (L : Chapter15LineBundle C.curve.carrier) where
   sections : ModuleCat k
   dualSections : ModuleCat k
   fiber : Scheme.{u}
-  sections_are_H0 : Prop
-  sections_are_H0_proof : sections_are_H0
-  dual_is_dual : Prop
-  dual_is_dual_proof : dual_is_dual
-  fiber_is_projective_space : Prop
-  fiber_is_projective_space_proof : fiber_is_projective_space
-  quotient_convention : Prop
-  quotient_convention_proof : quotient_convention
-  parametrizes_one_dimensional_subspaces : Prop
-  parametrizes_one_dimensional_subspaces_proof :
-    parametrizes_one_dimensional_subspaces
+  sections_are_H0 : sections = chapter15H0Module C L
+  dual_is_dual : Nonempty (dualSections ≅ chapter15DualH0Module C L)
+  projectiveFiber : Chapter04ProjectiveBundle (chapter15FieldBase k)
+  fiber_is_projective_space : fiber = projectiveFiber.space
 
 theorem chapter15_projective_bundle_fiber {k : Type u} [Field k]
     (C : Chapter15ProperSmoothIntegralCurve k)
     (L : Chapter15LineBundle C.curve.carrier)
-    (hsections : Prop) (has_sections : hsections) :
+    (hsections : Chapter15HasNonzeroH0 C L) :
     Nonempty (Chapter15ProjectiveBundleFiber C L) := by
   sorry
 
@@ -262,20 +323,23 @@ def Chapter15AbelFiberDimension {k : Type u} [Field k]
 
 structure Chapter15AbelFiberDimensionData
     {k : Type u} [Field k]
-    (C : Chapter15ProperSmoothIntegralCurve k) (d : ℕ) where
-  fiberPoints : Type u
-  dimension : fiberPoints → ℤ
-  dimension_is_abel_fiber : Prop
-  dimension_is_abel_fiber_proof : dimension_is_abel_fiber
+    (C : Chapter15ProperSmoothIntegralCurve k) (d : ℕ)
+    (A : Chapter15AbelMapData C.curve d)
+    (P : A.picard.representing.carrier) where
+  fiberPoints : Set (symmetricPower C.curve d).carrier
+  fiberPoints_are_abel_fiber : ∀ x,
+    x ∈ fiberPoints ↔ A.abelMap.hom x = P
+  dimension : ℤ
+  dimension_is_RiemannRoch : dimension = Chapter15AbelFiberDimension C d
 
 theorem chapter15_abel_fibers_have_dimension_d_sub_g
     {k : Type u} [Field k]
     (C : Chapter15ProperSmoothIntegralCurve k) (d : ℕ)
-    (F : Chapter15AbelFiberDimensionData C d)
-    (hF : F.dimension_is_abel_fiber)
+    (A : Chapter15AbelMapData C.curve d)
+    (P : A.picard.representing.carrier)
+    (F : Chapter15AbelFiberDimensionData C d A P)
     (hd : 2 * (C.genus : ℤ) - 2 < (d : ℤ)) :
-    ∀ x : F.fiberPoints, F.dimension x =
-      Chapter15AbelFiberDimension C d := by
+    F.dimension = Chapter15AbelFiberDimension C d := by
   sorry
 
 end

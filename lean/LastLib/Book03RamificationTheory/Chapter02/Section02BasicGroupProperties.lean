@@ -51,7 +51,9 @@ theorem chapter02_canonical_lower_group_succ_le
 theorem chapter02_canonical_lower_group_eventually_trivial
     (K : Type u) {L : Type u} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
-    (v : AddValuation L (WithTop ℤ)) :
+    (v : AddValuation L (WithTop ℤ))
+    [Valuation.IsRankOneDiscrete v.toValuation]
+    [Finite (chapter02DecompositionGroup K v)] :
     ∃ N : ℕ, ∀ n : ℕ, N ≤ n → chapter02LowerGroupNat K v n = ⊥ := by
   sorry
 

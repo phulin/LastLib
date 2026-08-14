@@ -39,11 +39,18 @@ theorem chapter04_serre_criterion_domain
     : IsIntegrallyClosed A ↔ IsReduced A ∧ Chapter04SerreConditions A := by
   sorry
 
+/-- A regular integral locally noetherian scheme is normal. -/
+theorem chapter04_regular_integral_scheme_is_normal
+    (X : Scheme.{u}) [IsIntegral X] [IsLocallyNoetherian X]
+    (hregular : Chapter04RegularScheme X) :
+    Chapter04NormalScheme X := by
+  sorry
+
 /-- A noetherian normal local domain of dimension at least two has depth at least two. -/
 theorem chapter04_normal_local_domain_depth_ge_two
     (A : Type u) [CommRing A] [IsLocalRing A] [IsDomain A] [IsNoetherianRing A]
     (hnormal : IsIntegrallyClosed A)
-    (hmax : (maximalIdeal A).IsPrime)
+    (hmax : (IsLocalRing.maximalIdeal A).IsPrime)
     (hdim : (2 : WithBot ℕ∞) ≤ ringKrullDim A) :
     Chapter04Depth A ≥ (2 : WithBot ℕ∞) := by
   sorry
@@ -85,6 +92,7 @@ theorem chapter04_integral_mem_height_one_localization
 /-- The height-one intersection property forces integral closedness. -/
 theorem chapter04_height_one_intersection_integrallyClosed
     (A : Type u) [CommRing A] [IsDomain A] [IsNoetherianRing A]
+    (hR1 : Chapter04R1 A)
     (hinter : Chapter04HeightOneIntersection A) :
     IsIntegrallyClosed A := by
   sorry
@@ -114,13 +122,13 @@ theorem chapter04_normal_surface_nonregular_points_are_closed
 theorem chapter04_excellence_closes_singular_locus
     (X : Scheme.{u}) [Chapter04ExcellenceProfile X] :
     IsClosed (Chapter04NonRegularLocus X) := by
-  exact Chapter04ExcellenceProfile.singularLocus_closed
+  sorry
 
 /-- On a quasi-compact noetherian surface, no singular curve leaves finitely many singular points. -/
 theorem chapter04_quasiCompact_surface_singular_locus_finite
     (X : Scheme.{u}) [Chapter04ExcellenceProfile X]
     (hsurface : Chapter04NoetherianSurface X)
-    (hqc : IsQuasiCompact (Set.univ : Set X))
+    (hqc : IsCompact (Set.univ : Set X))
     (hnoCurve : Chapter04SingularLocusContainsNoCurve X) :
     (Chapter04NonRegularLocus X).Finite := by
   sorry

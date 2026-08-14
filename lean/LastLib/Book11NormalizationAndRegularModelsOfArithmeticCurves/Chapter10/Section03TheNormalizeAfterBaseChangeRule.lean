@@ -8,6 +8,7 @@ open AlgebraicGeometry CategoryTheory CategoryTheory.Limits Set
 open LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter01
 open LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter02
 open LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter03
+open LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter07
 open LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter08
 open scoped AlgebraicGeometry BigOperators
 
@@ -15,92 +16,109 @@ universe u v
 
 /-! ## 10.3 The normalize-after-base-change rule -/
 
-noncomputable abbrev chapter10NormalizedReducedBaseChange
+noncomputable def chapter10NormalizedReducedBaseChange
     {X S T : Scheme.{u}} (f : X ⟶ S) (p : T ⟶ S)
     (R : Chapter10ReductionData (chapter10BaseChange f p))
-    [QuasiCompact (𝟙 R.carrier)] [QuasiSeparated (𝟙 R.carrier)] : Scheme.{u} :=
-  Chapter02AbsoluteNormalization R.carrier
+    (hqc : QuasiCompact (chapter10IntegralComponentGenericPointMap R.integralComponent))
+    (hqs : QuasiSeparated (chapter10IntegralComponentGenericPointMap R.integralComponent)) :
+    Scheme.{u} := by
+  letI := hqc
+  letI := hqs
+  exact Chapter02AbsoluteNormalization R.integralComponent.carrier
 
-noncomputable abbrev chapter10NormalizedReducedBaseChangeToReduced
+noncomputable def chapter10NormalizedReducedBaseChangeToReduced
     {X S T : Scheme.{u}} (f : X ⟶ S) (p : T ⟶ S)
     (R : Chapter10ReductionData (chapter10BaseChange f p))
-    [QuasiCompact (𝟙 R.carrier)] [QuasiSeparated (𝟙 R.carrier)] :
-    chapter10NormalizedReducedBaseChange f p R ⟶ R.carrier :=
-  chapter02AbsoluteNormalizationMap R.carrier
+    (hqc : QuasiCompact (chapter10IntegralComponentGenericPointMap R.integralComponent))
+    (hqs : QuasiSeparated (chapter10IntegralComponentGenericPointMap R.integralComponent)) :
+    chapter10NormalizedReducedBaseChange f p R hqc hqs ⟶
+      R.integralComponent.carrier := by
+  letI := hqc
+  letI := hqs
+  exact chapter02AbsoluteNormalizationMap R.integralComponent.carrier
 
 noncomputable def chapter10NormalizedReducedBaseChangeMap
     {X S T : Scheme.{u}} (f : X ⟶ S) (p : T ⟶ S)
     (R : Chapter10ReductionData (chapter10BaseChange f p))
-    [QuasiCompact (𝟙 R.carrier)] [QuasiSeparated (𝟙 R.carrier)] :
-    chapter10NormalizedReducedBaseChange f p R ⟶ chapter10BaseChange f p :=
-  chapter10NormalizedReducedBaseChangeToReduced f p R ≫ R.projection
+    (hqc : QuasiCompact (chapter10IntegralComponentGenericPointMap R.integralComponent))
+    (hqs : QuasiSeparated (chapter10IntegralComponentGenericPointMap R.integralComponent)) :
+    chapter10NormalizedReducedBaseChange f p R hqc hqs ⟶ chapter10BaseChange f p :=
+  chapter10NormalizedReducedBaseChangeToReduced f p R hqc hqs ≫
+    R.integralComponent.inclusion ≫ R.projection
 
 theorem chapter10_normalized_reduced_baseChange_map_is_integral
     {X S T : Scheme.{u}} (f : X ⟶ S) (p : T ⟶ S)
     (R : Chapter10ReductionData (chapter10BaseChange f p))
-    [QuasiCompact (𝟙 R.carrier)] [QuasiSeparated (𝟙 R.carrier)] :
-    IsIntegralHom (chapter10NormalizedReducedBaseChangeMap f p R) := by
+    (hqc : QuasiCompact (chapter10IntegralComponentGenericPointMap R.integralComponent))
+    (hqs : QuasiSeparated (chapter10IntegralComponentGenericPointMap R.integralComponent)) :
+    IsIntegralHom (chapter10NormalizedReducedBaseChangeMap f p R hqc hqs) := by
   sorry
 
 theorem chapter10_normalized_reduced_baseChange_is_finite_over_excellent_base
     {X S T : Scheme.{u}} (f : X ⟶ S) (p : T ⟶ S)
     (R : Chapter10ReductionData (chapter10BaseChange f p))
-    [QuasiCompact (𝟙 R.carrier)] [QuasiSeparated (𝟙 R.carrier)]
+    (hqc : QuasiCompact (chapter10IntegralComponentGenericPointMap R.integralComponent))
+    (hqs : QuasiSeparated (chapter10IntegralComponentGenericPointMap R.integralComponent))
     (hT : Chapter03ExcellentDedekindScheme T)
     (hf : Chapter03ReducedFiniteTypeMorphism
-      (R.projection ≫ chapter10BaseChangeToBase f p))
+      (R.integralComponent.inclusion ≫ R.projection ≫ chapter10BaseChangeToBase f p))
     (hν : Chapter03NormalizationMap
-      (chapter10NormalizedReducedBaseChangeToReduced f p R)) :
-    IsFinite (chapter10NormalizedReducedBaseChangeToReduced f p R) := by
-  exact chapter03_normalization_finite_over_excellent_dedekind
-    (R.projection ≫ chapter10BaseChangeToBase f p) hT hf
-    (chapter10NormalizedReducedBaseChangeToReduced f p R) hν
+      (chapter10NormalizedReducedBaseChangeToReduced f p R hqc hqs)) :
+    IsFinite (chapter10NormalizedReducedBaseChangeToReduced f p R hqc hqs) := by
+  sorry
 
 theorem chapter10_normalized_reduced_baseChange_map_is_finite
     {X S T : Scheme.{u}} (f : X ⟶ S) (p : T ⟶ S)
     (R : Chapter10ReductionData (chapter10BaseChange f p))
-    [QuasiCompact (𝟙 R.carrier)] [QuasiSeparated (𝟙 R.carrier)]
-    (hν : IsFinite (chapter10NormalizedReducedBaseChangeToReduced f p R))
-    (hR : IsFinite R.projection) :
-    IsFinite (chapter10NormalizedReducedBaseChangeMap f p R) := by
+    (hqc : QuasiCompact (chapter10IntegralComponentGenericPointMap R.integralComponent))
+    (hqs : QuasiSeparated (chapter10IntegralComponentGenericPointMap R.integralComponent))
+    (hν : IsFinite (chapter10NormalizedReducedBaseChangeToReduced f p R hqc hqs))
+    (hR : IsFinite (R.integralComponent.inclusion ≫ R.projection)) :
+    IsFinite (chapter10NormalizedReducedBaseChangeMap f p R hqc hqs) := by
   sorry
 
 theorem chapter10_normalized_reduced_baseChange_is_proper
     {X S T : Scheme.{u}} (f : X ⟶ S) (p : T ⟶ S)
     (R : Chapter10ReductionData (chapter10BaseChange f p))
-    [QuasiCompact (𝟙 R.carrier)] [QuasiSeparated (𝟙 R.carrier)]
-    (hfinite : IsFinite (chapter10NormalizedReducedBaseChangeToReduced f p R)) :
-    IsProper (chapter10NormalizedReducedBaseChangeMap f p R) := by
+    (hqc : QuasiCompact (chapter10IntegralComponentGenericPointMap R.integralComponent))
+    (hqs : QuasiSeparated (chapter10IntegralComponentGenericPointMap R.integralComponent))
+    (hfinite : IsFinite (chapter10NormalizedReducedBaseChangeToReduced f p R hqc hqs))
+    (hR : IsProper (R.integralComponent.inclusion ≫ R.projection)) :
+    IsProper (chapter10NormalizedReducedBaseChangeMap f p R hqc hqs) := by
   sorry
 
 theorem chapter10_normalized_reduced_baseChange_is_projective
     {X S T : Scheme.{u}} (f : X ⟶ S) (p : T ⟶ S)
     (R : Chapter10ReductionData (chapter10BaseChange f p))
-    [QuasiCompact (𝟙 R.carrier)] [QuasiSeparated (𝟙 R.carrier)]
-    (hfinite : IsFinite (chapter10NormalizedReducedBaseChangeToReduced f p R)) :
-    Chapter07IsProjectiveMorphism (chapter10NormalizedReducedBaseChangeMap f p R) := by
+    (hqc : QuasiCompact (chapter10IntegralComponentGenericPointMap R.integralComponent))
+    (hqs : QuasiSeparated (chapter10IntegralComponentGenericPointMap R.integralComponent))
+    (hfinite : IsFinite (chapter10NormalizedReducedBaseChangeToReduced f p R hqc hqs))
+    (hR : Chapter07IsProjectiveMorphism (R.integralComponent.inclusion ≫ R.projection)) :
+    Chapter07IsProjectiveMorphism (chapter10NormalizedReducedBaseChangeMap f p R hqc hqs) := by
   sorry
 
 theorem chapter10_normalized_reduced_baseChange_is_proper_over_base
     {X S T : Scheme.{u}} (f : X ⟶ S) (p : T ⟶ S)
     (R : Chapter10ReductionData (chapter10BaseChange f p))
-    [QuasiCompact (𝟙 R.carrier)] [QuasiSeparated (𝟙 R.carrier)]
-    (hfinite : IsFinite (chapter10NormalizedReducedBaseChangeToReduced f p R))
-    (hR : IsProper R.projection)
+    (hqc : QuasiCompact (chapter10IntegralComponentGenericPointMap R.integralComponent))
+    (hqs : QuasiSeparated (chapter10IntegralComponentGenericPointMap R.integralComponent))
+    (hfinite : IsFinite (chapter10NormalizedReducedBaseChangeToReduced f p R hqc hqs))
+    (hR : IsProper (R.integralComponent.inclusion ≫ R.projection))
     (hbase : IsProper (chapter10BaseChangeToBase f p)) :
-    IsProper (chapter10NormalizedReducedBaseChangeMap f p R ≫
+    IsProper (chapter10NormalizedReducedBaseChangeMap f p R hqc hqs ≫
       chapter10BaseChangeToBase f p) := by
   sorry
 
 theorem chapter10_normalized_reduced_baseChange_is_projective_over_base
     {X S T : Scheme.{u}} (f : X ⟶ S) (p : T ⟶ S)
     (R : Chapter10ReductionData (chapter10BaseChange f p))
-    [QuasiCompact (𝟙 R.carrier)] [QuasiSeparated (𝟙 R.carrier)]
-    (hfinite : IsFinite (chapter10NormalizedReducedBaseChangeToReduced f p R))
-    (hR : Chapter07IsProjectiveMorphism R.projection)
+    (hqc : QuasiCompact (chapter10IntegralComponentGenericPointMap R.integralComponent))
+    (hqs : QuasiSeparated (chapter10IntegralComponentGenericPointMap R.integralComponent))
+    (hfinite : IsFinite (chapter10NormalizedReducedBaseChangeToReduced f p R hqc hqs))
+    (hR : Chapter07IsProjectiveMorphism (R.integralComponent.inclusion ≫ R.projection))
     (hbase : Chapter07IsProjectiveMorphism (chapter10BaseChangeToBase f p)) :
     Chapter07IsProjectiveMorphism
-      (chapter10NormalizedReducedBaseChangeMap f p R ≫
+      (chapter10NormalizedReducedBaseChangeMap f p R hqc hqs ≫
         chapter10BaseChangeToBase f p) := by
   sorry
 
@@ -140,11 +158,11 @@ theorem chapter10_normalization_after_baseChange_comparison_isIso_of_smooth
     {X S T : Scheme.{u}} (f : X ⟶ S) (p : T ⟶ S)
     [QuasiCompact f] [QuasiSeparated f] (hp : Smooth p) :
     IsIso (chapter10NormalizationAfterBaseChangeComparison f p) := by
-  letI : Smooth p := hp
+  let _ : Smooth p := hp
   exact chapter02_normalization_pullback_isIso f p
 
 theorem chapter10_normalization_after_baseChange_need_not_be_an_isomorphism :
-    Nonempty Chapter03NormalizationNeedNotCommuteWithBaseChange := by
+    Chapter03NormalizationNeedNotCommuteWithBaseChange := by
   exact chapter03_normalization_need_not_commute_with_base_change
 
 theorem chapter10_geometrically_normal_base_change_is_normal
@@ -167,6 +185,7 @@ theorem chapter10_separable_geometrically_normal_base_change_comparison_isIso
     {X : Scheme.{u}} {K K' : Type u} [Field K] [Field K'] [Algebra K K']
     [FiniteDimensional K K']
     (f : X ⟶ Spec (CommRingCat.of K))
+    [QuasiCompact f] [QuasiSeparated f]
     (hX : Chapter10GeometricallyNormal f)
     (hsep : Algebra.IsSeparable K K') :
     IsIso (chapter02NormalizationPullbackComparison f

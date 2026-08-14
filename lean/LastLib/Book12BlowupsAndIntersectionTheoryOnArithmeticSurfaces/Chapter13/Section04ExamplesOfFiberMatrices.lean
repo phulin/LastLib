@@ -1,4 +1,4 @@
-import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter13.Section03NegativityAndTheExactKernel
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter13.Dependencies
 
 namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter13
 
@@ -9,7 +9,7 @@ open scoped BigOperators
 
 /-! ## 13.4. Examples of fiber matrices -/
 
-def chapter13SingleComponentFiberMatrix (m : ℕ) :
+def chapter13SingleComponentFiberMatrix (_m : ℕ) :
     Matrix (Fin 1) (Fin 1) ℤ :=
   fun _ _ => 0
 
@@ -22,16 +22,17 @@ theorem chapter13_smooth_irreducible_fiber_self_intersection_zero
     selfIntersection = 0 ∧
       chapter13SingleComponentFiberMatrix 1 =
         fun _ _ => 0 := by
-  sorry
+  refine ⟨by simpa using hfiber_relation, ?_⟩
+  rfl
 
 def chapter13RationalizeMatrix {n : ℕ}
     (M : Matrix (Fin n) (Fin n) ℤ) : Matrix (Fin n) (Fin n) ℚ :=
   fun i j => M i j
 
 def chapter13MatrixHasEigenvalue {n : ℕ}
-    (M : Matrix (Fin n) (Fin n) ℤ) (λ : ℚ) : Prop :=
+    (M : Matrix (Fin n) (Fin n) ℤ) (eigenvalue : ℚ) : Prop :=
   ∃ v : Fin n → ℚ, v ≠ 0 ∧
-    ∀ i, ∑ j, (M i j : ℚ) * v j = λ * v i
+    ∀ i, ∑ j, (M i j : ℚ) * v j = eigenvalue * v i
 
 def chapter13TwoComponentFiberMatrix (q : ℕ) :
     Matrix (Fin 2) (Fin 2) ℤ :=
@@ -45,14 +46,16 @@ theorem chapter13_two_component_fiber_matrix_entries (q : ℕ) :
       chapter13TwoComponentFiberMatrix q 0 1 = (q : ℤ) ∧
       chapter13TwoComponentFiberMatrix q 1 0 = (q : ℤ) ∧
       chapter13TwoComponentFiberMatrix q 1 1 = -(q : ℤ) := by
-  sorry
+  simp [chapter13TwoComponentFiberMatrix]
 
 theorem chapter13_two_component_fiber_matrix_is_negative_laplacian
     (q : ℕ) :
     chapter13TwoComponentFiberMatrix q =
       fun i j =>
         if i = j then -(q : ℤ) else (q : ℤ) := by
-  sorry
+  funext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [chapter13TwoComponentFiberMatrix]
 
 theorem chapter13_two_component_fiber_matrix_kernel
     (q : ℕ) (hq : 0 < q) :
@@ -60,17 +63,103 @@ theorem chapter13_two_component_fiber_matrix_kernel
       chapter13MatrixKernel (chapter13RationalizeMatrix
         (chapter13TwoComponentFiberMatrix q)) x ↔
         ∃ c : ℚ, x = c • (fun _ : Fin 2 => (1 : ℚ)) := by
-  sorry
+  intro x
+  constructor
+  · intro hx
+    change ∀ i, ∑ j,
+      (chapter13TwoComponentFiberMatrix q i j : ℚ) * x j = 0 at hx
+    have hq0 : (q : ℚ) ≠ 0 := by
+      exact_mod_cast (Nat.ne_of_gt hq)
+    have h0 := hx (0 : Fin 2)
+    rw [Fin.sum_univ_two] at h0
+    simp [chapter13TwoComponentFiberMatrix] at h0
+    have hdiff : (q : ℚ) * x 1 - (q : ℚ) * x 0 = 0 := by
+      calc
+        (q : ℚ) * x 1 - (q : ℚ) * x 0 =
+            -(q : ℚ) * x 0 + (q : ℚ) * x 1 := by ring
+        _ = 0 := by simpa [neg_mul] using h0
+    have hx10 : x 1 = x 0 := by
+      apply mul_left_cancel₀ hq0
+      exact sub_eq_zero.mp hdiff
+    refine ⟨x 0, ?_⟩
+    funext i
+    fin_cases i
+    · simp
+    · simp [hx10]
+  · rintro ⟨c, rfl⟩
+    change ∀ i, ∑ j,
+      (chapter13TwoComponentFiberMatrix q i j : ℚ) *
+        (c • (fun _ : Fin 2 => (1 : ℚ))) j = 0
+    intro i
+    fin_cases i <;>
+      simp [chapter13TwoComponentFiberMatrix, Fin.sum_univ_two]
 
 theorem chapter13_two_component_fiber_matrix_eigenvalues
     (q : ℕ) (hq : 0 < q) :
     chapter13MatrixHasEigenvalue (chapter13TwoComponentFiberMatrix q) 0 ∧
       chapter13MatrixHasEigenvalue (chapter13TwoComponentFiberMatrix q)
         (-(2 * (q : ℚ))) ∧
-      ∀ λ : ℚ,
-        chapter13MatrixHasEigenvalue (chapter13TwoComponentFiberMatrix q) λ →
-          λ = 0 ∨ λ = -(2 * (q : ℚ)) := by
-  sorry
+      ∀ eigenvalue : ℚ,
+        chapter13MatrixHasEigenvalue (chapter13TwoComponentFiberMatrix q) eigenvalue →
+          eigenvalue = 0 ∨ eigenvalue = -(2 * (q : ℚ)) := by
+  unfold chapter13MatrixHasEigenvalue
+  constructor
+  · refine ⟨(fun _ : Fin 2 => (1 : ℚ)), ?_, ?_⟩
+    · intro h
+      have h0 := congrFun h (0 : Fin 2)
+      simp at h0
+    · intro i
+      fin_cases i <;>
+        simp [chapter13TwoComponentFiberMatrix, Fin.sum_univ_two]
+  constructor
+  · refine ⟨(fun i : Fin 2 => if i = 0 then (q : ℚ) else -(q : ℚ)), ?_, ?_⟩
+    · intro h
+      have h0 := congrFun h (0 : Fin 2)
+      simp at h0
+      exact (Nat.ne_of_gt hq) h0
+    · intro i
+      fin_cases i <;>
+        simp [chapter13TwoComponentFiberMatrix, Fin.sum_univ_two] <;> ring
+  · intro eigenvalue h
+    rcases h with ⟨v, hv, heq⟩
+    have h0 := heq (0 : Fin 2)
+    have h1 := heq (1 : Fin 2)
+    rw [Fin.sum_univ_two] at h0 h1
+    simp [chapter13TwoComponentFiberMatrix] at h0 h1
+    have h0' : -(q : ℚ) * v 0 + (q : ℚ) * v 1 =
+        eigenvalue * v 0 := by
+      simpa [neg_mul] using h0
+    have h1' : (q : ℚ) * v 0 - (q : ℚ) * v 1 =
+        eigenvalue * v 1 := by
+      simpa only [sub_eq_add_neg] using h1
+    by_cases hlambda : eigenvalue = 0
+    · exact Or.inl hlambda
+    · right
+      have hsum : eigenvalue * (v 0 + v 1) = 0 := by
+        calc
+          eigenvalue * (v 0 + v 1) =
+              eigenvalue * v 0 + eigenvalue * v 1 := by ring
+          _ = (-(q : ℚ) * v 0 + (q : ℚ) * v 1) +
+              ((q : ℚ) * v 0 - (q : ℚ) * v 1) := by
+            rw [h0', h1']
+          _ = 0 := by ring
+      have hsumzero : v 0 + v 1 = 0 :=
+        (mul_eq_zero.mp hsum).resolve_left hlambda
+      have hv1 : v 1 = -v 0 := eq_neg_of_add_eq_zero_right hsumzero
+      have hv0 : v 0 ≠ 0 := by
+        intro hv0
+        have hv1zero : v 1 = 0 := by rw [hv1, hv0, neg_zero]
+        apply hv
+        funext i
+        fin_cases i <;> simp [hv0, hv1zero]
+      have hcoef : (-(2 * (q : ℚ))) * v 0 = eigenvalue * v 0 := by
+        calc
+          (-(2 * (q : ℚ))) * v 0 =
+              -(q : ℚ) * v 0 + (q : ℚ) * v 1 := by
+                rw [hv1]
+                ring
+          _ = eigenvalue * v 0 := h0'
+      exact (mul_right_cancel₀ hv0 hcoef).symm
 
 def chapter13ResidueDegreeTotal {q : ℕ} (d : Fin q → ℕ) : ℕ :=
   ∑ j, d j
@@ -82,7 +171,8 @@ theorem chapter13_two_component_residue_degree_weighting
       fun i j =>
         if i = j then -(chapter13ResidueDegreeTotal d : ℤ)
         else (chapter13ResidueDegreeTotal d : ℤ) := by
-  sorry
+  exact chapter13_two_component_fiber_matrix_is_negative_laplacian
+    (chapter13ResidueDegreeTotal d)
 
 /-! ### Normal-crossing chains -/
 
@@ -96,9 +186,11 @@ def chapter13ChainValency (n : ℕ) (i : Fin n) : ℕ :=
 
 def chapter13ChainIntersectionMatrix (n : ℕ) :
     Matrix (Fin n) (Fin n) ℤ :=
-  fun i j =>
-    if i = j then -(chapter13ChainValency n i : ℤ)
-    else if chapter13ChainAdjacent i j then 1 else 0
+  by
+    classical
+    exact fun i j =>
+      if i = j then -(chapter13ChainValency n i : ℤ)
+      else if chapter13ChainAdjacent i j then 1 else 0
 
 structure Chapter13RationalTransverseChain where
   n : ℕ
@@ -120,13 +212,24 @@ theorem chapter13_rational_transverse_chain_matrix_is_negative_graph_laplacian
     (C : Chapter13RationalTransverseChain) :
     chapter13RationalTransverseChainMatrix C =
       chapter13ChainIntersectionMatrix C.n := by
-  sorry
+  funext i j
+  by_cases hij : i = j
+  · subst j
+    simp [chapter13RationalTransverseChainMatrix,
+      chapter13ChainIntersectionMatrix]
+  · by_cases hadj : chapter13ChainAdjacent i j
+    · simp [chapter13RationalTransverseChainMatrix,
+        chapter13ChainIntersectionMatrix, hij, hadj,
+        C.edgeIntersection_rational_transverse i j hadj]
+    · simp [chapter13RationalTransverseChainMatrix,
+        chapter13ChainIntersectionMatrix, hij, hadj,
+        C.nonedge_intersection_zero i j hij hadj]
 
 theorem chapter13_chain_end_component_has_square_minus_one
     (n : ℕ) (hn : 2 ≤ n) (i : Fin n)
     (hi : i.val = 0 ∨ i.val + 1 = n) :
     chapter13ChainIntersectionMatrix n i i = -1 := by
-  sorry
+  simp [chapter13ChainIntersectionMatrix, chapter13ChainValency, hn, hi]
 
 /-! The geometric certificate for an inverse point blowup is kept separate
 from the numerical end-component entry. -/
@@ -162,9 +265,12 @@ theorem chapter13_inverse_point_blowup_requires_projective_line_and_normal_bundl
 theorem chapter13_multiple_irreducible_fiber_matrix_is_zero
     (m : ℕ) (hm : 0 < m) (selfIntersection : ℤ)
     (hfiber_relation : (m : ℤ) * selfIntersection = 0) :
-    chapter13SingleComponentFiberMatrix m = fun _ _ => 0 ∧
+    (chapter13SingleComponentFiberMatrix m = fun _ _ => 0) ∧
       selfIntersection = 0 := by
-  sorry
+  have hm0 : (m : ℤ) ≠ 0 := by
+    exact_mod_cast (Nat.ne_of_gt hm)
+  refine ⟨rfl, ?_⟩
+  exact (mul_eq_zero.mp hfiber_relation).resolve_left hm0
 
 theorem chapter13_single_component_matrix_does_not_detect_multiplicity
     (m n : ℕ) (hm : 0 < m) (hn : 0 < n) (hmn : m ≠ n) :
@@ -172,7 +278,15 @@ theorem chapter13_single_component_matrix_does_not_detect_multiplicity
         chapter13SingleComponentFiberMatrix n ∧
       chapter13LabeledSingleComponentFiber m ≠
         chapter13LabeledSingleComponentFiber n := by
-  sorry
+  refine ⟨rfl, ?_⟩
+  by_cases hmz : m = 0
+  · exact (Nat.ne_of_gt hm hmz).elim
+  by_cases hnz : n = 0
+  · exact (Nat.ne_of_gt hn hnz).elim
+  intro h
+  apply hmn
+  have h0 := congrFun h (0 : Fin 1)
+  simpa [chapter13LabeledSingleComponentFiber] using h0
 
 end
 

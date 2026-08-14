@@ -15,18 +15,18 @@ universe u
 
 abbrev Chapter06SymmetricPower {S : Scheme.{u}}
     (C : RelativeScheme S) (d : ℕ)
-    [Chapter11QuasiProjectiveOver C] :=
+    [Chapter06SmoothProjectiveRelativeCurve C] :=
   symmetricPower C d
 
 abbrev Chapter06SymmetricPowerMap {S : Scheme.{u}}
     (C : RelativeScheme S) (d : ℕ)
-    [Chapter11QuasiProjectiveOver C] :
+    [Chapter06SmoothProjectiveRelativeCurve C] :
     (Chapter06SymmetricPower C d).carrier ⟶ S :=
   (symmetricPower C d).structuralMap
 
 abbrev Chapter06SymmetricPowerQuotientMap {S : Scheme.{u}}
     (C : RelativeScheme S) (d : ℕ)
-    [Chapter11QuasiProjectiveOver C] :
+    [Chapter06SmoothProjectiveRelativeCurve C] :
     (relativePower C d).carrier ⟶ Chapter06SymmetricPower C d :=
   symmetricPowerMap C d
 
@@ -37,13 +37,13 @@ abbrev Chapter06UniversalDivisorAmbient {S : Scheme.{u}}
 
 abbrev Chapter06UniversalDivisor {S : Scheme.{u}}
     (C : RelativeScheme S) (d : ℕ)
-    [Chapter11SmoothQuasiProjectiveCurve C] :
+    [Chapter06SmoothProjectiveRelativeCurve C] :
     EffectiveCartierDivisor (Chapter06UniversalDivisorAmbient C d) :=
   universalDivisor C d
 
 theorem chapter06_universal_divisor_is_finite_flat_of_rank
     {S : Scheme.{u}} (C : RelativeScheme S) (d : ℕ)
-    [Chapter11SmoothQuasiProjectiveCurve C] :
+    [Chapter06SmoothProjectiveRelativeCurve C] :
     Chapter06FiniteFlatRank
       ((Chapter06UniversalDivisor C d).inclusion ≫
         pullback.snd C.structuralMap (Chapter06SymmetricPowerMap C d)) d :=
@@ -51,19 +51,19 @@ theorem chapter06_universal_divisor_is_finite_flat_of_rank
 
 abbrev Chapter06UniversalDivisorOnTest {S : Scheme.{u}}
     (C T : RelativeScheme S) (d : ℕ)
-    [Chapter11SmoothQuasiProjectiveCurve C] :=
+    [Chapter06SmoothProjectiveRelativeCurve C] :=
   Chapter06RelativeEffectiveDivisor C T d
 
 noncomputable def chapter06UniversalDivisorEquiv
     {S : Scheme.{u}} (C T : RelativeScheme S) (d : ℕ)
-    [Chapter11SmoothQuasiProjectiveCurve C] :
+    [Chapter06SmoothProjectiveRelativeCurve C] :
     (T ⟶ Chapter06SymmetricPower C d) ≃
       Chapter06UniversalDivisorOnTest C T d :=
   universalDivisorEquiv C T d
 
 theorem chapter06_universal_divisor_pullback_is_universal
     {S : Scheme.{u}} (C T : RelativeScheme S) (d : ℕ)
-    [Chapter11SmoothQuasiProjectiveCurve C]
+    [Chapter06SmoothProjectiveRelativeCurve C]
     (f : T ⟶ Chapter06SymmetricPower C d) :
     Chapter11UniversalDivisorPullbackRelation C T d f
       (chapter06UniversalDivisorEquiv C T d f) :=
@@ -71,7 +71,7 @@ theorem chapter06_universal_divisor_pullback_is_universal
 
 theorem chapter06_universal_divisor_is_natural_under_base_change
     {S : Scheme.{u}} (C T U : RelativeScheme S) (d : ℕ)
-    [Chapter11SmoothQuasiProjectiveCurve C] (u : U ⟶ T)
+    [Chapter06SmoothProjectiveRelativeCurve C] (u : U ⟶ T)
     (f : T ⟶ Chapter06SymmetricPower C d) :
     divisorRestriction d u (chapter06UniversalDivisorEquiv C T d f) =
       chapter06UniversalDivisorEquiv C U d (u ≫ f) :=
@@ -79,14 +79,14 @@ theorem chapter06_universal_divisor_is_natural_under_base_change
 
 theorem chapter06_universal_divisor_pointwise_bijective
     {S : Scheme.{u}} (C T : RelativeScheme S) (d : ℕ)
-    [Chapter11SmoothQuasiProjectiveCurve C] :
+    [Chapter06SmoothProjectiveRelativeCurve C] :
     Function.Bijective (fun f : T ⟶ Chapter06SymmetricPower C d =>
       chapter06UniversalDivisorEquiv C T d f) :=
   (chapter06UniversalDivisorEquiv C T d).bijective
 
 noncomputable def chapter06SymmetricPowerClassifiesLengthFamilies
     {S : Scheme.{u}} (C T : RelativeScheme S) (d : ℕ)
-    [Chapter11SmoothQuasiProjectiveCurve C] :
+    [Chapter06SmoothProjectiveRelativeCurve C] :
     (T ⟶ Chapter06SymmetricPower C d) ≃
       Chapter06FiniteFlatClosedFamily C T d := by
   let e := chapter06UniversalDivisorEquiv C T d
@@ -98,18 +98,34 @@ noncomputable def chapter06SymmetricPowerClassifiesLengthFamilies
       invFun := fun Z => e.symm (h Z)
       left_inv := by
         intro f
-        sorry
+        apply e.injective
+        rw [e.apply_symm_apply]
+        apply chapter06_relative_effective_divisor_ext
+        exact chapter06FiniteFlatFamilyToRelativeDivisor_ideal C T d
+          { ideal := (e f).divisor.ideal
+            finite_flat_rank := (e f).finite_flat_rank }
       right_inv := by
         intro Z
         apply chapter06FiniteFlatClosedFamily_ext
-        sorry }
+        change (e (e.symm (h Z))).divisor.ideal = Z.ideal
+        rw [e.apply_symm_apply]
+        exact chapter06FiniteFlatFamilyToRelativeDivisor_ideal C T d Z }
 
 theorem chapter06_symmetric_power_classifies_length_d_families
     {S : Scheme.{u}} (C T : RelativeScheme S) (d : ℕ)
-    [Chapter11SmoothQuasiProjectiveCurve C] :
+    [Chapter06SmoothProjectiveRelativeCurve C] :
     Nonempty ((T ⟶ Chapter06SymmetricPower C d) ≃
       Chapter06FiniteFlatClosedFamily C T d) :=
   ⟨chapter06SymmetricPowerClassifiesLengthFamilies C T d⟩
+
+theorem chapter06_symmetric_power_classifies_length_families_natural
+    {S : Scheme.{u}} (C T U : RelativeScheme S) (d : ℕ)
+    [Chapter06SmoothProjectiveRelativeCurve C] (u : U ⟶ T)
+    (f : T ⟶ Chapter06SymmetricPower C d) :
+    chapter06FiniteFlatClosedFamilyBaseChange C T U u d
+        (chapter06SymmetricPowerClassifiesLengthFamilies C T d f) =
+      chapter06SymmetricPowerClassifiesLengthFamilies C U d (u ≫ f) := by
+  sorry
 
 noncomputable def chapter06RelativeDivisorSum
     {S : Scheme.{u}} {C T : RelativeScheme S} {d e : ℕ}
@@ -136,14 +152,14 @@ theorem chapter06_relative_divisor_sum_is_effective_cartier
 
 noncomputable def chapter06SymmetricPowerAddition
     {S : Scheme.{u}} (C : RelativeScheme S) (d e : ℕ)
-    [Chapter11SmoothQuasiProjectiveCurve C] :
+    [Chapter06SmoothProjectiveRelativeCurve C] :
     (relativeProduct (Chapter06SymmetricPower C d)
       (Chapter06SymmetricPower C e)).carrier ⟶ Chapter06SymmetricPower C (d + e) :=
   symmetricPowerAddition C d e
 
 theorem chapter06_symmetric_power_addition_is_divisor_sum
     {S : Scheme.{u}} (C : RelativeScheme S) (d e : ℕ)
-    [Chapter11SmoothQuasiProjectiveCurve C] :
+    [Chapter06SmoothProjectiveRelativeCurve C] :
     ∃ D : Chapter06RelativeEffectiveDivisor C
         (relativeProduct (Chapter06SymmetricPower C d)
           (Chapter06SymmetricPower C e)).carrier (d + e),
@@ -154,20 +170,43 @@ theorem chapter06_symmetric_power_addition_is_divisor_sum
             (relativeProduct (Chapter06SymmetricPower C d)
               (Chapter06SymmetricPower C e)).fst).divisor.add
             (chapter06UniversalDivisorEquiv C
-              (relativeProduct (Chapter06SymmetricPower C d)
-                (Chapter06SymmetricPower C e)).carrier e
+            (relativeProduct (Chapter06SymmetricPower C d)
+              (Chapter06SymmetricPower C e)).carrier e
               (relativeProduct (Chapter06SymmetricPower C d)
                 (Chapter06SymmetricPower C e)).snd).divisor ∧
+      chapter06SymmetricPowerAddition C d e =
+        divisorToSymmetricPoint C
+          (relativeProduct (Chapter06SymmetricPower C d)
+            (Chapter06SymmetricPower C e)).carrier (d + e) D ∧
       Chapter06FiniteFlatRank
         (D.divisor.inclusion ≫
           pullback.snd C.structuralMap
             (relativeProduct (Chapter06SymmetricPower C d)
               (Chapter06SymmetricPower C e)).carrier.structuralMap) (d + e) := by
-  sorry
+  rcases symmetricPowerAddition_from_divisor_sum C d e with ⟨D, hD, hRank⟩
+  refine ⟨D, hD, ?_, hRank⟩
+  unfold chapter06SymmetricPowerAddition symmetricPowerAddition
+  let P := relativeProduct (symmetricPower C d) (symmetricPower C e)
+  let Dd := pullbackUniversalDivisor C P.carrier d P.fst
+  let De := pullbackUniversalDivisor C P.carrier e P.snd
+  let D₀ : RelativeEffectiveCartierDivisor C P.carrier (d + e) :=
+    { divisor := Dd.divisor.add De.divisor
+      finite_flat_rank := relativeEffectiveCartierDivisor_add_rank d e Dd De }
+  change divisorToSymmetricPoint C P.carrier (d + e) D₀ =
+    divisorToSymmetricPoint C P.carrier (d + e) D
+  unfold divisorToSymmetricPoint
+  have hD₀ : D₀.divisor = D.divisor := by
+    simpa [D₀, Dd, De, P] using hD.symm
+  have hD₀' : D₀ = D := by
+    dsimp [D₀]
+    cases D
+    congr
+  exact congrArg ((universalDivisorRepresentingData C (d + e)).equivalence P.carrier).symm
+    hD₀'
 
 theorem chapter06_symmetric_power_addition_is_over_base
     {S : Scheme.{u}} (C : RelativeScheme S) (d e : ℕ)
-    [Chapter11SmoothQuasiProjectiveCurve C] :
+    [Chapter06SmoothProjectiveRelativeCurve C] :
     (chapter06SymmetricPowerAddition C d e).hom ≫
         Chapter06SymmetricPowerMap C (d + e) =
       (relativeProduct (Chapter06SymmetricPower C d)
@@ -189,13 +228,18 @@ theorem chapter06_geometric_point_sum_is_concatenation
 theorem chapter06_geometric_point_sum_retains_multiplicity
     {α : Type u} [DecidableEq α] (p q : Multiset α) (a : α) :
     (chapter06GeometricPointSum p q).count a = p.count a + q.count a := by
-  sorry
+  simp [chapter06GeometricPointSum]
 
 theorem chapter06_collision_gives_multiplicity_two
     {α : Type u} [DecidableEq α] {p q : Multiset α}
     (h : chapter06GeometricPointCollision p q) :
     ∃ a, 2 ≤ (chapter06GeometricPointSum p q).count a := by
-  sorry
+  rcases h with ⟨a, hpa, hqa⟩
+  refine ⟨a, ?_⟩
+  rw [chapter06_geometric_point_sum_retains_multiplicity]
+  have hp : 0 < p.count a := Multiset.count_pos.mpr hpa
+  have hq : 0 < q.count a := Multiset.count_pos.mpr hqa
+  omega
 
 def chapter06RepeatedSectionLocalEquation {R : Type u} [CommRing R]
     (t : R) (d : ℕ) : R :=

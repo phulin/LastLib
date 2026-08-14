@@ -1,4 +1,4 @@
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.Section02ExistenceUniquenessAndCompleteness
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section06FiniteExtensionsOfCompleteFields
 import Mathlib.NumberTheory.Padics.Complex
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01

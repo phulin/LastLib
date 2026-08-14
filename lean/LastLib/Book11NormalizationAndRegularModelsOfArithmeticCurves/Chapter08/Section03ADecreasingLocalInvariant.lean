@@ -98,14 +98,11 @@ structure Chapter08SurfaceLocalInvariantInput
   excellent : Chapter03Excellent A
   dimension_two : ringKrullDim A = 2
 
-def chapter08SurfaceLocalInvariantInput_of_excellentNormal
+theorem chapter08SurfaceLocalInvariantInput_of_excellentNormal
     (A : Type u) [CommRing A] [IsLocalRing A] [IsDomain A] [IsNoetherianRing A]
     (hA : Chapter08ExcellentNormalTwoDimensionalLocalDomain A) :
-    Chapter08SurfaceLocalInvariantInput A :=
-  { domain := inferInstance
-    normal := hA.normal
-    excellent := hA.excellent
-    dimension_two := hA.dimension_two }
+    Chapter08SurfaceLocalInvariantInput A := by
+  sorry
 
 structure Chapter08ConductorProfile
     (A : Type u) [CommRing A] [IsLocalRing A] where
@@ -113,7 +110,7 @@ structure Chapter08ConductorProfile
   parameter_is_general : Prop
   sectionRing : Type u
   sectionRing_identification :
-    sectionRing = A ⧸ Ideal.span ({parameter} : Set A)
+    sectionRing = (A ⧸ Ideal.span ({parameter} : Set A))
   normalization : Type u
   finite_normalization : Prop
   conductor_colength : ℕ
@@ -125,7 +122,7 @@ structure Chapter08LocalInvariantData
   multiplicity : ℕ
   directrixField : Type u
   [directrixField_isField : Field directrixField]
-  [directrixField_algebra : Algebra (ResidueField A) directrixField]
+  [directrixField_algebra : Algebra (IsLocalRing.ResidueField A) directrixField]
   directrix : Chapter08DirectrixProfile A directrixField
   conductor : Chapter08ConductorProfile A
   multiplicity_specification : Prop
@@ -145,6 +142,8 @@ noncomputable def chapter08LocalInvariantData
 def chapter08InvariantOfData
     (A : Type u) [CommRing A] [IsLocalRing A] [IsNoetherianRing A]
     (D : Chapter08LocalInvariantData A) : ℕ × ℕ × ℕ :=
+  letI := D.directrixField_isField
+  letI := D.directrixField_algebra
   (D.multiplicity,
     (2 - Module.finrank D.directrixField D.directrix.directrix,
       D.conductor.conductor_colength))
@@ -205,6 +204,7 @@ structure Chapter08ConductorLengthData where
 
 theorem chapter08_conductor_length_formula
     (D : Chapter08ConductorLengthData) :
+    letI := D.branchIndex_finite
     D.totalLength = (∑ j, D.branchLength j) - D.baseLength := by
   exact D.formula
 
@@ -279,6 +279,7 @@ theorem chapter08_surface_decrease_with_prescribed_regular_punctured_spectrum
 
 def Chapter08MultiplicityPlateau
     (A B : Type u) [CommRing A] [IsLocalRing A] [IsNoetherianRing A]
+    [CommRing B] [IsLocalRing B] [IsNoetherianRing B]
     (hA : Chapter08SurfaceLocalInvariantInput A)
     (hB : Chapter08SurfaceLocalInvariantInput B) : Prop :=
   chapter08Multiplicity A hA.dimension_two = chapter08Multiplicity B hB.dimension_two

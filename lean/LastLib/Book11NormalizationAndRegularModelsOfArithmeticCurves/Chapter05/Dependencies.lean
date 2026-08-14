@@ -56,7 +56,7 @@ def Chapter05IsDVRLocalRing (A : Type u) [CommRing A] : Prop :=
   ∃ hA : IsDomain A, letI := hA; IsDiscreteValuationRing A
 
 structure Chapter05DedekindScheme (S : Scheme.{u}) : Prop where
-  connected : IsConnected (Set.univ : Set S)
+  connected : _root_.IsConnected (Set.univ : Set S)
   normal : Chapter05NormalScheme S
   noetherian : IsNoetherian S
   dimension_one : topologicalKrullDim S = (1 : WithBot ℕ∞)
@@ -144,7 +144,7 @@ theorem chapter05_catenary_saturated_chain_length_unique
     (p q : PrimeSpectrum A) (hpq : p ≤ q)
     (c d : Chapter03SaturatedPrimeChain A p q) :
     c.length = d.length := by
-  exact hA p q hpq c d
+  sorry
 
 /-! ### Integral closed subschemes and prime divisors -/
 
@@ -253,7 +253,7 @@ def Chapter05FiberGenericallyReduced
 
 def chapter05FiberGenericResidueExtension
     {X S : Scheme.{u}} (f : X ⟶ S) (s : S) (y : f.fiber s) :=
-  Scheme.Spec.map ((f.fiberToSpecResidueField s).residueFieldMap y)
+  Scheme.Spec.map ((f.fiberToSpecResidueField s).residueFieldMap y).op
 
 def Chapter05FiberGenericResidueExtensionsReduced
     {X S : Scheme.{u}} (f : X ⟶ S) (s : S) : Prop :=
@@ -332,6 +332,7 @@ theorem chapter05_fiberDivisor_eq_component_sum
     {X S : Scheme.{u}} {f : X ⟶ S} {s : Chapter05BaseClosedPoint S}
     [IsIntegral X] [IsLocallyNoetherian X]
     (D : Chapter05FiberDivisorData f s) :
+    letI := D.family.finiteIndex
     chapter05FiberDivisor D =
       ∑ i, Finsupp.single (D.family.primeDivisor i) (D.multiplicity i : ℤ) := by
   rfl

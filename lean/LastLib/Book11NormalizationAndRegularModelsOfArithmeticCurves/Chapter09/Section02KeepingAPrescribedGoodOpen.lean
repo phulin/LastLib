@@ -22,8 +22,8 @@ structure Chapter09ClosureRestrictionIdentification
     (U : S.Opens)
     (D : Chapter01ProjectiveClosureData B.toChapter01DedekindBase C.structureMap)
     (M : Chapter09RegularProjectiveOpenModel B C U) where
-  iso : (D.closure ⁻¹ᵁ U).toScheme ≅ M.carrier
-  over : iso.hom ≫ M.structureMap = D.closureMap ∣_ U
+  iso : (D.closureMap ⁻¹ᵁ U).toScheme ≅ M.carrier
+  «over» : iso.hom ≫ M.structureMap = D.closureMap ∣_ U
 
 theorem chapter09_closureRestrictionIdentification_over
     {S : Scheme.{u}} {K : Type u} [Field K]

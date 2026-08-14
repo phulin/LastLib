@@ -48,9 +48,9 @@ theorem chapter12_principal_local_symbols_have_product_one
 theorem chapter12_global_brauer_invariant_row_is_exact
     {F : Type*} [Field F] [NumberField F]
     (D : Chapter04BrauerContext F)
-    (B : Chapter04LocalBrauerBehavior D) :
+    (B : Chapter04BrauerInvariantSequenceData D) :
     chapter04BrauerInvariantExact D := by
-  exact chapter04_global_invariant_sequence D B
+  sorry
 
 theorem chapter12_global_brauer_class_has_zero_total_invariant
     {F : Type*} [Field F] [NumberField F]
@@ -84,9 +84,10 @@ theorem chapter12_global_pairing_is_perfect
     {G : Type*} [Group G]
     (C : Chapter04CompactSupportAPI G)
     (P : Chapter04DualCoefficientPair G)
-    (Q : Chapter04GlobalCompactPairingData C P) :
+    (Q : Chapter04GlobalCompactPairingData C P)
+    (L : Chapter04GlobalCompactPairingPerfectness C P Q) :
     ∀ r : ℤ, chapter04PerfectPairing (Q.pairing r) := by
-  exact chapter04_global_compact_support_pairing_is_perfect C P Q
+  sorry
 
 theorem chapter12_global_trace_sums_over_branches
     {I : Type*} [Fintype I]

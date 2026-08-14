@@ -93,7 +93,7 @@ theorem chapter09_rightCosetTransferProduct_independent
 
 /-- The transfer attached to the Galois inclusion in the common closure. -/
 noncomputable def chapter09GaloisTransfer
-    (K L Ks : Type*) [Field K] [Field L] [Field Ks]
+    (K L Ks : Type) [Field K] [Field L] [Field Ks]
     [Algebra K L] [Algebra K Ks] [Algebra L Ks]
     [IsScalarTower K L Ks] [FiniteDimensional K L]
     [Algebra.IsSeparable K L]
@@ -111,27 +111,27 @@ This is the equality represented by the second reciprocity square:
 `rec_L ∘ ι = Ver_{L/K} ∘ rec_K`.
 -/
 theorem chapter09_inclusion_transfer_compatibility
-    (K L Ks : Type*) [Field K] [Field L] [Field Ks]
+    (K L Ks : Type) [Field K] [Field L] [Field Ks]
     [Algebra K L] [Algebra K Ks] [Algebra L Ks]
     [IsScalarTower K L Ks] [FiniteDimensional K L]
     [Algebra.IsSeparable K L]
     (T : Chapter09FiniteSeparableExtension K L Ks)
     (R : Chapter09ReciprocitySystem K L Ks T) :
-    R.recL.comp (chapter09FieldInclusionHom K L) =
-      (chapter09GaloisTransfer K L Ks T).comp R.recK := by
+    R.recL.reciprocity.comp (chapter09FieldInclusionHom K L) =
+      (chapter09GaloisTransfer K L Ks T).comp R.recK.reciprocity := by
   sorry
 
 theorem chapter09_inclusion_transfer_compatibility_apply
-    (K L Ks : Type*) [Field K] [Field L] [Field Ks]
+    (K L Ks : Type) [Field K] [Field L] [Field Ks]
     [Algebra K L] [Algebra K Ks] [Algebra L Ks]
     [IsScalarTower K L Ks] [FiniteDimensional K L]
     [Algebra.IsSeparable K L]
     (T : Chapter09FiniteSeparableExtension K L Ks)
     (R : Chapter09ReciprocitySystem K L Ks T) (x : Kˣ) :
-    R.recL (chapter09FieldInclusionHom K L x) =
-      chapter09GaloisTransfer K L Ks T (R.recK x) := by
-  simpa only [MonoidHom.comp_apply] using
-    DFunLike.congr_fun (chapter09_inclusion_transfer_compatibility K L Ks T R) x
+    R.recL.reciprocity (chapter09FieldInclusionHom K L x) =
+      chapter09GaloisTransfer K L Ks T (R.recK.reciprocity x) := by
+  exact DFunLike.congr_fun
+    (chapter09_inclusion_transfer_compatibility K L Ks T R) x
 
 end
 

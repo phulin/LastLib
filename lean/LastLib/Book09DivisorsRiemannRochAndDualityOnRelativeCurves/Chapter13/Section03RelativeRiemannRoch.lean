@@ -6,6 +6,8 @@ open CategoryTheory CategoryTheory.Limits
 open AlgebraicGeometry
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09
+open LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter09
 open scoped AlgebraicGeometry
 
 noncomputable section
@@ -13,6 +15,29 @@ noncomputable section
 universe u
 
 /-! ## 13.3. Relative Riemann--Roch -/
+
+/-! ### Canonical line-bundle cohomology -/
+
+/- The line-bundle profile is the specialization of the canonical relative
+cohomology package for the line bundle viewed as a rank-one bundle. -/
+structure Chapter13LineBundleCohomologyData
+    (C : Chapter13RelativeCurve) (L : Chapter04LineBundle C.X) where
+  relative_cohomology :
+    Chapter13RelativeCohomologyData C (chapter13LineBundleAsVectorBundle L)
+
+namespace Chapter13LineBundleCohomologyData
+
+abbrev fiber {C : Chapter13RelativeCurve} {L : Chapter04LineBundle C.X}
+    (H : Chapter13LineBundleCohomologyData C L) :
+    Chapter13FiberCohomologyProfile C L.sheaf :=
+  H.relative_cohomology.fiber
+
+abbrev firstHigherDirectImage {C : Chapter13RelativeCurve}
+    {L : Chapter04LineBundle C.X}
+    (H : Chapter13LineBundleCohomologyData C L) : C.S.Modules :=
+  H.relative_cohomology.firstHigherDirectImage
+
+end Chapter13LineBundleCohomologyData
 
 /-! ### Connected reduced fibers and degree -/
 
@@ -23,6 +48,15 @@ structure Chapter13GeometricGenusData (C : Chapter13RelativeCurve) where
   genus : ℕ
   arithmetic_genus : C.S → ℕ
   arithmetic_genus_eq : ∀ s, arithmetic_genus s = genus
+  structure_sheaf_cohomology :
+    Chapter13LineBundleCohomologyData C (chapter04TrivialLineBundle C.X)
+  structure_sheaf_h0_rank_one : ∀ s : C.S,
+    Module.finrank (C.S.residueField s)
+        (structure_sheaf_cohomology.fiber.h0 s).module = 1
+  arithmetic_genus_eq_structure_sheaf_h1 : ∀ s : C.S,
+    arithmetic_genus s =
+      Module.finrank (C.S.residueField s)
+        (structure_sheaf_cohomology.fiber.h1 s).module
 
 /-- The fiberwise degree interface for line bundles. -/
 structure Chapter13FiberDegreeTheory (C : Chapter13RelativeCurve) where
@@ -31,6 +65,25 @@ structure Chapter13FiberDegreeTheory (C : Chapter13RelativeCurve) where
     ∀ (s : C.S) (L M : Chapter04LineBundle (C.f.fiber s)),
       degree s (chapter04LineBundleTensor L M) = degree s L + degree s M
   degree_trivial : ∀ s, degree s (chapter04TrivialLineBundle (C.f.fiber s)) = 0
+  canonical_line_bundle_cohomology : ∀ L : Chapter04LineBundle C.X,
+    Chapter13LineBundleCohomologyData C L
+  degree_eq_canonical_euler_difference :
+    ∀ (s : C.S) (L : Chapter04LineBundle C.X),
+      degree s (chapter13FiberLineBundle L s) =
+        ((Module.finrank (C.S.residueField s)
+            ((canonical_line_bundle_cohomology L).fiber.h0 s).module : ℤ) -
+          (Module.finrank (C.S.residueField s)
+            ((canonical_line_bundle_cohomology L).fiber.h1 s).module : ℤ)) -
+          ((Module.finrank (C.S.residueField s)
+            ((canonical_line_bundle_cohomology
+              (chapter04TrivialLineBundle C.X)).fiber.h0 s).module : ℤ) -
+            (Module.finrank (C.S.residueField s)
+              ((canonical_line_bundle_cohomology
+                (chapter04TrivialLineBundle C.X)).fiber.h1 s).module : ℤ))
+  determinant_degree_compatibility :
+    ∀ (E : Chapter13VectorBundle C.X) (s : C.S),
+      degree s (chapter13FiberVectorBundle E s).determinant =
+        degree s (chapter13FiberLineBundle E.determinant s)
 
 /-- Relative degree of a line bundle on the total space. -/
 def chapter13RelativeDegree {C : Chapter13RelativeCurve}
@@ -70,13 +123,8 @@ theorem chapter13_arithmetic_genus_locally_constant
 
 /- LOCAL_DEPENDENCY_GUESS: the preceding divisor chapters are expected to
 identify the degree function with the degree of a Cartier divisor and to prove
-its local constancy in flat projective families.  The RR statements use only
-the displayed fiberwise degree interface. -/
-
-/-- Cohomology data for a line bundle, using the actual scheme-theoretic fibers. -/
-structure Chapter13LineBundleCohomologyData
-    (C : Chapter13RelativeCurve) (L : Chapter04LineBundle C.X) where
-  fiber : Chapter13FiberCohomologyProfile C L.sheaf
+its local constancy in flat projective families.  The displayed compatibility
+now fixes the degree to the canonical fiber Euler characteristic. -/
 
 /-- Euler characteristic of a line bundle on a fiber. -/
 def chapter13LineFiberEulerCharacteristic
@@ -90,7 +138,8 @@ theorem chapter13_relative_line_bundle_riemann_roch
     {C : Chapter13RelativeCurve} (G : Chapter13GeometricGenusData C)
     (deg : Chapter13FiberDegreeTheory C) (L : Chapter04LineBundle C.X)
     (H : Chapter13LineBundleCohomologyData C L) (d : ℤ)
-    (hd : chapter13LineBundleOfRelativeDegree deg L d) :
+    (hd : chapter13LineBundleOfRelativeDegree deg L d)
+    (hcanonical : H = deg.canonical_line_bundle_cohomology L) :
     ∀ s : C.S,
       chapter13LineFiberEulerCharacteristic H s = d + 1 - (G.genus : ℤ) := by
   sorry
@@ -99,13 +148,14 @@ theorem chapter13_relative_line_bundle_riemann_roch
 def chapter13VectorBundleDegree {C : Chapter13RelativeCurve}
     (deg : Chapter13FiberDegreeTheory C) (E : Chapter13VectorBundle C.X)
     (s : C.S) : ℤ :=
-  deg.degree s (chapter13FiberVectorBundle E s).determinant
+  deg.degree s (chapter13FiberLineBundle E.determinant s)
 
 /-- Euler characteristic of a vector bundle on a fiber. -/
 def chapter13VectorFiberEulerCharacteristic
     {C : Chapter13RelativeCurve} {E : Chapter13VectorBundle C.X}
     (D : Chapter13RelativeCohomologyData C E) (s : C.S) : ℤ :=
-  chapter13FiberEulerCharacteristic D.fiber s
+  (Module.finrank (C.S.residueField s) (D.fiber.h0 s).module : ℤ) -
+    (Module.finrank (C.S.residueField s) (D.fiber.h1 s).module : ℤ)
 
 /- The determinant-degree notation is intentionally a definition rather than a
 second degree operation, so (13.7) is phrased exactly through `det E`. -/
@@ -116,16 +166,29 @@ second degree operation, so (13.7) is phrased exactly through `det E`. -/
 object is canonical, but its inverse line bundle is exposed through a class
 and is not reconciled with the Chapter 4 line-bundle object. -/
 
+/- The Chapter 10 ideal-dual operation is converted once at this boundary;
+the divisor package below cannot then choose an unrelated `𝒪(D)`. -/
+noncomputable def chapter13CanonicalOofD {C : Chapter13RelativeCurve}
+    (D : Chapter10EffectiveCartierDivisor C.X)
+    (idealDual : Chapter10IdealDualAPI C.X) : Chapter04LineBundle C.X :=
+  letI := idealDual
+  chapter09AsChapter04LineBundle (chapter10OofD D)
+
 /-- An effective divisor package with `𝒪(D)` and `𝒪(-D)`. -/
 structure Chapter13EffectiveDivisorData (C : Chapter13RelativeCurve) where
   divisor : Chapter10EffectiveCartierDivisor C.X
+  idealDual : Chapter10IdealDualAPI C.X
   OofD : Chapter04LineBundle C.X
   OofMinusD : Chapter04LineBundle C.X
+  OofD_is_ideal_dual :
+    chapter04LineBundleIsomorphic OofD
+      (chapter13CanonicalOofD divisor idealDual)
+  OofMinusD_is_cartier_ideal :
+    Nonempty (OofMinusD.sheaf ≅ chapter10CartierOminusD divisor)
   inverse_line_bundle :
     chapter04LineBundleIsomorphic
       (chapter04LineBundleTensor OofD OofMinusD)
       (chapter04TrivialLineBundle C.X)
-  degree : C.S → ℤ
 
 /-- The twist `E(D)` used in the generation and incidence argument. -/
 def chapter13TwistModule {C : Chapter13RelativeCurve}
@@ -154,6 +217,8 @@ structure Chapter13IncidenceProfile
     {C : Chapter13RelativeCurve} (E : Chapter13VectorBundle C.X)
     (D : Chapter13EffectiveDivisorData C) where
   incidence : Set (Γ(chapter13TwistModule E D, ⊤) × C.X)
+  incidence_eq_zero_locus :
+    incidence = {p | chapter13SectionVanishesAt p.1 p.2}
   incidenceFiberCodimension : C.X → ℕ
   incidence_fiber_codimension : ∀ x : C.X, incidenceFiberCodimension x = E.rank
   image_is_proper :
@@ -163,6 +228,7 @@ structure Chapter13IncidenceProfile
 theorem chapter13_incidence_nonvanishing_section
     {C : Chapter13RelativeCurve} (E : Chapter13VectorBundle C.X)
     (D : Chapter13EffectiveDivisorData C)
+    (P : Chapter13IncidenceProfile E D)
     (hgenerated : chapter13TwistGloballyGenerated E D)
     (hrank : 1 < E.rank) :
     Nonempty (Chapter13EverywhereNonvanishingSection E D) := by
@@ -255,7 +321,8 @@ theorem chapter13_two_term_virtual_rank_is_riemann_roch_number
     (deg : Chapter13FiberDegreeTheory C) (E : Chapter13VectorBundle C.X)
     (D : Chapter13RelativeCohomologyData C E)
     (T : Chapter13TwoTermEulerCharacteristicData C E D) (s : C.S) :
-    chapter13TwoTermVirtualRank (Classical.choice (T.local_model s)).model =
+    letI := (T.local_model s).local_model.chart.commRingA
+    chapter13TwoTermVirtualRank (T.local_model s).local_model.model =
       chapter13VectorBundleDegree deg E s +
         (E.rank : ℤ) * (1 - (G.genus : ℤ)) := by
   sorry

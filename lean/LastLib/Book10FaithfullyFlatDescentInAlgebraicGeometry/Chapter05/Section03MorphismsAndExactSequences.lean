@@ -1,4 +1,5 @@
 import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter05.Section02ProofOfEffectivity
+import Mathlib.LinearAlgebra.Complex.Module
 
 /-!
 # 5.3 Morphisms and exact sequences
@@ -54,18 +55,39 @@ noncomputable def canonicalCompatibleBMap (M M' : ModuleCat A) (f : M ⟶ M') :
 theorem canonicalCompatibleBMap_bijective_of_faithfullyFlat
     (hAB : RingHom.FaithfullyFlat (algebraMap A B)) (M M' : ModuleCat A) :
     Function.Bijective (canonicalCompatibleBMap (A := A) (B := B) M M') := by
-  sorry
+  have hEq : (descentComparison A B).IsEquivalence := faithfullyFlat_module_descent hAB
+  constructor
+  · intro f g h
+    apply hEq.faithful.map_injective
+    apply Comonad.Coalgebra.Hom.ext'
+    change ((descentComparison A B).map f).f = ((descentComparison A B).map g).f
+    simpa [canonicalCompatibleBMap] using congrArg Subtype.val h
+  · intro u
+    let e : (descentComparison A B).obj M ⟶ (descentComparison A B).obj M' :=
+      mkDescentMorphism _ _ u.1 u.2
+    obtain ⟨f, hf⟩ := hEq.full.map_surjective e
+    refine ⟨f, ?_⟩
+    apply Subtype.ext
+    change ((descentComparison A B).map f).f = u.1
+    simpa [e, mkDescentMorphism] using
+      congrArg (fun k : (descentComparison A B).obj M ⟶
+        (descentComparison A B).obj M' => k.f) hf
 
 theorem canonicalCompatibleBMap_bijective_of_instance [Module.FaithfullyFlat A B]
     (M M' : ModuleCat A) :
     Function.Bijective (canonicalCompatibleBMap (A := A) (B := B) M M') := by
-  sorry
+  apply canonicalCompatibleBMap_bijective_of_faithfullyFlat
+  exact RingHom.faithfullyFlat_algebraMap_iff.mpr inferInstance
 
 theorem compatibleBMap_iff_unique_descent
     (hAB : RingHom.FaithfullyFlat (algebraMap A B)) (M M' : ModuleCat A)
     (u : CompatibleBMap (A := A) (B := B) M M') :
     ∃! f : M ⟶ M', canonicalCompatibleBMap (A := A) (B := B) M M' f = u := by
-  sorry
+  let hbij := canonicalCompatibleBMap_bijective_of_faithfullyFlat hAB M M'
+  obtain ⟨f, hf⟩ := hbij.2 u
+  refine ⟨f, hf, ?_⟩
+  intro g hg
+  exact hbij.1 (hg.trans hf.symm)
 
 end Morphisms
 
@@ -115,12 +137,30 @@ theorem kernel_inherits_descent_data [Module.FaithfullyFlat A B] (f : D ⟶ E) :
     ∃ K : DescentDatum A B, Nonempty (K.A ≅ kernelModule f) := by
   sorry
 
+theorem kernel_inherits_descent_data_with_inclusion [Module.FaithfullyFlat A B]
+    (f : D ⟶ E) :
+    ∃ (K : DescentDatum A B) (e : K.A ≅ kernelModule f) (i : K ⟶ D),
+      e.hom ≫ kernelInclusion f = i.f := by
+  sorry
+
 theorem cokernel_inherits_descent_data [Module.FaithfullyFlat A B] (f : D ⟶ E) :
     ∃ Q : DescentDatum A B, Nonempty (Q.A ≅ cokernelModule f) := by
   sorry
 
+theorem cokernel_inherits_descent_data_with_projection [Module.FaithfullyFlat A B]
+    (f : D ⟶ E) :
+    ∃ (Q : DescentDatum A B) (e : Q.A ≅ cokernelModule f) (q : E ⟶ Q),
+      q.f ≫ e.hom = cokernelProjection f := by
+  sorry
+
 theorem image_inherits_descent_data [Module.FaithfullyFlat A B] (f : D ⟶ E) :
     ∃ I : DescentDatum A B, Nonempty (I.A ≅ imageModule f) := by
+  sorry
+
+theorem image_inherits_descent_data_with_inclusion [Module.FaithfullyFlat A B]
+    (f : D ⟶ E) :
+    ∃ (I : DescentDatum A B) (e : I.A ≅ imageModule f) (i : I ⟶ E),
+      e.hom ≫ imageInclusion f = i.f := by
   sorry
 
 /-- A finite direct sum of the underlying modules of a family of descent data. -/
@@ -144,7 +184,7 @@ theorem tensor_inherits_descent_data [Module.FaithfullyFlat A B]
 
 /-- The `n`th symmetric tensor power of a descended module. -/
 def symmetricPowerModule (D : DescentDatum A B) (n : ℕ) : ModuleCat B :=
-  ModuleCat.of B (SymmetricPower B (Fin n) (D.A : Type u))
+  ModuleCat.of B (SymmetricPower B (ULift (Fin n)) (D.A : Type u))
 
 theorem symmetricPower_inherits_descent_data [Module.FaithfullyFlat A B]
     (D : DescentDatum A B) (n : ℕ) :
@@ -170,7 +210,7 @@ def dualModule (D : DescentDatum A B) : ModuleCat B :=
 theorem dual_inherits_descent_data [Module.FaithfullyFlat A B]
     (D : DescentDatum A B) [Module.Finite B (D.A : Type u)]
     [Module.Projective B (D.A : Type u)] :
-    ∃ Dᵛ : DescentDatum A B, Nonempty (Dᵛ.A ≅ dualModule D) := by
+    ∃ Ddual : DescentDatum A B, Nonempty (Ddual.A ≅ dualModule D) := by
   sorry
 
 end ConcreteModuleOperations
@@ -189,7 +229,7 @@ theorem exactness_reflected_by_faithfullyFlat [Module.FaithfullyFlat A B]
 
 theorem injective_reflected_by_faithfullyFlat [Module.FaithfullyFlat A B]
     {M₁ M₂ : ModuleCat A} (f : M₁ ⟶ M₂) :
-    Function.Injective (((ModuleCat.extendScalars (algebraMap A B)).map f).hom) ↔
+      Function.Injective (((ModuleCat.extendScalars (algebraMap A B)).map f).hom) ↔
       Function.Injective f.hom := by
   sorry
 
@@ -212,26 +252,28 @@ structure CompatibleShortExact where
 
 def compatibleShortComplex (S : CompatibleShortExact (A := A) (B := B)) :
     ShortComplex (ModuleCat B) :=
-  ShortComplex.moduleCatMkOfKerLERange S.f.f S.g.f (by sorry)
+  ShortComplex.moduleCatMkOfKerLERange S.f.f S.g.f
+    (LinearMap.range_le_ker_iff.mpr S.exact.linearMap_comp_eq_zero)
 
 theorem compatibleShortComplex_exact (S : CompatibleShortExact (A := A) (B := B)) :
     (compatibleShortComplex S).Exact := by
-  sorry
+  exact ModuleCat.shortComplex_exact (compatibleShortComplex S) S.exact
 
 theorem compatibleShortComplex_shortExact (S : CompatibleShortExact (A := A) (B := B)) :
     (compatibleShortComplex S).ShortExact := by
-  sorry
+  exact ModuleCat.shortComplex_shortExact (compatibleShortComplex S) S.exact S.injective_f
+    S.surjective_g
 
 /-- A base short exact sequence together with the comparison isomorphisms to a compatible one.
 This type keeps the datum on the middle module distinct from the datum on the whole sequence. -/
 structure DescendedShortExact (S : CompatibleShortExact (A := A) (B := B)) where
   base : ShortComplex (ModuleCat A)
   exact : base.ShortExact
-  e₁ : (descentComparison A B).obj base.X₁ ≅ S.X₁.A
-  e₂ : (descentComparison A B).obj base.X₂ ≅ S.X₂.A
-  e₃ : (descentComparison A B).obj base.X₃ ≅ S.X₃.A
-  f_comm : ((descentComparison A B).map base.f).f ≫ e₂.hom = e₁.hom ≫ S.f.f
-  g_comm : ((descentComparison A B).map base.g).f ≫ e₃.hom = e₂.hom ≫ S.g.f
+  e₁ : (descentComparison A B).obj base.X₁ ≅ S.X₁
+  e₂ : (descentComparison A B).obj base.X₂ ≅ S.X₂
+  e₃ : (descentComparison A B).obj base.X₃ ≅ S.X₃
+  f_comm : (descentComparison A B).map base.f ≫ e₂.hom = e₁.hom ≫ S.f
+  g_comm : (descentComparison A B).map base.g ≫ e₃.hom = e₂.hom ≫ S.g
 
 theorem compatibleShortExact_descends [Module.FaithfullyFlat A B]
     (S : CompatibleShortExact (A := A) (B := B)) :
@@ -253,12 +295,43 @@ section Submodules
 
 variable {A B : Type u} [CommRing A] [CommRing B] [Algebra A B]
 
+/-- The inclusion of the first Čech pullback of a submodule into the first Čech pullback
+of the ambient descent datum. -/
+noncomputable def firstOverlapInclusion (D : DescentDatum A B) (P : Submodule B D.A) :
+    firstOverlap (A := A) (B := B) (ModuleCat.of B P) ⟶
+      firstOverlap (A := A) (B := B) D.A := by
+  letI : SMul B (CechRing A B) := (cech_d1 A B).toRingHom.toModule.toSMul
+  letI : Module B (CechRing A B) := (cech_d1 A B).toRingHom.toModule
+  letI : Algebra B (CechRing A B) := (cech_d1 A B).toRingHom.toAlgebra
+  letI : SMulCommClass B (CechRing A B) (CechRing A B) := by
+    constructor
+    intro b x y
+    simp [RingHom.toModule_smul, mul_assoc, mul_comm]
+  exact ModuleCat.ofHom
+    (TensorProduct.AlgebraTensorModule.map
+      (LinearMap.id : CechRing A B →ₗ[CechRing A B] CechRing A B) P.subtype)
+
+/-- The analogous inclusion for the second Čech pullback. -/
+noncomputable def secondOverlapInclusion (D : DescentDatum A B) (P : Submodule B D.A) :
+    secondOverlap (A := A) (B := B) (ModuleCat.of B P) ⟶
+      secondOverlap (A := A) (B := B) D.A := by
+  letI : SMul B (CechRing A B) := (cech_d0 A B).toRingHom.toModule.toSMul
+  letI : Module B (CechRing A B) := (cech_d0 A B).toRingHom.toModule
+  letI : Algebra B (CechRing A B) := (cech_d0 A B).toRingHom.toAlgebra
+  letI : SMulCommClass B (CechRing A B) (CechRing A B) := by
+    constructor
+    intro b x y
+    simp [RingHom.toModule_smul, mul_assoc, mul_comm]
+  exact ModuleCat.ofHom
+    (TensorProduct.AlgebraTensorModule.map
+      (LinearMap.id : CechRing A B →ₗ[CechRing A B] CechRing A B) P.subtype)
+
 /-- The overlap equality for a `B`-submodule, written in the normalized equalizer presentation. -/
 def overlapGluingCondition (D : DescentDatum A B) (P : Submodule B D.A) : Prop :=
-  Submodule.map
-      ((ModuleCat.restrictScalars (algebraMap A B)).map D.a).hom
-      (P.restrictScalars A) =
-    Submodule.map (canonicalCechMap (A := A) (B := B) D.A).hom (P.restrictScalars A)
+  ∃ e : firstOverlap (A := A) (B := B) (ModuleCat.of B P) ≅
+      secondOverlap (A := A) (B := B) (ModuleCat.of B P),
+    e.hom ≫ secondOverlapInclusion D P =
+      firstOverlapInclusion D P ≫ (descentTheta D).hom
 
 /-- A descended submodule includes its descended datum and the inclusion into the ambient datum. -/
 def descendedSubmodule (D : DescentDatum A B) (P : Submodule B D.A) : Prop :=

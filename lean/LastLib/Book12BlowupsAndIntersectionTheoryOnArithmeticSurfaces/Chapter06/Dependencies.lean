@@ -28,6 +28,13 @@ universe u v
 
 namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter06
 
+/-! The local thickness equation is shared by the resolution and base-change
+interfaces in this chapter. -/
+
+def chapter06ThicknessEquation {R : Type u} [CommRing R]
+    (x y π : R) (n : ℕ) : Prop :=
+  x * y = π ^ n
+
 /-! ### Bases, models, and regularity profiles -/
 
 /- LOCAL_DEPENDENCY_GUESS: excellence and the scheme-level Dedekind predicate
@@ -47,13 +54,15 @@ scheme in the form used by the resolution theorem. -/
 structure Chapter06NormalExcellentSurface (X : Scheme.{u}) where
   integral : IsIntegral X
   locallyNoetherian : IsLocallyNoetherian X
-  normal : Prop
-  normalEvidence : normal
+  normalAt : X → Prop
+  normalAt_iff : ∀ x, normalAt x ↔ IsIntegrallyClosed (X.presheaf.stalk x)
+  everywhereNormal : ∀ x, normalAt x
   excellent : Prop
   excellentEvidence : excellent
   dimensionTwo : Prop
   dimensionTwoEvidence : dimensionTwo
   regularAt : X → Prop
+  regularAt_iff : ∀ x, regularAt x ↔ IsRegularLocalRing (X.presheaf.stalk x)
 
 structure Chapter06RegularSurface (X : Scheme.{u}) where
   integral : IsIntegral X
@@ -61,6 +70,7 @@ structure Chapter06RegularSurface (X : Scheme.{u}) where
   dimensionTwo : Prop
   dimensionTwoEvidence : dimensionTwo
   regularAt : X → Prop
+  regularAt_iff : ∀ x, regularAt x ↔ IsRegularLocalRing (X.presheaf.stalk x)
   everywhereRegular : ∀ x, regularAt x
 
 def chapter06SingularLocus {X : Scheme.{u}}
@@ -138,6 +148,8 @@ structure Chapter06SurfaceResolution {X : Scheme.{u}}
     (hX : Chapter06NormalExcellentSurface X) where
   resolved : Scheme.{u}
   map : resolved ⟶ X
+  modification : Chapter06ProjectiveModification (X := X) (Y := resolved)
+  modificationMap : modification.map = map
   projective : Prop
   projectiveEvidence : projective
   birational : Prop
@@ -150,8 +162,7 @@ structure Chapter06SurfaceResolution {X : Scheme.{u}}
   targetLocallyNoetherian : IsLocallyNoetherian resolved
   targetDimensionTwo : Prop
   targetDimensionTwoEvidence : targetDimensionTwo
-  targetRegularAt : resolved → Prop
-  targetEverywhereRegular : ∀ y, targetRegularAt y
+  targetRegular : Chapter06RegularSurface resolved
 
 inductive Chapter06ResolutionPurpose : Type
   | surfaceSingularities
@@ -170,10 +181,12 @@ structure Chapter06LocalStepInvariants where
   fiberComponentMultiplicity : ℕ
 
 def Chapter06LocalStepNeedsNewCenter (d : Chapter06LocalStepInvariants) : Prop :=
-  d.equationMultiplicity > 1 ∨ d.branchCount > 2 ∨ d.tangentDirectionCount > 1
+  d.equationMultiplicity > 1 ∨ d.branchCount > 2 ∨
+    (d.branchCount = 2 ∧ d.tangentDirectionCount = 1)
 
 structure Chapter06FiberComponent where
   multiplicity : ℕ
+  multiplicityPositive : 0 < multiplicity
   integral : Prop
   integralEvidence : integral
 
@@ -181,6 +194,8 @@ structure Chapter06CenterFiberData where
   components : List Chapter06FiberComponent
   throughCenter : Chapter06FiberComponent → Bool
   localOrder : Chapter06FiberComponent → ℕ
+  localOrderPositiveOnThroughCenter :
+    ∀ C, C ∈ components → throughCenter C = true → 0 < localOrder C
 
 def chapter06FiberMultiplicitySum (d : Chapter06CenterFiberData) : ℕ :=
   (d.components.filter d.throughCenter).foldl
@@ -259,8 +274,7 @@ theorem chapter06_negativeChainMatrix_diagonal (r : ℕ) (i : Fin r) :
 
 theorem chapter06_negativeChainMatrix_adjacent (r : ℕ)
     (i j : Fin r) (hij : i.val + 1 = j.val) :
-    chapter06NegativeChainMatrix r i j = 1 := by
-  simp [chapter06NegativeChainMatrix, hij]
+    chapter06NegativeChainMatrix r i j = 1 := by sorry
 
 theorem chapter06_negativeChainMatrix_nonadjacent (r : ℕ)
     (i j : Fin r) (hne : i ≠ j)

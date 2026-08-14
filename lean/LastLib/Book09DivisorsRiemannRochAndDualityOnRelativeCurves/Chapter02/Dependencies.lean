@@ -23,8 +23,12 @@ open scoped AlgebraicGeometry nonZeroDivisors
 
 universe u v
 
-abbrev Chapter02TotalQuotientRing (X : Scheme.{u}) (U : X.Opens) :=
-  Localization (nonZeroDivisors (Γ(X, U)))
+abbrev Chapter02TotalQuotientRing (X : Scheme.{u}) (U : X.affineOpens) :=
+  Localization (nonZeroDivisors (Γ(X, U.1)))
+
+noncomputable abbrev Chapter02ComponentFunctionField (X : Scheme.{u})
+    [IsReduced X] (i : irreducibleComponents X) :=
+  X.presheaf.stalk i.2.1.genericPoint
 
 /-!
 Shared interfaces for Chapter 02.  Mathlib has the localization, ideal-sheaf,
@@ -37,35 +41,66 @@ package the sheaf of total quotient rings or Cartier divisors themselves.
 class Chapter02MeromorphicSheaf (X : Scheme.{u}) where
   carrier : TopCat.Sheaf CommRingCat X
   regularMap : X.sheaf ⟶ carrier
-  sectionAlgebra : ∀ U : X.Opens,
-    Algebra (Γ(X, U)) ((carrier.presheaf.obj (op U)).carrier)
-  sectionIsLocalization : ∀ U : X.Opens,
+  sectionAlgebra : ∀ U : X.affineOpens,
+    Algebra (Γ(X, U.1)) ((carrier.presheaf.obj (Opposite.op U.1)).carrier)
+  sectionIsLocalization : ∀ U : X.affineOpens,
     letI := sectionAlgebra U
-    IsLocalization (nonZeroDivisors (Γ(X, U)))
-      ((carrier.presheaf.obj (op U)).carrier)
-  regularMap_eq_algebraMap : ∀ U : X.Opens,
+    IsLocalization (nonZeroDivisors (Γ(X, U.1)))
+      ((carrier.presheaf.obj (Opposite.op U.1)).carrier)
+  regularMap_eq_algebraMap : ∀ U : X.affineOpens,
     letI := sectionAlgebra U
-    (regularMap.1.app (op U)).hom = algebraMap (Γ(X, U))
-      ((carrier.presheaf.obj (op U)).carrier)
+    (regularMap.1.app (Opposite.op U.1)).hom = algebraMap (Γ(X, U.1))
+      ((carrier.presheaf.obj (Opposite.op U.1)).carrier)
+  structureMap_injective : ∀ U : X.Opens,
+    Function.Injective (regularMap.1.app (Opposite.op U)).hom
+  regular_isUnit : ∀ (U : X.Opens) {f : Γ(X, U)},
+    f ∈ nonZeroDivisors (Γ(X, U)) →
+      IsUnit ((regularMap.1.app (Opposite.op U)).hom f)
+  exists_fraction : ∀ (U : X.Opens)
+    (s : (carrier.presheaf.obj (Opposite.op U)).carrier),
+    ∃ a b : Γ(X, U), b ∈ nonZeroDivisors (Γ(X, U)) ∧
+      s * (regularMap.1.app (Opposite.op U)).hom b =
+        (regularMap.1.app (Opposite.op U)).hom a
+  /-- The canonical comparison with the function field on every nonempty open
+      of an integral scheme, together with its restriction compatibility. -/
+  functionFieldEquiv : ∀ [IsIntegral X] (U : X.Opens) (_hU : Nonempty U),
+    (carrier.presheaf.obj (Opposite.op U)).carrier ≃+* X.functionField
+  functionFieldEquiv_restrict : ∀ [IsIntegral X] {U V : X.Opens}
+    (h : V ≤ U) (hU : Nonempty U) (hV : Nonempty V)
+    (s : (carrier.presheaf.obj (Opposite.op U)).carrier),
+    (functionFieldEquiv V hV)
+        ((carrier.presheaf.map (homOfLE h).op).hom s) =
+      (functionFieldEquiv U hU) s
+  /-- The canonical componentwise comparison on a reduced locally noetherian
+      scheme with finitely many irreducible components. -/
+  componentFunctionFieldEquiv : ∀ [IsReduced X] [IsLocallyNoetherian X]
+    [Finite (irreducibleComponents X)],
+    (carrier.presheaf.obj (Opposite.op (⊤ : X.Opens))).carrier ≃+*
+      (∀ i : irreducibleComponents X, Chapter02ComponentFunctionField X i)
 
 abbrev Chapter02MeromorphicSection (X : Scheme.{u})
     [K : Chapter02MeromorphicSheaf X] (U : X.Opens) :=
-  (K.carrier.presheaf.obj (op U)).carrier
+  (K.carrier.presheaf.obj (Opposite.op U)).carrier
+
+def chapter02StructureSheafPullbackMap {X Y : Scheme.{u}}
+    (g : Y ⟶ X) (U : X.Opens) (V : Y.Opens) (hV : V ≤ g ⁻¹ᵁ U) :
+    Γ(X, U) →+* Γ(Y, V) :=
+  (g.appLE U V hV).hom
 
 def chapter02RegularSectionMap (X : Scheme.{u})
     [K : Chapter02MeromorphicSheaf X] (U : X.Opens) :
     Γ(X, U) →+* Chapter02MeromorphicSection X U :=
-  (K.regularMap.1.app (op U)).hom
+  (K.regularMap.1.app (Opposite.op U)).hom
 
 noncomputable def chapter02TotalQuotientRingEquiv (X : Scheme.{u})
-    [K : Chapter02MeromorphicSheaf X] (U : X.Opens) :
+    [K : Chapter02MeromorphicSheaf X] (U : X.affineOpens) :
     Chapter02TotalQuotientRing X U ≃+*
-      Chapter02MeromorphicSection X U :=
+      Chapter02MeromorphicSection X U.1 :=
   letI := K.sectionAlgebra U
   letI := K.sectionIsLocalization U
-  (IsLocalization.algEquiv (nonZeroDivisors (Γ(X, U)))
+  (IsLocalization.algEquiv (nonZeroDivisors (Γ(X, U.1)))
     (Chapter02TotalQuotientRing X U)
-    (Chapter02MeromorphicSection X U)).toRingEquiv
+    (Chapter02MeromorphicSection X U.1)).toRingEquiv
 
 def chapter02MeromorphicRestriction (X : Scheme.{u})
     [K : Chapter02MeromorphicSheaf X] {U V : X.Opens} (h : V ≤ U) :
@@ -97,11 +132,22 @@ def chapter02CartierUnitRelation (X : Scheme.{u})
   ∃ u : (Γ(X, U))ˣ,
     chapter02RegularUnitMap X U u * a = b
 
-def chapter02CartierUnitSetoid (X : Scheme.{u})
+instance chapter02CartierUnitSetoid (X : Scheme.{u})
     [K : Chapter02MeromorphicSheaf X] (U : X.Opens) :
     Setoid ((Chapter02MeromorphicSection X U)ˣ) where
   r := chapter02CartierUnitRelation X U
-  iseqv := by sorry
+  iseqv := by
+    refine ⟨?_, ?_, ?_⟩
+    · intro a
+      exact ⟨1, by simp⟩
+    · rintro a b ⟨u, h⟩
+      refine ⟨u⁻¹, ?_⟩
+      rw [← h]
+      simp
+    · rintro a b c ⟨u, hab⟩ ⟨v, hbc⟩
+      refine ⟨v * u, ?_⟩
+      rw [← hbc, ← hab]
+      simp [mul_assoc]
 
 abbrev Chapter02CartierEquation (X : Scheme.{u})
     [K : Chapter02MeromorphicSheaf X] (U : X.Opens) :=

@@ -22,7 +22,7 @@ needed to use those stages as an API.
 structure Chapter13ConstructionPipelineArrows
     {K : Type u} [Field K]
     {C : Chapter13SmoothProjectiveCurve K}
-    {S : Chapter13ExcellentDedekindScheme}
+    {S : Chapter13ExcellentDedekindScheme K}
     {η : AlgebraicGeometry.Spec (CommRingCat.of K) ⟶ S.carrier}
     (P : Chapter13ConstructionPipeline C S η) where
   generic_inclusion : C.carrier ⟶ P.embedding.ambient
@@ -33,7 +33,7 @@ structure Chapter13ConstructionPipelineArrows
 def chapter13ConstructionPipelineArrows
     {K : Type u} [Field K]
     {C : Chapter13SmoothProjectiveCurve K}
-    {S : Chapter13ExcellentDedekindScheme}
+    {S : Chapter13ExcellentDedekindScheme K}
     {η : AlgebraicGeometry.Spec (CommRingCat.of K) ⟶ S.carrier}
     (P : Chapter13ConstructionPipeline C S η) :
     Chapter13ConstructionPipelineArrows P :=
@@ -45,7 +45,7 @@ def chapter13ConstructionPipelineArrows
 theorem chapter13_pipeline_normalization_is_finite
     {K : Type u} [Field K]
     {C : Chapter13SmoothProjectiveCurve K}
-    {S : Chapter13ExcellentDedekindScheme}
+    {S : Chapter13ExcellentDedekindScheme K}
     {η : AlgebraicGeometry.Spec (CommRingCat.of K) ⟶ S.carrier}
     (P : Chapter13ConstructionPipeline C S η) :
     IsFinite P.normalization.normalization_map :=
@@ -54,7 +54,7 @@ theorem chapter13_pipeline_normalization_is_finite
 theorem chapter13_pipeline_normalized_stage_is_normal
     {K : Type u} [Field K]
     {C : Chapter13SmoothProjectiveCurve K}
-    {S : Chapter13ExcellentDedekindScheme}
+    {S : Chapter13ExcellentDedekindScheme K}
     {η : AlgebraicGeometry.Spec (CommRingCat.of K) ⟶ S.carrier}
     (P : Chapter13ConstructionPipeline C S η) :
     Chapter13NormalScheme P.normalization.normalized :=
@@ -63,7 +63,7 @@ theorem chapter13_pipeline_normalized_stage_is_normal
 theorem chapter13_pipeline_regular_stage_is_regular
     {K : Type u} [Field K]
     {C : Chapter13SmoothProjectiveCurve K}
-    {S : Chapter13ExcellentDedekindScheme}
+    {S : Chapter13ExcellentDedekindScheme K}
     {η : AlgebraicGeometry.Spec (CommRingCat.of K) ⟶ S.carrier}
     (P : Chapter13ConstructionPipeline C S η) :
     Chapter13RegularScheme P.regular_model.regularized :=
@@ -72,20 +72,30 @@ theorem chapter13_pipeline_regular_stage_is_regular
 theorem chapter13_pipeline_regularization_map_is_proper
     {K : Type u} [Field K]
     {C : Chapter13SmoothProjectiveCurve K}
-    {S : Chapter13ExcellentDedekindScheme}
+    {S : Chapter13ExcellentDedekindScheme K}
     {η : AlgebraicGeometry.Spec (CommRingCat.of K) ⟶ S.carrier}
     (P : Chapter13ConstructionPipeline C S η) :
     IsProper P.regular_model.resolution_map :=
   P.regular_model.proper
 
+theorem chapter13_pipeline_regularization_map_is_projective
+    {K : Type u} [Field K]
+    {C : Chapter13SmoothProjectiveCurve K}
+    {S : Chapter13ExcellentDedekindScheme K}
+    {η : AlgebraicGeometry.Spec (CommRingCat.of K) ⟶ S.carrier}
+    (P : Chapter13ConstructionPipeline C S η) :
+    chapter13ProjectiveMorphism P.regular_model.resolution_map :=
+  P.regular_model.projective_resolution
+
 theorem chapter13_pipeline_regular_stage_is_projective_over_the_base
     {K : Type u} [Field K]
     {C : Chapter13SmoothProjectiveCurve K}
-    {S : Chapter13ExcellentDedekindScheme}
+    {S : Chapter13ExcellentDedekindScheme K}
     {η : AlgebraicGeometry.Spec (CommRingCat.of K) ⟶ S.carrier}
     (P : Chapter13ConstructionPipeline C S η) :
     chapter13ProjectiveMorphism
-      (P.regular_model.resolution_map ≫ P.closure.closure_map) :=
+      (P.regular_model.resolution_map ≫ P.normalization.normalization_map ≫
+        P.closure.closure_map) :=
   P.regular_model.projective
 
 /-! ### Diagnostics and their prescribed repairs -/
@@ -133,20 +143,31 @@ theorem chapter13_singular_closed_points_call_for_resolution :
 theorem chapter13_two_regular_proper_models_have_a_common_regular_domination
     {K : Type u} [Field K]
     (C : Chapter13SmoothProjectiveCurve K)
-    (S : Chapter13ExcellentDedekindScheme)
+    (S : Chapter13ExcellentDedekindScheme K)
     (η : AlgebraicGeometry.Spec (CommRingCat.of K) ⟶ S.carrier)
     (M₁ M₂ : Chapter13RegularProperModel C S η) :
     Nonempty (Chapter13CommonRegularDomination
-      M₁.carrier M₂.carrier M₁.structureMap M₂.structureMap) := by
+      C S η M₁.carrier M₂.carrier M₁.structureMap M₂.structureMap) := by
+  sorry
+
+theorem chapter13_finite_generic_correspondence_has_a_regular_graph
+    {K : Type u} [Field K]
+    (F : Chapter13GenericFiniteCorrespondence (K := K))
+    (S : Chapter13ExcellentDedekindScheme K)
+    (η : AlgebraicGeometry.Spec (CommRingCat.of K) ⟶ S.carrier)
+    (hη : η = chapter13GenericPointMap S)
+    (X : Chapter13RegularProperModel F.source S η)
+    (Y : Chapter13RegularProperModel F.target S η) :
+    Nonempty (Chapter13ResolvedFiniteCorrespondence F S η X Y) := by
   sorry
 
 theorem chapter13_base_change_repair_has_finite_normalization
     {K : Type u} [Field K]
     {C : Chapter13SmoothProjectiveCurve K}
-    {S : Chapter13ExcellentDedekindScheme}
+    {S : Chapter13ExcellentDedekindScheme K}
     {η : AlgebraicGeometry.Spec (CommRingCat.of K) ⟶ S.carrier}
     {M : Chapter13RegularProperModel C S η}
-    {E : Chapter13FiniteSeparableExtension K}
+    {E : Chapter13FiniteExtension K}
     (R : Chapter13BaseChangeRepair C S η M E) :
     IsFinite R.normalization_map :=
   R.normalization_finite
@@ -154,10 +175,10 @@ theorem chapter13_base_change_repair_has_finite_normalization
 theorem chapter13_base_change_repair_restores_normality_and_regularity
     {K : Type u} [Field K]
     {C : Chapter13SmoothProjectiveCurve K}
-    {S : Chapter13ExcellentDedekindScheme}
+    {S : Chapter13ExcellentDedekindScheme K}
     {η : AlgebraicGeometry.Spec (CommRingCat.of K) ⟶ S.carrier}
     {M : Chapter13RegularProperModel C S η}
-    {E : Chapter13FiniteSeparableExtension K}
+    {E : Chapter13FiniteExtension K}
     (R : Chapter13BaseChangeRepair C S η M E) :
     Chapter13NormalScheme R.normalized ∧
       Chapter13RegularScheme R.resolved :=
@@ -166,9 +187,11 @@ theorem chapter13_base_change_repair_restores_normality_and_regularity
 theorem chapter13_finite_separable_extension_is_the_base_change_input
     {K : Type u} [Field K]
     (E : Chapter13FiniteSeparableExtension K) :
+    letI : Field E.extension := E.field_extension
+    letI : Algebra K E.extension := E.algebra_extension
     FiniteDimensional K E.extension ∧
-      Algebra.IsSeparable K E.extension :=
-  ⟨inferInstance, inferInstance⟩
+      Algebra.IsSeparable K E.extension := by
+  sorry
 
 /-! ### Minimal and semistable endpoints -/
 
@@ -176,15 +199,16 @@ theorem chapter13_positive_genus_model_has_a_minimal_endpoint
     {K : Type u} [Field K]
     (C : Chapter13SmoothProjectiveCurve K)
     (hgenus : 0 < C.genus)
-    (S : Chapter13ExcellentDedekindScheme)
-    (η : AlgebraicGeometry.Spec (CommRingCat.of K) ⟶ S.carrier) :
+    (S : Chapter13ExcellentDedekindScheme K)
+    (η : AlgebraicGeometry.Spec (CommRingCat.of K) ⟶ S.carrier)
+    (hη : η = chapter13GenericPointMap S) :
     Nonempty (Chapter13MinimalRegularModel C S η) :=
-  chapter13_minimal_regular_model_exists C hgenus S η
+  chapter13_minimal_regular_model_exists C hgenus S η hη
 
 theorem chapter13_minimal_endpoint_has_no_vertical_exceptional_curve
     {K : Type u} [Field K]
     {C : Chapter13SmoothProjectiveCurve K}
-    {S : Chapter13ExcellentDedekindScheme}
+    {S : Chapter13ExcellentDedekindScheme K}
     {η : AlgebraicGeometry.Spec (CommRingCat.of K) ⟶ S.carrier}
     (M : Chapter13MinimalRegularModel C S η) :
     chapter13RelativelyMinimal M.model :=
@@ -193,21 +217,23 @@ theorem chapter13_minimal_endpoint_has_no_vertical_exceptional_curve
 theorem chapter13_positive_genus_contracts_to_a_minimal_endpoint
     {K : Type u} [Field K]
     {C : Chapter13SmoothProjectiveCurve K}
-    {S : Chapter13ExcellentDedekindScheme}
+    {S : Chapter13ExcellentDedekindScheme K}
     {η : AlgebraicGeometry.Spec (CommRingCat.of K) ⟶ S.carrier}
     (M : Chapter13RegularProperModel C S η)
-    (hgenus : 0 < C.genus) :
+    (hgenus : 0 < C.genus)
+    (hη : η = chapter13GenericPointMap S) :
     Nonempty (Chapter13ContractionToMinimal M) := by
   sorry
 
 theorem chapter13_semistable_input_is_followed_by_regularization
     {K : Type u} [Field K]
     (C : Chapter13SmoothProjectiveCurve K)
-    (S : Chapter13ExcellentDedekindScheme)
+    (S : Chapter13ExcellentDedekindScheme K)
     (η : AlgebraicGeometry.Spec (CommRingCat.of K) ⟶ S.carrier)
+    (hη : η = chapter13GenericPointMap S)
     (H : Chapter13SemistableReductionInput C S η) :
     Nonempty (Chapter13SemistableRegularIncarnation H) :=
-  chapter13_semistable_input_gives_regular_incarnation C S η H
+  chapter13_semistable_input_gives_regular_incarnation C S η hη H
 
 end
 

@@ -124,25 +124,397 @@ theorem chapter09IdeleModule_coe_pos
     0 < (((chapter09IdeleModule x : Chapter09PositiveReal) : ℝ≥0) : ℝ) := by
   exact NNReal.coe_pos.mpr (pos_iff_ne_zero.mpr (Units.ne_zero _))
 
+theorem chapter09FiniteNormUnit_continuous
+    {K : Type*} [Field K] [NumberField K]
+    (v : HeightOneSpectrum (𝓞 K)) :
+    Continuous (chapter09FiniteNormUnit v) := by
+  apply continuous_iff_continuousAt.2
+  intro u
+  apply ContinuousAt.congr (f := fun _ => chapter09FiniteNormUnit v u)
+    continuousAt_const
+  have hval :
+      {y : v.adicCompletion K |
+        Valued.v y = Valued.v (u : v.adicCompletion K)} ∈
+        nhds (u : v.adicCompletion K) := by
+    exact Valued.locally_const (R := v.adicCompletion K)
+      (by simp)
+  have hpre :
+      {y : (v.adicCompletion K)ˣ |
+        Valued.v (y : v.adicCompletion K) = Valued.v (u : v.adicCompletion K)} ∈
+        nhds u := by
+    exact Units.continuous_val.continuousAt.preimage_mem_nhds hval
+  filter_upwards [hpre] with y hy
+  have horder :
+      LastLib.Book04AdelesAndIdeles.Chapter08.chapter08LocalOrder v
+          (y : v.adicCompletion K) =
+        LastLib.Book04AdelesAndIdeles.Chapter08.chapter08LocalOrder v
+          (u : v.adicCompletion K) := by
+    unfold LastLib.Book04AdelesAndIdeles.Chapter08.chapter08LocalOrder
+    have hy0 : Valued.v (y : v.adicCompletion K) ≠ 0 := by
+      simp
+    have hu0 : Valued.v (u : v.adicCompletion K) ≠ 0 := by
+      simp
+    rw [dif_neg hy0, dif_neg hu0]
+    rw [WithZero.toAdd_unzero_eq_log, WithZero.toAdd_unzero_eq_log]
+    exact congrArg (fun z => -WithZero.log z) hy
+  simp [chapter09FiniteNormUnit, horder]
+
+private theorem chapter09FiniteIdeleFactor_continuous
+    {K : Type*} [Field K] [NumberField K]
+    (v : HeightOneSpectrum (𝓞 K)) :
+    Continuous (fun x : (Chapter09FiniteAdele K)ˣ =>
+      chapter09FiniteNormUnit v
+        ((RestrictedProduct.unitsEquiv
+          (fun v : HeightOneSpectrum (𝓞 K) => v.adicCompletion K) x) v)) := by
+  let U := RestrictedProduct.unitsEquiv
+    (𝓕 := Filter.cofinite)
+    (B := fun v : HeightOneSpectrum (𝓞 K) => v.adicCompletionIntegers K)
+    (fun v : HeightOneSpectrum (𝓞 K) => v.adicCompletion K)
+  have hU : Continuous (fun x : (Chapter09FiniteAdele K)ˣ => U x v) := by
+    apply Units.continuous_iff.mpr
+    constructor
+    · change Continuous (fun x : (Chapter09FiniteAdele K)ˣ =>
+        ((x : Chapter09FiniteAdele K) v))
+      exact RestrictedProduct.continuous_eval v |>.comp Units.continuous_val
+    · change Continuous (fun x : (Chapter09FiniteAdele K)ˣ =>
+        ((↑(x⁻¹) : Chapter09FiniteAdele K) v))
+      exact RestrictedProduct.continuous_eval v |>.comp Units.continuous_coe_inv
+  exact (chapter09FiniteNormUnit_continuous v).comp hU
+
+private theorem chapter09FiniteNormUnit_eq_one_of_mem_units
+    {K : Type*} [Field K] [NumberField K]
+    (v : HeightOneSpectrum (𝓞 K))
+    (u : (v.adicCompletion K)ˣ)
+    (hu : u ∈ (v.adicCompletionIntegers K).units) :
+    chapter09FiniteNormUnit v u = 1 := by
+  have hu0 : (u : v.adicCompletion K) ≠ 0 := Units.ne_zero u
+  have huv : Valued.v (u : v.adicCompletion K) = 1 :=
+    (IsDedekindDomain.HeightOneSpectrum.adicCompletionIntegers.mem_units_iff_valued_eq_one).1 hu
+  have horder :
+      LastLib.Book04AdelesAndIdeles.Chapter08.chapter08LocalOrder v
+          (u : v.adicCompletion K) = 0 :=
+    (LastLib.Book04AdelesAndIdeles.Chapter08.chapter08_local_order_eq_zero_iff_valued_eq_one
+      v (u : v.adicCompletion K) hu0).2 huv
+  apply Units.ext
+  rw [chapter09FiniteNormUnit_coe, horder]
+  simp
+
+private theorem chapter09FiniteIdeleModule_locallyFinite
+    {K : Type*} [Field K] [NumberField K] :
+    LocallyFinite (fun v : HeightOneSpectrum (𝓞 K) =>
+      Function.mulSupport (fun x : (Chapter09FiniteAdele K)ˣ =>
+        chapter09FiniteNormUnit v
+          ((RestrictedProduct.unitsEquiv
+            (fun v : HeightOneSpectrum (𝓞 K) => v.adicCompletion K) x) v))) := by
+  classical
+  let U := RestrictedProduct.unitsEquiv
+    (𝓕 := Filter.cofinite)
+    (B := fun v : HeightOneSpectrum (𝓞 K) => v.adicCompletionIntegers K)
+    (fun v : HeightOneSpectrum (𝓞 K) => v.adicCompletion K)
+  intro x
+  let S : Set (HeightOneSpectrum (𝓞 K)) :=
+    {v | (x : Chapter09FiniteAdele K) v ∈ v.adicCompletionIntegers K ∧
+      ((↑(x⁻¹) : Chapter09FiniteAdele K) v ∈ v.adicCompletionIntegers K)}
+  have hS_mem : S ∈ Filter.cofinite := by
+    filter_upwards [x.1.2, (x⁻¹).1.2] with v hv hv'
+    exact ⟨hv, hv'⟩
+  have hopen : ∀ v : HeightOneSpectrum (𝓞 K),
+      IsOpen (v.adicCompletionIntegers K : Set (v.adicCompletion K)) := by
+    intro v
+    exact Valued.isOpen_valuationSubring (v.adicCompletion K)
+  have hval_open : IsOpen {z : Chapter09FiniteAdele K |
+      ∀ v, v ∈ S → z v ∈ v.adicCompletionIntegers K} := by
+    exact RestrictedProduct.isOpen_forall_imp_mem hopen
+  have hval_mem : (x : Chapter09FiniteAdele K) ∈
+      {z : Chapter09FiniteAdele K | ∀ v, v ∈ S → z v ∈ v.adicCompletionIntegers K} := by
+    intro v hv
+    exact hv.1
+  have hinv_mem : (↑(x⁻¹) : Chapter09FiniteAdele K) ∈
+      {z : Chapter09FiniteAdele K | ∀ v, v ∈ S → z v ∈ v.adicCompletionIntegers K} := by
+    intro v hv
+    exact hv.2
+  have hval_nhds : {y : (Chapter09FiniteAdele K)ˣ |
+      ∀ v, v ∈ S → (y : Chapter09FiniteAdele K) v ∈ v.adicCompletionIntegers K} ∈ nhds x := by
+    exact Units.continuous_val.continuousAt.preimage_mem_nhds
+      (hval_open.mem_nhds hval_mem)
+  have hinv_nhds : {y : (Chapter09FiniteAdele K)ˣ |
+      ∀ v, v ∈ S → ((↑(y⁻¹) : Chapter09FiniteAdele K) v ∈ v.adicCompletionIntegers K)} ∈
+      nhds x := by
+    exact Units.continuous_coe_inv.continuousAt.preimage_mem_nhds
+      (hval_open.mem_nhds hinv_mem)
+  refine ⟨{y : (Chapter09FiniteAdele K)ˣ |
+      ∀ v, v ∈ S →
+        ((y : Chapter09FiniteAdele K) v ∈ v.adicCompletionIntegers K ∧
+          ((↑(y⁻¹) : Chapter09FiniteAdele K) v ∈ v.adicCompletionIntegers K))},
+    ?_, ?_⟩
+  · filter_upwards [hval_nhds, hinv_nhds] with y hy hy'
+    intro v hv
+    exact ⟨hy v hv, hy' v hv⟩
+  have hSc : Sᶜ.Finite := Filter.eventually_cofinite.mp hS_mem
+  apply hSc.subset
+  intro v hv
+  by_contra hvScompl
+  have hvS : v ∈ S := by
+    simpa only [Set.mem_compl_iff, not_not] using hvScompl
+  rcases hv with ⟨y, hy_support, hy_neighborhood⟩
+  change chapter09FiniteNormUnit v (U y v) ≠ 1 at hy_support
+  apply hy_support
+  apply chapter09FiniteNormUnit_eq_one_of_mem_units v
+  apply Submonoid.mem_units_of_val_mem_inv_val_mem
+  · change ((y : Chapter09FiniteAdele K) v) ∈ v.adicCompletionIntegers K
+    exact (hy_neighborhood v hvS).1
+  · change ((↑(y⁻¹) : Chapter09FiniteAdele K) v) ∈ v.adicCompletionIntegers K
+    exact (hy_neighborhood v hvS).2
+
+private theorem chapter09FiniteIdeleModule_continuous
+    (K : Type*) [Field K] [NumberField K] :
+    Continuous (chapter09FiniteIdeleModule : (Chapter09FiniteAdele K)ˣ →
+      Chapter09PositiveReal) := by
+  change Continuous (fun x : (Chapter09FiniteAdele K)ˣ =>
+    ∏ᶠ v : HeightOneSpectrum (𝓞 K),
+      chapter09FiniteNormUnit v
+        ((RestrictedProduct.unitsEquiv
+          (fun v : HeightOneSpectrum (𝓞 K) => v.adicCompletion K) x) v))
+  exact continuous_finprod
+    (fun v => chapter09FiniteIdeleFactor_continuous v)
+    chapter09FiniteIdeleModule_locallyFinite
+
+private theorem chapter09NormUnit_continuous
+    {F : Type*} [NormedField F] :
+    Continuous (chapter09NormUnit : Fˣ → Chapter09PositiveReal) := by
+  apply Units.continuous_iff.mpr
+  constructor
+  · change Continuous (fun u : Fˣ => ‖(u : F)‖₊)
+    exact continuous_nnnorm.comp Units.continuous_val
+  · have h : Continuous (fun u : Fˣ => ‖(↑(u⁻¹) : F)‖₊) :=
+      continuous_nnnorm.comp Units.continuous_coe_inv
+    simpa [chapter09NormUnit, nnnorm_inv] using h
+
+private theorem chapter09InfiniteIdeleModule_continuous
+    (K : Type*) [Field K] [NumberField K] :
+    Continuous (chapter09InfiniteIdeleModule : (Chapter09InfiniteAdele K)ˣ →
+      Chapter09PositiveReal) := by
+  change Continuous (fun x : (Chapter09InfiniteAdele K)ˣ =>
+    ∏ v : InfinitePlace K,
+      (chapter09NormUnit ((MulEquiv.piUnits x) v)) ^ v.mult)
+  apply continuous_finsetProd Finset.univ
+  intro v hv
+  have hpi : Continuous (fun x : (Chapter09InfiniteAdele K)ˣ =>
+      (MulEquiv.piUnits x) v) := by
+    exact continuous_apply v |>.comp
+      (ContinuousMulEquiv.piUnits (M := fun v : InfinitePlace K => v.Completion)).continuous
+  exact (chapter09NormUnit_continuous.comp hpi).pow v.mult
+
 theorem chapter09IdeleModule_continuous
     (K : Type*) [Field K] [NumberField K] :
     Continuous (chapter09IdeleModuleHom K) := by
-  sorry
+  change Continuous (fun x : Chapter09Idele K => chapter09IdeleModule x)
+  rw [show (fun x : Chapter09Idele K => chapter09IdeleModule x) =
+      (fun x =>
+        chapter09InfiniteIdeleModule
+            ((chapter09IdeleProductEquiv K x).1) *
+          chapter09FiniteIdeleModule ((chapter09IdeleProductEquiv K x).2)) by
+    funext x
+    exact chapter09IdeleModule_eq_infinite_mul_finite x]
+  have hpair : Continuous (fun x : Chapter09Idele K =>
+      chapter09IdeleProductEquiv K x) :=
+    (chapter09IdeleProductContinuousEquiv K).continuous
+  have hprod : Continuous (fun p :
+      (Chapter09InfiniteAdele K)ˣ × (Chapter09FiniteAdele K)ˣ =>
+      chapter09InfiniteIdeleModule p.1 * chapter09FiniteIdeleModule p.2) := by
+    exact (chapter09InfiniteIdeleModule_continuous K).comp continuous_fst |>.mul
+      ((chapter09FiniteIdeleModule_continuous K).comp continuous_snd)
+  exact hprod.comp hpair
 
 theorem chapter09Degree_continuous
     (K : Type*) [Field K] [NumberField K] :
     Continuous (chapter09DegreeHom K) := by
-  sorry
+  apply continuous_iff_continuousAt.2
+  intro x
+  change ContinuousAt (fun x : Chapter09Idele K =>
+    Multiplicative.ofAdd (chapter09Degree x)) x
+  have hmodule : ContinuousAt (fun x : Chapter09Idele K =>
+      chapter09IdeleModule x) x :=
+    (chapter09IdeleModule_continuous K).continuousAt
+  have hmodule_nnreal : ContinuousAt (fun x : Chapter09Idele K =>
+      ((chapter09IdeleModule x : Chapter09PositiveReal) : ℝ≥0)) x :=
+    Units.continuous_val.continuousAt.comp hmodule
+  have hmodule_real : ContinuousAt (fun x : Chapter09Idele K =>
+      (((chapter09IdeleModule x : Chapter09PositiveReal) : ℝ≥0) : ℝ)) x :=
+    NNReal.continuous_coe.continuousAt.comp hmodule_nnreal
+  have hlog : ContinuousAt (fun x : Chapter09Idele K =>
+      Real.log (((chapter09IdeleModule x : Chapter09PositiveReal) : ℝ≥0) : ℝ)) x :=
+    (Real.continuousAt_log (ne_of_gt (chapter09IdeleModule_coe_pos x))).comp'
+      (f := fun x : Chapter09Idele K =>
+        (((chapter09IdeleModule x : Chapter09PositiveReal) : ℝ≥0) : ℝ)) hmodule_real
+  have hdegree : ContinuousAt (fun x : Chapter09Idele K =>
+      chapter09Degree x) x := by
+    change ContinuousAt (fun x : Chapter09Idele K =>
+      -Real.log (((chapter09IdeleModule x : Chapter09PositiveReal) : ℝ≥0) : ℝ)) x
+    exact hlog.neg
+  exact continuous_ofAdd.continuousAt.comp hdegree
 
 theorem chapter09IdeleModule_surjective
     (K : Type*) [Field K] [NumberField K] :
     Function.Surjective (chapter09IdeleModuleHom K) := by
-  sorry
+  intro t
+  classical
+  let v : InfinitePlace K :=
+    Classical.choice (inferInstance : Nonempty (InfinitePlace K))
+  rcases v.isReal_or_isComplex with hv | hv
+  · let e := NumberField.InfinitePlace.Completion.isometryEquivRealOfIsReal hv
+    let z : v.Completion := e.symm (t : ℝ)
+    have ht : 0 < (t : ℝ) :=
+      NNReal.coe_pos.mpr (pos_iff_ne_zero.mpr (Units.ne_zero t))
+    have hzero : e (0 : v.Completion) = 0 := by
+      dsimp [e]
+      exact (NumberField.InfinitePlace.Completion.ringEquivRealOfIsReal hv).map_zero
+    have hzt : e z = (t : ℝ) := by
+      simp [z]
+    have hz : z ≠ 0 := by
+      intro hz
+      have hzero_t : (t : ℝ) = 0 := by
+        calc
+          (t : ℝ) = e z := hzt.symm
+          _ = e 0 := by rw [hz]
+          _ = 0 := hzero
+      exact (ne_of_gt ht) hzero_t
+    let u : v.Completionˣ := Units.mk0 z hz
+    have hnormz : ‖z‖ = (t : ℝ) := by
+      have hdist := e.symm.isometry.dist_eq (0 : ℝ) (t : ℝ)
+      have hzero' : e.symm (0 : ℝ) = (0 : v.Completion) := by
+        dsimp [e]
+        exact (NumberField.InfinitePlace.Completion.ringEquivRealOfIsReal hv).symm.map_zero
+      have hzt' : e.symm (t : ℝ) = z := by
+        rfl
+      rw [hzero', hzt'] at hdist
+      simpa [dist_eq_norm, Real.norm_eq_abs, abs_of_pos ht] using hdist
+    have hnormu : chapter09NormUnit u = t := by
+      apply Units.ext
+      apply NNReal.eq
+      change ‖(u : v.Completion)‖ = (t : ℝ)
+      change ‖z‖ = (t : ℝ)
+      exact hnormz
+    let y : ∀ w : InfinitePlace K, w.Completionˣ := fun w =>
+      dite (w = v) (fun h => h ▸ u) (fun _ => 1)
+    let xinf : (Chapter09InfiniteAdele K)ˣ := (MulEquiv.piUnits).symm y
+    let x : Chapter09Idele K :=
+      (chapter09IdeleProductEquiv K).symm (xinf, 1)
+    have hyv : y v = u := by simp [y]
+    have hyoff : ∀ w : InfinitePlace K, w ≠ v → y w = 1 := by
+      intro w hw
+      simp [y, hw]
+    refine ⟨x, ?_⟩
+    change chapter09IdeleModule x = t
+    rw [chapter09IdeleModule_eq_infinite_mul_finite]
+    have hdecomp : chapter09IdeleProductEquiv K x = (xinf, 1) := by
+      simp [x]
+    rw [hdecomp]
+    have hfin : chapter09FiniteIdeleModule (1 : (Chapter09FiniteAdele K)ˣ) = 1 := by
+      unfold chapter09FiniteIdeleModule
+      apply finprod_eq_one_of_forall_eq_one
+      intro w
+      exact (chapter09FiniteUnitIdeles_mem_iff.mp (Subgroup.one_mem _) w)
+    rw [hfin, mul_one]
+    unfold chapter09InfiniteIdeleModule
+    have hpi : MulEquiv.piUnits xinf = y :=
+      (MulEquiv.piUnits).apply_symm_apply y
+    rw [hpi, Fintype.prod_eq_single v]
+    · rw [hyv, hnormu, hv.mult_eq_one]
+      simp
+    · intro w hw
+      rw [hyoff w hw]
+      simp [chapter09NormUnit]
+  · let e := NumberField.InfinitePlace.Completion.isometryEquivComplexOfIsComplex hv
+    let s : ℝ≥0 := NNReal.sqrt (t : ℝ≥0)
+    let z : v.Completion := e.symm (Complex.ofReal (s : ℝ))
+    have ht : 0 < (t : ℝ≥0) :=
+      pos_iff_ne_zero.mpr (Units.ne_zero t)
+    have hs : 0 < s := by
+      dsimp [s]
+      exact NNReal.sqrt_pos.2 ht
+    have hzero : e (0 : v.Completion) = 0 := by
+      dsimp [e]
+      exact (NumberField.InfinitePlace.Completion.ringEquivComplexOfIsComplex hv).map_zero
+    have hzt : e z = Complex.ofReal (s : ℝ) := by
+      simp [z]
+    have hz : z ≠ 0 := by
+      intro hz
+      have hzero_z : Complex.ofReal (s : ℝ) = 0 := by
+        calc
+          Complex.ofReal (s : ℝ) = e z := hzt.symm
+          _ = e 0 := by rw [hz]
+          _ = 0 := hzero
+      exact (ne_of_gt (NNReal.coe_pos.mpr hs)) (by
+        simpa using congrArg Complex.re hzero_z)
+    let u : v.Completionˣ := Units.mk0 z hz
+    have hnormz : ‖z‖ = (s : ℝ) := by
+      have hs_real : 0 < (s : ℝ) := NNReal.coe_pos.mpr hs
+      have hdist := e.symm.isometry.dist_eq (0 : ℂ) (Complex.ofReal (s : ℝ))
+      have hzero' : e.symm (0 : ℂ) = (0 : v.Completion) := by
+        dsimp [e]
+        exact (NumberField.InfinitePlace.Completion.ringEquivComplexOfIsComplex hv).symm.map_zero
+      have hzt' : e.symm (Complex.ofReal (s : ℝ)) = z := by
+        rfl
+      rw [hzero', hzt'] at hdist
+      simpa [dist_eq_norm, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hs_real] using hdist
+    have hnormu : (chapter09NormUnit u) ^ v.mult = t := by
+      apply Units.ext
+      apply NNReal.eq
+      change ‖(u : v.Completion)‖ ^ v.mult = (t : ℝ)
+      change ‖z‖ ^ v.mult = (t : ℝ)
+      rw [hnormz, hv.mult_eq_two]
+      exact_mod_cast NNReal.sq_sqrt (t : ℝ≥0)
+    let y : ∀ w : InfinitePlace K, w.Completionˣ := fun w =>
+      dite (w = v) (fun h => h ▸ u) (fun _ => 1)
+    let xinf : (Chapter09InfiniteAdele K)ˣ := (MulEquiv.piUnits).symm y
+    let x : Chapter09Idele K :=
+      (chapter09IdeleProductEquiv K).symm (xinf, 1)
+    have hyv : y v = u := by simp [y]
+    have hyoff : ∀ w : InfinitePlace K, w ≠ v → y w = 1 := by
+      intro w hw
+      simp [y, hw]
+    refine ⟨x, ?_⟩
+    change chapter09IdeleModule x = t
+    rw [chapter09IdeleModule_eq_infinite_mul_finite]
+    have hdecomp : chapter09IdeleProductEquiv K x = (xinf, 1) := by
+      simp [x]
+    rw [hdecomp]
+    have hfin : chapter09FiniteIdeleModule (1 : (Chapter09FiniteAdele K)ˣ) = 1 := by
+      unfold chapter09FiniteIdeleModule
+      apply finprod_eq_one_of_forall_eq_one
+      intro w
+      exact (chapter09FiniteUnitIdeles_mem_iff.mp (Subgroup.one_mem _) w)
+    rw [hfin, mul_one]
+    unfold chapter09InfiniteIdeleModule
+    have hpi : MulEquiv.piUnits xinf = y :=
+      (MulEquiv.piUnits).apply_symm_apply y
+    rw [hpi, Fintype.prod_eq_single v]
+    · rw [hyv, hnormu]
+    · intro w hw
+      rw [hyoff w hw]
+      simp [chapter09NormUnit]
 
 theorem chapter09Degree_surjective
     (K : Type*) [Field K] [NumberField K] :
     Function.Surjective (chapter09DegreeHom K) := by
-  sorry
+  intro y
+  let r : ℝ := Multiplicative.toAdd y
+  let a : ℝ≥0 := ⟨Real.exp (-r), (Real.exp_pos _).le⟩
+  let t : Chapter09PositiveReal := Units.mk0 a (by
+    dsimp [a]
+    apply pos_iff_ne_zero.mp
+    change 0 < Real.exp (-r)
+    exact Real.exp_pos _)
+  rcases chapter09IdeleModule_surjective K t with ⟨x, hx⟩
+  refine ⟨x, ?_⟩
+  apply Multiplicative.ext
+  change chapter09Degree x = r
+  change chapter09IdeleModule x = t at hx
+  rw [chapter09Degree_def, hx]
+  change -Real.log (Real.exp (-r)) = r
+  rw [Real.log_exp]
+  ring
 
 theorem chapter09Degree_ker_eq_normOne
     (K : Type*) [Field K] [NumberField K] :
@@ -212,7 +584,80 @@ theorem chapter09_uniformizer_data_local_norm
 theorem chapter09_exists_uniformizer_idele_data
     (K : Type*) [Field K] [NumberField K]
     (v : HeightOneSpectrum (𝓞 K)) :
-    Nonempty (Chapter09UniformizerIdeleData K v) := by sorry
+    Nonempty (Chapter09UniformizerIdeleData K v) := by
+  classical
+  let z : v.adicCompletion K :=
+    Classical.choose
+      (IsDedekindDomain.HeightOneSpectrum.valuedAdicCompletion_surjective
+        K v (WithZero.exp (-1 : ℤ)))
+  have hz : Valued.v z = WithZero.exp (-1 : ℤ) :=
+    Classical.choose_spec
+      (IsDedekindDomain.HeightOneSpectrum.valuedAdicCompletion_surjective
+        K v (WithZero.exp (-1 : ℤ)))
+  have hz0 : z ≠ 0 := by
+    intro hzero
+    rw [hzero, map_zero] at hz
+    exact WithZero.exp_ne_zero hz.symm
+  let u : (v.adicCompletion K)ˣ := Units.mk0 z hz0
+  let localUnit : ∀ w : HeightOneSpectrum (𝓞 K), (w.adicCompletion K)ˣ :=
+    fun w => dite (w = v) (fun h => h ▸ u) (fun _ => 1)
+  have hunit : ∀ᶠ w : HeightOneSpectrum (𝓞 K) in Filter.cofinite,
+      localUnit w ∈ (Submonoid.ofClass (w.adicCompletionIntegers K)).units := by
+    filter_upwards [(Set.finite_singleton v).compl_mem_cofinite] with w hw
+    have hw' : w ≠ v := by simpa using hw
+    simp [localUnit, hw']
+  let finite : (Chapter09FiniteAdele K)ˣ :=
+    RestrictedProduct.mkUnit localUnit hunit
+  let x : Chapter09Idele K :=
+    (chapter09IdeleProductEquiv K).symm (1, finite)
+  have hx : chapter09IdeleProductEquiv K x = (1, finite) := by
+    simp [x]
+  have hlocal : localUnit v = u := by
+    simp [localUnit]
+  have horder :
+      LastLib.Book04AdelesAndIdeles.Chapter08.chapter08LocalOrder v z = 1 := by
+    unfold LastLib.Book04AdelesAndIdeles.Chapter08.chapter08LocalOrder
+    rw [hz, dif_neg WithZero.exp_ne_zero,
+      WithZero.toAdd_unzero_eq_log, WithZero.log_exp]
+    ring
+  refine ⟨{
+    idele := x
+    infinite_components_one := ?_
+    finite_component_at := ?_
+    finite_components_off := ?_ }⟩
+  · intro w
+    rw [hx]
+    have hpi : MulEquiv.piUnits (1 : (Chapter09InfiniteAdele K)ˣ) = 1 :=
+      (MulEquiv.piUnits).map_one
+    rw [hpi]
+    rfl
+  · rw [hx]
+    have hcomp :
+        (↑((RestrictedProduct.unitsEquiv
+          (fun w : HeightOneSpectrum (𝓞 K) => w.adicCompletion K) finite) v) :
+          v.adicCompletion K) = z := by
+      rw [RestrictedProduct.unitsEquiv_apply]
+      change (localUnit v : v.adicCompletion K) = z
+      rw [hlocal]
+      rfl
+    change (Ideal.absNorm v.asIdeal : ℝ≥0) ^
+      (-LastLib.Book04AdelesAndIdeles.Chapter08.chapter08LocalOrder v
+        ((RestrictedProduct.unitsEquiv
+          (fun w : HeightOneSpectrum (𝓞 K) => w.adicCompletion K) finite) v)) =
+      (Ideal.absNorm v.asIdeal : ℝ≥0)⁻¹
+    rw [hcomp, horder]
+    simp
+  · intro w hw
+    rw [hx]
+    apply Units.ext
+    have hcomp :
+        (↑((RestrictedProduct.unitsEquiv
+          (fun w : HeightOneSpectrum (𝓞 K) => w.adicCompletion K) finite) w) :
+          w.adicCompletion K) = 1 := by
+      rw [RestrictedProduct.unitsEquiv_apply]
+      change (localUnit w : w.adicCompletion K) = 1
+      simp [localUnit, hw]
+    exact hcomp
 
 theorem chapter09_uniformizer_data_degree
     {K : Type*} [Field K] [NumberField K]
@@ -317,7 +762,11 @@ theorem chapter09IdeleClassDegree_apply
 theorem chapter09IdeleClassDegree_surjective
     (K : Type*) [Field K] [NumberField K] :
     Function.Surjective (chapter09IdeleClassDegree K) := by
-  sorry
+  intro y
+  rcases chapter09Degree_surjective K y with ⟨x, hx⟩
+  refine ⟨QuotientGroup.mk x, ?_⟩
+  rw [chapter09IdeleClassDegree_apply]
+  exact hx
 
 theorem chapter09IdeleClassDegree_ker_eq_classNormOne
     (K : Type*) [Field K] [NumberField K] :
@@ -332,7 +781,11 @@ theorem chapter09IdeleClassDegree_ker_eq_classNormOne
 theorem chapter09_module_descends_to_idele_class_group
     (K : Type*) [Field K] [NumberField K] :
     Function.Surjective (chapter09IdeleClassModule K) := by
-  sorry
+  intro t
+  rcases chapter09IdeleModule_surjective K t with ⟨x, hx⟩
+  refine ⟨QuotientGroup.mk x, ?_⟩
+  rw [chapter09IdeleClassModule_apply]
+  exact hx
 
 theorem chapter09_class_module_kernel_is_normOne_class_group
     (K : Type*) [Field K] [NumberField K] :
@@ -346,7 +799,47 @@ theorem chapter09_normOne_is_not_finite_unit_condition
     ∃ x : Chapter09Idele K,
       x ∈ chapter09NormOneIdeles K ∧
         x ∉ chapter09FiniteUnitIdeleSubgroup K := by
-  sorry
+  let a : Kˣ := -1
+  refine ⟨chapter09PrincipalIdele K a,
+    chapter09_principal_idele_in_normOne a, ?_⟩
+  intro hx
+  change (chapter09PrincipalIdele K a) ∈
+    Subgroup.map (chapter09FiniteUnitIdeleEmbedding K)
+      (chapter09FiniteUnitIdeles K) at hx
+  have hx' : (chapter09PrincipalIdele K a) ∈
+      (↑(Subgroup.map (chapter09FiniteUnitIdeleEmbedding K)
+        (chapter09FiniteUnitIdeles K)) : Set (Chapter09Idele K)) := hx
+  rw [Subgroup.coe_map] at hx'
+  rcases hx' with ⟨u, hu, hux⟩
+  have hfirst := congrArg (fun y : Chapter09Idele K =>
+      (chapter09IdeleProductEquiv K y).1) hux
+  have hprincipal :
+      (chapter09IdeleProductEquiv K (chapter09PrincipalIdele K a)).1 =
+        LastLib.Book04AdelesAndIdeles.Chapter08.chapter08InfinitePrincipalIdele a := by
+    rfl
+  have hbad :
+      LastLib.Book04AdelesAndIdeles.Chapter08.chapter08InfinitePrincipalIdele a ≠
+        (1 : (Chapter09InfiniteAdele K)ˣ) := by
+    intro h
+    have hval := congrArg Units.val h
+    change algebraMap K (Chapter09InfiniteAdele K) (a : K) = 1 at hval
+    simp [a] at hval
+    let w : InfinitePlace K :=
+      Classical.choice (inferInstance : Nonempty (InfinitePlace K))
+    have hval' := congrArg (fun z : Chapter09InfiniteAdele K => z w) hval
+    change -(1 : w.Completion) = 1 at hval'
+    rcases w.isReal_or_isComplex with hw | hw
+    · let e := NumberField.InfinitePlace.Completion.ringEquivRealOfIsReal hw
+      have hval'' := congrArg e hval'
+      have hreal : (-1 : ℝ) = 1 := by simpa [e] using hval''
+      norm_num at hreal
+    · let e := NumberField.InfinitePlace.Completion.ringEquivComplexOfIsComplex hw
+      have hval'' := congrArg e hval'
+      have hcomplex : (-1 : ℂ) = 1 := by simpa [e] using hval''
+      norm_num at hcomplex
+  apply hbad
+  rw [← hprincipal]
+  simpa [chapter09FiniteUnitIdeleEmbedding] using hfirst.symm
 
 /- The number-field degree in this chapter is real-valued and uses the
 archimedean magnitude.  In the separate function-field theory with constant

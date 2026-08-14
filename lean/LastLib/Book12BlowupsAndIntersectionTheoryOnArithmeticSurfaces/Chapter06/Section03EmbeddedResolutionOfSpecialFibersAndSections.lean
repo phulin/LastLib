@@ -1,4 +1,6 @@
 import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter06.Dependencies
+import Mathlib.Data.ENat.Basic
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter05.Dependencies
 
 /-!
 ### 6.3 Embedded resolution of special fibers and sections
@@ -10,6 +12,7 @@ Cartier and tangent-space APIs are available.
 -/
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
+open LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter05
 
 noncomputable section
 
@@ -101,39 +104,52 @@ def chapter06SectionContactEquations {R : Type u} [CommRing R]
   v = 0 ∧ v - u ^ r = 0
 
 structure Chapter06SectionContact
-    {R : Type u} [CommRing R] where
-  u v : R
+    {R : Type u} [CommRing R] [IsLocalRing R] [IsNoetherianRing R] where
+  u : R
+  v : R
   contactOrder : ℕ
   contactOrderPositive : 0 < contactOrder
   equations : chapter06SectionContactEquations u v contactOrder
+  parametersAreRegular : Chapter05RegularSystemOfParameters u v
 
-/- LOCAL_DEPENDENCY_GUESS: the length of a finite intersection quotient is not
-yet connected to the book-facing local equation record.  In this local chart
-the quotient length is normalized by the contact order, which is the exact
-integer used by the later global intersection API. -/
+def chapter06SectionIntersectionIdeal
+    {R : Type u} [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
+    (C : Chapter06SectionContact (R := R)) : Ideal R :=
+  Ideal.span ({C.v, C.v - C.u ^ C.contactOrder} : Set R)
+
 def chapter06SectionIntersectionLength
-    {R : Type u} [CommRing R] (C : Chapter06SectionContact) : ℕ :=
-  C.contactOrder
+    {R : Type u} [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
+    (C : Chapter06SectionContact (R := R)) : ℕ∞ :=
+  Module.length R (R ⧸ chapter06SectionIntersectionIdeal C)
 
 def chapter06SectionLocalIntersectionMultiplicity
-    {R : Type u} [CommRing R] (C : Chapter06SectionContact) : ℕ :=
-  chapter06SectionIntersectionLength C
+    {R : Type u} [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
+    (C : Chapter06SectionContact (R := R)) : ℕ∞ :=
+  chapter06SectionIntersectionLength (R := R) C
 
 theorem chapter06_section_local_intersection_multiplicity_eq_contact_order
-    {R : Type u} [CommRing R] (C : Chapter06SectionContact) :
-    chapter06SectionLocalIntersectionMultiplicity C = C.contactOrder := by
-  rfl
+    {R : Type u} [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
+    (C : Chapter06SectionContact (R := R)) :
+    chapter06SectionLocalIntersectionMultiplicity (R := R) C =
+      (C.contactOrder : ℕ∞) := by
+  sorry
+
+theorem chapter06_section_intersection_length_is_finite
+    {R : Type u} [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
+    (C : Chapter06SectionContact (R := R)) :
+    chapter06SectionIntersectionLength (R := R) C ≠ ⊤ := by
+  sorry
 
 def chapter06SectionBlowupChartEquations
-    {R : Type u} [CommRing R]
-    (C : Chapter06SectionContact) (u₁ t : R) : Prop :=
+    {R : Type u} [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
+    (C : Chapter06SectionContact (R := R)) (u₁ t : R) : Prop :=
   t = 0 ∧ t = u₁ ^ (C.contactOrder - 1)
 
 def chapter06RemainingContact (r q : ℕ) : ℕ := r - q
 
 structure Chapter06SectionBlowupStep
-    {R : Type u} [CommRing R]
-    (C : Chapter06SectionContact) where
+    {R : Type u} [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
+    (C : Chapter06SectionContact (R := R)) where
   uChart : R
   exceptionalChartCoordinate : R
   strictTransformEquations :
@@ -145,25 +161,29 @@ structure Chapter06SectionBlowupStep
   recordsTheOrderEvidence : recordsTheOrder
 
 theorem chapter06_section_blowup_decreases_contact_by_one
-    {R : Type u} [CommRing R]
-    {C : Chapter06SectionContact} (B : Chapter06SectionBlowupStep C) :
+    {R : Type u} [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
+    {C : Chapter06SectionContact (R := R)}
+    (B : Chapter06SectionBlowupStep (R := R) C) :
     B.remainingContact = C.contactOrder - 1 := by
   exact B.remainingContactFormula
 
 theorem chapter06_section_blowup_chart_has_the_two_strict_transforms
-    {R : Type u} [CommRing R]
-    {C : Chapter06SectionContact} (B : Chapter06SectionBlowupStep C) :
+    {R : Type u} [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
+    {C : Chapter06SectionContact (R := R)}
+    (B : Chapter06SectionBlowupStep (R := R) C) :
     B.exceptionalChartCoordinate = 0 ∧
       B.exceptionalChartCoordinate = B.uChart ^ (C.contactOrder - 1) := by
   exact B.strictTransformEquations
 
 theorem chapter06_section_blowup_step_exists
-    {R : Type u} [CommRing R] (C : Chapter06SectionContact) :
-    Nonempty (Chapter06SectionBlowupStep C) := by
+    {R : Type u} [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
+    (C : Chapter06SectionContact (R := R)) :
+    Nonempty (Chapter06SectionBlowupStep (R := R) C) := by
   sorry
 
 theorem chapter06_after_contact_order_many_blowups_the_sections_are_separated
-    {R : Type u} [CommRing R] (C : Chapter06SectionContact) :
+    {R : Type u} [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
+    (C : Chapter06SectionContact (R := R)) :
     chapter06RemainingContact C.contactOrder C.contactOrder = 0 := by
   simp [chapter06RemainingContact]
 
@@ -172,7 +192,8 @@ def chapter06ContactOrderSequence : ℕ → List ℕ
   | n + 1 => (n + 1) :: chapter06ContactOrderSequence n
 
 structure Chapter06SuccessiveSectionExceptionalCurves
-    {R : Type u} [CommRing R] (C : Chapter06SectionContact) where
+    {R : Type u} [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
+    (C : Chapter06SectionContact (R := R)) where
   orderSequence : List ℕ
   orderSequenceIsExact :
     orderSequence = chapter06ContactOrderSequence C.contactOrder
@@ -183,8 +204,9 @@ structure Chapter06SuccessiveSectionExceptionalCurves
   strictTransformsSeparatedAtEndEvidence : strictTransformsSeparatedAtEnd
 
 theorem chapter06_successive_exceptional_curves_remember_contact_orders
-    {R : Type u} [CommRing R] (C : Chapter06SectionContact) :
-    Nonempty (Chapter06SuccessiveSectionExceptionalCurves C) := by
+    {R : Type u} [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
+    (C : Chapter06SectionContact (R := R)) :
+    Nonempty (Chapter06SuccessiveSectionExceptionalCurves (R := R) C) := by
   sorry
 
 /-! The total transform of the uniformizer fiber. -/

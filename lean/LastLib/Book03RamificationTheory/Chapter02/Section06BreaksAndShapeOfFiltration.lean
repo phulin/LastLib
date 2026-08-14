@@ -38,7 +38,7 @@ theorem chapter02_lower_break_zero_iff_tame_layer_nontrivial
 theorem chapter02_positive_lower_break_is_wild
     {G : Type u} [Group G] [Finite G]
     (F : Chapter02LowerFiltration G) {n : ℕ}
-    (hn : 1 ≤ n) (hbreak : chapter02LowerBreak F n) :
+    (hn : 1 ≤ n) :
     F.group n ≤ chapter02WildGroup F := by
   sorry
 

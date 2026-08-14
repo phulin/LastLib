@@ -9,13 +9,7 @@ noncomputable section
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter14
 
-open scoped NumberField
-
-/-! Arithmetic and geometric Frobenius are two conventions on the same canonical automorphism. -/
-
-inductive Chapter14FrobeniusConvention
-  | arithmetic
-  | geometric
+open scoped NNReal NumberField
 
 noncomputable def chapter14FrobeniusAtConvention (c : Chapter14FrobeniusConvention)
     (k l : Type*) [Field k] [Fintype k] [Field l] [Finite l]
@@ -59,8 +53,10 @@ def chapter14FiniteUniformizer (K : Type*) [Field K] [NumberField K]
 
 def chapter14FiniteUniformizerNormalization (K : Type*) [Field K] [NumberField K]
     (v : NumberField.FinitePlace K) (π : K) : Prop :=
-  ‖NumberField.FinitePlace.embedding v.maximalIdeal π‖ =
-    (v.maximalIdeal.asIdeal.absNorm : ℝ)⁻¹
+  (((Ideal.absNorm v.maximalIdeal.asIdeal : ℝ≥0) ^
+      (-LastLib.Book04AdelesAndIdeles.Chapter08.chapter08LocalOrder v.maximalIdeal
+        (NumberField.FinitePlace.embedding v.maximalIdeal π)) : ℝ≥0) : ℝ) =
+    (Ideal.absNorm v.maximalIdeal.asIdeal : ℝ)⁻¹
 
 theorem chapter14_finite_uniformizer_has_normalized_magnitude {K : Type*} [Field K]
     [NumberField K] (v : NumberField.FinitePlace K) (π : K)
@@ -144,7 +140,7 @@ theorem chapter14_local_unit_filtration_descends {K : Type*} [Field K] [NumberFi
   sorry
 
 theorem chapter14_real_local_quotient_records_sign :
-    Nonempty (chapter14RealSignQuotient ≃* ZMod 2) :=
+    Nonempty (chapter14RealSignQuotient ≃* Multiplicative (ZMod 2)) :=
   chapter14_real_sign_quotient_has_order_two
 
 theorem chapter14_complex_local_quotient_has_no_exponent :

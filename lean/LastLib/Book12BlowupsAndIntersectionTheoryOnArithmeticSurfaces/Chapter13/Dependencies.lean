@@ -11,6 +11,7 @@ import Mathlib.Data.Matrix.Mul
 import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
 import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.LinearAlgebra.Span.Basic
+import Mathlib.LinearAlgebra.Quotient.Defs
 import Mathlib.LinearAlgebra.Matrix.Symmetric
 import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter01.Section01TheAbsoluteAndRelativeSettings
 
@@ -46,12 +47,13 @@ abbrev chapter13PureDimensionOne (X : Scheme.{u}) : Prop :=
 the regularity condition is imposed on the total space, as required for the
 Cartier/Weil dictionary used by the chapter. -/
 structure Chapter13ArithmeticSurface
-    (R : Type u) [CommRing R] [IsDomain R] [IsDedekindDomain R] where
+    (R : Type u) [CommRing R] [IsDedekindDomain R] where
   carrier : Scheme.{u}
   structureMap : carrier ⟶ Spec (CommRingCat.of R)
   proper : IsProper structureMap
   flat : Flat structureMap
   finitePresentation : LocallyOfFinitePresentation structureMap
+  integral : IsIntegral carrier
   regular : chapter13RegularScheme carrier
   fiberPureDimensionOne :
     ∀ s : Spec (CommRingCat.of R),
@@ -59,17 +61,23 @@ structure Chapter13ArithmeticSurface
 
 namespace Chapter13ArithmeticSurface
 
-instance (A : Chapter13ArithmeticSurface R) : IsProper A.structureMap := A.proper
+instance {R : Type u} [CommRing R] [IsDedekindDomain R]
+    (A : Chapter13ArithmeticSurface R) : IsProper A.structureMap := A.proper
 
-instance (A : Chapter13ArithmeticSurface R) : Flat A.structureMap := A.flat
+instance {R : Type u} [CommRing R] [IsDedekindDomain R]
+    (A : Chapter13ArithmeticSurface R) : Flat A.structureMap := A.flat
 
-instance (A : Chapter13ArithmeticSurface R) :
+instance {R : Type u} [CommRing R] [IsDedekindDomain R]
+    (A : Chapter13ArithmeticSurface R) :
     LocallyOfFinitePresentation A.structureMap := A.finitePresentation
+
+instance {R : Type u} [CommRing R] [IsDedekindDomain R]
+    (A : Chapter13ArithmeticSurface R) : IsIntegral A.carrier := A.integral
 
 end Chapter13ArithmeticSurface
 
 abbrev chapter13SchemeTheoreticFiber
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     (A : Chapter13ArithmeticSurface R)
     (s : Spec (CommRingCat.of R)) : Scheme.{u} :=
   A.structureMap.fiber s
@@ -79,13 +87,13 @@ equations separately, but the pinned checkout has no bundled Cartier-divisor
 type for a regular surface.  This small wrapper is the weakest interface needed
 to distinguish the Cartier divisors used in the displayed pairings. -/
 structure Chapter13CartierDivisor
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     (A : Chapter13ArithmeticSurface R) where
   cycle : AlgebraicCycle A.carrier ℤ
 
 @[ext]
 theorem chapter13CartierDivisor_ext
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {D E : Chapter13CartierDivisor A}
     (h : D.cycle = E.cycle) : D = E := by
@@ -98,7 +106,7 @@ theorem chapter13CartierDivisor_ext
 the cycle used by the intersection interface.  The bundled type is the
 book-facing bridge from the scheme support to the canonical cycle API. -/
 structure Chapter13PrimeDivisor
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     (A : Chapter13ArithmeticSurface R)
     extends Chapter13CartierDivisor A where
   support : Scheme.{u}
@@ -108,7 +116,7 @@ structure Chapter13PrimeDivisor
   proper : IsProper (inclusion ≫ A.structureMap)
 
 def chapter13FiniteFlatOverNeighborhood
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     (P : Chapter13PrimeDivisor A)
     (s : Spec (CommRingCat.of R)) : Prop :=
@@ -121,7 +129,7 @@ fiber and the finite-type curve condition make the geometric meaning of the
 index `Γᵢ` available without pretending that Mathlib already has a global
 intersection theory for these components. -/
 structure Chapter13FiberComponent
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     (A : Chapter13ArithmeticSurface R)
     (s : Spec (CommRingCat.of R))
     extends Chapter13CartierDivisor A where
@@ -139,10 +147,11 @@ structure Chapter13FiberComponent
 indexing choice.  The positive multiplicities and the cycle decomposition are
 the exact data behind `F = ∑ mᵢ Γᵢ`. -/
 structure Chapter13SpecialFiber
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     (A : Chapter13ArithmeticSurface R)
     (s : Spec (CommRingCat.of R)) where
   r : ℕ
+  nonempty : 0 < r
   component : Fin r → Chapter13FiberComponent A s
   multiplicity : Fin r → ℕ
   multiplicity_pos : ∀ i, 0 < multiplicity i
@@ -153,7 +162,7 @@ structure Chapter13SpecialFiber
 
 @[simp]
 theorem chapter13SpecialFiber.multiplicity_ne_zero
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (F : Chapter13SpecialFiber A s) (i : Fin F.r) :
@@ -167,7 +176,7 @@ intersection and Cartier divisor calculus.  Additivity and symmetry are kept
 as fields so later formulas can be transported to matrices without depending
 on a particular implementation of cycles. -/
 structure Chapter13SpecialFiberIntersectionData
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     extends Chapter13SpecialFiber A s where
@@ -192,7 +201,7 @@ structure Chapter13SpecialFiberIntersectionData
         components_meet i j)
 
 def chapter13ComponentIntersection
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s))
@@ -200,7 +209,7 @@ def chapter13ComponentIntersection
   T.intersection (T.component i).cycle (T.component j).cycle
 
 def chapter13FiberIntersectionWithComponent
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s))
@@ -208,7 +217,7 @@ def chapter13FiberIntersectionWithComponent
   T.intersection T.fiber.cycle (T.component i).cycle
 
 def chapter13IntersectionMatrix
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s)) :
@@ -217,7 +226,7 @@ def chapter13IntersectionMatrix
 
 @[simp]
 theorem chapter13IntersectionMatrix_apply
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s))
@@ -226,7 +235,7 @@ theorem chapter13IntersectionMatrix_apply
   rfl
 
 def chapter13FiberMultiplicityVector
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s)) :
@@ -235,7 +244,7 @@ def chapter13FiberMultiplicityVector
 
 @[simp]
 theorem chapter13FiberMultiplicityVector_apply
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s))
@@ -244,7 +253,7 @@ theorem chapter13FiberMultiplicityVector_apply
   rfl
 
 def chapter13FiberRelation
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s)) : Prop :=
@@ -256,7 +265,7 @@ def chapter13MatrixKernel
   ∀ i, ∑ j, M i j * v j = 0
 
 def chapter13RationalIntersectionMatrix
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s)) :
@@ -264,7 +273,7 @@ def chapter13RationalIntersectionMatrix
   fun i j => chapter13ComponentIntersection T i j
 
 def chapter13RationalMultiplicityVector
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s)) :
@@ -279,7 +288,7 @@ def chapter13RationalMatrixLinearMap {n : ℕ}
   map_smul' c x := Matrix.mulVec_smul M c x
 
 def chapter13RationalMatrixKernel
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s)) :
@@ -287,7 +296,7 @@ def chapter13RationalMatrixKernel
   {x | chapter13MatrixKernel (chapter13RationalIntersectionMatrix T) x}
 
 def chapter13MultiplicityLine
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s)) :
@@ -295,7 +304,7 @@ def chapter13MultiplicityLine
   {x | ∃ q : ℚ, x = q • chapter13RationalMultiplicityVector T}
 
 def chapter13WeightedPotential
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s))
@@ -303,7 +312,7 @@ def chapter13WeightedPotential
   a i / (T.multiplicity i : ℚ)
 
 def chapter13VerticalSelfIntersection
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s))
@@ -311,7 +320,7 @@ def chapter13VerticalSelfIntersection
   ∑ i, ∑ j, a i * a j * (chapter13ComponentIntersection T i j : ℚ)
 
 def chapter13WeightedLaplacianEnergy
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s))
@@ -322,7 +331,7 @@ def chapter13WeightedLaplacianEnergy
         (chapter13WeightedPotential T a i - chapter13WeightedPotential T a j) ^ 2
 
 def chapter13MultiplicitySubmodule
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s)) :
@@ -330,11 +339,11 @@ def chapter13MultiplicitySubmodule
   Submodule.span ℚ {chapter13RationalMultiplicityVector T}
 
 abbrev Chapter13VerticalCoefficientQuotient
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s)) :=
-  Submodule.Quotient (chapter13MultiplicitySubmodule T)
+  (Fin T.r → ℚ) ⧸ chapter13MultiplicitySubmodule T
 
 /-! ### Generic-fiber degree and the local-length proof interface -/
 
@@ -342,8 +351,15 @@ abbrev Chapter13VerticalCoefficientQuotient
 earlier surface/divisor chapters.  This record keeps their outputs canonical
 at the Chapter 13 boundary and exposes the exact local assertions used in the
 proof of (13.3). -/
+def chapter13CartierPrimeDecomposition
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {A : Chapter13ArithmeticSurface R}
+    (D : Chapter13CartierDivisor A) : Prop :=
+  ∃ (n : ℕ) (P : Fin n → Chapter13PrimeDivisor A) (a : Fin n → ℤ),
+    D.cycle = ∑ i, a i • (P i).cycle
+
 structure Chapter13GenericDegreeData
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s)) where
@@ -352,6 +368,11 @@ structure Chapter13GenericDegreeData
   finiteFlatRank : Chapter13PrimeDivisor A → ℕ
   isVerticalPrime : Chapter13PrimeDivisor A → Prop
   isHorizontalPrime : Chapter13PrimeDivisor A → Prop
+  prime_is_vertical_or_horizontal :
+    ∀ P, isVerticalPrime P ∨ isHorizontalPrime P
+  vertical_prime_generic_degree_zero :
+    ∀ P, isVerticalPrime P →
+      degreeOnGenericFiber P.toChapter13CartierDivisor = 0
   vertical_prime_intersection_zero :
     ∀ P, isVerticalPrime P →
       T.intersection P.cycle T.fiber.cycle = 0
@@ -365,12 +386,20 @@ structure Chapter13GenericDegreeData
   horizontal_degree_eq_rank :
     ∀ P, isHorizontalPrime P →
       degreeOnGenericFiber P.toChapter13CartierDivisor = finiteFlatRank P
+  cartier_prime_decomposition :
+    ∀ D, chapter13CartierPrimeDecomposition (A := A) D
+  degree_on_cartier_prime_decomposition :
+    ∀ (D : Chapter13CartierDivisor A) (n : ℕ)
+      (P : Fin n → Chapter13PrimeDivisor A) (a : Fin n → ℤ),
+      D.cycle = ∑ i, a i • (P i).cycle →
+      degreeOnGenericFiber D =
+        ∑ i, a i * degreeOnGenericFiber (P i).toChapter13CartierDivisor
   isHorizontalSection : Chapter13PrimeDivisor A → Prop
   horizontal_section_degree_one :
     ∀ P, isHorizontalSection P → degreeOnGenericFiber P.toChapter13CartierDivisor = 1
 
 def chapter13DegreeZeroOnGenericFiber
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     {T : Chapter13SpecialFiberIntersectionData (A := A) (s := s)}
@@ -381,7 +410,7 @@ def chapter13DegreeZeroOnGenericFiber
 /-! ### Graph language and warning interfaces -/
 
 def chapter13Adjacency
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s)) :
@@ -389,7 +418,7 @@ def chapter13Adjacency
   fun i j => i ≠ j ∧ T.components_meet i j
 
 def chapter13GraphConnected
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s)) : Prop :=
@@ -397,7 +426,7 @@ def chapter13GraphConnected
     Relation.ReflTransGen (chapter13Adjacency T) i j
 
 def chapter13NoBoundaryEdges
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s))
@@ -405,12 +434,14 @@ def chapter13NoBoundaryEdges
   ∀ i ∈ C, ∀ j ∉ C, chapter13ComponentIntersection T i j = 0
 
 def chapter13ComponentIndicator
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s))
     (C : Set (Fin T.r)) : Fin T.r → ℤ :=
-  fun i => if i ∈ C then T.multiplicity i else 0
+  by
+    classical
+    exact fun i => if i ∈ C then T.multiplicity i else 0
 
 end
 

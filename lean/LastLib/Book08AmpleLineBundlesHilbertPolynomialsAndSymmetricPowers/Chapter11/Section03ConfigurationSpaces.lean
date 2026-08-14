@@ -151,6 +151,25 @@ noncomputable def unorderedConfiguration_classifies_split_finite_etale_families
     Chapter11ConfigurationFamilyClassification X d := by
   sorry
 
+/- The identity point of the classification equivalence is the descended
+   universal family.  Naming it makes the universal-family part of the
+   configuration-space construction available independently of the chosen
+   equivalence presentation. -/
+noncomputable def unorderedConfigurationUniversalFamily
+    {S : Scheme.{u}} (X : RelativeScheme S) (d : ℕ)
+    [Chapter11QuasiProjectiveOver X] :
+    ConfigurationFamily X (unorderedConfigurationSpace X d) d :=
+  (unorderedConfiguration_classifies_split_finite_etale_families X d).equivalence
+    (unorderedConfigurationSpace X d) (𝟙 _)
+
+theorem unorderedConfigurationUniversalFamily_pullback
+    {S : Scheme.{u}} (X : RelativeScheme S) (d : ℕ)
+    [Chapter11QuasiProjectiveOver X] {T : RelativeScheme S}
+    (f : T ⟶ unorderedConfigurationSpace X d) :
+    ConfigurationFamily.pullback f (unorderedConfigurationUniversalFamily X d) =
+      (unorderedConfiguration_classifies_split_finite_etale_families X d).equivalence T f := by
+  sorry
+
 theorem configurationSpace_smooth {S : Scheme.{u}} (X : RelativeScheme S) (d r : ℕ)
     [Chapter11QuasiProjectiveOver X]
     (hX : SmoothOfRelativeDimension r X.structuralMap) :
@@ -165,18 +184,38 @@ theorem unorderedConfigurationSpace_smooth {S : Scheme.{u}} (X : RelativeScheme 
       (unorderedConfigurationSpace X d).structuralMap := by
   sorry
 
-/- SOURCE_ISSUE: §11.3 says "its finite quotient has the same codimension"
-   without specifying whether codimension is stalkwise, fiberwise, or a cycle
-   codimension.  The aggregate big diagonal is generally not a regular
-   immersion at multiple collisions, so the interface below records closedness
-   and local ideal-height codimension; the pairwise regular-immersion claim is
-   not silently promoted to a claim about the whole union. -/
+/- The pairwise diagonal is the equalizer of two coordinate projections.  Its
+   regular-immersion statement is kept separate from the aggregate big
+   diagonal, which is generally not a regular immersion at multiple
+   collisions. -/
+structure Chapter11PairwiseDiagonalData {S : Scheme.{u}} (X : RelativeScheme S)
+    (d r : ℕ) (i j : Fin d) where
+  carrier : RelativeScheme S
+  inclusion : carrier ⟶ (relativePower X d).carrier
+  regular : Chapter11RegularImmersion inclusion.hom r
+  equal_coordinates :
+    inclusion ≫ (relativePower X d).projection i =
+      inclusion ≫ (relativePower X d).projection j
+  characterizes : ∀ (T : RelativeScheme S) (x : T ⟶ (relativePower X d).carrier),
+    x ≫ (relativePower X d).projection i =
+        x ≫ (relativePower X d).projection j ↔
+      ∃! y : T ⟶ carrier, y ≫ inclusion = x
+
+theorem pairwiseDiagonal_exists {S : Scheme.{u}} (X : RelativeScheme S) (d r : ℕ)
+    [Chapter11QuasiProjectiveOver X]
+    (i j : Fin d) (hij : i ≠ j)
+    (hX : SmoothOfRelativeDimension r X.structuralMap) :
+    Nonempty (Chapter11PairwiseDiagonalData X d r i j) := by
+  sorry
+
 structure BigDiagonalData {S : Scheme.{u}} (X : RelativeScheme S) (d r : ℕ)
     [Chapter11QuasiProjectiveOver X] where
   carrier : RelativeScheme S
   inclusion : carrier ⟶ (relativePower X d).carrier
   closed : IsClosedImmersion inclusion.hom
   codimension : Chapter11FiberwiseHeightCodimension inclusion.hom r
+  pairwiseDiagonals : ∀ (i j : Fin d), i ≠ j →
+    Chapter11PairwiseDiagonalData X d r i j
   complement : ConfigurationSpace X d
   complement_eq :
     Set.range complement.inclusion.hom = Set.univ \ Set.range inclusion.hom
@@ -249,6 +288,15 @@ structure OrderedConfigurationFamily {S : Scheme.{u}} (X : RelativeScheme S) (d 
       (Scheme.Hom.opensRange
         (Sigma.ι (fun _ : Fin d => C.carrier.carrier) j)
         (H := componentInclusion_open j))
+  /-- The coordinate graphs are disjoint in the ambient curve/product. -/
+  graphs_disjoint : ∀ i j, i ≠ j →
+    Disjoint
+      (Set.range
+        ((Sigma.ι (fun _ : Fin d => C.carrier.carrier) i) ≫
+          orderedConfigurationFamilyToX d C))
+      (Set.range
+        ((Sigma.ι (fun _ : Fin d => C.carrier.carrier) j) ≫
+          orderedConfigurationFamilyToX d C))
 
 theorem ordered_configuration_family_exists {S : Scheme.{u}}
     (X : RelativeScheme S) (d : ℕ) [Chapter11QuasiProjectiveOver X] :
@@ -258,9 +306,14 @@ theorem ordered_configuration_family_exists {S : Scheme.{u}}
 theorem ordered_configuration_family_graphs_disjoint {S : Scheme.{u}}
     (X : RelativeScheme S) (d : ℕ) [Chapter11QuasiProjectiveOver X]
     (i j : Fin d) (hij : i ≠ j) :
-    Disjoint (Sigma.ι (fun _ : Fin d => (configurationSpace X d).carrier.carrier) i).opensRange
-      (Sigma.ι (fun _ : Fin d => (configurationSpace X d).carrier.carrier) j).opensRange := by
-  exact disjoint_opensRange_sigmaι _ _ _ hij
+    Disjoint
+      (Set.range
+        ((Sigma.ι (fun _ : Fin d => (configurationSpace X d).carrier.carrier) i) ≫
+          orderedConfigurationFamilyToX d (configurationSpace X d)))
+      (Set.range
+        ((Sigma.ι (fun _ : Fin d => (configurationSpace X d).carrier.carrier) j) ≫
+          orderedConfigurationFamilyToX d (configurationSpace X d))) := by
+  exact (ordered_configuration_family_exists X d).graphs_disjoint i j hij
 
 noncomputable def configurationAmbientPermutationMap {S : Scheme.{u}}
     (X : RelativeScheme S) (d : ℕ) [Chapter11QuasiProjectiveOver X]
@@ -272,24 +325,6 @@ noncomputable def configurationAmbientPermutationMap {S : Scheme.{u}}
     ((pullback.snd X.structuralMap (configurationSpace X d).carrier.structuralMap) ≫
       ((configurationAction X d).hom σ).hom) (by sorry)
 
-theorem ordered_configuration_family_equivariant {S : Scheme.{u}}
-    (X : RelativeScheme S) (d : ℕ) [Chapter11QuasiProjectiveOver X] :
-    ∀ σ : Equiv.Perm (Fin d),
-      ∃ e : orderedConfigurationFamilyTotal d (configurationSpace X d) ⟶
-        orderedConfigurationFamilyTotal d (configurationSpace X d),
-        IsIso e ∧
-          e ≫ orderedConfigurationFamilyToBase d (configurationSpace X d) =
-            orderedConfigurationFamilyToBase d (configurationSpace X d) ≫
-              ((configurationAction X d).hom σ).hom ∧
-          e ≫ orderedConfigurationFamilyToX d (configurationSpace X d) =
-            orderedConfigurationFamilyToX d (configurationSpace X d) ≫
-              configurationAmbientPermutationMap X d σ ∧
-            ∀ i : Fin d,
-            (Sigma.ι (fun _ : Fin d => (configurationSpace X d).carrier.carrier) i) ≫ e =
-              ((configurationAction X d).hom σ).hom ≫
-              Sigma.ι (fun _ : Fin d => (configurationSpace X d).carrier.carrier) (σ.symm i) := by
-  sorry
-
 /- The comparison map on the ambient pullbacks induced by the quotient map. -/
 noncomputable def configurationFamilyAmbientMap {S : Scheme.{u}}
     (X : RelativeScheme S) (d : ℕ) [Chapter11QuasiProjectiveOver X] :
@@ -300,37 +335,102 @@ noncomputable def configurationFamilyAmbientMap {S : Scheme.{u}}
     (pullback.snd X.structuralMap (configurationSpace X d).carrier.structuralMap ≫
       (unorderedConfigurationMap X d).hom) (by sorry)
 
+/- Equivariance of the ordered family is descent data, so it must include the
+   group laws for the permutation action rather than unrelated isomorphisms
+   indexed by individual permutations. -/
+structure OrderedConfigurationFamilyEquivariance {S : Scheme.{u}}
+    (X : RelativeScheme S) (d : ℕ)
+    [Chapter11QuasiProjectiveOver X] where
+  action : Equiv.Perm (Fin d) →
+    (orderedConfigurationFamilyTotal d (configurationSpace X d) ⟶
+      orderedConfigurationFamilyTotal d (configurationSpace X d))
+  action_one : action 1 = 𝟙 _
+  action_mul : ∀ σ τ, action (σ * τ) = action σ ≫ action τ
+  action_isIso : ∀ σ, IsIso (action σ)
+  over_base : ∀ σ,
+    action σ ≫ orderedConfigurationFamilyToBase d (configurationSpace X d) =
+      orderedConfigurationFamilyToBase d (configurationSpace X d) ≫
+        ((configurationAction X d).hom σ).hom
+  over_X : ∀ σ,
+    action σ ≫ orderedConfigurationFamilyToX d (configurationSpace X d) =
+      orderedConfigurationFamilyToX d (configurationSpace X d) ≫
+        configurationAmbientPermutationMap X d σ
+  component : ∀ σ : Equiv.Perm (Fin d), ∀ i : Fin d,
+    (Sigma.ι (fun _ : Fin d => (configurationSpace X d).carrier.carrier) i) ≫
+        action σ =
+      ((configurationAction X d).hom σ).hom ≫
+        Sigma.ι (fun _ : Fin d => (configurationSpace X d).carrier.carrier) (σ.symm i)
+
+abbrev configurationFamilyPullback {S : Scheme.{u}}
+    (X : RelativeScheme S) (d : ℕ) [Chapter11QuasiProjectiveOver X]
+    (family : RelativeFiniteEtaleSubscheme X (unorderedConfigurationSpace X d) d) :
+    RelativeFiniteEtaleSubscheme X (configurationSpace X d).carrier d :=
+  RelativeFiniteEtaleSubscheme.pullback family (unorderedConfigurationMap X d)
+
+/- The pullback of a descended family carries the permutation action induced
+   by the action on the configuration base.  Recording this action makes the
+   comparison with the ordered family genuine descent data, rather than merely
+   an isomorphism of the two underlying schemes. -/
+structure ConfigurationFamilyPullbackAction {S : Scheme.{u}}
+    (X : RelativeScheme S) (d : ℕ) [Chapter11QuasiProjectiveOver X]
+    (family : RelativeFiniteEtaleSubscheme X (unorderedConfigurationSpace X d) d) where
+  hom : Equiv.Perm (Fin d) →
+    ((configurationFamilyPullback X d family).carrier ⟶
+      (configurationFamilyPullback X d family).carrier)
+  one_hom : hom 1 = 𝟙 _
+  mul_hom : ∀ σ τ, hom (σ * τ) = hom σ ≫ hom τ
+  isIso : ∀ σ, IsIso (hom σ)
+  over_base : ∀ σ,
+    hom σ ≫ (configurationFamilyPullback X d family).mapToBase =
+      (configurationFamilyPullback X d family).mapToBase ≫
+        ((configurationAction X d).hom σ).hom
+  over_X : ∀ σ,
+    hom σ ≫ (configurationFamilyPullback X d family).mapToX =
+      (configurationFamilyPullback X d family).mapToX ≫
+        configurationAmbientPermutationMap X d σ
+
 /- A descended family must identify its pullback along the quotient torsor with
    the explicit coproduct of the coordinate graphs. -/
 structure ConfigurationFamilyDescent {S : Scheme.{u}}
     (X : RelativeScheme S) (d : ℕ) [Chapter11QuasiProjectiveOver X] where
   family : RelativeFiniteEtaleSubscheme X (unorderedConfigurationSpace X d) d
+  pullbackAction : ConfigurationFamilyPullbackAction X d family
   comparison :
-    orderedConfigurationFamilyTotal d (configurationSpace X d) ⟶ family.carrier
+    orderedConfigurationFamilyTotal d (configurationSpace X d) ⟶
+      (configurationFamilyPullback X d family).carrier
   comparison_isIso : IsIso comparison
-  comparison_invariant :
-    ∀ σ : Equiv.Perm (Fin d),
-      ∃ e : orderedConfigurationFamilyTotal d (configurationSpace X d) ⟶
-          orderedConfigurationFamilyTotal d (configurationSpace X d),
-        IsIso e ∧
-          (∀ i : Fin d,
-            (Sigma.ι (fun _ : Fin d => (configurationSpace X d).carrier.carrier) i) ≫ e =
-              ((configurationAction X d).hom σ).hom ≫
-                Sigma.ι (fun _ : Fin d => (configurationSpace X d).carrier.carrier) (σ.symm i)) ∧
-          e ≫ comparison = comparison
+  ordered_equivariance : OrderedConfigurationFamilyEquivariance X d
+  comparison_equivariant : ∀ σ : Equiv.Perm (Fin d),
+    ordered_equivariance.action σ ≫ comparison =
+      comparison ≫ pullbackAction.hom σ
   comparison_over_base :
-    comparison ≫ family.mapToBase =
-      orderedConfigurationFamilyToBase d (configurationSpace X d) ≫
-        (unorderedConfigurationMap X d).hom
+    comparison ≫ (configurationFamilyPullback X d family).mapToBase =
+      orderedConfigurationFamilyToBase d (configurationSpace X d)
   comparison_over_X :
-    comparison ≫ family.mapToX =
-      orderedConfigurationFamilyToX d (configurationSpace X d) ≫
-        configurationFamilyAmbientMap X d
+    comparison ≫ (configurationFamilyPullback X d family).mapToX =
+      orderedConfigurationFamilyToX d (configurationSpace X d)
+
+theorem ordered_configuration_family_equivariant {S : Scheme.{u}}
+    (X : RelativeScheme S) (d : ℕ) [Chapter11QuasiProjectiveOver X] :
+    Nonempty (OrderedConfigurationFamilyEquivariance X d) := by
+  sorry
 
 theorem configuration_family_descends {S : Scheme.{u}} (X : RelativeScheme S) (d : ℕ)
     [Chapter11QuasiProjectiveOver X] :
     Nonempty (ConfigurationFamilyDescent X d) := by
   sorry
+
+/- The aggregate package is the interface consumed by later chapters.  Its
+   fields package the open complement, permutation quotient, and classifying
+   family constructed above, including the closed big diagonal. -/
+theorem configuration_space_data_exists {S : Scheme.{u}} (X : RelativeScheme S) (d : ℕ)
+    [Chapter11QuasiProjectiveOver X] :
+    Nonempty (Chapter11ConfigurationSpaceData X d) := by
+  sorry
+
+noncomputable def configurationSpaceData {S : Scheme.{u}} (X : RelativeScheme S) (d : ℕ)
+    [Chapter11QuasiProjectiveOver X] : Chapter11ConfigurationSpaceData X d :=
+  Classical.choice (configuration_space_data_exists X d)
 
 end
 

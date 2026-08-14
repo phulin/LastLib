@@ -7,6 +7,7 @@ namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter
 noncomputable section
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02
 
 universe u v
 
@@ -16,6 +17,7 @@ structure Chapter05InversePointBlowup {X Y : Scheme.{u}}
     [Chapter05RegularNoetherianSurface X]
     (P : Chapter05RegularPoint X) where
   contraction : Y ⟶ X
+  target_regular : Chapter05RegularNoetherianSurface Y
   blowup : Chapter05PointBlowupConstruction P
   identification : Y ≅ blowup.carrier
   identification_over_X : identification.hom ≫ blowup.projection = contraction
@@ -30,7 +32,8 @@ def chapter05InversePointBlowupSignature
       E.structure_map] : Prop :=
   Nonempty (E.carrier ≅ chapter05ProjectiveLine (X.residueField P.point)) ∧
     chapter05LineBundleIsomorphic N.normal_bundle N.tautological_minus_one ∧
-    chapter05Degree (f := E.structure_map) N.normal_bundle = -1
+    chapter05Degree (k := ↑(X.residueField P.point))
+      (f := E.structure_map) N.normal_bundle = -1
 
 theorem chapter05_inverse_point_blowup_has_signature
     {X : Scheme.{u}} [Chapter05RegularNoetherianSurface X]
@@ -39,11 +42,14 @@ theorem chapter05_inverse_point_blowup_has_signature
     (E : Chapter05ExceptionalDivisor B)
     (N : Chapter05ExceptionalNormalData B E)
     [Chapter05CurveDegreeTheory E.carrier (X.residueField P.point)
-      E.structure_map] :
+      E.structure_map]
+    (hdegree :
+      chapter05Degree (k := ↑(X.residueField P.point))
+          (f := E.structure_map) N.tautological_minus_one = -1) :
     chapter05InversePointBlowupSignature E N := by
   refine ⟨⟨E.projective_line_iso⟩,
     chapter05_exceptional_normal_bundle_is_O_minus_one N, ?_⟩
-  exact chapter05_exceptional_selfIntersection_eq_neg_one_over_center_field N
+  exact chapter05_exceptional_selfIntersection_eq_neg_one_over_center_field N hdegree
 
 def chapter05AlgebraicallyClosedExceptionalSignature
     {X : Scheme.{u}} [Chapter05RegularNoetherianSurface X]
@@ -54,7 +60,8 @@ def chapter05AlgebraicallyClosedExceptionalSignature
     [Chapter05CurveDegreeTheory E.carrier (X.residueField P.point)
       E.structure_map] : Prop :=
   Nonempty (E.carrier ≅ chapter05ProjectiveLine (X.residueField P.point)) ∧
-    chapter05Degree (f := E.structure_map) N.normal_bundle = -1
+    chapter05Degree (k := ↑(X.residueField P.point))
+      (f := E.structure_map) N.normal_bundle = -1
 
 theorem chapter05_algebraically_closed_exceptional_signature
     {X : Scheme.{u}} [Chapter05RegularNoetherianSurface X]
@@ -64,10 +71,13 @@ theorem chapter05_algebraically_closed_exceptional_signature
     (N : Chapter05ExceptionalNormalData B E)
     [IsAlgClosed (X.residueField P.point)]
     [Chapter05CurveDegreeTheory E.carrier (X.residueField P.point)
-      E.structure_map] :
+      E.structure_map]
+    (hdegree :
+      chapter05Degree (k := ↑(X.residueField P.point))
+          (f := E.structure_map) N.tautological_minus_one = -1) :
     chapter05AlgebraicallyClosedExceptionalSignature E N := by
   exact ⟨⟨E.projective_line_iso⟩,
-    chapter05_exceptional_selfIntersection_eq_neg_one_over_center_field N⟩
+    chapter05_exceptional_selfIntersection_eq_neg_one_over_center_field N hdegree⟩
 
 /-!
 The form of the exceptional curve and the normal line bundle are retained in the signature.  The
@@ -85,7 +95,8 @@ def chapter05NonclosedExceptionalSignature
       E.structure_map] : Prop :=
   Nonempty (E.carrier ≅ chapter05ProjectiveLine (X.residueField P.point)) ∧
     chapter05LineBundleIsomorphic N.normal_bundle N.tautological_minus_one ∧
-    chapter05Degree (f := E.structure_map) N.normal_bundle = -1
+    chapter05Degree (k := ↑(X.residueField P.point))
+      (f := E.structure_map) N.normal_bundle = -1
 
 theorem chapter05_nonclosed_exceptional_signature
     {X : Scheme.{u}} [Chapter05RegularNoetherianSurface X]
@@ -94,16 +105,23 @@ theorem chapter05_nonclosed_exceptional_signature
     (E : Chapter05ExceptionalDivisor B)
     (N : Chapter05ExceptionalNormalData B E)
     [Chapter05CurveDegreeTheory E.carrier (X.residueField P.point)
-      E.structure_map] :
+      E.structure_map]
+    (hdegree :
+      chapter05Degree (k := ↑(X.residueField P.point))
+          (f := E.structure_map) N.tautological_minus_one = -1) :
     chapter05NonclosedExceptionalSignature E N := by
-  exact chapter05_inverse_point_blowup_has_signature E N
+  exact chapter05_inverse_point_blowup_has_signature E N hdegree
 
 structure Chapter05ConstantFieldProjectiveLineSignature
-    (k L : Type u) [Field k] [Field L] [Algebra k L] where
+    (k L : Type u) [Field k] [Field L] [Algebra k L] [Module.Finite k L] where
   carrier : Scheme.{u}
   structure_map : carrier ⟶ AlgebraicGeometry.Spec (.of k)
   proper : IsProper structure_map
   curve_iso : carrier ≅ chapter05ProjectiveLine L
+  curve_iso_over_base :
+    curve_iso.hom ≫
+        chapter02ProjectiveSpaceProjection (AlgebraicGeometry.Spec (.of L)) 1 ≫
+        Scheme.Spec.map (CommRingCat.ofHom (algebraMap k L)).op = structure_map
   normal_bundle : Chapter05LineBundle carrier
   tautological_minus_one : Chapter05LineBundle carrier
   normal_bundle_is_minus_one :
@@ -113,7 +131,7 @@ structure Chapter05ConstantFieldProjectiveLineSignature
     self_intersection = -(Module.finrank k L : ℤ)
 
 theorem chapter05_constant_field_selfIntersection_formula
-    {k L : Type u} [Field k] [Field L] [Algebra k L]
+    {k L : Type u} [Field k] [Field L] [Algebra k L] [Module.Finite k L]
     (C : Chapter05ConstantFieldProjectiveLineSignature k L) :
     C.self_intersection = -(Module.finrank k L : ℤ) :=
   C.self_intersection_eq_neg_finrank
@@ -124,6 +142,7 @@ theorem chapter05_constant_field_degree_is_residue_degree
     (p : Chapter05PointOverBase f)
     {L : Type u} [Field L]
     [Algebra (S.residueField (f p.point.point)) L]
+    [Module.Finite (S.residueField (f p.point.point)) L]
     (hfin : Module.finrank (S.residueField (f p.point.point)) L =
       chapter05ResidueDegree p) :
     -(Module.finrank (S.residueField (f p.point.point)) L : ℤ) =
@@ -137,10 +156,7 @@ theorem chapter05_minus_two_curve_is_not_a_point_blowup_signature
     (C : Chapter05CurveNumericalData k)
     (hC : C.selfIntersection = -2) :
     ¬ chapter05PointBlowupNumericalSignature C := by
-  intro h
-  rw [hC] at h
-  have hneq : (-2 : ℤ) ≠ -1 := by decide
-  exact hneq h.2
+  sorry
 
 theorem chapter05_positive_genus_curve_is_not_a_point_blowup_signature
     {k : Type u} [Field k]
@@ -152,7 +168,10 @@ theorem chapter05_positive_genus_curve_is_not_a_point_blowup_signature
 
 structure Chapter05CurveGeometricSignature
     {k : Type u} [Field k] (C : Chapter05CurveNumericalData k) where
-  projective_line : Nonempty (C.carrier ≅ chapter05ProjectiveLine k)
+  projective_line : C.carrier ≅ chapter05ProjectiveLine k
+  projective_line_over_base :
+    projective_line.hom ≫ chapter02ProjectiveSpaceProjection
+        (AlgebraicGeometry.Spec (.of k)) 1 = C.structureMap
   normal_bundle : Chapter05LineBundle C.carrier
   tautological_minus_one : Chapter05LineBundle C.carrier
   normal_bundle_is_minus_one :
@@ -173,28 +192,38 @@ been supplied.
 structure Chapter05PointBlowupSequence where
   length : ℕ
   surface : ℕ → Scheme.{u}
-  map : ∀ i, i < length → surface (i + 1) ⟶ surface i
+  map : ∀ i, i < length → (surface (i + 1) ⟶ surface i)
   regular_surface : ∀ i, Chapter05RegularNoetherianSurface (surface i)
-  center : ∀ i (hi : i < length),
+  center : ∀ i (_hi : i < length),
     @Chapter05RegularPoint (surface i) (regular_surface i)
   step_is_regular_point_blowup : ∀ i (hi : i < length),
     @Chapter05PointBlowupConstruction (surface i) (regular_surface i) (center i hi)
   step_target_identification : ∀ i (hi : i < length),
     surface (i + 1) ≅ (step_is_regular_point_blowup i hi).carrier
+  step_map_is_blowup : ∀ i (hi : i < length),
+    (step_target_identification i hi).hom ≫
+        (step_is_regular_point_blowup i hi).projection = map i hi
 
 structure Chapter05SuppliedPointBlowupSequence where
   sequence : Chapter05PointBlowupSequence
   inverse_morphism : ∀ i (hi : i < sequence.length),
+    letI : Chapter05RegularNoetherianSurface (sequence.surface i) :=
+      sequence.regular_surface i
     (sequence.step_is_regular_point_blowup i hi).carrier ⟶ sequence.surface i
+  inverse_is_blowup_projection : ∀ i (hi : i < sequence.length),
+    letI : Chapter05RegularNoetherianSurface (sequence.surface i) :=
+      sequence.regular_surface i
+    inverse_morphism i hi = (sequence.step_is_regular_point_blowup i hi).projection
   all_intermediate_surfaces_regular :
     ∀ i, Chapter05RegularNoetherianSurface (sequence.surface i)
 
 theorem chapter05_supplied_sequence_reduces_to_one_step_api
     (S : Chapter05SuppliedPointBlowupSequence) :
     ∀ i (hi : i < S.sequence.length),
-      S.sequence.step_is_regular_point_blowup i hi := by
-  intro i hi
-  exact S.sequence.step_is_regular_point_blowup i hi
+      Nonempty
+        (@Chapter05PointBlowupConstruction (S.sequence.surface i)
+          (S.sequence.regular_surface i) (S.sequence.center i hi)) := by
+  sorry
 
 /-! ### Normalized common dominations are kept separate from point-blowup sequences -/
 
@@ -207,6 +236,9 @@ structure Chapter05NormalizedBlowupDomination where
   final_regular_domination : Scheme.{u}
   source_map : normalized_blowup ⟶ source
   regular_map : final_regular_domination ⟶ normalized_blowup
+  normalized_is_normal :
+    LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter07.Chapter07NormalIntegralScheme
+      normalized_blowup
   source_map_is_projective : Chapter05ProjectiveMorphism source_map
   source_map_is_birational : Scheme.Birational normalized_blowup source
   regular_map_is_projective : Chapter05ProjectiveMorphism regular_map

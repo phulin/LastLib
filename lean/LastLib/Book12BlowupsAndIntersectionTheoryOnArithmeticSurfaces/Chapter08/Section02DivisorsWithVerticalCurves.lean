@@ -38,7 +38,7 @@ def chapter08DivisorCurveLocalLengthSum
     {D : Chapter08CartierDivisor X} {C : Chapter08VerticalCurve X}
     (I : Chapter08ProperDivisorCurveIntersectionWitness D C) : ℤ := by
   classical
-  exact ∑ x in I.support.filter C.pointOnCurve,
+  exact ∑ x ∈ I.support.filter C.pointOnCurve,
     (chapter08LocalIntersectionLength D C x : ℤ) * (x.residueDegree : ℤ)
 
 theorem chapter08_restricted_intersection_length_eq_local_multiplicity

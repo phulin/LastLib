@@ -7,7 +7,7 @@ noncomputable section
 open CategoryTheory AlgebraicGeometry
 open scoped AlgebraicGeometry nonZeroDivisors
 
-universe u v
+universe u
 
 /-!
 ## 13.1 The hypothesis ledger
@@ -31,7 +31,7 @@ theorem chapter13_totalRingOfFractions_is_the_canonical_localization
 /- A reduced ring supplies this total-quotient construction, but no choice of
 normalization or separation of branches is hidden in the definition. -/
 def chapter13ReducedAffineLedger (R : Type u) [CommRing R] : Prop :=
-  _root_.IsReduced R ∧ Nonempty (chapter13TotalRingOfFractions R)
+  _root_.IsReduced R
 
 def chapter13NormalAffineLedger (R : Type u) [CommRing R] : Prop :=
   chapter13NormalRing R
@@ -66,26 +66,28 @@ def chapter13ProjectiveLedger {X S : Scheme.{u}} (f : X ⟶ S) : Prop :=
   chapter13ProjectiveMorphism f
 
 def chapter13FlatDedekindLedger {X S : Scheme.{u}} (f : X ⟶ S) : Prop :=
-  ∃ hS : Chapter13DedekindScheme S, ∃ _ : Flat f,
+  ∃ _hS : Chapter13DedekindScheme S, ∃ _ : Flat f,
     chapter13NoVerticalTorsion f ∧
       Nonempty (Chapter13WellBehavedFibers f)
 
 theorem chapter13_smooth_supplies_flat_and_geometrically_regular_fibers
     {X S : Scheme.{u}} (f : X ⟶ S) [Smooth f] :
-    Flat f ∧ Nonempty (Chapter13GeometricallyRegularFibers f) := by
+    Flat f ∧ Chapter13GeometricallyRegularFibers f := by
   sorry
 
 theorem chapter13_nagata_supplies_finite_normalization_for_finite_type_maps
     {X Y : Scheme.{u}} (f : X ⟶ Y)
     [QuasiCompact f] [QuasiSeparated f] [LocallyOfFiniteType f]
-    (hY : Chapter13NagataScheme Y) :
+    (hX : IsReduced X) (hY : Chapter13NagataScheme Y) :
     IsFinite (chapter13NormalizationMap f) := by
   sorry
 
 theorem chapter13_excellent_supplies_nagata_and_surface_resolution
-    {X : Scheme.{u}} (hX : Chapter13ExcellentScheme X) :
+    {X : Scheme.{u}} (hX : Chapter13ExcellentScheme X)
+    (hDim : Chapter13SurfaceDimensionBound X) :
     Chapter13NagataScheme X ∧ Chapter13SurfaceResolutionCapability X := by
-  exact ⟨hX.nagata, hX.surface_resolution⟩
+  exact ⟨chapter13_excellent_implies_nagata hX,
+    chapter13_excellent_implies_surface_resolution hX hDim⟩
 
 theorem chapter13_proper_supplies_valuative_extension_and_universal_closedness
     {X S : Scheme.{u}} (f : X ⟶ S) [IsProper f] :
@@ -152,7 +154,7 @@ theorem chapter13_regular_does_not_entail_reduced_special_fibers :
 
 /-! ### Normal but not regular: `k[x,y,z]/(xy-z^2)` -/
 
-def chapter13QuadricConePolynomialRing (k : Type u) [CommRing k] :=
+abbrev chapter13QuadricConePolynomialRing (k : Type u) [CommRing k] :=
   MvPolynomial (Fin 3) k
 
 def chapter13QuadricConeEquationIdeal (k : Type u) [CommRing k] :
@@ -189,14 +191,14 @@ def chapter13QuadricConeIsRegularAtVertex (k : Type u) [Field k] : Prop :=
   chapter13RegularAt (chapter13QuadricCone k) (chapter13QuadricConeVertex k)
 
 theorem chapter13_quadric_cone_is_normal_not_regular_at_vertex
-    (k : Type u) [Field k] :
+    (k : Type u) [Field k] (hchar : (2 : k) ≠ 0) :
     chapter13QuadricConeIsNormal k ∧
       ¬ chapter13QuadricConeIsRegularAtVertex k := by
   sorry
 
 /-! ### Regular total space but non-smooth nodal fiber: `R[x,y]/(xy-π)` -/
 
-def chapter13NodePolynomialRing (R : Type u) [CommRing R] :=
+abbrev chapter13NodePolynomialRing (R : Type u) [CommRing R] :=
   MvPolynomial (Fin 2) R
 
 def chapter13NodeEquationIdeal (R : Type u) [CommRing R] (π : R) :
@@ -221,7 +223,7 @@ def chapter13NodeStructureMap (R : Type u) [CommRing R] (π : R) :
     chapter13NodeSurface R π ⟶ AlgebraicGeometry.Spec (CommRingCat.of R) :=
   Scheme.Spec.map (CommRingCat.ofHom (chapter13NodeBaseRingHom R π)).op
 
-def chapter13NodeSpecialFiberRing (R : Type u) [CommRing R] (π : R) :=
+abbrev chapter13NodeSpecialFiberRing (R : Type u) [CommRing R] (π : R) :=
   chapter13NodeRing R π ⧸
     Ideal.map (Ideal.Quotient.mk (chapter13NodeEquationIdeal R π))
       (Ideal.span ({MvPolynomial.C π} : Set (chapter13NodePolynomialRing R)))
@@ -232,7 +234,8 @@ def chapter13NodeSpecialFiberEquation (R : Type u) [CommRing R] (π : R) : Prop 
 
 theorem chapter13_node_total_space_regular_but_structure_map_not_smooth
     (R : Type u) [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
-    (π : R) (hπ : ¬ IsUnit π) (hπ0 : π ≠ 0) :
+    (π : R) (hπ : ¬ IsUnit π) (hπ0 : π ≠ 0)
+    (hπ_uniformizer : Ideal.span ({π} : Set R) = IsLocalRing.maximalIdeal R) :
     Chapter13RegularScheme (chapter13NodeSurface R π) ∧
       ¬ Smooth (chapter13NodeStructureMap R π) ∧
       chapter13NodeSpecialFiberEquation R π := by
@@ -243,7 +246,7 @@ theorem chapter13_node_total_space_regular_but_structure_map_not_smooth
 structure Chapter13PurelyInseparableNonreducedBaseChange where
   base : Type u
   [base_field : Field base]
-  extension : Type v
+  extension : Type u
   [extension_field : Field extension]
   [base_algebra : Algebra base extension]
   [purely_inseparable : IsPurelyInseparable base extension]
@@ -256,12 +259,12 @@ theorem chapter13_purely_inseparable_scalar_extension_can_be_nonreduced :
 /-! ### Explicit boundary predicates for later users -/
 
 def chapter13NormalDoesNotSupplyRegularityAtClosedPoints
-    {X : Scheme.{u}} (hX : Chapter13NormalScheme X) (x : X) : Prop :=
+    {X : Scheme.{u}} (_hX : Chapter13NormalScheme X) (x : X) : Prop :=
   Chapter13NormalScheme X ∧ ¬ chapter13RegularAt X x
 
 def chapter13RegularDoesNotSupplySmoothFibers
     {X S : Scheme.{u}} (f : X ⟶ S)
-    (hX : Chapter13RegularScheme X) : Prop :=
+    (_hX : Chapter13RegularScheme X) : Prop :=
   Chapter13RegularScheme X ∧ ¬ Smooth f
 
 def chapter13FlatDoesNotSupplyReducedFibers

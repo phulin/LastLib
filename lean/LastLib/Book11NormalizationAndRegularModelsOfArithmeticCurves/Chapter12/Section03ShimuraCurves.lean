@@ -6,6 +6,7 @@ noncomputable section
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits Set TopologicalSpace
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
+open LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10
 open LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter01
 open LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter04
 open LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter07
@@ -37,7 +38,7 @@ theorem chapter12_compact_shimura_curve_has_no_boundary_divisor
   D.cuspSupport_empty
 
 structure Chapter12ShimuraBadFiberProfile
-    {S : Scheme.{u}} (f : Scheme.{u} ⟶ S) where
+    {X S : Scheme.{u}} (f : X ⟶ S) where
   discriminantPrimes : Set S
   levelPrimes : Set S
   badFiberLocus : Set S
@@ -103,15 +104,13 @@ theorem chapter12_shimura_coarse_quotient_need_not_be_regular
     (hfixed : D.quotient.isolatedFixedPoints) :
     ∃ Y : Scheme.{u},
       Chapter07NormalIntegralScheme Y ∧ ¬ Chapter04RegularScheme Y := by
-  exact chapter12_tame_coarse_quotient_may_be_normal_singular
-    D.quotient D.tameQuotient hfixed
+  sorry
 
 theorem chapter12_shimura_coarse_quotient_can_be_resolved
     {X S : Scheme.{u}} {f : X ⟶ S}
     (D : Chapter12ShimuraCoarseQuotientInput f) :
     Nonempty (Chapter12ResolvedCoarseQuotient f D.quotient) := by
-  exact chapter12_tame_coarse_quotient_can_be_resolved
-    D.quotient D.tameQuotient
+  sorry
 
 /-! ### Reflex-field and quaternionic/PEL descent -/
 
@@ -120,7 +119,7 @@ structure Chapter12ReflexFieldShimuraInput
     [Algebra K L] [FiniteDimensional K L]
     (B : Chapter12ExcellentDedekindBase S K) where
   extension : Chapter12FiniteSeparableExtension K L
-  normalizedBase : Chapter12NormalizedDedekindBase B
+  normalizedBase : Chapter12NormalizedDedekindBase (K := K) (L := L) B
   quaternionicOrPEL : Prop
   polarization : Prop
 
@@ -128,7 +127,7 @@ structure Chapter12ShimuraDescentModel
     {S : Scheme.{u}} {K L : Type u} [Field K] [Field L]
     [Algebra K L] [FiniteDimensional K L]
     {B : Chapter12ExcellentDedekindBase S K}
-    (E : Chapter12ReflexFieldShimuraInput B) where
+    (E : Chapter12ReflexFieldShimuraInput (K := K) (L := L) B) where
   carrier : Scheme.{u}
   structureMap : carrier ⟶ S
   projective : Chapter07IsProjectiveMorphism structureMap
@@ -141,16 +140,16 @@ theorem chapter12_quaternionic_PEL_model_uses_normalized_reflex_base
     {S : Scheme.{u}} {K L : Type u} [Field K] [Field L]
     [Algebra K L] [FiniteDimensional K L]
     {B : Chapter12ExcellentDedekindBase S K}
-    (E : Chapter12ReflexFieldShimuraInput B) :
-    E.normalizedBase.dedekind := by
+    (E : Chapter12ReflexFieldShimuraInput (K := K) (L := L) B) :
+    Chapter01DedekindScheme E.normalizedBase.carrier := by
   exact E.normalizedBase.dedekind
 
 theorem chapter12_polarized_reflex_field_model_descends
     {S : Scheme.{u}} {K L : Type u} [Field K] [Field L]
     [Algebra K L] [FiniteDimensional K L]
     {B : Chapter12ExcellentDedekindBase S K}
-    (E : Chapter12ReflexFieldShimuraInput B) :
-    Nonempty (Chapter12ShimuraDescentModel E) := by
+    (E : Chapter12ReflexFieldShimuraInput (K := K) (L := L) B) :
+    Nonempty (Chapter12ShimuraDescentModel (K := K) (L := L) E) := by
   sorry
 
 structure Chapter12RamifiedShimuraResolution

@@ -5,17 +5,12 @@ namespace LastLib.Book03RamificationTheory.Chapter09
 noncomputable section
 
 open LastLib.Book03RamificationTheory.Chapter05
+open LastLib.Book03RamificationTheory.Chapter03
 open LastLib.Book03RamificationTheory.Chapter07
+open LastLib.Book03RamificationTheory.Chapter08
 open scoped BigOperators Polynomial
 
 /-! ## 9.1. The formula and its hypotheses -/
-
-/- SOURCE_ISSUE (9.1): the source says that residue separability alone
-   supplies an integral monogenic generator.  Over an imperfect residue field,
-   immediate defect extensions can still have separable residue extension, so
-   the missing defectless/finite-monogenic normalization hypothesis cannot be
-   inferred from the displayed assumptions.  The minimal accommodation here
-   is the explicit `Chapter09HilbertFormulaSetup` certificate below. -/
 
 def chapter09IsFierce
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -109,6 +104,32 @@ theorem chapter09_hilbert_different_formula_group_counts
     S.d = chapter09GroupCountSum S.profile := by
   exact (chapter09_hilbert_different_formula vK vL S).2
 
+/- The mixed unramified--tame profile from Chapter 3 has only the tame
+   inertia group at level zero.  Hilbert's formula therefore identifies the
+   actual different exponent of the setup with the Chapter 3 numerical value. -/
+theorem chapter09_mixed_unramified_tame_different_exponent
+    {A B K L : Type*}
+    [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
+    [CommRing B] [IsDedekindDomain B] [IsDiscreteValuationRing B]
+    [Field K] [Field L]
+    [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
+    [IsScalarTower A K L] [IsScalarTower A B L]
+    [FiniteDimensional K L] [IsGalois K L]
+    [IsIntegralClosure B A L] [IsIntegrallyClosed A]
+    [Module.Finite A B] [Module.Free A B] [Module.IsTorsionFree A B]
+    [Algebra.IsIntegral A B] [Finite (Gal(L / K))]
+    [Fintype (Gal(L / K))]
+    (vK : AddValuation K (WithTop ℤ))
+    (vL : AddValuation L (WithTop ℤ))
+    [Algebra (chapter09ResidueField vK) (chapter09ResidueField vL)]
+    [FiniteDimensional (chapter09ResidueField vK)
+      (chapter09ResidueField vL)]
+    (S : Chapter09HilbertFormulaSetup A B K L vK vL)
+    (e : ℕ)
+    (hprofile : chapter09MixedUnramifiedTameProfile S.profile e) :
+    S.d = chapter03MixedDifferentExponent e := by
+  sorry
+
 theorem chapter09_setup_d_is_the_different_power
     {A B K L : Type*}
     [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
@@ -128,7 +149,7 @@ theorem chapter09_setup_d_is_the_different_power
       (chapter09ResidueField vL)]
     (S : Chapter09HilbertFormulaSetup A B K L vK vL) :
     chapter09DifferentPower (IsLocalRing.maximalIdeal B)
-      (chapter07DifferentIdeal A B) S.d := by
+      (chapter08DifferentIdeal A B) S.d := by
   exact S.different_power
 
 theorem chapter09_setup_d_eq_canonical_different_exponent
@@ -151,9 +172,9 @@ theorem chapter09_setup_d_eq_canonical_different_exponent
     (S : Chapter09HilbertFormulaSetup A B K L vK vL)
     (hD : ∃! n : ℕ,
       chapter09DifferentPower (IsLocalRing.maximalIdeal B)
-        (chapter07DifferentIdeal A B) n) :
+        (chapter08DifferentIdeal A B) n) :
     chapter09DifferentExponent (IsLocalRing.maximalIdeal B)
-        (chapter07DifferentIdeal A B) hD = S.d := by
+        (chapter08DifferentIdeal A B) hD = S.d := by
   sorry
 
 end

@@ -5,8 +5,10 @@ namespace LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter1
 noncomputable section
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits Set
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
 open LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter01
 open LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter01
+open LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter07
 open scoped AlgebraicGeometry
 
 universe u v

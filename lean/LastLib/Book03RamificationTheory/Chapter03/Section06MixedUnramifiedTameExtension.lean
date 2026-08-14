@@ -29,16 +29,17 @@ structure Chapter03MixedUnramifiedTameData
     ∃ r : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
       r.degree = f ∧ r.ramificationIndex = 1 ∧ r.residueDegree = f ∧
         LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10Unramified r
+  unramified_is_galois : IsGalois K Kf
   root_of_unity_order : e ∣ q ^ f - 1
   ζ : Kf
   primitive_root : IsPrimitiveRoot ζ e
+  frobenius_on_tame_root : arithmetic_frobenius ζ = ζ ^ q
   πK : K
   α : L
   radical_equation :
     algebraMap Kf L (algebraMap K Kf πK) = α ^ e
   generated : Algebra.adjoin Kf ({α} : Set L) = ⊤
   ramified_degree : Module.finrank Kf L = e
-  total_degree : Module.finrank K L = e * f
 
 /- A witness for the semidirect Frobenius--tame-inertia presentation. -/
 structure Chapter03MixedGaloisWitness
@@ -78,7 +79,7 @@ theorem chapter03_mixed_extension_has_degree_ef
     (p e f q : ℕ) [Fact p.Prime] [CharP k p]
     (D : Chapter03MixedUnramifiedTameData K Kf L k p e f q) :
     Module.finrank K L = e * f := by
-  exact D.total_degree
+  sorry
 
 theorem chapter03_mixed_extension_galois_presentation
     {K Kf L k : Type*} [Field K] [Field Kf] [Field L] [Field k]
@@ -87,7 +88,10 @@ theorem chapter03_mixed_extension_galois_presentation
     [FiniteDimensional K Kf] [FiniteDimensional Kf L]
     [FiniteDimensional K L] [Fintype k]
     (p e f q : ℕ) [Fact p.Prime] [CharP k p]
-    (D : Chapter03MixedUnramifiedTameData K Kf L k p e f q) :
+    (D : Chapter03MixedUnramifiedTameData K Kf L k p e f q)
+    (hseparable :
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08KummerPolynomial
+        (algebraMap K Kf D.πK) e).Separable) :
     IsGalois K L ∧
       ∃ F τ : Gal(L / K),
         (∀ x : Kf,
@@ -125,45 +129,37 @@ theorem chapter03_mixed_lower_filtration
     (chapter03_tame_profile_of_inertia_displacement F (Subgroup.zpowers τ)
       hinside houtside).2⟩
 
-/- The upstairs different and downstairs discriminant exponents in this
-mixed tame profile. -/
+/- The numerical upstairs/downstairs exponent profile for this mixed tame
+stage.  Its field-theoretic interpretation is deferred to the later different
+theory; these definitions do not assume that interpretation. -/
 def chapter03MixedDifferentExponent (e : ℕ) : ℕ := e - 1
 
 def chapter03MixedDiscriminantExponent (e f : ℕ) : ℕ :=
   f * chapter03MixedDifferentExponent e
 
-/- LOCAL_DEPENDENCY_GUESS: Hilbert's different formula is developed in a
-   later chapter and is not available as an earlier declaration in this
-   checkout.  This ledger is the minimal interface needed to expose the two
-   numerical consequences stated here without assuming either exponent in a
-   ramification theorem. -/
-structure Chapter03MixedDifferentLedger (e f : ℕ) where
-  differentExponent : ℕ
-  discriminantExponent : ℕ
-  hilbert_formula : differentExponent = chapter03MixedDifferentExponent e
-  norm_formula : discriminantExponent = f * differentExponent
-
 theorem chapter03_mixed_different_and_discriminant_exponents
-    (e f : ℕ) (D : Chapter03MixedDifferentLedger e f) :
-    D.differentExponent = e - 1 ∧
-      D.discriminantExponent = f * (e - 1) := by
-  refine ⟨D.hilbert_formula, ?_⟩
-  calc
-    D.discriminantExponent = f * D.differentExponent := D.norm_formula
-    _ = f * (e - 1) := by
-      simpa [chapter03MixedDifferentExponent] using
-        congrArg (fun n : ℕ => f * n) D.hilbert_formula
+    (e f : ℕ) :
+    chapter03MixedDifferentExponent e = e - 1 ∧
+      chapter03MixedDiscriminantExponent e f = f * (e - 1) := by
+  simp [chapter03MixedDifferentExponent, chapter03MixedDiscriminantExponent]
 
 theorem chapter03_mixed_residue_degree_only_changes_downstairs_exponent
-    (e f : ℕ) (D : Chapter03MixedDifferentLedger e f) :
-    D.differentExponent = e - 1 ∧
-      D.discriminantExponent = f * D.differentExponent := by
-  exact ⟨D.hilbert_formula, D.norm_formula⟩
+    (e f : ℕ) :
+    chapter03MixedDifferentExponent e = e - 1 ∧
+      chapter03MixedDiscriminantExponent e f =
+        f * chapter03MixedDifferentExponent e := by
+  exact ⟨rfl, rfl⟩
+
+/- The identification of these numerical profile values with the actual
+   different and discriminant belongs to the later Hilbert/different theory;
+   this chapter records only the arithmetic profile without making that later
+   theorem a hypothesis of its own conclusion. -/
 
 /- SOURCE_WARNING (3.6): The semidirect presentation needs the chosen lift
    `F` and the chosen tame generator `τ`; the filtration statement itself is
-   independent of the choice of Frobenius lift.  The ledger above separates
-   the later different/discriminant input from the filtration calculation. -/
+   independent of the choice of Frobenius lift.  The numerical profile above
+   separates the later different/discriminant input from the filtration
+   calculation. -/
 
 end
 end LastLib.Book03RamificationTheory.Chapter03

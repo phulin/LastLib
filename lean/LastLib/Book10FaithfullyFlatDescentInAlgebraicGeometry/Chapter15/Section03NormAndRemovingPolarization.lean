@@ -14,7 +14,7 @@ open scoped AlgebraicGeometry
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10
 
-universe u
+universe u v
 
 namespace LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter15
 
@@ -47,12 +47,6 @@ theorem baseChange_projection_is_surjective
     (G : FiniteLocallyFreeConstantRank g) :
     Surjective (baseChangeToSource f g) := by
   exact baseChangeToSource_surjective f g G
-
-theorem norm_is_a_line_bundle
-    {Y X : Scheme.{u}} (q : Y ⟶ X) (hq : FiniteLocallyFreeMorphism q)
-    (M : LineBundle Y) : lineBundleIsomorphic (normLineBundle q hq M)
-      (normLineBundle q hq M) :=
-  lineBundleIsomorphic_refl _
 
 theorem norm_formula
     {Y X : Scheme.{u}} (q : Y ⟶ X) (hq : FiniteLocallyFreeMorphism q)
@@ -112,8 +106,22 @@ theorem norm_ampleness_of_ampleness_over_finite_cover
   apply norm_ampleness (baseChangeToSource f g) f
     (baseChangeToSource_finiteLocallyFree f g G)
     (baseChangeToSource_surjective f g G)
-  · sorry
-  · sorry
+  · let : IsFinite (baseChangeToSource f g) :=
+      (baseChangeToSource_finiteLocallyFree f g G).1
+    let : Flat (baseChangeToSource f g) :=
+      (baseChangeToSource_finiteLocallyFree f g G).2.1
+    let : LocallyOfFinitePresentation (baseChangeToSource f g) :=
+      (baseChangeToSource_finiteLocallyFree f g G).2.2
+    let : QuasiCompact f := hf.1
+    let : QuasiSeparated f := hf.2.1
+    let : LocallyOfFinitePresentation f := hf.2.2
+    exact ⟨inferInstance, inferInstance, inferInstance⟩
+  · have hcomp : IsAmple (baseChangeToBase f g ≫ g) M :=
+      baseChange_ample_over_finite_base f g G.profile.finite M hM
+    have heq : baseChangeToSource f g ≫ f = baseChangeToBase f g ≫ g :=
+      pullback.condition
+    rw [← heq] at hcomp
+    exact hcomp
 
 theorem quasiProjectivity_finiteLocallyFree_descent_local
     {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
@@ -134,7 +142,8 @@ theorem quasiProjectivity_finiteLocallyFree_descent_global
 theorem projectivity_finiteLocallyFree_descent
     {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
     (G : FiniteLocallyFreeConstantRank g) (hf : IsFinitePresentation f)
-    (hproper : IsProper f) (M : LineBundle (baseChange f g))
+    (hproper : IsProper f) (hS : QuasiCompact (𝟙 S))
+    (M : LineBundle (baseChange f g))
     (hM : IsAmple (baseChangeToBase f g) M) :
     IsProjectiveMorphism f := by
   sorry
@@ -142,13 +151,15 @@ theorem projectivity_finiteLocallyFree_descent
 theorem properness_finiteLocallyFree_descent
     {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
     (G : FiniteLocallyFreeConstantRank g)
-    (hproper : IsProper (baseChangeStructureMap f g)) : IsProper f := by
-  sorry
+    (hproper : IsProper (baseChangeToBase f g)) : IsProper f := by
+  let : IsFinite g := G.profile.finite
+  exact proper_faithfullyFlat_descent f g
+    ⟨G.profile.flat, G.surjective, inferInstance⟩ hproper
 
 theorem projectivity_finiteLocallyFree_descent_of_upstairs_proper
     {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
     (G : FiniteLocallyFreeConstantRank g) (hf : IsFinitePresentation f)
-    (hproper : IsProper (baseChangeStructureMap f g))
+    (hproper : IsProper (baseChangeToBase f g)) (hS : QuasiCompact (𝟙 S))
     (M : LineBundle (baseChange f g))
     (hM : IsAmple (baseChangeToBase f g) M) :
     IsProjectiveMorphism f := by
@@ -172,8 +183,10 @@ theorem marked_divisor_OofD_has_descent_datum
     {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
     [Chapter10IdealDualAPI (baseChange f g)]
     (D : MarkedDivisorDescentData f g) :
-    Nonempty (LineBundleDescentDatum (baseChangeToSource f g)) :=
-  ⟨D.descent.descent⟩
+    ∃ E : LineBundleDescentDatum (baseChangeToSource f g),
+      E.carrier = fromNormLineBundle (chapter10OofD D.divisor) := by
+  refine ⟨D.descent.descent, ?_⟩
+  exact D.descent.carrier_eq.trans (D.descent_carrier.trans D.lineBundle_is_OofD)
 
 theorem marked_divisor_fixed_power_descends
     {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
@@ -183,14 +196,28 @@ theorem marked_divisor_fixed_power_descends
     ∃ L : LineBundle X,
       Nonempty (LineBundleDescentRealization D.descent.descent L) ∧
         IsAmple f L := by
-  sorry
+  obtain ⟨n, hn, hpower⟩ := D.positivePower
+  have hline : IsAmple (baseChangeToBase f g) D.lineBundle := by
+    change
+      LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04Ample
+        (baseChangeToBase f g) D.lineBundle
+    exact
+      LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04_ample_of_ample_tensorPower
+        (baseChangeToBase f g) D.lineBundle n hn hpower
+  obtain ⟨L, hreal⟩ := lineBundle_fpqc_effective_descent f g hf hg D.descent
+  refine ⟨L, hreal, ?_⟩
+  exact
+    relative_ampleness_of_descended_lineBundle f g L D.lineBundle D.descent hreal
+      (by
+        rw [← D.descent_carrier, ← D.descent.carrier_eq]
+        exact lineBundleIsomorphic_refl _) hf hg hline
 
 def CartierDivisorMeetsComponent {X : Scheme.{u}}
     (D : Chapter10EffectiveCartierDivisor X) (C : Set X) : Prop :=
   ∃ x : X, x ∈ C ∧ x ∈ D.ideal.support
 
 def CartierDivisorMeetsEveryGeometricComponent {X : Scheme.{u}}
-    (D : Chapter10EffectiveCartierDivisor X) {ι : Type u}
+    (D : Chapter10EffectiveCartierDivisor X) {ι : Type v}
     (component : ι → Set X) : Prop :=
   ∀ i, CartierDivisorMeetsComponent D (component i)
 
@@ -199,52 +226,70 @@ structure PolygonCurveComponentData {X : Scheme.{u}} (n : ℕ) where
   component : Fin n → Set X
   component_nonempty : ∀ i, (component i).Nonempty
   identityDivisor : Chapter10EffectiveCartierDivisor X
-  identity_support_empty : identityDivisor.ideal.support = ∅
+  identityComponent : Fin n
+  identity_support_nonempty :
+    (identityDivisor.ideal.support : Set X).Nonempty
+  identity_support_in_identity_component :
+    (identityDivisor.ideal.support : Set X) ⊆ component identityComponent
+  identity_support_avoids_other_components :
+    ∀ j, j ≠ identityComponent →
+      Disjoint (identityDivisor.ideal.support : Set X) (component j)
 
 theorem identity_divisor_does_not_meet_all_components_on_polygon
-    {X : Scheme.{u}} {n : ℕ} (P : PolygonCurveComponentData n) :
-    ¬ CartierDivisorMeetsEveryGeometricComponent P.identityDivisor P.component := by
-  sorry
+    {X : Scheme.{u}} {n : ℕ} (P : PolygonCurveComponentData (X := X) n) :
+    ¬ CartierDivisorMeetsEveryGeometricComponent (ι := Fin n) P.identityDivisor P.component := by
+  intro h
+  let j : Fin n :=
+    if hzero : P.identityComponent.val = 0 then
+      ⟨1, P.moreThanOne⟩
+    else
+      ⟨0, lt_trans Nat.zero_lt_one P.moreThanOne⟩
+  have hj : j ≠ P.identityComponent := by
+    dsimp [j]
+    split_ifs with hzero
+    · intro hEq
+      have hval : (1 : ℕ) = P.identityComponent.val := congrArg Fin.val hEq
+      have : (1 : ℕ) = 0 := hval.trans hzero
+      exact Nat.one_ne_zero this
+    · intro hEq
+      apply hzero
+      exact (congrArg Fin.val hEq).symm
+  obtain ⟨x, hxComponent, hxSupport⟩ := h j
+  exact (Set.disjoint_left.1 (P.identity_support_avoids_other_components j hj))
+    hxSupport hxComponent
 
 /-! ### Rigidified polarized abelian schemes -/
 
 def chapter15AsChapter09LineBundle {X : Scheme.{u}} (L : LineBundle X) :
-    LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09
-      .Chapter09LineBundle X :=
+    LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09.Chapter09LineBundle X :=
   { module := L.sheaf
     isInvertible := L.isInvertible }
 
 def RigidifiedAbelianLineBundle {S : Scheme.{u}}
-    (A : LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09
-      .Chapter09AbelianScheme S)
+    (A : LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09.Chapter09AbelianScheme S)
     (L : LineBundle A.carrier)
     [Chapter10PicardOperations A.carrier] : Prop :=
-  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09
-    .chapter09Rigidified A (chapter15AsChapter09LineBundle L)
+  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09.chapter09Rigidified A
+    (chapter15AsChapter09LineBundle L)
 
 def AbelianRelativePolarization {S : Scheme.{u}}
-    (A : LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09
-      .Chapter09AbelianScheme S)
+    (A : LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09.Chapter09AbelianScheme S)
     (L : LineBundle A.carrier)
     [Chapter10PicardOperations A.carrier] : Prop :=
-  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09
-    .chapter09Polarization A (chapter15AsChapter09LineBundle L)
+  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09.chapter09Polarization A
+    (chapter15AsChapter09LineBundle L)
 
 structure RigidifiedPolarizationDescentData
     {S T : Scheme.{u}}
-    (A : LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09
-      .Chapter09AbelianScheme S)
+    (A : LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09.Chapter09AbelianScheme S)
     (g : T ⟶ S) [Chapter10PicardOperations A.carrier] where
   lineBundle : LineBundle A.carrier
   rigidified : RigidifiedAbelianLineBundle A lineBundle
   polarization : AbelianRelativePolarization A lineBundle
   descent : FpqcLineBundleDescentDatum A.structureMap g
-  overlap_isomorphism : LineBundleIso
-    (pullbackLineBundle (cechFirst (baseChangeToSource A.structureMap g))
-      descent.lineBundle)
-    (pullbackLineBundle (cechSecond (baseChangeToSource A.structureMap g))
-      descent.lineBundle)
-  triple_cocycle : descent.descent.cocycle
+  descent_carrier :
+    descent.lineBundle =
+      pullbackLineBundle (baseChangeToSource A.structureMap g) lineBundle
 
 /- A rigidification controls the scalar ambiguity only after an overlap
   isomorphism has been chosen.  The uniqueness field is the reusable form of
@@ -268,13 +313,6 @@ def RigidificationInsufficientForDescent {S : Scheme.{u}}
     (A : Chapter09AbelianScheme S) (L M : LineBundle A.carrier)
     [Chapter10PicardOperations A.carrier] : Prop :=
   RigidifiedAbelianLineBundle A L ∧ ¬ lineBundleIsomorphic L M
-
-theorem rigidification_does_not_create_an_overlap_isomorphism
-    {S : Scheme.{u}} (A : Chapter09AbelianScheme S)
-    {L M : LineBundle A.carrier} [Chapter10PicardOperations A.carrier]
-    (h : RigidificationInsufficientForDescent A L M) :
-    ¬ lineBundleIsomorphic L M := by
-  exact h.2
 
 end
 

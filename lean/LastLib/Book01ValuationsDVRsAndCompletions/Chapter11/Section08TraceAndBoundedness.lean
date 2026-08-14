@@ -65,6 +65,19 @@ theorem chapter11_integral_trace_and_norm_stay_integral
   · refine ⟨Algebra.intNorm A B x, ?_⟩
     exact Algebra.algebraMap_intNorm (L := L) x
 
+/-! The boundedness statement used before finite normalization is known.  An
+integral element of a finite field extension has integral trace and norm, so
+an integrally closed base ring contains both values even when the full
+integral closure is not assumed finite. -/
+theorem chapter11_integral_trace_and_norm_stay_integral_without_finite_normalization
+    (A K L : Type*) [CommRing A] [IsDomain A]
+    [Field K] [Field L] [Algebra A K] [Algebra K L] [Algebra A L]
+    [IsScalarTower A K L] [IsFractionRing A K] [FiniteDimensional K L]
+    [IsIntegrallyClosed A] (x : L) (hx : IsIntegral A x) :
+    Algebra.trace K L x ∈ Set.range (algebraMap A K) ∧
+      Algebra.norm K x ∈ Set.range (algebraMap A K) := by
+  sorry
+
 /-- The trace pairing on the field extension. -/
 def chapter11TracePairing (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L]

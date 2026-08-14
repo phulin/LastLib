@@ -1,4 +1,5 @@
 import Mathlib.AlgebraicGeometry.Birational.Birational
+import Mathlib.AlgebraicGeometry.Geometrically.Basic
 import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
 import Mathlib.AlgebraicGeometry.Morphisms.Flat
 import Mathlib.AlgebraicGeometry.Morphisms.Proper
@@ -10,8 +11,10 @@ import Mathlib.RingTheory.Localization.Basic
 import Mathlib.RingTheory.Polynomial.Basic
 import Mathlib.RingTheory.Regular.RegularSequence
 import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.Topology.KrullDimension
 
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09.Dependencies
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter03.Dependencies
 
 namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter05
 
@@ -40,10 +43,18 @@ def Chapter05SurfaceDimensionTwo (X : Scheme.{u}) : Prop :=
   (∀ U : X.affineOpens, ringKrullDim Γ(X, U) ≤ 2) ∧
     ∃ U : X.affineOpens, ringKrullDim Γ(X, U) = 2
 
+def Chapter05PureDimensionOne (X : Scheme.{u}) : Prop :=
+  ∀ Z : irreducibleComponents X,
+    topologicalKrullDim Z.1 = (1 : WithBot ℕ∞)
+
+def Chapter05RelativeDimensionOne {X S : Scheme.{u}} (f : X ⟶ S) : Prop :=
+  geometrically Chapter05PureDimensionOne f
+
 /- LOCAL_DEPENDENCY_GUESS: Mathlib has the local regular-ring and Noetherian predicates, but no
 single scheme-level predicate for a regular noetherian surface of absolute dimension two. -/
 class Chapter05RegularNoetherianSurface (X : Scheme.{u}) : Prop
     extends IsNoetherian X where
+  integral : IsIntegral X
   regular_local_ring : ∀ x : X, IsRegularLocalRing (X.presheaf.stalk x)
   dimension_two : Chapter05SurfaceDimensionTwo X
 
@@ -51,9 +62,18 @@ class Chapter05RegularNoetherianSurface (X : Scheme.{u}) : Prop
 not a primitive in the pinned morphism API; properness and flatness remain canonical fields. -/
 class Chapter05ArithmeticSurface (X S : Scheme.{u}) (f : X ⟶ S)
     [Chapter05RegularNoetherianSurface X] : Prop where
+  base_dedekind :
+    LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter03.Chapter03DedekindBase S
+  base_connected : _root_.IsConnected (Set.univ : Set S)
   proper : IsProper f
   flat : Flat f
-  relative_dimension_one : Prop
+  relative_dimension_one : Chapter05RelativeDimensionOne f
+
+theorem chapter05ArithmeticSurface.baseDedekind
+    {X S : Scheme.{u}} [Chapter05RegularNoetherianSurface X]
+    {f : X ⟶ S} [T : Chapter05ArithmeticSurface X S f] :
+    LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter03.Chapter03DedekindBase S :=
+  T.base_dedekind
 
 def Chapter05RegularSystemOfParameters {A : Type u} [CommRing A]
     [IsLocalRing A] [IsNoetherianRing A] (u v : A) : Prop :=
@@ -86,6 +106,7 @@ structure Chapter05PointOverBase {X S : Scheme.{u}}
     [Chapter05RegularNoetherianSurface X] (f : X ⟶ S) where
   point : Chapter05RegularPoint X
   base_point : S
+  base_point_closed : IsClosed ({base_point} : Set S)
   lies_over : f point.point = base_point
 
 def chapter05ResidueDegree {X S : Scheme.{u}}
@@ -168,7 +189,10 @@ def chapter05PullbackLineBundle {X Y : Scheme.{u}}
 arithmetic degree over a chosen residue field is not exposed as a reusable local interface. -/
 class Chapter05CurveDegreeTheory (C : Scheme.{u}) (k : Type u) [Field k]
     (f : C ⟶ AlgebraicGeometry.Spec (.of k)) where
+  proper : IsProper f
   degree : Chapter05LineBundle C → ℤ
+  degree_structureSheaf :
+    degree (chapter05StructureSheafLineBundle C) = 0
   degree_iso : ∀ {L M},
     chapter05LineBundleIsomorphic L M → degree L = degree M
 
@@ -176,7 +200,7 @@ def chapter05Degree {C : Scheme.{u}} {k : Type u} [Field k]
     {f : C ⟶ AlgebraicGeometry.Spec (.of k)}
     [Chapter05CurveDegreeTheory C k f]
     (L : Chapter05LineBundle C) : ℤ :=
-  Chapter05CurveDegreeTheory.degree L
+  Chapter05CurveDegreeTheory.degree (f := f) L
 
 theorem chapter05_degree_eq_of_isomorphic
     {C : Scheme.{u}} {k : Type u} [Field k]
@@ -184,8 +208,8 @@ theorem chapter05_degree_eq_of_isomorphic
     [Chapter05CurveDegreeTheory C k f]
     {L M : Chapter05LineBundle C}
     (hLM : chapter05LineBundleIsomorphic L M) :
-    chapter05Degree L = chapter05Degree M :=
-  Chapter05CurveDegreeTheory.degree_iso hLM
+    chapter05Degree (f := f) L = chapter05Degree (f := f) M :=
+  Chapter05CurveDegreeTheory.degree_iso (f := f) hLM
 
 /- LOCAL_DEPENDENCY_GUESS: the finite-dimensional H⁰ package is not bundled with the current
 sheaf API.  The H⁰ object below is the book-facing module of global sections; its canonical sheaf
@@ -201,6 +225,14 @@ class Chapter05GlobalSectionsTheory (C : Scheme.{u}) (k : Type u) [Field k]
     letI : AddCommGroup (H0 L) := addCommGroup L
     letI : Module k (H0 L) := module L
     Module.Finite k (H0 L)
+  finrank_isomorphic : ∀ {L M},
+    chapter05LineBundleIsomorphic L M →
+      (letI : AddCommGroup (H0 L) := addCommGroup L
+       letI : Module k (H0 L) := module L
+       Module.finrank k (H0 L)) =
+      (letI : AddCommGroup (H0 M) := addCommGroup M
+       letI : Module k (H0 M) := module M
+       Module.finrank k (H0 M))
 
 instance chapter05GlobalSectionsTheory.addCommGroup
     {C : Scheme.{u}} {k : Type u} [Field k]
@@ -221,7 +253,7 @@ abbrev Chapter05H0 {C : Scheme.{u}} {k : Type u} [Field k]
     {f : C ⟶ AlgebraicGeometry.Spec (.of k)}
     [Chapter05GlobalSectionsTheory C k f]
     (L : Chapter05LineBundle C) : Type u :=
-  Chapter05GlobalSectionsTheory.H0 L
+  Chapter05GlobalSectionsTheory.H0 (f := f) L
 
 def chapter05H0Finrank {C : Scheme.{u}} {k : Type u} [Field k]
     {f : C ⟶ AlgebraicGeometry.Spec (.of k)}
@@ -231,14 +263,26 @@ def chapter05H0Finrank {C : Scheme.{u}} {k : Type u} [Field k]
   letI : Module k (T.H0 L) := T.module L
   Module.finrank k (T.H0 L)
 
+/- LOCAL_DEPENDENCY_GUESS: the pinned cohomology API does not yet expose the standard
+negative-degree vanishing theorem for proper integral curves, so the section-space interface keeps
+that theorem as a separate reusable hypothesis rather than baking a particular line bundle into the
+exceptional-curve data. -/
+class Chapter05NegativeDegreeGlobalSectionsTheory (C : Scheme.{u}) (k : Type u) [Field k]
+    (f : C ⟶ AlgebraicGeometry.Spec (.of k))
+    [Chapter05CurveDegreeTheory C k f]
+    [Chapter05GlobalSectionsTheory C k f] : Prop where
+  negative_degree_vanishing : ∀ {L : Chapter05LineBundle C},
+    chapter05Degree (f := f) L < 0 →
+      chapter05H0Finrank (f := f) L = 0
+
 theorem chapter05_h0_finrank_eq_of_isomorphic
     {C : Scheme.{u}} {k : Type u} [Field k]
     {f : C ⟶ AlgebraicGeometry.Spec (.of k)}
     [T : Chapter05GlobalSectionsTheory C k f]
     {L M : Chapter05LineBundle C}
     (hLM : chapter05LineBundleIsomorphic L M) :
-    chapter05H0Finrank L = chapter05H0Finrank M := by
-  sorry
+    chapter05H0Finrank (f := f) L = chapter05H0Finrank (f := f) M := by
+  simpa [chapter05H0Finrank] using T.finrank_isomorphic hLM
 
 /-! ### The residue-field projective line and numerical bookkeeping -/
 

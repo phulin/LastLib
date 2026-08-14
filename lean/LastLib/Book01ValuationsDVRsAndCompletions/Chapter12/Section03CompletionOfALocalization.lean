@@ -38,6 +38,7 @@ abbrev localizationFractionField
 theorem dedekind_local_completion_product
     {R S : Type*} [CommRing R] [CommRing S]
     [IsDedekindDomain R] [IsDedekindDomain S] [Algebra R S]
+    [Algebra.IsIntegral R S]
     [Algebra (FractionRing R) (FractionRing S)]
     [Algebra R (FractionRing S)]
     [IsScalarTower R S (FractionRing S)]
@@ -60,6 +61,7 @@ theorem dedekind_local_completion_product
 theorem dedekind_local_fraction_field_product
     {R S : Type*} [CommRing R] [CommRing S]
     [IsDedekindDomain R] [IsDedekindDomain S] [Algebra R S]
+    [Algebra.IsIntegral R S]
     {g : ℕ} (p : Ideal R) [p.IsPrime] (P : Fin g → Ideal S)
     (hp : p ≠ ⊥)
     [Algebra (FractionRing R) (FractionRing S)]

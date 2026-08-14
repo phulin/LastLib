@@ -20,9 +20,37 @@ universe u v
 abbrev Chapter16RelativeFunctor (S : Scheme.{u}) :=
   LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter14.Chapter14RelativeFunctor S
 
+def chapter16RestrictedRelativeFunctor
+    {S T : Scheme.{u}} (F : Chapter16RelativeFunctor S) (g : T ⟶ S) :
+    Chapter16RelativeFunctor T :=
+  (Over.map g).op.comp F
+
 def chapter16RepresentedBy {S : Scheme.{u}} (F : Chapter16RelativeFunctor S)
     (Y : Over S) : Prop :=
   LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter14.chapter14RepresentedBy F Y
+
+structure Chapter16ModuleTrivializationCertificate (T : Scheme.{u}) where
+  bundle : T.Modules
+  finiteLocallyFree :
+    LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04FiniteLocallyFree
+      bundle
+  trivialModule : T.Modules
+  trivialization : bundle ≅ trivialModule
+
+structure Chapter16LocalUniversalFamilyData
+    {T S P : Scheme.{u}} (g : T ⟶ S) (parameterMap : P ⟶ T) where
+  carrier : Scheme.{u}
+  familyToParameter : carrier ⟶ P
+  familyToBase : carrier ⟶ T
+  family_over_parameter : familyToParameter ≫ parameterMap = familyToBase
+  family_over_base : familyToBase ≫ g = familyToParameter ≫ parameterMap ≫ g
+
+structure Chapter16ParameterFamilyCompatibility
+    {P Q : Scheme.{u}} (iso : P ≅ Q) where
+  overlap : Scheme.{u}
+  toP : overlap ⟶ P
+  toQ : overlap ⟶ Q
+  compatibility : toP ≫ iso.hom = toQ
 
 /-! ### Local parameter spaces -/
 
@@ -36,7 +64,7 @@ structure Chapter16ClosedParameterCondition (P : Scheme.{u}) where
 
 structure Chapter16OpenParameterCondition (P : Scheme.{u}) where
   locus : Set P
-  open : IsOpen locus
+  isOpen : IsOpen locus
 
 structure Chapter16ParameterLoci (P : Scheme.{u}) where
   groupLaws : Chapter16ClosedParameterCondition P
@@ -46,34 +74,55 @@ structure Chapter16ParameterLoci (P : Scheme.{u}) where
   nondegeneracy : Chapter16OpenParameterCondition P
   smoothness : Chapter16OpenParameterCondition P
 
-structure Chapter16LocalParameterPresentation {T S : Scheme.{u}} (g : T ⟶ S) where
+structure Chapter16LocalParameterPresentation
+    {T S : Scheme.{u}} (F : Chapter16RelativeFunctor S) (g : T ⟶ S) where
   parameter : Scheme.{u}
   parameterMap : parameter ⟶ T
   projectiveEmbedding : Chapter16IsProjectiveMorphism parameterMap
-  noetherian_base : Prop
-  finitePresentation : Prop
-  fixed_polynomial : Prop
-  vectorBundles_trivialized : Prop
-  ample_canonical_lineBundle : Prop
-  hilbertScheme_parameter : Prop
-  locallyClosed_parameter : Prop
+  noetherian_base : IsLocallyNoetherian T
+  finitePresentation : LocallyOfFinitePresentation parameterMap
+  fixed_polynomial :
+    LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter14.Chapter14NumericalPolynomial
+  vectorBundles_trivialized : Chapter16ModuleTrivializationCertificate T
+  canonicalLineBundle : Chapter16LineBundle parameter
+  ample_canonical_lineBundle : Chapter16IsAmple parameterMap canonicalLineBundle
+  hilbertScheme_parameter :
+    LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter14.Chapter14ProjectiveMorphismData
+      parameterMap
+  locallyClosed_parameter : IsLocallyClosed (Set.range parameterMap)
   parameterLoci : Chapter16ParameterLoci parameter
-  localUniversalFamily : Prop
-  localRepresentability : Prop
+  localFunctor : Chapter16RelativeFunctor T
+  localFunctor_is_restriction : localFunctor = chapter16RestrictedRelativeFunctor F g
+  localUniversalFamily :
+    Chapter16LocalUniversalFamilyData (𝟙 T) parameterMap
+  localRepresentability : chapter16RepresentedBy localFunctor (Over.mk parameterMap)
 
 structure Chapter16ParameterSpaceData {S : Scheme.{u}} where
   parameter : Scheme.{u}
   parameterMap : parameter ⟶ S
   projective : Chapter16IsProjectiveMorphism parameterMap
   loci : Chapter16ParameterLoci parameter
-  universalFamily : Prop
+  universalFamily :
+    Chapter16LocalUniversalFamilyData (𝟙 S) parameterMap
 
 /-! ### Change of trivialization -/
 
 structure Chapter16ParameterTransition {P Q : Scheme.{u}} where
   iso : P ≅ Q
-  universalFamilyCompatibility : Prop
-  objectCompatibility : Prop
+  overlap_compatibility : Chapter16ParameterFamilyCompatibility iso
+  universalFamilyCompatibility : Chapter16ParameterFamilyCompatibility iso
+  objectCompatibility : Chapter16ParameterFamilyCompatibility iso
+
+/- A local parameter scheme is only compared with another one after both are pulled back to
+the pairwise overlap of their bases.  The generic transition above remains useful for absolute
+scheme changes; this record carries the missing over-the-overlap equation for the moduli package. -/
+structure Chapter16ParameterOverlapTransition
+    {P Q U : Scheme.{u}} (p : P ⟶ U) (q : Q ⟶ U) where
+  iso : P ≅ Q
+  iso_over : iso.hom ≫ q = p
+  iso_inv_over : iso.inv ≫ p = q
+  universalFamilyCompatibility : Chapter16ParameterFamilyCompatibility iso
+  objectCompatibility : Chapter16ParameterFamilyCompatibility iso
 
 structure Chapter16TripleParameterTransition
     {P Q R : Scheme.{u}}
@@ -82,7 +131,24 @@ structure Chapter16TripleParameterTransition
     (ePR : Chapter16ParameterTransition (P := P) (Q := R)) where
   triple_identity : ePQ.iso ≪≫ eQR.iso = ePR.iso
 
-theorem chapter16_parameter_transition_is_canonical
+structure Chapter16CanonicalOverlapDescentData
+    {S : Scheme.{u}} {I : Type v}
+    (family : LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter02.SchemeFamily S I)
+    (D : LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter11.SchemeDescent.Data
+      family.map) where
+  compare : ∀ (i j : I) (U : Scheme.{u})
+    (u : U ⟶ family.obj i) (v : U ⟶ family.obj j)
+    (_h : u ≫ family.map i = v ≫ family.map j),
+    (Over.pullback u).obj (D.obj i) ≅ (Over.pullback v).obj (D.obj j)
+  compare_comp : ∀ (i j k : I) (U : Scheme.{u})
+    (u : U ⟶ family.obj i) (v : U ⟶ family.obj j) (w : U ⟶ family.obj k)
+    (hij : u ≫ family.map i = v ≫ family.map j)
+    (hjk : v ≫ family.map j = w ≫ family.map k)
+    (hik : u ≫ family.map i = w ≫ family.map k),
+    (compare i j U u v hij).hom ≫ (compare j k U v w hjk).hom =
+      (compare i k U u w hik).hom
+
+theorem chapter16_parameter_transition_has_isomorphism
     {P Q : Scheme.{u}} (e : Chapter16ParameterTransition (P := P) (Q := Q)) :
     Nonempty (P ≅ Q) := ⟨e.iso⟩
 
@@ -94,23 +160,100 @@ structure Chapter16ModuliDescentPackage {S : Scheme.{u}} (F : Chapter16RelativeF
   cover : Chapter16FpqcCoveringFamily family
   fppfCover : Chapter16FppfCoveringFamily family
   localParameter : ∀ i,
-    Chapter16LocalParameterPresentation (family.map i)
-  overlapTransitions : ∀ i j,
-    Chapter16ParameterTransition
-      (P := (localParameter i).parameter) (Q := (localParameter j).parameter)
-  tripleTransitions : ∀ i j k,
-    Chapter16TripleParameterTransition
-      (overlapTransitions i j) (overlapTransitions j k) (overlapTransitions i k)
-  local_universal_cocycle : Prop
-  transition_composition_on_objects : Prop
+    Chapter16LocalParameterPresentation F (family.map i)
+  /- The canonical Chapter 11 descent datum already contains the actual pairwise
+     and triple-overlap comparisons.  Keeping a second family of unrelated
+     transition isomorphisms would not express the cocycle. -/
+  parameterSchemeDescent :
+    LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter11.SchemeDescent.Data
+      family.map
+  parameterSchemeDescent_comparison : ∀ i,
+    parameterSchemeDescent.obj i ≅
+      Over.mk ((localParameter i).parameterMap)
+  parameterOverlap :
+    Chapter16CanonicalOverlapDescentData family parameterSchemeDescent
+  localRepresentability : ∀ i,
+    chapter16RepresentedBy (localParameter i).localFunctor
+      (Over.mk (localParameter i).parameterMap)
+  /- Universal families need their own descent datum.  The parameter-space
+     cocycle does not, by itself, glue the carriers of the universal family. -/
+  universalFamilyDescent :
+    LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter11.SchemeDescent.Data
+      (ι := I) (S := S)
+      (X := fun i => family.obj i) family.map
+  universalFamilyDescent_comparison : ∀ i,
+    universalFamilyDescent.obj i ≅
+      Over.mk ((localParameter i).localUniversalFamily.familyToBase)
+  universalFamilyOverlap :
+    Chapter16CanonicalOverlapDescentData family universalFamilyDescent
+  universalFamily_parameter_map : ∀ i,
+    universalFamilyDescent.obj i ⟶ parameterSchemeDescent.obj i
+  universalFamily_parameter_map_matches : ∀ i,
+    (universalFamilyDescent_comparison i).hom ≫
+        Over.homMk
+          (U := Over.mk ((localParameter i).localUniversalFamily.familyToBase))
+          (V := Over.mk ((localParameter i).parameterMap))
+          (localParameter i).localUniversalFamily.familyToParameter
+          (localParameter i).localUniversalFamily.family_over_parameter =
+      universalFamily_parameter_map i ≫
+        (parameterSchemeDescent_comparison i).hom
+  parameter_transition_natural :
+    ∀ (i j : I) (U : Scheme.{u})
+      (u : U ⟶ family.obj i) (v : U ⟶ family.obj j)
+      (_h : u ≫ family.map i = v ≫ family.map j),
+      (Over.pullback u).obj (Over.mk ((localParameter i).parameterMap)) ≅
+        (Over.pullback v).obj (Over.mk ((localParameter j).parameterMap))
+  parameter_transition_is_canonical :
+    ∀ (i j : I) (U : Scheme.{u})
+      (u : U ⟶ family.obj i) (v : U ⟶ family.obj j)
+      (h : u ≫ family.map i = v ≫ family.map j),
+      parameter_transition_natural i j U u v h =
+        (Over.pullback u).mapIso (parameterSchemeDescent_comparison i).symm ≪≫
+          parameterOverlap.compare i j U u v h ≪≫
+          (Over.pullback v).mapIso (parameterSchemeDescent_comparison j)
+  universalFamily_transition_natural :
+    ∀ (i j : I) (U : Scheme.{u})
+      (u : U ⟶ family.obj i) (v : U ⟶ family.obj j)
+      (_h : u ≫ family.map i = v ≫ family.map j),
+      (Over.pullback u).obj
+          (Over.mk ((localParameter i).localUniversalFamily.familyToBase)) ≅
+        (Over.pullback v).obj
+          (Over.mk ((localParameter j).localUniversalFamily.familyToBase))
+  universalFamily_transition_is_canonical :
+    ∀ (i j : I) (U : Scheme.{u})
+      (u : U ⟶ family.obj i) (v : U ⟶ family.obj j)
+      (h : u ≫ family.map i = v ≫ family.map j),
+      universalFamily_transition_natural i j U u v h =
+        (Over.pullback u).mapIso (universalFamilyDescent_comparison i).symm ≪≫
+          universalFamilyOverlap.compare i j U u v h ≪≫
+          (Over.pullback v).mapIso (universalFamilyDescent_comparison j)
+
+structure Chapter16GluedUniversalFamilyData {S : Scheme.{u}} (Y : Over S) where
+  index : Type v
+  localCarrier : index → Scheme.{u}
+  localMap : ∀ i, localCarrier i ⟶ S
+  localToGlobal : ∀ i, localCarrier i ⟶ Y.left
+  localToGlobal_over : ∀ i, localToGlobal i ≫ Y.hom = localMap i
+  transition : ∀ i j, localCarrier i ≅ localCarrier j
+  transition_over : ∀ i j,
+    (transition i j).hom ≫ localMap j = localMap i
+  transition_compatible_with_global : ∀ i j,
+    (transition i j).hom ≫ localToGlobal j = localToGlobal i
+  triple_cocycle : ∀ i j k,
+    transition i j ≪≫ transition j k = transition i k
 
 structure Chapter16GluedUniversalFamily {S : Scheme.{u}}
     (F : Chapter16RelativeFunctor S) where
   representingObject : Over S
   representingEquivalence : chapter16RepresentedBy F representingObject
-  universalFamily : Prop
-  overlap_isomorphisms : Prop
-  triple_cocycle : Prop
+  universalFamily : Chapter16GluedUniversalFamilyData representingObject
+  overlap_isomorphisms : ∀ i j,
+    universalFamily.localCarrier i ≅ universalFamily.localCarrier j
+  overlap_isomorphisms_match : ∀ i j,
+    overlap_isomorphisms i j = universalFamily.transition i j
+  triple_cocycle : ∀ i j k,
+    universalFamily.transition i j ≪≫ universalFamily.transition j k =
+      universalFamily.transition i k
 
 theorem chapter16_parameter_spaces_glue
     {S : Scheme.{u}} {F : Chapter16RelativeFunctor S} {I : Type v}
@@ -138,16 +281,18 @@ structure Chapter16NontrivialAutomorphismWitness (C : Type u) [Category C] where
 
 structure Chapter16GroupoidValuedModuli (S : Scheme.{u}) where
   functor : (Over S)ᵒᵖ ⥤ Cat.{u, u}
-  all_morphisms_invertible : Prop
+  all_morphisms_invertible :
+    ∀ X : (Over S)ᵒᵖ, ∀ {A B : functor.obj X} (f : A ⟶ B), IsIso f
 
 structure Chapter16SetValuedModuli (S : Scheme.{u}) where
   functor : Chapter16RelativeFunctor S
 
 structure Chapter16ModuliWithAutomorphisms (S : Scheme.{u}) where
   groupoidValued : Chapter16GroupoidValuedModuli S
-  automorphismCategory : Type u
-  automorphismCategory_structure : Category automorphismCategory
-  witness : Chapter16NontrivialAutomorphismWitness automorphismCategory
+  witnessBase : Over S
+  witness :
+    Chapter16NontrivialAutomorphismWitness
+      (groupoidValued.functor.obj (Opposite.op witnessBase))
 
 inductive Chapter16ModuliValueKind
   | setValued

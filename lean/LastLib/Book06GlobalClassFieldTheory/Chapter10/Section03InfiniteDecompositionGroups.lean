@@ -65,7 +65,8 @@ theorem chapter10_conjugation_disappears_after_abelianization
 theorem chapter10_abelianization_conjugation
     {D : Type u} [Group D] (g x : D) :
     Abelianization.of (g * x * g⁻¹) = Abelianization.of x := by
-  sorry
+  exact chapter10_conjugation_disappears_after_abelianization
+    (Abelianization.of : D →* Abelianization D) g x
 
 theorem chapter10_decomposition_group_choice_independent_after_abelianization
     {D A : Type u} [Group D] [CommGroup A]
@@ -170,7 +171,10 @@ theorem chapter10_character_restriction_compatibility
     (χ : Gal(Kab / K) →* A) :
     (χ.comp S.decompositionMap).comp S.localReciprocity =
       (χ.comp (chapter10GlobalArtinMap F)).comp S.localEmbedding := by
-  sorry
+  ext x
+  change χ (S.decompositionMap (S.localReciprocity x)) =
+    χ ((chapter10GlobalArtinMap F) (S.localEmbedding x))
+  exact congrArg χ (DFunLike.congr_fun S.commutes x)
 
 end
 

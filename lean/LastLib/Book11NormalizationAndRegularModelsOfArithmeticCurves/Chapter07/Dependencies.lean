@@ -18,7 +18,7 @@ import Mathlib.RingTheory.Localization.Away.Basic
 import Mathlib.RingTheory.MvPolynomial.Basic
 import Mathlib.RingTheory.ReesAlgebra
 import Mathlib.RingTheory.RegularLocalRing.Defs
-import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter05.Dependencies
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Dependencies
 import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter03.Dependencies
 import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter03.Section01CodimensionOneCycles
 
@@ -28,7 +28,6 @@ noncomputable section
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits Set TopologicalSpace
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
-open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter05
 open LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter03
 open scoped AlgebraicGeometry BigOperators
 
@@ -62,7 +61,7 @@ noncomputable def chapter07ZeroCoherentIdeal (X : Scheme.{u}) : Chapter07Coheren
   ideal := ⊥
   finitelyGenerated := by
     intro U
-    exact Ideal.fg_bot
+    exact Submodule.fg_bot
 
 noncomputable def Chapter07CoherentIdeal.comap
     {X Y : Scheme.{u}} (I : Chapter07CoherentIdeal X) (f : Y ⟶ X) :
@@ -81,17 +80,16 @@ theorem chapter07_coherentIdeal_comap_ideal
 theorem chapter07_coherentIdeal_support_comap
     {X Y : Scheme.{u}} (I : Chapter07CoherentIdeal X) (f : Y ⟶ X) :
     (I.comap f).support = I.support.preimage f := by
-  simpa [Chapter07CoherentIdeal.support] using
-    congrArg (fun C : Closeds Y => (C : Set Y))
-      (Scheme.IdealSheafData.support_comap I.ideal f)
+  change ((I.ideal.comap f).support : Set Y) = (I.ideal.support : Set X).preimage f
+  exact congrArg (fun K : TopologicalSpace.Closeds Y => (K : Set Y)) (I.ideal.support_comap f)
 
 noncomputable def chapter07AffineCoherentIdeal
     (A : Type u) [CommRing A] (I : Ideal A) (hI : I.FG) :
     Chapter07CoherentIdeal (Spec (.of A)) where
-  ideal := Scheme.IdealSheafData.ofIdealTop I
+  ideal := Scheme.IdealSheafData.ofIdealTop (I.map (Scheme.ΓSpecIso (.of A)).inv.hom)
   finitelyGenerated := by
     intro U
-    sorry
+    exact (hI.map _).map _
 
 /- The source uses “invertible ideal” in the ideal-sheaf sense: locally one regular
 element generates the ideal.  This is also the exact hypothesis in the blowup
@@ -113,9 +111,8 @@ def chapter07IdealPullback {X Y : Scheme.{u}}
 
 theorem chapter07IdealPullback_support
     {X Y : Scheme.{u}} (I : X.IdealSheafData) (f : Y ⟶ X) :
-    (chapter07IdealPullback I f).support = I.support.preimage f := by
-  simpa using congrArg (fun C : Closeds Y => (C : Set Y))
-    (Scheme.IdealSheafData.support_comap I f)
+    (chapter07IdealPullback I f).support = I.support.preimage f.continuous := by
+  exact I.support_comap f
 
 /-! ### Normality, regular surfaces, and finite centers -/
 
@@ -160,7 +157,7 @@ theorem chapter07SchemeIsoOver_ext
   rfl
 
 abbrev Chapter07IsProjectiveMorphism {Y X : Scheme.{u}} (f : Y ⟶ X) : Prop :=
-  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter05.IsProjectiveMorphism f
+  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04Projective f
 
 def Chapter07Birational {Y X : Scheme.{u}} (f : Y ⟶ X) : Prop :=
   ∃ U : X.Opens, Dense (U : Set X) ∧ IsIso (f ∣_ U)
@@ -176,8 +173,8 @@ structure Chapter07ExceptionalDivisor
 /-! ### Generic fibers and arithmetic surfaces -/
 
 structure Chapter07GenericOpen (S : Scheme.{u}) where
-  open : S.Opens
-  dense : Dense (open : Set S)
+  openSet : S.Opens
+  dense : Dense (openSet : Set S)
 
 def chapter07GenericFiber {X S : Scheme.{u}} (f : X ⟶ S) (η : S) : Scheme :=
   f.fiber η
@@ -187,7 +184,8 @@ chapter-facing morphism until the most convenient pinned `pullback.map` normal f
 noncomputable def chapter07GenericFiberMap
     {Y X S : Scheme.{u}} (g : Y ⟶ X) (f : X ⟶ S) (η : S) :
     (g ≫ f).fiber η ⟶ f.fiber η := by
-  sorry
+  exact pullback.map (g ≫ f) (S.fromSpecResidueField η) f (S.fromSpecResidueField η)
+    g (𝟙 _) (𝟙 _) (by simp) (by simp)
 
 def Chapter07CenterDisjointFromGenericFiber
     {X S : Scheme.{u}} (f : X ⟶ S) (I : Chapter07CoherentIdeal X) (η : S) : Prop :=
@@ -196,16 +194,19 @@ def Chapter07CenterDisjointFromGenericFiber
 def Chapter07CenterDisjointFromGenericOpen
     {X S : Scheme.{u}} (f : X ⟶ S) (I : Chapter07CoherentIdeal X)
     (G : Chapter07GenericOpen S) : Prop :=
-  I.support ∩ f ⁻¹' (G.open : Set S) = ∅
+  I.support ∩ f ⁻¹' (G.openSet : Set S) = ∅
 
 structure Chapter07ArithmeticSurface where
   base : Scheme.{u}
   baseDedekind : Chapter03DedekindBase base
   model : Scheme.{u}
   structureMap : model ⟶ base
+  normal : Chapter07NormalIntegralScheme model
   flat : Flat structureMap
   projective : Chapter07IsProjectiveMorphism structureMap
+  finiteType : LocallyOfFiniteType structureMap ∧ QuasiCompact structureMap
   relativeCurve : Chapter03RelativeCurve structureMap
+  relativeCurve_fibers : chapter03_relativeCurve_fibers_are_curves structureMap
   generic : Chapter07GenericOpen base
   surfaceDimension : ∀ x : model, Order.coheight x ≤ 2
 
@@ -216,7 +217,7 @@ abbrev Chapter07ReesAlgebra (A : Type u) [CommRing A] (I : Ideal A) :=
 
 noncomputable def chapter07ReesDegreeMap
     (A : Type u) [CommRing A] (I : Ideal A) (n : ℕ) :
-    (I ^ n : Type u) →ₗ[A] Chapter07ReesAlgebra A I where
+    ((I ^ n : Ideal A) : Type u) →ₗ[A] Chapter07ReesAlgebra A I where
   toFun a :=
     ⟨Polynomial.monomial n a.1, reesAlgebra.monomial_mem.mpr a.2⟩
   map_add' := by
@@ -238,7 +239,16 @@ theorem chapter07_reesDegree_mem_iff
     (p : Chapter07ReesAlgebra A I) :
     p ∈ chapter07ReesDegree A I n ↔
       ∀ i, i ≠ n → p.1.coeff i = 0 := by
-  sorry
+  constructor
+  · rintro ⟨a, ha, rfl⟩ i hi
+    simp [chapter07ReesDegreeMap, Polynomial.coeff_monomial, Ne.symm hi]
+  · intro hp
+    refine ⟨⟨p.1.coeff n, (mem_reesAlgebra_iff I p.1).mp p.2 n⟩, trivial, ?_⟩
+    ext i
+    by_cases h : i = n
+    · subst i
+      simp [chapter07ReesDegreeMap]
+    · simp [chapter07ReesDegreeMap, Polynomial.coeff_monomial, Ne.symm h, hp i h]
 
 /- The pinned Rees-algebra file supplies the subalgebra but not its internal grading.  The
 following record is the minimal reusable bridge to Mathlib's `Proj` API. -/
@@ -252,7 +262,80 @@ noncomputable def chapter07CanonicalReesGrading
   component := chapter07ReesDegree A I
   component_eq := fun _ => rfl
   graded := by
-    sorry
+    let M : ℕ → Submodule A (Chapter07ReesAlgebra A I) :=
+      chapter07ReesDegree A I
+    letI : SetLike.GradedMonoid M := by
+      refine { one_mem := ?_, mul_mem := ?_ }
+      · change (1 : Chapter07ReesAlgebra A I) ∈ M 0
+        refine ⟨⟨1, by simp⟩, trivial, ?_⟩
+        apply Subtype.ext
+        simp [chapter07ReesDegreeMap]
+      · intro i j x y hx hy
+        rcases hx with ⟨a, ha, hax⟩
+        rcases hy with ⟨b, hb, hby⟩
+        refine ⟨⟨a.1 * b.1, ?_⟩, trivial, ?_⟩
+        · rw [pow_add]
+          exact Ideal.mul_mem_mul a.2 b.2
+        · apply Subtype.ext
+          change Polynomial.monomial (i + j) (a.1 * b.1) = _
+          rw [← hax, ← hby]
+          simp [chapter07ReesDegreeMap, Polynomial.monomial_mul_monomial]
+    have hspan : iSup M = ⊤ := by
+      apply top_unique
+      intro p hp
+      have hterm : ∀ i ∈ p.1.support,
+          (chapter07ReesDegreeMap A I i ⟨p.1.coeff i, (mem_reesAlgebra_iff I p.1).mp p.2 i⟩ :
+            Chapter07ReesAlgebra A I) ∈ iSup M := by
+        intro i hi
+        exact Submodule.mem_iSup_of_mem i
+          ⟨⟨p.1.coeff i, (mem_reesAlgebra_iff I p.1).mp p.2 i⟩, trivial, rfl⟩
+      have hsum :
+          (∑ i ∈ p.1.support,
+            (chapter07ReesDegreeMap A I i
+              ⟨p.1.coeff i, (mem_reesAlgebra_iff I p.1).mp p.2 i⟩ :
+                Chapter07ReesAlgebra A I)) ∈ iSup M := by
+        exact Submodule.sum_mem _ (fun i hi ↦ hterm i hi)
+      have heq :
+          (∑ i ∈ p.1.support,
+            (chapter07ReesDegreeMap A I i
+              ⟨p.1.coeff i, (mem_reesAlgebra_iff I p.1).mp p.2 i⟩ :
+                Chapter07ReesAlgebra A I)) = p := by
+        apply Subtype.ext
+        simpa [chapter07ReesDegreeMap] using p.1.as_sum_support.symm
+      exact heq ▸ hsum
+    have hindep : iSupIndep M := by
+      rw [iSupIndep_iff_finsetSum_eq_zero_imp_eq_zero]
+      intro s v hv hv0 i hi
+      have hcoeff := congrArg (fun q : Chapter07ReesAlgebra A I => q.1.coeff i) hv0
+      have hcoeff_zero : ∀ b ∈ s, b ≠ i → (v b).1.coeff i = 0 := by
+        intro b hb hbi
+        rcases hv b hb with ⟨a, ha, hab⟩
+        rw [← hab]
+        change (Polynomial.monomial b a.1).coeff i = 0
+        rw [Polynomial.coeff_monomial]
+        split <;> simp_all
+      have hcoeff' : (∑ b ∈ s, (v b).1.coeff i) = 0 := by
+        simpa [Polynomial.coeff_sum] using hcoeff
+      have hsingle :
+          (∑ b ∈ s, (v b).1.coeff i) = (v i).1.coeff i :=
+        Finset.sum_eq_single i (fun b hb hbi ↦ hcoeff_zero b hb hbi)
+          (fun hni ↦ (hni hi).elim)
+      have hvi_coeff : (v i).1.coeff i = 0 := by
+        rw [← hsingle]
+        exact hcoeff'
+      have hvi := hv i hi
+      rcases hvi with ⟨a, ha, hia⟩
+      have hzero : v i = 0 := by
+        apply Subtype.ext
+        rw [← hia]
+        rw [← hia] at hvi_coeff
+        change (Polynomial.monomial i a.1).coeff i = 0 at hvi_coeff
+        have ha_zero : a.1 = 0 := by
+          simpa using hvi_coeff
+        simp [chapter07ReesDegreeMap, ha_zero]
+      exact hzero
+    exact DirectSum.IsInternal.gradedAlgebra
+      (DirectSum.isInternal_submodule_of_iSupIndep_of_iSup_eq_top hindep hspan)
 
 noncomputable def chapter07ReesProj
     (A : Type u) [CommRing A] (I : Ideal A) : Scheme :=
@@ -263,8 +346,9 @@ noncomputable def chapter07ReesProj
 /-! The integral closure of a Rees algebra is written over the polynomial ring itself.  The
 degree-wise ideal and the normalized Rees grading are introduced in §7.3. -/
 noncomputable def chapter07NormalizedReesAlgebra
-    (A : Type u) [CommRing A] (I : Ideal A) : Subalgebra (Chapter07ReesAlgebra A I) A[X] :=
-  integralClosure (Chapter07ReesAlgebra A I) A[X]
+    (A : Type u) [CommRing A] (I : Ideal A) :
+    Subalgebra (Chapter07ReesAlgebra A I) (Polynomial A) :=
+  integralClosure (Chapter07ReesAlgebra A I) (Polynomial A)
 
 end
 

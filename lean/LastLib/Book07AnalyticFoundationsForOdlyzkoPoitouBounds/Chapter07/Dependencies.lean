@@ -5,6 +5,8 @@ import Mathlib.Analysis.Complex.Trigonometric
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import Mathlib.MeasureTheory.Measure.Dirac
 import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.Core
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.Section01TransformConventions
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.Dependencies
 
 namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter07
 
@@ -47,13 +49,20 @@ theorem chapter07FourierTransform_eq_integral
     chapter07FourierTransform f t =
       ∫ x : ℝ, (f x : ℂ) * Complex.exp
         (-Complex.I * (t : ℂ) * (x : ℂ)) := by
-  sorry
+  simp [chapter07FourierTransform,
+    LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05FourierTransform,
+    mul_assoc]
 
 theorem chapter07ComplexFourierTransform_ofReal
     (f : Chapter07TestFunction) (t : ℝ) :
     chapter07ComplexFourierTransform f (t : ℂ) =
       chapter07FourierTransform f t := by
-  sorry
+  simp [chapter07ComplexFourierTransform,
+    LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05BilateralLaplaceTransform,
+    LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05LaplaceKernel,
+    chapter07FourierTransform,
+    LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05FourierTransform,
+    mul_assoc]
 
 abbrev chapter07CosineTransform
     (f : Chapter07TestFunction) (t : ℝ) : ℝ :=
@@ -62,12 +71,41 @@ abbrev chapter07CosineTransform
 theorem chapter07FourierTransform_re_eq_cosineTransform
     (f : Chapter07TestFunction) (hf : Integrable f) (t : ℝ) :
     (chapter07FourierTransform f t).re = chapter07CosineTransform f t := by
-  sorry
+  have hreal : Integrable (fun x : ℝ => (f x : ℂ)) := hf.ofReal
+  have hcomplex_integrable : Integrable (fun x : ℝ =>
+      (f x : ℂ) * Complex.exp (-Complex.I * (t : ℂ) * (x : ℂ))) := by
+    apply (hreal.congr' ?_ ?_)
+    · exact hf.ofReal.aestronglyMeasurable.mul
+        (Continuous.aestronglyMeasurable (by fun_prop))
+    · filter_upwards [] with x
+      rw [Complex.norm_mul, Complex.norm_real, Complex.norm_exp]
+      simp
+  rw [chapter07FourierTransform_eq_integral]
+  change (∫ x : ℝ, (f x : ℂ) * Complex.exp
+      (-Complex.I * (t : ℂ) * (x : ℂ))).re =
+    ∫ x : ℝ, f x * Real.cos (t * x)
+  calc
+    (∫ x : ℝ, (f x : ℂ) * Complex.exp
+      (-Complex.I * (t : ℂ) * (x : ℂ))).re =
+        ∫ x : ℝ, ((f x : ℂ) * Complex.exp
+          (-Complex.I * (t : ℂ) * (x : ℂ))).re :=
+      (integral_re hcomplex_integrable).symm
+    _ = ∫ x : ℝ, f x * Real.cos (t * x) := by
+      apply integral_congr_ae
+      filter_upwards [] with x
+      rw [Complex.mul_re, Complex.exp_re]
+      simp
 
 theorem chapter07FourierTransform_im_eq_zero_of_even
     (f : Chapter07TestFunction) (hf : Integrable f) (heven : chapter07Even f) (t : ℝ) :
     (chapter07FourierTransform f t).im = 0 := by
-  sorry
+  have h :=
+    LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05_fourier_transform_eq_ofReal_real_transform
+      hf heven t
+  have h' : chapter07FourierTransform f t =
+      (chapter07CosineTransform f t : ℂ) := h
+  rw [h']
+  rfl
 
 /- Positive definiteness is the continuous finite positive-semidefinite-kernel
    condition.  It is kept separate from the book's integrable Fourier-positive
@@ -99,7 +137,10 @@ theorem chapter07_positiveType_mul
 theorem chapter07_positiveType_fourierNonnegative
     (f : Chapter07TestFunction) (hpositive : chapter07PositiveType f) :
     chapter07FourierNonnegative f := by
-  sorry
+  refine ⟨hpositive.integrable, ?_⟩
+  intro t
+  exact ⟨(hpositive.transformNonnegative t).2,
+    (hpositive.transformNonnegative t).1⟩
 
 /- The convolution convention matching the book Fourier normalization. -/
 noncomputable def chapter07ComplexConvolution
@@ -122,7 +163,7 @@ def chapter07ZeroPartner (ρ : ℂ) : ℂ :=
 
 theorem chapter07ZeroPartner_involutive (ρ : ℂ) :
     chapter07ZeroPartner (chapter07ZeroPartner ρ) = ρ := by
-  sorry
+  simp [chapter07ZeroPartner]
 
 structure Chapter07ZeroSpectrum where
   support : Set ℂ
@@ -133,14 +174,70 @@ structure Chapter07ZeroSpectrum where
     ∀ {ρ}, ρ ∈ support → 0 ≤ ρ.re ∧ ρ.re ≤ 1
   functional_equation_partner :
     ∀ {ρ}, ρ ∈ support ↔ chapter07ZeroPartner ρ ∈ support
+  conjugation_partner :
+    ∀ {ρ}, ρ ∈ support ↔ star ρ ∈ support
   multiplicity_partner :
     ∀ ρ, multiplicity (chapter07ZeroPartner ρ) = multiplicity ρ
+  multiplicity_conjugation_partner :
+    ∀ ρ, multiplicity (star ρ) = multiplicity ρ
   locally_finite :
     ∀ R : ℝ, Set.Finite {ρ : ℂ | ρ ∈ support ∧ ‖ρ‖ ≤ R}
+
+/- The canonical zero package is parameterized by the number field in Chapter
+   6.  This view retains its support, both partner symmetries, multiplicities,
+   and local-finiteness data while presenting the functional-equation partner
+   used by the strip argument. -/
+abbrev Chapter07CanonicalZeroSpectrum
+    (K : Type*) [Field K] [NumberField K] :=
+  LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.Chapter06ZeroSpectrum K
+
+def chapter07ZeroSpectrumOfChapter06
+    (K : Type*) [Field K] [NumberField K]
+    (Z : Chapter07CanonicalZeroSpectrum K) : Chapter07ZeroSpectrum where
+  support := Z.support
+  multiplicity := Z.multiplicity
+  support_iff_multiplicity_ne_zero := Z.support_iff_multiplicity_ne_zero
+  critical_strip := Z.critical_strip
+  functional_equation_partner := by
+    intro ρ
+    constructor
+    · intro hρ
+      have hρ' : star ρ ∈ Z.support :=
+        (Z.conjugation_partner (ρ := ρ)).1 hρ
+      simpa [chapter07ZeroPartner] using
+        (Z.functional_equation_partner (ρ := star ρ)).1 hρ'
+    · intro hρ
+      have hρ' : 1 - star ρ ∈ Z.support := by
+        simpa [chapter07ZeroPartner] using hρ
+      have hρ'' : star ρ ∈ Z.support :=
+        (Z.functional_equation_partner (ρ := star ρ)).2 hρ'
+      exact (Z.conjugation_partner (ρ := ρ)).2 hρ''
+  conjugation_partner := Z.conjugation_partner
+  multiplicity_partner := by
+    intro ρ
+    simpa [chapter07ZeroPartner] using
+      (Z.multiplicity_functional_equation_partner (star ρ)).trans
+        (Z.multiplicity_conjugation_partner ρ)
+  multiplicity_conjugation_partner := Z.multiplicity_conjugation_partner
+  locally_finite := by
+    intro R
+    refine (Z.locally_finite (R + 1)).subset ?_
+    intro ρ hρ
+    refine ⟨hρ.1, ?_⟩
+    have him_sq : ρ.im * ρ.im ≤ ‖ρ‖ ^ 2 := by
+      simpa [Complex.normSq_eq_norm_sq] using Complex.im_sq_le_normSq ρ
+    have him : |ρ.im| ≤ ‖ρ‖ := by
+      exact abs_le_of_sq_le_sq (by simpa [pow_two] using him_sq) (norm_nonneg ρ)
+    exact lt_of_le_of_lt (him.trans hρ.2) (by linarith)
 
 def chapter07GRH (Z : Chapter07ZeroSpectrum) : Prop :=
   ∀ ρ, ρ ∈ Z.support →
     ∃ γ : ℝ, ρ = (1 / 2 : ℂ) + Complex.I * (γ : ℂ)
+
+def chapter07CanonicalGRH
+    (K : Type*) [Field K] [NumberField K]
+    (Z : Chapter07CanonicalZeroSpectrum K) : Prop :=
+  chapter07GRH (chapter07ZeroSpectrumOfChapter06 K Z)
 
 abbrev chapter07ZeroTransform
     (f : Chapter07TestFunction) (ρ : ℂ) : ℂ :=
@@ -151,11 +248,27 @@ theorem chapter07ZeroTransform_eq_complexFourierTransform
     chapter07ZeroTransform f ρ =
       chapter07ComplexFourierTransform f
         (Complex.I * (ρ - (1 / 2 : ℂ))) := by
-  sorry
+  simp only [chapter07ZeroTransform, chapter07ComplexFourierTransform,
+    LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05BilateralLaplaceTransform,
+    LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05LaplaceKernel]
+  apply integral_congr_ae
+  filter_upwards [] with x
+  congr 2
+  rw [← mul_assoc, Complex.I_mul_I]
+  simp
 
 def chapter07ZeroTermSummand
     (Z : Chapter07ZeroSpectrum) (f : Chapter07TestFunction) (ρ : ℂ) : ℂ :=
   (Z.multiplicity ρ : ℂ) * chapter07ZeroTransform f ρ
+
+theorem chapter07_zeroTermSummand_of_chapter06
+    (K : Type*) [Field K] [NumberField K]
+    (Z : Chapter07CanonicalZeroSpectrum K)
+    (f : Chapter07TestFunction) (ρ : ℂ) :
+    chapter07ZeroTermSummand (chapter07ZeroSpectrumOfChapter06 K Z) f ρ =
+        LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.chapter06ZeroSummand
+        Z f ρ := by
+  rfl
 
 def chapter07ZeroTermConvergent
     (Z : Chapter07ZeroSpectrum) (f : Chapter07TestFunction) : Prop :=

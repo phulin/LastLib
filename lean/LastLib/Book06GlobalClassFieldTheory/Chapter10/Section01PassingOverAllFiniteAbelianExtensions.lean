@@ -74,6 +74,185 @@ theorem chapter10_global_artin_restricts_to_finite_artin
     (chapter10RestrictionMap L).comp (chapter10GlobalArtinMap F) = F.map L :=
   chapter10GlobalArtinMap_restrict F L
 
+/- The finite Artin maps induce a map from the open-quotient completion to the
+inverse limit of finite Galois groups. -/
+noncomputable def chapter10CompletedArtinLimitMap
+    {C : Type u} {K : Type v} {Kab : Type w}
+    [CommGroup C] [TopologicalSpace C]
+    [IsTopologicalGroup C] [Field K] [Field Kab] [Algebra K Kab]
+    [IsGalois K Kab] (F : Chapter10FiniteArtinFamily C K Kab) :
+    chapter10ProfiniteCompletion C →*
+      ProfiniteGrp.limit (InfiniteGalois.asProfiniteGaloisGroupFunctor K Kab) := by
+  let H : ∀ L : FiniteGaloisIntermediateField K Kab,
+      Chapter10OpenFiniteIndexNormalSubgroup C :=
+    fun L =>
+      { toSubgroup := (F.map L).ker
+        isNormal' := inferInstance
+        isFiniteIndex' := F.map_kernel_finiteIndex L
+        isOpen := F.map_kernel_open L }
+  let A : ∀ L : FiniteGaloisIntermediateField K Kab,
+      chapter10ProfiniteCompletion C →* Gal(L / K) :=
+    fun L =>
+      (Chapter10FiniteArtinFamily.quotientEquiv F L).toMonoidHom.comp
+        (chapter10ProfiniteCompletionProjection C (H L))
+  have hker {L₁ L₂ : FiniteGaloisIntermediateField K Kab}
+      (h : L₂ ≤ L₁) : (H L₁).toSubgroup ≤ (H L₂).toSubgroup := by
+    change (F.map L₁).ker ≤ (F.map L₂).ker
+    intro c hc
+    apply MonoidHom.mem_ker.mpr
+    rw [← DFunLike.congr_fun (F.compatible h) c]
+    simp [MonoidHom.mem_ker.mp hc]
+  have hquot {L₁ L₂ : FiniteGaloisIntermediateField K Kab}
+      (h : L₂ ≤ L₁) :
+      (chapter10FiniteRestrictionMap (K := K) (Kab := Kab) h).comp
+          (Chapter10FiniteArtinFamily.quotientEquiv F L₁).toMonoidHom =
+        (Chapter10FiniteArtinFamily.quotientEquiv F L₂).toMonoidHom.comp
+          (QuotientGroup.map (H L₁).toSubgroup (H L₂).toSubgroup
+            (MonoidHom.id C) (hker h)) := by
+    apply MonoidHom.ext
+    intro x
+    obtain ⟨c, rfl⟩ := QuotientGroup.mk'_surjective (H L₁).toSubgroup x
+    change chapter10FiniteRestrictionMap (K := K) (Kab := Kab) h
+        (F.map L₁ c) = F.map L₂ c
+    exact DFunLike.congr_fun (F.compatible h) c
+  have hproj {L₁ L₂ : FiniteGaloisIntermediateField K Kab}
+      (h : L₂ ≤ L₁) (x : chapter10ProfiniteCompletion C) :
+      QuotientGroup.map (H L₁).toSubgroup (H L₂).toSubgroup
+          (MonoidHom.id C) (hker h)
+          (chapter10ProfiniteCompletionProjection C (H L₁) x) =
+        chapter10ProfiniteCompletionProjection C (H L₂) x := by
+    let hH : H L₁ ⟶ H L₂ := (hker h).hom
+    have hx := x.property hH
+    change QuotientGroup.map (H L₁).toSubgroup (H L₂).toSubgroup
+        (MonoidHom.id C) (hker h)
+        (chapter10ProfiniteCompletionProjection C (H L₁) x) =
+      chapter10ProfiniteCompletionProjection C (H L₂) x at hx
+    exact hx
+  have hcompat {L₁ L₂ : FiniteGaloisIntermediateField K Kab}
+      (h : L₂ ≤ L₁) :
+      (chapter10FiniteRestrictionMap (K := K) (Kab := Kab) h).comp (A L₁) = A L₂ := by
+    apply MonoidHom.ext
+    intro x
+    dsimp [A]
+    rw [← hproj h x]
+    exact DFunLike.congr_fun (hquot h)
+      (chapter10ProfiniteCompletionProjection C (H L₁) x)
+  let G : chapter10ProfiniteCompletion C →*
+      ProfiniteGrp.limit (InfiniteGalois.asProfiniteGaloisGroupFunctor K Kab) :=
+    { toFun := fun x =>
+        { val := fun L => A L.unop x
+          property := by
+            intro L₁ L₂ f
+            change (chapter10FiniteRestrictionMap (K := K) (Kab := Kab) f.unop.le)
+                (A L₁.unop x) = A L₂.unop x
+            exact DFunLike.congr_fun (hcompat f.unop.le) x }
+      map_one' := by
+        apply ProfiniteGrp.limit_ext
+        intro L
+        change A L.unop 1 = 1
+        exact map_one (A L.unop)
+      map_mul' := by
+        intro x y
+        apply ProfiniteGrp.limit_ext
+        intro L
+        change A L.unop (x * y) = A L.unop x * A L.unop y
+        exact map_mul (A L.unop) x y }
+  exact G
+
+theorem chapter10CompletedArtinLimitMap_continuous
+    {C : Type u} {K : Type v} {Kab : Type w}
+    [CommGroup C] [TopologicalSpace C]
+    [IsTopologicalGroup C] [Field K] [Field Kab] [Algebra K Kab]
+    [IsGalois K Kab] (F : Chapter10FiniteArtinFamily C K Kab) :
+    Continuous (chapter10CompletedArtinLimitMap F) := by
+  rw [continuous_induced_rng]
+  refine continuous_pi (fun L => ?_)
+  dsimp [chapter10CompletedArtinLimitMap]
+  let H : Chapter10OpenFiniteIndexNormalSubgroup C :=
+    { toSubgroup := (F.map L.unop).ker
+      isNormal' := inferInstance
+      isFiniteIndex' := F.map_kernel_finiteIndex L.unop
+      isOpen := F.map_kernel_open L.unop }
+  have hproj : Continuous (chapter10ProfiniteCompletionProjection C H) := by
+    let hdisc : DiscreteTopology (C ⧸ H.toSubgroup) :=
+      QuotientGroup.discreteTopology H.isOpen
+    have htop :
+        ((chapter10OpenFiniteIndexProfiniteDiagram C).obj H).toProfinite.toTop.str =
+          (inferInstance : TopologicalSpace (C ⧸ H.toSubgroup)) := by
+      change (⊥ : TopologicalSpace (C ⧸ H.toSubgroup)) =
+        QuotientGroup.instTopologicalSpace H.toSubgroup
+      exact hdisc.eq_bot.symm
+    have hcont : @Continuous
+        (chapter10ProfiniteCompletion C) (C ⧸ H.toSubgroup)
+        (chapter10ProfiniteCompletion C).toProfinite.toTop.str
+        ((chapter10OpenFiniteIndexProfiniteDiagram C).obj H).toProfinite.toTop.str
+        (chapter10ProfiniteCompletionProjection C H) := by
+      change Continuous (((ProfiniteGrp.limitCone
+          (chapter10OpenFiniteIndexProfiniteDiagram C)).π.app H).hom)
+      exact ((ProfiniteGrp.limitCone
+          (chapter10OpenFiniteIndexProfiniteDiagram C)).π.app H).hom.continuous_toFun
+    change @Continuous
+        (chapter10ProfiniteCompletion C) (C ⧸ H.toSubgroup)
+        (chapter10ProfiniteCompletion C).toProfinite.toTop.str
+        (inferInstance : TopologicalSpace (C ⧸ H.toSubgroup))
+        (chapter10ProfiniteCompletionProjection C H)
+    rw [← htop]
+    exact hcont
+  have hcomp : Continuous ((Chapter10FiniteArtinFamily.quotientEquiv F L.unop).toMonoidHom.comp
+      (chapter10ProfiniteCompletionProjection C H)) := by
+    have hquot : Continuous
+        ((Chapter10FiniteArtinFamily.quotientEquiv F L.unop).toMonoidHom :
+          (C ⧸ H.toSubgroup) → Gal(L.unop / K)) := by
+      let hdisc : DiscreteTopology (C ⧸ H.toSubgroup) :=
+        QuotientGroup.discreteTopology H.isOpen
+      exact @continuous_of_discreteTopology
+        (C ⧸ H.toSubgroup) (inferInstance : TopologicalSpace (C ⧸ H.toSubgroup))
+        hdisc (Gal(L.unop / K)) _ _
+    exact hquot.comp hproj
+  convert! hcomp
+  exact (DiscreteTopology.eq_bot (α := Gal(L.unop / K))).symm
+  subst_vars
+  rfl
+
+theorem chapter10ArtinLimitMap_denseRange
+    {C : Type u} {K : Type v} {Kab : Type w}
+    [CommGroup C] [TopologicalSpace C]
+    [IsTopologicalGroup C] [Field K] [Field Kab] [Algebra K Kab]
+    [IsGalois K Kab] (F : Chapter10FiniteArtinFamily C K Kab) :
+    DenseRange (chapter10ArtinLimitMap F) := by
+  apply dense_iff_inter_open.mpr
+  rintro U ⟨s, hsO, hsv⟩ ⟨⟨spc, hspc⟩, uDefaultSpec⟩
+  have hpre : ⟨spc, hspc⟩ ∈ Subtype.val ⁻¹' s := hsv.symm ▸ uDefaultSpec
+  have hspc_s : spc ∈ s := hpre
+  rcases (isOpen_pi_iff.mp hsO) _ hspc_s with ⟨J, fJ, hJ1, hJ2⟩
+  let L : FiniteGaloisIntermediateField K Kab :=
+    J.sup (fun j => j.unop)
+  rcases F.map_surjective L (spc (Opposite.op L)) with ⟨origin, horigin⟩
+  use chapter10ArtinLimitMap F origin
+  refine ⟨?_, origin, rfl⟩
+  rw [← hsv]
+  apply hJ2
+  intro a a_in_J
+  have hLa : a.unop ≤ L := by
+    exact Finset.le_sup (f := fun j => j.unop) a_in_J
+  let L_to_a : Opposite.op L ⟶ a := CategoryTheory.opHomOfLE hLa
+  have hspc_a :
+      chapter10FiniteRestrictionMap (K := K) (Kab := Kab) hLa
+          (spc (Opposite.op L)) = spc a := by
+    have h := hspc L_to_a
+    change chapter10FiniteRestrictionMap (K := K) (Kab := Kab) hLa
+        (spc (Opposite.op L)) = spc a at h
+    exact h
+  have hF_a :
+      chapter10FiniteRestrictionMap (K := K) (Kab := Kab) hLa
+          (F.map L origin) = F.map a.unop origin :=
+    DFunLike.congr_fun (F.compatible hLa) origin
+  have hcoord : F.map a.unop origin = spc a := by
+    rw [← hF_a, horigin]
+    exact hspc_a
+  change F.map a.unop origin ∈ fJ a
+  exact Set.mem_of_eq_of_mem hcoord (hJ1 a a_in_J).right
+
 /-- Global Artin reciprocity, in the topology-sensitive inverse-limit form of
 Theorem 10.1. -/
 noncomputable def chapter10InfiniteReciprocityEquiv
@@ -83,7 +262,92 @@ noncomputable def chapter10InfiniteReciprocityEquiv
     [IsGalois K Kab] (F : Chapter10FiniteArtinFamily C K Kab)
     (R : Chapter10FiniteReciprocityData F) :
     chapter10ProfiniteCompletion C ≃ₜ* Gal(Kab / K) := by
-  sorry
+  have hg_eta (c : C) :
+      chapter10CompletedArtinLimitMap F
+          (chapter10ProfiniteCompletionEta C c) =
+        chapter10ArtinLimitMap F c := by
+    apply ProfiniteGrp.limit_ext
+    intro L
+    convert! Chapter10FiniteArtinFamily.quotientEquiv_mk F L.unop c
+  have hg_inj : Function.Injective (chapter10CompletedArtinLimitMap F) := by
+    intro x y hxy
+    apply Subtype.ext
+    funext H
+    obtain ⟨L, hL⟩ := R.kernel_cofinal H
+    let HL : Chapter10OpenFiniteIndexNormalSubgroup C :=
+      { toSubgroup := (F.map L).ker
+        isNormal' := inferInstance
+        isFiniteIndex' := F.map_kernel_finiteIndex L
+        isOpen := F.map_kernel_open L }
+    have hcoord := congrArg
+      (fun z : ProfiniteGrp.limit
+          (InfiniteGalois.asProfiniteGaloisGroupFunctor K Kab) =>
+        z.val (Opposite.op L)) hxy
+    have hq :
+        (Chapter10FiniteArtinFamily.quotientEquiv F L).toMonoidHom
+            (chapter10ProfiniteCompletionProjection C HL x) =
+          (Chapter10FiniteArtinFamily.quotientEquiv F L).toMonoidHom
+            (chapter10ProfiniteCompletionProjection C HL y) := by
+      convert! hcoord
+    have hproj :
+        chapter10ProfiniteCompletionProjection C HL x =
+          chapter10ProfiniteCompletionProjection C HL y :=
+      (Chapter10FiniteArtinFamily.quotientEquiv F L).injective hq
+    change chapter10ProfiniteCompletionProjection C H x =
+      chapter10ProfiniteCompletionProjection C H y
+    have hHL : H = HL := by
+      apply SetLike.coe_injective
+      ext c
+      change c ∈ H.toSubgroup ↔ c ∈ HL.toSubgroup
+      rw [hL]
+    rw [hHL]
+    exact hproj
+  have hg_dense :
+      Dense (Set.range (chapter10CompletedArtinLimitMap F)) := by
+    have hsub : Set.range (chapter10ArtinLimitMap F) ⊆
+        Set.range (chapter10CompletedArtinLimitMap F) := by
+      rintro z ⟨c, rfl⟩
+      exact ⟨chapter10ProfiniteCompletionEta C c, hg_eta c⟩
+    apply dense_iff_closure_eq.mpr
+    refine Set.Subset.antisymm (fun _ _ ↦ Set.mem_univ _) ?_
+    rw [← (chapter10ArtinLimitMap_denseRange F).closure_eq]
+    exact closure_mono hsub
+  have hg_closed : IsClosedMap (chapter10CompletedArtinLimitMap F) :=
+    @Continuous.isClosedMap _ _ _ _ inferInstance inferInstance
+      (chapter10CompletedArtinLimitMap F)
+      (chapter10CompletedArtinLimitMap_continuous F)
+  have hg_surj : Function.Surjective (chapter10CompletedArtinLimitMap F) := by
+    rw [← Set.range_eq_univ]
+    calc
+      Set.range (chapter10CompletedArtinLimitMap F) =
+          closure (Set.range (chapter10CompletedArtinLimitMap F)) :=
+        hg_closed.isClosed_range.closure_eq.symm
+      _ = Set.univ := hg_dense.closure_eq
+  let e : chapter10ProfiniteCompletion C ≃*
+      ProfiniteGrp.limit (InfiniteGalois.asProfiniteGaloisGroupFunctor K Kab) :=
+    MulEquiv.ofBijective (chapter10CompletedArtinLimitMap F) ⟨hg_inj, hg_surj⟩
+  have hefun : (e : chapter10ProfiniteCompletion C →
+      ProfiniteGrp.limit (InfiniteGalois.asProfiniteGaloisGroupFunctor K Kab)) =
+        chapter10CompletedArtinLimitMap F := by
+    funext x
+    exact MulEquiv.ofBijective_apply
+      (chapter10CompletedArtinLimitMap F) ⟨hg_inj, hg_surj⟩ x
+  let eTop : chapter10ProfiniteCompletion C ≃ₜ
+      ProfiniteGrp.limit (InfiniteGalois.asProfiniteGaloisGroupFunctor K Kab) :=
+    @Continuous.homeoOfEquivCompactToT2 _ _ _ _ inferInstance inferInstance e
+      (by
+        change Continuous (e : chapter10ProfiniteCompletion C →
+          ProfiniteGrp.limit (InfiniteGalois.asProfiniteGaloisGroupFunctor K Kab))
+        rw [hefun]
+        exact chapter10CompletedArtinLimitMap_continuous F)
+  let eC : chapter10ProfiniteCompletion C ≃ₜ*
+      ProfiniteGrp.limit (InfiniteGalois.asProfiniteGaloisGroupFunctor K Kab) :=
+    ContinuousMulEquiv.mk' eTop (by
+      intro x y
+      change chapter10CompletedArtinLimitMap F (x * y) =
+        chapter10CompletedArtinLimitMap F x * chapter10CompletedArtinLimitMap F y
+      exact map_mul (chapter10CompletedArtinLimitMap F) x y)
+  exact eC.trans (InfiniteGalois.continuousMulEquivToLimit K Kab).symm
 
 theorem chapter10InfiniteReciprocityEquiv_apply_eta
     {C : Type u} {K : Type v} {Kab : Type w}
@@ -93,7 +357,16 @@ theorem chapter10InfiniteReciprocityEquiv_apply_eta
     (R : Chapter10FiniteReciprocityData F) (c : C) :
     chapter10InfiniteReciprocityEquiv F R (chapter10ProfiniteCompletionEta C c) =
       chapter10GlobalArtinMap F c := by
-  sorry
+  change (InfiniteGalois.mulEquivToLimit K Kab).symm
+      (chapter10CompletedArtinLimitMap F
+        (chapter10ProfiniteCompletionEta C c)) =
+    chapter10GlobalArtinMap F c
+  rw [show chapter10CompletedArtinLimitMap F
+      (chapter10ProfiniteCompletionEta C c) = chapter10ArtinLimitMap F c by
+        apply ProfiniteGrp.limit_ext
+        intro L
+        convert! Chapter10FiniteArtinFamily.quotientEquiv_mk F L.unop c]
+  rfl
 
 noncomputable def chapter10CompletedFiniteArtinMap
     {C : Type u} {K : Type v} {Kab : Type w}
@@ -115,7 +388,11 @@ theorem chapter10CompletedFiniteArtinMap_apply_eta
     (c : C) :
     chapter10CompletedFiniteArtinMap F R L (chapter10ProfiniteCompletionEta C c) =
       F.map L c := by
-  sorry
+  change (chapter10RestrictionMap L)
+      (chapter10InfiniteReciprocityEquiv F R
+        (chapter10ProfiniteCompletionEta C c)) = F.map L c
+  rw [chapter10InfiniteReciprocityEquiv_apply_eta]
+  exact DFunLike.congr_fun (chapter10GlobalArtinMap_restrict F L) c
 
 end
 

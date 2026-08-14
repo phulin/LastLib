@@ -172,21 +172,21 @@ def chapter16RingLowerRamificationGroup
     {G B : Type*} [Group G] [CommRing B] [MulSemiringAction G B]
     (P : Ideal B) (i : ℕ)
     (hstable : ∀ g : G, ∀ x : B,
-      x ∈ P ^ i ↔ g • x ∈ P ^ i) : Subgroup G :=
+      x ∈ P ^ (i + 1) ↔ g • x ∈ P ^ (i + 1)) : Subgroup G :=
   chapter15RingLowerRamificationGroup P i hstable
 
 /-- The different exponent at a selected prime. -/
 noncomputable def chapter16DifferentExponent
     (A B : Type*) [CommRing A] [IsDomain A] [CommRing B]
     [Algebra A B] [IsIntegrallyClosed A] [IsDedekindDomain B]
-    [Module.IsTorsionFree A B] (P : Ideal B) : ℕ :=
+    [Module.IsTorsionFree A B] (P : Ideal B) [P.IsPrime] : ℕ :=
   chapter15DifferentExponent A B P
 
 /-- The discriminant exponent at a selected prime downstairs. -/
 noncomputable def chapter16DiscriminantExponent
     (A B : Type*) [CommRing A] [CommRing B]
     [Algebra A B] [IsDedekindDomain A] [IsDedekindDomain B]
-    [Module.Finite A B] [Module.IsTorsionFree A B] (p : Ideal A) : ℕ :=
+    [Module.Finite A B] [Module.IsTorsionFree A B] (p : Ideal A) [p.IsPrime] : ℕ :=
   chapter15DiscriminantExponent A B p
 
 /-- Hilbert's formula identifies the different exponent with accumulated displacement. -/
@@ -196,9 +196,9 @@ theorem chapter16_hilbert_different_formula
     [Module.Finite A B] [Module.IsTorsionFree A B]
     [Group G] [Finite G] [MulSemiringAction G B]
     [SMulCommClass G A B] [IsGaloisGroup G A B]
-    (P : Ideal B) (F : Chapter16LowerRamificationFiltration G)
+    (P : Ideal B) [P.IsPrime] (F : Chapter16LowerRamificationFiltration G)
     (hstable : ∀ i : ℕ, ∀ g : G, ∀ x : B,
-      x ∈ P ^ i ↔ g • x ∈ P ^ i)
+      x ∈ P ^ (i + 1) ↔ g • x ∈ P ^ (i + 1))
     (hF : ∀ i : ℕ,
       F.group i = chapter16RingLowerRamificationGroup P i (hstable i)) :
     chapter16DifferentExponent A B P =
@@ -211,7 +211,7 @@ theorem chapter16_derivative_and_hilbert_calculations_agree
     [Algebra A B] [IsIntegrallyClosed A] [IsDedekindDomain B]
     [Module.IsTorsionFree A B]
     {G : Type*} [Group G] [Finite G]
-    (P : Ideal B) (F : Chapter16LowerRamificationFiltration G) (d : ℕ)
+    (P : Ideal B) [P.IsPrime] (F : Chapter16LowerRamificationFiltration G) (d : ℕ)
     (hderivative : d = chapter16DifferentExponent A B P)
     (hhilbert : d = chapter16DifferentDisplacementSum F) :
     chapter16DifferentExponent A B P =

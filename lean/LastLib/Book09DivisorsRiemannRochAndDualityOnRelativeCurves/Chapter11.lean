@@ -8,6 +8,7 @@ namespace LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter11
 
 /-! Aggregator for Chapter 11: Riemann--Roch over a field, the adding-points
 Euler-characteristic calculation, consequences for sections and embeddings,
-and the Gorenstein and nodal extensions. -/
+and the Gorenstein and nodal extensions, using the canonical earlier-book
+curve and pairing interfaces. -/
 
 end LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter11

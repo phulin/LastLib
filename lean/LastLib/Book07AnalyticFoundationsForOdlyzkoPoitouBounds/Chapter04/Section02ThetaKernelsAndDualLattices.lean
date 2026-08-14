@@ -1,5 +1,4 @@
 import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter04.Dependencies
-import Mathlib.RingTheory.Trace.Basic
 
 namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter04
 
@@ -547,6 +546,78 @@ theorem chapter04_normalized_archimedean_product_formula
   rw [chapter04NormalizedArchimedeanProduct, chapter04SelfDualCovolume]
   field_simp
 
+noncomputable def chapter04UnitLogLinearMap
+    (K : Type*) [Field K] [NumberField K] :
+    chapter04UnitLogHyperplane K →ₗ[ℝ]
+      NumberField.Units.dirichletUnitTheorem.logSpace K :=
+  { toFun := fun x w => (w.1.mult : ℝ) * x.1 w.1
+    map_add' := by
+      intro x y
+      funext w
+      simp [mul_add]
+    map_smul' := by
+      intro c x
+      funext w
+      simp [smul_eq_mul]
+      ring }
+
+theorem chapter04_unit_log_linear_map_injective
+    (K : Type*) [Field K] [NumberField K] :
+    Function.Injective (chapter04UnitLogLinearMap K) := by
+  let w₀ : InfinitePlace K :=
+    NumberField.Units.dirichletUnitTheorem.w₀
+  intro x y hxy
+  apply Subtype.ext
+  funext v
+  by_cases hv : v = w₀
+  · subst v
+    have hx := x.property
+    have hy := y.property
+    change (∑ v : InfinitePlace K, (v.mult : ℝ) * x.1 v) = 0 at hx
+    change (∑ v : InfinitePlace K, (v.mult : ℝ) * y.1 v) = 0 at hy
+    rw [Fintype.sum_eq_add_sum_subtype_ne _ w₀] at hx hy
+    have hrest : ∀ w : {w : InfinitePlace K // w ≠ w₀},
+        x.1 w.1 = y.1 w.1 := by
+      intro w
+      have hw := congrFun hxy w
+      dsimp [chapter04UnitLogLinearMap] at hw
+      exact mul_left_cancel₀ mult_coe_ne_zero hw
+    have hsum : ∑ v : InfinitePlace K,
+        (v.mult : ℝ) * (x.1 v - y.1 v) = 0 := by
+      have hx' : (∑ v : InfinitePlace K, (v.mult : ℝ) * x.1 v) = 0 := by
+        rw [Fintype.sum_eq_add_sum_subtype_ne _ w₀]
+        exact hx
+      have hy' : (∑ v : InfinitePlace K, (v.mult : ℝ) * y.1 v) = 0 := by
+        rw [Fintype.sum_eq_add_sum_subtype_ne _ w₀]
+        exact hy
+      calc
+        (∑ v : InfinitePlace K,
+            (v.mult : ℝ) * (x.1 v - y.1 v)) =
+            (∑ v : InfinitePlace K, (v.mult : ℝ) * x.1 v) -
+              ∑ v : InfinitePlace K, (v.mult : ℝ) * y.1 v := by
+                rw [← Finset.sum_sub_distrib]
+                apply Finset.sum_congr rfl
+                intro v hv
+                ring
+        _ = 0 := by rw [hx', hy']; simp
+    rw [Fintype.sum_eq_add_sum_subtype_ne _ w₀] at hsum
+    simp only [hrest, sub_self, mul_zero, Finset.sum_const_zero, add_zero] at hsum
+    have hzero : x.1 w₀ - y.1 w₀ = 0 :=
+      (mul_eq_zero.mp hsum).resolve_left mult_coe_ne_zero
+    exact sub_eq_zero.mp hzero
+  · have hw : (v.mult : ℝ) * x.1 v = (v.mult : ℝ) * y.1 v := by
+      have h := congrFun hxy ⟨v, hv⟩
+      simpa [chapter04UnitLogLinearMap] using h
+    exact mul_left_cancel₀ mult_coe_ne_zero hw
+
+theorem chapter04_unit_log_linear_map_embedding
+    (K : Type*) [Field K] [NumberField K]
+    (u : Additive ((𝓞 K)ˣ)) :
+    chapter04UnitLogLinearMap K (chapter04UnitLogEmbedding K u) =
+      NumberField.Units.logEmbedding K u := by
+  ext w
+  rfl
+
 theorem chapter04_theta_series_and_derivatives_locally_uniform
     (K : Type*) [Field K] [NumberField K]
     {a : Chapter04FractionalIdeal K} (ha : a ≠ 0) :
@@ -564,14 +635,107 @@ theorem chapter04_theta_poisson_summation
 
 theorem chapter04_unit_log_lattice_discrete
     (K : Type*) [Field K] [NumberField K] :
-    DiscreteTopology (chapter04UnitLogLattice K) := by sorry
+    DiscreteTopology (chapter04UnitLogLattice K) := by
+  let e := chapter04UnitLogLinearMap K
+  have hgen (u : Additive ((𝓞 K)ˣ)) :
+      e (chapter04UnitLogEmbedding K u) =
+        NumberField.Units.logEmbedding K u := by
+    ext w
+    rfl
+  have hmap :
+      Submodule.map (e.restrictScalars ℤ) (chapter04UnitLogLattice K) =
+        NumberField.Units.unitLattice K := by
+    change Submodule.map (e.restrictScalars ℤ)
+        (Submodule.span ℤ (Set.range (chapter04UnitLogEmbedding K))) =
+      Submodule.map
+        (NumberField.Units.logEmbedding K).toIntLinearMap ⊤
+    apply le_antisymm
+    · intro z hz
+      rcases hz with ⟨x, hx, rfl⟩
+      change e x ∈ Submodule.map
+        (NumberField.Units.logEmbedding K).toIntLinearMap ⊤
+      induction hx using Submodule.span_induction with
+      | mem z hz =>
+          rcases hz with ⟨u, rfl⟩
+          exact ⟨u, trivial, (hgen u).symm⟩
+      | zero =>
+          simpa only [map_zero] using
+            (Submodule.zero_mem
+              (Submodule.map (NumberField.Units.logEmbedding K).toIntLinearMap ⊤))
+      | add z w hz hw hzp hwp =>
+          simpa only [map_add] using Submodule.add_mem _ hzp hwp
+      | smul c z hz hzp =>
+          change (e.restrictScalars ℤ) (c • z) ∈
+            Submodule.map (NumberField.Units.logEmbedding K).toIntLinearMap ⊤
+          rw [map_smul]
+          exact Submodule.smul_mem _ c hzp
+    · intro z hz
+      rcases hz with ⟨u, hu, rfl⟩
+      refine ⟨chapter04UnitLogEmbedding K u,
+        Submodule.subset_span ⟨u, rfl⟩, ?_⟩
+      exact hgen u
+  have hpre : chapter04UnitLogLattice K =
+      ZLattice.comap ℝ
+        (NumberField.Units.unitLattice K) e := by
+    apply Submodule.ext
+    intro x
+    constructor
+    · intro hx
+      have hx' : e x ∈ Submodule.map (e.restrictScalars ℤ)
+          (chapter04UnitLogLattice K) := ⟨x, hx, rfl⟩
+      rw [hmap] at hx'
+      exact hx'
+    · intro hx
+      change e x ∈ NumberField.Units.unitLattice K at hx
+      rw [← hmap] at hx
+      rcases hx with ⟨y, hy, hyeq⟩
+      rw [← chapter04_unit_log_linear_map_injective K hyeq]
+      exact hy
+  rw [hpre]
+  exact ZLattice.comap_discreteTopology ℝ _
+    e.continuous_of_finiteDimensional (chapter04_unit_log_linear_map_injective K)
 
 attribute [instance] chapter04_unit_log_lattice_discrete
 
 theorem chapter04_unit_log_lattice_is_full
     (K : Type*) [Field K] [NumberField K] :
     IsZLattice ℝ (chapter04UnitLogLattice K) := by
-  sorry
+  let e := chapter04UnitLogLinearMap K
+  let T : Submodule ℝ (chapter04UnitLogHyperplane K) :=
+    Submodule.span ℝ (chapter04UnitLogLattice K :
+      Set (chapter04UnitLogHyperplane K))
+  have hgen (u : Additive ((𝓞 K)ˣ)) :
+      e (chapter04UnitLogEmbedding K u) =
+        NumberField.Units.logEmbedding K u :=
+    chapter04_unit_log_linear_map_embedding K u
+  have hunit_span :
+      Submodule.span ℝ (NumberField.Units.unitLattice K :
+        Set (NumberField.Units.dirichletUnitTheorem.logSpace K)) = ⊤ :=
+    (inferInstance : IsZLattice ℝ (NumberField.Units.unitLattice K)).span_top
+  have hunit_le : (NumberField.Units.unitLattice K :
+      Set (NumberField.Units.dirichletUnitTheorem.logSpace K)) ⊆
+      (Submodule.map e T : Set (NumberField.Units.dirichletUnitTheorem.logSpace K)) := by
+    intro z hz
+    change z ∈ Submodule.map (NumberField.Units.logEmbedding K).toIntLinearMap ⊤ at hz
+    rcases hz with ⟨u, hu, rfl⟩
+    have huL : chapter04UnitLogEmbedding K u ∈ chapter04UnitLogLattice K :=
+      Submodule.subset_span ⟨u, rfl⟩
+    have huT : chapter04UnitLogEmbedding K u ∈ T :=
+      Submodule.subset_span huL
+    exact ⟨chapter04UnitLogEmbedding K u, huT, hgen u⟩
+  have hmap_top : Submodule.map e T = ⊤ := by
+    apply top_unique
+    rw [← hunit_span]
+    exact Submodule.span_le.2 hunit_le
+  refine ⟨?_⟩
+  apply top_unique
+  intro x hx
+  have hxmap : e x ∈ Submodule.map e T := by
+    rw [hmap_top]
+    exact Submodule.mem_top
+  rcases hxmap with ⟨y, hy, hyeq⟩
+  have hyx : y = x := chapter04_unit_log_linear_map_injective K hyeq
+  simpa [hyx] using hy
 
 theorem chapter04_unit_log_lattice_span_eq_top
     (K : Type*) [Field K] [NumberField K] :
@@ -579,10 +743,394 @@ theorem chapter04_unit_log_lattice_span_eq_top
       Set (chapter04UnitLogHyperplane K)) = ⊤ := by
   exact (chapter04_unit_log_lattice_is_full K).span_top
 
+private noncomputable def chapter04YLog
+    (K : Type*) [Field K] [NumberField K]
+    (y : chapter04Y K) : chapter04UnitLogHyperplane K :=
+  { val := fun v => Real.log (y.scale v)
+    property := by
+      change (∑ v : InfinitePlace K, (v.mult : ℝ) * Real.log (y.scale v)) = 0
+      have hprodlog :
+          Real.log (∏ v : InfinitePlace K, y.scale v ^ v.mult) =
+            ∑ v : InfinitePlace K, Real.log (y.scale v ^ v.mult) := by
+        simpa using
+          (Real.log_prod (s := Finset.univ)
+            (f := fun v : InfinitePlace K => y.scale v ^ v.mult)
+            (fun v hv => pow_ne_zero _ (ne_of_gt (y.positive v))))
+      calc
+        (∑ v : InfinitePlace K, (v.mult : ℝ) * Real.log (y.scale v)) =
+            ∑ v : InfinitePlace K, Real.log (y.scale v ^ v.mult) := by
+              apply Finset.sum_congr rfl
+              intro v hv
+              rw [Real.log_pow]
+        _ = Real.log (∏ v : InfinitePlace K, y.scale v ^ v.mult) := hprodlog.symm
+        _ = Real.log 1 := congrArg Real.log y.determinant_one
+        _ = 0 := by simp }
+
+private noncomputable def chapter04YExp
+    (K : Type*) [Field K] [NumberField K]
+    (x : chapter04UnitLogHyperplane K) : chapter04Y K :=
+  { scale := fun v => Real.exp (x.1 v)
+    positive := by
+      intro v
+      exact Real.exp_pos _
+    determinant_one := by
+      calc
+        (∏ v : InfinitePlace K, Real.exp (x.1 v) ^ v.mult) =
+            ∏ v : InfinitePlace K, Real.exp ((v.mult : ℝ) * x.1 v) := by
+              apply Finset.prod_congr rfl
+              intro v hv
+              rw [← Real.exp_nat_mul]
+        _ = Real.exp (∑ v : InfinitePlace K, (v.mult : ℝ) * x.1 v) := by
+              rw [Real.exp_sum]
+        _ = 1 := by rw [x.2, Real.exp_zero] }
+
 theorem chapter04_exists_unit_fundamental_domain
     (K : Type*) [Field K] [NumberField K] :
     Nonempty (Chapter04UnitFundamentalDomain K) := by
-  sorry
+  let L := chapter04UnitLogLattice K
+  have hdiscrete : DiscreteTopology L := chapter04_unit_log_lattice_discrete K
+  have hfull : IsZLattice ℝ L := chapter04_unit_log_lattice_is_full K
+  let b := Module.Free.chooseBasis ℤ L
+  let e := b.ofZLatticeBasis ℝ L
+  let F := ZSpan.fundamentalDomain e
+  let μ : Measure (chapter04UnitLogHyperplane K) := e.addHaar
+  have hlog_exp (x : chapter04UnitLogHyperplane K) :
+      chapter04YLog K (chapter04YExp K x) = x := by
+    apply Subtype.ext
+    funext v
+    simp [chapter04YLog, chapter04YExp]
+  have hexp_log (y : chapter04Y K) :
+      chapter04YExp K (chapter04YLog K y) = y := by
+    rcases y with ⟨scale, hscale, hdet⟩
+    simp only [chapter04YExp, chapter04YLog]
+    congr
+    funext v
+    simp [Real.exp_log (hscale v)]
+  have hF : IsAddFundamentalDomain L F μ := by
+    exact ZLattice.isAddFundamentalDomain b μ
+  have hFmeas : MeasurableSet F := by
+    exact ZSpan.fundamentalDomain_measurableSet e
+  have hlog_meas : Measurable (chapter04YLog K) := by
+    apply Measurable.subtype_mk
+    apply measurable_pi_lambda
+    intro v
+    apply Measurable.log
+    exact (continuous_apply v).borel_measurable.comp
+      (comap_measurable (fun y : chapter04Y K => y.scale))
+  have hexp_meas : Measurable (chapter04YExp K) := by
+    rw [measurable_comap_iff]
+    rw [← @BorelSpace.measurable_eq (InfinitePlace K → ℝ) _ _ _]
+    change Measurable (fun x : chapter04UnitLogHyperplane K =>
+      fun v => Real.exp (x.1 v))
+    exact measurable_pi_lambda _ fun v =>
+      Real.measurable_exp.comp ((measurable_pi_apply v).comp measurable_subtype_coe)
+  have hLmeas : MeasurableSet (chapter04YLog K ⁻¹' F) := by
+    exact hlog_meas hFmeas
+  have hLexp : chapter04YExp K '' F = chapter04YLog K ⁻¹' F := by
+    ext y
+    constructor
+    · rintro ⟨x, hx, rfl⟩
+      rw [Set.mem_preimage]
+      rw [hlog_exp]
+      exact hx
+    · intro hy
+      refine ⟨chapter04YLog K y, ?_, ?_⟩
+      · exact hy
+      · exact hexp_log y
+  have hμF_nezero : μ F ≠ 0 := by
+    dsimp [μ]
+    exact ZSpan.measure_fundamentalDomain_ne_zero e
+  have hμF_ne_top : μ F ≠ ⊤ := by
+    exact (Bornology.IsBounded.measure_lt_top
+      (μ := μ) (ZSpan.fundamentalDomain_isBounded e)).ne
+  have hpre : chapter04YExp K ⁻¹' (chapter04YLog K ⁻¹' F) = F := by
+    ext x
+    simp [hlog_exp]
+  have hmapF : Measure.map (chapter04YExp K) μ
+      (chapter04YLog K ⁻¹' F) = μ F := by
+    rw [Measure.map_apply hexp_meas hLmeas, hpre]
+  have hmul_meas (g : chapter04Y K) :
+      Measurable (chapter04YMul K g) := by
+    rw [measurable_comap_iff]
+    rw [← @BorelSpace.measurable_eq (InfinitePlace K → ℝ) _ _ _]
+    change Measurable (fun y : chapter04Y K =>
+      fun v => g.scale v * y.scale v)
+    apply measurable_pi_lambda
+    intro v
+    exact measurable_const.mul
+      ((continuous_apply v).borel_measurable.comp
+        (comap_measurable (fun y : chapter04Y K => y.scale)))
+  have hinv_meas : Measurable (chapter04YInv K) := by
+    rw [measurable_comap_iff]
+    rw [← @BorelSpace.measurable_eq (InfinitePlace K → ℝ) _ _ _]
+    change Measurable (fun y : chapter04Y K =>
+      fun v => (y.scale v)⁻¹)
+    apply measurable_pi_lambda
+    intro v
+    exact Measurable.inv
+      ((continuous_apply v).borel_measurable.comp
+        (comap_measurable (fun y : chapter04Y K => y.scale)))
+  have hmul_left_inv (g y : chapter04Y K) :
+      chapter04YMul K (chapter04YInv K g) (chapter04YMul K g y) = y := by
+    rcases g with ⟨g, hg, hgd⟩
+    rcases y with ⟨y, hy, hyd⟩
+    simp only [chapter04YMul, chapter04YInv]
+    congr 1
+    funext v
+    field_simp [ne_of_gt (hg v)]
+  have hinv_inv (g : chapter04Y K) :
+      chapter04YInv K (chapter04YInv K g) = g := by
+    rcases g with ⟨g, hg, hgd⟩
+    simp only [chapter04YInv]
+    congr 1
+    funext v
+    field_simp [ne_of_gt (hg v)]
+  have hmul_right_inv (g y : chapter04Y K) :
+      chapter04YMul K g (chapter04YMul K (chapter04YInv K g) y) = y := by
+    simpa [hinv_inv] using hmul_left_inv (chapter04YInv K g) y
+  have hmul_exp (g : chapter04Y K) (x : chapter04UnitLogHyperplane K) :
+      chapter04YMul K g (chapter04YExp K x) =
+        chapter04YExp K (chapter04YLog K g + x) := by
+    rcases g with ⟨g, hg, hgd⟩
+    simp only [chapter04YMul, chapter04YExp, chapter04YLog]
+    congr
+    funext v
+    simp [Real.exp_add, Real.exp_log (hg v)]
+  have hlog_inv (g : chapter04Y K) :
+      chapter04YLog K (chapter04YInv K g) = -chapter04YLog K g := by
+    apply Subtype.ext
+    funext v
+    simp [chapter04YLog, chapter04YInv, Real.log_inv]
+  have hinv_exp (g : chapter04Y K) (x : chapter04UnitLogHyperplane K) :
+      chapter04YMul K (chapter04YInv K g) (chapter04YExp K x) =
+        chapter04YExp K (-chapter04YLog K g + x) := by
+    simpa [hlog_inv] using hmul_exp (chapter04YInv K g) x
+  have hcomp (g : chapter04Y K) :
+      (chapter04YMul K g) ∘ chapter04YExp K =
+        chapter04YExp K ∘ (chapter04YLog K g + ·) := by
+    funext x
+    exact hmul_exp g x
+  have hmap_mul_raw (g : chapter04Y K) :
+      Measure.map (chapter04YMul K g)
+          (Measure.map (chapter04YExp K) μ) =
+        Measure.map (chapter04YExp K) μ := by
+    rw [Measure.map_map (hmul_meas g) hexp_meas, hcomp]
+    rw [← Measure.map_map hexp_meas (measurable_const_add _)]
+    exact congrArg (Measure.map (chapter04YExp K))
+      (Measure.IsAddLeftInvariant.map_add_left_eq_self
+        (μ := μ) (chapter04YLog K g))
+  have hinv_exp_zero (x : chapter04UnitLogHyperplane K) :
+      chapter04YInv K (chapter04YExp K x) = chapter04YExp K (-x) := by
+    simp only [chapter04YInv, chapter04YExp]
+    congr
+    funext v
+    simp [Real.exp_neg]
+  have hcomp_inv :
+      chapter04YInv K ∘ chapter04YExp K =
+        chapter04YExp K ∘ (-·) := by
+    funext x
+    exact hinv_exp_zero x
+  have hmap_neg :
+      Measure.map (fun x : chapter04UnitLogHyperplane K => -x) μ = μ := by
+    exact Measure.map_neg_eq_self μ
+  have hspan : Submodule.span ℤ (Set.range e) = L := by
+    exact b.ofZLatticeBasis_span ℝ
+  have hfund (x : chapter04UnitLogHyperplane K) :
+      ∃! z : L, (z : chapter04UnitLogHyperplane K) + x ∈ F := by
+    rcases ZSpan.exist_unique_vadd_mem_fundamentalDomain e x with
+      ⟨z, hz, hzu⟩
+    have hzL : (z : chapter04UnitLogHyperplane K) ∈ L := by
+      exact (le_of_eq hspan) z.property
+    refine ⟨⟨z, hzL⟩, ?_, ?_⟩
+    · change z +ᵥ x ∈ ZSpan.fundamentalDomain e
+      exact hz
+    · intro w hw
+      have hw' :
+          (⟨(w : chapter04UnitLogHyperplane K), hspan.symm ▸ w.property⟩ :
+            Submodule.span ℤ (Set.range e)) +ᵥ x ∈ ZSpan.fundamentalDomain e := by
+        change (w : chapter04UnitLogHyperplane K) + x ∈
+          ZSpan.fundamentalDomain e at hw ⊢
+        exact hw
+      have heq := hzu _ hw'
+      apply Subtype.ext
+      change (w : chapter04UnitLogHyperplane K) = (z : chapter04UnitLogHyperplane K)
+      exact congrArg Subtype.val heq
+  have hunit_span (x : chapter04UnitLogHyperplane K) (hx : x ∈ L) :
+      ∃ u : (𝓞 K)ˣ,
+        chapter04UnitLogEmbedding K (Additive.ofMul u) = x := by
+    induction hx using Submodule.span_induction with
+    | mem z hz =>
+        rcases hz with ⟨u, rfl⟩
+        exact ⟨u.toMul, by rw [ofMul_toMul]⟩
+    | zero =>
+        exact ⟨1, by simp⟩
+    | add z w hz hw hzp hwp =>
+        rcases hzp with ⟨u, hu⟩
+        rcases hwp with ⟨v, hv⟩
+        refine ⟨u * v, ?_⟩
+        rw [ofMul_mul, map_add, hu, hv]
+    | smul c z hz hzp =>
+        rcases hzp with ⟨u, hu⟩
+        refine ⟨u ^ c, ?_⟩
+        rw [ofMul_zpow, map_zsmul, hu]
+  have hunit_surj (z : L) :
+      ∃ u : (𝓞 K)ˣ,
+        chapter04UnitLogEmbedding K (Additive.ofMul u) = (z : chapter04UnitLogHyperplane K) := by
+    exact hunit_span z z.property
+  have hunit_log (u : (𝓞 K)ˣ) :
+      chapter04YLog K (chapter04UnitScaling K u) =
+        chapter04UnitLogEmbedding K (Additive.ofMul u) := by
+    apply Subtype.ext
+    funext v
+    rfl
+  have hlog_mul (g y : chapter04Y K) :
+      chapter04YLog K (chapter04YMul K g y) =
+        chapter04YLog K g + chapter04YLog K y := by
+    have h := congrArg (chapter04YLog K)
+      (hmul_exp g (chapter04YLog K y))
+    simpa [hexp_log, hlog_exp] using h
+  have hunit_inv (u : (𝓞 K)ˣ) :
+      chapter04YInv K (chapter04UnitScaling K u) =
+        chapter04UnitScaling K u⁻¹ := by
+    simp only [chapter04YInv, chapter04UnitScaling]
+    congr 1
+    funext v
+    simp
+  have hmap_inv_raw :
+      Measure.map (chapter04YInv K) (Measure.map (chapter04YExp K) μ) =
+        Measure.map (chapter04YExp K) μ := by
+    rw [Measure.map_map hinv_meas hexp_meas, hcomp_inv]
+    rw [← Measure.map_map hexp_meas measurable_neg]
+    exact congrArg (Measure.map (chapter04YExp K)) hmap_neg
+  let ν : Measure (chapter04Y K) := (μ F)⁻¹ • Measure.map (chapter04YExp K) μ
+  have hmap_mul (g : chapter04Y K) :
+      Measure.map (chapter04YMul K g) ν = ν := by
+    dsimp [ν]
+    rw [Measure.map_smul, hmap_mul_raw]
+  have hmap_inv :
+      Measure.map (chapter04YInv K) ν = ν := by
+    dsimp [ν]
+    rw [Measure.map_smul, hmap_inv_raw]
+  have hleft (g : chapter04Y K) (s : Set (chapter04Y K))
+      (hs : MeasurableSet s) :
+      ν (chapter04YMul K g '' s) = ν s := by
+    let e : chapter04Y K ≃ᵐ chapter04Y K :=
+      ⟨{ toFun := chapter04YMul K g
+         invFun := chapter04YMul K (chapter04YInv K g)
+         left_inv := hmul_left_inv g
+         right_inv := hmul_right_inv g },
+       hmul_meas g, hmul_meas (chapter04YInv K g)⟩
+    have himage : MeasurableSet (chapter04YMul K g '' s) :=
+      e.measurableSet_image.mpr hs
+    calc
+      ν (chapter04YMul K g '' s) =
+          Measure.map (chapter04YMul K g) ν
+            (chapter04YMul K g '' s) := by rw [hmap_mul g]
+      _ = ν (chapter04YMul K g ⁻¹' (chapter04YMul K g '' s)) := by
+        rw [Measure.map_apply (hmul_meas g) himage]
+      _ = ν s := by
+        change ν (e ⁻¹' (e '' s)) = ν s
+        rw [e.preimage_image]
+  have hinverse (s : Set (chapter04Y K)) (hs : MeasurableSet s) :
+      ν (chapter04YInv K '' s) = ν s := by
+    let e : chapter04Y K ≃ᵐ chapter04Y K :=
+      ⟨{ toFun := chapter04YInv K
+         invFun := chapter04YInv K
+         left_inv := hinv_inv
+         right_inv := hinv_inv },
+       hinv_meas, hinv_meas⟩
+    have himage : MeasurableSet (chapter04YInv K '' s) :=
+      e.measurableSet_image.mpr hs
+    calc
+      ν (chapter04YInv K '' s) =
+          Measure.map (chapter04YInv K) ν (chapter04YInv K '' s) := by
+            rw [hmap_inv]
+      _ = ν (chapter04YInv K ⁻¹' (chapter04YInv K '' s)) := by
+        rw [Measure.map_apply hinv_meas himage]
+      _ = ν s := by
+        change ν (e ⁻¹' (e '' s)) = ν s
+        rw [e.preimage_image]
+  have hunit_fundamental :
+      ∀ y : chapter04Y K, ∃ u : (𝓞 K)ˣ, ∃ p ∈ chapter04YLog K ⁻¹' F,
+        y = chapter04YMul K (chapter04UnitScaling K u) p := by
+    intro y
+    rcases hfund (chapter04YLog K y) with ⟨z, hz, hzu⟩
+    rcases hunit_surj z with ⟨u, hu⟩
+    refine ⟨u⁻¹, chapter04YMul K (chapter04UnitScaling K u) y, ?_, ?_⟩
+    · change chapter04YLog K
+        (chapter04YMul K (chapter04UnitScaling K u) y) ∈ F
+      rw [hlog_mul, hunit_log, hu]
+      exact hz
+    · calc
+        y = chapter04YMul K (chapter04YInv K (chapter04UnitScaling K u))
+            (chapter04YMul K (chapter04UnitScaling K u) y) :=
+          (hmul_left_inv (chapter04UnitScaling K u) y).symm
+        _ = chapter04YMul K (chapter04UnitScaling K u⁻¹)
+            (chapter04YMul K (chapter04UnitScaling K u) y) := by
+          rw [hunit_inv]
+  have hunit_unique :
+      ∀ {u v : (𝓞 K)ˣ} {p q : chapter04Y K},
+        p ∈ chapter04YLog K ⁻¹' F → q ∈ chapter04YLog K ⁻¹' F →
+          chapter04YMul K (chapter04UnitScaling K u) p =
+            chapter04YMul K (chapter04UnitScaling K v) q → p = q := by
+    intro u v p q hp hq heq
+    change chapter04YLog K p ∈ F at hp
+    change chapter04YLog K q ∈ F at hq
+    have hlogeq :
+        chapter04UnitLogEmbedding K (Additive.ofMul u) +
+            chapter04YLog K p =
+          chapter04UnitLogEmbedding K (Additive.ofMul v) +
+            chapter04YLog K q := by
+      have h := congrArg (chapter04YLog K) heq
+      simpa [hlog_mul, hunit_log] using h
+    have hu_mem :
+        chapter04UnitLogEmbedding K (Additive.ofMul u) ∈ L :=
+      Submodule.subset_span ⟨Additive.ofMul u, rfl⟩
+    have hv_mem :
+        chapter04UnitLogEmbedding K (Additive.ofMul v) ∈ L :=
+      Submodule.subset_span ⟨Additive.ofMul v, rfl⟩
+    let zu : L := ⟨chapter04UnitLogEmbedding K (Additive.ofMul u), hu_mem⟩
+    let zv : L := ⟨chapter04UnitLogEmbedding K (Additive.ofMul v), hv_mem⟩
+    have hzero : ((0 : L) : chapter04UnitLogHyperplane K) +
+        chapter04YLog K q ∈ F := by simpa using hq
+    have hdiff_eq :
+        chapter04YLog K p =
+          ((zv - zu : L) : chapter04UnitLogHyperplane K) +
+            chapter04YLog K q := by
+      change chapter04YLog K p =
+        (chapter04UnitLogEmbedding K (Additive.ofMul v) -
+          chapter04UnitLogEmbedding K (Additive.ofMul u)) +
+            chapter04YLog K q
+      have h := congrArg
+        (fun x : chapter04UnitLogHyperplane K =>
+          x - chapter04UnitLogEmbedding K (Additive.ofMul u)) hlogeq
+      simpa [sub_eq_add_neg, add_assoc, add_left_comm, add_comm] using h
+    have hdiff :
+        ((zv - zu : L) : chapter04UnitLogHyperplane K) +
+            chapter04YLog K q ∈ F := by
+      rw [← hdiff_eq]
+      exact hp
+    rcases hfund (chapter04YLog K q) with ⟨z, hz, hzu⟩
+    have hdiff_zero : zv - zu = 0 := by
+      calc
+        zv - zu = z := hzu (zv - zu) hdiff
+        _ = 0 := (hzu 0 hzero).symm
+    have hzvu : zv = zu := sub_eq_zero.mp hdiff_zero
+    have huv :
+        chapter04UnitLogEmbedding K (Additive.ofMul v) =
+          chapter04UnitLogEmbedding K (Additive.ofMul u) := by
+      exact congrArg Subtype.val hzvu
+    rw [huv] at hlogeq
+    have hlogpq : chapter04YLog K p = chapter04YLog K q :=
+      add_left_cancel hlogeq
+    have hexp := congrArg (chapter04YExp K) hlogpq
+    simpa [hexp_log] using hexp
+  exact ⟨⟨chapter04YLog K ⁻¹' F, ν,
+      hLmeas, by
+        dsimp [ν]
+        rw [hmapF]
+        exact ENNReal.inv_mul_cancel hμF_nezero hμF_ne_top,
+      hleft, hinverse, hunit_fundamental, hunit_unique⟩⟩
 
 theorem chapter04_unit_fundamental_domain_normalized
     (K : Type*) [Field K] [NumberField K]

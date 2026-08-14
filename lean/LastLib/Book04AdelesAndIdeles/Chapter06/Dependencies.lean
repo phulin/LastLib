@@ -295,6 +295,36 @@ def Chapter06DiscreteEmbedding
     ∀ g : G, ∃ U : Set H, IsOpen U ∧ ι g ∈ U ∧
       ∀ h : G, ι h ∈ U → h = g
 
+/-- Bridge the usual discrete-subspace formulation to the local isolation
+    formulation used by the additive-lattice statements. -/
+theorem chapter06_discrete_embedding_of_discrete_range
+    {G : Type uG} {H : Type uVA} [AddCommGroup G] [AddCommGroup H]
+    [TopologicalSpace H] (ι : G →+ H)
+    (hinjective : Function.Injective ι)
+    (hdiscrete : DiscreteTopology (Set.range ι)) :
+    Chapter06DiscreteEmbedding ι := by
+  refine ⟨hinjective, ?_⟩
+  intro g
+  let _ : DiscreteTopology (Set.range ι) := hdiscrete
+  have hs : IsOpen ({⟨ι g, ⟨g, rfl⟩⟩} : Set (Set.range ι)) :=
+    (discreteTopology_iff_isOpen_singleton.mp inferInstance) _
+  rw [isOpen_induced_iff] at hs
+  rcases hs with ⟨U, hU, hpre⟩
+  refine ⟨U, hU, ?_, ?_⟩
+  · change (⟨ι g, ⟨g, rfl⟩⟩ : Set.range ι) ∈
+      Subtype.val ⁻¹' U
+    rw [hpre]
+    change (⟨ι g, ⟨g, rfl⟩⟩ : Set.range ι) ∈
+      ({⟨ι g, ⟨g, rfl⟩⟩} : Set (Set.range ι))
+    exact Set.mem_singleton _
+  · intro h hh
+    have hmem :
+        (⟨ι h, ⟨h, rfl⟩⟩ : Set.range ι) ∈
+          ({⟨ι g, ⟨g, rfl⟩⟩} : Set (Set.range ι)) := by
+      rw [← hpre]
+      exact hh
+    exact hinjective (congrArg Subtype.val (Set.mem_singleton_iff.mp hmem))
+
 /-- A compact fundamental set for an additive embedding. -/
 def Chapter06CompactFundamentalSet
     {G : Type uG} {H : Type uVA} [AddCommGroup G] [AddCommGroup H]

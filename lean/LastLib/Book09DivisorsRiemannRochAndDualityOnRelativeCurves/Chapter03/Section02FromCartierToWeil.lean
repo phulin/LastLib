@@ -59,7 +59,17 @@ theorem chapter03_no_codimension_one_zero_or_pole_is_unit
     (hf : f ≠ 0) (h₀ : chapter03NoCodimensionOnePoles U f)
     (h₁ : chapter03NoCodimensionOnePoles U f⁻¹) :
     ∃ g : Γ(X, U), IsUnit g ∧ X.germToFunctionField U g = f := by
-  sorry
+  obtain ⟨g, hg⟩ := (chapter03_no_codimension_one_poles_iff_section U f).mp h₀
+  obtain ⟨h, hh⟩ := (chapter03_no_codimension_one_poles_iff_section U f⁻¹).mp h₁
+  refine ⟨g, ?_, hg⟩
+  exact isUnit_iff_exists.mpr
+    ⟨h,
+      by
+        apply Scheme.germToFunctionField_injective X U
+        simp [map_mul, hg, hh, hf],
+      by
+        apply Scheme.germToFunctionField_injective X U
+        simp [map_mul, hg, hh, hf]⟩
 
 theorem chapter03_cartier_to_weil_map_zero
     {X : Scheme.{u}} [Chapter03CartierDivisorTheory X] :
@@ -83,9 +93,17 @@ theorem chapter03_cartier_to_weil_map_neg
 /-- The Cartier divisor map is injective on locally noetherian normal integral schemes. -/
 theorem chapter03_cartier_to_weil_injective
     {X : Scheme.{u}} [IsIntegral X] [IsLocallyNoetherian X]
-    [Chapter03Normal X] [Chapter03CartierDivisorTheory X] :
+    [Chapter03Normal X] [T : Chapter03CartierDivisorTheory X] :
     Function.Injective (chapter03CartierDivisorToWeil X) := by
-  sorry
+  intro D E h
+  apply T.canonicalLocalPresentation.injective
+  apply Subtype.ext
+  calc
+    (T.canonicalLocalPresentation D).1 = chapter03CartierDivisorToWeil X D :=
+      (chapter03_cartierDivisorToWeil_eq_canonicalLocalPresentation D).symm
+    _ = chapter03CartierDivisorToWeil X E := h
+    _ = (T.canonicalLocalPresentation E).1 :=
+      chapter03_cartierDivisorToWeil_eq_canonicalLocalPresentation E
 
 /-- Surjectivity of the Cartier--Weil map is equivalent to local factoriality. -/
 theorem chapter03_cartier_to_weil_surjective_iff_locallyFactorial
@@ -94,13 +112,6 @@ theorem chapter03_cartier_to_weil_surjective_iff_locallyFactorial
     Function.Surjective (chapter03CartierDivisorToWeil X) ↔
       Chapter03LocallyFactorial X := by
   sorry
-
-/-- Local principality of the height-one ideal of a prime divisor. -/
-def chapter03PrimeDivisorLocallyPrincipal
-    {X : Scheme.{u}} (P : Chapter03PrimeDivisor X) : Prop :=
-  ∀ U : X.affineOpens, P.genericPoint ∈ U.1 →
-    ∃ V : X.affineOpens, P.genericPoint ∈ V.1 ∧ V ≤ U ∧
-      ∃ a : Γ(X, V), P.closedSubscheme.ideal V = Ideal.span ({a} : Set Γ(X, V))
 
 /-- A prime divisor is Cartier exactly when its height-one ideal is locally principal. -/
 theorem chapter03_primeDivisor_isCartier_iff_locallyPrincipal

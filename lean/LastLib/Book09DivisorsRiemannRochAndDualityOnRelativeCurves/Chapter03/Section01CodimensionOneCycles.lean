@@ -22,7 +22,8 @@ theorem chapter03_primeDivisor_support_isClosed {X : Scheme.{u}}
 /-- The support of a prime divisor is irreducible. -/
 theorem chapter03_primeDivisor_support_isIrreducible {X : Scheme.{u}}
     (P : Chapter03PrimeDivisor X) : IsIrreducible P.support := by
-  sorry
+  rw [chapter03_primeDivisor_support_eq_closure]
+  exact isIrreducible_singleton.closure
 
 /-- The integral closed-subscheme condition in the definition of a prime divisor. -/
 theorem chapter03_primeDivisor_support_isIntegral {X : Scheme.{u}}
@@ -34,7 +35,29 @@ theorem chapter03_normal_codimensionOne_stalk_isDVR
     {X : Scheme.{u}} [IsIntegral X] [IsLocallyNoetherian X]
     [Chapter03Normal X] (P : Chapter03PrimeDivisor X) :
     IsDiscreteValuationRing (X.presheaf.stalk P.genericPoint) := by
-  sorry
+  let R := X.presheaf.stalk P.genericPoint
+  have hclosed : IsIntegrallyClosed R :=
+    Chapter03Normal.integrallyClosed_stalk P.genericPoint
+  have hkrull : Ring.KrullDimLE 1 R := krullDimLE_of_coheight_le P.codim_one.le
+  have hdimone : Ring.DimensionLEOne R := by
+    constructor
+    intro I hI hI'
+    exact @Ideal.IsPrime.isMaximal_of_ne_bot R _ _ hkrull I hI' hI
+  have hded : IsDedekindDomain R :=
+    (isDedekindDomain_iff R (FractionRing R)).mpr
+      ⟨inferInstance, inferInstance, hdimone,
+        fun {_} hx => (isIntegrallyClosed_iff (R := R) (FractionRing R)).mp hclosed hx⟩
+  have hfield : ¬ IsField R := by
+    intro h
+    have hdim : ringKrullDim R = 0 := ringKrullDim_eq_zero_of_isField h
+    have hdim' : ringKrullDim R = 1 := by
+      rw [show R = X.presheaf.stalk P.genericPoint from rfl,
+        ringKrullDim_stalk_eq_coheight, P.codim_one]
+      norm_num
+    exact zero_ne_one (hdim.symm.trans hdim')
+  change IsDiscreteValuationRing R
+  exact ((IsDiscreteValuationRing.TFAE R hfield).out 0 2).mpr
+    hded
 
 /-- Mathlib's order of vanishing, restricted to the generic point of a prime divisor. -/
 noncomputable def chapter03OrderOfVanishing
@@ -73,7 +96,12 @@ theorem chapter03_orderOfVanishing_inv
     {X : Scheme.{u}} [IsIntegral X] [IsLocallyNoetherian X]
     (f : X.functionField) (hf : f ≠ 0) (P : Chapter03PrimeDivisor X) :
     chapter03OrderOfVanishing f⁻¹ P = -chapter03OrderOfVanishing f P := by
-  sorry
+  have hone : X.ord (1 : X.functionField) P.genericPoint = 0 := by
+    simp [AlgebraicGeometry.Scheme.ord]
+  have h := X.ord_mul (x := P.genericPoint) hf (inv_ne_zero hf)
+  rw [mul_inv_cancel₀ hf, hone] at h
+  change X.ord f⁻¹ P.genericPoint = -X.ord f P.genericPoint
+  linarith
 
 theorem chapter03_orderOfVanishing_of_isUnit
     {X : Scheme.{u}} [IsIntegral X] [IsLocallyNoetherian X]
@@ -89,7 +117,10 @@ theorem chapter03_rationalFunction_affine_fraction
       letI := hU
       X.germToFunctionField U a / X.germToFunctionField U b = f ∧
         X.germToFunctionField U b ≠ 0 := by
-  sorry
+  obtain ⟨U, hUA, a, hU, ha, haunit⟩ :=
+    AlgebraicGeometry.exists_isUnit_germ_eq X f hf
+  refine ⟨⟨U, hUA⟩, hU, a, 1, ?_⟩
+  simp [ha]
 
 /-- The finite-support theorem needed to turn the valuation function into a divisor. -/
 theorem chapter03_principal_order_finite_support
@@ -145,7 +176,10 @@ theorem chapter03_principalWeilDivisor_one
     {X : Scheme.{u}} [IsIntegral X] [IsNoetherian X]
     [Chapter03Normal X] :
     chapter03PrincipalWeilDivisor (1 : X.functionField) = 0 := by
-  sorry
+  apply chapter03_weilDivisor_ext
+  intro P
+  simp [chapter03_principalWeilDivisor_coeff, chapter03OrderOfVanishing,
+    AlgebraicGeometry.Scheme.ord]
 
 theorem chapter03_principalWeilDivisor_inv
     {X : Scheme.{u}} [IsIntegral X] [IsNoetherian X]

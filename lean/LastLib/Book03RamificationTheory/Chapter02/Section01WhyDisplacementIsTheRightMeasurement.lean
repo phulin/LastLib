@@ -23,6 +23,7 @@ structure Chapter02LowerFiltration (G : Type u) [Group G] [Finite G] where
   eventually_trivial : ∃ N : ℕ, ∀ n : ℕ, N ≤ n → group n = ⊥
   displacement : G → WithTop ℤ
   displacement_one : displacement 1 = ⊤
+  displacement_nonnegative : ∀ σ : G, (0 : WithTop ℤ) ≤ displacement σ
   lower_mem_iff :
     ∀ {σ : G}, σ ≠ 1 → ∀ n : ℕ,
       σ ∈ group n ↔ ((n + 1 : ℕ) : WithTop ℤ) ≤ displacement σ
@@ -212,7 +213,8 @@ def chapter02IntegralRingGeneratedByUniformizer
    present in this checkout.  The fixed coefficient ring and its generation by
    a uniformizer below are the minimal local interface needed for the
    uniformizer-displacement lemma. -/
-/-- In the separable-residue case the minimum can be tested on a uniformizer. -/
+/-- Under the displayed integral-generation hypothesis, the minimum can be
+tested on a uniformizer in the separable-residue case. -/
 theorem chapter02_displacement_eq_uniformizer
     {K L : Type u} [Field K] [Field L] [Algebra K L]
     (vK : AddValuation K (WithTop ℤ))
@@ -266,6 +268,9 @@ def chapter02CanonicalLowerFiltration
     sorry
   displacement := chapter02Displacement K v
   displacement_one := chapter02Displacement_one K v
+  displacement_nonnegative := by
+    intro σ
+    sorry
   lower_mem_iff := by
     intro σ hσ n
     exact chapter02_lower_group_mem_iff_displacement K v σ hσ n

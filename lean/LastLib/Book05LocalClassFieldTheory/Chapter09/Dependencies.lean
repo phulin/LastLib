@@ -9,6 +9,7 @@ import Mathlib.GroupTheory.Abelianization.Defs
 import Mathlib.GroupTheory.Index
 import Mathlib.GroupTheory.QuotientGroup.Defs
 import Mathlib.RingTheory.Norm.Transitivity
+import LastLib.Book05LocalClassFieldTheory.Chapter05.Section06FiniteReciprocity
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter09
 
@@ -27,26 +28,26 @@ compatibility theorems proved later in the chapter.
 /-- The multiplicative map induced by a field inclusion. -/
 def chapter09FieldInclusionHom
     (K L : Type*) [Field K] [Field L] [Algebra K L] : Kˣ →* Lˣ :=
-  Units.map (algebraMap K L).toMonoidHom
+  LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05AlgebraMapUnits K L
 
 /-- The unit-group map induced by the algebraic norm. -/
-def chapter09NormHom
+noncomputable def chapter09NormHom
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] : Lˣ →* Kˣ :=
-  Units.map (Algebra.norm K : L →* K)
+  LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05NormMap K L
 
 /-- The image subgroup of the norm on units. -/
 def chapter09NormSubgroup
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] : Subgroup Kˣ :=
-  (chapter09NormHom K L).range
+  LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05NormSubgroup K L
 
 theorem chapter09_mem_normSubgroup_iff
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] (x : Kˣ) :
     x ∈ chapter09NormSubgroup K L ↔
       ∃ y : Lˣ, chapter09NormHom K L y = x := by
-  simp [chapter09NormSubgroup]
+  sorry
 
 /--
 The inclusion of automorphism groups obtained by restricting scalars.
@@ -87,11 +88,97 @@ def chapter09GaloisInclusionAbelianization
   Abelianization.map (chapter09GaloisInclusion K L Ks)
 
 /-!
-The next record is the minimal common-separable-closure interface used by
-the chapter.  The finite-index field is a local dependency guess for the
-standard finite-extension theorem from the preceding local class field theory
-chapters; it does not encode either reciprocity compatibility statement.
+The finite quotient of an absolute Galois abelianization is not an arbitrary
+homomorphism to a finite Galois group.  It is the restriction of an absolute
+automorphism to the embedded finite field.  This predicate records that
+field-theoretic meaning without choosing a separate representative for the
+restriction map.
 -/
+def chapter09FiniteGaloisRestriction
+    (K E Ks : Type*) [Field K] [Field E] [Field Ks]
+    [Algebra K E] [Algebra K Ks] [Algebra E Ks]
+    [IsScalarTower K E Ks]
+    (q : Abelianization (Gal(Ks / K)) →* Gal(E / K)) : Prop :=
+  ∀ (σ : Gal(Ks / K)) (x : E),
+    algebraMap E Ks (q (Abelianization.of σ) x) =
+      σ (algebraMap E Ks x)
+
+theorem chapter09_finiteGaloisRestriction_ext
+    (K E Ks : Type*) [Field K] [Field E] [Field Ks]
+    [Algebra K E] [Algebra K Ks] [Algebra E Ks]
+    [IsScalarTower K E Ks]
+    {q₁ q₂ : Abelianization (Gal(Ks / K)) →* Gal(E / K)}
+    (hq₁ : chapter09FiniteGaloisRestriction K E Ks q₁)
+    (hq₂ : chapter09FiniteGaloisRestriction K E Ks q₂) :
+    q₁ = q₂ := by
+  sorry
+
+/-!
+The next records separate canonical finite-reciprocity normalization from the
+two functoriality equalities proved later in the chapter.  Finite maps are
+obtained from Chapter 5, while the absolute reciprocity records only how those
+canonical maps are seen at finite levels; it does not assume either final
+compatibility square.
+-/
+
+structure Chapter09FiniteReciprocityNormalization
+    {K L : Type} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+    [Fintype (Gal(L / K))]
+    (D : LastLib.Book05LocalClassFieldTheory.Chapter05.Chapter05LocalClassFormationData
+      K L) where
+  quotientEquiv :
+    LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05NormQuotient K L ≃*
+      Gal(L / K)
+  compatibility :
+    LastLib.Book05LocalClassFieldTheory.Chapter05.Chapter05FiniteReciprocityCompatibility
+      D quotientEquiv
+
+noncomputable def Chapter09FiniteReciprocityNormalization.canonical
+    {K L : Type} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+    [Fintype (Gal(L / K))]
+    (D : LastLib.Book05LocalClassFieldTheory.Chapter05.Chapter05LocalClassFormationData
+      K L) :
+    Chapter09FiniteReciprocityNormalization D :=
+  { quotientEquiv :=
+      (LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05_finite_local_reciprocity D).choose
+    compatibility :=
+      (LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05_finite_local_reciprocity D).choose_spec.1 }
+
+theorem chapter09_finiteReciprocityNormalization_quotientEquiv_eq_canonical
+    {K L : Type} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+    [Fintype (Gal(L / K))]
+    (D : LastLib.Book05LocalClassFieldTheory.Chapter05.Chapter05LocalClassFormationData
+      K L)
+    (N : Chapter09FiniteReciprocityNormalization D) :
+    N.quotientEquiv =
+      (Chapter09FiniteReciprocityNormalization.canonical D).quotientEquiv := by
+  sorry
+
+structure Chapter09AbsoluteReciprocityNormalization
+    (K Ks : Type) [Field K] [Field Ks] [Algebra K Ks]
+    (reciprocity : Kˣ →* Abelianization (Gal(Ks / K))) where
+  closure : IsSepClosure K Ks
+  finite_level :
+    ∀ (E : Type) [Field E] [Algebra K E] [Algebra E Ks]
+      [IsScalarTower K E Ks] [FiniteDimensional K E]
+      [IsAbelianGalois K E] [Fintype (Gal(E / K))]
+      (D : LastLib.Book05LocalClassFieldTheory.Chapter05.Chapter05LocalClassFormationData
+        K E),
+        ∃ q : Abelianization (Gal(Ks / K)) →* Gal(E / K),
+        chapter09FiniteGaloisRestriction K E Ks q ∧
+        q.comp reciprocity =
+          (Chapter09FiniteReciprocityNormalization.canonical D).quotientEquiv.toMonoidHom.comp
+            (QuotientGroup.mk'
+              (LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05NormSubgroup K E))
+
+structure Chapter09NormalizedReciprocityMap
+    (K Ks : Type) [Field K] [Field Ks] [Algebra K Ks] where
+  reciprocity : Kˣ →* Abelianization (Gal(Ks / K))
+  normalization :
+    Chapter09AbsoluteReciprocityNormalization K Ks reciprocity
 
 /- LOCAL_DEPENDENCY_GUESS: the preceding chapters expose the standard fact
 that a separable closure of `K` is also a separable closure of a finite
@@ -116,24 +203,36 @@ structure Chapter09FiniteSeparableExtension
   galoisInclusion_finiteIndex :
     (chapter09GaloisSubgroup K L Ks).FiniteIndex
 
-/- LOCAL_DEPENDENCY_GUESS: the preceding chapters expose the two local
-reciprocity homomorphisms on unit groups. -/
 structure Chapter09ReciprocitySystem
-    (K L Ks : Type*) [Field K] [Field L] [Field Ks]
+    (K L Ks : Type) [Field K] [Field L] [Field Ks]
     [Algebra K L] [Algebra K Ks] [Algebra L Ks]
     [IsScalarTower K L Ks] [FiniteDimensional K L]
     [Algebra.IsSeparable K L]
     (T : Chapter09FiniteSeparableExtension K L Ks) where
-  recK : Kˣ →* Abelianization (Gal(Ks / K))
-  recL : Lˣ →* Abelianization (Gal(Ks / L))
+  recK : Chapter09NormalizedReciprocityMap K Ks
+  recL : Chapter09NormalizedReciprocityMap L Ks
 
-/- LOCAL_DEPENDENCY_GUESS: finite abelian reciprocity identifies the indicated
-norm quotient with the finite Galois group. -/
 structure Chapter09FiniteAbelianReciprocity
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [IsAbelianGalois K L] where
+    (K L : Type) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+    [Fintype (Gal(L / K))] where
+  classFormation :
+    LastLib.Book05LocalClassFieldTheory.Chapter05.Chapter05LocalClassFormationData K L
   quotientEquiv :
-    (Kˣ ⧸ chapter09NormSubgroup K L) ≃* Gal(L / K)
+    LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05NormQuotient K L ≃*
+      Gal(L / K)
+  normalization :
+    LastLib.Book05LocalClassFieldTheory.Chapter05.Chapter05FiniteReciprocityCompatibility
+      classFormation quotientEquiv
+
+theorem chapter09_finiteAbelianReciprocity_quotientEquiv_eq_canonical
+    (K L : Type) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+    [Fintype (Gal(L / K))]
+    (R : Chapter09FiniteAbelianReciprocity K L) :
+    R.quotientEquiv =
+      (Chapter09FiniteReciprocityNormalization.canonical R.classFormation).quotientEquiv := by
+  sorry
 
 end
 

@@ -14,9 +14,11 @@ import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter06.
 import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter06.Section04WhatBlowupsDoNotAccomplish
 import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter07.Section01LengthOfAProperIntersection
 import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter07.Section04HomologicalIntersectionAndSelfIntersection
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter08.Section03CommonComponentsAndSelfIntersection
 import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter08.Section04HorizontalSelfIntersectionAndTheBase
 import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter09.Section02IntersectionWithPrincipalDivisors
 import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter10.Section04FiniteMapsAndDegree
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter11.Section01FourFundamentalFormulas
 import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter11.Section02IntersectionsOfStrictTransforms
 import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter12.Section04ExceptionalCurves
 import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter13.Section03NegativityAndTheExactKernel
@@ -50,7 +52,12 @@ noncomputable def chapter15BlowupOfIdeal {X : Scheme.{u}}
 
 def chapter15BlowupIsRelativeProj {X : Scheme.{u}}
     {I : Chapter15CoherentIdeal X} (B : Chapter15Blowup I) : Prop :=
-  B.rees_presentation
+  ∀ U : X.affineOpens,
+    Nonempty
+      (LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter07.Chapter07SchemeIsoOver
+        (B.projection ∣_ U)
+        (LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter07.chapter07ReesProjMapOnAffine
+          U I.ideal))
 
 def chapter15BlowupUniversalProperty {X : Scheme.{u}}
     {I : Chapter15CoherentIdeal X} (B : Chapter15Blowup I) : Prop :=
@@ -78,7 +85,7 @@ abbrev Chapter15ArithmeticSurface :=
 
 def chapter15ArithmeticSurfaceHypotheses (X : Chapter15ArithmeticSurface) : Prop :=
   X.base_excellent ∧ X.base_connected ∧ X.base_dedekind ∧ X.integral ∧ X.regular ∧
-    X.proper ∧ X.flat ∧ X.relativeDimensionOne ∧ X.genericFiberSmooth ∧
+    IsProper X.structureMap ∧ Flat X.structureMap ∧ X.relativeDimensionOne ∧ X.genericFiberSmooth ∧
       X.genericFiberGeometricallyConnected
 
 /-! ## Local lengths and residue-degree weighting -/
@@ -101,11 +108,15 @@ def chapter15ResidueWeightedLocalLength (length residueDegree : ℕ) : ℤ :=
 
 /-! ## Component matrices and corrections -/
 
-abbrev Chapter15SpecialFiberIntersectionData :=
+abbrev Chapter15SpecialFiberIntersectionData
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {A : LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter13.Chapter13ArithmeticSurface R}
+    {s : Spec (CommRingCat.of R)} :=
   LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter13.Chapter13SpecialFiberIntersectionData
+    (A := A) (s := s)
 
 def chapter15ComponentMatrix
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter13.Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter15SpecialFiberIntersectionData (A := A) (s := s)) :
@@ -113,7 +124,7 @@ def chapter15ComponentMatrix
   LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter13.chapter13IntersectionMatrix T
 
 def chapter15RationalComponentMatrix
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter13.Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter15SpecialFiberIntersectionData (A := A) (s := s)) :
@@ -121,7 +132,7 @@ def chapter15RationalComponentMatrix
   LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter13.chapter13RationalIntersectionMatrix T
 
 def chapter15MultiplicityKernel
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter13.Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter15SpecialFiberIntersectionData (A := A) (s := s)) :
@@ -129,7 +140,7 @@ def chapter15MultiplicityKernel
   LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter13.chapter13RationalMatrixKernel T
 
 def chapter15FiberLine
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter13.Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter15SpecialFiberIntersectionData (A := A) (s := s)) :
@@ -137,20 +148,20 @@ def chapter15FiberLine
   LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter13.chapter13MultiplicityLine T
 
 def chapter15NegativeDefiniteModuloFiber
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter13.Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter15SpecialFiberIntersectionData (A := A) (s := s)) : Prop :=
   LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter13.chapter13NegativeDefiniteModuloFiber T
 
-abbrev Chapter15FiberMatrix :=
-  LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter14.Chapter14FiberMatrix
+abbrev Chapter15FiberMatrix (r : ℕ) :=
+  LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter14.Chapter14FiberMatrix r
 
-abbrev Chapter15HorizontalDivisor :=
-  LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter14.Chapter14HorizontalDivisor
+abbrev Chapter15HorizontalDivisor {r : ℕ} (F : Chapter15FiberMatrix r) :=
+  LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter14.Chapter14HorizontalDivisor F
 
-abbrev Chapter15RationalVerticalDivisor :=
-  LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter14.Chapter14RationalVerticalDivisor
+abbrev Chapter15RationalVerticalDivisor {r : ℕ} (F : Chapter15FiberMatrix r) :=
+  LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter14.Chapter14RationalVerticalDivisor F
 
 def chapter15Balanced {r : ℕ}
     {F : LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter14.Chapter14FiberMatrix r}
@@ -213,7 +224,8 @@ def chapter15SymmetricToReesMayHaveKernel
 def chapter15ArbitraryBaseChangeMayHavePowerTorsion
     {R S : Type u} [CommRing R] [CommRing S] [Algebra R S]
     (I : Ideal R) : Prop :=
-  LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter03.Chapter03ArbitraryBaseChangeMayHavePowerTorsion I
+  LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter03.Chapter03ArbitraryBaseChangeMayHavePowerTorsion
+    (R := R) (S := S) I
 
 def chapter15StrictTransformRemovesExceptionalComponents
     {Z Y X : Scheme.{u}} {z : Z ⟶ X} {f : Y ⟶ X}

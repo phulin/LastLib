@@ -19,38 +19,66 @@ structure Chapter09TraceFunctional
 /-- The two roles of regular differentials on a smooth curve. -/
 structure Chapter09SmoothDifferentialRoles
     (k : Type u) [Field k]
-  (C : Chapter09ProperCurveOverField k) where
+    (C : Chapter09ProperCurveOverField k)
+    [Chapter09DifferentialSheafTheory C.structureMap] where
   differentials : C.scheme.Modules
-  isRelativeDifferentials : Prop
-  firstOrderForms : Prop
-  dualToH1StructureSheaf : Prop
+  differentials_eq :
+    differentials = chapter09RelativeDifferentials C.structureMap
+  /-- Smooth relative differentials form a line bundle. -/
+  firstOrderForms : chapter09VectorBundle differentials
+  /-- The trace on the degree-one cohomology of the canonical sheaf. -/
+  traceFunctional : Chapter09TraceFunctional k differentials
+  /-- The perfect pairing exchanged by smooth-curve Serre duality. -/
+  dualToH1StructureSheaf :
+    Chapter09PerfectPairing k
+      (chapter09H (chapter09StructureSheaf C.scheme) 1)
+      (chapter09H differentials 0)
 
 theorem chapter09_smooth_differentials_have_both_roles
     (k : Type u) [Field k]
     (C : Chapter09ProperCurveOverField k)
-    [Smooth C.structureMap] :
+    [Smooth C.structureMap]
+    [Chapter09DifferentialSheafTheory C.structureMap] :
     Nonempty (Chapter09SmoothDifferentialRoles k C) := by
   sorry
 
 /- LOCAL_DEPENDENCY_GUESS: the pinned scheme API has no node predicate or
 Kähler-differential module sheaf, so the node condition is kept as a named
 hypothesis while the non-invertibility assertion remains a theorem. -/
+/- The stalkwise condition below is the part of invertibility that can be
+   checked at the displayed node even before a canonical node predicate is
+   available. -/
+def chapter09StalkIsInvertible
+    {X : Scheme.{u}} (M : X.Modules) (x : X) : Prop :=
+  letI : Module (X.presheaf.stalk x) (M.presheaf.stalk x) := by
+    change Module (X.presheaf.stalk x) (↑(TopCat.Presheaf.stalk M.val.presheaf x))
+    exact
+      PresheafOfModules.instModuleCarrierStalkCommRingCatCarrierAbPresheafOpensCarrier
+        (R := X.presheaf) M.val x
+  Module.Invertible (X.presheaf.stalk x) (M.presheaf.stalk x)
+
 /-- The local warning that Kähler differentials at a node need not be invertible. -/
 structure Chapter09NodeDifferentialFailure (X : Scheme.{u}) where
   node : X
   isNode : Prop
+  isNode_holds : isNode
   kahlerDifferentials : X.Modules
-  doesNotRepresentDuality : Prop
+  notInvertibleAtNode :
+    ¬ chapter09StalkIsInvertible kahlerDifferentials node
 
 theorem chapter09_node_differentials_not_invertible
     {X : Scheme.{u}} (W : Chapter09NodeDifferentialFailure X) :
     ¬ chapter09IsInvertible W.kahlerDifferentials := by
-  sorry
+  intro h
+  exact W.notInvertibleAtNode (by
+    simpa [chapter09StalkIsInvertible] using h.2.2 W.node)
 
+/-- The non-invertibility obstruction to using Kähler differentials as the
+invertible dualizing sheaf at a node. -/
 theorem chapter09_node_differentials_do_not_represent_duality
     {X : Scheme.{u}} (W : Chapter09NodeDifferentialFailure X) :
-    W.doesNotRepresentDuality := by
-  sorry
+    ¬ chapter09IsInvertible W.kahlerDifferentials := by
+  exact chapter09_node_differentials_not_invertible W
 
 /-- The multiplication/trace pairing for a coherent sheaf, in the range `i = 0, 1`. -/
 def chapter09_multiplication_followed_by_trace_is_perfect
@@ -88,11 +116,13 @@ structure Chapter09TracePairingStatement
     (k : Type u) [Field k]
     {X : Scheme.{u}} [Chapter09ExtTheory X]
     (ω F : X.Modules) (i : ℕ) where
+  degreeBound : i ≤ 1
   trace : chapter09H ω 1 → k
   multiplicationPairing : chapter09H F i → chapter09Ext F ω (1 - i) → k
-  pairing_is_multiplication_then_trace : Prop
   perfect :
     Chapter09PerfectPairing k (chapter09H F i) (chapter09Ext F ω (1 - i))
+  pairing_is_multiplication_then_trace :
+    perfect.pairing = multiplicationPairing
 
 /-- For a vector bundle, the Ext factor is represented by cohomology of `E^∨ ⊗ ω`. -/
 def chapter09_vector_bundle_second_factor_is_cohomology

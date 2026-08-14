@@ -11,9 +11,15 @@ import Mathlib.AlgebraicGeometry.Noetherian
 import Mathlib.AlgebraicGeometry.Properties
 import Mathlib.AlgebraicGeometry.ResidueField
 import Mathlib.AlgebraicGeometry.Restrict
+import Mathlib.RingTheory.TensorProduct.Basic
 import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
 import Mathlib.RingTheory.Ideal.Quotient.Basic
 import Mathlib.RingTheory.MvPolynomial
+import Mathlib.RingTheory.AdicCompletion.Algebra
+import Mathlib.RingTheory.AdicCompletion.Basic
+import Mathlib.RingTheory.FiniteType
+import Mathlib.RingTheory.Localization.AtPrime.Basic
+import Mathlib.RingTheory.LocalRing.ResidueField.Ideal
 import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.Topology.KrullDimension
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section01FromOneLocalRingToSeveral
@@ -28,7 +34,7 @@ noncomputable section
 open AlgebraicGeometry CategoryTheory Limits TopologicalSpace
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
 open LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10
-open scoped AlgebraicGeometry
+open scoped AlgebraicGeometry TensorProduct
 
 universe u v
 
@@ -57,9 +63,6 @@ def Chapter01PureDimensionTwo : ObjectProperty Scheme.{u} :=
 def Chapter01RelativeDimensionOne {X S : Scheme.{u}} (f : X ⟶ S) : Prop :=
   geometrically Chapter01PureDimensionOne f
 
-def Chapter01ArithmeticSurface {X S : Scheme.{u}} (f : X ⟶ S) : Prop :=
-  Chapter01RelativeDimensionOne f ∧ Chapter01PureDimensionTwo X
-
 /-! ### Normality and regularity -/
 
 def Chapter01NormalRing (R : Type u) [CommRing R] : Prop :=
@@ -70,6 +73,11 @@ def Chapter01NormalLocalRing (R : Type u) [CommRing R] : Prop :=
 
 def Chapter01NormalScheme (X : Scheme.{u}) : Prop :=
   ∀ x : X, Chapter01NormalLocalRing (X.presheaf.stalk x)
+
+def Chapter01ArithmeticSurface {X S : Scheme.{u}} (f : X ⟶ S) : Prop :=
+  IsIntegral X ∧ Chapter01NormalScheme X ∧ Flat f ∧
+    Chapter01FiniteType f ∧ Chapter01RelativeDimensionOne f ∧
+      Chapter01PureDimensionTwo X
 
 abbrev Chapter01RegularLocalRing (R : Type u) [CommRing R] : Prop :=
   IsRegularLocalRing R
@@ -97,10 +105,52 @@ abbrev Chapter01NormalizationFinite (A L : Type u) [CommRing A] [CommRing L] [Al
 abbrev Chapter01Japanese (R : Type u) [CommRing R] [IsDomain R] : Prop :=
   LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Chapter11Japanese R
 
-/- LOCAL_DEPENDENCY_GUESS: the three fields below are deliberately exposed as named propositions;
-the pinned Mathlib
-snapshot has no universally-catenary/excellent-ring API.  They are local dependency interfaces,
-not assumptions engineered to imply a later conclusion. -/
+/- LOCAL_DEPENDENCY_GUESS: the pinned Mathlib snapshot has no catenary or
+excellent-ring API.  These definitions keep the three conditions in the
+source's excellence package explicit at the Chapter 1 boundary. -/
+structure Chapter01SaturatedPrimeChain (A : Type u) [CommRing A]
+    (p q : PrimeSpectrum A) where
+  length : ℕ
+  chain : Fin (length + 1) → PrimeSpectrum A
+  first : chain 0 = p
+  last : chain ⟨length, Nat.lt_succ_self length⟩ = q
+  strict : ∀ i : Fin length, chain i.castSucc < chain i.succ
+  saturated : ∀ i : Fin length,
+    ¬ ∃ r : PrimeSpectrum A, chain i.castSucc < r ∧ r < chain i.succ
+
+def Chapter01Catenary (A : Type u) [CommRing A] : Prop :=
+  ∀ (p q : PrimeSpectrum A), p ≤ q →
+    ∀ (c d : Chapter01SaturatedPrimeChain A p q), c.length = d.length
+
+def Chapter01UniversallyCatenary (A : Type u) [CommRing A] : Prop :=
+  ∀ (B : Type u) [CommRing B] [Algebra A B] [Algebra.FiniteType A B],
+    Chapter01Catenary B
+
+abbrev chapter01FormalFiber (A : Type u) [CommRing A] (p : PrimeSpectrum A) : Type u :=
+  letI : p.asIdeal.IsPrime := p.isPrime
+  p.asIdeal.ResidueField ⊗[Localization.AtPrime p.asIdeal]
+    AdicCompletion (IsLocalRing.maximalIdeal (Localization.AtPrime p.asIdeal))
+      (Localization.AtPrime p.asIdeal)
+
+def Chapter01GeometricallyRegularAlgebra
+    (k B : Type u) [Field k] [CommRing B] [Algebra k B] : Prop :=
+  ∀ (K : Type u) [Field K] [Algebra k K],
+    IsRegularRing (B ⊗[k] K)
+
+def Chapter01GeometricallyRegularFormalFibers (A : Type u) [CommRing A] : Prop :=
+  ∀ p : PrimeSpectrum A,
+    letI : p.asIdeal.IsPrime := p.isPrime
+    Chapter01GeometricallyRegularAlgebra p.asIdeal.ResidueField
+      (chapter01FormalFiber A p)
+
+def chapter01RegularLocus (B : Type u) [CommRing B] : Set (PrimeSpectrum B) :=
+  {p | letI : p.asIdeal.IsPrime := p.isPrime
+    IsRegularLocalRing (Localization.AtPrime p.asIdeal)}
+
+def Chapter01RegularLocusOpen (A : Type u) [CommRing A] : Prop :=
+  ∀ (B : Type u) [CommRing B] [Algebra A B] [Algebra.FiniteType A B],
+    IsOpen (chapter01RegularLocus B)
+
 class Chapter01Nagata (R : Type u) [CommRing R] : Prop where
   noetherian : IsNoetherianRing R
   japanese_quotient : ∀ (p : Ideal R) [p.IsPrime],
@@ -108,11 +158,9 @@ class Chapter01Nagata (R : Type u) [CommRing R] : Prop where
 
 class Chapter01ExcellentRing (R : Type u) [CommRing R] : Prop where
   noetherian : IsNoetherianRing R
-  universallyCatenary : Prop
-  geometricallyRegularFormalFibers : Prop
-  regularLocusOpen : Prop
-  completionReflectsRegularity : Prop
-  localizationReflectsRegularity : Prop
+  universallyCatenary : Chapter01UniversallyCatenary R
+  geometricallyRegularFormalFibers : Chapter01GeometricallyRegularFormalFibers R
+  regularLocusOpen : Chapter01RegularLocusOpen R
 
 def Chapter01ExcellentScheme (X : Scheme.{u}) : Prop :=
   IsNoetherian X ∧ ∀ U : X.affineOpens, Chapter01ExcellentRing Γ(X, U)
@@ -180,7 +228,7 @@ structure Chapter01Model {S C : Scheme.{u}} {K : Type u} [Field K]
   finiteType : Chapter01FiniteType structureMap
   genericFiberIso : chapter01GenericFiber structureMap B.genericPointMap ≅ C
   genericFiberIso_over :
-    genericFiberIso.hom ≫ pullback.snd structureMap B.genericPointMap = c
+    genericFiberIso.hom ≫ c = pullback.snd structureMap B.genericPointMap
 
 def Chapter01ProperModel {S C : Scheme.{u}} {K : Type u} [Field K]
     {B : Chapter01IntegralBase S K} {c : C ⟶ Spec (CommRingCat.of K)}

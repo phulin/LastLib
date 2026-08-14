@@ -1,6 +1,13 @@
 import Mathlib.RingTheory.MvPolynomial.Basic
+import Mathlib.Algebra.MvPolynomial.Division
 import Mathlib.RingTheory.Polynomial.Basic
 import Mathlib.RingTheory.KrullDimension.Basic
+import Mathlib.RingTheory.KrullDimension.NonZeroDivisors
+import Mathlib.CategoryTheory.Abelian.Exact
+import Mathlib.CategoryTheory.Sites.Abelian
+import Mathlib.CategoryTheory.Limits.Shapes.RegularMono
+import Mathlib.Topology.Sheaves.Abelian
+import Mathlib.Topology.Sheaves.LocallySurjective
 import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter02.Section01LocalEquationsModuloUnits
 
 namespace LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter02
@@ -41,7 +48,7 @@ def Chapter02CartierIdealRepresents {X : Scheme.{u}}
 
 structure Chapter02EffectiveCartierDivisor (X : Scheme.{u})
     [K : Chapter02MeromorphicSheaf X] where
-  divisor : Chapter02CartierDivisor X
+  divisor : Chapter02CartierDivisor.{u, v} X
   effective : divisor.IsEffective
   ideal : X.IdealSheafData
   ideal_is_effective_cartier : Chapter02IsEffectiveCartierIdeal ideal
@@ -67,7 +74,11 @@ theorem chapter02_effective_cartier_divisor_ext
     (D E : Chapter02EffectiveCartierDivisor X)
     (hdiv : D.divisor = E.divisor) (hideal : D.ideal = E.ideal) :
     D = E := by
-  sorry
+  cases D
+  cases E
+  cases hdiv
+  cases hideal
+  rfl
 
 theorem chapter02_effective_cartier_ideal_exists
     {X : Scheme.{u}} [K : Chapter02MeromorphicSheaf X]
@@ -146,9 +157,34 @@ structure Chapter02CartierExactSequence {X : Scheme.{u}}
 
 theorem chapter02_effective_cartier_exact_sequence_of_ideal
     {X : Scheme.{u}} (I : X.IdealSheafData)
-    (hI : Chapter02IsEffectiveCartierIdeal I) :
+    (_hI : Chapter02IsEffectiveCartierIdeal I) :
     Nonempty (Chapter02CartierExactSequence I) := by
-  sorry
+  refine ⟨{
+    comp_zero := chapter02_ideal_inclusion_comp_quotient I
+    mono_inclusion := by
+      change Mono (kernel.ι (chapter02IdealQuotient I))
+      infer_instance
+    epi_quotient := by
+      let F := SheafOfModules.toSheaf X.ringCatSheaf
+      have hEpi : Epi (F.map (chapter02IdealQuotient I)) := by
+        rw [← CategoryTheory.Sheaf.isLocallySurjective_iff_epi']
+        change TopCat.Presheaf.IsLocallySurjective
+          ((F.map (chapter02IdealQuotient I)).hom)
+        rw [TopCat.Presheaf.isLocallySurjective_iff]
+        intro U t x hxU
+        obtain ⟨V, hV, hxV, hVU⟩ := AlgebraicGeometry.exists_isAffineOpen_mem_and_subset hxU
+        let V' : X.affineOpens := ⟨V, hV⟩
+        obtain ⟨s, hs⟩ := I.subschemeι_app_surjective V'
+          (t |_ V)
+        refine ⟨V, hVU, ⟨s, ?_⟩, hxV⟩
+        exact hs
+      refine ⟨fun g h hgh => ?_⟩
+      apply F.map_injective
+      apply (cancel_epi (F.map (chapter02IdealQuotient I))).1
+      change F.map (chapter02IdealQuotient I ≫ g) =
+        F.map (chapter02IdealQuotient I ≫ h)
+      exact congrArg F.map hgh
+    exact := ShortComplex.exact_kernel (chapter02IdealQuotient I) }⟩
 
 theorem chapter02_effective_cartier_exact_sequence_exists
     {X : Scheme.{u}} [K : Chapter02MeromorphicSheaf X]
@@ -157,7 +193,7 @@ theorem chapter02_effective_cartier_exact_sequence_exists
   exact chapter02_effective_cartier_exact_sequence_of_ideal D.ideal
     D.ideal_is_effective_cartier
 
-noncomputable def chapter02EffectiveCartierExactSequence
+theorem chapter02EffectiveCartierExactSequence
     {X : Scheme.{u}} [K : Chapter02MeromorphicSheaf X]
     (D : Chapter02EffectiveCartierDivisor X) :
     Chapter02CartierExactSequence D.ideal :=
@@ -185,7 +221,7 @@ theorem chapter02_effective_add_exists
       F.divisor = D.divisor.add E.divisor ∧ F.ideal = D.ideal * E.ideal} := by
   sorry
 
-noncomputable def chapter02EffectiveCartierDivisor.add
+noncomputable def Chapter02EffectiveCartierDivisor.add
     {X : Scheme.{u}} [K : Chapter02MeromorphicSheaf X]
     (D E : Chapter02EffectiveCartierDivisor X) :
     Chapter02EffectiveCartierDivisor X :=
@@ -203,7 +239,7 @@ theorem chapter02_effective_add_ideal
     (D.add E).ideal = D.ideal * E.ideal :=
   (Classical.choice (chapter02_effective_add_exists D E)).2.2
 
-def chapter02CartierDivisor.nsmul {X : Scheme.{u}}
+def Chapter02CartierDivisor.nsmul {X : Scheme.{u}}
     [K : Chapter02MeromorphicSheaf X] (D : Chapter02CartierDivisor X) (n : ℕ) :
     Chapter02CartierDivisor X where
   index := D.index
@@ -212,7 +248,12 @@ def chapter02CartierDivisor.nsmul {X : Scheme.{u}}
   equation i := (D.equation i) ^ n
   equationClass i := Quotient.mk' ((D.equation i) ^ n)
   equationClass_eq i := rfl
-  transition := by sorry
+  transition := by
+    intro i j
+    obtain ⟨u, hu⟩ := D.transition i j
+    refine ⟨u ^ n, ?_⟩
+    rw [map_pow, hu]
+    simp only [chapter02MeromorphicRestrictionUnit, map_pow, inv_pow, mul_pow]
 
 theorem chapter02_effective_natMultiple_exists
     {X : Scheme.{u}} [K : Chapter02MeromorphicSheaf X]
@@ -221,7 +262,7 @@ theorem chapter02_effective_natMultiple_exists
       F.divisor = D.divisor.nsmul n ∧ F.ideal = D.ideal ^ n} := by
   sorry
 
-noncomputable def chapter02EffectiveCartierDivisor.natMultiple
+noncomputable def Chapter02EffectiveCartierDivisor.natMultiple
     {X : Scheme.{u}} [K : Chapter02MeromorphicSheaf X]
     (D : Chapter02EffectiveCartierDivisor X) (n : ℕ) :
     Chapter02EffectiveCartierDivisor X :=
@@ -242,11 +283,15 @@ theorem chapter02_effective_multiple_divisor
 theorem chapter02_effective_multiple_has_power_local_equation
     {X : Scheme.{u}} [K : Chapter02MeromorphicSheaf X]
     (D : Chapter02EffectiveCartierDivisor X) (n : ℕ) :
-    ∀ i : (D.natMultiple n).divisor.index,
-      ∃ f : Γ(X, (D.natMultiple n).divisor.openSet i),
-        f ∈ nonZeroDivisors (Γ(X, (D.natMultiple n).divisor.openSet i)) ∧
-          chapter02RegularSectionMap X ((D.natMultiple n).divisor.openSet i) (f ^ n) =
-            (D.natMultiple n).divisor.equation i := by
+    ∀ i : D.divisor.index,
+      ∀ x : X, x ∈ D.divisor.openSet i →
+        ∃ (V : X.Opens) (_hxV : x ∈ V) (hV : V ≤ D.divisor.openSet i)
+          (f : Γ(X, V)),
+          f ∈ nonZeroDivisors (Γ(X, V)) ∧
+            chapter02RegularSectionMap X V (f ^ n) =
+              chapter02MeromorphicRestriction X hV
+                ((D.divisor.equation i :
+                  Chapter02MeromorphicSection X (D.divisor.openSet i)) ^ n) := by
   sorry
 
 theorem chapter02_effective_multiple_ideal
@@ -260,7 +305,7 @@ theorem chapter02_effective_multiple_support
     (D : Chapter02EffectiveCartierDivisor X) (n : ℕ) :
     (D.natMultiple (n + 1)).ideal.support = D.ideal.support := by
   rw [chapter02_effective_multiple_ideal]
-  sorry
+  simp
 
 def Chapter02PrincipalEquationIsEffective (R : Type u) [CommRing R] (f : R) : Prop :=
   f ∈ nonZeroDivisors R
@@ -276,7 +321,7 @@ theorem chapter02_zero_divisor_multiplication_not_injective
     (hf : f ∉ nonZeroDivisors R) :
     ¬ Function.Injective (fun x : R => f * x) := by
   intro h
-  exact hf (chapter02_principal_equation_effective_iff_injective R f).2 h
+  exact hf ((chapter02_regular_element_iff_injective_multiplication R f).2 h)
 
 /-!
 The nodal example `Spec k[x,y]/(xy)` records both the zero-divisor failure and
@@ -292,7 +337,7 @@ abbrev Chapter02NodeRing (k : Type u) [CommRing k] :=
       Set (Chapter02NodePolynomialRing k))
 
 abbrev Chapter02NodeScheme (k : Type u) [CommRing k] : Scheme :=
-  Scheme.Spec (CommRingCat.of (Chapter02NodeRing k))
+  AlgebraicGeometry.Spec (CommRingCat.of (Chapter02NodeRing k))
 
 def chapter02NodeX (k : Type u) [CommRing k] : Chapter02NodeRing k :=
   Ideal.Quotient.mk _ (MvPolynomial.X 0)
@@ -305,11 +350,29 @@ def chapter02NodeXPlusY (k : Type u) [CommRing k] : Chapter02NodeRing k :=
 
 theorem chapter02_node_equation_xy_zero (k : Type u) [CommRing k] :
     chapter02NodeX k * chapter02NodeY k = 0 := by
-  sorry
+  apply Ideal.Quotient.eq_zero_iff_mem.2
+  exact Ideal.subset_span (by simp)
 
 theorem chapter02_node_y_ne_zero (k : Type u) [Nontrivial k] [CommRing k] :
     chapter02NodeY k ≠ 0 := by
-  sorry
+  intro hy
+  let φ : Chapter02NodePolynomialRing k →+* k :=
+    MvPolynomial.eval₂Hom (RingHom.id k)
+      (fun i => if i = (0 : Fin 2) then 0 else 1)
+  have hgen : MvPolynomial.X 0 * MvPolynomial.X 1 ∈ RingHom.ker φ := by
+    change φ (MvPolynomial.X 0 * MvPolynomial.X 1) = 0
+    simp [φ]
+  have hker : Ideal.span ({MvPolynomial.X 0 * MvPolynomial.X 1} :
+      Set (Chapter02NodePolynomialRing k)) ≤ RingHom.ker φ :=
+    Ideal.span_le.2 (by simpa using hgen)
+  have hy' : MvPolynomial.X 1 ∈
+      Ideal.span ({MvPolynomial.X 0 * MvPolynomial.X 1} :
+        Set (Chapter02NodePolynomialRing k)) :=
+    Ideal.Quotient.eq_zero_iff_mem.1 hy
+  have hzero : (1 : k) = 0 := by
+    have := hker hy'
+    simp [φ] at this
+  exact one_ne_zero hzero
 
 theorem chapter02_node_x_has_nonzero_annihilator
     (k : Type u) [Nontrivial k] [CommRing k] :
@@ -319,7 +382,8 @@ theorem chapter02_node_x_has_nonzero_annihilator
 
 theorem chapter02_node_x_is_zero_divisor (k : Type u) [Nontrivial k] [CommRing k] :
     chapter02NodeX k ∉ nonZeroDivisors (Chapter02NodeRing k) := by
-  sorry
+  intro hx
+  exact chapter02_node_y_ne_zero k (hx.1 _ (chapter02_node_equation_xy_zero k))
 
 theorem chapter02_node_x_not_effective (k : Type u) [Nontrivial k] [CommRing k] :
     ¬ Chapter02PrincipalEquationIsEffective (Chapter02NodeRing k) (chapter02NodeX k) := by
@@ -327,12 +391,86 @@ theorem chapter02_node_x_not_effective (k : Type u) [Nontrivial k] [CommRing k] 
 
 theorem chapter02_node_x_add_y_is_regular (k : Type u) [Field k] :
     chapter02NodeXPlusY k ∈ nonZeroDivisors (Chapter02NodeRing k) := by
-  sorry
+  rw [mem_nonZeroDivisors_iff_right]
+  intro z hz
+  obtain ⟨p, rfl⟩ := Ideal.Quotient.mk_surjective z
+  have hmem :
+      MvPolynomial.X 0 * MvPolynomial.X 1 ∣
+        (MvPolynomial.X 0 + MvPolynomial.X 1) * p := by
+    apply Ideal.mem_span_singleton.mp
+    apply Ideal.Quotient.eq_zero_iff_mem.mp
+    rw [mul_comm] at hz
+    change Ideal.Quotient.mk
+      (Ideal.span ({MvPolynomial.X 0 * MvPolynomial.X 1} :
+        Set (Chapter02NodePolynomialRing k)))
+      ((MvPolynomial.X 0 + MvPolynomial.X 1) * p) = 0 at hz
+    exact hz
+  have hxnot :
+      ¬ (MvPolynomial.X 0 : Chapter02NodePolynomialRing k) ∣
+        MvPolynomial.X 0 + MvPolynomial.X 1 := by
+    intro h
+    obtain ⟨q, hq⟩ := h
+    let φ : Chapter02NodePolynomialRing k →+* k :=
+      MvPolynomial.eval₂Hom (RingHom.id k)
+        (fun i => if i = (0 : Fin 2) then 0 else 1)
+    have hzero : (1 : k) = 0 := by
+      have := congrArg φ hq
+      simp [φ] at this
+    exact one_ne_zero hzero
+  have hynot :
+      ¬ (MvPolynomial.X 1 : Chapter02NodePolynomialRing k) ∣
+        MvPolynomial.X 0 + MvPolynomial.X 1 := by
+    intro h
+    obtain ⟨q, hq⟩ := h
+    let φ : Chapter02NodePolynomialRing k →+* k :=
+      MvPolynomial.eval₂Hom (RingHom.id k)
+        (fun i => if i = (1 : Fin 2) then 0 else 1)
+    have hzero : (1 : k) = 0 := by
+      have := congrArg φ hq
+      simp [φ] at this
+    exact one_ne_zero hzero
+  have hxmul :
+      (MvPolynomial.X 0 : Chapter02NodePolynomialRing k) ∣
+        (MvPolynomial.X 0 + MvPolynomial.X 1) * p := by
+    exact dvd_trans ⟨MvPolynomial.X 1, by ac_rfl⟩ hmem
+  have hxp : (MvPolynomial.X 0 : Chapter02NodePolynomialRing k) ∣ p := by
+    rcases MvPolynomial.X_dvd_mul_iff.mp hxmul with h | h
+    · exact (hxnot h).elim
+    · exact h
+  have hymul :
+      (MvPolynomial.X 1 : Chapter02NodePolynomialRing k) ∣
+        (MvPolynomial.X 0 + MvPolynomial.X 1) * p := by
+    exact dvd_trans ⟨MvPolynomial.X 0, by ac_rfl⟩ hmem
+  have hyp : (MvPolynomial.X 1 : Chapter02NodePolynomialRing k) ∣ p := by
+    rcases MvPolynomial.X_dvd_mul_iff.mp hymul with h | h
+    · exact (hynot h).elim
+    · exact h
+  obtain ⟨q, hpq⟩ := hxp
+  have hyx :
+      ¬ (MvPolynomial.X 1 : Chapter02NodePolynomialRing k) ∣ MvPolynomial.X 0 := by
+    rw [MvPolynomial.X_dvd_X]
+    simp
+  have hyq : (MvPolynomial.X 1 : Chapter02NodePolynomialRing k) ∣ q := by
+    have h : (MvPolynomial.X 1 : Chapter02NodePolynomialRing k) ∣
+        MvPolynomial.X 0 * q := by
+      rw [← hpq]
+      exact hyp
+    rcases MvPolynomial.X_dvd_mul_iff.mp h with h | h
+    · exact (hyx h).elim
+    · exact h
+  obtain ⟨r, hqr⟩ := hyq
+  apply Ideal.Quotient.eq_zero_iff_mem.2
+  apply Ideal.mem_span_singleton.2
+  refine ⟨r, ?_⟩
+  rw [hpq, hqr]
+  ac_rfl
 
 theorem chapter02_node_x_add_y_avoids_minimal_primes (k : Type u) [Field k] :
     ∀ p ∈ minimalPrimes (Chapter02NodeRing k),
       chapter02NodeXPlusY k ∉ p := by
-  sorry
+  intro p hp hf
+  exact (notMem_nonZeroDivisors_of_mem_mem_minimalPrimes hf hp)
+    (chapter02_node_x_add_y_is_regular k)
 
 theorem chapter02_node_x_add_y_is_effective (k : Type u) [Field k] :
     Chapter02PrincipalEquationIsEffective (Chapter02NodeRing k)

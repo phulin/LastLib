@@ -449,6 +449,15 @@ theorem chapter13_rootDiscriminant_eq_of_unramifiedAtFinitePrimes
   exact
     (LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01.chapter01_rootDiscriminant_eq_iff_unramified F L).mpr hunramified
 
+theorem chapter13_rootDiscriminant_eq_iff_unramifiedAtFinitePrimes
+    (F L : Type*) [Field F] [NumberField F] [Field L] [NumberField L]
+    [Algebra F L] [IsScalarTower ℚ F L]
+    [Module.Finite (𝓞 F) (𝓞 L)] :
+    chapter13RootDiscriminant L = chapter13RootDiscriminant F ↔
+      chapter13UnramifiedAtFinitePrimes F L := by
+  exact
+    LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter01.chapter01_rootDiscriminant_eq_iff_unramified F L
+
 /-- The norm of a finite place, used in the product of local different costs. -/
 noncomputable def chapter13FinitePlaceNorm
     {F : Type*} [Field F] [NumberField F]

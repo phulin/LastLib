@@ -1,4 +1,4 @@
-import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter11.Section02ProofByAddingPoints
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter11.Dependencies
 
 namespace LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter11
 
@@ -15,20 +15,20 @@ universe u
 divisor whose degree is the degree of its line bundle. -/
 theorem chapter11_nonzero_section_has_effective_zero_divisor
     {k : Type u} [Field k] (C : Chapter11CurveOverField k)
-    (hIntegral : Chapter11IntegralCurve C)
     [Chapter11CohomologyTheory C.carrier C.structureMap]
     [Chapter11PicardTheory C.carrier] [Chapter11DegreeTheory C.carrier]
+    [Chapter11SectionZeroDivisorTheory C]
     (L : Chapter11LineBundle C.carrier) (s : Chapter11H0 C L)
     (hs : s ≠ 0) :
-    Nonempty (Chapter11SectionZeroDivisor C L s) := by
-  sorry
+    Nonempty (Chapter11SectionZeroDivisor C L s) :=
+  Chapter11SectionZeroDivisorTheory.zero_divisor_of_nonzero_section L s hs
 
 /-- Negative degree forbids nonzero sections on an integral curve. -/
 theorem chapter11_negative_degree_no_nonzero_sections
     {k : Type u} [Field k] (C : Chapter11CurveOverField k)
-    (hIntegral : Chapter11IntegralCurve C)
     [Chapter11CohomologyTheory C.carrier C.structureMap]
     [Chapter11PicardTheory C.carrier] [Chapter11DegreeTheory C.carrier]
+    [Chapter11SectionZeroDivisorTheory C]
     (L : Chapter11LineBundle C.carrier)
     (hdegree : chapter11Degree L < 0) :
     ∀ s : Chapter11H0 C L, s = 0 := by
@@ -36,9 +36,9 @@ theorem chapter11_negative_degree_no_nonzero_sections
 
 theorem chapter11_negative_degree_h0_finrank_eq_zero
     {k : Type u} [Field k] (C : Chapter11CurveOverField k)
-    (hIntegral : Chapter11IntegralCurve C)
     [Chapter11CohomologyTheory C.carrier C.structureMap]
     [Chapter11PicardTheory C.carrier] [Chapter11DegreeTheory C.carrier]
+    [Chapter11SectionZeroDivisorTheory C]
     (L : Chapter11LineBundle C.carrier)
     (hdegree : chapter11Degree L < 0) :
     chapter11H0Finrank C L = 0 := by
@@ -72,9 +72,9 @@ theorem chapter11_reducible_total_degree_negative_does_not_force_vanishing
 theorem chapter11_h0_canonical_bundle_eq_genus
     {k : Type u} [Field k] (C : Chapter11CurveOverField k)
     [Chapter11PicardTheory C.carrier]
-    [Chapter11DegreeTheory C.carrier]
     [Chapter11DualizingSheafTheory C.carrier]
     [Chapter11CohomologyTheory C.carrier C.structureMap]
+    [Chapter11CohomologyIsomorphismTheory C.carrier C.structureMap]
     [Chapter11ConnectedGlobalSections C]
     [Chapter11SerreDualityTheory C] :
     chapter11H0Finrank C (chapter11CanonicalBundle (X := C.carrier)) = C.genus := by
@@ -87,7 +87,11 @@ theorem chapter11_degree_canonical_divisor_eq_two_genus_sub_two
     [Chapter11DegreeTheory C.carrier]
     [Chapter11DualizingSheafTheory C.carrier]
     [Chapter11CohomologyTheory C.carrier C.structureMap]
+    [Chapter11EffectiveDecompositionTheory C]
+    [Chapter11EffectiveCartierTwistSequenceTheory C]
+    [Chapter11CohomologyIsomorphismTheory C.carrier C.structureMap]
     [Chapter11ConnectedGlobalSections C]
+    [Chapter11EulerCharacteristicTheory C.carrier C.structureMap]
     [Chapter11SerreDualityTheory C]
     (K : Chapter11CanonicalDivisor C) :
     K.divisor.degree = 2 * (C.genus : ℤ) - 2 := by
@@ -99,8 +103,13 @@ theorem chapter11_degree_canonical_bundle_eq_two_genus_sub_two
     [Chapter11DegreeTheory C.carrier]
     [Chapter11DualizingSheafTheory C.carrier]
     [Chapter11CohomologyTheory C.carrier C.structureMap]
+    [Chapter11EffectiveDecompositionTheory C]
+    [Chapter11EffectiveCartierTwistSequenceTheory C]
+    [Chapter11CohomologyIsomorphismTheory C.carrier C.structureMap]
     [Chapter11ConnectedGlobalSections C]
-    [Chapter11SerreDualityTheory C] :
+    [Chapter11EulerCharacteristicTheory C.carrier C.structureMap]
+    [Chapter11SerreDualityTheory C]
+    (K : Chapter11CanonicalDivisor C) :
     chapter11Degree (chapter11CanonicalBundle (X := C.carrier)) =
       2 * (C.genus : ℤ) - 2 := by
   sorry
@@ -168,8 +177,16 @@ def Chapter11HasNonzeroSection {k : Type u} [Field k]
 theorem chapter11_genus_one_canonical_bundle_degree_zero
     {k : Type u} [Field k] (C : Chapter11CurveOverField k)
     (hgenus : C.genus = 1)
+    [Chapter11CohomologyTheory C.carrier C.structureMap]
     [Chapter11PicardTheory C.carrier] [Chapter11DegreeTheory C.carrier]
-    [Chapter11DualizingSheafTheory C.carrier] :
+    [Chapter11EffectiveDecompositionTheory C]
+    [Chapter11EffectiveCartierTwistSequenceTheory C]
+    [Chapter11DualizingSheafTheory C.carrier]
+    [Chapter11CohomologyIsomorphismTheory C.carrier C.structureMap]
+    [Chapter11ConnectedGlobalSections C]
+    [Chapter11EulerCharacteristicTheory C.carrier C.structureMap]
+    [Chapter11SerreDualityTheory C]
+    (K : Chapter11CanonicalDivisor C) :
     chapter11Degree (chapter11CanonicalBundle (X := C.carrier)) = 0 := by
   sorry
 
@@ -177,8 +194,9 @@ theorem chapter11_genus_one_canonical_bundle_has_nonzero_section
     {k : Type u} [Field k] (C : Chapter11CurveOverField k)
     (hgenus : C.genus = 1)
     [Chapter11CohomologyTheory C.carrier C.structureMap]
-    [Chapter11PicardTheory C.carrier] [Chapter11DegreeTheory C.carrier]
+    [Chapter11PicardTheory C.carrier]
     [Chapter11DualizingSheafTheory C.carrier]
+    [Chapter11CohomologyIsomorphismTheory C.carrier C.structureMap]
     [Chapter11ConnectedGlobalSections C]
     [Chapter11SerreDualityTheory C] :
     Chapter11HasNonzeroSection C
@@ -190,6 +208,7 @@ theorem chapter11_genus_one_canonical_bundle_is_trivial
     (hgenus : C.genus = 1)
     [Chapter11CohomologyTheory C.carrier C.structureMap]
     [Chapter11PicardTheory C.carrier] [Chapter11DegreeTheory C.carrier]
+    [Chapter11SectionZeroDivisorTheory C]
     [Chapter11DualizingSheafTheory C.carrier]
     (hdegree : chapter11Degree (chapter11CanonicalBundle (X := C.carrier)) = 0)
     (hsection : Chapter11HasNonzeroSection C
@@ -232,9 +251,18 @@ theorem chapter11_evaluation_surjective_of_degree_ge_two_genus
     [Chapter11PicardTheory C.carrier] [Chapter11DegreeTheory C.carrier]
     [Chapter11DualizingSheafTheory C.carrier]
     [Chapter11SerreDualityTheory C]
+    [Chapter11GeometricBaseChangeTheory C]
     [Chapter11FiberTheory C]
     [Chapter11PointTwistTheory C]
+    [Chapter11PointEvaluationTheory C]
     (L : Chapter11LineBundle C.carrier)
+    (hcanonicalDegree :
+      chapter11Degree (chapter11CanonicalBundle (X := C.carrier)) =
+        2 * (C.genus : ℤ) - 2)
+    (hnegative : ∀ (p : Chapter11GeometricPoint C)
+      (M : Chapter11LineBundle (chapter11GeometricBaseChange C p)),
+      chapter11Degree M < 0 →
+        chapter11GeometricCohomologyFinrank C p M 0 = 0)
     (hdegree : 2 * (C.genus : ℤ) ≤ chapter11Degree L)
     (p : Chapter11GeometricPoint C) :
     Function.Surjective (chapter11EvaluationMap C L p) := by
@@ -246,25 +274,44 @@ theorem chapter11_line_bundle_globally_generated_of_degree_ge_two_genus
     [Chapter11PicardTheory C.carrier] [Chapter11DegreeTheory C.carrier]
     [Chapter11DualizingSheafTheory C.carrier]
     [Chapter11SerreDualityTheory C]
+    [Chapter11GeometricBaseChangeTheory C]
     [Chapter11FiberTheory C]
     [Chapter11PointTwistTheory C]
+    [Chapter11PointEvaluationTheory C]
     (L : Chapter11LineBundle C.carrier)
+    (hcanonicalDegree :
+      chapter11Degree (chapter11CanonicalBundle (X := C.carrier)) =
+        2 * (C.genus : ℤ) - 2)
+    (hnegative : ∀ (p : Chapter11GeometricPoint C)
+      (M : Chapter11LineBundle (chapter11GeometricBaseChange C p)),
+      chapter11Degree M < 0 →
+        chapter11GeometricCohomologyFinrank C p M 0 = 0)
     (hdegree : 2 * (C.genus : ℤ) ≤ chapter11Degree L) :
     chapter11GloballyGenerated C L := by
   sorry
 
-theorem chapter11_line_bundle_very_ample_of_degree_ge_two_genus_plus_one
+theorem chapter11_line_bundle_base_field_criterion_of_degree_ge_two_genus_plus_one
     {k : Type u} [Field k] (C : Chapter11CurveOverField k)
     [Chapter11CohomologyTheory C.carrier C.structureMap]
     [Chapter11PicardTheory C.carrier] [Chapter11DegreeTheory C.carrier]
     [Chapter11DualizingSheafTheory C.carrier]
     [Chapter11SerreDualityTheory C]
+    [Chapter11GeometricBaseChangeTheory C]
     [Chapter11FiberTheory C]
     [Chapter11PointTwistTheory C]
+    [Chapter11PointEvaluationTheory C]
     [Chapter11LengthTwoRestrictionTheory C]
+    [Chapter11LengthTwoTwistTheory C]
     (L : Chapter11LineBundle C.carrier)
+    (hcanonicalDegree :
+      chapter11Degree (chapter11CanonicalBundle (X := C.carrier)) =
+        2 * (C.genus : ℤ) - 2)
+    (hnegative : ∀ (p : Chapter11GeometricPoint C)
+      (M : Chapter11LineBundle (chapter11GeometricBaseChange C p)),
+      chapter11Degree M < 0 →
+        chapter11GeometricCohomologyFinrank C p M 0 = 0)
     (hdegree : 2 * (C.genus : ℤ) + 1 ≤ chapter11Degree L) :
-    chapter11VeryAmpleByLengthTwoCriterion C L := by
+    chapter11BaseFieldGenerationAndLengthTwoSeparation C L := by
   sorry
 
 end

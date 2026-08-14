@@ -66,12 +66,24 @@ def chapter04P3 {S T : Scheme.{u}} (p : T ⟶ S) : chapter04TripleProduct p ⟶ 
 /-- The projection of the triple overlap onto its second and third factors. -/
 def chapter04P23 {S T : Scheme.{u}} (p : T ⟶ S) :
     chapter04TripleProduct p ⟶ chapter04PairProduct p :=
-  pullback.lift (chapter04P12 p ≫ chapter04P2 p) (chapter04P3 p) (by sorry)
+  pullback.lift (chapter04P12 p ≫ chapter04P2 p) (chapter04P3 p)
+    (by
+      change
+        (pullback.fst (pullback.fst p p ≫ p) p ≫ pullback.snd p p) ≫ p =
+          pullback.snd (pullback.fst p p ≫ p) p ≫ p
+      rw [Category.assoc, ← pullback.condition (f := p) (g := p)]
+      exact pullback.condition)
 
 /-- The projection of the triple overlap onto its first and third factors. -/
 def chapter04P13 {S T : Scheme.{u}} (p : T ⟶ S) :
     chapter04TripleProduct p ⟶ chapter04PairProduct p :=
-  pullback.lift (chapter04P12 p ≫ chapter04P1 p) (chapter04P3 p) (by sorry)
+  pullback.lift (chapter04P12 p ≫ chapter04P1 p) (chapter04P3 p)
+    (by
+      change
+        (pullback.fst (pullback.fst p p ≫ p) p ≫ pullback.fst p p) ≫ p =
+          pullback.snd (pullback.fst p p ≫ p) p ≫ p
+      simpa [Category.assoc] using
+        (pullback.condition (f := pullback.fst p p ≫ p) (g := p)))
 
 /-- The all-level Čech nerve supplied by Mathlib's simplicial construction. -/
 noncomputable def chapter04CechNerve {S T : Scheme.{u}} (p : T ⟶ S) :
@@ -104,7 +116,7 @@ abbrev Chapter04PullbackFunctor
 abbrev Chapter04SingleDescentData
     (F : Pseudofunctor (LocallyDiscrete Scheme.{u}ᵒᵖ) (Cat.{v', u'}))
     {S T : Scheme.{u}} (p : T ⟶ S) :=
-  F.DescentData (fun _ : PUnit => p)
+  F.DescentData (ι := PUnit.{1}) (fun _ : PUnit.{1} => p)
 
 end
 

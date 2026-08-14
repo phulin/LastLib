@@ -35,38 +35,49 @@ reusing the preceding tensor-power carrier where it is already available.
 abbrev chapter07BaseScheme (k : Type u) [CommRing k] : Scheme.{u} :=
   AlgebraicGeometry.Spec (CommRingCat.of k)
 
-/-! The standard grading on the polynomial ring in `r + 1` variables. -/
+/-! The standard grading on the polynomial ring in `r + 1` variables.  The
+following name is retained for the Chapter 7 polynomial-model interface; the
+scheme and its tautological bundle use the canonical projective-space package
+from Chapter 2 below. -/
 noncomputable def chapter07ProjectiveSpaceGrading
     (k : Type u) [Field k] (r : ℕ) :
     ℕ → Submodule k (MvPolynomial (Fin (r + 1)) k) :=
   MvPolynomial.homogeneousSubmodule (Fin (r + 1)) k
 
-/-!
-`AlgebraicGeometry.Proj` is the pinned Mathlib construction of projective
-spectrum.  We expose the standard polynomial-ring model so later interfaces
-can name a closed subscheme of `ℙ^r` without introducing a second projective
-space type.
--/
-noncomputable def chapter07ProjectiveSpace
+/-! The standard projective-space model and its structure morphism. -/
+abbrev chapter07ProjectiveSpace
     (k : Type u) [Field k] (r : ℕ) : Scheme.{u} :=
-  letI : GradedAlgebra (chapter07ProjectiveSpaceGrading k r) :=
-    MvPolynomial.gradedAlgebra
-  AlgebraicGeometry.«Proj» (chapter07ProjectiveSpaceGrading k r)
+  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02.chapter02ProjectiveSpace
+    (AlgebraicGeometry.Spec (.of k)) r
 
-/-! The standard structure morphism of the polynomial projective space over
-`Spec k`.  The degree-zero part of the grading is used explicitly rather than
-being identified with `k` by definitional equality. -/
-noncomputable def chapter07ProjectiveSpaceToBase
+abbrev chapter07ProjectiveSpaceToBase
     (k : Type u) [Field k] (r : ℕ) :
     chapter07ProjectiveSpace k r ⟶ chapter07BaseScheme k :=
-  letI : GradedAlgebra (chapter07ProjectiveSpaceGrading k r) :=
-    MvPolynomial.gradedAlgebra
-  AlgebraicGeometry.Proj.toSpecZero (chapter07ProjectiveSpaceGrading k r) ≫
-    AlgebraicGeometry.Spec.map
-      (CommRingCat.ofHom
-        ((GradedRing.projZeroRingHom'
-            (chapter07ProjectiveSpaceGrading k r)).comp
-          (algebraMap k (MvPolynomial (Fin (r + 1)) k))))
+  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02.chapter02ProjectiveSpaceProjection
+    (AlgebraicGeometry.Spec (.of k)) r
+
+/-!
+Chapter 4 already supplies the canonical finite locally free rank-one
+interface.  Keep the Chapter 7 name as a compatibility abbreviation rather
+than introducing a second, weaker notion of line bundle.
+-/
+abbrev Chapter07RankOneLocallyFree {X : Scheme.{u}} (M : X.Modules) : Prop :=
+  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04IsInvertible M
+
+abbrev Chapter07LineBundle (X : Scheme.{u}) :=
+  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Chapter04LineBundle X
+
+/-! The standard `𝓞(1)` on the projective-space model. -/
+noncomputable def chapter07ProjectiveSpaceTautologicalLineBundle
+    (k : Type u) [Field k] (r : ℕ) :
+    Chapter07LineBundle (chapter07ProjectiveSpace k r) :=
+  { sheaf :=
+      (LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02.chapter02ProjectiveSpaceTwistingLine
+        (AlgebraicGeometry.Spec (.of k)) r).carrier
+    isInvertible :=
+      LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04_isInvertible_of_chapter02Invertible
+        (LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02.chapter02ProjectiveSpaceTwistingLine
+          (AlgebraicGeometry.Spec (.of k)) r).invertible }
 
 /- LOCAL_DEPENDENCY_GUESS: the projectivity predicate should be replaced by
 the relative projective-morphism API developed in the preceding Book 8
@@ -86,59 +97,46 @@ def Chapter07ProjectiveOver
     (f : X ⟶ chapter07BaseScheme k) : Prop :=
   Nonempty (Chapter07ProjectivePresentation k f)
 
-/-!
-Mathlib's locally-free predicate is used for the line-bundle part.  The
-rank-one condition is expressed using one-element locally free generators;
-the current sheaf API does not package invertible sheaves under that name.
--/
-def Chapter07RankOneLocallyFree {X : Scheme.{u}} (M : X.Modules) : Prop :=
-  ∃ q : M.LocalGeneratorsData.{u}, q.IsLocallyFreeData ∧
-    ∀ i : q.I, Nonempty ((q.generators i).I ≃ Unit)
-
-structure Chapter07LineBundle (X : Scheme.{u}) where
-  sheaf : X.Modules
-  locallyFree : sheaf.IsLocallyFree
-  rank_one : Chapter07RankOneLocallyFree sheaf
-
 noncomputable def chapter07LineBundlePower
     {X : Scheme.{u}} (L : Chapter07LineBundle X) (q : ℕ) : X.Modules :=
-  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04TensorPower
-    L.sheaf q
+  (LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04LineBundleTensorPower
+    L q).sheaf
 
 structure Chapter07CoherentSheaf (X : Scheme.{u}) where
   sheaf : X.Modules
+  coherent : LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04FiniteTypeQuasiCoherent sheaf
   finitePresentation : sheaf.IsFinitePresentation
 
-/- LOCAL_DEPENDENCY_GUESS: the preceding coherent-sheaf chapters should
-replace this certificate by their canonical support and Krull-dimension API. -/
+/-! A dimension certificate is tied to the actual stalkwise support of the
+coherent sheaf through the preceding chapter's Krull-dimension predicate. -/
 structure Chapter07SupportDimensionCertificate
     {X : Scheme.{u}} (F : Chapter07CoherentSheaf X) where
   dimension : ℕ
-  isSupportDimension : Prop
+  dimension_has_supportDimension :
+    LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04SheafHasSupportDimension
+      F.sheaf dimension
 
-/- LOCAL_DEPENDENCY_GUESS: preceding chapters should replace the remaining
-tautological-bundle marker in `Chapter07VeryAmplePower` by the canonical
-`𝒪(1)` on relative Proj and its identification with a tensor power. -/
-structure Chapter07VeryAmplePower
+/-!
+The preceding chapter's very-ample witness already contains an immersion into
+a finite projective bundle and the pullback identification with its
+tautological line bundle.  Specialize it to the canonical tensor power rather
+than adding an unconnected `Prop` marker for tautologicality.
+-/
+abbrev Chapter07VeryAmplePower
     (k : Type u) [Field k] {X : Scheme.{u}}
     (f : X ⟶ chapter07BaseScheme k)
-    (L : Chapter07LineBundle X) (q : ℕ) where
-  embeddingDimension : ℕ
-  embedding : X ⟶ chapter07ProjectiveSpace k embeddingDimension
-  closedImmersion : IsClosedImmersion embedding
-  compatibleWithBase :
-    embedding ≫ chapter07ProjectiveSpaceToBase k embeddingDimension = f
-  targetLineBundle : Chapter07LineBundle (chapter07ProjectiveSpace k embeddingDimension)
-  identifiesPullback :
-    chapter07LineBundlePower L q ≅
-      (Scheme.Modules.pullback embedding).obj targetLineBundle.sheaf
-  targetLineBundleIsTautological : Prop
+    (L : Chapter07LineBundle X) (q : ℕ) :=
+  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Chapter04VeryAmpleWitness
+    f
+    (LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04LineBundleTensorPower
+      L q)
 
 def Chapter07AmpleLineBundle
     (k : Type u) [Field k] {X : Scheme.{u}}
     (f : X ⟶ chapter07BaseScheme k)
     (L : Chapter07LineBundle X) : Prop :=
-  ∃ q : ℕ, 0 < q ∧ Nonempty (Chapter07VeryAmplePower k f L q)
+  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04Ample
+    f L
 
 structure Chapter07PolarizedScheme (k : Type u) [Field k] where
   X : Scheme.{u}
@@ -146,6 +144,13 @@ structure Chapter07PolarizedScheme (k : Type u) [Field k] where
   projective : Chapter07ProjectiveOver k structureMap
   L : Chapter07LineBundle X
   ample : Chapter07AmpleLineBundle k structureMap L
+
+noncomputable def chapter07TwistedSheaf
+    {k : Type u} [Field k]
+    {C : Chapter07PolarizedScheme k}
+    (F : Chapter07CoherentSheaf C.X) (n : ℕ) : C.X.Modules :=
+  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04Tensor
+    F.sheaf (chapter07LineBundlePower C.L n)
 
 def chapter07ForwardDifference (f : ℤ → ℤ) : ℤ → ℤ :=
   fun n => f (n + 1) - f n
@@ -167,7 +172,7 @@ structure Chapter07HilbertSetup
     (k : Type u) [Field k]
     (C : Chapter07PolarizedScheme k) where
   F : Chapter07CoherentSheaf C.X
-  cohomology : ℕ → ℤ → ModuleCat k
+  cohomology : ℕ → ℤ → ModuleCat.{u + 1} k
   cohomologicalBound : ℕ
   finiteDimensional : ∀ (i : ℕ) (n : ℤ), Module.Finite k (cohomology i n)
   vanishes_above :
@@ -187,9 +192,17 @@ structure Chapter07HilbertSetup
               (-1 : ℤ) ^ i * (Module.finrank k (cohomology i m) : ℤ)) n = 0
   cohomology_vanishes_when_sheaf_is_zero :
     IsZero F.sheaf → ∀ (i : ℕ) (n : ℤ), IsZero (cohomology i n)
-  /- LOCAL_DEPENDENCY_GUESS: replace this marker by the canonical
-  identification of the profile with H^i(X, F ⊗ L^n). -/
-  cohomologyRepresentsTwistedSheaf : Prop
+  /- The nonnegative part of the profile is identified with the earlier
+  canonical additive-group cohomology of `F ⊗ L^n`.  The scalar-module
+  presentation is retained because the Hilbert function uses `finrank`; the
+  missing comparison with the canonical scalar action belongs to the earlier
+  cohomology API, not to an opaque proposition in this record. -/
+  cohomologyRepresentsTwistedSheaf :
+    ∀ (i n : ℕ), Nonempty (
+      (forget₂ (ModuleCat.{u + 1} k) AddCommGrpCat.{u + 1}).obj
+          (cohomology i (n : ℤ)) ≅
+        LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04Cohomology
+          (chapter07TwistedSheaf F n) i)
 
 noncomputable def chapter07HilbertFunction
     {k : Type u} [Field k]
@@ -203,6 +216,24 @@ noncomputable def chapter07EulerCharacteristicAtInteger
     (S : Chapter07HilbertSetup k C) (n : ℤ) : ℤ :=
   ∑ i ∈ Finset.range S.cohomologicalBound,
     (-1 : ℤ) ^ i * (Module.finrank k (S.cohomology i n) : ℤ)
+
+/-!
+The support-filtration proof of the degree theorem has a numerical boundary
+which is not present in the pinned scheme API: the first difference order is
+one larger than the support dimension, and the top difference is a positive
+integer.  Recording that intermediate certificate keeps the later theorem
+statements honest without assuming their desired polynomial conclusion.
+-/
+structure Chapter07HilbertPolynomialDimensionCertificate
+    {k : Type u} [Field k]
+    {C : Chapter07PolarizedScheme k}
+    (S : Chapter07HilbertSetup k C)
+    (D : Chapter07SupportDimensionCertificate S.F) where
+  differenceOrder_eq : S.eulerCharacteristicDifferenceOrder = D.dimension + 1
+  topDifference_positive :
+    ∃ e : ℕ, 0 < e ∧ ∀ n : ℤ,
+      chapter07IteratedForwardDifference D.dimension
+        (fun m : ℤ => chapter07EulerCharacteristicAtInteger S m) n = e
 
 noncomputable def chapter07EulerCharacteristic
     {k : Type u} [Field k]

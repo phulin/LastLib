@@ -1,6 +1,7 @@
 import LastLib.Book06GlobalClassFieldTheory.Chapter01.Dependencies
 import Mathlib.Algebra.BrauerGroup.Defs
 import Mathlib.Data.ZMod.QuotientGroup
+import Mathlib.FieldTheory.AlgebraicClosure
 import LastLib.Book05LocalClassFieldTheory.Chapter05.Section03ClassFormation
 
 namespace LastLib.Book06GlobalClassFieldTheory.Chapter01
@@ -21,6 +22,16 @@ local instance chapter01ClassicalDecidable (p : Prop) : Decidable p :=
   Classical.propDecidable p
 
 /-! ## 1.4. The architecture of the proof -/
+
+/- The source of the cap-product equivalence is the standard negative-degree
+identification for the trivial coefficient module.  Exposing its exact type
+here keeps the later idelic quotient equivalence from silently assuming an
+unrelated abstract equivalence between the two endpoints. -/
+noncomputable def trivialTateNegativeTwoAbelianizationEquiv
+    (G : Type) [Group G] [Fintype G] :
+    chapter05TateCohomology G (Rep.trivial ℤ G ℤ) (-2) ≃+
+      Additive (GroupAbelianization G) := by
+  sorry
 
 /- Mathlib's canonical `BrauerGroup` is the carrier for the global and local
 Brauer classes.  Its additive group operations are still pending upstream, so
@@ -128,15 +139,29 @@ API is available. -/
 structure GlobalIdeleClassGaloisActionData
     (K L : Type) [Field K] [NumberField K] [Field L] [NumberField L]
     [Algebra K L] [FiniteDimensional K L] [IsGalois K L] where
-  action : MulAction (Gal(L / K)) (C_K L)
+  action : Representation ℤ (Gal(L / K)) (Additive (C_K L))
 
 noncomputable def globalIdeleClassCoefficientRep
     {K L : Type} [Field K] [NumberField K] [Field L] [NumberField L]
     [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
     (A : GlobalIdeleClassGaloisActionData K L) :
     Rep ℤ (Gal(L / K)) := by
-  letI : MulAction (Gal(L / K)) (C_K L) := A.action
-  exact Rep.ofMulAction ℤ (Gal(L / K)) (C_K L)
+  exact Rep.of A.action
+
+/- The degree-zero Tate group is identified with the class norm quotient
+separately from the cap-product theorem.  Keeping this bridge as its own
+object prevents the reciprocity equivalence from being smuggled into the
+fundamental-class data as an unrelated field. -/
+structure GlobalIdeleClassDegreeZeroNormBridge
+    (K L : Type) [Field K] [NumberField K] [Field L] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
+    [Fintype (Gal(L / K))]
+    (N : GlobalNormInterface K L)
+    (A : GlobalIdeleClassGaloisActionData K L) where
+  equiv :
+    chapter05TateCohomology (Gal(L / K))
+        (globalIdeleClassCoefficientRep A) 0 ≃+
+      Additive (finiteClassArtinQuotient N)
 
 /- The same global-to-local exact sequence is the input for the finite
 Galois fundamental class. -/
@@ -146,6 +171,8 @@ structure FiniteGaloisFundamentalClassData
     [Fintype (Gal(L / K))] where
   normData : GlobalNormInterface K L
   ideleClassAction : GlobalIdeleClassGaloisActionData K L
+  degreeZeroNormBridge :
+    GlobalIdeleClassDegreeZeroNormBridge K L normData ideleClassAction
   brauerSequence : BookBrauerInvariantSequence K
   fundamentalClass : Chapter05FundamentalTwoClass
     (Gal(L / K)) (globalIdeleClassCoefficientRep ideleClassAction)
@@ -167,13 +194,58 @@ theorem finite_galois_fundamental_class_exists
     : Nonempty (FiniteGaloisFundamentalClassData K L) := by
   sorry
 
-theorem cap_fundamental_class_identifies_abelianization
+/- The top-subgroup cap map must be transported back to the original Galois
+   group before it can be compared with the degree-zero norm bridge. -/
+structure GlobalCapProductDegreeZeroData
+    {K L : Type} [Field K] [NumberField K] [Field L] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
+    [Fintype (Gal(L / K))]
+    (D : FiniteGaloisFundamentalClassData K L) where
+  topRestriction : Chapter05TopRestrictionTateIso (Gal(L / K))
+    (globalIdeleClassCoefficientRep D.ideleClassAction)
+  topRestrictionTrivial : Chapter05TopRestrictionTrivialTateIso (Gal(L / K))
+  capEquiv :
+    chapter05TateCohomology (Gal(L / K))
+        (Rep.trivial ℤ (Gal(L / K)) ℤ) (-2) ≃+
+      chapter05TateCohomology (Gal(L / K))
+        (globalIdeleClassCoefficientRep D.ideleClassAction) 0
+  capEquiv_is_cap :
+    ∀ x : chapter05TateCohomology (Gal(L / K))
+        (Rep.trivial ℤ (Gal(L / K)) ℤ) (-2),
+      capEquiv x =
+        (topRestriction.iso 0).hom
+          (D.capProduct.cap (⊤ : Subgroup (Gal(L / K))) (-2)
+            ((topRestrictionTrivial.iso (-2)).inv x))
+
+theorem global_cap_product_degree_zero_data_exists
     {K L : Type} [Field K] [NumberField K] [Field L] [NumberField L]
     [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
     [Fintype (Gal(L / K))]
     (D : FiniteGaloisFundamentalClassData K L) :
-    Nonempty (GroupAbelianization (Gal(L / K)) ≃*
-      finiteClassArtinQuotient D.normData) := by
+    Nonempty (GlobalCapProductDegreeZeroData D) := by
+  sorry
+
+structure GlobalCapProductNormQuotientEquivalence
+    {K L : Type} [Field K] [NumberField K] [Field L] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
+    [Fintype (Gal(L / K))]
+    (D : FiniteGaloisFundamentalClassData K L)
+    (P : GlobalCapProductDegreeZeroData D) where
+  equiv : Additive (GroupAbelianization (Gal(L / K))) ≃+
+    Additive (finiteClassArtinQuotient D.normData)
+  compatible :
+    ∀ x : Additive (GroupAbelianization (Gal(L / K))),
+      equiv x = D.degreeZeroNormBridge.equiv
+        (P.capEquiv ((trivialTateNegativeTwoAbelianizationEquiv
+          (Gal(L / K))).symm x))
+
+theorem cap_fundamental_class_identifies_abelianization
+    {K L : Type} [Field K] [NumberField K] [Field L] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
+    [Fintype (Gal(L / K))]
+    (D : FiniteGaloisFundamentalClassData K L)
+    (P : GlobalCapProductDegreeZeroData D) :
+    Nonempty (GlobalCapProductNormQuotientEquivalence D P) := by
   sorry
 
 theorem abelian_group_abelianization_equiv
@@ -188,8 +260,10 @@ restricted product of the corresponding local H¹ groups. -/
 abbrev CartierConstantCoefficient (n : ℕ) :=
   ZMod n
 
+/- The Cartier dual μₙ is geometric: using K-rational roots here would make
+the interface silently assume μₙ ⊂ K. -/
 abbrev CartierRootCoefficient
-    (K : Type*) [Field K] (n : ℕ) := rootsOfUnity n K
+    (K : Type*) [Field K] (n : ℕ) := rootsOfUnity n (AlgebraicClosure K)
 
 def CartierContinuousCharacterSubgroup
     (G A : Type*) [Group G] [AddCommGroup A]
@@ -260,8 +334,45 @@ abbrev CartierLocalH1Product
     (U : ∀ v : BookPlace K, AddSubgroup (CartierLocalH1At K v n)) :=
   CartierRestrictedProduct (BookPlace K) (fun v => CartierLocalH1At K v n) U
 
+abbrev CartierNthPowerSubgroup (F : Type*) [Field F] (n : ℕ) : Subgroup Fˣ :=
+  (powMonoidHom n : Fˣ →* Fˣ).range
+
 abbrev CartierKummerClassGroup (F : Type*) [Field F] (n : ℕ) :=
-  Additive (Fˣ ⧸ (powMonoidHom n : Fˣ →* Fˣ).range)
+  Additive (Fˣ ⧸ CartierNthPowerSubgroup F n)
+
+def cartierKummerClassMk
+    {F : Type*} [Field F] (n : ℕ) (x : Fˣ) : CartierKummerClassGroup F n :=
+  Additive.ofMul (QuotientGroup.mk' (CartierNthPowerSubgroup F n) x)
+
+noncomputable def cartierKummerRestriction
+    {K F : Type*} [Field K] [Field F] (n : ℕ) (f : K →+* F) :
+    CartierKummerClassGroup K n →+ CartierKummerClassGroup F n :=
+  let q : Kˣ ⧸ CartierNthPowerSubgroup K n →*
+      Fˣ ⧸ CartierNthPowerSubgroup F n :=
+    QuotientGroup.map (CartierNthPowerSubgroup K n)
+      (CartierNthPowerSubgroup F n) (Units.map f.toMonoidHom) (by
+        intro x hx
+        rcases hx with ⟨y, rfl⟩
+        exact ⟨Units.map f.toMonoidHom y, by simp⟩)
+  q.toAdditive
+
+theorem cartierKummerRestriction_mk
+    {K F : Type*} [Field K] [Field F] (n : ℕ) (f : K →+* F) (x : Kˣ) :
+    cartierKummerRestriction n f (cartierKummerClassMk n x) =
+      cartierKummerClassMk n (Units.map f.toMonoidHom x) := by
+  sorry
+
+abbrev CartierLocalKummerClassGroup
+    (K : Type*) [Field K] [NumberField K]
+    (v : BookPlace K) (n : ℕ) :=
+  CartierKummerClassGroup (BookPlace.completion v) n
+
+noncomputable def cartierKummerLocalization
+    {K : Type*} [Field K] [NumberField K]
+    (v : BookPlace K) (n : ℕ) :
+    CartierKummerClassGroup K n →+
+      CartierLocalKummerClassGroup K v n :=
+  cartierKummerRestriction n (algebraMap K (BookPlace.completion v))
 
 def ExactAtMiddle
     {A B C : Type*} [AddZeroClass A] [AddZeroClass B] [AddZeroClass C]
@@ -276,6 +387,18 @@ structure FiniteCartierDualityStatement
     CartierLocalH1Product K n unramified
   obstruction : CartierLocalH1Product K n unramified →+
     (CartierKummerClassGroup K n →+ RationalModuloIntegers)
+  localCupInvariant : ∀ v : BookPlace K,
+    CartierLocalH1At K v n →+
+      CartierLocalKummerClassGroup K v n →+ RationalModuloIntegers
+  obstruction_is_local_sum :
+    ∀ (c : CartierLocalH1Product K n unramified)
+      (a : CartierKummerClassGroup K n),
+      ∃ s : Finset (BookPlace K),
+        (∀ v ∉ s,
+          localCupInvariant v (c.1 v) (cartierKummerLocalization v n a) = 0) ∧
+          obstruction c a = Finset.sum s
+            (fun v =>
+              localCupInvariant v (c.1 v) (cartierKummerLocalization v n a))
   localization_injective : Function.Injective localization
   exact_at_middle : ExactAtMiddle localization obstruction
   character_globalization : ∀ c,

@@ -20,38 +20,45 @@ def Chapter04JacobianMatrix (k : Type u) [CommRing k]
     Matrix (Fin m) (Fin n) (MvPolynomial (Fin n) k) :=
   fun i j => MvPolynomial.pderiv j (F i)
 
-/-- Full-rank of the Jacobian at a prime, expressed by an invertible maximal minor. -/
+/-- Full-rank of the Jacobian at a prime, expressed by a maximal minor nonzero modulo it. -/
 def Chapter04JacobianFullRankAt (k : Type u) [CommRing k]
     (n m : ℕ) (F : Fin m → MvPolynomial (Fin n) k)
     (p : Ideal (MvPolynomial (Fin n) k)) : Prop :=
   ∃ σ : Fin m → Fin n, Function.Injective σ ∧
-    IsUnit (Ideal.Quotient.mk p
-      (Matrix.det (fun i j => Chapter04JacobianMatrix k n m F i (σ j))))
+    Matrix.det (fun i j => Chapter04JacobianMatrix k n m F i (σ j)) ∉ p
 
 /- LOCAL_DEPENDENCY_GUESS: the pinned snapshot has the polynomial partial
 derivatives but not a scheme-level Jacobian criterion packaged with the
-separability hypotheses.  This interface records the exact rank condition and
-the local smoothness predicate supplied by a later implementation. -/
+separability hypotheses.  The local smoothness side below is nevertheless
+fixed to the canonical affine quotient and its prime over `p`; the displayed
+theorem uses the standard complete-intersection and perfect-field special case. -/
 structure Chapter04JacobianCriterionData (k : Type u) [Field k]
     (n m : ℕ) where
   equations : Fin m → MvPolynomial (Fin n) k
-  finiteType : Prop
-  separable : Prop
-  smoothAt : Ideal (MvPolynomial (Fin n) k) → Prop
-  smoothAt_iff_jacobian :
-    ∀ (p : Ideal (MvPolynomial (Fin n) k)), p.IsPrime →
-      Ideal.span (Set.range equations) ≤ p →
-      finiteType → separable →
-      (smoothAt p ↔ Chapter04JacobianFullRankAt k n m equations p)
+
+abbrev Chapter04JacobianQuotientRing (k : Type u) [Field k]
+    (n m : ℕ) (F : Fin m → MvPolynomial (Fin n) k) :=
+  MvPolynomial (Fin n) k ⧸ Ideal.span (Set.range F)
+
+def Chapter04JacobianSmoothAt (k : Type u) [Field k]
+    (n m : ℕ) (F : Fin m → MvPolynomial (Fin n) k)
+    (p : Ideal (MvPolynomial (Fin n) k)) (hp : p.IsPrime)
+    (hequations : Ideal.span (Set.range F) ≤ p) : Prop :=
+  letI := hp
+  letI : (p.map (Ideal.Quotient.mk (Ideal.span (Set.range F)))).IsPrime :=
+    Ideal.isPrime_map_quotientMk_of_isPrime hequations
+  Algebra.IsSmoothAt k (p.map (Ideal.Quotient.mk (Ideal.span (Set.range F))))
 
 theorem chapter04_jacobian_criterion
-    {k : Type u} [Field k] {n m : ℕ}
+    {k : Type u} [Field k] [PerfectField k] {n m : ℕ}
     (J : Chapter04JacobianCriterionData k n m)
     (p : Ideal (MvPolynomial (Fin n) k)) (hp : p.IsPrime)
     (hequations : Ideal.span (Set.range J.equations) ≤ p)
-    (hfiniteType : J.finiteType) (hseparable : J.separable) :
-    J.smoothAt p ↔ Chapter04JacobianFullRankAt k n m J.equations p := by
-  exact J.smoothAt_iff_jacobian p hp hequations hfiniteType hseparable
+    (hregular : RingTheory.Sequence.IsRegular (MvPolynomial (Fin n) k)
+      (List.ofFn J.equations)) :
+    Chapter04JacobianSmoothAt k n m J.equations p hp hequations ↔
+      Chapter04JacobianFullRankAt k n m J.equations p := by
+  sorry
 
 /-- The local hypersurface quotient used in the linear-term criterion. -/
 abbrev Chapter04HypersurfaceRing (P : Type u) [CommRing P] (f : P) :=
@@ -61,35 +68,40 @@ def Chapter04HypersurfaceRegular (P : Type u) [CommRing P] (f : P) : Prop :=
   IsRegularLocalRing (Chapter04HypersurfaceRing P f)
 
 def Chapter04HypersurfaceHasNonzeroInitialLinearTerm
-    (P : Type u) [CommRing P] (f : P) : Prop :=
-  f ∉ (maximalIdeal P) ^ 2
+    (P : Type u) [CommRing P] [IsLocalRing P] (f : P) : Prop :=
+  f ∉ (IsLocalRing.maximalIdeal P) ^ 2
 
 /-- A hypersurface in a regular local ring is regular exactly when its equation
 has a nonzero linear term. -/
 theorem chapter04_hypersurface_regular_iff_nonzero_initial_linear_term
-    (P : Type u) [CommRing P] [IsLocalRing P] [IsNoetherianRing P]
-    [IsRegularLocalRing P] (f : P) (hf : f ≠ 0) (hunit : ¬ IsUnit f) :
+    (P : Type u) [CommRing P] [IsRegularLocalRing P]
+    (f : P) (hf : f ≠ 0) (hunit : ¬ IsUnit f) :
     Chapter04HypersurfaceRegular P f ↔
       Chapter04HypersurfaceHasNonzeroInitialLinearTerm P f := by
   sorry
 
 /-- The dimension formula for a nonzero nonunit hypersurface equation. -/
 theorem chapter04_hypersurface_dimension_formula
-    (P : Type u) [CommRing P] [IsLocalRing P] [IsNoetherianRing P]
-    [IsRegularLocalRing P] (f : P) (hf : f ≠ 0) (hunit : ¬ IsUnit f) :
-    ringKrullDim (Chapter04HypersurfaceRing P f) = ringKrullDim P - 1 := by
+    (P : Type u) [CommRing P] [IsRegularLocalRing P]
+    (f : P) (hf : f ≠ 0) (hunit : ¬ IsUnit f) :
+    ringKrullDim (Chapter04HypersurfaceRing P f) + 1 = ringKrullDim P := by
   sorry
 
 /-- The embedding dimension drops by one precisely when the initial linear form is nonzero. -/
 def Chapter04HypersurfaceEmbeddingDimensionDrops
-    (P : Type u) [CommRing P] [IsLocalRing P] (f : P) : Prop :=
-  (maximalIdeal P).spanFinrank =
-    (maximalIdeal (Chapter04HypersurfaceRing P f)).spanFinrank + 1
+    (P : Type u) [CommRing P] [IsLocalRing P] (f : P)
+    (hunit : ¬ IsUnit f) : Prop :=
+  letI : Nontrivial (Chapter04HypersurfaceRing P f) :=
+    Ideal.Quotient.nontrivial_iff.mpr (Ideal.span_singleton_ne_top hunit)
+  letI : IsLocalRing (Chapter04HypersurfaceRing P f) :=
+    IsLocalRing.of_surjective' (Ideal.Quotient.mk _) Ideal.Quotient.mk_surjective
+  (IsLocalRing.maximalIdeal P).spanFinrank =
+    (IsLocalRing.maximalIdeal (Chapter04HypersurfaceRing P f)).spanFinrank + 1
 
 theorem chapter04_hypersurface_embedding_dimension_drops_iff
-    (P : Type u) [CommRing P] [IsLocalRing P] [IsNoetherianRing P]
-    [IsRegularLocalRing P] (f : P) (hf : f ≠ 0) (hunit : ¬ IsUnit f) :
-    Chapter04HypersurfaceEmbeddingDimensionDrops P f ↔
+    (P : Type u) [CommRing P] [IsRegularLocalRing P]
+    (f : P) (hf : f ≠ 0) (hunit : ¬ IsUnit f) :
+    Chapter04HypersurfaceEmbeddingDimensionDrops P f hunit ↔
       Chapter04HypersurfaceHasNonzeroInitialLinearTerm P f := by
   sorry
 

@@ -41,7 +41,7 @@ theorem bijective_iff_faithfullyFlat_lTensor
 `Γ(X, L^n) ⊗_A A' ≃ Γ(X_{S'}, L_{S'}^n)`.  The module structures are induced by the two
 affine structure morphisms, so the displayed identity is visible without adding a fake global
 sections API. -/
-theorem affine_degree_zero_sections_base_change
+noncomputable def affine_degree_zero_sections_base_change
     {X : Scheme.{u}} {A A' : Type u} [CommRing A] [CommRing A']
     (f : X ⟶ Spec (.of A)) (hfqc : QuasiCompact f) (hfqs : QuasiSeparated f)
     (φ : A →+* A') (hφ : RingHom.Flat φ) (L : LineBundle X)

@@ -1,4 +1,6 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section01SeparatingBranchesByCompletion
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Section04HenselianLocalRings
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section03IntegralElementsAreBounded
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter02
 
@@ -90,7 +92,33 @@ theorem chapter2_complete_base_has_unique_valuation_subring_extension
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring) :
     chapter2UniqueValuationExtension vK vL := by
-  sorry
+  have hDVR : LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.CompleteDVR
+      vK.valuationSubring :=
+    { isAdicComplete' := hcomplete }
+  have hhens :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.HenselianFactorizationProperty
+        vK.valuationSubring :=
+    @LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.complete_DVR_is_henselian
+      _ _ _ hDVR
+  have hL : vK.IsEquiv (vL.comap (algebraMap K L)) :=
+    Valuation.HasExtension.val_isEquiv_comap
+  intro W hW
+  have hW' : (algebraMap K L) ⁻¹' (W : Set L) =
+      (vK.valuationSubring : Set K) := hW
+  have hWext : vK.HasExtension W.valuation := by
+    apply Valuation.HasExtension.ofComapInteger
+    rw [ValuationSubring.integer_valuation W]
+    ext x
+    change algebraMap K L x ∈ W ↔ x ∈ vK.valuationSubring
+    exact Set.ext_iff.mp hW' x
+  have hW' : vK.IsEquiv (W.valuation.comap (algebraMap K L)) :=
+    hWext.val_isEquiv_comap
+  have hval :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_henselian_valuation_has_unique_branch
+      vK hhens vL W.valuation hL hW'
+  have hsub := (Valuation.isEquiv_iff_valuationSubring vL W.valuation).mp hval
+  simpa only [ValuationSubring.valuationSubring_valuation] using
+    congrArg (fun V : ValuationSubring L => (V : Set L)) hsub.symm
 
 /-- The integral closure is the unit ball of the unique normalized extension. -/
 theorem integral_closure_eq_extension_valuation_subring
@@ -99,16 +127,74 @@ theorem integral_closure_eq_extension_valuation_subring
     (hunique : chapter2UniqueValuationExtension vK vL) :
     (integralClosure vK.valuationSubring L : Set L) =
       (vL.valuationSubring : Set L) := by
-  sorry
+  ext x
+  change IsIntegral vK.valuationSubring x ↔ x ∈ vL.valuationSubring
+  have hcrit := Set.ext_iff.mp
+    (LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_integral_closure_valuative_criterion
+      (K := K) (L := L) vK)
+  let W₀ :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ValuationOnField L :=
+    { valueGroup := vL.valuationSubring.ValueGroup
+      valuation := vL.valuationSubring.valuation }
+  have hW₀ : vK.IsEquiv (W₀.valuation.comap (algebraMap K L)) :=
+    by
+      exact (Valuation.HasExtension.val_isEquiv_comap).trans
+        (Valuation.IsEquiv.comap (algebraMap K L)
+          (Valuation.isEquiv_valuation_valuationSubring vL))
+  constructor
+  · intro hx
+    have hxall := (hcrit x).mp hx
+    simpa [W₀] using hxall W₀ hW₀
+  · intro hx
+    apply (hcrit x).mpr
+    intro W hW
+    have hWext : chapter2ValuationSubringExtends vK W.valuation.valuationSubring := by
+      ext y
+      change W.valuation (algebraMap K L y) ≤ 1 ↔ vK y ≤ 1
+      exact (hW.le_one_iff_le_one).symm
+    have heq := hunique W.valuation.valuationSubring hWext
+    change x ∈ (W.valuation.valuationSubring : Set L)
+    rw [heq]
+    exact hx
 
 /-- The non-unique valuation-ring form of the integral-closure intersection. -/
 theorem integral_closure_eq_chosen_extension_intersection
     {ι : Type*} (vK : Valuation K ℤᵐ⁰) (W : ι → ValuationSubring L)
     [FiniteDimensional K L]
-    (hfamily : chapter2IntegralClosureIntersection vK W) :
+  (hfamily : chapter2IntegralClosureIntersection vK W) :
     (integralClosure vK.valuationSubring L : Set L) =
       ⋂ i, (W i : Set L) := by
-  sorry
+  ext x
+  change IsIntegral vK.valuationSubring x ↔ x ∈ ⋂ i, (W i : Set L)
+  simp only [Set.mem_iInter]
+  have hcrit := Set.ext_iff.mp
+    (LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_integral_closure_valuative_criterion
+      (K := K) (L := L) vK)
+  constructor
+  · intro hx i
+    have hWi : (algebraMap K L) ⁻¹' (W i : Set L) =
+        (vK.valuationSubring : Set K) := hfamily.1 i
+    have hWext : vK.HasExtension (W i).valuation := by
+      apply Valuation.HasExtension.ofComapInteger
+      rw [ValuationSubring.integer_valuation (W i)]
+      ext y
+      change algebraMap K L y ∈ W i ↔ y ∈ vK.valuationSubring
+      exact Set.ext_iff.mp hWi y
+    have hbound :=
+      @LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_integral_elements_are_bounded
+        K L ℤᵐ⁰ (W i).ValueGroup _ _ _ _ _ vK (W i).valuation hWext x hx
+    simpa [ValuationSubring.valuationSubring_valuation] using hbound
+  · intro hx
+    apply (hcrit x).mpr
+    intro V hV
+    have hVext : chapter2ValuationSubringExtends vK V.valuation.valuationSubring := by
+      ext y
+      change V.valuation (algebraMap K L y) ≤ 1 ↔ vK y ≤ 1
+      exact (hV.le_one_iff_le_one).symm
+    obtain ⟨i, hi⟩ := hfamily.2 V.valuation.valuationSubring hVext
+    change x ∈ (V.valuation.valuationSubring : Set L)
+    rw [← hi]
+    exact hx i
 
 /-- `A = B ∩ K`, expressed as a preimage because `K` is not a subtype of `L`. -/
 theorem base_valuation_ring_is_comap_of_extension_ring

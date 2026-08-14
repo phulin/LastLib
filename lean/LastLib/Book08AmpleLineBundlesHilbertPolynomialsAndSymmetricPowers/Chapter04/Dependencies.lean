@@ -15,9 +15,11 @@ import Mathlib.AlgebraicGeometry.Morphisms.QuasiCompact
 import Mathlib.AlgebraicGeometry.Morphisms.QuasiSeparated
 import Mathlib.AlgebraicGeometry.Morphisms.Separated
 import Mathlib.AlgebraicGeometry.Noetherian
+import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
 import Mathlib.AlgebraicGeometry.ResidueField
 import Mathlib.RingTheory.Length
 import Mathlib.RingTheory.PicardGroup
+import Mathlib.Topology.KrullDimension
 import Mathlib.Topology.Sheaves.LocallySurjective
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02.Section01ProjectiveBundles
 
@@ -156,7 +158,24 @@ def chapter04QuotientPairEquivalent
 instance {S : Scheme.{u}} {E : S.Modules} : Setoid (Chapter04InvertibleQuotientPair E) where
   r := chapter04QuotientPairEquivalent
   iseqv := by
-    sorry
+    constructor
+    · intro p
+      exact ⟨Iso.refl _, by simp⟩
+    · intro p q h
+      obtain ⟨e, he⟩ := h
+      refine ⟨e.symm, ?_⟩
+      calc
+        q.quotient ≫ e.symm.hom = (p.quotient ≫ e.hom) ≫ e.symm.hom := by rw [he]
+        _ = p.quotient := by simp [Category.assoc]
+    · intro p q r h₁ h₂
+      obtain ⟨e, he⟩ := h₁
+      obtain ⟨g, hg⟩ := h₂
+      refine ⟨e ≪≫ g, ?_⟩
+      calc
+        p.quotient ≫ (e ≪≫ g).hom = (p.quotient ≫ e.hom) ≫ g.hom := by
+          simp [Category.assoc]
+        _ = q.quotient ≫ g.hom := by rw [he]
+        _ = r.quotient := hg
 
 /-- Isomorphism classes of invertible quotients. -/
 abbrev Chapter04InvertibleQuotientClass
@@ -173,7 +192,7 @@ theorem chapter04QuotientClass_eq_iff
     (p q : Chapter04InvertibleQuotientPair E) :
     chapter04QuotientClassMk p = chapter04QuotientClassMk q ↔
       chapter04QuotientPairEquivalent p q := by
-  sorry
+  exact Quotient.eq
 
 /-- Pullback of an invertible quotient presentation. -/
 def chapter04PullbackInvertibleQuotientPair
@@ -183,7 +202,10 @@ def chapter04PullbackInvertibleQuotientPair
   line := chapter04PullbackLineBundle f p.line
   quotient := (Scheme.Modules.pullback f).map p.quotient
   quotient_is_epi := by
-    sorry
+    exact @Functor.map_epi _ _ _ _ (Scheme.Modules.pullback f)
+      (Functor.preservesEpimorphisms_of_adjunction
+        (Scheme.Modules.pullbackPushforwardAdjunction f))
+      _ _ p.quotient p.quotient_is_epi
 
 /-- Base change on isomorphism classes of invertible quotient presentations. -/
 noncomputable def chapter04PullbackQuotientClass
@@ -193,7 +215,13 @@ noncomputable def chapter04PullbackQuotientClass
   Quotient.lift
     (fun p => chapter04QuotientClassMk (chapter04PullbackInvertibleQuotientPair f p)) (by
       intro p q hp
-      sorry)
+      apply Quotient.sound
+      obtain ⟨e, he⟩ := hp
+      refine ⟨(Scheme.Modules.pullback f).mapIso e, ?_⟩
+      change (Scheme.Modules.pullback f).map p.quotient ≫
+          (Scheme.Modules.pullback f).map e.hom =
+        (Scheme.Modules.pullback f).map q.quotient
+      simpa using congrArg (Scheme.Modules.pullback f).map he)
 
 /-!
 The module-sheaf pullback has a canonical composition comparison.  Naming the
@@ -253,9 +281,23 @@ noncomputable def chapter04PullbackQuotientClassAlong
         quotient :=
           (chapter04PullbackCompositionIso h f E).hom ≫
             (Scheme.Modules.pullback h).map p.quotient
-        quotient_is_epi := by sorry }) (by
+        quotient_is_epi := by
+          exact epi_comp' (by infer_instance)
+            (@Functor.map_epi _ _ _ _ (Scheme.Modules.pullback h)
+              (Functor.preservesEpimorphisms_of_adjunction
+                (Scheme.Modules.pullbackPushforwardAdjunction h))
+              _ _ p.quotient p.quotient_is_epi) }) (by
       intro p q hp
-      sorry)
+      apply Quotient.sound
+      obtain ⟨e, he⟩ := hp
+      refine ⟨(Scheme.Modules.pullback h).mapIso e, ?_⟩
+      change
+        ((chapter04PullbackCompositionIso h f E).hom ≫
+            (Scheme.Modules.pullback h).map p.quotient) ≫
+            (Scheme.Modules.pullback h).map e.hom =
+          (chapter04PullbackCompositionIso h f E).hom ≫
+            (Scheme.Modules.pullback h).map q.quotient
+      rw [Category.assoc, ← (Scheme.Modules.pullback h).map_comp, he])
 
 /-- A scheme morphism is constant when it factors through one residue-field point. -/
 def chapter04UnderlyingConstant
@@ -527,7 +569,48 @@ noncomputable def chapter04SchemeLength
 /-- The additive-group structure on global sections of a module sheaf. -/
 noncomputable instance chapter04SectionsAddCommGroup
     {Z : Scheme.{u}} (M : Z.Modules) : AddCommGroup M.val.sections := by
-  sorry
+  let zero : M.val.sections := chapter02ZeroSection M
+  let add : M.val.sections → M.val.sections → M.val.sections :=
+    chapter02AddSection M
+  let neg : M.val.sections → M.val.sections := fun s =>
+    M.val.sectionsMk (fun X => -s.1 X) (by
+      intro X Y f
+      rw [← M.val.sections_property s f]
+      exact (M.val.map f).hom.map_neg _)
+  letI : Zero M.val.sections := ⟨zero⟩
+  letI : Add M.val.sections := ⟨add⟩
+  letI : Neg M.val.sections := ⟨neg⟩
+  refine
+    { zero := zero
+      add := add
+      neg := neg
+      add_assoc := ?_
+      zero_add := ?_
+      add_zero := ?_
+      neg_add_cancel := ?_
+      add_comm := ?_
+      nsmul := nsmulRec
+      zsmul := zsmulRec }
+  · intro a b c
+    ext X
+    change (a.1 X + b.1 X) + c.1 X = a.1 X + (b.1 X + c.1 X)
+    exact add_assoc _ _ _
+  · intro a
+    ext X
+    change (0 : (M.val.presheaf ⋙ forget Ab).obj X) + a.1 X = a.1 X
+    exact zero_add _
+  · intro a
+    ext X
+    change a.1 X + (0 : (M.val.presheaf ⋙ forget Ab).obj X) = a.1 X
+    exact add_zero _
+  · intro a
+    ext X
+    change (-a.1 X) + a.1 X = 0
+    exact neg_add_cancel _
+  · intro a b
+    ext X
+    change a.1 X + b.1 X = b.1 X + a.1 X
+    exact add_comm _ _
 
 /-- The module structure of global sections over the ring of global functions. -/
 @[instance_reducible]
@@ -636,6 +719,27 @@ def chapter04SeparatesLengthTwo
 def chapter04FiniteTypeQuasiCoherent {X : Scheme.{u}} (F : X.Modules) : Prop :=
   F.IsQuasicoherent ∧ F.IsFiniteType
 
+/-! ### Support dimension -/
+
+/-
+The support is defined from the stalks of the actual module sheaf.  In
+particular, it is empty for a zero sheaf and does not introduce a numerical
+dimension as independent metadata.
+-/
+def chapter04SheafSupport {X : Scheme.{u}} (F : X.Modules) : Set X :=
+  {x | ¬ Subsingleton (F.presheaf.stalk x)}
+
+/-- The topological Krull dimension of the support of a module sheaf. -/
+noncomputable def chapter04SheafSupportDimension
+    {X : Scheme.{u}} (F : X.Modules) : WithBot ℕ∞ :=
+  topologicalKrullDim (chapter04SheafSupport F)
+
+/-- A coherent-sheaf support dimension is an equality with the canonical
+    Krull dimension of its stalkwise support. -/
+def chapter04SheafHasSupportDimension
+    {X : Scheme.{u}} (F : X.Modules) (d : ℕ) : Prop :=
+  chapter04SheafSupportDimension F = d
+
 /-- A coherent ideal sheaf as a finite-type quasi-coherent submodule of `𝒪_X`. -/
 structure Chapter04CoherentIdealSheaf (X : Scheme.{u}) where
   carrier : X.Modules
@@ -671,11 +775,51 @@ abbrev Chapter04CohomologyContext.H
 noncomputable def chapter04CanonicalCohomologyContext (X : Scheme.{u}) :
     Chapter04CohomologyContext X :=
   { map := by
-      sorry
+      intro F G φ i
+      let : CategoryTheory.HasExt.{u + 1}
+          (Sheaf (Opens.grothendieckTopology X.toPresheafedSpace) AddCommGrpCat.{u}) :=
+        CategoryTheory.HasExt.standard _
+      let G : X.Modules ⥤
+          Sheaf (Opens.grothendieckTopology X.toPresheafedSpace) AddCommGrpCat.{u} :=
+        SheafOfModules.toSheaf X.ringCatSheaf
+      exact
+        ((CategoryTheory.Sheaf.cohomologyPresheafFunctor
+          (Opens.grothendieckTopology X.toPresheafedSpace) i).map
+          (G.map φ)).app
+          (Opposite.op (⊤ : X.Opens))
     map_id := by
-      sorry
+      intro F i
+      let : CategoryTheory.HasExt.{u + 1}
+          (Sheaf (Opens.grothendieckTopology X.toPresheafedSpace) AddCommGrpCat.{u}) :=
+        CategoryTheory.HasExt.standard _
+      let G : X.Modules ⥤
+          Sheaf (Opens.grothendieckTopology X.toPresheafedSpace) AddCommGrpCat.{u} :=
+        SheafOfModules.toSheaf X.ringCatSheaf
+      change
+        ((CategoryTheory.Sheaf.cohomologyPresheafFunctor
+          (Opens.grothendieckTopology X.toPresheafedSpace) i).map
+          (G.map (𝟙 F))).app (Opposite.op (⊤ : X.Opens)) = 𝟙 _
+      rw [G.map_id]
+      rw [(CategoryTheory.Sheaf.cohomologyPresheafFunctor
+        (Opens.grothendieckTopology X.toPresheafedSpace) i).map_id]
+      rfl
     map_comp := by
-      sorry }
+      intro F G H φ ψ i
+      let : CategoryTheory.HasExt.{u + 1}
+          (Sheaf (Opens.grothendieckTopology X.toPresheafedSpace) AddCommGrpCat.{u}) :=
+        CategoryTheory.HasExt.standard _
+      let G : X.Modules ⥤
+          Sheaf (Opens.grothendieckTopology X.toPresheafedSpace) AddCommGrpCat.{u} :=
+        SheafOfModules.toSheaf X.ringCatSheaf
+      change
+        ((CategoryTheory.Sheaf.cohomologyPresheafFunctor
+          (Opens.grothendieckTopology X.toPresheafedSpace) i).map
+          (G.map (φ ≫ ψ))).app (Opposite.op (⊤ : X.Opens)) = _
+      rw [G.map_comp]
+      rw [(CategoryTheory.Sheaf.cohomologyPresheafFunctor
+        (Opens.grothendieckTopology X.toPresheafedSpace) i).map_comp]
+      rfl
+  }
 
 def chapter04CohomologyVanishes
     {X : Scheme.{u}} (F : X.Modules) (i : ℕ) : Prop :=
@@ -690,7 +834,15 @@ theorem chapter04CohomologyContext_vanishes_iff_isZero
     {X : Scheme.{u}} (C : Chapter04CohomologyContext X)
     (F : X.Modules) (i : ℕ) :
     C.Vanishes F i ↔ IsZero (C.H F i) := by
-  sorry
+  constructor
+  · intro h
+    let : Subsingleton (C.H F i) :=
+      ⟨fun x y => by rw [h x, h y]⟩
+    exact AddCommGrpCat.isZero_of_subsingleton _
+  · intro h x
+    let : Subsingleton (C.H F i) :=
+      AddCommGrpCat.subsingleton_of_isZero h
+    exact Subsingleton.elim _ _
 
 end
 end LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04

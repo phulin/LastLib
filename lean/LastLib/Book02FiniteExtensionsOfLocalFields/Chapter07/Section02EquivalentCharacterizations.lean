@@ -68,9 +68,6 @@ with one finite normalization branch.  Completeness/henselianity is expressed
 by `HenselianLocalRing A`, and both residue maps are explicit. -/
 
 /-- The five field/ring/residue criteria for an unramified extension. -/
--- SOURCE_ISSUE: The source suppresses the residue map upstairs.  The
--- proof-ready interface adds it, together with its compatibility, kernel, and
--- surjectivity data.
 theorem chapter07_unramified_criteria
     {A B K L k l : Type*} [CommRing A] [IsDomain A]
     [CommRing B] [IsDomain B] [Field K] [Field L] [Field k] [Field l]

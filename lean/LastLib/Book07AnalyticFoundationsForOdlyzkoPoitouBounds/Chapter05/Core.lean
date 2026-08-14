@@ -82,13 +82,19 @@ repeating the compact-support argument at every use site. -/
 theorem chapter05_basically_admissible_integrable
     {F : ℝ → ℝ} (hF : Chapter05BasicallyAdmissible F) :
     Integrable F volume := by
-  sorry
+  exact hF.continuous.integrable_of_hasCompactSupport hF.compactSupport
 
 theorem chapter05_basically_admissible_laplace_integrable
     {F : ℝ → ℝ} (hF : Chapter05BasicallyAdmissible F) (s : ℂ) :
     Integrable
       (fun x : ℝ => (F x : ℂ) * chapter05LaplaceKernel s x) volume := by
-  sorry
+  exact (by
+    apply Continuous.integrable_of_hasCompactSupport
+    · exact (Complex.continuous_ofReal.comp hF.continuous).mul
+        (Complex.continuous_exp.comp
+          ((continuous_const.sub continuous_const).mul
+            (Complex.continuous_ofReal.comp continuous_id)))
+    · exact (hF.compactSupport.comp_left (g := fun y : ℝ => (y : ℂ)) (by simp)).mul_right)
 
 /-! The common extra hypothesis used when a lower-bound argument discards the
 prime-side contribution. -/

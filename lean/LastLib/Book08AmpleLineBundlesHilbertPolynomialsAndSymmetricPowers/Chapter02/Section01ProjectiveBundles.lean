@@ -35,7 +35,18 @@ structure Chapter02ProjectiveSpaceData (S : Scheme.{u}) (I : Type u) where
 theorem chapter02_projective_space_data_exists
     (S : Scheme.{u}) (I : Type u) :
     Nonempty (Chapter02ProjectiveSpaceData S I) := by
-  sorry
+  obtain ⟨B⟩ :=
+    chapter02_relative_projective_bundle_exists S
+      (chapter02FreeQuasiCoherentModule S I)
+  let C := chapter02FreePullbackComparisonData B.projection I
+  refine ⟨{
+    bundle := B
+    coordinateSections :=
+      B.twistingLineBundle.carrier.freeHomEquiv
+        (C.comparison.hom ≫ B.universalQuotient)
+    coordinateComparison := C.comparison
+    coordinateSections_spec := ?_ }⟩
+  rw [Equiv.symm_apply_apply]
 
 noncomputable def chapter02ProjectiveSpaceData (S : Scheme.{u}) (I : Type u) :
     Chapter02ProjectiveSpaceData S I :=
@@ -130,6 +141,26 @@ theorem chapter02_projective_space_over_ring_is_relative_projective_space
         chapter02ProjectiveSpaceOverRingProjection R r := by
   sorry
 
+structure Chapter02ProjectiveSpaceOverRingComparison (R : Type u) [CommRing R]
+    (r : ℕ) where
+  comparison : chapter02ProjectiveSpaceOverRing R r ≅
+    chapter02ProjectiveSpace (AlgebraicGeometry.Spec (CommRingCat.of R)) r
+  comparison_over :
+    comparison.hom ≫ chapter02ProjectiveSpaceProjection
+        (AlgebraicGeometry.Spec (CommRingCat.of R)) r =
+      chapter02ProjectiveSpaceOverRingProjection R r
+
+theorem chapter02_projective_space_over_ring_comparison_exists
+    (R : Type u) [CommRing R] (r : ℕ) :
+    Nonempty (Chapter02ProjectiveSpaceOverRingComparison R r) := by
+  obtain ⟨e, he⟩ := chapter02_projective_space_over_ring_is_relative_projective_space R r
+  exact ⟨{ comparison := e, comparison_over := he }⟩
+
+noncomputable def chapter02ProjectiveSpaceOverRingComparison
+    (R : Type u) [CommRing R] (r : ℕ) :
+    Chapter02ProjectiveSpaceOverRingComparison R r :=
+  Classical.choice (chapter02_projective_space_over_ring_comparison_exists R r)
+
 theorem chapter02_projective_bundle_universal_quotient_is_epi
     {S : Scheme.{u}} {E : Chapter02QuasiCoherentModule S}
     (P : Chapter02ProjectiveBundleData S E) :
@@ -152,10 +183,41 @@ theorem chapter02_standard_affine_cover_exists
     Nonempty (Chapter02StandardAffineCover S I P) := by
   sorry
 
+abbrev Chapter02ProjectiveSpaceBasicOpenCover
+    (S : Scheme.{u}) (I : Type u) (P : Chapter02ProjectiveSpaceData S I) :=
+  Chapter02StandardAffineCover S I P
+
+theorem chapter02_projective_space_basic_open_cover_exists
+    (S : Scheme.{u}) (I : Type u) (P : Chapter02ProjectiveSpaceData S I) :
+    Nonempty (Chapter02ProjectiveSpaceBasicOpenCover S I P) := by
+  exact chapter02_standard_affine_cover_exists S I P
+
 noncomputable def chapter02StandardAffineCover
     (S : Scheme.{u}) (I : Type u) (P : Chapter02ProjectiveSpaceData S I) :
     Chapter02StandardAffineCover S I P :=
   Classical.choice (chapter02_standard_affine_cover_exists S I P)
+
+/-! Re-export the canonical polynomial basic-open cover from Chapter 1.  The separate declaration
+keeps the affine `Proj` presentation and the free relative projective-space presentation visibly
+connected without replacing the arbitrary-index cover above. -/
+abbrev Chapter02PolynomialStandardAffineCover (R : Type u) [CommRing R] (r : ℕ) :=
+  Chapter01.Chapter01PolynomialStandardAffineCover R r
+
+theorem chapter02_polynomial_standard_affine_cover_exists
+    (R : Type u) [CommRing R] (r : ℕ) :
+    Nonempty (Chapter02PolynomialStandardAffineCover R r) := by
+  sorry
+
+abbrev Chapter02RelativeProjectiveSpaceBasicOpenCover
+    (S : Scheme.{u}) (r : ℕ)
+    (P : Chapter01.Chapter01RelativeProjectiveSpace S r) :=
+  Chapter01.Chapter01RelativeProjectiveSpaceBasicOpenCover S r P
+
+theorem chapter02_relative_projective_space_basic_open_cover_exists
+    (S : Scheme.{u}) (r : ℕ)
+    (P : Chapter01.Chapter01RelativeProjectiveSpace S r) :
+    Nonempty (Chapter02RelativeProjectiveSpaceBasicOpenCover S r P) := by
+  sorry
 
 /-- Coordinate tuples used on standard charts. -/
 abbrev Chapter02CoordinateTuple (K : Type u) (I : Type u) := I → K
@@ -200,8 +262,9 @@ theorem chapter02_projective_bundle_fiber_is_projective_space
     ∀ s : S,
       ∃ e : P.projection.fiber s ≅
           chapter02ProjectiveSpaceOverRing (S.residueField s) r,
-        e.hom ≫ chapter02ProjectiveSpaceOverRingProjection (S.residueField s) r =
-          P.projection.fiberToSpecResidueField s := by
+        IsIso e.hom ∧
+          e.hom ≫ chapter02ProjectiveSpaceOverRingProjection (S.residueField s) r =
+            P.projection.fiberToSpecResidueField s := by
   sorry
 
 end

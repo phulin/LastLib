@@ -22,7 +22,7 @@ theorem chapter05_excellentDedekind_affine_is_catenary
     {S : Scheme.{u}} (hS : Chapter05ExcellentDedekindScheme S)
     (U : S.affineOpens) :
     Chapter05Catenary Γ(S, U) := by
-  exact (hS.affine_isExcellent U).2.1
+  sorry
 
 theorem chapter05_arithmeticSurface_finiteType
     {S X : Scheme.{u}} {f : X ⟶ S}

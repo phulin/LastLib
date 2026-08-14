@@ -5,6 +5,8 @@ namespace LastLib.Book03RamificationTheory.Chapter13
 
 noncomputable section
 
+universe u
+
 open LastLib.Book03RamificationTheory.Chapter11
 open LastLib.Book03RamificationTheory.Chapter12
 open scoped BigOperators
@@ -65,6 +67,22 @@ noncomputable def chapter13EmbeddingPermutationRepresentation
       Representation.ofMulAction ℚ G (chapter13EmbeddingSet K M Ω) g := by
   rfl
 
+/- The Chapter 12 conductor profile uses a coefficient and representation
+  space in the same universe as its group.  This lifted copy is the
+  universe-compatible model used at that interface. -/
+noncomputable def chapter13EmbeddingPermutationRepresentationLifted
+    {K M Ω G : Type u}
+    [Field K] [Field M] [Field Ω] [Algebra K M] [Algebra K Ω]
+    [FiniteDimensional K M] [Algebra.IsSeparable K M]
+    [FiniteDimensional K Ω] [IsGalois K Ω]
+    [Group G] [Fintype G] [MulAction G (chapter13EmbeddingSet K M Ω)]
+    [Fintype (chapter13EmbeddingSet K M Ω)]
+    (_C : Chapter13NongaloisExtensionContext K M Ω G) :
+    Representation (ULift.{u} ℚ) G
+      (MonoidAlgebra (ULift.{u} ℚ) (chapter13EmbeddingSet K M Ω)) := by
+  exact Representation.ofMulAction (ULift.{u} ℚ) G
+    (chapter13EmbeddingSet K M Ω)
+
 /- The subgroup fixing the selected embedding is the finite realization of
 `G_M`, while `G` is the finite quotient representing `G_K`. -/
 def chapter13InducedTrivialEmbeddingRepresentation
@@ -112,7 +130,7 @@ the nongalois extension.  The two character comparisons are precisely the
 off-identity and identity normalizations supplied by Chapter 12's induction
 formula. -/
 theorem chapter13_permutation_conductor_discriminant
-    {K M Ω G : Type*}
+    {K M Ω G : Type u}
     [Field K] [Field M] [Field Ω] [Algebra K M] [Algebra K Ω]
     [FiniteDimensional K M] [Algebra.IsSeparable K M]
     [FiniteDimensional K Ω] [IsGalois K Ω]
@@ -130,12 +148,13 @@ theorem chapter13_permutation_conductor_discriminant
           (C.numbers.residueDegree : ℚ) * AM.artinCharacter 1 =
         (Nat.card (chapter13EmbeddingStabilizer C) : ℚ) *
           (C.numbers.discriminantExponent : ℚ)) :
-    (AK.artinConductor _ (chapter13EmbeddingPermutationRepresentation C) : ℚ) =
+    (AK.artinConductor (E := ULift.{u} ℚ) _
+      (chapter13EmbeddingPermutationRepresentationLifted C) : ℚ) =
       (C.numbers.discriminantExponent : ℚ) := by
   sorry
 
 theorem chapter13_permutation_conductor_eq_relative_discriminant_valuation
-    {K M Ω G : Type*}
+    {K M Ω G : Type u}
     [Field K] [Field M] [Field Ω] [Algebra K M] [Algebra K Ω]
     [FiniteDimensional K M] [Algebra.IsSeparable K M]
     [FiniteDimensional K Ω] [IsGalois K Ω]
@@ -153,7 +172,8 @@ theorem chapter13_permutation_conductor_eq_relative_discriminant_valuation
           (C.numbers.residueDegree : ℚ) * AM.artinCharacter 1 =
         (Nat.card (chapter13EmbeddingStabilizer C) : ℚ) *
           (C.numbers.discriminantExponent : ℚ)) :
-    (AK.artinConductor _ (chapter13EmbeddingPermutationRepresentation C) : ℚ) =
+    (AK.artinConductor (E := ULift.{u} ℚ) _
+      (chapter13EmbeddingPermutationRepresentationLifted C) : ℚ) =
       (C.relative_discriminant_valuation : ℚ) := by
   sorry
 

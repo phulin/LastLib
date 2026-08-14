@@ -1,4 +1,4 @@
-import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter11.Section01TheTheoremAndItsMeaning
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter11.Dependencies
 
 namespace LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter11
 
@@ -15,6 +15,7 @@ universe u
 theorem chapter11_effective_cartier_euler_difference
     {k : Type u} [Field k] (C : Chapter11CurveOverField k)
     [Chapter11CohomologyTheory C.carrier C.structureMap]
+    [Chapter11EulerCharacteristicTheory C.carrier C.structureMap]
     (D : Chapter11EffectiveCartierDivisor C) :
     chapter11EulerCharacteristicOfLineBundle C D.divisor.lineBundle -
         chapter11EulerCharacteristic (f := C.structureMap)
@@ -36,6 +37,7 @@ theorem chapter11_effective_cartier_quotient_euler_eq_degree
 theorem chapter11_effective_cartier_euler_characteristic_difference
     {k : Type u} [Field k] (C : Chapter11CurveOverField k)
     [Chapter11CohomologyTheory C.carrier C.structureMap]
+    [Chapter11EulerCharacteristicTheory C.carrier C.structureMap]
     (D : Chapter11EffectiveCartierDivisor C) :
     chapter11EulerCharacteristicOfLineBundle C D.divisor.lineBundle -
         chapter11EulerCharacteristic (f := C.structureMap)
@@ -43,30 +45,16 @@ theorem chapter11_effective_cartier_euler_characteristic_difference
       (D.divisor.degree : ℤ) := by
   sorry
 
-/-- A decomposition of a divisor into disjoint effective parts.  The line
-bundle comparison records the tensor/inverse normalization needed to pass
-from the effective calculation to an arbitrary divisor. -/
-structure Chapter11EffectiveDecomposition {k : Type u} [Field k]
-    (C : Chapter11CurveOverField k)
-    [Chapter11PicardTheory C.carrier] [Chapter11DegreeTheory C.carrier]
-    (D : Chapter11Divisor C.carrier) where
-  positive : Chapter11EffectiveDivisor C
-  negative : Chapter11EffectiveDivisor C
-  disjoint : Prop
-  degree_decomposition :
-    D.degree = (positive.degree : ℤ) - (negative.degree : ℤ)
-  lineBundle_comparison :
-    Chapter11LineBundleIso D.lineBundle
-      (chapter11Tensor positive.lineBundle (chapter11Dual negative.lineBundle))
-
 /-- Every divisor on the smooth proper curve has a disjoint effective
 decomposition. -/
 theorem chapter11_divisor_has_effective_decomposition
     {k : Type u} [Field k] (C : Chapter11CurveOverField k)
+    [Chapter11CohomologyTheory C.carrier C.structureMap]
     [Chapter11PicardTheory C.carrier] [Chapter11DegreeTheory C.carrier]
+    [Chapter11EffectiveDecompositionTheory C]
     (D : Chapter11Divisor C.carrier) :
-    Nonempty (Chapter11EffectiveDecomposition C D) := by
-  sorry
+    Nonempty (Chapter11EffectiveDecomposition C D) :=
+  Chapter11EffectiveDecompositionTheory.every_divisor_has_effective_decomposition D
 
 /-- Euler characteristic is additive after subtracting the negative effective
 part. -/
@@ -74,6 +62,8 @@ theorem chapter11_euler_characteristic_of_divisor_decomposition
     {k : Type u} [Field k] (C : Chapter11CurveOverField k)
     [Chapter11CohomologyTheory C.carrier C.structureMap]
     [Chapter11PicardTheory C.carrier] [Chapter11DegreeTheory C.carrier]
+    [Chapter11EffectiveCartierTwistSequenceTheory C]
+    [Chapter11EulerCharacteristicTheory C.carrier C.structureMap]
     (D : Chapter11Divisor C.carrier)
     (hD : Chapter11EffectiveDecomposition C D) :
     chapter11EulerCharacteristicOfLineBundle C D.lineBundle =
@@ -85,7 +75,8 @@ theorem chapter11_euler_characteristic_of_divisor_decomposition
 /-- The structure sheaf has Euler characteristic `1-g`. -/
 theorem chapter11_euler_characteristic_structure_sheaf
     {k : Type u} [Field k] (C : Chapter11CurveOverField k)
-    [Chapter11CohomologyTheory C.carrier C.structureMap] :
+    [Chapter11CohomologyTheory C.carrier C.structureMap]
+    [Chapter11ConnectedGlobalSections C] :
     chapter11EulerCharacteristic (f := C.structureMap)
         (chapter11StructureSheafLineBundle C.carrier).module =
       1 - (C.genus : ℤ) := by
@@ -97,43 +88,41 @@ theorem chapter11_euler_characteristic_of_divisor
     {k : Type u} [Field k] (C : Chapter11CurveOverField k)
     [Chapter11CohomologyTheory C.carrier C.structureMap]
     [Chapter11PicardTheory C.carrier] [Chapter11DegreeTheory C.carrier]
+    [Chapter11EffectiveDecompositionTheory C]
+    [Chapter11EffectiveCartierTwistSequenceTheory C]
+    [Chapter11EulerCharacteristicTheory C.carrier C.structureMap]
+    [Chapter11ConnectedGlobalSections C]
     (D : Chapter11Divisor C.carrier) :
     chapter11EulerCharacteristicOfLineBundle C D.lineBundle =
       D.degree + 1 - (C.genus : ℤ) := by
   sorry
 
-/-- The smoothness-based divisor representation used by the adding-points
-proof: every line bundle is represented by a divisor. -/
-def Chapter11LineBundleDivisorRepresentation {k : Type u} [Field k]
-    (C : Chapter11CurveOverField k)
-    [Chapter11PicardTheory C.carrier] [Chapter11DegreeTheory C.carrier]
-    (L : Chapter11LineBundle C.carrier) : Prop :=
-  ∃ D : Chapter11Divisor C.carrier,
-    chapter11LineBundleIsomorphic D.lineBundle L
-
 theorem chapter11_smooth_curve_every_line_bundle_has_divisor_representation
     {k : Type u} [Field k] (C : Chapter11CurveOverField k)
     [Chapter11PicardTheory C.carrier] [Chapter11DegreeTheory C.carrier]
+    [Chapter11DivisorRepresentationTheory C]
     (L : Chapter11LineBundle C.carrier) :
-    Chapter11LineBundleDivisorRepresentation C L := by
-  sorry
+    Chapter11LineBundleDivisorRepresentation C L :=
+  Chapter11DivisorRepresentationTheory.every_line_bundle_has_divisor_representation L
 
 /-- Degree defined by the Euler characteristic, the definition available for
 the singular Gorenstein proof. -/
 noncomputable def chapter11EulerDefinedDegree
     {k : Type u} [Field k] {X : Scheme.{u}}
     (f : X ⟶ AlgebraicGeometry.Spec (.of k))
-    [Chapter11CohomologyTheory X f] (F : X.Modules) : ℤ :=
-  chapter11EulerCharacteristic (f := f) F -
+    [Chapter11CohomologyTheory X f]
+    (L : Chapter11LineBundle X) : ℤ :=
+  chapter11EulerCharacteristic (f := f) L.module -
     chapter11EulerCharacteristic (f := f)
       (chapter11StructureSheafLineBundle X).module
 
 theorem chapter11_euler_defined_degree_reconstructs_euler_characteristic
     {k : Type u} [Field k] {X : Scheme.{u}}
     (f : X ⟶ AlgebraicGeometry.Spec (.of k))
-    [Chapter11CohomologyTheory X f] (F : X.Modules) :
-    chapter11EulerCharacteristic (f := f) F =
-    chapter11EulerDefinedDegree f F +
+    [Chapter11CohomologyTheory X f]
+    (L : Chapter11LineBundle X) :
+    chapter11EulerCharacteristic (f := f) L.module =
+    chapter11EulerDefinedDegree f L +
         chapter11EulerCharacteristic (f := f)
           (chapter11StructureSheafLineBundle X).module := by
   simp [chapter11EulerDefinedDegree, sub_add_cancel]
@@ -149,7 +138,7 @@ theorem chapter11_gorenstein_euler_defined_degree_rr
         (chapter11StructureSheafLineBundle C.carrier).module =
       1 - (C.arithmeticGenus : ℤ)) :
     chapter11EulerCharacteristic (f := C.structureMap) L.module =
-      chapter11EulerDefinedDegree C.structureMap L.module +
+      chapter11EulerDefinedDegree C.structureMap L +
         1 - (C.arithmeticGenus : ℤ) := by
   sorry
 

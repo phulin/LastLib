@@ -1,5 +1,6 @@
 import LastLib.Book03RamificationTheory.Chapter03.Dependencies
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section07ConcreteFiniteExtensions
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section04RamificationIndexAndResidueDegree
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.Section08PrimeToP_RadicalExtensions
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Data.Finset.Card
@@ -48,6 +49,11 @@ theorem chapter03_cyclotomic_base_degree_and_normalization
     {K : Type*} [Field K] [Algebra (ℚ_[p]) K]
     [FiniteDimensional (ℚ_[p]) K]
     (ζ lambda : K) (vK : AddValuation K (WithTop ℤ))
+    (hdiscreteK :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation
+        vK)
+    (hext : (Padic.addValuation (p := p)).IsEquiv
+      (vK.comap (algebraMap (ℚ_[p]) K)))
     (hζ : IsPrimitiveRoot ζ p) (hlambda : lambda = ζ - 1)
     (hroot :
       aeval lambda
@@ -98,9 +104,22 @@ theorem chapter03_wild_kummer_extension_profile
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L]
     (p : ℕ) [Fact p.Prime]
-    (D : Chapter03WildKummerExtensionData p K L) :
-    ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
-      q.degree = p ∧ q.ramificationIndex = p ∧ q.residueDegree = 1 := by
+    (D : Chapter03WildKummerExtensionData p K L)
+    (vK : AddValuation K (WithTop ℤ))
+    (vL : AddValuation L (WithTop ℤ))
+    (hdiscreteK :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vK)
+    (hdiscreteL :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vL)
+    (hval : vK.IsEquiv (vL.comap (algebraMap K L)))
+    (hvalue_lambda : vK D.lambda = 1)
+    (hvalue_alpha : vL D.α = 1) :
+    ∃ d : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10HeterogeneousExtensionData
+        vK vL hval,
+      ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
+        LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ProfileRealizedByData d q ∧
+          q.degree = p ∧ q.ramificationIndex = p ∧ q.residueDegree = 1 ∧
+          LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10TotallyRamified q := by
   sorry
 
 theorem chapter03_wild_kummer_restriction_scales_by_p
@@ -110,6 +129,11 @@ theorem chapter03_wild_kummer_restriction_scales_by_p
     (D : Chapter03WildKummerExtensionData p K L)
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
     (hval_lambda : vK D.lambda = 1) (hval_alpha : vL D.α = 1)
+    (hdiscreteK :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vK)
+    (hdiscreteL :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vL)
+    (hext : vK.IsEquiv (vL.comap (algebraMap K L)))
     (hrestriction : vL (algebraMap K L D.lambda) = p) :
     ∀ x : K, vL (algebraMap K L x) = p • vK x := by
   sorry
@@ -119,6 +143,17 @@ theorem chapter03_wild_kummer_root_difference_ratio_is_a_unit
     (ζ : K) (hζ : IsPrimitiveRoot ζ p)
     (ha : 1 ≤ a) (hap : a < p) :
     IsUnit ((ζ ^ a - 1) / (ζ - 1)) := by
+  sorry
+
+/- The field-level unit statement above is supplemented by the valuation
+   consequence used in the displacement calculation. -/
+theorem chapter03_wild_kummer_root_difference_ratio_has_value_zero
+    {K : Type*} [Field K] (p a : ℕ) [Fact p.Prime]
+    (ζ : K) (hζ : IsPrimitiveRoot ζ p)
+    (ha : 1 ≤ a) (hap : a < p)
+    (vK : AddValuation K (WithTop ℤ))
+    (hvalue : vK (ζ - 1) = 1) :
+    vK ((ζ ^ a - 1) / (ζ - 1)) = 0 := by
   sorry
 
 theorem chapter03_wild_kummer_displacement_calculation

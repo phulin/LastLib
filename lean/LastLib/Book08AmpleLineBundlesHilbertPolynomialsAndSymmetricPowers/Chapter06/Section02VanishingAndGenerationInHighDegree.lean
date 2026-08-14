@@ -16,13 +16,12 @@ theorem chapter06_serre_vanishing_projective_space
     (hA : IsNoetherianRing A)
     (C : Chapter06CohomologyTheory A)
     (P : Chapter06ProjectiveSpaceData A r)
-    (H : Chapter06SerreVanishingProjectiveSpaceData C P)
     (F : P.X.Modules) (hF : Chapter06Coherent F) :
     ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
       (∀ i : ℕ, 0 < i →
         chapter06CohomologyIsZero C (P.twisting.twist F n) i) ∧
       chapter06FinitelyGloballyGenerated (P.twisting.twist F n) := by
-  exact H.vanishing hA F hF
+  sorry
 
 /-- The kernel of an epimorphism between coherent sheaves is coherent over a noetherian scheme. -/
 theorem chapter06_coherent_kernel_of_epi
@@ -46,7 +45,7 @@ theorem chapter06_closed_immersion_cohomology_iso
     {X Y : Chapter06Scheme} (i : X ⟶ Y) [IsClosedImmersion i]
     (G : X.Modules) (j : ℕ) :
     Nonempty (C.H (chapter06Pushforward i G) j ≅ C.H G j) := by
-  exact C.closedImmersionPushforward i G j
+  exact C.closedImmersionIso i G j
 
 /-- Pushforward commutes with the chosen twists under the canonical twisting compatibility. -/
 def chapter06_closed_immersion_pushforward_twist_iso
@@ -66,15 +65,14 @@ theorem chapter06_serre_vanishing_closed_subscheme
     {X : Chapter06Scheme} (i : X ⟶ P.X) [IsClosedImmersion i]
     (G : X.Modules) (hG : Chapter06Coherent G)
     (T_X : Chapter06TwistSystem X)
-    (hT : Chapter06TwistCompatibility i T_X P.twisting)
-    (H : Chapter06SerreVanishingClosedSubschemeData C P i G T_X hT) :
+    (hT : Chapter06TwistCompatibility i T_X P.twisting) :
     ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
       (∀ j : ℕ, 0 < j →
         chapter06CohomologyIsZero C (T_X.twist G n) j ∧
           Nonempty (C.H (chapter06Pushforward i (T_X.twist G n)) j ≅
             C.H (T_X.twist G n) j)) ∧
       chapter06FinitelyGloballyGenerated (T_X.twist G n) := by
-  exact H.vanishing hA hG
+  sorry
 
 /-- Serre vanishing for a projective noetherian scheme with a relatively ample twist. -/
 theorem chapter06_serre_vanishing_projective
@@ -83,12 +81,11 @@ theorem chapter06_serre_vanishing_projective
     (hproj : chapter06IsProjective f)
     (T : Chapter06TwistSystem X) [Chapter06RelativelyAmple f T]
     (C : Chapter06CohomologyTheory ℤ)
-    (H : Chapter06SerreVanishingProjectiveData f T C)
     (F : X.Modules) (hF : Chapter06Coherent F) :
     ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
       (∀ i : ℕ, 0 < i → chapter06CohomologyIsZero C (T.twist F n) i) ∧
       chapter06FinitelyGloballyGenerated (T.twist F n) := by
-  exact H.vanishing hS hproj F hF
+  sorry
 
 /-- The finitely many residue classes modulo a very-ample power are the reduction used for an
 ample twist. -/
@@ -98,12 +95,11 @@ theorem chapter06_serre_vanishing_of_ample_twist
     (hproj : chapter06IsProjective f)
     (T : Chapter06TwistSystem X) [Chapter06RelativelyAmple f T]
     (C : Chapter06CohomologyTheory ℤ)
-    (H : Chapter06SerreVanishingProjectiveData f T C)
     (F : X.Modules) (hF : Chapter06Coherent F) :
     ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
       (∀ i : ℕ, 0 < i → chapter06CohomologyIsZero C (T.twist F n) i) ∧
       chapter06FinitelyGloballyGenerated (T.twist F n) := by
-  exact H.vanishing hS hproj F hF
+  sorry
 
 end
 

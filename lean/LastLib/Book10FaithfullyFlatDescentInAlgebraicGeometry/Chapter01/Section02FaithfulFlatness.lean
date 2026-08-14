@@ -9,7 +9,7 @@ chapter-facing names make the direction of tensoring explicit.
 -/
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
-open scoped AlgebraicGeometry
+open scoped AlgebraicGeometry TensorProduct
 
 universe u
 
@@ -56,14 +56,19 @@ theorem chapter01_faithfullyFlat_iff_tensoring_preserves_and_reflects_exactness
     (A B : Type u) [CommRing A] [CommRing B] [Algebra A B] :
     Chapter01FaithfullyFlatAlgebra A B ↔
       Chapter01TensoringPreservesAndReflectsExactness A B := by
-  simpa [Chapter01FaithfullyFlatAlgebra,
-    Chapter01TensoringPreservesAndReflectsExactness] using
-      (Module.FaithfullyFlat.iff_exact_iff_lTensor_exact A B)
+  unfold Chapter01FaithfullyFlatAlgebra Chapter01TensoringPreservesAndReflectsExactness
+  constructor
+  · intro h M₁ M₂ M₃ _ _ _ _ _ _ f g
+    let _ : Module.FaithfullyFlat A B := h
+    exact (Module.FaithfullyFlat.lTensor_exact_iff_exact A B f g).symm
+  · intro h
+    exact (Module.FaithfullyFlat.iff_exact_iff_lTensor_exact A B).mpr (fun f g => h f g)
 
 theorem chapter01_flat_iff_tensoring_preserves_exactness
     (A B : Type u) [CommRing A] [CommRing B] [Algebra A B] :
     Chapter01FlatAlgebra A B ↔ Chapter01TensoringPreservesExactness A B := by
-  sorry
+  simpa [Chapter01FlatAlgebra, Chapter01TensoringPreservesExactness] using
+    (Module.Flat.iff_lTensor_exact (R := A) (M := B))
 
 /-- Faithfulness of tensoring, written as reflection of trivial modules. -/
 def Chapter01TensorReflectsTriviality
@@ -73,11 +78,10 @@ def Chapter01TensorReflectsTriviality
 
 theorem chapter01_faithfullyFlat_iff_flat_and_tensor_reflects_triviality
     (A B : Type u) [CommRing A] [CommRing B] [Algebra A B] :
-    Chapter01FaithfullyFlatAlgebra A B ↔
+      Chapter01FaithfullyFlatAlgebra A B ↔
       Chapter01FlatAlgebra A B ∧ Chapter01TensorReflectsTriviality A B := by
-  simpa [Chapter01FaithfullyFlatAlgebra, Chapter01FlatAlgebra,
-    Chapter01TensorReflectsTriviality] using
-      (Module.FaithfullyFlat.iff_flat_and_lTensor_reflects_triviality A B)
+  simpa [Chapter01FaithfullyFlatAlgebra, Chapter01FlatAlgebra, Chapter01TensorReflectsTriviality] using
+    (Module.FaithfullyFlat.iff_flat_and_lTensor_reflects_triviality (R := A) (M := B))
 
 theorem chapter01_faithfullyFlat_iff_flat_and_tensor_nontrivial
     (A B : Type u) [CommRing A] [CommRing B] [Algebra A B] :
@@ -89,7 +93,7 @@ theorem chapter01_faithfullyFlat_iff_flat_and_tensor_nontrivial
     (Module.FaithfullyFlat.iff_flat_and_lTensor_faithful A B)
 
 /-- Extension of an ideal along an algebra map; this is the book's notation `IB`. -/
-def chapter01IdealExtension
+abbrev chapter01IdealExtension
     (A B : Type u) [CommRing A] [CommRing B] [Algebra A B] (I : Ideal A) : Ideal B :=
   I.map (algebraMap A B)
 
@@ -104,14 +108,16 @@ theorem chapter01_faithfullyFlat_iff_flat_and_proper_ideal
     Chapter01FaithfullyFlatAlgebra A B ↔
       Chapter01FlatAlgebra A B ∧
         ∀ I : Ideal A, I ≠ ⊤ → chapter01IdealExtension A B I ≠ ⊤ := by
-  sorry
+  simpa [Chapter01FaithfullyFlatAlgebra, Chapter01FlatAlgebra, chapter01IdealExtension] using
+    (Module.FaithfullyFlat.iff_flat_and_proper_ideal (R := A) (M := B))
 
 theorem chapter01_faithfullyFlat_iff_flat_and_ideal_extension_eq_top
     (A B : Type u) [CommRing A] [CommRing B] [Algebra A B] :
     Chapter01FaithfullyFlatAlgebra A B ↔
       Chapter01FlatAlgebra A B ∧
         ∀ I : Ideal A, chapter01IdealExtension A B I = ⊤ → I = ⊤ := by
-  sorry
+  simpa [Chapter01FaithfullyFlatAlgebra, Chapter01FlatAlgebra, chapter01IdealExtension] using
+    (Module.FaithfullyFlat.iff_flat_and_ideal_smul_eq_top (R := A) (M := B))
 
 theorem chapter01_ringHom_faithfullyFlat_iff_flat_and_spec_surjective
     {A B : Type u} [CommRing A] [CommRing B] (f : A →+* B) :
@@ -144,14 +150,23 @@ theorem chapter01_faithfullyFlat_of_flat_of_primeFiber_nontrivial
     (A B : Type u) [CommRing A] [CommRing B] [Algebra A B] [Module.Flat A B]
     (h : ∀ p : PrimeSpectrum A, Nontrivial (Chapter01PrimeFiber A B p)) :
     Module.FaithfullyFlat A B := by
-  sorry
+  exact Module.FaithfullyFlat.of_comap_surjective (fun p => by
+    let _ : Nontrivial (B ⊗[A] p.asIdeal.ResidueField) := h p
+    exact (PrimeSpectrum.nontrivial_iff_mem_rangeComap p).mp
+      ((TensorProduct.comm A B p.asIdeal.ResidueField).symm.toEquiv.nontrivial))
 
 theorem chapter01_faithfullyFlat_iff_flat_and_primeFiber_nontrivial
     (A B : Type u) [CommRing A] [CommRing B] [Algebra A B] :
     Module.FaithfullyFlat A B ↔
       Module.Flat A B ∧
         ∀ p : PrimeSpectrum A, Nontrivial (Chapter01PrimeFiber A B p) := by
-  sorry
+  constructor
+  · intro h
+    let _ : Module.FaithfullyFlat A B := h
+    exact ⟨inferInstance, fun p => chapter01_primeFiber_nontrivial_of_faithfullyFlat A B p⟩
+  · rintro ⟨hf, h⟩
+    let _ : Module.Flat A B := hf
+    exact chapter01_faithfullyFlat_of_flat_of_primeFiber_nontrivial A B h
 
 theorem chapter01_tensorProduct_mk_injective
     (A B : Type u) [CommRing A] [CommRing B] [Algebra A B]
@@ -166,7 +181,16 @@ theorem chapter01_faithfullyFlat_iff_flat_and_tensorProduct_mk_injective
       Module.Flat A B ∧
         ∀ (M : Type u) [AddCommGroup M] [Module A M],
           Function.Injective (TensorProduct.mk A B M 1) := by
-  sorry
+  constructor
+  · intro h
+    let _ : Module.FaithfullyFlat A B := h
+    exact ⟨inferInstance, fun M _ _ => chapter01_tensorProduct_mk_injective A B M⟩
+  · rintro ⟨hf, hm⟩
+    let _ : Module.Flat A B := hf
+    exact (Module.FaithfullyFlat.iff_flat_and_lTensor_reflects_triviality (R := A) (M := B)).2
+      ⟨hf, fun M _ _ hM => by
+        let _ : Subsingleton (B ⊗[A] M) := hM
+        exact (hm M).subsingleton⟩
 
 theorem chapter01_lTensor_injective_iff_injective
     (A B : Type u) [CommRing A] [CommRing B] [Algebra A B]

@@ -4,8 +4,6 @@ namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter
 
 noncomputable section
 
-classical
-
 open AlgebraicGeometry CategoryTheory
 
 universe u v
@@ -26,6 +24,15 @@ theorem chapter11_total_transform_formula
         (D.multiplicity p : ℤ) • chapter11ExceptionalDivisor b := by
   sorry
 
+theorem chapter11_total_transform_ideal_is_pullback
+    {S : Chapter11ArithmeticBase}
+    {X : Chapter11ArithmeticSurface S}
+    {p : Chapter11SurfacePoint X}
+    (b : Chapter11PointBlowup p)
+    (D : Chapter11CartierCurve X) :
+    chapter11TotalTransformIdeal b D = D.cartierDivisor.ideal.comap b.map := by
+  sorry
+
 /-- The exceptional curve has normal-bundle degree `-d_x` (11.2). -/
 theorem chapter11_exceptional_self_intersection
     {S : Chapter11ArithmeticBase}
@@ -33,7 +40,7 @@ theorem chapter11_exceptional_self_intersection
     {p : Chapter11SurfacePoint X}
     (b : Chapter11PointBlowup p)
     (I : Chapter11NumericalIntersectionContext b.target)
-    (hscope : I.scope) :
+    (N : Chapter11ExceptionalIntersectionBridge b I) :
     I.pairing (chapter11ExceptionalDivisor b)
       (chapter11ExceptionalDivisor b) =
       -(chapter11ResidueDegree p : ℤ) := by

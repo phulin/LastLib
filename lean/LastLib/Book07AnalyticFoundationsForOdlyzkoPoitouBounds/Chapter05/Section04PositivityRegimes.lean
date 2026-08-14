@@ -1,4 +1,6 @@
 import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.Core
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.Section01TransformConventions
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.Section03PositiveType
 
 namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05
 
@@ -38,7 +40,12 @@ theorem chapter05_grh_admissible_iff
 theorem chapter05_grh_admissible_real_transform_nonnegative
     {F : ℝ → ℝ} (hF : Chapter05GRHAdmissible F) :
     ∀ t : ℝ, 0 ≤ chapter05RealFourierTransform F t := by
-  sorry
+  intro t
+  have hEq := chapter05_fourier_transform_eq_ofReal_real_transform
+    (chapter05_basically_admissible_integrable hF.basic) hF.basic.even t
+  have hnonneg := (hF.transformNonnegative t).2
+  rw [hEq] at hnonneg
+  exact hnonneg
 
 theorem chapter05_grh_admissible_central_line_nonnegative
     {F : ℝ → ℝ} (hF : Chapter05GRHAdmissible F) (t : ℝ) :
@@ -46,7 +53,10 @@ theorem chapter05_grh_admissible_central_line_nonnegative
         ((1 / 2 : ℂ) + (t : ℂ) * Complex.I)).im = 0 ∧
       0 ≤ (chapter05BilateralLaplaceTransform F
         ((1 / 2 : ℂ) + (t : ℂ) * Complex.I)).re := by
-  sorry
+  have hEq := chapter05_laplace_on_critical_line
+    (chapter05_basically_admissible_integrable hF.basic) hF.basic.even t
+  rw [hEq]
+  exact hF.transformNonnegative t
 
 theorem chapter05_grh_admissible_lower_bound_admissible
     {F : ℝ → ℝ} (hF : Chapter05GRHAdmissible F) :
@@ -63,7 +73,10 @@ than guessing the number-field zeta API before that chapter is reconciled.
 theorem chapter05_unconditionally_admissible_pointwise_nonnegative
     {F : ℝ → ℝ} (hF : Chapter05UnconditionallyAdmissible F) :
     ∀ x : ℝ, 0 ≤ F x := by
-  sorry
+  rcases hF.2 with ⟨witness, hwitness, _, _, hF_eq⟩
+  intro x
+  rw [hF_eq x]
+  exact div_nonneg (hwitness x) (Real.cosh_pos _).le
 
 theorem chapter05_unconditionally_admissible_lower_bound_admissible
     {F : ℝ → ℝ} (hF : Chapter05UnconditionallyAdmissible F) :

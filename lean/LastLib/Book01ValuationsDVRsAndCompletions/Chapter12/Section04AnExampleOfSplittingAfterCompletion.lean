@@ -306,14 +306,18 @@ theorem quadratic_quotient_projectors_are_coordinates
     exact hB
 
 
-/-- A repeated factorization supplies a square divisor. -/
+/-- A nonzero repeated factor is equivalently a nonzero square divisor with a
+    displayed quotient. -/
 theorem repeated_polynomial_factor_has_square_divisor
-    {A : Type*} [CommRing A] (f : A[X])
-    (hrepeated : ∃ g : A[X], g ≠ 0 ∧ g * g ∣ f) :
-    ∃ g q : A[X], g ≠ 0 ∧ f = g * g * q := by
-  rcases hrepeated with ⟨g, hg, hdiv⟩
-  rcases hdiv with ⟨q, hq⟩
-  exact ⟨g, q, hg, hq⟩
+    {A : Type*} [CommRing A] (f : A[X]) :
+    (∃ g : A[X], g ≠ 0 ∧ g * g ∣ f) ↔
+      (∃ g q : A[X], g ≠ 0 ∧ f = g * g * q) := by
+  constructor
+  · rintro ⟨g, hg, hdiv⟩
+    rcases hdiv with ⟨q, hq⟩
+    exact ⟨g, q, hg, hq⟩
+  · rintro ⟨g, q, hg, hq⟩
+    exact ⟨g, hg, ⟨q, hq⟩⟩
 
 
 /-- Concrete maps in the branch-language chain. -/

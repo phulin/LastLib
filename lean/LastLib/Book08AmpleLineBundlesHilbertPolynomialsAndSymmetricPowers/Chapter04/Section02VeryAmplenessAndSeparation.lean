@@ -1,5 +1,4 @@
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Dependencies
-import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02.Section03SectionsWithoutCommonZeros
 
 namespace LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
 
@@ -121,20 +120,38 @@ theorem chapter04_induced_section_system_map_isClosedImmersion_of_proper
     (w : Chapter04InducedSectionSystemMap V)
     (hV : chapter04SectionSystemGenerates V ∧ chapter04SeparatesLengthTwo V) :
     IsClosedImmersion w.map := by
-  sorry
+  let : IsImmersion w.map :=
+    (chapter04_induced_section_system_map_isImmersion_iff V w).2 hV
+  have : IsProper (w.map ≫ w.projectiveBundle.projection) := by
+    rw [w.over]
+    infer_instance
+  have : IsProper w.map := IsProper.of_comp w.map w.projectiveBundle.projection
+  rw [IsClosedImmersion.iff_isProper_and_mono]
+  exact ⟨inferInstance, inferInstance⟩
 
 /-- A proper family turns the locally closed immersion from very ampleness into a closed immersion. -/
 theorem chapter04_veryAmple_closed_immersion_of_proper
     {X S : Scheme.{u}} (f : X ⟶ S) [IsProper f]
     (L : Chapter04LineBundle X) (w : Chapter04VeryAmpleWitness f L) :
     IsClosedImmersion w.map := by
-  sorry
+  let : IsImmersion w.map := w.immersion
+  have : IsProper (w.map ≫ w.projectiveBundle.projection) := by
+    rw [w.over]
+    infer_instance
+  have : IsProper w.map := IsProper.of_comp w.map w.projectiveBundle.projection
+  rw [IsClosedImmersion.iff_isProper_and_mono]
+  exact ⟨inferInstance, inferInstance⟩
 
 theorem chapter04_proper_veryAmple_is_projective
     {X S : Scheme.{u}} (f : X ⟶ S) [IsProper f]
     (L : Chapter04LineBundle X) (hL : chapter04VeryAmple f L) :
     chapter04Projective f := by
-  sorry
+  obtain ⟨w⟩ := hL
+  exact ⟨{ projectiveBundle := w.projectiveBundle
+           universalQuotientCompatible := w.universalQuotientCompatible
+           map := w.map
+           closedImmersion := chapter04_veryAmple_closed_immersion_of_proper f L w
+           over := w.over }⟩
 
 /- The length-two condition simultaneously contains the reduced two-point
 case and the doubled-point tangent-direction case.  The predicates below make

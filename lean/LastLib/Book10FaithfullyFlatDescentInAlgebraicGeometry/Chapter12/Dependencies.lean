@@ -20,6 +20,7 @@ import Mathlib.RingTheory.Bialgebra.Hom
 import Mathlib.RingTheory.Bialgebra.TensorProduct
 import Mathlib.RingTheory.Flat.FaithfullyFlat.Descent
 import Mathlib.RingTheory.Finiteness.Descent
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter11.Section01TheoremAndHypotheses
 
 namespace LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter12
 
@@ -27,7 +28,7 @@ noncomputable section
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
 open CategoryTheory.MonoidalCategory
-open CategoryTheory.MonoObj
+open scoped MonObj
 
 universe u v
 
@@ -78,7 +79,7 @@ abbrev identity (G : Chapter12GroupScheme S) : 𝟙_ (Over S) ⟶ G.X := η[G.X]
 abbrev identityScheme (G : Chapter12GroupScheme S) : S ⟶ G.carrier := G.identity.left
 
 /-- The inverse morphism in the slice. -/
-abbrev inverse (G : Chapter12GroupScheme S) : G.X ⟶ G.X := ι[G.X]
+abbrev inverse (G : Chapter12GroupScheme S) : G.X ⟶ G.X := GrpObj.inv (X := G.X)
 
 /-- The inverse scheme map `G ⟶ G`. -/
 abbrev inverseScheme (G : Chapter12GroupScheme S) : G.carrier ⟶ G.carrier := G.inverse.left
@@ -141,7 +142,8 @@ abbrev identity (G : Chapter12CommutativeGroupScheme S) : 𝟙_ (Over S) ⟶ G.X
 abbrev identityScheme (G : Chapter12CommutativeGroupScheme S) : S ⟶ G.carrier := G.identity.left
 
 /-- The inverse morphism in the slice. -/
-abbrev inverse (G : Chapter12CommutativeGroupScheme S) : G.X ⟶ G.X := ι[G.X]
+abbrev inverse (G : Chapter12CommutativeGroupScheme S) : G.X ⟶ G.X :=
+  GrpObj.inv (X := G.X)
 
 /-- The inverse scheme map `G ⟶ G`. -/
 abbrev inverseScheme (G : Chapter12CommutativeGroupScheme S) : G.carrier ⟶ G.carrier := G.inverse.left
@@ -195,6 +197,10 @@ abbrev Chapter12Flat {X Y : Scheme.{u}} (f : X ⟶ Y) : Prop := Flat f
 abbrev Chapter12LocallyOfFinitePresentation {X Y : Scheme.{u}} (f : X ⟶ Y) : Prop :=
   LocallyOfFinitePresentation f
 
+/-- Finite presentation, keeping the quasi-compact part explicit. -/
+def Chapter12FinitePresentation {X Y : Scheme.{u}} (f : X ⟶ Y) : Prop :=
+  LocallyOfFinitePresentation f ∧ QuasiCompact f
+
 /-- Finite and flat, with the two source properties kept separate. -/
 def Chapter12FiniteFlat {X Y : Scheme.{u}} (f : X ⟶ Y) : Prop :=
   IsFinite f ∧ Flat f
@@ -220,9 +226,10 @@ def Chapter12FaithfullyFlatLocallyOfFinitePresentation
 def Chapter12FpqcCover {X Y : Scheme.{u}} (f : X ⟶ Y) : Prop :=
   QuasiCompact f ∧ Flat f ∧ Surjective f
 
-/-- An fppf cover: quasi-compact, flat, locally finitely presented, and surjective. -/
+/-- A single fppf cover: flat, locally finitely presented, and surjective.  Quasi-compactness is
+separate because a surjective fppf morphism need not be quasi-compact. -/
 def Chapter12Fppf {X Y : Scheme.{u}} (f : X ⟶ Y) : Prop :=
-  QuasiCompact f ∧ Flat f ∧ LocallyOfFinitePresentation f ∧ Surjective f
+  Flat f ∧ LocallyOfFinitePresentation f ∧ Surjective f
 
 theorem chapter12_fpqcCover_iff_faithfullyFlat_and_quasiCompact
     {X Y : Scheme.{u}} (f : X ⟶ Y) :
@@ -233,15 +240,30 @@ theorem chapter12_fpqcCover_iff_faithfullyFlat_and_quasiCompact
   · rintro ⟨⟨hf, hs⟩, hq⟩
     exact ⟨hq, hf, hs⟩
 
-theorem chapter12_fppf_iff_faithfullyFlatLocallyOfFinitePresentation_and_quasiCompact
+theorem chapter12_fppf_iff_faithfullyFlatLocallyOfFinitePresentation
     {X Y : Scheme.{u}} (f : X ⟶ Y) :
     Chapter12Fppf f ↔
-      Chapter12FaithfullyFlatLocallyOfFinitePresentation f ∧ QuasiCompact f := by
+      Chapter12FaithfullyFlatLocallyOfFinitePresentation f := by
   constructor
-  · rintro ⟨hq, hf, hlfp, hs⟩
-    exact ⟨⟨hf, hs, hlfp⟩, hq⟩
-  · rintro ⟨⟨hf, hs, hlfp⟩, hq⟩
-    exact ⟨hq, hf, hlfp, hs⟩
+  · rintro ⟨hf, hlfp, hs⟩
+    exact ⟨hf, hs, hlfp⟩
+  · rintro ⟨hf, hs, hlfp⟩
+    exact ⟨hf, hlfp, hs⟩
+
+theorem chapter12_fppf_quasiCompact_to_fpqcCover
+    {X Y : Scheme.{u}} (f : X ⟶ Y) :
+    Chapter12Fppf f → QuasiCompact f → Chapter12FpqcCover f := by
+  intro hfppf hq
+  exact ⟨hq, hfppf.1, hfppf.2.2⟩
+
+/-! The canonical Chapter 11 API uses the order `flat ∧ surjective ∧ quasi-compact` for a
+singleton fpqc morphism, whereas the book-facing predicate above follows the order in Chapter 2.
+This bridge keeps the two interfaces interchangeable in descent proofs. -/
+
+theorem chapter12_fpqcCover_isFpqcMorphism
+    {S T : Scheme.{u}} (p : T ⟶ S) (hp : Chapter12FpqcCover p) :
+    LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter11.Scheme.IsFpqcMorphism p := by
+  exact ⟨hp.2.1, hp.2.2, hp.1⟩
 
 /-- A finite-flat group scheme package used when the property is part of the object. -/
 structure Chapter12FiniteFlatGroupScheme (S : Scheme.{u}) where
@@ -259,10 +281,31 @@ structure Chapter12FiniteLocallyFreeGroupScheme (S : Scheme.{u}) where
   finiteLocallyFree : Chapter12FiniteLocallyFree group.X.hom
 
 /-!
-The following coherent descent records are a local interface guess: an earlier chapter is expected
-to expose the equivalent canonical scheme-valued fpqc descent category.  They keep this chapter's
-statements proof-ready until that earlier interface is available.
+The following records refine the canonical scheme-valued descent interface from Chapter 11 with
+group-object structure.  The explicit pullback-compatibility fields keep the group comparison maps
+in the same pseudofunctorial form as the underlying scheme descent datum.
 -/
+
+/-! The associativity comparison for iterated pullback of a group scheme. -/
+
+def chapter12GroupSchemeBaseChangeCompIso
+    {S T U : Scheme.{u}} (p : T ⟶ S) (q : U ⟶ T)
+    (G : Chapter12GroupScheme S) :
+    Chapter12GroupScheme.baseChange q (Chapter12GroupScheme.baseChange p G) ≅
+      Chapter12GroupScheme.baseChange (q ≫ p) G := by
+  exact
+    ((Functor.mapGrpCompIso (F := Over.pullback p) (G := Over.pullback q)).app G).symm ≪≫
+      ((Functor.mapGrpNatIso (Over.pullbackComp q p)).app G).symm
+
+def chapter12CommutativeGroupSchemeBaseChangeCompIso
+    {S T U : Scheme.{u}} (p : T ⟶ S) (q : U ⟶ T)
+    (G : Chapter12CommutativeGroupScheme S) :
+    Chapter12CommutativeGroupScheme.baseChange q
+        (Chapter12CommutativeGroupScheme.baseChange p G) ≅
+      Chapter12CommutativeGroupScheme.baseChange (q ≫ p) G := by
+  exact
+    ((Functor.mapCommGrpCompIso (F := Over.pullback p) (G := Over.pullback q)).app G).symm ≪≫
+      ((Functor.mapCommGrpNatIso (Over.pullbackComp q p)).app G).symm
 
 /-! ### Coherent descent data -/
 
@@ -281,15 +324,23 @@ structure Chapter12GroupSchemeDescentDatum {S T : Scheme.{u}} (p : T ⟶ S) wher
   compare_comp {U : Scheme.{u}} (q₁ q₂ q₃ : U ⟶ T)
       (h₁₂ : q₁ ≫ p = q₂ ≫ p) (h₂₃ : q₂ ≫ p = q₃ ≫ p)
       (h₁₃ : q₁ ≫ p = q₃ ≫ p) :
-    compare q₁ q₂ h₁₂ ≫ compare q₂ q₃ h₂₃ = compare q₁ q₃ h₁₃
+    (compare q₁ q₂ h₁₂).hom ≫ (compare q₂ q₃ h₂₃).hom =
+      (compare q₁ q₃ h₁₃).hom
+  compare_pull {U V : Scheme.{u}} (r : V ⟶ U) (q₁ q₂ : U ⟶ T)
+      (h : q₁ ≫ p = q₂ ≫ p)
+      (h' : (r ≫ q₁) ≫ p = (r ≫ q₂) ≫ p) :
+    (Chapter12GroupScheme.baseChangeIso r (compare q₁ q₂ h)).hom =
+      (chapter12GroupSchemeBaseChangeCompIso q₁ r upstairs).hom ≫
+        (compare (r ≫ q₁) (r ≫ q₂) h').hom ≫
+          (chapter12GroupSchemeBaseChangeCompIso q₂ r upstairs).inv
 
 /-- A morphism of the preceding descent data. -/
 def chapter12DescentHomCompatible {S T : Scheme.{u}} {p : T ⟶ S}
     (D₁ D₂ : Chapter12GroupSchemeDescentDatum p)
     (f : D₁.upstairs ⟶ D₂.upstairs) : Prop :=
   ∀ {U : Scheme.{u}} (q₁ q₂ : U ⟶ T) (h : q₁ ≫ p = q₂ ≫ p),
-    Chapter12GroupScheme.baseChangeHom q₁ f ≫ D₂.compare q₁ q₂ h =
-      D₁.compare q₁ q₂ h ≫ Chapter12GroupScheme.baseChangeHom q₂ f
+    Chapter12GroupScheme.baseChangeHom q₁ f ≫ (D₂.compare q₁ q₂ h).hom =
+      (D₁.compare q₁ q₂ h).hom ≫ Chapter12GroupScheme.baseChangeHom q₂ f
 
 /-- The commutative-group-object version of coherent fpqc descent data. -/
 structure Chapter12CommutativeGroupSchemeDescentDatum {S T : Scheme.{u}} (p : T ⟶ S) where
@@ -302,15 +353,78 @@ structure Chapter12CommutativeGroupSchemeDescentDatum {S T : Scheme.{u}} (p : T 
   compare_comp {U : Scheme.{u}} (q₁ q₂ q₃ : U ⟶ T)
       (h₁₂ : q₁ ≫ p = q₂ ≫ p) (h₂₃ : q₂ ≫ p = q₃ ≫ p)
       (h₁₃ : q₁ ≫ p = q₃ ≫ p) :
-    compare q₁ q₂ h₁₂ ≫ compare q₂ q₃ h₂₃ = compare q₁ q₃ h₁₃
+    (compare q₁ q₂ h₁₂).hom ≫ (compare q₂ q₃ h₂₃).hom =
+      (compare q₁ q₃ h₁₃).hom
+  compare_pull {U V : Scheme.{u}} (r : V ⟶ U) (q₁ q₂ : U ⟶ T)
+      (h : q₁ ≫ p = q₂ ≫ p)
+      (h' : (r ≫ q₁) ≫ p = (r ≫ q₂) ≫ p) :
+    (Chapter12CommutativeGroupScheme.baseChangeIso r (compare q₁ q₂ h)).hom =
+      (chapter12CommutativeGroupSchemeBaseChangeCompIso q₁ r upstairs).hom ≫
+        (compare (r ≫ q₁) (r ≫ q₂) h').hom ≫
+          (chapter12CommutativeGroupSchemeBaseChangeCompIso q₂ r upstairs).inv
 
 /-- Compatibility of a commutative group homomorphism with commutative descent data. -/
 def chapter12CommutativeDescentHomCompatible {S T : Scheme.{u}} {p : T ⟶ S}
     (D₁ D₂ : Chapter12CommutativeGroupSchemeDescentDatum p)
     (f : D₁.upstairs ⟶ D₂.upstairs) : Prop :=
   ∀ {U : Scheme.{u}} (q₁ q₂ : U ⟶ T) (h : q₁ ≫ p = q₂ ≫ p),
-    Chapter12CommutativeGroupScheme.baseChangeHom q₁ f ≫ D₂.compare q₁ q₂ h =
-      D₁.compare q₁ q₂ h ≫ Chapter12CommutativeGroupScheme.baseChangeHom q₂ f
+    Chapter12CommutativeGroupScheme.baseChangeHom q₁ f ≫ (D₂.compare q₁ q₂ h).hom =
+      (D₁.compare q₁ q₂ h).hom ≫
+        Chapter12CommutativeGroupScheme.baseChangeHom q₂ f
+
+/-!
+The canonical comparison between two iterated pullbacks of an object already defined over the
+base.  The equality `h` identifies the two composites to the base; the resulting isomorphism is
+the one used when comparing an effective descent object with a prescribed datum.
+-/
+
+def chapter12GroupSchemeBaseChangeComparison
+    {S T U : Scheme.{u}} (p : T ⟶ S) (G : Chapter12GroupScheme S)
+    (q₁ q₂ : U ⟶ T) (h : q₁ ≫ p = q₂ ≫ p) :
+    Chapter12GroupScheme.baseChange q₁ (Chapter12GroupScheme.baseChange p G) ≅
+      Chapter12GroupScheme.baseChange q₂ (Chapter12GroupScheme.baseChange p G) := by
+  exact chapter12GroupSchemeBaseChangeCompIso p q₁ G ≪≫
+    eqToIso (by rw [h]) ≪≫ (chapter12GroupSchemeBaseChangeCompIso p q₂ G).symm
+
+def chapter12CommutativeGroupSchemeBaseChangeComparison
+    {S T U : Scheme.{u}} (p : T ⟶ S)
+    (G : Chapter12CommutativeGroupScheme S)
+    (q₁ q₂ : U ⟶ T) (h : q₁ ≫ p = q₂ ≫ p) :
+    Chapter12CommutativeGroupScheme.baseChange q₁
+        (Chapter12CommutativeGroupScheme.baseChange p G) ≅
+      Chapter12CommutativeGroupScheme.baseChange q₂
+        (Chapter12CommutativeGroupScheme.baseChange p G) := by
+  exact chapter12CommutativeGroupSchemeBaseChangeCompIso p q₁ G ≪≫
+    eqToIso (by rw [h]) ≪≫
+      (chapter12CommutativeGroupSchemeBaseChangeCompIso p q₂ G).symm
+
+/-!
+An upstairs isomorphism is a genuine comparison with a descent datum only when it intertwines the
+datum's overlap isomorphisms with the canonical pullback comparisons.  Keeping this condition
+explicit prevents an arbitrary isomorphism of the upstairs objects from being mistaken for an
+effective descent comparison.
+-/
+
+def chapter12GroupSchemeDescentComparisonCompatible
+    {S T : Scheme.{u}} {p : T ⟶ S}
+    (D : Chapter12GroupSchemeDescentDatum p)
+    (G : Chapter12GroupScheme S)
+    (e : Chapter12GroupScheme.baseChange p G ≅ D.upstairs) : Prop :=
+  ∀ {U : Scheme.{u}} (q₁ q₂ : U ⟶ T) (h : q₁ ≫ p = q₂ ≫ p),
+    (Chapter12GroupScheme.baseChangeIso q₁ e).hom ≫ (D.compare q₁ q₂ h).hom =
+      (chapter12GroupSchemeBaseChangeComparison p G q₁ q₂ h).hom ≫
+        (Chapter12GroupScheme.baseChangeIso q₂ e).hom
+
+def chapter12CommutativeGroupSchemeDescentComparisonCompatible
+    {S T : Scheme.{u}} {p : T ⟶ S}
+    (D : Chapter12CommutativeGroupSchemeDescentDatum p)
+    (G : Chapter12CommutativeGroupScheme S)
+    (e : Chapter12CommutativeGroupScheme.baseChange p G ≅ D.upstairs) : Prop :=
+  ∀ {U : Scheme.{u}} (q₁ q₂ : U ⟶ T) (h : q₁ ≫ p = q₂ ≫ p),
+    (Chapter12CommutativeGroupScheme.baseChangeIso q₁ e).hom ≫
+        (D.compare q₁ q₂ h).hom =
+      (chapter12CommutativeGroupSchemeBaseChangeComparison p G q₁ q₂ h).hom ≫
+        (Chapter12CommutativeGroupScheme.baseChangeIso q₂ e).hom
 
 end
 

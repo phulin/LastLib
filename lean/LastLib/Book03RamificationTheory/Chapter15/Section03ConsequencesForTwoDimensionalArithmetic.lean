@@ -186,7 +186,7 @@ theorem chapter15_permutation_conductor_recovers_discriminant
     [FiniteDimensional k (MonoidAlgebra k X)]
     (p : Ideal A) (P : Ideal B) [p.IsPrime] [P.IsPrime] [P.LiesOver p]
     (F : Chapter15LowerRamificationFiltration G)
-    (C : Chapter15PrimeBranchPermutationData p P F)
+    (C : Chapter15PrimeBranchPermutationData (k := k) (X := X) p P F)
     (hbranches : (p.primesOver B).ncard = 1) :
     chapter15ArtinConductor F (chapter15PermutationRepresentation k G X) =
       (chapter15DiscriminantExponent A B p : ℚ) := by

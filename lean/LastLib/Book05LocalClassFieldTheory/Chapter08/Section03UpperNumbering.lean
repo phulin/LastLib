@@ -122,7 +122,7 @@ theorem chapter08_herbrand_function_bijective
     (hintegrable : ∀ a b : ℝ,
       IntervalIntegrable
         (LastLib.Book03RamificationTheory.Chapter05.chapter05HerbrandSlope F)
-        volume a b) :
+        MeasureTheory.volume a b) :
     Function.Bijective (chapter08HerbrandFunction F) := by
   exact LastLib.Book03RamificationTheory.Chapter05.chapter05_herbrand_bijective
     F hintegrable

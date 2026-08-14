@@ -51,13 +51,13 @@ class Chapter01VerticalIntersectionTheory
     {B : Chapter01ExcellentConnectedDedekindBaseData K}
     (X : Chapter01RegularArithmeticSurface B) where
   restrictionLineBundle :
-    ∀ (D : Chapter01Divisor X.carrier) (C : Chapter01Curve X.carrier),
+    ∀ (_D : Chapter01Divisor X.carrier) (C : Chapter01Curve X.carrier),
       Chapter01LineBundle C.closedSubscheme.subscheme
   degree :
     ∀ (C : Chapter01Curve X.carrier),
       Chapter01LineBundle C.closedSubscheme.subscheme → ℤ
   intersection :
-    ∀ (D : Chapter01Divisor X.carrier) (C : Chapter01Curve X.carrier),
+    ∀ (_D : Chapter01Divisor X.carrier) (C : Chapter01Curve X.carrier),
       chapter01CurveIsVertical C → ℤ
   intersection_eq_degree :
     ∀ (D : Chapter01Divisor X.carrier) (C : Chapter01Curve X.carrier)

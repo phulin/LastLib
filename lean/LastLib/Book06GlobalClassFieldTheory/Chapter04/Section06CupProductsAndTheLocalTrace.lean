@@ -122,7 +122,11 @@ structure Chapter04LocalAnMuPairingData where
   localUnits : Type u
   [localUnitsGroup : CommGroup localUnits]
   reciprocity : H1Mu → localUnits
-  character : H1A → localUnits → ℂˣ
+  character : H1A → (localUnits →* ℂˣ)
+  character_add : ∀ c d x,
+    character (c + d) x = character c x * character d x
+  character_zero : ∀ x, character 0 x = 1
+  character_n_torsion : ∀ c x, (character c x) ^ n = 1
   pairing : H1A → H1Mu → chapter04QModZ
   exponentialInvariant : chapter04QModZ → ℂˣ
   sign_formula : ∀ c a,

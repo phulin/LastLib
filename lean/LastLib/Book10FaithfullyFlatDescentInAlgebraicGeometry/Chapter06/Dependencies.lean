@@ -50,7 +50,7 @@ structure FiniteProjectiveWitness
 
 /-- The finite-locally-free condition expressed using the canonical free locus. -/
 def FiniteLocallyFree (R M : Type*) [CommRing R] [AddCommGroup M] [Module R M] : Prop :=
-  Module.Finite R M ∧
+  Module.FinitePresentation R M ∧
     ∀ p : PrimeSpectrum R,
       Module.Free (Localization.AtPrime p.asIdeal)
         (LocalizedModule p.asIdeal.primeCompl M)
@@ -59,7 +59,17 @@ theorem finiteLocallyFree_iff_freeLocus_eq_univ
     {R M : Type*} [CommRing R] [AddCommGroup M] [Module R M]
     [Module.FinitePresentation R M] :
     FiniteLocallyFree R M ↔ Module.freeLocus R M = Set.univ := by
-  simp [FiniteLocallyFree, Module.freeLocus]
+  constructor
+  · rintro ⟨_, hfree⟩
+    apply Set.eq_univ_iff_forall.mpr
+    intro p
+    exact Module.mem_freeLocus.mpr (hfree p)
+  · intro h
+    refine ⟨inferInstance, ?_⟩
+    intro p
+    apply Module.mem_freeLocus.mp
+    rw [h]
+    trivial
 
 /-- The fiber rank of a finitely presented module at a prime. -/
 noncomputable def fiberRank
@@ -75,9 +85,10 @@ theorem fiberRank_eq_stalkRank
 
 theorem fiberRank_eq_residueField_finrank
     {R M : Type*} [CommRing R] [AddCommGroup M] [Module R M]
+    [Module.Finite R M] [Module.Flat R M]
     (p : PrimeSpectrum R) :
     fiberRank M p = Module.finrank p.asIdeal.ResidueField (p.asIdeal.Fiber M) := by
-  exact Module.rankAtStalk_eq M p
+  simpa [fiberRank] using (Module.rankAtStalk_eq (M := M) p)
 
 /-- A module has constant fiber rank `r`. -/
 def HasConstantRank
@@ -93,8 +104,9 @@ def HasRankIn
 
 /-- The `r`th exterior power, used as the determinant module in the constant-rank case. -/
 abbrev determinantModule
-    (R M : Type*) [CommRing R] [AddCommGroup M] [Module R M] (r : ℕ) : Type* :=
-  ⋀[R]^r M
+    (R : Type u) (M : Type v) [CommRing R] [AddCommGroup M] [Module R M] (r : ℕ) :
+    Type (max u v) :=
+  ↥(⋀[R]^r M)
 
 /-- The map induced on determinant modules by a linear map. -/
 noncomputable def determinantMap

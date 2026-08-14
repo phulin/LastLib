@@ -19,15 +19,15 @@ def FpqcProperty : MorphismProperty Scheme :=
 
 theorem IsFpqcMorphism.toFpqcProperty {S T : Scheme} {p : T ⟶ S}
     (hp : Scheme.IsFpqcMorphism p) : FpqcProperty p :=
-  ⟨hp.2.1, hp.1, hp.2.2⟩
+  ⟨⟨hp.2.1, hp.1⟩, hp.2.2⟩
 
 theorem fpqcProperty_iff_isFpqcMorphism {S T : Scheme} (p : T ⟶ S) :
     FpqcProperty p ↔ Scheme.IsFpqcMorphism p := by
   constructor
   · intro hp
-    exact ⟨hp.2.1, hp.1, hp.2.2⟩
+    exact ⟨hp.1.2, hp.1.1, hp.2⟩
   · intro hp
-    exact hp.toFpqcProperty
+    exact IsFpqcMorphism.toFpqcProperty hp
 
 /-- A property that can be checked upstairs and descended along an fpqc cover. -/
 def DescendsAlongFpqc (P : MorphismProperty Scheme) : Prop :=
@@ -47,12 +47,14 @@ def AffineIntersectionsAreQuasiCompact (X : Scheme) : Prop :=
 /-- This proposition records exactly the extra hypothesis that the shortcut through finite affine
 intersections would require. The effective descent theorem itself does not assume it. -/
 def NeedsQuasiSeparatedAffineIntersections (X : Scheme) : Prop :=
-  ¬ AffineIntersectionsAreQuasiCompact X
+  AffineIntersectionsAreQuasiCompact X
 
 theorem affine_intersections_are_quasi_compact_of_quasiSeparatedSpace
     (X : Scheme) [QuasiSeparatedSpace X] :
     AffineIntersectionsAreQuasiCompact X := by
-  sorry
+  intro U V hU hV
+  exact QuasiSeparatedSpace.inter_isCompact (U : Set X) (V : Set X)
+    U.2 hU.isCompact V.2 hV.isCompact
 
 /-- A quotient presentation has affine neighborhoods when every point is contained in an affine
 open chart. This is the scheme-side criterion that must be retained for quotient constructions. -/
@@ -60,15 +62,18 @@ def HasAffineNeighbourhoods (X : Scheme) : Prop :=
   ∀ x : X, ∃ U : X.Opens, x ∈ U ∧ IsAffineOpen U
 
 theorem scheme_has_affine_neighbourhoods (X : Scheme) : HasAffineNeighbourhoods X := by
-  sorry
+  intro x
+  obtain ⟨U, hU, hxU, _⟩ :=
+    exists_isAffineOpen_mem_and_subset (U := (⊤ : X.Opens)) (by simp)
+  exact ⟨U, hxU, hU⟩
 
 /-- Pairwise transition isomorphisms for three charts. -/
 structure PairwiseTransitionSystem (X : Scheme) where
-  transition : Fin 3 → Fin 3 → X ≅ X
-  inverse : ∀ i j, transition i j ≪≫ transition j i = Iso.refl X
+  transition : ∀ _i _j : Fin 3, X ≅ X
+  inverse : ∀ i j : Fin 3, (transition i j) ≪≫ (transition j i) = Iso.refl X
 
 def SatisfiesTripleCocycle {X : Scheme} (τ : PairwiseTransitionSystem X) : Prop :=
-  ∀ i j k,
+  ∀ i j k : Fin 3,
     (τ.transition i j ≪≫ τ.transition j k) ≪≫ τ.transition k i = Iso.refl X
 
 structure NonCocyclicPairwiseGluing (X : Scheme) extends PairwiseTransitionSystem X where

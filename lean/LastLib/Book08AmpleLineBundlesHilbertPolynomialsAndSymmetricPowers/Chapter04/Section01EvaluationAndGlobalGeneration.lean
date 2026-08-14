@@ -82,22 +82,31 @@ noncomputable def chapter04ProjectiveLineExample
 
 theorem chapter04_projective_line_constant_map_is_over
     (K : Type u) [Field K] :
-    (chapter04ProjectiveLineExample K).constant_map ≫
+      (chapter04ProjectiveLineExample K).constant_map ≫
         chapter04ProjectivePointStructureMap K =
       chapter04ProjectiveLineStructureMap K := by
-  sorry
+  exact (chapter04ProjectiveLineExample K).constant_map_over
 
 theorem chapter04_projective_line_constant_map_is_constant
     (K : Type u) [Field K] :
     chapter04UnderlyingConstant (chapter04ProjectiveLineExample K).constant_map := by
-  sorry
+  exact (chapter04ProjectiveLineExample K).constant_map_is_constant
 
 theorem chapter04_projective_line_tautological_basis_generates
     (K : Type u) [Field K] :
     Epi (((chapter04ProjectiveLineTautologicalLineBundle K).sheaf.freeHomEquiv
       (I := ULift.{u} (Fin 2))).symm
       (fun i : ULift.{u} (Fin 2) => chapter04ProjectiveLineTautologicalBasis K i.down)) := by
-  sorry
+  let P := Chapter02.chapter02ProjectiveSpaceData
+    (AlgebraicGeometry.Spec (.of K)) (Chapter02.Chapter02ProjectiveSpaceIndex 1)
+  have hcoord := P.coordinateSections_spec
+  have he : Epi P.coordinateComparison.hom :=
+    @IsIso.epi_of_iso _ _ _ _ P.coordinateComparison.hom P.coordinateComparison.isIso_hom
+  have hepi : Epi (P.coordinateComparison.hom ≫ P.bundle.universalQuotient) := by
+    exact epi_comp' he P.bundle.universalQuotient_is_epi
+  change Epi ((P.bundle.twistingLineBundle.carrier.freeHomEquiv).symm P.coordinateSections)
+  rw [← hcoord]
+  exact hepi
 
 theorem chapter04_projective_line_tautological_identity_embedding
     (K : Type u) [Field K] :
@@ -105,7 +114,9 @@ theorem chapter04_projective_line_tautological_identity_embedding
       Nonempty ((chapter04ProjectiveLineTautologicalLineBundle K).sheaf ≅
         (Scheme.Modules.pullback (𝟙 (chapter04ProjectiveLine K))).obj
           (chapter04ProjectiveLineTautologicalLineBundle K).sheaf) := by
-  sorry
+  refine ⟨inferInstance, ?_⟩
+  exact ⟨((Scheme.Modules.pullbackId (chapter04ProjectiveLine K)).app
+    (chapter04ProjectiveLineTautologicalLineBundle K).sheaf).symm⟩
 
 theorem chapter04_projective_line_tautological_is_veryAmple
     (K : Type u) [Field K] :

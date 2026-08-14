@@ -54,7 +54,7 @@ def chapter08VerticalDivisorPairing
     [∀ C : Chapter08VerticalCurve X, Chapter08CurveDegreeTheory C]
     (V W : Chapter08VerticalDivisor X s) : ℤ := by
   classical
-  exact ∑ C in V.support, ∑ E in W.support,
+  exact ∑ C ∈ V.support, ∑ E ∈ W.support,
     V.coefficient C * W.coefficient E *
       chapter08DivisorCurveIntersection C.asCartierDivisor E
 
@@ -63,7 +63,7 @@ theorem chapter08_vertical_divisor_pairing_eq_double_sum
     [∀ C : Chapter08VerticalCurve X, Chapter08CurveDegreeTheory C]
     (V W : Chapter08VerticalDivisor X s) :
     chapter08VerticalDivisorPairing V W =
-      ∑ C in V.support, ∑ E in W.support,
+      ∑ C ∈ V.support, ∑ E ∈ W.support,
         V.coefficient C * W.coefficient E *
           chapter08DivisorCurveIntersection C.asCartierDivisor E := by
   rfl

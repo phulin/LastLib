@@ -51,7 +51,7 @@ abbrev chapter11BaseScheme (R : Type u) [CommRing R] : Scheme.{u} :=
 abbrev chapter11GenericBaseMap
     (R K : Type u) [CommRing R] [Field K] [Algebra R K] :
     Spec (CommRingCat.of K) ⟶ chapter11BaseScheme R :=
-  Scheme.Spec.map (CommRingCat.ofHom (algebraMap R K))
+  Scheme.Spec.map (CommRingCat.ofHom (algebraMap R K)).op
 
 /- The theorem in §11.1 needs the excellence used to algebraize the formal
 contraction.  It is kept as an explicit hypothesis rather than inferred from
@@ -59,7 +59,7 @@ the DVR class alone. -/
 structure Chapter11ExcellentDiscreteValuationRing (R : Type u) [CommRing R] : Prop where
   domain : IsDomain R
   noetherian : IsNoetherianRing R
-  local : IsLocalRing R
+  localRing : IsLocalRing R
   discreteValuation : IsDiscreteValuationRing R
   excellent : Chapter01ExcellentRing R
 
@@ -80,12 +80,17 @@ structure Chapter11SmoothProjectiveCurve (K : Type u) [Field K] where
   pureDimensionOne : Chapter01PureDimensionOne carrier
   genus : ℕ
 
-instance (C : Chapter11SmoothProjectiveCurve K) : IsIntegral C.carrier := C.integral
-instance (C : Chapter11SmoothProjectiveCurve K) : IsProper C.structureMap := C.proper
-instance (C : Chapter11SmoothProjectiveCurve K) :
+instance {K : Type u} [Field K]
+    (C : Chapter11SmoothProjectiveCurve K) : IsIntegral C.carrier := C.integral
+instance {K : Type u} [Field K]
+    (C : Chapter11SmoothProjectiveCurve K) : IsProper C.structureMap := C.proper
+instance {K : Type u} [Field K]
+    (C : Chapter11SmoothProjectiveCurve K) :
     LocallyOfFinitePresentation C.structureMap := C.finitePresentation
-instance (C : Chapter11SmoothProjectiveCurve K) : Smooth C.structureMap := C.smooth
-instance (C : Chapter11SmoothProjectiveCurve K) :
+instance {K : Type u} [Field K]
+    (C : Chapter11SmoothProjectiveCurve K) : Smooth C.structureMap := C.smooth
+instance {K : Type u} [Field K]
+    (C : Chapter11SmoothProjectiveCurve K) :
     GeometricallyConnected C.structureMap := C.geometricallyConnected
 
 structure Chapter11GenericFiberIdentification
@@ -93,7 +98,8 @@ structure Chapter11GenericFiberIdentification
     (C : Chapter11SmoothProjectiveCurve K)
     {X : Scheme.{u}} (f : X ⟶ chapter11BaseScheme R) where
   iso : pullback f (chapter11GenericBaseMap R K) ≅ C.carrier
-  over : iso.hom ≫ C.structureMap = pullback.snd f (chapter11GenericBaseMap R K)
+  over_structureMap :
+    iso.hom ≫ C.structureMap = pullback.snd f (chapter11GenericBaseMap R K)
 
 structure Chapter11RegularProperModel
     (R K : Type u) [CommRing R] [Field K] [Algebra R K]
@@ -110,22 +116,34 @@ structure Chapter11RegularProperModel
   dimensionTwo : Chapter01PureDimensionTwo carrier
   regular : Chapter01RegularScheme carrier
   fiberComponentsFinite : ∀ s : chapter11BaseScheme R,
-    Finite (irreducibleComponents (structureMap.fiberToSpecResidueField s))
+    Finite (irreducibleComponents (structureMap.fiber s))
   genericFiber : Chapter11GenericFiberIdentification R K C structureMap
 
-instance (M : Chapter11RegularProperModel R K C) : IsProper M.structureMap := M.proper
-instance (M : Chapter11RegularProperModel R K C) :
+instance {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
+    (M : Chapter11RegularProperModel R K C) : IsProper M.structureMap := M.proper
+instance {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
+    (M : Chapter11RegularProperModel R K C) :
     LocallyOfFinitePresentation M.structureMap := M.finitePresentation
-instance (M : Chapter11RegularProperModel R K C) : Flat M.structureMap := M.flat
-instance (M : Chapter11RegularProperModel R K C) : IsIntegral M.carrier := M.integral
+instance {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
+    (M : Chapter11RegularProperModel R K C) : Flat M.structureMap := M.flat
+instance {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
+    (M : Chapter11RegularProperModel R K C) : IsIntegral M.carrier := M.integral
 
 abbrev chapter11ModelRestriction
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
     (M : Chapter11RegularProperModel R K C)
     (U : (chapter11BaseScheme R).Opens) :
-    (M.carrier ⁻¹ᵁ U).toScheme ⟶ U.toScheme :=
+    (M.structureMap ⁻¹ᵁ U).toScheme ⟶ U.toScheme :=
   M.structureMap ∣_ U
 
 structure Chapter11ContractionCapability
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
     (M : Chapter11RegularProperModel R K C) : Prop where
   projective : Chapter07IsProjectiveMorphism M.structureMap
   base_excellent : Chapter01ExcellentScheme (chapter11BaseScheme R)
@@ -135,6 +153,8 @@ structure Chapter11ContractionCapability
 ideal sheaves, while this chapter needs the resulting point blowup as a model
 over the arithmetic base.  The wrapper records that missing comparison. -/
 structure Chapter11PointBlowupRegularModel
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
     (M : Chapter11RegularProperModel R K C)
     (x : M.carrier) (hx : IsClosed ({x} : Set M.carrier)) where
   blowup : Scheme.{u}
@@ -148,6 +168,8 @@ structure Chapter11PointBlowupRegularModel
 /-! ### Vertical curves and the first-kind signature -/
 
 structure Chapter11VerticalIntegralCurve
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
     (M : Chapter11RegularProperModel R K C) where
   carrier : Scheme.{u}
   inclusion : carrier ⟶ M.carrier
@@ -161,11 +183,17 @@ structure Chapter11VerticalIntegralCurve
     (inclusion ≫ M.structureMap) x = basePoint
 
 abbrev chapter11VerticalMap
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
+    {M : Chapter11RegularProperModel R K C}
     (E : Chapter11VerticalIntegralCurve M) :
     E.carrier ⟶ chapter11BaseScheme R :=
   E.inclusion ≫ M.structureMap
 
 structure Chapter11ProjectiveLineOverResidueField
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
+    {M : Chapter11RegularProperModel R K C}
     (E : Chapter11VerticalIntegralCurve M) where
   factor : E.carrier ⟶
     Spec (CommRingCat.of ((chapter11BaseScheme R).residueField E.basePoint))
@@ -180,6 +208,9 @@ structure Chapter11ProjectiveLineOverResidueField
 represented by a Book 8 line bundle plus an explicit degree bridge until the
 intersection-theory package is available chronologically. -/
 structure Chapter11NormalBundleProfile
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
+    {M : Chapter11RegularProperModel R K C}
     (E : Chapter11VerticalIntegralCurve M) where
   normalBundle : Chapter04LineBundle E.carrier
   isNormalBundle : Prop
@@ -187,16 +218,24 @@ structure Chapter11NormalBundleProfile
   degree_specification : Prop
 
 def chapter11SelfIntersection
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
+    {M : Chapter11RegularProperModel R K C}
     (E : Chapter11VerticalIntegralCurve M)
     (N : Chapter11NormalBundleProfile E) : ℤ :=
   N.degree
 
 def chapter11NormalBundleDegreeMinusOne
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
+    {M : Chapter11RegularProperModel R K C}
     (E : Chapter11VerticalIntegralCurve M) : Prop :=
   ∃ N : Chapter11NormalBundleProfile E,
     N.isNormalBundle ∧ N.degree = -1
 
 structure Chapter11ExceptionalCurveOfFirstKind
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
     (M : Chapter11RegularProperModel R K C) where
   curve : Chapter11VerticalIntegralCurve M
   projectiveLine : Chapter11ProjectiveLineOverResidueField curve
@@ -208,12 +247,18 @@ structure Chapter11ExceptionalCurveOfFirstKind
     selfIntersection = chapter11SelfIntersection curve normalBundle
 
 def chapter11FirstKindCurveCondition
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
+    {M : Chapter11RegularProperModel R K C}
     (E : Chapter11VerticalIntegralCurve M) : Prop :=
   Nonempty (Chapter11ProjectiveLineOverResidueField E) ∧
     ∃ N : Chapter11NormalBundleProfile E,
       N.isNormalBundle ∧ N.degree = -1
 
 def chapter11AlgebraicallyClosedExceptionalSignature
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
+    {M : Chapter11RegularProperModel R K C}
     (E : Chapter11VerticalIntegralCurve M) : Prop :=
   ∃ N : Chapter11NormalBundleProfile E,
     Nonempty (E.carrier ≅
@@ -223,8 +268,13 @@ def chapter11AlgebraicallyClosedExceptionalSignature
 /-! ### The exact sequence and vanishing used by the formal contraction proof -/
 
 structure Chapter11InfinitesimalNeighborhoodExactSequence
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
+    {M : Chapter11RegularProperModel R K C}
     (E : Chapter11VerticalIntegralCurve M) (n : ℤ) where
-  left middle right : E.carrier.Modules
+  left : E.carrier.Modules
+  middle : E.carrier.Modules
+  right : E.carrier.Modules
   inclusion : left ⟶ middle
   projection : middle ⟶ right
   zero : inclusion ≫ projection = 0
@@ -259,6 +309,9 @@ def chapter11IsomorphismAwayFromCurve
 identify a contraction's maximal-ideal blowup with the divisor line bundle
 O(-E), so the recovery diagram keeps those comparisons as named capabilities. -/
 structure Chapter11PointBlowupRecovery
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
+    (M : Chapter11RegularProperModel R K C)
     (E : Chapter11ExceptionalCurveOfFirstKind M)
     (target : Chapter11RegularProperModel R K C)
     (contraction : M.carrier ⟶ target.carrier)
@@ -273,6 +326,8 @@ structure Chapter11PointBlowupRecovery
   exceptional_divisor_identification : Prop
 
 structure Chapter11ExceptionalContraction
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
     (M : Chapter11RegularProperModel R K C)
     (E : Chapter11ExceptionalCurveOfFirstKind M) where
   target : Chapter11RegularProperModel R K C
@@ -287,23 +342,30 @@ structure Chapter11ExceptionalContraction
     contraction (E.curve.inclusion z) = point
   point_closed : IsClosed ({point} : Set target.carrier)
   point_regular : IsRegularLocalRing (target.carrier.presheaf.stalk point)
-  recovery : Nonempty (Chapter11PointBlowupRecovery E target contraction point)
+  recovery : Nonempty (Chapter11PointBlowupRecovery M E target contraction point)
 
 def chapter11ContractionDecreasesFiberComponents
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
+    {M : Chapter11RegularProperModel R K C}
     (E : Chapter11ExceptionalCurveOfFirstKind M)
     (H : Chapter11ExceptionalContraction M E) : Prop :=
   Nat.card (irreducibleComponents
-      (H.target.structureMap.fiberToSpecResidueField E.curve.basePoint)) <
+      (H.target.structureMap.fiber E.curve.basePoint)) <
     Nat.card (irreducibleComponents
-      (M.structureMap.fiberToSpecResidueField E.curve.basePoint))
+      (M.structureMap.fiber E.curve.basePoint))
 
 /-! ### Minimality, generic identifications, and finite extensions -/
 
 def chapter11RelativelyMinimal
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
     (M : Chapter11RegularProperModel R K C) : Prop :=
   ¬ Nonempty (Chapter11ExceptionalCurveOfFirstKind M)
 
 def chapter11InducesIdentityOnGenericFiber
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
     (M N : Chapter11RegularProperModel R K C)
     (u : M.carrier ⟶ N.carrier) : Prop :=
   ∃ hu : u ≫ N.structureMap = M.structureMap,
@@ -322,12 +384,16 @@ structure Chapter11MinimalRegularModel
   relatively_minimal : chapter11RelativelyMinimal model
 
 def chapter11ContractsAllVerticalExceptionalCurves
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
     (M target : Chapter11RegularProperModel R K C)
     (f : M.carrier ⟶ target.carrier) : Prop :=
   ∀ E : Chapter11ExceptionalCurveOfFirstKind M, ∃ p : target.carrier,
     ∀ z : E.curve.carrier, f (E.curve.inclusion z) = p
 
 structure Chapter11ContractionToMinimal
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
     (M : Chapter11RegularProperModel R K C) where
   target : Chapter11MinimalRegularModel R K C
   contraction : M.carrier ⟶ target.model.carrier
@@ -347,15 +413,17 @@ structure Chapter11FiniteSeparableExtension (K : Type u) [Field K] where
 def chapter11RamifiedNodeEquation
     {K : Type u} [Field K]
     (E : Chapter11FiniteSeparableExtension K)
-    (π' unit : E.extension) (e : ℕ)
-    (x y : MvPolynomial (Fin 2) E.extension) : Prop :=
-  x * y = MvPolynomial.C (unit * π' ^ e)
+    (π' unit : E.extension) (e : ℕ) :=
+  letI := E.field_extension
+  fun (x y : MvPolynomial (Fin 2) E.extension) =>
+    x * y = MvPolynomial.C (unit * π' ^ e)
 
 def chapter11RamifiedNodeEquationProfile
     {K : Type u} [Field K]
     (E : Chapter11FiniteSeparableExtension K)
-    (π' unit : E.extension) (e : ℕ) : Prop :=
-  IsUnit unit ∧ 1 < e ∧
+    (π' unit : E.extension) (e : ℕ) : Prop := by
+  letI := E.field_extension
+  exact IsUnit unit ∧ 1 < e ∧
     chapter11RamifiedNodeEquation E π' unit e
       (MvPolynomial.X 0) (MvPolynomial.X 1)
 
@@ -363,6 +431,8 @@ def chapter11RamifiedNodeEquationProfile
 normalization of a ramified DVR base change together with its resolved
 exceptional curves, so the profile exposes the comparison maps explicitly. -/
 structure Chapter11RamifiedBaseChangeProfile
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
     (M : Chapter11RegularProperModel R K C) where
   extension : Chapter11FiniteSeparableExtension K
   ramified : Prop
@@ -392,6 +462,7 @@ structure Chapter11ExcellentDedekindBase
   quasiCompact : QuasiCompact (𝟙 S)
 
 structure Chapter11GlobalRegularProperModelData
+    {S : Scheme.{u}} {K : Type u} [Field K]
     (B : Chapter11ExcellentDedekindBase S K)
     (C : Chapter11SmoothProjectiveCurve K) where
   carrier : Scheme.{u}
@@ -406,19 +477,34 @@ structure Chapter11GlobalRegularProperModelData
   dimensionTwo : Chapter01PureDimensionTwo carrier
   regular : Chapter01RegularScheme carrier
   fiberComponentsFinite : ∀ s : S,
-    Finite (irreducibleComponents (structureMap.fiberToSpecResidueField s))
+    Finite (irreducibleComponents (structureMap.fiber s))
   genericFiber : pullback structureMap B.base.genericPointMap ≅ C.carrier
   genericFiber_over : genericFiber.hom ≫ C.structureMap =
     pullback.snd structureMap B.base.genericPointMap
 
-instance (M : Chapter11GlobalRegularProperModelData B C) :
+instance {S : Scheme.{u}} {K : Type u} [Field K]
+    {B : Chapter11ExcellentDedekindBase S K}
+    {C : Chapter11SmoothProjectiveCurve K}
+    (M : Chapter11GlobalRegularProperModelData B C) :
     IsProper M.structureMap := M.proper
-instance (M : Chapter11GlobalRegularProperModelData B C) :
+instance {S : Scheme.{u}} {K : Type u} [Field K]
+    {B : Chapter11ExcellentDedekindBase S K}
+    {C : Chapter11SmoothProjectiveCurve K}
+    (M : Chapter11GlobalRegularProperModelData B C) :
     LocallyOfFinitePresentation M.structureMap := M.finitePresentation
-instance (M : Chapter11GlobalRegularProperModelData B C) : Flat M.structureMap := M.flat
-instance (M : Chapter11GlobalRegularProperModelData B C) : IsIntegral M.carrier := M.integral
+instance {S : Scheme.{u}} {K : Type u} [Field K]
+    {B : Chapter11ExcellentDedekindBase S K}
+    {C : Chapter11SmoothProjectiveCurve K}
+    (M : Chapter11GlobalRegularProperModelData B C) : Flat M.structureMap := M.flat
+instance {S : Scheme.{u}} {K : Type u} [Field K]
+    {B : Chapter11ExcellentDedekindBase S K}
+    {C : Chapter11SmoothProjectiveCurve K}
+    (M : Chapter11GlobalRegularProperModelData B C) : IsIntegral M.carrier := M.integral
 
 def chapter11NonSmoothFiberSet
+    {S : Scheme.{u}} {K : Type u} [Field K]
+    {B : Chapter11ExcellentDedekindBase S K}
+    {C : Chapter11SmoothProjectiveCurve K}
     (M : Chapter11GlobalRegularProperModelData B C) : Set S :=
   {s | ¬ Smooth (M.structureMap.fiberToSpecResidueField s)}
 
@@ -426,6 +512,9 @@ def chapter11NonSmoothFiberSet
 degree interface is not exposed by the earlier chapters, so its numerical
 degree and projective-line comparison remain explicit fields here. -/
 structure Chapter11GlobalVerticalExceptionalCurve
+    {S : Scheme.{u}} {K : Type u} [Field K]
+    {B : Chapter11ExcellentDedekindBase S K}
+    {C : Chapter11SmoothProjectiveCurve K}
     (M : Chapter11GlobalRegularProperModelData B C) where
   carrier : Scheme.{u}
   inclusion : carrier ⟶ M.carrier
@@ -446,10 +535,14 @@ structure Chapter11GlobalVerticalExceptionalCurve
   normalBundleDegree_eq_minus_one : normalBundleDegree = -1
 
 def chapter11GlobalRelativelyMinimal
+    {S : Scheme.{u}} {K : Type u} [Field K]
+    {B : Chapter11ExcellentDedekindBase S K}
+    {C : Chapter11SmoothProjectiveCurve K}
     (M : Chapter11GlobalRegularProperModelData B C) : Prop :=
   ¬ Nonempty (Chapter11GlobalVerticalExceptionalCurve M)
 
 structure Chapter11GlobalMinimalRegularModel
+    {S : Scheme.{u}} {K : Type u} [Field K]
     (B : Chapter11ExcellentDedekindBase S K)
     (C : Chapter11SmoothProjectiveCurve K) where
   model : Chapter11GlobalRegularProperModelData B C
@@ -459,27 +552,34 @@ structure Chapter11GlobalMinimalRegularModel
 /-! ### Marked curves and the boundary invariant -/
 
 structure Chapter11MarkedCurve
+    {K : Type u} [Field K]
     (C : Chapter11SmoothProjectiveCurve K) (n : ℕ) where
   section_ : Fin n → (Spec (CommRingCat.of K) ⟶ C.carrier)
-  over : ∀ i, section_ i ≫ C.structureMap = 𝟙 _
+  over_structureMap : ∀ i, section_ i ≫ C.structureMap = 𝟙 _
   disjoint : ∀ i j, i ≠ j → ∀ z : Spec (CommRingCat.of K),
     section_ i z ≠ section_ j z
 
 noncomputable def chapter11ModelSmoothLocus
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
     (M : Chapter11RegularProperModel R K C) : M.carrier.Opens := by
   letI := M.finitePresentation
   exact M.structureMap.smoothLocus
 
 abbrev chapter11ModelSmoothLocusInclusion
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
     (M : Chapter11RegularProperModel R K C) :
     (chapter11ModelSmoothLocus M).toScheme ⟶ M.carrier :=
   Scheme.Opens.ι _
 
 structure Chapter11MarkedModel
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K} {n : ℕ}
     (P : Chapter11MarkedCurve C n)
     (M : Chapter11RegularProperModel R K C) where
   lift : Fin n → (Spec (CommRingCat.of K) ⟶ M.carrier)
-  over : ∀ i, lift i ≫ M.structureMap = chapter11GenericBaseMap R K
+  over_structureMap : ∀ i, lift i ≫ M.structureMap = chapter11GenericBaseMap R K
   transverse : Prop
   boundaryClosure : Prop
   defects_supported_at_closed_points : Prop
@@ -489,16 +589,28 @@ structure Chapter11MarkedModel
   boundaryTangency_specification : Prop
 
 noncomputable def chapter11MarkedLiftToGenericFiber
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K} {n : ℕ}
+    {P : Chapter11MarkedCurve C n}
+    {M : Chapter11RegularProperModel R K C}
     (D : Chapter11MarkedModel P M) (i : Fin n) :
     Spec (CommRingCat.of K) ⟶
       pullback M.structureMap (chapter11GenericBaseMap R K) :=
-  pullback.lift (D.lift i) (𝟙 _) (by simpa using D.over i)
+  pullback.lift (D.lift i) (𝟙 _) (by simpa using D.over_structureMap i)
 
 def chapter11MarkedModelGenericCompatibility
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K} {n : ℕ}
+    {P : Chapter11MarkedCurve C n}
+    {M : Chapter11RegularProperModel R K C}
     (D : Chapter11MarkedModel P M) : Prop :=
   ∀ i, chapter11MarkedLiftToGenericFiber D i ≫ M.genericFiber.iso.hom = P.section_ i
 
 structure Chapter11MarkedResolutionFrom
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K} {n : ℕ}
+    {P : Chapter11MarkedCurve C n}
+    {M N : Chapter11RegularProperModel R K C}
     (D : Chapter11MarkedModel P M)
     (E : Chapter11MarkedModel P N) where
   map : N.carrier ⟶ M.carrier
@@ -506,28 +618,44 @@ structure Chapter11MarkedResolutionFrom
   birational : Chapter07Birational map
   over_base : map ≫ M.structureMap = N.structureMap
   generic_identity : chapter11InducesIdentityOnGenericFiber N M map
-  preserves_marks : ∀ i, map ≫ D.lift i = E.lift i
+  preserves_marks : ∀ i, E.lift i ≫ map = D.lift i
 
 /- LOCAL_DEPENDENCY_GUESS: the pinned scheme API has no packaged closure of a
 marked section in a special fiber or transverse-intersection predicate for the
 boundary, so these are retained as named capabilities on the marked model. -/
 
 def chapter11MarkedSectionsInSmoothLocus
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K} {n : ℕ}
+    {P : Chapter11MarkedCurve C n}
+    {M : Chapter11RegularProperModel R K C}
     (D : Chapter11MarkedModel P M) : Prop :=
   ∀ i, ∃ q : Spec (CommRingCat.of K) ⟶
       (chapter11ModelSmoothLocus M).toScheme,
     q ≫ chapter11ModelSmoothLocusInclusion M = D.lift i
 
 def chapter11MarkedSectionsDisjoint
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K} {n : ℕ}
+    {P : Chapter11MarkedCurve C n}
+    {M : Chapter11RegularProperModel R K C}
     (D : Chapter11MarkedModel P M) : Prop :=
   ∀ i j, i ≠ j → ∀ z : Spec (CommRingCat.of K),
     D.lift i z ≠ D.lift j z
 
 def chapter11MarkedSectionsMeetReducedSpecialFiberTransversely
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K} {n : ℕ}
+    {P : Chapter11MarkedCurve C n}
+    {M : Chapter11RegularProperModel R K C}
     (D : Chapter11MarkedModel P M) : Prop :=
   D.transverse
 
 def chapter11MarkedBoundaryResolved
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K} {n : ℕ}
+    {P : Chapter11MarkedCurve C n}
+    {M : Chapter11RegularProperModel R K C}
     (D : Chapter11MarkedModel P M) : Prop :=
   D.boundaryClosure ∧
     D.defects_supported_at_closed_points ∧
@@ -577,17 +705,21 @@ def chapter11NodeSurfaceStructureMap
 completed-local-ring interface; the remaining relative transversality field
 is the book-facing bridge not bundled by that interface. -/
 structure Chapter11OrdinaryDoublePoint
-    (M : Chapter11RegularProperModel R K C) (x : M.carrier) : Prop where
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
+    (M : Chapter11RegularProperModel R K C) (x : M.carrier) where
   basePoint : chapter11BaseScheme R
-  fiberPoint : M.structureMap.fiberToSpecResidueField basePoint
+  fiberPoint : M.structureMap.fiber basePoint
   point_eq : M.structureMap.fiberι basePoint fiberPoint = x
   ordinary :
     LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter01.chapter01OrdinaryDoublePointAt
-      (M.structureMap.fiberToSpecResidueField basePoint) fiberPoint
+      (M.structureMap.fiber basePoint) fiberPoint
   intersection_multiplicity_one : Prop
 
 structure Chapter11NodeEtaleChart
     (R : Type u) [CommRing R]
+    {K : Type u} [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
     (M : Chapter11RegularProperModel R K C)
     (x : M.carrier) (π : R) where
   chart : Scheme.{u}
@@ -602,21 +734,29 @@ structure Chapter11NodeEtaleChart
       e.hom ≫ chapter11NodeSurfaceStructureMap R π = baseMap }
 
 def chapter11NodeLocalEquation
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
     (M : Chapter11RegularProperModel R K C) (π : R) : Prop :=
   ∀ (x : M.carrier), Chapter11OrdinaryDoublePoint M x →
     Nonempty (Chapter11NodeEtaleChart R M x π)
 
 def chapter11ReducedSpecialFibers
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
     (M : Chapter11RegularProperModel R K C) : Prop :=
   ∀ s : chapter11BaseScheme R,
-    IsReduced (M.structureMap.fiberToSpecResidueField s)
+    IsReduced (M.structureMap.fiber s)
 
 def chapter11ComponentsMeetTransversely
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
     (M : Chapter11RegularProperModel R K C) : Prop :=
   ∀ (x : M.carrier) (h : Chapter11OrdinaryDoublePoint M x),
     h.intersection_multiplicity_one
 
 structure Chapter11RegularSemistableModel
+    {R K : Type u} [CommRing R] [IsLocalRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
     (M : Chapter11RegularProperModel R K C) (π : R) where
   uniformizer : chapter11Uniformizer R π
   reducedSpecialFibers : chapter11ReducedSpecialFibers M
@@ -640,8 +780,9 @@ structure Chapter11StableModel (S : Scheme.{u}) where
   totalSpaceRegular : Chapter01RegularScheme carrier
 
 def chapter11StableModelMayHaveNonregularTotalSpace
+    {S : Scheme.{u}}
     (M : Chapter11StableModel S) : Prop :=
-  M.obtained_after_ramified_base_change ∧ ¬ M.totalSpaceRegular
+  M.obtained_after_ramified_base_change ∧ ¬ Chapter01RegularScheme M.carrier
 
 /-! ### Base-change repairs and normal proper candidates -/
 
@@ -661,7 +802,9 @@ structure Chapter11SemistableRepairInput (S : Scheme.{u}) where
   nodalOpen : candidate.carrier.Opens
   nodalOpen_preserved_by_candidate : Prop
 
-structure Chapter11SemistableRepairOutput (I : Chapter11SemistableRepairInput S) where
+structure Chapter11SemistableRepairOutput
+    {S : Scheme.{u}}
+    (I : Chapter11SemistableRepairInput S) where
   normalization : Chapter01NormalizationData I.candidate.carrier
   resolution : Chapter01ResolutionData normalization.normalized
   finalModel : Scheme.{u}

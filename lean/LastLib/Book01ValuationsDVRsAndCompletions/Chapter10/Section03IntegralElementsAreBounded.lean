@@ -5,12 +5,17 @@ import Mathlib.LinearAlgebra.Eigenspace.Minpoly
 import Mathlib.LinearAlgebra.Complex.FiniteDimensional
 import Mathlib.RingTheory.Polynomial.IsIntegral
 import Mathlib.RingTheory.Ideal.GoingUp
+import Mathlib.RingTheory.Complex
+import Mathlib.RingTheory.Polynomial.RationalRoot
+import Mathlib.FieldTheory.Galois.Basic
+import Mathlib.RingTheory.Valuation.RamificationGroup
+import Mathlib.Tactic.NormNum
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
 
 universe u10K u10L u10Γ
 
-open scoped BigOperators TensorProduct WithZero PowerSeries
+open scoped BigOperators Pointwise TensorProduct WithZero PowerSeries
 open Polynomial
 
 noncomputable section
@@ -308,6 +313,174 @@ theorem chapter10_unique_extension_makes_integral_closure_valuation_ring
 These results belong here, after maximal domination and the valuative
 criterion.  They used to be forward declarations in Chapter 9. -/
 
+/-- The center of an extending valuation on a finite integral closure. -/
+noncomputable def chapter10_extension_center
+    {A B : Type*} {K : Type u10K} {L : Type u10L} {Γ : Type u10Γ}
+    [CommRing A] [IsDomain A] [ValuationRing A]
+    [IsIntegrallyClosed A]
+    [Field K] [Algebra A K] [IsFractionRing A K]
+    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Algebra A L] [IsScalarTower A K L]
+    [CommRing B] [Algebra A B] [Algebra B L] [IsScalarTower A B L]
+    [IsIntegralClosure B A L]
+    [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ)
+    (hA : vK.Integers A)
+    (W : Chapter10HeterogeneousValuationExtension L vK) : Ideal B :=
+  Ideal.comap
+    (RingHom.codRestrict (algebraMap B L) W.valuation.valuationSubring
+      (by
+        intro b
+        let f : A →+* W.valuation.valuationSubring :=
+          RingHom.codRestrict (algebraMap A L) W.valuation.valuationSubring (by
+            intro a
+            rw [Valuation.mem_valuationSubring_iff]
+            have ha' :=
+              (W.isExtension.le_one_iff_le_one (x := algebraMap A K a)).mp
+                (hA.map_le_one a)
+            change W.valuation (algebraMap K L (algebraMap A K a)) ≤ 1 at ha'
+            simpa [IsScalarTower.algebraMap_apply A K L] using ha')
+        have hb : IsIntegral A (algebraMap B L b) :=
+          (IsIntegralClosure.isIntegral_iff (R := A) (A := B) (B := L)).mpr ⟨b, rfl⟩
+        have hcomp :
+            (algebraMap W.valuation.valuationSubring L).comp f =
+              (RingHom.id L).comp (algebraMap A L) := by
+          ext a
+          simp [f]
+        have hbW : IsIntegral W.valuation.valuationSubring (algebraMap B L b) := by
+          simpa using
+            (IsIntegral.map_of_comp_eq f (RingHom.id L) hcomp hb)
+        change (algebraMap B L) b ∈ W.valuation.valuationSubring.toSubring
+        apply LocalSubring.mem_of_isMax_of_isIntegral
+          (R := W.valuation.valuationSubring.toLocalSubring)
+          W.valuation.valuationSubring.isMax_toLocalSubring
+        exact hbW))
+    (IsLocalRing.maximalIdeal W.valuation.valuationSubring)
+
+/-- The center constructed from an extending valuation lies over the base
+maximal ideal and is prime. -/
+theorem chapter10_extension_center_is_prime_above
+    {A B : Type*} {K : Type u10K} {L : Type u10L} {Γ : Type u10Γ}
+    [CommRing A] [IsDomain A] [ValuationRing A]
+    [IsIntegrallyClosed A]
+    [Field K] [Algebra A K] [IsFractionRing A K]
+    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Algebra A L] [IsScalarTower A K L]
+    [CommRing B] [Algebra A B] [Algebra B L] [IsScalarTower A B L]
+    [IsIntegralClosure B A L]
+    [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ)
+    (hA : vK.Integers A)
+    (W : Chapter10HeterogeneousValuationExtension L vK) :
+    Chapter10PrimeAboveMaximal (A := A) (B := B)
+      (chapter10_extension_center vK hA W) := by
+  classical
+  let : Valuation.HasExtension vK W.valuation := ⟨W.isExtension⟩
+  constructor
+  · unfold chapter10_extension_center
+    apply Ideal.comap_isPrime
+  · unfold chapter10_extension_center
+    ext a
+    rw [Ideal.mem_comap, Ideal.mem_comap]
+    rw [Valuation.mem_maximalIdeal_iff]
+    change W.valuation (algebraMap B L (algebraMap A B a)) < 1 ↔
+      a ∈ IsLocalRing.maximalIdeal A
+    have hscalar : algebraMap B L (algebraMap A B a) =
+        algebraMap K L (algebraMap A K a) := by
+      calc
+        algebraMap B L (algebraMap A B a) = algebraMap A L a :=
+          (IsScalarTower.algebraMap_apply A B L a).symm
+        _ = algebraMap K L (algebraMap A K a) :=
+          IsScalarTower.algebraMap_apply A K L a
+    rw [hscalar, Valuation.HasExtension.val_map_lt_one_iff vK W.valuation]
+    rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
+    constructor
+    · intro hlt haunit
+      exact (ne_of_lt hlt) (hA.isUnit_iff_valuation_eq_one.mp haunit)
+    · intro hna
+      apply lt_of_le_of_ne (hA.map_le_one a)
+      intro heq
+      exact hna (hA.isUnit_iff_valuation_eq_one.mpr heq)
+
+/-- Equivalent representatives of a valuation branch have the same center. -/
+theorem chapter10_extension_center_eq_of_equivalent
+    {A B : Type*} {K : Type u10K} {L : Type u10L} {Γ : Type u10Γ}
+    [CommRing A] [IsDomain A] [ValuationRing A]
+    [IsIntegrallyClosed A]
+    [Field K] [Algebra A K] [IsFractionRing A K]
+    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Algebra A L] [IsScalarTower A K L]
+    [CommRing B] [Algebra A B] [Algebra B L] [IsScalarTower A B L]
+    [IsIntegralClosure B A L]
+    [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ)
+    (hA : vK.Integers A)
+    (W₁ W₂ : Chapter10HeterogeneousValuationExtension L vK)
+    (hEq : Chapter10ValuationExtensionsEquivalent vK W₁ W₂) :
+    chapter10_extension_center (A := A) (B := B) (K := K) (L := L) vK hA W₁ =
+      chapter10_extension_center (A := A) (B := B) (K := K) (L := L) vK hA W₂ := by
+  classical
+  ext b
+  unfold chapter10_extension_center
+  rw [Ideal.mem_comap, Ideal.mem_comap]
+  rw [Valuation.mem_maximalIdeal_iff, Valuation.mem_maximalIdeal_iff]
+  exact hEq.lt_one_iff_lt_one
+
+/-- The center map on valuation-extension equivalence classes. -/
+noncomputable def chapter10_extension_center_map
+    {A B : Type*} {K : Type u10K} {L : Type u10L} {Γ : Type u10Γ}
+    [CommRing A] [IsDomain A] [ValuationRing A]
+    [IsIntegrallyClosed A]
+    [Field K] [Algebra A K] [IsFractionRing A K]
+    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Algebra A L] [IsScalarTower A K L]
+    [CommRing B] [Algebra A B] [Algebra B L] [IsScalarTower A B L]
+    [IsIntegralClosure B A L]
+    [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ)
+    (hA : vK.Integers A) :
+    Chapter10ValuationExtensionClass (L := L) vK →
+      {P : Ideal B // Chapter10PrimeAboveMaximal (A := A) (B := B) P} :=
+  Quotient.lift
+    (fun W =>
+      ⟨chapter10_extension_center (A := A) (B := B) (K := K) (L := L) vK hA W,
+        chapter10_extension_center_is_prime_above
+          (A := A) (B := B) (K := K) (L := L) vK hA W⟩)
+    (by
+      intro W₁ W₂ hEq
+      apply Subtype.ext
+      exact chapter10_extension_center_eq_of_equivalent
+        (A := A) (B := B) (K := K) (L := L) vK hA W₁ W₂ hEq)
+
+/-- Every prime above the base maximal ideal is the center of a valuation
+extension. -/
+theorem chapter10_extension_center_map_surjective
+    {A B : Type*} {K : Type u10K} {L : Type u10L} {Γ : Type u10Γ}
+    [CommRing A] [IsDomain A] [ValuationRing A]
+    [IsIntegrallyClosed A]
+    [Field K] [Algebra A K] [IsFractionRing A K]
+    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Algebra A L] [IsScalarTower A K L]
+    [CommRing B] [Algebra A B] [Algebra B L] [IsScalarTower A B L]
+    [IsIntegralClosure B A L]
+    [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ)
+    (hA : vK.Integers A) :
+    Function.Surjective
+      (chapter10_extension_center_map (A := A) (B := B) (K := K) (L := L) vK hA) := by
+  sorry
+
+/-- Distinct valuation-extension classes have distinct centers. -/
+theorem chapter10_extension_center_map_injective
+    {A B : Type*} {K : Type u10K} {L : Type u10L} {Γ : Type u10Γ}
+    [CommRing A] [IsDomain A] [ValuationRing A]
+    [IsIntegrallyClosed A]
+    [Field K] [Algebra A K] [IsFractionRing A K]
+    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Algebra A L] [IsScalarTower A K L]
+    [CommRing B] [Algebra A B] [Algebra B L] [IsScalarTower A B L]
+    [IsIntegralClosure B A L]
+    [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ)
+    (hA : vK.Integers A) :
+    Function.Injective
+      (chapter10_extension_center_map (A := A) (B := B) (K := K) (L := L) vK hA) := by
+  sorry
+
 /-- Finite-dimensional integral closure gives the extension-center
 correspondence between valuation classes and primes over the base center. -/
 theorem chapter10_finite_extension_prime_valuation_correspondence
@@ -321,7 +494,28 @@ theorem chapter10_finite_extension_prime_valuation_correspondence
     [IsIntegralClosure B A L]
     [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ)
     (hA : vK.Integers A) :
-    Chapter10ExtensionPrimeCorrespondence (A := A) (B := B) (L := L) vK := by
+    Chapter10ExtensionPrimeCorrespondence (A := A) (B := B) (L := L) vK hA := by
+  sorry
+
+/-! ### Galois action on valuation branches
+
+The prime-center correspondence above supplies the integral-closure labels, while
+this earlier-book interface supplies the action on the valuation-ring labels.
+The branch predicate is written as a contraction equality so later chapters can
+identify it directly with their `ValuationSubring` branch sets.
+-/
+
+/-- A finite Galois extension acts transitively on the valuation branches above
+a fixed base valuation. -/
+theorem chapter10_galois_group_transitive_on_valuation_branches
+    {K L Γ : Type*} [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero Γ]
+    [FiniteDimensional K L] [IsGalois K L]
+    (v : Valuation K Γ) :
+    ∀ ⦃W₁ W₂ : ValuationSubring L⦄,
+      W₁.comap (algebraMap K L) = v.valuationSubring →
+      W₂.comap (algebraMap K L) = v.valuationSubring →
+        ∃ σ : Gal(L / K), σ • W₁ = W₂ := by
   sorry
 
 /-- Factorization-form henselianity makes the center over the base maximal
@@ -353,8 +547,9 @@ theorem chapter10_unique_prime_iff_unique_valuation_extension
     [Algebra K L] [FiniteDimensional K L]
     [IsScalarTower A K L]
     [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ)
+    (hA : vK.Integers A)
     (hcor : Chapter10ExtensionPrimeCorrespondence
-      (A := A) (B := B) (L := L) vK) :
+      (A := A) (B := B) (L := L) vK hA) :
     (Chapter10HasUniquePrimeAbove (A := A) (B := B) ↔
       Chapter10HasUniqueValuationExtension (L := L) vK) := by
   obtain ⟨e⟩ := hcor
@@ -407,7 +602,7 @@ theorem chapter10_henselian_valued_field_has_unique_prime_and_extension
   have hprime := chapter10_henselian_valuation_ring_has_unique_prime_above
     (A := A) (B := B) (K := K) (L := L) vK hA hH
   exact ⟨hprime,
-    (chapter10_unique_prime_iff_unique_valuation_extension vK hcor).mp hprime⟩
+    (chapter10_unique_prime_iff_unique_valuation_extension vK hA hcor).mp hprime⟩
 
 /-- A finite integral extension has finitely many nonempty centers above the
 base maximal ideal. -/
@@ -545,7 +740,46 @@ from the generic counterexample schema above, so the negative statement below
 does not merely assume that a witness has been supplied by a caller. -/
 theorem chapter10_concrete_norm_cancellation_example :
     Nonempty (Chapter10NormCancellationExample ℤ ℝ ℂ) := by
-  sorry
+  refine ⟨⟨(3 + 4 * Complex.I) / 5, ?_, ?_⟩⟩
+  · refine ⟨1, ?_⟩
+    rw [Algebra.norm_complex_apply]
+    simp [Complex.normSq]
+    norm_num
+  · intro hx
+    have hconj : IsIntegral ℤ (Complex.conjAe ((3 + 4 * Complex.I) / 5 : ℂ)) :=
+      map_isIntegral_int Complex.conjAe.toRingEquiv.toRingHom hx
+    have hsum :
+        IsIntegral ℤ
+          (((3 + 4 * Complex.I) / 5 : ℂ) +
+            Complex.conjAe ((3 + 4 * Complex.I) / 5 : ℂ)) :=
+      hx.add hconj
+    have hconj_eq :
+        Complex.conjAe ((3 + 4 * Complex.I) / 5 : ℂ) = (3 - 4 * Complex.I) / 5 := by
+      change (starRingEnd ℂ) ((3 + 4 * Complex.I) / 5) = _
+      rw [map_div₀, map_add, map_mul]
+      simp only [map_ofNat, Complex.conj_I]
+      ring
+    rw [hconj_eq] at hsum
+    have hsum_eq :
+        ((3 + 4 * Complex.I) / 5 : ℂ) + (3 - 4 * Complex.I) / 5 = (6 / 5 : ℂ) := by
+      apply Complex.ext <;> norm_num [Complex.div_re, Complex.div_im]
+    rw [hsum_eq] at hsum
+    have hsum' : IsIntegral ℤ (algebraMap ℚ ℂ (6 / 5 : ℚ)) := by
+      simpa using hsum
+    have hq : IsIntegral ℤ (6 / 5 : ℚ) :=
+      (isIntegral_algebraMap_iff (R := ℤ) (A := ℚ) (B := ℂ)
+        (algebraMap ℚ ℂ).injective).mp hsum'
+    have hqi : IsLocalization.IsInteger ℤ (6 / 5 : ℚ) :=
+      UniqueFactorizationMonoid.integer_of_integral hq
+    rcases hqi with ⟨z, hz⟩
+    have hz_cast : (z : ℚ) = 6 / 5 := by simpa using hz
+    have hz' : (5 : ℚ) * z = 6 := by
+      calc
+        (5 : ℚ) * z = 5 * (6 / 5) := by rw [hz_cast]
+        _ = 6 := by norm_num
+    have hz'' : (5 : ℤ) * z = 6 := by
+      exact_mod_cast hz'
+    omega
 
 theorem chapter10_norm_alone_is_not_a_converse
     {A K L : Type*} [CommRing A] [Field K] [Field L]

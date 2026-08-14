@@ -84,6 +84,7 @@ theorem chapter05_herbrand_inverse_tower_transitivity
 
 /-- A closure-independent invariant is the formal interface for descent from a Galois closure. -/
 structure Chapter05ClosureIndependentInvariant (C X : Type*) where
+  nonempty : Nonempty C
   value : C → X
   independent : ∀ c₁ c₂ : C, value c₁ = value c₂
 

@@ -19,30 +19,39 @@ abbrev Chapter15FunctionOnAutomorphicQuotient (n : ℕ)
     (Kf : Subgroup (Chapter15FiniteMatrixGroup n R K)) :=
   chapter15MatrixAutomorphicDoubleQuotient (R := R) (K := K) n Kf → ℂ
 
-/- The chapter intentionally does not choose one analytic category at infinity. -/
+/- The chapter intentionally does not choose one analytic category at infinity.
+   The specification is shared by all functions at the chosen level: keeping
+   it separate from an individual function prevents the conditions from being
+   discharged by choosing `Set.univ` separately for that function. -/
+structure Chapter15AutomorphicConditionSpec (n : ℕ) where
+  regularity : Set (Chapter15GLnAdeles n R K → ℂ)
+  growth : Set (Chapter15GLnAdeles n R K → ℂ)
+  finiteness : Set (Chapter15GLnAdeles n R K → ℂ)
+
 structure Chapter15AutomorphicConditions (n : ℕ)
-    (F : Chapter15GLnAdeles n R K → ℂ) where
-  regularity : Prop
-  regularity_holds : regularity
-  growth : Prop
-  growth_holds : growth
-  finiteness : Prop
-  finiteness_holds : finiteness
-  cuspidality : Prop
-  cuspidality_holds : cuspidality
+    (S : Chapter15AutomorphicConditionSpec (R := R) (K := K) n)
+    (F : Chapter15GLnAdeles n R K → ℂ) : Prop where
+  regularity_holds : F ∈ S.regularity
+  growth_holds : F ∈ S.growth
+  finiteness_holds : F ∈ S.finiteness
+
+/- Cuspidality is an optional extra condition in the source, so it is not a
+required field of the ambient automorphic-function interface. -/
 
 /-- An adelic automorphic function at a finite level, represented on the ambient group. -/
 structure Chapter15AutomorphicFunction (n : ℕ)
-    (Kf : Subgroup (Chapter15FiniteMatrixGroup n R K)) where
+    (Kf : Subgroup (Chapter15FiniteMatrixGroup n R K))
+    (S : Chapter15AutomorphicConditionSpec (R := R) (K := K) n) where
   toFun : Chapter15GLnAdeles n R K → ℂ
   left_invariant : ∀ γ : Matrix.GeneralLinearGroup (Fin n) K,
     ∀ g, toFun (chapter15PrincipalMatrix n γ * g) = toFun g
   right_invariant : ∀ g k, k ∈ chapter15GlobalLevelSubgroup n Kf →
     toFun (g * k) = toFun g
-  conditions : Chapter15AutomorphicConditions n toFun
+  conditions : Chapter15AutomorphicConditions n S toFun
 
-instance (n : ℕ) (Kf : Subgroup (Chapter15FiniteMatrixGroup n R K)) :
-    CoeFun (Chapter15AutomorphicFunction (R := R) (K := K) n Kf)
+instance (n : ℕ) (Kf : Subgroup (Chapter15FiniteMatrixGroup n R K))
+    (S : Chapter15AutomorphicConditionSpec (R := R) (K := K) n) :
+    CoeFun (Chapter15AutomorphicFunction (R := R) (K := K) n Kf S)
       (fun _ => Chapter15GLnAdeles n R K → ℂ) :=
   ⟨Chapter15AutomorphicFunction.toFun⟩
 
@@ -58,6 +67,8 @@ def chapter15AutomorphicFunctionPullback
 def chapter15AutomorphicFunctionDescend
     (n : ℕ) (Kf : Subgroup (Chapter15FiniteMatrixGroup n R K))
     (F : Chapter15GLnAdeles n R K → ℂ)
+    {S : Chapter15AutomorphicConditionSpec (R := R) (K := K) n}
+    (hconditions : Chapter15AutomorphicConditions n S F)
     (hleft : ∀ γ : Matrix.GeneralLinearGroup (Fin n) K, ∀ g,
       F (chapter15PrincipalMatrix n γ * g) = F g)
     (hright : ∀ g k, k ∈ chapter15GlobalLevelSubgroup n Kf →
@@ -68,12 +79,14 @@ def chapter15AutomorphicFunctionDescend
 theorem chapter15AutomorphicFunctionDescend_pullback
     (n : ℕ) (Kf : Subgroup (Chapter15FiniteMatrixGroup n R K))
     (F : Chapter15GLnAdeles n R K → ℂ)
+    {S : Chapter15AutomorphicConditionSpec (R := R) (K := K) n}
+    (hconditions : Chapter15AutomorphicConditions n S F)
     (hleft : ∀ γ : Matrix.GeneralLinearGroup (Fin n) K, ∀ g,
       F (chapter15PrincipalMatrix n γ * g) = F g)
     (hright : ∀ g k, k ∈ chapter15GlobalLevelSubgroup n Kf →
       F (g * k) = F g) :
     chapter15AutomorphicFunctionPullback n Kf
-        (chapter15AutomorphicFunctionDescend n Kf F hleft hright) = F := by
+        (chapter15AutomorphicFunctionDescend n Kf F hconditions hleft hright) = F := by
   sorry
 
 theorem chapter15AutomorphicFunctionPullback_injective

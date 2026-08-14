@@ -84,7 +84,7 @@ theorem chapter05_finite_integral_preimage_of_diagonal
     (chapter05FiniteDiagonal K ⁻¹'
       (chapter05FiniteIntegralAdeleSubring K :
         Set (Chapter05FiniteAdeleRing K))) =
-      (Chapter05RingOfIntegers K : Set K) := by
+      chapter05RingOfIntegersSet K := by
   sorry
 
 theorem chapter05_finite_integral_intersection_eq_integer_image
@@ -92,7 +92,7 @@ theorem chapter05_finite_integral_intersection_eq_integer_image
     Set.range (chapter05FiniteDiagonal K) ∩
         (chapter05FiniteIntegralAdeleSubring K :
           Set (Chapter05FiniteAdeleRing K)) =
-      chapter05FiniteDiagonal K '' (Chapter05RingOfIntegers K : Set K) := by
+      chapter05FiniteDiagonal K '' chapter05RingOfIntegersSet K := by
   sorry
 
 theorem chapter05_finite_integral_intersection_is_infinite
@@ -108,7 +108,7 @@ meets the canonical diagonal in all global integers. -/
 theorem chapter05_finite_zero_neighborhood_meets_diagonal_in_integers
     (K : Type*) [Field K] [NumberField K] :
     Set.range (chapter05FiniteDiagonal K) ∩ chapter05FiniteZeroNeighborhood K =
-        chapter05FiniteDiagonal K '' (Chapter05RingOfIntegers K : Set K) ∧
+        chapter05FiniteDiagonal K '' chapter05RingOfIntegersSet K ∧
       Set.Infinite
         (Set.range (chapter05FiniteDiagonal K) ∩
           chapter05FiniteZeroNeighborhood K) := by

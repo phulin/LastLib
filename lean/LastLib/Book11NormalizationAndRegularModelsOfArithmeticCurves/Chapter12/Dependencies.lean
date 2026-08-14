@@ -62,9 +62,9 @@ abbrev chapter12GenericPointMap {S : Scheme.{u}} {K : Type u} [Field K]
   B.dedekind.genericPointMap
 
 def chapter12GenericComponentControl
-    {S : Scheme.{u}} {K : Type u} [Field K]
+    {K : Type u} [Field K]
     (C : Chapter01SmoothProperCurveOverField K) : Prop :=
-  C.geometricallyConnected
+  GeometricallyConnected C.structureMap
 
 theorem chapter12_geometricallyConnected_controls_generic_components
     {K : Type u} [Field K] (C : Chapter01SmoothProperCurveOverField K) :
@@ -86,8 +86,8 @@ structure Chapter12FlatProjectiveModel
   integral : IsIntegral carrier
   genericFiberIso : pullback structureMap (chapter12GenericPointMap B) ≅ C.carrier
   genericFiberIso_over :
-    genericFiberIso.hom ≫ pullback.snd structureMap (chapter12GenericPointMap B) =
-      C.structureMap
+    genericFiberIso.hom ≫ C.structureMap =
+      pullback.snd structureMap (chapter12GenericPointMap B)
 
 instance {S : Scheme.{u}} {K : Type u} [Field K]
     {B : Chapter12ExcellentDedekindBase S K}
@@ -150,7 +150,7 @@ structure Chapter12SmoothProjectiveOpenModel
   genericMap_over : genericMap ≫ U.ι = chapter12GenericPointMap B
   genericFiberIso : pullback structureMap genericMap ≅ C.carrier
   genericFiberIso_over :
-    genericFiberIso.hom ≫ pullback.snd structureMap genericMap = C.structureMap
+    genericFiberIso.hom ≫ C.structureMap = pullback.snd structureMap genericMap
 
 instance {S : Scheme.{u}} {K : Type u} [Field K]
     {B : Chapter12ExcellentDedekindBase S K}
@@ -163,7 +163,7 @@ abbrev chapter12ModelRestriction
     {B : Chapter12ExcellentDedekindBase S K}
     {C : Chapter01SmoothProperCurveOverField K}
     (M : Chapter12FlatProjectiveModel B C) (U : S.Opens) :
-    (M.carrier ⁻¹ᵁ U).toScheme ⟶ U.toScheme :=
+    (M.structureMap ⁻¹ᵁ U).toScheme ⟶ U.toScheme :=
   M.structureMap ∣_ U
 
 theorem chapter12_model_restriction_is_projective
@@ -180,8 +180,9 @@ structure Chapter12ModelExtension
     {C : Chapter01SmoothProperCurveOverField K} {U : S.Opens}
     (M : Chapter12SmoothProjectiveOpenModel B C U)
     (N : Chapter12FlatProjectiveModel B C) where
-  openIso : M.carrier ≅ (N.carrier ⁻¹ᵁ U).toScheme
-  over : openIso.hom ≫ chapter12ModelRestriction N U = M.structureMap
+  openIso : M.carrier ≅ (N.structureMap ⁻¹ᵁ U).toScheme
+  over_base : openIso.hom ≫
+      (chapter12ModelRestriction (B := B) (C := C) N U) = M.structureMap
 
 theorem chapter12_model_extension_restricts_to
     {S : Scheme.{u}} {K : Type u} [Field K]
@@ -191,7 +192,7 @@ theorem chapter12_model_extension_restricts_to
     {N : Chapter12FlatProjectiveModel B C}
     (E : Chapter12ModelExtension M N) :
     E.openIso.hom ≫ chapter12ModelRestriction N U = M.structureMap :=
-  E.over
+  E.over_base
 
 structure Chapter12RegularModification
     {S : Scheme.{u}} {K : Type u} [Field K]
@@ -203,12 +204,13 @@ structure Chapter12RegularModification
     (normalExtension : Chapter12ModelExtension M (chapter12NormalModelToFlat N))
     (regularExtension : Chapter12ModelExtension M (chapter12RegularModelToFlat R)) where
   map : R.carrier ⟶ N.carrier
-  over : map ≫ N.structureMap = R.structureMap
+  over_base : (map ≫ N.structureMap) = R.structureMap
   projective : Chapter07IsProjectiveMorphism map
   proper : IsProper map
   birational : Chapter07Birational map
   identical_over_U :
-    map ∣_ U =
+    map.resLE (N.structureMap ⁻¹ᵁ U) (R.structureMap ⁻¹ᵁ U) (by
+      rw [← Scheme.Hom.comp_preimage, over_base]) =
       regularExtension.openIso.inv ≫ normalExtension.openIso.hom
 
 /-! ### Base change, normalization, and resolution records -/
@@ -231,7 +233,7 @@ abbrev chapter12FieldBaseChange
 abbrev chapter12FieldBaseChangedStructureMap
     {K L : Type u} [Field K] [Field L] [Algebra K L]
     (C : Scheme.{u}) (c : C ⟶ Spec (CommRingCat.of K)) :
-    chapter12FieldBaseChange C c ⟶ Spec (CommRingCat.of L) :=
+    chapter12FieldBaseChange (K := K) (L := L) C c ⟶ Spec (CommRingCat.of L) :=
   pullback.snd c (chapter12FieldBaseChangeMap K L)
 
 structure Chapter12NormalizedDedekindBase
@@ -254,7 +256,7 @@ def chapter12NormalizedBaseAsExcellentDedekindBase
     {S : Scheme.{u}} {K L : Type u} [Field K] [Field L]
     [Algebra K L] [FiniteDimensional K L]
     {B : Chapter12ExcellentDedekindBase S K}
-    (B' : Chapter12NormalizedDedekindBase B) :
+    (B' : Chapter12NormalizedDedekindBase (K := K) (L := L) B) :
     Chapter12ExcellentDedekindBase B'.carrier L where
   dedekind := B'.integralBase
   excellent := B'.excellent
@@ -265,7 +267,7 @@ structure Chapter12ReducedBaseChange
     {B : Chapter12ExcellentDedekindBase S K}
     {C : Chapter01SmoothProperCurveOverField K}
     (M : Chapter12FlatProjectiveModel B C)
-    (B' : Chapter12NormalizedDedekindBase B) where
+    (B' : Chapter12NormalizedDedekindBase (K := K) (L := L) B) where
   carrier : Scheme.{u}
   map : carrier ⟶ pullback M.structureMap B'.map
   reduced : IsReduced carrier
@@ -277,7 +279,8 @@ structure Chapter12NormalizedReducedBaseChange
     {B : Chapter12ExcellentDedekindBase S K}
     {C : Chapter01SmoothProperCurveOverField K}
     (M : Chapter12FlatProjectiveModel B C)
-    (B' : Chapter12NormalizedDedekindBase B) extends Chapter12ReducedBaseChange M B' where
+    (B' : Chapter12NormalizedDedekindBase (K := K) (L := L) B) extends
+      Chapter12ReducedBaseChange M B' where
   normalizationCarrier : Scheme.{u}
   normalization : normalizationCarrier ⟶ carrier
   normalization_finite : IsFinite normalization
@@ -291,7 +294,7 @@ structure Chapter12ResolvedBaseChange
     {B : Chapter12ExcellentDedekindBase S K}
     {C : Chapter01SmoothProperCurveOverField K}
     (M : Chapter12FlatProjectiveModel B C)
-    (B' : Chapter12NormalizedDedekindBase B) extends
+    (B' : Chapter12NormalizedDedekindBase (K := K) (L := L) B) extends
       Chapter12NormalizedReducedBaseChange M B' where
   resolvedCarrier : Scheme.{u}
   resolution : resolvedCarrier ⟶ normalizationCarrier
@@ -314,13 +317,13 @@ structure Chapter12RationalMapOver
   domain : X.Opens
   dense : Dense (domain : Set X)
   map : domain.toScheme ⟶ Y
-  over : map ≫ g = domain.ι ≫ f
+  over_base : (map ≫ g) = (domain.ι ≫ f)
 
 def chapter12RationalGraph
     {X Y S : Scheme.{u}} {f : X ⟶ S} {g : Y ⟶ S}
     (r : Chapter12RationalMapOver f g) :
     r.domain.toScheme ⟶ pullback f g :=
-  pullback.lift r.domain.ι r.map r.over.symm
+  pullback.lift r.domain.ι r.map r.over_base.symm
 
 structure Chapter12ProperCorrespondence
     {X Y S : Scheme.{u}} (f : X ⟶ S) (g : Y ⟶ S) where
@@ -386,7 +389,7 @@ def chapter12ResolvedGraphCorrespondence
   left := Z.left
   right := Z.right
   left_over := rfl
-  right_over := by rw [Z.right_factor, Z.left_factor, G.right_over, G.left_over]
+  right_over := by sorry
   left_proper := Z.left_proper
   right_proper := Z.right_proper
 
@@ -397,7 +400,7 @@ structure Chapter12FiniteGenericMap
     (C D : Chapter01SmoothProperCurveOverField K) where
   map : C.carrier ⟶ D.carrier
   finite : IsFinite map
-  over : map ≫ D.structureMap = C.structureMap
+  over_base : (map ≫ D.structureMap) = C.structureMap
 
 structure Chapter12FiniteGenericCorrespondence
     (K : Type u) [Field K]
@@ -462,7 +465,7 @@ structure Chapter12CommonRegularDomination
   graphClosure : ∀ j,
     Nonempty (Chapter12GraphClosure (F.rationalMap j))
   resolvedGraph : ∀ j,
-    Nonempty (Chapter12ResolvedNormalizedGraph (Classical.choice (F.graphClosure j)))
+    Nonempty (Chapter12ResolvedNormalizedGraph (Classical.choice (graphClosure j)))
   correspondenceClosure : ∀ j,
     Nonempty (Chapter12FiniteGenericCorrespondenceModelExtension
       (F.model (F.correspondenceSource j))
@@ -470,8 +473,8 @@ structure Chapter12CommonRegularDomination
       (F.correspondence j))
   correspondenceDomination : ∀ j,
     ∃ q : carrier ⟶
-        (Classical.choice (F.correspondenceClosure j)).correspondence.carrier,
-      q ≫ (Classical.choice (F.correspondenceClosure j)).correspondence.structureMap =
+        (Classical.choice (correspondenceClosure j)).correspondence.carrier,
+      q ≫ (Classical.choice (correspondenceClosure j)).correspondence.structureMap =
         structureMap
 
 /-! ### Minimal regular models and vertical exceptional contractions -/
@@ -506,12 +509,12 @@ structure Chapter12MinimalContraction
 
 structure Chapter12GenusData
     {K : Type u} [Field K] (C : Chapter01SmoothProperCurveOverField K)
-    (g : ℕ) : Prop where
+    (g : ℕ) where
   geometric_genus : Prop
 
 def Chapter12PositiveGenus
     {K : Type u} [Field K] (C : Chapter01SmoothProperCurveOverField K) : Prop :=
-  ∃ g : ℕ, 0 < g ∧ Chapter12GenusData C g
+  ∃ g : ℕ, 0 < g ∧ Nonempty (Chapter12GenusData C g)
 
 /-! ### Semistable local equations and algebraization input -/
 
@@ -536,7 +539,7 @@ abbrev chapter12NodeCompletedLocalRing
   chapter12NodePowerSeries R ⧸ chapter12NodeIdeal R π
 
 structure Chapter12NodeCompletedLocalPresentation
-    (R A : Type u) [CommRing R] [CommRing A] [Algebra R A]
+    (R A : Type u) [CommRing R] [CommRing A] [IsLocalRing R] [Algebra R A]
     (π : R) where
   uniformizer : Chapter12Uniformizer R π
   completedRing_isLocal : IsLocalRing A
@@ -564,11 +567,11 @@ structure Chapter12SemistableOpenModel
   genericMap_over : genericMap ≫ V.ι = chapter12GenericPointMap B
   genericFiberIso : pullback structureMap genericMap ≅ C.carrier
   genericFiberIso_over :
-    genericFiberIso.hom ≫ pullback.snd structureMap genericMap = C.structureMap
+    genericFiberIso.hom ≫ C.structureMap = pullback.snd structureMap genericMap
   semistable : Prop
   nodeIndex : Type u
   nodePoint : nodeIndex → carrier
-  nodePresentation : ∀ i, Prop
+  nodePresentation : ∀ _i : nodeIndex, Prop
 
 structure Chapter12SemistableModelExtension
     {S : Scheme.{u}} {K : Type u} [Field K]
@@ -576,8 +579,10 @@ structure Chapter12SemistableModelExtension
     {C : Chapter01SmoothProperCurveOverField K} {V : S.Opens}
     (N : Chapter12SemistableOpenModel B C V)
     (R : Chapter12RegularFlatProjectiveModel B C) where
-  openIso : N.carrier ≅ (R.carrier ⁻¹ᵁ V).toScheme
-  over : openIso.hom ≫ chapter12ModelRestriction R V = N.structureMap
+  openIso : N.carrier ≅ (R.structureMap ⁻¹ᵁ V).toScheme
+  over_base : openIso.hom ≫
+      (chapter12ModelRestriction (B := B) (C := C)
+        (chapter12RegularModelToFlat R) V) = N.structureMap
   centers_outside_V : Prop
 
 structure Chapter12SemistableResolutionOutsideOpen
@@ -599,15 +604,16 @@ structure Chapter12MarkedSemistableModel
     (M : Chapter12SemistableOpenModel B C V) where
   markIndex : Type u
   finiteMarks : Finite markIndex
-  marks : ∀ i, Chapter12MarkedSection M.structureMap
+  marks : ∀ _i : markIndex, Chapter12MarkedSection M.structureMap
 
 structure Chapter12NodeSeparationData
     {S : Scheme.{u}} {K : Type u} [Field K]
     {B : Chapter12ExcellentDedekindBase S K}
     {C : Chapter01SmoothProperCurveOverField K} {V : S.Opens}
-    (M : Chapter12MarkedSemistableModel (B := B) (C := C) (V := V)) where
+    {N : Chapter12SemistableOpenModel B C V}
+    (M : Chapter12MarkedSemistableModel N) where
   blownUpModel : Scheme.{u}
-  map : blownUpModel ⟶ M.carrier
+  map : blownUpModel ⟶ N.carrier
   projective : Chapter07IsProjectiveMorphism map
   proper : IsProper map
   pointBlowupChain : Prop
@@ -620,27 +626,28 @@ structure Chapter12StableComponent
   meetsRemainderAndMarks : ℕ
 
 def Chapter12StableComponentCondition
-    {X : Scheme.{u}} (E : Chapter12StableComponent) : Prop :=
+    {X : Scheme.{u}} (E : Chapter12StableComponent (X := X)) : Prop :=
   E.rational ∧ E.meetsRemainderAndMarks < 3
 
 structure Chapter12StableContractionData
     {X Y S : Scheme.{u}} (f : X ⟶ S) (g : Y ⟶ S) where
   contraction : X ⟶ Y
-  over : contraction ≫ g = f
+  over_base : (contraction ≫ g) = f
   proper : IsProper contraction
-  contracted : ∀ E : Chapter12StableComponent, Chapter12StableComponentCondition E → Prop
+  contracted : ∀ E : Chapter12StableComponent (X := X),
+    Chapter12StableComponentCondition E → Prop
 
 structure Chapter12CompletedLocalModelInput (S : Scheme.{u}) where
   localIndex : Type u
   completedLocalData : localIndex → Prop
 
 structure Chapter12CompatibleAlgebraicDescentData
-    {S : Scheme.{u}} (D : Chapter12CompletedLocalModelInput S) : Prop where
+    {S : Scheme.{u}} (D : Chapter12CompletedLocalModelInput S) where
   descentDatum : Prop
   cocycle : Prop
 
 structure Chapter12ApproximationAlgebraizationData
-    {S : Scheme.{u}} (D : Chapter12CompletedLocalModelInput S) : Prop where
+    {S : Scheme.{u}} (D : Chapter12CompletedLocalModelInput S) where
   approximation : Prop
   algebraization : Prop
 

@@ -92,7 +92,7 @@ theorem chapter09_horizontalClosure_normalization_is_baseNormalization
 
 theorem chapter09_section_is_effective_cartier
     {X S : Scheme.{u}} (f : X ⟶ S)
-    (hX : Chapter04RegularSurface X)
+    (hX : Chapter09RegularSurface X)
     (hf : Chapter01ArithmeticSurface f)
     (σ : Chapter09Section f) :
     Nonempty (Chapter09SectionCartierData σ) := by
@@ -100,7 +100,7 @@ theorem chapter09_section_is_effective_cartier
 
 theorem chapter09_section_closed_point_has_dimension_two_and_local_parameter
     {X S : Scheme.{u}} (f : X ⟶ S)
-    (hX : Chapter04RegularSurface X)
+    (hX : Chapter09RegularSurface X)
     (hf : Chapter01ArithmeticSurface f)
     (σ : Chapter09Section f)
     (D : Chapter09SectionCartierData σ)

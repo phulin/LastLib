@@ -1,4 +1,4 @@
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Section04MultiplicationPowersAndResidueCharacteristic
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Dependencies
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10
 
@@ -42,17 +42,27 @@ theorem chapter10_equal_characteristic_units_have_expansions
   dsimp
   field_simp
 
-/-- The coefficient recorded by the `n`th equal-characteristic layer. -/
+/-- The normalized coefficient recorded by the `n`th equal-characteristic layer. -/
 def chapter10PowerSeriesLayerCoefficient
     {k : Type*} [Field k] (u : (PowerSeries k)ˣ) (n : ℕ) : k :=
-  PowerSeries.coeff n (u : PowerSeries k)
+  PowerSeries.coeff (n + 1) (u : PowerSeries k) /
+    PowerSeries.constantCoeff (u : PowerSeries k)
 
 /-- The `p`th-power Frobenius identity in characteristic `p`. -/
 theorem chapter10_equal_characteristic_frobenius_identity
     {k : Type*} [Field k] (p : ℕ) (hp : 0 < p) [CharP k p]
     (x : PowerSeries k) :
     (1 + x) ^ p = 1 + x ^ p := by
-  sorry
+  have hchar : CharP (PowerSeries k) p :=
+    charP_of_injective_algebraMap (R := k) (A := PowerSeries k)
+      (fun a b h => by
+        have h₀ := congrArg (PowerSeries.coeff 0) h
+        simpa [PowerSeries.algebraMap_apply] using h₀)
+      p
+  have hprime : Fact p.Prime :=
+    ⟨CharP.char_prime_of_ne_zero (R := k) (by omega)⟩
+  simpa using (@add_pow_char (PowerSeries k) inferInstance
+    (1 : PowerSeries k) x p hprime hchar)
 
 /-- Frobenius sends the `t`-adic principal-unit filtration from depth `n` to `pn`. -/
 theorem chapter10_equal_characteristic_power_depth_jump
@@ -92,11 +102,12 @@ theorem chapter10_equal_characteristic_power_depth_jump
   rw [hident, hideal]
   exact hpow
 
-/-- The equal-characteristic layer is literally the next power-series coefficient. -/
+/-- The equal-characteristic layer is the normalized next power-series coefficient. -/
 theorem chapter10_equal_characteristic_layer_records_coefficient
     {k : Type*} [Field k] (u : (PowerSeries k)ˣ) (n : ℕ) :
     chapter10PowerSeriesLayerCoefficient u n =
-      PowerSeries.coeff n (u : PowerSeries k) := by
+      PowerSeries.coeff (n + 1) (u : PowerSeries k) /
+        PowerSeries.constantCoeff (u : PowerSeries k) := by
   rfl
 
 end

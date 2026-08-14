@@ -330,14 +330,6 @@ theorem chapter03_constant_one_witness_for_infinite_change
     chapter03RestrictedProductChangeWitness H H' := by
   sorry
 
-/- SOURCE_ISSUE:
-  In the sentence comparing `x_p ∈ ℤ_p` with `x_p ∈ pℤ_p`, "the identity
-  family" is ambiguous and is false if the products are additive groups: the
-  additive identity is the zero family, which belongs to both products.  The
-  smallest precise replacement is the constant-one family, which belongs to
-  the first model and is excluded from the second at every prime.
--/
-
 end ConstantOneWitness
 
 end InfiniteChanges

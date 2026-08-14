@@ -66,7 +66,7 @@ theorem chapter15_grh_admissible_iff_source_conditions
         (∀ x : ℝ, 0 ≤ F x) ∧
           Continuous F ∧ Integrable F ∧
             ∀ t : ℝ, 0 ≤ chapter08CosineTransform F t := by
-  rfl
+  sorry
 
 /- LOCAL_DEPENDENCY_GUESS: Chapters 6--8 should supply the explicit-formula
 identity and the zero/prime positivity fields below from the canonical

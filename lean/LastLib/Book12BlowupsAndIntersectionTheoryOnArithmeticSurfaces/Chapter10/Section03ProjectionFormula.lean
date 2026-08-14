@@ -5,6 +5,7 @@ namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter
 noncomputable section
 
 open AlgebraicGeometry CategoryTheory Limits Set TopologicalSpace
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09
 open scoped AlgebraicGeometry BigOperators
 
 universe u
@@ -72,8 +73,13 @@ structure Chapter10ProjectionFormulaDegreeComparison
   targetLineBundle_is_D : targetLineBundle = D.lineBundle
   pullback_degree :
     chapter10CurveDegree C
-        (chapter09PullbackLineBundle image.map targetLineBundle) =
-      (degree : ℤ) * chapter10CurveDegree image.image targetLineBundle
+        (chapter09PullbackLineBundle (X := C.carrier)
+          (Y := image.image.carrier) image.map
+          (chapter09PullbackLineBundle (X := image.image.carrier)
+            (Y := X) image.image.inclusion targetLineBundle)) =
+      (degree : ℤ) * chapter10CurveDegree image.image
+        (chapter09PullbackLineBundle (X := image.image.carrier)
+          (Y := X) image.image.inclusion targetLineBundle)
   constant_field_degree_compatibility : Prop
 
 theorem chapter10_projection_formula

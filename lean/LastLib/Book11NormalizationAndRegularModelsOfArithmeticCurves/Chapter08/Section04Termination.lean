@@ -38,16 +38,16 @@ structure Chapter08ResolutionStage where
   normal : Chapter08NormalNoetherianSurface carrier
   profile : Chapter08StageProfile carrier
 
-structure Chapter08PreparedNormalSurface (X0 : Scheme.{u}) : Prop where
+structure Chapter08PreparedNormalSurface (X0 : Scheme.{u}) : Type (u + 1) where
   normal : Chapter08NormalNoetherianSurface X0
   excellent : Chapter01ExcellentScheme X0
-  quasiCompact : IsQuasiCompact (Set.univ : Set X0)
+  quasiCompact : IsCompact (Set.univ : Set X0)
   singularLocus : Set X0
   singularLocus_eq : singularLocus = chapter08SingularLocus X0
   singular_closed : IsClosed singularLocus
   singular_codimension_two : Chapter08CodimensionAtLeastTwo singularLocus
   singular_finite_on_quasiCompact_open :
-    ∀ V : X0.Opens, IsQuasiCompact (V : Set X0) →
+    ∀ V : X0.Opens, IsCompact (V : Set X0) →
       (singularLocus ∩ (V : Set X0)).Finite
 
 structure Chapter08ResolutionStep
@@ -162,7 +162,7 @@ theorem chapter08_resolution_stage_clears_maximal_invariant
 
 theorem chapter08_resolution_stage_preserves_regular_open
     {S T : Chapter08ResolutionStage} (step : Chapter08ResolutionStep S T)
-    (U : S.carrier.Opens) (hU : ∀ x : S.carrier, x ∈ U →
+    (U : S.carrier.Opens) (_hU : ∀ x : S.carrier, x ∈ U →
       IsRegularLocalRing (S.carrier.presheaf.stalk x))
     (hUcenters : ∀ x : S.carrier, x ∈ U → x ∉ step.centers) :
     IsIso (step.map ∣_ U) := by
@@ -214,7 +214,7 @@ theorem chapter08_zero_dimensional_closed_finite_on_quasiCompact
     {X : Scheme.{u}} (Z : Set X)
     (hnoetherian : IsNoetherian X) (hclosed : IsClosed Z)
     (hzero : Chapter08ZeroDimensionalClosedSubset Z)
-    (hqc : IsQuasiCompact (Set.univ : Set X)) : Z.Finite := by
+    (hqc : IsCompact (Set.univ : Set X)) : Z.Finite := by
   sorry
 
 end

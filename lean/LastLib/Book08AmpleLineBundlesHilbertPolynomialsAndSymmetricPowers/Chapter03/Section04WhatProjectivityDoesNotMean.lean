@@ -1,3 +1,4 @@
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter03.Section02ElementaryPermanenceProperties
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter03.Section03SeparatednessFiniteTypeAndProperness
 
 /-!
@@ -35,17 +36,40 @@ def chapter03AffineLineProjection (k : Type u) [Field k] :
 /-- The affine line over a field is not proper over that field. -/
 theorem chapter03_affineLine_not_proper (k : Type u) [Field k] :
     ¬ IsProper (chapter03AffineLineProjection k) := by
-  sorry
+  intro h
+  have hfinite : IsFinite (chapter03AffineLineProjection k) := by
+    apply (IsFinite.iff_isProper_and_isAffineHom).2
+    exact ⟨h, by
+      dsimp [chapter03AffineLineProjection, chapter03AffineLine, chapter03AffineSpace]
+      have : IsAffine (AlgebraicGeometry.AffineSpace
+          (ULift.{u} (Fin 1)) (Spec (CommRingCat.of k))) := by infer_instance
+      have : IsAffine (Spec (CommRingCat.of k)) := by infer_instance
+      change IsAffineHom
+        (AlgebraicGeometry.AffineSpace (ULift.{u} (Fin 1))
+          (Spec (CommRingCat.of k)) ↘ Spec (CommRingCat.of k))
+      exact isAffineHom_of_isAffine _⟩
+  let : IsFinite (chapter03AffineLineProjection k) := hfinite
+  let : IsFinite (chapter03AffineSpaceProjection
+      (Spec (CommRingCat.of k)) 1) := hfinite
+  have hi : IsIntegralHom (chapter03AffineSpaceProjection
+      (Spec (CommRingCat.of k)) 1) := by
+    infer_instance
+  apply (AffineSpace.not_isIntegralHom
+    (n := ULift.{u} (Fin 1)) (S := Spec (CommRingCat.of k)))
+  change IsIntegralHom (chapter03AffineSpaceProjection
+    (Spec (CommRingCat.of k)) 1)
+  exact hi
 
 /-- The affine line over a field is not projective over that field. -/
 theorem chapter03_affineLine_not_projective (k : Type u) [Field k] :
     ¬ chapter03Projective (chapter03AffineLineProjection k) := by
-  sorry
+  intro h
+  exact chapter03_affineLine_not_proper k (chapter03_projective_isProper _ h)
 
 /-- The affine line is nevertheless quasi-projective as the standard projective-space open. -/
 theorem chapter03_affineLine_quasiProjective (k : Type u) [Field k] :
     chapter03QuasiProjective (chapter03AffineLineProjection k) := by
-  sorry
+  exact chapter03_affineSpace_quasiProjective (Spec (CommRingCat.of k)) 1
 
 /-- A projective morphism over a projective base need not be projective over a smaller base. -/
 def chapter03ProjectivityCanDependOnBase : Prop :=
@@ -63,7 +87,8 @@ def chapter03FiberwiseProjective (f : X ⟶ S) : Prop :=
 /-- A projective morphism is fiberwise projective. -/
 theorem chapter03_projective_fiberwiseProjective (f : X ⟶ S)
     (hf : chapter03Projective f) : chapter03FiberwiseProjective f := by
-  sorry
+  intro s
+  exact chapter03_projective_baseChange f (S.fromSpecResidueField s) hf
 
 /-- The source's fiberwise-projectivity warning, with all data quantified explicitly. -/
 def chapter03FiberwiseProjectivityIsInsufficient : Prop :=
@@ -83,14 +108,14 @@ theorem chapter03_proper_need_not_be_projective :
     chapter03ProperNeedNotBeProjective := by
   sorry
 
-/-
-COVERAGE NOTE: The final warning in the source concerns a line bundle that is ample on every
-residue-field fiber but not relatively ample when quasi-compactness or finite-presentation
-hypotheses are dropped.  The pinned Mathlib imports do not yet expose the book's relative
-line-bundle/ampleness predicate, so this draft records the warning here rather than introducing
-an unrelated surrogate.  The preceding and following chapters should supply that interface and
-turn this warning into an existential counterexample statement.
--/
+/-- A proper family can have fiberwise ample line bundle data without relative ampleness. -/
+def chapter03ProperFiberwiseAmpleButNotRelativelyAmple : Prop :=
+  ∃ (X S : Scheme.{u}) (f : X ⟶ S) (L : Chapter03LineBundle X),
+    IsProper f ∧ chapter03FiberwiseAmple f L ∧ ¬ chapter03RelativelyAmple f L
+
+theorem chapter03_proper_fiberwiseAmple_but_not_relativelyAmple :
+    chapter03ProperFiberwiseAmpleButNotRelativelyAmple := by
+  sorry
 
 end
 

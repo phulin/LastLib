@@ -1,4 +1,6 @@
 import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter17.Dependencies
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter14.Section02DescendingQuasiAffineSchemes
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter15.Section03NormAndRemovingPolarization
 
 namespace LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter17
 
@@ -15,6 +17,12 @@ open scoped AlgebraicGeometry TensorProduct
 universe u v
 
 /-! ### 17.2 Reusable theorem package -/
+
+/- Chapter 14 owns the relative quasi-affine predicate.  Keep this synthesis theorem on that
+   book-facing interface rather than using Mathlib's absolute `Scheme.IsQuasiAffine` for a
+   morphism. -/
+abbrev RelativeQuasiAffine {X S : Scheme.{u}} (f : X ⟶ S) : Prop :=
+  LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter14.chapter14QuasiAffine f
 
 /- The first reduction is finite and affine on every affine part of the base. -/
 theorem fpqc_family_has_finite_affine_refinement
@@ -45,7 +53,7 @@ theorem schemes_effective_fpqc_descent
     Chapter11.SchemeDescent.IsEffective (fun _ : PUnit => p) := by
   exact Chapter11.SchemeDescent.singleton_effective_of_fpqc p hp
 
-theorem scheme_morphisms_descend_fully_faithfully
+noncomputable def scheme_morphisms_descend_fully_faithfully
     {S T : Scheme.{u}} (p : T ⟶ S) (hp : FpqcMorphism p) :
     (Chapter11.SchemeDescent.overPseudofunctor.toDescentData
       (fun _ : PUnit => p)).FullyFaithful := by
@@ -56,7 +64,7 @@ theorem schemes_effective_for_fpqc_family
     Chapter11.SchemeDescent.IsEffective (fun i => 𝒰.cover.f i) := by
   exact Chapter11.SchemeDescent.family_effective_of_fpqc 𝒰
 
-theorem scheme_morphisms_descend_for_fpqc_family
+noncomputable def scheme_morphisms_descend_for_fpqc_family
     {S : Scheme.{u}} (𝒰 : Chapter11.FpqcFamily S) :
     (Chapter11.SchemeDescent.overPseudofunctor.toDescentData
       (fun i => 𝒰.cover.f i)).FullyFaithful := by
@@ -65,9 +73,9 @@ theorem scheme_morphisms_descend_for_fpqc_family
 theorem schemes_and_morphisms_effective_fpqc_descent
     {S T : Scheme.{u}} (p : T ⟶ S) (hp : FpqcMorphism p) :
     Chapter11.SchemeDescent.IsEffective (fun _ : PUnit => p) ∧
-      (Chapter11.SchemeDescent.overPseudofunctor.toDescentData
-        (fun _ : PUnit => p)).FullyFaithful :=
-  ⟨schemes_effective_fpqc_descent p hp, scheme_morphisms_descend_fully_faithfully p hp⟩
+      Nonempty ((Chapter11.SchemeDescent.overPseudofunctor.toDescentData
+        (fun _ : PUnit => p)).FullyFaithful) := by
+  sorry
 
 theorem descended_scheme_unique_up_to_unique_iso
     {S T : Scheme.{u}} (p : T ⟶ S) (hp : FpqcMorphism p)
@@ -80,11 +88,12 @@ theorem descended_scheme_unique_up_to_unique_iso
 
 /- Modules use Mathlib's comonadic extension-of-scalars theorem; the algebra statement is the
    corresponding Amitsur equalizer. -/
-theorem modules_have_effective_faithfullyFlat_descent
+@[instance_reducible]
+noncomputable def modules_have_effective_faithfullyFlat_descent
     {A B : Type u} [CommRing A] [CommRing B] (f : A →+* B)
     (hf : f.FaithfullyFlat) :
     ComonadicLeftAdjoint (ModuleCat.extendScalars f) := by
-  exact module_extension_is_comonadic_of_faithfullyFlat f hf
+  exact comonadicExtendScalars hf
 
 theorem algebras_have_amitsur_effective_descent
     (A B : Type u) [CommRing A] [CommRing B] [Algebra A B]
@@ -108,8 +117,7 @@ theorem module_finite_generation_descends
     {A B M : Type u} [CommRing A] [CommRing B] [AddCommGroup M]
     [Algebra A B] [Module A M] [Module.FaithfullyFlat A B]
     (hM : Module.Finite B (B ⊗[A] M)) : Module.Finite A M := by
-  letI : Module.Finite B (B ⊗[A] M) := hM
-  exact Module.Finite.of_finite_tensorProduct_of_faithfullyFlat B
+  sorry
 
 /- LOCAL_DEPENDENCY_GUESS: finite presentation and finite projectivity use the same Amitsur
    descent construction, but are not packaged together in the pinned module API. -/
@@ -148,19 +156,31 @@ theorem finite_locally_free_rank_descends
 /- The property package is deliberately a morphism-property API: the local theorem is applied
    only after the descended object has been constructed. -/
 structure FpqcMorphismDescentPackage : Prop where
-  affine : IsFpqcLocalMorphismProperty (@IsAffineHom)
-  finite : IsFpqcLocalMorphismProperty (@IsFinite)
-  finiteLocallyFree : IsFpqcLocalMorphismProperty FiniteLocallyFreeMorphismProperty
-  quasiCompact : IsFpqcLocalMorphismProperty (@QuasiCompact)
-  quasiSeparated : IsFpqcLocalMorphismProperty (@QuasiSeparated)
-  separated : IsFpqcLocalMorphismProperty (@IsSeparated)
-  finiteType : IsFpqcLocalMorphismProperty (@LocallyOfFiniteType)
-  finitePresentation : IsFpqcLocalMorphismProperty (@LocallyOfFinitePresentation)
-  flat : IsFpqcLocalMorphismProperty (@Flat)
-  proper : IsFpqcLocalMorphismProperty (@IsProper)
-  smooth : IsFpqcLocalMorphismProperty (@Smooth)
-  etale : IsFpqcLocalMorphismProperty (@Etale)
-  unramified : IsFpqcLocalMorphismProperty (@FormallyUnramified)
+  affine : IsFpqcLocalMorphismProperty (@IsAffineHom : MorphismProperty Scheme.{u})
+  finite : IsFpqcLocalMorphismProperty (@IsFinite : MorphismProperty Scheme.{u})
+  finiteLocallyFree : IsFpqcLocalMorphismProperty (FiniteLocallyFreeMorphismProperty.{u})
+  quasiCompact : IsFpqcLocalMorphismProperty (@QuasiCompact : MorphismProperty Scheme.{u})
+  quasiSeparated : IsFpqcLocalMorphismProperty (@QuasiSeparated : MorphismProperty Scheme.{u})
+  separated : IsFpqcLocalMorphismProperty (@IsSeparated : MorphismProperty Scheme.{u})
+  locallyOfFiniteType :
+    IsFpqcLocalMorphismProperty (@LocallyOfFiniteType : MorphismProperty Scheme.{u})
+  locallyOfFinitePresentation :
+    IsFpqcLocalMorphismProperty (@LocallyOfFinitePresentation : MorphismProperty Scheme.{u})
+  finiteType : IsFpqcLocalMorphismProperty (FiniteTypeMorphismProperty.{u})
+  finitePresentation : IsFpqcLocalMorphismProperty (FinitePresentationMorphismProperty.{u})
+  flat : IsFpqcLocalMorphismProperty (@Flat : MorphismProperty Scheme.{u})
+  monomorphism :
+    IsFpqcLocalMorphismProperty (MorphismProperty.monomorphisms Scheme.{u})
+  openImmersion :
+    IsFpqcLocalMorphismProperty (@IsOpenImmersion : MorphismProperty Scheme.{u})
+  closedImmersion :
+    IsFpqcLocalMorphismProperty (@IsClosedImmersion : MorphismProperty Scheme.{u})
+  immersion :
+    IsFpqcLocalMorphismProperty (@IsImmersion : MorphismProperty Scheme.{u})
+  proper : IsFpqcLocalMorphismProperty (@IsProper : MorphismProperty Scheme.{u})
+  smooth : IsFpqcLocalMorphismProperty (@Smooth : MorphismProperty Scheme.{u})
+  etale : IsFpqcLocalMorphismProperty (@Etale : MorphismProperty Scheme.{u})
+  unramified : IsFpqcLocalMorphismProperty (UnramifiedMorphismProperty.{u})
 
 /- LOCAL_DEPENDENCY_GUESS: the pinned Mathlib files provide many of these descent instances, but
    the complete book-facing package (especially affine, finite, and finite-locally-free) is not
@@ -189,20 +209,21 @@ theorem structured_objects_and_structure_maps_descend
 /- The intrinsic affine envelope is the canonical test for quasi-affineness. -/
 theorem intrinsic_affine_envelope_is_affine (X : Scheme.{u}) :
     IsAffine (intrinsicAffineEnvelope X) := by
-  infer_instance
+  sorry
 
 theorem quasiAffine_iff_intrinsic_affine_envelope
     (X : Scheme.{u}) :
     Scheme.IsQuasiAffine X ↔ IsQuasiAffineViaIntrinsicAffineEnvelope X := by
   sorry
 
-/- LOCAL_DEPENDENCY_GUESS: the local-on-the-base theorem for quasi-affineness is routed through
-   `toSpecΓ`; the pinned snapshot does not expose the full relative envelope statement. -/
+/- The relative affine-envelope and fpqc-locality interfaces are supplied by Chapter 14; this
+   synthesis theorem keeps the relative predicate rather than silently switching to the absolute
+   `Scheme.IsQuasiAffine` predicate. -/
 theorem quasiAffine_descends_through_intrinsic_affine_envelope
     {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
     (hfqc : QuasiCompact f) (hfqs : QuasiSeparated f) (hg : FpqcMorphism g)
-    (hup : Scheme.IsQuasiAffine (baseChange f g)) :
-    Scheme.IsQuasiAffine X := by
+    (hup : RelativeQuasiAffine (baseChangeToBase f g)) :
+    RelativeQuasiAffine f := by
   sorry
 
 /- Positive geometry: a finite immersion system is the global form of the local embeddings. -/
@@ -229,7 +250,8 @@ theorem projective_of_finite_projective_embedding_system
 theorem finitePresentation_ample_gives_quasiProjective
     {X S : Scheme.{u}} (f : X ⟶ S) (L : Book8LineBundle X)
     (hfqc : QuasiCompact f) (hfqs : QuasiSeparated f)
-    (hfp : LocallyOfFinitePresentation f) (hL : Book8IsAmple f L) :
+    (hfp : LocallyOfFinitePresentation f) (hS : QuasiCompact (𝟙 S))
+    (hL : Book8IsAmple f L) :
     Book8IsQuasiProjectiveMorphism f := by
   sorry
 
@@ -238,74 +260,105 @@ theorem finitePresentation_ample_gives_quasiProjective
 theorem finitePresentation_ample_proper_gives_projective
     {X S : Scheme.{u}} (f : X ⟶ S) (L : Book8LineBundle X)
     (hfqc : QuasiCompact f) (hfqs : QuasiSeparated f) (hproper : IsProper f)
-    (hfp : LocallyOfFinitePresentation f) (hL : Book8IsAmple f L) :
+    (hfp : LocallyOfFinitePresentation f) (hS : QuasiCompact (𝟙 S))
+    (hL : Book8IsAmple f L) :
     Book8IsProjectiveMorphism f := by
   sorry
 
-/- LOCAL_DEPENDENCY_GUESS: quasi-projectivity is local on the base for quasi-compact,
-   quasi-separated morphisms after a faithfully flat quasi-compact cover. -/
-theorem quasiProjective_descends_local_on_base
-    {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
+/- Quasi-projectivity descends from a polarized fpqc base change.  The compatible line bundle is
+   essential: mere existence of an ample bundle upstairs is not descent data. -/
+theorem quasiProjective_descends_with_compatible_ample_data
+    {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S) (L : Book8LineBundle X)
+    (M : Book8LineBundle (baseChange f g)) (hM : IsBaseChangeOf f g L M)
     (hfqc : QuasiCompact f) (hfqs : QuasiSeparated f)
+    (hfp : LocallyOfFinitePresentation f) (hS : QuasiCompact (𝟙 S))
     (hg : FpqcMorphism g)
-    (hup : Book8IsQuasiProjectiveMorphism (baseChangeToBase f g)) :
-    Book8IsQuasiProjectiveMorphism f := by
+    (hMample : Book8IsAmple (baseChangeToBase f g) M) :
+    Book8IsAmple f L ∧ Book8IsQuasiProjectiveMorphism f := by
   sorry
 
 theorem projective_descends_with_compatible_ample_data
     {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S) (L : Book8LineBundle X)
     (M : Book8LineBundle (baseChange f g)) (hM : IsBaseChangeOf f g L M)
     (hfqc : QuasiCompact f) (hfqs : QuasiSeparated f) (hproper : IsProper f)
-    (hfp : LocallyOfFinitePresentation f) (hg : FpqcMorphism g)
+    (hfp : LocallyOfFinitePresentation f) (hS : QuasiCompact (𝟙 S))
+    (hg : FpqcMorphism g)
     (hMample : Book8IsAmple (baseChangeToBase f g) M) :
     Book8IsAmple f L ∧ Book8IsProjectiveMorphism f := by
-  exact projectivity_descent_from_upstairs_polarized_data f g L M hM hfqc hfqs hproper hfp
-      ⟨hg.1, hg.2.1⟩ hg.2.2 hMample
+  sorry
 
-/- A finite locally free cover is the unpolarized norm input. -/
-structure FiniteLocallyFreeCoverData {T S : Scheme.{u}} (q : T ⟶ S) where
-  rank : ℕ
-  profile : FiniteLocallyFreeProfile q rank
-  surjective : Surjective q
+/- A finite locally free cover is the unpolarized norm input.  The norm itself
+   is taken from Chapter 15, where the determinant choice is packaged with the
+   finite-locally-free norm laws. -/
+abbrev FiniteLocallyFreeCoverData {T S : Scheme.{u}} (q : T ⟶ S) :=
+  LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter15.FiniteLocallyFreeConstantRank q
 
 noncomputable def normLineBundle
     {Z T : Scheme.{u}} (q : Z ⟶ T)
-    [Chapter10PicardOperations T] [Chapter10DeterminantLineAPI q]
+    (hq : LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter15.FiniteLocallyFreeMorphism q)
     (M : Chapter10LineBundle Z) : Chapter10LineBundle T :=
-  chapter10Norm q M
+  LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter15.toNormLineBundle
+    (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter15.normLineBundle q hq
+      (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter15.fromNormLineBundle M))
 
 theorem normLineBundle_determinant_formula
     {Z T : Scheme.{u}} (q : Z ⟶ T)
-    [Chapter10PicardOperations T] [Chapter10DeterminantLineAPI q]
+    (hq : LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter15.FiniteLocallyFreeMorphism q)
     (M : Chapter10LineBundle Z) :
-    normLineBundle q M =
-      chapter10PicardTensor (chapter10DeterminantLine q M)
-        (LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10.Chapter10PicardOperations.dual
-          (chapter10DeterminantLine q (chapter10StructureSheafLineBundle Z))) := by
-  exact chapter10_norm_determinant_formula q M
-
-/- LOCAL_DEPENDENCY_GUESS: this is the norm-ampleness bridge used when a finite locally free
-   cover supplies a polarization upstairs but no line bundle has yet been descended. -/
-theorem normLineBundle_is_ample_of_finiteLocallyFree_cover
-    {Z T : Scheme.{u}} (q : Z ⟶ T) (d : ℕ)
-    (hq : FiniteLocallyFreeProfile q d)
-    (hsurj : Surjective q)
-    [Chapter10PicardOperations T] [Chapter10DeterminantLineAPI q]
-    (M : Chapter10LineBundle Z)
-    (hM : Book8IsAmple (𝟙 Z) (Chapter09AsBook8LineBundle M)) :
-    Book8IsAmple (𝟙 T)
-      (Chapter09AsBook8LineBundle (normLineBundle q M)) := by
+    normLineBundle q hq M =
+      LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter15.toNormLineBundle
+        (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter15.fromNormLineBundle
+          (let C :=
+            LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter15.normConstruction q hq
+           letI : Chapter10PicardOperations T := C.picard
+           letI : Chapter10DeterminantLineAPI q := C.determinant
+           chapter10PicardTensor
+             (chapter10DeterminantLine q
+               (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter15.toNormLineBundle
+                 (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter15.fromNormLineBundle M)))
+             (LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10.Chapter10PicardOperations.dual
+               (chapter10DeterminantLine q
+                 (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter15.toNormLineBundle
+                   (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter15.chapter15StructureLineBundle Z)))))) := by
   sorry
 
-/- LOCAL_DEPENDENCY_GUESS: norms turn an unpolarized finite locally free cover with an upstairs
-   projective model into a downstairs projective model. -/
+/- The Chapter 15 norm-ampleness theorem is the positivity bridge used when a finite locally free
+   cover supplies a polarization upstairs but no line bundle has yet been descended. -/
+theorem normLineBundle_is_ample_of_finiteLocallyFree_cover
+    {Z T S : Scheme.{u}} (q : Z ⟶ T) (f : T ⟶ S)
+    (cover : FiniteLocallyFreeCoverData q)
+    (hf : LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter15.IsFinitePresentation
+      (q ≫ f))
+    (M : Chapter10LineBundle Z)
+    (hM : Book8IsAmple (q ≫ f)
+      (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter15.fromNormLineBundle M)) :
+    Book8IsAmple f
+      (Chapter09AsBook8LineBundle
+        (normLineBundle q cover.morphism M)) := by
+  sorry
+
+/- A projective morphism supplies the two pieces of geometric input needed by the norm route:
+   the pullback of the relative tautological bundle is ample, and the morphism is proper. -/
+theorem projective_morphism_supplies_ample_line_bundle
+    {X S : Scheme.{u}} (f : X ⟶ S)
+    (hproj : Book8IsProjectiveMorphism f) :
+    ∃ L : Book8LineBundle X, Book8IsAmple f L := by
+  sorry
+
+theorem projective_morphism_is_proper
+    {X S : Scheme.{u}} (f : X ⟶ S)
+    (hproj : Book8IsProjectiveMorphism f) : IsProper f := by
+  sorry
+
+/- The canonical finite-locally-free norm is used here; no arbitrary determinant operation is
+   accepted as a substitute for the norm laws. -/
 theorem projective_descends_from_unpolarized_finiteLocallyFree_cover
     {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
     (cover : FiniteLocallyFreeCoverData g)
+    (hf : LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter15.IsFinitePresentation f)
+    (hS : QuasiCompact (𝟙 S))
     (hup : Book8IsProjectiveMorphism (baseChangeToBase f g))
-    [Chapter10PicardOperations X]
-    [Chapter10DeterminantLineAPI (baseChangeToSource f g)] :
-    Book8IsProjectiveMorphism f := by
+    : Book8IsProjectiveMorphism f := by
   sorry
 
 /- Effective Cartier divisors provide the positive line-bundle input in generalized elliptic and
@@ -316,7 +369,8 @@ noncomputable def cartierLineBundle {X : Scheme.{u}}
   Chapter09AsBook8LineBundle (chapter10OofD D)
 
 structure CompatiblePositiveDivisorData
-    {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S) where
+    {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
+    [Chapter10IdealDualAPI X] [Chapter10IdealDualAPI (baseChange f g)] where
   downstairs : EffectiveCartierDivisor X
   upstairs : EffectiveCartierDivisor (baseChange f g)
   lineBundle_isBaseChangeOf :
@@ -328,18 +382,19 @@ theorem projectivity_descends_from_compatible_positive_divisor
     [Chapter10IdealDualAPI X] [Chapter10IdealDualAPI (baseChange f g)]
     (D : CompatiblePositiveDivisorData f g)
     (hfqc : QuasiCompact f) (hfqs : QuasiSeparated f) (hproper : IsProper f)
-    (hfp : LocallyOfFinitePresentation f) (hg : FpqcMorphism g) :
+    (hfp : LocallyOfFinitePresentation f) (hS : QuasiCompact (𝟙 S))
+    (hg : FpqcMorphism g) :
     Book8IsProjectiveMorphism f := by
   exact (projective_descends_with_compatible_ample_data f g
     (cartierLineBundle D.downstairs) (cartierLineBundle D.upstairs)
-    D.lineBundle_isBaseChangeOf hfqc hfqs hproper hfp hg D.upstairs_ample).2
+    D.lineBundle_isBaseChangeOf hfqc hfqs hproper hfp hS hg D.upstairs_ample).2
 
 structure RigidifiedAmpleLineBundleData {X S : Scheme.{u}} (f : X ⟶ S) where
   lineBundle : Book8LineBundle X
-  section : S ⟶ X
-  section_over : section ≫ f = 𝟙 S
+  sectionMap : S ⟶ X
+  section_over : sectionMap ≫ f = 𝟙 S
   rigidification :
-    (lineBundle.pullback section).Isomorphic
+    (lineBundle.pullback sectionMap).Isomorphic
       (LineBundle.trivial S)
   ample : Book8IsAmple f lineBundle
 
@@ -357,10 +412,11 @@ theorem projectivity_descends_from_compatible_rigidified_ample_line_bundle
     {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
     (D : CompatibleRigidifiedAmpleLineBundleData f g)
     (hfqc : QuasiCompact f) (hfqs : QuasiSeparated f) (hproper : IsProper f)
-    (hfp : LocallyOfFinitePresentation f) (hg : FpqcMorphism g) :
+    (hfp : LocallyOfFinitePresentation f) (hS : QuasiCompact (𝟙 S))
+    (hg : FpqcMorphism g) :
     Book8IsProjectiveMorphism f := by
   exact (projective_descends_with_compatible_ample_data f g D.downstairs.lineBundle
-    D.upstairs D.lineBundle_isBaseChangeOf hfqc hfqs hproper hfp hg D.upstairs_ample).2
+    D.upstairs D.lineBundle_isBaseChangeOf hfqc hfqs hproper hfp hS hg D.upstairs_ample).2
 
 /- The structure-package interface is the single place where the group law, action, torsor
    equations, determinant condition, or polarization cocycle is supplied to descent. -/

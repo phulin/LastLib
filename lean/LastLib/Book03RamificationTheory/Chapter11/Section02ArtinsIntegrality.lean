@@ -1,3 +1,4 @@
+import LastLib.Book03RamificationTheory.Chapter06.Section03FiniteUpperBreakDecompositions
 import LastLib.Book03RamificationTheory.Chapter11.Section01WhyTheWeightedSumIsAnInteger
 
 namespace LastLib.Book03RamificationTheory.Chapter11
@@ -5,6 +6,7 @@ namespace LastLib.Book03RamificationTheory.Chapter11
 noncomputable section
 
 open LastLib.Book03RamificationTheory.Chapter05
+open LastLib.Book03RamificationTheory.Chapter06
 open scoped BigOperators
 
 /-! ## 11.2. Artin's integrality theorem -/
@@ -345,6 +347,25 @@ theorem chapter11_swan_conductor_is_nonnegative_integer
     (hseparable : D.residue_separable) (hperfect : D.residue_perfect)
     (hvirtual : Chapter11RamificationCharacterInput D) :
     Chapter11NonnegativeInteger (chapter11SwanConductor D ρ) := by
+  sorry
+
+/-!
+The Chapter 6 finite upper-profile API measures the same wild contribution by
+an upper-depth integral, while Chapter 11 obtains its integrality from the
+Artin character.  The comparison is kept explicit here so the later bridge
+does not force an import from Chapter 6 back into an earlier chapter.
+-/
+theorem chapter11_artin_integrality_implies_chapter06_total_swan_conductor_integral
+    {k G V : Type*} [Field k] [CharZero k] [Fintype G] [Finite G] [Group G]
+    [AddCommGroup V] [Module k V] [FiniteDimensional k V]
+    (P : Chapter05RamificationFiltration G)
+    (D : Chapter11RamificationData G) (ρ : Representation k G V)
+    (hseparable : D.residue_separable) (hperfect : D.residue_perfect)
+    (hvirtual : Chapter11RamificationCharacterInput D)
+    (hupper :
+      ((chapter11SwanConductor D ρ : ℚ) : ℝ) =
+        chapter06SwanConductor P ρ) :
+    chapter06TotalSwanConductorIntegral P ρ := by
   sorry
 
 theorem chapter11_swan_conductor_eq_artin_sub_tame

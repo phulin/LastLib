@@ -1,4 +1,7 @@
 import LastLib.Book04AdelesAndIdeles.Chapter11.Section06ConductorsAtTheElementaryLevel
+import LastLib.Book04AdelesAndIdeles.Chapter11.Section04FinitenessOfRayClassGroups
+import LastLib.Book04AdelesAndIdeles.Chapter11.Section05OpenCompactSubgroups
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.Section01SuccessivePrecision
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter11
 
@@ -21,9 +24,9 @@ theorem chapter11_exists_rational_modulus (N : ℕ) (hN : 0 < N)
     ∃ m : RayModulus ℚ,
       m.finiteIdeal = Ideal.span ({(N : 𝓞 ℚ)} : Set (𝓞 ℚ)) ∧
         m.infinitePart =
-          match ε with
-          | .omitted => ∅
-          | .included => {Rat.infinitePlace} := by
+        match ε with
+        | .omitted => ∅
+        | .included => {Rat.infinitePlace} := by
   sorry
 
 noncomputable def chapter11RationalModulus (N : ℕ) (hN : 0 < N)
@@ -60,7 +63,7 @@ theorem chapter11_rational_infinite_ray_class_group_equiv_residue_units
   sorry
 
 def chapter11ModFiveRepresentative (i : Fin 4) : (ZMod 5)ˣ :=
-  ZMod.unitOfCoprime (i.1 + 1) (by sorry)
+  by sorry
 
 theorem chapter11_mod_five_representatives_are_all_residue_units :
     Function.Bijective chapter11ModFiveRepresentative := by

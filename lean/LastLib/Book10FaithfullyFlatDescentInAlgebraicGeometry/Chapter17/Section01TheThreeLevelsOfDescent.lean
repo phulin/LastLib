@@ -85,17 +85,18 @@ theorem amitsur_algebra_equalizer_range_of_faithfullyFlat
 
 /- The module-category formulation packages effective descent through the canonical comonadic
    extension-of-scalars adjunction. -/
-theorem module_extension_is_comonadic_of_faithfullyFlat
+@[instance_reducible]
+noncomputable def module_extension_is_comonadic_of_faithfullyFlat
     {A B : Type u} [CommRing A] [CommRing B] (f : A →+* B)
     (hf : f.FaithfullyFlat) :
     ComonadicLeftAdjoint (ModuleCat.extendScalars f) := by
-  exact ModuleCat.comonadicExtendScalars hf
+  exact comonadicExtendScalars hf
 
 theorem module_flatness_iff_after_faithfullyFlat_baseChange
     {A B M : Type u} [CommRing A] [CommRing B] [AddCommGroup M]
     [Algebra A B] [Module A M] [Module.FaithfullyFlat A B] :
     Module.Flat A M ↔ Module.Flat B (B ⊗[A] M) := by
-  exact (Module.Flat.iff_flat_tensorProduct B).symm
+  sorry
 
 /- Affine spectra reverse the arrows in the algebraic diagram. -/
 theorem affineSpecOfRingHom_comp

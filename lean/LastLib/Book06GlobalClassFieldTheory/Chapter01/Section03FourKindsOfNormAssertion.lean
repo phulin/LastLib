@@ -105,8 +105,8 @@ def AlmostAllLocalNormPreimagesIntegral
   ∃ S : Finset (FinitePlaceIndex K),
     ∀ v : FinitePlaceIndex K, v ∉ S →
       ∃ y : LocalScalarExtension K L v,
-        y ≠ 0 ∧
-          localElementNorm K L v y =
+        IsUnit y ∧
+        localElementNorm K L v y =
             algebraMap K (BookPlace.completion (Sum.inl v)) a ∧
           LocalNormPreimageIntegralAt K L v y
 
@@ -124,8 +124,8 @@ def IsElementNormUnit
 def IsLocalElementNorm
     (K L : Type*) [Field K] [NumberField K] [Field L] [NumberField L]
     [Algebra K L] [FiniteDimensional K L] (a : K) : Prop :=
-  ∀ v : BookPlace K, ∃ y : LocalScalarExtensionAt K L v,
-    y ≠ 0 ∧ localElementNormAt K L v y =
+  ∀ v : BookPlace K, ∃ y : (LocalScalarExtensionAt K L v)ˣ,
+    localElementNormAt K L v (y : LocalScalarExtensionAt K L v) =
       algebraMap K (BookPlace.completion v) a
 
 def IsIdeleNorm
@@ -372,7 +372,8 @@ def ClassNormImpliesElementNormForPrincipalRepresentatives
     [Algebra K L] [FiniteDimensional K L]
     (N : GlobalNormInterface K L) : Prop :=
   ∀ {a : K} (ha : a ≠ 0),
-    IsClassNorm N (principalIdeleClassOf a ha) → IsElementNorm K L a
+    IsLocalElementNorm K L a →
+      IsClassNorm N (principalIdeleClassOf a ha) → IsElementNorm K L a
 
 theorem class_norm_does_not_assert_field_element_norm
     {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L]

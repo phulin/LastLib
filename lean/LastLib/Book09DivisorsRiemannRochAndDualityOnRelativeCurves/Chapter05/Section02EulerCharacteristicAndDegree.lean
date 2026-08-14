@@ -47,8 +47,7 @@ theorem chapter05_effective_cartier_minus_sequence
   chapter10_cartier_exact_sequence_exists D
 
 /-! Zero-dimensional cohomology is isolated as an explicit interface because
-the pinned tree has no coherent-cohomology object.  The fields state exactly
-the two consequences used in the degree calculation. -/
+the pinned tree has no coherent-cohomology object. -/
 
 class Chapter05ZeroDimensionalCohomologyTheory
     {k : Type u} [Field k] {Z : Scheme}
@@ -62,13 +61,29 @@ class Chapter05ZeroDimensionalCohomologyTheory
     ∀ M : Z.Modules,
       chapter05EulerCharacteristic M = (Module.finrank k (cohomology 0 M) : ℤ)
 
+/-! The finite quotient in the Cartier exact sequence is a sheaf on the
+ambient curve, so its Euler-characteristic/length bridge is indexed by the
+ambient structure morphism rather than by a zero-dimensional cohomology
+theory for the whole curve. -/
+
+class Chapter05FiniteCartierQuotientEulerTheory
+    {k : Type u} [Field k] {X : Scheme}
+    (q : X ⟶ Spec (.of k))
+    [Chapter05EulerCharacteristicTheory X] where
+  finite_flat_cartier_quotient_euler :
+    ∀ [Chapter10IdealDualAPI X]
+      (D : Chapter05EffectiveCartierDivisor X) (d : ℕ),
+      Chapter05FiniteLocallyFreeProfile (D.ideal.subschemeι ≫ q) d →
+        chapter05EulerCharacteristic (chapter05CartierTwistedQuotientModule D) =
+          (d : ℤ)
+
 theorem chapter05_zero_dimensional_h1_vanishes
     {k : Type u} [Field k] {Z : Scheme}
     (q : Z ⟶ Spec (.of k))
     [Chapter05EulerCharacteristicTheory Z]
     [Chapter05ZeroDimensionalCohomologyTheory q]
     (M : Z.Modules) :
-    IsZero (Chapter05ZeroDimensionalCohomologyTheory.cohomology 1 M) :=
+    IsZero (Chapter05ZeroDimensionalCohomologyTheory.cohomology q 1 M) :=
   Chapter05ZeroDimensionalCohomologyTheory.h1_vanishes M
 
 theorem chapter05_zero_dimensional_euler_eq_h0_finrank
@@ -77,13 +92,13 @@ theorem chapter05_zero_dimensional_euler_eq_h0_finrank
     [Chapter05EulerCharacteristicTheory Z]
     [Chapter05ZeroDimensionalCohomologyTheory q]
     (M : Z.Modules) :
-    chapter05EulerCharacteristic M =
+      chapter05EulerCharacteristic M =
       (Module.finrank k
-        (Chapter05ZeroDimensionalCohomologyTheory.cohomology 0 M) : ℤ) :=
+        (Chapter05ZeroDimensionalCohomologyTheory.cohomology q 0 M) : ℤ) :=
   Chapter05ZeroDimensionalCohomologyTheory.euler_eq_h0_finrank M
 
 theorem chapter05_dvr_point_quotient_length
-    {A : Type u} [CommRing A] [IsLocalRing A]
+    {A : Type u} [CommRing A] [IsDomain A]
     [IsDiscreteValuationRing A] (n : ℕ) :
     Module.length A
         (A ⧸ ((IsLocalRing.maximalIdeal A) ^ n : Ideal A)) = (n : ℕ∞) := by
@@ -91,7 +106,7 @@ theorem chapter05_dvr_point_quotient_length
 
 theorem chapter05_zero_dimensional_twist_preserves_length
     {R : Type u} [CommRing R] {M N : Type v}
-    [AddCommMonoid M] [AddCommMonoid N]
+    [AddCommGroup M] [AddCommGroup N]
     [Module R M] [Module R N] (e : M ≃ₗ[R] N) :
     Module.length R M = Module.length R N := by
   sorry
@@ -100,16 +115,16 @@ theorem chapter05_zero_dimensional_twist_preserves_length
 the regular local ring at a closed point. -/
 
 structure Chapter05PointDivisorLengthProfile
-    {A : Type u} [CommRing A] [IsLocalRing A]
+    {A : Type u} [CommRing A] [IsDomain A]
     [IsDiscreteValuationRing A] where
   multiplicity : ℕ
-  quotientLength :
-    Module.length A
-        (A ⧸ ((IsLocalRing.maximalIdeal A) ^ multiplicity : Ideal A))
+  quotientLength : ℕ∞
+    := Module.length A
+      (A ⧸ ((IsLocalRing.maximalIdeal A) ^ multiplicity : Ideal A))
   quotientLength_eq_multiplicity : quotientLength = (multiplicity : ℕ∞)
 
 theorem chapter05_point_divisor_length_profile
-    {A : Type u} [CommRing A] [IsLocalRing A]
+    {A : Type u} [CommRing A] [IsDomain A]
     [IsDiscreteValuationRing A] (n : ℕ) :
     Nonempty (Chapter05PointDivisorLengthProfile (A := A)) := by
   refine ⟨{ multiplicity := n
@@ -123,8 +138,9 @@ theorem chapter05_effective_divisor_line_bundle_degree_eq_length
     (q : X ⟶ Spec (.of k))
     [Chapter05EulerCharacteristicTheory X]
     [IsProper q]
-    [Chapter05ZeroDimensionalCohomologyTheory q]
+    [Chapter05FiniteCartierQuotientEulerTheory q]
     [Chapter10IdealDualAPI X]
+    [Chapter10SectionVanishingIdealAPI X]
     (D : Chapter05EffectiveCartierDivisor X) (d : ℕ)
     (hD : Chapter05FiniteLocallyFreeProfile
       (D.ideal.subschemeι ≫ q) d) :
@@ -136,7 +152,7 @@ structure Chapter05EffectiveCartierDivisorDegreeData
     (q : X ⟶ Spec (.of k))
     (D : Chapter05EffectiveCartierDivisor X) (d : ℕ) where
   associatedDivisor : Chapter05Divisor X
-  associated_support : associatedDivisor.coeff.support = D.ideal.support
+  associated_support : (associatedDivisor.coeff.support : Set X) = D.ideal.support
   degree_eq_length : chapter05Degree q associatedDivisor = (d : ℤ)
 
 theorem chapter05_effective_divisor_euler_difference_eq_degree
@@ -144,8 +160,9 @@ theorem chapter05_effective_divisor_euler_difference_eq_degree
     (q : X ⟶ Spec (.of k))
     [Chapter05EulerCharacteristicTheory X]
     [IsProper q]
-    [Chapter05ZeroDimensionalCohomologyTheory q]
+    [Chapter05FiniteCartierQuotientEulerTheory q]
     [Chapter10IdealDualAPI X]
+    [Chapter10SectionVanishingIdealAPI X]
     (D : Chapter05EffectiveCartierDivisor X) (d : ℕ)
     (hD : Chapter05FiniteLocallyFreeProfile
       (D.ideal.subschemeι ≫ q) d)
@@ -175,16 +192,18 @@ class Chapter05EffectiveDivisorDifferenceTheory (X : Scheme)
       Nonempty (Chapter05EffectiveDivisorDifferencePresentation L)
 
 theorem chapter05_line_bundle_has_effective_difference
-    {X : Scheme} [Chapter05EffectiveDivisorDifferenceTheory X]
-    [Chapter10IdealDualAPI X] [Chapter10PicardOperations X]
+    {X : Scheme} [Chapter10IdealDualAPI X] [Chapter10PicardOperations X]
+    [Chapter05EffectiveDivisorDifferenceTheory X]
     (L : Chapter05LineBundle X) :
     Nonempty (Chapter05EffectiveDivisorDifferencePresentation L) :=
   Chapter05EffectiveDivisorDifferenceTheory.every_line_bundle_has_effective_difference L
 
 theorem chapter05_line_bundle_degree_tensor_add
-    {X : Scheme} [Chapter05EulerCharacteristicTheory X]
-    [Chapter09LineBundleTensorTheory X]
-    (L M : Chapter05LineBundle X) :
+    {k : Type u} [Field k]
+    (C : Chapter05ProperRegularIntegralCurve k)
+    [Chapter05EulerCharacteristicTheory C.carrier]
+    [Chapter09LineBundleTensorTheory C.carrier]
+    (L M : Chapter05LineBundle C.carrier) :
     chapter05LineBundleDegree (chapter09Tensor L M) =
       chapter05LineBundleDegree L + chapter05LineBundleDegree M := by
   sorry

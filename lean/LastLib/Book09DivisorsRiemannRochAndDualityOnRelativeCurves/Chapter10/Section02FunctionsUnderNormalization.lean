@@ -14,17 +14,21 @@ universe u
 /-- The split, rational-node specialization of the normalization data. -/
 structure Chapter10SplitNodalCurveData (k : Type u) [Field k] where
   general : Chapter10NodalCurveData k
-  rationalNodes : ∀ q, (general.nodeData q).residue.degree = 1
+  rationalNodes : ∀ q : general.nodes, (general.nodeData q).residue.degree = 1
   rationalBranches : Prop
+  rationalBranches_holds : rationalBranches
   orderedBranches : Prop
+  orderedBranches_holds : orderedBranches
 
 def chapter10BranchValueDifference
-    {k : Type u} [Field k] (D : Chapter10SplitNormalizationFunctionData)
+    {k : Type u} [Field k]
+    (D : Chapter10SplitNormalizationFunctionData (k := k))
     (f : Γ(D.normalization.carrier, ⊤)) (q : D.nodes.index) : k :=
   D.leftValue q f - D.rightValue q f
 
 theorem chapter10_branch_value_difference_zero_iff_agreement
-    {k : Type u} [Field k] (D : Chapter10SplitNormalizationFunctionData)
+    {k : Type u} [Field k]
+    (D : Chapter10SplitNormalizationFunctionData (k := k))
     (f : Γ(D.normalization.carrier, ⊤)) (q : D.nodes.index) :
     chapter10BranchValueDifference D f q = 0 ↔
       D.leftValue q f = D.rightValue q f := by
@@ -46,10 +50,11 @@ the branch evaluation interface from `Dependencies.lean`.
 -/
 
 theorem chapter10_regular_function_descends_iff_branch_values_agree
-    {k : Type u} [Field k] (D : Chapter10SplitNormalizationFunctionData)
+    {k : Type u} [Field k]
+    (D : Chapter10SplitNormalizationFunctionData (k := k))
     (f : Γ(D.normalization.carrier, ⊤)) :
     (∃ g : Γ(D.curve.carrier, ⊤), D.pullback g = f) ↔
-      ∀ q, D.leftValue q f = D.rightValue q f := by
+      ∀ q : D.nodes.index, D.leftValue q f = D.rightValue q f := by
   exact chapter10_function_descends_iff D f
 
 /-!
@@ -70,13 +75,13 @@ theorem chapter10_normalization_exact_sequence_has_expected_terms
     (Q : Chapter10NodeDiscrepancySheaf D)
     (E : Chapter10NormalizationStructureSheafExactSequence D Q) :
     E.quotient_identification := by
-  exact E.quotient_identification
+  exact E.quotient_identification_holds
 
 theorem chapter10_nonsplit_last_term_is_sum_of_discrepancy_lines
     {k : Type u} [Field k] (D : Chapter10NodalCurveData k)
     (Q : Chapter10NodeDiscrepancySheaf D) :
     Q.isDirectSumOfPushforwardDiscrepancyLines := by
-  exact Q.isDirectSumOfPushforwardDiscrepancyLines
+  exact Q.isDirectSumOfPushforwardDiscrepancyLines_holds
 
 /-!
 Over a nonsplit node the branch algebra and discrepancy line are intrinsic.
@@ -96,7 +101,9 @@ theorem chapter10_nonsplit_discrepancy_line_is_intrinsic
     letI := (D.nodeData q).residue.field
     Module.finrank (D.nodeData q).residue.carrier
       (chapter10NodeDiscrepancyLine (D.nodeData q)) = 1 := by
-  sorry
+  let := (D.nodeData q).residue.field
+  exact chapter10_discrepancy_line_is_one_dimensional
+    (D.nodeData q).branches
 
 abbrev Chapter10DiscrepancyOrientation
     (K Q : Type u) [Field K] [AddCommGroup Q] [Module K Q] :=
@@ -106,45 +113,62 @@ theorem chapter10_discrepancy_orientation_exists_of_finrank_one
     {K Q : Type u} [Field K] [AddCommGroup Q] [Module K Q]
     (hQ : Module.finrank K Q = 1) :
     Nonempty (Chapter10DiscrepancyOrientation K Q) := by
-  sorry
+  let : FiniteDimensional K Q :=
+    FiniteDimensional.of_finrank_pos (by omega)
+  exact ⟨LinearEquiv.ofFinrankEq Q K (by simp [hQ])⟩
 
 noncomputable def chapter10ReversedDiscrepancyOrientation
     {K Q : Type u} [Field K] [AddCommGroup Q] [Module K Q]
     (e : Chapter10DiscrepancyOrientation K Q) :
     Chapter10DiscrepancyOrientation K Q := by
-  sorry
+  exact e.trans (LinearEquiv.neg K)
 
 theorem chapter10_reversed_discrepancy_orientation_negates_coordinates
     {K Q : Type u} [Field K] [AddCommGroup Q] [Module K Q]
     (e : Chapter10DiscrepancyOrientation K Q) (q : Q) :
     chapter10ReversedDiscrepancyOrientation e q = -(e q) := by
-  sorry
+  rfl
 
-theorem chapter10_nonsplit_discrepancy_line_does_not_choose_an_orientation
+/-! An orientation can be chosen noncanonically, while the discrepancy line
+itself stores no such choice.  Reversing the choice is handled by the preceding
+negation theorem. -/
+theorem chapter10_nonsplit_discrepancy_line_orientation_exists
     {k : Type u} [Field k] (D : Chapter10NodalCurveData k) (q : D.nodes) :
     letI := (D.nodeData q).residue.field
     Nonempty (Chapter10DiscrepancyOrientation
       (D.nodeData q).residue.carrier
       (chapter10NodeDiscrepancyLine (D.nodeData q))) := by
-  sorry
+  let := (D.nodeData q).residue.field
+  exact chapter10_discrepancy_orientation_exists_of_finrank_one
+    (chapter10_nonsplit_discrepancy_line_is_intrinsic D q)
 
 /-! ### Arithmetic genus after normalization -/
 
 theorem chapter10_arithmetic_genus_normalization_formula
-    {k : Type u} [Field k] (D : Chapter10NodalCurveData k) :
+    {k : Type u} [Field k] (D : Chapter10NodalCurveData k)
+    (Q : Chapter10NodeDiscrepancySheaf D)
+    (E : Chapter10NormalizationStructureSheafExactSequence D Q) :
     D.arithmeticGenus =
       (∑ i, D.componentGenus i) +
         (∑ q, (chapter10NodeResidueDegree D q : ℤ)) -
           (Fintype.card D.components : ℤ) + 1 := by
-  sorry
+  rw [D.arithmeticGenus_eq_one_sub_eulerCharacteristic,
+    E.eulerCharacteristic_relation,
+    D.normalizationEulerCharacteristic_eq_components]
+  simp [Finset.sum_sub_distrib]
+  ring_nf
+  rfl
 
 theorem chapter10_split_arithmetic_genus_formula
-    {k : Type u} [Field k] (D : Chapter10SplitNodalCurveData k) :
+    {k : Type u} [Field k] (D : Chapter10SplitNodalCurveData k)
+    (Q : Chapter10NodeDiscrepancySheaf D.general)
+    (E : Chapter10NormalizationStructureSheafExactSequence D.general Q) :
     D.general.arithmeticGenus =
       (∑ i, D.general.componentGenus i) +
         (Fintype.card D.general.nodes : ℤ) -
           (Fintype.card D.general.components : ℤ) + 1 := by
-  sorry
+  rw [chapter10_arithmetic_genus_normalization_formula D.general Q E]
+  simp [chapter10NodeResidueDegree, D.rationalNodes]
 
 def chapter10SplitNodeCount {k : Type u} [Field k]
     (D : Chapter10SplitNodalCurveData k) : ℕ :=

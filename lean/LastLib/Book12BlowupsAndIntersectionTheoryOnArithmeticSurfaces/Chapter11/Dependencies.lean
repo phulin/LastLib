@@ -2,15 +2,28 @@ import Mathlib.Algebra.FreeAbelianGroup.Finsupp
 import Mathlib.AlgebraicGeometry.Morphisms.Flat
 import Mathlib.AlgebraicGeometry.Morphisms.Proper
 import Mathlib.AlgebraicGeometry.ResidueField
+import LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter07.Section02ChartsAndExceptionalCurves
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter03.Section01ConstructionAndProjectivity
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter04.Section02TotalAndStrictTransforms
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter05.Section02ExceptionalCurveAndItsNormalBundle
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter06.Section03EmbeddedResolutionOfSpecialFibersAndSections
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter07.Section01LengthOfAProperIntersection
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter07.Section02SymmetryPositivityAndTransversality
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter07.Section04HomologicalIntersectionAndSelfIntersection
 
 namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter11
 
 noncomputable section
 
-classical
-
 open AlgebraicGeometry CategoryTheory
 open scoped BigOperators
+
+open LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter03
+open LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter04
+open LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter05
+open LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter06
+open LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter07
+open LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter07
 
 universe u v
 
@@ -64,6 +77,8 @@ structure Chapter11SurfacePoint {S : Chapter11ArithmeticBase}
   point_closed : IsClosed ({point} : Set X.carrier)
   basePoint_closed : IsClosed ({basePoint} : Set S.carrier)
   lies_over : X.structureMap point = basePoint
+  residueDegree_positive :
+    0 < X.structureMap.residueDegree point
 
 /-- The residue degree of a surface point over its base point.
 
@@ -90,11 +105,9 @@ noncomputable def chapter11ResidueDegreeOfMap
 
 /-! ### Curves and divisors -/
 
-/- LOCAL_DEPENDENCY_GUESS: the preceding surface chapters supply the
-codimension-one Cartier/Weil dictionary and the order of a Cartier equation at
-a closed point, but those interfaces are not present in this checkout.  The
-fields below are the minimal book-facing replacement; the residue-degree and
-divisor-group operations remain canonical. -/
+/- The preceding transform chapters supply the effective-Cartier ideal and its
+scheme-theoretic support.  The curve record retains that ideal as the source
+of the divisor, while its inclusion keeps the prime-curve carrier visible. -/
 
 /-- An integral codimension-one Cartier curve on a regular arithmetic surface.
 
@@ -108,7 +121,9 @@ structure Chapter11CartierCurve {S : Chapter11ArithmeticBase}
   closed : IsClosedImmersion inclusion
   integral : Prop
   codimensionOne : Prop
-  cartier : Prop
+  cartierDivisor : Chapter04EffectiveCartierDivisor X.carrier
+  cartierDivisor_support :
+    (cartierDivisor.ideal.support : Set X.carrier) = Set.range inclusion
   vertical : Prop
   horizontal : Prop
   vertical_or_horizontal : vertical ∨ horizontal
@@ -168,7 +183,7 @@ noncomputable def chapter11DivisorMultiplicity
     {S : Chapter11ArithmeticBase}
     {X : Chapter11ArithmeticSurface S}
     (D : Chapter11Divisor X) (p : Chapter11SurfacePoint X) : ℤ :=
-  ∑ C in D.support,
+  ∑ C ∈ D.support,
     FreeAbelianGroup.coeff C D * (C.multiplicity p : ℤ)
 
 theorem chapter11_curveAsDivisor_multiplicity
@@ -186,6 +201,24 @@ def chapter11NoCommonComponent
     (D G : Chapter11Divisor X) : Prop :=
   ∀ C, C ∈ D.support → C ∉ G.support
 
+theorem chapter11_noCommonComponent_comm
+    {S : Chapter11ArithmeticBase}
+    {X : Chapter11ArithmeticSurface S}
+    (D G : Chapter11Divisor X) :
+    chapter11NoCommonComponent D G ↔ chapter11NoCommonComponent G D := by
+  constructor
+  · intro h C hC_G hC_D
+    exact h C hC_D hC_G
+  · intro h C hC_D hC_G
+    exact h C hC_G hC_D
+
+def chapter11DivisorsDisjoint
+    {S : Chapter11ArithmeticBase}
+    {X : Chapter11ArithmeticSurface S}
+    (D G : Chapter11Divisor X) : Prop :=
+  ∀ C, C ∈ D.support →
+    ∀ E, E ∈ G.support → ¬ chapter11CurvesMeet C E
+
 def chapter11DivisorIsVertical
     {S : Chapter11ArithmeticBase}
     {X : Chapter11ArithmeticSurface S}
@@ -200,11 +233,20 @@ def chapter11DivisorIsHorizontal
 
 /-! ### Point blowups and transforms -/
 
-/- LOCAL_DEPENDENCY_GUESS: Mathlib has the Rees algebra and relative Proj
-primitives but no bundled point-blowup object with exceptional and strict
-transform maps.  This record is the smallest interface needed by the chapter;
-the field `isBlowupOfPoint` is deliberately a geometric predicate rather than
-an axiom asserting any intersection formula. -/
+def chapter11TransportMorphism
+    {X Y : Scheme.{u}} (h : X = Y) {Z : Scheme.{u}}
+    (f : X ⟶ Z) : Y ⟶ Z := by
+  cases h
+  exact f
+
+def chapter11TransportIdealSheaf
+    {X Y : Scheme.{u}} (h : X = Y) (I : X.IdealSheafData) : Y.IdealSheafData := by
+  cases h
+  exact I
+
+/- The center, relative Rees/Proj presentation, and the saturation operation
+are all retained in the point-blowup record.  Equalities identify the
+book-facing arithmetic-surface carrier with those earlier scheme interfaces. -/
 
 /-- A point blowup over the fixed arithmetic base. -/
 structure Chapter11PointBlowup
@@ -214,15 +256,54 @@ structure Chapter11PointBlowup
   target : Chapter11ArithmeticSurface S
   map : target.carrier ⟶ X.carrier
   map_over_base : map ≫ X.structureMap = target.structureMap
-  isBlowupOfPoint : Prop
+  centerIdeal : Chapter03CoherentIdeal X.carrier
+  centerIdeal_eq_pointIdeal :
+    centerIdeal.ideal = chapter07PointIdeal p.point
+  reesBlowup : Chapter03Blowup centerIdeal
+  rees_carrier_eq_target : reesBlowup.carrier = target.carrier
+  rees_projection_eq_map :
+    chapter11TransportMorphism rees_carrier_eq_target reesBlowup.projection = map
   target_regular : target.regular
+  cartierBlowup : Chapter04Blowup X.carrier centerIdeal.ideal
+  cartier_carrier_eq_rees : cartierBlowup.carrier = reesBlowup.carrier
+  cartier_morphism_eq_rees :
+    chapter11TransportMorphism cartier_carrier_eq_rees cartierBlowup.morphism =
+      reesBlowup.projection
+  exceptionalIdeal : target.carrier.IdealSheafData
+  exceptionalIdeal_eq_pullback :
+    exceptionalIdeal =
+      chapter11TransportIdealSheaf
+        (cartier_carrier_eq_rees.trans rees_carrier_eq_target)
+        cartierBlowup.exceptionalIdeal
+  exceptionalIdeal_support_eq_preimage :
+    (exceptionalIdeal.support : Set target.carrier) =
+      centerIdeal.support.preimage map
   exceptionalCurve : Chapter11CartierCurve target
+  exceptionalIdeal_subscheme_eq_curve :
+    exceptionalIdeal.subscheme = exceptionalCurve.carrier
+  exceptionalCurve_inclusion_eq_subscheme :
+    chapter11TransportMorphism exceptionalIdeal_subscheme_eq_curve
+        exceptionalIdeal.subschemeι = exceptionalCurve.inclusion
+  exceptionalCurve_ideal_eq_exceptionalIdeal :
+    exceptionalCurve.cartierDivisor.ideal = exceptionalIdeal
   exceptional_vertical : exceptionalCurve.vertical
-  exceptional_contracted_to_center : Prop
+  exceptional_contracted_to_center :
+    ∀ z : exceptionalCurve.carrier,
+      map (exceptionalCurve.inclusion z) = p.point
   strictTransform : Chapter11CartierCurve X → Chapter11CartierCurve target
+  strictTransform_ideal_eq_saturation :
+    ∀ C, (strictTransform C).cartierDivisor.ideal =
+      chapter04IdealSheafSaturation
+        (C.cartierDivisor.ideal.comap map) exceptionalIdeal
+  strictTransform_meets_exceptional_of_mem :
+    ∀ C, chapter11PointLiesOnCurve C p →
+      chapter11CurvesMeet (strictTransform C) exceptionalCurve
   totalTransform : Chapter11Divisor X →+ Chapter11Divisor target
-  totalTransform_is_pullback : Prop
-  isomorphism_off_center : Prop
+  totalTransformIdeal : Chapter11CartierCurve X → target.carrier.IdealSheafData
+  totalTransformIdeal_eq_pullback :
+    ∀ C, totalTransformIdeal C = C.cartierDivisor.ideal.comap map
+  isomorphism_off_center :
+    IsIso (chapter03BlowupRestriction reesBlowup centerIdeal.ideal.support.compl)
 
 abbrev Chapter11BlowupSurface
     {S : Chapter11ArithmeticBase}
@@ -279,6 +360,30 @@ def chapter11TotalTransform
     Chapter11Divisor b.target :=
   b.totalTransform D
 
+def chapter11TotalTransformIdeal
+    {S : Chapter11ArithmeticBase}
+    {X : Chapter11ArithmeticSurface S}
+    {p : Chapter11SurfacePoint X}
+    (b : Chapter11PointBlowup p) (C : Chapter11CartierCurve X) :
+    b.target.carrier.IdealSheafData :=
+  C.cartierDivisor.ideal.comap b.map
+
+def chapter11StrictTransformIdeal
+    {S : Chapter11ArithmeticBase}
+    {X : Chapter11ArithmeticSurface S}
+    {p : Chapter11SurfacePoint X}
+    (b : Chapter11PointBlowup p) (C : Chapter11CartierCurve X) :
+    b.target.carrier.IdealSheafData :=
+  chapter04IdealSheafSaturation (C.cartierDivisor.ideal.comap b.map)
+    b.exceptionalIdeal
+
+def chapter11TransportDivisor
+    {S : Chapter11ArithmeticBase}
+    {X Y : Chapter11ArithmeticSurface S}
+    (h : X = Y) (D : Chapter11Divisor X) : Chapter11Divisor Y := by
+  cases h
+  exact D
+
 /-! ### Numerical intersections and the projection bridge -/
 
 /- LOCAL_DEPENDENCY_GUESS: Books 9--10 supply degree, pushforward, pullback,
@@ -310,6 +415,7 @@ structure Chapter11NumericalIntersectionContext
     ∀ (n : ℤ) D G, pairing D (n • G) = n * pairing D G
   pairing_zero_left : ∀ G, pairing 0 G = 0
   pairing_zero_right : ∀ D, pairing D 0 = 0
+  pairing_symmetric : ∀ D G, pairing D G = pairing G D
 
 def chapter11Intersection
     {S : Chapter11ArithmeticBase}
@@ -317,6 +423,47 @@ def chapter11Intersection
     (I : Chapter11NumericalIntersectionContext X)
     (D G : Chapter11Divisor X) : ℤ :=
   I.pairing D G
+
+/-! ### The normal-bundle and vertical-intersection bridge -/
+
+structure Chapter11ExceptionalNormalBundleData
+    {S : Chapter11ArithmeticBase}
+    {X : Chapter11ArithmeticSurface S}
+    {p : Chapter11SurfacePoint X}
+    (b : Chapter11PointBlowup p) where
+  exceptionalBaseMap :
+    b.exceptionalCurve.carrier ⟶
+      AlgebraicGeometry.Spec (.of (S.carrier.residueField p.basePoint))
+  normalBundle : Chapter05LineBundle b.exceptionalCurve.carrier
+  degreeTheory :
+    Chapter05CurveDegreeTheory b.exceptionalCurve.carrier
+      (S.carrier.residueField p.basePoint) exceptionalBaseMap
+
+noncomputable def chapter11ExceptionalNormalBundleDegree
+    {S : Chapter11ArithmeticBase}
+    {X : Chapter11ArithmeticSurface S}
+    {p : Chapter11SurfacePoint X}
+    {b : Chapter11PointBlowup p}
+    (N : Chapter11ExceptionalNormalBundleData b) : ℤ :=
+  letI : Chapter05CurveDegreeTheory b.exceptionalCurve.carrier
+      (S.carrier.residueField p.basePoint) N.exceptionalBaseMap := N.degreeTheory
+  chapter05Degree (f := N.exceptionalBaseMap) N.normalBundle
+
+structure Chapter11ExceptionalIntersectionBridge
+    {S : Chapter11ArithmeticBase}
+    {X : Chapter11ArithmeticSurface S}
+    {p : Chapter11SurfacePoint X}
+    (b : Chapter11PointBlowup p)
+    (I : Chapter11NumericalIntersectionContext b.target) where
+  scope : I.scope
+  normalBundle : Chapter11ExceptionalNormalBundleData b
+  pairing_eq_normalBundleDegree :
+    I.pairing (chapter11ExceptionalDivisor b)
+        (chapter11ExceptionalDivisor b) =
+      chapter11ExceptionalNormalBundleDegree normalBundle
+  normalBundleDegree_eq_neg_residueDegree :
+    chapter11ExceptionalNormalBundleDegree normalBundle =
+      -(chapter11ResidueDegree p : ℤ)
 
 /-- The pushforward/projection data used for a point blowup.  This is the
 book-facing form of the earlier proper-map projection formula: strict
@@ -329,6 +476,7 @@ structure Chapter11PointBlowupProjectionData
     (b : Chapter11PointBlowup p) where
   source : Chapter11NumericalIntersectionContext X
   target : Chapter11NumericalIntersectionContext b.target
+  exceptionalIntersection : Chapter11ExceptionalIntersectionBridge b target
   pushforward : Chapter11Divisor b.target →+ Chapter11Divisor X
   pushforward_totalTransform :
     ∀ D, pushforward (chapter11TotalTransform b D) = D
@@ -344,24 +492,103 @@ structure Chapter11PointBlowupProjectionData
 
 /-! ### Local intersections and finite exceptional support -/
 
-/- LOCAL_DEPENDENCY_GUESS: the length/Tor construction of Chapter 7 is not
-available as a reusable declaration.  The local theory below leaves that
-construction abstract but requires its proper-intersection input explicitly,
-so the chapter cannot accidentally assign a finite length to a common
-component. -/
+/-! The local length/Tor, additivity, and positivity interfaces from Chapter 7
+are made explicit before Chapter 11 uses its separation theorem. -/
 
-/-- Local intersection multiplicities for proper pairs of Cartier divisors. -/
-class Chapter11LocalIntersectionTheory
+structure Chapter11Chapter07LocalIntersectionWitness
+    {S : Chapter11ArithmeticBase.{u}}
+    {X : Chapter11ArithmeticSurface S}
+    (D G : Chapter11Divisor X)
+    (h : chapter11NoCommonComponent D G)
+    (p : Chapter11SurfacePoint X) where
+  ring : Type u
+  ringComm : CommRing ring
+  ringLocal : IsLocalRing ring
+  ringNoetherian : IsNoetherianRing ring
+  ringRegular : IsRegularLocalRing ring
+  hasProjectiveResolutions :
+    HasProjectiveResolutions (@Chapter07LocalModuleCategory ring ringComm)
+  firstCurve : @Chapter07LocalEffectiveCartierCurve ring ringComm
+  secondCurve : @Chapter07LocalEffectiveCartierCurve ring ringComm
+  proper :
+    @Chapter07ProperIntersectionAt ring ringComm ringLocal firstCurve secondCurve
+  firstPassesThrough : @Chapter07PassesThrough ring ringComm ringLocal firstCurve
+  secondPassesThrough : @Chapter07PassesThrough ring ringComm ringLocal secondCurve
+  firstModule : @Chapter07LocalModuleCategory ring ringComm
+  secondModule : @Chapter07LocalModuleCategory ring ringComm
+  torProfile : @Chapter07LocalTorLengthProfile ring ringComm
+  torProfile_eq_canonical :
+    ∀ j, torProfile.torLength j =
+      @Chapter07CanonicalTorLength ring ringComm hasProjectiveResolutions j
+        firstModule secondModule
+  moduleLength : ℕ∞
+  moduleLength_eq_tor_zero : moduleLength = torProfile.torLength 0
+  moduleLength_finite : moduleLength ≠ ⊤
+  localValue : ℤ
+  localValue_eq_moduleLength : localValue = Int.ofNat moduleLength.toNat
+
+structure Chapter11Chapter07LocalIntersectionAdapter
     {S : Chapter11ArithmeticBase}
     (X : Chapter11ArithmeticSurface S) where
   localIntersection :
     ∀ (D G : Chapter11Divisor X),
       chapter11NoCommonComponent D G →
       Chapter11SurfacePoint X → ℤ
+  moduleLengthWitness :
+    ∀ (D G : Chapter11Divisor X) (h : chapter11NoCommonComponent D G)
+      (p : Chapter11SurfacePoint X),
+      Nonempty (Chapter11Chapter07LocalIntersectionWitness D G h p)
+  localIntersection_eq_moduleLength :
+    ∀ (D G : Chapter11Divisor X) (h : chapter11NoCommonComponent D G)
+      (p : Chapter11SurfacePoint X)
+      (W : Chapter11Chapter07LocalIntersectionWitness D G h p),
+      localIntersection D G h p = W.localValue
+  add_left :
+    ∀ (D₁ D₂ G : Chapter11Divisor X)
+      (h₁ : chapter11NoCommonComponent D₁ G)
+      (h₂ : chapter11NoCommonComponent D₂ G)
+      (h₁₂ : chapter11NoCommonComponent (D₁ + D₂) G)
+      (p : Chapter11SurfacePoint X),
+      localIntersection (D₁ + D₂) G h₁₂ p =
+        localIntersection D₁ G h₁ p + localIntersection D₂ G h₂ p
+  add_right :
+    ∀ (D E₁ E₂ : Chapter11Divisor X)
+      (h₁ : chapter11NoCommonComponent D E₁)
+      (h₂ : chapter11NoCommonComponent D E₂)
+      (h₁₂ : chapter11NoCommonComponent D (E₁ + E₂))
+      (p : Chapter11SurfacePoint X),
+      localIntersection D (E₁ + E₂) h₁₂ p =
+        localIntersection D E₁ h₁ p + localIntersection D E₂ h₂ p
+  curve_nonnegative :
+    ∀ (C G : Chapter11CartierCurve X)
+      (h : chapter11NoCommonComponent
+        (chapter11CurveAsDivisor C) (chapter11CurveAsDivisor G))
+      (p : Chapter11SurfacePoint X),
+      0 ≤ localIntersection (chapter11CurveAsDivisor C)
+        (chapter11CurveAsDivisor G) h p
+  curve_positive_iff :
+    ∀ (C G : Chapter11CartierCurve X)
+      (h : chapter11NoCommonComponent
+        (chapter11CurveAsDivisor C) (chapter11CurveAsDivisor G))
+      (p : Chapter11SurfacePoint X),
+      0 < localIntersection (chapter11CurveAsDivisor C)
+        (chapter11CurveAsDivisor G) h p ↔
+        chapter11PointLiesOnCurve C p ∧ chapter11PointLiesOnCurve G p
+  zero_of_disjoint :
+    ∀ (D G : Chapter11Divisor X)
+      (h : chapter11NoCommonComponent D G)
+      (_hdisjoint : chapter11DivisorsDisjoint D G)
+      (p : Chapter11SurfacePoint X),
+      localIntersection D G h p = 0
+
+class Chapter11LocalIntersectionTheory
+    {S : Chapter11ArithmeticBase}
+    (X : Chapter11ArithmeticSurface S) where
+  adapter : Chapter11Chapter07LocalIntersectionAdapter X
   symmetric :
     ∀ (D G : Chapter11Divisor X) (h : chapter11NoCommonComponent D G)
       (h' : chapter11NoCommonComponent G D) (p : Chapter11SurfacePoint X),
-      localIntersection D G h p = localIntersection G D h' p
+      adapter.localIntersection D G h p = adapter.localIntersection G D h' p
 
 def chapter11LocalIntersection
     {S : Chapter11ArithmeticBase}
@@ -370,7 +597,7 @@ def chapter11LocalIntersection
     (D G : Chapter11Divisor X)
     (h : chapter11NoCommonComponent D G)
     (p : Chapter11SurfacePoint X) : ℤ :=
-  Chapter11LocalIntersectionTheory.localIntersection D G h p
+  (Chapter11LocalIntersectionTheory.adapter (X := X)).localIntersection D G h p
 
 /-- A point on the exceptional curve of a point blowup, hence infinitely near
 to the center. -/
@@ -405,6 +632,14 @@ structure Chapter11ExceptionalContactData
   point_on_exceptional :
     ∀ i, chapter11PointLiesOnCurve b.exceptionalCurve (point i)
   point_over_center : ∀ i, b.map (point i).point = p.point
+  point_residueDegree_positive :
+    ∀ i, 0 < chapter11ResidueDegreeOfMap b.map (point i).point
+  point_is_contact :
+    ∀ i,
+      chapter11LocalIntersection
+          (chapter11StrictTransformDivisor b D)
+          (chapter11StrictTransformDivisor b G)
+          strict_no_common (point i) ≠ 0
   captures_all_remaining_contact :
     ∀ q : Chapter11SurfacePoint b.target,
       (∀ i, point i ≠ q) →
@@ -431,6 +666,58 @@ noncomputable def chapter11ExceptionalContactContribution
       F.strict_no_common (F.point i) *
       (chapter11ResidueDegreeOfMap b.map (F.point i).point : ℤ)
 
+/- A one-step witness carries the local intersection separation, the finite
+contact points above the center, and the projection context for that step.
+Unlike a free residual integer, every remaining term is a Chapter 7 local
+intersection weighted by its residue degree. -/
+structure Chapter11IteratedOneStepWitness
+    {S : Chapter11ArithmeticBase.{u}}
+    {X : Chapter11ArithmeticSurface S}
+    {p : Chapter11SurfacePoint X}
+    (b : Chapter11PointBlowup p)
+    (sourceTheory : Chapter11LocalIntersectionTheory X)
+    (targetTheory : Chapter11LocalIntersectionTheory b.target)
+    (D G : Chapter11Divisor X) where
+  source_no_common : chapter11NoCommonComponent D G
+  strict_no_common :
+    chapter11NoCommonComponent
+      (chapter11StrictTransformDivisor b D)
+      (chapter11StrictTransformDivisor b G)
+  projection : Chapter11PointBlowupProjectionData b
+  index : Type u
+  [index_finite : Fintype index]
+  point : index → Chapter11SurfacePoint b.target
+  point_injective : Function.Injective point
+  point_on_exceptional :
+    ∀ i, chapter11PointLiesOnCurve b.exceptionalCurve (point i)
+  point_over_center : ∀ i, b.map (point i).point = p.point
+  point_residueDegree_positive :
+    ∀ i, 0 < chapter11ResidueDegreeOfMap b.map (point i).point
+  point_is_contact :
+    ∀ i,
+      @chapter11LocalIntersection _ b.target targetTheory
+        (chapter11StrictTransformDivisor b D)
+        (chapter11StrictTransformDivisor b G)
+        strict_no_common (point i) ≠ 0
+  captures_all_remaining_contact :
+    ∀ q : Chapter11SurfacePoint b.target,
+      (∀ i, point i ≠ q) →
+        @chapter11LocalIntersection _ b.target targetTheory
+          (chapter11StrictTransformDivisor b D)
+          (chapter11StrictTransformDivisor b G)
+          strict_no_common q = 0
+  separation :
+    @chapter11LocalIntersection _ X sourceTheory D G source_no_common p =
+      chapter11DivisorMultiplicity D p * chapter11DivisorMultiplicity G p +
+        (∑ i,
+          @chapter11LocalIntersection _ b.target targetTheory
+            (chapter11StrictTransformDivisor b D)
+            (chapter11StrictTransformDivisor b G)
+            strict_no_common (point i) *
+            (chapter11ResidueDegreeOfMap b.map (point i).point : ℤ))
+
+attribute [instance] Chapter11IteratedOneStepWitness.index_finite
+
 /-! ### Iterated blowup and resolution-graph data -/
 
 /- LOCAL_DEPENDENCY_GUESS: the preceding resolution chapter is not present in
@@ -455,11 +742,23 @@ structure Chapter11PointBlowupSequence (S : Chapter11ArithmeticBase) where
   map_to_initial :
     ∀ j : Fin (length + 1),
       (stage j).carrier ⟶ (stage 0).carrier
+  map_to_initial_over_base :
+    ∀ j : Fin (length + 1),
+      map_to_initial j ≫ (stage 0).structureMap = (stage j).structureMap
+  map_to_initial_step :
+    ∀ j : Fin length,
+      chapter11TransportMorphism
+          (congrArg (fun T : Chapter11ArithmeticSurface S => T.carrier)
+            (target_eq_stage j))
+          ((step j).map ≫ map_to_initial
+            ⟨j.1, Nat.lt_succ_of_lt j.2⟩) =
+        map_to_initial (Fin.succ j)
   map_to_initial_center :
     ∀ j : Fin length,
       map_to_initial ⟨j.1, Nat.lt_succ_of_lt j.2⟩ (center j).point =
         initialPoint.point
-  first_center_is_initial_point : Prop
+  first_center_is_initial_point :
+    ∀ (j : Fin length), j.1 = 0 → HEq (center j) initialPoint
 
 noncomputable def chapter11CenterDegreeOverInitial
     {S : Chapter11ArithmeticBase}
@@ -469,27 +768,99 @@ noncomputable def chapter11CenterDegreeOverInitial
     (Q.center j).point
 
 /-- The intersection data attached to a chosen sequence of point blowups.
-`strictD` and `strictG` are the stagewise strict transforms; the residual is
-the intersection left after the selected centers. -/
+`strictD` and `strictG` are the stagewise strict transforms.  Every step has
+an explicit Chapter 7 local-intersection/projection witness, and the final
+residual is defined from a finite list of final local intersections. -/
 structure Chapter11IteratedIntersectionData
-    {S : Chapter11ArithmeticBase}
+    {S : Chapter11ArithmeticBase.{u}}
     (Q : Chapter11PointBlowupSequence S)
     [Chapter11LocalIntersectionTheory (Q.stage 0)] where
-  D G : Chapter11Divisor (Q.stage 0)
+  D : Chapter11Divisor (Q.stage 0)
+  G : Chapter11Divisor (Q.stage 0)
   source_no_common : chapter11NoCommonComponent D G
   original_point : Chapter11SurfacePoint (Q.stage 0)
   strictD : ∀ j : Fin (Q.length + 1), Chapter11Divisor (Q.stage j)
   strictG : ∀ j : Fin (Q.length + 1), Chapter11Divisor (Q.stage j)
-  strict_transform_data : Prop
+  strictD_step :
+    ∀ j : Fin Q.length,
+      chapter11TransportDivisor (Q.target_eq_stage j)
+          (chapter11StrictTransformDivisor (Q.step j)
+            (strictD ⟨j.1, Nat.lt_succ_of_lt j.2⟩)) =
+        strictD (Fin.succ j)
+  strictG_step :
+    ∀ j : Fin Q.length,
+      chapter11TransportDivisor (Q.target_eq_stage j)
+          (chapter11StrictTransformDivisor (Q.step j)
+            (strictG ⟨j.1, Nat.lt_succ_of_lt j.2⟩)) =
+        strictG (Fin.succ j)
   multiplicityD : Fin Q.length → ℤ
   multiplicityG : Fin Q.length → ℤ
   center_degree : Fin Q.length → ℕ
   center_degree_eq_residue_degree :
     ∀ j, center_degree j = chapter11CenterDegreeOverInitial Q j
+  center_degree_positive : ∀ j, 0 < center_degree j
   original_point_eq_sequence_initial : original_point = Q.initialPoint
-  residualIntersection : ℤ
-  residual_is_remaining_intersection : Prop
-  final_strict_transforms_disjoint : Prop
+  stage_theory :
+    ∀ j : Fin (Q.length + 1),
+      Chapter11LocalIntersectionTheory (Q.stage j)
+  step_target_theory :
+    ∀ j : Fin Q.length,
+      Chapter11LocalIntersectionTheory (Q.step j).target
+  step_witness :
+    ∀ j : Fin Q.length,
+      Chapter11IteratedOneStepWitness
+        (Q.step j)
+        (stage_theory ⟨j.1, Nat.lt_succ_of_lt j.2⟩)
+        (step_target_theory j)
+        (strictD ⟨j.1, Nat.lt_succ_of_lt j.2⟩)
+        (strictG ⟨j.1, Nat.lt_succ_of_lt j.2⟩)
+  final_theory :
+    Chapter11LocalIntersectionTheory (Q.stage (Fin.last Q.length))
+  final_no_common :
+    chapter11NoCommonComponent
+      (strictD (Fin.last Q.length)) (strictG (Fin.last Q.length))
+  residualIndex : Type u
+  [residualIndex_finite : Fintype residualIndex]
+  residualPoint : residualIndex → Chapter11SurfacePoint (Q.stage (Fin.last Q.length))
+  residualPoint_injective : Function.Injective residualPoint
+  residualPoint_is_contact :
+    ∀ i,
+      @chapter11LocalIntersection _ (Q.stage (Fin.last Q.length)) final_theory
+        (strictD (Fin.last Q.length)) (strictG (Fin.last Q.length))
+        final_no_common (residualPoint i) ≠ 0
+  residual_captures_all_contact :
+    ∀ q : Chapter11SurfacePoint (Q.stage (Fin.last Q.length)),
+      @chapter11LocalIntersection _ (Q.stage (Fin.last Q.length)) final_theory
+        (strictD (Fin.last Q.length)) (strictG (Fin.last Q.length))
+        final_no_common q ≠ 0 →
+        ∃ i, residualPoint i = q
+  final_strict_transforms_disjoint :
+    chapter11DivisorsDisjoint
+      (strictD (Fin.last Q.length)) (strictG (Fin.last Q.length))
+  multiplicityD_eq_stage_multiplicity :
+    ∀ j,
+      multiplicityD j =
+        chapter11DivisorMultiplicity
+          (strictD ⟨j.1, Nat.lt_succ_of_lt j.2⟩) (Q.center j)
+  multiplicityG_eq_stage_multiplicity :
+    ∀ j,
+      multiplicityG j =
+        chapter11DivisorMultiplicity
+          (strictG ⟨j.1, Nat.lt_succ_of_lt j.2⟩) (Q.center j)
+
+attribute [instance] Chapter11IteratedIntersectionData.residualIndex_finite
+
+noncomputable def chapter11ResidualIntersection
+    {S : Chapter11ArithmeticBase}
+    (Q : Chapter11PointBlowupSequence S)
+    [Chapter11LocalIntersectionTheory (Q.stage 0)]
+    (H : Chapter11IteratedIntersectionData Q) : ℤ :=
+  ∑ i,
+    @chapter11LocalIntersection _ (Q.stage (Fin.last Q.length)) H.final_theory
+      (H.strictD (Fin.last Q.length)) (H.strictG (Fin.last Q.length))
+      H.final_no_common (H.residualPoint i) *
+      (chapter11ResidueDegreeOfMap
+        (Q.map_to_initial (Fin.last Q.length)) (H.residualPoint i).point : ℤ)
 
 /-! ### Proximity and final resolution graphs -/
 
@@ -506,11 +877,20 @@ structure Chapter11ProximityData
   oldComponent_is_strict_transform :
     oldComponent = first.exceptionalCurve
   center_on_oldComponent : chapter11PointLiesOnCurve oldComponent q
+  center_over_same_base_point : q.basePoint = p.basePoint
   old_multiplicity_at_center : oldComponent.multiplicity q = 1
   creationSquare : ℤ
-  creationSquare_eq_exceptional_square : Prop
   before : Chapter11NumericalIntersectionContext first.target
+  exceptionalIntersection :
+    Chapter11ExceptionalIntersectionBridge first before
   after : Chapter11NumericalIntersectionContext later.target
+  creationSquare_eq_exceptional_square :
+    creationSquare =
+      before.pairing (chapter11CurveAsDivisor oldComponent)
+        (chapter11CurveAsDivisor oldComponent)
+  projection : Chapter11PointBlowupProjectionData later
+  before_eq_projection_source : before = projection.source
+  after_eq_projection_target : after = projection.target
 
 /-- Data for a later center lying on two components at once. -/
 structure Chapter11DoubleProximityData
@@ -520,14 +900,19 @@ structure Chapter11DoubleProximityData
     (first : Chapter11PointBlowup p)
     (q : Chapter11SurfacePoint first.target)
     (later : Chapter11PointBlowup q) where
-  component₁ component₂ : Chapter11CartierCurve first.target
+  component₁ : Chapter11CartierCurve first.target
+  component₂ : Chapter11CartierCurve first.target
   component₁_ne_component₂ : component₁ ≠ component₂
   center_on_component₁ : chapter11PointLiesOnCurve component₁ q
   center_on_component₂ : chapter11PointLiesOnCurve component₂ q
+  center_over_same_base_point : q.basePoint = p.basePoint
   component₁_multiplicity : component₁.multiplicity q = 1
   component₂_multiplicity : component₂.multiplicity q = 1
   before : Chapter11NumericalIntersectionContext first.target
   after : Chapter11NumericalIntersectionContext later.target
+  projection : Chapter11PointBlowupProjectionData later
+  before_eq_projection_source : before = projection.source
+  after_eq_projection_target : after = projection.target
 
 /-- A resolution graph records final strict transforms and their final squares,
 not merely the labels assigned when components were created. -/

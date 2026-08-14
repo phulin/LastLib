@@ -1,5 +1,9 @@
 import LastLib.Book04AdelesAndIdeles.Chapter11.Dependencies
 import LastLib.Book04AdelesAndIdeles.Chapter11.Section04FinitenessOfRayClassGroups
+import LastLib.Book04AdelesAndIdeles.Chapter02.Section04LocalIntegersAndLocalUnits
+import Mathlib.Analysis.Complex.Convex
+import Mathlib.RingTheory.RootsOfUnity.Basic
+import Mathlib.Topology.Connected.TotallyDisconnected
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter11
 
@@ -43,7 +47,10 @@ theorem chapter11_finite_local_character_levels_are_monotone
     (ψ : (v.adicCompletion K)ˣ →* ℂˣ) {m n : ℕ} (hmn : m ≤ n)
     (hn : chapter11FiniteLocalCharacterTrivialAtLevel v ψ m) :
     chapter11FiniteLocalCharacterTrivialAtLevel v ψ n := by
-  sorry
+  intro x hx
+  apply hn
+  rcases hx with ⟨u, hu, rfl⟩
+  exact ⟨u, chapter11LocalUnitFiltration_antitone hmn hu, rfl⟩
 
 theorem chapter11_exists_least_conductor
     (χ : Chapter11FiniteOrderIdeleClassCharacter K) :
@@ -112,7 +119,9 @@ theorem chapter11_complex_places_do_not_contribute_to_the_conductor
     {v : NumberField.InfinitePlace K}
     (hv : NumberField.InfinitePlace.IsComplex v) :
     v ∉ (chapter11Conductor χ).infinitePart := by
-  sorry
+  intro hv'
+  exact (NumberField.InfinitePlace.not_isReal_iff_isComplex.mpr hv)
+    ((chapter11Conductor χ).infinitePart_isReal v hv')
 
 theorem chapter11_character_has_almost_everywhere_level_zero
     (χ : Chapter11FiniteOrderIdeleClassCharacter K) :

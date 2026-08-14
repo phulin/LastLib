@@ -23,10 +23,10 @@ abbrev chapter05AffineLineRing (R : Type u) [CommRing R] :=
 
 def chapter05AffineLineStructureMap
     (R : Type u) [CommRing R] :
-    Scheme.Spec (CommRingCat.of (chapter05AffineLineRing R)) ⟶
-      Scheme.Spec (CommRingCat.of R) :=
+    AlgebraicGeometry.Spec (CommRingCat.of (chapter05AffineLineRing R)) ⟶
+      AlgebraicGeometry.Spec (CommRingCat.of R) :=
   Scheme.Spec.map (CommRingCat.ofHom
-    (algebraMap R (chapter05AffineLineRing R)))
+    (algebraMap R (chapter05AffineLineRing R))).op
 
 def chapter05AffineLineSpecialFiberRing
     (R : Type u) [CommRing R] [IsLocalRing R] : Type u :=
@@ -36,7 +36,7 @@ def Chapter05AffineLineLocalEquationProfile
     (R : Type u) [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] : Prop :=
   Smooth (chapter05AffineLineStructureMap R) ∧
     Chapter04RegularScheme
-      (Scheme.Spec (CommRingCat.of (chapter05AffineLineRing R)))
+      (AlgebraicGeometry.Spec (CommRingCat.of (chapter05AffineLineRing R)))
 
 theorem chapter05_affine_line_is_smooth_and_regular
     (R : Type u) [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] :
@@ -45,7 +45,7 @@ theorem chapter05_affine_line_is_smooth_and_regular
 
 theorem chapter05_affine_line_special_fiber_is_smooth
     (R : Type u) [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] :
-    ∀ s : Scheme.Spec (CommRingCat.of R),
+    ∀ s : AlgebraicGeometry.Spec (CommRingCat.of R),
       Smooth ((chapter05AffineLineStructureMap R).fiberToSpecResidueField s) := by
   sorry
 
@@ -101,10 +101,10 @@ abbrev chapter05ThicknessRing
 
 def chapter05ThicknessStructureMap
     (R : Type u) [CommRing R] (π : R) (n : ℕ) :
-    Scheme.Spec (CommRingCat.of (chapter05ThicknessRing R π n)) ⟶
-      Scheme.Spec (CommRingCat.of R) :=
+    AlgebraicGeometry.Spec (CommRingCat.of (chapter05ThicknessRing R π n)) ⟶
+      AlgebraicGeometry.Spec (CommRingCat.of R) :=
   Scheme.Spec.map (CommRingCat.ofHom
-    (algebraMap R (chapter05ThicknessRing R π n)))
+    (algebraMap R (chapter05ThicknessRing R π n))).op
 
 def chapter05ThicknessCoordinate
     (R : Type u) [CommRing R] (π : R) (n : ℕ) (i : Fin 2) :
@@ -134,9 +134,8 @@ def Chapter05ThicknessNormal
 def Chapter05ThicknessSingularAtOrigin
     (R : Type u) [CommRing R] (π : R) (n : ℕ) : Prop :=
   ∃ hp : (chapter05ThicknessOriginIdeal R π n).IsPrime,
-    ¬ (letI := hp
-      IsRegularLocalRing
-        (Localization.AtPrime (chapter05ThicknessOriginIdeal R π n)))
+    (letI := hp; ¬ IsRegularLocalRing
+      (Localization.AtPrime (chapter05ThicknessOriginIdeal R π n)))
 
 def Chapter05ThicknessBlowupDecreasesExponent (n : ℕ) : Prop :=
   1 < n → n - 1 < n
@@ -149,7 +148,7 @@ structure Chapter05ThicknessResolutionData
     (R : Type u) [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
     (π : R) (n : ℕ) where
   source : Scheme.{u}
-  source_eq : source = Scheme.Spec
+  source_eq : source = AlgebraicGeometry.Spec
     (CommRingCat.of (chapter05ThicknessRing R π n))
   resolution : Scheme.{u}
   resolutionMap : resolution ⟶ source
@@ -192,10 +191,10 @@ abbrev chapter05CuspRing
 
 def chapter05CuspStructureMap
     (R : Type u) [CommRing R] (π : R) :
-    Scheme.Spec (CommRingCat.of (chapter05CuspRing R π)) ⟶
-      Scheme.Spec (CommRingCat.of R) :=
+    AlgebraicGeometry.Spec (CommRingCat.of (chapter05CuspRing R π)) ⟶
+      AlgebraicGeometry.Spec (CommRingCat.of R) :=
   Scheme.Spec.map (CommRingCat.ofHom
-    (algebraMap R (chapter05CuspRing R π)))
+    (algebraMap R (chapter05CuspRing R π))).op
 
 def chapter05CuspOriginIdeal
     (R : Type u) [CommRing R] (π : R) :
@@ -208,8 +207,7 @@ def chapter05CuspOriginIdeal
 def Chapter05CuspTotalSpaceRegularAtOrigin
     (R : Type u) [CommRing R] (π : R) : Prop :=
   ∃ hp : (chapter05CuspOriginIdeal R π).IsPrime,
-    letI := hp
-      IsRegularLocalRing (Localization.AtPrime (chapter05CuspOriginIdeal R π))
+    letI := hp; IsRegularLocalRing (Localization.AtPrime (chapter05CuspOriginIdeal R π))
 
 def chapter05CuspSpecialFiberEquation
     (R : Type u) [CommRing R] [IsLocalRing R] (π : R) :
@@ -242,9 +240,8 @@ def chapter05CuspSpecialFiberOriginIdeal
 def Chapter05CuspSpecialFiberCuspidal
     (R : Type u) [CommRing R] [IsLocalRing R] (π : R) : Prop :=
   ∃ hp : (chapter05CuspSpecialFiberOriginIdeal R π).IsPrime,
-    (letI := hp
-      ¬ IsRegularLocalRing
-        (Localization.AtPrime (chapter05CuspSpecialFiberOriginIdeal R π)))
+    (letI := hp; ¬ IsRegularLocalRing
+      (Localization.AtPrime (chapter05CuspSpecialFiberOriginIdeal R π)))
 
 theorem chapter05_cusp_specialFiber_equation
     (R : Type u) [CommRing R] [IsLocalRing R] (π : R) :
@@ -275,7 +272,7 @@ theorem chapter05_cusp_can_have_regular_total_space_and_cuspidal_fiber
 
 /-! Finally, `π x = 0` has vertical torsion and therefore is not flat. -/
 
-def chapter05VerticalTorsionPolynomialRing
+abbrev chapter05VerticalTorsionPolynomialRing
     (R : Type u) [CommRing R] :=
   chapter05DVRPolynomialRing R 1
 
@@ -297,10 +294,10 @@ abbrev chapter05VerticalTorsionRing
 
 def chapter05VerticalTorsionStructureMap
     (R : Type u) [CommRing R] (π : R) :
-    Scheme.Spec (CommRingCat.of (chapter05VerticalTorsionRing R π)) ⟶
-      Scheme.Spec (CommRingCat.of R) :=
+    AlgebraicGeometry.Spec (CommRingCat.of (chapter05VerticalTorsionRing R π)) ⟶
+      AlgebraicGeometry.Spec (CommRingCat.of R) :=
   Scheme.Spec.map (CommRingCat.ofHom
-    (algebraMap R (chapter05VerticalTorsionRing R π)))
+    (algebraMap R (chapter05VerticalTorsionRing R π))).op
 
 theorem chapter05_vertical_torsion_equation_is_not_flat
     (R : Type u) [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]

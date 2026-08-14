@@ -26,8 +26,7 @@ chapter; proofs are postponed.
 
 /-- Total divisibility is the intrinsic characterization of a valuation ring. -/
 theorem valuation_ring_total_divisibility_characterization
-    {A K : Type*} [CommRing A] [IsDomain A] [Field K]
-    [Algebra A K] [IsFractionRing A K] :
+    {A : Type*} [CommRing A] [IsDomain A] :
     ValuationRing A ↔ @Std.Total A (· ∣ ·) := by
   exact ValuationRing.iff_dvd_total (R := A)
 
@@ -174,8 +173,14 @@ structure Chapter12LocalArithmeticDictionary
   branch_liesOver : P.LiesOver (IsLocalRing.maximalIdeal A)
   center : ∀ x : B, x ∈ P ↔ w (algebraMap B L x) < 1
   localizationMap : B →+* branchLocalization B P
+  localizationMap_spec :
+    localizationMap = algebraMap B (branchLocalization B P)
   completionMap : branchLocalization B P →+* branchCompletion B P
+  completionMap_spec :
+    completionMap = algebraMap (branchLocalization B P) (branchCompletion B P)
   fractionFieldMap : branchCompletion B P →+* branchFractionField B P
+  fractionFieldMap_spec :
+    fractionFieldMap = algebraMap (branchCompletion B P) (branchFractionField B P)
 
 /-- The final dictionary links valuation, ring, residue, precision, completion, and branches. -/
 theorem local_arithmetic_dictionary
@@ -198,8 +203,11 @@ theorem local_arithmetic_dictionary
     branch_liesOver := hP_liesOver
     center := hcenter
     localizationMap := algebraMap B (branchLocalization B P)
+    localizationMap_spec := rfl
     completionMap := algebraMap (branchLocalization B P) (branchCompletion B P)
+    completionMap_spec := rfl
     fractionFieldMap := algebraMap (branchCompletion B P) (branchFractionField B P)
+    fractionFieldMap_spec := rfl
   }⟩
 
 end

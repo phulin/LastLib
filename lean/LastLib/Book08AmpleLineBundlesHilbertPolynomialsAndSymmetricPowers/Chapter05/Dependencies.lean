@@ -153,11 +153,15 @@ noncomputable def RelativeProjectiveBundleData.baseChange
     (Scheme.Modules.pullback
       (pullback.fst (Chapter04.Chapter04ProjectiveBundle.projection P) g)).obj P.tautological
   tautological_isInvertible := by sorry
+  universalQuotient := by sorry
+  universalQuotient_is_epi := by sorry
+  universal_equiv := by sorry
+  universal_natural := by sorry
   projection_isProper := by sorry
 
 def IsFiniteDimensionalLocallyOnBase {S : Scheme.{u}}
     (P : RelativeProjectiveBundleData S) : Prop :=
-  P.finiteLocallyFree
+  Chapter04.chapter04FiniteLocallyFree P.E
 
 theorem relativeProjectiveBundleData_finiteDimensional {S : Scheme.{u}}
     (P : RelativeProjectiveBundleData S) : IsFiniteDimensionalLocallyOnBase P :=
@@ -242,7 +246,7 @@ structure FiniteAffineOpenCover (X : Scheme.{u}) where
 structure FiniteSectionFamily {X : Scheme.{u}} (M : X.Modules) where
   index : Type u
   finite_index : Finite index
-  sections : index → Γ(M, ⊤)
+  sections : index → M.val.sections
   generates : Epi (M.freeHomEquiv.symm sections)
 
 def IsFiberwiseVeryAmple {X S : Scheme.{u}} (f : X ⟶ S) (L : LineBundle X) : Prop :=

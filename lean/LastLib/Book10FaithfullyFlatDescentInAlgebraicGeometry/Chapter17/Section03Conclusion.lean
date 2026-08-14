@@ -19,7 +19,7 @@ def CompatibleEffectiveIso
     {C : Type u} [Category.{v} C]
     (F : Pseudofunctor (LocallyDiscrete Cᵒᵖ) Cat.{v, u})
     {ι : Type v} {S : C} {X : ι → C} {f : ∀ i, X i ⟶ S}
-    {D : F.DescentData f} (A B : EffectiveDescent F f D) : Prop :=
+    {D : F.DescentData f} (A B : EffectiveDescent F f D) :=
   { e : A.descended ≅ B.descended //
       A.comparison.hom ≫ (F.toDescentData f).map e.hom = B.comparison.hom }
 
@@ -29,8 +29,8 @@ theorem effective_descent_unique_up_to_unique_iso
     {ι : Type v} {S : C} {X : ι → C} {f : ∀ i, X i ⟶ S}
     {D : F.DescentData f} (A B : EffectiveDescent F f D)
     (hfullyFaithful : IsFullyFaithfulDescent F f) :
-    Nonempty (CompatibleEffectiveIso A B) ∧
-      ∀ e₁ e₂ : CompatibleEffectiveIso A B, e₁ = e₂ := by
+    Nonempty (CompatibleEffectiveIso F A B) ∧
+      ∀ e₁ e₂ : CompatibleEffectiveIso F A B, e₁ = e₂ := by
   sorry
 
 structure SynthesisConclusion
@@ -45,7 +45,7 @@ structure StructuredSynthesisConclusion
     (F : Pseudofunctor (LocallyDiscrete Cᵒᵖ) Cat.{v, u})
     {ι : Type v} {S : C} {X : ι → C} (f : ∀ i, X i ⟶ S) : Prop where
   descent : StructuredFpqcDescentPackage F f
-  morphismProperties : FpqcMorphismDescentPackage
+  morphismProperties : FpqcMorphismDescentPackage.{u}
 
 /- LOCAL_DEPENDENCY_GUESS: the generic `EffectiveDescent` record in this synthesis chapter and
    Chapter 11's scheme-specific `Effective` record need a canonical fieldwise bridge before this

@@ -1,4 +1,10 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.Section01TheLocalExtensionProblem
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section01TheExtensionProblem
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section02ExistenceByMaximalDomination
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section03IntegralElementsAreBounded
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section04RamificationIndexAndResidueDegree
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section05SplittingPatterns
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section05UniqueExtensionAndHenselianity
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01
 
@@ -48,7 +54,7 @@ theorem chapter01_finite_extension_prime_valuation_correspondence
     [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ)
     (hA : vK.Integers A) :
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ExtensionPrimeCorrespondence
-      (A := A) (B := B) (L := L) vK := by
+      (A := A) (B := B) (L := L) vK hA := by
   exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_finite_extension_prime_valuation_correspondence
     vK hA
 
@@ -62,24 +68,29 @@ theorem chapter01_unique_prime_iff_unique_valuation_extension
     [Algebra A K] [IsFractionRing A K] [Algebra K L] [FiniteDimensional K L]
     [IsScalarTower A K L]
     [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ)
+    (hA : vK.Integers A)
     (hcor :
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ExtensionPrimeCorrespondence
-        (A := A) (B := B) (L := L) vK) :
+        (A := A) (B := B) (L := L) vK hA) :
     (LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10HasUniquePrimeAbove
         (A := A) (B := B) ↔
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10HasUniqueValuationExtension
         (L := L) vK) := by
   exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_unique_prime_iff_unique_valuation_extension
-    vK hcor
+    vK hA hcor
 
-/-- A heterogeneous extension is discrete when its own value group is discrete. -/
+/-- A heterogeneous extension is discrete when its canonical value group is
+discrete. A branch may use an ambient ordered codomain larger than the image
+of its valuation, so discreteness must not be imposed on that arbitrary
+codomain. -/
 def chapter01DiscreteHeterogeneousExtension
     {K L Γ : Type u} [Field K] [Field L] [Algebra K L]
     [LinearOrderedCommGroupWithZero Γ]
     (vK : Valuation K Γ)
     (W : LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.HeterogeneousValuationExtension vK L) : Prop :=
   letI : LinearOrderedCommGroupWithZero W.valueGroup := W.orderedValueGroup
-  Valuation.IsRankOneDiscrete W.valuation
+  Nonempty
+    (MonoidWithZeroHom.ValueGroup₀ (MonoidWithZeroHom.ofClass W.valuation) ≃*o ℤᵐ⁰)
 
 /-- Finite algebraic extensions of a discrete field have discrete extension values. -/
 theorem chapter01_finite_extension_value_group_is_discrete
@@ -135,6 +146,8 @@ theorem chapter01_finite_value_group_quotient_is_finite
     {K L Γ : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [LinearOrderedCommGroupWithZero Γ]
     (vK : Valuation K Γ) (vL : Valuation L Γ)
+    [Valuation.IsRankOneDiscrete vK]
+    [Valuation.IsRankOneDiscrete vL]
     (hext : chapter01SamePlace vK vL)
     (hΓ : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ValueGroup vK ≤
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ValueGroup vL) :
@@ -154,7 +167,7 @@ theorem chapter01_discrete_value_group_can_be_normalized
 
 /-- The finite normalization is local over a henselian valuation ring. -/
 theorem chapter01_henselian_integral_closure_is_local
-    {A K L : Type*} [CommRing A] [IsDomain A]
+    {A K L : Type*} [CommRing A] [IsDomain A] [ValuationRing A]
     [Field K] [Field L] [Algebra A K] [IsFractionRing A K]
     [Algebra K L] [FiniteDimensional K L] [Algebra A L]
     [IsScalarTower A K L] [HenselianLocalRing A]
@@ -164,7 +177,7 @@ theorem chapter01_henselian_integral_closure_is_local
 
 /-- Maximal ideals above the base maximal ideal are the finite-extension branches. -/
 theorem chapter01_henselian_branch_is_unique
-    {A K L : Type*} [CommRing A] [IsDomain A]
+    {A K L : Type*} [CommRing A] [IsDomain A] [ValuationRing A]
     [Field K] [Field L] [Algebra A K] [IsFractionRing A K]
     [Algebra K L] [FiniteDimensional K L] [Algebra A L]
     [IsScalarTower A K L] [HenselianLocalRing A]

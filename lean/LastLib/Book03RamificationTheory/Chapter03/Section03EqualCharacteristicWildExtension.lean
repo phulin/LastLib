@@ -42,7 +42,7 @@ structure Chapter03ArtinSchreierExtensionData
   generated : Algebra.adjoin (LaurentSeries k) ({y} : Set L) = ⊤
 
 theorem chapter03_artin_schreier_derivative
-    {K : Type*} [Field K] (p : ℕ) [CharP K p] (a : K) :
+    {K : Type*} [Field K] (p : ℕ) [Fact p.Prime] [CharP K p] (a : K) :
     (chapter03ArtinSchreierPolynomial p a).derivative = -1 := by
   sorry
 
@@ -56,13 +56,13 @@ theorem chapter03_artin_schreier_no_root_in_laurent_series
   sorry
 
 theorem chapter03_artin_schreier_translation
-    {K : Type*} [Field K] (p : ℕ) [CharP K p]
+    {K : Type*} [Field K] (p : ℕ) [Fact p.Prime] [CharP K p]
     (a y z : K) (hroot : y ^ p - y = a) :
     (y - z) ^ p - (y - z) = a - (z ^ p - z) := by
   sorry
 
 theorem chapter03_artin_schreier_root_set_is_a_translation
-    {K : Type*} [Field K] (p : ℕ) [CharP K p]
+    {K : Type*} [Field K] (p : ℕ) [Fact p.Prime] [CharP K p]
     (a y : K) (hroot : y ^ p - y = a) :
     chapter03ArtinSchreierRootSet p a =
       {z | ∃ c : K, c ^ p - c = 0 ∧ z = y + c} := by
@@ -91,11 +91,24 @@ theorem chapter03_artin_schreier_degree_and_cyclic_profile
     (hno_root :
       ∀ z : LaurentSeries k,
         z ^ p - z ≠
-          (LastLib.Book01ValuationsDVRsAndCompletions.Chapter03.laurentSeriesUniformizer k) ^
-            (-(m : ℤ))) :
+            (LastLib.Book01ValuationsDVRsAndCompletions.Chapter03.laurentSeriesUniformizer k) ^
+            (-(m : ℤ)))
+    (vK : AddValuation (LaurentSeries k) (WithTop ℤ))
+    (vL : AddValuation L (WithTop ℤ))
+    (hdiscreteK :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vK)
+    (hdiscreteL :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vL)
+    (hext : vK.IsEquiv (vL.comap (algebraMap (LaurentSeries k) L)))
+    (hvalue_t :
+      vK (LastLib.Book01ValuationsDVRsAndCompletions.Chapter03.laurentSeriesUniformizer k) = 1) :
     Module.finrank (LaurentSeries k) L = p ∧
-      ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
-        q.degree = p ∧ q.ramificationIndex = p ∧ q.residueDegree = 1 := by
+      ∃ d : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10HeterogeneousExtensionData
+          vK vL hext,
+        ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
+          LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ProfileRealizedByData d q ∧
+            q.degree = p ∧ q.ramificationIndex = p ∧ q.residueDegree = 1 ∧
+            LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10TotallyRamified q := by
   sorry
 
 theorem chapter03_artin_schreier_y_has_normalized_value
@@ -141,7 +154,7 @@ def chapter03ArtinSchreierUniformizer
     ((LastLib.Book01ValuationsDVRsAndCompletions.Chapter03.laurentSeriesUniformizer k) ^ a) * y ^ b
 
 theorem chapter03_artin_schreier_bezout_indices
-    (p m : ℕ) (hm : Nat.Coprime m p) :
+    (p m : ℕ) [Fact p.Prime] (hm : Nat.Coprime m p) :
     ∃ a : ℤ, ∃ b : ℕ,
       1 ≤ b ∧ b < p ∧ a * p - b * m = 1 := by
   sorry
@@ -165,6 +178,9 @@ theorem chapter03_artin_schreier_displacement_calculation
     (p m : ℕ) [Fact p.Prime] [CharP k p]
     (vL : AddValuation L (WithTop ℤ)) (y : L) (a : ℤ) (b : ℕ)
     (σ : L ≃ₐ[LaurentSeries k] L) (c : L)
+    (hvalue_t :
+      vL (algebraMap (LaurentSeries k) L
+        (LastLib.Book01ValuationsDVRsAndCompletions.Chapter03.laurentSeriesUniformizer k)) = p)
     (hvalue_y : vL y = -m)
     (hvalue_c : vL c = 0)
     (hindices : a * p - b * m = 1)
@@ -190,7 +206,7 @@ theorem chapter03_artin_schreier_first_binomial_term_has_value_m
     [Algebra (LaurentSeries k) L]
     (p m : ℕ) [Fact p.Prime] [CharP k p]
     (vL : AddValuation L (WithTop ℤ)) (y c : L) (b : ℕ)
-    (hvalue_y : vL y = -m) (hvalue_c : vL c = 0)
+    (hm : 0 < m) (hvalue_y : vL y = -m) (hvalue_c : vL c = 0)
     (hb : 1 ≤ b) (hbp : b < p) (hc : c ^ p - c = 0) :
     vL ((1 + c / y) ^ b - 1) = m := by
   sorry
@@ -212,7 +228,7 @@ theorem chapter03_artin_schreier_lower_groups
 /- Changing an Artin--Schreier coordinate changes the right side by an
 additive coboundary. -/
 theorem chapter03_artin_schreier_change_of_variable
-    {K : Type*} [Field K] (p : ℕ) [CharP K p]
+    {K : Type*} [Field K] (p : ℕ) [Fact p.Prime] [CharP K p]
     (y z a : K) (hroot : y ^ p - y = a) :
     (y - z) ^ p - (y - z) = a - (z ^ p - z) := by
   exact chapter03_artin_schreier_translation p a y z hroot

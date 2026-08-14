@@ -76,12 +76,15 @@ instance chapter02ResidueQuotientGroup
   infer_instance
 
 /- The preceding chapter's `K₀` is represented here by the coefficient ring
-   `C`; the structure records exactly the two properties used in the
-   uniformizer argument: integral generation and pointwise inertia fixing. -/
+   `C`; the structure records the uniformizer, integral generation, and
+   pointwise inertia fixing used in the uniformizer argument. -/
 structure Chapter02UnramifiedUniformizerPresentation
     (K L : Type u) [Field K] [Field L] [Algebra K L]
     (A : ValuationSubring L) (C : Type*) [CommRing C] [Algebra C A]
     (π : A) where
+  /-- The named generator is a generator of the maximal ideal of `A`. -/
+  uniformizer :
+    IsLocalRing.maximalIdeal A = Ideal.span ({π} : Set A)
   integral_generation :
     chapter02IntegralRingGeneratedByUniformizer (C := C) (A := A) π
   inertia_fixes_coefficients :
@@ -177,8 +180,8 @@ theorem chapter02_tame_layer_order_coprime
 
 /- DEPENDENCY_GUESS: The canonical construction of `θ₀` needs the preceding
    maximal-unramified-subextension and uniformizer package.  The hypotheses
-   below expose the finite, complete, discrete, residue-separable situation
-   in which that package is expected to supply the data. -/
+   below expose the finite, complete, discrete, defectless situation in which
+   that package is expected to supply the data. -/
 theorem chapter02_canonical_tame_character_data_exists
     (K L : Type u) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
@@ -191,6 +194,7 @@ theorem chapter02_canonical_tame_character_data_exists
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.toValuation.valuationSubring)
       vK.toValuation.valuationSubring)
+    [PerfectField (IsLocalRing.ResidueField vK.toValuation.valuationSubring)]
     [Algebra (IsLocalRing.ResidueField vK.toValuation.valuationSubring)
       (IsLocalRing.ResidueField vL.toValuation.valuationSubring)]
     [FiniteDimensional (IsLocalRing.ResidueField vK.toValuation.valuationSubring)
@@ -282,8 +286,8 @@ theorem chapter02_wild_group_eq_bot_of_trivial_positive_layers
     chapter02WildGroup F = ⊥ := by
   sorry
 
-/-- In the characteristic-zero convention `p = 1`, the wild order is one. -/
-theorem chapter02_char_zero_wild_order_eq_one
+/-- A filtration with trivial positive layers has trivial wild order. -/
+theorem chapter02_wild_order_eq_one_of_trivial_positive_layers
     {G : Type u} [Group G] [Finite G]
     (F : Chapter02LowerFiltration G)
     (htrivial : ∀ i : ℕ, 1 ≤ i → Subsingleton (chapter02LowerLayer F i)) :

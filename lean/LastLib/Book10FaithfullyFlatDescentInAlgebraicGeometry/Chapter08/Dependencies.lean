@@ -6,6 +6,7 @@ import Mathlib.Algebra.Category.ModuleCat.Sheaf.Quasicoherent
 import Mathlib.Algebra.Homology.ShortComplex.Exact
 import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.AlgebraicGeometry.Modules.Tilde
+import Mathlib.AlgebraicGeometry.ResidueField
 import Mathlib.AlgebraicGeometry.Morphisms.Flat
 import Mathlib.AlgebraicGeometry.Morphisms.FlatDescent
 import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
@@ -84,7 +85,11 @@ theorem chapter08_baseChange_fpqc
     {X T S : Scheme.{u}} {f : X ⟶ S} {p : T ⟶ S}
     (hp : Chapter08FpqcMorphism p) :
     Chapter08FpqcMorphism (chapter08BaseChangedCoverMap f p) := by
-  sorry
+  change Flat (pullback.fst f p) ∧ QuasiCompact (pullback.fst f p) ∧
+    Surjective (pullback.fst f p)
+  exact ⟨by let : Flat p := hp.1; infer_instance,
+    by let : QuasiCompact p := hp.2.1; infer_instance,
+    by let : Surjective p := hp.2.2; infer_instance⟩
 
 /-- A chosen pullback for two members of a covering family. -/
 noncomputable def chapter08ChosenPullback
@@ -94,7 +99,7 @@ noncomputable def chapter08ChosenPullback
   p₁ := pullback.fst f₁ f₂
   p₂ := pullback.snd f₁ f₂
   condition := pullback.condition
-  isLimit := pullback.isLimit f₁ f₂
+  isLimit := PullbackCone.mkSelfIsLimit (pullback.isLimit f₁ f₂)
 
 /-- Canonical threefold overlap choices built from nested pullbacks. -/
 noncomputable def chapter08ChosenPullback₃
@@ -106,23 +111,14 @@ noncomputable def chapter08ChosenPullback₃
   let h₂₃ := chapter08ChosenPullback f₂ f₃
   let h₁₃ := chapter08ChosenPullback f₁ f₃
   let h₂ := chapter08ChosenPullback h₁₂.p₂ h₂₃.p₁
-  refine { chosenPullback := h₂
-    p := h₂.p₁ ≫ h₁₂.p
-    p₁ := h₂.p₁ ≫ h₁₂.p₁
-    p₃ := h₂.p₂ ≫ h₂₃.p₂
-    l := ?_ }
-  refine ⟨h₁₃.isPullback.lift (h₂.p₁ ≫ h₁₂.p₁) (h₂.p₂ ≫ h₂₃.p₂) ?_, ?_, ?_, ?_⟩
-    · sorry
-    · sorry
-    · sorry
-    · sorry
+  refine { chosenPullback := h₂, p := h₂.p₁ ≫ h₁₂.p, p₁ := h₂.p₁ ≫ h₁₂.p₁, p₃ := h₂.p₂ ≫ h₂₃.p₂, l := { f := h₁₃.isPullback.lift (h₂.p₁ ≫ h₁₂.p₁) (h₂.p₂ ≫ h₂₃.p₂) (by rw [Category.assoc, Category.assoc, h₁₂.condition, h₂.condition_assoc, h₂₃.condition]), f_p₁ := by apply h₁₃.isPullback.lift_fst, f_p₂ := by apply h₁₃.isPullback.lift_snd, f_p := by rw [← h₁₃.hp₁, ← Category.assoc, h₁₃.isPullback.lift_fst, Category.assoc, h₁₂.hp₁] }, hp₁ := by rfl, hp₃ := by rfl }
 
 /-- The canonical pseudofunctor sending a scheme to its category of module
 sheaves and a scheme map to pullback.  It is obtained from Mathlib's
 adjunction-valued pseudofunctor by forgetting the right adjoints. -/
 noncomputable def chapter08ModulesPseudofunctor :
     Pseudofunctor (LocallyDiscrete Scheme.{u}ᵒᵖ) Cat :=
-  (Bicategory.Adj.forget₁).comp AlgebraicGeometry.Scheme.Modules.pseudofunctor
+  AlgebraicGeometry.Scheme.Modules.pseudofunctor.comp (Bicategory.Adj.forget₁)
 
 /-- Choices of pairwise and triple overlaps for a family over a common base. -/
 structure Chapter08PullbackChoices {S : Scheme.{u}} {ι : Type*}
@@ -140,13 +136,45 @@ abbrev Chapter08ModuleDescentData {S : Scheme.{u}} {ι : Type*}
 abbrev Chapter08QuasiCoherentModules (S : Scheme.{u}) :=
   (SheafOfModules.isQuasicoherent S.ringCatSheaf).FullSubcategory
 
+/-- Pullback of a quasi-coherent module along an arbitrary scheme morphism is
+quasi-coherent.  The pinned Mathlib snapshot exposes the affine and open
+immersion cases, but not this general scheme-level bridge. -/
+theorem chapter08_pullback_is_quasicoherent
+    {X S : Scheme.{u}} (f : X ⟶ S)
+    (M : Chapter08QuasiCoherentModules S) :
+    ((Scheme.Modules.pullback f).obj M.obj).IsQuasicoherent := by
+  sorry
+
 /-- The full subcategory of descent data whose local modules are
 quasi-coherent. -/
 abbrev Chapter08QuasiCoherentModuleDescentData
     {S : Scheme.{u}} {ι : Type*} {X : ι → Scheme.{u}}
     {f : ∀ i, X i ⟶ S} (choices : Chapter08PullbackChoices X f) :=
-  (fun D : Chapter08ModuleDescentData choices =>
-    ∀ i, (D.obj i).IsQuasicoherent).FullSubcategory
+  ObjectProperty.FullSubcategory (fun D : Chapter08ModuleDescentData choices =>
+    ∀ i, SheafOfModules.isQuasicoherent (X i).ringCatSheaf
+      (show (X i).Modules from D.obj i))
+
+/-- The canonical quasi-coherent descent datum obtained by pulling a global
+module sheaf back to every member of a chosen cover.  Keeping this datum
+explicit is useful when a gluing comparison must be compatible with the
+overlap maps, rather than merely giving unrelated local isomorphisms. -/
+noncomputable def chapter08CanonicalQuasiCoherentDescentData
+    {S : Scheme.{u}} {ι : Type*} {X : ι → Scheme.{u}}
+    {f : ∀ i, X i ⟶ S} (choices : Chapter08PullbackChoices X f)
+    (M : Chapter08QuasiCoherentModules S) :
+    Chapter08QuasiCoherentModuleDescentData choices := by
+  sorry
+
+/-- The local component of the canonical datum is the pullback module, up to
+the canonical comparison supplied by its construction. -/
+theorem chapter08_canonical_quasiCoherent_descent_component
+    {S : Scheme.{u}} {ι : Type*} {X : ι → Scheme.{u}}
+    {f : ∀ i, X i ⟶ S} (choices : Chapter08PullbackChoices X f)
+    (M : Chapter08QuasiCoherentModules S) (i : ι) :
+    Nonempty
+      ((chapter08CanonicalQuasiCoherentDescentData choices M).obj.obj i ≅
+        (Scheme.Modules.pullback (f i)).obj M.obj) := by
+  sorry
 
 /-- The single-cover overlap choices used for the displayed `p₁^*` and
 `p₂^*` comparison in the chapter. -/
@@ -169,12 +197,12 @@ noncomputable def chapter08DescentTheta
   asIso (D.hom () ())
 
 /-- The unit part of the descent condition. -/
-def chapter08DescentUnitCondition
+abbrev chapter08DescentUnitCondition
     {T S : Scheme.{u}} {p : T ⟶ S} (D : Chapter08SingleCoverDescentData p) :=
   D.pullHom'_hom_self ()
 
 /-- The triple-overlap cocycle supplied by `DescentData'`. -/
-def chapter08DescentCocycleCondition
+abbrev chapter08DescentCocycleCondition
     {T S : Scheme.{u}} {p : T ⟶ S} (D : Chapter08SingleCoverDescentData p) :=
   D.pullHom'_hom_comp () () ()
 
@@ -184,7 +212,8 @@ theorem chapter08_descent_hom_ext
     {T S : Scheme.{u}} {p : T ⟶ S}
     {D E : Chapter08SingleCoverDescentData p} {φ ψ : D ⟶ E}
     (h : φ.hom () = ψ.hom ()) : φ = ψ := by
-  sorry
+  apply Pseudofunctor.DescentData'.hom_ext
+  exact fun i => by cases i; exact h
 
 /-!
 ## Affine interfaces
@@ -205,17 +234,19 @@ structure Chapter08FiniteAffineRefinement
   affine : ∀ i, IsAffine (source i)
   flat : ∀ i, Flat (map i)
   quasiCompact : ∀ i, QuasiCompact (map i)
-  coordinateRing : ∀ i, CommRingCat.{u}
-  source_isSpec : ∀ i, Nonempty (source i ≅ Scheme.Spec (coordinateRing i))
-  jointlySurjective : ∀ x : pullback U.ι p, ∃ (i : index) (y : source i), map i y = x
+  isOpenImmersion : ∀ i, IsOpenImmersion (map i)
+  coordinateRing : index → CommRingCat.{u}
+  source_isSpec : ∀ i, Nonempty (source i ≅ Spec (coordinateRing i))
+  jointlySurjective : ∀ x : (pullback U.ι p : Scheme.{u}),
+    ∃ (i : index) (y : source i), map i y = x
 
 /-- The product ring used to combine a finite affine refinement. -/
-def chapter08ProductRing {ι : Type*} (B : ι → CommRingCat.{u}) : CommRingCat.{u} :=
+def chapter08ProductRing {ι : Type u} (B : ι → CommRingCat.{u}) : CommRingCat.{u} :=
   CommRingCat.of (∀ i, B i)
 
 /-- A faithfully flat product algebra `A ⟶ ∏ Bᵢ`. -/
 structure Chapter08FaithfullyFlatProductAlgebra
-    (A : CommRingCat.{u}) {ι : Type*} (B : ι → CommRingCat.{u}) where
+    (A : CommRingCat.{u}) {ι : Type u} (B : ι → CommRingCat.{u}) where
   finite : Finite ι
   algebraMap : A ⟶ chapter08ProductRing B
   faithfullyFlat : algebraMap.hom.FaithfullyFlat
@@ -224,34 +255,55 @@ structure Chapter08FaithfullyFlatProductAlgebra
 module descent datum produces an `A`-module whose product-base-change is the
 module upstairs. -/
 structure Chapter08AffineModuleDescentWitness
-    (A : CommRingCat.{u}) {ι : Type*} (B : ι → CommRingCat.{u})
+    (A : CommRingCat.{u}) {ι : Type u} (B : ι → CommRingCat.{u})
     (P : Chapter08FaithfullyFlatProductAlgebra A B) where
   descended : ModuleCat A
   upstairs : ModuleCat (chapter08ProductRing B)
-  comparison :
-    (ModuleCat.extendScalars P.algebraMap.hom).obj descended ≅ upstairs
+  descent :
+    Chapter08SingleCoverQuasiCoherentDescentData
+      (Spec.map P.algebraMap)
+  upstairsComparison :
+    Nonempty (tilde upstairs ≅ (descent.obj).obj ())
+  descendedComparison :
+    Nonempty
+      (chapter08CanonicalQuasiCoherentDescentData
+          (chapter08SingleCoverChoices
+            (Spec.map P.algebraMap))
+          ⟨tilde descended, inferInstance⟩ ≅ descent)
+
+/- The module comparison is a consequence of the two compatible affine tilde
+   comparisons, rather than independent data.  Keeping it as a derived
+   interface prevents an arbitrary isomorphism from being mistaken for the
+   comparison supplied by descent. -/
+theorem chapter08_affine_module_descent_comparison
+    {A : CommRingCat.{u}} {ι : Type u} {B : ι → CommRingCat.{u}}
+    {P : Chapter08FaithfullyFlatProductAlgebra A B}
+    (W : Chapter08AffineModuleDescentWitness A B P) :
+    Nonempty ((ModuleCat.extendScalars P.algebraMap.hom).obj W.descended ≅ W.upstairs) := by
+  sorry
 
 /-- Pinned Mathlib's algebraic input for affine descent. -/
-theorem chapter08_affine_extension_is_comonadic
+@[instance_reducible]
+noncomputable def chapter08_affine_extension_is_comonadic
     {A B : Type u} [CommRing A] [CommRing B] (f : A →+* B)
     (hf : f.FaithfullyFlat) :
     ComonadicLeftAdjoint (ModuleCat.extendScalars f) :=
-  ModuleCat.comonadicExtendScalars hf
+  comonadicExtendScalars hf
 
 /-- The sheaf associated to an affine module by the canonical tilde
 construction. -/
 def chapter08AffineSheafOfModule {R : CommRingCat.{u}} (M : ModuleCat R) :
-    (Scheme.Spec R).Modules :=
-  Scheme.Modules.tilde M
+    (Spec R).Modules :=
+  tilde M
 
 /-- The affine tilde equivalence, used to identify the descended module on an
 affine with its quasi-coherent sheaf. -/
 noncomputable def chapter08AffineQuasiCoherentEquivalence (R : CommRingCat.{u}) :
-    ModuleCat R ≌ Chapter08QuasiCoherentModules (Scheme.Spec R) :=
-  Scheme.Modules.tildeEquiv R
+    ModuleCat R ≌ Chapter08QuasiCoherentModules (Spec R) :=
+  tildeEquiv (R := R)
 
 /-- The basic open `D(f)` on an affine scheme. -/
-def chapter08AffineBasicOpen {R : CommRingCat.{u}} (f : R) : (Scheme.Spec R).Opens :=
+def chapter08AffineBasicOpen {R : CommRingCat.{u}} (f : R) : (Spec R).Opens :=
   PrimeSpectrum.basicOpen f
 
 /-- The module-theoretic localization appearing as restriction to `D(f)`. -/
@@ -274,13 +326,35 @@ def chapter08AffineRestrictionComparison.canonical
   restricted := chapter08LocalizedModule M f
   comparison := Iso.refl _
 
-/- A finite affine open cover written directly as maps from affine schemes. -/
+/-- The actual sheaf restriction of an affine tilde module to `D(f)`, together
+with the affine chart identifying it with the localized module.  The older
+module-only comparison above is only a normalization; this interface records
+the geometric restriction used in the affine-local construction. -/
+structure Chapter08AffineRestrictionSheafComparison
+    {R : CommRingCat.{u}} (M : ModuleCat R) (f : R) where
+  localizationIso : (chapter08AffineBasicOpen f).toScheme ≅
+    Spec (CommRingCat.of (Localization.Away f))
+  comparison :
+    (Scheme.Modules.pullback (chapter08AffineBasicOpen f).ι).obj
+        (chapter08AffineSheafOfModule M) ≅
+      (Scheme.Modules.pullback localizationIso.hom).obj
+        (chapter08AffineSheafOfModule
+          (chapter08LocalizedModule M f))
+
+/-- The standard affine restriction/localization comparison. -/
+theorem chapter08_affine_restriction_sheaf_comparison
+    {R : CommRingCat.{u}} (M : ModuleCat R) (f : R) :
+    Nonempty (Chapter08AffineRestrictionSheafComparison M f) := by
+  sorry
+
+/- An affine open cover written directly as maps from affine schemes. -/
 structure Chapter08AffineOpenCover (S : Scheme.{u}) where
   index : Type u
+  finite : Finite index
   coordinateRing : index → CommRingCat.{u}
-  map : ∀ i, Scheme.Spec (coordinateRing i) ⟶ S
+  map : ∀ i, Spec (coordinateRing i) ⟶ S
   isOpenImmersion : ∀ i, IsOpenImmersion (map i)
-  jointlySurjective : ∀ s : S, ∃ (i : index) (x : Scheme.Spec (coordinateRing i)), map i x = s
+  jointlySurjective : ∀ s : S, ∃ (i : index) (x : Spec (coordinateRing i)), map i x = s
 
 end
 end Chapter08

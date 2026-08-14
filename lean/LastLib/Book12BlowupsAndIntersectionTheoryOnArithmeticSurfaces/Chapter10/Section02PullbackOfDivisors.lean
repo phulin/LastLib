@@ -5,6 +5,8 @@ namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter
 noncomputable section
 
 open AlgebraicGeometry CategoryTheory Limits Set TopologicalSpace
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09
+open LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter11
 open scoped AlgebraicGeometry BigOperators
 
 universe u

@@ -1,4 +1,5 @@
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.Section03UniformizersAndMinimalPolynomials
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.Section01TheMeaningOfTotalRamification
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section07UnramifiedAndTotallyRamifiedEndpoints
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter03.Section06ResiduesAndLeadingCoefficients
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08
@@ -90,31 +91,49 @@ theorem chapter08_padic_radical_extension
     (α : L)
     (hroot : aeval α (chapter08PadicRadicalPolynomial p n) = 0)
     (hgen : Algebra.adjoin (ℚ_[p]) ({α} : Set L) = ⊤)
-    (_hdegree : Module.finrank (ℚ_[p]) L = n) :
-    ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
-      q.degree = n ∧ q.ramificationIndex = n ∧ q.residueDegree = 1 ∧
-        LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10TotallyRamified q ∧
-        (integralClosure (ℤ_[p]) L : Set L) =
-          (Algebra.adjoin (ℤ_[p]) ({α} : Set L) : Set L) := by
-  let q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile :=
-    { degree := n, ramificationIndex := n, residueDegree := 1 }
-  have hroot' :
-      aeval α (chapter08PadicIntegralRadicalPolynomial p n) = 0 := by
-    simpa [chapter08PadicRadicalPolynomial] using hroot
-  have hdegree' :
-      (chapter08PadicIntegralRadicalPolynomial p n).natDegree = n := by
-    rw [chapter08PadicIntegralRadicalPolynomial, chapter08RadicalPolynomial,
-      natDegree_X_pow_sub_C]
-  have hclosure :
-      (integralClosure (ℤ_[p]) L : Set L) =
-        (Algebra.adjoin (ℤ_[p]) ({α} : Set L) : Set L) :=
-    LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.eisenstein_integral_closure_is_root_order
-      (p : ℤ_[p]) (chapter08PadicIntegralRadicalPolynomial p n) α
-      (chapter08_padic_radical_polynomial_is_eisenstein p n hn)
-      hroot' hdegree' hgen
-  refine ⟨q, rfl, rfl, rfl, ?_, hclosure⟩
-  change q.ramificationIndex = q.degree ∧ q.residueDegree = 1
-  exact ⟨rfl, rfl⟩
+    (hdegree : Module.finrank (ℚ_[p]) L = n)
+    (vL : AddValuation L (WithTop ℤ))
+    (hvL : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vL)
+    (hext : (Padic.addValuation (p := p)).IsEquiv
+      (vL.comap (algebraMap (ℚ_[p]) L))) :
+    ∃ d : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10HeterogeneousExtensionData
+        (Padic.addValuation (p := p)) vL hext,
+      ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
+        LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ProfileRealizedByData d q ∧
+          q.degree = n ∧ q.ramificationIndex = n ∧ q.residueDegree = 1 ∧
+          LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10TotallyRamified q ∧
+          (integralClosure (ℤ_[p]) L : Set L) =
+            (Algebra.adjoin (ℤ_[p]) ({α} : Set L) : Set L) := by
+  let P : (ℤ_[p])[X] := chapter08PadicIntegralRadicalPolynomial p n
+  have hE0 := chapter08_padic_radical_polynomial_is_eisenstein p n hn
+  have hE :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10EisensteinAtUniformizer
+        P (p : ℤ_[p]) := by
+    rcases hE0 with ⟨hmonic, hdegree, hcoeff, hconstant, hspan⟩
+    refine ⟨hmonic, Nat.ne_of_gt hdegree, ?_, ?_⟩
+    · intro i hi
+      apply Ideal.mem_span_singleton.mp
+      exact hcoeff i (by simpa [P, chapter08PadicIntegralRadicalPolynomial] using hi)
+    · intro hdiv
+      apply hconstant
+      exact Ideal.mem_span_singleton.mpr hdiv
+  have hPdegree : P.natDegree = n := by
+    dsimp [P, chapter08PadicIntegralRadicalPolynomial, chapter08RadicalPolynomial]
+    rw [natDegree_X_pow_sub_C]
+  have hdegree' : Module.finrank (ℚ_[p]) L = P.natDegree :=
+    hdegree.trans hPdegree.symm
+  have hroot' : Polynomial.eval₂ (algebraMap (ℤ_[p]) L) α P = 0 := by
+    simpa [P, chapter08PadicRadicalPolynomial, Polynomial.aeval_def,
+      Polynomial.eval₂_map, IsScalarTower.algebraMap_eq (ℤ_[p]) (ℚ_[p]) L] using hroot
+  obtain ⟨d, q, hd, hqdeg, hqram, hqres, hqtotal⟩ :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_padic_eisenstein_profile
+      P α hE hroot' hgen hdegree' vL hvL hext
+  have hclosure : (integralClosure (ℤ_[p]) L : Set L) =
+      (Algebra.adjoin (ℤ_[p]) ({α} : Set L) : Set L) := by
+    exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.eisenstein_integral_closure_is_root_order
+      (p : ℤ_[p]) P α hE0 hroot' rfl hgen
+  exact ⟨d, q, hd, hqdeg.trans hPdegree, hqram.trans hPdegree,
+    hqres, hqtotal, hclosure⟩
 
 /-- The equal-characteristic radical polynomial over `k((t))`. -/
 def chapter08LaurentRadicalPolynomial

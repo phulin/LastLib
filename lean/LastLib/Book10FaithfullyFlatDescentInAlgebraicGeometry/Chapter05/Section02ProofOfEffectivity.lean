@@ -69,6 +69,20 @@ noncomputable def splitCover_effectiveIso (s : D →ₐ[C] C) (Q : DescentDatum 
   LinearEquiv.toModuleIso
     (LinearEquiv.ofBijective (splitEvaluation s Q).hom (splitCover_effective s Q))
 
+/- The split-cover calculation identifies the evaluation map itself with a morphism of descent
+data; retaining this equation is stronger and more useful than only asserting existence of some
+isomorphism of underlying modules. -/
+theorem splitEvaluation_compatible_with_descent_data (s : D →ₐ[C] C) (Q : DescentDatum C D) :
+    ((descentComparison C D).obj (splitInvariant s Q)).a ≫
+        (descentComonad C D).map (splitEvaluation s Q) =
+      splitEvaluation s Q ≫ Q.a := by
+  sorry
+
+theorem splitEvaluation_is_underlying_descent_iso (s : D →ₐ[C] C) (Q : DescentDatum C D) :
+    ∃ e : ((descentComparison C D).obj (splitInvariant s Q)) ≅ Q,
+      e.hom.f = splitEvaluation s Q := by
+  sorry
+
 @[simp]
 theorem splitCover_effectiveIso_hom_inv (s : D →ₐ[C] C) (Q : DescentDatum C D) :
     (splitCover_effectiveIso s Q).hom ≫ (splitCover_effectiveIso s Q).inv = 𝟙 _ :=
@@ -82,7 +96,7 @@ theorem splitCover_effectiveIso_inv_hom (s : D →ₐ[C] C) (Q : DescentDatum C 
 theorem splitCover_invariant_is_canonically_effective (s : D →ₐ[C] C) (Q : DescentDatum C D) :
     Nonempty
       (((descentComparison C D).obj (splitInvariant s Q)) ≅ Q) := by
-  sorry
+  exact ⟨(splitEvaluation_is_underlying_descent_iso s Q).choose⟩
 
 end SplitCover
 
@@ -100,6 +114,20 @@ theorem evaluationMap_bijective_of_instance [Module.FaithfullyFlat A B]
   apply evaluationMap_bijective_of_faithfullyFlat
   exact RingHom.faithfullyFlat_algebraMap_iff.mpr inferInstance
 
+/- The invariant equalizer does not merely produce an abstract descended object: its canonical
+evaluation map is the comparison morphism carrying the canonical datum to `D`. -/
+theorem evaluationMap_compatible_with_descent_data (D : DescentDatum A B) :
+    ((descentComparison A B).obj (invariantModuleCat D)).a ≫
+        (descentComonad A B).map (evaluationMap D) =
+      evaluationMap D ≫ D.a := by
+  sorry
+
+theorem evaluationMap_is_underlying_descent_iso
+    (hAB : RingHom.FaithfullyFlat (algebraMap A B)) (D : DescentDatum A B) :
+    ∃ e : ((descentComparison A B).obj (invariantModuleCat D)) ≅ D,
+      e.hom.f = evaluationMap D := by
+  sorry
+
 noncomputable def evaluationIso_of_faithfullyFlat
     (hAB : RingHom.FaithfullyFlat (algebraMap A B)) (D : DescentDatum A B) :
     invariantExtension D ≅ D.A :=
@@ -109,7 +137,7 @@ noncomputable def evaluationIso_of_faithfullyFlat
 theorem evaluationIso_respects_canonical_descent_data
     (hAB : RingHom.FaithfullyFlat (algebraMap A B)) (D : DescentDatum A B) :
     Nonempty (((descentComparison A B).obj (invariantModuleCat D)) ≅ D) := by
-  sorry
+  exact ⟨(evaluationMap_is_underlying_descent_iso hAB D).choose⟩
 
 theorem faithfullyFlat_module_descent_essential_surjective
     (hAB : RingHom.FaithfullyFlat (algebraMap A B)) (D : DescentDatum A B) :
@@ -128,14 +156,29 @@ theorem invariant_amitsur_exact (D : DescentDatum A B) :
       (invariantModule D).subtype
       (((ModuleCat.restrictScalars (algebraMap A B)).map D.a).hom -
         (canonicalCechMap (A := A) (B := B) D.A).hom) := by
-  sorry
+  intro n
+  constructor
+  · intro hn
+    refine ⟨⟨n, ?_⟩, rfl⟩
+    exact (mem_invariantModule_iff D n).2 (sub_eq_zero.mp hn)
+  · rintro ⟨m, rfl⟩
+    rw [LinearMap.sub_apply]
+    change
+      ((ModuleCat.restrictScalars (algebraMap A B)).map D.a).hom m.1 -
+          (canonicalCechMap (A := A) (B := B) D.A).hom m.1 = 0
+    rw [sub_eq_zero]
+    exact (mem_invariantModule_iff D m.1).1 m.property
+
+theorem invariant_amitsur_subtype_injective (D : DescentDatum A B) :
+    Function.Injective (invariantModule D).subtype := by
+  exact (invariantModule D).subtype_injective
 
 theorem invariant_amitsur_equalizer (D : DescentDatum A B) :
     LinearMap.range (invariantModule D).subtype =
       LinearMap.ker
         (((ModuleCat.restrictScalars (algebraMap A B)).map D.a).hom -
           (canonicalCechMap (A := A) (B := B) D.A).hom) := by
-  sorry
+  exact (invariant_amitsur_exact D).linearMap_ker_eq.symm
 
 theorem flat_base_change_preserves_invariant_equalizer
     [Module.Flat A B] (D : DescentDatum A B) :
@@ -144,7 +187,8 @@ theorem flat_base_change_preserves_invariant_equalizer
       LinearMap.eqLocus
         (((ModuleCat.restrictScalars (algebraMap A B)).map D.a).hom.lTensor B)
         ((canonicalCechMap (A := A) (B := B) D.A).hom.lTensor B) := by
-  sorry
+  rw [LinearMap.eqLocus_eq_ker_sub, ← LinearMap.lTensor_sub]
+  exact (Module.Flat.lTensor_exact B (invariant_amitsur_exact D)).linearMap_ker_eq.symm
 
 theorem faithful_flatness_reflects_invariant_equalizer
     [Module.FaithfullyFlat A B] (D : DescentDatum A B) :

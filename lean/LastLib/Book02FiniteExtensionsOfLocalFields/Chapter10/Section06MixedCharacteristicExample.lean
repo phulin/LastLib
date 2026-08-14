@@ -1,4 +1,4 @@
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Section05EqualCharacteristicExample
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Dependencies
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10
 

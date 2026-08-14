@@ -1,7 +1,7 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Section04HenselianLocalRings
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section04RamificationIndexAndResidueDegree
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section05UniqueExtensionAndHenselianity
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section06TheValuationRingInAFiniteCompleteExtension
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01
 
@@ -41,6 +41,7 @@ abbrev chapter01ResidueField {K Γ : Type*} [Field K]
 def chapter01CompleteDiscreteValuation (K : Type*) [Field K]
     (v : Valuation K ℤᵐ⁰) : Prop :=
   Valuation.IsRankOneDiscrete v ∧
+    (∃ π : K, π ≠ 0 ∧ v π = WithZero.exp (-1 : ℤ)) ∧
     IsAdicComplete (chapter01MaximalIdeal v) (chapter01ValuationRing v)
 
 /-- A uniformizer in the valuation ring, expressed by its maximal-ideal equation. -/

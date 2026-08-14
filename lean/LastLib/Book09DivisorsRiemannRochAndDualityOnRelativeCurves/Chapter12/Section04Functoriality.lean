@@ -6,6 +6,7 @@ namespace LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter12
 noncomputable section
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
 
 /-! ### 12.4 Functoriality -/
 
@@ -57,7 +58,7 @@ theorem chapter12_smooth_generically_separable_trace_comparison
     (hseparable : R.genericallySeparable)
     (η : R.rationalDifferentialY) :
     R.traceCompatibility η (R.rationalTrace η) := by
-  exact R.rationalTrace_is_sheafTrace η
+  exact R.traceCompatibility_holds hsource htarget hseparable η
 
 /-- Pullback of functions and trace of differentials are adjoint for the
 residue pairing. -/
@@ -68,14 +69,37 @@ theorem chapter12_finite_map_residue_pairing_adjoint
     (α : R.rationalFunctionX) (η : R.rationalDifferentialY) :
     R.pairingY (R.pullbackFunction α) η =
       R.pairingX α (R.traceDifferential η) := by
-  exact R.adjoint α η
+  exact R.pairing_adjoint α η
 
 /-! The next record makes the phrase “transpose on cohomology” an explicit
 pair of linear maps and gives the evaluation equations that characterize both
 transposes. -/
+def chapter12VectorBundleOmegaDualizedMap
+    {k : Type u} [Field k] {C : Chapter12Curve k}
+    [Chapter12VectorBundleDuality C]
+    {K : Chapter12CohomologyContext C}
+    (W : Chapter12DualizingSheafData C K)
+    {E F : Chapter12VectorBundle C}
+    (φ : Chapter12DualizedVectorBundleMap E F)
+    [Chapter12TensorTheory C.scheme] :
+    chapter12VectorBundleOmegaTwist W F ⟶ chapter12VectorBundleOmegaTwist W E :=
+  let hF :
+    (Chapter12VectorBundleDuality.canonicalDualTensor F W.omega).tensor =
+        chapter04Tensor (chapter12VectorBundleDual F).module W.omega :=
+    congrArg (fun M => chapter04Tensor M W.omega)
+      (Chapter12VectorBundleDuality.canonicalDualTensor_dual F W.omega)
+  let hE :
+    (Chapter12VectorBundleDuality.canonicalDualTensor E W.omega).tensor =
+        chapter04Tensor (chapter12VectorBundleDual E).module W.omega :=
+    congrArg (fun M => chapter04Tensor M W.omega)
+      (Chapter12VectorBundleDuality.canonicalDualTensor_dual E W.omega)
+  eqToHom hF ≫ Chapter12TensorTheory.map φ.dualizedTwistMap (𝟙 W.omega) ≫
+    eqToHom hE.symm
+
 structure Chapter12VectorBundleCohomologyTranspose
     {k : Type u} [Field k] {C : Chapter12Curve k}
     [Chapter12VectorBundleDuality C]
+    [Chapter12TensorTheory C.scheme]
     (K : Chapter12CohomologyContext C)
     (W : Chapter12DualizingSheafData C K)
     (E F : Chapter12VectorBundle C)
@@ -98,6 +122,12 @@ structure Chapter12VectorBundleCohomologyTranspose
   transposeOne_apply : ∀ x y,
     (DF.degreeOne.symm y) (mapOne x) =
       (DE.degreeOne.symm (transposeOne y)) x
+  transposeZero_eq_dualized_cohomologyMap :
+    transposeZero = chapter12CohomologyMap K
+      (chapter12VectorBundleOmegaDualizedMap W φ) 1
+  transposeOne_eq_dualized_cohomologyMap :
+    transposeOne = chapter12CohomologyMap K
+      (chapter12VectorBundleOmegaDualizedMap W φ) 0
 
 theorem chapter12_vector_bundle_map_has_transpose
     {k : Type u} [Field k] {C : Chapter12Curve k}
@@ -107,7 +137,8 @@ theorem chapter12_vector_bundle_map_has_transpose
     (E F : Chapter12VectorBundle C)
     (φ : Chapter12DualizedVectorBundleMap E F)
     (DE : Chapter12VectorBundleDualityFamily K W E)
-    (DF : Chapter12VectorBundleDualityFamily K W F) :
+    (DF : Chapter12VectorBundleDualityFamily K W F)
+    [Chapter12TensorTheory C.scheme] :
     Nonempty (Chapter12VectorBundleCohomologyTranspose K W E F φ DE DF) := by
   sorry
 

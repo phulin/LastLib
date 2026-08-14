@@ -10,14 +10,12 @@ noncomputable section
 
 /-! ### 3.1 The algebraic construction -/
 
-/- SOURCE_ISSUE:
-  The sentence that the direct sum "excludes the family whose component is 1
-  everywhere, and therefore has no multiplicative identity" is false for the
-  usual direct sum: the all-identity family has empty support and is included.
-  The intended defect is that the direct sum excludes families with infinitely
-  many non-identity coordinates.  In additive notation, use a nonzero
-  constant family for the counterexample and do not attribute a multiplicative
-  identity to the additive direct sum.
+/-!
+The book's direct-sum warning is read additively: finite support is measured
+away from `0`, so the zero family is included while a constant family of
+nonzero elements is excluded when the index set is infinite.  This is distinct
+from a multiplicative direct sum, whose support is measured away from `1` and
+which therefore contains its all-identity family.
 -/
 
 universe u v

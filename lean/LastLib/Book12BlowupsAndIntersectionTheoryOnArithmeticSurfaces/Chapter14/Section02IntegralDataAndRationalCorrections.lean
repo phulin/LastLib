@@ -1,3 +1,4 @@
+import Mathlib.LinearAlgebra.Basis.Defs
 import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter14.Section01SolvingTheBalancingEquations
 
 /-!
@@ -153,11 +154,11 @@ theorem chapter14IntegralMatrixQuotientMap_factorization
 
 abbrev Chapter14IntegralMatrixCokernel {r : ℕ} (F : Chapter14FiberMatrix r) :=
   (chapter14IntegralDegreeZeroLattice F) ⧸
-    Submodule.range (chapter14IntegralMatrixQuotientMap F).map
+    LinearMap.range (chapter14IntegralMatrixQuotientMap F).map
 
 def chapter14FreeAbelianRank (A : Type*) [AddCommGroup A]
     [Module ℤ A] (n : ℕ) : Prop :=
-  Nonempty (Basis (Fin n) ℤ A)
+  Nonempty (Module.Basis (Fin n) ℤ A)
 
 theorem chapter14_integral_matrix_quotient_source_free_rank
     {r : ℕ} (F : Chapter14FiberMatrix r) :
@@ -193,7 +194,7 @@ def chapter14RationalDegreeZeroLattice {r : ℕ} (F : Chapter14FiberMatrix r) :
 structure Chapter14RationalizedMatrixEquivalence
     {r : ℕ} (F : Chapter14FiberMatrix r) where
   equivalence :
-    (Chapter14RationalVector r) ⧸ chapter14RationalKernelSubmodule F ≃ₗ[ℚ]
+    ((Chapter14RationalVector r) ⧸ chapter14RationalKernelSubmodule F) ≃ₗ[ℚ]
       chapter14RationalDegreeZeroLattice F
   factorization : ∀ v,
     equivalence (Submodule.mkQ (chapter14RationalKernelSubmodule F) v) =
@@ -211,7 +212,7 @@ noncomputable def chapter14RationalizedMatrixEquivalence
 
 theorem chapter14_rationalized_matrix_map_isomorphism
     {r : ℕ} (F : Chapter14FiberMatrix r) :
-    Nonempty ((Chapter14RationalVector r) ⧸ chapter14RationalKernelSubmodule F ≃ₗ[ℚ]
+    Nonempty (((Chapter14RationalVector r) ⧸ chapter14RationalKernelSubmodule F) ≃ₗ[ℚ]
       chapter14RationalDegreeZeroLattice F) := by
   exact ⟨(chapter14RationalizedMatrixEquivalence F).equivalence⟩
 
@@ -221,6 +222,23 @@ noncomputable def chapter14PrincipalCofactor {r : ℕ}
     (F : Chapter14FiberMatrix r) (i₀ : Fin r) : ℤ := by
   classical
   exact Matrix.det (F.matrix.submatrix
+    (fun i : {j : Fin r // j ≠ i₀} => i.1)
+    (fun j : {j : Fin r // j ≠ i₀} => j.1))
+
+/-!
+For a non-primitive fiber the graph Laplacian is naturally expressed after
+rescaling the component basis by the multiplicities.  Its off-diagonal
+conductances are the products `mᵢ mⱼ Mᵢⱼ`; using this normalized matrix keeps
+the spanning-tree certificate valid when the multiplicities are not all one.
+-/
+def chapter14MultiplicityNormalizedMatrix {r : ℕ}
+    (F : Chapter14FiberMatrix r) : Matrix (Fin r) (Fin r) ℤ :=
+  fun i j => F.multiplicity i * F.matrix i j * F.multiplicity j
+
+noncomputable def chapter14MultiplicityNormalizedPrincipalCofactor {r : ℕ}
+    (F : Chapter14FiberMatrix r) (i₀ : Fin r) : ℤ := by
+  classical
+  exact Matrix.det ((chapter14MultiplicityNormalizedMatrix F).submatrix
     (fun i : {j : Fin r // j ≠ i₀} => i.1)
     (fun j : {j : Fin r // j ≠ i₀} => j.1))
 
@@ -235,13 +253,15 @@ theorem chapter14_nonzero_principal_cofactor_exists
 
 theorem chapter14_denominators_are_controlled_by_a_cofactor
     {r : ℕ} (F : Chapter14FiberMatrix r)
-    (d : Chapter14RationalVector r)
-    (hd : chapter14RationalCompatibility F d)
+    (d : Chapter14IntegralVector r)
+    (i₀ : Fin r)
+    (hi₀ : chapter14PrincipalCofactor F i₀ ≠ 0)
     (v : Chapter14RationalVector r)
-    (hv : chapter14MatrixVec (chapter14FiberRationalMatrix F) v = -d) :
-    ∃ i₀, chapter14PrincipalCofactor F i₀ ≠ 0 ∧
-      chapter14IntegralMultipleOfRationalVector
-        (Int.natAbs (chapter14PrincipalCofactor F i₀)) v := by
+    (hnormal : v i₀ = 0)
+    (hv : chapter14MatrixVec (chapter14FiberRationalMatrix F) v =
+      -(fun i => (d i : ℚ))) :
+    chapter14IntegralMultipleOfRationalVector
+      (Int.natAbs (chapter14PrincipalCofactor F i₀)) v := by
   sorry
 
 /- The spanning-tree reformulation is restricted to the graph-Laplacian
@@ -259,10 +279,40 @@ theorem chapter14_graph_laplacian_tree_determinant_controls_denominators
     {r : ℕ} (F : Chapter14FiberMatrix r)
     (C : Chapter14WeightedGraphLaplacianCertificate F)
     (hdet : C.weighted_spanning_tree_determinant ≠ 0)
-    (d : Chapter14RationalVector r)
-    (hd : chapter14RationalCompatibility F d)
+    (d : Chapter14IntegralVector r)
     (v : Chapter14RationalVector r)
-    (hv : chapter14MatrixVec (chapter14FiberRationalMatrix F) v = -d) :
+    (i₀ : Fin r)
+    (hnormal : v i₀ = 0)
+    (hv : chapter14MatrixVec (chapter14FiberRationalMatrix F) v =
+      -(fun i => (d i : ℚ))) :
+    chapter14IntegralMultipleOfRationalVector
+      (Int.natAbs C.weighted_spanning_tree_determinant) v := by
+  sorry
+
+/-!
+The ordinary certificate above identifies the cofactors of `F.matrix` with a
+single tree determinant.  The normalized certificate is the corresponding
+statement for `chapter14MultiplicityNormalizedMatrix`; it is the form supplied
+by the multiplicity-weighted Laplacian identity.
+-/
+structure Chapter14MultiplicityNormalizedWeightedGraphLaplacianCertificate
+    {r : ℕ} (F : Chapter14FiberMatrix r) where
+  is_graph_laplacian : Prop
+  weighted_spanning_tree_determinant : ℤ
+  matrix_tree_identity :
+    ∀ i₀, chapter14MultiplicityNormalizedPrincipalCofactor F i₀ =
+      weighted_spanning_tree_determinant
+
+theorem chapter14_multiplicity_normalized_tree_determinant_controls_denominators
+    {r : ℕ} (F : Chapter14FiberMatrix r)
+    (C : Chapter14MultiplicityNormalizedWeightedGraphLaplacianCertificate F)
+    (hdet : C.weighted_spanning_tree_determinant ≠ 0)
+    (d : Chapter14IntegralVector r)
+    (v : Chapter14RationalVector r)
+    (i₀ : Fin r)
+    (hnormal : v i₀ = 0)
+    (hv : chapter14MatrixVec (chapter14FiberRationalMatrix F) v =
+      -(fun i => (d i : ℚ))) :
     chapter14IntegralMultipleOfRationalVector
       (Int.natAbs C.weighted_spanning_tree_determinant) v := by
   sorry

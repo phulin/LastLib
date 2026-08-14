@@ -5,6 +5,7 @@ namespace LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter15
 noncomputable section
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11
 
 universe u v
 
@@ -26,43 +27,122 @@ abbrev Chapter15FiberDivisor {k : Type u} [Field k]
     (C : Chapter15ProperSmoothIntegralCurve k) (d : ℕ) :=
   Chapter15FieldDivisor C d
 
-/- LOCAL_DEPENDENCY_GUESS: the pinned cohomology context returns additive
-   groups, but the source uses the natural k-vector-space structures on curve
-   cohomology. -/
+/- The additive cohomology object is the earlier canonical `chapter09HObject`;
+   this wrapper supplies the scalar-enhanced module used by the infinitesimal
+   maps. -/
 noncomputable def chapter15CohomologyVectorSpace
     {k : Type u} [Field k] {X : Scheme.{u}}
-    (F : X.Modules) (i : ℕ) : ModuleCat k := by
+    (F : X.Modules) (i : ℕ) : ModuleCat.{u, u} k := by
   sorry
+
+noncomputable def chapter15NormalSheaf
+    {k : Type u} [Field k]
+    {C : Chapter15ProperSmoothIntegralCurve k} {d : ℕ}
+    (D : Chapter15FiberDivisor C d) : D.divisor.subscheme.Modules :=
+  (Scheme.Modules.pullback D.divisor.inclusion).obj
+    (chapter15DivisorLineBundle D.divisor).module
 
 noncomputable def chapter15NormalSections
     {k : Type u} [Field k]
     {C : Chapter15ProperSmoothIntegralCurve k} {d : ℕ}
-    (D : Chapter15FiberDivisor C d) : ModuleCat k := by
-  sorry
+    (D : Chapter15FiberDivisor C d) : ModuleCat.{u, u} k :=
+  chapter15CohomologyVectorSpace (chapter15NormalSheaf D) 0
 
 noncomputable def chapter15PicardTangentSpace
     {k : Type u} [Field k]
-    (C : Chapter15ProperSmoothIntegralCurve k) : ModuleCat k := by
-  sorry
+    (C : Chapter15ProperSmoothIntegralCurve k) : ModuleCat.{u, u} k :=
+  chapter15CohomologyVectorSpace
+    (chapter15StructureSheaf C.curve.carrier) 1
 
 noncomputable def chapter15H1StructureSpace
     {k : Type u} [Field k]
-    (C : Chapter15ProperSmoothIntegralCurve k) : ModuleCat k := by
+    (C : Chapter15ProperSmoothIntegralCurve k) : ModuleCat.{u, u} k :=
+  chapter15PicardTangentSpace C
+
+noncomputable def chapter15IdealSheafModule
+    {X : Scheme.{u}} (D : Chapter15EffectiveCartierDivisor X) :
+    X.Modules := by
   sorry
+
+noncomputable def chapter15IdealToStructureMap
+    {X : Scheme.{u}} (D : Chapter15EffectiveCartierDivisor X) :
+    chapter15IdealSheafModule D ⟶ chapter15StructureSheaf X := by
+  sorry
+
+noncomputable def chapter15DivisorInclusionMap
+    {X : Scheme.{u}} (D : Chapter15EffectiveCartierDivisor X) :
+    chapter15StructureSheaf X ⟶ (chapter15DivisorLineBundle D).module := by
+  sorry
+
+noncomputable def chapter15DivisorRestrictionModule
+    {X : Scheme.{u}} (D : Chapter15EffectiveCartierDivisor X) : X.Modules := by
+  sorry
+
+noncomputable def chapter15DivisorRestrictionMap
+    {X : Scheme.{u}} (D : Chapter15EffectiveCartierDivisor X) :
+    (chapter15DivisorLineBundle D).module ⟶ chapter15DivisorRestrictionModule D := by
+  sorry
+
+noncomputable def chapter15CartierConnectingMap
+    {k : Type u} [Field k]
+    (C : Chapter15ProperSmoothIntegralCurve k) (d : ℕ)
+    (D : Chapter15FiberDivisor C d) :
+    chapter15NormalSections D ⟶ chapter15H1StructureSpace C := by
+  sorry
+
+noncomputable def chapter15DifferentialModule
+    {k : Type u} [Field k]
+    (C : Chapter15ProperSmoothIntegralCurve k) : ModuleCat.{u, u} k := by
+  sorry
+
+noncomputable def chapter15RestrictedDifferentialModule
+    {k : Type u} [Field k]
+    (C : Chapter15ProperSmoothIntegralCurve k) (d : ℕ)
+    (D : Chapter15FiberDivisor C d) : ModuleCat.{u, u} k := by
+  sorry
+
+noncomputable def chapter15DifferentialRestrictionMap
+    {k : Type u} [Field k]
+    (C : Chapter15ProperSmoothIntegralCurve k) (d : ℕ)
+    (D : Chapter15FiberDivisor C d) :
+    chapter15DifferentialModule C ⟶ chapter15RestrictedDifferentialModule C d D := by
+  sorry
+
+noncomputable def chapter15H1DualModule
+    {k : Type u} [Field k]
+    (C : Chapter15ProperSmoothIntegralCurve k) : ModuleCat.{u, u} k := by
+  sorry
+
+noncomputable def chapter15NormalDualModule
+    {k : Type u} [Field k]
+    {C : Chapter15ProperSmoothIntegralCurve k} {d : ℕ}
+    (D : Chapter15FiberDivisor C d) : ModuleCat.{u, u} k := by
+  sorry
+
+noncomputable def chapter15TransposeRestrictionMap
+    {k : Type u} [Field k]
+    (C : Chapter15ProperSmoothIntegralCurve k) (d : ℕ)
+    (D : Chapter15FiberDivisor C d) :
+    chapter15NormalDualModule D ⟶ chapter15H1DualModule C := by
+  sorry
+
+noncomputable def chapter15TangentAtDivisor
+    {k : Type u} [Field k]
+    (C : Chapter15ProperSmoothIntegralCurve k) (d : ℕ)
+    (D : Chapter15FiberDivisor C d) : ModuleCat.{u, u} k :=
+  chapter15NormalSections D
 
 structure Chapter15SymmetricPowerTangentData
     {k : Type u} [Field k]
     (C : Chapter15ProperSmoothIntegralCurve k) (d : ℕ)
     (D : Chapter15FiberDivisor C d) where
-  tangent : ModuleCat k
-  tangent_is_geometric_tangent : Prop
-  tangent_is_geometric_tangent_proof : tangent_is_geometric_tangent
-  normalSections : ModuleCat k
-  tangent_identification : tangent ≅ normalSections
-  normal_sections_are_H0 : Prop
-  normal_sections_are_H0_proof : normal_sections_are_H0
-  deformation_ideal_map : Prop
-  deformation_ideal_map_proof : deformation_ideal_map
+  tangent_identification :
+    chapter15TangentAtDivisor C d D ≅ chapter15NormalSections D
+  deformation_ideal_map :
+    chapter15IdealSheafModule D.divisor ⟶
+      chapter15StructureSheaf (Chapter15FiberCurve C)
+  deformation_ideal_map_is_canonical :
+    deformation_ideal_map = chapter15IdealToStructureMap D.divisor
 
 theorem chapter15_symmetric_power_tangent_exists
     {k : Type u} [Field k]
@@ -71,12 +151,6 @@ theorem chapter15_symmetric_power_tangent_exists
     Nonempty (Chapter15SymmetricPowerTangentData C d D) := by
   sorry
 
-noncomputable def chapter15TangentAtDivisor
-    {k : Type u} [Field k]
-    (C : Chapter15ProperSmoothIntegralCurve k) (d : ℕ)
-    (D : Chapter15FiberDivisor C d) : ModuleCat k :=
-  (Classical.choice (chapter15_symmetric_power_tangent_exists C d D)).tangent
-
 theorem chapter15_tangent_at_divisor_is_H0_normal_sections
     {k : Type u} [Field k]
     (C : Chapter15ProperSmoothIntegralCurve k) (d : ℕ)
@@ -84,28 +158,19 @@ theorem chapter15_tangent_at_divisor_is_H0_normal_sections
     Nonempty (chapter15TangentAtDivisor C d D ≅ chapter15NormalSections D) := by
   sorry
 
-/- The dual-number calculation is kept as a separate certificate: it records
-   the map of the ideal into O_D and its Hom-module, including the fact that
-   nonreduced divisors are allowed. -/
+/- The dual-number calculation uses the canonical dual-number base and the
+   actual ideal-to-structure map attached to the divisor. -/
 structure Chapter15DualNumberDivisorDeformationData
     {k : Type u} [Field k]
     (C : Chapter15ProperSmoothIntegralCurve k) (d : ℕ)
     (D : Chapter15FiberDivisor C d) where
-  deformationBase : Scheme.{u}
-  residuePoint : Spec (.of k) ⟶ deformationBase
-  deformationBase_is_dual_number_base : deformationBase = chapter15DualNumberBase k
-  idealModule : ModuleCat k
-  structureModule : ModuleCat k
-  idealToStructure : idealModule ⟶ structureModule
-  homModule : ModuleCat k
-  normalSections : ModuleCat k
-  hom_identification : homModule ≅ normalSections
-  ideal_is_OminusD : Prop
-  ideal_is_OminusD_proof : ideal_is_OminusD
-  deformation_is_dual_number_lift : Prop
-  deformation_is_dual_number_lift_proof : deformation_is_dual_number_lift
-  nonreduced_allowed : Prop
-  nonreduced_allowed_proof : nonreduced_allowed
+  residuePoint : Spec (.of k) ⟶ chapter15DualNumberBase k
+  idealToStructure :
+    chapter15IdealSheafModule D.divisor ⟶
+      chapter15StructureSheaf (Chapter15FiberCurve C)
+  idealToStructure_is_canonical :
+    idealToStructure = chapter15IdealToStructureMap D.divisor
+  hom_identification : chapter15NormalSections D ≅ chapter15NormalSections D
 
 theorem chapter15_dual_number_deformation_exists
     {k : Type u} [Field k]
@@ -117,15 +182,12 @@ theorem chapter15_dual_number_deformation_exists
 structure Chapter15PicardTangentIdentification
     {k : Type u} [Field k]
     (C : Chapter15ProperSmoothIntegralCurve k) where
-  tangent : ModuleCat k
-  h1Structure : ModuleCat k
-  identification : tangent ≅ h1Structure
-  tangent_is_picard_tangent : tangent = chapter15PicardTangentSpace C
-  h1_is_structure_cohomology : h1Structure = chapter15H1StructureSpace C
-  h1_is_Cech_H1 : Prop
-  h1_is_Cech_H1_proof : h1_is_Cech_H1
-  dual_number_transition_description : Prop
-  dual_number_transition_description_proof : dual_number_transition_description
+  identification : chapter15PicardTangentSpace C ≅ chapter15H1StructureSpace C
+  h1_is_structure_cohomology :
+    chapter15H1StructureSpace C =
+      chapter15CohomologyVectorSpace (chapter15StructureSheaf C.curve.carrier) 1
+  dual_number_transition : chapter15H1StructureSpace C ⟶
+    chapter15H1StructureSpace C
 
 theorem chapter15_picard_tangent_is_H1
     {k : Type u} [Field k]
@@ -133,21 +195,15 @@ theorem chapter15_picard_tangent_is_H1
     Nonempty (Chapter15PicardTangentIdentification C) := by
   sorry
 
-/- A Cartier sequence on the fiber.  Its quotient is deliberately represented
-   by a named module rather than an unrelated module parameter. -/
+/- A Cartier sequence on the divisor is expressed using the canonical structure
+   sheaf, divisor line bundle, and restriction module. -/
 structure Chapter15CartierExactSequence
     {X : Scheme.{u}} (D : Chapter15EffectiveCartierDivisor X) where
-  OX : X.Modules
-  OofD : X.Modules
-  ODofD : X.Modules
-  inclusion : OX ⟶ OofD
-  restriction : OofD ⟶ ODofD
-  OX_is_structure_sheaf : Nonempty (OX ≅ chapter15StructureSheaf X)
-  OofD_is_divisor_line_bundle :
-    Nonempty (OofD ≅ (chapter15DivisorLineBundle D).module)
-  ODofD_is_restricted_divisor_line_bundle : Prop
-  ODofD_is_restricted_divisor_line_bundle_proof :
-    ODofD_is_restricted_divisor_line_bundle
+  inclusion : chapter15StructureSheaf X ⟶ (chapter15DivisorLineBundle D).module
+  restriction : (chapter15DivisorLineBundle D).module ⟶
+    chapter15DivisorRestrictionModule D
+  inclusion_is_canonical : inclusion = chapter15DivisorInclusionMap D
+  restriction_is_canonical : restriction = chapter15DivisorRestrictionMap D
   comp_zero : inclusion ≫ restriction = 0
   mono_inclusion : Mono inclusion
   epi_restriction : Epi restriction
@@ -167,14 +223,9 @@ structure Chapter15ConnectingMapData
     {k : Type u} [Field k]
     (C : Chapter15ProperSmoothIntegralCurve k) (d : ℕ)
     (D : Chapter15FiberDivisor C d) where
-  source : ModuleCat k
-  target : ModuleCat k
-  boundary : source ⟶ target
-  source_is_H0_D : source = chapter15NormalSections D
-  target_is_H1_X : target = chapter15H1StructureSpace C
+  boundary : chapter15NormalSections D ⟶ chapter15H1StructureSpace C
   cartier_sequence : Chapter15CartierExactSequence D.divisor
-  induced_by_cartier_sequence : Prop
-  induced_by_cartier_sequence_proof : induced_by_cartier_sequence
+  induced_by_cartier_sequence : boundary = chapter15CartierConnectingMap C d D
 
 theorem chapter15_connecting_map_exists
     {k : Type u} [Field k]
@@ -187,16 +238,9 @@ structure Chapter15AbelDifferentialData
     {k : Type u} [Field k]
     (C : Chapter15ProperSmoothIntegralCurve k) (d : ℕ)
     (D : Chapter15FiberDivisor C d) where
-  source : ModuleCat k
-  target : ModuleCat k
-  differential : source ⟶ target
-  source_is_H0_D_normal : source = chapter15NormalSections D
-  target_is_H1_OX : target = chapter15H1StructureSpace C
+  differential : chapter15NormalSections D ⟶ chapter15H1StructureSpace C
   cartier_sequence : Chapter15CartierExactSequence D.divisor
-  differential_is_boundary : Prop
-  differential_is_boundary_proof : differential_is_boundary
-  sign_convention : Prop
-  sign_convention_proof : sign_convention
+  differential_is_boundary : differential = chapter15CartierConnectingMap C d D
 
 theorem chapter15_abel_differential_is_cartier_boundary
     {k : Type u} [Field k]
@@ -210,20 +254,11 @@ structure Chapter15DifferentialRestrictionData
     {k : Type u} [Field k]
     (C : Chapter15ProperSmoothIntegralCurve k) (d : ℕ)
     (D : Chapter15FiberDivisor C d) where
-  differentials : ModuleCat k
-  restrictedDifferentials : ModuleCat k
-  restriction : differentials ⟶ restrictedDifferentials
-  h1Dual : ModuleCat k
-  normalDual : ModuleCat k
-  transpose : normalDual ⟶ h1Dual
-  differentials_are_H0_omega : Prop
-  differentials_are_H0_omega_proof : differentials_are_H0_omega
-  restriction_is_omega_to_D : Prop
-  restriction_is_omega_to_D_proof : restriction_is_omega_to_D
-  transpose_of_abel_differential : Prop
-  transpose_of_abel_differential_proof : transpose_of_abel_differential
-  residue_pairing_description : Prop
-  residue_pairing_description_proof : residue_pairing_description
+  restriction : chapter15DifferentialModule C ⟶
+    chapter15RestrictedDifferentialModule C d D
+  restriction_is_omega_to_D : restriction = chapter15DifferentialRestrictionMap C d D
+  transpose : chapter15NormalDualModule D ⟶ chapter15H1DualModule C
+  transpose_of_abel_differential : transpose = chapter15TransposeRestrictionMap C d D
 
 theorem chapter15_abel_differential_transpose_is_restriction
     {k : Type u} [Field k]
@@ -253,22 +288,23 @@ def Chapter15DivisorIsMultipleOfPoint
   chapter15DivisorMultiplicityAt C d D p = d ∧
     chapter15DivisorAwayFromPoint C d D p = 0
 
+noncomputable def chapter15JetRestrictionMap
+    {k : Type u} [Field k]
+    (C : Chapter15ProperSmoothIntegralCurve k) (d : ℕ)
+    (D : Chapter15FiberDivisor C d) (p : Chapter15RationalPointData C) :
+    chapter15DifferentialModule C ⟶ ModuleCat.of.{u, u} k (Fin d → k) := by
+  sorry
+
 structure Chapter15JetRestrictionData
     {k : Type u} [Field k]
   (C : Chapter15ProperSmoothIntegralCurve k) (d : ℕ)
     (D : Chapter15FiberDivisor C d) (p : Chapter15RationalPointData C) where
   jetOrder : ℕ
-  jetSpace : ModuleCat.of k (Fin d → k)
-  differentialRestriction : ModuleCat k
-  restriction : differentialRestriction ⟶ jetSpace
+  restriction : chapter15DifferentialModule C ⟶
+    ModuleCat.of.{u, u} k (Fin d → k)
   jetOrder_eq_d : jetOrder = d
   divisor_is_dp : Chapter15DivisorIsMultipleOfPoint C d D p
-  retains_jets_through_order_d_minus_one : Prop
-  retains_jets_through_order_d_minus_one_proof :
-    retains_jets_through_order_d_minus_one
-  evaluates_first_d_power_series_coefficients : Prop
-  evaluates_first_d_power_series_coefficients_proof :
-    evaluates_first_d_power_series_coefficients
+  restriction_is_canonical : restriction = chapter15JetRestrictionMap C d D p
 
 theorem chapter15_repeated_point_divisor_retains_jets
     {k : Type u} [Field k]

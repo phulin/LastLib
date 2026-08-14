@@ -141,7 +141,8 @@ theorem chapter02_intrinsic_higher_target_finrank_one
 /- DEPENDENCY_GUESS: The residue-field linearization and the chosen
    uniformizer presentation from the preceding chapter are represented by the
    coefficient data below until those declarations are reconciled globally. -/
-/-- The canonical higher coefficient package exists in the separable-residue case. -/
+/-- The canonical higher coefficient package exists in the defectless,
+separable-residue case. -/
 theorem chapter02_canonical_higher_coefficient_data_exists
     (K L : Type u) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
@@ -151,6 +152,10 @@ theorem chapter02_canonical_higher_coefficient_data_exists
     [Valuation.IsRankOneDiscrete vL.toValuation]
     [Finite (chapter02DecompositionGroup K vL)]
     (hext : vK.IsEquiv (vL.comap (algebraMap K L)))
+    (hcomplete : IsAdicComplete
+      (IsLocalRing.maximalIdeal vK.toValuation.valuationSubring)
+      vK.toValuation.valuationSubring)
+    [PerfectField (IsLocalRing.ResidueField vK.toValuation.valuationSubring)]
     [Algebra (IsLocalRing.ResidueField vK.toValuation.valuationSubring)
       (IsLocalRing.ResidueField vL.toValuation.valuationSubring)]
     [FiniteDimensional (IsLocalRing.ResidueField vK.toValuation.valuationSubring)
@@ -163,6 +168,62 @@ theorem chapter02_canonical_higher_coefficient_data_exists
       (Chapter02HigherCoefficientData
         (chapter02CanonicalLowerFiltration K vL)
         (IsLocalRing.ResidueField vL.toValuation.valuationSubring) i) := by
+  sorry
+
+/- The canonical coefficient packages are the missing assembly step between
+   the graded-piece calculation and the book's assertion about wild inertia.
+   Keeping these consequences explicit prevents users from having to rebuild
+   the infinite family of positive layers at every application. -/
+/-- The canonical positive subgroup is a `p`-group in residue characteristic `p`. -/
+theorem chapter02_canonical_wild_group_is_p_group
+    (K L : Type u) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L]
+    (vK : AddValuation K (WithTop ℤ))
+    (vL : AddValuation L (WithTop ℤ))
+    [Valuation.IsRankOneDiscrete vK.toValuation]
+    [Valuation.IsRankOneDiscrete vL.toValuation]
+    [Finite (chapter02DecompositionGroup K vL)]
+    (hext : vK.IsEquiv (vL.comap (algebraMap K L)))
+    (hcomplete : IsAdicComplete
+      (IsLocalRing.maximalIdeal vK.toValuation.valuationSubring)
+      vK.toValuation.valuationSubring)
+    [PerfectField (IsLocalRing.ResidueField vK.toValuation.valuationSubring)]
+    [Algebra (IsLocalRing.ResidueField vK.toValuation.valuationSubring)
+      (IsLocalRing.ResidueField vL.toValuation.valuationSubring)]
+    [FiniteDimensional (IsLocalRing.ResidueField vK.toValuation.valuationSubring)
+      (IsLocalRing.ResidueField vL.toValuation.valuationSubring)]
+    (hseparable : Algebra.IsSeparable
+      (IsLocalRing.ResidueField vK.toValuation.valuationSubring)
+      (IsLocalRing.ResidueField vL.toValuation.valuationSubring))
+    (p : ℕ) [Fact p.Prime]
+    [CharP (IsLocalRing.ResidueField vL.toValuation.valuationSubring) p] :
+    IsPGroup p
+      (chapter02WildGroup (chapter02CanonicalLowerFiltration K vL)) := by
+  sorry
+
+/-- In residue characteristic zero the canonical positive subgroup is trivial. -/
+theorem chapter02_canonical_wild_group_eq_bot_of_char_zero
+    (K L : Type u) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L]
+    (vK : AddValuation K (WithTop ℤ))
+    (vL : AddValuation L (WithTop ℤ))
+    [Valuation.IsRankOneDiscrete vK.toValuation]
+    [Valuation.IsRankOneDiscrete vL.toValuation]
+    [Finite (chapter02DecompositionGroup K vL)]
+    (hext : vK.IsEquiv (vL.comap (algebraMap K L)))
+    (hcomplete : IsAdicComplete
+      (IsLocalRing.maximalIdeal vK.toValuation.valuationSubring)
+      vK.toValuation.valuationSubring)
+    [PerfectField (IsLocalRing.ResidueField vK.toValuation.valuationSubring)]
+    [Algebra (IsLocalRing.ResidueField vK.toValuation.valuationSubring)
+      (IsLocalRing.ResidueField vL.toValuation.valuationSubring)]
+    [FiniteDimensional (IsLocalRing.ResidueField vK.toValuation.valuationSubring)
+      (IsLocalRing.ResidueField vL.toValuation.valuationSubring)]
+    (hseparable : Algebra.IsSeparable
+      (IsLocalRing.ResidueField vK.toValuation.valuationSubring)
+      (IsLocalRing.ResidueField vL.toValuation.valuationSubring))
+    [CharZero (IsLocalRing.ResidueField vL.toValuation.valuationSubring)] :
+    chapter02WildGroup (chapter02CanonicalLowerFiltration K vL) = ⊥ := by
   sorry
 
 /-- Positive layers in characteristic zero are trivial. -/

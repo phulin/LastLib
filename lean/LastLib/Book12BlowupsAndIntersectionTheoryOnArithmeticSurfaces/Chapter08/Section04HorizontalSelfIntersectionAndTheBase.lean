@@ -1,8 +1,11 @@
 import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter08.Section01ZeroCyclesAndFiberwiseNumbers
+import Mathlib.Data.Real.Basic
 
 namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter08
 
 noncomputable section
+
+universe u
 
 open CategoryTheory AlgebraicGeometry
 
@@ -118,14 +121,14 @@ structure Chapter08DVRLocalOrderTheory (X : Chapter08ArithmeticSurface) where
   rationalFunctions : Type u
   principalOrder : rationalFunctions → ℤ
   changeOfTrivialization :
-    ∀ t₁ t₂ : Chapter08DVRLocalTrivialization X,
+    ∀ t₁ t₂ : Chapter08DVRLocalTrivialization.{u} X,
       ∃ f : rationalFunctions,
         t₂.localOrder - t₁.localOrder = principalOrder f
 
 theorem chapter08_dvr_local_order_changes_by_principal_divisor
     {X : Chapter08ArithmeticSurface}
-    (T : Chapter08DVRLocalOrderTheory X)
-    (t₁ t₂ : Chapter08DVRLocalTrivialization X) :
+    (T : Chapter08DVRLocalOrderTheory.{u} X)
+    (t₁ t₂ : Chapter08DVRLocalTrivialization.{u} X) :
     ∃ f : T.rationalFunctions,
       t₂.localOrder - t₁.localOrder = T.principalOrder f := by
   exact T.changeOfTrivialization t₁ t₂

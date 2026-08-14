@@ -69,19 +69,19 @@ theorem chapter04_serre_vanishing
     (hproj : chapter04Projective f) (L : Chapter04LineBundle X)
     (hL : chapter04Ample f L) :
     chapter04SerreVanishingStatement f hproj L hL := by
-  sorry
+  exact chapter04_serre_vanishing_forward f hproj L hL
 
 /-- The converse Serre criterion, with the projective and noetherian hypotheses made explicit. -/
 theorem chapter04_serre_ampleness_converse
     {X S : Scheme.{u}} (f : X ⟶ S) [IsAffine S] [IsNoetherian S]
     [IsNoetherian X] [QuasiCompact f] [IsSeparated f]
-    (hproj : chapter04Projective f) (L : Chapter04LineBundle X)
-    (hvanish : ∀ F : X.Modules, chapter04FiniteTypeQuasiCoherent F →
+    (_hproj : chapter04Projective f) (L : Chapter04LineBundle X)
+    (_hvanish : ∀ F : X.Modules, chapter04FiniteTypeQuasiCoherent F →
       chapter04EventuallyHigherCohomologyVanishes f F L)
     (hideal : ∀ I : Chapter04CoherentIdealSheaf X,
       chapter04EventuallyTwistGenerated f I.carrier L) :
     chapter04Ample f L := by
-  sorry
+  exact (chapter04_serre_coherent_ideal_criterion f L).2 hideal
 
 end
 end LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04

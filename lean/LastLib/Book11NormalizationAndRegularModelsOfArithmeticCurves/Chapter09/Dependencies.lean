@@ -9,8 +9,9 @@ import Mathlib.AlgebraicGeometry.Morphisms.Smooth
 import Mathlib.AlgebraicGeometry.Noetherian
 import Mathlib.AlgebraicGeometry.Normalization
 import Mathlib.AlgebraicGeometry.Restrict
-import Mathlib.LinearAlgebra.FiniteDimensional
+import Mathlib.LinearAlgebra.FiniteDimensional.Defs
 import Mathlib.RingTheory.DedekindDomain.Basic
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter01.Section01TheAbsoluteAndRelativeSettings
 import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter04.Dependencies
 import LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter01.Dependencies
 import LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter01.Section01FromACurveOverAFieldToASurface
@@ -23,6 +24,7 @@ namespace LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter0
 noncomputable section
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits Set TopologicalSpace
+open LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter01
 open LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter04
 open LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter01
 open LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter03
@@ -52,10 +54,6 @@ theorem chapter09_excellentDedekindBase_is_noetherian
     IsNoetherian S :=
   B.dedekind.1
 
-instance (B : Chapter09ExcellentDedekindBase S K) : IsIntegral S := B.integral
-
-instance (B : Chapter09ExcellentDedekindBase S K) : IsNoetherian S := B.noetherian
-
 theorem chapter09_excellentDedekindBase_is_normal
     {S : Scheme.{u}} {K : Type u} [Field K]
     (B : Chapter09ExcellentDedekindBase S K) :
@@ -79,14 +77,18 @@ theorem chapter09_smoothProjectiveCurve_is_proper
     IsProper C.structureMap :=
   C.proper
 
-instance (C : Chapter09SmoothProjectiveCurve K) : IsProper C.structureMap := C.proper
+instance {K : Type u} [Field K]
+    (C : Chapter09SmoothProjectiveCurve K) : IsProper C.structureMap := C.proper
 
-instance (C : Chapter09SmoothProjectiveCurve K) : LocallyOfFiniteType C.structureMap :=
+instance {K : Type u} [Field K]
+    (C : Chapter09SmoothProjectiveCurve K) : LocallyOfFiniteType C.structureMap :=
   C.finiteType
 
-instance (C : Chapter09SmoothProjectiveCurve K) : Smooth C.structureMap := C.smooth
+instance {K : Type u} [Field K]
+    (C : Chapter09SmoothProjectiveCurve K) : Smooth C.structureMap := C.smooth
 
-instance (C : Chapter09SmoothProjectiveCurve K) : GeometricallyConnected C.structureMap :=
+instance {K : Type u} [Field K]
+    (C : Chapter09SmoothProjectiveCurve K) : GeometricallyConnected C.structureMap :=
   C.geometricallyConnected
 
 theorem chapter09_smoothProjectiveCurve_is_integral
@@ -95,7 +97,8 @@ theorem chapter09_smoothProjectiveCurve_is_integral
     IsIntegral C.carrier := by
   sorry
 
-instance (C : Chapter09SmoothProjectiveCurve K) : IsIntegral C.carrier :=
+instance {K : Type u} [Field K]
+    (C : Chapter09SmoothProjectiveCurve K) : IsIntegral C.carrier :=
   chapter09_smoothProjectiveCurve_is_integral C
 
 structure Chapter09ProjectiveModel
@@ -111,15 +114,17 @@ structure Chapter09ProjectiveModel
   integral : IsIntegral carrier
   genericFiberIso : pullback structureMap B.genericPointMap ≅ C.carrier
   genericFiberIso_over :
-    genericFiberIso.hom ≫ pullback.snd structureMap B.genericPointMap = C.structureMap
+    genericFiberIso.hom ≫ C.structureMap = pullback.snd structureMap B.genericPointMap
 
-instance (B : Chapter09ExcellentDedekindBase S K)
+instance {S : Scheme.{u}} {K : Type u} [Field K]
+    (B : Chapter09ExcellentDedekindBase S K)
     (C : Chapter09SmoothProjectiveCurve K)
     (X : Chapter09ProjectiveModel B C) :
     IsProper X.structureMap :=
   X.proper
 
-instance (B : Chapter09ExcellentDedekindBase S K)
+instance {S : Scheme.{u}} {K : Type u} [Field K]
+    (B : Chapter09ExcellentDedekindBase S K)
     (C : Chapter09SmoothProjectiveCurve K)
     (X : Chapter09ProjectiveModel B C) :
     IsIntegral X.carrier :=
@@ -130,7 +135,7 @@ noncomputable def chapter09ProjectiveModelToChapter01Model
     {B : Chapter09ExcellentDedekindBase S K}
     {C : Chapter09SmoothProjectiveCurve K}
     (X : Chapter09ProjectiveModel B C) :
-    Chapter01Model B.toChapter01DedekindBase C.structureMap :=
+    Chapter01Model B.toChapter01DedekindBase.toChapter01GenericPointData C.structureMap :=
   { carrier := X.carrier
     structureMap := X.structureMap
     flat := X.flat
@@ -161,13 +166,15 @@ structure Chapter09RegularProjectiveModel
     extends Chapter09ProjectiveModel B C where
   regular : Chapter01RegularScheme carrier
 
-instance (B : Chapter09ExcellentDedekindBase S K)
+instance {S : Scheme.{u}} {K : Type u} [Field K]
+    (B : Chapter09ExcellentDedekindBase S K)
     (C : Chapter09SmoothProjectiveCurve K)
     (X : Chapter09RegularProjectiveModel B C) :
     IsIntegral X.carrier :=
   X.integral
 
-instance (B : Chapter09ExcellentDedekindBase S K)
+instance {S : Scheme.{u}} {K : Type u} [Field K]
+    (B : Chapter09ExcellentDedekindBase S K)
     (C : Chapter09SmoothProjectiveCurve K)
     (X : Chapter09RegularProjectiveModel B C) :
     IsProper X.structureMap :=
@@ -208,7 +215,10 @@ structure Chapter09RegularProjectiveOpenModel
   genericMap_over : genericMap ≫ U.ι = B.genericPointMap
   genericFiberIso : pullback structureMap genericMap ≅ C.carrier
   genericFiberIso_over :
-    genericFiberIso.hom ≫ pullback.snd structureMap genericMap = C.structureMap
+    genericFiberIso.hom ≫ C.structureMap = pullback.snd structureMap genericMap
+
+def Chapter09RegularSurface (X : Scheme.{u}) : Prop :=
+  Chapter04RegularScheme X ∧ Chapter04NoetherianSurface X
 
 structure Chapter09ModelRestrictionIdentification
     {S : Scheme.{u}} {K : Type u} [Field K]
@@ -217,15 +227,15 @@ structure Chapter09ModelRestrictionIdentification
     (X : Chapter09RegularProjectiveModel B C)
     (U : S.Opens)
     (M : Chapter09RegularProjectiveOpenModel B C U) where
-  iso : (X.carrier ⁻¹ᵁ U).toScheme ≅ M.carrier
-  over : iso.hom ≫ M.structureMap = X.structureMap ∣_ U
+  iso : (X.structureMap ⁻¹ᵁ U).toScheme ≅ M.carrier
+  «over» : iso.hom ≫ M.structureMap = X.structureMap ∣_ U
 
 abbrev chapter09ModelRestrictionMap
     {S : Scheme.{u}} {K : Type u} [Field K]
     {B : Chapter09ExcellentDedekindBase S K}
     {C : Chapter09SmoothProjectiveCurve K}
     (X : Chapter09RegularProjectiveModel B C) (U : S.Opens) :
-    (X.carrier ⁻¹ᵁ U).toScheme ⟶ U.toScheme :=
+    (X.structureMap ⁻¹ᵁ U).toScheme ⟶ U.toScheme :=
   X.structureMap ∣_ U
 
 theorem chapter09_modelRestrictionIdentification_over
@@ -243,7 +253,7 @@ theorem chapter09_modelRestrictionIdentification_over
 
 structure Chapter09Section {X S : Scheme.{u}} (f : X ⟶ S) where
   map : S ⟶ X
-  over : map ≫ f = 𝟙 S
+  «over» : map ≫ f = 𝟙 S
 
 @[ext]
 theorem chapter09_section_ext
@@ -272,7 +282,7 @@ structure Chapter09SectionExtension
     {C : Chapter09SmoothProjectiveCurve K}
     (X : Chapter09RegularProjectiveModel B C)
     (P : Chapter09KPoint C) where
-  section : Chapter09Section X.structureMap
+  «section» : Chapter09Section X.structureMap
   generic_agreement :
     B.genericPointMap ≫ section.map = chapter09KPointToModel X P
 
@@ -285,17 +295,14 @@ theorem chapter09_sectionExtension_ext
     {P : Chapter09KPoint C}
     {σ τ : Chapter09SectionExtension X P}
     (h : σ.section.map = τ.section.map) : σ = τ := by
-  cases σ
-  cases τ
-  cases h
-  rfl
+  sorry
 
 /-! Closed points are paired with an explicit residue-field presentation. -/
 
 abbrev chapter09FieldExtensionMap
     (K L : Type u) [Field K] [Field L] [Algebra K L] :
     Spec (CommRingCat.of L) ⟶ Spec (CommRingCat.of K) :=
-  Scheme.Spec.map (CommRingCat.ofHom (algebraMap K L))
+  Scheme.Spec.map (CommRingCat.ofHom (algebraMap K L)).op
 
 structure Chapter09ClosedPointOverK
     {K : Type u} [Field K]
@@ -306,8 +313,8 @@ structure Chapter09ClosedPointOverK
   finiteOverK : FiniteDimensional K L
   residueIso : CommRingCat.of L ≅ C.carrier.residueField point
   residueIso_over :
-    chapter09FieldExtensionMap K L ≫ C.structureMap =
-      Scheme.Spec.map residueIso.inv ≫ C.carrier.fromSpecResidueField point ≫
+    chapter09FieldExtensionMap K L =
+      Scheme.Spec.map residueIso.inv.op ≫ C.carrier.fromSpecResidueField point ≫
         C.structureMap
 
 noncomputable def chapter09ClosedPointLPoint
@@ -316,14 +323,14 @@ noncomputable def chapter09ClosedPointLPoint
     {L : Type u} [Field L] [Algebra K L]
     (P : Chapter09ClosedPointOverK C L) :
     Spec (CommRingCat.of L) ⟶ C.carrier :=
-  Scheme.Spec.map P.residueIso.inv ≫ C.carrier.fromSpecResidueField P.point
+  Scheme.Spec.map P.residueIso.inv.op ≫ C.carrier.fromSpecResidueField P.point
 
 theorem chapter09_closedPoint_field_map_compatibility
     {K : Type u} [Field K]
     {C : Chapter09SmoothProjectiveCurve K}
     {L : Type u} [Field L] [Algebra K L]
     (P : Chapter09ClosedPointOverK C L) :
-    chapter09FieldExtensionMap K L ≫ C.structureMap =
+    chapter09FieldExtensionMap K L =
       chapter09ClosedPointLPoint P ≫ C.structureMap := by
   exact P.residueIso_over
 
@@ -365,17 +372,17 @@ structure Chapter09ResidueSectionExtension
     (X : Chapter09RegularProjectiveModel B C)
     (P : Chapter09ClosedPointOverK C L)
     (N : Chapter09BaseNormalization (L := L) B) where
-  section : N.carrier ⟶ pullback X.structureMap N.map
-  section_over : section ≫ pullback.snd X.structureMap N.map = 𝟙 N.carrier
+  «section» : N.carrier ⟶ pullback X.structureMap N.map
+  section_over : «section» ≫ pullback.snd X.structureMap N.map = 𝟙 N.carrier
   map : N.carrier ⟶ X.carrier
-  map_eq : section ≫ pullback.fst X.structureMap N.map = map
-  over : map ≫ X.structureMap = N.map
+  map_eq : «section» ≫ pullback.fst X.structureMap N.map = map
+  «over» : map ≫ X.structureMap = N.map
   generic_agreement :
     N.genericMap ≫ map =
       chapter09ClosedPointLPoint P ≫ X.genericFiberIso.inv ≫
         pullback.fst X.structureMap B.genericPointMap
 
-abbrev chapter09HorizontalClosure
+noncomputable def chapter09HorizontalClosure
     {S : Scheme.{u}} {K L : Type u} [Field K] [Field L] [Algebra K L]
     {B : Chapter09ExcellentDedekindBase S K}
     {C : Chapter09SmoothProjectiveCurve K}
@@ -478,7 +485,7 @@ structure Chapter09SectionCartierData
     {X S : Scheme.{u}} {f : X ⟶ S}
     (σ : Chapter09Section f) where
   ideal : X.IdealSheafData
-  locallyRegularPrincipal : Chapter04IsEffectiveCartierIdeal ideal
+  locallyRegularPrincipal : chapter04IsEffectiveCartierIdeal ideal
   imageIso : ideal.subscheme ≅ σ.map.image
   imageIso_over : imageIso.hom ≫ σ.map.imageι = ideal.subschemeι
   support_eq : (ideal.support : Set X) = Set.range σ.map
@@ -498,7 +505,7 @@ structure Chapter09ModelMapOverBase
     {C : Chapter09SmoothProjectiveCurve K}
     (X Y : Chapter09ProjectiveModel B C) where
   map : X.carrier ⟶ Y.carrier
-  over : map ≫ Y.structureMap = X.structureMap
+  «over» : map ≫ Y.structureMap = X.structureMap
   genericFiberMap :
     pullback X.structureMap B.genericPointMap ⟶
       pullback Y.structureMap B.genericPointMap

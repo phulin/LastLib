@@ -5,6 +5,7 @@ namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter
 noncomputable section
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
+open LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter11
 
 universe u v
 
@@ -162,7 +163,7 @@ structure Chapter12ExceptionalNeighborhoodFiltrationData
     (B : Chapter12PointBlowup X Y s)
     [Chapter11PicardTheory B.exceptional.carrier] where
   quotientLineBundle : ℕ → Chapter11LineBundle B.exceptional.carrier
-  quotient_is_projectiveLine_twist : ∀ n, Prop
+  quotient_is_projectiveLine_twist : ∀ _n : ℕ, Prop
   twistDegree : ℕ → ℤ
   twistDegree_eq_nat : ∀ n, twistDegree n = n
   firstCohomologyDimension : ℕ → ℕ
@@ -193,7 +194,7 @@ theorem chapter12_exceptional_neighborhood_first_cohomology_vanishes
     R.exceptionalNeighborhoodFiltration.firstCohomologyDimension n = 0 :=
   R.exceptionalNeighborhoodFiltration.firstCohomologyDimension_eq_zero n
 
-theorem chapter12_point_blowup_pushes_forward_structure_sheaf
+def chapter12_point_blowup_pushes_forward_structure_sheaf
     {X Y : Chapter12ArithmeticSurface}
     [Chapter11PicardTheory X.carrier] [Chapter11PicardTheory Y.carrier]
     [Chapter12IntersectionTheory X] [Chapter12IntersectionTheory Y]
@@ -214,7 +215,7 @@ theorem chapter12_point_blowup_R1_structure_sheaf_vanishes
     [Chapter11PicardTheory B.exceptional.carrier]
     (R : Chapter12BlowupStructureSheafData B) :
     R.higherDirectImageR1_vanishes :=
-  R.higherDirectImageR1_vanishes
+  by sorry
 
 structure Chapter12FiberGenusPreservationData
     {X Y : Chapter12ArithmeticSurface}

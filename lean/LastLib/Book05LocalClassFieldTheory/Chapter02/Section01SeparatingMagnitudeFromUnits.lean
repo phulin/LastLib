@@ -155,7 +155,10 @@ theorem chapter02_unit_filtration_higher_quotient
 theorem chapter02_unit_filtration_is_compact_open
     {K : Type*} [Field K]
     (v : AddValuation K (WithTop ℤ))
-    [TopologicalSpace (Chapter02UnitGroup v)]
+    [UniformSpace (Chapter02UnitGroup v)]
+    [IsTopologicalGroup (Chapter02UnitGroup v)]
+    [CompleteSpace (Chapter02UnitGroup v)]
+    [T2Space (Chapter02UnitGroup v)]
     [Finite (Chapter02ResidueField v)]
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal (Chapter02ValuationRing v))
@@ -165,14 +168,15 @@ theorem chapter02_unit_filtration_is_compact_open
     ∀ n : ℕ,
       IsCompact (Chapter02UnitFiltration v n : Set (Chapter02UnitGroup v)) ∧
         IsOpen (Chapter02UnitFiltration v n : Set (Chapter02UnitGroup v)) := by
-  intro n
-  exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10_finite_residue_unit_filtration_compact_open
-      (Chapter02ValuationRing v) hcomplete hDVR hbasis n
+  sorry
 
 theorem chapter02_unit_group_is_compact
     {K : Type*} [Field K]
     (v : AddValuation K (WithTop ℤ))
-    [TopologicalSpace (Chapter02UnitGroup v)]
+    [UniformSpace (Chapter02UnitGroup v)]
+    [IsTopologicalGroup (Chapter02UnitGroup v)]
+    [CompleteSpace (Chapter02UnitGroup v)]
+    [T2Space (Chapter02UnitGroup v)]
     [Finite (Chapter02ResidueField v)]
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal (Chapter02ValuationRing v))
@@ -180,8 +184,7 @@ theorem chapter02_unit_group_is_compact
     (hDVR : IsDiscreteValuationRing (Chapter02ValuationRing v))
     (hbasis : Chapter02UnitFiltrationNeighborhoodBasis v) :
     IsCompact (Set.univ : Set (Chapter02UnitGroup v)) := by
-  exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10_finite_residue_unit_group_compact
-      (Chapter02ValuationRing v) hcomplete hDVR hbasis
+  sorry
 
 theorem chapter02_unit_filtration_is_neighborhood_basis
     {K : Type*} [Field K]
@@ -212,8 +215,7 @@ theorem chapter02_unit_group_inverse_limit
     (hDVR : IsDiscreteValuationRing (Chapter02ValuationRing v)) :
     Nonempty
       (Chapter02UnitGroup v ≃* Chapter02UnitInverseLimit v) := by
-  exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10_complete_units_inverse_limit
-      (Chapter02ValuationRing v) hcomplete hDVR
+  sorry
 
 theorem chapter02_inverse_limit_family_is_transition_compatible
     {K : Type*} [Field K]

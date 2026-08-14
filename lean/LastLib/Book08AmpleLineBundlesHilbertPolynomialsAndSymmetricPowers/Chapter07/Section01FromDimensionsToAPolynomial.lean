@@ -7,6 +7,7 @@ noncomputable section
 universe u
 
 open CategoryTheory
+open CategoryTheory.Limits
 open AlgebraicGeometry
 open Polynomial
 
@@ -37,6 +38,19 @@ theorem chapter07_polynomial_exists_of_vanishing_forward_differences
     ∃ P : Polynomial ℚ,
       Chapter07IntegerValuedOnIntegers P ∧
         ∀ n : ℤ, P.eval (n : ℚ) = (f n : ℚ) := by
+  sorry
+
+/-! The support-filtration argument also bounds the degree of the Newton
+polynomial.  Keeping this as a separate strengthening leaves the basic
+finite-difference existence lemma useful without extra bookkeeping. -/
+theorem chapter07_polynomial_exists_of_vanishing_forward_differences_with_degree_bound
+    (f : ℤ → ℤ) (d : ℕ)
+    (h : ∀ n : ℤ,
+      chapter07IteratedForwardDifference d f n = 0) :
+    ∃ P : Polynomial ℚ,
+      Chapter07IntegerValuedOnIntegers P ∧
+        (∀ n : ℤ, P.eval (n : ℚ) = (f n : ℚ)) ∧
+          P.natDegree ≤ d := by
   sorry
 
 /-!
@@ -96,6 +110,17 @@ theorem chapter07_hilbert_polynomial_matches_function_eventually
     Chapter07PolynomialMatchesEventually (chapter07HilbertPolynomial S)
       (fun n : ℕ => (chapter07HilbertFunction S n : ℤ)) := by
   exact (chapter07_hilbert_polynomial_spec S).2.2
+
+/-! The Euler-characteristic polynomial is defined on all integer twists, not
+only on the nonnegative twists used by the Hilbert function. -/
+theorem chapter07_hilbert_polynomial_matches_euler_at_all_integers
+    {k : Type u} [Field k]
+    {C : Chapter07PolarizedScheme k}
+    (S : Chapter07HilbertSetup k C) :
+    ∀ n : ℤ,
+      (chapter07HilbertPolynomial S).eval (n : ℚ) =
+        chapter07EulerCharacteristicAtInteger S n := by
+  sorry
 
 theorem chapter07_hilbert_polynomial_eq_zero_of_zero_sheaf
     {k : Type u} [Field k]

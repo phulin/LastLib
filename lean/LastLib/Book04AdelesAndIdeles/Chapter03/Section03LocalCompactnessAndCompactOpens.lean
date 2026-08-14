@@ -147,13 +147,12 @@ theorem chapter03_directSum_excludes_infinite_support
   exact fun hx => hinfinite
     ((chapter03_directSum_mem_iff_finite_support x).mp hx)
 
-/- SOURCE_ISSUE:
-  The sentence "The direct sum has other defects and does not contain the
-  diagonal identity" is false if identity means the identity element: the
-  additive zero family is always finitely supported.  The precise replacement
-  used here is that the direct sum excludes diagonal families with infinitely
-  many nonzero coordinates (and, in a multiplicative reading, nontrivial
-  constant diagonal families).
+/-!
+The direct-sum comparison is additive: its zero family is the additive
+identity and is finitely supported, whereas a diagonal family with infinitely
+many nonzero coordinates is excluded.  In particular, the all-ones family is
+excluded from the additive direct sum of nontrivial rings, so that additive
+direct sum is not unital as a subring of the product.
 -/
 omit [(i : I) → Group (G i)] in
 theorem chapter03_directSum_diagonal_family_excluded_when_support_infinite

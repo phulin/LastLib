@@ -1,4 +1,5 @@
 import LastLib.Book03RamificationTheory.Chapter01.Section01TheQuestionLeftByInertia
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.Section04FixedFieldsOfInertia
 
 namespace LastLib.Book03RamificationTheory.Chapter01
 
@@ -91,13 +92,12 @@ theorem chapter01_residue_action_over_base_surjective
     (v : Valuation F Γ) [Valuation.IsRankOneDiscrete v]
     (w : Valuation E Γ) [Valuation.IsRankOneDiscrete w]
     (hext : v.IsEquiv (w.comap (algebraMap F E)))
+    [Valuation.HasExtension v w]
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal v.valuationSubring) v.valuationSubring)
     (hunique :
       LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05UniqueNormalizedValuationExtension
         v w)
-    [Algebra (IsLocalRing.ResidueField v.valuationSubring)
-      (IsLocalRing.ResidueField w.valuationSubring)]
     [FiniteDimensional (IsLocalRing.ResidueField v.valuationSubring)
       (IsLocalRing.ResidueField w.valuationSubring)]
     [Normal (IsLocalRing.ResidueField v.valuationSubring)
@@ -128,13 +128,12 @@ theorem chapter01_separable_residue_reduction_exists
     (v : Valuation F Γ) [Valuation.IsRankOneDiscrete v]
     (w : Valuation E Γ) [Valuation.IsRankOneDiscrete w]
     (hext : v.IsEquiv (w.comap (algebraMap F E)))
+    [Valuation.HasExtension v w]
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal v.valuationSubring) v.valuationSubring)
     (hunique :
       LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05UniqueNormalizedValuationExtension
         v w)
-    [Algebra (IsLocalRing.ResidueField v.valuationSubring)
-      (IsLocalRing.ResidueField w.valuationSubring)]
     [FiniteDimensional (IsLocalRing.ResidueField v.valuationSubring)
       (IsLocalRing.ResidueField w.valuationSubring)]
     [Normal (IsLocalRing.ResidueField v.valuationSubring)
@@ -166,11 +165,6 @@ the actual branch ideals and the maximal-unramified predicate, while perfect
 base residue fields provide the standard defectless hypothesis.
 -/
 
--- SOURCE_ISSUE: The source's order identity `|I| = e` is not valid for an
--- arbitrary imperfect-residue complete field if defect extensions are allowed.
--- The local Galois interface below follows the preceding canonical theorem and
--- retains a perfect base residue field (an explicit defectless profile would be
--- an equivalent later replacement).
 theorem chapter01_inertia_fixed_field_is_maximal_unramified
     (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]

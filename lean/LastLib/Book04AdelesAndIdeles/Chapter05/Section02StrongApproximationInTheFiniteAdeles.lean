@@ -21,7 +21,7 @@ theorem chapter05_finite_approximation_hits_congruences
       (∀ v (hv : v ∈ S),
         LastLib.Book04AdelesAndIdeles.Chapter01.chapter01LocallyClose
           v (x v hv) (chapter05FiniteDiagonal K a v) (m v hv)) ∧
-      (∀ q : Chapter05FinitePlace K, q ∉ S,
+      (∀ q : Chapter05FinitePlace K, q ∉ S →
         0 ≤ LastLib.Book04AdelesAndIdeles.Chapter01.chapter01Order q a) := by
   sorry
 

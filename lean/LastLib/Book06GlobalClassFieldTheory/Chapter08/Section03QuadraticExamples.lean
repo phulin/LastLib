@@ -94,7 +94,7 @@ theorem chapter08_minusFive_data_is_imaginary_quadratic
     (D : Chapter08MinusFiveData K) :
     letI : Algebra.IsQuadraticExtension ℚ K := D.quadratic
     chapter08ImaginaryQuadratic K := by
-  letI : Algebra.IsQuadraticExtension ℚ K := D.quadratic
+  let _ : Algebra.IsQuadraticExtension ℚ K := D.quadratic
   exact D.noRealPlaces
 
 theorem chapter08_minusFive_minkowski_bound_value

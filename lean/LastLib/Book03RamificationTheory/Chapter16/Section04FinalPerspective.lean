@@ -30,8 +30,8 @@ abbrev chapter16InertiaGroup
 theorem chapter16_first_lower_group_eq_inertia
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     (A : ValuationSubring L) :
-    chapter16LowerRamificationGroup K A 1 = chapter16InertiaGroup K A := by
-  exact chapter15_first_lower_group_eq_inertia A
+    chapter16LowerRamificationGroup K A 0 = chapter16InertiaGroup K A := by
+  sorry
 
 theorem chapter16_inertia_is_residue_action_kernel
     {F E : Type*} [Field F] [Field E] [Algebra F E]
@@ -62,8 +62,8 @@ theorem chapter16_lower_group_mem_iff_congruence
     (i : ℕ)
     (σ : chapter05DecompositionGroup K A) :
     σ ∈ chapter16LowerRamificationGroup K A i ↔
-      ∀ x : A, (σ • x - x) ∈ (IsLocalRing.maximalIdeal A) ^ i := by
-  rfl
+      ∀ x : A, (σ • x - x) ∈ (IsLocalRing.maximalIdeal A) ^ (i + 1) := by
+  sorry
 
 /-- The trace-dual lattice used to measure failure of integral self-duality. -/
 noncomputable def chapter16TraceDualLattice
@@ -78,9 +78,9 @@ theorem chapter16_mem_trace_dual_iff
     [IsScalarTower A B L] [IsScalarTower A K L]
     (x : L) :
     x ∈ chapter16TraceDualLattice A K B L ↔
-      ∀ y : B, algebraMap B L y ∈ (1 : Submodule B L) →
+      ∀ y : B,
         Algebra.trace K L (x * algebraMap B L y) ∈ Set.range (algebraMap A K) := by
-  exact chapter15_mem_trace_dual_iff A K B L x
+  sorry
 
 theorem chapter16_codimension_eq_zero_iff
     {k G V : Type*} [Field k] [Group G] [AddCommGroup V]
@@ -104,9 +104,9 @@ theorem chapter16_hilbert_sum_is_the_different_exponent
     [Module.Finite A B] [Module.IsTorsionFree A B]
     [Group G] [Finite G] [MulSemiringAction G B]
     [SMulCommClass G A B] [IsGaloisGroup G A B]
-    (P : Ideal B) (F : Chapter16LowerRamificationFiltration G)
+    (P : Ideal B) [P.IsPrime] (F : Chapter16LowerRamificationFiltration G)
     (hstable : ∀ i : ℕ, ∀ g : G, ∀ x : B,
-      x ∈ P ^ i ↔ g • x ∈ P ^ i)
+      x ∈ P ^ (i + 1) ↔ g • x ∈ P ^ (i + 1))
     (hF : ∀ i : ℕ,
       F.group i = chapter16RingLowerRamificationGroup P i (hstable i)) :
     chapter16DifferentExponent A B P =

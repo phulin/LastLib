@@ -57,10 +57,24 @@ theorem chapter03_tame_kummer_extension_profile
     [Algebra A L] [IsScalarTower A K L] [FiniteDimensional K L]
     (p e : ℕ) [Fact p.Prime]
     [CharP (IsLocalRing.ResidueField A) p]
-    (D : Chapter03TameKummerData (A := A) (K := K) (L := L) p e) :
-    ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
-      q.degree = e ∧ q.ramificationIndex = e ∧ q.residueDegree = 1 ∧
-        LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10TotallyRamified q := by
+    (D : Chapter03TameKummerData (A := A) (K := K) (L := L) p e)
+    (vK : AddValuation K (WithTop ℤ))
+    (vL : AddValuation L (WithTop ℤ))
+    (hdiscreteK :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vK)
+    (hdiscreteL :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vL)
+    (hval : vK.IsEquiv (vL.comap (algebraMap K L)))
+    (hA : vK.Integers A)
+    (hπK : vK (algebraMap A K D.π) = 1)
+    (hscale : ∀ x : K, x ≠ 0 →
+      vL (algebraMap K L x) = e • vK x) :
+    ∃ d : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10HeterogeneousExtensionData
+        vK vL hval,
+      ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
+        LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ProfileRealizedByData d q ∧
+          q.degree = e ∧ q.ramificationIndex = e ∧ q.residueDegree = 1 ∧
+          LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10TotallyRamified q := by
   sorry
 
 /- The Kummer automorphism ratio used to describe the Galois action. -/

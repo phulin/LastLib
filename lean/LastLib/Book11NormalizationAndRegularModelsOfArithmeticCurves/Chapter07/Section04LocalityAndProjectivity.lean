@@ -1,4 +1,4 @@
-import LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter07.Section03NormalizedBlowups
+import LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter07.Section01TheUniversalRemedyForAnIdeal
 
 namespace LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter07
 
@@ -29,8 +29,8 @@ theorem chapter07_blowup_is_local_on_target
 theorem chapter07_blowup_is_projective
     {X : Scheme.{u}} {I : Chapter07CoherentIdeal X}
     (B : Chapter07Blowup I) :
-    Chapter07IsProjectiveMorphism B.projection := by
-  sorry
+    Chapter07IsProjectiveMorphism B.projection :=
+  B.projective
 
 /-! ### Base change and strict transforms -/
 
@@ -52,10 +52,9 @@ structure Chapter07BlowupBaseChangeWitness
   iso : pulledBack.carrier ≅ chapter07BlowupBaseChange B f
   over : iso.hom ≫ chapter07BlowupBaseChangeMap B f = pulledBack.projection
 
-/- The comparison witness is stated for the flat base-change interface used by the Rees algebra. -/
 theorem chapter07_blowup_commutes_with_flat_base_change
     {X Y : Scheme.{u}} {I : Chapter07CoherentIdeal X}
-    (B : Chapter07Blowup I) (f : Y ⟶ X) (hf : Flat f) :
+    (B : Chapter07Blowup I) (f : Y ⟶ X) (_hf : Flat f) :
     Nonempty (Chapter07BlowupBaseChangeWitness B f) := by
   sorry
 
@@ -65,6 +64,7 @@ structure Chapter07StrictTransformData
     {Z Y X : Scheme.{u}} (z : Z ⟶ X) (f : Y ⟶ X) where
   carrier : Scheme.{u}
   inclusion : carrier ⟶ Y
+  inclusion_closed : IsClosedImmersion inclusion
   toSubscheme : carrier ⟶ Z
   compatibility : inclusion ≫ f = toSubscheme ≫ z
   flatBaseChange : Flat z
@@ -82,8 +82,9 @@ theorem chapter07_strict_transform_removes_exceptional_components
 /-! ### Arithmetic surfaces and the generic curve -/
 
 def Chapter07VerticalCenter
-    {X S : Scheme.{u}} (f : X ⟶ S) (I : Chapter07CoherentIdeal X) (η : S) : Prop :=
-  Chapter07CenterDisjointFromGenericFiber f I η
+    {X S : Scheme.{u}} (f : X ⟶ S) (I : Chapter07CoherentIdeal X)
+    (G : Chapter07GenericOpen S) : Prop :=
+  Chapter07CenterDisjointFromGenericOpen f I G
 
 structure Chapter07GenericFiberAgreement
     {Y X S : Scheme.{u}} (g : Y ⟶ X) (f : X ⟶ S) (η : S) where
@@ -99,13 +100,13 @@ theorem chapter07_blowup_isIso_on_generic_fiber
 
 theorem chapter07_arithmetic_surface_center_is_vertical
     (M : Chapter07ArithmeticSurface) (I : Chapter07CoherentIdeal M.model)
-    (η : M.base) (hη : Chapter07CenterDisjointFromGenericFiber M.structureMap I η) :
-    Chapter07VerticalCenter M.structureMap I η :=
-  hη
+    (hI : Chapter07CenterDisjointFromGenericOpen M.structureMap I M.generic) :
+    Chapter07VerticalCenter M.structureMap I M.generic :=
+  hI
 
 theorem chapter07_arithmetic_surface_blowup_preserves_generic_curve
     (M : Chapter07ArithmeticSurface) (I : Chapter07CoherentIdeal M.model)
-    (η : M.base) (hη : Chapter07VerticalCenter M.structureMap I η)
+    (η : M.base) (hη : Chapter07CenterDisjointFromGenericFiber M.structureMap I η)
     (B : Chapter07Blowup I) :
     Nonempty (Chapter07GenericFiberAgreement B.projection M.structureMap η) := by
   exact chapter07_blowup_isIso_on_generic_fiber M.structureMap I η hη B
@@ -117,9 +118,12 @@ composition constructor gives the reusable closure interface for projectivity. -
 inductive Chapter07ProjectiveModification :
     {Y X : Scheme.{u}} → (Y ⟶ X) → Prop
   | blowup {X : Scheme.{u}} {I : Chapter07CoherentIdeal X}
-      (B : Chapter07Blowup I) : Chapter07ProjectiveModification B.projection
+      (B : Chapter07Blowup I)
+      (hbirational : Chapter07Birational B.projection) :
+      Chapter07ProjectiveModification B.projection
   | finiteNormalization {Y X : Scheme.{u}} (f : Y ⟶ X)
       (hfinite : IsFinite f) (hintegral : IsIntegralHom f) :
+      Chapter07Birational f →
       Chapter07ProjectiveModification f
   | comp {Z Y X : Scheme.{u}} {g : Z ⟶ Y} {f : Y ⟶ X}
       (hg : Chapter07ProjectiveModification g)

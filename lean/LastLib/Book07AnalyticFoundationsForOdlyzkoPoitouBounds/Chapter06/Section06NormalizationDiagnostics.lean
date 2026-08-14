@@ -64,7 +64,31 @@ theorem chapter06_triangular_limiting_diagnostic
     Tendsto (fun n =>
       chapter06AsymptoticExpression A.alpha (A.B n) (A.C n) (A.pole n)) atTop
       (𝓝 (Real.eulerMascheroniConstant + Real.log (4 * Real.pi) + A.alpha)) := by
-  sorry
+  have hconst : Tendsto (fun _ : ℕ =>
+      chapter06GammaConstant + A.alpha * (Real.pi / 2)) atTop
+      (𝓝 (chapter06GammaConstant + A.alpha * (Real.pi / 2))) :=
+    tendsto_const_nhds
+  have hpole : Tendsto (fun n => -A.pole n) atTop (𝓝 0) := by
+    simpa using A.pole_tendsto.neg
+  have hB : Tendsto (fun n => -A.B n) atTop
+      (𝓝 (-Real.log 2)) := by
+    simpa using A.B_tendsto.neg
+  have hC : Tendsto (fun n => -A.alpha * A.C n) atTop
+      (𝓝 (-A.alpha * (Real.pi / 2 - 1))) := by
+    simpa using (A.C_tendsto.const_mul (-A.alpha))
+  have hsum := hconst.add hpole |>.add hB |>.add hC
+  have hlog : Real.log (8 * Real.pi) - Real.log 2 =
+      Real.log (4 * Real.pi) := by
+    rw [← Real.log_div (by positivity) (by norm_num)]
+    congr 1
+    ring
+  convert hsum using 1
+  · funext n
+    simp [chapter06AsymptoticExpression]
+    ring
+  · congr 1
+    rw [chapter06_completion_constant_diagnostic, ← hlog]
+    ring
 
 def chapter06AsymptoticExpressionWithoutB (alpha C pole : ℝ) : ℝ :=
   chapter06AsymptoticExpression alpha 0 C pole
@@ -77,7 +101,23 @@ theorem chapter06_missing_B_loss_diagnostic
     Tendsto (fun n =>
       chapter06AsymptoticExpressionWithoutB A.alpha (A.C n) (A.pole n)) atTop
       (𝓝 (Real.eulerMascheroniConstant + Real.log (8 * Real.pi) + A.alpha)) := by
-  sorry
+  have hconst : Tendsto (fun _ : ℕ =>
+      chapter06GammaConstant + A.alpha * (Real.pi / 2)) atTop
+      (𝓝 (chapter06GammaConstant + A.alpha * (Real.pi / 2))) :=
+    tendsto_const_nhds
+  have hpole : Tendsto (fun n => -A.pole n) atTop (𝓝 0) := by
+    simpa using A.pole_tendsto.neg
+  have hC : Tendsto (fun n => -A.alpha * A.C n) atTop
+      (𝓝 (-A.alpha * (Real.pi / 2 - 1))) := by
+    simpa using (A.C_tendsto.const_mul (-A.alpha))
+  have hsum := hconst.add hpole |>.add hC
+  convert hsum using 1
+  · funext n
+    simp [chapter06AsymptoticExpressionWithoutB, chapter06AsymptoticExpression]
+    ring
+  · congr 1
+    rw [chapter06_completion_constant_diagnostic]
+    ring
 
 theorem chapter06_missing_C_loss_diagnostic
     (A : Chapter06TriangularAsymptoticData) :
@@ -85,7 +125,28 @@ theorem chapter06_missing_C_loss_diagnostic
       chapter06AsymptoticExpressionWithoutC A.alpha (A.B n) (A.pole n)) atTop
       (𝓝 (Real.eulerMascheroniConstant + Real.log (4 * Real.pi) +
         A.alpha * (Real.pi / 2))) := by
-  sorry
+  have hconst : Tendsto (fun _ : ℕ =>
+      chapter06GammaConstant + A.alpha * (Real.pi / 2)) atTop
+      (𝓝 (chapter06GammaConstant + A.alpha * (Real.pi / 2))) :=
+    tendsto_const_nhds
+  have hpole : Tendsto (fun n => -A.pole n) atTop (𝓝 0) := by
+    simpa using A.pole_tendsto.neg
+  have hB : Tendsto (fun n => -A.B n) atTop
+      (𝓝 (-Real.log 2)) := by
+    simpa using A.B_tendsto.neg
+  have hsum := hconst.add hpole |>.add hB
+  have hlog : Real.log (8 * Real.pi) - Real.log 2 =
+      Real.log (4 * Real.pi) := by
+    rw [← Real.log_div (by positivity) (by norm_num)]
+    congr 1
+    ring
+  convert hsum using 1
+  · funext n
+    simp [chapter06AsymptoticExpressionWithoutC, chapter06AsymptoticExpression]
+    ring
+  · congr 1
+    rw [chapter06_completion_constant_diagnostic, ← hlog]
+    ring
 
 def chapter06TrivialZeroSet
     (K : Type*) [Field K] [NumberField K] : Set ℂ :=

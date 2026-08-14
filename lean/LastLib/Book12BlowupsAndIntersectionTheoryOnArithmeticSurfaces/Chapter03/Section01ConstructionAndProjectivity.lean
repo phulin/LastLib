@@ -8,7 +8,7 @@ noncomputable section
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits Set TopologicalSpace
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
-open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09
 open LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter07
 open scoped AlgebraicGeometry
 
@@ -77,14 +77,12 @@ def chapter03LineBundleIsomorphic
 structure Chapter03BlowupSignData
     {X : Scheme.{u}} {I : Chapter03CoherentIdeal X}
     (B : Chapter03Blowup I) where
-  exceptional : EffectiveCartierDivisor B.carrier
+  exceptional : Chapter09EffectiveCartierDivisor B.carrier
   exceptional_ideal : exceptional.ideal = chapter03BlowupExceptionalIdeal B
   tautological : Chapter03LineBundle B.carrier
   tautological_is_relatively_ample :
     chapter04Ample B.projection tautological
-  ideal_line : Chapter07IdealLineBundleIso exceptional.ideal
-  tautological_is_O_one :
-    Nonempty (ideal_line.line.sheaf ≅ tautological.sheaf)
+  ideal_line : Chapter07IdealLineBundleIso exceptional.ideal tautological
 
 /- LOCAL_DEPENDENCY_GUESS (3.1): on an integral scheme with nowhere-dense center, the extended
 ideal is an effective Cartier ideal and the relative-Proj tautological line is its `O(1) = O(-E)`
@@ -128,6 +126,9 @@ structure Chapter03ProjectiveLineDegreeConvention
   degree : Chapter03LineBundle (chapter04ProjectiveLine K) → ℤ
   tensor_additive : ∀ L M,
     degree (chapter04LineBundleTensor L M) = degree L + degree M
+  degree_isomorphic :
+    ∀ {L M : Chapter03LineBundle (chapter04ProjectiveLine K)},
+      chapter03LineBundleIsomorphic L M → degree L = degree M
   trivial_degree :
     degree (chapter04ProjectiveLineTrivialLineBundle K) = 0
   tautological : Chapter03LineBundle (chapter04ProjectiveLine K)
@@ -136,7 +137,10 @@ structure Chapter03ProjectiveLineDegreeConvention
       (chapter04ProjectiveLineTautologicalLineBundle K).sheaf)
   tautological_degree : degree tautological = 1
   inverse_tautological : Chapter03LineBundle (chapter04ProjectiveLine K)
-  inverse_is_O_E : Prop
+  inverse_tensor_is_trivial :
+    chapter03LineBundleIsomorphic
+      (chapter04LineBundleTensor tautological inverse_tautological)
+      (chapter04ProjectiveLineTrivialLineBundle K)
   inverse_degree : degree inverse_tautological = -1
 
 theorem chapter03_projective_line_degree_convention_exists

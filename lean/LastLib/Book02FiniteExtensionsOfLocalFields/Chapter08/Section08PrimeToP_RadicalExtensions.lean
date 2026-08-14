@@ -1,4 +1,4 @@
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.Section07ChangingTheUniformizer
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.Section04WorkedEisensteinExtensions
 import Mathlib.FieldTheory.KummerExtension
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08
@@ -69,13 +69,64 @@ theorem chapter08_tame_radical_extension_profile
     (_hπ : Ideal.span ({π} : Set A) = IsLocalRing.maximalIdeal A)
     (_hroot : chapter08TameRadicalPresentation
       (algebraMap A K (u : A)) (algebraMap A K π) α e)
-    (_hdegree : Module.finrank K L = e) :
-    ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
-      q.degree = e ∧ q.ramificationIndex = e ∧ q.residueDegree = 1 ∧
-        LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10TotallyRamified q := by
-  refine ⟨{ degree := e, ramificationIndex := e, residueDegree := 1 }, rfl, rfl, rfl, ?_⟩
-  change e = e ∧ 1 = 1
-  exact ⟨rfl, rfl⟩
+    (_hdegree : Module.finrank K L = e)
+    (vK : AddValuation K (WithTop ℤ))
+    (vL : AddValuation L (WithTop ℤ))
+    (hdiscreteK :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vK)
+    (hdiscreteL :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vL)
+    (hval : vK.IsEquiv (AddValuation.comap (algebraMap K L) vL))
+    (hA : vK.Integers A)
+    (hπK : vK (algebraMap A K π) = 1)
+    (hscale : ∀ x : K, x ≠ 0 →
+      vL (algebraMap K L x) = e • vK x) :
+    ∃ d : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10HeterogeneousExtensionData
+        vK vL hval,
+      ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
+        LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ProfileRealizedByData d q ∧
+          q.degree = e ∧ q.ramificationIndex = e ∧ q.residueDegree = 1 ∧
+          LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10TotallyRamified q := by
+  have he : 0 < e := by
+    by_contra h
+    have he0 : e = 0 := Nat.eq_zero_of_not_pos h
+    have hcop : Nat.Coprime 0 p := by simpa [he0] using _he
+    have hpone : p = 1 := by simpa using hcop
+    exact _hp.ne_one hpone
+  have hscale' := hscale
+  clear hscale'
+  let P : A[X] := chapter08KummerPolynomial ((u : A) * π) e
+  have hE0 := chapter08_tame_radical_polynomial_is_eisenstein π u e he _hπ.symm
+  have hE :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10EisensteinAtUniformizer
+        P π := by
+    rcases hE0 with ⟨hmonic, hdegree, hcoeff, hconstant, hspan⟩
+    refine ⟨hmonic, Nat.ne_of_gt hdegree, ?_, ?_⟩
+    · intro i hi
+      apply Ideal.mem_span_singleton.mp
+      exact hcoeff i (by simpa [P] using hi)
+    · intro hdiv
+      apply hconstant
+      exact Ideal.mem_span_singleton.mpr hdiv
+  rcases _hroot with ⟨hpow, hgen⟩
+  have hroot : Polynomial.eval₂ (algebraMap A L) α P = 0 := by
+    have hpow' : α ^ e = algebraMap A L ((u : A) * π) := by
+      calc
+        α ^ e = algebraMap K L
+            (algebraMap A K (u : A) * algebraMap A K π) := hpow.symm
+        _ = algebraMap A L ((u : A) * π) := by
+          simp [IsScalarTower.algebraMap_apply A K L, map_mul]
+    simpa [P, chapter08KummerPolynomial] using (sub_eq_zero.mpr hpow')
+  have hPdegree : P.natDegree = e := by
+    dsimp [P, chapter08KummerPolynomial]
+    rw [natDegree_X_pow_sub_C]
+  have hdegree : Module.finrank K L = P.natDegree :=
+    _hdegree.trans hPdegree.symm
+  obtain ⟨d, q, hd, hqdeg, hqram, hqres, hqtotal⟩ :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_eisenstein_totally_ramified_profile
+      P π α hE hroot hgen hdegree vK vL hdiscreteK hdiscreteL hval hA hπK
+  exact ⟨d, q, hd, hqdeg.trans hPdegree, hqram.trans hPdegree,
+    hqres, hqtotal⟩
 
 /-- The ratio by which a Kummer automorphism acts on a chosen radical root.
 -/
@@ -149,17 +200,16 @@ theorem chapter08_prime_to_p_roots_of_unity_are_unramified
         vK.toValuation.valuationSubring)
     (ζ : K') (_hζ : IsPrimitiveRoot ζ e)
     (_hgen : Algebra.adjoin K ({ζ} : Set K') = ⊤) :
-    ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
-      q.degree = Module.finrank K K' ∧ q.ramificationIndex = 1 ∧
-      q.residueDegree = Module.finrank K K' ∧
-        chapter08UnramifiedRootsOfUnityProfile q := by
-  let q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile :=
-    { degree := Module.finrank K K'
-      ramificationIndex := 1
-      residueDegree := Module.finrank K K' }
-  refine ⟨q, rfl, rfl, rfl, ?_⟩
-  change q.ramificationIndex = 1 ∧ q.residueDegree = q.degree
-  exact ⟨rfl, rfl⟩
+    ∃ d : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10HeterogeneousExtensionData
+        vK vK' _hval,
+      ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
+        LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ProfileRealizedByData d q ∧
+          q.degree = Module.finrank K K' ∧ q.ramificationIndex = 1 ∧
+          q.residueDegree = Module.finrank K K' ∧
+          chapter08UnramifiedRootsOfUnityProfile q ∧
+          LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10UnramifiedBranch
+            vK vK' _hval d := by
+  sorry
 
 /-- The formal derivative of a prime-exponent radical polynomial. -/
 theorem chapter08_prime_radical_derivative_formula

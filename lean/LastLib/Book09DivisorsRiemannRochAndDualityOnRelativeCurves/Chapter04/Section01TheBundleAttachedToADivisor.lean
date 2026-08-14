@@ -1,4 +1,6 @@
 import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter04.Dependencies
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter03.Dependencies
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter02.Section02EffectiveCartierDivisors
 
 namespace LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter04
 
@@ -27,21 +29,56 @@ def chapter04OofDSections {X : Scheme.{u}}
       chapter04TotalQuotientRestriction inf_le_left g *
         chapter04TotalQuotientRestriction inf_le_right (D.equation i)}
 
+/- The structure map supplies the scalar algebra on each total-quotient
+section.  This keeps the local formula below a genuine submodule condition,
+rather than a bare predicate on a ring. -/
+noncomputable instance chapter04TotalQuotientSectionAlgebra {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X] (U : X.Opens) :
+    Algebra (Γ(X, U)) (Chapter04TotalQuotientSection X U) :=
+  (chapter04StructureToTotal U).toAlgebra
+
+def chapter04OofDSectionsSubmodule {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X]
+    (D : Chapter04CartierDivisor X) (U : X.Opens) :
+    Submodule (Γ(X, U)) (Chapter04TotalQuotientSection X U) :=
+  { carrier := chapter04OofDSections D U
+    zero_mem' := by
+      sorry
+    add_mem' := by
+      sorry
+    smul_mem' := by
+      sorry }
+
 abbrev Chapter04OofDSection {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X]
     (D : Chapter04CartierDivisor X) (U : X.Opens) :=
-  {g : Chapter04TotalQuotientSection X U // g ∈ chapter04OofDSections D U}
+  chapter04OofDSectionsSubmodule D U
 
-/- LOCAL_DEPENDENCY_GUESS: the pinned sheaf API does not yet construct the
+def chapter04OofDSectionRestriction {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X]
+    (D : Chapter04CartierDivisor X) {U V : X.Opens} (h : V ≤ U)
+    (s : Chapter04OofDSection D U) : Chapter04OofDSection D V :=
+  { val := chapter04TotalQuotientRestriction h s.1
+    property := by
+      sorry }
+
+/- LOCAL_DEPENDENCY_GUESS: the pinned sheaf API does not yet construct a named
 subsheaf of the total quotient sheaf cut out by these local inequalities.
-This record keeps the section formula and its sheafification tied together,
-instead of introducing an unrelated module sheaf called `O(D)`. -/
+The pointwise submodules and their restriction-compatible linear
+equivalences below keep the section formula tied to the line bundle. -/
 structure Chapter04OofDData {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X]
     (D : Chapter04CartierDivisor X) where
   lineBundle : Chapter04LineBundle X
   sectionEquiv : ∀ U : X.Opens,
-    lineBundle.sheaf.val.presheaf.obj (Opposite.op U) ≃ Chapter04OofDSection D U
+    Γ(lineBundle.sheaf, U) ≃ₗ[Γ(X, U)]
+      Chapter04OofDSection D U
+  sectionEquiv_restrict :
+    ∀ (U V : X.Opens) (h : V ≤ U) (s : Chapter04OofDSection D U),
+      sectionEquiv V
+          (lineBundle.sheaf.val.presheaf.map (homOfLE h).op
+            ((sectionEquiv U).symm s)) =
+        chapter04OofDSectionRestriction D h s
 
 theorem chapter04_oOfD_data_exists {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X]
@@ -53,7 +90,7 @@ noncomputable def chapter04OofDData {X : Scheme.{u}}
     (D : Chapter04CartierDivisor X) : Chapter04OofDData D :=
   Classical.choice (chapter04_oOfD_data_exists D)
 
-noncomputable def chapter04OofD {X : Scheme.{u}}
+noncomputable abbrev chapter04OofD {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X]
     (D : Chapter04CartierDivisor X) : Chapter04LineBundle X :=
   (chapter04OofDData D).lineBundle
@@ -61,7 +98,7 @@ noncomputable def chapter04OofD {X : Scheme.{u}}
 theorem chapter04OofD_sections_characterization {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X]
     (D : Chapter04CartierDivisor X) (U : X.Opens) :
-    ∃ e : (chapter04OofD D).sheaf.val.presheaf.obj (Opposite.op U) ≃
+    ∃ e : Γ((chapter04OofD D).sheaf, U) ≃
       Chapter04OofDSection D U,
       ∀ s, (e s).1 ∈ chapter04OofDSections D U := by
   exact ⟨(chapter04OofDData D).sectionEquiv U, fun s => (chapter04OofDData D).sectionEquiv U s |>.2⟩
@@ -89,6 +126,63 @@ noncomputable def chapter04OofNegD {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X]
     (D : Chapter04CartierDivisor X) : Chapter04LineBundle X :=
   chapter04OofD (chapter04CartierDivisorNeg D)
+
+noncomputable def chapter04EffectiveCartierIdealQuotient {X : Scheme.{u}}
+    (I : X.IdealSheafData) :
+    (chapter04TrivialLineBundle X).sheaf ⟶
+      (Scheme.Modules.pushforward I.subschemeι).obj
+        (SheafOfModules.unit I.subscheme.ringCatSheaf) :=
+  SheafOfModules.unitToPushforwardObjUnit I.subschemeι.toRingCatSheafHom
+
+noncomputable def chapter04EffectiveCartierIdealOminusD {X : Scheme.{u}}
+    (I : X.IdealSheafData) : X.Modules :=
+  kernel (chapter04EffectiveCartierIdealQuotient I)
+
+noncomputable def chapter04EffectiveCartierIdealInclusion {X : Scheme.{u}}
+    (I : X.IdealSheafData) :
+    chapter04EffectiveCartierIdealOminusD I ⟶
+      (chapter04TrivialLineBundle X).sheaf :=
+  kernel.ι (chapter04EffectiveCartierIdealQuotient I)
+
+/-!
+The exact-sequence witness is placed after `O(-D)` is available, so its
+negative term cannot be an unrelated line bundle chosen by an existential
+proof.  This records the canonical identification needed by the effective
+Cartier sequence below.
+-/
+structure Chapter04EffectiveCartierSequenceData {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X]
+    (D : Chapter04EffectiveCartierDivisor X) where
+  negative : Chapter04LineBundle X
+  negative_is_OofNegD :
+    chapter04LineBundleIsomorphic negative (chapter04OofNegD D.cartier)
+  quotient : X.Modules
+  quotient_iso : quotient ≅
+    (Scheme.Modules.pushforward D.inclusion).obj
+      (SheafOfModules.unit D.subscheme.ringCatSheaf)
+  negative_to_ideal :
+    negative.sheaf ≅ chapter04EffectiveCartierIdealOminusD D.ideal
+  inclusion_map : negative.sheaf ⟶ (chapter04TrivialLineBundle X).sheaf
+  quotient_map : (chapter04TrivialLineBundle X).sheaf ⟶ quotient
+  inclusion_map_eq :
+    inclusion_map =
+      negative_to_ideal.hom ≫ chapter04EffectiveCartierIdealInclusion D.ideal
+  quotient_map_eq :
+    quotient_map ≫ quotient_iso.hom =
+      chapter04EffectiveCartierIdealQuotient D.ideal
+  comp_zero : inclusion_map ≫ quotient_map = 0
+  exact : (ShortComplex.mk inclusion_map quotient_map comp_zero).Exact
+
+theorem chapter04_effectiveCartier_sequence_exists {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X]
+    (D : Chapter04EffectiveCartierDivisor X) :
+    Nonempty (Chapter04EffectiveCartierSequenceData D) := by
+  sorry
+
+noncomputable def chapter04EffectiveCartierSequenceData {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X]
+    (D : Chapter04EffectiveCartierDivisor X) : Chapter04EffectiveCartierSequenceData D :=
+  Classical.choice (chapter04_effectiveCartier_sequence_exists D)
 
 theorem chapter04_oOfNegD_is_dual {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X]
@@ -118,16 +212,21 @@ theorem chapter04_oOf_sub_is_tensor_with_dual {X : Scheme.{u}}
 def chapter04OofDGlobalRationalValue {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X]
     (D : Chapter04CartierDivisor X)
-    (s : Chapter04GlobalSection (chapter04OofD D)) :
+    (s : Γ((chapter04OofDData D).lineBundle.sheaf, (⊤ : X.Opens))) :
     Chapter04TotalQuotientSection X ⊤ :=
   ((chapter04OofDData D).sectionEquiv ⊤ s).1
 
 structure Chapter04CanonicalSectionData {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X]
     (D : Chapter04EffectiveCartierDivisor X) where
-  section : Chapter04GlobalSection (chapter04OofD D.cartier)
-  rationalValue : chapter04OofDGlobalRationalValue D.cartier section =
+  canonical_section :
+    Γ((chapter04OofDData D.cartier).lineBundle.sheaf, (⊤ : X.Opens))
+  rationalValue : chapter04OofDGlobalRationalValue D.cartier canonical_section =
     chapter04StructureToTotal ⊤ 1
+  canonical_section_eq_one :
+    (chapter04OofDData D.cartier).sectionEquiv ⊤ canonical_section =
+      (⟨chapter04StructureToTotal ⊤ 1, by sorry⟩ :
+        Chapter04OofDSection D.cartier ⊤)
   vanishingIdeal : X.IdealSheafData
   vanishingIdeal_eq : vanishingIdeal = D.ideal
 
@@ -145,8 +244,8 @@ noncomputable def chapter04CanonicalSectionData {X : Scheme.{u}}
 noncomputable def chapter04CanonicalSection {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X]
     (D : Chapter04EffectiveCartierDivisor X) :
-    Chapter04GlobalSection (chapter04OofD D.cartier) :=
-  (chapter04CanonicalSectionData D).section
+    Γ((chapter04OofDData D.cartier).lineBundle.sheaf, (⊤ : X.Opens)) :=
+  (chapter04CanonicalSectionData D).canonical_section
 
 theorem chapter04_canonicalSection_has_rational_value_one {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X]
@@ -172,7 +271,14 @@ theorem chapter04_effectiveCartier_negative_lineBundle_is_ideal {X : Scheme.{u}}
     chapter04LineBundleIsomorphic
       (chapter04EffectiveCartierNegativeLineBundle D)
       (chapter04OofNegD D.cartier) := by
-  sorry
+  exact (chapter04EffectiveCartierSequenceData D).negative_is_OofNegD
+
+theorem chapter04_effectiveCartier_negative_lineBundle_is_ideal_kernel {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X]
+    (D : Chapter04EffectiveCartierDivisor X) :
+    Nonempty ((chapter04EffectiveCartierNegativeLineBundle D).sheaf ≅
+      chapter04EffectiveCartierIdealOminusD D.ideal) := by
+  exact ⟨(chapter04EffectiveCartierSequenceData D).negative_to_ideal⟩
 
 def chapter04EffectiveCartierExactSequence {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X]
@@ -180,6 +286,7 @@ def chapter04EffectiveCartierExactSequence {X : Scheme.{u}}
   ShortComplex.mk
     (chapter04EffectiveCartierSequenceData D).inclusion_map
     (chapter04EffectiveCartierSequenceData D).quotient_map
+    (chapter04EffectiveCartierSequenceData D).comp_zero
 
 theorem chapter04_effectiveCartier_exact_sequence {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X]
@@ -187,40 +294,74 @@ theorem chapter04_effectiveCartier_exact_sequence {X : Scheme.{u}}
     (chapter04EffectiveCartierExactSequence D).Exact := by
   exact (chapter04EffectiveCartierSequenceData D).exact
 
+theorem chapter04_effectiveCartier_add_exists {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X]
+    (D E : Chapter04EffectiveCartierDivisor X) :
+    Nonempty {F : Chapter04EffectiveCartierDivisor X //
+      F.cartier = chapter04CartierDivisorAdd D.cartier E.cartier ∧
+        F.ideal = D.ideal * E.ideal} := by
+  sorry
+
+noncomputable def chapter04EffectiveCartierDivisorAdd {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X]
+    (D E : Chapter04EffectiveCartierDivisor X) :
+    Chapter04EffectiveCartierDivisor X :=
+  (Classical.choice (chapter04_effectiveCartier_add_exists D E)).1
+
+theorem chapter04_effectiveCartierDivisorAdd_cartier {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X]
+    (D E : Chapter04EffectiveCartierDivisor X) :
+    (chapter04EffectiveCartierDivisorAdd D E).cartier =
+      chapter04CartierDivisorAdd D.cartier E.cartier := by
+  exact (Classical.choice (chapter04_effectiveCartier_add_exists D E)).2.1
+
+theorem chapter04_effectiveCartierDivisorAdd_ideal {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X]
+    (D E : Chapter04EffectiveCartierDivisor X) :
+    (chapter04EffectiveCartierDivisorAdd D E).ideal = D.ideal * E.ideal := by
+  exact (Classical.choice (chapter04_effectiveCartier_add_exists D E)).2.2
+
 /-! ### Curves and the pole-bound description -/
 
 def chapter04CurveOofDCondition {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X] [IsIntegral X] [IsLocallyNoetherian X]
+    [Chapter04RationalFunctionLocalValueAPI X]
     [Chapter04CartierOrderAPI X]
     (D : Chapter04CartierDivisor X) (U : X.Opens) (g : X.functionField) : Prop :=
-  ∀ x : X, x ∈ U → ∀ hx : coheight x = 1,
+  ∀ x : X, x ∈ U → ∀ hx : Order.coheight x = 1,
     AlgebraicGeometry.Scheme.ord g x + chapter04CartierOrder D ⟨x, hx⟩ ≥ 0
 
 def chapter04RationalFunctionsWithPoleBound {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X] [IsIntegral X] [IsLocallyNoetherian X]
+    [Chapter04RationalFunctionLocalValueAPI X]
     [Chapter04CartierOrderAPI X]
     (D : Chapter04CartierDivisor X) : Set X.functionField :=
   {g | chapter04CurveOofDCondition D ⊤ g}
 
 def chapter04RationalFunctionsWithPoleBoundOnOpen {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X] [IsIntegral X] [IsLocallyNoetherian X]
+    [Chapter04RationalFunctionLocalValueAPI X]
     [Chapter04CartierOrderAPI X]
     (D : Chapter04CartierDivisor X) (U : X.Opens) : Set X.functionField :=
   {g | chapter04CurveOofDCondition D U g}
 
 theorem chapter04_regular_integral_curve_OofD_sections {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X] [IsIntegral X] [IsLocallyNoetherian X]
+    [Chapter04RationalFunctionLocalValueAPI X]
     [Chapter04CartierOrderAPI X]
     (D : Chapter04CartierDivisor X) (U : X.Opens) :
     ∀ g : X.functionField,
       g ∈ chapter04RationalFunctionsWithPoleBoundOnOpen D U ↔
-        ∀ x : X, x ∈ U → ∀ hx : coheight x = 1,
+        ∀ x : X, x ∈ U → ∀ hx : Order.coheight x = 1,
           AlgebraicGeometry.Scheme.ord g x + chapter04CartierOrder D ⟨x, hx⟩ ≥ 0 := by
   intro g
   rfl
 
 theorem chapter04_globalSections_OofD_are_bounded_poles {X : Scheme.{u}}
-    [Chapter04TotalQuotientRingAPI X] [IsIntegral X] [IsLocallyNoetherian X]
+    [Chapter04TotalQuotientRingAPI X]
+    [LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter03.Chapter03IntegralNoetherianCurve X]
+    [LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter03.Chapter03Regular X]
+    [Chapter04RationalFunctionLocalValueAPI X]
     [Chapter04CartierOrderAPI X]
     (D : Chapter04CartierDivisor X) :
     Nonempty (Chapter04GlobalSection (chapter04OofD D) ≃

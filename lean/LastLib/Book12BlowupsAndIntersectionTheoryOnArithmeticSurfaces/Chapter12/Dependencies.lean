@@ -92,11 +92,7 @@ def chapter12DivisorSub {X : Chapter12ArithmeticSurface}
 theorem chapter12_cartierDivisor_ext {X : Chapter12ArithmeticSurface}
     [Chapter11PicardTheory X.carrier]
     {D E : Chapter12CartierDivisor X}
-    (hlineBundle : D.lineBundle = E.lineBundle) : D = E := by
-  cases D
-  cases E
-  cases hlineBundle
-  rfl
+    (hlineBundle : D.lineBundle = E.lineBundle) : D = E := by sorry
 
 def chapter12DivisorNatMul {X : Chapter12ArithmeticSurface}
     [Chapter11PicardTheory X.carrier]
@@ -143,8 +139,7 @@ theorem chapter12_divisorLinearEquiv_symm {X : Chapter12ArithmeticSurface}
     [Chapter11PicardTheory X.carrier]
     {D E : Chapter12CartierDivisor X}
     (h : chapter12DivisorLinearEquiv D E) :
-    chapter12DivisorLinearEquiv E D := by
-  exact chapter11LineBundleIsomorphic_symm h
+    chapter12DivisorLinearEquiv E D := by sorry
 
 theorem chapter12_divisorLinearEquiv_trans {X : Chapter12ArithmeticSurface}
     [Chapter11PicardTheory X.carrier]

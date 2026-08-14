@@ -194,7 +194,7 @@ theorem chapter06_piece_fixedSpaceCodim_step
     {r : ℝ} (hr : r ∈ B.breaks) (hr_pos : 0 < r) (u : ℝ) :
     chapter06PieceFixedSpaceCodim ρ (B.piece r)
         (chapter05UpperRamificationGroup D u) =
-      if 0 < u ∧ u ≤ r then Module.finrank L (B.piece r) else 0 := by
+      if u ≤ r then Module.finrank L (B.piece r) else 0 := by
   sorry
 
 theorem chapter06_upper_fixedSpaceCodim_decomposition
@@ -288,25 +288,19 @@ def chapter06TotalSwanConductorIntegral
     (ρ : Representation L G V) : Prop :=
   ∃ n : ℤ, (n : ℝ) = chapter06SwanConductor D ρ
 
-/- LOCAL_DEPENDENCY_GUESS: the Artin-character integrality theorem is proved
-later in the book and is not available in the earlier checkout.  This
-finite-local statement records the intended theorem at the canonical
-Chapter 5 local-Galois interface without assuming its conclusion as data. -/
-theorem chapter06_total_swan_conductor_integral_of_artin_character_theorem
-    {K M E : Type*} [Field K] [Field M] [Algebra K M]
-    [FiniteDimensional K M] [IsGalois K M]
-    {V : Type*} [Field E] [CharZero E] [AddCommGroup V]
-    [Module E V] [FiniteDimensional E V]
-    (F : Chapter05LocalGaloisUpperData K M)
-    [Algebra (IsLocalRing.ResidueField F.vK.toValuation.valuationSubring)
-      (IsLocalRing.ResidueField F.vL.toValuation.valuationSubring)]
-    [PerfectField (IsLocalRing.ResidueField F.vK.toValuation.valuationSubring)]
-    (hresidue_separable :
-      Algebra.IsSeparable
-        (IsLocalRing.ResidueField F.vK.toValuation.valuationSubring)
-        (IsLocalRing.ResidueField F.vL.toValuation.valuationSubring))
-    (ρ : Representation E (Gal(M / K)) V) :
-    chapter06TotalSwanConductorIntegral F.profile ρ := by
+/-- The source-facing integrality API for a finite-image representation on a
+realized finite local Galois profile. -/
+theorem chapter06_finite_image_representation_total_swan_conductor_integral
+    {K L F V : Type*}
+    [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
+    [IsGalois K L] [Finite (L ≃ₐ[K] L)]
+    [Field F] [CharZero F] [AddCommGroup V] [Module F V]
+    [FiniteDimensional F V]
+    (D : Chapter05LocalGaloisUpperData K L)
+    (ρ : Representation F (L ≃ₐ[K] L) V)
+    (hperfect :
+      PerfectField (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)) :
+    chapter06TotalSwanConductorIntegral D.profile ρ := by
   sorry
 
 theorem chapter06_swan_conductor_rational_of_rational_breaks
@@ -322,12 +316,11 @@ theorem chapter06_swan_conductor_rational_of_rational_breaks
 
 /-!
 The integral total Swan assertion for a general nonabelian representation is
-deliberately exposed as a proposition rather than asserted here: its proof is
-the later Artin-character theorem.  In contrast, the rational conductor
-statement above is already the finite-break consequence available in this
-chapter.  Separability of one chosen residue level is therefore enough for
-the decomposition and rational formula, but does not supply the integral
-conclusion.
+exposed by the finite local Galois profile API above; its proof is the later
+Artin-character theorem.  In contrast, the rational conductor statement above
+is already the finite-break consequence available in this chapter.  Separability
+of one chosen residue level is therefore enough for the decomposition and
+rational formula, but does not supply the integral conclusion.
 -/
 
 end

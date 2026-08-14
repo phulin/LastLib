@@ -16,7 +16,7 @@ variable {K : Type*} [Field K] [NumberField K]
 theorem chapter11_modulus_finite_part_is_finitely_supported (m : RayModulus K) :
     (m.finiteExponent.support : Set
       (IsDedekindDomain.HeightOneSpectrum (𝓞 K))).Finite := by
-  sorry
+  exact RayModulus.finiteExponent_support_finite m
 
 theorem chapter11_modulus_selected_archimedean_places_are_real (m : RayModulus K) :
     ∀ v ∈ m.infinitePart, NumberField.InfinitePlace.IsReal v := by
@@ -24,7 +24,9 @@ theorem chapter11_modulus_selected_archimedean_places_are_real (m : RayModulus K
 
 theorem chapter11_modulus_has_no_complex_sign_component (m : RayModulus K) :
     ∀ v, NumberField.InfinitePlace.IsComplex v → v ∉ m.infinitePart := by
-  sorry
+  intro v hv hmem
+  exact (NumberField.InfinitePlace.not_isReal_iff_isComplex.mpr hv)
+    (m.infinitePart_isReal v hmem)
 
 theorem chapter11_modulus_is_finite_part_times_real_part (m : RayModulus K) :
     m.finiteIdeal =

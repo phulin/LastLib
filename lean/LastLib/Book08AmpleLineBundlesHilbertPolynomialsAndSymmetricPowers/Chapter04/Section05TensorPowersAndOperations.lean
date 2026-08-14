@@ -1,4 +1,5 @@
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Dependencies
+import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
 
 namespace LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
 
@@ -25,14 +26,17 @@ theorem chapter04_lineBundleIsomorphic_symm
     {X : Scheme.{u}} {L M : Chapter04LineBundle X}
     (h : chapter04LineBundleIsomorphic L M) :
     chapter04LineBundleIsomorphic M L := by
-  sorry
+  obtain ⟨e⟩ := h
+  exact ⟨e.symm⟩
 
 theorem chapter04_lineBundleIsomorphic_trans
     {X : Scheme.{u}} {L M N : Chapter04LineBundle X}
     (hLM : chapter04LineBundleIsomorphic L M)
     (hMN : chapter04LineBundleIsomorphic M N) :
     chapter04LineBundleIsomorphic L N := by
-  sorry
+  obtain ⟨e⟩ := hLM
+  obtain ⟨g⟩ := hMN
+  exact ⟨e ≪≫ g⟩
 
 theorem chapter04_ample_iff_of_lineBundleIsomorphic
     {X S : Scheme.{u}} (f : X ⟶ S)
@@ -67,51 +71,81 @@ theorem chapter04_ample_eventually_tensor_twist
         (chapter04LineBundleTensor (chapter04LineBundleTensorPower L n) M) := by
   sorry
 
-/-- Every sufficiently high power of an ample bundle is relatively very ample. -/
+/-- Over an affine quasi-compact base, every sufficiently high power of an ample bundle is relatively very ample. -/
 theorem chapter04_ample_eventually_veryAmple_power
-    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact (𝟙 S)] [QuasiCompact f]
+    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact (𝟙 S)] [IsAffine S] [QuasiCompact f]
     [LocallyOfFiniteType f] [QuasiSeparated f]
     (L : Chapter04LineBundle X) (hL : chapter04Ample f L) :
     ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
       chapter04VeryAmple f (chapter04LineBundleTensorPower L n) := by
   sorry
 
-/-- Over a quasi-compact base, an ample line bundle on a quasi-compact finite-type family has a very ample power. -/
+/-- Over an affine quasi-compact base, an ample line bundle on a quasi-compact finite-type family has a very ample power. -/
 theorem chapter04_ample_has_veryAmple_power
-    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact (𝟙 S)] [QuasiCompact f]
+    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact (𝟙 S)] [IsAffine S] [QuasiCompact f]
     [LocallyOfFiniteType f] [QuasiSeparated f]
     (L : Chapter04LineBundle X) (hL : chapter04Ample f L) :
     ∃ d : ℕ, 0 < d ∧ chapter04VeryAmple f (chapter04LineBundleTensorPower L d) := by
-  sorry
+  obtain ⟨n₀, hn₀⟩ := chapter04_ample_eventually_veryAmple_power f L hL
+  let d := max n₀ 1
+  refine ⟨d, ?_, hn₀ d ?_⟩
+  · exact lt_of_lt_of_le Nat.zero_lt_one (Nat.le_max_right n₀ 1)
+  · exact Nat.le_max_left n₀ 1
 
-/-- If the family is proper, a sufficiently high ample power gives a closed projective embedding. -/
+/-- Over an affine quasi-compact base, if the family is proper, a sufficiently high ample power gives a closed projective embedding. -/
 theorem chapter04_proper_ample_has_closed_projective_power
-    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact (𝟙 S)] [IsProper f] [QuasiCompact f]
+    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact (𝟙 S)] [IsAffine S] [IsProper f] [QuasiCompact f]
     (L : Chapter04LineBundle X) (hL : chapter04Ample f L) :
     ∃ d : ℕ, 0 < d ∧
       ∃ w : Chapter04VeryAmpleWitness f (chapter04LineBundleTensorPower L d),
         IsClosedImmersion w.map := by
-  sorry
+  obtain ⟨d, hd, hV⟩ := chapter04_ample_has_veryAmple_power f L hL
+  obtain ⟨w⟩ := hV
+  refine ⟨d, hd, w, ?_⟩
+  let : IsImmersion w.map := w.immersion
+  have : IsProper (w.map ≫ w.projectiveBundle.projection) := by
+    rw [w.over]
+    infer_instance
+  have : IsProper w.map := IsProper.of_comp w.map w.projectiveBundle.projection
+  rw [IsClosedImmersion.iff_isProper_and_mono]
+  exact ⟨inferInstance, inferInstance⟩
 
 /-!
-For a proper family the eventual very-ampleness statement upgrades to closed
+For an affine quasi-compact base, a proper family upgrades eventual very-ampleness to closed
 immersions, so the exponent can be chosen uniformly rather than separately
 for one power.
 -/
 theorem chapter04_proper_ample_eventually_closed_projective_power
-    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact (𝟙 S)] [IsProper f] [QuasiCompact f]
+    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact (𝟙 S)] [IsAffine S] [IsProper f] [QuasiCompact f]
     [QuasiSeparated f]
     (L : Chapter04LineBundle X) (hL : chapter04Ample f L) :
     ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
       ∃ w : Chapter04VeryAmpleWitness f (chapter04LineBundleTensorPower L n),
         IsClosedImmersion w.map := by
-  sorry
+  obtain ⟨n₀, hn₀⟩ := chapter04_ample_eventually_veryAmple_power f L hL
+  refine ⟨n₀, ?_⟩
+  intro n hn
+  obtain ⟨w⟩ := hn₀ n hn
+  refine ⟨w, ?_⟩
+  let : IsImmersion w.map := w.immersion
+  have : IsProper (w.map ≫ w.projectiveBundle.projection) := by
+    rw [w.over]
+    infer_instance
+  have : IsProper w.map := IsProper.of_comp w.map w.projectiveBundle.projection
+  rw [IsClosedImmersion.iff_isProper_and_mono]
+  exact ⟨inferInstance, inferInstance⟩
 
 theorem chapter04_proper_ample_is_projective
-    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact (𝟙 S)] [IsProper f] [QuasiCompact f]
+    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact (𝟙 S)] [IsAffine S] [IsProper f] [QuasiCompact f]
     (L : Chapter04LineBundle X) (hL : chapter04Ample f L) :
     chapter04Projective f := by
-  sorry
+  obtain ⟨d, hd, w, hw⟩ :=
+    chapter04_proper_ample_has_closed_projective_power f L hL
+  exact ⟨{ projectiveBundle := w.projectiveBundle
+           universalQuotientCompatible := w.universalQuotientCompatible
+           map := w.map
+           closedImmersion := hw
+           over := w.over }⟩
 
 /-- Tensor products of ample line bundles are ample. -/
 theorem chapter04_ample_tensor

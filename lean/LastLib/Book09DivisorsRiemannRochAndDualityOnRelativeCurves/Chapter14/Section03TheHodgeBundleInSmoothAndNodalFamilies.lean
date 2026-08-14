@@ -40,7 +40,7 @@ def chapter14DifferentialHodgeBundle
   chapter14DifferentialPushforwardOf Ω F.curve.map
 
 def chapter14SmoothingDifferentialFailureStatement
-    (F : Chapter14SmoothRelativeCurveFamily)
+    (F : Chapter14NodalRelativeCurveFamily)
     (D : Chapter14RelativeDualityData F.curve)
     (Ω : Chapter14RelativeDifferentialData) : Prop :=
   Nonempty (Chapter14SmoothingDifferentialFailureWitness F D Ω)
@@ -52,14 +52,17 @@ structure Chapter14SmoothDifferentialDualizingIdentification
     (D : Chapter14RelativeDualityData F.curve)
     (Ω : Chapter14RelativeDifferentialData) where
   sheafIso : Ω.differentials F.curve.map ≅ D.dualizing.omega
-  pushforwardIso : chapter14DifferentialHodgeBundle F Ω ≅ chapter14HodgeBundle D
-  pushforwardIso_is_induced : Prop
+  pushforwardIso :
+    chapter14DifferentialHodgeBundle (F := F) Ω ≅ chapter14HodgeBundle D
+  pushforwardIso_hom_eq_map_sheafIso :
+    pushforwardIso.hom =
+      (Scheme.Modules.pushforward F.curve.map).map sheafIso.hom
 
 def chapter14SmoothHodgeBundle
     {F : Chapter14SmoothRelativeCurveFamily}
     {D : Chapter14RelativeDualityData F.curve}
     {Ω : Chapter14RelativeDifferentialData}
-    (I : Chapter14SmoothDifferentialDualizingIdentification F D Ω) :
+    (_I : Chapter14SmoothDifferentialDualizingIdentification F D Ω) :
     F.curve.S.Modules :=
   chapter14HodgeBundle D
 
@@ -68,25 +71,22 @@ structure Chapter14SmoothHodgeBundleFiberDescription
     (D : Chapter14RelativeDualityData F.curve)
     (Ω : Chapter14RelativeDifferentialData)
     (I : Chapter14SmoothDifferentialDualizingIdentification F D Ω)
-    (B : Chapter14FiberCohomologyData) where
+  (B : Chapter14FiberCohomologyData F.curve) where
   hodgeLocallyFree : chapter04FiniteLocallyFree (chapter14HodgeBundle D)
-  fiberH0 : ∀ s : F.curve.S, Type
-  fiberIsoH0 : ∀ s : F.curve.S,
-    Nonempty (B.fiber (chapter14HodgeBundle D) s ≃ fiberH0 s)
-  fiberH0IsoDifferentialSections : ∀ s : F.curve.S,
-    Nonempty (fiberH0 s ≃ B.h0 F.curve.map
-      (Ω.differentials F.curve.map) s)
-  fiberH0IsDifferentialSections : ∀ s : F.curve.S, Prop
+  fiberIsoH0DifferentialSections : ∀ s : F.curve.S,
+    Nonempty (((B.fiber (chapter14HodgeBundle D) s : Type) ≃ₗ[
+      F.curve.S.residueField s] (B.h0 (Ω.differentials F.curve.map) s).module))
   rank : ℕ
   rank_eq_genus : rank = F.genus
-  fiberDimension : ∀ s : F.curve.S, ∃ n : ℕ, n = rank
+  fiberFinrank_eq_rank : ∀ s : F.curve.S,
+    B.fiberFinrank (chapter14HodgeBundle D) s = rank
 
 def chapter14SmoothHodgeBundleStatement
     (F : Chapter14SmoothRelativeCurveFamily)
     (D : Chapter14RelativeDualityData F.curve)
     (Ω : Chapter14RelativeDifferentialData)
     (I : Chapter14SmoothDifferentialDualizingIdentification F D Ω)
-    (B : Chapter14FiberCohomologyData) : Prop :=
+    (B : Chapter14FiberCohomologyData F.curve) : Prop :=
   Nonempty (Chapter14SmoothHodgeBundleFiberDescription F D Ω I B)
 
 theorem chapter14_smooth_hodge_bundle_is_locally_free_rank_genus
@@ -94,19 +94,20 @@ theorem chapter14_smooth_hodge_bundle_is_locally_free_rank_genus
     (D : Chapter14RelativeDualityData F.curve)
     (Ω : Chapter14RelativeDifferentialData)
     (I : Chapter14SmoothDifferentialDualizingIdentification F D Ω)
-    (B : Chapter14FiberCohomologyData)
+    (B : Chapter14FiberCohomologyData F.curve)
     (H : Chapter14RelativeCohomologyConstancyData F.curve D)
-    (hB : H.fiberCohomology = B) :
+    (hB : H.fiberCohomology = B)
+    (hgenus : ∀ s : F.curve.S, H.h1Rank s = F.genus) :
     Nonempty (Chapter14SmoothHodgeBundleFiberDescription F D Ω I B) := by
   sorry
 
-theorem chapter14_smooth_hodge_bundle_description_of_statement
+def chapter14_smooth_hodge_bundle_description_of_statement
     (F : Chapter14SmoothRelativeCurveFamily)
     (D : Chapter14RelativeDualityData F.curve)
     (Ω : Chapter14RelativeDifferentialData)
     (I : Chapter14SmoothDifferentialDualizingIdentification F D Ω)
-    (B : Chapter14FiberCohomologyData)
-    (H : Chapter14SmoothHodgeBundleStatement F D Ω I B) :
+    (B : Chapter14FiberCohomologyData F.curve)
+    (H : chapter14SmoothHodgeBundleStatement F D Ω I B) :
     Chapter14SmoothHodgeBundleFiberDescription F D Ω I B := by
   exact Classical.choice H
 
@@ -115,23 +116,23 @@ theorem chapter14_smooth_hodge_bundle_description_of_statement
 structure Chapter14NodalHodgeBundleDescription
     (F : Chapter14NodalRelativeCurveFamily)
     (D : Chapter14RelativeDualityData F.curve)
-    (B : Chapter14FiberCohomologyData) where
+    (B : Chapter14FiberCohomologyData F.curve) where
   hodgeBundle : F.curve.S.Modules
   hodgeBundle_eq_duality_pushforward : hodgeBundle = chapter14HodgeBundle D
   differentialDescription : Chapter14NodalFiberDifferentialDescription F D B
   hodgeLocallyFree : chapter04FiniteLocallyFree hodgeBundle
   rank : ℕ
   rank_eq_arithmeticGenus : rank = F.arithmeticGenus
-  fiber : ∀ s : F.curve.S, Type
   fiberIso : ∀ s : F.curve.S,
-    Nonempty (B.fiber hodgeBundle s ≃ fiber s)
-  fiberIsNormalizationDifferentialsWithOppositeResidues :
-    ∀ s : F.curve.S, Prop
-  normalizedComponentGenus : ∀ s : F.curve.S, ℕ
-  dualGraphCycleRank : ∀ s : F.curve.S, ℕ
+    Nonempty (((B.fiber hodgeBundle s : Type) ≃ₗ[
+      F.curve.S.residueField s]
+      (differentialDescription.normalizedDifferentials s : Type)))
+  normalizedComponentGenus : ∀ _s : F.curve.S, ℕ
+  dualGraphCycleRank : ∀ _s : F.curve.S, ℕ
   arithmeticGenusDecomposition : ∀ s : F.curve.S,
     normalizedComponentGenus s + dualGraphCycleRank s = F.arithmeticGenus
-  nodePoleFormsAccountForGraphCycles : ∀ s : F.curve.S, Prop
+  fiberFinrank_eq_rank : ∀ s : F.curve.S,
+    B.fiberFinrank hodgeBundle s = rank
 
 def chapter14NodalHodgeBundle
     {F : Chapter14NodalRelativeCurveFamily}
@@ -141,22 +142,24 @@ def chapter14NodalHodgeBundle
 def chapter14NodalHodgeBundleStatement
     (F : Chapter14NodalRelativeCurveFamily)
     (D : Chapter14RelativeDualityData F.curve)
-    (B : Chapter14FiberCohomologyData) : Prop :=
+    (B : Chapter14FiberCohomologyData F.curve) : Prop :=
   Nonempty (Chapter14NodalHodgeBundleDescription F D B)
 
 theorem chapter14_nodal_hodge_bundle_description
     (F : Chapter14NodalRelativeCurveFamily)
     (D : Chapter14RelativeDualityData F.curve)
-    (B : Chapter14FiberCohomologyData)
+    (B : Chapter14FiberCohomologyData F.curve)
     (H : Chapter14RelativeCohomologyConstancyData F.curve D)
-    (hB : H.fiberCohomology = B) :
+    (hB : H.fiberCohomology = B)
+    (harithmeticGenus : ∀ s : F.curve.S,
+      H.h1Rank s = F.arithmeticGenus) :
     Nonempty (Chapter14NodalHodgeBundleDescription F D B) := by
   sorry
 
 theorem chapter14_nodal_hodge_bundle_has_arithmetic_genus_rank
     (F : Chapter14NodalRelativeCurveFamily)
     (D : Chapter14RelativeDualityData F.curve)
-    (B : Chapter14FiberCohomologyData)
+    (B : Chapter14FiberCohomologyData F.curve)
     (H : chapter14NodalHodgeBundleStatement F D B) :
     (Classical.choice H).rank = F.arithmeticGenus := by
   exact (Classical.choice H).rank_eq_arithmeticGenus
@@ -164,10 +167,12 @@ theorem chapter14_nodal_hodge_bundle_has_arithmetic_genus_rank
 theorem chapter14_nodal_hodge_fiber_has_opposite_residues
     (F : Chapter14NodalRelativeCurveFamily)
     (D : Chapter14RelativeDualityData F.curve)
-    (B : Chapter14FiberCohomologyData)
-    (H : chapter14NodalHodgeBundleStatement F D B) (s : F.curve.S) :
-    (Classical.choice H).fiberIsNormalizationDifferentialsWithOppositeResidues s := by
-  exact (Classical.choice H).fiberIsNormalizationDifferentialsWithOppositeResidues s
+    (B : Chapter14FiberCohomologyData F.curve)
+    (H : chapter14NodalHodgeBundleStatement F D B) (s : F.curve.S)
+    (η : ModuleCat.carrier
+      ((Classical.choice H).differentialDescription.normalizedDifferentials s)) :
+    (Classical.choice H).differentialDescription.oppositeResidues s η := by
+  exact (Classical.choice H).differentialDescription.oppositeResidues_holds s η
 
 /-! The Hodge bundle is stable under arbitrary base change. -/
 
@@ -178,15 +183,6 @@ structure Chapter14HodgeBundleBaseChangeData
     (Scheme.Modules.pullback g).obj (chapter14HodgeBundle D) ≅
       (Scheme.Modules.pushforward (pullback.snd C.map g)).obj
         (D.dualizing.baseChangeOmega g)
-  compatibleWithTrace : Prop
-  compatibleWithPairing : Prop
-
-structure Chapter14HodgeBundleBaseChangeStatement
-    {C : Chapter14RelativeCurveFamily}
-    (D : Chapter14RelativeDualityData C) where
-  forTestScheme : ∀ {T : Scheme} (g : T ⟶ C.S), Prop
-  arbitrary : Prop
-  selectedByDuality : Prop
 
 theorem chapter14_hodge_bundle_commutes_with_arbitrary_base_change
     {C : Chapter14RelativeCurveFamily}

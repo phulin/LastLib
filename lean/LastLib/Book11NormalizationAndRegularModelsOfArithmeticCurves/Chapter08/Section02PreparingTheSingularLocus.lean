@@ -28,7 +28,7 @@ structure Chapter08SurfacePreparationData (X : Scheme.{u}) where
     Chapter08CodimensionAtLeastTwo ((regularOpen : Set normalization.carrier)ᶜ)
   complement_finite_on_quasiCompact_open :
     ∀ V : normalization.carrier.Opens,
-      IsQuasiCompact (V : Set normalization.carrier) →
+      IsCompact (V : Set normalization.carrier) →
         (((regularOpen : Set normalization.carrier)ᶜ) ∩
           (V : Set normalization.carrier)).Finite
 
@@ -59,7 +59,7 @@ theorem chapter08_prepared_singular_locus_has_codimension_two
 theorem chapter08_prepared_singular_locus_is_finite_on_quasiCompact_open
     {X : Scheme.{u}} (P : Chapter08SurfacePreparationData X)
     (V : P.normalization.carrier.Opens)
-    (hV : IsQuasiCompact (V : Set P.normalization.carrier)) :
+    (hV : IsCompact (V : Set P.normalization.carrier)) :
     (chapter08PreparedSingularLocus P ∩ (V : Set P.normalization.carrier)).Finite := by
   exact P.complement_finite_on_quasiCompact_open V hV
 
@@ -92,17 +92,21 @@ noncomputable def chapter08PuncturedSpectrum
   sorry
 
 def Chapter08ModificationSupportedAtClosedPoint
-    {A Y : Type u} [CommRing A] [IsLocalRing A]
+    {A : Type u} {Y : Scheme.{u}} [CommRing A] [IsLocalRing A]
     (hmax : (chapter08MaximalIdeal A).IsPrime)
     (f : Y ⟶ chapter08LocalSurfaceSpec A) : Prop :=
-  IsIso (f ∣_ chapter08PuncturedSpectrum A hmax)
+  IsIso
+    (morphismRestrict (X := Y) (Y := chapter08LocalSurfaceSpec A) f
+      (chapter08PuncturedSpectrum A hmax))
 
 theorem chapter08_supported_modification_glues_to_identity_off_closed_point
-    {A Y : Type u} [CommRing A] [IsLocalRing A]
+    {A : Type u} {Y : Scheme.{u}} [CommRing A] [IsLocalRing A]
     (hmax : (chapter08MaximalIdeal A).IsPrime)
     (f : Y ⟶ chapter08LocalSurfaceSpec A)
     (h : Chapter08ModificationSupportedAtClosedPoint hmax f) :
-    IsIso (f ∣_ chapter08PuncturedSpectrum A hmax) :=
+    IsIso
+      (morphismRestrict (X := Y) (Y := chapter08LocalSurfaceSpec A) f
+        (chapter08PuncturedSpectrum A hmax)) :=
   h
 
 /-! Completion is exposed as a diagnostic interface, not as an extra hypothesis of the global
@@ -120,7 +124,7 @@ noncomputable def chapter08CompletionMap
 def chapter08CompletionSchemeMap
     (A : Type u) [CommRing A] [IsLocalRing A] :
     Spec (.of (chapter08AdicCompletion A)) ⟶ Spec (.of A) :=
-  Scheme.Spec.map (CommRingCat.ofHom (chapter08CompletionMap A))
+  Scheme.Spec.map (CommRingCat.ofHom (chapter08CompletionMap A)).op
 
 def Chapter08CompletionMapIsRegular
     (A : Type u) [CommRing A] [IsLocalRing A] : Prop :=
@@ -143,7 +147,7 @@ theorem chapter08_excellent_completion_facts
 theorem chapter08_completion_detects_regular_locality
     (A : Type u) [CommRing A] [IsLocalRing A] [IsDomain A] [IsNoetherianRing A]
     (hA : Chapter03Excellent A) :
-    ∃ F : Chapter08CompletionFacts A,
+    ∃ _F : Chapter08CompletionFacts A,
       (IsRegularLocalRing A ↔ IsRegularLocalRing (chapter08AdicCompletion A)) := by
   rcases chapter08_excellent_completion_facts A hA with ⟨F⟩
   exact ⟨F, F.regularity_iff⟩

@@ -38,14 +38,21 @@ def Chapter08FlatOver
     {X : Scheme.{u}} (M : X.Modules) : Prop :=
   ∀ x : X, chapter08StalkFlatOver M x
 
-/-- The intrinsic rank of a module sheaf at a point. -/
-def chapter08RankAtPoint {X : Scheme.{u}} (M : X.Modules) (x : X) : Cardinal :=
+/-- The fiber module of a module sheaf at a point, formed by extending the
+stalk along the residue-field map. -/
+noncomputable def chapter08FiberModuleAtPoint
+    {X : Scheme.{u}} (M : X.Modules) (x : X) : ModuleCat (X.residueField x) := by
   letI : Module (X.presheaf.stalk x)
       (↑(TopCat.Presheaf.stalk M.val.presheaf x)) := by
     exact PresheafOfModules.instModuleCarrierStalkCommRingCatCarrierAbPresheafOpensCarrier
       M.val x
-  Module.rank (X.presheaf.stalk x)
-    (↑(TopCat.Presheaf.stalk M.val.presheaf x))
+  exact (ModuleCat.extendScalars (X.residue x).hom).obj
+    (ModuleCat.of (X.presheaf.stalk x)
+      (↑(TopCat.Presheaf.stalk M.val.presheaf x)))
+
+/-- The fiber rank at `x`, i.e. the dimension of the residue-field fiber. -/
+def chapter08RankAtPoint {X : Scheme.{u}} (M : X.Modules) (x : X) : Cardinal :=
+  Module.rank (X.residueField x) (chapter08FiberModuleAtPoint M x)
 
 /-- Finite locally free rank is unchanged by a faithfully flat pullback. -/
 theorem chapter08_rank_pullback
@@ -98,7 +105,7 @@ def chapter08PullbackShortComplex
   f := (Scheme.Modules.pullback f).map C.f
   g := (Scheme.Modules.pullback f).map C.g
   zero := by
-    sorry
+    rw [← (Scheme.Modules.pullback f).map_comp, C.zero, Functor.map_zero]
 
 /-- Exactness of a sequence of quasi-coherent sheaves is reflected by an fpqc
 pullback. -/
@@ -141,9 +148,10 @@ theorem chapter08_locallyFinitelyPresented_fpqc_local
       Chapter08LocallyFinitelyPresented ((Scheme.Modules.pullback p).obj M) := by
   sorry
 
-/-- The more general kernel-finite convention. -/
+/-- The kernel-finite coherence convention: quasi-coherence and finite type,
+with finite-type kernels for maps from finite free sheaves. -/
 def Chapter08KernelFiniteCoherent {S : Scheme.{u}} (M : S.Modules) : Prop :=
-  M.IsQuasicoherent ∧ Chapter08FiniteFreeKernels M
+  M.IsQuasicoherent ∧ M.IsFiniteType ∧ Chapter08FiniteFreeKernels M
 
 /-- The hypotheses under which the chapter uses coherence descent. -/
 structure Chapter08CoherenceDescentHypotheses
@@ -158,8 +166,8 @@ theorem chapter08_coherent_iff_locallyFinitePresentation_of_locallyNoetherian
     Chapter08NoetherianCoherent M ↔ Chapter08LocallyFinitelyPresented M := by
   sorry
 
-/-- Under the locally noetherian convention, finite type kernels give the same
-coherent sheaves. -/
+/-- A noetherian coherent sheaf has finite-type kernels for maps from finite
+free sheaves. -/
 theorem chapter08_kernelFinite_coherent_of_locallyNoetherian
     {S : Scheme.{u}} (hS : IsLocallyNoetherian S) (M : S.Modules)
     (hM : Chapter08NoetherianCoherent M) :

@@ -5,6 +5,7 @@ namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter
 noncomputable section
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
+open LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter11
 
 universe u v
 

@@ -417,6 +417,74 @@ theorem chapter10_algebraic_valuation_extension_exists
       Chapter10ContractsTo v.valuationSubring.toSubring W.toSubring :=
   chapter10_valuation_extension_exists v
 
+/-- Ring-level contraction of a valuation subring is the corresponding
+book-facing equivalence of valuations. -/
+theorem chapter10_contracts_to_is_equiv
+    {K L Γ₀ : Type*} [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero Γ₀]
+    (v : Valuation K Γ₀) (W : ValuationSubring L)
+    (hW : Chapter10ContractsTo v.valuationSubring.toSubring W.toSubring) :
+    v.IsEquiv (W.valuation.comap (algebraMap K L)) := by
+  apply Valuation.isEquiv_of_val_le_one
+  intro x
+  rw [← Valuation.mem_valuationSubring_iff,
+    ← Valuation.mem_valuationSubring_iff]
+  change x ∈ v.valuationSubring ↔
+    algebraMap K L x ∈ W.valuation.valuationSubring
+  rw [ValuationSubring.valuationSubring_valuation]
+  change x ∈ v.valuationSubring.toSubring ↔
+    algebraMap K L x ∈ W.toSubring
+  exact (hW x).symm
+
+private noncomputable def chapter10_heterogeneous_extension_of_valuationSubring
+    {K : Type u10K} {L : Type u10L} {Γ₀ : Type u10Γ}
+    [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero Γ₀]
+    (v : Valuation K Γ₀) (W : ValuationSubring L)
+    (hW : Chapter10ContractsTo v.valuationSubring.toSubring W.toSubring) :
+    Chapter10HeterogeneousValuationExtension L v := by
+  let G := ULift.{max u10K u10Γ} W.ValueGroup
+  letI : LinearOrderedCommMonoidWithZero G := by
+    change LinearOrderedCommMonoidWithZero (ULift.{max u10K u10Γ} W.ValueGroup)
+    apply Function.Injective.linearOrderedCommMonoidWithZero ULift.down ULift.down_injective
+    all_goals intros; rfl
+  letI : CommGroupWithZero G := by
+    change CommGroupWithZero (ULift.{max u10K u10Γ} W.ValueGroup)
+    apply Function.Injective.commGroupWithZero ULift.down ULift.down_injective
+    all_goals intros; rfl
+  letI : LinearOrderedCommGroupWithZero G :=
+    { __ := (inferInstance : LinearOrderedCommMonoidWithZero G)
+      __ := (inferInstance : CommGroupWithZero G) }
+  let f : W.ValueGroup →*₀ G :=
+    { toFun := ULift.up
+      map_one' := rfl
+      map_zero' := rfl
+      map_mul' := by intros; rfl }
+  let w' : Valuation L G := W.valuation.map f (by
+    intro a b hab
+    change ULift.up a ≤ ULift.up b
+    exact hab)
+  refine { valueGroup := G, valuation := w', isExtension := ?_ }
+  apply Valuation.isEquiv_of_val_le_one
+  intro x
+  change v x ≤ 1 ↔
+    (ULift.up (W.valuation (algebraMap K L x)) : G) ≤ (1 : G)
+  change v x ≤ 1 ↔ W.valuation (algebraMap K L x) ≤ 1
+  rw [← Valuation.mem_valuationSubring_iff,
+    ← Valuation.mem_valuationSubring_iff]
+  rw [ValuationSubring.valuationSubring_valuation]
+  exact (hW x).symm
+
+/-- Every valuation has a heterogeneous valuation extension over an arbitrary
+field extension. -/
+theorem chapter10_valuation_extension_exists_as_heterogeneous
+    {K L Γ₀ : Type*} [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero Γ₀]
+    (v : Valuation K Γ₀) :
+    Nonempty (Chapter10HeterogeneousValuationExtension L v) := by
+  obtain ⟨W, hW⟩ := chapter10_valuation_extension_exists (K := K) (L := L) v
+  exact ⟨chapter10_heterogeneous_extension_of_valuationSubring v W hW⟩
+
 end
 
 end LastLib.Book01ValuationsDVRsAndCompletions.Chapter10

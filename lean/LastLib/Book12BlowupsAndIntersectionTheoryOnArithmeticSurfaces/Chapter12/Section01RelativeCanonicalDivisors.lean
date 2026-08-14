@@ -86,7 +86,7 @@ def chapter12RelativeCanonicalBundle
 /-! The determinant formula is exposed as its own theorem so later uses do not
 need to unpack the presentation record. -/
 
-theorem chapter12_relative_dualizing_determinant_formula
+def chapter12_relative_dualizing_determinant_formula
     {X : Chapter12ArithmeticSurface}
     [Chapter11PicardTheory X.carrier]
     (P : Chapter12RelativeLCIPresentation X) :
@@ -108,14 +108,14 @@ theorem chapter12_relative_dualizing_sheaf_identification
     [Chapter11PicardTheory X.carrier]
     (P : Chapter12RelativeLCIPresentation X) :
     P.omega_is_relativeDualizingSheaf :=
-  P.omega_is_relativeDualizingSheaf
+  by sorry
 
 theorem chapter12_relative_dualizing_is_line_bundle
     {X : Chapter12ArithmeticSurface}
     [Chapter11PicardTheory X.carrier]
     (P : Chapter12RelativeLCIPresentation X) :
     P.gorenstein := by
-  exact P.gorenstein
+  sorry
 
 structure Chapter12RelativeCanonicalDivisor
     {X : Chapter12ArithmeticSurface}
@@ -125,7 +125,7 @@ structure Chapter12RelativeCanonicalDivisor
   associated : Chapter11LineBundleIso divisor.lineBundle
     (chapter12RelativeCanonicalBundle P)
 
-theorem chapter12_relative_canonical_divisor_associated
+def chapter12_relative_canonical_divisor_associated
     {X : Chapter12ArithmeticSurface}
     [Chapter11PicardTheory X.carrier]
     (P : Chapter12RelativeLCIPresentation X)
@@ -161,8 +161,12 @@ theorem chapter12_relative_canonical_divisor_intersection_independent
 structure Chapter12BlowupCanonicalChartComparison where
   chartRing : Type u
   [chartRing_commRing : CommRing chartRing]
-  localU localV localT : chartRing
-  tau tauY pullbackTau : chartRing
+  localU : chartRing
+  localV : chartRing
+  localT : chartRing
+  tau : chartRing
+  tauY : chartRing
+  pullbackTau : chartRing
   chart_equation : localV = localU * localT
   determinant_comparison : pullbackTau = localU * tauY
   vanishingOrder : ℕ
@@ -172,10 +176,9 @@ attribute [instance] Chapter12BlowupCanonicalChartComparison.chartRing_commRing
 
 theorem chapter12_blowup_chart_canonical_comparison
     (A : Chapter12BlowupCanonicalChartComparison) :
-    A.determinant_comparison := by
-  exact A.determinant_comparison
+    A.pullbackTau = A.localU * A.tauY := by sorry
 
-theorem chapter12_relative_dualizing_line_blowup_isomorphism
+def chapter12_relative_dualizing_line_blowup_isomorphism
     {X Y : Chapter12ArithmeticSurface}
     [Chapter11PicardTheory X.carrier] [Chapter11PicardTheory Y.carrier]
     [Chapter12IntersectionTheory X] [Chapter12IntersectionTheory Y]

@@ -18,7 +18,7 @@ def chapter14CorrectedLocalPairing
     (D G : Chapter14HorizontalDivisor F)
   (hgeneric : I.genericDisjoint D G)
   (v : Chapter14RationalVerticalDivisor F) : ℚ :=
-  I.rawIntersection D G hgeneric +
+  (I.rawIntersection D G hgeneric : ℚ) +
     chapter14VerticalAgainstHorizontal v G.componentIntersections
 
 def chapter14FullyCorrectedLocalPairing
@@ -27,7 +27,7 @@ def chapter14FullyCorrectedLocalPairing
     (D G : Chapter14HorizontalDivisor F)
   (hgeneric : I.genericDisjoint D G)
   (v w : Chapter14RationalVerticalDivisor F) : ℚ :=
-  I.rawIntersection D G hgeneric +
+  (I.rawIntersection D G hgeneric : ℚ) +
     chapter14VerticalAgainstHorizontal v G.componentIntersections +
     chapter14VerticalAgainstHorizontal w D.componentIntersections +
     chapter14VerticalIntersection F v w
@@ -48,7 +48,7 @@ theorem chapter14_equation_14_3
     (hgeneric : I.genericDisjoint D G)
     (v : Chapter14RationalVerticalDivisor F) :
     chapter14CorrectedLocalPairing I D G hgeneric v =
-      I.rawIntersection D G hgeneric +
+      (I.rawIntersection D G hgeneric : ℚ) +
         chapter14VerticalAgainstHorizontal v G.componentIntersections := by
   rfl
 
@@ -84,7 +84,8 @@ theorem chapter14_corrected_local_pairing_eq_raw_sub_vertical
     (hw : chapter14Balanced F
       (fun i => (G.componentIntersections i : ℚ)) w) :
     chapter14CorrectedLocalPairing I D G hgeneric v =
-      I.rawIntersection D G hgeneric - chapter14VerticalIntersection F v w := by
+      (I.rawIntersection D G hgeneric : ℚ) -
+        chapter14VerticalIntersection F v w := by
   sorry
 
 theorem chapter14_equation_14_4
@@ -98,7 +99,8 @@ theorem chapter14_equation_14_4
     (hw : chapter14Balanced F
       (fun i => (G.componentIntersections i : ℚ)) w) :
     chapter14CorrectedLocalPairing I D G hgeneric v =
-      I.rawIntersection D G hgeneric - chapter14VerticalIntersection F v w := by
+      (I.rawIntersection D G hgeneric : ℚ) -
+        chapter14VerticalIntersection F v w := by
   exact chapter14_corrected_local_pairing_eq_raw_sub_vertical
     I D G hgeneric v w hv hw
 
@@ -199,7 +201,7 @@ theorem chapter14_component_energy_of_horizontal_divisor_nonnegative
 
 def chapter14ComponentBilinearPairing
     {r : ℕ} (F : Chapter14FiberMatrix r)
-    (d e : Chapter14RationalVector r)
+    (_d _e : Chapter14RationalVector r)
     (v w : Chapter14RationalVector r) : ℚ :=
   -chapter14VerticalIntersection F v w
 
@@ -235,7 +237,7 @@ theorem chapter14_component_energy_is_diagonal_component_pairing
     {r : ℕ} {F : Chapter14FiberMatrix r}
     (d : Chapter14RationalVector r)
     (v : Chapter14RationalVector r)
-    (hv : chapter14MatrixVec (chapter14FiberRationalMatrix F) v = -d) :
+    (_hv : chapter14MatrixVec (chapter14FiberRationalMatrix F) v = -d) :
     chapter14ComponentBilinearPairing F d d v v =
       chapter14ComponentEnergy F v := by
   rfl
@@ -257,7 +259,7 @@ theorem chapter14_raw_self_intersection_available_of_proper_generic_pair
     (I : Chapter14LocalIntersectionData F)
     (D : Chapter14HorizontalDivisor F)
     (h : chapter14RawSelfIntersectionDefined I D) :
-    ∃ q : ℚ, q = I.rawIntersection D D h := by
+    ∃ q : ℤ, q = I.rawIntersection D D h := by
   exact ⟨I.rawIntersection D D h, rfl⟩
 
 end LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter14

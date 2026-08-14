@@ -48,6 +48,101 @@ def chapter09RootDiscriminant (K : Type*) [Field K] [NumberField K] : ℝ :=
 
 abbrev chapter09EulerMascheroni : ℝ := Real.eulerMascheroniConstant
 
+/- Exact rational endpoints for the numerical constants displayed in Chapter 9.
+   The proof-carrying interface below is deliberately earlier than the Chapter
+   10 certificate machinery. A later certificate chapter can provide a value
+   without making this chapter depend on that later chapter. -/
+def chapter09GammaLower : ℚ := 577215664901532 / 10 ^ 15
+
+def chapter09GammaUpper : ℚ := 577215664901533 / 10 ^ 15
+
+def chapter09UnconditionalEndpointZero : ℝ :=
+  4 * Real.pi * Real.exp chapter09EulerMascheroni
+
+def chapter09UnconditionalEndpointOne : ℝ :=
+  4 * Real.pi * Real.exp (1 + chapter09EulerMascheroni)
+
+def chapter09GRHEndpointZero : ℝ :=
+  8 * Real.pi * Real.exp chapter09EulerMascheroni
+
+def chapter09GRHEndpointOne : ℝ :=
+  8 * Real.pi * Real.exp (chapter09EulerMascheroni + Real.pi / 2)
+
+def chapter09UnconditionalEndpointZeroLower : ℚ := 223816160954 / 10 ^ 10
+
+def chapter09UnconditionalEndpointZeroUpper : ℚ := 223816160955 / 10 ^ 10
+
+def chapter09UnconditionalEndpointOneLower : ℚ := 608395403238 / 10 ^ 10
+
+def chapter09UnconditionalEndpointOneUpper : ℚ := 608395403239 / 10 ^ 10
+
+def chapter09GRHEndpointZeroLower : ℚ := 447632321909 / 10 ^ 10
+
+def chapter09GRHEndpointZeroUpper : ℚ := 447632321910 / 10 ^ 10
+
+def chapter09GRHEndpointOneLower : ℚ := 2153325159534 / 10 ^ 10
+
+def chapter09GRHEndpointOneUpper : ℚ := 2153325159535 / 10 ^ 10
+
+structure Chapter09NumericalEnclosureInterface : Prop where
+  gamma_directed_bounds :
+    (chapter09GammaLower : ℝ) < chapter09EulerMascheroni ∧
+      chapter09EulerMascheroni < (chapter09GammaUpper : ℝ)
+  unconditional_endpoint_zero_directed_bounds :
+    (chapter09UnconditionalEndpointZeroLower : ℝ) <
+        chapter09UnconditionalEndpointZero ∧
+      chapter09UnconditionalEndpointZero <
+        (chapter09UnconditionalEndpointZeroUpper : ℝ)
+  unconditional_endpoint_one_directed_bounds :
+    (chapter09UnconditionalEndpointOneLower : ℝ) <
+        chapter09UnconditionalEndpointOne ∧
+      chapter09UnconditionalEndpointOne <
+        (chapter09UnconditionalEndpointOneUpper : ℝ)
+  grh_endpoint_zero_directed_bounds :
+    (chapter09GRHEndpointZeroLower : ℝ) < chapter09GRHEndpointZero ∧
+      chapter09GRHEndpointZero < (chapter09GRHEndpointZeroUpper : ℝ)
+  grh_endpoint_one_directed_bounds :
+    (chapter09GRHEndpointOneLower : ℝ) < chapter09GRHEndpointOne ∧
+      chapter09GRHEndpointOne < (chapter09GRHEndpointOneUpper : ℝ)
+
+theorem chapter09NumericalEnclosure :
+    Chapter09NumericalEnclosureInterface := by
+  sorry
+
+theorem chapter09_gamma_directed_bounds :
+    (chapter09GammaLower : ℝ) < chapter09EulerMascheroni ∧
+      chapter09EulerMascheroni < (chapter09GammaUpper : ℝ) := by
+  exact Chapter09NumericalEnclosureInterface.gamma_directed_bounds
+    chapter09NumericalEnclosure
+
+theorem chapter09_unconditional_endpoint_zero_directed_bounds :
+    (chapter09UnconditionalEndpointZeroLower : ℝ) <
+        chapter09UnconditionalEndpointZero ∧
+      chapter09UnconditionalEndpointZero <
+        (chapter09UnconditionalEndpointZeroUpper : ℝ) := by
+  exact Chapter09NumericalEnclosureInterface.unconditional_endpoint_zero_directed_bounds
+    chapter09NumericalEnclosure
+
+theorem chapter09_unconditional_endpoint_one_directed_bounds :
+    (chapter09UnconditionalEndpointOneLower : ℝ) <
+        chapter09UnconditionalEndpointOne ∧
+      chapter09UnconditionalEndpointOne <
+        (chapter09UnconditionalEndpointOneUpper : ℝ) := by
+  exact Chapter09NumericalEnclosureInterface.unconditional_endpoint_one_directed_bounds
+    chapter09NumericalEnclosure
+
+theorem chapter09_grh_endpoint_zero_directed_bounds :
+    (chapter09GRHEndpointZeroLower : ℝ) < chapter09GRHEndpointZero ∧
+      chapter09GRHEndpointZero < (chapter09GRHEndpointZeroUpper : ℝ) := by
+  exact Chapter09NumericalEnclosureInterface.grh_endpoint_zero_directed_bounds
+    chapter09NumericalEnclosure
+
+theorem chapter09_grh_endpoint_one_directed_bounds :
+    (chapter09GRHEndpointOneLower : ℝ) < chapter09GRHEndpointOne ∧
+      chapter09GRHEndpointOne < (chapter09GRHEndpointOneUpper : ℝ) := by
+  exact Chapter09NumericalEnclosureInterface.grh_endpoint_one_directed_bounds
+    chapter09NumericalEnclosure
+
 def chapter09RealProportion (K : Type*) [Field K] [NumberField K] : ℝ :=
   (chapter09RealPlaceCount K : ℝ) / (chapter09Degree K : ℝ)
 
@@ -110,6 +205,15 @@ class Chapter09ZetaZeroInterface
   nontrivialZeros_spec :
     ∀ ρ, ρ ∈ nontrivialZeros ↔
       chapter09NontrivialCompletedDedekindZetaZero K ρ
+
+theorem chapter09_zeta_zero_interface_eq_canonical_zero_support
+    (K : Type*) [Field K] [NumberField K]
+    [Chapter09ZetaZeroInterface K] :
+    Chapter09ZetaZeroInterface.nontrivialZeros (K := K) =
+      LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.chapter06CanonicalZeroSupport K := by
+  ext ρ
+  rw [Chapter09ZetaZeroInterface.nontrivialZeros_spec]
+  rfl
 
 def chapter09GRHOnZeros (zeros : Set ℂ) : Prop :=
   ∀ ρ ∈ zeros, ρ.re = 1 / 2

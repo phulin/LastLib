@@ -128,10 +128,11 @@ structure Chapter15IdeleModuleData where
   continuous_toMonoidHom : Continuous toMonoidHom
 
 /- The canonical full-idele model from Chapter 9 supplies the normalized module
-once the book-facing graph model is identified with units of the full adele ring. -/
-theorem chapter15_idele_group_homeomorph_full_adele_units_principal
+through the underlying-group identification; the graph topology remains the
+book-facing topology. -/
+theorem chapter15_idele_group_equiv_full_adele_units_principal
     (K : Type*) [Field K] [NumberField K] (x : Kˣ) :
-    chapter15_idele_group_homeomorph_full_adele_units (R := 𝓞 K) (K := K)
+    chapter15_idele_group_equiv_full_adele_units (R := 𝓞 K) (K := K)
         (chapter15PrincipalIdele (R := 𝓞 K) (K := K) x) =
       LastLib.Book04AdelesAndIdeles.Chapter09.chapter09PrincipalIdele K x := by
   sorry
@@ -141,7 +142,7 @@ def chapter15CanonicalIdeleModuleData
     Chapter15IdeleModuleData (R := 𝓞 K) (K := K) where
   toMonoidHom :=
     (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleModuleHom K).comp
-      (chapter15_idele_group_homeomorph_full_adele_units (R := 𝓞 K) (K := K)).toMulEquiv.toMonoidHom
+      (chapter15_idele_group_equiv_full_adele_units (R := 𝓞 K) (K := K)).toMonoidHom
   surjective_toMonoidHom := by
     sorry
   principal_eq_one := by

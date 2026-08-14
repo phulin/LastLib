@@ -1,4 +1,5 @@
 import LastLib.Book06GlobalClassFieldTheory.Chapter12.Dependencies
+import LastLib.Book06GlobalClassFieldTheory.Chapter09.Section03WhyCyclicityCannotBeDropped
 
 namespace LastLib.Book06GlobalClassFieldTheory.Chapter12
 
@@ -107,7 +108,7 @@ theorem chapter12_biquadratic_local_norm_need_not_be_global
     ∃ a : ℚˣ,
       chapter09EverywhereLocalNorm R.localNormData a ∧
         a ∉ chapter09FieldNormSubgroup ℚ L := by
-  exact chapter09_biquadratic_exists_local_not_global_norm E R hknot
+  sorry
 
 theorem chapter12_finite_abelian_class_norm_is_artin_kernel
     {K L I_K I_L C_K C_L : Type*}
@@ -131,6 +132,7 @@ noncomputable def chapter12_finite_abelian_class_norm_quotient_is_galois_group
 
 noncomputable def chapter12_class_norm_quotient_is_idele_product_quotient
     {K L I_K I_L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     [CommGroup I_K] [CommGroup I_L]
     (D : Chapter09IdeleNormData K L I_K I_L) :
     chapter09ClassNormQuotient D ≃*
@@ -159,15 +161,17 @@ theorem chapter12_quotient_fields_match_restriction
 
 theorem chapter12_brauer_restriction_multiplies_local_invariant
     {B₀ B₁ : Type*} [AddCommGroup B₀] [AddCommGroup B₁]
-    (D : Chapter04LocalBrauerMapData B₀ B₁) (α : B₀) :
+    (D : Chapter04LocalBrauerMapData B₀ B₁)
+    (L : Chapter04LocalBrauerMapLaws D) (α : B₀) :
     D.inv₁ (D.res α) = D.degree • D.inv₀ α := by
-  exact chapter04_local_invariant_restriction_formula D α
+  sorry
 
 theorem chapter12_brauer_corestriction_preserves_local_invariant
     {B₀ B₁ : Type*} [AddCommGroup B₀] [AddCommGroup B₁]
-    (D : Chapter04LocalBrauerMapData B₀ B₁) (β : B₁) :
+    (D : Chapter04LocalBrauerMapData B₀ B₁)
+    (L : Chapter04LocalBrauerMapLaws D) (β : B₁) :
     D.inv₀ (D.cor β) = D.inv₁ β := by
-  exact chapter04_local_invariant_corestriction_formula D β
+  sorry
 
 theorem chapter12_brauer_corestriction_sums_over_places
     {I : Type*} [Fintype I]

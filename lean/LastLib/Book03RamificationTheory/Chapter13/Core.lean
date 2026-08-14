@@ -1,4 +1,5 @@
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.Field.ULift
 import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.FieldTheory.Galois.Notation
 import Mathlib.LinearAlgebra.FiniteDimensional.Basic
@@ -13,6 +14,11 @@ import LastLib.Book03RamificationTheory.Chapter12.Core
 namespace LastLib.Book03RamificationTheory.Chapter13
 
 noncomputable section
+
+universe u
+
+instance chapter13ULiftRationalCharZero : CharZero (ULift.{u} ℚ) :=
+  charZero_of_injective_ringHom (ULift.ringEquiv.symm.toRingHom.injective)
 
 open LastLib.Book03RamificationTheory.Chapter11
 open LastLib.Book03RamificationTheory.Chapter12
@@ -162,9 +168,10 @@ def chapter13ArtinConductor
 interface: it is the trivial-representation input needed when the induction
 formula is specialized to `W = 1`. -/
 theorem chapter13_conductor_profile_trivial_representation_zero
-    {G : Type*} [Group G] [Fintype G]
+    {G : Type u} [Group G] [Fintype G]
     (P : Chapter12ConductorProfile G) :
-    P.artinConductor _ (Representation.trivial ℚ G ℚ) = 0 := by
+    P.artinConductor (E := ULift.{u} ℚ) _
+        (Representation.trivial (ULift.{u} ℚ) G (ULift.{u} ℚ)) = 0 := by
   sorry
 
 def chapter13CharacterConductor

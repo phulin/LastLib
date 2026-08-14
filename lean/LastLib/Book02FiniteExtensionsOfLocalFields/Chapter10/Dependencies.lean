@@ -1,7 +1,6 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter08
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.Section01SuccessivePrecision
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Section04FormalPowerSeries
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section07UnramifiedAndTotallyRamifiedEndpoints
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10
 
@@ -113,6 +112,8 @@ def Chapter10SuccessiveUnitCorrectionProduct
     {L : Type*} [Field L] (A : ValuationSubring L)
     [TopologicalSpace Aˣ] (u s₀ : Aˣ) (c : ℕ → Aˣ) : Prop :=
   (∀ n, c n ∈ chapter10UnitFiltration A (n + 1)) ∧
+    (∀ N, u * (s₀ * Finset.prod (Finset.range N) c)⁻¹ ∈
+      chapter10UnitFiltration A (N + 1)) ∧
     Filter.Tendsto
       (fun N : ℕ => s₀ * Finset.prod (Finset.range N) c)
       Filter.atTop (𝓝 u)

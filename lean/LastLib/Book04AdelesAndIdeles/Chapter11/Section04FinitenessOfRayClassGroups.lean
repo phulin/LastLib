@@ -27,7 +27,7 @@ theorem chapter11_ray_residue_group_is_finite (m : RayModulus K) :
 
 theorem chapter11_ray_sign_group_is_finite (m : RayModulus K) :
     Finite (chapter11RaySignGroup m) := by
-  sorry
+  infer_instance
 
 theorem chapter11_ray_class_group_is_finite (m : RayModulus K) :
     Finite (chapter11RayClassGroup m) := by

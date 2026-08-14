@@ -4,9 +4,8 @@ namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter
 
 noncomputable section
 
-classical
-
 open AlgebraicGeometry CategoryTheory
+open LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter06
 open scoped BigOperators
 
 universe u v
@@ -56,6 +55,27 @@ theorem chapter11_strict_transform_intersection_formula
         chapter11DivisorMultiplicity D p *
           chapter11DivisorMultiplicity G p *
             (chapter11ResidueDegree p : ℤ) := by
+  sorry
+
+theorem chapter11_strict_transform_ideal_is_saturated
+    {S : Chapter11ArithmeticBase}
+    {X : Chapter11ArithmeticSurface S}
+    {p : Chapter11SurfacePoint X}
+    (b : Chapter11PointBlowup p)
+    (D : Chapter11CartierCurve X) :
+    (b.strictTransform D).cartierDivisor.ideal =
+      chapter11StrictTransformIdeal b D := by
+  sorry
+
+theorem chapter11_local_intersection_is_chapter07_module_length
+    {S : Chapter11ArithmeticBase}
+    {X : Chapter11ArithmeticSurface S}
+    [Chapter11LocalIntersectionTheory X]
+    (D G : Chapter11Divisor X)
+    (h : chapter11NoCommonComponent D G)
+    (p : Chapter11SurfacePoint X)
+    (W : Chapter11Chapter07LocalIntersectionWitness D G h p) :
+    chapter11LocalIntersection D G h p = W.localValue := by
   sorry
 
 /-- The local separation formula (11.6).  The explicit
@@ -181,7 +201,8 @@ structure Chapter11TangentPair
     {S : Chapter11ArithmeticBase}
     (X : Chapter11ArithmeticSurface S)
     [Chapter11LocalIntersectionTheory X] where
-  D G : Chapter11CartierCurve X
+  D : Chapter11CartierCurve X
+  G : Chapter11CartierCurve X
   point : Chapter11SurfacePoint X
   rational_point : chapter11ResidueDegree point = 1
   D_smooth : D.smoothAt point
@@ -192,6 +213,7 @@ structure Chapter11TangentPair
     chapter11NoCommonComponent
       (chapter11CurveAsDivisor D) (chapter11CurveAsDivisor G)
   tangentOrder : ℕ
+  tangentOrder_pos : 0 < tangentOrder
   contact_order :
     chapter11LocalIntersection
       (chapter11CurveAsDivisor D)
@@ -209,6 +231,41 @@ theorem chapter11_tangent_pair_intersection_is_order
         T.no_common T.point = T.tangentOrder := by
   exact T.contact_order
 
+/-! The Chapter 6 chart calculation and the Chapter 11 point sequence use
+the same contact order.  This record keeps their index, initial-stage, and
+one-step chart data synchronized without replacing either API. -/
+structure Chapter11SectionContactSequenceBridge
+    {S : Chapter11ArithmeticBase}
+    {X : Chapter11ArithmeticSurface S}
+    [Chapter11LocalIntersectionTheory X]
+    (T : Chapter11TangentPair X)
+    (Q : Chapter11PointBlowupSequence S) where
+  ring : Type u
+  ringComm : CommRing ring
+  ringLocal : IsLocalRing ring
+  ringNoetherian : IsNoetherianRing ring
+  contact :
+    @Chapter06SectionContact ring ringComm ringLocal ringNoetherian
+  contactOrder_eq_tangentOrder : contact.contactOrder = T.tangentOrder
+  chartSequence :
+    @Chapter06SuccessiveSectionExceptionalCurves
+      ring ringComm ringLocal ringNoetherian contact
+  chart_order_sequence_eq :
+    chartSequence.orderSequence = chapter06ContactOrderSequence Q.length
+  chart_order_sequence_length :
+    chartSequence.orderSequence.length = Q.length
+  sequence_length_eq_contactOrder : Q.length = contact.contactOrder
+  initial_stage : Q.stage 0 = X
+  initial_point : HEq Q.initialPoint T.point
+  chartStep : ∀ _j : Fin Q.length,
+    @Chapter06SectionBlowupStep ring ringComm ringLocal ringNoetherian contact
+  chartStep_exceptionalCurve_mem :
+    ∀ j : Fin Q.length,
+      (chartStep j).exceptionalCurve ∈ chartSequence.exceptionalCurves
+  chartStep_remainingContact :
+    ∀ j : Fin Q.length,
+      (chartStep j).remainingContact = contact.contactOrder - 1
+
 /- LOCAL_DEPENDENCY_GUESS: existence of the iterated tangent-point sequence
 is supplied by the local chart calculation in the preceding blowup chapters;
 the abstract API records the exact conclusions used by this example. -/
@@ -219,10 +276,24 @@ structure Chapter11TangentPairResolution
     (T : Chapter11TangentPair X) where
   sequence : Chapter11PointBlowupSequence S
   initial_stage : sequence.stage 0 = X
-  initial_point : Prop
+  initial_point : HEq sequence.initialPoint T.point
   length_eq_order : sequence.length = T.tangentOrder
-  unit_multiplicity_at_each_center : Prop
-  final_strict_transforms_disjoint : Prop
+  stage_zero_local_intersection :
+    Chapter11LocalIntersectionTheory (sequence.stage 0)
+  sectionContactBridge :
+    Chapter11SectionContactSequenceBridge T sequence
+  intersectionData :
+    @Chapter11IteratedIntersectionData S sequence stage_zero_local_intersection
+  initial_D : HEq intersectionData.D (chapter11CurveAsDivisor T.D)
+  initial_G : HEq intersectionData.G (chapter11CurveAsDivisor T.G)
+  unit_multiplicity_at_each_center :
+    ∀ j : Fin sequence.length,
+      intersectionData.multiplicityD j = 1 ∧
+        intersectionData.multiplicityG j = 1
+  final_strict_transforms_disjoint :
+    chapter11DivisorsDisjoint
+      (intersectionData.strictD (Fin.last sequence.length))
+      (intersectionData.strictG (Fin.last sequence.length))
 
 theorem chapter11_tangent_pair_successive_blowups_separate
     {S : Chapter11ArithmeticBase}

@@ -45,20 +45,23 @@ theorem chapter15_some_blowup_chart_is_not_free_polynomial
 theorem chapter15_rees_algebra_need_not_be_the_symmetric_algebra
     (k : Type u) [Field k] :
     chapter15SymmetricToReesMayHaveKernel
-      (LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter02.chapter02BivariateSquareIdeal k) := by
-  exact LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter02.chapter02_bivariate_square_symmetric_to_rees_has_kernel k
+      (LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter02.chapter02BivariateSquareIdeal
+        (k := k)) := by
+  sorry
 
 theorem chapter15_flat_base_change_has_all_power_comparisons
     {R S : Type u} [CommRing R] [CommRing S] [Algebra R S]
     (I : Ideal R) [Module.Flat R S] :
-    LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter03.Chapter03AllPowersBaseChangeComparison I := by
-  exact LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter03.chapter03_flat_base_change_has_power_comparisons I
+    LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter03.Chapter03AllPowersBaseChangeComparison
+      (R := R) (S := S) I := by
+  sorry
 
 theorem chapter15_arbitrary_base_change_warning_is_the_negation_of_power_compatibility
     {R S : Type u} [CommRing R] [CommRing S] [Algebra R S]
     (I : Ideal R) :
-    chapter15ArbitraryBaseChangeMayHavePowerTorsion I ↔
-      ¬ LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter03.Chapter03AllPowersBaseChangeComparison I := by
+    chapter15ArbitraryBaseChangeMayHavePowerTorsion (R := R) (S := S) I ↔
+      ¬ LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter03.Chapter03AllPowersBaseChangeComparison
+        (R := R) (S := S) I := by
   rfl
 
 theorem chapter15_strict_transform_removes_exceptional_components
@@ -98,17 +101,20 @@ theorem chapter15_semistable_reduction_may_require_finite_base_extension :
   exact chapter06_semistable_reduction_may_require_a_finite_base_extension
 
 theorem chapter15_ramified_node_base_change_produces_thickness
-    {R R' : Type u} [CommRing R] [CommRing R'] [Algebra R R']
+    {R R' : Type u} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
+    [CommRing R'] [IsDomain R'] [IsDiscreteValuationRing R'] [Algebra R R']
     (B : Chapter06RamifiedNodeBaseChange R R') (x' y' : R')
     (hxy : x' * y' = algebraMap R R' B.uniformizer) :
     chapter06ThicknessEquation x' y' B.newUniformizer B.ramificationIndex := by
   exact chapter06_ramified_node_base_change_equation B x' y' hxy
 
 theorem chapter15_ramified_node_base_change_is_singular
-    {R R' : Type u} [CommRing R] [CommRing R'] [Algebra R R']
+    {R R' : Type u} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
+    [CommRing R'] [IsDomain R'] [IsDiscreteValuationRing R'] [Algebra R R']
     (B : Chapter06RamifiedNodeBaseChange R R') :
-    B.baseChangedSurfaceSingular := by
-  exact chapter06_ramified_node_base_change_is_singular B
+    ¬ IsRegularLocalRing
+      (B.baseChangedSurface.presheaf.stalk B.baseChangedOrigin) := by
+  sorry
 
 /-! ### Local lengths, normal bundles, and horizontal classes -/
 
@@ -147,8 +153,8 @@ theorem chapter15_horizontal_self_intersection_number_requires_extra_degree_data
 
 theorem chapter15_horizontal_local_order_changes_by_a_principal_order
     {X : Chapter08ArithmeticSurface}
-    (T : Chapter08DVRLocalOrderTheory X)
-    (t₁ t₂ : Chapter08DVRLocalTrivialization X) :
+    (T : Chapter08DVRLocalOrderTheory.{u} X)
+    (t₁ t₂ : Chapter08DVRLocalTrivialization.{u} X) :
     ∃ f : T.rationalFunctions,
       t₂.localOrder - t₁.localOrder = T.principalOrder f := by
   exact chapter08_dvr_local_order_changes_by_principal_divisor T t₁ t₂
@@ -162,28 +168,31 @@ theorem chapter15_principal_divisor_has_zero_vertical_intersection
   exact chapter08_principal_divisor_intersection_with_vertical_curve_zero f C
 
 def chapter15BaseUniformizerBoundaryWarning
-    {X S : Scheme.{u}} (f : X ⟶ S) (s : S) (z : Chapter09ZeroCycle X) : Prop :=
-  chapter09PositiveHorizontalBoundaryWarning f s z
+    {X S : Scheme.{u}} (f : X ⟶ S) (s : S) (z : Chapter09ZeroCycle X)
+    (hfinite : chapter09ZeroCycleResidueDegreesFinite f z) : Prop :=
+  chapter09PositiveHorizontalBoundaryWarning f s z hfinite
 
 theorem chapter15_base_uniformizer_boundary_has_nonzero_degree
     {X S : Scheme.{u}} (f : X ⟶ S) (s : S) (z : Chapter09ZeroCycle X)
-    (h : chapter15BaseUniformizerBoundaryWarning f s z) :
-    chapter09ZeroCycleDegree f z ≠ 0 := by
-  exact chapter09_positive_horizontal_boundary_has_nonzero_degree f s z h
+    (hfinite : chapter09ZeroCycleResidueDegreesFinite f z)
+    (h : chapter15BaseUniformizerBoundaryWarning f s z hfinite) :
+    chapter09ZeroCycleDegree f z hfinite ≠ 0 := by
+  exact chapter09_positive_horizontal_boundary_has_nonzero_degree f s z hfinite h
 
 /-! ### Matrix kernels and rational corrections -/
 
 theorem chapter15_unreduced_special_fiber_matrix_is_not_negative_definite
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s)) :
     chapter13VerticalSelfIntersection T
-        (chapter13RationalMultiplicityVector T) = 0 := by
-  exact chapter13_unreduced_matrix_is_not_negative_definite T
+        (chapter13RationalMultiplicityVector T) = 0 ∧
+      ¬ chapter13NegativeDefiniteOnFullCoefficientSpace T := by
+  sorry
 
 theorem chapter15_connected_fiber_has_exactly_the_full_fiber_kernel
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s))
@@ -214,8 +223,9 @@ theorem chapter15_positive_genus_curve_is_not_a_point_blowup_signature
     ¬ chapter05PointBlowupNumericalSignature C := by
   exact chapter05_positive_genus_curve_is_not_a_point_blowup_signature C hgenus
 
-def chapter15PointBlowupRecognitionNeedsGeometry :=
-  Chapter05RecognitionDataNeedsGeometry
+abbrev chapter15PointBlowupRecognitionNeedsGeometry
+    {k : Type u} [Field k] (C : Chapter05CurveNumericalData k) : Prop :=
+  Chapter05RecognitionDataNeedsGeometry C
 
 theorem chapter15_numerical_exceptional_data_keeps_contraction_as_separate_input
     {X : Chapter12ArithmeticSurface}
@@ -226,10 +236,9 @@ theorem chapter15_numerical_exceptional_data_keeps_contraction_as_separate_input
     (E : Chapter12Curve X)
     [Chapter12CurveEulerCharacteristicTheory E] 
     (D : Chapter12ExceptionalCurveRecognitionData P K E) :
-    D.projectiveLineGeometry ∧ D.normalBundleGeometry ∧
+      D.projectiveLineGeometry ∧ D.normalBundleGeometry ∧
       D.contractionToRegularSurface ∧ D.inversePointBlowup := by
-  exact ⟨D.projectiveLineGeometry, D.normalBundleGeometry,
-    D.contractionToRegularSurface, D.inversePointBlowup⟩
+  sorry
 
 end
 

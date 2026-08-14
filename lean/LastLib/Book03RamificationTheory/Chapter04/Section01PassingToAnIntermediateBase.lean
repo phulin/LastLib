@@ -56,7 +56,15 @@ theorem chapter04_fixed_field_is_galois_over_base_iff_normal
     [FiniteDimensional K L] [IsGalois K L]
     (H : Subgroup Gal(L / K)) :
     IsGalois K (chapter04FixedField H) ↔ H.Normal := by
-  sorry
+  constructor
+  · intro h
+    have hnormal : (chapter04FixedField H).fixingSubgroup.Normal :=
+      @IsGalois.fixingSubgroup_normal_of_isGalois K L _ _ _
+        (chapter04FixedField H) inferInstance h
+    rw [IntermediateField.fixingSubgroup_fixedField H] at hnormal
+    exact hnormal
+  · intro h
+    exact @IsGalois.of_fixedField_normal_subgroup K L _ _ _ inferInstance H h
 
 /-- Perfect residue/base fields make the finite residue extension separable,
 which is the standing separability interface for the later quotient results. -/
@@ -123,7 +131,7 @@ theorem chapter04_conjugate_fixed_fields_have_conjugate_fixing_subgroups
     (H : Subgroup Gal(L / K)) (σ : Gal(L / K)) :
     ((chapter04FixedField H).map σ).fixingSubgroup =
       (MulAut.conj σ) • H := by
-  sorry
+  simp [IntermediateField.fixingSubgroup_fixedField H]
 
 /-- Equivalently, conjugating the field and then taking its fixed field gives
 the conjugate subgroup field. -/
@@ -133,7 +141,9 @@ theorem chapter04_conjugate_fixed_fields_eq
     (H : Subgroup Gal(L / K)) (σ : Gal(L / K)) :
     (chapter04FixedField H).map σ =
       chapter04FixedField ((MulAut.conj σ) • H) := by
-  sorry
+  exact
+    ((IsGalois.fixedField_eq_iff_fixingSubgroup_eq).mpr
+      (chapter04_conjugate_fixed_fields_have_conjugate_fixing_subgroups H σ)).symm
 
 /-- Conjugate intermediate fields have the same lower cardinality profile. -/
 theorem chapter04_conjugate_subgroups_have_identical_ramification_profile

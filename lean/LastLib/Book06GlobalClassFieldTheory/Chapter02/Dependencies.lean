@@ -138,13 +138,15 @@ theorem chapter02_decompositionGroup_choice_independent_of_abelianity
     (P : Chapter02ChosenPlace G V W) (τ : G) :
     chapter02DecompositionGroup (chapter02ConjugateChosenPlace P τ) =
       chapter02DecompositionGroup P := by
-  sorry
+  rw [chapter02_decompositionGroup_conjugate]
+  ext σ
+  simp
 
 theorem chapter02_inertia_choice_independent_of_abelianity
     {G : Type u} [CommGroup G] {V : Type v} {W : Type w} [MulAction G W]
     (P : Chapter02ChosenPlace G V W) (S : Chapter02InertiaSystem G W) (τ : G) :
     S.inertia (τ • P.extensionPlace) = S.inertia P.extensionPlace := by
-  sorry
+  exact (S.conjugation τ P.extensionPlace).symm.trans (by ext σ; simp)
 
 /-!
 ### Local residue and reciprocity interfaces
@@ -270,13 +272,15 @@ theorem chapter02_local_artin_kernel_eq_norm_range
     {B E D : Type*} [CommGroup B] [CommGroup E] [CommGroup D]
     (R : Chapter02LocalReciprocityData B E D) :
     (chapter02LocalArtinMap R).ker = R.norm.range := by
-  sorry
+  simpa [chapter02LocalArtinMap] using R.kernel_eq_norm_range
 
 theorem chapter02_local_artin_surjective
     {B E D : Type*} [CommGroup B] [CommGroup E] [CommGroup D]
     (R : Chapter02LocalReciprocityData B E D) :
     Function.Surjective (chapter02LocalArtinMap R) := by
-  sorry
+  intro d
+  rcases R.reciprocity_surjective (Abelianization.equivOfComm d) with ⟨b, hb⟩
+  exact ⟨b, by simpa [chapter02LocalArtinMap] using congrArg Abelianization.equivOfComm.symm hb⟩
 
 theorem chapter02_local_artin_range_eq_top
     {B E D : Type*} [CommGroup B] [CommGroup E] [CommGroup D]
@@ -288,7 +292,13 @@ theorem chapter02_local_artin_units_eq_inertia
     {B E D : Type*} [CommGroup B] [CommGroup E] [CommGroup D]
     (R : Chapter02LocalReciprocityData B E D) :
     ((chapter02LocalArtinMap R).comp R.unitSubgroup.subtype).range = R.inertia := by
-  sorry
+  rw [MonoidHom.range_comp, Subgroup.range_subtype, chapter02LocalArtinMap,
+    ← Subgroup.map_map]
+  rw [← (show (R.reciprocity.comp R.unitSubgroup.subtype).range =
+      R.unitSubgroup.map R.reciprocity by
+    rw [MonoidHom.range_comp, Subgroup.range_subtype]), R.unit_image_eq_inertia]
+  ext d
+  simp
 
 /-- The canonical abelianized local map in a possibly nonabelian ambient group. -/
 def chapter02AbelianizedLocalArtinMap
@@ -304,7 +314,10 @@ theorem chapter02_abelianized_local_artin_choice_conjugation_invariant
     (Abelianization.map c).comp
         (chapter02AbelianizedLocalArtinMap inclusion R) =
       chapter02AbelianizedLocalArtinMap inclusion R := by
-  sorry
+  rw [chapter02AbelianizedLocalArtinMap, ← MonoidHom.comp_assoc]
+  congr 1
+  ext x
+  simp [hc]
 
 /-!
 ### Discrete valuation and Frobenius interfaces
@@ -327,7 +340,9 @@ theorem Chapter02DiscreteValuationData.ext
     {V W : Chapter02DiscreteValuationData B U}
     (hord : V.ord = W.ord) (huniformizer : V.uniformizer = W.uniformizer) :
     V = W := by
-  sorry
+  cases V
+  cases W
+  simp_all
 
 @[simp]
 theorem chapter02_discrete_valuation_ord_uniformizer
@@ -346,7 +361,7 @@ theorem chapter02_arithmetic_frobenius_apply
     {k l : Type*} [Field k] [Field l] [Fintype k] [Finite l]
     [Algebra k l] [Algebra.IsAlgebraic k l] (x : l) :
     chapter02ArithmeticFrobenius (k := k) (l := l) x = x ^ Fintype.card k := by
-  sorry
+  rfl
 
 /- DEPENDENCY_GUESS: when a concrete completion API is unavailable, this
    equivalence is the minimal local interface for the canonical identification
@@ -371,7 +386,9 @@ theorem Chapter02RestrictedProductData.ext
     {D E : Chapter02RestrictedProductData V H}
     (hfinite : D.isFinite = E.isFinite)
     (hintegral : D.integral = E.integral) : D = E := by
-  sorry
+  cases D
+  cases E
+  simp_all
 
 /-- The subgroup of the full product consisting of ideles. -/
 def chapter02IdeleSubgroup
@@ -388,9 +405,28 @@ def chapter02IdeleSubgroup
         rw [h]
         exact Set.finite_empty
       mul_mem' := by
-        sorry
+        intro x y hx hy
+        change Set.Finite {v | D.isFinite v ∧ (x * y) v ∉ D.integral v}
+        apply Set.Finite.subset (Set.Finite.union hx hy)
+        intro v hv
+        by_contra h
+        simp only [Set.mem_ofPred_eq, Set.mem_union, not_or] at h
+        exact hv.2 (by
+          simpa only [Pi.mul_apply] using
+            (D.integral v).mul_mem
+              (Classical.byContradiction (fun hxI => h.1 ⟨hv.1, hxI⟩))
+              (Classical.byContradiction (fun hyI => h.2 ⟨hv.1, hyI⟩)))
       inv_mem' := by
-        sorry }
+        intro x hx
+        change Set.Finite {v | D.isFinite v ∧ x⁻¹ v ∉ D.integral v}
+        apply Set.Finite.subset hx
+        intro v hv
+        by_contra h
+        simp only [Set.mem_ofPred_eq] at h
+        exact hv.2 (by
+          simpa only [Pi.inv_apply] using
+            (D.integral v).inv_mem
+              (Classical.byContradiction (fun hxI => h ⟨hv.1, hxI⟩))) }
 
 /-- The idele group attached to the restricted product data. -/
 abbrev chapter02Ideles
@@ -439,7 +475,9 @@ theorem Chapter02GlobalArtinData.ext
     (hlocal : A.localArtin = B.localArtin)
     (hdecomposition : A.decomposition = B.decomposition)
     (hramified : A.ramified = B.ramified) : A = B := by
-  sorry
+  cases A
+  cases B
+  simp_all
 
 /-- The finite set on which the product defining global Artin is evaluated. -/
 def chapter02GlobalArtinIndexSet
@@ -466,7 +504,19 @@ theorem chapter02_global_artin_factor_eq_one_outside_index_set
     (A : Chapter02GlobalArtinData D G) (x : chapter02Ideles D) {v : V}
     (hv : v ∉ chapter02GlobalArtinIndexSet A x) :
     A.localArtin v (x.1 v) = 1 := by
-  sorry
+  classical
+  have hram : v ∉ A.ramified := by
+    intro hvram
+    apply hv
+    simp [chapter02GlobalArtinIndexSet, hvram]
+  have hsupport : v ∉ chapter02IdeleSupport D x := by
+    intro hsupport
+    apply hv
+    simp [chapter02GlobalArtinIndexSet, hsupport]
+  by_cases hfin : D.isFinite v
+  · exact A.trivial_on_finite_integral_outside_ramified hfin hram (x.1 v)
+      ((chapter02_idele_mem_integral_iff_not_mem_support D x v hfin).2 hsupport)
+  · exact A.trivial_at_infinite_outside_ramified hfin hram (x.1 v)
 
 theorem chapter02_global_artin_eq_prod_of_contains_all_nontrivial_factors
     {V : Type u} {H : V → Type v} [∀ x, CommGroup (H x)]
@@ -475,7 +525,21 @@ theorem chapter02_global_artin_eq_prod_of_contains_all_nontrivial_factors
     (A : Chapter02GlobalArtinData D G) (x : chapter02Ideles D) (S : Finset V)
     (hS : ∀ v : V, v ∉ S → A.localArtin v (x.1 v) = 1) :
     chapter02GlobalArtin A x = Finset.prod S (fun v => A.localArtin v (x.1 v)) := by
-  sorry
+  classical
+  let I := chapter02GlobalArtinIndexSet A x
+  let f := fun v : V => A.localArtin v (x.1 v)
+  have hI : Finset.prod (S ∩ I) f = Finset.prod I f :=
+    Finset.prod_subset Finset.inter_subset_right (fun v hvI hnot =>
+      hS v (by
+        intro hvS
+        exact hnot (Finset.mem_inter.mpr ⟨hvS, hvI⟩)))
+  have hS' : Finset.prod (S ∩ I) f = Finset.prod S f :=
+    Finset.prod_subset Finset.inter_subset_left (fun v hvS hnot =>
+      chapter02_global_artin_factor_eq_one_outside_index_set A x (by
+        intro hvI
+        apply hnot
+        exact Finset.mem_inter.mpr ⟨hvS, hvI⟩))
+  exact hI.symm.trans hS'
 
 /-- The global Artin homomorphism on the idele group. -/
 noncomputable def chapter02GlobalArtinHom
@@ -485,9 +549,41 @@ noncomputable def chapter02GlobalArtinHom
     (A : Chapter02GlobalArtinData D G) : chapter02Ideles D →* G where
   toFun := chapter02GlobalArtin A
   map_one' := by
-    sorry
+    simp [chapter02GlobalArtin, chapter02GlobalArtinIndexSet, chapter02IdeleSupport]
   map_mul' x y := by
-    sorry
+    classical
+    let Ix := chapter02GlobalArtinIndexSet A x
+    let Iy := chapter02GlobalArtinIndexSet A y
+    let S := Ix ∪ Iy
+    have hxy : ∀ v : V, v ∉ S → A.localArtin v ((x * y).1 v) = 1 := by
+      intro v hv
+      have hxI : v ∉ Ix := by
+        intro h
+        exact hv (Finset.mem_union_left _ h)
+      have hyI : v ∉ Iy := by
+        intro h
+        exact hv (Finset.mem_union_right _ h)
+      have hx1 := chapter02_global_artin_factor_eq_one_outside_index_set A x hxI
+      have hy1 := chapter02_global_artin_factor_eq_one_outside_index_set A y hyI
+      change A.localArtin v (x.1 v * y.1 v) = 1
+      rw [(A.localArtin v).map_mul, hx1, hy1, mul_one]
+    have hxS : ∀ v : V, v ∉ S → A.localArtin v (x.1 v) = 1 := by
+      intro v hv
+      exact chapter02_global_artin_factor_eq_one_outside_index_set A x
+        (fun h => hv (Finset.mem_union_left _ h))
+    have hyS : ∀ v : V, v ∉ S → A.localArtin v (y.1 v) = 1 := by
+      intro v hv
+      exact chapter02_global_artin_factor_eq_one_outside_index_set A y
+        (fun h => hv (Finset.mem_union_right _ h))
+    rw [chapter02_global_artin_eq_prod_of_contains_all_nontrivial_factors A (x * y) S hxy,
+      chapter02_global_artin_eq_prod_of_contains_all_nontrivial_factors A x S hxS,
+      chapter02_global_artin_eq_prod_of_contains_all_nontrivial_factors A y S hyS]
+    rw [← Finset.prod_mul_distrib]
+    apply Finset.prod_congr rfl
+    intro v hv
+    change A.localArtin v (x.1 v * y.1 v) =
+      A.localArtin v (x.1 v) * A.localArtin v (y.1 v)
+    exact (A.localArtin v).map_mul _ _
 
 @[simp]
 theorem chapter02_global_artinHom_apply
@@ -519,7 +615,16 @@ theorem chapter02_global_artin_single_idele
     {D : Chapter02RestrictedProductData V H}
     (A : Chapter02GlobalArtinData D G) (v : V) (a : H v) :
     chapter02GlobalArtin A (chapter02SingleIdele D v a) = A.localArtin v a := by
-  sorry
+  classical
+  refine (chapter02_global_artin_eq_prod_of_contains_all_nontrivial_factors
+    A (chapter02SingleIdele D v a) {v} ?_).trans ?_
+  · intro w hw
+    have hw' : w ≠ v := by simpa using hw
+    change A.localArtin w (if h : w = v then h ▸ a else 1) = 1
+    simp [hw']
+  · rw [Finset.prod_singleton]
+    change A.localArtin v (if h : v = v then h ▸ a else 1) = A.localArtin v a
+    simp
 
 /-- The standard open subgroup used to prove continuity of global Artin. -/
 def chapter02StandardArtinKernelSubgroup
@@ -536,9 +641,30 @@ def chapter02StandardArtinKernelSubgroup
         intro v
         split_ifs <;> simp
       mul_mem' := by
-        sorry
+        intro x y hx hy v
+        split_ifs with hram hfin
+        · have hxv := hx v
+          have hyv := hy v
+          rw [if_pos hram] at hxv hyv
+          change x.1 v * y.1 v ∈ (A.localArtin v).ker
+          exact (A.localArtin v).ker.mul_mem hxv hyv
+        · have hxv := hx v
+          have hyv := hy v
+          rw [if_neg hram, if_pos hfin] at hxv hyv
+          change x.1 v * y.1 v ∈ D.integral v
+          exact (D.integral v).mul_mem hxv hyv
       inv_mem' := by
-        sorry }
+        intro x hx v
+        split_ifs with hram hfin
+        · have hxv := hx v
+          rw [if_pos hram] at hxv
+          change (x.1 v)⁻¹ ∈ (A.localArtin v).ker
+          exact (A.localArtin v).ker.inv_mem hxv
+        · have hxv := hx v
+          rw [if_neg hram, if_pos hfin] at hxv
+          change (x.1 v)⁻¹ ∈ D.integral v
+          exact (D.integral v).inv_mem hxv
+        }
 
 theorem chapter02_standard_artin_kernel_subgroup_le_kernel
     {V : Type u} {H : V → Type v} [∀ x, CommGroup (H x)]
@@ -546,7 +672,24 @@ theorem chapter02_standard_artin_kernel_subgroup_le_kernel
     {D : Chapter02RestrictedProductData V H}
     (A : Chapter02GlobalArtinData D G) :
     chapter02StandardArtinKernelSubgroup A ≤ (chapter02GlobalArtinHom A).ker := by
-  sorry
+  intro x hx
+  classical
+  change chapter02GlobalArtin A x = 1
+  change Finset.prod (chapter02GlobalArtinIndexSet A x)
+      (fun v => A.localArtin v (x.1 v)) = 1
+  apply Finset.prod_eq_one
+  intro v hv
+  by_cases hram : v ∈ A.ramified
+  · have hxv := hx v
+    rw [if_pos hram] at hxv
+    exact hxv
+  · have hxv := hx v
+    by_cases hfin : D.isFinite v
+    · rw [if_neg hram, if_pos hfin] at hxv
+      exact A.trivial_on_finite_integral_outside_ramified hfin hram (x.1 v) hxv
+    · have hv' : v ∈ A.ramified ∨ v ∈ chapter02IdeleSupport D x := by
+        simpa [chapter02GlobalArtinIndexSet] using hv
+      exact (hfin (hv'.resolve_left hram).1).elim
 
 /--
 The topology bridge expected from the restricted-product construction in the
@@ -577,7 +720,11 @@ theorem chapter02_global_artin_continuous
     (T : Chapter02GlobalArtinTopologyData A) :
     Continuous (chapter02GlobalArtinHom A) :=
   by
-    sorry
+    refine continuous_of_continuousAt_one (chapter02GlobalArtinHom A) ?_
+    apply Filter.EventuallyEq.continuousAt
+    filter_upwards [T.standard_open.mem_nhds
+      (chapter02StandardArtinKernelSubgroup A).one_mem] with x hx
+    exact chapter02_standard_artin_kernel_subgroup_le_kernel A hx
 
 /-- The diagonal localization data for principal ideles. -/
 structure Chapter02PrincipalIdeleData
@@ -597,7 +744,9 @@ theorem Chapter02PrincipalIdeleData.ext
     {P Q : Chapter02PrincipalIdeleData K D}
     (hlocalization : P.localization = Q.localization)
     (hprincipal : P.principal = Q.principal) : P = Q := by
-  sorry
+  cases P
+  cases Q
+  simp_all
 
 @[simp]
 theorem chapter02_principal_idele_component

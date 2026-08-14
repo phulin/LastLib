@@ -1,4 +1,5 @@
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter02.Section05ExamplesAndWarnings
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter02.Section04TheFundamentalEquality
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter02.Section01WhyTheValuationRingMustBeTheIntegralClosure
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter02
 
@@ -329,6 +330,30 @@ structure Chapter2FinitePrecisionResidueDiagram
       ((IsLocalRing.maximalIdeal vK.valuationSubring).map
         (algebraMap vK.valuationSubring vL.valuationSubring)) ^ r) →+*
       IsLocalRing.ResidueField vL.valuationSubring
+  topHorizontal_spec :
+    ∀ x : vK.valuationSubring,
+      topHorizontal (Ideal.Quotient.mk
+        ((IsLocalRing.maximalIdeal vK.valuationSubring) ^ r) x) =
+        Ideal.Quotient.mk
+          (((IsLocalRing.maximalIdeal vK.valuationSubring).map
+            (algebraMap vK.valuationSubring vL.valuationSubring)) ^ r)
+          (algebraMap vK.valuationSubring vL.valuationSubring x)
+  leftVertical_spec :
+    ∀ x : vK.valuationSubring,
+      leftVertical (Ideal.Quotient.mk
+        ((IsLocalRing.maximalIdeal vK.valuationSubring) ^ r) x) =
+        IsLocalRing.residue vK.valuationSubring x
+  bottomHorizontal_spec :
+    ∀ x : vK.valuationSubring,
+      bottomHorizontal (IsLocalRing.residue vK.valuationSubring x) =
+        IsLocalRing.residue vL.valuationSubring
+          (algebraMap vK.valuationSubring vL.valuationSubring x)
+  rightVertical_spec :
+    ∀ x : vL.valuationSubring,
+      rightVertical (Ideal.Quotient.mk
+        (((IsLocalRing.maximalIdeal vK.valuationSubring).map
+          (algebraMap vK.valuationSubring vL.valuationSubring)) ^ r) x) =
+        IsLocalRing.residue vL.valuationSubring x
   commutes :
     rightVertical.comp topHorizontal = bottomHorizontal.comp leftVertical
 
@@ -380,6 +405,19 @@ theorem finite_precision_residue_diagram_exists
     leftVertical := left
     bottomHorizontal := bottom
     rightVertical := right
+    topHorizontal_spec := by
+      intro x
+      rfl
+    leftVertical_spec := by
+      intro x
+      rfl
+    bottomHorizontal_spec := by
+      intro x
+      exact IsLocalRing.ResidueField.algebraMap_residue
+        (R := vK.valuationSubring) (S := vL.valuationSubring) x
+    rightVertical_spec := by
+      intro x
+      rfl
     commutes := hcomm }⟩
 
 /-- For `r > 1`, the base precision quotient has nonzero nilpotent thickness. -/

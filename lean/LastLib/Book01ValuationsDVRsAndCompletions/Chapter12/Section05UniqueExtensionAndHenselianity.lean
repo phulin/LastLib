@@ -86,10 +86,9 @@ theorem integral_closure_lies_in_extension_valuation_ring
     {A E Γ : Type*} [CommRing A] [Field E]
     [LinearOrderedCommGroupWithZero Γ] [Algebra A E]
     (w : Valuation E Γ) (x : integralClosure A E)
-    (hintegers : w.Integers A)
-    (hx : IsIntegral A (algebraMap (integralClosure A E) E x)) :
+    (hintegers : w.Integers A) :
     w (algebraMap (integralClosure A E) E x) ≤ 1 := by
-  exact hintegers.isIntegral_iff_v_le_one.mp hx
+  exact hintegers.isIntegral_iff_v_le_one.mp x.property
 
 /-- Maximal ideals of integral closures are the centers of extended valuations. -/
 theorem integral_closure_maximal_ideals_are_valuation_centers
@@ -244,7 +243,69 @@ theorem distinct_finite_extensions_remain_distinct_in_algebraic_closure
        letI : LinearOrderedCommGroupWithZero W₂.valueGroup :=
           W₂.orderedValueGroup
        ¬ W₁.valuation.IsEquiv W₂.valuation) := by
-  sorry
+  let : Algebra E (AlgebraicClosure K) := ι.toRingHom.toAlgebra
+  let : IsScalarTower K E (AlgebraicClosure K) := by
+    apply IsScalarTower.of_algebraMap_eq'
+    ext x
+    change algebraMap K (AlgebraicClosure K) x =
+      ι (algebraMap K E x)
+    exact (ι.commutes x).symm
+  obtain ⟨U₁⟩ :=
+    Chapter10.chapter10_valuation_extension_exists_as_heterogeneous
+      (L := AlgebraicClosure K) w₁.valuation
+  obtain ⟨U₂⟩ :=
+    Chapter10.chapter10_valuation_extension_exists_as_heterogeneous
+      (L := AlgebraicClosure K) w₂.valuation
+  have hcomp₁ :
+      U₁.valuation.comap (algebraMap K (AlgebraicClosure K)) =
+        (U₁.valuation.comap (algebraMap E (AlgebraicClosure K))).comap
+          (algebraMap K E) := by
+    ext x
+    change U₁.valuation (algebraMap K (AlgebraicClosure K) x) =
+      U₁.valuation (algebraMap E (AlgebraicClosure K) (algebraMap K E x))
+    rw [← IsScalarTower.algebraMap_apply K E (AlgebraicClosure K)]
+  have hcomp₂ :
+      U₂.valuation.comap (algebraMap K (AlgebraicClosure K)) =
+        (U₂.valuation.comap (algebraMap E (AlgebraicClosure K))).comap
+          (algebraMap K E) := by
+    ext x
+    change U₂.valuation (algebraMap K (AlgebraicClosure K) x) =
+      U₂.valuation (algebraMap E (AlgebraicClosure K) (algebraMap K E x))
+    rw [← IsScalarTower.algebraMap_apply K E (AlgebraicClosure K)]
+  let W₁ : HeterogeneousValuationExtension v (AlgebraicClosure K) :=
+    { valueGroup := U₁.valueGroup
+      orderedValueGroup := U₁.orderedValueGroup
+      valuation := U₁.valuation
+      isExtension := by
+        rw [hcomp₁]
+        exact w₁.isExtension.trans
+          (U₁.isExtension.comap (algebraMap K E)) }
+  let W₂ : HeterogeneousValuationExtension v (AlgebraicClosure K) :=
+    { valueGroup := U₂.valueGroup
+      orderedValueGroup := U₂.orderedValueGroup
+      valuation := U₂.valuation
+      isExtension := by
+        rw [hcomp₂]
+        exact w₂.isExtension.trans
+          (U₂.isExtension.comap (algebraMap K E)) }
+  have h₁ :
+      w₁.valuation.IsEquiv
+        (U₁.valuation.comap (algebraMap E (AlgebraicClosure K))) :=
+    U₁.isExtension
+  have h₂ :
+      w₂.valuation.IsEquiv
+        (U₂.valuation.comap (algebraMap E (AlgebraicClosure K))) :=
+    U₂.isExtension
+  refine ⟨W₁, W₂, ?_, ?_, ?_⟩
+  · exact h₁
+  · exact h₂
+  · intro hEq
+    apply hne
+    have hEq' :
+        (U₁.valuation.comap (algebraMap E (AlgebraicClosure K))).IsEquiv
+          (U₂.valuation.comap (algebraMap E (AlgebraicClosure K))) := by
+      exact hEq.comap (ι.toRingHom)
+    exact h₁.trans (hEq'.trans h₂.symm)
 
 /-- The four conditions in Theorem 12.2 are equivalent. -/
 theorem henselian_uniqueness_criterion

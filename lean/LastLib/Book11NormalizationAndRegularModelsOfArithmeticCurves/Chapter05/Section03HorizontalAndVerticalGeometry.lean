@@ -126,6 +126,7 @@ theorem chapter05_fiber_divisor_is_principal_and_component_sum
     (hsupport :
       ∀ Q : Chapter05PrimeDivisor X, P.divisor Q ≠ 0 →
         ∃ i : D.family.index, Q = D.family.primeDivisor i) :
+    letI := D.family.finiteIndex
     chapter05FiberDivisor D = P.divisor ∧
       P.divisor = ∑ i, Finsupp.single (D.family.primeDivisor i)
         (D.multiplicity i : ℤ) := by
@@ -211,8 +212,8 @@ def Chapter05VerticalRemainsVerticalAfterFiniteBaseChange
     {X S S' : Scheme.{u}} (f : X ⟶ S)
     (B : Chapter05FiniteBaseChange S S')
     (D : Chapter05PrimeDivisor X)
-    (hD : chapter05PrimeDivisorVertical f D) : Prop :=
-  hD ∧
+    (_hD : chapter05PrimeDivisorVertical f D) : Prop :=
+  chapter05PrimeDivisorVertical f D ∧
     ∃ H : Chapter05BaseChangedVerticalPrimeDivisorFamily f B D, Nonempty H.index
 
 theorem chapter05_horizontal_baseChange_component_is_horizontal

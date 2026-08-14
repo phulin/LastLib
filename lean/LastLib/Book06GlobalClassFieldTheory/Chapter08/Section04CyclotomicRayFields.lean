@@ -14,7 +14,7 @@ theorem chapter08_rational_ordinary_class_group_is_trivial :
     chapter08ClassNumber ℚ = 1 := by
   sorry
 
-theorem chapter08_rational_ray_group_with_infinity
+noncomputable def chapter08_rational_ray_group_with_infinity
     {I C : Type u} [CommGroup I] [CommGroup C]
     (m : ℕ) (hm0 : m ≠ 0) (hm : 2 < m)
     (R : Chapter08RayClassPresentation ℚ I C)
@@ -22,7 +22,7 @@ theorem chapter08_rational_ray_group_with_infinity
     chapter08RayClassGroup R ≃* chapter08RationalRayGroup m := by
   sorry
 
-theorem chapter08_rational_ray_group_without_infinity
+noncomputable def chapter08_rational_ray_group_without_infinity
     {I C : Type u} [CommGroup I] [CommGroup C]
     (m : ℕ) (hm0 : m ≠ 0) (hm : 2 < m)
     (R : Chapter08RayClassPresentation ℚ I C)
@@ -174,7 +174,7 @@ theorem chapter08_cyclotomic_field_is_the_full_ray_class_field
 
 theorem chapter08_cyclotomic_no_infinity_field_is_maximal_real_subfield
     {m : ℕ} {F : Type u} [Field F] [Algebra ℚ F]
-    [NumberField F] [IsCyclotomicExtension {m} ℚ F]
+    [NumberField F] [IsCyclotomicExtension {m} ℚ F] [NeZero m]
     {I C : Type u} [CommGroup I] [CommGroup C]
     (D : Chapter08CyclotomicData m F) (hm0 : m ≠ 0) (hm : 2 < m)
     (R₀ : Chapter08RayClassPresentation ℚ I C)

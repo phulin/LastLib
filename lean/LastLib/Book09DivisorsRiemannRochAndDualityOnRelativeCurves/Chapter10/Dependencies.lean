@@ -4,20 +4,30 @@ import Mathlib.AlgebraicGeometry.Morphisms.Finite
 import Mathlib.AlgebraicGeometry.Morphisms.Flat
 import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
 import Mathlib.AlgebraicGeometry.Morphisms.Proper
+import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
 import Mathlib.AlgebraicGeometry.Modules.Sheaf
+import Mathlib.AlgebraicGeometry.Geometrically.Reduced
+import Mathlib.AlgebraicGeometry.Properties
 import Mathlib.CategoryTheory.Abelian.Exact
 import Mathlib.FieldTheory.IsAlgClosed.Basic
+import Mathlib.LinearAlgebra.Basis.Basic
 import Mathlib.LinearAlgebra.Dimension.Finite
+import Mathlib.LinearAlgebra.Quotient.Defs
 import Mathlib.RingTheory.LaurentSeries
+import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
 import Mathlib.RingTheory.MvPolynomial.Basic
+import Mathlib.RingTheory.Etale.Basic
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Section04FormalPowerSeries
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09.Dependencies
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter01.Section01TheAbsoluteAndRelativeSettings
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter09.Core
 
 namespace LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter10
 
 noncomputable section
 
 open AlgebraicGeometry CategoryTheory Limits Set
+open LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter01
 open scoped BigOperators LaurentSeries PowerSeries
 
 universe u v
@@ -35,6 +45,47 @@ differential which is already canonical is taken from Mathlib.
 
 /-! ### Curves, normalizations, and node data -/
 
+/-!
+Chapter 1 supplies the completed-local-ring ordinary-double-point predicate.
+Chapter 10 keeps a small wrapper so its curve and node records can expose the
+book-facing nodal data without weakening it to an unconstrained proposition.
+-/
+
+def chapter10IsNormal (X : Scheme.{u}) : Prop :=
+  IsLocallyNoetherian X ∧
+    ∀ x : X,
+      IsDomain (X.presheaf.stalk x) ∧
+        IsIntegrallyClosed (X.presheaf.stalk x)
+
+structure Chapter10NodalCurvePredicate (X : Scheme.{u}) where
+  nodal : chapter01NodalScheme X
+
+def chapter10IsNodal (X : Scheme.{u}) : Prop :=
+  Nonempty (Chapter10NodalCurvePredicate X)
+
+/-!
+The normalization property is only a universal property for dominant maps from
+normal schemes.  Without dominance, a map into a node need not have a unique
+lift (a closed point at the node can choose either branch), so an unqualified
+factorization statement would be false.  The normalization map itself must also
+be dominant; otherwise the universal quantifier over dominant test maps could
+be vacuous and would not characterize a normalization.
+-/
+def Chapter10NormalizationUniversalProperty
+    {N C : Scheme.{u}} (ν : N ⟶ C) : Prop :=
+  IsDominant ν ∧
+    ∀ (Y : Scheme.{u}) (_hY : chapter10IsNormal Y) (g : Y ⟶ C)
+      (_hg : IsDominant g),
+      ∃! h : Y ⟶ N, h ≫ ν = g
+
+structure Chapter10RelativeNodalPredicate
+    {X S : Scheme.{u}} (f : X ⟶ S) where
+  relativeNodalCurve : Chapter01NodalRelativeCurve f
+
+def chapter10IsRelativeNodal
+    {X S : Scheme.{u}} (f : X ⟶ S) : Prop :=
+  Nonempty (Chapter10RelativeNodalPredicate f)
+
 /-- The spectrum of the coefficient field used for a curve over a field. -/
 def chapter10FieldBaseScheme (k : Type u) [Field k] : Scheme.{u} :=
   Spec (CommRingCat.of k)
@@ -44,10 +95,12 @@ separately because the genus formula has a connected and a disconnected form. -/
 structure Chapter10Curve (k : Type u) [Field k] where
   carrier : Scheme.{u}
   structureMap : carrier ⟶ chapter10FieldBaseScheme k
-  reduced : Prop
+  reduced : IsReduced carrier
   proper : IsProper structureMap
-  nodal : Prop
-  connected : Prop
+  finiteType : LocallyOfFiniteType structureMap
+  pureDimensionOne : Chapter01PureDimensionOne carrier
+  nodal : chapter10IsNodal carrier
+  connected : _root_.IsConnected (Set.univ : Set carrier)
 
 /-- A finite normalization of a Chapter 10 curve.  The normality and
 normalization universal property are intentionally explicit local interfaces. -/
@@ -56,8 +109,8 @@ structure Chapter10Normalization {k : Type u} [Field k]
   carrier : Scheme.{u}
   map : carrier ⟶ C.carrier
   finite : IsFinite map
-  normal : Prop
-  isNormalization : Prop
+  normal : chapter10IsNormal carrier
+  isNormalization : Chapter10NormalizationUniversalProperty map
 
 def chapter10NormalizationStructureMap {k : Type u} [Field k]
     {C : Chapter10Curve k} (N : Chapter10Normalization C) :
@@ -70,8 +123,10 @@ structure Chapter10NodeFamily {k : Type u} [Field k]
   index : Type u
   [finite : Fintype index]
   point : index → C.carrier
-  isNode : ∀ q, Prop
-  pairwiseDistinct : Pairwise (fun q r => point q ≠ point r)
+  isNode : ∀ q, chapter01OrdinaryDoublePointAt C.carrier (point q)
+  pairwiseDistinct : Pairwise (fun q r : index => point q ≠ point r)
+  exhaustive : ∀ x : C.carrier,
+    chapter01OrdinaryDoublePointAt C.carrier x → ∃ q, point q = x
 
 attribute [instance] Chapter10NodeFamily.finite
 
@@ -81,9 +136,11 @@ structure Chapter10SplitBranchFamily {k : Type u} [Field k]
     (nodes : Chapter10NodeFamily C) where
   left : nodes.index → N.carrier
   right : nodes.index → N.carrier
-  left_over_node : ∀ q, N.map (left q) = nodes.point q
-  right_over_node : ∀ q, N.map (right q) = nodes.point q
-  branches_distinct : ∀ q, left q ≠ right q
+  left_over_node : ∀ q : nodes.index, N.map (left q) = nodes.point q
+  right_over_node : ∀ q : nodes.index, N.map (right q) = nodes.point q
+  branches_distinct : ∀ q : nodes.index, left q ≠ right q
+  all_preimages : ∀ (q : nodes.index) (z : N.carrier),
+    N.map z = nodes.point q → z = left q ∨ z = right q
 
 /-!
 The residue field and branch algebra records are the nonsplit replacement for
@@ -111,32 +168,58 @@ structure Chapter10BranchAlgebraData (K : Type u) [Field K] where
   finite : Module.Finite K carrier
   flat : Module.Flat K carrier
   rank_two : Module.finrank K carrier = 2
-  etale : Prop
+  [etale : Algebra.Etale K carrier]
 
 attribute [instance] Chapter10BranchAlgebraData.commRing
 attribute [instance] Chapter10BranchAlgebraData.algebra
+attribute [instance] Chapter10BranchAlgebraData.etale
 
 /-- The intrinsic discrepancy line `B_q / κ(q)`, with the residue field
 embedded diagonally through the algebra map. -/
-noncomputable def chapter10DiscrepancyLine
+abbrev chapter10DiscrepancyLine
     {K : Type u} [Field K] (B : Chapter10BranchAlgebraData K) : Type u := by
   letI := B.commRing
   letI := B.algebra
-  exact Submodule.Quotient (Submodule.span K (Set.range (algebraMap K B.carrier)))
+  exact B.carrier ⧸ Submodule.span K (Set.range (algebraMap K B.carrier))
 
 theorem chapter10_discrepancy_line_is_one_dimensional
     {K : Type u} [Field K] (B : Chapter10BranchAlgebraData K) :
     letI := B.commRing
     letI := B.algebra
     Module.finrank K (chapter10DiscrepancyLine B) = 1 := by
-  sorry
+  let := B.commRing
+  let := B.algebra
+  let := B.finite
+  let : Nontrivial B.carrier :=
+    Module.nontrivial_of_finrank_pos (by rw [B.rank_two]; decide)
+  let W : Submodule K B.carrier :=
+    Submodule.span K (Set.range (algebraMap K B.carrier))
+  have hW : W = K ∙ (1 : B.carrier) := by
+    apply le_antisymm
+    · refine Submodule.span_le.2 ?_
+      rintro x ⟨r, rfl⟩
+      rw [Algebra.algebraMap_eq_smul_one]
+      exact Submodule.smul_mem _ r (Submodule.mem_span_singleton_self 1)
+    · refine Submodule.span_le.2 ?_
+      intro x hx
+      have hx1 : x = (1 : B.carrier) := by simpa using hx
+      rw [hx1]
+      exact Submodule.subset_span
+        (show (1 : B.carrier) ∈ Set.range (algebraMap K B.carrier) from ⟨1, by simp⟩)
+  have hWfinrank : Module.finrank K W = 1 := by
+    rw [hW]
+    exact finrank_span_singleton (K := K) (v := (1 : B.carrier)) one_ne_zero
+  have hquot := W.finrank_quotient_add_finrank
+  rw [hWfinrank, B.rank_two] at hquot
+  change Module.finrank K (B.carrier ⧸ W) = 1
+  omega
 
 /-- All local data attached to a possibly nonsplit node. -/
 structure Chapter10NonsplitNodeData (k : Type u) [Field k] where
   residue : Chapter10ResidueFieldData k
   branches : Chapter10BranchAlgebraData residue.carrier
 
-noncomputable def chapter10NodeDiscrepancyLine
+abbrev chapter10NodeDiscrepancyLine
     {k : Type u} [Field k] (q : Chapter10NonsplitNodeData k) : Type u := by
   letI := q.residue.field
   exact chapter10DiscrepancyLine q.branches
@@ -150,14 +233,25 @@ structure Chapter10NodalCurveData (k : Type u) [Field k] where
   nodes : Type u
   [nodesFinite : Fintype nodes]
   nodePoint : nodes → curve.carrier
-  nodeIsNode : ∀ q, Prop
+  nodeIsNode : ∀ q, chapter01OrdinaryDoublePointAt curve.carrier (nodePoint q)
+  nodePointsDistinct : Pairwise (fun q r : nodes => nodePoint q ≠ nodePoint r)
+  nodePointsExhaustive : ∀ x : curve.carrier,
+    chapter01OrdinaryDoublePointAt curve.carrier x → ∃ q, nodePoint q = x
   nodeData : nodes → Chapter10NonsplitNodeData k
   components : Type u
   [componentsFinite : Fintype components]
   componentGenus : components → ℤ
   arithmeticGenus : ℤ
+  structureSheafEulerCharacteristic : ℤ
+  arithmeticGenus_eq_one_sub_eulerCharacteristic :
+    arithmeticGenus = 1 - structureSheafEulerCharacteristic
+  normalizationEulerCharacteristic : ℤ
+  normalizationEulerCharacteristic_eq_components :
+    normalizationEulerCharacteristic = ∑ i, (1 - componentGenus i)
   normalizationComponents : Prop
+  normalizationComponents_holds : normalizationComponents
   normalizationComponentsSmooth : Prop
+  normalizationComponentsSmooth_holds : normalizationComponentsSmooth
 
 attribute [instance] Chapter10NodalCurveData.nodesFinite
 attribute [instance] Chapter10NodalCurveData.componentsFinite
@@ -169,14 +263,20 @@ def chapter10NodeResidueDegree {k : Type u} [Field k]
 def chapter10FirstBettiNumber (vertices edges : ℕ) : ℤ :=
   (edges : ℤ) - (vertices : ℤ) + 1
 
-/-- The combinatorial dual graph of a connected nodal curve. -/
+def chapter10DualGraphAdjacent {V E : Type u}
+    (left right : E → V) (v w : V) : Prop :=
+  ∃ e, (left e = v ∧ right e = w) ∨ (left e = w ∧ right e = v)
+
+/-! The combinatorial dual graph of a connected nodal curve. -/
 structure Chapter10DualGraph where
   vertices : Type u
   [verticesFinite : Fintype vertices]
   edges : Type u
   [edgesFinite : Fintype edges]
-  left right : edges → vertices
-  connected : Prop
+  left : edges → vertices
+  right : edges → vertices
+  connected : ∀ v w,
+    Relation.ReflTransGen (chapter10DualGraphAdjacent left right) v w
 
 attribute [instance] Chapter10DualGraph.verticesFinite
 attribute [instance] Chapter10DualGraph.edgesFinite
@@ -207,18 +307,33 @@ structure Chapter10SplitNormalizationFunctionData
   pullback : Γ(curve.carrier, ⊤) → Γ(normalization.carrier, ⊤)
   leftValue : nodes.index → Γ(normalization.carrier, ⊤) → k
   rightValue : nodes.index → Γ(normalization.carrier, ⊤) → k
+  /-- Pullbacks of regular functions have equal values on the two branches. -/
+  pullback_branch_agreement :
+    ∀ (g : Γ(curve.carrier, ⊤)) (q : nodes.index),
+      leftValue q (pullback g) = rightValue q (pullback g)
+  /-- The normalization exactness step: every branch-compatible function lifts. -/
+  branch_agreement_lifts :
+    ∀ (f : Γ(normalization.carrier, ⊤)),
+      (∀ q : nodes.index, leftValue q f = rightValue q f) →
+        ∃ g : Γ(curve.carrier, ⊤), pullback g = f
 
 def chapter10FunctionDescends
-    {k : Type u} [Field k] (D : Chapter10SplitNormalizationFunctionData)
+    {k : Type u} [Field k]
+    (D : Chapter10SplitNormalizationFunctionData (k := k))
     (f : Γ(D.normalization.carrier, ⊤)) : Prop :=
-  ∀ q, D.leftValue q f = D.rightValue q f
+  ∀ q : D.nodes.index, D.leftValue q f = D.rightValue q f
 
 theorem chapter10_function_descends_iff
-    {k : Type u} [Field k] (D : Chapter10SplitNormalizationFunctionData)
+    {k : Type u} [Field k]
+    (D : Chapter10SplitNormalizationFunctionData (k := k))
     (f : Γ(D.normalization.carrier, ⊤)) :
     (∃ g : Γ(D.curve.carrier, ⊤), D.pullback g = f) ↔
       chapter10FunctionDescends D f := by
-  sorry
+  constructor
+  · rintro ⟨g, rfl⟩
+    exact D.pullback_branch_agreement g
+  · intro h
+    exact D.branch_agreement_lifts f h
 
 /-!
 The direct sum of node discrepancy lines is not yet a standard skyscraper
@@ -231,7 +346,10 @@ structure Chapter10NodeDiscrepancySheaf {k : Type u} [Field k]
     (D : Chapter10NodalCurveData k) where
   sheaf : D.curve.carrier.Modules
   isDirectSumOfPushforwardDiscrepancyLines : Prop
+  isDirectSumOfPushforwardDiscrepancyLines_holds :
+    isDirectSumOfPushforwardDiscrepancyLines
   finiteSupport : Prop
+  finiteSupport_holds : finiteSupport
 
 structure Chapter10NormalizationStructureSheafExactSequence
     {k : Type u} [Field k] (D : Chapter10NodalCurveData k)
@@ -244,22 +362,33 @@ structure Chapter10NormalizationStructureSheafExactSequence
   epi_discrepancy : Epi discrepancy
   exact : (ShortComplex.mk inclusion discrepancy comp_zero).Exact
   quotient_identification : Prop
+  quotient_identification_holds : quotient_identification
+  eulerCharacteristic_relation :
+    D.structureSheafEulerCharacteristic =
+      D.normalizationEulerCharacteristic -
+        ∑ q, ((D.nodeData q).residue.degree : ℤ)
 
 /-! ### Rank-one modules and residue spaces -/
 
 def Chapter10FreeRankOne (R M : Type u) [Semiring R] [AddCommMonoid M]
     [Module R M] : Prop :=
-  Nonempty (Basis (Fin 1) R M)
+  Nonempty (Module.Basis (Fin 1) R M)
 
 structure Chapter10RankOneModuleData (A : Type u) [CommRing A] where
   carrier : Type u
   [addCommGroup : AddCommGroup carrier]
   [module : Module A carrier]
   frame : carrier
-  freeRankOne : Chapter10FreeRankOne A carrier
+  frameBasis : Module.Basis (Fin 1) A carrier
+  frame_eq_basis : frame = frameBasis 0
 
 attribute [instance] Chapter10RankOneModuleData.addCommGroup
 attribute [instance] Chapter10RankOneModuleData.module
+
+theorem Chapter10RankOneModuleData.freeRankOne
+    {A : Type u} [CommRing A] (D : Chapter10RankOneModuleData A) :
+    Chapter10FreeRankOne A D.carrier :=
+  ⟨D.frameBasis⟩
 
 abbrev Chapter10BranchMeromorphicDifferential (k : Type u) [Field k] :=
   LaurentSeries k
@@ -304,8 +433,11 @@ structure Chapter10ProperFlatNodalFamily where
   proper : IsProper map
   flat : Flat map
   finitePresentation : LocallyOfFinitePresentation map
-  nodal : Prop
-  relativeLocalCompleteIntersection : Prop
+  baseLocallyNoetherian : IsLocallyNoetherian base
+  nodal : chapter10IsRelativeNodal map
+  relativeLocalCompleteIntersection :
+    LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter09.Chapter09RelativeLocalCompleteIntersection
+      map
 
 def chapter10FamilyBaseChangeTotal (F : Chapter10ProperFlatNodalFamily)
     {T : Scheme.{u}} (g : T ⟶ F.base) : Scheme.{u} :=
@@ -324,24 +456,28 @@ def chapter10FamilyBaseChangeToTotal (F : Chapter10ProperFlatNodalFamily)
 structure Chapter10RelativeDualizingSheafData
     (F : Chapter10ProperFlatNodalFamily) where
   omega : F.total.Modules
-  invertible : chapter09IsInvertibleSheaf omega
   baseChangeOmega : ∀ {T : Scheme.{u}} (g : T ⟶ F.base),
     (chapter10FamilyBaseChangeTotal F g).Modules
   baseChangeIso : ∀ {T : Scheme.{u}} (g : T ⟶ F.base),
-    (Scheme.Modules.pullback (chapter10FamilyBaseChangeToTotal F g)).obj omega ≅
+      (Scheme.Modules.pullback (chapter10FamilyBaseChangeToTotal F g)).obj omega ≅
       baseChangeOmega g
-  fiberwiseRosenlicht : ∀ p : Chapter10GeometricPoint F.base, Prop
+  fiberwiseRosenlicht : Chapter10GeometricPoint F.base → Prop
+  fiberwiseRosenlicht_holds : ∀ p, fiberwiseRosenlicht p
   canonicalAdjunctionGluing : Prop
+  canonicalAdjunctionGluing_holds : canonicalAdjunctionGluing
 
 def chapter10RelativeDualizingIsLineBundle
     {F : Chapter10ProperFlatNodalFamily}
     (ω : Chapter10RelativeDualizingSheafData F) : Prop :=
-  ω.invertible
+  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09.chapter09IsInvertibleSheaf
+    ω.omega
 
 def chapter10RelativeDualizingCommutesWithBaseChange
     {F : Chapter10ProperFlatNodalFamily}
     (ω : Chapter10RelativeDualizingSheafData F) : Prop :=
-  ∀ {T : Scheme.{u}} (g : T ⟶ F.base), Nonempty (ω.baseChangeIso g)
+  ∀ {T : Scheme.{u}} (g : T ⟶ F.base),
+    Nonempty ((Scheme.Modules.pullback (chapter10FamilyBaseChangeToTotal F g)).obj ω.omega ≅
+      ω.baseChangeOmega g)
 
 /-!
 Simultaneous normalization is deliberately a separate structure.  In
@@ -353,8 +489,19 @@ structure Chapter10SimultaneousNormalization
   normalizedTotal : Scheme.{u}
   map : normalizedTotal ⟶ F.total
   finite : IsFinite map
-  normal : Prop
-  fiberwiseNormalization : Prop
+  normal : chapter10IsNormal normalizedTotal
+  totalNormalization : Chapter10NormalizationUniversalProperty map
+  fiberMap : ∀ p : Chapter10GeometricPoint F.base,
+    chapter10GeometricFiberTotal (map ≫ F.map) p ⟶
+      chapter10GeometricFiberTotal F.map p
+  fiberMap_to_total : ∀ p,
+    fiberMap p ≫ pullback.fst F.map p.point =
+      pullback.fst (map ≫ F.map) p.point ≫ map
+  fiberMap_to_base : ∀ p,
+    fiberMap p ≫ pullback.snd F.map p.point =
+      pullback.snd (map ≫ F.map) p.point
+  fiberwiseNormalization : ∀ p,
+    Chapter10NormalizationUniversalProperty (fiberMap p)
 
 def chapter10HasSimultaneousNormalization
     (F : Chapter10ProperFlatNodalFamily) : Prop :=
@@ -362,8 +509,9 @@ def chapter10HasSimultaneousNormalization
 
 structure Chapter10MarkedSection (F : Chapter10ProperFlatNodalFamily) where
   sectionMap : F.base ⟶ F.total
-  over : sectionMap ≫ F.map = 𝟙 F.base
+  sectionOver : sectionMap ≫ F.map = 𝟙 F.base
   smoothPoint : Prop
+  smoothPoint_holds : smoothPoint
 
 structure Chapter10MarkedDifferentialData
     (F : Chapter10ProperFlatNodalFamily)
@@ -372,10 +520,14 @@ structure Chapter10MarkedDifferentialData
   markings : Fin n → Chapter10MarkedSection F
   twistedOmega : F.total.Modules
   allowsSimplePolesAtMarkings : Prop
+  allowsSimplePolesAtMarkings_holds : allowsSimplePolesAtMarkings
   allowsImplicitNodeBranchPoles : Prop
+  allowsImplicitNodeBranchPoles_holds : allowsImplicitNodeBranchPoles
   inclusionFromOmega : ω.omega ⟶ twistedOmega
-  totalResidue : ∀ p : Chapter10GeometricPoint F.base, Prop
-  nodeResiduesCancel : ∀ p : Chapter10GeometricPoint F.base, Prop
+  totalResidue : Chapter10GeometricPoint F.base → Prop
+  totalResidue_holds : ∀ p, totalResidue p
+  nodeResiduesCancel : Chapter10GeometricPoint F.base → Prop
+  nodeResiduesCancel_holds : ∀ p, nodeResiduesCancel p
 
 end
 

@@ -50,7 +50,7 @@ theorem chapter08_quadratic_hilbert_symbol_principal_idele_product_formula
 
 def chapter08RationalQuadraticUniformizerArtinValue
     (d : ℤ) (p : ℕ) [Fact p.Prime]
-    (hpd : ¬(p : ℤ) ∣ 2 * d) : ℤ :=
+    (_hpd : ¬(p : ℤ) ∣ 2 * d) : ℤ :=
   legendreSym p d
 
 theorem chapter08_rational_quadratic_uniformizer_artin_value

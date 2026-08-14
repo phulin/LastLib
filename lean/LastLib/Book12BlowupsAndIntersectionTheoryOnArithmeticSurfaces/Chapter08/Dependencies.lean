@@ -322,7 +322,7 @@ def chapter08DivisorOneCycleIntersection
     {X : Chapter08ArithmeticSurface} (D : Chapter08CartierDivisor X)
     (V : Chapter08VerticalOneCycle X)
     [∀ C : Chapter08VerticalCurve X, Chapter08CurveDegreeTheory C] : ℤ :=
-  ∑ C in V.support, V C * chapter08DivisorCurveIntersection D C
+  ∑ C ∈ V.support, V C * chapter08DivisorCurveIntersection D C
 
 /- LOCAL_DEPENDENCY_GUESS: the principal-divisor construction and its
 trivializing section are supplied by the Cartier-divisor chapter. -/

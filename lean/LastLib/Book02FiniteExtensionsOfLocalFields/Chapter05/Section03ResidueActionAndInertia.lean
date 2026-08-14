@@ -1,6 +1,8 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.Section02DecompositionGroups
 import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.Invariant.Basic
 import Mathlib.RingTheory.Valuation.Discrete.RankOne
+import Mathlib.RingTheory.Valuation.Extension
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05
 
@@ -209,12 +211,11 @@ theorem residue_action_surjective_when_residue_separable
     (v : Valuation F Γ) [Valuation.IsRankOneDiscrete v]
     (w : Valuation E Γ) [Valuation.IsRankOneDiscrete w]
     (hext : v.IsEquiv (w.comap (algebraMap F E)))
+    [Valuation.HasExtension v w]
     (hcomplete :
       IsAdicComplete (IsLocalRing.maximalIdeal v.valuationSubring)
         v.valuationSubring)
     (hunique : chapter05UniqueNormalizedValuationExtension v w)
-    [Algebra (IsLocalRing.ResidueField v.valuationSubring)
-      (IsLocalRing.ResidueField w.valuationSubring)]
     [FiniteDimensional (IsLocalRing.ResidueField v.valuationSubring)
       (IsLocalRing.ResidueField w.valuationSubring)]
     (hbase : ∀ σ : chapter05DecompositionGroup F w.valuationSubring, ∀ x :
@@ -229,7 +230,77 @@ theorem residue_action_surjective_when_residue_separable
     Function.Surjective
       (chapter05ResidueActionOverBase F w.valuationSubring
         (IsLocalRing.ResidueField v.valuationSubring) hbase) := by
-  sorry
+  classical
+  let _ := hseparable
+  let A := v.valuationSubring
+  let B := w.valuationSubring
+  let D := chapter05DecompositionGroup F B
+  have hD : D = ⊤ := by
+    exact complete_base_decomposition_group_eq_galois_group v w hext hcomplete hunique
+  let _ : Algebra.IsInvariant A B D := by
+    constructor
+    intro b hb
+    have hfixed : ∀ σ : Gal(E / F), σ (b : E) = b := by
+      intro σ
+      have hσ : σ ∈ D := by
+        rw [hD]
+        exact Subgroup.mem_top σ
+      have hbσ := hb ⟨σ, hσ⟩
+      exact congrArg (fun x : B => (x : E)) hbσ
+    have hmem : (b : E) ∈ (⊥ : IntermediateField F E) :=
+      (IsGalois.mem_bot_iff_fixed (b : E)).mpr hfixed
+    obtain ⟨a, ha⟩ := IntermediateField.mem_bot.mp hmem
+    have hAB : A = B.comap (algebraMap F E) := by
+      change v.valuationSubring =
+        (w.comap (algebraMap F E)).valuationSubring
+      exact (Valuation.isEquiv_iff_valuationSubring v
+        (w.comap (algebraMap F E))).mp hext
+    have haA : a ∈ A := by
+      rw [hAB]
+      change algebraMap F E a ∈ B
+      rw [ha]
+      exact b.property
+    refine ⟨⟨a, haA⟩, ?_⟩
+    apply Subtype.ext
+    change algebraMap F E a = (b : E)
+    exact ha
+  let _ : SMulCommClass D A B := by
+    constructor
+    intro σ a b
+    apply Subtype.ext
+    simp only [Algebra.smul_def]
+    change (σ.1 : E ≃+* E)
+        (algebraMap F E (a : F) * (b : E)) =
+      algebraMap F E (a : F) * (σ.1 : E ≃+* E) (b : E)
+    have hσa : (σ.1 : E ≃+* E) (algebraMap F E (a : F)) =
+        algebraMap F E (a : F) := by
+      exact σ.1.commutes (a : F)
+    rw [map_mul, hσa]
+  have hsurj : Function.Surjective
+      (Ideal.Quotient.stabilizerHom (IsLocalRing.maximalIdeal B)
+        (IsLocalRing.maximalIdeal A) D) := by
+    exact Ideal.Quotient.stabilizerHom_surjective D
+      (IsLocalRing.maximalIdeal A) (IsLocalRing.maximalIdeal B)
+  intro φ
+  let φ' : (B ⧸ IsLocalRing.maximalIdeal B) ≃ₐ[
+      A ⧸ IsLocalRing.maximalIdeal A] (B ⧸ IsLocalRing.maximalIdeal B) :=
+    AlgEquiv.ofRingEquiv (R := A ⧸ IsLocalRing.maximalIdeal A) (f := φ.1)
+      (fun x => φ.2 x)
+  obtain ⟨g, hg⟩ := hsurj φ'
+  refine ⟨g.1, ?_⟩
+  apply Subtype.ext
+  ext x
+  obtain ⟨b, rfl⟩ := IsLocalRing.residue_surjective (R := B) x
+  have hred := congrArg (fun e => e (IsLocalRing.residue B b)) hg
+  change chapter05ResidueAction F B g.1 (IsLocalRing.residue B b) =
+    φ.1 (IsLocalRing.residue B b)
+  rw [← residue_action_commutes_with_reduction B g.1 b]
+  have hst : IsLocalRing.residue B (g.1 • b) =
+      (Ideal.Quotient.stabilizerHom (IsLocalRing.maximalIdeal B)
+        (IsLocalRing.maximalIdeal A) D g) (IsLocalRing.residue B b) := by
+    rfl
+  rw [hst, hred]
+  rfl
 
 /-- Finite exact residue sequences account for the group order as `|I| · |Q|`. -/
 theorem residue_exact_sequence_cardinality

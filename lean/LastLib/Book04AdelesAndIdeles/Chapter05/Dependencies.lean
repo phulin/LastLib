@@ -1,5 +1,6 @@
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Data.Finset.Basic
+import Mathlib.Analysis.Normed.Group.Constructions
 import Mathlib.LinearAlgebra.FiniteDimensional.Basic
 import Mathlib.NumberTheory.NumberField.AdeleRing
 import Mathlib.NumberTheory.NumberField.CanonicalEmbedding.Basic
@@ -16,7 +17,7 @@ noncomputable section
 
 open Filter Set
 open NumberField IsDedekindDomain
-open scoped BigOperators Pointwise Topology RestrictedProduct
+open scoped BigOperators Pointwise Topology RestrictedProduct nonZeroDivisors
 
 universe u v w
 
@@ -29,8 +30,13 @@ from Chapters 1--4.  In particular, finite places are height-one primes of
 adele rings are the canonical restricted product and product carriers.
 -/
 
-abbrev Chapter05RingOfIntegers (K : Type*) [Field K] [NumberField K] :=
+abbrev Chapter05RingOfIntegers
+    (K : Type*) [Field K] [NumberField K] :=
   𝓞 K
+
+def chapter05RingOfIntegersSet
+    (K : Type*) [Field K] [NumberField K] : Set K :=
+  Set.range (algebraMap (Chapter05RingOfIntegers K) K)
 
 abbrev Chapter05FinitePlace (K : Type*) [Field K] [NumberField K] :=
   LastLib.Book04AdelesAndIdeles.Chapter04.Chapter04FinitePlace K
@@ -50,6 +56,11 @@ abbrev Chapter05FiniteLocalIntegerRing
     (K : Type*) [Field K] [NumberField K]
     (v : Chapter05FinitePlace K) : Type _ :=
   LastLib.Book04AdelesAndIdeles.Chapter04.Chapter04FiniteLocalIntegerRing K v
+
+def chapter05FiniteLocalIntegerSet
+    (K : Type*) [Field K] [NumberField K]
+    (v : Chapter05FinitePlace K) : Set (Chapter05FiniteLocalField K v) :=
+  LastLib.Book04AdelesAndIdeles.Chapter04.chapter04FiniteLocalIntegerSet K v
 
 abbrev Chapter05LocalField
     (K : Type*) [Field K] [NumberField K]
@@ -79,6 +90,12 @@ abbrev Chapter05AdeleRing (K : Type*) [Field K] [NumberField K] :=
 
 abbrev Chapter05MinkowskiSpace (K : Type*) [Field K] [NumberField K] :=
   NumberField.mixedEmbedding.mixedSpace K
+
+open scoped Classical in
+noncomputable instance chapter05MinkowskiSpaceNormedAddCommGroup
+    (K : Type*) [Field K] [NumberField K] :
+    NormedAddCommGroup (Chapter05MinkowskiSpace K) :=
+  Prod.normedAddCommGroup
 
 abbrev Chapter05IntegerLattice (K : Type*) [Field K] [NumberField K] :=
   NumberField.mixedEmbedding.integerLattice K
@@ -150,9 +167,11 @@ theorem chapter05_minkowski_correction_lattice_is_discrete_and_full
     (K : Type*) [Field K] [NumberField K]
     (I : Chapter05FractionalIdealGroup K) :
     DiscreteTopology (chapter05MinkowskiCorrectionLattice K I) ∧
-      IsZLattice ℝ (chapter05MinkowskiCorrectionLattice K I) := by
+      IsZLattice ℝ (E := Chapter05MinkowskiSpace K)
+        (chapter05MinkowskiCorrectionLattice K I) := by
   sorry
 
+open scoped Classical in
 theorem chapter05_minkowski_correction_lattice_has_fundamental_domain
     (K : Type*) [Field K] [NumberField K]
     (I : Chapter05FractionalIdealGroup K) :
@@ -213,15 +232,21 @@ theorem chapter05_awayDiagonal_coordinate
       chapter05LocalEmbedding K v.1 a := by
   sorry
 
+def chapter05FiniteCoordinate
+    (K : Type*) [Field K] [NumberField K]
+    (x : Chapter05FiniteAdeleRing K) (v : Chapter05Place K) :
+    Chapter05LocalField K v :=
+  match v with
+  | Sum.inl w => x w
+  | Sum.inr _ => 0
+
 def chapter05FiniteToAwayProjection
     (K : Type*) [Field K] [NumberField K]
     (S : Set (Chapter05Place K))
     (hfinite : ∀ v, v ∉ S → ∃ w : Chapter05FinitePlace K,
       v = Sum.inl w)
     (x : Chapter05FiniteAdeleRing K) : Chapter05AdeleAwayFrom K S :=
-  ⟨fun v => match h : v.1 with
-    | Sum.inl w => x w
-    | Sum.inr _ => 0, by
+  ⟨fun v => chapter05FiniteCoordinate K x v.1, by
       sorry⟩
 
 def chapter05AwayBasicNeighborhood

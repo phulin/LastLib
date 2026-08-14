@@ -1,4 +1,5 @@
 import LastLib.Book06GlobalClassFieldTheory.Chapter04.Dependencies
+import LastLib.Book06GlobalClassFieldTheory.Chapter01.Section03FourKindsOfNormAssertion
 
 namespace LastLib.Book06GlobalClassFieldTheory.Chapter04
 
@@ -126,31 +127,23 @@ theorem chapter04_dedekind_zeta_partial_summation
 
 /-- A source-facing predicate for an extension that splits completely at every completion.
 
-The precise completion-valued definition belongs with the missing global place API; the semantic
-class below keeps the separation lemma from hiding that dependency.
+The earlier global-place interface supplies the completion-valued local tensor algebra and its
+product decomposition, so the separation lemma does not assume its degree-one conclusion as hidden
+typeclass data.
 -/
-class Chapter04EverywhereSplitPredicate
-    (F E : Type*) [Field F] [Field E] [NumberField F] [Algebra F E] where
-  splitsCompletelyAt : Chapter04Place F → Prop
-  splits_implies_finrank_one :
-    (∀ v : Chapter04Place F, splitsCompletelyAt v) → Module.finrank F E = 1
-
 def Chapter04SplitsAtEveryCompletion
-    (F E : Type*) [Field F] [Field E] [NumberField F] [Algebra F E]
-    [Chapter04EverywhereSplitPredicate F E] : Prop :=
-  ∀ v : Chapter04Place F,
-    Chapter04EverywhereSplitPredicate.splitsCompletelyAt (F := F) (E := E) v
+    (F E : Type*) [Field F] [Field E] [NumberField F] [NumberField E]
+    [Algebra F E] [FiniteDimensional F E] : Prop :=
+  ∀ v : LastLib.Book06GlobalClassFieldTheory.Chapter01.BookPlace F,
+    LastLib.Book06GlobalClassFieldTheory.Chapter01.IsLocalProductAlgebra F E v
 
 /-- A nontrivial finite extension cannot split completely at every completion. -/
 theorem chapter04_no_nontrivial_everywhere_split
     (F E : Type*) [Field F] [Field E] [NumberField F] [NumberField E]
     [Algebra F E] [FiniteDimensional F E]
-    [Chapter04EverywhereSplitPredicate F E]
     (hdegree : 1 < Module.finrank F E) :
     ¬ Chapter04SplitsAtEveryCompletion F E := by
-  intro hsplit
-  rw [Chapter04EverywhereSplitPredicate.splits_implies_finrank_one hsplit] at hdegree
-  exact (Nat.lt_irrefl 1) hdegree
+  sorry
 
 /-! ### Finite-level compact support and Kummer interfaces -/
 
@@ -159,9 +152,8 @@ structure Chapter04FiniteSupportLevel (F : Type*) [Field F] [NumberField F] wher
   n : ℕ
   S : Finset (Chapter04Place F)
   contains_infinite : ∀ w : NumberField.InfinitePlace F, Sum.inr w ∈ S
-  places_above_n : Chapter04Place F → Prop
-  places_above_n_finite : Set.Finite {v | places_above_n v}
-  contains_n_places : ∀ v, places_above_n v → v ∈ S
+  places_above_n : Finset (NumberField.FinitePlace F)
+  contains_n_places : ∀ v, v ∈ places_above_n → Sum.inl v ∈ S
 
 /-- An additive local Kummer/valuation exact sequence. -/
 structure Chapter04LocalKummerValuationSequence
@@ -281,6 +273,9 @@ structure Chapter04DegreeTwoRowData
   [localH₂Group : AddCommGroup localH₂]
   targetH₀ : Type v
   [targetH₀Group : AddCommGroup targetH₀]
+  /-- The cokernel target is the dual of global degree-zero `Aₙ`-cohomology. -/
+  target_identification :
+    targetH₀ ≃+ (chapter04GlobalH C P.M 0 →+ chapter04QModZ)
   localization : chapter04GlobalH C P.μn 2 →+ localH₂
   totalInvariant : localH₂ →+ targetH₀
   exactness : Function.Exact localization totalInvariant

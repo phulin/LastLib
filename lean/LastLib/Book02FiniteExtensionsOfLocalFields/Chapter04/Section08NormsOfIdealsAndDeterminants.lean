@@ -1,4 +1,7 @@
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.Section07MinimalPolynomialsAndMultiplicities
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.Section05ResidueFieldShadows
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.Section02LeadingTermsAndDigits
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section07NormsAndIdeals
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section08TraceAndBoundedness
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04
 
@@ -180,7 +183,24 @@ theorem chapter04_ideal_norm_witness_independent
       I = chapter04FractionalIdealPower B L mB n} :
     chapter04IdealNorm A B K L mA mB hmA hmB f I hI =
       chapter04IdealNorm A B K L mA mB hmA hmB f I hI' := by
-  sorry
+  subst mB
+  have hmB0 : IsLocalRing.maximalIdeal B ≠ (⊥ : Ideal B) := by
+    exact IsDiscreteValuationRing.not_a_field B
+  have hpow_nezero (q : ℤ) :
+      chapter04FractionalIdealPower B L (IsLocalRing.maximalIdeal B) q ≠ 0 := by
+    by_cases hq : 0 ≤ q
+    · rw [chapter04FractionalIdealPower, dif_pos hq]
+      exact FractionalIdeal.coeIdeal_ne_zero.mpr (pow_ne_zero _ hmB0)
+    · rw [chapter04FractionalIdealPower, dif_neg hq]
+      exact inv_ne_zero (FractionalIdeal.coeIdeal_ne_zero.mpr (pow_ne_zero _ hmB0))
+  have huniq := chapter04_nonzero_fractional_ideal_is_maximal_power B L I
+    (by
+      rw [Classical.choose_spec hI]
+      exact hpow_nezero (Classical.choose hI))
+  have hchoose : Classical.choose hI = Classical.choose hI' := by
+    exact huniq.unique (Classical.choose_spec hI) (Classical.choose_spec hI')
+  unfold chapter04IdealNorm
+  rw [hchoose]
 
 /- Principal ideals have principal norm given by the field norm (§4.8). -/
 theorem chapter04_ideal_norm_of_principal
@@ -297,7 +317,7 @@ theorem chapter04_norm_of_base_element_is_degree_power
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] (πK : K) :
     Algebra.norm K (algebraMap K L πK) = πK ^ Module.finrank K L := by
-  sorry
+  exact Algebra.norm_algebraMap πK
 
 /- The residue quotient has the cardinality of the residue field (§4.8). -/
 theorem chapter04_residue_quotient_cardinality
@@ -325,7 +345,30 @@ theorem chapter04_dvr_power_quotient_cardinality
     (hmax : m = IsLocalRing.maximalIdeal A)
     (hequiv : Nonempty ((A ⧸ m) ≃+* k)) :
     Fintype.card (A ⧸ m ^ f) = Fintype.card k ^ f := by
-  sorry
+  let hfinite : Finite (IsLocalRing.ResidueField A) := by
+    let e : IsLocalRing.ResidueField A ≃+* k :=
+      (Ideal.quotEquivOfEq hmax.symm).trans hequiv.some
+    exact Finite.of_injective e.toFun e.injective
+  obtain ⟨π, hπ⟩ := IsDiscreteValuationRing.exists_irreducible A
+  have hcard :=
+    @LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.chapter_quotient_cardinality_pow
+      A _ _ _ π hπ hfinite f
+  have hpow :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.chapter_maximalIdeal_pow_eq_uniformizer_span
+      A π hπ f
+  rw [← hpow] at hcard
+  have hres :
+      Nat.card (IsLocalRing.ResidueField A) = Fintype.card k := by
+    change Nat.card (A ⧸ IsLocalRing.maximalIdeal A) = Fintype.card k
+    have he : (A ⧸ IsLocalRing.maximalIdeal A) ≃+* k :=
+      (Ideal.quotEquivOfEq hmax.symm).trans hequiv.some
+    rw [Nat.card_congr he.toEquiv]
+    simp
+  change Nat.card (A ⧸ (IsLocalRing.maximalIdeal A) ^ f) =
+      Nat.card (IsLocalRing.ResidueField A) ^ f at hcard
+  rw [hres] at hcard
+  rw [← Nat.card_eq_fintype_card]
+  simpa [hmax] using hcard
 
 /- The residue degree, not the ramification index, controls the norm of an
 individual maximal-ideal power (§4.8). -/

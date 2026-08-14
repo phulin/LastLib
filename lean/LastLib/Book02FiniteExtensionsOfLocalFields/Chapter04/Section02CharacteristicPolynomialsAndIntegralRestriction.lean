@@ -1,4 +1,4 @@
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.Section01LinearAlgebraTurnedIntoArithmetic
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section08TraceAndBoundedness
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04
 

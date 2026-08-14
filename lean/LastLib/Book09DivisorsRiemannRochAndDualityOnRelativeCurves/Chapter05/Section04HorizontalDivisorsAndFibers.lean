@@ -36,14 +36,19 @@ theorem chapter05_relative_divisor_fiber_length
 theorem chapter05_relative_divisor_degree_on_projective_flat_family
     (F : Chapter05ProjectiveFlatRelativeCurve)
     [Chapter05FiberEulerCharacteristicTheory F]
+    [Chapter05RelativeCohomologyBaseChangeTheory F]
     [Chapter10IdealDualAPI F.X]
-    {d : ℕ} (D : Chapter05RelativeEffectiveCartierDivisor F.f d) (s : F.S) :
+    [Chapter10SectionVanishingIdealAPI F.X]
+    {d : ℕ} (D : Chapter05RelativeEffectiveCartierDivisor F.f d) (s : F.S)
+    [Chapter10IdealDualAPI (F.f.fiber s)]
+    [Chapter10SectionVanishingIdealAPI (F.f.fiber s)] :
     chapter05FiberDegree F (chapter10OofD D.divisor) s = (d : ℤ) := by
   sorry
 
 structure Chapter05RelativeDivisorFiberBaseChangeData
     {C T : Scheme} {c : C ⟶ T} {d : ℕ}
     (D : Chapter05RelativeEffectiveCartierDivisor c d) (t : T)
+    [Chapter10IdealDualAPI C]
     [Chapter10IdealDualAPI (c.fiber t)]
     [Chapter10SectionVanishingIdealAPI (c.fiber t)] where
   fiberDivisor : Chapter05EffectiveCartierDivisor (c.fiber t)
@@ -51,6 +56,13 @@ structure Chapter05RelativeDivisorFiberBaseChangeData
     fiberDivisor.ideal = D.divisor.ideal.comap (c.fiberι t)
   exactSequence :
     Nonempty (Chapter05EffectiveCartierTwistedExactSequence fiberDivisor)
+  finiteLocallyFree :
+    Chapter05FiniteLocallyFreeProfile
+      (fiberDivisor.ideal.subschemeι ≫ c.fiberToSpecResidueField t) d
+  lineBundle_base_change :
+    Nonempty (Chapter05LineBundleIso
+      (chapter09PullbackLineBundle (c.fiberι t) (chapter10OofD D.divisor))
+      (chapter10OofD fiberDivisor))
 
 theorem chapter05_relative_divisor_restricts_to_a_cartier_fiber
     {C T : Scheme} {c : C ⟶ T} [Flat c] {d : ℕ}
@@ -61,6 +73,7 @@ theorem chapter05_relative_divisor_restricts_to_a_cartier_fiber
 theorem chapter05_relative_divisor_has_fiber_base_change_data
     {C T : Scheme} {c : C ⟶ T} [Flat c] {d : ℕ}
     (D : Chapter05RelativeEffectiveCartierDivisor c d) (t : T)
+    [Chapter10IdealDualAPI C]
     [Chapter10IdealDualAPI (c.fiber t)]
     [Chapter10SectionVanishingIdealAPI (c.fiber t)] :
     Nonempty (Chapter05RelativeDivisorFiberBaseChangeData D t) := by
@@ -69,6 +82,9 @@ theorem chapter05_relative_divisor_has_fiber_base_change_data
 theorem chapter05_cartier_exact_sequence_is_compatible_with_fiber_base_change
     {C T : Scheme} {c : C ⟶ T} {d : ℕ}
     (D : Chapter05RelativeEffectiveCartierDivisor c d) (t : T)
+    [Chapter10IdealDualAPI C]
+    [Chapter10IdealDualAPI (c.fiber t)]
+    [Chapter10SectionVanishingIdealAPI (c.fiber t)]
     (H : Chapter05RelativeDivisorFiberBaseChangeData D t) :
     Nonempty (Chapter05EffectiveCartierTwistedExactSequence H.fiberDivisor) :=
   H.exactSequence
@@ -104,6 +120,9 @@ structure Chapter05RegularSurfaceOverRegularCurve where
   base : Scheme
   total : Scheme
   map : total ⟶ base
+  flat : Flat map
+  locallyOfFinitePresentation : LocallyOfFinitePresentation map
+  relativeCurve : Chapter09RelativeCurve map
   baseLocallyNoetherian : IsLocallyNoetherian base
   totalLocallyNoetherian : IsLocallyNoetherian total
   base_regular_stalk : ∀ s : base,
@@ -132,10 +151,10 @@ theorem chapter05_proper_intersection_number_formula
     {D : Chapter05EffectiveCartierDivisor X} {s : S}
     (I : Chapter05ProperIntersectionData f D s) :
     chapter05IntersectionNumber I =
-      ∑ x in I.points,
+      Finset.sum I.points.attach (fun x =>
         (chapter05LocalIntersectionMultiplicity
-          (I.point_data x (by simp)) : ℤ) *
-          (f.residueDegree x : ℤ) :=
+          (I.point_data x.1 x.2) : ℤ) *
+          (f.residueDegree (I.point_data x.1 x.2).point : ℤ)) :=
   rfl
 
 theorem chapter05_proper_intersection_requires_finite_support

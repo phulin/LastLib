@@ -1,4 +1,5 @@
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Section07GaloisActionOnTheLayers
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Section01WhyUnitsNeedTheirOwnFiltration
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Section03HigherQuotientsAreAdditiveResidueFields
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10
 
@@ -96,12 +97,27 @@ noncomputable def chapter10UnitToAdicInverseLimit
         ext n
         exact (q n).map_mul u v }
 
+private noncomputable def chapter10CompatibleRingUnitMap
+    {L : Type*} [Field L] (A : ValuationSubring L) :
+    (LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Chapter08CompatibleFamily A
+      (IsLocalRing.maximalIdeal A))ˣ →*
+      Chapter10AdicUnitInverseLimit A := by
+  sorry
+
+private noncomputable def chapter10CompatibleRingUnitUnmap
+    {L : Type*} [Field L] (A : ValuationSubring L) :
+    Chapter10AdicUnitInverseLimit A →*
+      (LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Chapter08CompatibleFamily A
+        (IsLocalRing.maximalIdeal A))ˣ := by
+  sorry
+
 /-- Completeness identifies ring units with the inverse limit of their reductions. -/
 theorem chapter10_complete_units_inverse_limit
     {L : Type*} [Field L] (A : ValuationSubring L)
     (hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal A) A)
     (hDVR : IsDiscreteValuationRing A) :
-    Nonempty (Aˣ ≃* Chapter10AdicUnitInverseLimit A) := by
+    ∃ e : Aˣ ≃* Chapter10AdicUnitInverseLimit A,
+      ∀ u, e u = chapter10UnitToAdicInverseLimit A u := by
   sorry
 
 /-- The finite-precision quotients of the principal-unit group. -/
@@ -170,14 +186,40 @@ abbrev Chapter10PrincipalUnitInverseLimit
     (A : Type*) [CommRing A] [IsLocalRing A] : Type _ :=
   Chapter10CompatiblePrincipalUnitFamily A
 
+/- The canonical family of principal-unit reductions. -/
+noncomputable def chapter10PrincipalUnitToAdicInverseLimit
+    (A : Type*) [CommRing A] [IsLocalRing A] :
+    chapter10UnitFiltration A 1 →*
+      Chapter10PrincipalUnitInverseLimit A := by
+  let q : ∀ n : ℕ,
+      chapter10UnitFiltration A 1 →*
+        Chapter10PrincipalUnitPrecisionGroup A n :=
+    fun n => QuotientGroup.mk'
+      ((chapter10UnitFiltration A (n + 1)).subgroupOf
+        (chapter10UnitFiltration A 1))
+  have hcompat : ∀ (u : chapter10UnitFiltration A 1) (n : ℕ),
+      chapter10AbstractPrincipalUnitTransition A n (q (n + 1) u) =
+        q n u := by
+    intro u n
+    rfl
+  refine
+    { toFun := fun u => ⟨fun n => q n u, hcompat u⟩
+      map_one' := by
+        ext n
+        exact (q n).map_one
+      map_mul' := by
+        intro u v
+        ext n
+        exact (q n).map_mul u v }
+
 /-- Completeness identifies principal units with their compatible finite layers. -/
 theorem chapter10_complete_principal_units_inverse_limit
     {L : Type*} [Field L] (A : ValuationSubring L)
     (hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal A) A)
     (hDVR : IsDiscreteValuationRing A) :
-    Nonempty
-      (chapter10UnitFiltration A 1 ≃*
-        Chapter10PrincipalUnitInverseLimit A) := by
+    ∃ e : chapter10UnitFiltration A 1 ≃*
+        Chapter10PrincipalUnitInverseLimit A,
+      ∀ u, e u = chapter10PrincipalUnitToAdicInverseLimit A u := by
   sorry
 
 /-- Finite residue fields make every finite-precision quotient finite. -/
@@ -196,7 +238,8 @@ theorem chapter10_finite_residue_finite_precision_quotients
 /-- Under the adic topology, finite residue fields make the unit group compact. -/
 theorem chapter10_finite_residue_unit_group_compact
     {L : Type*} [Field L] (A : ValuationSubring L)
-    [TopologicalSpace Aˣ] [Finite (Chapter10ResidueField A)]
+    [UniformSpace Aˣ] [IsTopologicalGroup Aˣ] [CompleteSpace Aˣ]
+    [T2Space Aˣ] [Finite (Chapter10ResidueField A)]
     (hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal A) A)
     (hDVR : IsDiscreteValuationRing A)
     (htop : Chapter10UnitFiltrationNeighborhoodBasis
@@ -207,7 +250,8 @@ theorem chapter10_finite_residue_unit_group_compact
 /-- Each congruence subgroup is compact and open in the finite-residue case. -/
 theorem chapter10_finite_residue_unit_filtration_compact_open
     {L : Type*} [Field L] (A : ValuationSubring L)
-    [TopologicalSpace Aˣ] [Finite (Chapter10ResidueField A)]
+    [UniformSpace Aˣ] [IsTopologicalGroup Aˣ] [CompleteSpace Aˣ]
+    [T2Space Aˣ] [Finite (Chapter10ResidueField A)]
     (hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal A) A)
     (hDVR : IsDiscreteValuationRing A)
     (htop : Chapter10UnitFiltrationNeighborhoodBasis
@@ -225,7 +269,8 @@ def Chapter10LocallyCompactButNotCompact
 /-- With finite residue field, a complete valued field is locally compact but not compact. -/
 theorem chapter10_finite_residue_local_compactness
     {L : Type*} [Field L] (A : ValuationSubring L)
-    [TopologicalSpace Lˣ] [Finite (Chapter10ResidueField A)]
+    [UniformSpace Lˣ] [IsTopologicalGroup Lˣ] [CompleteSpace Lˣ]
+    [T2Space Lˣ] [Finite (Chapter10ResidueField A)]
     [Valuation.IsRankOneDiscrete A.valuation]
     (π : A) (hπ : Chapter10Uniformizer A π)
     (hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal A) A)

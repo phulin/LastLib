@@ -1,5 +1,7 @@
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09.Dependencies
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11.Section05SymmetricPowersAndBaseChange
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter01.Section01TheAbsoluteAndRelativeSettings
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter08.Dependencies
 import Mathlib.Algebra.Category.ModuleCat.Sheaf.LocallyFree
 import Mathlib.Algebra.DualNumber
 import Mathlib.AlgebraicGeometry.Morphisms.Flat
@@ -17,6 +19,8 @@ open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter0
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter08
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11
+open LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter01
+open LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter08
 
 universe u v
 
@@ -105,16 +109,12 @@ theorem chapter15CurveBaseChangeMap_snd {S : Scheme.{u}}
       pullback.snd C.structuralMap U.structuralMap ≫ u.hom := by
   sorry
 
-/- A proper, flat, finitely presented relative curve.  The geometric
-   dimension-one assertion is intentionally kept as a named hypothesis until
-   the earlier project has a canonical fiber-dimension package. -/
+/- A proper, flat, finitely presented relative curve.  The relative-curve
+   class from Chapter 1 is the single source of these hypotheses, including
+   geometric pure dimension one. -/
 structure Chapter15RelativeCurve (S : Scheme.{u}) where
   curve : RelativeScheme S
-  proper : IsProper curve.structuralMap
-  flat : Flat curve.structuralMap
-  finitePresentation : LocallyOfFinitePresentation curve.structuralMap
-  geometricFibersPureDimensionOne : Prop
-  geometricFibersPureDimensionOne_proof : geometricFibersPureDimensionOne
+  relativeCurve : Chapter01RelativeCurve curve.structuralMap
 
 abbrev Chapter15RelativeCurveMap {S : Scheme.{u}}
     (C : Chapter15RelativeCurve S) : C.curve.carrier ⟶ S :=
@@ -149,13 +149,15 @@ structure Chapter15ProperSmoothIntegralCurve (k : Type u) [Field k] where
   finiteType : LocallyOfFiniteType curve.structuralMap
   smooth : SmoothOfRelativeDimension 1 curve.structuralMap
   smoothQuasiProjective : Chapter11SmoothQuasiProjectiveCurve curve
-  integral : Prop
-  integral_proof : integral
-  geometricallyIntegral : Prop
-  geometricallyIntegral_proof : geometricallyIntegral
-  geometricallyConnected : Prop
-  geometricallyConnected_proof : geometricallyConnected
+  integral : IsIntegral curve.carrier
+  irreducible : IrreducibleSpace (curve.carrier : Type u)
+  geometricallyConnected : GeometricallyConnected curve.structuralMap
   genus : ℕ
+
+instance chapter15ProperSmoothIntegralCurve_irreducible
+    {k : Type u} [Field k] (C : Chapter15ProperSmoothIntegralCurve k) :
+    IrreducibleSpace (C.curve.carrier : Type u) :=
+  C.irreducible
 
 instance chapter15ProperSmoothIntegralCurve_smoothQuasiProjective
     {k : Type u} [Field k] (C : Chapter15ProperSmoothIntegralCurve k) :
@@ -165,9 +167,7 @@ instance chapter15ProperSmoothIntegralCurve_smoothQuasiProjective
 structure Chapter15RationalPointData
     {k : Type u} [Field k]
     (C : Chapter15ProperSmoothIntegralCurve k) where
-  point : C.curve.carrier
-  rational : Prop
-  rational_proof : rational
+  point : RelativeScheme.Hom (RelativeScheme.base (chapter15FieldBase k)) C.curve
 
 abbrev Chapter15FieldDivisor {k : Type u} [Field k]
     (C : Chapter15ProperSmoothIntegralCurve k) (d : ℕ) :=

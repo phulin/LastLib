@@ -17,12 +17,12 @@ def chapter11FiniteRayUnitSubgroup (m : RayModulus K) :
     ∀ v, chapter11FiniteIdeleComponent K v x ∈
       chapter11FiniteLocalUnitGroup K v (m.finiteExponent v)}
   one_mem' := by
-    sorry
+    intro v
+    simpa only [map_one] using
+      (chapter11FiniteLocalUnitGroup K v (m.finiteExponent v)).one_mem
   mul_mem' := by
-    intro x y hx hy
     sorry
   inv_mem' := by
-    intro x hx
     sorry
 
 theorem chapter11_finite_ray_unit_subgroup_mem_iff (m : RayModulus K)
@@ -67,7 +67,7 @@ theorem chapter11_additive_compact_open_subgroup_is_eventually_an_ideal_lattice
 theorem chapter11_one_plus_translation_has_multiplicative_defect
     {A : Type*} [CommRing A] (x y : A) :
     (1 + x) * (1 + y) - 1 - (x + y) = x * y := by
-  sorry
+  ring
 
 theorem chapter11_local_multiplicative_layer_is_additive_layer
     {A : Type*} [CommRing A] [IsLocalRing A] {n : ℕ} (hn : 0 < n) :
@@ -83,7 +83,7 @@ abbrev Chapter11ArchimedeanMaximalCompact (K : Type*) [Field K] [NumberField K] 
 theorem chapter11_archimedean_maximal_compact_factor_is_compact
     (K : Type*) [Field K] [NumberField K] :
     CompactSpace (Chapter11ArchimedeanMaximalCompact K) := by
-  sorry
+  infer_instance
 
 structure Chapter11MagnitudeDirection {G : Type*} [Group G] [TopologicalSpace G] where
   toFun : ℝ → G

@@ -70,12 +70,29 @@ def chapter05IdeleClassMap
     (principal : Kˣ →* I) : I →* chapter05IdeleClassGroup principal :=
   QuotientGroup.mk' (chapter05PrincipalIdeleSubgroup principal)
 
+@[simp]
+theorem chapter05_idele_class_map_principal
+    {K : Type uK} {I : Type uI} [Field K] [CommGroup I]
+    (principal : Kˣ →* I) (a : Kˣ) :
+    chapter05IdeleClassMap principal (principal a) = 1 := by
+  change QuotientGroup.mk' (chapter05PrincipalIdeleSubgroup principal) (principal a) = 1
+  exact (QuotientGroup.eq_one_iff
+    (N := chapter05PrincipalIdeleSubgroup principal) (principal a)).2
+      ⟨a, by simp, rfl⟩
+
 theorem chapter05_idele_class_eq_iff
     {K : Type uK} {I : Type uI} [Field K] [CommGroup I]
     (principal : Kˣ →* I) (x y : I) :
     chapter05IdeleClassMap principal x = chapter05IdeleClassMap principal y ↔
       x * y⁻¹ ∈ chapter05PrincipalIdeleSubgroup principal := by
-  sorry
+  change QuotientGroup.mk' (chapter05PrincipalIdeleSubgroup principal) x =
+    QuotientGroup.mk' (chapter05PrincipalIdeleSubgroup principal) y ↔ _
+  rw [← QuotientGroup.eq_one_iff (N := chapter05PrincipalIdeleSubgroup principal)
+    (x * y⁻¹)]
+  simp only [QuotientGroup.mk'_apply]
+  exact (mul_inv_eq_one :
+    (QuotientGroup.mk' (chapter05PrincipalIdeleSubgroup principal) x) *
+        (QuotientGroup.mk' (chapter05PrincipalIdeleSubgroup principal) y)⁻¹ = 1 ↔ _).symm
 
 /-- The abstract norm and quotient maps used to compare two idele class groups. -/
 structure Chapter05IdeleNormData
@@ -104,7 +121,12 @@ theorem chapter05_class_norm_mem_iff
     [CommGroup I_K] [CommGroup I_L] [CommGroup C_K] [CommGroup C_L]
     (N : Chapter05IdeleNormData I_K I_L C_K C_L) (c : C_K) :
     c ∈ chapter05ClassNormSubgroup N ↔ ∃ y : C_L, N.classNorm y = c := by
-  sorry
+  rw [chapter05ClassNormSubgroup, Subgroup.mem_map]
+  constructor
+  · rintro ⟨y, _, hy⟩
+    exact ⟨y, hy⟩
+  · rintro ⟨y, hy⟩
+    exact ⟨y, trivial, hy⟩
 
 theorem chapter05_norm_class_commutes
     {I_K : Type uI} {I_L : Type uI'} {C_K : Type uC} {C_L : Type uC'}
@@ -189,7 +211,9 @@ theorem chapter05_input_global_artin_ker
     [FiniteDimensional K L] [IsGalois K L]
     (X : Chapter05ClassFormationInput K L I_K I_L C_K C_L) :
     (chapter05InputGlobalArtin X).ker = chapter05InputNormSubgroup X := by
-  sorry
+  rw [chapter05InputGlobalArtin,
+    MonoidHom.ker_comp_of_injective _ _ (chapter05InputCapProductEquiv X).symm.injective,
+    chapter05InputClassNormQuotientMap, QuotientGroup.ker_mk']
 
 theorem chapter05_input_global_artin_surjective
     {K : Type uK} {L : Type uL}
@@ -199,7 +223,8 @@ theorem chapter05_input_global_artin_surjective
     [FiniteDimensional K L] [IsGalois K L]
     (X : Chapter05ClassFormationInput K L I_K I_L C_K C_L) :
     Function.Surjective (chapter05InputGlobalArtin X) := by
-  sorry
+  exact (chapter05InputCapProductEquiv X).symm.surjective.comp
+    (QuotientGroup.mk'_surjective _)
 
 theorem chapter05_input_norm_quotient_card
     {K : Type uK} {L : Type uL}
@@ -210,30 +235,33 @@ theorem chapter05_input_norm_quotient_card
     (X : Chapter05ClassFormationInput K L I_K I_L C_K C_L) :
     Nat.card (C_K ⧸ chapter05InputNormSubgroup X) =
       Nat.card (Abelianization (Gal(L / K))) := by
-  sorry
+  exact Nat.card_congr (chapter05InputCapProductEquiv X).toEquiv.symm
 
 /-
 DEPENDENCY_GUESS: `Chapter05NormLimitationData` stands for the canonical
 comparison between the level `L` and the commutator fixed field
-`L^[G, G]`.  The common quotient map should later be supplied by the
-reconciled class-formation and local-compatibility interfaces.
+`L^[G, G]`.  The two quotient maps, and their identification, should later
+be supplied by the reconciled class-formation and local-compatibility
+interfaces.
 -/
-/-- A norm-limitation comparison: two levels have a common quotient map after
-  the local decomposition data are identified.  The common map is part of the
-  comparison; equality of the two norm kernels is the resulting conclusion. -/
+/-- A norm-limitation comparison: the two levels have quotient maps into a
+  common target, and the local comparison identifies those maps.  Equality of
+  the two norm kernels is the resulting conclusion. -/
 structure Chapter05NormLimitationData
     (C : Type uC) (Q : Type uQ) [CommGroup C] [CommGroup Q] where
   normSubgroupL : Subgroup C
   normSubgroupM : Subgroup C
-  quotient : C →* Q
-  quotientL_kernel : quotient.ker = normSubgroupL
-  quotientM_kernel : quotient.ker = normSubgroupM
+  quotientL : C →* Q
+  quotientM : C →* Q
+  quotient_maps_agree : quotientL = quotientM
+  quotientL_kernel : quotientL.ker = normSubgroupL
+  quotientM_kernel : quotientM.ker = normSubgroupM
 
 theorem chapter05_norm_limitation
     {C : Type uC} {Q : Type uQ} [CommGroup C] [CommGroup Q]
     (D : Chapter05NormLimitationData C Q) :
     D.normSubgroupL = D.normSubgroupM := by
-  rw [← D.quotientL_kernel, ← D.quotientM_kernel]
+  rw [← D.quotientL_kernel, ← D.quotientM_kernel, D.quotient_maps_agree]
 
 /-- A local multiplicative group, its units, and its local Artin map. -/
 structure Chapter05LocalArtinFamily

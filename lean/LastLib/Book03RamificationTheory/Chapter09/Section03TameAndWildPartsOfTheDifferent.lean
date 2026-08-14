@@ -5,6 +5,8 @@ namespace LastLib.Book03RamificationTheory.Chapter09
 noncomputable section
 
 open LastLib.Book03RamificationTheory.Chapter05
+open LastLib.Book03RamificationTheory.Chapter03
+open LastLib.Book03RamificationTheory.Chapter08
 open scoped BigOperators
 
 /-! ## 9.3. Tame and wild parts of the different -/
@@ -66,6 +68,43 @@ theorem chapter09_different_decomposes_for_hilbert_setup
     S.d = chapter09TameBaseline S.profile + chapter09WildExcess S.profile := by
   apply chapter09_different_decomposes_into_tame_and_wild
   exact (chapter09_hilbert_different_formula_group_counts vK vL S)
+
+/- The norm formula turns the actual downstairs discriminant exponent into
+   the Chapter 3 mixed-profile value.  The ideal-power hypotheses expose the
+   canonical Chapter 8 discriminant/different and residue-norm interface. -/
+theorem chapter09_mixed_unramified_tame_discriminant_exponent
+    {A B K L : Type*}
+    [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
+    [CommRing B] [IsDedekindDomain B] [IsDiscreteValuationRing B]
+    [Field K] [Field L]
+    [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
+    [IsScalarTower A K L] [IsScalarTower A B L]
+    [IsFractionRing A K] [IsFractionRing B L]
+    [FiniteDimensional K L] [IsGalois K L]
+    [Algebra.IsSeparable K L]
+    [IsIntegralClosure B A L] [IsIntegrallyClosed A]
+    [Module.Finite A B] [Module.Free A B] [Module.IsTorsionFree A B]
+    [Algebra.IsIntegral A B] [Finite (Gal(L / K))]
+    [Fintype (Gal(L / K))]
+    (vK : AddValuation K (WithTop ℤ))
+    (vL : AddValuation L (WithTop ℤ))
+    [Algebra (chapter09ResidueField vK) (chapter09ResidueField vL)]
+    [FiniteDimensional (chapter09ResidueField vK)
+      (chapter09ResidueField vL)]
+    (S : Chapter09HilbertFormulaSetup A B K L vK vL)
+    (e f δ : ℕ)
+    (hprofile : chapter09MixedUnramifiedTameProfile S.profile e)
+    (hdisc :
+      chapter08RelativeDiscriminantIdeal A B =
+        (IsLocalRing.maximalIdeal A) ^ δ)
+    (hnorm :
+      Ideal.relNorm A (IsLocalRing.maximalIdeal B) =
+        (IsLocalRing.maximalIdeal A) ^ f)
+    (hδunique : ∃! n : ℕ,
+      chapter08RelativeDiscriminantIdeal A B =
+        (IsLocalRing.maximalIdeal A) ^ n) :
+    δ = chapter03MixedDiscriminantExponent e f := by
+  sorry
 
 theorem chapter09_wild_excess_nonnegative
     {G : Type*} [Group G] [Finite G] [Fintype G]

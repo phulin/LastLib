@@ -9,6 +9,8 @@ open LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
 
 noncomputable section
 
+universe uC
+
 /-! # Book 2, Chapter 7, §7.7: roots of unity prime to the residue characteristic -/
 
 /-- `m` is invertible in the valuation ring. -/
@@ -26,9 +28,12 @@ def chapter07RootsOfUnityReduction
 /-- A bijective reduction map induces a bijection on the prime-to-
 residue-characteristic roots of unity. -/
 theorem chapter07_roots_of_unity_reduction_bijective
-    {K k : Type*} [CommMonoid K] [CommMonoid k]
-    (m : ℕ) (ρ : K →* k) (hρ : Function.Bijective ρ) :
-    Function.Bijective (chapter07RootsOfUnityReduction m ρ) := by
+    {B l : Type*} [CommRing B] [Field l] [HenselianLocalRing B]
+    (res : B →+* l) (m : ℕ) (hm : Chapter07OrderInvertibleIn B m)
+    (hres : Function.Surjective res)
+    (hker : RingHom.ker res = IsLocalRing.maximalIdeal B) :
+    Function.Bijective
+      (chapter07RootsOfUnityReduction m res.toMonoidHom) := by
   sorry
 
 /-- The derivative of `T^m - 1` has the expected normalization factor. -/
@@ -45,26 +50,6 @@ theorem chapter07_prime_to_residue_characteristic_roots_are_simple
     eval₂ (RingHom.id k) ζ (derivative (X ^ m - 1 : k[X])) ≠ 0 := by
   sorry
 
-/-- The root-lifting property for a chosen maximal unramified subextension of
-a finite extension.  It is kept as a predicate because the subgroup `S` and
-the reduction map depend on that chosen embedding. -/
-def Chapter07FiniteExtensionResidueRootLifting
-    {L l : Type*} [Field L] [Field l]
-    (m : ℕ) (ρ : Lˣ →* lˣ) (S : Subgroup Lˣ) : Prop :=
-  ∀ ζ : rootsOfUnity m l,
-      ∃! ξ : rootsOfUnity m L, (ξ : Lˣ) ∈ S ∧
-        ρ ξ = ζ.1
-
-/-- The chosen unramified subgroup supplies the unique lift of each residue
-root. -/
-theorem chapter07_finite_extension_residue_root_lifting
-    {L l : Type*} [Field L] [Field l]
-    (m : ℕ) (ρ : Lˣ →* lˣ) (S : Subgroup Lˣ)
-    (hρ : Chapter07FiniteExtensionResidueRootLifting m ρ S) :
-    ∀ ζ : rootsOfUnity m l,
-      ∃! ξ : rootsOfUnity m L, (ξ : Lˣ) ∈ S ∧ ρ ξ = ζ.1 := by
-  sorry
-
 /-- Hensel's simple-root criterion lifts every residue `m`th root when `m` is
 invertible in the local ring. -/
 theorem chapter07_prime_to_residue_characteristic_root_lifts_uniquely
@@ -76,21 +61,18 @@ theorem chapter07_prime_to_residue_characteristic_root_lifts_uniquely
     ∃! ξ : B, ξ ^ m = 1 ∧ res ξ = ζ := by
   sorry
 
-/-- The exact-order compatibility assertion for the reduction map. -/
-def Chapter07ReductionPreservesPrimitiveRootOrder
-    {L l : Type*} [CommMonoid L] [CommMonoid l]
-    (m : ℕ) (ρ : Lˣ →* lˣ) : Prop :=
-  ∀ ζ : rootsOfUnity m L, IsPrimitiveRoot (ζ : Lˣ) m →
-    IsPrimitiveRoot (ρ ζ) m
-
-/-- The primitive-root clause is a reusable consequence of the reduction
-compatibility interface. -/
+/-- Reduction preserves exact order for roots of unity whose order is invertible
+in the henselian local ring.  The hypotheses make the reduction map the actual
+residue map; exactness is not assumed as an independent predicate. -/
 theorem chapter07_reduction_preserves_primitive_root_order
-    {L l : Type*} [CommMonoid L] [CommMonoid l]
-    (m : ℕ) (ρ : Lˣ →* lˣ)
-    (hρ : Chapter07ReductionPreservesPrimitiveRootOrder m ρ)
-    (ζ : rootsOfUnity m L) (hζ : IsPrimitiveRoot (ζ : Lˣ) m) :
-    IsPrimitiveRoot (ρ ζ) m := by
+    {B l : Type*} [CommRing B] [Field l] [HenselianLocalRing B]
+    (res : B →+* l) (m : ℕ)
+    (hm : Chapter07OrderInvertibleIn B m)
+    (hres : Function.Surjective res)
+    (hker : RingHom.ker res = IsLocalRing.maximalIdeal B)
+    (ζ : rootsOfUnity m B) (hζ : IsPrimitiveRoot (ζ : Bˣ) m) :
+    IsPrimitiveRoot
+      (((chapter07RootsOfUnityReduction m res.toMonoidHom) ζ : rootsOfUnity m l) : lˣ) m := by
   sorry
 
 /-- The numerical relation defining the multiplicative order of `q` modulo
@@ -113,37 +95,80 @@ theorem chapter07_finite_field_primitive_root_degree
   sorry
 
 /-- The residue degree of a primitive `m`th root is the least `d` satisfying
-`m ∣ q^d - 1`. -/
--- SOURCE_ISSUE: The source suppresses the identifications between the field
--- extensions and the residue-field root fields.  The two degree equalities
--- are therefore explicit hypotheses in this proof-ready interface.
+`m ∣ q^d - 1`; the generic field-degree equality is supplied by the local
+extension construction and is used to identify the ramification index. -/
 theorem chapter07_primitive_root_unramified_degree
     {K L k l : Type*} [Field K] [Field L] [Field k] [Field l]
     [Algebra K L] [Algebra k l] [FiniteDimensional K L]
-    [FiniteDimensional k l] [Fintype k]
+    [FiniteDimensional k l] [Fintype k] [Finite l]
     (q m d : ℕ) (hq : Fintype.card k = q)
     (horder : Chapter07MultiplicativeOrderModulo q m d)
-    (hsep : Chapter07ResidueExtensionIsSeparable k l)
     (E : Chapter07FiniteLocalExtensionData K L k l)
-    (he : E.ramificationIndex = 1)
-    (hres_degree : Module.finrank k l = d)
     (hfield_degree : Module.finrank K L = d)
     (hroot : ∃ ζ : L, IsPrimitiveRoot ζ m ∧
       Algebra.adjoin K ({ζ} : Set L) = ⊤)
     (hresroot : ∃ ζ : l, IsPrimitiveRoot ζ m ∧
       Algebra.adjoin k ({ζ} : Set l) = ⊤) :
     Chapter07UnramifiedExtension E ∧
-      Module.finrank k l = d ∧ Module.finrank K L = d := by
+      Module.finrank k l = d := by
   sorry
 
-/-- The `p`-adic cyclotomic example: the degree is the order of `p` modulo
-`m` when `m` is prime to `p`. -/
+/-- An actual p-adic field/root extension carrying the numerical profile of
+the cyclotomic construction. -/
+structure Chapter07PadicCyclotomicExtension (p m d : ℕ) where
+  [primeFact : Fact p.Prime]
+  field : Type uC
+  [fieldField : Field field]
+  [fieldAlgebra : Algebra ℚ_[p] field]
+  [fieldFinite : FiniteDimensional ℚ_[p] field]
+  root : field
+  root_primitive : IsPrimitiveRoot root m
+  root_generates : Algebra.adjoin ℚ_[p] ({root} : Set field) = ⊤
+  degree : Module.finrank ℚ_[p] field = d
+  profile : Chapter10FiniteExtensionProfile
+  profile_degree : profile.degree = d
+  profile_ramificationIndex : profile.ramificationIndex = 1
+  profile_residueDegree : profile.residueDegree = d
+  profile_unramified : Chapter10Unramified profile
+  valuation : AddValuation field (WithTop ℤ)
+  valuation_extension :
+    (Padic.addValuation (p := p)).IsEquiv
+      (valuation.comap (algebraMap ℚ_[p] field))
+  extensionData :
+    Chapter10HeterogeneousExtensionData
+      (Padic.addValuation (p := p)) valuation valuation_extension
+  profile_realized :
+    profile.ramificationIndex = extensionData.ramificationIndex ∧
+      profile.residueDegree = extensionData.residueDegree
+  residueField : Type uC
+  [residueFieldField : Field residueField]
+  [residueFieldAlgebra : Algebra (ZMod p) residueField]
+  [residueFieldFinite : FiniteDimensional (ZMod p) residueField]
+  residueDegree : Module.finrank (ZMod p) residueField = d
+  residue_separable : ∀ x : residueField, IsSeparable (ZMod p) x
+  baseResidueIdentification :
+    Chapter10ResidueField (Padic.addValuation (p := p)) ≃+* ZMod p
+  extensionResidueIdentification :
+    Chapter10ResidueField valuation ≃+* residueField
+  residueMap :
+    Chapter10ResidueField (Padic.addValuation (p := p)) →+*
+      Chapter10ResidueField valuation
+  residueMap_is_canonical :
+    letI : Valuation.HasExtension (Padic.addValuation (p := p)) valuation :=
+      ⟨valuation_extension⟩
+    residueMap = Chapter10ResidueFieldMap
+      (Padic.addValuation (p := p)) valuation
+  residueMap_compatible :
+    extensionResidueIdentification.toRingHom.comp residueMap =
+      (algebraMap (ZMod p) residueField).comp
+        baseResidueIdentification.toRingHom
+
+/-- The p-adic cyclotomic result quantifies the actual field and primitive root,
+not just a detached numerical profile. -/
 theorem chapter07_padic_prime_to_p_roots_of_unity
     {p m d : ℕ} [Fact p.Prime]
     (horder : Chapter07MultiplicativeOrderModulo p m d) :
-    ∃ q : Chapter10FiniteExtensionProfile,
-      q.degree = d ∧ q.ramificationIndex = 1 ∧ q.residueDegree = d ∧
-      Chapter10Unramified q := by
+    Nonempty (Chapter07PadicCyclotomicExtension p m d) := by
   sorry
 
 /-- In residue characteristic `p`, the derivative of `T^p - 1` has a

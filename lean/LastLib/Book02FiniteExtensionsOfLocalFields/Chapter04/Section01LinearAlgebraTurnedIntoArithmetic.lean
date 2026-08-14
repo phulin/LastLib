@@ -1,5 +1,6 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section08TraceAndBoundedness
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section01SeparatingBranchesByCompletion
+import Mathlib.FieldTheory.PurelyInseparable.Basic
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04
 

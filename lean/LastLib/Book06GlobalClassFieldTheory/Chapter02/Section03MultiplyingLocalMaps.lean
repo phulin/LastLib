@@ -142,7 +142,20 @@ theorem chapter02_global_local_factor_is_trivial_iff_decomposition_group_trivial
     (A : Chapter02GlobalArtinData D G) (v : V) :
     (∀ a : H v, A.localArtin v a = 1) ↔
       chapter02GlobalDecompositionGroup A v = ⊥ := by
-  sorry
+  constructor
+  · intro h
+    change A.decomposition v = ⊥
+    apply le_antisymm
+    · intro d hd
+      have hd' : d ∈ (A.localArtin v).range := by
+        rw [A.local_artin_range v]
+        exact hd
+      rcases hd' with ⟨a, ha⟩
+      have hd_one : d = 1 := ha.symm.trans (h a)
+      simp [hd_one]
+    · exact bot_le
+  · intro hv a
+    exact chapter02_global_local_factor_killed_at_completely_split_place A v hv a
 
 end
 

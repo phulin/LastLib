@@ -38,10 +38,19 @@ theorem chapter03_quadratic_extension_degree_and_profile
     (p : ℕ) [Fact p.Prime]
     (L : Type*) [Field L] [Algebra (ℚ_[p]) L]
     [FiniteDimensional (ℚ_[p]) L]
-    (D : Chapter03QuadraticExtensionData p L) :
+    (D : Chapter03QuadraticExtensionData p L)
+    (hdiscreteL :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation
+        D.valuation)
+    (hext : (Padic.addValuation (p := p)).IsEquiv
+      (D.valuation.comap (algebraMap (ℚ_[p]) L))) :
     Module.finrank (ℚ_[p]) L = 2 ∧
-      ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
-        q.degree = 2 ∧ q.ramificationIndex = 2 ∧ q.residueDegree = 1 := by
+      ∃ d : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10HeterogeneousExtensionData
+          (Padic.addValuation (p := p)) D.valuation hext,
+        ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
+          LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ProfileRealizedByData d q ∧
+            q.degree = 2 ∧ q.ramificationIndex = 2 ∧ q.residueDegree = 1 ∧
+            LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10TotallyRamified q := by
   sorry
 
 theorem chapter03_quadratic_odd_prime_displacement

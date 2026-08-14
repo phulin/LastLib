@@ -11,6 +11,7 @@ import Mathlib.RingTheory.ClassGroup.Basic
 import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Completion
 import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.Topology.Algebra.RestrictedProduct.Units
+import LastLib.Book04AdelesAndIdeles.Chapter11.Dependencies
 
 /-!
 # Chapter 14: shared interfaces
@@ -150,10 +151,16 @@ def chapter14GlobalReciprocityStatement (K : Type*) [Field K] [NumberField K] : 
   Nonempty (chapter14IdeleClassProfiniteCompletion K ≃ₜ*
     chapter14AbelianGaloisGroup K)
 
+/-! The two standard choices for the Frobenius normalization. -/
+
+inductive Chapter14FrobeniusConvention
+  | arithmetic
+  | geometric
+
 /-!
-The next structures are local dependency interfaces.  The preceding chapters of the book are not
-yet available as stable LastLib declarations in this drafting pass, so these fields isolate exactly
-which local embeddings, open subgroups, and unit tails the chapter uses.
+The next structures are chapter-level dependency interfaces.  Earlier chapters provide the
+canonical adelic objects and graph topology; these fields isolate the local embeddings, open
+subgroups, and unit tails needed by the reciprocity statements.
 -/
 
 /- LOCAL_DEPENDENCY_GUESS: the local-to-global embedding maps are supplied by the earlier adelic
@@ -161,8 +168,16 @@ chapters in the reconciled library. -/
 structure Chapter14LocalComponentData (K : Type*) [Field K] [NumberField K] where
   finiteComponent : ∀ v : NumberField.FinitePlace K,
     (v.maximalIdeal.adicCompletion K)ˣ →* chapter14IdeleGroup K
+  finiteComponent_continuous :
+    ∀ v, Continuous (finiteComponent v)
+  finiteComponent_injective :
+    ∀ v, Function.Injective (finiteComponent v)
   infiniteComponent : ∀ w : NumberField.InfinitePlace K,
     (w.Completion)ˣ →* chapter14IdeleGroup K
+  infiniteComponent_continuous :
+    ∀ w, Continuous (infiniteComponent w)
+  infiniteComponent_injective :
+    ∀ w, Function.Injective (infiniteComponent w)
 
 /- LOCAL_DEPENDENCY_GUESS: these subgroups package the positive archimedean directions and the
 integral-unit restricted-product tail used by the finite-level statements. -/
@@ -271,7 +286,7 @@ theorem chapter14_real_sign_quotient_is_finite :
   sorry
 
 theorem chapter14_real_sign_quotient_has_order_two :
-    Nonempty (chapter14RealSignQuotient ≃* ZMod 2) := by
+    Nonempty (chapter14RealSignQuotient ≃* Multiplicative (ZMod 2)) := by
   sorry
 
 def chapter14ComplexMagnitudeSubgroup : Subgroup ℂˣ := ⊤
@@ -313,6 +328,14 @@ structure Chapter14RaySubgroupFamily {K : Type*} [Field K] [NumberField K]
     ∀ m, (chapter14PrincipalIdeleSubgroup K ⊔ raySubgroup m).FiniteIndex
   ray_subgroup_cofinal :
     ∀ U : Chapter14FiniteLevel D, ∃ m, raySubgroup m ≤ U.subgroup
+  /-- Every continuous finite quotient has an idele-level kernel neighborhood.
+  This is the topological bridge needed before ray cofinality can be applied
+  to a quotient of the idele class group. -/
+  finite_quotient_pullback :
+    ∀ {H : Type*} [Group H] [Finite H] [TopologicalSpace H] [DiscreteTopology H]
+      (f : chapter14IdeleClassGroup K →* H), Continuous f →
+      ∃ U : Chapter14FiniteLevel D,
+        U.subgroup ≤ Subgroup.comap (chapter14IdeleClassMap K) f.ker
 
 def chapter14RayFiniteLevel {K : Type*} [Field K] [NumberField K]
     (D : Chapter14IdeleLevelData K) (R : Chapter14RaySubgroupFamily D)
@@ -338,6 +361,7 @@ def chapter14RayClassQuotientMap {K : Type*} [Field K] [NumberField K]
 
 structure Chapter14ModuleData (K : Type*) [Field K] [NumberField K] where
   module : chapter14IdeleGroup K →* ℝ≥0ˣ
+  module_continuous : Continuous module
   principal_one :
     ∀ x : Kˣ, module (chapter14PrincipalIdeleEmbedding K x) = 1
 
@@ -365,7 +389,7 @@ def chapter14NormOneClassSubgroup {K : Type*} [Field K] [NumberField K]
     rw [map_inv, ha, inv_one]
 
 def chapter14FieldNormOnUnits (K L : Type*) [Field K] [Field L]
-    [Algebra K L] : Lˣ →* Kˣ :=
+    [Algebra K L] [FiniteDimensional K L] : Lˣ →* Kˣ :=
   Units.map (Algebra.norm K)
 
 /- LOCAL_DEPENDENCY_GUESS: local norm groups and the adelic norm map are the interfaces supplied by
@@ -373,6 +397,7 @@ the norm/functoriality chapters.  No surjectivity is assumed here. -/
 structure Chapter14AdelicNormInterface (K L : Type*) [Field K] [Field L]
     [NumberField K] [NumberField L] [Algebra K L] [FiniteDimensional K L] where
   ideleNorm : chapter14IdeleGroup L →* chapter14IdeleGroup K
+  ideleNorm_continuous : Continuous ideleNorm
   galoisRestriction : chapter14AbelianGaloisGroup L →*
     chapter14AbelianGaloisGroup K
   map_principal :

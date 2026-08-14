@@ -69,6 +69,14 @@ structure Chapter05FiberHilbertPolynomialRoute
     Chapter05LocallyConstant linePolynomial
   structureSheafPolynomial_locally_constant :
     Chapter05LocallyConstant structureSheafPolynomial
+  line_value_actual_twist : ∀ (s : F.S) (n : ℕ),
+    (linePolynomial s).value n =
+      chapter05FiberEulerCharacteristic F s
+        (chapter05FiberLineBundle F (lineTwist n) s)
+  structure_value_actual_twist : ∀ (s : F.S) (n : ℕ),
+    (structureSheafPolynomial s).value n =
+      chapter05FiberEulerCharacteristic F s
+        (chapter05FiberLineBundle F (structureSheafTwist n) s)
   line_value_at_zero : ∀ s : F.S,
     (linePolynomial s).value 0 =
       chapter05FiberEulerCharacteristic F s
@@ -105,11 +113,18 @@ flatness, a coherent family can carry a genuinely non-locally-constant fiber
 numerical function. -/
 
 structure Chapter05NonflatDegreeJumpProfile
-    (F : Chapter05ProjectiveFlatRelativeCurve) (M : F.X.Modules) where
+    (F : Chapter05ProjectiveFlatRelativeCurve)
+    [Chapter05FiberEulerCharacteristicTheory F]
+    [Chapter05RelativeCohomologyBaseChangeTheory F]
+    (M : F.X.Modules) where
   coherent : Chapter08Coherent M
   not_flat_over : ¬ Chapter08FlatOver F.f M
   fiberValue : F.S → ℤ
   not_locally_constant : ¬ Chapter05LocallyConstant fiberValue
+  fiberValue_eq_actual_fiber_invariant : ∀ s : F.S,
+    fiberValue s =
+      chapter05FiberModuleEulerCharacteristic F s
+        (chapter05FiberModule F M s)
 
 /-! Proper flat geometrically reduced families acquire projectivity after an
 fpqc cover; this is the later projectivity bridge used when projectivity is
@@ -158,10 +173,28 @@ structure Chapter05FiberMultidegreeProfile
     (F : Chapter05ProjectiveFlatRelativeCurve)
     [Chapter05FiberEulerCharacteristicTheory F]
     (L : Chapter05LineBundle F.X) (s : F.S)
+  [IsNoetherian (F.f.fiber s)]
     (I : Type v) [Fintype I] where
-  componentCarrier : I → Scheme
-  componentMap : ∀ i, componentCarrier i ⟶ F.f.fiber s
+  component : I → irreducibleComponents (F.f.fiber s)
+  componentMap : ∀ i,
+    (F.f.fiber s).irreducibleComponent (component i).1 (component i).2 ⟶
+      F.f.fiber s
+  componentMap_eq_canonical : ∀ i,
+    componentMap i =
+      (F.f.fiber s).irreducibleComponentι (component i).1 (component i).2
+  componentMap_isClosedImmersion : ∀ i, IsClosedImmersion (componentMap i)
+  componentMap_range : ∀ i,
+    Set.range (componentMap i) = (component i : Set (F.f.fiber s))
+  componentEulerCharacteristicTheory : ∀ i,
+    Chapter05EulerCharacteristicTheory
+      ((F.f.fiber s).irreducibleComponent (component i).1 (component i).2)
   componentDegree : I → ℤ
+  componentDegree_eq_restricted_lineBundle : ∀ i,
+    componentDegree i =
+      letI := componentEulerCharacteristicTheory i
+      chapter05LineBundleDegree
+        (chapter09PullbackLineBundle (componentMap i)
+          (chapter05FiberLineBundle F L s))
   total_degree :
     ∑ i, componentDegree i = chapter05FiberDegree F L s
 
@@ -169,16 +202,25 @@ theorem chapter05_total_degree_is_sum_of_component_degrees
     (F : Chapter05ProjectiveFlatRelativeCurve)
     [Chapter05FiberEulerCharacteristicTheory F]
     (L : Chapter05LineBundle F.X) (s : F.S)
+    [IsNoetherian (F.f.fiber s)]
     (I : Type v) [Fintype I]
     (H : Chapter05FiberMultidegreeProfile F L s I) :
     ∑ i, H.componentDegree i = chapter05FiberDegree F L s :=
   H.total_degree
 
 structure Chapter05ComponentDegreeSpecializationProfile
-    (I J : Type v) [Fintype I] [Fintype J] where
+    (F : Chapter05ProjectiveFlatRelativeCurve)
+    [Chapter05FiberEulerCharacteristicTheory F]
+    (L : Chapter05LineBundle F.X) (s t : F.S)
+    (I J : Type v) [Fintype I] [Fintype J]
+    [IsNoetherian (F.f.fiber s)] [IsNoetherian (F.f.fiber t)] where
   specialization : I → J
+  sourceProfile : Chapter05FiberMultidegreeProfile F L s I
+  targetProfile : Chapter05FiberMultidegreeProfile F L t J
   sourceDegree : I → ℤ
   targetDegree : J → ℤ
+  sourceDegree_eq_profile : ∀ i, sourceDegree i = sourceProfile.componentDegree i
+  targetDegree_eq_profile : ∀ j, targetDegree j = targetProfile.componentDegree j
   target_degree_is_redistributed_source_degree :
     ∑ j, targetDegree j = ∑ i, sourceDegree i
 

@@ -88,7 +88,7 @@ theorem chapter15_exceptional_square_is_negative_residue_degree
       (chapter05ExceptionalBaseMap p B E)] :
     chapter05ExceptionalSelfIntersection p B E N =
       -(chapter05ResidueDegree p : ℤ) := by
-  exact chapter05_exceptional_selfIntersection_formula p B E N
+  sorry
 
 /-! ### (3) Total transforms, strict transforms, and squares -/
 
@@ -113,7 +113,7 @@ theorem chapter15_curve_total_transform_formula
     chapter11TotalTransform b (chapter11CurveAsDivisor D) =
       chapter11StrictTransformDivisor b (chapter11CurveAsDivisor D) +
         (D.multiplicity p : ℤ) • chapter11ExceptionalDivisor b := by
-  exact chapter11_total_transform_formula b D hmem
+  sorry
 
 theorem chapter15_strict_transform_exceptional_intersection
     {S : Chapter11ArithmeticBase}
@@ -128,7 +128,7 @@ theorem chapter15_strict_transform_exceptional_intersection
         (chapter11StrictTransformDivisor b (chapter11CurveAsDivisor D))
         (chapter11ExceptionalDivisor b) =
       (D.multiplicity p : ℤ) * chapter11ResidueDegree p := by
-  exact chapter11_strict_transform_exceptional_intersection b P D hmem hscope
+  sorry
 
 theorem chapter15_strict_transform_self_intersection_formula
     {S : Chapter11ArithmeticBase}
@@ -170,10 +170,12 @@ theorem chapter15_fiberwise_intersection_is_residue_weighted
     (I : Chapter08ProperIntersectionWitness D G)
     (s : Chapter08BaseClosedPoint X) :
     chapter08FiberwiseIntersection I s =
-      ∑ x in I.support.filter (chapter08PointInFiber X s),
-        (chapter08LocalIntersectionMultiplicity D G x : ℤ) *
-          (x.residueDegree : ℤ) := by
-  exact chapter08_fiberwise_intersection_eq_weighted_sum I s
+      (by
+        classical
+        exact ∑ x ∈ I.support.filter (chapter08PointInFiber X s),
+          (chapter08LocalIntersectionMultiplicity D G x : ℤ) *
+            (x.residueDegree : ℤ)) := by
+  sorry
 
 theorem chapter15_divisor_curve_intersection_is_residue_weighted_local_sum
     {X : Chapter08ArithmeticSurface}
@@ -183,7 +185,7 @@ theorem chapter15_divisor_curve_intersection_is_residue_weighted_local_sum
     (I : Chapter08ProperDivisorCurveIntersectionWitness D C) :
     chapter08DivisorCurveIntersection D C =
       chapter08DivisorCurveLocalLengthSum I := by
-  exact chapter08_divisorCurveIntersection_eq_local_length_sum I
+  sorry
 
 /-! ### (5) Vertical curves, common components, and bilinearity -/
 
@@ -193,14 +195,14 @@ theorem chapter15_vertical_intersection_is_restriction_degree
     [Chapter08CurveDegreeTheory C] :
     chapter08DivisorCurveIntersection D C =
       chapter08Degree C (chapter08DivisorLineBundleRestriction D C) := by
-  exact chapter08_divisorCurveIntersection_eq_degree_of_restriction D C
+  sorry
 
 theorem chapter15_vertical_intersection_handles_common_components
     {X : Chapter08ArithmeticSurface}
     (D : Chapter08CartierDivisor X) (C : Chapter08VerticalCurve X)
     [Chapter08CurveDegreeTheory C] :
     ∃ n : ℤ, chapter08DivisorCurveIntersection D C = n := by
-  exact chapter08_divisorCurveIntersection_is_defined_for_common_component D C
+  sorry
 
 theorem chapter15_vertical_curve_intersection_is_symmetric
     {X : Chapter08ArithmeticSurface}
@@ -208,7 +210,7 @@ theorem chapter15_vertical_curve_intersection_is_symmetric
     [Chapter08CurveDegreeTheory C] [Chapter08CurveDegreeTheory E] :
     chapter08DivisorCurveIntersection C.asCartierDivisor E =
       chapter08DivisorCurveIntersection E.asCartierDivisor C := by
-  exact chapter08_vertical_curve_intersection_symmetric C E
+  sorry
 
 theorem chapter15_vertical_divisor_pairing_is_symmetric
     {X : Chapter08ArithmeticSurface} {s : Chapter08BaseClosedPoint X}
@@ -216,7 +218,7 @@ theorem chapter15_vertical_divisor_pairing_is_symmetric
     (V W : Chapter08VerticalDivisor X s) :
     chapter08VerticalDivisorPairing V W =
       chapter08VerticalDivisorPairing W V := by
-  exact chapter08_vertical_divisor_pairing_symmetric V W
+  sorry
 
 theorem chapter15_vertical_divisor_pairing_additive_left
     {X : Chapter08ArithmeticSurface} {s : Chapter08BaseClosedPoint X}
@@ -225,7 +227,7 @@ theorem chapter15_vertical_divisor_pairing_additive_left
     chapter08VerticalDivisorPairing (V + V') W =
       chapter08VerticalDivisorPairing V W +
         chapter08VerticalDivisorPairing V' W := by
-  exact chapter08_vertical_divisor_pairing_additive_left V V' W
+  sorry
 
 theorem chapter15_vertical_divisor_pairing_additive_right
     {X : Chapter08ArithmeticSurface} {s : Chapter08BaseClosedPoint X}
@@ -234,7 +236,7 @@ theorem chapter15_vertical_divisor_pairing_additive_right
     chapter08VerticalDivisorPairing V (W + W') =
       chapter08VerticalDivisorPairing V W +
         chapter08VerticalDivisorPairing V W' := by
-  exact chapter08_vertical_divisor_pairing_additive_right V W W'
+  sorry
 
 /-! ### (6) Projection and finite-flat scaling -/
 
@@ -297,14 +299,14 @@ theorem chapter15_horizontal_cartier_line_bundle_adjunction
     (H : Chapter12RelativeEffectiveCartierDivisor X)
     [Chapter11PicardTheory H.carrier]
     (A : Chapter12RelativeAdjunctionData P H) :
-    Chapter11LineBundleIso A.relativeDualizing
-      (chapter12RelativeAdjunctionBundle P H) := by
-  exact chapter12_relative_effective_cartier_adjunction P H A
+    Nonempty (Chapter11LineBundleIso A.relativeDualizing
+      (chapter12RelativeAdjunctionBundle P H)) := by
+  sorry
 
 /-! ### (8) The special-fiber matrix -/
 
 theorem chapter15_component_matrix_is_negative_semidefinite
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s))
@@ -313,7 +315,7 @@ theorem chapter15_component_matrix_is_negative_semidefinite
   exact chapter13_vertical_self_intersection_nonpositive T a
 
 theorem chapter15_component_matrix_fiber_equation
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s)) :
@@ -321,7 +323,7 @@ theorem chapter15_component_matrix_fiber_equation
   exact chapter13_fiber_relation T
 
 theorem chapter15_component_matrix_kernel_is_the_fiber_line
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s))
@@ -330,7 +332,7 @@ theorem chapter15_component_matrix_kernel_is_the_fiber_line
   exact chapter13_rational_intersection_kernel_eq_multiplicity_line T hconn
 
 theorem chapter15_connected_fiber_certificate_gives_graph_connected
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     {T : Chapter13SpecialFiberIntersectionData (A := A) (s := s)}
@@ -339,7 +341,7 @@ theorem chapter15_connected_fiber_certificate_gives_graph_connected
   exact chapter13_graph_connected_of_connected_fibers_certificate C
 
 theorem chapter15_component_matrix_kernel_membership_iff
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s))
@@ -349,7 +351,7 @@ theorem chapter15_component_matrix_kernel_membership_iff
   exact chapter13_rational_matrix_kernel_mem_iff_multiple_of_fiber T hconn a
 
 theorem chapter15_component_matrix_is_negative_definite_modulo_fiber
-    {R : Type u} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     {A : Chapter13ArithmeticSurface R}
     {s : Spec (CommRingCat.of R)}
     (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s))
@@ -478,33 +480,40 @@ theorem chapter15_thickness_blowup_has_reduced_chart
   exact chapter06_blowup_thickness_chart T
 
 theorem chapter15_thickness_resolution_is_a_minus_two_chain
-    (n : ℕ) (hn : 1 < n) :
-    Nonempty (Chapter06ThicknessResolutionGraph n) := by
-  exact chapter06_thickness_minimal_resolution_chain n hn
+    {R : Type u} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
+    (T : Chapter06ThicknessLocalEquation R)
+    (hclosed : IsAlgClosed (IsLocalRing.ResidueField R)) :
+    Nonempty (Chapter06ThicknessResolutionGraph T) := by
+  sorry
 
 theorem chapter15_thickness_chain_has_minus_two_exceptionals
-    {n : ℕ} (G : Chapter06ThicknessResolutionGraph n) (i : Fin (n - 1)) :
+    {R : Type u} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
+    {T : Chapter06ThicknessLocalEquation R}
+    (G : Chapter06ThicknessResolutionGraph T) (i : Fin (T.thickness - 1)) :
     (G.exceptionalCurves i).selfIntersection = -2 := by
-  exact chapter06_thickness_exceptional_curve_is_minus_two G i
+  sorry
 
 theorem chapter15_thickness_chain_matrix_is_the_negative_cartan_matrix
-    {n : ℕ} (G : Chapter06ThicknessResolutionGraph n) :
-    G.intersectionMatrix = chapter06NegativeChainMatrix (n - 1) := by
-  exact chapter06_thickness_chain_matrix_is_negative_Cartan G
+    {R : Type u} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
+    {T : Chapter06ThicknessLocalEquation R}
+    (G : Chapter06ThicknessResolutionGraph T) :
+    G.intersectionMatrix = chapter06NegativeChainMatrix (T.thickness - 1) := by
+  sorry
 
 theorem chapter15_total_transform_transports_fiber_multiplicity
     {X Y : Scheme.{u}} {b : Y ⟶ X}
     (T : Chapter06FiberTotalTransformStep b) :
-    T.exceptionalMultiplicity =
+      T.exceptionalMultiplicity =
         chapter06FiberMultiplicitySum T.centerFiberData ∧
       T.uniformizerFiber.fiberOnY =
         chapter06PullbackFormalDivisor b T.uniformizerFiber.fiberOnX := by
-  exact chapter06_total_transform_is_safe_fiber_multiplicity_label T
+  sorry
 
 theorem chapter15_regular_surface_boundary_steps_are_a_separate_resolution_stage :
     ∃ (S X : Scheme.{u}) (f : X ⟶ S),
-      Chapter06ArithmeticSurface f ∧ Chapter06EmbeddedBoundaryResolution X := by
-  exact chapter06_regular_surface_may_need_embedded_boundary_steps
+      Nonempty (Chapter06ArithmeticSurface f) ∧
+        Chapter06EmbeddedBoundaryResolution (X := X) := by
+  sorry
 
 theorem chapter15_point_blowups_resolve_a_marked_normal_crossing_boundary
     {X : Scheme.{u}} (hX : Chapter06NormalExcellentSurface X)

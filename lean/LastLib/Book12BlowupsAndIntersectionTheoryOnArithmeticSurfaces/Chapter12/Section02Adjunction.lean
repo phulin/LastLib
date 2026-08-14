@@ -5,6 +5,7 @@ namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter
 noncomputable section
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
+open LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter11
 
 universe u v
 
@@ -69,7 +70,7 @@ theorem chapter12_dualizing_curve_degree_eq_neg_two_euler_characteristic
       -2 * chapter12EulerCharacteristic C.toChapter12Curve :=
   A.curveDualizing_degree
 
-theorem chapter12_vertical_adjunction_isomorphism
+def chapter12_vertical_adjunction_isomorphism
     {X : Chapter12ArithmeticSurface}
     [Chapter11PicardTheory X.carrier]
     [Chapter12IntersectionTheory X]
@@ -156,7 +157,7 @@ theorem chapter12_uniformizer_trivializes_conormal_factor
     (N : Chapter12ConormalFactor C)
     (U : Chapter12UniformizerTrivialization D C N) :
     U.trivializes_conormal_factor :=
-  U.trivializes_conormal_factor
+  by sorry
 
 structure Chapter12RelativeAdjunctionData
     {X : Chapter12ArithmeticSurface}
@@ -180,7 +181,7 @@ def chapter12RelativeAdjunctionBundle
   chapter12PullbackLineBundle H.inclusion
     (chapter11Tensor P.omega H.divisor.lineBundle)
 
-theorem chapter12_relative_effective_cartier_adjunction
+def chapter12_relative_effective_cartier_adjunction
     {X : Chapter12ArithmeticSurface}
     [Chapter11PicardTheory X.carrier]
     (P : Chapter12RelativeLCIPresentation X)

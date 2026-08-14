@@ -25,14 +25,16 @@ structure Chapter08LocalParameter
   newParameter : C.carrier.functionField
   unitFactor : C.carrier.functionField
   parameter_change : newParameter = oldParameter * unitFactor
-  oldParameter_isUnit : IsUnit oldParameter
-  newParameter_isUnit : IsUnit newParameter
+  oldParameter_is_uniformizer : Chapter08UniformizerAt C x oldParameter
+  newParameter_is_uniformizer : Chapter08UniformizerAt C x newParameter
+  oldParameter_ne_zero : oldParameter ≠ 0
+  newParameter_ne_zero : newParameter ≠ 0
   unitFactor_isUnit : IsUnit unitFactor
   unitFactor_isUnit_at : Chapter08UnitAt C x unitFactor
 
 theorem chapter08_log_differential_product
     {F : Type v} [Field F] [Algebra k F]
-    {t v u : F} (hu : u = t * v) (ht : IsUnit t) (hv : IsUnit v) :
+    {t v u : F} (hu : u = t * v) (ht : t ≠ 0) (hv : v ≠ 0) :
     chapter08LogDifferential k u =
       chapter08LogDifferential k t + chapter08LogDifferential k v := by
   sorry
@@ -42,7 +44,7 @@ theorem chapter08_parameter_unit_log_differential_regular
     (R : Chapter08LocalResidueSystem k C x)
     (p : Chapter08LocalParameter k C x) :
     chapter08LogDifferential k p.unitFactor ∈ R.regularDifferentials := by
-  sorry
+  exact R.unit_log_differential_regular p.unitFactor p.unitFactor_isUnit_at
 
 theorem chapter08_residue_log_differential_parameter_change
     [Algebra k C.carrier.functionField]
@@ -57,7 +59,7 @@ theorem chapter08_residue_parameter_change_regular_correction
     [Algebra k C.carrier.functionField]
     (R : Chapter08LocalResidueSystem k C x)
     {t v : C.carrier.functionField}
-    (ht : IsUnit t) (hv : IsUnit v)
+    (ht : t ≠ 0) (hv : v ≠ 0)
     (hregular : chapter08LogDifferential k v ∈ R.regularDifferentials) :
     chapter08ResidueAt k C x R (chapter08LogDifferential k (t * v)) =
       chapter08ResidueAt k C x R (chapter08LogDifferential k t) := by
@@ -76,8 +78,8 @@ theorem chapter08_laurent_derivative_minus_one_coefficient
 
 structure Chapter08CoordinateResidue
     [Algebra k C.carrier.functionField]
-    (R : Chapter08LocalResidueSystem k C x)
-    {E : Type v} [Field E] [Algebra k E]
+    (E : Type v) [Field E] [Algebra k E]
+    [FiniteDimensional k E] [Algebra.IsSeparable k E]
     (η : Chapter08RationalDifferentials k C.carrier) where
   expansion : Chapter08LaurentExpansion k C x E η
   coordinateResidue : k
@@ -87,32 +89,30 @@ structure Chapter08CoordinateResidue
 def chapter08_coordinate_residue
     [Algebra k C.carrier.functionField]
     {E : Type v} [Field E] [Algebra k E]
+    [FiniteDimensional k E] [Algebra.IsSeparable k E]
     {η : Chapter08RationalDifferentials k C.carrier}
-    (c : Chapter08CoordinateResidue k C x R E η) : k :=
+    (c : Chapter08CoordinateResidue k C x E η) : k :=
   c.coordinateResidue
 
 theorem chapter08_coordinate_residue_parameter_independent
     [Algebra k C.carrier.functionField]
-    (R : Chapter08LocalResidueSystem k C x)
     {E : Type v} [Field E] [Algebra k E] [FiniteDimensional k E]
     [Algebra.IsSeparable k E]
     {η : Chapter08RationalDifferentials k C.carrier}
-    (c₁ c₂ : Chapter08CoordinateResidue k C x R E η)
-    (h₁ : c₁.expansion.parameter_is_uniformizer)
-    (h₂ : c₂.expansion.parameter_is_uniformizer) :
-    chapter08_coordinate_residue k C x R c₁ =
-      chapter08_coordinate_residue k C x R c₂ := by
+    (c₁ c₂ : Chapter08CoordinateResidue k C x E η)
+    :
+    chapter08_coordinate_residue k C x c₁ =
+      chapter08_coordinate_residue k C x c₂ := by
   sorry
 
 theorem chapter08_residue_is_parameter_independent
     [Algebra k C.carrier.functionField]
-    (R : Chapter08LocalResidueSystem k C x)
     {E : Type v} [Field E] [Algebra k E] [FiniteDimensional k E]
     [Algebra.IsSeparable k E]
     {η : Chapter08RationalDifferentials k C.carrier}
-    (c : Chapter08CoordinateResidue k C x R E η) :
-    chapter08_coordinate_residue k C x R c =
-      chapter08ResidueAt k C x R η := by
+    (c : Chapter08CoordinateResidue k C x E η) :
+    chapter08_coordinate_residue k C x c =
+      chapter08CanonicalResidueAt k C x η := by
   sorry
 
 end

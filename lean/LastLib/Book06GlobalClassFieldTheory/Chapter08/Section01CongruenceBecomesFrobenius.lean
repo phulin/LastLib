@@ -111,7 +111,7 @@ theorem chapter08_artin_factors_through_ray_class_group
   exact chapter08_artin_factor_comp_quotientMap R E A hcond
 
 /-- In the full ray class field, the factor is the ray-class reciprocity isomorphism. -/
-theorem chapter08_full_ray_class_factor_isomorphism
+noncomputable def chapter08_full_ray_class_factor_isomorphism
     {K : Type u} [Field K] [NumberField K]
     {I C : Type u} [CommGroup I] [CommGroup C]
     (R : Chapter08RayClassPresentation K I C)

@@ -144,6 +144,8 @@ theorem chapter15_unconditional_asymptotic_lower_bound
     (hT : Tendsto T atTop atTop)
     (hdegree : Tendsto
       (fun j => (chapter09SequenceDegree S j : ℝ)) atTop atTop)
+    (hroot : Filter.IsCoboundedUnder (· ≥ ·) atTop
+      (chapter09SequenceRootDiscriminant S))
     (halpha : α₀ ≤ Filter.liminf
       (chapter09SequenceRealProportion S) atTop)
     (hTdegree : Tendsto
@@ -160,6 +162,8 @@ theorem chapter15_grh_asymptotic_lower_bound
     (hT : Tendsto T atTop atTop)
     (hdegree : Tendsto
       (fun j => (chapter09SequenceDegree S j : ℝ)) atTop atTop)
+    (hroot : Filter.IsCoboundedUnder (· ≥ ·) atTop
+      (chapter09SequenceRootDiscriminant S))
     (halpha : α₀ ≤ Filter.liminf
       (chapter09SequenceRealProportion S) atTop)
     (hpole : Tendsto

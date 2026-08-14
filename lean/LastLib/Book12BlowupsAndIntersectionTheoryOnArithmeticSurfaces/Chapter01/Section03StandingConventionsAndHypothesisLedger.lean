@@ -23,7 +23,7 @@ theorem chapter01_base_generic_point_is_generic
     IsGenericPoint (chapter01GenericPoint B) Set.univ :=
   B.genericPoint.eta_is_generic
 
-theorem chapter01_base_generic_point_has_function_field_presentation
+noncomputable def chapter01_base_generic_point_has_function_field_presentation
     {K : Type u} [Field K]
     (B : Chapter01ExcellentConnectedDedekindBaseData K) :
     CommRingCat.of K ≅ B.carrier.residueField (chapter01GenericPoint B) :=
@@ -49,7 +49,8 @@ theorem chapter01_generic_fiber_is_smooth_and_geometrically_connected
     {X : Chapter01RegularArithmeticSurface B}
     (G : Chapter01GenericFiberProperties X) :
     Smooth (pullback.snd X.structureMap (chapter01GenericPointMap B)) ∧
-      Chapter13GeometricallyConnected (chapter01GenericFiber X) :=
+      Chapter13GeometricallyConnected
+        (pullback.snd X.structureMap (chapter01GenericPointMap B)) :=
   ⟨G.smooth, G.geometricallyConnected⟩
 
 /- LOCAL_DEPENDENCY_GUESS: the codimension-one dichotomy is the Book 9
@@ -81,19 +82,22 @@ def chapter01LocalDVRAt
     {K : Type u} [Field K]
     (B : Chapter01ExcellentConnectedDedekindBaseData K)
     (s : B.carrier) : Prop :=
-  IsLocalRing (chapter01LocalBaseRing B s) ∧
-    IsDiscreteValuationRing (chapter01LocalBaseRing B s)
+  ∃ hDomain : IsDomain (chapter01LocalBaseRing B s),
+    letI : IsDomain (chapter01LocalBaseRing B s) := hDomain
+    IsLocalRing (chapter01LocalBaseRing B s) ∧
+      IsDiscreteValuationRing (chapter01LocalBaseRing B s)
 
 structure Chapter01LocalDVRData
     {K : Type u} [Field K]
     (B : Chapter01ExcellentConnectedDedekindBaseData K)
     (s : B.carrier)
+    [IsDomain (chapter01LocalBaseRing B s)]
     [IsLocalRing (chapter01LocalBaseRing B s)]
     [IsDiscreteValuationRing (chapter01LocalBaseRing B s)] where
   uniformizer : chapter01LocalBaseRing B s
   uniformizer_span :
     Ideal.span ({uniformizer} : Set (chapter01LocalBaseRing B s)) =
-      maximalIdeal (chapter01LocalBaseRing B s)
+      IsLocalRing.maximalIdeal (chapter01LocalBaseRing B s)
 
 /- LOCAL_DEPENDENCY_GUESS: the stalk of a Dedekind scheme at a closed point
 is the local DVR used by the source. -/
@@ -138,7 +142,6 @@ theorem chapter01_regular_surface_weil_divisor_is_cartier
     (D : Chapter01Divisor X.carrier) :
     ∃ C : Chapter03CartierDivisor X.carrier,
       chapter03CartierDivisorToWeil X.carrier C = D := by
-  letI : Chapter03Normal X.carrier := chapter01_regular_surface_is_normal X
   rcases chapter03_regular_relative_totalSpace_all_prime_divisors_cartier
       X.structureMap D with ⟨C, hC⟩
   exact ⟨C, hC⟩
@@ -290,7 +293,7 @@ noncomputable def chapter01ProjectiveBundleProjection
     chapter01ProjectiveBundle Z E ⟶ Z :=
   (chapter02ProjectiveBundleData Z E).projection
 
-theorem chapter01_projective_bundle_classifies_invertible_quotients
+noncomputable def chapter01_projective_bundle_classifies_invertible_quotients
     (Z : Scheme.{u}) (E : Chapter01QuasiCoherentModule Z)
     {T : Scheme.{u}} (f : T ⟶ Z) :
     {u : T ⟶ chapter01ProjectiveBundle Z E //
@@ -313,14 +316,15 @@ structure Chapter01NormalDirectionsData
 
 abbrev chapter01ProjectivizedNormalDirections
     (Z : Scheme.{u}) (N : Chapter01QuasiCoherentModule Z)
-    (D : Chapter01DualModuleData Z N) : Scheme.{u} :=
-  (D.projectivization).scheme
+    (D : Chapter01DualModuleData Z N)
+    (P : Chapter01NormalDirectionsData Z N D) : Scheme.{u} :=
+  P.projectivization.scheme
 
 theorem chapter01_normal_directions_use_the_dual_bundle
     (Z : Scheme.{u}) (N : Chapter01QuasiCoherentModule Z)
     (D : Chapter01DualModuleData Z N)
     (P : Chapter01NormalDirectionsData Z N D) :
-    chapter01ProjectivizedNormalDirections Z N D = P.projectivization.scheme := by
+    chapter01ProjectivizedNormalDirections Z N D P = P.projectivization.scheme := by
   rfl
 
 end

@@ -9,6 +9,7 @@ import Mathlib.Algebra.Polynomial.RingDivision
 import Mathlib.Algebra.Polynomial.SpecificDegree
 import Mathlib.Analysis.Normed.Field.Basic
 import Mathlib.Analysis.Normed.Field.Lemmas
+import Mathlib.Analysis.Normed.Field.TransferInstance
 import Mathlib.Analysis.Normed.Unbundled.FiniteExtension
 import Mathlib.Analysis.Normed.Unbundled.RingSeminorm
 import Mathlib.Analysis.Normed.Unbundled.SpectralNorm
@@ -66,6 +67,7 @@ import Mathlib.RingTheory.LocalRing.Length
 import Mathlib.RingTheory.Localization.AtPrime.Basic
 import Mathlib.RingTheory.Localization.AtPrime.Extension
 import Mathlib.RingTheory.Localization.Basic
+import Mathlib.RingTheory.Localization.BaseChange
 import Mathlib.RingTheory.Localization.FractionRing
 import Mathlib.RingTheory.OrderOfVanishing.Noetherian
 import Mathlib.RingTheory.Polynomial.Basic
@@ -118,12 +120,17 @@ import Mathlib.Topology.UniformSpace.AbsoluteValue
 import Mathlib.Topology.UniformSpace.Cauchy
 import Mathlib.Topology.UniformSpace.CompareReals
 import Mathlib.Topology.UniformSpace.Completion
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section06FiniteExtensionsOfCompleteFields
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter07.Section05SeparatedCompletionOfRings
 
 universe u v
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter11
 
 noncomputable section
+
+open LastLib.Book01ValuationsDVRsAndCompletions.Chapter07
+open LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
 
 open Ideal IsLocalRing
 open Polynomial
@@ -175,6 +182,480 @@ class Chapter11CompleteDVR (A : Type u) [CommRing A] [IsDomain A]
 def chapter11IsCompleteDVR (A : Type*) [CommRing A] [IsDomain A]
     [IsDiscreteValuationRing A] : Prop :=
   Chapter11CompleteDVR A
+
+/-- Finiteness of the valuation-ring normalization in a finite extension of a
+complete DVR.  No separability hypothesis is needed, so this interface also
+covers finite inseparable extensions. -/
+theorem chapter11_complete_dvr_valuation_ring_is_finite
+    (A K L : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
+    [Field K] [Field L] [Algebra A K] [IsFractionRing A K]
+    [Algebra K L] [Algebra A L] [IsScalarTower A K L]
+    [FiniteDimensional K L]
+    (_hcomplete : chapter11IsCompleteDVR A) :
+    chapter11NormalizationFinite A L := by
+  change Module.Finite A (integralClosure A L)
+  let : UniformSpace A :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter07.chapter07DvrUniformSpace A
+  let : IsUniformAddGroup A :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter07.chapter07DvrUniformSpace_isUniformAddGroup A
+  let : IsTopologicalRing A :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter07.chapter07DvrUniformSpace_isTopologicalRing A
+  let hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal A) A :=
+    (show Chapter11CompleteDVR A from _hcomplete).isAdicComplete
+  let : IsAdicComplete (IsLocalRing.maximalIdeal A) A := hcomplete
+  obtain ⟨e, he⟩ :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter07.chapter07_dvr_metric_completion_agrees_with_adic_completion
+      (A := A)
+  have hcoe_surjective : Function.Surjective
+      (fun a : A => (a : @UniformSpace.Completion A
+        (LastLib.Book01ValuationsDVRsAndCompletions.Chapter07.chapter07DvrUniformSpace A))) := by
+    intro x
+    obtain ⟨a, ha⟩ := (AdicCompletion.of_bijective
+      (IsLocalRing.maximalIdeal A) A).2 (e x)
+    refine ⟨a, ?_⟩
+    apply e.injective
+    calc
+      e ((a : A) : @UniformSpace.Completion A
+          (LastLib.Book01ValuationsDVRsAndCompletions.Chapter07.chapter07DvrUniformSpace A)) =
+          LastLib.Book01ValuationsDVRsAndCompletions.Chapter07.chapter07AdicCompletionMap
+            (IsLocalRing.maximalIdeal A) a := he a
+      _ = AdicCompletion.of (IsLocalRing.maximalIdeal A) A a := rfl
+      _ = e x := ha
+  let : CompleteSpace A :=
+    ((UniformSpace.Completion.isUniformInducing_coe A).completeSpace_congr
+      hcoe_surjective).2 inferInstance
+  let K₀ := FractionRing A
+  let v₀ : Valuation K₀ ℤᵐ⁰ :=
+    (IsDiscreteValuationRing.maximalIdeal A).valuation K₀
+  let : Valued K₀ ℤᵐ⁰ := Valued.mk' v₀
+  let : UniformSpace K₀ := (Valued.mk' v₀).toUniformSpace
+  let : TopologicalSpace K₀ := (Valued.mk' v₀).toTopologicalSpace
+  let : IsUniformAddGroup K₀ := (Valued.mk' v₀).toIsUniformAddGroup
+  have hv₀ : v₀.IsRankOneDiscrete := by infer_instance
+  let : v₀.IsRankOneDiscrete := hv₀
+  let C₀ := UniformSpace.Completion K₀
+  let B₀ := chapter07CompletedValuationRing K₀ ℤᵐ⁰
+  let : UniformSpace B₀ :=
+    UniformSpace.comap (fun b : B₀ => (b : C₀)) (inferInstance : UniformSpace C₀)
+  let : TopologicalSpace B₀ :=
+    (UniformSpace.comap (fun b : B₀ => (b : C₀))
+      (inferInstance : UniformSpace C₀)).toTopologicalSpace
+  have hclosedB₀ : IsClosed (B₀ : Set C₀) :=
+    chapter07_completed_valuation_ring_is_closed
+  let : CompleteSpace B₀ := hclosedB₀.completeSpace_coe
+  let : T0Space B₀ := by infer_instance
+  let fK₀ : A →+* C₀ :=
+    (UniformSpace.Completion.coeRingHom).comp (algebraMap A K₀)
+  have hfK₀_mem : ∀ a : A, fK₀ a ∈ (B₀ : Set C₀) := by
+    intro a
+    change chapter07CompletionValuation K₀ ℤᵐ⁰ (fK₀ a) ≤ 1
+    change chapter07CompletionValuation K₀ ℤᵐ⁰
+      (((algebraMap A K₀ a) : K₀) : UniformSpace.Completion K₀) ≤ 1
+    rw [chapter07_completion_valuation_apply_coe]
+    change v₀ (algebraMap A K₀ a) ≤ 1
+    exact (Valuation.mem_integer_iff v₀ _).mp (by
+      apply (Valuation.mem_integer_iff v₀ _).2
+      exact (Valuation.mem_valuationSubring_iff v₀ _).mp (by
+        change algebraMap A K₀ a ∈ v₀.valuationSubring.toSubring
+        rw [show v₀ = (IsDiscreteValuationRing.maximalIdeal A).valuation K₀ by rfl]
+        rw [← IsDiscreteValuationRing.map_algebraMap_eq_valuationSubring
+          (A := A) (K := K₀)]
+        exact Subring.mem_map.mpr ⟨a, Subring.mem_top _, rfl⟩))
+  let f₀ : A →+* B₀ := fK₀.codRestrict B₀ hfK₀_mem
+  have hif₀ : @IsUniformInducing A B₀ (chapter07DvrUniformSpace A)
+      (inferInstance : UniformSpace B₀) f₀ := by
+    apply (isUniformInducing_iff_uniformSpace).2
+    have hcoek : UniformSpace.comap (fun x : K₀ => (x : C₀))
+        (inferInstance : UniformSpace C₀) = (inferInstance : UniformSpace K₀) := by
+      exact (isUniformInducing_iff_uniformSpace).1
+        (UniformSpace.Completion.isUniformInducing_coe K₀)
+    have hsub : UniformSpace.comap (fun b : B₀ => (b : C₀))
+        (inferInstance : UniformSpace C₀) = (inferInstance : UniformSpace B₀) := by
+      rfl
+    calc
+      UniformSpace.comap (f₀ : A → B₀) (inferInstance : UniformSpace B₀) =
+          UniformSpace.comap (f₀ : A → B₀)
+            (UniformSpace.comap (fun b : B₀ => (b : C₀))
+              (inferInstance : UniformSpace C₀)) := by rw [hsub]
+      _ = UniformSpace.comap (algebraMap A K₀)
+          (UniformSpace.comap (fun x : K₀ => (x : C₀))
+            (inferInstance : UniformSpace C₀)) := by
+        rw [← UniformSpace.comap_comap, ← UniformSpace.comap_comap]
+        apply congrArg (fun h : A → C₀ =>
+          UniformSpace.comap h (inferInstance : UniformSpace C₀))
+        funext a
+        rfl
+      _ = UniformSpace.comap (algebraMap A K₀) (inferInstance : UniformSpace K₀) := by
+        rw [hcoek]
+      _ = chapter07DvrUniformSpace A := by rfl
+  have hsubrange₀ : Set.range (chapter07ValuationRingCompletionEmbedding
+      (K := K₀) (Γ₀ := ℤᵐ⁰)) ⊆
+      (fun b : B₀ => (b : C₀)) '' Set.range f₀ := by
+    rintro z ⟨y, rfl⟩
+    obtain ⟨a, ha⟩ := IsDiscreteValuationRing.exists_lift_of_le_one
+      (A := A) (K := K₀) y.property
+    refine ⟨f₀ a, ⟨a, rfl⟩, ?_⟩
+    change ((algebraMap A K₀ a : K₀) : C₀) =
+      (((y : chapter07ValuationRing K₀ ℤᵐ⁰) : K₀) : C₀)
+    rw [ha]
+  have hcl₀ : closure (Set.range (chapter07ValuationRingCompletionEmbedding
+      (K := K₀) (Γ₀ := ℤᵐ⁰))) = (B₀ : Set C₀) := by
+    exact chapter07_valuation_ring_closure_eq_completed_valuation_ring
+  have hdense₀ : DenseRange f₀ := by
+    rw [DenseRange]
+    apply (Subtype.dense_iff).2
+    intro y hy
+    have hy' : y ∈ closure (Set.range (chapter07ValuationRingCompletionEmbedding
+        (K := K₀) (Γ₀ := ℤᵐ⁰))) := by
+      rw [hcl₀]
+      exact hy
+    exact (closure_mono hsubrange₀) hy'
+  have hclosed_range₀ : IsClosed (Set.range f₀) :=
+    hif₀.isComplete_range.isClosed
+  have hf₀_surjective : Function.Surjective f₀ := by
+    intro b
+    have hb : b ∈ closure (Set.range f₀) := hdense₀ b
+    exact hclosed_range₀.closure_subset hb
+  have hf₀_injective : Function.Injective f₀ := by
+    intro a b hab
+    have hab' : ((algebraMap A K₀ a : K₀) : C₀) =
+        ((algebraMap A K₀ b : K₀) : C₀) := by
+      exact congrArg (fun z : B₀ => (z : C₀)) hab
+    exact (IsFractionRing.injective A K₀)
+      ((UniformSpace.Completion.coe_injective K₀) hab')
+  let eAB₀ : A ≃+* B₀ := RingEquiv.ofBijective f₀ ⟨hf₀_injective, hf₀_surjective⟩
+  obtain ⟨eBC₀, heBC₀⟩ :=
+    chapter07_completed_field_is_fraction_field (K := K₀) (Γ₀ := ℤᵐ⁰)
+  let eFrac₀ : FractionRing A ≃+* FractionRing B₀ :=
+    IsFractionRing.ringEquivOfRingEquiv (K := FractionRing A)
+      (L := FractionRing B₀) eAB₀
+  let eK₀ : K₀ ≃+* C₀ :=
+    (FractionRing.algEquiv A K₀).symm.toRingEquiv.trans
+      (eFrac₀.trans eBC₀)
+  have heK₀_on_A (a : A) :
+      eK₀ (algebraMap A K₀ a) =
+        ((algebraMap A K₀ a : K₀) : C₀) := by
+    change eBC₀ (eFrac₀
+      ((FractionRing.algEquiv A K₀).symm (algebraMap A K₀ a))) = _
+    have halg : (FractionRing.algEquiv A K₀).symm (algebraMap A K₀ a) =
+        algebraMap A (FractionRing A) a := by
+      apply (FractionRing.algEquiv A K₀).injective
+      simp
+    rw [halg, IsFractionRing.ringEquivOfRingEquiv_algebraMap]
+    change eBC₀ (algebraMap B₀ (FractionRing B₀) (eAB₀ a)) = _
+    rw [heBC₀]
+    rfl
+  have heK₀_eq : eK₀.toRingHom = UniformSpace.Completion.coeRingHom := by
+    apply IsFractionRing.ringHom_ext (A := A)
+    intro a
+    exact heK₀_on_A a
+  have hfunK₀ : (eK₀ : K₀ → C₀) =
+      (UniformSpace.Completion.coeRingHom : K₀ → C₀) := by
+    exact congrArg (fun f : K₀ →+* C₀ => (f : K₀ → C₀)) heK₀_eq
+  have hifK₀ : IsUniformInducing (eK₀ : K₀ → C₀) := by
+    rw [hfunK₀]
+    exact UniformSpace.Completion.isUniformInducing_coe K₀
+  have hembK₀ : IsUniformEmbedding (eK₀ : K₀ → C₀) :=
+    ⟨hifK₀, eK₀.injective⟩
+  let : CompleteSpace K₀ :=
+    (@completeSpace_congr K₀ C₀ _ _ eK₀ hembK₀).2 inferInstance
+  let : (Valued.v (R := K₀)).RankOne := by
+    change v₀.RankOne
+    exact Valuation.IsRankOneDiscrete.rankOne (v := v₀)
+      (by norm_num : (1 : NNReal) < 2)
+  let : NormedField K₀ :=
+    Valued.toNormedField (L := K₀) (Γ₀ := ℤᵐ⁰)
+  let : NontriviallyNormedField K₀ :=
+    Valued.toNontriviallyNormedField (L := K₀) (Γ₀ := ℤᵐ⁰)
+  let eK : K ≃+* K₀ := (FractionRing.algEquiv A K).symm.toRingEquiv
+  let : NormedField K :=
+    NormedField.induced K K₀ eK eK.injective
+  let : NontriviallyNormedField K :=
+    ⟨let ⟨x, hx⟩ := @NontriviallyNormedField.non_trivial K₀ _
+      ; ⟨eK.symm x, by
+          change 1 < ‖eK (eK.symm x)‖
+          rw [eK.apply_symm_apply]
+          exact hx⟩⟩
+  have hifK : IsUniformInducing (eK : K → K₀) := by
+    apply (isUniformInducing_iff_uniformSpace).2
+    rfl
+  have hembK : IsUniformEmbedding (eK : K → K₀) :=
+    ⟨hifK, eK.injective⟩
+  let : CompleteSpace K :=
+    (@completeSpace_congr K K₀ _ _ eK.toEquiv hembK).2 inferInstance
+  let : IsUltrametricDist K := by
+    apply IsUltrametricDist.isUltrametricDist_of_isNonarchimedean_norm
+    intro x y
+    change ‖eK (x + y)‖ ≤ max ‖eK x‖ ‖eK y‖
+    rw [map_add]
+    exact (IsUltrametricDist.isUltrametricDist_iff_isNonarchimedean_norm.mp
+      (inferInstance : IsUltrametricDist K₀)) (eK x) (eK y)
+  have hA_norm₀ (a : A) : ‖algebraMap A K₀ a‖ ≤ 1 := by
+    rw [Valued.toNormedField.norm_le_one_iff]
+    exact (Valuation.mem_integer_iff v₀ _).mp (by
+      apply (Valuation.mem_integer_iff v₀ _).2
+      exact (Valuation.mem_valuationSubring_iff v₀ _).mp (by
+        change algebraMap A K₀ a ∈ v₀.valuationSubring.toSubring
+        rw [show v₀ = (IsDiscreteValuationRing.maximalIdeal A).valuation K₀ by rfl]
+        rw [← IsDiscreteValuationRing.map_algebraMap_eq_valuationSubring
+          (A := A) (K := K₀)]
+        exact Subring.mem_map.mpr ⟨a, Subring.mem_top _, rfl⟩))
+  have hA_range₀ : Set.range (algebraMap A K₀) = {x : K₀ | ‖x‖ ≤ 1} := by
+    ext x
+    constructor
+    · rintro ⟨a, rfl⟩
+      exact hA_norm₀ a
+    · intro hx
+      have hxv : v₀ x ≤ 1 :=
+        (Valued.toNormedField.norm_le_one_iff (x := x)).mp hx
+      obtain ⟨a, ha⟩ := IsDiscreteValuationRing.exists_lift_of_le_one
+        (A := A) (K := K₀) hxv
+      exact ⟨a, ha⟩
+  have hA_norm (a : A) : ‖algebraMap A K a‖ ≤ 1 := by
+    change ‖(FractionRing.algEquiv A K).symm (algebraMap A K a)‖ ≤ 1
+    rw [(FractionRing.algEquiv A K).symm.commutes]
+    exact hA_norm₀ a
+  have hA_range : Set.range (algebraMap A K) = {x : K | ‖x‖ ≤ 1} := by
+    ext x
+    constructor
+    · rintro ⟨a, rfl⟩
+      exact hA_norm a
+    · intro hx
+      change ‖eK x‖ ≤ 1 at hx
+      have hx₀ : ‖eK x‖ ≤ 1 := hx
+      have hxmem : eK x ∈ Set.range (algebraMap A K₀) :=
+        (Set.ext_iff.mp hA_range₀ (eK x)).2 hx₀
+      obtain ⟨a, ha⟩ := hxmem
+      refine ⟨a, ?_⟩
+      apply eK.injective
+      calc
+        eK (algebraMap A K a) = algebraMap A K₀ a := by
+          change (FractionRing.algEquiv A K).symm (algebraMap A K a) =
+            algebraMap A (FractionRing A) a
+          exact (FractionRing.algEquiv A K).symm.commutes a
+        _ = eK x := ha
+  let : Nonempty (Fin (Module.finrank K L)) :=
+    ⟨⟨0, Module.finrank_pos⟩⟩
+  let b : Module.Basis (Fin (Module.finrank K L)) K L :=
+    Module.finBasis K L
+  let N : AlgebraNorm K L := spectralAlgNorm K L
+  have hNmul (x y : L) : N (x * y) = N x * N y := by
+    simpa [N] using (spectralAlgNorm_mul (K := K) (L := L) x y)
+  have hNpow : IsPowMul N := by
+    simpa [N] using (spectralAlgNorm_isPowMul (K := K) (L := L))
+  have hNna : IsNonarchimedean (N : L → ℝ) := by
+    change IsNonarchimedean (spectralNorm K L)
+    exact isNonarchimedean_spectralNorm (K := K) (L := L)
+  have hnorms :=
+    chapter10_nonarchimedean_norm_equivalent_to_coordinate_norm b N hNna
+  obtain ⟨π, hπ⟩ := IsDiscreteValuationRing.exists_irreducible A
+  have hπK : algebraMap A K π ≠ 0 := by
+    intro h
+    apply hπ.ne_zero
+    apply IsFractionRing.injective A K
+    simpa using h
+  have hπv_le : v₀ (algebraMap A K₀ π) ≤ 1 := by
+    apply (Valuation.mem_valuationSubring_iff v₀ _).mp
+    change algebraMap A K₀ π ∈ v₀.valuationSubring.toSubring
+    rw [show v₀ = (IsDiscreteValuationRing.maximalIdeal A).valuation K₀ by rfl]
+    rw [← IsDiscreteValuationRing.map_algebraMap_eq_valuationSubring
+      (A := A) (K := K₀)]
+    exact Subring.mem_map.mpr ⟨π, Subring.mem_top _, rfl⟩
+  have hπv_ne : v₀ (algebraMap A K₀ π) ≠ 1 := by
+    intro h
+    have hmem : algebraMap A K₀ π ∈ MonoidHom.mker v₀ := h
+    rw [show v₀ = (IsDiscreteValuationRing.maximalIdeal A).valuation K₀ by rfl,
+      IsDiscreteValuationRing.mker_valuation_eq_isUnitSubmonoid (A := A)
+        (K := K₀)] at hmem
+    obtain ⟨a, ha, hmap⟩ := hmem
+    have hae : a = π := by
+      apply IsFractionRing.injective A K₀
+      exact hmap
+    exact hπ.not_isUnit (hae ▸ ha)
+  have hπv_lt : v₀ (algebraMap A K₀ π) < 1 :=
+    lt_of_le_of_ne hπv_le hπv_ne
+  let q : ℝ := ‖algebraMap A K π‖
+  have hq_pos : 0 < q := by
+    dsimp [q]
+    exact norm_pos_iff.mpr hπK
+  have hq_lt : q < 1 := by
+    dsimp [q]
+    change ‖eK (algebraMap A K π)‖ < 1
+    rw [show eK (algebraMap A K π) = algebraMap A K₀ π by
+      change (FractionRing.algEquiv A K).symm (algebraMap A K π) =
+        algebraMap A (FractionRing A) π
+      exact (FractionRing.algEquiv A K).symm.commutes π]
+    rw [Valued.toNormedField.norm_lt_one_iff]
+    exact hπv_lt
+  classical
+  rcases hnorms with ⟨_, d, _, hd, _, hcoordN⟩
+  let M : Submodule A L :=
+    Submodule.span A
+      (Set.range (fun i : Fin (Module.finrank K L) => b i))
+  have hMfin : Module.Finite A M :=
+    Module.Finite.span_of_finite A (Set.finite_range _)
+  obtain ⟨s, hs⟩ :=
+    exists_pow_lt_of_lt_one (x := d⁻¹) (by positivity) hq_lt
+  have hsd : q ^ s * d ≤ 1 := by
+    have hsd' : q ^ s * d < 1 := by
+      calc
+        q ^ s * d < d⁻¹ * d := mul_lt_mul_of_pos_right hs hd
+        _ = 1 := by field_simp
+    exact hsd'.le
+  have hN_base (a : A) :
+      N (algebraMap A L a) = ‖algebraMap A K a‖ := by
+    rw [IsScalarTower.algebraMap_apply A K L]
+    simpa [N] using (spectralAlgNorm_extends (K := K) (L := L)
+      (algebraMap A K a))
+  have hcoeff_scaled (x : L) (hx : N x ≤ 1)
+      (i : Fin (Module.finrank K L)) :
+      q ^ s * ‖b.repr x i‖ ≤ 1 := by
+    have hrepr : ‖b.repr x i‖ ≤ Chapter10CoordinateNorm b x := by
+      rw [chapter10_coordinate_norm_eq_pi_norm]
+      simpa only [Module.Basis.equivFun_apply] using
+        (norm_le_pi_norm (b.equivFun x) i)
+    calc
+      q ^ s * ‖b.repr x i‖ ≤ q ^ s * Chapter10CoordinateNorm b x :=
+        mul_le_mul_of_nonneg_left hrepr
+          (pow_nonneg (le_of_lt hq_pos) s)
+      _ ≤ q ^ s * (d * N x) :=
+        mul_le_mul_of_nonneg_left (hcoordN x)
+          (pow_nonneg (le_of_lt hq_pos) s)
+      _ ≤ q ^ s * (d * 1) := by
+        gcongr
+      _ ≤ 1 := by simpa using hsd
+  have hscaled_mem (x : L) (hx : N x ≤ 1) :
+      algebraMap A L (π ^ s) * x ∈ M := by
+    let coeff : Fin (Module.finrank K L) → K :=
+      fun i => (algebraMap A K π) ^ s * b.repr x i
+    have hcoeff_range (i : Fin (Module.finrank K L)) :
+        coeff i ∈ Set.range (algebraMap A K) := by
+      rw [hA_range]
+      simpa [coeff, q, norm_mul, norm_pow] using hcoeff_scaled x hx i
+    choose a ha using hcoeff_range
+    have hsum :
+        (∑ i, algebraMap A L (a i) * b i) ∈ M := by
+      apply Submodule.sum_mem
+      intro i hi
+      simpa [Algebra.smul_def] using
+        M.smul_mem (a i) (Submodule.subset_span (Set.mem_range_self i))
+    have hx_repr : x =
+        ∑ i, algebraMap K L (b.repr x i) * b i := by
+      calc
+        x = ∑ i, (b.repr x i) • b i := (b.sum_repr x).symm
+        _ = ∑ i, algebraMap K L (b.repr x i) * b i := by
+          simp [Algebra.smul_def]
+    have heq :
+        (∑ i, algebraMap A L (a i) * b i) =
+          algebraMap A L (π ^ s) * x := by
+      calc
+        ∑ i, algebraMap A L (a i) * b i =
+            ∑ i, algebraMap K L (coeff i) * b i := by
+          apply Finset.sum_congr rfl
+          intro i hi
+          have hmap : algebraMap A L (a i) =
+              algebraMap K L (coeff i) := by
+            calc
+              algebraMap A L (a i) =
+                  algebraMap K L (algebraMap A K (a i)) :=
+                IsScalarTower.algebraMap_apply A K L (a i)
+              _ = algebraMap K L (coeff i) := by rw [ha i]
+          exact congrArg (fun z : L => z * b i) hmap
+        _ = algebraMap A L (π ^ s) * x := by
+          rw [hx_repr]
+          simp [coeff, ← IsScalarTower.algebraMap_apply A K L,
+            map_pow, map_mul, Finset.mul_sum, mul_assoc]
+    rw [← heq]
+    exact hsum
+  let U : Submodule A L :=
+    { carrier := {x | N x ≤ 1}
+      zero_mem' := by
+        change N 0 ≤ 1
+        have hzero : N 0 = 0 := by
+          simpa [N, spectralAlgNorm_def] using
+            (spectralNorm_zero (K := K) (L := L))
+        rw [hzero]
+        norm_num
+      add_mem' := by
+        intro x y hx hy
+        exact (hNna x y).trans (max_le hx hy)
+      smul_mem' := by
+        intro a x hx
+        change N (a • x) ≤ 1
+        rw [Algebra.smul_def, hNmul, hN_base]
+        have hNx : 0 ≤ N x := by
+          simpa [N, spectralAlgNorm_def] using
+            (spectralNorm_nonneg (K := K) (L := L) x)
+        calc
+          ‖algebraMap A K a‖ * N x ≤ 1 * 1 :=
+            mul_le_mul (hA_norm a) hx hNx (by norm_num)
+          _ = 1 := by norm_num }
+  have hπL : algebraMap A L π ≠ 0 := by
+    intro h
+    have hK : algebraMap A K π = 0 := by
+      apply FaithfulSMul.algebraMap_injective K L
+      simpa [IsScalarTower.algebraMap_apply A K L] using h
+    exact hπK hK
+  have hπLs : algebraMap A L (π ^ s) ≠ 0 := by
+    rw [map_pow]
+    exact pow_ne_zero _ hπL
+  let g : U →ₗ[A] M :=
+    { toFun := fun x =>
+        ⟨algebraMap A L (π ^ s) * (x : L), hscaled_mem x x.property⟩
+      map_add' := by
+        intro x y
+        apply Subtype.ext
+        simp [mul_add]
+      map_smul' := by
+        intro a x
+        apply Subtype.ext
+        simp [Algebra.smul_def, mul_assoc, mul_comm, mul_left_comm] }
+  have hg_inj : Function.Injective g := by
+    intro x y hxy
+    apply Subtype.ext
+    have hxy' := congrArg (fun z : M => (z : L)) hxy
+    change algebraMap A L (π ^ s) * (x : L) =
+      algebraMap A L (π ^ s) * (y : L) at hxy'
+    exact mul_left_cancel₀ hπLs hxy'
+  let _ : Module.Finite A M := hMfin
+  have hUfin : Module.Finite A U :=
+    Module.Finite.of_injective g hg_inj
+  have hintegral_bound (x : integralClosure A L) : N (x : L) ≤ 1 := by
+    rcases x.property with ⟨p, hp, hroot⟩
+    let pK : K[X] := p.map (algebraMap A K)
+    have hpK : pK.Monic := by
+      dsimp [pK]
+      exact hp.map _
+    have hrootK : aeval (x : L) pK = 0 := by
+      dsimp [pK]
+      rw [aeval_map_algebraMap]
+      simpa only [Polynomial.aeval_def,
+        IsScalarTower.algebraMap_eq A K L] using hroot
+    have hbound : N (x : L) ≤ spectralValue pK :=
+      norm_root_le_spectralValue hNpow hNna hpK hrootK
+    have hcoeff : ∀ n, ‖pK.coeff n‖ ≤ 1 := by
+      intro n
+      simpa [pK] using hA_norm (p.coeff n)
+    have hspec : spectralValue pK ≤ 1 :=
+      (spectralValue_le_one_iff hpK).2 hcoeff
+    exact hbound.trans hspec
+  let _ : Module.Finite A U := hUfin
+  let j : integralClosure A L →ₗ[A] U :=
+    { toFun := fun x => ⟨(x : L), hintegral_bound x⟩
+      map_add' := by
+        intro x y
+        apply Subtype.ext
+        rfl
+      map_smul' := by
+        intro a x
+        apply Subtype.ext
+        rfl }
+  have hj_inj : Function.Injective j := by
+    intro x y hxy
+    apply Subtype.ext
+    have hxy' := congrArg (fun z : U => (z : L)) hxy
+    simpa [j] using hxy'
+  exact Module.Finite.of_injective j hj_inj
 
 /-- A maximal ideal of the normalization lying above the base maximal ideal. -/
 def chapter11Branch (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
@@ -231,10 +712,72 @@ theorem chapter11_base_change_model_of_integral_closure
     [IsIntegralClosure S R L] [IsIntegralClosure B A L]
     [FiniteDimensional K L]
     (p : Ideal R) [p.IsPrime] [p.IsMaximal]
-    [IsLocalization p.primeCompl A] (hp0 : p ≠ (⊥ : Ideal R))
-    (hfinite : Module.Finite R S) :
+    [IsLocalization p.primeCompl A] (_hp0 : p ≠ (⊥ : Ideal R))
+    (_hfinite : Module.Finite R S) :
     chapter11BaseChangeModel R S A B := by
-  sorry
+  let iCD : integralClosure R L →ₐ[R] integralClosure A L :=
+    { toFun := fun x => ⟨(x : L),
+        x.property.tower_top⟩
+      map_one' := by ext; rfl
+      map_mul' := by intro x y; ext; rfl
+      map_zero' := by ext; rfl
+      map_add' := by intro x y; ext; rfl
+      commutes' := by
+        intro r
+        apply Subtype.ext
+        simp only [Subalgebra.coe_algebraMap] }
+  let : Algebra (integralClosure R L) (integralClosure A L) :=
+    iCD.toRingHom.toAlgebra
+  let : IsScalarTower R (integralClosure R L) (integralClosure A L) :=
+    IsScalarTower.of_algebraMap_eq' iCD.comp_algebraMap.symm
+  let : IsScalarTower (integralClosure R L) (integralClosure A L) L :=
+    IsScalarTower.of_algebraMap_eq' rfl
+  have hlocL : Algebra.algebraMapSubmonoid L p.primeCompl ≤ IsUnit.submonoid L := by
+    have hRKin : Function.Injective (algebraMap R K) := IsFractionRing.injective R K
+    have hKLin : Function.Injective (algebraMap K L) :=
+      FaithfulSMul.algebraMap_injective K L
+    have hRLin : Function.Injective (algebraMap R L) := by
+      intro x y hxy
+      apply hRKin
+      apply hKLin
+      simpa only [IsScalarTower.algebraMap_apply R K L] using hxy
+    rintro x ⟨r, hr, rfl⟩
+    apply isUnit_iff_ne_zero.mpr
+    exact map_ne_zero_of_mem_nonZeroDivisors (algebraMap R L) hRLin
+      (p.primeCompl_le_nonZeroDivisors hr)
+  let : IsLocalization (Algebra.algebraMapSubmonoid L p.primeCompl) L :=
+    IsLocalization.of_le_isUnit hlocL
+  have hlocD :
+      IsLocalization (Algebra.algebraMapSubmonoid (integralClosure R L) p.primeCompl)
+        (integralClosure A L) := by
+    have htower : IsScalarTower R (integralClosure R L) (integralClosure A L) :=
+      inferInstance
+    exact @IsLocalization.integralClosure R
+      (inferInstance : CommRing R) L (inferInstance : CommRing L)
+      (inferInstance : Algebra R L) A L
+      (inferInstance : CommRing A) (inferInstance : CommRing L)
+      (inferInstance : Algebra R A) (inferInstance : Algebra L L)
+      (inferInstance : Algebra A L) (inferInstance : Algebra R L)
+      (inferInstance : IsScalarTower R L L)
+      (inferInstance : IsScalarTower R A L) p.primeCompl
+      (inferInstance : IsLocalization p.primeCompl A)
+      (inferInstance : IsLocalization (Algebra.algebraMapSubmonoid L p.primeCompl) L)
+      (inferInstance : Algebra (integralClosure R L) (integralClosure A L))
+      (inferInstance : IsScalarTower (integralClosure R L) (integralClosure A L) L)
+      htower
+  let eCD : (integralClosure R L ⊗[R] A) ≃ₐ[integralClosure R L]
+      integralClosure A L :=
+    IsLocalization.algEquiv
+      (Algebra.algebraMapSubmonoid (integralClosure R L) p.primeCompl)
+      (integralClosure R L ⊗[R] A) (integralClosure A L)
+  let eS : S ≃ₐ[R] integralClosure R L :=
+    IsIntegralClosure.equiv R S L (integralClosure R L)
+  let eB : B ≃ₐ[A] integralClosure A L :=
+    IsIntegralClosure.equiv A B L (integralClosure A L)
+  refine ⟨(eB.restrictScalars R).trans ?_⟩
+  exact (eCD.restrictScalars R).symm.trans <|
+    (Algebra.TensorProduct.congr eS
+      (AlgEquiv.refl : A ≃ₐ[R] A)).symm
 
 /-- The same finite normalization is the normalization of `S` away from `p`. -/
 theorem chapter11_away_model_of_integral_closure
@@ -251,10 +794,60 @@ theorem chapter11_away_model_of_integral_closure
     [IsIntegralClosure S R L] [IsIntegralClosure B A L]
     [FiniteDimensional K L]
     (p : Ideal R) [p.IsPrime] [p.IsMaximal]
-    [IsLocalization p.primeCompl A] (hp0 : p ≠ (⊥ : Ideal R))
-    (hfinite : Module.Finite R S) :
+    [IsLocalization p.primeCompl A] (_hp0 : p ≠ (⊥ : Ideal R))
+    (_hfinite : Module.Finite R S) :
     chapter11AwayModel R S A B p := by
-  sorry
+  let iCD : integralClosure R L →ₐ[R] integralClosure A L :=
+    { toFun := fun x => ⟨(x : L),
+        x.property.tower_top⟩
+      map_one' := by ext; rfl
+      map_mul' := by intro x y; ext; rfl
+      map_zero' := by ext; rfl
+      map_add' := by intro x y; ext; rfl
+      commutes' := by
+        intro r
+        apply Subtype.ext
+        simp only [Subalgebra.coe_algebraMap] }
+  let : Algebra (integralClosure R L) (integralClosure A L) :=
+    iCD.toRingHom.toAlgebra
+  let : IsScalarTower R (integralClosure R L) (integralClosure A L) :=
+    IsScalarTower.of_algebraMap_eq' iCD.comp_algebraMap.symm
+  let : IsScalarTower (integralClosure R L) (integralClosure A L) L :=
+    IsScalarTower.of_algebraMap_eq' rfl
+  have hlocL : Algebra.algebraMapSubmonoid L p.primeCompl ≤ IsUnit.submonoid L := by
+    have hRKin : Function.Injective (algebraMap R K) := IsFractionRing.injective R K
+    have hKLin : Function.Injective (algebraMap K L) :=
+      FaithfulSMul.algebraMap_injective K L
+    have hRLin : Function.Injective (algebraMap R L) := by
+      intro x y hxy
+      apply hRKin
+      apply hKLin
+      simpa only [IsScalarTower.algebraMap_apply R K L] using hxy
+    rintro x ⟨r, hr, rfl⟩
+    apply isUnit_iff_ne_zero.mpr
+    exact map_ne_zero_of_mem_nonZeroDivisors (algebraMap R L) hRLin
+      (p.primeCompl_le_nonZeroDivisors hr)
+  let : IsLocalization (Algebra.algebraMapSubmonoid L p.primeCompl) L :=
+    IsLocalization.of_le_isUnit hlocL
+  have hlocD :
+      IsLocalization (Algebra.algebraMapSubmonoid (integralClosure R L) p.primeCompl)
+        (integralClosure A L) := by
+    exact IsLocalization.integralClosure (R := R) (S := L) (Rf := A) (Sf := L)
+      p.primeCompl
+  let eS : S ≃ₐ[R] integralClosure R L :=
+    IsIntegralClosure.equiv R S L (integralClosure R L)
+  have hM :
+      (Algebra.algebraMapSubmonoid (integralClosure R L) p.primeCompl).map eS.symm.toAlgHom =
+        Algebra.algebraMapSubmonoid S p.primeCompl := by
+    exact Algebra.algebraMapSubmonoid_map_eq p.primeCompl eS.symm.toAlgHom
+  let eAway : (integralClosure A L) ≃ₐ[R]
+      Localization (Algebra.algebraMapSubmonoid S p.primeCompl) :=
+    IsLocalization.algEquivOfAlgEquiv (integralClosure A L)
+      (Localization (Algebra.algebraMapSubmonoid S p.primeCompl)) eS.symm hM
+  let eB : B ≃ₐ[A] integralClosure A L :=
+    IsIntegralClosure.equiv A B L (integralClosure A L)
+  refine ⟨(eB.restrictScalars R).trans ?_⟩
+  exact eAway
 
 /-- A nonzero prime of the normalization away from `p` maps to the unit ideal. -/
 theorem chapter11_prime_disappears_away_from
@@ -265,11 +858,35 @@ theorem chapter11_prime_disappears_away_from
     [Algebra S L] [IsScalarTower R S L]
     [IsIntegralClosure S R L] [FiniteDimensional K L]
     (p : Ideal R) [p.IsPrime] [p.IsMaximal]
-    (hp0 : p ≠ (⊥ : Ideal R)) (hfinite : Module.Finite R S)
+    (_hp0 : p ≠ (⊥ : Ideal R)) (_hfinite : Module.Finite R S)
     (Q : Ideal S) (hQ : chapter11PrimeDisappearsAwayFrom R S p Q)
     (hQ0 : Q ≠ (⊥ : Ideal S)) :
     Ideal.map (algebraMap S (chapter11AwayLocalization R S p)) Q = ⊤ := by
-  sorry
+  let : Q.IsPrime := hQ.1
+  let : Algebra.IsIntegral R S := IsIntegralClosure.isIntegral_algebra R L
+  have hQc0 : Q.comap (algebraMap R S) ≠ (⊥ : Ideal R) :=
+    IsIntegral.comap_ne_bot R hQ0
+  have hQcprime : (Q.comap (algebraMap R S)).IsPrime := inferInstance
+  have hQcmax : (Q.comap (algebraMap R S)).IsMaximal :=
+    hQcprime.isMaximal hQc0
+  have hnot_le : ¬Q.comap (algebraMap R S) ≤ p := by
+    intro hle
+    apply hQ.2
+    exact ⟨(hQcmax.eq_of_le ‹p.IsMaximal›.ne_top hle).symm⟩
+  have hnot_subset :
+      ¬(Q : Set S) ⊆ (Algebra.algebraMapSubmonoid S p.primeCompl : Set S)ᶜ := by
+    intro hsubset
+    apply hnot_le
+    intro r hr
+    by_contra hrp
+    apply hsubset
+    · exact hr
+    · exact (Algebra.mem_algebraMapSubmonoid_of_mem ⟨r, hrp⟩)
+  change Ideal.map
+    (algebraMap S (Localization (Algebra.algebraMapSubmonoid S p.primeCompl))) Q = ⊤
+  exact IsLocalization.map_eq_top_of_not_subset
+    (Algebra.algebraMapSubmonoid S p.primeCompl)
+    (Localization (Algebra.algebraMapSubmonoid S p.primeCompl)) hnot_subset
 
 /-- A valuation extension is expressed using Mathlib's equivalence relation on valuations. -/
 def chapter11ValuationExtensionAt (K L : Type*) [CommRing K] [CommRing L] [Algebra K L]

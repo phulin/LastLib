@@ -1,4 +1,6 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter02.Section04TheFundamentalEquality
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter02.Section01WhyTheValuationRingMustBeTheIntegralClosure
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section07UnramifiedAndTotallyRamifiedEndpoints
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter02
 
@@ -86,16 +88,84 @@ theorem eisenstein_power_root_example
     (hirreducible : Irreducible (chapter2PowerRootPolynomial π n))
     (hroot : aeval piRoot (chapter2PowerRootPolynomial π n) = 0)
     (hgenerates : Algebra.adjoin K ({piRoot} : Set L) = ⊤)
-    (hvaluation : vL piRoot = Valuation.IsRankOneDiscrete.generator vL)
-    (hbase : vK (algebraMap A K π) = (vL piRoot) ^ n)
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring) :
-    chapterRamificationIndex vK.valuationSubring vL.valuationSubring
+    vL.IsUniformizer piRoot ∧
+      chapterRamificationIndex vK.valuationSubring vL.valuationSubring
           (IsLocalRing.maximalIdeal vL.valuationSubring) = n ∧
       chapterResidueDegree vK.valuationSubring vL.valuationSubring
           (IsLocalRing.maximalIdeal vL.valuationSubring) = 1 ∧
       Module.finrank K L = n := by
-  sorry
+  have hbaseIntegers : vK.Integers A := by
+    refine
+      { hom_inj := IsFractionRing.injective A K
+        map_le_one := ?_
+        exists_of_le_one := ?_ }
+    · intro a
+      have ha : algebraMap A K a ∈ (vK.valuationSubring : Set K) := by
+        rw [hvaluationRing]
+        exact ⟨a, rfl⟩
+      exact (Valuation.mem_valuationSubring_iff vK (algebraMap A K a)).mp ha
+    · intro x hx
+      have hx' : x ∈ (vK.valuationSubring : Set K) :=
+        (Valuation.mem_valuationSubring_iff vK x).mpr hx
+      rw [hvaluationRing] at hx'
+      exact hx'
+  let f : A →+* vK.valuationSubring :=
+    RingHom.codRestrict (algebraMap A K) vK.valuationSubring (by
+      intro a
+      change algebraMap A K a ∈ (vK.valuationSubring : Set K)
+      rw [hvaluationRing]
+      exact ⟨a, rfl⟩)
+  have hf_inj : Function.Injective f := by
+    intro a b hab
+    apply IsFractionRing.injective A K
+    exact congrArg (fun z : vK.valuationSubring => (z : K)) hab
+  have hf_surj : Function.Surjective f := by
+    intro a
+    have ha : (a : K) ∈ (vK.valuationSubring : Set K) := a.property
+    rw [hvaluationRing] at ha
+    rcases ha with ⟨b, hb⟩
+    refine ⟨b, ?_⟩
+    exact Subtype.ext hb
+  let eA : A ≃+* vK.valuationSubring :=
+    RingEquiv.ofBijective f ⟨hf_inj, hf_surj⟩
+  have heA_coe (a : A) : (eA a : K) = algebraMap A K a := by
+    change (f a : K) = algebraMap A K a
+    rfl
+  have hcomp :
+      (algebraMap vK.valuationSubring L).comp eA.toRingHom =
+        algebraMap A L := by
+    ext a
+    change algebraMap vK.valuationSubring L (eA a) = algebraMap A L a
+    rw [IsScalarTower.algebraMap_apply vK.valuationSubring K L]
+    change algebraMap K L (eA a : K) = algebraMap A L a
+    rw [heA_coe]
+    exact congrArg (fun g : A →+* L => g a)
+      (IsScalarTower.algebraMap_eq A K L).symm
+  have hunique :=
+    chapter2_complete_base_has_unique_valuation_subring_extension vK vL hcomplete
+  have hclosureV :=
+    integral_closure_eq_extension_valuation_subring vK vL hunique
+  have hupperIntegralClosure :
+      (vL.valuationSubring : Set L) = (integralClosure A L : Set L) := by
+    ext x
+    have hV := Set.ext_iff.mp hclosureV x
+    change IsIntegral vK.valuationSubring x ↔ x ∈ vL.valuationSubring at hV
+    change x ∈ vL.valuationSubring ↔ IsIntegral A x
+    exact hV.symm.trans (RingEquiv.isIntegral_iff eA hcomp x).symm
+  have hdegree :
+      (chapter2PowerRootPolynomial π n).natDegree = n := by
+    by_cases hzero : chapter2PowerRootPolynomial π n = 0
+    · exact (hirreducible.ne_zero hzero).elim
+    · simp [chapter2PowerRootPolynomial]
+  have hendpoint :=
+    eisenstein_root_is_uniformizer_and_totally_ramified
+      (A := A) (K := K) (L := L) (Γ := ℤᵐ⁰) vK vL π
+      (chapter2PowerRootPolynomial π n) piRoot hf hroot hdegree hgenerates
+      hbaseIntegers hvaluationRing hupperIntegralClosure
+  rcases hendpoint with ⟨huniformizer, hramification, hresidue, _, hfinrank⟩
+  exact ⟨huniformizer, hramification, hresidue, hfinrank⟩
 
 /-- The fundamental equality still applies to purely inseparable examples. -/
 theorem purely_inseparable_extension_still_satisfies_fundamental_equality

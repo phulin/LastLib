@@ -4,6 +4,7 @@ import Mathlib.RingTheory.MvPolynomial
 import Mathlib.RingTheory.Polynomial.Quotient
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10.Section03DivisorsOnSmoothRelativeCurves
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11.Section05SymmetricPowersAndBaseChange
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter01.Section01TheAbsoluteAndRelativeSettings
 
 namespace LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter06
 
@@ -12,6 +13,7 @@ noncomputable section
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits TopologicalSpace
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11
+open LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter01
 open RelativeScheme
 open scoped BigOperators Polynomial
 
@@ -59,6 +61,41 @@ def chapter06RelativeDivisorProjection {S : Scheme.{u}}
     Chapter06RelativeDivisorSubscheme D ⟶ T.carrier :=
   D.divisor.inclusion ≫ pullback.snd C.structuralMap T.structuralMap
 
+noncomputable def chapter06RelativeDivisorBaseChangeAmbientMap
+    {S : Scheme.{u}} (C T U : RelativeScheme S) (u : U ⟶ T) :
+    Chapter06RelativeDivisorAmbient C U ⟶ Chapter06RelativeDivisorAmbient C T := by
+  refine pullback.lift
+    (pullback.fst C.structuralMap U.structuralMap)
+    (pullback.snd C.structuralMap U.structuralMap ≫ u.hom) ?_
+  simpa [Category.assoc, u.comm] using
+    (pullback.condition (f := C.structuralMap) (g := U.structuralMap))
+
+theorem chapter06_relative_divisor_base_change_ambient_map_comp
+    {S : Scheme.{u}} (C T U V : RelativeScheme S)
+    (u : U ⟶ T) (v : V ⟶ U) :
+    chapter06RelativeDivisorBaseChangeAmbientMap C U V v ≫
+        chapter06RelativeDivisorBaseChangeAmbientMap C T U u =
+      chapter06RelativeDivisorBaseChangeAmbientMap C T V (v ≫ u) := by
+  apply (IsPullback.of_hasPullback C.structuralMap T.structuralMap).hom_ext
+  · simp only [Category.assoc, chapter06RelativeDivisorBaseChangeAmbientMap,
+      pullback.lift_fst]
+  · simp only [chapter06RelativeDivisorBaseChangeAmbientMap]
+    rw [Category.assoc, pullback.lift_snd, pullback.lift_snd]
+    rw [pullback.lift_snd_assoc]
+    rfl
+
+theorem chapter06_relative_divisor_base_change_ambient_map_id
+    {S : Scheme.{u}} (C T : RelativeScheme S) :
+    chapter06RelativeDivisorBaseChangeAmbientMap C T T (𝟙 T) =
+      𝟙 (Chapter06RelativeDivisorAmbient C T) := by
+  apply (IsPullback.of_hasPullback C.structuralMap T.structuralMap).hom_ext
+  · simp only [chapter06RelativeDivisorBaseChangeAmbientMap,
+      pullback.lift_fst, Category.id_comp]
+  · dsimp [chapter06RelativeDivisorBaseChangeAmbientMap]
+    rw [pullback.lift_snd]
+    change pullback.snd C.structuralMap T.structuralMap ≫ 𝟙 T.carrier = _
+    simp
+
 theorem chapter06_relativeEffectiveDivisor_rank
     {S : Scheme.{u}} {C T : RelativeScheme S} {d : ℕ}
     (D : Chapter06RelativeEffectiveDivisor C T d) (t : T.carrier) :
@@ -83,7 +120,9 @@ theorem chapter06_finiteFlatMorphism_rank_constant_on_connected_base
     (h : Chapter06FiniteFlatMorphism q)
     (hconnected : _root_.IsConnected (Set.univ : Set Y)) :
     ∀ y z : Y, Scheme.Hom.finrank q y = Scheme.Hom.finrank q z := by
-  sorry
+  intro y z
+  exact (chapter06_finiteFlatMorphism_rank_is_locally_constant h).apply_eq_of_isPreconnected
+    hconnected.isPreconnected trivial trivial
 
 /- The length family is deliberately recorded before Cartierness.  This is
 the Hilbert-side object to which the smooth-curve theorem adds one equation. -/
@@ -93,6 +132,52 @@ structure Chapter06FiniteFlatClosedFamily {S : Scheme.{u}}
   finite_flat_rank :
     Chapter06FiniteFlatRank
       (ideal.subschemeι ≫ pullback.snd C.structuralMap T.structuralMap) d
+
+/-!
+The Chapter 10 smooth-curve theorem uses its own bundled profile.  The
+Chapter 11 rank predicate is propositionally the same four-part package, so
+these conversions keep the proof route through that canonical theorem
+explicit rather than relying on a hidden coercion.
+-/
+def chapter06FiniteFlatClosedFamilyAsChapter10Family
+    {S : Scheme.{u}} (C T : RelativeScheme S) (d : ℕ)
+    (Z : Chapter06FiniteFlatClosedFamily C T d) :
+    Chapter10FamilyOfLength C.structuralMap T.structuralMap d :=
+  ⟨Z.ideal,
+    { finite := Z.finite_flat_rank.1
+      flat := Z.finite_flat_rank.2.1
+      locallyOfFinitePresentation := Z.finite_flat_rank.2.2.1
+      rank := Z.finite_flat_rank.2.2.2 }⟩
+
+def chapter06Chapter10FamilyAsFiniteFlatClosedFamily
+    {S : Scheme.{u}} (C T : RelativeScheme S) (d : ℕ)
+    (Z : Chapter10FamilyOfLength C.structuralMap T.structuralMap d) :
+    Chapter06FiniteFlatClosedFamily C T d :=
+  { ideal := Z.1
+    finite_flat_rank :=
+      ⟨Z.2.finite, Z.2.flat, Z.2.locallyOfFinitePresentation, Z.2.rank⟩ }
+
+@[simp]
+theorem chapter06FiniteFlatClosedFamilyAsChapter10Family_ideal
+    {S : Scheme.{u}} (C T : RelativeScheme S) (d : ℕ)
+    (Z : Chapter06FiniteFlatClosedFamily C T d) :
+    (chapter06FiniteFlatClosedFamilyAsChapter10Family C T d Z).1 = Z.ideal :=
+  rfl
+
+@[simp]
+theorem chapter06Chapter10FamilyAsFiniteFlatClosedFamily_ideal
+    {S : Scheme.{u}} (C T : RelativeScheme S) (d : ℕ)
+    (Z : Chapter10FamilyOfLength C.structuralMap T.structuralMap d) :
+    (chapter06Chapter10FamilyAsFiniteFlatClosedFamily C T d Z).ideal = Z.1 :=
+  rfl
+
+noncomputable def chapter06FiniteFlatClosedFamilyBaseChange
+    {S : Scheme.{u}} (C T U : RelativeScheme S) (u : U ⟶ T)
+    (d : ℕ) (Z : Chapter06FiniteFlatClosedFamily C T d) :
+    Chapter06FiniteFlatClosedFamily C U d := by
+  refine
+    { ideal := Z.ideal.comap (chapter06RelativeDivisorBaseChangeAmbientMap C T U u)
+      finite_flat_rank := by sorry }
 
 abbrev Chapter06FiniteFlatClosedFamily.subscheme
     {S : Scheme.{u}} {C T : RelativeScheme S} {d : ℕ}
@@ -147,10 +232,9 @@ instance chapter06SmoothProjectiveRelativeCurve_to_chapter10
 
 /-!
 The pinned Book 8 API exposes the Cartier line-bundle construction through
-an explicit local interface.  This profile keeps the line bundle, its
-canonical section, its vanishing ideal, and the already canonical fiber-rank
-statement together.  The existence theorem in §6.1 is the bridge to the
-earlier divisor/Picard chapters.
+an explicit local interface.  Fiberwise degree is kept as a separate
+line-bundle interface, while the conditional ideal-dual and section
+interfaces remain the bridge to the earlier divisor/Picard chapters.
 -/
 
 abbrev Chapter06LineBundle (X : Scheme.{u}) := Chapter10LineBundle X
@@ -158,15 +242,88 @@ abbrev Chapter06LineBundle (X : Scheme.{u}) := Chapter10LineBundle X
 abbrev Chapter06LineBundleSection {X : Scheme.{u}}
     (L : Chapter06LineBundle X) := Chapter10LineBundleSection L
 
-structure Chapter06AssociatedLineBundleProfile
+/-!
+Book 8 has two effective-Cartier predicates: the Chapter 11 ideal-sheaf
+predicate used by `RelativeEffectiveCartierDivisor`, and the Chapter 10
+locally-regular-principal predicate consumed by the line-bundle interface.
+This one-way bridge is the conversion needed by the associated-line-bundle
+construction below.
+-/
+theorem chapter06_effective_cartier_is_locally_regular_principal
+    {X : Scheme.{u}} (I : Chapter06ClosedSubscheme X)
+    (hI : I.IsEffectiveCartier) : Chapter10LocallyRegularPrincipal I := by
+  intro x
+  obtain ⟨_, ⟨U, hU, rfl⟩, hxU, hUtop⟩ :=
+    X.isBasis_affineOpens.exists_subset_of_mem_open (Set.mem_univ x) isOpen_univ
+  let U' : X.affineOpens := ⟨U, hU⟩
+  rcases hI U' ⟨x, hxU⟩ with ⟨V, f, hxV, hVU, hIdeal, hf⟩
+  refine ⟨V, hxV, f, hIdeal, ?_⟩
+  exact isRegular_iff_mem_nonZeroDivisors.mpr hf
+
+def chapter06AsChapter10EffectiveCartierDivisor
     {S : Scheme.{u}} {C T : RelativeScheme S} {d : ℕ}
-    (D : Chapter06RelativeEffectiveDivisor C T d) where
-  lineBundle : Chapter06LineBundle (Chapter06RelativeDivisorAmbient C T)
-  canonicalSection : Chapter06LineBundleSection lineBundle
-  vanishingIdeal : Chapter06ClosedSubscheme (Chapter06RelativeDivisorAmbient C T)
-  canonicalSection_vanishingIdeal : vanishingIdeal = D.divisor.ideal
-  fiberwise_degree : ∀ t : T.carrier,
-    Scheme.Hom.finrank (chapter06RelativeDivisorProjection D) t = d
+    (D : Chapter06RelativeEffectiveDivisor C T d) :
+    Chapter10EffectiveCartierDivisor (Chapter06RelativeDivisorAmbient C T) :=
+  { ideal := D.divisor.ideal
+    locallyRegularPrincipal :=
+      chapter06_effective_cartier_is_locally_regular_principal
+        D.divisor.ideal D.divisor.isEffectiveCartier
+    closed := by infer_instance }
+
+class Chapter06LineBundleFiberwiseDegreeAPI {S : Scheme.{u}}
+    (C T : RelativeScheme S) where
+  degree :
+    Chapter06LineBundle (Chapter06RelativeDivisorAmbient C T) →
+      T.carrier → ℤ
+  degree_respects_isomorphism :
+    ∀ {L M : Chapter06LineBundle (Chapter06RelativeDivisorAmbient C T)}
+      (_e : Nonempty (Chapter10LineBundleIso L M)) (t : T.carrier),
+      degree L t = degree M t
+  degree_of_associated_divisor :
+    ∀ [Chapter10IdealDualAPI (Chapter06RelativeDivisorAmbient C T)]
+      {d : ℕ} (D : Chapter06RelativeEffectiveDivisor C T d) (t : T.carrier),
+      degree (chapter10OofD (chapter06AsChapter10EffectiveCartierDivisor D)) t =
+        (d : ℤ)
+
+theorem chapter06_line_bundle_degree_of_associated_divisor
+    {S : Scheme.{u}} {C T : RelativeScheme S}
+    [Chapter06LineBundleFiberwiseDegreeAPI C T]
+    [Chapter10IdealDualAPI (Chapter06RelativeDivisorAmbient C T)]
+    {d : ℕ} (D : Chapter06RelativeEffectiveDivisor C T d) (t : T.carrier) :
+    Chapter06LineBundleFiberwiseDegreeAPI.degree
+      (chapter10OofD (chapter06AsChapter10EffectiveCartierDivisor D)) t =
+        (d : ℤ) :=
+  Chapter06LineBundleFiberwiseDegreeAPI.degree_of_associated_divisor D t
+
+def chapter06LineBundleFiberwiseDegree
+    {S : Scheme.{u}} (C T : RelativeScheme S)
+    [Chapter06LineBundleFiberwiseDegreeAPI C T]
+    (L : Chapter06LineBundle (Chapter06RelativeDivisorAmbient C T))
+    (t : T.carrier) : ℤ :=
+  Chapter06LineBundleFiberwiseDegreeAPI.degree L t
+
+def Chapter06LineBundleHasFiberwiseDegree
+    {S : Scheme.{u}} (C T : RelativeScheme S)
+    [Chapter06LineBundleFiberwiseDegreeAPI C T]
+    (L : Chapter06LineBundle (Chapter06RelativeDivisorAmbient C T))
+    (d : ℕ) : Prop :=
+  ∀ t : T.carrier, chapter06LineBundleFiberwiseDegree C T L t = (d : ℤ)
+
+abbrev chapter06AssociatedLineBundle
+    {S : Scheme.{u}} {C T : RelativeScheme S} {d : ℕ}
+    [Chapter10IdealDualAPI (Chapter06RelativeDivisorAmbient C T)]
+    (D : Chapter06RelativeEffectiveDivisor C T d)
+    :
+    Chapter06LineBundle (Chapter06RelativeDivisorAmbient C T) :=
+  chapter10OofD (chapter06AsChapter10EffectiveCartierDivisor D)
+
+abbrev chapter06AssociatedLineBundleCanonicalSection
+    {S : Scheme.{u}} {C T : RelativeScheme S} {d : ℕ}
+    [Chapter10IdealDualAPI (Chapter06RelativeDivisorAmbient C T)]
+    [Chapter10SectionVanishingIdealAPI (Chapter06RelativeDivisorAmbient C T)]
+    (D : Chapter06RelativeEffectiveDivisor C T d) :
+    Chapter06LineBundleSection (chapter06AssociatedLineBundle D) :=
+  chapter10OofD_section (chapter06AsChapter10EffectiveCartierDivisor D)
 
 /-!
 The following two records describe the parameter-space language used in
@@ -180,6 +337,10 @@ structure Chapter06LengthDHilbertSpaceData {S : Scheme.{u}}
   carrier : RelativeScheme S
   represents : ∀ T : RelativeScheme S,
     (T ⟶ carrier) ≃ Chapter06FiniteFlatClosedFamily C T d
+  represents_natural : ∀ {T U : RelativeScheme S} (u : U ⟶ T)
+    (f : T ⟶ carrier),
+    chapter06FiniteFlatClosedFamilyBaseChange C T U u d (represents T f) =
+      represents U (u ≫ f)
 
 structure Chapter06CartierDivisorOpenLocusData {S : Scheme.{u}}
     (C : RelativeScheme S) (d : ℕ)
@@ -193,23 +354,23 @@ structure Chapter06CartierDivisorOpenLocusData {S : Scheme.{u}}
         chapter06IsEffectiveCartierFamily Z}
   inclusion_compatibility : ∀ (T : RelativeScheme S) (f : T ⟶ locus),
     H.represents T (f ≫ inclusion) = (represents T f).1
+  represents_natural : ∀ {T U : RelativeScheme S} (u : U ⟶ T)
+    (f : T ⟶ locus),
+    chapter06FiniteFlatClosedFamilyBaseChange C T U u d
+        ((represents T f).1) =
+      (represents U (u ≫ f)).1
 
-/- LOCAL_DEPENDENCY_GUESS (6.4): Mathlib and the earlier LastLib chapters do
-not expose a single canonical predicate for geometrically reduced fibers with
-ordinary double points.  Keep those two geometric hypotheses as named fields
-until the nodal-curve interface is available. -/
-structure Chapter06NodalRelativeCurveData {S : Scheme.{u}}
-    (C : RelativeScheme S) where
-  proper : IsProper C.structuralMap
-  flat : Flat C.structuralMap
-  finite_presentation : LocallyOfFinitePresentation C.structuralMap
-  separated : IsSeparated C.structuralMap
-  geometrically_reduced_fibers : Prop
-  ordinary_double_points : Prop
+/- The earlier standing-conventions chapter already supplies the genuine nodal
+   relative-curve predicate, including properness, flatness, finite
+   presentation, geometric purity, reduced fibers, and the ordinary-double-
+   point condition.  Reuse it instead of storing unconstrained `Prop` labels. -/
+abbrev Chapter06NodalRelativeCurveData {S : Scheme.{u}}
+    (C : RelativeScheme S) :=
+  Chapter01NodalRelativeCurve C.structuralMap
 
 abbrev Chapter06NodalRelativeCurve {S : Scheme.{u}}
     (C : RelativeScheme S) : Prop :=
-  Nonempty (Chapter06NodalRelativeCurveData C)
+  Chapter06NodalRelativeCurveData C
 
 end
 

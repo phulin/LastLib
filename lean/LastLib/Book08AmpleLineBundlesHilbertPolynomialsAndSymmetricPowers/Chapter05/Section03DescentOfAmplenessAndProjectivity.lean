@@ -34,6 +34,7 @@ theorem projectivity_descent_with_polarization
     {X S S' : Scheme.{u}} (f : X ⟶ S) (g : S' ⟶ S) (L : LineBundle X)
     (hfqc : QuasiCompact f) (hfqs : QuasiSeparated f)
     (hproper : IsProper f) (hfp : LocallyOfFinitePresentation f)
+    (hS : QuasiCompact (𝟙 S))
     (hgff : IsFaithfullyFlat g) (hgqc : QuasiCompact g)
     (hL : IsAmple (baseChangeToBase f g) (baseChangeLineBundle f g L)) :
     IsAmple f L ∧ IsProjectiveMorphism f := by sorry
@@ -43,6 +44,7 @@ theorem projectivity_descent_from_upstairs_polarized_data
     (M : LineBundle (baseChange f g)) (hM : IsBaseChangeOf f g L M)
     (hfqc : QuasiCompact f) (hfqs : QuasiSeparated f)
     (hproper : IsProper f) (hfp : LocallyOfFinitePresentation f)
+    (hS : QuasiCompact (𝟙 S))
     (hgff : IsFaithfullyFlat g) (hgqc : QuasiCompact g)
     (hMample : IsAmple (baseChangeToBase f g) M) :
     IsAmple f L ∧ IsProjectiveMorphism f := by sorry

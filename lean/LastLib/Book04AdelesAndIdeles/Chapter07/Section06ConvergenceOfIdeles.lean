@@ -412,7 +412,45 @@ theorem chapter07_additive_adele_tendsto_iff_aux
       ∃ S : Set (chapter07FinitePlace R), S.Finite ∧
         ∀ᶠ n in l, ∀ v ∉ S,
           (f n).2 v - (x.2 v) ∈ chapter07LocalIntegerRing R K v := by
-  sorry
+  constructor
+  · intro h
+    have hp := (Prod.tendsto_iff f x).mp h
+    have hi : ∀ v : NumberField.InfinitePlace K,
+        Tendsto (fun n => (f n).1 v) l (𝓝 (x.1 v)) := by
+      exact fun v => (tendsto_pi_nhds.mp hp.1) v
+    have hf := hp.2
+    have hB : ∀ v : chapter07FinitePlace R,
+        IsOpen (((chapter07LocalIntegerRing R K v).toSubring.toAddSubgroup :
+          Set (chapter07LocalField R K v))) := by
+      intro v
+      change IsOpen (chapter07LocalIntegerRing R K v :
+        Set (chapter07LocalField R K v))
+      exact Valued.isOpen_valuationSubring _
+    have hfinite :=
+      (chapter07_restrictedProduct_additive_tendsto_iff
+        (fun v : chapter07FinitePlace R => chapter07LocalField R K v)
+        (fun v : chapter07FinitePlace R =>
+          (chapter07LocalIntegerRing R K v).toSubring.toAddSubgroup)
+        hB (fun n => (f n).2) (x.2) l).mp hf
+    exact ⟨hi, hfinite.1, hfinite.2⟩
+  · rintro ⟨hi, hf, htail⟩
+    have hB : ∀ v : chapter07FinitePlace R,
+        IsOpen (((chapter07LocalIntegerRing R K v).toSubring.toAddSubgroup :
+          Set (chapter07LocalField R K v))) := by
+      intro v
+      change IsOpen (chapter07LocalIntegerRing R K v :
+        Set (chapter07LocalField R K v))
+      exact Valued.isOpen_valuationSubring _
+    apply (Prod.tendsto_iff f x).mpr
+    refine ⟨?_, ?_⟩
+    · exact tendsto_pi_nhds.mpr hi
+    · apply
+        (chapter07_restrictedProduct_additive_tendsto_iff
+          (fun v : chapter07FinitePlace R => chapter07LocalField R K v)
+          (fun v : chapter07FinitePlace R =>
+            (chapter07LocalIntegerRing R K v).toSubring.toAddSubgroup)
+          hB (fun n => (f n).2) (x.2) l).mpr
+      exact ⟨hf, htail⟩
 
 theorem chapter07_idele_tendsto_iff
     {δ : Type*} (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
@@ -427,7 +465,253 @@ theorem chapter07_idele_tendsto_iff
         ∃ S : Set (chapter07FinitePlace R), S.Finite ∧
           ∀ᶠ n in l, ∀ v ∉ S,
             Valued.v ((f n).1.2 v * (x.1.2 v)⁻¹) = 1 := by
-  sorry
+  have hinv_inf (u : chapter07IdeleGroup R K) (v : NumberField.InfinitePlace K) :
+      (u⁻¹ : chapter07IdeleGroup R K).1.1 v = (u.1.1 v)⁻¹ := by
+    apply eq_inv_of_mul_eq_one_right
+    exact congrArg (fun a : chapter07AdeleRing R K => a.1 v) u.val_inv
+  have hinv_fin (u : chapter07IdeleGroup R K) (v : chapter07FinitePlace R) :
+      (u⁻¹ : chapter07IdeleGroup R K).1.2 v = (u.1.2 v)⁻¹ := by
+    apply eq_inv_of_mul_eq_one_right
+    exact congrArg (fun a : chapter07AdeleRing R K => a.2 v) u.val_inv
+  constructor
+  · intro h
+    have hgraph := ((chapter07_ideleGraph_isEmbedding R K).tendsto_nhds_iff).mp h
+    have hprod := (Prod.tendsto_iff
+      (fun n => chapter07IdeleGraph R K (f n))
+      (chapter07IdeleGraph R K x)).mp hgraph
+    have hf := (chapter07_additive_adele_tendsto_iff_aux R K
+      (fun n => (chapter07IdeleGraph R K (f n)).1)
+      (chapter07IdeleGraph R K x).1 l).mp hprod.1
+    have hinv := (chapter07_additive_adele_tendsto_iff_aux R K
+      (fun n => (chapter07IdeleGraph R K (f n)).2)
+      (chapter07IdeleGraph R K x).2 l).mp hprod.2
+    have hcoord_inf : ∀ v : NumberField.InfinitePlace K,
+        Tendsto (fun n => (f n).1.1 v) l (𝓝 (x.1.1 v)) := by
+      intro v
+      simpa [chapter07IdeleGraph] using hf.1 v
+    have hcoord_fin : ∀ v : chapter07FinitePlace R,
+        Tendsto (fun n => (f n).1.2 v) l (𝓝 (x.1.2 v)) := by
+      intro v
+      simpa [chapter07IdeleGraph] using hf.2.1 v
+    refine ⟨hcoord_inf, hcoord_fin, ?_⟩
+    rcases hf.2.2 with ⟨Sf, hSf, hTf⟩
+    rcases hinv.2.2 with ⟨Si, hSi, hTi⟩
+    let Sx : Set (chapter07FinitePlace R) :=
+      {v | x.1.2 v ∉ chapter07LocalIntegerRing R K v}
+    let Sxi : Set (chapter07FinitePlace R) :=
+      {v | (x⁻¹ : chapter07IdeleGroup R K).1.2 v ∉
+        chapter07LocalIntegerRing R K v}
+    have hSx : Sx.Finite := by
+      change {v : chapter07FinitePlace R |
+        x.1.2 v ∉ chapter07LocalIntegerRing R K v}.Finite
+      exact Filter.eventually_cofinite.mp x.1.2.2
+    have hSxi : Sxi.Finite := by
+      change {v : chapter07FinitePlace R |
+        (x⁻¹ : chapter07IdeleGroup R K).1.2 v ∉
+          chapter07LocalIntegerRing R K v}.Finite
+      exact Filter.eventually_cofinite.mp (x⁻¹ : chapter07IdeleGroup R K).1.2.2
+    let S : Set (chapter07FinitePlace R) := ((Sf ∪ Si) ∪ Sx) ∪ Sxi
+    have hS : S.Finite := hSf.union hSi |>.union hSx |>.union hSxi
+    refine ⟨S, hS, ?_⟩
+    filter_upwards [hTf, hTi] with n hfn hin
+    intro v hv
+    have hvf : v ∉ Sf := by
+      intro hv'
+      exact hv (Or.inl (Or.inl (Or.inl hv')))
+    have hvi : v ∉ Si := by
+      intro hv'
+      exact hv (Or.inl (Or.inl (Or.inr hv')))
+    have hvx : v ∉ Sx := by
+      intro hv'
+      exact hv (Or.inl (Or.inr hv'))
+    have hvxi : v ∉ Sxi := by
+      intro hv'
+      exact hv (Or.inr hv')
+    have hfd : (f n).1.2 v - x.1.2 v ∈
+        chapter07LocalIntegerRing R K v := hfn v hvf
+    have hid : (x⁻¹ : chapter07IdeleGroup R K).1.2 v ∈
+        chapter07LocalIntegerRing R K v := by
+      by_contra hid
+      exact hvxi hid
+    have hird : (f n)⁻¹.1.2 v -
+        (x⁻¹ : chapter07IdeleGroup R K).1.2 v ∈
+        chapter07LocalIntegerRing R K v := hin v hvi
+    have hxmem : x.1.2 v ∈ chapter07LocalIntegerRing R K v := by
+      by_contra hxmem
+      exact hvx hxmem
+    have hfdmul : ((f n).1.2 v - x.1.2 v) *
+        (x⁻¹ : chapter07IdeleGroup R K).1.2 v ∈
+        chapter07LocalIntegerRing R K v :=
+      (chapter07LocalIntegerRing R K v).mul_mem _ _ hfd hid
+    have hirdmul : ((f n)⁻¹.1.2 v -
+        (x⁻¹ : chapter07IdeleGroup R K).1.2 v) * x.1.2 v ∈
+        chapter07LocalIntegerRing R K v :=
+      (chapter07LocalIntegerRing R K v).mul_mem _ _ hird hxmem
+    have hy : (f n).1.2 v * (x.1.2 v)⁻¹ ∈
+        chapter07LocalIntegerRing R K v := by
+      have hx0 : x.1.2 v ≠ 0 :=
+        (chapter07IdeleFiniteCoordinate R K x v).ne_zero
+      have hsum := (chapter07LocalIntegerRing R K v).add_mem _ _
+        hfdmul (chapter07LocalIntegerRing R K v).one_mem
+      simpa [hinv_fin, sub_mul, mul_assoc, hx0, mul_comm] using hsum
+    have hyinv : ((f n).1.2 v * (x.1.2 v)⁻¹)⁻¹ ∈
+        chapter07LocalIntegerRing R K v := by
+      have hx0 : x.1.2 v ≠ 0 :=
+        (chapter07IdeleFiniteCoordinate R K x v).ne_zero
+      have hsum := (chapter07LocalIntegerRing R K v).add_mem _ _
+        hirdmul (chapter07LocalIntegerRing R K v).one_mem
+      rw [sub_mul] at hsum
+      simpa [hinv_fin, sub_mul, mul_assoc, hx0, mul_comm] using hsum
+    have hy0 : (f n).1.2 v * (x.1.2 v)⁻¹ ≠ 0 := by
+      exact mul_ne_zero
+        (chapter07IdeleFiniteCoordinate R K (f n) v).ne_zero
+        (inv_ne_zero (chapter07IdeleFiniteCoordinate R K x v).ne_zero)
+    let yu : (chapter07LocalField R K v)ˣ :=
+      Units.mk0 ((f n).1.2 v * (x.1.2 v)⁻¹) hy0
+    have hyunit : yu ∈
+        (Submonoid.ofClass (chapter07LocalIntegerRing R K v)).units := by
+      apply Submonoid.mem_units_of_val_mem_inv_val_mem
+        (Submonoid.ofClass (chapter07LocalIntegerRing R K v))
+      · change (f n).1.2 v * (x.1.2 v)⁻¹ ∈
+          chapter07LocalIntegerRing R K v
+        exact hy
+      · change ((f n).1.2 v * (x.1.2 v)⁻¹)⁻¹ ∈
+          chapter07LocalIntegerRing R K v
+        exact hyinv
+    exact (IsDedekindDomain.HeightOneSpectrum.adicCompletionIntegers.mem_units_iff_valued_eq_one
+      (a := yu)).1 hyunit
+  · rintro ⟨hcoord_inf, hcoord_fin, htail⟩
+    have hcoord_inv_inf : ∀ v : NumberField.InfinitePlace K,
+        Tendsto (fun n => (f n)⁻¹ |>.1.1 v) l
+          (𝓝 ((x⁻¹ : chapter07IdeleGroup R K).1.1 v)) := by
+      intro v
+      have hx0 : x.1.1 v ≠ 0 :=
+        (chapter07IdeleInfiniteCoordinate R K x v).ne_zero
+      have h := (continuousAt_inv₀ hx0).tendsto.comp (hcoord_inf v)
+      simpa only [Function.comp_def, hinv_inf] using h
+    have hcoord_inv_fin : ∀ v : chapter07FinitePlace R,
+        Tendsto (fun n => (f n)⁻¹ |>.1.2 v) l
+          (𝓝 ((x⁻¹ : chapter07IdeleGroup R K).1.2 v)) := by
+      intro v
+      have hx0 : x.1.2 v ≠ 0 :=
+        (chapter07IdeleFiniteCoordinate R K x v).ne_zero
+      have h := (continuousAt_inv₀ hx0).tendsto.comp (hcoord_fin v)
+      simpa only [Function.comp_def, hinv_fin] using h
+    let S0 : Set (chapter07FinitePlace R) := Classical.choose htail
+    have hS0 : S0.Finite := (Classical.choose_spec htail).1
+    have hT0 : ∀ᶠ n in l, ∀ v ∉ S0,
+        Valued.v ((f n).1.2 v * (x.1.2 v)⁻¹) = 1 :=
+      (Classical.choose_spec htail).2
+    let Sx : Set (chapter07FinitePlace R) :=
+      {v | x.1.2 v ∉ chapter07LocalIntegerRing R K v}
+    let Sxi : Set (chapter07FinitePlace R) :=
+      {v | (x⁻¹ : chapter07IdeleGroup R K).1.2 v ∉
+        chapter07LocalIntegerRing R K v}
+    have hSx : Sx.Finite := by
+      change {v : chapter07FinitePlace R |
+        x.1.2 v ∉ chapter07LocalIntegerRing R K v}.Finite
+      exact Filter.eventually_cofinite.mp x.1.2.2
+    have hSxi : Sxi.Finite := by
+      change {v : chapter07FinitePlace R |
+        (x⁻¹ : chapter07IdeleGroup R K).1.2 v ∉
+          chapter07LocalIntegerRing R K v}.Finite
+      exact Filter.eventually_cofinite.mp (x⁻¹ : chapter07IdeleGroup R K).1.2.2
+    have hf_tail : ∃ S : Set (chapter07FinitePlace R), S.Finite ∧
+        ∀ᶠ n in l, ∀ v ∉ S,
+          (f n).1.2 v - x.1.2 v ∈ chapter07LocalIntegerRing R K v := by
+      let S : Set (chapter07FinitePlace R) := S0 ∪ Sx
+      refine ⟨S, hS0.union hSx, ?_⟩
+      filter_upwards [hT0] with n hn
+      intro v hv
+      have hv0 : v ∉ S0 := by
+        intro hv'
+        exact hv (Or.inl hv')
+      have hvx : v ∉ Sx := by
+        intro hv'
+        exact hv (Or.inr hv')
+      have hxmem : x.1.2 v ∈ chapter07LocalIntegerRing R K v := by
+        by_contra hxmem
+        exact hvx hxmem
+      have hy0 : (f n).1.2 v * (x.1.2 v)⁻¹ ≠ 0 := by
+        exact mul_ne_zero
+          (chapter07IdeleFiniteCoordinate R K (f n) v).ne_zero
+          (inv_ne_zero (chapter07IdeleFiniteCoordinate R K x v).ne_zero)
+      let yu : (chapter07LocalField R K v)ˣ :=
+        Units.mk0 ((f n).1.2 v * (x.1.2 v)⁻¹) hy0
+      have hyu : yu ∈
+          (Submonoid.ofClass (chapter07LocalIntegerRing R K v)).units := by
+        apply IsDedekindDomain.HeightOneSpectrum.adicCompletionIntegers.mem_units_iff_valued_eq_one.2
+        simpa [yu] using hn v hv0
+      have hy : (f n).1.2 v * (x.1.2 v)⁻¹ ∈
+          chapter07LocalIntegerRing R K v :=
+        by
+          change (yu : chapter07LocalField R K v) ∈
+            chapter07LocalIntegerRing R K v
+          exact Submonoid.val_mem_of_mem_units
+            (Submonoid.ofClass (chapter07LocalIntegerRing R K v)) hyu
+      have hsub := (chapter07LocalIntegerRing R K v).sub_mem
+        ((chapter07LocalIntegerRing R K v).mul_mem _ _
+          ((chapter07LocalIntegerRing R K v).sub_mem hy
+            (chapter07LocalIntegerRing R K v).one_mem) hxmem)
+        (chapter07LocalIntegerRing R K v).zero_mem
+      have hx0 : x.1.2 v ≠ 0 :=
+        (chapter07IdeleFiniteCoordinate R K x v).ne_zero
+      simpa [sub_mul, mul_assoc, hx0] using hsub
+    have hinv_tail : ∃ S : Set (chapter07FinitePlace R), S.Finite ∧
+        ∀ᶠ n in l, ∀ v ∉ S,
+          (f n)⁻¹ |>.1.2 v -
+            (x⁻¹ : chapter07IdeleGroup R K).1.2 v ∈
+              chapter07LocalIntegerRing R K v := by
+      let S : Set (chapter07FinitePlace R) := S0 ∪ Sxi
+      refine ⟨S, hS0.union hSxi, ?_⟩
+      filter_upwards [hT0] with n hn
+      intro v hv
+      have hv0 : v ∉ S0 := by
+        intro hv'
+        exact hv (Or.inl hv')
+      have hvxi : v ∉ Sxi := by
+        intro hv'
+        exact hv (Or.inr hv')
+      have hximem : (x⁻¹ : chapter07IdeleGroup R K).1.2 v ∈
+          chapter07LocalIntegerRing R K v := by
+        by_contra hximem
+        exact hvxi hximem
+      have hy0 : (f n).1.2 v * (x.1.2 v)⁻¹ ≠ 0 := by
+        exact mul_ne_zero
+          (chapter07IdeleFiniteCoordinate R K (f n) v).ne_zero
+          (inv_ne_zero (chapter07IdeleFiniteCoordinate R K x v).ne_zero)
+      let yu : (chapter07LocalField R K v)ˣ :=
+        Units.mk0 ((f n).1.2 v * (x.1.2 v)⁻¹) hy0
+      have hyu : yu ∈
+          (Submonoid.ofClass (chapter07LocalIntegerRing R K v)).units := by
+        apply IsDedekindDomain.HeightOneSpectrum.adicCompletionIntegers.mem_units_iff_valued_eq_one.2
+        simpa [yu] using hn v hv0
+      have hyinv : ((f n).1.2 v * (x.1.2 v)⁻¹)⁻¹ ∈
+          chapter07LocalIntegerRing R K v :=
+        by
+          change ((yu⁻¹ : (chapter07LocalField R K v)ˣ) :
+            chapter07LocalField R K v) ∈ chapter07LocalIntegerRing R K v
+          exact Submonoid.val_mem_of_mem_units
+            (Submonoid.ofClass (chapter07LocalIntegerRing R K v))
+            ((Submonoid.ofClass (chapter07LocalIntegerRing R K v)).units.inv_mem hyu)
+      have hsub := (chapter07LocalIntegerRing R K v).sub_mem
+        ((chapter07LocalIntegerRing R K v).mul_mem _ _
+          ((chapter07LocalIntegerRing R K v).sub_mem hyinv
+            (chapter07LocalIntegerRing R K v).one_mem) hximem)
+        (chapter07LocalIntegerRing R K v).zero_mem
+      rw [sub_mul] at hsub
+      have hx0 : x.1.2 v ≠ 0 :=
+        (chapter07IdeleFiniteCoordinate R K x v).ne_zero
+      simpa [hinv_fin, sub_mul, mul_assoc, hx0, mul_comm] using hsub
+    have hf := (chapter07_additive_adele_tendsto_iff_aux R K
+      (fun n => (f n).1) x.1 l).2 ⟨hcoord_inf, hcoord_fin, hf_tail⟩
+    have hinv := (chapter07_additive_adele_tendsto_iff_aux R K
+      (fun n => (f n)⁻¹ |>.1) (x⁻¹ : chapter07IdeleGroup R K).1 l).2
+      ⟨hcoord_inv_inf, hcoord_inv_fin, hinv_tail⟩
+    apply ((chapter07_ideleGraph_isEmbedding R K).tendsto_nhds_iff).mpr
+    exact (Prod.tendsto_iff
+      (fun n => chapter07IdeleGraph R K (f n))
+      (chapter07IdeleGraph R K x)).2 ⟨hf, hinv⟩
 
 theorem chapter07_idele_sequence_tendsto_iff
     (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
@@ -453,15 +737,80 @@ theorem chapter07_additive_adele_tendsto_iff
         Tendsto (fun n => (f n).1 v) l (𝓝 (x.1 v))) ∧
         (∀ v : chapter07FinitePlace R,
           Tendsto (fun n => (f n).2 v) l (𝓝 (x.2 v))) ∧
-        ∃ S : Set (chapter07FinitePlace R), S.Finite ∧
+    ∃ S : Set (chapter07FinitePlace R), S.Finite ∧
           ∀ᶠ n in l, ∀ v ∉ S,
             (f n).2 v - (x.2 v) ∈ chapter07LocalIntegerRing R K v := by
-  sorry
+  exact chapter07_additive_adele_tendsto_iff_aux R K f x l
 
 theorem chapter07_moving_prime_idele_does_not_tendsto_one :
     ¬ Tendsto chapter07MovingPrimeIdele cofinite
       (𝓝 (1 : chapter07IdeleGroup ℤ ℚ)) := by
-  sorry
+  intro h
+  have hcrit := (chapter07_idele_tendsto_iff ℤ ℚ
+    chapter07MovingPrimeIdele (1 : chapter07IdeleGroup ℤ ℚ) cofinite).mp h
+  rcases hcrit.2.2 with ⟨S, hS, htail⟩
+  let e : Nat.Primes → chapter07FinitePlace ℤ :=
+    (Rat.HeightOneSpectrum.primesEquiv (R := ℤ)).symm
+  have he : Function.Injective e := by
+    intro p q hpq
+    exact (Rat.HeightOneSpectrum.primesEquiv (R := ℤ)).symm.injective hpq
+  have hbad : {p : Nat.Primes | e p ∈ S}.Finite :=
+    hS.preimage he.injOn
+  have hfalse : ∀ᶠ p : Nat.Primes in cofinite, False := by
+    filter_upwards [htail, hbad.compl_mem_cofinite] with p hp hpb
+    let _ : Fact p.1.Prime := ⟨p.2⟩
+    let v : chapter07FinitePlace ℤ := e p
+    have hvS : v ∉ S := by
+      intro hv
+      exact hpb hv
+    have hval := hp v hvS
+    have hcoord : Padic.adicCompletionEquiv ℤ p
+        (algebraMap ℚ (ℚ_[p]) (p.1 : ℚ)) =
+        algebraMap ℚ (chapter07LocalField ℤ ℚ v) (p.1 : ℚ) := by
+      exact (Padic.adicCompletionEquiv ℤ p).commutes (p.1 : ℚ)
+    have hvaluation : Valued.v
+        (Padic.adicCompletionEquiv ℤ p
+          (algebraMap ℚ (ℚ_[p]) (p.1 : ℚ))) =
+        v.valuation ℚ (p.1 : ℚ) := by
+      rw [hcoord]
+      rw [IsDedekindDomain.HeightOneSpectrum.algebraMap_adicCompletion]
+      simp only [Function.comp_apply]
+      exact IsDedekindDomain.HeightOneSpectrum.valuedAdicCompletion_eq_valuation'
+        v (p.1 : ℚ)
+    have hmap : (Rat.IsIntegralClosure.intEquiv ℤ)
+        (p.1 : ℤ) ∈ v.asIdeal.map (Rat.IsIntegralClosure.intEquiv ℤ) := by
+      have hgen : Rat.HeightOneSpectrum.natGenerator v = p.1 := by
+        exact congrArg Subtype.val
+          ((Rat.HeightOneSpectrum.primesEquiv (R := ℤ)).apply_symm_apply p)
+      simpa [hgen] using
+        (Rat.HeightOneSpectrum.natGenerator_dvd_iff v).mp (dvd_refl _)
+    have hmemR : (p.1 : ℤ) ∈ v.asIdeal :=
+      (Ideal.apply_mem_of_equiv_iff
+        (I := v.asIdeal) (f := Rat.IsIntegralClosure.intEquiv ℤ)
+        (x := (p.1 : ℤ))).mp hmap
+    have hlt : v.valuation ℚ (p.1 : ℚ) < 1 := by
+      exact (v.valuation_lt_one_iff_mem (K := ℚ) (p.1 : ℤ)).2 hmemR
+    have hnot : Valued.v
+        (Padic.adicCompletionEquiv ℤ p
+          (algebraMap ℚ (ℚ_[p]) (p.1 : ℚ))) ≠ 1 := by
+      rw [hvaluation]
+      exact ne_of_lt hlt
+    have htarget : Valued.v
+        ((chapter07MovingPrimeIdele p).1.2 v *
+          ((1 : chapter07IdeleGroup ℤ ℚ).1.2 v)⁻¹) = 1 := hval
+    have hmove : (chapter07MovingPrimeIdele p).1.2 v =
+        Padic.adicCompletionEquiv ℤ p
+          (algebraMap ℚ (ℚ_[p]) (p.1 : ℚ)) := by
+      rw [show (chapter07MovingPrimeIdele p).1.2 v =
+          (chapter07MovingPrimeAdele p).2 v by
+        rw [chapter07MovingPrimeIdele_val]]
+      simpa [v, e] using chapter07_moving_prime_adele_component_at_prime p
+    rw [hmove] at htarget
+    have hone : (1 : chapter07IdeleGroup ℤ ℚ).1.2 v = 1 := by rfl
+    rw [hone, inv_one, mul_one] at htarget
+    exact hnot htarget
+  rcases hfalse.exists with ⟨p, hp⟩
+  exact hp
 
 theorem chapter07_moving_prime_is_additively_convergent_but_not_idelically :
     Tendsto chapter07MovingPrimeAdele cofinite

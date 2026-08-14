@@ -1,4 +1,5 @@
 import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter09.Core
+import Mathlib.RingTheory.LocalProperties.InjectiveDimension
 
 namespace LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter09
 
@@ -14,10 +15,17 @@ universe u
 
 /-- The residue-chart compatibility used to identify the smooth trace with the usual residue trace. -/
 structure Chapter09SmoothResidueTraceCompatibility
-    {X S : Scheme.{u}} (f : X ⟶ S) where
+    {X S : Scheme.{u}} (f : X ⟶ S)
+    [Chapter09RelativeDerivedHomTheory f]
+    (D : Chapter09RelativeDualizingData f)
+    (differentials : X.Modules) where
+  identification : D.omega ≅ differentials
   étaleCoordinateTrace : Prop
+  étaleCoordinateTrace_holds : étaleCoordinateTrace
   residueTrace : Prop
+  residueTrace_holds : residueTrace
   compatible : Prop
+  compatible_holds : compatible
 
 /-- Smooth relative curves have dualizing sheaf equal to relative differentials. -/
 theorem chapter09_smooth_curve_dualizing_is_differentials
@@ -29,35 +37,72 @@ theorem chapter09_smooth_curve_dualizing_is_differentials
     Nonempty (D.omega ≅ chapter09RelativeDifferentials F.f) := by
   sorry
 
+/-- The missing smooth Kähler-differential API supplies the line-bundle
+property needed to pass from the smooth identification to Gorensteinness. -/
+theorem chapter09_smooth_relative_differentials_are_vector_bundle
+    (F : Chapter09RelativeCurveFamily)
+    [SmoothOfRelativeDimension 1 F.f]
+    [Chapter09DifferentialSheafTheory F.f] :
+    chapter09VectorBundle (chapter09RelativeDifferentials F.f) := by
+  sorry
+
 /-- The smooth identification is compatible with the étale-coordinate residue trace. -/
 theorem chapter09_smooth_trace_is_residue_trace
     (F : Chapter09RelativeCurveFamily)
-    [SmoothOfRelativeDimension 1 F.f] :
-    Nonempty (Chapter09SmoothResidueTraceCompatibility F.f) := by
+    [SmoothOfRelativeDimension 1 F.f]
+    [Chapter09RelativeDerivedHomTheory F.f]
+    [Chapter09DifferentialSheafTheory F.f]
+    (D : Chapter09RelativeDualizingData F.f) :
+    Nonempty
+      (Chapter09SmoothResidueTraceCompatibility F.f D
+        (chapter09RelativeDifferentials F.f)) := by
+  sorry
+
+/-- Smooth relative curves are Gorenstein, since their dualizing sheaf is the
+relative line bundle of differentials. -/
+theorem chapter09_smooth_curve_family_is_gorenstein
+    (F : Chapter09RelativeCurveFamily)
+    [SmoothOfRelativeDimension 1 F.f]
+    [Chapter09RelativeDerivedHomTheory F.f]
+    [Chapter09DifferentialSheafTheory F.f]
+    (D : Chapter09RelativeDualizingData F.f) :
+    chapter09RelativeGorenstein D := by
   sorry
 
 /-! ### The Gorenstein criterion -/
 
-/- LOCAL_DEPENDENCY_GUESS: the pinned Mathlib API does not yet expose
-Gorenstein local rings for scheme fibers. -/
-structure Chapter09LocalGorensteinProfile
-    {X S : Scheme.{u}} (f : X ⟶ S) (s : S) where
-  localRingsGorenstein : ∀ _y : f.fiber s, Prop
+/-! The canonical local-ring criterion used here is finite self-injective
+dimension for a commutative noetherian local ring. -/
+def chapter09LocalRingIsGorenstein (R : Type*) [CommRing R] : Prop :=
+  IsLocalRing R ∧ IsNoetherianRing R ∧
+    ∃ n : ℕ, CategoryTheory.HasInjectiveDimensionLE (ModuleCat.of R R) n
 
 def chapter09FiberIsGorenstein
     {X S : Scheme.{u}} (f : X ⟶ S) (s : S) : Prop :=
-  ∃ h : Chapter09LocalGorensteinProfile f s, ∀ y, h.localRingsGorenstein y
+  ∀ y : f.fiber s,
+    chapter09LocalRingIsGorenstein ((f.fiber s).presheaf.stalk y)
 
-/-- The source-level definition of a Gorenstein relative curve morphism. -/
-def chapter09GorensteinMorphism {X S : Scheme.{u}} (f : X ⟶ S) : Prop :=
+/- This name is retained for later chapters that record the source-level
+fiberwise hypothesis.  Since the pinned API has no canonical local
+Gorenstein predicate, proofs of the invertibility criterion use the
+dualizing-data version immediately below. -/
+def chapter09GorensteinMorphism
+    {X S : Scheme.{u}} (f : X ⟶ S) : Prop :=
   Flat f ∧ ∀ s : S, chapter09FiberIsGorenstein f s
+
+def chapter09GorensteinMorphismWithDualizingData
+    {X S : Scheme.{u}} (f : X ⟶ S)
+    [Chapter09RelativeDerivedHomTheory f]
+    (D : Chapter09RelativeDualizingData f) : Prop :=
+  Flat f ∧ chapter09RelativeGorenstein D
 
 /-- In the relative curve setting, Gorensteinness is equivalent to invertibility of `ω`. -/
 theorem chapter09_relative_gorenstein_iff_invertible_dualizing
     (F : Chapter09RelativeCurveFamily)
     [Chapter09RelativeDerivedHomTheory F.f]
     (D : Chapter09RelativeDualizingData F.f) :
-    chapter09GorensteinMorphism F.f ↔ chapter09RelativeGorenstein D := by
+    chapter09GorensteinMorphism F.f ↔
+      chapter09GorensteinMorphismWithDualizingData F.f D := by
   sorry
 
 /-- A relative local complete intersection of pure relative dimension one is Gorenstein. -/
@@ -88,7 +133,8 @@ theorem chapter09_relative_hypersurface_adjunction
     (D : Chapter09RelativeDualizingData F.f)
     (ambientOmega : H.ambient.Modules)
     (hambientOmega : chapter09IsInvertible ambientOmega)
-    (hambientOmega_is_relativeDualizing : Prop) :
+    (hambientOmega_is_relativeDualizing : Prop)
+    (hambientOmega_is_relativeDualizing_holds : hambientOmega_is_relativeDualizing) :
     Nonempty
       (D.omega ≅
         chapter09Pullback H.inclusion
@@ -114,6 +160,7 @@ structure Chapter09InvariantDifferentialConstruction
     (H : Chapter09RelativeHypersurface F.f) where
   ambientOmega : H.ambient.Modules
   ambientOmega_is_relativeDualizing : Prop
+  ambientOmega_is_relativeDualizing_holds : ambientOmega_is_relativeDualizing
   ambientOmega_invertible : chapter09IsInvertible ambientOmega
   adjunctionSheaf : F.X.Modules
   adjunctionSheaf_eq :

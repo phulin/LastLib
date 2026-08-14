@@ -23,6 +23,7 @@ namespace LastLib.Book04AdelesAndIdeles.Chapter09
 
 noncomputable section
 
+open Topology
 open scoped BigOperators NNReal NumberField.AdeleRing RestrictedProduct
 
 open NumberField IsDedekindDomain
@@ -72,6 +73,50 @@ noncomputable instance chapter09AdicCompletionBorelSpace
     (v : HeightOneSpectrum (𝓞 K)) :
     BorelSpace (v.adicCompletion K) :=
   ⟨rfl⟩
+
+/-! ### Locally compact adele interfaces -/
+
+/- The finite-adic restricted product is locally compact once its local
+completion fields and the integral subgroups are supplied with their standard
+compactness data.  These declarations keep that prerequisite chain available
+to the full-adele and Haar-character APIs. -/
+theorem chapter09_adic_completion_locally_compact
+    (K : Type*) [Field K] [NumberField K]
+    (v : HeightOneSpectrum (𝓞 K)) :
+    LocallyCompactSpace (v.adicCompletion K) := by
+  sorry
+
+theorem chapter09_adic_completion_integers_compact
+    (K : Type*) [Field K] [NumberField K]
+    (v : HeightOneSpectrum (𝓞 K)) :
+    IsCompact (v.adicCompletionIntegers K : Set (v.adicCompletion K)) := by
+  sorry
+
+theorem chapter09_finite_adele_integral_subgroups_compact
+    (K : Type*) [Field K] [NumberField K] :
+    ∀ᶠ v : HeightOneSpectrum (𝓞 K) in Filter.cofinite,
+      IsCompact (v.adicCompletionIntegers K : Set (v.adicCompletion K)) := by
+  sorry
+
+theorem chapter09_finite_adele_locally_compact
+    (K : Type*) [Field K] [NumberField K] :
+    LocallyCompactSpace (Chapter09FiniteAdele K) := by
+  sorry
+
+noncomputable instance chapter09FiniteAdeleLocallyCompactSpace
+    (K : Type*) [Field K] [NumberField K] :
+    LocallyCompactSpace (Chapter09FiniteAdele K) :=
+  chapter09_finite_adele_locally_compact K
+
+theorem chapter09_adele_locally_compact
+    (K : Type*) [Field K] [NumberField K] :
+    LocallyCompactSpace (Chapter09Adele K) := by
+  sorry
+
+noncomputable instance chapter09AdeleLocallyCompactSpace
+    (K : Type*) [Field K] [NumberField K] :
+    LocallyCompactSpace (Chapter09Adele K) :=
+  chapter09_adele_locally_compact K
 
 /-- Ideles are the units of the full adele ring. -/
 abbrev Chapter09Idele (K : Type*) [Field K] [NumberField K] :=
@@ -365,6 +410,28 @@ theorem chapter09IdeleModuleHom_apply
     {K : Type*} [Field K] [NumberField K] (x : Chapter09Idele K) :
     chapter09IdeleModuleHom K x = chapter09IdeleModule x :=
   rfl
+
+/-- The idele module viewed as an `ℝ≥0`-valued homomorphism. -/
+def chapter09IdeleModuleNNRealHom
+    (K : Type*) [Field K] [NumberField K] :
+    Chapter09Idele K →* ℝ≥0 :=
+  (Units.coeHom ℝ≥0).comp (chapter09IdeleModuleHom K)
+
+@[simp]
+theorem chapter09IdeleModuleNNRealHom_apply
+    {K : Type*} [Field K] [NumberField K] (x : Chapter09Idele K) :
+    chapter09IdeleModuleNNRealHom K x =
+      (chapter09IdeleModuleHom K x : ℝ≥0) :=
+  rfl
+
+/- The action used by `distribHaarChar` is the canonical multiplication action
+of adele units on the additive adele ring. -/
+theorem chapter09IdeleModuleNNRealHom_eq_distribHaarChar
+    (K : Type*) [Field K] [NumberField K] :
+    chapter09IdeleModuleNNRealHom K =
+      MeasureTheory.distribHaarChar
+        (G := Chapter09Idele K) (A := Chapter09Adele K) := by
+  sorry
 
 theorem chapter09IdeleModule_ne_zero
     {K : Type*} [Field K] [NumberField K] (x : Chapter09Idele K) :
@@ -943,7 +1010,134 @@ algebraic identification above also needs its topological form. -/
 noncomputable def chapter09NormOneClassGroup_continuousEquiv_classNormOne
     {K : Type*} [Field K] [NumberField K] :
     Chapter09NormOneClassGroup K ≃ₜ* chapter09ClassNormOne K := by
-  sorry
+  classical
+  let N := chapter09NormOneIdeles K
+  let P := (chapter09NormOnePrincipalIdele K).range
+  let P₀ := chapter09PrincipalIdeleSubgroup K
+  let e := chapter09NormOneClassGroup_equiv_classNormOne (K := K)
+  let g : Chapter09NormOneClassGroup K →* Chapter09IdeleClassGroup K :=
+    (chapter09ClassNormOne K).subtype.comp e.toMonoidHom
+  have hcomm :
+      g.comp (QuotientGroup.mk' P) =
+        (QuotientGroup.mk' P₀).comp N.subtype := by
+    ext x
+    rfl
+  have hsat :
+      (QuotientGroup.mk' P₀ : Chapter09Idele K → Chapter09IdeleClassGroup K) ⁻¹'
+          (QuotientGroup.mk' P₀ '' Set.range N.subtype) ⊆ Set.range N.subtype := by
+    intro x hx
+    rcases hx with ⟨y, ⟨z, rfl⟩, hxy⟩
+    have hp : x / (z : Chapter09Idele K) ∈ P₀ :=
+      (QuotientGroup.eq_iff_div_mem).1 hxy.symm
+    rcases hp with ⟨a, ha⟩
+    have hfactor : x = chapter09PrincipalIdele K a * (z : Chapter09Idele K) := by
+      have h := congrArg (fun w : Chapter09Idele K => w * (z : Chapter09Idele K)) ha
+      simpa [div_eq_mul_inv, mul_assoc] using h.symm
+    have hxnorm : x ∈ N := by
+      change chapter09IdeleModuleHom K x = 1
+      have hz : chapter09IdeleModule (z : Chapter09Idele K) = 1 := by
+        change chapter09IdeleModuleHom K (z : Chapter09Idele K) = 1
+        exact z.property
+      have hpa : chapter09IdeleModuleHom K (chapter09PrincipalIdele K a) = 1 := by
+        simpa only [chapter09IdeleModuleHom_apply] using
+          chapter09PrincipalIdele_module_eq_one a
+      have hz' : chapter09IdeleModuleHom K (z : Chapter09Idele K) = 1 := by
+        simpa only [chapter09IdeleModuleHom_apply] using hz
+      rw [hfactor, (chapter09IdeleModuleHom K).map_mul, hpa, hz']
+      simp
+    exact ⟨⟨x, hxnorm⟩, rfl⟩
+  have hg_inj : Function.Injective g := by
+    intro x y hxy
+    apply e.injective
+    exact Subtype.ext hxy
+  have hcomm_fun :
+      (g : Chapter09NormOneClassGroup K → Chapter09IdeleClassGroup K) ∘
+          (QuotientGroup.mk : N →
+            Chapter09NormOneClassGroup K) =
+          (QuotientGroup.mk : Chapter09Idele K → Chapter09IdeleClassGroup K) ∘
+          N.subtype := by
+    ext x
+    exact congrArg (fun h : N →* Chapter09IdeleClassGroup K => h x) hcomm
+  have hgemb : IsEmbedding g :=
+    isEmbedding_of_isOpenQuotientMap_of_isInducing
+      (f := (N.subtype : N → Chapter09Idele K))
+      (g := (g : Chapter09NormOneClassGroup K → Chapter09IdeleClassGroup K))
+      (p := (QuotientGroup.mk : N → Chapter09NormOneClassGroup K))
+      (q := (QuotientGroup.mk : Chapter09Idele K → Chapter09IdeleClassGroup K))
+      hcomm_fun IsInducing.subtypeVal (QuotientGroup.isQuotientMap_mk P)
+      (QuotientGroup.isOpenQuotientMap_mk (N := P₀)) hg_inj hsat
+  have hemb : IsEmbedding (e : Chapter09NormOneClassGroup K →
+      chapter09ClassNormOne K) := by
+    exact (Topology.IsEmbedding.of_comp_iff (f := e)
+      (g := (chapter09ClassNormOne K).subtype) IsEmbedding.subtypeVal).mp hgemb
+  exact ContinuousMulEquiv.mk e hemb.continuous
+    (hemb.toHomeomorphOfSurjective e.surjective).symm.continuous
+
+theorem chapter09NormOneClassGroup_equiv_classNormOne_continuous
+    {K : Type*} [Field K] [NumberField K] :
+    Continuous (chapter09NormOneClassGroup_equiv_classNormOne (K := K) :
+      Chapter09NormOneClassGroup K → chapter09ClassNormOne K) := by
+  classical
+  let N := chapter09NormOneIdeles K
+  let P := (chapter09NormOnePrincipalIdele K).range
+  let P₀ := chapter09PrincipalIdeleSubgroup K
+  let e := chapter09NormOneClassGroup_equiv_classNormOne (K := K)
+  let g : Chapter09NormOneClassGroup K →* Chapter09IdeleClassGroup K :=
+    (chapter09ClassNormOne K).subtype.comp e.toMonoidHom
+  have hcomm :
+      g.comp (QuotientGroup.mk' P) =
+        (QuotientGroup.mk' P₀).comp N.subtype := by
+    ext x
+    rfl
+  have hsat :
+      (QuotientGroup.mk' P₀ : Chapter09Idele K → Chapter09IdeleClassGroup K) ⁻¹'
+          (QuotientGroup.mk' P₀ '' Set.range N.subtype) ⊆ Set.range N.subtype := by
+    intro x hx
+    rcases hx with ⟨y, ⟨z, rfl⟩, hxy⟩
+    have hp : x / (z : Chapter09Idele K) ∈ P₀ :=
+      (QuotientGroup.eq_iff_div_mem).1 hxy.symm
+    rcases hp with ⟨a, ha⟩
+    have hfactor : x = chapter09PrincipalIdele K a * (z : Chapter09Idele K) := by
+      have h := congrArg (fun w : Chapter09Idele K => w * (z : Chapter09Idele K)) ha
+      simpa [div_eq_mul_inv, mul_assoc] using h.symm
+    have hxnorm : x ∈ N := by
+      change chapter09IdeleModuleHom K x = 1
+      have hz : chapter09IdeleModule (z : Chapter09Idele K) = 1 := by
+        change chapter09IdeleModuleHom K (z : Chapter09Idele K) = 1
+        exact z.property
+      have hpa : chapter09IdeleModuleHom K (chapter09PrincipalIdele K a) = 1 := by
+        simpa only [chapter09IdeleModuleHom_apply] using
+          chapter09PrincipalIdele_module_eq_one a
+      have hz' : chapter09IdeleModuleHom K (z : Chapter09Idele K) = 1 := by
+        simpa only [chapter09IdeleModuleHom_apply] using hz
+      rw [hfactor, (chapter09IdeleModuleHom K).map_mul, hpa, hz']
+      simp
+    exact ⟨⟨x, hxnorm⟩, rfl⟩
+  have hg_inj : Function.Injective g := by
+    intro x y hxy
+    apply e.injective
+    exact Subtype.ext hxy
+  have hcomm_fun :
+      (g : Chapter09NormOneClassGroup K → Chapter09IdeleClassGroup K) ∘
+          (QuotientGroup.mk : N →
+            Chapter09NormOneClassGroup K) =
+          (QuotientGroup.mk : Chapter09Idele K → Chapter09IdeleClassGroup K) ∘
+          N.subtype := by
+    ext x
+    exact congrArg (fun h : N →* Chapter09IdeleClassGroup K => h x) hcomm
+  have hgemb : IsEmbedding g :=
+    isEmbedding_of_isOpenQuotientMap_of_isInducing
+      (f := (N.subtype : N → Chapter09Idele K))
+      (g := (g : Chapter09NormOneClassGroup K → Chapter09IdeleClassGroup K))
+      (p := (QuotientGroup.mk : N → Chapter09NormOneClassGroup K))
+      (q := (QuotientGroup.mk : Chapter09Idele K → Chapter09IdeleClassGroup K))
+      hcomm_fun IsInducing.subtypeVal (QuotientGroup.isQuotientMap_mk P)
+      (QuotientGroup.isOpenQuotientMap_mk (N := P₀)) hg_inj hsat
+  have hemb : IsEmbedding (e : Chapter09NormOneClassGroup K →
+      chapter09ClassNormOne K) := by
+    exact (Topology.IsEmbedding.of_comp_iff (f := e)
+      (g := (chapter09ClassNormOne K).subtype) IsEmbedding.subtypeVal).mp hgemb
+  exact hemb.continuous
 
 /-! ### Finite unit ideles and the archimedean norm-one subgroup -/
 
@@ -966,6 +1160,28 @@ def chapter09FiniteUnitIdeleSubgroup
     (K : Type*) [Field K] [NumberField K] : Subgroup (Chapter09Idele K) :=
   Subgroup.map (chapter09FiniteUnitIdeleEmbedding K)
     (chapter09FiniteUnitIdeles K)
+
+theorem chapter09FiniteUnitIdele_module_eq_one
+    {K : Type*} [Field K] [NumberField K]
+    (u : chapter09FiniteUnitIdeles K) :
+    chapter09IdeleModule (chapter09FiniteUnitIdeleEmbedding K u) = 1 := by
+  have hdecomp : chapter09IdeleProductEquiv K
+      (chapter09FiniteUnitIdeleEmbedding K u) = (1, (u : (Chapter09FiniteAdele K)ˣ)) := by
+    simp [chapter09FiniteUnitIdeleEmbedding]
+  have hinf : chapter09InfiniteIdeleModule
+      (1 : (Chapter09InfiniteAdele K)ˣ) = 1 := by
+    unfold chapter09InfiniteIdeleModule
+    have hpi : MulEquiv.piUnits (1 : (Chapter09InfiniteAdele K)ˣ) = 1 :=
+      (MulEquiv.piUnits).map_one
+    rw [hpi]
+    simp [chapter09NormUnit]
+  have hfin : chapter09FiniteIdeleModule (u : (Chapter09FiniteAdele K)ˣ) = 1 := by
+    unfold chapter09FiniteIdeleModule
+    apply finprod_eq_one_of_forall_eq_one
+    intro v
+    exact (chapter09FiniteUnitIdeles_mem_iff.mp u.property v)
+  rw [chapter09IdeleModule_eq_infinite_mul_finite, hdecomp, hinf, hfin]
+  simp
 
 def chapter09PrincipalTimesFiniteUnits
     (K : Type*) [Field K] [NumberField K] : Subgroup (Chapter09Idele K) :=

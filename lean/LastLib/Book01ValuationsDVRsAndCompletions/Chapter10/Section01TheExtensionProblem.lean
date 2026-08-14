@@ -134,7 +134,7 @@ def Chapter10ExtensionPrimeCorrespondence
     [Algebra K L] [FiniteDimensional K L]
     [IsScalarTower A K L]
     [LinearOrderedCommGroupWithZero ΓK]
-    (vK : Valuation K ΓK) : Prop :=
+    (vK : Valuation K ΓK) (_hA : vK.Integers A) : Prop :=
   Nonempty
     (Chapter10ValuationExtensionClass (L := L) vK ≃
       {P : Ideal B // Chapter10PrimeAboveMaximal (A := A) (B := B) P})

@@ -5,7 +5,8 @@ namespace LastLib.Book04AdelesAndIdeles.Chapter05
 noncomputable section
 
 open Filter
-open scoped Topology
+open NumberField
+open scoped Topology nonZeroDivisors
 
 /-! ## 5.1. The diagonal embedding -/
 
@@ -41,7 +42,7 @@ theorem chapter05_finite_diagonal_injective
 theorem chapter05_completion_map_injective
     (K : Type*) [Field K] [NumberField K]
     (v : Chapter05FinitePlace K) :
-    Function.Injective (NumberField.FinitePlace.embedding v) := by
+    Function.Injective (NumberField.FinitePlace.embedding (K := K) v) := by
   sorry
 
 theorem chapter05_diagonal_components
@@ -54,8 +55,7 @@ theorem chapter05_diagonal_is_integral_at_almost_all_finite_places
     (K : Type*) [Field K] [NumberField K] (a : K) :
     ({v : Chapter05FinitePlace K |
       chapter05FiniteDiagonal K a v ∉
-        (Chapter05FiniteLocalIntegerRing K v :
-          Set (Chapter05FiniteLocalField K v))}).Finite := by
+        chapter05FiniteLocalIntegerSet K v}).Finite := by
   sorry
 
 theorem chapter05_diagonal_is_unit_or_zero_at_almost_all_finite_places
@@ -70,17 +70,15 @@ theorem chapter05_unit_or_zero_component_is_integral
     (K : Type*) [Field K] [NumberField K]
     (v : Chapter05FinitePlace K) (x : Chapter05FiniteLocalField K v)
     (h : x = 0 ∨ chapter05FiniteLocalUnit K v x) :
-    x ∈ (Chapter05FiniteLocalIntegerRing K v :
-      Set (Chapter05FiniteLocalField K v)) := by
+    x ∈ chapter05FiniteLocalIntegerSet K v := by
   sorry
 
 theorem chapter05_diagonal_integrality_iff
     (K : Type*) [Field K] [NumberField K] (a : K) :
-    a ∈ (Chapter05RingOfIntegers K : Set K) ↔
+    a ∈ chapter05RingOfIntegersSet K ↔
       ∀ v : Chapter05FinitePlace K,
         chapter05FiniteDiagonal K a v ∈
-          (Chapter05FiniteLocalIntegerRing K v :
-            Set (Chapter05FiniteLocalField K v)) := by
+          chapter05FiniteLocalIntegerSet K v := by
   sorry
 
 /-! A canonical formulation of the unit-escape warning.  The size is the
@@ -91,8 +89,8 @@ structure Chapter05UnitEscapeWitness
     (K : Type*) [Field K] [NumberField K] where
   unit : Kˣ
   unit_ne_zero : (unit : K) ≠ 0
-  unit_mem_integer : (unit : K) ∈ (Chapter05RingOfIntegers K : Set K)
-  inverse_mem_integer : (unit⁻¹ : K) ∈ (Chapter05RingOfIntegers K : Set K)
+  unit_mem_integer : (unit : K) ∈ chapter05RingOfIntegersSet K
+  inverse_mem_integer : (unit⁻¹ : K) ∈ chapter05RingOfIntegersSet K
   shrinkingPlace : Chapter05InfinitePlace K
   growingPlace : Chapter05InfinitePlace K
   size_nonnegative :

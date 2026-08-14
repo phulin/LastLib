@@ -6,11 +6,12 @@ noncomputable section
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
+open LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter09
 
 /-! ### 12.3 Duality for line bundles and vector bundles -/
 
 /-- The degree-one line-bundle form of Serre duality, formula (12.4). -/
-theorem chapter12_line_bundle_duality_degree_one
+noncomputable def chapter12_line_bundle_duality_degree_one
     {k : Type u} [Field k] {C : Chapter12Curve k}
     [Chapter12LineBundleDuality C]
     (K : Chapter12CohomologyContext C)
@@ -21,7 +22,7 @@ theorem chapter12_line_bundle_duality_degree_one
   sorry
 
 /-- The degree-zero line-bundle form of Serre duality, formula (12.4). -/
-theorem chapter12_line_bundle_duality_degree_zero
+noncomputable def chapter12_line_bundle_duality_degree_zero
     {k : Type u} [Field k] {C : Chapter12Curve k}
     [Chapter12LineBundleDuality C]
     (K : Chapter12CohomologyContext C)
@@ -32,7 +33,7 @@ theorem chapter12_line_bundle_duality_degree_zero
   sorry
 
 /-- Formula (12.5) packaged for each of the two cohomological degrees. -/
-theorem chapter12_vector_bundle_duality_degree_one
+noncomputable def chapter12_vector_bundle_duality_degree_one
     {k : Type u} [Field k] {C : Chapter12Curve k}
     [Chapter12VectorBundleDuality C] 
     (K : Chapter12CohomologyContext C)
@@ -42,7 +43,7 @@ theorem chapter12_vector_bundle_duality_degree_one
       chapter12HZero K (chapter12VectorBundleOmegaTwist W E) := by
   sorry
 
-theorem chapter12_vector_bundle_duality_degree_zero
+noncomputable def chapter12_vector_bundle_duality_degree_zero
     {k : Type u} [Field k] {C : Chapter12Curve k}
     [Chapter12VectorBundleDuality C]
     (K : Chapter12CohomologyContext C)
@@ -82,10 +83,11 @@ structure Chapter12VectorBundleInternalHomData
     (W : Chapter12DualizingSheafData C K)
     (E : Chapter12VectorBundle C)
     [Chapter12InternalHomTheory C.scheme] where
+  canonicalDualTensor : Chapter09VectorBundleDualTensor E.module W.omega
+  internalHom_eq_canonicalDualTensor :
+    chapter12InternalHom E.module W.omega = canonicalDualTensor.tensor
   internalHomIso :
     chapter12InternalHom E.module W.omega ≅ chapter12VectorBundleOmegaTwist W E
-  higherSheafExtVanishing : ∀ n : ℕ, 0 < n →
-    IsZero (chapter12SheafExt E.module W.omega n)
 
 theorem chapter12_vector_bundle_internal_hom_tensor_omega
     {k : Type u} [Field k] {C : Chapter12Curve k}
@@ -97,7 +99,7 @@ theorem chapter12_vector_bundle_internal_hom_tensor_omega
     Nonempty (Chapter12VectorBundleInternalHomData K W E) := by
   sorry
 
-theorem chapter12_vector_bundle_internal_hom_identification
+noncomputable def chapter12_vector_bundle_internal_hom_identification
     {k : Type u} [Field k] {C : Chapter12Curve k}
     [Chapter12VectorBundleDuality C]
     (K : Chapter12CohomologyContext C)
@@ -110,44 +112,45 @@ theorem chapter12_vector_bundle_internal_hom_identification
 
 theorem chapter12_vector_bundle_higher_sheaf_ext_vanishing
     {k : Type u} [Field k] {C : Chapter12Curve k}
-    [Chapter12VectorBundleDuality C]
     (K : Chapter12CohomologyContext C)
     (W : Chapter12DualizingSheafData C K)
     (E : Chapter12VectorBundle C)
-    [Chapter12InternalHomTheory C.scheme]
-    (I : Chapter12VectorBundleInternalHomData K W E)
+    [Chapter12SheafExtTheory C.scheme]
     (n : ℕ) (hn : 0 < n) : IsZero (chapter12SheafExt E.module W.omega n) :=
-  I.higherSheafExtVanishing n hn
+  by sorry
 
 /-! For a coherent sheaf the target is Ext, rather than cohomology of the
 naive sheaf dual. -/
-theorem chapter12_coherent_sheaf_serre_duality_degree_zero
+noncomputable def chapter12_coherent_sheaf_serre_duality_degree_zero
     {k : Type u} [Field k] {C : Chapter12Curve k}
     (K : Chapter12CohomologyContext C)
     (T : Chapter12ExtContext C)
     (W : Chapter12DualizingSheafData C K)
     (F : C.scheme.Modules) (hF : chapter12CoherentSheaf F) :
+    letI := T.extModule F W.omega 1
     Module.Dual k (chapter12HZero K F) ≃ₗ[k]
       chapter12Ext T F W.omega 1 := by
   sorry
 
-theorem chapter12_coherent_sheaf_serre_duality_degree_one
+noncomputable def chapter12_coherent_sheaf_serre_duality_degree_one
     {k : Type u} [Field k] {C : Chapter12Curve k}
     (K : Chapter12CohomologyContext C)
     (T : Chapter12ExtContext C)
     (W : Chapter12DualizingSheafData C K)
     (F : C.scheme.Modules) (hF : chapter12CoherentSheaf F) :
+    letI := T.extModule F W.omega 0
     Module.Dual k (chapter12HOne K F) ≃ₗ[k]
       chapter12Ext T F W.omega 0 := by
   sorry
 
-theorem chapter12_coherent_sheaf_serre_duality
+noncomputable def chapter12_coherent_sheaf_serre_duality
     {k : Type u} [Field k] {C : Chapter12Curve k}
     (K : Chapter12CohomologyContext C)
     (T : Chapter12ExtContext C)
     (W : Chapter12DualizingSheafData C K)
     (F : C.scheme.Modules) (hF : chapter12CoherentSheaf F)
     (i : Fin 2) :
+    letI := T.extModule F W.omega (1 - (i : ℕ))
     Module.Dual k (chapter12H K F (i : ℕ)) ≃ₗ[k]
       chapter12Ext T F W.omega (1 - (i : ℕ)) := by
   sorry
@@ -162,18 +165,21 @@ def chapter12_ext_term_not_generally_sheaf_dual
     (T : Chapter12ExtContext C)
     (W : Chapter12DualizingSheafData C K)
     (F : C.scheme.Modules) : Prop :=
-  ¬ ∀ i : Fin 2, Nonempty
-      (chapter12Ext T F W.omega (1 - (i : ℕ)) ≃ₗ[k]
-        chapter12H K (chapter12InternalHom F W.omega) (1 - (i : ℕ)))
+  ¬ ∀ i : Fin 2,
+      letI := T.extModule F W.omega (1 - (i : ℕ))
+      Nonempty
+        (chapter12Ext T F W.omega (1 - (i : ℕ)) ≃ₗ[k]
+          chapter12H K (chapter12InternalHom F W.omega) (1 - (i : ℕ)))
 
 /-! Proper Cohen--Macaulay curves use the same Ext statement with their
 dualizing sheaf. -/
-theorem chapter12_proper_cm_coherent_sheaf_serre_duality
+noncomputable def chapter12_proper_cm_coherent_sheaf_serre_duality
     {k : Type u} [Field k]
     (C : Chapter12ProperCohenMacaulayCurve k)
-    (T : Chapter12ProperCMCohomologyContext C)
+    (T : Chapter12ProperCMCohomologyContext k C)
     (F : C.carrier.Modules) (hF : chapter04FiniteTypeQuasiCoherent F)
     (i : Fin 2) :
+    letI := T.extModule F C.dualizing (1 - (i : ℕ))
     Module.Dual k (T.H F (i : ℕ)) ≃ₗ[k]
       T.Ext F C.dualizing (1 - (i : ℕ)) := by
   sorry
@@ -186,9 +192,8 @@ structure Chapter12ProperCMGorensteinData
   omega_iso : omega.sheaf ≅ C.dualizing
   dual : Chapter04LineBundle C.carrier → Chapter04LineBundle C.carrier
   dual_involutive : ∀ L, chapter12LineBundleIsomorphic (dual (dual L)) L
-  unit : Chapter04LineBundle C.carrier
   dual_tensor_iso_unit : ∀ L, chapter12LineBundleIsomorphic
-    (chapter04LineBundleTensor (dual L) L) unit
+    (chapter04LineBundleTensor (dual L) L) (chapter04TrivialLineBundle C.carrier)
 
 def chapter12ProperCMGorensteinOmegaTwist
     {k : Type u} [Field k]
@@ -197,10 +202,10 @@ def chapter12ProperCMGorensteinOmegaTwist
     (L : Chapter04LineBundle C.carrier) : Chapter04LineBundle C.carrier :=
   chapter04LineBundleTensor (G.dual L) G.omega
 
-theorem chapter12_proper_cm_gorenstein_line_bundle_duality_degree_one
+noncomputable def chapter12_proper_cm_gorenstein_line_bundle_duality_degree_one
     {k : Type u} [Field k]
     (C : Chapter12ProperCohenMacaulayCurve k)
-    (T : Chapter12ProperCMCohomologyContext C)
+    (T : Chapter12ProperCMCohomologyContext k C)
     (G : Chapter12ProperCMGorensteinData C)
     (hG : C.gorenstein)
     (L : Chapter04LineBundle C.carrier) :
@@ -208,10 +213,10 @@ theorem chapter12_proper_cm_gorenstein_line_bundle_duality_degree_one
       T.H (chapter12ProperCMGorensteinOmegaTwist G L).sheaf 0 := by
   sorry
 
-theorem chapter12_proper_cm_gorenstein_line_bundle_duality_degree_zero
+noncomputable def chapter12_proper_cm_gorenstein_line_bundle_duality_degree_zero
     {k : Type u} [Field k]
     (C : Chapter12ProperCohenMacaulayCurve k)
-    (T : Chapter12ProperCMCohomologyContext C)
+    (T : Chapter12ProperCMCohomologyContext k C)
     (G : Chapter12ProperCMGorensteinData C)
     (hG : C.gorenstein)
     (L : Chapter04LineBundle C.carrier) :

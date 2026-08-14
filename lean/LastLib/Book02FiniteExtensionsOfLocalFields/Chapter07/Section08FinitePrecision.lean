@@ -2,6 +2,7 @@ import Mathlib.RingTheory.AdicCompletion.Basic
 import Mathlib.RingTheory.AdicCompletion.Algebra
 import Mathlib.RingTheory.AdicCompletion.Completeness
 import Mathlib.RingTheory.Ideal.Quotient.PowTransition
+import Mathlib.RingTheory.Ideal.Quotient.Operations
 import Mathlib.RingTheory.PowerSeries.Basic
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Section07RootsOfUnity
 
@@ -38,18 +39,18 @@ abbrev Chapter07ExtensionPrecisionQuotient
 /-- The quotient-algebra interface needed to compare precision quotients. -/
 abbrev Chapter07PrecisionAlgebra
     (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
-    (π : A) (n : ℕ) : Type _ :=
-  Algebra (Chapter07BasePrecisionQuotient A π n)
-    (Chapter07ExtensionPrecisionQuotient A B π n)
+    (π : A) (n : ℕ) :
+    Algebra (Chapter07BasePrecisionQuotient A π n)
+      (Chapter07ExtensionPrecisionQuotient A B π n) :=
+  Ideal.Quotient.algebraQuotientOfLEComap (Ideal.le_comap_map)
 
 /- A finite precision quotient is free of rank `f` over the corresponding
   base quotient.  `Module.rank`, rather than `Module.finrank`, is used because
   a quotient modulo `π^n` is generally not a field when `n > 1`. -/
 def Chapter07FinitePrecisionFreeOfRank
     (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
-    (π : A) (f n : ℕ)
-    (qAlgebra : Chapter07PrecisionAlgebra A B π n) : Prop :=
-  letI := qAlgebra
+    (π : A) (f n : ℕ) : Prop :=
+  letI := Chapter07PrecisionAlgebra A B π n
   Module.Finite (Chapter07BasePrecisionQuotient A π n)
       (Chapter07ExtensionPrecisionQuotient A B π n) ∧
     Module.Free (Chapter07BasePrecisionQuotient A π n)
@@ -64,17 +65,13 @@ structure Chapter07FinitePrecisionTower
     (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
     (π : A) (f : ℕ) (k l : Type*) [Field k] [Field l]
     [Algebra k l] [FiniteDimensional k l] where
-  quotientAlgebra : ∀ n, Chapter07PrecisionAlgebra A B π n
   finiteFree : ∀ n,
-    0 < n → Chapter07FinitePrecisionFreeOfRank A B π f n (quotientAlgebra n)
+    0 < n → Chapter07FinitePrecisionFreeOfRank A B π f n
   residueDegree : Module.finrank k l = f
   residueSeparable : Chapter07ResidueExtensionIsSeparable k l
 
 /-- For an unramified finite extension, all quotients `B/π^nB` are finite free
 of rank equal to the residue degree. -/
--- SOURCE_ISSUE: At `n = 0`, the quotient is the zero ring and its free-module
--- rank is zero.  The source's “every `n`” must therefore be read as positive
--- precision.
 theorem chapter07_unramified_quotients_are_free
     {A B K L k l : Type*} [CommRing A] [IsDomain A] [CommRing B]
     [IsDomain B] [Field K] [Field L] [Field k] [Field l]
@@ -88,12 +85,11 @@ theorem chapter07_unramified_quotients_are_free
     [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
     (π : A) (f : ℕ)
     (hπ : IsLocalRing.maximalIdeal A = Ideal.span ({π} : Set A))
-    (E : Chapter07FiniteLocalExtensionData K L k l)
-    (hE : Chapter07UnramifiedExtension E)
-    (hf : E.residueDegree = f)
-    (qAlgebra : ∀ n, Chapter07PrecisionAlgebra A B π n) :
+    (U : Chapter07UnramifiedLocalExtensionData A B K L k l)
+    (hf : U.profile.residueDegree = f)
+    (hresidueDegree : Module.finrank k l = f) :
     ∀ n : ℕ, 0 < n →
-      Chapter07FinitePrecisionFreeOfRank A B π f n (qAlgebra n) := by
+      Chapter07FinitePrecisionFreeOfRank A B π f n := by
   sorry
 
 /-- A compatible family of roots modulo all powers of an ideal.  Transition

@@ -6,6 +6,7 @@ open CategoryTheory CategoryTheory.Limits
 open AlgebraicGeometry
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10
+open LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter09
 
 noncomputable section
 
@@ -19,6 +20,15 @@ structure Chapter13SmoothProperCurve extends Chapter13RelativeCurve where
   proper : IsProper f
   geometrically_connected : GeometricallyConnected f
   genus : ℕ
+  genus_data : Chapter13GeometricGenusData toChapter13RelativeCurve
+  genus_data_genus_eq : genus_data.genus = genus
+  relative_dualizing : Chapter13RelativeDualizingData toChapter13RelativeCurve
+  differential_theory : Chapter09DifferentialSheafTheory f
+  dualizing_is_relative_differentials :
+    letI := relative_dualizing.derived_theory
+    letI := differential_theory
+    Nonempty (relative_dualizing.dualizing.omega ≅
+      chapter09RelativeDifferentials f)
 
 namespace Chapter13SmoothProperCurve
 
@@ -30,10 +40,22 @@ end Chapter13SmoothProperCurve
 /-- Relative cohomology data specialized to a line bundle. -/
 structure Chapter13RelativeLineCohomologyData
     (C : Chapter13RelativeCurve) (L : Chapter04LineBundle C.X) where
-  fiber : Chapter13FiberCohomologyProfile C L.sheaf
-  firstHigherDirectImage : C.S.Modules
-  firstHigherDirectImage_coherent :
-    chapter13CoherentBaseModule firstHigherDirectImage
+  relative_cohomology :
+    Chapter13RelativeCohomologyData C (chapter13LineBundleAsVectorBundle L)
+
+namespace Chapter13RelativeLineCohomologyData
+
+abbrev fiber {C : Chapter13RelativeCurve} {L : Chapter04LineBundle C.X}
+    (D : Chapter13RelativeLineCohomologyData C L) :
+    Chapter13FiberCohomologyProfile C L.sheaf :=
+  D.relative_cohomology.fiber
+
+abbrev firstHigherDirectImage {C : Chapter13RelativeCurve}
+    {L : Chapter04LineBundle C.X}
+    (D : Chapter13RelativeLineCohomologyData C L) : C.S.Modules :=
+  D.relative_cohomology.firstHigherDirectImage
+
+end Chapter13RelativeLineCohomologyData
 
 /-- The degree-one relative direct image is zero. -/
 def chapter13FirstHigherDirectImageIsZero
@@ -167,7 +189,7 @@ theorem chapter13_smooth_degree_two_genus_plus_one_separates_length_two
     (hd : chapter13LineBundleOfRelativeDegree deg L d)
     (hdegree : ∀ s : C.S, 2 * (C.genus : ℤ) + 1 ≤ d)
     (H : Chapter13RelativeLineCohomologyData C.toChapter13RelativeCurve L) :
-    chapter13SeparatesEveryLengthTwo C.toChapter13RelativeCurve L := by
+    chapter13SeparatesEveryLengthTwo (C := C.toChapter13RelativeCurve) L := by
   sorry
 
 /-- The same high-degree hypothesis yields a relative very-ample embedding. -/
@@ -188,16 +210,25 @@ structure Chapter13ConnectedComponentUnion
   (C : Chapter13RelativeCurve) (s : C.S) where
   Z : Scheme
   inclusion : Z ⟶ C.f.fiber s
-  connected : IsConnected (Set.univ : Set Z)
+  closed : IsClosedImmersion inclusion
+  connected : _root_.IsConnected (Set.univ : Set Z)
   nonempty : Nonempty Z
   is_union_of_components : Prop
+  is_union_of_components_holds : is_union_of_components
   is_whole_fiber : Prop
+  is_whole_fiber_holds : is_whole_fiber
   boundary_branches : ℕ
   arithmetic_genus : ℕ
-  degree_restriction : Chapter04LineBundle (C.f.fiber s) → ℤ
+  degree_on_union : Chapter04LineBundle Z → ℤ
   canonical_degree : ℤ
   canonical_degree_formula :
     canonical_degree = 2 * (arithmetic_genus : ℤ) - 2 + boundary_branches
+
+def chapter13ComponentDegree
+    {C : Chapter13RelativeCurve} {s : C.S}
+    (Z : Chapter13ConnectedComponentUnion C s)
+    (L : Chapter04LineBundle (C.f.fiber s)) : ℤ :=
+  Z.degree_on_union (chapter04PullbackLineBundle Z.inclusion L)
 
 /-- Componentwise positivity of a line bundle on a fiber. -/
 def chapter13ComponentwisePositiveOnFiber
@@ -206,7 +237,7 @@ def chapter13ComponentwisePositiveOnFiber
     (components : Set (Chapter13ConnectedComponentUnion C s)) : Prop :=
   ∀ Z ∈ components,
     2 * (Z.arithmetic_genus : ℤ) - 2 <
-      Z.degree_restriction (chapter13FiberLineBundle L s)
+      chapter13ComponentDegree Z (chapter13FiberLineBundle L s)
 
 /-- The canonical bundle degree after removing the forced boundary zeros. -/
 def chapter13InducedCanonicalSectionDegree
@@ -225,9 +256,9 @@ theorem chapter13_induced_canonical_section_degree_formula
 theorem chapter13_componentwise_bound_forces_negative_twisted_degree
     {C : Chapter13RelativeCurve} {s : C.S}
     (Z : Chapter13ConnectedComponentUnion C s)
-    (L : Chapter04LineBundle (C.fiber s))
-    (hdegree : 2 * (Z.arithmetic_genus : ℤ) - 2 < Z.degree_restriction L) :
-    chapter13InducedCanonicalSectionDegree Z - Z.degree_restriction L < 0 := by
+    (L : Chapter04LineBundle (C.f.fiber s))
+    (hdegree : 2 * (Z.arithmetic_genus : ℤ) - 2 < chapter13ComponentDegree Z L) :
+    chapter13InducedCanonicalSectionDegree Z - chapter13ComponentDegree Z L < 0 := by
   sorry
 
 /- LOCAL_DEPENDENCY_GUESS: the pinned snapshot has no single predicate for a
@@ -238,11 +269,24 @@ line bundle restricted to a connected union of components. -/
 structure Chapter13NodalVanishingData
     (C : Chapter13RelativeCurve) (L : Chapter04LineBundle C.X) where
   nodal_or_reducible_fibers : Prop
+  nodal_or_reducible_fibers_holds : nodal_or_reducible_fibers
   relative_cohomology : Chapter13RelativeLineCohomologyData C L
+  relative_dualizing : Chapter13RelativeDualizingData C
   components : ∀ s : C.S, Set (Chapter13ConnectedComponentUnion C s)
   components_complete : ∀ s Z, Z ∈ components s
   componentwise_bound : ∀ s, chapter13ComponentwisePositiveOnFiber s L (components s)
   includes_whole_fiber : ∀ s Z, Z.is_whole_fiber → Z ∈ components s
+  component_dualizing : ∀ (s : C.S) (Z : Chapter13ConnectedComponentUnion C s),
+    Chapter04LineBundle Z.Z
+  component_dualizing_restriction : ∀ (s : C.S)
+      (Z : Chapter13ConnectedComponentUnion C s),
+    Nonempty (
+      (chapter04PullbackLineBundle Z.inclusion
+        (chapter04PullbackLineBundle (C.f.fiberι s) relative_dualizing.line_bundle)).sheaf ≅
+      (component_dualizing s Z).sheaf)
+  component_canonical_degree : ∀ (s : C.S)
+      (Z : Chapter13ConnectedComponentUnion C s),
+    Z.canonical_degree = Z.degree_on_union (component_dualizing s Z)
 
 /-- Componentwise positivity implies `H¹ = 0` on nodal or reducible fibers. -/
 theorem chapter13_componentwise_bound_gives_h1_vanishing
@@ -254,7 +298,8 @@ theorem chapter13_componentwise_bound_gives_h1_vanishing
 /-- Total degree alone does not provide componentwise positivity. -/
 def chapter13TotalDegreeBoundInsufficientForReducibleFibers : Prop :=
   ∃ (a b : ℤ) (g₁ g₂ : ℕ),
-    a + b > 2 * ((g₁ + g₂ : ℕ) : ℤ) - 2 ∧
+    0 < a + b ∧
+      a + b > 2 * ((g₁ + g₂ : ℕ) : ℤ) - 2 ∧
       a ≤ 2 * (g₁ : ℤ) - 2
 
 /-- A positive total degree can coexist with a component at the critical bound. -/
@@ -264,11 +309,9 @@ theorem chapter13_total_degree_alone_is_insufficient :
 
 /-- The componentwise criterion explicitly includes the whole fiber. -/
 def chapter13ComponentwiseCriterionIncludesWholeFiber
-    {C : Chapter13RelativeCurve} {L : Chapter04LineBundle C.X}
+    {C : Chapter13RelativeCurve}
     (s : C.S) (components : Set (Chapter13ConnectedComponentUnion C s)) : Prop :=
-  ∀ Z, Z.is_whole_fiber → Z ∈ components →
-    2 * (Z.arithmetic_genus : ℤ) - 2 <
-      Z.degree_restriction (chapter13FiberLineBundle L s)
+  ∀ Z, Z.is_whole_fiber → Z ∈ components
 
 end
 end LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter13

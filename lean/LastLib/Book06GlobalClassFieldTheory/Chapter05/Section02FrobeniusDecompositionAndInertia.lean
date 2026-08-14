@@ -2,6 +2,7 @@ import LastLib.Book06GlobalClassFieldTheory.Chapter05.Dependencies
 import LastLib.Book06GlobalClassFieldTheory.Chapter02.Dependencies
 import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.FieldTheory.Galois.Notation
+import Mathlib.FieldTheory.Finite.Basic
 import Mathlib.GroupTheory.Index
 
 namespace LastLib.Book06GlobalClassFieldTheory.Chapter05
@@ -74,15 +75,25 @@ structure Chapter05UnramifiedPlaceProfile
   localArtin : U →* G
   decomposition : Subgroup G
   inertia : Subgroup G
-  residueAction : G →* Gal(k' / k)
   q : ℕ
   q_eq_card : q = Fintype.card k
   frobenius : G
+  /-- The residue action is defined on the decomposition group, not on the
+  ambient global Galois group. -/
+  residueAction : decomposition →* Gal(k' / k)
   inertia_trivial : inertia = ⊥
   range_decomposition : Subgroup.map localArtin ⊤ = decomposition
   range_units : Subgroup.map localArtin units = inertia
+  /-- The residue action is faithful on the decomposition group.  This is the
+  local exactness needed to transport the order of residue Frobenius to the
+  ambient Galois group. -/
+  frobenius_mem_decomposition : frobenius ∈ decomposition
+  residueAction_injective_on_decomposition :
+    ∀ {g : decomposition}, residueAction g = 1 → g = 1
   localArtin_uniformizer : localArtin order.uniformizer = frobenius
-  arithmetic_frobenius : chapter05ArithmeticFrobenius q (residueAction frobenius)
+  arithmetic_frobenius :
+    chapter05ArithmeticFrobenius q
+      (residueAction ⟨frobenius, frobenius_mem_decomposition⟩)
 
 theorem chapter05_unramified_inertia_trivial
     {U : Type uU} {G : Type uG} {k : Type uk} {k' : Type uk'}
@@ -96,7 +107,8 @@ theorem chapter05_unramified_arithmetic_frobenius
     [CommGroup U] [CommGroup G] [Finite G] [Field k] [Field k'] [Algebra k k']
     [Fintype k] [Finite k'] [Algebra.IsAlgebraic k k'] [FiniteDimensional k k']
     (D : Chapter05UnramifiedPlaceProfile U G k k') :
-    chapter05ArithmeticFrobenius D.q (D.residueAction D.frobenius) := by
+    chapter05ArithmeticFrobenius D.q
+      (D.residueAction ⟨D.frobenius, D.frobenius_mem_decomposition⟩) := by
   exact D.arithmetic_frobenius
 
 /-- At an unramified place the local symbol depends only on the valuation. -/
@@ -106,7 +118,21 @@ theorem chapter05_unramified_local_artin_formula
     [Fintype k] [Finite k'] [Algebra.IsAlgebraic k k'] [FiniteDimensional k k']
     (D : Chapter05UnramifiedPlaceProfile U G k k') (x : U) :
     D.localArtin x = D.frobenius ^ D.order.ord x := by
-  sorry
+  obtain ⟨u, hu⟩ := D.order.decomposition x
+  have hu_artin : D.localArtin (u : U) = 1 := by
+    have hu_mem : D.localArtin (u : U) ∈ D.inertia := by
+      rw [← D.range_units]
+      exact Subgroup.mem_map_of_mem D.localArtin u.property
+    rw [D.inertia_trivial] at hu_mem
+    exact Subgroup.mem_bot.mp hu_mem
+  calc
+    D.localArtin x =
+        D.localArtin ((u : U) * D.order.uniformizer ^ D.order.ord x) :=
+      congrArg D.localArtin hu
+    _ = D.localArtin (u : U) * D.localArtin D.order.uniformizer ^ D.order.ord x := by
+      rw [map_mul, map_zpow]
+    _ = D.frobenius ^ D.order.ord x := by
+      rw [hu_artin, D.localArtin_uniformizer, one_mul]
 
 theorem chapter05_unramified_local_artin_units
     {U : Type uU} {G : Type uG} {k : Type uk} {k' : Type uk'}
@@ -118,16 +144,44 @@ theorem chapter05_unramified_local_artin_units
   rw [D.order.unit_iff_ord_zero x] at hx
   simp [hx]
 
-/-- An unramified prime ideal has an ideal Frobenius only because its inertia
-group is trivial. -/
+/-- The ideal Frobenius datum is a residue-Frobenius class modulo inertia.  It
+has a unique representative exactly when the quotient map is injective. -/
+def chapter05IdealFrobeniusClass
+    {G : Type uG} [CommGroup G] (inertia : Subgroup G) (g : G) : G ⧸ inertia :=
+  QuotientGroup.mk' inertia g
+
 def chapter05IdealFrobeniusCanonical
     {G : Type uG} [CommGroup G] (inertia : Subgroup G) : Prop :=
-  inertia = ⊥
+  Function.Injective (QuotientGroup.mk' inertia)
+
+theorem chapter05_ideal_frobenius_canonical_iff_inertia_trivial
+    {G : Type uG} [CommGroup G] (inertia : Subgroup G) :
+    chapter05IdealFrobeniusCanonical inertia ↔ inertia = ⊥ := by
+  change Function.Injective (QuotientGroup.mk' inertia) ↔ inertia = ⊥
+  rw [← MonoidHom.ker_eq_bot_iff, QuotientGroup.ker_mk']
 
 theorem chapter05_ideal_frobenius_not_canonical_when_ramified
     {G : Type uG} [CommGroup G] (inertia : Subgroup G)
     (h : inertia ≠ ⊥) : ¬ chapter05IdealFrobeniusCanonical inertia := by
-  exact h
+  intro hcanonical
+  exact h ((chapter05_ideal_frobenius_canonical_iff_inertia_trivial inertia).mp hcanonical)
+
+theorem chapter05_ideal_frobenius_lift_ambiguous_when_ramified
+    {G : Type uG} [CommGroup G] (inertia : Subgroup G)
+    (h : inertia ≠ ⊥) :
+    ∃ g₁ g₂ : G, g₁ ≠ g₂ ∧
+      chapter05IdealFrobeniusClass inertia g₁ =
+        chapter05IdealFrobeniusClass inertia g₂ := by
+  obtain ⟨a, ha⟩ := (Subgroup.ne_bot_iff_exists_ne_one.mp h)
+  refine ⟨1, (a : G), ?_, ?_⟩
+  · intro h_one
+    apply ha
+    exact Subtype.ext h_one.symm
+  · calc
+      chapter05IdealFrobeniusClass inertia (1 : G) = 1 := by rfl
+      _ = chapter05IdealFrobeniusClass inertia (a : G) := by
+        symm
+        exact (QuotientGroup.eq_one_iff (N := inertia) (a : G)).2 a.property
 
 /-- A class-level formulation of complete splitting. -/
 def chapter05SplitsCompletely
@@ -140,7 +194,8 @@ theorem chapter05_unramified_split_iff_norm_class
     (hker : globalArtin.ker = normSubgroup)
     (huniformizer : globalArtin classOfUniformizer = frobenius) :
     chapter05SplitsCompletely frobenius ↔ classOfUniformizer ∈ normSubgroup := by
-  sorry
+  change frobenius = 1 ↔ classOfUniformizer ∈ normSubgroup
+  rw [← huniformizer, ← MonoidHom.mem_ker, hker]
 
 /-- The residue degree of the displayed finite residue extension. -/
 def chapter05ResidueDegree
@@ -156,7 +211,26 @@ theorem chapter05_residue_degree_eq_frobenius_order
     [Fintype k] [Finite k'] [Algebra.IsAlgebraic k k'] [FiniteDimensional k k']
     (D : Chapter05UnramifiedPlaceProfile U G k k') :
     chapter05ResidueDegree D = orderOf D.frobenius := by
-  sorry
+  let σ : Gal(k' / k) :=
+    D.residueAction ⟨D.frobenius, D.frobenius_mem_decomposition⟩
+  have hσ : σ = FiniteField.frobeniusAlgEquivOfAlgebraic k k' := by
+    ext x
+    rw [FiniteField.coe_frobeniusAlgEquivOfAlgebraic, ← D.q_eq_card]
+    exact D.arithmetic_frobenius x
+  have hinj : Function.Injective D.residueAction := by
+    intro a b hab
+    apply (mul_inv_eq_one).mp
+    apply D.residueAction_injective_on_decomposition
+    simp only [map_mul, map_inv, hab, mul_inv_cancel]
+  calc
+    chapter05ResidueDegree D = Module.finrank k k' := rfl
+    _ = orderOf (FiniteField.frobeniusAlgEquivOfAlgebraic k k') :=
+      (FiniteField.orderOf_frobeniusAlgEquivOfAlgebraic k k').symm
+    _ = orderOf σ := by rw [hσ]
+    _ = orderOf (⟨D.frobenius, D.frobenius_mem_decomposition⟩ : D.decomposition) :=
+      orderOf_injective D.residueAction hinj _
+    _ = orderOf D.frobenius :=
+      Subgroup.orderOf_mk D.frobenius D.frobenius_mem_decomposition
 
 /-- The group-theoretic count of primes above a place, as the decomposition
 index.  Identifying this index with an actual place fibre is supplied by the
@@ -168,14 +242,30 @@ def chapter05NumberOfPrimesAbove
 theorem chapter05_number_of_primes_above_eq_index
     {G : Type uG} [Group G] [Finite G] (D : Subgroup G) :
     chapter05NumberOfPrimesAbove D = Nat.card G / Nat.card D := by
-  sorry
+  change D.index = Nat.card G / Nat.card D
+  symm
+  have hcard := D.card_mul_index.symm
+  rw [Nat.mul_comm] at hcard
+  exact Nat.div_eq_of_eq_mul_left (Nat.card_pos (α := D))
+    hcard
 
 /-- The positive component of the real local multiplicative group. -/
 def chapter05PositiveRealUnits : Subgroup ℝˣ where
   carrier := {u | 0 < (u : ℝ)}
-  one_mem' := by sorry
-  mul_mem' := by sorry
-  inv_mem' := by sorry
+  one_mem' := by
+    change (0 : ℝ) < 1
+    exact zero_lt_one
+  mul_mem' := by
+    intro a b ha hb
+    change (0 : ℝ) < (a : ℝ) at ha
+    change (0 : ℝ) < (b : ℝ) at hb
+    change (0 : ℝ) < ((a * b : ℝˣ) : ℝ)
+    simpa using mul_pos ha hb
+  inv_mem' := by
+    intro a ha
+    change (0 : ℝ) < (a : ℝ) at ha
+    change (0 : ℝ) < ((a⁻¹ : ℝˣ) : ℝ)
+    simpa using (inv_pos.mpr ha)
 
 /-- The two possible images at a real place. -/
 structure Chapter05RealPlaceProfile (G : Type uG) [CommGroup G] [Finite G] where

@@ -1,7 +1,9 @@
 import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter09.Dependencies
-import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.Section04GammaAndPoleTerms
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.Section01StatementWithEveryTermVisible
 import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter08.Section01TheThreeGoverningIntegrals
 import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter08.Section03ExactEvaluationOfTheArchimedeanTerms
+import Mathlib.Analysis.Normed.Ring.Lemmas
+import Mathlib.Topology.Algebra.Order.LiminfLimsup
 
 namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter09
 
@@ -19,7 +21,64 @@ theorem chapter09_universal_odlyzko_poitou_bound
     {T : ℝ} (hT : 0 < T) :
     Real.exp (chapter09UnconditionalExponent K T) ≤
       chapter09RootDiscriminant K := by
-  sorry
+  have heqF : chapter09UnconditionalTestFunction T =
+      Chapter08.chapter08FUnconditionalTriangle T := by
+    funext x
+    rfl
+  have hF08 := Chapter08.chapter08_unconditional_triangle_admissible hT
+  have hF : Chapter08.Chapter08UnconditionallyAdmissible
+      (chapter09UnconditionalTestFunction T) := by
+    rw [heqF]
+    exact hF08
+  have hnonneg : ∀ x, 0 ≤ chapter09UnconditionalTestFunction T x := by
+    intro x
+    unfold chapter09UnconditionalTestFunction
+    exact div_nonneg (le_max_right _ _) (le_of_lt (Real.cosh_pos _))
+  let hformula :=
+    Chapter08.chapter08CanonicalUnconditionalExplicitFormulaData K
+      (F := chapter09UnconditionalTestFunction T) hF
+  have hzero : 0 ≤ hformula.zeroContribution := by
+    change 0 ≤ Chapter08.chapter08CanonicalZeroContribution K
+      (chapter09UnconditionalTestFunction T)
+    exact Chapter08.chapter08_canonical_unconditional_zero_contribution_nonnegative K hF
+  have hprime : 0 ≤ hformula.primeContribution := by
+    change 0 ≤ Chapter08.chapter08CanonicalPrimeContribution K
+      (chapter09UnconditionalTestFunction T)
+    exact Chapter08.chapter08_canonical_prime_contribution_nonnegative K hF.1 hnonneg
+  have hlower := Chapter08.chapter08_root_discriminant_lower_bound
+    (K := K) (F := chapter09UnconditionalTestFunction T)
+    (chapter09_degree_pos K) hformula hzero hprime
+  have hA : Chapter08.chapter08A (chapter09UnconditionalTestFunction T) = T / 2 := by
+    rw [heqF]
+    exact Chapter08.chapter08_unconditional_triangle_A hT
+  have hB : Chapter08.chapter08B (chapter09UnconditionalTestFunction T) =
+      chapter09BT T := by
+    rfl
+  have hC : Chapter08.chapter08C (chapter09UnconditionalTestFunction T) =
+      chapter09CT T := by
+    rfl
+  have hlog : chapter09UnconditionalExponent K T ≤
+      Real.log (chapter09RootDiscriminant K) := by
+    calc
+      chapter09UnconditionalExponent K T =
+          chapter09EulerMascheroni + Real.log (8 * Real.pi) +
+            chapter09RealProportion K * (Real.pi / 2) -
+            4 * Chapter08.chapter08A (chapter09UnconditionalTestFunction T) /
+              (chapter09Degree K : ℝ) -
+            Chapter08.chapter08B (chapter09UnconditionalTestFunction T) -
+            chapter09RealProportion K *
+              Chapter08.chapter08C (chapter09UnconditionalTestFunction T) := by
+        rw [chapter09UnconditionalExponent, hA, hB, hC]
+        ring
+      _ ≤ Real.log (Chapter08.Chapter08RootDiscriminant K) := hlower
+      _ = Real.log (chapter09RootDiscriminant K) := by
+        rw [chapter09_root_discriminant_eq_canonical K]
+  calc
+    Real.exp (chapter09UnconditionalExponent K T) ≤
+        Real.exp (Real.log (chapter09RootDiscriminant K)) :=
+      Real.exp_le_exp.mpr hlog
+    _ = chapter09RootDiscriminant K :=
+      Real.exp_log (chapter09_root_discriminant_pos K)
 
 theorem chapter09_universal_odlyzko_poitou_log_bound
     (K : Type*) [Field K] [NumberField K]
@@ -293,6 +352,9 @@ theorem chapter09_unconditional_asymptotic_lower_bound
     (hTpos : ∀ j, 0 < T j)
     (hT : Tendsto T atTop atTop)
     (hdegree : Tendsto (fun j => (chapter09SequenceDegree S j : ℝ)) atTop atTop)
+    (hroot :
+      Filter.IsCoboundedUnder (· ≥ ·) atTop
+        (chapter09SequenceRootDiscriminant S))
     (halpha : α₀ ≤ Filter.liminf (chapter09SequenceRealProportion S) atTop)
     (hTdegree :
       Tendsto
@@ -300,7 +362,174 @@ theorem chapter09_unconditional_asymptotic_lower_bound
         atTop (𝓝 0)) :
     Filter.liminf (chapter09SequenceRootDiscriminant S) atTop ≥
       chapter09UnconditionalAsymptoticConstant α₀ := by
-  sorry
+  let d : ℕ → ℝ := fun j => (chapter09SequenceDegree S j : ℝ)
+  let a : ℕ → ℝ := chapter09SequenceRealProportion S
+  let r : ℕ → ℝ := chapter09SequenceRootDiscriminant S
+  let b : ℕ → ℝ := fun j => chapter09BT (T j)
+  let c : ℕ → ℝ := fun j => chapter09CT (T j)
+  let p : ℕ → ℝ := fun j => 2 * (T j / d j)
+  let q : ℕ → ℝ := fun j => Real.pi / 2 - c j
+  let k : ℝ := chapter09EulerMascheroni + Real.log (8 * Real.pi)
+  let e : ℕ → ℝ := fun j =>
+    k + (a j * q j + -(p j + b j))
+  have hd : Tendsto d atTop atTop := by
+    simpa [d] using hdegree
+  have hp : Tendsto p atTop (𝓝 0) := by
+    simpa [p, d] using (tendsto_const_nhds.mul hTdegree)
+  have hb : Tendsto b atTop (𝓝 (Real.log 2)) := by
+    simpa [b, Function.comp_def] using
+      (chapter09_unconditional_archimedean_B_tendsto.comp hT)
+  have hc : Tendsto c atTop (𝓝 (Real.pi / 2 - 1)) := by
+    simpa [c, Function.comp_def] using
+      (chapter09_unconditional_archimedean_C_tendsto.comp hT)
+  have hq : Tendsto q atTop (𝓝 1) := by
+    have hconst : Tendsto (fun _ : ℕ => Real.pi / 2) atTop
+        (𝓝 (Real.pi / 2)) := tendsto_const_nhds
+    have h := hconst.sub hc
+    simpa [q, c, Function.comp_def] using h
+  have ha_nonneg : 0 ≤ᶠ[atTop] a := by
+    exact Filter.Eventually.of_forall (fun j =>
+      Chapter09NumberFieldModel.real_proportion_mem_Icc (S.field j) |>.1)
+  have ha_le_one : ∀ᶠ j : ℕ in atTop, a j ≤ 1 := by
+    exact Filter.Eventually.of_forall (fun j =>
+      Chapter09NumberFieldModel.real_proportion_mem_Icc (S.field j) |>.2)
+  have ha_upper : IsBoundedUnder (· ≤ ·) atTop a :=
+    isBoundedUnder_of_eventually_le ha_le_one
+  have hq_nonneg : 0 ≤ᶠ[atTop] q := by
+    have hqpos := hq.eventually (Ioi_mem_nhds (by norm_num : (0 : ℝ) < 1))
+    filter_upwards [hqpos] with j hj
+    exact hj.le
+  have hq_upper : IsBoundedUnder (· ≤ ·) atTop q := hq.isBoundedUnder_le
+  obtain ⟨q₀, hq₀⟩ := hq_upper.eventually_le
+  have hu_ge : IsBoundedUnder (· ≥ ·) atTop
+      (fun j => a j * q j) := by
+    apply isBoundedUnder_of_eventually_ge
+    filter_upwards [ha_nonneg, hq_nonneg] with j hₐ hqj
+    exact mul_nonneg hₐ hqj
+  have hu_le : IsBoundedUnder (· ≤ ·) atTop
+      (fun j => a j * q j) := by
+    apply isBoundedUnder_of_eventually_le (a := q₀)
+    filter_upwards [ha_le_one, hq_nonneg, hq₀] with j hₐ hqj hqj₀
+    calc
+      a j * q j ≤ 1 * q j := mul_le_mul_of_nonneg_right hₐ hqj
+      _ = q j := one_mul _
+      _ ≤ q₀ := hqj₀
+  have hprod : Filter.liminf a atTop * Filter.liminf q atTop ≤
+      Filter.liminf (fun j => a j * q j) atTop :=
+    le_liminf_mul ha_nonneg ha_upper hq_nonneg hq.isCoboundedUnder_ge
+  have hq_liminf : Filter.liminf q atTop = 1 := hq.liminf_eq
+  have hprod' : α₀ ≤ Filter.liminf (fun j => a j * q j) atTop := by
+    calc
+      α₀ = α₀ * 1 := by ring
+      _ ≤ Filter.liminf a atTop * Filter.liminf q atTop := by
+        rw [hq_liminf]
+        exact mul_le_mul_of_nonneg_right halpha (by norm_num)
+      _ ≤ Filter.liminf (fun j => a j * q j) atTop := hprod
+  have hneg : Tendsto (fun j => -(p j + b j)) atTop
+      (𝓝 (-Real.log 2)) := by
+    have h := hp.add hb
+    simpa using h.neg
+  have hv_ge : IsBoundedUnder (· ≥ ·) atTop
+      (fun j => -(p j + b j)) := hneg.isBoundedUnder_ge
+  have hsum' :
+      Filter.liminf (fun j => a j * q j) atTop +
+          Filter.liminf (fun j => -(p j + b j)) atTop ≤
+        Filter.liminf (fun j => a j * q j + -(p j + b j)) atTop := by
+    calc
+      Filter.liminf (fun j => a j * q j) atTop +
+            Filter.liminf (fun j => -(p j + b j)) atTop ≤
+          Filter.liminf
+            ((fun j => a j * q j) + (fun j => -(p j + b j))) atTop :=
+        le_liminf_add hu_ge hu_le hv_ge hneg.isCoboundedUnder_ge
+      _ = Filter.liminf (fun j => a j * q j + -(p j + b j)) atTop := by
+        apply Filter.liminf_congr
+        exact Filter.Eventually.of_forall (fun j => rfl)
+  have huv_cobdd : IsCoboundedUnder (· ≥ ·) atTop
+      ((fun j => a j * q j) + (fun j => -(p j + b j))) :=
+    isCoboundedUnder_ge_add hu_le hneg.isCoboundedUnder_ge
+  have huv_bdd : IsBoundedUnder (· ≥ ·) atTop
+      ((fun j => a j * q j) + (fun j => -(p j + b j))) :=
+    isBoundedUnder_ge_add hu_ge hv_ge
+  have hk_le : IsBoundedUnder (· ≤ ·) atTop (fun _ : ℕ => k) := by
+    apply isBoundedUnder_of_eventually_le
+    exact Filter.Eventually.of_forall (fun _ => le_rfl)
+  have hk_ge : IsBoundedUnder (· ≥ ·) atTop (fun _ : ℕ => k) := by
+    apply isBoundedUnder_of_eventually_ge
+    exact Filter.Eventually.of_forall (fun _ => le_rfl)
+  have he_cobdd : IsCoboundedUnder (· ≥ ·) atTop e := by
+    exact isCoboundedUnder_ge_add hk_le huv_cobdd
+  have he_bdd : IsBoundedUnder (· ≥ ·) atTop e := by
+    exact isBoundedUnder_ge_add hk_ge huv_bdd
+  have hL : k + (α₀ + -Real.log 2) ≤ Filter.liminf e atTop := by
+    have hbase : α₀ + -Real.log 2 ≤
+        Filter.liminf (fun j => a j * q j) atTop +
+          Filter.liminf (fun j => -(p j + b j)) atTop := by
+      rw [hneg.liminf_eq]
+      exact add_le_add hprod' (le_refl _)
+    calc
+      k + (α₀ + -Real.log 2) ≤
+          k + (Filter.liminf (fun j => a j * q j) atTop +
+            Filter.liminf (fun j => -(p j + b j)) atTop) :=
+        add_le_add (le_refl _) hbase
+      _ ≤ k + Filter.liminf
+          (fun j => a j * q j + -(p j + b j)) atTop := by
+        simpa [add_comm] using (add_le_add_left hsum' k)
+      _ = Filter.liminf e atTop := by
+        symm
+        exact liminf_const_add atTop
+          (fun j => a j * q j + -(p j + b j)) k huv_cobdd huv_bdd
+  have hexp_map : Real.exp (Filter.liminf e atTop) =
+      Filter.liminf (fun j => Real.exp (e j)) atTop := by
+    have h := Real.exp_monotone.map_liminf_of_continuousAt e
+      Real.continuous_exp.continuousAt he_cobdd he_bdd
+    simpa [Function.comp_def] using h
+  have hexp_lower : Real.exp (k + (α₀ + -Real.log 2)) ≤
+      Filter.liminf (fun j => Real.exp (e j)) atTop := by
+    rw [← hexp_map]
+    exact Real.exp_monotone hL
+  have hpoint : ∀ j, Real.exp (e j) ≤ r j := by
+    intro j
+    let M := S.field j
+    have h := @chapter09_universal_odlyzko_poitou_bound
+      M.K M.field M.numberField (T j) (hTpos j)
+    have he : e j =
+        @chapter09UnconditionalExponent M.K M.field M.numberField (T j) := by
+      rw [chapter09UnconditionalExponent]
+      dsimp [e, k, a, q, p, b, c, d, M,
+        chapter09RealProportion, chapter09SequenceRealProportion,
+        chapter09SequenceDegree, Chapter09NumberFieldModel.realProportion,
+        Chapter09NumberFieldModel.degree]
+      ring
+    have hr : r j = @chapter09RootDiscriminant M.K M.field M.numberField := by
+      dsimp [r, M, Chapter09NumberFieldModel.rootDiscriminant]
+      rfl
+    rw [he, hr]
+    exact h
+  have hexp_ge : IsBoundedUnder (· ≥ ·) atTop
+      (fun j => Real.exp (e j)) := by
+    apply isBoundedUnder_of_eventually_ge
+    exact Filter.Eventually.of_forall (fun j => Real.exp_nonneg _)
+  have hroot' : Filter.liminf (fun j => Real.exp (e j)) atTop ≤
+      Filter.liminf r atTop :=
+    Filter.liminf_le_liminf (Filter.Eventually.of_forall hpoint) hexp_ge hroot
+  have hconst : Real.exp (k + (α₀ + -Real.log 2)) =
+      chapter09UnconditionalAsymptoticConstant α₀ := by
+    rw [chapter09UnconditionalAsymptoticConstant]
+    dsimp [k]
+    rw [show chapter09EulerMascheroni + Real.log (8 * Real.pi) +
+        (α₀ + -Real.log 2) =
+        (chapter09EulerMascheroni + Real.log (8 * Real.pi) + α₀) -
+          Real.log 2 by ring]
+    rw [Real.exp_sub, Real.exp_add, Real.exp_add,
+      Real.exp_log (by positivity : (0 : ℝ) < 8 * Real.pi),
+      Real.exp_log (by norm_num : (0 : ℝ) < 2)]
+    rw [Real.exp_add]
+    ring
+  calc
+    chapter09UnconditionalAsymptoticConstant α₀ =
+        Real.exp (k + (α₀ + -Real.log 2)) := hconst.symm
+    _ ≤ Filter.liminf (fun j => Real.exp (e j)) atTop := hexp_lower
+    _ ≤ Filter.liminf r atTop := hroot'
 
 theorem chapter09_unconditional_endpoint_constants :
     chapter09UnconditionalAsymptoticConstant 0 =
@@ -317,14 +546,22 @@ theorem chapter09_unconditional_endpoint_zero_decimal_bounds :
         chapter09UnconditionalAsymptoticConstant 0 ∧
       chapter09UnconditionalAsymptoticConstant 0 <
         (223816160955 : ℝ) / (10 : ℝ) ^ 10 := by
-  sorry
+  simpa [chapter09UnconditionalAsymptoticConstant,
+    chapter09UnconditionalEndpointZero,
+    chapter09UnconditionalEndpointZeroLower,
+    chapter09UnconditionalEndpointZeroUpper] using
+    chapter09_unconditional_endpoint_zero_directed_bounds
 
 theorem chapter09_unconditional_endpoint_one_decimal_bounds :
     (608395403238 : ℝ) / (10 : ℝ) ^ 10 <
         chapter09UnconditionalAsymptoticConstant 1 ∧
       chapter09UnconditionalAsymptoticConstant 1 <
         (608395403239 : ℝ) / (10 : ℝ) ^ 10 := by
-  sorry
+  simpa [chapter09UnconditionalAsymptoticConstant,
+    chapter09UnconditionalEndpointOne,
+    chapter09UnconditionalEndpointOneLower,
+    chapter09UnconditionalEndpointOneUpper, add_comm] using
+    chapter09_unconditional_endpoint_one_directed_bounds
 
 /-! ### 9.3 Bounds under the generalized Riemann hypothesis -/
 
@@ -689,7 +926,69 @@ theorem chapter09_grh_universal_odlyzko_poitou_bound
     {T : ℝ} (hT : 0 < T) (hGRH : chapter09GRH K) :
     Real.exp (chapter09GRHExponent K T) ≤
       chapter09RootDiscriminant K := by
-  sorry
+  have hGRH06 : Chapter06.chapter06GRH
+      (Chapter06.chapter06CanonicalZeroSpectrum K) := by
+    intro ρ hρ
+    have hρ' : ρ ∈ Chapter09ZetaZeroInterface.nontrivialZeros (K := K) := by
+      rw [chapter09_zeta_zero_interface_eq_canonical_zero_support K]
+      exact hρ
+    exact hGRH ρ hρ'
+  have heqF : chapter09GRHTestFunction T =
+      Chapter08.chapter08FGRHTriangle T := by
+    funext x
+    rfl
+  have hF08 := Chapter08.chapter08_grh_triangle_admissible hT
+  have hF : Chapter08.Chapter08GRHAdmissible
+      (chapter09GRHTestFunction T) := by
+    rw [heqF]
+    exact hF08
+  let hformula := Chapter08.chapter08CanonicalGRHExplicitFormulaData K hF
+  have hzero : 0 ≤ hformula.zeroContribution := by
+    change 0 ≤ Chapter08.chapter08CanonicalZeroContribution K
+      (chapter09GRHTestFunction T)
+    exact Chapter08.chapter08_canonical_grh_zero_contribution_nonnegative K hF hGRH06
+  have hnonneg : ∀ x, 0 ≤ chapter09GRHTestFunction T x := by
+    intro x
+    unfold chapter09GRHTestFunction
+    exact le_max_right _ _
+  have hprime : 0 ≤ hformula.primeContribution := by
+    change 0 ≤ Chapter08.chapter08CanonicalPrimeContribution K
+      (chapter09GRHTestFunction T)
+    exact Chapter08.chapter08_canonical_prime_contribution_nonnegative K hF.1 hnonneg
+  have hlower := Chapter08.chapter08_root_discriminant_lower_bound
+    (K := K) (F := chapter09GRHTestFunction T)
+    (chapter09_degree_pos K) hformula hzero hprime
+  have hA : Chapter08.chapter08A (chapter09GRHTestFunction T) =
+      chapter09GRHPoleIntegral T := by
+    rw [heqF, chapter09_grh_pole_integral hT]
+    exact Chapter08.chapter08_grh_triangle_A hT
+  have hB : Chapter08.chapter08B (chapter09GRHTestFunction T) =
+      chapter09GRHBT T := by
+    rfl
+  have hC : Chapter08.chapter08C (chapter09GRHTestFunction T) =
+      chapter09GRHCT T := by
+    rfl
+  have hlog : chapter09GRHExponent K T ≤
+      Real.log (chapter09RootDiscriminant K) := by
+    calc
+      chapter09GRHExponent K T =
+          chapter09EulerMascheroni + Real.log (8 * Real.pi) +
+            chapter09RealProportion K * (Real.pi / 2) -
+            4 * Chapter08.chapter08A (chapter09GRHTestFunction T) /
+              (chapter09Degree K : ℝ) -
+            Chapter08.chapter08B (chapter09GRHTestFunction T) -
+            chapter09RealProportion K *
+              Chapter08.chapter08C (chapter09GRHTestFunction T) := by
+        rw [chapter09GRHExponent, hA, hB, hC]
+      _ ≤ Real.log (Chapter08.Chapter08RootDiscriminant K) := hlower
+      _ = Real.log (chapter09RootDiscriminant K) := by
+        rw [chapter09_root_discriminant_eq_canonical K]
+  calc
+    Real.exp (chapter09GRHExponent K T) ≤
+        Real.exp (Real.log (chapter09RootDiscriminant K)) :=
+      Real.exp_le_exp.mpr hlog
+    _ = chapter09RootDiscriminant K :=
+      Real.exp_log (chapter09_root_discriminant_pos K)
 
 def chapter09GRHAsymptoticConstant (α₀ : ℝ) : ℝ :=
   8 * Real.pi * Real.exp
@@ -701,6 +1000,9 @@ theorem chapter09_grh_asymptotic_lower_bound
     (hTpos : ∀ j, 0 < T j)
     (hT : Tendsto T atTop atTop)
     (hdegree : Tendsto (fun j => (chapter09SequenceDegree S j : ℝ)) atTop atTop)
+    (hroot :
+      Filter.IsCoboundedUnder (· ≥ ·) atTop
+        (chapter09SequenceRootDiscriminant S))
     (halpha : α₀ ≤ Filter.liminf (chapter09SequenceRealProportion S) atTop)
     (hpole :
       Tendsto
@@ -710,7 +1012,222 @@ theorem chapter09_grh_asymptotic_lower_bound
         atTop (𝓝 0)) :
     Filter.liminf (chapter09SequenceRootDiscriminant S) atTop ≥
       chapter09GRHAsymptoticConstant α₀ := by
-  sorry
+  let d : ℕ → ℝ := fun j => (chapter09SequenceDegree S j : ℝ)
+  let a : ℕ → ℝ := chapter09SequenceRealProportion S
+  let r : ℕ → ℝ := chapter09SequenceRootDiscriminant S
+  let bg : ℕ → ℝ := fun j => chapter09GRHBT (T j)
+  let cg : ℕ → ℝ := fun j => chapter09GRHCT (T j)
+  let pole : ℕ → ℝ := fun j =>
+    4 * chapter09GRHPoleIntegral (T j) / d j
+  let q : ℕ → ℝ := fun _ => Real.pi / 2
+  let u : ℕ → ℝ := fun j => a j * q j
+  let z : ℕ → ℝ := fun j => a j * cg j
+  let v : ℕ → ℝ := fun j => -(pole j + bg j + z j)
+  let k : ℝ := chapter09EulerMascheroni + Real.log (8 * Real.pi)
+  let e : ℕ → ℝ := fun j => k + (u j + v j)
+  have hpole0 : Tendsto (fun j => Real.exp (T j / 2) /
+      (d j * T j)) atTop (𝓝 0) := by
+    simpa [d] using hpole
+  have hbg : Tendsto bg atTop (𝓝 0) := by
+    simpa [bg, Function.comp_def] using
+      (chapter09_grh_archimedean_B_tendsto.comp hT)
+  have hcg : Tendsto cg atTop (𝓝 0) := by
+    simpa [cg, Function.comp_def] using
+      (chapter09_grh_archimedean_C_tendsto.comp hT)
+  have hd : Tendsto d atTop atTop := by
+    simpa [d] using hdegree
+  have ha_nonneg : 0 ≤ᶠ[atTop] a := by
+    exact Filter.Eventually.of_forall (fun j =>
+      Chapter09NumberFieldModel.real_proportion_mem_Icc (S.field j) |>.1)
+  have ha_le_one : ∀ᶠ j : ℕ in atTop, a j ≤ 1 := by
+    exact Filter.Eventually.of_forall (fun j =>
+      Chapter09NumberFieldModel.real_proportion_mem_Icc (S.field j) |>.2)
+  have ha_upper : IsBoundedUnder (· ≤ ·) atTop a :=
+    isBoundedUnder_of_eventually_le ha_le_one
+  have ha_norm : IsBoundedUnder (· ≤ ·) atTop
+      (fun j => ‖a j‖) := by
+    apply isBoundedUnder_of_eventually_le (a := (1 : ℝ))
+    filter_upwards [ha_nonneg, ha_le_one] with j hₐ hₐ1
+    rw [Real.norm_eq_abs, abs_of_nonneg hₐ]
+    exact hₐ1
+  have hz : Tendsto z atTop (𝓝 0) := by
+    have hz' := Filter.isBoundedUnder_le_mul_tendsto_zero
+      (f := a) (g := cg) ha_norm hcg
+    simpa [z] using hz'
+  have hpole_nonneg : ∀ j, 0 ≤ pole j := by
+    intro j
+    have hdpos : 0 < d j := by
+      dsimp [d]
+      exact_mod_cast chapter09_sequence_degree_pos S j
+    have hTj : 0 < T j := hTpos j
+    have hcosh : 0 ≤ Real.cosh (T j / 2) - 1 :=
+      sub_nonneg.mpr (Real.one_le_cosh _)
+    dsimp [pole]
+    rw [chapter09_grh_pole_integral hTj]
+    exact div_nonneg
+      (mul_nonneg (by norm_num)
+        (mul_nonneg (by positivity : (0 : ℝ) ≤ 4 / T j) hcosh)) hdpos.le
+  have hpole_le : ∀ j, pole j ≤
+      16 * (Real.exp (T j / 2) / (d j * T j)) := by
+    intro j
+    have hdpos : 0 < d j := by
+      dsimp [d]
+      exact_mod_cast chapter09_sequence_degree_pos S j
+    have hTj : 0 < T j := hTpos j
+    have hcosh : Real.cosh (T j / 2) - 1 ≤ Real.exp (T j / 2) := by
+      have hcosh' : Real.cosh (T j / 2) ≤ Real.exp (T j / 2) := by
+        rw [Real.cosh_eq]
+        apply (div_le_iff₀ (by norm_num : (0 : ℝ) < 2)).2
+        have h := Real.exp_le_exp.mpr (by linarith :
+          -(T j / 2) ≤ T j / 2)
+        linarith
+      linarith [Real.exp_pos (T j / 2)]
+    calc
+      pole j = 16 * ((Real.cosh (T j / 2) - 1) /
+          (d j * T j)) := by
+        dsimp [pole]
+        rw [chapter09_grh_pole_integral hTj]
+        field_simp [ne_of_gt hdpos, ne_of_gt hTj]
+        ring
+      _ ≤ 16 * (Real.exp (T j / 2) / (d j * T j)) := by
+        apply mul_le_mul_of_nonneg_left
+        · exact div_le_div_of_nonneg_right hcosh
+            (mul_pos hdpos hTj).le
+        · norm_num
+  have hpole_upper : Tendsto
+      (fun j => 16 * (Real.exp (T j / 2) / (d j * T j))) atTop (𝓝 0) := by
+    have hconst : Tendsto (fun _ : ℕ => (16 : ℝ)) atTop (𝓝 16) :=
+      tendsto_const_nhds
+    simpa using hconst.mul hpole0
+  have hpole_lim : Tendsto pole atTop (𝓝 0) := by
+    apply tendsto_of_tendsto_of_tendsto_of_le_of_le'
+      tendsto_const_nhds hpole_upper
+    · exact Filter.Eventually.of_forall hpole_nonneg
+    · exact Filter.Eventually.of_forall hpole_le
+  have hq : Tendsto q atTop (𝓝 (Real.pi / 2)) := by
+    change Tendsto (fun _ : ℕ => Real.pi / 2) atTop (𝓝 (Real.pi / 2))
+    exact tendsto_const_nhds
+  have hq_nonneg : 0 ≤ᶠ[atTop] q := by
+    exact Filter.Eventually.of_forall (fun _ => by positivity)
+  have hq_liminf : Filter.liminf q atTop = Real.pi / 2 := hq.liminf_eq
+  have hu_ge : IsBoundedUnder (· ≥ ·) atTop u := by
+    apply isBoundedUnder_of_eventually_ge
+    filter_upwards [ha_nonneg, hq_nonneg] with j hₐ hqj
+    exact mul_nonneg hₐ hqj
+  have hu_le : IsBoundedUnder (· ≤ ·) atTop u := by
+    apply isBoundedUnder_of_eventually_le (a := Real.pi / 2)
+    filter_upwards [ha_le_one, hq_nonneg] with j hₐ hqj
+    calc
+      u j ≤ 1 * q j := by
+        simpa [u] using mul_le_mul_of_nonneg_right hₐ hqj
+      _ = q j := one_mul _
+      _ = Real.pi / 2 := by rfl
+  have hprod : Filter.liminf a atTop * Filter.liminf q atTop ≤
+      Filter.liminf u atTop := by
+    change Filter.liminf a atTop * Filter.liminf q atTop ≤
+      Filter.liminf (fun j => a j * q j) atTop
+    have hmul :=
+      le_liminf_mul ha_nonneg ha_upper hq_nonneg hq.isCoboundedUnder_ge
+    convert hmul using 1
+    apply Filter.liminf_congr
+    exact Filter.Eventually.of_forall (fun j => rfl)
+  have hprod' : α₀ * (Real.pi / 2) ≤ Filter.liminf u atTop := by
+    calc
+      α₀ * (Real.pi / 2) = α₀ * Filter.liminf q atTop := by
+        rw [hq_liminf]
+      _ ≤ Filter.liminf a atTop * Filter.liminf q atTop := by
+        rw [hq_liminf]
+        exact mul_le_mul_of_nonneg_right halpha (by positivity)
+      _ ≤ Filter.liminf u atTop := hprod
+  have hv : Tendsto v atTop (𝓝 0) := by
+    have hsum := hpole_lim.add hbg
+    have hsum' := hsum.add hz
+    simpa [v] using hsum'.neg
+  have hsum_lim :
+      Filter.liminf u atTop + Filter.liminf v atTop ≤
+        Filter.liminf (fun j => u j + v j) atTop := by
+    exact le_liminf_add hu_ge hu_le hv.isBoundedUnder_ge hv.isCoboundedUnder_ge
+  have huv_cobdd : IsCoboundedUnder (· ≥ ·) atTop
+      ((fun j => u j) + (fun j => v j)) :=
+    isCoboundedUnder_ge_add hu_le hv.isCoboundedUnder_ge
+  have huv_bdd : IsBoundedUnder (· ≥ ·) atTop
+      ((fun j => u j) + (fun j => v j)) :=
+    isBoundedUnder_ge_add hu_ge hv.isBoundedUnder_ge
+  have hk_le : IsBoundedUnder (· ≤ ·) atTop (fun _ : ℕ => k) := by
+    apply isBoundedUnder_of_eventually_le
+    exact Filter.Eventually.of_forall (fun _ => le_rfl)
+  have hk_ge : IsBoundedUnder (· ≥ ·) atTop (fun _ : ℕ => k) := by
+    apply isBoundedUnder_of_eventually_ge
+    exact Filter.Eventually.of_forall (fun _ => le_rfl)
+  have he_cobdd : IsCoboundedUnder (· ≥ ·) atTop e := by
+    exact isCoboundedUnder_ge_add hk_le huv_cobdd
+  have he_bdd : IsBoundedUnder (· ≥ ·) atTop e := by
+    exact isBoundedUnder_ge_add hk_ge huv_bdd
+  have hL : k + (α₀ * (Real.pi / 2) + 0) ≤ Filter.liminf e atTop := by
+    have hbase : α₀ * (Real.pi / 2) + 0 ≤
+        Filter.liminf u atTop + Filter.liminf v atTop := by
+      rw [hv.liminf_eq]
+      exact add_le_add hprod' (le_refl _)
+    calc
+      k + (α₀ * (Real.pi / 2) + 0) ≤
+          k + (Filter.liminf u atTop + Filter.liminf v atTop) :=
+        add_le_add (le_refl _) hbase
+      _ ≤ k + Filter.liminf (fun j => u j + v j) atTop := by
+        simpa [add_comm] using (add_le_add_left hsum_lim k)
+      _ = Filter.liminf e atTop := by
+        symm
+        exact liminf_const_add atTop (fun j => u j + v j) k
+          huv_cobdd huv_bdd
+  have hexp_map : Real.exp (Filter.liminf e atTop) =
+      Filter.liminf (fun j => Real.exp (e j)) atTop := by
+    have h := Real.exp_monotone.map_liminf_of_continuousAt e
+      Real.continuous_exp.continuousAt he_cobdd he_bdd
+    simpa [Function.comp_def] using h
+  have hexp_lower : Real.exp (k + (α₀ * (Real.pi / 2) + 0)) ≤
+      Filter.liminf (fun j => Real.exp (e j)) atTop := by
+    rw [← hexp_map]
+    exact Real.exp_monotone hL
+  have hpoint : ∀ j, Real.exp (e j) ≤ r j := by
+    intro j
+    let M := S.field j
+    let Z := Chapter09NumberFieldModel.zetaZeroInterface M
+    have hGRH_M : @chapter09GRH M.K M.field M.numberField Z := by
+      change chapter09GRHOnZeros M.nontrivialZeros
+      exact hGRH j
+    have h := @chapter09_grh_universal_odlyzko_poitou_bound
+      M.K M.field M.numberField Z (T j) (hTpos j) hGRH_M
+    have he : e j =
+        @chapter09GRHExponent M.K M.field M.numberField (T j) := by
+      rw [chapter09GRHExponent]
+      dsimp [e, k, u, v, pole, bg, cg, z, q, a, d, M,
+        chapter09RealProportion, chapter09SequenceRealProportion,
+        chapter09SequenceDegree, Chapter09NumberFieldModel.realProportion,
+        Chapter09NumberFieldModel.degree]
+      ring
+    have hr : r j = @chapter09RootDiscriminant M.K M.field M.numberField := by
+      dsimp [r, M, Chapter09NumberFieldModel.rootDiscriminant]
+      rfl
+    rw [he, hr]
+    exact h
+  have hexp_ge : IsBoundedUnder (· ≥ ·) atTop
+      (fun j => Real.exp (e j)) := by
+    apply isBoundedUnder_of_eventually_ge
+    exact Filter.Eventually.of_forall (fun j => Real.exp_nonneg _)
+  have hroot' : Filter.liminf (fun j => Real.exp (e j)) atTop ≤
+      Filter.liminf r atTop :=
+    Filter.liminf_le_liminf (Filter.Eventually.of_forall hpoint) hexp_ge hroot
+  have hconst : Real.exp (k + (α₀ * (Real.pi / 2) + 0)) =
+      chapter09GRHAsymptoticConstant α₀ := by
+    rw [chapter09GRHAsymptoticConstant]
+    dsimp [k]
+    simp only [Real.exp_add, Real.exp_zero]
+    rw [Real.exp_log (by positivity : (0 : ℝ) < 8 * Real.pi)]
+    ring
+  calc
+    chapter09GRHAsymptoticConstant α₀ =
+        Real.exp (k + (α₀ * (Real.pi / 2) + 0)) := hconst.symm
+    _ ≤ Filter.liminf (fun j => Real.exp (e j)) atTop := hexp_lower
+    _ ≤ Filter.liminf r atTop := hroot'
 
 theorem chapter09_grh_endpoint_constants :
     chapter09GRHAsymptoticConstant 0 =
@@ -725,14 +1242,22 @@ theorem chapter09_grh_endpoint_zero_decimal_bounds :
         chapter09GRHAsymptoticConstant 0 ∧
       chapter09GRHAsymptoticConstant 0 <
         (447632321910 : ℝ) / (10 : ℝ) ^ 10 := by
-  sorry
+  simpa [chapter09GRHAsymptoticConstant,
+    chapter09GRHEndpointZero,
+    chapter09GRHEndpointZeroLower,
+    chapter09GRHEndpointZeroUpper] using
+    chapter09_grh_endpoint_zero_directed_bounds
 
 theorem chapter09_grh_endpoint_one_decimal_bounds :
     (2153325159534 : ℝ) / (10 : ℝ) ^ 10 <
         chapter09GRHAsymptoticConstant 1 ∧
       chapter09GRHAsymptoticConstant 1 <
         (2153325159535 : ℝ) / (10 : ℝ) ^ 10 := by
-  sorry
+  simpa [chapter09GRHAsymptoticConstant,
+    chapter09GRHEndpointOne,
+    chapter09GRHEndpointOneLower,
+    chapter09GRHEndpointOneUpper] using
+    chapter09_grh_endpoint_one_directed_bounds
 
 /- A finite GRH certificate must retain a positive finite support parameter. -/
 structure Chapter09FiniteGRHCertificate

@@ -23,6 +23,8 @@ import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapte
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Section04SerreCriteria
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Section05TensorPowersAndOperations
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10.Dependencies
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10.Section02RelativeEffectiveCartierDivisors
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter09.Core
 
 /-!
 # Book 9, Chapter 13: relative Riemann--Roch and cohomology in families
@@ -42,6 +44,8 @@ open CategoryTheory CategoryTheory.Limits
 open AlgebraicGeometry
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09
+open LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter09
 
 noncomputable section
 
@@ -119,7 +123,7 @@ end Chapter13RelativeCurve
 
 /-- Constant rank expressed by locally free generators indexed by `Fin r`. -/
 def Chapter13HasConstantRank {X : Scheme.{u}} (M : X.Modules) (r : ℕ) : Prop :=
-  ∃ q : M.LocalGeneratorsData,
+  ∃ q : M.LocalGeneratorsData.{u},
     q.IsLocallyFreeData ∧
       ∀ i : q.I, Nonempty ((q.generators i).I ≃ Fin r)
 
@@ -169,6 +173,18 @@ noncomputable def chapter13DeterminantLine {X : Scheme.{u}}
     (E : Chapter13VectorBundle X) : Chapter04LineBundle X :=
   E.determinant
 
+/-- A line bundle viewed through the same finite-locally-free package as a
+vector bundle.  This is the canonical coefficient package used by the
+line-bundle cohomology records below. -/
+noncomputable def chapter13LineBundleAsVectorBundle {X : Scheme.{u}}
+    (L : Chapter04LineBundle X) : Chapter13VectorBundle X :=
+  { sheaf := L.sheaf
+    locally_free := by sorry
+    finite_type := by sorry
+    rank := 1
+    rank_spec := by sorry
+    determinant := L }
+
 /-! ## Base change and canonical fiber cohomology -/
 
 /-- The base-changed total scheme of a family along `T ⟶ S`. -/
@@ -195,6 +211,22 @@ def chapter13BaseChangeSheaf {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
     (M : X.Modules) : (chapter13BaseChangeTotal f g).Modules :=
   (Scheme.Modules.pullback (chapter13BaseChangeToSource f g)).obj M
 
+/-! ## Relative dualizing data -/
+
+/- The preceding duality chapter exposes the relative dualizing sheaf through
+its derived pushforward and trace package.  The extra fiber comparisons here
+make the later smooth and nodal statements use the actual scheme-theoretic
+fiber, rather than an unrelated line bundle on an abstract fiber. -/
+structure Chapter13RelativeDualizingData (C : Chapter13RelativeCurve) where
+  derived_theory : Chapter09RelativeDerivedHomTheory C.f
+  dualizing : @Chapter09RelativeDualizingData C.X C.S C.f derived_theory
+  line_bundle : Chapter04LineBundle C.X
+  line_bundle_iso : Nonempty (line_bundle.sheaf ≅ dualizing.omega)
+  fiber : ∀ s : C.S, (C.f.fiber s).Modules
+  fiber_comparison : ∀ s : C.S,
+    Nonempty (
+      (Scheme.Modules.pullback (C.f.fiberι s)).obj dualizing.omega ≅ fiber s)
+
 /-- The base-changed relative-curve structure. -/
 noncomputable def chapter13BaseChangedRelativeCurve
     (C : Chapter13RelativeCurve) {T : Scheme} (g : T ⟶ C.S) : Chapter13RelativeCurve :=
@@ -216,8 +248,8 @@ noncomputable def chapter13BaseChangedVectorBundle
 
 /-- The fiber of a base-changed family over a point of the test scheme. -/
 def chapter13BaseChangedFiberToSource {X S T : Scheme.{u}} (f : X ⟶ S)
-    (g : T ⟶ S) (t : T) : ((chapter13BaseChangeTotal f g).fiber t) ⟶ X :=
-  (chapter13BaseChangeTotal f g).fiberι t ≫ chapter13BaseChangeToSource f g
+    (g : T ⟶ S) (t : T) : ((chapter13BaseChangeToTest f g).fiber t) ⟶ X :=
+  (chapter13BaseChangeToTest f g).fiberι t ≫ chapter13BaseChangeToSource f g
 
 /-- Canonical cohomology of a pulled-back coefficient sheaf. -/
 noncomputable def chapter13BaseChangeCohomology {C : Chapter13RelativeCurve}
@@ -246,24 +278,33 @@ noncomputable def chapter13PushforwardModule {C : Chapter13RelativeCurve}
 structure Chapter13AffineBase (C : Chapter13RelativeCurve) where
   U : C.S.Opens
   A : Type u
-  commRingA : CommRing A
+  [commRingA : CommRing A]
   chart : U.toScheme ≅ Spec (.of A)
 
 /-- An arbitrary algebra over a fixed affine coordinate ring. -/
 structure Chapter13AAlgebra (A : Type u) [CommRing A] where
   B : Type u
-  commRingB : CommRing B
-  algebraAB : Algebra A B
+  [commRingB : CommRing B]
+  [algebraAB : Algebra A B]
+
+/-- Package an explicitly supplied algebra as the chapter's base-change
+coefficient record. -/
+def chapter13AAlgebraOfAlgebra {A K : Type u} [CommRing A] [CommRing K]
+    (a : Algebra A K) : Chapter13AAlgebra A :=
+  { B := K
+    commRingB := inferInstance
+    algebraAB := a }
 
 /-- The structure morphism from an affine test scheme to the base. -/
 def Chapter13AffineBase.mapToBase {C : Chapter13RelativeCurve}
-    (U : Chapter13AffineBase C) (B : Chapter13AAlgebra U.A) :
-    Spec (.of B.B) ⟶ C.S := by
+    (U : Chapter13AffineBase C) (B : @Chapter13AAlgebra U.A U.commRingA) :
+    Spec (@CommRingCat.of (@Chapter13AAlgebra.B U.A U.commRingA B)
+      (@Chapter13AAlgebra.commRingB U.A U.commRingA B)) ⟶ C.S := by
   letI := U.commRingA
   letI := B.commRingB
   letI := B.algebraAB
   exact Scheme.Spec.map (CommRingCat.ofHom (algebraMap U.A B.B)).op ≫
-      U.chart.inv.hom ≫ U.U.ι
+      U.chart.inv ≫ U.U.ι
 
 /-- Extension of scalars in the category of modules. -/
 def chapter13ExtendScalars {A : Type u} {B : Type v} [CommRing A] [CommRing B]
@@ -281,18 +322,18 @@ structure Chapter13FiniteFreeModule (A : Type u) [CommRing A] where
 namespace Chapter13FiniteFreeModule
 
 /-- Scalar extension of a finite free module. -/
-noncomputable def baseChange {A : Type u} [CommRing A]
+noncomputable def baseChange {A : Type u} [commRingA : CommRing A]
     (M : Chapter13FiniteFreeModule A) (B : Chapter13AAlgebra A) :
-    Chapter13FiniteFreeModule B.B := by
+    @Chapter13FiniteFreeModule B.B
+      (@Chapter13AAlgebra.commRingB A commRingA B) := by
   letI := B.commRingB
   letI := B.algebraAB
-  refine
+  exact
     { carrier := (ModuleCat.extendScalars (algebraMap A B.B)).obj M.carrier
-      finite := by infer_instance
-      free := by infer_instance
+      finite := by sorry
+      free := by sorry
       rank := M.rank
-      basis := ?_ }
-  sorry
+      basis := by sorry }
 
 end Chapter13FiniteFreeModule
 
@@ -305,9 +346,10 @@ structure Chapter13TwoTermModel (A : Type u) [CommRing A] where
 namespace Chapter13TwoTermModel
 
 /-- Base change of the matrix `K⁰ ⟶ K¹`. -/
-noncomputable def baseChange {A : Type u} [CommRing A]
+noncomputable def baseChange {A : Type u} [commRingA : CommRing A]
     (M : Chapter13TwoTermModel A) (B : Chapter13AAlgebra A) :
-    Chapter13TwoTermModel B.B := by
+    @Chapter13TwoTermModel B.B
+      (@Chapter13AAlgebra.commRingB A commRingA B) := by
   letI := B.commRingB
   letI := B.algebraAB
   exact
@@ -322,23 +364,42 @@ model exposes the two cohomology groups without conflating a kernel with a
 fiberwise dimension statement. -/
 
 noncomputable def chapter13Kernel {A : Type u} [CommRing A]
-    {K0 K1 : ModuleCat.{u} A} (d : K0 ⟶ K1) : ModuleCat.{u} A := by
+    {K0 K1 : ModuleCat.{v} A} (d : K0 ⟶ K1) : ModuleCat.{v} A := by
   letI : HasKernels (ModuleCat A) := ModuleCat.hasKernels_moduleCat
   exact kernel d
 
 noncomputable def chapter13Cokernel {A : Type u} [CommRing A]
-    {K0 K1 : ModuleCat.{u} A} (d : K0 ⟶ K1) : ModuleCat.{u} A := by
+    {K0 K1 : ModuleCat.{v} A} (d : K0 ⟶ K1) : ModuleCat.{v} A := by
   letI : HasCokernels (ModuleCat A) := ModuleCat.hasCokernels_moduleCat
   exact cokernel d
 
+abbrev chapter13TwoTermH0Module {A : Type u} [CommRing A]
+    {K0 K1 : ModuleCat.{u} A} (d : K0 ⟶ K1) : ModuleCat.{u} A :=
+  chapter13Kernel d
+
+abbrev chapter13TwoTermH1Module {A : Type u} [CommRing A]
+    {K0 K1 : ModuleCat.{u} A} (d : K0 ⟶ K1) : ModuleCat.{u} A :=
+  chapter13Cokernel d
+
+/-- The canonical cokernel comparison supplied by tensoring a presentation. -/
+structure Chapter13CokernelBaseChangeComparison {A : Type u} [CommRing A]
+    (M : Chapter13TwoTermModel A) (B : Chapter13AAlgebra A) where
+  comparison :
+    letI := B.commRingB
+    letI := B.algebraAB
+    chapter13Cokernel
+        ((ModuleCat.extendScalars (algebraMap A B.B)).map M.d) ≅
+      (ModuleCat.extendScalars (algebraMap A B.B)).obj
+        (chapter13Cokernel M.d)
+
 abbrev chapter13TwoTermH0 {A : Type u} [CommRing A]
-    (d : ModuleCat.{u} A ⟶ ModuleCat.{u} A) : AddCommGrpCat.{u + 1} :=
-  (AddCommGrpCat.uliftFunctor.{u, u + 1}).obj
+    {K0 K1 : ModuleCat.{u} A} (d : K0 ⟶ K1) : AddCommGrpCat.{u + 1} :=
+  (AddCommGrpCat.uliftFunctor.{u + 1, u}).obj
     (AddCommGrpCat.of (chapter13Kernel d : Type u))
 
 abbrev chapter13TwoTermH1 {A : Type u} [CommRing A]
-    (d : ModuleCat.{u} A ⟶ ModuleCat.{u} A) : AddCommGrpCat.{u + 1} :=
-  (AddCommGrpCat.uliftFunctor.{u, u + 1}).obj
+    {K0 K1 : ModuleCat.{u} A} (d : K0 ⟶ K1) : AddCommGrpCat.{u + 1} :=
+  (AddCommGrpCat.uliftFunctor.{u + 1, u}).obj
     (AddCommGrpCat.of (chapter13Cokernel d : Type u))
 
 /-! ## Fiber cohomology as finite modules over residue fields -/
@@ -349,7 +410,7 @@ structure Chapter13FiberCohomologyModule {C : Chapter13RelativeCurve}
   module : ModuleCat.{u} (C.S.residueField s)
   finite : Module.Finite (C.S.residueField s) (module : Type u)
   additive_identification :
-    (AddCommGrpCat.uliftFunctor.{u, u + 1}).obj
+    (AddCommGrpCat.uliftFunctor.{u + 1, u}).obj
         (AddCommGrpCat.of (module : Type u)) ≅
       chapter04Cohomology (chapter13FiberModule M s) i
 

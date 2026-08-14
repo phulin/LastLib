@@ -93,12 +93,12 @@ theorem chapter04_zero_counting_unit_band_bound_log_analytic_conductor
     ∃ C : ℝ, 0 ≤ C ∧ ∀ T : ℝ, 0 ≤ T →
       ((chapter04ZeroCounting K (T + 1) - chapter04ZeroCounting K T : ℕ) : ℝ) ≤
         C * Real.log (chapter04AnalyticConductor K T) := by
-  obtain ⟨C, hC, hbound⟩ := chapter04_zero_counting_unit_band_bound K
+  obtain ⟨C, hC, hbound⟩ := chapter04_zero_counting_unit_band_bound
   refine ⟨C, hC, ?_⟩
   intro T hT
   rw [chapter04_log_analytic_conductor_eq]
   rw [abs_of_nonneg hT]
-  exact hbound T hT
+  exact hbound T hT K
 
 theorem chapter04_analytic_conductor_keeps_degree_and_discriminant_exponents
     (K : Type*) [Field K] [NumberField K] {c t : ℝ} :

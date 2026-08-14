@@ -84,10 +84,12 @@ noncomputable def chapter05_finite_global_reciprocity_abelian
 /-- In the abelian case the norm quotient has the degree of the extension. -/
 theorem chapter05_finite_global_reciprocity_abelian_index
     [IsAbelianGalois K L]
-    [Fintype (Gal(L / K))]
     (X : Chapter05ClassFormationInput K L I_K I_L C_K C_L) :
     Nat.card (C_K ⧸ chapter05InputNormSubgroup X) = Module.finrank K L := by
-  sorry
+  rw [chapter05_finite_global_reciprocity_index X]
+  exact (Nat.card_congr
+      (Abelianization.equivOfComm (H := Gal(L / K))).toEquiv.symm).trans
+    (IsGalois.card_aut_eq_finrank K L)
 
 /-- The local product identifies with the global Artin map once its class map
 is the degree-zero cap-product map. -/

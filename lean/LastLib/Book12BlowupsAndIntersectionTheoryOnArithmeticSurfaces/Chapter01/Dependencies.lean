@@ -11,6 +11,7 @@ import Mathlib.AlgebraicGeometry.Restrict
 import Mathlib.Data.Finsupp.Basic
 import Mathlib.Data.Matrix.Basic
 import Mathlib.RingTheory.DiscreteValuationRing.Basic
+import Mathlib.RingTheory.Ideal.Quotient.Defs
 import Mathlib.RingTheory.KrullDimension.Basic
 import Mathlib.RingTheory.Length
 import Mathlib.RingTheory.RegularLocalRing.Defs
@@ -62,7 +63,7 @@ structure Chapter01GenericPointData
   residueFieldIso : CommRingCat.of K ≅ B.carrier.residueField eta
   genericPointMap : AlgebraicGeometry.Spec (CommRingCat.of K) ⟶ B.carrier
   genericPointMap_eq :
-    genericPointMap (AlgebraicGeometry.genericPoint
+    genericPointMap (genericPoint
       (AlgebraicGeometry.Spec (CommRingCat.of K))) = eta
   genericPointMap_is_residueFieldMap :
     genericPointMap =
@@ -132,7 +133,9 @@ structure Chapter01GenericFiberProperties
     {B : Chapter01ExcellentConnectedDedekindBaseData K}
     (X : Chapter01RegularArithmeticSurface B) where
   smooth : Smooth (pullback.snd X.structureMap (chapter01GenericPointMap B))
-  geometricallyConnected : Chapter13GeometricallyConnected (chapter01GenericFiber X)
+  geometricallyConnected :
+    Chapter13GeometricallyConnected
+      (pullback.snd X.structureMap (chapter01GenericPointMap B))
 
 /-- A closed surface point together with the closed point of the base below it. -/
 structure Chapter01SurfacePoint
@@ -208,7 +211,7 @@ theorem chapter01_curveMultiplicity_zero_of_not_mem
 noncomputable def chapter01DivisorMultiplicity
     {X : Scheme.{u}} [Chapter01CurveMultiplicityTheory X]
     (D : Chapter01Divisor X) (x : X) : ℤ :=
-  ∑ C in D.support, D C * (chapter01CurveMultiplicity C x : ℤ)
+  ∑ C ∈ D.support, D C * (chapter01CurveMultiplicity C x : ℤ)
 
 def chapter01NoCommonComponent
     {X : Scheme.{u}} (D G : Chapter01Divisor X) : Prop :=
@@ -263,9 +266,9 @@ structure Chapter01PointBlowup
   isBlowupOfPoint : Prop
   genericFiberIso : chapter01GenericFiber target ≅ chapter01GenericFiber X
   genericFiberIso_over :
-    genericFiberIso.hom ≫ pullback.snd target.structureMap
+    genericFiberIso.hom ≫ pullback.snd X.structureMap
         (chapter01GenericPointMap B) =
-      pullback.snd X.structureMap (chapter01GenericPointMap B)
+      pullback.snd target.structureMap (chapter01GenericPointMap B)
   exceptionalCurve : Chapter01Curve target.carrier
   exceptional_vertical : chapter01CurveIsVertical exceptionalCurve
   exceptional_contracted_to_center :
@@ -320,7 +323,7 @@ structure Chapter01PointBlowupProjectionData
 noncomputable def chapter01LocalIntersectionLength
     {X : Scheme.{u}} (x : X)
     (I J : Ideal (X.presheaf.stalk x)) : ℕ∞ :=
-  Module.length (X.presheaf.stalk x) (Ideal.Quotient (I ⊔ J))
+  Module.length (X.presheaf.stalk x) ((X.presheaf.stalk x) ⧸ (I ⊔ J))
 
 structure Chapter01LocalIntersectionWitness
     {K : Type u} [Field K]

@@ -4,15 +4,16 @@ import Mathlib.Data.Matrix.Basic
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.LinearAlgebra.Dimension.Finrank
 import Mathlib.LinearAlgebra.Quotient.Basic
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter13.Section03NegativityAndTheExactKernel
 
 /-!
 # Book 12, Chapter 14: shared interfaces
 
-The preceding chapters are not present in this checkout.  The records below
-are therefore the smallest book-facing interfaces needed by this chapter.
+The preceding chapters expose scheme-level fibre and intersection data.  The
+records below are the smallest numerical interfaces needed by this chapter.
 The finite-dimensional assertions about a special fibre are kept as fields of
-the component-matrix record; the correction and pairing constructions use
-only the displayed matrix operations.
+the component-matrix record so that the correction and pairing constructions
+use only the displayed matrix operations.
 -/
 
 noncomputable section
@@ -22,6 +23,9 @@ open scoped BigOperators
 universe u v
 
 namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter14
+
+open AlgebraicGeometry CategoryTheory
+open LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter13
 
 /-! ## Component vectors and matrices -/
 
@@ -63,6 +67,40 @@ structure Chapter14FiberMatrix (r : ℕ) where
           (fun i j => (matrix i j : ℚ)) v v ≤ 0
   connected : Prop
 
+/-!
+The matrix record is a numerical view of the preceding special-fiber API.
+This constructor keeps the Chapter 13 component cycles, multiplicities, kernel
+theorem, and connected-fiber certificate as the source of the Chapter 14
+fields instead of asking a caller to repeat those facts independently.
+-/
+def chapter14FiberMatrixOfChapter13
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {A : Chapter13ArithmeticSurface R}
+    {s : Spec (CommRingCat.of R)}
+    (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s))
+    (hr : 0 < T.r)
+    (C : Chapter13ConnectedFibersCertificate T) :
+    Chapter14FiberMatrix T.r :=
+  { nonempty := hr
+    multiplicity := chapter13FiberMultiplicityVector T
+    multiplicity_pos := by
+      intro i
+      sorry
+    matrix := chapter13IntersectionMatrix T
+    symmetric := by
+      intro i j
+      sorry
+    fiber_relation := by
+      intro i
+      sorry
+    rational_kernel := by
+      intro v
+      sorry
+    negative_semidefinite := by
+      intro v
+      sorry
+    connected := chapter13GraphConnected T }
+
 def chapter14FiberRationalMatrix {r : ℕ}
     (F : Chapter14FiberMatrix r) : Matrix (Fin r) (Fin r) ℚ :=
   fun i j => (F.matrix i j : ℚ)
@@ -103,6 +141,31 @@ structure Chapter14HorizontalDivisor {r : ℕ} (F : Chapter14FiberMatrix r) wher
   genericDegree_zero : genericDegree = 0
   compatibility :
     chapter14IntegralCompatibility F componentIntersections
+
+/-!
+The horizontal-divisor vocabulary is likewise obtained from the Chapter 13
+intersection and generic-degree interfaces.  In particular, the degree-zero
+hypothesis supplies `genericDegree_zero`, while the divisor/fiber formula
+supplies the component compatibility field.
+-/
+def chapter14HorizontalDivisorOfChapter13
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {A : Chapter13ArithmeticSurface R}
+    {s : Spec (CommRingCat.of R)}
+    (T : Chapter13SpecialFiberIntersectionData (A := A) (s := s))
+    (hr : 0 < T.r)
+    (C : Chapter13ConnectedFibersCertificate T)
+    (G : Chapter13GenericDegreeData T)
+    (D : Chapter13CartierDivisor A)
+    (hD : chapter13DegreeZeroOnGenericFiber G D) :
+    Chapter14HorizontalDivisor (chapter14FiberMatrixOfChapter13 T hr C) :=
+  { componentIntersections := fun i =>
+      T.intersection D.cycle (T.component i).cycle
+    genericDegree := G.degreeOnGenericFiber D
+    genericDegree_zero := by
+      exact hD
+    compatibility := by
+      sorry }
 
 abbrev Chapter14RationalVerticalDivisor {r : ℕ} (_F : Chapter14FiberMatrix r) :=
   Chapter14RationalVector r
@@ -203,7 +266,7 @@ structure Chapter14LocalIntersectionData {r : ℕ}
   genericDisjoint : Chapter14HorizontalDivisor F →
     Chapter14HorizontalDivisor F → Prop
   rawIntersection : ∀ (D G : Chapter14HorizontalDivisor F),
-    genericDisjoint D G → ℚ
+    genericDisjoint D G → ℤ
   raw_symmetric : ∀ (D G : Chapter14HorizontalDivisor F) hDG hGD,
     rawIntersection D G hDG = rawIntersection G D hGD
 
@@ -216,10 +279,16 @@ later chapter or inventing a competing scheme API. -/
 structure Chapter14ArithmeticSurfaceData (X : Type u) (S : Type v) where
   structureMap : X → S
   base_is_dedekind : Prop
+  base_is_dedekind_evidence : base_is_dedekind
   regular : Prop
+  regular_evidence : regular
   proper : Prop
+  proper_evidence : proper
   flat : Prop
+  flat_evidence : flat
   generic_fiber_smooth_geometrically_connected : Prop
+  generic_fiber_smooth_geometrically_connected_evidence :
+    generic_fiber_smooth_geometrically_connected
 
 structure Chapter14FiniteFlatSurfaceMap
     {Y X : Type u} {S : Type v}
@@ -227,7 +296,9 @@ structure Chapter14FiniteFlatSurfaceMap
     (Xdata : Chapter14ArithmeticSurfaceData X S)
     (f : Y → X) where
   finite : Prop
+  finite_evidence : finite
   flat : Prop
+  flat_evidence : flat
   over_base : ∀ y, Xdata.structureMap (f y) = Ydata.structureMap y
   generic_degree : ℕ
   generic_degree_pos : 0 < generic_degree

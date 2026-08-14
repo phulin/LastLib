@@ -194,12 +194,15 @@ def Chapter02HigherPrincipalUnitGroup
     {K : Type*} [Field K] [NumberField K]
     (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) (m : ℕ) :
     Subgroup (Chapter02LocalField v)ˣ :=
-  { carrier := {u | ∃ y : Chapter02LocalIntegerRing v,
-        y ∈ Chapter02LocalIdealPower v m ∧
-          (u : Chapter02LocalField v) = 1 + (y : Chapter02LocalField v)}
-    one_mem' := by sorry
-    mul_mem' := by sorry
-    inv_mem' := by sorry }
+  if hm : m = 0 then
+    (v.adicCompletionIntegers K).unitGroup
+  else
+    { carrier := {u | ∃ y : Chapter02LocalIntegerRing v,
+          y ∈ Chapter02LocalIdealPower v m ∧
+            (u : Chapter02LocalField v) = 1 + (y : Chapter02LocalField v)}
+      one_mem' := by sorry
+      mul_mem' := by sorry
+      inv_mem' := by sorry }
 
 theorem chapter02_higher_principal_units_are_open
     {K : Type*} [Field K] [NumberField K]

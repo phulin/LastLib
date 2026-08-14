@@ -14,6 +14,18 @@ theorem chapter14_adelic_norm_module_identity {K L : Type*} [Field K] [Field L]
     N.moduleK.module (N.ideleNorm y) = N.moduleL.module y :=
   N.module_compatibility y
 
+theorem chapter14_adelic_norm_is_continuous {K L : Type*} [Field K] [Field L]
+    [NumberField K] [NumberField L] [Algebra K L] [FiniteDimensional K L]
+    (N : Chapter14AdelicNormInterface K L) :
+    Continuous N.ideleNorm :=
+  N.ideleNorm_continuous
+
+theorem chapter14_class_norm_is_continuous {K L : Type*} [Field K] [Field L]
+    [NumberField K] [NumberField L] [Algebra K L] [FiniteDimensional K L]
+    (N : Chapter14AdelicNormInterface K L) :
+    Continuous (chapter14NormOnClassGroups N) := by
+  sorry
+
 def chapter14NormGaloisCompatibility {K L : Type*} [Field K] [Field L]
     [NumberField K] [NumberField L] [Algebra K L] [FiniteDimensional K L]
     (N : Chapter14AdelicNormInterface K L)

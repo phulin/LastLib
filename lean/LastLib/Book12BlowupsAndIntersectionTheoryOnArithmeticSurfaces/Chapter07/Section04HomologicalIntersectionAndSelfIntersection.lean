@@ -1,4 +1,5 @@
 import Mathlib.Algebra.Category.ModuleCat.Basic
+import Mathlib.Algebra.Category.ModuleCat.Abelian
 import Mathlib.Algebra.Category.ModuleCat.Monoidal.Symmetric
 import Mathlib.Algebra.Category.ModuleCat.Projective
 import Mathlib.CategoryTheory.Abelian.Projective.Resolution
@@ -6,11 +7,16 @@ import Mathlib.CategoryTheory.Monoidal.Tor
 import Mathlib.RingTheory.Ideal.Quotient.Operations
 import Mathlib.RingTheory.Length
 
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter01.Section02TheTwoDimensionsInAnArithmeticSurface
 import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter07.Dependencies
 
 namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter07
 
 open CategoryTheory
+open scoped BigOperators
+open LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter01
+
+noncomputable section
 
 universe u v
 
@@ -93,7 +99,7 @@ structure Chapter07LocalTorLengthProfile (A : Type u) [CommRing A] where
   vanishes_after_two : ∀ j, 2 < j → torLength j = 0
 
 /-- The category of local module stalks over `A`. -/
-abbrev Chapter07LocalModuleCategory (A : Type u) [CommRing A] := ModuleCat A
+abbrev Chapter07LocalModuleCategory (A : Type u) [CommRing A] := ModuleCat.{u} A
 
 /-- The canonical Tor object for two local module stalks. -/
 abbrev Chapter07CanonicalTorStalk
@@ -147,13 +153,13 @@ by `vanishes_after_two`, and is the concrete form of the source's alternating
 sum over all Tor degrees. -/
 noncomputable def Chapter07LocalEulerCharacteristic
     {A : Type u} [CommRing A] (profile : Chapter07LocalTorLengthProfile A) : ℤ :=
-  ∑ j in Finset.range 3,
+  ∑ j ∈ Finset.range 3,
     Chapter07AlternatingLengthTerm j (profile.torLength j)
 
 theorem chapter07_euler_characteristic_is_finite_tor_sum
     {A : Type u} [CommRing A] (profile : Chapter07LocalTorLengthProfile A) :
     Chapter07LocalEulerCharacteristic profile =
-      ∑ j in Finset.range 3,
+      ∑ j ∈ Finset.range 3,
         Chapter07AlternatingLengthTerm j (profile.torLength j) := by
   rfl
 
@@ -167,18 +173,35 @@ sheaves.
 structure Chapter07ProperCartierTorProfile
     (A : Type u) [CommRing A]
     [IsRegularLocalRing A]
+    [HasProjectiveResolutions (Chapter07LocalModuleCategory A)]
     (C D : Chapter07LocalEffectiveCartierCurve A) where
   surface : Chapter07IsTwoDimensionalRegularLocalRing A
   proper : Chapter07ProperIntersectionAt C D
   profile : Chapter07LocalTorLengthProfile A
+  canonical_profile :
+    ∀ j, profile.torLength j =
+      Chapter07CanonicalTorLength j
+        (ModuleCat.of A (A ⧸ Ideal.span ({C.equation} : Set A)))
+        (ModuleCat.of A (A ⧸ Ideal.span ({D.equation} : Set A)))
   tor_zero_length : profile.torLength 0 =
     Chapter07LocalIntersectionMultiplicity C D
   tor_one_zero : profile.torLength 1 = 0
   tor_two_zero : profile.torLength 2 = 0
 
+theorem chapter07_proper_cartier_tor_profile_exists
+    {A : Type u} [CommRing A]
+    [IsRegularLocalRing A]
+    [HasProjectiveResolutions (Chapter07LocalModuleCategory A)]
+    (hA : Chapter07IsTwoDimensionalRegularLocalRing A)
+    (C D : Chapter07LocalEffectiveCartierCurve A)
+    (hCD : Chapter07ProperIntersectionAt C D) :
+    Nonempty (Chapter07ProperCartierTorProfile A C D) := by
+  sorry
+
 theorem chapter07_euler_characteristic_of_proper_cartier_profile
     {A : Type u} [CommRing A]
     [IsRegularLocalRing A]
+    [HasProjectiveResolutions (Chapter07LocalModuleCategory A)]
     {C D : Chapter07LocalEffectiveCartierCurve A}
     (data : Chapter07ProperCartierTorProfile A C D) :
     Chapter07LocalEulerCharacteristic data.profile =
@@ -187,11 +210,47 @@ theorem chapter07_euler_characteristic_of_proper_cartier_profile
 
 theorem chapter07_euler_characteristic_of_proper_cartier_pair
     {A : Type u} [CommRing A] [IsRegularLocalRing A]
+    [HasProjectiveResolutions (Chapter07LocalModuleCategory A)]
     {C D : Chapter07LocalEffectiveCartierCurve A}
     (data : Chapter07ProperCartierTorProfile A C D) :
     Chapter07LocalEulerCharacteristic data.profile =
       Int.ofNat
         (Chapter07LocalIntersectionMultiplicity C D).toNat := by
+  sorry
+
+/-! ### The module-length/Tor adapter
+
+This record is the concrete Chapter 7 witness that a later divisor-level
+local-intersection class can consume.  It keeps the scheme-theoretic module
+length, the canonical Tor Euler characteristic, and the finite integer local
+number related by explicit fields; improper pairs do not receive such a
+witness merely by truncating an infinite length.
+-/
+
+structure Chapter07ProperCartierModuleLengthTorAdapter
+    (A : Type u) [CommRing A] [IsRegularLocalRing A]
+    [HasProjectiveResolutions (Chapter07LocalModuleCategory A)]
+    (C D : Chapter07LocalEffectiveCartierCurve A) where
+  proper : Chapter07ProperIntersectionAt C D
+  profile : Chapter07ProperCartierTorProfile A C D
+  moduleLength : ℕ∞
+  moduleLength_eq_scheme_theoretic_length :
+    moduleLength = Module.length A (Chapter07SchemeTheoreticIntersectionRing C D)
+  moduleLength_eq_local_intersection :
+    moduleLength = Chapter07LocalIntersectionMultiplicity C D
+  torEulerCharacteristic : ℤ
+  torEulerCharacteristic_eq_profile :
+    torEulerCharacteristic = Chapter07LocalEulerCharacteristic profile.profile
+  torEulerCharacteristic_eq_local_intersection :
+    torEulerCharacteristic = Int.ofNat (Chapter07LocalIntersectionNumber C D)
+
+theorem chapter07_proper_cartier_module_length_tor_adapter_exists
+    {A : Type u} [CommRing A] [IsRegularLocalRing A]
+    [HasProjectiveResolutions (Chapter07LocalModuleCategory A)]
+    (hA : Chapter07IsTwoDimensionalRegularLocalRing A)
+    (C D : Chapter07LocalEffectiveCartierCurve A)
+    (hCD : Chapter07ProperIntersectionAt C D) :
+    Nonempty (Chapter07ProperCartierModuleLengthTorAdapter A C D) := by
   sorry
 
 /-- A local intersection number presented through the Euler characteristic of
@@ -226,23 +285,41 @@ theorem chapter07_common_component_gives_infinite_length
 /-- A self-intersection is recorded through a normal-line-bundle degree or
 through a rational-equivalence move, rather than by the improper tensor
 product length. -/
-/- LOCAL_DEPENDENCY_GUESS: the global divisor/normal-bundle chapters should
-replace this small witness interface by their canonical self-intersection API. -/
-inductive Chapter07SelfIntersectionMethod
-  | normalLineBundle
-  | rationalEquivalenceMove
-
-structure Chapter07SelfIntersectionWitness (A : Type u) where
-  method : Chapter07SelfIntersectionMethod
+structure Chapter07SelfIntersectionWitness
+    {K : Type u} [Field K]
+    {B : Chapter01ExcellentConnectedDedekindBaseData K}
+    {X : Chapter01RegularArithmeticSurface B}
+    [Chapter01VerticalIntersectionTheory X] where
+  curve : Chapter01Curve X.carrier
+  vertical : chapter01CurveIsVertical curve
+  normalLineBundle : Chapter01LineBundle curve.closedSubscheme.subscheme
+  normalLineBundle_eq_restriction :
+    normalLineBundle =
+      Chapter01VerticalIntersectionTheory.restrictionLineBundle
+        (Finsupp.single curve 1) curve
+  normalLineBundleDegree : ℤ
+  normalLineBundleDegree_eq :
+    normalLineBundleDegree =
+      Chapter01VerticalIntersectionTheory.degree curve normalLineBundle
   value : ℤ
+  value_eq_normalLineBundleDegree : value = normalLineBundleDegree
 
-def Chapter07SelfIntersectionValue {A : Type u}
-    (witness : Chapter07SelfIntersectionWitness A) : ℤ :=
+def Chapter07SelfIntersectionValue
+    {K : Type u} [Field K]
+    {B : Chapter01ExcellentConnectedDedekindBaseData K}
+    {X : Chapter01RegularArithmeticSurface B}
+    [Chapter01VerticalIntersectionTheory X]
+    (witness : Chapter07SelfIntersectionWitness (K := K) (B := B) (X := X)) : ℤ :=
   witness.value
 
 theorem chapter07_self_intersection_value_is_recorded
-    {A : Type u} (witness : Chapter07SelfIntersectionWitness A) :
-    Chapter07SelfIntersectionValue witness = witness.value := by
-  rfl
+    {K : Type u} [Field K]
+    {B : Chapter01ExcellentConnectedDedekindBaseData K}
+    {X : Chapter01RegularArithmeticSurface B}
+    [Chapter01VerticalIntersectionTheory X]
+    (witness : Chapter07SelfIntersectionWitness (K := K) (B := B) (X := X)) :
+    Chapter07SelfIntersectionValue witness = witness.normalLineBundleDegree := by
+  sorry
 
+end
 end LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter07

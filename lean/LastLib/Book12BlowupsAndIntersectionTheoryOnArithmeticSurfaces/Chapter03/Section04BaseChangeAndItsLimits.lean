@@ -1,4 +1,4 @@
-import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter03.Section03TheUniversalProperty
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter03.Dependencies
 
 namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter03
 
@@ -40,6 +40,10 @@ structure Chapter03BlowupBaseChangeWitness
   pulledBack : Chapter03Blowup (I.comap f)
   iso : pulledBack.carrier ≅ chapter03BlowupBaseChange B f
   over : iso.hom ≫ chapter03BlowupBaseChangeToSource B f = pulledBack.projection
+  /-- The comparison is also over the original target, not only over the base-change source. -/
+  over_original :
+    iso.hom ≫ chapter03BlowupBaseChangeToBlowup B f ≫ B.projection =
+      pulledBack.projection ≫ f
 
 /- The ring-level statement is recorded separately because it is the input for the relative-Proj
 base-change comparison.  The affine Rees comparison itself remains a local dependency guess in
@@ -51,9 +55,10 @@ structure Chapter03ReesFlatBaseChangeData
   ideal_power_map : ∀ n : ℕ,
     Ideal.map (algebraMap R S) (I ^ n) =
       chapter02LocalizedIdeal (S := S) I ^ n
-  /- LOCAL_DEPENDENCY_GUESS (3.4): the degreewise tensor comparison of Rees algebras is an
-  isomorphism under the flatness hypothesis. -/
-  rees_tensor_base_change : Prop
+  /- The degreewise tensor comparison of Rees algebras is expressed by the canonical comparison
+  supplied by Chapter 2, rather than by an unrelated proposition. -/
+  rees_tensor_base_change :
+    Chapter02AllPowersBaseChangeComparison (S := S) I
 
 theorem chapter03_rees_ideal_power_map
     {R S : Type u} [CommRing R] [CommRing S] [Algebra R S]
@@ -66,7 +71,7 @@ theorem chapter03_rees_ideal_power_map
 theorem chapter03_rees_flat_base_change_data
     {R S : Type u} [CommRing R] [CommRing S] [Algebra R S]
     (I : Ideal R) [Module.Flat R S] :
-    Nonempty (Chapter03ReesFlatBaseChangeData I) := by
+    Nonempty (Chapter03ReesFlatBaseChangeData (S := S) I) := by
   sorry
 
 /- LOCAL_DEPENDENCY_GUESS (3.4): relative `Proj` commutes with the preceding flat Rees
@@ -79,7 +84,7 @@ theorem chapter03_blowup_commutes_with_flat_base_change
 
 theorem chapter03_flat_base_change_over_source
     {X Y : Scheme.{u}} {I : Chapter03CoherentIdeal X}
-    (B : Chapter03Blowup I) (f : Y ⟶ X) (hf : Flat f)
+    (B : Chapter03Blowup I) (f : Y ⟶ X) (_hf : Flat f)
     (W : Chapter03BlowupBaseChangeWitness B f) :
     W.iso.hom ≫ chapter03BlowupBaseChangeToSource B f = W.pulledBack.projection :=
   W.over
@@ -88,27 +93,25 @@ theorem chapter03_flat_base_change_over_source
 
 /- The following predicate names the actual comparison that must be supplied before a non-flat
 base change can be identified with the blowup of the extended ideal. -/
-def Chapter03PowerBaseChangeComparison
+abbrev Chapter03PowerBaseChangeComparison
     {R S : Type u} [CommRing R] [CommRing S] [Algebra R S]
     (I : Ideal R) (n : ℕ) : Prop :=
-  Nonempty
-    (S ⊗[R] (I ^ n : Submodule R R) ≃ₗ[S]
-      (chapter02LocalizedIdeal (S := S) I ^ n : Submodule S S))
+  Chapter02PowerBaseChangeComparison (S := S) I n
 
-def Chapter03AllPowersBaseChangeComparison
+abbrev Chapter03AllPowersBaseChangeComparison
     {R S : Type u} [CommRing R] [CommRing S] [Algebra R S]
     (I : Ideal R) : Prop :=
-  ∀ n : ℕ, Chapter03PowerBaseChangeComparison I n
+  Chapter02AllPowersBaseChangeComparison (S := S) I
 
-def Chapter03ArbitraryBaseChangeMayHavePowerTorsion
+abbrev Chapter03ArbitraryBaseChangeMayHavePowerTorsion
     {R S : Type u} [CommRing R] [CommRing S] [Algebra R S]
     (I : Ideal R) : Prop :=
-  ¬ Chapter03AllPowersBaseChangeComparison I
+  Chapter02ArbitraryBaseChangeMayHavePowerTorsion (S := S) I
 
 theorem chapter03_flat_base_change_has_power_comparisons
     {R S : Type u} [CommRing R] [CommRing S] [Algebra R S]
     (I : Ideal R) [Module.Flat R S] :
-    Chapter03AllPowersBaseChangeComparison I := by
+    Chapter03AllPowersBaseChangeComparison (S := S) I := by
   sorry
 
 def chapter03FiberAssociatedGradedRing
@@ -123,23 +126,22 @@ theorem chapter03_fiber_associated_graded_ring_def
 /-! ### Regular centers and exceptional projective bundles -/
 
 structure Chapter03RegularClosedImmersion
-    {Z X : Scheme.{u}} (i : Z ⟶ X) (r : ℕ) : Prop where
+    {Z X : Scheme.{u}} (i : Z ⟶ X) : Prop where
   closed : IsClosedImmersion i
   regularSequence :
     ∀ z : Z, ∃ rs : List (X.presheaf.stalk (i z)),
-      rs.length = r ∧
-        RingTheory.Sequence.IsRegular (X.presheaf.stalk (i z)) rs ∧
-          RingHom.ker (i.stalkMap z).hom = Ideal.ofList rs
+      RingTheory.Sequence.IsRegular (X.presheaf.stalk (i z)) rs ∧
+        RingHom.ker (i.stalkMap z).hom = Ideal.ofList rs
 
 def Chapter03RegularClosedCenter
     {X : Scheme.{u}} (I : X.IdealSheafData) : Prop :=
-  ∃ r : ℕ, Chapter03RegularClosedImmersion I.subschemeι r
+  Chapter03RegularClosedImmersion I.subschemeι
 
 def Chapter03IntegralRegularClosedCenter
     {X : Scheme.{u}} (I : X.IdealSheafData) : Prop :=
   IsIntegral I.subscheme ∧ Chapter03RegularClosedCenter I
 
-def chapter03AffineConormalModule
+abbrev chapter03AffineConormalModule
     {R : Type u} [CommRing R] (J : Ideal R) :=
   J.Cotangent
 
@@ -153,23 +155,67 @@ theorem chapter03_affine_normal_is_dual_conormal
       Module.Dual (R ⧸ J) (chapter03AffineConormalModule J) :=
   rfl
 
+/- A local conormal comparison must retain its scalar action.  The source section module is
+supplied explicitly because the pinned sheaf API exposes sections as additive groups, while the
+cotangent target already carries its canonical quotient-module structure. -/
+structure Chapter03AffineModuleEquivalence
+    (R M N : Type u) [CommRing R] [AddCommGroup M] [AddCommGroup N]
+    [Module R N] where
+  [sourceModule : Module R M]
+  equivalence : M ≃ₗ[R] N
+
 structure Chapter03RegularCenterExceptionalData
     {X : Scheme.{u}} {I : Chapter03CoherentIdeal X}
     (B : Chapter03Blowup I) where
   regularCenter : Chapter03RegularClosedCenter I.ideal
   conormal : I.ideal.subscheme.Modules
   normal : I.ideal.subscheme.Modules
-  conormal_is_I_mod_I_squared : Prop
-  normal_is_dual_conormal : Prop
+  conormal_is_I_mod_I_squared :
+    ∀ U : X.affineOpens,
+      Chapter03AffineModuleEquivalence
+        (Γ(X, U.1) ⧸ (I.ideal.ideal U))
+        (Γ(conormal, I.ideal.subschemeι ⁻¹ᵁ U.1))
+        (I.ideal.ideal U).Cotangent
+  conormal_target_restriction :
+    ∀ {U V : X.affineOpens} (_h : V.1 ≤ U.1),
+      (I.ideal.ideal U).Cotangent →+
+        (I.ideal.ideal V).Cotangent
+  conormal_restriction_natural :
+    ∀ {U V : X.affineOpens} (h : V.1 ≤ U.1)
+      (hpre : I.ideal.subschemeι ⁻¹ᵁ V.1 ≤ I.ideal.subschemeι ⁻¹ᵁ U.1)
+      (x : Γ(conormal, I.ideal.subschemeι ⁻¹ᵁ U.1)),
+      (conormal_is_I_mod_I_squared V).equivalence
+          ((Scheme.Modules.presheaf conormal).map (homOfLE hpre).op x) =
+        (conormal_target_restriction h)
+          ((conormal_is_I_mod_I_squared U).equivalence x)
+  normal_is_dual_conormal :
+    ∀ U : X.affineOpens,
+      Chapter03AffineModuleEquivalence
+        (Γ(X, U.1) ⧸ (I.ideal.ideal U))
+        (Γ(normal, I.ideal.subschemeι ⁻¹ᵁ U.1))
+        (Module.Dual (Γ(X, U.1) ⧸ (I.ideal.ideal U))
+          (I.ideal.ideal U).Cotangent)
+  normal_target_restriction :
+    ∀ {U V : X.affineOpens} (_h : V.1 ≤ U.1),
+      Module.Dual (Γ(X, U.1) ⧸ (I.ideal.ideal U))
+          (I.ideal.ideal U).Cotangent →+
+        Module.Dual (Γ(X, V.1) ⧸ (I.ideal.ideal V))
+          (I.ideal.ideal V).Cotangent
+  normal_restriction_natural :
+    ∀ {U V : X.affineOpens} (h : V.1 ≤ U.1)
+      (hpre : I.ideal.subschemeι ⁻¹ᵁ V.1 ≤ I.ideal.subschemeι ⁻¹ᵁ U.1)
+      (x : Γ(normal, I.ideal.subschemeι ⁻¹ᵁ U.1)),
+      (normal_is_dual_conormal V).equivalence
+          ((Scheme.Modules.presheaf normal).map (homOfLE hpre).op x) =
+        (normal_target_restriction h)
+          ((normal_is_dual_conormal U).equivalence x)
   projectivized_conormal : Chapter04ProjectiveBundle I.ideal.subscheme
-  projectivized_conormal_module : projectivized_conormal.E = conormal
+  projectivized_conormal_module : projectivized_conormal.E ≅ conormal
   exceptional_iso :
     chapter03BlowupExceptionalSubscheme B ≅ projectivized_conormal.space
   exceptional_iso_over_center :
     exceptional_iso.hom ≫ projectivized_conormal.projection =
       chapter03BlowupExceptionalToCenter B
-  projectivization_uses_quotient_convention : Prop
-  projectivized_dual_normal_identification : Prop
 
 /- LOCAL_DEPENDENCY_GUESS (3.4): the exceptional divisor of a blowup along a regular closed
 center is the projective bundle of the conormal module, equivalently of the dual normal module
@@ -189,14 +235,18 @@ abbrev Chapter03AffineAssociatedGradedRing
 
 structure Chapter03AssociatedGradedAlgebraData
     {R : Type u} [CommRing R] (J : Ideal R) where
-  components : ℕ → Submodule ℤ (Chapter03AffineAssociatedGradedRing J)
-  graded : GradedAlgebra components
+  graded : Chapter02GradedAlgebra ℤ (Chapter03AffineAssociatedGradedRing J)
+  component_is_canonical :
+    ∀ n (x : Chapter03AffineAssociatedGradedRing J),
+      x ∈ graded.component n ↔
+        ∃ y : chapter02AssociatedGradedPiece J n,
+          DirectSum.of (fun n : ℕ => chapter02AssociatedGradedPiece J n) n y = x
 
 noncomputable def chapter03ProjectivizedNormalCone
     {R : Type u} [CommRing R] {J : Ideal R}
     (D : Chapter03AssociatedGradedAlgebraData J) : Scheme.{u} :=
-  letI : GradedAlgebra D.components := D.graded
-  AlgebraicGeometry.«Proj» D.components
+  letI : GradedAlgebra D.graded.component := D.graded.graded
+  AlgebraicGeometry.«Proj» D.graded.component
 
 structure Chapter03AffineNormalConeDescription
     {R : Type u} [CommRing R] (J : Ideal R) where
@@ -205,15 +255,34 @@ structure Chapter03AffineNormalConeDescription
   projectivizedNormalCone_is_Proj_associatedGraded :
     projectivizedNormalCone = chapter03ProjectivizedNormalCone associatedGraded
 
+def chapter03BlowupExceptionalRestriction
+    {X : Scheme.{u}} {I : Chapter03CoherentIdeal X}
+    (B : Chapter03Blowup I) (U : X.affineOpens) : Scheme.{u} :=
+  pullback (chapter03BlowupExceptionalInclusion B)
+    ((B.projection ⁻¹ᵁ U.1).ι)
+
+def chapter03BlowupExceptionalRestrictionToCenter
+    {X : Scheme.{u}} {I : Chapter03CoherentIdeal X}
+    (B : Chapter03Blowup I) (U : X.affineOpens) :
+    chapter03BlowupExceptionalRestriction B U ⟶ I.ideal.subscheme :=
+  pullback.fst (chapter03BlowupExceptionalInclusion B)
+      ((B.projection ⁻¹ᵁ U.1).ι) ≫ chapter03BlowupExceptionalToCenter B
+
 structure Chapter03SingularCenterNormalConeData
     {X : Scheme.{u}} {I : Chapter03CoherentIdeal X}
     (B : Chapter03Blowup I) where
   local_description :
     ∀ U : X.affineOpens,
       Chapter03AffineNormalConeDescription (I.ideal.ideal U)
-  exceptional_is_projectivized_normal_cone : Prop
-  exceptional_may_be_nonreduced : Prop
-  exceptional_may_be_reducible : Prop
+  local_to_center :
+    ∀ U : X.affineOpens,
+      (local_description U).projectivizedNormalCone ⟶ I.ideal.subscheme
+  exceptional_is_projectivized_normal_cone :
+    ∀ U : X.affineOpens,
+      ∃ e : chapter03BlowupExceptionalRestriction B U ≅
+          (local_description U).projectivizedNormalCone,
+        e.hom ≫ local_to_center U =
+          chapter03BlowupExceptionalRestrictionToCenter B U
 
 /- LOCAL_DEPENDENCY_GUESS (3.4): for a singular center the exceptional locus is locally
 `Proj gr_I(O_X)` and no reducedness or irreducibility is implied. -/

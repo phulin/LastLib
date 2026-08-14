@@ -30,7 +30,7 @@ theorem chapter07_intersection_equations_are_regular_sequence
     (C D : Chapter07LocalEffectiveCartierCurve A)
     (hC : Chapter07PassesThrough C) (hD : Chapter07PassesThrough D)
     (hCD : Chapter07ProperIntersectionAt C D) :
-    IsRegular A [C.equation, D.equation] := by
+    RingTheory.Sequence.IsRegular A [C.equation, D.equation] := by
   sorry
 
 theorem chapter07_proper_intersection_at_of_no_common_curve_component
@@ -53,6 +53,7 @@ theorem chapter07_proper_intersection_quotient_is_artinian
 theorem chapter07_proper_intersection_quotient_has_zero_dimension
     {A : Type u} [CommRing A] [IsLocalRing A] [IsNoetherianRing A]
     (C D : Chapter07LocalEffectiveCartierCurve A)
+    (hC : Chapter07PassesThrough C) (hD : Chapter07PassesThrough D)
     (hCD : Chapter07ProperIntersectionAt C D) :
     ringKrullDim (A ⧸ Chapter07IntersectionIdeal C D) = (0 : WithBot ℕ∞) := by
   sorry
@@ -77,7 +78,7 @@ theorem chapter07_scheme_theoretic_intersection_ring
     {A : Type u} [CommRing A]
     (C D : Chapter07LocalEffectiveCartierCurve A) :
     Chapter07SchemeTheoreticIntersectionRing C D =
-      A ⧸ Chapter07IntersectionIdeal C D := by
+      (A ⧸ Chapter07IntersectionIdeal C D) := by
   rfl
 
 /-- Properness identifies the `ℕ`-valued presentation with the canonical `ℕ∞` length. -/
@@ -127,21 +128,21 @@ abbrev Chapter07SignedLocalCartierDivisor (A : Type u) [CommRing A] :=
 
 /-- Supportwise properness for a pair of signed divisors. -/
 noncomputable def Chapter07ProperSignedPair
-    {A : Type u} [CommRing A] [IsLocalRing A]
+    {A : Type u} [CommRing A] [IsLocalRing A] [IsNoetherianRing A]
     (D E : Chapter07SignedLocalCartierDivisor A) : Prop := by
   classical
   exact ∀ C ∈ D.support, ∀ C' ∈ E.support, Chapter07ProperIntersectionAt C C'
 
 /-- Bilinear extension of local intersection from effective terms to signed divisors. -/
 noncomputable def Chapter07SignedLocalIntersection
-    {A : Type u} [CommRing A]
+    {A : Type u} [CommRing A] [IsLocalRing A] [IsNoetherianRing A]
     (D E : Chapter07SignedLocalCartierDivisor A) : ℤ := by
   classical
-  exact ∑ C in D.support, ∑ C' in E.support,
+  exact ∑ C ∈ D.support, ∑ C' ∈ E.support,
     (D C) * (E C') * Int.ofNat (Chapter07LocalIntersectionNumber C C')
 
 theorem chapter07_signed_local_intersection_add_left
-    {A : Type u} [CommRing A] [IsLocalRing A]
+    {A : Type u} [CommRing A] [IsLocalRing A] [IsNoetherianRing A]
     (D₁ D₂ E : Chapter07SignedLocalCartierDivisor A)
     (h : Chapter07ProperSignedPair (D₁ + D₂) E) :
     Chapter07SignedLocalIntersection (D₁ + D₂) E =
@@ -149,7 +150,7 @@ theorem chapter07_signed_local_intersection_add_left
   sorry
 
 theorem chapter07_signed_local_intersection_add_right
-    {A : Type u} [CommRing A] [IsLocalRing A]
+    {A : Type u} [CommRing A] [IsLocalRing A] [IsNoetherianRing A]
     (D E₁ E₂ : Chapter07SignedLocalCartierDivisor A)
     (h : Chapter07ProperSignedPair D (E₁ + E₂)) :
     Chapter07SignedLocalIntersection D (E₁ + E₂) =
@@ -210,5 +211,58 @@ theorem chapter07_local_intersection_number_comm
     (hCD : Chapter07ProperIntersectionAt C D) :
     Chapter07LocalIntersectionNumber C D = Chapter07LocalIntersectionNumber D C := by
   sorry
+
+/-! ### Adapter laws for later divisor-level theories
+
+The later arithmetic-surface chapters work with their own signed divisor and
+point types.  This interface keeps the Chapter 7 content reusable without
+importing those later chapters: a concrete instance supplies the local module
+length and Tor Euler characteristic, while the laws below expose the
+symmetry, additivity, and positivity needed by the divisor-level API.
+-/
+
+class Chapter07LocalIntersectionTheoryAdapter
+    (Divisor P : Type u) [AddCommGroup Divisor]
+    (noCommon : Divisor → Divisor → Prop)
+    (effective : Divisor → Prop)
+    (passesThrough : Divisor → P → Prop) where
+  localIntersection :
+    ∀ (D G : Divisor), noCommon D G → P → ℤ
+  symmetric :
+    ∀ (D G : Divisor) (h : noCommon D G) (h' : noCommon G D) (p : P),
+      localIntersection D G h p = localIntersection G D h' p
+  moduleLength :
+    ∀ (C G : Divisor), effective C → effective G → noCommon C G → P → ℕ∞
+  torEulerCharacteristic :
+    ∀ (C G : Divisor), effective C → effective G → noCommon C G → P → ℤ
+  moduleLength_eq_torEulerCharacteristic :
+    ∀ (C G : Divisor) (hC : effective C) (hG : effective G)
+      (h : noCommon C G) (p : P),
+      torEulerCharacteristic C G hC hG h p =
+        Int.ofNat (moduleLength C G hC hG h p).toNat
+  localIntersection_eq_moduleLength :
+    ∀ (C G : Divisor) (hC : effective C) (hG : effective G)
+      (h : noCommon C G) (p : P),
+      localIntersection C G h p =
+        Int.ofNat (moduleLength C G hC hG h p).toNat
+  localIntersection_eq_torEulerCharacteristic :
+    ∀ (C G : Divisor) (hC : effective C) (hG : effective G)
+      (h : noCommon C G) (p : P),
+      localIntersection C G h p = torEulerCharacteristic C G hC hG h p
+  add_left :
+    ∀ (D₁ D₂ G : Divisor) (h₁ : noCommon D₁ G) (h₂ : noCommon D₂ G)
+      (h₁₂ : noCommon (D₁ + D₂) G) (p : P),
+      localIntersection (D₁ + D₂) G h₁₂ p =
+        localIntersection D₁ G h₁ p + localIntersection D₂ G h₂ p
+  add_right :
+    ∀ (D E₁ E₂ : Divisor) (h₁ : noCommon D E₁) (h₂ : noCommon D E₂)
+      (h₁₂ : noCommon D (E₁ + E₂)) (p : P),
+      localIntersection D (E₁ + E₂) h₁₂ p =
+        localIntersection D E₁ h₁ p + localIntersection D E₂ h₂ p
+  positive_iff :
+    ∀ (C G : Divisor) (_hC : effective C) (_hG : effective G)
+      (h : noCommon C G) (p : P),
+      0 < localIntersection C G h p ↔
+        passesThrough C p ∧ passesThrough G p
 
 end LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter07

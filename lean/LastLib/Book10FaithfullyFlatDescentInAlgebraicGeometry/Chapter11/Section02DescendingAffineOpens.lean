@@ -14,6 +14,8 @@ universe u v
 
 namespace SchemeDescent
 
+noncomputable section
+
 variable {S T : Scheme.{u}}
 
 /-! ### Affine-local reduction -/
@@ -30,7 +32,30 @@ structure FiniteAffineRefinement (p : T ⟶ S) (U : S.Opens) where
 theorem exists_finite_affine_refinement {p : T ⟶ S}
     (hp : Scheme.IsFpqcMorphism p) {U : S.Opens} (hU : IsAffineOpen U) :
     Nonempty (FiniteAffineRefinement p U) := by
-  sorry
+  have hspec : IsSpectralMap p := @Scheme.Hom.isSpectralMap _ _ p hp.quasiCompact
+  have hcov : IsCompactOpenCovered (fun _ : Unit => p) (U : Set S) :=
+    IsCompactOpenCovered.of_finite_of_isSpectralMap
+      (fun _ : Unit => hspec)
+      (by
+        intro x hx
+        obtain ⟨y, hy⟩ := hp.surjective.surj x
+        exact ⟨(), ⟨y, hy⟩⟩)
+      U.2 hU.isCompact
+  obtain ⟨n, a, V, hV, hcover⟩ := hcov.exists_mem_of_isBasis
+    (fun _ : Unit => T.isBasis_affineOpens)
+    (fun _ _ h => h.isCompact)
+  refine ⟨{
+    base_affine := hU
+    cardinal := n
+    source_open := V
+    source_affine := fun i => hV i
+    source_over_base := ?_
+    images_cover := hcover
+  }⟩
+  intro i x hx
+  change p x ∈ (U : Set S)
+  rw [← hcover]
+  exact Set.mem_iUnion.mpr ⟨i, ⟨x, hx, rfl⟩⟩
 
 def refinementSourceScheme {p : T ⟶ S} {U : S.Opens}
     (r : FiniteAffineRefinement p U) (i : Fin r.cardinal) : Scheme :=
@@ -56,17 +81,17 @@ def refinementPairwiseSnd {p : T ⟶ S} {U : S.Opens}
     refinementPairwiseFiberProduct r i j ⟶ refinementSourceScheme r j :=
   pullback.snd (refinementSourceMap r i) (refinementSourceMap r j)
 
-/-- The affine faithfully flat model obtained after choosing the finite affine refinement.
-
-The ring presentation is kept as an explicit interface so later proofs can use the usual
-`Spec.map` and Amitsur equalizer APIs without assuming that the original fpqc morphism was affine.
+/-- A ring presentation for the affine case. After an affine-local finite refinement, later proofs
+can use the usual `Spec.map` and Amitsur equalizer APIs; existence of this record is not asserted
+for an arbitrary original fpqc morphism.
 -/
 structure AffineFaithfullyFlatModel {S T : Scheme.{u}} (p : T ⟶ S) where
-  A B : CommRingCat.{u}
-  base : Scheme.{u} ≅ Scheme.Spec A
-  cover : Scheme.{u} ≅ Scheme.Spec B
+  A : CommRingCat.{u}
+  B : CommRingCat.{u}
+  base : S ≅ Scheme.Spec.obj (Opposite.op (A : CommRingCat.{u}))
+  cover : T ≅ Scheme.Spec.obj (Opposite.op (B : CommRingCat.{u}))
   ring_map : A ⟶ B
-  compatible : cover.hom ≫ Scheme.Spec.map ring_map.hom =
+  compatible : cover.hom ≫ Scheme.Spec.map ring_map.op =
     p ≫ base.hom
   faithfully_flat : RingHom.FaithfullyFlat ring_map.hom
 
@@ -86,16 +111,19 @@ def kernelPairToBase (p : T ⟶ S) : kernelPair p ⟶ S :=
 @[simp]
 theorem kernelPairFst_comp (p : T ⟶ S) :
     kernelPairFst p ≫ p = kernelPairSnd p ≫ p := by
-  simp [kernelPairFst, kernelPairSnd]
+  exact pullback.condition
 
 def descentObject {S T : Scheme.{u}} {p : T ⟶ S} (D : Datum p) : Over T :=
-  D.obj PUnit
+  D.obj PUnit.unit
 
 /-- The comparison isomorphism on the kernel pair, with the first projection as source. -/
 noncomputable def kernelPairIso {S T : Scheme.{u}} {p : T ⟶ S} (D : Datum p) :
     (Over.pullback (kernelPairFst p)).obj (descentObject D) ≅
       (Over.pullback (kernelPairSnd p)).obj (descentObject D) := by
-  exact D.iso (kernelPairToBase p) (kernelPairFst p) (kernelPairSnd p)
+  exact D.iso (kernelPairToBase p) (kernelPairFst p) (kernelPairSnd p) (by rfl)
+    (by
+      change kernelPairSnd p ≫ p = kernelPairFst p ≫ p
+      exact (kernelPairFst_comp p).symm)
 
 def relationScheme {S T : Scheme.{u}} {p : T ⟶ S} (D : Datum p) : Scheme :=
   ((Over.pullback (kernelPairFst p)).obj (descentObject D)).left
@@ -130,22 +158,74 @@ theorem isDatumStableAffineOpen_iff {S T : Scheme.{u}} {p : T ⟶ S} (D : Datum 
 theorem relationFirst_isFaithfullyFlat {S T : Scheme.{u}} {p : T ⟶ S}
     (D : Datum p) (hp : Scheme.IsFpqcMorphism p) :
     Scheme.IsFaithfullyFlat (relationFirst D) := by
-  sorry
+  change Flat (pullback.fst (descentObject D).hom (kernelPairFst p)) ∧
+    Surjective (pullback.fst (descentObject D).hom (kernelPairFst p))
+  exact ⟨
+    @AlgebraicGeometry.Flat.instFstScheme _ _ _ (descentObject D).hom (kernelPairFst p)
+      (@AlgebraicGeometry.Flat.instFstScheme _ _ _ p p hp.1),
+    @AlgebraicGeometry.Surjective.instFstScheme _ _ _ (descentObject D).hom (kernelPairFst p)
+      (@AlgebraicGeometry.Surjective.instFstScheme _ _ _ p p hp.2.1)⟩
 
 theorem relationSecond_isFaithfullyFlat {S T : Scheme.{u}} {p : T ⟶ S}
     (D : Datum p) (hp : Scheme.IsFpqcMorphism p) :
     Scheme.IsFaithfullyFlat (relationSecond D) := by
-  sorry
+  have hIso : IsIso (kernelPairIso D).hom.left := IsIso.mk' ⟨
+    (kernelPairIso D).inv.left,
+    Over.inv_left_hom_left (kernelPairIso D),
+    Over.hom_left_inv_left (kernelPairIso D)⟩
+  have hpull : IsPullback (kernelPairIso D).hom.left (kernelPairIso D).hom.left
+      (𝟙 _) (𝟙 _) :=
+    @IsPullback.of_horiz_isIso _ _ _ _ _ _ _ _ _ _ hIso (by infer_instance)
+      (CommSq.mk (by simp))
+  have hflat : Flat (kernelPairIso D).hom.left :=
+    AlgebraicGeometry.Flat.isStableUnderBaseChange.of_isPullback hpull
+      (AlgebraicGeometry.Flat.instIsMultiplicativeScheme.id_mem _)
+  have hsurj : Surjective (kernelPairIso D).hom.left :=
+    AlgebraicGeometry.Surjective.instIsStableUnderBaseChangeScheme.of_isPullback hpull
+      ⟨Function.surjective_id⟩
+  constructor
+  · change Flat ((kernelPairIso D).hom.left ≫
+      pullback.fst (descentObject D).hom (kernelPairSnd p))
+    exact @AlgebraicGeometry.Flat.comp _ _ _ (kernelPairIso D).hom.left
+      (pullback.fst (descentObject D).hom (kernelPairSnd p))
+      hflat
+      (@AlgebraicGeometry.Flat.instFstScheme _ _ _ (descentObject D).hom (kernelPairSnd p)
+        (@AlgebraicGeometry.Flat.instSndScheme _ _ _ p p hp.1))
+  · change Surjective ((kernelPairIso D).hom.left ≫
+      pullback.fst (descentObject D).hom (kernelPairSnd p))
+    let hpb : Surjective (pullback.fst (descentObject D).hom (kernelPairSnd p)) :=
+      @AlgebraicGeometry.Surjective.instFstScheme _ _ _ (descentObject D).hom (kernelPairSnd p)
+        (@AlgebraicGeometry.Surjective.instSndScheme _ _ _ p p hp.2.1)
+    exact ⟨hpb.surj.comp hsurj.surj⟩
 
 theorem relationFirst_quasiCompact {S T : Scheme.{u}} {p : T ⟶ S}
     (D : Datum p) (hp : Scheme.IsFpqcMorphism p) :
     QuasiCompact (relationFirst D) := by
-  sorry
+  change QuasiCompact (pullback.fst (descentObject D).hom (kernelPairFst p))
+  exact @AlgebraicGeometry.instQuasiCompactFstScheme _ _ _ (descentObject D).hom
+    (kernelPairFst p) (@AlgebraicGeometry.instQuasiCompactFstScheme _ _ _ p p hp.2.2)
 
 theorem relationSecond_quasiCompact {S T : Scheme.{u}} {p : T ⟶ S}
     (D : Datum p) (hp : Scheme.IsFpqcMorphism p) :
     QuasiCompact (relationSecond D) := by
-  sorry
+  have hIso : IsIso (kernelPairIso D).hom.left := IsIso.mk' ⟨
+    (kernelPairIso D).inv.left,
+    Over.inv_left_hom_left (kernelPairIso D),
+    Over.hom_left_inv_left (kernelPairIso D)⟩
+  have hpull : IsPullback (kernelPairIso D).hom.left (kernelPairIso D).hom.left
+      (𝟙 _) (𝟙 _) :=
+    @IsPullback.of_horiz_isIso _ _ _ _ _ _ _ _ _ _ hIso (by infer_instance)
+      (CommSq.mk (by simp))
+  have hqc : QuasiCompact (kernelPairIso D).hom.left :=
+    AlgebraicGeometry.quasiCompact_isStableUnderBaseChange.of_isPullback hpull
+      (by infer_instance)
+  have hpb : QuasiCompact (pullback.fst (descentObject D).hom (kernelPairSnd p)) :=
+    @AlgebraicGeometry.instQuasiCompactFstScheme _ _ _ (descentObject D).hom
+      (kernelPairSnd p)
+      (@AlgebraicGeometry.instQuasiCompactSndScheme _ _ _ p p hp.2.2)
+  change QuasiCompact ((kernelPairIso D).hom.left ≫
+    pullback.fst (descentObject D).hom (kernelPairSnd p))
+  exact AlgebraicGeometry.quasiCompact_isStableUnderComposition.comp_mem _ _ hqc hpb
 
 def orbit {S T : Scheme.{u}} {p : T ⟶ S} (D : Datum p)
     (x : (descentObject D).left) : Set (descentObject D).left :=
@@ -155,14 +235,51 @@ def orbit {S T : Scheme.{u}} {p : T ⟶ S} (D : Datum p)
 structure FiniteAffineOrbitCover {S T : Scheme.{u}} {p : T ⟶ S} (D : Datum p)
     (x : (descentObject D).left) where
   cardinal : ℕ
-  open : Fin cardinal → (descentObject D).left.Opens
-  affine : ∀ i, IsAffineOpen (open i)
-  covers : orbit D x ⊆ ⋃ i, (open i : Set (descentObject D).left)
+  openSet : Fin cardinal → (descentObject D).left.Opens
+  affine : ∀ i, IsAffineOpen (openSet i)
+  covers : orbit D x ⊆ ⋃ i, (openSet i : Set (descentObject D).left)
 
 theorem exists_finite_affine_orbit_cover {S T : Scheme.{u}} {p : T ⟶ S}
     (D : Datum p) (hp : Scheme.IsFpqcMorphism p) (x : (descentObject D).left) :
     Nonempty (FiniteAffineOrbitCover D x) := by
-  sorry
+  classical
+  obtain ⟨U, hU, hxU, _⟩ :=
+    exists_isAffineOpen_mem_and_subset (U := (⊤ : (descentObject D).left.Opens)) (by simp)
+  have hq : QuasiCompact (relationFirst D) := relationFirst_quasiCompact D hp
+  let W : (relationScheme D).Opens := relationFirst D ⁻¹ᵁ U
+  have hW : IsCompact (W : Set (relationScheme D)) := by
+    dsimp [W]
+    exact hq.isCompact_preimage (U : Set (descentObject D).left) U.2 hU.isCompact
+  let K : Set (descentObject D).left := relationSecond D '' (W : Set (relationScheme D))
+  have hK : IsCompact K := by
+    dsimp [K]
+    exact hW.image (relationSecond D).continuous
+  obtain ⟨s, hs⟩ := hK.elim_finite_subcover
+    (fun V : (descentObject D).left.affineOpens => (V : Set (descentObject D).left))
+    (fun V => V.1.2)
+    (by
+      intro y hy
+      exact Set.mem_iUnion.mpr
+        ((descentObject D).left.isBasis_affineOpens.isOpenCover.exists_mem y))
+  let e : s ≃ Fin (Fintype.card s) := Fintype.equivFin s
+  refine ⟨{
+    cardinal := Fintype.card s
+    openSet := fun i => ((e.symm i).1 : (descentObject D).left.Opens)
+    affine := fun i => (e.symm i).1.2
+    covers := ?_
+  }⟩
+  intro y hy
+  rcases hy with ⟨z, hzx, hzy⟩
+  have hzW : z ∈ (W : Set (relationScheme D)) := by
+    change relationFirst D z ∈ (U : Set (descentObject D).left)
+    rw [hzx]
+    exact hxU
+  have hyK : y ∈ K := by
+    exact ⟨z, hzW, hzy⟩
+  obtain ⟨V, hVs, hyV⟩ := Set.mem_iUnion₂.mp (hs hyK)
+  obtain ⟨i, hi⟩ := e.symm.surjective ⟨V, hVs⟩
+  refine Set.mem_iUnion.mpr ⟨i, ?_⟩
+  simpa [hi] using hyV
 
 theorem exists_stable_affine_open_mem {S T : Scheme.{u}} {p : T ⟶ S}
     (D : Datum p) (hp : Scheme.IsFpqcMorphism p) (x : (descentObject D).left) :
@@ -172,25 +289,38 @@ theorem exists_stable_affine_open_mem {S T : Scheme.{u}} {p : T ⟶ S}
 
 /-- A cover by affine opens that are stable under the descent datum. -/
 structure StableAffineOpenCover {S T : Scheme.{u}} {p : T ⟶ S} (D : Datum p) where
-  index : Type v
-  open : index → (descentObject D).left.Opens
-  affine : ∀ i, IsAffineOpen (open i)
-  stable : ∀ i, IsDatumStableAffineOpen D (open i)
-  covers : ∀ x : (descentObject D).left, ∃ i, x ∈ open i
+  index : Type (max u v)
+  openSet : index → (descentObject D).left.Opens
+  affine : ∀ i, IsAffineOpen (openSet i)
+  stable : ∀ i, IsDatumStableAffineOpen D (openSet i)
+  covers : ∀ x : (descentObject D).left, ∃ i, x ∈ openSet i
 
 theorem stableAffineOpenCover {S T : Scheme.{u}} {p : T ⟶ S} (D : Datum p)
     (hp : Scheme.IsFpqcMorphism p) :
     Nonempty (StableAffineOpenCover D) := by
-  sorry
+  classical
+  let V : ∀ x : (descentObject D).left, (descentObject D).left.Opens := fun x ↦
+    (Classical.choose (exists_stable_affine_open_mem D hp x))
+  have hV : ∀ x : (descentObject D).left,
+      x ∈ V x ∧ IsDatumStableAffineOpen D (V x) := by
+    intro x
+    exact Classical.choose_spec (exists_stable_affine_open_mem D hp x)
+  refine ⟨{
+    index := ULift ((descentObject D).left : Type u)
+    openSet := fun x => V x.down
+    affine := fun x => (hV x.down).2.1
+    stable := fun x => (hV x.down).2
+    covers := fun x => ⟨ULift.up x, (hV x).1⟩
+  }⟩
 
 def StableAffineOpenCover.openCover {S T : Scheme.{u}} {p : T ⟶ S} {D : Datum p}
     (𝒱 : StableAffineOpenCover D) :
     (descentObject D).left.OpenCover :=
-  Scheme.Cover.mkOfCovers 𝒱.index (fun i => (𝒱.open i).toScheme)
-    (fun i => (𝒱.open i).ι) (by
+  Scheme.Cover.mkOfCovers 𝒱.index (fun i => (𝒱.openSet i).toScheme)
+    (fun i => (𝒱.openSet i).ι) (by
       intro x
       obtain ⟨i, hi⟩ := 𝒱.covers x
-      exact ⟨i, ⟨x, hi, rfl⟩⟩)
+      exact ⟨i, ⟨⟨x, hi⟩, rfl⟩⟩)
 
 theorem StableAffineOpenCover.openCover_exists_eq {S T : Scheme.{u}} {p : T ⟶ S}
     {D : Datum p} (𝒱 : StableAffineOpenCover D) :
@@ -240,8 +370,14 @@ theorem amitsur_equalizer_eq_range (A B : Type u) [CommRing A] [CommRing B]
 /-- The basic-open normalization used in the simultaneous shrinking argument. -/
 theorem basicOpen_finset_iInf_eq_prod (R : Type u) [CommRing R] (s : Finset R) :
     (⨅ f ∈ s, PrimeSpectrum.basicOpen f) =
-      PrimeSpectrum.basicOpen (∏ f in s, f) := by
-  sorry
+      PrimeSpectrum.basicOpen (s.prod id) := by
+  classical
+  rw [← Finset.inf_eq_iInf]
+  induction s using Finset.induction_on with
+  | empty => simp
+  | @insert a s ha ih => simp [ih, PrimeSpectrum.basicOpen_mul, ha]
+
+end
 
 end SchemeDescent
 

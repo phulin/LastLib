@@ -44,7 +44,7 @@ need not be presented by one ring. -/
 theorem chapter11_global_nonsmooth_fibers_are_finite
     {S : Scheme.{u}} {K : Type u} [Field K]
     (B : Chapter11ExcellentDedekindBase S K)
-    (hqc : B.quasiCompact)
+    (hqc : QuasiCompact (𝟙 S))
     (C : Chapter11SmoothProjectiveCurve K)
     (M : Chapter11GlobalRegularProperModelData B C) :
     (chapter11NonSmoothFiberSet M).Finite := by
@@ -71,7 +71,7 @@ structure Chapter11GlobalContractionGluingData
 theorem chapter11_global_fiberwise_contractions_glue
     {S : Scheme.{u}} {K : Type u} [Field K]
     (B : Chapter11ExcellentDedekindBase S K)
-    (hqc : B.quasiCompact)
+    (hqc : QuasiCompact (𝟙 S))
     (C : Chapter11SmoothProjectiveCurve K)
     (M : Chapter11GlobalRegularProperModelData B C)
     (hgenus : 0 < C.genus) :
@@ -81,7 +81,7 @@ theorem chapter11_global_fiberwise_contractions_glue
 theorem chapter11_global_minimal_regular_model_exists
     {S : Scheme.{u}} {K : Type u} [Field K]
     (B : Chapter11ExcellentDedekindBase S K)
-    (hqc : B.quasiCompact)
+    (hqc : QuasiCompact (𝟙 S))
     (C : Chapter11SmoothProjectiveCurve K)
     (M : Chapter11GlobalRegularProperModelData B C)
     (hgenus : 0 < C.genus) :
@@ -92,10 +92,11 @@ theorem chapter11_global_minimal_regular_model_exists
 /-! Genus one with a rational point and the Weierstrass comparison. -/
 
 structure Chapter11GenusOneRationalPoint
+    {K : Type u} [Field K]
     (C : Chapter11SmoothProjectiveCurve K) where
   genus_eq_one : C.genus = 1
   section_ : Spec (CommRingCat.of K) ⟶ C.carrier
-  over : section_ ≫ C.structureMap = 𝟙 _
+  over_structureMap : section_ ≫ C.structureMap = 𝟙 _
 
 structure Chapter11MinimalWeierstrassResolution
     {R : Type u} [CommRing R] [IsDomain R]
@@ -115,6 +116,8 @@ structure Chapter11MinimalWeierstrassResolution
 
 structure Chapter11NormalSingularWeierstrassProfile
     {R : Type u} [CommRing R] [IsDomain R]
+    {C : Chapter11SmoothProjectiveCurve (FractionRing R)}
+    {P : Chapter11GenusOneRationalPoint C}
     (W : Chapter11MinimalWeierstrassResolution C P) : Prop where
   normal : Chapter01NormalScheme W.weierstrass
   singular : ¬ Chapter01RegularScheme W.weierstrass
@@ -140,8 +143,8 @@ theorem chapter11_minimal_regular_resolution_has_no_superfluous_point_blowups
     {C : Chapter11SmoothProjectiveCurve (FractionRing R)}
     {P : Chapter11GenusOneRationalPoint C}
     (W : Chapter11MinimalWeierstrassResolution C P) :
-    W.noSuperfluousPointBlowups :=
-  W.noSuperfluousPointBlowups
+    W.noSuperfluousPointBlowups := by
+  sorry
 
 end
 

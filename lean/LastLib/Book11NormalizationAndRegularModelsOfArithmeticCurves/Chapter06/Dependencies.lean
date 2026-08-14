@@ -32,7 +32,7 @@ open AlgebraicGeometry CategoryTheory CategoryTheory.Limits TopologicalSpace
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09
-open scoped AlgebraicGeometry
+open scoped AlgebraicGeometry TensorProduct
 
 universe u v
 
@@ -52,7 +52,7 @@ abbrev Chapter06BaseField (R : Type u) [CommRing R] [IsDedekindDomain R] :=
 
 abbrev chapter06GenericBaseMap (R : Type u) [CommRing R] [IsDedekindDomain R] :
     Spec (.of (FractionRing R)) ⟶ Chapter06BaseScheme R :=
-  Scheme.Spec.map (CommRingCat.ofHom (algebraMap R (FractionRing R)))
+  Scheme.Spec.map (CommRingCat.ofHom (algebraMap R (FractionRing R))).op
 
 abbrev chapter06GenericFiber {X S : Scheme.{u}} (f : X ⟶ S)
     {K : Type u} [Field K] (η : Spec (.of K) ⟶ S) : Scheme.{u} :=
@@ -82,18 +82,24 @@ structure Chapter06SmoothProjectiveCurve
   integral : IsIntegral carrier
   curve : Chapter09RelativeCurve structureMap
 
-instance (C : Chapter06SmoothProjectiveCurve R) : IsIntegral C.carrier := C.integral
+instance {R : Type u} [CommRing R] [IsDedekindDomain R]
+    (C : Chapter06SmoothProjectiveCurve R) : IsIntegral C.carrier := C.integral
 
-instance (C : Chapter06SmoothProjectiveCurve R) : IsProper C.structureMap := C.proper
+instance {R : Type u} [CommRing R] [IsDedekindDomain R]
+    (C : Chapter06SmoothProjectiveCurve R) : IsProper C.structureMap := C.proper
 
-instance (C : Chapter06SmoothProjectiveCurve R) : QuasiCompact C.structureMap := C.quasiCompact
+instance {R : Type u} [CommRing R] [IsDedekindDomain R]
+    (C : Chapter06SmoothProjectiveCurve R) : QuasiCompact C.structureMap := C.quasiCompact
 
-instance (C : Chapter06SmoothProjectiveCurve R) : Smooth C.structureMap := C.smooth
+instance {R : Type u} [CommRing R] [IsDedekindDomain R]
+    (C : Chapter06SmoothProjectiveCurve R) : Smooth C.structureMap := C.smooth
 
-instance (C : Chapter06SmoothProjectiveCurve R) :
+instance {R : Type u} [CommRing R] [IsDedekindDomain R]
+    (C : Chapter06SmoothProjectiveCurve R) :
     GeometricallyConnected C.structureMap := C.geometricallyConnected
 
 structure Chapter06ProjectiveEmbedding
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     (C : Chapter06SmoothProjectiveCurve R) where
   dimension : ℕ
   map : C.carrier ⟶ chapter02ProjectiveSpace (Spec (.of (FractionRing R))) dimension
@@ -102,6 +108,7 @@ structure Chapter06ProjectiveEmbedding
       (Spec (.of (FractionRing R))) dimension = C.structureMap
 
 theorem chapter06_projective_embedding_of_very_ampleness
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
     (C : Chapter06SmoothProjectiveCurve R)
     (L : Chapter04LineBundle C.carrier)
     (hL : chapter04VeryAmple C.structureMap L) :
@@ -128,11 +135,13 @@ structure Chapter06ClearedHomogeneousEquations
     (R : Type u) [CommRing R] [IsDedekindDomain R]
     (E : Chapter06HomogeneousEquations (FractionRing R) N) where
   base : Chapter06HomogeneousEquations R N
+  baseIndexEquiv : base.index ≃ E.index
   scalar : E.index → FractionRing R
   scalar_ne_zero : ∀ i, scalar i ≠ 0
   generic_equation :
-    ∀ i, chapter06PolynomialGenericMap R N (base.equation i) =
-      scalar i * E.equation i
+    ∀ i : E.index,
+      chapter06PolynomialGenericMap R N (base.equation (baseIndexEquiv.symm i)) =
+      scalar i • E.equation i
 
 /-! ### Generic-fiber presentations and models -/
 
@@ -158,104 +167,212 @@ structure Chapter06Model
     (C : Chapter06SmoothProjectiveCurve R) where
   carrier : Scheme.{u}
   structureMap : carrier ⟶ Chapter06BaseScheme R
-  projective : chapter04Projective structureMap
-  proper : IsProper structureMap
   locallyOfFiniteType : LocallyOfFiniteType structureMap
+  quasiCompact : QuasiCompact structureMap
   flat : Flat structureMap
   integral : IsIntegral carrier
   genericFiber : Chapter06GenericFiberIdentification R C structureMap
 
-instance (X : Chapter06Model R C) : IsIntegral X.carrier := X.integral
+instance {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    (X : Chapter06Model R C) : IsIntegral X.carrier := X.integral
 
-instance (X : Chapter06Model R C) : IsProper X.structureMap := X.proper
+instance {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    (X : Chapter06Model R C) : QuasiCompact X.structureMap := X.quasiCompact
 
-instance (X : Chapter06Model R C) : QuasiCompact X.structureMap := by
-  sorry
+structure Chapter06ProperModel
+    (R : Type u) [CommRing R] [IsDedekindDomain R]
+    (C : Chapter06SmoothProjectiveCurve R)
+    extends Chapter06Model R C where
+  proper : IsProper structureMap
+
+instance {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    (X : Chapter06ProperModel R C) : IsIntegral X.carrier := X.integral
+
+instance {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    (X : Chapter06ProperModel R C) : IsProper X.structureMap := X.proper
+
+instance {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    (X : Chapter06ProperModel R C) : QuasiCompact X.structureMap := X.quasiCompact
+
+structure Chapter06ProjectiveModel
+    (R : Type u) [CommRing R] [IsDedekindDomain R]
+    (C : Chapter06SmoothProjectiveCurve R)
+    extends Chapter06ProperModel R C where
+  projective : chapter04Projective structureMap
+
+instance {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    (X : Chapter06ProjectiveModel R C) : IsIntegral X.carrier := X.integral
+
+instance {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    (X : Chapter06ProjectiveModel R C) : IsProper X.structureMap := X.proper
+
+instance {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    (X : Chapter06ProjectiveModel R C) : QuasiCompact X.structureMap := X.quasiCompact
 
 structure Chapter06NormalModel
     (R : Type u) [CommRing R] [IsDedekindDomain R]
     (C : Chapter06SmoothProjectiveCurve R)
-    extends Chapter06Model R C where
+    extends Chapter06ProjectiveModel R C where
   normal : chapter06IsNormal carrier
 
-instance (X : Chapter06NormalModel R C) : IsIntegral X.carrier := X.integral
+instance {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    (X : Chapter06NormalModel R C) : IsIntegral X.carrier := X.integral
 
-instance (X : Chapter06NormalModel R C) : IsProper X.structureMap := X.proper
+instance {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    (X : Chapter06NormalModel R C) : IsProper X.structureMap := X.proper
+
+instance {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    (X : Chapter06NormalModel R C) : QuasiCompact X.structureMap := X.quasiCompact
+
+structure Chapter06NormalProperModel
+    (R : Type u) [CommRing R] [IsDedekindDomain R]
+    (C : Chapter06SmoothProjectiveCurve R)
+    extends Chapter06ProperModel R C where
+  normal : chapter06IsNormal carrier
+
+instance {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    (X : Chapter06NormalProperModel R C) : IsIntegral X.carrier := X.integral
+
+instance {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    (X : Chapter06NormalProperModel R C) : IsProper X.structureMap := X.proper
+
+instance {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    (X : Chapter06NormalProperModel R C) : QuasiCompact X.structureMap := X.quasiCompact
 
 abbrev chapter06ModelRestriction
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
     (X : Chapter06Model R C) (U : (Chapter06BaseScheme R).Opens) :
-    (X.carrier ⁻¹ᵁ U).toScheme ⟶ U.toScheme :=
+    (X.structureMap ⁻¹ᵁ U).toScheme ⟶ U.toScheme :=
   X.structureMap ∣_ U
 
 structure Chapter06SmoothProjectiveOpenModel
     (R : Type u) [CommRing R] [IsDedekindDomain R]
     (C : Chapter06SmoothProjectiveCurve R) where
-  open : (Chapter06BaseScheme R).Opens
-  open_nonempty : open ≠ ⊥
-  complement_finite : Set.Finite ((open : Set (Chapter06BaseScheme R))ᶜ)
+  baseOpen : (Chapter06BaseScheme R).Opens
+  open_nonempty : baseOpen ≠ ⊥
+  complement_finite : Set.Finite ((baseOpen : Set (Chapter06BaseScheme R))ᶜ)
   carrier : Scheme.{u}
-  structureMap : carrier ⟶ open.toScheme
+  structureMap : carrier ⟶ baseOpen.toScheme
   projective : chapter04Projective structureMap
   smooth : Smooth structureMap
-  genericMap : Spec (.of (FractionRing R)) ⟶ open.toScheme
-  genericMap_over : genericMap ≫ open.ι = chapter06GenericBaseMap R
+  genericMap : Spec (.of (FractionRing R)) ⟶ baseOpen.toScheme
+  genericMap_over : genericMap ≫ baseOpen.ι = chapter06GenericBaseMap R
   genericFiber : Chapter06GenericFiberIdentification R C
-    (structureMap ≫ open.ι)
+    (structureMap ≫ baseOpen.ι)
 
-instance (M : Chapter06SmoothProjectiveOpenModel R C) : Smooth M.structureMap := M.smooth
+instance {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    (M : Chapter06SmoothProjectiveOpenModel R C) : Smooth M.structureMap := M.smooth
 
 /-! ### Closure and normalization data -/
 
 structure Chapter06ClosureDatum
-    (C : Chapter06SmoothProjectiveCurve R) where
-  dimension : ℕ
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    (C : Chapter06SmoothProjectiveCurve R)
+    (E : Chapter06ProjectiveEmbedding C) where
   genericAmbientIso :
     pullback
-        (chapter02ProjectiveSpaceProjection (Spec (.of R)) dimension)
+        (chapter02ProjectiveSpaceProjection (Spec (.of R)) E.dimension)
         (chapter06GenericBaseMap R) ≅
-      chapter02ProjectiveSpace (Spec (.of (FractionRing R))) dimension
-  genericEmbedding :
-    C.carrier ⟶ chapter02ProjectiveSpace (Spec (.of (FractionRing R))) dimension
-  genericEmbedding_closedImmersion : IsClosedImmersion genericEmbedding
-  genericEmbedding_over :
-    genericEmbedding ≫ chapter02ProjectiveSpaceProjection
-        (Spec (.of (FractionRing R))) dimension = C.structureMap
+      chapter02ProjectiveSpace (Spec (.of (FractionRing R))) E.dimension
+  genericAmbientIso_over :
+    genericAmbientIso.hom ≫
+        chapter02ProjectiveSpaceProjection
+          (Spec (.of (FractionRing R))) E.dimension =
+      pullback.snd
+        (chapter02ProjectiveSpaceProjection (Spec (.of R)) E.dimension)
+        (chapter06GenericBaseMap R)
+
+theorem chapter06_closure_datum_exists
+    (R : Type u) [CommRing R] [IsDedekindDomain R]
+    (C : Chapter06SmoothProjectiveCurve R)
+    (E : Chapter06ProjectiveEmbedding C) :
+    Nonempty (Chapter06ClosureDatum C E) := by
+  sorry
 
 noncomputable def chapter06GenericEmbeddingIntoBaseAmbient
-    (D : Chapter06ClosureDatum C) :
-    C.carrier ⟶ chapter02ProjectiveSpace (Spec (.of R)) D.dimension :=
-  D.genericEmbedding ≫ D.genericAmbientIso.inv ≫
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    {E : Chapter06ProjectiveEmbedding C}
+    (D : Chapter06ClosureDatum C E) :
+    C.carrier ⟶ chapter02ProjectiveSpace (Spec (.of R)) E.dimension :=
+  E.map ≫ D.genericAmbientIso.inv ≫
     pullback.fst
-      (chapter02ProjectiveSpaceProjection (Spec (.of R)) D.dimension)
+      (chapter02ProjectiveSpaceProjection (Spec (.of R)) E.dimension)
       (chapter06GenericBaseMap R)
 
+theorem chapter06_genericEmbeddingIntoBaseAmbient_over
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    {E : Chapter06ProjectiveEmbedding C}
+    (D : Chapter06ClosureDatum C E) :
+    chapter06GenericEmbeddingIntoBaseAmbient D ≫
+    chapter02ProjectiveSpaceProjection (Spec (.of R)) E.dimension =
+      C.structureMap ≫ chapter06GenericBaseMap R := by
+  simp only [chapter06GenericEmbeddingIntoBaseAmbient, Category.assoc,
+    pullback.condition]
+  rw [← D.genericAmbientIso_over]
+  simp only [Category.assoc, Iso.inv_hom_id_assoc]
+  rw [← Category.assoc, E.over]
+
 noncomputable def chapter06SchematicClosure
-    (D : Chapter06ClosureDatum C) : Scheme.{u} :=
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    {E : Chapter06ProjectiveEmbedding C}
+    (D : Chapter06ClosureDatum C E) : Scheme.{u} :=
   (chapter06GenericEmbeddingIntoBaseAmbient D).image
 
 abbrev chapter06SchematicClosureEmbedding
-    (D : Chapter06ClosureDatum C) :
-    chapter06SchematicClosure D ⟶ chapter02ProjectiveSpace (Spec (.of R)) D.dimension :=
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    {E : Chapter06ProjectiveEmbedding C}
+    (D : Chapter06ClosureDatum C E) :
+    chapter06SchematicClosure D ⟶ chapter02ProjectiveSpace (Spec (.of R)) E.dimension :=
   (chapter06GenericEmbeddingIntoBaseAmbient D).imageι
 
 noncomputable def chapter06SchematicClosureToAmbient
-    (D : Chapter06ClosureDatum C) :
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    {E : Chapter06ProjectiveEmbedding C}
+    (D : Chapter06ClosureDatum C E) :
     C.carrier ⟶ chapter06SchematicClosure D :=
   (chapter06GenericEmbeddingIntoBaseAmbient D).toImage
 
 abbrev chapter06SchematicClosureStructureMap
-    (D : Chapter06ClosureDatum C) :
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    {E : Chapter06ProjectiveEmbedding C}
+    (D : Chapter06ClosureDatum C E) :
     chapter06SchematicClosure D ⟶ Chapter06BaseScheme R :=
   chapter06SchematicClosureEmbedding D ≫
-    chapter02ProjectiveSpaceProjection (Spec (.of R)) D.dimension
+    chapter02ProjectiveSpaceProjection (Spec (.of R)) E.dimension
 
 def chapter06ClosedSubschemeContains
     {X Y Z : Scheme.{u}} (f : X ⟶ Y) (i : Z ⟶ Y) : Prop :=
   ∃ g : X ⟶ Z, g ≫ i = f
 
 theorem chapter06_schematicClosure_closedImmersion
-    (D : Chapter06ClosureDatum C) :
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    {E : Chapter06ProjectiveEmbedding C}
+    (D : Chapter06ClosureDatum C E) :
     IsClosedImmersion (chapter06SchematicClosureEmbedding D) := by
+  change IsClosedImmersion (chapter06GenericEmbeddingIntoBaseAmbient D).imageι
   infer_instance
 
 /-! ### Affine saturation -/
@@ -321,7 +438,7 @@ class Chapter06ExcellentDedekindBase
     (R : Type u) [CommRing R] [IsDedekindDomain R] : Prop where
   finite_normalization :
     ∀ (X : Scheme.{u}) (f : X ⟶ Chapter06BaseScheme R)
-      [IsIntegral X] (hft : LocallyOfFiniteType f)
+      [IsIntegral X] (_hft : LocallyOfFiniteType f)
       [QuasiCompact f] [QuasiSeparated f]
       (hqc : QuasiCompact (chapter06GenericPointMap X))
       (hqs : QuasiSeparated (chapter06GenericPointMap X)),
@@ -330,23 +447,26 @@ class Chapter06ExcellentDedekindBase
       IsFinite (chapter06GenericPointMap X).fromNormalization
 
 noncomputable def chapter06RelativeNormalization
-    {X : Scheme.{u}} (hqc : QuasiCompact (chapter06GenericPointMap X))
-    (hqs : QuasiSeparated (chapter06GenericPointMap X)) [IsIntegral X] : Scheme.{u} := by
+    {X : Scheme.{u}} [IsIntegral X]
+    (hqc : QuasiCompact (chapter06GenericPointMap X))
+    (hqs : QuasiSeparated (chapter06GenericPointMap X)) : Scheme.{u} := by
   letI := hqc
   letI := hqs
   exact (chapter06GenericPointMap X).normalization
 
 noncomputable def chapter06RelativeNormalizationMap
-    {X : Scheme.{u}} (hqc : QuasiCompact (chapter06GenericPointMap X))
-    (hqs : QuasiSeparated (chapter06GenericPointMap X)) [IsIntegral X] :
+    {X : Scheme.{u}} [IsIntegral X]
+    (hqc : QuasiCompact (chapter06GenericPointMap X))
+    (hqs : QuasiSeparated (chapter06GenericPointMap X)) :
     chapter06RelativeNormalization hqc hqs ⟶ X := by
   letI := hqc
   letI := hqs
   exact (chapter06GenericPointMap X).fromNormalization
 
 noncomputable def chapter06RelativeNormalizationToNormalization
-    {X : Scheme.{u}} (hqc : QuasiCompact (chapter06GenericPointMap X))
-    (hqs : QuasiSeparated (chapter06GenericPointMap X)) [IsIntegral X] :
+    {X : Scheme.{u}} [IsIntegral X]
+    (hqc : QuasiCompact (chapter06GenericPointMap X))
+    (hqs : QuasiSeparated (chapter06GenericPointMap X)) :
     Spec X.functionField ⟶ chapter06RelativeNormalization hqc hqs := by
   letI := hqc
   letI := hqs
@@ -358,9 +478,8 @@ theorem chapter06_relativeNormalization_factorization
     (hqs : QuasiSeparated (chapter06GenericPointMap X)) :
     chapter06RelativeNormalizationToNormalization hqc hqs ≫
         chapter06RelativeNormalizationMap hqc hqs = chapter06GenericPointMap X := by
-  letI := hqc
-  letI := hqs
-  exact Scheme.Hom.toNormalization_fromNormalization _
+  exact @Scheme.Hom.toNormalization_fromNormalization _ _
+    (chapter06GenericPointMap X) hqc hqs
 
 end
 

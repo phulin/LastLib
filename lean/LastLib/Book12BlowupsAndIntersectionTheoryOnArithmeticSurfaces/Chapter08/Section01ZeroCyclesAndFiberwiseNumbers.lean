@@ -14,7 +14,7 @@ def chapter08IntersectionZeroCycle
     {D G : Chapter08CartierDivisor X}
     (I : Chapter08ProperIntersectionWitness D G) : Chapter08ZeroCycle X := by
   classical
-  exact ∑ x in I.support,
+  exact ∑ x ∈ I.support,
     (chapter08LocalIntersectionMultiplicity D G x : ℤ) • chapter08PointCycle x
 
 theorem chapter08_finite_intersection_of_generic_disjoint
@@ -38,7 +38,7 @@ theorem chapter08_intersection_zeroCycle_eq_sum_local_multiplicities
     {D G : Chapter08CartierDivisor X}
     (I : Chapter08ProperIntersectionWitness D G) :
     chapter08IntersectionZeroCycle I =
-      ∑ x in I.support,
+      ∑ x ∈ I.support,
         (chapter08LocalIntersectionMultiplicity D G x : ℤ) • chapter08PointCycle x := by
   rfl
 
@@ -49,7 +49,7 @@ def chapter08FiberwiseIntersection
     (I : Chapter08ProperIntersectionWitness D G)
     (s : Chapter08BaseClosedPoint X) : ℤ := by
   classical
-  exact ∑ x in I.support.filter (chapter08PointInFiber X s),
+  exact ∑ x ∈ I.support.filter (chapter08PointInFiber X s),
     (chapter08LocalIntersectionMultiplicity D G x : ℤ) * (x.residueDegree : ℤ)
 
 theorem chapter08_fiberwise_intersection_eq_weighted_sum
@@ -59,9 +59,11 @@ theorem chapter08_fiberwise_intersection_eq_weighted_sum
     (I : Chapter08ProperIntersectionWitness D G)
     (s : Chapter08BaseClosedPoint X) :
     chapter08FiberwiseIntersection I s =
-      ∑ x in I.support.filter (chapter08PointInFiber X s),
-        (chapter08LocalIntersectionMultiplicity D G x : ℤ) *
-          (x.residueDegree : ℤ) := by
+      (by
+        classical
+        exact ∑ x ∈ I.support.filter (chapter08PointInFiber X s),
+          (chapter08LocalIntersectionMultiplicity D G x : ℤ) *
+            (x.residueDegree : ℤ)) := by
   rfl
 
 theorem chapter08_fiberwise_intersection_is_an_integer
@@ -90,7 +92,7 @@ def chapter08FiberwiseIntersectionDivisor
     {D G : Chapter08CartierDivisor X}
     (I : Chapter08ProperIntersectionWitness D G) : Chapter08BaseDivisor X := by
   classical
-  exact ∑ x in I.support,
+  exact ∑ x ∈ I.support,
     Finsupp.single x.basePoint
       ((chapter08LocalIntersectionMultiplicity D G x : ℤ) * (x.residueDegree : ℤ))
 

@@ -13,8 +13,8 @@ namespace LastLib.Book04AdelesAndIdeles.Chapter07
 
 noncomputable section
 
-open Set Filter Topology
-open scoped BigOperators DirectSum RestrictedProduct
+open Set Filter Topology WithZeroTopology
+open scoped BigOperators DirectSum RestrictedProduct WithZero
 
 /-!
 Shared interfaces for Book 4, Chapter 7.
@@ -86,6 +86,220 @@ theorem chapter07_mem_localIntegralUnitSubgroup_iff
       u ∈ (Submonoid.ofClass (chapter07LocalIntegerRing R K v)).units :=
   Iff.rfl
 
+theorem chapter07_finite_local_residueField_finite
+    (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
+    [Algebra R K] [IsFractionRing R K]
+    [Module.Finite ℤ R] [Module.Free ℤ R]
+    (v : chapter07FinitePlace R) :
+    Finite (IsLocalRing.ResidueField (chapter07LocalIntegerRing R K v)) := by
+  let hfiniteQuotient : Finite (R ⧸ v.asIdeal) :=
+    v.asIdeal.finiteQuotientOfFreeOfNeBot v.ne_bot
+  let f : R →+* IsLocalRing.ResidueField (chapter07LocalIntegerRing R K v) :=
+    (IsLocalRing.residue (chapter07LocalIntegerRing R K v)).comp
+      (algebraMap R (chapter07LocalIntegerRing R K v))
+  have hf : ∀ r : R, r ∈ v.asIdeal → f r = 0 := by
+    intro r hr
+    apply (IsLocalRing.residue_eq_zero_iff
+      (R := ↥(chapter07LocalIntegerRing R K v))
+      (algebraMap R (chapter07LocalIntegerRing R K v) r)).2
+    rw [IsLocalRing.mem_maximalIdeal]
+    change ¬ IsUnit (algebraMap R (chapter07LocalIntegerRing R K v) r)
+    intro hunit
+    have hval :=
+      (IsDedekindDomain.HeightOneSpectrum.adicCompletionIntegers.isUnit_iff_valued_eq_one
+        (K := K) (v := v)).1 hunit
+    have hlt : Valued.v
+        ((algebraMap R (chapter07LocalIntegerRing R K v) r :
+          chapter07LocalIntegerRing R K v) : chapter07LocalField R K v) < 1 := by
+      rw [IsDedekindDomain.HeightOneSpectrum.algebraMap_adicCompletionIntegers_apply]
+      rw [IsDedekindDomain.HeightOneSpectrum.valuedAdicCompletion_eq_valuation'
+        (K := K) (v := v) (algebraMap R K r)]
+      exact (v.valuation_lt_one_iff_mem (K := K) r).2 hr
+    exact (ne_of_lt hlt) hval
+  let g : R ⧸ v.asIdeal →+* IsLocalRing.ResidueField
+      (chapter07LocalIntegerRing R K v) :=
+    Ideal.Quotient.lift v.asIdeal f hf
+  have hrep : ∀ x : chapter07LocalIntegerRing R K v, ∃ r : R,
+      IsLocalRing.residue (chapter07LocalIntegerRing R K v)
+          (algebraMap R (chapter07LocalIntegerRing R K v) r) =
+        IsLocalRing.residue (chapter07LocalIntegerRing R K v) x := by
+    intro x
+    have hxval : Valued.v (x : chapter07LocalField R K v) ≤ 1 := x.property
+    let U : Set (chapter07LocalField R K v) :=
+      {z | Valued.v (z - (x : chapter07LocalField R K v)) < 1}
+    have hUopen : IsOpen U := by
+      change IsOpen ((fun z : chapter07LocalField R K v =>
+        Valued.v (z - (x : chapter07LocalField R K v))) ⁻¹' Set.Iio 1)
+      apply (WithZeroTopology.isOpen_Iio : IsOpen (Set.Iio (1 : ℤᵐ⁰))).preimage
+      exact (Valued.continuous_valuation_of_surjective
+        (v.valuedAdicCompletion_surjective K)).comp
+        (continuous_id.sub continuous_const)
+    have hxU : (x : chapter07LocalField R K v) ∈ U := by
+      simp [U]
+    obtain ⟨y, hy⟩ :=
+      (IsDedekindDomain.HeightOneSpectrum.denseRange_algebraMap
+        (v := v) (K := K)).exists_mem_open hUopen ⟨x, hxU⟩
+    have hyclose : Valued.v
+        ((algebraMap K (chapter07LocalField R K v) y) -
+          (x : chapter07LocalField R K v)) < 1 := hy
+    have hmapK : algebraMap K (chapter07LocalField R K v) y =
+        (y : chapter07LocalField R K v) := by
+      rfl
+    have hyval' : Valued.v (algebraMap K (chapter07LocalField R K v) y) ≤ 1 := by
+      have hsum := (Valued.v : Valuation (chapter07LocalField R K v) ℤᵐ⁰).map_add
+        ((algebraMap K (chapter07LocalField R K v) y) -
+          (x : chapter07LocalField R K v)) (x : chapter07LocalField R K v)
+      rw [sub_add_cancel] at hsum
+      exact (hsum.trans (max_le (le_of_lt hyclose) hxval))
+    have hyval : v.valuation K y ≤ 1 := by
+      rw [← IsDedekindDomain.HeightOneSpectrum.adicCompletion.valued_coe
+        (K := K) (v := v) y]
+      rw [hmapK] at hyval'
+      exact hyval'
+    obtain ⟨r, hr⟩ := v.exists_valuation_sub_lt_of_integer (K := K) hyval
+      (1 : (ℤᵐ⁰)ˣ)
+    have hmapR : algebraMap R (chapter07LocalField R K v) r =
+        (algebraMap R K r : chapter07LocalField R K v) := by
+      rfl
+    have hsub : ((algebraMap R K r - y : K) : chapter07LocalField R K v) =
+        (algebraMap R K r : chapter07LocalField R K v) -
+          (y : chapter07LocalField R K v) := by
+      apply IsDedekindDomain.HeightOneSpectrum.adicCompletion.ext
+      change
+        ((WithVal.toVal (v.valuation K) (algebraMap R K r - y) :
+          WithVal (v.valuation K)) :
+          UniformSpace.Completion (WithVal (v.valuation K))) =
+          ((WithVal.toVal (v.valuation K) (algebraMap R K r) :
+            WithVal (v.valuation K)) :
+            UniformSpace.Completion (WithVal (v.valuation K))) -
+            ((WithVal.toVal (v.valuation K) y : WithVal (v.valuation K)) :
+              UniformSpace.Completion (WithVal (v.valuation K)))
+      exact (UniformSpace.Completion.coeRingHom
+        (α := WithVal (v.valuation K))).map_sub _ _
+    have hrclose : Valued.v
+        ((algebraMap R (chapter07LocalField R K v) r) -
+          (algebraMap K (chapter07LocalField R K v) y)) < 1 := by
+      have hr' : Valued.v
+          (((algebraMap R K r - y : K) : chapter07LocalField R K v)) < 1 := by
+        rw [IsDedekindDomain.HeightOneSpectrum.adicCompletion.valued_coe
+          (K := K) (v := v)]
+        simpa using hr
+      rw [hmapR, hmapK]
+      rw [← hsub]
+      exact hr'
+    have harclose : Valued.v
+        ((algebraMap R (chapter07LocalField R K v) r) -
+          (x : chapter07LocalField R K v)) < 1 := by
+      have hsum := (Valued.v : Valuation (chapter07LocalField R K v) ℤᵐ⁰).map_add
+        ((algebraMap R (chapter07LocalField R K v) r) -
+          (algebraMap K (chapter07LocalField R K v) y))
+        ((algebraMap K (chapter07LocalField R K v) y) -
+          (x : chapter07LocalField R K v))
+      rw [sub_add_sub_cancel] at hsum
+      exact (hsum.trans_lt (max_lt hrclose hyclose))
+    have hmax : (algebraMap R (chapter07LocalIntegerRing R K v) r :
+        chapter07LocalIntegerRing R K v) - x ∈
+        IsLocalRing.maximalIdeal (chapter07LocalIntegerRing R K v) := by
+      rw [IsLocalRing.mem_maximalIdeal]
+      change ¬ IsUnit ((algebraMap R (chapter07LocalIntegerRing R K v) r :
+        chapter07LocalIntegerRing R K v) - x)
+      intro hunit
+      have hval :=
+        (IsDedekindDomain.HeightOneSpectrum.adicCompletionIntegers.isUnit_iff_valued_eq_one
+          (K := K) (v := v)).1 hunit
+      have hlt : Valued.v
+          (((algebraMap R (chapter07LocalIntegerRing R K v) r :
+            chapter07LocalIntegerRing R K v) - x) :
+            chapter07LocalField R K v) < 1 := by
+        simpa [hmapR] using harclose
+      exact (ne_of_lt hlt) hval
+    have hzero : IsLocalRing.residue (chapter07LocalIntegerRing R K v)
+        ((algebraMap R (chapter07LocalIntegerRing R K v) r :
+          chapter07LocalIntegerRing R K v) - x) = 0 :=
+      (IsLocalRing.residue_eq_zero_iff
+        (R := ↥(chapter07LocalIntegerRing R K v))
+        ((algebraMap R (chapter07LocalIntegerRing R K v) r :
+          chapter07LocalIntegerRing R K v) - x)).2 hmax
+    refine ⟨r, ?_⟩
+    exact sub_eq_zero.mp (by simpa using hzero)
+  have hg : Function.Surjective g := by
+    intro z
+    obtain ⟨x, rfl⟩ :=
+      IsLocalRing.residue_surjective
+        (R := ↥(chapter07LocalIntegerRing R K v)) z
+    obtain ⟨r, hr⟩ := hrep x
+    refine ⟨Ideal.Quotient.mk v.asIdeal r, ?_⟩
+    simpa [g, f, IsLocalRing.residue_def] using hr
+  exact Finite.of_surjective g hg
+
+theorem chapter07_finite_local_integer_isCompact
+    (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
+    [Algebra R K] [IsFractionRing R K]
+    [Module.Finite ℤ R] [Module.Free ℤ R]
+    (v : chapter07FinitePlace R) :
+    IsCompact (chapter07LocalIntegerRing R K v : Set (chapter07LocalField R K v)) := by
+  let e : chapter07LocalIntegerRing R K v ≃+*
+      Valued.integer (chapter07LocalField R K v) :=
+    { toFun := fun x =>
+        ⟨x, (Valuation.mem_valuationSubring_iff (Valued.v)
+          (x : chapter07LocalField R K v)).1 x.property⟩
+      invFun := fun x =>
+        ⟨x, (Valuation.mem_valuationSubring_iff (Valued.v)
+          (x : chapter07LocalField R K v)).2 x.property⟩
+      left_inv := by intro x; rfl
+      right_inv := by intro x; rfl
+      map_add' := by intro x y; rfl
+      map_mul' := by intro x y; rfl }
+  let hcomplete : CompleteSpace (Valued.integer (chapter07LocalField R K v)) := by
+    apply completeSpace_of_isComplete_univ
+    rw [Subtype.isComplete_iff]
+    convert (Valued.isClosed_valuationSubring (chapter07LocalField R K v)).isComplete using 1
+    ext x
+    constructor
+    · rintro ⟨y, -, rfl⟩
+      exact (Valuation.mem_valuationSubring_iff (Valued.v)
+        (y : chapter07LocalField R K v)).2 y.property
+    · intro hx
+      exact ⟨⟨x, (Valuation.mem_valuationSubring_iff (Valued.v)
+          (x : chapter07LocalField R K v)).1 hx⟩, Set.mem_univ _, rfl⟩
+  let hdvr : IsDiscreteValuationRing (Valued.integer (chapter07LocalField R K v)) :=
+    { principal := (isPrincipalIdealRing_iff _).1 (.of_surjective _ e.surjective)
+      __ := e.isLocalRing
+      not_a_field' := by
+        obtain ⟨a, ha⟩ := Submodule.nonzero_mem_of_bot_lt
+          (bot_lt_iff_ne_bot.mpr <| IsDiscreteValuationRing.not_a_field
+            (chapter07LocalIntegerRing R K v))
+        rw [Submodule.ne_bot_iff]
+        refine ⟨e a, ⟨?_, by simp only [ne_eq, EmbeddingLike.map_eq_zero_iff,
+          ZeroMemClass.coe_eq_zero, ha, not_false_eq_true]⟩⟩
+        rw [IsLocalRing.mem_maximalIdeal, map_mem_nonunits_iff e,
+          ← IsLocalRing.mem_maximalIdeal]
+        exact a.2 }
+  let hfiniteO : Finite (IsLocalRing.ResidueField (chapter07LocalIntegerRing R K v)) :=
+    chapter07_finite_local_residueField_finite R K v
+  let hfiniteI : Finite (Valued.ResidueField (chapter07LocalField R K v)) := by
+    exact @Finite.of_equiv _ _ hfiniteO (IsLocalRing.ResidueField.mapEquiv e).toEquiv
+  let hcompactSpaceI : CompactSpace (Valued.integer (chapter07LocalField R K v)) :=
+    (Valued.integer.compactSpace_iff_completeSpace_and_isDiscreteValuationRing_and_finite_residueField
+      (K := chapter07LocalField R K v) (Γ₀ := ℤᵐ⁰)).2
+      ⟨hcomplete, hdvr, hfiniteI⟩
+  have hcompactI : IsCompact (Valued.integer (chapter07LocalField R K v) :
+      Set (chapter07LocalField R K v)) := by
+    convert ((isCompact_univ_iff.mpr hcompactSpaceI :
+        IsCompact (Set.univ : Set (Valued.integer (chapter07LocalField R K v)))).image
+        (continuous_subtype_val : Continuous
+          (fun x : Valued.integer (chapter07LocalField R K v) =>
+            (x : chapter07LocalField R K v)))) using 1
+    ext x
+    simp
+  convert hcompactI using 1
+  ext x
+  constructor
+  · intro hx
+    exact (Valuation.mem_valuationSubring_iff (Valued.v) x).2 hx
+  · intro hx
+    exact (Valuation.mem_valuationSubring_iff (Valued.v) x).1 hx
+
 /-- The finite idele group, with its canonical restricted-product presentation available through
 `chapter07FiniteIdeleEquiv`.  The primary definition is the unit group of the finite adele ring,
 so it inherits the graph topology supplied by Mathlib. -/
@@ -106,41 +320,6 @@ def chapter07FiniteIdeleEquiv
     (𝓕 := Filter.cofinite)
     (B := fun v : chapter07FinitePlace R => chapter07LocalIntegerRing R K v)
     (fun v : chapter07FinitePlace R => chapter07LocalField R K v)
-
-theorem chapter07_finiteIdele_restrictedProduct_topology
-    (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
-    [Algebra R K] [IsFractionRing R K] :
-    (inferInstance : TopologicalSpace (chapter07FiniteIdeleGroup R K)) =
-      TopologicalSpace.induced (chapter07FiniteIdeleEquiv R K) inferInstance := by
-  sorry
-
-@[simp]
-theorem chapter07FiniteIdeleEquiv_apply
-    (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
-    [Algebra R K] [IsFractionRing R K]
-    (x : chapter07FiniteIdeleGroup R K) (v : chapter07FinitePlace R) :
-    chapter07FiniteIdeleEquiv R K x v = x.1 v :=
-  rfl
-
-/-- The finite divisor group in the book's direct-sum notation. -/
-abbrev chapter07FiniteDivisorGroup
-    (R : Type*) [CommRing R] [IsDedekindDomain R] :=
-  chapter07FinitePlace R →₀ ℤ
-
-def chapter07FiniteDivisorGroupToDirectSum
-    (R : Type*) [CommRing R] [IsDedekindDomain R] :
-    chapter07FiniteDivisorGroup R ≃+
-      (⨁ _ : chapter07FinitePlace R, ℤ) :=
-  letI : DecidableEq (chapter07FinitePlace R) := Classical.decEq _
-  (finsuppLEquivDirectSum ℤ ℤ (chapter07FinitePlace R)).toAddEquiv
-
-@[simp]
-theorem chapter07FiniteDivisorGroupToDirectSum_apply
-    (R : Type*) [CommRing R] [IsDedekindDomain R]
-    (d : chapter07FiniteDivisorGroup R) (v : chapter07FinitePlace R) :
-    chapter07FiniteDivisorGroupToDirectSum R d v = d v :=
-by
-  rfl
 
 /-! ### Basic neighborhoods for classical restricted products -/
 
@@ -282,6 +461,212 @@ theorem chapter07_restrictedProduct_basicOpen_basis_shared
   apply hWU
   change RestrictedProduct.inclusion R A hT z' ∈ W at hzpre
   simpa [hzz] using hzpre
+
+theorem chapter07_finiteIdele_restrictedProduct_topology
+    (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
+    [Algebra R K] [IsFractionRing R K] :
+    (inferInstance : TopologicalSpace (chapter07FiniteIdeleGroup R K)) =
+      TopologicalSpace.induced (chapter07FiniteIdeleEquiv R K) inferInstance := by
+  let φ : ∀ v : chapter07FinitePlace R,
+      (chapter07LocalField R K v)ˣ → chapter07LocalField R K v :=
+    fun _ u => u
+  have hφ : ∀ᶠ v : chapter07FinitePlace R in cofinite,
+      MapsTo (φ v)
+        (chapter07LocalIntegralUnitSubgroup R K v)
+        (chapter07LocalIntegerRing R K v) := by
+    exact Filter.Eventually.of_forall (fun v u hu => hu.1)
+  let fval : chapter07FiniteIdeleRestrictedProduct R K →
+      chapter07FiniteAdeleRing R K :=
+    RestrictedProduct.map φ hφ
+  have hfval : Continuous fval := by
+    exact RestrictedProduct.mapAlong_continuous
+      (R₁ := fun v => (chapter07LocalField R K v)ˣ)
+      (R₂ := fun v => chapter07LocalField R K v)
+      (f := id) (hf := Filter.tendsto_id)
+      (φ := φ)
+      (hφ := hφ) (fun v => Units.continuous_val)
+  have hval : Continuous (fun y : chapter07FiniteIdeleRestrictedProduct R K =>
+      ((chapter07FiniteIdeleEquiv R K).symm y :
+        chapter07FiniteAdeleRing R K)) := by
+    change Continuous fval
+    exact hfval
+  let ginv : chapter07FiniteIdeleRestrictedProduct R K →
+      chapter07FiniteAdeleRing R K :=
+    fun y => (↑((chapter07FiniteIdeleEquiv R K).symm y)⁻¹ :
+      chapter07FiniteAdeleRing R K)
+  have hinvval : Continuous ginv := by
+    change Continuous (fval ∘ fun a => a⁻¹)
+    exact hfval.comp continuous_inv
+  have hinv : Continuous (chapter07FiniteIdeleEquiv R K).symm := by
+    rw [Units.continuous_iff]
+    exact ⟨hval, by simpa only [ginv] using hinvval⟩
+  have hBopen : ∀ v : chapter07FinitePlace R,
+      IsOpen (chapter07LocalIntegerRing R K v : Set (chapter07LocalField R K v)) := by
+    intro v
+    exact Valued.isOpen_valuationSubring _
+  have hAopen : ∀ v : chapter07FinitePlace R,
+      IsOpen (chapter07LocalIntegralUnitSubgroup R K v :
+        Set ((chapter07LocalField R K v)ˣ)) := by
+    intro v
+    exact Submonoid.isOpen_units (hBopen v)
+  have hcoord (v : chapter07FinitePlace R) :
+      Continuous (fun z : chapter07FiniteIdeleGroup R K =>
+        chapter07FiniteIdeleEquiv R K z v) := by
+    rw [Units.continuous_iff]
+    constructor
+    · change Continuous (fun z : chapter07FiniteIdeleGroup R K => z.1 v)
+      exact (RestrictedProduct.continuous_eval v).comp Units.continuous_val
+    · change Continuous (fun z : chapter07FiniteIdeleGroup R K =>
+        (z⁻¹ : chapter07FiniteIdeleGroup R K).1 v)
+      exact (RestrictedProduct.continuous_eval v).comp Units.continuous_coe_inv
+  have hE_val (z : chapter07FiniteIdeleGroup R K) (v : chapter07FinitePlace R) :
+      (↑(chapter07FiniteIdeleEquiv R K z v) : chapter07LocalField R K v) =
+        (z : chapter07FiniteAdeleRing R K) v := by
+    rfl
+  have hE_inv_val (z : chapter07FiniteIdeleGroup R K) (v : chapter07FinitePlace R) :
+      (↑((chapter07FiniteIdeleEquiv R K z v)⁻¹) : chapter07LocalField R K v) =
+        ((z⁻¹ : chapter07FiniteIdeleGroup R K) : chapter07FiniteAdeleRing R K) v := by
+    rfl
+  have he : Continuous (chapter07FiniteIdeleEquiv R K) := by
+    rw [continuous_def]
+    intro W hW
+    apply isOpen_iff_mem_nhds.mpr
+    intro x hx
+    rcases chapter07_restrictedProduct_basicOpen_basis_shared
+        (fun v : chapter07FinitePlace R => (chapter07LocalField R K v)ˣ)
+        (fun v : chapter07FinitePlace R =>
+          chapter07LocalIntegralUnitSubgroup R K v) hAopen
+        (chapter07FiniteIdeleEquiv R K x) W
+        (mem_nhds_iff.mpr ⟨W, subset_rfl, hW, hx⟩) with
+      ⟨S, hS, U, hU, hxU, hUW⟩
+    have hfinite : IsOpen {z : chapter07FiniteIdeleGroup R K |
+        ∀ v ∈ S, chapter07FiniteIdeleEquiv R K z v ∈ U v} := by
+      rw [show {z : chapter07FiniteIdeleGroup R K |
+          ∀ v ∈ S, chapter07FiniteIdeleEquiv R K z v ∈ U v} =
+          ⋂ v ∈ S, (fun z : chapter07FiniteIdeleGroup R K =>
+            chapter07FiniteIdeleEquiv R K z v) ⁻¹' U v by
+        ext z
+        simp]
+      exact hS.isOpen_biInter (fun v hv => (hU v).preimage (hcoord v))
+    have hbase : IsOpen {z : chapter07FiniteIdeleGroup R K |
+        ∀ v, v ∉ S → (z : chapter07FiniteAdeleRing R K) v ∈
+          chapter07LocalIntegerRing R K v} := by
+      exact (RestrictedProduct.isOpen_forall_imp_mem hBopen).preimage
+        Units.continuous_val
+    have hbase_inv : IsOpen {z : chapter07FiniteIdeleGroup R K |
+        ∀ v, v ∉ S → ((z⁻¹ : chapter07FiniteIdeleGroup R K) :
+          chapter07FiniteAdeleRing R K) v ∈ chapter07LocalIntegerRing R K v} := by
+      exact (RestrictedProduct.isOpen_forall_imp_mem hBopen).preimage
+        Units.continuous_coe_inv
+    have hpre : (chapter07FiniteIdeleEquiv R K) ⁻¹'
+        (chapter07RestrictedProductBasicOpenShared
+          (fun v : chapter07FinitePlace R => (chapter07LocalField R K v)ˣ)
+          (fun v : chapter07FinitePlace R =>
+            chapter07LocalIntegralUnitSubgroup R K v) S U) =
+        {z : chapter07FiniteIdeleGroup R K |
+          ∀ v ∈ S, chapter07FiniteIdeleEquiv R K z v ∈ U v} ∩
+          {z : chapter07FiniteIdeleGroup R K |
+            ∀ v, v ∉ S → (z : chapter07FiniteAdeleRing R K) v ∈
+              chapter07LocalIntegerRing R K v} ∩
+          {z : chapter07FiniteIdeleGroup R K |
+            ∀ v, v ∉ S → ((z⁻¹ : chapter07FiniteIdeleGroup R K) :
+              chapter07FiniteAdeleRing R K) v ∈ chapter07LocalIntegerRing R K v} := by
+      ext z
+      simp only [chapter07RestrictedProductBasicOpenShared, mem_preimage, mem_ofPred_eq,
+        mem_inter_iff]
+      change
+        ((∀ i ∈ S, chapter07FiniteIdeleEquiv R K z i ∈ U i) ∧
+          ∀ i ∉ S, chapter07FiniteIdeleEquiv R K z i ∈
+            chapter07LocalIntegralUnitSubgroup R K i) ↔
+        (((∀ i ∈ S, chapter07FiniteIdeleEquiv R K z i ∈ U i) ∧
+            (∀ i ∉ S, (z : chapter07FiniteAdeleRing R K) i ∈
+              chapter07LocalIntegerRing R K i)) ∧
+          (∀ i ∉ S, ((z⁻¹ : chapter07FiniteIdeleGroup R K) :
+            chapter07FiniteAdeleRing R K) i ∈ chapter07LocalIntegerRing R K i))
+      constructor
+      · rintro ⟨hS', hA'⟩
+        refine ⟨⟨hS', ?_⟩, ?_⟩
+        · intro v hv
+          have hv' := Submonoid.val_mem_of_mem_units
+            (Submonoid.ofClass (chapter07LocalIntegerRing R K v)) (hA' v hv)
+          rw [hE_val] at hv'
+          exact hv'
+        · intro v hv
+          have hv' := Submonoid.inv_val_mem_of_mem_units
+            (Submonoid.ofClass (chapter07LocalIntegerRing R K v)) (hA' v hv)
+          rw [hE_inv_val] at hv'
+          exact hv'
+      · rintro ⟨⟨hS', hA'⟩, hAinv'⟩
+        refine ⟨hS', ?_⟩
+        intro v hv
+        have hv' := hA' v hv
+        have hv'' := hAinv' v hv
+        rw [← hE_val] at hv'
+        rw [← hE_inv_val] at hv''
+        exact Submonoid.mem_units_of_val_mem_inv_val_mem
+          (Submonoid.ofClass (chapter07LocalIntegerRing R K v)) hv' hv''
+    apply mem_nhds_iff.mpr
+    refine ⟨(chapter07FiniteIdeleEquiv R K) ⁻¹'
+        (chapter07RestrictedProductBasicOpenShared
+          (fun v : chapter07FinitePlace R => (chapter07LocalField R K v)ˣ)
+          (fun v : chapter07FinitePlace R =>
+            chapter07LocalIntegralUnitSubgroup R K v) S U), ?_, ?_, ?_⟩
+    · exact preimage_mono hUW
+    · rw [hpre]
+      exact (hfinite.inter hbase).inter hbase_inv
+    · rw [hpre]
+      refine ⟨⟨hxU.1, ?_⟩, ?_⟩
+      · intro v hv
+        have hv' := Submonoid.val_mem_of_mem_units
+          (Submonoid.ofClass (chapter07LocalIntegerRing R K v)) (hxU.2 v hv)
+        rw [hE_val] at hv'
+        exact hv'
+      · intro v hv
+        have hv' := Submonoid.inv_val_mem_of_mem_units
+          (Submonoid.ofClass (chapter07LocalIntegerRing R K v)) (hxU.2 v hv)
+        rw [hE_inv_val] at hv'
+        exact hv'
+  let hhomeo :
+      Homeomorph (chapter07FiniteIdeleGroup R K)
+        (chapter07FiniteIdeleRestrictedProduct R K) :=
+    Homeomorph.mk (chapter07FiniteIdeleEquiv R K).toEquiv he hinv
+  change Units.instTopologicalSpaceUnits =
+    TopologicalSpace.induced (chapter07FiniteIdeleEquiv R K)
+      (RestrictedProduct.topologicalSpace
+        (fun v : chapter07FinitePlace R => (chapter07LocalField R K v)ˣ)
+        (fun v : chapter07FinitePlace R => chapter07LocalIntegralUnitSubgroup R K v)
+        cofinite)
+  have htop := hhomeo.isInducing.eq_induced
+  simpa [hhomeo] using htop
+
+@[simp]
+theorem chapter07FiniteIdeleEquiv_apply
+    (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
+    [Algebra R K] [IsFractionRing R K]
+    (x : chapter07FiniteIdeleGroup R K) (v : chapter07FinitePlace R) :
+    chapter07FiniteIdeleEquiv R K x v = x.1 v :=
+  rfl
+
+/-- The finite divisor group in the book's direct-sum notation. -/
+abbrev chapter07FiniteDivisorGroup
+    (R : Type*) [CommRing R] [IsDedekindDomain R] :=
+  chapter07FinitePlace R →₀ ℤ
+
+def chapter07FiniteDivisorGroupToDirectSum
+    (R : Type*) [CommRing R] [IsDedekindDomain R] :
+    chapter07FiniteDivisorGroup R ≃+
+      (⨁ _ : chapter07FinitePlace R, ℤ) :=
+  letI : DecidableEq (chapter07FinitePlace R) := Classical.decEq _
+  (finsuppLEquivDirectSum ℤ ℤ (chapter07FinitePlace R)).toAddEquiv
+
+@[simp]
+theorem chapter07FiniteDivisorGroupToDirectSum_apply
+    (R : Type*) [CommRing R] [IsDedekindDomain R]
+    (d : chapter07FiniteDivisorGroup R) (v : chapter07FinitePlace R) :
+    chapter07FiniteDivisorGroupToDirectSum R d v = d v :=
+by
+  rfl
+
 
 /-! ### The graph topology of units -/
 
@@ -483,7 +868,22 @@ noncomputable def chapter07IdeleRestrictedProductEquiv
           RestrictedProduct.mk
             (fun v : chapter07FinitePlace R =>
               ((y (Sum.inr v))⁻¹ : chapter07LocalField R K v))
-            (by sorry)⟩
+            (by
+              have hy : {w : chapter07AllPlace R K |
+                  y w ∉ chapter07AllIntegralUnitSubgroup R K w}.Finite :=
+                Filter.eventually_cofinite.mp y.2
+              have hy' := hy.preimage
+                (Sum.inr_injective : Function.Injective
+                  (Sum.inr : chapter07FinitePlace R → chapter07AllPlace R K)).injOn
+              filter_upwards [hy'.compl_mem_cofinite] with v hv
+              have hmem : y (Sum.inr v) ∈
+                  chapter07AllIntegralUnitSubgroup R K (Sum.inr v) := by
+                by_contra hbad
+                exact hv hbad
+              rw [← Units.val_inv_eq_inv_val]
+              exact Submonoid.val_mem_of_mem_units
+                (Submonoid.ofClass (chapter07LocalIntegerRing R K v))
+                ((chapter07AllIntegralUnitSubgroup R K (Sum.inr v)).inv_mem hmem))⟩
       val_inv := by
         apply Prod.ext
         · funext v
@@ -533,9 +933,244 @@ noncomputable def chapter07IdeleRestrictedProductEquiv
 theorem chapter07_idele_restrictedProduct_topology
     (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
     [Algebra R K] [IsFractionRing R K] [NumberField K] :
-    (inferInstance : TopologicalSpace (chapter07IdeleGroup R K)) =
+      (inferInstance : TopologicalSpace (chapter07IdeleGroup R K)) =
       TopologicalSpace.induced (chapter07IdeleRestrictedProductEquiv R K) inferInstance := by
-  sorry
+  have hAopen : ∀ w : chapter07AllPlace R K,
+      IsOpen (chapter07AllIntegralUnitSet R K w :
+        Set (chapter07AllLocalUnitGroup R K w)) := by
+    intro w
+    cases w with
+    | inl v => simp [chapter07AllIntegralUnitSet, chapter07AllIntegralUnitSubgroup]
+    | inr v =>
+      have hlocal : IsOpen (chapter07LocalIntegerRing R K v :
+          Set (chapter07LocalField R K v)) := by
+        exact Valued.isOpen_valuationSubring _
+      exact Submonoid.isOpen_units hlocal
+  have hcoord (w : chapter07AllPlace R K) :
+      Continuous (fun x : chapter07IdeleGroup R K =>
+        chapter07IdeleRestrictedProductEquiv R K x w) := by
+    cases w with
+    | inl v =>
+      rw [Units.continuous_iff]
+      constructor
+      · change Continuous (fun x : chapter07IdeleGroup R K => x.1.1 v)
+        exact (continuous_apply v).comp
+          (continuous_fst.comp Units.continuous_val)
+      · change Continuous (fun x : chapter07IdeleGroup R K =>
+          (x⁻¹ : chapter07IdeleGroup R K).1.1 v)
+        exact (continuous_apply v).comp
+          (continuous_fst.comp Units.continuous_coe_inv)
+    | inr v =>
+      rw [Units.continuous_iff]
+      constructor
+      · change Continuous (fun x : chapter07IdeleGroup R K => x.1.2 v)
+        exact (RestrictedProduct.continuous_eval v).comp
+          (continuous_snd.comp Units.continuous_val)
+      · change Continuous (fun x : chapter07IdeleGroup R K =>
+          (x⁻¹ : chapter07IdeleGroup R K).1.2 v)
+        exact (RestrictedProduct.continuous_eval v).comp
+          (continuous_snd.comp Units.continuous_coe_inv)
+  have he : Continuous (chapter07IdeleRestrictedProductEquiv R K) := by
+    rw [continuous_def]
+    intro W hW
+    apply isOpen_iff_mem_nhds.mpr
+    intro x hx
+    rcases chapter07_restrictedProduct_basicOpen_basis_shared
+        (chapter07AllLocalUnitGroup R K) (chapter07AllIntegralUnitSet R K) hAopen
+        (chapter07IdeleRestrictedProductEquiv R K x) W
+        (mem_nhds_iff.mpr ⟨W, subset_rfl, hW, hx⟩) with
+      ⟨S, hS, U, hU, hxU, hUW⟩
+    have hBopen : ∀ v : chapter07FinitePlace R,
+        IsOpen (chapter07LocalIntegerRing R K v :
+          Set (chapter07LocalField R K v)) := by
+      intro v
+      exact Valued.isOpen_valuationSubring _
+    have hvalUnits : Continuous (fun z : chapter07IdeleGroup R K =>
+        (z : chapter07AdeleRing R K)) := by
+      exact Units.continuous_val
+    have hinvUnits : Continuous (fun z : chapter07IdeleGroup R K =>
+        ((z⁻¹ : chapter07IdeleGroup R K) : chapter07AdeleRing R K)) := by
+      exact Units.continuous_coe_inv
+    have hfinite : IsOpen {z : chapter07IdeleGroup R K |
+        ∀ w ∈ S, chapter07IdeleRestrictedProductEquiv R K z w ∈ U w} := by
+      rw [show {z : chapter07IdeleGroup R K |
+          ∀ w ∈ S, chapter07IdeleRestrictedProductEquiv R K z w ∈ U w} =
+          ⋂ w ∈ S, (fun z : chapter07IdeleGroup R K =>
+            chapter07IdeleRestrictedProductEquiv R K z w) ⁻¹' U w by
+        ext z
+        simp]
+      exact hS.isOpen_biInter (fun w hw => (hU w).preimage (hcoord w))
+    have hbase : IsOpen {z : chapter07IdeleGroup R K |
+        ∀ v : chapter07FinitePlace R, Sum.inr v ∉ S →
+          (z : chapter07AdeleRing R K).2 v ∈ chapter07LocalIntegerRing R K v} := by
+      change IsOpen ((fun z : chapter07IdeleGroup R K =>
+        (z : chapter07AdeleRing R K).2) ⁻¹'
+          {a : chapter07FiniteAdeleRing R K | ∀ v : chapter07FinitePlace R,
+            Sum.inr v ∉ S → a v ∈ chapter07LocalIntegerRing R K v})
+      exact (RestrictedProduct.isOpen_forall_imp_mem hBopen).preimage
+        (continuous_snd.comp hvalUnits)
+    have hbase_inv : IsOpen {z : chapter07IdeleGroup R K |
+        ∀ v : chapter07FinitePlace R, Sum.inr v ∉ S →
+          ((z⁻¹ : chapter07IdeleGroup R K) : chapter07AdeleRing R K).2 v ∈
+            chapter07LocalIntegerRing R K v} := by
+      change IsOpen ((fun z : chapter07IdeleGroup R K =>
+        ((z⁻¹ : chapter07IdeleGroup R K) : chapter07AdeleRing R K).2) ⁻¹'
+          {a : chapter07FiniteAdeleRing R K | ∀ v : chapter07FinitePlace R,
+            Sum.inr v ∉ S → a v ∈ chapter07LocalIntegerRing R K v})
+      exact (RestrictedProduct.isOpen_forall_imp_mem hBopen).preimage
+        (continuous_snd.comp hinvUnits)
+    have hE_val (z : chapter07IdeleGroup R K) (v : chapter07FinitePlace R) :
+        (↑(chapter07IdeleRestrictedProductEquiv R K z (Sum.inr v)) :
+          chapter07LocalField R K v) = (z : chapter07AdeleRing R K).2 v := by
+      rfl
+    have hE_inv_val (z : chapter07IdeleGroup R K) (v : chapter07FinitePlace R) :
+        (↑((chapter07IdeleRestrictedProductEquiv R K z (Sum.inr v))⁻¹) :
+          chapter07LocalField R K v) =
+          ((z⁻¹ : chapter07IdeleGroup R K) : chapter07AdeleRing R K).2 v := by
+      rfl
+    let B := chapter07RestrictedProductBasicOpenShared
+      (chapter07AllLocalUnitGroup R K) (chapter07AllIntegralUnitSet R K) S U
+    have hpre : (chapter07IdeleRestrictedProductEquiv R K) ⁻¹' B =
+        {z : chapter07IdeleGroup R K |
+          ∀ w ∈ S, chapter07IdeleRestrictedProductEquiv R K z w ∈ U w} ∩
+        {z : chapter07IdeleGroup R K |
+          ∀ v : chapter07FinitePlace R, Sum.inr v ∉ S →
+            (z : chapter07AdeleRing R K).2 v ∈ chapter07LocalIntegerRing R K v} ∩
+        {z : chapter07IdeleGroup R K |
+          ∀ v : chapter07FinitePlace R, Sum.inr v ∉ S →
+            ((z⁻¹ : chapter07IdeleGroup R K) : chapter07AdeleRing R K).2 v ∈
+              chapter07LocalIntegerRing R K v} := by
+      ext z
+      simp only [B, chapter07RestrictedProductBasicOpenShared, mem_preimage,
+        mem_ofPred_eq, mem_inter_iff]
+      change
+        ((∀ i ∈ S, chapter07IdeleRestrictedProductEquiv R K z i ∈ U i) ∧
+          ∀ i ∉ S, chapter07IdeleRestrictedProductEquiv R K z i ∈
+            chapter07AllIntegralUnitSubgroup R K i) ↔
+        (((∀ i ∈ S, chapter07IdeleRestrictedProductEquiv R K z i ∈ U i) ∧
+            (∀ v : chapter07FinitePlace R, Sum.inr v ∉ S →
+              (z : chapter07AdeleRing R K).2 v ∈
+                chapter07LocalIntegerRing R K v)) ∧
+          (∀ v : chapter07FinitePlace R, Sum.inr v ∉ S →
+            ((z⁻¹ : chapter07IdeleGroup R K) : chapter07AdeleRing R K).2 v ∈
+              chapter07LocalIntegerRing R K v))
+      constructor
+      · rintro ⟨hS', hA'⟩
+        refine ⟨⟨hS', ?_⟩, ?_⟩
+        · intro v hv
+          have hv' := Submonoid.val_mem_of_mem_units
+            (Submonoid.ofClass (chapter07LocalIntegerRing R K v))
+            (hA' (Sum.inr v) hv)
+          rw [hE_val] at hv'
+          exact hv'
+        · intro v hv
+          have hv' := Submonoid.inv_val_mem_of_mem_units
+            (Submonoid.ofClass (chapter07LocalIntegerRing R K v))
+            (hA' (Sum.inr v) hv)
+          rw [hE_inv_val] at hv'
+          exact hv'
+      · rintro ⟨⟨hS', hA'⟩, hAinv'⟩
+        refine ⟨hS', ?_⟩
+        intro w hw
+        cases w with
+        | inl v => simp [chapter07AllIntegralUnitSubgroup]
+        | inr v =>
+          apply Submonoid.mem_units_of_val_mem_inv_val_mem
+            (Submonoid.ofClass (chapter07LocalIntegerRing R K v))
+          · rw [hE_val]
+            exact hA' v hw
+          · rw [hE_inv_val]
+            exact hAinv' v hw
+    apply mem_nhds_iff.mpr
+    refine ⟨(chapter07IdeleRestrictedProductEquiv R K) ⁻¹' B, ?_, ?_, ?_⟩
+    · exact preimage_mono hUW
+    · rw [hpre]
+      exact (hfinite.inter hbase).inter hbase_inv
+    · rw [hpre]
+      refine ⟨⟨hxU.1, ?_⟩, ?_⟩
+      · intro v hv
+        have hv' := Submonoid.val_mem_of_mem_units
+          (Submonoid.ofClass (chapter07LocalIntegerRing R K v)) (hxU.2 (Sum.inr v) hv)
+        rw [hE_val] at hv'
+        exact hv'
+      · intro v hv
+        have hv' := Submonoid.inv_val_mem_of_mem_units
+          (Submonoid.ofClass (chapter07LocalIntegerRing R K v)) (hxU.2 (Sum.inr v) hv)
+        rw [hE_inv_val] at hv'
+        exact hv'
+  let projFinite : chapter07GlobalIdeleRestrictedProduct R K →
+      chapter07FiniteAdeleRing R K :=
+    RestrictedProduct.mapAlong
+      (chapter07AllLocalUnitGroup R K)
+      (fun v : chapter07FinitePlace R => chapter07LocalField R K v)
+      (Sum.inr : chapter07FinitePlace R → chapter07AllPlace R K)
+      ((Sum.inr_injective : Function.Injective
+        (Sum.inr : chapter07FinitePlace R → chapter07AllPlace R K)).tendsto_cofinite)
+      (fun v u => (u : chapter07LocalField R K v))
+      (Filter.Eventually.of_forall (fun v u hu =>
+        Submonoid.val_mem_of_mem_units
+          (Submonoid.ofClass (chapter07LocalIntegerRing R K v)) hu))
+  have hproj : Continuous projFinite := by
+    apply RestrictedProduct.mapAlong_continuous
+      (R₁ := chapter07AllLocalUnitGroup R K)
+      (R₂ := fun v : chapter07FinitePlace R => chapter07LocalField R K v)
+      (f := Sum.inr)
+      (hf := (Sum.inr_injective : Function.Injective
+        (Sum.inr : chapter07FinitePlace R → chapter07AllPlace R K)).tendsto_cofinite)
+      (φ := fun v u => (u : chapter07LocalField R K v))
+      (hφ := Filter.Eventually.of_forall (fun v u hu =>
+        Submonoid.val_mem_of_mem_units
+          (Submonoid.ofClass (chapter07LocalIntegerRing R K v)) hu))
+    intro v
+    exact Units.continuous_val
+  have hinf : Continuous (fun y : chapter07GlobalIdeleRestrictedProduct R K =>
+      fun v : NumberField.InfinitePlace K => (y (Sum.inl v) : v.Completion)) := by
+    exact continuous_pi (fun v => Units.continuous_val.comp
+      (RestrictedProduct.continuous_eval (Sum.inl v)))
+  have hval : Continuous (fun y : chapter07GlobalIdeleRestrictedProduct R K =>
+      ((chapter07IdeleRestrictedProductEquiv R K).symm y :
+        chapter07AdeleRing R K)) := by
+    change Continuous (fun y : chapter07GlobalIdeleRestrictedProduct R K =>
+      (fun v : NumberField.InfinitePlace K => (y (Sum.inl v) : v.Completion),
+        projFinite y))
+    exact hinf.prodMk hproj
+  have hRP_inv : Continuous (fun y : chapter07GlobalIdeleRestrictedProduct R K => y⁻¹) := by
+    have : ∀ w : chapter07AllPlace R K,
+        ContinuousInv (chapter07AllLocalUnitGroup R K w) := fun w => by
+      cases w <;> infer_instance
+    rw [RestrictedProduct.continuous_dom]
+    intro T hT
+    have hprincipal : ContinuousInv
+        (Πʳ w : chapter07AllPlace R K,
+          [chapter07AllLocalUnitGroup R K w,
+            chapter07AllIntegralUnitSubgroup R K w]_[𝓟 T]) :=
+      RestrictedProduct.isEmbedding_coe_of_principal.continuousInv (fun _ => rfl)
+    exact (RestrictedProduct.continuous_inclusion hT).comp hprincipal.continuous_inv
+  have hinvval : Continuous (fun y : chapter07GlobalIdeleRestrictedProduct R K =>
+      (((chapter07IdeleRestrictedProductEquiv R K).symm y)⁻¹ :
+        chapter07IdeleGroup R K).1) := by
+    have heq : (fun y : chapter07GlobalIdeleRestrictedProduct R K =>
+        ((chapter07IdeleRestrictedProductEquiv R K).symm (y⁻¹) :
+          chapter07IdeleGroup R K).1) =
+        (fun y : chapter07GlobalIdeleRestrictedProduct R K =>
+          (((chapter07IdeleRestrictedProductEquiv R K).symm y)⁻¹ :
+            chapter07IdeleGroup R K).1) := by
+      funext y
+      rw [map_inv]
+    rw [← heq]
+    exact hval.comp hRP_inv
+  have hinv : Continuous (chapter07IdeleRestrictedProductEquiv R K).symm := by
+    rw [Units.continuous_iff]
+    exact ⟨hval, hinvval⟩
+  let hhomeo : Homeomorph (chapter07IdeleGroup R K)
+      (chapter07GlobalIdeleRestrictedProduct R K) :=
+    Homeomorph.mk (chapter07IdeleRestrictedProductEquiv R K).toEquiv he hinv
+  change Units.instTopologicalSpaceUnits =
+    TopologicalSpace.induced (chapter07IdeleRestrictedProductEquiv R K)
+      (RestrictedProduct.topologicalSpace
+        (chapter07AllLocalUnitGroup R K) (chapter07AllIntegralUnitSet R K) cofinite)
+  have htop := hhomeo.isInducing.eq_induced
+  simpa [hhomeo] using htop
 
 theorem chapter07_ideleGraph_isEmbedding
     (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]

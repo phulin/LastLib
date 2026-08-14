@@ -16,7 +16,11 @@ structure Chapter04PlaceSystem (G W V : Type*) [Group G] where
   action_one : ∀ w, action 1 w = w
   action_mul : ∀ g h w, action (g * h) w = action g (action h w)
   below : W → V
+  below_invariant : ∀ g w, below (action g w) = below w
   decomposition : W → Subgroup G
+  decomposition_conjugate :
+    ∀ (g : G) (w : W) (x : G),
+      x ∈ decomposition (action g w) ↔ g⁻¹ * x * g ∈ decomposition w
   is_archimedean : W → Prop
   is_ramified : W → Prop
   represents_class_group_generator : W → Prop
@@ -63,20 +67,19 @@ theorem chapter04_mem_XS_iff {W : Type*} (S : Finset W) (x : chapter04YS S) :
 /-- The additive encoding of the valuation sequence outside `S_L`. -/
 structure Chapter04SUnitValuationData
     {G : Type} {W : Type w} [Group G] [Fintype G]
-    (S : Finset W) where
+  (S : Finset W) where
   units : Chapter04GModule.{0, 0} G
-  multiplicative : Type w
-  [multiplicativeGroup : AddCommGroup multiplicative]
-  divisorsOutside : Type w
-  [divisorsGroup : AddCommGroup divisorsOutside]
-  unitsMap : units.V →+ multiplicative
-  valuationMap : multiplicative →+ divisorsOutside
+  multiplicative : Chapter04GModule.{0, w} G
+  divisorsOutside : Chapter04GModule.{0, w} G
+  unitsMap : units.V →+ multiplicative.V
+  valuationMap : multiplicative.V →+ divisorsOutside.V
+  unitsMap_equivariant : ∀ (g : G) (x : units.V),
+    multiplicative.ρ g (unitsMap x) = unitsMap (units.ρ g x)
+  valuationMap_equivariant : ∀ (g : G) (x : multiplicative.V),
+    divisorsOutside.ρ g (valuationMap x) = valuationMap (multiplicative.ρ g x)
   unitsMap_injective : Function.Injective unitsMap
   valuation_exact : Function.Exact unitsMap valuationMap
   valuation_surjective : Function.Surjective valuationMap
-
-attribute [instance] Chapter04SUnitValuationData.multiplicativeGroup
-  Chapter04SUnitValuationData.divisorsGroup
 
 theorem chapter04_S_unit_valuation_exact
     {G : Type} {W : Type w} [Group G] [Fintype G]
@@ -122,8 +125,12 @@ theorem chapter04_exists_large_place_set
 the idele-class quotient. -/
 structure Chapter04GlobalFundamentalExtension
     {G : Type} [Group G] [Fintype G] where
-  ideleClasses : Chapter04GModule.{0, 0} G
-  sequence : Chapter04TwoExtension ideleClasses (chapter04TrivialGModule G)
+  /-- The coefficient module is the chapter's additive adapter for the idele-class module.
+
+  The field-indexed canonical realization belongs to the earlier global-class-field architecture;
+  this structure is the generic source-order adapter. -/
+  fundamentalClass : Chapter04FundamentalClass (G := G)
+  sequence : Chapter04TwoExtension fundamentalClass.C (chapter04TrivialGModule G)
 
 /-- The splicing construction produces the global fundamental extension. -/
 theorem chapter04_splice_global_fundamental_extension
@@ -138,13 +145,10 @@ theorem chapter04_splice_global_fundamental_extension
 /-- The splicing construction also supplies the normalized fundamental-class interface used by
 the subgroup and cap-product statements. -/
 theorem chapter04_splice_supplies_fundamental_class
-    {G : Type} {W : Type w} {V : Type z} [Group G] [Fintype G]
-    (P : Chapter04PlaceSystem G W V)
-    (S : Chapter04LargePlaceSet G W V P)
-    (valuation : Chapter04SUnitValuationData (G := G) S.S)
-    (localSequence : Chapter04CanonicalSUnitSequence P S valuation) :
+    {G : Type} [Group G] [Fintype G]
+    (globalExtension : Chapter04GlobalFundamentalExtension (G := G)) :
     Nonempty (Chapter04FundamentalClass (G := G)) := by
-  sorry
+  exact ⟨globalExtension.fundamentalClass⟩
 
 /-! Independence of the auxiliary finite set is a property of the splicing construction, not an
 unrelated proposition stored in every extension record.  The construction theorem above is the

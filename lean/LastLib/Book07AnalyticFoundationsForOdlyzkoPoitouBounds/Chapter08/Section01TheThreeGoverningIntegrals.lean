@@ -267,6 +267,323 @@ theorem chapter08_root_discriminant_log_eq_div
     field_simp [ne_of_gt hd]
   · exact_mod_cast (abs_pos.mpr (NumberField.discr_ne_zero K))
 
+private theorem chapter08_bounded_variation_on_univ_of_compact_support
+    {f : ℝ → ℝ} (hcompact : HasCompactSupport f)
+    (hlocal : ∀ a b : ℝ, BoundedVariationOn f (Set.uIcc a b)) :
+    BoundedVariationOn f Set.univ := by
+  obtain ⟨R, hR⟩ := hcompact.isBounded.subset_closedBall (0 : ℝ)
+  let S : ℝ := max R 0 + 1
+  have hS : 0 ≤ S := by
+    dsimp [S]
+    linarith [le_max_right R 0]
+  have hSpos : 0 < S := by
+    dsimp [S]
+    linarith [le_max_right R 0]
+  have hRltS : R < S := by
+    dsimp [S]
+    linarith [le_max_left R 0]
+  have hzero : ∀ x : ℝ, x ≤ -S ∨ S ≤ x → f x = 0 := by
+    intro x hx
+    have hxnot : x ∉ tsupport f := by
+      intro hxt
+      have hxball : x ∈ Metric.closedBall (0 : ℝ) R := hR hxt
+      have hxdist : dist x 0 ≤ R := by
+        simpa only [Metric.mem_closedBall, dist_zero_right] using hxball
+      have habs : |x| ≤ R := by
+        simpa only [Real.dist_eq, sub_zero] using hxdist
+      rcases hx with hxleft | hxright
+      · have hxneg : x < 0 := lt_of_le_of_lt hxleft (by linarith [hSpos])
+        have hSabs : S ≤ |x| := by
+          rw [abs_of_neg hxneg]
+          linarith
+        exact (not_lt_of_ge habs) (lt_of_lt_of_le hRltS hSabs)
+      · have hxpos : 0 < x := lt_of_lt_of_le hSpos hxright
+        have hSabs : S ≤ |x| := by
+          rw [abs_of_pos hxpos]
+          exact hxright
+        exact (not_lt_of_ge habs) (lt_of_lt_of_le hRltS hSabs)
+    exact image_eq_zero_of_notMem_tsupport hxnot
+  have hboundary : f (-S) = 0 ∧ f S = 0 := by
+    exact ⟨hzero (-S) (Or.inl le_rfl), hzero S (Or.inr le_rfl)⟩
+  have hclamp_mem : ∀ x : ℝ,
+      max (-S) (min x S) ∈ Set.Icc (-S) S := by
+    intro x
+    constructor
+    · exact le_max_left _ _
+    · apply max_le
+      · linarith
+      · exact min_le_right _ _
+  have hclamp_eq : ∀ x : ℝ,
+      f x = f (max (-S) (min x S)) := by
+    intro x
+    by_cases hxleft : x < -S
+    · have hfx : f x = 0 := hzero x (Or.inl hxleft.le)
+      have hclamp : max (-S) (min x S) = -S := by
+        rw [min_eq_left (by linarith [hxleft, hS]), max_eq_left hxleft.le]
+      rw [hfx, hclamp, hboundary.1]
+    · by_cases hxright : S < x
+      · have hfx : f x = 0 := hzero x (Or.inr hxright.le)
+        have hclamp : max (-S) (min x S) = S := by
+          rw [min_eq_right hxright.le, max_eq_right (by linarith [hS])]
+        rw [hfx, hclamp, hboundary.2]
+      · have hxleft' : -S ≤ x := le_of_not_gt hxleft
+        have hxright' : x ≤ S := le_of_not_gt hxright
+        simp [max_eq_right hxleft', min_eq_left hxright']
+  have hle : eVariationOn f Set.univ ≤ eVariationOn f (Set.Icc (-S) S) := by
+    rw [eVariationOn]
+    apply iSup_le
+    rintro ⟨n, u, hu, hu_mem⟩
+    let v : ℕ → ℝ := fun i => max (-S) (min (u i) S)
+    have hv : Monotone v := by
+      intro i j hij
+      dsimp [v]
+      exact max_le_max le_rfl (min_le_min (hu hij) le_rfl)
+    have hv_mem : ∀ i, v i ∈ Set.Icc (-S) S := by
+      intro i
+      exact hclamp_mem (u i)
+    calc
+      (∑ i ∈ Finset.range n,
+          edist (f (u (i + 1))) (f (u i))) =
+          ∑ i ∈ Finset.range n,
+            edist (f (v (i + 1))) (f (v i)) := by
+        apply Finset.sum_congr rfl
+        intro i hi
+        change edist (f (u (i + 1))) (f (u i)) =
+          edist (f (max (-S) (min (u (i + 1)) S)))
+            (f (max (-S) (min (u i) S)))
+        exact congrArg₂ edist (hclamp_eq (u (i + 1))) (hclamp_eq (u i))
+      _ ≤ eVariationOn f (Set.Icc (-S) S) :=
+        eVariationOn.sum_le hv hv_mem
+  have hcentral : BoundedVariationOn f (Set.Icc (-S) S) := by
+    have h := hlocal (-S) S
+    rw [Set.uIcc_of_le (by linarith [hS])] at h
+    exact h
+  exact ne_top_of_le_ne_top hcentral hle
+
+private theorem chapter08_derivative_eq_zero_of_eventually_zero
+    {F D : ℝ → ℝ} {s : Set ℝ} {x : ℝ}
+    (hderiv : HasDerivWithinAt F (D x) s x)
+    (hevent : (fun _ : ℝ => (0 : ℝ)) =ᶠ[𝓝[s] x] F)
+    (hvalue : F x = 0) (hunique : UniqueDiffWithinAt ℝ s x) :
+    D x = 0 := by
+  have hconst : HasDerivWithinAt (fun _ : ℝ => (0 : ℝ)) (D x) s x :=
+    hderiv.congr_of_eventuallyEq hevent hvalue.symm
+  have hzero : HasDerivWithinAt (fun _ : ℝ => (0 : ℝ)) 0 s x :=
+    hasDerivWithinAt_const (x := x) (s := s) (c := (0 : ℝ))
+  exact (hconst.derivWithin hunique).symm.trans
+    (hzero.derivWithin hunique)
+
+private theorem chapter08_one_sided_derivatives_have_compact_support
+    {F Dleft Dright : ℝ → ℝ} (hcompact : HasCompactSupport F)
+    (hleft : ∀ x, HasDerivWithinAt F (Dleft x) (Set.Iic x) x)
+    (hright : ∀ x, HasDerivWithinAt F (Dright x) (Set.Ici x) x) :
+    HasCompactSupport Dleft ∧ HasCompactSupport Dright := by
+  obtain ⟨R, hR⟩ := hcompact.isBounded.subset_closedBall (0 : ℝ)
+  let S : ℝ := max R 0 + 1
+  have hS : 0 ≤ S := by
+    dsimp [S]
+    linarith [le_max_right R 0]
+  have hSpos : 0 < S := by
+    dsimp [S]
+    linarith [le_max_right R 0]
+  have hRltS : R < S := by
+    dsimp [S]
+    linarith [le_max_left R 0]
+  have hzeroF : ∀ x : ℝ, x ≤ -S ∨ S ≤ x → F x = 0 := by
+    intro x hx
+    have hxnot : x ∉ tsupport F := by
+      intro hxt
+      have hxball : x ∈ Metric.closedBall (0 : ℝ) R := hR hxt
+      have hxdist : dist x 0 ≤ R := by
+        simpa only [Metric.mem_closedBall, dist_zero_right] using hxball
+      have habs : |x| ≤ R := by
+        simpa only [Real.dist_eq, sub_zero] using hxdist
+      rcases hx with hxleft | hxright
+      · have hxneg : x < 0 := lt_of_le_of_lt hxleft (by linarith [hSpos])
+        have hSabs : S ≤ |x| := by
+          rw [abs_of_neg hxneg]
+          linarith
+        exact (not_lt_of_ge habs) (lt_of_lt_of_le hRltS hSabs)
+      · have hxpos : 0 < x := lt_of_lt_of_le hSpos hxright
+        have hSabs : S ≤ |x| := by
+          rw [abs_of_pos hxpos]
+          exact hxright
+        exact (not_lt_of_ge habs) (lt_of_lt_of_le hRltS hSabs)
+    exact image_eq_zero_of_notMem_tsupport hxnot
+  have hDleft_zero : ∀ x, x ∉ Set.Icc (-S) S → Dleft x = 0 := by
+    intro x hx
+    have hx' : x < -S ∨ S < x := by
+      by_cases hleft : x < -S
+      · exact Or.inl hleft
+      · right
+        exact lt_of_not_ge (fun hright => hx ⟨le_of_not_gt hleft, hright⟩)
+    rcases hx' with hxleft | hxright
+    · have hevent : (fun _ : ℝ => (0 : ℝ)) =ᶠ[𝓝[Set.Iic x] x] F := by
+        filter_upwards [self_mem_nhdsWithin] with y hy
+        exact (hzeroF y (Or.inl (le_trans hy hxleft.le))).symm
+      exact chapter08_derivative_eq_zero_of_eventually_zero (hleft x) hevent
+        (hzeroF x (Or.inl hxleft.le)) (uniqueDiffWithinAt_Iic x)
+    · have hevent : (fun _ : ℝ => (0 : ℝ)) =ᶠ[𝓝[Set.Iic x] x] F := by
+        filter_upwards [mem_nhdsWithin_of_mem_nhds (Ioi_mem_nhds hxright)] with y hy
+        exact (hzeroF y (Or.inr hy.le)).symm
+      exact chapter08_derivative_eq_zero_of_eventually_zero (hleft x) hevent
+        (hzeroF x (Or.inr hxright.le)) (uniqueDiffWithinAt_Iic x)
+  have hDright_zero : ∀ x, x ∉ Set.Icc (-S) S → Dright x = 0 := by
+    intro x hx
+    have hx' : x < -S ∨ S < x := by
+      by_cases hleft : x < -S
+      · exact Or.inl hleft
+      · right
+        exact lt_of_not_ge (fun hright => hx ⟨le_of_not_gt hleft, hright⟩)
+    rcases hx' with hxleft | hxright
+    · have hevent : (fun _ : ℝ => (0 : ℝ)) =ᶠ[𝓝[Set.Ici x] x] F := by
+        filter_upwards [mem_nhdsWithin_of_mem_nhds (Iio_mem_nhds hxleft)] with y hy
+        exact (hzeroF y (Or.inl hy.le)).symm
+      exact chapter08_derivative_eq_zero_of_eventually_zero (hright x) hevent
+        (hzeroF x (Or.inl hxleft.le)) (uniqueDiffWithinAt_Ici x)
+    · have hevent : (fun _ : ℝ => (0 : ℝ)) =ᶠ[𝓝[Set.Ici x] x] F := by
+        filter_upwards [self_mem_nhdsWithin] with y hy
+        exact (hzeroF y (Or.inr (le_trans hxright.le hy))).symm
+      exact chapter08_derivative_eq_zero_of_eventually_zero (hright x) hevent
+        (hzeroF x (Or.inr hxright.le)) (uniqueDiffWithinAt_Ici x)
+  refine ⟨?_, ?_⟩
+  · apply HasCompactSupport.intro isCompact_Icc
+    intro x hx
+    exact hDleft_zero x hx
+  · apply HasCompactSupport.intro isCompact_Icc
+    intro x hx
+    exact hDright_zero x hx
+
+/-!
+The Chapter 6 explicit formula uses the canonical Chapter 5 admissibility class.  This bridge
+keeps the Chapter 8-facing piecewise formulation available while exposing the canonical class
+required by the zero and prime summability interfaces.
+-/
+theorem chapter08_basically_admissible_to_chapter06
+    {F : ℝ → ℝ} (hF : Chapter08BasicallyAdmissible F) :
+    Chapter06.Chapter06BasicallyAdmissible F := by
+  rcases hF with ⟨heven, hcont, hcompact, hpiece, hderiv, hF0, hnear⟩
+  refine
+    { even := heven
+      continuous := hcont
+      compactSupport := hcompact
+      piecewiseC2 := ?_
+      valueAtZero := hF0
+      oneSidedDerivativeBV := ?_
+      originCondition := ?_ }
+  · rcases hpiece with ⟨s, hs⟩
+    refine ⟨(s : Set ℝ), s.finite_toSet, ?_⟩
+    intro x hx
+    rcases hs x hx with ⟨ε, hε, hdiff⟩
+    apply hdiff.contDiffAt
+    exact isOpen_Ioo.mem_nhds (by constructor <;> linarith)
+  · rcases hderiv with ⟨Dleft, Dright, hleftBV, hrightBV, hderiv⟩
+    have hcompactD := chapter08_one_sided_derivatives_have_compact_support hcompact
+      (fun x => (hderiv x).2) (fun x => (hderiv x).1)
+    refine ⟨Dleft, Dright, ?_, ?_, ?_, ?_⟩
+    · intro x
+      exact (hderiv x).2
+    · intro x
+      exact (hderiv x).1
+    · exact chapter08_bounded_variation_on_univ_of_compact_support
+        hcompactD.1 hleftBV
+    · exact chapter08_bounded_variation_on_univ_of_compact_support
+        hcompactD.2 hrightBV
+  · exact (Chapter05.chapter05_origin_condition_iff_integrableOn hcont).2 hnear
+
+theorem chapter08_unconditionally_admissible_to_chapter06
+    {F : ℝ → ℝ} (hF : Chapter08UnconditionallyAdmissible F) :
+    Chapter06.Chapter06UnconditionallyAdmissible F := by
+  rcases hF with ⟨hbasic, G, heven, hnonnegative, hpositive, hshape⟩
+  refine ⟨chapter08_basically_admissible_to_chapter06 hbasic, ?_⟩
+  exact ⟨G, hnonnegative, heven, hpositive, hshape⟩
+
+theorem chapter08_grh_admissible_to_chapter06
+    {F : ℝ → ℝ} (hF : Chapter08GRHAdmissible F) :
+    Chapter06.Chapter06GRHAdmissible F := by
+  refine
+    { basic := chapter08_basically_admissible_to_chapter06 hF.1
+      pointwiseNonnegative := hF.2.1
+      transformNonnegative := hF.2.2.transformNonnegative }
+
+theorem chapter08_canonical_zero_summable
+    (K : Type*) [Field K] [NumberField K] {F : ℝ → ℝ}
+    (hF : Chapter08BasicallyAdmissible F) :
+    Summable (fun ρ : ℂ =>
+      Chapter06.chapter06ZeroSummand (chapter08CanonicalZeroSpectrum K) F ρ) := by
+  simpa [chapter08CanonicalZeroSpectrum] using
+    (Chapter06.chapter06_canonical_zero_summand_summable K
+      (chapter08_basically_admissible_to_chapter06 hF))
+
+theorem chapter08_canonical_prime_power_summable
+    (K : Type*) [Field K] [NumberField K] {F : ℝ → ℝ}
+    (hF : Chapter08BasicallyAdmissible F) :
+    Summable (fun q : Chapter06.Chapter06PrimePower K =>
+      Chapter06.chapter06PrimePowerTerm F q) := by
+  apply summable_of_hasFiniteSupport
+  exact Chapter06.chapter06_prime_power_support_finite K
+    (chapter08_basically_admissible_to_chapter06 hF)
+
+theorem chapter08_canonical_prime_contribution_nonnegative
+    (K : Type*) [Field K] [NumberField K] {F : ℝ → ℝ}
+    (hF : Chapter08BasicallyAdmissible F) (hFnonnegative : ∀ x, 0 ≤ F x) :
+    0 ≤ chapter08CanonicalPrimeContribution K F := by
+  simpa [chapter08CanonicalPrimeContribution] using
+    (Chapter06.chapter06_prime_contribution_nonnegative K
+      (chapter08_basically_admissible_to_chapter06 hF) hFnonnegative)
+
+theorem chapter08_canonical_unconditional_zero_contribution_nonnegative
+    (K : Type*) [Field K] [NumberField K] {F : ℝ → ℝ}
+    (hF : Chapter08UnconditionallyAdmissible F) :
+    0 ≤ chapter08CanonicalZeroContribution K F := by
+  simpa [chapter08CanonicalZeroContribution, chapter08CanonicalZeroSpectrum] using
+    (Chapter06.chapter06_canonical_unconditional_zero_contribution_nonnegative K
+      (chapter08_unconditionally_admissible_to_chapter06 hF))
+
+theorem chapter08_canonical_grh_zero_contribution_nonnegative
+    (K : Type*) [Field K] [NumberField K] {F : ℝ → ℝ}
+    (hF : Chapter08GRHAdmissible F)
+    (hGRH : Chapter06.chapter06GRH (chapter08CanonicalZeroSpectrum K)) :
+    0 ≤ chapter08CanonicalZeroContribution K F := by
+  simpa [chapter08CanonicalZeroContribution, chapter08CanonicalZeroSpectrum] using
+    (Chapter06.chapter06_canonical_grh_zero_contribution_nonnegative K
+      (chapter08_grh_admissible_to_chapter06 hF) hGRH)
+
+/-!
+The canonical bridge used by both triangular regimes.  Its zero and prime fields are the terms
+from the canonical Chapter 6 zeta package, while the Chapter 8 admissibility field remains the
+one consumed by `chapter08_root_discriminant_lower_bound`.
+-/
+noncomputable def chapter08CanonicalExplicitFormulaData
+    (K : Type*) [Field K] [NumberField K] {F : ℝ → ℝ}
+    (hF : Chapter08BasicallyAdmissible F) :
+    Chapter08ExplicitFormulaData K F where
+  basicAdmissible := hF
+  zeroContribution := chapter08CanonicalZeroContribution K F
+  primeContribution := chapter08CanonicalPrimeContribution K F
+  identity := by
+    simpa [Chapter08AbsoluteDiscriminant, Chapter08Degree, Chapter08RealPlaceCount,
+      chapter08A, chapter08B, chapter08C, chapter08CanonicalZeroContribution,
+      chapter08CanonicalZeroSpectrum, chapter08CanonicalPrimeContribution,
+      Chapter06.chapter06AbsoluteDiscriminant, Chapter06.chapter06Degree,
+      Chapter06.chapter06RealPlaces, Chapter06.chapter06A, Chapter06.chapter06B,
+      Chapter06.chapter06C] using
+      (Chapter06.chapter06_weil_poitou_explicit_formula_expanded K
+        (Chapter06.chapter06CanonicalZetaAnalyticPackage K)
+        (chapter08_basically_admissible_to_chapter06 hF))
+
+noncomputable def chapter08CanonicalUnconditionalExplicitFormulaData
+    (K : Type*) [Field K] [NumberField K] {F : ℝ → ℝ}
+    (hF : Chapter08UnconditionallyAdmissible F) :
+    Chapter08ExplicitFormulaData K F :=
+  chapter08CanonicalExplicitFormulaData K hF.1
+
+noncomputable def chapter08CanonicalGRHExplicitFormulaData
+    (K : Type*) [Field K] [NumberField K] {F : ℝ → ℝ}
+    (hF : Chapter08GRHAdmissible F) :
+    Chapter08ExplicitFormulaData K F :=
+  chapter08CanonicalExplicitFormulaData K hF.1
+
 /-!
 Dropping the nonnegative zero and prime contributions in the earlier explicit formula gives the
 book's equation (8.2).

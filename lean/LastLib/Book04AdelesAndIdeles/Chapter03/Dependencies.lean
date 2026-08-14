@@ -156,7 +156,7 @@ theorem chapter03_stage_mono
 
 theorem chapter03_stage_inter
     (H : ∀ i, Subgroup (G i)) (S T : Set I) :
-    chapter03StageSubgroup H (S ∪ T) =
+    chapter03StageSubgroup H (S ∩ T) =
       chapter03StageSubgroup H S ⊓ chapter03StageSubgroup H T := by
   sorry
 

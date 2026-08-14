@@ -65,20 +65,16 @@ theorem chapter02_sum_of_local_degrees_is_the_global_degree
       Chapter02GlobalDegree K := by
   sorry
 
-/-- The local-degree formula `[K_𝔭 : ℚ_p] = e_𝔭 f_𝔭`, with the scalar
-completion algebra made explicit. -/
--- LOCAL_DEPENDENCY_GUESS: Mathlib exposes the finite completion and the
--- rational `p`-adic field separately; the coordinator may later replace this
--- explicit equality bridge by a canonical `ℚ_[p]`-algebra instance on the
--- completion at a prime above `p`.
+/-- The local-degree formula `[K_𝔭 : ℚ_p] = e_𝔭 f_𝔭`, with the compatible
+`ℚ_[p]`-algebra on the finite completion made explicit. -/
 theorem chapter02_local_completion_degree_formula
     {K : Type u} [Field K] [NumberField K]
     (p : Chapter02RationalPrime) (q : Chapter02PrimeAbove K p)
-    (Kp : Type u) [Field Kp]
-    [Algebra (@Padic p.1 ⟨p.2⟩) Kp]
-    [FiniteDimensional (@Padic p.1 ⟨p.2⟩) Kp]
-    (hKp : Kp = Chapter02LocalField q.1) :
-    Module.finrank (@Padic p.1 ⟨p.2⟩) Kp = Chapter02LocalDegree q := by
+    [Algebra (@Padic p.1 ⟨p.2⟩) (Chapter02LocalField q.1)]
+    [FiniteDimensional (@Padic p.1 ⟨p.2⟩) (Chapter02LocalField q.1)]
+    [IsScalarTower ℚ (@Padic p.1 ⟨p.2⟩) (Chapter02LocalField q.1)] :
+    Module.finrank (@Padic p.1 ⟨p.2⟩) (Chapter02LocalField q.1) =
+      Chapter02LocalDegree q := by
   sorry
 
 theorem chapter02_padic_scalar_restriction_power
@@ -114,6 +110,14 @@ theorem chapter02_rational_scalar_value_at_a_finite_place
       Chapter02RationalPadicValue p a ^ Chapter02LocalDegree q := by
   sorry
 
+theorem chapter02_finite_place_restriction_exponent_is_local_degree
+    {K : Type*} [Field K] [NumberField K]
+    (p : Chapter02RationalPrime) (q : Chapter02PrimeAbove K p) :
+    Chapter02RestrictionHasDegreeExponent
+      (Sum.inl (NumberField.FinitePlace.mk q.1) : Chapter02Place K)
+      (Chapter02RationalNormalizedPlace.finite p) (Chapter02LocalDegree q) := by
+  sorry
+
 theorem chapter02_product_over_places_above_a_rational_prime
     {K : Type*} [Field K] [NumberField K]
     (p : Chapter02RationalPrime) [Fintype (Chapter02PrimeAbove K p)] (a : ℚ) :
@@ -129,6 +133,15 @@ theorem chapter02_infinite_local_degree_formula
     [w.LiesOver v] :
     v.mult * Module.finrank v.Completion w.Completion = w.mult := by
   exact NumberField.InfinitePlace.mult_mul_finrank v w
+
+theorem chapter02_infinite_place_restriction_exponent_is_weight
+    {K : Type*} [Field K] [NumberField K]
+    (v : NumberField.InfinitePlace ℚ) (w : NumberField.InfinitePlace K)
+    [w.LiesOver v] :
+    Chapter02RestrictionHasDegreeExponent
+      (Sum.inr w : Chapter02Place K)
+      Chapter02RationalNormalizedPlace.real w.mult := by
+  sorry
 
 theorem chapter02_real_infinite_place_local_degree_is_one
     {K L : Type*} [Field K] [Field L] [Algebra K L]

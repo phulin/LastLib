@@ -29,7 +29,7 @@ def chapter12Counit (A H : Type*) [CommSemiring A] [Semiring H]
     [Bialgebra A H] : H →ₐ[A] A :=
   Bialgebra.counitAlgHom A H
 
-def chapter12Antipode (A H : Type*) [CommSemiring A] [CommRing H]
+def chapter12Antipode (A H : Type*) [CommSemiring A] [CommSemiring H]
     [HopfAlgebra A H] : H →ₐ[A] H :=
   HopfAlgebra.antipodeAlgHom A H
 
@@ -44,51 +44,65 @@ theorem chapter12Counit_apply (A H : Type*) [CommSemiring A] [Semiring H]
     chapter12Counit A H h = Coalgebra.counit h := rfl
 
 @[simp]
-theorem chapter12Antipode_apply (A H : Type*) [CommSemiring A] [CommRing H]
+theorem chapter12Antipode_apply (A H : Type*) [CommSemiring A] [CommSemiring H]
     [HopfAlgebra A H] (h : H) :
     chapter12Antipode A H h = HopfAlgebra.antipode A h := rfl
 
 theorem chapter12_hopf_coassociative (A H : Type*) [CommSemiring A] [Semiring H]
-    [HopfAlgebra A H] :
-    Coalgebra.coassoc (R := A) (A := H) :=
-  Coalgebra.coassoc
+    [Bialgebra A H] :
+    ((TensorProduct.assoc A H H H).toLinearMap ∘ₗ LinearMap.rTensor H comul ∘ₗ comul =
+      LinearMap.lTensor H comul ∘ₗ comul) := by
+  exact Coalgebra.coassoc
 
 theorem chapter12_hopf_left_counit (A H : Type*) [CommSemiring A] [Semiring H]
-    [HopfAlgebra A H] :
-    Coalgebra.rTensor_counit_comp_comul (R := A) (A := H) :=
-  Coalgebra.rTensor_counit_comp_comul
+    [Bialgebra A H] :
+    (LinearMap.rTensor H counit ∘ₗ comul = (TensorProduct.mk A A H) 1) := by
+  exact Coalgebra.rTensor_counit_comp_comul
 
 theorem chapter12_hopf_right_counit (A H : Type*) [CommSemiring A] [Semiring H]
-    [HopfAlgebra A H] :
-    Coalgebra.lTensor_counit_comp_comul (R := A) (A := H) :=
-  Coalgebra.lTensor_counit_comp_comul
+    [Bialgebra A H] :
+    (LinearMap.lTensor H counit ∘ₗ comul = (TensorProduct.mk A H A).flip 1) := by
+  exact Coalgebra.lTensor_counit_comp_comul
 
 theorem chapter12_hopf_antipode_left (A H : Type*) [CommSemiring A] [Semiring H]
     [HopfAlgebra A H] :
-    HopfAlgebra.mul_antipode_rTensor_comul (R := A) (A := H) :=
-  HopfAlgebra.mul_antipode_rTensor_comul
+    (LinearMap.mul' A H ∘ₗ LinearMap.rTensor H (HopfAlgebra.antipode A) ∘ₗ comul =
+      Algebra.linearMap A H ∘ₗ counit) := by
+  exact HopfAlgebra.mul_antipode_rTensor_comul
 
 theorem chapter12_hopf_antipode_right (A H : Type*) [CommSemiring A] [Semiring H]
     [HopfAlgebra A H] :
-    HopfAlgebra.mul_antipode_lTensor_comul (R := A) (A := H) :=
-  HopfAlgebra.mul_antipode_lTensor_comul
+    (LinearMap.mul' A H ∘ₗ LinearMap.lTensor H (HopfAlgebra.antipode A) ∘ₗ comul =
+      Algebra.linearMap A H ∘ₗ counit) := by
+  exact HopfAlgebra.mul_antipode_lTensor_comul
 
 /-! The affine dictionary. -/
 
-theorem chapter12_hopfSpec_fullyFaithful (A : CommRingCat.{u}) :
+def chapter12_hopfSpec_fullyFaithful (A : CommRingCat.{u}) :
     (AlgebraicGeometry.hopfSpec A).FullyFaithful :=
-  AlgebraicGeometry.hopfSpec.fullyFaithful A
+  AlgebraicGeometry.hopfSpec.fullyFaithful
 
 theorem chapter12_affine_hopf_essential_image (A : CommRingCat.{u})
     (G : Chapter12GroupScheme (Spec A)) :
     (AlgebraicGeometry.hopfSpec A).essImage G ↔ IsAffine G.X.left := by
-  simpa using (AlgebraicGeometry.essImage_hopfSpec (R := A) (G := G))
+  exact AlgebraicGeometry.essImage_hopfSpec
 
-theorem chapter12_affine_coordinate_hopf_algebra
+instance chapter12_affine_coordinate_hopf_algebra
     (A : Type u) [CommRing A] (G : Scheme.{u})
-    [G.Over (Spec A)] [GrpObj (G.asOver (Spec A))] [IsAffine G] :
+    [G.Over (Spec (CommRingCat.of A))]
+    [GrpObj (G.asOver (Spec (CommRingCat.of A)))] [IsAffine G] :
     HopfAlgebra A Γ(G, ⊤) := by
-  infer_instance
+  letI : Algebra (CommRingCat.of A) Γ(G, ⊤) :=
+    ((commAlgCatEquivUnder (CommRingCat.of A)).inverse.obj <|
+      .mk (AlgebraicGeometry.Spec.fullyFaithful.preimage <|
+        G.isoSpec.inv ≫ G ↘ AlgebraicGeometry.Spec (CommRingCat.of A)).unop).algebra
+  have h₁ : GrpObj ((AlgebraicGeometry.algSpec (CommRingCat.of A)).obj <|
+      .op <| CommAlgCat.of (CommRingCat.of A) Γ(G, ⊤)) :=
+    .ofIso <| G.isoSpec.asOver (Spec (CommRingCat.of A))
+  have h₂ : GrpObj (Opposite.op <| CommAlgCat.of (CommRingCat.of A) Γ(G, ⊤)) :=
+    AlgebraicGeometry.algSpec.fullyFaithful.grpObj _
+  exact ((commHopfAlgCatEquivCogrpCommAlgCat (CommRingCat.of A)).inverse.obj <|
+    .op <| .mk <| .op <| .of (CommRingCat.of A) Γ(G, ⊤)).hopfAlgebra
 
 /-! ### Finite projective descent and duality -/
 
@@ -104,11 +118,33 @@ switch between the two canonical presentations.
 -/
 
 theorem chapter12_affine_finiteLocallyFree_iff_coordinate_finiteProjective
-    (A H : Type u) [CommRing A] [CommRing H] [Algebra A H] [HopfAlgebra A H] :
+    (A H : Type u) [CommRing A] [CommRing H] [HopfAlgebra A H] :
     Chapter12FiniteLocallyFree
         (Spec.map (CommRingCat.ofHom (algebraMap A H))) ↔
       Chapter12FiniteProjectiveModule A H := by
-  sorry
+  simp only [Chapter12FiniteLocallyFree, Chapter12FiniteProjectiveModule,
+    IsFinite.SpecMap_iff, Flat.SpecMap_iff,
+    LocallyOfFinitePresentation.SpecMap_iff]
+  change RingHom.Finite (algebraMap A H) ∧ RingHom.Flat (algebraMap A H) ∧
+      RingHom.FinitePresentation (algebraMap A H) ↔
+    Module.Finite A H ∧ Module.Projective A H
+  constructor
+  · rintro ⟨hfinite, hflat, hfp⟩
+    have : Module.Finite A H := (RingHom.finite_algebraMap).mp hfinite
+    have : Module.Flat A H := (RingHom.flat_algebraMap_iff).mp hflat
+    have : Algebra.FinitePresentation A H :=
+      (RingHom.finitePresentation_algebraMap).mp hfp
+    have : Module.FinitePresentation A H :=
+      Module.FinitePresentation.of_finite_of_finitePresentation A H
+    exact ⟨inferInstance, Module.Flat.projective_of_finitePresentation⟩
+  · rintro ⟨hfinite, hprojective⟩
+    let : Module.Finite A H := hfinite
+    let : Module.Projective A H := hprojective
+    let : Module.Flat A H := Module.Flat.of_projective
+    let : Module.FinitePresentation A H := Module.finitePresentation_of_projective A H
+    exact ⟨(RingHom.finite_algebraMap).mpr hfinite,
+      (RingHom.flat_algebraMap_iff).mpr inferInstance,
+      (RingHom.finitePresentation_algebraMap).mpr inferInstance⟩
 
 /-- A module together with its chosen faithfully-flat base-change presentation. -/
 structure Chapter12ModuleBaseChangeData
@@ -130,10 +166,9 @@ theorem chapter12_dual_of_finite_projective
     (A M : Type*) [CommRing A] [AddCommGroup M] [Module A M]
     (hM : Chapter12FiniteProjectiveModule A M) :
     Chapter12FiniteProjectiveModule A (Module.Dual A M) := by
-  rcases hM with ⟨hfinite, hprojective⟩
-  letI : Module.Finite A M := hfinite
-  letI : Module.Projective A M := hprojective
-  constructor <;> infer_instance
+  let : Module.Finite A M := hM.1
+  let : Module.Projective A M := hM.2
+  exact ⟨inferInstance, inferInstance⟩
 
 /-- The base-change map on duals, with the source convention `Dual A M = M →ₗ[A] A`. -/
 def chapter12DualBaseChange (A B M : Type*) [CommSemiring A] [CommSemiring B]
@@ -154,7 +189,7 @@ theorem chapter12_dual_base_change_is_base_change
     [AddCommMonoid V] [AddCommMonoid W] [Module R V] [Module R W]
     [Algebra R A] [Module A W] [IsScalarTower R A W]
     (j : V →ₗ[R] W) (h : IsBaseChange A j)
-    [Free R V] [Module.Finite R V] :
+    [Module.Free R V] [Module.Finite R V] :
     IsBaseChange A (h.toDual) := by
   exact h.dual
 

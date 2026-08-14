@@ -444,13 +444,16 @@ theorem eisenstein_root_is_uniformizer_and_totally_ramified
       (vK.valuationSubring : Set K) = Set.range (algebraMap A K))
     (hupperIntegralClosure :
       (v.valuationSubring : Set L) = (integralClosure A L : Set L)) :
-    v.IsUniformizer Pi ∧
-      chapterRamificationIndex vK.valuationSubring v.valuationSubring
-          (IsLocalRing.maximalIdeal v.valuationSubring) = n ∧
-      chapterResidueDegree vK.valuationSubring v.valuationSubring
-          (IsLocalRing.maximalIdeal v.valuationSubring) = 1 ∧
-      (∀ a : K,
-        v (algebraMap K L a) = (vK a) ^ n) ∧
+      v.IsUniformizer Pi ∧
+        chapterRamificationIndex vK.valuationSubring v.valuationSubring
+            (IsLocalRing.maximalIdeal v.valuationSubring) = n ∧
+        chapterResidueDegree vK.valuationSubring v.valuationSubring
+            (IsLocalRing.maximalIdeal v.valuationSubring) = 1 ∧
+      /- `Valuation.HasExtension` records the canonical equivalence of the
+         restricted and base valuations.  A literal power formula in the
+         common codomain requires an additional normalization choice; it is
+         not implied by the extension class alone. -/
+      vK.IsEquiv (v.comap (algebraMap K L)) ∧
       Module.finrank K L = n := by
   sorry
 

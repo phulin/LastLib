@@ -33,14 +33,15 @@ theorem chapter09_regular_surface_all_codimOne_stalks_areDVR
 coefficient interface. -/
 theorem chapter09_primeCurve_order_is_additive
     (X : Chapter09RegularNoetherianIntegralSurface)
-    (C : Chapter09PrimeCurve X) (f g : chapter09RationalFunction X) :
-    C.order (f * g) = C.order f + C.order g := by
+    (C : Chapter09PrimeCurve X)
+    (f g : Chapter09NonzeroRationalFunction X) :
+    C.order ⟨f.1 * g.1, mul_ne_zero f.2 g.2⟩ = C.order f + C.order g := by
   exact C.order_mul f g
 
 @[simp]
 theorem chapter09_primeCurve_order_one
     (X : Chapter09RegularNoetherianIntegralSurface)
-    (C : Chapter09PrimeCurve X) : C.order 1 = 0 := by
+    (C : Chapter09PrimeCurve X) : C.order ⟨1, one_ne_zero⟩ = 0 := by
   exact C.order_one
 
 /-! ### Weil divisors, Cartier divisors, and line bundles -/
@@ -122,6 +123,14 @@ theorem chapter09_cartier_presentation_has_lineBundle_section
         L.rationalSection = P.rationalSection := by
   refine ⟨chapter09LineBundleRationalSectionOfPresentation P, rfl, rfl⟩
 
+theorem chapter09_cartier_presentation_coeff_eq_book9_valuation
+    (X : Chapter09RegularNoetherianIntegralSurface)
+    (P : Chapter09CartierPresentation X) (C : Chapter09PrimeCurve X) :
+    P.divisor C =
+      P.book9CartierTheory.valuation P.book9CartierDivisor
+        C.toChapter03PrimeDivisor := by
+  sorry
+
 /-! ### Zero-cycles and their degree -/
 
 /-- The support of a zero-cycle is finite because it is represented by a
@@ -168,16 +177,20 @@ theorem chapter09_zeroCycle_mem_support_iff
 the residue-field degrees. -/
 theorem chapter09_zeroCycle_degree_is_residueWeighted_sum
     {X S : Scheme.{u}} (f : X ⟶ S) (s : S) (z : Chapter09ZeroCycle X)
-    (hz : chapter09ZeroCycleSupportedOver f s z) :
-    chapter09ZeroCycleDegree f z =
-      ∑ x in z.support, z x * (f.residueDegree x.point : ℤ) := by
-  exact chapter09_zeroCycle_degree_formula f s z hz
+    (hz : chapter09ZeroCycleSupportedOver f s z)
+    (hfinite : chapter09ZeroCycleResidueDegreesFinite f z) :
+    chapter09ZeroCycleDegree f z hfinite =
+      ∑ x ∈ z.support.attach, z x.1 * (f.residueDegree x.1.point : ℤ) := by
+  sorry
 
 theorem chapter09_zeroCycle_degree_add
     {X S : Scheme.{u}} (f : X ⟶ S)
-    (z w : Chapter09ZeroCycle X) :
-    chapter09ZeroCycleDegree f (z + w) =
-      chapter09ZeroCycleDegree f z + chapter09ZeroCycleDegree f w := by
+    (z w : Chapter09ZeroCycle X)
+    (hz : chapter09ZeroCycleResidueDegreesFinite f z)
+    (hw : chapter09ZeroCycleResidueDegreesFinite f w)
+    (hzw : chapter09ZeroCycleResidueDegreesFinite f (z + w)) :
+    chapter09ZeroCycleDegree f (z + w) hzw =
+      chapter09ZeroCycleDegree f z hz + chapter09ZeroCycleDegree f w hw := by
   sorry
 
 /-! ### Canonical and book-facing formulations -/

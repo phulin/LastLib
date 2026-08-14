@@ -1,3 +1,4 @@
+import LastLib.Book04AdelesAndIdeles.Chapter10.Dependencies
 import LastLib.Book04AdelesAndIdeles.Chapter14.Dependencies
 
 /-!
@@ -71,6 +72,25 @@ def chapter14BiquadraticNormFailure
       b ∈ chapter14EverywhereLocalNormSubgroup N ∧
         b ∉ chapter14GlobalNormSubgroup N
 
+/- The source asserts existence of such extensions without fixing a numerical
+example, so package the existential witness together with all its field data. -/
+structure Chapter14BiquadraticNormCounterexample where
+  K : Type
+  [field_K : Field K]
+  [numberField_K : NumberField K]
+  L : Type
+  [field_L : Field L]
+  [numberField_L : NumberField L]
+  [algebra_K_L : Algebra K L]
+  [finiteDimensional_K_L : FiniteDimensional K L]
+  [galois_K_L : IsGalois K L]
+  normData : Chapter14AdelicNormInterface K L
+  failure : chapter14BiquadraticNormFailure normData
+
+theorem chapter14_exists_biquadratic_norm_failure :
+    Nonempty Chapter14BiquadraticNormCounterexample := by
+  sorry
+
 theorem chapter14_biquadratic_failure_makes_the_knot_nontrivial
     {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
     [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
@@ -107,14 +127,20 @@ theorem chapter14_complex_norm_to_real_is_positive {z : ℂ} (hz : z ≠ 0) :
   sorry
 
 def chapter14UnramifiedNormValuationCondition (f : ℕ) (n : ℤ) : Prop :=
-  (f : ℤ) ∣ n
+  0 < f ∧ (f : ℤ) ∣ n
 
 def chapter14UnramifiedNormValuationObstruction (f : ℕ) (n : ℤ) : Prop :=
   ¬ chapter14UnramifiedNormValuationCondition f n
 
 theorem chapter14_unramified_norms_have_divisible_valuation
-    {f : ℕ} {n : ℤ} (h : chapter14UnramifiedNormValuationCondition f n) :
-    (f : ℤ) ∣ n :=
-  h
+    {F E : Type*} [Field F] [Field E] [Algebra F E] [FiniteDimensional F E]
+    (vF : AddValuation F (WithTop ℤ)) (vE : AddValuation E (WithTop ℤ))
+    (f : ℕ) (hf : 0 < f)
+    (hformula :
+      LastLib.Book04AdelesAndIdeles.Chapter10.chapter10NormValuationFormula F E vF vE f)
+    {y : E} (hy : y ≠ 0) :
+    LastLib.Book04AdelesAndIdeles.Chapter10.chapter10LocalNorm F E y ∈
+      LastLib.Book04AdelesAndIdeles.Chapter10.chapter10ValuationDivisibleSet vF f := by
+  sorry
 
 end LastLib.Book04AdelesAndIdeles.Chapter14

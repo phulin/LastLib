@@ -1,4 +1,6 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section02TheCompletedProductTheorem
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section03IntegralElementsAreBounded
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section01FromOneLocalRingToSeveral
 import Mathlib.Analysis.Normed.Module.FiniteDimension
 import Mathlib.Analysis.Normed.Operator.BoundedLinearMaps
 
@@ -314,7 +316,72 @@ theorem complete_extension_unit_ball_is_finite
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring) :
     Module.Finite vK.valuationSubring w.valuationSubring := by
-  sorry
+  let : Chapter09.CompleteDVR vK.valuationSubring :=
+    { toIsDiscreteValuationRing := inferInstance
+      isAdicComplete' := hcomplete }
+  have hH : Chapter10.Chapter10IsHenselianValuedField vK :=
+    Chapter09.complete_DVR_is_henselian
+  have hEqVal (W : Chapter10.Chapter10ValuationOnField L)
+      (hW : vK.IsEquiv (W.valuation.comap (algebraMap K L))) :
+      W.valuation.IsEquiv w :=
+    Chapter10.chapter10_henselian_valuation_has_unique_branch vK hH W.valuation w hW
+      (Valuation.HasExtension.val_isEquiv_comap (vR := vK) (vA := w))
+  obtain ⟨W₀, hW₀⟩ :=
+    Chapter10.chapter10_algebraic_valuation_extension_exists
+      (K := K) (L := L) (Γ₀ := Γ) vK
+  let W₀' : Chapter10.Chapter10ValuationOnField L :=
+    { valueGroup := W₀.ValueGroup
+      valuation := W₀.valuation }
+  have hW₀' : vK.IsEquiv (W₀'.valuation.comap (algebraMap K L)) := by
+    apply Valuation.isEquiv_of_val_le_one
+    intro x
+    change x ∈ vK.valuationSubring ↔ W₀.valuation (algebraMap K L x) ≤ 1
+    constructor
+    · intro hx
+      exact (ValuationSubring.valuation_le_one_iff W₀ _).mpr ((hW₀ x).mpr hx)
+    · intro hx
+      exact (hW₀ x).mp ((ValuationSubring.valuation_le_one_iff W₀ _).mp hx)
+  have hclosure : (w.valuationSubring : Set L) =
+      {x : L | IsIntegral vK.valuationSubring x} := by
+    ext x
+    change x ∈ w.valuationSubring ↔ IsIntegral vK.valuationSubring x
+    rw [show IsIntegral vK.valuationSubring x ↔
+        ∀ (W : Chapter10.Chapter10ValuationOnField L),
+          vK.IsEquiv (W.valuation.comap (algebraMap K L)) →
+            x ∈ W.valuation.valuationSubring by
+          simpa [Chapter10.Chapter10IntegralElements] using
+            (Set.ext_iff.mp (Chapter10.chapter10_integral_closure_valuative_criterion vK) x)]
+    constructor
+    · intro hx W hW
+      have hEq : W.valuation.valuationSubring = w.valuationSubring :=
+        (Valuation.isEquiv_iff_valuationSubring W.valuation w).mp (hEqVal W hW)
+      rw [hEq]
+      exact hx
+    · intro hx
+      have hxW := hx W₀' hW₀'
+      have hEq : W₀'.valuation.valuationSubring = w.valuationSubring :=
+        (Valuation.isEquiv_iff_valuationSubring W₀'.valuation w).mp
+          (hEqVal W₀' hW₀')
+      rw [← hEq]
+      exact hxW
+  have hnorm : Module.Finite vK.valuationSubring
+      (integralClosure vK.valuationSubring L) := by
+    let hcdvr : Chapter11.chapter11IsCompleteDVR vK.valuationSubring :=
+      { isAdicComplete := hcomplete }
+    exact Chapter11.chapter11_complete_dvr_valuation_ring_is_finite
+      vK.valuationSubring K L hcdvr
+  let e : (integralClosure vK.valuationSubring L) ≃ₗ[vK.valuationSubring]
+      w.valuationSubring :=
+    { toFun := fun x =>
+        ⟨x.1, (Set.ext_iff.mp hclosure x.1).mpr x.2⟩
+      invFun := fun x =>
+        ⟨x.1, (Set.ext_iff.mp hclosure x.1).mp x.2⟩
+      left_inv := by intro x; apply Subtype.ext; rfl
+      right_inv := by intro x; apply Subtype.ext; rfl
+      map_add' := by intro x y; apply Subtype.ext; rfl
+      map_smul' := by intro c x; apply Subtype.ext; rfl }
+  let : Module.Finite vK.valuationSubring (integralClosure vK.valuationSubring L) := hnorm
+  exact Module.Finite.equiv e
 
 /-- Once the preceding lattice theorem supplies module finiteness, the
 determinant trick identifies the valuation unit ball with the integral

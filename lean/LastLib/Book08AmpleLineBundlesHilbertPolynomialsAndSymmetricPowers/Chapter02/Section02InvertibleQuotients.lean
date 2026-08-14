@@ -54,6 +54,15 @@ theorem chapter02_projective_bundle_universal_equiv_injective
     u = v := by
   exact (chapter02ProjectiveBundleUniversalEquiv P f).injective h
 
+theorem chapter02_projective_bundle_point_eq_iff
+    {S T : Scheme.{u}} {E : Chapter02QuasiCoherentModule S}
+    (P : Chapter02ProjectiveBundleData S E) (f : T ⟶ S)
+    {u v : Chapter02ProjectiveBundlePoint P f} :
+    u = v ↔
+      chapter02UniversalQuotientClassOfPoint P f u =
+        chapter02UniversalQuotientClassOfPoint P f v := by
+  exact ⟨fun h => h ▸ rfl, chapter02_projective_bundle_universal_equiv_injective P f⟩
+
 /-!
 The representative statement spells out the direction of the universal quotient.  Its line is
 `u^*𝒪(1)` and its quotient is obtained by pulling back the universal quotient, after the canonical
@@ -70,18 +79,9 @@ theorem chapter02_universal_point_is_pullback_universal_quotient
         p.quotient ≫ e.hom =
           (chapter02PullbackCompositionIso u P.projection E.carrier).hom ≫
             (Scheme.Modules.pullback u).map P.universalQuotient := by
-  let point : Chapter02ProjectiveBundlePoint P (u ≫ P.projection) := ⟨u, rfl⟩
   obtain ⟨p, hp, e, he⟩ :=
-    P.universalProperty_compatible (u ≫ P.projection) point
-  dsimp [point] at e he
-  refine ⟨p, ?_, e, ?_⟩
-  · change P.universalProperty (u ≫ P.projection) ⟨u, rfl⟩ = _
-    rw [show (⟨u, rfl⟩ : Chapter02ProjectiveBundlePoint P (u ≫ P.projection)) = point by
-      apply Subtype.ext
-      rfl]
-    exact hp
-  · simpa [chapter02PullbackModule, chapter02PullbackCompositionIso,
-      Scheme.Modules.pullbackCongr] using he
+    P.universalProperty_compatible (f := u ≫ P.projection) (u := ⟨u, rfl⟩)
+  exact ⟨p, hp, e, he⟩
 
 /-!
 This data structure is the precise commutative square expressing compatibility with base change:
@@ -104,67 +104,55 @@ structure Chapter02UniversalBaseChangeData
     classMap (chapter02UniversalQuotientClassOfPoint P f u) =
       chapter02UniversalQuotientClassOfPoint P (g ≫ f) (pointMap u)
 
+private noncomputable def chapter02UniversalBaseChangeClassMap
+    {S T U : Scheme.{u}} {E : Chapter02QuasiCoherentModule S}
+    (f : T ⟶ S) (g : U ⟶ T) :
+    Chapter02InvertibleQuotientClass (chapter02PullbackModule f E) ⟶
+      Chapter02InvertibleQuotientClass (chapter02PullbackModule (g ≫ f) E) := by
+  change Chapter02InvertibleQuotientClass ((Scheme.Modules.pullback f).obj E.carrier) ⟶
+    Chapter02InvertibleQuotientClass ((Scheme.Modules.pullback (g ≫ f)).obj E.carrier)
+  refine TypeCat.ofHom ?_
+  refine Quotient.lift
+    (fun p : Chapter02InvertibleQuotientPair ((Scheme.Modules.pullback f).obj E.carrier) =>
+      chapter02QuotientClassMk
+        (chapter02PullbackInvertibleQuotientPairAlongComposition g f p)) ?_
+  intro p q h
+  apply Quotient.sound
+  obtain ⟨e, he⟩ := h
+  let e' := (Scheme.Modules.pullback g).mapIso e
+  refine ⟨e', ?_⟩
+  change ((chapter02PullbackCompositionIso g f E.carrier).hom ≫
+      (Scheme.Modules.pullback g).map p.quotient) ≫ e'.hom =
+    (chapter02PullbackCompositionIso g f E.carrier).hom ≫
+      (Scheme.Modules.pullback g).map q.quotient
+  change (chapter02PullbackCompositionIso g f E.carrier).hom ≫
+      ((Scheme.Modules.pullback g).map p.quotient ≫
+        (Scheme.Modules.pullback g).map e.hom) = _
+  rw [← (Scheme.Modules.pullback g).map_comp, he]
+
 /- LOCAL_DEPENDENCY_GUESS: pullback of quotient pairs and the comparison isomorphism. -/
 theorem chapter02_universal_base_change_data_exists
     {S T U : Scheme.{u}} {E : Chapter02QuasiCoherentModule S}
     (P : Chapter02ProjectiveBundleData S E) (f : T ⟶ S) (g : U ⟶ T) :
     Nonempty (Chapter02UniversalBaseChangeData P f g) := by
-  have pullback_equiv :
-      ∀ {p q : Chapter02InvertibleQuotientPair
-          ((Scheme.Modules.pullback f).obj E.carrier)},
-        chapter02QuotientPairEquivalent p q →
-          chapter02QuotientPairEquivalent
-            (chapter02PullbackInvertibleQuotientPairAlongComposition g f p)
-            (chapter02PullbackInvertibleQuotientPairAlongComposition g f q) := by
-    intro p q hpq
-    obtain ⟨e, he⟩ := hpq
-    refine ⟨(Scheme.Modules.pullback g).mapIso e, ?_⟩
-    dsimp [chapter02PullbackInvertibleQuotientPairAlongComposition,
-      chapter02PullbackModule]
-    change
-      ((chapter02PullbackCompositionIso g f E.carrier).hom ≫
-          (Scheme.Modules.pullback g).map p.quotient) ≫
-        (Scheme.Modules.pullback g).map e.hom =
-      (chapter02PullbackCompositionIso g f E.carrier).hom ≫
-        (Scheme.Modules.pullback g).map q.quotient
-    rw [Category.assoc, ← (Scheme.Modules.pullback g).map_comp, he]
-  let underlyingClassMap :
-      Chapter02InvertibleQuotientClass ((Scheme.Modules.pullback f).obj E.carrier) →
-        Chapter02InvertibleQuotientClass ((Scheme.Modules.pullback (g ≫ f)).obj E.carrier) :=
-    Quotient.lift
-      (fun p => chapter02QuotientClassMk
-        (chapter02PullbackInvertibleQuotientPairAlongComposition g f p))
-      (by
-        intro p q hpq
-        exact Quotient.sound (pullback_equiv hpq))
-  have underlyingClassMap_mk (p : Chapter02InvertibleQuotientPair
-      ((Scheme.Modules.pullback f).obj E.carrier)) :
-      underlyingClassMap (chapter02QuotientClassMk p) =
-        chapter02QuotientClassMk
-          (chapter02PullbackInvertibleQuotientPairAlongComposition g f p) := by
-    exact Quotient.lift_mk _ _ _
+  let classMap := chapter02UniversalBaseChangeClassMap (E := E) f g
   refine ⟨{
     pointMap := fun u => chapter02ProjectiveBundlePointPostcompose P.projection f g u
-    pointMap_eq_comp := by
-      intro u
-      rfl
-    classMap := by
-      simpa [chapter02PullbackModule] using underlyingClassMap
-    classMap_is_pullback := by
-      intro p
-      change Chapter02InvertibleQuotientPair
-        ((Scheme.Modules.pullback f).obj E.carrier) at p
-      simpa [chapter02PullbackModule] using underlyingClassMap_mk p
-    commutes := by
-      intro u
-      obtain ⟨p, hp, hnatural⟩ := P.universalProperty_natural f g u
-      change underlyingClassMap (P.universalProperty f u) =
-        P.universalProperty (g ≫ f)
-          (chapter02ProjectiveBundlePointPostcompose P.projection f g u)
-      rw [hp]
-      rw [underlyingClassMap_mk]
-      exact hnatural.symm
-  }⟩
+    pointMap_eq_comp := fun u => rfl
+    classMap := classMap
+    classMap_is_pullback := ?_
+    commutes := ?_ }⟩
+  · intro p
+    rfl
+  · intro u
+    change classMap (P.universalProperty f u) =
+      P.universalProperty (g ≫ f)
+        (chapter02ProjectiveBundlePointPostcompose P.projection f g u)
+    obtain ⟨p, hp, hnat⟩ := P.universalProperty_natural f g u
+    rw [hp]
+    change chapter02QuotientClassMk
+        (chapter02PullbackInvertibleQuotientPairAlongComposition g f p) = _
+    exact hnat.symm
 
 noncomputable def chapter02UniversalBaseChangeData
     {S T U : Scheme.{u}} {E : Chapter02QuasiCoherentModule S}
@@ -182,7 +170,7 @@ theorem chapter02_projective_bundle_universal_property_base_change
         ((chapter02UniversalBaseChangeData P f g).pointMap u) := by
   exact (chapter02UniversalBaseChangeData P f g).commutes u
 
-/-! An `E` of finite locally free rank `r+1` gives a projective, finitely presented morphism.  The
+/-! A finite locally free `E` gives a projective, finitely presented morphism.  The
 projective-morphism predicate uses Mathlib's `IsClosedImmersion` and the shared relative
 projective-bundle interface, so it also covers nontrivial finite locally free bundles over the base.
 
@@ -196,20 +184,32 @@ def Chapter02FiniteTypeMorphism {S X : Scheme.{u}} (f : X ⟶ S) : Prop :=
 def Chapter02FinitePresentationMorphism {S X : Scheme.{u}} (f : X ⟶ S) : Prop :=
   QuasiCompact f ∧ QuasiSeparated f ∧ LocallyOfFinitePresentation f
 
+/-!
+The universal-property fields of `Chapter02ProjectiveBundleData` are deliberately available for
+arbitrary quasi-coherent modules.  They do not by themselves make the projection finite type.
+The following theorems record the additional geometric conclusions for a finite locally free
+module; their proofs are deferred to the relative-projective-bundle construction.
+-/
 theorem chapter02_projective_bundle_is_projective_and_finitely_presented
     {S : Scheme.{u}} {E : Chapter02QuasiCoherentModule S}
-    (P : Chapter02ProjectiveBundleData S E) (r : ℕ)
-    (hE : Chapter02LocallyFreeRank E.carrier (r + 1)) :
+    (P : Chapter02ProjectiveBundleData S E)
+    (hE : Chapter02FiniteLocallyFreeModule E) :
     Chapter02ProjectiveMorphism P.projection ∧
       Chapter02FinitePresentationMorphism P.projection := by
   sorry
 
 theorem chapter02_projective_bundle_is_finite_type
     {S : Scheme.{u}} {E : Chapter02QuasiCoherentModule S}
-    (P : Chapter02ProjectiveBundleData S E) (r : ℕ)
-    (hE : Chapter02LocallyFreeRank E.carrier (r + 1)) :
+    (P : Chapter02ProjectiveBundleData S E)
+    (hE : Chapter02FiniteLocallyFreeModule E) :
     Chapter02FiniteTypeMorphism P.projection := by
-  sorry
+  have h := chapter02_projective_bundle_is_projective_and_finitely_presented P hE
+  refine ⟨h.2.1, ?_⟩
+  have hf : LocallyOfFinitePresentation P.projection := h.2.2.2
+  rw [HasRingHomProperty.eq_affineLocally @LocallyOfFinitePresentation] at hf
+  rw [HasRingHomProperty.eq_affineLocally @LocallyOfFiniteType]
+  refine affineLocally_le (fun hf ↦ ?_) P.projection hf
+  exact RingHom.FiniteType.of_finitePresentation hf
 
 /-!
 The finite locally free hypothesis is essential for finite presentation.  The following
@@ -224,11 +224,32 @@ def Chapter02ModuleIsFinitePresentation {S : Scheme.{u}}
     (E : Chapter02QuasiCoherentModule S) : Prop :=
   E.carrier.IsFinitePresentation
 
+abbrev Chapter02InfiniteCounterexampleBase : Scheme.{u} :=
+  AlgebraicGeometry.Spec (CommRingCat.of (ULift.{u} ℤ))
+
+abbrev Chapter02InfiniteCounterexampleIndex : Type u := ULift.{u} ℕ
+
+noncomputable def chapter02InfiniteCounterexampleModule :
+    Chapter02QuasiCoherentModule Chapter02InfiniteCounterexampleBase :=
+  chapter02FreeQuasiCoherentModule Chapter02InfiniteCounterexampleBase
+    Chapter02InfiniteCounterexampleIndex
+
+theorem chapter02_explicit_infinite_quasi_coherent_module_is_not_finite_type :
+    ¬ Chapter02ModuleIsFiniteType chapter02InfiniteCounterexampleModule := by
+  sorry
+
+theorem chapter02_explicit_infinite_quasi_coherent_counterexample :
+    ¬ Chapter02ModuleIsFiniteType chapter02InfiniteCounterexampleModule ∧
+      ¬ Chapter02FiniteTypeMorphism
+        (chapter02ProjectiveBundleProjection Chapter02InfiniteCounterexampleBase
+          chapter02InfiniteCounterexampleModule) := by
+  sorry
+
 theorem chapter02_arbitrary_quasi_coherent_projective_bundle_need_not_be_finite_type :
     ∃ (S : Scheme.{u}) (E : Chapter02QuasiCoherentModule S),
       ¬ Chapter02ModuleIsFiniteType E ∧
         ¬ Chapter02FiniteTypeMorphism (chapter02ProjectiveBundleProjection S E) := by
-  sorry
+  exact ⟨_, _, chapter02_explicit_infinite_quasi_coherent_counterexample⟩
 
 end
 

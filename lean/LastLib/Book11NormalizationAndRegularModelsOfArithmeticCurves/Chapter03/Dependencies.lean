@@ -1,11 +1,12 @@
-import Mathlib.Algebra.TensorProduct.Basic
 import Mathlib.AlgebraicGeometry.AlgebraicCycle.Basic
 import Mathlib.AlgebraicGeometry.Morphisms.Finite
 import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
 import Mathlib.AlgebraicGeometry.Morphisms.Proper
 import Mathlib.AlgebraicGeometry.Normalization
 import Mathlib.AlgebraicGeometry.Noetherian
+import Mathlib.AlgebraicGeometry.Pullbacks
 import Mathlib.AlgebraicGeometry.Properties
+import Mathlib.LinearAlgebra.Basis.Basic
 import Mathlib.LinearAlgebra.FiniteDimensional.Defs
 import Mathlib.RingTheory.AdicCompletion.Basic
 import Mathlib.RingTheory.AdicCompletion.Algebra
@@ -28,9 +29,9 @@ import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter01.Sec
 /-!
 # Book 11, Chapter 3: shared imports
 
-The source-order declarations live in `Core.lean`.  The Chapter 1 and 2 files of Book 11 are not
-present in this drafting workspace, so the normalization boundary used there is recorded locally
-in the core file and can be replaced by the earlier chapter's canonical construction in fixup.
+The source-order declarations live in `Core.lean`.  The pinned normalization API supplies the
+canonical affine and base-change constructions; `Core.lean` retains a componentwise chart
+interface for the finite-normalization argument where the source works with reduced schemes.
 -/
 
 namespace LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter03

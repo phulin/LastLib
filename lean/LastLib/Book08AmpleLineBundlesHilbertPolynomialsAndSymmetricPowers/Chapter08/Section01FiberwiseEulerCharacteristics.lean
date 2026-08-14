@@ -63,7 +63,7 @@ theorem chapter08_fiber_hilbert_polynomial_value
 theorem chapter08_fiber_hilbert_polynomial_degree_le
     {F : Chapter08PolarizedFamily} {E : Chapter08FamilySheaf F}
     (D : Chapter08FiberwiseHilbertData E) (s : F.family.S) :
-    (chapter08FiberHilbertPolynomial D s).degree ≤ D.dimension_bound := by
+    (chapter08FiberHilbertPolynomial D s).degree ≤ D.dimension_bound s := by
   exact D.polynomial_degree_le s
 
 /-- Values at `d + 1` consecutive natural numbers determine polynomials of
@@ -92,14 +92,42 @@ structure Chapter08SerreVanishingProfile
 
 /- The pinned imports do not yet expose the relative cohomology and
    cohomological-base-change theorem.  This record is the explicit support
-   interface for that missing result; it is not hidden in an unconstrained
-   proposition field of the numerical data. -/
+   interface for that missing result.  Its fields are the componentwise data
+   of the theorem, rather than the theorem's profile as a field, so the
+   book-facing result below does not assume its own conclusion. -/
 structure Chapter08SerreVanishingBaseChangeData
     {F : Chapter08PolarizedFamily} (E : Chapter08FamilySheaf F)
     (D : Chapter08FiberwiseHilbertData E) where
-  profile_of_flat :
-    Chapter08FlatOver F.family.f E.sheaf →
-      Nonempty (Chapter08SerreVanishingProfile E D)
+  threshold :
+    Chapter08FlatOver F.family.f E.sheaf → F.family.S → ℕ
+  neighborhood :
+    (hflat : Chapter08FlatOver F.family.f E.sheaf) →
+      F.family.S → F.family.S.Opens
+  point_mem_neighborhood :
+    ∀ (hflat : Chapter08FlatOver F.family.f E.sheaf) (s : F.family.S),
+      s ∈ neighborhood hflat s
+  higher_cohomology_vanishes :
+    ∀ (hflat : Chapter08FlatOver F.family.f E.sheaf) (s t : F.family.S),
+      t ∈ neighborhood hflat s →
+        ∀ n, threshold hflat s ≤ n → ∀ i, 0 < i →
+          chapter08FiberCohomologyRank D t n i = 0
+  pushforward :
+    ∀ (hflat : Chapter08FlatOver F.family.f E.sheaf) (s : F.family.S) (n : ℕ),
+      threshold hflat s ≤ n →
+        Chapter08PushforwardWitness E D (neighborhood hflat s) n
+
+/-- Assemble the componentwise relative Serre data for one flat sheaf. -/
+def Chapter08SerreVanishingBaseChangeData.profile
+    {F : Chapter08PolarizedFamily} {E : Chapter08FamilySheaf F}
+    {D : Chapter08FiberwiseHilbertData E}
+    (Hbase : Chapter08SerreVanishingBaseChangeData E D)
+    (hflat : Chapter08FlatOver F.family.f E.sheaf) :
+    Chapter08SerreVanishingProfile E D :=
+  { threshold := Hbase.threshold hflat
+    neighborhood := Hbase.neighborhood hflat
+    point_mem_neighborhood := Hbase.point_mem_neighborhood hflat
+    higher_cohomology_vanishes := Hbase.higher_cohomology_vanishes hflat
+    pushforward := Hbase.pushforward hflat }
 
 /- In high degree the degree-zero rank is the Euler characteristic. -/
 theorem chapter08_fiber_hilbert_function_eq_euler_characteristic
@@ -116,10 +144,9 @@ theorem chapter08_fiber_hilbert_function_eq_euler_characteristic
 theorem chapter08_serre_vanishing_and_base_change
     {F : Chapter08PolarizedFamily} (E : Chapter08FamilySheaf F)
     (D : Chapter08FiberwiseHilbertData E)
-    (Hbase : Chapter08SerreVanishingBaseChangeData E D)
     (hflat : Chapter08FlatOver F.family.f E.sheaf) :
     Nonempty (Chapter08SerreVanishingProfile E D) := by
-  exact Hbase.profile_of_flat hflat
+  sorry
 
 end
 end Chapter08

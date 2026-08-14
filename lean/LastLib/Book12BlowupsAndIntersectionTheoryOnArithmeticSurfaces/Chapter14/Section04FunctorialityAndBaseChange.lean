@@ -1,3 +1,6 @@
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter10.Section04FiniteMapsAndDegree
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter11.Section02IntersectionsOfStrictTransforms
 import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter14.Section03TheCorrectedLocalPairing
 
 /-!
@@ -11,6 +14,53 @@ open scoped BigOperators
 universe u v
 
 namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter14
+
+open AlgebraicGeometry CategoryTheory
+open LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter10
+open LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter11
+
+/-! ## Canonical Chapter 10--13 bridges -/
+
+/-!
+These small wrappers retain the canonical Chapter 10 inputs.  The Chapter 14
+coefficient records can then consume the resulting projection/scaling facts
+without making those formulas a second, disconnected source of data.
+-/
+structure Chapter14CanonicalProjectionFormulaData
+    {X Y : Scheme.{u}} (f : Y ⟶ X)
+    (D : Chapter10CartierDivisor X)
+    (C : Chapter10IntegralCurveOn Y)
+    [Chapter10IntersectionTheory X] [Chapter10IntersectionTheory Y] where
+  projection : Chapter10ProjectionFormulaInput f D C
+
+theorem chapter14_canonical_projection_formula
+    {X Y : Scheme.{u}} (f : Y ⟶ X)
+    (D : Chapter10CartierDivisor X)
+    (C : Chapter10IntegralCurveOn Y)
+    [Chapter10IntersectionTheory X] [Chapter10IntersectionTheory Y]
+    (P : Chapter14CanonicalProjectionFormulaData f D C) :
+    chapter10IntersectionNumber P.projection.pullback C =
+      chapter10IntersectionNumberWithWeilDivisor D P.projection.pushforward := by
+  sorry
+
+structure Chapter14CanonicalFiniteFlatIntersectionData
+    {X Y : Scheme.{u}} (f : Y ⟶ X)
+    (D G : Chapter10CartierDivisor X)
+    [Chapter10IntersectionTheory X] [Chapter10IntersectionTheory Y]
+    [QuasiCompact f] where
+  finiteFlat : Chapter10FiniteFlatIntersectionData f D G
+
+theorem chapter14_canonical_finite_flat_intersection_scales
+    {X Y : Scheme.{u}} (f : Y ⟶ X)
+    (D G : Chapter10CartierDivisor X)
+    [Chapter10IntersectionTheory X] [Chapter10IntersectionTheory Y]
+    [QuasiCompact f]
+    (P : Chapter14CanonicalFiniteFlatIntersectionData f D G) :
+    chapter10IntersectionNumberWithWeilDivisor
+        P.finiteFlat.pullbackD P.finiteFlat.pullbackG.divisor =
+      (P.finiteFlat.genericDegree : ℤ) *
+        chapter10IntersectionNumberWithWeilDivisor D G.divisor := by
+  sorry
 
 /-! ## Finite flat maps and projection -/
 
@@ -56,13 +106,26 @@ structure Chapter14FiniteFlatIntersectionCorrespondence
       (hdown : Idown.genericDisjoint D (pushforwardHorizontal H)),
       Iup.rawIntersection (pullbackHorizontal D) H hup =
         Idown.rawIntersection D (pushforwardHorizontal H) hdown
+  vertical_pullback_projection_formula :
+    ∀ (v : Chapter14RationalVector r)
+      (H : Chapter14HorizontalDivisor up),
+      chapter14VerticalAgainstHorizontal (pullbackVertical v)
+          H.componentIntersections =
+        chapter14VerticalAgainstHorizontal v
+          (pushforwardHorizontal H).componentIntersections
   raw_pullback_scaling :
     ∀ (D G : Chapter14HorizontalDivisor down)
       (hup : Iup.genericDisjoint
         (pullbackHorizontal D) (pullbackHorizontal G))
       (hdown : Idown.genericDisjoint D G),
       Iup.rawIntersection (pullbackHorizontal D) (pullbackHorizontal G) hup =
-        (surfaceMap.generic_degree : ℚ) * Idown.rawIntersection D G hdown
+        (surfaceMap.generic_degree : ℤ) * Idown.rawIntersection D G hdown
+  pullback_vertical_intersection_scaling :
+    ∀ (v w : Chapter14RationalVector r),
+      chapter14VerticalIntersection up
+          (pullbackVertical v) (pullbackVertical w) =
+        (surfaceMap.generic_degree : ℚ) *
+          chapter14VerticalIntersection down v w
   pullback_generic_degree :
     ∀ (D : Chapter14HorizontalDivisor down),
       (pullbackHorizontal D).genericDegree =
@@ -206,7 +269,7 @@ theorem chapter14_upstairs_correction_class_is_pullback_class
     {Iup : Chapter14LocalIntersectionData up}
     (A : Chapter14FiniteFlatIntersectionCorrespondence
       Ydata Xdata f down up C Idown Iup)
-    (hupconnected : up.connected)
+    (_hupconnected : up.connected)
     (D : Chapter14HorizontalDivisor down)
     (v : Chapter14RationalVector r)
     (hv : chapter14Balanced down
@@ -286,7 +349,7 @@ structure Chapter14ResidueDegreeWeightedSplit
   upstairsWeight : B → ℕ
   total_weight : ∀ a,
     downstairsWeight a =
-      ∑ b in (Finset.univ : Finset B).filter (fun b => map b = a),
+      ∑ b ∈ (Finset.univ : Finset B).filter (fun b => map b = a),
         upstairsWeight b
 
 theorem chapter14_unramified_residue_weights_preserve_total_contribution
@@ -356,6 +419,37 @@ theorem chapter14_regularized_base_change_matrix_comparison
     B.matrix_compared_by_pullback_pushforward_on_domination := by
   exact B.ramified_matrix_comparison hramified
 
+/-!
+The qualitative caution is paired here with the canonical Chapter 10 local
+extension and fiber-scaling records.  The exact uniformizer and total-fiber
+identities are consequently read from those records rather than restated as
+free Chapter 14 assumptions.
+-/
+structure Chapter14CanonicalBaseChangeCertificate
+    {X Y : Scheme.{u}} (f : Y ⟶ X)
+    {R R' : Type u} [CommRing R] [CommRing R'] where
+  localExtension : Chapter10FiniteDVRFiberData R R'
+  fiberScaling : Chapter10DVRFiberDivisorScalingData f
+  caution : Chapter14BaseChangeCaution
+
+theorem chapter14_canonical_base_change_uniformizer_formula
+    {X Y : Scheme.{u}} (f : Y ⟶ X)
+    {R R' : Type u} [CommRing R] [CommRing R']
+    (B : Chapter14CanonicalBaseChangeCertificate (R := R) (R' := R') f) :
+    B.localExtension.map B.localExtension.uniformizer =
+      B.localExtension.unit *
+        B.localExtension.uniformizer' ^ B.localExtension.ramificationIndex := by
+  sorry
+
+theorem chapter14_canonical_base_change_fiber_scaling_formula
+    {X Y : Scheme.{u}} (f : Y ⟶ X)
+    {R R' : Type u} [CommRing R] [CommRing R']
+    (B : Chapter14CanonicalBaseChangeCertificate (R := R) (R' := R') f) :
+    B.fiberScaling.pulledBackBaseFiber.cycle =
+      (B.fiberScaling.ramificationIndex : ℤ) •
+        B.fiberScaling.totalFiberOnY.cycle := by
+  sorry
+
 /-! ## Point blowups and birational invariance -/
 
 structure Chapter14BlowupDivisorExpression
@@ -375,24 +469,41 @@ structure Chapter14PointBlowupData
     (Idown : Chapter14LocalIntersectionData down)
     (Iup : Chapter14LocalIntersectionData up) where
   is_point_blowup : Prop
+  is_point_blowup_evidence : is_point_blowup
   new_component_count : t = r + 1
   strictTransform : Chapter14HorizontalDivisor down →
     Chapter14HorizontalDivisor up
   exceptional : Fin t
   exceptionalVector : Chapter14RationalVector t
+  exceptionalVector_is_basis :
+    ∀ j, exceptionalVector j = if j = exceptional then 1 else 0
+  centerResidueDegree : ℕ
+  centerResidueDegree_pos : 0 < centerResidueDegree
   multiplicityAtPoint : Chapter14HorizontalDivisor down → ℤ
   pullbackVertical : Chapter14RationalVector r → Chapter14RationalVector t
+  pullback_vertical_pushforward_identity :
+    ∀ v, chapter14PushforwardComponentVector C (pullbackVertical v) = v
   pullback_vertical_matrix_compatibility :
     ∀ v, chapter14MatrixVec (chapter14FiberRationalMatrix up)
         (pullbackVertical v) =
       chapter14TransposeComponentVector C
         (chapter14MatrixVec (chapter14FiberRationalMatrix down) v)
   strict_transform_component_intersections :
+    ∀ (D : Chapter14HorizontalDivisor down) (j : Fin t),
+      ((strictTransform D).componentIntersections j : ℚ) =
+        (∑ i, (C.pushforward i j : ℚ) *
+          (D.componentIntersections i : ℚ)) -
+        (multiplicityAtPoint D : ℚ) *
+          chapter14MatrixVec (chapter14FiberRationalMatrix up)
+            exceptionalVector j
+  exceptional_against_strict_transform :
     ∀ (D : Chapter14HorizontalDivisor down),
-      (strictTransform D).componentIntersections =
-      fun j => ∑ i, C.pushforward i j * D.componentIntersections i
-  exceptional_self_intersection_negative :
-    chapter14VerticalIntersection up exceptionalVector exceptionalVector < 0
+      chapter14DotProduct exceptionalVector
+          (fun j => ((strictTransform D).componentIntersections j : ℚ)) =
+        (multiplicityAtPoint D : ℚ) * (centerResidueDegree : ℚ)
+  exceptional_self_intersection :
+    chapter14VerticalIntersection up exceptionalVector exceptionalVector =
+      -(centerResidueDegree : ℚ)
   total_pullback_orthogonal_to_exceptional :
     ∀ v, chapter14VerticalIntersection up
       (pullbackVertical v) exceptionalVector = 0
@@ -401,7 +512,61 @@ structure Chapter14PointBlowupData
       (hup : Iup.genericDisjoint (strictTransform D) (strictTransform G))
       (hdown : Idown.genericDisjoint D G),
       Iup.rawIntersection (strictTransform D) (strictTransform G) hup =
-        Idown.rawIntersection D G hdown
+        Idown.rawIntersection D G hdown -
+          multiplicityAtPoint D * multiplicityAtPoint G *
+            (centerResidueDegree : ℤ)
+
+/-!
+The coefficient-level point-blowup certificate is also available directly
+from the canonical Chapter 11 blowup and projection records.  This bridge
+keeps strict/total transforms, exceptional orthogonality, and the residue
+degree tied to their geometric source.
+-/
+structure Chapter14CanonicalPointBlowupCertificate
+    {S : Chapter11ArithmeticBase}
+    {X : Chapter11ArithmeticSurface S}
+    {p : Chapter11SurfacePoint X} where
+  blowup : Chapter11PointBlowup p
+  projection : Chapter11PointBlowupProjectionData blowup
+
+theorem chapter14_canonical_point_blowup_total_transform_formula
+    {S : Chapter11ArithmeticBase}
+    {X : Chapter11ArithmeticSurface S}
+    {p : Chapter11SurfacePoint X}
+    (B : Chapter14CanonicalPointBlowupCertificate (p := p))
+    (D : Chapter11Divisor X) :
+    chapter11TotalTransform B.blowup D =
+      chapter11StrictTransformDivisor B.blowup D +
+        chapter11DivisorMultiplicity D p • chapter11ExceptionalDivisor B.blowup := by
+  sorry
+
+theorem chapter14_canonical_point_blowup_intersection_formula
+    {S : Chapter11ArithmeticBase}
+    {X : Chapter11ArithmeticSurface S}
+    {p : Chapter11SurfacePoint X}
+    (B : Chapter14CanonicalPointBlowupCertificate (p := p))
+    (D G : Chapter11Divisor X)
+    (hscope : B.projection.source.scope ∧ B.projection.target.scope) :
+    B.projection.target.pairing
+        (chapter11StrictTransformDivisor B.blowup D)
+        (chapter11StrictTransformDivisor B.blowup G) =
+      B.projection.source.pairing D G -
+        chapter11DivisorMultiplicity D p *
+          chapter11DivisorMultiplicity G p *
+            (chapter11ResidueDegree p : ℤ) := by
+  sorry
+
+theorem chapter14_canonical_point_blowup_exceptional_orthogonality
+    {S : Chapter11ArithmeticBase}
+    {X : Chapter11ArithmeticSurface S}
+    {p : Chapter11SurfacePoint X}
+    (B : Chapter14CanonicalPointBlowupCertificate (p := p))
+    (D : Chapter11Divisor X)
+    (hscope : B.projection.source.scope ∧ B.projection.target.scope) :
+    B.projection.target.pairing
+        (chapter11TotalTransform B.blowup D)
+        (chapter11ExceptionalDivisor B.blowup) = 0 := by
+  sorry
 
 def chapter14PointBlowupPullbackOfHorizontal
     {r t : ℕ}

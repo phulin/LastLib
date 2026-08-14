@@ -1,4 +1,5 @@
-import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter03.Section01ConstructionAndProjectivity
+import Mathlib.Algebra.MvPolynomial.PDeriv
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter03.Dependencies
 
 namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter03
 
@@ -6,8 +7,12 @@ universe u v
 
 noncomputable section
 
-open AlgebraicGeometry CategoryTheory Set
+open AlgebraicGeometry CategoryTheory CategoryTheory.Limits Set
 open Polynomial
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter01
+open LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter02
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
+open LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter07
 open scoped AlgebraicGeometry
 
 /-! ## 3.2. Affine charts -/
@@ -17,15 +22,13 @@ def chapter03AffineChartRing
     {A : Type u} [CommRing A] {ι : Type v} (f : ι → A) (i : ι) :
     Subalgebra A (Localization.Away (f i)) :=
   Algebra.adjoin A (Set.range (fun j =>
-    algebraMap A (Localization.Away (f i)) (f j) /
-      algebraMap A (Localization.Away (f i)) (f i)))
+    chapter02ChartRatio f i j))
 
 /-- The coordinate represented by the ratio `f_j / f_i` in the `i`-chart. -/
 def chapter03AffineChartCoordinate
     {A : Type u} [CommRing A] {ι : Type v} (f : ι → A) (i j : ι) :
     Localization.Away (f i) :=
-  algebraMap A (Localization.Away (f i)) (f j) /
-    algebraMap A (Localization.Away (f i)) (f i)
+  chapter02ChartRatio f i j
 
 @[simp]
 theorem chapter03_affine_chart_ring_mem_iff
@@ -33,8 +36,7 @@ theorem chapter03_affine_chart_ring_mem_iff
     (z : Localization.Away (f i)) :
     z ∈ chapter03AffineChartRing f i ↔
       z ∈ Algebra.adjoin A (Set.range (fun j =>
-        algebraMap A (Localization.Away (f i)) (f j) /
-          algebraMap A (Localization.Away (f i)) (f i))) :=
+        chapter02ChartRatio f i j)) :=
   Iff.rfl
 
 theorem chapter03_affine_chart_coordinate_mul_denominator
@@ -49,8 +51,7 @@ def Chapter03AffineChartPresentation
     (f : ι → A) (i : ι) : Prop :=
   chapter03AffineChartRing f i =
     Algebra.adjoin A (Set.range (fun j =>
-      algebraMap A (Localization.Away (f i)) (f j) /
-        algebraMap A (Localization.Away (f i)) (f i)))
+      chapter02ChartRatio f i j))
 
 theorem chapter03_affine_chart_presentation
     {A : Type u} [CommRing A] {ι : Type v} (f : ι → A) (i : ι) :
@@ -58,12 +59,11 @@ theorem chapter03_affine_chart_presentation
   rfl
 
 theorem chapter03_affine_chart_domain_formula
-    {A : Type u} [CommRing A] [IsDomain A] {ι : Type v}
-    (f : ι → A) (i : ι) (hi : f i ≠ 0) :
+    {A : Type u} [CommRing A] {ι : Type v}
+    (f : ι → A) (i : ι) :
     chapter03AffineChartRing f i =
       Algebra.adjoin A (Set.range (fun j =>
-        algebraMap A (Localization.Away (f i)) (f j) /
-          algebraMap A (Localization.Away (f i)) (f i))) := by
+        chapter02ChartRatio f i j)) := by
   rfl
 
 /-! ### The origin in the affine plane -/
@@ -86,79 +86,107 @@ def chapter03OriginPlaneIdeal {k : Type u} [CommRing k] :
 
 theorem chapter03_origin_plane_ideal_fg
     {k : Type u} [CommRing k] :
-    (chapter03OriginPlaneIdeal k).FG := by
+    (chapter03OriginPlaneIdeal (k := k)).FG := by
   sorry
 
-def chapter03OriginBaseScheme {k : Type u} [CommRing k] : Scheme.{u} :=
+abbrev chapter03OriginBaseScheme {k : Type u} [CommRing k] : Scheme.{u} :=
   AlgebraicGeometry.Spec (CommRingCat.of (Chapter03AffinePlane k))
 
 noncomputable def chapter03OriginCoherentIdeal
-    {k : Type u} [CommRing k] : Chapter03CoherentIdeal (chapter03OriginBaseScheme k) :=
+    {k : Type u} [CommRing k] :
+    Chapter03CoherentIdeal (chapter03OriginBaseScheme (k := k)) :=
   chapter07AffineCoherentIdeal
-    (Chapter03AffinePlane k) (chapter03OriginPlaneIdeal k)
+    (Chapter03AffinePlane k) (chapter03OriginPlaneIdeal (k := k))
     (chapter03_origin_plane_ideal_fg (k := k))
 
-def chapter03OriginXChartRing {k : Type u} [CommRing k] :=
+abbrev chapter03OriginXChartRing {k : Type u} [CommRing k] :=
   MvPolynomial (Fin 2) k
 
-def chapter03OriginYChartRing {k : Type u} [CommRing k] :=
+abbrev chapter03OriginYChartRing {k : Type u} [CommRing k] :=
   MvPolynomial (Fin 2) k
 
-def chapter03OriginXChartX {k : Type u} [CommRing k] : chapter03OriginXChartRing k :=
+def chapter03OriginXChartX {k : Type u} [CommRing k] :
+    chapter03OriginXChartRing (k := k) :=
   MvPolynomial.X 0
 
-def chapter03OriginXChartT {k : Type u} [CommRing k] : chapter03OriginXChartRing k :=
+def chapter03OriginXChartT {k : Type u} [CommRing k] :
+    chapter03OriginXChartRing (k := k) :=
   MvPolynomial.X 1
 
-def chapter03OriginYChartS {k : Type u} [CommRing k] : chapter03OriginYChartRing k :=
+def chapter03OriginYChartS {k : Type u} [CommRing k] :
+    chapter03OriginYChartRing (k := k) :=
   MvPolynomial.X 0
 
-def chapter03OriginYChartY {k : Type u} [CommRing k] : chapter03OriginYChartRing k :=
+def chapter03OriginYChartY {k : Type u} [CommRing k] :
+    chapter03OriginYChartRing (k := k) :=
   MvPolynomial.X 1
 
 def chapter03OriginXChartMap {k : Type u} [CommRing k] :
-    Chapter03AffinePlane k →ₐ[k] chapter03OriginXChartRing k :=
+    Chapter03AffinePlane k →ₐ[k] chapter03OriginXChartRing (k := k) :=
   MvPolynomial.eval₂AlgHom k
-    (Fin.cases chapter03OriginXChartX
-      (fun _ => chapter03OriginXChartX * chapter03OriginXChartT))
+    (Fin.cases (chapter03OriginXChartX (k := k))
+      (fun _ => chapter03OriginXChartX (k := k) * chapter03OriginXChartT (k := k)))
 
 def chapter03OriginYChartMap {k : Type u} [CommRing k] :
-    Chapter03AffinePlane k →ₐ[k] chapter03OriginYChartRing k :=
+    Chapter03AffinePlane k →ₐ[k] chapter03OriginYChartRing (k := k) :=
   MvPolynomial.eval₂AlgHom k
-    (Fin.cases (chapter03OriginYChartS * chapter03OriginYChartY)
-      (fun _ => chapter03OriginYChartY))
+    (Fin.cases (chapter03OriginYChartS (k := k) * chapter03OriginYChartY (k := k))
+      (fun _ => chapter03OriginYChartY (k := k)))
 
 theorem chapter03_origin_x_chart_x_coordinate
     {k : Type u} [CommRing k] :
-    chapter03OriginXChartMap k chapter03AffinePlaneX = chapter03OriginXChartX := by
+    chapter03OriginXChartMap (k := k) chapter03AffinePlaneX = chapter03OriginXChartX := by
   sorry
 
 theorem chapter03_origin_x_chart_y_coordinate
     {k : Type u} [CommRing k] :
-    chapter03OriginXChartMap k chapter03AffinePlaneY =
+    chapter03OriginXChartMap (k := k) chapter03AffinePlaneY =
       chapter03OriginXChartX * chapter03OriginXChartT := by
   sorry
 
 theorem chapter03_origin_y_chart_x_coordinate
     {k : Type u} [CommRing k] :
-    chapter03OriginYChartMap k chapter03AffinePlaneX =
+    chapter03OriginYChartMap (k := k) chapter03AffinePlaneX =
       chapter03OriginYChartS * chapter03OriginYChartY := by
   sorry
 
 theorem chapter03_origin_y_chart_y_coordinate
     {k : Type u} [CommRing k] :
-    chapter03OriginYChartMap k chapter03AffinePlaneY = chapter03OriginYChartY := by
+    chapter03OriginYChartMap (k := k) chapter03AffinePlaneY = chapter03OriginYChartY := by
   sorry
 
-def chapter03OriginOverlapRing {k : Type u} [CommRing k] :=
+abbrev chapter03OriginOverlapRing {k : Type u} [CommRing k] :=
   Localization.Away (chapter03OriginXChartT (k := k))
 
-def chapter03OriginOverlapT {k : Type u} [CommRing k] : chapter03OriginOverlapRing k :=
-  algebraMap (chapter03OriginXChartRing k) (chapter03OriginOverlapRing k)
-    chapter03OriginXChartT
+def chapter03OriginOverlapT {k : Type u} [CommRing k] :
+    chapter03OriginOverlapRing (k := k) :=
+  algebraMap (chapter03OriginXChartRing (k := k)) (chapter03OriginOverlapRing (k := k))
+    (chapter03OriginXChartT (k := k))
 
-def chapter03OriginOverlapS {k : Type u} [CommRing k] : chapter03OriginOverlapRing k :=
-  (chapter03OriginOverlapT (k := k))⁻¹
+def chapter03OriginOverlapS {k : Type u} [CommRing k] :
+    chapter03OriginOverlapRing (k := k) :=
+  IsLocalization.Away.invSelf (chapter03OriginXChartT (k := k))
+
+/- The two expected transition homomorphisms on the overlap.  Writing these as algebra maps keeps
+the coordinate changes attached to the actual affine chart rings rather than to unrelated scheme
+morphisms. -/
+def chapter03OriginOverlapFromXChart {k : Type u} [CommRing k] :
+    chapter03OriginXChartRing (k := k) →ₐ[k] chapter03OriginOverlapRing (k := k) :=
+  MvPolynomial.eval₂AlgHom k
+    (Fin.cases
+      (algebraMap (chapter03OriginXChartRing (k := k))
+        (chapter03OriginOverlapRing (k := k)) (chapter03OriginXChartX (k := k)))
+      (fun _ => chapter03OriginOverlapT (k := k)))
+
+def chapter03OriginOverlapFromYChart {k : Type u} [CommRing k] :
+    chapter03OriginYChartRing (k := k) →ₐ[k] chapter03OriginOverlapRing (k := k) :=
+  MvPolynomial.eval₂AlgHom k
+    (Fin.cases
+      (chapter03OriginOverlapS (k := k))
+      (fun _ =>
+        algebraMap (chapter03OriginYChartRing (k := k))
+            (chapter03OriginOverlapRing (k := k)) (chapter03OriginYChartY (k := k)) *
+          chapter03OriginOverlapT (k := k)))
 
 theorem chapter03_origin_overlap_s_mul_t
     {k : Type u} [CommRing k] :
@@ -168,27 +196,29 @@ theorem chapter03_origin_overlap_s_mul_t
 theorem chapter03_origin_overlap_s_eq_t_inv
     {k : Type u} [CommRing k] :
     chapter03OriginOverlapS (k := k) =
-      (chapter03OriginOverlapT (k := k))⁻¹ :=
+      IsLocalization.Away.invSelf (chapter03OriginXChartT (k := k)) :=
   rfl
 
 def chapter03OriginXChartExceptionalIdeal {k : Type u} [CommRing k] :
-    Ideal (chapter03OriginXChartRing k) :=
-  Ideal.span ({chapter03OriginXChartX} : Set (chapter03OriginXChartRing k))
+    Ideal (chapter03OriginXChartRing (k := k)) :=
+  Ideal.span ({chapter03OriginXChartX (k := k)} : Set (chapter03OriginXChartRing (k := k)))
 
 def chapter03OriginYChartExceptionalIdeal {k : Type u} [CommRing k] :
-    Ideal (chapter03OriginYChartRing k) :=
-  Ideal.span ({chapter03OriginYChartY} : Set (chapter03OriginYChartRing k))
+    Ideal (chapter03OriginYChartRing (k := k)) :=
+  Ideal.span ({chapter03OriginYChartY (k := k)} : Set (chapter03OriginYChartRing (k := k)))
 
 theorem chapter03_origin_x_chart_exceptional_equation
     {k : Type u} [CommRing k] :
     chapter03OriginXChartExceptionalIdeal (k := k) =
-      Ideal.span ({chapter03OriginXChartX} : Set (chapter03OriginXChartRing k)) := by
+      Ideal.span ({chapter03OriginXChartX} :
+        Set (chapter03OriginXChartRing (k := k))) := by
   rfl
 
 theorem chapter03_origin_y_chart_exceptional_equation
     {k : Type u} [CommRing k] :
     chapter03OriginYChartExceptionalIdeal (k := k) =
-      Ideal.span ({chapter03OriginYChartY} : Set (chapter03OriginYChartRing k)) := by
+      Ideal.span ({chapter03OriginYChartY} :
+        Set (chapter03OriginYChartRing (k := k))) := by
   rfl
 
 noncomputable def chapter03OriginBlowup
@@ -196,24 +226,118 @@ noncomputable def chapter03OriginBlowup
     Chapter03Blowup (chapter03OriginCoherentIdeal (k := k)) :=
   chapter03Blowup (chapter03OriginCoherentIdeal (k := k))
 
+/- A chart is recorded against the actual relative-Proj standard open.  The ring equivalence and
+the canonical Spec comparison prevent the polynomial chart ring from floating free of the Rees
+presentation. -/
+structure Chapter03OriginBlowupStandardChartData
+    (k : Type u) [Field k]
+    (B : Chapter03Blowup (chapter03OriginCoherentIdeal (k := k)))
+    (A : Type u) [CommRing A] [Algebra k A]
+    (chartMap : Chapter03AffinePlane k →ₐ[k] A)
+    (exceptionalIdeal : Ideal A) where
+  base_open : (chapter03OriginBaseScheme (k := k)).Opens
+  base_open_affine : IsAffineOpen base_open
+  degree : ℕ
+  graded_section : B.relative_rees.algebra.sections base_open
+  graded_section_mem : graded_section ∈ B.relative_rees.algebra.grading base_open degree
+  degree_positive : 0 < degree
+  ring_equiv : A ≃+*
+    chapter01RelativeDegreeZeroLocalization B.relative_rees.algebra base_open graded_section
+      graded_section_mem degree_positive
+  chart_iso :
+    AlgebraicGeometry.Spec (CommRingCat.of A) ≅
+      (B.relative_proj.standardOpen base_open base_open_affine degree graded_section graded_section_mem
+        degree_positive).toScheme
+  chart_iso_canonical :
+    chart_iso.hom =
+      AlgebraicGeometry.Spec.map (CommRingCat.ofHom ring_equiv.symm.toRingHom) ≫
+        (B.relative_proj.standardOpen_chart base_open base_open_affine degree graded_section graded_section_mem
+          degree_positive).inv
+  chart_to_base :
+    AlgebraicGeometry.Spec (CommRingCat.of A) ⟶ chapter03OriginBaseScheme (k := k)
+  chart_to_base_canonical :
+    chart_to_base =
+      AlgebraicGeometry.Spec.map (CommRingCat.ofHom chartMap.toRingHom)
+  chart_iso_over :
+    chart_iso.hom ≫
+        (B.relative_proj.standardOpen base_open base_open_affine degree graded_section graded_section_mem
+          degree_positive).ι ≫ B.projection =
+      chart_to_base
+  exceptional_iso :
+    AlgebraicGeometry.Spec (CommRingCat.of (A ⧸ exceptionalIdeal)) ≅
+      pullback (chapter03BlowupExceptionalInclusion B)
+        (B.relative_proj.standardOpen base_open base_open_affine degree graded_section graded_section_mem
+          degree_positive).ι
+  exceptional_iso_over :
+    exceptional_iso.hom ≫
+        pullback.snd (chapter03BlowupExceptionalInclusion B)
+          (B.relative_proj.standardOpen base_open base_open_affine degree graded_section graded_section_mem
+            degree_positive).ι =
+      AlgebraicGeometry.Spec.map
+          (CommRingCat.ofHom (Ideal.Quotient.mk exceptionalIdeal)) ≫ chart_iso.hom
+
+abbrev Chapter03OriginBlowupStandardChartData.chart
+    {k : Type u} [Field k]
+    {B : Chapter03Blowup (chapter03OriginCoherentIdeal (k := k))}
+    {A : Type u} [CommRing A] [Algebra k A]
+    {chartMap : Chapter03AffinePlane k →ₐ[k] A}
+    {exceptionalIdeal : Ideal A}
+    (D : Chapter03OriginBlowupStandardChartData k B A chartMap exceptionalIdeal) :
+    B.carrier.Opens :=
+  B.relative_proj.standardOpen D.base_open D.base_open_affine D.degree D.graded_section D.graded_section_mem
+    D.degree_positive
+
 /- LOCAL_DEPENDENCY_GUESS (3.2): the two chart affine lines glue along the inversion overlap and
 identify the exceptional subscheme of the origin blowup with the projective line. -/
 structure Chapter03OriginBlowupChartData (k : Type u) [Field k] where
   x_chart_relation :
-    chapter03OriginXChartMap k chapter03AffinePlaneY =
+    chapter03OriginXChartMap (k := k) chapter03AffinePlaneY =
       chapter03OriginXChartX * chapter03OriginXChartT
   y_chart_relation :
-    chapter03OriginYChartMap k chapter03AffinePlaneX =
+    chapter03OriginYChartMap (k := k) chapter03AffinePlaneX =
       chapter03OriginYChartS * chapter03OriginYChartY
   overlap_relation :
     chapter03OriginOverlapS (k := k) =
-      (chapter03OriginOverlapT (k := k))⁻¹
+      IsLocalization.Away.invSelf (chapter03OriginXChartT (k := k))
   x_exceptional :
     chapter03OriginXChartExceptionalIdeal (k := k) =
-      Ideal.span ({chapter03OriginXChartX} : Set (chapter03OriginXChartRing k))
+      Ideal.span ({chapter03OriginXChartX} :
+        Set (chapter03OriginXChartRing (k := k)))
   y_exceptional :
     chapter03OriginYChartExceptionalIdeal (k := k) =
-      Ideal.span ({chapter03OriginYChartY} : Set (chapter03OriginYChartRing k))
+      Ideal.span ({chapter03OriginYChartY} :
+        Set (chapter03OriginYChartRing (k := k)))
+  x_chart_data :
+    Chapter03OriginBlowupStandardChartData k (chapter03OriginBlowup (k := k))
+      (chapter03OriginXChartRing (k := k)) (chapter03OriginXChartMap (k := k))
+      (chapter03OriginXChartExceptionalIdeal (k := k))
+  y_chart_data :
+    Chapter03OriginBlowupStandardChartData k (chapter03OriginBlowup (k := k))
+      (chapter03OriginYChartRing (k := k)) (chapter03OriginYChartMap (k := k))
+      (chapter03OriginYChartExceptionalIdeal (k := k))
+  overlap : (chapter03OriginBlowup (k := k)).carrier.Opens
+  overlap_is_intersection : overlap = x_chart_data.chart ⊓ y_chart_data.chart
+  overlap_iso :
+    AlgebraicGeometry.Spec (CommRingCat.of (chapter03OriginOverlapRing (k := k))) ≅
+      overlap.toScheme
+  overlap_to_x_chart :
+    AlgebraicGeometry.Spec (CommRingCat.of (chapter03OriginOverlapRing (k := k))) ⟶
+      x_chart_data.chart.toScheme
+  overlap_to_y_chart :
+    AlgebraicGeometry.Spec (CommRingCat.of (chapter03OriginOverlapRing (k := k))) ⟶
+      y_chart_data.chart.toScheme
+  overlap_to_x_chart_over :
+    overlap_to_x_chart ≫ x_chart_data.chart.ι = overlap_iso.hom ≫ overlap.ι
+  overlap_to_y_chart_over :
+    overlap_to_y_chart ≫ y_chart_data.chart.ι = overlap_iso.hom ≫ overlap.ι
+  overlap_to_x_chart_canonical :
+    overlap_to_x_chart ≫ x_chart_data.chart_iso.inv =
+      AlgebraicGeometry.Spec.map
+        (CommRingCat.ofHom (chapter03OriginOverlapFromXChart (k := k)).toRingHom)
+  overlap_to_y_chart_canonical :
+    overlap_to_y_chart ≫ y_chart_data.chart_iso.inv =
+      AlgebraicGeometry.Spec.map
+        (CommRingCat.ofHom (chapter03OriginOverlapFromYChart (k := k)).toRingHom)
   exceptional_is_projective_line :
     chapter03BlowupExceptionalSubscheme (chapter03OriginBlowup (k := k)) ≅
       chapter04ProjectiveLine k
@@ -240,21 +364,40 @@ def chapter03CuspBaseEquation {k : Type u} [CommRing k] : Chapter03AffinePlane k
   chapter03AffinePlaneY ^ 2 - chapter03AffinePlaneX ^ 3
 
 def chapter03CuspXChartTotalTransformEquation {k : Type u} [CommRing k] :
-    chapter03OriginXChartRing k :=
+    chapter03OriginXChartRing (k := k) :=
   chapter03OriginXChartX ^ 2 *
     (chapter03OriginXChartT ^ 2 - chapter03OriginXChartX)
 
 def chapter03CuspXChartExceptionalFactor {k : Type u} [CommRing k] :
-    chapter03OriginXChartRing k :=
+    chapter03OriginXChartRing (k := k) :=
   chapter03OriginXChartX ^ 2
 
 def chapter03CuspXChartStrictTransformEquation {k : Type u} [CommRing k] :
-    chapter03OriginXChartRing k :=
+    chapter03OriginXChartRing (k := k) :=
   chapter03OriginXChartT ^ 2 - chapter03OriginXChartX
+
+/-- The partial derivative in the exceptional-coordinate direction.  Its being a unit is the
+Jacobian certificate for the smooth strict transform. -/
+def chapter03CuspXChartStrictTransformJacobian {k : Type u} [CommRing k] :
+    chapter03OriginXChartRing (k := k) :=
+  MvPolynomial.pderiv 0 (chapter03CuspXChartStrictTransformEquation (k := k))
+
+/-- The ideal of the origin in the `x,t` chart. -/
+def chapter03CuspXChartOriginIdeal {k : Type u} [CommRing k] :
+    Ideal (chapter03OriginXChartRing (k := k)) :=
+  Ideal.span ({chapter03OriginXChartX (k := k), chapter03OriginXChartT (k := k)} :
+    Set (chapter03OriginXChartRing (k := k)))
+
+/-- The strict transform has the exceptional line as its tangent at the origin. -/
+def chapter03CuspXChartTangentCondition {k : Type u} [CommRing k] : Prop :=
+  chapter03CuspXChartStrictTransformEquation (k := k) ∈
+    Ideal.span ({chapter03OriginXChartX (k := k)} :
+      Set (chapter03OriginXChartRing (k := k))) +
+      (chapter03CuspXChartOriginIdeal (k := k)) ^ 2
 
 theorem chapter03_cusp_x_chart_substitution
     {k : Type u} [CommRing k] :
-    chapter03OriginXChartMap k (chapter03CuspBaseEquation (k := k)) =
+    chapter03OriginXChartMap (k := k) (chapter03CuspBaseEquation (k := k)) =
       chapter03CuspXChartTotalTransformEquation (k := k) := by
   sorry
 
@@ -275,16 +418,17 @@ structure Chapter03CuspChartAnalysis (k : Type u) [Field k] where
   strict_transform_equation :
     chapter03CuspXChartStrictTransformEquation (k := k) =
       chapter03OriginXChartT ^ 2 - chapter03OriginXChartX
-  strict_transform_is_smooth : Prop
-  strict_transform_tangent_to_exceptional : Prop
-  resolving_curve_differs_from_normal_crossing_boundary : Prop
+  strict_transform_is_smooth :
+    IsUnit (chapter03CuspXChartStrictTransformJacobian (k := k))
+  strict_transform_tangent_to_exceptional :
+    chapter03CuspXChartTangentCondition (k := k)
 
 theorem chapter03_cusp_chart_analysis_exists
     (k : Type u) [Field k] :
     Nonempty (Chapter03CuspChartAnalysis k) := by
   sorry
 
-noncomputable def chapter03CuspChartAnalysis
+theorem chapter03CuspChartAnalysis
     (k : Type u) [Field k] : Chapter03CuspChartAnalysis k :=
   Classical.choice (chapter03_cusp_chart_analysis_exists k)
 

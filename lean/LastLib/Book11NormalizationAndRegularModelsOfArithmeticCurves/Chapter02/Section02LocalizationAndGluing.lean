@@ -1,4 +1,4 @@
-import LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter02.Section01AffineConstruction
+import LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter02.Dependencies
 
 namespace LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter02
 
@@ -22,8 +22,7 @@ theorem chapter02_affineIntegralClosure_mem_iff {X Y : Scheme.{u}} (f : X ⟶ Y)
     (U : Y.Opens) (x : Γ(X, f ⁻¹ᵁ U)) :
     letI := (f.app U).hom.toAlgebra
     x ∈ chapter02AffineIntegralClosure f U ↔ IsIntegral Γ(Y, U) x := by
-  letI := (f.app U).hom.toAlgebra
-  exact mem_integralClosure_iff
+  rfl
 
 /-- Taking integral closure commutes with an arbitrary localization. -/
 theorem chapter02_integralClosure_localization
@@ -96,7 +95,54 @@ theorem chapter02_normalization_is_finite_iff_local_closures {X Y : Scheme.{u}}
       ∀ (U : Y.Opens), IsAffineOpen U →
         letI := (f.app U).hom.toAlgebra
         Module.Finite Γ(Y, U) (integralClosure Γ(Y, U) Γ(X, f ⁻¹ᵁ U)) := by
-  sorry
+  rw [isFinite_iff]
+  constructor
+  · intro h U hU
+    let := (f.app U).hom.toAlgebra
+    have hf := h.2 U hU
+    change (CommRingCat.Hom.hom (Scheme.Hom.app (f.fromNormalization) U)).Finite at hf
+    have happ := Scheme.Hom.fromNormalization_app f hU
+    rw [happ] at hf
+    have hcomp :
+        ((f.normalizationObjIso hU).symm.commRingCatIsoToRingEquiv.toRingHom.comp
+          (algebraMap Γ(Y, U) (integralClosure Γ(Y, U) Γ(X, f ⁻¹ᵁ U)))).Finite := by
+      change ((f.normalizationObjIso hU).symm.commRingCatIsoToRingEquiv.toRingHom.comp
+        (algebraMap Γ(Y, U) (integralClosure Γ(Y, U) Γ(X, f ⁻¹ᵁ U)))).Finite at hf
+      exact hf
+    have hcomp' :=
+      (f.normalizationObjIso hU).commRingCatIsoToRingEquiv.finite.comp hcomp
+    have hsymm :
+        (f.normalizationObjIso hU).symm.commRingCatIsoToRingEquiv =
+          (f.normalizationObjIso hU).commRingCatIsoToRingEquiv.symm := by
+      ext x
+      rfl
+    rw [hsymm] at hcomp'
+    have hcancel :
+        (f.normalizationObjIso hU).commRingCatIsoToRingEquiv.toRingHom.comp
+          ((f.normalizationObjIso hU).commRingCatIsoToRingEquiv.symm.toRingHom.comp
+            (algebraMap Γ(Y, U) (integralClosure Γ(Y, U) Γ(X, f ⁻¹ᵁ U)))) =
+          algebraMap Γ(Y, U) (integralClosure Γ(Y, U) Γ(X, f ⁻¹ᵁ U)) := by
+      ext x
+      simp [RingHom.comp_apply]
+    rw [hcancel] at hcomp'
+    exact RingHom.finite_algebraMap.mp hcomp'
+  · intro h
+    refine ⟨(chapter02_normalization_is_integral_affine f).2, ?_⟩
+    intro U hU
+    let := (f.app U).hom.toAlgebra
+    have hfinite :
+        (algebraMap Γ(Y, U) (integralClosure Γ(Y, U) Γ(X, f ⁻¹ᵁ U))).Finite :=
+      RingHom.finite_algebraMap.mpr (h U hU)
+    have hcomp :
+        ((f.normalizationObjIso hU).symm.commRingCatIsoToRingEquiv.toRingHom.comp
+          (algebraMap Γ(Y, U) (integralClosure Γ(Y, U) Γ(X, f ⁻¹ᵁ U)))).Finite :=
+      (f.normalizationObjIso hU).symm.commRingCatIsoToRingEquiv.finite.comp hfinite
+    change (CommRingCat.Hom.hom (Scheme.Hom.app (f.fromNormalization) U)).Finite
+    have happ := Scheme.Hom.fromNormalization_app f hU
+    rw [happ]
+    change ((f.normalizationObjIso hU).symm.commRingCatIsoToRingEquiv.toRingHom.comp
+        (algebraMap Γ(Y, U) (integralClosure Γ(Y, U) Γ(X, f ⁻¹ᵁ U)))).Finite
+    exact hcomp
 
 /-- A finite extension of the function field is presented to the relative normalization API
 through the generic point map `Spec L → Spec K(X) → X`. -/
@@ -121,15 +167,17 @@ abbrev chapter02FieldExtensionNormalizationMap (X : Scheme.{u}) [IsIntegral X]
     Chapter02FieldExtensionNormalization X L ⟶ X :=
   (chapter02FunctionFieldExtensionMap X L).fromNormalization
 
-/-- The absolute normalization is the relative normalization of the identity. -/
-abbrev Chapter02AbsoluteNormalization (X : Scheme.{u})
-    [QuasiCompact (𝟙 X)] [QuasiSeparated (𝟙 X)] : Scheme :=
-  (𝟙 X).normalization
+/-- The absolute normalization is the relative normalization of the generic-point map. -/
+abbrev Chapter02AbsoluteNormalization (X : Scheme.{u}) [IsIntegral X]
+    [QuasiCompact (chapter02FunctionFieldExtensionMap X X.functionField)]
+    [QuasiSeparated (chapter02FunctionFieldExtensionMap X X.functionField)] : Scheme :=
+  (chapter02FunctionFieldExtensionMap X X.functionField).normalization
 
-abbrev chapter02AbsoluteNormalizationMap (X : Scheme.{u})
-    [QuasiCompact (𝟙 X)] [QuasiSeparated (𝟙 X)] :
+abbrev chapter02AbsoluteNormalizationMap (X : Scheme.{u}) [IsIntegral X]
+    [QuasiCompact (chapter02FunctionFieldExtensionMap X X.functionField)]
+    [QuasiSeparated (chapter02FunctionFieldExtensionMap X X.functionField)] :
     Chapter02AbsoluteNormalization X ⟶ X :=
-  (𝟙 X).fromNormalization
+  (chapter02FunctionFieldExtensionMap X X.functionField).fromNormalization
 
 theorem chapter02_fieldExtension_normalization_is_integral_affine
     (X : Scheme.{u}) [IsIntegral X] (L : Type u) [Field L]

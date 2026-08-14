@@ -16,6 +16,7 @@ import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
 import Mathlib.RepresentationTheory.Homological.GroupCohomology.Shapiro
 import Mathlib.RepresentationTheory.Homological.TateCohomology.Basic
 import Mathlib.RepresentationTheory.Induced
+import LastLib.Book06GlobalClassFieldTheory.Chapter01.Dependencies
 import LastLib.Book05LocalClassFieldTheory.Chapter05.Section03ClassFormation
 
 namespace LastLib.Book06GlobalClassFieldTheory.Chapter04
@@ -31,15 +32,11 @@ universe u v w
 Shared interfaces for the global class-formation chapter.
 
 The pinned Mathlib snapshot contains the finite-group Tate and group-cohomology complexes, the
-number-field place and Dedekind-zeta APIs, and Shapiro's lemma.  It does not yet expose the
-idele-class, Brauer-group, or compact-support Galois-cohomology constructions used by the book.
-The small structures below are therefore book-facing dependency interfaces.  They record objects
-and maps; where a canonical earlier API is still absent, conclusion-level input is isolated in a
-named record rather than smuggled into an unrelated map or proposition.
-
-DEPENDENCY_GUESS: `Chapter04BrauerContext`, `Chapter04CompactSupportAPI`, and the idele-class
-presentation are temporary bridges for the missing Book 4--6 interfaces.  They should be replaced
-by the canonical reconciled declarations when those chapters are available.
+number-field place and Dedekind-zeta APIs, and Shapiro's lemma.  The preceding global-class-field
+interfaces supply the canonical book-facing places and idele-class quotient.  The small structures
+below are adapters for the Brauer, compact-support, local invariant, and finite-level cohomology
+interfaces that are not yet exposed canonically; each records objects and maps at the boundary
+needed by this chapter.
 -/
 
 /-! ### Canonical finite-group cohomology bridge -/
@@ -267,6 +264,29 @@ structure Chapter04BrauerInvariantSequenceData
 
 /-! ### Ideles and idele classes -/
 
+/-! The preceding global-class-field interfaces already provide the canonical adelic quotient.  Keep
+these aliases in the shared dependency leaf so the chapter's later interfaces can state the actual
+`I_K`/`C_K` objects without rebuilding them as unrelated abstract groups. -/
+abbrev chapter04CanonicalIdeleGroup
+    (F : Type*) [Field F] [NumberField F] :=
+  LastLib.Book06GlobalClassFieldTheory.Chapter01.I_K F
+
+abbrev chapter04CanonicalIdeleClassGroup
+    (F : Type*) [Field F] [NumberField F] :=
+  LastLib.Book06GlobalClassFieldTheory.Chapter01.C_K F
+
+def chapter04CanonicalIdeleClassQuotient
+    (F : Type*) [Field F] [NumberField F] :
+    chapter04CanonicalIdeleGroup F →*
+      chapter04CanonicalIdeleClassGroup F :=
+  LastLib.Book06GlobalClassFieldTheory.Chapter01.classQuotient
+
+@[simp] theorem chapter04CanonicalIdeleClassQuotient_principal
+    (F : Type*) [Field F] [NumberField F] (a : Fˣ) :
+    chapter04CanonicalIdeleClassQuotient F
+        (LastLib.Book06GlobalClassFieldTheory.Chapter01.principalIdele a) = 1 := by
+  exact LastLib.Book06GlobalClassFieldTheory.Chapter01.classQuotient_principal a
+
 /-- The canonical quotient of an abstract idele group by diagonal principal ideles. -/
 abbrev chapter04IdeleClassQuotient (I : Type u) [CommGroup I]
     {L : Type v} [Field L] (diagonal : Lˣ →* I) : Type u :=
@@ -348,6 +368,10 @@ structure Chapter04TwoExtension {G : Type} [Group G] [Fintype G]
   i : A.V →+ X₁.V
   p : X₁.V →+ X₀.V
   q : X₀.V →+ B.V
+  /-- The sequence maps are maps of `G`-modules, not merely additive maps. -/
+  i_equivariant : ∀ (g : G) (x : A.V), X₁.ρ g (i x) = i (A.ρ g x)
+  p_equivariant : ∀ (g : G) (x : X₁.V), X₀.ρ g (p x) = p (X₁.ρ g x)
+  q_equivariant : ∀ (g : G) (x : X₀.V), B.ρ g (q x) = q (X₀.ρ g x)
   i_injective : Function.Injective i
   p_comp_i : p.comp i = 0
   q_comp_p : q.comp p = 0
@@ -372,6 +396,10 @@ structure Chapter04FundamentalClass
   /-- The fundamental class is ordinary degree-two cohomology, not Tate degree two. -/
   u : chapter04GroupH C 2
   capAPI : Chapter04TateCapProductAPI C u
+  /-- The canonical two-extension representative needed by the Tate--Nakayama induction. -/
+  twoExtensionRepresentative :
+    LastLib.Book05LocalClassFieldTheory.Chapter05.Chapter05TwoExtensionRepresentative
+      G (chapter04GModuleRep C) u capAPI
   invariant : ∀ (H : Subgroup G),
     chapter04GroupH (chapter04RestrictGModule C H) 2 →+ chapter04QModZ
   invariant_normalization : ∀ (H : Subgroup G),

@@ -130,7 +130,7 @@ structure EffectiveDescent
     {ι : Type w} {S : C} {X : ι → C} (f : ∀ i, X i ⟶ S)
     (D : F.DescentData f) where
   descended : F.obj (.mk (op S))
-  comparison : D ≅ F.toDescentData f descended
+  comparison : D ≅ (F.toDescentData f).obj descended
 
 def IsEffectiveDescent
     {C : Type u} [Category.{v} C]
@@ -142,7 +142,7 @@ def IsFullyFaithfulDescent
     {C : Type u} [Category.{v} C]
     (F : Pseudofunctor (LocallyDiscrete Cᵒᵖ) Cat.{v, u})
     {ι : Type w} {S : C} {X : ι → C} (f : ∀ i, X i ⟶ S) : Prop :=
-  (F.toDescentData f).FullyFaithful
+  Nonempty (F.toDescentData f).FullyFaithful
 
 structure EffectiveAndFullyFaithfulDescent
     {C : Type u} [Category.{v} C]
@@ -155,16 +155,12 @@ structure EffectiveAndFullyFaithfulDescent
     pseudofunctor from which the quasi-coherent full-subcategory interface below is formed. -/
 
 noncomputable def moduleSheafPseudofunctor :
-    Pseudofunctor (LocallyDiscrete Scheme.{u}ᵒᵖ) Cat :=
-  LocallyDiscrete.mkPseudofunctor
-    (fun X => Cat.of X.unop.Modules)
-    (fun f => (Scheme.Modules.pullback f.unop).toCat)
-    (fun X => Cat.Hom.isoMk (Scheme.Modules.pullbackId X.unop))
-    (fun f g => Cat.Hom.isoMk (Scheme.Modules.pullbackComp g.unop f.unop))
+  Pseudofunctor (LocallyDiscrete Scheme.{u}ᵒᵖ) Cat :=
+  AlgebraicGeometry.Scheme.Modules.pseudofunctor.comp (Bicategory.Adj.forget₁)
 
 def quasiCoherentModuleSheafObjectProperty :
-    moduleSheafPseudofunctor.ObjectProperty where
-  prop X := SheafOfModules.isQuasicoherent X.unop.ringCatSheaf
+    (moduleSheafPseudofunctor.{u}).ObjectProperty where
+  prop X := SheafOfModules.isQuasicoherent X.as.unop.ringCatSheaf
 
 /- LOCAL_DEPENDENCY_GUESS: the pinned snapshot exposes quasi-coherent objects and the ambient
    pullback pseudofunctor separately, but not the general pullback-preservation instance needed
@@ -176,7 +172,7 @@ instance quasiCoherentModuleSheafObjectProperty_isClosedUnderMapObj :
 
 noncomputable def quasiCoherentModuleSheafPseudofunctor :
     Pseudofunctor (LocallyDiscrete Scheme.{u}ᵒᵖ) Cat :=
-  quasiCoherentModuleSheafObjectProperty.fullsubcategory
+  (quasiCoherentModuleSheafObjectProperty.{u}).fullsubcategory
 
 abbrev ModuleSheafDescentData {ι : Type v} {S : Scheme.{u}} {X : ι → Scheme.{u}}
     (f : ∀ i, X i ⟶ S) := moduleSheafPseudofunctor.DescentData f
@@ -195,15 +191,35 @@ def schemeBaseChangeMap {X S T : Scheme.{u}} (f : X ⟶ S) (p : T ⟶ S) :
   pullback.snd f p
 
 noncomputable def schemeAmitsurOverlap {X S T : Scheme.{u}} (f : X ⟶ S) (p : T ⟶ S) : Scheme.{u} :=
-  pullback (schemeBaseChangeMap f p) (schemeBaseChangeMap f p)
+  pullback f (pullback.snd p p ≫ p)
 
 def schemeAmitsurLeft {X S T : Scheme.{u}} (f : X ⟶ S) (p : T ⟶ S) :
     schemeAmitsurOverlap f p ⟶ schemeBaseChange f p :=
-  pullback.fst (schemeBaseChangeMap f p) (schemeBaseChangeMap f p)
+  pullback.lift
+    (pullback.fst f (pullback.snd p p ≫ p))
+    (pullback.snd f (pullback.snd p p ≫ p) ≫ pullback.fst p p)
+    (by
+      calc
+        pullback.fst f (pullback.snd p p ≫ p) ≫ f =
+            pullback.snd f (pullback.snd p p ≫ p) ≫ (pullback.snd p p ≫ p) :=
+          pullback.condition
+        _ = pullback.snd f (pullback.snd p p ≫ p) ≫ (pullback.fst p p ≫ p) := by
+          rw [pullback.condition]
+        _ = (pullback.snd f (pullback.snd p p ≫ p) ≫ pullback.fst p p) ≫ p := by
+          simp only [Category.assoc])
 
 def schemeAmitsurRight {X S T : Scheme.{u}} (f : X ⟶ S) (p : T ⟶ S) :
     schemeAmitsurOverlap f p ⟶ schemeBaseChange f p :=
-  pullback.snd (schemeBaseChangeMap f p) (schemeBaseChangeMap f p)
+  pullback.lift
+    (pullback.fst f (pullback.snd p p ≫ p))
+    (pullback.snd f (pullback.snd p p ≫ p) ≫ pullback.snd p p)
+    (by
+      calc
+        pullback.fst f (pullback.snd p p ≫ p) ≫ f =
+            pullback.snd f (pullback.snd p p ≫ p) ≫ (pullback.snd p p ≫ p) :=
+          pullback.condition
+        _ = (pullback.snd f (pullback.snd p p ≫ p) ≫ pullback.snd p p) ≫ p := by
+          simp only [Category.assoc])
 
 /-! Tensor notation for the upper row `M → B ⊗[A] M ⇉ (B ⊗[A] B) ⊗[A] M`. -/
 
@@ -275,15 +291,25 @@ def IsQuasiAffineViaIntrinsicAffineEnvelope (X : Scheme.{u}) : Prop :=
 /-! The morphism-property predicate used in the reusable package. -/
 
 def IsFpqcLocalMorphismProperty (P : MorphismProperty Scheme) : Prop :=
-  P.DescendsAlong FpqcMorphismProperty
+  P.IsStableUnderBaseChange ∧ P.DescendsAlong FpqcMorphismProperty
 
-def FiniteLocallyFreeMorphismProperty : MorphismProperty Scheme :=
-  @IsFinite ⊓ @Flat ⊓ @LocallyOfFinitePresentation
+abbrev FiniteLocallyFreeMorphismProperty : MorphismProperty Scheme :=
+  @LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10.Chapter10FiniteLocallyFreeMorphism
+
+/-! These properties retain the qualifications displayed in the source table. -/
+def FiniteTypeMorphismProperty : MorphismProperty Scheme :=
+  @QuasiCompact ⊓ @LocallyOfFiniteType
+
+def FinitePresentationMorphismProperty : MorphismProperty Scheme :=
+  @QuasiCompact ⊓ @LocallyOfFinitePresentation
+
+def UnramifiedMorphismProperty : MorphismProperty Scheme :=
+  @LocallyOfFiniteType ⊓ @FormallyUnramified
 
 /-! A finite-flat group scheme is represented by a group object in the slice.  This keeps the
     multiplication, unit, inverse, and all their laws in the canonical `GrpObj` interface. -/
 
-structure FiniteFlatGroupScheme {G S : Scheme.{u}} (e : G ⟶ S) : Prop where
+structure FiniteFlatGroupScheme {G S : Scheme.{u}} (e : G ⟶ S) where
   finite : IsFinite e
   flat : Flat e
   groupObject : GrpObj (Over.mk e)

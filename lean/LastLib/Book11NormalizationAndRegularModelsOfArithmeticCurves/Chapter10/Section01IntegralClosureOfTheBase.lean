@@ -8,6 +8,7 @@ open AlgebraicGeometry CategoryTheory CategoryTheory.Limits Set
 open LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter01
 open LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter02
 open LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter03
+open LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter07
 open scoped AlgebraicGeometry BigOperators
 
 universe u v
@@ -17,35 +18,36 @@ universe u v
 abbrev chapter10BaseNormalization {S : Scheme.{u}} {K K' : Type u}
     [Field K] [Field K'] [Algebra K K']
     (B : Chapter10ExcellentDedekindBase S K)
-    [QuasiCompact (chapter10BaseExtensionMap B)]
-    [QuasiSeparated (chapter10BaseExtensionMap B)] : Scheme.{u} :=
-  (chapter10BaseExtensionMap B).normalization
+    [QuasiCompact (chapter10BaseExtensionMap (K' := K') B)]
+    [QuasiSeparated (chapter10BaseExtensionMap (K' := K') B)] : Scheme.{u} :=
+  (chapter10BaseExtensionMap (K' := K') B).normalization
 
 abbrev chapter10BaseNormalizationMap {S : Scheme.{u}} {K K' : Type u}
     [Field K] [Field K'] [Algebra K K']
     (B : Chapter10ExcellentDedekindBase S K)
-    [QuasiCompact (chapter10BaseExtensionMap B)]
-    [QuasiSeparated (chapter10BaseExtensionMap B)] :
-    chapter10BaseNormalization B ⟶ S :=
-  (chapter10BaseExtensionMap B).fromNormalization
+    [QuasiCompact (chapter10BaseExtensionMap (K' := K') B)]
+    [QuasiSeparated (chapter10BaseExtensionMap (K' := K') B)] :
+    chapter10BaseNormalization (K' := K') B ⟶ S :=
+  (chapter10BaseExtensionMap (K' := K') B).fromNormalization
 
 theorem chapter10_base_normalization_factorization
     {S : Scheme.{u}} {K K' : Type u} [Field K] [Field K'] [Algebra K K']
     (B : Chapter10ExcellentDedekindBase S K)
-    [QuasiCompact (chapter10BaseExtensionMap B)]
-    [QuasiSeparated (chapter10BaseExtensionMap B)] :
-    (chapter10BaseExtensionMap B).toNormalization ≫ chapter10BaseNormalizationMap B =
-      chapter10BaseExtensionMap B := by
-  exact chapter02_normalization_factorization (chapter10BaseExtensionMap B)
+    [QuasiCompact (chapter10BaseExtensionMap (K' := K') B)]
+    [QuasiSeparated (chapter10BaseExtensionMap (K' := K') B)] :
+    (chapter10BaseExtensionMap (K' := K') B).toNormalization ≫
+        chapter10BaseNormalizationMap (K' := K') B =
+      chapter10BaseExtensionMap (K' := K') B := by
+  exact chapter02_normalization_factorization (chapter10BaseExtensionMap (K' := K') B)
 
 theorem chapter10_base_normalization_is_integral_affine
     {S : Scheme.{u}} {K K' : Type u} [Field K] [Field K'] [Algebra K K']
     (B : Chapter10ExcellentDedekindBase S K)
-    [QuasiCompact (chapter10BaseExtensionMap B)]
-    [QuasiSeparated (chapter10BaseExtensionMap B)] :
-    IsIntegralHom (chapter10BaseNormalizationMap B) ∧
-      IsAffineHom (chapter10BaseNormalizationMap B) := by
-  exact chapter02_normalization_is_integral_affine (chapter10BaseExtensionMap B)
+    [QuasiCompact (chapter10BaseExtensionMap (K' := K') B)]
+    [QuasiSeparated (chapter10BaseExtensionMap (K' := K') B)] :
+    IsIntegralHom (chapter10BaseNormalizationMap (K' := K') B) ∧
+      IsAffineHom (chapter10BaseNormalizationMap (K' := K') B) := by
+  exact chapter02_normalization_is_integral_affine (chapter10BaseExtensionMap (K' := K') B)
 
 /- The excellence and Dedekind conclusion is the scheme-level finite-normalization theorem from
  Chapter 3, with the finite field extension and the generic-point identification made explicit at
@@ -54,19 +56,19 @@ theorem chapter10_base_normalization_finite_and_excellentDedekind
     {S : Scheme.{u}} {K K' : Type u} [Field K] [Field K'] [Algebra K K']
     (B : Chapter10ExcellentDedekindBase S K)
     (hKK' : Chapter10FiniteFieldExtension K K')
-    [QuasiCompact (chapter10BaseExtensionMap B)]
-    [QuasiSeparated (chapter10BaseExtensionMap B)] :
-    IsFinite (chapter10BaseNormalizationMap B) ∧
-      Chapter03ExcellentDedekindScheme (chapter10BaseNormalization B) := by
+    [QuasiCompact (chapter10BaseExtensionMap (K' := K') B)]
+    [QuasiSeparated (chapter10BaseExtensionMap (K' := K') B)] :
+    IsFinite (chapter10BaseNormalizationMap (K' := K') B) ∧
+      Chapter03ExcellentDedekindScheme (chapter10BaseNormalization (K' := K') B) := by
   sorry
 
 theorem chapter10_base_normalization_is_proper
     {S : Scheme.{u}} {K K' : Type u} [Field K] [Field K'] [Algebra K K']
     (B : Chapter10ExcellentDedekindBase S K)
-    (hfinite : IsFinite (chapter10BaseNormalizationMap B))
-    [QuasiCompact (chapter10BaseExtensionMap B)]
-    [QuasiSeparated (chapter10BaseExtensionMap B)] :
-    IsProper (chapter10BaseNormalizationMap B) := by
+    (hfinite : IsFinite (chapter10BaseNormalizationMap (K' := K') B))
+    [QuasiCompact (chapter10BaseExtensionMap (K' := K') B)]
+    [QuasiSeparated (chapter10BaseExtensionMap (K' := K') B)] :
+    IsProper (chapter10BaseNormalizationMap (K' := K') B) := by
   sorry
 
 /-! The finite reduced-algebra version is componentwise: the factors are indexed by minimal
@@ -77,7 +79,7 @@ theorem chapter10_finite_reduced_algebra_normalization_is_finite_disjoint_union
     (hA : Chapter10FiniteReducedAlgebra K A) :
     letI : Chapter02ReducedFiniteMinimalPrimes A :=
       { reduced := hA.reduced, finite := hA.finiteMinimalPrimes }
-    ∃ D : Chapter10FiniteReducedAlgebraNormalizationData A, D.finite := by
+    ∃ D : Chapter10FiniteReducedAlgebraNormalizationData A, IsFinite D.map := by
   sorry
 
 theorem chapter10_finite_reduced_algebra_component_membership
@@ -91,9 +93,9 @@ theorem chapter10_finite_reduced_algebra_component_membership
       x ∈ integralClosure A (Chapter02TotalRingOfFractions A) ↔
         ∀ p : Chapter02MinimalPrime A,
           x p ∈ Chapter02ComponentIntegralClosure A p := by
-  letI : Chapter02ReducedFiniteMinimalPrimes A :=
+  let : Chapter02ReducedFiniteMinimalPrimes A :=
     { reduced := hA.reduced, finite := hA.finiteMinimalPrimes }
-  letI : Algebra A (Chapter02TotalRingOfFractions A) :=
+  let : Algebra A (Chapter02TotalRingOfFractions A) :=
     (chapter02TotalRingOfFractionsMap A).toAlgebra
   exact chapter02_integralClosure_totalRing_components A
 
@@ -104,7 +106,7 @@ theorem chapter10_points_over_a_closed_point_correspond_to_valuation_extensions
     {K K' : Type u} [Field K] [Field K'] [Algebra K K']
     (hS : Chapter01DedekindScheme S) (hS' : Chapter01DedekindScheme S')
     (hν : IsFinite ν) (s : S) (hs : IsClosed ({s} : Set S)) :
-    Nonempty (Chapter10DVRPointCorrespondence ν s) := by
+    Nonempty (Chapter10DVRPointCorrespondence (K := K) (K' := K') ν s) := by
   sorry
 
 /-! ### Base change of a model -/
@@ -133,26 +135,26 @@ theorem chapter10_baseChange_preserves_model_morphism_properties
     chapter10_model_baseChange_preserves_properness f p hf.2.1,
     chapter10_model_baseChange_preserves_projectivity f p hf.2.2⟩
 
-def Chapter10IntegralBaseChangeFailure : Prop :=
-  Chapter10BaseChangeFailure IsIntegral
+def Chapter10IntegralBaseChangeFailure.{w} : Prop :=
+  Chapter10BaseChangeFailure (IsIntegral : ObjectProperty Scheme.{w})
 
-def Chapter10ReducedBaseChangeFailure : Prop :=
-  Chapter10BaseChangeFailure IsReduced
+def Chapter10ReducedBaseChangeFailure.{w} : Prop :=
+  Chapter10BaseChangeFailure (IsReduced : ObjectProperty Scheme.{w})
 
-def Chapter10NormalBaseChangeFailure : Prop :=
-  Chapter10BaseChangeFailure Chapter10NormalScheme
+def Chapter10NormalBaseChangeFailure.{w} : Prop :=
+  Chapter10BaseChangeFailure (Chapter10NormalScheme : ObjectProperty Scheme.{w})
 
-def Chapter10RegularBaseChangeFailure : Prop :=
-  Chapter10BaseChangeFailure Chapter10RegularScheme
+def Chapter10RegularBaseChangeFailure.{w} : Prop :=
+  Chapter10BaseChangeFailure (Chapter10RegularScheme : ObjectProperty Scheme.{w})
 
-structure Chapter10BaseChangeFailureProfile : Prop where
-  integral : Chapter10IntegralBaseChangeFailure
-  reduced : Chapter10ReducedBaseChangeFailure
-  normal : Chapter10NormalBaseChangeFailure
-  regular : Chapter10RegularBaseChangeFailure
+structure Chapter10BaseChangeFailureProfile.{w} : Prop where
+  integral : Chapter10IntegralBaseChangeFailure.{w}
+  reduced : Chapter10ReducedBaseChangeFailure.{w}
+  normal : Chapter10NormalBaseChangeFailure.{w}
+  regular : Chapter10RegularBaseChangeFailure.{w}
 
 theorem chapter10_base_change_can_lose_integrality_reducedness_normality_regularity :
-    Nonempty Chapter10BaseChangeFailureProfile := by
+    Nonempty Chapter10BaseChangeFailureProfile.{u} := by
   sorry
 
 theorem chapter10_generic_fiber_is_the_scalar_extension
@@ -164,8 +166,11 @@ theorem chapter10_generic_fiber_is_the_scalar_extension
 
 def Chapter10GenericFiberSplits {C : Scheme.{u}} {K : Type u} [Field K]
     (c : C ⟶ Spec (CommRingCat.of K)) : Prop :=
-  ∃ (K' : Type u) [Field K'] [Algebra K K'],
-    ¬ IsIntegral (chapter10FieldBaseChange c (K := K'))
+  ∃ (K' : Type u) (hK' : Field K'),
+    letI : Field K' := hK'
+    ∃ (hAlg : Algebra K K'),
+      letI : Algebra K K' := hAlg
+      ¬ IsIntegral (chapter10FieldBaseChange c (K := K'))
 
 theorem chapter10_geometricallyIntegral_generic_fiber_stays_integral
     {C : Scheme.{u}} {K K' : Type u} [Field K] [Field K'] [Algebra K K']

@@ -15,6 +15,9 @@ import Mathlib.NumberTheory.Harmonic.EulerMascheroni
 import Mathlib.NumberTheory.NumberField.Discriminant.Basic
 import Mathlib.Topology.Algebra.Support
 import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.Core
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.Section01StatementWithEveryTermVisible
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.Section03PrimeAndDiscriminantTerms
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.Section05RemovingTruncations
 
 namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter08
 
@@ -138,6 +141,21 @@ structure Chapter08ExplicitFormulaData
         (Chapter08Degree K : ℝ) * chapter08B F -
         (Chapter08RealPlaceCount K : ℝ) * chapter08C F +
         zeroContribution + primeContribution
+
+/-! ### Canonical Chapter 6 terms -/
+
+noncomputable def chapter08CanonicalZeroSpectrum
+    (K : Type*) [Field K] [NumberField K] :
+    Chapter06.Chapter06ZeroSpectrum K :=
+  (Chapter06.chapter06CanonicalZetaAnalyticPackage K).zeros
+
+noncomputable def chapter08CanonicalZeroContribution
+    (K : Type*) [Field K] [NumberField K] (F : ℝ → ℝ) : ℝ :=
+  Chapter06.chapter06ZeroContribution (chapter08CanonicalZeroSpectrum K) F
+
+noncomputable def chapter08CanonicalPrimeContribution
+    (K : Type*) [Field K] [NumberField K] (F : ℝ → ℝ) : ℝ :=
+  Chapter06.chapter06PrimeContribution K F
 
 theorem chapter08_fourier_transform_eq_cosine_of_even
     {F : ℝ → ℝ} (hF : Integrable F) (heven : Chapter08Even F) (t : ℝ) :

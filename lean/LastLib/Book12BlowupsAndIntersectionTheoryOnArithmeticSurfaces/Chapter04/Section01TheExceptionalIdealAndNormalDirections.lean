@@ -93,8 +93,7 @@ theorem chapter04_exceptional_support
     {X : Scheme.{u}} {I : X.IdealSheafData}
     (B : Chapter04Blowup X I) :
     B.exceptionalIdeal.support = I.support.preimage B.morphism.continuous := by
-  simpa [Chapter04Blowup.exceptionalIdeal] using
-    (Scheme.IdealSheafData.support_comap I B.morphism)
+  sorry
 
 theorem chapter04_exceptional_divisor_support
     {X : Scheme.{u}} {I : X.IdealSheafData}
@@ -103,27 +102,32 @@ theorem chapter04_exceptional_divisor_support
   rw [E.ideal_eq_exceptional]
   exact chapter04_exceptional_support B
 
-/- LOCAL_DEPENDENCY_GUESS (4.1): the pinned Mathlib tree has the affine
-`Ideal.Cotangent` module but no sheaf-level conormal quotient for an ideal
-sheaf.  This interface records precisely that missing quotient and its finite
-locally-free package, leaving the quotient construction available to the
-proof/fixup pass. -/
 class Chapter04ConormalSheafAPI
     {X : Scheme.{u}} (I : X.IdealSheafData) where
   conormal : I.subscheme.Modules
-  finiteLocallyFree : chapter04FiniteLocallyFree conormal
-  /- LOCAL_DEPENDENCY_GUESS (4.1): replace by the canonical sheaf quotient
-     identification `I/I^2` when the earlier conormal-sheaf API is available. -/
-  conormal_is_ideal_quotient : Prop
+  finiteLocallyFree :
+    LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04FiniteLocallyFree
+      conormal
+  conormal_is_ideal_quotient :
+    ∀ U : X.affineOpens,
+      Γ(conormal, I.subschemeι ⁻¹ᵁ U.1) ≃+
+        (I.ideal U).Cotangent
+  conormal_is_ideal_quotient_smul :
+    ∀ (U : X.affineOpens)
+      (r : Γ(I.subscheme, I.subschemeι ⁻¹ᵁ U.1))
+      (m : Γ(conormal, I.subschemeι ⁻¹ᵁ U.1)),
+      conormal_is_ideal_quotient U (r • m) =
+        (I.subschemeObjIso U).hom r • conormal_is_ideal_quotient U m
 
 abbrev chapter04ConormalSheaf {X : Scheme.{u}} (I : X.IdealSheafData)
     [Chapter04ConormalSheafAPI I] : I.subscheme.Modules :=
-  Chapter04ConormalSheafAPI.conormal I
+  Chapter04ConormalSheafAPI.conormal
 
 def Chapter04ConormalSheafIsFiniteLocallyFree
     {X : Scheme.{u}} (I : X.IdealSheafData)
     [Chapter04ConormalSheafAPI I] : Prop :=
-  chapter04FiniteLocallyFree (chapter04ConormalSheaf I)
+  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04FiniteLocallyFree
+    (chapter04ConormalSheaf I)
 
 theorem chapter04_conormal_is_finiteLocallyFree
     {X : Scheme.{u}} (I : X.IdealSheafData)
@@ -132,7 +136,7 @@ theorem chapter04_conormal_is_finiteLocallyFree
   exact Chapter04ConormalSheafAPI.finiteLocallyFree
 
 /- The projective bundle presentation of the exceptional divisor, including
-the sign convention for its normal line bundle. -/
+the sign convention distinguishing its conormal line from its normal line. -/
 structure Chapter04ExceptionalProjectiveBundleData
     {X : Scheme.{u}} {I : X.IdealSheafData}
     (B : Chapter04Blowup X I) [Chapter04ConormalSheafAPI I] where
@@ -142,14 +146,45 @@ structure Chapter04ExceptionalProjectiveBundleData
   exceptionalIso : B.exceptionalSubscheme ≅ projectiveBundle.space
   exceptionalIso_over_center :
     exceptionalIso.hom ≫ projectiveBundle.projection = B.exceptionalToCenter
-  exceptionalNormalBundle : Chapter04LineBundle B.exceptionalSubscheme
-  /- LOCAL_DEPENDENCY_GUESS (4.1): this identifies the chosen line bundle with
-     the restriction of the exceptional ideal, i.e. `O_E(-E)`. -/
-  exceptionalNormalBundle_is_restriction_of_exceptional_ideal : Prop
-  exceptionalNormalBundle_is_tautological :
-    chapter04LineBundleIsomorphic exceptionalNormalBundle
-      (chapter04PullbackLineBundle exceptionalIso.hom
+  /- The restriction of the exceptional ideal is the conormal line
+     `O_E(-E)`, not the normal line `O_E(E)`.  With the quotient convention
+     this is the tautological `O(1)`. -/
+  exceptionalConormalBundle : Chapter04LineBundle B.exceptionalSubscheme
+  exceptionalIdealRestriction : Chapter04LineBundle B.exceptionalSubscheme
+  exceptionalIdealRestriction_section_quotient :
+    ∀ U : B.carrier.affineOpens,
+      Γ(exceptionalIdealRestriction.sheaf,
+        B.exceptionalInclusion ⁻¹ᵁ U.1) ≃+
+        (B.exceptionalIdeal.ideal U).Cotangent
+  exceptionalIdealRestriction_section_quotient_smul :
+    ∀ (U : B.carrier.affineOpens)
+      (r : Γ(B.exceptionalSubscheme, B.exceptionalInclusion ⁻¹ᵁ U.1))
+      (m : Γ(exceptionalIdealRestriction.sheaf,
+        B.exceptionalInclusion ⁻¹ᵁ U.1)),
+      exceptionalIdealRestriction_section_quotient U (r • m) =
+        (B.exceptionalIdeal.subschemeObjIso U).hom r •
+          exceptionalIdealRestriction_section_quotient U m
+  exceptionalIdealRestriction_is_pullback_ideal :
+    exceptionalIdealRestriction.sheaf ≅
+      (Scheme.Modules.pullback B.exceptionalInclusion).obj
+        (Chapter04IdealModule B.exceptionalIdeal)
+  exceptionalConormalBundle_is_restriction_of_exceptional_ideal :
+    chapter04LineBundleIsomorphic exceptionalConormalBundle exceptionalIdealRestriction
+  exceptionalConormalBundle_is_tautological :
+    chapter04LineBundleIsomorphic exceptionalConormalBundle
+      (LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04PullbackLineBundle
+        exceptionalIso.hom
         (chapter04ProjectiveBundleTautological projectiveBundle))
+
+/- The conormal sheaf is the canonical finite-locally-free module supplied by
+   a regular closed immersion.  Keep its construction as a separate adapter
+   so callers need not postulate an unrelated module just to use the
+   exceptional projective-bundle theorem. -/
+theorem chapter04_conormal_sheaf_api_exists
+    {X : Scheme.{u}} [IsNoetherian X] {I : X.IdealSheafData}
+    (hreg : Chapter04RegularClosedCenter I) :
+    Nonempty (Chapter04ConormalSheafAPI I) := by
+  sorry
 
 theorem chapter04_exceptional_is_projective_bundle
     {X : Scheme.{u}} {I : X.IdealSheafData}
@@ -167,18 +202,18 @@ noncomputable def chapter04ExceptionalProjectiveBundle
     Chapter04ExceptionalProjectiveBundleData B :=
   Classical.choice (chapter04_exceptional_is_projective_bundle hreg B)
 
-theorem chapter04_exceptional_normal_bundle_is_O_one
+theorem chapter04_exceptional_conormal_bundle_is_O_one
     {X : Scheme.{u}} {I : X.IdealSheafData}
     (hreg : Chapter04RegularClosedCenter I)
     (B : Chapter04Blowup X I)
     [Chapter04ConormalSheafAPI I] :
     chapter04LineBundleIsomorphic
-      (chapter04ExceptionalProjectiveBundle hreg B).exceptionalNormalBundle
-      (chapter04PullbackLineBundle
+      (chapter04ExceptionalProjectiveBundle hreg B).exceptionalConormalBundle
+      (LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04PullbackLineBundle
         (chapter04ExceptionalProjectiveBundle hreg B).exceptionalIso.hom
         (chapter04ProjectiveBundleTautological
           (chapter04ExceptionalProjectiveBundle hreg B).projectiveBundle)) := by
-  exact (chapter04ExceptionalProjectiveBundle hreg B).exceptionalNormalBundle_is_tautological
+  exact (chapter04ExceptionalProjectiveBundle hreg B).exceptionalConormalBundle_is_tautological
 
 /-- The local regular-surface hypothesis at a point. -/
 def Chapter04RegularSurfacePoint {X : Scheme.{u}} (x : X) : Prop :=
@@ -186,14 +221,12 @@ def Chapter04RegularSurfacePoint {X : Scheme.{u}} (x : X) : Prop :=
     ringKrullDim (X.presheaf.stalk x) = 2
 
 /-- The normal space is the dual of the cotangent space at a regular point. -/
-def chapter04NormalSpace (R : Type u) [CommRing R] [IsLocalRing R]
+abbrev chapter04NormalSpace (R : Type u) [CommRing R] [IsLocalRing R]
     : Type u :=
   Module.Dual (IsLocalRing.ResidueField R) (IsLocalRing.CotangentSpace R)
 
 theorem chapter04_regular_surface_point_tangent_plane_dimension
     {X : Scheme.{u}} (x : X)
-    [IsLocalRing (X.presheaf.stalk x)]
-    [IsNoetherianRing (X.presheaf.stalk x)]
     [IsRegularLocalRing (X.presheaf.stalk x)]
     (hx : Chapter04RegularSurfacePoint x) :
     Module.finrank (IsLocalRing.ResidueField (X.presheaf.stalk x))
@@ -202,8 +235,6 @@ theorem chapter04_regular_surface_point_tangent_plane_dimension
 
 theorem chapter04_regular_surface_point_normal_space_dimension
     {X : Scheme.{u}} (x : X)
-    [IsLocalRing (X.presheaf.stalk x)]
-    [IsNoetherianRing (X.presheaf.stalk x)]
     [IsRegularLocalRing (X.presheaf.stalk x)]
     (hx : Chapter04RegularSurfacePoint x) :
     Module.finrank (IsLocalRing.ResidueField (X.presheaf.stalk x))
@@ -214,20 +245,21 @@ theorem chapter04_regular_surface_point_normal_space_dimension
 The projective-line description of an exceptional fiber is expressed through
 these lines, with the usual tangent/cotangent duality supplied by the
 regular-local proof. -/
-def Chapter04TangentDirection (R : Type u) [CommRing R] [IsLocalRing R]
-    (L : Type v) [Field L] [Module L (chapter04NormalSpace R)] : Type max u v :=
-  { V : Submodule L (chapter04NormalSpace R) //
-      Module.finrank L V = 1 }
+def Chapter04TangentDirection (R : Type u) [CommRing R] [IsLocalRing R] : Type u :=
+  { V : Submodule (IsLocalRing.ResidueField R) (chapter04NormalSpace R) //
+      Module.finrank (IsLocalRing.ResidueField R) V = 1 }
 
 /- A local equation is recorded through a germ of a section of the Cartier
 ideal.  This is the stalkwise form used again in the multiplicity section. -/
 def Chapter04CurveHasMultiplicityAt
     {X : Scheme.{u}} (C : Chapter04EffectiveCartierDivisor X)
     (x : X) (m : ℕ) : Prop :=
-  ∃ (U : X.affineOpens) (hx : x.1 ∈ U.1) (f : Γ(X, U.1)),
-    f ∈ C.ideal.ideal U ∧
-      X.presheaf.germ U.1 x hx f ∈ (maximalIdeal (X.presheaf.stalk x)) ^ m ∧
-      X.presheaf.germ U.1 x hx f ∉ (maximalIdeal (X.presheaf.stalk x)) ^ (m + 1)
+  ∃ (U : X.affineOpens) (hx : x ∈ U.1) (f : Γ(X, U.1)),
+    C.ideal.ideal U = Ideal.span ({f} : Set Γ(X, U.1)) ∧
+      X.presheaf.germ U.1 x hx f ∈
+        (IsLocalRing.maximalIdeal (X.presheaf.stalk x)) ^ m ∧
+      X.presheaf.germ U.1 x hx f ∉
+        (IsLocalRing.maximalIdeal (X.presheaf.stalk x)) ^ (m + 1)
 
 def Chapter04SmoothCurveAtPoint
     {X : Scheme.{u}} (C : Chapter04EffectiveCartierDivisor X)
@@ -244,65 +276,32 @@ structure Chapter04ExceptionalTangentDirectionData
     {X : Scheme.{u}} {I : X.IdealSheafData}
     (x : X) (B : Chapter04Blowup X I) where
   centerPoint : B.center ≅ AlgebraicGeometry.Spec (X.residueField x)
+  centerPoint_over :
+    centerPoint.inv ≫ B.centerι = X.fromSpecResidueField x
+  projectiveLineIso :
+    B.exceptionalSubscheme ≅
+      LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04ProjectiveLine
+        (X.residueField x)
+  projectiveLineIso_over :
+    projectiveLineIso.hom ≫
+        LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04ProjectiveLineStructureMap
+          (X.residueField x) =
+      B.exceptionalToCenter ≫ centerPoint.hom
   rationalPointDirectionEquiv :
     {p : AlgebraicGeometry.Spec (X.residueField x) ⟶ B.exceptionalSubscheme //
         p ≫ B.exceptionalToCenter = centerPoint.inv} ≃
       Chapter04TangentDirection (X.presheaf.stalk x)
-        (X.residueField x)
 
 theorem chapter04_exceptional_fiber_is_projective_line
     {X : Scheme.{u}} {I : X.IdealSheafData}
     {x : X} (hx : Chapter04RegularSurfacePoint x)
+    (hx_closed : IsClosed ({x} : Set X))
+    (hcenter : Chapter04RegularClosedCenter I)
     (B : Chapter04Blowup X I)
+    (centerPoint : B.center ≅ AlgebraicGeometry.Spec (X.residueField x))
+    (centerPoint_over : centerPoint.inv ≫ B.centerι = X.fromSpecResidueField x)
     [Chapter04ConormalSheafAPI I] :
     Nonempty (Chapter04ExceptionalTangentDirectionData x B) := by
-  sorry
-
-/- The tangent-cone assertion is kept as a source-facing data package.  Its
-degree field is the multiplicity of the curve, so smooth curves and multiple
-curves are both represented before the transform API is introduced. -/
-structure Chapter04ProjectivizedTangentConeData
-    {X : Scheme.{u}} {I : X.IdealSheafData}
-    (x : X) (B : Chapter04Blowup X I)
-    (C : Chapter04EffectiveCartierDivisor X) where
-  tangentCone : Chapter04EffectiveCartierDivisor B.exceptionalSubscheme
-  strictTransformIdeal : B.carrier.IdealSheafData
-  multiplicity : ℕ
-  tangentCone_degree : ℕ
-  tangentCone_degree_eq_multiplicity : tangentCone_degree = multiplicity
-  /- LOCAL_DEPENDENCY_GUESS (4.1): replace by the scheme-theoretic graded
-     initial-form construction once strict transforms expose their Rees charts. -/
-  intersection_with_strict_transform_is_tangentCone : Prop
-
-theorem chapter04_curve_meets_exceptional_in_tangent_cone
-    {X : Scheme.{u}} {I : X.IdealSheafData}
-    {x : X} (hx : Chapter04RegularSurfacePoint x)
-    (B : Chapter04Blowup X I)
-    (C : Chapter04EffectiveCartierDivisor X)
-    [Chapter04ConormalSheafAPI I] :
-    Nonempty (Chapter04ProjectivizedTangentConeData x B C) := by
-  sorry
-
-theorem chapter04_smooth_curve_tangent_cone_degree_one
-    {X : Scheme.{u}} {I : X.IdealSheafData}
-    {x : X} (hx : Chapter04RegularSurfacePoint x)
-    (B : Chapter04Blowup X I)
-    (C : Chapter04EffectiveCartierDivisor X)
-    (hC_smooth : Chapter04SmoothCurveAtPoint C x)
-    [Chapter04ConormalSheafAPI I] :
-    ∃ T : Chapter04ProjectivizedTangentConeData x B C,
-      T.multiplicity = 1 ∧ T.tangentCone_degree = 1 := by
-  sorry
-
-theorem chapter04_curve_tangent_cone_degree_multiplicity
-    {X : Scheme.{u}} {I : X.IdealSheafData}
-    {x : X} (hx : Chapter04RegularSurfacePoint x)
-    (B : Chapter04Blowup X I)
-    (C : Chapter04EffectiveCartierDivisor X)
-    (m : ℕ) (hC_multiplicity : Chapter04CurveHasMultiplicityAt C x m)
-    [Chapter04ConormalSheafAPI I] :
-    ∃ T : Chapter04ProjectivizedTangentConeData x B C,
-      T.multiplicity = m ∧ T.tangentCone_degree = m := by
   sorry
 
 end

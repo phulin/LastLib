@@ -5,6 +5,8 @@ namespace LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter0
 noncomputable section
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits TopologicalSpace
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
 open scoped AlgebraicGeometry
 
 universe u v
@@ -12,22 +14,37 @@ universe u v
 /-! ### 6.2 Projective closure -/
 
 theorem chapter06_schematicClosure_factorization
-    (D : Chapter06ClosureDatum C) :
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    {E : Chapter06ProjectiveEmbedding C}
+    (D : Chapter06ClosureDatum C E) :
     chapter06SchematicClosureToAmbient D ≫
         chapter06SchematicClosureEmbedding D =
       chapter06GenericEmbeddingIntoBaseAmbient D := by
   exact (chapter06GenericEmbeddingIntoBaseAmbient D).toImage_imageι
 
 theorem chapter06_schematicClosure_is_smallest_closed_subscheme
-    (D : Chapter06ClosureDatum C)
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    {E : Chapter06ProjectiveEmbedding C}
+    (D : Chapter06ClosureDatum C E)
     {Z : Scheme.{u}}
-    (i : Z ⟶ chapter02ProjectiveSpace (Spec (.of R)) D.dimension)
+    (i : Z ⟶ chapter02ProjectiveSpace (Spec (.of R)) E.dimension)
     [IsClosedImmersion i]
     (hcontains : chapter06ClosedSubschemeContains
       (chapter06GenericEmbeddingIntoBaseAmbient D) i) :
     ∃ h : chapter06SchematicClosure D ⟶ Z,
       h ≫ i = chapter06SchematicClosureEmbedding D := by
-  sorry
+  rcases hcontains with ⟨g, hg⟩
+  have hker :
+      i.ker ≤ (chapter06GenericEmbeddingIntoBaseAmbient D).ker := by
+    rw [← hg]
+    exact g.le_ker_comp i
+  have hker' :
+      i.ker ≤ (chapter06SchematicClosureEmbedding D).ker := by
+    simpa [chapter06SchematicClosureEmbedding, chapter06SchematicClosure] using hker
+  refine ⟨IsClosedImmersion.lift i (chapter06SchematicClosureEmbedding D) hker', ?_⟩
+  exact IsClosedImmersion.lift_fac i (chapter06SchematicClosureEmbedding D) hker'
 
 theorem chapter06_affine_closure_coordinate_subring
     (R A : Type u) [CommRing R] [IsDedekindDomain R]
@@ -35,7 +52,7 @@ theorem chapter06_affine_closure_coordinate_subring
     Nonempty
       (chapter06SaturatedAffineRing R A ≃+*
       (chapter06GenericFiberRingMap R A).range) := by
-  sorry
+  exact ⟨RingHom.quotientKerEquivRange (chapter06GenericFiberRingMap R A)⟩
 
 theorem chapter06_affine_closure_coordinate_injective
     (R A : Type u) [CommRing R] [IsDedekindDomain R]
@@ -44,39 +61,58 @@ theorem chapter06_affine_closure_coordinate_injective
   exact RingHom.kerLift_injective _
 
 noncomputable def chapter06SchematicClosureModel
-    (D : Chapter06ClosureDatum C) : Chapter06Model R C :=
-  { carrier := chapter06SchematicClosure D
-    structureMap := chapter06SchematicClosureStructureMap D
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    {E : Chapter06ProjectiveEmbedding C}
+    (D : Chapter06ClosureDatum C E) : Chapter06ProjectiveModel R C :=
+  { toChapter06ProperModel :=
+      { toChapter06Model :=
+          { carrier := chapter06SchematicClosure D
+            structureMap := chapter06SchematicClosureStructureMap D
+            locallyOfFiniteType := by
+              sorry
+            quasiCompact := by
+              sorry
+            flat := by
+              sorry
+            integral := by
+              sorry
+            genericFiber := by
+              sorry }
+        proper := by
+          sorry }
     projective := by
-      sorry
-    proper := by
-      sorry
-    locallyOfFiniteType := by
-      sorry
-    flat := by
-      sorry
-    integral := by
-      sorry
-    genericFiber := by
       sorry }
 
 theorem chapter06_schematicClosure_model_carrier
-    (D : Chapter06ClosureDatum C) :
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    {E : Chapter06ProjectiveEmbedding C}
+    (D : Chapter06ClosureDatum C E) :
     (chapter06SchematicClosureModel D).carrier = chapter06SchematicClosure D :=
   rfl
 
 theorem chapter06_schematicClosure_model_is_integral
-    (D : Chapter06ClosureDatum C) :
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    {E : Chapter06ProjectiveEmbedding C}
+    (D : Chapter06ClosureDatum C E) :
     IsIntegral (chapter06SchematicClosureModel D).carrier :=
   (chapter06SchematicClosureModel D).integral
 
 theorem chapter06_schematicClosure_model_is_flat
-    (D : Chapter06ClosureDatum C) :
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    {E : Chapter06ProjectiveEmbedding C}
+    (D : Chapter06ClosureDatum C E) :
     Flat (chapter06SchematicClosureModel D).structureMap :=
   (chapter06SchematicClosureModel D).flat
 
 theorem chapter06_schematicClosure_model_is_projective
-    (D : Chapter06ClosureDatum C) :
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    {E : Chapter06ProjectiveEmbedding C}
+    (D : Chapter06ClosureDatum C E) :
     chapter04Projective (chapter06SchematicClosureModel D).structureMap :=
   (chapter06SchematicClosureModel D).projective
 
@@ -84,7 +120,10 @@ theorem chapter06_schematicClosure_model_is_projective
 scheme-theoretic properties. -/
 
 theorem chapter06_proposition_6_1
-    (D : Chapter06ClosureDatum C) :
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    {E : Chapter06ProjectiveEmbedding C}
+    (D : Chapter06ClosureDatum C E) :
     IsIntegral (chapter06SchematicClosure D) ∧
       Flat (chapter06SchematicClosureStructureMap D) ∧
       chapter04Projective (chapter06SchematicClosureStructureMap D) ∧
@@ -96,11 +135,25 @@ theorem chapter06_proposition_6_1
   exact ⟨X₀.genericFiber⟩
 
 theorem chapter06_schematicClosure_topological_support
-    (D : Chapter06ClosureDatum C) :
-    ((chapter06SchematicClosureEmbedding D).range : Set
-        (chapter02ProjectiveSpace (Spec (.of R)) D.dimension)) =
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    {E : Chapter06ProjectiveEmbedding C}
+    (D : Chapter06ClosureDatum C E) :
+    Set.range (chapter06SchematicClosureEmbedding D) =
       closure (Set.range (chapter06GenericEmbeddingIntoBaseAmbient D)) := by
-  sorry
+  let : IsClosedImmersion E.map := E.closedImmersion
+  let : QuasiCompact (chapter06GenericBaseMap R) := by infer_instance
+  let : QuasiCompact (chapter06GenericEmbeddingIntoBaseAmbient D) := by
+    change QuasiCompact
+      (E.map ≫ D.genericAmbientIso.inv ≫
+        pullback.fst
+          (chapter02ProjectiveSpaceProjection (Spec (.of R)) E.dimension)
+          (chapter06GenericBaseMap R))
+    infer_instance
+  change Set.range (chapter06GenericEmbeddingIntoBaseAmbient D).imageι =
+    closure (Set.range (chapter06GenericEmbeddingIntoBaseAmbient D))
+  rw [AlgebraicGeometry.Scheme.IdealSheafData.range_subschemeι,
+    Scheme.Hom.support_ker]
 
 end
 

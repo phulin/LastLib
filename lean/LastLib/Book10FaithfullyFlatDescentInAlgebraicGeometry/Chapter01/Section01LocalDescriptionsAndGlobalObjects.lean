@@ -8,9 +8,9 @@ throughout descent: full faithfulness and effectivity.
 -/
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
-open scoped AlgebraicGeometry
+open scoped AlgebraicGeometry TensorProduct
 
-universe u
+universe u v
 
 namespace LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter01
 
@@ -63,7 +63,7 @@ theorem chapter01SpecDoubleOverlapIso_inv_fst
         pullback.fst (chapter01SpecMap (algebraMap A B))
           (chapter01SpecMap (algebraMap A B)) =
       chapter01SpecMap (chapter01DoubleOverlapLeft A B).toRingHom := by
-  sorry
+  exact pullbackSpecIso_inv_fst A B B
 
 /-- Under the double-overlap isomorphism, the second projection is the second scalar view. -/
 theorem chapter01SpecDoubleOverlapIso_inv_snd
@@ -72,20 +72,22 @@ theorem chapter01SpecDoubleOverlapIso_inv_snd
         pullback.snd (chapter01SpecMap (algebraMap A B))
           (chapter01SpecMap (algebraMap A B)) =
       chapter01SpecMap (chapter01DoubleOverlapRight A B).toRingHom := by
-  sorry
+  exact pullbackSpecIso_inv_snd A B B
 
 /-- A field spectrum has no nontrivial nonempty open pieces. -/
 theorem chapter01_field_spec_open_is_empty_or_univ
     (K : Type u) [Field K] (U : (Spec (.of K)).Opens) :
     U = ⊥ ∨ U = ⊤ := by
-  sorry
+  exact IsSimpleOrder.eq_bot_or_eq_top U
 
 /-- An abstract cocycle records the three compatible identifications on a triple overlap. -/
-structure Chapter01Cocycle (C : Type u) [Category C] where
-  first second third : C
-  firstToSecond : first ≅ second
-  secondToThird : second ≅ third
-  firstToThird : first ≅ third
+structure Chapter01Cocycle (C : Type u) [Category.{v} C] where
+  first : C
+  second : C
+  third : C
+  firstToSecond : CategoryTheory.Iso first second
+  secondToThird : CategoryTheory.Iso second third
+  firstToThird : CategoryTheory.Iso first third
   cocycle : firstToSecond ≪≫ secondToThird = firstToThird
 
 /-- The full-faithfulness part of a descent comparison functor. -/
@@ -103,7 +105,9 @@ structure Chapter01EffectivityWitness {C D : Type u} [Category C] [Category D]
     (F : C ⥤ D) (Compatible : D → Prop)
     (Z : Chapter01CompatibleObject F Compatible) where
   downstairs : C
+  downstairs_compatible : Compatible (F.obj downstairs)
   comparison : F.obj downstairs ≅ Z.carrier
+  comparison_compatible : Compatible (F.obj downstairs) ↔ Compatible Z.carrier
 
 /-- Effectivity for a specified class of compatible upstairs objects. -/
 def Chapter01EffectiveFor {C D : Type u} [Category C] [Category D]

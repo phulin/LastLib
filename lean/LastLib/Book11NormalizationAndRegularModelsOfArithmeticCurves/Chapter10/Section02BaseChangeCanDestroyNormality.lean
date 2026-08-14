@@ -21,7 +21,7 @@ def chapter10PurelyInseparablePolynomial (k : Type u) [CommRing k]
     (p : ℕ) (a : k) : Polynomial k :=
   Polynomial.X ^ p - Polynomial.C a
 
-def chapter10PurelyInseparableQuotient (k : Type u) [CommRing k]
+abbrev chapter10PurelyInseparableQuotient (k : Type u) [CommRing k]
     (p : ℕ) (a : k) : Type u :=
   Polynomial k ⧸ Ideal.span ({chapter10PurelyInseparablePolynomial k p a} : Set (Polynomial k))
 
@@ -29,11 +29,11 @@ def chapter10RepeatedRootPolynomial (k' : Type u) [CommRing k']
     (p : ℕ) (α : k') : Polynomial k' :=
   (Polynomial.X - Polynomial.C α) ^ p
 
-def chapter10RepeatedRootQuotient (k' : Type u) [CommRing k']
+abbrev chapter10RepeatedRootQuotient (k' : Type u) [CommRing k']
     (p : ℕ) (α : k') : Type u :=
   Polynomial k' ⧸ Ideal.span ({chapter10RepeatedRootPolynomial k' p α} : Set (Polynomial k'))
 
-def chapter10PurelyInseparableBaseChangeAlgebra
+abbrev chapter10PurelyInseparableBaseChangeAlgebra
     (k k' : Type u) [Field k] [Field k'] [Algebra k k']
     (p : ℕ) (a : k) : Type u :=
   k' ⊗[k] chapter10PurelyInseparableQuotient k p a
@@ -68,7 +68,7 @@ theorem chapter10_purely_inseparable_quotient_is_normal_zero_dimensional
 theorem chapter10_purely_inseparable_quotient_is_field
     (k : Type u) [Field k] (p : ℕ) [CharP k p] (hp : Nat.Prime p)
     (a : k) (ha : a ∉ chapter10PthPowers k p) :
-    Field (chapter10PurelyInseparableQuotient k p a) := by
+    IsField (chapter10PurelyInseparableQuotient k p a) := by
   sorry
 
 theorem chapter10_purely_inseparable_quotient_is_integrally_closed
@@ -150,7 +150,7 @@ theorem chapter10_normalization_commutes_with_smooth_base_change
     {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
     [QuasiCompact f] [QuasiSeparated f] (hg : Smooth g) :
     IsIso (chapter02NormalizationPullbackComparison f g) := by
-  letI : Smooth g := hg
+  let _ : Smooth g := hg
   exact chapter02_normalization_pullback_isIso f g
 
 theorem chapter10_normalization_commutes_with_etale_base_change

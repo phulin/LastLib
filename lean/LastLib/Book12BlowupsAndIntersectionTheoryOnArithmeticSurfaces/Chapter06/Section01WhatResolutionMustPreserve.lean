@@ -33,8 +33,8 @@ theorem chapter06_resolution_is_supported_on_singular_locus
 theorem chapter06_resolution_target_is_regular
     {X : Scheme.{u}} (hX : Chapter06NormalExcellentSurface X)
     (r : Chapter06SurfaceResolution hX) :
-    ∀ y, r.targetRegularAt y := by
-  exact r.targetEverywhereRegular
+    ∀ y, r.targetRegular.regularAt y := by
+  exact r.targetRegular.everywhereRegular
 
 /-! A vertical modification has no generic-fiber contribution.  The explicit
 generic-fiber isomorphism is the missing restriction/base-change bridge in the
@@ -43,9 +43,9 @@ rather than smuggled in through a stronger surface record. -/
 
 theorem chapter06_vertical_modification_preserves_generic_curve
     {S : Scheme.{u}} {X Y : Chapter06RelativeSurfaceModel S}
-    (b : Chapter06VerticalModification X Y) :
+    (_b : Chapter06VerticalModification X Y) :
     Chapter06SameGenericCurve X Y := by
-  exact b.genericFiberPreserved
+  exact _b.genericFiberPreserved
 
 def chapter06CenterAvoidsOpen {X : Scheme.{u}}
     (center U : Set X) : Prop :=
@@ -58,16 +58,17 @@ theorem chapter06_centerAvoidsOpen_iff_disjoint {X : Scheme.{u}}
   · intro h
     apply Set.eq_empty_iff_forall_notMem.mpr
     intro x hx
-    exact hx.2 (h x hx.1)
+    exact (h x hx.1) hx.2
   · intro h x hxCenter hxOpen
     have : x ∈ center ∩ U := ⟨hxCenter, hxOpen⟩
     rw [h] at this
-    simpa using this
+    simp at this
 
 def Chapter06RegularNormalCrossingOpen {X : Scheme.{u}}
     (hX : Chapter06NormalExcellentSurface X)
     (U : Set X) (B : Chapter06NormalCrossingBoundary X) : Prop :=
   (∀ x, x ∈ U → hX.regularAt x) ∧
+    B.support ⊆ U ∧
     B.smoothBranches ∧ B.atMostTwoBranches ∧ B.transverseBranches
 
 structure Chapter06BoundaryResolution {X : Scheme.{u}}
@@ -105,24 +106,25 @@ structure Chapter06EmbeddedBoundaryStep {X Y : Scheme.{u}} where
   map : Y ⟶ X
   sourceRegular : Chapter06RegularSurface X
   targetRegular : Chapter06RegularSurface Y
-  centerIsClosedPoint : Prop
-  centerIsClosedPointEvidence : centerIsClosedPoint
-  centerOnBoundary : Prop
-  centerOnBoundaryEvidence : centerOnBoundary
   boundaryBefore : Chapter06NormalCrossingBoundary X
   boundaryAfter : Chapter06NormalCrossingBoundary Y
+  center : X
+  centerIsClosedPoint : IsClosed ({center} : Set X)
+  centerIsRegular : sourceRegular.regularAt center
+  centerOnBoundary : center ∈ boundaryBefore.support
   projective : Prop
   projectiveEvidence : projective
   birational : Prop
   birationalEvidence : birational
 
 def Chapter06EmbeddedBoundaryResolution {X : Scheme.{u}} : Prop :=
-  ∃ (Y : Scheme.{u}) (b : Y ⟶ X),
+  ∃ (Y : Scheme.{u}),
     Nonempty (Chapter06EmbeddedBoundaryStep (X := X) (Y := Y))
 
 theorem chapter06_regular_surface_may_need_embedded_boundary_steps :
     ∃ (S X : Scheme.{u}) (f : X ⟶ S),
-      Chapter06ArithmeticSurface f ∧ Chapter06EmbeddedBoundaryResolution X := by
+      Nonempty (Chapter06ArithmeticSurface f) ∧
+        Chapter06EmbeddedBoundaryResolution (X := X) := by
   sorry
 
 /-! The multiplicity/branch/tangent ledger is intentionally independent of a
@@ -131,17 +133,22 @@ picture of the special fiber. -/
 structure Chapter06LocalResolutionStep where
   invariants : Chapter06LocalStepInvariants
   centerFiberData : Chapter06CenterFiberData
-  requiresFurtherBlowup : Chapter06LocalStepNeedsNewCenter invariants
   multiplicityTransportedByTotalTransform : Prop
   multiplicityTransportedEvidence : multiplicityTransportedByTotalTransform
+
+/-! A terminal step is allowed: only a step whose ledger detects a remaining
+boundary defect is required to carry the nonterminal marker. -/
+structure Chapter06NonterminalLocalResolutionStep where
+  step : Chapter06LocalResolutionStep
+  requiresFurtherBlowup : Chapter06LocalStepNeedsNewCenter step.invariants
 
 def chapter06LocalResolutionStepMultiplicity
     (s : Chapter06LocalResolutionStep) : ℕ :=
   chapter06ExceptionalFiberMultiplicity s.centerFiberData
 
-theorem chapter06_local_step_requires_further_blowup_of_guiding_invariants
-    (s : Chapter06LocalResolutionStep) :
-    s.requiresFurtherBlowup := by
+theorem chapter06_nonterminal_local_step_requires_further_blowup
+    (s : Chapter06NonterminalLocalResolutionStep) :
+    Chapter06LocalStepNeedsNewCenter s.step.invariants := by
   exact s.requiresFurtherBlowup
 
 theorem chapter06_local_step_exceptional_multiplicity_is_transport_sum

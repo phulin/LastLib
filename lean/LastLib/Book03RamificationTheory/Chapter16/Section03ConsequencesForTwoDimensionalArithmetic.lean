@@ -172,11 +172,13 @@ theorem chapter16_permutation_conductor_recovers_discriminant
     [FiniteDimensional k (MonoidAlgebra k (p.primesOver B))]
     (P : Ideal B) [P.IsPrime] [P.LiesOver p]
     (F : Chapter16LowerRamificationFiltration G)
+    (C : Chapter15PrimeBranchPermutationData
+      (k := k) (X := p.primesOver B) p P F)
     (hbranches : (p.primesOver B).ncard = 1) :
     chapter16ArtinConductor F
         (chapter16PermutationRepresentation k G (p.primesOver B)) =
       (chapter16DiscriminantExponent A B p : ℚ) := by
-  exact chapter15_permutation_conductor_recovers_discriminant p P F hbranches
+  exact chapter15_permutation_conductor_recovers_discriminant p P F C hbranches
 
 /-- A field discriminant is ideal-valued. -/
 abbrev Chapter16FieldDiscriminant (A : Type*) [Semiring A] := Ideal A

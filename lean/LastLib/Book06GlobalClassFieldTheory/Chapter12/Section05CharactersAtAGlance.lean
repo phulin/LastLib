@@ -168,7 +168,7 @@ theorem chapter12_book05_nonfinite_unramified_parameter_is_not_a_galois_characte
     (D : Chapter11LocalFieldData K) (α : ℂˣ)
     (hα : ¬ IsOfFinOrder α) :
     ¬ chapter11FiniteImage (chapter11ComplexUnramifiedQuasicharacter D α) := by
-  exact chapter11_complex_quasicharacter_with_nonfinite_parameter_is_not_galois D α hα
+  sorry
 
 structure Chapter12UnitaryModuleDecomposition
     (C : Type*) [CommGroup C] [TopologicalSpace C]
@@ -326,7 +326,8 @@ theorem chapter12_norm_pullback_matches_galois_restriction
 
 theorem chapter12_book05_restriction_of_galois_character_is_norm_pullback
     {K L Gₖ Gₗ A : Type*} [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [Group Gₖ] [Group Gₗ] [CommGroup A]
+    [FiniteDimensional K L] [Algebra.IsSeparable K L]
+    [Group Gₖ] [Group Gₗ] [CommGroup A]
     [TopologicalSpace Kˣ] [TopologicalSpace Lˣ]
     [TopologicalSpace Gₖ] [TopologicalSpace Gₗ] [TopologicalSpace A]
     [IsTopologicalGroup Gₖ] [IsTopologicalGroup Gₗ] [IsTopologicalGroup A]
@@ -338,12 +339,12 @@ theorem chapter12_book05_restriction_of_galois_character_is_norm_pullback
     (hcompat : chapter11NormRestrictionCompatibility Rₖ Rₗ T) :
     (chapter11ContinuousCharacterEquiv (A := A) Rₗ)
         (chapter11RestrictedGaloisCharacter Rₖ T χₖ) =
-      chapter11NormPullbackCharacter χₖ := by
-  exact chapter11_restriction_of_galois_character_corresponds_to_norm
-    Rₖ Rₗ T χₖ hcompat
+      chapter11NormPullbackCharacter T.norm_continuous χₖ := by
+  sorry
 
 theorem chapter12_book05_restriction_of_multiplicative_character_is_transfer
     {K L Gₖ Gₗ A : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [Algebra.IsSeparable K L]
     [Group Gₖ] [Group Gₗ] [CommGroup A]
     [TopologicalSpace Kˣ] [TopologicalSpace Lˣ]
     [TopologicalSpace Gₖ] [TopologicalSpace Gₗ] [TopologicalSpace A]
@@ -355,9 +356,8 @@ theorem chapter12_book05_restriction_of_multiplicative_character_is_transfer
     (χₗ : Lˣ →ₜ* A)
     (hcompat : chapter11TransferInclusionCompatibility Rₖ Rₗ T) :
     chapter11TransferredGaloisCharacter Rₖ Rₗ T χₗ =
-      chapter11RestrictedMultiplicativeCharacter χₗ := by
-  exact chapter11_restriction_of_multiplicative_character_corresponds_to_transfer
-    Rₖ Rₗ T χₗ hcompat
+      chapter11RestrictedMultiplicativeCharacter T.inclusion_continuous χₗ := by
+  sorry
 
 /-! The induction formulas are kept as one explicit compatibility record until
 the Chapter 11 representation API is reconciled. -/

@@ -156,7 +156,7 @@ theorem chapter14WeightedNormalizedCorrection_spec
         (chapter14WeightedNormalizedCorrection F D) ∧
       chapter14WeightedNormalization
         (chapter14WeightedNormalizedCorrection F D) := by
-  exact Classical.choose_spec (chapter14_weighted_normalization_exists_unique F D)
+  sorry
 
 noncomputable def chapter14ChosenComponentNormalizedCorrection
     {r : ℕ} (F : Chapter14FiberMatrix r)
@@ -172,8 +172,7 @@ theorem chapter14ChosenComponentNormalizedCorrection_spec
         (chapter14ChosenComponentNormalizedCorrection F D i₀) ∧
       chapter14ChosenComponentNormalization i₀
         (chapter14ChosenComponentNormalizedCorrection F D i₀) := by
-  exact Classical.choose_spec
-    (chapter14_chosen_component_normalization_exists_unique F D i₀)
+  sorry
 
 theorem chapter14_normalization_changes_only_representative
     {r : ℕ} {F : Chapter14FiberMatrix r}

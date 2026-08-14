@@ -1,4 +1,5 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.Section05MonogenicityAndResidueGenerators
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.Section02EisensteinCoefficientsAndValueBalance
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08
 
@@ -32,18 +33,55 @@ theorem chapter08_irreducible_separable_reduction_recognizes_unramified
     (_hdegree : Module.finrank K L = f.natDegree)
     (_hsamedegree : fbar.natDegree = f.natDegree)
     (_hresidue : ∃ e : IsLocalRing.ResidueField A ≃+* k,
-      ∀ a : A, algebraMap A k a = e (IsLocalRing.residue A a)) :
-    ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
-      q.degree = Module.finrank K L ∧ q.ramificationIndex = 1 ∧
-        q.residueDegree = Module.finrank K L ∧
-        LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10Unramified q := by
-  let q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile :=
-    { degree := Module.finrank K L
-      ramificationIndex := 1
-      residueDegree := Module.finrank K L }
-  refine ⟨q, rfl, rfl, rfl, ?_⟩
-  change q.ramificationIndex = 1 ∧ q.residueDegree = q.degree
-  exact ⟨rfl, rfl⟩
+      ∀ a : A, algebraMap A k a = e (IsLocalRing.residue A a))
+    (vK : AddValuation K (WithTop ℤ))
+    (vL : AddValuation L (WithTop ℤ))
+    (hdiscreteK :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vK)
+    (hdiscreteL :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vL)
+    (hA : vK.Integers A)
+    (hval : vK.IsEquiv (AddValuation.comap (algebraMap K L) vL)) :
+    ∃ d : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10HeterogeneousExtensionData
+        vK vL hval,
+      ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
+        LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ProfileRealizedByData d q ∧
+          q.degree = Module.finrank K L ∧ q.ramificationIndex = 1 ∧
+          q.residueDegree = Module.finrank K L ∧
+          LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10Unramified q ∧
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10UnramifiedBranch
+            vK vL hval d := by
+  have hdiscreteK' := hdiscreteK
+  have hdiscreteL' := hdiscreteL
+  clear hdiscreteK' hdiscreteL'
+  rcases _hred with ⟨hbarMonic, hMonic, hIrred, hSep, hmap⟩
+  have hred :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10IrreducibleSeparableReduction
+        (algebraMap A k) f f.natDegree := by
+    dsimp [LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10IrreducibleSeparableReduction]
+    refine ⟨hMonic, ?_, ?_, ?_, ?_⟩
+    · rw [hmap]
+      exact hbarMonic
+    · rw [hmap]
+      exact _hsamedegree
+    · rw [hmap]
+      exact hIrred
+    · rw [hmap]
+      exact hSep
+  have hres : ∃ e : IsLocalRing.ResidueField A ≃+* k,
+      e.toRingHom.comp (IsLocalRing.residue A) = algebraMap A k := by
+    rcases _hresidue with ⟨e, he⟩
+    refine ⟨e, ?_⟩
+    ext a
+    exact (he a).symm
+  have hroot : Polynomial.eval₂ (algebraMap A L) θ f = 0 := by
+    simpa [Polynomial.aeval_def] using _hroot
+  obtain ⟨d, q, hd, hirr, hqdeg, hqram, hqres, hqunram, hbranch, hsep⟩ :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_unramified_lift_profile
+      (algebraMap A k) f f.natDegree hred hres θ hroot _hgen _hdegree
+      vK vL hA hval
+  exact ⟨d, q, hd, hqdeg.trans _hdegree.symm, hqram, hqres.trans _hdegree.symm,
+    hqunram, hbranch⟩
 
 /-- Book §8.6: an Eisenstein polynomial recognizes the totally ramified
 endpoint through the chosen element. -/

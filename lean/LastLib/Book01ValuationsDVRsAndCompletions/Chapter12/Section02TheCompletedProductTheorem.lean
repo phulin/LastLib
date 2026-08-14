@@ -50,6 +50,7 @@ are the completions of the localizations at the primes `P i`.
 -/
 theorem completed_product_decomposition
     {A B : Type*} [CommRing A] [CommRing B] [IsDomain A] [IsDomain B]
+    [IsIntegrallyClosed B]
     [IsDiscreteValuationRing A] [Algebra A B] [Algebra.IsIntegral A B]
     {g : ℕ} (m : Ideal A) (π : A) (P : Fin g → Ideal B) (e : Fin g → ℕ)
     [m.IsMaximal] [hprime : ∀ i, (P i).IsPrime]
@@ -217,7 +218,9 @@ theorem completed_branch_factors_are_complete_DVR_and_finite_free
     (hP_distinct : Function.Injective P)
     [Algebra (AdicCompletion m A) (B ⊗[A] AdicCompletion m A)]
     [∀ i, Algebra (AdicCompletion m A) (branchCompletion B (P i))]
-    [hbranchLocal : ∀ i, IsLocalRing (branchCompletion B (P i))] :
+    [hbranchLocal : ∀ i, IsLocalRing (branchCompletion B (P i))]
+    [∀ i, IsScalarTower A B (branchCompletion B (P i))]
+    [∀ i, IsScalarTower A (AdicCompletion m A) (branchCompletion B (P i))] :
     ∀ i, isCompleteDVR (branchCompletion B (P i)) ∧
     Module.Finite (AdicCompletion m A) (branchCompletion B (P i)) ∧
     Module.Free (AdicCompletion m A) (branchCompletion B (P i)) ∧

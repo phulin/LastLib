@@ -4,7 +4,10 @@ namespace LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter05
 
 universe u v
 
+variable {k : Type u} [Field k]
+
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits Set
+open LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter04
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter08
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09
@@ -30,6 +33,7 @@ the degree calculation. -/
 structure Chapter05RationalFunctionFiberLengthData
     (C : Chapter05ProperRegularIntegralCurve k)
     [Chapter05FunctionFieldBaseAlgebra C]
+    [Chapter05FunctionFieldToProjectiveLineAPI C]
     (g : C.carrier.functionField)
     (W : Chapter05RationalFunctionMapData C g)
     (P : Chapter05PrincipalDivisorData g) where
@@ -62,6 +66,7 @@ structure Chapter05RationalFunctionFiberLengthData
 theorem chapter05_finite_rational_function_map_is_flat
     (C : Chapter05ProperRegularIntegralCurve k)
     [Chapter05FunctionFieldBaseAlgebra C]
+    [Chapter05FunctionFieldToProjectiveLineAPI C]
     (g : C.carrier.functionField)
     (W : Chapter05RationalFunctionMapData C g) :
     Flat W.map := by
@@ -77,6 +82,7 @@ theorem chapter05_torsion_free_module_over_dvr_is_flat
 theorem chapter05_zero_and_pole_fiber_lengths_agree
     (C : Chapter05ProperRegularIntegralCurve k)
     [Chapter05FunctionFieldBaseAlgebra C]
+    [Chapter05FunctionFieldToProjectiveLineAPI C]
     (g : C.carrier.functionField)
     (W : Chapter05RationalFunctionMapData C g)
     (P : Chapter05PrincipalDivisorData g)
@@ -88,6 +94,7 @@ theorem chapter05_zero_and_pole_fiber_lengths_agree
 theorem chapter05_principal_degree_from_zero_and_pole_fibers
     (C : Chapter05ProperRegularIntegralCurve k)
     [Chapter05FunctionFieldBaseAlgebra C]
+    [Chapter05FunctionFieldToProjectiveLineAPI C]
     (g : C.carrier.functionField)
     (W : Chapter05RationalFunctionMapData C g)
     (P : Chapter05PrincipalDivisorData g)
@@ -133,6 +140,10 @@ def chapter05LineBundleEquivalenceSetoid (X : Scheme) :
       { refl := chapter05_lineBundleEquivalent_refl
         symm := chapter05_lineBundleEquivalent_symm
         trans := chapter05_lineBundleEquivalent_trans } }
+
+instance chapter05LineBundleEquivalenceSetoid_inst (X : Scheme) :
+    Setoid (Chapter05LineBundle X) :=
+  chapter05LineBundleEquivalenceSetoid X
 
 abbrev Chapter05LineBundlePicard (X : Scheme) :=
   Quotient (chapter05LineBundleEquivalenceSetoid X)
@@ -180,7 +191,7 @@ noncomputable def chapter05DegreeOnPicard
 theorem chapter05_degreeOnPicard_mk
     (C : Chapter05ProperRegularIntegralCurve k)
     (D : Chapter05Divisor C.carrier) :
-    chapter05DegreeOnPicard C (Quotient.mk' D) =
+    chapter05DegreeOnPicard C (Quotient.mk (chapter05LinearEquivalenceSetoid C.carrier) D) =
       chapter05Degree C.structureMap D := by
   rfl
 
@@ -189,6 +200,10 @@ the regular integral divisor presentation identifies it with (5.1). -/
 
 theorem chapter05_regular_divisor_degree_eq_euler_degree
     (C : Chapter05ProperRegularIntegralCurve k)
+    [Chapter04TotalQuotientRingAPI C.carrier]
+    [Chapter04RationalFunctionLocalValueAPI C.carrier]
+    [Chapter04CartierOrderAPI C.carrier]
+    [Chapter05CartierDivisorLineBundleCompatibility C.carrier]
     [Chapter05EulerCharacteristicTheory C.carrier]
     (L : Chapter05LineBundle C.carrier)
     (P : Chapter05DivisorPresentation L) :

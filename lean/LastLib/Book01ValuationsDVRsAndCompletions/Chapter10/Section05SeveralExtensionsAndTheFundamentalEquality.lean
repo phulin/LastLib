@@ -10,7 +10,7 @@ import Mathlib.RingTheory.TensorProduct.Finite
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
 
-universe u10K u10L u10Γ
+universe u10K u10L u10Γ u10Kh u10ΓL
 
 open scoped BigOperators TensorProduct WithZero
 open Polynomial
@@ -157,6 +157,189 @@ abbrev Chapter10HenselizedTensor (K L Kh : Type*) [CommRing K] [CommRing L]
 /-- Maximal ideals of an algebra are the local-factor indices. -/
 def Chapter10TensorMaximalIdeals {C : Type*} [CommRing C] : Set (Ideal C) :=
   {P | P.IsMaximal}
+
+/-! A finite henselized tensor separates the inequivalent heterogeneous
+valuation branches.  The package below keeps the branch-to-factor
+correspondence and the value/residue contributions explicit. -/
+
+/-- A finite maximal-factor index for the henselized tensor, together with the
+branch data and the local contribution carried by each factor. -/
+structure Chapter10HenselizedTensorBranchCorrespondence
+    {K : Type u10K} {L : Type u10L} {Kh : Type u10Kh} {ΓK : Type u10Γ}
+    [Field K] [Field L] [Field Kh]
+    [Algebra K L] [Algebra K Kh] [FiniteDimensional K L]
+    [LinearOrderedCommGroupWithZero ΓK]
+    [Algebra Kh (L ⊗[K] Kh)] [Module.Finite Kh (L ⊗[K] Kh)]
+    (v : Valuation K ΓK)
+    (S : Finset (Chapter10ValuationBranch (K := K) (L := L) v)) where
+  complete : Chapter10CompleteBranchFamily.{u10K, u10L, u10Γ, u10ΓL} v S
+  factors : Finset (Ideal (L ⊗[K] Kh))
+  factors_maximal : ∀ P ∈ factors, P.IsMaximal
+  factors_exhaustive : ∀ P, P.IsMaximal ↔ P ∈ factors
+  branchFactor : {b // b ∈ S} ≃ {P // P ∈ factors}
+  factorRamification : {P // P ∈ factors} → ℕ
+  factorResidueDegree : {P // P ∈ factors} → ℕ
+  factorDimension : {P // P ∈ factors} → ℕ
+  branch_ramification :
+    ∀ b, factorRamification (branchFactor b) =
+      Nat.card (Chapter10ValueGroup b.1.w ⧸
+        b.1.extensionData.valueGroupMap.range)
+  branch_residue :
+    ∀ b, factorResidueDegree (branchFactor b) =
+      Chapter10HeterogeneousResidueDegree v b.1.w b.1.extension.isExtension
+  branch_profile :
+    ∀ b, b.1.profile.e = factorRamification (branchFactor b) ∧
+      b.1.profile.f = factorResidueDegree (branchFactor b)
+  factorDimension_eq :
+    ∀ P, factorDimension P =
+      (letI : Algebra Kh (L ⊗[K] Kh) := Algebra.TensorProduct.rightAlgebra
+       Module.finrank Kh ((L ⊗[K] Kh) ⧸ P.1))
+  contribution_le_factorDimension :
+    ∀ b, Chapter10BranchContribution b.1.profile ≤
+      factorDimension (branchFactor b)
+
+private theorem chapter10_henselized_tensor_factor_dimensions_bound
+    {K L Kh : Type*} [Field K] [Field L] [Field Kh]
+    [Algebra K L] [Algebra K Kh]
+    [FiniteDimensional K L]
+    (factors : Finset (Ideal (L ⊗[K] Kh)))
+    (hmax : ∀ P ∈ factors, P.IsMaximal)
+    (hexhaustive : ∀ P, P.IsMaximal ↔ P ∈ factors) :
+    (letI : Algebra Kh (L ⊗[K] Kh) := Algebra.TensorProduct.rightAlgebra
+     Finset.sum factors
+         (fun P => Module.finrank Kh ((L ⊗[K] Kh) ⧸ P)) ≤
+       Module.finrank K L) := by
+  let : Algebra Kh (Kh ⊗[K] L) := Algebra.TensorProduct.leftAlgebra
+  let : Algebra Kh (L ⊗[K] Kh) := Algebra.TensorProduct.rightAlgebra
+  let : Module.Finite Kh (Kh ⊗[K] L) :=
+    Module.Finite.base_change (R := K) (A := Kh) (M := L)
+  let : Module.Finite Kh (L ⊗[K] Kh) :=
+    Module.Finite.equiv (Algebra.TensorProduct.commRight K Kh L).toLinearEquiv
+  let : IsArtinianRing (L ⊗[K] Kh) :=
+    IsArtinianRing.of_finite Kh (L ⊗[K] Kh)
+  let : Finite (PrimeSpectrum (L ⊗[K] Kh)) := inferInstance
+  let : Fintype (PrimeSpectrum (L ⊗[K] Kh)) := Fintype.ofFinite _
+  have hdim := IsArtinianRing.finrank_eq_sum_primeSpectrum
+    (L ⊗[K] Kh) Kh
+  have hquot (p : PrimeSpectrum (L ⊗[K] Kh)) :
+      Module.finrank Kh ((L ⊗[K] Kh) ⧸ p.asIdeal) ≤
+        Module.finrank Kh (Localization.AtPrime p.asIdeal) := by
+    let : p.asIdeal.IsMaximal := by
+      rw [← IsArtinianRing.isPrime_iff_isMaximal]
+      exact p.isPrime
+    let f : (L ⊗[K] Kh) →ₐ[Kh] ((L ⊗[K] Kh) ⧸ p.asIdeal) :=
+      Ideal.Quotient.mkₐ Kh p.asIdeal
+    have hf : ∀ y : p.asIdeal.primeCompl, IsUnit (f y) := by
+      intro y
+      let : Field ((L ⊗[K] Kh) ⧸ p.asIdeal) := Ideal.Quotient.field p.asIdeal
+      change IsUnit (Ideal.Quotient.mk p.asIdeal y)
+      rw [isUnit_iff_ne_zero, ne_eq, Ideal.Quotient.eq_zero_iff_mem]
+      exact Ideal.mem_primeCompl_iff.mp y.property
+    let g : Localization.AtPrime p.asIdeal →ₐ[Kh]
+        ((L ⊗[K] Kh) ⧸ p.asIdeal) :=
+      IsLocalization.liftAlgHom hf
+    have hg : Function.Surjective g := by
+      intro z
+      obtain ⟨x, rfl⟩ := Ideal.Quotient.mkₐ_surjective Kh p.asIdeal z
+      refine ⟨algebraMap (L ⊗[K] Kh) (Localization.AtPrime p.asIdeal) x, ?_⟩
+      rw [IsLocalization.liftAlgHom_apply]
+      simp [f]
+    let : Module.Finite Kh (Localization.AtPrime p.asIdeal) :=
+      Module.Finite.of_surjective
+        (IsScalarTower.toAlgHom Kh (L ⊗[K] Kh)
+          (Localization.AtPrime p.asIdeal)).toLinearMap
+        (IsArtinianRing.localization_surjective p.asIdeal.primeCompl
+          (Localization.AtPrime p.asIdeal))
+    exact LinearMap.finrank_le_finrank_of_surjective (f := g.toLinearMap) hg
+  let e : {P // P ∈ factors} ≃ PrimeSpectrum (L ⊗[K] Kh) :=
+    { toFun := fun P =>
+        ⟨P.1, (IsArtinianRing.isPrime_iff_isMaximal P.1).mpr
+          (hmax P.1 P.2)⟩
+      invFun := fun p =>
+        ⟨p.asIdeal, (hexhaustive p.asIdeal).mp
+          ((IsArtinianRing.isPrime_iff_isMaximal p.asIdeal).mp p.isPrime)⟩
+      left_inv := by
+        intro P
+        rfl
+      right_inv := by
+        intro p
+        change (⟨p.asIdeal, _⟩ : PrimeSpectrum (L ⊗[K] Kh)) = p
+        rfl }
+  have hsum0 : Finset.sum factors (fun P =>
+      Module.finrank Kh ((L ⊗[K] Kh) ⧸ P)) =
+      ∑ P : {P // P ∈ factors},
+        Module.finrank Kh ((L ⊗[K] Kh) ⧸ P.1) := by
+    rw [Finset.sum_subtype factors (p := fun P => P ∈ factors)
+      (fun P => Iff.rfl)]
+  have hsum1 : (∑ P : {P // P ∈ factors},
+      Module.finrank Kh ((L ⊗[K] Kh) ⧸ P.1)) =
+      ∑ p : PrimeSpectrum (L ⊗[K] Kh),
+        Module.finrank Kh ((L ⊗[K] Kh) ⧸ p.asIdeal) := by
+    apply Fintype.sum_equiv e
+    intro P
+    rfl
+  rw [hsum0, hsum1]
+  calc
+    (∑ p : PrimeSpectrum (L ⊗[K] Kh),
+        Module.finrank Kh ((L ⊗[K] Kh) ⧸ p.asIdeal)) ≤
+        ∑ p : PrimeSpectrum (L ⊗[K] Kh),
+          Module.finrank Kh (Localization.AtPrime p.asIdeal) :=
+      Finset.sum_le_sum (fun p _ => hquot p)
+    _ = Module.finrank Kh (L ⊗[K] Kh) := hdim.symm
+    _ = Module.finrank K L := by
+      rw [← Module.finrank_baseChange (R := Kh) (S := K) (M' := L)]
+      exact (Algebra.TensorProduct.commRight K Kh L).toLinearEquiv.finrank_eq.symm
+
+
+/-- The branch contributions in a finite henselized tensor are bounded by the
+total extension degree. -/
+theorem chapter10_henselized_tensor_branch_sum_bound
+    {K : Type u10K} {L : Type u10L} {Kh : Type u10Kh} {ΓK : Type u10Γ}
+    [Field K] [Field L] [Field Kh]
+    [Algebra K L] [Algebra K Kh] [FiniteDimensional K L]
+    [LinearOrderedCommGroupWithZero ΓK]
+    [Algebra Kh (L ⊗[K] Kh)] [Module.Finite Kh (L ⊗[K] Kh)]
+    (v : Valuation K ΓK)
+    (S : Finset (Chapter10ValuationBranch (K := K) (L := L) v))
+      (D : Chapter10HenselizedTensorBranchCorrespondence.{u10K, u10L, u10Γ,
+      u10Kh, u10ΓL} (K := K) (L := L) (Kh := Kh) (ΓK := ΓK) v S) :
+    Finset.sum S (fun b => Chapter10BranchContribution b.profile) ≤
+      Module.finrank K L := by
+  classical
+  have hsum0 :
+      Finset.sum S (fun b => Chapter10BranchContribution b.profile) =
+        ∑ b : {b // b ∈ S}, Chapter10BranchContribution b.1.profile := by
+    rw [Finset.sum_subtype S (p := fun b => b ∈ S) (fun b => Iff.rfl)]
+  have hle :
+      (∑ b : {b // b ∈ S}, Chapter10BranchContribution b.1.profile) ≤
+        ∑ b : {b // b ∈ S}, D.factorDimension (D.branchFactor b) := by
+    exact Finset.sum_le_sum (fun b _ => D.contribution_le_factorDimension b)
+  let : Fintype {P // P ∈ D.factors} := Finset.fintypeCoeSort D.factors
+  have hsum1 :
+      (∑ b : {b // b ∈ S}, D.factorDimension (D.branchFactor b)) =
+        ∑ P : {P // P ∈ D.factors}, D.factorDimension P := by
+    apply Fintype.sum_equiv D.branchFactor
+    intro b
+    rfl
+  have hsum2 :
+      (∑ P : {P // P ∈ D.factors}, D.factorDimension P) =
+        Finset.sum D.factors (fun P =>
+          (letI : Algebra Kh (L ⊗[K] Kh) := Algebra.TensorProduct.rightAlgebra
+           Module.finrank Kh ((L ⊗[K] Kh) ⧸ P))) := by
+    rw [Finset.sum_subtype D.factors (p := fun P => P ∈ D.factors)
+      (fun P => Iff.rfl) (F := Finset.fintypeCoeSort D.factors)]
+    simp_rw [D.factorDimension_eq]
+  have hdim := chapter10_henselized_tensor_factor_dimensions_bound
+    (K := K) (L := L) (Kh := Kh) D.factors D.factors_maximal D.factors_exhaustive
+  calc
+    Finset.sum S (fun b => Chapter10BranchContribution b.profile) =
+        ∑ b : {b // b ∈ S}, Chapter10BranchContribution b.1.profile := hsum0
+    _ ≤ ∑ b : {b // b ∈ S}, D.factorDimension (D.branchFactor b) := hle
+    _ = ∑ P : {P // P ∈ D.factors}, D.factorDimension P := hsum1
+    _ = Finset.sum D.factors (fun P =>
+          (letI : Algebra Kh (L ⊗[K] Kh) := Algebra.TensorProduct.rightAlgebra
+           Module.finrank Kh ((L ⊗[K] Kh) ⧸ P))) := hsum2
+    _ ≤ Module.finrank K L := hdim
 
 /-- The finite base-change tensor product has finitely many maximal local factors. -/
 theorem chapter10_henselized_tensor_has_finitely_many_factors

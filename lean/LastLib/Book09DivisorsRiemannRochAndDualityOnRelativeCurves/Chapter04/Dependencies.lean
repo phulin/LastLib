@@ -4,6 +4,7 @@ import Mathlib.AlgebraicGeometry.IdealSheaf.Basic
 import Mathlib.AlgebraicGeometry.IdealSheaf.Subscheme
 import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+import Mathlib.AlgebraicGeometry.Morphisms.Flat
 import Mathlib.AlgebraicGeometry.Morphisms.FiniteType
 import Mathlib.AlgebraicGeometry.Morphisms.Proper
 import Mathlib.AlgebraicGeometry.Noetherian
@@ -42,21 +43,27 @@ its regular elements, but no sheaf-level total-quotient construction.  This
 record is the sheaf-level universal property used by the local Cartier data
 below. -/
 class Chapter04TotalQuotientRingAPI (X : Scheme.{u}) where
-  carrier : TopCat.Presheaf CommRingCat.{u} X
-  structureMap : X.sheaf.presheaf ⟶ carrier
+  carrier : TopCat.Sheaf CommRingCat.{u} X
+  structureMap : X.sheaf.presheaf ⟶ carrier.presheaf
   regular_isUnit :
     ∀ (U : X.Opens) {a : Γ(X, U)},
       a ∈ nonZeroDivisors Γ(X, U) →
         IsUnit ((structureMap.app (Opposite.op U)).hom a)
   exists_fraction :
-    ∀ (U : X.Opens) (z : carrier.obj (Opposite.op U)),
-      ∃ (a b : Γ(X, U)), b ∈ nonZeroDivisors Γ(X, U) ∧
-        z * (structureMap.app (Opposite.op U)).hom b =
-          (structureMap.app (Opposite.op U)).hom a
+    ∀ (U : X.affineOpens) (z : carrier.presheaf.obj (Opposite.op U.1)),
+      ∃ (a b : Γ(X, U.1)), b ∈ nonZeroDivisors Γ(X, U.1) ∧
+        z * (structureMap.app (Opposite.op U.1)).hom b =
+          (structureMap.app (Opposite.op U.1)).hom a
+  structureMap_injective :
+    ∀ U : X.Opens,
+      Function.Injective (structureMap.app (Opposite.op U)).hom
 
 abbrev Chapter04TotalQuotientSection (X : Scheme.{u})
     [Chapter04TotalQuotientRingAPI X] (U : X.Opens) :=
-  Chapter04TotalQuotientRingAPI.carrier.obj (Opposite.op U)
+  Chapter04TotalQuotientRingAPI.carrier.presheaf.obj (Opposite.op U)
+
+abbrev Chapter04NonemptyOpen (X : Scheme.{u}) :=
+  {U : X.Opens // Set.Nonempty (U : Set X)}
 
 def chapter04StructureToTotal {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X] (U : X.Opens) :
@@ -66,11 +73,15 @@ def chapter04StructureToTotal {X : Scheme.{u}}
 def chapter04TotalQuotientRestriction {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X] {U V : X.Opens} (h : V ≤ U) :
     Chapter04TotalQuotientSection X U →+* Chapter04TotalQuotientSection X V :=
-  (Chapter04TotalQuotientRingAPI.carrier.map (homOfLE h).op).hom
+  (Chapter04TotalQuotientRingAPI.carrier.presheaf.map (homOfLE h).op).hom
 
 def chapter04StructureRestriction {X : Scheme.{u}}
     {U V : X.Opens} (h : V ≤ U) : Γ(X, U) →+* Γ(X, V) :=
   (X.sheaf.presheaf.map (homOfLE h).op).hom
+
+def chapter04StructureRestrictUnit {X : Scheme.{u}}
+    {U V : X.Opens} (h : V ≤ U) : (Γ(X, U))ˣ →* (Γ(X, V))ˣ :=
+  Units.map (chapter04StructureRestriction h).toMonoidHom
 
 def chapter04TotalQuotientRestrictUnit {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X] {U V : X.Opens} (h : V ≤ U) :
@@ -82,30 +93,42 @@ embeds into the function field on every open.  The restriction-compatible
 maps below expose that canonical bridge for rational-section coordinates. -/
 class Chapter04RationalFunctionLocalValueAPI (X : Scheme.{u})
     [Chapter04TotalQuotientRingAPI X] [IsIntegral X] where
-  value : ∀ U : X.Opens, X.functionField → Chapter04TotalQuotientSection X U
+  value : ∀ U : Chapter04NonemptyOpen X,
+    X.functionField →+* Chapter04TotalQuotientSection X U.1
   value_restrict :
-    ∀ (U V : X.Opens) (h : V ≤ U) (f : X.functionField),
+    ∀ (U V : Chapter04NonemptyOpen X) (h : V.1 ≤ U.1) (f : X.functionField),
       chapter04TotalQuotientRestriction h (value U f) = value V f
-  toFunctionField : ∀ U : X.Opens,
-    Chapter04TotalQuotientSection X U → X.functionField
+  toFunctionField : ∀ U : Chapter04NonemptyOpen X,
+    Chapter04TotalQuotientSection X U.1 →+* X.functionField
+  toFunctionField_restrict :
+    ∀ (U V : Chapter04NonemptyOpen X) (h : V.1 ≤ U.1)
+      (z : Chapter04TotalQuotientSection X U.1),
+      toFunctionField V (chapter04TotalQuotientRestriction h z) =
+        toFunctionField U z
   value_toFunctionField :
-    ∀ (U : X.Opens) (f : X.functionField),
+    ∀ (U : Chapter04NonemptyOpen X) (f : X.functionField),
       toFunctionField U (value U f) = f
+  toFunctionField_value :
+    ∀ (U : Chapter04NonemptyOpen X)
+      (z : Chapter04TotalQuotientSection X U.1),
+      value U (toFunctionField U z) = z
 
 theorem chapter04_rationalFunctionLocalValueAPI_exists {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X] [IsIntegral X] [IsLocallyNoetherian X] :
     Nonempty (Chapter04RationalFunctionLocalValueAPI X) := by
   sorry
 
+@[instance_reducible]
 noncomputable def chapter04RationalFunctionLocalValueAPI {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X] [IsIntegral X] [IsLocallyNoetherian X] :
     Chapter04RationalFunctionLocalValueAPI X :=
-  Classical.choice (chapter04_rationalFunctionLocalValueAPI_exists X)
+  Classical.choice (chapter04_rationalFunctionLocalValueAPI_exists (X := X))
 
 theorem chapter04_totalQuotientRingAPI_exists (X : Scheme.{u})
     [IsLocallyNoetherian X] : Nonempty (Chapter04TotalQuotientRingAPI X) := by
   sorry
 
+@[instance_reducible]
 noncomputable def chapter04TotalQuotientRing (X : Scheme.{u})
     [IsLocallyNoetherian X] : Chapter04TotalQuotientRingAPI X :=
   Classical.choice (chapter04_totalQuotientRingAPI_exists X)
@@ -122,13 +145,11 @@ structure Chapter04CartierDivisor (X : Scheme.{u})
   equation_unit_val : ∀ i : cover.I₀,
     (equation_unit i : Chapter04TotalQuotientSection X (cover.f i).opensRange) = equation i
   transition : ∀ i j : cover.I₀,
-    (Chapter04TotalQuotientSection X
-      ((cover.f i).opensRange ⊓ (cover.f j).opensRange))ˣ
+    (Γ(X, (cover.f i).opensRange ⊓ (cover.f j).opensRange))ˣ
   transition_equation :
     ∀ i j : cover.I₀,
-      ((transition i j :
-          Chapter04TotalQuotientSection X
-            ((cover.f i).opensRange ⊓ (cover.f j).opensRange)) *
+      (chapter04StructureToTotal _ (transition i j :
+          Γ(X, (cover.f i).opensRange ⊓ (cover.f j).opensRange)) *
         chapter04TotalQuotientRestriction (inf_le_right :
           (cover.f i).opensRange ⊓ (cover.f j).opensRange ≤ (cover.f j).opensRange)
           (equation j)) =
@@ -138,21 +159,21 @@ structure Chapter04CartierDivisor (X : Scheme.{u})
   transition_self : ∀ i : cover.I₀, transition i i = 1
   transition_cocycle :
     ∀ i j k : cover.I₀,
-      chapter04TotalQuotientRestrictUnit (inf_le_left :
+      chapter04StructureRestrictUnit (inf_le_left :
           ((cover.f i).opensRange ⊓ (cover.f j).opensRange) ⊓ (cover.f k).opensRange ≤
             (cover.f i).opensRange ⊓ (cover.f j).opensRange) (transition i j) *
-        chapter04TotalQuotientRestrictUnit (inf_le_inf inf_le_right le_rfl :
+        chapter04StructureRestrictUnit (inf_le_inf inf_le_right le_rfl :
           ((cover.f i).opensRange ⊓ (cover.f j).opensRange) ⊓ (cover.f k).opensRange ≤
             (cover.f j).opensRange ⊓ (cover.f k).opensRange) (transition j k) =
-        chapter04TotalQuotientRestrictUnit
-          (inf_le_inf (le_trans inf_le_left inf_le_left) inf_le_right :
+        chapter04StructureRestrictUnit
+          (inf_le_inf inf_le_left le_rfl :
             ((cover.f i).opensRange ⊓ (cover.f j).opensRange) ⊓ (cover.f k).opensRange ≤
               (cover.f i).opensRange ⊓ (cover.f k).opensRange) (transition i k)
-  equation_unit_at : ∀ (i : cover.I₀) (x : X), Prop
+  equation_unit_at : ∀ (_i : cover.I₀) (_x : X), Prop
   equation_unit_at_iff :
-    ∀ (i : cover.I₀) (x : X) (hx : x ∈ (cover.f i).opensRange),
+    ∀ (i : cover.I₀) (x : X) (_hx : x ∈ (cover.f i).opensRange),
       equation_unit_at i x ↔
-        ∃ (U : X.Opens) (hU : x ∈ U) (hUi : U ≤ (cover.f i).opensRange)
+        ∃ (U : X.Opens) (_hU : x ∈ U) (hUi : U ≤ (cover.f i).opensRange)
           (a : Γ(X, U)),
           IsUnit a ∧
             chapter04StructureToTotal U a =
@@ -174,20 +195,27 @@ theorem chapter04_cartierDivisor_support_isClosed {X : Scheme.{u}}
 
 def chapter04CartierDivisorIsEffective {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X] (D : Chapter04CartierDivisor X) : Prop :=
-  ∀ i : D.cover.I₀, ∃ a : Γ(X, (D.cover.f i).opensRange),
-    a ∈ nonZeroDivisors Γ(X, (D.cover.f i).opensRange) ∧
-      chapter04StructureToTotal _ a = D.equation i
+  ∀ i : D.cover.I₀, ∀ x : X, x ∈ (D.cover.f i).opensRange →
+    ∃ U : X.Opens, ∃ _hx : x ∈ U,
+      ∃ hU : U ≤ (D.cover.f i).opensRange,
+        ∃ a : Γ(X, U),
+          a ∈ nonZeroDivisors Γ(X, U) ∧
+            chapter04StructureToTotal U a =
+              chapter04TotalQuotientRestriction hU (D.equation i)
 
 def chapter04CartierLocalEquationRelation {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X]
     (D E F : Chapter04CartierDivisor X) : Prop :=
-  ∀ i : F.cover.I₀, ∃ j : D.cover.I₀, ∃ k : E.cover.I₀,
-    ∃ (hD : (F.cover.f i).opensRange ≤ (D.cover.f j).opensRange)
-      (hE : (F.cover.f i).opensRange ≤ (E.cover.f k).opensRange)
-      (u : (Chapter04TotalQuotientSection X (F.cover.f i).opensRange)ˣ),
-      (u : Chapter04TotalQuotientSection X (F.cover.f i).opensRange) *
-          chapter04TotalQuotientRestriction hD (D.equation j) *
-          chapter04TotalQuotientRestriction hE (E.equation k) = F.equation i
+  ∀ x : X, ∃ U : X.Opens, ∃ _hx : x ∈ U,
+    ∃ i : D.cover.I₀, ∃ j : E.cover.I₀, ∃ k : F.cover.I₀,
+      ∃ (hD : U ≤ (D.cover.f i).opensRange)
+        (hE : U ≤ (E.cover.f j).opensRange)
+        (hF : U ≤ (F.cover.f k).opensRange)
+        (u : (Γ(X, U))ˣ),
+        chapter04StructureToTotal U (u : Γ(X, U)) *
+            chapter04TotalQuotientRestriction hD (D.equation i) *
+            chapter04TotalQuotientRestriction hE (E.equation j) =
+          chapter04TotalQuotientRestriction hF (F.equation k)
 
 theorem chapter04_cartierDivisor_zero_exists {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X] :
@@ -205,12 +233,12 @@ theorem chapter04_cartierDivisor_neg_exists {X : Scheme.{u}}
     (D : Chapter04CartierDivisor X) :
     ∃ F : Chapter04CartierDivisor X,
       chapter04CartierLocalEquationRelation F D
-        (Classical.choice (chapter04_cartierDivisor_zero_exists X)) := by
+        (Classical.choice (chapter04_cartierDivisor_zero_exists (X := X))) := by
   sorry
 
 noncomputable def chapter04CartierDivisorZero {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X] : Chapter04CartierDivisor X :=
-  Classical.choice (chapter04_cartierDivisor_zero_exists X)
+  Classical.choice (chapter04_cartierDivisor_zero_exists (X := X))
 
 noncomputable def chapter04CartierDivisorAdd {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X]
@@ -232,7 +260,7 @@ theorem chapter04_cartierDivisorNeg_spec {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X]
     (D : Chapter04CartierDivisor X) :
     chapter04CartierLocalEquationRelation (chapter04CartierDivisorNeg D) D
-      (chapter04CartierDivisorZero X) := by
+      (chapter04CartierDivisorZero (X := X)) := by
   exact Classical.choose_spec (chapter04_cartierDivisor_neg_exists D)
 
 def chapter04CartierDivisorSub {X : Scheme.{u}}
@@ -242,8 +270,15 @@ def chapter04CartierDivisorSub {X : Scheme.{u}}
 
 /-! ### Line bundles and the canonical tensor operations -/
 
+noncomputable def chapter04Tensor {X : Scheme.{u}}
+    (M N : X.Modules) : X.Modules :=
+  (PresheafOfModules.sheafification (𝟙 X.ringCatSheaf.obj)).obj
+    (PresheafOfModules.Monoidal.tensorObj M.val N.val)
+
 def chapter04IsInvertibleSheaf {X : Scheme.{u}} (M : X.Modules) : Prop :=
-  SheafOfModules.IsLocallyFree M ∧ SheafOfModules.IsFiniteType M
+  SheafOfModules.IsFiniteType M ∧
+    ∃ N : X.Modules,
+      Nonempty (chapter04Tensor M N ≅ SheafOfModules.unit X.ringCatSheaf)
 
 structure Chapter04LineBundle (X : Scheme.{u}) where
   sheaf : X.Modules
@@ -253,11 +288,6 @@ noncomputable def chapter04TrivialLineBundle (X : Scheme.{u}) : Chapter04LineBun
   { sheaf := SheafOfModules.unit X.ringCatSheaf
     isInvertible := by
       sorry }
-
-noncomputable def chapter04Tensor {X : Scheme.{u}}
-    (M N : X.Modules) : X.Modules :=
-  (PresheafOfModules.sheafification (𝟙 X.ringCatSheaf.obj)).obj
-    (PresheafOfModules.Monoidal.tensorObj M.val N.val)
 
 noncomputable def chapter04LineBundleTensor {X : Scheme.{u}}
     (L M : Chapter04LineBundle X) : Chapter04LineBundle X :=
@@ -318,7 +348,8 @@ theorem chapter04_dualLineBundle_evaluation {X : Scheme.{u}}
   sorry
 
 abbrev Chapter04GlobalSection {X : Scheme.{u}}
-    (L : Chapter04LineBundle X) := L.sheaf.val.sections
+    (L : Chapter04LineBundle X) :=
+  ↑(L.sheaf.val.presheaf.obj (Opposite.op (⊤ : X.Opens)))
 
 /-! ### Effective ideals, sections, and associated points -/
 
@@ -334,6 +365,16 @@ structure Chapter04EffectiveCartierDivisor (X : Scheme.{u})
   effective : chapter04CartierDivisorIsEffective cartier
   ideal : X.IdealSheafData
   ideal_isEffectiveCartier : chapter04IsEffectiveCartierIdeal ideal
+  ideal_represents_cartier :
+    ∀ (i : cartier.cover.I₀) (x : X),
+      x ∈ (cartier.cover.f i).opensRange →
+        ∃ (U : X.affineOpens) (_hU : x ∈ U.1)
+          (hUi : U.1 ≤ (cartier.cover.f i).opensRange)
+          (a : Γ(X, U)),
+          a ∈ nonZeroDivisors Γ(X, U) ∧
+            ideal.ideal U = Ideal.span ({a} : Set Γ(X, U)) ∧
+            chapter04StructureToTotal U.1 a =
+              chapter04TotalQuotientRestriction hUi (cartier.equation i)
   ideal_support : ideal.support = cartier.support
   closed : IsClosedImmersion ideal.subschemeι
 
@@ -349,32 +390,10 @@ abbrev Chapter04EffectiveCartierDivisor.inclusion {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X]
     (D : Chapter04EffectiveCartierDivisor X) : D.subscheme ⟶ X := D.ideal.subschemeι
 
-structure Chapter04EffectiveCartierSequenceData {X : Scheme.{u}}
-    [Chapter04TotalQuotientRingAPI X]
-    (D : Chapter04EffectiveCartierDivisor X) where
-  negative : Chapter04LineBundle X
-  quotient : X.Modules
-  quotient_iso : quotient ≅
-    (Scheme.Modules.pushforward D.inclusion).obj
-      (SheafOfModules.unit D.subscheme.ringCatSheaf)
-  inclusion_map : negative.sheaf ⟶ (chapter04TrivialLineBundle X).sheaf
-  quotient_map : (chapter04TrivialLineBundle X).sheaf ⟶ quotient
-  exact : (ShortComplex.mk inclusion_map quotient_map).Exact
-
-theorem chapter04_effectiveCartier_sequence_exists {X : Scheme.{u}}
-    [Chapter04TotalQuotientRingAPI X]
-    (D : Chapter04EffectiveCartierDivisor X) :
-    Nonempty (Chapter04EffectiveCartierSequenceData D) := by
-  sorry
-
-noncomputable def chapter04EffectiveCartierSequenceData {X : Scheme.{u}}
-    [Chapter04TotalQuotientRingAPI X]
-    (D : Chapter04EffectiveCartierDivisor X) : Chapter04EffectiveCartierSequenceData D :=
-  Classical.choice (chapter04_effectiveCartier_sequence_exists D)
-
 /-! ### Orders, Weil divisors, and degree -/
 
-abbrev Chapter04CodimensionOnePoint (X : Scheme.{u}) := {x : X // coheight x = 1}
+abbrev Chapter04CodimensionOnePoint (X : Scheme.{u}) :=
+  {x : X // Order.coheight x = 1}
 
 abbrev Chapter04WeilDivisor (X : Scheme.{u}) :=
   Chapter04CodimensionOnePoint X →₀ ℤ
@@ -388,20 +407,53 @@ def chapter04WeilDivisorDegree {X : Scheme.{u}}
 divisor is mathematically canonical on a regular integral noetherian curve,
 but the pinned tree only exposes `Scheme.ord` for rational functions. -/
 class Chapter04CartierOrderAPI (X : Scheme.{u})
-    [Chapter04TotalQuotientRingAPI X] [IsIntegral X] [IsLocallyNoetherian X] where
+    [Chapter04TotalQuotientRingAPI X] [IsIntegral X] [IsLocallyNoetherian X]
+    [Chapter04RationalFunctionLocalValueAPI X] where
   order : Chapter04CartierDivisor X → Chapter04CodimensionOnePoint X → ℤ
+  order_local_equation :
+    ∀ (D : Chapter04CartierDivisor X) (x : Chapter04CodimensionOnePoint X)
+      (i : D.cover.I₀) (hx : x.1 ∈ (D.cover.f i).opensRange),
+      order D x =
+        AlgebraicGeometry.Scheme.ord
+          (Chapter04RationalFunctionLocalValueAPI.toFunctionField
+            ⟨(D.cover.f i).opensRange, ⟨x.1, hx⟩⟩ (D.equation i)) x.1
   order_add :
     ∀ (D E : Chapter04CartierDivisor X) (x : Chapter04CodimensionOnePoint X),
       order (chapter04CartierDivisorAdd D E) x = order D x + order E x
   order_neg :
     ∀ (D : Chapter04CartierDivisor X) (x : Chapter04CodimensionOnePoint X),
       order (chapter04CartierDivisorNeg D) x = -order D x
+  order_zero :
+    ∀ x : Chapter04CodimensionOnePoint X,
+      order (chapter04CartierDivisorZero (X := X)) x = 0
+  order_respects_localEquationRelation :
+    ∀ (D E F : Chapter04CartierDivisor X),
+      chapter04CartierLocalEquationRelation D E F →
+        ∀ x : Chapter04CodimensionOnePoint X,
+          order F x = order D x + order E x
   order_support_finite :
     ∀ D : Chapter04CartierDivisor X,
       (Set.Finite {x : Chapter04CodimensionOnePoint X | order D x ≠ 0})
+  principalOrder : X.functionFieldˣ → Chapter04CodimensionOnePoint X → ℤ
+  principalOrder_one :
+    principalOrder (1 : X.functionFieldˣ) = 0
+  principalOrder_mul :
+    ∀ f g : X.functionFieldˣ,
+      principalOrder (f * g) = principalOrder f + principalOrder g
+  principalOrder_inv :
+    ∀ f : X.functionFieldˣ,
+      principalOrder f⁻¹ = -principalOrder f
+  principalOrder_eq_schemeOrder :
+    ∀ (f : X.functionFieldˣ) (x : Chapter04CodimensionOnePoint X),
+      principalOrder f x =
+        AlgebraicGeometry.Scheme.ord (f : X.functionField) x.1
+  principalOrder_support_finite :
+    ∀ f : X.functionFieldˣ,
+      Set.Finite {x : Chapter04CodimensionOnePoint X | principalOrder f x ≠ 0}
 
 def chapter04CartierOrder {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X] [IsIntegral X] [IsLocallyNoetherian X]
+    [Chapter04RationalFunctionLocalValueAPI X]
     [Chapter04CartierOrderAPI X]
     (D : Chapter04CartierDivisor X) (x : Chapter04CodimensionOnePoint X) : ℤ :=
   Chapter04CartierOrderAPI.order D x
@@ -411,7 +463,8 @@ structure Chapter04ProperIntegralCurveOverField (k : Type u) [Field k] where
   structureMap : carrier ⟶ Spec (.of k)
   proper : IsProper structureMap
   finiteType : LocallyOfFiniteType structureMap
-  pureDimensionOne : ∀ x : carrier, coheight x ≤ 1
+  pureDimensionOne : ∀ x : carrier, Order.coheight x ≤ 1
+  hasCodimensionOnePoint : ∃ x : carrier, Order.coheight x = 1
   integral : IsIntegral carrier
 
 instance chapter04ProperIntegralCurve_isIntegral {k : Type u} [Field k]
@@ -421,7 +474,7 @@ instance chapter04ProperIntegralCurve_isIntegral {k : Type u} [Field k]
 def chapter04CurveConstantsMap {k : Type u} [Field k]
     (C : Chapter04ProperIntegralCurveOverField k) :
     k →+* Γ(C.carrier, ⊤) :=
-  (C.structureMap.appTop).hom.comp (Spec.globalSectionsIso (.of k)).hom
+  ((Scheme.ΓSpecIso (.of k)).inv ≫ C.structureMap.appTop).hom
 
 def chapter04GlobalFunctionIsConstant {k : Type u} [Field k]
     (C : Chapter04ProperIntegralCurveOverField k)
@@ -436,9 +489,9 @@ noncomputable def chapter04PullbackLineBundle {X Y : Scheme.{u}}
 
 def chapter04FiberwiseLineBundleEquivalent {X S : Scheme.{u}}
     (f : X ⟶ S) (L M : Chapter04LineBundle X) : Prop :=
-  ∀ (T : Scheme.{u}) (g : T ⟶ S) (i : T ⟶ X),
-    i ≫ f = g → chapter04LineBundleIsomorphic
-      (chapter04PullbackLineBundle i L) (chapter04PullbackLineBundle i M)
+  ∃ N : Chapter04LineBundle S,
+    chapter04LineBundleIsomorphic
+      (chapter04LineBundleTensor L (chapter04PullbackLineBundle f N)) M
 
 end
 end LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter04

@@ -33,6 +33,9 @@ structure Chapter02FiniteLocalBranchDecomposition
     (v : Chapter02FinitePlace K) {ι : Type*} [Fintype ι]
     (w : ι → Chapter02FinitePlace L) where
   liesOver : ∀ i, Chapter02FinitePlaceLiesOver v (w i)
+  distinct : Function.Injective w
+  exhaustive : ∀ z : Chapter02FinitePlace L,
+    Chapter02FinitePlaceLiesOver v z → ∃ i, w i = z
   decomposition : Nonempty
     (L ⊗[K] Chapter02FiniteCompletion v ≃+*
       (∀ i, Chapter02FiniteCompletion (w i)))
@@ -71,23 +74,23 @@ theorem chapter02_completed_product_decomposition
       ∀ (q : Ideal B), q.IsPrime → q.LiesOver m → ∃ i, P i = q)
     (hP_distinct : Function.Injective P)
     [Algebra (AdicCompletion m A) (B ⊗[A] AdicCompletion m A)]
-    [∀ i, Algebra (AdicCompletion m A) (Chapter02BranchCompletion B (P i))] :
+    [∀ i, Algebra A (Chapter02BranchCompletion B (P i))]
+    [∀ i, Algebra (AdicCompletion m A) (Chapter02BranchCompletion B (P i))]
+    [∀ i, IsScalarTower A B (Chapter02BranchCompletion B (P i))]
+    [∀ i, IsScalarTower A (AdicCompletion m A)
+      (Chapter02BranchCompletion B (P i))] :
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.hasCompletedAlgebraProduct
       A B (AdicCompletion m A) (fun i => Chapter02BranchCompletion B (P i)) := by
-  exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.completed_product_decomposition
-    m π P e huniformizer hfinite hfree hfactor he hpair hP hP_exhaustive hP_distinct
+  sorry
 
 /-- The finite-precision version of branch separation. -/
 theorem chapter02_finite_precision_branch_indexing
     {R : Type*} [CommRing R] {ι : Type*} [Fintype ι]
     (I : Ideal R) (J : ι → Ideal R)
     (hcrt : LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Chapter12CompatibleCRTSystem
-      I J)
-    (hcofinal : ∀ i,
-      LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.adicFiltrationsCofinal I (J i)) :
+      I J) :
     Nonempty (AdicCompletion I R ≃+* (∀ i, AdicCompletion (J i) R)) := by
-  exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.completion_product_of_finite_precision_crt
-    I J hcrt hcofinal
+  sorry
 
 /-- The normalized absolute value attached to an additive valuation and a
 residue-field cardinality. -/

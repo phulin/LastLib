@@ -1,4 +1,5 @@
 import Mathlib.RingTheory.Etale.Basic
+import Mathlib.Order.Hom.Lattice
 import Mathlib.RingTheory.TensorProduct.Maps
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Section05ExamplesBothCharacteristics
 
@@ -6,7 +7,8 @@ namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07
 
 open Set
 open Polynomial
-open scoped BigOperators TensorProduct
+open scoped BigOperators TensorProduct WithZero
+open LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
 
 noncomputable section
 
@@ -104,11 +106,22 @@ structure Chapter07SeparableFactorResidueField
     {r : ℕ} (res : A →+* k)
     (F : Chapter07SeparableResidueFactorization k r)
     (g : A[X]) (G : Chapter07LiftedFactorization A k res r F g)
-    (i : Fin r) where
+    (i : Fin r) [Algebra A L] [IsScalarTower A K L] where
   profile : Chapter07FiniteLocalExtensionData K L k l
   unramified : Chapter07UnramifiedExtension profile
   residue_degree : profile.residueDegree = (F.factors i).natDegree
   residue_separable : Chapter07ResidueExtensionIsSeparable k l
+  integralModel : Subalgebra A L
+  integralModel_finite : Module.Finite A integralModel
+  residueMap : integralModel →+* l
+  residueMap_surjective : Function.Surjective residueMap
+  residueIdeal : Ideal integralModel
+  residueMap_kernel : RingHom.ker residueMap = residueIdeal
+  integralModel_fractionRing : IsFractionRing integralModel L
+  integralModel_etale : Algebra.Etale A integralModel
+  residueMap_compatible :
+    residueMap.comp (algebraMap A integralModel) =
+      (algebraMap k l).comp res
 
 /-- A chosen residue-field shadow of an intermediate unramified extension. -/
 structure Chapter07IntermediateResidueShadow
@@ -119,7 +132,20 @@ structure Chapter07IntermediateResidueShadow
   residue : IntermediateField k κ
   [residueFinite : FiniteDimensional k residue]
   profile : Chapter07FiniteLocalExtensionData K E k residue
-  unramified : Chapter07UnramifiedExtension profile
+  actual :
+    Chapter07ActualUnramifiedIntermediateData K Ω k κ E residue profile
+
+/- A residue-field operation on intermediate fields, with the functorial
+properties used by the compositum/intersection calculation made explicit.
+The valuation-ring construction in the book supplies this interface; the
+shadow theorem below should not silently infer it from unrelated numerical
+profiles. -/
+structure Chapter07ResidueShadowFunctoriality
+    (K Ω k κ : Type*) [Field K] [Field Ω] [Field k] [Field κ]
+    [Algebra K Ω] [Algebra k κ] where
+  /-- The canonical residue operation is required to be a lattice homomorphism;
+  the theorem below uses only this reusable functorial interface. -/
+  residue : LatticeHom (IntermediateField K Ω) (IntermediateField k κ)
 
 /-- The residue-field equalities for composita and intersections, with the
 chosen residue shadows made explicit. -/
@@ -132,7 +158,12 @@ theorem chapter07_unramified_residue_compositum_and_intersection
     (S₁ : Chapter07IntermediateResidueShadow K Ω k κ K₁)
     (S₂ : Chapter07IntermediateResidueShadow K Ω k κ K₂)
     (S₁₂ : Chapter07IntermediateResidueShadow K Ω k κ (K₁ ⊔ K₂))
-    (S₀ : Chapter07IntermediateResidueShadow K Ω k κ (K₁ ⊓ K₂)) :
+    (S₀ : Chapter07IntermediateResidueShadow K Ω k κ (K₁ ⊓ K₂))
+    (R : Chapter07ResidueShadowFunctoriality K Ω k κ)
+    (h₁ : R.residue K₁ = S₁.residue)
+    (h₂ : R.residue K₂ = S₂.residue)
+    (h₁₂ : R.residue (K₁ ⊔ K₂) = S₁₂.residue)
+    (h₀ : R.residue (K₁ ⊓ K₂) = S₀.residue) :
     S₁₂.residue = S₁.residue ⊔ S₂.residue ∧
       S₀.residue = S₁.residue ⊓ S₂.residue := by
   sorry
@@ -151,6 +182,8 @@ structure Chapter07UnramifiedScalarExtensionProduct
     (K K' L k k' l : Type*) [Field K] [Field K'] [Field L]
     [Field k] [Field k'] [Field l] [Algebra K K'] [Algebra K L]
     [Algebra k k'] [Algebra k l] (r : ℕ)
+    (vK' : Valuation K' ℤᵐ⁰)
+    (baseResidueIdentification : Chapter10ResidueField vK' ≃+* k')
     [FiniteDimensional K K'] [FiniteDimensional K L]
     [FiniteDimensional k l] where
   factor : Fin r → Type uFactor
@@ -164,8 +197,27 @@ structure Chapter07UnramifiedScalarExtensionProduct
   profile : ∀ i,
     Chapter07FiniteLocalExtensionData K' (factor i) k' (residue i)
   unramified : ∀ i, Chapter07UnramifiedExtension (profile i)
+  factorValuation : ∀ i, Valuation (factor i) ℤᵐ⁰
+  factorValuation_extension : ∀ i,
+    vK'.IsEquiv
+      ((factorValuation i).comap (algebraMap K' (factor i)))
+  factorResidueIdentification : ∀ i,
+    Chapter10ResidueField (factorValuation i) ≃+* (residue i)
+  factorResidueMap : ∀ i,
+    Chapter10ResidueField vK' →+*
+      Chapter10ResidueField (factorValuation i)
+  factorResidueMap_compatible : ∀ i,
+    (factorResidueIdentification i).toRingHom.comp (factorResidueMap i) =
+      (algebraMap k' (residue i)).comp baseResidueIdentification.toRingHom
+  factorExtensionData : ∀ i,
+    Chapter10HeterogeneousExtensionData vK' (factorValuation i)
+      (factorValuation_extension i)
+  factorProfile_ramificationIndex : ∀ i,
+    (profile i).ramificationIndex = (factorExtensionData i).ramificationIndex
+  factorProfile_residueDegree : ∀ i,
+    (profile i).residueDegree = (factorExtensionData i).residueDegree
   productEquiv : Nonempty
-    (L ⊗[K] K' ≃+* (∀ i, factor i))
+    (L ⊗[K] K' ≃ₐ[K'] (∀ i, factor i))
 
 /-- Hensel lifting of the residue idempotents gives the product decomposition
 of an unramified scalar extension. -/
@@ -176,15 +228,30 @@ theorem chapter07_unramified_scalar_extension_is_product
     [FiniteDimensional K L] [FiniteDimensional k l]
     [Algebra.IsSeparable k l]
     (E : Chapter07FiniteLocalExtensionData K L k l)
-    (hE : Chapter07UnramifiedExtension E) :
+    (hE : Chapter07UnramifiedExtension E)
+    (hLseparable : Chapter07FiniteExtensionIsSeparable K L)
+    (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
+    (hext : vK.IsEquiv (vL.comap (algebraMap K L)))
+    (baseResidueIdentification : Chapter10ResidueField vK ≃+* k)
+    (extensionResidueIdentification : Chapter10ResidueField vL ≃+* l)
+    (residueMap : Chapter10ResidueField vK →+* Chapter10ResidueField vL)
+    (residueMap_compatible :
+      extensionResidueIdentification.toRingHom.comp residueMap =
+        (algebraMap k l).comp baseResidueIdentification.toRingHom)
+    (vK' : Valuation K' ℤᵐ⁰) [Valuation.IsRankOneDiscrete vK']
+    (baseChangeValuation : vK.IsEquiv (vK'.comap (algebraMap K K')))
+    (baseChangeComplete :
+      IsAdicComplete (IsLocalRing.maximalIdeal vK'.valuationSubring)
+        vK'.valuationSubring)
+    (baseChangeResidueIdentification : Chapter10ResidueField vK' ≃+* k')
+    (d : Chapter10HeterogeneousExtensionData vK vL hext)
+    (hprofile : E.ramificationIndex = d.ramificationIndex ∧
+      E.residueDegree = d.residueDegree) :
     ∃ r : ℕ, Nonempty
-      (Chapter07UnramifiedScalarExtensionProduct K K' L k k' l r) := by
+      (Chapter07UnramifiedScalarExtensionProduct K K' L k k' l r vK'
+        baseChangeResidueIdentification) := by
   sorry
 
--- SOURCE_ISSUE: The source's unconditional linear-disjointness sentence is
--- false for arbitrary finite separable residue extensions.  The minimal
--- correction here assumes finite Galois residue extensions, which is the
--- situation in the finite-field tower of §7.4.
 theorem chapter07_finite_galois_residue_extensions_linearly_disjoint
     {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω]
     (K₁ K₂ : IntermediateField K Ω)

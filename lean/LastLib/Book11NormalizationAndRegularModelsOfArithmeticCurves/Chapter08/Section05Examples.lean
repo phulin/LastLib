@@ -100,7 +100,7 @@ theorem chapter08_arithmetic_node_x_chart_equations
   sorry
 
 def chapter08ArithmeticNodePiChartRelationIdeal
-    (R : Type u) [CommRing R] (π : R) (n : ℕ) :
+    (R : Type u) [CommRing R] (_π : R) (n : ℕ) :
     Ideal (MvPolynomial (Fin 3) R) :=
   Ideal.span ({MvPolynomial.X 1 * MvPolynomial.X 2 -
     MvPolynomial.X 0 ^ (n - 1)} : Set (MvPolynomial (Fin 3) R))
@@ -158,7 +158,8 @@ structure Chapter08ArithmeticNodeBlowupStep
   x_chart_equations : Prop
   x_chart_regular : Chapter08ArithmeticNodeXChartRegular R π n
   pi_chart_equations : Prop
-  pi_chart_exponent : n - 1
+  pi_chart_exponent : ℕ
+  pi_chart_exponent_eq : pi_chart_exponent = n - 1
   modification_is_iso_away_from_singular_point : Prop
 
 theorem chapter08_arithmetic_node_blowup_step
@@ -297,7 +298,10 @@ def chapter08CuspNormalizationMap (k : Type u) [CommRing k] :
 structure Chapter08CuspNormalizationData (k : Type u) [Field k] where
   map : chapter08CuspSubalgebra k →+* chapter08CuspNormalizationRing k
   map_eq_canonical : map = chapter08CuspNormalizationMap k
-  integral : IsIntegralHom map
+  integral :
+    letI : Algebra (chapter08CuspSubalgebra k) (chapter08CuspNormalizationRing k) :=
+      (chapter08CuspNormalizationMap k).toAlgebra
+    Algebra.IsIntegral (chapter08CuspSubalgebra k) (chapter08CuspNormalizationRing k)
   normalization_is_polynomial_ring :
     chapter08CuspNormalizationRing k = Polynomial k
   target_is_integrallyClosed : IsIntegrallyClosed (chapter08CuspNormalizationRing k)

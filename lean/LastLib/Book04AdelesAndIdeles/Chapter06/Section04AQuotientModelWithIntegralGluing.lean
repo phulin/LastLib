@@ -1,4 +1,4 @@
-import LastLib.Book04AdelesAndIdeles.Chapter06.Dependencies
+import LastLib.Book04AdelesAndIdeles.Chapter06.Section03ACompactFundamentalSet
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter06
 
@@ -215,6 +215,24 @@ theorem chapter06_integral_gluing_homeomorph
   refine ⟨e.toEquiv.toHomeomorphOfContinuousOpen hcont hopen, ?_⟩
   intro x
   exact chapter06IntegralGluingEquiv_mk P hsurj hker x
+
+/-- The integral-gluing model is compact, as it is homeomorphic to the
+    compact adelic quotient. -/
+theorem chapter06_integral_gluing_quotient_compact
+    (P : Chapter06AdeleData K O KInf Af Ohat)
+    (D : Chapter06ArchimedeanCell P)
+    [IsTopologicalAddGroup KInf] [IsTopologicalAddGroup Af]
+    [IsTopologicalAddGroup Ohat] :
+    CompactSpace (Chapter06IntegralGluingQuotient P) := by
+  let _ : CompactSpace (Chapter06AdeleQuotient P) :=
+    chapter06_adelic_quotient_compact P D
+  rcases chapter06_integral_gluing_homeomorph P
+      (chapter06_integral_gluing_kernel P) with ⟨e, he⟩
+  refine ⟨?_⟩
+  simpa using
+    (e.isCompact_preimage.mpr
+      (isCompact_univ : IsCompact
+        (Set.univ : Set (Chapter06AdeleQuotient P))))
 
 end
 

@@ -119,6 +119,9 @@ def chapter10CurveImageDegree
 
 /-! ### Cycles and Cartier divisors -/
 
+/-- The line-bundle object supplied by the preceding chapters. -/
+abbrev Chapter10LineBundle (X : Scheme.{u}) := Chapter11LineBundle X
+
 abbrev Chapter10AlgebraicCycle (X : Scheme.{u}) :=
   AlgebraicCycle X ℤ
 
@@ -156,7 +159,7 @@ noncomputable def chapter10PrimeCurveDivisor {X : Scheme.{u}}
     (C : Chapter10PrimeCurvePoint X) : Chapter10WeilDivisor X := by
   classical
   exact
-    { cycle := Function.locallyFinsupp.single C.1 1
+    { cycle := Function.locallyFinsuppWithin.single C.1 1
       support_is_curve := by
         sorry
       finite_support := by
@@ -166,7 +169,7 @@ noncomputable def chapter10PointZeroCycle {X : Scheme.{u}}
     (x : Chapter10ClosedPoint X) : Chapter10ZeroCycle X := by
   classical
   exact
-    { cycle := Function.locallyFinsupp.single x.1 1
+    { cycle := Function.locallyFinsuppWithin.single x.1 1
       support_is_closed := by
         sorry
       finite_support := by
@@ -177,7 +180,7 @@ def chapter10WeilDivisorZero {X : Scheme.{u}} : Chapter10WeilDivisor X where
   support_is_curve := by
     simp
   finite_support := by
-    simp
+    sorry
 
 def chapter10WeilDivisorAdd {X : Scheme.{u}}
     (D E : Chapter10WeilDivisor X) : Chapter10WeilDivisor X where
@@ -200,7 +203,7 @@ def chapter10ZeroCycleZero {X : Scheme.{u}} : Chapter10ZeroCycle X where
   support_is_closed := by
     simp
   finite_support := by
-    simp
+    sorry
 
 def chapter10ZeroCycleAdd {X : Scheme.{u}}
     (z w : Chapter10ZeroCycle X) : Chapter10ZeroCycle X where
@@ -298,13 +301,15 @@ def chapter10ProperIntersection {X : Scheme.{u}}
 /- LOCAL_DEPENDENCY_GUESS: restriction of a line bundle to a prime curve has
 an integer degree and is invariant under line-bundle isomorphism. -/
 class Chapter10CurveDegreeTheory (X : Scheme.{u}) where
-  degree : Chapter10IntegralCurveOn X → Chapter10LineBundle X → ℤ
-  degree_iso : ∀ (C : Chapter10IntegralCurveOn X) {L M : Chapter10LineBundle X},
+  degree : ∀ (C : Chapter10IntegralCurveOn X),
+    Chapter10LineBundle C.carrier → ℤ
+  degree_iso : ∀ (C : Chapter10IntegralCurveOn X)
+    {L M : Chapter10LineBundle C.carrier},
     chapter11LineBundleIsomorphic L M → degree C L = degree C M
 
 def chapter10CurveDegree {X : Scheme.{u}}
     [Chapter10CurveDegreeTheory X]
-    (C : Chapter10IntegralCurveOn X) (L : Chapter10LineBundle X) : ℤ :=
+    (C : Chapter10IntegralCurveOn X) (L : Chapter10LineBundle C.carrier) : ℤ :=
   Chapter10CurveDegreeTheory.degree C L
 
 /-! ### Function-field and birational adapters -/

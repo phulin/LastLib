@@ -97,7 +97,431 @@ theorem chapter08_eisenstein_extension
       (∀ x : L, IsIntegral A x →
         ∃! a : Fin g.natDegree → A,
           x = chapter08PowerBasisExpansion α a) := by
-  sorry
+  let n : ℕ := g.natDegree
+  have hn : 0 < n := by
+    dsimp [n]
+    exact hf.2.1
+  have hspan : Ideal.span ({π} : Set A) = IsLocalRing.maximalIdeal A :=
+    hf.2.2.2.2
+  have hconstmem : g.constantCoeff ∈ IsLocalRing.maximalIdeal A := by
+    rw [← hspan]
+    simpa [Polynomial.constantCoeff] using hf.2.2.1 0 hf.2.1
+  have hconstnot : g.constantCoeff ∉ (IsLocalRing.maximalIdeal A) ^ 2 := by
+    intro h
+    apply hf.2.2.2.1
+    rw [← Ideal.span_singleton_pow, hspan]
+    exact h
+  have hconstval : vK (algebraMap A K g.constantCoeff) = 1 :=
+    (hvalue_square g.constantCoeff).mp ⟨hconstmem, hconstnot⟩
+  have hconstne : g.constantCoeff ≠ 0 := by
+    intro hzero
+    have hbad := hconstval
+    rw [hzero, map_zero, AddValuation.map_zero] at hbad
+    simp at hbad
+  have hcoeff_value (i : Fin (n + 1)) (hci : g.coeff (i : ℕ) ≠ 0) :
+      ∃ s : ℤ,
+        vK (algebraMap A K (g.coeff (i : ℕ))) = (s : WithTop ℤ) := by
+    have hmapne : algebraMap A K (g.coeff (i : ℕ)) ≠ 0 := by
+      intro hzero
+      apply hci
+      apply IsFractionRing.injective A K
+      simpa using hzero
+    rcases WithTop.ne_top_iff_exists.mp (vK.ne_top_iff.mpr hmapne) with ⟨s, hs⟩
+    exact ⟨s, hs.symm⟩
+  have hcoeff_lower (i : Fin (n + 1)) (hi : (i : ℕ) < n)
+      (hci : g.coeff (i : ℕ) ≠ 0) :
+      (1 : WithTop ℤ) ≤ vK (algebraMap A K (g.coeff (i : ℕ))) := by
+    have hmem : g.coeff (i : ℕ) ∈ IsLocalRing.maximalIdeal A := by
+      rw [← hspan]
+      exact hf.2.2.1 (i : ℕ) hi
+    have hpos := (hvalue_ideal (g.coeff (i : ℕ))).mp hmem
+    rcases hcoeff_value i hci with ⟨s, hs⟩
+    rw [hs]
+    apply WithTop.coe_le_coe.mpr
+    rw [hs] at hpos
+    have hspos : (0 : ℤ) < s := WithTop.coe_lt_coe.mp hpos
+    omega
+  let terms : Fin (n + 1) → L :=
+    fun i => algebraMap A L (g.coeff (i : ℕ)) * α ^ (i : ℕ)
+  have hterm_ne_coeff (i : Fin (n + 1)) (hti : terms i ≠ 0) :
+      g.coeff (i : ℕ) ≠ 0 := by
+    intro hzero
+    apply hti
+    dsimp [terms]
+    rw [hzero, map_zero, zero_mul]
+  have hsum : (∑ i, terms i) = 0 := by
+    simpa [terms, n, Polynomial.aeval_eq_sum_range,
+      Algebra.smul_def, ← Fin.sum_univ_eq_sum_range] using hroot
+  have hαne : α ≠ 0 := by
+    intro hzero
+    have hzeroL : algebraMap A L g.constantCoeff = 0 := by
+      change algebraMap A L (g.coeff 0) = 0
+      rw [Polynomial.coeff_zero_eq_aeval_zero' g]
+      simpa [hzero] using hroot
+    have hzeroK : algebraMap A K g.constantCoeff = 0 := by
+      apply (algebraMap K L).injective
+      rw [← IsScalarTower.algebraMap_apply A K L]
+      simpa using hzeroL
+    have hbad := hconstval
+    rw [hzeroK, AddValuation.map_zero] at hbad
+    simp at hbad
+  have hαtop : vL α ≠ (⊤ : WithTop ℤ) := vL.ne_top_iff.mpr hαne
+  obtain ⟨r, hr⟩ := WithTop.ne_top_iff_exists.mp hαtop
+  have hterm_value (i : Fin (n + 1))
+      (hci : g.coeff (i : ℕ) ≠ 0) :
+      vL (terms i) =
+        n • vK (algebraMap A K (g.coeff (i : ℕ))) +
+          (i : ℕ) • vL α := by
+    dsimp [terms]
+    have hmapne : algebraMap A K (g.coeff (i : ℕ)) ≠ 0 := by
+      intro hzero
+      apply hci
+      apply IsFractionRing.injective A K
+      simpa using hzero
+    rw [AddValuation.map_mul, IsScalarTower.algebraMap_apply A K L,
+      hrestrict _ hmapne, AddValuation.map_pow]
+  have hterm_value_coe (i : Fin (n + 1))
+      (hci : g.coeff (i : ℕ) ≠ 0) :
+      ∃ s : ℤ,
+        vK (algebraMap A K (g.coeff (i : ℕ))) = (s : WithTop ℤ) ∧
+          vL (terms i) =
+            (((n : ℤ) * s + (i : ℤ) * r : ℤ) : WithTop ℤ) := by
+    rcases hcoeff_value i hci with ⟨s, hs⟩
+    refine ⟨s, hs, ?_⟩
+    rw [hterm_value i hci, hs, ← hr]
+    norm_cast
+  have hterm0 : terms (0 : Fin (n + 1)) ≠ 0 := by
+    dsimp [terms]
+    have hmap : algebraMap A L g.constantCoeff ≠ 0 := by
+      intro hzero
+      apply hconstne
+      apply IsFractionRing.injective A K
+      apply (algebraMap K L).injective
+      rw [← IsScalarTower.algebraMap_apply A K L]
+      simpa using hzero
+    exact mul_ne_zero hmap (pow_ne_zero _ hαne)
+  have hterm0_value : vL (terms (0 : Fin (n + 1))) = (n : WithTop ℤ) := by
+    have hcoeff0 : g.coeff (0 : ℕ) ≠ 0 := by
+      simpa [Polynomial.constantCoeff] using hconstne
+    rw [hterm_value (0 : Fin (n + 1)) hcoeff0]
+    have hscaled := congrArg (fun z : WithTop ℤ => n • z) hconstval
+    simpa [Polynomial.constantCoeff] using hscaled
+  have hleading_coeff : g.coeff n = 1 := by
+    simpa [n] using hf.1.coeff_natDegree
+  have htermN : terms ⟨n, Nat.lt_succ_self n⟩ ≠ 0 := by
+    dsimp [terms]
+    rw [hleading_coeff]
+    simp [hαne]
+  have htermN_value :
+      vL (terms ⟨n, Nat.lt_succ_self n⟩) = ((n : ℤ) * r : WithTop ℤ) := by
+    have hleading_ne : g.coeff n ≠ 0 := by
+      rw [hleading_coeff]
+      exact one_ne_zero
+    rw [hterm_value ⟨n, Nat.lt_succ_self n⟩ hleading_ne,
+      hleading_coeff, ← hr]
+    simp only [map_one]
+    rw [← WithTop.coe_nsmul]
+    norm_num [nsmul_eq_mul]
+  have hno_strict_least (i₀ : Fin (n + 1)) (hti : terms i₀ ≠ 0)
+      (hleast : ∀ j, j ≠ i₀ → vL (terms i₀) < vL (terms j)) : False := by
+    have hlt : vL (terms i₀) <
+        vL (∑ i ∈ (Finset.univ \ {i₀}), terms i) := by
+      apply vL.map_lt_sum
+      · exact vL.ne_top_iff.mpr hti
+      · intro j hj
+        exact hleast j (by simpa using (Finset.mem_sdiff.mp hj).2)
+    have hcancel : vL (∑ i, terms i) = vL (terms i₀) := by
+      rw [Finset.sum_eq_add_sum_sdiff_singleton_of_mem (Finset.mem_univ i₀)]
+      exact AddValuation.map_add_eq_of_lt_left vL hlt
+    have hfinite : vL (terms i₀) ≠ (⊤ : WithTop ℤ) :=
+      vL.ne_top_iff.mpr hti
+    apply hfinite
+    calc
+      vL (terms i₀) = vL (∑ i, terms i) := hcancel.symm
+      _ = vL 0 := by rw [hsum]
+      _ = ⊤ := AddValuation.map_zero vL
+  have hr_le_one : r ≤ 1 := by
+    by_contra hnot
+    have hgt : (1 : ℤ) < r := lt_of_not_ge hnot
+    have hrpos : (0 : ℤ) < r := by omega
+    have hleast :
+        ∀ j, j ≠ (0 : Fin (n + 1)) →
+          vL (terms (0 : Fin (n + 1))) < vL (terms j) := by
+      intro j hj
+      by_cases ht : terms j = 0
+      · rw [ht, AddValuation.map_zero]
+        exact (vL.ne_top_iff.mpr hterm0).lt_top
+      · have hj0 : (j : ℕ) ≠ 0 := by
+          intro hz
+          apply hj
+          apply Fin.ext
+          simpa using hz
+        have hjpos : 0 < (j : ℕ) := Nat.pos_of_ne_zero hj0
+        by_cases hjn : (j : ℕ) = n
+        · have hjvalue : vL (terms j) = ((n : ℤ) * r : WithTop ℤ) := by
+            have hjc : g.coeff (j : ℕ) ≠ 0 := by
+              rw [hjn, hleading_coeff]
+              exact one_ne_zero
+            rw [hterm_value j hjc, hjn, hleading_coeff, ← hr]
+            simp only [map_one]
+            rw [← WithTop.coe_nsmul]
+            norm_num [nsmul_eq_mul]
+          have hnZ : (0 : ℤ) < n := by exact_mod_cast hn
+          have hnr : (n : ℤ) < (n : ℤ) * r := by
+            simpa using mul_lt_mul_of_pos_left hgt hnZ
+          rw [hterm0_value, hjvalue]
+          exact WithTop.coe_lt_coe.mpr hnr
+        · have hjlt : (j : ℕ) < n := by
+            have hjlt' := j.isLt
+            omega
+          have hjc := hterm_ne_coeff j ht
+          rcases hterm_value_coe j hjc with ⟨s, hs, hsterm⟩
+          have hs_lower : (1 : ℤ) ≤ s := by
+            apply WithTop.coe_le_coe.mp
+            rw [← hs]
+            exact hcoeff_lower j hjlt hjc
+          have hjZ : (0 : ℤ) < (j : ℤ) := by exact_mod_cast hjpos
+          have hns : (n : ℤ) ≤ (n : ℤ) * s := by
+            calc
+              (n : ℤ) = (n : ℤ) * 1 := by ring
+              _ ≤ (n : ℤ) * s := mul_le_mul_of_nonneg_left hs_lower (by omega)
+          have hir : (0 : ℤ) < (j : ℤ) * r := mul_pos hjZ hrpos
+          have hrat : (n : ℤ) < (n : ℤ) * s + (j : ℤ) * r := by
+            linarith
+          rw [hterm0_value, hsterm]
+          exact WithTop.coe_lt_coe.mpr hrat
+    exact hno_strict_least (0 : Fin (n + 1)) hterm0 hleast
+  have one_le_r : (1 : ℤ) ≤ r := by
+    by_contra hnot
+    have hlt : r < (1 : ℤ) := lt_of_not_ge hnot
+    have hleast :
+        ∀ j, j ≠ ⟨n, Nat.lt_succ_self n⟩ →
+          vL (terms ⟨n, Nat.lt_succ_self n⟩) < vL (terms j) := by
+      intro j hj
+      by_cases hjzero : (j : ℕ) = 0
+      · have hj' : j = (0 : Fin (n + 1)) := by
+          apply Fin.ext
+          simpa using hjzero
+        have hnZ : (0 : ℤ) < n := by exact_mod_cast hn
+        have hnr : (n : ℤ) * r < (n : ℤ) := by
+          simpa using mul_lt_mul_of_pos_left hlt hnZ
+        rw [htermN_value, hj', hterm0_value]
+        exact WithTop.coe_lt_coe.mpr hnr
+      · by_cases ht : terms j = 0
+        · rw [ht, AddValuation.map_zero]
+          exact (vL.ne_top_iff.mpr htermN).lt_top
+        · have hjpos : 0 < (j : ℕ) := Nat.pos_of_ne_zero hjzero
+          have hjn : (j : ℕ) ≠ n := by
+            intro hjn
+            apply hj
+            apply Fin.ext
+            simpa using hjn
+          have hjlt : (j : ℕ) < n := by
+            have hjlt' := j.isLt
+            omega
+          have hjc := hterm_ne_coeff j ht
+          rcases hterm_value_coe j hjc with ⟨s, hs, hsterm⟩
+          have hs_lower : (1 : ℤ) ≤ s := by
+            apply WithTop.coe_le_coe.mp
+            rw [← hs]
+            exact hcoeff_lower j hjlt hjc
+          have hjZ : (0 : ℤ) < (j : ℤ) := by exact_mod_cast hjpos
+          have hdiffpos : (0 : ℤ) < (n : ℤ) - (j : ℤ) := by
+            apply sub_pos.mpr
+            exact_mod_cast hjlt
+          have hdifflt : (n : ℤ) - (j : ℤ) < (n : ℤ) := by
+            have : (0 : ℤ) < (j : ℤ) := hjZ
+            linarith
+          have hmul :
+              ((n : ℤ) - (j : ℤ)) * r <
+                ((n : ℤ) - (j : ℤ)) * 1 := by
+            simpa using mul_lt_mul_of_pos_left hlt hdiffpos
+          have hbase :
+              (n : ℤ) * r < (n : ℤ) * 1 + (j : ℤ) * r := by
+            calc
+              (n : ℤ) * r = (j : ℤ) * r +
+                  ((n : ℤ) - (j : ℤ)) * r := by ring
+              _ < (j : ℤ) * r + ((n : ℤ) - (j : ℤ)) * 1 := by linarith
+              _ ≤ (j : ℤ) * r + (n : ℤ) * 1 := by
+                gcongr
+              _ = (n : ℤ) * 1 + (j : ℤ) * r := by ring
+          have hns : (n : ℤ) * 1 ≤ (n : ℤ) * s := by
+            exact mul_le_mul_of_nonneg_left hs_lower (by omega)
+          have hrat :
+              (n : ℤ) * r < (n : ℤ) * s + (j : ℤ) * r := by
+            linarith
+          rw [htermN_value, hsterm]
+          exact WithTop.coe_lt_coe.mpr hrat
+    exact hno_strict_least ⟨n, Nat.lt_succ_self n⟩ htermN hleast
+  have hr_one : r = 1 := by omega
+  have hα : vL α = 1 := by
+    calc
+      vL α = (r : WithTop ℤ) := hr.symm
+      _ = 1 := by rw [hr_one]; norm_num
+  let _ : (Ideal.span ({π} : Set A)).IsPrime := by
+    rw [hspan]
+    infer_instance
+  have hE : g.IsEisensteinAt (Ideal.span ({π} : Set A)) := by
+    apply hf.1.isEisensteinAt_of_mem_of_notMem
+    · rw [hspan]
+      exact (IsLocalRing.maximalIdeal.isMaximal A).ne_top
+    · intro i hi
+      exact hf.2.2.1 i hi
+    · simpa [Ideal.span_singleton_pow] using hf.2.2.2.1
+  have hirrA : Irreducible g :=
+    hE.irreducible inferInstance hf.1.isPrimitive hf.2.1
+  have hirrK : Irreducible (g.map (algebraMap A K)) :=
+    (hf.1.isPrimitive.irreducible_iff_irreducible_map_fraction_map).mp hirrA
+  have hrootK : aeval α (g.map (algebraMap A K)) = 0 := by
+    simpa only [aeval_map_algebraMap, IsScalarTower.algebraMap_eq A K L] using hroot
+  have hmin : g.map (algebraMap A K) = minpoly K α :=
+    minpoly.eq_of_irreducible_of_monic hirrK hrootK
+      (hf.1.map (algebraMap A K))
+  have hαintegralK : IsIntegral K α := by
+    have hαintegralA : IsIntegral A α := ⟨g, hf.1, hroot⟩
+    exact hαintegralA.tower_top
+  let B : PowerBasis K L := PowerBasis.ofAdjoinEqTop hαintegralK hgen
+  have hBdim : B.dim = n := by
+    rw [PowerBasis.ofAdjoinEqTop_dim, ← hmin,
+      natDegree_map_eq_of_injective (IsFractionRing.injective A K)]
+  have hdegree : Module.finrank K L = n := by
+    exact (PowerBasis.finrank B).trans hBdim
+  have hdiscreteK :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation
+        vK := by
+    have hπKne : algebraMap A K π ≠ 0 := by
+      intro hzero
+      have hbad := hπ
+      rw [hzero, AddValuation.map_zero] at hbad
+      simp at hbad
+    refine ⟨algebraMap A K π, hπKne, hπ, ?_⟩
+    intro x hx
+    rcases WithTop.ne_top_iff_exists.mp (vK.ne_top_iff.mpr hx) with ⟨z, hz⟩
+    exact ⟨z, hz.symm⟩
+  have hdiscreteL :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation
+        vL := by
+    refine ⟨α, hαne, hα, ?_⟩
+    intro x hx
+    rcases WithTop.ne_top_iff_exists.mp (vL.ne_top_iff.mpr hx) with ⟨z, hz⟩
+    exact ⟨z, hz.symm⟩
+  obtain ⟨d⟩ :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_heterogeneous_extension_data_exists
+      vK vL hval
+  let : Finite
+      (LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ValueGroup vL ⧸
+        d.valueGroupMap.range) :=
+    d.finite_quotient
+  have hram :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_normalized_ramification_index_eq_scale
+      vK vL hdiscreteK hdiscreteL hval d n hn hrestrict
+  have hfund :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_heterogeneous_single_extension_fundamental_inequality
+      vK vL hval d
+  have hprod : n * d.residueDegree ≤ n := by
+    simpa [hram.2, hdegree] using hfund
+  have hdres_le : d.residueDegree ≤ 1 := by
+    by_contra hnot
+    have hdres_two : 2 ≤ d.residueDegree := by omega
+    have hmul : n * 2 ≤ n * d.residueDegree := Nat.mul_le_mul_left n hdres_two
+    have hn_two : n < n * 2 := by omega
+    exact (Nat.not_lt_of_ge hprod) (hn_two.trans_le hmul)
+  have hdres_pos : 0 < d.residueDegree := by
+    rw [d.residueDegree_eq]
+    unfold LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10HeterogeneousResidueDegree
+    let vk : Valuation K (Multiplicative (WithTop ℤ)ᵒᵈ) := vK
+    let vl : Valuation L (Multiplicative (WithTop ℤ)ᵒᵈ) := vL
+    let : Valuation.HasExtension vk vl := ⟨hval⟩
+    let : Algebra vk.valuationSubring vl.valuationSubring :=
+      Valuation.HasExtension.instAlgebra_valuationSubring vk vl
+    let : IsLocalHom
+        (algebraMap vk.valuationSubring vl.valuationSubring) :=
+      Valuation.HasExtension.instIsLocalHomValuationInteger
+        (vR := vk) (vS := vl)
+    let : Algebra
+        (LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ResidueField
+          vk)
+        (LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ResidueField
+          vl) := inferInstance
+    let : Module
+        (LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ResidueField
+          vk)
+        (LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ResidueField
+          vl) := Algebra.toModule
+    let : FiniteDimensional
+        (LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ResidueField
+          vk)
+        (LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ResidueField
+          vl) :=
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_residue_degree_finite
+        vk vl
+    change 0 < Module.finrank
+      (LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ResidueField vk)
+      (LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ResidueField vl)
+    exact Module.finrank_pos
+  have hdres : d.residueDegree = 1 := by omega
+  have htotal : chapter08TotallyRamified vK vL hval := by
+    change
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10HeterogeneousResidueDegree
+          vK vL hval = 1
+    exact d.residueDegree_eq.symm.trans hdres
+  have hclosure : (integralClosure A L : Set L) =
+      (Algebra.adjoin A ({α} : Set L) : Set L) :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.eisenstein_integral_closure_is_root_order
+      π g α hf hroot (by rfl) hgen
+  have hexpK : ∀ x : L, ∃! b : Fin n → K,
+      x = LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.eisensteinExpansion α b :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.eisenstein_power_basis_expansion_unique
+      π g α hf hroot (by rfl) hgen
+  have hexpansion : ∀ x : L, IsIntegral A x →
+      ∃! a : Fin n → A, x = chapter08PowerBasisExpansion α a := by
+    intro x hx
+    obtain ⟨b, hxb, hbuniq⟩ := hexpK x
+    have hbintegral : ∀ i, IsLocalization.IsInteger A (b i) := by
+      intro i
+      have hiff :=
+        LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.eisenstein_expansion_integrality_iff
+          π g α hf hroot (by rfl) hgen b
+      apply hiff.mp
+      rw [← hxb]
+      exact hx
+    choose a ha using hbintegral
+    have hxa : x = chapter08PowerBasisExpansion α a := by
+      calc
+        x = LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.eisensteinExpansion α b := hxb
+        _ = chapter08PowerBasisExpansion α a := by
+          dsimp [LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.eisensteinExpansion,
+            chapter08PowerBasisExpansion]
+          apply Finset.sum_congr rfl
+          intro i hi
+          rw [← ha i]
+          simp [IsScalarTower.algebraMap_apply A K L]
+    refine ⟨a, hxa, ?_⟩
+    intro a' ha'
+    have ha'K : x =
+        LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.eisensteinExpansion α
+          (fun i => algebraMap A K (a' i)) := by
+      calc
+        x = chapter08PowerBasisExpansion α a' := ha'
+        _ = LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.eisensteinExpansion α
+            (fun i => algebraMap A K (a' i)) := by
+          dsimp [chapter08PowerBasisExpansion,
+            LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.eisensteinExpansion]
+          apply Finset.sum_congr rfl
+          intro i hi
+          simp [IsScalarTower.algebraMap_apply A K L]
+    have hb' := hbuniq (fun i => algebraMap A K (a' i)) ha'K
+    apply _root_.funext
+    intro i
+    apply IsFractionRing.injective A K
+    calc
+      algebraMap A K (a' i) = (fun i => algebraMap A K (a' i)) i := rfl
+      _ = b i := congrFun hb' i
+      _ = algebraMap A K (a i) := (ha i).symm
+  refine ⟨hirrK, ?_, htotal, hα, hclosure, ?_⟩
+  · simpa [n] using hdegree
+  · intro x hx
+    simpa [n] using hexpansion x hx
 
 /-- The additive value of the `i`th term in a root equation. -/
 def chapter08RootEquationTermValue

@@ -1,8 +1,11 @@
 import Mathlib.Algebra.Module.FinitePresentation
+import Mathlib.Algebra.Ring.Opposite
+import Mathlib.Data.ZMod.Basic
 import Mathlib.LinearAlgebra.TensorProduct.Map
 import Mathlib.RingTheory.Flat.EquationalCriterion
 import Mathlib.RingTheory.Flat.FaithfullyFlat.Algebra
 import Mathlib.RingTheory.Flat.FaithfullyFlat.Descent
+import Mathlib.RingTheory.TensorProduct.IncludeLeftSubRight
 import Mathlib.RingTheory.Flat.Localization
 import Mathlib.RingTheory.Finiteness.Descent
 import Mathlib.RingTheory.Localization.Away.Basic
@@ -25,6 +28,10 @@ abbrev Chapter03FaithfullyFlat (A : Type u) (B : Type v) [CommRing A] [CommRing 
     [Algebra A B] : Prop :=
   Module.FaithfullyFlat A B
 
+instance chapter03ZModTwoOppositeModule : Module ℤᵐᵒᵖ (ZMod 2) :=
+  Module.compHom (ZMod 2)
+    ((RingHom.id ℤ).fromOpposite (fun _ _ => mul_comm _ _))
+
 theorem chapter03_faithfullyFlat_iff_ringHom
     (A : Type u) (B : Type v) [CommRing A] [CommRing B] [Algebra A B] :
     Chapter03FaithfullyFlat A B ↔ (algebraMap A B).FaithfullyFlat := by
@@ -43,10 +50,39 @@ theorem chapter03TensorUnitMap_apply (A : Type u) (B : Type v) [CommRing A] [Com
   rfl
 
 /-- The iterated tensor product with `n + 1` copies of `B`, right-associated. -/
+structure Chapter03AmitsurTensorStage (A : Type u) (B : Type v) [CommRing A] [CommRing B]
+    [Algebra A B] where
+  carrier : Type v
+  [addCommGroup : AddCommGroup carrier]
+  [module : Module A carrier]
+
+def chapter03AmitsurTensorStage (A : Type u) (B : Type v) [CommRing A] [CommRing B]
+    [Algebra A B] : ℕ → Chapter03AmitsurTensorStage A B
+  | 0 =>
+      { carrier := B
+        addCommGroup := inferInstance
+        module := inferInstance }
+  | n + 1 =>
+      let stage := chapter03AmitsurTensorStage A B n
+      letI := stage.addCommGroup
+      letI := stage.module
+      { carrier := B ⊗[A] stage.carrier
+        addCommGroup := inferInstance
+        module := inferInstance }
+
 def Chapter03AmitsurTensor (A : Type u) (B : Type v) [CommRing A] [CommRing B]
-    [Algebra A B] : ℕ → Type max u v
-  | 0 => B
-  | n + 1 => B ⊗[A] Chapter03AmitsurTensor A B n
+    [Algebra A B] : ℕ → Type v :=
+  fun n => (chapter03AmitsurTensorStage A B n).carrier
+
+instance chapter03AmitsurTensorAddCommGroup (A : Type u) (B : Type v) [CommRing A]
+    [CommRing B] [Algebra A B] (n : ℕ) :
+    AddCommGroup (Chapter03AmitsurTensor A B n) :=
+  (chapter03AmitsurTensorStage A B n).addCommGroup
+
+instance chapter03AmitsurTensorModule (A : Type u) (B : Type v) [CommRing A]
+    [CommRing B] [Algebra A B] (n : ℕ) :
+    Module A (Chapter03AmitsurTensor A B n) :=
+  (chapter03AmitsurTensorStage A B n).module
 
 @[simp]
 theorem chapter03AmitsurTensor_zero (A : Type u) (B : Type v) [CommRing A] [CommRing B]
@@ -138,8 +174,16 @@ def chapter03ModuleAmitsurEqualizer (A : Type u) (B : Type v) [CommRing A] [Comm
 theorem chapter03AmitsurInvariant_iff_mem (A : Type u) (B : Type v) [CommRing A] [CommRing B]
     [Algebra A B] (M : Type*) [AddCommGroup M] [Module A M] (x : B ⊗[A] M) :
     chapter03AmitsurInvariant A B M x ↔ x ∈ chapter03ModuleAmitsurEqualizer A B M := by
-  simp [chapter03AmitsurInvariant, chapter03ModuleAmitsurEqualizer,
-    chapter03ModuleAmitsurDifference]
+  change chapter03ModuleAmitsurD0 A B M x = chapter03ModuleAmitsurD1 A B M x ↔
+    x ∈ (chapter03ModuleAmitsurD0 A B M - chapter03ModuleAmitsurD1 A B M).ker
+  rw [LinearMap.mem_ker]
+  constructor
+  · intro h
+    change chapter03ModuleAmitsurD0 A B M x - chapter03ModuleAmitsurD1 A B M x = 0
+    exact sub_eq_zero.mpr h
+  · intro h
+    apply sub_eq_zero.mp
+    simpa only [LinearMap.sub_apply] using h
 
 /-- The alternating differential `∂ₙ = ∑ i (-1)^i dⁱ` for a coface family. -/
 def chapter03AmitsurBoundary (A : Type u) (B : Type v) [CommRing A] [CommRing B]

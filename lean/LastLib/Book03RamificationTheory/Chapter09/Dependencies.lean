@@ -1,6 +1,8 @@
+import LastLib.Book03RamificationTheory.Chapter03.Section06MixedUnramifiedTameExtension
 import LastLib.Book03RamificationTheory.Chapter05.Section03TowerTransitivity
 import LastLib.Book03RamificationTheory.Chapter07.Section03TheDerivativeFormula
 import LastLib.Book03RamificationTheory.Chapter07.Section06TameAndWildDerivativeBounds
+import LastLib.Book03RamificationTheory.Chapter08.Section01FromADualLatticeToAnIdealDownstairs
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.MeasureTheory.Integral.Bochner.Set
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
@@ -11,7 +13,9 @@ namespace LastLib.Book03RamificationTheory.Chapter09
 noncomputable section
 
 open LastLib.Book03RamificationTheory.Chapter05
+open LastLib.Book03RamificationTheory.Chapter03
 open LastLib.Book03RamificationTheory.Chapter07
+open LastLib.Book03RamificationTheory.Chapter08
 open Polynomial
 open scoped BigOperators Polynomial
 
@@ -47,6 +51,15 @@ def chapter09LowerGroup
     (D : Chapter05RamificationFiltration G) (i : ℕ) :
     chapter09LowerGroup D i = D.lowerGroup (i : ℝ) :=
   rfl
+
+/- The lower-numbered shape of the mixed unramified--tame example from
+   Chapter 3.  The residue degree is invisible to this group profile; it
+   reappears only when the different is normed downstairs. -/
+def chapter09MixedUnramifiedTameProfile
+    {G : Type*} [Group G] [Finite G]
+    (D : Chapter05RamificationFiltration G) (e : ℕ) : Prop :=
+  Nat.card (chapter09LowerGroup D 0) = e ∧
+    chapter09LowerGroup D 1 = ⊥
 
 theorem chapter09_lower_group_mem_iff
     {G : Type*} [Group G] [Finite G]
@@ -203,11 +216,11 @@ structure Chapter09HilbertFormulaSetup
   d : ℕ
   monogenic : chapter07MonogenicPresentation A B K L α f
   different_power :
-    chapter07DifferentIdeal A B =
+    chapter08DifferentIdeal A B =
       (IsLocalRing.maximalIdeal B) ^ d
   different_power_unique :
     ∃! n : ℕ,
-      chapter07DifferentIdeal A B =
+      chapter08DifferentIdeal A B =
         (IsLocalRing.maximalIdeal B) ^ n
   /- LOCAL_DEPENDENCY_GUESS: the preceding different chapter supplies the
      valuation realization of the different exponent for the chosen integral

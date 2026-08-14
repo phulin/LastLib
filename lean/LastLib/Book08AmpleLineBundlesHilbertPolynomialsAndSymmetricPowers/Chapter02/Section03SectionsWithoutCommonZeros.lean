@@ -67,24 +67,57 @@ theorem chapter02_sections_generate_iff_stalkwise_generation
   sorry
 
 /-!
-The canonical pullback statement is phrased before choosing a comparison between a pulled-back
-free sheaf and the free sheaf on the target.  Once that comparison is supplied, this is exactly
-generation by the pulled-back sections.
+The free presentation has to be transported across base change.  Merely pulling back the old
+evaluation map gives an epimorphism from the pulled-back free sheaf, but the book's statement is
+generation by the pulled-back sections, whose canonical source is the free sheaf on the target.
+The comparison in `Dependencies.lean` records this replacement of presentations.
 -/
+def chapter02PullbackEvaluationMap
+    {X Y : Scheme.{u}} (g : Y ⟶ X) (L : Chapter02LineBundle X)
+    {I : Type u} (s : I → Chapter02LineBundleSections L) :
+    SheafOfModules.free (R := Y.ringCatSheaf) I ⟶
+      (Scheme.Modules.pullback g).obj L.carrier :=
+  (chapter02FreePullbackComparisonData g I).comparison.hom ≫
+    (Scheme.Modules.pullback g).map (chapter02EvaluationMap L s)
+
 def Chapter02PullbackEvaluationIsEpi
     {X Y : Scheme.{u}} (g : Y ⟶ X) (L : Chapter02LineBundle X)
     {I : Type u} (s : I → Chapter02LineBundleSections L) : Prop :=
-  Epi ((Scheme.Modules.pullback g).map (chapter02EvaluationMap L s))
+  Epi (chapter02PullbackEvaluationMap g L s)
 
 theorem chapter02_sections_generate_is_stable_under_base_change
     {X Y : Scheme.{u}} (g : Y ⟶ X) (L : Chapter02LineBundle X)
     {I : Type u} (s : I → Chapter02LineBundleSections L)
     (h : Chapter02SectionsGenerate L s) :
     Chapter02PullbackEvaluationIsEpi g L s := by
-  exact @Functor.map_epi _ _ _ _ (Scheme.Modules.pullback g)
-    (Functor.preservesEpimorphisms_of_adjunction
-      (Scheme.Modules.pullbackPushforwardAdjunction g))
-    _ _ (chapter02EvaluationMap L s) h
+  let e := (chapter02FreePullbackComparisonData g I).comparison
+  have he : Epi e.hom := @IsIso.epi_of_iso _ _ _ _ e.hom e.isIso_hom
+  exact epi_comp' he
+    (@Functor.map_epi _ _ _ _ (Scheme.Modules.pullback g)
+      (Functor.preservesEpimorphisms_of_adjunction
+        (Scheme.Modules.pullbackPushforwardAdjunction g))
+      _ _ (chapter02EvaluationMap L s) h)
+
+theorem chapter02_pullback_evaluation_map_on_sections
+    {X Y : Scheme.{u}} (g : Y ⟶ X) (L : Chapter02LineBundle X)
+    {I : Type u} (s : I → Chapter02LineBundleSections L) (i : I) :
+      ((Scheme.Modules.pullback g).obj L.carrier).freeHomEquiv
+        (chapter02PullbackEvaluationMap g L s) i =
+      chapter02PullbackSectionMap g L.carrier (s i) := by
+  change SheafOfModules.sectionsMap ((Scheme.Modules.pullback g).map (chapter02EvaluationMap L s))
+    (((Scheme.Modules.pullback g).obj (chapter02FreeQuasiCoherentModule X I).carrier).freeHomEquiv
+      (chapter02FreePullbackComparisonData g I).comparison.hom i) =
+    chapter02PullbackSectionMap g L.carrier (s i)
+  rw [show (((Scheme.Modules.pullback g).obj (chapter02FreeQuasiCoherentModule X I).carrier).freeHomEquiv
+      (chapter02FreePullbackComparisonData g I).comparison.hom i) =
+      SheafOfModules.sectionsMap (chapter02FreePullbackComparisonData g I).comparison.hom
+        (SheafOfModules.freeSection (R := Y.ringCatSheaf) i) from rfl]
+  rw [(chapter02FreePullbackComparisonData g I).comparison_sections i]
+  have hn := chapter02_pullback_section_map_natural
+    (M := (chapter02FreeQuasiCoherentModule X I).carrier) (N := L.carrier)
+    g (chapter02EvaluationMap L s) (SheafOfModules.freeSection (R := X.ringCatSheaf) i)
+  exact hn.symm.trans (congrArg (chapter02PullbackSectionMap g L.carrier)
+    (SheafOfModules.sectionsMap_freeHomEquiv_symm_freeSection s i))
 
 /-!
 The projective-bundle theorem turns a generating tuple into a unique map to projective space.
@@ -100,7 +133,7 @@ def Chapter02CoordinateCompatibility
     ∃ e : (Scheme.Modules.pullback φ).obj P.bundle.twistingLineBundle.carrier ≅ L.carrier,
       ∀ i,
         SheafOfModules.sectionsMap e.hom
-          ((chapter02PullbackSectionData φ P.bundle.twistingLineBundle.carrier).map
+          (chapter02PullbackSectionMap φ P.bundle.twistingLineBundle.carrier
             (P.coordinateSections i)) = s i
 
 theorem chapter02_sections_define_unique_projective_map
@@ -110,6 +143,36 @@ theorem chapter02_sections_define_unique_projective_map
     (hgen : Chapter02SectionsGenerate L s) :
     ∃! φ : X ⟶ P.bundle.scheme,
       Chapter02CoordinateCompatibility f P L s φ := by
+  sorry
+
+/-! Choose the universal coordinate map only after the stalkwise generation witness is supplied;
+the specification and uniqueness declarations keep this choice usable without exposing a second
+projective-map construction. -/
+noncomputable def chapter02SectionsProjectiveMap
+    {S X : Scheme.{u}} {I : Type u}
+    (f : X ⟶ S) (P : Chapter02ProjectiveSpaceData S I)
+    (L : Chapter02LineBundle X) (s : I → Chapter02LineBundleSections L)
+    (hgen : Chapter02SectionsGenerate L s) : X ⟶ P.bundle.scheme :=
+  Classical.choose
+    (chapter02_sections_define_unique_projective_map f P L s hgen).exists
+
+theorem chapter02SectionsProjectiveMap_spec
+    {S X : Scheme.{u}} {I : Type u}
+    (f : X ⟶ S) (P : Chapter02ProjectiveSpaceData S I)
+    (L : Chapter02LineBundle X) (s : I → Chapter02LineBundleSections L)
+    (hgen : Chapter02SectionsGenerate L s) :
+    Chapter02CoordinateCompatibility f P L s
+      (chapter02SectionsProjectiveMap f P L s hgen) := by
+  sorry
+
+theorem chapter02SectionsProjectiveMap_unique
+    {S X : Scheme.{u}} {I : Type u}
+    (f : X ⟶ S) (P : Chapter02ProjectiveSpaceData S I)
+    (L : Chapter02LineBundle X) (s : I → Chapter02LineBundleSections L)
+    (hgen : Chapter02SectionsGenerate L s)
+    {φ : X ⟶ P.bundle.scheme}
+    (hφ : Chapter02CoordinateCompatibility f P L s φ) :
+    φ = chapter02SectionsProjectiveMap f P L s hgen := by
   sorry
 
 theorem chapter02_sections_define_unique_map_to_projective_space

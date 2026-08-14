@@ -7,7 +7,7 @@ open scoped BigOperators NumberField
 
 noncomputable section
 
-universe uF
+universe uF uk
 
 /-! ## 1.2. Conventions at finite and infinite places -/
 
@@ -55,6 +55,37 @@ theorem finitePlaceUnitFiltration_is_subgroup
           finitePlaceUnitFiltration v n} := by
   sorry
 
+/- A stable subgroup representative is needed when local reciprocity is
+   stated on a specified unit level. -/
+noncomputable def finitePlaceUnitFiltrationSubgroup
+    {K : Type*} [Field K] [NumberField K]
+    (v : FinitePlaceIndex K) (n : ℕ) :
+    Subgroup (BookPlace.completion (Sum.inl v))ˣ :=
+  Classical.choose (finitePlaceUnitFiltration_is_subgroup v n)
+
+theorem finitePlaceUnitFiltrationSubgroup_carrier
+    {K : Type*} [Field K] [NumberField K]
+    (v : FinitePlaceIndex K) (n : ℕ) :
+    (finitePlaceUnitFiltrationSubgroup v n :
+      Set ((BookPlace.completion (Sum.inl v))ˣ)) =
+      {u : (BookPlace.completion (Sum.inl v))ˣ |
+        (u : BookPlace.completion (Sum.inl v)) ∈
+          finitePlaceUnitFiltration v n} :=
+  Classical.choose_spec (finitePlaceUnitFiltration_is_subgroup v n)
+
+@[simp]
+theorem finitePlaceUnitFiltrationSubgroup_mem_iff
+    {K : Type*} [Field K] [NumberField K]
+    (v : FinitePlaceIndex K) (n : ℕ)
+    (u : (BookPlace.completion (Sum.inl v))ˣ) :
+    u ∈ finitePlaceUnitFiltrationSubgroup v n ↔
+      (u : BookPlace.completion (Sum.inl v)) ∈
+        finitePlaceUnitFiltration v n := by
+  change u ∈ (finitePlaceUnitFiltrationSubgroup v n :
+    Set ((BookPlace.completion (Sum.inl v))ˣ)) ↔ _
+  rw [finitePlaceUnitFiltrationSubgroup_carrier]
+  rfl
+
 /- A residue-field automorphism is arithmetic Frobenius when it is q-power. -/
 def arithmeticFrobeniusAction (k : Type*) [MonoidWithZero k] (q : ℕ) : k → k :=
   fun x => x ^ q
@@ -68,25 +99,31 @@ theorem geometricFrobeniusAction_inverse {k : Type*} [Field k]
 
 /- The local reciprocity normalization at a finite place. -/
 structure FiniteReciprocityNormalization
-    (F : Type uF) (k : Type*) [Field F] [Field k] [Fintype k]
+    (F : Type uF) (k : Type uk) [Field F] [Field k] [Fintype k]
     where
   reciprocity : Fˣ →* Field.absoluteGaloisGroupAbelianization F
   valuation : AddValuation F (WithTop ℤ)
   uniformizer : Fˣ
   uniformizer_spec : valuation (uniformizer : F) = (1 : WithTop ℤ)
-  residueAction : Field.absoluteGaloisGroupAbelianization F →* (k ≃+* k)
+  /- Frobenius acts on the residue field of an unramified finite level, not on
+     the base residue field itself (where q-power is the identity). -/
+  residueExtension : Type uk
+  [residueExtensionField : Field residueExtension]
+  [residueExtensionFintype : Fintype residueExtension]
+  [residueExtensionAlgebra : Algebra k residueExtension]
+  residueAction : Field.absoluteGaloisGroupAbelianization F →*
+    (residueExtension ≃ₐ[k] residueExtension)
   unitSubgroup : Subgroup Fˣ
   unitSubgroup_spec : ∀ u : Fˣ,
     u ∈ unitSubgroup ↔ valuation (u : F) = 0
   inertia : Subgroup (Field.absoluteGaloisGroupAbelianization F)
   unit_image_eq_inertia :
     (reciprocity.comp unitSubgroup.subtype).range = inertia
-  unramified : Prop
-  unramified_iff_inertia_trivial : unramified ↔ inertia = ⊥
   q : ℕ
   q_card : q = Fintype.card k
-  arithmetic_uniformizer : ∀ x : k,
-    residueAction (reciprocity uniformizer) x = arithmeticFrobeniusAction k q x
+  arithmetic_uniformizer : ∀ x : residueExtension,
+    residueAction (reciprocity uniformizer) x =
+      arithmeticFrobeniusAction residueExtension q x
 
 /- LOCAL_DEPENDENCY_GUESS: this is the local reciprocity map and its finite
 normalization, awaiting the local class-field interfaces. -/
@@ -105,11 +142,13 @@ theorem finite_local_reciprocity_uses_arithmetic_frobenius
     {K : Type*} [Field K] [NumberField K]
     (R : LocalReciprocityData K) (v : FinitePlaceIndex K) :
     letI : Fintype (FinitePlaceResidueField v) := R.residueFintype v
-    ∀ x : FinitePlaceResidueField v,
-      (R.finite_normalization v).residueAction
-          ((R.finite_normalization v).reciprocity
-            (R.finite_normalization v).uniformizer) x =
-        x ^ (R.finite_normalization v).q := by
+    let N := R.finite_normalization v
+    letI : Field N.residueExtension := N.residueExtensionField
+    letI : Fintype N.residueExtension := N.residueExtensionFintype
+    letI : Algebra (FinitePlaceResidueField v) N.residueExtension :=
+      N.residueExtensionAlgebra
+    ∀ x : N.residueExtension,
+      N.residueAction (N.reciprocity N.uniformizer) x = x ^ N.q := by
   sorry
 
 /- At an unramified finite prime, the chosen uniformizer maps to arithmetic

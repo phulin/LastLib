@@ -17,9 +17,6 @@ The universal affine construction and the conormal sequence live in
 relative-dimension-one bridges.
 -/
 
-/- LOCAL_DEPENDENCY_GUESS: the global sheaf of relative differentials is not
-constructed by pinned Mathlib.  The data record is the smallest chapter
-interface that retains quasi-coherence and the rank-one conclusion. -/
 theorem chapter07_smooth_relative_differential_data_exists
     {X S : Scheme.{u}} (f : X ⟶ S)
     [SmoothOfRelativeDimension 1 f] :
@@ -35,14 +32,14 @@ noncomputable def chapter07RelativeDifferentialLineBundle
     {X S : Scheme.{u}} (f : X ⟶ S)
     [SmoothOfRelativeDimension 1 f] : Chapter07LineBundle X :=
   let D := chapter07SmoothRelativeDifferentialData f
-  { module := D.module
+  { module := D.relativeDifferentials.relativeDifferentials
     isInvertible := D.isLineBundle }
 
 theorem chapter07_smooth_curve_differentials_are_quasicoherent
     {X S : Scheme.{u}} (f : X ⟶ S)
     [SmoothOfRelativeDimension 1 f] :
     (chapter07RelativeDifferentialLineBundle f).module.IsQuasicoherent := by
-  exact (chapter07SmoothRelativeDifferentialData f).isQuasicoherent
+  sorry
 
 theorem chapter07_smooth_curve_differentials_are_a_line_bundle
     {X S : Scheme.{u}} (f : X ⟶ S)
@@ -72,19 +69,20 @@ theorem chapter07_conormal_sequence_has_zero_composite
   exact (chapter07_affine_conormal_sequence_exact R A B h).apply_apply_eq_zero x
 
 theorem chapter07_smooth_curve_local_parameter_transition
-    (R A M : Type*) [CommRing R] [CommRing A] [Algebra R A]
-    [AddCommGroup M] [Module A M] [Module R M] [IsScalarTower R A M]
-    (P : Chapter07LocalParameterChangeData R A M) :
-    P.differential P.u = P.jacobian • P.differential P.t ∧
-      IsUnit P.jacobian :=
-  ⟨P.du_eq_jacobian_smul_dt, P.jacobian_isUnit⟩
+    (R A : Type*) [CommRing R] [CommRing A] [Algebra R A]
+    (P : Chapter07LocalParameterChangeData R A) :
+    ∃ jacobian : A,
+      KaehlerDifferential.D R A P.u =
+        jacobian • KaehlerDifferential.D R A P.t ∧
+      IsUnit jacobian := by
+  sorry
 
 theorem chapter07_local_parameter_differential_is_a_basis
-    (R A M : Type*) [CommRing R] [CommRing A] [Algebra R A]
-    [AddCommGroup M] [Module A M] [Module R M] [IsScalarTower R A M]
-    (P : Chapter07LocalParameterChangeData R A M) :
-    ∃ e : Basis (Fin 1) A M, e 0 = P.differential P.t :=
-  P.dt_is_basis
+    (R A : Type*) [CommRing R] [CommRing A] [Algebra R A]
+    (P : Chapter07LocalParameterChangeData R A) :
+    ∃ e : Module.Basis (Fin 1) A Ω[A⁄R],
+      e 0 = KaehlerDifferential.D R A P.t := by
+  sorry
 
 end
 

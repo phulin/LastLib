@@ -147,7 +147,7 @@ structure Chapter15RayClassModulus (K : Type*) [Field K] [NumberField K] where
 
 /- The explicit finite-level constructions above remain useful as local
 interfaces.  For the class-group quotient, however, use the canonical ray
-unit subgroup transported across the graph/full-idele homeomorphism. -/
+unit subgroup transported across the underlying full-idele group equivalence. -/
 /- The transport uses the same full adele-unit model as Chapter 11, so this
 quotient is tied to the canonical ray class construction rather than to an
 arbitrary open subgroup chosen with a finiteness proof. -/
@@ -156,8 +156,8 @@ def chapter15CanonicalIdeleRayLevel
     (m : Chapter15RayClassModulus K) :
     Subgroup (Chapter15IdeleGroup (𝓞 K) K) :=
   (LastLib.Book04AdelesAndIdeles.Chapter11.chapter11RayUnitSubgroup m.underlying).comap
-    (chapter15_idele_group_homeomorph_full_adele_units
-      (R := 𝓞 K) (K := K)).toMulEquiv.toMonoidHom
+    (chapter15_idele_group_equiv_full_adele_units
+      (R := 𝓞 K) (K := K)).toMonoidHom
 
 def chapter15CanonicalRayClassSubgroup
     (K : Type*) [Field K] [NumberField K]

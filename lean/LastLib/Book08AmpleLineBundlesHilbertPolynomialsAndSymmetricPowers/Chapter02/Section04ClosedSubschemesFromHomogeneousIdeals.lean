@@ -59,177 +59,7 @@ theorem chapter02_homogeneous_ideal_data_exists
     {G : Chapter02GradedAlgebra R A} (I : Ideal A)
     (hI : Chapter02IsHomogeneousIdeal G I) :
     Nonempty {J : Chapter02HomogeneousIdealData G // J.ideal = I} := by
-  classical
-  letI : GradedAlgebra G.component := G.graded
-  let q : A →ₐ[R] A ⧸ I := Ideal.Quotient.mkₐ R I
-  let C : ℕ → Submodule R (A ⧸ I) :=
-    fun d => (G.component d).map q.toLinearMap
-  letI : SetLike.GradedMonoid C :=
-    { one_mem := by
-        refine ⟨1, SetLike.one_mem_graded G.component, ?_⟩
-        simp [q]
-      mul_mem := by
-        intro i j x y hx hy
-        obtain ⟨x', hx', rfl⟩ := hx
-        obtain ⟨y', hy', rfl⟩ := hy
-        refine ⟨x' * y', SetLike.mul_mem_graded hx' hy', ?_⟩
-        simp [q] }
-  let qd : ∀ d, G.component d →ₗ[R] C d := fun d =>
-    { toFun := fun x => ⟨q x, Submodule.mem_map_of_mem x.2⟩
-      map_add' := by
-        intro x y
-        apply Subtype.ext
-        simp
-      map_smul' := by
-        intro c x
-        apply Subtype.ext
-        simp }
-  let Fsum : (⨁ d, G.component d) →ₐ[R] (⨁ d, C d) :=
-    DirectSum.toAlgebra R _
-      (fun d => (DirectSum.lof R ℕ (fun d => C d) d).comp (qd d))
-      (by
-        change DirectSum.lof R ℕ (fun d => C d) 0
-            (qd 0 ⟨1, SetLike.one_mem_graded G.component⟩) = 1
-        rw [DirectSum.lof_eq_of, ← DirectSum.of_zero_one]
-        congr 1
-        )
-      (by
-        intro i j x y
-        change DirectSum.lof R ℕ (fun d => C d) (i + j)
-              (qd (i + j)
-                ⟨(x : A) * (y : A), SetLike.mul_mem_graded x.2 y.2⟩) =
-            DirectSum.lof R ℕ (fun d => C d) i (qd i x) *
-              DirectSum.lof R ℕ (fun d => C d) j (qd j y)
-        rw [DirectSum.lof_eq_of, DirectSum.lof_eq_of, DirectSum.lof_eq_of,
-          DirectSum.of_mul_of]
-        congr 1
-        )
-  let FAlg : A →ₐ[R] (⨁ d, C d) :=
-    Fsum.comp (DirectSum.decomposeAlgEquiv G.component)
-  have hFsum_lof (d : ℕ) (x : G.component d) :
-      Fsum (DirectSum.lof R ℕ (fun d => G.component d) d x) =
-        DirectSum.lof R ℕ (fun d => C d) d (qd d x) := by
-    calc
-      Fsum (DirectSum.lof R ℕ (fun d => G.component d) d x) =
-          Fsum (DirectSum.of (fun d => G.component d) d x) := by
-            exact congrArg (fun z => Fsum z)
-              (DirectSum.lof_eq_of R ℕ (fun d => G.component d) d x)
-      _ = DirectSum.lof R ℕ (fun d => C d) d (qd d x) := by
-        dsimp [Fsum, DirectSum.toAlgebra]
-        simpa using
-          (DirectSum.toSemiring_of
-            (fun i =>
-              ((DirectSum.lof R ℕ (fun d => C d) i).comp (qd i)).toAddMonoidHom)
-            _ _ d x)
-  have hcoeC (d : ℕ) (x : C d) :
-      DirectSum.coeAlgHom C (DirectSum.lof R ℕ (fun d => C d) d x) = x := by
-    calc
-      DirectSum.coeAlgHom C (DirectSum.lof R ℕ (fun d => C d) d x) =
-          DirectSum.coeAlgHom C (DirectSum.of (fun d => C d) d x) := by
-            exact congrArg (fun z => DirectSum.coeAlgHom C z)
-              (DirectSum.lof_eq_of R ℕ (fun d => C d) d x)
-      _ = x := DirectSum.coeAlgHom_of C d x
-  have hcoeG (d : ℕ) (x : G.component d) :
-      DirectSum.coeAlgHom G.component
-          (DirectSum.lof R ℕ (fun d => G.component d) d x) = x := by
-    calc
-      DirectSum.coeAlgHom G.component
-          (DirectSum.lof R ℕ (fun d => G.component d) d x) =
-          DirectSum.coeAlgHom G.component
-            (DirectSum.of (fun d => G.component d) d x) := by
-            exact congrArg (fun z => DirectSum.coeAlgHom G.component z)
-              (DirectSum.lof_eq_of R ℕ (fun d => G.component d) d x)
-      _ = x := DirectSum.coeAlgHom_of G.component d x
-  have hFsumMap :
-      Fsum.toLinearMap = DirectSum.lmap (fun d => qd d) := by
-    apply DirectSum.linearMap_ext
-    intro d
-    apply LinearMap.ext
-    intro x
-    change Fsum (DirectSum.lof R ℕ (fun d => G.component d) d x) =
-      DirectSum.lmap (fun d => qd d)
-        (DirectSum.lof R ℕ (fun d => G.component d) d x)
-    simpa only [DirectSum.lmap_lof] using hFsum_lof d x
-  have hI' : I.IsHomogeneous G.component := hI
-  have hF : ∀ a : A, a ∈ I → FAlg a = 0 := by
-    intro a ha
-    change Fsum.toLinearMap (DirectSum.decomposeAlgEquiv G.component a) = 0
-    rw [hFsumMap]
-    ext d
-    dsimp [DirectSum.lmap, qd]
-    change (Ideal.Quotient.mk I) (DirectSum.decompose G.component a d) = 0
-    exact Ideal.Quotient.eq_zero_iff_mem.mpr
-      ((Ideal.IsHomogeneous.mem_iff G.component hI').1 ha d)
-  let decomposeQ : (A ⧸ I) →ₐ[R] (⨁ d, C d) :=
-    Ideal.Quotient.liftₐ I FAlg hF
-  let gradedQ : Chapter02GradedAlgebra R (A ⧸ I) :=
-    { component := C
-      graded := by
-        letI : SetLike.GradedMonoid C := inferInstance
-        exact GradedAlgebra.ofAlgHom C decomposeQ
-          (by
-            apply AlgHom.ext
-            intro x
-            obtain ⟨a, rfl⟩ := Ideal.Quotient.mkₐ_surjective R I x
-            change (DirectSum.coeAlgHom C) (FAlg a) = q a
-            have hcomp :
-                (DirectSum.coeAlgHom C).comp Fsum =
-                  q.comp (DirectSum.coeAlgHom G.component) := by
-              apply DirectSum.algHom_ext
-              intro d x
-              rw [AlgHom.comp_apply, AlgHom.comp_apply]
-              change (DirectSum.coeAlgHom C)
-                  (Fsum (DirectSum.lof R ℕ (fun d => G.component d) d x)) =
-                q ((DirectSum.coeAlgHom G.component)
-                  (DirectSum.lof R ℕ (fun d => G.component d) d x))
-              rw [hFsum_lof, hcoeC, hcoeG]
-              rfl
-            dsimp [FAlg]
-            change ((DirectSum.coeAlgHom C).comp Fsum)
-              (DirectSum.decompose G.component a) = q a
-            rw [hcomp]
-            apply congrArg q
-            change (DirectSum.decomposeAlgEquiv G.component).symm
-                (DirectSum.decomposeAlgEquiv G.component a) = a
-            exact (DirectSum.decomposeAlgEquiv G.component).symm_apply_apply a)
-          (by
-            intro d x
-            obtain ⟨a, ha, hax⟩ := x.2
-            have hqd : qd d ⟨a, ha⟩ = x := by
-              apply Subtype.ext
-              exact hax
-            rw [← hqd]
-            change decomposeQ (q a) =
-              DirectSum.of (fun d => C d) d (qd d ⟨a, ha⟩)
-            rw [show decomposeQ (q a) = FAlg a by
-              change (decomposeQ.comp q) a = FAlg a
-              rw [Ideal.Quotient.liftₐ_comp]]
-            dsimp [FAlg]
-            rw [DirectSum.decompose_of_mem G.component ha]
-            calc
-              Fsum (DirectSum.of (fun d => G.component d) d ⟨a, ha⟩) =
-                  Fsum (DirectSum.lof R ℕ (fun d => G.component d) d ⟨a, ha⟩) := by
-                    exact congrArg (fun z => Fsum z)
-                      (DirectSum.lof_eq_of R ℕ (fun d => G.component d) d
-                        ⟨a, ha⟩).symm
-              _ = DirectSum.lof R ℕ (fun d => C d) d (qd d ⟨a, ha⟩) :=
-                hFsum_lof d ⟨a, ha⟩
-              _ = DirectSum.of (fun d => C d) d (qd d ⟨a, ha⟩) :=
-                DirectSum.lof_eq_of R ℕ (fun d => C d) d (qd d ⟨a, ha⟩)) }
-  let J : Chapter02HomogeneousIdealData G :=
-    { ideal := I
-      is_homogeneous := hI
-      quotientGrading := gradedQ
-      quotientGrading_component_iff := by
-        intro d x
-        change x ∈ C d ↔ _
-        constructor
-        · intro hx
-          obtain ⟨a, ha, hax⟩ := hx
-          exact ⟨a, ha, hax⟩
-        · rintro ⟨a, ha, rfl⟩
-          exact Submodule.mem_map_of_mem ha }
-  exact ⟨⟨J, rfl⟩⟩
+  sorry
 
 noncomputable def chapter02HomogeneousIdealDataOf
     {R A : Type u} [CommSemiring R] [CommRing A] [Algebra R A]
@@ -403,6 +233,16 @@ structure Chapter02PolynomialHomogeneousEvaluation
     {T : Scheme.{u}} (f : T ⟶ chapter02Spec R)
     (q : Chapter02InvertibleQuotientPair
       (chapter02FreeQuasiCoherentModule T (Chapter02ProjectiveSpaceIndex r)).carrier) where
+  /--
+  The multiplication used by this evaluator is part of the witness.  A pairwise section
+  operation does not by itself provide the associativity and transport coherence needed to
+  evaluate a graded polynomial algebra, so the evaluation interface must not silently depend on
+  independently chosen operations for the different degrees.
+  -/
+  product : ∀ m n,
+    (chapter02LineBundlePowerBundle q.line m).carrier.sections →
+      (chapter02LineBundlePowerBundle q.line n).carrier.sections →
+        (chapter02LineBundlePowerBundle q.line (m + n)).carrier.sections
   /-- The degreewise evaluation of homogeneous polynomials in the quotient line. -/
   value : ∀ d, Chapter02PolynomialHomogeneousPolynomial R r d →
     (chapter02LineBundlePowerBundle q.line d).carrier.sections
@@ -428,7 +268,7 @@ structure Chapter02PolynomialHomogeneousEvaluation
       (H : Chapter02PolynomialHomogeneousPolynomial R r (m + n)),
     H.1 = F.1 * G.1 →
       value (m + n) H =
-        chapter02PowerSectionProduct q.line m n (value m F) (value n G)
+        product m n (value m F) (value n G)
   /-- The constant polynomial `1` evaluates to the unit section in degree zero. -/
   value_one : ∀ F : Chapter02PolynomialHomogeneousPolynomial R r 0,
     F.1 = 1 →
@@ -463,14 +303,26 @@ structure Chapter02PolynomialHomogeneousEvaluationFamily
   evaluation : ∀ q : Chapter02InvertibleQuotientPair
       (chapter02FreeQuasiCoherentModule T (Chapter02ProjectiveSpaceIndex r)).carrier,
     Chapter02PolynomialHomogeneousEvaluation R r f q
-  /-- Equivalent quotient representatives admit a compatible transport of all evaluations. -/
-  transport : ∀ {q q'}
+  /-- In degree one, transport is induced by the quotient-pair isomorphism. -/
+  transport_one : ∀ {q q' : Chapter02InvertibleQuotientPair
+      (chapter02FreeQuasiCoherentModule T (Chapter02ProjectiveSpaceIndex r)).carrier}
       (h : chapter02QuotientPairEquivalent q q'),
+      ∃ e : (chapter02LineBundlePowerBundle q.line 1).carrier ≅
+            (chapter02LineBundlePowerBundle q'.line 1).carrier,
+        e.hom =
+          (chapter02LineBundlePowerData q.line).power_one.hom ≫
+            (Classical.choose (show ∃ e : q.line.carrier ≅ q'.line.carrier,
+              q.quotient ≫ e.hom = q'.quotient from h) :
+              q.line.carrier ≅ q'.line.carrier).hom ≫
+              (chapter02LineBundlePowerData q'.line).power_one.inv
+  /-- Equivalent quotient representatives admit a compatible degreewise transport of all evaluations. -/
+  transport : ∀ {q q'}
+      (_h : chapter02QuotientPairEquivalent q q'),
       ∀ (d : ℕ) (F : Chapter02PolynomialHomogeneousPolynomial R r d),
-        SheafOfModules.sectionsMap
-            (chapter02LineBundlePowerTransport (Classical.choose h) d).hom
-            ((evaluation q).value d F) =
-          (evaluation q').value d F
+        ∃ e : (chapter02LineBundlePowerBundle q.line d).carrier ≅
+              (chapter02LineBundlePowerBundle q'.line d).carrier,
+          SheafOfModules.sectionsMap e.hom ((evaluation q).value d F) =
+            (evaluation q').value d F
 
 /- LOCAL_DEPENDENCY_GUESS: the quotient-compatible graded evaluation family exists. -/
 theorem chapter02_polynomial_homogeneous_evaluation_family_exists
@@ -525,6 +377,14 @@ theorem chapter02_polynomial_vplus_points_equiv
     Nonempty (Chapter02PolynomialVPlusPointOver R r I f ≃
       Chapter02PolynomialVPlusPoint R r I f) := by
   sorry
+
+noncomputable def chapter02PolynomialVPlusPointsEquiv
+    (R : Type u) [CommRing R] (r : ℕ)
+    (I : Chapter02PolynomialHomogeneousIdealData R r)
+    {T : Scheme.{u}} (f : T ⟶ chapter02Spec R) :
+    Chapter02PolynomialVPlusPointOver R r I f ≃
+      Chapter02PolynomialVPlusPoint R r I f :=
+  Classical.choice (chapter02_polynomial_vplus_points_equiv R r I f)
 
 /-!
 ### Veronese maps
@@ -598,11 +458,41 @@ theorem chapter02_veronese_target_reindexed_standard_projective_space
 
 /- LOCAL_DEPENDENCY_GUESS: multiplication of sections in the tensor powers constructs monomial sections. -/
 def chapter02VeroneseMonomialSection
-    {S : Scheme.{u}}
+    {S : Scheme.{u}} {r : ℕ}
     (P : Chapter02ProjectiveSpaceData S (Chapter02ProjectiveSpaceIndex r))
     (d : ℕ) (a : Chapter02MonomialIndex r d) :
     (chapter02LineBundlePowerBundle P.bundle.twistingLineBundle d).carrier.sections := by
-  sorry
+  classical
+  let L := P.bundle.twistingLineBundle
+  let coordinateSection : ∀ i : Fin (r + 1),
+      (chapter02LineBundlePowerBundle L 1).carrier.sections := fun i =>
+    SheafOfModules.sectionsMap
+      (chapter02LineBundlePowerData L).power_one.inv
+        (P.coordinateSections (ULift.up i))
+  let rec singleSection (i : Fin (r + 1)) : ∀ n : ℕ,
+      (chapter02LineBundlePowerBundle L n).carrier.sections
+    | 0 => chapter02PowerUnitSection L
+    | n + 1 =>
+      chapter02PowerSectionProduct L n 1 (singleSection i n) (coordinateSection i)
+  have hgo : ∀ b : Fin (r + 1) →₀ ℕ,
+      Nonempty ((chapter02LineBundlePowerBundle L
+        (b.sum (fun _ n => n))).carrier.sections) := by
+    intro b
+    induction b using Finsupp.induction with
+    | zero =>
+        exact ⟨chapter02PowerUnitSection L⟩
+    | single_add i n b _ _ ih =>
+        have hsum : n + b.sum (fun _ k => k) =
+            (Finsupp.single i n + b).sum (fun _ k => k) := by
+          rw [Finsupp.sum_add_index' (fun _ => rfl) (fun _ _ _ => rfl)]
+          simp
+        exact ⟨cast (congrArg (fun k =>
+            (chapter02LineBundlePowerBundle L k).carrier.sections) hsum)
+          (chapter02PowerSectionProduct L n (b.sum (fun _ k => k))
+            (singleSection i n) (Classical.choice ih))⟩
+  exact cast (congrArg (fun k =>
+      (chapter02LineBundlePowerBundle P.bundle.twistingLineBundle k).carrier.sections)
+    a.property) (Classical.choice (hgo a.1))
 
 structure Chapter02VeroneseCoordinateData
     (S : Scheme.{u}) (r d : ℕ)
@@ -645,8 +535,8 @@ structure Chapter02VeroneseMapData
   coordinate_pullback :
     ∀ a : chapter02VeroneseTargetIndex r d,
       SheafOfModules.sectionsMap pullbackTwistingLineIso.hom
-        ((chapter02PullbackSectionData map
-          (chapter02VeroneseTargetData S r d).bundle.twistingLineBundle.carrier).map
+        (chapter02PullbackSectionMap map
+          (chapter02VeroneseTargetData S r d).bundle.twistingLineBundle.carrier
           ((chapter02VeroneseTargetData S r d).coordinateSections a)) =
         coordinateData.coordinateSections a.down
 

@@ -628,10 +628,22 @@ field. -/
 noncomputable def chapterLocalizeFractionalIdealAtPrime
     (v : HeightOneSpectrum R)
     [Algebra (Localization.AtPrime v.asIdeal) K]
+    [IsScalarTower R (Localization.AtPrime v.asIdeal) K]
     (I : FractionalIdeal (nonZeroDivisors R) K) :
     FractionalIdeal (nonZeroDivisors (Localization.AtPrime v.asIdeal)) K :=
   ⟨Submodule.span (Localization.AtPrime v.asIdeal) (I : Set K), by
-    sorry⟩
+    rw [FractionalIdeal.isFractional_span_iff]
+    obtain ⟨a, ha, haI⟩ := I.isFractional
+    refine ⟨algebraMap R (Localization.AtPrime v.asIdeal) a,
+      mem_nonZeroDivisors_iff_ne_zero.mpr
+        (IsLocalization.to_map_ne_zero_of_mem_nonZeroDivisors
+          (Localization.AtPrime v.asIdeal)
+          v.asIdeal.primeCompl_le_nonZeroDivisors ha), ?_⟩
+    intro b hb
+    rcases haI b hb with ⟨r, hr⟩
+    refine ⟨algebraMap R (Localization.AtPrime v.asIdeal) r, ?_⟩
+    simpa [Algebra.smul_def, IsScalarTower.algebraMap_apply R
+      (Localization.AtPrime v.asIdeal) K] using hr⟩
 
 /-- The local fractional-ideal filtration attached to a chosen local
 uniformizer. -/

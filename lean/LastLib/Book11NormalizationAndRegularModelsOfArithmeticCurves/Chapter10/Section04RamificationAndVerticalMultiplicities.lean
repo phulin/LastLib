@@ -1,3 +1,4 @@
+import LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter01.Section01FromACurveOverAFieldToASurface
 import LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter10.Section03TheNormalizeAfterBaseChangeRule
 
 namespace LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter10
@@ -17,7 +18,7 @@ universe u v
 /-! ## 10.4 Ramification and vertical multiplicities -/
 
 structure Chapter10DVRExtensionData (R R' : Type u)
-    [CommRing R] [CommRing R'] [Algebra R R'] where
+    [CommRing R] [CommRing R'] [Algebra R R'] [IsDomain R] [IsDomain R'] where
   baseDVR : IsDiscreteValuationRing R
   extensionDVR : IsDiscreteValuationRing R'
   ramificationIndex : ℕ
@@ -94,7 +95,7 @@ theorem chapter10_vertical_multiplicity_formula
     {F F' : Type u} [Field F] [Field F'] [Algebra F F']
     (D : Chapter10VerticalDivisorialValuationData F F') :
     (D.baseExtensionRamificationIndex : ℤ) * chapter10VerticalMultiplicity D =
-      D.ramificationScale D.baseUniformizer := by
+      (D.divisorialRamificationIndex : ℤ) * D.baseValue D.baseUniformizer := by
   sorry
 
 def chapter10SemistableNodeRelation (R : Type u) [CommRing R] (π : R) :
@@ -119,7 +120,7 @@ structure Chapter10NodeChart (A : Type u) [CommRing A] where
   uniformizer : base
   coordinateIso : A ≃+* chapter10SemistableNodeRing base uniformizer
 
-structure Chapter10NormalCrossingsProfile (X : Scheme.{u}) : Prop where
+structure Chapter10NormalCrossingsProfile (X : Scheme.{u}) where
   charts : FiniteAffineOpenCover X
   specialFiberReduced : IsReduced X
   localChart : ∀ i,
@@ -131,7 +132,7 @@ abbrev Chapter10NormalCrossings (X : Scheme.{u}) : Prop :=
 
 def chapter10SemistableNodeBaseChangeRelation
     (R R' : Type u) [CommRing R] [CommRing R'] [Algebra R R']
-    (π : R) (π' u : R') (e : ℕ) : Ideal (MvPolynomial (Fin 2) R') :=
+    (_π : R) (π' u : R') (e : ℕ) : Ideal (MvPolynomial (Fin 2) R') :=
   chapter10SemistableNodeRelation R' (u * π' ^ e)
 
 theorem chapter10_semistable_equation_after_ramified_base_change
@@ -174,7 +175,8 @@ theorem chapter10_ramified_node_base_change_is_singular_at_the_crossing
   sorry
 
 structure Chapter10RamifiedNodeResolutionWitness where
-  R R' : Type u
+  R : Type u
+  R' : Type u
   [commRingR : CommRing R]
   [commRingR' : CommRing R']
   [algebraRR' : Algebra R R']
@@ -187,14 +189,15 @@ structure Chapter10RamifiedNodeResolutionWitness where
       R R' π extensionUniformizer unit e)
 
 def Chapter10NormalizationAloneMayRemainSingular : Prop :=
-  Nonempty Chapter10RamifiedNodeResolutionWitness
+  Nonempty (Chapter10RamifiedNodeResolutionWitness.{u})
 
 theorem chapter10_normalization_alone_need_not_resolve_the_ramified_node :
     Chapter10NormalizationAloneMayRemainSingular := by
   sorry
 
 structure Chapter10RegularModelRamifiedBaseChangeWitness where
-  R R' : Type u
+  R : Type u
+  R' : Type u
   [commRingR : CommRing R]
   [commRingR' : CommRing R']
   [algebraRR' : Algebra R R']
@@ -213,7 +216,7 @@ structure Chapter10RegularModelRamifiedBaseChangeWitness where
       (chapter10SemistableNodeScheme R' (unit * extensionUniformizer ^ e))
 
 def Chapter10RegularModelRamifiedBaseChangeFailure : Prop :=
-  Nonempty Chapter10RegularModelRamifiedBaseChangeWitness
+  Nonempty (Chapter10RegularModelRamifiedBaseChangeWitness.{u})
 
 theorem chapter10_regular_model_does_not_commute_with_ramified_base_change :
     Chapter10RegularModelRamifiedBaseChangeFailure := by
@@ -244,7 +247,7 @@ def Chapter10InertiaAndRamificationControlVerticalMultiplicity : Prop :=
   ∀ {F F' : Type u} [Field F] [Field F'] [Algebra F F']
     (D : Chapter10VerticalDivisorialValuationData F F'),
     (D.baseExtensionRamificationIndex : ℤ) * chapter10VerticalMultiplicity D =
-      D.ramificationScale D.baseUniformizer
+      (D.divisorialRamificationIndex : ℤ) * D.baseValue D.baseUniformizer
 
 theorem chapter10_inertia_and_ramification_enter_the_vertical_geometry :
     Chapter10InertiaAndRamificationControlVerticalMultiplicity := by

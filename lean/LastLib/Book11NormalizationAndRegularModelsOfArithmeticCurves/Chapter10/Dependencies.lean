@@ -42,7 +42,7 @@ open LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter03
 open LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter04
 open LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter07
 open LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter08
-open scoped AlgebraicGeometry BigOperators TensorProduct
+open scoped AlgebraicGeometry BigOperators TensorProduct WithZero
 
 universe u v
 
@@ -112,14 +112,29 @@ def Chapter10DesiredGenericFiber {X S : Scheme.{u}} (f : X ⟶ S) (η : S) (C : 
 /- LOCAL_DEPENDENCY_GUESS: the pinned Mathlib snapshot has affine reduction rings and scheme
 properties, but no scheme-level reduction object with its universal property.  This is the
 smallest reusable boundary needed to state the normalize-after-reduction operation below. -/
+structure Chapter10IntegralComponent (Y : Scheme.{u}) where
+  carrier : Scheme.{u}
+  inclusion : carrier ⟶ Y
+  closed : IsClosedImmersion inclusion
+  integral : IsIntegral carrier
+
+instance {Y : Scheme.{u}} (C : Chapter10IntegralComponent Y) : IsIntegral C.carrier :=
+  C.integral
+
+abbrev chapter10IntegralComponentGenericPointMap
+    {Y : Scheme.{u}} (C : Chapter10IntegralComponent Y) :
+    Spec (CommRingCat.of C.carrier.functionField) ⟶ C.carrier :=
+  chapter02FunctionFieldExtensionMap C.carrier C.carrier.functionField
+
 structure Chapter10ReductionData (Y : Scheme.{u}) where
   carrier : Scheme.{u}
   projection : carrier ⟶ Y
   closed : IsClosedImmersion projection
   reduced : IsReduced carrier
+  integralComponent : Chapter10IntegralComponent carrier
   universal : ∀ {Z : Scheme.{u}} (g : Z ⟶ Y), IsReduced Z →
     ∃ h : Z ⟶ carrier, h ≫ projection = g
-  unique : ∀ {Z : Scheme.{u}} (g : Z ⟶ Y) (hZ : IsReduced Z)
+  unique : ∀ {Z : Scheme.{u}} (g : Z ⟶ Y) (_hZ : IsReduced Z)
     (h₁ h₂ : Z ⟶ carrier), h₁ ≫ projection = g → h₂ ≫ projection = g → h₁ = h₂
 
 theorem chapter10_reduction_is_reduced {Y : Scheme.{u}} (R : Chapter10ReductionData Y) :
@@ -139,7 +154,9 @@ structure Chapter10DVRPointCorrespondence {S S' : Scheme.{u}} (ν : S' ⟶ S)
   extension : extensions → Chapter10ValuationExtensionAt K K'
   point : extensions → {x : S' // ν x = s}
   bijective : Function.Bijective point
-  stalk_is_dvr : ∀ e, IsDiscreteValuationRing (S'.presheaf.stalk (point e.1))
+  stalk_is_dvr : ∀ e, ∃ hDomain : IsDomain (S'.presheaf.stalk (point e)),
+    letI : IsDomain (S'.presheaf.stalk (point e)) := hDomain
+    IsDiscreteValuationRing (S'.presheaf.stalk (point e))
 
 structure Chapter10FiniteReducedAlgebra (K A : Type u) [Field K] [CommRing A]
     [Algebra K A] where
@@ -161,7 +178,7 @@ structure Chapter10FiniteReducedAlgebraNormalizationData
   componentIntegral : ∀ i, IsIntegralHom (componentMap i)
   componentNormal : ∀ i, Chapter10NormalScheme (component i)
   carrier : Scheme.{u}
-  decomposition : carrier ≅ ∐ i, component i
+  decomposition : carrier ≅ ∐ fun i ↦ component i
   map : carrier ⟶ Spec (CommRingCat.of A)
   decomposition_over_base : ∀ i,
     Sigma.ι (fun j => component j) i ≫ decomposition.inv ≫ map = componentMap i

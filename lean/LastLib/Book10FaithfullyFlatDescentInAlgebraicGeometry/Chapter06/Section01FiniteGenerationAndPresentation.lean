@@ -40,7 +40,10 @@ theorem submodule_eq_top_of_faithfullyFlat_lTensor_surjective
     (N : Submodule A M)
     (hN : Function.Surjective (N.subtype.lTensor B)) :
     N = ⊤ := by
-  sorry
+  rw [← N.range_subtype]
+  exact LinearMap.range_eq_top.mpr
+    ((Module.FaithfullyFlat.lTensor_surjective_iff_surjective (R := A) (M := B)
+      N.subtype).mp hN)
 
 /-- The tensor product of a quotient by a submodule is zero when its base-changed quotient map is.
 -/
@@ -50,7 +53,9 @@ theorem tensor_quotient_subsingleton_of_faithfullyFlat_lTensor_surjective
     (N : Submodule A M)
     (hN : Function.Surjective (N.subtype.lTensor B)) :
     Subsingleton (B ⊗[A] (M ⧸ N)) := by
-  sorry
+  have htop : N = ⊤ := submodule_eq_top_of_faithfullyFlat_lTensor_surjective N hN
+  rw [htop]
+  exact inferInstance
 
 /-- This packages the vanishing step used to recover the original finite span. -/
 theorem tensor_quotient_subsingleton_iff_submodule_eq_top
@@ -58,7 +63,18 @@ theorem tensor_quotient_subsingleton_iff_submodule_eq_top
     [Algebra A B] [Module A M] [Module.FaithfullyFlat A B]
     (N : Submodule A M) :
     Subsingleton (B ⊗[A] (M ⧸ N)) ↔ N = ⊤ := by
-  sorry
+  constructor
+  · intro h
+    exact Submodule.Quotient.subsingleton_iff.mp
+      (@Module.FaithfullyFlat.lTensor_reflects_triviality A B
+        _ _ _ _ (M ⧸ N) _ _ h)
+  · intro hN
+    exact tensor_quotient_subsingleton_of_faithfullyFlat_lTensor_surjective N
+      (by
+        rw [hN]
+        apply LinearMap.lTensor_surjective B
+        intro x
+        exact ⟨⟨x, trivial⟩, rfl⟩)
 
 /-- For a surjection onto a finitely presented module, the kernel is finitely generated. -/
 theorem finitePresentation_kernel_fg_of_surjective
@@ -85,7 +101,14 @@ theorem finitePresentation_iff_finite_free_exact
       ∃ (n m : ℕ) (f : (Fin n → A) →ₗ[A] M)
         (g : (Fin m → A) →ₗ[A] (Fin n → A)),
         Function.Surjective f ∧ Function.Exact g f := by
-  sorry
+  constructor
+  · intro h
+    exact Module.FinitePresentation.exists_fin' (fp := h) A M
+  · rintro ⟨n, m, f, g, hf, hfg⟩
+    apply Module.finitePresentation_of_free_of_surjective f hf
+    have hker : LinearMap.ker f = LinearMap.range g := LinearMap.exact_iff.mp hfg
+    rw [hker]
+    exact Submodule.fg_range g
 
 /-- Finite presentation descends along faithfully flat base change.  This is the affine statement
 with a uniform finite presentation; no merely pointwise-family variant is asserted. -/
@@ -94,7 +117,48 @@ theorem module_finitePresentation_of_faithfullyFlat_baseChange
     [Algebra A B] [Module A M] [Module.FaithfullyFlat A B]
     [Module.FinitePresentation B (B ⊗[A] M)] :
     Module.FinitePresentation A M := by
-  sorry
+  have hfinite : Module.Finite A M :=
+    module_finite_of_faithfullyFlat_baseChange (A := A) (B := B) (M := M)
+  obtain ⟨n, f, hf⟩ := Module.Finite.exists_fin' A M
+  have hfB : Function.Surjective (f.baseChange B) := by
+    rw [LinearMap.baseChange_eq_ltensor]
+    exact LinearMap.lTensor_surjective B hf
+  have h_exact :
+      Function.Exact ((LinearMap.ker f).subtype.baseChange B) (f.baseChange B) := by
+    simpa only [LinearMap.baseChange_eq_ltensor] using
+      (Module.Flat.lTensor_exact B (LinearMap.exact_subtype_ker_map f))
+  let u : B ⊗[A] LinearMap.ker f →ₗ[B] LinearMap.ker (f.baseChange B) :=
+    LinearMap.codRestrict _ ((LinearMap.ker f).subtype.baseChange B)
+      (fun x => h_exact.apply_apply_eq_zero x)
+  have hu : Function.Bijective u := by
+    constructor
+    · intro x y hxy
+      apply (show Function.Injective ((LinearMap.ker f).subtype.baseChange B) from by
+        rw [LinearMap.baseChange_eq_ltensor]
+        exact Module.Flat.lTensor_preserves_injective_linearMap _
+          (Submodule.injective_subtype _))
+      exact congrArg Subtype.val hxy
+    · intro y
+      have hy : (y : B ⊗[A] (Fin n → A)) ∈
+          LinearMap.range ((LinearMap.ker f).subtype.baseChange B) := by
+        exact Eq.mp
+          (congrArg (fun K : Submodule B (B ⊗[A] (Fin n → A)) =>
+            (y.1 : B ⊗[A] (Fin n → A)) ∈ K) (LinearMap.exact_iff.mp h_exact)) y.property
+      obtain ⟨x, hx⟩ := hy
+      exact ⟨x, Subtype.ext hx⟩
+  let e := LinearEquiv.ofBijective u hu
+  have hker_fg : (LinearMap.ker (f.baseChange B)).FG :=
+    Module.FinitePresentation.fg_ker (f.baseChange B) hfB
+  have hker_finite : Module.Finite B (LinearMap.ker (f.baseChange B)) :=
+    Module.Finite.of_fg hker_fg
+  have hbase_finite : Module.Finite B (B ⊗[A] LinearMap.ker f) := by
+    rw [Module.Finite.equiv_iff e]
+    exact hker_finite
+  have hfinite_ker : Module.Finite A (LinearMap.ker f) :=
+    Module.Finite.of_finite_tensorProduct_of_faithfullyFlat B
+  apply Module.finitePresentation_of_surjective f hf
+  rw [← Module.Finite.iff_fg]
+  exact hfinite_ker
 
 /-- Finite type descends for algebras along a faithfully flat base change. -/
 theorem algebra_finiteType_of_faithfullyFlat_baseChange

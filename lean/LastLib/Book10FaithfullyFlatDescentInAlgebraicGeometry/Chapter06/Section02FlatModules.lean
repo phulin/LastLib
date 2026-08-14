@@ -6,7 +6,7 @@ noncomputable section
 
 open TensorProduct
 
-universe u v w
+universe u v w z
 
 /-! ## 6.2 Flat modules -/
 
@@ -35,7 +35,7 @@ theorem faithfullyFlat_lTensor_injective_iff
     [AddCommGroup N'] [Algebra R B] [Module R N] [Module R N']
     [Module.FaithfullyFlat R B] (f : N →ₗ[R] N') :
     Function.Injective (f.lTensor B) ↔ Function.Injective f := by
-  sorry
+  exact Module.FaithfullyFlat.lTensor_injective_iff_injective R B f
 
 /-- Faithfully flat tensoring reflects surjectivity. -/
 theorem faithfullyFlat_lTensor_surjective_iff
@@ -43,7 +43,7 @@ theorem faithfullyFlat_lTensor_surjective_iff
     [AddCommGroup N'] [Algebra R B] [Module R N] [Module R N']
     [Module.FaithfullyFlat R B] (f : N →ₗ[R] N') :
     Function.Surjective (f.lTensor B) ↔ Function.Surjective f := by
-  sorry
+  exact Module.FaithfullyFlat.lTensor_surjective_iff_surjective R B f
 
 /-- Faithfully flat tensoring reflects exactness. -/
 theorem faithfullyFlat_lTensor_exact_iff
@@ -52,7 +52,7 @@ theorem faithfullyFlat_lTensor_exact_iff
     [Algebra R B] [Module R N] [Module R N'] [Module R N'']
     [Module.FaithfullyFlat R B] {f : N →ₗ[R] N'} {g : N' →ₗ[R] N''} :
     Function.Exact (f.lTensor B) (g.lTensor B) ↔ Function.Exact f g := by
-  sorry
+  exact Module.FaithfullyFlat.lTensor_exact_iff_exact R B f g
 
 /-- Flatness descends along a faithfully flat tensor-product base change. -/
 theorem flat_of_faithfullyFlat_tensorProduct
@@ -64,15 +64,16 @@ theorem flat_of_faithfullyFlat_tensorProduct
 
 /-- The relative base-changed ring and module used for the fpqc-local statement. -/
 abbrev relativeBaseChangedRing
-    (A R B : Type*) [CommRing A] [CommRing R] [CommRing B]
-    [Algebra A R] [Algebra A B] : Type* :=
-  B ⊗[A] R
+    (A : Type u) (R : Type v) (B : Type w) [CommRing A] [CommRing R] [CommRing B]
+    [Algebra A R] [Algebra A B] : Type (max v w) :=
+  R ⊗[A] B
 
 abbrev relativeBaseChangedModule
-    (A R B M : Type*) [CommRing A] [CommRing R] [CommRing B]
+    (A : Type u) (R : Type v) (B : Type w) (M : Type z)
+    [CommRing A] [CommRing R] [CommRing B]
     [AddCommGroup M] [Algebra A R] [Algebra A B] [Module R M]
-    [Module A M] [IsScalarTower A R M] : Type* :=
-  B ⊗[A] M
+    [Module A M] [IsScalarTower A R M] : Type (max v (max w z)) :=
+  (R ⊗[A] B) ⊗[R] M
 
 /-- Flatness after relative base change is the source-level hypothesis on `R_B` and `M_B`. -/
 def FlatAfterFaithfullyFlatBaseChange
@@ -88,7 +89,9 @@ theorem flat_of_flatAfterFaithfullyFlatBaseChange
     [Module A M] [IsScalarTower A R M] [Module.FaithfullyFlat A B]
     (hM : FlatAfterFaithfullyFlatBaseChange A R B M) :
     Module.Flat R M := by
-  sorry
+  change Module.Flat (R ⊗[A] B) ((R ⊗[A] B) ⊗[R] M) at hM
+  let _ : Module.Flat (R ⊗[A] B) ((R ⊗[A] B) ⊗[R] M) := hM
+  exact Module.Flat.of_flat_tensorProduct R M (R ⊗[A] B)
 
 /-- The ring-hom formulation of fpqc-local flatness. -/
 theorem ringHom_flat_of_faithfullyFlat_relative_baseChange
@@ -99,7 +102,13 @@ theorem ringHom_flat_of_faithfullyFlat_relative_baseChange
       letI : Algebra A B := g.toAlgebra
       Module.Flat B (B ⊗[A] R)) :
     RingHom.Flat f := by
-  sorry
+  let _ : Algebra A R := f.toAlgebra
+  let _ : Algebra A B := g.toAlgebra
+  change Module.FaithfullyFlat A B at hg
+  let _ : Module.FaithfullyFlat A B := hg
+  change Module.Flat B (B ⊗[A] R) at hbase
+  change Module.Flat A R
+  exact Module.Flat.of_flat_tensorProduct A R B
 
 end
 

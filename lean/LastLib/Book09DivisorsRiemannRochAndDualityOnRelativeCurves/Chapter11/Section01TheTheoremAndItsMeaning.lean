@@ -46,6 +46,11 @@ theorem chapter11_riemann_roch_euler_characteristic
     {k : Type u} [Field k] (C : Chapter11CurveOverField k)
     [Chapter11CohomologyTheory C.carrier C.structureMap]
     [Chapter11PicardTheory C.carrier] [Chapter11DegreeTheory C.carrier]
+    [Chapter11DivisorRepresentationTheory C]
+    [Chapter11EffectiveDecompositionTheory C]
+    [Chapter11EffectiveCartierTwistSequenceTheory C]
+    [Chapter11EulerCharacteristicTheory C.carrier C.structureMap]
+    [Chapter11ConnectedGlobalSections C]
     (L : Chapter11LineBundle C.carrier) :
     chapter11EulerCharacteristicOfLineBundle C L =
       chapter11Degree L + 1 - (C.genus : ℤ) := by
@@ -98,6 +103,7 @@ theorem chapter11_riemann_roch_forms_iff
     [Chapter11DualizingSheafTheory C.carrier]
     [Chapter11CohomologyTheory C.carrier C.structureMap]
     [Chapter11DegreeTheory C.carrier]
+    [Chapter11CohomologyIsomorphismTheory C.carrier C.structureMap]
     [Chapter11SerreDualityTheory C] (K : Chapter11CanonicalDivisor C)
     (D : Chapter11Divisor C.carrier) :
     Chapter11RiemannRochEulerForm C D.lineBundle ↔
@@ -111,6 +117,12 @@ theorem chapter11_riemann_roch_divisor
     [Chapter11DualizingSheafTheory C.carrier]
     [Chapter11CohomologyTheory C.carrier C.structureMap]
     [Chapter11DegreeTheory C.carrier]
+    [Chapter11DivisorRepresentationTheory C]
+    [Chapter11EffectiveDecompositionTheory C]
+    [Chapter11EffectiveCartierTwistSequenceTheory C]
+    [Chapter11CohomologyIsomorphismTheory C.carrier C.structureMap]
+    [Chapter11EulerCharacteristicTheory C.carrier C.structureMap]
+    [Chapter11ConnectedGlobalSections C]
     [Chapter11SerreDualityTheory C] (K : Chapter11CanonicalDivisor C)
     (D : Chapter11Divisor C.carrier) :
     (chapter11Ell C D : ℤ) -
@@ -127,6 +139,11 @@ theorem chapter11_h1_vanishes_of_degree_gt_two_genus_sub_two
     [Chapter11DegreeTheory C.carrier]
     [Chapter11SerreDualityTheory C]
     (L : Chapter11LineBundle C.carrier)
+    (hcanonicalDegree :
+      chapter11Degree (chapter11CanonicalBundle (X := C.carrier)) =
+        2 * (C.genus : ℤ) - 2)
+    (hnegative : ∀ M : Chapter11LineBundle C.carrier,
+      chapter11Degree M < 0 → chapter11H0Finrank C M = 0)
     (hdegree : 2 * (C.genus : ℤ) - 2 < chapter11Degree L) :
     chapter11H1Finrank C L = 0 := by
   sorry
@@ -138,8 +155,18 @@ theorem chapter11_h0_eq_degree_plus_one_sub_genus_of_high_degree
     [Chapter11DualizingSheafTheory C.carrier]
     [Chapter11CohomologyTheory C.carrier C.structureMap]
     [Chapter11DegreeTheory C.carrier]
+    [Chapter11DivisorRepresentationTheory C]
+    [Chapter11EffectiveDecompositionTheory C]
+    [Chapter11EffectiveCartierTwistSequenceTheory C]
+    [Chapter11EulerCharacteristicTheory C.carrier C.structureMap]
+    [Chapter11ConnectedGlobalSections C]
     [Chapter11SerreDualityTheory C]
     (L : Chapter11LineBundle C.carrier)
+    (hcanonicalDegree :
+      chapter11Degree (chapter11CanonicalBundle (X := C.carrier)) =
+        2 * (C.genus : ℤ) - 2)
+    (hnegative : ∀ M : Chapter11LineBundle C.carrier,
+      chapter11Degree M < 0 → chapter11H0Finrank C M = 0)
     (hdegree : 2 * (C.genus : ℤ) - 2 < chapter11Degree L) :
     (chapter11H0Finrank C L : ℤ) = chapter11Degree L + 1 - (C.genus : ℤ) := by
   sorry
@@ -151,6 +178,8 @@ theorem chapter11_riemann_roch_euler_characteristic_gorenstein
     (C : Chapter11ProperGorensteinCurveOverField k)
     [Chapter11CohomologyTheory C.carrier C.structureMap]
     [Chapter11PicardTheory C.carrier] [Chapter11DegreeTheory C.carrier]
+    [Chapter11GorensteinDegreeTheory C]
+    [Chapter11GorensteinEulerCharacteristicTheory C]
     (L : Chapter11LineBundle C.carrier) :
     chapter11EulerCharacteristic (f := C.structureMap) L.module =
       chapter11Degree L + 1 - (C.arithmeticGenus : ℤ) := by

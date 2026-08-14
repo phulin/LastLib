@@ -1,6 +1,7 @@
 import Mathlib.AlgebraicGeometry.Cover.QuasiCompact
 import Mathlib.AlgebraicGeometry.Morphisms.Affine
 import Mathlib.AlgebraicGeometry.Sites.Fpqc
+import Mathlib.CategoryTheory.Bicategory.Functor.LocallyDiscrete
 import Mathlib.CategoryTheory.Comma.Over.Pullback
 import Mathlib.CategoryTheory.Sites.Descent.DescentData
 
@@ -49,17 +50,15 @@ theorem IsFpqcMorphism.quasiCompact {p : T ⟶ S} (hp : IsFpqcMorphism p) :
 theorem IsFpqcMorphism.mem_fpqcPrecoverage {p : T ⟶ S}
     (hp : IsFpqcMorphism p) :
     Presieve.singleton p ∈ AlgebraicGeometry.Scheme.fpqcPrecoverage S := by
-  letI : Flat p := hp.1
-  letI : Surjective p := hp.2.1
-  letI : QuasiCompact p := hp.2.2
-  exact AlgebraicGeometry.Scheme.Hom.singleton_mem_fpqcPrecoverage p
+  exact @Scheme.Hom.singleton_mem_fpqcPrecoverage _ _ p hp.1 hp.2.1 hp.2.2
 
 theorem IsFpqcMorphism.effectiveEpi {p : T ⟶ S} (hp : IsFpqcMorphism p) :
     EffectiveEpi p := by
-  letI : Flat p := hp.1
-  letI : Surjective p := hp.2.1
-  letI : QuasiCompact p := hp.2.2
-  infer_instance
+  rw [← Sieve.effectiveEpimorphic_singleton,
+    Presieve.EffectiveEpimorphic.iff_forall_isSheafFor_yoneda]
+  intro Z
+  exact (GrothendieckTopology.Subcanonical.isSheaf_of_isRepresentable _).isSheafFor _
+    (Precoverage.generate_mem_toGrothendieck hp.mem_fpqcPrecoverage)
 
 end Scheme
 
@@ -82,7 +81,7 @@ def HasAffineLocallyFiniteReduction {S : Scheme.{u}}
 The cover field supplies flatness and joint surjectivity; the last field is the quasi-compactness
 condition in the form used by the affine-local proof. -/
 structure FpqcFamily (S : Scheme.{u}) where
-  cover : S.Cover (Scheme.precoverage (fun f => Flat f))
+  cover : S.Cover (Scheme.precoverage @Flat)
   affineLocallyFinite : HasAffineLocallyFiniteReduction cover.toPreZeroHypercover
 
 namespace FpqcFamily
@@ -90,19 +89,20 @@ namespace FpqcFamily
 variable {S : Scheme.{u}} (𝒰 : FpqcFamily S)
 
 theorem flat (i : 𝒰.cover.I₀) : Flat (𝒰.cover.f i) := by
-  have h := 𝒰.cover.mem₀
-  rw [Scheme.presieve₀_mem_precoverage_iff] at h
-  exact h.2 i
+  exact 𝒰.cover.map_prop i
 
 theorem jointlySurjective :
     ∀ x : S, ∃ i : 𝒰.cover.I₀, x ∈ Set.range (𝒰.cover.f i) := by
-  have h := 𝒰.cover.mem₀
-  rw [Scheme.presieve₀_mem_precoverage_iff] at h
-  exact h.1
+  intro x
+  exact (Scheme.presieve₀_mem_precoverage_iff (P := @Flat)
+    𝒰.cover.toPreZeroHypercover).mp 𝒰.cover.mem₀ |>.1 x
 
 theorem quasiCompactCover :
     QuasiCompactCover 𝒰.cover.toPreZeroHypercover := by
-  sorry
+  constructor
+  intro U hU
+  obtain ⟨n, a, V, hV, hcover⟩ := 𝒰.affineLocallyFinite hU
+  exact IsCompactOpenCovered.of_finite a V (fun i ↦ (hV i).isCompact) hcover
 
 end FpqcFamily
 
@@ -111,12 +111,63 @@ namespace SchemeDescent
 /-- The pseudofunctor whose fiber over `S` is the category of schemes over `S` and whose
 morphisms are pullback functors. -/
 noncomputable def overPseudofunctor :
-    Pseudofunctor (LocallyDiscrete Scheme.{u}ᵒᵖ) Cat :=
+    Pseudofunctor (LocallyDiscrete Scheme.{u}ᵒᵖ) (Cat.{u, u + 1}) :=
   LocallyDiscrete.mkPseudofunctor
     (fun X => Cat.of (Over X.unop))
-    (fun f => (Over.pullback f.unop).toCat)
-    (fun X => Cat.Hom.isoMk (Over.pullbackId X.unop))
+    (fun f => (Over.pullback f.unop).toCatHom)
+    (fun X => Cat.Hom.isoMk Over.pullbackId)
     (fun f g => Cat.Hom.isoMk (Over.pullbackComp g.unop f.unop))
+    (by
+      intro b₀ b₁ b₂ b₃ f g h
+      have hraw :
+          (Over.pullbackComp h.unop (f ≫ g).unop).hom ≫
+              Functor.whiskerRight (Over.pullbackComp g.unop f.unop).hom
+                (Over.pullback h.unop) ≫
+            (Functor.associator (Over.pullback f.unop) (Over.pullback g.unop)
+                (Over.pullback h.unop)).hom ≫
+              Functor.whiskerLeft (Over.pullback f.unop)
+                (Over.pullbackComp h.unop g.unop).inv ≫
+            (Over.pullbackComp (g ≫ h).unop f.unop).inv =
+            eqToHom (by simp) := by
+        ext X
+        dsimp [Over.pullbackComp, conjugateIsoEquiv, Over.mapComp]
+        ext <;>
+          simp [pullback.lift_fst, pullback.lift_snd, pullback.lift_fst_assoc,
+            Category.assoc] <;>
+          cases (Category.assoc h.unop g.unop f.unop).symm <;> rfl
+      exact congr($(hraw).toCatHom₂))
+    (by
+      intro b₀ b₁ f
+      have hraw :
+          (Over.pullbackComp f.unop (𝟙 _)).hom ≫
+              Functor.whiskerRight (Over.pullbackId (X := b₀.unop)).hom
+                (Over.pullback f.unop) ≫
+            (Functor.leftUnitor (Over.pullback f.unop)).hom =
+            eqToHom (by simp) := by
+        ext X
+        dsimp [Over.pullbackComp, Over.pullbackId, conjugateIsoEquiv,
+          Over.mapComp]
+        ext <;>
+          simp [pullback.lift_fst, pullback.lift_snd, pullback.lift_fst_assoc,
+            Category.assoc] <;>
+          cases (Category.comp_id f.unop) <;> rfl
+      exact congr($(hraw).toCatHom₂))
+    (by
+      intro b₀ b₁ f
+      have hraw :
+          (Over.pullbackComp (𝟙 _) f.unop).hom ≫
+              Functor.whiskerLeft (Over.pullback f.unop)
+                (Over.pullbackId (X := b₁.unop)).hom ≫
+            (Functor.rightUnitor (Over.pullback f.unop)).hom =
+            eqToHom (by simp) := by
+        ext X
+        dsimp [Over.pullbackComp, Over.pullbackId, conjugateIsoEquiv,
+          Over.mapComp]
+        ext <;>
+          simp [pullback.lift_fst, pullback.lift_snd, pullback.lift_fst_assoc,
+            Category.assoc] <;>
+          cases (Category.id_comp f.unop) <;> rfl
+      exact congr($(hraw).toCatHom₂))
 
 abbrev Data {ι : Type v} {S : Scheme.{u}} {X : ι → Scheme.{u}}
     (f : ∀ i, X i ⟶ S) :=
@@ -129,7 +180,7 @@ abbrev Datum {S T : Scheme.{u}} (p : T ⟶ S) : Type _ :=
 structure Effective {ι : Type v} {S : Scheme.{u}} {X : ι → Scheme.{u}}
     (f : ∀ i, X i ⟶ S) (D : Data f) where
   descended : Over S
-  comparison : D ≅ overPseudofunctor.toDescentData f descended
+  comparison : D ≅ (overPseudofunctor.toDescentData f).obj descended
 
 def IsEffective {ι : Type v} {S : Scheme.{u}} {X : ι → Scheme.{u}}
     (f : ∀ i, X i ⟶ S) : Prop :=
@@ -150,12 +201,11 @@ theorem family_effective_of_fpqc (𝒰 : FpqcFamily S) :
     IsEffective (fun i => 𝒰.cover.f i) := by
   sorry
 
-theorem singleton_morphisms_descend_uniquely {S T : Scheme.{u}} (p : T ⟶ S)
+noncomputable def singleton_morphisms_descend_uniquely {S T : Scheme.{u}} (p : T ⟶ S)
     (hp : Scheme.IsFpqcMorphism p) :
-    (overPseudofunctor.toDescentData (fun _ : PUnit => p)).FullyFaithful := by
-  sorry
+    (overPseudofunctor.toDescentData (fun _ : PUnit => p)).FullyFaithful := by sorry
 
-theorem family_morphisms_descend_uniquely (𝒰 : FpqcFamily S) :
+noncomputable def family_morphisms_descend_uniquely (𝒰 : FpqcFamily S) :
     (overPseudofunctor.toDescentData (fun i => 𝒰.cover.f i)).FullyFaithful := by
   sorry
 
@@ -166,7 +216,20 @@ theorem effective_unique_up_to_unique_iso {ι : Type v} {S : Scheme.{u}}
       (overPseudofunctor.toDescentData f).FullyFaithful) :
     Nonempty (CompatibleIso A B) ∧
       ∀ e₁ e₂ : CompatibleIso A B, e₁ = e₂ := by
-  sorry
+  let e : A.descended ≅ B.descended :=
+    hfullyFaithful.preimageIso (A.comparison.symm ≪≫ B.comparison)
+  refine ⟨⟨e, ?_⟩, ?_⟩
+  ·
+    have hm := hfullyFaithful.map_preimage (A.comparison.symm ≪≫ B.comparison).hom
+    simp only [e, Functor.FullyFaithful.preimageIso]
+    rw [hm]
+    simp
+  · intro e₁ e₂
+    apply Subtype.ext
+    apply Iso.ext
+    apply hfullyFaithful.map_injective
+    apply (cancel_epi A.comparison.hom).1
+    exact e₁.property.trans e₂.property.symm
 
 end SchemeDescent
 

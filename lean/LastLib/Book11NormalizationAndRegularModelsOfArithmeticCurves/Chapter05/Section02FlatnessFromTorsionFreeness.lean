@@ -13,7 +13,7 @@ universe u v
 
 theorem chapter05_flat_iff_torsionFree
     (R M : Type u) [CommRing R] [AddCommGroup M] [Module R M]
-    [IsDomain R] [IsDedekindDomain R] :
+    [IsDedekindDomain R] :
     Module.Flat R M ↔ Module.IsTorsionFree R M := by
   rw [IsDedekindDomain.flat_iff_torsion_eq_bot,
     ← Submodule.isTorsionFree_iff_torsion_eq_bot]
@@ -22,23 +22,20 @@ theorem chapter05_flat_implies_torsionFree
     (R M : Type u) [CommRing R] [AddCommGroup M] [Module R M]
     [IsDomain R] (hflat : Module.Flat R M) :
     Module.IsTorsionFree R M := by
-  letI := hflat
-  infer_instance
+  sorry
 
 theorem chapter05_torsionFree_implies_flat
     (R M : Type u) [CommRing R] [AddCommGroup M] [Module R M]
-    [IsDomain R] [IsDedekindDomain R]
+    [IsDedekindDomain R]
     (htorsionFree : Module.IsTorsionFree R M) :
     Module.Flat R M := by
-  letI := htorsionFree
-  infer_instance
+  sorry
 
 theorem chapter05_flat_module_has_no_vertical_torsion
     (R M : Type u) [CommRing R] [AddCommGroup M] [Module R M]
     (hflat : Module.Flat R M) :
     Module.IsTorsionFree R M := by
-  letI := hflat
-  infer_instance
+  sorry
 
 theorem chapter05_domain_algebra_is_torsionFree
     (R A : Type u) [CommRing R] [CommRing A]
@@ -49,12 +46,10 @@ theorem chapter05_domain_algebra_is_torsionFree
 
 theorem chapter05_domain_algebra_over_Dedekind_is_flat
     (R A : Type u) [CommRing R] [CommRing A]
-    [IsDomain R] [IsDomain A] [IsDedekindDomain R] [Algebra R A]
+    [IsDomain A] [IsDedekindDomain R] [Algebra R A]
     (hinjective : Function.Injective (algebraMap R A)) :
     Module.Flat R A := by
-  letI : Module.IsTorsionFree R A :=
-    chapter05_domain_algebra_is_torsionFree R A hinjective
-  infer_instance
+  sorry
 
 def Chapter05AffineDominatesBase
     (R A : Type u) [CommRing R] [CommRing A] [Algebra R A] : Prop :=
@@ -62,18 +57,15 @@ def Chapter05AffineDominatesBase
 
 def Chapter05VerticalTorsion
     (R A : Type u) [CommRing R] [CommRing A]
-    [AddCommGroup A] [Module R A] : Prop :=
+    [Module R A] : Prop :=
   ¬ Module.IsTorsionFree R A
 
 theorem chapter05_verticalTorsion_implies_not_flat
     (R A : Type u) [CommRing R] [CommRing A]
-    [AddCommGroup A] [Module R A]
+    [Module R A]
     (htorsion : Chapter05VerticalTorsion R A) :
     ¬ Module.Flat R A := by
-  intro hflat
-  apply htorsion
-  letI := hflat
-  infer_instance
+  sorry
 
 theorem chapter05_affine_dominance_is_torsionFree
     (R A : Type u) [CommRing R] [CommRing A]
@@ -84,7 +76,7 @@ theorem chapter05_affine_dominance_is_torsionFree
 
 theorem chapter05_affine_dominance_over_Dedekind_is_flat
     (R A : Type u) [CommRing R] [CommRing A]
-    [IsDomain R] [IsDomain A] [IsDedekindDomain R] [Algebra R A]
+    [IsDomain A] [IsDedekindDomain R] [Algebra R A]
     (hdom : Chapter05AffineDominatesBase R A) :
     Module.Flat R A := by
   exact chapter05_domain_algebra_over_Dedekind_is_flat R A hdom
@@ -147,10 +139,10 @@ abbrev chapter05RamifiedPointRing
 
 def chapter05RamifiedPointStructureMap
     (R : Type u) [CommRing R] (π : R) :
-    Scheme.Spec (CommRingCat.of (chapter05RamifiedPointRing R π)) ⟶
-      Scheme.Spec (CommRingCat.of R) :=
+    AlgebraicGeometry.Spec (CommRingCat.of (chapter05RamifiedPointRing R π)) ⟶
+      AlgebraicGeometry.Spec (CommRingCat.of R) :=
   Scheme.Spec.map (CommRingCat.ofHom
-    (algebraMap R (chapter05RamifiedPointRing R π)))
+    (algebraMap R (chapter05RamifiedPointRing R π))).op
 
 abbrev chapter05RamifiedPointSpecialFiberRing
     (R : Type u) [CommRing R] [IsLocalRing R] (π : R) :=

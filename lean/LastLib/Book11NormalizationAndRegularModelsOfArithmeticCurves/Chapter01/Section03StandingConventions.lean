@@ -21,6 +21,8 @@ structure Chapter01CurveOverField (k : Type u) [Field k] where
 
 namespace Chapter01CurveOverField
 
+variable {k : Type u} [Field k]
+
 instance (C : Chapter01CurveOverField k) : IsSeparated C.structureMap := C.separated
 
 instance (C : Chapter01CurveOverField k) : LocallyOfFiniteType C.structureMap :=
@@ -49,6 +51,8 @@ structure Chapter01SmoothProperCurveOverField (k : Type u) [Field k]
 
 namespace Chapter01SmoothProperCurveOverField
 
+variable {k : Type u} [Field k]
+
 instance (C : Chapter01SmoothProperCurveOverField k) : IsSeparated C.structureMap :=
   C.toChapter01CurveOverField.separated
 
@@ -64,10 +68,6 @@ instance (C : Chapter01SmoothProperCurveOverField k) : Smooth C.structureMap := 
 
 instance (C : Chapter01SmoothProperCurveOverField k) :
     GeometricallyConnected C.structureMap := C.geometricallyConnected
-
-theorem smooth (C : Chapter01SmoothProperCurveOverField k) :
-    Smooth C.structureMap :=
-  C.smooth
 
 theorem geometrically_connected (C : Chapter01SmoothProperCurveOverField k) :
     GeometricallyConnected C.structureMap :=
@@ -86,7 +86,7 @@ theorem chapter01_model_flat
     (M : Chapter01Model B c) : Flat M.structureMap :=
   M.flat
 
-theorem chapter01_model_generic_fiber_identification
+def chapter01_model_generic_fiber_identification
     {S C : Scheme.{u}} {K : Type u} [Field K]
     {B : Chapter01IntegralBase S K} {c : C ⟶ Spec (CommRingCat.of K)}
     (M : Chapter01Model B c) :
@@ -97,12 +97,12 @@ theorem chapter01_model_generic_fiber_identification_over
     {S C : Scheme.{u}} {K : Type u} [Field K]
     {B : Chapter01IntegralBase S K} {c : C ⟶ Spec (CommRingCat.of K)}
     (M : Chapter01Model B c) :
-    M.genericFiberIso.hom ≫ pullback.snd M.structureMap B.genericPointMap = c :=
+    M.genericFiberIso.hom ≫ c = pullback.snd M.structureMap B.genericPointMap :=
   M.genericFiberIso_over
 
 /- LOCAL_DEPENDENCY_GUESS: a candidate with the same generic fiber but no flatness hypothesis models the vertical
-embedded-component warning in the source.  The final field names the extra vertical component;
-its concrete associated-prime API is deferred to the local-algebra chapters. -/
+embedded-component warning in the source.  The nonflatness field records the required defect; its
+concrete associated-prime API is deferred to the local-algebra chapters. -/
 structure Chapter01NonflatGenericFiberCandidate {S C : Scheme.{u}} {K : Type u} [Field K]
     (B : Chapter01IntegralBase S K) (c : C ⟶ Spec (CommRingCat.of K)) where
   carrier : Scheme.{u}
@@ -110,9 +110,8 @@ structure Chapter01NonflatGenericFiberCandidate {S C : Scheme.{u}} {K : Type u} 
   finiteType : Chapter01FiniteType structureMap
   genericFiberIso : chapter01GenericFiber structureMap B.genericPointMap ≅ C
   genericFiberIso_over :
-    genericFiberIso.hom ≫ pullback.snd structureMap B.genericPointMap = c
+    genericFiberIso.hom ≫ c = pullback.snd structureMap B.genericPointMap
   notFlat : ¬ Flat structureMap
-  verticalEmbeddedComponent : Prop
 
 def Chapter01FlatnessIsPartOfModelDefinition : Prop :=
   ∀ {S C : Scheme.{u}} {K : Type u} [Field K]

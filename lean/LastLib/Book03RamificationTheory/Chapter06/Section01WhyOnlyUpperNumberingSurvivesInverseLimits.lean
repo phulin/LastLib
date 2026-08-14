@@ -1,15 +1,18 @@
 import LastLib.Book03RamificationTheory.Chapter06.Dependencies
+import LastLib.Book03RamificationTheory.Chapter05.Section06HasseArfAndTheLimitsOfIntegrality
 import Mathlib.FieldTheory.IsSepClosed
-import Mathlib.GroupTheory.FiniteIndexNormalSubgroup
 import Mathlib.LinearAlgebra.Dimension.Finite
+import Mathlib.RingTheory.Valuation.Extension
 
 namespace LastLib.Book03RamificationTheory.Chapter06
 
 noncomputable section
 
+open LastLib.Book03RamificationTheory.Chapter05
+
 /-! ## 6.1. Why only upper numbering survives inverse limits -/
 
-universe u
+universe u v w
 
 /-- The residue characteristic exponent, with `1` in characteristic zero. -/
 def chapter06ResidueCharacteristicExponent (k : Type*) [Ring k] : ℕ :=
@@ -23,53 +26,6 @@ def chapter06PerfectResidueField (k : Type*) [Field k] : Prop :=
 def chapter06SeparableResidueExtension
     (k l : Type*) [Field k] [Field l] [Algebra k l] : Prop :=
   Algebra.IsSeparable k l
-
-/-!
-The source permits either a perfect residue field or a directed collection of
-finite levels with separable residue extensions.  The latter is kept as an
-explicit local interface because the current earlier chapters do not attach a
-canonical residue-field object to every open normal subgroup.
--/
-structure Chapter06SeparableResidueLevel (k : Type u) [Field k] where
-  extension : Type u
-  [extension_field : Field extension]
-  [extension_algebra : Algebra k extension]
-  [extension_finite : FiniteDimensional k extension]
-  separable : Algebra.IsSeparable k extension
-
-structure Chapter06ResidueData (P : ProfiniteGrp.{u}) where
-  residueField : Type u
-  [residueField_field : Field residueField]
-  residueCharacteristicExponent : ℕ
-  characteristic_exponent_eq :
-    residueCharacteristicExponent = ringExpChar residueField
-  residue_condition :
-    chapter06PerfectResidueField residueField ∨
-      ∀ _N : OpenNormalSubgroup P,
-        Nonempty (Chapter06SeparableResidueLevel residueField)
-
-structure Chapter06InfiniteGaloisRamificationData
-    (K E : Type*) [Field K] [Field E] [Algebra K E] [IsGalois K E] where
-  upper : Chapter06InfiniteUpperSystem (chapter06ProfiniteGaloisGroup K E)
-  residue : Chapter06ResidueData (chapter06ProfiniteGaloisGroup K E)
-
-namespace Chapter06InfiniteGaloisRamificationData
-
-variable {K E : Type*} [Field K] [Field E] [Algebra K E] [IsGalois K E]
-
-abbrev galoisGroup
-    (_D : Chapter06InfiniteGaloisRamificationData K E) : ProfiniteGrp :=
-  chapter06ProfiniteGaloisGroup K E
-
-abbrev inertia
-    (D : Chapter06InfiniteGaloisRamificationData K E) : Subgroup D.galoisGroup :=
-  chapter06InertiaGroup D.upper
-
-abbrev wildInertia
-    (D : Chapter06InfiniteGaloisRamificationData K E) : Subgroup D.galoisGroup :=
-  chapter06WildInertiaGroup D.upper
-
-end Chapter06InfiniteGaloisRamificationData
 
 /-!
 An open normal level has a closed normal carrier, so Mathlib's infinite
@@ -110,6 +66,126 @@ noncomputable def chapter06GaloisLevelQuotientEquiv
     (chapter06ClosedLevel N) (chapter06ClosedLevel_normal N)
 
 /-!
+The upper system is now required to come from the complete discretely valued
+finite Galois levels supplied by Chapter 5.  The profile transport is stated
+after the canonical quotient equivalence, so the finite profiles cannot be
+unrelated witnesses on an abstract quotient.
+-/
+structure Chapter06InfiniteGaloisRamificationRealization
+    (K : Type v) (E : Type w) [Field K] [Field E] [Algebra K E] [IsGalois K E] where
+  upper : Chapter06InfiniteUpperSystem (chapter06ProfiniteGaloisGroup K E)
+  levelData :
+    ∀ N : OpenNormalSubgroup (chapter06ProfiniteGaloisGroup K E),
+      letI : FiniteDimensional K (chapter06GaloisLevelFixedField N) :=
+        chapter06GaloisLevelFixedField_finite N
+      letI : (chapter06ClosedLevel N).toSubgroup.Normal :=
+        chapter06ClosedLevel_normal N
+      letI : IsGalois K (chapter06GaloisLevelFixedField N) :=
+        @IsGalois.of_fixedField_normal_subgroup K E _ _ _ _
+          (chapter06ClosedLevel N).toSubgroup (chapter06ClosedLevel_normal N)
+      letI : Finite (Gal(chapter06GaloisLevelFixedField N / K)) :=
+        Finite.of_equiv _ (chapter06GaloisLevelQuotientEquiv N).toEquiv
+      Chapter05LocalGaloisUpperData K (chapter06GaloisLevelFixedField N)
+  upper_profile_is_realized :
+    ∀ (N : OpenNormalSubgroup (chapter06ProfiniteGaloisGroup K E)) (v : ℝ),
+      letI : FiniteDimensional K (chapter06GaloisLevelFixedField N) :=
+        chapter06GaloisLevelFixedField_finite N
+      letI : (chapter06ClosedLevel N).toSubgroup.Normal :=
+        chapter06ClosedLevel_normal N
+      letI : IsGalois K (chapter06GaloisLevelFixedField N) :=
+        @IsGalois.of_fixedField_normal_subgroup K E _ _ _ _
+          (chapter06ClosedLevel N).toSubgroup (chapter06ClosedLevel_normal N)
+      letI : Finite (Gal(chapter06GaloisLevelFixedField N / K)) :=
+        Finite.of_equiv _ (chapter06GaloisLevelQuotientEquiv N).toEquiv
+      (chapter05UpperRamificationGroup (levelData N).profile v).map
+          (chapter06GaloisLevelQuotientEquiv N).symm.toMonoidHom =
+        chapter05UpperRamificationGroup (upper.upperProfile N) v
+  residueField : Type v
+  [residueField_field : Field residueField]
+  residueField_identification :
+    ∀ N : OpenNormalSubgroup (chapter06ProfiniteGaloisGroup K E),
+      letI : FiniteDimensional K (chapter06GaloisLevelFixedField N) :=
+        chapter06GaloisLevelFixedField_finite N
+      letI : (chapter06ClosedLevel N).toSubgroup.Normal :=
+        chapter06ClosedLevel_normal N
+      letI : IsGalois K (chapter06GaloisLevelFixedField N) :=
+        @IsGalois.of_fixedField_normal_subgroup K E _ _ _ _
+          (chapter06ClosedLevel N).toSubgroup (chapter06ClosedLevel_normal N)
+      letI : Finite (Gal(chapter06GaloisLevelFixedField N / K)) :=
+        Finite.of_equiv _ (chapter06GaloisLevelQuotientEquiv N).toEquiv
+      Nonempty (residueField ≃+*
+        IsLocalRing.ResidueField
+          (levelData N).vK.toValuation.valuationSubring)
+
+/-- The actual finite residue extension at a realized local Galois level. -/
+def chapter06ResidueLevelCondition
+    {K : Type v} {E : Type w} [Field K] [Field E] [Algebra K E] [IsGalois K E]
+    (R : Chapter06InfiniteGaloisRamificationRealization K E)
+    (N : OpenNormalSubgroup (chapter06ProfiniteGaloisGroup K E)) : Prop :=
+  letI : FiniteDimensional K (chapter06GaloisLevelFixedField N) :=
+    chapter06GaloisLevelFixedField_finite N
+  letI : (chapter06ClosedLevel N).toSubgroup.Normal :=
+    chapter06ClosedLevel_normal N
+  letI : IsGalois K (chapter06GaloisLevelFixedField N) :=
+    @IsGalois.of_fixedField_normal_subgroup K E _ _ _ _
+      (chapter06ClosedLevel N).toSubgroup (chapter06ClosedLevel_normal N)
+  letI : Finite (Gal(chapter06GaloisLevelFixedField N / K)) :=
+    Finite.of_equiv _ (chapter06GaloisLevelQuotientEquiv N).toEquiv
+  let L := R.levelData N
+  letI : L.vK.toValuation.HasExtension L.vL.toValuation :=
+    ⟨L.restriction⟩
+  FiniteDimensional
+      (IsLocalRing.ResidueField L.vK.toValuation.valuationSubring)
+      (IsLocalRing.ResidueField L.vL.toValuation.valuationSubring) ∧
+    Algebra.IsSeparable
+      (IsLocalRing.ResidueField L.vK.toValuation.valuationSubring)
+      (IsLocalRing.ResidueField L.vL.toValuation.valuationSubring)
+
+structure Chapter06ResidueData
+    {K : Type v} {E : Type w} [Field K] [Field E] [Algebra K E] [IsGalois K E]
+    (R : Chapter06InfiniteGaloisRamificationRealization K E) where
+  residueField : Type v
+  [residueField_field : Field residueField]
+  residueField_equiv :
+    letI : Field R.residueField := R.residueField_field
+    residueField ≃+* R.residueField
+  residueCharacteristicExponent : ℕ
+  characteristic_exponent_eq :
+    residueCharacteristicExponent = ringExpChar residueField
+  residue_condition :
+    chapter06PerfectResidueField residueField ∨
+      ∀ N : OpenNormalSubgroup (chapter06ProfiniteGaloisGroup K E),
+        chapter06ResidueLevelCondition R N
+
+structure Chapter06InfiniteGaloisRamificationData
+    (K : Type v) (E : Type w) [Field K] [Field E] [Algebra K E] [IsGalois K E] where
+  realization : Chapter06InfiniteGaloisRamificationRealization K E
+  residue : Chapter06ResidueData realization
+
+namespace Chapter06InfiniteGaloisRamificationData
+
+variable {K E : Type*} [Field K] [Field E] [Algebra K E] [IsGalois K E]
+
+abbrev galoisGroup
+    (_D : Chapter06InfiniteGaloisRamificationData K E) : ProfiniteGrp :=
+  chapter06ProfiniteGaloisGroup K E
+
+abbrev upper
+    (D : Chapter06InfiniteGaloisRamificationData K E) :
+    Chapter06InfiniteUpperSystem D.galoisGroup :=
+  D.realization.upper
+
+abbrev inertia
+    (D : Chapter06InfiniteGaloisRamificationData K E) : Subgroup D.galoisGroup :=
+  chapter06InertiaGroup D.upper
+
+abbrev wildInertia
+    (D : Chapter06InfiniteGaloisRamificationData K E) : Subgroup D.galoisGroup :=
+  chapter06WildInertiaGroup D.upper
+
+end Chapter06InfiniteGaloisRamificationData
+
+/-!
 The tame quotient is a genuine group quotient of inertia by wild inertia.  The
 finite-index formulation of the three profinite properties avoids choosing a
 presentation of the profinite group.
@@ -130,23 +206,28 @@ instance chapter06TameQuotient_group
       (chapter06WildInertiaGroup S).subgroupOf (chapter06InertiaGroup S))
   infer_instance
 
-def chapter06ProPGroup (p : ℕ) (G : Type*) [Group G] : Prop :=
-  ∀ N : FiniteIndexNormalSubgroup G,
-    ∃ r : ℕ, Nat.card (G ⧸ N.toSubgroup) = p ^ r
+noncomputable instance chapter06TameQuotient_topologicalSpace
+    {P : ProfiniteGrp.{u}} (S : Chapter06InfiniteUpperSystem P) :
+    TopologicalSpace (chapter06TameQuotient S) := by
+  exact QuotientGroup.instTopologicalSpace _
 
-def chapter06ProPrimeTo (p : ℕ) (G : Type*) [Group G] : Prop :=
-  ∀ N : FiniteIndexNormalSubgroup G,
-    Nat.Coprime p (Nat.card (G ⧸ N.toSubgroup))
+def chapter06ProPGroup (p : ℕ) (G : Type*) [Group G] [TopologicalSpace G] : Prop :=
+  ∀ N : OpenNormalSubgroup G,
+    ∃ r : ℕ, Finite (G ⧸ N.toSubgroup) ∧
+      Nat.card (G ⧸ N.toSubgroup) = p ^ r
 
-def chapter06Procyclic (G : Type*) [Group G] : Prop :=
-  ∀ N : FiniteIndexNormalSubgroup G, IsCyclic (G ⧸ N.toSubgroup)
+def chapter06ProPrimeTo (p : ℕ) (G : Type*) [Group G] [TopologicalSpace G] : Prop :=
+  ∀ N : OpenNormalSubgroup G,
+    Finite (G ⧸ N.toSubgroup) ∧
+      Nat.Coprime p (Nat.card (G ⧸ N.toSubgroup))
 
-/- LOCAL_DEPENDENCY_GUESS: the current checkout has the finite upper profiles
-and the infinite Galois correspondence but no earlier theorem packaging the
-local residue-characteristic calculation for every finite quotient.  The
-following statements are the book-facing consequences for the residue data
-recorded above; they do not put those consequences into the data structure as
-hypotheses. -/
+def chapter06Procyclic (G : Type*) [Group G] [TopologicalSpace G] : Prop :=
+  ∀ N : OpenNormalSubgroup G,
+    Finite (G ⧸ N.toSubgroup) ∧ IsCyclic (G ⧸ N.toSubgroup)
+
+/-- The following statements are consequences of the finite local-Galois
+realization carried by `D`; the pro-group conclusions are not hypotheses of
+the data structure. -/
 theorem chapter06_tame_quotient_pro_prime_to
     {K E : Type*} [Field K] [Field E] [Algebra K E] [IsGalois K E]
     [IsSepClosed E]

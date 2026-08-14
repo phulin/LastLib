@@ -75,7 +75,7 @@ theorem chapter08_normal_arithmetic_surface_singular_locus_locally_finite_closed
 
 theorem chapter08_normal_arithmetic_surface_singular_locus_finite
     (M : Chapter08NormalArithmeticSurface)
-    (hqc : IsQuasiCompact (Set.univ : Set M.surface.model)) :
+    (hqc : IsCompact (Set.univ : Set M.surface.model)) :
     (chapter08ArithmeticSurfaceSingularLocus M).Finite := by
   sorry
 
@@ -85,7 +85,7 @@ def Chapter08FiniteClosedPointPreparation (M : Chapter08NormalArithmeticSurface)
 
 theorem chapter08_arithmetic_surface_centers_can_be_taken_successively_above_singular_points
     (M : Chapter08NormalArithmeticSurface)
-    (hqc : IsQuasiCompact (Set.univ : Set M.surface.model)) :
+    (hqc : IsCompact (Set.univ : Set M.surface.model)) :
     Nonempty (Chapter08ResolutionData M.surface.model (⊥ : M.surface.model.Opens)) ∧
       Chapter08FiniteClosedPointPreparation M := by
   sorry

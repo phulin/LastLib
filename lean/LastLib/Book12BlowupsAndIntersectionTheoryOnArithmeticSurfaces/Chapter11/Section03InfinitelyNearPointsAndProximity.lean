@@ -4,8 +4,6 @@ namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter
 
 noncomputable section
 
-classical
-
 open AlgebraicGeometry CategoryTheory
 open scoped BigOperators
 
@@ -23,7 +21,7 @@ theorem chapter11_iterated_blowup_intersection_decomposition
     chapter11LocalIntersection H.D H.G H.source_no_common H.original_point =
       (∑ j,
         H.multiplicityD j * H.multiplicityG j *
-          (H.center_degree j : ℤ)) + H.residualIntersection := by
+          (H.center_degree j : ℤ)) + chapter11ResidualIntersection Q H := by
   sorry
 
 /-- Once the selected sequence makes the final strict transforms disjoint,
@@ -33,8 +31,11 @@ theorem chapter11_iterated_blowup_residual_zero_of_disjoint
     (Q : Chapter11PointBlowupSequence S)
     [Chapter11LocalIntersectionTheory (Q.stage 0)]
     (H : Chapter11IteratedIntersectionData Q)
-    (hdisjoint : H.final_strict_transforms_disjoint) :
-    H.residualIntersection = 0 := by
+    (hdisjoint :
+      chapter11DivisorsDisjoint
+        (H.strictD (Fin.last Q.length))
+        (H.strictG (Fin.last Q.length))) :
+    chapter11ResidualIntersection Q H = 0 := by
   sorry
 
 /-- The creation-time exceptional square is `-d_i`, where `d_i` is the
@@ -45,7 +46,7 @@ theorem chapter11_creation_square_of_exceptional_curve
     {p : Chapter11SurfacePoint X}
     (b : Chapter11PointBlowup p)
     (I : Chapter11NumericalIntersectionContext b.target)
-    (hscope : I.scope) :
+    (N : Chapter11ExceptionalIntersectionBridge b I) :
     I.pairing (chapter11ExceptionalDivisor b)
         (chapter11ExceptionalDivisor b) =
       -(chapter11ResidueDegree p : ℤ) := by
@@ -134,9 +135,6 @@ theorem chapter11_creation_label_changes_after_later_blowup
     (q : Chapter11SurfacePoint first.target)
     (later : Chapter11PointBlowup q)
     (P : Chapter11ProximityData first q later)
-    (hcreation : P.creationSquare =
-      P.before.pairing (chapter11CurveAsDivisor P.oldComponent)
-        (chapter11CurveAsDivisor P.oldComponent))
     (hscope : P.before.scope ∧ P.after.scope) :
     P.after.pairing
         (chapter11CurveAsDivisor (later.strictTransform P.oldComponent))

@@ -6,7 +6,9 @@ noncomputable section
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11
+open LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter01
 open RelativeScheme
+open scoped AlgebraicGeometry
 
 universe u
 
@@ -30,8 +32,10 @@ theorem chapter06_cartier_divisor_locus_is_stable_under_base_change
     (T U : RelativeScheme S) (u : U ⟶ T)
     (f : T ⟶ L.locus) :
     chapter06IsEffectiveCartierFamily
-      ((L.represents U (u ≫ f)).1) := by
-  exact (L.represents U (u ≫ f)).2
+      (chapter06FiniteFlatClosedFamilyBaseChange C T U u d
+        ((L.represents T f).1)) := by
+  exact chapter06_finiteFlatClosedFamily_base_change_is_effectiveCartier C T U u d
+    ((L.represents T f).1) ((L.represents T f).2)
 
 theorem chapter06_cartier_divisor_locus_representation_is_natural
     {S : Scheme.{u}} (C : RelativeScheme S) (d : ℕ)
@@ -42,7 +46,7 @@ theorem chapter06_cartier_divisor_locus_representation_is_natural
     chapter06FiniteFlatClosedFamilyBaseChange C T U u d
         ((L.represents T f).1) =
       (L.represents U (u ≫ f)).1 := by
-  sorry
+  exact L.represents_natural u f
 
 /-!
 The standard ramified smoothing is kept at the coordinate-ring level.  This
@@ -50,7 +54,7 @@ is enough to expose the two-generator section ideal and the missing Cartier
 limit without introducing a second local-ring implementation.
 -/
 
-abbrev chapter06NodalSmoothingPolynomialRing (R : Type u) :=
+abbrev chapter06NodalSmoothingPolynomialRing (R : Type u) [CommSemiring R] :=
   MvPolynomial (Fin 2) R
 
 def chapter06NodalSmoothingEquationIdeal
@@ -60,6 +64,44 @@ def chapter06NodalSmoothingEquationIdeal
     MvPolynomial.X (0 : Fin 2) * MvPolynomial.X (1 : Fin 2) -
       MvPolynomial.C (π ^ 2)
   } : Set (chapter06NodalSmoothingPolynomialRing R))
+
+private theorem chapter06_mvPolynomial_eval₂_kernel_fin_two
+    (R : Type u) [CommRing R] (a : Fin 2 → R) :
+    RingHom.ker (MvPolynomial.eval₂Hom (RingHom.id R) a) =
+      Ideal.span ({
+        MvPolynomial.X (0 : Fin 2) - MvPolynomial.C (a 0),
+        MvPolynomial.X (1 : Fin 2) - MvPolynomial.C (a 1)
+      } : Set (chapter06NodalSmoothingPolynomialRing R)) := by
+  let ev := MvPolynomial.eval₂Hom (RingHom.id R) a
+  let J : Ideal (chapter06NodalSmoothingPolynomialRing R) := Ideal.span ({
+    MvPolynomial.X (0 : Fin 2) - MvPolynomial.C (a 0),
+    MvPolynomial.X (1 : Fin 2) - MvPolynomial.C (a 1)
+  } : Set (chapter06NodalSmoothingPolynomialRing R))
+  apply le_antisymm
+  · intro p hp
+    change ev p = 0 at hp
+    have hdecomp : ∀ p : chapter06NodalSmoothingPolynomialRing R,
+        p - MvPolynomial.C (ev p) ∈ J := by
+      intro p
+      induction p using MvPolynomial.induction_on with
+      | C r => simp [ev]
+      | add p q hp hq =>
+          convert J.add_mem hp hq using 1; simp [ev]; ring
+      | mul_X p i hp =>
+          have hgen : MvPolynomial.X i - MvPolynomial.C (a i) ∈ J := by
+            apply Ideal.subset_span
+            fin_cases i
+            all_goals simp
+          have hmul := J.mul_mem_right (MvPolynomial.X i) hp
+          have hgenmul := J.mul_mem_left (MvPolynomial.C (ev p)) hgen
+          convert J.add_mem hmul hgenmul using 1; simp [ev]; ring
+    simpa [hp] using hdecomp p
+  · change J ≤ RingHom.ker ev
+    refine Ideal.span_le.2 ?_
+    intro p hp
+    rcases hp with rfl | rfl
+    · simp [ev]
+    · simp [ev]
 
 abbrev chapter06NodalSmoothingTotalRing
     (R : Type u) [CommRing R] (π : R) :=
@@ -95,7 +137,17 @@ def chapter06NodalSmoothingSectionMap
     chapter06NodalSmoothingTotalRing R π →+* R :=
   Ideal.Quotient.lift
     (chapter06NodalSmoothingEquationIdeal R π)
-    (MvPolynomial.eval₂Hom (RingHom.id R) (fun _ : Fin 2 => π)) (by sorry)
+    (MvPolynomial.eval₂Hom (RingHom.id R) (fun _ : Fin 2 => π)) (by
+      change Ideal.span ({
+        MvPolynomial.X (0 : Fin 2) * MvPolynomial.X (1 : Fin 2) -
+          MvPolynomial.C (π ^ 2)
+      } : Set (chapter06NodalSmoothingPolynomialRing R)) ≤
+        RingHom.ker (MvPolynomial.eval₂Hom (RingHom.id R) (fun _ : Fin 2 => π))
+      refine Ideal.span_le.2 ?_
+      intro x hx
+      rw [Set.mem_singleton_iff] at hx
+      subst x
+      simp [pow_two])
 
 def chapter06NodalSmoothingSection
     (R : Type u) [CommRing R] (π : R) :
@@ -108,7 +160,16 @@ theorem chapter06_nodal_smoothing_section_is_over_base
     chapter06NodalSmoothingSection R π ≫
         chapter06NodalSmoothingFamilyMap R π =
       𝟙 (chapter06NodalSmoothingBaseScheme R) := by
-  sorry
+  dsimp [chapter06NodalSmoothingSection, chapter06NodalSmoothingFamilyMap,
+    chapter06NodalSmoothingQuotientMap, chapter06NodalSmoothingSectionMap,
+    chapter06NodalSmoothingBaseStructureMap, chapter06NodalSmoothingBaseScheme,
+    chapter06NodalSmoothingTotalScheme]
+  simp only [← CommRingCat.ofHom_comp]
+  rw [← Spec.map_comp]
+  rw [← CommRingCat.ofHom_comp, ← Spec.map_id]
+  congr 1
+  ext x
+  simp
 
 def chapter06NodalSmoothingSectionIdeal
     (R : Type u) [CommRing R] (π : R) :
@@ -117,20 +178,141 @@ def chapter06NodalSmoothingSectionIdeal
     (Ideal.span ({
       MvPolynomial.X (0 : Fin 2) - MvPolynomial.C π,
       MvPolynomial.X (1 : Fin 2) - MvPolynomial.C π
-    } : Set (chapter06NodalSmoothingPolynomialRing R))
+    } : Set (chapter06NodalSmoothingPolynomialRing R)))
+
+def chapter06NodalSmoothingSectionPointKernel
+    (R : Type u) [CommRing R] (π : R) :
+    Ideal (chapter06NodalSmoothingTotalRing R π) :=
+  RingHom.ker (chapter06NodalSmoothingSectionMap R π)
+
+theorem chapter06_nodal_smoothing_section_ideal_eq_point_kernel
+    (R : Type u) [CommRing R] (π : R) :
+    chapter06NodalSmoothingSectionIdeal R π =
+      chapter06NodalSmoothingSectionPointKernel R π := by
+  rw [chapter06NodalSmoothingSectionIdeal, chapter06NodalSmoothingSectionPointKernel]
+  symm
+  have hker :
+      RingHom.ker (chapter06NodalSmoothingSectionMap R π) =
+        (RingHom.ker (MvPolynomial.eval₂Hom (RingHom.id R) (fun _ : Fin 2 => π))).map
+          (Ideal.Quotient.mk (chapter06NodalSmoothingEquationIdeal R π)) := by
+    unfold chapter06NodalSmoothingSectionMap
+    apply Ideal.ker_quotient_lift
+  rw [hker, chapter06_mvPolynomial_eval₂_kernel_fin_two]
+
+def chapter06NodalSmoothingSectionPointComplement
+    (R : Type u) [CommRing R] [IsDomain R] (π : R) :
+    Submonoid (chapter06NodalSmoothingTotalRing R π) where
+  carrier := {a | a ∉ chapter06NodalSmoothingSectionPointKernel R π}
+  one_mem' := by
+    intro h
+    change chapter06NodalSmoothingSectionMap R π 1 = 0 at h
+    simp only [map_one] at h
+    exact (one_ne_zero : (1 : R) ≠ 0) h
+  mul_mem' := by
+    intro a b ha hb hab
+    change chapter06NodalSmoothingSectionMap R π (a * b) = 0 at hab
+    rw [map_mul] at hab
+    rcases mul_eq_zero.mp hab with h | h
+    · exact ha h
+    · exact hb h
+
+abbrev Chapter06NodalSmoothingSectionPointLocalRing
+    (R : Type u) [CommRing R] [IsDomain R] (π : R) :=
+  Localization (chapter06NodalSmoothingSectionPointComplement R π)
+
+def chapter06NodalSmoothingSectionPointLocalIdeal
+    (R : Type u) [CommRing R] [IsDomain R] (π : R) :
+    Ideal (Chapter06NodalSmoothingSectionPointLocalRing R π) :=
+  Ideal.map (algebraMap (chapter06NodalSmoothingTotalRing R π)
+      (Chapter06NodalSmoothingSectionPointLocalRing R π))
+    (chapter06NodalSmoothingSectionIdeal R π)
+
+def Chapter06NodalSmoothingSectionCartierObstruction
+    (R : Type u) [CommRing R] [IsDomain R] (π : R) : Prop :=
+  ¬ ∃ a : Chapter06NodalSmoothingSectionPointLocalRing R π,
+    chapter06NodalSmoothingSectionPointLocalIdeal R π =
+      Ideal.span ({a} : Set (Chapter06NodalSmoothingSectionPointLocalRing R π))
+
+def chapter06NodalSmoothingNodeIdeal
+    (R : Type u) [CommRing R] (π : R) :
+    Ideal (chapter06NodalSmoothingTotalRing R π) :=
+  Ideal.map (Ideal.Quotient.mk (chapter06NodalSmoothingEquationIdeal R π))
+    (Ideal.span ({
+      MvPolynomial.X (0 : Fin 2),
+      MvPolynomial.X (1 : Fin 2)
+    } : Set (chapter06NodalSmoothingPolynomialRing R)))
+
+abbrev chapter06NodalSmoothingGenericFiberRing
+    (R : Type u) [CommRing R] [IsDomain R] (π : R) :=
+  MvPolynomial (Fin 2) (FractionRing R) ⧸
+    Ideal.span ({
+      MvPolynomial.X (0 : Fin 2) * MvPolynomial.X (1 : Fin 2) -
+        MvPolynomial.C ((algebraMap R (FractionRing R) π) ^ 2)
+    } : Set (MvPolynomial (Fin 2) (FractionRing R)))
+
+def chapter06NodalSmoothingGenericFiberStructureMap
+    (R : Type u) [CommRing R] [IsDomain R] (π : R) :
+    FractionRing R →+* chapter06NodalSmoothingGenericFiberRing R π :=
+  (Ideal.Quotient.mk _).comp (MvPolynomial.C)
+
+def chapter06NodalSmoothingGenericFiberMap
+    (R : Type u) [CommRing R] [IsDomain R] (π : R) :
+    Spec (.of (chapter06NodalSmoothingGenericFiberRing R π)) ⟶
+      Spec (.of (FractionRing R)) :=
+  Scheme.Spec.map
+    (CommRingCat.ofHom (chapter06NodalSmoothingGenericFiberStructureMap R π)).op
+
+def chapter06NodalSmoothingGenericFiberSectionIdeal
+    (R : Type u) [CommRing R] [IsDomain R] (π : R) :
+    Ideal (chapter06NodalSmoothingGenericFiberRing R π) :=
+  Ideal.map (Ideal.Quotient.mk _)
+    (Ideal.span ({
+      MvPolynomial.X (0 : Fin 2) -
+        MvPolynomial.C (algebraMap R (FractionRing R) π),
+      MvPolynomial.X (1 : Fin 2) -
+        MvPolynomial.C (algebraMap R (FractionRing R) π)
+    } : Set (MvPolynomial (Fin 2) (FractionRing R))) )
+
+abbrev chapter06NodalSmoothingSpecialFiberField
+    (R : Type u) [CommRing R] [IsLocalRing R] :=
+  IsLocalRing.ResidueField R
+
+abbrev chapter06NodalSmoothingSpecialFiberRing
+    (R : Type u) [CommRing R] [IsLocalRing R] :=
+  MvPolynomial (Fin 2) (chapter06NodalSmoothingSpecialFiberField R) ⧸
+    Ideal.span ({
+      MvPolynomial.X (0 : Fin 2) * MvPolynomial.X (1 : Fin 2)
+    } : Set (MvPolynomial (Fin 2) (chapter06NodalSmoothingSpecialFiberField R)))
+
+def chapter06NodalSmoothingSpecialFiberScheme
+    (R : Type u) [CommRing R] [IsLocalRing R] : Scheme :=
+  Spec (.of (chapter06NodalSmoothingSpecialFiberRing R))
 
 structure Chapter06NodalSmoothingBoundaryProfile
-    (R : Type u) [CommRing R] (π : R) where
-  generic_fiber_smooth : Prop
-  special_fiber_nodal : Prop
-  section_through_node : Prop
+    (R : Type u) [CommRing R] [IsLocalRing R] [IsDomain R] (π : R) where
+  generic_fiber_smooth :
+    SmoothOfRelativeDimension 1 (chapter06NodalSmoothingGenericFiberMap R π)
+  generic_section_is_principal :
+    ∃ a : chapter06NodalSmoothingGenericFiberRing R π,
+      chapter06NodalSmoothingGenericFiberSectionIdeal R π =
+        Ideal.span ({a} : Set (chapter06NodalSmoothingGenericFiberRing R π))
+  special_fiber_nodal :
+    chapter01NodalScheme (chapter06NodalSmoothingSpecialFiberScheme R)
+  section_through_node :
+    Ideal.map (chapter06NodalSmoothingSectionMap R π)
+        (chapter06NodalSmoothingNodeIdeal R π) ≤
+      IsLocalRing.maximalIdeal R
   section_height_one :
     (chapter06NodalSmoothingSectionIdeal R π).height = 1
-  relation_has_no_linear_term : Prop
-  conormal_generators_independent : Prop
-  section_not_principal :
-    ¬ ∃ a : chapter06NodalSmoothingTotalRing R π,
-      chapter06NodalSmoothingSectionIdeal R π = Ideal.span ({a} : Set _)
+  relation_has_no_linear_term :
+    MvPolynomial.X (0 : Fin 2) * MvPolynomial.X (1 : Fin 2) -
+        MvPolynomial.C (π ^ 2) ∈
+      (Ideal.span ({
+        MvPolynomial.X (0 : Fin 2),
+        MvPolynomial.X (1 : Fin 2),
+        MvPolynomial.C π
+      } : Set (chapter06NodalSmoothingPolynomialRing R)) :
+        Ideal (chapter06NodalSmoothingPolynomialRing R)) ^ 2
 
 theorem chapter06_nodal_smoothing_boundary_profile_exists
     (R : Type u) [CommRing R] [IsDomain R] [IsNoetherianRing R]
@@ -139,29 +321,259 @@ theorem chapter06_nodal_smoothing_boundary_profile_exists
     Nonempty (Chapter06NodalSmoothingBoundaryProfile R π) := by
   sorry
 
-theorem chapter06_nodal_smoothing_section_is_not_cartier
-    (R : Type u) [CommRing R] (π : R)
+theorem chapter06_nodal_smoothing_section_is_not_globally_principal
+    (R : Type u) [CommRing R] [IsLocalRing R] [IsDomain R] (π : R)
     (P : Chapter06NodalSmoothingBoundaryProfile R π) :
     ¬ ∃ a : chapter06NodalSmoothingTotalRing R π,
       chapter06NodalSmoothingSectionIdeal R π = Ideal.span ({a} : Set _) :=
-  P.section_not_principal
+by
+  sorry
+
+theorem chapter06_nodal_smoothing_section_is_not_cartier
+    (R : Type u) [CommRing R] [IsLocalRing R] [IsDomain R] (π : R)
+    (P : Chapter06NodalSmoothingBoundaryProfile R π) :
+    Chapter06NodalSmoothingSectionCartierObstruction R π :=
+by
+  sorry
+
+theorem chapter06_nodal_smoothing_section_is_not_locally_cartier
+    (R : Type u) [CommRing R] [IsLocalRing R] [IsDomain R] (π : R)
+    (P : Chapter06NodalSmoothingBoundaryProfile R π) :
+    Chapter06NodalSmoothingSectionCartierObstruction R π :=
+  chapter06_nodal_smoothing_section_is_not_cartier R π P
 
 def chapter06CartierLocusOmitsNodalLimit
-    (R : Type u) [CommRing R] (π : R)
-    (P : Chapter06NodalSmoothingBoundaryProfile R π) : Prop :=
-  P.section_not_principal
+    (R : Type u) [CommRing R] [IsLocalRing R] [IsDomain R] (π : R) : Prop :=
+  (∃ a : chapter06NodalSmoothingGenericFiberRing R π,
+      chapter06NodalSmoothingGenericFiberSectionIdeal R π =
+        Ideal.span ({a} : Set (chapter06NodalSmoothingGenericFiberRing R π))) ∧
+    Chapter06NodalSmoothingSectionCartierObstruction R π
 
 theorem chapter06_cartier_locus_omits_nodal_limit
-    (R : Type u) [CommRing R] (π : R)
+    (R : Type u) [CommRing R] [IsLocalRing R] [IsDomain R] (π : R)
     (P : Chapter06NodalSmoothingBoundaryProfile R π) :
-    chapter06CartierLocusOmitsNodalLimit R π P :=
-  P.section_not_principal
+    chapter06CartierLocusOmitsNodalLimit R π :=
+  ⟨P.generic_section_is_principal,
+    chapter06_nodal_smoothing_section_is_not_cartier R π P⟩
 
-/- LOCAL_DEPENDENCY_GUESS (6.4): the pinned interfaces do not yet expose a
-canonical Hilbert compactification together with its Cartier open immersion.
-The open-locus record in `Dependencies.lean` therefore keeps the representing
-equivalences and the omitted-limit profile explicit until that earlier API is
-available. -/
+def chapter06NodalSmoothingRelativeCurve
+    (R : Type u) [CommRing R] (π : R) :
+    RelativeScheme (chapter06NodalSmoothingBaseScheme R) where
+  carrier := chapter06NodalSmoothingTotalScheme R π
+  structuralMap := chapter06NodalSmoothingFamilyMap R π
+
+def chapter06NodalSmoothingGenericTest
+    (R : Type u) [CommRing R] [IsDomain R] :
+    RelativeScheme (chapter06NodalSmoothingBaseScheme R) where
+  carrier := Spec (.of (FractionRing R))
+  structuralMap :=
+    Scheme.Spec.map
+      (CommRingCat.ofHom (algebraMap R (FractionRing R))).op
+
+abbrev chapter06NodalSmoothingSpecialTest
+    (R : Type u) [CommRing R] :
+    RelativeScheme (chapter06NodalSmoothingBaseScheme R) :=
+  RelativeScheme.base (chapter06NodalSmoothingBaseScheme R)
+
+def chapter06NodalSmoothingGenericToSpecialTest
+    (R : Type u) [CommRing R] [IsDomain R] :
+    chapter06NodalSmoothingGenericTest R ⟶
+      chapter06NodalSmoothingSpecialTest R where
+  hom := (chapter06NodalSmoothingGenericTest R).structuralMap
+  comm := by
+    simp [chapter06NodalSmoothingSpecialTest, RelativeScheme.base]
+
+noncomputable def chapter06NodalSmoothingGenericSectionIdealSheaf
+    (R : Type u) [CommRing R] [IsDomain R] (π : R)
+    (e : Chapter06RelativeDivisorAmbient
+      (chapter06NodalSmoothingRelativeCurve R π)
+        (chapter06NodalSmoothingGenericTest R) ≅
+      Spec (.of (chapter06NodalSmoothingGenericFiberRing R π))) :
+    (Chapter06RelativeDivisorAmbient
+      (chapter06NodalSmoothingRelativeCurve R π)
+        (chapter06NodalSmoothingGenericTest R)).IdealSheafData :=
+  (Scheme.IdealSheafData.ofIdealTop
+      ((chapter06NodalSmoothingGenericFiberSectionIdeal R π).map
+        (Scheme.ΓSpecIso
+          (.of (chapter06NodalSmoothingGenericFiberRing R π))).inv.hom)).comap e.hom
+
+noncomputable def chapter06NodalSmoothingSectionIdealSheaf
+    (R : Type u) [CommRing R] [IsDomain R] (π : R)
+    (e : Chapter06RelativeDivisorAmbient
+      (chapter06NodalSmoothingRelativeCurve R π)
+        (chapter06NodalSmoothingSpecialTest R) ≅
+      chapter06NodalSmoothingTotalScheme R π) :
+    (Chapter06RelativeDivisorAmbient
+      (chapter06NodalSmoothingRelativeCurve R π)
+        (chapter06NodalSmoothingSpecialTest R)).IdealSheafData :=
+  (Scheme.IdealSheafData.ofIdealTop
+      ((chapter06NodalSmoothingSectionIdeal R π).map
+        (Scheme.ΓSpecIso
+          (.of (chapter06NodalSmoothingTotalRing R π))).inv.hom)).comap e.hom
+
+def chapter06NodalSmoothingGenericFiberSectionMap
+    (R : Type u) [CommRing R] [IsDomain R] (π : R) :
+    chapter06NodalSmoothingGenericFiberRing R π →+* FractionRing R :=
+  Ideal.Quotient.lift
+    (Ideal.span ({
+      MvPolynomial.X (0 : Fin 2) * MvPolynomial.X (1 : Fin 2) -
+        MvPolynomial.C ((algebraMap R (FractionRing R) π) ^ 2)
+    } : Set (MvPolynomial (Fin 2) (FractionRing R))))
+    (MvPolynomial.eval₂Hom (RingHom.id _) (fun _ : Fin 2 =>
+      algebraMap R (FractionRing R) π)) (by
+      change Ideal.span ({
+        MvPolynomial.X (0 : Fin 2) * MvPolynomial.X (1 : Fin 2) -
+          MvPolynomial.C ((algebraMap R (FractionRing R) π) ^ 2)
+      } : Set (MvPolynomial (Fin 2) (FractionRing R))) ≤
+        RingHom.ker (MvPolynomial.eval₂Hom (RingHom.id _) (fun _ : Fin 2 =>
+          algebraMap R (FractionRing R) π))
+      refine Ideal.span_le.2 ?_
+      intro x hx
+      rw [Set.mem_singleton_iff] at hx
+      subst x
+      simp [pow_two])
+
+def chapter06NodalSmoothingGenericFiberSection
+    (R : Type u) [CommRing R] [IsDomain R] (π : R) :
+    Spec (.of (FractionRing R)) ⟶
+      Spec (.of (chapter06NodalSmoothingGenericFiberRing R π)) :=
+  Scheme.Spec.map
+    (CommRingCat.ofHom (chapter06NodalSmoothingGenericFiberSectionMap R π)).op
+
+theorem chapter06_nodal_smoothing_generic_fiber_section_ideal_eq_kernel
+    (R : Type u) [CommRing R] [IsDomain R] (π : R) :
+    chapter06NodalSmoothingGenericFiberSectionIdeal R π =
+      RingHom.ker (chapter06NodalSmoothingGenericFiberSectionMap R π) := by
+  rw [chapter06NodalSmoothingGenericFiberSectionIdeal]
+  symm
+  have hker :
+      RingHom.ker (chapter06NodalSmoothingGenericFiberSectionMap R π) =
+        (RingHom.ker
+          (MvPolynomial.eval₂Hom (RingHom.id (FractionRing R)) (fun _ : Fin 2 =>
+            algebraMap R (FractionRing R) π))).map
+          (Ideal.Quotient.mk _) := by
+    unfold chapter06NodalSmoothingGenericFiberSectionMap
+    apply Ideal.ker_quotient_lift
+  rw [hker, chapter06_mvPolynomial_eval₂_kernel_fin_two]
+
+def chapter06NodalSmoothingGenericSectionIsCartierPoint
+    (R : Type u) [CommRing R] [IsLocalRing R] [IsDomain R] (π : R)
+    {H : Chapter06LengthDHilbertSpaceData
+      (chapter06NodalSmoothingRelativeCurve R π) 1}
+    (L : Chapter06CartierDivisorOpenLocusData
+      (chapter06NodalSmoothingRelativeCurve R π) 1 H)
+    (e : Chapter06RelativeDivisorAmbient
+      (chapter06NodalSmoothingRelativeCurve R π)
+        (chapter06NodalSmoothingGenericTest R) ≅
+      Spec (.of (chapter06NodalSmoothingGenericFiberRing R π)))
+    (_e_over : e.hom ≫ chapter06NodalSmoothingGenericFiberMap R π =
+      pullback.snd
+        (chapter06NodalSmoothingRelativeCurve R π).structuralMap
+        (chapter06NodalSmoothingGenericTest R).structuralMap)
+    (s : Spec (.of (FractionRing R)) ⟶
+      Spec (.of (chapter06NodalSmoothingGenericFiberRing R π)))
+    (g : chapter06NodalSmoothingGenericTest R ⟶ L.locus) : Prop :=
+  s = chapter06NodalSmoothingGenericFiberSection R π ∧
+    e.hom ≫ chapter06NodalSmoothingGenericFiberMap R π =
+      pullback.snd
+        (chapter06NodalSmoothingRelativeCurve R π).structuralMap
+        (chapter06NodalSmoothingGenericTest R).structuralMap ∧
+    (∃ a : chapter06NodalSmoothingGenericFiberRing R π,
+      chapter06NodalSmoothingGenericFiberSectionIdeal R π =
+        Ideal.span ({a} : Set (chapter06NodalSmoothingGenericFiberRing R π))) ∧
+      (H.represents (chapter06NodalSmoothingGenericTest R)
+          (g ≫ L.inclusion)).ideal =
+        chapter06NodalSmoothingGenericSectionIdealSheaf R π e
+
+def chapter06NodalSmoothingSpecializationIsOmittedLimit
+    (R : Type u) [CommRing R] [IsLocalRing R] [IsDomain R] (π : R)
+    {H : Chapter06LengthDHilbertSpaceData
+      (chapter06NodalSmoothingRelativeCurve R π) 1}
+    (L : Chapter06CartierDivisorOpenLocusData
+      (chapter06NodalSmoothingRelativeCurve R π) 1 H)
+    (e : Chapter06RelativeDivisorAmbient
+      (chapter06NodalSmoothingRelativeCurve R π)
+        (chapter06NodalSmoothingSpecialTest R) ≅
+      chapter06NodalSmoothingTotalScheme R π)
+    (_e_over : e.hom ≫ chapter06NodalSmoothingFamilyMap R π =
+      pullback.snd
+        (chapter06NodalSmoothingRelativeCurve R π).structuralMap
+        (chapter06NodalSmoothingSpecialTest R).structuralMap)
+    (s : (chapter06NodalSmoothingSpecialTest R).carrier ⟶
+      (chapter06NodalSmoothingRelativeCurve R π).carrier)
+    (p : chapter06NodalSmoothingSpecialTest R ⟶ H.carrier) : Prop :=
+  s = chapter06NodalSmoothingSection R π ∧
+    e.hom ≫ chapter06NodalSmoothingFamilyMap R π =
+      pullback.snd
+        (chapter06NodalSmoothingRelativeCurve R π).structuralMap
+        (chapter06NodalSmoothingSpecialTest R).structuralMap ∧
+    Chapter06NodalSmoothingSectionCartierObstruction R π ∧
+      (H.represents (chapter06NodalSmoothingSpecialTest R) p).ideal =
+        chapter06NodalSmoothingSectionIdealSheaf R π e ∧
+      ¬ ∃ g : chapter06NodalSmoothingSpecialTest R ⟶ L.locus,
+        g ≫ L.inclusion = p
+
+structure Chapter06NodalSmoothingHilbertBoundaryProfile
+    (R : Type u) [CommRing R] [IsLocalRing R] [IsDomain R] (π : R)
+    (H : Chapter06LengthDHilbertSpaceData
+      (chapter06NodalSmoothingRelativeCurve R π) 1)
+    (L : Chapter06CartierDivisorOpenLocusData
+      (chapter06NodalSmoothingRelativeCurve R π) 1 H) where
+  boundary : Chapter06NodalSmoothingBoundaryProfile R π
+  generic_ambient_iso :
+    Chapter06RelativeDivisorAmbient
+      (chapter06NodalSmoothingRelativeCurve R π)
+        (chapter06NodalSmoothingGenericTest R) ≅
+      Spec (.of (chapter06NodalSmoothingGenericFiberRing R π))
+  generic_ambient_iso_over :
+    generic_ambient_iso.hom ≫ chapter06NodalSmoothingGenericFiberMap R π =
+      pullback.snd
+        (chapter06NodalSmoothingRelativeCurve R π).structuralMap
+        (chapter06NodalSmoothingGenericTest R).structuralMap
+  generic_section :
+    Spec (.of (FractionRing R)) ⟶
+      Spec (.of (chapter06NodalSmoothingGenericFiberRing R π))
+  generic_point : chapter06NodalSmoothingGenericTest R ⟶ L.locus
+  generic_point_is_cartier :
+    chapter06NodalSmoothingGenericSectionIsCartierPoint R π L
+      generic_ambient_iso generic_ambient_iso_over generic_section generic_point
+  special_ambient_iso :
+    Chapter06RelativeDivisorAmbient
+      (chapter06NodalSmoothingRelativeCurve R π)
+        (chapter06NodalSmoothingSpecialTest R) ≅
+      chapter06NodalSmoothingTotalScheme R π
+  special_ambient_iso_over :
+    special_ambient_iso.hom ≫ chapter06NodalSmoothingFamilyMap R π =
+      pullback.snd
+        (chapter06NodalSmoothingRelativeCurve R π).structuralMap
+        (chapter06NodalSmoothingSpecialTest R).structuralMap
+  specialization_section :
+    (chapter06NodalSmoothingSpecialTest R).carrier ⟶
+      (chapter06NodalSmoothingRelativeCurve R π).carrier
+  specialization_point : chapter06NodalSmoothingSpecialTest R ⟶ H.carrier
+  specialization_is_omitted_limit :
+    chapter06NodalSmoothingSpecializationIsOmittedLimit R π L
+      special_ambient_iso special_ambient_iso_over specialization_section
+        specialization_point
+  generic_specialization_compatibility :
+    chapter06NodalSmoothingGenericToSpecialTest R ≫ specialization_point =
+      generic_point ≫ L.inclusion
+
+theorem chapter06_nodal_smoothing_hilbert_boundary_profile_exists
+    (R : Type u) [CommRing R] [IsLocalRing R] [IsDomain R] (π : R)
+    {H : Chapter06LengthDHilbertSpaceData
+      (chapter06NodalSmoothingRelativeCurve R π) 1}
+    (L : Chapter06CartierDivisorOpenLocusData
+      (chapter06NodalSmoothingRelativeCurve R π) 1 H)
+    (P : Chapter06NodalSmoothingBoundaryProfile R π) :
+    Nonempty (Chapter06NodalSmoothingHilbertBoundaryProfile R π H L) := by
+  sorry
+
+/- LOCAL_DEPENDENCY_GUESS (6.4): Book 8 exposes the finite-length Hilbert locus
+   through projective-completion and test-scheme structures, while this chapter's
+   relative-scheme interface has not yet been bridged to those canonical objects.
+The bridge above records the coordinate profile against the representing
+equivalences and the omitted specialization point. -/
 
 /-!
 The smooth locus is Mathlib's canonical open smooth locus.  Pulling it back
@@ -182,9 +594,8 @@ def chapter06RelativeDivisorSupportedOnSmoothLocus
     {S : Scheme.{u}} (C T : RelativeScheme S) (d : ℕ)
     [LocallyOfFinitePresentation C.structuralMap]
     (D : Chapter06RelativeEffectiveDivisor C T d) : Prop :=
-  D.divisor.ideal.support ≤
-    (chapter06SmoothLocus C).preimage
-      (pullback.fst C.structuralMap T.structuralMap).continuous
+  ∀ x, x ∈ D.divisor.ideal.support →
+    x ∈ pullback.fst C.structuralMap T.structuralMap ⁻¹ᵁ chapter06SmoothLocus C
 
 def chapter06MarkedSectionInSmoothLocus
     {S : Scheme.{u}} (C T : RelativeScheme S)
@@ -193,26 +604,44 @@ def chapter06MarkedSectionInSmoothLocus
   ∃ q : T.carrier ⟶ (chapter06SmoothLocus C).toScheme,
     q ≫ chapter06SmoothLocusInclusion C = p.hom
 
+def chapter06FiniteFlatClosedFamilySupportedOnSmoothLocus
+    {S : Scheme.{u}} (C T : RelativeScheme S) (d : ℕ)
+    [LocallyOfFinitePresentation C.structuralMap]
+    (Z : Chapter06FiniteFlatClosedFamily C T d) : Prop :=
+  ∀ x, x ∈ Z.ideal.support →
+    x ∈ pullback.fst C.structuralMap T.structuralMap ⁻¹ᵁ chapter06SmoothLocus C
+
+theorem chapter06_nodal_smooth_locus_finite_flat_family_is_cartier
+    {S : Scheme.{u}} (C T : RelativeScheme S) (d : ℕ)
+    [LocallyOfFinitePresentation C.structuralMap]
+    (hC : Chapter06NodalRelativeCurve C)
+    (Z : Chapter06FiniteFlatClosedFamily C T d)
+    (hsupport : chapter06FiniteFlatClosedFamilySupportedOnSmoothLocus C T d Z) :
+    chapter06IsEffectiveCartierFamily Z := by
+  sorry
+
 theorem chapter06_symmetric_power_smooth_locus_points_are_cartier
     {S : Scheme.{u}} (C T : RelativeScheme S) (d : ℕ)
-    [Chapter11SmoothQuasiProjectiveCurve C]
+    [Chapter06SmoothProjectiveRelativeCurve C]
     [LocallyOfFinitePresentation C.structuralMap]
-    (f : T ⟶ Chapter06SymmetricPower C d)
-    (hsupport : chapter06RelativeDivisorSupportedOnSmoothLocus C T d
-      (chapter06UniversalDivisorEquiv C T d f)) :
+    (f : T ⟶ Chapter06SymmetricPower C d) :
     (chapter06UniversalDivisorEquiv C T d f).divisor.ideal.IsEffectiveCartier := by
   exact (chapter06UniversalDivisorEquiv C T d f).divisor.isEffectiveCartier
 
 theorem chapter06_symmetric_power_universal_divisor_is_supported_on_smooth_locus
     {S : Scheme.{u}} (C T : RelativeScheme S) (d : ℕ)
-    [Chapter11SmoothQuasiProjectiveCurve C]
+    [Chapter06SmoothProjectiveRelativeCurve C]
     [LocallyOfFinitePresentation C.structuralMap]
-    (f : T ⟶ Chapter06SymmetricPower C d)
-    (hsupport : chapter06RelativeDivisorSupportedOnSmoothLocus C T d
-      (chapter06UniversalDivisorEquiv C T d f)) :
-    chapter06RelativeDivisorSupportedOnSmoothLocus C T d
-      (chapter06UniversalDivisorEquiv C T d f) :=
-  hsupport
+    (f : T ⟶ Chapter06SymmetricPower C d) :
+      chapter06RelativeDivisorSupportedOnSmoothLocus C T d
+      (chapter06UniversalDivisorEquiv C T d f) := by
+  intro x hx
+  change (pullback.fst C.structuralMap T.structuralMap).base x ∈
+    C.structuralMap.smoothLocus
+  rw [@Scheme.Hom.smoothLocus_eq_top _ _ C.structuralMap
+    (@SmoothOfRelativeDimension.smooth 1 _ _ _
+      (Chapter11SmoothQuasiProjectiveCurve.smooth (C := C)))]
+  trivial
 
 end
 

@@ -82,14 +82,12 @@ the exact sequence.
 /-- The reduction map on the selected decomposition group. -/
 abbrev chapter02ResidueReduction
     {D k l : Type*} [Group D] [Field k] [Field l] [Algebra k l]
-    [FiniteDimensional k l] [IsGalois k l]
     (R : Chapter02ResidueActionData D k l) : D →* Gal(l / k) :=
   R.reduction
 
 /-- The inertia subgroup as the kernel of residue reduction. -/
 theorem chapter02_inertia_is_reduction_kernel
     {D k l : Type*} [Group D] [Field k] [Field l] [Algebra k l]
-    [FiniteDimensional k l] [IsGalois k l]
     (R : Chapter02ResidueActionData D k l) :
     R.inertia = (chapter02ResidueReduction R).ker := by
   exact R.kernel_eq_inertia.symm
@@ -97,7 +95,6 @@ theorem chapter02_inertia_is_reduction_kernel
 /-- The finite-place decomposition/inertia sequence is exact and onto. -/
 theorem chapter02_decomposition_inertia_exact
     {D k l : Type*} [Group D] [Field k] [Field l] [Algebra k l]
-    [FiniteDimensional k l] [IsGalois k l]
     (R : Chapter02ResidueActionData D k l) :
     Function.MulExact R.inertia.subtype (chapter02ResidueReduction R) ∧
       Function.Surjective (chapter02ResidueReduction R) := by
@@ -123,7 +120,11 @@ theorem chapter02_local_artin_map_at_chosen_place_kernel
     (P : Chapter02ChosenPlace G V W)
     (R : Chapter02LocalReciprocityData B E (chapter02DecompositionGroup P)) :
     (chapter02LocalArtinMapAtChosenPlace P R).ker = R.norm.range := by
-  sorry
+  simpa [chapter02LocalArtinMapAtChosenPlace] using
+    (MonoidHom.ker_comp_of_injective (chapter02LocalArtinMap R)
+      (chapter02DecompositionGroup P).subtype
+      (chapter02DecompositionGroup P).subtype_injective).trans
+      (chapter02_local_artin_kernel_eq_norm_range R)
 
 theorem chapter02_local_artin_map_at_chosen_place_range
     {G : Type u} [CommGroup G] {V : Type v} {W : Type w} [MulAction G W]
@@ -132,7 +133,10 @@ theorem chapter02_local_artin_map_at_chosen_place_range
     (R : Chapter02LocalReciprocityData B E (chapter02DecompositionGroup P)) :
     (chapter02LocalArtinMapAtChosenPlace P R).range =
       chapter02DecompositionGroup P := by
-  sorry
+  rw [chapter02LocalArtinMapAtChosenPlace, MonoidHom.range_comp,
+    chapter02_local_artin_range_eq_top R]
+  exact (MonoidHom.range_eq_map (chapter02DecompositionGroup P).subtype).symm.trans
+    (Subgroup.range_subtype (chapter02DecompositionGroup P))
 
 theorem chapter02_local_artin_map_at_chosen_place_units
     {G : Type u} [CommGroup G] {V : Type v} {W : Type w} [MulAction G W]
@@ -141,7 +145,10 @@ theorem chapter02_local_artin_map_at_chosen_place_units
     (R : Chapter02LocalReciprocityData B E (chapter02DecompositionGroup P)) :
     ((chapter02LocalArtinMapAtChosenPlace P R).comp R.unitSubgroup.subtype).range =
       (R.inertia.map (chapter02DecompositionGroup P).subtype) := by
-  sorry
+  change (((chapter02DecompositionGroup P).subtype.comp
+      (chapter02LocalArtinMap R)).comp R.unitSubgroup.subtype).range = _
+  rw [MonoidHom.comp_assoc, MonoidHom.range_comp,
+    chapter02_local_artin_units_eq_inertia R]
 
 /-
 For a nonabelian Galois group the same construction has target `Gᵃᵇ`.  The

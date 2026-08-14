@@ -1,4 +1,4 @@
-import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter03.Section02AffineCharts
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter03.Section01ConstructionAndProjectivity
 
 namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter03
 
@@ -9,6 +9,7 @@ noncomputable section
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits Set TopologicalSpace
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter01
 open LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter07
+open LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter02
 open scoped AlgebraicGeometry
 
 /-! ## 3.3. The universal property -/
@@ -34,7 +35,11 @@ theorem chapter03_locally_principal_regular_iff_invertible
 /-- The source is contained in the center when every point maps into the ideal support. -/
 def Chapter03SourceContainedInCenter
     {T X : Scheme.{u}} (I : Chapter03CoherentIdeal X) (g : T ⟶ X) : Prop :=
-  (Set.univ : Set T) ⊆ I.ideal.support.preimage g
+  (Set.univ : Set T) ⊆ I.ideal.support.preimage g.continuous
+
+abbrev chapter03CenterComplement
+    {X : Scheme.{u}} (I : X.IdealSheafData) : X.Opens :=
+  I.support.compl
 
 theorem chapter03_regular_pullback_not_source_contained_in_center
     {T X : Scheme.{u}} (I : Chapter03CoherentIdeal X) (g : T ⟶ X)
@@ -77,7 +82,7 @@ theorem chapter03_blowup_factor_unique
     (hI : Chapter03LocallyPrincipalRegularIdeal (I.ideal.comap g))
     {u v : T ⟶ B.carrier} (hu : u ≫ B.projection = g) (hv : v ≫ B.projection = g) :
     u = v := by
-  exact (chapter03_theorem_3_1_universal_property B g hI).unique u hu v hv
+  sorry
 
 theorem chapter03_blowup_of_invertible_ideal_isIso
     {X : Scheme.{u}} {I : Chapter03CoherentIdeal X}
@@ -93,7 +98,7 @@ Proj universal property.  The ideal case is recovered by the earlier ideal-modul
 structure Chapter03FinitelyGeneratedModule (X : Scheme.{u}) where
   carrier : X.Modules
   isQuasicoherent : carrier.IsQuasicoherent
-  finitelyGenerated : SheafOfModules.IsFiniteType carrier
+  finitelyGenerated : carrier.IsFiniteType
 
 noncomputable def chapter03ModuleQuotientData
     {X : Scheme.{u}} (M : Chapter03FinitelyGeneratedModule X) :
@@ -102,7 +107,7 @@ noncomputable def chapter03ModuleQuotientData
   chapter01ProjectiveBundleData X
     { carrier := M.carrier, isQuasicoherent := M.isQuasicoherent }
 
-theorem chapter03_relative_proj_represents_invertible_module_quotients
+noncomputable def chapter03_relative_proj_represents_invertible_module_quotients
     {X : Scheme.{u}} (M : Chapter03FinitelyGeneratedModule X)
     {T : Scheme.{u}} (g : T ⟶ X) :
     {u : T ⟶ (chapter03ModuleQuotientData M).scheme //
@@ -117,7 +122,11 @@ theorem chapter03_relative_proj_quotient_naturality
       u ≫ (chapter03ModuleQuotientData M).projection = g}) :
     ∃ p : Chapter01InvertibleQuotient M.carrier g,
       (chapter03ModuleQuotientData M).universalProperty g u =
-          chapter01InvertibleQuotientClassMk p := by
+          chapter01InvertibleQuotientClassMk p ∧
+        (chapter03ModuleQuotientData M).universalProperty (h ≫ g)
+            ⟨h ≫ u.1, by simp only [Category.assoc, u.2]⟩ =
+          chapter01InvertibleQuotientClassMk
+            (chapter01PullbackInvertibleQuotientAlong g h p) := by
   sorry
 
 /-! ### Consequences for maps -/
@@ -125,28 +134,65 @@ theorem chapter03_relative_proj_quotient_naturality
 def Chapter03DominantMap {T X : Scheme.{u}} (g : T ⟶ X) : Prop :=
   Dense (Set.range g)
 
+/- The target chart is part of the coordinate data.  Its section map is induced by the displayed
+map into the target chart, while the ratio equations are equations in the source chart ring. -/
+structure Chapter03GeneratorRatioCoordinateData
+    {X Y : Scheme.{u}} (I : Chapter03CoherentIdeal X)
+    (g : (chapter03CenterComplement I.ideal).toScheme ⟶ Y) where
+  targetChart : Y.Opens
+  targetChart_affine : IsAffineOpen targetChart
+  targetChartMap :
+    (chapter03CenterComplement I.ideal).toScheme ⟶ targetChart.toScheme
+  targetChartMap_over : targetChartMap ≫ targetChart.ι = g
+  generatorIndex : Type v
+  denominator : generatorIndex
+  targetGenerators : generatorIndex → Γ(targetChart.toScheme, ⊤)
+  sourceGenerators : generatorIndex →
+    Γ((chapter03CenterComplement I.ideal).toScheme, ⊤)
+  sourceGenerators_are_pullbacks :
+    ∀ i, sourceGenerators i =
+      (targetChartMap.appLE (⊤ : targetChart.toScheme.Opens)
+        (⊤ : (chapter03CenterComplement I.ideal).toScheme.Opens) (by simp)).hom
+        (targetGenerators i)
+  denominator_is_unit :
+    IsUnit (sourceGenerators denominator)
+  ratios : generatorIndex →
+    Γ((chapter03CenterComplement I.ideal).toScheme, ⊤)
+  ratio_equations :
+    ∀ i, sourceGenerators denominator * ratios i = sourceGenerators i
+
 structure Chapter03RationalMapByGeneratorRatios
     {X Y : Scheme.{u}} where
   centerIdeal : Chapter03CoherentIdeal X
   mapOnCenterComplement :
-    centerIdeal.ideal.support.compl.toScheme ⟶ Y
-  generator_ratios_define_map : Prop
+    (chapter03CenterComplement centerIdeal.ideal).toScheme ⟶ Y
+  coordinates :
+    Chapter03GeneratorRatioCoordinateData.{u, v} centerIdeal mapOnCenterComplement
+
+/- The inverse of the restriction is available because the blowup is an isomorphism off the
+center.  This is the canonical open part on which a resolved map must agree with the original
+rational map. -/
+noncomputable def chapter03BlowupComplementInclusion
+    {X : Scheme.{u}} {I : Chapter03CoherentIdeal X} (B : Chapter03Blowup I) :
+    (chapter03CenterComplement I.ideal).toScheme ⟶ B.carrier := by
+  letI : IsIso (chapter03BlowupRestriction B I.ideal.support.compl) := B.off_center
+  exact inv (chapter03BlowupRestriction B I.ideal.support.compl) ≫
+    (B.projection ⁻¹ᵁ I.ideal.support.compl).ι
 
 structure Chapter03RationalMapResolutionData
     {X Y : Scheme.{u}} {I : Chapter03CoherentIdeal X}
-    (B : Chapter03Blowup I) where
-  mapOnCenterComplement : I.ideal.support.compl.toScheme ⟶ Y
+  (B : Chapter03Blowup I)
+  (mapOnCenterComplement : (chapter03CenterComplement I.ideal).toScheme ⟶ Y) where
   resolvedMap : B.carrier ⟶ Y
-  agreesOnTheBlowupComplement : Prop
 
-/- LOCAL_DEPENDENCY_GUESS (3.3): a rational map whose coordinates are given by the chosen
-generator ratios extends across the relative-Proj blowup. -/
-theorem chapter03_generator_ratios_resolve_rational_map
-    {X Y : Scheme.{u}} (R : Chapter03RationalMapByGeneratorRatios (X := X) (Y := Y))
-    (B : Chapter03Blowup R.centerIdeal)
-    (hR : R.generator_ratios_define_map) :
-    Nonempty (Chapter03RationalMapResolutionData (Y := Y) B) := by
-  sorry
+  /-- The resolved morphism restricts to the original morphism on the complement of the center. -/
+  agreesOnTheBlowupComplement :
+    chapter03BlowupComplementInclusion B ≫ resolvedMap = mapOnCenterComplement
+
+/- A ratio presentation for an arbitrary target is not by itself an extension theorem: one must
+also specify a projective target presentation and the relations that make the ratios a quotient.
+The universal property above is the precise extension statement retained here; a target-specific
+ratio corollary can be added once those data are available. -/
 
 end
 

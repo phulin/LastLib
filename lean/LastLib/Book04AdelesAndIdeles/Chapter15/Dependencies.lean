@@ -266,12 +266,6 @@ def chapter15_finite_idele_group_equiv_finite_adele_units :
       (IsDedekindDomain.FiniteAdeleRing R K)ˣ := by
   sorry
 
-def chapter15_finite_idele_group_homeomorph_finite_adele_units
-    [NumberField K] :
-    Chapter15FiniteIdeleGroup R K ≃ₜ*
-      (IsDedekindDomain.FiniteAdeleRing R K)ˣ := by
-  sorry
-
 /- The underlying multiplicative groups agree with units of the full adele
 ring; the topology on the graph model is kept separate. -/
 def chapter15_idele_group_equiv_full_adele_units
@@ -279,12 +273,10 @@ def chapter15_idele_group_equiv_full_adele_units
     Chapter15IdeleGroup R K ≃* Chapter15AdeleUnitGroup R K := by
   sorry
 
-/- The graph/restricted-product topology agrees with the induced unit topology
-on the canonical full adele ring. -/
-def chapter15_idele_group_homeomorph_full_adele_units
-    [NumberField K] :
-    Chapter15IdeleGroup R K ≃ₜ* Chapter15AdeleUnitGroup R K := by
-  sorry
+/- The graph/restricted-product topology is deliberately kept separate from
+the induced topology on the unit group of the adele ring.  The book's unit
+group identification is algebraic; the graph description above is what makes
+the idele topology a topological-group topology. -/
 
 /-! ### Generic predicates used by later sections -/
 

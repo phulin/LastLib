@@ -1,4 +1,4 @@
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.Section06RecognitionThroughAChosenElement
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.Section03UniformizersAndMinimalPolynomials
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08
 

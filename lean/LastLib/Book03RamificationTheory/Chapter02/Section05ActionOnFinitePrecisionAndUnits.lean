@@ -50,7 +50,8 @@ theorem chapter02_principal_unit_group_succ_le
 /- DEPENDENCY_GUESS: The quotient action is the action of the decomposition
    group on `A` descended through the stabilized ideal power.  The canonical
    quotient-lifting declaration is not exposed by the pinned earlier API, so
-   this structure records its action and exact kernel until reconciliation. -/
+   this structure records the descended action, its compatibility, and exact
+   kernel until reconciliation. -/
 /-- A finite-precision action package records the exact kernel. -/
 structure Chapter02PrecisionActionData
     (K L : Type u) [Field K] [Field L] [Algebra K L]
@@ -62,6 +63,12 @@ structure Chapter02PrecisionActionData
     MonoidHom.ker action =
       LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05RamificationGroup
         K A (i + 1)
+  /-- The packaged action is the natural action induced from the valuation ring. -/
+  action_apply :
+    ∀ (σ : LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05DecompositionGroup
+        K A) (x : A),
+      action σ (Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ (i + 1)) x) =
+        Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ (i + 1)) (σ • x)
 
 /-- Every lower group is the kernel of the action visible at its precision. -/
 theorem chapter02_precision_action_exists
@@ -71,6 +78,16 @@ theorem chapter02_precision_action_exists
     (hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal A) A) :
     Nonempty (Chapter02PrecisionActionData K L A i) := by
   sorry
+
+theorem chapter02_precision_action_apply
+    (K L : Type u) [Field K] [Field L] [Algebra K L]
+    (A : ValuationSubring L) (i : ℕ)
+    (D : Chapter02PrecisionActionData K L A i)
+    (σ : LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05DecompositionGroup K A)
+    (x : A) :
+    D.action σ (Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ (i + 1)) x) =
+      Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ (i + 1)) (σ • x) := by
+  exact D.action_apply σ x
 
 theorem chapter02_precision_action_mem_iff
     (K L : Type u) [Field K] [Field L] [Algebra K L]

@@ -21,6 +21,7 @@ variable {I : Type u} {G : I → Type v} [∀ i, Group (G i)]
 
 theorem chapter03_restrictedProduct_metrizable
     [∀ i, TopologicalSpace (G i)]
+    [∀ i, IsTopologicalGroup (G i)]
     (H : ∀ i, Subgroup (G i))
     [Countable I]
     (hmetric : ∀ i, MetrizableSpace (G i))
@@ -81,7 +82,7 @@ def chapter03CauchyTailCondition
   ∃ S : Set I, S.Finite ∧
     ∀ᶠ n in Filter.atTop, ∀ m : ℕ, n ≤ m →
       ∀ i, i ∉ S →
-        (((u m : ∀ i, G i) i) * (((u n : ∀ i, G i) i)⁻¹)) ∈ H i
+        ((((u n : ∀ i, G i) i)⁻¹) * ((u m : ∀ i, G i) i)) ∈ H i
 
 /-- A natural uniformity is recorded by the coordinatewise Cauchy and tail
 characterization used in the proof of completeness. -/
@@ -103,10 +104,10 @@ def chapter03CauchyFilterTailCondition
     [∀ i, UniformSpace (G i)]
     (H : ∀ i, Subgroup (G i))
     (l : Filter (Chapter03RestrictedProduct H)) : Prop :=
-  ∃ S : Set I, S.Finite ∧
+    ∃ S : Set I, S.Finite ∧
     ∀ᶠ p in l ×ˢ l, ∀ i, i ∉ S →
-      ((((p.1 : Chapter03RestrictedProduct H) : ∀ i, G i) i) *
-        ((((p.2 : Chapter03RestrictedProduct H) : ∀ i, G i) i)⁻¹)) ∈ H i
+      (((((p.1 : Chapter03RestrictedProduct H) : ∀ i, G i) i)⁻¹) *
+        (((p.2 : Chapter03RestrictedProduct H) : ∀ i, G i) i)) ∈ H i
 
 def chapter03NaturalCauchyFilterCharacterization
     [∀ i, UniformSpace (G i)]
@@ -117,6 +118,23 @@ def chapter03NaturalCauchyFilterCharacterization
       (∀ i, Cauchy (l.map (fun x : Chapter03RestrictedProduct H =>
         ((x : ∀ i, G i) i)))) ∧
         chapter03CauchyFilterTailCondition H l
+
+/-- The convergence characterization needed in addition to the Cauchy
+characterization when proving completeness for a chosen restricted-product
+uniformity. -/
+def chapter03NaturalConvergenceFilterCharacterization
+    [∀ i, UniformSpace (G i)]
+    (H : ∀ i, Subgroup (G i))
+    [UniformSpace (Chapter03RestrictedProduct H)] : Prop :=
+  ∀ l : Filter (Chapter03RestrictedProduct H),
+    ∀ x : Chapter03RestrictedProduct H,
+      Tendsto (fun y : Chapter03RestrictedProduct H => y) l (𝓝 x) ↔
+          (∀ i, Tendsto (fun y : Chapter03RestrictedProduct H =>
+          ((y : ∀ i, G i) i)) l
+            (𝓝 (((x : ∀ i, G i) i)))) ∧
+          ∃ S : Set I, S.Finite ∧
+            ∀ᶠ y : Chapter03RestrictedProduct H in l, ∀ i, i ∉ S →
+              ((y : ∀ i, G i) i) ∈ H i
 
 theorem chapter03_cauchy_sequence_has_eventually_integral_tail
     [∀ i, UniformSpace (G i)]
@@ -142,16 +160,17 @@ theorem chapter03_restrictedProduct_complete_of_natural_characterization
     [UniformSpace (Chapter03RestrictedProduct H)]
     (hlocal : ∀ i, CompleteSpace (G i))
     (hclosed : ∀ i, IsClosed (H i : Set (G i)))
-    (hchar : chapter03NaturalCauchyFilterCharacterization H) :
+    (hchar : chapter03NaturalCauchyFilterCharacterization H)
+    (hconv : chapter03NaturalConvergenceFilterCharacterization H) :
     CompleteSpace (Chapter03RestrictedProduct H) := by
   sorry
 
-/- SOURCE_ISSUE:
-  The sentence "They are also complete for their natural uniform structures"
-  omits the completeness hypotheses on the local groups (and on the tail
-  models).  The corrected theorem above assumes complete local uniform spaces,
-  closed distinguished subgroups, and an explicit natural Cauchy
-  characterization.  Without such hypotheses the assertion is false.
+/-!
+The source's completeness assertion is conditional on complete local uniform
+spaces and closed distinguished subgroups.  Since this chapter does not yet
+choose a canonical uniform-space construction for the restricted product, the
+theorem above exposes the corresponding Cauchy and convergence
+characterizations as explicit interfaces.
 -/
 
 end Completeness

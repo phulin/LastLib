@@ -17,6 +17,8 @@ import Mathlib.RingTheory.Polynomial.HilbertPoly
 import Mathlib.RingTheory.Polynomial.Quotient
 import Mathlib.Topology.GDelta.Basic
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Dependencies
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Section05TensorPowersAndOperations
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter06.Dependencies
 
 /-!
 # Chapter 8: Hilbert polynomials in families
@@ -115,6 +117,10 @@ abbrev chapter08FiniteLocallyFree {S : Scheme} (E : S.Modules) : Prop :=
 structure Chapter08RelativeProjectiveBundle (S : Scheme) (E : S.Modules) where
   bundle : Chapter04ProjectiveBundle S
   module_eq : bundle.E = E
+  /-- The ambient bundle is the canonical relative-Proj presentation, not merely
+      an object with an abstract universal equivalence. -/
+  universal_quotient_compatible :
+    chapter04ProjectiveBundleUniversalQuotientCompatible bundle
 
 namespace Chapter08RelativeProjectiveBundle
 
@@ -167,19 +173,14 @@ class Chapter08FAmple {X S : Scheme} (f : X ⟶ S) (L : X.Modules)
   ample_witness : Nonempty (Chapter04AmpleWitness f
     { sheaf := L, isInvertible := hL })
 
-/- LOCAL_DEPENDENCY_GUESS: this is the missing sheaf-flat-over-the-base
-   interface, distinct from flatness of a scheme morphism. -/
-def chapter08StalkFlat {X S : Scheme} (f : X ⟶ S) (M : X.Modules) (x : X) : Prop :=
-  letI : Module (X.presheaf.stalk x)
-      (↑(TopCat.Presheaf.stalk M.val.presheaf x)) := by
-    exact PresheafOfModules.instModuleCarrierStalkCommRingCatCarrierAbPresheafOpensCarrier M.val x
-  letI : Module (S.presheaf.stalk (f x))
-      (↑(TopCat.Presheaf.stalk M.val.presheaf x)) :=
-    Module.compHom (↑(TopCat.Presheaf.stalk M.val.presheaf x)) (f.stalkMap x).hom
-  Module.Flat (S.presheaf.stalk (f x)) (↑(TopCat.Presheaf.stalk M.val.presheaf x))
+/- The earlier Chapter 6 API already supplies the stalkwise relative-flatness
+   interface. Reuse it so the same notion is not split into incompatible
+   chapter-local classes. -/
+abbrev chapter08StalkFlat {X S : Scheme} (f : X ⟶ S) (M : X.Modules) (x : X) : Prop :=
+  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter06.chapter06StalkFlat f M x
 
-class Chapter08FlatOver {X S : Scheme} (f : X ⟶ S) (M : X.Modules) : Prop where
-  stalkwise_flat : ∀ x : X, chapter08StalkFlat f M x
+abbrev Chapter08FlatOver {X S : Scheme} (f : X ⟶ S) (M : X.Modules) : Prop :=
+  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter06.Chapter06FlatOver f M
 
 /- Flatness at a point of the base, used for the openness of the flat locus. -/
 def chapter08FlatAt {X S : Scheme} (f : X ⟶ S) (M : X.Modules) (s : S) : Prop :=
@@ -190,7 +191,7 @@ theorem chapter08_flat_at_of_flat_over
     (hflat : Chapter08FlatOver f M) (s : S) :
     chapter08FlatAt f M s := by
   intro x _
-  exact hflat.stalkwise_flat x
+  exact hflat.flatAtStalk x
 
 theorem chapter08_flat_over_iff_flat_at
     {X S : Scheme} {f : X ⟶ S} {M : X.Modules} :
@@ -215,8 +216,8 @@ class Chapter08RelativelyVeryAmple {X S : Scheme} (f : X ⟶ S) (L : X.Modules)
 
 /-- The coherent sheaf hypothesis used by the chapter, in the standard
    finite-type/quasi-coherent form. -/
-def Chapter08Coherent {X : Scheme} (M : X.Modules) : Prop :=
-  chapter04FiniteTypeQuasiCoherent M
+abbrev Chapter08Coherent {X : Scheme} (M : X.Modules) : Prop :=
+  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter06.Chapter06Coherent M
 
 /-- A projective, finitely presented family over a locally noetherian base. -/
 structure Chapter08ProjectiveFamily where
@@ -227,7 +228,8 @@ structure Chapter08ProjectiveFamily where
   projective : Chapter08IsProjective f
   quasi_compact : QuasiCompact f
   locally_of_finite_presentation : LocallyOfFinitePresentation f
-  fiber_dimension_bound : ℕ
+  /-- A bound on the fiber dimension, allowed to vary with the base point. -/
+  fiber_dimension_bound : S → ℕ
 
 namespace Chapter08ProjectiveFamily
 
@@ -314,7 +316,7 @@ noncomputable def chapter08FiberTwistedSheaf
    naming a function on the base. -/
 structure Chapter08FiberwiseHilbertDataCompatibility
     {F : Chapter08PolarizedFamily} (E : Chapter08FamilySheaf F)
-    (dimension_bound : ℕ)
+    (dimension_bound : F.family.S → ℕ)
     (eulerCharacteristic : F.family.S → ℕ → ℤ)
     (cohomologyRank : F.family.S → ℕ → ℕ → ℕ) where
   fiberEulerCharacteristic :
@@ -331,11 +333,11 @@ structure Chapter08FiberwiseHilbertDataCompatibility
         fiberCohomologyRank s (chapter08FiberTwistedSheaf E s n) i
   fiberCohomology_vanishes_above_dimension :
     ∀ (s : F.family.S) (M : (F.family.f.fiber s).Modules) (i : ℕ),
-      dimension_bound < i → fiberCohomologyRank s M i = 0
+      dimension_bound s < i → fiberCohomologyRank s M i = 0
   fiberEulerCharacteristic_altSum :
     ∀ (s : F.family.S) (M : (F.family.f.fiber s).Modules),
       fiberEulerCharacteristic s M =
-        Finset.sum (Finset.range (dimension_bound + 1))
+        Finset.sum (Finset.range (dimension_bound s + 1))
           (fun i => (-1 : ℤ) ^ i * (fiberCohomologyRank s M i : ℤ))
 
 /-- Fiberwise cohomological data representing the Euler characteristic and its
@@ -344,9 +346,9 @@ structure Chapter08FiberwiseHilbertDataCompatibility
    scheme-theoretic fiber. -/
 structure Chapter08FiberwiseHilbertData
     {F : Chapter08PolarizedFamily} (E : Chapter08FamilySheaf F) where
-  dimension_bound : ℕ
+  dimension_bound : F.family.S → ℕ
   dimension_bound_le_family_bound :
-    dimension_bound ≤ F.family.fiber_dimension_bound
+    ∀ s, dimension_bound s ≤ F.family.fiber_dimension_bound s
   eulerCharacteristic : F.family.S → ℕ → ℤ
   fiberPolynomial : F.family.S → Chapter08NumericalPolynomial
   fiberPolynomial_value :
@@ -354,11 +356,11 @@ structure Chapter08FiberwiseHilbertData
       (fiberPolynomial s).value n = eulerCharacteristic s n
   cohomologyRank : F.family.S → ℕ → ℕ → ℕ
   cohomology_vanishes_above_dimension :
-    ∀ (s : F.family.S) (n i : ℕ), dimension_bound < i → cohomologyRank s n i = 0
+    ∀ (s : F.family.S) (n i : ℕ), dimension_bound s < i → cohomologyRank s n i = 0
   eulerCharacteristic_altSum :
     ∀ (s : F.family.S) (n : ℕ),
       eulerCharacteristic s n =
-        Finset.sum (Finset.range (dimension_bound + 1))
+        Finset.sum (Finset.range (dimension_bound s + 1))
           (fun i => (-1 : ℤ) ^ i * (cohomologyRank s n i : ℤ))
   fiberwise_compatibility :
     Chapter08FiberwiseHilbertDataCompatibility E dimension_bound
@@ -369,7 +371,7 @@ structure Chapter08FiberwiseHilbertData
         fiberwise_compatibility.fiberEulerCharacteristic s
           (chapter08FiberTwistedSheaf E s n)
   polynomial_degree_le :
-    ∀ s, (fiberPolynomial s).degree ≤ dimension_bound
+    ∀ s, (fiberPolynomial s).degree ≤ dimension_bound s
 
 noncomputable def chapter08FiberEulerCharacteristic
     {F : Chapter08PolarizedFamily} {E : Chapter08FamilySheaf F}
@@ -385,6 +387,15 @@ def chapter08FiberCohomologyRank
 
 /- LOCAL_DEPENDENCY_GUESS: this witness abstracts the coherent pushforward and
    cohomology-and-base-change theorem used for large twists. -/
+def chapter08PushforwardBaseChangeComparison
+    {F : Chapter08PolarizedFamily} (E : Chapter08FamilySheaf F)
+    {T : Scheme} (t : T ⟶ F.family.S) (n : ℕ) : Prop :=
+  Nonempty (
+    (Scheme.Modules.pullback t).obj (chapter08TwistedPushforward E n) ≅
+      (Scheme.Modules.pushforward (Limits.pullback.snd F.family.f t)).obj
+        ((Scheme.Modules.pullback (Limits.pullback.fst F.family.f t)).obj
+          (chapter08TwistedSheaf E n)))
+
 structure Chapter08PushforwardWitness
     {F : Chapter08PolarizedFamily} (E : Chapter08FamilySheaf F)
   (D : Chapter08FiberwiseHilbertData E) (U : F.family.S.Opens) (n : ℕ) where
@@ -393,8 +404,9 @@ structure Chapter08PushforwardWitness
     SheafOfModules.IsLocallyFree ((chapter08TwistedPushforward E n).over U) ∧
       SheafOfModules.IsFiniteType ((chapter08TwistedPushforward E n).over U)
   fiber_is_H0 : ∀ s ∈ U, rank = chapter08FiberCohomologyRank D s n 0
-  rank_eq_eulerCharacteristic :
-    ∀ s ∈ U, (rank : ℤ) = chapter08FiberEulerCharacteristic D s n
+  commutes_with_base_change :
+    ∀ {T : Scheme} (t : T ⟶ F.family.S),
+      (∀ x : T, t x ∈ U) → chapter08PushforwardBaseChangeComparison E t n
 
 section BaseChange
 

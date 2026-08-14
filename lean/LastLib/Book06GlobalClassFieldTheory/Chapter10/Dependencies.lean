@@ -140,14 +140,57 @@ the canonical completion API once the preceding global topology is merged. -/
 theorem chapter10ProfiniteCompletionEta_denseRange
     (C : Type u) [CommGroup C] [TopologicalSpace C] :
     DenseRange (chapter10ProfiniteCompletionEta C) := by
-  sorry
+  apply dense_iff_inter_open.mpr
+  rintro U ⟨s, hsO, hsv⟩ ⟨⟨spc, hspc⟩, uDefaultSpec⟩
+  dsimp only [chapter10ProfiniteCompletion] at U hsv uDefaultSpec ⊢
+  have hpre : ⟨spc, hspc⟩ ∈ Subtype.val ⁻¹' s := hsv.symm ▸ uDefaultSpec
+  have hspc_s : spc ∈ s := hpre
+  rcases (isOpen_pi_iff.mp hsO) _ hspc_s with ⟨J, fJ, hJ1, hJ2⟩
+  let M : Subgroup C := iInf fun (j : J) => j.1.toSubgroup
+  have hM : M.Normal := Subgroup.normal_iInf_normal fun j => inferInstance
+  have hMFinite : M.FiniteIndex := by
+    apply Subgroup.finiteIndex_iInf
+    infer_instance
+  have hMOpen : IsOpen (M : Set C) := by
+    rw [Subgroup.coe_iInf]
+    exact isOpen_iInter_of_finite fun i => i.1.isOpen
+  let m : Chapter10OpenFiniteIndexNormalSubgroup C :=
+    { toSubgroup := M
+      isNormal' := hM
+      isFiniteIndex' := hMFinite
+      isOpen := hMOpen }
+  rcases QuotientGroup.mk'_surjective M (spc m) with ⟨origin, horigin⟩
+  use chapter10ProfiniteCompletionEtaFn C origin
+  refine ⟨?_, origin, rfl⟩
+  rw [← hsv]
+  apply hJ2
+  intro a a_in_J
+  let M_to_Na : m ⟶ a :=
+    (iInf_le (fun (j : J) => (j.1.toSubgroup)) ⟨a, a_in_J⟩).hom
+  rw [← (chapter10ProfiniteCompletionEtaFn C origin).property M_to_Na]
+  dsimp [chapter10ProfiniteCompletionEtaFn] at ⊢ horigin
+  rw [horigin]
+  exact Set.mem_of_eq_of_mem (hspc M_to_Na) (hJ1 a a_in_J).right
 
 /- The openness built into the indexing subgroups makes the canonical map
 continuous for the original idele-class topology. -/
 theorem chapter10ProfiniteCompletionEta_continuous
     (C : Type u) [CommGroup C] [TopologicalSpace C] [IsTopologicalGroup C] :
     Continuous (chapter10ProfiniteCompletionEta C) := by
-  sorry
+  apply Continuous.subtype_mk
+  refine continuous_pi
+    (T := fun H => ((chapter10OpenFiniteIndexProfiniteDiagram C).obj H).toProfinite.toTop.str)
+    (fun H ↦ ?_)
+  let hdisc : DiscreteTopology (C ⧸ H.toSubgroup) :=
+    QuotientGroup.discreteTopology_iff.mpr H.isOpen
+  have htop :
+      ((chapter10OpenFiniteIndexProfiniteDiagram C).obj H).toProfinite.toTop.str =
+        (inferInstance : TopologicalSpace (C ⧸ H.toSubgroup)) := by
+    change (⊥ : TopologicalSpace (C ⧸ H.toSubgroup)) =
+      QuotientGroup.instTopologicalSpace H.toSubgroup
+    exact hdisc.eq_bot.symm
+  rw [htop]
+  exact QuotientGroup.continuous_mk
 
 /- The projections are exposed as maps so later compatibility statements can
 refer to the finite quotients without unpacking the categorical limit. -/
@@ -232,7 +275,19 @@ theorem chapter10FiniteRestrictionMap_comp
     (chapter10FiniteRestrictionMap (K := K) (Kab := Kab) h₃₂).comp
         (chapter10FiniteRestrictionMap (K := K) (Kab := Kab) h₂₁) =
       chapter10FiniteRestrictionMap (K := K) (Kab := Kab) (h₃₂.trans h₂₁) := by
-  sorry
+  change
+    ((finGaloisGroupMap (CategoryTheory.opHomOfLE h₃₂)).hom.hom).comp
+        ((finGaloisGroupMap (CategoryTheory.opHomOfLE h₂₁)).hom.hom) =
+      (finGaloisGroupMap
+        (CategoryTheory.opHomOfLE (h₃₂.trans h₂₁))).hom.hom
+  have hmap := finGaloisGroupMap.map_comp
+    (CategoryTheory.opHomOfLE h₂₁) (CategoryTheory.opHomOfLE h₃₂)
+  have hcomp :
+      CategoryTheory.opHomOfLE h₂₁ ≫ CategoryTheory.opHomOfLE h₃₂ =
+        CategoryTheory.opHomOfLE (h₃₂.trans h₂₁) :=
+    Subsingleton.elim _ _
+  rw [← hcomp]
+  exact congrArg (fun f => f.hom.hom) hmap.symm
 
 /- LOCAL_DEPENDENCY_GUESS: this record is the finite Artin reciprocity API
 from the preceding chapters. Its fields are finite-level facts only; no
@@ -285,7 +340,10 @@ noncomputable def chapter10ArtinLimitMap
     { val := fun L => F.map L.unop c
       property := by
         intro L₁ L₂ f
-        sorry }
+        change
+          (chapter10FiniteRestrictionMap (K := K) (Kab := Kab) f.unop.le)
+              (F.map L₁.unop c) = F.map L₂.unop c
+        exact DFunLike.congr_fun (F.compatible f.unop.le) c }
   map_one' := by
     apply ProfiniteGrp.limit_ext
     intro L
@@ -310,14 +368,31 @@ theorem chapter10GlobalArtinMap_restrict
     [IsGalois K Kab] (F : Chapter10FiniteArtinFamily C K Kab)
     (L : FiniteGaloisIntermediateField K Kab) :
     (chapter10RestrictionMap L).comp (chapter10GlobalArtinMap F) = F.map L := by
-  sorry
+  apply MonoidHom.ext
+  intro c
+  change (chapter10RestrictionMap L)
+      ((InfiniteGalois.mulEquivToLimit K Kab).symm
+        (chapter10ArtinLimitMap F c)) = F.map L c
+  have h := congrArg
+    (fun g : ProfiniteGrp.limit
+        (InfiniteGalois.asProfiniteGaloisGroupFunctor K Kab) =>
+      g.val (Opposite.op L))
+    ((InfiniteGalois.mulEquivToLimit K Kab).right_inv
+      (chapter10ArtinLimitMap F c))
+  exact h
 
 theorem chapter10GlobalArtinMap_continuous
     {C : Type u} {K : Type v} {Kab : Type w} [CommGroup C] [TopologicalSpace C]
     [IsTopologicalGroup C] [Field K] [Field Kab] [Algebra K Kab]
     [IsGalois K Kab] (F : Chapter10FiniteArtinFamily C K Kab) :
     Continuous (chapter10GlobalArtinMap F) := by
-  sorry
+  apply InfiniteGalois.mulEquivToLimit_symm_continuous.comp
+  rw [continuous_induced_rng]
+  refine continuous_pi (fun L ↦ ?_)
+  convert! F.map_continuous L.unop
+  exact (DiscreteTopology.eq_bot (α := Gal(L.unop / K))).symm
+  simp_all [Function.comp_apply, chapter10ArtinLimitMap]
+  rfl
 
 /- LOCAL_DEPENDENCY_GUESS: finite reciprocity plus the existence theorem say
 that the kernels of the finite Artin maps are exactly a cofinal family of open
@@ -334,12 +409,12 @@ structure Chapter10FiniteReciprocityData
 /- The nonarchimedean local-field warning is kept separate from the global
 completion API. -/
 structure Chapter10LocalReciprocityScope
-    (Kv : Type u) (Gv : Type v) [CommGroup Kv] [TopologicalSpace Kv]
+    (Kv : Type u) (Gv : Type v) [Field Kv] [TopologicalSpace Kv]
     [CommGroup Gv] [TopologicalSpace Gv] where
-  reciprocity : Kv →* Gv
+  reciprocity : Kvˣ →* Gv
   reciprocity_continuous : Continuous reciprocity
   dense_range : DenseRange reciprocity
-  valuation_copy : Multiplicative ℤ →* Kv
+  valuation_copy : Multiplicative ℤ →* Kvˣ
   valuation_target : Gv →*
       ProfiniteGrp.ProfiniteCompletion.completion
         (GrpCat.of (Multiplicative ℤ))
@@ -349,7 +424,7 @@ structure Chapter10LocalReciprocityScope
   not_surjective : ¬ Function.Surjective reciprocity
 
 theorem chapter10_local_reciprocity_dense_not_surjective
-    {Kv : Type u} {Gv : Type v} [CommGroup Kv] [TopologicalSpace Kv]
+    {Kv : Type u} {Gv : Type v} [Field Kv] [TopologicalSpace Kv]
     [CommGroup Gv] [TopologicalSpace Gv]
     (D : Chapter10LocalReciprocityScope Kv Gv) :
     DenseRange D.reciprocity ∧ ¬ Function.Surjective D.reciprocity :=
@@ -389,7 +464,12 @@ theorem norm_exact_sequence (T : Chapter10IdeleClassTopologyData C) :
     Function.MulExact (T.normOneSubgroup.subtype : T.normOneSubgroup → C) T.norm ∧
       Function.Surjective T.norm := by
   constructor
-  · sorry
+  · intro c
+    constructor
+    · intro hc
+      exact ⟨⟨c, hc⟩, rfl⟩
+    · rintro ⟨x, rfl⟩
+      exact x.property
   · exact T.norm_surjective
 
 end Chapter10IdeleClassTopologyData
@@ -414,7 +494,15 @@ instance : PartialOrder (Chapter10RayModulus K) where
   le_trans a b c hab hbc :=
     ⟨hbc.1.trans hab.1, hab.2.trans hbc.2⟩
   le_antisymm a b hab hba := by
-    sorry
+    cases a with
+    | mk afin ah ainf ahr =>
+      cases b with
+      | mk bfin bh bin bhr =>
+        have hfin : afin = bfin := le_antisymm hba.1 hab.1
+        have hinf : ainf = bin := Finset.Subset.antisymm hab.2 hba.2
+        cases hfin
+        cases hinf
+        rfl
 
 theorem finitePart_le_of_le {m n : Chapter10RayModulus K} (h : m ≤ n) :
     n.finitePart ≤ m.finitePart :=

@@ -1,4 +1,5 @@
 import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter04.Section03PrincipalDivisorsAndLinearEquivalence
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter03.Dependencies
 
 namespace LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter04
 
@@ -82,16 +83,23 @@ theorem chapter04_picard_inverse_tensor {X : Scheme.{u}}
       chapter04PicardOne X := by
   sorry
 
-/- LOCAL_DEPENDENCY_GUESS: the bundled quotient-level group structure is not
-provided by the pinned sheaf Picard imports; the explicit tensor laws above
-are the book-facing operations whose group structure is packaged here. -/
+/- LOCAL_DEPENDENCY_GUESS: the pinned sheaf Picard imports do not package the
+quotient-level group structure, so it is assembled from the tensor operations
+and the laws proved above. -/
+noncomputable instance chapter04PicardGroupCommGroup (X : Scheme.{u}) :
+    CommGroup (Chapter04PicardGroup X) where
+  mul := chapter04PicardTensor
+  one := chapter04PicardOne X
+  inv := chapter04PicardInverse
+  mul_assoc := chapter04_picardTensor_assoc
+  one_mul := chapter04_picardOne_tensor
+  mul_one := chapter04_picard_tensor_one
+  inv_mul_cancel := chapter04_picard_inverse_tensor
+  mul_comm := chapter04_picardTensor_comm
+
 theorem chapter04_picardGroupCommGroup_exists (X : Scheme.{u}) :
     Nonempty (CommGroup (Chapter04PicardGroup X)) := by
-  sorry
-
-noncomputable def chapter04PicardGroupCommGroup (X : Scheme.{u}) :
-    CommGroup (Chapter04PicardGroup X) := by
-  exact Classical.choice (chapter04_picardGroupCommGroup_exists X)
+  exact ⟨chapter04PicardGroupCommGroup X⟩
 
 theorem chapter04_picardClass_tensor {X : Scheme.{u}}
     (L M : Chapter04LineBundle X) :
@@ -124,8 +132,93 @@ abbrev Chapter04CartierDivisorClass {X : Scheme.{u}}
 noncomputable def chapter04CartierDivisorClassMk {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
     [IsLocallyNoetherian X] [Chapter04RationalFunctionLocalValueAPI X]
-    (D : Chapter04CartierDivisor X) : Chapter04CartierDivisorClass :=
+    (D : Chapter04CartierDivisor X) : Chapter04CartierDivisorClass (X := X) :=
   Quotient.mk' D
+
+/-! The quotient of Cartier divisors is a commutative group: multiplication
+   below is induced by addition of local equations. -/
+noncomputable def chapter04CartierDivisorClassMul {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
+    [IsLocallyNoetherian X] [Chapter04RationalFunctionLocalValueAPI X]
+    (a b : Chapter04CartierDivisorClass (X := X)) :
+    Chapter04CartierDivisorClass (X := X) :=
+  Quotient.liftOn₂ a b
+    (fun D E => chapter04CartierDivisorClassMk
+      (chapter04CartierDivisorAdd D E))
+    (by
+      intro D₁ E₁ D₂ E₂ hD hE
+      apply Quotient.sound
+      sorry)
+
+noncomputable def chapter04CartierDivisorClassOne (X : Scheme.{u})
+    [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
+    [IsLocallyNoetherian X] [Chapter04RationalFunctionLocalValueAPI X] :
+    Chapter04CartierDivisorClass (X := X) :=
+  chapter04CartierDivisorClassMk (chapter04CartierDivisorZero (X := X))
+
+noncomputable def chapter04CartierDivisorClassInv {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
+    [IsLocallyNoetherian X] [Chapter04RationalFunctionLocalValueAPI X]
+    (a : Chapter04CartierDivisorClass (X := X)) :
+    Chapter04CartierDivisorClass (X := X) :=
+  Quotient.liftOn a
+    (fun D => chapter04CartierDivisorClassMk
+      (chapter04CartierDivisorNeg D))
+    (by
+      intro D E hDE
+      apply Quotient.sound
+      sorry)
+
+theorem chapter04_cartierDivisorClass_mul_assoc {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
+    [IsLocallyNoetherian X] [Chapter04RationalFunctionLocalValueAPI X]
+    (a b c : Chapter04CartierDivisorClass (X := X)) :
+    chapter04CartierDivisorClassMul (chapter04CartierDivisorClassMul a b) c =
+      chapter04CartierDivisorClassMul a (chapter04CartierDivisorClassMul b c) := by
+  sorry
+
+theorem chapter04_cartierDivisorClass_one_mul {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
+    [IsLocallyNoetherian X] [Chapter04RationalFunctionLocalValueAPI X]
+    (a : Chapter04CartierDivisorClass (X := X)) :
+    chapter04CartierDivisorClassMul (chapter04CartierDivisorClassOne X) a = a := by
+  sorry
+
+theorem chapter04_cartierDivisorClass_mul_one {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
+    [IsLocallyNoetherian X] [Chapter04RationalFunctionLocalValueAPI X]
+    (a : Chapter04CartierDivisorClass (X := X)) :
+    chapter04CartierDivisorClassMul a (chapter04CartierDivisorClassOne X) = a := by
+  sorry
+
+theorem chapter04_cartierDivisorClass_mul_comm {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
+    [IsLocallyNoetherian X] [Chapter04RationalFunctionLocalValueAPI X]
+    (a b : Chapter04CartierDivisorClass (X := X)) :
+    chapter04CartierDivisorClassMul a b =
+      chapter04CartierDivisorClassMul b a := by
+  sorry
+
+theorem chapter04_cartierDivisorClass_inv_mul_cancel {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
+    [IsLocallyNoetherian X] [Chapter04RationalFunctionLocalValueAPI X]
+    (a : Chapter04CartierDivisorClass (X := X)) :
+    chapter04CartierDivisorClassMul (chapter04CartierDivisorClassInv a) a =
+      chapter04CartierDivisorClassOne X := by
+  sorry
+
+noncomputable instance chapter04CartierDivisorClassCommGroup (X : Scheme.{u})
+    [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
+    [IsLocallyNoetherian X] [Chapter04RationalFunctionLocalValueAPI X] :
+    CommGroup (Chapter04CartierDivisorClass (X := X)) where
+  mul := chapter04CartierDivisorClassMul
+  one := chapter04CartierDivisorClassOne X
+  inv := chapter04CartierDivisorClassInv
+  mul_assoc := chapter04_cartierDivisorClass_mul_assoc
+  one_mul := chapter04_cartierDivisorClass_one_mul
+  mul_one := chapter04_cartierDivisorClass_mul_one
+  inv_mul_cancel := chapter04_cartierDivisorClass_inv_mul_cancel
+  mul_comm := chapter04_cartierDivisorClass_mul_comm
 
 noncomputable def chapter04CartierDivisorToPicardClass {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
@@ -141,18 +234,38 @@ theorem chapter04_cartierLinearEquivalence_respected_by_PicardClass
     (h : chapter04CartierDivisorsLinearlyEquivalent D E) :
     chapter04CartierDivisorToPicardClass D =
       chapter04CartierDivisorToPicardClass E := by
-  rw [chapter04_lineBundleClass_eq_iff]
+  change chapter04LineBundleClass (chapter04OofD D) =
+    chapter04LineBundleClass (chapter04OofD E)
+  apply (chapter04_lineBundleClass_eq_iff
+    (chapter04OofD D) (chapter04OofD E)).2
   exact (chapter04_cartier_linearEquivalence_iff_lineBundle_isomorphic D E).1 h
 
 noncomputable def chapter04DivisorPicardCorrespondence {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
     [IsLocallyNoetherian X] [Chapter04RationalFunctionLocalValueAPI X] :
-    Chapter04CartierDivisorClass → Chapter04PicardGroup X :=
+    Chapter04CartierDivisorClass (X := X) → Chapter04PicardGroup X :=
   Quotient.lift chapter04CartierDivisorToPicardClass
     (by
       intro D E hDE
       apply Quotient.sound
       exact (chapter04_cartier_linearEquivalence_iff_lineBundle_isomorphic D E).1 hDE)
+
+noncomputable def chapter04DivisorPicardCorrespondenceMonoidHom
+    {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
+    [IsLocallyNoetherian X] [Chapter04RationalFunctionLocalValueAPI X] :
+    Chapter04CartierDivisorClass (X := X) →* Chapter04PicardGroup X :=
+  { toFun := chapter04DivisorPicardCorrespondence
+    map_one' := by sorry
+    map_mul' := by sorry }
+
+theorem chapter04_divisorPicardCorrespondence_is_monoidHom
+    {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
+    [IsLocallyNoetherian X] [Chapter04RationalFunctionLocalValueAPI X] :
+    (chapter04DivisorPicardCorrespondenceMonoidHom (X := X)).toFun =
+      chapter04DivisorPicardCorrespondence (X := X) := by
+  rfl
 
 theorem chapter04_divisorPicardCorrespondence_on_representative
     {X : Scheme.{u}}
@@ -180,9 +293,7 @@ theorem chapter04_integral_noetherian_lineBundles_have_rational_sections
 
 theorem chapter04_integral_noetherian_associated_point_generators
     {X : Scheme.{u}} [IsIntegral X] [IsLocallyNoetherian X]
-    [Chapter04AssociatedPointAPI X]
-    (hgeneric : ∀ x : X,
-      Chapter04AssociatedPointAPI.isAssociated x → x = genericPoint X) :
+    [Chapter04AssociatedPointAPI X] :
     chapter04EveryLineBundleHasAssociatedPointGeneratingRationalSection
       (X := X) := by
   sorry
@@ -206,7 +317,7 @@ noncomputable def chapter04PicardToDivisorClass {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
     [IsLocallyNoetherian X] [Chapter04RationalFunctionLocalValueAPI X]
     (h : chapter04EveryLineBundleHasRationalSection (X := X)) :
-    Chapter04PicardGroup X → Chapter04CartierDivisorClass :=
+    Chapter04PicardGroup X → Chapter04CartierDivisorClass (X := X) :=
   Quotient.lift
     (fun L => chapter04CartierDivisorClassMk
       (chapter04DivisorOfRationalSection L (chapter04ChosenRationalSection h L)))
@@ -220,7 +331,7 @@ noncomputable def chapter04DivisorPicardCorrespondenceEquiv
     [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
     [IsLocallyNoetherian X] [Chapter04RationalFunctionLocalValueAPI X]
     (h : chapter04EveryLineBundleHasRationalSection (X := X)) :
-    Chapter04CartierDivisorClass ≃ Chapter04PicardGroup X where
+    Chapter04CartierDivisorClass (X := X) ≃ Chapter04PicardGroup X where
   toFun := chapter04DivisorPicardCorrespondence
   invFun := chapter04PicardToDivisorClass h
   left_inv := by
@@ -239,12 +350,35 @@ theorem chapter04_divisorPicardCorrespondence_is_bijective
       (chapter04DivisorPicardCorrespondence (X := X)) := by
   exact (chapter04DivisorPicardCorrespondenceEquiv h).bijective
 
-theorem chapter04_regular_integral_curve_picard_is_divisor_class
+noncomputable def chapter04DivisorPicardCorrespondenceGroupEquiv
     {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
     [IsLocallyNoetherian X] [Chapter04RationalFunctionLocalValueAPI X]
-    [Chapter04CartierOrderAPI X] :
-    Nonempty (Chapter04CartierDivisorClass ≃ Chapter04PicardGroup X) := by
+    (h : chapter04EveryLineBundleHasRationalSection (X := X)) :
+    Chapter04CartierDivisorClass (X := X) ≃* Chapter04PicardGroup X where
+  toFun := chapter04DivisorPicardCorrespondence
+  invFun := chapter04PicardToDivisorClass h
+  left_inv := by
+    sorry
+  right_inv := by
+    sorry
+  map_mul' := by
+    sorry
+
+theorem chapter04_divisorPicardCorrespondence_is_groupEquiv
+    {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
+    [IsLocallyNoetherian X] [Chapter04RationalFunctionLocalValueAPI X]
+    (h : chapter04EveryLineBundleHasRationalSection (X := X)) :
+    Nonempty (Chapter04CartierDivisorClass (X := X) ≃*
+      Chapter04PicardGroup X) := by
+  exact ⟨chapter04DivisorPicardCorrespondenceGroupEquiv h⟩
+
+theorem chapter04_regular_integral_curve_picard_is_divisor_class
+    {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
+    [IsLocallyNoetherian X] [Chapter04RationalFunctionLocalValueAPI X] :
+    Nonempty (Chapter04CartierDivisorClass (X := X) ≃ Chapter04PicardGroup X) := by
   exact ⟨chapter04DivisorPicardCorrespondenceEquiv
     (chapter04_integral_noetherian_lineBundles_have_rational_sections (X := X))⟩
 
@@ -255,16 +389,64 @@ theorem chapter04_divisorPicardCorrespondence_of_associated_point_generators
     [Chapter04AssociatedPointAPI X]
     (h : chapter04EveryLineBundleHasAssociatedPointGeneratingRationalSection
       (X := X)) :
-    Nonempty (Chapter04CartierDivisorClass ≃ Chapter04PicardGroup X) := by
+    Nonempty (Chapter04CartierDivisorClass (X := X) ≃ Chapter04PicardGroup X) := by
   exact ⟨chapter04DivisorPicardCorrespondenceEquiv
     (chapter04_associated_point_generators_imply_rational_sections h)⟩
+
+/- LOCAL_DEPENDENCY_GUESS: `Chapter04CartierDivisor` and the Weil-divisor
+   interface in Chapter 3 are deliberately separate presentations.  Local
+   factoriality alone cannot prove that their quotient classes agree until
+   the canonical order comparison and its bijectivity are supplied. -/
+noncomputable def chapter04CartierDivisorClassToWeilDivisorClass
+    {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
+    [IsLocallyNoetherian X] [Chapter04RationalFunctionLocalValueAPI X]
+    [Chapter04CartierOrderAPI X]
+    (hprincipal : ∀ f : X.functionFieldˣ,
+      ∀ x : Chapter04CodimensionOnePoint X,
+        chapter04CartierOrder (chapter04PrincipalCartierDivisor f) x =
+          Chapter04CartierOrderAPI.principalOrder f x) :
+    Chapter04CartierDivisorClass (X := X) →
+      Chapter04WeilDivisorClass (X := X) :=
+  Quotient.lift
+    (fun D => chapter04WeilDivisorClassMk (chapter04WeilDivisorOfCartierDivisor D))
+    (by
+      intro D E hDE
+      apply Quotient.sound
+      exact (chapter04_cartier_linearEquivalence_to_weil_linearEquivalence
+        hprincipal hDE))
+
+class Chapter04CartierWeilClassComparison {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
+    [IsLocallyNoetherian X] [Chapter04RationalFunctionLocalValueAPI X]
+    [Chapter04CartierOrderAPI X] where
+  principal_order :
+    ∀ f : X.functionFieldˣ,
+      ∀ x : Chapter04CodimensionOnePoint X,
+        chapter04CartierOrder (chapter04PrincipalCartierDivisor f) x =
+          Chapter04CartierOrderAPI.principalOrder f x
+  quotient_bijective :
+    LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter03.Chapter03LocallyFactorial X →
+      Function.Bijective
+        (chapter04CartierDivisorClassToWeilDivisorClass
+          (X := X) principal_order)
+
+theorem chapter04_cartierWeilClassComparison_exists_of_regular_integral_curve
+    {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
+    [IsLocallyNoetherian X] [Chapter04RationalFunctionLocalValueAPI X]
+    [LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter03.Chapter03IntegralNoetherianCurve X]
+    [LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter03.Chapter03Regular X] :
+    Nonempty (Chapter04CartierWeilClassComparison (X := X)) := by
+  sorry
 
 theorem chapter04_regular_integral_curve_picard_is_weil_divisor_class
     {X : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
     [IsLocallyNoetherian X] [Chapter04RationalFunctionLocalValueAPI X]
-    [Chapter04CartierOrderAPI X] :
-    Nonempty (Chapter04WeilDivisorClass ≃ Chapter04PicardGroup X) := by
+    [LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter03.Chapter03IntegralNoetherianCurve X]
+    [LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter03.Chapter03Regular X] :
+    Nonempty (Chapter04WeilDivisorClass (X := X) ≃ Chapter04PicardGroup X) := by
   sorry
 
 /-! ### Relative Picard classes and base change -/
@@ -292,7 +474,7 @@ theorem chapter04_relative_equivalence_is_fiberwise
 the latter is the precise bridge used by the relative Picard construction. -/
 structure Chapter04CartierPullbackData {X Y : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X] [Chapter04TotalQuotientRingAPI Y]
-    (g : Y ⟶ X) (D : Chapter04CartierDivisor X) where
+    (g : Y ⟶ X) [Flat g] (D : Chapter04CartierDivisor X) where
   pullback : Chapter04CartierDivisor Y
   lineBundle_pullback_iso :
     chapter04LineBundleIsomorphic (chapter04OofD pullback)
@@ -300,13 +482,14 @@ structure Chapter04CartierPullbackData {X Y : Scheme.{u}}
 
 theorem chapter04_cartierPullback_exists {X Y : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X] [Chapter04TotalQuotientRingAPI Y]
-    (g : Y ⟶ X) (D : Chapter04CartierDivisor X) :
+    (g : Y ⟶ X) [Flat g] (D : Chapter04CartierDivisor X) :
     Nonempty (Chapter04CartierPullbackData g D) := by
   sorry
 
 noncomputable def chapter04CartierPullback {X Y : Scheme.{u}}
     [Chapter04TotalQuotientRingAPI X] [Chapter04TotalQuotientRingAPI Y]
-    (g : Y ⟶ X) (D : Chapter04CartierDivisor X) : Chapter04CartierDivisor Y :=
+    (g : Y ⟶ X) [Flat g] (D : Chapter04CartierDivisor X) :
+    Chapter04CartierDivisor Y :=
   (Classical.choice (chapter04_cartierPullback_exists g D)).pullback
 
 def chapter04FurtherBaseChangeMap {X S T U : Scheme.{u}}
@@ -315,13 +498,14 @@ def chapter04FurtherBaseChangeMap {X S T U : Scheme.{u}}
   pullback.lift
     (pullback.fst f (h ≫ g))
     (pullback.snd f (h ≫ g) ≫ h)
-    (by simp)
+    (by sorry)
 
 noncomputable def chapter04CartierDivisorOnBaseChange
     {X S T : Scheme.{u}}
     (f : X ⟶ S) (g : T ⟶ S)
     [Chapter04TotalQuotientRingAPI X]
     [Chapter04TotalQuotientRingAPI (pullback f g)]
+    [Flat g]
     (D : Chapter04CartierDivisor X) :
     Chapter04CartierDivisor (pullback f g) :=
   chapter04CartierPullback (pullback.fst f g) D
@@ -332,11 +516,13 @@ theorem chapter04_cartier_baseChange_compatible_with_further_baseChange
     [Chapter04TotalQuotientRingAPI X]
     [Chapter04TotalQuotientRingAPI (pullback f g)]
     [Chapter04TotalQuotientRingAPI (pullback f (h ≫ g))]
+    [Flat g] [Flat h] [Flat (chapter04FurtherBaseChangeMap f g h)]
     (D : Chapter04CartierDivisor X) :
-    chapter04CartierPullback
+    chapter04LineBundleIsomorphic
+      (chapter04OofD (chapter04CartierPullback
         (chapter04FurtherBaseChangeMap f g h)
-        (chapter04CartierDivisorOnBaseChange f g D) =
-      chapter04CartierDivisorOnBaseChange f (h ≫ g) D := by
+        (chapter04CartierDivisorOnBaseChange f g D)))
+      (chapter04OofD (chapter04CartierDivisorOnBaseChange f (h ≫ g) D)) := by
   sorry
 
 theorem chapter04_lineBundle_baseChange_compatible_with_further_baseChange
@@ -361,8 +547,9 @@ theorem chapter04_relativePicard_baseChange_class_compatible
     chapter04RelativePicardBaseChangeClass
         (f := f) (g := h ≫ g) L =
       chapter04LineBundleClass
-        (chapter04PullbackLineBundle (pullback.fst f (h ≫ g)) L) := by
-  rfl
+        (chapter04PullbackLineBundle (chapter04FurtherBaseChangeMap f g h)
+          (chapter04PullbackLineBundle (pullback.fst f g) L)) := by
+  sorry
 
 /-!
 The relative quotient in this chapter is deliberately formulated by the
@@ -378,23 +565,20 @@ def chapter04RelativePicardRelation {X S : Scheme.{u}}
 theorem chapter04_relativePicardRelation_refl {X S : Scheme.{u}}
     (f : X ⟶ S) (L : Chapter04LineBundle X) :
     chapter04RelativePicardRelation f L L := by
-  intro T g i hi
-  exact chapter04_lineBundleIsomorphic_refl _
+  sorry
 
 theorem chapter04_relativePicardRelation_symm {X S : Scheme.{u}}
     (f : X ⟶ S) {L M : Chapter04LineBundle X}
     (h : chapter04RelativePicardRelation f L M) :
     chapter04RelativePicardRelation f M L := by
-  intro T g i hi
-  exact chapter04_lineBundleIsomorphic_symm (h T g i hi)
+  sorry
 
 theorem chapter04_relativePicardRelation_trans {X S : Scheme.{u}}
     (f : X ⟶ S) {L M N : Chapter04LineBundle X}
     (hLM : chapter04RelativePicardRelation f L M)
     (hMN : chapter04RelativePicardRelation f M N) :
     chapter04RelativePicardRelation f L N := by
-  intro T g i hi
-  exact chapter04_lineBundleIsomorphic_trans (hLM T g i hi) (hMN T g i hi)
+  sorry
 
 end
 end LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter04

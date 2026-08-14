@@ -3,6 +3,7 @@ import Mathlib.RingTheory.Valuation.ValuationRing
 import Mathlib.RingTheory.Valuation.Extension
 import Mathlib.LinearAlgebra.Dimension.Finite
 import Mathlib.GroupTheory.QuotientGroup.Basic
+import Mathlib.Data.ZMod.Basic
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
@@ -1390,7 +1391,541 @@ theorem chapter10_heterogeneous_single_extension_fundamental_inequality
     (h : v.IsEquiv (w.comap (algebraMap K L)))
     (d : Chapter10HeterogeneousExtensionData v w h) :
     d.ramificationIndex * d.residueDegree ≤ Module.finrank K L := by
-  sorry
+  set_option maxHeartbeats 1000000 in
+    classical
+    let : Valuation.HasExtension v w := ⟨h⟩
+    let vc := w.comap (algebraMap K L)
+    let : Valuation.HasExtension vc w := ⟨Valuation.IsEquiv.refl⟩
+    have hresfin : FiniteDimensional (Chapter10ResidueField v)
+        (Chapter10ResidueField w) := by
+      let k := Chapter10ResidueField v
+      let E := Chapter10ResidueField w
+      let I := Module.Basis.ofVectorSpaceIndex k E
+      let b : Module.Basis I k E := Module.Basis.ofVectorSpace k E
+      let y₀ : I → w.valuationSubring := fun i =>
+        Classical.choose (IsLocalRing.residue_surjective (b i))
+      have hy₀ (i : I) :
+          IsLocalRing.residue w.valuationSubring (y₀ i) = b i :=
+        Classical.choose_spec (IsLocalRing.residue_surjective (b i))
+      let yres : I → L := fun i => y₀ i
+      have hyval (i : I) : w (yres i) = 1 := by
+        have hbi : b i ≠ 0 := b.ne_zero i
+        have hnot : y₀ i ∉ IsLocalRing.maximalIdeal w.valuationSubring := by
+          intro hmem
+          apply hbi
+          rw [← hy₀ i]
+          exact (IsLocalRing.residue_eq_zero_iff _).mpr hmem
+        have hle : w (yres i) ≤ 1 :=
+          (Valuation.mem_valuationSubring_iff w (yres i)).mpr (y₀ i).property
+        have hnlt : ¬w (yres i) < 1 := by
+          intro hlt
+          apply hnot
+          exact (Valuation.mem_maximalIdeal_iff (v := w)).mpr hlt
+        exact le_antisymm hle (le_of_not_gt hnlt)
+      have hLI : LinearIndependent K yres := by
+        rw [linearIndependent_iff_finset_linearIndependent]
+        intro s
+        let e : (↥s) ≃ Fin s.card := Finset.equivFin s
+        let y' : Fin s.card → L := fun i => yres (e.symm i)
+        have hy' (i : Fin s.card) : w (y' i) = 1 := by
+          simpa [y'] using hyval (e.symm i)
+        have hLI' : LinearIndependent K y' := by
+          rw [Fintype.linearIndependent_iff]
+          intro a ha
+          let T : Finset (Fin s.card) :=
+            Finset.univ.filter (fun i => a i ≠ 0)
+          have hTempty : T = ∅ := by
+            by_contra hT
+            have hTne : T.Nonempty := Finset.nonempty_iff_ne_empty.mpr hT
+            let U : Finset ΓL :=
+              T.image (fun i => w (algebraMap K L (a i)))
+            have hUne : U.Nonempty := hTne.image _
+            obtain ⟨i₀, hi₀T, hi₀eq⟩ :=
+              Finset.mem_image.mp (Finset.max'_mem U hUne)
+            have hai₀ : a i₀ ≠ 0 := (Finset.mem_filter.mp hi₀T).2
+            have hamap₀ : algebraMap K L (a i₀) ≠ 0 := by
+              simpa using (RingHom.injective (algebraMap K L)).ne hai₀
+            have hw₀ : w (algebraMap K L (a i₀)) ≠ 0 :=
+              (Valuation.ne_zero_iff w).mpr hamap₀
+            have hmax (i : Fin s.card) (hiT : i ∈ T) :
+                w (algebraMap K L (a i)) ≤
+                  w (algebraMap K L (a i₀)) := by
+              calc
+                w (algebraMap K L (a i)) ≤ U.max' hUne :=
+                  Finset.le_max' U _ (Finset.mem_image.mpr ⟨i, hiT, rfl⟩)
+                _ = w (algebraMap K L (a i₀)) := hi₀eq.symm
+            let c : Fin s.card → v.valuationSubring := fun i =>
+              ⟨a i / a i₀, by
+                by_cases hai : a i = 0
+                · simp [hai]
+                · have hiT : i ∈ T :=
+                    Finset.mem_filter.mpr ⟨Finset.mem_univ _, hai⟩
+                  apply (Valuation.mem_valuationSubring_iff v _).mpr
+                  apply (Valuation.HasExtension.val_map_le_one_iff v w _).mp
+                  rw [map_div₀, w.map_div]
+                  exact (div_le_one₀ (w.pos_iff.mpr hamap₀)).mpr (hmax i hiT)
+                ⟩
+            have hnorm :
+                (∑ i : Fin s.card,
+                  algebraMap K L (a i / a i₀) * y' i) = 0 := by
+              have ha' :
+                  (∑ i : Fin s.card, algebraMap K L (a i) * y' i) = 0 := by
+                simpa only [Algebra.smul_def] using ha
+              calc
+                (∑ i : Fin s.card,
+                    algebraMap K L (a i / a i₀) * y' i) =
+                    ∑ i : Fin s.card,
+                      (algebraMap K L (a i₀))⁻¹ *
+                        (algebraMap K L (a i) * y' i) := by
+                  apply Finset.sum_congr rfl
+                  intro i hi
+                  rw [map_div₀]
+                  field_simp [hw₀]
+                _ = (algebraMap K L (a i₀))⁻¹ *
+                    ∑ i : Fin s.card, algebraMap K L (a i) * y' i := by
+                  rw [Finset.mul_sum]
+                _ = 0 := by rw [ha', mul_zero]
+            have hnormB :
+                (∑ i : Fin s.card,
+                    (algebraMap v.valuationSubring w.valuationSubring (c i)) *
+                      (y₀ (e.symm i))) = 0 := by
+              apply Subtype.ext
+              simpa [c, y', yres] using hnorm
+            have hresnorm :=
+              congrArg (IsLocalRing.residue w.valuationSubring) hnormB
+            have hresrel :
+                (∑ i : Fin s.card,
+                  algebraMap (Chapter10ResidueField v)
+                      (Chapter10ResidueField w)
+                    (IsLocalRing.residue v.valuationSubring (c i)) *
+                    b (e.symm i)) = 0 := by
+              simpa only [map_sum, map_mul,
+                Valuation.HasExtension.algebraMap_residue_eq_residue_algebraMap,
+                hy₀, map_zero] using hresnorm
+            have hb' : LinearIndependent k
+                (fun i : Fin s.card => b (e.symm i)) :=
+              b.linearIndependent.comp
+                (fun i : Fin s.card => (e.symm i : I))
+                (fun i j hij => by
+                  exact e.symm.injective (Subtype.ext hij))
+            have hc0 : ∀ i : Fin s.card,
+                IsLocalRing.residue v.valuationSubring (c i) = 0 := by
+              apply (Fintype.linearIndependent_iff.mp hb')
+              simpa only [Algebra.smul_def] using hresrel
+            have hc₀ : c i₀ = 1 := by
+              apply Subtype.ext
+              dsimp [c]
+              exact div_self hai₀
+            have honezero : (1 : Chapter10ResidueField v) = 0 := by
+              calc
+                (1 : Chapter10ResidueField v) =
+                    IsLocalRing.residue v.valuationSubring (c i₀) := by
+                  rw [hc₀]
+                  simp
+                _ = 0 := hc0 i₀
+            exact one_ne_zero honezero
+          have hz : ∀ i : Fin s.card, a i = 0 := by
+            intro i
+            by_contra hai
+            have hiT : i ∈ T :=
+              Finset.mem_filter.mpr ⟨Finset.mem_univ _, hai⟩
+            rw [hTempty] at hiT
+            simp at hiT
+          intro i
+          exact hz i
+        have heq :
+            (fun i : Fin s.card => y' i) ∘ e =
+              (fun q : (↥s) => yres q) := by
+          funext q
+          simp [y']
+        exact (linearIndependent_equiv' e heq).mpr hLI'
+      let : Finite I := Cardinal.mk_lt_aleph0_iff.mp
+        hLI.lt_aleph0_of_finiteDimensional
+      exact b.finiteDimensional_of_finite
+    let : FiniteDimensional (Chapter10ResidueField v)
+        (Chapter10ResidueField w) := hresfin
+    let Q := Chapter10ValueGroup w ⧸ d.valueGroupMap.range
+    let : Finite Q := d.finite_quotient
+    let : Fintype Q := Fintype.ofFinite Q
+    let dres : ℕ := Module.finrank (Chapter10ResidueField v)
+      (Chapter10ResidueField w)
+    let b : Module.Basis (Fin dres) (Chapter10ResidueField v)
+        (Chapter10ResidueField w) := Module.finBasis _ _
+    let rep : Q → Chapter10ValueGroup w := fun q =>
+      Classical.choose (QuotientGroup.mk_surjective q)
+    have hrep (q : Q) : QuotientGroup.mk (rep q) = q :=
+      Classical.choose_spec (QuotientGroup.mk_surjective q)
+    have hvalmem (u : Chapter10ValueGroup w) : ∃ z : L, ∃ hz : w z ≠ 0,
+        Units.mk0 (w z) hz = (u : ΓLˣ) := by
+      have hu : (u : ΓLˣ).val ∈
+          (Units.val '' (Chapter10ValueGroup w : Set ΓLˣ)) :=
+        ⟨u, u.property, rfl⟩
+      change (u : ΓLˣ).val ∈
+        Units.val ''
+          (MonoidWithZeroHom.valueGroup w.toMonoidWithZeroHom : Set ΓLˣ) at hu
+      rw [MonoidWithZeroHom.valueGroup_eq_range w.toMonoidWithZeroHom] at hu
+      rcases hu with ⟨hu, hne⟩
+      rcases hu with ⟨z, hz⟩
+      have hne_u : (u : ΓLˣ).val ≠ 0 := by exact hne
+      have hz' : w z ≠ 0 := by
+        have hz_eq : w z = (u : ΓLˣ).val := by simpa using hz
+        rw [hz_eq]
+        exact hne_u
+      refine ⟨z, hz', ?_⟩
+      apply Units.ext
+      simpa using hz
+    let x : Q → L := fun q => Classical.choose (hvalmem (rep q))
+    have hx (q : Q) : w (x q) ≠ 0 :=
+      Classical.choose (Classical.choose_spec (hvalmem (rep q)))
+    let y₀ : Fin dres → w.valuationSubring := fun i =>
+      Classical.choose (IsLocalRing.residue_surjective (b i))
+    have hy₀ (i : Fin dres) :
+        IsLocalRing.residue w.valuationSubring (y₀ i) = b i :=
+      Classical.choose_spec (IsLocalRing.residue_surjective (b i))
+    let y : Fin dres → L := fun i => y₀ i
+    have hyval (i : Fin dres) : w (y i) = 1 := by
+      have hbi : b i ≠ 0 := b.ne_zero i
+      have hnot : y₀ i ∉ IsLocalRing.maximalIdeal w.valuationSubring := by
+        intro hmem
+        apply hbi
+        rw [← hy₀ i]
+        exact (IsLocalRing.residue_eq_zero_iff _).mpr hmem
+      have hle : w (y i) ≤ 1 :=
+        (Valuation.mem_valuationSubring_iff w (y i)).mpr (y₀ i).property
+      have hnlt : ¬w (y i) < 1 := by
+        intro hlt
+        apply hnot
+        exact (Valuation.mem_maximalIdeal_iff (v := w)).mpr hlt
+      exact le_antisymm hle (le_of_not_gt hnlt)
+    have hLIy : LinearIndependent K y := by
+      rw [Fintype.linearIndependent_iff]
+      intro a ha
+      let T : Finset (Fin dres) :=
+        Finset.univ.filter (fun i => a i ≠ 0)
+      have hTempty : T = ∅ := by
+        by_contra hT
+        have hTne : T.Nonempty := Finset.nonempty_iff_ne_empty.mpr hT
+        let U : Finset ΓL :=
+          T.image (fun i => w (algebraMap K L (a i)))
+        have hUne : U.Nonempty := hTne.image _
+        obtain ⟨i₀, hi₀T, hi₀eq⟩ :=
+          Finset.mem_image.mp (Finset.max'_mem U hUne)
+        have hai₀ : a i₀ ≠ 0 := (Finset.mem_filter.mp hi₀T).2
+        have hamap₀ : algebraMap K L (a i₀) ≠ 0 := by
+          simpa using (RingHom.injective (algebraMap K L)).ne hai₀
+        have hw₀ : w (algebraMap K L (a i₀)) ≠ 0 :=
+          (Valuation.ne_zero_iff w).mpr hamap₀
+        have hmax (i : Fin dres) (hiT : i ∈ T) :
+            w (algebraMap K L (a i)) ≤
+              w (algebraMap K L (a i₀)) := by
+          calc
+            w (algebraMap K L (a i)) ≤ U.max' hUne :=
+              Finset.le_max' U _ (Finset.mem_image.mpr ⟨i, hiT, rfl⟩)
+            _ = w (algebraMap K L (a i₀)) := hi₀eq.symm
+        let c : Fin dres → v.valuationSubring := fun i =>
+          ⟨a i / a i₀, by
+            by_cases hai : a i = 0
+            · simp [hai]
+            · have hiT : i ∈ T :=
+                Finset.mem_filter.mpr ⟨Finset.mem_univ _, hai⟩
+              apply (Valuation.mem_valuationSubring_iff v _).mpr
+              apply (Valuation.HasExtension.val_map_le_one_iff v w _).mp
+              rw [map_div₀, w.map_div]
+              exact (div_le_one₀ (w.pos_iff.mpr hamap₀)).mpr (hmax i hiT)
+            ⟩
+        have hnorm :
+            (∑ i : Fin dres, algebraMap K L (a i / a i₀) * y i) = 0 := by
+          have ha' : (∑ i : Fin dres, algebraMap K L (a i) * y i) = 0 := by
+            simpa only [Algebra.smul_def] using ha
+          calc
+            (∑ i : Fin dres, algebraMap K L (a i / a i₀) * y i) =
+                ∑ i : Fin dres,
+                  (algebraMap K L (a i₀))⁻¹ *
+                    (algebraMap K L (a i) * y i) := by
+              apply Finset.sum_congr rfl
+              intro i hi
+              rw [map_div₀]
+              field_simp [hw₀]
+            _ = (algebraMap K L (a i₀))⁻¹ *
+                ∑ i : Fin dres, algebraMap K L (a i) * y i := by
+              rw [Finset.mul_sum]
+            _ = 0 := by rw [ha', mul_zero]
+        have hnormB :
+            (∑ i : Fin dres,
+                (algebraMap v.valuationSubring w.valuationSubring (c i)) *
+                  (y₀ i)) = 0 := by
+          apply Subtype.ext
+          simpa [c, y] using hnorm
+        have hresnorm :=
+          congrArg (IsLocalRing.residue w.valuationSubring) hnormB
+        have hresrel :
+            (∑ i : Fin dres,
+              algebraMap (Chapter10ResidueField v) (Chapter10ResidueField w)
+                (IsLocalRing.residue v.valuationSubring (c i)) * b i) = 0 := by
+          simpa only [map_sum, map_mul,
+            Valuation.HasExtension.algebraMap_residue_eq_residue_algebraMap v w,
+            hy₀, map_zero] using hresnorm
+        have hc0 : ∀ i : Fin dres,
+            IsLocalRing.residue v.valuationSubring (c i) = 0 := by
+          apply (Fintype.linearIndependent_iff.mp b.linearIndependent)
+          simpa only [Algebra.smul_def] using hresrel
+        have hc₀ : c i₀ = 1 := by
+          apply Subtype.ext
+          dsimp [c]
+          exact div_self hai₀
+        have honezero : (1 : Chapter10ResidueField v) = 0 := by
+          calc
+            (1 : Chapter10ResidueField v) =
+                IsLocalRing.residue v.valuationSubring (c i₀) := by
+              rw [hc₀]
+              simp
+            _ = 0 := hc0 i₀
+        exact one_ne_zero honezero
+      have hz : ∀ i : Fin dres, a i = 0 := by
+        intro i
+        by_contra hai
+        have hiT : i ∈ T := Finset.mem_filter.mpr ⟨Finset.mem_univ _, hai⟩
+        rw [hTempty] at hiT
+        simp at hiT
+      intro i
+      exact hz i
+    have hblock : ∀ (a : Fin dres → K),
+        (∑ j, algebraMap K L (a j) * y j) = 0 → ∀ j, a j = 0 := by
+      intro a ha
+      apply (Fintype.linearIndependent_iff.mp hLIy) a
+      simpa only [Algebra.smul_def] using ha
+    have hsum_value (a : Fin dres → K)
+        (ha : (∑ j, algebraMap K L (a j) * y j) ≠ 0) :
+        ∃ j, a j ≠ 0 ∧
+          w (∑ j, algebraMap K L (a j) * y j) =
+            w (algebraMap K L (a j)) := by
+      let T : Finset (Fin dres) :=
+        Finset.univ.filter (fun i => a i ≠ 0)
+      have hTne : T.Nonempty := by
+        by_contra hT
+        apply ha
+        have hz : ∀ i : Fin dres, a i = 0 := by
+          intro i
+          by_contra hai
+          exact hT ⟨i, Finset.mem_filter.mpr ⟨Finset.mem_univ _, hai⟩⟩
+        simp [hz]
+      let U : Finset ΓL :=
+        T.image (fun i => w (algebraMap K L (a i)))
+      have hUne : U.Nonempty := hTne.image _
+      obtain ⟨i₀, hi₀T, hi₀eq⟩ :=
+        Finset.mem_image.mp (Finset.max'_mem U hUne)
+      have hai₀ : a i₀ ≠ 0 := (Finset.mem_filter.mp hi₀T).2
+      have hamap₀ : algebraMap K L (a i₀) ≠ 0 := by
+        simpa using (RingHom.injective (algebraMap K L)).ne hai₀
+      have hw₀ : w (algebraMap K L (a i₀)) ≠ 0 :=
+        (Valuation.ne_zero_iff w).mpr hamap₀
+      have hmax (i : Fin dres) (hiT : i ∈ T) :
+          w (algebraMap K L (a i)) ≤
+            w (algebraMap K L (a i₀)) := by
+        calc
+          w (algebraMap K L (a i)) ≤ U.max' hUne :=
+            Finset.le_max' U _ (Finset.mem_image.mpr ⟨i, hiT, rfl⟩)
+          _ = w (algebraMap K L (a i₀)) := hi₀eq.symm
+      let c : Fin dres → v.valuationSubring := fun i =>
+        ⟨a i / a i₀, by
+          by_cases hai : a i = 0
+          · simp [hai]
+          · have hiT : i ∈ T :=
+              Finset.mem_filter.mpr ⟨Finset.mem_univ _, hai⟩
+            apply (Valuation.mem_valuationSubring_iff v _).mpr
+            apply (Valuation.HasExtension.val_map_le_one_iff v w _).mp
+            rw [map_div₀, w.map_div]
+            exact (div_le_one₀ (w.pos_iff.mpr hamap₀)).mpr (hmax i hiT)
+          ⟩
+      let normB : w.valuationSubring :=
+        ∑ i : Fin dres,
+          (algebraMap v.valuationSubring w.valuationSubring (c i)) * y₀ i
+      have hnormB_coe : (normB : L) =
+          ∑ i : Fin dres, algebraMap K L (a i / a i₀) * y i := by
+        simp [normB, c, y]
+      have hresnorm_ne :
+          IsLocalRing.residue w.valuationSubring normB ≠ 0 := by
+        intro hres
+        have hresrel :
+            (∑ i : Fin dres,
+              algebraMap (Chapter10ResidueField v) (Chapter10ResidueField w)
+                (IsLocalRing.residue v.valuationSubring (c i)) * b i) = 0 := by
+          have hres' := hres
+          simpa [normB, map_sum, map_mul,
+            Valuation.HasExtension.algebraMap_residue_eq_residue_algebraMap v w,
+            hy₀] using hres'
+        have hc0 : ∀ i : Fin dres,
+            IsLocalRing.residue v.valuationSubring (c i) = 0 := by
+          apply (Fintype.linearIndependent_iff.mp b.linearIndependent)
+          simpa only [Algebra.smul_def] using hresrel
+        have hc₀ : c i₀ = 1 := by
+          apply Subtype.ext
+          dsimp [c]
+          exact div_self hai₀
+        have honezero : (1 : Chapter10ResidueField v) = 0 := by
+          calc
+            (1 : Chapter10ResidueField v) =
+                IsLocalRing.residue v.valuationSubring (c i₀) := by
+              rw [hc₀]
+              simp
+            _ = 0 := hc0 i₀
+        exact one_ne_zero honezero
+      have hnormval : w (normB : L) = 1 := by
+        have hle : w (normB : L) ≤ 1 :=
+          (Valuation.mem_valuationSubring_iff w (normB : L)).mpr normB.property
+        have hnlt : ¬w (normB : L) < 1 := by
+          intro hlt
+          apply hresnorm_ne
+          exact (IsLocalRing.residue_eq_zero_iff _).mpr
+            ((Valuation.mem_maximalIdeal_iff (v := w)).mpr hlt)
+        exact le_antisymm hle (le_of_not_gt hnlt)
+      have hnorm_eq :
+          (∑ i : Fin dres, algebraMap K L (a i / a i₀) * y i) =
+            (algebraMap K L (a i₀))⁻¹ *
+              ∑ i : Fin dres, algebraMap K L (a i) * y i := by
+        calc
+          (∑ i : Fin dres, algebraMap K L (a i / a i₀) * y i) =
+              ∑ i : Fin dres,
+                (algebraMap K L (a i₀))⁻¹ *
+                  (algebraMap K L (a i) * y i) := by
+            apply Finset.sum_congr rfl
+            intro i hi
+            rw [map_div₀]
+            field_simp [hw₀]
+          _ = (algebraMap K L (a i₀))⁻¹ *
+              ∑ i : Fin dres, algebraMap K L (a i) * y i := by
+            rw [Finset.mul_sum]
+      have hsum_eq :
+          (∑ i : Fin dres, algebraMap K L (a i) * y i) =
+            algebraMap K L (a i₀) * (normB : L) := by
+        calc
+          (∑ i : Fin dres, algebraMap K L (a i) * y i) =
+              algebraMap K L (a i₀) *
+                ((algebraMap K L (a i₀))⁻¹ *
+                  ∑ i : Fin dres, algebraMap K L (a i) * y i) := by
+            field_simp [hw₀]
+          _ = algebraMap K L (a i₀) *
+              (∑ i : Fin dres, algebraMap K L (a i / a i₀) * y i) := by
+            rw [hnorm_eq]
+          _ = algebraMap K L (a i₀) * (normB : L) := by
+            rw [hnormB_coe]
+      refine ⟨i₀, hai₀, ?_⟩
+      rw [hsum_eq, w.map_mul, hnormval, mul_one]
+    have hvalues : ∀ (a : Q × Fin dres → K) (q q' : Q), q ≠ q' →
+        (∑ j, algebraMap K L (a (q, j)) * y j) ≠ 0 →
+        (∑ j, algebraMap K L (a (q', j)) * y j) ≠ 0 →
+        w (x q * ∑ j, algebraMap K L (a (q, j)) * y j) ≠
+          w (x q' * ∑ j, algebraMap K L (a (q', j)) * y j) := by
+      intro a q q' hqq' hq hq'
+      obtain ⟨j, haj, hj⟩ := hsum_value (fun j => a (q, j)) hq
+      obtain ⟨j', haj', hj'⟩ := hsum_value (fun j => a (q', j)) hq'
+      intro heq
+      have hvj : v (a (q, j)) ≠ 0 :=
+        (Valuation.ne_zero_iff v).mpr haj
+      have hvj' : v (a (q', j')) ≠ 0 :=
+        (Valuation.ne_zero_iff v).mpr haj'
+      let uj : Chapter10ValueGroup v :=
+        Chapter10ValueGroupGenerator v (a (q, j)) hvj
+      let uj' : Chapter10ValueGroup v :=
+        Chapter10ValueGroupGenerator v (a (q', j')) hvj'
+      have huj : (uj : ΓKˣ) =
+          Units.mk0 (v (a (q, j))) hvj := by rfl
+      have huj' : (uj' : ΓKˣ) =
+          Units.mk0 (v (a (q', j'))) hvj' := by rfl
+      have hmapuj :
+          ((d.valueGroupMap uj : Chapter10ValueGroup w) : ΓLˣ) =
+            Units.mk0 (w (algebraMap K L (a (q, j)))) (h.eq_zero.ne.mp hvj) :=
+        d.valueGroupMap_spec (a (q, j)) hvj
+      have hmapuj' :
+          ((d.valueGroupMap uj' : Chapter10ValueGroup w) : ΓLˣ) =
+            Units.mk0 (w (algebraMap K L (a (q', j')))) (h.eq_zero.ne.mp hvj') :=
+        d.valueGroupMap_spec (a (q', j')) hvj'
+      have hrepval :
+          (rep q : ΓLˣ) *
+              ((d.valueGroupMap uj : Chapter10ValueGroup w) : ΓLˣ) =
+            (rep q' : ΓLˣ) *
+              ((d.valueGroupMap uj' : Chapter10ValueGroup w) : ΓLˣ) := by
+        have hxi := Classical.choose_spec (hvalmem (rep q))
+        have hxi' := Classical.choose_spec (hvalmem (rep q'))
+        have hxi_val : Units.mk0 (w (x q)) (hx q) = (rep q : ΓLˣ) := hxi.2
+        have hxi'_val : Units.mk0 (w (x q')) (hx q') =
+            (rep q' : ΓLˣ) := hxi'.2
+        have hxi_val' : w (x q) = (rep q : ΓLˣ).val := by
+          simpa using congrArg Units.val hxi_val
+        have hxi'_val' : w (x q') = (rep q' : ΓLˣ).val := by
+          simpa using congrArg Units.val hxi'_val
+        apply Units.ext
+        rw [hmapuj, hmapuj']
+        change (rep q : ΓLˣ).val * w (algebraMap K L (a (q, j))) =
+          (rep q' : ΓLˣ).val * w (algebraMap K L (a (q', j')))
+        rw [← hxi_val', ← hxi'_val', ← hj, ← hj']
+        simpa only [w.map_mul] using heq
+      have hmem : (uj : ΓKˣ) * (uj' : ΓKˣ)⁻¹ ∈ Chapter10ValueGroup v := by
+        exact (Chapter10ValueGroup v).mul_mem uj.property
+          ((Chapter10ValueGroup v).inv_mem uj'.property)
+      let g : Chapter10ValueGroup w :=
+        ⟨(rep q : ΓLˣ)⁻¹ * (rep q' : ΓLˣ), by
+          exact (Chapter10ValueGroup w).mul_mem
+            ((Chapter10ValueGroup w).inv_mem (rep q).property)
+            (rep q').property⟩
+      have huieq :
+          ((rep q : ΓLˣ)⁻¹ * (rep q' : ΓLˣ) : ΓLˣ) =
+            ((d.valueGroupMap uj : Chapter10ValueGroup w) : ΓLˣ) *
+              ((d.valueGroupMap uj' : Chapter10ValueGroup w) : ΓLˣ)⁻¹ := by
+        calc
+          ((rep q : ΓLˣ)⁻¹ * (rep q' : ΓLˣ) : ΓLˣ) =
+              (rep q : ΓLˣ)⁻¹ *
+                ((rep q : ΓLˣ) *
+                  ((d.valueGroupMap uj : Chapter10ValueGroup w) : ΓLˣ)) *
+                  ((d.valueGroupMap uj' : Chapter10ValueGroup w) : ΓLˣ)⁻¹ := by
+                    rw [hrepval]
+                    simp [mul_assoc]
+          _ = ((d.valueGroupMap uj : Chapter10ValueGroup w) : ΓLˣ) *
+              ((d.valueGroupMap uj' : Chapter10ValueGroup w) : ΓLˣ)⁻¹ := by
+                simp
+      have hmem' : g ∈ d.valueGroupMap.range := by
+        refine ⟨uj * uj'⁻¹, ?_⟩
+        apply Subtype.ext
+        simpa [g] using huieq.symm
+      have hg : g = (rep q)⁻¹ * rep q' := by
+        apply Subtype.ext
+        rfl
+      have hq0 :
+          (QuotientGroup.mk (s := d.valueGroupMap.range) (rep q) : Q) =
+            QuotientGroup.mk (s := d.valueGroupMap.range) (rep q') := by
+        apply QuotientGroup.eq.mpr
+        rw [← hg]
+        exact hmem'
+      have hq'' : q = q' := by
+        calc
+          q = QuotientGroup.mk (rep q) := (hrep q).symm
+          _ = QuotientGroup.mk (rep q') := hq0
+          _ = q' := hrep q'
+      exact hqq' hq''
+    let eQ : Q ≃ Fin (Fintype.card Q) := Fintype.equivFin Q
+    let x' : Fin (Fintype.card Q) → L := fun i => x (eQ.symm i)
+    have hx' (i : Fin (Fintype.card Q)) : x' i ≠ 0 := by
+      simpa [x'] using (Valuation.ne_zero_iff w).mp (hx (eQ.symm i))
+    have hvalues' : ∀ (a : Fin (Fintype.card Q) × Fin dres → K)
+        (i i' : Fin (Fintype.card Q)), i ≠ i' →
+        (∑ j, algebraMap K L (a (i, j)) * y j) ≠ 0 →
+        (∑ j, algebraMap K L (a (i', j)) * y j) ≠ 0 →
+        w (x' i * ∑ j, algebraMap K L (a (i, j)) * y j) ≠
+          w (x' i' * ∑ j, algebraMap K L (a (i', j)) * y j) := by
+      intro a i i' hii hi hi'
+      let a' : Q × Fin dres → K := fun qj => a (eQ qj.1, qj.2)
+      have hq : eQ.symm i ≠ eQ.symm i' := by
+        intro heq
+        apply hii
+        exact eQ.symm.injective heq
+      simpa [x', a'] using
+        hvalues a' (eQ.symm i) (eQ.symm i') hq
+          (by simpa [a'] using hi) (by simpa [a'] using hi')
+    have hLI := chapter10_value_residue_product_independence vc w x' y hx' hblock hvalues'
+    have hcard := hLI.fintype_card_le_finrank
+    simpa [d.ramificationIndex_eq, d.residueDegree_eq,
+      Chapter10HeterogeneousResidueDegree, Q, dres,
+      Nat.card_eq_fintype_card] using hcard
 
 /-- Normalized discrete additive valuations. -/
 def Chapter10DiscreteAddValuation {K : Type*} [Field K]
@@ -1509,6 +2044,262 @@ theorem chapter10_normalized_restriction_formula
       rw [hcast e, negSucc_zsmul, hnegcast n, hneg_nsmul]
       congr 1
       exact hnat (n + 1) e
+
+/-- The finite quotient attached to heterogeneous extension data is available
+as an explicit instance for cardinality arguments. -/
+theorem chapter10_heterogeneous_value_group_quotient_finite
+    {K L ΓK ΓL : Type*} [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero ΓK]
+    [LinearOrderedCommGroupWithZero ΓL] [FiniteDimensional K L]
+    (v : Valuation K ΓK) (w : Valuation L ΓL)
+    (h : v.IsEquiv (w.comap (algebraMap K L)))
+    (d : Chapter10HeterogeneousExtensionData v w h) :
+    Finite (Chapter10ValueGroup w ⧸ d.valueGroupMap.range) :=
+  d.finite_quotient
+
+/-- For normalized discrete additive valuations, the heterogeneous value-group
+quotient records exactly the positive restriction scale, and hence the stored
+ramification index. -/
+theorem chapter10_normalized_ramification_index_eq_scale
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
+    (v : AddValuation K (WithTop ℤ))
+    (w : AddValuation L (WithTop ℤ))
+    (hv : Chapter10DiscreteAddValuation v)
+    (hw : Chapter10DiscreteAddValuation w)
+    (hext : v.IsEquiv (w.comap (algebraMap K L)))
+    (d : Chapter10HeterogeneousExtensionData v w hext)
+    (n : ℕ) (hn : 0 < n)
+    (hscale : ∀ x : K, x ≠ 0 →
+      w (algebraMap K L x) = n • v x)
+    [Finite (Chapter10ValueGroup w ⧸ d.valueGroupMap.range)] :
+    Nat.card (Chapter10ValueGroup w ⧸ d.valueGroupMap.range) = n ∧
+      d.ramificationIndex = n := by
+  classical
+  rcases hv with ⟨π, hπ0, hπ, hv⟩
+  rcases hw with ⟨Pi, hPi0, hPi, hw⟩
+  let : NeZero n := ⟨Nat.ne_of_gt hn⟩
+  let value : Chapter10ValueGroup w → WithTop ℤ :=
+    fun u => OrderDual.ofDual
+      (Multiplicative.toAdd (u : (Multiplicative (WithTop ℤ)ᵒᵈ)ˣ).val)
+  have hvalue_mul (u z : Chapter10ValueGroup w) :
+      value (u * z) = value u + value z := by
+    rfl
+  have hvalue_one : value (1 : Chapter10ValueGroup w) = 0 := by
+    rfl
+  have hvalue_mem (u : Chapter10ValueGroup w) :
+      ∃ m : ℤ, value u = (m : WithTop ℤ) := by
+    have hu : (u : (Multiplicative (WithTop ℤ)ᵒᵈ)ˣ).val ∈
+        Units.val '' (Chapter10ValueGroup w : Set (Multiplicative (WithTop ℤ)ᵒᵈ)ˣ) :=
+      ⟨u, u.property, rfl⟩
+    change (u : (Multiplicative (WithTop ℤ)ᵒᵈ)ˣ).val ∈
+      Units.val ''
+        (MonoidWithZeroHom.valueGroup w.toMonoidWithZeroHom :
+          Set (Multiplicative (WithTop ℤ)ᵒᵈ)ˣ) at hu
+    rw [MonoidWithZeroHom.valueGroup_eq_range w.toMonoidWithZeroHom] at hu
+    rcases hu with ⟨hu, hne⟩
+    rcases hu with ⟨x, hx⟩
+    have hx' : (AddValuation.toValuation w) x =
+        (u : (Multiplicative (WithTop ℤ)ᵒᵈ)ˣ).val := by
+      change w.toMonoidWithZeroHom x = _
+      exact hx
+    have hx0 : x ≠ 0 := by
+      intro hx0
+      subst x
+      apply hne
+      simpa using hx.symm
+    obtain ⟨m, hm⟩ := hw x hx0
+    refine ⟨m, ?_⟩
+    have hx'' := congrArg
+      (fun z : Multiplicative (WithTop ℤ)ᵒᵈ =>
+        OrderDual.ofDual (Multiplicative.toAdd z)) hx'
+    simpa [value, AddValuation.toValuation_apply] using hx''.symm.trans hm
+  let exp : Chapter10ValueGroup w → ℤ :=
+    fun u => Classical.choose (hvalue_mem u)
+  have hexp (u : Chapter10ValueGroup w) :
+      value u = (exp u : WithTop ℤ) :=
+    Classical.choose_spec (hvalue_mem u)
+  have hexp_one : exp (1 : Chapter10ValueGroup w) = 0 := by
+    apply WithTop.coe_eq_coe.mp
+    calc
+      (exp (1 : Chapter10ValueGroup w) : WithTop ℤ) =
+          value (1 : Chapter10ValueGroup w) := (hexp _).symm
+      _ = (0 : WithTop ℤ) := hvalue_one
+  have hexp_mul (u z : Chapter10ValueGroup w) :
+      exp (u * z) = exp u + exp z := by
+    apply WithTop.coe_eq_coe.mp
+    calc
+      (exp (u * z) : WithTop ℤ) = value (u * z) := (hexp _).symm
+      _ = value u + value z := hvalue_mul _ _
+      _ = (exp u + exp z : ℤ) := by rw [hexp u, hexp z]; norm_cast
+  let φ : Chapter10ValueGroup w →* Multiplicative (ZMod n) :=
+    { toFun := fun u => Multiplicative.ofAdd ((exp u : ℤ) : ZMod n)
+      map_one' := by
+        apply Multiplicative.ext
+        simp [hexp_one]
+      map_mul' := by
+        intro u z
+        apply Multiplicative.ext
+        simp [hexp_mul, Int.cast_add] }
+  have hone : ∀ z : ℕ, z • (1 : WithTop ℤ) = (z : WithTop ℤ) := by
+    intro z
+    induction z with
+    | zero => simp
+    | succ z ih =>
+        rw [succ_nsmul, Nat.cast_succ, ih]
+  have hnegcast : ∀ z : ℕ,
+      (Int.negSucc z : WithTop ℤ) = -((z + 1 : ℕ) : WithTop ℤ) := by
+    intro z
+    simp [Int.negSucc_eq]
+  have hpow_v : ∀ z : ℤ, v (π ^ z) = (z : WithTop ℤ) := by
+    intro z
+    cases z with
+    | ofNat z =>
+        change v (π ^ (z : ℤ)) = (z : WithTop ℤ)
+        rw [zpow_natCast, v.map_pow, hπ]
+        rw [hone]
+    | negSucc z =>
+        rw [zpow_negSucc, v.map_inv, v.map_pow, hπ]
+        rw [hnegcast, hone]
+  have hpow_w : ∀ z : ℤ, w (Pi ^ z) = (z : WithTop ℤ) := by
+    intro z
+    cases z with
+    | ofNat z =>
+        change w (Pi ^ (z : ℤ)) = (z : WithTop ℤ)
+        rw [zpow_natCast, w.map_pow, hPi]
+        rw [hone]
+    | negSucc z =>
+        rw [zpow_negSucc, w.map_inv, w.map_pow, hPi]
+        rw [hnegcast, hone]
+  have hsmul_cast (a : ℕ) (b : ℤ) :
+      a • (b : WithTop ℤ) = ((a : ℤ) * b : WithTop ℤ) := by
+    rw [← WithTop.coe_nsmul b a]
+    simp
+  have hconvert_v (x : K) :
+      OrderDual.ofDual (Multiplicative.toAdd ((AddValuation.toValuation v) x)) =
+        v x := by
+    rfl
+  have hconvert_w (x : L) :
+      OrderDual.ofDual (Multiplicative.toAdd ((AddValuation.toValuation w) x)) =
+        w x := by
+    rfl
+  have hd_value (a : K) (ha : (AddValuation.toValuation v) a ≠ 0) :
+      value (d.valueGroupMap (Chapter10ValueGroupGenerator v a ha)) =
+        w (algebraMap K L a) := by
+    have hs := d.valueGroupMap_spec a ha
+    have hs' := congrArg Units.val hs
+    change OrderDual.ofDual (Multiplicative.toAdd
+      ((d.valueGroupMap (Chapter10ValueGroupGenerator v a ha) :
+        Chapter10ValueGroup w) : (Multiplicative (WithTop ℤ)ᵒᵈ)ˣ).val) =
+      w (algebraMap K L a)
+    rw [hs']
+    rfl
+  have hφ_surj : Function.Surjective φ := by
+    intro y
+    let z : ℤ := ZMod.cast y.toAdd
+    have hz0 : Pi ^ z ≠ 0 := zpow_ne_zero _ hPi0
+    have hzval : (AddValuation.toValuation w) (Pi ^ z) ≠ 0 :=
+      (Valuation.ne_zero_iff _).mpr hz0
+    let u : Chapter10ValueGroup w :=
+      Chapter10ValueGroupGenerator w (Pi ^ z) hzval
+    have huval : value u = (z : WithTop ℤ) := by
+      change OrderDual.ofDual (Multiplicative.toAdd
+        ((AddValuation.toValuation w) (Pi ^ z))) = (z : WithTop ℤ)
+      rw [hconvert_w, hpow_w]
+    have huez : exp u = z := by
+      apply WithTop.coe_eq_coe.mp
+      calc
+        (exp u : WithTop ℤ) = value u := (hexp u).symm
+        _ = (z : WithTop ℤ) := huval
+    refine ⟨u, ?_⟩
+    apply Multiplicative.ext
+    simp [φ, huez, z]
+  have hvalmemK (u : Chapter10ValueGroup v) :
+      ∃ a : K, ∃ ha : (AddValuation.toValuation v) a ≠ 0,
+        Units.mk0 ((AddValuation.toValuation v) a) ha =
+          (u : (Multiplicative (WithTop ℤ)ᵒᵈ)ˣ) := by
+    have hu : (u : (Multiplicative (WithTop ℤ)ᵒᵈ)ˣ).val ∈
+        Units.val '' (Chapter10ValueGroup v : Set (Multiplicative (WithTop ℤ)ᵒᵈ)ˣ) :=
+      ⟨u, u.property, rfl⟩
+    change (u : (Multiplicative (WithTop ℤ)ᵒᵈ)ˣ).val ∈
+      Units.val ''
+        (MonoidWithZeroHom.valueGroup v.toMonoidWithZeroHom :
+          Set (Multiplicative (WithTop ℤ)ᵒᵈ)ˣ) at hu
+    rw [MonoidWithZeroHom.valueGroup_eq_range v.toMonoidWithZeroHom] at hu
+    rcases hu with ⟨hu, hne⟩
+    rcases hu with ⟨a, ha⟩
+    have ha' : (AddValuation.toValuation v) a ≠ 0 := by
+      intro ha0
+      apply hne
+      calc
+        (u : (Multiplicative (WithTop ℤ)ᵒᵈ)ˣ).val =
+            v.toMonoidWithZeroHom a := ha.symm
+        _ = 0 := ha0
+    refine ⟨a, ha', ?_⟩
+    have ha_val : (AddValuation.toValuation v) a =
+        (u : (Multiplicative (WithTop ℤ)ᵒᵈ)ˣ).val := by
+      change v.toMonoidWithZeroHom a = _
+      exact ha
+    apply Units.ext
+    exact ha_val
+  have hrange_le : d.valueGroupMap.range ≤ φ.ker := by
+    rintro _ ⟨u, rfl⟩
+    obtain ⟨a, ha, hau⟩ := hvalmemK u
+    have hgen : Chapter10ValueGroupGenerator v a ha = u := by
+      apply Subtype.ext
+      change Units.mk0 ((AddValuation.toValuation v) a) ha =
+        (u : (Multiplicative (WithTop ℤ)ᵒᵈ)ˣ)
+      exact hau
+    obtain ⟨m, hm⟩ := hv a ((Valuation.ne_zero_iff (AddValuation.toValuation v)).mp ha)
+    have hval : value (d.valueGroupMap u) =
+        (((n : ℤ) * m : ℤ) : WithTop ℤ) := by
+      rw [← hgen, hd_value,
+        hscale a ((Valuation.ne_zero_iff (AddValuation.toValuation v)).mp ha), hm,
+        hsmul_cast]
+      exact (WithTop.coe_mul (α := ℤ) (n : ℤ) m).symm
+    have hex : exp (d.valueGroupMap u) = (n : ℤ) * m := by
+      apply WithTop.coe_eq_coe.mp
+      calc
+        (exp (d.valueGroupMap u) : WithTop ℤ) =
+            value (d.valueGroupMap u) := (hexp _).symm
+        _ = (((n : ℤ) * m : ℤ) : WithTop ℤ) := hval
+    change φ (d.valueGroupMap u) = 1
+    apply Multiplicative.ext
+    simp [φ, hex]
+  have hker_le : φ.ker ≤ d.valueGroupMap.range := by
+    intro u hu
+    have hu0 : φ u = 1 := hu
+    have hmod : (exp u : ZMod n) = 0 := by
+      simpa [φ] using congrArg Multiplicative.toAdd hu0
+    obtain ⟨k, hk⟩ := (ZMod.intCast_zmod_eq_zero_iff_dvd (exp u) n).mp hmod
+    have hval_u : value u = (((n : ℤ) * k : ℤ) : WithTop ℤ) := by
+      rw [hexp u, hk]
+    let g : Chapter10ValueGroup v :=
+      Chapter10ValueGroupGenerator v (π ^ k)
+        ((Valuation.ne_zero_iff (AddValuation.toValuation v)).mpr
+          (zpow_ne_zero _ hπ0))
+    have hval_g : value (d.valueGroupMap g) =
+        (((n : ℤ) * k : ℤ) : WithTop ℤ) := by
+      rw [hd_value, hscale (π ^ k) (zpow_ne_zero _ hπ0), hpow_v, hsmul_cast]
+      exact (WithTop.coe_mul (α := ℤ) (n : ℤ) k).symm
+    have hvalue_eq : value u = value (d.valueGroupMap g) := hval_u.trans hval_g.symm
+    rw [MonoidHom.mem_range]
+    refine ⟨g, ?_⟩
+    apply Subtype.ext
+    apply Units.ext
+    apply Multiplicative.ext
+    exact congrArg OrderDual.toDual hvalue_eq.symm
+  have hker : φ.ker = d.valueGroupMap.range := le_antisymm hker_le hrange_le
+  have hcard : Nat.card (Chapter10ValueGroup w ⧸ d.valueGroupMap.range) = n := by
+    calc
+      Nat.card (Chapter10ValueGroup w ⧸ d.valueGroupMap.range) =
+          Nat.card (Chapter10ValueGroup w ⧸ φ.ker) := by rw [hker]
+      _ = Nat.card (Multiplicative (ZMod n)) :=
+        Nat.card_congr (QuotientGroup.quotientKerEquivOfSurjective φ hφ_surj).toEquiv
+      _ = n := by simp
+  constructor
+  · exact hcard
+  · exact d.ramificationIndex_eq.trans hcard
 
 /-- Uniformizers are related by π = u Piᵉ. -/
 theorem chapter10_uniformizer_relation

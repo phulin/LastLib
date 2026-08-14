@@ -184,8 +184,8 @@ quotient, but is retained in the ambient definition.
 
 def chapter06InfiniteUpperRightLimit
     {P : ProfiniteGrp} (S : Chapter06InfiniteUpperSystem P) (v : ℝ) : Subgroup P :=
-  Subgroup.closure {g : P |
-    ∃ w : ℝ, v < w ∧ g ∈ chapter06InfiniteUpperGroup S w}
+  Subgroup.topologicalClosure (Subgroup.closure {g : P |
+    ∃ w : ℝ, v < w ∧ g ∈ chapter06InfiniteUpperGroup S w})
 
 abbrev chapter06InfiniteUpperGroupPlus
     {P : ProfiniteGrp} (S : Chapter06InfiniteUpperSystem P) (v : ℝ) : Subgroup P :=

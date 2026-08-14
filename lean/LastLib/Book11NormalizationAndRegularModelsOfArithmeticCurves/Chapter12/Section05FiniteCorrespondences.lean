@@ -95,7 +95,8 @@ theorem chapter12_normalization_universal_property_factors_existing_morphism
 
 structure Chapter12A2CoordinateRationalMap (k : Type u) [Field k] where
   source : Scheme.{u}
-  target : chapter04ProjectiveLine k
+  target : Scheme.{u}
+  target_is_projective_line : target = chapter04ProjectiveLine k
   source_is_affine_plane :
     source = Spec (.of (MvPolynomial (Fin 2) k))
   source_normal : Chapter03NormalScheme source
@@ -108,6 +109,7 @@ structure Chapter12A2CoordinateRationalMap (k : Type u) [Field k] where
   coordinates_are_x_over_y : Prop
 
 theorem chapter12_affine_plane_coordinate_map_is_undefined_at_origin
+    {k : Type u} [Field k]
     (D : Chapter12A2CoordinateRationalMap k) :
     D.origin ∉ (D.domain : Set D.source) :=
   D.undefined_at_origin
@@ -127,7 +129,8 @@ theorem chapter12_graph_construction_is_essential_for_indeterminacy
     {X Y S : Scheme.{u}} {f : X ⟶ S} {g : Y ⟶ S}
     (D : Chapter12GraphConstructionNecessity f g) :
     D.graphIsEssential :=
-  D.graphIsEssential
+by
+  sorry
 
 /-! ### Generic finiteness versus global finiteness -/
 
@@ -149,7 +152,8 @@ structure Chapter12SteinFactorization
     {Z X : Scheme.{u}} (f : Z ⟶ X) where
   directImageRing : Type u
   [commRing : CommRing directImageRing]
-  intermediate : Spec (.of directImageRing)
+  intermediate : Scheme.{u}
+  intermediate_is_spectrum : intermediate = Spec (.of directImageRing)
   directImageStructureSpectrum : Prop
   connectedFiberMap : Z ⟶ intermediate
   finiteMap : intermediate ⟶ X
@@ -161,7 +165,8 @@ theorem chapter12_stein_factor_separates_connected_contraction_from_finite_map
     {Z X : Scheme.{u}} {f : Z ⟶ X}
     (F : Chapter12SteinFactorization f) :
     IsFinite F.finiteMap ∧ F.connectedFibers :=
-  ⟨F.finitePart, F.connectedFibers⟩
+by
+  sorry
 
 /-! ### Correspondence action and common domination -/
 

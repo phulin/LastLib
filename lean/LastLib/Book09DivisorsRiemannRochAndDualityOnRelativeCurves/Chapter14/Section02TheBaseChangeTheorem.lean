@@ -71,54 +71,72 @@ and evaluation is natural for the resulting transposed map.
 -/
 
 abbrev chapter14PullbackFiniteFreeModelK0
-    {S T : Scheme} (g : T ⟶ S) {M : S.Modules}
-    (K : Chapter14FiniteFreeModel S M) : T.Modules :=
+    {C : Chapter14RelativeCurveFamily}
+    {H : Chapter14RelativeCohomologyTheory}
+    {E : Chapter14VectorBundle C.X}
+    {T : Scheme} (g : T ⟶ C.S)
+    (K : Chapter14FiniteFreeModel C H E) : T.Modules :=
   (Scheme.Modules.pullback g).obj K.K0
 
 abbrev chapter14PullbackFiniteFreeModelK1
-    {S T : Scheme} (g : T ⟶ S) {M : S.Modules}
-    (K : Chapter14FiniteFreeModel S M) : T.Modules :=
+    {C : Chapter14RelativeCurveFamily}
+    {H : Chapter14RelativeCohomologyTheory}
+    {E : Chapter14VectorBundle C.X}
+    {T : Scheme} (g : T ⟶ C.S)
+    (K : Chapter14FiniteFreeModel C H E) : T.Modules :=
   (Scheme.Modules.pullback g).obj K.K1
 
 abbrev chapter14PullbackFiniteFreeModelDifferential
-    {S T : Scheme} (g : T ⟶ S) {M : S.Modules}
-    (K : Chapter14FiniteFreeModel S M) :
+    {C : Chapter14RelativeCurveFamily}
+    {H : Chapter14RelativeCohomologyTheory}
+    {E : Chapter14VectorBundle C.X}
+    {T : Scheme} (g : T ⟶ C.S)
+    (K : Chapter14FiniteFreeModel C H E) :
     chapter14PullbackFiniteFreeModelK0 g K ⟶
       chapter14PullbackFiniteFreeModelK1 g K :=
   (Scheme.Modules.pullback g).map K.differential
 
 structure Chapter14FiniteFreeBaseChangeCompatibility
-    {S T : Scheme} (g : T ⟶ S)
-    (D_S : Chapter14SheafDualityData S)
+    {C : Chapter14RelativeCurveFamily}
+    {H : Chapter14RelativeCohomologyTheory}
+    {E : Chapter14VectorBundle C.X}
+    {T : Scheme} (g : T ⟶ C.S)
+    (D_S : Chapter14SheafDualityData C.S)
     (D_T : Chapter14SheafDualityData T) where
-  dualPullbackIso : ∀ {M : S.Modules} (K : Chapter14FiniteFreeModel S M),
+  dualPullbackIso : ∀ (K : Chapter14FiniteFreeModel C H E),
     D_T.dual (chapter14PullbackFiniteFreeModelK1 g K) ≅
-      chapter14PullbackFiniteFreeModelK0 g
-        (chapter14TransposedDualModel D_S K)
-  matrixPullback : Prop
-  transposeTensorCompatibility : Prop
-  evaluationTensorCompatibility : Prop
+      (Scheme.Modules.pullback g).obj
+        (chapter14TransposedDualModel D_S K).K0
 
 theorem chapter14_finite_free_model_explains_trace_base_change
     {C : Chapter14RelativeCurveFamily}
     (D : Chapter14RelativeDualityData C)
     {T : Scheme} (g : T ⟶ C.S)
+    {E : Chapter14VectorBundle C.X}
     (D_T : Chapter14SheafDualityData T)
-    (K : Chapter14FiniteFreeBaseChangeCompatibility g D.dualOnBase
-      D_T) :
-    K.matrixPullback ∧ K.transposeTensorCompatibility ∧
-      K.evaluationTensorCompatibility := by
-  exact ⟨K.matrixPullback, K.transposeTensorCompatibility,
-    K.evaluationTensorCompatibility⟩
+    (K : @Chapter14FiniteFreeBaseChangeCompatibility C D.cohomology E T g
+      D.dualOnBase D_T) :
+    ∀ (model : Chapter14FiniteFreeModel C D.cohomology E),
+      Nonempty (D_T.dual (chapter14PullbackFiniteFreeModelK1 g model) ≅
+        (Scheme.Modules.pullback g).obj
+          (chapter14TransposedDualModel D.dualOnBase model).K0) := by
+  intro model
+  exact ⟨K.dualPullbackIso model⟩
 
 /-! Connected and reduced fibers. -/
 
 structure Chapter14ConnectedReducedFiberData
-    (C : Chapter14RelativeCurveFamily) where
+  (C : Chapter14RelativeCurveFamily) where
   geometricallyConnected : GeometricallyConnected C.map
   geometricallyReduced : GeometricallyReduced C.map
-  h0StructureSheaf : ∀ s : C.S, Prop
-  h0IsOne : ∀ s : C.S, Prop
+  fiberCohomology : Chapter14FiberCohomologyData C
+  h0StructureSheafOne : ∀ s : C.S,
+    Nonempty (((fiberCohomology.fiber
+      ((Scheme.Modules.pushforward C.map).obj (chapter14StructureSheaf C.X)) s : Type)
+      ≃ₗ[C.S.residueField s] C.S.residueField s))
+  h0StructureSheafFinrankOne : ∀ s : C.S,
+    fiberCohomology.fiberFinrank
+      ((Scheme.Modules.pushforward C.map).obj (chapter14StructureSheaf C.X)) s = 1
 
 def chapter14HasConnectedReducedFibers
     (C : Chapter14RelativeCurveFamily) : Prop :=
@@ -132,7 +150,6 @@ structure Chapter14UnitPushforwardIdentification
   iso : chapter14StructureSheaf C.S ≅
     (Scheme.Modules.pushforward C.map).obj (chapter14StructureSheaf C.X)
   unit_eq_iso_hom : iso.hom = unit
-  compatibleWithBaseChange : Prop
 
 def chapter14StructureSheafPushforwardIso
     {C : Chapter14RelativeCurveFamily}
@@ -162,7 +179,6 @@ structure Chapter14TraceIsomorphism
   iso : chapter14R1Pushforward D.cohomology C.map D.dualizing.omega ≅
     chapter14StructureSheaf C.S
   iso_hom_eq_trace : iso.hom = D.trace
-  compatibleWithBaseChange : Prop
 
 /-! Equation (14.5). -/
 
@@ -173,8 +189,6 @@ structure Chapter14DualityPushforwardIsomorphism
     (Scheme.Modules.pushforward C.map).obj D.dualizing.omega ≅
       D.dualOnBase.dual (chapter14R1Pushforward D.cohomology C.map
         (chapter14StructureSheaf C.X))
-  compatibleWithPairing : Prop
-  compatibleWithBaseChange : Prop
 
 structure Chapter14ConnectedFiberBaseChangeConclusion
     (C : Chapter14RelativeCurveFamily)
@@ -184,48 +198,31 @@ structure Chapter14ConnectedFiberBaseChangeConclusion
   traceIsomorphism : Chapter14TraceIsomorphism C D
   dualityPushforward : Chapter14DualityPushforwardIsomorphism C D
 
-/- LOCAL_DEPENDENCY_GUESS: Section 13.2's cohomology-and-base-change package
-is not yet available under the Book 9 namespace.  The following theorem is the
-book-facing bridge; its hypotheses explicitly include the fiberwise H⁰=1 and
-locally constant H¹ data used in the source argument. -/
+/- Chapter 13 provides a typed cohomology-and-base-change package for its
+projective relative-curve interface.  The present proper-family interface has
+different data, so the following record is the explicit bridge for this
+chapter; its hypotheses contain only the fiberwise H⁰=1 and locally constant
+Euler/H¹ information used in the source argument. -/
 
 structure Chapter14RelativeCohomologyConstancyData
     (C : Chapter14RelativeCurveFamily)
     (D : Chapter14RelativeDualityData C) where
-  fiberCohomology : Chapter14FiberCohomologyData
+  fiberCohomology : Chapter14FiberCohomologyData C
   h0StructureSheafOne : ∀ s : C.S,
-    Nonempty (fiberCohomology.fiber (chapter14StructureSheafPushforward C) s ≃ Unit)
+    Nonempty (((fiberCohomology.fiber (chapter14StructureSheafPushforward C) s : Type)
+      ≃ₗ[C.S.residueField s] C.S.residueField s))
+  h0StructureSheafFinrankOne : ∀ s : C.S,
+    fiberCohomology.fiberFinrank (chapter14StructureSheafPushforward C) s = 1
   h1Rank : C.S → ℕ
   eulerCharacteristic : C.S → ℤ
-  h1LocallyConstant : ∀ s t : C.S, h1Rank s = h1Rank t
   eulerCharacteristicLocallyConstant :
-    ∀ s t : C.S, eulerCharacteristic s = eulerCharacteristic t
+    chapter14LocallyConstant eulerCharacteristic
   h1RankDeterminedByEulerCharacteristic :
     ∀ s : C.S, (h1Rank s : ℤ) = 1 - eulerCharacteristic s
-  structureSheafBaseChange :
-    chapter14HigherDirectImageCommutesWithBaseChange D.cohomology
-      C.map (chapter14StructureSheaf C.X) 0
-  omegaBaseChange :
-    chapter14HigherDirectImageCommutesWithBaseChange D.cohomology
-      C.map D.dualizing.omega 0
-  r1OmegaBaseChange :
-    chapter14HigherDirectImageCommutesWithBaseChange D.cohomology
-      C.map D.dualizing.omega 1
-  r1StructureSheafBaseChange :
-    chapter14HigherDirectImageCommutesWithBaseChange D.cohomology
-      C.map (chapter14StructureSheaf C.X) 1
-  pushforwardStructureSheafLocallyFree :
-    chapter04FiniteLocallyFree (chapter14StructureSheafPushforward C)
-  r1StructureSheafLocallyFree :
-    chapter04FiniteLocallyFree
+  h1Rank_eq_fiberFinrank : ∀ s : C.S,
+    h1Rank s = fiberCohomology.fiberFinrank
       (chapter14R1Pushforward D.cohomology C.map
-        (chapter14StructureSheaf C.X))
-  omegaPushforwardLocallyFree :
-    chapter04FiniteLocallyFree
-      ((Scheme.Modules.pushforward C.map).obj D.dualizing.omega)
-  r1OmegaLocallyFree :
-    chapter04FiniteLocallyFree
-      (chapter14R1Pushforward D.cohomology C.map D.dualizing.omega)
+        (chapter14StructureSheaf C.X)) s
 
 theorem chapter14_connected_reduced_fibers_give_the_standard_pushforwards
     (C : Chapter14RelativeCurveFamily)
@@ -240,17 +237,16 @@ theorem chapter14_connected_reduced_fibers_give_the_standard_pushforwards
 
 structure Chapter14ConstantGenusData
     (C : Chapter14RelativeCurveFamily)
-    (D : Chapter14RelativeDualityData C) where
+    (D : Chapter14RelativeDualityData C)
+    (H : Chapter14RelativeCohomologyConstancyData C D) where
   genus : ℕ
-  h1Rank : C.S → ℕ
-  h1RankIsConstant : ∀ s : C.S, h1Rank s = genus
-  rankOfR1StructureSheaf : ∀ s : C.S, h1Rank s = genus
-  rankOfOmegaPushforward : ∀ s : C.S, h1Rank s = genus
+  h1RankIsConstant : ∀ s : C.S, H.h1Rank s = genus
 
 structure Chapter14ConstantGenusBaseChangeConclusion
     (C : Chapter14RelativeCurveFamily)
     (D : Chapter14RelativeDualityData C)
-    (G : Chapter14ConstantGenusData C D) where
+    (H : Chapter14RelativeCohomologyConstancyData C D)
+    (G : Chapter14ConstantGenusData C D H) where
   dualityPushforward : Chapter14DualityPushforwardIsomorphism C D
   r1StructureSheafLocallyFree :
     chapter04FiniteLocallyFree
@@ -258,10 +254,16 @@ structure Chapter14ConstantGenusBaseChangeConclusion
   omegaPushforwardLocallyFree :
     chapter04FiniteLocallyFree
       ((Scheme.Modules.pushforward C.map).obj D.dualizing.omega)
+  traceIsomorphism : Chapter14TraceIsomorphism C D
   r1StructureSheafRank_eq_genus :
-    ∀ s : C.S, G.h1Rank s = G.genus
+    ∀ s : C.S,
+      H.fiberCohomology.fiberFinrank
+        (chapter14R1Pushforward D.cohomology C.map
+          (chapter14StructureSheaf C.X)) s = G.genus
   omegaPushforwardRank_eq_genus :
-    ∀ s : C.S, G.h1Rank s = G.genus
+    ∀ s : C.S,
+      H.fiberCohomology.fiberFinrank
+        ((Scheme.Modules.pushforward C.map).obj D.dualizing.omega) s = G.genus
   arbitraryBaseChange :
     chapter14HigherDirectImageCommutesWithBaseChange D.cohomology
         C.map (chapter14StructureSheaf C.X) 1 ∧
@@ -273,9 +275,9 @@ theorem chapter14_constant_genus_gives_locally_free_hodge_pushforward
     (D : Chapter14RelativeDualityData C)
     (hconn : GeometricallyConnected C.map)
     (hred : GeometricallyReduced C.map)
-    (G : Chapter14ConstantGenusData C D)
-    (H : Chapter14RelativeCohomologyConstancyData C D) :
-    Nonempty (Chapter14ConstantGenusBaseChangeConclusion C D G) := by
+    (H : Chapter14RelativeCohomologyConstancyData C D)
+    (G : Chapter14ConstantGenusData C D H) :
+    Nonempty (Chapter14ConstantGenusBaseChangeConclusion C D H G) := by
   sorry
 
 end

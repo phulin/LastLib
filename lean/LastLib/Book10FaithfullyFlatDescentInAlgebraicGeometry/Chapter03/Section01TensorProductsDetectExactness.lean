@@ -14,7 +14,7 @@ theorem chapter03_flat_tensor_preserves_exact
     [Module A M'] [Module A M] [Module A M''] [Module.Flat A B]
     (u : M' →ₗ[A] M) (v : M →ₗ[A] M'') (h : Function.Exact u v) :
     Function.Exact (u.lTensor B) (v.lTensor B) := by
-  sorry
+  exact Module.Flat.lTensor_exact B h
 
 theorem chapter03_tensor_exact_iff
     {A B M' M M'' : Type*} [CommRing A] [CommRing B] [Algebra A B]
@@ -75,7 +75,14 @@ theorem chapter03_tensor_map_eq_iff
     [AddCommGroup M] [AddCommGroup M'] [Module A M] [Module A M']
     [Module.FaithfullyFlat A B] (u v : M →ₗ[A] M') :
     u = v ↔ u.lTensor B = v.lTensor B := by
-  sorry
+  constructor
+  · intro h
+    rw [h]
+  · intro h
+    apply sub_eq_zero.mp
+    apply (chapter03_tensor_zero_iff (A := A) (B := B) (u - v)).2
+    rw [LinearMap.lTensor_sub, h]
+    exact sub_self (LinearMap.lTensor B v)
 
 theorem chapter03_tensor_vanishes_iff
     {A B M : Type*} [CommRing A] [CommRing B] [Algebra A B]

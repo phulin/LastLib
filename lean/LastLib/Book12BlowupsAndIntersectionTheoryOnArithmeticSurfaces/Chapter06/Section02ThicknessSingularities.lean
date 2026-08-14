@@ -1,4 +1,5 @@
 import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter06.Dependencies
+import Mathlib.FieldTheory.IsAlgClosed.Basic
 
 /-!
 ### 6.2 Thickness singularities
@@ -17,19 +18,14 @@ universe u v
 
 namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter06
 
-/-! The local equation and its thickness. -/
-
-def chapter06ThicknessEquation {R : Type u} [CommRing R]
-    (x y π : R) (n : ℕ) : Prop :=
-  x * y = π ^ n
-
 structure Chapter06ThicknessLocalEquation
     (R : Type u) [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] where
   uniformizer : R
   uniformizerIrreducible : Irreducible uniformizer
   thickness : ℕ
   thicknessGreaterThanOne : 1 < thickness
-  x y : R
+  x : R
+  y : R
   equation : chapter06ThicknessEquation x y uniformizer thickness
 
 def chapter06ThicknessGreaterThanOne
@@ -47,24 +43,30 @@ structure Chapter06ThicknessGeometry
     (T : Chapter06ThicknessLocalEquation R) where
   totalSpace : Scheme.{u}
   origin : totalSpace
-  regularAtOrigin : Prop
-  singularAtOrigin : ¬ regularAtOrigin
-  puncturedRegular : Prop
-  puncturedRegularEvidence : puncturedRegular
+  originRegularity : Prop
+  originRegularity_iff :
+    originRegularity ↔
+      IsRegularLocalRing (totalSpace.presheaf.stalk origin)
+  originSingular : ¬ originRegularity
+  puncturedRegular :
+    ∀ y : totalSpace, y ≠ origin →
+      IsRegularLocalRing (totalSpace.presheaf.stalk y)
 
 theorem chapter06_thickness_total_space_is_singular_at_origin
     {R : Type u} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
     (T : Chapter06ThicknessLocalEquation R)
     (G : Chapter06ThicknessGeometry T) :
-    G.singularAtOrigin := by
-  exact G.singularAtOrigin
+    ¬ IsRegularLocalRing (G.totalSpace.presheaf.stalk G.origin) := by
+  intro hregular
+  exact G.originSingular (G.originRegularity_iff.mpr hregular)
 
 theorem chapter06_thickness_punctured_surface_is_regular
     {R : Type u} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
     (T : Chapter06ThicknessLocalEquation R)
     (G : Chapter06ThicknessGeometry T) :
-    G.puncturedRegular := by
-  exact G.puncturedRegularEvidence
+    ∀ y : G.totalSpace, y ≠ G.origin →
+      IsRegularLocalRing (G.totalSpace.presheaf.stalk y) := by
+  exact G.puncturedRegular
 
 theorem chapter06_thickness_geometry_exists
     {R : Type u} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
@@ -97,14 +99,13 @@ structure Chapter06ThicknessBlowupDescription
       piChartCoordinateX T.y T.uniformizer T.thickness
   strictTransform : Prop
   strictTransformEvidence : strictTransform
-  thicknessDecreases : T.thickness - 1 < T.thickness
 
 theorem chapter06_blowup_thickness_decreases
     {R : Type u} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
     (T : Chapter06ThicknessLocalEquation R)
     (B : Chapter06ThicknessBlowupDescription T) :
     T.thickness - 1 < T.thickness := by
-  exact B.thicknessDecreases
+  sorry
 
 theorem chapter06_blowup_thickness_chart
     {R : Type u} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
@@ -139,10 +140,9 @@ theorem chapter06_thickness_iteration_terminates
   sorry
 
 structure Chapter06ThicknessTerminalChart
-    {R : Type u} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] where
-  uniformizer : R
+    {R : Type u} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
+    (uniformizer x y : R) where
   uniformizerIrreducible : Irreducible uniformizer
-  x y : R
   equation : x * y = uniformizer
   totalSpaceRegular : Prop
   totalSpaceRegularEvidence : totalSpaceRegular
@@ -159,14 +159,15 @@ theorem chapter06_thickness_one_is_regular_node
 
 /-! The minimal resolution graph over an algebraically closed residue field. -/
 
-structure Chapter06ThicknessResolutionGraph (n : ℕ) where
-  nGreaterThanOne : 1 < n
-  residueFieldAlgebraicallyClosed : Prop
-  residueFieldAlgebraicallyClosedEvidence : residueFieldAlgebraicallyClosed
-  exceptionalCurves : Fin (n - 1) → Chapter06CurveNumericalData
-  intersectionMatrix : Chapter06IntersectionMatrix (Fin (n - 1))
+structure Chapter06ThicknessResolutionGraph
+    {R : Type u} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
+    (T : Chapter06ThicknessLocalEquation R) where
+  nGreaterThanOne : 1 < T.thickness
+  residueFieldAlgebraicallyClosed : IsAlgClosed (IsLocalRing.ResidueField R)
+  exceptionalCurves : Fin (T.thickness - 1) → Chapter06CurveNumericalData
+  intersectionMatrix : Chapter06IntersectionMatrix (Fin (T.thickness - 1))
   intersectionMatrixIsChain :
-    intersectionMatrix = chapter06NegativeChainMatrix (n - 1)
+    intersectionMatrix = chapter06NegativeChainMatrix (T.thickness - 1)
   exceptionalCurvesAreSmoothRational :
     ∀ i, (exceptionalCurves i).smooth ∧ (exceptionalCurves i).rational
   exceptionalSquares :
@@ -183,35 +184,49 @@ structure Chapter06ThicknessResolutionGraph (n : ℕ) where
   minimalEvidence : minimal
 
 theorem chapter06_thickness_minimal_resolution_chain
-    (n : ℕ) (hn : 1 < n) :
-    Nonempty (Chapter06ThicknessResolutionGraph n) := by
+    {R : Type u} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
+    (T : Chapter06ThicknessLocalEquation R)
+    (hclosed : IsAlgClosed (IsLocalRing.ResidueField R)) :
+    Nonempty (Chapter06ThicknessResolutionGraph T) := by
   sorry
 
 theorem chapter06_thickness_exceptional_curve_is_minus_two
-    {n : ℕ} (G : Chapter06ThicknessResolutionGraph n) (i : Fin (n - 1)) :
+    {R : Type u} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
+    {T : Chapter06ThicknessLocalEquation R}
+    (G : Chapter06ThicknessResolutionGraph T)
+    (i : Fin (T.thickness - 1)) :
     (G.exceptionalCurves i).selfIntersection = -2 := by
   exact G.exceptionalSquares i
 
 theorem chapter06_thickness_chain_matrix_is_negative_Cartan
-    {n : ℕ} (G : Chapter06ThicknessResolutionGraph n) :
-    G.intersectionMatrix = chapter06NegativeChainMatrix (n - 1) := by
+    {R : Type u} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
+    {T : Chapter06ThicknessLocalEquation R}
+    (G : Chapter06ThicknessResolutionGraph T) :
+    G.intersectionMatrix = chapter06NegativeChainMatrix (T.thickness - 1) := by
   exact G.intersectionMatrixIsChain
 
 theorem chapter06_thickness_consecutive_exceptional_curves_meet_once
-    {n : ℕ} (G : Chapter06ThicknessResolutionGraph n) :
+    {R : Type u} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
+    {T : Chapter06ThicknessLocalEquation R}
+    (G : Chapter06ThicknessResolutionGraph T) :
     G.consecutiveCurvesMeetOnce := by
   exact G.consecutiveCurvesMeetOnceEvidence
 
 theorem chapter06_thickness_no_other_exceptional_intersections
-    {n : ℕ} (G : Chapter06ThicknessResolutionGraph n) :
+    {R : Type u} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
+    {T : Chapter06ThicknessLocalEquation R}
+    (G : Chapter06ThicknessResolutionGraph T) :
     G.noOtherExceptionalIntersections := by
   exact G.noOtherExceptionalIntersectionsEvidence
 
 /-! Nonminimal resolutions retain the generic curve but may add `(-1)` curves. -/
 
-structure Chapter06NonminimalThicknessResolution (n : ℕ) where
-  minimalGraph : Chapter06ThicknessResolutionGraph n
+structure Chapter06NonminimalThicknessResolution
+    {R : Type u} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
+    (T : Chapter06ThicknessLocalEquation R) where
+  minimalGraph : Chapter06ThicknessResolutionGraph T
   addedExceptionalCurves : List Chapter06CurveNumericalData
+  addedExceptionalCurvesNonempty : addedExceptionalCurves ≠ []
   addedCurvesAreMinusOne :
     ∀ C, C ∈ addedExceptionalCurves → C.selfIntersection = -1
   genericCurveUnchanged : Prop
@@ -220,12 +235,16 @@ structure Chapter06NonminimalThicknessResolution (n : ℕ) where
   intersectionNumbersRecordChoiceEvidence : intersectionNumbersRecordChoice
 
 theorem chapter06_nonminimal_resolution_can_add_minus_one_vertices
-    {n : ℕ} (G : Chapter06ThicknessResolutionGraph n) :
-    Nonempty (Chapter06NonminimalThicknessResolution n) := by
+    {R : Type u} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
+    {T : Chapter06ThicknessLocalEquation R}
+    (G : Chapter06ThicknessResolutionGraph T) :
+    Nonempty (Chapter06NonminimalThicknessResolution T) := by
   sorry
 
 theorem chapter06_nonminimal_resolution_preserves_generic_curve
-    {n : ℕ} (N : Chapter06NonminimalThicknessResolution n) :
+    {R : Type u} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
+    {T : Chapter06ThicknessLocalEquation R}
+    (N : Chapter06NonminimalThicknessResolution T) :
     N.genericCurveUnchanged := by
   exact N.genericCurveUnchangedEvidence
 

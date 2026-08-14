@@ -1,4 +1,5 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.Section01FromEmbeddingsToLocalSymmetries
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section03IntegralElementsAreBounded
 import Mathlib.RingTheory.AdicCompletion.Basic
 import Mathlib.RingTheory.Valuation.RamificationGroup
 import Mathlib.FieldTheory.Galois.IsGaloisGroup
@@ -132,7 +133,9 @@ theorem galois_group_transitive_on_valuations_above
     ∀ ⦃A₁ A₂ : ValuationSubring E⦄,
       A₁ ∈ chapter05ValuationsAbove v → A₂ ∈ chapter05ValuationsAbove v →
         ∃ σ : Gal(E / F), σ • A₁ = A₂ := by
-  sorry
+  intro A₁ A₂ h₁ h₂
+  exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_galois_group_transitive_on_valuation_branches
+    v h₁ h₂
 
 /-- The number of branches is the cardinality of the branch set above `v`. -/
 def chapter05BranchCount

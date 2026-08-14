@@ -153,36 +153,71 @@ The two vertical maps and the two horizontal reciprocity equivalences form
 the finite quotient diagram of §9.4.
 -/
 
-theorem chapter09_finite_quotient_reciprocity_compatibility
-    (K M : Type*) [Field K] [Field M] [Algebra K M]
-    [FiniteDimensional K M]
-    [IsAbelianGalois K M]
+/- A common normalized absolute reciprocity map is included in the theorem
+  interface so that both finite quotients are actual restrictions of one
+  compatible system, rather than independently chosen quotient labels. -/
+
+structure Chapter09FiniteReciprocityTower
+    (K M : Type) [Field K] [Field M] [Algebra K M]
+    [FiniteDimensional K M] [IsAbelianGalois K M]
+    [Fintype (Gal(M / K))]
     (L : IntermediateField K M) [Normal K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
+    [Fintype (Gal(L / K))] [FiniteDimensional L M] where
+  upperReciprocity : Chapter09FiniteAbelianReciprocity K M
+  lowerReciprocity : Chapter09FiniteAbelianReciprocity K L
+  normSubgroup_mono : chapter09NormSubgroup K M ≤ chapter09NormSubgroup K L
+
+theorem chapter09_finite_quotient_reciprocity_compatibility
+    (K M : Type) [Field K] [Field M] [Algebra K M]
+    [FiniteDimensional K M]
+    [IsAbelianGalois K M]
+    [Fintype (Gal(M / K))]
+    (L : IntermediateField K M) [Normal K L]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+    [Fintype (Gal(L / K))]
     [FiniteDimensional L M]
-    (R_M : Chapter09FiniteAbelianReciprocity K M)
-    (R_L : Chapter09FiniteAbelianReciprocity K L)
-    (h : chapter09NormSubgroup K M ≤ chapter09NormSubgroup K L) :
-    (chapter09RestrictionMap K M L).comp R_M.quotientEquiv.toMonoidHom =
-      R_L.quotientEquiv.toMonoidHom.comp (chapter09NormQuotientMap K M L h) := by
+    (Ks : Type) [Field Ks]
+    [Algebra K Ks] [Algebra M Ks] [Algebra L Ks]
+    [IsScalarTower K M Ks] [IsScalarTower K L Ks]
+    [IsScalarTower L M Ks]
+    (reciprocity : Kˣ →* Abelianization (Gal(Ks / K)))
+    (A : Chapter09AbsoluteReciprocityNormalization K Ks reciprocity)
+    (T : Chapter09FiniteReciprocityTower K M L) :
+    (chapter09RestrictionMap K M L).comp
+        T.upperReciprocity.quotientEquiv.toMonoidHom =
+      T.lowerReciprocity.quotientEquiv.toMonoidHom.comp
+        (chapter09NormQuotientMap K M L T.normSubgroup_mono) := by
   sorry
 
 theorem chapter09_finite_quotient_reciprocity_compatibility_apply
-    (K M : Type*) [Field K] [Field M] [Algebra K M]
+    (K M : Type) [Field K] [Field M] [Algebra K M]
     [FiniteDimensional K M]
     [IsAbelianGalois K M]
+    [Fintype (Gal(M / K))]
     (L : IntermediateField K M) [Normal K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
+    [Fintype (Gal(L / K))]
     [FiniteDimensional L M]
-    (R_M : Chapter09FiniteAbelianReciprocity K M)
-    (R_L : Chapter09FiniteAbelianReciprocity K L)
-    (h : chapter09NormSubgroup K M ≤ chapter09NormSubgroup K L)
+    (Ks : Type) [Field Ks]
+    [Algebra K Ks] [Algebra M Ks] [Algebra L Ks]
+    [IsScalarTower K M Ks] [IsScalarTower K L Ks]
+    [IsScalarTower L M Ks]
+    (reciprocity : Kˣ →* Abelianization (Gal(Ks / K)))
+    (A : Chapter09AbsoluteReciprocityNormalization K Ks reciprocity)
+    (T : Chapter09FiniteReciprocityTower K M L)
     (x : Kˣ ⧸ chapter09NormSubgroup K M) :
-    chapter09RestrictionMap K M L (R_M.quotientEquiv x) =
-      R_L.quotientEquiv (chapter09NormQuotientMap K M L h x) := by
-  simpa only [MonoidHom.comp_apply, MulEquiv.coe_toMonoidHom] using
-    DFunLike.congr_fun
-      (chapter09_finite_quotient_reciprocity_compatibility K M L R_M R_L h) x
+    chapter09RestrictionMap K M L
+        (T.upperReciprocity.quotientEquiv x) =
+      T.lowerReciprocity.quotientEquiv
+        (chapter09NormQuotientMap K M L T.normSubgroup_mono x) := by
+  change
+    ((chapter09RestrictionMap K M L).comp
+        T.upperReciprocity.quotientEquiv.toMonoidHom) x =
+      (T.lowerReciprocity.quotientEquiv.toMonoidHom.comp
+        (chapter09NormQuotientMap K M L T.normSubgroup_mono)) x
+  exact DFunLike.congr_fun
+    (chapter09_finite_quotient_reciprocity_compatibility K M L Ks reciprocity A T) x
 
 end
 

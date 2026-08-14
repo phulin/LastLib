@@ -204,8 +204,8 @@ theorem chapter11_separable_extension_gives_finite_normalization
   change Module.Finite A (integralClosure A L)
   exact IsIntegralClosure.finite A K L (integralClosure A L)
 
-/-! The complete-DVR case is stated here without importing the later chapter
-that supplies its coordinate-lattice proof. -/
+/-! The complete-DVR interface is supplied by Section 11.1, without importing
+the later chapter that supplies its coordinate-lattice proof. -/
 
 /-- A finite extension of the fraction field of a complete DVR has finite
 integral closure, including the inseparable case. -/
@@ -216,7 +216,7 @@ theorem chapter11_complete_dvr_gives_finite_normalization
     [FiniteDimensional K L]
     (_hcomplete : chapter11IsCompleteDVR A) :
     chapter11NormalizationFinite A L := by
-  sorry
+  exact chapter11_complete_dvr_valuation_ring_is_finite A K L _hcomplete
 
 /-- The Japanese hypothesis is an available Chapter 11 source of normalization
 finiteness; finite separable extensions are handled by the theorem above. -/

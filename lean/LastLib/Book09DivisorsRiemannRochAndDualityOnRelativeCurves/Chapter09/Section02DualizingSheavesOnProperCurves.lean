@@ -131,7 +131,7 @@ theorem chapter09_trace_is_the_image_of_one
     [Chapter09ExtTheory C.scheme]
     [Chapter09AbsoluteDerivedHomTheory k C.scheme]
     (D : Chapter09AbsoluteDualizingData k C) :
-    D.trace_is_image_of_one := by
+    D.trace = D.traceCohomologyComparison := by
   sorry
 
 /-- Degree zero of the derived comparison gives the zero-dimensional formula (9.1). -/
@@ -185,9 +185,13 @@ structure Chapter09EmbeddingIndependenceComparison
       (DJ : Chapter09AbsoluteExtConstruction k C J),
       Nonempty (DI.dualizingSheaf ≅ DJ.dualizingSheaf)
   representsTheSameFunctor : Prop
+  representsTheSameFunctor_holds : representsTheSameFunctor
   traceCompatible : Prop
+  traceCompatible_holds : traceCompatible
   comparisonUnique : Prop
+  comparisonUnique_holds : comparisonUnique
   cocycle : Prop
+  cocycle_holds : cocycle
 
 /-- Two projective constructions represent the same duality functor. -/
 theorem chapter09_dualizing_construction_independent_of_embedding
@@ -200,13 +204,15 @@ theorem chapter09_dualizing_construction_independent_of_embedding
 
 /-- A Cohen--Macaulay curve has no embedded zero-dimensional components. -/
 structure Chapter09EmbeddedZeroDimensionalComponent (X : Scheme.{u}) where
-  component : Prop
-  embedded : Prop
-  zeroDimensional : Prop
+  carrier : X.Modules
+  coherent : chapter09Coherent carrier
+  zeroDimensional : chapter09ZeroDimensional carrier
+  inclusion : carrier ⟶ chapter09StructureSheaf X
+  inclusion_mono : Mono inclusion
+  nonzero_stalk : ∃ x : X, Nontrivial (carrier.presheaf.stalk x)
 
 def chapter09HasEmbeddedZeroDimensionalComponent (X : Scheme.{u}) : Prop :=
-  ∃ h : Chapter09EmbeddedZeroDimensionalComponent X, h.component ∧ h.embedded ∧
-    h.zeroDimensional
+  Nonempty (Chapter09EmbeddedZeroDimensionalComponent X)
 
 theorem chapter09_cm_excludes_embedded_zero_dimensional_components
     (k : Type u) [Field k]
@@ -218,7 +224,9 @@ theorem chapter09_cm_excludes_embedded_zero_dimensional_components
 structure Chapter09NonCohenMacaulayDualityWarning (X : Scheme.{u}) where
   notCohenMacaulay : ¬ chapter09CohenMacaulay X
   multipleSheafDegrees : Prop
+  multipleSheafDegrees_holds : multipleSheafDegrees
   noSingleDualizingSheafEncodesAllDuality : Prop
+  noSingleDualizingSheafEncodesAllDuality_holds : noSingleDualizingSheafEncodesAllDuality
 
 theorem chapter09_non_cm_duality_needs_multiple_sheaf_degrees
     {X : Scheme.{u}} (W : Chapter09NonCohenMacaulayDualityWarning X) :
@@ -229,9 +237,9 @@ theorem chapter09_non_cm_duality_needs_multiple_sheaf_degrees
 structure Chapter09PureReducedCurve (X : Scheme.{u}) where
   reduced : IsReduced X
   locallyNoetherian : IsLocallyNoetherian X
-  pureDimensionOne : Prop
-  localRingsDimensionOne : Prop
-  nonZeroDivisorAvoidingMinimalPrimes : Prop
+  pureDimensionOne :
+    LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter08.Chapter08PureDimensionOne
+      X
 
 theorem chapter09_pure_reduced_curve_is_cohen_macaulay
     {X : Scheme.{u}} (C : Chapter09PureReducedCurve X) :
@@ -277,6 +285,7 @@ structure Chapter09NodalCurve
     (k : Type u) [Field k]
     (C : Chapter09CohenMacaulayCurveOverField k) where
   localNodeModel : Prop
+  localNodeModel_holds : localNodeModel
 
 theorem chapter09_nodal_curve_is_gorenstein
     (k : Type u) [Field k]
@@ -299,8 +308,11 @@ structure Chapter09ReducedNonGorensteinCurve
   reduced : IsReduced C.scheme
   dualizing : Chapter09AbsoluteDualizingData k C
   torsionFreeRankOne : Prop
+  torsionFreeRankOne_holds : torsionFreeRankOne
   notInvertible : ¬ chapter09IsInvertible dualizing.sheaf
   canonicalCartierFormulasRequireModification : Prop
+  canonicalCartierFormulasRequireModification_holds :
+    canonicalCartierFormulasRequireModification
 
 theorem chapter09_reduced_curve_need_not_be_gorenstein
     (k : Type u) [Field k]

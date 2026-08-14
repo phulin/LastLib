@@ -156,6 +156,16 @@ noncomputable def relativePowerBaseChangeComparison {S : Scheme.{u}}
   RelativePower.lift (relativePower (RelativeScheme.baseChange X T) d)
     (fun i => RelativeScheme.baseChangeHom ((relativePower X d).projection i) T)
 
+@[simp]
+theorem relativePowerBaseChangeComparison_projection {S : Scheme.{u}}
+    (X T : RelativeScheme S) (d : ℕ) (i : Fin d) :
+    relativePowerBaseChangeComparison X T d ≫
+        (relativePower (RelativeScheme.baseChange X T) d).projection i =
+      RelativeScheme.baseChangeHom ((relativePower X d).projection i) T := by
+  exact RelativePower.lift_projection
+    (relativePower (RelativeScheme.baseChange X T) d)
+    (fun i => RelativeScheme.baseChangeHom ((relativePower X d).projection i) T) i
+
 /- The comparison is induced by two finite-product universal properties, so it
    is an isomorphism even before passing to the quotient. -/
 theorem relativePowerBaseChangeComparison_isIso {S : Scheme.{u}}
@@ -177,6 +187,14 @@ theorem symmetricPower_flat_base_change_comparison {S : Scheme.{u}} (X : Relativ
       RelativeScheme.baseChangeHom (symmetricPowerMap X d) T ≫ e.hom =
         relativePowerBaseChangeComparison X T d ≫
           symmetricPowerMap (RelativeScheme.baseChange X T) d := by
+  sorry
+
+/- Properness is the intermediate geometric conclusion for a proper input;
+   projectivity is recorded separately below because it uses the
+   quasi-projective presentation as well. -/
+theorem symmetricPower_proper {S : Scheme.{u}} (X : RelativeScheme S) (d : ℕ)
+    [Chapter11QuasiProjectiveOver X] (hX : IsProper X.structuralMap) :
+    IsProper (symmetricPower X d).structuralMap := by
   sorry
 
 @[instance_reducible]

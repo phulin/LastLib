@@ -26,17 +26,17 @@ def chapter03ProductOver (f : X ⟶ S) (g : Y ⟶ S) :
 /-- Either projection computes the structure map of the fiber product. -/
 theorem chapter03_productOver_eq_snd (f : X ⟶ S) (g : Y ⟶ S) :
     chapter03ProductOver f g = Limits.pullback.snd f g ≫ g := by
-  sorry
+  exact Limits.pullback.condition
 
 /-- The projective bundle construction is compatible with pullback of its base. -/
 theorem chapter03_relativeProjectiveBundle_baseChange
-    (g : T ⟶ S) (E : S.Modules) (hE : chapter03FiniteLocallyFree E) :
+    (g : T ⟶ S) (E : S.Modules) (_hE : chapter03FiniteLocallyFree E) :
     Nonempty (Chapter03RelativeProjectiveBundle T ((Scheme.Modules.pullback g).obj E)) := by
   sorry
 
 /-- The base-change comparison for the canonical relative projective-bundle interface. -/
 theorem chapter03_relativeProjectiveBundle_baseChange_compatibility
-    (g : T ⟶ S) (E : S.Modules) (hE : chapter03FiniteLocallyFree E)
+    (g : T ⟶ S) (E : S.Modules) (_hE : chapter03FiniteLocallyFree E)
     (P : Chapter03RelativeProjectiveBundle S E) :
     ∃ (Q : Chapter03RelativeProjectiveBundle T ((Scheme.Modules.pullback g).obj E))
       (e : Limits.pullback P.projection g ⟶ Q.carrier),
@@ -46,19 +46,132 @@ theorem chapter03_relativeProjectiveBundle_baseChange_compatibility
 /-- Projectivity is stable under arbitrary base change. -/
 theorem chapter03_projective_baseChange (f : X ⟶ S) (g : T ⟶ S)
     (hf : chapter03Projective f) :
-    chapter03Projective (Limits.pullback.fst f g) := by
-  sorry
+    chapter03Projective (Limits.pullback.snd f g) := by
+  obtain ⟨P⟩ := hf
+  let P₃ : Chapter03RelativeProjectiveBundle S P.module.carrier :=
+    { module := P.module
+      module_carrier := rfl
+      finiteLocallyFree := P.ambient.finiteLocallyFree
+      canonical := P.ambient }
+  obtain ⟨Q, e, he, hebase⟩ :=
+    chapter03_relativeProjectiveBundle_baseChange_compatibility
+      g P.module.carrier P₃.finiteLocallyFree P₃
+  let u : Limits.pullback f g ⟶ Limits.pullback P.ambient.projection g :=
+    Limits.pullback.lift
+      (Limits.pullback.fst f g ≫ P.embedding)
+      (Limits.pullback.snd f g)
+      (by
+        rw [Category.assoc, P.overBase]
+        exact Limits.pullback.condition)
+  have hu : IsClosedImmersion u := by
+    let h₁ : IsPullback (Limits.pullback.snd f g) (Limits.pullback.fst f g)
+        g f := (IsPullback.of_hasPullback f g).flip
+    let h₂ : IsPullback (Limits.pullback.snd P.ambient.projection g)
+        (Limits.pullback.fst P.ambient.projection g) g P.ambient.projection :=
+      (IsPullback.of_hasPullback P.ambient.projection g).flip
+    have h₁' : IsPullback (Limits.pullback.snd f g) (Limits.pullback.fst f g)
+        g (P.embedding ≫ P.ambient.projection) := by
+      simpa [P.overBase] using h₁
+    have hvcond : Limits.pullback.snd f g ≫ g =
+        (Limits.pullback.fst f g ≫ P.embedding) ≫ P.ambient.projection := by
+        rw [Category.assoc, P.overBase]
+        exact Limits.pullback.condition.symm
+    let v := h₂.lift (Limits.pullback.snd f g)
+      (Limits.pullback.fst f g ≫ P.embedding) hvcond
+    have huv : u = v := by
+      ext
+      · dsimp [v]
+        rw [h₂.lift_snd]
+        exact Limits.pullback.lift_fst _ _ _
+      · dsimp [v]
+        rw [h₂.lift_fst]
+        exact Limits.pullback.lift_snd _ _ _
+    rw [huv]
+    have hpb : IsPullback v (Limits.pullback.fst f g)
+        (Limits.pullback.fst P.ambient.projection g) P.embedding := by
+      simpa [v] using (IsPullback.of_right' h₁' h₂)
+    exact MorphismProperty.of_isPullback hpb.flip P.isClosedImmersion
+  let : IsClosedImmersion u := hu
+  let : IsIso e := he
+  refine ⟨{
+    module := Q.module
+    ambient := Q.canonical
+    embedding := u ≫ e
+    isClosedImmersion := by infer_instance
+    overBase := ?_ }⟩
+  rw [Category.assoc, hebase]
+  change u ≫ Limits.pullback.snd P.ambient.projection g = Limits.pullback.snd f g
+  dsimp [u]
+  apply Limits.pullback.lift_snd
 
 /-- Quasi-projectivity is stable under arbitrary base change. -/
 theorem chapter03_quasiProjective_baseChange (f : X ⟶ S) (g : T ⟶ S)
     (hf : chapter03QuasiProjective f) :
-    chapter03QuasiProjective (Limits.pullback.fst f g) := by
-  sorry
+    chapter03QuasiProjective (Limits.pullback.snd f g) := by
+  obtain ⟨P⟩ := hf
+  let P₃ : Chapter03RelativeProjectiveBundle S P.module.carrier :=
+    { module := P.module
+      module_carrier := rfl
+      finiteLocallyFree := P.ambient.finiteLocallyFree
+      canonical := P.ambient }
+  obtain ⟨Q, e, he, hebase⟩ :=
+    chapter03_relativeProjectiveBundle_baseChange_compatibility
+      g P.module.carrier P₃.finiteLocallyFree P₃
+  let u : Limits.pullback f g ⟶ Limits.pullback P.ambient.projection g :=
+    Limits.pullback.lift
+      (Limits.pullback.fst f g ≫ P.embedding)
+      (Limits.pullback.snd f g)
+      (by
+        rw [Category.assoc, P.overBase]
+        exact Limits.pullback.condition)
+  have hu : IsImmersion u := by
+    let h₁ : IsPullback (Limits.pullback.snd f g) (Limits.pullback.fst f g)
+        g f := (IsPullback.of_hasPullback f g).flip
+    let h₂ : IsPullback (Limits.pullback.snd P.ambient.projection g)
+        (Limits.pullback.fst P.ambient.projection g) g P.ambient.projection :=
+      (IsPullback.of_hasPullback P.ambient.projection g).flip
+    have h₁' : IsPullback (Limits.pullback.snd f g) (Limits.pullback.fst f g)
+        g (P.embedding ≫ P.ambient.projection) := by
+      simpa [P.overBase] using h₁
+    have hvcond : Limits.pullback.snd f g ≫ g =
+        (Limits.pullback.fst f g ≫ P.embedding) ≫ P.ambient.projection := by
+      rw [Category.assoc, P.overBase]
+      exact Limits.pullback.condition.symm
+    let v := h₂.lift (Limits.pullback.snd f g)
+      (Limits.pullback.fst f g ≫ P.embedding) hvcond
+    have huv : u = v := by
+      ext
+      · dsimp [v]
+        rw [h₂.lift_snd]
+        exact Limits.pullback.lift_fst _ _ _
+      · dsimp [v]
+        rw [h₂.lift_fst]
+        exact Limits.pullback.lift_snd _ _ _
+    rw [huv]
+    have hpb : IsPullback v (Limits.pullback.fst f g)
+        (Limits.pullback.fst P.ambient.projection g) P.embedding := by
+      simpa [v] using (IsPullback.of_right' h₁' h₂)
+    exact MorphismProperty.of_isPullback hpb.flip P.isImmersion
+  let : IsImmersion u := hu
+  let : IsIso e := he
+  refine ⟨{
+    module := Q.module
+    ambient := Q.canonical
+    embedding := u ≫ e
+    isImmersion := by infer_instance
+    overBase := ?_ }⟩
+  rw [Category.assoc, hebase]
+  change u ≫ Limits.pullback.snd P.ambient.projection g = Limits.pullback.snd f g
+  dsimp [u]
+  apply Limits.pullback.lift_snd
 
 /-- Projective morphisms are quasi-projective. -/
 theorem chapter03_projective_quasiProjective (f : X ⟶ S)
     (hf : chapter03Projective f) : chapter03QuasiProjective f := by
-  sorry
+  apply Nonempty.elim hf
+  intro P
+  let : IsClosedImmersion P.embedding := P.isClosedImmersion
+  exact ⟨{ module := P.module, ambient := P.ambient, embedding := P.embedding, isImmersion := by infer_instance, overBase := P.overBase }⟩
 
 /-- Products of projective morphisms over a common base are projective. -/
 theorem chapter03_projective_product (f : X ⟶ S) (g : Y ⟶ S)
@@ -91,10 +204,17 @@ structure Chapter03SegreData {S : Scheme.{u}} {E F : S.Modules}
   embedding : Limits.pullback P.projection Q.projection ⟶ B.carrier
   isClosedImmersion : IsClosedImmersion embedding
   overBase : embedding ≫ B.projection = chapter03ProductOver P.projection Q.projection
+  pullbackTwistingLineIso :
+    (Scheme.Modules.pullback embedding).obj B.twistingLineBundle.carrier ≅
+      chapter01SheafTensor
+        ((Scheme.Modules.pullback (Limits.pullback.fst P.projection Q.projection)).obj
+          P.twistingLineBundle.carrier)
+        ((Scheme.Modules.pullback (Limits.pullback.snd P.projection Q.projection)).obj
+          Q.twistingLineBundle.carrier)
 
 /-- The Segre map is a closed immersion into the projective bundle of the tensor product. -/
 theorem chapter03_segre_embedding (S : Scheme.{u}) (E F : S.Modules)
-    (hE : chapter03FiniteLocallyFree E) (hF : chapter03FiniteLocallyFree F)
+    (_hE : chapter03FiniteLocallyFree E) (_hF : chapter03FiniteLocallyFree F)
     (P : Chapter03RelativeProjectiveBundle S E)
     (Q : Chapter03RelativeProjectiveBundle S F) :
     ∃ (R : Chapter03TensorProductModule S E F)

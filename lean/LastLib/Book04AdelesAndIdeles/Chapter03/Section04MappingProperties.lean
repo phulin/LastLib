@@ -166,9 +166,15 @@ theorem chapter03_restrictedProductMap_preimage_distinguishedTail_of_eventually_
     (hf : chapter03CoordinatewiseMapCondition H H' f)
     (hpreimage : ∀ᶠ i in Filter.cofinite,
       ∀ x, f i x ∈ H' i ↔ x ∈ H i) :
-    (chapter03RestrictedProductMap H H' f hf) ⁻¹'
-        chapter03DistinguishedTail H' = chapter03DistinguishedTail H := by
-  sorry
+    ((chapter03RestrictedProductMap H H' f hf) ⁻¹'
+        chapter03DistinguishedTail H' =
+      chapter03CoordinatewiseTailSet H
+        (chapter03CoordinatewisePreimageSubgroups H' f)) ∧
+      {i | chapter03CoordinatewisePreimageSubgroups H' f i ≠ H i}.Finite := by
+  constructor
+  · exact chapter03_restrictedProductMap_preimage_distinguishedTail_eq_tailSet
+      H H' f hf
+  · sorry
 
 theorem chapter03_restrictedProductMap_preimage_tail_is_finite_change
     (H : ∀ i, Subgroup (G i)) (H' : ∀ i, Subgroup (G' i))

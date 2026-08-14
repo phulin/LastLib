@@ -80,15 +80,17 @@ def Chapter07CohenMacaulaySurfaceCriterion (A : Type u) [CommRing A]
     f ∈ IsLocalRing.maximalIdeal A →
     g ∈ IsLocalRing.maximalIdeal A →
     (Ideal.span ({f, g} : Set A)).radical = IsLocalRing.maximalIdeal A →
-    IsRegular A [f, g]
+    RingTheory.Sequence.IsRegular A [f, g]
 
 /-- The m-adic order of an element, with units having order zero. -/
 noncomputable def Chapter07MAdicOrder {A : Type u} [CommRing A] [IsLocalRing A]
+    [IsNoetherianRing A]
     (f : A) : ℕ :=
   sInf {n : ℕ | f ∉ (IsLocalRing.maximalIdeal A) ^ (n + 1)}
 
 /-- The multiplicity of an effective Cartier curve at the chosen point. -/
 noncomputable def Chapter07CurveMultiplicity {A : Type u} [CommRing A] [IsLocalRing A]
+    [IsNoetherianRing A]
     (C : Chapter07LocalEffectiveCartierCurve A) : ℕ :=
   Chapter07MAdicOrder C.equation
 

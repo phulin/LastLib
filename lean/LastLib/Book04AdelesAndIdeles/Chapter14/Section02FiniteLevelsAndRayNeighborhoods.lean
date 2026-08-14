@@ -62,4 +62,13 @@ theorem chapter14_modulus_has_no_complex_exponent {K : Type*} [Field K] [NumberF
     chapter14ModulusComplexPart m = ∅ :=
   rfl
 
+/-! A finite-order continuous local character at a complex place has finite
+image, hence factors through a finite discrete quotient; connectedness of
+`ℂˣ` forces that quotient map to be trivial. -/
+theorem chapter14_complex_finite_continuous_quotient_is_trivial
+    {H : Type*} [CommGroup H] [Finite H] [TopologicalSpace H] [DiscreteTopology H]
+    (f : ℂˣ →* H) (hf : Continuous f) :
+    ∀ z, f z = 1 := by
+  sorry
+
 end LastLib.Book04AdelesAndIdeles.Chapter14

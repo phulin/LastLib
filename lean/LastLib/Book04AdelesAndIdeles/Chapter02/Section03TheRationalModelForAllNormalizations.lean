@@ -150,9 +150,9 @@ theorem chapter02_restriction_to_Q_has_local_degree_weight
 theorem chapter02_restriction_weights_are_local_degrees
     {K : Type*} [Field K] [NumberField K]
     (v : Chapter02Place K) (u : Chapter02RationalNormalizedPlace) (d : ℕ)
-    (_h : Chapter02RestrictionHasDegreeExponent v u d) :
-    d = 0 ∨ 0 < d := by
-  exact Nat.eq_zero_or_pos d
+    (h : Chapter02RestrictionHasDegreeExponent v u d) :
+    0 < d := by
+  sorry
 
 end
 

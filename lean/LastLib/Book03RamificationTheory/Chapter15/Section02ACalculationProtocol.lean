@@ -1,7 +1,8 @@
 import LastLib.Book03RamificationTheory.Chapter15.Section01TheRamificationDictionary
 import Mathlib.NumberTheory.RamificationInertia.Ramification
 import Mathlib.RingTheory.DedekindDomain.Factorization
-import Mathlib.MeasureTheory.Integral.Bochner
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 
 namespace LastLib.Book03RamificationTheory.Chapter15
 

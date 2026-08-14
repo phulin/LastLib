@@ -21,12 +21,14 @@ def chapter09StalkwiseFlat {X : Scheme.{u}} (M : X.Modules) : Prop :=
           (R := X.presheaf) M.val x
     Module.Flat (X.presheaf.stalk x) (M.presheaf.stalk x)
 
-/-- The direct local-freeness criterion used in the chapter: finite presentation and flatness,
-after a faithfully flat cover on which the fixed finite rank is locally free. -/
+/-- The direct local-freeness criterion used in the chapter: a quasicoherent sheaf that is of
+finite presentation and flat, after a faithfully flat cover on which the fixed finite rank is
+locally free. -/
 theorem chapter09_finite_locally_free_of_faithfully_flat_pullback
     {S T : Scheme.{u}} (p : T ⟶ S) (hp : Chapter09FpqcCover p)
     {M : S.Modules} (r : ℕ)
-    (hfp : SheafOfModules.IsFinitePresentation M)
+    (hqc : M.IsQuasicoherent)
+    (hfp : M.IsFinitePresentation)
     (hflat : chapter09StalkwiseFlat M)
     (hupstairs : chapter09FiniteLocallyFreeOfRank
       (Chapter09PullbackModule p M) r) :
@@ -44,16 +46,17 @@ theorem chapter09_pullback_preserves_finite_locally_free_rank
 theorem chapter09_finite_locally_free_iff_of_fpqc
     {S T : Scheme.{u}} (p : T ⟶ S) (hp : Chapter09FpqcCover p)
     {M : S.Modules} {r : ℕ}
-    (hfp : SheafOfModules.IsFinitePresentation M)
+    (hqc : M.IsQuasicoherent)
+    (hfp : M.IsFinitePresentation)
     (hflat : chapter09StalkwiseFlat M) :
     chapter09FiniteLocallyFreeOfRank M r ↔
       chapter09FiniteLocallyFreeOfRank (Chapter09PullbackModule p M) r := by
   constructor
   · exact chapter09_pullback_preserves_finite_locally_free_rank p
-  · exact chapter09_finite_locally_free_of_faithfully_flat_pullback p hp r hfp hflat
+  · exact chapter09_finite_locally_free_of_faithfully_flat_pullback p hp r hqc hfp hflat
 
 /- LOCAL_DEPENDENCY_GUESS: effective fpqc descent for module sheaves with the explicit Čech
-comparison fields from Dependencies.lean. -/
+   comparison fields from Dependencies.lean. -/
 theorem chapter09_vector_bundle_effective_fpqc_descent
     {S T : Scheme.{u}} (p : T ⟶ S) (hp : Chapter09FpqcCover p)
     {r : ℕ} (D : Chapter09VectorBundleDescentDatum p r) :
@@ -68,7 +71,6 @@ theorem chapter09_line_bundle_effective_fpqc_descent
     Nonempty (Chapter09VectorBundleDescentResult D) := by
   exact chapter09_vector_bundle_effective_fpqc_descent p hp D
 
-/- LOCAL_DEPENDENCY_GUESS: the equalizer/full-faithfulness comparison for descended morphisms. -/
 def chapter09DescendedMorphismMatches
     {S T : Scheme.{u}} {p : T ⟶ S} {r s : ℕ}
     (D : Chapter09ModuleDescentDatum p r)
@@ -77,7 +79,9 @@ def chapter09DescendedMorphismMatches
     (RE : Chapter09VectorBundleDescentResult E)
     (f : D.upstairs.carrier ⟶ E.upstairs.carrier)
     (f₀ : RD.downstairs.carrier ⟶ RE.downstairs.carrier) : Prop := by
-  sorry
+  exact
+    (Scheme.Modules.pullback p).map f₀ ≫ RE.comparison.hom =
+      RD.comparison.hom ≫ f
 
 /-- Compatible morphisms of vector bundles descend uniquely after the descended objects are fixed. -/
 theorem chapter09_vector_bundle_morphism_descends
@@ -92,10 +96,20 @@ theorem chapter09_vector_bundle_morphism_descends
       chapter09DescendedMorphismMatches D E RD RE f f₀ := by
   sorry
 
+/- Effective descent is unique up to the unique isomorphism whose pullback
+   identifies the two comparison isomorphisms. -/
+theorem chapter09_vector_bundle_descent_result_unique
+    {S T : Scheme.{u}} (p : T ⟶ S) (hp : Chapter09FpqcCover p)
+    {r : ℕ} (D : Chapter09ModuleDescentDatum p r)
+    (R R' : Chapter09VectorBundleDescentResult D) :
+    ∃! e : R.downstairs.carrier ≅ R'.downstairs.carrier,
+      chapter09DescentResultsIsoCompatible R R' e := by
+  sorry
+
 /-- Effective fpqc descent applies simultaneously to vector bundles, line bundles, and their
 morphisms. -/
 def chapter09EffectiveFpqcDescentForVectorBundles
-    {S T : Scheme.{u}} (p : T ⟶ S) (hp : Chapter09FpqcCover p) : Prop :=
+    {S T : Scheme.{u}} (p : T ⟶ S) (_hp : Chapter09FpqcCover p) : Prop :=
   (∀ (r : ℕ) (D : Chapter09VectorBundleDescentDatum p r),
       Nonempty (Chapter09VectorBundleDescentResult D)) ∧
     (∀ (r s : ℕ) (D : Chapter09ModuleDescentDatum p r)
@@ -105,7 +119,11 @@ def chapter09EffectiveFpqcDescentForVectorBundles
       (f : D.upstairs.carrier ⟶ E.upstairs.carrier),
       chapter09DescentMorphismCompatible D E f →
         ∃! f₀ : RD.downstairs.carrier ⟶ RE.downstairs.carrier,
-          chapter09DescendedMorphismMatches D E RD RE f f₀)
+          chapter09DescendedMorphismMatches D E RD RE f f₀) ∧
+    (∀ (r : ℕ) (D : Chapter09VectorBundleDescentDatum p r)
+      (R R' : Chapter09VectorBundleDescentResult D),
+      ∃! e : R.downstairs.carrier ≅ R'.downstairs.carrier,
+        chapter09DescentResultsIsoCompatible R R' e)
 
 theorem chapter09_effective_fpqc_descent_for_vector_bundles
     {S T : Scheme.{u}} (p : T ⟶ S) (hp : Chapter09FpqcCover p) :
@@ -113,8 +131,11 @@ theorem chapter09_effective_fpqc_descent_for_vector_bundles
   constructor
   · intro r D
     exact chapter09_vector_bundle_effective_fpqc_descent p hp D
-  · intro r s D E RD RE f hf
-    exact chapter09_vector_bundle_morphism_descends p hp D E RD RE f hf
+  · constructor
+    · intro r s D E RD RE f hf
+      exact chapter09_vector_bundle_morphism_descends p hp D E RD RE f hf
+    · intro r D R R'
+      exact chapter09_vector_bundle_descent_result_unique p hp D R R'
 
 end
 end LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter09

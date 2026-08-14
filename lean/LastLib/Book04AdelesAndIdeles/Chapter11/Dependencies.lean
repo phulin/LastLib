@@ -17,6 +17,7 @@ import Mathlib.Topology.Algebra.Group.Units
 import Mathlib.Topology.Algebra.IsOpenUnits
 import Mathlib.Topology.Algebra.RestrictedProduct.Units
 import Mathlib.Topology.Instances.Sign
+import LastLib.Book04AdelesAndIdeles.Chapter08.Section86
 import LastLib.Book04AdelesAndIdeles.Chapter09.Dependencies
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter11
@@ -198,10 +199,20 @@ def chapter11LocalUnitFiltration {A : Type*} [CommRing A] [IsLocalRing A]
       one_mem' := by simp
       mul_mem' := by
         intro u v hu hv
-        sorry
+        change ((u : A) * (v : A) - 1) ∈ (IsLocalRing.maximalIdeal A) ^ n
+        change (u : A) - 1 ∈ (IsLocalRing.maximalIdeal A) ^ n at hu
+        change (v : A) - 1 ∈ (IsLocalRing.maximalIdeal A) ^ n at hv
+        rw [show (u : A) * (v : A) - 1 =
+          ((u : A) - 1) * (v : A) + ((v : A) - 1) by ring]
+        exact ((IsLocalRing.maximalIdeal A) ^ n).add_mem
+          (((IsLocalRing.maximalIdeal A) ^ n).mul_mem_right (v : A) hu) hv
       inv_mem' := by
         intro u hu
-        sorry }
+        change ((↑(u⁻¹) : A) - 1) ∈ (IsLocalRing.maximalIdeal A) ^ n
+        change (u : A) - 1 ∈ (IsLocalRing.maximalIdeal A) ^ n at hu
+        simpa [sub_mul] using
+          ((IsLocalRing.maximalIdeal A) ^ n).neg_mem
+            (((IsLocalRing.maximalIdeal A) ^ n).mul_mem_right (↑(u⁻¹) : A) hu) }
 
 theorem chapter11LocalUnitFiltration_zero {A : Type*} [CommRing A] [IsLocalRing A] :
     chapter11LocalUnitFiltration (A := A) 0 = ⊤ := by
@@ -211,6 +222,15 @@ theorem chapter11LocalUnitFiltration_mem_iff {A : Type*} [CommRing A] [IsLocalRi
     (u : Aˣ) (n : ℕ) :
     u ∈ chapter11LocalUnitFiltration (A := A) n ↔
       n = 0 ∨ (u : A) - 1 ∈ (IsLocalRing.maximalIdeal A) ^ n := by
+  classical
+  by_cases hn : n = 0
+  · simp [hn, chapter11LocalUnitFiltration]
+  · simp [hn, chapter11LocalUnitFiltration]
+
+theorem chapter11LocalUnitFiltration_antitone {A : Type*} [CommRing A] [IsLocalRing A]
+    {m n : ℕ} (hmn : m ≤ n) :
+    chapter11LocalUnitFiltration (A := A) n ≤
+      chapter11LocalUnitFiltration (A := A) m := by
   sorry
 
 def chapter11AdditiveLocalDepth {A : Type*} [CommRing A] [IsLocalRing A]
@@ -316,13 +336,29 @@ def chapter11RayUnitSubgroup (m : RayModulus K) : Subgroup (Chapter11IdeleGroup 
       ∀ v (hv : v ∈ m.infinitePart),
         chapter11RealSignComponent K v (m.infinitePart_isReal v hv) x = 1}
   one_mem' := by
-    sorry
+    constructor
+    · intro v
+      simpa only [map_one] using
+        (chapter11FiniteLocalUnitGroup K v (m.finiteExponent v)).one_mem
+    · intro v hv
+      simp
   mul_mem' := by
     intro x y hx hy
-    sorry
+    constructor
+    · intro v
+      simpa only [map_mul] using
+        (chapter11FiniteLocalUnitGroup K v (m.finiteExponent v)).mul_mem
+          (hx.1 v) (hy.1 v)
+    · intro v hv
+      rw [map_mul, hx.2 v hv, hy.2 v hv, one_mul]
   inv_mem' := by
     intro x hx
-    sorry
+    constructor
+    · intro v
+      simpa only [map_inv] using
+        (chapter11FiniteLocalUnitGroup K v (m.finiteExponent v)).inv_mem (hx.1 v)
+    · intro v hv
+      rw [map_inv, hx.2 v hv, inv_one]
 
 def chapter11FullFiniteUnitSubgroup : Subgroup (Chapter11IdeleGroup K) :=
   chapter11RayUnitSubgroup (RayModulus.trivial (K := K))
@@ -357,14 +393,9 @@ def chapter11IdealPrimeToModulus (m : RayModulus K) :
   carrier := {I |
     ∀ v, m.finiteExponent v ≠ 0 →
       FractionalIdeal.count K v (I : FractionalIdeal (𝓞 K)⁰ K) = 0}
-  one_mem' := by
-    sorry
-  mul_mem' := by
-    intro I J hI hJ
-    sorry
-  inv_mem' := by
-    intro I hI
-    sorry
+  one_mem' := by sorry
+  mul_mem' := by sorry
+  inv_mem' := by sorry
 
 abbrev Chapter11IdealGroup (m : RayModulus K) :=
   chapter11IdealPrimeToModulus m
@@ -384,13 +415,47 @@ def chapter11RayPrincipalIdealSubgroup (m : RayModulus K) :
       ((I : Chapter11FractionalIdealUnitGroup K) : FractionalIdeal (𝓞 K)⁰ K) =
         (toPrincipalIdeal (𝓞 K) K a : FractionalIdeal (𝓞 K)⁰ K)}
   one_mem' := by
-    sorry
+    refine ⟨1, ?_, ?_⟩
+    · simp [chapter11RayGenerator]
+    · simp
   mul_mem' := by
     intro I J hI hJ
-    sorry
+    rcases hI with ⟨a, ha, hIa⟩
+    rcases hJ with ⟨b, hb, hJb⟩
+    refine ⟨a * b, ?_, ?_⟩
+    · constructor
+      · intro v hv
+        simpa only [map_mul] using
+          (chapter11FiniteLocalUnitGroup K v (m.finiteExponent v)).mul_mem
+            (ha.1 v hv) (hb.1 v hv)
+      · intro v hv
+        simp only [map_mul]
+        rw [ha.2 v hv, hb.2 v hv, one_mul]
+    · change ((I : Chapter11FractionalIdealUnitGroup K) *
+        (J : Chapter11FractionalIdealUnitGroup K) :
+          FractionalIdeal (𝓞 K)⁰ K) =
+        (toPrincipalIdeal (𝓞 K) K (a * b) : FractionalIdeal (𝓞 K)⁰ K)
+      rw [hIa, hJb]
+      simpa only [Units.val_mul] using
+        congrArg (fun z : Chapter11FractionalIdealUnitGroup K =>
+          (z : FractionalIdeal (𝓞 K)⁰ K))
+          ((toPrincipalIdeal (𝓞 K) K).map_mul a b).symm
   inv_mem' := by
     intro I hI
-    sorry
+    rcases hI with ⟨a, ha, hIa⟩
+    refine ⟨a⁻¹, ?_, ?_⟩
+    · constructor
+      · intro v hv
+        simpa only [map_inv] using
+          (chapter11FiniteLocalUnitGroup K v (m.finiteExponent v)).inv_mem (ha.1 v hv)
+      · intro v hv
+        simp only [map_inv]
+        rw [ha.2 v hv, inv_one]
+    · rw [Subgroup.coe_inv, Units.val_inv_eq_inv_val, hIa]
+      simpa only [Units.val_inv_eq_inv_val] using
+        congrArg (fun z : Chapter11FractionalIdealUnitGroup K =>
+          (z : FractionalIdeal (𝓞 K)⁰ K))
+          ((toPrincipalIdeal (𝓞 K) K).map_inv a).symm
 
 abbrev chapter11IdealRayClassGroup (m : RayModulus K) :=
   Chapter11IdealGroup m ⧸ chapter11RayPrincipalIdealSubgroup m
@@ -429,14 +494,110 @@ noncomputable def chapter11CanonicalIdeleIdealMap
       (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09FiniteIdelePartHom K)
   map_principal := by
     intro a
-    sorry
+    have hfinite :
+        LastLib.Book04AdelesAndIdeles.Chapter09.chapter09FiniteIdelePartHom K
+          (chapter11PrincipalIdeleHom (K := K) a) =
+          LastLib.Book04AdelesAndIdeles.Chapter08.chapter08FinitePrincipalIdele a := by
+      apply Units.ext
+      rfl
+    change LastLib.Book04AdelesAndIdeles.Chapter08.chapter08FiniteIdeleIdealMap K
+      (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09FiniteIdelePartHom K
+        (chapter11PrincipalIdeleHom (K := K) a)) =
+        toPrincipalIdeal (𝓞 K) K a
+    rw [hfinite]
+    exact LastLib.Book04AdelesAndIdeles.Chapter08.chapter08_finite_idele_ideal_principal a
   kernel_eq_full_finite_units := by
-    sorry
+    ext x
+    constructor
+    · intro hx
+      change LastLib.Book04AdelesAndIdeles.Chapter08.chapter08FiniteIdeleIdealMap K
+        (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09FiniteIdelePartHom K x) = 1 at hx
+      have hunit :
+          LastLib.Book04AdelesAndIdeles.Chapter09.chapter09FiniteIdelePartHom K x ∈
+            LastLib.Book04AdelesAndIdeles.Chapter08.chapter08FiniteIntegralUnits := by
+        rw [← LastLib.Book04AdelesAndIdeles.Chapter08.chapter08_finite_idele_ideal_kernel]
+        exact (MonoidHom.mem_ker).2 hx
+      change
+        (∀ v, chapter11IdeleFiniteComponent K v x ∈
+          chapter11FiniteLocalUnitGroup K v 0) ∧
+          (∀ v (hv : v ∈ (RayModulus.trivial (K := K)).infinitePart),
+            chapter11RealSignComponent K v
+              ((RayModulus.trivial (K := K)).infinitePart_isReal v hv) x = 1)
+      constructor
+      · intro v
+        rw [chapter11FiniteLocalUnitGroup_zero]
+        have hval :=
+          (LastLib.Book04AdelesAndIdeles.Chapter08.chapter08_finite_integral_unit_iff_local_valued_eq_one
+            (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09FiniteIdelePartHom K x)).1 hunit v
+        have hval' :
+            Valued.v ((chapter11IdeleFiniteComponent K v x :
+              (v.adicCompletion K)ˣ) : v.adicCompletion K) = 1 := by
+          simpa only [show LastLib.Book04AdelesAndIdeles.Chapter08.chapter08FiniteIdeleComponent
+              (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09FiniteIdelePartHom K x) v =
+                (chapter11IdeleFiniteComponent K v x : v.adicCompletion K) by rfl] using hval
+        have hmem :
+            chapter11IdeleFiniteComponent K v x ∈ Valued.v.valuationSubring.unitGroup :=
+          (Valuation.mem_unitGroup_iff (v.adicCompletion K) (Valued.v) _).2 hval'
+        simpa only [IsDedekindDomain.HeightOneSpectrum.adicCompletionIntegers] using hmem
+      · simp [RayModulus.trivial]
+    · intro hx
+      change (∀ v, chapter11IdeleFiniteComponent K v x ∈
+        chapter11FiniteLocalUnitGroup K v 0) ∧ _ at hx
+      change LastLib.Book04AdelesAndIdeles.Chapter08.chapter08FiniteIdeleIdealMap K
+        (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09FiniteIdelePartHom K x) = 1
+      rw [← MonoidHom.mem_ker]
+      rw [LastLib.Book04AdelesAndIdeles.Chapter08.chapter08_finite_idele_ideal_kernel]
+      apply (LastLib.Book04AdelesAndIdeles.Chapter08.chapter08_finite_integral_unit_iff_local_valued_eq_one
+        (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09FiniteIdelePartHom K x)).2
+      intro v
+      have hxv : chapter11IdeleFiniteComponent K v x ∈
+          chapter11FiniteLocalUnitGroup K v 0 := hx.1 v
+      rw [chapter11FiniteLocalUnitGroup_zero K v] at hxv
+      have hxv' :
+          chapter11IdeleFiniteComponent K v x ∈ Valued.v.valuationSubring.unitGroup := by
+        simpa only [IsDedekindDomain.HeightOneSpectrum.adicCompletionIntegers] using hxv
+      have hval' := (Valuation.mem_unitGroup_iff (v.adicCompletion K) (Valued.v) _).1 hxv'
+      have hlocal :
+          LastLib.Book04AdelesAndIdeles.Chapter08.chapter08FiniteIdeleComponent
+              (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09FiniteIdelePartHom K x) v =
+            (chapter11IdeleFiniteComponent K v x : v.adicCompletion K) := by
+        rfl
+      simpa only [hlocal] using hval'
   count_eq_zero_of_local_unit := by
     intro x v n hx
-    sorry
+    change FractionalIdeal.count K v
+      (LastLib.Book04AdelesAndIdeles.Chapter08.chapter08FiniteIdeleIdealMap K
+        (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09FiniteIdelePartHom K x) :
+          FractionalIdeal (𝓞 K)⁰ K) = 0
+    rw [LastLib.Book04AdelesAndIdeles.Chapter08.chapter08_finite_idele_ideal_count]
+    apply (LastLib.Book04AdelesAndIdeles.Chapter08.chapter08_local_order_eq_zero_iff_valued_eq_one
+      v _ (LastLib.Book04AdelesAndIdeles.Chapter08.chapter08_finite_idele_component_ne_zero
+        (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09FiniteIdelePartHom K x) v)).2
+    have hlocal :
+        LastLib.Book04AdelesAndIdeles.Chapter08.chapter08FiniteIdeleComponent
+            (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09FiniteIdelePartHom K x) v =
+          (chapter11IdeleFiniteComponent K v x : v.adicCompletion K) := by
+      rfl
+    rw [hlocal]
+    change (chapter11FiniteLocalUnitGroup K v n).carrier
+      (chapter11IdeleFiniteComponent K v x) at hx
+    rcases hx with ⟨u, hu, hux⟩
+    rw [← hux]
+    change Valued.v ((u : v.adicCompletionIntegers K) : v.adicCompletion K) = 1
+    exact (IsDedekindDomain.HeightOneSpectrum.adicCompletionIntegers.isUnit_iff_valued_eq_one).1
+      u.isUnit
   surjective := by
-    sorry
+    intro I
+    obtain ⟨y, hy⟩ :=
+      LastLib.Book04AdelesAndIdeles.Chapter08.chapter08_finite_idele_ideal_surjective K I
+    refine ⟨
+      (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K).symm (1, y), ?_⟩
+    change LastLib.Book04AdelesAndIdeles.Chapter08.chapter08FiniteIdeleIdealMap K
+      (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09FiniteIdelePartHom K
+        ((LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K).symm (1, y))) = I
+    rw [show LastLib.Book04AdelesAndIdeles.Chapter09.chapter09FiniteIdelePartHom K
+        ((LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K).symm (1, y)) = y by
+      rfl, hy]
 
 /- A ray normalizer only imposes the congruence conditions at the finite
 places in the modulus and the selected real signs.  It must not require the
@@ -463,7 +624,35 @@ abbrev chapter11RayResidueSignGroup (m : RayModulus K) :=
 
 def chapter11GlobalUnitResidueSignHom (m : RayModulus K) :
     (𝓞 K)ˣ →* chapter11RayResidueSignGroup m := by
-  sorry
+  let q : 𝓞 K →+* (𝓞 K ⧸ m.finiteIdeal) := Ideal.Quotient.mk m.finiteIdeal
+  let r : (𝓞 K)ˣ →* chapter11RayResidueGroup m :=
+    Units.map q.toMonoidHom
+  let s : (𝓞 K)ˣ →* chapter11RaySignGroup m :=
+    { toFun := fun u v =>
+        LastLib.Book04AdelesAndIdeles.Chapter08.chapter08SignOfUnit
+          (Units.map (algebraMap (𝓞 K) K).toMonoidHom u)
+          ⟨v, m.infinitePart_isReal v v.property⟩
+      map_one' := by
+        funext v
+        apply Units.ext
+        simp [LastLib.Book04AdelesAndIdeles.Chapter08.chapter08SignOfUnit]
+      map_mul' := by
+        intro x y
+        funext v
+        apply Units.ext
+        simp [LastLib.Book04AdelesAndIdeles.Chapter08.chapter08SignOfUnit,
+          sign_mul] }
+  refine
+    { toFun := fun u => (r u, s u)
+      map_one' := ?_
+      map_mul' := ?_ }
+  · apply Prod.ext
+    · exact r.map_one
+    · exact s.map_one
+  · intro x y
+    apply Prod.ext
+    · exact r.map_mul x y
+    · exact s.map_mul x y
 
 def chapter11ResidueSignToRayClassHom (m : RayModulus K) :
     chapter11RayResidueSignGroup m →* chapter11RayClassGroup m := by
@@ -471,6 +660,41 @@ def chapter11ResidueSignToRayClassHom (m : RayModulus K) :
 
 def chapter11RayClassToOrdinaryClassHom (m : RayModulus K) :
     chapter11RayClassGroup m →* Chapter11OrdinaryClassGroup K := by
-  sorry
+  let f : Chapter11IdeleGroup K →* Chapter11OrdinaryClassGroup K :=
+    (ClassGroup.mk K).comp (chapter11CanonicalIdeleIdealMap K).toIdeal
+  refine QuotientGroup.lift
+    (chapter11PrincipalIdeleSubgroup (K := K) ⊔ chapter11RayUnitSubgroup m) f ?_
+  apply sup_le
+  · rintro x ⟨a, rfl⟩
+    rw [MonoidHom.mem_ker]
+    change ClassGroup.mk K
+      ((chapter11CanonicalIdeleIdealMap K).toIdeal
+        (chapter11PrincipalIdeleHom (K := K) a)) = 1
+    rw [(chapter11CanonicalIdeleIdealMap K).map_principal]
+    apply (ClassGroup.mk_eq_one_iff).2
+    refine ⟨(a : K), ?_⟩
+    simp [coe_toPrincipalIdeal]
+  · intro x hx
+    rw [MonoidHom.mem_ker]
+    change ClassGroup.mk K
+      ((chapter11CanonicalIdeleIdealMap K).toIdeal x) = 1
+    have hxker : x ∈ (chapter11CanonicalIdeleIdealMap K).toIdeal.ker := by
+      rw [(chapter11CanonicalIdeleIdealMap K).kernel_eq_full_finite_units]
+      change
+        (∀ v, chapter11IdeleFiniteComponent K v x ∈
+          chapter11FiniteLocalUnitGroup K v 0) ∧
+          (∀ v (hv : v ∈ (RayModulus.trivial (K := K)).infinitePart),
+            chapter11RealSignComponent K v
+              ((RayModulus.trivial (K := K)).infinitePart_isReal v hv) x = 1)
+      constructor
+      · intro v
+        apply (show chapter11FiniteLocalUnitGroup K v (m.finiteExponent v) ≤
+            chapter11FiniteLocalUnitGroup K v 0 from ?_) (hx.1 v)
+        intro z hz
+        rcases hz with ⟨u, hu, hzu⟩
+        exact ⟨u, chapter11LocalUnitFiltration_antitone (Nat.zero_le _) hu, hzu⟩
+      · simp [RayModulus.trivial]
+    rw [MonoidHom.mem_ker.mp hxker]
+    simp
 
 end

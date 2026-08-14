@@ -22,6 +22,7 @@ theorem chapter07_degree_dimension_and_leading_term
     {C : Chapter07PolarizedScheme k}
     (S : Chapter07HilbertSetup k C)
     (D : Chapter07SupportDimensionCertificate S.F)
+    (hDimensionData : Chapter07HilbertPolynomialDimensionCertificate S D)
     (hF : Chapter07NonzeroCoherentSheaf S.F) :
     ∃ e : ℕ, 0 < e ∧
       (chapter07HilbertPolynomial S).natDegree = D.dimension ∧
@@ -34,6 +35,7 @@ theorem chapter07_hilbert_polynomial_has_positive_degree_coefficient
     {C : Chapter07PolarizedScheme k}
     (S : Chapter07HilbertSetup k C)
     (D : Chapter07SupportDimensionCertificate S.F)
+    (hDimensionData : Chapter07HilbertPolynomialDimensionCertificate S D)
     (hF : Chapter07NonzeroCoherentSheaf S.F) :
     ∃ e : ℕ, 0 < e ∧
       (chapter07HilbertPolynomial S).coeff D.dimension =
@@ -49,8 +51,7 @@ structure Chapter07HyperplaneSection
     (C : Chapter07PolarizedScheme k) where
   H : Scheme.{u}
   inclusion : H ⟶ C.X
-  isHyperplaneSection : Prop
-  isGeneral : Prop
+  isClosedImmersion : IsClosedImmersion inclusion
 
 /-! The colon/kernel correction in the general hyperplane argument is carried
 by an explicit lower-dimensional error profile.  The Euler relation is the
@@ -63,14 +64,15 @@ structure Chapter07HyperplaneRestrictionData
     (S R : Chapter07HilbertSetup k C) (d : ℕ) where
   error : Chapter07HilbertSetup k C
   eulerRelation : ∀ n : ℕ,
-    chapter07EulerCharacteristic S n -
-        chapter07EulerCharacteristic S (n - 1) =
-      chapter07EulerCharacteristic R n -
-        chapter07EulerCharacteristic error n
+    chapter07EulerCharacteristicAtInteger S (n : ℤ) -
+        chapter07EulerCharacteristicAtInteger S ((n : ℤ) - 1) =
+      chapter07EulerCharacteristicAtInteger R (n : ℤ) -
+        chapter07EulerCharacteristicAtInteger error ((n : ℤ) - 1)
   errorLowerDimensional :
     IsZero error.F.sheaf ∨
       ∃ D : Chapter07SupportDimensionCertificate error.F,
-        ¬ IsZero error.F.sheaf ∧ D.dimension < d
+        ¬ IsZero error.F.sheaf ∧ D.dimension < d ∧
+          Nonempty (Chapter07HilbertPolynomialDimensionCertificate error D)
 
 def chapter07FiniteDifference (P : Polynomial ℚ) : Polynomial ℚ :=
   P - P.comp (Polynomial.X - Polynomial.C 1)
@@ -109,6 +111,7 @@ theorem chapter07_projective_curve_hilbert_polynomial_shape
     {C : Chapter07PolarizedScheme k}
     (S : Chapter07HilbertSetup k C)
     (D : Chapter07SupportDimensionCertificate S.F)
+    (hDimensionData : Chapter07HilbertPolynomialDimensionCertificate S D)
     (hcurve : D.dimension = 1)
     (hF : Chapter07NonzeroCoherentSheaf S.F) :
     ∃ e : ℕ, 0 < e ∧ ∃ c : ℚ,
@@ -133,9 +136,10 @@ structure Chapter07UnionHilbertData
     chapter07EulerCharacteristic middle n =
       chapter07EulerCharacteristic union n +
         chapter07EulerCharacteristic intersection n
-  middlePolynomial :
-    chapter07HilbertPolynomial middle =
-      chapter07HilbertPolynomial left + chapter07HilbertPolynomial right
+  middle_euler_additive : ∀ n : ℕ,
+    chapter07EulerCharacteristic middle n =
+      chapter07EulerCharacteristic left n +
+        chapter07EulerCharacteristic right n
 
 theorem chapter07_union_hilbert_polynomial_inclusion_exclusion
     {k : Type u} [Field k]

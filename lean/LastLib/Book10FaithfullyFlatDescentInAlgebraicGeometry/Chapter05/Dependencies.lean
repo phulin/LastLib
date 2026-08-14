@@ -28,11 +28,27 @@ open CategoryTheory
 open TensorProduct
 open scoped TensorProduct
 
-universe u v
+universe u v w
 
 namespace LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter05
 
 noncomputable section
+
+section ModuleCatMapCompatibility
+
+variable {R : Type u} {S : Type v} [CommRing R] [CommRing S]
+
+/-- The underlying function of extension of scalars is the one-sided tensor map.  The first
+factor is written through `restrictScalars` so that its bundled `R`-module instance is exactly the
+one used by `ModuleCat.extendScalars`. -/
+theorem ModuleCat.extendScalars_map_hom_toFun_eq_lTensor
+    {M N : ModuleCat.{w} R} (f : R →+* S) (g : M ⟶ N) :
+    ((ModuleCat.extendScalars f).map g).hom.toFun =
+      (LinearMap.lTensor
+        ((ModuleCat.restrictScalars f).obj (ModuleCat.of S S)) g.hom).toFun := by
+  sorry
+
+end ModuleCatMapCompatibility
 
 section CechRing
 
@@ -64,15 +80,13 @@ def cech_multiplication : CechRing A B →ₐ[A] B :=
 
 @[simp]
 theorem cech_multiplication_d0 :
-    (cech_multiplication A B).comp (cech_d0 A B) = Algebra.ofId A B := by
-  ext b
-  simp [cech_multiplication, cech_d0]
+    (cech_multiplication A B).comp (cech_d0 A B) = AlgHom.id A B := by
+  exact Algebra.TensorProduct.lmul'_comp_includeRight (R := A) (S := B)
 
 @[simp]
 theorem cech_multiplication_d1 :
-    (cech_multiplication A B).comp (cech_d1 A B) = Algebra.ofId A B := by
-  ext b
-  simp [cech_multiplication, cech_d1]
+    (cech_multiplication A B).comp (cech_d1 A B) = AlgHom.id A B := by
+  exact Algebra.TensorProduct.lmul'_comp_includeLeft (R := A) (S := B)
 
 end CechRing
 
@@ -86,7 +100,7 @@ Mathlib presents this as `(B ⊗[A] B) ⊗[B] N`, with the structural map acting
 factor.  This is canonically the source convention `N ⊗_{B,d} (B ⊗[A] B)` because the rings are
 commutative; keeping the Mathlib orientation makes the induced overlap module and its linear maps
 available without ad hoc module instances. -/
-noncomputable def overlapModule (d : B →ₐ[A] CechRing A B) (N : Type u)
+noncomputable abbrev overlapModule (d : B →ₐ[A] CechRing A B) (N : Type u)
     [AddCommGroup N] [Module B N] : Type u :=
   letI : Module B (CechRing A B) := d.toRingHom.toModule
   CechRing A B ⊗[B] N
@@ -99,9 +113,8 @@ abbrev secondOverlapModule (N : Type u) [AddCommGroup N] [Module B N] : Type u :
 
 theorem overlapModule_commutes_with_source_order (d : B →ₐ[A] CechRing A B)
     (N : Type u) [AddCommGroup N] [Module B N] :
-    Nonempty
-      (N ⊗[B] (letI : Module B (CechRing A B) := d.toRingHom.toModule; CechRing A B) ≃ₗ[CechRing A B]
-        overlapModule d N) := by
+    letI : Module B (CechRing A B) := d.toRingHom.toModule
+    Nonempty (N ⊗[B] CechRing A B ≃ₗ[B] overlapModule d N) := by
   sorry
 
 end OverlapModules
@@ -112,7 +125,7 @@ variable (A B : Type u) [CommRing A] [CommRing B] [Algebra A B]
 
 /-- The comonad on `B`-modules induced by extension and restriction of scalars along `A → B`.
 Its coalgebras are the canonical categorical form of `B`-modules equipped with descent data. -/
-noncomputable def descentComonad : Comonad (ModuleCat B) :=
+noncomputable abbrev descentComonad : Comonad (ModuleCat B) :=
   (ModuleCat.extendRestrictScalarsAdj (algebraMap A B)).toComonad
 
 abbrev DescentDatum : Type _ := (descentComonad A B).Coalgebra
@@ -145,6 +158,15 @@ noncomputable def descentComparison : ModuleCat A ⥤ DescentDatum A B :=
 theorem descentComparison_underlying (M : ModuleCat A) :
     ((descentComparison A B).obj M).A = (ModuleCat.extendScalars (algebraMap A B)).obj M :=
   rfl
+
+/-- Faithfully flatness makes the scalar-extension adjunction comonadic, with no restriction on
+the universe used for bundled module objects. -/
+theorem faithfullyFlat_comonadic_comparison_is_equivalence
+    {A B : Type u} [CommRing A] [CommRing B] [Algebra A B]
+    (hAB : RingHom.FaithfullyFlat (algebraMap A B)) :
+    (Comonad.comparison
+      (ModuleCat.extendRestrictScalarsAdj.{v, u, u} (algebraMap A B))).IsEquivalence := by
+  sorry
 
 end CanonicalComonad
 

@@ -9,7 +9,7 @@ import Mathlib.AlgebraicGeometry.Morphisms.QuasiCompact
 import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
 import Mathlib.AlgebraicGeometry.OpenImmersion
 import Mathlib.AlgebraicGeometry.Pullbacks
-import Mathlib.LinearAlgebra.TensorProduct.IncludeLeftSubRight
+import Mathlib.RingTheory.TensorProduct.IncludeLeftSubRight
 import Mathlib.RingTheory.AdicCompletion.AsTensorProduct
 import Mathlib.RingTheory.AdicCompletion.Noetherian
 import Mathlib.RingTheory.Flat.FaithfullyFlat.Algebra
@@ -27,7 +27,7 @@ does not acquire an accidental dependency on a later section.
 -/
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
-open scoped AlgebraicGeometry
+open scoped AlgebraicGeometry TensorProduct
 
 universe u
 
@@ -54,9 +54,10 @@ structure Chapter01FpqcFamilyRefinement {T S : Scheme.{u}} (p : T ⟶ S) where
   factor : ∀ i, lift i ≫ p = map i
   flat : ∀ i, Flat (map i)
   finite_reduction :
-    ∀ (U : S.Opens), IsQuasiCompact (U : Set S) →
+    ∀ (U : S.Opens), IsCompact (U : Set S) →
       ∃ (J : Finset index) (V : ∀ i : J, (source i).Opens),
-        (∀ i : J, IsQuasiCompact (V i : Set (source i))) ∧
+        (∀ i : J, IsCompact (V i : Set (source i))) ∧
+          (∀ i : J, ∀ y : V i, (map i y : S) ∈ U) ∧
           (∀ x : U, ∃ i : J, ∃ y : V i, (map i y : S) = x.1)
 
 end

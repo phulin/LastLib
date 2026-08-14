@@ -15,6 +15,12 @@ universe u v
 identification.  The latter is part of the data rather than an inferred equality of schemes. -/
 structure Chapter01ProjectiveClosureData {S C : Scheme.{u}} {K : Type u} [Field K]
     (B : Chapter01DedekindBase S K) (c : C ⟶ Spec (CommRingCat.of K)) where
+  genericFiniteType : Chapter01FiniteType c
+  genericProjective : Chapter01ProjectiveMorphism c
+  genericSeparated : IsSeparated c
+  genericSmooth : Chapter01SmoothMorphism c
+  genericPureDimensionOne : Chapter01PureDimensionOne C
+  genericGeometricallyConnected : GeometricallyConnected c
   ambient : Scheme.{u}
   ambientMap : ambient ⟶ S
   ambientProjective : Chapter01ProjectiveMorphism ambientMap
@@ -26,18 +32,17 @@ structure Chapter01ProjectiveClosureData {S C : Scheme.{u}} {K : Type u} [Field 
   embedding_over : embedding ≫ ambientMap = closureMap
   genericFiberIso : chapter01GenericFiber closureMap B.genericPointMap ≅ C
   genericFiberIso_over :
-    genericFiberIso.hom ≫ pullback.snd closureMap B.genericPointMap = c
+    genericFiberIso.hom ≫ c = pullback.snd closureMap B.genericPointMap
 
-/- LOCAL_DEPENDENCY_GUESS: the normalization stage is deliberately separated from the resolution stage.  The
-`inFunctionField` field is a local interface for the function-field construction, which is not
-yet exposed by the pinned scheme API in the exact form used by the source. -/
+/- LOCAL_DEPENDENCY_GUESS: the normalization stage is deliberately separated from the resolution stage.
+The finite normal proper-birational interface records the normalization without depending on a
+separate function-field object. -/
 structure Chapter01NormalizationData (Y : Scheme.{u}) where
   baseIntegral : IsIntegral Y
   normalized : Scheme.{u}
   map : normalized ⟶ Y
   finite : IsFinite map
   normal : Chapter01NormalScheme normalized
-  inFunctionField : Prop
   properBirational : Chapter01ProperBirational map
 
 structure Chapter01ResolutionData (Y : Scheme.{u}) where
@@ -60,7 +65,7 @@ def Chapter01ResolutionExists (Y : Scheme.{u}) : Prop :=
 the proof and its excellence hypotheses belong to the later resolution development. -/
 theorem chapter01_resolution_exists_of_excellent_surface
     (Y : Scheme.{u}) (hY : Chapter01ExcellentScheme Y)
-    (hDim : Chapter01PureDimensionTwo Y) :
+    (hDim : Chapter01PureDimensionTwo Y) (hIntegral : IsIntegral Y) :
     Chapter01ResolutionExists Y := by
   sorry
 
@@ -90,7 +95,7 @@ def Chapter01XYEqualsPiExample (R : Type u) [CommRing R] (π : R) : Prop :=
 theorem chapter01_xy_equals_pi_regular_total_singular_special
     (R : Type u) [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
     (π : R) (hπ : π ≠ 0)
-    (hπ_uniformizer : Ideal.span ({π} : Set R) = maximalIdeal R) :
+    (hπ_uniformizer : Ideal.span ({π} : Set R) = IsLocalRing.maximalIdeal R) :
     Chapter01XYEqualsPiExample R π := by
   sorry
 

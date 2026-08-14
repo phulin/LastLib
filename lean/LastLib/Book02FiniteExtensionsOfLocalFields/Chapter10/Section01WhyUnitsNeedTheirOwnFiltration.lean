@@ -1,4 +1,5 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Dependencies
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter04.Section02EquivalentCharacterizations
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10
 
@@ -25,7 +26,135 @@ theorem chapter10_valuation_unit_decomposition
         x = π ^ n * ((u : v.valuationSubring) : L)) ∧
       Nonempty
         (Lˣ ≃* (Multiplicative ℤ × v.valuationSubringˣ)) := by
-  sorry
+  classical
+  let A := v.valuationSubring
+  have hgenlt : Valuation.IsRankOneDiscrete.generator v < (1 : Γ₀) :=
+    Valuation.IsRankOneDiscrete.generator_lt_one v
+  let πA : A :=
+    ⟨π, by
+      change v π ≤ 1
+      rw [hπ]
+      exact hgenlt.le⟩
+  have hπu : v.IsUniformizer πA := by
+    change v (πA : L) = Valuation.IsRankOneDiscrete.generator v
+    simpa [πA] using hπ
+  have hπne : π ≠ 0 := by
+    intro h
+    apply hπu.ne_zero
+    simpa [πA] using h
+  have hπA_ne : πA ≠ 0 := by
+    intro h
+    apply hπu.ne_zero
+    simpa using congrArg Subtype.val h
+  have hπchapter :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter04.Chapter04Uniformizer A πA :=
+    ⟨hπA_ne, hπu.is_generator⟩
+  have normal_form (x : L) (hx : x ≠ 0) :
+      ∃ n : ℤ, ∃ u : Aˣ,
+        x = π ^ n * ((u : A) : L) ∧
+          ∀ m : ℤ, ∀ w : Aˣ,
+            x = π ^ m * ((w : A) : L) → m = n ∧ w = u := by
+    obtain ⟨n, u, hxu, hu⟩ :=
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter04.dvr_fraction_field_unique_normal_form
+        A L hπchapter hx
+    refine ⟨n, u, ?_, ?_⟩
+    · simpa [Units.smul_def, Algebra.smul_def, ValuationSubring.algebraMap_apply,
+        πA, mul_comm] using hxu
+    · intro m w hmw
+      apply hu m w
+      simpa [Units.smul_def, Algebra.smul_def, ValuationSubring.algebraMap_apply,
+        πA, mul_comm] using hmw
+  constructor
+  · intro x hx
+    obtain ⟨n, u, hxu, _⟩ := normal_form x hx
+    exact ⟨n, u, hxu⟩
+  · choose n u hfactor hunique using
+      fun x : Lˣ => normal_form (x : L) x.ne_zero
+    let f : Lˣ →* (Multiplicative ℤ × Aˣ) :=
+      { toFun := fun x => (Multiplicative.ofAdd (n x), u x)
+        map_one' := by
+          have h := hunique 1 0 1 (by simp)
+          apply Prod.ext
+          · change n 1 = 0
+            exact h.1.symm
+          · exact h.2.symm
+        map_mul' := by
+          intro x y
+          have hxy :
+              ((x * y : Lˣ) : L) =
+                π ^ (n x + n y) * (((u x * u y : Aˣ) : A) : L) := by
+            change (x : L) * (y : L) = _
+            rw [hfactor x, hfactor y]
+            simp only [Units.val_mul]
+            calc
+              π ^ n x * (((u x : A) : L)) *
+                    (π ^ n y * (((u y : A) : L))) =
+                  (π ^ n x * π ^ n y) *
+                    ((((u x : A) : L) * ((u y : A) : L))) := by ring
+              _ = π ^ (n x + n y) *
+                    ((((u x : A) : L) * ((u y : A) : L))) := by
+                rw [← zpow_add₀ hπne]
+              _ = π ^ (n x + n y) * (((u x * u y : Aˣ) : A) : L) := by
+                rfl
+          have h := hunique (x * y) (n x + n y) (u x * u y) hxy
+          apply Prod.ext
+          · change n (x * y) = n x + n y
+            exact h.1.symm
+          · exact h.2.symm }
+    let g : (Multiplicative ℤ × Aˣ) →* Lˣ :=
+      { toFun := fun z =>
+          Units.mk0
+            (π ^ (Multiplicative.toAdd z.1) * (((z.2 : A) : L))) (by
+              have hz : ((z.2 : A) : L) ≠ 0 := by
+                intro hz
+                apply z.2.ne_zero
+                apply Subtype.ext
+                exact hz
+              exact mul_ne_zero (zpow_ne_zero _ hπne) hz)
+        map_one' := by
+          apply Units.ext
+          simp
+        map_mul' := by
+          intro z w
+          apply Units.ext
+          change
+            π ^ (Multiplicative.toAdd z.1 + Multiplicative.toAdd w.1) *
+                (((z.2 * w.2 : Aˣ) : A) : L) =
+              (π ^ Multiplicative.toAdd z.1 * (((z.2 : A) : L))) *
+                (π ^ Multiplicative.toAdd w.1 * (((w.2 : A) : L)))
+          rw [zpow_add₀ hπne]
+          simp only [Units.val_mul]
+          change
+            (π ^ Multiplicative.toAdd z.1 * π ^ Multiplicative.toAdd w.1) *
+                ((((z.2 : A) : L) * ((w.2 : A) : L))) =
+              (π ^ Multiplicative.toAdd z.1 * (((z.2 : A) : L))) *
+                (π ^ Multiplicative.toAdd w.1 * (((w.2 : A) : L)))
+          ring }
+    have hfg : ∀ x : Lˣ, g (f x) = x := by
+      intro x
+      apply Units.ext
+      change π ^ n x * (((u x : A) : L)) = (x : L)
+      exact (hfactor x).symm
+    have hgf : ∀ z : Multiplicative ℤ × Aˣ, f (g z) = z := by
+      intro z
+      have hz :
+          ((g z : Lˣ) : L) =
+            π ^ (Multiplicative.toAdd z.1) * (((z.2 : A) : L)) := by
+        rfl
+      have h := hunique (g z) (Multiplicative.toAdd z.1) z.2 hz
+      apply Prod.ext
+      · change n (g z) = Multiplicative.toAdd z.1
+        exact h.1.symm
+      · exact h.2.symm
+    let e : Lˣ ≃* (Multiplicative ℤ × Aˣ) :=
+      { toFun := fun x => f x
+        invFun := fun z => g z
+        left_inv := hfg
+        right_inv := hgf
+        map_mul' := by
+          intro x y
+          exact f.map_mul x y }
+    exact ⟨e⟩
 
 /-- The zeroth congruence subgroup is the full unit group of the valuation ring. -/
 theorem chapter10_unit_filtration_zero
@@ -137,12 +266,13 @@ theorem chapter10_unit_filtration_separated
 theorem chapter10_unit_filtration_is_open_neighborhood_basis
     {L : Type*} [Field L] (A : ValuationSubring L)
     [TopologicalSpace Aˣ]
-    (hbasis : Chapter10UnitFiltrationNeighborhoodBasis
-      (chapter10UnitFiltration A)) :
+    (hopens : ∀ n, IsOpen (chapter10UnitFiltration A n : Set Aˣ))
+    (hnbasis : ∀ s ∈ 𝓝 (1 : Aˣ), ∃ n,
+      (chapter10UnitFiltration A n : Set Aˣ) ⊆ s) :
     (∀ n, IsOpen (chapter10UnitFiltration A n : Set Aˣ)) ∧
       ∀ s ∈ 𝓝 (1 : Aˣ), ∃ n,
         (chapter10UnitFiltration A n : Set Aˣ) ⊆ s := by
-  exact hbasis
+  exact ⟨hopens, hnbasis⟩
 
 end
 

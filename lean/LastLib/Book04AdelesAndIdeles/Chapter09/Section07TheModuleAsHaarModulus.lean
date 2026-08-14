@@ -84,7 +84,18 @@ theorem chapter09_principal_idele_preserves_additive_lattice
           Set (Chapter09Adele K)) =
       (NumberField.AdeleRing.principalSubgroup (𝓞 K) K :
         Set (Chapter09Adele K)) := by
-  sorry
+  apply Set.Subset.antisymm
+  · rintro z ⟨y, ⟨b, rfl⟩, rfl⟩
+    refine ⟨(a : K) * b, ?_⟩
+    simp [chapter09IdeleMulAddEquiv, chapter09PrincipalIdele]
+  · rintro z ⟨b, rfl⟩
+    refine ⟨algebraMap K (Chapter09Adele K) ((a : K)⁻¹ * b), ?_, ?_⟩
+    · exact ⟨(a : K)⁻¹ * b, rfl⟩
+    · change ((algebraMap K (Chapter09Adele K)) ↑a) *
+        ((algebraMap K (Chapter09Adele K)) ((a : K)⁻¹ * b)) =
+        (algebraMap K (Chapter09Adele K)) b
+      rw [← map_mul]
+      simp
 
 theorem chapter09_principal_idele_has_haar_modulus_one
     (K : Type*) [Field K] [NumberField K] (a : Kˣ) :

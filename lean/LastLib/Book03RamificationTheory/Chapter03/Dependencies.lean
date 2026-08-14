@@ -14,18 +14,12 @@ universe u v
 /-!
 Shared interfaces for Chapter 3.
 
-The checkout does not yet contain the preceding Book 3 chapters.  The
-displacement-filtration structure below is therefore a deliberately small
-book-facing bridge: it records the lower-numbering shift and the membership
-test used by every calculation in this chapter, without assuming any of the
-calculations themselves.  The valuation-ring definitions are connected to
-Book 2's canonical congruence groups.
+Chapters 1--2 already expose the canonical valuation lower groups and the
+full lower-filtration interface.  The finite-depth structure below is kept as
+a small calculation-facing bridge for the explicit examples: it uses natural
+number displacement values away from the identity, while the valuation-ring
+definitions remain connected to Book 2's canonical congruence groups.
 -/
-
-/- LOCAL_DEPENDENCY_GUESS: In the reconciled pass this structure should be
-   replaced by the canonical lower-filtration interface from Book 3,
-   Chapters 1--2.  Its only required fields are the displayed lower-group
-   convention and the displacement membership equivalence. -/
 
 /- The lower group attached to a chosen valuation branch.
 
@@ -86,14 +80,21 @@ theorem chapter03ValuationLowerGroup_succ_le
 def chapter03GaloisLowerGroup
     (F : Type u) {E : Type v} [Field F] [Field E] [Algebra F E]
     (A : ValuationSubring E) (i : ℤ) : Subgroup (Gal(E / F)) :=
-  if i < 0 then ⊤ else
+  if i < 0 then
+    (⊤ : Subgroup
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05DecompositionGroup
+        F A)).map (Subgroup.subtype _)
+  else
     (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05RamificationGroup
       F A (i.toNat + 1)).map (Subgroup.subtype _)
 
 @[simp]
 theorem chapter03GaloisLowerGroup_neg_one
     (F : Type u) {E : Type v} [Field F] [Field E] [Algebra F E]
-    (A : ValuationSubring E) :
+    (A : ValuationSubring E)
+    (hdecomp :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05DecompositionGroup
+          F A = ⊤) :
     chapter03GaloisLowerGroup F A (-1) = ⊤ := by
   sorry
 
@@ -136,11 +137,15 @@ identity when every tested displacement is zero. -/
 noncomputable def chapter03DisplacementIndex
     {L : Type*} [Field L] (vL : AddValuation L (WithTop ℤ))
     (B : Set L) (σ : L ≃+* L) : WithTop ℤ :=
-  sInf (chapter03DisplacementValues vL B σ)
+  by
+    classical
+    exact if σ = 1 then ⊤ else sInf (chapter03DisplacementValues vL B σ)
 
 theorem chapter03DisplacementIndex_le
     {L : Type*} [Field L] (vL : AddValuation L (WithTop ℤ))
-    (B : Set L) (σ : L ≃+* L) {x : L} (hx : x ∈ B) :
+    (B : Set L) (σ : L ≃+* L) (hσ : σ ≠ 1)
+    (hbounded : BddBelow (chapter03DisplacementValues vL B σ))
+    {x : L} (hx : x ∈ B) :
     chapter03DisplacementIndex vL B σ ≤
       chapter03DisplacementValue vL σ x := by
   sorry

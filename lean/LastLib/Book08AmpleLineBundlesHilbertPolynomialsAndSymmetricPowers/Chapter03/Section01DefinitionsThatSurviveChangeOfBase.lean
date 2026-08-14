@@ -1,4 +1,5 @@
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter03.Dependencies
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02.Section02InvertibleQuotients
 
 /-!
 ## 3.1 Definitions that survive change of base
@@ -30,19 +31,19 @@ theorem chapter03_quasiProjective_iff_exists_presentation (f : X ⟶ S) :
 
 /-- Constructor for the projective predicate from its presentation data. -/
 theorem chapter03_projective_of_presentation (f : X ⟶ S)
-    (E : S.Modules) (hE : chapter03FiniteLocallyFree E)
+    (E : S.Modules) (_hE : chapter03FiniteLocallyFree E)
     (P : Chapter03RelativeProjectiveBundle S E) (i : X ⟶ P.carrier)
     (hi : IsClosedImmersion i) (overBase : i ≫ P.projection = f) :
     chapter03Projective f := by
-  sorry
+  exact ⟨{ module := P.module, ambient := P.canonical, embedding := i, isClosedImmersion := hi, overBase := overBase }⟩
 
 /-- Constructor for the quasi-projective predicate from its presentation data. -/
 theorem chapter03_quasiProjective_of_presentation (f : X ⟶ S)
-    (E : S.Modules) (hE : chapter03FiniteLocallyFree E)
+    (E : S.Modules) (_hE : chapter03FiniteLocallyFree E)
     (P : Chapter03RelativeProjectiveBundle S E) (i : X ⟶ P.carrier)
     (hi : IsImmersion i) (overBase : i ≫ P.projection = f) :
     chapter03QuasiProjective f := by
-  sorry
+  exact ⟨{ module := P.module, ambient := P.canonical, embedding := i, isImmersion := hi, overBase := overBase }⟩
 
 /-- Eliminator for a projective presentation. -/
 theorem chapter03_projective_elim (f : X ⟶ S) {Q : Prop}
@@ -73,7 +74,19 @@ noncomputable def chapter03TrivialModule (S : Scheme.{u}) (r : ℕ) : S.Modules 
 /-- The standard free module is finite locally free. -/
 theorem chapter03_trivialModule_finiteLocallyFree (S : Scheme.{u}) (r : ℕ) :
     chapter03FiniteLocallyFree (chapter03TrivialModule S r) := by
-  sorry
+  change (SheafOfModules.free (R := S.ringCatSheaf) (ULift.{u} (Fin (r + 1)))).IsQuasicoherent ∧
+    (SheafOfModules.free (R := S.ringCatSheaf) (ULift.{u} (Fin (r + 1)))).IsLocallyFree ∧
+      (SheafOfModules.free (R := S.ringCatSheaf) (ULift.{u} (Fin (r + 1)))).IsFiniteType
+  refine ⟨by infer_instance, by infer_instance, ?_⟩
+  let G := SheafOfModules.free.generatingSections
+    (R := S.ringCatSheaf) (ULift.{u} (Fin (r + 1)))
+  refine { exists_localGeneratorsData := ?_ }
+  refine ⟨G.localGeneratorsData, ?_⟩
+  refine { isFiniteType := ?_ }
+  intro i
+  refine { finite := ?_ }
+  change Finite (ULift.{u} (Fin (r + 1)))
+  infer_instance
 
 /-- The chosen relative projective space of rank `r`. -/
 noncomputable def chapter03ProjectiveSpaceBundle (S : Scheme.{u}) (r : ℕ) :
@@ -83,11 +96,9 @@ noncomputable def chapter03ProjectiveSpaceBundle (S : Scheme.{u}) (r : ℕ) :
     module_carrier := rfl
     finiteLocallyFree := chapter03_trivialModule_finiteLocallyFree S r
     canonical :=
-      { finiteLocallyFree := chapter03_trivialModule_finiteLocallyFree S r
-        data :=
-          (chapter02ProjectiveSpaceData S (Chapter02ProjectiveSpaceIndex r)).bundle
-        proper := by sorry
-        finite_presentation := by sorry } }
+      chapter02FiniteRelativeProjectiveBundle S
+        (chapter02FreeQuasiCoherentModule S (Chapter02ProjectiveSpaceIndex r))
+        (chapter03_trivialModule_finiteLocallyFree S r) }
 
 /-- The relative projective space `ℙ^r_S`, as supplied by the preceding projective-bundle API. -/
 noncomputable def chapter03ProjectiveSpace (S : Scheme.{u}) (r : ℕ) : Scheme.{u} :=
@@ -118,7 +129,22 @@ theorem chapter03_affineSpace_is_standard_open (S : Scheme.{u}) (r : ℕ) :
 /-- Affine space is quasi-projective over its base. -/
 theorem chapter03_affineSpace_quasiProjective (S : Scheme.{u}) (r : ℕ) :
     chapter03QuasiProjective (chapter03AffineSpaceProjection S r) := by
-  sorry
+  obtain ⟨i, hi, hbase⟩ := chapter03_affineSpace_is_standard_open S r
+  let : IsOpenImmersion i := hi
+  have hp : chapter03Projective (chapter03ProjectiveSpaceProjection S r) := by
+    apply chapter03_projective_of_presentation
+      (chapter03ProjectiveSpaceProjection S r)
+      (chapter03TrivialModule S r)
+      (chapter03_trivialModule_finiteLocallyFree S r)
+      (chapter03ProjectiveSpaceBundle S r) (𝟙 _)
+    · dsimp [chapter03ProjectiveSpace]
+      infer_instance
+    · simp [chapter03ProjectiveSpaceProjection, chapter03ProjectiveSpace]
+  obtain ⟨P⟩ := hp
+  let : IsClosedImmersion P.embedding := P.isClosedImmersion
+  have hq : chapter03QuasiProjective (i ≫ P.embedding ≫ P.ambient.projection) := by
+    exact ⟨{ module := P.module, ambient := P.ambient, embedding := i ≫ P.embedding, isImmersion := by infer_instance, overBase := by simp [Category.assoc, P.overBase] }⟩
+  simpa [Category.assoc, P.overBase, hbase] using hq
 
 /-- Every closed immersion is projective. -/
 theorem chapter03_closedImmersion_projective (i : X ⟶ S) [IsClosedImmersion i] :
@@ -129,7 +155,9 @@ theorem chapter03_closedImmersion_projective (i : X ⟶ S) [IsClosedImmersion i]
 theorem chapter03_openImmersion_quasiProjective (j : X ⟶ Y) (f : Y ⟶ S)
     [IsOpenImmersion j] (hf : chapter03Projective f) :
     chapter03QuasiProjective (j ≫ f) := by
-  sorry
+  obtain ⟨P⟩ := hf
+  let : IsClosedImmersion P.embedding := P.isClosedImmersion
+  exact ⟨{ module := P.module, ambient := P.ambient, embedding := j ≫ P.embedding, isImmersion := by infer_instance, overBase := by simp [Category.assoc, P.overBase] }⟩
 
 end
 

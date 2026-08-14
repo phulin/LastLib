@@ -13,11 +13,19 @@ universe u v
 /-! ### 11.4 Marked and semistable variants -/
 
 def chapter11MarkedInvariant
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K} {n : ℕ}
+    {P : Chapter11MarkedCurve C n}
+    {M : Chapter11RegularProperModel R K C}
     (D : Chapter11MarkedModel P M) : Chapter11MarkedResolutionInvariant :=
   { surface := D.surfaceInvariant
     boundaryTangencies := D.boundaryTangencies }
 
 def chapter11MarkedResolutionStep
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K} {n : ℕ}
+    {P : Chapter11MarkedCurve C n}
+    {M : Chapter11RegularProperModel R K C}
     (D E : Chapter11MarkedModel P M) : Prop :=
   chapter11MarkedComplexityLt
     (chapter11MarkedComplexity (chapter11MarkedInvariant E))
@@ -28,6 +36,10 @@ theorem chapter11_marked_resolution_complexity_is_well_founded :
   sorry
 
 theorem chapter11_marked_resolution_step_decreases_complexity
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K} {n : ℕ}
+    {P : Chapter11MarkedCurve C n}
+    {M : Chapter11RegularProperModel R K C}
     (D E : Chapter11MarkedModel P M)
     (h : chapter11MarkedResolutionStep D E) :
     chapter11MarkedComplexityLt
@@ -109,8 +121,8 @@ theorem chapter11_normalize_resolve_and_remove_exceptional_components_preserving
 
 theorem chapter11_stable_model_contracts_unstable_rational_components
     {S : Scheme.{u}} (M : Chapter11StableModel S) :
-    M.contractsUnstableRationalComponents :=
-  M.contractsUnstableRationalComponents
+    M.contractsUnstableRationalComponents := by
+  sorry
 
 def chapter11_stable_model_can_have_nonregular_total_space_after_ramified_base_change
     {S : Scheme.{u}} : Prop :=

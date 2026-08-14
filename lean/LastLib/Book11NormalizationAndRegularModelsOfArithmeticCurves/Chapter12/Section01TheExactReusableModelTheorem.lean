@@ -33,7 +33,7 @@ structure Chapter12ArithmeticCurveModelPackage
   finiteExtensionResolution :
     ∀ {L : Type u} [Field L] [Algebra K L] [FiniteDimensional K L],
       Chapter12FiniteSeparableExtension K L →
-        ∃ (B' : Chapter12NormalizedDedekindBase B),
+        ∃ (B' : Chapter12NormalizedDedekindBase (K := K) (L := L) B),
           Nonempty (Chapter12ResolvedBaseChange (chapter12NormalModelToFlat normalModel) B')
   semistable_centers_avoid_open :
     ∀ {V : S.Opens} (N : Chapter12SemistableOpenModel B C V),
@@ -60,7 +60,7 @@ noncomputable def chapter12ArithmeticCurveModelPackage
     Chapter12ArithmeticCurveModelPackage B C U M :=
   Classical.choice (chapter12_arithmeticCurve_model_package B C U hU M)
 
-theorem chapter12_package_has_normal_flat_projective_model
+def chapter12_package_has_normal_flat_projective_model
     {S : Scheme.{u}} {K : Type u} [Field K]
     {B : Chapter12ExcellentDedekindBase S K}
     {C : Chapter01SmoothProperCurveOverField K}
@@ -69,7 +69,7 @@ theorem chapter12_package_has_normal_flat_projective_model
     Chapter12NormalFlatProjectiveModel B C :=
   P.normalModel
 
-theorem chapter12_package_has_regular_flat_projective_model
+def chapter12_package_has_regular_flat_projective_model
     {S : Scheme.{u}} {K : Type u} [Field K]
     {B : Chapter12ExcellentDedekindBase S K}
     {C : Chapter01SmoothProperCurveOverField K}
@@ -94,7 +94,10 @@ theorem chapter12_package_is_identical_over_prescribed_open
     {C : Chapter01SmoothProperCurveOverField K}
     {U : S.Opens} {M : Chapter12SmoothProjectiveOpenModel B C U}
     (P : Chapter12ArithmeticCurveModelPackage B C U M) :
-    P.regularModification.map ∣_ U =
+    P.regularModification.map.resLE
+        (P.normalModel.structureMap ⁻¹ᵁ U)
+        (P.regularModel.structureMap ⁻¹ᵁ U) (by
+          rw [← Scheme.Hom.comp_preimage, P.regularModification.over_base]) =
       P.regularExtension.openIso.inv ≫ P.normalExtension.openIso.hom :=
   P.regularModification.identical_over_U
 
@@ -106,7 +109,7 @@ theorem chapter12_package_finite_extension_normalization_then_resolution
     (P : Chapter12ArithmeticCurveModelPackage B C U M)
     {L : Type u} [Field L] [Algebra K L] [FiniteDimensional K L]
     (E : Chapter12FiniteSeparableExtension K L) :
-    ∃ (B' : Chapter12NormalizedDedekindBase B),
+    ∃ (B' : Chapter12NormalizedDedekindBase (K := K) (L := L) B),
       Nonempty (Chapter12ResolvedBaseChange
         (chapter12NormalModelToFlat P.normalModel) B') :=
   P.finiteExtensionResolution E

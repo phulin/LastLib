@@ -19,13 +19,28 @@ and residue degree `f`. -/
 theorem chapter08_unramified_stage_profile
     {K Kf : Type*} [Field K] [Field Kf] [Algebra K Kf]
     [FiniteDimensional K Kf]
-    (f : ℕ) (_hdegree : Module.finrank K Kf = f) :
-    ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
-      q.degree = f ∧ q.ramificationIndex = 1 ∧ q.residueDegree = f ∧
-        LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10Unramified q := by
-  refine ⟨{ degree := f, ramificationIndex := 1, residueDegree := f }, rfl, rfl, rfl, ?_⟩
-  change (1 : ℕ) = 1 ∧ f = f
-  exact ⟨rfl, rfl⟩
+    (f : ℕ) (_hdegree : Module.finrank K Kf = f)
+    (vK : AddValuation K (WithTop ℤ))
+    (vKf : AddValuation Kf (WithTop ℤ))
+    (hdiscreteK :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vK)
+    (hdiscreteKf :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vKf)
+    (hval : vK.IsEquiv (AddValuation.comap (algebraMap K Kf) vKf))
+    (hunramified :
+      ∃ d : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10HeterogeneousExtensionData
+          vK vKf hval,
+        LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10UnramifiedBranch
+          vK vKf hval d) :
+    ∃ d : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10HeterogeneousExtensionData
+        vK vKf hval,
+      ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
+        LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ProfileRealizedByData d q ∧
+          q.degree = f ∧ q.ramificationIndex = 1 ∧ q.residueDegree = f ∧
+          LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10Unramified q ∧
+          LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10UnramifiedBranch
+            vK vKf hval d := by
+  sorry
 
 /-- Book §8.9: adjoining a root of `varpi^e = π_K` over the unramified stage
 produces the ramified degree-`e` stage. -/
@@ -38,31 +53,41 @@ theorem chapter08_ramified_stage_profile
     (e f : ℕ) (_he : 0 < e) (_hf : 0 < f)
     (πK : K) (varpi : L)
     (vK : AddValuation K (WithTop ℤ))
-    (_hdiscreteK :
+    (hdiscreteK :
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vK)
-    (_hπK : vK πK = 1)
     (_hroot : algebraMap Kf L (algebraMap K Kf πK) = varpi ^ e)
     (_hgen : Algebra.adjoin Kf ({varpi} : Set L) = ⊤)
     (hdegree : Module.finrank Kf L = e)
     (hbaseDegree : Module.finrank K Kf = f)
-    (_hunramified : ∃ q :
-      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
-      q.degree = f ∧ q.ramificationIndex = 1 ∧ q.residueDegree = f ∧
-        LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10Unramified q) :
+    (vKf : AddValuation Kf (WithTop ℤ))
+    (vL : AddValuation L (WithTop ℤ))
+    (hdiscreteKf :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vKf)
+    (hdiscreteL :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vL)
+    (hvalKf : vK.IsEquiv (AddValuation.comap (algebraMap K Kf) vKf))
+    (hvalL : vKf.IsEquiv (AddValuation.comap (algebraMap Kf L) vL))
+    (hval : vK.IsEquiv (AddValuation.comap (algebraMap K L) vL))
+    (hπK : vK πK = 1)
+    (hvarpi : vL varpi = 1)
+    (hscale : ∀ x : Kf, x ≠ 0 →
+      vL (algebraMap Kf L x) = e • vKf x)
+    (hunramified :
+      ∃ d : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10HeterogeneousExtensionData
+          vK vKf hvalKf,
+        ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
+          LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ProfileRealizedByData d q ∧
+            q.degree = f ∧ q.ramificationIndex = 1 ∧ q.residueDegree = f ∧
+            LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10Unramified q ∧
+            LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10UnramifiedBranch
+              vK vKf hvalKf d) :
     Module.finrank K L = e * f ∧
-      ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
-        q.degree = e * f ∧ q.ramificationIndex = e ∧
-          q.residueDegree = f := by
-  have hfin : Module.finrank K L =
-      Module.finrank K Kf * Module.finrank Kf L :=
-    (Module.finrank_mul_finrank K Kf L).symm
-  have hdegree' : Module.finrank K L = e * f := by
-    calc
-      Module.finrank K L = Module.finrank K Kf * Module.finrank Kf L := hfin
-      _ = f * e := by rw [hbaseDegree, hdegree]
-      _ = e * f := Nat.mul_comm _ _
-  refine ⟨hdegree', ?_⟩
-  exact ⟨{ degree := e * f, ramificationIndex := e, residueDegree := f }, rfl, rfl, rfl⟩
+      ∃ d : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10HeterogeneousExtensionData
+          vK vL hval,
+        ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
+          LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ProfileRealizedByData d q ∧
+            q.degree = e * f ∧ q.ramificationIndex = e ∧ q.residueDegree = f := by
+  sorry
 
 /-- The coordinate term `θ^j varpi^i` in the mixed integral basis. -/
 def chapter08MixedIntegralBasisTerm

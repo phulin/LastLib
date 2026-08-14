@@ -155,13 +155,6 @@ def chapter08RayClassGroup
     (R : Chapter08RayClassPresentation K I C) : Type v :=
   I ⧸ R.principalSubgroup
 
-theorem chapter08_rayClassGroup_canonical_equiv
-    {K : Type u} {I : Type v} {C : Type w} [Field K] [NumberField K]
-    [CommGroup I] [CommGroup C]
-    (R : Chapter08RayClassPresentation K I C) :
-    chapter08RayClassGroup R ≃* idealRayClassGroup R.modulus :=
-  R.canonicalIdealRayClassEquiv
-
 instance chapter08RayClassGroupCommGroup
     {K : Type u} {I : Type v} {C : Type w} [Field K] [NumberField K]
     [CommGroup I] [CommGroup C]
@@ -169,6 +162,13 @@ instance chapter08RayClassGroupCommGroup
     CommGroup (chapter08RayClassGroup R) := by
   change CommGroup (I ⧸ R.principalSubgroup)
   infer_instance
+
+noncomputable def chapter08_rayClassGroup_canonical_equiv
+    {K : Type u} {I : Type v} {C : Type w} [Field K] [NumberField K]
+    [CommGroup I] [CommGroup C]
+    (R : Chapter08RayClassPresentation K I C) :
+    chapter08RayClassGroup R ≃* idealRayClassGroup R.modulus :=
+  R.canonicalIdealRayClassEquiv
 
 /-- The quotient map from ideals to ray classes. -/
 def chapter08RayClassQuotientMap
@@ -470,18 +470,18 @@ abbrev chapter08NarrowClassGroup
     (N : Chapter08NarrowClassGroupData K) : Type v :=
   N.carrier
 
-theorem chapter08_narrowClassGroup_canonical_equiv
-    {K : Type u} [Field K] [NumberField K]
-    (N : Chapter08NarrowClassGroupData K) :
-    chapter08NarrowClassGroup N ≃* NarrowClassGroup K :=
-  N.canonicalEquiv
-
 instance chapter08NarrowClassGroupCommGroup
     {K : Type u} [Field K] [NumberField K]
     (N : Chapter08NarrowClassGroupData K) :
     CommGroup (chapter08NarrowClassGroup N) := by
   change CommGroup N.carrier
   exact N.carrierCommGroup
+
+noncomputable def chapter08_narrowClassGroup_canonical_equiv
+    {K : Type u} [Field K] [NumberField K]
+    (N : Chapter08NarrowClassGroupData K) :
+    chapter08NarrowClassGroup N ≃* NarrowClassGroup K :=
+  N.canonicalEquiv
 
 /- LOCAL_DEPENDENCY_GUESS: this is the finite-unramified, possibly
 complexifying analogue of `Chapter08HilbertClassFieldData`. -/
@@ -629,7 +629,7 @@ instance chapter08RationalRayGroupWithoutInfinityCommGroup (m : ℕ) :
 /-- Cyclotomic data retaining the chosen complex-conjugation automorphism. -/
 structure Chapter08CyclotomicData
     (m : ℕ) (F : Type u) [Field F] [Algebra ℚ F]
-    [NumberField F] [IsCyclotomicExtension {m} ℚ F] where
+    [NumberField F] [IsCyclotomicExtension {m} ℚ F] [NeZero m] where
   complexConjugation : Gal(F / ℚ)
   complexConjugation_on_root :
     complexConjugation (IsCyclotomicExtension.zeta m ℚ F) =
@@ -643,7 +643,7 @@ def chapter08CyclotomicRoot
 
 def chapter08CyclotomicMaximalRealSubfield
     {m : ℕ} {F : Type u} [Field F] [Algebra ℚ F]
-    [NumberField F] [IsCyclotomicExtension {m} ℚ F]
+    [NumberField F] [IsCyclotomicExtension {m} ℚ F] [NeZero m]
     (D : Chapter08CyclotomicData m F) : IntermediateField ℚ F :=
   IntermediateField.fixedField (Subgroup.closure {D.complexConjugation})
 

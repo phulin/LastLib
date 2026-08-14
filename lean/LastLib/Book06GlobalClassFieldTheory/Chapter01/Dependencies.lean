@@ -86,6 +86,11 @@ theorem classQuotient_principal {K : Type*} [Field K] [NumberField K]
     (a : Kˣ) : classQuotient (principalIdele (K := K) a) = 1 := by
   sorry
 
+theorem classQuotient_eq_one_iff {K : Type*} [Field K] [NumberField K]
+    (x : BookIdeleGroup K) :
+    classQuotient x = 1 ↔ x ∈ principalIdeleSubgroup K := by
+  sorry
+
 theorem principalIdele_injective {K : Type*} [Field K] [NumberField K] :
     Function.Injective (principalIdele (K := K)) := by
   sorry
@@ -259,10 +264,18 @@ def globalMaximalAbelianSubextension
     [FiniteDimensional K L] [IsGalois K L] : IntermediateField K L :=
   IntermediateField.fixedField (commutator (Gal(L / K)))
 
-/- LOCAL_DEPENDENCY_GUESS: the earlier restricted-product and local class-field
-interfaces supply these componentwise maps and their unit-tail properties.
-The idele map below is constructed from the local factors rather than being a
-free continuous homomorphism. -/
+/- The branch norm is tied to the canonical finite-dimensional algebra norm.
+The place interface below supplies the local algebra structure because the
+completion API does not yet choose an embedding of a completion above `v` over
+the completion at `v`. -/
+structure BookLocalNormData (F E : Type*) [Field F] [Field E] where
+  [algebra : Algebra F E]
+  [finiteDimensional : FiniteDimensional F E]
+  norm : Eˣ →* Fˣ
+  norm_eq : norm = Units.map (Algebra.norm F (S := E))
+
+/- The component formula is recorded in the structure so the map cannot be
+replaced by a free unrelated homomorphism. -/
 structure GlobalNormInterface (K L : Type*) [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L] where
   above : ∀ _v : BookPlace K, Finset (BookPlace L)
@@ -272,6 +285,11 @@ structure GlobalNormInterface (K L : Type*) [Field K] [NumberField K]
     ∀ (v : BookPlace K) (w : BookPlace L), w ∈ above v ↔ below w = v
   localNorm : ∀ (v : BookPlace K) (w : BookPlace L),
     (BookPlace.completion w)ˣ →* (BookPlace.completion v)ˣ
+  localNormData : ∀ (v : BookPlace K) (w : BookPlace L), w ∈ above v →
+    BookLocalNormData (BookPlace.completion v) (BookPlace.completion w)
+  localNorm_is_field_norm : ∀ (v : BookPlace K) (w : BookPlace L)
+      (hw : w ∈ above v),
+      localNorm v w = (localNormData v w hw).norm
   principal_norm_component :
     ∀ (a : Lˣ) (v : BookPlace K),
       (above v).prod (fun w => localNorm v w (bookPlaceUnitEmbedding w a)) =
@@ -283,6 +301,16 @@ structure GlobalNormInterface (K L : Type*) [Field K] [NumberField K]
       Set.MapsTo (localNorm v w)
         (bookPlaceUnitSubgroup w : Set (BookPlace.completion w)ˣ)
         (bookPlaceUnitSubgroup v : Set (BookPlace.completion v)ˣ)
+  /- The idele norm is the homomorphism whose local unit components are the
+     products of the local norms over all places above a base place.  Keeping
+     this equation in the interface prevents the later class norm from being
+     built from an unrelated arbitrary homomorphism. -/
+  ideleNorm : BookIdeleGroup L →* BookIdeleGroup K
+  ideleNorm_component :
+    ∀ (x : BookIdeleGroup L) (v : BookPlace K),
+      bookIdeleUnitComponent (ideleNorm x) v =
+        (above v).prod (fun w =>
+          localNorm v w (bookIdeleUnitComponent x w))
   unramified : BookPlace K → Prop
   eventually_finite_unramified :
     ∀ᶠ v in Filter.cofinite, bookPlaceIsFinite v ∧ unramified v
@@ -297,8 +325,8 @@ structure GlobalNormInterface (K L : Type*) [Field K] [NumberField K]
 noncomputable def componentwiseIdeleNorm
     {K L : Type*} [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L]
-    (N : GlobalNormInterface K L) : BookIdeleGroup L →* BookIdeleGroup K := by
-  sorry
+    (N : GlobalNormInterface K L) : BookIdeleGroup L →* BookIdeleGroup K :=
+  N.ideleNorm
 
 theorem GlobalNormInterface.principal_compatibility_apply
     {K L : Type*} [Field K] [NumberField K]
@@ -320,6 +348,15 @@ noncomputable def classNorm {K L : Type*} [Field K] [NumberField K]
       change classQuotient (componentwiseIdeleNorm N (principalIdele y)) = 1
       rw [N.principal_compatibility_apply y]
       exact classQuotient_principal (fieldNormUnits K L y))
+
+@[simp]
+theorem classNorm_apply_classQuotient
+    {K L : Type*} [Field K] [NumberField K]
+    [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L]
+    (N : GlobalNormInterface K L) (x : BookIdeleGroup L) :
+    classNorm N (classQuotient x) =
+      classQuotient (componentwiseIdeleNorm N x) := by
+  sorry
 
 def ideleNormGroup {K L : Type*} [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L]
@@ -406,8 +443,14 @@ noncomputable def finiteLevelGlobalArtin
     (finite_product :
       ∀ x : BookIdeleGroup K, ∃ s : Finset (BookPlace K),
         ∀ v ∉ s, localArtin v (bookIdeleUnitComponent x v) = 1) :
-    BookIdeleGroup K →* GroupAbelianization (Gal(L / K)) := by
-  sorry
+    BookIdeleGroup K →* GroupAbelianization (Gal(L / K)) where
+  toFun x :=
+    Finset.prod (Classical.choose (finite_product x))
+      (fun v => localArtin v (bookIdeleUnitComponent x v))
+  map_one' := by
+    sorry
+  map_mul' := by
+    sorry
 
 structure FiniteLevelArtinData (K L : Type*) [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]

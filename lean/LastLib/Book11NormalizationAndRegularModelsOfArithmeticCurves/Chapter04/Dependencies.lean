@@ -15,12 +15,16 @@ import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
 import Mathlib.RingTheory.KrullDimension.Basic
 import Mathlib.RingTheory.Regular.RegularSequence
 import Mathlib.RingTheory.RegularLocalRing.Defs
+import LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter01.Dependencies
 import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter03.Dependencies
+import LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter03.Core
 
 namespace LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter04
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits Set TopologicalSpace
+open LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter01
 open LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter03
+open LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter03
 open scoped AlgebraicGeometry BigOperators
 
 noncomputable section
@@ -32,9 +36,10 @@ Shared interfaces for Chapter 4.
 
 The pinned library has the stalkwise regular-local-ring and integrally-closed
 predicates, localization dimension, normalization morphisms, and the
-fiberwise smoothness machinery.  It does not expose a named depth/S2 package
-or an excellence package, so depth is defined from regular sequences and the
-excellence consequence is kept as an explicit book-facing interface below.
+fiberwise smoothness machinery.  It does not expose a named depth/S2 package,
+so depth is defined from regular sequences.  The preceding Book 11 Chapter 3
+supplies the affine excellence predicate; the scheme-level profile below
+packages those affine hypotheses for this chapter.
 -/
 
 /-- Regularity of a scheme in the stalkwise form used in this chapter. -/
@@ -99,7 +104,7 @@ noncomputable def Chapter04Depth (R : Type u) [CommRing R] [IsLocalRing R] : Wit
     ∃ rs : List R,
       d = (rs.length : WithBot ℕ∞) ∧
         RingTheory.Sequence.IsRegular R rs ∧
-          ∀ r ∈ rs, r ∈ maximalIdeal R}
+          ∀ r ∈ rs, r ∈ IsLocalRing.maximalIdeal R}
 
 /- The codimension-two depth condition (S2). -/
 def Chapter04S2 (A : Type u) [CommRing A] [IsNoetherianRing A] : Prop :=
@@ -123,11 +128,17 @@ def Chapter04HeightOneIntersection (A : Type u) [CommRing A] [IsDomain A]
       ∀ (p : Ideal A) (hp : p.IsPrime),
         p.height = 1 → Chapter04MemHeightOneLocalization x p hp
 
-/- LOCAL_DEPENDENCY_GUESS: Excellence is not a pinned Mathlib predicate for
-schemes.  This profile records exactly the closure consequence used here and
-leaves the independent excellence theorem available to a later chapter. -/
+/- The preceding chapter supplies the affine excellence predicate, but not a
+   scheme-level class.  Keep the scheme interface tied to those actual affine
+   hypotheses rather than making closedness of the singular locus an input. -/
 class Chapter04ExcellenceProfile (X : Scheme.{u}) : Prop where
-  singularLocus_closed : IsClosed (Chapter04NonRegularLocus X)
+  noetherian : IsNoetherian X
+  affine_excellent : ∀ U : X.affineOpens, Chapter03Excellent Γ(X, U)
+
+theorem chapter04_excellenceProfile_of_excellentSurface
+    (X : Scheme.{u}) (hX : Chapter03ExcellentSurface X) :
+    Chapter04ExcellenceProfile X := by
+  exact ⟨hX.2.1, hX.2.2.2⟩
 
 /-- A positive-dimensional closed subset contained in the singular locus. -/
 def Chapter04SingularCurve (X : Scheme.{u}) (C : Set X) : Prop :=
@@ -138,13 +149,17 @@ def Chapter04SingularCurve (X : Scheme.{u}) (C : Set X) : Prop :=
 def Chapter04SingularLocusContainsNoCurve (X : Scheme.{u}) : Prop :=
   ¬ ∃ C : Set X, Chapter04SingularCurve X C
 
-/-- Geometric regularity of a scheme-valued fiber. -/
-def Chapter04GeometricallyRegular : ObjectProperty Scheme :=
-  Chapter04RegularScheme
+/- Geometric regularity is a morphism property: every field-valued fiber is
+   regular.  An object property alone would forget the base and would merely
+   restate ordinary regularity. -/
+abbrev Chapter04GeometricallyRegular : MorphismProperty Scheme :=
+  geometrically Chapter04RegularScheme
 
-/-- Geometric regularity of all fibers of a morphism. -/
-def Chapter04GeometricallyRegularFibers {X S : Scheme.{u}} (f : X ⟶ S) : Prop :=
-  geometrically Chapter04GeometricallyRegular f
+/- The preceding Chapter 1 already fixes the pinned fiberwise interface (smoothness
+   of each residue-field fiber).  Keep a Chapter 4 name as an alias instead of
+   introducing a second, potentially non-equivalent notion. -/
+abbrev Chapter04GeometricallyRegularFibers {X S : Scheme.{u}} (f : X ⟶ S) : Prop :=
+  Chapter01GeometricallyRegularFibers f
 
 /-- The local algebraic smoothness predicate used for the node example. -/
 def Chapter04AlgebraSmoothAt (R A : Type u) [CommRing R] [CommRing A]
@@ -163,22 +178,6 @@ theorem chapter04_normalization_fromNormalization_integral
     [QuasiCompact f] [QuasiSeparated f] :
     IsIntegralHom f.fromNormalization := by
   infer_instance
-
-/- LOCAL_DEPENDENCY_GUESS: the pinned imports do not expose a blow-up
-construction or a projective-line exceptional divisor.  This is the minimal
-data interface needed to keep both assertions available to later proofs. -/
-
-structure Chapter04QuadraticConeResolutionData (k : Type u) [Field k] where
-  blowup : Scheme
-  morphism : blowup ⟶ Scheme.Spec (CommRingCat.of (MvPolynomial (Fin 3) k ⧸
-    Ideal.span ({MvPolynomial.X 0 * MvPolynomial.X 1 - MvPolynomial.X 2 ^ 2} :
-      Set (MvPolynomial (Fin 3) k))))
-  morphismIsBlowupAtOrigin : Prop
-  exceptional : Scheme
-  exceptionalToBlowup : exceptional ⟶ blowup
-  exceptionalIsProjectiveLine : Prop
-  exceptionalMapsToVertex : Prop
-  blowupRegular : Chapter04RegularScheme blowup
 
 end
 

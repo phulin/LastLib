@@ -5,6 +5,7 @@ namespace LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter1
 noncomputable section
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits Set
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
 open LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter07
 open scoped AlgebraicGeometry
 
@@ -34,21 +35,26 @@ theorem chapter11_genus_zero_elementary_transformations_destroy_unmarked_uniquen
     (C : Chapter11SmoothProjectiveCurve K)
     (hgenus : C.genus = 0)
     (hP1 : Nonempty (C.carrier ≅ chapter04ProjectiveLine K)) :
-    Nonempty (Chapter11GenusZeroMinimalModelPair C) := by
+    Nonempty (Chapter11GenusZeroMinimalModelPair (R := R) C) := by
   sorry
 
 structure Chapter11ThreeMarkedSections
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
     (M : Chapter11RegularProperModel R K C) where
   sections : Fin 3 → (Spec (CommRingCat.of K) ⟶ M.carrier)
-  over : ∀ i, sections i ≫ M.structureMap = chapter11GenericBaseMap R K
+  over_structureMap : ∀ i, sections i ≫ M.structureMap = chapter11GenericBaseMap R K
   pairwise_disjoint : ∀ i j, i ≠ j → ∀ z : Spec (CommRingCat.of K),
     sections i z ≠ sections j z
 
 def chapter11PreservesThreeMarkedSections
+    {R K : Type u} [CommRing R] [Field K] [Algebra R K]
+    {C : Chapter11SmoothProjectiveCurve K}
+    {M N : Chapter11RegularProperModel R K C}
     (P : Chapter11ThreeMarkedSections M)
     (Q : Chapter11ThreeMarkedSections N)
     (u : M.carrier ⟶ N.carrier) : Prop :=
-  ∀ i, u ≫ Q.sections i = P.sections i
+  ∀ i, P.sections i ≫ u = Q.sections i
 
 theorem chapter11_three_marked_sections_restore_rigidity
     {R K : Type u} [CommRing R] [Field K] [Algebra R K]
@@ -70,7 +76,7 @@ earlier category of unmarked models. -/
 structure Chapter11UnmarkedGenusZeroNonuniqueness
     {R K : Type u} [CommRing R] [Field K] [Algebra R K]
     (C : Chapter11SmoothProjectiveCurve K) where
-  pair : Chapter11GenusZeroMinimalModelPair C
+  pair : Chapter11GenusZeroMinimalModelPair (R := R) C
   no_unique_map : Prop
 
 theorem chapter11_unmarked_genus_zero_has_too_many_minimal_models
@@ -78,7 +84,7 @@ theorem chapter11_unmarked_genus_zero_has_too_many_minimal_models
     (C : Chapter11SmoothProjectiveCurve K)
     (hgenus : C.genus = 0)
     (hP1 : Nonempty (C.carrier ≅ chapter04ProjectiveLine K)) :
-    Nonempty (Chapter11UnmarkedGenusZeroNonuniqueness C) := by
+    Nonempty (Chapter11UnmarkedGenusZeroNonuniqueness (R := R) C) := by
   sorry
 
 def chapter11InducesGenericAutomorphism
@@ -121,7 +127,7 @@ structure Chapter11MinimalRegularDistinctionWitness
 def chapter11_minimal_regular_does_not_mean_smooth_semistable_or_stable
     {R K : Type u} [CommRing R] [Field K] [Algebra R K]
     (C : Chapter11SmoothProjectiveCurve K) : Prop :=
-  Nonempty (Chapter11MinimalRegularDistinctionWitness C)
+  Nonempty (Chapter11MinimalRegularDistinctionWitness (R := R) C)
 
 def chapter11_minimality_need_not_commute_with_ramified_base_change
     {R K : Type u} [CommRing R] [Field K] [Algebra R K]
@@ -135,7 +141,7 @@ theorem chapter11_ramified_base_change_requires_recontraction
     {M : Chapter11MinimalRegularModel R K C}
     (Rpr : Chapter11RamifiedBaseChangeProfile M.model) :
     Rpr.newExceptionalCurve ∧ Rpr.recontracted := by
-  exact ⟨Rpr.newExceptionalCurve, Rpr.recontracted⟩
+  sorry
 
 end
 

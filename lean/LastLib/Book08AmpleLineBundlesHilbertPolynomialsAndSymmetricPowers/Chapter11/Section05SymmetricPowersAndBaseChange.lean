@@ -217,6 +217,44 @@ noncomputable def relativeProductBaseChangeComparison {S : Scheme.{u}}
     (RelativeScheme.baseChangeHom (relativeProduct (symmetricPower C d)
       (symmetricPower C e)).snd T ≫ (symmetricPower_curve_base_change_iso C e T).choose.hom)
 
+@[simp]
+theorem relativeProductBaseChangeComparison_fst {S : Scheme.{u}}
+    (C T : RelativeScheme S) (d e : ℕ) [Chapter11SmoothQuasiProjectiveCurve C] :
+    relativeProductBaseChangeComparison C T d e ≫
+        (relativeProduct (symmetricPower (RelativeScheme.baseChange C T) d)
+          (symmetricPower (RelativeScheme.baseChange C T) e)).fst =
+      RelativeScheme.baseChangeHom (relativeProduct (symmetricPower C d)
+        (symmetricPower C e)).fst T ≫
+        (symmetricPower_curve_base_change_iso C d T).choose.hom := by
+  exact RelativeProduct.lift_fst
+    (relativeProduct (symmetricPower (RelativeScheme.baseChange C T) d)
+      (symmetricPower (RelativeScheme.baseChange C T) e))
+    (RelativeScheme.baseChangeHom (relativeProduct (symmetricPower C d)
+      (symmetricPower C e)).fst T ≫
+      (symmetricPower_curve_base_change_iso C d T).choose.hom)
+    (RelativeScheme.baseChangeHom (relativeProduct (symmetricPower C d)
+      (symmetricPower C e)).snd T ≫
+      (symmetricPower_curve_base_change_iso C e T).choose.hom)
+
+@[simp]
+theorem relativeProductBaseChangeComparison_snd {S : Scheme.{u}}
+    (C T : RelativeScheme S) (d e : ℕ) [Chapter11SmoothQuasiProjectiveCurve C] :
+    relativeProductBaseChangeComparison C T d e ≫
+        (relativeProduct (symmetricPower (RelativeScheme.baseChange C T) d)
+          (symmetricPower (RelativeScheme.baseChange C T) e)).snd =
+      RelativeScheme.baseChangeHom (relativeProduct (symmetricPower C d)
+        (symmetricPower C e)).snd T ≫
+        (symmetricPower_curve_base_change_iso C e T).choose.hom := by
+  exact RelativeProduct.lift_snd
+    (relativeProduct (symmetricPower (RelativeScheme.baseChange C T) d)
+      (symmetricPower (RelativeScheme.baseChange C T) e))
+    (RelativeScheme.baseChangeHom (relativeProduct (symmetricPower C d)
+      (symmetricPower C e)).fst T ≫
+      (symmetricPower_curve_base_change_iso C d T).choose.hom)
+    (RelativeScheme.baseChangeHom (relativeProduct (symmetricPower C d)
+      (symmetricPower C e)).snd T ≫
+      (symmetricPower_curve_base_change_iso C e T).choose.hom)
+
 theorem relativeProductBaseChangeComparison_isIso {S : Scheme.{u}}
     (C T : RelativeScheme S) (d e : ℕ) [Chapter11SmoothQuasiProjectiveCurve C] :
     IsIso (relativeProductBaseChangeComparison C T d e) := by

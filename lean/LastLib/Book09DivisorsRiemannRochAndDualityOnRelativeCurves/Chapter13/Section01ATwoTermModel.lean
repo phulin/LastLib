@@ -19,28 +19,39 @@ formed in the module category after scalar extension.
 structure Chapter13LocalTwoTermModel
     (C : Chapter13RelativeCurve) (E : Chapter13VectorBundle C.X) where
   chart : Chapter13AffineBase C
-  model : Chapter13TwoTermModel chart.A
+  model : @Chapter13TwoTermModel chart.A chart.commRingA
   h0_identification :
-    ∀ (B : Chapter13AAlgebra chart.A),
+    ∀ (B : @Chapter13AAlgebra chart.A chart.commRingA),
+      letI := chart.commRingA
       letI := B.commRingB
       letI := B.algebraAB
       Nonempty
-        (chapter13BaseChangeCohomology C E (chart.mapToBase B) 0 ≅
+        (chapter13BaseChangeCohomology E (chart.mapToBase B) 0 ≅
           chapter13TwoTermH0 (model.baseChange B).d)
   h1_identification :
-    ∀ (B : Chapter13AAlgebra chart.A),
+    ∀ (B : @Chapter13AAlgebra chart.A chart.commRingA),
+      letI := chart.commRingA
       letI := B.commRingB
       letI := B.algebraAB
       Nonempty
-        (chapter13BaseChangeCohomology C E (chart.mapToBase B) 1 ≅
+        (chapter13BaseChangeCohomology E (chart.mapToBase B) 1 ≅
           chapter13TwoTermH1 (model.baseChange B).d)
+  h1_cokernel_base_change :
+    ∀ (B : @Chapter13AAlgebra chart.A chart.commRingA),
+      letI := chart.commRingA
+      letI := B.commRingB
+      letI := B.algebraAB
+      Nonempty (Chapter13CokernelBaseChangeComparison model B)
 
 /-- The matrix in the local model. -/
 abbrev chapter13TwoTermMatrix
     {C : Chapter13RelativeCurve} {E : Chapter13VectorBundle C.X}
     (M : Chapter13LocalTwoTermModel C E) :
+    letI := M.chart.commRingA
     M.model.K0.carrier ⟶ M.model.K1.carrier :=
-  M.model.d
+  by
+    letI := M.chart.commRingA
+    exact M.model.d
 
 /-- The virtual rank of a finite free two-term model. -/
 def chapter13TwoTermVirtualRank
@@ -51,9 +62,9 @@ def chapter13TwoTermVirtualRank
 theorem chapter13TwoTermVirtualRank_baseChange
     {A : Type u} [CommRing A] (M : Chapter13TwoTermModel A)
     (B : Chapter13AAlgebra A) :
+    letI := B.commRingB
     chapter13TwoTermVirtualRank (M.baseChange B) =
-      chapter13TwoTermVirtualRank M := by
-  rfl
+      chapter13TwoTermVirtualRank M := by sorry
 
 /- LOCAL_DEPENDENCY_GUESS: perfectness of the derived pushforward of a vector
 bundle on a projective flat relative curve, together with its uniform arbitrary
@@ -69,24 +80,26 @@ theorem chapter13_two_term_model_exists
 theorem chapter13_two_term_model_h0
     {C : Chapter13RelativeCurve} {E : Chapter13VectorBundle C.X}
     (M : Chapter13LocalTwoTermModel C E)
-    (B : Chapter13AAlgebra M.chart.A) :
+    (B : @Chapter13AAlgebra M.chart.A M.chart.commRingA) :
+    letI := M.chart.commRingA
     letI := B.commRingB
-      letI := B.algebraAB
-      Nonempty
-        (chapter13BaseChangeCohomology C E (M.chart.mapToBase B) 0 ≅
-        chapter13TwoTermH0 (M.model.baseChange B).d) := by
+    letI := B.algebraAB
+    Nonempty
+      (chapter13BaseChangeCohomology E (M.chart.mapToBase B) 0 ≅
+      chapter13TwoTermH0 (M.model.baseChange B).d) := by
   exact M.h0_identification B
 
 /-- The degree-one cohomology calculation in (13.2). -/
 theorem chapter13_two_term_model_h1
     {C : Chapter13RelativeCurve} {E : Chapter13VectorBundle C.X}
     (M : Chapter13LocalTwoTermModel C E)
-    (B : Chapter13AAlgebra M.chart.A) :
+    (B : @Chapter13AAlgebra M.chart.A M.chart.commRingA) :
+    letI := M.chart.commRingA
     letI := B.commRingB
-      letI := B.algebraAB
-      Nonempty
-        (chapter13BaseChangeCohomology C E (M.chart.mapToBase B) 1 ≅
-        chapter13TwoTermH1 (M.model.baseChange B).d) := by
+    letI := B.algebraAB
+    Nonempty
+      (chapter13BaseChangeCohomology E (M.chart.mapToBase B) 1 ≅
+      chapter13TwoTermH1 (M.model.baseChange B).d) := by
   exact M.h1_identification B
 
 end

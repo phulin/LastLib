@@ -1,4 +1,4 @@
-import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter08.Dependencies
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter08.Section02FlatnessForcesConstancy
 
 namespace LastLib
 namespace Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers
@@ -48,10 +48,25 @@ theorem chapter08_flattening_stratum
     Nonempty (Chapter08FlatteningStratumData E D B P) := by
   sorry
 
-/- The numerical flatness criterion uses the flattening theorem above.  It is
-   placed in this file so the formal dependency order matches that proof route;
-   the locally noetherian statement is obtained by applying the construction
-   on affine noetherian neighborhoods. -/
+/- The locally noetherian version used by the numerical flatness criterion is
+   obtained by carrying out the same construction on affine noetherian
+   neighborhoods and gluing the resulting locally closed immersions. -/
+theorem chapter08_flattening_stratum_locally_noetherian
+    {F : Chapter08PolarizedFamily} (E : Chapter08FamilySheaf F)
+    (D : Chapter08FiberwiseHilbertData E)
+    (B : Chapter08BaseChangeHilbertData E D)
+    (hnoetherian : IsLocallyNoetherian F.family.S)
+    (hveryample : Chapter08RelativelyVeryAmple F.family.f F.lineBundle
+      F.lineBundle_invertible.is_invertible)
+    (P : Chapter08NumericalPolynomial) :
+    Nonempty (Chapter08FlatteningStratumData E D B P) := by
+  sorry
+
+/- The numerical flatness criterion uses the flattening theorem above after
+   replacing the ample polarization locally by a sufficiently high very ample
+   power (and keeping the finitely many residue-class twists).  It is placed in
+   this file so the formal dependency order matches that proof route; the
+   locally noetherian statement is obtained on affine noetherian neighborhoods. -/
 theorem chapter08_numerical_flatness_iff
     {F : Chapter08PolarizedFamily} (E : Chapter08FamilySheaf F)
     (D : Chapter08FiberwiseHilbertData E)

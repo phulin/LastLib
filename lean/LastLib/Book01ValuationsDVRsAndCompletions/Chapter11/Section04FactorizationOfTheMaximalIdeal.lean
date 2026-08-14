@@ -130,6 +130,16 @@ theorem chapter11_prime_power_layer_is_a_residue_line
   exact ⟨(Ideal.quotEquivPowQuotPowSucc
     (by infer_instance) hP0 i).symm.toAddEquiv⟩
 
+/-- The same prime-power layer equivalence retains its residue-field linear
+structure, so each layer is one-dimensional over `B / P`. -/
+theorem chapter11_prime_power_layer_is_a_residue_line_linear
+    (B : Type*) [CommRing B] [IsDedekindDomain B] (P : Ideal B)
+    [P.IsPrime] [P.IsMaximal] [P.IsPrincipal] (i : ℕ)
+    (hP0 : P ≠ ⊥) :
+    Nonempty
+      ((B ⧸ P) ≃ₗ[B] chapter11PrimePowerLayer B P i) := by
+  exact ⟨Ideal.quotEquivPowQuotPowSucc (by infer_instance) hP0 i⟩
+
 /-- The quotient `B / πB` has one `k`-dimension for every residue-degree layer. -/
 theorem chapter11_residue_quotient_dimension_sum
     (A B : Type*) [CommRing A] [IsDomain A] [CommRing B]

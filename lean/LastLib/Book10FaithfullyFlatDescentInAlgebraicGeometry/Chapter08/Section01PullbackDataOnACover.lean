@@ -52,13 +52,13 @@ noncomputable def chapter08PullbackComparisonIso
   asIso (chapter08PullbackComparison D)
 
 /-- The identity normalization on the diagonal overlap. -/
-def chapter08PullbackComparison_on_diagonal
+abbrev chapter08PullbackComparison_on_diagonal
     {T S : Scheme.{u}} {p : T ⟶ S}
     (D : Chapter08QuasiCoherentPullbackData p) :=
   (D.obj).pullHom'_hom_self ()
 
 /-- The cocycle on the triple overlap. -/
-def chapter08PullbackComparison_cocycle
+abbrev chapter08PullbackComparison_cocycle
     {T S : Scheme.{u}} {p : T ⟶ S}
     (D : Chapter08QuasiCoherentPullbackData p) :=
   (D.obj).pullHom'_hom_comp () () ()
@@ -70,7 +70,7 @@ abbrev Chapter08CompatibleUpstairsMap
 
 /-- Compatibility on the overlap is the defining equation for a morphism in
 the descent category. -/
-def chapter08CompatibleUpstairsMap_condition
+abbrev chapter08CompatibleUpstairsMap_condition
     {T S : Scheme.{u}} {p : T ⟶ S}
     {D E : Chapter08QuasiCoherentPullbackData p}
     (φ : Chapter08CompatibleUpstairsMap D E) :=
@@ -83,7 +83,10 @@ theorem chapter08_compatible_upstairs_map_ext
     {D E : Chapter08QuasiCoherentPullbackData p}
     {φ ψ : Chapter08CompatibleUpstairsMap D E}
     (h : φ.hom.hom () = ψ.hom.hom ()) : φ = ψ := by
-  exact chapter08_descent_hom_ext h
+  apply ObjectProperty.hom_ext
+  apply Pseudofunctor.DescentData'.hom_ext
+  intro i
+  simpa using h
 
 /-- Pullback of a quasi-coherent module along a scheme morphism, packaged in
 the book's quasi-coherent full subcategory. -/
@@ -92,7 +95,7 @@ def chapter08PullbackQuasiCoherentModule
     (M : Chapter08QuasiCoherentModules S) :
     Chapter08QuasiCoherentModules X := by
   refine ⟨(Scheme.Modules.pullback f).obj M.obj, ?_⟩
-  sorry
+  exact chapter08_pullback_is_quasicoherent f M
 
 /-- The pullback operation on quasi-coherent modules is functorial up to the
 canonical pseudofunctorial identifications. -/
@@ -137,7 +140,7 @@ instance chapter08FamilyPullbackComparison.isIso
   infer_instance
 
 /-- The family cocycle on a specified triple of indices. -/
-def chapter08FamilyPullbackComparison_cocycle
+abbrev chapter08FamilyPullbackComparison_cocycle
     {S : Scheme.{u}} {ι : Type*} {X : ι → Scheme.{u}}
     {f : ∀ i, X i ⟶ S}
     {choices : Chapter08PullbackChoices X f}
@@ -152,7 +155,9 @@ theorem chapter08_family_descent_hom_ext
     {choices : Chapter08PullbackChoices X f}
     {D E : Chapter08QuasiCoherentFamilyPullbackData choices}
     {φ ψ : D ⟶ E} (h : ∀ i, φ.hom.hom i = ψ.hom.hom i) : φ = ψ := by
-  sorry
+  apply ObjectProperty.hom_ext
+  apply Pseudofunctor.DescentData'.hom_ext
+  exact h
 
 /- A finite affine refinement exists over every affine open in the base. -/
 theorem chapter08_exists_finite_affine_refinement

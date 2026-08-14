@@ -20,7 +20,8 @@ def chapter14OpenSubgroupCorrespondsToFiniteAbelianExtension
     [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
     (U : Chapter14OpenFiniteIndexSubgroup (chapter14IdeleClassGroup K)) : Prop :=
   chapter14FiniteAbelianExtension K L ∧
-    Nonempty ((chapter14IdeleClassGroup K ⧸ U.1.toSubgroup) ≃* Gal(L/K))
+    ∃ ρ : chapter14IdeleClassGroup K →* Gal(L/K),
+      Function.Surjective ρ ∧ ρ.ker = U.1.toSubgroup
 
 def chapter14OpenSubgroupIsClassNormGroup
     (K L : Type*) [Field K] [Field L] [NumberField K] [NumberField L]
@@ -35,13 +36,34 @@ def chapter14RayQuotientCorrespondsToFiniteAbelianExtension
     [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
     (D : Chapter14IdeleLevelData K) (R : Chapter14RaySubgroupFamily D)
     (m : Chapter14Modulus K) : Prop :=
-  chapter14FiniteAbelianExtension K L ∧
-    Nonempty (chapter14RayClassGroup D R m ≃* Gal(L/K))
+    chapter14FiniteAbelianExtension K L ∧
+    ∃ ρ : chapter14IdeleClassGroup K →* Gal(L/K),
+      Function.Surjective ρ ∧
+        ρ.ker = (chapter14RayClassQuotientMap D R m).ker
 
 def chapter14RayQuotientRamificationControl {K : Type*} [Field K] [NumberField K]
     (m : Chapter14Modulus K)
     (ramifiedAt : NumberField.FinitePlace K → Prop) : Prop :=
   ∀ v, ¬ v.maximalIdeal.asIdeal ∣ m.finitePart → ¬ ramifiedAt v
+
+/-! A quotient-level witness packages the finite abelian extension and the actual kernel of its
+reciprocity map.  This keeps the later correspondence fields from degenerating into unconnected
+propositions. -/
+structure Chapter14FiniteAbelianExtensionWitness
+    (K : Type*) [Field K] [NumberField K]
+    (N : Subgroup (chapter14IdeleClassGroup K)) where
+  L : Type
+  [field_L : Field L]
+  [numberField_L : NumberField L]
+  [algebra_K_L : Algebra K L]
+  [finiteDimensional_K_L : FiniteDimensional K L]
+  [galois_K_L : IsGalois K L]
+  abelian : IsMulCommutative Gal(L/K)
+  normData : Chapter14AdelicNormInterface K L
+  norm_kernel : chapter14ClassNormSubgroup normData = N
+  reciprocity : chapter14IdeleClassGroup K →* Gal(L/K)
+  reciprocity_surjective : Function.Surjective reciprocity
+  reciprocity_kernel : reciprocity.ker = N
 
 /-!
 These two predicates expose the exact objects that the final reciprocity theorem relates.  The
@@ -49,10 +71,9 @@ remaining ramification and conductor assertions are packaged with their local ma
 -/
 
 def chapter14ConductorUnitFiltrationCompatibility
-    {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
-    [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
+    {K G : Type*} [Field K] [NumberField K] [Group G]
     (localMap : ∀ v : NumberField.FinitePlace K,
-      (v.maximalIdeal.adicCompletion K)ˣ →* Gal(L/K))
+      (v.maximalIdeal.adicCompletion K)ˣ →* G)
     (filtration : ∀ v : NumberField.FinitePlace K, ℕ →
       Subgroup (v.maximalIdeal.adicCompletion K)ˣ)
     (conductorExponent : NumberField.FinitePlace K → ℕ) : Prop :=
@@ -61,15 +82,16 @@ def chapter14ConductorUnitFiltrationCompatibility
       conductorExponent v ≤ n
 
 def chapter14FrobeniusCompatibility
-    {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
-    [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
+    {K G : Type*} [Field K] [NumberField K] [Group G]
     (localMap : ∀ v : NumberField.FinitePlace K,
-      (v.maximalIdeal.adicCompletion K)ˣ →* Gal(L/K))
+      (v.maximalIdeal.adicCompletion K)ˣ →* G)
     (unramifiedAt : NumberField.FinitePlace K → Prop)
-    (frobenius : ∀ _v : NumberField.FinitePlace K, Gal(L/K))
+    (convention : Chapter14FrobeniusConvention)
+    (frobenius : Chapter14FrobeniusConvention →
+      NumberField.FinitePlace K → G)
     (uniformizer : ∀ v : NumberField.FinitePlace K,
       (v.maximalIdeal.adicCompletion K)ˣ) : Prop :=
-  ∀ v, unramifiedAt v → localMap v (uniformizer v) = frobenius v
+  ∀ v, unramifiedAt v → localMap v (uniformizer v) = frobenius convention v
 
 /-!
 The law contains the canonical map, its local compatibility, the open-subgroup/extension
@@ -90,21 +112,46 @@ structure Chapter14GlobalReciprocityLaw (K : Type*) [Field K] [NumberField K]
   finiteLocalMap : ∀ v : NumberField.FinitePlace K,
     (v.maximalIdeal.adicCompletion K)ˣ →*
       chapter14AbelianGaloisGroup K
+  finiteLocalMap_continuous :
+    ∀ v, Continuous (finiteLocalMap v)
   infiniteLocalMap : ∀ w : NumberField.InfinitePlace K,
     (w.Completion)ˣ →* chapter14AbelianGaloisGroup K
+  infiniteLocalMap_continuous :
+    ∀ w, Continuous (infiniteLocalMap w)
   finiteLocalCompatibility :
     ∀ v x, globalMap (chapter14IdeleClassMap K (D.finiteComponent v x)) =
       finiteLocalMap v x
   infiniteLocalCompatibility :
     ∀ w x, globalMap (chapter14IdeleClassMap K (D.infiniteComponent w x)) =
       infiniteLocalMap w x
-  openSubgroupNormCorrespondence : Prop
-  rayQuotientGaloisControl : Prop
-  conductorFrobeniusUnitFiltrationCompatibility : Prop
+  openSubgroupNormCorrespondence :
+    ∀ U : Chapter14OpenFiniteIndexSubgroup (chapter14IdeleClassGroup K),
+      Nonempty (Chapter14FiniteAbelianExtensionWitness K U.1.toSubgroup)
+  rayLevelData : Chapter14IdeleLevelData K
+  rayLevelData_component : rayLevelData.toChapter14LocalComponentData = D
+  raySubgroups : Chapter14RaySubgroupFamily.{_, 0} rayLevelData
+  rayQuotientGaloisControl :
+    ∀ m : Chapter14Modulus K,
+      Nonempty (Chapter14FiniteAbelianExtensionWitness K
+        (chapter14RayClassQuotientMap rayLevelData raySubgroups m).ker)
+  conductorFrobeniusUnitFiltrationCompatibility :
+    ∃ filtration : ∀ v : NumberField.FinitePlace K, ℕ →
+        Subgroup (v.maximalIdeal.adicCompletion K)ˣ,
+      ∃ conductorExponent : NumberField.FinitePlace K → ℕ,
+        ∃ unramifiedAt : NumberField.FinitePlace K → Prop,
+          ∃ convention : Chapter14FrobeniusConvention,
+            ∃ frobenius : Chapter14FrobeniusConvention →
+                NumberField.FinitePlace K → chapter14AbelianGaloisGroup K,
+              ∃ uniformizer : ∀ v : NumberField.FinitePlace K,
+                  (v.maximalIdeal.adicCompletion K)ˣ,
+                chapter14ConductorUnitFiltrationCompatibility
+                    finiteLocalMap filtration conductorExponent ∧
+                  chapter14FrobeniusCompatibility finiteLocalMap unramifiedAt convention
+                    frobenius uniformizer
 
 theorem chapter14_global_reciprocity_law_exists (K : Type*) [Field K] [NumberField K]
-    (D : Chapter14LocalComponentData K) :
-    Nonempty (Chapter14GlobalReciprocityLaw K D) := by
+    : ∃ D : Chapter14LocalComponentData K,
+      Nonempty (Chapter14GlobalReciprocityLaw K D) := by
   sorry
 
 theorem chapter14_global_reciprocity_law_implies_completion_statement
@@ -123,22 +170,24 @@ theorem chapter14_global_reciprocity_map_is_induced_by_completion
 /-! Finite-order characters become Galois characters only after applying reciprocity. -/
 
 def chapter14FiniteOrderIdeleClassCharacter {K A : Type*} [Field K] [NumberField K]
-    [CommGroup A] (χ : chapter14IdeleClassGroup K →* A) : Prop :=
-  ∃ n : ℕ, 0 < n ∧ ∀ c, χ c ^ n = 1
+    [CommGroup A] [TopologicalSpace A]
+    (χ : chapter14IdeleClassGroup K →* A) : Prop :=
+  Continuous χ ∧ ∃ n : ℕ, 0 < n ∧ ∀ c, χ c ^ n = 1
 
 def chapter14FiniteOrderGaloisCharacter {K A : Type*} [Field K] [NumberField K]
-    [CommGroup A] (χ : chapter14AbelianGaloisGroup K →* A) : Prop :=
-  ∃ n : ℕ, 0 < n ∧ ∀ g, χ g ^ n = 1
+    [CommGroup A] [TopologicalSpace A]
+    (χ : chapter14AbelianGaloisGroup K →* A) : Prop :=
+  Continuous χ ∧ ∃ n : ℕ, 0 < n ∧ ∀ g, χ g ^ n = 1
 
 def chapter14TransportGaloisCharacter {K A : Type*} [Field K] [NumberField K]
-    [CommGroup A] {D : Chapter14LocalComponentData K}
+    [CommGroup A] [TopologicalSpace A] {D : Chapter14LocalComponentData K}
     (L : Chapter14GlobalReciprocityLaw K D)
     (χ : chapter14AbelianGaloisGroup K →* A) :
     chapter14IdeleClassGroup K →* A :=
   χ.comp L.globalMap
 
 theorem chapter14_transport_preserves_finite_order
-    {K A : Type*} [Field K] [NumberField K] [CommGroup A]
+    {K A : Type*} [Field K] [NumberField K] [CommGroup A] [TopologicalSpace A]
     {D : Chapter14LocalComponentData K}
     (L : Chapter14GlobalReciprocityLaw K D)
     (χ : chapter14AbelianGaloisGroup K →* A)

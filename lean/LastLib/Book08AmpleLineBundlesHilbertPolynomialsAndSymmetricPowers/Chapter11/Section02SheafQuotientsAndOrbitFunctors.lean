@@ -179,12 +179,20 @@ def Chapter11FppfLocallyUniqueOrbitLifts {S : Scheme.{u}} {X : RelativeScheme S}
         Chapter11Fppf w.hom ∧
           ∃ σ : Equiv.Perm (Fin d), ∀ i, w ≫ x i = w ≫ y (σ i)
 
-/- The local uniqueness condition is the pointwise form of the epimorphism
-   from the disjoint union of action maps to the kernel pair. -/
-abbrev Chapter11FppfOrbitKernelPairEpimorphic {S : Scheme.{u}} {X : RelativeScheme S}
+/- The kernel-pair epimorphism is stated on arbitrary test schemes.  Thus it
+   says that two local points of the power with the same quotient become
+   related by one permutation after an fppf refinement, which is the
+   pointwise form of the displayed sheaf epimorphism in the book. -/
+def Chapter11FppfOrbitKernelPairEpimorphic {S : Scheme.{u}} {X : RelativeScheme S}
     (d : ℕ) (Q : RelativeCategoricalQuotient (relativePower X d).carrier
       (Equiv.Perm (Fin d)) (relativePower X d).permutationAction) : Prop :=
-  Chapter11FppfLocallyUniqueOrbitLifts d Q
+  ∀ (T : RelativeScheme S)
+    (x y : T ⟶ (relativePower X d).carrier),
+    x ≫ Q.quotientMap = y ≫ Q.quotientMap →
+      ∃ (U : RelativeScheme S) (u : U ⟶ T),
+        Chapter11Fppf u.hom ∧
+          ∃ σ : Equiv.Perm (Fin d),
+            (u ≫ x) ≫ (relativePower X d).permutationAction.hom σ = u ≫ y
 
 /- The quotient presheaf is required to be a genuine sheaf on the induced
    fppf site before the orbit map can be lifted through sheafification. -/

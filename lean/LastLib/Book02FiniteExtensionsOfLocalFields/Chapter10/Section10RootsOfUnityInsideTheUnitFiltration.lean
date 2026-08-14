@@ -1,4 +1,5 @@
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Section09UnitCoordinatesAndTheirLimitations
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Section02TheFirstQuotient
+import Mathlib.Data.Nat.Factorization.Basic
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10
 
@@ -23,7 +24,44 @@ theorem chapter10_field_root_of_unity_is_ring_unit
     {L : Type*} [Field L] (A : ValuationSubring L) (m : ℕ) (hm : 0 < m)
     (ζ : Lˣ) (hζ : (ζ : L) ^ m = 1) :
     ∃ u : Aˣ, Units.map A.subtype.toMonoidHom u = ζ := by
-  sorry
+  have hinv_mem_of_mem (x : L) (hx : x ∈ A) (hxm : x ^ m = 1) :
+      x⁻¹ ∈ A := by
+    have hx0 : x ≠ 0 := by
+      intro hx0
+      subst x
+      simp [hm.ne'] at hxm
+    have hpow : x ^ (m - 1) * x = 1 := by
+      rw [← pow_succ, Nat.sub_add_cancel (Nat.succ_le_iff.mpr hm), hxm]
+    have hinv : x⁻¹ = x ^ (m - 1) := by
+      apply (mul_right_cancel₀ hx0)
+      rw [inv_mul_cancel₀ hx0]
+      exact hpow.symm
+    rw [hinv]
+    exact A.pow_mem hx _
+  have hζA : (ζ : L) ∈ A := by
+    rcases ValuationSubring.mem_or_inv_mem A (ζ : L) with h | h
+    · exact h
+    · have hpow : ((ζ : L)⁻¹) ^ m = 1 := by
+        rw [inv_pow, hζ, inv_one]
+      have h := hinv_mem_of_mem ((ζ : L)⁻¹) h hpow
+      simpa using h
+  have hζinvA : (ζ : L)⁻¹ ∈ A := hinv_mem_of_mem (ζ : L) hζA hζ
+  let a : A := ⟨(ζ : L), hζA⟩
+  let b : A := ⟨(ζ : L)⁻¹, hζinvA⟩
+  let u : Aˣ :=
+    { val := a
+      inv := b
+      val_inv := by
+        apply Subtype.ext
+        change (ζ : L) * (ζ : L)⁻¹ = 1
+        exact mul_inv_cancel₀ ζ.ne_zero
+      inv_val := by
+        apply Subtype.ext
+        change (ζ : L)⁻¹ * (ζ : L) = 1
+        exact inv_mul_cancel₀ ζ.ne_zero }
+  refine ⟨u, ?_⟩
+  apply Units.ext
+  rfl
 
 /-- The characteristic-`p` identity used to detect principal-unit torsion. -/
 theorem chapter10_equal_characteristic_p_power_sub_one_identity
@@ -144,7 +182,96 @@ theorem chapter10_finite_order_unit_torsion_decomposes
       ∃ w : chapter10UnitFiltration A 1,
         u = (t : Aˣ) * (w : Aˣ) ∧
           Chapter10PowerTorsion p (w : Aˣ) := by
-  sorry
+  classical
+  let q := Fintype.card (Chapter10ResidueField A)
+  obtain ⟨s, hs, _hsunique⟩ :=
+    chapter10_teichmuller_section_exists_unique A hcomplete hDVR
+  rcases hs with ⟨hsred, hspow, hsuniq⟩
+  let H : Subgroup Aˣ := chapter10RootOfUnitySubgroup A (q - 1)
+  let K : Subgroup Aˣ := chapter10UnitFiltration A 1
+  let t : Aˣ → H := fun x =>
+    ⟨s (chapter10UnitReduction A x), by
+      change (s (chapter10UnitReduction A x)) ^ (q - 1) = 1
+      simpa [q] using hspow (chapter10UnitReduction A x)⟩
+  have htred (x : Aˣ) :
+      chapter10UnitReduction A (t x : Aˣ) = chapter10UnitReduction A x := by
+    change chapter10UnitReduction A (s (chapter10UnitReduction A x)) =
+      chapter10UnitReduction A x
+    exact hsred _
+  have w_mem (x : Aˣ) : (t x : Aˣ)⁻¹ * x ∈ K := by
+    change (t x : Aˣ)⁻¹ * x ∈ chapter10UnitFiltration A 1
+    rw [← chapter10_unit_reduction_kernel A]
+    apply MonoidHom.mem_ker.mpr
+    change chapter10UnitReduction A ((t x : Aˣ)⁻¹ * x) = 1
+    rw [map_mul, map_inv, htred]
+    simp
+  let w : Aˣ → K := fun x => ⟨(t x : Aˣ)⁻¹ * x, w_mem x⟩
+  have hdecomp (x : Aˣ) : x = (t x : Aˣ) * (w x : Aˣ) := by
+    simp [w]
+  have hinter {x : Aˣ} (hx : x ∈ H) (hy : x ∈ K) : x = 1 := by
+    have hred : chapter10UnitReduction A x = 1 := by
+      have hker : x ∈ (chapter10UnitReduction A).ker := by
+        rw [chapter10_unit_reduction_kernel A]
+        exact hy
+      exact MonoidHom.mem_ker.mp hker
+    change x ^ (q - 1) = 1 at hx
+    have hxs := hsuniq (chapter10UnitReduction A x) x rfl hx
+    rw [hred] at hxs
+    simpa using hxs
+  obtain ⟨m, hmpos, hum⟩ := hu
+  obtain ⟨r, d, hd, hmd⟩ :=
+    Nat.exists_eq_pow_mul_and_not_dvd (Nat.ne_of_gt hmpos) p
+      (Fact.out : Nat.Prime p).ne_one
+  have htw :
+      (t u : Aˣ) ^ m * (w u : Aˣ) ^ m = 1 := by
+    calc
+      (t u : Aˣ) ^ m * (w u : Aˣ) ^ m =
+          ((t u : Aˣ) * (w u : Aˣ)) ^ m := (mul_pow _ _ _).symm
+      _ = u ^ m := congrArg (fun z : Aˣ => z ^ m) (hdecomp u).symm
+      _ = 1 := hum
+  have htm_mem : (t u : Aˣ) ^ m ∈ H := by
+    exact H.pow_mem (t u).property m
+  have hwm_mem : (w u : Aˣ) ^ m ∈ K := by
+    exact K.pow_mem (w u).property m
+  have htm_mem_K : (t u : Aˣ) ^ m ∈ K := by
+    rw [eq_inv_of_mul_eq_one_left htw]
+    exact K.inv_mem hwm_mem
+  have htm : (t u : Aˣ) ^ m = 1 := hinter htm_mem htm_mem_K
+  have hwm : (w u : Aˣ) ^ m = 1 := by
+    simpa [htm] using htw
+  have hzd : ((w u : Aˣ) ^ (p ^ r)) ^ d = 1 := by
+    calc
+      ((w u : Aˣ) ^ (p ^ r)) ^ d =
+          (w u : Aˣ) ^ (p ^ r * d) := (pow_mul _ _ _).symm
+      _ = (w u : Aˣ) ^ m := by rw [hmd]
+      _ = 1 := hwm
+  have hwred : chapter10UnitReduction A (w u : Aˣ) = 1 := by
+    have hker : (w u : Aˣ) ∈ (chapter10UnitReduction A).ker := by
+      rw [chapter10_unit_reduction_kernel A]
+      exact (w u).property
+    exact MonoidHom.mem_ker.mp hker
+  have hzred : chapter10UnitReduction A ((w u : Aˣ) ^ (p ^ r)) = 1 := by
+    rw [map_pow, hwred]
+    simp
+  have hcoprime : Nat.Coprime d p :=
+    ((Fact.out : Nat.Prime p).coprime_iff_not_dvd.mpr hd).symm
+  let z : chapter10RootOfUnitySubgroup A d :=
+    ⟨(w u : Aˣ) ^ (p ^ r), hzd⟩
+  let zone : chapter10RootOfUnitySubgroup A d :=
+    ⟨1, by simp⟩
+  have hz : z = zone := by
+    apply chapter10_prime_to_residue_characteristic_roots_reduce_injectively
+      A d p hcoprime
+    change chapter10UnitReduction A ((w u : Aˣ) ^ (p ^ r)) =
+      chapter10UnitReduction A (1 : Aˣ)
+    rw [hzred]
+    simp
+  have hpowp : (w u : Aˣ) ^ (p ^ r) = 1 := by
+    have hz' := congrArg
+      (fun x : chapter10RootOfUnitySubgroup A d => (x : Aˣ)) hz
+    simpa [z, zone] using hz'
+  refine ⟨t u, w u, hdecomp u, ?_⟩
+  exact ⟨r, hpowp⟩
 
 /-- In a field of characteristic `p`, a `p`-power root of unity is `1`. -/
 theorem chapter10_equal_characteristic_p_power_root_is_one

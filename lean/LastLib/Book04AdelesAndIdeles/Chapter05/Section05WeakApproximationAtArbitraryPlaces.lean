@@ -4,30 +4,27 @@ namespace LastLib.Book04AdelesAndIdeles.Chapter05
 
 noncomputable section
 
-open scoped Topology
+open NumberField
+open scoped Topology nonZeroDivisors
 
 /-! ## 5.5. Weak approximation at arbitrary places -/
 
 def chapter05SelectedFinitePlaces
     (K : Type*) [Field K] [NumberField K]
-    (T : Finset (Chapter05Place K)) : Finset (Chapter05FinitePlace K) := by
+  (T : Finset (Chapter05Place K)) : Finset (Chapter05FinitePlace K) := by
   classical
-  exact T.filterMap (fun v => match v with
-    | Sum.inl w => some w
-    | Sum.inr _ => none)
+  exact T.toLeft
 
 def chapter05SelectedArchimedeanPlaces
     (K : Type*) [Field K] [NumberField K]
-    (T : Finset (Chapter05Place K)) : Finset (Chapter05InfinitePlace K) := by
+  (T : Finset (Chapter05Place K)) : Finset (Chapter05InfinitePlace K) := by
   classical
-  exact T.filterMap (fun v => match v with
-    | Sum.inl _ => none
-    | Sum.inr w => some w)
+  exact T.toRight
 
 def chapter05FiniteCorrectionSet
     (K : Type*) [Field K] [NumberField K]
     (S : Finset (Chapter05FinitePlace K))
-    (m : ∀ v : S, ℤ) : Set K :=
+    (m : ∀ _v : S, ℤ) : Set K :=
   {c |
     (∀ v : S,
       chapter05FiniteDiagonal K c v.1 ∈
@@ -35,8 +32,7 @@ def chapter05FiniteCorrectionSet
           v.1 (m v)) ∧
     (∀ v : Chapter05FinitePlace K, v ∉ (S : Set (Chapter05FinitePlace K)) →
       chapter05FiniteDiagonal K c v ∈
-        (Chapter05FiniteLocalIntegerRing K v :
-          Set (Chapter05FiniteLocalField K v)))}
+        chapter05FiniteLocalIntegerSet K v)}
 
 theorem chapter05_finite_correction_set_is_fractional_ideal
     (K : Type*) [Field K] [NumberField K]
@@ -64,7 +60,7 @@ theorem chapter05_exists_auxiliary_prime
 
 def chapter05ScaledCorrectionSet
     (K : Type*) [Field K] [NumberField K]
-    (S : Finset (Chapter05FinitePlace K)) (m : ∀ v : S, ℤ)
+    (S : Finset (Chapter05FinitePlace K)) (m : ∀ _v : S, ℤ)
     (ell s : ℕ) : Set K :=
   {c |
     ∃ d : K, d ∈ chapter05FiniteCorrectionSet K S m ∧

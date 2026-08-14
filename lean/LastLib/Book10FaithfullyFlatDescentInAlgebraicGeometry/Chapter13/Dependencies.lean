@@ -14,6 +14,8 @@ import Mathlib.CategoryTheory.Monoidal.Cartesian.Mod
 import Mathlib.CategoryTheory.Monoidal.Cartesian.Over
 import Mathlib.CategoryTheory.Monoidal.Grp
 import Mathlib.RingTheory.RootsOfUnity.Basic
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter08.Section03EffectivityAndFullFaithfulness
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter11.Section04SeparatednessAndQuasiCompactness
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter01.Section01ProjectiveGeometryOverABase
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Dependencies
 
@@ -27,6 +29,7 @@ noncommutative cocycle is visible in the later section.
 -/
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
+open CategoryTheory.MonoidalCategory
 open scoped AlgebraicGeometry MonObj
 
 universe u v
@@ -90,14 +93,14 @@ noncomputable def chapter13RegularRightAction {S : Scheme.{u}}
     (G : Chapter13GroupScheme S) : Chapter13RightAction G G.X where
   act := μ[G.X]
   one_act := by simp [MonoidalCategory.tensorHom_def]
-  mul_act := by simpa [MonoidalCategory.tensorHom_def] using MonObj.mul_assoc G.X
+  mul_act := by simp [MonoidalCategory.tensorHom_def, MonObj.mul_assoc]
 
 /-- The regular left action of a group scheme on itself. -/
 noncomputable def chapter13RegularLeftAction {S : Scheme.{u}}
     (G : Chapter13GroupScheme S) : Chapter13LeftAction G G.X where
   act := μ[G.X]
   one_act := by simp [MonoidalCategory.tensorHom_def]
-  mul_act := by simpa [MonoidalCategory.tensorHom_def] using MonObj.mul_assoc G.X
+  mul_act := by simp [MonoidalCategory.tensorHom_def, MonObj.mul_assoc]
 
 /-- The scheme morphism `(p,g) ↦ (p,p·g)` attached to a right action. -/
 noncomputable def chapter13TorsorComparisonMap {S : Scheme.{u}}
@@ -146,9 +149,40 @@ noncomputable def chapter13BaseChangedRightAction {S T : Scheme.{u}}
     (A : Chapter13RightAction G P) (t : T ⟶ S) :
     Chapter13RightAction (chapter13BaseChangedGroup G t) ((Over.pullback t).obj P) where
   act :=
-    (prodComparisonIso (Over.pullback t) P G.X).hom ≫ (Over.pullback t).map A.act
-  one_act := by sorry
-  mul_act := by sorry
+    (CartesianMonoidalCategory.prodComparisonIso (Over.pullback t) P G.X).inv ≫
+      (Over.pullback t).map A.act
+  one_act := by
+    dsimp [chapter13BaseChangedGroup]
+    rw [← Functor.Monoidal.μ_of_cartesianMonoidalCategory (Over.pullback t) P G.X]
+    change
+      (ρ_ ((Over.pullback t).obj P)).inv ≫
+          (𝟙 _ ⊗ₘ ((Functor.LaxMonoidal.ε (Over.pullback t)) ≫
+            (Over.pullback t).map η[G.X])) ≫
+        Functor.LaxMonoidal.μ (Over.pullback t) P G.X ≫
+          (Over.pullback t).map A.act = 𝟙 _
+    simp [MonoidalCategory.tensorHom_def, ← Functor.map_comp]
+    simpa [MonoidalCategory.tensorHom_def] using congrArg ((Over.pullback t).map) A.one_act
+  mul_act := by
+    dsimp [chapter13BaseChangedGroup]
+    rw [← Functor.Monoidal.μ_of_cartesianMonoidalCategory (Over.pullback t) P G.X]
+    change
+      ((Functor.LaxMonoidal.μ (Over.pullback t) P G.X ≫ (Over.pullback t).map A.act) ⊗ₘ
+          𝟙 ((Over.pullback t).obj G.X)) ≫
+          Functor.LaxMonoidal.μ (Over.pullback t) P G.X ≫
+            (Over.pullback t).map A.act =
+        (α_ ((Over.pullback t).obj P) ((Over.pullback t).obj G.X)
+            ((Over.pullback t).obj G.X)).hom ≫
+          (𝟙 _ ⊗ₘ (Functor.LaxMonoidal.μ (Over.pullback t) G.X G.X ≫
+            (Over.pullback t).map μ[G.X])) ≫
+            Functor.LaxMonoidal.μ (Over.pullback t) P G.X ≫
+              (Over.pullback t).map A.act
+    simp [MonoidalCategory.tensorHom_def, ← Functor.map_comp]
+    have hA :
+        A.act ▷ G.X ≫ A.act =
+          (α_ P G.X G.X).hom ≫ (𝟙 P ⊗ₘ μ[G.X]) ≫ A.act := by
+      simpa [MonoidalCategory.tensorHom_def] using A.mul_act
+    rw [hA]
+    simp [Functor.map_comp]
 
 /-- A local trivialization of a right action after base change. -/
 structure Chapter13TorsorLocalTrivialization {S T : Scheme.{u}}

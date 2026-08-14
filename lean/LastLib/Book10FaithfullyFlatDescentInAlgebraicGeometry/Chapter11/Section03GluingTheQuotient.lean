@@ -14,7 +14,8 @@ namespace SchemeDescent
 
 variable {S T : Scheme.{u}}
 
-/-- The affine chart obtained by descending a datum-stable affine open. -/
+/-- The affine chart obtained in the central affine faithfully flat reduction from a
+datum-stable affine open. -/
 structure AffineChartDescent {S T : Scheme.{u}} {p : T ⟶ S} (D : Datum p)
     (V : (descentObject D).left.Opens) (hV : IsDatumStableAffineOpen D V) where
   descended : Over S
@@ -25,16 +26,18 @@ structure AffineChartDescent {S T : Scheme.{u}} {p : T ⟶ S} (D : Datum p)
       V.ι ≫ (descentObject D).hom
 
 theorem affine_stable_open_descends {S T : Scheme.{u}} {p : T ⟶ S} (D : Datum p)
+    (hS : IsAffine S) (hT : IsAffine T) (hp : Scheme.IsFpqcMorphism p)
     {V : (descentObject D).left.Opens} (hV : IsDatumStableAffineOpen D V) :
     Nonempty (AffineChartDescent D V hV) := by
   sorry
 
 theorem stable_affine_opens_cover_intersection {S T : Scheme.{u}} {p : T ⟶ S}
-    (D : Datum p) {V W : (descentObject D).left.Opens}
+    (D : Datum p) (hp : Scheme.IsFpqcMorphism p)
+    {V W : (descentObject D).left.Opens}
     (hV : IsDatumStableAffineOpen D V) (hW : IsDatumStableAffineOpen D W) :
     ∀ x : (descentObject D).left, x ∈ V ⊓ W →
       ∃ U : (descentObject D).left.Opens,
-        x ∈ U ∧ IsDatumStableAffineOpen D U := by
+        x ∈ U ∧ U ≤ V ⊓ W ∧ IsDatumStableAffineOpen D U := by
   sorry
 
 /-- The compatibility data used to glue the descended affine charts.
@@ -55,7 +58,7 @@ theorem glued_charts_jointly_surjective (G : SchemeGluingData) :
   intro x
   exact G.ι_jointly_surjective x
 
-theorem glued_overlap_is_pullback (G : SchemeGluingData) (i j : G.J) :
+noncomputable def glued_overlap_is_pullback (G : SchemeGluingData) (i j : G.J) :
     IsLimit (G.vPullbackCone i j) := by
   exact G.vPullbackConeIsLimit i j
 
@@ -75,13 +78,13 @@ theorem glued_open_iff (G : SchemeGluingData) (U : Set G.glued.carrier) :
     IsOpen U ↔ ∀ i, IsOpen (G.ι i ⁻¹' U) := by
   exact G.isOpen_iff U
 
-def gluedOpenCover (G : SchemeGluingData) : G.glued.OpenCover :=
+noncomputable def gluedOpenCover (G : SchemeGluingData) : G.glued.OpenCover :=
   G.openCover
 
 theorem glued_openCover_is_cover (G : SchemeGluingData) :
-    ∀ x : G.glued, ∃ i y, G.gluedOpenCover.f i y = x := by
+    ∀ x : G.glued, ∃ i y, (gluedOpenCover G).f i y = x := by
   intro x
-  exact G.gluedOpenCover.exists_eq x
+  exact (gluedOpenCover G).exists_eq x
 
 theorem glue_stable_affine_charts {S T : Scheme.{u}} {p : T ⟶ S} (D : Datum p)
     (hp : Scheme.IsFpqcMorphism p) :

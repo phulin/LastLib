@@ -1,10 +1,13 @@
 import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter15.Section02TheInfinitesimalAbelMap
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter01.Section01TheAbsoluteAndRelativeSettings
 
 namespace LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter15
 
 noncomputable section
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
+open LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter01
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11
 
 universe u v
 
@@ -18,22 +21,64 @@ cannot disappear into a definition.
 
 -/
 
-/- LOCAL_DEPENDENCY_GUESS: the pinned scheme API does not expose the completed
-   local-ring comparison and cotangent/tangent maps in the source-facing form;
-   these certificates are the minimal interfaces needed by the criterion. -/
+/- The completed local-ring map and its linearizations are named constructions
+   attached to the actual morphism.  The records below only retain their typed
+   comparison and rank properties. -/
+noncomputable def chapter15InducedCompletedLocalRingMap
+    {Y Z : Scheme.{u}} (φ : Y ⟶ Z) (x : Y) (z : Z) :
+    CommRingCat.of (chapter01CompletedLocalRing Z z) ⟶
+      CommRingCat.of (chapter01CompletedLocalRing Y x) := by
+  sorry
+
+def Chapter15SameResidueField
+    {Y Z : Scheme.{u}} (x : Y) (z : Z) : Prop :=
+  Nonempty (Y.residueField x ≃+* Z.residueField z)
+
+def Chapter15FormalImmersionFiniteness
+    {Y Z : Scheme.{u}} (φ : Y ⟶ Z) : Prop :=
+  LocallyOfFiniteType φ ∧ IsNoetherian Y ∧ IsNoetherian Z
+
+noncomputable def chapter15CotangentTarget
+    {k : Type u} [Field k]
+    {Y Z : Scheme.{u}} (φ : Y ⟶ Z) (x : Y) (z : Z) : ModuleCat.{u, u} k := by
+  sorry
+
+noncomputable def chapter15CotangentSource
+    {k : Type u} [Field k]
+    {Y Z : Scheme.{u}} (φ : Y ⟶ Z) (x : Y) (z : Z) : ModuleCat.{u, u} k := by
+  sorry
+
+noncomputable def chapter15InducedCotangentMap
+    {k : Type u} [Field k]
+    {Y Z : Scheme.{u}} (φ : Y ⟶ Z) (x : Y) (z : Z) :
+    chapter15CotangentTarget (k := k) φ x z ⟶
+      chapter15CotangentSource (k := k) φ x z := by
+  sorry
+
+noncomputable def chapter15TangentSource
+    {k : Type u} [Field k]
+    {Y Z : Scheme.{u}} (φ : Y ⟶ Z) (x : Y) (z : Z) : ModuleCat.{u, u} k := by
+  sorry
+
+noncomputable def chapter15TangentTarget
+    {k : Type u} [Field k]
+    {Y Z : Scheme.{u}} (φ : Y ⟶ Z) (x : Y) (z : Z) : ModuleCat.{u, u} k := by
+  sorry
+
+noncomputable def chapter15InducedTangentMap
+    {k : Type u} [Field k]
+    {Y Z : Scheme.{u}} (φ : Y ⟶ Z) (x : Y) (z : Z) :
+    chapter15TangentSource (k := k) φ x z ⟶
+      chapter15TangentTarget (k := k) φ x z := by
+  sorry
 
 structure Chapter15CompletedLocalRingMap
     {Y Z : Scheme.{u}} (φ : Y ⟶ Z) (x : Y) (z : Z) where
-  targetCompletion : CommRingCat.{u}
-  sourceCompletion : CommRingCat.{u}
-  map : targetCompletion ⟶ sourceCompletion
-  target_is_completed_local_ring : Prop
-  target_is_completed_local_ring_proof : target_is_completed_local_ring
-  source_is_completed_local_ring : Prop
-  source_is_completed_local_ring_proof : source_is_completed_local_ring
-  identifies_with_local_rings : Prop
-  identifies_with_local_rings_proof : identifies_with_local_rings
-  surjective : Function.Surjective map.hom
+  map : CommRingCat.of (chapter01CompletedLocalRing Z z) ⟶
+    CommRingCat.of (chapter01CompletedLocalRing Y x)
+  point_compatibility : φ x = z
+  map_is_induced : map = chapter15InducedCompletedLocalRingMap φ x z
+  surjective : Function.Surjective (chapter15InducedCompletedLocalRingMap φ x z).hom
 
 def Chapter15FormalImmersionAt
     {Y Z : Scheme.{u}} (φ : Y ⟶ Z) (x : Y) (z : Z) : Prop :=
@@ -48,109 +93,104 @@ theorem chapter15_formal_immersion_iff_completed_local_ring_surjective
 structure Chapter15CotangentMapData
     {k : Type u} [Field k]
     {Y Z : Scheme.{u}} (φ : Y ⟶ Z) (x : Y) (z : Z) where
-  cotangentAtTarget : ModuleCat k
-  cotangentAtSource : ModuleCat k
-  cotangentMap : cotangentAtTarget ⟶ cotangentAtSource
-  target_is_mZ_over_mZsq : Prop
-  target_is_mZ_over_mZsq_proof : target_is_mZ_over_mZsq
-  source_is_mX_over_mXsq : Prop
-  source_is_mX_over_mXsq_proof : source_is_mX_over_mXsq
-  induced_by_local_ring_map : Prop
-  induced_by_local_ring_map_proof : induced_by_local_ring_map
-  surjective : Function.Surjective cotangentMap.hom
+  cotangentMap : chapter15CotangentTarget (k := k) φ x z ⟶
+    chapter15CotangentSource (k := k) φ x z
+  point_compatibility : φ x = z
+  cotangentMap_is_induced :
+    cotangentMap = chapter15InducedCotangentMap (k := k) φ x z
+  surjective : Function.Surjective (chapter15InducedCotangentMap (k := k) φ x z).hom
 
 structure Chapter15TangentMapData
     {k : Type u} [Field k]
     {Y Z : Scheme.{u}} (φ : Y ⟶ Z) (x : Y) (z : Z) where
-  tangentAtSource : ModuleCat k
-  tangentAtTarget : ModuleCat k
-  tangentMap : tangentAtSource ⟶ tangentAtTarget
-  dual_to_cotangent_map : Prop
-  dual_to_cotangent_map_proof : dual_to_cotangent_map
-  injective : Function.Injective tangentMap.hom
+  tangentMap : chapter15TangentSource (k := k) φ x z ⟶
+    chapter15TangentTarget (k := k) φ x z
+  point_compatibility : φ x = z
+  tangentMap_is_induced :
+    tangentMap = chapter15InducedTangentMap (k := k) φ x z
+  injective : Function.Injective (chapter15InducedTangentMap (k := k) φ x z).hom
 
 theorem chapter15_formal_immersion_implies_cotangent_surjective
     {k : Type u} [Field k]
     {Y Z : Scheme.{u}} (φ : Y ⟶ Z) (x : Y) (z : Z)
     (hformal : Chapter15FormalImmersionAt φ x z) :
-    Nonempty (Chapter15CotangentMapData φ x z) := by
+    Nonempty (Chapter15CotangentMapData (k := k) φ x z) := by
   sorry
 
 theorem chapter15_cotangent_surjective_implies_tangent_injective
     {k : Type u} [Field k]
     {Y Z : Scheme.{u}} (φ : Y ⟶ Z) (x : Y) (z : Z)
-    (hcotangent : Nonempty (Chapter15CotangentMapData φ x z)) :
-    Nonempty (Chapter15TangentMapData φ x z) := by
+    (hcotangent : Nonempty (Chapter15CotangentMapData (k := k) φ x z)) :
+    Nonempty (Chapter15TangentMapData (k := k) φ x z) := by
   sorry
 
 theorem chapter15_formal_immersion_implies_tangent_injective
     {k : Type u} [Field k]
     {Y Z : Scheme.{u}} (φ : Y ⟶ Z) (x : Y) (z : Z)
     (hformal : Chapter15FormalImmersionAt φ x z) :
-    Nonempty (Chapter15TangentMapData φ x z) := by
+    Nonempty (Chapter15TangentMapData (k := k) φ x z) := by
   sorry
 
 theorem chapter15_formal_immersion_of_cotangent_surjective
     {k : Type u} [Field k]
     {Y Z : Scheme.{u}} (φ : Y ⟶ Z) (x : Y) (z : Z)
-    (same_residue_field : Prop)
-    (hresidue : same_residue_field)
-    (finite_type_and_noetherian : Prop)
-    (hfinite : finite_type_and_noetherian)
-    (hcotangent : Nonempty (Chapter15CotangentMapData φ x z)) :
+    (hresidue : Chapter15SameResidueField x z)
+    (hfinite : Chapter15FormalImmersionFiniteness φ)
+    (hcotangent : Nonempty (Chapter15CotangentMapData (k := k) φ x z)) :
     Chapter15FormalImmersionAt φ x z := by
   sorry
 
 theorem chapter15_formal_immersion_iff_tangent_injective
     {k : Type u} [Field k]
     {Y Z : Scheme.{u}} (φ : Y ⟶ Z) (x : Y) (z : Z)
-    (same_residue_field : Prop)
-    (hresidue : same_residue_field)
-    (finite_type_and_noetherian : Prop)
-    (hfinite : finite_type_and_noetherian) :
+    (hresidue : Chapter15SameResidueField x z)
+    (hfinite : Chapter15FormalImmersionFiniteness φ) :
     Chapter15FormalImmersionAt φ x z ↔
-      Nonempty (Chapter15TangentMapData φ x z) := by
+      Nonempty (Chapter15TangentMapData (k := k) φ x z) := by
   sorry
 
 structure Chapter15AbelMapAtDivisor
     {k : Type u} [Field k]
     (C : Chapter15ProperSmoothIntegralCurve k) (d : ℕ)
     (D : Chapter15FiberDivisor C d) where
-  source : Scheme.{u}
-  target : Scheme.{u}
-  map : source ⟶ target
-  source_point : source
-  target_point : target
-  point_compatibility : Prop
-  point_compatibility_proof : point_compatibility
+  abelMapData : Chapter15AbelMapData C.curve d
+  source_point : (symmetricPower C.curve d).carrier
+  target_point : abelMapData.picard.representing.carrier
+  map : (symmetricPower C.curve d).carrier ⟶
+    abelMapData.picard.representing.carrier
+  map_is_abel_map : map = abelMapData.abelMap.hom
+  source_point_is_divisor :
+    source_point = (divisorToSymmetricPoint C.curve
+      (RelativeScheme.base (chapter15FieldBase k)) d D
+      ).hom (IsLocalRing.closedPoint k)
+  target_point_is_abel_image : target_point = map source_point
+  point_compatibility : map source_point = target_point
 
 structure Chapter15AbelFormalImmersionProfile
     {k : Type u} [Field k]
     (C : Chapter15ProperSmoothIntegralCurve k) (d : ℕ)
     (D : Chapter15FiberDivisor C d) where
   mapAtDivisor : Chapter15AbelMapAtDivisor C d D
-  differentialSource : ModuleCat k
-  differentialTarget : ModuleCat k
-  differential : differentialSource ⟶ differentialTarget
-  differentialSource_is_H0_D : differentialSource = chapter15NormalSections D
-  differentialTarget_is_H1 : differentialTarget = chapter15H1StructureSpace C
-  differential_is_abel_boundary : Prop
-  differential_is_abel_boundary_proof : differential_is_abel_boundary
-  restrictionSource : ModuleCat k
-  restrictionTarget : ModuleCat k
-  restrictionOfDifferentials : restrictionSource ⟶ restrictionTarget
-  residue_fields_agree : Prop
-  residue_fields_agree_proof : residue_fields_agree
-  finite_type_and_noetherian : Prop
-  finite_type_and_noetherian_proof : finite_type_and_noetherian
+  differential : chapter15NormalSections D ⟶ chapter15H1StructureSpace C
+  differential_is_abel_boundary :
+    differential = chapter15CartierConnectingMap C d D
+  restrictionOfDifferentials :
+    chapter15DifferentialModule C ⟶ chapter15RestrictedDifferentialModule C d D
+  restriction_is_canonical :
+    restrictionOfDifferentials = chapter15DifferentialRestrictionMap C d D
+  residue_fields_agree :
+    Chapter15SameResidueField mapAtDivisor.source_point mapAtDivisor.target_point
+  finite_type_and_noetherian : Chapter15FormalImmersionFiniteness mapAtDivisor.map
 
 theorem chapter15_abel_formal_immersion_iff_differential_injective
     {k : Type u} [Field k]
     (C : Chapter15ProperSmoothIntegralCurve k) (d : ℕ)
     (D : Chapter15FiberDivisor C d)
     (P : Chapter15AbelFormalImmersionProfile C d D)
-    (hresidue : P.residue_fields_agree)
-    (hfinite : P.finite_type_and_noetherian) :
+    (hresidue :
+      Chapter15SameResidueField P.mapAtDivisor.source_point
+        P.mapAtDivisor.target_point)
+    (hfinite : Chapter15FormalImmersionFiniteness P.mapAtDivisor.map) :
     Chapter15FormalImmersionAt
         P.mapAtDivisor.map P.mapAtDivisor.source_point P.mapAtDivisor.target_point ↔
       Function.Injective P.differential.hom ∧
@@ -162,8 +202,10 @@ theorem chapter15_formal_abel_immersion_forces_degree_le_genus
     (C : Chapter15ProperSmoothIntegralCurve k) (d : ℕ)
     (D : Chapter15FiberDivisor C d)
     (P : Chapter15AbelFormalImmersionProfile C d D)
-    (hresidue : P.residue_fields_agree)
-    (hfinite : P.finite_type_and_noetherian) :
+    (hresidue :
+      Chapter15SameResidueField P.mapAtDivisor.source_point
+        P.mapAtDivisor.target_point)
+    (hfinite : Chapter15FormalImmersionFiniteness P.mapAtDivisor.map) :
     Chapter15FormalImmersionAt
         P.mapAtDivisor.map P.mapAtDivisor.source_point P.mapAtDivisor.target_point →
       (d : ℤ) ≤ C.genus := by
@@ -173,16 +215,17 @@ structure Chapter15DifferentialEvaluationData
     {k : Type u} [Field k]
     (C : Chapter15ProperSmoothIntegralCurve k)
     (p q : Chapter15RationalPointData C) where
-  differentials : ModuleCat k
-  differentials_are_H0_omega : Prop
-  differentials_are_H0_omega_proof : differentials_are_H0_omega
-  valuesAtPoints : ModuleCat.of k (k × k)
-  evaluation : differentials ⟶ valuesAtPoints
+  evaluation : chapter15DifferentialModule C ⟶ ModuleCat.of.{u, u} k (k × k)
   distinct_points : p.point ≠ q.point
-  separates_points : Prop
-  separates_points_proof : separates_points
 
-theorem chapter15_distinct_points_are_separated_by_differentials
+def Chapter15DifferentialEvaluationSeparatesPoints
+    {k : Type u} [Field k]
+    {C : Chapter15ProperSmoothIntegralCurve k}
+    {p q : Chapter15RationalPointData C}
+    (E : Chapter15DifferentialEvaluationData C p q) : Prop :=
+  Function.Surjective E.evaluation.hom
+
+theorem chapter15_distinct_points_have_differential_evaluation
     {k : Type u} [Field k]
     (C : Chapter15ProperSmoothIntegralCurve k)
     (p q : Chapter15RationalPointData C) (hpq : p.point ≠ q.point) :
@@ -190,49 +233,55 @@ theorem chapter15_distinct_points_are_separated_by_differentials
   sorry
 
 structure Chapter15NodalDualizingData
-    {k : Type u} [Field k] where
-  curve : Scheme.{u}
-  nodal : Prop
-  nodal_proof : nodal
-  smoothLocus : Set curve
-  dualizingModule : curve.Modules
-  dualizing_invertible_on_smooth_locus : Prop
-  dualizing_invertible_on_smooth_locus_proof :
-    dualizing_invertible_on_smooth_locus
+    {k : Type u} [Field k] (X : Scheme.{u}) where
+  nodal : chapter01NodalScheme X
+  smoothLocus : Set X
+  dualizing : Chapter15LineBundle X
   normalization : Scheme.{u}
-  pullback_with_simple_poles : Prop
-  pullback_with_simple_poles_proof : pullback_with_simple_poles
-  opposite_branch_residues : Prop
-  opposite_branch_residues_proof : opposite_branch_residues
+  normalizationMap : normalization ⟶ X
+  dualizing_restriction :
+    (Scheme.Modules.pullback normalizationMap).obj dualizing.module ⟶
+      chapter15StructureSheaf normalization
+  normalization_differentials : normalization.Modules
+  simple_pole_comparison :
+    Nonempty (normalization_differentials ≅
+      (Scheme.Modules.pullback normalizationMap).obj dualizing.module)
+  residues : ModuleCat.{u, u} k
+  opposite_branch_residues : Nonempty (residues ≅ residues)
 
 structure Chapter15NodalAbelFormalImmersionData
   {k : Type u} [Field k]
     (C : Chapter15ProperSmoothIntegralCurve k) (d : ℕ)
     (D : Chapter15FiberDivisor C d) where
-  dualizing : Chapter15NodalDualizingData (k := k)
+  dualizing : Chapter15NodalDualizingData (k := k) (Chapter15FiberCurve C)
   mapAtDivisor : Chapter15AbelMapAtDivisor C d D
-  divisor_supported_on_smooth_locus : Prop
-  divisor_supported_on_smooth_locus_proof : divisor_supported_on_smooth_locus
-  differentialSource : ModuleCat k
-  differentialTarget : ModuleCat k
-  differential : differentialSource ⟶ differentialTarget
-  restrictionSource : ModuleCat k
-  restrictionTarget : ModuleCat k
-  smooth_locus_restriction : restrictionSource ⟶ restrictionTarget
-  opposite_residue_condition : Prop
-  opposite_residue_condition_proof : opposite_residue_condition
-  residue_fields_agree : Prop
-  residue_fields_agree_proof : residue_fields_agree
-  finite_type_and_noetherian : Prop
-  finite_type_and_noetherian_proof : finite_type_and_noetherian
+  divisor_supported_on_smooth_locus :
+    (D.divisor.ideal.support : Set (Chapter15FiberCurve C)) ⊆ dualizing.smoothLocus
+  differential : chapter15NormalSections D ⟶ chapter15H1StructureSpace C
+  differential_is_abel_boundary :
+    differential = chapter15CartierConnectingMap C d D
+  smooth_locus_restriction :
+    chapter15DifferentialModule C ⟶ chapter15RestrictedDifferentialModule C d D
+  restriction_is_dualizing :
+    smooth_locus_restriction = chapter15DifferentialRestrictionMap C d D
+  dualizing_map :
+    (Scheme.Modules.pullback dualizing.normalizationMap).obj dualizing.dualizing.module ⟶
+      chapter15StructureSheaf dualizing.normalization
+  dualizing_map_is_canonical :
+    dualizing_map = dualizing.dualizing_restriction
+  residue_fields_agree :
+    Chapter15SameResidueField mapAtDivisor.source_point mapAtDivisor.target_point
+  finite_type_and_noetherian : Chapter15FormalImmersionFiniteness mapAtDivisor.map
 
 theorem chapter15_nodal_formal_immersion_criterion
     {k : Type u} [Field k]
     (C : Chapter15ProperSmoothIntegralCurve k) (d : ℕ)
     (D : Chapter15FiberDivisor C d) :
     ∀ P : Chapter15NodalAbelFormalImmersionData C d D,
-      P.opposite_residue_condition → P.residue_fields_agree →
-      P.finite_type_and_noetherian →
+      Nonempty (P.dualizing.residues ≅ P.dualizing.residues) →
+      Chapter15SameResidueField P.mapAtDivisor.source_point
+        P.mapAtDivisor.target_point →
+      Chapter15FormalImmersionFiniteness P.mapAtDivisor.map →
       Chapter15FormalImmersionAt
           P.mapAtDivisor.map P.mapAtDivisor.source_point P.mapAtDivisor.target_point ↔
         Function.Injective P.differential.hom ∧
@@ -242,21 +291,31 @@ theorem chapter15_nodal_formal_immersion_criterion
 structure Chapter15NodalAbelFormalNeighborhoodComparison
     {k : Type u} [Field k]
     (C : Chapter15ProperSmoothIntegralCurve k) (d : ℕ)
+    (A : Chapter15AbelMapData C.curve d)
     (D E : Chapter15FiberDivisor C d) where
-  nodal_duality_hypotheses : Prop
-  nodal_duality_hypotheses_proof : nodal_duality_hypotheses
-  equal_formal_neighborhoods : Prop
-  equal_formal_neighborhoods_proof : equal_formal_neighborhoods
+  nodal_duality_hypotheses :
+    Chapter15NodalDualizingData (k := k) (Chapter15FiberCurve C)
+  source_point : A.picard.representing.carrier
+  target_point : A.picard.representing.carrier
+  source_point_is_abel_image :
+    source_point = (chapter15AbelPoint C d A D).hom
+      (IsLocalRing.closedPoint k)
+  target_point_is_abel_image :
+    target_point = (chapter15AbelPoint C d A E).hom
+      (IsLocalRing.closedPoint k)
+  equal_formal_neighborhoods : Nonempty
+    (CommRingCat.of (chapter01CompletedLocalRing A.picard.representing.carrier source_point) ≅
+      CommRingCat.of (chapter01CompletedLocalRing A.picard.representing.carrier target_point))
 
 theorem chapter15_nodal_Abel_image_and_formal_neighborhood_comparison
     {k : Type u} [Field k]
     (C : Chapter15ProperSmoothIntegralCurve k) (d : ℕ)
     (A : Chapter15AbelMapData C.curve d)
     (D E : Chapter15FiberDivisor C d)
-    (hdual : Prop) (has_hdual : hdual)
+    (hdual : Chapter15NodalDualizingData (k := k) (Chapter15FiberCurve C))
     (equal_Abel_images :
       chapter15AbelPoint C d A D = chapter15AbelPoint C d A E) :
-    Nonempty (Chapter15NodalAbelFormalNeighborhoodComparison C d D E) := by
+    Nonempty (Chapter15NodalAbelFormalNeighborhoodComparison C d A D E) := by
   sorry
 
 end

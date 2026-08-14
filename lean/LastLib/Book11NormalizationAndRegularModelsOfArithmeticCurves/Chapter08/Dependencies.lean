@@ -13,6 +13,7 @@ import Mathlib.RingTheory.AdicCompletion.Algebra
 import Mathlib.RingTheory.AdicCompletion.LocalRing
 import Mathlib.RingTheory.Flat.FaithfullyFlat.Basic
 import Mathlib.RingTheory.Ideal.AssociatedPrime.Basic
+import Mathlib.RingTheory.Ideal.Cotangent
 import Mathlib.RingTheory.Ideal.Quotient.Operations
 import Mathlib.RingTheory.MvPolynomial.Basic
 import Mathlib.RingTheory.RegularLocalRing.Defs
@@ -20,6 +21,7 @@ import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapte
 import LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter01.Dependencies
 import LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter03.Core
 import LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter04.Dependencies
+import LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter07.Section03NormalizedBlowups
 import LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter07.Section04LocalityAndProjectivity
 
 namespace LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter08
@@ -152,11 +154,11 @@ def chapter08RingQuotientLength
     (A : Type u) [CommRing A] (J : Ideal A) : ℕ∞ :=
   Module.length A (A ⧸ J)
 
-def chapter08AssociatedGradedPiece
+abbrev chapter08AssociatedGradedPiece
     (A : Type u) [CommRing A] [IsLocalRing A] (n : ℕ) : Type u :=
   (chapter08MaximalIdeal A ^ n : Submodule A A) ⧸
-    (chapter08MaximalIdeal A ^ (n + 1) : Submodule A A).comap
-      (chapter08MaximalIdeal A ^ n : Submodule A A).subtype
+    Submodule.comap (chapter08MaximalIdeal A ^ n : Submodule A A).subtype
+      (chapter08MaximalIdeal A ^ (n + 1) : Submodule A A)
 
 abbrev chapter08AssociatedGraded
     (A : Type u) [CommRing A] [IsLocalRing A] : Type u :=
@@ -195,18 +197,18 @@ noncomputable instance chapter08AssociatedGradedCommRing
 
 abbrev Chapter08ZariskiTangentSpace
     (A : Type u) [CommRing A] [IsLocalRing A] : Type u :=
-  CotangentSpace A →ₗ[ResidueField A] ResidueField A
+  IsLocalRing.CotangentSpace A →ₗ[IsLocalRing.ResidueField A] IsLocalRing.ResidueField A
 
 structure Chapter08ResidueFieldExtension
     (A : Type u) [CommRing A] [IsLocalRing A]
-    (K : Type u) [Field K] [Algebra (ResidueField A) K] where
-  finite : FiniteDimensional (ResidueField A) K
+    (K : Type u) [Field K] [Algebra (IsLocalRing.ResidueField A) K] where
+  finite : FiniteDimensional (IsLocalRing.ResidueField A) K
   unramified : Prop
 
 abbrev chapter08ExtendedTangentSpace
     (A : Type u) [CommRing A] [IsLocalRing A]
-    (K : Type u) [Field K] [Algebra (ResidueField A) K] : Type u :=
-  Chapter08ZariskiTangentSpace A ⊗[ResidueField A] K
+    (K : Type u) [Field K] [Algebra (IsLocalRing.ResidueField A) K] : Type u :=
+  TensorProduct (IsLocalRing.ResidueField A) K (Chapter08ZariskiTangentSpace A)
 
 def chapter08TranslationPreservesCone
     {K T : Type u} [Field K] [AddCommGroup T] [Module K T]
@@ -217,7 +219,7 @@ def chapter08TranslationPreservesCone
 to the chosen affine set of tangent directions. -/
 structure Chapter08DirectrixProfile
     (A : Type u) [CommRing A] [IsLocalRing A]
-    (K : Type u) [Field K] [Algebra (ResidueField A) K] where
+    (K : Type u) [Field K] [Algebra (IsLocalRing.ResidueField A) K] where
   extension : Chapter08ResidueFieldExtension A K
   cone : Set (chapter08ExtendedTangentSpace A K)
   identification : Prop
@@ -230,7 +232,7 @@ structure Chapter08DirectrixProfile
 
 def chapter08DirectrixDimension
     {A : Type u} [CommRing A] [IsLocalRing A]
-    {K : Type u} [Field K] [Algebra (ResidueField A) K]
+    {K : Type u} [Field K] [Algebra (IsLocalRing.ResidueField A) K]
     (D : Chapter08DirectrixProfile A K) : ℕ :=
   Module.finrank K D.directrix
 
@@ -252,7 +254,7 @@ def Chapter08MPrimaryIdeal
 
 def Chapter08UnmixedLocalRing
     (A : Type u) [CommRing A] [IsLocalRing A] [IsNoetherianRing A] : Prop :=
-  ∀ p : Ideal A, p ∈ Module.associatedPrimes A A →
+  ∀ p : Ideal A, p ∈ associatedPrimes A A →
     ringKrullDim (A ⧸ p) = ringKrullDim A
 
 end

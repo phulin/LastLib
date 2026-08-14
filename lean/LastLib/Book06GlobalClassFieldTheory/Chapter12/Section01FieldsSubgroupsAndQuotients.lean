@@ -11,7 +11,8 @@ open LastLib.Book06GlobalClassFieldTheory.Chapter10
 /-! ## 12.1. Fields, subgroups, and quotients -/
 
 theorem chapter12_canonical_field_subgroup_assignments_are_inverse
-    {K Ks C : Type*} [Field K] [Field Ks] [Algebra K Ks]
+    {K Ks C : Type*} [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
     [CommGroup C] [TopologicalSpace C]
     (A : Chapter06CharacterFieldAssignment K Ks C)
     (G : Chapter06GlobalExistenceCorrespondence K Ks C A) :
@@ -23,7 +24,8 @@ theorem chapter12_canonical_field_subgroup_assignments_are_inverse
     fun E => chapter06_global_existence_right_inverse A G E⟩
 
 theorem chapter12_canonical_open_subgroup_quotient_dictionary
-    {K Ks C : Type*} [Field K] [Field Ks] [Algebra K Ks]
+    {K Ks C : Type*} [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
     [CommGroup C] [TopologicalSpace C]
     (A : Chapter06CharacterFieldAssignment K Ks C)
     (G : Chapter06GlobalExistenceCorrespondence K Ks C A)
@@ -38,7 +40,8 @@ theorem chapter12_canonical_open_subgroup_quotient_dictionary
     G.quotient_index_degree H⟩
 
 theorem chapter12_canonical_inclusion_reversal
-    {K Ks C : Type*} [Field K] [Field Ks] [Algebra K Ks]
+    {K Ks C : Type*} [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
     [CommGroup C] [TopologicalSpace C]
     (A : Chapter06CharacterFieldAssignment K Ks C)
     (G : Chapter06GlobalExistenceCorrespondence K Ks C A)

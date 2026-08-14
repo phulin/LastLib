@@ -286,24 +286,31 @@ theorem chapter01_norm_valuation_formula
   exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04_norm_valuation_formula
     K L e f hext hrestrict hf hunique hdegree x hx
 
-/-- The unramified-extension classification is imported in its functorial
-book-facing form. -/
+/-- The unramified-extension classification is imported through its concrete
+book-facing intermediate-field interface. -/
 abbrev Chapter01UnramifiedClassificationInterface :=
-  LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Chapter07UnramifiedClassificationInterface
+  LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Chapter07ActualUnramifiedClassificationInterface
 
 theorem chapter01_unramified_extensions_classified_by_residue_extensions
-    {U S : Type*} (C : Chapter01UnramifiedClassificationInterface U S) :
+    {K Ω k κ U S : Type*} [Field K] [Field Ω] [Field k] [Field κ]
+    [Algebra K Ω] [Algebra k κ]
+    [IsAlgClosed Ω] [Algebra.IsAlgebraic K Ω]
+    [IsAlgClosed κ] [Algebra.IsAlgebraic k κ]
+    (C : Chapter01UnramifiedClassificationInterface K Ω k κ U S) :
     Nonempty (U ≃ S) ∧
-      (∀ u, C.degreeU u = C.degreeS (C.reduction u)) ∧
-      (∀ u v, C.inclusionU u v ↔
-        C.inclusionS (C.reduction u) (C.reduction v)) ∧
-      (∀ u v, C.reduction (C.compositumU u v) =
-        C.compositumS (C.reduction u) (C.reduction v)) ∧
-      (∀ u v, C.reduction (C.intersectionU u v) =
-        C.intersectionS (C.reduction u) (C.reduction v)) ∧
-      (∀ u, LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Chapter07GaloisGroupPreservation
-        (C.galoisU u) (C.galoisS (C.reduction u))) := by
-  exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.chapter07_unramified_extensions_classified_by_residue_extensions C
+      (∀ u,
+        letI : FiniteDimensional K (C.extension u) := C.extension_finite u
+        letI : FiniteDimensional k (C.residueExtension (C.reduction u)) :=
+          C.residue_finite (C.reduction u)
+        Module.finrank K (C.extension u) =
+          Module.finrank k (C.residueExtension (C.reduction u))) ∧
+      (∀ u,
+        letI : FiniteDimensional K (C.extension u) := C.extension_finite u
+        letI : FiniteDimensional k (C.residueExtension (C.reduction u)) :=
+          C.residue_finite (C.reduction u)
+        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Chapter07UnramifiedExtension
+          (C.profile u)) := by
+  sorry
 
 end
 

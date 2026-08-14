@@ -1,6 +1,7 @@
 import LastLib.Book06GlobalClassFieldTheory.Chapter05.Dependencies
 import Mathlib.Algebra.Group.Subgroup.Pointwise
 import Mathlib.Topology.Algebra.Group.Basic
+import Mathlib.Topology.Algebra.OpenSubgroup
 
 namespace LastLib.Book06GlobalClassFieldTheory.Chapter05
 
@@ -78,7 +79,10 @@ theorem chapter05_tower_norm_subgroups_reverse_inclusion
     [CommGroup C_K] [CommGroup C_E] [CommGroup C_L]
     (T : Chapter05TowerNormData C_K C_E C_L) :
     T.normSubgroupL ≤ T.normSubgroupE := by
-  sorry
+  rw [T.normSubgroupL_eq_range, T.normSubgroupE_eq_range, ← T.transitive]
+  intro x hx
+  obtain ⟨y, hy, rfl⟩ := Subgroup.mem_map.mp hx
+  exact Subgroup.mem_map_of_mem T.normEK (Subgroup.mem_top _)
 
 /-- The field/norm order interface used by the finite abelian class-field
 lattice.  `fieldLe E L` means `E ⊆ L`. -/
@@ -126,14 +130,16 @@ theorem chapter05_norm_subgroup_product_open
     [IsTopologicalGroup C]
     (N : Chapter05AbelianExtensionNormLattice E C) (A B : E) :
     IsOpen ((N.normSubgroup A : Set C) * (N.normSubgroup B : Set C)) := by
-  sorry
+  rw [← N.intersection_norm_product A B]
+  exact N.normSubgroup_open (N.intersection A B)
 
 theorem chapter05_norm_subgroup_product_closed
     {E : Type uE} {C : Type uC} [CommGroup C] [TopologicalSpace C]
     [IsTopologicalGroup C]
     (N : Chapter05AbelianExtensionNormLattice E C) (A B : E) :
     IsClosed ((N.normSubgroup A : Set C) * (N.normSubgroup B : Set C)) := by
-  sorry
+  rw [← N.intersection_norm_product A B]
+  exact Subgroup.isClosed_of_isOpen _ (N.normSubgroup_open (N.intersection A B))
 
 /-- The finite-level norm square for an arbitrary extension in a common
 separable closure. -/

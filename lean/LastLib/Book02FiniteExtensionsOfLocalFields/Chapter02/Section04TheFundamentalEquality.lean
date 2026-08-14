@@ -143,9 +143,49 @@ theorem first_precision_length_is_ramification_times_residue
   have hprod :
       (IsLocalRing.maximalIdeal vK.valuationSubring).ramificationIdx'
           (IsLocalRing.maximalIdeal vL.valuationSubring) *
-        (IsLocalRing.maximalIdeal vK.valuationSubring).inertiaDeg'
+          (IsLocalRing.maximalIdeal vK.valuationSubring).inertiaDeg'
           (IsLocalRing.maximalIdeal vL.valuationSubring) = Module.finrank K L := by
-    sorry
+    let : FaithfulSMul vK.valuationSubring vL.valuationSubring :=
+      (faithfulSMul_iff_algebraMap_injective _ _).mpr
+        (Valuation.HasExtension.algebraMap_injective (vK := vK) (vA := vL))
+    have hsum :=
+      Ideal.sum_ramification_inertia_eq_finrank
+        (p := IsLocalRing.maximalIdeal vK.valuationSubring)
+        (S := vL.valuationSubring)
+    have hq_eq (q : (IsLocalRing.maximalIdeal vK.valuationSubring).primesOver
+        vL.valuationSubring) :
+        q.1 = IsLocalRing.maximalIdeal vL.valuationSubring := by
+      exact IsLocalRing.eq_maximalIdeal
+        (q.2.1.isMaximal (Ideal.ne_bot_of_mem_primesOver
+          (IsDiscreteValuationRing.not_a_field vK.valuationSubring) q.2))
+    let : Unique ((IsLocalRing.maximalIdeal vK.valuationSubring).primesOver
+        vL.valuationSubring) :=
+      { default := Ideal.primesOver.mk
+          (IsLocalRing.maximalIdeal vK.valuationSubring)
+          (IsLocalRing.maximalIdeal vL.valuationSubring)
+        uniq := fun q => Subtype.ext (hq_eq q) }
+    have hdefault :
+        (default : (IsLocalRing.maximalIdeal vK.valuationSubring).primesOver
+          vL.valuationSubring).1 = IsLocalRing.maximalIdeal vL.valuationSubring :=
+      hq_eq default
+    have hfinrank : Module.finrank vK.valuationSubring vL.valuationSubring =
+        Module.finrank K L := by
+      calc
+        Module.finrank vK.valuationSubring vL.valuationSubring =
+            Cardinal.toNat (Module.finrank vK.valuationSubring
+              vL.valuationSubring : Cardinal) := by simp
+        _ = Cardinal.toNat (Module.rank vK.valuationSubring
+              vL.valuationSubring) := by rw [Module.finrank_eq_rank]
+        _ = Module.finrank K L := hrank
+    rw [Fintype.sum_unique, hfinrank] at hsum
+    rw [Ideal.ramificationIdx'_eq_ramificationIdx
+      (IsLocalRing.maximalIdeal vK.valuationSubring)
+      (IsLocalRing.maximalIdeal vL.valuationSubring)
+      (IsDiscreteValuationRing.not_a_field vK.valuationSubring),
+      Ideal.inertiaDeg'_eq_inertiaDeg
+        (IsLocalRing.maximalIdeal vK.valuationSubring)
+        (IsLocalRing.maximalIdeal vL.valuationSubring)]
+    simpa only [hdefault] using hsum
   have hram :
       (IsLocalRing.maximalIdeal vK.valuationSubring).ramificationIdx'
           (IsLocalRing.maximalIdeal vL.valuationSubring) = e := by
@@ -187,7 +227,17 @@ theorem fundamental_equality_as_layer_sum
       (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring) :
     Module.finrank K L = (∑ _ : Fin e, f) ∧
       (∑ _ : Fin e, f) = e * f := by
-  sorry
+  have hfund := fundamental_equality vK vL hcomplete
+  constructor
+  · calc
+      Module.finrank K L =
+          chapterRamificationIndex vK.valuationSubring vL.valuationSubring
+            (IsLocalRing.maximalIdeal vL.valuationSubring) *
+          chapterResidueDegree vK.valuationSubring vL.valuationSubring
+            (IsLocalRing.maximalIdeal vL.valuationSubring) := hfund
+      _ = e * f := by rw [he, hf]
+      _ = ∑ _ : Fin e, f := by simp
+  · simp
 
 /-- Completeness and discreteness remove the defect factor without a
 separability or residue-perfection hypothesis. -/
