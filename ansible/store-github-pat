@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+pat_file="${LASTLIB_GITHUB_PAT_FILE:-${HOME}/.config/lastlib/github.pat}"
+pat_dir="$(dirname -- "${pat_file}")"
+
+umask 077
+install -d -m 0700 -- "${pat_dir}"
+
+printf 'GitHub PAT (input is hidden): ' >&2
+IFS= read -r -s github_pat
+printf '\n' >&2
+
+if [[ -z "${github_pat}" ]]; then
+  printf 'error: refusing to store an empty token\n' >&2
+  exit 1
+fi
+
+printf '%s\n' "${github_pat}" > "${pat_file}"
+chmod 0600 -- "${pat_file}"
+unset github_pat
+
+printf 'Stored the PAT in %s (mode 0600).\n' "${pat_file}"

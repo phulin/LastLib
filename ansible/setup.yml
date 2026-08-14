@@ -1,0 +1,231 @@
+---
+- name: Provision a LastLib Ubuntu host
+  hosts: lastlib
+  become: true
+  gather_facts: true
+
+  vars:
+    lastlib_user: phulin
+    lastlib_home: "/home/{{ lastlib_user }}"
+    lastlib_shell: /usr/bin/fish
+    lastlib_dotfiles_repo: https://github.com/phulin/dotfiles.git
+    lastlib_dotfiles_version: master
+    lastlib_repo: https://github.com/phulin/LastLib.git
+    lastlib_repo_version: book1-lean
+
+    # This lookup runs on the Ansible controller (your laptop), not the target.
+    # Override the path by exporting LASTLIB_GITHUB_PAT_FILE.
+    lastlib_github_pat_file: >-
+      {{ lookup('ansible.builtin.env', 'LASTLIB_GITHUB_PAT_FILE')
+         | default(lookup('ansible.builtin.env', 'HOME')
+         + '/.config/lastlib/github.pat', true) }}
+    lastlib_github_pat: >-
+      {{ lookup('ansible.builtin.file', lastlib_github_pat_file,
+                errors='ignore') | trim }}
+
+    # The public key found in the initial Fish history. Add or replace keys here.
+    lastlib_authorized_keys:
+      - >-
+        ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILILc5NyUuezKFipnPXF4jj0E6NQFEiVCmufUccfHZtl
+        patrick.hulin@gmail.com
+
+    # The project bootstrap installs uv, elan, Lean, Codex, project dependencies,
+    # and initializes the Mathlib executable cache. Set this to false for a quick
+    # host-only setup.
+    lastlib_run_project_setup: true
+
+    lastlib_packages:
+      - build-essential
+      - ca-certificates
+      - curl
+      - fish
+      - fuse3
+      - fuse-overlayfs
+      - git
+      - htop
+      - pkg-config
+      - ripgrep
+      - rsync
+      - sudo
+      - tmux
+
+    lastlib_dotfile_links:
+      - .bashrc
+      - .dircolors
+      - .gdbinit
+      - .gitconfig
+      - .tmux.conf
+      - .config/fish/conf.d/60-dotfiles.fish
+      - .local/bin/doge
+      - .local/bin/up
+
+  pre_tasks:
+    - name: Require Ubuntu 26.04
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.distribution == "Ubuntu"
+          - ansible_facts.distribution_version == "26.04"
+        fail_msg: >-
+          This playbook follows LastLib's setup_ubuntu.sh and requires Ubuntu
+          26.04; found {{ ansible_facts.distribution }}
+          {{ ansible_facts.distribution_version }}.
+
+  tasks:
+    - name: Install host packages
+      ansible.builtin.apt:
+        name: "{{ lastlib_packages }}"
+        state: present
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Create the LastLib administrator
+      ansible.builtin.user:
+        name: "{{ lastlib_user }}"
+        home: "{{ lastlib_home }}"
+        create_home: true
+        groups:
+          - sudo
+        append: true
+        shell: "{{ lastlib_shell }}"
+        state: present
+
+    - name: Allow key-authenticated administration without a password
+      ansible.builtin.copy:
+        dest: "/etc/sudoers.d/90-{{ lastlib_user }}"
+        content: "{{ lastlib_user }} ALL=(ALL:ALL) NOPASSWD: ALL\n"
+        owner: root
+        group: root
+        mode: "0440"
+        validate: /usr/sbin/visudo -cf %s
+
+    - name: Create the SSH configuration directory
+      ansible.builtin.file:
+        path: "{{ lastlib_home }}/.ssh"
+        state: directory
+        owner: "{{ lastlib_user }}"
+        group: "{{ lastlib_user }}"
+        mode: "0700"
+
+    - name: Install authorized SSH keys
+      ansible.builtin.copy:
+        dest: "{{ lastlib_home }}/.ssh/authorized_keys"
+        content: "{{ lastlib_authorized_keys | join('\n') }}\n"
+        owner: "{{ lastlib_user }}"
+        group: "{{ lastlib_user }}"
+        mode: "0600"
+
+    - name: Persist LastLib host tuning
+      ansible.builtin.copy:
+        dest: /etc/sysctl.d/99-lastlib.conf
+        content: |
+          # Concurrent LastLib swarm workers open many files, pipes, and watches.
+          fs.file-max = 8388608
+          fs.pipe-user-pages-soft = 262144
+          fs.inotify.max_user_instances = 4096
+        owner: root
+        group: root
+        mode: "0644"
+      notify: Reload sysctl settings
+
+    - name: Persist the LastLib user's open-file limit
+      ansible.builtin.copy:
+        dest: /etc/security/limits.d/99-lastlib.conf
+        content: |
+          {{ lastlib_user }} soft nofile 65536
+          {{ lastlib_user }} hard nofile 524288
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Create dotfile parent directories
+      ansible.builtin.file:
+        path: "{{ lastlib_home }}/{{ item }}"
+        state: directory
+        owner: "{{ lastlib_user }}"
+        group: "{{ lastlib_user }}"
+        mode: "0755"
+      loop:
+        - .config/fish/conf.d
+        - .local/bin
+
+    - name: Check out dotfiles and their submodules
+      become_user: "{{ lastlib_user }}"
+      ansible.builtin.git:
+        repo: "{{ lastlib_dotfiles_repo }}"
+        dest: "{{ lastlib_home }}/dotfiles"
+        version: "{{ lastlib_dotfiles_version }}"
+        recursive: true
+        update: true
+        force: false
+
+    - name: Link managed dotfiles
+      ansible.builtin.file:
+        src: "{{ lastlib_home }}/dotfiles/{{ item }}"
+        dest: "{{ lastlib_home }}/{{ item }}"
+        state: link
+        owner: "{{ lastlib_user }}"
+        group: "{{ lastlib_user }}"
+        force: true
+      loop: "{{ lastlib_dotfile_links }}"
+
+    - name: Check out public LastLib without credentials in the URL
+      become_user: "{{ lastlib_user }}"
+      ansible.builtin.git:
+        repo: "{{ lastlib_repo }}"
+        dest: "{{ lastlib_home }}/LastLib"
+        version: "{{ lastlib_repo_version }}"
+        recursive: false
+        update: true
+        force: false
+      when: lastlib_github_pat | length == 0
+
+    - name: Check out private LastLib using the laptop PAT
+      become_user: "{{ lastlib_user }}"
+      ansible.builtin.git:
+        repo: "{{ lastlib_repo }}"
+        dest: "{{ lastlib_home }}/LastLib"
+        version: "{{ lastlib_repo_version }}"
+        recursive: false
+        update: true
+        force: false
+      environment:
+        GIT_TERMINAL_PROMPT: "0"
+        GIT_CONFIG_COUNT: "1"
+        GIT_CONFIG_KEY_0: http.https://github.com/.extraheader
+        GIT_CONFIG_VALUE_0: >-
+          Basic {{ ('x-access-token:' + lastlib_github_pat) | b64encode }}
+      no_log: true
+      when: lastlib_github_pat | length > 0
+
+    - name: Check whether the project bootstrap has completed
+      ansible.builtin.stat:
+        path: "{{ lastlib_home }}/LastLib/.ansible-bootstrap-complete"
+      register: lastlib_bootstrap_marker
+
+    - name: Run the LastLib project bootstrap
+      become_user: "{{ lastlib_user }}"
+      ansible.builtin.command:
+        cmd: ./scripts/setup_ubuntu.sh
+        chdir: "{{ lastlib_home }}/LastLib"
+      environment:
+        HOME: "{{ lastlib_home }}"
+        PATH: "{{ lastlib_home }}/.local/bin:{{ lastlib_home }}/.elan/bin:{{ ansible_env.PATH }}"
+      when:
+        - lastlib_run_project_setup | bool
+        - not lastlib_bootstrap_marker.stat.exists
+
+    - name: Record successful project bootstrap
+      ansible.builtin.file:
+        path: "{{ lastlib_home }}/LastLib/.ansible-bootstrap-complete"
+        state: touch
+        owner: "{{ lastlib_user }}"
+        group: "{{ lastlib_user }}"
+        mode: "0644"
+      when:
+        - lastlib_run_project_setup | bool
+        - not lastlib_bootstrap_marker.stat.exists
+
+  handlers:
+    - name: Reload sysctl settings
+      ansible.builtin.command: /usr/sbin/sysctl --system
+      changed_when: true

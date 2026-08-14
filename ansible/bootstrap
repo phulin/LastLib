@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+pat_file="${LASTLIB_GITHUB_PAT_FILE:-${HOME}/.config/lastlib/github.pat}"
+ssh_user="${LASTLIB_SSH_USER:-root}"
+
+if [[ "$#" -lt 1 ]]; then
+  printf 'usage: %s HOST [ansible-playbook arguments...]\n' "$0" >&2
+  exit 2
+fi
+
+target_host="$1"
+shift
+
+if [[ "${target_host}" == *,* ]]; then
+  printf 'error: HOST must not contain a comma\n' >&2
+  exit 2
+fi
+
+if [[ ! -r "${pat_file}" ]]; then
+  printf 'error: PAT file %s is not readable\n' "${pat_file}" >&2
+  printf 'run %s/store-github-pat first\n' "${script_dir}" >&2
+  exit 1
+fi
+
+pat_mode="$(stat -c '%a' -- "${pat_file}")"
+if (( (8#${pat_mode} & 8#077) != 0 )); then
+  printf 'error: PAT file %s is accessible by group or others (mode %s)\n' \
+    "${pat_file}" "${pat_mode}" >&2
+  printf 'fix it with: chmod 600 %q\n' "${pat_file}" >&2
+  exit 1
+fi
+
+export LASTLIB_GITHUB_PAT_FILE="${pat_file}"
+
+exec ansible-playbook \
+  --inventory "${target_host}," \
+  --user "${ssh_user}" \
+  --ssh-common-args='-o StrictHostKeyChecking=accept-new' \
+  "${script_dir}/setup.yml" \
+  "$@"

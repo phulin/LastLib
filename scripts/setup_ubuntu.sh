@@ -128,25 +128,6 @@ if [[ ! -e /dev/fuse ]]; then
   printf '\nwarning: /dev/fuse is unavailable. LastLib Swarm will use its slower shared isolation mode.\n' >&2
 fi
 
-log "Building each LastLib chapter"
-(
-  cd "${REPO_ROOT}/lean"
-  mapfile -t CHAPTER_FILES < <(
-    find LastLib -mindepth 2 -maxdepth 2 -type f -name 'Chapter[0-9]*.lean' \
-      -printf '%p\n' | sort -V
-  )
-  if [[ "${#CHAPTER_FILES[@]}" -eq 0 ]]; then
-    die "no LastLib chapter entry modules were found"
-  fi
-
-  for chapter_file in "${CHAPTER_FILES[@]}"; do
-    chapter_module="${chapter_file%.lean}"
-    chapter_module="${chapter_module//\//.}"
-    log "Building ${chapter_module}"
-    lake build "+${chapter_module}"
-  done
-)
-
 cat <<EOF
 
 Setup complete.
