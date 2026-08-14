@@ -1076,6 +1076,17 @@ finite-set occurrence theorem $({\rm DLO}_{P_{\rm tar}})$ and verification of th
 minimal ledger.  Thus saturation is no longer the first unnamed obstacle on this route; the
 first obstacle is the implication from nonzero upper support to nonzero exact minimal support.
 
+Section 1.7 of Book 176 now reduces that implication further.  On the preferred Book 178
+route, $P_{\rm tar}$ contains retained multiplicative places above $3$ and accidental
+semistable places, not the retired selected set $W_0(M)$.  At each such place the upper factor
+is special and $\bar\rho|_{G_{F_v}}$ is unramified.  Proposition 1.3 of Book 176 proves DLO by
+successive application of the one-place outside-$\ell$ level-optimization theorem
+$({\rm FLO}_v)$ with spectators.  Controlled places above $3$ are in the regular Mazur range;
+an accidental place can have repeated-root, possibly scalar Frobenius and then requires the
+stronger scalar-support theorem, since ordinary level optimization gives only a
+spherical-or-special alternative.  These exact arithmetic theorems are not proved in the
+present corpus, so the reduction narrows but does not close the seed gap.
+
 Book 176's $({\rm IAV}_{P_{\rm aux}})$ does not itself prove (4.4). It starts with a named
 characteristic-zero desired point and proves that point automorphic. Before Book 181 there is
 no characteristic-zero point of the minimal signed-special deformation problem to feed into a
@@ -1870,7 +1881,10 @@ Book 178's conditional $({\rm IAV}_{P_{\rm aux}})$ handoff supplies the upper ta
 and direct transfer to the all-real-place definite algebra supplies upper residual occurrence
 without an integral curve switch. The remaining theorem is precisely
 $({\rm DMS}_{P_{\rm tar}})$ of (4.4), whose first arithmetic clause is
-$({\rm DLO}_{P_{\rm tar}})$. Its clean minimal output implies
+$({\rm DLO}_{P_{\rm tar}})$. Book 176, Proposition 1.3 reduces DLO to the one-place
+$({\rm FLO}_v)$ theorem with fixed away compact level; the invariant-cycle,
+residual-isotypy/Frobenius comparison, and scalar-support proofs remain outside the current
+source closure. Its clean minimal output implies
 $(\mathrm{Seed}_{\mathrm{SP}})$ and hence $(\mathrm{SF}_{\mathrm{SP}})$. Neither the optional
 singleton moving geometry nor the constant-row abelian-Ihara family belongs to that direct
 definite route.
@@ -1925,7 +1939,7 @@ The FLT-range unconditional theorem is not dependency-closed because neither
 $(\mathrm{SF}_{\mathrm{SP}})$ nor the stronger $(\mathrm{Seed}_{\mathrm{SP}})$ is proved; on
 the preferred split route the missing source is $({\rm DMS}_{P_{\rm tar}})$ after the separate
 $({\rm IAV}_{P_{\rm aux}})$ certificate, with $({\rm DLO}_{P_{\rm tar}})$ its first unresolved
-arithmetic clause. The precise verdict is therefore
+arithmetic clause and $({\rm FLO}_v)$ its exact one-place reduction. The precise verdict is therefore
 
 $$
 \boxed{\text{NOT READY}.}

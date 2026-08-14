@@ -26,7 +26,10 @@ class set follows directly from strong approximation away from the changed finit
 Section 1.6 proves that result and its integral saturation consequence.  It then isolates why
 this does not by itself lower an upper eigensystem to minimal level: injectivity controls the
 old source once that source exists, whereas the application first needs to prove that the
-minimal source is nonzero.
+minimal source is nonzero. Section 1.7 checks the actual Frey target-extra places against
+Mazur principle and full outside-$\ell$ level optimization. It proves the finite-set induction
+from the exact one-place theorem, and identifies the arithmetic-model theorem still absent
+from this source chain.
 
 The discussion of incidence complexes below serves these application theorems. It never
 forms a tensor product of full global one-prime cohomology complexes: the common global
@@ -42,6 +45,7 @@ multiplied.
   - [1.4 The application routes and their boundary](#14-the-application-routes-and-their-boundary)
   - [1.5 The direct finite-set Ihara-avoidance route](#15-the-direct-finite-set-ihara-avoidance-route)
   - [1.6 Definite Ihara and the minimal-support boundary](#16-definite-ihara-and-the-minimal-support-boundary)
+  - [1.7 Outside-ell level optimization and the actual Frey set](#17-outside-ell-level-optimization-and-the-actual-frey-set)
 - [2. Local conventions and the three congruence regimes](#2-local-conventions-and-the-three-congruence-regimes)
   - [2.1 Frobenius, Hecke operators, and monodromy](#21-frobenius-hecke-operators-and-monodromy)
   - [2.2 Special representations and conductor](#22-special-representations-and-conductor)
@@ -575,6 +579,146 @@ with component and branch-Smith hypotheses.  Consequently total definiteness mak
 and carrier parts substantially simpler, but the first exact unresolved arithmetic statement
 on the preferred route is $({\rm DLO}_{P_{\rm tar}})$, not saturation and not any optional
 node or toroidal comparison.
+
+### 1.7 Outside-$\ell$ level optimization and the actual Frey set
+
+The preceding boundary can be made substantially narrower.  Let $F$ be the even-degree
+split top of Book 178, let $\Pi^{\rm up}$ be its upper target packet, and let
+$\bar\rho_F=\bar\rho|_{G_F}$.  The actual target-extra set is
+
+$$
+P_{\rm tar}=
+\{v\nmid2\ell:\Pi^{\rm up}_v\text{ is special of conductor one while the represented
+minimal problem is unramified at }v\}.
+\tag{1.19}
+$$
+
+Thus every $v\in P_{\rm tar}$ has the following exact local record:
+
+1. $\bar\rho_F|_{G_{F_v}}$ is unramified, because the Frey residual representation is
+   unramified away from $2\ell$;
+2. $\Pi^{\rm up}_v$ is an unramified twist of Steinberg, because the specialized
+   Hilbert--Blumenthal factor is semistable of toric rank one there; and
+3. if $\alpha_v$ is the unramified twisting scalar, the two residual arithmetic-Frobenius
+   roots are $\bar\alpha_v$ and $q_v\bar\alpha_v$.
+
+In particular the residual Frobenius semisimplification has a repeated root exactly when
+$q_v\equiv1\pmod\ell$; the actual residual matrix can be scalar or a nonsemisimple
+repeated-root matrix.  The congruence $q_v\equiv-1\pmod\ell$ has distinct roots for odd
+$\ell$: it obstructs a one-sign Gram formula, but it remains in the ordinary unrefined
+Mazur-principle range.
+
+The notation $W_0(M)$ from the earlier selected-place construction of Book 177 does not
+belong to the preferred split construction.  On the Book 178 route, (1.19) consists of any
+retained multiplicative places above $3$ and the accidental semistable places discovered only
+after specialization.  A controlled place above $3$ is completely split, so $q_v=3$ and,
+for $\ell\ge7$, it satisfies $q_v\not\equiv1\pmod\ell$.  An accidental place has no such
+congruence restriction.  It may therefore lie in either the regular or scalar regime.  The
+dyadic places are not in (1.19), because the target problem retains their primitive
+signed-special condition.  A multiplicative coefficient-prime place is not repaired by
+level lowering: unless the good finite-flat replacement was made before specialization, the
+target path has not started.
+
+Here is the exact one-place theorem which would settle both congruence regimes.  It is useful
+to state its spectator clause, since that clause is what makes a finite-set argument honest.
+
+**Required theorem $({\rm FLO}_v)$ (outside-$\ell$ level optimization with spectators).**
+Let $F$ be totally real, $\ell\ge3$, and let
+$\bar r:G_F\to\operatorname{GL}_2(k)$ be absolutely irreducible, with
+$\bar r|_{G_{F(\zeta_\ell)}}$ absolutely irreducible when the cyclotomic extension is
+quadratic.  Let $v\nmid\ell$ and suppose that
+
+1. $\bar r|_{G_{F_v}}$ is unramified;
+2. a cohomological cuspidal packet $\pi$ of parallel weight two gives $\bar r$ and has a
+   vector fixed by $K_0(v)K^v$, where $K^v$ is a declared compact open away from $v$; and
+3. the declared determinant is the canonical lift of the residual determinant.
+
+Then, after finite coefficient extension, there is a cohomological cuspidal packet $\pi'$ of
+the same weight and declared determinant which gives $\bar r$, has a $K^v$-fixed vector with
+and is spherical at $v$.
+
+The standard published level-optimization theorem does **not** prove this statement in both
+congruence regimes.  When $q_v\not\equiv1\pmod\ell$, Mazur principle proves the conclusion:
+if the lower system did not occur, the invariant-cycle filtration would force Frobenius to be
+scalar on the residual global block, whereas the special local parameter has the two distinct
+roots $\bar\alpha_v,q_v\bar\alpha_v$.  The even-degree proof uses a parity-compatible
+quaternionic curve; the already retained dyadic special factor is an available
+essentially-square-integrable spectator in the Frey application.
+
+When $q_v\equiv1\pmod\ell$, the Frobenius contradiction disappears.  The optimal general
+level-optimization conclusion is only that a congruent output is spherical **or** an
+unramified special representation.  The auxiliary $q_z\equiv-1\pmod\ell$ construction in the
+standard even-degree proof removes a parity hypothesis in the regular theorem; it does not
+force the scalar output to be spherical.  Accordingly write
+
+$$
+({\rm FLO}_v)=
+\begin{cases}
+({\rm MP}_v),&q_v\not\equiv1\pmod\ell,\\
+({\rm SLO}_v),&q_v\equiv1\pmod\ell,
+\end{cases}
+\tag{1.20}
+$$
+
+where $({\rm MP}_v)$ is the usual Mazur-principle theorem with fixed away level and
+$({\rm SLO}_v)$ is the genuinely stronger application-specific scalar-support assertion that
+an occurring Iwahori-level output is spherical rather than remaining on any special or
+scalar-tame conductor-one branch.  The latter needs an additional arithmetic hypothesis or
+proof; it is not a consequence of the standard level-optimization theorem.
+
+The spectator clause causes no hidden local loss in the Frey application.  At a dyadic
+place, primitive residual monodromy has conductor one, so a packet giving the same residual
+representation and retaining Iwahori level cannot become spherical; its invariant line and
+sign are read from that residual local representation.  At a place above $\ell$, $K^v$
+preserves hyperspecial **automorphic level**.  This does not by itself prove that a stable
+Galois lattice for the output is finite flat with the selected model: Book 129 identifies
+finite-flat models only after finite flatness has been supplied.  That branchwise integral
+attachment is deliberately part of $({\rm CLN}_{\min})$, not of the occurrence assertion
+DLO.  A not-yet-lowered target-extra spectator need only retain Iwahori invariants.  If it
+becomes spherical early, that is harmless and the place is deleted from the remaining set.
+If its characteristic-zero Iwahori factor changes branch, the next application still meets
+the $K_0(v)$ hypothesis of $({\rm FLO}_v)$; no induction step assumes that the current factor
+remains the original Steinberg representation.
+
+**Proposition 1.3 (finite-set reduction to $({\rm FLO}_v)$).**  If
+$({\rm FLO}_v)$ holds with the displayed spectator clause at every current member of
+$P_{\rm tar}$, then $({\rm DLO}_{P_{\rm tar}})$ holds.
+
+**Proof.**  Order the finite set as $v_1,\ldots,v_t$.  Begin with
+$\Pi_0=\Pi^{\rm up}$.  Apply $({\rm FLO}_{v_1})$ with hyperspecial level at no target-extra
+place yet and Iwahori level at $v_2,\ldots,v_t$.  The output $\Pi_1$ is spherical at $v_1$
+and has the same residual representation and the declared level at every spectator.  Inductively,
+apply $({\rm FLO}_{v_i})$ to the current packet, omitting any later place which has already
+become spherical.  Every application preserves hyperspecial level at the previously removed
+places and does not increase level elsewhere.  The final packet $\Pi_t$ is spherical at all
+of $P_{\rm tar}$, retains the signed-special residual localization, and remains hyperspecial
+at the coefficient prime.  The finite-flat attachment at that prime remains in
+$({\rm CLN}_{\min})$.
+
+Since $[F:\mathbf Q]$ is even, transfer $\Pi_t$ to the quaternion algebra ramified at every
+real place and no finite place.  Its finite components are unchanged.  A fresh neat definite
+class-set lattice contains the rational packet eigenline; scaling a generator to be primitive
+gives a nonzero reduction in the exact minimal localization.  This is (1.17). $\square$
+
+This proposition proves that no genuinely simultaneous level-lowering theorem is needed once
+the one-place theorem preserves spectators: ordinary induction is sufficient.  It also
+locates the remaining source gap more accurately than the abstract countermodel (1.15).
+Books 21--22 provide general invariant-cycle algebra, Books 104 and 125--129 transfer and
+attach packets already known to occur, and Books 139 and 176 prove the relevant saturation
+statements.  But the present corpus does not prove even the application-shaped
+$({\rm MP}_v)$ from its arithmetic Shimura-curve model.  Book 140's lowering theorem assumes
+the component and normalized-branch obstructions vanish and excludes scalar, self-twist, and
+vexing identifications; it is not an alias for $({\rm SLO}_v)$.  Thus the narrow source-closed
+repair has two layers.  First import or prove the ordinary totally-real Mazur principle with
+fixed away level.  In this application the existing dyadic special factor supplies the
+finite ramification needed for the even-degree curve; the missing proof must still establish
+the localized integral invariant-cycle filtration, residual isotypy, and the Frobenius--$U_v$
+relation which yields the distinct-root contradiction.  Then either prove that no accidental target place has
+$q_v\equiv1\pmod\ell$, or supply a scalar Mazur-principle theorem for the actual residual block
+with explicit enhanced-line, component, branch, duality, and support hypotheses strong enough
+to force the spherical alternative.  Proposition 1.3 then proves
+$({\rm DLO}_{P_{\rm tar}})$.  The separately defined $({\rm CLN}_{\min})$ ledger must still be
+checked before one may write $({\rm DMS}_{P_{\rm tar}})$.
 
 ## 2. Local conventions and the three congruence regimes
 
@@ -2844,7 +2988,13 @@ The later definite-seed consumer has a different finite-set boundary. Theorem 1.
 the scalar definite Ihara and saturation statement without any curve abelian-Ihara input.
 It does not prove that the upper residual block occurs at minimal level. In the notation of
 Section 1.6, the first unresolved arithmetic theorem is
-$({\rm DLO}_{P_{\rm tar}})$; after it, $({\rm CLN}_{\min})$ verifies the exact structural
+$({\rm DLO}_{P_{\rm tar}})$. Section 1.7 reduces it rigorously to the one-place
+outside-$\ell$ level-optimization theorem $({\rm FLO}_v)$ with spectators.  The regular
+$q_v\not\equiv1\pmod\ell$ case is Mazur principle; accidental semistable places can also have
+$q_v\equiv1\pmod\ell$, where ordinary level optimization gives only a spherical-or-special
+alternative and the stronger scalar-support assertion $({\rm SLO}_v)$ is needed.  The present
+corpus proves neither the arithmetic invariant-cycle comparison for $({\rm MP}_v)$ nor
+$({\rm SLO}_v)$. After DLO, $({\rm CLN}_{\min})$ verifies the exact structural
 ledger, and their conjunction is $({\rm DMS}_{P_{\rm tar}})$. Independent upper-side
 Taylor--Wiles patching and common residual local-ring equations do not prove DLO; a paired
 upper/minimal patch must construct the synchronized mod-$\varpi$ automorphic module comparison
@@ -3008,7 +3158,12 @@ than the whole direct comparison. Theorem 1.2 removes the curve-Ihara and satura
 from scalar weight-two degeneracy maps. The countermodel (1.15)--(1.16) shows why upper
 occurrence and residual monodromy zero still do not produce minimal occurrence. Thus the
 direct definite route stops exactly at $({\rm DLO}_{P_{\rm tar}})$ and the subsequent clean
-minimal ledger, with no need to reintroduce node uniformization or toroidal joining.
+minimal ledger. Proposition 1.3 reduces DLO to the reusable one-place theorem
+$({\rm FLO}_v)$ with spectators: Mazur principle in the regular residue regime and full
+scalar-support lowering, beyond the ordinary spherical-or-special conclusion, at scalar
+accidental places.  These arithmetic theorems are narrower than the several-place cube, but
+they are not proved by definite Ihara or by the current conditional Book 140 comparison.  No
+toroidal joining is involved.
 
 For the actual named point downstream, the canonical torsion-free top quotient and its
 adjoint give a smaller honest carrier with the global module $W_\Pi$ occurring once. Theorem

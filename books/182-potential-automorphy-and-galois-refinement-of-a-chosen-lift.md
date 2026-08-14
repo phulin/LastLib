@@ -471,8 +471,8 @@ and they have different meanings.
 
 | Ledger | Definition | Forced examples | Purpose |
 |---|---|---|---|
-| $P_{\mathrm{aux}}(A)$ | places where the auxiliary-$q$ characteristic-zero representation has more level than its residual lifting problem | every dyadic place in the Frey-adapted Tate construction, the full conjugate distinguished set $W_0(M)$, some places above $3$, and accidental semistable places | make $V_{\mathfrak q}(A)$ automorphic |
-| $P_{\mathrm{tar}}$ | places where the resulting target-coefficient packet has more level than $\mathcal D_M^{\mathrm{SP}}$ | $W_0(M)$ and any retained multiplicative place above $3$ | lower the target packet to the exact signed-special minimal problem |
+| $P_{\mathrm{aux}}(A)$ | places where the auxiliary-$q$ characteristic-zero representation has more level than its residual lifting problem | every dyadic place in the Frey-adapted Tate construction, any controlled semistable place above $3$, and all accidental semistable places | make $V_{\mathfrak q}(A)$ automorphic |
+| $P_{\mathrm{tar}}$ | places $v\nmid2\ell$ where the resulting target packet is special but $\mathcal D_M^{\mathrm{SP}}$ is unramified | any retained multiplicative place above $3$ and all accidental semistable target places | lower the target packet to the exact signed-special minimal problem |
 
 The dyadic places lie in $P_{\mathrm{aux}}(A)$ because the auxiliary residual branch is
 unramified there while the Tate seed has nonzero characteristic-zero monodromy. They do not lie
@@ -480,6 +480,12 @@ in $P_{\mathrm{tar}}$, because the target problem retains its signed-special con
 $2$. A multiplicative place above $3$ may lie in both sets. An unrepaired multiplicative place
 above $\ell$ is not a target edge at all: it violates the coefficient-prime finite-flat
 condition and stops the target path before lowering begins.
+
+The conjugate selected set $W_0(M)$ belongs to Book 177's earlier selected-place route, not to
+the preferred Book 178 split construction.  It is therefore not a forced entry in either live
+ledger.  The specialization-dependent accidental places cannot be discarded: they are known
+only after $A$ exists, and their residue cardinalities satisfy no imposed congruence modulo
+$\ell$.
 
 The retired one-active-place route is impossible already before accidental bad places are
 counted, because every dyadic place lies in $P_{\mathrm{aux}}(A)$. The preferred auxiliary
@@ -490,11 +496,14 @@ begin the second path.
 
 ### 4.4 Branch corrections and bottom occurrence
 
-At each target edge $x\in P_{\mathrm{tar}}$, the one-step lowering theorem requires more than
-a numerical conductor congruence or a saturated old map. Its hypotheses include localized
-abelian Ihara, residual duality, vanishing of the full residual monodromy operator, the
-component obstruction, the exact two-branch normalization term, and the branch-Smith
-correction.
+On the ordered Book 140 geometric route, each target edge
+$x\in P_{\mathrm{tar}}$ requires more than a numerical conductor congruence or a saturated old
+map. Its hypotheses include localized abelian Ihara, residual duality, vanishing of the full
+residual monodromy operator, the component obstruction, the exact two-branch normalization
+term, and the branch-Smith correction.  These are hypotheses of that particular geometric
+proof, not necessary hypotheses of every level-lowering theorem.  Book 176, Section 1.7
+isolates the smaller direct alternative $({\rm FLO}_x)$: full outside-$\ell$ automorphic level
+optimization with the complete away-from-$x$ spectator datum.
 
 The component obstruction and the branch-Smith correction are independent. A model may have a
 clean component group while the bottom branch inclusion still has cokernel
@@ -503,7 +512,7 @@ lower class. Conversely, a clean branch inclusion does not remove torsion from t
 map. Both conditions must be checked on the current edge, with all previously lowered places
 retained as spectators.
 
-Bottom occurrence is different again. Suppose an actual upper packet is placed on a compact
+For the geometric route, bottom occurrence is different again. Suppose an actual upper packet is placed on a compact
 carrier split at every target place, its integral packet lattice is primitive, and the target
 places are ordered so that every current lower block is exactly the next current new block.
 If every one-step hypothesis just listed is verified, nonvanishing propagates inductively down
@@ -575,6 +584,41 @@ the simultaneous or fully reverified ordered implication from upper residual occ
 nonzero exact minimal occurrence; the second is the Book 173 structural ledger on that
 minimal carrier.  Finite class sets remove the curve-switch Ihara hypothesis, but neither
 their finiteness nor upper-side Taylor--Wiles patching proves $({\rm DLO}_{P_{\rm tar}})$.
+
+There is nevertheless no irreducible **finite-set** obstruction.  At every
+$v\in P_{\rm tar}$ the upper factor is an unramified twist of Steinberg and
+$\bar\rho|_{G_{F_v}}$ is unramified.  Its residual Frobenius roots have ratio $q_v$, so the
+semisimplification has a repeated root exactly when $q_v\equiv1\pmod\ell$; the residual
+matrix may then be scalar or nonsemisimple.  A retained controlled place above $3$ has
+$q_v=3$ and lies in the regular Mazur-principle range for $\ell\ge7$.  The congruence
+$q_v\equiv-1\pmod\ell$ also remains regular for unrefined lowering, although it defeats a
+single-sign Gram formula.  Only an accidental semistable place can present an uncontrolled
+scalar edge on the preferred route.
+
+Book 176, Proposition 1.3 proves that the application-shaped one-place theorem
+$({\rm FLO}_v)$, with preservation of the declared away compact level, may be applied
+successively to obtain $({\rm DLO}_{P_{\rm tar}})$.  Previously lowered places remain
+hyperspecial; a later place which becomes spherical early is simply omitted.  Primitive
+residual monodromy forces the dyadic signed-special spectator to remain conductor one, while
+the coefficient-prime automorphic level remains hyperspecial.  This proves occurrence only:
+the selected finite-flat Galois lattice is part of the subsequent
+$({\rm CLN}_{\min})$ branchwise-attachment ledger and is not inferred from hyperspecial level.
+At an unlowered target spectator, fixed Iwahori level is enough for the next
+$({\rm FLO}_v)$ application; induction does not assume that an intermediate packet retains
+the original Steinberg branch there.
+
+The absent source is the one-place arithmetic theorem.  Standard Mazur principle supplies its
+$q_v\not\equiv1\pmod\ell$ half by an invariant-cycle Frobenius contradiction.  The scalar
+$q_v\equiv1\pmod\ell$ half is stronger than the general totally-real level-optimization
+theorem: in that regime the published conclusion is only spherical-or-special.  The
+auxiliary $q_z\equiv-1\pmod\ell$ construction used to remove an even-degree parity hypothesis
+does not force the scalar output to be spherical; in this application the existing dyadic
+special spectator already supplies the parity place anyway.  Book 140 is not an alias: its
+lowering theorem retains component and branch-cleanliness hypotheses and excludes
+scalar/vexing blocks.  Consequently $({\rm DLO}_{P_{\rm tar}})$ has been reduced to the
+ordinary Mazur-principle theorem at regular places and a genuinely application-specific
+scalar-support theorem at any repeated-root accidental place.  Neither has been proved
+source-closed here.
 
 Consequently the preferred construction has the exact form
 
@@ -1096,7 +1140,10 @@ seed summarized in Chapter 4. On the preferred split route, after the separate
 $({\rm IAV}_{P_{\rm aux}})$ certificate, Proposition 4.1 supplies upper definite occurrence
 and the smallest remaining package is $({\rm DMS}_{P_{\rm tar}})$, beginning with the
 unproved occurrence theorem $({\rm DLO}_{P_{\rm tar}})$; no preceding volume proves that
-target-minimal support theorem and its clean bottom ledger. The later one is the
+target-minimal support theorem and its clean bottom ledger. Book 176, Proposition 1.3 reduces
+DLO to the one-place outside-$\ell$ theorem $({\rm FLO}_v)$ with fixed away level; the present
+corpus contains neither the integral Mazur-principle proof nor the stronger scalar-support
+case. The later one is the
 mixed-dyadic $(\mathrm{MDSP}_{2})$ hypothesis of Chapter 7 for the even-degree parity
 carriers, together with the already isolated smooth-proper source of $(\mathrm{HT}_1)$.
 Book 168's unitary bypass closes the all-dyadic-split cases without (10.5), but basic carrier

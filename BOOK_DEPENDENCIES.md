@@ -396,6 +396,12 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   one-place statements do not supply it.
 
   After auxiliary automorphy, the target-extra set $P_{\mathrm{tar}}$ is formed separately.
+  On the preferred Book 178 route it consists of retained multiplicative places above $3$ and
+  the accidental semistable target places found after specialization; the selected set
+  $W_0(M)$ belongs to the retired Book 177 route.  Every target-extra upper factor is special
+  while the Frey residual factor is unramified. Controlled places above $3$ are in the regular
+  Mazur range for $\ell\ge7$, whereas an accidental place may have repeated-root, possibly
+  scalar Frobenius with $q_v\equiv1\pmod\ell$.
   Since the split top has positive even degree, ordinary Jacquet--Langlands and a fresh
   primitive class-set lattice give a nonzero upper localization directly on the totally
   definite algebra. Book 176, Theorem 1.2 proves the scalar definite two-map Ihara theorem
@@ -413,6 +419,13 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   $({\rm DLO}_{P_{\mathrm{tar}}})$ and the bottom structural ledger—not a singleton moving
   presentation. Finite class sets, residual monodromy zero, and upper-side Taylor--Wiles
   patching do not formally imply DLO; Book 176 gives an explicit paired countermodel.
+  Book 176, Proposition 1.3 reduces DLO to the one-place fixed-away-level
+  outside-$\ell$ theorem $({\rm FLO}_v)$ by ordinary induction.  Its regular half is Mazur
+  principle, including $q_v\equiv-1$.  At $q_v\equiv1$, general level optimization gives only
+  a spherical-or-special alternative; forcing the spherical output is a stronger
+  application-specific scalar-support theorem.  The corpus proves neither the regular
+  integral invariant-cycle argument nor that scalar theorem, so this is a narrowing of the
+  first gap rather than a proof of DLO.
 
   For the post-point construction, Book 182 starts from Book 181's chosen lift and a controlled
   exact datum on the split top. It gives parity-complete compact carriers and the common
