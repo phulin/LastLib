@@ -91,9 +91,10 @@ noncomputable def chapter09_fundamental_class_shift_by_two
 /- LOCAL_DEPENDENCY_GUESS: the following data package is the canonical idele
 resolution/local-decomposition realization of the exact sequence in Section
 9.1.  Mathlib has the cohomology, Shapiro, and Tate interfaces, but not this
-global idelic comparison theorem.  Packaging the decomposition data together
-with its comparison prevents an arbitrary family of subgroups from being
-mistaken for the actual local decomposition groups of `L / K`.
+global idelic comparison theorem.  Packaging the decomposition data keeps an
+arbitrary family of subgroups from being mistaken for the actual local
+decomposition groups of `L / K`; the comparison itself is stated as a theorem
+interface below.
 -/
 structure Chapter09KnotCohomologyRealization
     {K L : Type} [Field K] [Field L] [Algebra K L]
@@ -106,9 +107,6 @@ structure Chapter09KnotCohomologyRealization
     [IsTopologicalGroup (chapter09KnotGroup D)]
     [DiscreteTopology (chapter09KnotGroup D)] where
   decompositionData : Chapter09DecompositionData (Gal(L / K))
-  comparison :
-    Additive (PontryaginDual (chapter09KnotGroup D)) ≃+
-      chapter09H3LocalizationKernel decompositionData
 
 noncomputable def chapter09_knot_cohomology_formula_at
     {K L : Type} [Field K] [Field L] [Algebra K L]
@@ -122,8 +120,8 @@ noncomputable def chapter09_knot_cohomology_formula_at
     [DiscreteTopology (chapter09KnotGroup D)]
     (R : Chapter09KnotCohomologyRealization D) :
     Additive (PontryaginDual (chapter09KnotGroup D)) ≃+
-      chapter09H3LocalizationKernel R.decompositionData :=
-  R.comparison
+      chapter09H3LocalizationKernel R.decompositionData := by
+  sorry
 
 theorem chapter09_h3_cyclic_subgroup_vanishes
     {C : Type} [Group C] [Fintype C] [IsCyclic C] :

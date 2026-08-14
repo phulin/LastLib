@@ -6,6 +6,7 @@ import Mathlib.RingTheory.DiscreteValuationRing.Basic
 import Mathlib.RingTheory.LaurentSeries
 import Mathlib.RingTheory.PowerSeries.Basic
 import Mathlib.RingTheory.Polynomial.Eisenstein.Criterion
+import Mathlib.RingTheory.TensorProduct.Basic
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Order
 
@@ -108,6 +109,15 @@ def Chapter10UnramifiedBaseChangeProfile
     p'.ramificationIndex = p.ramificationIndex ∧
     p'.residueDegree = p.residueDegree
 
+/-- Profile compatibility for the changed branch of a base change.  This is
+the comparison supplied by the field-theoretic base-change construction, and
+is only required for a totally ramified original branch. -/
+def Chapter10BaseChangeProfileCompatibility
+    (p p' : Chapter10FiniteExtensionProfile) : Prop :=
+  p'.degree = p.degree ∧
+    p'.ramificationIndex = p.ramificationIndex ∧
+    p'.residueDegree = p.residueDegree
+
 /-- A chosen field-theoretic compositum square for an unramified base change.
 
 The four valuation branches, their heterogeneous invariant data, and the
@@ -152,6 +162,13 @@ structure Chapter10UnramifiedBaseChangeData
   changedProfile_realized :
     Chapter10ProfileRealizedByData changedData changedProfile
   relativeData : Chapter10HeterogeneousExtensionData vL vL' hLL'
+  /-- The changed field is the algebraic base change of the original field.
+  This is the structural input from which degree and local-invariant
+  compatibility are proved; the numerical profile equality is not stored as
+  an assumption. -/
+  baseChangeEquiv :
+    letI : Algebra K' (L ⊗[K] K') := Algebra.TensorProduct.rightAlgebra
+    L' ≃ₐ[K'] (L ⊗[K] K')
 
 /-- The profile compatibilities furnished by an actual unramified base change
 of a totally ramified branch. -/
@@ -188,7 +205,17 @@ theorem chapter10_total_ramification_preserved_under_unramified_base_change
     (hbase : Chapter10UnramifiedBaseChangeProfile base p p')
     (htotal : Chapter10TotallyRamified p) :
     Chapter10TotallyRamified p' := by
-  sorry
+  unfold Chapter10UnramifiedBaseChangeProfile at hbase
+  unfold Chapter10TotallyRamified at htotal
+  unfold Chapter10TotallyRamified
+  rcases hbase with ⟨hbase_unram, hdeg, heram, hres⟩
+  rcases htotal with ⟨htotal_e, htotal_f⟩
+  constructor
+  · calc
+      p'.ramificationIndex = p.ramificationIndex := heram
+      _ = p.degree := htotal_e
+      _ = p'.degree := hdeg.symm
+  · exact hres.trans htotal_f
 
 /-- The Laurent-series valuation used in the equal-characteristic model. -/
 def Chapter10LaurentSeriesValuation (k : Type*) [Field k] :
@@ -211,6 +238,18 @@ theorem chapter10_power_polynomial_separable_iff
     (X ^ n - C a : K[X]).Separable ↔ ¬ p ∣ n := by
   rw [X_pow_sub_C_separable_iff hn ha]
   exact not_congr (CharP.cast_eq_zero_iff K p n)
+
+/-- In a simple power extension, separability of the field extension is the
+separability criterion for its defining power polynomial. -/
+theorem chapter10_power_extension_separable_iff
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    {p n : ℕ} [CharP K p] [FiniteDimensional K L]
+    (a : K) (α : L) (hn : 0 < n) (ha : a ≠ 0)
+    (hirreducible : Irreducible (X ^ n - C a : K[X]))
+    (hroot : Polynomial.eval₂ (algebraMap K L) α (X ^ n - C a) = 0)
+    (hgen : Algebra.adjoin K ({α} : Set L) = ⊤) :
+    Algebra.IsSeparable K L ↔ ¬ p ∣ n := by
+  sorry
 
 /-- The extension k((u))/k((t)) with t = uⁿ has e = n and f = 1. -/
 theorem chapter10_equal_characteristic_totally_ramified_profile
@@ -390,6 +429,30 @@ private noncomputable def chapter10_laurent_series_residue_ring_equiv
     exact (ne_of_lt hlt) (hconst (a - b) (sub_ne_zero.mpr habne))
   exact RingEquiv.ofBijective cr ⟨hcr_inj, hcr_surj⟩
 
+/-! Constant-field extensions have the numerical profile e = 1 and
+f = [k' : k] without a separability hypothesis.  The separable refinement
+below additionally identifies the branch as intrinsically unramified. -/
+theorem chapter10_constant_field_extension_numerical_profile
+    {k k' : Type*} [Field k] [Field k'] [Algebra k k'] [FiniteDimensional k k']
+    [Algebra (LaurentSeries k) (LaurentSeries k')]
+    [FiniteDimensional (LaurentSeries k) (LaurentSeries k')]
+    [IsScalarTower k (LaurentSeries k) (LaurentSeries k')]
+    (hparameter :
+      algebraMap (LaurentSeries k) (LaurentSeries k')
+          (((PowerSeries.X : PowerSeries k) : LaurentSeries k)) =
+        ((PowerSeries.X : PowerSeries k') : LaurentSeries k'))
+    (h : (Chapter10LaurentSeriesValuation k).IsEquiv
+      ((Chapter10LaurentSeriesValuation k').comap
+        (algebraMap (LaurentSeries k) (LaurentSeries k')))) :
+    ∃ d : Chapter10HeterogeneousExtensionData
+        (Chapter10LaurentSeriesValuation k)
+        (Chapter10LaurentSeriesValuation k') h,
+      ∃ p : Chapter10FiniteExtensionProfile,
+        Chapter10ProfileRealizedByData d p ∧
+          p.degree = Module.finrank k k' ∧ p.ramificationIndex = 1 ∧
+          p.residueDegree = Module.finrank k k' ∧ Chapter10Unramified p := by
+  sorry
+
 /-! Constant-field extensions have e = 1 and residue degree equal to the field degree. -/
 theorem chapter10_constant_field_extension_profile
     {k k' : Type*} [Field k] [Field k'] [Algebra k k'] [FiniteDimensional k k']
@@ -413,7 +476,8 @@ theorem chapter10_constant_field_extension_profile
           p.residueDegree = Module.finrank k k' ∧ Chapter10Unramified p ∧
           Chapter10UnramifiedBranch
             (Chapter10LaurentSeriesValuation k)
-            (Chapter10LaurentSeriesValuation k') h d := by sorry
+            (Chapter10LaurentSeriesValuation k') h d := by
+  sorry
 
 /-- Combining a constant extension and a totally ramified extension gives ef. -/
 theorem chapter10_combined_equal_characteristic_profile

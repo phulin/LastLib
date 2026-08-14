@@ -238,12 +238,93 @@ structure Chapter06FiniteLocalGlobalCharacterData
       Chapter06RestrictedProduct ι HLocal localData.unramified
   localization_formula :
     ∀ c v, localization c v = localizationAt v c
+  /- The finite-S calculation passes to the restricted product through a
+     finite-intersection argument on the global H¹ group.  This is the
+     finiteness input supplied by the arithmetic calculation for a number
+     field and a finite coefficient module. -/
+  global_character_finite :
+    Finite (Chapter06ContinuousACharacter G A)
   component_separation :
     Chapter06ComponentSeparation G A ι HLocal localizationAt
   finite_level_duality :
     ∀ c S, chapter06AdmissibleFinitePlaceSet localData c placesAboveN S →
       Nonempty (Chapter06FiniteSLocalCalculation G A ι n HLocal HMu HBr HTate
         HMuGlobal localData placesAboveN kummerRestriction localization c S)
+
+/- The finite-support Kummer subgroup occurring in the Grunwald--Wang
+   calculation.  This uses the zero local class, rather than the larger
+   unramified subgroup used for the restricted-product support. -/
+def chapter06KummerClassesTrivialOutside
+    {G A : Type*} {ι : Type*} {n : ℕ}
+    {HLocal HMu HBr HTate : ι → Type*} {HMuGlobal : Type*}
+    [Group G] [AddCommGroup A]
+    [TopologicalSpace G] [TopologicalSpace A] [IsTopologicalAddGroup A]
+    [∀ v, AddCommGroup (HLocal v)]
+    [∀ v, AddCommGroup (HMu v)]
+    [∀ v, AddCommGroup (HBr v)]
+    [∀ v, AddCommGroup (HTate v)] [AddCommGroup HMuGlobal]
+    (D : Chapter06FiniteLocalGlobalCharacterData
+      G A ι n HLocal HMu HBr HTate HMuGlobal)
+    (S : Finset ι) : AddSubgroup HMuGlobal where
+  carrier := {a | ∀ v, v ∉ S → D.kummerRestriction v a = 0}
+  zero_mem' := by
+    intro v hv
+    simp
+  add_mem' := by
+    intro a b ha hb v hv
+    rw [map_add, ha v hv, hb v hv, add_zero]
+  neg_mem' := by
+    intro a ha v hv
+    rw [map_neg, ha v hv, neg_zero]
+
+@[simp]
+theorem chapter06_mem_kummer_classes_trivial_outside_iff
+    {G A : Type*} {ι : Type*} {n : ℕ}
+    {HLocal HMu HBr HTate : ι → Type*} {HMuGlobal : Type*}
+    [Group G] [AddCommGroup A]
+    [TopologicalSpace G] [TopologicalSpace A] [IsTopologicalAddGroup A]
+    [∀ v, AddCommGroup (HLocal v)]
+    [∀ v, AddCommGroup (HMu v)]
+    [∀ v, AddCommGroup (HBr v)]
+    [∀ v, AddCommGroup (HTate v)] [AddCommGroup HMuGlobal]
+    (D : Chapter06FiniteLocalGlobalCharacterData
+      G A ι n HLocal HMu HBr HTate HMuGlobal)
+    (S : Finset ι) (a : HMuGlobal) :
+    a ∈ chapter06KummerClassesTrivialOutside D S ↔
+      ∀ v, v ∉ S → D.kummerRestriction v a = 0 :=
+  Iff.rfl
+
+/- The explicit cyclotomic descent in the source has one exceptional class.
+   The abstract local data above do not expose a canonical cyclotomic layer,
+   so this structure records exactly the resulting defect calculation at the
+   finite-S interface: the caller supplies the Wang-special predicate and
+   the distinguished defect class, while the two alternatives are stated
+   without conflating zero with an unramified class. -/
+structure Chapter06WangDefectCalculation
+    {G A : Type*} {ι : Type*} {n : ℕ}
+    {HLocal HMu HBr HTate : ι → Type*} {HMuGlobal : Type*}
+    [Group G] [AddCommGroup A]
+    [TopologicalSpace G] [TopologicalSpace A] [IsTopologicalAddGroup A]
+    [∀ v, AddCommGroup (HLocal v)]
+    [∀ v, AddCommGroup (HMu v)]
+    [∀ v, AddCommGroup (HBr v)]
+    [∀ v, AddCommGroup (HTate v)] [AddCommGroup HMuGlobal]
+    (D : Chapter06FiniteLocalGlobalCharacterData
+      G A ι n HLocal HMu HBr HTate HMuGlobal)
+    (S : Finset ι) where
+  wangSpecial : Prop
+  defect : HMuGlobal
+  defect_order_two : defect + defect = 0
+  defect_nonzero : wangSpecial → defect ≠ 0
+  defect_trivial_outside :
+    wangSpecial → defect ∈ chapter06KummerClassesTrivialOutside D S
+  nonspecial_calculation :
+    ¬ wangSpecial → ∀ a,
+      a ∈ chapter06KummerClassesTrivialOutside D S ↔ a = 0
+  special_calculation :
+    wangSpecial → ∀ a,
+      a ∈ chapter06KummerClassesTrivialOutside D S ↔
+        a = 0 ∨ a = defect
 
 theorem chapter06_admissible_finite_place_set_exists
     {G A : Type*} {ι : Type*} {n : ℕ}

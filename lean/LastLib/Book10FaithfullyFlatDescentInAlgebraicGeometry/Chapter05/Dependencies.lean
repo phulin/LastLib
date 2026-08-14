@@ -46,9 +46,36 @@ theorem ModuleCat.extendScalars_map_hom_toFun_eq_lTensor
     ((ModuleCat.extendScalars f).map g).hom.toFun =
       (LinearMap.lTensor
         ((ModuleCat.restrictScalars f).obj (ModuleCat.of S S)) g.hom).toFun := by
-  sorry
+  rfl
 
 end ModuleCatMapCompatibility
+
+section FaithfullyFlatRestrictedScalar
+
+variable {A B : Type u} [CommRing A] [CommRing B] [Algebra A B]
+
+/-- The restricted `A`-module structure on `B` is faithfully flat whenever the usual one is. -/
+theorem faithfullyFlat_restrictScalars_self [Module.FaithfullyFlat A B] :
+    Module.FaithfullyFlat A
+      (((ModuleCat.restrictScalars (algebraMap A B)).obj (ModuleCat.of B B) : Type u)) := by
+  let eBAdd : ((ModuleCat.restrictScalars (algebraMap A B)).obj (ModuleCat.of B B) : Type u)
+      ≃+ B :=
+    { toFun := fun x => x
+      invFun := fun x => x
+      left_inv := by intro x; rfl
+      right_inv := by intro x; rfl
+      map_add' := by intro x y; rfl }
+  let eB : ((ModuleCat.restrictScalars (algebraMap A B)).obj (ModuleCat.of B B) : Type u)
+      ≃ₗ[A] B :=
+    @AddEquiv.toLinearEquiv _ _ _ _ _ _
+      (((ModuleCat.restrictScalars (algebraMap A B)).obj (ModuleCat.of B B)).isModule) _ eBAdd
+      (fun a x => by
+        have hB : ∀ z, eBAdd z = (z : B) := by intro z; rfl
+        rw [hB, hB, ModuleCat.restrictScalars.smul_def]
+        exact IsScalarTower.algebraMap_smul (R := A) (A := B) (M := B) a (x : B))
+  exact Module.FaithfullyFlat.of_linearEquiv (R := A) (M := B) eB
+
+end FaithfullyFlatRestrictedScalar
 
 section CechRing
 
@@ -115,7 +142,7 @@ theorem overlapModule_commutes_with_source_order (d : B →ₐ[A] CechRing A B)
     (N : Type u) [AddCommGroup N] [Module B N] :
     letI : Module B (CechRing A B) := d.toRingHom.toModule
     Nonempty (N ⊗[B] CechRing A B ≃ₗ[B] overlapModule d N) := by
-  sorry
+  exact ⟨@TensorProduct.comm B _ N (CechRing A B) _ _ _ d.toRingHom.toModule⟩
 
 end OverlapModules
 

@@ -77,6 +77,15 @@ structure Chapter10FppfCoverFamily (S : Scheme.{u}) (I : Type v) where
 abbrev chapter10FpqcMorphismProperty : MorphismProperty Scheme.{u} :=
   @Surjective ⊓ @Flat ⊓ @QuasiCompact
 
+/-- Locally closed immersions descend along the single-morphism fpqc property.
+
+This is kept in the shared Chapter 10 interface so the property table can use the generic
+stable-under-base-change/`DescendsAlong` bridge without depending on a later section. -/
+instance chapter10_isImmersion_descendsAlong_fpqc :
+    MorphismProperty.DescendsAlong
+      (@IsImmersion : MorphismProperty Scheme.{u}) chapter10FpqcMorphismProperty := by
+  sorry
+
 /-- The explicit proposition corresponding to `Chapter10FpqcCover`. -/
 def chapter10IsFpqc {S T : Scheme.{u}} (p : T ⟶ S) : Prop :=
   Surjective p ∧ Flat p ∧ QuasiCompact p

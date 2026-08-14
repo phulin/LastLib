@@ -304,10 +304,12 @@ def Chapter03RegularCurvePurelyInseparableSmoothnessFailure
 theorem chapter03_regular_divisor_theory_uses_regular_not_smooth
     {k K : Type u} [Field k] [Field K] [Algebra k K]
     {X : Scheme.{u}} [Chapter03IntegralNoetherianCurve X]
+    [Chapter03CartierDivisorTheory X]
     (f : X ⟶ Spec (CommRingCat.of k))
     (h : Chapter03RegularCurvePurelyInseparableSmoothnessFailure (k := k) (K := K) f) :
-    Chapter03Regular X :=
-  h.1
+    Nonempty (Chapter03CartierDivisor X ≃ Chapter03WeilDivisor X) := by
+  let _ : Chapter03Regular X := h.1
+  exact chapter03_regular_curve_cartierWeilEquiv (X := X)
 
 theorem chapter03_normal_surface_need_not_be_locallyFactorial
     {X : Scheme.{u}} [IsIntegral X] [IsNoetherian X] [Chapter03Normal X]

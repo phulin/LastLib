@@ -124,6 +124,8 @@ structure FiniteReciprocityNormalization
   arithmetic_uniformizer : ∀ x : residueExtension,
     residueAction (reciprocity uniformizer) x =
       arithmeticFrobeniusAction residueExtension q x
+  unit_residue_trivial : ∀ u : Fˣ, u ∈ unitSubgroup → ∀ x : residueExtension,
+    residueAction (reciprocity u) x = x
 
 /- LOCAL_DEPENDENCY_GUESS: this is the local reciprocity map and its finite
 normalization, awaiting the local class-field interfaces. -/
@@ -153,16 +155,31 @@ theorem finite_local_reciprocity_uses_arithmetic_frobenius
 
 /- At an unramified finite prime, the chosen uniformizer maps to arithmetic
 Frobenius; geometric Frobenius is its inverse. -/
-def GlobalUnramifiedFrobeniusConvention (k : Type*) [Field k] [Fintype k] : Prop :=
-  ∃ (arith geom : k ≃+* k),
-    (∀ x : k, arith x = x ^ Fintype.card k) ∧ geom = arith.symm
+def GlobalUnramifiedFrobeniusConvention
+    (F : Type uF) (k : Type uk) [Field F] [Field k] [Fintype k]
+    (R : FiniteReciprocityNormalization F k) : Prop := by
+  letI : Field R.residueExtension := R.residueExtensionField
+  letI : Fintype R.residueExtension := R.residueExtensionFintype
+  letI : Algebra k R.residueExtension := R.residueExtensionAlgebra
+  exact ∃ (arith geom : R.residueExtension ≃ₐ[k] R.residueExtension),
+    (∀ x : R.residueExtension, arith x = x ^ R.q) ∧
+      geom = arith.symm ∧
+      (∀ x : R.residueExtension,
+        R.residueAction (R.reciprocity R.uniformizer) x = arith x)
 
 theorem global_unramified_prime_uses_arithmetic_convention
-    {k : Type*} [Field k] [Fintype k]
-    (h : GlobalUnramifiedFrobeniusConvention k) :
-    ∃ arith : k ≃+* k, ∀ x : k, arith x = x ^ Fintype.card k := by
-  rcases h with ⟨arith, geom, harith, hgeom⟩
-  exact ⟨arith, harith⟩
+    {F : Type uF} {k : Type uk} [Field F] [Field k] [Fintype k]
+    (R : FiniteReciprocityNormalization F k)
+    (h : GlobalUnramifiedFrobeniusConvention F k R) :
+    letI : Field R.residueExtension := R.residueExtensionField
+    letI : Fintype R.residueExtension := R.residueExtensionFintype
+    letI : Algebra k R.residueExtension := R.residueExtensionAlgebra
+    ∃ arith : R.residueExtension ≃ₐ[k] R.residueExtension,
+      (∀ x : R.residueExtension, arith x = x ^ R.q) ∧
+        ∀ x : R.residueExtension,
+          R.residueAction (R.reciprocity R.uniformizer) x = arith x := by
+  rcases h with ⟨arith, geom, harith, hgeom, hrec⟩
+  exact ⟨arith, harith, hrec⟩
 
 theorem complex_finite_extension_is_trivial
     (L : Type*) [Field L] [Algebra ℂ L] [FiniteDimensional ℂ L] :

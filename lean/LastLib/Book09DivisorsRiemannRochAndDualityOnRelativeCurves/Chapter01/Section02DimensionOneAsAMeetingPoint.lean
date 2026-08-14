@@ -1,9 +1,22 @@
 import Mathlib.Algebra.Homology.ShortComplex.Exact
+import Mathlib.Algebra.Polynomial.Bivariate
+import Mathlib.Algebra.Polynomial.Expand
 import Mathlib.AlgebraicGeometry.Properties
+import Mathlib.AlgebraicGeometry.Stalk
+import Mathlib.Algebra.DualNumber
+import Mathlib.Algebra.Field.ULift
+import Mathlib.FieldTheory.KummerPolynomial
 import Mathlib.LinearAlgebra.Dimension.Finrank
 import Mathlib.LinearAlgebra.Dual.Defs
 import Mathlib.RingTheory.DedekindDomain.Dvr
+import Mathlib.RingTheory.Ideal.Cotangent
+import Mathlib.RingTheory.IsAdjoinRoot
+import Mathlib.RingTheory.KrullDimension.NonZeroDivisors
+import Mathlib.RingTheory.KrullDimension.Polynomial
 import Mathlib.RingTheory.Length
+import Mathlib.RingTheory.MvPolynomial.Ideal
+import Mathlib.RingTheory.Polynomial.GaussLemma
+import Mathlib.RingTheory.Polynomial.Quotient
 import Mathlib.Topology.LocallyConstant.Basic
 import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter01.Section01TheAbsoluteAndRelativeSettings
 
@@ -69,6 +82,479 @@ theorem chapter01_normal_oneDimensional_local_isDVR
     intro hF
     exact one_ne_zero (by rw [← hdim, ringKrullDim_eq_zero_of_isField hF])
   exact ((IsDiscreteValuationRing.TFAE R hnf).out 0 2).mpr hDed
+
+/-! The cusp is a convenient explicit singular curve for the warning below.  These
+helpers are kept private because they only witness the existential statement. -/
+
+private def chapter01CuspRelation (k : Type u) [CommRing k] :
+    Ideal (MvPolynomial (Fin 2) k) :=
+  Ideal.span ({MvPolynomial.X 1 ^ 2 - MvPolynomial.X 0 ^ 3} :
+    Set (MvPolynomial (Fin 2) k))
+
+private abbrev Chapter01CuspRing (k : Type u) [CommRing k] :=
+  MvPolynomial (Fin 2) k ⧸ chapter01CuspRelation k
+
+private def chapter01CuspQuotientMap (k : Type u) [CommRing k] :
+    MvPolynomial (Fin 2) k →+* Chapter01CuspRing k :=
+  Ideal.Quotient.mk (chapter01CuspRelation k)
+
+private def chapter01CuspX (k : Type u) [CommRing k] : Chapter01CuspRing k :=
+  chapter01CuspQuotientMap k (MvPolynomial.X 0)
+
+private def chapter01CuspY (k : Type u) [CommRing k] : Chapter01CuspRing k :=
+  chapter01CuspQuotientMap k (MvPolynomial.X 1)
+
+private def chapter01CuspMaximalIdeal (k : Type u) [CommRing k] :
+    Ideal (Chapter01CuspRing k) :=
+  (Ideal.span ({MvPolynomial.X 0, MvPolynomial.X 1} :
+    Set (MvPolynomial (Fin 2) k))).map (chapter01CuspQuotientMap k)
+
+private theorem chapter01_cusp_ring_isDomain (k : Type u) [Field k] :
+    IsDomain (Chapter01CuspRing k) := by
+  classical
+  let A := Polynomial k
+  let K := FractionRing A
+  have hnot_square : ∀ b : K, b ^ 2 ≠ algebraMap A K (Polynomial.X ^ 3) := by
+    intro b hb
+    obtain ⟨a, s, hs, rfl⟩ := IsFractionRing.div_surjective A b
+    have hs0 : s ≠ 0 := mem_nonZeroDivisors_iff_ne_zero.mp hs
+    have hsK : algebraMap A K s ≠ 0 :=
+      IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors hs
+    have hb0 :
+        (algebraMap A K a) ^ 2 / (algebraMap A K s) ^ 2 =
+          algebraMap A K (Polynomial.X ^ 3) := by
+      rw [← div_pow]
+      exact hb
+    have hb' :
+        (algebraMap A K a) ^ 2 =
+          algebraMap A K (Polynomial.X ^ 3) * (algebraMap A K s) ^ 2 :=
+      (div_eq_iff (pow_ne_zero 2 hsK)).mp hb0
+    have hbpoly : a ^ 2 = Polynomial.X ^ 3 * s ^ 2 := by
+      apply (IsFractionRing.injective A K)
+      calc
+        algebraMap A K (a ^ 2) = (algebraMap A K a) ^ 2 := by rw [map_pow]
+        _ = algebraMap A K (Polynomial.X ^ 3) * (algebraMap A K s) ^ 2 := hb'
+        _ = algebraMap A K (Polynomial.X ^ 3 * s ^ 2) := by
+          simp only [map_mul, map_pow]
+    have ha : a ≠ 0 := by
+      intro ha
+      subst a
+      have hzero : Polynomial.X ^ 3 * s ^ 2 = 0 := by
+        simpa only [zero_pow (by norm_num : (2 : Nat) ≠ 0)] using hbpoly.symm
+      rcases mul_eq_zero.mp hzero with hX | hs2
+      · exact (pow_ne_zero 3 (by simp)) hX
+      · exact hs0 (eq_zero_of_pow_eq_zero hs2)
+    have hdeg := congrArg Polynomial.natDegree hbpoly
+    rw [Polynomial.natDegree_pow,
+        Polynomial.natDegree_mul
+          (pow_ne_zero 3 (by simp)) (pow_ne_zero 2 hs0)] at hdeg
+    rw [Polynomial.natDegree_pow] at hdeg
+    rw [Polynomial.natDegree_X] at hdeg
+    rw [Polynomial.natDegree_pow] at hdeg
+    omega
+  let p : Polynomial (Polynomial k) :=
+    Polynomial.X ^ 2 - Polynomial.C (Polynomial.X ^ 3)
+  have hpK0 :=
+    X_pow_sub_C_irreducible_of_prime (K := K) (p := 2)
+      (a := algebraMap A K (Polynomial.X ^ 3)) Nat.prime_two hnot_square
+  have hmap_p :
+      (Polynomial.X ^ 2 - Polynomial.C (Polynomial.X ^ 3) :
+        Polynomial (Polynomial k)).map (algebraMap A K) =
+          Polynomial.X ^ 2 - Polynomial.C (algebraMap A K (Polynomial.X ^ 3)) := by
+    simp
+  have hpA : Irreducible p := by
+    refine (Polynomial.Monic.irreducible_iff_irreducible_map_fraction_map
+      (R := A) (K := K) ?_).mpr ?_
+    · dsimp [p]
+      exact Polynomial.monic_X_pow_sub_C _ (by norm_num)
+    · change Irreducible ((Polynomial.X ^ 2 - Polynomial.C (Polynomial.X ^ 3) :
+        Polynomial (Polynomial k)).map (algebraMap A K))
+      rw [hmap_p]
+      exact hpK0
+  have hpprime : Prime p := hpA.prime
+  have hJprime : (Ideal.span ({p} : Set (Polynomial (Polynomial k)))).IsPrime :=
+    Ideal.isPrime_span_singleton_of_prime hpprime
+  let e := Polynomial.Bivariate.equivMvPolynomial k
+  have he : e p = MvPolynomial.X 1 ^ 2 - MvPolynomial.X 0 ^ 3 := by
+    simp [e, p]
+  have hmap :
+      (Ideal.span ({p} : Set (Polynomial (Polynomial k)))).map
+          (e : Polynomial (Polynomial k) →+* MvPolynomial (Fin 2) k) =
+        chapter01CuspRelation k := by
+    rw [chapter01CuspRelation, Ideal.map_span, Set.image_singleton]
+    change Ideal.span ({e p} : Set (MvPolynomial (Fin 2) k)) =
+      Ideal.span ({MvPolynomial.X 1 ^ 2 - MvPolynomial.X 0 ^ 3} :
+        Set (MvPolynomial (Fin 2) k))
+    rw [he]
+  have hIprime : (chapter01CuspRelation k).IsPrime := by
+    let _ : (Ideal.span ({p} : Set (Polynomial (Polynomial k)))).IsPrime := hJprime
+    rw [← hmap]
+    exact Ideal.map_isPrime_of_equiv e
+  rw [Ideal.Quotient.isDomain_iff_prime]
+  exact hIprime
+
+private theorem chapter01_cusp_maximalIdeal_isMaximal (k : Type u) [Field k] :
+    (chapter01CuspMaximalIdeal k).IsMaximal := by
+  have hM : (Ideal.span ({MvPolynomial.X 0, MvPolynomial.X 1} :
+      Set (MvPolynomial (Fin 2) k))).IsMaximal := by
+    rw [Ideal.isMaximal_iff]
+    constructor
+    · intro h1
+      rw [show ({MvPolynomial.X 0, MvPolynomial.X 1} :
+          Set (MvPolynomial (Fin 2) k)) =
+          MvPolynomial.X '' ({0, 1} : Set (Fin 2)) by
+        ext z
+        constructor
+        · intro hz
+          rcases hz with rfl | rfl <;> simp
+        · intro hz
+          rcases hz with ⟨i, hi, rfl⟩
+          fin_cases i <;> simp_all] at h1
+      rw [MvPolynomial.mem_ideal_span_X_image] at h1
+      simp at h1
+    · intro J p hMJ hp hJ
+      have hdiff : p - MvPolynomial.C (MvPolynomial.constantCoeff p) ∈
+          Ideal.span ({MvPolynomial.X 0, MvPolynomial.X 1} :
+            Set (MvPolynomial (Fin 2) k)) := by
+        rw [show ({MvPolynomial.X 0, MvPolynomial.X 1} :
+            Set (MvPolynomial (Fin 2) k)) =
+            MvPolynomial.X '' ({0, 1} : Set (Fin 2)) by
+          ext z
+          constructor
+          · intro hz
+            rcases hz with rfl | rfl <;> simp
+          · intro hz
+            rcases hz with ⟨i, hi, rfl⟩
+            fin_cases i <;> simp_all]
+        rw [MvPolynomial.mem_ideal_span_X_image]
+        intro m hm
+        have hm0 : m ≠ 0 := by
+          intro hm0
+          subst m
+          have hm' := MvPolynomial.mem_support_iff.mp hm
+          change MvPolynomial.coeff 0
+            (p - MvPolynomial.C (MvPolynomial.coeff 0 p)) ≠ 0 at hm'
+          simp at hm'
+        obtain ⟨i, hi⟩ := Finsupp.support_nonempty_iff.mpr hm0
+        exact ⟨i, by fin_cases i <;> simp, Finsupp.mem_support_iff.mp hi⟩
+      have hc : MvPolynomial.C (MvPolynomial.constantCoeff p) ∈ J := by
+        simpa [sub_sub] using J.sub_mem hJ (hMJ hdiff)
+      have hcp : MvPolynomial.constantCoeff p ≠ 0 := by
+        intro hcp
+        apply hp
+        simpa [hcp] using hdiff
+      have hunit : IsUnit (MvPolynomial.C (MvPolynomial.constantCoeff p)) :=
+        IsUnit.map (MvPolynomial.C : k →+* MvPolynomial (Fin 2) k) hcp.isUnit
+      rw [J.eq_top_of_isUnit_mem hc hunit]
+      exact Submodule.mem_top
+  let _ : (Ideal.span ({MvPolynomial.X 0, MvPolynomial.X 1} :
+      Set (MvPolynomial (Fin 2) k))).IsMaximal := hM
+  have hker : RingHom.ker (chapter01CuspQuotientMap k) ≤
+      Ideal.span ({MvPolynomial.X 0, MvPolynomial.X 1} :
+        Set (MvPolynomial (Fin 2) k)) := by
+    change RingHom.ker (Ideal.Quotient.mk (chapter01CuspRelation k)) ≤
+      Ideal.span ({MvPolynomial.X 0, MvPolynomial.X 1} :
+        Set (MvPolynomial (Fin 2) k))
+    rw [Ideal.mk_ker]
+    exact Ideal.span_le.2 (by
+      intro z hz
+      rcases hz with rfl
+      let M := Ideal.span ({MvPolynomial.X 0, MvPolynomial.X 1} :
+        Set (MvPolynomial (Fin 2) k))
+      have hx : MvPolynomial.X 0 ∈ M := Ideal.subset_span (by simp)
+      have hy : MvPolynomial.X 1 ∈ M := Ideal.subset_span (by simp)
+      exact sub_mem
+        (by simpa [pow_two] using mul_mem hy hy)
+        (by simpa [pow_succ, pow_two] using mul_mem (mul_mem hx hx) hx))
+  simpa [chapter01CuspMaximalIdeal] using
+    (Ideal.IsMaximal.map_of_surjective_of_ker_le
+      (f := chapter01CuspQuotientMap k) Ideal.Quotient.mk_surjective hker)
+
+private instance chapter01CuspMaximalIdeal_isPrime (k : Type u) [Field k] :
+    (chapter01CuspMaximalIdeal k).IsPrime :=
+  (chapter01_cusp_maximalIdeal_isMaximal k).isPrime
+
+private instance chapter01CuspMaximalIdeal_isMaximal (k : Type u) [Field k] :
+    (chapter01CuspMaximalIdeal k).IsMaximal :=
+  chapter01_cusp_maximalIdeal_isMaximal k
+
+private abbrev Chapter01CuspLocalRing (k : Type u) [Field k] :=
+  Localization.AtPrime (chapter01CuspMaximalIdeal k)
+
+private theorem chapter01_cusp_local_maximalIdeal_not_principal (k : Type u) [Field k] :
+    ¬ (IsLocalRing.maximalIdeal (Chapter01CuspLocalRing k)).IsPrincipal := by
+  classical
+  let R := Chapter01CuspRing k
+  let S := Chapter01CuspLocalRing k
+  let q : MvPolynomial (Fin 2) k →+* R := chapter01CuspQuotientMap k
+  let l : R →+* S := algebraMap R S
+  let x : S := l (chapter01CuspX k)
+  let y : S := l (chapter01CuspY k)
+  have hlocal :
+      IsLocalRing.maximalIdeal S =
+        Ideal.map l (chapter01CuspMaximalIdeal k) := by
+    rw [IsLocalization.AtPrime.map_eq_maximalIdeal
+      (chapter01CuspMaximalIdeal k) S]
+  have hspan : IsLocalRing.maximalIdeal S = Ideal.span ({x, y} : Set S) := by
+    rw [hlocal]
+    change Ideal.map l
+        ((Ideal.span ({MvPolynomial.X 0, MvPolynomial.X 1} :
+          Set (MvPolynomial (Fin 2) k))).map q) = _
+    rw [Ideal.map_map, Ideal.map_span, Set.image_pair]
+    rfl
+  let f : MvPolynomial (Fin 2) k →+* DualNumber k :=
+    MvPolynomial.eval₂Hom (algebraMap k (DualNumber k))
+      (fun i => if i = 0 then DualNumber.eps else 0)
+  have hfX0 : f (MvPolynomial.X 0) = (DualNumber.eps : DualNumber k) := by
+    simp [f]
+  have hfX1 : f (MvPolynomial.X 1) = 0 := by
+    simp [f]
+  have hm0sqker :
+      (Ideal.span ({MvPolynomial.X 0, MvPolynomial.X 1} :
+        Set (MvPolynomial (Fin 2) k))) ^ 2 ≤ RingHom.ker f := by
+    rw [pow_two, Ideal.span_pair_mul_span_pair]
+    apply Ideal.span_le.2
+    intro z hz
+    simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hz
+    rcases hz with rfl | rfl | rfl | rfl
+    all_goals
+      change f _ = 0
+      simp [map_mul, hfX0, hfX1]
+  have heps : (DualNumber.eps : DualNumber k) ≠ 0 := by
+    intro h
+    have hs := congrArg TrivSqZeroExt.snd h
+    simp at hs
+  have hX0not : MvPolynomial.X 0 ∉
+      (Ideal.span ({MvPolynomial.X 0, MvPolynomial.X 1} :
+        Set (MvPolynomial (Fin 2) k))) ^ 2 := by
+    intro h
+    have hfzero := hm0sqker h
+    rw [RingHom.mem_ker] at hfzero
+    exact heps (hfX0.symm.trans hfzero)
+  let : IsDomain R := chapter01_cusp_ring_isDomain k
+  have hqX : chapter01CuspX k ≠ 0 := by
+    intro hx
+    change chapter01CuspQuotientMap k (MvPolynomial.X 0) = 0 at hx
+    have hm : MvPolynomial.X 0 ∈ chapter01CuspRelation k :=
+      Ideal.Quotient.eq_zero_iff_mem.mp hx
+    rcases (Ideal.mem_span_singleton').mp hm with ⟨p, hp⟩
+    have heval :=
+      congrArg (MvPolynomial.eval (fun _ : Fin 2 => (1 : k))) hp
+    simp [MvPolynomial.eval_mul] at heval
+  have hlinj : Function.Injective l :=
+    IsLocalization.injective S
+      (chapter01CuspMaximalIdeal k).primeCompl_le_nonZeroDivisors
+  have hx : x ≠ 0 := by
+    intro hxzero
+    apply hqX
+    apply hlinj
+    simpa [x, l] using hxzero
+  let m₀ : Ideal (MvPolynomial (Fin 2) k) :=
+    Ideal.span ({MvPolynomial.X 0, MvPolynomial.X 1} :
+      Set (MvPolynomial (Fin 2) k))
+  have hkerq : RingHom.ker q ≤ m₀ ^ 2 := by
+    change RingHom.ker (Ideal.Quotient.mk (chapter01CuspRelation k)) ≤ m₀ ^ 2
+    rw [Ideal.mk_ker]
+    rw [chapter01CuspRelation]
+    apply Ideal.span_le.2
+    intro z hz
+    rcases hz with rfl
+    have hX0 : MvPolynomial.X 0 ∈ m₀ := Ideal.subset_span (by simp)
+    have hX1 : MvPolynomial.X 1 ∈ m₀ := Ideal.subset_span (by simp)
+    have hX1sq : MvPolynomial.X 1 ^ 2 ∈ m₀ ^ 2 := by
+      simpa [pow_two] using Ideal.mul_mem_mul hX1 hX1
+    have hX0sq : MvPolynomial.X 0 ^ 2 ∈ m₀ ^ 2 := by
+      simpa [pow_two] using Ideal.mul_mem_mul hX0 hX0
+    have hX0cu : MvPolynomial.X 0 ^ 3 ∈ m₀ ^ 2 := by
+      simpa [pow_succ, pow_two, mul_comm, mul_left_comm, mul_assoc] using
+        (m₀ ^ 2).mul_mem_left (MvPolynomial.X 0) hX0sq
+    exact sub_mem hX1sq hX0cu
+  have hmRpow :
+      chapter01CuspMaximalIdeal k ^ 2 = Ideal.map q (m₀ ^ 2) := by
+    change (m₀.map q) ^ 2 = _
+    rw [← Ideal.map_pow]
+  have hqXnot : chapter01CuspX k ∉ chapter01CuspMaximalIdeal k ^ 2 := by
+    intro h
+    rw [hmRpow] at h
+    have hpre : MvPolynomial.X 0 ∈
+        (Ideal.map q (m₀ ^ 2)).comap q := h
+    rw [Ideal.comap_map_of_surjective q Ideal.Quotient.mk_surjective] at hpre
+    rcases Submodule.mem_sup.mp hpre with ⟨u, hu, v, hv, huv⟩
+    have hv' : v ∈ RingHom.ker q := hv
+    apply hX0not
+    have hsum : u + v ∈ m₀ ^ 2 := add_mem hu (hkerq hv')
+    convert hsum using 1
+    exact huv.symm
+  have hxnot : x ∉ (IsLocalRing.maximalIdeal S) ^ 2 := by
+    intro h
+    have hx' : l (chapter01CuspX k) ∈
+        (IsLocalRing.maximalIdeal S) ^ 2 := by
+      simpa [x] using h
+    have hunder :
+        ((IsLocalRing.maximalIdeal S) ^ 2).under R =
+          chapter01CuspMaximalIdeal k ^ 2 :=
+      IsLocalization.AtPrime.under_maximalIdeal_pow
+        (chapter01CuspMaximalIdeal k) S 2
+    have hbase : chapter01CuspX k ∈ chapter01CuspMaximalIdeal k ^ 2 := by
+      rw [← hunder]
+      exact hx'
+    exact hqXnot hbase
+  rintro ⟨a, ha⟩
+  have hxm : x ∈ IsLocalRing.maximalIdeal S := by
+    rw [hspan]
+    exact Ideal.subset_span (by simp)
+  have hxa : x ∈ Ideal.span ({a} : Set S) := by
+    change x ∈ S ∙ a
+    rw [← ha]
+    exact hxm
+  obtain ⟨r, hr⟩ := (Ideal.mem_span_singleton').mp hxa
+  have hrm : r ∉ IsLocalRing.maximalIdeal S := by
+    intro hrm
+    have ham : a ∈ IsLocalRing.maximalIdeal S := by
+      rw [ha]
+      exact Ideal.subset_span (by simp)
+    apply hxnot
+    rw [← hr]
+    simpa [pow_two] using Ideal.mul_mem_mul hrm ham
+  have hru : IsUnit r := IsLocalRing.notMem_maximalIdeal.mp hrm
+  have hax : a ∈ Ideal.span ({x} : Set S) := by
+    rw [← Ideal.unit_mul_mem_iff_mem _ hru]
+    rw [hr]
+    exact Ideal.subset_span (Set.mem_singleton x)
+  have hspanx : IsLocalRing.maximalIdeal S = Ideal.span ({x} : Set S) := by
+    apply le_antisymm
+    · rw [ha]
+      exact Ideal.span_le.2 (by
+        intro z hz
+        rcases hz with rfl
+        exact hax)
+    · exact Ideal.span_le.2 (by
+        intro z hz
+        rcases hz with rfl
+        exact hxm)
+  have hyx : y ∈ Ideal.span ({x} : Set S) := by
+    rw [← hspanx, hspan]
+    exact Ideal.subset_span (by simp)
+  obtain ⟨z, hz⟩ := (Ideal.mem_span_singleton').mp hyx
+  have hrel0 : (chapter01CuspY k) ^ 2 - (chapter01CuspX k) ^ 3 = 0 := by
+    change q (MvPolynomial.X 1 ^ 2 - MvPolynomial.X 0 ^ 3) = 0
+    exact Ideal.Quotient.eq_zero_iff_mem.mpr
+      (Ideal.subset_span (by simp))
+  have hrel : y ^ 2 = x ^ 3 := by
+    have hrel' := congrArg l hrel0
+    have hrel'' : y ^ 2 - x ^ 3 = 0 := by
+      simpa [x, y] using hrel'
+    exact sub_eq_zero.mp hrel''
+  have hsq : z ^ 2 = x := by
+    have hzy : (z * x) ^ 2 = x ^ 3 := by
+      calc
+        (z * x) ^ 2 = y ^ 2 := by rw [hz]
+        _ = x ^ 3 := hrel
+    have hzy' : x ^ 2 * z ^ 2 = x ^ 2 * x := by
+      calc
+        x ^ 2 * z ^ 2 = (z * x) ^ 2 := by ring
+        _ = x ^ 3 := hzy
+        _ = x ^ 2 * x := by ring
+    exact mul_left_cancel₀ (pow_ne_zero 2 hx) hzy'
+  have hxnotunit : ¬ IsUnit x := by
+    rw [← mem_nonunits_iff, ← IsLocalRing.mem_maximalIdeal]
+    exact hxm
+  have hzm : z ∈ IsLocalRing.maximalIdeal S := by
+    by_contra hzn
+    have hzu : IsUnit z := IsLocalRing.notMem_maximalIdeal.mp hzn
+    apply hxnotunit
+    rw [← hsq]
+    exact hzu.pow 2
+  apply hxnot
+  have hzsq : z ^ 2 ∈ (IsLocalRing.maximalIdeal S) ^ 2 := by
+    simpa [pow_two] using Ideal.mul_mem_mul hzm hzm
+  simpa [hsq] using hzsq
+
+private theorem chapter01_cusp_maximalIdeal_height (k : Type u) [Field k] :
+    (chapter01CuspMaximalIdeal k).height = 1 := by
+  classical
+  let : IsDomain (Chapter01CuspRing k) := chapter01_cusp_ring_isDomain k
+  have hr :
+      (MvPolynomial.X 1 ^ 2 - MvPolynomial.X 0 ^ 3 :
+        MvPolynomial (Fin 2) k) ∈ nonZeroDivisors (MvPolynomial (Fin 2) k) := by
+    apply mem_nonZeroDivisors_of_ne_zero
+    apply sub_ne_zero.mpr
+    intro h
+    have hd := congrArg MvPolynomial.totalDegree h
+    simp at hd
+  have hq := ringKrullDim_quotient_succ_le_of_nonZeroDivisor hr
+  have hp : ringKrullDim (MvPolynomial (Fin 2) k) = 2 := by
+    rw [MvPolynomial.ringKrullDim_of_isNoetherianRing]
+    norm_num
+  have hq' : ringKrullDim (Chapter01CuspRing k) + 1 ≤ 2 := by
+    change ringKrullDim (MvPolynomial (Fin 2) k ⧸
+      Ideal.span {MvPolynomial.X 1 ^ 2 - MvPolynomial.X 0 ^ 3}) + 1 ≤ 2
+    rw [← hp]
+    exact hq
+  have hdim : ringKrullDim (Chapter01CuspRing k) ≤ 1 := by
+    have htwo : (2 : WithBot ℕ∞) = 1 + 1 := by norm_num
+    rw [htwo] at hq'
+    exact (ENat.WithBot.add_le_add_one_right_iff).mp hq'
+  have hXne : chapter01CuspX k ≠ 0 := by
+    intro hx
+    change chapter01CuspQuotientMap k (MvPolynomial.X 0) = 0 at hx
+    have hm : MvPolynomial.X 0 ∈ chapter01CuspRelation k :=
+      Ideal.Quotient.eq_zero_iff_mem.mp hx
+    rcases (Ideal.mem_span_singleton').mp hm with ⟨q, hq⟩
+    have heval := congrArg
+      (MvPolynomial.eval (fun _ : Fin 2 => (1 : k))) hq
+    simp [MvPolynomial.eval_mul] at heval
+  have hMnebot : chapter01CuspMaximalIdeal k ≠ ⊥ := by
+    intro hM
+    have hxM : chapter01CuspX k ∈ chapter01CuspMaximalIdeal k := by
+      rw [chapter01CuspMaximalIdeal]
+      exact Ideal.mem_map_of_mem _ (Ideal.subset_span (by simp))
+    have : chapter01CuspX k = 0 := by simpa [hM] using hxM
+    exact hXne this
+  have hle : (chapter01CuspMaximalIdeal k).height ≤
+      ringKrullDim (Chapter01CuspRing k) :=
+    Ideal.height_le_ringKrullDim_of_isPrime
+  have hle1' : (↑(chapter01CuspMaximalIdeal k).height : WithBot ℕ∞) ≤
+      (1 : WithBot ℕ∞) := hle.trans hdim
+  have hle1 : (chapter01CuspMaximalIdeal k).height ≤ 1 :=
+    WithBot.coe_le_coe.mp hle1'
+  have hnezero : (chapter01CuspMaximalIdeal k).height ≠ 0 := by
+    intro hzero
+    exact hMnebot ((Ideal.height_eq_zero_iff_eq_bot).mp hzero)
+  have hge1 : 1 ≤ (chapter01CuspMaximalIdeal k).height :=
+    (Order.one_le_iff_ne_zero).2 hnezero
+  exact le_antisymm hle1 hge1
+
+private theorem chapter01_cusp_localRing_dim (k : Type u) [Field k] :
+    ringKrullDim (Chapter01CuspLocalRing k) = 1 := by
+  calc
+    ringKrullDim (Chapter01CuspLocalRing k) =
+        (↑(chapter01CuspMaximalIdeal k).height : WithBot ℕ∞) :=
+      IsLocalization.AtPrime.ringKrullDim_eq_height
+        (chapter01CuspMaximalIdeal k) (Chapter01CuspLocalRing k)
+    _ = 1 := by
+      exact_mod_cast chapter01_cusp_maximalIdeal_height k
+
+private theorem chapter01_cusp_local_scheme_pureDimensionOne (k : Type u) [Field k] :
+    Chapter01PureDimensionOne
+      (Spec (CommRingCat.of (Chapter01CuspLocalRing k))) := by
+  classical
+  let S := Chapter01CuspLocalRing k
+  let : IsDomain (Chapter01CuspRing k) := chapter01_cusp_ring_isDomain k
+  let : IsDomain S := inferInstance
+  intro Z
+  have hZ : Z.1 = (Set.univ : Set (Spec (CommRingCat.of S))) := by
+    have hZmem : Z.1 ∈ irreducibleComponents (Spec (CommRingCat.of S)) := Z.2
+    simpa [irreducibleComponents_eq_singleton] using hZmem
+  rw [hZ]
+  have heq : topologicalKrullDim (Set.univ : Set (Spec (CommRingCat.of S))) =
+      topologicalKrullDim (Spec (CommRingCat.of S)) :=
+    IsHomeomorph.topologicalKrullDim_eq _
+      (Homeomorph.Set.univ (Spec (CommRingCat.of S))).isHomeomorph
+  rw [heq]
+  change topologicalKrullDim (PrimeSpectrum S) = 1
+  rw [PrimeSpectrum.topologicalKrullDim_eq_ringKrullDim]
+  exact chapter01_cusp_localRing_dim k
 
 theorem chapter01_regular_local_ring_is_factorial
     {R : Type u} [CommRing R] [IsRegularLocalRing R] [IsDomain R] :
@@ -144,7 +630,87 @@ def chapter01NormalHigherDimensionalNonCartierExample : Prop :=
 
 theorem chapter01_singular_curve_cycle_need_not_be_Cartier :
     ∃ (X : Scheme.{u}), chapter01CodimensionOneCycleNotLocallyPrincipal X := by
-  sorry
+  classical
+  let S := Chapter01CuspLocalRing (k := ULift.{u} ℚ)
+  let X : Scheme := Spec (CommRingCat.of S)
+  let x : X := IsLocalRing.closedPoint S
+  let T := X.presheaf.stalk x
+  have he : T ≃+* S := by
+    simpa [X, x, T] using
+      (stalkClosedPointIso (CommRingCat.of S)).commRingCatIsoToRingEquiv
+  have hstalkdim : ringKrullDim T = 1 := by
+    calc
+      ringKrullDim T = ringKrullDim S :=
+        ringKrullDim_eq_of_ringEquiv he
+      _ = 1 := chapter01_cusp_localRing_dim (k := ULift.{u} ℚ)
+  have hNoeth : IsNoetherianRing T := by
+    exact isNoetherianRing_of_ringEquiv S he.symm
+  let : IsNoetherianRing T := hNoeth
+  have hnotprincipal :
+      ¬ (IsLocalRing.maximalIdeal T).IsPrincipal := by
+    intro h
+    refine (chapter01_cusp_local_maximalIdeal_not_principal
+      (k := ULift.{u} ℚ)) ?_
+    rcases h with ⟨a, ha⟩
+    refine ⟨he a, ?_⟩
+    apply le_antisymm
+    · intro z hz
+      have hzT : he.symm z ∈ IsLocalRing.maximalIdeal T := by
+        rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
+        intro hzunit
+        rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff] at hz
+        apply hz
+        simpa using IsUnit.map he.toMonoidHom hzunit
+      have hza : he.symm z ∈ Ideal.span ({a} : Set T) := by
+        change he.symm z ∈ (↑T) ∙ a
+        rw [← ha]
+        exact hzT
+      obtain ⟨r, hr⟩ := (Ideal.mem_span_singleton').mp hza
+      apply Ideal.mem_span_singleton'.mpr
+      refine ⟨he r, ?_⟩
+      simpa using congrArg he hr
+    · intro z hz
+      rw [Ideal.mem_span_singleton'] at hz
+      obtain ⟨r, hr⟩ := hz
+      have haT : a ∈ IsLocalRing.maximalIdeal T := by
+        rw [ha]
+        exact Ideal.subset_span (Set.mem_singleton a)
+      have haS : he a ∈ IsLocalRing.maximalIdeal S := by
+        rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
+        intro haunit
+        rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff] at haT
+        apply haT
+        simpa using IsUnit.map he.symm.toMonoidHom haunit
+      rw [← hr]
+      exact (IsLocalRing.maximalIdeal S).mul_mem_left r haS
+  have hnotregular : ¬ chapter01RegularCurveAt X x := by
+    intro hregular
+    change IsRegularLocalRing T at hregular
+    have hcot :=
+      (IsRegularLocalRing.iff_finrank_cotangentSpace _).mp hregular
+    rw [hstalkdim] at hcot
+    have hcot' :
+        Module.finrank (IsLocalRing.ResidueField T)
+            (IsLocalRing.CotangentSpace T) = 1 := by
+      exact_mod_cast hcot
+    have hprincipal :=
+      (IsLocalRing.finrank_cotangentSpace_le_one_iff
+        (R := T)).mp (le_of_eq hcot')
+    exact hnotprincipal hprincipal
+  have hcodim : chapter01CodimensionOnePoint X x := by
+    change Order.coheight x = 1
+    have hdim' : (↑(Order.coheight x) : WithBot ℕ∞) = 1 := by
+      simpa only [ringKrullDim_stalk_eq_coheight, T] using hstalkdim
+    exact_mod_cast hdim'
+  have hclosed : chapter01ClosedPoint X x := by
+    change IsClosed ({x} : Set X)
+    change @IsClosed (PrimeSpectrum S) PrimeSpectrum.zariskiTopology
+      {IsLocalRing.closedPoint S}
+    exact IsLocalRing.isClosed_singleton_closedPoint S
+  have hpure : Chapter01PureDimensionOne X := by
+    simpa [X] using
+      chapter01_cusp_local_scheme_pureDimensionOne (k := ULift.{u} ℚ)
+  refine ⟨X, x, hpure, hcodim, hclosed, hNoeth, hnotregular, hnotprincipal⟩
 
 theorem chapter01_normal_higher_dimensional_prime_need_not_be_Cartier :
     chapter01NormalHigherDimensionalNonCartierExample := by

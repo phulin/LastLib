@@ -100,7 +100,53 @@ theorem chapter02_inertial_precision_two_iff_uniformizer
     (hσI : σ ∈ LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05InertiaGroup K A) :
     LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05HigherCongruence A 2 σ ↔
       (σ • π - π) ∈ (IsLocalRing.maximalIdeal A) ^ 2 := by
-  sorry
+  let I : Ideal A := IsLocalRing.maximalIdeal A
+  constructor
+  · intro hσ
+    exact hσ π
+  · intro hπ
+    change ∀ x : A, (σ • x - x) ∈ I ^ 2
+    have hcoeff (c : C) :
+        (σ • algebraMap C A c - algebraMap C A c) ∈ I ^ 2 := by
+      have hfix := P.inertia_fixes_coefficients ⟨σ, hσI⟩ c
+      have hzero : σ • algebraMap C A c - algebraMap C A c = 0 := by
+        change (⟨σ, hσI⟩ :
+          LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05InertiaGroup K A) •
+            algebraMap C A c - algebraMap C A c = 0
+        rw [hfix, sub_self]
+      rw [hzero]
+      exact (I ^ 2).zero_mem
+    have hx : ∀ x : A, x ∈ Algebra.adjoin C ({π} : Set A) →
+        (σ • x - x) ∈ I ^ 2 := by
+      intro x hx
+      refine Algebra.adjoin_induction (s := ({π} : Set A))
+        (p := fun y _ => (σ • y - y) ∈ I ^ 2) ?_ ?_ ?_ ?_ hx
+      · intro y hy
+        have hy' : y = π := by simpa using hy
+        subst y
+        simpa [I] using hπ
+      · intro c
+        exact hcoeff c
+      · intro y z hy hz hy' hz'
+        have heq : σ • (y + z) - (y + z) =
+            (σ • y - y) + (σ • z - z) := by
+          rw [smul_add]
+          ring
+        rw [heq]
+        exact (I ^ 2).add_mem hy' hz'
+      · intro y z hy hz hy' hz'
+        have heq : σ • (y * z) - (y * z) =
+            y * (σ • z - z) + (σ • y - y) * (σ • z) := by
+          simp [smul_mul']
+          ring
+        rw [heq]
+        exact (I ^ 2).add_mem
+          ((I ^ 2).mul_mem_left y hz')
+          ((I ^ 2).mul_mem_right (σ • z) hy')
+    intro x
+    apply hx x
+    rw [P.integral_generation]
+    trivial
 
 /- DEPENDENCY_GUESS: The map called `θ₀` in Section 1.3 is not available in
    this checkout.  The structure below keeps its source and kernel explicit,
@@ -146,7 +192,15 @@ theorem chapter02_tame_character_injective
     {F : Chapter02LowerFiltration G} {l : Type*} [Field l]
     (D : Chapter02TameCharacterData F l) :
     Function.Injective (chapter02TameCharacter D) := by
-  sorry
+  let N := (F.group 1).subgroupOf (F.group 0)
+  letI : N.Normal := chapter02_lower_layer_normal F 0
+  have hN : N ≤ D.thetaZero.ker := by
+    change (F.group 1).subgroupOf (F.group 0) ≤ D.thetaZero.ker
+    rw [D.thetaZero_kernel]
+  change Function.Injective
+    (QuotientGroup.lift N D.thetaZero hN)
+  apply (QuotientGroup.injective_lift_iff N D.thetaZero hN).2
+  exact D.thetaZero_kernel.symm
 
 theorem chapter02_tame_character_factorization
     {G : Type u} [Group G] [Finite G]
@@ -155,7 +209,13 @@ theorem chapter02_tame_character_factorization
     chapter02TameCharacter D
         (QuotientGroup.mk' ((F.group 1).subgroupOf (F.group 0)) σ) =
       D.thetaZero σ := by
-  sorry
+  let N := (F.group 1).subgroupOf (F.group 0)
+  letI : N.Normal := chapter02_lower_layer_normal F 0
+  have hN : N ≤ D.thetaZero.ker := by
+    change (F.group 1).subgroupOf (F.group 0) ≤ D.thetaZero.ker
+    rw [D.thetaZero_kernel]
+  change QuotientGroup.lift N D.thetaZero hN (QuotientGroup.mk' N σ) = D.thetaZero σ
+  exact QuotientGroup.lift_mk' N hN σ
 
 /-- A finite subgroup of a field's multiplicative group is cyclic. -/
 theorem chapter02_tame_layer_is_cyclic
@@ -163,7 +223,14 @@ theorem chapter02_tame_layer_is_cyclic
     {F : Chapter02LowerFiltration G} {l : Type*} [Field l]
     (D : Chapter02TameCharacterData F l) :
     IsCyclic (chapter02TameLayer F) := by
-  sorry
+  letI : ((F.group 1).subgroupOf (F.group 0)).Normal :=
+    chapter02_lower_layer_normal F 0
+  letI : Finite (chapter02TameLayer F) := by
+    change Finite (F.group 0 ⧸ (F.group 1).subgroupOf (F.group 0))
+    infer_instance
+  exact isCyclic_of_injective_ringHom
+    ((Units.coeHom l).comp (chapter02TameCharacter D))
+    (Units.val_injective.comp (chapter02_tame_character_injective D))
 
 /-- The tame layer has order prime to the positive residue characteristic. -/
 theorem chapter02_tame_layer_order_coprime
@@ -172,7 +239,45 @@ theorem chapter02_tame_layer_order_coprime
     (p : ℕ) [Fact p.Prime] [CharP l p]
     (D : Chapter02TameCharacterData F l) :
     Nat.Coprime (Nat.card (chapter02TameLayer F)) p := by
-  sorry
+  letI : ((F.group 1).subgroupOf (F.group 0)).Normal :=
+    chapter02_lower_layer_normal F 0
+  letI : Finite (chapter02TameLayer F) := by
+    change Finite (F.group 0 ⧸ (F.group 1).subgroupOf (F.group 0))
+    infer_instance
+  rw [Nat.coprime_comm, (Fact.out : p.Prime).coprime_iff_not_dvd]
+  intro hpdiv
+  have hcyc : IsCyclic (chapter02TameLayer F) :=
+    chapter02_tame_layer_is_cyclic D
+  obtain ⟨g, hg⟩ := hcyc.exists_ofOrder_eq_natCard
+  let f : chapter02TameLayer F →* lˣ := chapter02TameCharacter D
+  have hf : Function.Injective f := chapter02_tame_character_injective D
+  have horder0 : orderOf g ≠ 0 := by
+    rw [hg]
+    exact Nat.ne_of_gt Nat.card_pos
+  have hpdiv' : p ∣ orderOf g := by
+    rw [hg]
+    exact hpdiv
+  have hpow : orderOf (g ^ (Nat.card (chapter02TameLayer F) / p)) = p := by
+    simpa [hg] using (orderOf_pow_orderOf_div horder0 hpdiv')
+  let u : lˣ := f (g ^ (Nat.card (chapter02TameLayer F) / p))
+  have hpow' : orderOf u = p := by
+    rw [orderOf_injective f hf]
+    exact hpow
+  have hroot (u : lˣ) (hu : u ^ p = 1) : u = 1 := by
+    apply Units.val_injective
+    have hu' : (u : l) ^ (p ^ 1 * 1) = 1 := by
+      simpa [Units.val_pow_eq_pow_val] using congrArg Units.val hu
+    have hv := (ExpChar.pow_prime_pow_mul_eq_one_iff p 1 1 (u : l)).mp hu'
+    simpa using hv
+  have hu : u ^ p = 1 := by
+    have hu' : u ^ orderOf u = 1 := pow_orderOf_eq_one u
+    rw [hpow'] at hu'
+    exact hu'
+  have hpone : p = 1 := by
+    have hpone' := hpow'.symm
+    rw [hroot u hu] at hpone'
+    simpa using hpone'
+  exact (Fact.out : p.Prime).ne_one hpone
 
 /- The cyclicity conclusion concerns inertia modulo wild inertia, not
    inertia itself.  No splitting or abelianity of the wild extension is
@@ -221,7 +326,45 @@ theorem chapter02_wild_group_is_p_group
     (F : Chapter02LowerFiltration G) (p : ℕ) [Fact p.Prime]
     (hlayers : ∀ i : ℕ, 1 ≤ i → IsPGroup p (chapter02LowerLayer F i)) :
     IsPGroup p (chapter02WildGroup F) := by
-  sorry
+  obtain ⟨N, hN⟩ := F.eventually_trivial
+  have hbase : F.group (N + 1) = ⊥ := hN (N + 1) (by omega)
+  have hdown : ∀ d : ℕ, ∀ i : ℕ, i + d = N + 1 → 1 ≤ i →
+      IsPGroup p (F.group i) := by
+    intro d
+    induction d with
+    | zero =>
+        intro i hEq hi
+        have hiEq : i = N + 1 := by omega
+        subst i
+        rw [hbase]
+        exact IsPGroup.of_bot
+    | succ d ih =>
+        intro i hEq hi
+        have hEq' : (i + 1) + d = N + 1 := by omega
+        have hnext : IsPGroup p (F.group (i + 1)) :=
+          ih (i + 1) hEq' (by omega)
+        let H : Subgroup (F.group i) :=
+          (F.group (i + 1)).subgroupOf (F.group i)
+        letI : H.Normal := by
+          dsimp [H]
+          exact chapter02_lower_layer_normal F i
+        letI : Finite (chapter02LowerLayer F i) := by
+          change Finite (F.group i ⧸ H)
+          infer_instance
+        have hcard : Nat.card (F.group i) =
+            Nat.card (chapter02LowerLayer F i) * Nat.card (F.group (i + 1)) := by
+          change Nat.card (F.group i) =
+            Nat.card ((F.group i) ⧸ H) * Nat.card (F.group (i + 1))
+          have heq : Nat.card H = Nat.card (F.group (i + 1)) :=
+            Nat.card_congr (Subgroup.subgroupOfEquivOfLe (F.descending i)).toEquiv
+          rw [Subgroup.card_eq_card_quotient_mul_card_subgroup H, heq]
+        obtain ⟨a, ha⟩ := (hlayers i hi).exists_card_eq
+        obtain ⟨b, hb⟩ := hnext.exists_card_eq
+        apply IsPGroup.of_card
+        rw [hcard, ha, hb, pow_add]
+  have hresult := hdown N 1 (by omega) (by omega)
+  change IsPGroup p (F.group 1)
+  exact hresult
 
 /-- The lower-layer quotient accounts for the order of inertia. -/
 theorem chapter02_inertia_order_factorization
@@ -229,7 +372,15 @@ theorem chapter02_inertia_order_factorization
     (F : Chapter02LowerFiltration G) :
     Nat.card (F.group 0) =
       Nat.card (chapter02TameLayer F) * Nat.card (chapter02WildGroup F) := by
-  sorry
+  let H : Subgroup (F.group 0) := (F.group 1).subgroupOf (F.group 0)
+  letI : H.Normal := by
+    dsimp [H]
+    exact chapter02_lower_layer_normal F 0
+  change Nat.card (F.group 0) =
+    Nat.card ((F.group 0) ⧸ H) * Nat.card (F.group 1)
+  have heq : Nat.card H = Nat.card (F.group 1) :=
+    Nat.card_congr (Subgroup.subgroupOfEquivOfLe (F.descending 0)).toEquiv
+  rw [Subgroup.card_eq_card_quotient_mul_card_subgroup H, heq]
 
 /-- The ramification index represented by the inertia group in this profile. -/
 def chapter02RamificationIndex
@@ -266,7 +417,8 @@ theorem chapter02_wild_order_is_prime_power
     (F : Chapter02LowerFiltration G) (p : ℕ) [Fact p.Prime]
     (hwild : IsPGroup p (chapter02WildGroup F)) :
     ∃ n : ℕ, chapter02WildOrder F = p ^ n := by
-  sorry
+  change ∃ n : ℕ, Nat.card (chapter02WildGroup F) = p ^ n
+  exact hwild.exists_card_eq
 
 /-- The wild subgroup is the unique subgroup of inertia of the Sylow order. -/
 theorem chapter02_wild_group_unique_sylow
@@ -276,7 +428,26 @@ theorem chapter02_wild_group_unique_sylow
     (hwild : IsPGroup p (chapter02WildSubgroupInInertia F)) :
     ∀ P : Sylow p (F.group 0),
       (P : Subgroup (F.group 0)) = chapter02WildSubgroupInInertia F := by
-  sorry
+  let W : Subgroup (F.group 0) := chapter02WildSubgroupInInertia F
+  letI : W.Normal := by
+    change ((F.group 1).subgroupOf (F.group 0)).Normal
+    exact chapter02_lower_layer_normal F 0
+  change IsPGroup p W at hwild
+  have hindex : W.index = Nat.card (chapter02TameLayer F) := by
+    change W.index = Nat.card ((F.group 0) ⧸ W)
+    rw [Subgroup.index_eq_card]
+  have hnot : ¬ p ∣ W.index := by
+    rw [hindex]
+    exact (Fact.out : p.Prime).coprime_iff_not_dvd.mp htame.symm
+  let P0 : Sylow p (F.group 0) := hwild.toSylow hnot
+  intro P
+  have hle : W ≤ (P : Subgroup (F.group 0)) :=
+    IsPGroup.le_sylow_of_normal hwild P
+  have hle' : (P0 : Subgroup (F.group 0)) ≤ (P : Subgroup (F.group 0)) := by
+    simpa [P0] using hle
+  have heq : (P : Subgroup (F.group 0)) = (P0 : Subgroup (F.group 0)) :=
+    P0.is_maximal' P.isPGroup' hle'
+  simpa [P0, W] using heq
 
 /-- If every positive layer is trivial, the wild factor is trivial. -/
 theorem chapter02_wild_group_eq_bot_of_trivial_positive_layers
@@ -284,7 +455,35 @@ theorem chapter02_wild_group_eq_bot_of_trivial_positive_layers
     (F : Chapter02LowerFiltration G)
     (htrivial : ∀ i : ℕ, 1 ≤ i → Subsingleton (chapter02LowerLayer F i)) :
     chapter02WildGroup F = ⊥ := by
-  sorry
+  have hstep : ∀ i : ℕ, 1 ≤ i → F.group i = F.group (i + 1) := by
+    intro i hi
+    letI : ((F.group (i + 1)).subgroupOf (F.group i)).Normal :=
+      chapter02_lower_layer_normal F i
+    letI : Subsingleton (chapter02LowerLayer F i) := htrivial i hi
+    have htop : (F.group (i + 1)).subgroupOf (F.group i) = ⊤ :=
+      QuotientGroup.subsingleton_iff.mp
+        (inferInstance : Subsingleton (chapter02LowerLayer F i))
+    exact le_antisymm (Subgroup.subgroupOf_eq_top.mp htop) (F.descending i)
+  obtain ⟨N, hN⟩ := F.eventually_trivial
+  have hbase : F.group (N + 1) = ⊥ := hN (N + 1) (by omega)
+  have hdown : ∀ d : ℕ, ∀ i : ℕ, i + d = N + 1 → 1 ≤ i →
+      F.group i = ⊥ := by
+    intro d
+    induction d with
+    | zero =>
+        intro i hEq hi
+        have hiEq : i = N + 1 := by omega
+        subst i
+        exact hbase
+    | succ d ih =>
+        intro i hEq hi
+        have hEq' : (i + 1) + d = N + 1 := by omega
+        have hnext : F.group (i + 1) = ⊥ :=
+          ih (i + 1) hEq' (by omega)
+        exact (hstep i hi).trans hnext
+  have hresult := hdown N 1 (by omega) (by omega)
+  change F.group 1 = ⊥
+  exact hresult
 
 /-- A filtration with trivial positive layers has trivial wild order. -/
 theorem chapter02_wild_order_eq_one_of_trivial_positive_layers
@@ -292,7 +491,9 @@ theorem chapter02_wild_order_eq_one_of_trivial_positive_layers
     (F : Chapter02LowerFiltration G)
     (htrivial : ∀ i : ℕ, 1 ≤ i → Subsingleton (chapter02LowerLayer F i)) :
     chapter02WildOrder F = 1 := by
-  sorry
+  change Nat.card (chapter02WildGroup F) = 1
+  rw [chapter02_wild_group_eq_bot_of_trivial_positive_layers F htrivial]
+  simp
 
 end
 

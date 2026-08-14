@@ -1,4 +1,5 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section04FactorizationOfTheMaximalIdeal
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section07ConcreteFiniteExtensions
 import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
 import Mathlib.Algebra.Polynomial.FieldDivision
 import Mathlib.NumberTheory.LegendreSymbol.Basic
@@ -15,6 +16,7 @@ noncomputable section
 
 open Ideal IsLocalRing UniqueFactorizationMonoid
 open Polynomial
+open LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
 open scoped BigOperators TensorProduct WithZero Polynomial nonZeroDivisors
 
 /-! # Chapter 11: several places above one place
@@ -96,6 +98,63 @@ theorem chapter11_quadratic_patterns_exhaustive
     refine ⟨rfl, ?_, ?_⟩ <;> intro i
     · fin_cases i <;> simp [he0, he1]
     · fin_cases i <;> simp [hf0, hf1]
+
+/-! The completed equal-characteristic models from the preceding chapter make
+the power-cover and constant-residue-field examples precise. -/
+
+/-- The local model `k((t)) ⊂ k((u))` with `t = u^n` has `e = n` and `f = 1`.
+
+This is the completed valuation-theoretic form of the function-field power
+cover in the source discussion. -/
+theorem chapter11_equal_characteristic_power_cover_profile
+    {k K L : Type*} [Field k] [Field K] [Field L]
+    [Algebra k K] [Algebra k L] [Algebra K L]
+    [FiniteDimensional K L]
+    (t : K) (u : L) (n : ℕ)
+    (hn : 0 < n)
+    (hparameter : Chapter10PowerParameterRelation t u n)
+    (hirreducible : Irreducible (X ^ n - C t : K[X]))
+    (hdegree : Module.finrank K L = n)
+    (vK : AddValuation K (WithTop ℤ))
+    (vL : AddValuation L (WithTop ℤ))
+    (hvK : Chapter10DiscreteAddValuation vK)
+    (hvL : Chapter10DiscreteAddValuation vL)
+    (hext : vK.IsEquiv (vL.comap (algebraMap K L)))
+    (ht : vK t = 1) (hu : vL u = 1) :
+    ∃ d : Chapter10HeterogeneousExtensionData vK vL hext,
+      ∃ p : Chapter10FiniteExtensionProfile,
+        Chapter10ProfileRealizedByData d p ∧
+          p.degree = n ∧ p.ramificationIndex = n ∧ p.residueDegree = 1 ∧
+          Chapter10TotallyRamified p := by
+  sorry
+
+/-- A constant residue-field extension has `e = 1` and residue degree equal to
+the field degree in the completed Laurent-series model. -/
+theorem chapter11_constant_residue_extension_profile
+    {k k' : Type*} [Field k] [Field k'] [Algebra k k']
+    [FiniteDimensional k k']
+    [Algebra (LaurentSeries k) (LaurentSeries k')]
+    [FiniteDimensional (LaurentSeries k) (LaurentSeries k')]
+    [IsScalarTower k (LaurentSeries k) (LaurentSeries k')]
+    (hparameter :
+      algebraMap (LaurentSeries k) (LaurentSeries k')
+          (((PowerSeries.X : PowerSeries k) : LaurentSeries k)) =
+        ((PowerSeries.X : PowerSeries k') : LaurentSeries k'))
+    (hseparable : Algebra.IsSeparable k k')
+    (h : (Chapter10LaurentSeriesValuation k).IsEquiv
+      ((Chapter10LaurentSeriesValuation k').comap
+        (algebraMap (LaurentSeries k) (LaurentSeries k')))) :
+    ∃ d : Chapter10HeterogeneousExtensionData
+        (Chapter10LaurentSeriesValuation k)
+        (Chapter10LaurentSeriesValuation k') h,
+      ∃ p : Chapter10FiniteExtensionProfile,
+        Chapter10ProfileRealizedByData d p ∧
+          p.degree = Module.finrank k k' ∧ p.ramificationIndex = 1 ∧
+          p.residueDegree = Module.finrank k k' ∧ Chapter10Unramified p ∧
+          Chapter10UnramifiedBranch
+            (Chapter10LaurentSeriesValuation k)
+            (Chapter10LaurentSeriesValuation k') h d := by
+  sorry
 
 /-- Reduction of a polynomial modulo an ideal. -/
 def chapter11Reduction (R : Type*) [CommRing R] (p : Ideal R) (f : R[X]) : (R ⧸ p)[X] :=
@@ -2329,6 +2388,43 @@ def chapter11LocalFactorizationBranchCount
     {p : Ideal A} {f : A[X]} {g : ℕ}
   (_D : Chapter11LocalFactorizationData A B K L p f g) : ℕ :=
   g
+
+/-- A monic reduction written as a product of pairwise distinct monic
+irreducible factors.  The factor index is retained so that residue degrees can
+be attached to the corresponding branches. -/
+def chapter11DistinctResidueFactorization
+    (A : Type*) [CommRing A] (p : Ideal A) (f : A[X]) (g : ℕ)
+    (q : Fin g → (A ⧸ p)[X]) : Prop :=
+  Function.Injective q ∧
+    (∀ i, (q i).Monic ∧ Irreducible (q i)) ∧
+    chapter11Reduction A p f = ∏ i, q i
+
+/-- Distinct irreducible residue factors, together with a unit discriminant and
+the finite-normalization presentation, give the actual unramified branches.
+The residue degree of the branch indexed by `i` is the degree of its residue
+factor. -/
+theorem chapter11_distinct_residue_factors_give_local_unramified_factorization
+    (A B K L : Type*) [CommRing A] [IsDomain A]
+    [IsDiscreteValuationRing A] [CommRing B] [IsDomain B]
+    [Field K] [Field L] [Algebra A B] [Algebra A K] [Algebra K L]
+    [Algebra B L] [Algebra A L] [IsScalarTower A K L]
+    [IsScalarTower A B L] [IsFractionRing A K]
+    [FiniteDimensional K L] [IsIntegralClosure B A L]
+    [Algebra.IsIntegral A B] [Module.IsTorsionFree A B]
+    (p : Ideal A) [p.IsMaximal] (f : A[X]) (g : ℕ)
+    (hfinite : Module.Finite A B)
+    (hp : p = IsLocalRing.maximalIdeal A)
+    (hf : f.Monic)
+    (hfield : chapter11FieldPresentation K L (f.map (algebraMap A K)))
+    (hmonogenic : chapter11MonogenicIntegralClosurePresentation A L f)
+    (q : Fin g → (A ⧸ p)[X])
+    (hfactor : chapter11DistinctResidueFactorization A p f g q)
+    (hg : 0 < g)
+    (hdisc : chapter11DiscriminantUnitAt A p f) :
+    ∃ D : Chapter11LocalFactorizationData A B K L p f g,
+      (∀ i, D.ramificationIndex i = 1) ∧
+        (∀ i, D.residueDegree i = (q i).natDegree) := by
+  sorry
 
 /-- An irreducible quadratic residue factor determines the inert profile under
 the same finite-normalization and field-presentation hypotheses. -/

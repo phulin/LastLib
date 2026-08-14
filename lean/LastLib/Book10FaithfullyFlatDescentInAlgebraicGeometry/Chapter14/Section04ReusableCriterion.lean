@@ -112,7 +112,22 @@ private theorem chapter14_absolute_quasiAffine_of_relative_quasiAffine
     {X S : Scheme.{u}} (f : X ⟶ S) (U : S.Opens) (hU : IsAffineOpen U)
     [QuasiCompact f] [QuasiSeparated f]
     (hX : chapter14QuasiAffine (chapter14BaseChangeToBase f U.ι)) :
-    Scheme.IsQuasiAffine (chapter14BaseChange f U.ι) := by sorry
+    Scheme.IsQuasiAffine (chapter14BaseChange f U.ι) := by
+  rcases hX with ⟨hX⟩
+  let _ : IsAffine U.toScheme := hU
+  let _ : IsAffineHom hX.ambientMap := hX.ambientAffine
+  let _ : IsAffine hX.ambient := isAffine_of_isAffineHom hX.ambientMap
+  have hqcStable : MorphismProperty.IsStableUnderBaseChange
+      (@QuasiCompact : MorphismProperty Scheme.{u}) := inferInstance
+  have hqcAlong : MorphismProperty.IsStableUnderBaseChangeAlong
+      (@QuasiCompact : MorphismProperty Scheme.{u}) U.ι :=
+    { of_isPullback := fun pb h => hqcStable.of_isPullback pb h }
+  let _ : QuasiCompact (chapter14BaseChangeToBase f U.ι) :=
+    hqcAlong.of_isPullback (IsPullback.of_hasPullback f U.ι) inferInstance
+  let _ : CompactSpace (chapter14BaseChange f U.ι) :=
+    QuasiCompact.compactSpace_of_compactSpace (chapter14BaseChangeToBase f U.ι)
+  let _ : IsOpenImmersion hX.embedding := hX.embeddingOpen
+  exact Scheme.IsQuasiAffine.of_isImmersion hX.embedding
 
 theorem chapter14_quasiAffine_iff_preciseCriterion
     {X S : Scheme.{u}} (f : X ⟶ S)
@@ -299,7 +314,25 @@ theorem chapter14_preciseCriterion_stable_under_fpqc_base_change
     [QuasiCompact f] [QuasiSeparated f]
     (hg : chapter14Fpqc g) :
     chapter14PreciseQuasiAffineCriterion f ↔
-      chapter14PreciseQuasiAffineCriterion (chapter14BaseChangeToBase f g) := by sorry
+      chapter14PreciseQuasiAffineCriterion (chapter14BaseChangeToBase f g) := by
+  have hqcStable : MorphismProperty.IsStableUnderBaseChange
+      (@QuasiCompact : MorphismProperty Scheme.{u}) := inferInstance
+  have hqcAlong : MorphismProperty.IsStableUnderBaseChangeAlong
+      (@QuasiCompact : MorphismProperty Scheme.{u}) g :=
+    { of_isPullback := fun pb h => hqcStable.of_isPullback pb h }
+  let _ : QuasiCompact (chapter14BaseChangeToBase f g) :=
+    hqcAlong.of_isPullback (IsPullback.of_hasPullback f g) inferInstance
+  have hqsStable : MorphismProperty.IsStableUnderBaseChange
+      (@QuasiSeparated : MorphismProperty Scheme.{u}) := inferInstance
+  have hqsAlong : MorphismProperty.IsStableUnderBaseChangeAlong
+      (@QuasiSeparated : MorphismProperty Scheme.{u}) g :=
+    { of_isPullback := fun pb h => hqsStable.of_isPullback pb h }
+  let _ : QuasiSeparated (chapter14BaseChangeToBase f g) :=
+    hqsAlong.of_isPullback (IsPullback.of_hasPullback f g) inferInstance
+  rw [← chapter14_quasiAffine_iff_preciseCriterion f,
+    ← chapter14_quasiAffine_iff_preciseCriterion (chapter14BaseChangeToBase f g)]
+  exact chapter14_quasiAffine_iff_fpqc_base_change f g hg
+
 
 /-! ## Restriction and map compatibility -/
 

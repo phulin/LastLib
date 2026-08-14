@@ -10,6 +10,8 @@ import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
 import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.CategoryTheory.Abelian.Exact
 import Mathlib.Topology.Sheaves.LocallySurjective
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter07.Section03AffineDescent
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter09.Section01DescentOfLocalFreeness
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter05.Dependencies
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10.Section04NormsAndAddition
 
@@ -388,6 +390,19 @@ theorem baseChangeToSource_surjective
   change Surjective (pullback.fst f g)
   exact inferInstance
 
+theorem baseChangeToSource_fpqcCoverData
+    {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
+    (G : FpqcCoverData g) :
+    FpqcCoverData (baseChangeToSource f g) := by
+  sorry
+
+theorem FpqcCoverData.toChapter09
+    {S T : Scheme.{u}} {g : T ⟶ S} (G : FpqcCoverData g) :
+    LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter09.Chapter09FpqcCover g :=
+  { flat := G.flat
+    quasiCompact := G.quasiCompact
+    surjective := G.surjective }
+
 /-! ### Čech descent data -/
 
 structure ModuleDescentDatum {T S : Scheme.{u}} (g : T ⟶ S) where
@@ -448,6 +463,37 @@ structure LineBundleDescentRealization {Y X : Scheme.{u}} {q : Y ⟶ X}
   comparison : LineBundleIso (pullbackLineBundle q L) D.carrier
   comparison_compatible : lineBundleDescentComparisonCompatible q D L comparison
 
+/- Chapter 9 uses its rank-one vector-bundle carrier and canonical Čech nerve,
+   while this chapter keeps the source-order pullback presentation.  The
+   adapter records both the carrier transport and the overlap comparison; the
+   effective theorem below can therefore consume Chapter 9's rank-one descent
+   result without identifying the two presentations by an unproved equality. -/
+structure Chapter09LineBundleDescentAdapter {Y X : Scheme.{u}} {q : Y ⟶ X}
+    (D : LineBundleDescentDatum q) where
+  datum :
+    LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter09.Chapter09LineBundleDescentDatum q
+  carrier_eq : datum.upstairs.carrier = D.carrier.sheaf
+  comparison_eq :
+    castModuleIso
+      (congrArg (fun M : Y.Modules =>
+        (Scheme.Modules.pullback (cechFirst q)).obj M) carrier_eq)
+      (congrArg (fun M : Y.Modules =>
+        (Scheme.Modules.pullback (cechSecond q)).obj M) carrier_eq)
+      datum.overlapIso = D.comparison.hom
+
+theorem chapter09LineBundleDescentAdapter_exists
+    {Y X : Scheme.{u}} (q : Y ⟶ X) (D : LineBundleDescentDatum q)
+    (hq : FpqcCoverData q) :
+    Nonempty (Chapter09LineBundleDescentAdapter D) := by
+  sorry
+
+theorem lineBundleDescentDatum_effective_via_chapter09
+    {Y X : Scheme.{u}} (q : Y ⟶ X) (D : LineBundleDescentDatum q)
+    (hq : FpqcCoverData q) :
+    ∃ L : LineBundle X,
+      Nonempty (LineBundleDescentRealization D L) := by
+  sorry
+
 structure FpqcLineBundleDescentDatum
     {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S) where
   cover : FpqcCoverData g
@@ -480,6 +526,19 @@ structure CoefficientDescentDatum
   finiteLocallyFree :
     LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04FiniteLocallyFree
       coefficient
+
+/- The variable-rank coefficient carrier is deliberately kept at the Chapter
+   4 level.  Chapter 9's rank-indexed theorem is therefore not silently
+   applied to it; this adapter exposes the general module-descent conclusion
+   needed by the finite-system construction. -/
+theorem coefficientDescent_effective_fpqc
+    {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
+    (C : CoefficientDescentDatum f g) (hg : FpqcCoverData g) :
+    ∃ E : S.Modules,
+      Nonempty (ModuleDescentRealization C.descent E) ∧
+        LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04FiniteLocallyFree
+          E := by
+  sorry
 
 /- The double overlap of the base change maps canonically to the double overlap
   of the original cover.  This is the map along which the coefficient descent
@@ -561,6 +620,26 @@ theorem coefficientCechComparison_exists
       (Scheme.Modules.pullback (cechSecond (baseChangeToSource f g))).obj
         ((Scheme.Modules.pullback (baseChangeToBase f g)).obj C.coefficient)) :=
   ⟨coefficientCechComparison f g C⟩
+
+structure CoefficientBaseChangeDescentData
+    {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
+    (C : CoefficientDescentDatum f g) where
+  datum : ModuleDescentDatum (baseChangeToSource f g)
+  module_eq : datum.module =
+    (Scheme.Modules.pullback (baseChangeToBase f g)).obj C.coefficient
+  comparison_eq :
+    castModuleIso
+      (congrArg (fun M : (baseChange f g).Modules =>
+        (Scheme.Modules.pullback (cechFirst (baseChangeToSource f g))).obj M) module_eq)
+      (congrArg (fun M : (baseChange f g).Modules =>
+        (Scheme.Modules.pullback (cechSecond (baseChangeToSource f g))).obj M) module_eq)
+      datum.comparison = coefficientCechComparison f g C
+
+theorem coefficientBaseChangeDescentData_exists
+    {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
+    (C : CoefficientDescentDatum f g) :
+    Nonempty (CoefficientBaseChangeDescentData f g C) := by
+  sorry
 
 noncomputable def fpqcLineBundleRealizationComparison
     {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
@@ -650,6 +729,25 @@ def HasGlobalFiniteRankEmbeddingFor {X S : Scheme.{u}} (f : X ⟶ S)
 def HasGlobalFiniteRankEmbedding {X S : Scheme.{u}} (f : X ⟶ S) : Prop :=
   ∃ L : LineBundle X, HasGlobalFiniteRankEmbeddingFor f L
 
+/- A global finite projective-bundle immersion restricts to every open of the
+   base.  Keeping the pullback line bundle explicit makes this the transport
+   interface needed when a global descended system is consumed by a local-on-
+   the-base conclusion. -/
+theorem hasGlobalFiniteRankEmbeddingFor_restrict
+    {X S : Scheme.{u}} (f : X ⟶ S) (L : LineBundle X) (U : S.Opens)
+    (h : HasGlobalFiniteRankEmbeddingFor f L) :
+    HasGlobalFiniteRankEmbeddingFor (f ∣_ U)
+      (L.pullback (f ⁻¹ᵁ U).ι) := by
+  sorry
+
+theorem hasGlobalFiniteRankEmbedding_restrict
+    {X S : Scheme.{u}} (f : X ⟶ S) (U : S.Opens)
+    (h : HasGlobalFiniteRankEmbedding f) :
+    HasGlobalFiniteRankEmbedding (f ∣_ U) := by
+  rcases h with ⟨L, hL⟩
+  exact ⟨L.pullback (f ⁻¹ᵁ U).ι,
+    hasGlobalFiniteRankEmbeddingFor_restrict f L U hL⟩
+
 theorem hasGlobalFiniteRankEmbeddingFor_isQuasiProjectiveMorphism
     {X S : Scheme.{u}} {f : X ⟶ S} {L : LineBundle X}
     (h : HasGlobalFiniteRankEmbeddingFor f L) : IsQuasiProjectiveMorphism f := by
@@ -710,23 +808,6 @@ structure NormConstruction {Y X : Scheme.{u}} (q : Y ⟶ X) where
     LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10.Chapter10PicardOperations X
   determinant :
     LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10.Chapter10DeterminantLineAPI q
-  /- The norm tensor theorem needs the determinant functor's multiplicativity;
-    the determinant API alone only supplies an operation on line bundles. -/
-  determinant_tensor :
-    ∀ L M : LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10.Chapter10LineBundle Y,
-      letI : LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10.Chapter10PicardOperations Y :=
-        picardSource
-      letI : LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10.Chapter10PicardOperations X :=
-        picard
-      letI : LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10.Chapter10DeterminantLineAPI q :=
-        determinant
-      Nonempty
-        (LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10.Chapter10LineBundleIso
-          (LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10.chapter10DeterminantLine
-            q (LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10.chapter10PicardTensor L M))
-          (LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10.chapter10PicardTensor
-            (LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10.chapter10DeterminantLine q L)
-            (LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10.chapter10DeterminantLine q M)))
 
 /- LOCAL_DEPENDENCY_GUESS: determinant line bundles and duals are the only
   Picard-level operations absent from the pinned global sheaf API.  The
@@ -844,7 +925,10 @@ theorem affine_of_finite_faithfullyFlat_preimage_affine
     {Y X : Scheme.{u}} (q : Y ⟶ X) (hqfinite : IsFinite q)
     (hqff : IsFaithfullyFlat q) (U : X.Opens)
     (hpreimage : IsAffineOpen (q ⁻¹ᵁ U)) : IsAffineOpen U := by
-  sorry
+  exact
+    LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter07.chapter07_affine_of_finite_faithfullyFlat_preimage_affine
+      q hqfinite
+      ⟨hqff.1, hqff.2⟩ U hpreimage
 
 structure NormAffineChart {Y X : Scheme.{u}} (q : Y ⟶ X)
     (hq : FiniteLocallyFreeMorphism q) (M : LineBundle Y) where

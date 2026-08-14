@@ -33,12 +33,34 @@ def chapter15FinitePrincipalMatrix (n : ℕ) :
   toFun g :=
     ⟨fun v => Matrix.GeneralLinearGroup.map
         (algebraMap K (v.adicCompletion K)) g, by
-      sorry⟩
+      have hglobal : ∀ x : Matrix.GeneralLinearGroup (Fin n) K,
+          ∀ᶠ v : Chapter15FinitePlace R in Filter.cofinite,
+            ∀ i j : Fin n,
+              algebraMap K (v.adicCompletion K) (x i j) ∈
+                v.adicCompletionIntegers K := by
+        intro x
+        simp only [Filter.eventually_all]
+        intro i j
+        exact (algebraMap K (IsDedekindDomain.FiniteAdeleRing R K)
+          (x i j)).2
+      filter_upwards [hglobal g, hglobal (g⁻¹)] with v hv hvi
+      apply (chapter15_finite_integral_matrix_mem_entries_and_inverse_iff
+        (R := R) (K := K) n v
+          (Matrix.GeneralLinearGroup.map (algebraMap K (v.adicCompletion K)) g)).2
+      intro i j
+      constructor
+      · exact hv i j
+      · rw [← Matrix.GeneralLinearGroup.map_inv]
+        exact hvi i j
+    ⟩
   map_one' := by
     ext v i j
     simp
   map_mul' g h := by
-    sorry
+    apply Subtype.ext
+    funext v
+    exact (Matrix.GeneralLinearGroup.map
+      (algebraMap K (v.adicCompletion K))).map_mul g h
 
 /-- The diagonal embedding `GLₙ(K) → GLₙ(𝔸_K)`. -/
 def chapter15PrincipalMatrix (n : ℕ) :
@@ -50,7 +72,8 @@ def chapter15PrincipalMatrix (n : ℕ) :
     ext v i j <;> simp [chapter15ArchimedeanPrincipalMatrix,
       chapter15FinitePrincipalMatrix]
   map_mul' g h := by
-    sorry
+    exact Prod.ext ((chapter15ArchimedeanPrincipalMatrix n).map_mul g h)
+      ((chapter15FinitePrincipalMatrix n).map_mul g h)
 
 theorem chapter15_principal_matrix_apply_archimedean
     (n : ℕ) (g : Matrix.GeneralLinearGroup (Fin n) K)
@@ -69,7 +92,12 @@ theorem chapter15_principal_matrix_apply_finite
 theorem chapter15_principal_matrix_injective
     (n : ℕ) [NumberField K] :
     Function.Injective (chapter15PrincipalMatrix (R := R) (K := K) n) := by
-  sorry
+  intro g h hgh
+  obtain ⟨v⟩ := (inferInstance : Nonempty (NumberField.InfinitePlace K))
+  apply Matrix.GeneralLinearGroup.ext
+  intro i j
+  apply (FaithfulSMul.algebraMap_injective K (v.Completion))
+  exact congrArg (fun z : Chapter15GLnAdeles n R K => (z.1 v) i j) hgh
 
 theorem chapter15_principal_matrix_range_is_discrete
     (n : ℕ) {L : Type*} [Field L] [NumberField L] :
@@ -92,12 +120,30 @@ def chapter15FinitePrincipalIdele :
     Kˣ →* Chapter15FiniteIdeleGroup R K where
   toFun x :=
     ⟨fun v => Units.map (algebraMap K (v.adicCompletion K)).toMonoidHom x, by
-      sorry⟩
+      have hglobal (y : K) :
+          ∀ᶠ v : Chapter15FinitePlace R in Filter.cofinite,
+            algebraMap K (v.adicCompletion K) y ∈ v.adicCompletionIntegers K :=
+        (algebraMap K (IsDedekindDomain.FiniteAdeleRing R K) y).2
+      filter_upwards [hglobal (x : K), hglobal (x⁻¹ : K)] with v hx hxi
+      let y : (v.adicCompletion K)ˣ :=
+        Units.map (algebraMap K (v.adicCompletion K)).toMonoidHom x
+      have hy : (y : v.adicCompletion K) ∈ v.adicCompletionIntegers K := by
+        exact hx
+      have hyinv : ((y⁻¹ : (v.adicCompletion K)ˣ) : v.adicCompletion K) ∈
+          v.adicCompletionIntegers K := by
+        simpa [y] using hxi
+      refine ⟨(v.adicCompletionIntegers K).unitsEquivUnitsType
+        ⟨y, Submonoid.mem_units_of_val_mem_inv_val_mem _ hy hyinv⟩, ?_⟩
+      apply Units.ext
+      rfl
+    ⟩
   map_one' := by
     ext v
     simp
   map_mul' x y := by
-    sorry
+    apply Subtype.ext
+    funext v
+    exact (Units.map (algebraMap K (v.adicCompletion K)).toMonoidHom).map_mul x y
 
 /-- The principal idele map `Kˣ → 𝔸_Kˣ` in the graph-topologized model. -/
 def chapter15PrincipalIdele : Kˣ →* Chapter15IdeleGroup R K where
@@ -106,7 +152,8 @@ def chapter15PrincipalIdele : Kˣ →* Chapter15IdeleGroup R K where
     ext v <;> simp [chapter15ArchimedeanPrincipalIdele,
       chapter15FinitePrincipalIdele]
   map_mul' x y := by
-    sorry
+    exact Prod.ext ((chapter15ArchimedeanPrincipalIdele).map_mul x y)
+      ((chapter15FinitePrincipalIdele).map_mul x y)
 
 theorem chapter15_rank_one_recovers_ideles_principal
     (K : Type*) [Field K] [NumberField K]
@@ -115,7 +162,23 @@ theorem chapter15_rank_one_recovers_ideles_principal
         (chapter15PrincipalMatrix (R := 𝓞 K) (K := K) 1 g) =
       chapter15PrincipalIdele (R := 𝓞 K) (K := K)
         (chapter15_rank_one_local_gl_is_multiplicative_group K g) := by
-  sorry
+  apply Prod.ext
+  · funext v
+    change Matrix.GeneralLinearGroup.det
+        (Matrix.GeneralLinearGroup.map (algebraMap K v.Completion) g) =
+      Units.map (algebraMap K v.Completion).toMonoidHom
+        (Matrix.GeneralLinearGroup.det g)
+    exact Matrix.GeneralLinearGroup.map_det
+      (algebraMap K v.Completion) g
+  · apply Subtype.ext
+    funext v
+    change Matrix.GeneralLinearGroup.det
+        (Matrix.GeneralLinearGroup.map
+          (algebraMap K (v.adicCompletion K)) g) =
+      Units.map (algebraMap K (v.adicCompletion K)).toMonoidHom
+        (Matrix.GeneralLinearGroup.det g)
+    exact Matrix.GeneralLinearGroup.map_det
+      (algebraMap K (v.adicCompletion K)) g
 
 /- LOCAL_DEPENDENCY_GUESS: the book's normalized idele module is not a named
 Mathlib object.  The structure records the surjective, continuous,
@@ -135,7 +198,7 @@ theorem chapter15_idele_group_equiv_full_adele_units_principal
     chapter15_idele_group_equiv_full_adele_units (R := 𝓞 K) (K := K)
         (chapter15PrincipalIdele (R := 𝓞 K) (K := K) x) =
       LastLib.Book04AdelesAndIdeles.Chapter09.chapter09PrincipalIdele K x := by
-  sorry
+  rfl
 
 def chapter15CanonicalIdeleModuleData
     (K : Type*) [Field K] [NumberField K] :
@@ -144,10 +207,17 @@ def chapter15CanonicalIdeleModuleData
     (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleModuleHom K).comp
       (chapter15_idele_group_equiv_full_adele_units (R := 𝓞 K) (K := K)).toMonoidHom
   surjective_toMonoidHom := by
-    sorry
+    exact
+      LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleModule_surjective K |>.comp
+        (chapter15_idele_group_equiv_full_adele_units
+          (R := 𝓞 K) (K := K)).surjective
   principal_eq_one := by
     intro x
-    sorry
+    change LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleModuleHom K
+        (chapter15_idele_group_equiv_full_adele_units (R := 𝓞 K) (K := K)
+          (chapter15PrincipalIdele (R := 𝓞 K) (K := K) x)) = 1
+    rw [chapter15_idele_group_equiv_full_adele_units_principal]
+    exact LastLib.Book04AdelesAndIdeles.Chapter09.chapter09PrincipalIdele_module_eq_one x
   continuous_toMonoidHom := by
     sorry
 

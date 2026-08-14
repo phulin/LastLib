@@ -345,9 +345,9 @@ theorem chapter02_cartier_add_equation {X : Scheme.{u}}
 def Chapter02CartierDivisor.IsEffective {X : Scheme.{u}}
     [K : Chapter02MeromorphicSheaf X] (D : Chapter02CartierDivisor X) : Prop :=
   ∀ i, ∀ x : X, x ∈ D.openSet i →
-    ∃ (V : X.Opens) (_hxV : x ∈ V) (hV : V ≤ D.openSet i)
+    ∃ (V : X.Opens) (hxV : x ∈ V) (hV : V ≤ D.openSet i)
       (f : Γ(X, V)),
-      f ∈ nonZeroDivisors (Γ(X, V)) ∧
+      chapter02RegularSectionIsRegularAt V f x hxV ∧
         chapter02RegularSectionMap X V f =
           chapter02MeromorphicRestriction X hV
             (D.equation i : Chapter02MeromorphicSection X (D.openSet i))
@@ -412,79 +412,87 @@ theorem chapter02_cartier_support_omits_generic_point {X : Scheme.{u}}
   obtain ⟨i, hi⟩ : ∃ i : D.index, genericPoint X ∈ D.openSet i := by
     exact Opens.mem_iSup.mp hηcover
   let U := D.openSet i
-  let hU : Nonempty U := ⟨⟨genericPoint X, hi⟩⟩
-  have hnontrivial : Nontrivial Γ(X, U) := @Scheme.component_nontrivial X U hU
   let s : Chapter02MeromorphicSection X U := D.equation i
-  obtain ⟨a, b, hb, hs⟩ := K.exists_fraction U s
+  obtain ⟨V0, hηV0, hV0U, a, b, hb, hs⟩ :=
+    K.exists_fraction U s (genericPoint X) hi
+  let U0 := V0.1
+  let hU0 : Nonempty U0 := ⟨⟨genericPoint X, hηV0⟩⟩
+  have hnontrivial : Nontrivial Γ(X, U0) := @Scheme.component_nontrivial X U0 hU0
+  let s0 : Chapter02MeromorphicSection X U0 :=
+    chapter02MeromorphicRestriction X hV0U s
   have hbnz : b ≠ 0 := by
     intro hb0
     exact @zero_notMem_nonZeroDivisors _ _ hnontrivial (hb0 ▸ hb)
   have han : a ≠ 0 := by
     intro ha
-    have hzero : chapter02RegularSectionMap X U b = 0 := by
+    have hzero : chapter02RegularSectionMap X U0 b = 0 := by
       have hmul := congrArg
-        (fun z : Chapter02MeromorphicSection X U =>
-          (↑((D.equation i)⁻¹) : Chapter02MeromorphicSection X U) * z) hs
+        (fun z : Chapter02MeromorphicSection X U0 =>
+          (↑((chapter02MeromorphicRestrictionUnit X hV0U (D.equation i))⁻¹) :
+            Chapter02MeromorphicSection X U0) * z) hs
       have hmapzero :
-          (K.regularMap.1.app (Opposite.op U)).hom
-              (0 : Γ(X, U)) = 0 := map_zero _
+          (K.regularMap.1.app (Opposite.op U0)).hom
+              (0 : Γ(X, U0)) = 0 := map_zero _
       rw [ha, hmapzero, mul_zero] at hmul
-      change (↑((D.equation i)⁻¹) : Chapter02MeromorphicSection X U) *
-          ((D.equation i : Chapter02MeromorphicSection X U) *
-            (K.regularMap.1.app (Opposite.op U)).hom b) = 0 at hmul
+      change (↑((chapter02MeromorphicRestrictionUnit X hV0U (D.equation i))⁻¹) :
+          Chapter02MeromorphicSection X U0) *
+          ((chapter02MeromorphicRestrictionUnit X hV0U (D.equation i) :
+              Chapter02MeromorphicSection X U0) *
+            (K.regularMap.1.app (Opposite.op U0)).hom b) = 0 at hmul
       rw [← mul_assoc, Units.inv_mul, one_mul] at hmul
-      change (K.regularMap.1.app (Opposite.op U)).hom b = 0
+      change (K.regularMap.1.app (Opposite.op U0)).hom b = 0
       exact hmul
-    exact hbnz ((K.structureMap_injective U)
-      (hzero.trans ((chapter02RegularSectionMap X U).map_zero).symm))
-  have hbgerm : X.presheaf.germ U (genericPoint X) hi b ≠ 0 := by
+    exact hbnz ((K.structureMap_injective U0)
+      (hzero.trans ((chapter02RegularSectionMap X U0).map_zero).symm))
+  have hbgerm : X.presheaf.germ U0 (genericPoint X) hηV0 b ≠ 0 := by
     intro h
     apply hbnz
-    apply (germ_injective_of_isIntegral (X := X) (genericPoint X) hi)
+    apply (germ_injective_of_isIntegral (X := X) (genericPoint X) hηV0)
     simpa using h
-  have hagerm : X.presheaf.germ U (genericPoint X) hi a ≠ 0 := by
+  have hagerm : X.presheaf.germ U0 (genericPoint X) hηV0 a ≠ 0 := by
     intro h
     apply han
-    apply (germ_injective_of_isIntegral (X := X) (genericPoint X) hi)
+    apply (germ_injective_of_isIntegral (X := X) (genericPoint X) hηV0)
     simpa using h
   let V := X.basicOpen (a * b)
-  have hVU : V ≤ U := X.basicOpen_le (a * b)
+  have hVU0 : V ≤ U0 := X.basicOpen_le (a * b)
   have hηV : genericPoint X ∈ V := by
-    rw [Scheme.mem_basicOpen X (a * b) (genericPoint X) hi]
+    rw [Scheme.mem_basicOpen X (a * b) (genericPoint X) hηV0]
     rw [isUnit_iff_ne_zero]
-    simp [map_mul, hagerm, hbgerm]
-  let aV : Γ(X, V) := X.presheaf.map (homOfLE hVU).op a
-  let bV : Γ(X, V) := X.presheaf.map (homOfLE hVU).op b
+    simpa only [map_mul] using mul_ne_zero hagerm hbgerm
+  let aV : Γ(X, V) := X.presheaf.map (homOfLE hVU0).op a
+  let bV : Γ(X, V) := X.presheaf.map (homOfLE hVU0).op b
   have habV : IsUnit (aV * bV) := by
     rw [← map_mul]
     exact X.toRingedSpace.isUnit_res_basicOpen (a * b)
   have haV : IsUnit aV := isUnit_of_mul_isUnit_left habV
   have hbV : IsUnit bV := isUnit_of_mul_isUnit_right habV
   have hfracV :
-      chapter02MeromorphicRestriction X hVU s *
+      chapter02MeromorphicRestriction X hVU0 s0 *
           chapter02RegularSectionMap X V bV =
         chapter02RegularSectionMap X V aV := by
     have hnat_a :
         chapter02RegularSectionMap X V aV =
-          (K.carrier.presheaf.map (homOfLE hVU).op).hom
-            (chapter02RegularSectionMap X U a) := by
-      exact congr($(K.regularMap.1.naturality (homOfLE hVU).op).hom a)
+          (K.carrier.presheaf.map (homOfLE hVU0).op).hom
+            (chapter02RegularSectionMap X U0 a) := by
+      exact congr($(K.regularMap.1.naturality (homOfLE hVU0).op).hom a)
     have hnat_b :
         chapter02RegularSectionMap X V bV =
-          (K.carrier.presheaf.map (homOfLE hVU).op).hom
-            (chapter02RegularSectionMap X U b) := by
-      exact congr($(K.regularMap.1.naturality (homOfLE hVU).op).hom b)
+          (K.carrier.presheaf.map (homOfLE hVU0).op).hom
+            (chapter02RegularSectionMap X U0 b) := by
+      exact congr($(K.regularMap.1.naturality (homOfLE hVU0).op).hom b)
     have hmap := congrArg
-      (fun z => (K.carrier.presheaf.map (homOfLE hVU).op).hom z) hs
-    change (K.carrier.presheaf.map (homOfLE hVU).op).hom
-        (s * chapter02RegularSectionMap X U b) =
-      (K.carrier.presheaf.map (homOfLE hVU).op).hom
-        (chapter02RegularSectionMap X U a) at hmap
+      (fun z => (K.carrier.presheaf.map (homOfLE hVU0).op).hom z) hs
+    change (K.carrier.presheaf.map (homOfLE hVU0).op).hom
+        (s0 * chapter02RegularSectionMap X U0 b) =
+      (K.carrier.presheaf.map (homOfLE hVU0).op).hom
+        (chapter02RegularSectionMap X U0 a) at hmap
     rw [map_mul] at hmap
     rw [← hnat_a, ← hnat_b] at hmap
     simpa [chapter02MeromorphicRestriction, map_mul] using hmap
   let uA : (Γ(X, V))ˣ := haV.unit
   let uB : (Γ(X, V))ˣ := hbV.unit
+  have hVU : V ≤ U := hVU0.trans hV0U
   have hregular : chapter02MeromorphicSectionIsRegularUnitAt U s (genericPoint X) := by
     refine ⟨V, hVU, hηV, uB⁻¹ * uA, ?_⟩
     have hvB :
@@ -498,13 +506,13 @@ theorem chapter02_cartier_support_omits_generic_point {X : Scheme.{u}}
           chapter02RegularSectionMap X V aV := by
       simp [chapter02RegularUnitMap, uA]
     have hcancel :
-        chapter02MeromorphicRestriction X hVU s =
+        chapter02MeromorphicRestriction X hVU0 s0 =
           (↑((chapter02RegularUnitMap X V uB)⁻¹) :
             Chapter02MeromorphicSection X V) *
             (chapter02RegularUnitMap X V uA :
               Chapter02MeromorphicSection X V) := by
       have hfracUnits :
-          chapter02MeromorphicRestriction X hVU s *
+          chapter02MeromorphicRestriction X hVU0 s0 *
               (chapter02RegularUnitMap X V uB :
                 Chapter02MeromorphicSection X V) =
             (chapter02RegularUnitMap X V uA :
@@ -516,10 +524,10 @@ theorem chapter02_cartier_support_omits_generic_point {X : Scheme.{u}}
           (↑((chapter02RegularUnitMap X V uB)⁻¹) :
             Chapter02MeromorphicSection X V) * z) hfracUnits
       calc
-        chapter02MeromorphicRestriction X hVU s =
-            chapter02MeromorphicRestriction X hVU s * 1 :=
+        chapter02MeromorphicRestriction X hVU0 s0 =
+            chapter02MeromorphicRestriction X hVU0 s0 * 1 :=
           (mul_one _).symm
-        _ = chapter02MeromorphicRestriction X hVU s *
+        _ = chapter02MeromorphicRestriction X hVU0 s0 *
               ((↑((chapter02RegularUnitMap X V uB)⁻¹) :
                 Chapter02MeromorphicSection X V) *
                 (chapter02RegularUnitMap X V uB :
@@ -527,7 +535,7 @@ theorem chapter02_cartier_support_omits_generic_point {X : Scheme.{u}}
           rw [(chapter02RegularUnitMap X V uB).inv_mul, mul_one]
         _ = (↑((chapter02RegularUnitMap X V uB)⁻¹) :
               Chapter02MeromorphicSection X V) *
-              (chapter02MeromorphicRestriction X hVU s *
+              (chapter02MeromorphicRestriction X hVU0 s0 *
                 (chapter02RegularUnitMap X V uB :
                   Chapter02MeromorphicSection X V)) := by
           ac_rfl
@@ -538,6 +546,7 @@ theorem chapter02_cartier_support_omits_generic_point {X : Scheme.{u}}
     change (chapter02RegularUnitMap X V (uB⁻¹ * uA) :
       Chapter02MeromorphicSection X V) = _
     rw [map_mul, map_inv]
+    rw [← chapter02_meromorphicRestriction_comp (X := X) hV0U hVU0 s]
     exact hcancel.symm
   intro hηsupport
   exact hηsupport i hi hregular
@@ -577,7 +586,7 @@ def Chapter02MeromorphicSheaf.IsConstantOnNonemptyOpens {X : Scheme.{u}}
 
 theorem chapter02_total_quotient_constant_on_integral_scheme
     (X : Scheme.{u}) [K : Chapter02MeromorphicSheaf X]
-    [IsIntegral X] [IsLocallyNoetherian X] :
+    [IsIntegral X] :
     Chapter02MeromorphicSheaf.IsConstantOnNonemptyOpens (X := X) := by
   sorry
 

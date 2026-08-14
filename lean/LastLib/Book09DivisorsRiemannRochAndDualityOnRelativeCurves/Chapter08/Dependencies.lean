@@ -247,6 +247,18 @@ noncomputable instance chapter08FiniteMapOfCurvesAlgebra
     Algebra π.target.carrier.functionField π.source.carrier.functionField :=
   π.functionFieldExtension.algebra
 
+noncomputable instance chapter08FiniteMapOfCurvesScalarTower
+    {k : Type u} [Field k]
+    (π : Chapter08FiniteMapOfCurves k) :
+    IsScalarTower k π.target.carrier.functionField π.source.carrier.functionField := by
+  apply IsScalarTower.of_algebraMap_eq'
+  apply RingHom.ext
+  intro a
+  change algebraMap k π.source.carrier.functionField a =
+    π.functionFieldExtension.toAlgebraMap
+      (algebraMap k π.target.carrier.functionField a)
+  exact π.functionFieldExtension_overBase a
+
 structure Chapter08FiniteMapOfProperCurves (k : Type u) [Field k] where
   source : Chapter08ProperSmoothIntegralCurve k
   target : Chapter08ProperSmoothIntegralCurve k
@@ -271,6 +283,18 @@ noncomputable instance chapter08FiniteMapOfProperCurvesAlgebra
     (π : Chapter08FiniteMapOfProperCurves k) :
     Algebra π.target.carrier.functionField π.source.carrier.functionField :=
   π.functionFieldExtension.algebra
+
+noncomputable instance chapter08FiniteMapOfProperCurvesScalarTower
+    {k : Type u} [Field k]
+    (π : Chapter08FiniteMapOfProperCurves k) :
+    IsScalarTower k π.target.carrier.functionField π.source.carrier.functionField := by
+  apply IsScalarTower.of_algebraMap_eq'
+  apply RingHom.ext
+  intro a
+  change algebraMap k π.source.carrier.functionField a =
+    π.functionFieldExtension.toAlgebraMap
+      (algebraMap k π.target.carrier.functionField a)
+  exact π.functionFieldExtension_overBase a
 
 structure Chapter08ProjectiveLineFunctionFieldData
     (k : Type u) [Field k]

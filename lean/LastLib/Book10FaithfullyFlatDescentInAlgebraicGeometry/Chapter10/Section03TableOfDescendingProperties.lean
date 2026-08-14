@@ -1,4 +1,5 @@
 import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.Section02TheDiagonalMethod
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter07.Section03AffineDescent
 import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
 
 /-!
@@ -31,7 +32,11 @@ private theorem chapter10_fpqc_local_of_descendsAlong_aux
 
 theorem chapter10_affine_fpqc_local_on_base :
     chapter10FpqcLocalOnBase (@IsAffineHom) := by
-  sorry
+  apply chapter10_fpqc_local_of_descendsAlong_aux
+  · intro X S T f p hf
+    exact MorphismProperty.IsStableUnderBaseChange.of_isPullback
+      (P := @IsAffineHom) (IsPullback.of_hasPullback f p) hf
+  · infer_instance
 
 theorem chapter10_quasiCompact_fpqc_local_on_base :
     chapter10FpqcLocalOnBase (@QuasiCompact) := by
@@ -259,7 +264,11 @@ theorem chapter10_closedImmersion_fpqc_local_on_base :
 
 theorem chapter10_locallyClosedImmersion_fpqc_local_on_base :
     chapter10FpqcLocalOnBase (@IsImmersion) := by
-  sorry
+  apply chapter10_fpqc_local_of_descendsAlong_aux
+  · intro X S T f p hf
+    exact MorphismProperty.IsStableUnderBaseChange.of_isPullback
+      (P := @IsImmersion) (IsPullback.of_hasPullback f p) hf
+  · infer_instance
 
 theorem chapter10_proper_fpqc_local_on_base :
     chapter10FpqcLocalOnBase (@IsProper) := by

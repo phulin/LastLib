@@ -54,7 +54,7 @@ theorem chapter02Displacement_one
     (K : Type u) {L : Type u} [Field K] [Field L] [Algebra K L]
     (v : AddValuation L (WithTop ℤ)) :
     chapter02Displacement K v (1 : chapter02DecompositionGroup K v) = ⊤ := by
-  sorry
+  simp [chapter02Displacement]
 
 /-- The lower group at an integer index, with all negative indices using `G₋₁`. -/
 def chapter02LowerGroup

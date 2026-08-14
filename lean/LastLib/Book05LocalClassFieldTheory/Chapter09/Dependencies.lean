@@ -47,7 +47,7 @@ theorem chapter09_mem_normSubgroup_iff
     [FiniteDimensional K L] (x : Kˣ) :
     x ∈ chapter09NormSubgroup K L ↔
       ∃ y : Lˣ, chapter09NormHom K L y = x := by
-  sorry
+  rfl
 
 /--
 The inclusion of automorphism groups obtained by restricting scalars.
@@ -111,7 +111,10 @@ theorem chapter09_finiteGaloisRestriction_ext
     (hq₁ : chapter09FiniteGaloisRestriction K E Ks q₁)
     (hq₂ : chapter09FiniteGaloisRestriction K E Ks q₂) :
     q₁ = q₂ := by
-  sorry
+  exact Abelianization.hom_ext q₁ q₂
+    (MonoidHom.ext fun σ =>
+      AlgEquiv.ext fun x =>
+        (algebraMap E Ks).injective ((hq₁ σ x).trans (hq₂ σ x).symm))
 
 /-!
 The next records separate canonical finite-reciprocity normalization from the
@@ -155,7 +158,11 @@ theorem chapter09_finiteReciprocityNormalization_quotientEquiv_eq_canonical
     (N : Chapter09FiniteReciprocityNormalization D) :
     N.quotientEquiv =
       (Chapter09FiniteReciprocityNormalization.canonical D).quotientEquiv := by
-  sorry
+  exact MulEquiv.toMonoidHom_injective
+    (QuotientGroup.monoidHom_ext
+      (LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05NormSubgroup K L)
+      (N.compatibility.fundamental_class_compatibility.trans
+        ((Chapter09FiniteReciprocityNormalization.canonical D).compatibility).fundamental_class_compatibility.symm))
 
 structure Chapter09AbsoluteReciprocityNormalization
     (K Ks : Type) [Field K] [Field Ks] [Algebra K Ks]
@@ -190,7 +197,7 @@ theorem chapter09_isSepClosure_over_extension_of_base
     [Algebra.IsSeparable K L]
     (hKs : IsSepClosure K Ks) :
     IsSepClosure L Ks := by
-  sorry
+  exact ⟨hKs.1, ⟨fun x => IsSeparable.tower_top (L := L) (hKs.2.isSeparable K x)⟩⟩
 
 /- LOCAL_DEPENDENCY_GUESS: the preceding chapters expose the finite-index
 fact for the restriction subgroup of a finite separable extension. -/
@@ -232,7 +239,11 @@ theorem chapter09_finiteAbelianReciprocity_quotientEquiv_eq_canonical
     (R : Chapter09FiniteAbelianReciprocity K L) :
     R.quotientEquiv =
       (Chapter09FiniteReciprocityNormalization.canonical R.classFormation).quotientEquiv := by
-  sorry
+  exact MulEquiv.toMonoidHom_injective
+    (QuotientGroup.monoidHom_ext
+      (LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05NormSubgroup K L)
+      (R.normalization.fundamental_class_compatibility.trans
+        ((Chapter09FiniteReciprocityNormalization.canonical R.classFormation).compatibility).fundamental_class_compatibility.symm))
 
 end
 

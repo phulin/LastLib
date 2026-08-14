@@ -23,6 +23,36 @@ theorem chapter06_schematicClosure_factorization
       chapter06GenericEmbeddingIntoBaseAmbient D := by
   exact (chapter06GenericEmbeddingIntoBaseAmbient D).toImage_imageι
 
+/-! The schematic image has the expected generic-fiber comparison.  The map is
+kept explicit because base change of a schematic image is not a definitional
+operation in the pinned API. -/
+noncomputable def chapter06SchematicClosureGenericFiberMap
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    {E : Chapter06ProjectiveEmbedding C}
+    (D : Chapter06ClosureDatum C E) :
+    C.carrier ⟶
+      chapter06GenericFiber
+        (chapter06SchematicClosureStructureMap D)
+        (chapter06GenericBaseMap R) :=
+  pullback.lift
+    (chapter06SchematicClosureToAmbient D)
+    C.structureMap (by
+      change chapter06SchematicClosureToAmbient D ≫
+          chapter06SchematicClosureEmbedding D ≫
+            chapter02ProjectiveSpaceProjection (Spec (.of R)) E.dimension =
+        C.structureMap ≫ chapter06GenericBaseMap R
+      rw [← Category.assoc, chapter06_schematicClosure_factorization,
+        chapter06_genericEmbeddingIntoBaseAmbient_over D])
+
+theorem chapter06_schematicClosure_generic_fiber_map_is_iso
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    {E : Chapter06ProjectiveEmbedding C}
+    (D : Chapter06ClosureDatum C E) :
+    IsIso (chapter06SchematicClosureGenericFiberMap D) := by
+  sorry
+
 theorem chapter06_schematicClosure_is_smallest_closed_subscheme
     {R : Type u} [CommRing R] [IsDedekindDomain R]
     {C : Chapter06SmoothProjectiveCurve R}

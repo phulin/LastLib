@@ -153,6 +153,251 @@ noncomputable def fittingIdeal
     [Module.FinitePresentation R M] (i : ℕ) : Ideal R :=
   fittingIdealOfPresentation (finitePresentationData (R := R) (M := M)) i
 
+private def determinantCoefficientIdeal
+    {R U V : Type*} [CommRing R] [AddCommGroup U] [Module R U]
+    [AddCommGroup V] [Module R V] (k : ℕ) (f : U →ₗ[R] V) : Ideal R :=
+  Ideal.span
+    {a : R |
+      ∃ x : determinantModule R U k,
+        ∃ φ : determinantModule R V k →ₗ[R] R,
+          a = φ (determinantMap k f x)}
+
+private theorem determinantCoefficientIdeal_comp_le_left
+    {R U V W : Type*} [CommRing R] [AddCommGroup U] [Module R U]
+    [AddCommGroup V] [Module R V] [AddCommGroup W] [Module R W]
+    (k : ℕ) (f : U →ₗ[R] V) (g : V →ₗ[R] W) :
+    determinantCoefficientIdeal k (g ∘ₗ f) ≤ determinantCoefficientIdeal k f := by
+  rw [determinantCoefficientIdeal, Ideal.span_le]
+  rintro a ⟨x, φ, rfl⟩
+  apply Ideal.subset_span
+  refine ⟨x, φ.comp (determinantMap k g), ?_⟩
+  change φ ((exteriorPower.map k (g ∘ₗ f)) x) =
+    (φ.comp (exteriorPower.map k g)) ((exteriorPower.map k f) x)
+  rw [exteriorPower.map_comp]
+  rfl
+
+private theorem determinantCoefficientIdeal_comp_le_right
+    {R U V W : Type*} [CommRing R] [AddCommGroup U] [Module R U]
+    [AddCommGroup V] [Module R V] [AddCommGroup W] [Module R W]
+    (k : ℕ) (f : U →ₗ[R] V) (g : V →ₗ[R] W) :
+    determinantCoefficientIdeal k (g ∘ₗ f) ≤ determinantCoefficientIdeal k g := by
+  rw [determinantCoefficientIdeal, Ideal.span_le]
+  rintro a ⟨x, φ, rfl⟩
+  apply Ideal.subset_span
+  refine ⟨(determinantMap k f) x, φ, ?_⟩
+  change φ ((exteriorPower.map k (g ∘ₗ f)) x) = φ ((exteriorPower.map k g) ((exteriorPower.map k f) x))
+  rw [exteriorPower.map_comp]
+  rfl
+
+private theorem determinantCoefficientIdeal_comp_eq_of_equiv
+    {R U V U' V' : Type*} [CommRing R]
+    [AddCommGroup U] [Module R U] [AddCommGroup V] [Module R V]
+    [AddCommGroup U'] [Module R U'] [AddCommGroup V'] [Module R V']
+    (k : ℕ) (f : U →ₗ[R] V) (eU : U' ≃ₗ[R] U) (eV : V ≃ₗ[R] V') :
+    determinantCoefficientIdeal k (eV.toLinearMap ∘ₗ f ∘ₗ eU.toLinearMap) =
+      determinantCoefficientIdeal k f := by
+  apply le_antisymm
+  · calc
+      determinantCoefficientIdeal k (eV.toLinearMap ∘ₗ f ∘ₗ eU.toLinearMap) ≤
+          determinantCoefficientIdeal k (f ∘ₗ eU.toLinearMap) := by
+            simpa only [LinearMap.comp_assoc] using
+              determinantCoefficientIdeal_comp_le_left k
+                (f ∘ₗ eU.toLinearMap) eV.toLinearMap
+      _ ≤ determinantCoefficientIdeal k f :=
+        determinantCoefficientIdeal_comp_le_right
+          (R := R) (U := U') (V := U) (W := V) k eU.toLinearMap f
+  · have h₁ :
+        determinantCoefficientIdeal k
+            (eV.symm.toLinearMap ∘ₗ
+              (eV.toLinearMap ∘ₗ f ∘ₗ eU.toLinearMap) ∘ₗ eU.symm.toLinearMap) ≤
+          determinantCoefficientIdeal k
+            (eV.toLinearMap ∘ₗ f ∘ₗ eU.toLinearMap) := by
+      calc
+        determinantCoefficientIdeal k
+            (eV.symm.toLinearMap ∘ₗ
+              (eV.toLinearMap ∘ₗ f ∘ₗ eU.toLinearMap) ∘ₗ eU.symm.toLinearMap) ≤
+            determinantCoefficientIdeal k
+              ((eV.toLinearMap ∘ₗ f ∘ₗ eU.toLinearMap) ∘ₗ eU.symm.toLinearMap) := by
+                simpa only [LinearMap.comp_assoc] using
+                  determinantCoefficientIdeal_comp_le_left k
+                    ((eV.toLinearMap ∘ₗ f ∘ₗ eU.toLinearMap) ∘ₗ eU.symm.toLinearMap)
+                    eV.symm.toLinearMap
+        _ ≤ determinantCoefficientIdeal k
+              (eV.toLinearMap ∘ₗ f ∘ₗ eU.toLinearMap) :=
+          determinantCoefficientIdeal_comp_le_right
+            (R := R) (U := U) (V := U') (W := V') k
+            eU.symm.toLinearMap
+            (eV.toLinearMap ∘ₗ f ∘ₗ eU.toLinearMap)
+    have hcomp :
+        eV.symm.toLinearMap ∘ₗ
+            (eV.toLinearMap ∘ₗ f ∘ₗ eU.toLinearMap) ∘ₗ eU.symm.toLinearMap = f := by
+      ext x
+      simp [LinearMap.comp_apply]
+    rw [hcomp] at h₁
+    exact h₁
+
+private theorem fittingIdealOfPresentation_eq_determinantCoefficientIdeal
+    {R M : Type*} [CommRing R] [AddCommGroup M] [Module R M]
+    (P : FinitePresentationData R M) (i : ℕ) :
+    fittingIdealOfPresentation P i =
+      determinantCoefficientIdeal (P.generators - i) P.relationMap := by
+  rfl
+
+private theorem determinantCoefficientIdeal_eq_span_basisCoords
+    {R U V : Type*} [CommRing R] [AddCommGroup U] [Module R U]
+    [AddCommGroup V] [Module R V] {ι κ : Type*} [Fintype ι] [Fintype κ]
+    (k : ℕ) (f : U →ₗ[R] V)
+    (bU : Module.Basis ι R (determinantModule R U k))
+    (bV : Module.Basis κ R (determinantModule R V k)) :
+    determinantCoefficientIdeal k f =
+      Ideal.span
+        {a : R | ∃ i : ι, ∃ j : κ,
+          a = bV.coord j (determinantMap k f (bU i))} := by
+  apply le_antisymm
+  · rw [determinantCoefficientIdeal, Ideal.span_le]
+    rintro a ⟨x, φ, rfl⟩
+    rw [← bU.sum_repr x]
+    simp only [map_sum, map_smul]
+    apply Submodule.sum_mem
+    intro i hi
+    apply Submodule.smul_mem
+    rw [← bV.sum_repr (determinantMap k f (bU i))]
+    simp only [map_sum, map_smul]
+    apply Submodule.sum_mem
+    intro j hj
+    rw [smul_eq_mul, mul_comm]
+    apply Ideal.mul_mem_left
+    apply Ideal.subset_span
+    refine ⟨i, j, ?_⟩
+    rfl
+  · rw [Ideal.span_le]
+    rintro a ⟨i, j, rfl⟩
+    exact Ideal.subset_span ⟨bU i, bV.coord j, rfl⟩
+
+private noncomputable def piBaseChangeEquiv
+    {A B : Type*} [CommRing A] [CommRing B] [Algebra A B] (n : ℕ) :
+    B ⊗[A] (Fin n → A) ≃ₗ[B] (Fin n → B) := by
+  letI : IsScalarTower A B (Fin n → B) :=
+    IsScalarTower.of_algebraMap_smul (fun a x => by
+      ext j
+      simp [Algebra.smul_def])
+  let c := Fintype.linearCombination A (Pi.basisFun B (Fin n))
+  let h : IsBaseChange B c := IsBaseChange.of_fintype_basis A (Pi.basisFun B (Fin n))
+  exact h.equiv
+
+private theorem piBaseChangeEquiv_tmul
+    {A B : Type*} [CommRing A] [CommRing B] [Algebra A B] (n : ℕ)
+    (b : B) (x : Fin n → A) :
+    piBaseChangeEquiv (A := A) (B := B) n (b ⊗ₜ[A] x) =
+      b • (fun j => algebraMap A B (x j)) := by
+  let _ : IsScalarTower A B (Fin n → B) :=
+    IsScalarTower.of_algebraMap_smul (fun a x => by
+      ext j
+      simp [Algebra.smul_def])
+  let c := Fintype.linearCombination A (Pi.basisFun B (Fin n))
+  let h : IsBaseChange B c := IsBaseChange.of_fintype_basis A (Pi.basisFun B (Fin n))
+  have hh := h.equiv_tmul b x
+  change h.equiv (b ⊗ₜ[A] x) = _ at hh
+  rw [show piBaseChangeEquiv (A := A) (B := B) n = h.equiv by rfl]
+  rw [hh]
+  ext j
+  simp [c, Fintype.linearCombination_apply, Algebra.smul_def, Pi.single_apply]
+
+private theorem piBaseChangeEquiv_symm_apply_single
+    {A B : Type*} [CommRing A] [CommRing B] [Algebra A B] (n : ℕ) (j : Fin n) :
+    (piBaseChangeEquiv (A := A) (B := B) n).symm (Pi.single j 1) =
+      1 ⊗ₜ[A] (Pi.single j 1) := by
+  apply (piBaseChangeEquiv (A := A) (B := B) n).injective
+  rw [(piBaseChangeEquiv (A := A) (B := B) n).apply_symm_apply]
+  rw [piBaseChangeEquiv_tmul]
+  ext k
+  simp [Pi.single_apply]
+
+private theorem baseChange_pi_apply_basis
+    {A B : Type*} [CommRing A] [CommRing B] [Algebra A B]
+    {n m : ℕ} (f : (Fin n → A) →ₗ[A] (Fin m → A)) (j : Fin n) :
+    ((piBaseChangeEquiv (A := A) (B := B) m).toLinearMap ∘ₗ
+      (f.baseChange B) ∘ₗ
+        (piBaseChangeEquiv (A := A) (B := B) n).symm.toLinearMap)
+        (Pi.basisFun B (Fin n) j) =
+      (fun k => algebraMap A B (f (Pi.basisFun A (Fin n) j) k)) := by
+  rw [Pi.basisFun_apply]
+  simp only [LinearMap.comp_apply]
+  change piBaseChangeEquiv (A := A) (B := B) m
+      ((f.baseChange B)
+        ((piBaseChangeEquiv (A := A) (B := B) n).symm (Pi.single j 1))) = _
+  rw [piBaseChangeEquiv_symm_apply_single]
+  simp only [LinearMap.baseChange_tmul]
+  rw [piBaseChangeEquiv_tmul]
+  ext k
+  simp
+
+private theorem determinantCoefficientIdeal_baseChange_pi
+    {A B : Type*} [CommRing A] [CommRing B] [Algebra A B]
+    {n m : ℕ} (k : ℕ) (f : (Fin n → A) →ₗ[A] (Fin m → A)) :
+    determinantCoefficientIdeal (R := B) k
+        ((piBaseChangeEquiv (A := A) (B := B) m).toLinearMap ∘ₗ
+          (f.baseChange B) ∘ₗ
+            (piBaseChangeEquiv (A := A) (B := B) n).symm.toLinearMap) =
+      (determinantCoefficientIdeal (R := A) k f).map (algebraMap A B) := by
+  let fB : (Fin n → B) →ₗ[B] (Fin m → B) :=
+    (piBaseChangeEquiv (A := A) (B := B) m).toLinearMap ∘ₗ
+      (f.baseChange B) ∘ₗ
+        (piBaseChangeEquiv (A := A) (B := B) n).symm.toLinearMap
+  let bUA := (Pi.basisFun A (Fin n)).exteriorPower k
+  let bVA := (Pi.basisFun A (Fin m)).exteriorPower k
+  let bUB := (Pi.basisFun B (Fin n)).exteriorPower k
+  let bVB := (Pi.basisFun B (Fin m)).exteriorPower k
+  rw [determinantCoefficientIdeal_eq_span_basisCoords k fB bUB bVB,
+    determinantCoefficientIdeal_eq_span_basisCoords k f bUA bVA]
+  have hentry (i : Set.powersetCard (Fin n) k)
+      (j : Set.powersetCard (Fin m) k) :
+      bVB.coord j (determinantMap k fB (bUB i)) =
+        algebraMap A B (bVA.coord j (determinantMap k f (bUA i))) := by
+    simp [fB, bUA, bVA, bUB, bVB, exteriorPower.basis_coord,
+      exteriorPower.ιMultiDual_apply_ιMulti, exteriorPower.basis_apply,
+      exteriorPower.ιMulti_family, determinantMap]
+    rw [RingHom.map_det]
+    congr 1
+    ext i₁ j₁
+    simpa [fB, Pi.basisFun_apply] using
+      congrFun
+        (baseChange_pi_apply_basis f
+          (Set.powersetCard.ofFinEmbEquiv.symm i i₁))
+        (Set.powersetCard.ofFinEmbEquiv.symm j j₁)
+  have hset :
+      {a : B | ∃ i, ∃ j,
+          a = bVB.coord j (determinantMap k fB (bUB i))} =
+        (algebraMap A B) '' {a : A | ∃ i, ∃ j,
+          a = bVA.coord j (determinantMap k f (bUA i))} := by
+    ext a
+    constructor
+    · rintro ⟨i, j, rfl⟩
+      exact ⟨bVA.coord j (determinantMap k f (bUA i)), ⟨i, j, rfl⟩, (hentry i j).symm⟩
+    · rintro ⟨a, ⟨i, j, rfl⟩, rfl⟩
+      exact ⟨i, j, (hentry i j).symm⟩
+  rw [Ideal.map_span, hset]
+
+private theorem determinantCoefficientIdeal_baseChange
+    {A B : Type*} [CommRing A] [CommRing B] [Algebra A B]
+    {n m : ℕ} (k : ℕ) (f : (Fin n → A) →ₗ[A] (Fin m → A)) :
+    determinantCoefficientIdeal (R := B) k (f.baseChange B) =
+      (determinantCoefficientIdeal (R := A) k f).map (algebraMap A B) := by
+  let e0 := piBaseChangeEquiv (A := A) (B := B) m
+  let e1 := piBaseChangeEquiv (A := A) (B := B) n
+  calc
+    determinantCoefficientIdeal (R := B) k (f.baseChange B) =
+        determinantCoefficientIdeal (R := B) k
+          (e0.toLinearMap ∘ₗ (f.baseChange B ∘ₗ e1.symm.toLinearMap)) := by
+            symm
+            simpa only [LinearMap.comp_assoc] using
+              determinantCoefficientIdeal_comp_eq_of_equiv k
+                (f.baseChange B) e1.symm e0
+    _ = (determinantCoefficientIdeal (R := A) k f).map (algebraMap A B) := by
+      simpa [e0, e1, LinearMap.comp_assoc] using
+        determinantCoefficientIdeal_baseChange_pi
+          (A := A) (B := B) (n := n) (m := m) k f
+
 theorem fittingIdeal_eq_of_presentation
     {R M : Type*} [CommRing R] [AddCommGroup M] [Module R M]
     [Module.FinitePresentation R M] (P : FinitePresentationData R M) (i : ℕ) :
@@ -164,7 +409,62 @@ theorem fittingIdeal_baseChange
     [Algebra A B] [Module A M] [Module.FinitePresentation A M] (i : ℕ) :
     fittingIdeal (R := B) (M := B ⊗[A] M) i =
       (fittingIdeal (R := A) (M := M) i).map (algebraMap A B) := by
-  sorry
+  let P : FinitePresentationData A M :=
+    finitePresentationData (R := A) (M := M)
+  let e0 : B ⊗[A] (Fin P.generators → A) ≃ₗ[B] (Fin P.generators → B) :=
+    piBaseChangeEquiv (A := A) (B := B) P.generators
+  let e1 : B ⊗[A] (Fin P.relations → A) ≃ₗ[B] (Fin P.relations → B) :=
+    piBaseChangeEquiv (A := A) (B := B) P.relations
+  have hp0 : Function.Surjective (P.presentation.baseChange B) := by
+    exact LinearMap.baseChange_surjective B P.presentation_surjective
+  have hbase_exact :
+      Function.Exact (P.relationMap.baseChange B) (P.presentation.baseChange B) := by
+    simpa only [LinearMap.baseChange_eq_ltensor] using
+      (lTensor_exact B P.exact P.presentation_surjective)
+  have hconj :
+      Function.Exact
+        (e0.toLinearMap ∘ₗ P.relationMap.baseChange B)
+        (P.presentation.baseChange B ∘ₗ e0.symm.toLinearMap) := by
+    exact
+      (LinearEquiv.conj_exact_iff_exact (P.relationMap.baseChange B)
+        (P.presentation.baseChange B) e0).2 hbase_exact
+  have hpre :
+      Function.Exact
+        ((e0.toLinearMap ∘ₗ P.relationMap.baseChange B) ∘ₗ e1.symm.toLinearMap)
+        (P.presentation.baseChange B ∘ₗ e0.symm.toLinearMap) := by
+    exact (e1.symm.precomp_exact_iff_exact).2 hconj
+  let P_B : FinitePresentationData B (B ⊗[A] M) :=
+    { generators := P.generators
+      relations := P.relations
+      presentation := P.presentation.baseChange B ∘ₗ e0.symm.toLinearMap
+      relationMap := e0.toLinearMap ∘ₗ (P.relationMap.baseChange B ∘ₗ e1.symm.toLinearMap)
+      presentation_surjective := hp0.comp e0.symm.surjective
+      exact := by
+        simpa only [LinearMap.comp_assoc] using hpre }
+  rw [fittingIdeal_eq_of_presentation P_B]
+  change fittingIdealOfPresentation P_B i =
+    (fittingIdealOfPresentation P i).map (algebraMap A B)
+  rw [fittingIdealOfPresentation_eq_determinantCoefficientIdeal P_B i,
+    fittingIdealOfPresentation_eq_determinantCoefficientIdeal P i]
+  change determinantCoefficientIdeal (R := B) (P.generators - i)
+      (e0.toLinearMap ∘ₗ
+        (P.relationMap.baseChange B ∘ₗ e1.symm.toLinearMap)) =
+    (determinantCoefficientIdeal (R := A) (P.generators - i) P.relationMap).map
+      (algebraMap A B)
+  calc
+    determinantCoefficientIdeal (R := B) (P.generators - i)
+        (e0.toLinearMap ∘ₗ
+          (P.relationMap.baseChange B ∘ₗ e1.symm.toLinearMap)) =
+        determinantCoefficientIdeal (R := B) (P.generators - i)
+          (P.relationMap.baseChange B) := by
+            simpa only [LinearMap.comp_assoc] using
+              determinantCoefficientIdeal_comp_eq_of_equiv
+                (P.generators - i) (P.relationMap.baseChange B) e1.symm e0
+    _ = (determinantCoefficientIdeal (R := A) (P.generators - i)
+      P.relationMap).map (algebraMap A B) :=
+        determinantCoefficientIdeal_baseChange
+          (A := A) (B := B) (n := P.relations) (m := P.generators)
+          (P.generators - i) P.relationMap
 
 theorem ideal_comap_map_eq_self_of_faithfullyFlat
     {A B : Type*} [CommRing A] [CommRing B] [Algebra A B]

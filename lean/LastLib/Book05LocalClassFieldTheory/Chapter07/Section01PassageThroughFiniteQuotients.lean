@@ -6,6 +6,8 @@ noncomputable section
 
 open CategoryTheory CategoryTheory.Limits Opposite
 
+universe u v
+
 /-- The canonical continuous multiplicative equivalence from the Galois group
 of the chosen maximal abelian extension to its finite Galois inverse limit. -/
 noncomputable def chapter07AbelianGaloisLimitEquiv
@@ -13,7 +15,7 @@ noncomputable def chapter07AbelianGaloisLimitEquiv
     [IsAbelianGalois K KAb] :
     Gal(KAb / K) ≃ₜ*
       ProfiniteGrp.limit (InfiniteGalois.asProfiniteGaloisGroupFunctor K KAb) :=
-  InfiniteGalois.continuousMulEquivToLimit K KAb
+  LastLib.Book05LocalClassFieldTheory.Chapter01.chapter01AbelianGaloisLimitEquiv K KAb
 
 /-- Every finite Galois level of an abelian extension is itself abelian. -/
 theorem chapter07_finite_level_is_abelian
@@ -33,7 +35,10 @@ noncomputable def chapter07FiniteReciprocityQuotientHom
   QuotientGroup.lift
     (chapter07NormSubgroup (K := K) (L := L))
     (S.artin L) (by
-      rw [← S.kernel_eq_norm L])
+      have hker : (S.artin L).ker =
+          chapter07NormSubgroup (K := K) (L := L) := by
+        simpa only [chapter07NormSubgroup] using S.kernel_eq_norm L
+      exact le_of_eq hker.symm)
 
 /-- The descended finite map composed with the quotient projection is the
 finite Artin map itself. -/
@@ -55,9 +60,13 @@ noncomputable def chapter07FiniteReciprocityEquiv
     (L : Chapter07FiniteAbelianIndex K KAb) :
     Kˣ ⧸ chapter07NormSubgroup (K := K) (L := L) ≃*
       Gal(L / K) := by
-  rw [← S.kernel_eq_norm L]
-  exact QuotientGroup.quotientKerEquivOfSurjective
-    (S.artin L) (S.surjective L)
+  let hker : (S.artin L).ker =
+      chapter07NormSubgroup (K := K) (L := L) := by
+    simpa only [chapter07NormSubgroup] using S.kernel_eq_norm L
+  exact
+    (QuotientGroup.quotientMulEquivOfEq hker.symm).trans
+      (QuotientGroup.quotientKerEquivOfSurjective
+        (S.artin L) (S.surjective L))
 
 /-- The local reciprocity map obtained by applying the inverse-limit Galois
 equivalence to the compatible tuple of finite Artin maps. -/
@@ -94,23 +103,47 @@ theorem chapter07_local_reciprocity_restricts_to_artin
 is the cofinality bridge from arbitrary finite abelian extensions to the
 canonical finite Galois-intermediate-field index. -/
 theorem chapter07_finite_abelian_levels_are_cofinal
-    {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    {K : Type u} {KAb : Type v} [Field K] [Field KAb] [Algebra K KAb]
     [IsAbelianGalois K KAb]
     (hmax : chapter07IsMaximalAbelianExtension K KAb)
-    {L : Type*} [Field L] [Algebra K L] [FiniteDimensional K L]
+    {L : Type v} [Field L] [Algebra K L] [FiniteDimensional K L]
     [IsAbelianGalois K L] :
     ∃ M : Chapter07FiniteAbelianIndex K KAb, Nonempty (L ≃ₐ[K] M) := by
   sorry
 
-/-- The inverse-limit statement in the source notation
+/- The inverse-limit construction is indexed by the chosen canonical model,
+but the source theorem quantifies over every finite abelian extension.  The
+following bridge transports the canonical finite reciprocity equivalence
+across the algebra equivalence supplied by cofinality. -/
+theorem chapter07_finite_abelian_extension_reciprocity
+    {K : Type u} {KAb : Type v} [Field K] [Field KAb] [Algebra K KAb]
+    [IsAbelianGalois K KAb]
+    (S : Chapter07FiniteArtinSystem K KAb)
+    (hmax : chapter07IsMaximalAbelianExtension K KAb)
+    {L : Type v} [Field L] [Algebra K L] [FiniteDimensional K L]
+    [IsAbelianGalois K L] :
+    Nonempty
+      (Kˣ ⧸ chapter07NormSubgroup (K := K) (L := L) ≃*
+        Gal(L / K)) := by
+  sorry
+
+/-- The inverse-limit equivalence in the source notation
 Galois-abelian-group equals Gal of the maximal abelian extension. -/
+noncomputable def chapter07_galois_ab_is_the_inverse_limit_equiv
+    {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [IsAbelianGalois K KAb] :
+    Gal(KAb / K) ≃ₜ*
+      ProfiniteGrp.limit (InfiniteGalois.asProfiniteGaloisGroupFunctor K KAb) :=
+  chapter07AbelianGaloisLimitEquiv K KAb
+
+/-- The inverse-limit statement in proposition form. -/
 theorem chapter07_galois_ab_is_the_inverse_limit
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
     [IsAbelianGalois K KAb] :
     Nonempty
       (Gal(KAb / K) ≃ₜ*
         ProfiniteGrp.limit (InfiniteGalois.asProfiniteGaloisGroupFunctor K KAb)) :=
-  ⟨chapter07AbelianGaloisLimitEquiv K KAb⟩
+  ⟨chapter07_galois_ab_is_the_inverse_limit_equiv (K := K) (KAb := KAb)⟩
 
 end
 

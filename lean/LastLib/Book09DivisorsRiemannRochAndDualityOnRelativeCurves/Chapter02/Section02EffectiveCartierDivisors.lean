@@ -8,6 +8,7 @@ import Mathlib.CategoryTheory.Sites.Abelian
 import Mathlib.CategoryTheory.Limits.Shapes.RegularMono
 import Mathlib.Topology.Sheaves.Abelian
 import Mathlib.Topology.Sheaves.LocallySurjective
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11.Dependencies
 import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter02.Section01LocalEquationsModuloUnits
 
 namespace LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter02
@@ -23,12 +24,9 @@ universe u v
 ### 2.2 Effective Cartier divisors
 -/
 
-def Chapter02IsEffectiveCartierIdeal {X : Scheme.{u}}
+abbrev Chapter02IsEffectiveCartierIdeal {X : Scheme.{u}}
     (I : X.IdealSheafData) : Prop :=
-  ∀ (U : X.affineOpens) (x : U.1),
-    ∃ (V : X.affineOpens) (f : Γ(X, V.1)),
-      x.1 ∈ V.1 ∧ V ≤ U ∧ I.ideal V = Ideal.span ({f} : Set Γ(X, V.1)) ∧
-        f ∈ nonZeroDivisors Γ(X, V.1)
+  I.IsEffectiveCartier
 
 abbrev Chapter02InvertibleIdealSheaf {X : Scheme.{u}} (I : X.IdealSheafData) : Prop :=
   Chapter02IsEffectiveCartierIdeal I
@@ -38,9 +36,9 @@ def Chapter02CartierIdealRepresents {X : Scheme.{u}}
     (I : X.IdealSheafData) : Prop :=
   ∀ (U : X.affineOpens) (x : U.1),
     ∃ (i : D.index) (V : X.affineOpens) (f : Γ(X, V.1))
-      (hVD : V.1 ≤ D.openSet i),
-      x.1 ∈ V.1 ∧ V ≤ U ∧
-        f ∈ nonZeroDivisors Γ(X, V.1) ∧
+      (hVD : V.1 ≤ D.openSet i) (hxV : x.1 ∈ V.1),
+      V ≤ U ∧
+        chapter02RegularSectionIsRegularAt V.1 f x.1 hxV ∧
         I.ideal V = Ideal.span ({f} : Set Γ(X, V.1)) ∧
         chapter02RegularSectionMap X V.1 f =
           chapter02MeromorphicRestriction X hVD
@@ -149,6 +147,7 @@ theorem chapter02_ideal_inclusion_comp_quotient {X : Scheme.{u}}
 
 structure Chapter02CartierExactSequence {X : Scheme.{u}}
     (I : X.IdealSheafData) where
+  effective : Chapter02IsEffectiveCartierIdeal I
   comp_zero : chapter02IdealInclusion I ≫ chapter02IdealQuotient I = 0
   mono_inclusion : Mono (chapter02IdealInclusion I)
   epi_quotient : Epi (chapter02IdealQuotient I)
@@ -157,9 +156,10 @@ structure Chapter02CartierExactSequence {X : Scheme.{u}}
 
 theorem chapter02_effective_cartier_exact_sequence_of_ideal
     {X : Scheme.{u}} (I : X.IdealSheafData)
-    (_hI : Chapter02IsEffectiveCartierIdeal I) :
+    (hI : Chapter02IsEffectiveCartierIdeal I) :
     Nonempty (Chapter02CartierExactSequence I) := by
   refine ⟨{
+    effective := hI
     comp_zero := chapter02_ideal_inclusion_comp_quotient I
     mono_inclusion := by
       change Mono (kernel.ι (chapter02IdealQuotient I))
@@ -285,9 +285,9 @@ theorem chapter02_effective_multiple_has_power_local_equation
     (D : Chapter02EffectiveCartierDivisor X) (n : ℕ) :
     ∀ i : D.divisor.index,
       ∀ x : X, x ∈ D.divisor.openSet i →
-        ∃ (V : X.Opens) (_hxV : x ∈ V) (hV : V ≤ D.divisor.openSet i)
+        ∃ (V : X.Opens) (hxV : x ∈ V) (hV : V ≤ D.divisor.openSet i)
           (f : Γ(X, V)),
-          f ∈ nonZeroDivisors (Γ(X, V)) ∧
+          chapter02RegularSectionIsRegularAt V f x hxV ∧
             chapter02RegularSectionMap X V (f ^ n) =
               chapter02MeromorphicRestriction X hV
                 ((D.divisor.equation i :

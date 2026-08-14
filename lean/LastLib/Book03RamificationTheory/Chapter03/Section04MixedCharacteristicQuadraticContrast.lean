@@ -1,6 +1,8 @@
 import LastLib.Book03RamificationTheory.Chapter03.Dependencies
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.Section04WorkedEisensteinExtensions
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section07ConcreteFiniteExtensions
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Section01CorrectingAnApproximateRoot
+import Mathlib.FieldTheory.KummerPolynomial
 
 namespace LastLib.Book03RamificationTheory.Chapter03
 
@@ -32,7 +34,11 @@ theorem chapter03_quadratic_polynomial_is_eisenstein
     (p : ℕ) [Fact p.Prime] :
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.IsEisensteinAt
       (p : ℤ_[p]) (chapter03QuadraticPolynomial p) := by
-  sorry
+  simpa [chapter03QuadraticPolynomial,
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08PadicIntegralRadicalPolynomial,
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08RadicalPolynomial] using
+    (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08_padic_radical_polynomial_is_eisenstein
+      p 2 (by decide))
 
 theorem chapter03_quadratic_extension_degree_and_profile
     (p : ℕ) [Fact p.Prime]

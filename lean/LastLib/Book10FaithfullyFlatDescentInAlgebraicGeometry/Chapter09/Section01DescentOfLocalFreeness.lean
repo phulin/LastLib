@@ -63,6 +63,49 @@ theorem chapter09_vector_bundle_effective_fpqc_descent
     Nonempty (Chapter09VectorBundleDescentResult D) := by
   sorry
 
+/-! ### Variable-rank finite locally free modules -/
+
+/- A finite locally free sheaf need not have one rank on a disconnected base.  The
+   rank-indexed `Chapter09VectorBundle` interface is therefore not the right carrier for
+   coefficient sheaves whose rank is only locally constant.  Keep this interface at the
+   earlier Book 8 predicate, which records local freeness without choosing a global rank. -/
+abbrev Chapter09FiniteLocallyFree {X : Scheme.{u}} (M : X.Modules) : Prop :=
+  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04FiniteLocallyFree M
+
+structure Chapter09VariableRankModuleDescentDatum
+    {S T : Scheme.{u}} (p : T ⟶ S) where
+  nerve : Chapter09CechNerve p
+  upstairs : T.Modules
+  finiteLocallyFree : Chapter09FiniteLocallyFree upstairs
+  overlapIso :
+    Chapter09PullbackModule (chapter09DoubleFirst p) upstairs ≅
+      Chapter09PullbackModule (chapter09DoubleSecond p) upstairs
+  cocycle : chapter09CechCocycleCondition p nerve overlapIso
+
+def chapter09VariableRankDescentComparisonCompatible
+    {S T : Scheme.{u}} {p : T ⟶ S}
+    (D : Chapter09VariableRankModuleDescentDatum p) (M : S.Modules)
+    (e : Chapter09PullbackModule p M ≅ D.upstairs) : Prop :=
+  (Scheme.Modules.pullback (chapter09DoubleFirst p)).map e.hom ≫ D.overlapIso.hom =
+    (chapter09CanonicalModuleDescentOverlapIso p M).hom ≫
+      (Scheme.Modules.pullback (chapter09DoubleSecond p)).map e.hom
+
+structure Chapter09VariableRankModuleDescentResult
+    {S T : Scheme.{u}} {p : T ⟶ S}
+    (D : Chapter09VariableRankModuleDescentDatum p) where
+  downstairs : S.Modules
+  finiteLocallyFree : Chapter09FiniteLocallyFree downstairs
+  comparison : Chapter09PullbackModule p downstairs ≅ D.upstairs
+  compatible : chapter09VariableRankDescentComparisonCompatible D downstairs comparison
+
+/-- Effective fpqc descent for finite locally free sheaves with locally constant, rather than
+globally fixed, rank.  This is the coefficient-sheaf interface used by later parameter spaces. -/
+theorem chapter09_variable_rank_module_effective_fpqc_descent
+    {S T : Scheme.{u}} (p : T ⟶ S) (hp : Chapter09FpqcCover p)
+    (D : Chapter09VariableRankModuleDescentDatum p) :
+    Nonempty (Chapter09VariableRankModuleDescentResult D) := by
+  sorry
+
 /-! The rank-one instance is named separately so later sections can depend on the line-bundle
 statement without unfolding the abbreviation. -/
 theorem chapter09_line_bundle_effective_fpqc_descent
@@ -70,6 +113,22 @@ theorem chapter09_line_bundle_effective_fpqc_descent
     (D : Chapter09LineBundleDescentDatum p) :
     Nonempty (Chapter09VectorBundleDescentResult D) := by
   exact chapter09_vector_bundle_effective_fpqc_descent p hp D
+
+/- The Book 8 line-bundle carrier is definitionally a Chapter 4 invertible sheaf, but its
+   comparison record is not the same as the rank-indexed Chapter 9 result.  Keep this bridge
+   explicit so later polarized descent can consume an actual line bundle and its comparison. -/
+theorem chapter09_line_bundle_effective_fpqc_descent_to_chapter04
+    {S T : Scheme.{u}} (p : T ⟶ S) (hp : Chapter09FpqcCover p)
+    (D : Chapter09LineBundleDescentDatum p) :
+    ∃ L : LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Chapter04LineBundle S,
+      Nonempty (Chapter09LineBundleDescentRealization D L) := by
+  rcases chapter09_line_bundle_effective_fpqc_descent p hp D with ⟨R⟩
+  let L := chapter09AsChapter04LineBundle R.downstairs
+  refine ⟨L, ⟨?_, ?_⟩⟩
+  · change Chapter09PullbackModule p R.downstairs.carrier ≅ D.upstairs.carrier
+    exact R.comparison
+  · change chapter09ModuleDescentComparisonCompatible D R.downstairs.carrier R.comparison
+    exact R.compatible
 
 def chapter09DescendedMorphismMatches
     {S T : Scheme.{u}} {p : T ⟶ S} {r s : ℕ}
@@ -94,6 +153,22 @@ theorem chapter09_vector_bundle_morphism_descends
     (hf : chapter09DescentMorphismCompatible D E f) :
     ∃! f₀ : RD.downstairs.carrier ⟶ RE.downstairs.carrier,
       chapter09DescendedMorphismMatches D E RD RE f f₀ := by
+  sorry
+
+/- Epi maps between finite locally free carriers are the quotient-map case of the preceding
+   morphism descent theorem.  The epimorphism is part of the conclusion, since it is reflected by
+   the faithfully flat pullback rather than being an automatic consequence of compatibility. -/
+theorem chapter09_vector_bundle_epi_morphism_descends
+    {S T : Scheme.{u}} (p : T ⟶ S) (hp : Chapter09FpqcCover p)
+    {r s : ℕ} (D : Chapter09ModuleDescentDatum p r)
+    (E : Chapter09ModuleDescentDatum p s)
+    (RD : Chapter09VectorBundleDescentResult D)
+    (RE : Chapter09VectorBundleDescentResult E)
+    (f : D.upstairs.carrier ⟶ E.upstairs.carrier)
+    (hf : chapter09DescentMorphismCompatible D E f)
+    (h_epi : Epi f) :
+    ∃! f₀ : RD.downstairs.carrier ⟶ RE.downstairs.carrier,
+      chapter09DescendedMorphismMatches D E RD RE f f₀ ∧ Epi f₀ := by
   sorry
 
 /- Effective descent is unique up to the unique isomorphism whose pullback

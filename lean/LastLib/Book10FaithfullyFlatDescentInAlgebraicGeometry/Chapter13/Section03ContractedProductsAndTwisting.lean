@@ -1,4 +1,5 @@
 import Mathlib.CategoryTheory.Monoidal.Cartesian.Grp
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter13.Section01TheTorsorIdentity
 import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter13.Section02LocalTrivialityAndEffectivity
 
 /-!
@@ -26,7 +27,19 @@ noncomputable def chapter13ContractedProductRightAction
     {S : Scheme.{u}} {G : Chapter13GroupScheme S}
     {P : Chapter13SchemeOver S} {X : Chapter13SchemeOver S}
     (Paction : Chapter13RightAction G P) (Xaction : Chapter13LeftAction G X) :
-    Chapter13RightAction G (P ⊗ X) := by sorry
+    Chapter13RightAction G (P ⊗ X) where
+  act :=
+    CartesianMonoidalCategory.lift
+      (CartesianMonoidalCategory.lift
+          (CartesianMonoidalCategory.fst (P ⊗ X) G.X ≫
+            CartesianMonoidalCategory.fst P X)
+          (CartesianMonoidalCategory.snd (P ⊗ X) G.X) ≫ Paction.act)
+      (CartesianMonoidalCategory.lift
+          (CartesianMonoidalCategory.snd (P ⊗ X) G.X ≫ GrpObj.inv (X := G.X))
+          (CartesianMonoidalCategory.fst (P ⊗ X) G.X ≫
+            CartesianMonoidalCategory.snd P X) ≫ Xaction.act)
+  one_act := by sorry
+  mul_act := by sorry
 
 def chapter13ContractedProductInvariantMap
     {S : Scheme.{u}} {G : Chapter13GroupScheme S}

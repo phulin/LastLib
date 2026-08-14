@@ -2503,12 +2503,18 @@ def chapter01VeroneseCoversProj {A : Type*} [CommRing A]
     ∃ n : ℕ, 0 < n * d ∧ ∃ a : A,
       a ∈ 𝒜 (n * d) ∧ a ∉ x.asHomogeneousIdeal
 
+theorem chapter01_veronese_covers_proj_of_pos
+    {A : Type*} [CommRing A] (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜]
+    {d : ℕ} (hd : 0 < d) :
+    chapter01VeroneseCoversProj 𝒜 d := by
+  sorry
+
 theorem chapter01_veronese_covers_proj_of_generated_in_degree_one
     {A : Type*} [CommRing A] (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜]
     {d : ℕ} (hd : 0 < d)
-    (h : chapter01GeneratedInDegreeOne 𝒜) :
+    (_h : chapter01GeneratedInDegreeOne 𝒜) :
     chapter01VeroneseCoversProj 𝒜 d := by
-  sorry
+  exact chapter01_veronese_covers_proj_of_pos 𝒜 hd
 
 noncomputable def chapter01VeroneseProj {A : Type*} [CommRing A]
     {𝒜 : ℕ → Submodule ℤ A} [GradedAlgebra 𝒜] {d : ℕ}
@@ -2754,7 +2760,15 @@ noncomputable def chapter01PullbackUnitComparison
 noncomputable def chapter01PullbackSectionData
     {S T : Scheme.{u}} (f : T ⟶ S) (M : S.Modules) :
     Chapter01PullbackSectionData f M := by
-  sorry
+  refine
+    { unitComparison := chapter01PullbackUnitComparison f
+      map := fun s =>
+        ((Scheme.Modules.pullback f).obj M).unitHomEquiv
+          ((chapter01PullbackUnitComparison f).inv ≫
+            (Scheme.Modules.pullback f).map (M.unitHomEquiv.symm s))
+      map_spec := ?_ }
+  intro s
+  exact (SheafOfModules.unitHomEquiv ((Scheme.Modules.pullback f).obj M)).symm_apply_apply _
 
 noncomputable def chapter01PullbackSectionMap
     {S T : Scheme.{u}} (f : T ⟶ S) (M : S.Modules) :
@@ -3410,11 +3424,16 @@ def chapter01PolynomialQuotientCoordinateSection
         (R := (chapter01Spec R).ringCatSheaf) (ULift.up i)))
 
 noncomputable def chapter01ZeroSection {X : Scheme.{u}} (M : X.Modules) : M.sections := by
-  sorry
+  exact M.val.sectionsMk (fun X => 0) (by
+    intro X Y f
+    exact (M.val.map f).hom.map_zero)
 
 noncomputable def chapter01AddSection {X : Scheme.{u}} (M : X.Modules)
     (s t : M.sections) : M.sections := by
-  sorry
+  exact M.val.sectionsMk (fun X => s.1 X + t.1 X) (by
+    intro X Y f
+    rw [← M.val.sections_property s f, ← M.val.sections_property t f]
+    exact (M.val.map f).hom.map_add _ _)
 
 /-! Coefficients from an affine base act on every tensor power through the
 structure-sheaf comparison.  The action is kept as a named interface so the
@@ -3423,7 +3442,26 @@ noncomputable def chapter01BaseCoefficientSection
     (R : Type u) [CommRing R] {T : Scheme.{u}}
     (f : T ⟶ chapter01Spec R) (c : R) :
     (SheafOfModules.unit T.ringCatSheaf).sections := by
-  sorry
+  exact (SheafOfModules.unit T.ringCatSheaf).val.sectionsMk
+    (fun X =>
+      (T.ringCatSheaf.obj.map
+        (homOfLE (show X.unop ≤ ⊤ from le_top)).op).hom
+        (((Scheme.ΓSpecIso (CommRingCat.of R)).inv ≫ f.appTop).hom c))
+    (by
+      intro X Y g
+      change (T.ringCatSheaf.obj.map g).hom
+          ((T.ringCatSheaf.obj.map
+            (homOfLE (show X.unop ≤ ⊤ from le_top)).op).hom
+            (((Scheme.ΓSpecIso (CommRingCat.of R)).inv ≫ f.appTop).hom c)) =
+        (T.ringCatSheaf.obj.map
+          (homOfLE (show Y.unop ≤ ⊤ from le_top)).op).hom
+          (((Scheme.ΓSpecIso (CommRingCat.of R)).inv ≫ f.appTop).hom c)
+      change ((T.ringCatSheaf.obj.map
+          (homOfLE (show X.unop ≤ ⊤ from le_top)).op) ≫
+        T.ringCatSheaf.obj.map g).hom
+          (((Scheme.ΓSpecIso (CommRingCat.of R)).inv ≫ f.appTop).hom c) = _
+      rw [← T.ringCatSheaf.obj.map_comp]
+      congr 1)
 
 noncomputable def chapter01CanonicalBaseScalarAction
     (R : Type u) [CommRing R] (r : ℕ) {T : Scheme.{u}}

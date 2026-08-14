@@ -137,6 +137,76 @@ structure Chapter05CharacterKernelHasseArfData
     PerfectField
       (IsLocalRing.ResidueField quotient_local.vK.toValuation.valuationSubring)
 
+private theorem chapter05_nat_card_map_group_equiv
+    {G G' : Type*} [Group G] [Group G'] [Finite G] [Finite G']
+    (K : Subgroup G) (e : G ≃* G') :
+    Nat.card (K.map e.toMonoidHom) = Nat.card K := by
+  classical
+  let f : K → K.map e.toMonoidHom := fun x =>
+    ⟨e x, ⟨x, x.property, rfl⟩⟩
+  have hf : Function.Bijective f := by
+    constructor
+    · intro x y hxy
+      apply Subtype.ext
+      apply e.injective
+      exact congrArg Subtype.val hxy
+    · intro y
+      rcases y.property with ⟨x, hx, hxy⟩
+      refine ⟨⟨x, hx⟩, ?_⟩
+      apply Subtype.ext
+      exact hxy
+  exact Nat.card_congr (Equiv.ofBijective f hf).symm
+
+private theorem chapter05_upper_group_transport_of_profile
+    {G G' : Type*} [Group G] [Group G'] [Finite G] [Finite G']
+    (D : Chapter05RamificationFiltration G)
+    (E : Chapter05RamificationFiltration G')
+    (e : G ≃* G')
+    (hprofile : ∀ u : ℝ,
+      E.lowerGroup u = (D.lowerGroup u).map e.toMonoidHom)
+    (hD : Function.Bijective (chapter05HerbrandFunction D))
+    (hE : Function.Bijective (chapter05HerbrandFunction E))
+    {v : ℝ} (hv : (-1 : ℝ) ≤ v) :
+    chapter05UpperRamificationGroup E v =
+      (chapter05UpperRamificationGroup D v).map e.toMonoidHom := by
+  have hcard (u : ℝ) :
+      Nat.card (E.lowerGroup u) = Nat.card (D.lowerGroup u) := by
+    rw [hprofile u]
+    exact chapter05_nat_card_map_group_equiv _ e
+  have hslope (u : ℝ) :
+      chapter05HerbrandSlope E u = chapter05HerbrandSlope D u := by
+    by_cases hu : u ≤ 0
+    · simp [chapter05HerbrandSlope, hu]
+    · rw [chapter05HerbrandSlope, if_neg hu,
+        chapter05HerbrandSlope, if_neg hu, hcard u, hcard 0]
+  have hfunction (u : ℝ) :
+      chapter05HerbrandFunction E u = chapter05HerbrandFunction D u := by
+    by_cases hu : u ≤ 0
+    · simp [chapter05HerbrandFunction, hu]
+    · rw [chapter05HerbrandFunction, if_neg hu,
+        chapter05HerbrandFunction, if_neg hu]
+      rw [show (fun t : ℝ => chapter05HerbrandSlope E t) =
+          (fun t : ℝ => chapter05HerbrandSlope D t) by
+        funext t
+        exact hslope t]
+  have hinverse (u : ℝ) :
+      chapter05HerbrandInverse E u = chapter05HerbrandInverse D u := by
+    apply hD.1
+    calc
+      chapter05HerbrandFunction D
+          (chapter05HerbrandInverse E u) =
+          chapter05HerbrandFunction E
+            (chapter05HerbrandInverse E u) :=
+        (hfunction _).symm
+      _ = u := chapter05_herbrand_inverse_spec E hE u
+      _ = chapter05HerbrandFunction D
+          (chapter05HerbrandInverse D u) :=
+        (chapter05_herbrand_inverse_spec D hD u).symm
+  rw [chapter05_upper_group_eq_lower_at_inverse E hE hv,
+    chapter05_upper_group_eq_lower_at_inverse D hD hv,
+    hinverse]
+  exact hprofile _
+
 theorem chapter05_character_kernel_upper_break_integer
     {K L C : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
@@ -166,7 +236,258 @@ theorem chapter05_character_kernel_detects_two_break_second_upper
     (hsubgroup_not_le_kernel : ¬H ≤ MonoidHom.ker χ) :
     chapter05UpperBreak R.quotient_local.profile
       (chapter05TwoBreakSecondUpper T.twoBreak.p T.twoBreak.a T.twoBreak.b) := by
-  sorry
+  classical
+  let q := chapter05QuotientMap (MonoidHom.ker χ)
+  let c : ℝ :=
+    chapter05TwoBreakSecondUpper T.twoBreak.p T.twoBreak.a T.twoBreak.b
+  have hcomp :
+      (T.twoBreak.a : ℝ) < c ∧ c < (T.twoBreak.b : ℝ) := by
+    simpa [c] using chapter05_two_break_upper_label_is_strictly_compressed
+      T.twoBreak.p T.twoBreak.a T.twoBreak.b T.twoBreak.p_prime
+        T.twoBreak.a_lt_b
+  have hformula (x : ℝ) :
+      chapter05HerbrandFunction T.twoBreak.profile x =
+        chapter05TwoBreakHerbrand T.twoBreak.p T.twoBreak.a T.twoBreak.b x := by
+    exact chapter05_two_break_herbrand_formula H T.twoBreak (volume := 0)
+      (by
+        intro a' b'
+        exact (intervalIntegrable_iff).2
+          (_root_.MeasureTheory.IntegrableOn.of_measure_zero (by simp))) x
+  have hF_le_a {x : ℝ} (hx : x ≤ (T.twoBreak.a : ℝ)) :
+      chapter05HerbrandFunction T.twoBreak.profile x = x := by
+    rw [hformula]
+    by_cases hx0 : x ≤ 0
+    · simp [chapter05TwoBreakHerbrand, hx0]
+    · simp [chapter05TwoBreakHerbrand, hx0, hx]
+  have hF_mid {x : ℝ} (hxa : (T.twoBreak.a : ℝ) < x)
+      (hxb : x ≤ (T.twoBreak.b : ℝ)) :
+      chapter05HerbrandFunction T.twoBreak.profile x =
+        (T.twoBreak.a : ℝ) +
+          (x - (T.twoBreak.a : ℝ)) / (T.twoBreak.p : ℝ) := by
+    rw [hformula]
+    have hx0 : ¬x ≤ 0 := by
+      have ha_pos : (0 : ℝ) < (T.twoBreak.a : ℝ) := by
+        exact_mod_cast T.twoBreak.a_pos
+      linarith
+    simp [chapter05TwoBreakHerbrand, hx0, not_le.mpr hxa, hxb]
+  have hF_gt {x : ℝ} (hxb : (T.twoBreak.b : ℝ) < x) :
+      chapter05HerbrandFunction T.twoBreak.profile x =
+        (T.twoBreak.a : ℝ) +
+          ((T.twoBreak.b - T.twoBreak.a : ℕ) : ℝ) /
+            (T.twoBreak.p : ℝ) +
+          (x - (T.twoBreak.b : ℝ)) / (T.twoBreak.p : ℝ) ^ 2 := by
+    rw [hformula]
+    have hab : (T.twoBreak.a : ℝ) ≤ (T.twoBreak.b : ℝ) := by
+      exact_mod_cast T.twoBreak.a_lt_b.le
+    have hxa : ¬x ≤ (T.twoBreak.a : ℝ) := by linarith
+    have hb_pos : (0 : ℝ) < (T.twoBreak.b : ℝ) := by
+      exact lt_of_lt_of_le (by exact_mod_cast T.twoBreak.a_pos) hab
+    have hx0 : ¬x ≤ 0 := by linarith
+    simp [chapter05TwoBreakHerbrand, hx0, hxa, hxb]
+  have hFb :
+      chapter05HerbrandFunction T.twoBreak.profile (T.twoBreak.b : ℝ) = c := by
+    have h := hF_mid (x := (T.twoBreak.b : ℝ))
+      (by exact_mod_cast T.twoBreak.a_lt_b) le_rfl
+    have hcast : ((T.twoBreak.b - T.twoBreak.a : ℕ) : ℝ) =
+        (T.twoBreak.b : ℝ) - (T.twoBreak.a : ℝ) := by
+      exact_mod_cast Nat.cast_sub T.twoBreak.a_lt_b.le
+    simpa [c, chapter05TwoBreakSecondUpper, hcast] using h
+  have hF_gt_c {x : ℝ} (hxb : (T.twoBreak.b : ℝ) < x) :
+      c < chapter05HerbrandFunction T.twoBreak.profile x := by
+    rw [hF_gt hxb]
+    simp only [c, chapter05TwoBreakSecondUpper]
+    have hp0 : (0 : ℝ) < (T.twoBreak.p : ℝ) := by
+      exact_mod_cast T.twoBreak.p_prime.pos
+    have hpos : 0 < (x - (T.twoBreak.b : ℝ)) /
+        (T.twoBreak.p : ℝ) ^ 2 := by
+      exact div_pos (sub_pos.mpr hxb) (sq_pos_of_pos hp0)
+    linarith
+  have hmono : StrictMonoOn
+      (chapter05HerbrandFunction T.twoBreak.profile)
+      (Set.Ici (-1 : ℝ)) :=
+    (chapter05_herbrand_function_is_continuous_increasing_piecewise_linear
+      T.twoBreak.profile).2.1
+  have htop_bij :
+      Function.Bijective (chapter05HerbrandFunction T.twoBreak.profile) :=
+    chapter05_herbrand_bijective_of_filtration T.twoBreak.profile
+  have hinv_domain {x : ℝ} (hx : (-1 : ℝ) ≤ x) :
+      (-1 : ℝ) ≤ chapter05HerbrandInverse T.twoBreak.profile x := by
+    by_contra hnot
+    have hlt : chapter05HerbrandInverse T.twoBreak.profile x < (-1 : ℝ) :=
+      lt_of_not_ge hnot
+    have hidentity :=
+      chapter05_herbrand_function_of_nonpositive T.twoBreak.profile (by linarith)
+    have hspec := chapter05_herbrand_inverse_spec
+      T.twoBreak.profile htop_bij x
+    have hxeq : chapter05HerbrandInverse T.twoBreak.profile x = x :=
+      hidentity.symm.trans hspec
+    linarith
+  have htop_upper_c :
+      chapter05UpperRamificationGroup T.twoBreak.profile c = H := by
+    have hc_dom : (-1 : ℝ) ≤ c := by linarith [hcomp.1]
+    have hspec := chapter05_herbrand_inverse_spec
+      T.twoBreak.profile htop_bij c
+    have hψ_dom := hinv_domain hc_dom
+    have hψ_gt_a : (T.twoBreak.a : ℝ) <
+        chapter05HerbrandInverse T.twoBreak.profile c := by
+      by_contra hnot
+      have hψ_le := le_of_not_gt hnot
+      have hfx := hF_le_a hψ_le
+      linarith [hcomp.1]
+    have hψ_le_b : chapter05HerbrandInverse T.twoBreak.profile c ≤
+        (T.twoBreak.b : ℝ) := by
+      by_contra hnot
+      have hψ_gt := lt_of_not_ge hnot
+      have hgtc := hF_gt_c hψ_gt
+      linarith
+    rw [chapter05UpperRamificationGroup, if_pos hc_dom,
+      T.twoBreak.lower_second_layer _ hψ_gt_a hψ_le_b]
+  have htop_upper_gt {w : ℝ} (hw : c < w) :
+      chapter05UpperRamificationGroup T.twoBreak.profile w = ⊥ := by
+    have hw_dom : (-1 : ℝ) ≤ w := by linarith [hcomp.1]
+    have hspec := chapter05_herbrand_inverse_spec
+      T.twoBreak.profile htop_bij w
+    have hψ_dom := hinv_domain hw_dom
+    have hF_le_b {x : ℝ} (hx : (-1 : ℝ) ≤ x)
+        (hxb : x ≤ (T.twoBreak.b : ℝ)) :
+        chapter05HerbrandFunction T.twoBreak.profile x ≤ c := by
+      have hb_dom : (-1 : ℝ) ≤ (T.twoBreak.b : ℝ) := by
+        have hb_nonneg : (0 : ℝ) ≤ (T.twoBreak.b : ℝ) := by
+          exact_mod_cast T.twoBreak.a_pos.le.trans T.twoBreak.a_lt_b.le
+        linarith
+      have hle := hmono.monotoneOn hx hb_dom hxb
+      rw [hFb] at hle
+      exact hle
+    have hψ_gt_b : (T.twoBreak.b : ℝ) <
+        chapter05HerbrandInverse T.twoBreak.profile w := by
+      by_contra hnot
+      have hψ_le := le_of_not_gt hnot
+      have hle := hF_le_b hψ_dom hψ_le
+      linarith
+    rw [chapter05UpperRamificationGroup, if_pos hw_dom,
+      T.twoBreak.lower_after_second_layer _ hψ_gt_b]
+  letI : Fintype (Gal(L / K)) := AlgEquiv.fintype K L
+  let Q := R.quotient_setup
+  have hQ_profile : Q.upstairs = R.local_data.profile := by
+    exact R.quotient_setup_upstairs_eq
+  have hup_R :
+      Function.Bijective
+        (chapter05HerbrandFunction Q.upstairs) := by
+    exact chapter05_herbrand_bijective_of_filtration Q.upstairs
+  have hdown_R :
+      Function.Bijective
+        (chapter05HerbrandFunction Q.downstairs) := by
+    exact chapter05_herbrand_bijective_of_filtration Q.downstairs
+  have hquotient_upper {w : ℝ} (hw : (-1 : ℝ) ≤ w) :
+      chapter05UpperRamificationGroup Q.downstairs w =
+        (chapter05UpperRamificationGroup R.local_data.profile w).map q := by
+    simpa [chapter05UpperQuotientImage, q, hQ_profile] using
+      (chapter05_herbrand_quotient_theorem (MonoidHom.ker χ)
+        Q hup_R hdown_R hw)
+  have hdown_upper_c :
+      chapter05UpperRamificationGroup Q.downstairs c =
+        H.map q := by
+    have htop_upper_c_R :
+        chapter05UpperRamificationGroup R.local_data.profile c = H := by
+      rw [hprofile]
+      exact htop_upper_c
+    rw [hquotient_upper (by linarith [hcomp.1]), htop_upper_c_R]
+  have hdown_upper_gt {w : ℝ} (hw : c < w) :
+      chapter05UpperRamificationGroup Q.downstairs w = ⊥ := by
+    have htop_upper_gt_R :
+        chapter05UpperRamificationGroup R.local_data.profile w = ⊥ := by
+      rw [hprofile]
+      exact htop_upper_gt hw
+    rw [hquotient_upper (by linarith [hcomp.1]), htop_upper_gt_R]
+    simp
+  have hdown_right :
+      chapter05UpperRightLimit Q.downstairs c = ⊥ := by
+    rw [chapter05UpperRightLimit, chapter05RightLimit]
+    apply le_antisymm
+    · apply sSup_le
+      intro K' hK'
+      rcases hK' with ⟨w, hw, rfl⟩
+      exact le_of_eq (hdown_upper_gt hw)
+    · exact bot_le
+  have hnotker : ∃ h : Gal(L / K), h ∈ H ∧ h ∉ MonoidHom.ker χ := by
+    by_contra hnone
+    apply hsubgroup_not_le_kernel
+    intro h hh
+    by_contra hhk
+    apply hnone
+    exact ⟨h, hh, hhk⟩
+  have hqker_eq : MonoidHom.ker q = MonoidHom.ker χ := by
+    dsimp [q]
+    exact Chapter05QuotientRamificationSetup.quotient_map_kernel _
+  have hmapH_ne_bot : H.map q ≠ (⊥ : Subgroup _ ) := by
+    intro hbot
+    rcases hnotker with ⟨h, hh, hhk⟩
+    have hmem : q h ∈ H.map q := ⟨h, hh, rfl⟩
+    rw [hbot] at hmem
+    have hqone : q h = 1 := by simpa using hmem
+    apply hhk
+    have hkerq : h ∈ MonoidHom.ker q := MonoidHom.mem_ker.mpr hqone
+    rw [hqker_eq] at hkerq
+    exact hkerq
+  have hdown_break : chapter05UpperBreak
+      R.quotient_setup.downstairs c := by
+    rw [chapter05UpperBreak]
+    refine ⟨by linarith [hcomp.1], ?_⟩
+    have hc_ne : c ≠ (-1 : ℝ) := by linarith [hcomp.1]
+    rw [if_neg hc_ne, hdown_upper_c, hdown_right]
+    exact hmapH_ne_bot
+  have hquotient_profile_bij :
+      Function.Bijective
+        (chapter05HerbrandFunction R.quotient_local.profile) := by
+    exact chapter05_herbrand_bijective_of_filtration R.quotient_local.profile
+  have htransport_c := chapter05_upper_group_transport_of_profile
+    R.quotient_setup.downstairs R.quotient_local.profile
+      R.quotient_galois_equiv R.quotient_profile_transport hdown_R
+        hquotient_profile_bij (by linarith [hcomp.1] : (-1 : ℝ) ≤ c)
+  have htransport_gt {w : ℝ} (hw : c < w) :
+      chapter05UpperRamificationGroup R.quotient_local.profile w = ⊥ := by
+    have hw_dom : (-1 : ℝ) ≤ w := by linarith [hcomp.1]
+    rw [chapter05_upper_group_transport_of_profile
+      R.quotient_setup.downstairs R.quotient_local.profile
+        R.quotient_galois_equiv R.quotient_profile_transport hdown_R
+          hquotient_profile_bij hw_dom, hdown_upper_gt hw]
+    simp
+  have hupper_c_ne_bot :
+      chapter05UpperRamificationGroup R.quotient_local.profile c ≠ ⊥ := by
+    intro hzero
+    have hmapzero :
+        (chapter05UpperRamificationGroup Q.downstairs c).map
+            R.quotient_galois_equiv.toMonoidHom = ⊥ := by
+      rw [← htransport_c, hzero]
+    rw [hdown_upper_c] at hmapzero
+    rcases hnotker with ⟨h, hh, hhk⟩
+    have hmem :
+        R.quotient_galois_equiv (q h) ∈
+          (H.map q).map R.quotient_galois_equiv.toMonoidHom := by
+      exact ⟨q h, ⟨h, hh, rfl⟩, rfl⟩
+    rw [hmapzero] at hmem
+    have heq : R.quotient_galois_equiv (q h) = 1 := by simpa using hmem
+    apply hhk
+    have hqone : q h = 1 := by
+      apply R.quotient_galois_equiv.injective
+      simpa using heq
+    have hkerq : h ∈ MonoidHom.ker q := MonoidHom.mem_ker.mpr hqone
+    rw [hqker_eq] at hkerq
+    exact hkerq
+  have hright :
+      chapter05UpperRightLimit R.quotient_local.profile c = ⊥ := by
+    rw [chapter05UpperRightLimit, chapter05RightLimit]
+    apply le_antisymm
+    · apply sSup_le
+      intro K' hK'
+      rcases hK' with ⟨w, hw, rfl⟩
+      exact le_of_eq (htransport_gt hw)
+    · exact bot_le
+  rw [chapter05UpperBreak]
+  refine ⟨by linarith [hcomp.1], ?_⟩
+  have hc_ne : c ≠ (-1 : ℝ) := by linarith [hcomp.1]
+  rw [if_neg hc_ne, hright]
+  exact hupper_c_ne_bot
 
 theorem chapter05_perfect_residue_p_squared_two_break_second_upper_integral
     {K L C : Type*} [Field K] [Field L] [Algebra K L]
@@ -181,7 +502,13 @@ theorem chapter05_perfect_residue_p_squared_two_break_second_upper_integral
     chapter05UpperBreakIsInteger
         (chapter05TwoBreakSecondUpper T.twoBreak.p T.twoBreak.a T.twoBreak.b) ∧
       T.twoBreak.p ∣ T.twoBreak.b - T.twoBreak.a := by
-  sorry
+  have hbreak := chapter05_character_kernel_detects_two_break_second_upper
+    χ R T hprofile hsubgroup_not_le_kernel
+  have hintegral := chapter05_character_kernel_upper_break_integer χ R hbreak
+  refine ⟨hintegral, ?_⟩
+  exact chapter05_two_break_integral_second_label_implies_dvd
+    T.twoBreak.p T.twoBreak.a T.twoBreak.b T.twoBreak.p_prime.pos
+    T.twoBreak.a_lt_b hintegral
 
 /- The source's cyclic lemma is exposed separately so the abelian theorem can
    reduce to cyclic quotients without hiding the integrality input in its
@@ -219,7 +546,9 @@ theorem chapter05_character_kernel_cyclic_hasse_arf
     (htotally_ramified : R.quotient_local.profile.lowerGroup 0 = ⊤) :
     ∃ z : ℤ,
       (z : ℚ) = chapter05CyclicHasseArfSum R.quotient_local.profile b := by
-  sorry
+  exact @chapter05_cyclic_hasse_arf_lemma _ _ _ _ _ _ _ _
+    R.quotient_local R.quotient_cyclic R.quotient_residue_perfect
+    b hlast hbreak htotally_ramified
 
 /-- The Hasse--Arf theorem in the local field interface of this chapter. -/
 theorem chapter05_hasse_arf
@@ -259,7 +588,17 @@ theorem chapter05_perfect_residue_p_squared_two_break_second_upper_integral_dire
     chapter05UpperBreakIsInteger
         (chapter05TwoBreakSecondUpper T.twoBreak.p T.twoBreak.a T.twoBreak.b) ∧
       T.twoBreak.p ∣ T.twoBreak.b - T.twoBreak.a := by
-  sorry
+  have hbreaks := chapter05_two_break_upper_breaks H T.twoBreak
+    (chapter05_herbrand_bijective_of_filtration T.twoBreak.profile)
+  have hsecond : chapter05UpperBreak D.profile
+      (chapter05TwoBreakSecondUpper T.twoBreak.p T.twoBreak.a T.twoBreak.b) := by
+    rw [hprofile]
+    exact hbreaks.2.1
+  have hintegral := (chapter05_hasse_arf D habelian) _ hsecond
+  refine ⟨hintegral, ?_⟩
+  exact chapter05_two_break_integral_second_label_implies_dvd
+    T.twoBreak.p T.twoBreak.a T.twoBreak.b T.twoBreak.p_prime.pos
+    T.twoBreak.a_lt_b hintegral
 
 /-- The boundary predicate for a fractional upper break in the nonabelian case. -/
 def chapter05HasFractionalUpperBreak

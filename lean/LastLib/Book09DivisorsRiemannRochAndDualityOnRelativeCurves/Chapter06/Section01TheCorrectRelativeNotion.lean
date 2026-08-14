@@ -60,10 +60,15 @@ noncomputable def chapter06RelativeEffectiveDivisorBaseChange
     Chapter06RelativeEffectiveDivisor C U d := by
   refine
     { divisor :=
-        { ideal := D.divisor.ideal.comap
-            (chapter06RelativeDivisorBaseChangeAmbientMap C T U u)
+        { ideal :=
+            D.divisor.ideal.comap
+              (chapter06RelativeDivisorBaseChangeAmbientMap C T U u)
           isEffectiveCartier := by sorry }
-      finite_flat_rank := by sorry }
+      finite_flat_rank := by
+        exact
+          (chapter06FiniteFlatClosedFamilyBaseChange C T U u d
+            { ideal := D.divisor.ideal
+              finite_flat_rank := D.finite_flat_rank }).finite_flat_rank }
 
 def Chapter06RelativeDivisorBaseChangeRelation
     {S : Scheme.{u}} {C T U : RelativeScheme S} {d : ℕ}

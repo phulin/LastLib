@@ -49,10 +49,19 @@ theorem chapter12_group_hom_ext_of_faithfullyFlat
   let : Epi (pullback.fst G.X.hom p) :=
     AlgebraicGeometry.Flat.epi_of_flat_of_surjective _
   refine (cancel_epi (pullback.fst G.X.hom p)).1 ?_
-  have h' := congrArg (fun k => k.hom.hom.left ≫ pullback.fst H.X.hom p) h
+  have h' := (congrArg (fun k => k.hom.hom.left ≫ pullback.fst H.X.hom p) h)
   simpa [Chapter12GroupScheme.baseChangeHom, Chapter12GroupScheme.baseChange,
     Functor.mapGrp, Functor.mapMon, Over.pullback, pullback.lift_fst,
     Category.assoc] using h'
+
+/-- Equality of commutative-group homomorphisms is detected after a faithfully flat base change. -/
+theorem chapter12_commutative_group_hom_ext_of_faithfullyFlat
+    {S T : Scheme.{u}} (p : T ⟶ S) (hp : Chapter12FaithfullyFlat p)
+    {G H : Chapter12CommutativeGroupScheme S} (f g : G ⟶ H)
+    (h : Chapter12CommutativeGroupScheme.baseChangeHom p f =
+      Chapter12CommutativeGroupScheme.baseChangeHom p g) :
+    f = g := by
+  sorry
 
 /-!
 The commutativity equation is the equality of multiplication with its pullback along the

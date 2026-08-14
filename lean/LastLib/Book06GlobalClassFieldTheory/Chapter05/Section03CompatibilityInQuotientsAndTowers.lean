@@ -28,6 +28,7 @@ structure Chapter05ArtinRestrictionSquare
   artinL : C →* G_L
   artinE : C →* G_E
   restriction : G_L →* G_E
+  restriction_surjective : Function.Surjective restriction
   commutes : restriction.comp artinL = artinE
 
 theorem chapter05_artin_restriction_square
@@ -36,6 +37,25 @@ theorem chapter05_artin_restriction_square
     (S : Chapter05ArtinRestrictionSquare C G_L G_E) :
     S.restriction.comp S.artinL = S.artinE := by
   exact S.commutes
+
+theorem chapter05_artin_restriction_kernel_le
+    {C : Type uC} {G_L : Type uG} {G_E : Type uG'}
+    [CommGroup C] [CommGroup G_L] [CommGroup G_E]
+    (S : Chapter05ArtinRestrictionSquare C G_L G_E) :
+    S.artinL.ker ≤ S.artinE.ker := by
+  exact chapter05_artin_kernel_le_of_factorization
+    S.artinL S.artinE S.restriction S.commutes
+
+theorem chapter05_restriction_norm_subgroups_reverse_inclusion
+    {C : Type uC} {G_L : Type uG} {G_E : Type uG'}
+    [CommGroup C] [CommGroup G_L] [CommGroup G_E]
+    (S : Chapter05ArtinRestrictionSquare C G_L G_E)
+    (normSubgroupL normSubgroupE : Subgroup C)
+    (hL : S.artinL.ker = normSubgroupL)
+    (hE : S.artinE.ker = normSubgroupE) :
+    normSubgroupL ≤ normSubgroupE := by
+  rw [← hL, ← hE]
+  exact chapter05_artin_restriction_kernel_le S
 
 /-! Restriction maps in a three-level tower compose as expected. -/
 structure Chapter05RestrictionTowerData
@@ -101,6 +121,7 @@ structure Chapter05AbelianExtensionNormLattice
     ∀ A B, (normSubgroup (intersection A B) : Set C) =
       (normSubgroup A : Set C) * (normSubgroup B : Set C)
   normSubgroup_open : ∀ A, IsOpen (normSubgroup A : Set C)
+  normSubgroup_finiteIndex : ∀ A, (normSubgroup A).FiniteIndex
 
 theorem chapter05_norm_subgroups_reverse_inclusion_iff
     {E : Type uE} {C : Type uC} [CommGroup C] [TopologicalSpace C]
@@ -150,6 +171,7 @@ structure Chapter05NormInclusionArtinSquare
   artinL : C_L →* G_L
   norm : C_L →* C_K
   inclusion : G_L →* G_K
+  inclusion_injective : Function.Injective inclusion
   commutes : artinK.comp norm = inclusion.comp artinL
 
 theorem chapter05_norm_corresponds_to_galois_inclusion
@@ -168,6 +190,7 @@ structure Chapter05ScalarIdeleInclusion
     [∀ w, CommGroup (U_L w)] where
   basePlace : V_L → V_K
   scalarInclusion : I_K →* I_L
+  scalar_inclusion_injective : Function.Injective scalarInclusion
   componentK : ∀ v, I_K →* U_K v
   componentL : ∀ w, I_L →* U_L w
   localScalar : ∀ w, U_K (basePlace w) →* U_L w

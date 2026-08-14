@@ -89,16 +89,28 @@ theorem chapter04_S_unit_valuation_exact
       Function.Surjective V.valuationMap := by
   exact ⟨V.unitsMap_injective, V.valuation_exact, V.valuation_surjective⟩
 
+/- The local fundamental classes are an input to the S-unit construction.  At
+ this abstraction level their invariant values are the data exposed by the
+ preceding Brauer interface; the normalization records the local degree. -/
+structure Chapter04LocalFundamentalClassSystem
+    {G : Type} {W : Type w} {V : Type z} [Group G] [Fintype G]
+    (P : Chapter04PlaceSystem G W V) where
+  value : W → chapter04QModZ
+  normalization : ∀ w,
+    value w = chapter04QModZOfRat ((1 : ℚ) / Nat.card (P.decomposition w))
+
 /-- The finite-level Tate sequence supplied by the local fundamental classes. -/
 structure Chapter04CanonicalSUnitSequence
     {G : Type} {W : Type w} [Group G] [Fintype G]
     {V : Type z} (P : Chapter04PlaceSystem G W V)
     (S : Chapter04LargePlaceSet G W V P)
-    (valuation : Chapter04SUnitValuationData (G := G) S.S) where
+    (valuation : Chapter04SUnitValuationData (G := G) S.S)
+    (localClasses : Chapter04LocalFundamentalClassSystem P) where
   lattice : Chapter04GModule.{0, 0} G
   sequence : Chapter04TwoExtension valuation.units lattice
   lattice_identification : lattice.V ≃+ chapter04XS S.S
   localFundamentalClass : W → chapter04QModZ
+  localFundamentalClass_supplied : localFundamentalClass = localClasses.value
   localFundamentalClass_normalization : ∀ w,
     localFundamentalClass w =
       chapter04QModZOfRat ((1 : ℚ) / Nat.card (P.decomposition w))
@@ -109,8 +121,9 @@ theorem chapter04_canonical_S_unit_sequence
     {G : Type} {W : Type w} {V : Type z} [Group G] [Fintype G]
     (P : Chapter04PlaceSystem G W V)
     (S : Chapter04LargePlaceSet G W V P)
-    (valuation : Chapter04SUnitValuationData (G := G) S.S) :
-    Nonempty (Chapter04CanonicalSUnitSequence P S valuation) := by
+    (valuation : Chapter04SUnitValuationData (G := G) S.S)
+    (localClasses : Chapter04LocalFundamentalClassSystem P) :
+    Nonempty (Chapter04CanonicalSUnitSequence P S valuation localClasses) := by
   sorry
 
 /-- Enlarging the finite set until the S-class group vanishes and the decomposition groups generate
@@ -124,13 +137,22 @@ theorem chapter04_exists_large_place_set
 /-- The global Tate extension obtained by splicing the S-unit sequence, the valuation sequence, and
 the idele-class quotient. -/
 structure Chapter04GlobalFundamentalExtension
-    {G : Type} [Group G] [Fintype G] where
+    {G : Type} [Group G] [Fintype G]
+    {W : Type w} {V : Type z}
+    (P : Chapter04PlaceSystem G W V)
+    (S : Chapter04LargePlaceSet G W V P)
+    (valuation : Chapter04SUnitValuationData (G := G) S.S)
+    {localClasses : Chapter04LocalFundamentalClassSystem P}
+    (localSequence : Chapter04CanonicalSUnitSequence P S valuation localClasses) where
   /-- The coefficient module is the chapter's additive adapter for the idele-class module.
 
   The field-indexed canonical realization belongs to the earlier global-class-field architecture;
   this structure is the generic source-order adapter. -/
   fundamentalClass : Chapter04FundamentalClass (G := G)
   sequence : Chapter04TwoExtension fundamentalClass.C (chapter04TrivialGModule G)
+  /-- The source sequence is retained as provenance of the global splice. -/
+  suppliedLocalSequence : Chapter04CanonicalSUnitSequence P S valuation localClasses
+  suppliedLocalSequence_eq : suppliedLocalSequence = localSequence
 
 /-- The splicing construction produces the global fundamental extension. -/
 theorem chapter04_splice_global_fundamental_extension
@@ -138,15 +160,21 @@ theorem chapter04_splice_global_fundamental_extension
     (P : Chapter04PlaceSystem G W V)
     (S : Chapter04LargePlaceSet G W V P)
     (valuation : Chapter04SUnitValuationData (G := G) S.S)
-    (localSequence : Chapter04CanonicalSUnitSequence P S valuation) :
-    Nonempty (Chapter04GlobalFundamentalExtension (G := G)) := by
+    {localClasses : Chapter04LocalFundamentalClassSystem P}
+    (localSequence : Chapter04CanonicalSUnitSequence P S valuation localClasses) :
+    Nonempty (Chapter04GlobalFundamentalExtension P S valuation localSequence) := by
   sorry
 
 /-- The splicing construction also supplies the normalized fundamental-class interface used by
 the subgroup and cap-product statements. -/
 theorem chapter04_splice_supplies_fundamental_class
-    {G : Type} [Group G] [Fintype G]
-    (globalExtension : Chapter04GlobalFundamentalExtension (G := G)) :
+    {G : Type} {W : Type w} {V : Type z} [Group G] [Fintype G]
+    (P : Chapter04PlaceSystem G W V)
+    (S : Chapter04LargePlaceSet G W V P)
+    (valuation : Chapter04SUnitValuationData (G := G) S.S)
+    {localClasses : Chapter04LocalFundamentalClassSystem P}
+    (localSequence : Chapter04CanonicalSUnitSequence P S valuation localClasses)
+    (globalExtension : Chapter04GlobalFundamentalExtension P S valuation localSequence) :
     Nonempty (Chapter04FundamentalClass (G := G)) := by
   exact ⟨globalExtension.fundamentalClass⟩
 

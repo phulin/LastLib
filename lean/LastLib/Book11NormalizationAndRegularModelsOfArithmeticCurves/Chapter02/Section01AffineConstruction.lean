@@ -255,6 +255,42 @@ theorem chapter02_integralClosure_totalRing_components
             (∏ r, q r) := by rw [hcomp]
       _ = 0 := heval
 
+/-!
+The next interface is deliberately independent of Chapter 3's named Japanese and Nagata
+predicates.  It records exactly the componentwise finite-extension hypothesis needed to transport
+Japanese finiteness from the prime quotients of a reduced ring.
+-/
+
+/-- The finite integral-closure condition for a domain used componentwise below. -/
+def Chapter02JapaneseDomain (A : Type u) [CommRing A] : Prop :=
+  IsDomain A ∧
+    ∀ (K L : Type u) [Field K] [Field L] [Algebra A K]
+      [IsFractionRing A K] [Algebra K L] [Algebra A L] [IsScalarTower A K L]
+      [FiniteDimensional K L],
+      Module.Finite A (integralClosure A L)
+
+/-- Every prime quotient satisfies the finite integral-closure condition. -/
+def Chapter02PrimeQuotientsJapanese (A : Type u) [CommRing A] : Prop :=
+  ∀ (p : Ideal A), p.IsPrime → Chapter02JapaneseDomain (A ⧸ p)
+
+/--
+The componentwise affine-normalization finiteness bridge.  Here `T` is a total fraction ring of the
+reduced noetherian ring `A`, `Q` is reduced and finite over `T`, and `B` is presented as the
+integral closure of `A` in `Q`.  The integral-closure predicate already supplies injectivity of
+`algebraMap B Q`; the explicit fraction and finiteness witnesses are kept as arguments so this
+interface can consume structure fields without manufacturing local instances.
+-/
+theorem chapter02_componentwise_affine_normalization_finite
+    (A B Q T : Type u) [CommRing A] [CommRing B] [CommRing Q] [CommRing T]
+    [IsReduced A] [IsNoetherianRing A]
+    [Algebra A T] [Algebra T Q] [Algebra A Q] [Algebra A B] [Algebra B Q]
+    [IsScalarTower A T Q] [IsScalarTower A B Q]
+    (hA : Chapter02PrimeQuotientsJapanese A)
+    (hT : IsFractionRing A T) (hQ : IsReduced Q) (hfinite : Module.Finite T Q)
+    (hclosure : IsIntegralClosure B A Q) :
+    Module.Finite A B := by
+  sorry
+
 /-- The reduced affine normalization attached to the componentwise total fraction ring. -/
 noncomputable def chapter02ReducedAffineNormalization
     (A : Type u) [CommRing A] [Chapter02ReducedFiniteMinimalPrimes A] :

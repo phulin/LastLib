@@ -629,7 +629,7 @@ theorem chapter04_theta_poisson_summation
     {a : Chapter04FractionalIdeal K} (ha : a ≠ 0)
     {t : ℝ} (ht : 0 < t) (y : chapter04Y K) :
     chapter04Theta K a t y =
-      t⁻¹ * chapter04Theta K (chapter04DualFractionalIdeal K a) t⁻¹
+        t⁻¹ * chapter04Theta K (chapter04DualFractionalIdeal K a) t⁻¹
         (chapter04YInv K y) := by
   sorry
 
@@ -1150,7 +1150,7 @@ theorem chapter04_theta_mellin_constant_exists
             (a : Chapter04FractionalIdeal K) s =
           (c : ℂ) *
             (chapter04AbsoluteDiscriminant K : ℂ) ^ (s / 2) *
-              chapter04ArchimedeanFactor K s *
+                chapter04ArchimedeanFactor K s *
                 chapter04PartialZeta K (chapter04InverseIdealClass K a) s := by
   sorry
 

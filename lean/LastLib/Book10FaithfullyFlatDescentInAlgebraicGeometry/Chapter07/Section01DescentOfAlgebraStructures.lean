@@ -312,9 +312,14 @@ structure Chapter07AlgebraDescentEquivalence
     letI : Algebra A X.carrier := X.algebra
     letI : CommRing Y.carrier := Y.commRing
     letI : Algebra A Y.carrier := Y.algebra
-    ∃ e : X.carrier ≃ₐ[A] Y.carrier,
-      ∀ (b : B) (x : X.carrier),
-        X.comparison (b ⊗ₜ[A] x) = Y.comparison (b ⊗ₜ[A] e x)
+    X.carrier ≃ₐ[A] Y.carrier
+  comparison_commutes :
+    letI : CommRing X.carrier := X.commRing
+    letI : Algebra A X.carrier := X.algebra
+    letI : CommRing Y.carrier := Y.commRing
+    letI : Algebra A Y.carrier := Y.algebra
+    ∀ (b : B) (x : X.carrier),
+      X.comparison (b ⊗ₜ[A] x) = Y.comparison (b ⊗ₜ[A] equivalence x)
 
 theorem chapter07_algebra_structure_descends
     {A B C : Type u} [CommRing A] [CommRing B] [CommRing C]
@@ -332,8 +337,8 @@ theorem chapter07_algebra_structure_descends_unique_up_to_equivalence
     ∀ X Y : Chapter07AlgebraDescentResult D,
       Nonempty (Chapter07AlgebraDescentEquivalence X Y) := by
   intro X Y
-  refine ⟨{ equivalence := ?_ }⟩
-  exact chapter07_algebra_equiv_of_comparison_compatibility D hff X Y
+  rcases chapter07_algebra_equiv_of_comparison_compatibility D hff X Y with ⟨e, he⟩
+  exact ⟨{ equivalence := e, comparison_commutes := he }⟩
 
 theorem chapter07_algebra_structure_descends_equivalence_unique
     {A B C : Type u} [CommRing A] [CommRing B] [CommRing C]

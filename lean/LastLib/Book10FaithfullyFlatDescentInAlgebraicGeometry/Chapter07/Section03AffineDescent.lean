@@ -230,12 +230,12 @@ theorem chapter07_affine_of_finite_faithfullyFlat_preimage_affine
     (hpreimage : IsAffineOpen (q ⁻¹ᵁ U)) : IsAffineOpen U := by
   sorry
 
+/-- Affineness of a morphism descends from its pullback along an fpqc morphism. -/
 theorem chapter07_affine_descent_affineness
-    {T S : Scheme.{u}} {p : T ⟶ S}
-    (_hp : Chapter07FpqcMorphism p)
-    (D : Chapter07AffineSchemeWithDescentData p)
-    (R : Chapter07AffineDescentResult D) : IsAffineHom R.map :=
-  R.affine
+    {T S X : Scheme.{u}} {p : T ⟶ S}
+    (hp : Chapter07FpqcMorphism p) (f : X ⟶ S)
+    (hbase : IsAffineHom (pullback.snd f p)) : IsAffineHom f := by
+  sorry
 
 theorem chapter07_affine_morphism_descends
     {T S : Scheme.{u}} {p : T ⟶ S}

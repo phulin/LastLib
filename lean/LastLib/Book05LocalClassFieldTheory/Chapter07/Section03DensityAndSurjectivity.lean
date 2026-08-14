@@ -54,6 +54,7 @@ structure Chapter07ArithmeticUnramifiedQuotient
   [topologyG : TopologicalSpace G]
   [topologicalGroupG : IsTopologicalGroup G]
   quotient : Gal(KAb / K) →* G
+  quotient_continuous : Continuous quotient
   quotient_surjective : Function.Surjective quotient
   completionEquiv : G ≃ₜ* Chapter07ProfiniteIntegers
   valuation : Kˣ →* Multiplicative ℤ
@@ -109,6 +110,16 @@ theorem chapter07_local_field_units_noncompact
     {K : Type*} [Field K] [TopologicalSpace Kˣ]
     [IsTopologicalGroup Kˣ] (D : Chapter07LocalFieldData K) :
     NoncompactSpace Kˣ := by
+  exact
+    @LastLib.Book05LocalClassFieldTheory.Chapter01.chapter01_local_field_units_noncompact
+      K _ D.valuation D.local_field D.valuation_coordinate _ _
+      D.unit_group_topology D.unit_group_topological D.coordinate_equiv
+
+/-- The profinite abelian Galois target is compact. -/
+theorem chapter07_reciprocity_target_is_compact
+    {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [IsAbelianGalois K KAb] :
+    IsCompact (Set.univ : Set (Gal(KAb / K))) := by
   sorry
 
 /-- The compactness obstruction for identifying K-units literally with the
@@ -116,7 +127,8 @@ whole profinite Galois group. -/
 theorem chapter07_reciprocity_is_not_a_topological_equivalence
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
     [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ] [NoncompactSpace Kˣ]
-    [IsAbelianGalois K KAb] :
+    [IsAbelianGalois K KAb]
+    (hcompact : IsCompact (Set.univ : Set (Gal(KAb / K)))) :
     ¬ Nonempty (Kˣ ≃ₜ* Gal(KAb / K)) := by
   sorry
 

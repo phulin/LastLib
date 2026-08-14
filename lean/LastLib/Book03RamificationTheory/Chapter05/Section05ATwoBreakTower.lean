@@ -733,7 +733,127 @@ theorem chapter05_two_break_quotient_upper_groups
     (∀ v : ℝ, 0 ≤ v → v ≤ (T.twoBreak.a : ℝ) →
       chapter05UpperRamificationGroup T.tower.quotientSetup.downstairs v = ⊤) ∧
     (∀ v : ℝ, (T.twoBreak.a : ℝ) < v →
-      chapter05UpperRamificationGroup T.tower.quotientSetup.downstairs v = ⊥) := by sorry
+      chapter05UpperRamificationGroup T.tower.quotientSetup.downstairs v = ⊥) := by
+  classical
+  let D := T.tower.quotientSetup.downstairs
+  have ha0 : (0 : ℝ) ≤ (T.twoBreak.a : ℝ) := by positivity
+  have htop0 : D.lowerGroup 0 = (⊤ : Subgroup (G ⧸ H)) := by
+    simpa [D] using T.quotient_zeroth_group_top
+  have hF_le : ∀ {x : ℝ}, x ≤ (T.twoBreak.a : ℝ) →
+      chapter05HerbrandFunction D x = x := by
+    intro x hx
+    by_cases hx0 : x ≤ 0
+    · simp [chapter05HerbrandFunction, hx0]
+    · rw [chapter05HerbrandFunction, if_neg hx0]
+      have hconst : Set.EqOn (chapter05HerbrandSlope D)
+          (fun _ : ℝ => (1 : ℝ)) (Set.Ioo 0 x) := by
+        intro t ht
+        have ht0 : ¬t ≤ 0 := not_le.mpr ht.1
+        have hgroup : D.lowerGroup t = D.lowerGroup 0 := by
+          simpa [D] using T.quotient_first_layer t (le_of_lt ht.1)
+            (le_trans ht.2.le hx)
+        simp [chapter05HerbrandSlope, ht0, hgroup, htop0]
+      rw [intervalIntegral.integral_congr_Ioo_of_le (le_of_not_ge hx0) hconst,
+        intervalIntegral.integral_const]
+      simp [smul_eq_mul]
+  have hF_gt_a : ∀ {x : ℝ}, (T.twoBreak.a : ℝ) < x →
+      (T.twoBreak.a : ℝ) < chapter05HerbrandFunction D x := by
+    intro x hxa
+    have hx0 : ¬x ≤ 0 := by linarith
+    have hconst1 : Set.EqOn (chapter05HerbrandSlope D)
+        (fun _ : ℝ => (1 : ℝ)) (Set.Ioo 0 (T.twoBreak.a : ℝ)) := by
+      intro t ht
+      have ht0 : ¬t ≤ 0 := not_le.mpr ht.1
+      have hgroup : D.lowerGroup t = D.lowerGroup 0 := by
+        simpa [D] using T.quotient_first_layer t (le_of_lt ht.1) ht.2.le
+      simp [chapter05HerbrandSlope, ht0, hgroup, htop0]
+    have hconst2 : Set.EqOn (chapter05HerbrandSlope D)
+        (fun _ : ℝ => (1 : ℝ) /
+          (Nat.card (D.lowerGroup 0) : ℝ))
+        (Set.Ioo (T.twoBreak.a : ℝ) x) := by
+      intro t ht
+      have ht0 : ¬t ≤ 0 := by linarith [ha0, ht.1]
+      have hgroup : D.lowerGroup t = (⊥ : Subgroup (G ⧸ H)) := by
+        simpa [D] using T.quotient_after_first_layer t ht.1
+      simp [chapter05HerbrandSlope, ht0, hgroup, htop0]
+    have hconst1' : Set.EqOn (chapter05HerbrandSlope D)
+        (fun _ : ℝ => (1 : ℝ))
+        (Set.uIoo 0 (T.twoBreak.a : ℝ)) := by
+      intro t ht
+      apply hconst1
+      simpa [Set.uIoo_of_le ha0] using ht
+    have hconst2' : Set.EqOn (chapter05HerbrandSlope D)
+        (fun _ : ℝ => (1 : ℝ) /
+          (Nat.card (D.lowerGroup 0) : ℝ))
+        (Set.uIoo (T.twoBreak.a : ℝ) x) := by
+      intro t ht
+      apply hconst2
+      simpa [Set.uIoo_of_le (le_of_lt hxa)] using ht
+    have hI1 : IntervalIntegrable (chapter05HerbrandSlope D)
+        MeasureTheory.volume 0 (T.twoBreak.a : ℝ) := by
+      apply (intervalIntegrable_congr_uIoo hconst1').mpr
+      exact intervalIntegrable_const
+    have hI2 : IntervalIntegrable (chapter05HerbrandSlope D)
+        MeasureTheory.volume (T.twoBreak.a : ℝ) x := by
+      apply (intervalIntegrable_congr_uIoo hconst2').mpr
+      exact intervalIntegrable_const
+    rw [chapter05HerbrandFunction, if_neg hx0]
+    rw [← intervalIntegral.integral_add_adjacent_intervals hI1 hI2,
+      intervalIntegral.integral_congr_Ioo_of_le ha0 hconst1,
+      intervalIntegral.integral_congr_Ioo_of_le (le_of_lt hxa) hconst2,
+      intervalIntegral.integral_const, intervalIntegral.integral_const]
+    have hden : 0 < (Nat.card (D.lowerGroup 0) : ℝ) := by
+      exact_mod_cast Nat.card_pos
+    have hpos : 0 < (x - (T.twoBreak.a : ℝ)) /
+        (Nat.card (D.lowerGroup 0) : ℝ) :=
+      div_pos (sub_pos.mpr hxa) hden
+    have hpos' : 0 < (x - (T.twoBreak.a : ℝ)) *
+        (Nat.card (D.lowerGroup 0) : ℝ)⁻¹ := by
+      simpa [div_eq_mul_inv] using hpos
+    simpa [smul_eq_mul, div_eq_mul_inv, Nat.card_eq_fintype_card] using
+      (lt_add_of_pos_right (T.twoBreak.a : ℝ) hpos')
+  have hupper_top : ∀ {v : ℝ}, (-1 : ℝ) ≤ v →
+      v ≤ (T.twoBreak.a : ℝ) →
+      chapter05UpperRamificationGroup D v = ⊤ := by
+    intro v hv hvA
+    have hvinv := chapter05_herbrand_inverse_spec D hbij v
+    have hinv_le : chapter05HerbrandInverse D v ≤ (T.twoBreak.a : ℝ) := by
+      by_contra hnot
+      have hgt : (T.twoBreak.a : ℝ) < chapter05HerbrandInverse D v :=
+        lt_of_not_ge hnot
+      linarith [hF_gt_a hgt]
+    rw [chapter05UpperRamificationGroup, if_pos hv]
+    by_cases hinv_neg : chapter05HerbrandInverse D v < 0
+    · have hinv_eq : chapter05HerbrandInverse D v = v := by
+        calc
+          chapter05HerbrandInverse D v =
+              chapter05HerbrandFunction D (chapter05HerbrandInverse D v) :=
+            (hF_le hinv_le).symm
+          _ = v := hvinv
+      rw [D.lower_neg _ (by linarith) hinv_neg]
+    · have hinv_nonneg : (0 : ℝ) ≤ chapter05HerbrandInverse D v :=
+        le_of_not_gt hinv_neg
+      rw [show D.lowerGroup (chapter05HerbrandInverse D v) =
+          D.lowerGroup 0 by
+            simpa [D] using T.quotient_first_layer _ hinv_nonneg hinv_le]
+      exact htop0
+  have hupper_bot : ∀ {v : ℝ}, (T.twoBreak.a : ℝ) < v →
+      chapter05UpperRamificationGroup D v = ⊥ := by
+    intro v hva
+    have hvinv := chapter05_herbrand_inverse_spec D hbij v
+    have hinv_gt : (T.twoBreak.a : ℝ) < chapter05HerbrandInverse D v := by
+      by_contra hnot
+      have hinv_le := le_of_not_gt hnot
+      linarith [hF_le hinv_le]
+    have hvneg : (-1 : ℝ) ≤ v := by linarith [ha0, hva]
+    rw [chapter05UpperRamificationGroup, if_pos hvneg]
+    simpa [D] using T.quotient_after_first_layer
+      (chapter05HerbrandInverse D v) hinv_gt
+  constructor
+  · intro v hv0 hvA
+    simpa [D] using hupper_top (by linarith) hvA
+  · intro v hvA
+    simpa [D] using hupper_bot hvA
 
 theorem chapter05_two_break_raw_stage_labels
     {G : Type*} [Group G] [Fintype G]

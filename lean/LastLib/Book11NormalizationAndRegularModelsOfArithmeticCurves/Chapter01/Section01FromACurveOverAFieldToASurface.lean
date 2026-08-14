@@ -1,11 +1,12 @@
 import LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter01.Dependencies
+import Mathlib.RingTheory.DualNumber
 
 namespace LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter01
 
 noncomputable section
 
 open AlgebraicGeometry CategoryTheory Limits TopologicalSpace
-open scoped AlgebraicGeometry
+open scoped AlgebraicGeometry DualNumber
 
 universe u v
 
@@ -108,7 +109,52 @@ def Chapter01SmoothFiberDoesNotControlTotalRegularity
 theorem chapter01_smooth_fiber_does_not_imply_total_regularity :
     ∃ (X S : Scheme.{u}) (f : X ⟶ S) (s : S),
       Chapter01SmoothFiberDoesNotControlTotalRegularity f s := by
-  sorry
+  let A₀ := ℚ[ε]
+  let A := ULift.{u} A₀
+  let e₀ : A ≃+* A₀ := ULift.ringEquiv
+  have hA_local : IsLocalRing A := e₀.symm.isLocalRing
+  let X : Scheme.{u} := Spec (CommRingCat.of A)
+  let s : X := IsLocalRing.closedPoint (CommRingCat.of A)
+  let f : X ⟶ X := 𝟙 X
+  refine ⟨X, X, f, s, ?_⟩
+  constructor
+  · have hf_smooth : Smooth f := by
+      simpa [f] using
+        (HasRingHomProperty.containsIdentities (P := @Smooth)
+          RingHom.Smooth.holdsForLocalizationAway.containsIdentities).id_mem X
+    change Smooth (pullback.snd f (X.fromSpecResidueField s))
+    have hf_instance : Smooth f := hf_smooth
+    infer_instance
+  · intro hX
+    have hstalk : IsRegularLocalRing (X.presheaf.stalk s) := hX s
+    have hstalk' : IsRegularLocalRing (X.presheaf.stalk s) := hstalk
+    let e := (stalkClosedPointIso (CommRingCat.of A)).commRingCatIsoToRingEquiv
+    have hregA : IsRegularLocalRing A :=
+      IsRegularLocalRing.of_ringEquiv e
+    have hstalk_instance : IsRegularLocalRing (X.presheaf.stalk s) := hstalk'
+    have hregA_instance : IsRegularLocalRing A := hregA
+    have hreg₀ : IsRegularLocalRing A₀ :=
+      IsRegularLocalRing.of_ringEquiv e₀
+    have hdimLE : Ring.KrullDimLE 0 A₀ := by
+      refine Ring.KrullDimLE.mk₀ ?_
+      intro I hI
+      have heps : (DualNumber.eps : A₀) ∈ I :=
+        (nilpotent_iff_mem_prime.mp (DualNumber.isNilpotent_eps (R := ℚ))) I hI
+      have hle : IsLocalRing.maximalIdeal A₀ ≤ I := by
+        rw [DualNumber.maximalIdeal_eq_span_singleton_eps]
+        exact Ideal.span_le.2 (by simpa using heps)
+      rw [← (IsLocalRing.maximalIdeal.isMaximal A₀).eq_of_le hI.ne_top hle]
+      exact IsLocalRing.maximalIdeal.isMaximal A₀
+    have hdim : ringKrullDim A₀ = 0 :=
+      (ringKrullDimZero_iff_ringKrullDim_eq_zero (R := A₀)).mp hdimLE
+    have hspan := hreg₀.spanFinrank_maximalIdeal
+    have heps_ne : (DualNumber.eps : A₀) ≠ 0 := by
+      intro h
+      have := congrArg TrivSqZeroExt.snd h
+      simp at this
+    rw [DualNumber.maximalIdeal_eq_span_singleton_eps,
+      Submodule.spanFinrank_singleton heps_ne, hdim] at hspan
+    norm_num at hspan
 
 end
 end LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter01

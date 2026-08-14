@@ -454,7 +454,34 @@ def chapter03_classNorm_coset_has_module_one_representative
     Prop :=
     ∃ c₁ : Chapter03ClassGroup S_K, ∃ n : Chapter03ClassGroup S_K,
       c₁ ∈ chapter03ClassModuleOneSubgroup A ∧
-        n ∈ chapter03NormClassSubgroup N ∧ c = c₁ * n
+      n ∈ chapter03NormClassSubgroup N ∧ c = c₁ * n
+
+/- The positive module direction is reached through the norm: if `c` has module
+value `t`, choose an extension idèle whose module value is `t`, and divide by
+its class norm.  This is the algebraic bridge used before compactness enters
+the finite-index argument. -/
+theorem chapter03_classNorm_coset_has_module_one_representative_of_module_surjective
+    {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L]
+    {S_K : Chapter03FieldIdeleData K} {S_L : Chapter03FieldIdeleData L}
+    {N : Chapter03NormData S_K S_L}
+    (A : Chapter03AdelicModuleData N) (c : Chapter03ClassGroup S_K) :
+    chapter03_classNorm_coset_has_module_one_representative A c := by
+  classical
+  rcases QuotientGroup.mk'_surjective (chapter03PrincipalSubgroup S_K) c with ⟨x, rfl⟩
+  rcases A.topModuleNorm_surjective (A.baseModuleNorm x) with ⟨y, hy⟩
+  let n : Chapter03ClassGroup S_K :=
+    chapter03ClassNorm N (QuotientGroup.mk' (chapter03PrincipalSubgroup S_L) y)
+  let c₁ : Chapter03ClassGroup S_K :=
+    QuotientGroup.mk' (chapter03PrincipalSubgroup S_K) x * n⁻¹
+  refine ⟨c₁, n, ?_, ?_, ?_⟩
+  · change chapter03ClassModuleNorm A c₁ = 1
+    simp only [c₁, n, map_mul, map_inv, chapter03ClassModuleNorm_mk,
+      chapter03ClassNorm_mk]
+    rw [A.module_norm_compatibility, ← hy]
+    simp
+  · exact ⟨QuotientGroup.mk' (chapter03PrincipalSubgroup S_L) y, rfl⟩
+  · simp [c₁, n]
 
 def chapter03_classNormQuotient_compact
     {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
@@ -463,6 +490,83 @@ def chapter03_classNormQuotient_compact
     {N : Chapter03NormData S_K S_L} :
     Prop :=
   IsCompact (Set.univ : Set (Chapter03ClassNormQuotient N))
+
+/- Compactness of the module-one subgroup descends to the norm quotient once
+the preceding representative lemma has been supplied.  Keeping this as a
+separate bridge makes the topology used by the finite-index argument
+explicit. -/
+theorem chapter03_classNormQuotient_compact_of_module_one_compact
+    {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L]
+    {S_K : Chapter03FieldIdeleData K} {S_L : Chapter03FieldIdeleData L}
+    {N : Chapter03NormData S_K S_L}
+    (A : Chapter03AdelicModuleData N)
+    (hcompact : chapter03_classModuleOne_compact A) :
+    chapter03_classNormQuotient_compact (N := N) := by
+  classical
+  change IsCompact (chapter03ClassModuleOneSubgroup A :
+    Set (Chapter03ClassGroup S_K)) at hcompact
+  let H : Subgroup (Chapter03ClassGroup S_K) := chapter03NormClassSubgroup N
+  let q : Chapter03ClassGroup S_K →*
+      (Chapter03ClassGroup S_K ⧸ H) := QuotientGroup.mk' H
+  have himage : IsCompact
+      (q '' (chapter03ClassModuleOneSubgroup A :
+        Set (Chapter03ClassGroup S_K))) :=
+    hcompact.image QuotientGroup.continuous_mk
+  have hsurj :
+      q '' (chapter03ClassModuleOneSubgroup A :
+        Set (Chapter03ClassGroup S_K)) = Set.univ := by
+    apply Set.eq_univ_of_forall
+    intro z
+    rcases QuotientGroup.mk'_surjective H z with ⟨c, rfl⟩
+    rcases chapter03_classNorm_coset_has_module_one_representative_of_module_surjective
+      A c with ⟨c₁, n, hc₁, hn, hcn⟩
+    refine ⟨c₁, hc₁, ?_⟩
+    rw [hcn]
+    change q c₁ = q (c₁ * n)
+    have hnq : q n = 1 := by
+      change (QuotientGroup.mk' H) n = 1
+      exact (QuotientGroup.eq_one_iff n).2 (by simpa [H] using hn)
+    rw [map_mul, hnq]
+    exact (mul_one (q c₁)).symm
+  change IsCompact (Set.univ : Set (Chapter03ClassNormQuotient N))
+  rw [← hsurj]
+  exact himage
+
+/- An open subgroup with compact quotient has finite index.  The openness
+theorem above supplies the discreteness of the quotient; this declaration is
+the finite-index form used by the book. -/
+theorem chapter03_normClassSubgroup_finiteIndex_of_compact_quotient
+    {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L]
+    {S_K : Chapter03FieldIdeleData K} {S_L : Chapter03FieldIdeleData L}
+    {N : Chapter03NormData S_K S_L}
+    (hcompact : chapter03_classNormQuotient_compact (N := N)) :
+    (chapter03NormClassSubgroup N).FiniteIndex := by
+  classical
+  change IsCompact (Set.univ : Set (Chapter03ClassNormQuotient N)) at hcompact
+  let hcompactSpace : CompactSpace (Chapter03ClassNormQuotient N) := ⟨hcompact⟩
+  let hdiscrete : DiscreteTopology (Chapter03ClassNormQuotient N) :=
+    QuotientGroup.discreteTopology (chapter03_classNorm_range_isOpen N)
+  let hfinite : Finite (Chapter03ClassNormQuotient N) :=
+    @finite_of_compact_of_discrete (Chapter03ClassNormQuotient N) _
+      hcompactSpace hdiscrete
+  exact ⟨@Subgroup.index_ne_zero_of_finite _ _ (chapter03NormClassSubgroup N) hfinite⟩
+
+theorem chapter03_classNormQuotient_finite_of_compact_quotient
+    {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L]
+    {S_K : Chapter03FieldIdeleData K} {S_L : Chapter03FieldIdeleData L}
+    {N : Chapter03NormData S_K S_L}
+    (hcompact : chapter03_classNormQuotient_compact (N := N)) :
+    Finite (Chapter03ClassNormQuotient N) := by
+  classical
+  change IsCompact (Set.univ : Set (Chapter03ClassNormQuotient N)) at hcompact
+  let hcompactSpace : CompactSpace (Chapter03ClassNormQuotient N) := ⟨hcompact⟩
+  let hdiscrete : DiscreteTopology (Chapter03ClassNormQuotient N) :=
+    QuotientGroup.discreteTopology (chapter03_classNorm_range_isOpen N)
+  exact @finite_of_compact_of_discrete (Chapter03ClassNormQuotient N) _
+    hcompactSpace hdiscrete
 
 def chapter03_normClassSubgroup_finiteIndex
     {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]

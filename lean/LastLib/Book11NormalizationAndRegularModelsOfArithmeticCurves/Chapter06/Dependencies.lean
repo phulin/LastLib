@@ -152,6 +152,26 @@ structure Chapter06GenericFiberIdentification
   iso : pullback f (chapter06GenericBaseMap R) ≅ C.carrier
   over : iso.hom ≫ C.structureMap = pullback.snd f (chapter06GenericBaseMap R)
 
+/-! The identification also gives the canonical map from the generic curve back to
+the model.  Keeping this map and its compatibility with the model projection named
+avoids repeating the inverse-iso/pullback composite at later graph and closure
+constructions. -/
+noncomputable def chapter06GenericFiberIdentificationToSource
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    {X : Scheme.{u}} (f : X ⟶ Chapter06BaseScheme R)
+    (I : Chapter06GenericFiberIdentification R C f) : C.carrier ⟶ X :=
+  I.iso.inv ≫ pullback.fst f (chapter06GenericBaseMap R)
+
+theorem chapter06_genericFiberIdentificationToSource_over
+    {R : Type u} [CommRing R] [IsDedekindDomain R]
+    {C : Chapter06SmoothProjectiveCurve R}
+    {X : Scheme.{u}} (f : X ⟶ Chapter06BaseScheme R)
+    (I : Chapter06GenericFiberIdentification R C f) :
+    chapter06GenericFiberIdentificationToSource f I ≫ f =
+      C.structureMap ≫ chapter06GenericBaseMap R := by
+  sorry
+
 def chapter06IsNormal (X : Scheme.{u}) : Prop :=
   ∀ (U : X.affineOpens) (_ : Nonempty U),
     IsDomain Γ(X, U) ∧ IsIntegrallyClosed Γ(X, U)

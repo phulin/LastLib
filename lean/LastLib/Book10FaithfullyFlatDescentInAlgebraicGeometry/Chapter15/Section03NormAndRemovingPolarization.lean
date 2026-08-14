@@ -204,7 +204,7 @@ theorem marked_divisor_fixed_power_descends
     exact
       LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04_ample_of_ample_tensorPower
         (baseChangeToBase f g) D.lineBundle n hn hpower
-  obtain ⟨L, hreal⟩ := lineBundle_fpqc_effective_descent f g hf hg D.descent
+  obtain ⟨L, hreal⟩ := lineBundle_fpqc_effective_descent f g hg D.descent
   refine ⟨L, hreal, ?_⟩
   exact
     relative_ampleness_of_descended_lineBundle f g L D.lineBundle D.descent hreal

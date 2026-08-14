@@ -179,20 +179,60 @@ structure Chapter06AssignedCharacterRealization
   field_eq_assignment :
     realization.reciprocity.extension.field = A.fieldOfCharacter χ
 
-/- LOCAL_DEPENDENCY_GUESS: individual character realizations do not by
-   themselves supply the finite reciprocity witness for a compositum or the
-   recovery of an arbitrary represented extension.  The theorem below is kept
-   as the source-facing construction interface until those two lattice-level
-   inputs are exposed explicitly. -/
+/- Individual character realizations do not by themselves supply the finite
+   reciprocity witness for a compositum, the inclusion-reversing field
+   lattice, or recovery of an arbitrary represented extension.  These are the
+   genuinely additional lattice-level inputs needed by the source proof. -/
+structure Chapter06GlobalExistenceLatticeInput
+    (K Ks C : Type*) [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
+    [CommGroup C] [TopologicalSpace C]
+    (A : Chapter06CharacterFieldAssignment K Ks C) where
+  realize :
+    ∀ (H : Chapter06OpenFiniteIndexSubgroup C)
+      (χ : C →* ℂˣ), χ ∈ chapter06LiftedQuotientCharacters H →
+        Chapter06AssignedCharacterRealization K Ks C A χ
+  compositum_witness :
+    ∀ H : Chapter06OpenFiniteIndexSubgroup C,
+      ∃ R : Chapter06FiniteReciprocityWitness K Ks C,
+        R.extension.field = chapter06FieldOfOpenSubgroup H A ∧
+        R.artin.ker =
+          ⨅ χ ∈ chapter06LiftedQuotientCharacters H, χ.ker
+  recovered_extension :
+    ∀ E : Chapter06FiniteAbelianExtension K Ks C,
+      ∃ H : Chapter06OpenFiniteIndexSubgroup C,
+        H.subgroup = chapter06NormSubgroupOfExtension E ∧
+          chapter06FieldOfOpenSubgroup H A = E.field
+  inclusion_reversal :
+    ∀ H₁ H₂ : Chapter06OpenFiniteIndexSubgroup C,
+      H₁.subgroup ≤ H₂.subgroup ↔
+        chapter06FieldOfOpenSubgroup H₂ A ≤
+          chapter06FieldOfOpenSubgroup H₁ A
+
+theorem chapter06_finite_reciprocity_witness_kernel_finite_index
+    {K Ks C : Type*} [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
+    [CommGroup C] [TopologicalSpace C]
+    (R : Chapter06FiniteReciprocityWitness K Ks C) :
+    R.artin.ker.FiniteIndex := by
+  sorry
+
+noncomputable def chapter06_finite_reciprocity_witness_quotient_galois
+    {K Ks C : Type*} [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
+    [CommGroup C] [TopologicalSpace C]
+    (R : Chapter06FiniteReciprocityWitness K Ks C) :
+    (C ⧸ R.artin.ker) ≃* Gal(R.extension.field / K) := by
+  sorry
+
+/- The remaining proof uses the lattice input to assemble compatible finite
+   character fields and to recover represented extensions. -/
 theorem chapter06_global_existence_from_character_realizations
     {K Ks C : Type*} [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
     [IsGalois K Ks] [IsSepClosed Ks]
     [CommGroup C] [TopologicalSpace C]
     (A : Chapter06CharacterFieldAssignment K Ks C)
-    (realize :
-      ∀ (H : Chapter06OpenFiniteIndexSubgroup C)
-        (χ : C →* ℂˣ), χ ∈ chapter06LiftedQuotientCharacters H →
-          Chapter06AssignedCharacterRealization K Ks C A χ) :
+    (input : Chapter06GlobalExistenceLatticeInput K Ks C A) :
     Nonempty (Chapter06GlobalExistenceCorrespondence K Ks C A) := by
   sorry
 
@@ -202,12 +242,9 @@ theorem chapter06_theorem_6_3_global_existence
     [IsGalois K Ks] [IsSepClosed Ks]
     [CommGroup C] [TopologicalSpace C]
     (A : Chapter06CharacterFieldAssignment K Ks C)
-    (realize :
-      ∀ (H : Chapter06OpenFiniteIndexSubgroup C)
-        (χ : C →* ℂˣ), χ ∈ chapter06LiftedQuotientCharacters H →
-          Chapter06AssignedCharacterRealization K Ks C A χ) :
+    (input : Chapter06GlobalExistenceLatticeInput K Ks C A) :
     Nonempty (Chapter06GlobalExistenceCorrespondence K Ks C A) :=
-  chapter06_global_existence_from_character_realizations A realize
+  chapter06_global_existence_from_character_realizations A input
 
 def chapter06_global_existence_quotient_galois
     {K Ks C : Type*} [Field K] [NumberField K] [Field Ks] [Algebra K Ks]

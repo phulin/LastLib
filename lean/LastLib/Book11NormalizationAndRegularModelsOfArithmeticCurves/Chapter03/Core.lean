@@ -173,6 +173,18 @@ attribute [instance] Chapter03AffineIntegralClosurePresentation.commRingQ
   Chapter03AffineIntegralClosurePresentation.algebraBQ
   Chapter03AffineIntegralClosurePresentation.tower
 
+/- The componentwise affine argument is the missing bridge between a Nagata ring and the
+   presentation used by a reduced normalization chart.  Its finite total-fraction algebra is
+   packaged by `P.finite_extension`; the explicit chart-level interface keeps the componentwise
+   hypotheses available to the later scheme theorem without pretending that the base is a domain. -/
+/-- A reduced Nagata affine normalization presentation is module-finite over its base. -/
+theorem chapter03_affine_integralClosure_finite_of_reduced_noetherian_nagata
+    (A : Type u) [CommRing A] [IsReduced A]
+    (hA : Chapter03NagataRing A)
+    (P : Chapter03AffineIntegralClosurePresentation A) :
+    Module.Finite A P.B := by
+  sorry
+
 /-- A scheme whose local rings are normal domains. -/
 def Chapter03NormalScheme (X : Scheme.{u}) : Prop :=
   ∀ x : X,
@@ -271,6 +283,14 @@ theorem chapter03_normalization_finite_of_reduced_noetherian_nagata
     (hX : Chapter03NagataScheme X) (ν : Y ⟶ X)
     (hν : Chapter03NormalizationMap ν) :
     IsFinite ν := by
+  have hfinite_chart :
+      ∀ (U : X.Opens) (hU : IsAffineOpen U),
+        ∃ (P : Chapter03AffineIntegralClosurePresentation Γ(X, U)),
+          Module.Finite (Γ(X, U)) P.B := by
+    intro U hU
+    rcases hν.affine_chart U hU with ⟨_, P, _, _⟩
+    exact ⟨P, chapter03_affine_integralClosure_finite_of_reduced_noetherian_nagata
+      (Γ(X, U)) (hX U hU) P⟩
   sorry
 
 /-- Componentwise normalization in a finite field extension is finite over a Nagata component. -/

@@ -23,8 +23,7 @@ theorem chapter07_local_reciprocity_kernel_le_precision
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
     [IsAbelianGalois K KAb] (S : Chapter07FiniteArtinSystem K KAb)
     (D : Chapter07PrecisionData Kˣ)
-    (hcofinal : chapter07KernelCofinality
-      (chapter07LocalReciprocity S) D) :
+    (hcofinal : chapter07KernelCofinality (KAb := KAb) D) :
     (chapter07LocalReciprocity S).ker ≤
       chapter07PrecisionIntersection D := by
   sorry
@@ -41,8 +40,7 @@ theorem chapter07_local_reciprocity_kernel_eq_bot
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
     [IsAbelianGalois K KAb] (S : Chapter07FiniteArtinSystem K KAb)
     (D : Chapter07PrecisionData Kˣ)
-    (hcofinal : chapter07KernelCofinality
-      (chapter07LocalReciprocity S) D) :
+    (hcofinal : chapter07KernelCofinality (KAb := KAb) D) :
     (chapter07LocalReciprocity S).ker = ⊥ := by
   apply le_antisymm
   · exact
@@ -55,8 +53,7 @@ theorem chapter07_local_reciprocity_injective
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
     [IsAbelianGalois K KAb] (S : Chapter07FiniteArtinSystem K KAb)
     (D : Chapter07PrecisionData Kˣ)
-    (hcofinal : chapter07KernelCofinality
-      (chapter07LocalReciprocity S) D) :
+    (hcofinal : chapter07KernelCofinality (KAb := KAb) D) :
     Function.Injective (chapter07LocalReciprocity S) := by
   sorry
 
@@ -80,8 +77,7 @@ theorem chapter07_local_reciprocity_theorem
     (hopen :
       ∀ L : Chapter07FiniteAbelianIndex K KAb,
         IsOpen (chapter07NormSubgroup (K := K) (L := L) : Set Kˣ))
-    (hcofinal : chapter07KernelCofinality
-      (chapter07LocalReciprocity S) D) :
+    (hcofinal : chapter07KernelCofinality (KAb := KAb) D) :
     Continuous (chapter07LocalReciprocity S) ∧
       Function.Injective (chapter07LocalReciprocity S) ∧
       DenseRange (chapter07LocalReciprocity S) ∧

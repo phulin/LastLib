@@ -1,5 +1,8 @@
 import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.Core
 import Mathlib.Analysis.Calculus.ParametricIntegral
+import Mathlib.Analysis.Fourier.Inversion
+import Mathlib.Analysis.Distribution.AEEqOfIntegralContDiff
+import Mathlib.Analysis.Distribution.SchwartzSpace.Fourier
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 import Mathlib.MeasureTheory.Measure.Regular
 
@@ -36,7 +39,100 @@ theorem chapter05_fourier_inverse_ae
     {f : ℝ → ℂ} (hF : Integrable f volume)
     (hFourierF : Integrable (𝓕 f) volume) :
     𝓕⁻ (𝓕 f) =ᵐ[volume] f := by
-  sorry
+  have hg_cont : Continuous (𝓕⁻ (𝓕 f)) := by
+    rw [show (𝓕⁻ (𝓕 f)) =
+        VectorFourier.fourierIntegral 𝐞 volume (-innerₗ ℝ) (𝓕 f) from by
+      funext x
+      simp [Real.fourierInv_eq, VectorFourier.fourierIntegral]]
+    exact VectorFourier.fourierIntegral_continuous Real.continuous_fourierChar
+      (continuous_neg.comp continuous_inner) hFourierF
+  refine ae_eq_of_integral_contDiff_smul_eq hg_cont.locallyIntegrable
+    hF.locallyIntegrable ?_
+  intro q hq_diff hq_supp
+  let qC : SchwartzMap ℝ ℂ :=
+    (hq_supp.comp_left rfl).toSchwartzMap
+      (Complex.ofRealCLM.contDiff.comp hq_diff)
+  let qCi : SchwartzMap ℝ ℂ := 𝓕⁻ qC
+  have hqC_int : Integrable (qC : ℝ → ℂ) := qC.integrable
+  have hqCi_int : Integrable (qCi : ℝ → ℂ) := qCi.integrable
+  have hfirst :=
+    VectorFourier.integral_bilin_fourierIntegral_eq_flip
+      (M := ContinuousLinearMap.lsmul ℂ ℂ)
+      (L := -innerₗ ℝ) (e := 𝐞) (μ := volume) (ν := volume)
+      Real.continuous_fourierChar (continuous_neg.comp continuous_inner)
+      hFourierF hqC_int
+  have hfirst0 :
+      ∫ x, VectorFourier.fourierIntegral 𝐞 volume (-innerₗ ℝ) (𝓕 f) x * qC x
+          ∂volume =
+        ∫ x, (𝓕 f) x *
+          VectorFourier.fourierIntegral 𝐞 volume (-innerₗ ℝ).flip
+            (qC : ℝ → ℂ) x ∂volume := by
+    simpa [ContinuousLinearMap.lsmul_apply, smul_eq_mul] using hfirst
+  have hsecond :=
+    VectorFourier.integral_bilin_fourierIntegral_eq_flip
+      (M := ContinuousLinearMap.lsmul ℂ ℂ)
+      (L := innerₗ ℝ) (e := 𝐞) (μ := volume) (ν := volume)
+      Real.continuous_fourierChar continuous_inner
+      hF hqCi_int
+  have hsecond0 :
+      ∫ x, VectorFourier.fourierIntegral 𝐞 volume (innerₗ ℝ) f x * qCi x
+          ∂volume =
+        ∫ x, f x *
+          VectorFourier.fourierIntegral 𝐞 volume (innerₗ ℝ).flip
+            (qCi : ℝ → ℂ) x ∂volume := by
+    simpa [ContinuousLinearMap.lsmul_apply, smul_eq_mul] using hsecond
+  have h_inv_f :
+      VectorFourier.fourierIntegral 𝐞 volume (-innerₗ ℝ) (𝓕 f) =
+        𝓕⁻ (𝓕 f) := by
+    funext x
+    simp [Real.fourierInv_eq, VectorFourier.fourierIntegral]
+  have hqC_inv :
+      VectorFourier.fourierIntegral 𝐞 volume (-innerₗ ℝ).flip
+          (qC : ℝ → ℂ) = qCi := by
+    ext x
+    simp [Real.fourierInv_eq, VectorFourier.fourierIntegral, qCi,
+      SchwartzMap.fourierInv_coe, mul_comm]
+  have hflip : (innerₗ ℝ).flip = innerₗ ℝ := by
+    apply LinearMap.ext
+    intro x
+    apply LinearMap.ext
+    intro y
+    simp
+  have hqCi_fourier :
+      VectorFourier.fourierIntegral 𝐞 volume (innerₗ ℝ).flip
+          (qCi : ℝ → ℂ) = qC := by
+    rw [hflip]
+    change 𝓕 (qCi : ℝ → ℂ) = qC
+    rw [← SchwartzMap.fourier_coe]
+    exact congrArg (fun g : SchwartzMap ℝ ℂ => (g : ℝ → ℂ))
+      (show 𝓕 (𝓕⁻ qC) = qC from FourierTransform.fourier_fourierInv_eq qC)
+  have hcomplex :
+      ∫ x, (𝓕⁻ (𝓕 f)) x * qC x ∂volume =
+        ∫ x, f x * qC x ∂volume := by
+    calc
+      _ = ∫ x, VectorFourier.fourierIntegral 𝐞 volume (-innerₗ ℝ)
+          (𝓕 f) x * qC x ∂volume := by rw [h_inv_f]
+      _ = ∫ x, (𝓕 f) x *
+          VectorFourier.fourierIntegral 𝐞 volume (-innerₗ ℝ).flip
+            (qC : ℝ → ℂ) x ∂volume := hfirst0
+      _ = ∫ x, (𝓕 f) x * qCi x ∂volume := by rw [hqC_inv]
+      _ = ∫ x, VectorFourier.fourierIntegral 𝐞 volume (innerₗ ℝ) f x *
+          qCi x ∂volume := by rfl
+      _ = ∫ x, f x *
+          VectorFourier.fourierIntegral 𝐞 volume (innerₗ ℝ).flip
+            (qCi : ℝ → ℂ) x ∂volume := hsecond0
+      _ = ∫ x, f x * qC x ∂volume := by rw [hqCi_fourier]
+  calc
+    (∫ x, q x • (𝓕⁻ (𝓕 f)) x ∂volume) =
+        ∫ x, (𝓕⁻ (𝓕 f)) x * qC x ∂volume := by
+      apply integral_congr_ae
+      filter_upwards [] with x
+      simp [qC, Function.comp_apply, mul_comm]
+    _ = ∫ x, f x * qC x ∂volume := hcomplex
+    _ = ∫ x, q x • f x ∂volume := by
+      apply integral_congr_ae
+      filter_upwards [] with x
+      simp [qC, Function.comp_apply, mul_comm]
 
 theorem chapter05_laplace_reflection
     {F : ℝ → ℝ} (hEven : Function.Even F)

@@ -256,10 +256,11 @@ def Chapter05InfinitesimalDeformationSpace
     {P : Chapter05RegularPoint X}
     {B : Chapter05PointBlowupConstruction P}
     {E : Chapter05ExceptionalDivisor B}
+    (N : Chapter05ExceptionalNormalData B E)
     [Chapter05GlobalSectionsTheory E.carrier (X.residueField P.point)
       E.structure_map] : ℕ :=
   chapter05H0Finrank (k := ↑(X.residueField P.point)) (f := E.structure_map)
-    (chapter05ExceptionalNormalData B E).normal_bundle
+    N.normal_bundle
 
 theorem chapter05_exceptional_curve_is_rigid
     {X : Scheme.{u}} [Chapter05RegularNoetherianSurface X]

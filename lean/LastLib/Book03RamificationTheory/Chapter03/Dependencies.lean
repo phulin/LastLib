@@ -41,7 +41,7 @@ theorem chapter03ValuationLowerGroup_neg_one
     (F : Type u) {E : Type v} [Field F] [Field E] [Algebra F E]
     (A : ValuationSubring E) :
     chapter03ValuationLowerGroup F A (-1) = ⊤ := by
-  sorry
+  simp [chapter03ValuationLowerGroup]
 
 theorem chapter03ValuationLowerGroup_of_nonnegative
     (F : Type u) {E : Type v} [Field F] [Field E] [Algebra F E]
@@ -49,7 +49,7 @@ theorem chapter03ValuationLowerGroup_of_nonnegative
     chapter03ValuationLowerGroup F A i =
       LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05RamificationGroup
         F A (i.toNat + 1) := by
-  sorry
+  simp [chapter03ValuationLowerGroup, not_lt.mpr hi]
 
 theorem chapter03ValuationLowerGroup_mem_iff_of_nonnegative
     (F : Type u) {E : Type v} [Field F] [Field E] [Algebra F E]
@@ -60,21 +60,28 @@ theorem chapter03ValuationLowerGroup_mem_iff_of_nonnegative
       σ ∈
         LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05RamificationGroup
           F A (i.toNat + 1) := by
-  sorry
+  rw [chapter03ValuationLowerGroup_of_nonnegative F A hi]
 
 theorem chapter03ValuationLowerGroup_zero_eq_inertia
     (F : Type u) {E : Type v} [Field F] [Field E] [Algebra F E]
     (A : ValuationSubring E) :
     chapter03ValuationLowerGroup F A 0 =
       LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05InertiaGroup F A := by
-  sorry
+  rw [chapter03ValuationLowerGroup_of_nonnegative F A (i := 0) (by norm_num)]
+  simpa using
+    (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05FirstRamificationGroup_eq_inertia
+      (A := A))
 
 theorem chapter03ValuationLowerGroup_succ_le
     (F : Type u) {E : Type v} [Field F] [Field E] [Algebra F E]
     (A : ValuationSubring E) (i : ℕ) :
     chapter03ValuationLowerGroup F A (i + 1) ≤
       chapter03ValuationLowerGroup F A i := by
-  sorry
+  rw [chapter03ValuationLowerGroup, if_neg (by omega),
+    chapter03ValuationLowerGroup, if_neg (by omega)]
+  simpa using
+    (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05RamificationGroup_succ_le
+      A (i + 1))
 
 /- The same lower group viewed in the ambient Galois group. -/
 def chapter03GaloisLowerGroup
@@ -96,7 +103,16 @@ theorem chapter03GaloisLowerGroup_neg_one
       LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05DecompositionGroup
           F A = ⊤) :
     chapter03GaloisLowerGroup F A (-1) = ⊤ := by
-  sorry
+  rw [chapter03GaloisLowerGroup, if_pos (by norm_num)]
+  apply le_antisymm le_top
+  intro σ _
+  have hσ : σ ∈
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05DecompositionGroup
+        F A := by
+    rw [hdecomp]
+    trivial
+  refine ⟨⟨σ, hσ⟩, ?_⟩
+  simp
 
 theorem chapter03GaloisLowerGroup_zero_eq_inertia
     (F : Type u) {E : Type v} [Field F] [Field E] [Algebra F E]
@@ -104,14 +120,25 @@ theorem chapter03GaloisLowerGroup_zero_eq_inertia
     chapter03GaloisLowerGroup F A 0 =
       LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05InertiaGroupInG
         F A := by
-  sorry
+  rw [chapter03GaloisLowerGroup, if_neg (by norm_num)]
+  simpa [LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05InertiaGroupInG] using congrArg
+    (fun H : Subgroup
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05DecompositionGroup
+          F A) => H.map (Subgroup.subtype _))
+    (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05FirstRamificationGroup_eq_inertia
+      (A := A))
 
 theorem chapter03GaloisLowerGroup_succ_le
     (F : Type u) {E : Type v} [Field F] [Field E] [Algebra F E]
     (A : ValuationSubring E) (i : ℕ) :
     chapter03GaloisLowerGroup F A (i + 1) ≤
       chapter03GaloisLowerGroup F A i := by
-  sorry
+  rw [chapter03GaloisLowerGroup, if_neg (by omega),
+    chapter03GaloisLowerGroup, if_neg (by omega)]
+  apply Subgroup.map_mono
+  simpa using
+    (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05RamificationGroup_succ_le
+      A (i + 1))
 
 /- The valuation of a displacement of an integral element. -/
 def chapter03DisplacementValue
@@ -147,14 +174,17 @@ theorem chapter03DisplacementIndex_le
     (hbounded : BddBelow (chapter03DisplacementValues vL B σ))
     {x : L} (hx : x ∈ B) :
     chapter03DisplacementIndex vL B σ ≤
-      chapter03DisplacementValue vL σ x := by
-  sorry
+    chapter03DisplacementValue vL σ x := by
+  unfold chapter03DisplacementIndex
+  rw [if_neg hσ]
+  apply csInf_le hbounded
+  exact ⟨x, hx, rfl⟩
 
 theorem chapter03DisplacementIndex_one
     {L : Type*} [Field L] (vL : AddValuation L (WithTop ℤ))
     (B : Set L) :
     chapter03DisplacementIndex vL B (1 : L ≃+* L) = ⊤ := by
-  sorry
+  simp [chapter03DisplacementIndex]
 
 @[simp]
 theorem chapter03DisplacementValue_apply
@@ -211,7 +241,26 @@ theorem chapter03_one_break_profile_of_constant_displacement
     (F : Chapter03LowerDisplacementFiltration G) (m : ℕ)
     (hdisp : ∀ {σ : G}, σ ≠ 1 → F.displacement σ = m + 1) :
     chapter03OneBreakProfile F m := by
-  sorry
+  constructor
+  · intro n hn
+    apply le_antisymm le_top
+    intro σ _
+    by_cases hσ : σ = 1
+    · subst σ
+      exact (F.lower (n : ℤ)).one_mem
+    · apply (F.lower_nat_mem_iff hσ n).2
+      simpa [hdisp hσ] using Nat.succ_le_succ hn
+  · intro n hmn
+    apply le_antisymm
+    · intro σ hσmem
+      by_cases hσ : σ = 1
+      · subst σ
+        exact (⊥ : Subgroup G).one_mem
+      · have hle := (F.lower_nat_mem_iff hσ n).1 hσmem
+        have hle' : n + 1 ≤ m + 1 := by
+          simpa [hdisp hσ] using hle
+        exact False.elim ((Nat.not_succ_le_self n) (hle'.trans hmn))
+    · exact bot_le
 
 theorem chapter03_one_break_is_unique
     {G : Type u} [Group G] [Finite G]
@@ -219,7 +268,15 @@ theorem chapter03_one_break_is_unique
     (hdisp : ∀ {σ : G}, σ ≠ 1 → F.displacement σ = m + 1)
     (hnontrivial : ∃ σ : G, σ ≠ 1) :
     chapter03LowerBreak F m := by
-  sorry
+  unfold chapter03LowerBreak
+  intro hEq
+  obtain ⟨σ, hσ⟩ := hnontrivial
+  have hmem : σ ∈ F.lower (m : ℤ) := by
+    rw [(chapter03_one_break_profile_of_constant_displacement F m hdisp).1 m le_rfl]
+    trivial
+  rw [hEq, (chapter03_one_break_profile_of_constant_displacement F m hdisp).2
+    (m + 1) le_rfl] at hmem
+  exact hσ (by simpa using hmem)
 
 /-
 The tame profile allows non-inertial elements to have displacement zero.
@@ -231,13 +288,56 @@ theorem chapter03_tame_profile_of_inertia_displacement
     (hinside : ∀ {σ : G}, σ ∈ H → σ ≠ 1 → F.displacement σ = 1)
     (houtside : ∀ {σ : G}, σ ∉ H → F.displacement σ = 0) :
     F.lower 0 = H ∧ F.lower 1 = ⊥ := by
-  sorry
+  constructor
+  · apply le_antisymm
+    · intro σ hσmem
+      by_cases hσ : σ = 1
+      · subst σ
+        exact H.one_mem
+      · by_cases hH : σ ∈ H
+        · exact hH
+        · have hle := (F.lower_nat_mem_iff hσ 0).1 hσmem
+          rw [houtside hH] at hle
+          exact False.elim (by omega)
+    · intro σ hH
+      by_cases hσ : σ = 1
+      · subst σ
+        exact (F.lower 0).one_mem
+      · apply (F.lower_nat_mem_iff hσ 0).2
+        simp [hinside hH hσ]
+  · apply le_antisymm
+    · intro σ hσmem
+      by_cases hσ : σ = 1
+      · subst σ
+        exact (⊥ : Subgroup G).one_mem
+      · have hle := (F.lower_nat_mem_iff hσ 1).1 hσmem
+        by_cases hH : σ ∈ H
+        · rw [hinside hH hσ] at hle
+          omega
+        · rw [houtside hH] at hle
+          omega
+    · exact bot_le
 
 theorem chapter03_lower_filtration_eventually_trivial
     {G : Type u} [Group G] [Finite G]
     (F : Chapter03LowerDisplacementFiltration G) :
     ∃ N : ℕ, ∀ n : ℕ, N ≤ n → F.lower (n : ℤ) = ⊥ := by
-  sorry
+  classical
+  let : Fintype G := Fintype.ofFinite G
+  obtain ⟨σ₀, _, hmax⟩ :=
+    Finset.exists_max_image (Finset.univ : Finset G) F.displacement
+      Finset.univ_nonempty
+  refine ⟨F.displacement σ₀, ?_⟩
+  intro n hn
+  apply le_antisymm
+  · intro σ hσmem
+    by_cases hσ : σ = 1
+    · subst σ
+      exact (⊥ : Subgroup G).one_mem
+    · have hle := (F.lower_nat_mem_iff hσ n).1 hσmem
+      have hbound := hmax σ (Finset.mem_univ σ)
+      omega
+  · exact bot_le
 
 end
 end LastLib.Book03RamificationTheory.Chapter03

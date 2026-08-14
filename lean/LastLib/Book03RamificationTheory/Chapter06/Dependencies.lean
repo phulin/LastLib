@@ -66,12 +66,16 @@ theorem chapter06QuotientTransition_comp_quotientMap
 theorem chapter06QuotientMap_surjective
     {P : ProfiniteGrp} (N : OpenNormalSubgroup P) :
     Function.Surjective (chapter06QuotientMap N) := by
-  sorry
+  exact QuotientGroup.mk'_surjective N.toSubgroup
 
 theorem chapter06QuotientTransition_surjective
     {P : ProfiniteGrp} {N M : OpenNormalSubgroup P} (h : N ≤ M) :
     Function.Surjective (chapter06QuotientTransition h) := by
-  sorry
+  intro y
+  rcases QuotientGroup.mk'_surjective M.toSubgroup y with ⟨x, hx⟩
+  refine ⟨chapter06QuotientMap N x, ?_⟩
+  rw [chapter06QuotientTransition_apply]
+  exact hx
 
 /- LOCAL_DEPENDENCY_GUESS: the present checkout exposes the finite upper
 profiles and Herbrand quotient theorem, but not a single canonical profinite
@@ -129,7 +133,7 @@ theorem chapter06InfiniteUpperGroup_mem_iff
       ∀ N : OpenNormalSubgroup P,
         chapter06QuotientMap N g ∈
           chapter05UpperRamificationGroup (S.upperProfile N) v := by
-  sorry
+  simp [chapter06InfiniteUpperGroup]
 
 @[simp]
 theorem chapter06InfiniteUpperGroup_eq_inverse_image_iInf
@@ -142,7 +146,18 @@ theorem chapter06InfiniteUpperGroup_eq_inverse_image_iInf
 theorem chapter06InfiniteUpperGroup_closed
     {P : ProfiniteGrp} (S : Chapter06InfiniteUpperSystem P) (v : ℝ) :
     IsClosed (chapter06InfiniteUpperGroup S v : Set P) := by
-  sorry
+  rw [show (chapter06InfiniteUpperGroup S v : Set P) =
+      ⋂ N : OpenNormalSubgroup P,
+        {g : P | chapter06QuotientMap N g ∈
+          chapter05UpperRamificationGroup (S.upperProfile N) v} by
+    ext g
+    simp [chapter06InfiniteUpperGroup]]
+  exact isClosed_iInter (fun N => by
+    let _ : DiscreteTopology (P ⧸ N.toSubgroup) :=
+      QuotientGroup.discreteTopology N.isOpen
+    exact (Set.toFinite
+      (chapter05UpperRamificationGroup (S.upperProfile N) v :
+        Set (P ⧸ N.toSubgroup))).isClosed.preimage continuous_quot_mk)
 
 def chapter06InfiniteUpperClosedSubgroup
     {P : ProfiniteGrp} (S : Chapter06InfiniteUpperSystem P) (v : ℝ) :
@@ -153,7 +168,10 @@ def chapter06InfiniteUpperClosedSubgroup
 theorem chapter06InfiniteUpperGroup_normal
     {P : ProfiniteGrp} (S : Chapter06InfiniteUpperSystem P) (v : ℝ) :
     (chapter06InfiniteUpperGroup S v).Normal := by
-  sorry
+  apply Subgroup.normal_iInf_normal
+  intro N
+  exact (chapter05_upper_group_normal (S.upperProfile N)
+    (S.herbrand_bijective N) v).comap (chapter06QuotientMap N)
 
 instance chapter06InfiniteUpperGroup_normal_instance
     {P : ProfiniteGrp} (S : Chapter06InfiniteUpperSystem P) (v : ℝ) :
@@ -163,7 +181,11 @@ instance chapter06InfiniteUpperGroup_normal_instance
 theorem chapter06InfiniteUpperGroup_antitone
     {P : ProfiniteGrp} (S : Chapter06InfiniteUpperSystem P) :
     Antitone (chapter06InfiniteUpperGroup S) := by
-  sorry
+  intro v w hvw g hg
+  rw [chapter06InfiniteUpperGroup_mem_iff] at hg ⊢
+  intro N
+  exact (chapter05_upper_filtration_antitone (S.upperProfile N)
+    (S.herbrand_bijective N) hvw) (hg N)
 
 /- LOCAL_DEPENDENCY_GUESS: the image equality is the compactness/cofinality
 bridge from the inverse-limit intersection to a finite quotient.  It is the
@@ -174,7 +196,79 @@ theorem chapter06InfiniteUpperGroup_map
     (N : OpenNormalSubgroup P) (v : ℝ) :
     (chapter06InfiniteUpperGroup S v).map (chapter06QuotientMap N) =
       chapter05UpperRamificationGroup (S.upperProfile N) v := by
-  sorry
+  classical
+  apply le_antisymm
+  · intro y hy
+    rcases Subgroup.mem_map.mp hy with ⟨g, hg, rfl⟩
+    exact (chapter06InfiniteUpperGroup_mem_iff S v g).mp hg N
+  · intro y hy
+    let fiber : Set P := {g : P | chapter06QuotientMap N g = y}
+    let C : OpenNormalSubgroup P → Set P := fun M =>
+      {g : P | chapter06QuotientMap M g ∈
+        chapter05UpperRamificationGroup (S.upperProfile M) v}
+    let _ : DiscreteTopology (P ⧸ N.toSubgroup) :=
+      QuotientGroup.discreteTopology N.isOpen
+    have hfiber : IsClosed fiber := by
+      have hs : IsClosed ({y} : Set (P ⧸ N.toSubgroup)) :=
+        isClosed_singleton
+      exact hs.preimage continuous_quot_mk
+    have hfiber_compact : IsCompact fiber := hfiber.isCompact
+    have hC : ∀ M : OpenNormalSubgroup P, IsClosed (C M) := by
+      intro M
+      let _ : DiscreteTopology (P ⧸ M.toSubgroup) :=
+        QuotientGroup.discreteTopology M.isOpen
+      exact (Set.toFinite
+        (chapter05UpperRamificationGroup (S.upperProfile M) v :
+          Set (P ⧸ M.toSubgroup))).isClosed.preimage continuous_quot_mk
+    have hcommon : ∀ u : Finset (OpenNormalSubgroup P),
+        ∃ K : OpenNormalSubgroup P, K ≤ N ∧ ∀ M ∈ u, K ≤ M := by
+      intro u
+      induction u using Finset.induction_on with
+      | empty =>
+          exact ⟨N, le_rfl, by simp⟩
+      | @insert M u hM ih =>
+          rcases ih with ⟨K, hKN, hKu⟩
+          refine ⟨K ⊓ M, inf_le_left.trans hKN, ?_⟩
+          intro L hL
+          simp only [Finset.mem_insert] at hL
+          rcases hL with rfl | hL
+          · exact inf_le_right
+          · exact inf_le_left.trans (hKu L hL)
+    have hfinite : ∀ u : Finset (OpenNormalSubgroup P),
+        (fiber ∩ ⋂ M ∈ u, C M).Nonempty := by
+      intro u
+      rcases hcommon u with ⟨K, hKN, hKu⟩
+      have hyK : y ∈
+          (chapter05UpperRamificationGroup (S.upperProfile K) v).map
+            (chapter06QuotientTransition hKN) := by
+        rw [S.transition_upper_map_at hKN v]
+        exact hy
+      rcases Subgroup.mem_map.mp hyK with ⟨z, hz, hzy⟩
+      rcases chapter06QuotientMap_surjective K z with ⟨g, hg⟩
+      refine ⟨g, ?_, ?_⟩
+      · change chapter06QuotientMap N g = y
+        rw [← chapter06QuotientTransition_apply hKN g, hg, hzy]
+      · simp only [Set.mem_iInter]
+        intro M hM
+        change chapter06QuotientMap M g ∈
+          chapter05UpperRamificationGroup (S.upperProfile M) v
+        rw [← chapter06QuotientTransition_apply (hKu M hM) g]
+        rw [← S.transition_upper_map_at (hKu M hM) v]
+        have hgK :
+            chapter06QuotientMap K g ∈
+              chapter05UpperRamificationGroup (S.upperProfile K) v := by
+          simpa [hg] using hz
+        exact Subgroup.mem_map.mpr ⟨chapter06QuotientMap K g, hgK, rfl⟩
+    have hnonempty :
+        (fiber ∩ ⋂ M : OpenNormalSubgroup P, C M).Nonempty :=
+      hfiber_compact.inter_iInter_nonempty
+        (fun M : OpenNormalSubgroup P => C M) hC hfinite
+    rcases hnonempty with ⟨g, hgfiber, hgC⟩
+    have hg : g ∈ chapter06InfiniteUpperGroup S v := by
+      rw [chapter06InfiniteUpperGroup_mem_iff]
+      intro M
+      exact (Set.mem_iInter.mp hgC) M
+    exact ⟨g, hg, hgfiber⟩
 
 /-!
 In the profinite convention a right limit is the closure of the union over
@@ -194,7 +288,7 @@ abbrev chapter06InfiniteUpperGroupPlus
 theorem chapter06InfiniteUpperRightLimit_closed
     {P : ProfiniteGrp} (S : Chapter06InfiniteUpperSystem P) (v : ℝ) :
     IsClosed (chapter06InfiniteUpperRightLimit S v : Set P) := by
-  sorry
+  exact Subgroup.isClosed_topologicalClosure _
 
 def chapter06InfiniteUpperRightLimitClosedSubgroup
     {P : ProfiniteGrp} (S : Chapter06InfiniteUpperSystem P) (v : ℝ) :
@@ -205,7 +299,19 @@ def chapter06InfiniteUpperRightLimitClosedSubgroup
 theorem chapter06InfiniteUpperRightLimit_normal
     {P : ProfiniteGrp} (S : Chapter06InfiniteUpperSystem P) (v : ℝ) :
     (chapter06InfiniteUpperRightLimit S v).Normal := by
-  sorry
+  unfold chapter06InfiniteUpperRightLimit
+  let _ : (Subgroup.closure {g : P |
+      ∃ w : ℝ, v < w ∧ g ∈ chapter06InfiniteUpperGroup S w}).Normal := by
+    apply Subgroup.normalizer_eq_top_iff.mp
+    apply le_antisymm le_top
+    exact (Subgroup.le_normalizer_closure_iff).2 (by
+      intro h _ g hg
+      rcases hg with ⟨w, hw, hg⟩
+      exact Subgroup.subset_closure
+        (k := {g : P |
+          ∃ w : ℝ, v < w ∧ g ∈ chapter06InfiniteUpperGroup S w})
+        ⟨w, hw, (chapter06InfiniteUpperGroup_normal S w).conj_mem g hg h⟩)
+  exact Subgroup.is_normal_topologicalClosure _
 
 /- LOCAL_DEPENDENCY_GUESS: identifying the image of the ambient closure with
 the finite right limit needs the cofinality/compactness bridge for the chosen
@@ -216,7 +322,52 @@ theorem chapter06InfiniteUpperRightLimit_map
     (N : OpenNormalSubgroup P) (v : ℝ) :
     (chapter06InfiniteUpperRightLimit S v).map (chapter06QuotientMap N) =
       chapter05UpperRightLimit (S.upperProfile N) v := by
-  sorry
+  rw [chapter05UpperRightLimit, chapter05RightLimit]
+  let _ : DiscreteTopology (P ⧸ N.toSubgroup) :=
+    QuotientGroup.discreteTopology N.isOpen
+  let levels : Set (Subgroup (P ⧸ N.toSubgroup)) :=
+    chapter05UpperRamificationGroup (S.upperProfile N) '' Set.Ioi v
+  let Hsup : Subgroup (P ⧸ N.toSubgroup) := sSup levels
+  change (chapter06InfiniteUpperRightLimit S v).map (chapter06QuotientMap N) = Hsup
+  apply le_antisymm
+  · apply (Subgroup.map_le_iff_le_comap).2
+    apply Subgroup.topologicalClosure_minimal
+    · apply (Subgroup.closure_le _).2
+      rintro g ⟨w, hw, hg⟩
+      have hq : chapter06QuotientMap N g ∈
+          chapter05UpperRamificationGroup (S.upperProfile N) w :=
+        (chapter06InfiniteUpperGroup_mem_iff S w g).mp hg N
+      have hlevel :
+          chapter05UpperRamificationGroup (S.upperProfile N) w ≤ Hsup :=
+        le_sSup (show chapter05UpperRamificationGroup
+            (S.upperProfile N) w ∈ levels from ⟨w, hw, rfl⟩)
+      exact hlevel hq
+    · have hclosed : IsClosed (Hsup : Set (P ⧸ N.toSubgroup)) :=
+        (Set.toFinite (Hsup : Set (P ⧸ N.toSubgroup))).isClosed
+      exact hclosed.preimage continuous_quot_mk
+  · change (sSup levels : Subgroup (P ⧸ N.toSubgroup)) ≤
+      Subgroup.map (chapter06QuotientMap N)
+        (chapter06InfiniteUpperRightLimit S v)
+    refine sSup_le ?_
+    intro H hH
+    rcases hH with ⟨w, hw, rfl⟩
+    calc
+      chapter05UpperRamificationGroup (S.upperProfile N) w =
+          (chapter06InfiniteUpperGroup S w).map (chapter06QuotientMap N) :=
+        (chapter06InfiniteUpperGroup_map S N w).symm
+      _ ≤ Subgroup.map (chapter06QuotientMap N)
+          (chapter06InfiniteUpperRightLimit S v) := by
+        apply (Subgroup.map_le_iff_le_comap).2
+        intro g hg
+        apply Subgroup.mem_map.mpr
+        refine ⟨g, ?_, rfl⟩
+        change g ∈ Subgroup.topologicalClosure
+          (Subgroup.closure {x : P | ∃ z : ℝ, v < z ∧
+            x ∈ chapter06InfiniteUpperGroup S z})
+        exact (Subgroup.le_topologicalClosure _)
+          (Subgroup.subset_closure
+            (k := {x : P | ∃ z : ℝ, v < z ∧
+              x ∈ chapter06InfiniteUpperGroup S z}) ⟨w, hw, hg⟩)
 
 /-!
 The two distinguished groups are the zero and zero-plus upper groups.  The
@@ -234,12 +385,29 @@ abbrev chapter06WildInertiaGroup
 theorem chapter06WildInertiaGroup_le_inertia
     {P : ProfiniteGrp} (S : Chapter06InfiniteUpperSystem P) :
     chapter06WildInertiaGroup S ≤ chapter06InertiaGroup S := by
-  sorry
+  apply Subgroup.topologicalClosure_minimal
+  · apply (Subgroup.closure_le _).2
+    rintro g ⟨w, hw, hg⟩
+    exact chapter06InfiniteUpperGroup_antitone S hw.le hg
+  · exact chapter06InfiniteUpperGroup_closed S 0
 
 theorem chapter06WildInertiaGroup_normal
     {P : ProfiniteGrp} (S : Chapter06InfiniteUpperSystem P) :
     (chapter06WildInertiaGroup S).Normal := by
-  sorry
+  unfold chapter06WildInertiaGroup chapter06InfiniteUpperGroupPlus
+    chapter06InfiniteUpperRightLimit
+  let _ : (Subgroup.closure {g : P |
+      ∃ w : ℝ, 0 < w ∧ g ∈ chapter06InfiniteUpperGroup S w}).Normal := by
+    apply Subgroup.normalizer_eq_top_iff.mp
+    apply le_antisymm le_top
+    exact (Subgroup.le_normalizer_closure_iff).2 (by
+      intro h _ g hg
+      rcases hg with ⟨w, hw, hg⟩
+      exact Subgroup.subset_closure
+        (k := {g : P |
+          ∃ w : ℝ, 0 < w ∧ g ∈ chapter06InfiniteUpperGroup S w})
+        ⟨w, hw, (chapter06InfiniteUpperGroup_normal S w).conj_mem g hg h⟩)
+  exact Subgroup.is_normal_topologicalClosure _
 
 instance chapter06WildInertiaGroup_normal_instance
     {P : ProfiniteGrp} (S : Chapter06InfiniteUpperSystem P) :

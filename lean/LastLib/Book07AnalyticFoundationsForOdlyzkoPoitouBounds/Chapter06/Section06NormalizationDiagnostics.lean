@@ -151,7 +151,7 @@ theorem chapter06_missing_C_loss_diagnostic
 def chapter06TrivialZeroSet
     (K : Type*) [Field K] [NumberField K] : Set ℂ :=
   {s | LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter03.chapter03DedekindZeta
-      K s = 0 ∧ s.re < 0}
+      K s = 0 ∧ s.re ≤ 0}
 
 def chapter06NaiveContourCrossingSet
     (K : Type*) [Field K] [NumberField K] : Set ℂ :=

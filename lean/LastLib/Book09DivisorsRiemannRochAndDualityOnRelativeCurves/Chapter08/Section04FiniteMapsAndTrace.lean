@@ -253,6 +253,15 @@ def Chapter08PurelyInseparableFieldTraceObstruction
     [Fact p.Prime] [CharP F p] [Algebra F E] [FiniteDimensional F E] : Prop :=
   Chapter08PurelyInseparableExtension (F := F) (E := E) p ∧ Algebra.trace F E = 0
 
+theorem chapter08_purely_inseparable_field_trace_obstruction_of_nontrivial
+    {p : ℕ} {F E : Type v} [Field F] [Field E]
+    [Fact p.Prime] [CharP F p] [Algebra F E] [FiniteDimensional F E]
+    (hpure : Chapter08PurelyInseparableExtension (F := F) (E := E) p)
+    (hnontrivial : ∃ x : E, ∀ a : F, algebraMap F E a ≠ x) :
+    Chapter08PurelyInseparableFieldTraceObstruction p F E := by
+  refine ⟨hpure, ?_⟩
+  sorry
+
 theorem chapter08_finite_duality_trace_is_evaluation_at_one
     {A B ωA ωB : Type u}
     [CommRing A] [CommRing B] [AddCommGroup ωA] [AddCommGroup ωB]

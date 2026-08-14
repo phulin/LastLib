@@ -120,7 +120,64 @@ theorem evaluationMap_compatible_with_descent_data (D : DescentDatum A B) :
     ((descentComparison A B).obj (invariantModuleCat D)).a ≫
         (descentComonad A B).map (evaluationMap D) =
       evaluationMap D ≫ D.a := by
-  sorry
+  let adj := ModuleCat.extendRestrictScalarsAdj (algebraMap A B)
+  let i : invariantModuleCat D ⟶
+      (ModuleCat.restrictScalars (algebraMap A B)).obj D.A :=
+    ModuleCat.ofHom (X := invariantModuleCat D)
+      (Y := (ModuleCat.restrictScalars (algebraMap A B)).obj D.A)
+      (invariantModule D).subtype
+  have hi : i ≫ (ModuleCat.restrictScalars (algebraMap A B)).map D.a =
+      i ≫ adj.unit.app ((ModuleCat.restrictScalars (algebraMap A B)).obj D.A) := by
+    ext m
+    change ((ModuleCat.restrictScalars (algebraMap A B)).map D.a).hom m.1 =
+      (adj.unit.app ((ModuleCat.restrictScalars (algebraMap A B)).obj D.A)).hom m.1
+    exact (mem_invariantModule_iff D m.1).mp m.property
+  have hev : evaluationMap D =
+      (adj.homEquiv (invariantModuleCat D) D.A).symm i := rfl
+  let a' : D.A ⟶
+      (ModuleCat.extendScalars (algebraMap A B)).obj
+        ((ModuleCat.restrictScalars (algebraMap A B)).obj D.A) := D.a
+  have hei : adj.unit.app (invariantModuleCat D) ≫
+        (ModuleCat.restrictScalars (algebraMap A B)).map
+          ((adj.homEquiv (invariantModuleCat D) D.A).symm i) = i := by
+    simpa only [Adjunction.homEquiv_unit] using
+      (adj.homEquiv (invariantModuleCat D) D.A).apply_symm_apply i
+  have hi' : i ≫ (ModuleCat.restrictScalars (algebraMap A B)).map a' =
+      i ≫ adj.unit.app ((ModuleCat.restrictScalars (algebraMap A B)).obj D.A) := by
+    change i ≫ (ModuleCat.restrictScalars (algebraMap A B)).map D.a =
+      i ≫ adj.unit.app ((ModuleCat.restrictScalars (algebraMap A B)).obj D.A)
+    exact hi
+  change
+    (ModuleCat.extendScalars (algebraMap A B)).map
+        (adj.unit.app (invariantModuleCat D)) ≫
+      (ModuleCat.extendScalars (algebraMap A B)).map
+        ((ModuleCat.restrictScalars (algebraMap A B)).map (evaluationMap D)) =
+      evaluationMap D ≫ D.a
+  rw [hev]
+  change
+    (ModuleCat.extendScalars (algebraMap A B)).map
+        (adj.unit.app (invariantModuleCat D)) ≫
+      (ModuleCat.extendScalars (algebraMap A B)).map
+        ((ModuleCat.restrictScalars (algebraMap A B)).map
+          ((adj.homEquiv (invariantModuleCat D) D.A).symm i)) =
+      (adj.homEquiv (invariantModuleCat D) D.A).symm i ≫ a'
+  simp only [Functor.id_obj, Functor.comp_obj]
+  apply (adj.homEquiv (invariantModuleCat D)
+      ((ModuleCat.extendScalars (algebraMap A B)).obj
+        ((ModuleCat.restrictScalars (algebraMap A B)).obj D.A))).injective
+  conv_lhs => rw [adj.homEquiv_naturality_right]
+  simp only [Adjunction.homEquiv_unit]
+  conv_lhs =>
+    rw [Category.assoc]
+    rw [← (ModuleCat.restrictScalars (algebraMap A B)).map_comp]
+    rw [← (ModuleCat.extendScalars (algebraMap A B)).map_comp]
+    rw [hei]
+    rw [adj.unit_naturality]
+  conv_rhs =>
+    rw [Functor.map_comp]
+    rw [← Category.assoc]
+    rw [hei]
+  exact hi'.symm
 
 theorem evaluationMap_is_underlying_descent_iso
     (hAB : RingHom.FaithfullyFlat (algebraMap A B)) (D : DescentDatum A B) :

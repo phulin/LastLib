@@ -145,7 +145,8 @@ def Chapter07FiniteLocallyFreeAffineMorphismOfRank
 
 theorem chapter07_finite_flat_is_finite_locally_free
     {X S : Scheme.{u}} {f : X ⟶ S}
-    (hfinite : IsFinite f) (hflat : Flat f) :
+    (hfinite : IsFinite f)
+    (hflat : Flat f) :
     Chapter07FiniteLocallyFreeAffineMorphism f := by sorry
 
 theorem chapter07_finite_affine_descent

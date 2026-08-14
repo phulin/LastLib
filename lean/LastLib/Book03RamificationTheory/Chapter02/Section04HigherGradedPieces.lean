@@ -32,7 +32,13 @@ theorem chapter02_higher_coefficient_vanishing_invariant
     (c c' : F.group i → l) (a : l) (ha : a ≠ 0)
     (hscale : ∀ σ, c' σ = a * c σ) :
     ∀ σ, c σ = 0 ↔ c' σ = 0 := by
-  sorry
+  intro σ
+  rw [hscale σ]
+  constructor
+  · intro h
+    simp [h]
+  · intro h
+    exact (mul_eq_zero.mp h).resolve_left ha
 
 /-- The coefficient homomorphism before passing to the lower quotient. -/
 def chapter02HigherCoefficientHom
@@ -42,7 +48,10 @@ def chapter02HigherCoefficientHom
     F.group i →* Multiplicative l where
   toFun σ := Multiplicative.ofAdd (D.coefficient σ)
   map_one' := by
-    sorry
+    have hzero : D.coefficient (1 : F.group i) = 0 :=
+      (D.coefficient_zero_iff (1 : F.group i)).2
+        (F.group (i + 1)).one_mem
+    simp [hzero]
   map_mul' σ τ := by
     change Multiplicative.ofAdd (D.coefficient (σ * τ)) =
       Multiplicative.ofAdd (D.coefficient σ) * Multiplicative.ofAdd (D.coefficient τ)
@@ -72,24 +81,54 @@ def chapter02HigherLayerAdditiveMap
     Additive (chapter02LowerLayer F i) →+ l where
   toFun σ := Multiplicative.toAdd (chapter02HigherLayerCharacter i D σ)
   map_zero' := by
-    sorry
+    change Multiplicative.toAdd (chapter02HigherLayerCharacter i D 1) = 0
+    simp
   map_add' σ τ := by
-    sorry
+    change chapter02LowerLayer F i at σ τ
+    change Multiplicative.toAdd
+        (chapter02HigherLayerCharacter i D (σ * τ)) =
+      Multiplicative.toAdd (chapter02HigherLayerCharacter i D σ) +
+        Multiplicative.toAdd (chapter02HigherLayerCharacter i D τ)
+    rw [map_mul]
+    rfl
 
 theorem chapter02_higher_layer_character_injective
     {G : Type u} [Group G] [Finite G]
     {F : Chapter02LowerFiltration G} {l : Type*} [Field l] (i : ℕ)
     (D : Chapter02HigherCoefficientData F l i) :
     Function.Injective (chapter02HigherLayerCharacter i D) := by
-  intro σ τ hστ
-  sorry
+  let N := (F.group (i + 1)).subgroupOf (F.group i)
+  letI : N.Normal := chapter02_lower_layer_normal F i
+  let f := chapter02HigherCoefficientHom i D
+  have hN : N ≤ f.ker := by
+    intro σ hσ
+    change Multiplicative.ofAdd (D.coefficient σ) = 1
+    have hzero : D.coefficient σ = 0 :=
+      (D.coefficient_zero_iff σ).2 hσ
+    simp [hzero]
+  have hker : N = f.ker := by
+    ext σ
+    constructor
+    · intro hσ
+      exact hN hσ
+    · intro hσ
+      change Multiplicative.ofAdd (D.coefficient σ) = 1 at hσ
+      have hzero : D.coefficient σ = 0 := by simpa using hσ
+      exact (D.coefficient_zero_iff σ).1 hzero
+  change Function.Injective (QuotientGroup.lift N f hN)
+  exact (QuotientGroup.injective_lift_iff N f hN).2 hker
 
 theorem chapter02_higher_layer_additive_map_injective
     {G : Type u} [Group G] [Finite G]
     {F : Chapter02LowerFiltration G} {l : Type*} [Field l] (i : ℕ)
     (D : Chapter02HigherCoefficientData F l i) :
     Function.Injective (chapter02HigherLayerAdditiveMap i D) := by
-  sorry
+  intro σ τ hστ
+  change chapter02LowerLayer F i at σ τ
+  change Multiplicative.toAdd (chapter02HigherLayerCharacter i D σ) =
+      Multiplicative.toAdd (chapter02HigherLayerCharacter i D τ) at hστ
+  apply chapter02_higher_layer_character_injective i D
+  exact Multiplicative.toAdd.injective hστ
 
 /-- The image of a positive layer in the additive residue field. -/
 def chapter02HigherLayerImage
@@ -115,7 +154,22 @@ theorem chapter02_higher_layer_is_elementary_abelian
     (p i : ℕ) [Fact p.Prime] [CharP l p]
     (hi : 1 ≤ i) (D : Chapter02HigherCoefficientData F l i) :
     chapter02HigherLayerIsElementaryAbelian p i D := by
-  sorry
+  have hcharall : ∀ x : Multiplicative l, x ^ p = 1 := by
+    intro x
+    apply Multiplicative.toAdd.injective
+    rw [toAdd_pow]
+    change p • (x.toAdd : l) = 0
+    rw [nsmul_eq_mul, CharP.cast_eq_zero, zero_mul]
+  have hP : IsPGroup p (chapter02LowerLayer F i) := by
+    intro σ
+    refine ⟨1, ?_⟩
+    simp only [pow_one]
+    apply chapter02_higher_layer_character_injective i D
+    rw [map_pow, map_one]
+    exact hcharall _
+  refine ⟨hi, hP, ?_⟩
+  exact ⟨AddMonoidHom.ofInjective
+    (chapter02_higher_layer_additive_map_injective i D)⟩
 
 /-- The intrinsic target for the coefficient map. -/
 abbrev chapter02IntrinsicHigherTarget
@@ -132,7 +186,7 @@ theorem chapter02_intrinsic_higher_target_finrank_one
     [FiniteDimensional l M] [FiniteDimensional l N]
     (hM : Module.finrank l M = 1) (hN : Module.finrank l N = 1) :
     Module.finrank l (chapter02IntrinsicHigherTarget l M N) = 1 := by
-  sorry
+  rw [Module.finrank_linearMap, hM, hN]
 
 /- The intrinsic target is only a one-dimensional residue-field Hom-space;
    this does not assert that every additive subspace occurs or that the
@@ -233,7 +287,31 @@ theorem chapter02_higher_layer_subsingleton_of_char_zero
     (i : ℕ) (hi : 1 ≤ i)
     (D : Chapter02HigherCoefficientData F l i) :
     Subsingleton (chapter02LowerLayer F i) := by
-  sorry
+  let f := chapter02HigherLayerAdditiveMap i D
+  letI : Finite (chapter02LowerLayer F i) := by
+    change Finite (F.group i ⧸ (F.group (i + 1)).subgroupOf (F.group i))
+    infer_instance
+  letI : Finite (Additive (chapter02LowerLayer F i)) := by
+    exact Finite.of_injective
+      (fun σ : Additive (chapter02LowerLayer F i) => (σ : chapter02LowerLayer F i))
+      (fun _ _ h => h)
+  letI : Finite (chapter02HigherLayerImage i D) := by
+    exact Finite.of_surjective f.rangeRestrict
+      (AddMonoidHom.rangeRestrict_surjective f)
+  have hzero (x : chapter02HigherLayerImage i D) : x = 0 := by
+    obtain ⟨n, hn, hnx⟩ := (isAddTorsion_of_finite x).exists_nsmul_eq_zero
+    apply Subtype.ext
+    have hnx' := congrArg
+      (fun y : chapter02HigherLayerImage i D => (y : l)) hnx
+    change n • (x : l) = 0 at hnx'
+    rw [nsmul_eq_mul] at hnx'
+    exact (mul_eq_zero.mp hnx').resolve_left (Nat.cast_ne_zero.mpr hn.ne')
+  constructor
+  intro σ τ
+  have hσ := hzero (f.rangeRestrict σ)
+  have hτ := hzero (f.rangeRestrict τ)
+  apply chapter02_higher_layer_additive_map_injective i D
+  exact Subtype.ext_iff.mp (hσ.trans hτ.symm)
 
 /-- The characteristic-zero positive subgroup is trivial. -/
 theorem chapter02_char_zero_positive_group_eq_bot

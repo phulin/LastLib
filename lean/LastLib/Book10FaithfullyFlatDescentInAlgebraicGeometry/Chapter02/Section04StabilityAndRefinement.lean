@@ -186,6 +186,21 @@ theorem FamilyTower.composite_map
     (G.composite.map ij) = (G.inner ij.1).map ij.2 ≫ F.map ij.1 := by
   rfl
 
+private theorem FamilyTower.composite_obj
+    {F : SchemeFamily S I} {J : I → Type w} (G : FamilyTower F J)
+    (ij : Σ i, J i) :
+    G.composite.obj ij = (G.inner ij.1).obj ij.2 := by
+  rfl
+
+private noncomputable def FamilyTower.explicitDescentData
+    {P : Pseudofunctor (LocallyDiscrete Schemeᵒᵖ) Cat.{v', u'}}
+    {F : SchemeFamily S I} {J : I → Type w} (G : FamilyTower F J)
+    (D : P.DescentData G.composite.map) :
+    P.DescentData
+      (fun ij : Σ i, J i => (G.inner ij.1).map ij.2 ≫ F.map ij.1) := by
+  change P.DescentData G.composite.map
+  exact D
+
 private noncomputable def FamilyTower.compositePullFunctor
     {P : Pseudofunctor (LocallyDiscrete Schemeᵒᵖ) Cat.{v', u'}}
     {F : SchemeFamily S I} {J : I → Type w} (G : FamilyTower F J) :
@@ -325,6 +340,7 @@ private noncomputable def FamilyTower.restrictedBaseChangeIso
             pullback.snd ((G.inner i).map j) g ≫ g
           exact pullback.condition)) α)
 
+set_option maxHeartbeats 10000000 in
 private noncomputable def FamilyTower.crossHom
     {P : Pseudofunctor (LocallyDiscrete Schemeᵒᵖ) Cat.{v', u'}}
     {F : SchemeFamily S I} {J : I → Type w} (G : FamilyTower F J)
@@ -337,7 +353,278 @@ private noncomputable def FamilyTower.crossHom
     (hK : (P.toDescentData ((G.inner k).baseChange g).map).IsEquivalence) :
     (P.map (a ≫ (G.inner i).map j).op.toLoc).toFunctor.obj (M i) ⟶
       (P.map g.op.toLoc).toFunctor.obj (M k) := by
-  sorry
+  let D' : P.DescentData
+      (fun ij : Σ i, J i => (G.inner ij.1).map ij.2 ≫ F.map ij.1) :=
+    G.explicitDescentData D
+  let K := P.toDescentData (fun l ↦ pullback.snd ((G.inner k).map l) g)
+  let source :=
+    (P.map (((G.inner i).map j).op.toLoc ≫ a.op.toLoc)).toFunctor.obj (M i)
+  let target := (P.map g.op.toLoc).toFunctor.obj (M k)
+  let : K.IsEquivalence := hK
+  let R :=
+    (Pseudofunctor.DescentData.pullFunctor P
+      (p := g) (f := (G.inner k).map)
+      (X' := fun l ↦ pullback ((G.inner k).map l) g)
+      (f' := fun l ↦ pullback.snd ((G.inner k).map l) g)
+      (α := fun l ↦ l)
+      (p' := fun l ↦ pullback.fst ((G.inner k).map l) g)
+      (fun l ↦ by
+        change pullback.fst ((G.inner k).map l) g ≫ (G.inner k).map l =
+          pullback.snd ((G.inner k).map l) g ≫ g
+        exact pullback.condition)).obj (G.restrictedDescentData D k)
+  let e := G.restrictedBaseChangeIso D k g (M k) (α k)
+  let alphaHom : ∀ (i : I) (j : J i),
+      (P.map ((G.inner i).map j).op.toLoc).toFunctor.obj (M i) ⟶
+        (G.restrictedDescentData D i).obj j := fun i j ↦ by
+    exact (α i).hom.hom j
+  let gammaHom : ∀ l,
+      (P.map (pullback.snd ((G.inner k).map l) g).op.toLoc).toFunctor.obj
+          ((P.map (((G.inner i).map j).op.toLoc ≫ a.op.toLoc)).toFunctor.obj (M i)) ⟶
+        (P.map (pullback.fst ((G.inner k).map l) g).op.toLoc).toFunctor.obj
+          ((G.restrictedDescentData D k).obj l) := fun l ↦ by
+    let f₁ := pullback.fst ((G.inner k).map l) g
+    let f₂ := pullback.snd ((G.inner k).map l) g
+    let c := f₂ ≫ a ≫ (G.inner i).map j
+    let d := f₂ ≫ a
+    have hsource :
+        d ≫ (G.inner i).map j ≫ F.map i =
+          f₂ ≫ g ≫ F.map k := by
+      simpa [d, Category.assoc] using congrArg (fun h => f₂ ≫ h) ha
+    have htarget :
+        f₁ ≫ (G.inner k).map l ≫ F.map k =
+          f₂ ≫ g ≫ F.map k := by
+      change
+        (pullback.fst ((G.inner k).map l) g ≫ (G.inner k).map l) ≫ F.map k =
+          (pullback.snd ((G.inner k).map l) g ≫ g) ≫ F.map k
+      rw [pullback.condition]
+    exact
+      (P.mapComp' (a ≫ (G.inner i).map j).op.toLoc f₂.op.toLoc
+        (f₂ ≫ a ≫ (G.inner i).map j).op.toLoc
+        (by simpa only [← Quiver.Hom.comp_toLoc, ← op_comp])).inv.toNatTrans.app
+        (M i) ≫
+      (P.mapComp' ((G.inner i).map j).op.toLoc (a.op.toLoc ≫ f₂.op.toLoc)
+          (f₂ ≫ a ≫ (G.inner i).map j).op.toLoc
+          (by simpa only [← Quiver.Hom.comp_toLoc, ← op_comp, Category.assoc])).hom.toNatTrans.app
+        (M i) ≫
+        (P.map d.op.toLoc).toFunctor.map (alphaHom i j) ≫
+        D'.hom (f₂ ≫ g ≫ F.map k) (i₁ := ⟨i, j⟩) (i₂ := ⟨k, l⟩)
+          d f₁ hsource htarget
+  let gamma : K.obj source ⟶ R :=
+    set_option backward.isDefEq.respectTransparency.types false in
+    set_option backward.isDefEq.respectTransparency false in by
+    refine { hom := gammaHom, comm := ?_ }
+    intro Y q l₁ l₂ f₁ f₂ hf₁ hf₂
+    let r₁ : pullback ((G.inner k).map l₁) g ⟶ (G.inner k).obj l₁ :=
+      pullback.fst ((G.inner k).map l₁) g
+    let r₂ : pullback ((G.inner k).map l₂) g ⟶ (G.inner k).obj l₂ :=
+      pullback.fst ((G.inner k).map l₂) g
+    dsimp [R, K, source, Pseudofunctor.toDescentData,
+      Pseudofunctor.DescentData.ofObj, FamilyTower.restrictedBaseChange,
+      Pseudofunctor.DescentData.pullFunctor,
+      Pseudofunctor.DescentData.pullFunctorObj]
+    rw [Pseudofunctor.DescentData.pullFunctorObjHom_eq _ _ _ _ _
+      (q ≫ g) (f₁ ≫ r₁) (f₂ ≫ r₂)]
+    rw [Pseudofunctor.LocallyDiscreteOpToCat.map_eq_pullHom_assoc
+      (gammaHom l₁) f₁ q (f₁ ≫ r₁) hf₁ (by simp [r₁]),
+      Pseudofunctor.LocallyDiscreteOpToCat.map_eq_pullHom
+      (gammaHom l₂) f₂ q (f₂ ≫ r₂) hf₂ (by simp [r₂])]
+    simp only [Category.assoc]
+    dsimp [Pseudofunctor.LocallyDiscreteOpToCat.pullHom]
+    simp only [Category.assoc, Cat.Hom.inv_hom_id_toNatTrans_app_assoc,
+      Cat.Hom.hom_inv_id_toNatTrans_app_assoc]
+    dsimp [gammaHom]
+    simp only [Functor.map_comp, Category.assoc]
+    rw [Pseudofunctor.LocallyDiscreteOpToCat.map_eq_pullHom
+      (D'.hom (pullback.snd ((G.inner k).map l₁) g ≫ g ≫ F.map k)
+        (i₁ := ⟨i, j⟩) (i₂ := ⟨k, l₁⟩)
+        (pullback.snd ((G.inner k).map l₁) g ≫ a) r₁
+        (by
+          change
+            (pullback.snd ((G.inner k).map l₁) g ≫ a) ≫
+                (G.inner i).map j ≫ F.map i =
+              (pullback.snd ((G.inner k).map l₁) g ≫ g) ≫ F.map k
+          simpa [Category.assoc] using
+            congrArg (fun h => pullback.snd ((G.inner k).map l₁) g ≫ h) ha)
+        (by
+          simpa only [r₁, Category.assoc] using
+            congrArg (fun h => h ≫ F.map k)
+              (pullback.condition :
+                pullback.fst ((G.inner k).map l₁) g ≫ (G.inner k).map l₁ =
+                  pullback.snd ((G.inner k).map l₁) g ≫ g))
+        )
+      f₁ (f₁ ≫ (pullback.snd ((G.inner k).map l₁) g ≫ a)) (f₁ ≫ r₁)
+      rfl rfl,
+      Pseudofunctor.LocallyDiscreteOpToCat.map_eq_pullHom
+      (D'.hom (pullback.snd ((G.inner k).map l₂) g ≫ g ≫ F.map k)
+        (i₁ := ⟨i, j⟩) (i₂ := ⟨k, l₂⟩)
+        (pullback.snd ((G.inner k).map l₂) g ≫ a) r₂
+        (by
+          change
+            (pullback.snd ((G.inner k).map l₂) g ≫ a) ≫
+                (G.inner i).map j ≫ F.map i =
+              (pullback.snd ((G.inner k).map l₂) g ≫ g) ≫ F.map k
+          simpa [Category.assoc] using
+            congrArg (fun h => pullback.snd ((G.inner k).map l₂) g ≫ h) ha)
+        (by
+          simpa only [r₂, Category.assoc] using
+            congrArg (fun h => h ≫ F.map k)
+              (pullback.condition :
+                pullback.fst ((G.inner k).map l₂) g ≫ (G.inner k).map l₂ =
+                  pullback.snd ((G.inner k).map l₂) g ≫ g))
+        )
+      f₂ (f₂ ≫ (pullback.snd ((G.inner k).map l₂) g ≫ a)) (f₂ ≫ r₂)
+      rfl rfl]
+    dsimp [r₁, r₂]
+    simp only [Category.assoc, Cat.Hom.hom_inv_id_toNatTrans_app_assoc,
+      Cat.Hom.inv_hom_id_toNatTrans_app_assoc]
+    rw [D'.pullHom_hom (i₁ := ⟨i, j⟩) (i₂ := ⟨k, l₁⟩) f₁
+      (pullback.snd ((G.inner k).map l₁) g ≫ g ≫ F.map k)
+      (q ≫ g ≫ F.map k)
+      (by
+        simpa only [Category.assoc] using
+          congrArg (fun h => h ≫ g ≫ F.map k) hf₁)
+      (pullback.snd ((G.inner k).map l₁) g ≫ a) r₁
+      (by
+        change
+          (pullback.snd ((G.inner k).map l₁) g ≫ a) ≫
+              (G.inner i).map j ≫ F.map i =
+            (pullback.snd ((G.inner k).map l₁) g ≫ g) ≫ F.map k
+        simpa [Category.assoc] using
+          congrArg (fun h => pullback.snd ((G.inner k).map l₁) g ≫ h) ha)
+      (by
+        simpa only [r₁, Category.assoc] using
+          congrArg (fun h => h ≫ F.map k)
+            (pullback.condition :
+              pullback.fst ((G.inner k).map l₁) g ≫ (G.inner k).map l₁ =
+                pullback.snd ((G.inner k).map l₁) g ≫ g))
+      (f₁ ≫ (pullback.snd ((G.inner k).map l₁) g ≫ a)) (f₁ ≫ r₁)
+      rfl rfl,
+      D'.pullHom_hom (i₁ := ⟨i, j⟩) (i₂ := ⟨k, l₂⟩) f₂
+      (pullback.snd ((G.inner k).map l₂) g ≫ g ≫ F.map k)
+      (q ≫ g ≫ F.map k)
+      (by
+        simpa only [Category.assoc] using
+          congrArg (fun h => h ≫ g ≫ F.map k) hf₂)
+      (pullback.snd ((G.inner k).map l₂) g ≫ a) r₂
+      (by
+        change
+          (pullback.snd ((G.inner k).map l₂) g ≫ a) ≫
+              (G.inner i).map j ≫ F.map i =
+            (pullback.snd ((G.inner k).map l₂) g ≫ g) ≫ F.map k
+        simpa [Category.assoc] using
+          congrArg (fun h => pullback.snd ((G.inner k).map l₂) g ≫ h) ha)
+      (by
+        simpa only [r₂, Category.assoc] using
+          congrArg (fun h => h ≫ F.map k)
+            (pullback.condition :
+              pullback.fst ((G.inner k).map l₂) g ≫ (G.inner k).map l₂ =
+                pullback.snd ((G.inner k).map l₂) g ≫ g))
+      (f₂ ≫ (pullback.snd ((G.inner k).map l₂) g ≫ a)) (f₂ ≫ r₂)
+      rfl rfl]
+    simp only [r₁, r₂]
+    have hcomp := D'.hom_comp (i₁ := ⟨i, j⟩) (i₂ := ⟨k, l₁⟩) (i₃ := ⟨k, l₂⟩)
+      (q ≫ g ≫ F.map k)
+      (f₁ ≫ pullback.snd ((G.inner k).map l₁) g ≫ a)
+      (f₁ ≫ pullback.fst ((G.inner k).map l₁) g)
+      (f₂ ≫ pullback.fst ((G.inner k).map l₂) g)
+      (by
+        change
+          (f₁ ≫ pullback.snd ((G.inner k).map l₁) g ≫ a) ≫
+              (G.inner i).map j ≫ F.map i =
+            q ≫ g ≫ F.map k
+        calc
+          (f₁ ≫ pullback.snd ((G.inner k).map l₁) g ≫ a) ≫
+                (G.inner i).map j ≫ F.map i =
+              f₁ ≫ pullback.snd ((G.inner k).map l₁) g ≫
+                (a ≫ (G.inner i).map j ≫ F.map i) := by
+                simp [Category.assoc]
+          _ = f₁ ≫ pullback.snd ((G.inner k).map l₁) g ≫
+                (g ≫ F.map k) := by rw [ha]
+          _ = q ≫ g ≫ F.map k := by
+            simpa only [Category.assoc] using
+              congrArg (fun h => h ≫ g ≫ F.map k) hf₁)
+      (by
+        change
+          (f₁ ≫ pullback.fst ((G.inner k).map l₁) g) ≫
+              (G.inner k).map l₁ ≫ F.map k =
+            q ≫ g ≫ F.map k
+        calc
+          (f₁ ≫ pullback.fst ((G.inner k).map l₁) g) ≫
+                (G.inner k).map l₁ ≫ F.map k =
+              f₁ ≫
+                (pullback.fst ((G.inner k).map l₁) g ≫
+                  (G.inner k).map l₁) ≫ F.map k := by
+                simp [Category.assoc]
+          _ = f₁ ≫
+                (pullback.snd ((G.inner k).map l₁) g ≫ g) ≫ F.map k := by
+                rw [pullback.condition]
+          _ = q ≫ g ≫ F.map k := by
+            simpa only [Category.assoc] using
+              congrArg (fun h => h ≫ g ≫ F.map k) hf₁)
+      (by
+        change
+          (f₂ ≫ pullback.fst ((G.inner k).map l₂) g) ≫
+              (G.inner k).map l₂ ≫ F.map k =
+            q ≫ g ≫ F.map k
+        calc
+          (f₂ ≫ pullback.fst ((G.inner k).map l₂) g) ≫
+                (G.inner k).map l₂ ≫ F.map k =
+              f₂ ≫
+                (pullback.fst ((G.inner k).map l₂) g ≫
+                  (G.inner k).map l₂) ≫ F.map k := by
+                simp [Category.assoc]
+          _ = f₂ ≫
+                (pullback.snd ((G.inner k).map l₂) g ≫ g) ≫ F.map k := by
+                rw [pullback.condition]
+          _ = q ≫ g ≫ F.map k := by
+            simpa only [Category.assoc] using
+              congrArg (fun h => h ≫ g ≫ F.map k) hf₂)
+    have hrestricted₁ :
+        (f₁ ≫ r₁) ≫ (G.inner k).map l₁ = q ≫ g := by
+      calc
+        (f₁ ≫ r₁) ≫ (G.inner k).map l₁ =
+            f₁ ≫ (r₁ ≫ (G.inner k).map l₁) := by simp [Category.assoc]
+        _ = f₁ ≫ (pullback.snd ((G.inner k).map l₁) g ≫ g) := by
+          dsimp [r₁]
+          rw [pullback.condition]
+        _ = q ≫ g := by
+          simpa only [Category.assoc] using congrArg (fun h => h ≫ g) hf₁
+    have hrestricted₂ :
+        (f₂ ≫ r₂) ≫ (G.inner k).map l₂ = q ≫ g := by
+      calc
+        (f₂ ≫ r₂) ≫ (G.inner k).map l₂ =
+            f₂ ≫ (r₂ ≫ (G.inner k).map l₂) := by simp [Category.assoc]
+        _ = f₂ ≫ (pullback.snd ((G.inner k).map l₂) g ≫ g) := by
+          dsimp [r₂]
+          rw [pullback.condition]
+        _ = q ≫ g := by
+          simpa only [Category.assoc] using congrArg (fun h => h ≫ g) hf₂
+    have hrestricted₁' :
+        (f₁ ≫ r₁) ≫ ((G.inner k).map l₁ ≫ F.map k) =
+          (q ≫ g) ≫ F.map k := by
+      calc
+        (f₁ ≫ r₁) ≫ ((G.inner k).map l₁ ≫ F.map k) =
+            ((f₁ ≫ r₁) ≫ (G.inner k).map l₁) ≫ F.map k :=
+          (Category.assoc _ _ _).symm
+        _ = (q ≫ g) ≫ F.map k := congrArg (fun h => h ≫ F.map k) hrestricted₁
+    have hrestricted₂' :
+        (f₂ ≫ r₂) ≫ ((G.inner k).map l₂ ≫ F.map k) =
+          (q ≫ g) ≫ F.map k := by
+      calc
+        (f₂ ≫ r₂) ≫ ((G.inner k).map l₂ ≫ F.map k) =
+            ((f₂ ≫ r₂) ≫ (G.inner k).map l₂) ≫ F.map k :=
+          (Category.assoc _ _ _).symm
+        _ = (q ≫ g) ≫ F.map k := congrArg (fun h => h ≫ F.map k) hrestricted₂
+    have hrestricted :
+        (G.restrictedDescentData D k).hom (q ≫ g) (f₁ ≫ r₁) (f₂ ≫ r₂)
+            hrestricted₁ hrestricted₂ =
+          D'.hom ((q ≫ g) ≫ F.map k) (i₁ := ⟨k, l₁⟩) (i₂ := ⟨k, l₂⟩)
+            (f₁ ≫ r₁) (f₂ ≫ r₂)
+            hrestricted₁' hrestricted₂' := by
+      rfl
+    rw [hrestricted]
+  apply K.preimage
+  exact gamma ≫ e.inv
 
 /- If every base change of every second-stage descent functor is an equivalence, refining a family
    does not change the effectiveness question for the outer family.  The base-change clause is

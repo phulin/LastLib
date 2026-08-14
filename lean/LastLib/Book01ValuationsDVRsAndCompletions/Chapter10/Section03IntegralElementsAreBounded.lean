@@ -463,6 +463,229 @@ theorem chapter10_extension_center_map_surjective
     (hA : vK.Integers A) :
     Function.Surjective
       (chapter10_extension_center_map (A := A) (B := B) (K := K) (L := L) vK hA) := by
+  classical
+  intro y
+  obtain ⟨P, hP⟩ := y
+  let f : B →+* L := algebraMap B L
+  have hf : Function.Injective f := IsIntegralClosure.algebraMap_injective B A L
+  let R : Subring L := f.range
+  let e : B ≃+* R :=
+    RingEquiv.ofBijective f.rangeRestrict
+      ⟨fun x y hxy => hf (congrArg Subtype.val hxy), f.rangeRestrict_surjective⟩
+  let I : Ideal R := Ideal.map e.toRingHom P
+  let : P.IsPrime := hP.1
+  let : I.IsPrime := Ideal.map_isPrime_of_equiv e
+  let A_P : LocalSubring L := LocalSubring.ofPrime R I
+  obtain ⟨W, hW⟩ := A_P.exists_le_valuationSubring
+  have hcontract : ∀ x : K,
+      algebraMap K L x ∈ W.toSubring ↔ x ∈ vK.valuationSubring.toSubring := by
+    intro x
+    constructor
+    · intro hxW
+      by_contra hx
+      have hx0 : x ≠ 0 := by
+        intro hx0
+        apply hx
+        simp [hx0]
+      have hxinv : x⁻¹ ∈ vK.valuationSubring.toSubring := by
+        exact (vK.valuationSubring.mem_or_inv_mem x).resolve_left hx
+      obtain ⟨a, ha⟩ := hA.exists_of_le_one
+        ((Valuation.mem_valuationSubring_iff vK x⁻¹).mp hxinv)
+      have hana : ¬ IsUnit a := by
+        intro hua
+        obtain ⟨a', ha'⟩ := isUnit_iff_exists_inv.mp hua
+        have ha'K : algebraMap A K a * algebraMap A K a' = 1 := by
+          simpa only [map_mul, map_one] using congrArg (algebraMap A K) ha'
+        have hmul : x⁻¹ * algebraMap A K a' = 1 := by
+          simpa [ha] using ha'K
+        have hax : algebraMap A K a' = x := by
+          have hmul' := congrArg (fun z : K => x * z) hmul
+          simpa [mul_assoc, hx0] using hmul'
+        apply hx
+        change vK x ≤ 1
+        rw [← hax]
+        exact hA.map_le_one a'
+      have hamax : a ∈ IsLocalRing.maximalIdeal A := by
+        rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
+        exact hana
+      have haP' : a ∈ P.comap (algebraMap A B) := by
+        rw [hP.2]
+        exact hamax
+      have haP : algebraMap A B a ∈ P := (Ideal.mem_comap.mp haP')
+      have hI : e (algebraMap A B a) ∈ I :=
+        Ideal.mem_map_of_mem e.toRingHom haP
+      have hAPmax : algebraMap R A_P.toSubring (e (algebraMap A B a)) ∈
+          IsLocalRing.maximalIdeal A_P.toSubring :=
+        (IsLocalization.AtPrime.to_map_mem_maximal_iff
+          A_P.toSubring I _).2 hI
+      let : IsLocalRing W.toLocalSubring.toSubring := W.toLocalSubring.isLocalRing
+      let : IsLocalHom (Subring.inclusion hW.1) := hW.2
+      have hWmax : Subring.inclusion hW.1
+          (algebraMap R A_P.toSubring (e (algebraMap A B a))) ∈
+            IsLocalRing.maximalIdeal W.toLocalSubring.toSubring := by
+        rw [IsLocalRing.mem_maximalIdeal, map_mem_nonunits_iff,
+          ← IsLocalRing.mem_maximalIdeal]
+        exact hAPmax
+      let z : W.toLocalSubring.toSubring :=
+        Subring.inclusion hW.1
+          (algebraMap R A_P.toSubring (e (algebraMap A B a)))
+      have hz : (z : L) = (algebraMap K L x)⁻¹ := by
+        change algebraMap B L (algebraMap A B a) = _
+        calc
+          algebraMap B L (algebraMap A B a) = algebraMap A L a :=
+            (IsScalarTower.algebraMap_apply A B L a).symm
+          _ = algebraMap K L (algebraMap A K a) :=
+            IsScalarTower.algebraMap_apply A K L a
+          _ = algebraMap K L (x⁻¹) := by rw [ha]
+          _ = (algebraMap K L x)⁻¹ := by rw [map_inv₀]
+      have hzmax : z ∈ IsLocalRing.maximalIdeal W.toLocalSubring.toSubring := by
+        simpa [z] using hWmax
+      have hznonunit : ¬ IsUnit z := by
+        rw [← mem_nonunits_iff, ← IsLocalRing.mem_maximalIdeal]
+        exact hzmax
+      have hx0L : algebraMap K L x ≠ 0 := by
+        intro hzero
+        apply hx0
+        exact (FaithfulSMul.algebraMap_injective K L) (by simpa using hzero)
+      let y' : W.toLocalSubring.toSubring := ⟨algebraMap K L x, hxW⟩
+      have hunit : IsUnit z := by
+        apply isUnit_iff_exists_inv.mpr
+        refine ⟨y', ?_⟩
+        apply Subtype.ext
+        change (z : L) * (algebraMap K L x) = 1
+        rw [hz]
+        exact inv_mul_cancel₀ hx0L
+      exact hznonunit hunit
+    · intro hx
+      obtain ⟨a, ha⟩ := hA.exists_of_le_one
+        ((Valuation.mem_valuationSubring_iff vK x).mp hx)
+      have hr : algebraMap B L (algebraMap A B a) ∈ R :=
+        ⟨algebraMap A B a, rfl⟩
+      have hAP : algebraMap B L (algebraMap A B a) ∈ A_P.toSubring :=
+        (LocalSubring.le_ofPrime R I) hr
+      have hW' : algebraMap B L (algebraMap A B a) ∈ W.toSubring :=
+        hW.1 hAP
+      have heq : algebraMap K L x = algebraMap B L (algebraMap A B a) := by
+        calc
+          algebraMap K L x = algebraMap K L (algebraMap A K a) := by rw [ha]
+          _ = algebraMap A L a := (IsScalarTower.algebraMap_apply A K L a).symm
+          _ = algebraMap B L (algebraMap A B a) :=
+            IsScalarTower.algebraMap_apply A B L a
+      rw [heq]
+      exact hW'
+  let G := ULift.{max u10K u10Γ} W.ValueGroup
+  let : LinearOrderedCommMonoidWithZero G := by
+    change LinearOrderedCommMonoidWithZero (ULift.{max u10K u10Γ} W.ValueGroup)
+    apply Function.Injective.linearOrderedCommMonoidWithZero ULift.down ULift.down_injective
+    all_goals (intros; rfl)
+  let : CommGroupWithZero G := by
+    change CommGroupWithZero (ULift.{max u10K u10Γ} W.ValueGroup)
+    apply Function.Injective.commGroupWithZero ULift.down ULift.down_injective
+    all_goals (intros; rfl)
+  let : LinearOrderedCommGroupWithZero G :=
+    { __ := (inferInstance : LinearOrderedCommMonoidWithZero G)
+      __ := (inferInstance : CommGroupWithZero G) }
+  let fW : W.ValueGroup →*₀ G :=
+    { toFun := ULift.up
+      map_one' := rfl
+      map_zero' := rfl
+      map_mul' := by intros; rfl }
+  let w' : Valuation L G := W.valuation.map fW (by
+    intro a b hab
+    change ULift.up a ≤ ULift.up b
+    exact hab)
+  have hwext : vK.IsEquiv (w'.comap (algebraMap K L)) := by
+    apply Valuation.isEquiv_of_val_le_one
+    intro x
+    change vK x ≤ 1 ↔ ULift.up (W.valuation (algebraMap K L x)) ≤ (1 : G)
+    change vK x ≤ 1 ↔ W.valuation (algebraMap K L x) ≤ 1
+    rw [← Valuation.mem_valuationSubring_iff,
+      ← Valuation.mem_valuationSubring_iff]
+    rw [ValuationSubring.valuationSubring_valuation]
+    exact (hcontract x).symm
+  let W' : Chapter10HeterogeneousValuationExtension L vK :=
+    { valueGroup := G
+      valuation := w'
+      isExtension := hwext }
+  refine ⟨Quotient.mk _ W', ?_⟩
+  apply Subtype.ext
+  ext b
+  simp only [chapter10_extension_center_map, Quotient.lift_mk, chapter10_extension_center,
+    Ideal.mem_comap, Valuation.mem_maximalIdeal_iff]
+  change (algebraMap B L) b ∈ W.nonunits ↔ b ∈ P
+  let r : R := e b
+  let z : A_P.toSubring := algebraMap R A_P.toSubring r
+  let zW : W.toLocalSubring.toSubring := Subring.inclusion hW.1 z
+  have hzW_eq : (zW : L) = algebraMap B L b := by
+    change algebraMap B L b = algebraMap B L b
+    rfl
+  have hzunit : IsUnit zW ↔ IsUnit z := by
+    let : IsLocalRing W.toLocalSubring.toSubring := W.toLocalSubring.isLocalRing
+    let : IsLocalHom (Subring.inclusion hW.1) := hW.2
+    exact isUnit_map_iff (Subring.inclusion hW.1) z
+  let eW : W ≃+* W.toLocalSubring.toSubring :=
+    { toFun := fun a => ⟨a, a.property⟩
+      invFun := fun a => ⟨a, a.property⟩
+      left_inv := by intro a; rfl
+      right_inv := by intro a; rfl
+      map_add' := by intros; rfl
+      map_mul' := by intros; rfl }
+  have hraw : (algebraMap B L b) ∈ W.nonunits ↔ ¬ IsUnit zW := by
+    let aW : W := ⟨algebraMap B L b, by
+      change algebraMap B L b ∈ W.toLocalSubring.toSubring
+      exact zW.property⟩
+    have haW : (algebraMap B L b) ∈ W.nonunits ↔ ¬ IsUnit aW := by
+      rw [show algebraMap B L b = (aW : L) by rfl, W.coe_mem_nonunits_iff,
+        IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
+    have heW : eW aW = zW := by
+      apply Subtype.ext
+      rfl
+    calc
+      (algebraMap B L b) ∈ W.nonunits ↔ ¬ IsUnit aW := haW
+      _ ↔ ¬ IsUnit (eW aW) := by
+        constructor
+        · intro h hu
+          exact h (hu.map eW.toRingHom)
+        · intro h hu
+          exact h (hu.map eW.symm.toRingHom)
+      _ ↔ ¬ IsUnit zW := by rw [heW]
+  rw [hraw, hzunit]
+  have hnon : ¬ IsUnit z ↔ e b ∈ I := by
+    have hzprime : IsUnit z ↔ e b ∈ I.primeCompl := by
+      simpa [z, r, A_P] using
+        (IsLocalization.AtPrime.isUnit_to_map_iff
+          (LocalSubring.ofPrime R I).toSubring I (e b))
+    rw [hzprime, Ideal.mem_primeCompl_iff]
+    simp only [not_not]
+  have heI : e b ∈ I ↔ b ∈ P := by
+    constructor
+    · intro hb
+      rcases (Ideal.mem_map_iff_of_surjective e.toRingHom e.surjective).mp hb with
+        ⟨c, hc, hcb⟩
+      exact e.injective hcb ▸ hc
+    · intro hb
+      exact Ideal.mem_map_of_mem e.toRingHom hb
+  calc
+    ¬ IsUnit z ↔ e b ∈ I := hnon
+    _ ↔ b ∈ P := heI
+
+/-- The extension-center correspondence remains available for an algebraic
+extension, without imposing finite-dimensionality on the ambient extension.
+This is the general form used by the book before specializing to finite
+extensions. -/
+theorem chapter10_algebraic_extension_prime_valuation_correspondence
+    {A B : Type*} {K : Type u10K} {L : Type u10L} {Γ : Type u10Γ}
+    [CommRing A] [IsDomain A] [ValuationRing A] [IsIntegrallyClosed A]
+    [Field K] [Algebra A K] [IsFractionRing A K]
+    [Field L] [Algebra K L] [Algebra.IsAlgebraic K L]
+    [Algebra A L] [IsScalarTower A K L]
+    [CommRing B] [Algebra A B] [Algebra B L] [IsScalarTower A B L]
+    [IsIntegralClosure B A L]
+    [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ)
+    (hA : vK.Integers A) :
+    Nonempty
+      (Chapter10ValuationExtensionClass (L := L) vK ≃
+        {P : Ideal B // Chapter10PrimeAboveMaximal (A := A) (B := B) P}) := by
   sorry
 
 /-- Distinct valuation-extension classes have distinct centers. -/

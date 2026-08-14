@@ -47,11 +47,13 @@ theorem baseChangeLineBundle_is_pullback {X S T : Scheme.{u}} (f : X ⟶ S) (g :
   not a hidden equality between an arbitrary upstairs bundle and a pullback. -/
 theorem lineBundle_fpqc_effective_descent
     {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
-    (hf : IsFinitePresentation f) (hg : FpqcCoverData g)
+    (hg : FpqcCoverData g)
     (D : FpqcLineBundleDescentDatum f g) :
     ∃ L : LineBundle X,
       Nonempty (LineBundleDescentRealization D.descent L) := by
-  sorry
+  exact lineBundleDescentDatum_effective_via_chapter09
+    (baseChangeToSource f g) D.descent
+    (baseChangeToSource_fpqcCoverData f g hg)
 
 theorem relative_ampleness_baseChange
     {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S) (L : LineBundle X)
@@ -104,7 +106,7 @@ theorem polarized_quasiProjective_effective_descent
     ∃ L : LineBundle X,
       Nonempty (LineBundleDescentRealization D.descent.descent L) ∧
         IsAmple f L ∧ HasLocalFiniteRankEmbeddingFor f L := by
-  obtain ⟨L, hL⟩ := lineBundle_fpqc_effective_descent f g hf hg D.descent
+  obtain ⟨L, hL⟩ := lineBundle_fpqc_effective_descent f g hg D.descent
   have hample : IsAmple f L :=
     relative_ampleness_of_descended_lineBundle f g L D.lineBundle D.descent
       hL (by

@@ -2,14 +2,16 @@ import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.Depende
 import Mathlib.Analysis.Calculus.BumpFunction.Convolution
 import Mathlib.Analysis.Calculus.Deriv.Support
 import Mathlib.Analysis.Calculus.MeanValue
+import Mathlib.RingTheory.Ideal.Quotient.HasFiniteQuotients
 
 namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06
 
 noncomputable section
 
-open MeasureTheory Set Filter
-open scoped BigOperators Topology ContDiff
+open MeasureTheory Set Filter NumberField Topology
+open scoped BigOperators Topology ContDiff Pointwise
 open LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05
+open LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter03
 
 /-! ### 6.5. Removing the truncations -/
 
@@ -1210,7 +1212,186 @@ theorem chapter06_smoothed_prime_sum_dominated_convergence
     Tendsto (fun n => chapter06PrimeContribution K
       (chapter06SmoothedTestFunction η F n)) atTop
       (𝓝 (chapter06PrimeContribution K F)) := by
-  sorry
+  classical
+  let G : ℕ → ℝ → ℝ :=
+    fun n => chapter06SmoothedTestFunction η F n
+  have hcorr : Tendsto
+      (fun n => chapter06OriginCorrectionFactor η F n) atTop (𝓝 1) :=
+    chapter06_origin_correction_factor_tendsto_one hη hF
+  rcases hη with ⟨hηint, hηcompact, hηsupport, hηdiff, hηnonneg,
+    hηeven, hηnorm, hηconv⟩
+  obtain ⟨RF₀, hRF⟩ :=
+    (Metric.isBounded_iff_subset_closedBall (0 : ℝ)).1
+      hF.compactSupport.isBounded
+  let RF : ℝ := max RF₀ 0
+  have hRF_nonneg : 0 ≤ RF := by
+    dsimp [RF]
+    exact le_max_right _ _
+  have hFsupport : Function.support F ⊆ Icc (-RF) RF := by
+    intro x hx
+    have hx' : x ∈ Metric.closedBall (0 : ℝ) RF₀ :=
+      hRF (subset_closure hx)
+    have habs : |x| ≤ RF₀ := by
+      simpa [Metric.mem_closedBall, Real.dist_eq] using hx'
+    have habs' : |x| ≤ RF := habs.trans (le_max_left _ _)
+    exact abs_le.mp habs'
+  rcases hηsupport with ⟨Rη, hRη, hηsupport⟩
+  let T : ℝ := Rη + RF
+  have hT : 0 ≤ T := by
+    dsimp [T]
+    linarith
+  have hFsupportT : chapter06SupportWithin F T := by
+    intro x hx
+    have hx' := hFsupport hx
+    constructor <;> linarith [hx'.1, hx'.2, hRη, hRF_nonneg]
+  have hconv_support : ∀ n : ℕ,
+      Function.support (chapter06SmoothedConvolution η F n) ⊆ Icc (-T) T := by
+    intro n x hx
+    have hxsum : x ∈ Function.support (η n) + Function.support F := by
+      apply (MeasureTheory.support_convolution_subset
+        (L := ContinuousLinearMap.lsmul ℝ ℝ)
+        (μ := (volume : Measure ℝ)) (f := η n) (g := F))
+      change chapter06SmoothedConvolution η F n x ≠ 0 at hx
+      exact hx
+    rcases hxsum with ⟨a, ha, b, hb, rfl⟩
+    have ha' := hηsupport n ha
+    have hb' := hFsupport hb
+    exact ⟨by linarith [ha'.1, hb'.1], by linarith [ha'.2, hb'.2]⟩
+  have hGsupport : ∀ n : ℕ, Function.support (G n) ⊆ Icc (-T) T := by
+    intro n x hx
+    change G n x ≠ 0 at hx
+    have hxconv : chapter06SmoothedConvolution η F n x ≠ 0 := by
+      intro hxzero
+      apply hx
+      simp [G, chapter06SmoothedTestFunction, hxzero]
+    exact hconv_support n hxconv
+  let B : ℕ := Nat.ceil (Real.exp T)
+  let M : ℕ := Nat.ceil (T / Real.log (2 : ℝ))
+  let SP : Set (Chapter06PrimeIdeal K) :=
+    {P | chapter06PrimeIdealNorm P ≤ B}
+  let U : Set Chapter06PositiveExponent :=
+    {m | m.1 ≤ M}
+  let S : Set (Chapter06PrimePower K) := SP ×ˢ U
+  have hSP : SP.Finite := by
+    simpa [SP, B, chapter06PrimeIdealNorm, chapter03PrimeIdealNorm,
+      chapter03AbsoluteIdealNorm] using
+      (Ring.HasFiniteQuotients.finite_absNorm_heightOneSpectrum_le
+        (R := 𝓞 K) B)
+  have hU : U.Finite := by
+    simpa [U] using
+      (Set.finite_le_nat M).preimage (by
+        intro a _ b _ hab
+        exact Subtype.ext hab)
+  have hS : S.Finite := by
+    exact hSP.prod hU
+  have hterm_mem : ∀ {H : ℝ → ℝ},
+      chapter06SupportWithin H T → ∀ q : Chapter06PrimePower K,
+        chapter06PrimePowerTerm H q ≠ 0 → q ∈ S := by
+    intro H hH q hterm
+    change chapter06PrimeIdealNorm q.1 ≤ B ∧ q.2.1 ≤ M
+    have hNgt : 1 < chapter06PrimeIdealNorm q.1 :=
+      chapter03_prime_ideal_norm_gt_one q.1
+    have hlog : 0 < Real.log (chapter06PrimeIdealNorm q.1 : ℝ) := by
+      exact Real.log_pos (by exact_mod_cast hNgt)
+    have hHq : H ((q.2.1 : ℝ) *
+        Real.log (chapter06PrimeIdealNorm q.1 : ℝ)) ≠ 0 := by
+      intro hzero
+      apply hterm
+      simp [chapter06PrimePowerTerm, hzero]
+    have hmem : ((q.2.1 : ℝ) *
+        Real.log (chapter06PrimeIdealNorm q.1 : ℝ)) ∈ Function.support H := hHq
+    have hbound : (q.2.1 : ℝ) *
+        Real.log (chapter06PrimeIdealNorm q.1 : ℝ) ≤ T :=
+      hH hmem |>.2
+    have hone : (1 : ℝ) ≤ (q.2.1 : ℝ) := by
+      exact_mod_cast (Nat.succ_le_iff.mpr q.2.2)
+    have hlog_le : Real.log (chapter06PrimeIdealNorm q.1 : ℝ) ≤ T := by
+      have hmul : Real.log (chapter06PrimeIdealNorm q.1 : ℝ) ≤
+          (q.2.1 : ℝ) * Real.log (chapter06PrimeIdealNorm q.1 : ℝ) := by
+        simpa only [one_mul] using
+          (mul_le_mul_of_nonneg_right hone (le_of_lt hlog))
+      exact hmul.trans hbound
+    have hNreal : (chapter06PrimeIdealNorm q.1 : ℝ) ≤ Real.exp T :=
+      Real.le_exp_of_log_le hlog_le
+    have hNnat : chapter06PrimeIdealNorm q.1 ≤ B := by
+      have hceil : Real.exp T ≤ (B : ℝ) := by
+        exact Nat.le_ceil _
+      exact_mod_cast hNreal.trans hceil
+    have hlog2 : 0 < Real.log (2 : ℝ) := Real.log_pos (by norm_num)
+    have hN2 : (2 : ℝ) ≤ chapter06PrimeIdealNorm q.1 := by
+      have hN2nat : 2 ≤ chapter06PrimeIdealNorm q.1 := by omega
+      exact_mod_cast hN2nat
+    have hlog2_le : Real.log (2 : ℝ) ≤
+        Real.log (chapter06PrimeIdealNorm q.1 : ℝ) :=
+      Real.log_le_log (by norm_num) hN2
+    have hprod_bound : (q.2.1 : ℝ) * Real.log (2 : ℝ) ≤ T := by
+      exact (mul_le_mul_of_nonneg_left hlog2_le (by positivity)).trans hbound
+    have hdiv : (q.2.1 : ℝ) ≤ T / Real.log (2 : ℝ) := by
+      exact (le_div_iff₀ hlog2).2 hprod_bound
+    have hnat : q.2.1 ≤ M := by
+      have hceil : T / Real.log (2 : ℝ) ≤ (M : ℝ) := by
+        exact Nat.le_ceil _
+      exact_mod_cast hdiv.trans hceil
+    exact ⟨hNnat, hnat⟩
+  have hsum_eq : ∀ {H : ℝ → ℝ}, chapter06SupportWithin H T →
+      (∑' q : Chapter06PrimePower K, chapter06PrimePowerTerm H q) =
+        ∑ q ∈ hS.toFinset, chapter06PrimePowerTerm H q := by
+    intro H hH
+    rw [tsum_eq_sum (s := hS.toFinset)]
+    intro q hq
+    by_contra hterm
+    apply hq
+    exact hS.mem_toFinset.mpr (hterm_mem hH q hterm)
+  have hphi_tendsto : ∀ y : ℝ,
+      Tendsto (fun n => chapter06SmoothedConvolution η F n y) atTop
+        (𝓝 (F y)) := by
+    intro y
+    have hphi_cont : Continuous (fun x : ℝ => F (y - x)) := by
+      exact hF.continuous.comp (continuous_const.sub continuous_id)
+    have hphi_compact : HasCompactSupport (fun x : ℝ => F (y - x)) := by
+      let e : ℝ ≃ₜ ℝ := (Homeomorph.neg ℝ).trans (Homeomorph.addLeft y)
+      have he : IsClosedEmbedding (fun x : ℝ => y - x) := by
+        convert e.isClosedEmbedding using 1
+        ext x
+        simp [e, sub_eq_add_neg]
+      change HasCompactSupport (F ∘ fun x : ℝ => y - x)
+      exact hF.compactSupport.comp_isClosedEmbedding he
+    have hlim := hηconv (fun x : ℝ => F (y - x)) hphi_cont hphi_compact
+    have heq : ∀ n, chapter06SmoothedConvolution η F n y =
+        ∫ x : ℝ, η n x * F (y - x) := by
+      intro n
+      simp [chapter06SmoothedConvolution, chapter05Convolution,
+        MeasureTheory.convolution_def]
+    simpa only [heq, sub_zero] using hlim
+  have hterm_tendsto : ∀ q : Chapter06PrimePower K,
+      Tendsto (fun n => chapter06PrimePowerTerm (G n) q) atTop
+        (𝓝 (chapter06PrimePowerTerm F q)) := by
+    intro q
+    let y : ℝ := (q.2.1 : ℝ) *
+      Real.log (chapter06PrimeIdealNorm q.1 : ℝ)
+    have hy := hphi_tendsto y
+    have hGy : Tendsto (fun n => G n y) atTop (𝓝 (F y)) := by
+      simpa [G, chapter06SmoothedTestFunction] using hcorr.mul hy
+    simpa [chapter06PrimePowerTerm, y] using
+      (tendsto_const_nhds.mul hGy)
+  have hfinite : Tendsto
+      (fun n => ∑ q ∈ hS.toFinset, chapter06PrimePowerTerm (G n) q) atTop
+        (𝓝 (∑ q ∈ hS.toFinset, chapter06PrimePowerTerm F q)) := by
+    exact tendsto_finsetSum _ (fun q _ => hterm_tendsto q)
+  have hGsum : ∀ n : ℕ, chapter06PrimeContribution K (G n) =
+      2 * ∑ q ∈ hS.toFinset, chapter06PrimePowerTerm (G n) q := by
+    intro n
+    unfold chapter06PrimeContribution
+    rw [hsum_eq (hGsupport n)]
+  have hFsum : chapter06PrimeContribution K F =
+      2 * ∑ q ∈ hS.toFinset, chapter06PrimePowerTerm F q := by
+    unfold chapter06PrimeContribution
+    rw [hsum_eq hFsupportT]
+  have hresult : Tendsto (fun n => chapter06PrimeContribution K (G n)) atTop
+      (𝓝 (chapter06PrimeContribution K F)) := by
+    simpa only [hGsum, hFsum] using
+      (tendsto_const_nhds.mul hfinite)
+  simpa [G] using hresult
 
 theorem chapter06_smoothed_archimedean_terms_converge
     {η : ℕ → ℝ → ℝ} {F : ℝ → ℝ}

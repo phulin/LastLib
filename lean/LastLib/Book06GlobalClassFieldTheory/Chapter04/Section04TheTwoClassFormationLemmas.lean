@@ -89,8 +89,10 @@ theorem chapter04_real_place_tate_terms_are_retained
     {G : Type} [Group G] [Fintype G]
     (U : Chapter04FundamentalClass (G := G))
     (HYP : Chapter04ClassFormationHypotheses U) :
-    ∀ H : Subgroup G,
-      IsIso (chapter04SubgroupCapMap U H 2) := by
+    Nonempty (Chapter04RealPlaceTateConvention U.C) ∧
+      ∀ H : Subgroup G,
+        IsIso (chapter04SubgroupCapMap U H 2) := by
+  refine ⟨⟨HYP.realPlaceTate⟩, ?_⟩
   intro H
   exact chapter04_class_formation_isomorphism U H 2 HYP
 

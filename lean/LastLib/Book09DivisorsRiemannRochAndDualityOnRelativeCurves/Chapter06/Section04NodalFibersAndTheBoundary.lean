@@ -5,6 +5,7 @@ namespace LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter06
 noncomputable section
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11
 open LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter01
 open RelativeScheme
@@ -199,36 +200,43 @@ theorem chapter06_nodal_smoothing_section_ideal_eq_point_kernel
     apply Ideal.ker_quotient_lift
   rw [hker, chapter06_mvPolynomial_eval₂_kernel_fin_two]
 
+/-!
+The local ring used for the section obstruction must be the stalk over the
+closed point of the base.  Localizing at the complement of the section kernel
+would invert `π`, and therefore localize at the generic point of the section;
+the section ideal is principal there.  The preimage of the units of the local
+base is the complement of the maximal ideal over the closed point whenever the
+section passes through the node; for a DVR with uniformizer `π` this ideal is
+`(π, x, y)`.  It is a multiplicative set without any extra primality proof.
+-/
 def chapter06NodalSmoothingSectionPointComplement
-    (R : Type u) [CommRing R] [IsDomain R] (π : R) :
+    (R : Type u) [CommRing R] [IsLocalRing R] (π : R) :
     Submonoid (chapter06NodalSmoothingTotalRing R π) where
-  carrier := {a | a ∉ chapter06NodalSmoothingSectionPointKernel R π}
+  carrier := {a | IsUnit (chapter06NodalSmoothingSectionMap R π a)}
   one_mem' := by
-    intro h
-    change chapter06NodalSmoothingSectionMap R π 1 = 0 at h
-    simp only [map_one] at h
-    exact (one_ne_zero : (1 : R) ≠ 0) h
+    change IsUnit (chapter06NodalSmoothingSectionMap R π 1)
+    simp
   mul_mem' := by
-    intro a b ha hb hab
-    change chapter06NodalSmoothingSectionMap R π (a * b) = 0 at hab
-    rw [map_mul] at hab
-    rcases mul_eq_zero.mp hab with h | h
-    · exact ha h
-    · exact hb h
+    intro a b ha hb
+    change IsUnit (chapter06NodalSmoothingSectionMap R π (a * b))
+    change IsUnit (chapter06NodalSmoothingSectionMap R π a) at ha
+    change IsUnit (chapter06NodalSmoothingSectionMap R π b) at hb
+    rw [map_mul]
+    exact ha.mul hb
 
 abbrev Chapter06NodalSmoothingSectionPointLocalRing
-    (R : Type u) [CommRing R] [IsDomain R] (π : R) :=
+    (R : Type u) [CommRing R] [IsLocalRing R] [IsDomain R] (π : R) :=
   Localization (chapter06NodalSmoothingSectionPointComplement R π)
 
 def chapter06NodalSmoothingSectionPointLocalIdeal
-    (R : Type u) [CommRing R] [IsDomain R] (π : R) :
+    (R : Type u) [CommRing R] [IsLocalRing R] [IsDomain R] (π : R) :
     Ideal (Chapter06NodalSmoothingSectionPointLocalRing R π) :=
   Ideal.map (algebraMap (chapter06NodalSmoothingTotalRing R π)
       (Chapter06NodalSmoothingSectionPointLocalRing R π))
     (chapter06NodalSmoothingSectionIdeal R π)
 
 def Chapter06NodalSmoothingSectionCartierObstruction
-    (R : Type u) [CommRing R] [IsDomain R] (π : R) : Prop :=
+    (R : Type u) [CommRing R] [IsLocalRing R] [IsDomain R] (π : R) : Prop :=
   ¬ ∃ a : Chapter06NodalSmoothingSectionPointLocalRing R π,
     chapter06NodalSmoothingSectionPointLocalIdeal R π =
       Ideal.span ({a} : Set (Chapter06NodalSmoothingSectionPointLocalRing R π))
@@ -327,7 +335,110 @@ theorem chapter06_nodal_smoothing_section_is_not_globally_principal
     ¬ ∃ a : chapter06NodalSmoothingTotalRing R π,
       chapter06NodalSmoothingSectionIdeal R π = Ideal.span ({a} : Set _) :=
 by
-  sorry
+  rintro ⟨a, ha⟩
+  let k := chapter06NodalSmoothingSpecialFiberField R
+  let B := chapter06NodalSmoothingSpecialFiberRing R
+  let qR := Ideal.Quotient.mk (chapter06NodalSmoothingEquationIdeal R π)
+  let qk := Ideal.Quotient.mk
+    (Ideal.span ({
+      MvPolynomial.X (0 : Fin 2) * MvPolynomial.X (1 : Fin 2)
+    } : Set (MvPolynomial (Fin 2) k)))
+  have hπ_node :
+      π ∈ Ideal.map (chapter06NodalSmoothingSectionMap R π)
+        (chapter06NodalSmoothingNodeIdeal R π) := by
+    have hx :
+        qR (MvPolynomial.X (0 : Fin 2)) ∈
+          chapter06NodalSmoothingNodeIdeal R π := by
+      apply Ideal.mem_map_of_mem
+      exact Ideal.subset_span (by simp)
+    have hx' := Ideal.mem_map_of_mem
+      (chapter06NodalSmoothingSectionMap R π) hx
+    simpa [qR, chapter06NodalSmoothingSectionMap,
+      Ideal.Quotient.lift_mk] using hx'
+  have hπmax : π ∈ IsLocalRing.maximalIdeal R :=
+    P.section_through_node hπ_node
+  have hπ0 : algebraMap R k π = 0 := by
+    change algebraMap R (IsLocalRing.ResidueField R) π = 0
+    rw [IsLocalRing.ResidueField.algebraMap_eq,
+      IsLocalRing.residue_eq_zero_iff]
+    exact hπmax
+  let p : MvPolynomial (Fin 2) R →+* MvPolynomial (Fin 2) k :=
+    MvPolynomial.eval₂Hom (MvPolynomial.C.comp (algebraMap R k))
+      (fun i => MvPolynomial.X i)
+  let F : chapter06NodalSmoothingTotalRing R π →+* B :=
+    Ideal.Quotient.lift
+      (chapter06NodalSmoothingEquationIdeal R π)
+      (qk.comp p) (by
+          have hEq :
+              chapter06NodalSmoothingEquationIdeal R π ≤
+                RingHom.ker (qk.comp p) := by
+            refine Ideal.span_le.2 ?_
+            intro z hz
+            rcases Set.mem_singleton_iff.mp hz with rfl
+            change (qk.comp p)
+              (MvPolynomial.X (0 : Fin 2) * MvPolynomial.X (1 : Fin 2) -
+                MvPolynomial.C (π ^ 2)) = 0
+            simp only [p, MvPolynomial.eval₂Hom_X', MvPolynomial.eval₂Hom_C,
+              RingHom.coe_comp, Function.comp_apply, map_sub, map_mul,
+              map_pow, hπ0, map_zero]
+            have hzero : (0 : B) ^ (2 : ℕ) = 0 := by simp
+            rw [hzero, sub_zero]
+            rw [← map_mul]
+            rw [Ideal.Quotient.eq_zero_iff_mem]
+            exact Ideal.subset_span (by simp)
+          exact fun z hz => hEq hz)
+  have hI_le_node :
+      Ideal.map F (chapter06NodalSmoothingSectionIdeal R π) ≤
+        chapter10NodeIdeal k := by
+    rw [chapter06NodalSmoothingSectionIdeal, Ideal.map_map]
+    apply Ideal.map_le_iff_le_comap.2
+    refine Ideal.span_le.2 ?_
+    intro z hz
+    rcases hz with rfl | rfl
+    · have hx :
+          qk (MvPolynomial.X (0 : Fin 2)) ∈ chapter10NodeIdeal k := by
+        apply Ideal.mem_map_of_mem
+        exact Ideal.subset_span (by simp)
+      simpa [F, p, qR, hπ0] using hx
+    · have hy :
+          qk (MvPolynomial.X (1 : Fin 2)) ∈ chapter10NodeIdeal k := by
+        apply Ideal.mem_map_of_mem
+        exact Ideal.subset_span (by simp)
+      simpa [F, p, qR, hπ0] using hy
+  have hnode_le_image :
+      chapter10NodeIdeal k ≤ Ideal.span ({F a} : Set B) := by
+    rw [chapter10NodeIdeal]
+    apply Ideal.map_le_iff_le_comap.2
+    refine Ideal.span_le.2 ?_
+    intro z hz
+    rcases hz with rfl | rfl
+    · have hx :
+          qR (MvPolynomial.X (0 : Fin 2) -
+            MvPolynomial.C π) ∈
+            chapter06NodalSmoothingSectionIdeal R π := by
+          apply Ideal.mem_map_of_mem
+          exact Ideal.subset_span (by simp)
+      have hx' := Ideal.mem_map_of_mem F hx
+      rw [ha] at hx'
+      simpa [F, p, qR, hπ0, Ideal.Quotient.eq_zero_iff_mem,
+        Ideal.map_span] using hx'
+    · have hy :
+          qR (MvPolynomial.X (1 : Fin 2) -
+            MvPolynomial.C π) ∈
+            chapter06NodalSmoothingSectionIdeal R π := by
+          apply Ideal.mem_map_of_mem
+          exact Ideal.subset_span (by simp)
+      have hy' := Ideal.mem_map_of_mem F hy
+      rw [ha] at hy'
+      simpa [F, p, qR, hπ0, Ideal.Quotient.eq_zero_iff_mem,
+        Ideal.map_span] using hy'
+  have himage_le_node :
+      Ideal.span ({F a} : Set B) ≤ chapter10NodeIdeal k := by
+    have h := hI_le_node
+    rw [ha] at h
+    simpa [Ideal.map_span] using h
+  exact chapter10_node_ideal_is_not_principal k ⟨F a,
+    le_antisymm hnode_le_image himage_le_node⟩
 
 theorem chapter06_nodal_smoothing_section_is_not_cartier
     (R : Type u) [CommRing R] [IsLocalRing R] [IsDomain R] (π : R)

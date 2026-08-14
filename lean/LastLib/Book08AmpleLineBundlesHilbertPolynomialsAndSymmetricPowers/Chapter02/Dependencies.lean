@@ -8,6 +8,7 @@ import Mathlib.Algebra.Category.ModuleCat.Stalk
 import Mathlib.Algebra.Category.Grp.Limits
 import Mathlib.AlgebraicGeometry.Fiber
 import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+import Mathlib.AlgebraicGeometry.Morphisms.Affine
 import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
 import Mathlib.AlgebraicGeometry.Morphisms.Immersion
 import Mathlib.AlgebraicGeometry.Morphisms.Proper
@@ -316,21 +317,21 @@ noncomputable def chapter02CanonicalRelativeProjectiveBundle
     Chapter02CanonicalProjectiveBundleData E :=
   Classical.choice (chapter02_canonical_relative_projective_bundle_exists S E)
 
-private def chapter02LineBundleToChapter01
+def chapter02LineBundleToChapter01
     {S : Scheme.{u}} (L : Chapter02LineBundle S) :
     Chapter01.Chapter01LineBundle S where
   module := L.carrier
   isLineBundle :=
     chapter02_invertible_module_iff_chapter01_line_bundle.mp L.invertible
 
-private def chapter01LineBundleToChapter02
+def chapter01LineBundleToChapter02
     {S : Scheme.{u}} (L : Chapter01.Chapter01LineBundle S) :
     Chapter02LineBundle S where
   carrier := L.module
   invertible :=
     chapter02_invertible_module_iff_chapter01_line_bundle.mpr L.isLineBundle
 
-private def chapter02InvertibleQuotientPairToChapter01
+def chapter02InvertibleQuotientPairToChapter01
     {S T : Scheme.{u}} {E : S.Modules} (f : T ⟶ S)
     (p : Chapter02InvertibleQuotientPair ((Scheme.Modules.pullback f).obj E)) :
     Chapter01.Chapter01InvertibleQuotient E f where
@@ -338,7 +339,7 @@ private def chapter02InvertibleQuotientPairToChapter01
   quotient := p.quotient
   quotient_is_epi := p.quotient_is_epi
 
-private def chapter01InvertibleQuotientToChapter02
+def chapter01InvertibleQuotientToChapter02
     {S T : Scheme.{u}} {E : S.Modules} (f : T ⟶ S)
     (p : Chapter01.Chapter01InvertibleQuotient E f) :
     Chapter02InvertibleQuotientPair ((Scheme.Modules.pullback f).obj E) where
@@ -346,7 +347,7 @@ private def chapter01InvertibleQuotientToChapter02
   quotient := p.quotient
   quotient_is_epi := p.quotient_is_epi
 
-private def chapter02QuotientClassToChapter01
+def chapter02QuotientClassToChapter01
     {S T : Scheme.{u}} (f : T ⟶ S) (E : S.Modules) :
     Chapter02InvertibleQuotientClass ((Scheme.Modules.pullback f).obj E) ⟶
       Chapter01.Chapter01InvertibleQuotientClass E f := by
@@ -360,7 +361,7 @@ private def chapter02QuotientClassToChapter01
   obtain ⟨e, he⟩ := h
   exact ⟨e, he⟩
 
-private def chapter01QuotientClassToChapter02
+def chapter01QuotientClassToChapter02
     {S T : Scheme.{u}} (f : T ⟶ S) (E : S.Modules) :
     Chapter01.Chapter01InvertibleQuotientClass E f ⟶
       Chapter02InvertibleQuotientClass ((Scheme.Modules.pullback f).obj E) := by
@@ -374,7 +375,7 @@ private def chapter01QuotientClassToChapter02
   obtain ⟨e, he⟩ := h
   exact ⟨e, he⟩
 
-private def chapter02QuotientClassEquivChapter01
+def chapter02QuotientClassEquivChapter01
     {S T : Scheme.{u}} (f : T ⟶ S) (E : S.Modules) :
     Chapter02InvertibleQuotientClass ((Scheme.Modules.pullback f).obj E) ≃
       Chapter01.Chapter01InvertibleQuotientClass E f where
@@ -945,6 +946,34 @@ noncomputable def chapter02TensorAssociator
       chapter02Tensor M (chapter02Tensor N P) :=
   Chapter01.chapter01SheafTensorAssociator M N P
 
+/-!
+The tensor sheaf has a canonical product on global sections.  Recording its value on every open is
+important here: an arbitrary bilinear operation on global sections would also admit the zero
+operation, and would not be suitable for homogeneous polynomial evaluation.  The open-wise field
+pins the operation to the presheaf tensor section supplied by Chapter 1.
+-/
+structure Chapter02TensorSectionProductData
+    {S : Scheme.{u}} (M N : S.Modules) where
+  product : M.sections → N.sections → (chapter02Tensor M N).sections
+  product_zero_left : ∀ t, product (chapter02ZeroSection M) t = chapter02ZeroSection _
+  product_zero_right : ∀ s, product s (chapter02ZeroSection N) = chapter02ZeroSection _
+  product_add_left : ∀ s₁ s₂ t,
+    product (chapter02AddSection M s₁ s₂) t =
+      chapter02AddSection _ (product s₁ t) (product s₂ t)
+  product_add_right : ∀ s t₁ t₂,
+    product s (chapter02AddSection N t₁ t₂) =
+      chapter02AddSection _ (product s t₁) (product s t₂)
+  product_on_opens : ∀ (U : S.Opens) (s : M.sections) (t : N.sections),
+    (product s t).1 (Opposite.op U) =
+      Chapter01.chapter01SheafTensorSection U
+        (s.1 (Opposite.op U)) (t.1 (Opposite.op U))
+
+/- LOCAL_DEPENDENCY_GUESS: the canonical tensor product of global sections. -/
+theorem chapter02_tensor_section_product_data_exists
+    {S : Scheme.{u}} (M N : S.Modules) :
+    Nonempty (Chapter02TensorSectionProductData M N) := by
+  sorry
+
 /-! The canonical coherence package from Chapter 1 is re-exported with the Chapter 2 tensor
 names.  It includes functoriality, symmetry, the pentagon and triangle, and both hexagons. -/
 abbrev Chapter02TensorCoherence {S : Scheme.{u}} :=
@@ -1042,10 +1071,18 @@ does not silently combine unrelated choices from different degrees.
 /- LOCAL_DEPENDENCY_GUESS: multiplication of sections of two tensor powers. -/
 structure Chapter02PowerSectionProductData
     {S : Scheme.{u}} (L : Chapter02LineBundle S) (m n : ℕ) where
+  tensorProduct : Chapter02TensorSectionProductData
+    (chapter02LineBundlePowerBundle L m).carrier
+    (chapter02LineBundlePowerBundle L n).carrier
   product :
     (chapter02LineBundlePowerBundle L m).carrier.sections →
       (chapter02LineBundlePowerBundle L n).carrier.sections →
         (chapter02LineBundlePowerBundle L (m + n)).carrier.sections
+  product_is_tensor : ∀ s t,
+    product s t =
+      SheafOfModules.sectionsMap
+        ((chapter02LineBundlePowerData L).power_tensor m n).hom
+        (tensorProduct.product s t)
   product_zero_left : ∀ t,
     product (chapter02ZeroSection _) t = chapter02ZeroSection _
   product_zero_right : ∀ s,
@@ -1402,158 +1439,7 @@ private theorem chapter02_power_cast_add
 theorem chapter02_power_section_product_data_exists
     {S : Scheme.{u}} (L : Chapter02LineBundle S) (m n : ℕ) :
     Nonempty (Chapter02PowerSectionProductData L m n) := by
-  by_cases hm : m = 0
-  · subst m
-    let e := (chapter02LineBundlePowerData L).power_zero
-    let h₀ :
-        (chapter02LineBundlePowerBundle L n).carrier.sections =
-          (chapter02LineBundlePowerBundle L (0 + n)).carrier.sections := by
-      change SheafOfModules.sections ((chapter02LineBundlePowerData L).power n) =
-        SheafOfModules.sections ((chapter02LineBundlePowerData L).power (0 + n))
-      rw [Nat.zero_add]
-    let product :
-        (chapter02LineBundlePowerBundle L 0).carrier.sections →
-          (chapter02LineBundlePowerBundle L n).carrier.sections →
-            (chapter02LineBundlePowerBundle L (0 + n)).carrier.sections :=
-      fun s t => cast h₀ (chapter02UnitScalarAction e s t)
-    refine ⟨{
-      product := product
-      product_zero_left := ?_
-      product_zero_right := ?_
-      product_add_left := ?_
-      product_add_right := ?_
-      product_unit_left := ?_
-      product_unit_right := ?_ }⟩
-    · intro t
-      dsimp [product]
-      calc
-        cast h₀ (chapter02UnitScalarAction e
-            (chapter02ZeroSection ((chapter02LineBundlePowerData L).power 0)) t) =
-            cast h₀ (chapter02ZeroSection
-              ((chapter02LineBundlePowerData L).power n)) := by
-          exact congrArg (fun z => cast h₀ z)
-            (chapter02UnitScalarAction_zero_left e t)
-        _ = chapter02ZeroSection (chapter02LineBundlePowerBundle L (0 + n)).carrier := by
-          simpa only [chapter02LineBundlePowerBundle, chapter02LineBundlePower] using
-            (chapter02_power_cast_zero L (Nat.zero_add n).symm)
-    · intro s
-      dsimp [product]
-      calc
-        cast h₀ (chapter02UnitScalarAction e s
-            (chapter02ZeroSection ((chapter02LineBundlePowerData L).power n))) =
-            cast h₀ (chapter02ZeroSection
-              ((chapter02LineBundlePowerData L).power n)) := by
-          exact congrArg (fun z => cast h₀ z)
-            (chapter02UnitScalarAction_zero_right e s)
-        _ = chapter02ZeroSection (chapter02LineBundlePowerBundle L (0 + n)).carrier := by
-          simpa only [chapter02LineBundlePowerBundle, chapter02LineBundlePower] using
-            (chapter02_power_cast_zero L (Nat.zero_add n).symm)
-    · intro s₁ s₂ t
-      dsimp [product]
-      calc
-        cast h₀ (chapter02UnitScalarAction e
-            (chapter02AddSection ((chapter02LineBundlePowerData L).power 0) s₁ s₂) t) =
-            cast h₀ (chapter02AddSection ((chapter02LineBundlePowerData L).power n)
-              (chapter02UnitScalarAction e s₁ t)
-              (chapter02UnitScalarAction e s₂ t)) := by
-          exact congrArg (fun z => cast h₀ z)
-            (chapter02UnitScalarAction_add_left e s₁ s₂ t)
-        _ = chapter02AddSection (chapter02LineBundlePowerBundle L (0 + n)).carrier
-              (cast h₀ (chapter02UnitScalarAction e s₁ t))
-              (cast h₀ (chapter02UnitScalarAction e s₂ t)) := by
-          simpa only [chapter02LineBundlePowerBundle, chapter02LineBundlePower] using
-            (chapter02_power_cast_add L (Nat.zero_add n).symm _ _)
-    · intro s t₁ t₂
-      dsimp [product]
-      calc
-        cast h₀ (chapter02UnitScalarAction e s
-            (chapter02AddSection ((chapter02LineBundlePowerData L).power n) t₁ t₂)) =
-            cast h₀ (chapter02AddSection ((chapter02LineBundlePowerData L).power n)
-              (chapter02UnitScalarAction e s t₁)
-              (chapter02UnitScalarAction e s t₂)) := by
-          exact congrArg (fun z => cast h₀ z)
-            (chapter02UnitScalarAction_add_right e s t₁ t₂)
-        _ = chapter02AddSection (chapter02LineBundlePowerBundle L (0 + n)).carrier
-              (cast h₀ (chapter02UnitScalarAction e s t₁))
-              (cast h₀ (chapter02UnitScalarAction e s t₂)) := by
-          simpa only [chapter02LineBundlePowerBundle, chapter02LineBundlePower] using
-            (chapter02_power_cast_add L (Nat.zero_add n).symm _ _)
-    · intro hm s
-      have hu := chapter02_powerUnitSection_map L
-      have hact := chapter02UnitScalarAction_unit_of_map e
-        (chapter02PowerUnitSection L) s hu
-      cases hm
-      dsimp [product]
-      congr 1
-    · intro hn s
-      have hact := chapter02UnitScalarAction_right_unit e s
-      cases hn
-      dsimp [product]
-      congr 1
-  · by_cases hn : n = 0
-    · subst n
-      let e := (chapter02LineBundlePowerData L).power_zero
-      let product :
-          (chapter02LineBundlePowerBundle L m).carrier.sections →
-            (chapter02LineBundlePowerBundle L 0).carrier.sections →
-              (chapter02LineBundlePowerBundle L m).carrier.sections :=
-        fun s t => chapter02UnitScalarAction e t s
-      refine ⟨{
-        product := product
-        product_zero_left := ?_
-        product_zero_right := ?_
-        product_add_left := ?_
-        product_add_right := ?_
-        product_unit_left := ?_
-        product_unit_right := ?_ }⟩
-      · intro t
-        simpa [product, chapter02LineBundlePowerBundle, chapter02LineBundlePower] using
-          (chapter02UnitScalarAction_zero_right e t)
-      · intro s
-        simpa [product, chapter02LineBundlePowerBundle, chapter02LineBundlePower] using
-          (chapter02UnitScalarAction_zero_left e s)
-      · intro s₁ s₂ t
-        simpa [product, chapter02LineBundlePowerBundle, chapter02LineBundlePower] using
-          (chapter02UnitScalarAction_add_right e t s₁ s₂)
-      · intro s t₁ t₂
-        simpa [product, chapter02LineBundlePowerBundle, chapter02LineBundlePower] using
-          (chapter02UnitScalarAction_add_left e t₁ t₂ s)
-      · intro hm' s
-        exact (hm hm').elim
-      · intro hn s
-        have hu := chapter02_powerUnitSection_map L
-        have hact := chapter02UnitScalarAction_unit_of_map e
-          (chapter02PowerUnitSection L) s hu
-        cases hn
-        dsimp [product]
-        congr 1
-    · let product :
-          (chapter02LineBundlePowerBundle L m).carrier.sections →
-            (chapter02LineBundlePowerBundle L n).carrier.sections →
-              (chapter02LineBundlePowerBundle L (m + n)).carrier.sections :=
-        fun _ _ => chapter02ZeroSection _
-      refine ⟨{
-        product := product
-        product_zero_left := ?_
-        product_zero_right := ?_
-        product_add_left := ?_
-        product_add_right := ?_
-        product_unit_left := ?_
-        product_unit_right := ?_ }⟩
-      · intro t
-        rfl
-      · intro s
-        rfl
-      · intro s₁ s₂ t
-        dsimp [product, chapter02LineBundlePowerBundle, chapter02LineBundlePower]
-        exact (chapter02AddSection_zero_zero).symm
-      · intro s t₁ t₂
-        dsimp [product, chapter02LineBundlePowerBundle, chapter02LineBundlePower]
-        exact (chapter02AddSection_zero_zero).symm
-      · intro hm'
-        exact (hm hm').elim
-      · intro hn'
-        exact (hn hn').elim
+  sorry
 
 noncomputable def chapter02PowerSectionProduct
     {S : Scheme.{u}} (L : Chapter02LineBundle S) (m n : ℕ) :
@@ -1813,6 +1699,12 @@ structure Chapter02LineBundlePowerTransportData
     map 1 =
       (chapter02LineBundlePowerData L).power_one ≪≫ e ≪≫
         (chapter02LineBundlePowerData M).power_one.symm
+  /-- Transport is compatible with the tensor comparison in every pair of degrees. -/
+  map_tensor : ∀ m n,
+    chapter02TensorMap (map m).hom (map n).hom ≫
+        ((chapter02LineBundlePowerData M).power_tensor m n).hom =
+      ((chapter02LineBundlePowerData L).power_tensor m n).hom ≫
+        (map (m + n)).hom
 
 /- LOCAL_DEPENDENCY_GUESS: equivalent line bundles admit chosen power isomorphisms with the
 displayed degree-zero and degree-one normalizations. -/

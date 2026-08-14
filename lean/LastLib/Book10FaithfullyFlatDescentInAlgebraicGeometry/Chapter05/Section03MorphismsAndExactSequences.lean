@@ -225,19 +225,48 @@ theorem exactness_reflected_by_faithfullyFlat [Module.FaithfullyFlat A B]
         ((ModuleCat.extendScalars (algebraMap A B)).map f).hom
         ((ModuleCat.extendScalars (algebraMap A B)).map g).hom ↔
       Function.Exact f.hom g.hom := by
-  sorry
+  let _ : Module.FaithfullyFlat A
+      (((ModuleCat.restrictScalars (algebraMap A B)).obj (ModuleCat.of B B) : Type u)) :=
+    faithfullyFlat_restrictScalars_self (A := A) (B := B)
+  change Function.Exact
+    (((ModuleCat.extendScalars (algebraMap A B)).map f).hom.toFun)
+    (((ModuleCat.extendScalars (algebraMap A B)).map g).hom.toFun) ↔
+      Function.Exact f.hom.toFun g.hom.toFun
+  rw [ModuleCat.extendScalars_map_hom_toFun_eq_lTensor,
+    ModuleCat.extendScalars_map_hom_toFun_eq_lTensor]
+  exact Module.FaithfullyFlat.lTensor_exact_iff_exact (R := A)
+    (M := ((ModuleCat.restrictScalars (algebraMap A B)).obj (ModuleCat.of B B) : Type u))
+    f.hom g.hom
 
 theorem injective_reflected_by_faithfullyFlat [Module.FaithfullyFlat A B]
     {M₁ M₂ : ModuleCat A} (f : M₁ ⟶ M₂) :
       Function.Injective (((ModuleCat.extendScalars (algebraMap A B)).map f).hom) ↔
       Function.Injective f.hom := by
-  sorry
+  let _ : Module.FaithfullyFlat A
+      (((ModuleCat.restrictScalars (algebraMap A B)).obj (ModuleCat.of B B) : Type u)) :=
+    faithfullyFlat_restrictScalars_self (A := A) (B := B)
+  change Function.Injective
+      (((ModuleCat.extendScalars (algebraMap A B)).map f).hom.toFun) ↔
+    Function.Injective f.hom.toFun
+  rw [ModuleCat.extendScalars_map_hom_toFun_eq_lTensor]
+  exact Module.FaithfullyFlat.lTensor_injective_iff_injective (R := A)
+    (M := ((ModuleCat.restrictScalars (algebraMap A B)).obj (ModuleCat.of B B) : Type u))
+    f.hom
 
 theorem surjective_reflected_by_faithfullyFlat [Module.FaithfullyFlat A B]
     {M₁ M₂ : ModuleCat A} (f : M₁ ⟶ M₂) :
     Function.Surjective (((ModuleCat.extendScalars (algebraMap A B)).map f).hom) ↔
-      Function.Surjective f.hom := by
-  sorry
+    Function.Surjective f.hom := by
+  let _ : Module.FaithfullyFlat A
+      (((ModuleCat.restrictScalars (algebraMap A B)).obj (ModuleCat.of B B) : Type u)) :=
+    faithfullyFlat_restrictScalars_self (A := A) (B := B)
+  change Function.Surjective
+      (((ModuleCat.extendScalars (algebraMap A B)).map f).hom.toFun) ↔
+    Function.Surjective f.hom.toFun
+  rw [ModuleCat.extendScalars_map_hom_toFun_eq_lTensor]
+  exact Module.FaithfullyFlat.lTensor_surjective_iff_surjective (R := A)
+    (M := ((ModuleCat.restrictScalars (algebraMap A B)).obj (ModuleCat.of B B) : Type u))
+    f.hom
 
 /-- A compatible short exact sequence remembers descent data on every term and on both maps. -/
 structure CompatibleShortExact where

@@ -1,4 +1,4 @@
-import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter08.Section03EffectivityAndFullFaithfulness
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter08.Dependencies
 
 namespace LastLib
 namespace Book10FaithfullyFlatDescentInAlgebraicGeometry
@@ -107,6 +107,19 @@ def chapter08PullbackShortComplex
   zero := by
     rw [← (Scheme.Modules.pullback f).map_comp, C.zero, Functor.map_zero]
 
+/- A faithfully flat pullback reflects monomorphisms of the relevant
+   quasi-coherent module sheaves.  This is stronger than faithfulness of the
+   pullback functor: it reflects the categorical mono property itself. -/
+theorem chapter08_pullback_reflects_mono
+    {T S : Scheme.{u}} {p : T ⟶ S}
+    (hp : Chapter08FpqcMorphism p)
+    {M N : S.Modules}
+    (hM : M.IsQuasicoherent) (hN : N.IsQuasicoherent)
+    (φ : M ⟶ N)
+    (hφ : Mono ((Scheme.Modules.pullback p).map φ)) :
+    Mono φ := by
+  sorry
+
 /-- Exactness of a sequence of quasi-coherent sheaves is reflected by an fpqc
 pullback. -/
 theorem chapter08_exact_fpqc_local
@@ -117,17 +130,24 @@ theorem chapter08_exact_fpqc_local
     C.Exact ↔ (chapter08PullbackShortComplex p C).Exact := by
   sorry
 
-/-- The finite-free-kernel convention for coherence on a general scheme. -/
+/-- The affine-local finite-free-kernel convention for coherence on a general
+scheme.  The tests are made on affine opens of the base; quantifying over
+arbitrary affine schemes mapping to `S` would be strictly stronger and would
+not follow from local noetherianity. -/
 def Chapter08FiniteFreeKernels {S : Scheme.{u}} (M : S.Modules) : Prop :=
-  ∀ (I : Type u), Finite I →
-    ∀ (φ : SheafOfModules.free (R := S.ringCatSheaf) I ⟶ M),
-      (kernel φ).IsFiniteType
+  ∀ (U : S.Opens), IsAffineOpen U →
+    ∀ (I : Type u), Finite I →
+      ∀ (φ : SheafOfModules.free (R := U.toScheme.ringCatSheaf) I ⟶
+        (Scheme.Modules.pullback U.ι).obj M),
+        (kernel φ).IsFiniteType
 
 /-- A stronger variant, useful when the chosen definition tests all finite-type
-source modules rather than only finite free ones. -/
+source modules rather than only finite free ones, again on affine opens. -/
 def Chapter08FiniteTypeKernels {S : Scheme.{u}} (M : S.Modules) : Prop :=
-  ∀ (N : S.Modules), N.IsFiniteType → ∀ (φ : N ⟶ M),
-    (kernel φ).IsFiniteType
+  ∀ (U : S.Opens), IsAffineOpen U →
+    ∀ (N : U.toScheme.Modules), N.IsFiniteType →
+      ∀ (φ : N ⟶ (Scheme.Modules.pullback U.ι).obj M),
+        (kernel φ).IsFiniteType
 
 /-- The standard noetherian convention: quasi-coherent and finite type. -/
 def Chapter08NoetherianCoherent {S : Scheme.{u}} (M : S.Modules) : Prop :=
@@ -175,13 +195,15 @@ theorem chapter08_kernelFinite_coherent_of_locallyNoetherian
   sorry
 
 /-- Kernel-finite coherence descends along the quasi-compact faithfully flat
-cover used in the chapter. -/
-theorem chapter08_kernelFinite_coherent_fpqc_local
+    cover used in the chapter.  The converse is not asserted: a faithfully
+    flat base change can have a noncoherent source even when the base is
+    coherent. -/
+theorem chapter08_kernelFinite_coherent_descends
     {T S : Scheme.{u}} {p : T ⟶ S}
     (hp : Chapter08FpqcMorphism p) (M : S.Modules) :
-    Chapter08KernelFiniteCoherent M ↔
-      Chapter08KernelFiniteCoherent
-        ((Scheme.Modules.pullback p).obj M) := by
+    Chapter08KernelFiniteCoherent
+        ((Scheme.Modules.pullback p).obj M) →
+      Chapter08KernelFiniteCoherent M := by
   sorry
 
 end

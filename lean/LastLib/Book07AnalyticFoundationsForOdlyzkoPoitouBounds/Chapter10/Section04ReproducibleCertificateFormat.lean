@@ -29,7 +29,9 @@ theorem chapter10_fixed_log_bound_expanded
         4 * chapter09A (chapter09UnconditionalTestFunction T) / (n : ℝ) -
         chapter09B (chapter09UnconditionalTestFunction T) -
         α * chapter09C (chapter09UnconditionalTestFunction T) := by
-  sorry
+  unfold chapter10FixedLogBound chapter09FixedTestFunctionLogBound
+    chapter09FixedTestFunctionConstant
+  ring
 
 def Chapter10MonotonicityExtension (T : ℝ) : Prop :=
   ∀ {N n : ℕ} {α₀ α : ℝ},
@@ -44,11 +46,23 @@ theorem chapter10_fixed_test_function_monotonicity_extension
       0 < N → N ≤ n → α₀ ≤ α →
         chapter09FixedTestFunctionLogBound F N α₀ ≤
           chapter09FixedTestFunctionLogBound F n α := by
-  sorry
+  exact chapter09_fixed_certificate_covers_larger_degree_and_signature
+    F hA hC
 
 theorem chapter10_unconditional_monotonicity_extension
     {T : ℝ} (hT : 0 < T) : Chapter10MonotonicityExtension T := by
-  sorry
+  intro N n α₀ α hN hNn hα
+  let F : Chapter09TestFunction := chapter09UnconditionalTestFunction T
+  have hAeq : chapter09A F = T / 2 := by
+    change chapter09UnconditionalPoleIntegral T = T / 2
+    exact chapter09_unconditional_pole_integral hT
+  have hA : 0 ≤ chapter09A F := by
+    rw [hAeq]
+    exact div_nonneg (le_of_lt hT) (by norm_num)
+  have hC : chapter09C F < Real.pi / 2 := by
+    simpa [F, chapter09CT] using
+      (chapter09_unconditional_archimedean_C_lt_pi_div_two hT)
+  exact chapter10_fixed_test_function_monotonicity_extension F hA hC hN hNn hα
 
 structure Chapter10DirectedEnclosure (x : ℝ) where
   interval : Chapter10RationalInterval
@@ -114,7 +128,14 @@ theorem chapter10_certificate_has_positive_margin
 theorem chapter10_certificate_ceiling_log_upper_endpoint_lt_lower_endpoint
     (C : Chapter10Certificate) :
     (C.ceilingLogUpperEndpoint : ℝ) < (C.logarithmicLowerEndpoint : ℝ) := by
-  sorry
+  have hpos : (0 : ℝ) < (C.positiveDifference : ℝ) := by
+    exact_mod_cast C.positiveDifference_pos
+  have heq : (C.positiveDifference : ℝ) =
+      (C.logarithmicLowerEndpoint : ℝ) -
+        (C.ceilingLogUpperEndpoint : ℝ) := by
+    exact_mod_cast C.positiveDifference_eq
+  rw [heq] at hpos
+  exact sub_pos.mp hpos
 
 theorem chapter10_certificate_extends_logarithmic_lower_endpoint
     (C : Chapter10Certificate) {m : ℕ} {β : ℝ}

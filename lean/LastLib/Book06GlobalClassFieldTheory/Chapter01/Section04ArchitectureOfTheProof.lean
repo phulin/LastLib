@@ -46,6 +46,24 @@ structure BookCanonicalBrauerContext
     BookCanonicalBrauerGroup K → BookCanonicalBrauerGroup (BookPlace.completion v)
   invariant : ∀ v : BookPlace K,
     BookCanonicalBrauerGroup (BookPlace.completion v) → RationalModuloIntegers
+  /- The local invariant normalizations used by the global sum: finite local
+     Brauer groups identify with `Q/Z`, real ones have exactly their two
+     torsion values, and complex ones are zero.  The canonical Brauer carrier
+     is kept as a plain type because its additive structure is not yet exposed
+     by the pinned Mathlib API. -/
+  finite_invariant_bijective : ∀ v : FinitePlaceIndex K,
+    Function.Bijective (invariant (Sum.inl v))
+  real_invariant_range : ∀ v : InfinitePlaceIndex K,
+    NumberField.InfinitePlace.IsReal v →
+      Set.range (invariant (Sum.inr v)) =
+        {x : RationalModuloIntegers | 2 • x = 0}
+  complex_brauer_subsingleton : ∀ v : InfinitePlaceIndex K,
+    NumberField.InfinitePlace.IsComplex v →
+      ∀ b₁ b₂ : BookCanonicalBrauerGroup (BookPlace.completion (Sum.inr v)),
+        b₁ = b₂
+  complex_invariant_zero : ∀ v : InfinitePlaceIndex K,
+    NumberField.InfinitePlace.IsComplex v →
+      ∀ b, invariant (Sum.inr v) b = 0
 
 structure BookBrauerInvariantSequence
     (K : Type uK) [Field K] [NumberField K] where
@@ -171,8 +189,6 @@ structure FiniteGaloisFundamentalClassData
     [Fintype (Gal(L / K))] where
   normData : GlobalNormInterface K L
   ideleClassAction : GlobalIdeleClassGaloisActionData K L
-  degreeZeroNormBridge :
-    GlobalIdeleClassDegreeZeroNormBridge K L normData ideleClassAction
   brauerSequence : BookBrauerInvariantSequence K
   fundamentalClass : Chapter05FundamentalTwoClass
     (Gal(L / K)) (globalIdeleClassCoefficientRep ideleClassAction)
@@ -184,6 +200,18 @@ structure FiniteGaloisFundamentalClassData
       (globalIdeleClassCoefficientRep ideleClassAction) fundamentalClass.value capProduct
   classFormation : Chapter05TateNakayamaHypotheses
     (Gal(L / K)) (globalIdeleClassCoefficientRep ideleClassAction) fundamentalClass.value
+
+/- The fixed-points modulo norm identification is a consequence of the
+degree-zero calculation; it is deliberately not an input to the fundamental
+class package. -/
+theorem global_idele_class_degree_zero_norm_bridge_exists
+    {K L : Type} [Field K] [NumberField K] [Field L] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
+    [Fintype (Gal(L / K))]
+    (D : FiniteGaloisFundamentalClassData K L) :
+    Nonempty (GlobalIdeleClassDegreeZeroNormBridge K L
+      D.normData D.ideleClassAction) := by
+  sorry
 
 /- LOCAL_DEPENDENCY_GUESS: the finite Galois class formation and its
 restriction-compatible H² fundamental class are supplied at this boundary. -/
@@ -201,6 +229,9 @@ structure GlobalCapProductDegreeZeroData
     [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
     [Fintype (Gal(L / K))]
     (D : FiniteGaloisFundamentalClassData K L) where
+  degreeZeroNormBridge :
+    GlobalIdeleClassDegreeZeroNormBridge K L
+      D.normData D.ideleClassAction
   topRestriction : Chapter05TopRestrictionTateIso (Gal(L / K))
     (globalIdeleClassCoefficientRep D.ideleClassAction)
   topRestrictionTrivial : Chapter05TopRestrictionTrivialTateIso (Gal(L / K))
@@ -235,7 +266,7 @@ structure GlobalCapProductNormQuotientEquivalence
     Additive (finiteClassArtinQuotient D.normData)
   compatible :
     ∀ x : Additive (GroupAbelianization (Gal(L / K))),
-      equiv x = D.degreeZeroNormBridge.equiv
+      equiv x = P.degreeZeroNormBridge.equiv
         (P.capEquiv ((trivialTateNegativeTwoAbelianizationEquiv
           (Gal(L / K))).symm x))
 
@@ -401,8 +432,6 @@ structure FiniteCartierDualityStatement
               localCupInvariant v (c.1 v) (cartierKummerLocalization v n a))
   localization_injective : Function.Injective localization
   exact_at_middle : ExactAtMiddle localization obstruction
-  character_globalization : ∀ c,
-    obstruction c = 0 → ∃ x, localization x = c
 
 /- The coefficient realizations are no longer arbitrary carrier types: the
 constant coefficient is `ZMod n`, the Cartier dual is the roots-of-unity

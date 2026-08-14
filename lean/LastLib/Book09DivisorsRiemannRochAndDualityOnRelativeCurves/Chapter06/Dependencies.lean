@@ -177,7 +177,120 @@ noncomputable def chapter06FiniteFlatClosedFamilyBaseChange
     Chapter06FiniteFlatClosedFamily C U d := by
   refine
     { ideal := Z.ideal.comap (chapter06RelativeDivisorBaseChangeAmbientMap C T U u)
-      finite_flat_rank := by sorry }
+      finite_flat_rank := by
+        let I := Z.ideal
+        let f := chapter06RelativeDivisorBaseChangeAmbientMap C T U u
+        let q := I.subschemeι
+        let qT := q ≫ pullback.snd C.structuralMap T.structuralMap
+        have hZ : Chapter10FiniteLocallyFreeProfile qT d :=
+          { finite := Z.finite_flat_rank.1
+            flat := Z.finite_flat_rank.2.1
+            locallyOfFinitePresentation := Z.finite_flat_rank.2.2.1
+            rank := Z.finite_flat_rank.2.2.2 }
+        have hP := chapter10_finiteLocallyFree_baseChange qT u.hom d
+          hZ
+        let r : pullback f I.subschemeι ⟶ pullback qT u.hom :=
+          pullback.lift
+            (pullback.snd f I.subschemeι)
+            (pullback.fst f I.subschemeι ≫
+              pullback.snd C.structuralMap U.structuralMap) (by
+              dsimp [qT]
+              rw [← pullback.condition_assoc]
+              dsimp [f, chapter06RelativeDivisorBaseChangeAmbientMap]
+              simp only [Category.assoc, pullback.lift_snd])
+        let a : pullback qT u.hom ⟶ Chapter06RelativeDivisorAmbient C U :=
+          pullback.lift
+            (pullback.fst qT u.hom ≫ q ≫
+              pullback.fst C.structuralMap T.structuralMap)
+            (pullback.snd qT u.hom) (by
+              dsimp [qT]
+              calc
+                _ = pullback.fst
+                      (q ≫ pullback.snd C.structuralMap T.structuralMap) u.hom ≫
+                    q ≫ (pullback.fst C.structuralMap T.structuralMap ≫
+                      C.structuralMap) := by simp only [Category.assoc]
+                _ = pullback.fst
+                      (q ≫ pullback.snd C.structuralMap T.structuralMap) u.hom ≫
+                    q ≫ (pullback.snd C.structuralMap T.structuralMap ≫
+                      T.structuralMap) := by rw [pullback.condition]
+                _ = (pullback.fst
+                      (q ≫ pullback.snd C.structuralMap T.structuralMap) u.hom ≫
+                    (q ≫ pullback.snd C.structuralMap T.structuralMap)) ≫
+                    T.structuralMap := by simp only [Category.assoc]
+                _ = (pullback.snd
+                      (q ≫ pullback.snd C.structuralMap T.structuralMap) u.hom ≫
+                    u.hom) ≫ T.structuralMap := by rw [pullback.condition]
+                _ = pullback.snd
+                      (q ≫ pullback.snd C.structuralMap T.structuralMap) u.hom ≫
+                    U.structuralMap := by
+                      rw [Category.assoc, u.comm])
+        let r' : pullback qT u.hom ⟶ pullback f I.subschemeι :=
+          pullback.lift a (pullback.fst qT u.hom) (by
+            apply (IsPullback.of_hasPullback C.structuralMap T.structuralMap).hom_ext
+            · simp [a, f, q, chapter06RelativeDivisorBaseChangeAmbientMap,
+                Category.assoc, pullback.lift_fst]
+            · simp [a, f, q, qT, chapter06RelativeDivisorBaseChangeAmbientMap,
+                Category.assoc, pullback.lift_snd,
+                pullback.lift_snd_assoc]
+              simpa only [Category.assoc] using
+                (pullback.condition
+                  (f := I.subschemeι ≫ pullback.snd C.structuralMap T.structuralMap)
+                  (g := u.hom)).symm)
+        have hrr : r ≫ r' = 𝟙 _ := by
+          apply (IsPullback.of_hasPullback f I.subschemeι).hom_ext
+          · apply pullback.hom_ext
+            · simp only [Category.assoc, r, r', a, pullback.lift_fst,
+                pullback.lift_fst_assoc, Category.id_comp]
+              rw [← pullback.condition_assoc]
+              dsimp [f, chapter06RelativeDivisorBaseChangeAmbientMap]
+              simp only [pullback.lift_fst]
+            · simp only [Category.assoc, r, r', a, pullback.lift_fst,
+                pullback.lift_snd, Category.id_comp]
+          · simp only [Category.assoc, r, r', a, pullback.lift_fst,
+              pullback.lift_snd, Category.id_comp]
+        have hrr' : r' ≫ r = 𝟙 _ := by
+          apply (IsPullback.of_hasPullback qT u.hom).hom_ext
+          · simp only [Category.assoc, r, r', a, pullback.lift_fst,
+              pullback.lift_snd, Category.id_comp]
+          · simp only [Category.assoc, r, r', a, pullback.lift_snd,
+              pullback.lift_fst_assoc, Category.id_comp]
+        let rIso : pullback f I.subschemeι ≅ pullback qT u.hom :=
+          { hom := r
+            inv := r'
+            hom_inv_id := hrr
+            inv_hom_id := hrr' }
+        let e : (I.comap f).subscheme ≅ pullback qT u.hom :=
+          I.comapIso f ≪≫ rIso
+        have heq :
+            (I.comap f).subschemeι ≫ pullback.snd C.structuralMap U.structuralMap =
+              e.hom ≫ pullback.snd qT u.hom := by
+          have hr_snd :
+              r ≫ pullback.snd qT u.hom =
+                pullback.fst f I.subschemeι ≫
+                  pullback.snd C.structuralMap U.structuralMap := by
+            dsimp [r]
+            exact pullback.lift_snd _ _ _
+          change (I.comap f).subschemeι ≫
+              pullback.snd C.structuralMap U.structuralMap =
+            (I.comapIso f).hom ≫ r ≫ pullback.snd qT u.hom
+          rw [hr_snd, ← Category.assoc, I.comapIso_hom_fst]
+        have _ : IsFinite (pullback.snd qT u.hom) := hP.finite
+        have _ : Flat (pullback.snd qT u.hom) := hP.flat
+        have _ : LocallyOfFinitePresentation (pullback.snd qT u.hom) :=
+          hP.locallyOfFinitePresentation
+        exact ⟨by
+          rw [heq]
+          infer_instance, by
+          rw [heq]
+          infer_instance, by
+          rw [heq]
+          infer_instance, by
+          have _ := hP.finite
+          have _ := hP.flat
+          have _ := hP.locallyOfFinitePresentation
+          rw [heq, Scheme.Hom.finrank_comp_left_of_isIso]
+          intro y
+          exact hP.rank y⟩ }
 
 abbrev Chapter06FiniteFlatClosedFamily.subscheme
     {S : Scheme.{u}} {C T : RelativeScheme S} {d : ℕ}
@@ -279,11 +392,6 @@ class Chapter06LineBundleFiberwiseDegreeAPI {S : Scheme.{u}}
     ∀ {L M : Chapter06LineBundle (Chapter06RelativeDivisorAmbient C T)}
       (_e : Nonempty (Chapter10LineBundleIso L M)) (t : T.carrier),
       degree L t = degree M t
-  degree_of_associated_divisor :
-    ∀ [Chapter10IdealDualAPI (Chapter06RelativeDivisorAmbient C T)]
-      {d : ℕ} (D : Chapter06RelativeEffectiveDivisor C T d) (t : T.carrier),
-      degree (chapter10OofD (chapter06AsChapter10EffectiveCartierDivisor D)) t =
-        (d : ℤ)
 
 theorem chapter06_line_bundle_degree_of_associated_divisor
     {S : Scheme.{u}} {C T : RelativeScheme S}
@@ -292,8 +400,8 @@ theorem chapter06_line_bundle_degree_of_associated_divisor
     {d : ℕ} (D : Chapter06RelativeEffectiveDivisor C T d) (t : T.carrier) :
     Chapter06LineBundleFiberwiseDegreeAPI.degree
       (chapter10OofD (chapter06AsChapter10EffectiveCartierDivisor D)) t =
-        (d : ℤ) :=
-  Chapter06LineBundleFiberwiseDegreeAPI.degree_of_associated_divisor D t
+        (d : ℤ) := by
+  sorry
 
 def chapter06LineBundleFiberwiseDegree
     {S : Scheme.{u}} (C T : RelativeScheme S)

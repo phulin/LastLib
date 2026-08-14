@@ -56,11 +56,15 @@ class Chapter02MeromorphicSheaf (X : Scheme.{u}) where
   regular_isUnit : ∀ (U : X.Opens) {f : Γ(X, U)},
     f ∈ nonZeroDivisors (Γ(X, U)) →
       IsUnit ((regularMap.1.app (Opposite.op U)).hom f)
+  /-- Meromorphic sections are locally fractions on affine neighborhoods.
+      A single fraction on an arbitrary open is not available in general. -/
   exists_fraction : ∀ (U : X.Opens)
-    (s : (carrier.presheaf.obj (Opposite.op U)).carrier),
-    ∃ a b : Γ(X, U), b ∈ nonZeroDivisors (Γ(X, U)) ∧
-      s * (regularMap.1.app (Opposite.op U)).hom b =
-        (regularMap.1.app (Opposite.op U)).hom a
+    (s : (carrier.presheaf.obj (Opposite.op U)).carrier) (x : X) (_hx : x ∈ U),
+    ∃ (V : X.affineOpens) (_hxV : x ∈ V.1) (hVU : V.1 ≤ U)
+      (a b : Γ(X, V.1)), b ∈ nonZeroDivisors (Γ(X, V.1)) ∧
+        (carrier.presheaf.map (homOfLE hVU).op).hom s *
+            (regularMap.1.app (Opposite.op V.1)).hom b =
+          (regularMap.1.app (Opposite.op V.1)).hom a
   /-- The canonical comparison with the function field on every nonempty open
       of an integral scheme, together with its restriction compatibility. -/
   functionFieldEquiv : ∀ [IsIntegral X] (U : X.Opens) (_hU : Nonempty U),
@@ -92,6 +96,11 @@ def chapter02RegularSectionMap (X : Scheme.{u})
     Γ(X, U) →+* Chapter02MeromorphicSection X U :=
   (K.regularMap.1.app (Opposite.op U)).hom
 
+def chapter02RegularSectionIsRegularAt {X : Scheme.{u}}
+    (U : X.Opens) (f : Γ(X, U)) (x : X) (hx : x ∈ U) : Prop :=
+  Function.Injective (fun z : X.presheaf.stalk x =>
+    X.presheaf.germ U x hx f * z)
+
 noncomputable def chapter02TotalQuotientRingEquiv (X : Scheme.{u})
     [K : Chapter02MeromorphicSheaf X] (U : X.affineOpens) :
     Chapter02TotalQuotientRing X U ≃+*
@@ -107,6 +116,24 @@ def chapter02MeromorphicRestriction (X : Scheme.{u})
     Chapter02MeromorphicSection X U →+* Chapter02MeromorphicSection X V :=
   (K.carrier.presheaf.map (homOfLE h).op).hom
 
+theorem chapter02_meromorphicRestriction_comp {X : Scheme.{u}}
+    [K : Chapter02MeromorphicSheaf X] {U V W : X.Opens}
+    (hVU : V ≤ U) (hWV : W ≤ V)
+    (s : Chapter02MeromorphicSection X U) :
+    chapter02MeromorphicRestriction X hWV
+        (chapter02MeromorphicRestriction X hVU s) =
+      chapter02MeromorphicRestriction X (hWV.trans hVU) s := by
+  change (K.carrier.presheaf.map (homOfLE hWV).op).hom
+      ((K.carrier.presheaf.map (homOfLE hVU).op).hom s) =
+    (K.carrier.presheaf.map (homOfLE (hWV.trans hVU)).op).hom s
+  have hle : (homOfLE hVU).op ≫ (homOfLE hWV).op =
+      (homOfLE (hWV.trans hVU)).op := by
+    subsingleton
+  simpa only [hle, CommRingCat.comp_apply] using
+    congrArg (fun z => z.hom s)
+      (Functor.map_comp K.carrier.presheaf
+        (homOfLE hVU).op (homOfLE hWV).op).symm
+
 def chapter02MeromorphicRestrictionUnit (X : Scheme.{u})
     [K : Chapter02MeromorphicSheaf X] {U V : X.Opens} (h : V ≤ U)
     (s : (Chapter02MeromorphicSection X U)ˣ) :
@@ -121,8 +148,11 @@ def chapter02RegularUnitMap (X : Scheme.{u})
 def chapter02MeromorphicSectionIsRegular (X : Scheme.{u})
     [K : Chapter02MeromorphicSheaf X] (U : X.Opens)
     (s : Chapter02MeromorphicSection X U) : Prop :=
-  ∃ f : Γ(X, U), f ∈ nonZeroDivisors (Γ(X, U)) ∧
-    chapter02RegularSectionMap X U f = s
+  ∀ (x : U),
+    ∃ (V : X.Opens) (hxV : (x : X) ∈ V) (hV : V ≤ U) (f : Γ(X, V)),
+      chapter02RegularSectionIsRegularAt V f (x : X) hxV ∧
+        chapter02RegularSectionMap X V f =
+          chapter02MeromorphicRestriction X hV s
 
 /- The local quotient `K_X^× / O_X^×` at an open is made explicit as a
    quotient of the unit group by the regular-unit relation. -/
@@ -159,6 +189,16 @@ theorem chapter02_cartier_equation_eq_of_regular_unit
     (h : chapter02CartierUnitRelation X U a b) :
     (Quotient.mk' a : Chapter02CartierEquation X U) = Quotient.mk' b := by
   exact Quotient.sound h
+
+theorem chapter02_cartier_equation_eq_iff
+    (X : Scheme.{u}) [K : Chapter02MeromorphicSheaf X] (U : X.Opens)
+    (a b : (Chapter02MeromorphicSection X U)ˣ) :
+    (Quotient.mk' a : Chapter02CartierEquation X U) = Quotient.mk' b ↔
+      chapter02CartierUnitRelation X U a b := by
+  constructor
+  · exact Quotient.exact
+  · intro h
+    exact Quotient.sound h
 
 /-!
 The concrete representative of a Cartier divisor is a cover and units in the

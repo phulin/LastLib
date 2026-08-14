@@ -80,7 +80,8 @@ theorem chapter03_restrictedProduct_mem_iff_exceptional_finite
     (H : ∀ i, Subgroup (G i)) (x : ∀ i, G i) :
     x ∈ chapter03RestrictedProductSubgroup H ↔
       (chapter03ExceptionalSet H x).Finite := by
-  sorry
+  simp [chapter03RestrictedProductSubgroup, chapter03AlmostAllIn,
+    chapter03ExceptionalSet, Filter.eventually_cofinite]
 
 /-- A family has infinitely many denominators relative to `H`. -/
 def chapter03InfinitelyManyExceptionalCoordinates
@@ -91,7 +92,8 @@ theorem chapter03_not_mem_restrictedProduct_iff_infinitely_many_exceptional
     (H : ∀ i, Subgroup (G i)) (x : ∀ i, G i) :
     x ∉ chapter03RestrictedProductSubgroup H ↔
       chapter03InfinitelyManyExceptionalCoordinates H x := by
-  sorry
+  rw [chapter03_restrictedProduct_mem_iff_exceptional_finite]
+  rfl
 
 /-- The identity family in the unrestricted dependent product. -/
 def chapter03IdentityFamily : ∀ i, G i := fun _ => 1
@@ -158,14 +160,39 @@ theorem chapter03_stage_inter
     (H : ∀ i, Subgroup (G i)) (S T : Set I) :
     chapter03StageSubgroup H (S ∩ T) =
       chapter03StageSubgroup H S ⊓ chapter03StageSubgroup H T := by
-  sorry
+  ext x
+  change (∀ i, i ∉ S ∩ T → ((x : ∀ i, G i) i) ∈ H i) ↔
+    ((∀ i, i ∉ S → ((x : ∀ i, G i) i) ∈ H i) ∧
+      (∀ i, i ∉ T → ((x : ∀ i, G i) i) ∈ H i))
+  constructor
+  · intro hx
+    constructor
+    · intro i hi
+      exact hx i (fun h => hi h.1)
+    · intro i hi
+      exact hx i (fun h => hi h.2)
+  · rintro ⟨hxS, hxT⟩ i hi
+    by_cases hiS : i ∉ S
+    · exact hxS i hiS
+    · have hiSin : i ∈ S := by simpa using hiS
+      exact hxT i (fun hiT => hi ⟨hiSin, hiT⟩)
 
 theorem chapter03_restrictedProduct_eq_iUnion_finite_stages
     (H : ∀ i, Subgroup (G i)) :
     (Set.univ : Set (Chapter03RestrictedProduct H)) =
       ⋃ S : Chapter03FiniteStageIndex,
         (chapter03StageSubgroup H S.1 : Set (Chapter03RestrictedProduct H)) := by
-  sorry
+  apply Set.Subset.antisymm
+  · intro x _
+    have hfin :=
+      (chapter03_restrictedProduct_mem_iff_exceptional_finite H
+        (x : ∀ i, G i)).1 x.property
+    refine Set.mem_iUnion.2
+      ⟨⟨chapter03ExceptionalSet H (x : ∀ i, G i), hfin⟩, ?_⟩
+    intro i hi
+    exact not_not.mp hi
+  · intro x _
+    exact Set.mem_univ x
 
 end AlgebraicConstruction
 
@@ -358,14 +385,41 @@ theorem chapter03_basicProductSet_isOpen
     (H : ∀ i, Subgroup (G i)) (U : ∀ i, Set (G i))
     (hU : chapter03BasicProductCondition H U) :
     IsOpen (chapter03BasicProductSet H U) := by
-  sorry
+  change IsOpen[chapter03RestrictedProductTopology H]
+    (chapter03BasicProductSet H U)
+  exact TopologicalSpace.isOpen_generateFrom_of_mem ⟨U, hU, rfl⟩
 
 theorem chapter03_stage_isOpen
     [∀ i, TopologicalSpace (G i)]
     (H : ∀ i, Subgroup (G i)) {S : Set I} (hS : S.Finite)
     (hH : ∀ i, IsOpen (H i : Set (G i))) :
     IsOpen (chapter03StageSubgroup H S : Set (Chapter03RestrictedProduct H)) := by
-  sorry
+  classical
+  let U : ∀ i, Set (G i) := fun i =>
+    if i ∈ S then Set.univ else (H i : Set (G i))
+  have hU : chapter03BasicProductCondition H U := by
+    constructor
+    · intro i
+      by_cases hi : i ∈ S
+      · simp [U, hi]
+      · simpa [U, hi] using hH i
+    · filter_upwards [hS.compl_mem_cofinite] with i hi
+      have hi' : i ∉ S := by simpa using hi
+      simp [U, hi']
+  have hset : chapter03BasicProductSet H U =
+      (chapter03StageSubgroup H S : Set (Chapter03RestrictedProduct H)) := by
+    ext x
+    change (∀ i, ((x : ∀ i, G i) i) ∈ U i) ↔
+      ∀ i, i ∉ S → ((x : ∀ i, G i) i) ∈ H i
+    constructor
+    · intro hx i hi
+      simpa [U, hi] using hx i
+    · intro hx i
+      by_cases hi : i ∈ S
+      · simp [U, hi]
+      · simpa [U, hi] using hx i hi
+  rw [← hset]
+  exact chapter03_basicProductSet_isOpen H U hU
 
 theorem chapter03_stage_is_basicProduct
     [∀ i, TopologicalSpace (G i)]
@@ -375,7 +429,29 @@ theorem chapter03_stage_is_basicProduct
       chapter03BasicProductCondition H U ∧
         chapter03BasicProductSet H U =
           (chapter03StageSubgroup H S : Set (Chapter03RestrictedProduct H)) := by
-  sorry
+  classical
+  let U : ∀ i, Set (G i) := fun i =>
+    if i ∈ S then Set.univ else (H i : Set (G i))
+  have hU : chapter03BasicProductCondition H U := by
+    constructor
+    · intro i
+      by_cases hi : i ∈ S
+      · simp [U, hi]
+      · simpa [U, hi] using hH i
+    · filter_upwards [hS.compl_mem_cofinite] with i hi
+      have hi' : i ∉ S := by simpa using hi
+      simp [U, hi']
+  refine ⟨U, hU, ?_⟩
+  ext x
+  change (∀ i, ((x : ∀ i, G i) i) ∈ U i) ↔
+    ∀ i, i ∉ S → ((x : ∀ i, G i) i) ∈ H i
+  constructor
+  · intro hx i hi
+    simpa [U, hi] using hx i
+  · intro hx i
+    by_cases hi : i ∈ S
+    · simp [U, hi]
+    · simpa [U, hi] using hx i hi
 
 theorem chapter03_restrictedTopology_ne_subspaceTopology
     [∀ i, TopologicalSpace (G i)]
@@ -384,7 +460,69 @@ theorem chapter03_restrictedTopology_ne_subspaceTopology
     (hproper : chapter03InfinitelyManyProperDistinguishedSubgroups H) :
     chapter03RestrictedProductTopology H ≠
       chapter03UnrestrictedProductSubspaceTopology H := by
-  sorry
+  classical
+  intro htop
+  have htailR : IsOpen[chapter03RestrictedProductTopology H]
+      (chapter03DistinguishedTail H) := by
+    exact chapter03_stage_isOpen H Set.finite_empty hH
+  have htailU : IsOpen[chapter03UnrestrictedProductSubspaceTopology H]
+      (chapter03DistinguishedTail H) := by
+    rw [← htop]
+    exact htailR
+  have hone : (1 : Chapter03RestrictedProduct H) ∈ chapter03DistinguishedTail H := by
+    rw [chapter03_distinguishedTail_mem_iff]
+    intro i
+    exact (H i).one_mem
+  let _ : TopologicalSpace (Chapter03RestrictedProduct H) :=
+    chapter03UnrestrictedProductSubspaceTopology H
+  have htail_mem : chapter03DistinguishedTail H ∈ 𝓝 (1 : Chapter03RestrictedProduct H) :=
+    htailU.mem_nhds hone
+  rcases (mem_nhds_induced
+      (fun x : Chapter03RestrictedProduct H => (x : ∀ i, G i))
+      (1 : Chapter03RestrictedProduct H)
+      (chapter03DistinguishedTail H)).mp htail_mem with ⟨U, hUnh, hUsub⟩
+  have hUnh' : U ∈ 𝓝 (1 : ∀ i, G i) := hUnh
+  rw [nhds_pi, Filter.mem_pi'] at hUnh'
+  rcases hUnh' with ⟨K, V, hV, hKV⟩
+  change {i | H i ≠ ⊤}.Infinite at hproper
+  obtain ⟨i, hi, hiK⟩ := hproper.exists_notMem_finset K
+  have hi' : H i ≠ ⊤ := hi
+  obtain ⟨g, hg⟩ := SetLike.exists_not_mem_of_ne_top (H i) hi'
+  let y : ∀ j, G j := Function.update chapter03IdentityFamily i g
+  have hy : y ∈ chapter03RestrictedProductSubgroup H := by
+    rw [chapter03_restrictedProduct_mem_iff_exceptional_finite]
+    apply (Set.finite_singleton i).subset
+    intro j hj
+    by_contra hji
+    apply hj
+    have hji' : j ≠ i := by
+      intro hji'
+      apply hji
+      simp [hji']
+    have hyj : y j = 1 := by
+      simp [y, chapter03IdentityFamily, hji']
+    rw [hyj]
+    exact (H j).one_mem
+  let z : Chapter03RestrictedProduct H := ⟨y, hy⟩
+  have hyK : y ∈ Set.pi (↑K : Set I) V := by
+    intro j hj
+    have hjV : V j ∈ 𝓝 (chapter03IdentityFamily j) := hV j
+    have honeV : chapter03IdentityFamily j ∈ V j := mem_of_mem_nhds hjV
+    have hji : j ≠ i := by
+      intro hji
+      subst j
+      exact hiK hj
+    simpa [y, hji] using honeV
+  have hyU : y ∈ U := hKV hyK
+  have hzpre : z ∈
+      (fun x : Chapter03RestrictedProduct H => (x : ∀ i, G i)) ⁻¹' U := by
+    exact hyU
+  have hzT : z ∈ chapter03DistinguishedTail H := hUsub hzpre
+  have hgi : g ∈ H i := by
+    have hgi' := (chapter03_distinguishedTail_mem_iff H z).mp hzT i
+    change y i ∈ H i at hgi'
+    simpa [y] using hgi'
+  exact hg hgi
 
 end StagesAndTopology
 
@@ -431,14 +569,17 @@ noncomputable def chapter03FiniteSupportProduct
   classical
   exact ∏ i ∈ h.toFinset, φ i (x i)
 
+omit [(i : I) → Group (G i)] in
 theorem chapter03_finiteSupportProduct_eq_one
     {M : Type w} [CommMonoid M]
     (φ : ∀ i, G i → M) (x : ∀ i, G i)
     (h : (chapter03ScalarExceptionalSet φ x).Finite)
     (hφ : ∀ i, φ i (x i) = 1) :
     chapter03FiniteSupportProduct φ x h = 1 := by
-  sorry
+  classical
+  simp [chapter03FiniteSupportProduct, hφ]
 
+omit [(i : I) → Group (G i)] in
 theorem chapter03_finiteSupportProduct_eq_finiteSubsetProduct_of_subset
     {M : Type w} [CommMonoid M]
     (φ : ∀ i, G i → M) (x : ∀ i, G i)
@@ -447,7 +588,16 @@ theorem chapter03_finiteSupportProduct_eq_finiteSubsetProduct_of_subset
     (hS : chapter03ScalarExceptionalSet φ x ⊆ S.1) :
     chapter03FiniteSupportProduct φ x h =
       chapter03FiniteSubsetProduct φ x S := by
-  sorry
+  classical
+  rw [chapter03FiniteSupportProduct, chapter03FiniteSubsetProduct]
+  apply Finset.prod_subset
+  · intro i hi
+    exact S.2.mem_toFinset.mpr (hS (h.mem_toFinset.mp hi))
+  · intro i hiS hi
+    by_contra hne
+    apply hi
+    exact h.mem_toFinset.mpr (by
+      simpa [chapter03ScalarExceptionalSet] using hne)
 
 end ScalarProducts
 

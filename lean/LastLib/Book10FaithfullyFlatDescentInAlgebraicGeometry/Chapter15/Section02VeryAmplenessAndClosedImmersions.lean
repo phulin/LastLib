@@ -270,7 +270,6 @@ theorem veryAmple_and_closedImmersion_descent_for_proper_upstairs
 theorem finite_system_global_on_quasiCompact_base
     {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
     (hf : IsFinitePresentation f) (hg : FpqcCoverData g)
-    (_hS : QuasiCompact (𝟙 S))
     (D : FpqcLineBundleDescentDatum f g)
     (V : CompatibleFiniteLinearSystem f g D) :
     ∃ Z : DescendedFiniteLinearSystem f g D V,
@@ -284,7 +283,12 @@ theorem finite_system_local_on_arbitrary_base
     (D : FpqcLineBundleDescentDatum f g)
     (V : CompatibleFiniteLinearSystem f g D) :
     HasLocalFiniteRankEmbedding f := by
-  sorry
+  obtain ⟨Z, hZ⟩ := compatible_finite_linear_system_effective_descent f g hf hg D V
+  have hglobal : HasGlobalFiniteRankEmbedding f :=
+    ⟨Z.lineBundle, Z.hasGlobalFiniteRankEmbeddingFor⟩
+  intro s
+  refine ⟨⊤, Set.mem_univ s, ?_⟩
+  exact hasGlobalFiniteRankEmbedding_restrict f ⊤ hglobal
 
 structure LocallyClosedProjectivePresentation {X S : Scheme.{u}} (f : X ⟶ S) where
   projectiveBundle :

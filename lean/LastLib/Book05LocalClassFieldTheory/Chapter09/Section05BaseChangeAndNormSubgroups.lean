@@ -1,4 +1,6 @@
 import Mathlib.Algebra.Algebra.Subalgebra.Lattice
+import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
+import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
 import Mathlib.GroupTheory.QuotientGroup.Defs
 
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section07ConcreteFiniteExtensions
@@ -39,7 +41,44 @@ theorem chapter09_compositum_finite_over_L
     [Algebra.IsSeparable K L] [IsAbelianGalois K E]
     (C : Chapter09Compositum K E L EL) :
     FiniteDimensional L EL := by
-  sorry
+  let e : E →ₐ[K] EL := IsScalarTower.toAlgHom K E EL
+  let l : L →ₐ[K] EL := IsScalarTower.toAlgHom K L EL
+  let E' : IntermediateField K EL := e.fieldRange
+  let L' : IntermediateField K EL := l.fieldRange
+  have hE' : FiniteDimensional K E' := by
+    dsimp [E']
+    exact LinearEquiv.finiteDimensional e.equivFieldRange.toLinearEquiv
+  have hL' : FiniteDimensional K L' := by
+    dsimp [L']
+    exact LinearEquiv.finiteDimensional l.equivFieldRange.toLinearEquiv
+  let _ : FiniteDimensional K E' := hE'
+  let _ : FiniteDimensional K L' := hL'
+  have he : e.range = Algebra.adjoin K (Set.range (algebraMap E EL)) := by
+    apply le_antisymm
+    · rintro x ⟨y, rfl⟩
+      exact Algebra.subset_adjoin ⟨y, rfl⟩
+    · exact Algebra.adjoin_le (by
+        rintro x ⟨y, rfl⟩
+        exact ⟨y, rfl⟩)
+  have hl : l.range = Algebra.adjoin K (Set.range (algebraMap L EL)) := by
+    apply le_antisymm
+    · rintro x ⟨y, rfl⟩
+      exact Algebra.subset_adjoin ⟨y, rfl⟩
+    · exact Algebra.adjoin_le (by
+        rintro x ⟨y, rfl⟩
+        exact ⟨y, rfl⟩)
+  have hsup : E' ⊔ L' = ⊤ := by
+    apply IntermediateField.toSubalgebra_injective
+    rw [IntermediateField.sup_toSubalgebra_of_left E' L']
+    change e.range ⊔ l.range = ⊤
+    rw [he, hl, ← Algebra.adjoin_union]
+    exact C.generated
+  have htop : FiniteDimensional K (⊤ : IntermediateField K EL) := by
+    rw [← hsup]
+    infer_instance
+  let _ : FiniteDimensional K EL :=
+    (IntermediateField.topEquiv (F := K) (E := EL)).toLinearEquiv.finiteDimensional
+  exact Module.Finite.of_restrictScalars_finite K L EL
 
 theorem chapter09_compositum_is_abelian
     (K E L EL : Type*) [Field K] [Field E] [Field L] [Field EL]
@@ -49,7 +88,98 @@ theorem chapter09_compositum_is_abelian
     [Algebra.IsSeparable K L] [IsAbelianGalois K E]
     (C : Chapter09Compositum K E L EL) :
     IsAbelianGalois L EL := by
-  sorry
+  let e : E →ₐ[K] EL := IsScalarTower.toAlgHom K E EL
+  let l : L →ₐ[K] EL := IsScalarTower.toAlgHom K L EL
+  let E' : IntermediateField K EL := e.fieldRange
+  let L' : IntermediateField K EL := l.fieldRange
+  have hE' : FiniteDimensional K E' := by
+    dsimp [E']
+    exact LinearEquiv.finiteDimensional e.equivFieldRange.toLinearEquiv
+  have hL' : FiniteDimensional K L' := by
+    dsimp [L']
+    exact LinearEquiv.finiteDimensional l.equivFieldRange.toLinearEquiv
+  have hsup : E' ⊔ L' = ⊤ := by
+    let _ : FiniteDimensional K E' := hE'
+    let _ : FiniteDimensional K L' := hL'
+    have he : e.range = Algebra.adjoin K (Set.range (algebraMap E EL)) := by
+      apply le_antisymm
+      · rintro x ⟨y, rfl⟩
+        exact Algebra.subset_adjoin ⟨y, rfl⟩
+      · exact Algebra.adjoin_le (by
+          rintro x ⟨y, rfl⟩
+          exact ⟨y, rfl⟩)
+    have hl : l.range = Algebra.adjoin K (Set.range (algebraMap L EL)) := by
+      apply le_antisymm
+      · rintro x ⟨y, rfl⟩
+        exact Algebra.subset_adjoin ⟨y, rfl⟩
+      · exact Algebra.adjoin_le (by
+          rintro x ⟨y, rfl⟩
+          exact ⟨y, rfl⟩)
+    apply IntermediateField.toSubalgebra_injective
+    rw [IntermediateField.sup_toSubalgebra_of_left E' L']
+    change e.range ⊔ l.range = ⊤
+    rw [he, hl, ← Algebra.adjoin_union]
+    exact C.generated
+  have hAE' : IsAbelianGalois K E' :=
+    IsAbelianGalois.of_algHom e.equivFieldRange.symm.toAlgHom
+  let _ : IsAbelianGalois K E' := hAE'
+  have hcommE (a b : Gal(E' / K)) : a * b = b * a :=
+    hAE'.is_comm.comm a b
+  have hG : IsGalois L' EL :=
+    IsGalois.sup_right E' L' hsup
+  have hf : Function.Injective
+      (IntermediateField.restrictRestrictAlgEquivMapHom K E' L' EL) :=
+    IntermediateField.restrictRestrictAlgEquivMapHom_injective E' L' hsup
+  have hcomm' (σ τ : Gal(EL / L')) : σ * τ = τ * σ := by
+    apply hf
+    simpa only [map_mul] using
+      hcommE
+        ((IntermediateField.restrictRestrictAlgEquivMapHom K E' L' EL) σ)
+        ((IntermediateField.restrictRestrictAlgEquivMapHom K E' L' EL) τ)
+  have hAb' : IsAbelianGalois L' EL := by
+    exact { toIsGalois := hG, is_comm := ⟨hcomm'⟩ }
+  let eL : L ≃ₐ[K] L' := l.equivFieldRange
+  have heL_apply (y : L) : (eL y : EL) = algebraMap L EL y := by
+    rfl
+  let t : Gal(EL / L) →* Gal(EL / L') :=
+    { toFun := fun σ =>
+        { σ with
+          commutes' := by
+            intro x
+            obtain ⟨y, hy⟩ := x.property
+            have hx : algebraMap L' EL x = algebraMap L EL y := by
+              calc
+                algebraMap L' EL x = (x : EL) := rfl
+                _ = l y := hy.symm
+                _ = algebraMap L EL y := by rfl
+            rw [hx]
+            exact σ.commutes y }
+      map_one' := by rfl
+      map_mul' := by intro σ τ; rfl }
+  have ht : Function.Injective t := by
+    intro σ τ h
+    apply AlgEquiv.ext
+    intro x
+    have hx := congrArg (fun ρ : Gal(EL / L') => ρ x) h
+    change σ x = τ x at hx
+    exact hx
+  have hcomm (σ τ : Gal(EL / L)) : σ * τ = τ * σ := by
+    apply ht
+    simpa only [map_mul] using hAb'.is_comm.comm (t σ) (t τ)
+  have hcomp :
+      (algebraMap L EL).comp eL.symm.toRingHom =
+        (RingHom.id EL).comp (algebraMap L' EL) := by
+    ext x
+    change algebraMap L EL (eL.symm x) = (x : EL)
+    calc
+      algebraMap L EL (eL.symm x) = (eL (eL.symm x) : EL) :=
+        (heL_apply (eL.symm x)).symm
+      _ = (x : EL) := congrArg (fun z : L' => (z : EL)) (eL.apply_symm_apply x)
+  have hG_L : IsGalois L EL := by
+    let _ : IsGalois L' EL := hG
+    exact IsGalois.of_equiv_equiv (f := eL.symm.toRingEquiv)
+      (g := RingEquiv.refl EL) hcomp
+  exact { toIsGalois := hG_L, is_comm := ⟨hcomm⟩ }
 
 /-- The finite reciprocity character supplied by a quotient equivalence. -/
 def chapter09ReciprocityCharacter
@@ -65,7 +195,15 @@ theorem chapter09ReciprocityCharacter_ker
     [FiniteDimensional K L] [IsAbelianGalois K L]
     (R : Chapter09FiniteAbelianReciprocity K L) :
     (chapter09ReciprocityCharacter K L R).ker = chapter09NormSubgroup K L := by
-  sorry
+  change (R.quotientEquiv.toMonoidHom.comp
+    (QuotientGroup.mk'
+      (LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05NormSubgroup K L))).ker = _
+  calc
+    _ = (QuotientGroup.mk'
+      (LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05NormSubgroup K L)).ker := by
+      apply MonoidHom.ker_comp_of_injective
+      exact R.quotientEquiv.injective
+    _ = _ := QuotientGroup.ker_mk' _
 
 /-!
 The restriction of automorphisms of `EL/L` to `E` is represented as an
@@ -234,7 +372,11 @@ theorem chapter09_total_ramification_preserved_under_unramified_base_change
         D.extensionProfile) :
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10TotallyRamified
       D.changedProfile := by
-  sorry
+  exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_total_ramification_preserved_under_unramified_base_change
+    D.baseProfile D.extensionProfile D.changedProfile
+    (LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_unramified_base_change_profile_of_data
+      vK vL vK' vL' hL hK' hL' hLL' D htotal)
+    htotal
 
 /- The Herbrand tower is the field/profile realization for the ramification
 part: `T.quotientSetup.local_field_realization` retains the actual valued
@@ -308,7 +450,13 @@ theorem chapter09_mem_reciprocityPreimageOfAbelianizedImage_of_group_element_iff
     (rec : K →* Abelianization G) (f : H →* G) (x : K) :
     x ∈ chapter09ReciprocityPreimageOfAbelianizedImage rec f ↔
       ∃ y : H, Abelianization.map f (Abelianization.of y) = rec x := by
-  sorry
+  constructor
+  · rintro ⟨z, hz⟩
+    refine QuotientGroup.induction_on z ?_ hz
+    intro y hy
+    exact ⟨y, hy⟩
+  · rintro ⟨y, hy⟩
+    exact ⟨Abelianization.of y, hy⟩
 
 end
 

@@ -145,6 +145,16 @@ theorem chapter08_pullback_is_quasicoherent
     ((Scheme.Modules.pullback f).obj M.obj).IsQuasicoherent := by
   sorry
 
+/-- The direct image of the structure sheaf is quasi-coherent for a
+quasi-compact, quasi-separated morphism.  This is the shared interface for
+relative global functions and does not require the morphism to be flat. -/
+theorem chapter08_pushforward_structure_sheaf_is_quasicoherent
+    {X S : Scheme.{u}} (f : X ⟶ S)
+    [QuasiCompact f] [QuasiSeparated f] :
+    ((Scheme.Modules.pushforward f).obj
+      (SheafOfModules.unit X.ringCatSheaf)).IsQuasicoherent := by
+  sorry
+
 /-- The full subcategory of descent data whose local modules are
 quasi-coherent. -/
 abbrev Chapter08QuasiCoherentModuleDescentData
@@ -153,6 +163,60 @@ abbrev Chapter08QuasiCoherentModuleDescentData
   ObjectProperty.FullSubcategory (fun D : Chapter08ModuleDescentData choices =>
     ∀ i, SheafOfModules.isQuasicoherent (X i).ringCatSheaf
       (show (X i).Modules from D.obj i))
+
+/- The canonical module datum is obtained from Mathlib's unrestricted descent
+   datum for the pullbacks and then transported to the chosen overlaps. -/
+noncomputable def chapter08CanonicalModuleDescentData
+    {S : Scheme.{u}} {ι : Type*} {X : ι → Scheme.{u}}
+    {f : ∀ i, X i ⟶ S} (choices : Chapter08PullbackChoices X f)
+    (M : Chapter08QuasiCoherentModules S) :
+    Chapter08ModuleDescentData choices :=
+  Pseudofunctor.DescentData'.ofDescentData choices.sq choices.sq₃
+    (((chapter08ModulesPseudofunctor).toDescentData f).obj M.obj)
+
+/- The local quasi-coherence proof is kept as the one affine/sheaf bridge
+   required to place the canonical datum in the chapter's full subcategory. -/
+noncomputable def chapter08CanonicalQuasiCoherentDescentDataBase
+    {S : Scheme.{u}} {ι : Type*} {X : ι → Scheme.{u}}
+    {f : ∀ i, X i ⟶ S} (choices : Chapter08PullbackChoices X f)
+    (M : Chapter08QuasiCoherentModules S) :
+    Chapter08QuasiCoherentModuleDescentData choices := by
+  refine ⟨chapter08CanonicalModuleDescentData choices M, ?_⟩
+  intro i
+  sorry
+
+/- This package keeps the canonical pullback datum, its component comparisons,
+   and its functorial maps in one interface.  The datum is fixed by the
+   canonical construction above, rather than being an arbitrary descent
+   object with only componentwise pullback isomorphisms. -/
+structure Chapter08CanonicalQuasiCoherentDescentPackage
+    {S : Scheme.{u}} {ι : Type*} {X : ι → Scheme.{u}}
+    {f : ∀ i, X i ⟶ S} (choices : Chapter08PullbackChoices X f) where
+  component : ∀ (M : Chapter08QuasiCoherentModules S) (i : ι),
+    (chapter08CanonicalQuasiCoherentDescentDataBase choices M).obj.obj i ≅
+      (Scheme.Modules.pullback (f i)).obj M.obj
+  map : ∀ {M N : Chapter08QuasiCoherentModules S}, (M ⟶ N) →
+    (chapter08CanonicalQuasiCoherentDescentDataBase choices M ⟶
+      chapter08CanonicalQuasiCoherentDescentDataBase choices N)
+  map_component : ∀ {M N : Chapter08QuasiCoherentModules S}
+    (φ : M ⟶ N) (i : ι),
+    (component M i).hom ≫ (Scheme.Modules.pullback (f i)).map φ.hom =
+      (map φ).hom.hom i ≫ (component N i).hom
+  map_id : ∀ (M : Chapter08QuasiCoherentModules S),
+    map (𝟙 M) =
+      𝟙 (chapter08CanonicalQuasiCoherentDescentDataBase choices M)
+  map_comp : ∀ {M N P : Chapter08QuasiCoherentModules S}
+    (φ : M ⟶ N) (ψ : N ⟶ P),
+    map (φ ≫ ψ) = map φ ≫ map ψ
+
+/- The existence of the package is the single construction interface used by
+   the chapter.  Its fields are the effectivity comparison and the naturality
+   data that the later categorical functor needs. -/
+noncomputable def chapter08CanonicalQuasiCoherentDescentPackage
+    {S : Scheme.{u}} {ι : Type*} {X : ι → Scheme.{u}}
+    {f : ∀ i, X i ⟶ S} (choices : Chapter08PullbackChoices X f) :
+    Chapter08CanonicalQuasiCoherentDescentPackage choices := by
+  sorry
 
 /-- The canonical quasi-coherent descent datum obtained by pulling a global
 module sheaf back to every member of a chosen cover.  Keeping this datum
@@ -163,7 +227,7 @@ noncomputable def chapter08CanonicalQuasiCoherentDescentData
     {f : ∀ i, X i ⟶ S} (choices : Chapter08PullbackChoices X f)
     (M : Chapter08QuasiCoherentModules S) :
     Chapter08QuasiCoherentModuleDescentData choices := by
-  sorry
+  exact chapter08CanonicalQuasiCoherentDescentDataBase choices M
 
 /-- The local component of the canonical datum is the pullback module, up to
 the canonical comparison supplied by its construction. -/
@@ -174,7 +238,37 @@ theorem chapter08_canonical_quasiCoherent_descent_component
     Nonempty
       ((chapter08CanonicalQuasiCoherentDescentData choices M).obj.obj i ≅
         (Scheme.Modules.pullback (f i)).obj M.obj) := by
-  sorry
+  exact ⟨(chapter08CanonicalQuasiCoherentDescentPackage choices).component M i⟩
+
+/- The componentwise pullback maps form the canonical morphism between the
+   corresponding descent data.  The overlap equation is the naturality of
+   pullback, retained here as the one compatibility field required by the
+   descent category. -/
+noncomputable def chapter08CanonicalQuasiCoherentDescentMap
+    {S : Scheme.{u}} {ι : Type*} {X : ι → Scheme.{u}}
+    {f : ∀ i, X i ⟶ S} (choices : Chapter08PullbackChoices X f)
+    {M N : Chapter08QuasiCoherentModules S} (φ : M ⟶ N) :
+    chapter08CanonicalQuasiCoherentDescentData choices M ⟶
+      chapter08CanonicalQuasiCoherentDescentData choices N := by
+  exact (chapter08CanonicalQuasiCoherentDescentPackage choices).map φ
+
+theorem chapter08CanonicalQuasiCoherentDescentMap_id
+    {S : Scheme.{u}} {ι : Type*} {X : ι → Scheme.{u}}
+    {f : ∀ i, X i ⟶ S} (choices : Chapter08PullbackChoices X f)
+    (M : Chapter08QuasiCoherentModules S) :
+    chapter08CanonicalQuasiCoherentDescentMap choices (𝟙 M) =
+      𝟙 (chapter08CanonicalQuasiCoherentDescentData choices M) := by
+  exact (chapter08CanonicalQuasiCoherentDescentPackage choices).map_id M
+
+theorem chapter08CanonicalQuasiCoherentDescentMap_comp
+    {S : Scheme.{u}} {ι : Type*} {X : ι → Scheme.{u}}
+    {f : ∀ i, X i ⟶ S} (choices : Chapter08PullbackChoices X f)
+    {M N P : Chapter08QuasiCoherentModules S}
+    (φ : M ⟶ N) (ψ : N ⟶ P) :
+    chapter08CanonicalQuasiCoherentDescentMap choices (φ ≫ ψ) =
+      chapter08CanonicalQuasiCoherentDescentMap choices φ ≫
+        chapter08CanonicalQuasiCoherentDescentMap choices ψ := by
+  exact (chapter08CanonicalQuasiCoherentDescentPackage choices).map_comp φ ψ
 
 /-- The single-cover overlap choices used for the displayed `p₁^*` and
 `p₂^*` comparison in the chapter. -/
@@ -233,7 +327,6 @@ structure Chapter08FiniteAffineRefinement
   map : ∀ i, source i ⟶ pullback U.ι p
   affine : ∀ i, IsAffine (source i)
   flat : ∀ i, Flat (map i)
-  quasiCompact : ∀ i, QuasiCompact (map i)
   isOpenImmersion : ∀ i, IsOpenImmersion (map i)
   coordinateRing : index → CommRingCat.{u}
   source_isSpec : ∀ i, Nonempty (source i ≅ Spec (coordinateRing i))

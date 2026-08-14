@@ -222,7 +222,6 @@ theorem chapter13_powerEquation_not_in_the_etale_range
 
 theorem chapter13_pointwise_transitivity_does_not_detect_stabilizers
     {G P : Type u} [Group G] [MulAction G P]
-    (htrans : ∀ x y : P, ∃ g : G, g • x = y)
     (hstabilizer : ∃ (p : P) (g : G), g ≠ 1 ∧ g • p = p) :
     ¬ (∀ x y : P, ∃! g : G, g • x = y) := by sorry
 

@@ -158,6 +158,35 @@ abbrev Chapter10HenselizedTensor (K L Kh : Type*) [CommRing K] [CommRing L]
 def Chapter10TensorMaximalIdeals {C : Type*} [CommRing C] : Set (Ideal C) :=
   {P | P.IsMaximal}
 
+/-- A local factor contribution is represented by linearly independent vectors
+in the corresponding residue factor.  This is the structural input used to
+derive the numerical local bound; the bound itself is not stored as data. -/
+def Chapter10FactorContributionIndependent
+    {K L Kh : Type*} [Field K] [Field L] [Field Kh]
+    [Algebra K L] [Algebra K Kh]
+    (P : Ideal (L ⊗[K] Kh)) (n : ℕ) : Prop := by
+  letI : Algebra Kh (L ⊗[K] Kh) := Algebra.TensorProduct.rightAlgebra
+  exact ∃ f : Fin n → (L ⊗[K] Kh) ⧸ P, LinearIndependent Kh f
+
+/-- The dimension of a maximal tensor factor, using its canonical right-field
+algebra structure. -/
+def Chapter10TensorFactorDimension
+    {K L Kh : Type*} [Field K] [Field L] [Field Kh]
+    [Algebra K L] [Algebra K Kh]
+    (P : Ideal (L ⊗[K] Kh)) : ℕ := by
+  letI : Algebra Kh (L ⊗[K] Kh) := Algebra.TensorProduct.rightAlgebra
+  exact Module.finrank Kh ((L ⊗[K] Kh) ⧸ P)
+
+/-- Independent vectors in a finite tensor factor give the corresponding
+dimension bound. -/
+theorem chapter10_factor_contribution_le_factor_dimension
+    {K L Kh : Type*} [Field K] [Field L] [Field Kh]
+    [Algebra K L] [Algebra K Kh] [FiniteDimensional K L]
+    (P : Ideal (L ⊗[K] Kh)) (n : ℕ)
+    (h : Chapter10FactorContributionIndependent P n) :
+    n ≤ Chapter10TensorFactorDimension P := by
+  sorry
+
 /-! A finite henselized tensor separates the inequivalent heterogeneous
 valuation branches.  The package below keeps the branch-to-factor
 correspondence and the value/residue contributions explicit. -/
@@ -179,7 +208,6 @@ structure Chapter10HenselizedTensorBranchCorrespondence
   branchFactor : {b // b ∈ S} ≃ {P // P ∈ factors}
   factorRamification : {P // P ∈ factors} → ℕ
   factorResidueDegree : {P // P ∈ factors} → ℕ
-  factorDimension : {P // P ∈ factors} → ℕ
   branch_ramification :
     ∀ b, factorRamification (branchFactor b) =
       Nat.card (Chapter10ValueGroup b.1.w ⧸
@@ -190,13 +218,10 @@ structure Chapter10HenselizedTensorBranchCorrespondence
   branch_profile :
     ∀ b, b.1.profile.e = factorRamification (branchFactor b) ∧
       b.1.profile.f = factorResidueDegree (branchFactor b)
-  factorDimension_eq :
-    ∀ P, factorDimension P =
-      (letI : Algebra Kh (L ⊗[K] Kh) := Algebra.TensorProduct.rightAlgebra
-       Module.finrank Kh ((L ⊗[K] Kh) ⧸ P.1))
-  contribution_le_factorDimension :
-    ∀ b, Chapter10BranchContribution b.1.profile ≤
-      factorDimension (branchFactor b)
+  factorContributionIndependent :
+    ∀ b : {b // b ∈ S},
+      Chapter10FactorContributionIndependent (branchFactor b).1
+        (Chapter10BranchContribution b.1.profile)
 
 private theorem chapter10_henselized_tensor_factor_dimensions_bound
     {K L Kh : Type*} [Field K] [Field L] [Field Kh]
@@ -312,30 +337,37 @@ theorem chapter10_henselized_tensor_branch_sum_bound
     rw [Finset.sum_subtype S (p := fun b => b ∈ S) (fun b => Iff.rfl)]
   have hle :
       (∑ b : {b // b ∈ S}, Chapter10BranchContribution b.1.profile) ≤
-        ∑ b : {b // b ∈ S}, D.factorDimension (D.branchFactor b) := by
-    exact Finset.sum_le_sum (fun b _ => D.contribution_le_factorDimension b)
+        ∑ b : {b // b ∈ S},
+          Chapter10TensorFactorDimension (D.branchFactor b).1 := by
+    exact Finset.sum_le_sum (fun b _ =>
+      chapter10_factor_contribution_le_factor_dimension
+        (P := (D.branchFactor b).1)
+        (n := Chapter10BranchContribution b.1.profile)
+        (D.factorContributionIndependent b))
   let : Fintype {P // P ∈ D.factors} := Finset.fintypeCoeSort D.factors
   have hsum1 :
-      (∑ b : {b // b ∈ S}, D.factorDimension (D.branchFactor b)) =
-        ∑ P : {P // P ∈ D.factors}, D.factorDimension P := by
+      (∑ b : {b // b ∈ S},
+        Chapter10TensorFactorDimension (D.branchFactor b).1) =
+        ∑ P : {P // P ∈ D.factors}, Chapter10TensorFactorDimension P.1 := by
     apply Fintype.sum_equiv D.branchFactor
     intro b
     rfl
   have hsum2 :
-      (∑ P : {P // P ∈ D.factors}, D.factorDimension P) =
+      (∑ P : {P // P ∈ D.factors}, Chapter10TensorFactorDimension P.1) =
         Finset.sum D.factors (fun P =>
           (letI : Algebra Kh (L ⊗[K] Kh) := Algebra.TensorProduct.rightAlgebra
            Module.finrank Kh ((L ⊗[K] Kh) ⧸ P))) := by
     rw [Finset.sum_subtype D.factors (p := fun P => P ∈ D.factors)
       (fun P => Iff.rfl) (F := Finset.fintypeCoeSort D.factors)]
-    simp_rw [D.factorDimension_eq]
+    rfl
   have hdim := chapter10_henselized_tensor_factor_dimensions_bound
     (K := K) (L := L) (Kh := Kh) D.factors D.factors_maximal D.factors_exhaustive
   calc
     Finset.sum S (fun b => Chapter10BranchContribution b.profile) =
         ∑ b : {b // b ∈ S}, Chapter10BranchContribution b.1.profile := hsum0
-    _ ≤ ∑ b : {b // b ∈ S}, D.factorDimension (D.branchFactor b) := hle
-    _ = ∑ P : {P // P ∈ D.factors}, D.factorDimension P := hsum1
+    _ ≤ ∑ b : {b // b ∈ S},
+          Chapter10TensorFactorDimension (D.branchFactor b).1 := hle
+    _ = ∑ P : {P // P ∈ D.factors}, Chapter10TensorFactorDimension P.1 := hsum1
     _ = Finset.sum D.factors (fun P =>
           (letI : Algebra Kh (L ⊗[K] Kh) := Algebra.TensorProduct.rightAlgebra
            Module.finrank Kh ((L ⊗[K] Kh) ⧸ P))) := hsum2
@@ -508,8 +540,7 @@ theorem chapter10_finite_dvr_normalization_fundamental_equality
     (v : Valuation K ΓK) (hA : v.Integers A)
     (hfinite : Module.Finite A (integralClosure A L))
     (S : Finset (Chapter10ValuationBranch (K := K) (L := L) v))
-    (hcomplete : Chapter10CompleteBranchFamily v S)
-    (hprofile : ∀ b ∈ S, Chapter10BranchProfileCorrect v b) :
+    (hcomplete : Chapter10CompleteBranchFamily v S) :
     Finset.sum S (fun b => Chapter10BranchContribution b.profile) = Module.finrank K L := by
   sorry
 
@@ -539,14 +570,13 @@ theorem chapter10_finite_normalization_defectless
     (hfinite : Module.Finite v.valuationSubring
       (integralClosure v.valuationSubring L))
     (S : Finset (Chapter10ValuationBranch (K := K) (L := L) v))
-    (hcomplete : Chapter10CompleteBranchFamily v S)
-    (hprofile : ∀ b ∈ S, Chapter10BranchProfileCorrect v b) :
+    (hcomplete : Chapter10CompleteBranchFamily v S) :
     Finset.sum S (fun b => Chapter10BranchContribution b.profile) = Module.finrank K L := by
   let : IsFractionRing v.valuationSubring K :=
     (Valuation.valuationSubring.integers v).isFractionRing
   exact chapter10_finite_dvr_normalization_fundamental_equality
     (A := v.valuationSubring) (K := K) (L := L) v
-    (Valuation.valuationSubring.integers v) hfinite S hcomplete hprofile
+    (Valuation.valuationSubring.integers v) hfinite S hcomplete
 
 end
 

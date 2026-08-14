@@ -1,4 +1,6 @@
 import Mathlib.AlgebraicGeometry.Fiber
+import Mathlib.AlgebraicGeometry.Morphisms.Finite
+import Mathlib.AlgebraicGeometry.Morphisms.FlatRank
 import Mathlib.Algebra.Polynomial.RingDivision
 import Mathlib.RingTheory.Flat.TorsionFree
 import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter02.Section02EffectiveCartierDivisors
@@ -186,14 +188,13 @@ structure Chapter02CartierPullbackData {X Y : Scheme.{u}}
     (D : Chapter02CartierDivisor.{u, v} X) where
   divisor : Chapter02CartierDivisor.{u, v} Y
   represents : chapter02CartierPullbackRepresents g D divisor
-  equations_are_admissible : chapter02PullbackEquationAdmissible g D
 
-theorem chapter02_cartier_pullback_exists_iff {X Y : Scheme.{u}}
+theorem chapter02_cartier_pullback_exists_of_admissible {X Y : Scheme.{u}}
     [KX : Chapter02MeromorphicSheaf X] [KY : Chapter02MeromorphicSheaf Y]
     (g : Y ⟶ X) [M : Chapter02MeromorphicPullbackMap g]
-    (D : Chapter02CartierDivisor X) :
-    Nonempty (Chapter02CartierPullbackData g D) ↔
-      chapter02PullbackEquationAdmissible g D := by
+    (D : Chapter02CartierDivisor X)
+    (hD : chapter02PullbackEquationAdmissible g D) :
+    Nonempty (Chapter02CartierPullbackData g D) := by
   sorry
 
 theorem chapter02_pullback_equations_admissible_of_flat {X Y : Scheme.{u}}
@@ -210,8 +211,8 @@ theorem chapter02_cartier_pullback_exists_of_flat {X Y : Scheme.{u}}
     [F : Chapter02FlatMeromorphicPullbackInterface g]
     (D : Chapter02CartierDivisor X) :
     Nonempty (Chapter02CartierPullbackData g D) := by
-  apply (chapter02_cartier_pullback_exists_iff g D).2
-  exact chapter02_pullback_equations_admissible_of_flat g D
+  exact chapter02_cartier_pullback_exists_of_admissible g D
+    (chapter02_pullback_equations_admissible_of_flat g D)
 
 theorem chapter02_cartier_restriction_to_open_exists {X : Scheme.{u}}
     [KX : Chapter02MeromorphicSheaf X] {U : X.Opens}
@@ -232,11 +233,11 @@ theorem chapter02_pullback_map_none_of_factors_through_support {X Y : Scheme.{u}
     (D : Chapter02EffectiveCartierDivisor X)
     (h : Chapter02MapFactorsThroughSupport g D) :
     ∃ (i : D.divisor.index) (V : Y.Opens)
-      (hV : V ≤ g ⁻¹ᵁ D.divisor.openSet i)
-      (f : Γ(X, D.divisor.openSet i)),
-      f ∈ nonZeroDivisors (Γ(X, D.divisor.openSet i)) ∧
-        chapter02StructureSheafPullbackMap g (D.divisor.openSet i) V hV f = 0 ∧
-          M.map (D.divisor.openSet i) V hV = none := by
+      (U : X.Opens) (hU : U ≤ D.divisor.openSet i)
+      (hV : V ≤ g ⁻¹ᵁ U) (f : Γ(X, U)),
+      f ∈ nonZeroDivisors (Γ(X, U)) ∧
+        chapter02StructureSheafPullbackMap g U V hV f = 0 ∧
+          M.map U V hV = none := by
   sorry
 
 theorem chapter02_pullback_can_fail_on_support {X Y : Scheme.{u}}
@@ -259,6 +260,20 @@ def chapter02EffectiveCartierPullbackSubschemeIso {X Y : Scheme.{u}}
     (chapter02EffectiveCartierPullbackIdeal g D).subscheme ≅
       pullback g D.inclusion :=
   D.ideal.comapIso g
+
+/- A flat Cartier quotient remains Cartier after a genuine base change even
+   when the ambient base-change morphism is not flat.  The pullback square is
+   the Tor-independence interface: flatness of the quotient over the base
+   makes tensoring its Cartier sequence exact. -/
+theorem chapter02_effective_cartier_comap_is_effective_of_flat_quotient
+    {X Y S T : Scheme.{u}} (f : X ⟶ S) (u : T ⟶ S)
+    (g : Y ⟶ X) (v : Y ⟶ T)
+    (hcart : IsPullback g v f u)
+    (I : X.IdealSheafData)
+    (hI : Chapter02IsEffectiveCartierIdeal I)
+    (hflat : Flat (I.subschemeι ≫ f)) :
+    Chapter02IsEffectiveCartierIdeal (I.comap g) := by
+  sorry
 
 theorem chapter02_effective_pullback_ideal_is_effective {X Y : Scheme.{u}}
     [K : Chapter02MeromorphicSheaf X]
@@ -296,10 +311,18 @@ theorem chapter02_effective_pullback_is_closed_immersion {X Y : Scheme.{u}}
     IsClosedImmersion (pullback.fst g D.inclusion) := by
   infer_instance
 
+structure Chapter02FiniteFlatRank {X S : Scheme.{u}} (q : X ⟶ S) (d : ℕ) : Prop where
+  finite : IsFinite q
+  flat : Flat q
+  locallyOfFinitePresentation : LocallyOfFinitePresentation q
+  rank : ∀ s : S, Scheme.Hom.finrank q s = d
+
 structure Chapter02RelativeEffectiveCartierDivisor {X S : Scheme.{u}}
     [K : Chapter02MeromorphicSheaf X] (f : X ⟶ S) where
   divisor : Chapter02EffectiveCartierDivisor.{u, v} X
-  flat_over_base : Flat (divisor.inclusion ≫ f)
+  degree : ℕ
+  finite_flat_rank :
+    Chapter02FiniteFlatRank (divisor.inclusion ≫ f) degree
 
 def chapter02RelativeFiberIdeal {X S : Scheme.{u}}
     [K : Chapter02MeromorphicSheaf X]

@@ -271,27 +271,25 @@ specialization can be connected to a future scheme-level function-field map API.
 
 structure Chapter02NormalSourceFactorization
     (F L K R : Type u) [Field F] [Field L] [Field K] [CommRing R]
-    [Algebra F L] [Algebra F K] [Algebra F R] [Algebra R K] [FiniteDimensional F L]
-    [IsScalarTower F R K] where
+    [Algebra F L] [Algebra F K] [Algebra R K] [FiniteDimensional F L] where
   embedding : Chapter02FunctionFieldEmbedding F L K
   integral_elements_land :
-    ∀ z : L, IsIntegral F z → ∃ r : R, algebraMap R K r = embedding.toAlgHom z
+    ∀ z : L, IsIntegral R (embedding.toAlgHom z) →
+      ∃ r : R, algebraMap R K r = embedding.toAlgHom z
 
 theorem chapter02_normalSourceFactorization_embedding_is_injective
     (F L K R : Type u) [Field F] [Field L] [Field K] [CommRing R]
-    [Algebra F L] [Algebra F K] [Algebra F R] [Algebra R K] [FiniteDimensional F L]
-    [IsScalarTower F R K]
+    [Algebra F L] [Algebra F K] [Algebra R K] [FiniteDimensional F L]
     (D : Chapter02NormalSourceFactorization F L K R) :
     Function.Injective (D.embedding.toAlgHom : L → K) :=
   D.embedding.injective
 
 theorem chapter02_normalSourceFactorization_integral_elements_land_unique
     (F L K R : Type u) [Field F] [Field L] [Field K] [CommRing R]
-    [Algebra F L] [Algebra F K] [Algebra F R] [Algebra R K] [FiniteDimensional F L]
-    [IsScalarTower F R K]
+    [Algebra F L] [Algebra F K] [Algebra R K] [FiniteDimensional F L]
     (D : Chapter02NormalSourceFactorization F L K R)
     (hR : Function.Injective (algebraMap R K)) :
-    ∀ z : L, IsIntegral F z →
+    ∀ z : L, IsIntegral R (D.embedding.toAlgHom z) →
       ∃! r : R, algebraMap R K r = D.embedding.toAlgHom z := by
   intro z hz
   rcases D.integral_elements_land z hz with ⟨r, hr⟩

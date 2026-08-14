@@ -45,9 +45,22 @@ structure Chapter09VectorBundle (X : Scheme.{u}) (r : ℕ) where
 /-- A line bundle is a rank-one vector bundle. -/
 abbrev Chapter09LineBundle (X : Scheme.{u}) := Chapter09VectorBundle X 1
 
+/- The rank-indexed carrier is the Chapter 2 local-generator presentation of a finite locally
+   free sheaf.  This bridge exposes the carrier predicate used by Chapter 4's projective-bundle
+   interface without changing the rank-indexed Chapter 9 object. -/
+theorem chapter09_finite_locally_free_of_rank_to_chapter04
+    {X : Scheme.{u}} {M : X.Modules} {r : ℕ}
+    (hM : chapter09FiniteLocallyFreeOfRank M r) :
+    LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04FiniteLocallyFree M := by
+  rcases hM with ⟨hqc, hft, q, hq, _⟩
+  change M.IsQuasicoherent ∧ M.IsLocallyFree ∧ M.IsFiniteType
+  let hloc : M.IsLocallyFree :=
+    { exists_isLocallyFreeData := ⟨q, hq⟩ }
+  exact ⟨hqc, hloc, hft⟩
+
 /- The Book 8 ampleness interface is phrased for its invertible-sheaf carrier.  A rank-one
-finite locally free carrier is the same mathematical object; this adapter keeps that bridge
-explicit until the corresponding pinned sheaf-level equivalence is available. -/
+  finite locally free carrier is the same mathematical object; this adapter keeps that bridge
+  explicit until the corresponding pinned sheaf-level equivalence is available. -/
 noncomputable def chapter09AsChapter04LineBundle
     {X : Scheme.{u}} (L : Chapter09LineBundle X) :
     LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Chapter04LineBundle X :=
@@ -55,6 +68,13 @@ noncomputable def chapter09AsChapter04LineBundle
     isInvertible :=
       LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04_isInvertible_of_chapter02Invertible
         L.locallyFree.2.2 }
+
+noncomputable def chapter09CanonicalProjectiveBundleOfVectorBundle
+    {X : Scheme.{u}} {r : ℕ} (E : Chapter09VectorBundle X r) :
+    LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Chapter04CanonicalProjectiveBundle
+      X E.carrier :=
+  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04CanonicalProjectiveBundle E.carrier
+    (chapter09_finite_locally_free_of_rank_to_chapter04 E.locallyFree)
 
 instance {X : Scheme.{u}} {r : ℕ} : CoeOut (Chapter09VectorBundle X r) X.Modules :=
   ⟨Chapter09VectorBundle.carrier⟩
@@ -103,6 +123,26 @@ noncomputable def chapter09PullbackIdentityIso
     Chapter09PullbackModule (𝟙 X) M ≅ M :=
   (Scheme.Modules.pullbackId X).app M
 
+/- The two comparison isomorphisms above are the Chapter 9 adapter for the
+   module-valued pullback pseudofunctor.  These naturality laws are kept
+   explicit because later Cech calculations must transport maps through the
+   comparisons rather than identify iterated pullbacks definitionally. -/
+theorem chapter09PullbackCompositionIso_naturality
+    {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+    {M N : Z.Modules} (u : M ⟶ N) :
+    (chapter09PullbackCompositionIso f g M).hom ≫
+        (Scheme.Modules.pullback f).map ((Scheme.Modules.pullback g).map u) =
+      (Scheme.Modules.pullback (f ≫ g)).map u ≫
+        (chapter09PullbackCompositionIso f g N).hom := by
+  sorry
+
+theorem chapter09PullbackIdentityIso_naturality
+    {X : Scheme.{u}} {M N : X.Modules} (u : M ⟶ N) :
+    (chapter09PullbackIdentityIso M).hom ≫ u =
+      (Scheme.Modules.pullback (𝟙 X)).map u ≫
+        (chapter09PullbackIdentityIso N).hom := by
+  sorry
+
 /-! ## Čech nerve and descent data -/
 
 abbrev Chapter09DoubleOverlap {S T : Scheme.{u}} (p : T ⟶ S) :=
@@ -117,20 +157,28 @@ noncomputable def chapter09DoubleSecond
   LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter04.chapter04P2 p
 
 /-- The canonical comparison between the two iterated pullbacks of a module from `S` to the
-double overlap. -/
+ double overlap. -/
+noncomputable def chapter09CanonicalModuleDescentOverlapIso
+    {S T : Scheme.{u}} (p : T ⟶ S) (M : S.Modules) :
+    Chapter09PullbackModule (chapter09DoubleFirst p)
+        (Chapter09PullbackModule p M) ≅
+      Chapter09PullbackModule (chapter09DoubleSecond p)
+        (Chapter09PullbackModule p M) := by
+  exact
+    (chapter09PullbackCompositionIso (chapter09DoubleFirst p) p M).symm ≪≫
+      eqToIso (congrArg
+        (fun q : Chapter09DoubleOverlap p ⟶ S => Chapter09PullbackModule q M)
+        (pullback.condition :
+          chapter09DoubleFirst p ≫ p = chapter09DoubleSecond p ≫ p)) ≪≫
+      chapter09PullbackCompositionIso (chapter09DoubleSecond p) p M
+
 noncomputable def chapter09CanonicalDescentOverlapIso
     {S T : Scheme.{u}} (p : T ⟶ S) {r : ℕ} (E : Chapter09VectorBundle S r) :
     Chapter09PullbackModule (chapter09DoubleFirst p)
         (Chapter09PullbackModule p E.carrier) ≅
       Chapter09PullbackModule (chapter09DoubleSecond p)
         (Chapter09PullbackModule p E.carrier) := by
-  exact
-    (chapter09PullbackCompositionIso (chapter09DoubleFirst p) p E.carrier).symm ≪≫
-      eqToIso (congrArg
-        (fun q : Chapter09DoubleOverlap p ⟶ S => Chapter09PullbackModule q E.carrier)
-        (pullback.condition :
-          chapter09DoubleFirst p ≫ p = chapter09DoubleSecond p ≫ p)) ≪≫
-      chapter09PullbackCompositionIso (chapter09DoubleSecond p) p E.carrier
+  exact chapter09CanonicalModuleDescentOverlapIso p E.carrier
 
 /-- The canonical triple overlap from the earlier Čech-nerve interface. -/
 structure Chapter09CechNerve {S T : Scheme.{u}} (p : T ⟶ S) where
@@ -250,6 +298,45 @@ def chapter09CechCocycleCondition
       Chapter09PullbackModule (chapter09DoubleSecond p) M) : Prop :=
   chapter09CechTripleCondition p N φ
 
+/- Pulling an intertwining square through a further map is the conjugation
+   calculation used for tensor operations, sections, and line bundles. -/
+theorem chapter09CechPullbackIso_conjugation
+    {S T U : Scheme.{u}} (p : T ⟶ S) (q : U ⟶ Chapter09DoubleOverlap p)
+    {M N : T.Modules}
+    (φ : Chapter09PullbackModule (chapter09DoubleFirst p) M ≅
+      Chapter09PullbackModule (chapter09DoubleSecond p) M)
+    (ψ : Chapter09PullbackModule (chapter09DoubleFirst p) N ≅
+      Chapter09PullbackModule (chapter09DoubleSecond p) N)
+    (u : M ⟶ N)
+    (h : (Scheme.Modules.pullback (chapter09DoubleFirst p)).map u ≫ ψ.hom =
+      φ.hom ≫ (Scheme.Modules.pullback (chapter09DoubleSecond p)).map u) :
+    (chapter09CechPullbackIso p q φ).hom ≫
+        (Scheme.Modules.pullback (q ≫ chapter09DoubleSecond p)).map u =
+      (Scheme.Modules.pullback (q ≫ chapter09DoubleFirst p)).map u ≫
+        (chapter09CechPullbackIso p q ψ).hom := by
+  sorry
+
+/- The canonical overlap comparison is natural in the module being pulled
+   back.  This is the comparison square needed to transport the canonical
+   descent datum through a morphism. -/
+theorem chapter09CanonicalModuleDescentOverlapIso_naturality
+    {S T : Scheme.{u}} (p : T ⟶ S) {M N : S.Modules} (u : M ⟶ N) :
+    (Scheme.Modules.pullback (chapter09DoubleFirst p)).map
+          ((Scheme.Modules.pullback p).map u) ≫
+        (chapter09CanonicalModuleDescentOverlapIso p N).hom =
+      (chapter09CanonicalModuleDescentOverlapIso p M).hom ≫
+        (Scheme.Modules.pullback (chapter09DoubleSecond p)).map
+          ((Scheme.Modules.pullback p).map u) := by
+  sorry
+
+/- This named theorem is the canonical-cocycle bridge consumed by the
+   effective vector-bundle datum below. -/
+theorem chapter09_canonical_module_descent_overlap_cocycle
+    {S T : Scheme.{u}} (p : T ⟶ S) (M : S.Modules) :
+    chapter09CechCocycleCondition p (chapter09CanonicalCechNerve p)
+      (chapter09CanonicalModuleDescentOverlapIso p M) := by
+  sorry
+
 /- The diagonal normalization and transposition-inverse equations are consequences of the
 triple-overlap cocycle. They are exposed separately so a descent datum records only the
 compatibility required by the book-facing definition. -/
@@ -304,18 +391,32 @@ noncomputable def chapter09CanonicalVectorBundleDescentDatum
     nerve := chapter09CanonicalCechNerve p
     upstairs := chapter09PullbackVectorBundle p E
     overlapIso := chapter09CanonicalDescentOverlapIso p E
-    cocycle := ?_ }
-  sorry
+    cocycle := chapter09_canonical_module_descent_overlap_cocycle p E.carrier }
+
+def chapter09ModuleDescentComparisonCompatible
+    {S T : Scheme.{u}} {p : T ⟶ S} {r : ℕ}
+    (D : Chapter09ModuleDescentDatum p r) (M : S.Modules)
+    (e : Chapter09PullbackModule p M ≅ D.upstairs.carrier) : Prop :=
+  (Scheme.Modules.pullback (chapter09DoubleFirst p)).map e.hom ≫ D.overlapIso.hom =
+    (chapter09CanonicalModuleDescentOverlapIso p M).hom ≫
+      (Scheme.Modules.pullback (chapter09DoubleSecond p)).map e.hom
 
 def chapter09DescentComparisonCompatible
     {S T : Scheme.{u}} {p : T ⟶ S} {r : ℕ}
     (D : Chapter09ModuleDescentDatum p r)
     (E : Chapter09VectorBundle S r)
-    (e : (chapter09PullbackVectorBundle p E).carrier ≅ D.upstairs.carrier) : Prop := by
-  exact
-    (Scheme.Modules.pullback (chapter09DoubleFirst p)).map e.hom ≫ D.overlapIso.hom =
-      (chapter09CanonicalDescentOverlapIso p E).hom ≫
-        (Scheme.Modules.pullback (chapter09DoubleSecond p)).map e.hom
+    (e : (chapter09PullbackVectorBundle p E).carrier ≅ D.upstairs.carrier) : Prop :=
+  chapter09ModuleDescentComparisonCompatible D E.carrier e
+
+/- A carrier-level realization is the form consumed by the earlier Book 8 line-bundle interface.
+   It records both the actual descended invertible carrier and the comparison square; an arbitrary
+   isomorphism of carriers is not silently treated as descent data. -/
+structure Chapter09LineBundleDescentRealization
+    {S T : Scheme.{u}} {p : T ⟶ S}
+    (D : Chapter09LineBundleDescentDatum p)
+    (L : LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Chapter04LineBundle S) where
+  comparison : Chapter09PullbackModule p L.sheaf ≅ D.upstairs.carrier
+  comparison_compatible : chapter09ModuleDescentComparisonCompatible D L.sheaf comparison
 
 def chapter09DescentMorphismCompatible
     {S T : Scheme.{u}} {p : T ⟶ S} {r s : ℕ}

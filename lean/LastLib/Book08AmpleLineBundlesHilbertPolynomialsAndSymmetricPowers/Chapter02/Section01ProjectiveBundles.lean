@@ -172,7 +172,9 @@ structure Chapter02StandardAffineCover
     (S : Scheme.{u}) (I : Type u)
     (P : Chapter02ProjectiveSpaceData S I) where
   chart : I → P.bundle.scheme.Opens
-  affine : ∀ i, IsAffineOpen (chart i)
+  /-- The standard chart is affine over the base; its total scheme need not be affine when `S`
+  is not affine. -/
+  affine : ∀ i, IsAffineHom ((chart i).ι ≫ P.bundle.projection)
   chart_is_coordinate : ∀ i, (chart i : Set P.bundle.scheme) =
     {x | chapter02SectionGeneratesAt (P.coordinateSections i) x}
   cover : ∀ x : P.bundle.scheme, ∃ i, x ∈ chart i
@@ -208,10 +210,18 @@ theorem chapter02_polynomial_standard_affine_cover_exists
     Nonempty (Chapter02PolynomialStandardAffineCover R r) := by
   sorry
 
-abbrev Chapter02RelativeProjectiveSpaceBasicOpenCover
+/-! The Chapter 1 re-export used an absolute-affineness predicate.  Relative standard charts are
+affine over `S`; their total schemes need not be affine when `S` is non-affine. -/
+structure Chapter02RelativeProjectiveSpaceBasicOpenCover
     (S : Scheme.{u}) (r : ℕ)
-    (P : Chapter01.Chapter01RelativeProjectiveSpace S r) :=
-  Chapter01.Chapter01RelativeProjectiveSpaceBasicOpenCover S r P
+    (P : Chapter01.Chapter01RelativeProjectiveSpace S r) where
+  chart : Chapter01.Chapter01ProjectiveSpaceIndex r → P.scheme.Opens
+  affine : ∀ i, IsAffineHom ((chart i).ι ≫ P.bundle.projection)
+  chart_is_coordinate : ∀ i,
+    (chart i : Set P.scheme) =
+      {x | Chapter01.Chapter01ModuleSectionGeneratesAt
+        (Chapter01.chapter01RelativeProjectiveSpaceCoordinateSection P i) x}
+  cover : ∀ x : P.scheme, ∃ i, x ∈ chart i
 
 theorem chapter02_relative_projective_space_basic_open_cover_exists
     (S : Scheme.{u}) (r : ℕ)

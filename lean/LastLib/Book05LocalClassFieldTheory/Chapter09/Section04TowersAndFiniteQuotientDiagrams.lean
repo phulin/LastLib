@@ -18,7 +18,11 @@ theorem chapter09_norm_hom_transitive
     [FiniteDimensional L M] [FiniteDimensional K M] :
     chapter09NormHom K M =
       (chapter09NormHom K L).comp (chapter09NormHom L M) := by
-  sorry
+  apply MonoidHom.ext
+  intro x
+  apply Units.ext
+  change Algebra.norm K (x : M) = Algebra.norm K (Algebra.norm L (x : M))
+  exact (Algebra.norm_norm (R := K) (S := L) (a := (x : M))).symm
 
 theorem chapter09_normSubgroup_mono_of_tower
     (K L M : Type*) [Field K] [Field L] [Field M]
@@ -26,7 +30,11 @@ theorem chapter09_normSubgroup_mono_of_tower
     [IsScalarTower K L M] [FiniteDimensional K L]
     [FiniteDimensional L M] [FiniteDimensional K M] :
     chapter09NormSubgroup K M ≤ chapter09NormSubgroup K L := by
-  sorry
+  intro x hx
+  change x ∈ (chapter09NormHom K M).range at hx
+  rcases hx with ⟨y, rfl⟩
+  rw [chapter09_norm_hom_transitive K L M]
+  exact ⟨chapter09NormHom L M y, rfl⟩
 
 theorem chapter09_normSubgroup_mem_of_tower
     (K L M : Type*) [Field K] [Field L] [Field M]
@@ -43,7 +51,11 @@ theorem chapter09_field_inclusion_hom_transitive
     [IsScalarTower K L M] :
     chapter09FieldInclusionHom K M =
       (chapter09FieldInclusionHom L M).comp (chapter09FieldInclusionHom K L) := by
-  sorry
+  apply MonoidHom.ext
+  intro x
+  apply Units.ext
+  change algebraMap K M (x : K) = algebraMap L M (algebraMap K L (x : K))
+  exact IsScalarTower.algebraMap_apply K L M (x : K)
 
 theorem chapter09_galoisInclusion_transitive
     (K L M Ks : Type*) [Field K] [Field L] [Field M] [Field Ks]
@@ -54,7 +66,11 @@ theorem chapter09_galoisInclusion_transitive
     chapter09GaloisInclusion K M Ks =
       (chapter09GaloisInclusion K L Ks).comp
         (chapter09GaloisInclusion L M Ks) := by
-  sorry
+  apply MonoidHom.ext
+  intro σ
+  apply AlgEquiv.ext
+  intro x
+  rfl
 
 theorem chapter09_galoisInclusionAbelianization_transitive
     (K L M Ks : Type*) [Field K] [Field L] [Field M] [Field Ks]
@@ -65,7 +81,21 @@ theorem chapter09_galoisInclusionAbelianization_transitive
     chapter09GaloisInclusionAbelianization K M Ks =
       (chapter09GaloisInclusionAbelianization K L Ks).comp
         (chapter09GaloisInclusionAbelianization L M Ks) := by
-  sorry
+  change Abelianization.map (chapter09GaloisInclusion K M Ks) =
+    (Abelianization.map (chapter09GaloisInclusion K L Ks)).comp
+      (Abelianization.map (chapter09GaloisInclusion L M Ks))
+  calc
+    Abelianization.map (chapter09GaloisInclusion K M Ks) =
+        Abelianization.map
+          ((chapter09GaloisInclusion K L Ks).comp
+            (chapter09GaloisInclusion L M Ks)) := by
+      rw [chapter09_galoisInclusion_transitive K L M Ks]
+    _ = (Abelianization.map (chapter09GaloisInclusion K L Ks)).comp
+        (Abelianization.map (chapter09GaloisInclusion L M Ks)) := by
+      symm
+      exact Abelianization.map_comp
+        (f := chapter09GaloisInclusion L M Ks)
+        (g := chapter09GaloisInclusion K L Ks)
 
 theorem chapter09_transferAlong_transitive
     {G₀ G₁ G₂ : Type*} [Group G₀] [Group G₁] [Group G₂]
@@ -102,7 +132,7 @@ theorem chapter09_intermediate_normSubgroup_mono
     (L : IntermediateField K M) [FiniteDimensional K L]
     [FiniteDimensional L M] :
     chapter09NormSubgroup K M ≤ chapter09NormSubgroup K L := by
-  sorry
+  exact chapter09_normSubgroup_mono_of_tower K L M
 
 def chapter09NormQuotientMap
     (K M : Type*) [Field K] [Field M] [Algebra K M]
@@ -123,7 +153,11 @@ theorem chapter09NormQuotientMap_ker
     (chapter09NormQuotientMap K M L h).ker =
       Subgroup.map (QuotientGroup.mk' (chapter09NormSubgroup K M))
         (chapter09NormSubgroup K L) := by
-  sorry
+  simpa [chapter09NormQuotientMap, chapter09QuotientMapOfLe] using
+    (QuotientGroup.ker_map
+      (N := chapter09NormSubgroup K M)
+      (M := chapter09NormSubgroup K L)
+      (MonoidHom.id Kˣ) (by simpa using h))
 
 /-- Restriction of a normal automorphism to the intermediate field. -/
 def chapter09RestrictionMap

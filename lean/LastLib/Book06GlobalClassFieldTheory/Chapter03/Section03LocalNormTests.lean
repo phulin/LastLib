@@ -202,6 +202,43 @@ theorem chapter03_elementNorm_mem_iff
       ∃ b : Units L, chapter03ElementNorm N b = a := by
   rfl
 
+/- A field norm supplies compatible local preimages through the principal norm
+component identity.  These implications keep the element, local-element, and
+idele-element notions distinct while recording the direction that is always
+valid. -/
+theorem chapter03_elementNorm_implies_localElementNorm
+    {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L]
+    {S_K : Chapter03FieldIdeleData K} {S_L : Chapter03FieldIdeleData L}
+    (N : Chapter03NormData S_K S_L) (a : Units K)
+    (h : a ∈ chapter03ElementNormSubgroup N) :
+    chapter03IsLocalElementNorm N a := by
+  classical
+  rcases (chapter03_elementNorm_mem_iff N a).1 h with ⟨b, hb⟩
+  intro v
+  let z : Chapter03LocalNormFiber N v := fun w => S_L.embedding w b
+  refine ⟨z, ?_⟩
+  rw [chapter03LocalNormAt_apply]
+  rw [Finset.univ_eq_attach]
+  simp only [z]
+  exact (Finset.prod_attach (N.above v)
+    (fun w => N.localNorm v w (S_L.embedding w b))).trans (by
+      rw [← hb]
+      exact N.principal_norm_component b v)
+
+theorem chapter03_elementNorm_implies_ideleElementNorm
+    {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L]
+    {S_K : Chapter03FieldIdeleData K} {S_L : Chapter03FieldIdeleData L}
+    (N : Chapter03NormData S_K S_L) (a : Units K)
+    (h : a ∈ chapter03ElementNormSubgroup N) :
+    chapter03IsIdeleElementNorm N a := by
+  rcases (chapter03_elementNorm_mem_iff N a).1 h with ⟨b, hb⟩
+  refine ⟨chapter03PrincipalIdeleHom S_L b, ?_⟩
+  rw [chapter03_ideleNorm_principal]
+  rw [← hb]
+  rfl
+
 /- A class norm is intentionally a separate predicate from an element norm. -/
 def chapter03IsClassNorm
     {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]

@@ -1,6 +1,8 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.Section01TheLocalExtensionProblem
+import LastLib.Book05LocalClassFieldTheory.Chapter01.Section01WhatKindOfLocalFieldIsMeant
 import Mathlib.Algebra.Group.Subgroup.ZPowers.Basic
 import Mathlib.Algebra.Group.TypeTags.Basic
+import Mathlib.GroupTheory.FiniteIndexNormalSubgroup
 import Mathlib.FieldTheory.Galois.Abelian
 import Mathlib.FieldTheory.Galois.Profinite
 import Mathlib.FieldTheory.SeparableClosure
@@ -10,6 +12,7 @@ import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.RingTheory.Norm.Basic
 import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Completion
 import Mathlib.Topology.Algebra.Group.Basic
+import Mathlib.Topology.Algebra.Group.Quotient
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter07
 
@@ -22,42 +25,57 @@ universe u v
 
 /-!
 Shared interfaces for Chapter 7.  The preceding chapters supply the finite
-Artin maps, their norm kernels, the cofinal precision family, and the local
-existence theorem.  Those declarations are not present in this isolated
-chapter draft, so the records below keep exactly those interfaces explicit.
-They do not assume any of the conclusions of the infinite reciprocity
-theorem.
+Artin maps, their norm kernels, and the maximal-abelian model; the aliases
+below retain the Chapter 7-facing names.  The topology-sensitive completion
+and precision/cofinality interfaces are Chapter 7-specific.  None of these
+interfaces assumes a conclusion of the infinite reciprocity theorem.
 -/
 
-/-- The finite abelian levels inside a chosen maximal abelian extension. -/
+/-- Compatibility name for the canonical finite abelian levels from Chapter 1. -/
 abbrev Chapter07FiniteAbelianIndex
     (K KAb : Type*) [Field K] [Field KAb] [Algebra K KAb]
     [IsAbelianGalois K KAb] :=
-  FiniteGaloisIntermediateField K KAb
+  LastLib.Book05LocalClassFieldTheory.Chapter01.Chapter01FiniteAbelianIndex K KAb
 
-/- LOCAL_DEPENDENCY_GUESS: earlier Book 5 chapters should expose a canonical
-local-field context; until it is reconciled, this is the exact Book 2
-valuation/completeness/finite-residue interface used by Chapter 7. -/
-structure Chapter07LocalFieldData (K : Type*) [Field K] where
-  valuation : Valuation K ℤᵐ⁰
-  complete_discrete :
-    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01CompleteDiscreteValuation
-      K valuation
+/- LOCAL_DEPENDENCY_GUESS: Chapter 1 supplies the canonical local-field and
+valuation-coordinate interfaces used by the infinite reciprocity arguments. -/
+structure Chapter07LocalFieldData (K : Type*) [Field K]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ] where
+  valuation : AddValuation K (WithTop ℤ)
+  local_field :
+    LastLib.Book05LocalClassFieldTheory.Chapter01.Chapter01LocalField valuation
   [residue_finite : Finite
-      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01ResidueField
+      (LastLib.Book05LocalClassFieldTheory.Chapter01.Chapter01ResidueField
         valuation)]
+  valuation_coordinate :
+    LastLib.Book05LocalClassFieldTheory.Chapter01.Chapter01ValuationCoordinateData
+      valuation
+  [unit_group_topology :
+      TopologicalSpace
+        (LastLib.Book05LocalClassFieldTheory.Chapter01.Chapter01UnitGroup
+          valuation)]
+  [unit_group_topological :
+      IsTopologicalGroup
+        (LastLib.Book05LocalClassFieldTheory.Chapter01.Chapter01UnitGroup
+          valuation)]
+  coordinate_equiv :
+    Nonempty
+      (Kˣ ≃ₜ*
+        Multiplicative ℤ ×
+          LastLib.Book05LocalClassFieldTheory.Chapter01.Chapter01UnitGroup
+            valuation)
 
-/-- The multiplicative norm homomorphism on units. -/
-noncomputable def chapter07NormHom
+/-- Compatibility name for the canonical multiplicative norm homomorphism. -/
+abbrev chapter07NormHom
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] : Lˣ →* Kˣ :=
-  Units.map (Algebra.norm K (S := L))
+  LastLib.Book05LocalClassFieldTheory.Chapter01.chapter01NormHom K L
 
-/-- The norm subgroup of K-units attached to a finite extension L/K. -/
-noncomputable def chapter07NormSubgroup
+/-- Compatibility name for the canonical norm subgroup of K-units. -/
+abbrev chapter07NormSubgroup
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] : Subgroup Kˣ :=
-  (chapter07NormHom (K := K) (L := L)).range
+  LastLib.Book05LocalClassFieldTheory.Chapter01.chapter01NormSubgroup K L
 
 @[simp]
 theorem chapter07_mem_norm_subgroup_iff
@@ -67,21 +85,12 @@ theorem chapter07_mem_norm_subgroup_iff
       ∃ y : Lˣ, chapter07NormHom (K := K) (L := L) y = x := by
   rfl
 
-/- LOCAL_DEPENDENCY_GUESS: this is the finite-level interface supplied by
-Chapters 3--6.  The kernel equation is the finite reciprocity/norm theorem;
-the compatibility field is the restriction compatibility needed to form the
-inverse-limit tuple. -/
-structure Chapter07FiniteArtinSystem
+/- The finite Artin system is supplied canonically by Chapter 1; this name
+keeps the Chapter 7-facing API stable while avoiding a duplicate record. -/
+abbrev Chapter07FiniteArtinSystem
     (K KAb : Type*) [Field K] [Field KAb] [Algebra K KAb]
-    [IsAbelianGalois K KAb] where
-  artin : ∀ L : Chapter07FiniteAbelianIndex K KAb, Kˣ →* Gal(L / K)
-  surjective : ∀ L, Function.Surjective (artin L)
-  kernel_eq_norm : ∀ L,
-    (artin L).ker = chapter07NormSubgroup (K := K) (L := L)
-  compatible :
-    ∀ {L₁ L₂ : (FiniteGaloisIntermediateField K KAb)ᵒᵖ}
-      (f : L₁ ⟶ L₂) (x : Kˣ),
-      (finGaloisGroupMap f).hom (artin L₁.unop x) = artin L₂.unop x
+    [IsAbelianGalois K KAb] :=
+  LastLib.Book05LocalClassFieldTheory.Chapter01.Chapter01FiniteArtinSystem K KAb
 
 /-- The compatible family of finite Artin values as a point of the canonical
 Mathlib inverse limit of finite Galois groups. -/
@@ -104,28 +113,147 @@ noncomputable def Chapter07FiniteArtinSystem.toLimitHom
     exact map_mul (S.artin L.unop) x y
 
 /-- The book's maximality predicate for a chosen model of K-ab. -/
-def chapter07IsMaximalAbelianExtension
+abbrev chapter07IsMaximalAbelianExtension
     (K : Type u) (KAb : Type v) [Field K] [Field KAb] [Algebra K KAb]
     [IsAbelianGalois K KAb] : Prop :=
-  ∀ (L : Type v) [Field L] [Algebra K L] [FiniteDimensional K L]
-    [IsAbelianGalois K L], Nonempty (L →ₐ[K] KAb)
+  LastLib.Book05LocalClassFieldTheory.Chapter01.chapter01IsMaximalAbelianExtension K KAb
 
 /-- A chosen model for the compositum of all finite abelian extensions.  The
 preceding chapters may replace this book-facing carrier by a subfield of a
 fixed separable closure during reconciliation. -/
-structure Chapter07MaximalAbelianExtensionData
-    (K : Type*) [Field K] where
-  extension : IntermediateField K (AlgebraicClosure K)
-  [abelian_galois_extension : IsAbelianGalois K extension]
-  maximal : chapter07IsMaximalAbelianExtension K extension
-  contained_in_separable_closure :
-    extension ≤ separableClosure K (AlgebraicClosure K)
+abbrev Chapter07MaximalAbelianExtensionData
+    (K : Type*) [Field K] :=
+  LastLib.Book05LocalClassFieldTheory.Chapter01.Chapter01MaximalAbelianExtensionData K
 
 /-- Open finite-index subgroups of a topological group.  The underlying
 subgroup is a subtype so that its order is inherited from Subgroup. -/
 abbrev Chapter07OpenFiniteIndexSubgroup
     (G : Type*) [Group G] [TopologicalSpace G] :=
-  {H : Subgroup G // IsOpen (H : Set G) ∧ H.FiniteIndex}
+  LastLib.Book05LocalClassFieldTheory.Chapter01.Chapter01OpenFiniteIndexSubgroup G
+
+/-! The source completion is indexed by open finite-index quotients.  Mathlib's
+abstract `ProfiniteCompletion` uses all finite-index normal subgroups, which is
+strictly larger in general; the topology-sensitive diagram below keeps the two
+constructions distinct. -/
+
+structure Chapter07OpenFiniteIndexNormalSubgroup
+    (G : Type*) [Group G] [TopologicalSpace G]
+    extends FiniteIndexNormalSubgroup G where
+  isOpen : IsOpen (toSubgroup : Set G)
+
+namespace Chapter07OpenFiniteIndexNormalSubgroup
+
+variable {G : Type*} [Group G] [TopologicalSpace G]
+
+instance (H : Chapter07OpenFiniteIndexNormalSubgroup G) :
+    H.toSubgroup.Normal := H.isNormal'
+
+instance (H : Chapter07OpenFiniteIndexNormalSubgroup G) :
+    H.toSubgroup.FiniteIndex := H.isFiniteIndex'
+
+instance : SetLike (Chapter07OpenFiniteIndexNormalSubgroup G) G where
+  coe H := H.toSubgroup
+  coe_injective A B h := by
+    cases A with
+    | mk A hA =>
+      cases B with
+      | mk B hB =>
+        have hAB : A.toSubgroup = B.toSubgroup := by
+          ext g
+          exact Set.ext_iff.mp h g
+        cases FiniteIndexNormalSubgroup.toSubgroup_injective hAB
+        rfl
+
+instance : PartialOrder (Chapter07OpenFiniteIndexNormalSubgroup G) :=
+  .ofSetLike (Chapter07OpenFiniteIndexNormalSubgroup G) G
+
+@[simp]
+theorem mem_toSubgroup_iff {H : Chapter07OpenFiniteIndexNormalSubgroup G}
+    {g : G} : g ∈ H.toSubgroup ↔ g ∈ H :=
+  Iff.rfl
+
+end Chapter07OpenFiniteIndexNormalSubgroup
+
+noncomputable def chapter07OpenFiniteIndexDiagram
+    (G : Type*) [CommGroup G] [TopologicalSpace G] :
+    Chapter07OpenFiniteIndexNormalSubgroup G ⥤ FiniteGrp where
+  obj H := FiniteGrp.of (G ⧸ H.toSubgroup)
+  map f := FiniteGrp.ofHom <|
+    QuotientGroup.map _ _ (MonoidHom.id G) (by
+      intro g hg
+      exact f.le hg)
+  map_id H := by
+    ext ⟨g⟩
+    rfl
+  map_comp f g := by
+    ext ⟨x⟩
+    rfl
+
+noncomputable def chapter07OpenFiniteIndexProfiniteDiagram
+    (G : Type*) [CommGroup G] [TopologicalSpace G] :
+    Chapter07OpenFiniteIndexNormalSubgroup G ⥤ ProfiniteGrp :=
+  chapter07OpenFiniteIndexDiagram G ⋙ forget₂ FiniteGrp ProfiniteGrp
+
+/-- The topology-sensitive profinite completion over open finite-index
+quotients. -/
+noncomputable def chapter07OpenProfiniteCompletion
+    (G : Type*) [CommGroup G] [TopologicalSpace G] : ProfiniteGrp :=
+  ProfiniteGrp.limit (chapter07OpenFiniteIndexProfiniteDiagram G)
+
+abbrev Chapter07OpenProfiniteCompletion
+    (G : Type*) [CommGroup G] [TopologicalSpace G] : Type _ :=
+  (chapter07OpenProfiniteCompletion G : Type _)
+
+noncomputable def chapter07OpenProfiniteCompletionEtaFn
+    (G : Type*) [CommGroup G] [TopologicalSpace G] (g : G) :
+    Chapter07OpenProfiniteCompletion G :=
+  ⟨fun H => QuotientGroup.mk g, by
+    intro H K f
+    rfl⟩
+
+noncomputable def chapter07OpenProfiniteCompletionEta
+    (G : Type*) [CommGroup G] [TopologicalSpace G] :
+    G →* Chapter07OpenProfiniteCompletion G where
+  toFun := chapter07OpenProfiniteCompletionEtaFn G
+  map_one' := by
+    apply ProfiniteGrp.limit_ext _
+    intro H
+    rfl
+  map_mul' g h := by
+    apply ProfiniteGrp.limit_ext _
+    intro H
+    rfl
+
+noncomputable def chapter07OpenProfiniteCompletionProjection
+    (G : Type*) [CommGroup G] [TopologicalSpace G]
+    (H : Chapter07OpenFiniteIndexNormalSubgroup G) :
+    Chapter07OpenProfiniteCompletion G →* (G ⧸ H.toSubgroup) :=
+  (((ProfiniteGrp.limitCone
+      (chapter07OpenFiniteIndexProfiniteDiagram G)).π.app H).hom).toMonoidHom
+
+@[simp]
+theorem chapter07OpenProfiniteCompletionProjection_eta
+    (G : Type*) [CommGroup G] [TopologicalSpace G]
+    (H : Chapter07OpenFiniteIndexNormalSubgroup G) (g : G) :
+    chapter07OpenProfiniteCompletionProjection G H
+        (chapter07OpenProfiniteCompletionEta G g) = QuotientGroup.mk g := by
+  rfl
+
+noncomputable def chapter07OpenFiniteIndexSubgroup.toNormal
+    {G : Type*} [CommGroup G] [TopologicalSpace G]
+    (H : Chapter07OpenFiniteIndexSubgroup G) :
+    Chapter07OpenFiniteIndexNormalSubgroup G :=
+  { toSubgroup := H.1
+    isNormal' := by infer_instance
+    isFiniteIndex' := H.2.2
+    isOpen := H.2.1 }
+
+@[simp]
+theorem chapter07OpenFiniteIndexSubgroup.toNormal_toSubgroup
+    {G : Type*} [CommGroup G] [TopologicalSpace G]
+    (H : Chapter07OpenFiniteIndexSubgroup G) :
+    (chapter07OpenFiniteIndexSubgroup.toNormal H).toSubgroup = H.1 :=
+  rfl
 
 /-- Positive integer indices used for the cofinal precision family. -/
 abbrev Chapter07PositiveNat := {n : ℕ // 0 < n}
@@ -173,12 +301,17 @@ def chapter07PrecisionIntersection
     chapter07PrecisionSubgroup D m n
 
 /- LOCAL_DEPENDENCY_GUESS: Chapter 6's explicit unramified/formal-module
-construction supplies this cofinality statement. -/
+construction supplies finite abelian norm subgroups refining every displayed
+precision subgroup.  This is the cofinality input needed to control the
+kernel; it does not assume the kernel conclusion itself. -/
 def chapter07KernelCofinality
-    {G H : Type*} [CommGroup G] [Group H]
-    (r : G →* H) (D : Chapter07PrecisionData G) : Prop :=
-  ∀ {x : G}, x ∈ r.ker →
-    ∀ (m n : Chapter07PositiveNat), x ∈ chapter07PrecisionSubgroup D m n
+    {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [IsAbelianGalois K KAb]
+    (D : Chapter07PrecisionData Kˣ) : Prop :=
+  ∀ (m n : Chapter07PositiveNat),
+    ∃ L : Chapter07FiniteAbelianIndex K KAb,
+      chapter07NormSubgroup (K := K) (L := L) ≤
+        chapter07PrecisionSubgroup D m n
 
 /- LOCAL_DEPENDENCY_GUESS: the finite-level existence theorem identifies all
 open finite-index subgroups with norm subgroups inside the selected K-ab.
@@ -191,23 +324,21 @@ def chapter07ExistenceProperty
     ∃! L : Chapter07FiniteAbelianIndex K KAb,
       chapter07NormSubgroup (K := K) (L := L) = H.1
 
-/-- The profinite completion of a group, using Mathlib's finite-index normal
-subgroup diagram.  For the abelian group K-units, this is the completion over
-all finite-index subgroups. -/
+/-- The abstract profinite completion of a group, using Mathlib's finite-index
+normal subgroup diagram.  The topology-sensitive local-field completion is
+`Chapter07OpenProfiniteCompletion` below. -/
 abbrev Chapter07ProfiniteCompletion (G : Type*) [Group G] : Type _ :=
-  (ProfiniteGrp.ProfiniteCompletion.completion (GrpCat.of G) : Type _)
+  LastLib.Book05LocalClassFieldTheory.Chapter01.Chapter01ProfiniteCompletion G
 
 /-- The profinite integers in the multiplicative presentation used by
 ProfiniteGrp. -/
 abbrev Chapter07ProfiniteIntegers : Type _ :=
-  Chapter07ProfiniteCompletion (Multiplicative ℤ)
+  Chapter07OpenProfiniteCompletion (Multiplicative ℤ)
 
 /-- The canonical copy of the integer z in the profinite integers. -/
 noncomputable def chapter07IntegerToProfiniteCompletionHom :
     Multiplicative ℤ →* Chapter07ProfiniteIntegers where
-  toFun :=
-    ProfiniteGrp.ProfiniteCompletion.etaFn
-      (GrpCat.of (Multiplicative ℤ))
+  toFun := chapter07OpenProfiniteCompletionEtaFn (Multiplicative ℤ)
   map_one' := rfl
   map_mul' _ _ := rfl
 

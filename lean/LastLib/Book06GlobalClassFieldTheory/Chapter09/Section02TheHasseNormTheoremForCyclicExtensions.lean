@@ -46,7 +46,9 @@ theorem chapter09_split_place_local_norm_is_product
 /-!
 Mathlib currently supplies the category of central simple algebras but not the
 cyclic-algebra construction or the number-field Brauer invariant sequence.
-This is the book-facing interface for those two canonical constructions.
+This is the book-facing interface for those two canonical constructions.  The substantive split
+and local--global assertions are theorem-level interfaces below rather than fields of the input
+record, so the Hasse norm theorem cannot be discharged merely by packaging its conclusion as data.
 -/
 def chapter09CsaIsSplit {K : Type uK} [Field K] (A : CSA.{uK, uK} K) : Prop :=
   ∃ n : ℕ, n ≠ 0 ∧ Nonempty (A ≃ₐ[K] Matrix (Fin n) (Fin n) K)
@@ -67,17 +69,7 @@ structure Chapter09CyclicNormData
   splitPlaceData : Chapter09SplitPlaceNormData places K_v A_v
   splitPlaceData_localNorm : ∀ v, splitPlaceData.localNorm v = localNorm v
   cyclicAlgebra : Kˣ → CSA.{uK, uK} K
-  localSplit : ∀ _v, CSA.{uK, uK} K → Prop
-  cyclicAlgebra_isSplit_iff_globalNorm :
-    ∀ a, chapter09CsaIsSplit (cyclicAlgebra a) ↔
-      a ∈ chapter09FieldNormSubgroup K L
-  localSplit_iff_localNorm :
-    ∀ a v,
-      localSplit v (cyclicAlgebra a) ↔
-        baseEmbedding v a ∈ (localNorm v).range
-  globalSplit_iff_allLocalSplit :
-    ∀ A : CSA.{uK, uK} K, chapter09CsaIsSplit A ↔
-      ∀ v, localSplit v A
+  localSplit : places → CSA.{uK, uK} K → Prop
 
 attribute [instance] Chapter09CyclicNormData.localFieldMonoid
   Chapter09CyclicNormData.localAlgebraMonoid
@@ -95,8 +87,8 @@ theorem chapter09_cyclic_algebra_split_iff_norm
     [FiniteDimensional K L] [IsGalois K L] [IsCyclic (Gal(L / K))]
     (P : Chapter09CyclicNormData K L) (a : Kˣ) :
     chapter09CsaIsSplit (P.cyclicAlgebra a) ↔
-      a ∈ chapter09FieldNormSubgroup K L :=
-  P.cyclicAlgebra_isSplit_iff_globalNorm a
+      a ∈ chapter09FieldNormSubgroup K L := by
+  sorry
 
 theorem chapter09_cyclic_algebra_local_split_iff_norm
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -104,8 +96,8 @@ theorem chapter09_cyclic_algebra_local_split_iff_norm
     [FiniteDimensional K L] [IsGalois K L] [IsCyclic (Gal(L / K))]
     (P : Chapter09CyclicNormData K L) (a : Kˣ) (v : P.places) :
     P.localSplit v (P.cyclicAlgebra a) ↔
-      P.baseEmbedding v a ∈ (P.localNorm v).range :=
-  P.localSplit_iff_localNorm a v
+      P.baseEmbedding v a ∈ (P.localNorm v).range := by
+  sorry
 
 theorem chapter09_cyclic_split_place_product_norm
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -126,7 +118,7 @@ theorem chapter09_cyclic_algebra_hasse_split_iff
     (P : Chapter09CyclicNormData K L) (a : Kˣ) :
     chapter09CsaIsSplit (P.cyclicAlgebra a) ↔
       ∀ v, P.localSplit v (P.cyclicAlgebra a) := by
-  exact P.globalSplit_iff_allLocalSplit (P.cyclicAlgebra a)
+  sorry
 
 /-!
 The family `A_v` in `Chapter09CyclicNormData` is also the split-place
@@ -144,15 +136,15 @@ theorem chapter09_hasse_norm_theorem
   constructor
   · intro ha v
     have hsplit : chapter09CsaIsSplit (P.cyclicAlgebra a) :=
-      (P.cyclicAlgebra_isSplit_iff_globalNorm a).2 ha
+      (chapter09_cyclic_algebra_split_iff_norm P a).2 ha
     have hlocal : ∀ v, P.localSplit v (P.cyclicAlgebra a) :=
       (chapter09_cyclic_algebra_hasse_split_iff P a).1 hsplit
-    exact (P.localSplit_iff_localNorm a v).1 (hlocal v)
+    exact (chapter09_cyclic_algebra_local_split_iff_norm P a v).1 (hlocal v)
   · intro ha
-    apply (P.cyclicAlgebra_isSplit_iff_globalNorm a).1
+    apply (chapter09_cyclic_algebra_split_iff_norm P a).1
     apply (chapter09_cyclic_algebra_hasse_split_iff P a).2
     intro v
-    exact (P.localSplit_iff_localNorm a v).2 (ha v)
+    exact (chapter09_cyclic_algebra_local_split_iff_norm P a v).2 (ha v)
 
 /-!
 The preceding witness-based API is useful for the cyclic-algebra proof
@@ -192,6 +184,17 @@ theorem chapter09_hasse_norm_principle_unconditional
     [IsCyclic (Gal(L / K))] :
     LastLib.Book06GlobalClassFieldTheory.Chapter01.HasseNormPrinciple K L :=
   LastLib.Book06GlobalClassFieldTheory.Chapter01.cyclic_extensions_satisfy_hasse_norm_principle
+
+theorem chapter09_hasse_norm_theorem_unconditional
+    {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
+    [IsCyclic (Gal(L / K))] {a : K} (ha : a ≠ 0) :
+    LastLib.Book06GlobalClassFieldTheory.Chapter01.IsElementNorm K L a ↔
+      LastLib.Book06GlobalClassFieldTheory.Chapter01.IsLocalElementNorm K L a := by
+  constructor
+  · exact LastLib.Book06GlobalClassFieldTheory.Chapter01.elementNorm_implies_local_elementNorm ha
+  · intro hlocal
+    exact chapter09_hasse_norm_principle_unconditional ha hlocal
 
 /-!
 This is the element-level, canonical local/global form of the displayed

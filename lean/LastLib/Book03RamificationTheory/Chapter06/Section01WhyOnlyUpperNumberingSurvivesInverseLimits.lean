@@ -55,7 +55,13 @@ theorem chapter06GaloisLevelFixedField_finite
     {K E : Type*} [Field K] [Field E] [Algebra K E] [IsGalois K E]
     (N : OpenNormalSubgroup (chapter06ProfiniteGaloisGroup K E)) :
     FiniteDimensional K (chapter06GaloisLevelFixedField N) := by
-  sorry
+  rw [← InfiniteGalois.isOpen_iff_finite]
+  have hfix :
+      (chapter06GaloisLevelFixedField N).fixingSubgroup = N.toSubgroup :=
+    InfiniteGalois.fixingSubgroup_fixedField (chapter06ClosedLevel N)
+  rw [hfix]
+  change IsOpen (N.toOpenSubgroup : Set (chapter06ProfiniteGaloisGroup K E))
+  exact N.toOpenSubgroup.isOpen
 
 noncomputable def chapter06GaloisLevelQuotientEquiv
     {K E : Type*} [Field K] [Field E] [Algebra K E] [IsGalois K E]
@@ -260,7 +266,7 @@ theorem chapter06_tame_quotient_procyclic_of_separably_closed_residue
 theorem chapter06_residue_characteristic_exponent_eq_one_of_charZero
     {k : Type*} [Field k] [CharZero k] :
     chapter06ResidueCharacteristicExponent k = 1 := by
-  sorry
+  simp [chapter06ResidueCharacteristicExponent]
 
 theorem chapter06_wild_inertia_trivial_of_characteristic_zero
     {K E : Type*} [Field K] [Field E] [Algebra K E] [IsGalois K E]

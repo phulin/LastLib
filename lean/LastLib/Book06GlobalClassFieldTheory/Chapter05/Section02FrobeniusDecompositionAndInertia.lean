@@ -1,5 +1,6 @@
 import LastLib.Book06GlobalClassFieldTheory.Chapter05.Dependencies
 import LastLib.Book06GlobalClassFieldTheory.Chapter02.Dependencies
+import LastLib.Book06GlobalClassFieldTheory.Chapter02.Section02UnramifiedAndRamifiedArtinSymbols
 import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.FieldTheory.Galois.Notation
 import Mathlib.FieldTheory.Finite.Basic
@@ -53,6 +54,20 @@ def chapter05ArithmeticFrobenius
     (q : ℕ) (σ : Gal(k' / k)) : Prop :=
   ∀ x : k', σ x = x ^ q
 
+/-! The proposition above is the book-facing spelling of the canonical finite-field
+Frobenius supplied by Chapter 2.  Record the identification explicitly so later
+profiles cannot silently use an unrelated automorphism with the same informal name. -/
+theorem chapter05_arithmetic_frobenius_eq_canonical
+    {k : Type uk} {k' : Type uk'} [Field k] [Field k'] [Algebra k k']
+    [Fintype k] [Finite k'] [Algebra.IsAlgebraic k k']
+    (q : ℕ) (hq : q = Fintype.card k) (σ : Gal(k' / k))
+    (hσ : chapter05ArithmeticFrobenius q σ) :
+    σ = LastLib.Book06GlobalClassFieldTheory.Chapter02.chapter02ArithmeticFrobenius := by
+  ext x
+  rw [LastLib.Book06GlobalClassFieldTheory.Chapter02.chapter02_arithmetic_frobenius_apply,
+    ← hq]
+  exact hσ x
+
 /-
 DEPENDENCY_GUESS: `Chapter05LocalOrder` is the local-field valuation
 interface provided by the preceding chapters.  Its decomposition field is
@@ -101,6 +116,30 @@ theorem chapter05_unramified_inertia_trivial
     [Fintype k] [Finite k'] [Algebra.IsAlgebraic k k'] [FiniteDimensional k k']
     (D : Chapter05UnramifiedPlaceProfile U G k k') : D.inertia = ⊥ := by
   exact D.inertia_trivial
+
+theorem chapter05_unramified_decomposition_range
+    {U : Type uU} {G : Type uG} {k : Type uk} {k' : Type uk'}
+    [CommGroup U] [CommGroup G] [Finite G] [Field k] [Field k'] [Algebra k k']
+    [Fintype k] [Finite k'] [Algebra.IsAlgebraic k k'] [FiniteDimensional k k']
+    (D : Chapter05UnramifiedPlaceProfile U G k k') :
+    Subgroup.map D.localArtin ⊤ = D.decomposition := by
+  exact D.range_decomposition
+
+theorem chapter05_unramified_units_range
+    {U : Type uU} {G : Type uG} {k : Type uk} {k' : Type uk'}
+    [CommGroup U] [CommGroup G] [Finite G] [Field k] [Field k'] [Algebra k k']
+    [Fintype k] [Finite k'] [Algebra.IsAlgebraic k k'] [FiniteDimensional k k']
+    (D : Chapter05UnramifiedPlaceProfile U G k k') :
+    Subgroup.map D.localArtin D.units = D.inertia := by
+  exact D.range_units
+
+theorem chapter05_unramified_uniformizer_artin
+    {U : Type uU} {G : Type uG} {k : Type uk} {k' : Type uk'}
+    [CommGroup U] [CommGroup G] [Finite G] [Field k] [Field k'] [Algebra k k']
+    [Fintype k] [Finite k'] [Algebra.IsAlgebraic k k'] [FiniteDimensional k k']
+    (D : Chapter05UnramifiedPlaceProfile U G k k') :
+    D.localArtin D.order.uniformizer = D.frobenius := by
+  exact D.localArtin_uniformizer
 
 theorem chapter05_unramified_arithmetic_frobenius
     {U : Type uU} {G : Type uG} {k : Type uk} {k' : Type uk'}
@@ -183,18 +222,48 @@ theorem chapter05_ideal_frobenius_lift_ambiguous_when_ramified
         symm
         exact (QuotientGroup.eq_one_iff (N := inertia) (a : G)).2 a.property
 
+/-! The preceding generic quotient lemmas express the abelian shadow of the
+canonical residue-field statement.  Re-export the actual Chapter 2 Frobenius
+coset results here so the global chapter retains the residue-Frobenius
+interpretation, not only quotient non-injectivity. -/
+theorem chapter05_canonical_frobenius_lifts_have_same_inertia_coset
+    {D k l : Type*} [Group D] [Field k] [Field l] [Algebra k l]
+    [Fintype k] [Finite l] [Algebra.IsAlgebraic k l]
+    (R : LastLib.Book06GlobalClassFieldTheory.Chapter02.Chapter02ResidueActionData D k l)
+    {σ τ : D} (hσ : σ ∈
+      LastLib.Book06GlobalClassFieldTheory.Chapter02.chapter02FrobeniusCoset R)
+    (hτ : τ ∈
+      LastLib.Book06GlobalClassFieldTheory.Chapter02.chapter02FrobeniusCoset R) :
+    QuotientGroup.mk' R.inertia σ = QuotientGroup.mk' R.inertia τ := by
+  exact LastLib.Book06GlobalClassFieldTheory.Chapter02.chapter02_frobenius_lifts_have_same_inertia_coset
+    R hσ hτ
+
+theorem chapter05_canonical_frobenius_lift_unique_when_unramified
+    {D k l : Type*} [Group D] [Field k] [Field l] [Algebra k l]
+    [Fintype k] [Finite l] [Algebra.IsAlgebraic k l]
+    (R : LastLib.Book06GlobalClassFieldTheory.Chapter02.Chapter02ResidueActionData D k l)
+    (hI : R.inertia = ⊥) :
+    ∃! σ : D, σ ∈
+      LastLib.Book06GlobalClassFieldTheory.Chapter02.chapter02FrobeniusCoset R := by
+  exact LastLib.Book06GlobalClassFieldTheory.Chapter02.chapter02_frobenius_lift_is_unique_when_unramified
+    R hI
+
 /-- A class-level formulation of complete splitting. -/
 def chapter05SplitsCompletely
-    {G : Type uG} [Group G] (frobenius : G) : Prop := frobenius = 1
+    {G : Type uG} [Group G] (frobenius : G) (inertia : Subgroup G) : Prop :=
+  frobenius = 1 ∧ inertia = ⊥
 
 theorem chapter05_unramified_split_iff_norm_class
     {C : Type uC} {G : Type uG} [CommGroup C] [Group G] [Finite G]
-    (classOfUniformizer : C) (normSubgroup : Subgroup C)
+    (classOfUniformizer : C) (normSubgroup : Subgroup C) (inertia : Subgroup G)
+    (hinertia : inertia = ⊥)
     (globalArtin : C →* G) (frobenius : G)
     (hker : globalArtin.ker = normSubgroup)
     (huniformizer : globalArtin classOfUniformizer = frobenius) :
-    chapter05SplitsCompletely frobenius ↔ classOfUniformizer ∈ normSubgroup := by
-  change frobenius = 1 ↔ classOfUniformizer ∈ normSubgroup
+    chapter05SplitsCompletely frobenius inertia ↔ classOfUniformizer ∈ normSubgroup := by
+  change (frobenius = 1 ∧ inertia = ⊥) ↔ classOfUniformizer ∈ normSubgroup
+  rw [hinertia]
+  simp only [eq_self, and_true]
   rw [← huniformizer, ← MonoidHom.mem_ker, hker]
 
 /-- The residue degree of the displayed finite residue extension. -/

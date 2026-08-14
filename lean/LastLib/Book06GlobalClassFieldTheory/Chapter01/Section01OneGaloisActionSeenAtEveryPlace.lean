@@ -26,6 +26,8 @@ structure BasicIdeleOpenSubgroupData (K : Type*) [Field K] [NumberField K] where
       Sum.inl v ∉ exceptional →
       (prescribed (Sum.inl v) : Set ((BookPlace.completion (Sum.inl v))ˣ)) =
         (bookFinitePlaceUnitSubgroup v : Set ((BookPlace.completion (Sum.inl v))ˣ))
+  outside_infinite_unrestricted : ∀ v : InfinitePlaceIndex K,
+      Sum.inr v ∉ exceptional → prescribed (Sum.inr v) = ⊤
   subgroup : Subgroup (I_K K)
   carrier_eq : (subgroup : Set (I_K K)) =
     {x | ∀ v : BookPlace K, bookIdeleUnitComponent x v ∈ prescribed v}

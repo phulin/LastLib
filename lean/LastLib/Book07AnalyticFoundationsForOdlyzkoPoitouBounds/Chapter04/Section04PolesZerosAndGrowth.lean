@@ -1341,8 +1341,73 @@ theorem chapter04_zero_counting_unit_band_bound
     ∃ C : ℝ, 0 ≤ C ∧ ∀ T : ℝ, 0 ≤ T →
       ∀ (K : Type*) [Field K] [NumberField K],
           ((chapter04ZeroCounting K (T + 1) - chapter04ZeroCounting K T : ℕ) : ℝ) ≤
-          C * (Real.log (chapter04AbsoluteDiscriminant K) +
-            (chapter04Degree K : ℝ) * Real.log (T + 3)) := by
+            C * (Real.log (chapter04AbsoluteDiscriminant K) +
+              (chapter04Degree K : ℝ) * Real.log (T + 3)) := by
+  sorry
+
+/-!
+The contour argument in the next chapter needs one additional piece of
+analytic bookkeeping.  It is kept here as a conductor-parametrized
+interface: Section 4.4 must not depend on the later Section 4.5 definition of
+the analytic conductor, while later chapters can specialize `Q` to that
+definition by the displayed conductor identity.
+-/
+
+def chapter04VerticalLinePoint (σ t : ℝ) : ℂ :=
+  (σ : ℂ) + (t : ℂ) * Complex.I
+
+noncomputable def chapter04LogDerivative (f : ℂ → ℂ) (s : ℂ) : ℂ :=
+  deriv f s / f s
+
+/--
+An inverse-polynomially separated sequence of contour heights for a
+meromorphic logarithmic derivative.  The support and conductor are explicit
+parameters so that this interface can be reused by a later contour chapter
+without importing that chapter back into Chapter 4.
+-/
+structure Chapter04ContourHeightSequence
+    (f : ℂ → ℂ) (zeroSupport : Set ℂ) (Q : ℝ → ℝ) (c : ℝ) where
+  height : ℕ → ℝ
+  tendsToInfinity : Tendsto height atTop atTop
+  positive : ∀ j, 0 < height j
+  conductorPos : ∀ t, 0 < Q t
+  separationExponent : ℕ
+  separationExponent_ge_two : 2 ≤ separationExponent
+  separationConstant : ℝ
+  separationConstant_pos : 0 < separationConstant
+  avoids_zero_ordinates :
+    ∀ (j : ℕ) (ρ : ℂ), ρ ∈ zeroSupport →
+      separationConstant /
+          Real.rpow (height j + 3) (separationExponent : ℝ) ≤
+        |height j - ρ.im|
+  logDerivativeBound :
+    ∃ C : ℝ, 0 ≤ C ∧ ∀ (j : ℕ) (σ : ℝ),
+      1 - c ≤ σ →
+      σ ≤ c →
+      ‖chapter04LogDerivative f
+          (chapter04VerticalLinePoint σ (height j))‖ ≤
+        C * (height j + 3) ^ separationExponent *
+            (Real.log (Q (height j))) ^ 2 ∧
+      ‖chapter04LogDerivative f
+          (chapter04VerticalLinePoint σ (-height j))‖ ≤
+        C * (height j + 3) ^ separationExponent *
+            (Real.log (Q (height j))) ^ 2
+
+/--
+The order-one and unit-band estimates provide the contour-height package for
+the completed zeta function.  The conductor equation is an explicit
+hypothesis so this theorem remains in Section 4.4; Section 4.5 supplies the
+canonical specialization.
+-/
+theorem chapter04_xi_contour_height_sequence_exists
+    (K : Type*) [Field K] [NumberField K]
+    {Q : ℝ → ℝ}
+    (hQ : ∀ t : ℝ,
+      Q t = chapter04AbsoluteDiscriminant K *
+        Real.rpow (|t| + 3) (chapter04Degree K : ℝ))
+    {c : ℝ} (hc : 1 < c) :
+    Nonempty (Chapter04ContourHeightSequence
+      (chapter04Xi K) (chapter04NontrivialZero K) Q c) := by
   sorry
 
 end

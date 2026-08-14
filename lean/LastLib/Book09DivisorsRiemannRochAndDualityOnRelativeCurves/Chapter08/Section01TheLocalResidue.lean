@@ -33,7 +33,6 @@ inverse of a local equation of `nx` gives the local pole-bound subspace.  Using
 the whole local differential module, rather than `D t` for a uniformizer,
 also covers inseparable residue-field extensions. -/
 noncomputable def chapter08LocalDifferentialMap
-    [Algebra k C.carrier.functionField]
     (x : Chapter08ClosedPoint C.carrier) :
     Ω[(C.carrier.presheaf.stalk x.1)⁄k] →ₗ[C.carrier.presheaf.stalk x.1]
       Ω[C.carrier.functionField⁄k] :=
@@ -45,13 +44,11 @@ noncomputable def chapter08LocalDifferentialMap
     (C.carrier.presheaf.stalk x.1) C.carrier.functionField
 
 def chapter08DifferentialRegularAt
-    [Algebra k C.carrier.functionField]
     (η : Chapter08RationalDifferentials k C.carrier) : Prop :=
   ∃ ξ : Ω[(C.carrier.presheaf.stalk x.1)⁄k],
     chapter08LocalDifferentialMap k C x ξ = η
 
 def chapter08DifferentialWithPoleBound
-    [Algebra k C.carrier.functionField]
     (_T : Chapter08PointThickening k C x n)
     (η : Chapter08RationalDifferentials k C.carrier) : Prop :=
   ∃ (t : C.carrier.functionField)
@@ -60,7 +57,6 @@ def chapter08DifferentialWithPoleBound
       η = (t ^ n)⁻¹ • chapter08LocalDifferentialMap k C x ξ
 
 structure Chapter08PrincipalParts
-    [Algebra k C.carrier.functionField]
     (T : Chapter08PointThickening k C x n) where
   poleDifferentials : Submodule k (Chapter08RationalDifferentials k C.carrier)
   regularDifferentials : Submodule k (Chapter08RationalDifferentials k C.carrier)
@@ -71,14 +67,12 @@ structure Chapter08PrincipalParts
     ∀ η, η ∈ poleDifferentials ↔ chapter08DifferentialWithPoleBound k C x T η
 
 abbrev Chapter08PrincipalParts.quotient
-    [Algebra k C.carrier.functionField]
     {T : Chapter08PointThickening k C x n}
     (P : Chapter08PrincipalParts k C x T) : Type u :=
   ((P.poleDifferentials : Type u) ⧸
     (P.regularDifferentials.comap P.poleDifferentials.subtype))
 
 structure Chapter08PointAdjunction
-    [Algebra k C.carrier.functionField]
     (T : Chapter08PointThickening k C x n)
     [Chapter08ThickeningSectionsAlgebra T] where
   principalParts : Chapter08PrincipalParts k C x T
@@ -87,21 +81,18 @@ structure Chapter08PointAdjunction
       Chapter08ThickeningDual T
 
 abbrev Chapter08PointAdjunction.poleDifferentials
-    [Algebra k C.carrier.functionField]
     {T : Chapter08PointThickening k C x n}
     [Chapter08ThickeningSectionsAlgebra T]
     (A : Chapter08PointAdjunction k C x T) :=
   A.principalParts.poleDifferentials
 
 abbrev Chapter08PointAdjunction.regularDifferentials
-    [Algebra k C.carrier.functionField]
     {T : Chapter08PointThickening k C x n}
     [Chapter08ThickeningSectionsAlgebra T]
     (A : Chapter08PointAdjunction k C x T) :=
   A.principalParts.regularDifferentials
 
 theorem chapter08_point_adjunction_regular_le_pole
-    [Algebra k C.carrier.functionField]
     {T : Chapter08PointThickening k C x n}
     [Chapter08ThickeningSectionsAlgebra T]
     (A : Chapter08PointAdjunction k C x T) :
@@ -109,13 +100,11 @@ theorem chapter08_point_adjunction_regular_le_pole
   A.principalParts.regular_le_pole
 
 abbrev Chapter08PoleQuotient
-    [Algebra k C.carrier.functionField]
     [Chapter08ThickeningSectionsAlgebra T]
     (A : Chapter08PointAdjunction k C x T) : Type u :=
   A.principalParts.quotient
 
 def chapter08_point_adjunction_iso
-    [Algebra k C.carrier.functionField]
     [Chapter08ThickeningSectionsAlgebra T]
     (A : Chapter08PointAdjunction k C x T) :
     Chapter08PoleQuotient k C x A ≃ₗ[k] Chapter08ThickeningDual T :=
@@ -129,10 +118,10 @@ theorem chapter08_point_thickening_exists
 theorem chapter08_point_cartier_exact_sequence
     (T : Chapter08PointThickening k C x n) :
     Nonempty (Chapter08CartierExactSequence T) := by
-  sorry
+  exact LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter10.chapter10_cartier_exact_sequence_exists
+    T.divisor
 
 theorem chapter08_finite_cartier_adjunction
-    [Algebra k C.carrier.functionField]
     (T : Chapter08PointThickening k C x n)
     [Chapter08ThickeningSectionsAlgebra T] :
     Nonempty (Chapter08PointAdjunction k C x T) := by
@@ -179,7 +168,6 @@ def chapter08_thickening_evaluation_at_one
   rfl
 
 def chapter08_point_adjunction_stage_residue
-    [Algebra k C.carrier.functionField]
     (T : Chapter08PointThickening k C x n)
     [Chapter08ThickeningSectionsAlgebra T]
     (A : Chapter08PointAdjunction k C x T)
@@ -191,12 +179,17 @@ def chapter08_point_adjunction_stage_residue
         ⟨η, hη⟩))
 
 structure Chapter08ThickeningTransition
-    [Algebra k C.carrier.functionField]
     (Tn : Chapter08PointThickening k C x n)
     (Tnext : Chapter08PointThickening k C x (n + 1))
     [Chapter08ThickeningSectionsAlgebra Tn]
     [Chapter08ThickeningSectionsAlgebra Tnext] where
+  thickeningMap :
+    Chapter08ThickeningScheme Tn ⟶ Chapter08ThickeningScheme Tnext
+  thickeningMap_over_curve :
+    thickeningMap ≫ Tnext.divisor.ideal.subschemeι = Tn.divisor.ideal.subschemeι
   quotientMap : Chapter08ThickeningSections Tnext →ₐ[k] Chapter08ThickeningSections Tn
+  quotientMap_eq_thickeningMap_appTop :
+    quotientMap.toRingHom = thickeningMap.appTop.hom
   dualRestriction : Chapter08ThickeningDual Tn →ₗ[k] Chapter08ThickeningDual Tnext
   dualRestriction_eq :
     dualRestriction = chapter08_dual_of_quotient k quotientMap
@@ -217,8 +210,7 @@ theorem chapter08_successive_thickening_quotient
 duals as a reusable module-valued colimit.  Record its stages and transition
 maps explicitly so that the residue functional is not detached from the
 finite Cartier thickenings. -/
-  structure Chapter08LocalResidueStages
-    [Algebra k C.carrier.functionField]
+structure Chapter08LocalResidueStages
     (x : Chapter08ClosedPoint C.carrier) where
   pointThickening : ∀ n : ℕ, 0 < n → Chapter08PointThickening k C x n
   adjunction :
@@ -271,7 +263,6 @@ finite Cartier thickenings. -/
       ∃ (n : ℕ) (hn : 0 < n), η ∈ (adjunction n hn).poleDifferentials
 
 structure Chapter08LocalResidueSystem
-    [Algebra k C.carrier.functionField]
     (x : Chapter08ClosedPoint C.carrier) where
   stages : Chapter08LocalResidueStages k C x
   regularDifferentials : Submodule k (Chapter08RationalDifferentials k C.carrier)
@@ -290,25 +281,22 @@ structure Chapter08LocalResidueSystem
         f⁻¹ • KaehlerDifferential.D k C.carrier.functionField f ∈ regularDifferentials
 
 def chapter08ResidueAt
-    [Algebra k C.carrier.functionField]
     (R : Chapter08LocalResidueSystem k C x) :
     Chapter08RationalDifferentials k C.carrier →ₗ[k] k :=
   R.stages.residue
 
 @[simp] theorem chapter08ResidueAt_apply
-    [Algebra k C.carrier.functionField]
     (R : Chapter08LocalResidueSystem k C x)
     (η : Chapter08RationalDifferentials k C.carrier) :
     chapter08ResidueAt k C x R η = R.stages.residue η :=
   rfl
 
 theorem chapter08_local_residue_exists
-    [Algebra k C.carrier.functionField] :
+    :
     Nonempty (Chapter08LocalResidueSystem k C x) := by
   sorry
 
 structure Chapter08LaurentExpansion
-    [Algebra k C.carrier.functionField]
     (E : Type v) [Field E] [Algebra k E]
     [FiniteDimensional k E] [Algebra.IsSeparable k E]
     (η : Chapter08RationalDifferentials k C.carrier) where
@@ -332,6 +320,11 @@ structure Chapter08LaurentExpansion
     completionMap parameter = HahnSeries.single (1 : ℤ) (1 : E)
   differentialMap :
     Ω[C.carrier.functionField⁄k] →ₗ[k] Ω[LaurentSeries E⁄k]
+  differentialMap_semilinear :
+    ∀ (a : C.carrier.functionField)
+      (ξ : Ω[C.carrier.functionField⁄k]),
+      differentialMap (a • ξ) =
+        completionMap a • differentialMap ξ
   differentialMap_on_D :
     ∀ f : C.carrier.functionField,
       differentialMap (KaehlerDifferential.D k C.carrier.functionField f) =
@@ -341,7 +334,6 @@ structure Chapter08LaurentExpansion
       series • KaehlerDifferential.D k (LaurentSeries E) (completionMap parameter)
 
 def Chapter08LaurentExpansion.residueCoefficient
-    [Algebra k C.carrier.functionField]
     {E : Type v} [Field E] [Algebra k E]
     [FiniteDimensional k E] [Algebra.IsSeparable k E]
     {η : Chapter08RationalDifferentials k C.carrier}
@@ -353,18 +345,17 @@ chosen representative behind the book-facing definition below; canonicality
 comes from the construction of that system, not from treating an arbitrary
 choice of principal-parts isomorphisms as unique. -/
 structure Chapter08CanonicalLocalResidueSystem
-    [Algebra k C.carrier.functionField]
     (x : Chapter08ClosedPoint C.carrier) where
   system : Chapter08LocalResidueSystem k C x
   normalization :
-    ∀ {E : Type u} [Field E] [Algebra k E]
+      ∀ {E : Type v} [Field E] [Algebra k E]
       [FiniteDimensional k E] [Algebra.IsSeparable k E]
       {η : Chapter08RationalDifferentials k C.carrier},
       (e : Chapter08LaurentExpansion k C x E η) →
         system.stages.residue η = Algebra.trace k E e.residueCoefficient
 
 theorem chapter08_canonical_local_residue_exists
-    [Algebra k C.carrier.functionField] :
+    :
     Nonempty (Chapter08CanonicalLocalResidueSystem k C x) := by
   sorry
 
@@ -373,35 +364,31 @@ thickenings.  The construction theorem above supplies this canonical choice;
 later global statements must not quantify over an arbitrary linear functional
 with the same interface. -/
 noncomputable def chapter08CanonicalLocalResidueSystem
-    [Algebra k C.carrier.functionField] :
+    :
     Chapter08LocalResidueSystem k C x :=
-  (Classical.choice (chapter08_canonical_local_residue_exists k C x)).system
+  (Classical.choice (chapter08_canonical_local_residue_exists.{u, u} k C x)).system
 
 noncomputable def chapter08CanonicalResidueMap
-    [Algebra k C.carrier.functionField] :
+    :
     Chapter08RationalDifferentials k C.carrier →ₗ[k] k :=
   chapter08ResidueAt k C x (chapter08CanonicalLocalResidueSystem k C x)
 
 noncomputable def chapter08CanonicalResidueAt
-    [Algebra k C.carrier.functionField]
     (η : Chapter08RationalDifferentials k C.carrier) : k :=
   chapter08CanonicalResidueMap k C x η
 
 @[simp] theorem chapter08CanonicalResidueMap_apply
-    [Algebra k C.carrier.functionField]
     (η : Chapter08RationalDifferentials k C.carrier) :
     chapter08CanonicalResidueMap k C x η = chapter08CanonicalResidueAt k C x η :=
   rfl
 
 @[simp] theorem chapter08CanonicalResidueAt_apply
-    [Algebra k C.carrier.functionField]
     (η : Chapter08RationalDifferentials k C.carrier) :
     chapter08CanonicalResidueAt k C x η =
       (chapter08CanonicalLocalResidueSystem k C x).stages.residue η :=
   rfl
 
 theorem chapter08_canonical_residue_kills_regular
-    [Algebra k C.carrier.functionField]
     {η : Chapter08RationalDifferentials k C.carrier}
     (hη : η ∈
       (chapter08CanonicalLocalResidueSystem k C x).regularDifferentials) :
@@ -409,14 +396,12 @@ theorem chapter08_canonical_residue_kills_regular
   exact (chapter08CanonicalLocalResidueSystem k C x).residue_kills_regular hη
 
 theorem chapter08_canonical_residue_of_exact_differential
-    [Algebra k C.carrier.functionField]
     (b : C.carrier.functionField) :
     chapter08CanonicalResidueAt k C x
         (KaehlerDifferential.D k C.carrier.functionField b) = 0 := by
   exact (chapter08CanonicalLocalResidueSystem k C x).residue_kills_exact b
 
 theorem chapter08_residue_kills_regular
-    [Algebra k C.carrier.functionField]
     (R : Chapter08LocalResidueSystem k C x)
     {η : Chapter08RationalDifferentials k C.carrier}
     (hη : η ∈ R.regularDifferentials) :
@@ -424,16 +409,17 @@ theorem chapter08_residue_kills_regular
   exact R.residue_kills_regular hη
 
 theorem chapter08_residue_of_exact_differential
-    [Algebra k C.carrier.functionField]
     (R : Chapter08LocalResidueSystem k C x)
     (b : C.carrier.functionField) :
     chapter08ResidueAt k C x R (KaehlerDifferential.D k C.carrier.functionField b) = 0 := by
   exact R.residue_kills_exact b
 
-/- The same map is used when the residue field extension is inseparable; no
-field-trace hypothesis occurs in its definition. -/
-def chapter08InseparableResidue
-    [Algebra k C.carrier.functionField]
+/- The residue is defined intrinsically by the compatible finite Cartier
+  thickenings.  For a closed point of the smooth curve in this chapter, the
+  residue field is finite separable over `k`; this trace-free interface is
+  retained as preparatory language for later finite-map situations, where a
+  residue-field extension need not be separable. -/
+def chapter08IntrinsicResidue
     (η : Chapter08RationalDifferentials k C.carrier) : k :=
   chapter08CanonicalResidueAt k C x η
 
@@ -445,7 +431,9 @@ def chapter08ResidueFieldTracePairing
       intro b₁ b₂
       simp [mul_add]
     map_smul' := by
-      sorry }
+      intro m x
+      simpa [Algebra.smul_def, mul_assoc, mul_left_comm, mul_comm] using
+        (Algebra.trace k E).map_smul m (a * x) }
 
 theorem chapter08_residue_field_trace_pairing_apply
     {E : Type v} [Field E] [Algebra k E] [FiniteDimensional k E] (a b : E) :
@@ -453,7 +441,6 @@ theorem chapter08_residue_field_trace_pairing_apply
   rfl
 
 theorem chapter08_residue_separable_expansion
-    [Algebra k C.carrier.functionField]
     {E : Type v} [Field E] [Algebra k E] [FiniteDimensional k E]
     [Algebra.IsSeparable k E]
     {η : Chapter08RationalDifferentials k C.carrier}

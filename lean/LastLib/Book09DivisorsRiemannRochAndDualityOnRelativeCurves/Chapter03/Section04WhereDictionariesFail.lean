@@ -318,7 +318,7 @@ def chapter03NodePoint (k : Type u) [Field k] : PrimeSpectrum (Chapter03NodeRing
   ⟨chapter03NodeIdeal k, chapter03_node_ideal_isPrime k⟩
 
 theorem chapter03_node_point_is_codimensionOne (k : Type u) [Field k] :
-    Order.height (chapter03NodePoint k) = 1 := by
+    Order.coheight (chapter03NodePoint k) = 1 := by
   sorry
 
 theorem chapter03_node_ring_not_a_domain (k : Type u) [Field k] :
@@ -763,7 +763,7 @@ def chapter03CuspPoint (k : Type u) [Field k] :
   ⟨chapter03CuspMaximalIdeal k, chapter03_cusp_maximalIdeal_isPrime k⟩
 
 theorem chapter03_cusp_point_is_codimensionOne (k : Type u) [Field k] :
-    Order.height (chapter03CuspPoint k) = 1 := by
+    Order.coheight (chapter03CuspPoint k) = 1 := by
   sorry
 
 theorem chapter03_cusp_point_defines_codimensionOne_cycle (k : Type u) [Field k] :

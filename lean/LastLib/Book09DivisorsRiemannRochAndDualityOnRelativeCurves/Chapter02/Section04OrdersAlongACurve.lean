@@ -170,6 +170,10 @@ class Chapter02MeromorphicFunctionFieldMap (X : Scheme.{u})
     [K : Chapter02MeromorphicSheaf X] where
   toFunctionField : ∀ (U : X.Opens) (_hU : Nonempty U),
     Chapter02MeromorphicSection X U →+* X.functionField
+  /-- The bridge is an identification of meromorphic sections with the
+      function field, not merely a map into it. -/
+  toFunctionField_bijective : ∀ (U : X.Opens) (hU : Nonempty U),
+    Function.Bijective (toFunctionField U hU)
   toFunctionField_restrict : ∀ {U V : X.Opens} (h : V ≤ U)
     (hU : Nonempty U) (hV : Nonempty V)
     (s : Chapter02MeromorphicSection X U),
@@ -196,6 +200,20 @@ class Chapter02CurveCartierOrderAPI (X : Scheme.{u})
     (x : Chapter02ClosedPoint X) (i : D.index) (_hx : x.1 ∈ D.openSet i),
       order D x = chapter02MeromorphicSectionOrder X (D.openSet i)
         ⟨⟨x.1, _hx⟩⟩ (D.equation i) x
+
+/-!
+The order API is not an additional geometric choice.  Its existence is the
+well-definedness statement for taking the order of a local Cartier equation:
+on overlaps, the transition ratio is a regular unit and hence has order zero.
+The construction is kept as an interface theorem here because the preceding
+meromorphic/function-field bridge is itself an earlier-book boundary.
+-/
+theorem chapter02_curve_cartier_order_api_exists
+    (X : Scheme.{u}) [C : Chapter02RegularIntegralNoetherianCurve X]
+    [K : Chapter02MeromorphicSheaf X]
+    [F : Chapter02MeromorphicFunctionFieldMap X] :
+    Nonempty (Chapter02CurveCartierOrderAPI X) := by
+  sorry
 
 def chapter02CartierOrder
     (X : Scheme.{u}) [C : Chapter02RegularIntegralNoetherianCurve X]

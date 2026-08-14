@@ -472,21 +472,28 @@ separate descent and norm comparison is still required to make a statement
 about the original extension.
 -/
 structure Chapter09GaloisClosureData
-    (K L : Type*) [Field K] [Field L] [Algebra K L] where
+    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] where
   closure : Type*
   [closureField : Field closure]
   [closureAlgebra : Algebra K closure]
   embedding : L →ₐ[K] closure
-  closure_isGalois : IsGalois K closure
+  [closureFiniteDimensional : FiniteDimensional K closure]
+  [closure_isGalois : IsGalois K closure]
+  closure_generated_by_conjugates :
+    IntermediateField.adjoin K
+        (⋃ σ : Gal(closure / K), σ '' Set.range embedding) = ⊤
 
 def chapter09GaloisClosureMaximalAbelianSubextension
     {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     (C : Chapter09GaloisClosureData K L) :
     (letI := C.closureField
      letI := C.closureAlgebra
      IntermediateField K C.closure) :=
   letI := C.closureField
   letI := C.closureAlgebra
+  letI := C.closureFiniteDimensional
   letI := C.closure_isGalois
   IntermediateField.fixedField (commutator (Gal(C.closure / K)))
 

@@ -239,10 +239,13 @@ structure Chapter02PolynomialHomogeneousEvaluation
   evaluate a graded polynomial algebra, so the evaluation interface must not silently depend on
   independently chosen operations for the different degrees.
   -/
+  product_data : ∀ m n, Chapter02PowerSectionProductData q.line m n
   product : ∀ m n,
     (chapter02LineBundlePowerBundle q.line m).carrier.sections →
       (chapter02LineBundlePowerBundle q.line n).carrier.sections →
         (chapter02LineBundlePowerBundle q.line (m + n)).carrier.sections
+  product_is_power_product : ∀ m n s t,
+    product m n s t = (product_data m n).product s t
   /-- The degreewise evaluation of homogeneous polynomials in the quotient line. -/
   value : ∀ d, Chapter02PolynomialHomogeneousPolynomial R r d →
     (chapter02LineBundlePowerBundle q.line d).carrier.sections
@@ -323,6 +326,14 @@ structure Chapter02PolynomialHomogeneousEvaluationFamily
               (chapter02LineBundlePowerBundle q'.line d).carrier,
           SheafOfModules.sectionsMap e.hom ((evaluation q).value d F) =
             (evaluation q').value d F
+  /-- A single coherent power transport witnesses all degreewise evaluations. -/
+  transport_power : ∀ {q q'}
+      (_h : chapter02QuotientPairEquivalent q q'),
+      ∃ e : q.line.carrier ≅ q'.line.carrier,
+        ∃ p : Chapter02LineBundlePowerTransportData e,
+          ∀ (d : ℕ) (F : Chapter02PolynomialHomogeneousPolynomial R r d),
+            SheafOfModules.sectionsMap (p.map d).hom ((evaluation q).value d F) =
+              (evaluation q').value d F
 
 /- LOCAL_DEPENDENCY_GUESS: the quotient-compatible graded evaluation family exists. -/
 theorem chapter02_polynomial_homogeneous_evaluation_family_exists
@@ -457,6 +468,48 @@ theorem chapter02_veronese_target_reindexed_standard_projective_space
   sorry
 
 /- LOCAL_DEPENDENCY_GUESS: multiplication of sections in the tensor powers constructs monomial sections. -/
+private def chapter02VeroneseRepeatedSection
+    {S : Scheme.{u}} {r : ℕ} (L : Chapter02LineBundle S)
+    (coordinateSection : Fin (r + 1) →
+      (chapter02LineBundlePowerBundle L 1).carrier.sections)
+    (i : Fin (r + 1)) : ∀ n : ℕ,
+      (chapter02LineBundlePowerBundle L n).carrier.sections
+  | 0 => chapter02PowerUnitSection L
+  | n + 1 =>
+      chapter02PowerSectionProduct L n 1
+        (chapter02VeroneseRepeatedSection L coordinateSection i n)
+        (coordinateSection i)
+
+private theorem chapter02_veronese_monomial_sum_single_add
+    {r : ℕ} (i : Fin (r + 1)) (n : ℕ) (b : Fin (r + 1) →₀ ℕ) :
+    n + b.sum (fun _ k => k) =
+      (Finsupp.single i n + b).sum (fun _ k => k) := by
+  rw [Finsupp.sum_add_index' (fun _ => rfl) (fun _ _ _ => rfl)]
+  simp
+
+private inductive Chapter02VeroneseMonomialSectionPredicate
+    {S : Scheme.{u}} {r : ℕ} (L : Chapter02LineBundle S)
+    (coordinateSection : Fin (r + 1) →
+      (chapter02LineBundlePowerBundle L 1).carrier.sections) :
+    ∀ b : Fin (r + 1) →₀ ℕ,
+      (chapter02LineBundlePowerBundle L
+        (b.sum (fun _ n => n))).carrier.sections → Prop
+  | zero :
+      Chapter02VeroneseMonomialSectionPredicate L coordinateSection 0
+        (chapter02PowerUnitSection L)
+  | single_add (i : Fin (r + 1)) (n : ℕ) (b : Fin (r + 1) →₀ ℕ)
+      (hnot : i ∉ b.support) (hn : n ≠ 0)
+      {s : (chapter02LineBundlePowerBundle L
+        (b.sum (fun _ k => k))).carrier.sections} :
+      Chapter02VeroneseMonomialSectionPredicate L coordinateSection b s →
+      Chapter02VeroneseMonomialSectionPredicate L coordinateSection
+        (Finsupp.single i n + b)
+        (cast (congrArg (fun k =>
+            (chapter02LineBundlePowerBundle L k).carrier.sections)
+          (chapter02_veronese_monomial_sum_single_add i n b))
+          (chapter02PowerSectionProduct L n (b.sum (fun _ k => k))
+            (chapter02VeroneseRepeatedSection L coordinateSection i n) s))
+
 def chapter02VeroneseMonomialSection
     {S : Scheme.{u}} {r : ℕ}
     (P : Chapter02ProjectiveSpaceData S (Chapter02ProjectiveSpaceIndex r))
@@ -469,30 +522,29 @@ def chapter02VeroneseMonomialSection
     SheafOfModules.sectionsMap
       (chapter02LineBundlePowerData L).power_one.inv
         (P.coordinateSections (ULift.up i))
-  let rec singleSection (i : Fin (r + 1)) : ∀ n : ℕ,
-      (chapter02LineBundlePowerBundle L n).carrier.sections
-    | 0 => chapter02PowerUnitSection L
-    | n + 1 =>
-      chapter02PowerSectionProduct L n 1 (singleSection i n) (coordinateSection i)
   have hgo : ∀ b : Fin (r + 1) →₀ ℕ,
-      Nonempty ((chapter02LineBundlePowerBundle L
-        (b.sum (fun _ n => n))).carrier.sections) := by
+      Nonempty {s : (chapter02LineBundlePowerBundle L
+        (b.sum (fun _ n => n))).carrier.sections //
+        Chapter02VeroneseMonomialSectionPredicate L coordinateSection b s} := by
     intro b
     induction b using Finsupp.induction with
     | zero =>
-        exact ⟨chapter02PowerUnitSection L⟩
-    | single_add i n b _ _ ih =>
-        have hsum : n + b.sum (fun _ k => k) =
-            (Finsupp.single i n + b).sum (fun _ k => k) := by
-          rw [Finsupp.sum_add_index' (fun _ => rfl) (fun _ _ _ => rfl)]
-          simp
-        exact ⟨cast (congrArg (fun k =>
-            (chapter02LineBundlePowerBundle L k).carrier.sections) hsum)
-          (chapter02PowerSectionProduct L n (b.sum (fun _ k => k))
-            (singleSection i n) (Classical.choice ih))⟩
+        exact ⟨⟨chapter02PowerUnitSection L,
+          Chapter02VeroneseMonomialSectionPredicate.zero
+            (L := L) (coordinateSection := coordinateSection)⟩⟩
+    | single_add i n b hnot hn ih =>
+        obtain ⟨s, hs⟩ := ih
+        refine ⟨⟨cast (congrArg (fun k =>
+            (chapter02LineBundlePowerBundle L k).carrier.sections)
+          (chapter02_veronese_monomial_sum_single_add i n b))
+            (chapter02PowerSectionProduct L n (b.sum (fun _ k => k))
+              (chapter02VeroneseRepeatedSection L coordinateSection i n) s), ?_⟩⟩
+        exact Chapter02VeroneseMonomialSectionPredicate.single_add
+          (L := L) (coordinateSection := coordinateSection)
+          i n b hnot hn hs
   exact cast (congrArg (fun k =>
       (chapter02LineBundlePowerBundle P.bundle.twistingLineBundle k).carrier.sections)
-    a.property) (Classical.choice (hgo a.1))
+    a.property) (Classical.choice (hgo a.1)).1
 
 structure Chapter02VeroneseCoordinateData
     (S : Scheme.{u}) (r d : ℕ)

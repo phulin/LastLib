@@ -9,6 +9,7 @@ import Mathlib.AlgebraicGeometry.Morphisms.QuasiCompact
 import Mathlib.AlgebraicGeometry.Morphisms.QuasiSeparated
 import Mathlib.AlgebraicGeometry.QuasiAffine
 import Mathlib.RingTheory.Flat.Equalizer
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter08.Dependencies
 import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter11.Section01TheoremAndHypotheses
 
 /-!
@@ -198,10 +199,6 @@ all recorded explicitly for the relative `Spec` construction. -/
 structure Chapter14RelativeFunctionAlgebra {X S : Scheme.{u}} (f : X ⟶ S) where
   carrier : S.Modules
   carrier_eq_pushforward : carrier = chapter14RelativeGlobalFunctions f
-  pushforward_isQuasicoherent :
-    ((Scheme.Modules.pushforward f).obj
-      (SheafOfModules.unit X.ringCatSheaf)).IsQuasicoherent
-  isQuasicoherent : carrier.IsQuasicoherent
   sectionsCommRing : ∀ U : S.Opens, CommRing Γ(carrier, U)
   sectionsRingEquiv :
     ∀ U : S.Opens,
@@ -240,7 +237,39 @@ structure Chapter14RelativeFunctionAlgebra {X S : Scheme.{u}} (f : X ⟶ S) wher
 theorem chapter14_relative_function_algebra_exists {X S : Scheme.{u}} (f : X ⟶ S)
     [QuasiCompact f] [QuasiSeparated f] :
     Nonempty (Chapter14RelativeFunctionAlgebra f) := by
-  sorry
+  classical
+  let sectionsEquiv (U : S.Opens) :
+      Γ(chapter14RelativeGlobalFunctions f, U) ≃ Γ(X, f ⁻¹ᵁ U) := Equiv.refl _
+  let sectionsCommRing (U : S.Opens) :
+      CommRing Γ(chapter14RelativeGlobalFunctions f, U) := (sectionsEquiv U).commRing
+  refine ⟨{
+    carrier := chapter14RelativeGlobalFunctions f
+    carrier_eq_pushforward := rfl
+    sectionsCommRing := sectionsCommRing
+    sectionsRingEquiv := fun U => by
+      letI := sectionsCommRing U
+      exact (Equiv.ringEquiv (sectionsEquiv U)).toCommRingCatIso
+    restrictionRingHom := fun {U V} i => by
+      letI := sectionsCommRing U
+      letI := sectionsCommRing V
+      exact (X.presheaf.map ((TopologicalSpace.Opens.map f.base).map i).op).hom
+    restrictionRingHom_apply := by intros; rfl
+    scalarRingHom := fun U => by
+      letI := sectionsCommRing U
+      exact (Equiv.ringEquiv (sectionsEquiv U)).symm.toRingHom.comp (f.app U).hom
+    sectionsRingEquiv_restriction := by
+      intros
+      ext x
+      rfl
+    sectionsRingEquiv_scalar := by
+      intros
+      ext x
+      simp
+    scalar_action := by
+      intros U r x
+      apply (sectionsEquiv U).injective
+      change (f.app U).hom r * (sectionsEquiv U x) = _
+      rfl }⟩
 
 noncomputable def chapter14RelativeFunctionAlgebra {X S : Scheme.{u}} (f : X ⟶ S)
     [QuasiCompact f] [QuasiSeparated f] : Chapter14RelativeFunctionAlgebra f :=
@@ -251,16 +280,16 @@ theorem chapter14_relative_function_algebra_carrier_eq_pushforward
     (chapter14RelativeFunctionAlgebra f).carrier = chapter14RelativeGlobalFunctions f := by
   exact (chapter14RelativeFunctionAlgebra f).carrier_eq_pushforward
 
-theorem chapter14_relative_function_algebra_is_quasicoherent
-    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact f] [QuasiSeparated f] :
-    (chapter14RelativeFunctionAlgebra f).carrier.IsQuasicoherent := by
-  exact (chapter14RelativeFunctionAlgebra f).isQuasicoherent
-
 theorem chapter14_relative_global_functions_is_quasicoherent
     {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact f] [QuasiSeparated f] :
     (chapter14RelativeGlobalFunctions f).IsQuasicoherent := by
-  simpa [chapter14RelativeGlobalFunctions] using
-    (chapter14RelativeFunctionAlgebra f).pushforward_isQuasicoherent
+  exact _root_.LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter08.chapter08_pushforward_structure_sheaf_is_quasicoherent f
+
+theorem chapter14_relative_function_algebra_is_quasicoherent
+    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact f] [QuasiSeparated f] :
+    (chapter14RelativeFunctionAlgebra f).carrier.IsQuasicoherent := by
+  rw [chapter14_relative_function_algebra_carrier_eq_pushforward f]
+  exact chapter14_relative_global_functions_is_quasicoherent f
 
 /-! ## The relative affine envelope interface -/
 

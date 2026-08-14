@@ -55,7 +55,7 @@ to an open finite-index subgroup. -/
 the local-existence theorem supplied by the preceding chapters. -/
 theorem chapter07_local_existence_theorem
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
-    [TopologicalSpace Kˣ] [IsAbelianGalois K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ] [IsAbelianGalois K KAb]
     (D : Chapter07LocalFieldData K)
     (hmax : chapter07IsMaximalAbelianExtension K KAb)
     (H : Chapter07OpenFiniteIndexSubgroup Kˣ) :
@@ -67,7 +67,7 @@ theorem chapter07_local_existence_theorem
 property used by the completion and correspondence APIs. -/
 theorem chapter07_local_existence_gives_existence_property
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
-    [TopologicalSpace Kˣ] [IsAbelianGalois K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ] [IsAbelianGalois K KAb]
     (D : Chapter07LocalFieldData K)
     (hmax : chapter07IsMaximalAbelianExtension K KAb) :
     chapter07ExistenceProperty K KAb := by
@@ -109,11 +109,24 @@ theorem chapter07_extension_of_open_subgroup_unique
 theorem chapter07_local_existence_degree
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
     [TopologicalSpace Kˣ] [IsAbelianGalois K KAb]
+    (S : Chapter07FiniteArtinSystem K KAb)
     (hExist : chapter07ExistenceProperty K KAb)
     (H : Chapter07OpenFiniteIndexSubgroup Kˣ) :
     Module.finrank K (chapter07ExtensionOfOpenSubgroup hExist H) =
       H.1.index := by
   sorry
+
+/-- Finite reciprocity at the level selected by an open subgroup. -/
+noncomputable def chapter07LocalExistenceFiniteReciprocityEquiv
+    {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsAbelianGalois K KAb]
+    (S : Chapter07FiniteArtinSystem K KAb)
+    (hExist : chapter07ExistenceProperty K KAb)
+    (H : Chapter07OpenFiniteIndexSubgroup Kˣ) :
+    Kˣ ⧸ H.1 ≃* Gal(chapter07ExtensionOfOpenSubgroup hExist H / K) := by
+  rw [← chapter07_norm_of_extension_of_open_subgroup hExist H]
+  exact chapter07FiniteReciprocityEquiv S
+    (chapter07ExtensionOfOpenSubgroup hExist H)
 
 /-- Finite reciprocity at the level selected by an open subgroup. -/
 theorem chapter07_local_existence_finite_reciprocity
@@ -124,8 +137,8 @@ theorem chapter07_local_existence_finite_reciprocity
     (H : Chapter07OpenFiniteIndexSubgroup Kˣ) :
     Nonempty
       (Kˣ ⧸ H.1 ≃*
-        Gal(chapter07ExtensionOfOpenSubgroup hExist H / K)) := by
-  sorry
+        Gal(chapter07ExtensionOfOpenSubgroup hExist H / K)) :=
+  ⟨chapter07LocalExistenceFiniteReciprocityEquiv S hExist H⟩
 
 /-- Under the existence theorem, the norm-subgroup assignment lands in the
 open finite-index subgroup API. -/
@@ -142,8 +155,10 @@ noncomputable def chapter07NormSubgroupAsOpenFiniteIndex
   property := by
     constructor
     · exact hopen L
-    · rw [← S.kernel_eq_norm L]
-      infer_instance
+    · have hker : (S.artin L).ker =
+          chapter07NormSubgroup (K := K) (L := L) := by
+        simpa only [chapter07NormSubgroup] using S.kernel_eq_norm L
+      exact hker ▸ (inferInstance : (S.artin L).ker.FiniteIndex)
 
 /-- Inclusion of finite abelian levels reverses inclusion of norm groups. -/
 theorem chapter07_norm_subgroup_antitone
@@ -159,6 +174,10 @@ theorem chapter07_norm_subgroup_antitone
 theorem chapter07_norm_subgroup_injective
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
     [TopologicalSpace Kˣ] [IsAbelianGalois K KAb]
+    (S : Chapter07FiniteArtinSystem K KAb)
+    (hopen :
+      ∀ L : Chapter07FiniteAbelianIndex K KAb,
+        IsOpen (chapter07NormSubgroup (K := K) (L := L) : Set Kˣ))
     (hExist : chapter07ExistenceProperty K KAb)
     {L₁ L₂ : Chapter07FiniteAbelianIndex K KAb}
     (hL : chapter07NormSubgroup (K := K) (L := L₁) =
@@ -201,7 +220,9 @@ finite level and reused by the final Chapter 7 synthesis. -/
 /-- Norm limitation for a finite Galois extension. -/
 theorem chapter07_norm_limitation
     {K E : Type*} [Field K] [Field E] [Algebra K E]
-    [FiniteDimensional K E] [IsGalois K E] :
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
+    [FiniteDimensional K E] [IsGalois K E]
+    (D : Chapter07LocalFieldData K) :
     chapter07NormSubgroup (K := K) (L := E) =
       chapter07NormSubgroup (K := K)
         (L := chapter07MaximalAbelianSubextension (K := K) (E := E)) := by
@@ -212,7 +233,7 @@ single source-facing declaration; the finite Artin system and the selected
 maximal abelian model are supplied by earlier chapters. -/
 theorem chapter07_reciprocity_existence_and_norm_theorems
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
-    [TopologicalSpace Kˣ] [IsAbelianGalois K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ] [IsAbelianGalois K KAb]
     (S : Chapter07FiniteArtinSystem K KAb)
     (D : Chapter07LocalFieldData K)
     (hmax : chapter07IsMaximalAbelianExtension K KAb) :

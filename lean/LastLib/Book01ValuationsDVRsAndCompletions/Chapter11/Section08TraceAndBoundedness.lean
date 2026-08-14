@@ -238,7 +238,12 @@ theorem chapter11_quadratic_field_trace_norm_implies_integral
 
 /-- Higher-degree characteristic polynomials have intermediate coefficients. -/
 def chapter11MonicCoefficientProfile (A : Type*) [CommRing A] (n : ℕ) :=
-  Fin (n + 1) → A
+  {c : Fin (n + 1) → A // c ⟨n, Nat.lt_succ_self n⟩ = 1}
+
+instance chapter11MonicCoefficientProfileCoeFun
+    (A : Type*) [CommRing A] (n : ℕ) :
+    CoeFun (chapter11MonicCoefficientProfile A n) (fun _ => Fin (n + 1) → A) where
+  coe c := c.1
 
 /-- The endpoint coefficient data do not determine a monic coefficient profile. -/
 theorem chapter11_higher_degree_trace_norm_omit_intermediate_coefficients
@@ -249,8 +254,11 @@ theorem chapter11_higher_degree_trace_norm_omit_intermediate_coefficients
       c ⟨n - 1, by omega⟩ = d ⟨n - 1, by omega⟩ ∧ c ≠ d := by
   classical
   let j : Fin (n + 1) := ⟨1, by omega⟩
-  let c : chapter11MonicCoefficientProfile A n := fun _ => 0
-  let d : chapter11MonicCoefficientProfile A n := fun i => if i = j then 1 else 0
+  let top : Fin (n + 1) := ⟨n, Nat.lt_succ_self n⟩
+  let c : chapter11MonicCoefficientProfile A n :=
+    ⟨fun i => if i = top then 1 else 0, by simp [top]⟩
+  let d : chapter11MonicCoefficientProfile A n :=
+    ⟨fun i => if i = top then 1 else if i = j then 1 else 0, by simp [top]⟩
   have hj0 : j ≠ (0 : Fin (n + 1)) := by
     intro h
     have := congrArg Fin.val h
@@ -261,23 +269,32 @@ theorem chapter11_higher_degree_trace_norm_omit_intermediate_coefficients
     simp [j] at this
     omega
   have hj0' : (0 : Fin (n + 1)) ≠ j := Ne.symm hj0
-  have hjn' : (⟨n, Nat.lt_succ_self n⟩ : Fin (n + 1)) ≠ j := Ne.symm hjn
+  have hjn' : top ≠ j := Ne.symm hjn
   have hjtrace : j ≠ (⟨n - 1, by omega⟩ : Fin (n + 1)) := by
     intro h
     have hval := congrArg Fin.val h
     simp [j] at hval
     omega
   have hjtrace' : (⟨n - 1, by omega⟩ : Fin (n + 1)) ≠ j := Ne.symm hjtrace
+  have htop0 : (0 : Fin (n + 1)) ≠ top := by
+    intro h
+    have hval := congrArg Fin.val h
+    simp [top] at hval
+    omega
+  have htoptrace : (⟨n - 1, by omega⟩ : Fin (n + 1)) ≠ top := by
+    intro h
+    have hval := congrArg Fin.val h
+    simp [top] at hval
+    omega
   refine ⟨c, d, ?_, ?_, ?_, ?_⟩
-  · simp [c, d, hj0']
-  · simp [c, d, hjn']
-  · simp [c, d, hjtrace']
+  · simp [c, d, top, hj0', htop0]
+  · simp [c, d, top]
+  · simp [c, d, top, hjtrace', htoptrace]
   · intro hcd
-    have hcdj := congrFun hcd j
-    change (0 : A) = if j = j then 1 else 0 at hcdj
-    rw [if_pos rfl] at hcdj
-    have h01 : (0 : A) = 1 := hcdj
-    exact zero_ne_one h01
+    have hcdj := congrArg (fun z => z.1 j) hcd
+    have hjtop : j ≠ top := by simpa [top] using hjn
+    dsimp [c, d] at hcdj
+    simp [hjtop] at hcdj
 
 /-- In degree at least three, distinct monic polynomials can have the same
 constant, next-to-leading, and leading coefficients.  The remaining

@@ -1,8 +1,10 @@
 import Mathlib.Data.Complex.Basic
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.BigOperators.Finprod
 import Mathlib.Analysis.Complex.Norm
 import Mathlib.MeasureTheory.Constructions.BorelSpace.Complex
 import Mathlib.Data.Real.Basic
+import Mathlib.Data.NNReal.Basic
 import Mathlib.Algebra.Group.Subgroup.Ker
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.LinearAlgebra.FiniteDimensional.Basic
@@ -12,13 +14,15 @@ import Mathlib.MeasureTheory.Measure.Haar.Unique
 import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.Topology.Algebra.Module.FiniteDimension
 import Mathlib.Topology.Instances.Real.Lemmas
+import Mathlib.MeasureTheory.Measure.Haar.DistribChar
+import Mathlib.Order.Filter.Cofinite
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter06
 
 noncomputable section
 
 open Set MeasureTheory Topology
-open scoped BigOperators ENNReal
+open scoped BigOperators ENNReal NNReal Pointwise
 
 universe uK uO uInf uFin uHat uG uPlace uV uVA
 
@@ -360,6 +364,127 @@ def Chapter06LocalMeasureModule
     (μ : Measure F) (size : F → ℝ≥0∞) : Prop :=
   ∀ a : F, a ≠ 0 →
     Measure.map (fun x : F => a * x) μ = size a • μ
+
+/-! ### Finite-adelic local factors and Haar scaling
+
+The finite-adelic measure calculation has two logically separate inputs.  The
+local factors must be normalized on the distinguished integral subgroups, and
+the measure of one normalized compact-open test set must be computed as the
+finite product of those factors.  The declarations below keep those inputs
+explicit.  In particular, they do not turn a local normalization into an
+unproved assertion about an arbitrary global measure. -/
+
+/-- Local scalar factors together with their almost-everywhere integral
+normalization.  The local groups need not be fields here; this is the small
+interface needed for the finite-support argument and can therefore be reused
+for normalized local absolute values. -/
+structure Chapter06FiniteAdeleLocalFactorData
+    (Place : Type uPlace) (Local : Place → Type uV)
+    [∀ v, Group (Local v)] where
+  integralSubgroup : ∀ v, Subgroup (Local v)
+  factor : ∀ v, Local v → ℝ≥0
+  normalized_on_integral :
+    ∀ᶠ v in Filter.cofinite,
+      ∀ u : Local v, u ∈ integralSubgroup v → factor v u = 1
+
+/-- An idele with an integral tail has only finitely many nontrivial local
+factors.  This is the eventual-unit-tail argument used to make the finite
+product in an adelic module literal rather than formal infinite-product data. -/
+theorem chapter06_finite_idele_local_factor_has_finite_support
+    {Place : Type uPlace} {Local : Place → Type uV}
+    [∀ v, Group (Local v)]
+    (D : Chapter06FiniteAdeleLocalFactorData Place Local)
+    (x : ∀ v, Local v)
+    (hx : ∀ᶠ v in Filter.cofinite,
+      x v ∈ D.integralSubgroup v) :
+    Function.HasFiniteMulSupport (fun v => D.factor v (x v)) := by
+  rw [Function.HasFiniteMulSupport]
+  apply Filter.eventually_cofinite.mp
+  filter_upwards [hx, D.normalized_on_integral] with v hv hnormal
+  exact hnormal (x v) hv
+
+/-- Finite-adelic data for comparing a normalized local-factor product with
+the distributive Haar character of the global additive action.
+
+`testSet_scaling` is the local product-measure calculation.  Once it has been
+proved for one non-null, non-infinite test set, Haar uniqueness gives scaling
+on every measurable set.  The component-tail field and the preceding support
+lemma expose the restricted-product argument needed by concrete finite-idele
+instantiations. -/
+structure Chapter06FiniteAdeleHaarScalingData
+    (Place : Type uPlace) (Local : Place → Type uV)
+    (G : Type uG) (A : Type uVA)
+    [∀ v, Group (Local v)] [Group G] [AddCommGroup A]
+    [DistribMulAction G A] [TopologicalSpace A] [IsTopologicalAddGroup A]
+    [LocallyCompactSpace A] [ContinuousConstSMul G A]
+    [MeasurableSpace A] [BorelSpace A] where
+  localFactors : Chapter06FiniteAdeleLocalFactorData Place Local
+  component : G → ∀ v, Local v
+  component_eventually_integral :
+    ∀ g : G, ∀ᶠ v in Filter.cofinite,
+      component g v ∈ localFactors.integralSubgroup v
+  measure : Measure A
+  testSet : Set A
+  testSet_compact : IsCompact testSet
+  testSet_measurable : MeasurableSet testSet
+  testSet_measure_ne_zero : measure testSet ≠ 0
+  testSet_measure_ne_top : measure testSet ≠ ⊤
+  testSet_scaling :
+    ∀ g : G,
+      measure (g • testSet) =
+        ((∏ᶠ v, localFactors.factor v (component g v) : ℝ≥0) : ℝ≥0∞) *
+          measure testSet
+
+theorem chapter06_finite_adelic_haar_factor_has_finite_support
+    {Place : Type uPlace} {Local : Place → Type uV}
+    {G : Type uG} {A : Type uVA}
+    [∀ v, Group (Local v)] [Group G] [AddCommGroup A]
+    [DistribMulAction G A] [TopologicalSpace A] [IsTopologicalAddGroup A]
+    [LocallyCompactSpace A] [ContinuousConstSMul G A]
+    [MeasurableSpace A] [BorelSpace A]
+    (D : Chapter06FiniteAdeleHaarScalingData Place Local G A) (g : G) :
+    Function.HasFiniteMulSupport
+      (fun v => D.localFactors.factor v (D.component g v)) := by
+  exact chapter06_finite_idele_local_factor_has_finite_support
+    D.localFactors (D.component g) (D.component_eventually_integral g)
+
+/-- The normalized local-factor product is the global distributive Haar
+character once its value has been computed on the test set. -/
+theorem chapter06_finite_adelic_haar_character_eq_local_factor_product
+    {Place : Type uPlace} {Local : Place → Type uV}
+    {G : Type uG} {A : Type uVA}
+    [∀ v, Group (Local v)] [Group G] [AddCommGroup A]
+    [DistribMulAction G A] [TopologicalSpace A] [IsTopologicalAddGroup A]
+    [LocallyCompactSpace A] [ContinuousConstSMul G A]
+    [MeasurableSpace A] [BorelSpace A]
+    (D : Chapter06FiniteAdeleHaarScalingData Place Local G A)
+    [D.measure.IsAddHaarMeasure] [Measure.Regular D.measure] (g : G) :
+    MeasureTheory.distribHaarChar A g =
+      ∏ᶠ v, D.localFactors.factor v (D.component g v) := by
+  exact MeasureTheory.distribHaarChar_eq_of_measure_smul_eq_mul
+    (μ := D.measure) (s := D.testSet) (g := g)
+    D.testSet_measure_ne_zero D.testSet_measure_ne_top (D.testSet_scaling g)
+
+/-- Haar scaling on every set, obtained from the local-factor product on the
+normalized test set. -/
+theorem chapter06_finite_adelic_haar_scaling
+    {Place : Type uPlace} {Local : Place → Type uV}
+    {G : Type uG} {A : Type uVA}
+    [∀ v, Group (Local v)] [Group G] [AddCommGroup A]
+    [DistribMulAction G A] [TopologicalSpace A] [IsTopologicalAddGroup A]
+    [LocallyCompactSpace A] [ContinuousConstSMul G A]
+    [MeasurableSpace A] [BorelSpace A]
+    (D : Chapter06FiniteAdeleHaarScalingData Place Local G A)
+    [D.measure.IsAddHaarMeasure] [Measure.Regular D.measure]
+    (g : G) (s : Set A) :
+    D.measure (g • s) =
+      ((∏ᶠ v, D.localFactors.factor v (D.component g v) : ℝ≥0) : ℝ≥0∞) *
+        D.measure s := by
+  have hchar : MeasureTheory.distribHaarChar A g =
+      ∏ᶠ v, D.localFactors.factor v (D.component g v) :=
+    chapter06_finite_adelic_haar_character_eq_local_factor_product D g
+  rw [← hchar]
+  exact (MeasureTheory.distribHaarChar_mul (A := A) (μ := D.measure) g s).symm
 
 /-- A regular Borel additive Haar measure, exposed through Mathlib's canonical
 Haar predicate and the regularity convention used by the source. -/

@@ -93,7 +93,7 @@ theorem chapter04_theta_mellin_split_at_one
     {s : ℂ} (hs : 1 < s.re) :
     chapter04ThetaMellinIntegral K D a s =
       chapter04ThetaMellinTail K D a s +
-        chapter04ThetaMellinTail K D (chapter04DualFractionalIdeal K a) (1 - s) +
+    chapter04ThetaMellinTail K D (chapter04DualFractionalIdeal K a) (1 - s) +
           chapter04ZeroVectorCorrection s := by
   sorry
 

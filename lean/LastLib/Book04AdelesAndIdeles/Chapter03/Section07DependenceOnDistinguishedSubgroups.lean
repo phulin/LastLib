@@ -39,7 +39,14 @@ theorem chapter03_eventually_mem_iff_of_finite_change
     (hchange : chapter03FiniteChange H H') (x : ∀ i, G i) :
     (∀ᶠ i in Filter.cofinite, x i ∈ H i) ↔
       ∀ᶠ i in Filter.cofinite, x i ∈ H' i := by
-  sorry
+  have heq : ∀ᶠ i in Filter.cofinite, H i = H' i := by
+    filter_upwards [hchange.compl_mem_cofinite] with i hi
+    simpa [chapter03FiniteChange, chapter03FiniteChangeSet] using hi
+  constructor <;> intro hx
+  · filter_upwards [hx, heq] with i hi hEq
+    simpa [hEq] using hi
+  · filter_upwards [hx, heq] with i hi hEq
+    simpa [hEq] using hi
 
 def chapter03FiniteChangeEquiv
     (H H' : ∀ i, Subgroup (G i))
@@ -86,7 +93,155 @@ theorem chapter03_finite_change_preserves_restricted_product_topology
     (hH' : ∀ i, IsOpen (H' i : Set (G i))) :
     Continuous (chapter03FiniteChangeEquiv H H' hchange) ∧
       Continuous (chapter03FiniteChangeEquiv H H' hchange).symm := by
-  sorry
+  classical
+  have hC : {i | H i ≠ H' i}.Finite := hchange
+  have hforward : Continuous (chapter03FiniteChangeEquiv H H' hchange) := by
+    rw [continuous_generateFrom_iff]
+    rintro _ ⟨V, hV, rfl⟩
+    have hE : {i | V i ≠ (H' i : Set (G i))}.Finite := by
+      exact Filter.eventually_cofinite.mp hV.2
+    apply isOpen_iff_mem_nhds.2
+    intro x hx
+    have hB : (chapter03ExceptionalSet H (x : ∀ i, G i)).Finite := by
+      exact (chapter03_restrictedProduct_mem_iff_exceptional_finite H
+        (x : ∀ i, G i)).1 x.property
+    let S : Set I :=
+      ({i | V i ≠ (H' i : Set (G i))} ∪ {i | H i ≠ H' i}) ∪
+        chapter03ExceptionalSet H (x : ∀ i, G i)
+    have hS : S.Finite := by
+      exact (hE.union hC).union hB
+    let W : ∀ i, Set (G i) := fun i =>
+      if i ∈ S then V i else (H i : Set (G i))
+    have hW : chapter03BasicProductCondition H W := by
+      constructor
+      · intro i
+        by_cases hi : i ∈ S
+        · simpa [W, hi] using hV.1 i
+        · simpa [W, hi] using hH i
+      · filter_upwards [hS.compl_mem_cofinite] with i hi
+        have hi' : i ∉ S := by simpa using hi
+        simp [W, hi']
+    have hxW : x ∈ chapter03BasicProductSet H W := by
+      change ∀ i, ((x : ∀ i, G i) i) ∈ W i
+      intro i
+      by_cases hi : i ∈ S
+      · have hxiV : ((x : ∀ i, G i) i) ∈ V i := by
+          change ∀ i, ((x : ∀ i, G i) i) ∈ V i at hx
+          exact hx i
+        simpa [W, hi] using hxiV
+      · have hiB : i ∉ chapter03ExceptionalSet H (x : ∀ i, G i) := by
+          intro hiB
+          apply hi
+          change i ∈
+            ({j | V j ≠ (H' j : Set (G j))} ∪ {j | H j ≠ H' j}) ∪
+              chapter03ExceptionalSet H (x : ∀ i, G i)
+          exact Or.inr hiB
+        have hxi : ((x : ∀ i, G i) i) ∈ H i := by
+          simpa [chapter03ExceptionalSet] using hiB
+        simpa [W, hi] using hxi
+    have hsubset : chapter03BasicProductSet H W ⊆
+        (chapter03FiniteChangeEquiv H H' hchange) ⁻¹'
+          chapter03BasicProductSet H' V := by
+      intro y hy
+      change ∀ i, ((y : ∀ i, G i) i) ∈ V i
+      intro i
+      by_cases hi : i ∈ S
+      · simpa [W, hi] using hy i
+      · have hiE : V i = (H' i : Set (G i)) := by
+          by_contra hne
+          apply hi
+          change i ∈
+            ({j | V j ≠ (H' j : Set (G j))} ∪ {j | H j ≠ H' j}) ∪
+              chapter03ExceptionalSet H (x : ∀ i, G i)
+          exact Or.inl (Or.inl hne)
+        have hiC : H i = H' i := by
+          by_contra hne
+          apply hi
+          change i ∈
+            ({j | V j ≠ (H' j : Set (G j))} ∪ {j | H j ≠ H' j}) ∪
+              chapter03ExceptionalSet H (x : ∀ i, G i)
+          exact Or.inl (Or.inr hne)
+        have hyH : ((y : ∀ i, G i) i) ∈ H i := by
+          simpa [W, hi] using hy i
+        rw [hiE, ← hiC]
+        exact hyH
+    exact mem_of_superset
+      ((chapter03_basicProductSet_isOpen H W hW).mem_nhds hxW) hsubset
+  have hC' : {i | H' i ≠ H i}.Finite :=
+    chapter03_finiteChange_symm H H' hchange
+  have hreverse : Continuous (chapter03FiniteChangeEquiv H H' hchange).symm := by
+    rw [continuous_generateFrom_iff]
+    rintro _ ⟨V, hV, rfl⟩
+    have hE : {i | V i ≠ (H i : Set (G i))}.Finite := by
+      exact Filter.eventually_cofinite.mp hV.2
+    apply isOpen_iff_mem_nhds.2
+    intro x hx
+    have hB : (chapter03ExceptionalSet H' (x : ∀ i, G i)).Finite := by
+      exact (chapter03_restrictedProduct_mem_iff_exceptional_finite H'
+        (x : ∀ i, G i)).1 x.property
+    let S : Set I :=
+      ({i | V i ≠ (H i : Set (G i))} ∪ {i | H' i ≠ H i}) ∪
+        chapter03ExceptionalSet H' (x : ∀ i, G i)
+    have hS : S.Finite := by
+      exact (hE.union hC').union hB
+    let W : ∀ i, Set (G i) := fun i =>
+      if i ∈ S then V i else (H' i : Set (G i))
+    have hW : chapter03BasicProductCondition H' W := by
+      constructor
+      · intro i
+        by_cases hi : i ∈ S
+        · simpa [W, hi] using hV.1 i
+        · simpa [W, hi] using hH' i
+      · filter_upwards [hS.compl_mem_cofinite] with i hi
+        have hi' : i ∉ S := by simpa using hi
+        simp [W, hi']
+    have hxW : x ∈ chapter03BasicProductSet H' W := by
+      change ∀ i, ((x : ∀ i, G i) i) ∈ W i
+      intro i
+      by_cases hi : i ∈ S
+      · have hxiV : ((x : ∀ i, G i) i) ∈ V i := by
+          change ∀ i, ((x : ∀ i, G i) i) ∈ V i at hx
+          exact hx i
+        simpa [W, hi] using hxiV
+      · have hiB : i ∉ chapter03ExceptionalSet H' (x : ∀ i, G i) := by
+          intro hiB
+          apply hi
+          change i ∈
+            ({j | V j ≠ (H j : Set (G j))} ∪ {j | H' j ≠ H j}) ∪
+              chapter03ExceptionalSet H' (x : ∀ i, G i)
+          exact Or.inr hiB
+        have hxi : ((x : ∀ i, G i) i) ∈ H' i := by
+          simpa [chapter03ExceptionalSet] using hiB
+        simpa [W, hi] using hxi
+    have hsubset : chapter03BasicProductSet H' W ⊆
+        (chapter03FiniteChangeEquiv H H' hchange).symm ⁻¹'
+          chapter03BasicProductSet H V := by
+      intro y hy
+      change ∀ i, ((y : ∀ i, G i) i) ∈ V i
+      intro i
+      by_cases hi : i ∈ S
+      · simpa [W, hi] using hy i
+      · have hiE : V i = (H i : Set (G i)) := by
+          by_contra hne
+          apply hi
+          change i ∈
+            ({j | V j ≠ (H j : Set (G j))} ∪ {j | H' j ≠ H j}) ∪
+              chapter03ExceptionalSet H' (x : ∀ i, G i)
+          exact Or.inl (Or.inl hne)
+        have hiC : H' i = H i := by
+          by_contra hne
+          apply hi
+          change i ∈
+            ({j | V j ≠ (H j : Set (G j))} ∪ {j | H' j ≠ H j}) ∪
+              chapter03ExceptionalSet H' (x : ∀ i, G i)
+          exact Or.inl (Or.inr hne)
+        have hyH : ((y : ∀ i, G i) i) ∈ H' i := by
+          simpa [W, hi] using hy i
+        rw [hiE, ← hiC]
+        exact hyH
+    exact mem_of_superset
+      ((chapter03_basicProductSet_isOpen H' W hW).mem_nhds hxW) hsubset
+  exact ⟨hforward, hreverse⟩
 
 theorem chapter03_finite_change_gives_canonical_topological_identification
     [∀ i, TopologicalSpace (G i)]
@@ -135,7 +290,14 @@ theorem chapter03_additive_eventually_mem_iff_of_finite_change
     (hchange : chapter03AdditiveFiniteChange H H') (x : ∀ i, G i) :
     (∀ᶠ i in Filter.cofinite, x i ∈ H i) ↔
       ∀ᶠ i in Filter.cofinite, x i ∈ H' i := by
-  sorry
+  have heq : ∀ᶠ i in Filter.cofinite, H i = H' i := by
+    filter_upwards [hchange.compl_mem_cofinite] with i hi
+    simpa [chapter03AdditiveFiniteChange, chapter03AdditiveFiniteChangeSet] using hi
+  constructor <;> intro hx
+  · filter_upwards [hx, heq] with i hi hEq
+    simpa [hEq] using hi
+  · filter_upwards [hx, heq] with i hi hEq
+    simpa [hEq] using hi
 
 def chapter03AdditiveFiniteChangeEquiv
     (H H' : ∀ i, AddSubgroup (G i))
@@ -183,7 +345,154 @@ theorem chapter03_additive_finite_change_preserves_restricted_product_topology
     (hH' : ∀ i, IsOpen (H' i : Set (G i))) :
     Continuous (chapter03AdditiveFiniteChangeEquiv H H' hchange) ∧
       Continuous (chapter03AdditiveFiniteChangeEquiv H H' hchange).symm := by
-  sorry
+  classical
+  have hC : {i | H i ≠ H' i}.Finite := hchange
+  have hforward : Continuous (chapter03AdditiveFiniteChangeEquiv H H' hchange) := by
+    rw [continuous_generateFrom_iff]
+    rintro _ ⟨V, hV, rfl⟩
+    have hE : {i | V i ≠ (H' i : Set (G i))}.Finite := by
+      exact Filter.eventually_cofinite.mp hV.2
+    apply isOpen_iff_mem_nhds.2
+    intro x hx
+    have hB : {i | ((x : ∀ i, G i) i) ∉ H i}.Finite := by
+      exact Filter.eventually_cofinite.mp
+        ((chapter03_additiveRestrictedProduct_mem_iff H
+          (x : ∀ i, G i)).1 x.property)
+    let S : Set I :=
+      ({i | V i ≠ (H' i : Set (G i))} ∪ {i | H i ≠ H' i}) ∪
+        {i | ((x : ∀ i, G i) i) ∉ H i}
+    have hS : S.Finite := by
+      exact (hE.union hC).union hB
+    let W : ∀ i, Set (G i) := fun i =>
+      if i ∈ S then V i else (H i : Set (G i))
+    have hW : chapter03AdditiveBasicProductCondition H W := by
+      constructor
+      · intro i
+        by_cases hi : i ∈ S
+        · simpa [W, hi] using hV.1 i
+        · simpa [W, hi] using hH i
+      · filter_upwards [hS.compl_mem_cofinite] with i hi
+        have hi' : i ∉ S := by simpa using hi
+        simp [W, hi']
+    have hxW : x ∈ chapter03AdditiveBasicProductSet H W := by
+      change ∀ i, ((x : ∀ i, G i) i) ∈ W i
+      intro i
+      by_cases hi : i ∈ S
+      · have hxiV : ((x : ∀ i, G i) i) ∈ V i := by
+          change ∀ i, ((x : ∀ i, G i) i) ∈ V i at hx
+          exact hx i
+        simpa [W, hi] using hxiV
+      · have hxi : ((x : ∀ i, G i) i) ∈ H i := by
+          by_contra hnot
+          apply hi
+          change i ∈
+            ({j | V j ≠ (H' j : Set (G j))} ∪ {j | H j ≠ H' j}) ∪
+              {j | ((x : ∀ i, G i) j) ∉ H j}
+          exact Or.inr hnot
+        simpa [W, hi] using hxi
+    have hsubset : chapter03AdditiveBasicProductSet H W ⊆
+        (chapter03AdditiveFiniteChangeEquiv H H' hchange) ⁻¹'
+          chapter03AdditiveBasicProductSet H' V := by
+      intro y hy
+      change ∀ i, ((y : ∀ i, G i) i) ∈ V i
+      intro i
+      by_cases hi : i ∈ S
+      · simpa [W, hi] using hy i
+      · have hiE : V i = (H' i : Set (G i)) := by
+          by_contra hne
+          apply hi
+          change i ∈
+            ({j | V j ≠ (H' j : Set (G j))} ∪ {j | H j ≠ H' j}) ∪
+              {j | ((x : ∀ i, G i) j) ∉ H j}
+          exact Or.inl (Or.inl hne)
+        have hiC : H i = H' i := by
+          by_contra hne
+          apply hi
+          change i ∈
+            ({j | V j ≠ (H' j : Set (G j))} ∪ {j | H j ≠ H' j}) ∪
+              {j | ((x : ∀ i, G i) j) ∉ H j}
+          exact Or.inl (Or.inr hne)
+        have hyH : ((y : ∀ i, G i) i) ∈ H i := by
+          simpa [W, hi] using hy i
+        rw [hiE, ← hiC]
+        exact hyH
+    exact mem_of_superset
+      ((chapter03_additive_basicProductSet_isOpen H W hW).mem_nhds hxW) hsubset
+  have hC' : {i | H' i ≠ H i}.Finite :=
+    chapter03_additiveFiniteChange_symm H H' hchange
+  have hreverse :
+      Continuous (chapter03AdditiveFiniteChangeEquiv H H' hchange).symm := by
+    rw [continuous_generateFrom_iff]
+    rintro _ ⟨V, hV, rfl⟩
+    have hE : {i | V i ≠ (H i : Set (G i))}.Finite := by
+      exact Filter.eventually_cofinite.mp hV.2
+    apply isOpen_iff_mem_nhds.2
+    intro x hx
+    have hB : {i | ((x : ∀ i, G i) i) ∉ H' i}.Finite := by
+      exact Filter.eventually_cofinite.mp
+        ((chapter03_additiveRestrictedProduct_mem_iff H'
+          (x : ∀ i, G i)).1 x.property)
+    let S : Set I :=
+      ({i | V i ≠ (H i : Set (G i))} ∪ {i | H' i ≠ H i}) ∪
+        {i | ((x : ∀ i, G i) i) ∉ H' i}
+    have hS : S.Finite := by
+      exact (hE.union hC').union hB
+    let W : ∀ i, Set (G i) := fun i =>
+      if i ∈ S then V i else (H' i : Set (G i))
+    have hW : chapter03AdditiveBasicProductCondition H' W := by
+      constructor
+      · intro i
+        by_cases hi : i ∈ S
+        · simpa [W, hi] using hV.1 i
+        · simpa [W, hi] using hH' i
+      · filter_upwards [hS.compl_mem_cofinite] with i hi
+        have hi' : i ∉ S := by simpa using hi
+        simp [W, hi']
+    have hxW : x ∈ chapter03AdditiveBasicProductSet H' W := by
+      change ∀ i, ((x : ∀ i, G i) i) ∈ W i
+      intro i
+      by_cases hi : i ∈ S
+      · have hxiV : ((x : ∀ i, G i) i) ∈ V i := by
+          change ∀ i, ((x : ∀ i, G i) i) ∈ V i at hx
+          exact hx i
+        simpa [W, hi] using hxiV
+      · have hxi : ((x : ∀ i, G i) i) ∈ H' i := by
+          by_contra hnot
+          apply hi
+          change i ∈
+            ({j | V j ≠ (H j : Set (G j))} ∪ {j | H' j ≠ H j}) ∪
+              {j | ((x : ∀ i, G i) j) ∉ H' j}
+          exact Or.inr hnot
+        simpa [W, hi] using hxi
+    have hsubset : chapter03AdditiveBasicProductSet H' W ⊆
+        (chapter03AdditiveFiniteChangeEquiv H H' hchange).symm ⁻¹'
+          chapter03AdditiveBasicProductSet H V := by
+      intro y hy
+      change ∀ i, ((y : ∀ i, G i) i) ∈ V i
+      intro i
+      by_cases hi : i ∈ S
+      · simpa [W, hi] using hy i
+      · have hiE : V i = (H i : Set (G i)) := by
+          by_contra hne
+          apply hi
+          change i ∈
+            ({j | V j ≠ (H j : Set (G j))} ∪ {j | H' j ≠ H j}) ∪
+              {j | ((x : ∀ i, G i) j) ∉ H' j}
+          exact Or.inl (Or.inl hne)
+        have hiC : H' i = H i := by
+          by_contra hne
+          apply hi
+          change i ∈
+            ({j | V j ≠ (H j : Set (G j))} ∪ {j | H' j ≠ H j}) ∪
+              {j | ((x : ∀ i, G i) j) ∉ H' j}
+          exact Or.inl (Or.inr hne)
+        have hyH : ((y : ∀ i, G i) i) ∈ H' i := by
+          simpa [W, hi] using hy i
+        rw [hiE, ← hiC]
+        exact hyH
+    exact mem_of_superset
+      ((chapter03_additive_basicProductSet_isOpen H' W hW).mem_nhds hxW) hsubset
+  exact ⟨hforward, hreverse⟩
 
 theorem chapter03_additive_local_lattice_agreement_outside_finite_set
     [∀ i, TopologicalSpace (G i)]
@@ -328,7 +637,10 @@ theorem chapter03_constant_one_witness_for_infinite_change
     (hone : ∀ i, (1 : G i) ∈ H i)
     (hnotone : {i | (1 : G i) ∉ H' i}.Infinite) :
     chapter03RestrictedProductChangeWitness H H' := by
-  sorry
+  refine ⟨fun _ => 1, Filter.Eventually.of_forall hone, ?_⟩
+  intro htail
+  apply hnotone
+  simpa using (Filter.eventually_cofinite.mp htail)
 
 end ConstantOneWitness
 

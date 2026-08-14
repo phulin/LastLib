@@ -406,14 +406,34 @@ structure Chapter04FundamentalClass
     invariant H (chapter04RestrictTwoClass C H u) =
       chapter04QModZOfRat ((1 : ℚ) / Nat.card H)
 
-/-! The class-formation hypotheses are imported from the canonical finite-group
-Tate--Nakayama interface.  This keeps the cap product tied to its chosen
-degree-two class instead of leaving an unrelated arbitrary family of maps. -/
-abbrev Chapter04ClassFormationHypotheses
+/-! The real-place convention is kept as an explicit boundary.  The local terms
+ at real places are Tate cohomology terms in every degree; this is the data that
+ retains the exceptional two-torsion contribution instead of silently replacing
+ it by ordinary positive-degree cohomology. -/
+structure Chapter04RealPlaceTateConvention
     {G : Type} [Group G] [Fintype G]
-    (U : Chapter04FundamentalClass (G := G)) : Prop :=
-  LastLib.Book05LocalClassFieldTheory.Chapter05.Chapter05TateNakayamaHypotheses
-    G (chapter04GModuleRep U.C) U.u
+    (C : Chapter04GModule.{0, 0} G) where
+  realPlace : Type
+  [realPlaceFintype : Fintype realPlace]
+  decompositionGroup : realPlace → Subgroup G
+  localTate : realPlace → ℤ → ModuleCat ℤ
+  retainedTate : ∀ (v : realPlace) (r : ℤ),
+    localTate v r ≅
+      chapter04TateH (chapter04RestrictGModule C (decompositionGroup v)) r
+
+attribute [instance] Chapter04RealPlaceTateConvention.realPlaceFintype
+
+/-! The class-formation hypotheses are imported from the canonical finite-group
+ Tate--Nakayama interface and carry the retained real-place Tate convention.
+ This keeps the cap product tied to its chosen degree-two class while making
+ the archimedean convention part of the input rather than prose only. -/
+structure Chapter04ClassFormationHypotheses
+    {G : Type} [Group G] [Fintype G]
+    (U : Chapter04FundamentalClass (G := G)) where
+  tateNakayama :
+    LastLib.Book05LocalClassFieldTheory.Chapter05.Chapter05TateNakayamaHypotheses
+      G (chapter04GModuleRep U.C) U.u
+  realPlaceTate : Chapter04RealPlaceTateConvention U.C
 
 end
 

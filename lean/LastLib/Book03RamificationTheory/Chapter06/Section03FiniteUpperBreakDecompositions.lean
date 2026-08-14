@@ -27,7 +27,7 @@ theorem chapter06_finite_group_representation_is_semisimple
     [AddCommGroup V] [Module L V] [FiniteDimensional L V]
     (ρ : Representation L G V) :
     Representation.IsSemisimpleRepresentation ρ := by
-  sorry
+  infer_instance
 
 theorem chapter06_finite_image_level_action_is_semisimple
     {E : Type u} {P : ProfiniteGrp} {V : Type w}
@@ -36,7 +36,8 @@ theorem chapter06_finite_image_level_action_is_semisimple
     {ρ : Chapter06FiniteImageRepresentation E P V}
     (R : Chapter06FiniteLevelRepresentation ρ) :
     Representation.IsSemisimpleRepresentation R.action := by
-  sorry
+  let _ : Fintype (P ⧸ R.level.toSubgroup) := Fintype.ofFinite _
+  infer_instance
 
 def chapter06SubmoduleInvariant
     {L : Type u} {G : Type v} {V : Type w}
@@ -60,14 +61,29 @@ theorem chapter06_invariant_complement_exists
     ∃ C : Submodule L V,
       chapter06SubmoduleInvariant ρ C ∧
         W ⊓ C = ⊥ ∧ W ⊔ C = ⊤ := by
-  sorry
+  let _ : Representation.IsSemisimpleRepresentation ρ :=
+    chapter06_finite_group_representation_is_semisimple ρ
+  have hle : ∀ g : G, W ≤ W.comap (ρ g) := by
+    intro g x hx
+    exact hW g x hx
+  let σ : Subrepresentation ρ :=
+    { toSubmodule := W
+      apply_mem_toSubmodule := by
+        intro g x hx
+        exact hle g hx }
+  obtain ⟨τ, hτ⟩ := exists_isCompl σ
+  refine ⟨τ.toSubmodule, ?_, ?_, ?_⟩
+  · intro g x hx
+    exact τ.apply_mem_toSubmodule g hx
+  · simpa [σ] using congrArg Subrepresentation.toSubmodule hτ.inf_eq_bot
+  · simpa [σ] using congrArg Subrepresentation.toSubmodule hτ.codisjoint.eq_top
 
 theorem chapter06_fixedSpace_invariant_of_normal
     {L : Type u} {G : Type v} {V : Type w}
     [Field L] [Group G] [AddCommGroup V] [Module L V]
     (ρ : Representation L G V) (H : Subgroup G) [H.Normal] :
     chapter06SubmoduleInvariant ρ (chapter06FixedSpace ρ H) := by
-  sorry
+  exact fun g x hx => (Representation.le_comap_invariants ρ H g) hx
 
 theorem chapter06_upper_fixedSpace_invariant
     {L : Type u} {G : Type v} {V : Type w}
@@ -77,7 +93,17 @@ theorem chapter06_upper_fixedSpace_invariant
     (ρ : Representation L G V) (u : ℝ) :
     chapter06SubmoduleInvariant ρ
       (chapter06FixedSpace ρ (chapter05UpperRamificationGroup D u)) := by
-  sorry
+  let _ : (chapter05UpperRamificationGroup D u).Normal :=
+    chapter05_upper_group_normal D hbij u
+  unfold chapter06SubmoduleInvariant
+  intro g x hx
+  change x ∈ Representation.invariants
+      (ρ.comp (chapter05UpperRamificationGroup D u)) at hx
+  change ρ g x ∈ Representation.invariants
+      (ρ.comp (chapter05UpperRamificationGroup D u))
+  have hle := Representation.le_comap_invariants ρ
+      (chapter05UpperRamificationGroup D u) g
+  exact hle hx
 
 theorem chapter06_upper_fixedSpace_chain
     {L : Type u} {G : Type v} {V : Type w}
@@ -87,7 +113,8 @@ theorem chapter06_upper_fixedSpace_chain
     (ρ : Representation L G V) {u w : ℝ} (huw : u ≤ w) :
     chapter06FixedSpace ρ (chapter05UpperRamificationGroup D u) ≤
       chapter06FixedSpace ρ (chapter05UpperRamificationGroup D w) := by
-  sorry
+  exact chapter06FixedSpace.antitone ρ
+    ((chapter05_upper_filtration_antitone D hbij) huw)
 
 /-!
 This record is the finite, source-order version of
@@ -155,7 +182,8 @@ theorem mem_positiveBreaks (B : Chapter06UpperBreakDecomposition D ρ)
 theorem piece_eq_bot_of_not_mem
     (B : Chapter06UpperBreakDecomposition D ρ) {r : ℝ}
     (hr : r ∉ B.breaks) : B.piece r = ⊥ := by
-  sorry
+  by_contra hne
+  exact hr ((B.piece_nonzero_iff_mem r).mp hne)
 
 end Chapter06UpperBreakDecomposition
 
@@ -195,7 +223,31 @@ theorem chapter06_piece_fixedSpaceCodim_step
     chapter06PieceFixedSpaceCodim ρ (B.piece r)
         (chapter05UpperRamificationGroup D u) =
       if u ≤ r then Module.finrank L (B.piece r) else 0 := by
-  sorry
+  by_cases hur : u ≤ r
+  · have hchain :=
+      chapter06_upper_fixedSpace_chain D
+        (chapter05_herbrand_bijective_of_filtration D) ρ hur
+    have hinter :
+        B.piece r ⊓ chapter06FixedSpace ρ
+            (chapter05UpperRamificationGroup D u) = ⊥ := by
+      apply le_antisymm
+      · exact le_trans (inf_le_inf_left _ hchain)
+          (B.positive_piece_upper_fixed_bottom hr hr_pos).le
+      · exact bot_le
+    rw [if_pos hur, chapter06PieceFixedSpaceCodim, hinter]
+    simp
+  · have hru : r < u := lt_of_not_ge hur
+    have htriv :=
+      (B.positive_piece_action_threshold hr hr_pos u).mpr hru
+    have hle :
+        B.piece r ≤ chapter06FixedSpace ρ
+            (chapter05UpperRamificationGroup D u) := by
+      intro x hx
+      rw [chapter06FixedSpace.mem_iff]
+      intro g
+      exact htriv g x hx
+    rw [if_neg hur, chapter06PieceFixedSpaceCodim, inf_eq_left.mpr hle]
+    simp
 
 theorem chapter06_upper_fixedSpaceCodim_decomposition
     {L : Type u} {G : Type v} {V : Type w}
@@ -208,7 +260,179 @@ theorem chapter06_upper_fixedSpaceCodim_decomposition
       ∑ r ∈ B.breaks,
         chapter06PieceFixedSpaceCodim ρ (B.piece r)
           (chapter05UpperRamificationGroup D u) := by
-  sorry
+  classical
+  let P : B.breaks → Submodule L V := fun r => B.piece r
+  have hP_indep : iSupIndep P := by
+    change iSupIndep (B.piece ∘ (fun r : B.breaks => (r : ℝ)))
+    simpa only [Function.comp_apply] using
+      B.pieces_internal.submodule_iSupIndep.comp Subtype.val_injective
+  have hP_span : (⨆ r : B.breaks, P r) = ⊤ := by
+    rw [iSup_subtype]
+    rw [← B.pieces_internal.submodule_iSup_eq_top]
+    refine le_antisymm ?_ ?_
+    · exact iSup₂_le fun r hr => le_iSup (fun r : ℝ => B.piece r) r
+    · refine iSup_le fun r => ?_
+      by_cases hr : r ∈ B.breaks
+      · exact le_iSup_of_le r (le_iSup_of_le hr le_rfl)
+      · rw [B.piece_eq_bot_of_not_mem hr]
+        exact bot_le
+  have hP_internal : DirectSum.IsInternal P :=
+    DirectSum.isInternal_submodule_of_iSupIndep_of_iSup_eq_top hP_indep hP_span
+  let _ : DirectSum.Decomposition P := hP_internal.chooseDecomposition
+  let H : Subgroup G := chapter05UpperRamificationGroup D u
+  let F : Submodule L V := chapter06FixedSpace ρ H
+  let Q : B.breaks → Submodule L V := fun r => P r ⊓ F
+  have hQ_indep : iSupIndep Q :=
+    hP_indep.mono (fun r => inf_le_left)
+  have hhom : ∀ x : V, x ∈ F → ∀ i : B.breaks,
+      (DirectSum.decompose P x i : V) ∈ F := by
+    intro x hx i
+    rw [chapter06FixedSpace.mem_iff] at hx ⊢
+    intro g
+    let f : ∀ j : B.breaks, P j →ₗ[L] P j := fun j =>
+      ((ρ (g : G)).comp (P j).subtype).codRestrict (P j) (by
+        intro y
+        exact B.pieces_invariant (j : ℝ) (g : G) y
+          (by simp [P] using y.property))
+    have hmap :
+        (DirectSum.decomposeLinearEquiv P) ∘ₗ (ρ (g : G)) =
+          (DirectSum.lmap f) ∘ₗ (DirectSum.decomposeLinearEquiv P) := by
+      apply DirectSum.decompose_lhom_ext P
+      intro j
+      apply LinearMap.ext
+      intro y
+      apply DirectSum.ext
+      intro i'
+      simp only [LinearMap.comp_apply]
+      change (DirectSum.decomposeLinearEquiv P
+          ((ρ (g : G)) ((P j).subtype y)) i') =
+        (DirectSum.lmap f
+          (DirectSum.decomposeLinearEquiv P ((P j).subtype y)) i')
+      have hy : (ρ (g : G)) ((P j).subtype y) = (f j y : V) := by rfl
+      rw [hy, DirectSum.decomposeLinearEquiv_apply_coe]
+      simp [f]
+    have hcomp := congrArg (fun z => (z i : V))
+      (DFunLike.congr_fun hmap x)
+    simp only [LinearMap.comp_apply] at hcomp
+    rw [hx g] at hcomp
+    simp only [DirectSum.lmap_apply] at hcomp
+    change ((DirectSum.decomposeLinearEquiv P x) i : V) =
+      (f i ((DirectSum.decomposeLinearEquiv P x) i) : V) at hcomp
+    have hfi :
+        (f i ((DirectSum.decomposeLinearEquiv P x) i) : V) =
+          (ρ (g : G)) ((DirectSum.decomposeLinearEquiv P x) i : V) := by rfl
+    rw [hfi] at hcomp
+    exact hcomp.symm
+  have hQ_span : (⨆ r : B.breaks, Q r) = F := by
+    apply le_antisymm
+    · exact iSup_le fun r => inf_le_right
+    · intro x hx
+      rw [← DirectSum.sum_support_decompose P x]
+      exact sum_mem fun i hi => by
+        exact (le_iSup Q i) ⟨(DirectSum.decompose P x i).property, hhom x hx i⟩
+  let Q' : B.breaks → Submodule L F := fun r => (Q r).comap F.subtype
+  have hcomap_disjoint :
+      ∀ {A B : Submodule L V}, Disjoint A B →
+        Disjoint (A.comap F.subtype) (B.comap F.subtype) := by
+    intro A B h
+    rw [disjoint_iff, ← Submodule.comap_inf, h.eq_bot]
+    simp
+  have hQ'_indep : iSupIndep Q' := by
+    intro i
+    let R : Submodule L V :=
+      iSup (fun j : B.breaks => iSup (fun _ : j ≠ i => Q j))
+    let R' : Submodule L F :=
+      iSup (fun j : B.breaks =>
+        iSup (fun _ : j ≠ i => (Q j).comap F.subtype))
+    change Disjoint ((Q i).comap F.subtype) R'
+    have hrest : R' ≤ R.comap F.subtype := by
+      refine iSup_le fun j => iSup_le fun hj => ?_
+      exact Submodule.comap_mono
+        (le_iSup_of_le j (le_iSup_of_le hj le_rfl))
+    exact (hcomap_disjoint (hQ_indep i)).mono_right hrest
+  have hmapQ :
+      (⨆ r : B.breaks, Q' r).map F.subtype = ⨆ r : B.breaks, Q r := by
+    rw [Submodule.map_iSup]
+    apply iSup_congr
+    intro r
+    rw [Submodule.map_comap_subtype]
+    exact inf_eq_right.mpr inf_le_right
+  have hQ'_span : (⨆ r : B.breaks, Q' r) = ⊤ := by
+    apply top_unique
+    intro x hx
+    have hxV : F.subtype x ∈ (⨆ r : B.breaks, Q r) := by
+      rw [hQ_span]
+      exact x.property
+    have hxmap :
+        F.subtype x ∈ (⨆ r : B.breaks, Q' r).map F.subtype := by
+      rw [hmapQ]
+      exact hxV
+    have hxcomap :
+        x ∈ ((⨆ r : B.breaks, Q' r).map F.subtype).comap F.subtype :=
+      hxmap
+    rw [Submodule.comap_map_eq_of_injective Subtype.coe_injective] at hxcomap
+    exact hxcomap
+  have hQ'_internal : DirectSum.IsInternal Q' :=
+    DirectSum.isInternal_submodule_of_iSupIndep_of_iSup_eq_top
+      hQ'_indep hQ'_span
+  let _ : DirectSum.Decomposition Q' := hQ'_internal.chooseDecomposition
+  have hPfin :
+      Module.finrank L V = ∑ r : B.breaks, Module.finrank L (P r) := by
+    rw [LinearEquiv.finrank_eq (DirectSum.decomposeLinearEquiv P)]
+    simp
+  have hFfin :
+      Module.finrank L F = ∑ r : B.breaks, Module.finrank L (Q' r) := by
+    rw [LinearEquiv.finrank_eq (DirectSum.decomposeLinearEquiv Q')]
+    simp
+  have hQfin : ∀ r : B.breaks,
+      Module.finrank L (Q' r) = Module.finrank L (Q r) := by
+    intro r
+    rw [← Submodule.finrank_map_subtype_eq F (Q' r)]
+    rw [Submodule.map_comap_subtype]
+    rw [inf_eq_right.mpr inf_le_right]
+  have hFfinQ :
+      Module.finrank L F = ∑ r : B.breaks, Module.finrank L (Q r) := by
+    simpa only [hQfin] using hFfin
+  have hquot := Submodule.finrank_quotient_add_finrank F
+  rw [hPfin, hFfinQ] at hquot
+  have hcodim :
+      Module.finrank L (V ⧸ F) =
+        (∑ r : B.breaks, Module.finrank L (P r)) -
+          (∑ r : B.breaks, Module.finrank L (Q r)) :=
+    Nat.eq_sub_of_add_eq hquot
+  let Qreal : ℝ → Submodule L V := fun r => (B.piece r) ⊓ F
+  have hsumP :
+      (∑ r : B.breaks, Module.finrank L (P r)) =
+        ∑ r ∈ B.breaks, Module.finrank L (B.piece r) := by
+    rw [← B.breaks.sum_attach]
+    simp [P]
+  have hsumQ :
+      (∑ r : B.breaks, Module.finrank L (Q r)) =
+        ∑ r ∈ B.breaks, Module.finrank L (Qreal r) := by
+    rw [← B.breaks.sum_attach]
+    simp [P, Q, Qreal]
+  have hcodim_target :
+      Module.finrank L (V ⧸ F) =
+        (∑ r ∈ B.breaks, Module.finrank L (B.piece r)) -
+          ∑ r ∈ B.breaks, Module.finrank L (Qreal r) := by
+    rw [← hsumP, ← hsumQ]
+    exact hcodim
+  have hsum :
+      (∑ r ∈ B.breaks,
+        (Module.finrank L (B.piece r) - Module.finrank L (Qreal r))) =
+      (∑ r ∈ B.breaks, Module.finrank L (B.piece r)) -
+        ∑ r ∈ B.breaks, Module.finrank L (Qreal r) := by
+    exact Finset.sum_tsub_distrib B.breaks
+      (fun r hr =>
+        Submodule.finrank_mono (show Qreal r ≤ B.piece r from inf_le_left))
+  have htarget :
+      Module.finrank L (V ⧸ F) =
+        ∑ r ∈ B.breaks,
+          (Module.finrank L (B.piece r) - Module.finrank L (Qreal r)) := by
+    rw [hsum]
+    exact hcodim_target
+  simpa [chapter06UpperFixedSpaceCodim, chapter06FixedSpaceCodim,
+      chapter06PieceFixedSpaceCodim, Qreal, F, H] using htarget
 
 theorem chapter06_swan_conductor_sum_formula
     {L : Type u} {G : Type v} {V : Type w}

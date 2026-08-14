@@ -1,4 +1,4 @@
-import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter08.Section02AffineLocalConstruction
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter08.Dependencies
 
 namespace LastLib
 namespace Book10FaithfullyFlatDescentInAlgebraicGeometry
@@ -10,7 +10,7 @@ open scoped AlgebraicGeometry
 
 noncomputable section
 
-universe u
+universe u v
 
 /-!
 ## 8.3 Effectivity and full faithfulness
@@ -37,28 +37,70 @@ category.  Its object part is the actual family of pullback sheaves with the
 canonical overlap datum, rather than the functor part of an unrelated chosen
 equivalence. -/
 noncomputable def chapter08CanonicalQuasiCoherentDescentFunctor
-    {T S : Scheme.{u}} {p : T ⟶ S} (hp : Chapter08FpqcMorphism p) :
+    {T S : Scheme.{u}} {p : T ⟶ S} :
     Chapter08QuasiCoherentModules S ⥤
       Chapter08SingleCoverQuasiCoherentDescentData p where
   obj := fun M =>
     chapter08CanonicalQuasiCoherentDescentData
       (chapter08SingleCoverChoices p) M
-  map := by
-    sorry
-  map_id := by
-    sorry
-  map_comp := by
-    sorry
+  map := fun {_M _N} φ =>
+    chapter08CanonicalQuasiCoherentDescentMap
+      (chapter08SingleCoverChoices p) φ
+  map_id := fun M =>
+    chapter08CanonicalQuasiCoherentDescentMap_id
+      (chapter08SingleCoverChoices p) M
+  map_comp := fun f g =>
+    chapter08CanonicalQuasiCoherentDescentMap_comp
+      (chapter08SingleCoverChoices p) f g
 
-/- LOCAL_DEPENDENCY_GUESS: the pinned module and affine-sheaf APIs expose the
-ingredients, but no earlier LastLib declaration packages them into this
-effectivity equivalence. -/
+/- A generic categorical view of effective descent.  The equivalence field
+   records effectivity, while the explicit full and faithful fields keep the
+   two parts available to consumers that only need uniqueness of maps. -/
+structure Chapter08EffectiveFullFaithfulDescent
+    {C : Type u} {D : Type v} [Category C] [Category D] (F : C ⥤ D) : Prop where
+  effective : Functor.IsEquivalence F
+  full : F.Full
+  faithful : F.Faithful
+
+/-- A reusable effective-descent package for a specified descent functor.
+
+The equivalence alone records effectivity, while the comparison identifies the
+chosen equivalence with the particular functor produced by the construction.
+This is the interface needed when another chapter presents the same descent
+data with a different but canonically comparable model. -/
+structure Chapter08EffectiveFullFaithfulDescentPackage
+    {C : Type u} {D : Type v} [Category C] [Category D] (F : C ⥤ D) where
+  equivalence : C ≌ D
+  canonical : Nonempty (F ≅ equivalence.functor)
+
+/-- The generic comparison package supplies effectivity, fullness, and
+faithfulness for the specified descent functor. -/
+theorem chapter08_effective_full_faithful_of_package
+    {C : Type u} {D : Type v} [Category C] [Category D]
+    {F : C ⥤ D}
+    (P : Chapter08EffectiveFullFaithfulDescentPackage F) :
+    Chapter08EffectiveFullFaithfulDescent F := by
+  sorry
+
+/- The equivalence used below is bundled with its comparison to the canonical
+   pullback functor.  The quasi-coherent package is an instance of the generic
+   package above, rather than a second incompatible interface. -/
+abbrev Chapter08QuasiCoherentDescentEquivalencePackage
+    {T S : Scheme.{u}} {p : T ⟶ S} (_hp : Chapter08FpqcMorphism p) :=
+  Chapter08EffectiveFullFaithfulDescentPackage
+    (chapter08CanonicalQuasiCoherentDescentFunctor (p := p))
+
+noncomputable def chapter08QuasiCoherentDescentEquivalencePackage
+    {T S : Scheme.{u}} {p : T ⟶ S} (hp : Chapter08FpqcMorphism p) :
+    Chapter08QuasiCoherentDescentEquivalencePackage hp := by
+  sorry
+
 /-- The quasi-coherent descent equivalence for one fpqc morphism. -/
 noncomputable def chapter08QuasiCoherentDescentEquivalence
     {T S : Scheme.{u}} {p : T ⟶ S} (hp : Chapter08FpqcMorphism p) :
-    Chapter08QuasiCoherentModules S ≌
+      Chapter08QuasiCoherentModules S ≌
       Chapter08SingleCoverQuasiCoherentDescentData p := by
-  sorry
+  exact (chapter08QuasiCoherentDescentEquivalencePackage hp).equivalence
 
 /-- The chosen equivalence is compatible, up to isomorphism in the descent
 category, with the canonical datum obtained by pulling a quasi-coherent module
@@ -71,7 +113,9 @@ theorem chapter08_quasiCoherent_descent_equivalence_canonical
       ((chapter08QuasiCoherentDescentEquivalence hp).functor.obj M ≅
         chapter08CanonicalQuasiCoherentDescentData
           (chapter08SingleCoverChoices p) M) := by
-  sorry
+  let h := Classical.choice
+    (chapter08QuasiCoherentDescentEquivalencePackage hp).canonical
+  exact ⟨(h.app M).symm⟩
 
 /-- The chosen equivalence is naturally identified with the canonical
 pullback/descent functor.  Objectwise comparisons alone would not transport
@@ -79,16 +123,16 @@ full faithfulness or descended morphisms. -/
 theorem chapter08_quasiCoherent_descent_equivalence_naturally_canonical
     {T S : Scheme.{u}} {p : T ⟶ S} (hp : Chapter08FpqcMorphism p) :
     Nonempty
-      (chapter08CanonicalQuasiCoherentDescentFunctor hp ≅
+      (chapter08CanonicalQuasiCoherentDescentFunctor ≅
         (chapter08QuasiCoherentDescentEquivalence hp).functor) := by
-  sorry
+  exact (chapter08QuasiCoherentDescentEquivalencePackage hp).canonical
 
 /-- The pullback/descent functor appearing in the theorem. -/
 noncomputable def chapter08QuasiCoherentPullbackDescentFunctor
-    {T S : Scheme.{u}} {p : T ⟶ S} (hp : Chapter08FpqcMorphism p) :
+    {T S : Scheme.{u}} {p : T ⟶ S} (_hp : Chapter08FpqcMorphism p) :
     Chapter08QuasiCoherentModules S ⥤
       Chapter08SingleCoverQuasiCoherentDescentData p :=
-  chapter08CanonicalQuasiCoherentDescentFunctor hp
+  chapter08CanonicalQuasiCoherentDescentFunctor
 
 /- Descent over `X` uses the fpqc base change of `p` along `X ⟶ S`. -/
 noncomputable def chapter08_quasiCoherent_descent_equivalence_after_base_change
@@ -109,6 +153,15 @@ theorem chapter08_pullback_is_full
 theorem chapter08_pullback_is_faithful
     {T S : Scheme.{u}} {p : T ⟶ S} (hp : Chapter08FpqcMorphism p) :
     (chapter08QuasiCoherentPullbackDescentFunctor hp).Faithful := by
+  sorry
+
+/- The canonical quasi-coherent descent functor therefore has one reusable
+   effective/full/faithful interface, rather than requiring downstream users to
+   unpack three unrelated assertions. -/
+theorem chapter08_quasiCoherent_descent_effective_full_faithful
+    {T S : Scheme.{u}} {p : T ⟶ S} (hp : Chapter08FpqcMorphism p) :
+    Chapter08EffectiveFullFaithfulDescent
+      (chapter08QuasiCoherentPullbackDescentFunctor hp) := by
   sorry
 
 /-- Effectivity: every quasi-coherent descent datum has a descended sheaf. -/
@@ -150,29 +203,43 @@ theorem chapter08_quasiCoherent_descent_theorem
         Chapter08SingleCoverQuasiCoherentDescentData p) := by
   exact ⟨chapter08QuasiCoherentDescentEquivalence hp⟩
 
-/-- The same descent theorem for an fpqc covering family,
-with pairwise and triple overlap choices. -/
-noncomputable def chapter08FamilyQuasiCoherentDescentEquivalence
-    {S : Scheme.{u}} {ι : Type*} (C : Chapter08FpqcCoverFamily S ι)
-    (choices : Chapter08PullbackChoices C.source C.map) :
-    Chapter08QuasiCoherentModules S ≌
-      Chapter08QuasiCoherentModuleDescentData choices := by
-  sorry
-
-/-- The canonical family pullback functor, retaining all pairwise and triple
-overlap maps from the chosen family data. -/
+/-- The same descent theorem for an fpqc covering family, with pairwise and
+triple overlap choices. -/
+/- The canonical family pullback functor is defined before the bundled
+   equivalence so that the package can record its natural comparison. -/
 noncomputable def chapter08CanonicalFamilyQuasiCoherentDescentFunctor
     {S : Scheme.{u}} {ι : Type*} (C : Chapter08FpqcCoverFamily S ι)
     (choices : Chapter08PullbackChoices C.source C.map) :
     Chapter08QuasiCoherentModules S ⥤
       Chapter08QuasiCoherentModuleDescentData choices where
   obj := fun M => chapter08CanonicalQuasiCoherentDescentData choices M
-  map := by
-    sorry
-  map_id := by
-    sorry
-  map_comp := by
-    sorry
+  map := fun {_M _N} φ =>
+    chapter08CanonicalQuasiCoherentDescentMap choices φ
+  map_id := fun M =>
+    chapter08CanonicalQuasiCoherentDescentMap_id choices M
+  map_comp := fun f g =>
+    chapter08CanonicalQuasiCoherentDescentMap_comp choices f g
+
+abbrev Chapter08FamilyQuasiCoherentDescentEquivalencePackage
+    {S : Scheme.{u}} {ι : Type*} (C : Chapter08FpqcCoverFamily S ι)
+    (choices : Chapter08PullbackChoices C.source C.map) :=
+  Chapter08EffectiveFullFaithfulDescentPackage
+    (chapter08CanonicalFamilyQuasiCoherentDescentFunctor C choices)
+
+noncomputable def chapter08FamilyQuasiCoherentDescentEquivalencePackage
+    {S : Scheme.{u}} {ι : Type*} (C : Chapter08FpqcCoverFamily S ι)
+    (choices : Chapter08PullbackChoices C.source C.map) :
+    Chapter08FamilyQuasiCoherentDescentEquivalencePackage C choices := by
+  sorry
+
+/-- The same descent theorem for an fpqc covering family,
+   with pairwise and triple overlap choices. -/
+noncomputable def chapter08FamilyQuasiCoherentDescentEquivalence
+    {S : Scheme.{u}} {ι : Type*} (C : Chapter08FpqcCoverFamily S ι)
+    (choices : Chapter08PullbackChoices C.source C.map) :
+      Chapter08QuasiCoherentModules S ≌
+      Chapter08QuasiCoherentModuleDescentData choices := by
+  exact (chapter08FamilyQuasiCoherentDescentEquivalencePackage C choices).equivalence
 
 /-- The family equivalence is compatible, up to isomorphism in the descent
 category, with the canonical pullback datum. -/
@@ -183,7 +250,9 @@ theorem chapter08_family_quasiCoherent_descent_equivalence_canonical
     Nonempty
       ((chapter08FamilyQuasiCoherentDescentEquivalence C choices).functor.obj M ≅
         chapter08CanonicalQuasiCoherentDescentData choices M) := by
-  sorry
+  let h := Classical.choice
+    (chapter08FamilyQuasiCoherentDescentEquivalencePackage C choices).canonical
+  exact ⟨(h.app M).symm⟩
 
 /-- The family equivalence is naturally identified with the canonical family
 pullback functor; this retains functorial compatibility of local comparisons. -/
@@ -193,7 +262,7 @@ theorem chapter08_family_quasiCoherent_descent_equivalence_naturally_canonical
     Nonempty
       (chapter08CanonicalFamilyQuasiCoherentDescentFunctor C choices ≅
         (chapter08FamilyQuasiCoherentDescentEquivalence C choices).functor) := by
-  sorry
+  exact (chapter08FamilyQuasiCoherentDescentEquivalencePackage C choices).canonical
 
 /-- The canonical family pullback/descent functor. -/
 noncomputable def chapter08FamilyQuasiCoherentPullbackDescentFunctor

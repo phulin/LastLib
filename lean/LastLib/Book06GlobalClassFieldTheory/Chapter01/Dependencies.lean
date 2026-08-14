@@ -18,6 +18,7 @@ import Mathlib.RingTheory.TensorProduct.Finite
 import Mathlib.RingTheory.Valuation.Basic
 import Mathlib.Topology.Algebra.Constructions
 import Mathlib.Topology.Algebra.Group.Quotient
+import LastLib.Book04AdelesAndIdeles.Chapter09.Dependencies
 
 namespace LastLib.Book06GlobalClassFieldTheory.Chapter01
 
@@ -197,13 +198,12 @@ theorem positiveReal_ext {x y : PositiveReal} (h : (x : ℝ) = y) : x = y := by
 
 def ideleModuleValue {K : Type*} [Field K] [NumberField K]
     (x : BookIdeleGroup K) : ℝ :=
-  (∏ v : InfinitePlaceIndex K,
-      ‖bookIdeleComponent x (Sum.inr v)‖ ^ v.mult) *
-    ∏ᶠ v : FinitePlaceIndex K, ‖bookIdeleComponent x (Sum.inl v)‖
+  ((LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleModule x).val : ℝ)
 
-/- LOCAL_DEPENDENCY_GUESS: the multiplicativity and positivity of the
-normalized restricted product norm are supplied here until the adelic norm
-API is connected to the idelic unit group. -/
+/- The preceding adelic chapter supplies the normalized finite-place factors
+ and the product formula.  Reuse that module here rather than the raw norm on
+ an adic completion: Mathlib's raw norm has exponential normalization, while
+ the global idelic module uses `q_v ^ (-ord_v)`. -/
 noncomputable def ideleModule {K : Type*} [Field K] [NumberField K] :
     BookIdeleGroup K →* PositiveReal where
   toFun x := ⟨ideleModuleValue x, by sorry⟩
@@ -488,6 +488,15 @@ noncomputable def classArtin {K L : Type*} [Field K] [NumberField K]
     intro x hx
     rcases hx with ⟨a, rfl⟩
     exact A.principal_trivial a)
+
+@[simp]
+theorem classArtin_apply_classQuotient
+    {K L : Type*} [Field K] [NumberField K]
+    [Field L] [NumberField L] [Algebra K L]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+    (A : FiniteLevelArtinData K L) (x : BookIdeleGroup K) :
+    classArtin A (classQuotient x) = A.globalArtin x := by
+  sorry
 
 abbrev finiteClassArtinQuotient {K L : Type*} [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L] [FiniteDimensional K L]

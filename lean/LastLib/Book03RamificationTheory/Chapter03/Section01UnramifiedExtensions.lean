@@ -33,7 +33,19 @@ theorem chapter03_unramified_inertia_is_trivial
     (D : Chapter03UnramifiedGaloisData K L) :
     LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05InertiaGroup
         K D.valuationRing = ⊥ := by
-  sorry
+  rw [LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.inertia_group_is_residue_action_kernel]
+  ext σ
+  constructor
+  · intro hσ
+    change LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05ResidueAction
+      K D.valuationRing σ = 1 at hσ
+    have hσone : σ = 1 := D.reduction_faithful
+      (hσ.trans (map_one _).symm)
+    simp [hσone]
+  · intro hσ
+    have hσone : σ = 1 := by simpa using hσ
+    rw [hσone]
+    simp
 
 theorem chapter03_unramified_reduction_has_no_positive_ramification
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -42,7 +54,33 @@ theorem chapter03_unramified_reduction_has_no_positive_ramification
     chapter03GaloisLowerGroup K D.valuationRing (-1) = ⊤ ∧
       chapter03GaloisLowerGroup K D.valuationRing 0 = ⊥ ∧
       (∀ i : ℤ, 0 < i → chapter03GaloisLowerGroup K D.valuationRing i = ⊥) := by
-  sorry
+  have hinertia := chapter03_unramified_inertia_is_trivial D
+  have hzero : chapter03GaloisLowerGroup K D.valuationRing 0 = ⊥ := by
+    rw [chapter03GaloisLowerGroup_zero_eq_inertia]
+    simpa [LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05InertiaGroupInG] using
+      congrArg
+        (fun H : Subgroup
+            (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05DecompositionGroup
+              K D.valuationRing) => H.map (Subgroup.subtype _)) hinertia
+  have hram : ∀ n : ℕ,
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05RamificationGroup
+          K D.valuationRing (n + 1) = ⊥ := by
+    intro n
+    induction n with
+    | zero =>
+        exact (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05FirstRamificationGroup_eq_inertia
+          (A := D.valuationRing)).trans hinertia
+    | succ n ih =>
+        apply le_antisymm
+        · rw [show n + 1 + 1 = (n + 1) + 1 by omega]
+          exact (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05RamificationGroup_succ_le
+            D.valuationRing (n + 1)).trans_eq ih
+        · exact bot_le
+  refine ⟨chapter03GaloisLowerGroup_neg_one K D.valuationRing D.decomposition_top,
+    hzero, ?_⟩
+  intro i hi
+  rw [chapter03GaloisLowerGroup, if_neg (by omega), hram i.toNat]
+  exact Subgroup.map_bot _
 
 theorem chapter03_unramified_lower_groups
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -50,7 +88,8 @@ theorem chapter03_unramified_lower_groups
     (D : Chapter03UnramifiedGaloisData K L) :
     chapter03GaloisLowerGroup K D.valuationRing (-1) = ⊤ ∧
       chapter03GaloisLowerGroup K D.valuationRing 0 = ⊥ := by
-  sorry
+  have h := chapter03_unramified_reduction_has_no_positive_ramification D
+  exact ⟨h.1, h.2.1⟩
 
 /- SOURCE_ISSUE (3.1): The sentence that Frobenius lies at level `-1` but
    not at level `0` is false for the trivial unramified extension (`f = 1`),
@@ -73,7 +112,49 @@ theorem chapter03_unramified_arithmetic_frobenius_at_minus_one
             R) ^ n = σ) ∧
       chapter03GaloisLowerGroup K D.valuationRing (-1) = ⊤ ∧
       chapter03GaloisLowerGroup K D.valuationRing 0 ≠ ⊤ := by
-  sorry
+  have hgen : ∀ σ : Gal(L / K),
+      ∃ n : ℤ,
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.chapter06UnramifiedArithmeticFrobenius
+          R) ^ n = σ := by
+    intro σ
+    exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.chapter06_unramified_arithmetic_frobenius_generates
+      R σ
+  have hres_ne :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.chapter06ArithmeticFrobenius
+        k l ≠ 1 := by
+    intro h
+    have hord :=
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.chapter06_arithmetic_frobenius_order
+        k l (Module.finrank k l) rfl
+    rw [h] at hord
+    have hfin : Module.finrank k l = 1 := by simpa using hord.symm
+    omega
+  have hlift_ne :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.chapter06UnramifiedArithmeticFrobenius
+          R ≠ 1 := by
+    intro h
+    apply hres_ne
+    simpa [LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.chapter06UnramifiedArithmeticFrobenius] using
+      congrArg R.reduction h
+  have hzero : chapter03GaloisLowerGroup K D.valuationRing 0 = ⊥ := by
+    rw [chapter03GaloisLowerGroup_zero_eq_inertia]
+    simpa [LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05InertiaGroupInG] using
+      congrArg
+        (fun H : Subgroup
+            (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05DecompositionGroup
+              K D.valuationRing) => H.map (Subgroup.subtype _))
+        (chapter03_unramified_inertia_is_trivial D)
+  have hnotop : chapter03GaloisLowerGroup K D.valuationRing 0 ≠ ⊤ := by
+    intro htop
+    have hmem :
+        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.chapter06UnramifiedArithmeticFrobenius
+            R ∈ (⊥ : Subgroup (Gal(L / K))) := by
+      rw [← hzero, htop]
+      trivial
+    apply hlift_ne
+    simpa using hmem
+  exact ⟨hgen, chapter03GaloisLowerGroup_neg_one K D.valuationRing D.decomposition_top,
+    hnotop⟩
 
 end
 end LastLib.Book03RamificationTheory.Chapter03

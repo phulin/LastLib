@@ -1,4 +1,5 @@
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.Group.Prod
 import Mathlib.FieldTheory.Galois.Abelian
 import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.FieldTheory.Galois.Notation
@@ -47,6 +48,98 @@ def chapter05MulEquivOfBijective
   left_inv := (Equiv.ofBijective f hf).left_inv
   right_inv := (Equiv.ofBijective f hf).right_inv
   map_mul' := f.map_mul
+
+/-!
+The finite reciprocity maps are quotient maps.  The following small algebraic
+bridge records the three compatibilities used when passing from individual
+abelian levels to their compositum: product maps have intersection kernels,
+restriction squares reverse kernel inclusion, and a family of quotient maps
+recovers its common kernel by an infimum.  Keeping these facts here makes the
+later field-theoretic interfaces consume the reciprocity layer rather than
+introduce a second, unrelated norm-lattice assumption.
+-/
+
+/-- Combine two finite Artin maps into the map recording both actions. -/
+def chapter05ArtinProduct
+    {C : Type*} {G : Type*} {H : Type*}
+    [Group C] [Group G] [Group H]
+    (f : C →* G) (g : C →* H) : C →* G × H :=
+  f.prod g
+
+theorem chapter05_artin_product_kernel
+    {C : Type*} {G : Type*} {H : Type*}
+    [Group C] [Group G] [Group H]
+    (f : C →* G) (g : C →* H) :
+    (chapter05ArtinProduct f g).ker = f.ker ⊓ g.ker := by
+  exact MonoidHom.ker_prod f g
+
+/-- A restriction-compatible Artin square gives the reverse inclusion of
+norm kernels. -/
+theorem chapter05_artin_kernel_le_of_factorization
+    {C : Type*} {G : Type*} {H : Type*}
+    [Group C] [Group G] [Group H]
+    (artinL : C →* G) (artinE : C →* H) (restriction : G →* H)
+    (commutes : restriction.comp artinL = artinE) :
+    artinL.ker ≤ artinE.ker := by
+  sorry
+
+/-- For a surjective finite-level Artin map, kernel inclusion is equivalent to
+factorization through the corresponding quotient action. -/
+theorem chapter05_artin_factorization_iff_kernel_le
+    {C : Type*} {G : Type*} {H : Type*}
+    [Group C] [Group G] [Group H]
+    (artinL : C →* G) (artinE : C →* H)
+    (surjective : Function.Surjective artinL) :
+    (∃ restriction : G →* H,
+      restriction.comp artinL = artinE) ↔ artinL.ker ≤ artinE.ker := by
+  sorry
+
+/-- The finite-level data needed to identify the Artin kernel of a compositum.
+The joint restriction map is injective for the Galois group of a compositum. -/
+structure Chapter05ArtinCompositumData
+    (C : Type*) (G : Type*) (G₁ : Type*) (G₂ : Type*)
+    [Group C] [Group G] [Group G₁] [Group G₂] where
+  compositumArtin : C →* G
+  leftArtin : C →* G₁
+  rightArtin : C →* G₂
+  restrictionLeft : G →* G₁
+  restrictionRight : G →* G₂
+  left_compatibility : restrictionLeft.comp compositumArtin = leftArtin
+  right_compatibility : restrictionRight.comp compositumArtin = rightArtin
+  restriction_jointly_injective :
+    Function.Injective (restrictionLeft.prod restrictionRight)
+
+theorem chapter05_artin_compositum_kernel
+    {C : Type*} {G : Type*} {G₁ : Type*} {G₂ : Type*}
+    [Group C] [Group G] [Group G₁] [Group G₂]
+    (D : Chapter05ArtinCompositumData C G G₁ G₂) :
+    D.compositumArtin.ker = D.leftArtin.ker ⊓ D.rightArtin.ker := by
+  sorry
+
+/-- The common kernel of a family of finite-level Artin maps. -/
+def chapter05ArtinKernelIntersection
+    {C : Type*} {ι : Type*} {G : ι → Type*}
+    [Group C] [∀ i, Group (G i)]
+    (artin : ∀ i, C →* G i) : Subgroup C :=
+  ⨅ i, (artin i).ker
+
+theorem chapter05_artin_kernel_intersection_mem_iff
+    {C : Type*} {ι : Type*} {G : ι → Type*}
+    [Group C] [∀ i, Group (G i)]
+    (artin : ∀ i, C →* G i) (x : C) :
+    x ∈ chapter05ArtinKernelIntersection artin ↔
+      ∀ i, artin i x = 1 := by
+  sorry
+
+/-- A separation statement recovers a subgroup from the common kernels of
+its finite quotient actions. -/
+theorem chapter05_artin_kernel_intersection_recovery
+    {C : Type*} {ι : Type*} {G : ι → Type*}
+    [Group C] [∀ i, Group (G i)]
+    (H : Subgroup C) (artin : ∀ i, C →* G i)
+    (separates : ∀ x, x ∈ H ↔ ∀ i, artin i x = 1) :
+    H = chapter05ArtinKernelIntersection artin := by
+  sorry
 
 /-- The degree-zero cap-product interface supplied by a class formation. -/
 structure Chapter05ClassFormationInterface
@@ -102,6 +195,8 @@ structure Chapter05IdeleNormData
   classNorm : C_L →* C_K
   classMapK : I_K →* C_K
   classMapL : I_L →* C_L
+  classMapK_surjective : Function.Surjective classMapK
+  classMapL_surjective : Function.Surjective classMapL
   norm_class_commutes : classNorm.comp classMapL = classMapK.comp ideleNorm
 
 def chapter05ClassNormSubgroup

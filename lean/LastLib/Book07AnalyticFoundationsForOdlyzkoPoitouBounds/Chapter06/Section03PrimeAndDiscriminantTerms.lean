@@ -1,7 +1,9 @@
 import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.Dependencies
 import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.Section01StatementWithEveryTermVisible
 import Mathlib.Analysis.Distribution.SchwartzSpace.Fourier
+import Mathlib.Analysis.Normed.Group.Tannery
 import Mathlib.Analysis.SpecialFunctions.JapaneseBracket
+import Mathlib.MeasureTheory.Integral.DominatedConvergence
 import Mathlib.MeasureTheory.Integral.IntegralEqImproper
 
 namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06
@@ -709,11 +711,385 @@ private theorem chapter06_zeta_term_continuous_on_vertical_line
       exact (continuous_const.mul hline).neg
     · exact Or.inl hN
 
+private theorem chapter06_smooth_compact_vertical_transform_continuous
+    {F : ℝ → ℝ} (hF : Chapter06SmoothCompactSupport F) {c : ℝ} :
+    Continuous (fun t : ℝ =>
+      chapter06Phi F (chapter06VerticalLinePoint c t)) := by
+  let K : Set ℝ := tsupport F
+  let f : ℝ → ℝ → ℂ := fun p x =>
+    (F x : ℂ) * Complex.exp
+      ((chapter06VerticalLinePoint c p - (1 / 2 : ℂ)) * (x : ℂ))
+  have hK : IsCompact K := hF.2.2
+  have hFc : Continuous (fun x : ℝ => (F x : ℂ)) :=
+    Complex.continuous_ofReal.comp hF.2.1.continuous
+  have hparam : Continuous (Function.uncurry f) := by
+    dsimp [f, Function.uncurry]
+    have hline : Continuous (fun p : ℝ × ℝ =>
+        chapter06VerticalLinePoint c p.1) := by
+      unfold chapter06VerticalLinePoint
+      fun_prop
+    exact (hFc.comp continuous_snd).mul <|
+      Complex.continuous_exp.comp <|
+        (hline.sub continuous_const).mul
+          (Complex.continuous_ofReal.comp continuous_snd)
+  have hzero : ∀ p : ℝ, ∀ x : ℝ, p ∈ (Set.univ : Set ℝ) → x ∉ K →
+      (F x : ℂ) * Complex.exp
+        ((chapter06VerticalLinePoint c p - (1 / 2 : ℂ)) * (x : ℂ)) = 0 := by
+    intro p x _ hx
+    have hFx : F x = 0 := image_eq_zero_of_notMem_tsupport hx
+    simp [hFx]
+  have hcont := continuousOn_integral_of_compact_support
+    (μ := (volume : Measure ℝ)) (s := (Set.univ : Set ℝ)) (k := K)
+    (f := f) hK hparam.continuousOn (by
+      simpa [f] using hzero)
+  change Continuous (fun t : ℝ =>
+    ∫ x : ℝ, (F x : ℂ) * Complex.exp
+      ((chapter06VerticalLinePoint c t - (1 / 2 : ℂ)) * (x : ℂ)))
+  simpa [f] using hcont
+
+private theorem chapter06_smooth_compact_prime_power_support_finite
+    (K : Type*) [Field K] [NumberField K] {F : ℝ → ℝ}
+    (hF : Chapter06SmoothCompactSupport F) :
+    (chapter06PrimePowerSupport (K := K) F).Finite := by
+  rcases (Metric.isBounded_iff_subset_closedBall (0 : ℝ)).1
+      hF.2.2.isBounded with ⟨R, hR⟩
+  let T : ℝ := max R 0
+  have hT : 0 ≤ T := le_max_right _ _
+  have hFsupport : chapter06SupportWithin F T := by
+    intro x hx
+    have hx' : x ∈ Metric.closedBall (0 : ℝ) R :=
+      hR (subset_closure hx)
+    have habs : |x| ≤ R := by
+      simpa [Metric.mem_closedBall, Real.dist_eq] using hx'
+    have habsT : |x| ≤ T := habs.trans (le_max_left _ _)
+    exact abs_le.mp habsT
+  let B : ℕ := Nat.ceil (Real.exp T)
+  let M : ℕ := Nat.ceil (T / Real.log (2 : ℝ))
+  let S : Set (Chapter06PrimeIdeal K) :=
+    {P | chapter06PrimeIdealNorm P ≤ B}
+  let U : Set Chapter06PositiveExponent :=
+    {m | m.1 ≤ M}
+  have hS : S.Finite := by
+    simpa [S, B, chapter06PrimeIdealNorm, chapter03PrimeIdealNorm,
+      chapter03AbsoluteIdealNorm] using
+      (Ring.HasFiniteQuotients.finite_absNorm_heightOneSpectrum_le
+        (R := 𝓞 K) B)
+  have hU : U.Finite := by
+    simpa [U] using
+      (Set.finite_le_nat M).preimage (by
+        intro a _ b _ hab
+        exact Subtype.ext hab)
+  have hprod : (S ×ˢ U).Finite := hS.prod hU
+  refine hprod.subset ?_
+  intro q hq
+  change q.1 ∈ S ∧ q.2 ∈ U
+  have hterm : chapter06PrimePowerTerm F q ≠ 0 := hq
+  have hNgt : 1 < chapter06PrimeIdealNorm q.1 :=
+    chapter03_prime_ideal_norm_gt_one q.1
+  have hlog : 0 < Real.log (chapter06PrimeIdealNorm q.1 : ℝ) := by
+    exact Real.log_pos (by exact_mod_cast hNgt)
+  have hFq : F ((q.2.1 : ℝ) *
+      Real.log (chapter06PrimeIdealNorm q.1 : ℝ)) ≠ 0 := by
+    intro hzero
+    apply hterm
+    simp [chapter06PrimePowerTerm, hzero]
+  have hmem : ((q.2.1 : ℝ) *
+      Real.log (chapter06PrimeIdealNorm q.1 : ℝ)) ∈ Function.support F := hFq
+  have hbound : (q.2.1 : ℝ) *
+      Real.log (chapter06PrimeIdealNorm q.1 : ℝ) ≤ T :=
+    hFsupport hmem |>.2
+  have hone : (1 : ℝ) ≤ (q.2.1 : ℝ) := by
+    exact_mod_cast (Nat.succ_le_iff.mpr q.2.2)
+  have hlog_le : Real.log (chapter06PrimeIdealNorm q.1 : ℝ) ≤ T := by
+    have hmul : Real.log (chapter06PrimeIdealNorm q.1 : ℝ) ≤
+        (q.2.1 : ℝ) * Real.log (chapter06PrimeIdealNorm q.1 : ℝ) := by
+      simpa only [one_mul] using
+        (mul_le_mul_of_nonneg_right hone (le_of_lt hlog))
+    exact hmul.trans hbound
+  have hNreal : (chapter06PrimeIdealNorm q.1 : ℝ) ≤ Real.exp T :=
+    Real.le_exp_of_log_le hlog_le
+  have hNnat : chapter06PrimeIdealNorm q.1 ≤ B := by
+    have hceil : Real.exp T ≤ (B : ℝ) := by exact Nat.le_ceil _
+    exact_mod_cast hNreal.trans hceil
+  have hlog2 : 0 < Real.log (2 : ℝ) := Real.log_pos (by norm_num)
+  have hN2 : (2 : ℝ) ≤ chapter06PrimeIdealNorm q.1 := by
+    have hN2nat : 2 ≤ chapter06PrimeIdealNorm q.1 := by omega
+    exact_mod_cast hN2nat
+  have hlog2_le : Real.log (2 : ℝ) ≤
+      Real.log (chapter06PrimeIdealNorm q.1 : ℝ) :=
+    Real.log_le_log (by norm_num) hN2
+  have hprod_bound : (q.2.1 : ℝ) * Real.log (2 : ℝ) ≤ T := by
+    exact (mul_le_mul_of_nonneg_left hlog2_le (by positivity)).trans hbound
+  have hdiv : (q.2.1 : ℝ) ≤ T / Real.log (2 : ℝ) := by
+    exact (le_div_iff₀ hlog2).2 hprod_bound
+  have hnat : q.2.1 ≤ M := by
+    have hceil : T / Real.log (2 : ℝ) ≤ (M : ℝ) := by
+      exact Nat.le_ceil _
+    exact_mod_cast hdiv.trans hceil
+  exact ⟨hNnat, hnat⟩
+
 theorem chapter06_prime_contour_contribution
     (K : Type*) [Field K] [NumberField K] {F : ℝ → ℝ}
     (hF : Chapter06SmoothCompactSupport F) {c : ℝ} (hc : 1 < c) :
     Tendsto (fun T => chapter06ZetaPrimeContourPartial K F c T) atTop
-      (𝓝 (-(chapter06PrimeContribution K F) / 2)) := by sorry
+      (𝓝 (-(chapter06PrimeContribution K F) / 2)) := by
+  let φ : ℝ → ℂ := fun t =>
+    chapter06Phi F (chapter06VerticalLinePoint c t)
+  let a : Chapter06PrimePower K → ℝ := fun q =>
+    ‖chapter06ZetaLogDerivativeTerm q
+      (chapter06VerticalLinePoint c 0)‖
+  let u : Chapter06PrimePower K → ℝ → ℂ := fun q t =>
+    φ t * (-chapter06ZetaLogDerivativeTerm q
+      (chapter06VerticalLinePoint c t)) * Complex.I
+  have hφ_cont : Continuous φ := by
+    dsimp [φ]
+    exact chapter06_smooth_compact_vertical_transform_continuous hF
+  have hφ_int : Integrable φ volume := by
+    dsimp [φ]
+    exact chapter06_smooth_compact_vertical_transform_integrable hF
+  have hs : Summable a := by
+    dsimp [a]
+    exact chapter06_zeta_log_derivative_series_summable K (by
+      simp [chapter06VerticalLinePoint]
+      exact hc)
+  have hline : ∀ t : ℝ,
+      1 < (chapter06VerticalLinePoint c t).re := by
+    intro t
+    simp [chapter06VerticalLinePoint]
+    exact hc
+  have hu_int : ∀ q : Chapter06PrimePower K, Integrable (u q) volume := by
+    intro q
+    have hqcont : Continuous (fun t : ℝ =>
+        chapter06ZetaLogDerivativeTerm q
+          (chapter06VerticalLinePoint c t)) :=
+      chapter06_zeta_term_continuous_on_vertical_line K q c
+    have hucont : Continuous (u q) := by
+      dsimp [u]
+      exact hφ_cont.mul hqcont.neg |>.mul continuous_const
+    have hbound : ∀ᵐ t : ℝ ∂volume,
+        ‖u q t‖ ≤ a q * ‖φ t‖ := by
+      filter_upwards [] with t
+      dsimp [u, a]
+      have hnorm := chapter06_zeta_term_norm_on_vertical_line K q
+        (c := c) (t := t)
+      rw [norm_mul, norm_mul, norm_neg, Complex.norm_I, hnorm]
+      simp [mul_comm]
+    exact (hφ_int.norm.const_mul (a q)).mono'
+      hucont.aestronglyMeasurable hbound
+  have hu_norm_bound : ∀ q : Chapter06PrimePower K,
+      ∫ t : ℝ, ‖u q t‖ ∂volume ≤
+        a q * ∫ t : ℝ, ‖φ t‖ ∂volume := by
+    intro q
+    have hmajor : Integrable (fun t : ℝ => a q * ‖φ t‖) volume :=
+      hφ_int.norm.const_mul (a q)
+    calc
+      ∫ t : ℝ, ‖u q t‖ ∂volume ≤
+          ∫ t : ℝ, a q * ‖φ t‖ ∂volume := by
+            apply integral_mono_ae (hu_int q).norm hmajor
+            filter_upwards [] with t
+            dsimp [u, a]
+            have hnorm := chapter06_zeta_term_norm_on_vertical_line K q
+              (c := c) (t := t)
+            rw [norm_mul, norm_mul, norm_neg, Complex.norm_I, hnorm]
+            simp [mul_comm]
+      _ = a q * ∫ t : ℝ, ‖φ t‖ ∂volume := by
+        rw [integral_const_mul]
+  have hinterval_bound : ∀ (q : Chapter06PrimePower K) {T : ℝ}, 0 ≤ T →
+      ‖∫ t in (-T)..T, u q t‖ ≤
+        a q * ∫ t : ℝ, ‖φ t‖ ∂volume := by
+    intro q T hT
+    have hnegT : -T ≤ T := by linarith
+    calc
+      ‖∫ t in (-T)..T, u q t‖ ≤
+          ∫ t in (-T)..T, ‖u q t‖ :=
+        intervalIntegral.norm_integral_le_integral_norm hnegT
+      _ ≤ ∫ t : ℝ, ‖u q t‖ := by
+        rw [intervalIntegral.integral_of_le hnegT]
+        exact setIntegral_le_integral (s := Set.Ioc (-T) T) ((hu_int q).norm)
+          (Eventually.of_forall (fun t => norm_nonneg (u q t)))
+      _ ≤ a q * ∫ t : ℝ, ‖φ t‖ ∂volume := hu_norm_bound q
+  have hpointwise_sum : ∀ t : ℝ,
+      (∑' q : Chapter06PrimePower K, u q t) =
+        φ t * (-chapter06ZetaLogDerivative K
+          (chapter06VerticalLinePoint c t)) * Complex.I := by
+    intro t
+    have hsum_t : Summable (fun q : Chapter06PrimePower K => u q t) := by
+      apply (hs.mul_left ‖φ t‖).of_norm_bounded
+      intro q
+      dsimp [u, a]
+      have hnorm := chapter06_zeta_term_norm_on_vertical_line K q
+        (c := c) (t := t)
+      rw [norm_mul, norm_mul, norm_neg, Complex.norm_I, hnorm]
+      simp [mul_comm]
+    calc
+      (∑' q : Chapter06PrimePower K, u q t) =
+          (∑' q : Chapter06PrimePower K,
+            φ t * (-chapter06ZetaLogDerivativeTerm q
+              (chapter06VerticalLinePoint c t))) * Complex.I := by
+            rw [tsum_mul_right]
+      _ = (φ t * (∑' q : Chapter06PrimePower K,
+            -chapter06ZetaLogDerivativeTerm q
+              (chapter06VerticalLinePoint c t))) * Complex.I := by
+            rw [tsum_mul_left]
+      _ = φ t * (-chapter06ZetaLogDerivative K
+          (chapter06VerticalLinePoint c t)) * Complex.I := by
+            rw [tsum_neg]
+            have hseries := chapter06_zeta_log_derivative_series_eq K (hline t)
+            change chapter06ZetaLogDerivative K
+                (chapter06VerticalLinePoint c t) =
+              ∑' q : Chapter06PrimePower K,
+                chapter06ZetaLogDerivativeTerm q
+                  (chapter06VerticalLinePoint c t) at hseries
+            rw [← hseries]
+  have hinterval_exchange : ∀ {T : ℝ}, 0 ≤ T →
+      (∑' q : Chapter06PrimePower K, ∫ t in (-T)..T, u q t) =
+        ∫ t in (-T)..T, (∑' q : Chapter06PrimePower K, u q t) := by
+    intro T hT
+    have hnegT : -T ≤ T := by linarith
+    have hcount : Countable (Chapter06PrimeIdeal K) := by
+      rw [← Set.countable_univ_iff]
+      have hnormfin : ∀ n : ℕ,
+          {P : Chapter06PrimeIdeal K |
+            chapter06PrimeIdealNorm P ≤ n}.Finite := by
+        intro n
+        simpa [chapter06PrimeIdealNorm, chapter03PrimeIdealNorm,
+          chapter03AbsoluteIdealNorm] using
+          (Ring.HasFiniteQuotients.finite_absNorm_heightOneSpectrum_le
+            (R := 𝓞 K) n)
+      have heq : (Set.univ : Set (Chapter06PrimeIdeal K)) =
+          ⋃ n : ℕ, {P : Chapter06PrimeIdeal K |
+            chapter06PrimeIdealNorm P ≤ n} := by
+        ext P
+        constructor
+        · intro _
+          exact Set.mem_iUnion.2 ⟨chapter06PrimeIdealNorm P, by
+            change chapter06PrimeIdealNorm P ≤ chapter06PrimeIdealNorm P
+            exact le_rfl⟩
+        · intro _
+          trivial
+      rw [heq]
+      exact Set.countable_iUnion (fun n => (hnormfin n).countable)
+    have hcountQ : Countable (Chapter06PrimePower K) := by
+      rcases hcount with ⟨⟨f, hf⟩⟩
+      rcases (inferInstance : Countable Chapter06PositiveExponent) with ⟨⟨g, hg⟩⟩
+      exact (Nat.pairEquiv.injective.comp (hf.prodMap hg)).countable
+    simp_rw [intervalIntegral.integral_of_le hnegT]
+    exact @integral_tsum_of_summable_integral_norm
+      ℝ ℂ _ _ _ (volume.restrict (Set.Ioc (-T) T))
+      (Chapter06PrimePower K) hcountQ (fun q => u q)
+      (fun q => (hu_int q).restrict)
+      (by
+        refine Summable.of_nonneg_of_le
+          (f := fun q : Chapter06PrimePower K =>
+            a q * ∫ t : ℝ, ‖φ t‖ ∂volume)
+          (g := fun q : Chapter06PrimePower K =>
+            ∫ t, ‖u q t‖ ∂volume.restrict (Set.Ioc (-T) T))
+          (fun q => integral_nonneg_of_ae
+            (Eventually.of_forall (fun t => norm_nonneg (u q t))))
+          (fun q => ?_) (hs.mul_right _)
+        calc
+          ∫ t, ‖u q t‖ ∂volume.restrict (Set.Ioc (-T) T) ≤
+              ∫ t : ℝ, ‖u q t‖ ∂volume := by
+                exact setIntegral_le_integral (s := Set.Ioc (-T) T)
+                  ((hu_int q).norm)
+                  (Eventually.of_forall (fun t => norm_nonneg (u q t)))
+          _ ≤ a q * ∫ t : ℝ, ‖φ t‖ ∂volume := hu_norm_bound q)
+  let C₀ : ℝ := ‖(1 / (2 * (Real.pi : ℂ) * Complex.I))‖ *
+    ∫ t : ℝ, ‖φ t‖ ∂volume
+  have hCsum : Summable (fun q : Chapter06PrimePower K => C₀ * a q) := by
+    exact hs.mul_left C₀
+  have hpartial_bound : ∀ {T : ℝ}, 0 ≤ T → ∀ q : Chapter06PrimePower K,
+      ‖chapter06PrimeContourTermPartial q F c T‖ ≤ C₀ * a q := by
+    intro T hT q
+    unfold chapter06PrimeContourTermPartial
+    rw [norm_mul]
+    calc
+      ‖(1 / (2 * (Real.pi : ℂ) * Complex.I))‖ *
+          ‖∫ t in (-T)..T, u q t‖ ≤
+          ‖(1 / (2 * (Real.pi : ℂ) * Complex.I))‖ *
+            (a q * ∫ t : ℝ, ‖φ t‖ ∂volume) := by
+              gcongr
+              exact hinterval_bound q hT
+      _ = C₀ * a q := by
+        dsimp [C₀]
+        ring
+  have hsum_limit : Tendsto
+      (fun T : ℝ => ∑' q : Chapter06PrimePower K,
+        chapter06PrimeContourTermPartial q F c T) atTop
+      (𝓝 (∑' q : Chapter06PrimePower K,
+        (-chapter06PrimePowerTerm F q : ℂ))) := by
+    apply tendsto_tsum_of_dominated_convergence hCsum
+    · intro q
+      exact chapter06_prime_power_contour_inversion K q hF hc
+    · filter_upwards [eventually_ge_atTop (0 : ℝ)] with T hT q
+      exact hpartial_bound hT q
+  have hsum_eq : ∀ {T : ℝ}, 0 ≤ T →
+      chapter06ZetaPrimeContourPartial K F c T =
+        ∑' q : Chapter06PrimePower K,
+          chapter06PrimeContourTermPartial q F c T := by
+    intro T hT
+    let d : ℂ := 1 / (2 * (Real.pi : ℂ) * Complex.I)
+    change d * (∫ t in (-T)..T,
+        φ t * (-chapter06ZetaLogDerivative K
+          (chapter06VerticalLinePoint c t)) * Complex.I) =
+      ∑' q : Chapter06PrimePower K,
+        d * (∫ t in (-T)..T, u q t)
+    have hintegral :
+        (∫ t in (-T)..T,
+          φ t * (-chapter06ZetaLogDerivative K
+            (chapter06VerticalLinePoint c t)) * Complex.I) =
+          ∫ t in (-T)..T, (∑' q : Chapter06PrimePower K, u q t) := by
+      apply intervalIntegral.integral_congr
+      intro t _
+      exact (hpointwise_sum t).symm
+    calc
+      d * (∫ t in (-T)..T,
+          φ t * (-chapter06ZetaLogDerivative K
+            (chapter06VerticalLinePoint c t)) * Complex.I) =
+          d * (∫ t in (-T)..T,
+            (∑' q : Chapter06PrimePower K, u q t) * 1) := by
+              rw [hintegral]
+              simp
+      _ = d * (∑' q : Chapter06PrimePower K, ∫ t in (-T)..T, u q t) := by
+            rw [hinterval_exchange hT]
+            simp
+      _ = ∑' q : Chapter06PrimePower K,
+          d * (∫ t in (-T)..T, u q t) := by
+            rw [tsum_mul_left]
+  have hmain : Tendsto
+      (fun T : ℝ => chapter06ZetaPrimeContourPartial K F c T) atTop
+      (𝓝 (∑' q : Chapter06PrimePower K,
+        (-chapter06PrimePowerTerm F q : ℂ))) := by
+    apply hsum_limit.congr'
+    filter_upwards [eventually_ge_atTop (0 : ℝ)] with T hT
+    exact (hsum_eq hT).symm
+  have hprime : Summable (fun q : Chapter06PrimePower K =>
+      chapter06PrimePowerTerm F q) := by
+    apply summable_of_hasFiniteSupport
+    change Set.Finite {q : Chapter06PrimePower K |
+      chapter06PrimePowerTerm F q ≠ 0}
+    exact chapter06_smooth_compact_prime_power_support_finite K hF
+  have hcast :
+      (∑' q : Chapter06PrimePower K, (chapter06PrimePowerTerm F q : ℂ)) =
+        ((∑' q : Chapter06PrimePower K,
+          chapter06PrimePowerTerm F q : ℝ) : ℂ) := by
+    simpa using (Complex.ofRealCLM.map_tsum hprime).symm
+  have hlim_eq :
+      (∑' q : Chapter06PrimePower K,
+        (-chapter06PrimePowerTerm F q : ℂ)) =
+        (-(chapter06PrimeContribution K F) / 2 : ℂ) := by
+    calc
+      (∑' q : Chapter06PrimePower K,
+          (-chapter06PrimePowerTerm F q : ℂ)) =
+          -∑' q : Chapter06PrimePower K,
+            (chapter06PrimePowerTerm F q : ℂ) := by rw [tsum_neg]
+      _ = -((∑' q : Chapter06PrimePower K,
+          chapter06PrimePowerTerm F q : ℝ) : ℂ) := by rw [hcast]
+      _ = (-(chapter06PrimeContribution K F) / 2 : ℂ) := by
+        simp [chapter06PrimeContribution]
+        ring
+  rw [hlim_eq] at hmain
+  exact hmain
 
 noncomputable def chapter06DiscriminantContourPartial
     (K : Type*) [Field K] [NumberField K]

@@ -153,15 +153,263 @@ private theorem chapter10_descent_compatible_kernelPair
     (u : chapter10BaseChangeOver p X ⟶ chapter10BaseChangeOver p Y)
     (hu : chapter10DescentCompatible p u) :
     pullback.fst (pullback.fst X.toBase p) (pullback.fst X.toBase p) ≫ u.left ≫
-        pullback.fst Y.toBase p =
+      pullback.fst Y.toBase p =
       pullback.snd (pullback.fst X.toBase p) (pullback.fst X.toBase p) ≫ u.left ≫
-        pullback.fst Y.toBase p := by sorry
+        pullback.fst Y.toBase p := by
+  have hhu := congrArg Over.Hom.left hu
+  dsimp [chapter10DescentCompatible, chapter10OverlapFirstHom,
+    chapter10OverlapSecondHomTransported] at hhu
+  let aX := pullback.fst X.toBase p
+  let qX := pullback.snd X.toBase p
+  let K := pullback aX aX
+  let rK := pullback.fst aX aX
+  let sK := pullback.snd aX aX
+  let kD : K ⟶ chapter10DoubleOverlap p :=
+    pullback.lift (rK ≫ qX) (sK ≫ qX) (by
+      dsimp [rK, sK, aX, qX]
+      calc
+        (pullback.fst (pullback.fst X.toBase p) (pullback.fst X.toBase p) ≫
+            pullback.snd X.toBase p) ≫ p =
+            pullback.fst (pullback.fst X.toBase p) (pullback.fst X.toBase p) ≫
+              (pullback.snd X.toBase p ≫ p) := by rw [Category.assoc]
+        _ = pullback.fst (pullback.fst X.toBase p) (pullback.fst X.toBase p) ≫
+              (pullback.fst X.toBase p ≫ X.toBase) := by rw [pullback.condition]
+        _ = (pullback.fst (pullback.fst X.toBase p) (pullback.fst X.toBase p) ≫
+            pullback.fst X.toBase p) ≫ X.toBase := by rw [Category.assoc]
+        _ = (pullback.snd (pullback.fst X.toBase p) (pullback.fst X.toBase p) ≫
+            pullback.fst X.toBase p) ≫ X.toBase := by rw [pullback.condition]
+        _ = pullback.snd (pullback.fst X.toBase p) (pullback.fst X.toBase p) ≫
+              (pullback.fst X.toBase p ≫ X.toBase) := by rw [Category.assoc]
+        _ = pullback.snd (pullback.fst X.toBase p) (pullback.fst X.toBase p) ≫
+              (pullback.snd X.toBase p ≫ p) := by rw [pullback.condition]
+        _ = (pullback.snd (pullback.fst X.toBase p) (pullback.fst X.toBase p) ≫
+            pullback.snd X.toBase p) ≫ p := by rw [Category.assoc])
+  let k : K ⟶ pullback qX (chapter10DoubleOverlapFirst p) :=
+    pullback.lift rK kD (by
+      dsimp [kD]
+      rw [pullback.lift_fst])
+  let aY := pullback.fst Y.toBase p
+  let qY := pullback.snd Y.toBase p
+  have hhu' := congrArg (fun m =>
+      k ≫ m ≫ pullback.fst qY (chapter10DoubleOverlapFirst p) ≫ aY) hhu
+  have hleft :
+      k ≫ Over.Hom.left ((Over.pullback (chapter10DoubleOverlapFirst p)).map u) ≫
+          pullback.fst qY (chapter10DoubleOverlapFirst p) ≫ aY =
+        rK ≫ u.left ≫ aY := by
+    dsimp [k, aY, qY, chapter10OverlapFirstHom]
+    change (pullback.lift rK kD _ ≫
+        pullback.lift (pullback.fst qX (chapter10DoubleOverlapFirst p) ≫ u.left)
+          (pullback.snd qX (chapter10DoubleOverlapFirst p)) _ ≫
+        pullback.fst (pullback.snd Y.toBase p) (chapter10DoubleOverlapFirst p) ≫
+          pullback.fst Y.toBase p) =
+      rK ≫ u.left ≫ pullback.fst Y.toBase p
+    simp only [pullback.lift_fst_assoc, Category.assoc]
+  have hcx_fst :
+      Over.Hom.left (chapter10DoubleOverlapComparison p X).hom ≫
+          pullback.fst qX (chapter10DoubleOverlapSecond p) ≫ aX =
+        pullback.fst qX (chapter10DoubleOverlapFirst p) ≫ aX := by
+    simpa [chapter10DoubleOverlapComparison] using
+      (chapter10_pullbackComp_comparison_fst
+        (chapter10DoubleOverlapFirst p) (chapter10DoubleOverlapSecond p) p
+        (chapter10DoubleOverlap_condition p) X.toBase)
+  have hcx_snd :
+      Over.Hom.left (chapter10DoubleOverlapComparison p X).hom ≫
+          pullback.snd qX (chapter10DoubleOverlapSecond p) =
+        pullback.snd qX (chapter10DoubleOverlapFirst p) := by
+    simpa [chapter10DoubleOverlapComparison] using
+      (chapter10_pullbackComp_comparison_snd
+        (chapter10DoubleOverlapFirst p) (chapter10DoubleOverlapSecond p) p
+        (chapter10DoubleOverlap_condition p) X.toBase)
+  have hcompX :
+      k ≫ Over.Hom.left (chapter10DoubleOverlapComparison p X).hom ≫
+          pullback.fst qX (chapter10DoubleOverlapSecond p) = sK := by
+    apply pullback.hom_ext
+    · calc
+        (k ≫ Over.Hom.left (chapter10DoubleOverlapComparison p X).hom ≫
+              pullback.fst qX (chapter10DoubleOverlapSecond p)) ≫ aX =
+            k ≫ (pullback.fst qX (chapter10DoubleOverlapFirst p) ≫ aX) := by
+              simpa only [Category.assoc] using
+                congrArg (fun z => k ≫ z) hcx_fst
+        _ = rK ≫ aX := by
+          dsimp [k]
+          simp only [pullback.lift_fst_assoc]
+        _ = sK ≫ aX := by
+          rw [pullback.condition]
+    · calc
+        (k ≫ Over.Hom.left (chapter10DoubleOverlapComparison p X).hom ≫
+              pullback.fst qX (chapter10DoubleOverlapSecond p)) ≫ qX =
+            k ≫ (Over.Hom.left (chapter10DoubleOverlapComparison p X).hom ≫
+              pullback.snd qX (chapter10DoubleOverlapSecond p) ≫
+                chapter10DoubleOverlapSecond p) := by
+              simp only [Category.assoc, pullback.condition]
+        _ = k ≫ (pullback.snd qX (chapter10DoubleOverlapFirst p) ≫
+              chapter10DoubleOverlapSecond p) := by
+              simpa only [Category.assoc] using
+                congrArg (fun z => k ≫ z ≫ chapter10DoubleOverlapSecond p) hcx_snd
+        _ = kD ≫ chapter10DoubleOverlapSecond p := by
+              dsimp [k]
+              simp only [pullback.lift_snd_assoc]
+        _ = sK ≫ qX := by
+              dsimp [kD]
+              rw [pullback.lift_snd]
+  have hcy_fst :
+      Over.Hom.left (chapter10DoubleOverlapComparison p Y).inv ≫
+          pullback.fst qY (chapter10DoubleOverlapFirst p) ≫ aY =
+        pullback.fst qY (chapter10DoubleOverlapSecond p) ≫ aY := by
+    simpa [chapter10DoubleOverlapComparison] using
+      (chapter10_pullbackComp_comparison_fst
+        (chapter10DoubleOverlapSecond p) (chapter10DoubleOverlapFirst p) p
+        (chapter10DoubleOverlap_condition p).symm Y.toBase)
+  have hm2 :
+      Over.Hom.left ((Over.pullback (chapter10DoubleOverlapSecond p)).map u) ≫
+          pullback.fst qY (chapter10DoubleOverlapSecond p) ≫ aY =
+        pullback.fst qX (chapter10DoubleOverlapSecond p) ≫ u.left ≫ aY := by
+    dsimp [chapter10OverlapSecondHom]
+    change (pullback.lift
+        (pullback.fst qX (chapter10DoubleOverlapSecond p) ≫ u.left)
+        (pullback.snd qX (chapter10DoubleOverlapSecond p)) _ ≫
+        pullback.fst qY (chapter10DoubleOverlapSecond p) ≫ aY) = _
+    simp only [pullback.lift_fst_assoc, Category.assoc]
+  have hright :
+      k ≫ (Over.Hom.left (chapter10DoubleOverlapComparison p X).hom ≫
+          Over.Hom.left (chapter10OverlapSecondHom p u) ≫
+            Over.Hom.left (chapter10DoubleOverlapComparison p Y).inv) ≫
+          pullback.fst qY (chapter10DoubleOverlapFirst p) ≫ aY =
+        sK ≫ u.left ≫ aY := by
+    calc
+      k ≫ (Over.Hom.left (chapter10DoubleOverlapComparison p X).hom ≫
+          Over.Hom.left (chapter10OverlapSecondHom p u) ≫
+            Over.Hom.left (chapter10DoubleOverlapComparison p Y).inv) ≫
+          pullback.fst qY (chapter10DoubleOverlapFirst p) ≫ aY =
+          k ≫ Over.Hom.left (chapter10DoubleOverlapComparison p X).hom ≫
+            Over.Hom.left (chapter10OverlapSecondHom p u) ≫
+              (Over.Hom.left (chapter10DoubleOverlapComparison p Y).inv ≫
+                pullback.fst qY (chapter10DoubleOverlapFirst p) ≫ aY) := by
+          simp only [Category.assoc]
+      _ = k ≫ Over.Hom.left (chapter10DoubleOverlapComparison p X).hom ≫
+            Over.Hom.left (chapter10OverlapSecondHom p u) ≫
+              (pullback.fst qY (chapter10DoubleOverlapSecond p) ≫ aY) := by
+          rw [hcy_fst]
+      _ = k ≫ Over.Hom.left (chapter10DoubleOverlapComparison p X).hom ≫
+            (pullback.fst qX (chapter10DoubleOverlapSecond p) ≫ u.left ≫ aY) := by
+          simpa only [chapter10OverlapSecondHom, Category.assoc] using
+            congrArg (fun z => k ≫ Over.Hom.left
+              (chapter10DoubleOverlapComparison p X).hom ≫ z) hm2
+      _ = sK ≫ u.left ≫ aY := by
+          simpa only [Category.assoc] using
+            congrArg (fun z => z ≫ u.left ≫ aY) hcompX
+  calc
+    pullback.fst (pullback.fst X.toBase p) (pullback.fst X.toBase p) ≫ u.left ≫
+        pullback.fst Y.toBase p = _ := hleft.symm
+    _ = _ := hhu'
+    _ = pullback.snd (pullback.fst X.toBase p) (pullback.fst X.toBase p) ≫ u.left ≫
+        pullback.fst Y.toBase p := hright
 
 /-- The Hom sequence over an fpqc cover is an equalizer. -/
 noncomputable def chapter10_hom_equalizer {S T : Scheme.{u}} (p : T ⟶ S)
     (hp : Chapter10FpqcCover p) (X Y : Chapter10SchemeOver S) :
     IsLimit (chapter10HomEqualizerFork p X Y) := by
-  sorry
+  letI : Surjective p := hp.surjective
+  letI : Flat p := hp.flat
+  letI : QuasiCompact p := hp.quasiCompact
+  refine Fork.IsLimit.mk' _ ?_
+  intro s
+  have hex : ∀ i : s.pt, ∃! f : chapter10OverHom X Y,
+      chapter10BaseChangeOverHom p f = s.ι i := by
+    intro i
+    let u := s.ι i
+    have hcompat : chapter10DescentCompatible p u := by
+      have hc := ConcreteCategory.congr_hom s.condition i
+      dsimp [chapter10HomEqualizerFork] at hc
+      change chapter10OverlapFirstHom p u =
+        chapter10OverlapSecondHomTransported p u at hc
+      exact hc
+    have hker := chapter10_descent_compatible_kernelPair p X Y u hcompat
+    obtain ⟨v, hv, hvuniq⟩ :=
+      chapter10_scheme_hom_descends_of_kernelPair
+        (chapter10BaseChangeToSource X.toBase p)
+        (pullback.fst (chapter10BaseChangeToSource X.toBase p)
+          (chapter10BaseChangeToSource X.toBase p))
+        (pullback.snd (chapter10BaseChangeToSource X.toBase p)
+          (chapter10BaseChangeToSource X.toBase p))
+        (IsPullback.of_hasPullback _ _)
+        (u.left ≫ pullback.fst Y.toBase p) hker
+    have hv_over : v ≫ Y.toBase = X.toBase := by
+      apply (cancel_epi (chapter10BaseChangeToSource X.toBase p)).1
+      calc
+        chapter10BaseChangeToSource X.toBase p ≫ v ≫ Y.toBase =
+            (chapter10BaseChangeToSource X.toBase p ≫ v) ≫ Y.toBase := by
+              rw [Category.assoc]
+        _ = (u.left ≫ pullback.fst Y.toBase p) ≫ Y.toBase := by rw [hv]
+        _ = u.left ≫ (pullback.fst Y.toBase p ≫ Y.toBase) := by
+              rw [Category.assoc]
+        _ = u.left ≫ (pullback.snd Y.toBase p ≫ p) := by
+              rw [pullback.condition]
+        _ = (u.left ≫ pullback.snd Y.toBase p) ≫ p := by
+              rw [Category.assoc]
+        _ = pullback.snd X.toBase p ≫ p := by
+              simpa [chapter10BaseChangeOver, chapter10OverObject, Over.pullback,
+                Category.assoc] using
+                congrArg (fun z => z ≫ p) (Over.w u)
+        _ = pullback.fst X.toBase p ≫ X.toBase := by
+              rw [pullback.condition]
+    let f : chapter10OverHom X Y := Over.homMk v hv_over
+    have hfac : chapter10BaseChangeOverHom p f = u := by
+      apply Over.OverMorphism.ext
+      apply pullback.hom_ext
+      · dsimp [chapter10BaseChangeOverHom, Over.pullback]
+        change
+          (pullback.lift
+              (pullback.fst (chapter10OverObject X).hom p ≫
+                f.left)
+              (pullback.snd (chapter10OverObject X).hom p) _ ≫
+            pullback.fst (chapter10OverObject Y).hom p) =
+            u.left ≫ pullback.fst (chapter10OverObject Y).hom p
+        rw [pullback.lift_fst]
+        simpa [f, chapter10OverObject] using hv
+      · dsimp [chapter10BaseChangeOverHom, Over.pullback]
+        change
+          (pullback.lift
+              (pullback.fst (chapter10OverObject X).hom p ≫
+                f.left)
+              (pullback.snd (chapter10OverObject X).hom p) _ ≫
+            pullback.snd (chapter10OverObject Y).hom p) =
+            u.left ≫ pullback.snd (chapter10OverObject Y).hom p
+        rw [pullback.lift_snd]
+        simpa [f, chapter10BaseChangeOver, chapter10OverObject, Over.pullback] using
+          (Over.w u).symm
+    refine ⟨f, hfac, ?_⟩
+    intro g hfg
+    apply Over.OverMorphism.ext
+    apply (cancel_epi (chapter10BaseChangeToSource X.toBase p)).1
+    have hfg' : chapter10BaseChangeOverHom p g = chapter10BaseChangeOverHom p f :=
+      hfg.trans hfac.symm
+    have hc := congrArg Over.Hom.left hfg'
+    have hc' := congrArg (fun z => z ≫ pullback.fst Y.toBase p) hc
+    change
+      (pullback.lift
+          (pullback.fst (chapter10OverObject X).hom p ≫ g.left)
+          (pullback.snd (chapter10OverObject X).hom p) _ ≫
+        pullback.fst (chapter10OverObject Y).hom p) =
+        (pullback.lift
+          (pullback.fst (chapter10OverObject X).hom p ≫
+            f.left)
+          (pullback.snd (chapter10OverObject X).hom p) _ ≫
+        pullback.fst (chapter10OverObject Y).hom p) at hc'
+    rw [pullback.lift_fst, pullback.lift_fst] at hc'
+    simpa [f, chapter10OverObject] using hc'
+  refine ⟨(↾fun i => Classical.choose (hex i)), ?_, ?_⟩
+  · apply ConcreteCategory.hom_ext
+    intro i
+    exact (Classical.choose_spec (hex i)).1
+  · intro m hm
+    apply ConcreteCategory.hom_ext
+    intro i
+    apply (Classical.choose_spec (hex i)).2
+    have hmi := ConcreteCategory.congr_hom hm i
+    change chapter10BaseChangeOverHom p ((ConcreteCategory.hom m) i) =
+      (ConcreteCategory.hom s.ι) i at hmi
+    exact hmi
 
 /-- A map on the cover descends exactly when its two pullbacks to the double overlap agree. -/
 theorem chapter10_morphism_descends_iff {S T : Scheme.{u}} (p : T ⟶ S)

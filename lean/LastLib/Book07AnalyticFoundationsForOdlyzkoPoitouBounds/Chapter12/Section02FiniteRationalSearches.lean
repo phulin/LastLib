@@ -11,19 +11,18 @@ noncomputable section
 
 /-! ## 12.2. Finite rational searches -/
 
-/- LOCAL_DEPENDENCY_GUESS: Chapter 10 supplies directed rational enclosures
-   for the two archimedean losses at each rational support.  This structure
-   records only those inequalities and leaves the numerical construction to
-   the Chapter 10 draft. -/
+/- Chapter 10 supplies directed rational enclosures for the two archimedean
+   losses at each rational support.  This structure records the corresponding
+   inequalities; the numerical construction remains in Chapter 10. -/
 structure Chapter12ArchimedeanEnclosure (T : ℚ) where
-  B_lower : ℝ
-  B_upper : ℝ
-  C_lower : ℝ
-  C_upper : ℝ
-  B_lower_le : B_lower ≤ chapter11B (T : ℝ)
-  B_le_upper : chapter11B (T : ℝ) ≤ B_upper
-  C_lower_le : C_lower ≤ chapter11C (T : ℝ)
-  C_le_upper : chapter11C (T : ℝ) ≤ C_upper
+  B_lower : ℚ
+  B_upper : ℚ
+  C_lower : ℚ
+  C_upper : ℚ
+  B_lower_le : (B_lower : ℝ) ≤ chapter11B (T : ℝ)
+  B_le_upper : chapter11B (T : ℝ) ≤ (B_upper : ℝ)
+  C_lower_le : (C_lower : ℝ) ≤ chapter11C (T : ℝ)
+  C_le_upper : chapter11C (T : ℝ) ≤ (C_upper : ℝ)
 
 def chapter12DirectedLowerEndpoint
     (n : ℕ) (T α B_upper C_upper : ℝ) : ℝ :=
@@ -34,20 +33,42 @@ def chapter12DirectedLowerEndpoint
 def chapter12CertifiedLowerEndpoint
     (n : ℕ) (α : ℝ) {T : ℚ}
     (E : Chapter12ArchimedeanEnclosure T) : ℝ :=
-  chapter12DirectedLowerEndpoint n (T : ℝ) α E.B_upper E.C_upper
+  chapter12DirectedLowerEndpoint n (T : ℝ) α
+    (E.B_upper : ℝ) (E.C_upper : ℝ)
 
 theorem chapter12_directed_lower_endpoint_le_affine
     {n : ℕ} {T : ℚ} {α : ℝ}
     (hα : 0 ≤ α) (E : Chapter12ArchimedeanEnclosure T) :
     chapter12CertifiedLowerEndpoint n α E ≤
       chapter12AffineLogExpression n (T : ℝ) α := by
-  sorry
+  dsimp [chapter12CertifiedLowerEndpoint, chapter12DirectedLowerEndpoint,
+    chapter12AffineLogExpression, chapter12AffineLogBase, chapter12AffineLogSlope]
+  have hB : 0 ≤ (E.B_upper : ℝ) - chapter11B (T : ℝ) :=
+    sub_nonneg.mpr E.B_le_upper
+  have hC : 0 ≤ (E.C_upper : ℝ) - chapter11C (T : ℝ) :=
+    sub_nonneg.mpr E.C_le_upper
+  have hαC : 0 ≤ α * ((E.C_upper : ℝ) - chapter11C (T : ℝ)) :=
+    mul_nonneg hα hC
+  linarith
 
 def chapter12ExactUnconditionalB (T : ℝ) : ℝ :=
   chapter08BT T
 
 def chapter12ExactUnconditionalC (T : ℝ) : ℝ :=
   chapter08CT T
+
+/- The exact Chapter 8 losses and the Chapter 11 wrappers denote the same
+   functions.  These bridges let the finite-formula and affine-search APIs
+   be used interchangeably. -/
+theorem chapter12_exact_unconditional_B_eq_chapter11 (T : ℝ) :
+    chapter12ExactUnconditionalB T = chapter11B T := by
+  rw [chapter11_B_eq_chapter10_BT]
+  rfl
+
+theorem chapter12_exact_unconditional_C_eq_chapter11 (T : ℝ) :
+    chapter12ExactUnconditionalC T = chapter11C T := by
+  rw [chapter11_C_eq_chapter10_CT]
+  rfl
 
 def chapter12ExactSupportObjective (n : ℕ) (α T : ℝ) : ℝ :=
   Real.eulerMascheroniConstant + Real.log (8 * Real.pi) -
@@ -74,22 +95,34 @@ theorem chapter12_exact_unconditional_C_formula
 def chapter12RationalSupportGrid (a h : ℚ) (M : ℕ) : Finset ℚ :=
   (Finset.range (M + 1)).image (fun j : ℕ => a + (j : ℚ) * h)
 
-/- SOURCE_ISSUE (books/007-analytic-foundations-for-odlyzko-poitou-bounds.md:§12.2):
-   “Choose a rational grid of supports” omits the positivity needed for the
-   support parameter in the test-function and explicit-formula statements.
-   `Chapter12RationalSupportSearch.positive_support` supplies the minimal
-   direct correction for the finite grid. -/
+/- The search structure records positivity for every grid support, so downstream
+   test-function applications receive their required positive-support hypotheses. -/
 
 theorem chapter12_rational_support_grid_nonempty
     (a h : ℚ) (M : ℕ) :
     (chapter12RationalSupportGrid a h M).Nonempty := by
-  sorry
+  classical
+  refine ⟨a, ?_⟩
+  unfold chapter12RationalSupportGrid
+  exact Finset.mem_image.mpr ⟨0, by simp, by simp⟩
 
 theorem chapter12_mem_rational_support_grid_iff
     {a h T : ℚ} {M : ℕ} :
     T ∈ chapter12RationalSupportGrid a h M ↔
       ∃ j ∈ Finset.range (M + 1), T = a + (j : ℚ) * h := by
-  sorry
+  classical
+  simp [chapter12RationalSupportGrid, eq_comm]
+
+theorem chapter12_rational_support_grid_positive
+    {a h T : ℚ} {M : ℕ} (ha : 0 < a) (hh : 0 ≤ h)
+    (hT : T ∈ chapter12RationalSupportGrid a h M) :
+    0 < (T : ℝ) := by
+  rcases (chapter12_mem_rational_support_grid_iff.mp hT) with ⟨j, hj, rfl⟩
+  have ha' : (0 : ℝ) < (a : ℝ) := by exact_mod_cast ha
+  have hh' : (0 : ℝ) ≤ (h : ℝ) := by exact_mod_cast hh
+  have hj' : (0 : ℝ) ≤ (j : ℝ) := by positivity
+  norm_num
+  exact add_pos_of_pos_of_nonneg ha' (mul_nonneg hj' hh')
 
 structure Chapter12RationalSupportSearch
     (n : ℕ) (a h : ℚ) (M : ℕ) (α : ℝ) where
@@ -137,7 +170,12 @@ theorem chapter12_search_maximum_attained
     (S : Chapter12RationalSupportSearch n a h M α) :
     ∃ T : ℚ, T ∈ chapter12RationalSupportGrid a h M ∧
       chapter12SearchMaximum S = chapter12SearchEndpoint S T := by
-  sorry
+  rcases Finset.exists_mem_eq_sup'
+      (chapter12SearchEndpoint S)
+      (s := chapter12RationalSupportGrid a h M)
+      (H := chapter12_rational_support_grid_nonempty a h M) with ⟨T, hT, hmax⟩
+  refine ⟨T, hT, ?_⟩
+  simpa [chapter12SearchMaximum] using hmax
 
 theorem chapter12_search_maximum_certified
     {n : ℕ} {a h : ℚ} {M : ℕ} {α : ℝ}
@@ -146,7 +184,10 @@ theorem chapter12_search_maximum_certified
       chapter12SearchMaximum S = chapter12SearchEndpoint S T ∧
       chapter12SearchMaximum S ≤
         chapter12AffineLogExpression n (T : ℝ) α := by
-  sorry
+  rcases chapter12_search_maximum_attained S with ⟨T, hT, hmax⟩
+  refine ⟨T, hT, hmax, ?_⟩
+  rw [hmax]
+  exact chapter12_search_endpoint_certified S hT
 
 def chapter12SuccessfulRationalSupport
     {n : ℕ} {a h : ℚ} {M : ℕ} {α U : ℝ}
@@ -159,7 +200,17 @@ theorem chapter12_successful_support_iff_maximum_success
     (S : Chapter12RationalSupportSearch n a h M α) :
     chapter12SuccessfulRationalSupport (U := U) S ↔
       Real.log U < chapter12SearchMaximum S := by
-  sorry
+  constructor
+  · rintro ⟨T, hT, hsuccess⟩
+    have hle := Finset.le_sup'
+      (s := chapter12RationalSupportGrid a h M)
+      (f := chapter12SearchEndpoint S) hT
+    change chapter12SearchEndpoint S T ≤ chapter12SearchMaximum S at hle
+    exact lt_of_lt_of_le hsuccess hle
+  · intro hsuccess
+    rcases chapter12_search_maximum_attained S with ⟨T, hT, hmax⟩
+    refine ⟨T, hT, ?_⟩
+    rwa [← hmax]
 
 theorem chapter12_one_successful_support_is_enough
     {n : ℕ} {a h : ℚ} {M : ℕ} {α U : ℝ}
@@ -211,13 +262,48 @@ structure Chapter12FiniteDerivativeAudit
     0 < ((enclosure J hJ).lower : ℝ) ∨
       ((enclosure J hJ).upper : ℝ) < 0 ∨
       (((enclosure J hJ).lower : ℝ) ≤ 0 ∧
-        0 ≤ ((enclosure J hJ).upper : ℝ))
+        0 ≤ ((enclosure J hJ).upper : ℝ) ∧
+        ∃ x ∈ chapter12RealInterval J, f' x = 0)
+
+theorem chapter12_derivative_audit_positive_derivative
+    {f f' : ℝ → ℝ} {I : Chapter12RationalInterval}
+    (A : Chapter12FiniteDerivativeAudit f f' I)
+    {J : Chapter12RationalInterval} (hJ : J ∈ A.intervals)
+    (hpositive : chapter12DerivativePositiveOnInterval (A.enclosure J hJ)) :
+    ∀ x ∈ chapter12RealInterval J, 0 < f' x := by
+  intro x hx
+  exact lt_of_lt_of_le hpositive ((A.enclosure J hJ).lower_bound x hx)
+
+theorem chapter12_derivative_audit_negative_derivative
+    {f f' : ℝ → ℝ} {I : Chapter12RationalInterval}
+    (A : Chapter12FiniteDerivativeAudit f f' I)
+    {J : Chapter12RationalInterval} (hJ : J ∈ A.intervals)
+    (hnegative : chapter12DerivativeNegativeOnInterval (A.enclosure J hJ)) :
+    ∀ x ∈ chapter12RealInterval J, f' x < 0 := by
+  intro x hx
+  exact lt_of_le_of_lt ((A.enclosure J hJ).upper_bound x hx) hnegative
 
 def chapter12SupportObjective (n : ℕ) (α T : ℝ) : ℝ :=
   chapter12AffineLogExpression n T α
 
+theorem chapter12_support_objective_eq_exact_support_objective
+    (n : ℕ) (α T : ℝ) :
+    chapter12SupportObjective n α T = chapter12ExactSupportObjective n α T := by
+  rw [chapter12ExactSupportObjective, chapter12SupportObjective]
+  rw [chapter12_affine_log_expression_formula]
+  rw [chapter12_exact_unconditional_B_eq_chapter11,
+    chapter12_exact_unconditional_C_eq_chapter11]
+
 def chapter12SupportDerivative (n : ℕ) (α T : ℝ) : ℝ :=
   deriv (chapter12SupportObjective n α) T
+
+theorem chapter12_support_derivative_eq_exact_support_derivative
+    (n : ℕ) (α T : ℝ) :
+    chapter12SupportDerivative n α T = chapter12ExactSupportDerivative n α T := by
+  unfold chapter12SupportDerivative chapter12ExactSupportDerivative
+  rw [show chapter12SupportObjective n α = chapter12ExactSupportObjective n α by
+    funext x
+    exact chapter12_support_objective_eq_exact_support_objective n α x]
 
 theorem chapter12_derivative_audit_certifies_sign_partition
     {f f' : ℝ → ℝ} {I : Chapter12RationalInterval}
@@ -226,8 +312,9 @@ theorem chapter12_derivative_audit_certifies_sign_partition
     0 < ((A.enclosure J hJ).lower : ℝ) ∨
       ((A.enclosure J hJ).upper : ℝ) < 0 ∨
       (((A.enclosure J hJ).lower : ℝ) ≤ 0 ∧
-        0 ≤ ((A.enclosure J hJ).upper : ℝ)) := by
-  sorry
+        0 ≤ ((A.enclosure J hJ).upper : ℝ) ∧
+        ∃ x ∈ chapter12RealInterval J, f' x = 0) := by
+  exact A.sign_partition J hJ
 
 end
 

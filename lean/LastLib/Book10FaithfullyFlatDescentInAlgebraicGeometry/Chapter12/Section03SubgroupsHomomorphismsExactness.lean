@@ -417,6 +417,24 @@ theorem chapter12_faithfullyFlatLocallyOfFinitePresentation_homomorphism_descend
       Chapter12GroupScheme.baseChangeHom p f = eG.hom ≫ fT ≫ eH.inv := by
   sorry
 
+theorem chapter12_commutative_faithfullyFlatLocallyOfFinitePresentation_homomorphism_descends
+    {S T : Scheme.{u}} (p : T ⟶ S) (hp : Chapter12FpqcCover p)
+    (D₁ D₂ : Chapter12CommutativeGroupSchemeDescentDatum p)
+    {G H : Chapter12CommutativeGroupScheme S}
+    (eG : Chapter12CommutativeGroupScheme.baseChange p G ≅ D₁.upstairs)
+    (heG : chapter12CommutativeGroupSchemeDescentComparisonCompatible D₁ G eG)
+    (eH : Chapter12CommutativeGroupScheme.baseChange p H ≅ D₂.upstairs)
+    (heH : chapter12CommutativeGroupSchemeDescentComparisonCompatible D₂ H eH)
+    (fT : D₁.upstairs ⟶ D₂.upstairs)
+    (hfT : chapter12CommutativeDescentHomCompatible D₁ D₂ fT)
+    (hfflfp : Chapter12FaithfullyFlatLocallyOfFinitePresentation
+      (Chapter12CommutativeGroupScheme.homScheme fT)) :
+    ∃ f : G ⟶ H,
+      Chapter12FaithfullyFlatLocallyOfFinitePresentation
+        (Chapter12CommutativeGroupScheme.homScheme f) ∧
+      Chapter12CommutativeGroupScheme.baseChangeHom p f = eG.hom ≫ fT ≫ eH.inv := by
+  sorry
+
 theorem chapter12_commutative_homomorphism_descends
     {S T : Scheme.{u}} (p : T ⟶ S) (hp : Chapter12FpqcCover p)
     (D₁ D₂ : Chapter12CommutativeGroupSchemeDescentDatum p)
@@ -429,6 +447,14 @@ theorem chapter12_commutative_homomorphism_descends
     (hfT : chapter12CommutativeDescentHomCompatible D₁ D₂ fT) :
     ∃ f : G ⟶ H,
       Chapter12CommutativeGroupScheme.baseChangeHom p f = eG.hom ≫ fT ≫ eH.inv := by
+  sorry
+
+theorem chapter12_commutative_homomorphism_descends_unique
+    {S T : Scheme.{u}} (p : T ⟶ S) (hp : Chapter12FpqcCover p)
+    {G H : Chapter12CommutativeGroupScheme S} (f g : G ⟶ H)
+    (h : Chapter12CommutativeGroupScheme.baseChangeHom p f =
+      Chapter12CommutativeGroupScheme.baseChangeHom p g) :
+    f = g := by
   sorry
 
 theorem chapter12_homomorphism_descends_unique

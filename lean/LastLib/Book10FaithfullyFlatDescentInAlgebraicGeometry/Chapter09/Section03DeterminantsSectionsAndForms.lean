@@ -110,10 +110,10 @@ structure Chapter09SheafOperationsData where
     chapter09TensorModule (dual M) M ⟶ SheafOfModules.unit X.ringCatSheaf
   dualUnit : ∀ {X : Scheme.{u}} (M : X.Modules),
     dual M ⟶ chapter09TensorModule (dual M) (SheafOfModules.unit X.ringCatSheaf)
-  determinantPullback :
-    ∀ {X Y : Scheme.{u}} (f : Y ⟶ X) (r : ℕ) (M : X.Modules),
-      Chapter09PullbackModule f (exteriorPower r M) ≅
-        exteriorPower r (Chapter09PullbackModule f M)
+  exteriorPowerPullback :
+    ∀ {X Y : Scheme.{u}} (f : Y ⟶ X) (n : ℕ) (M : X.Modules),
+      Chapter09PullbackModule f (exteriorPower n M) ≅
+        exteriorPower n (Chapter09PullbackModule f M)
   tensorPullback :
     ∀ {X Y : Scheme.{u}} (f : Y ⟶ X) (M N : X.Modules),
       Chapter09PullbackModule f (chapter09TensorModule M N) ≅
@@ -128,10 +128,6 @@ structure Chapter09SheafOperationsData where
     ∀ {X Y : Scheme.{u}} (f : Y ⟶ X) (n : ℕ) (M : X.Modules),
       Chapter09PullbackModule f (symmetricPower n M) ≅
         symmetricPower n (Chapter09PullbackModule f M)
-  exteriorPowerPullback :
-    ∀ {X Y : Scheme.{u}} (f : Y ⟶ X) (n : ℕ) (M : X.Modules),
-      Chapter09PullbackModule f (exteriorPower n M) ≅
-        exteriorPower n (Chapter09PullbackModule f M)
   tensorToExteriorSquare_pullback :
     ∀ {X Y : Scheme.{u}} (f : Y ⟶ X) (M : X.Modules),
       (tensorPullback f M M).hom ≫ tensorToExteriorSquare
@@ -288,13 +284,6 @@ structure Chapter09SheafOperationsData where
       dualMap f ≫ dualUnit M = dualUnit M' ≫ tensorMap (dualMap f) (𝟙 _)
 
   /- Pullback naturality makes the comparison isomorphisms usable on maps. -/
-  determinantPullback_natural :
-    ∀ {X Y : Scheme.{u}} (p : Y ⟶ X) (n : ℕ)
-      {M M' : X.Modules} (f : M ⟶ M'),
-      (determinantPullback p n M).hom ≫ exteriorPowerMap n
-          ((Scheme.Modules.pullback p).map f) =
-        (Scheme.Modules.pullback p).map (exteriorPowerMap n f) ≫
-          (determinantPullback p n M').hom
   tensorPullback_natural :
     ∀ {X Y : Scheme.{u}} (p : Y ⟶ X)
       {M M' N N' : X.Modules} (f : M ⟶ M') (g : N ⟶ N'),
@@ -482,7 +471,7 @@ noncomputable def chapter09_determinant_commutes_with_pullback
     {X Y : Scheme.{u}} (f : Y ⟶ X) {r : ℕ} (M : X.Modules) :
     Chapter09PullbackModule f (chapter09DeterminantModule r M) ≅
       chapter09DeterminantModule r (Chapter09PullbackModule f M) :=
-  Chapter09SheafOperationsData.determinantPullback chapter09SheafOperations f r M
+  Chapter09SheafOperationsData.exteriorPowerPullback chapter09SheafOperations f r M
 
 noncomputable def chapter09_tensor_commutes_with_pullback
     {X Y : Scheme.{u}} (f : Y ⟶ X) (M N : X.Modules) :
@@ -550,7 +539,7 @@ theorem chapter09_determinant_map_pullback_natural
         chapter09DeterminantMap r ((Scheme.Modules.pullback p).map f) =
       (Scheme.Modules.pullback p).map (chapter09DeterminantMap r f) ≫
         (chapter09_determinant_commutes_with_pullback p (r := r) M').hom := by
-  exact Chapter09SheafOperationsData.determinantPullback_natural
+  exact Chapter09SheafOperationsData.exteriorPowerPullback_natural
     chapter09SheafOperations p r f
 
 theorem chapter09_isIso_iff_determinant_map_isIso

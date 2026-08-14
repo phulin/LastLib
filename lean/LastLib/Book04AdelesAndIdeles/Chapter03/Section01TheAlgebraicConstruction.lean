@@ -62,7 +62,15 @@ theorem chapter03_stage_mem_iff_exceptional_subset
     (x : Chapter03RestrictedProduct H) :
     x ∈ chapter03StageSubgroup H S ↔
       chapter03ExceptionalSet H (x : ∀ i, G i) ⊆ S := by
-  sorry
+  change (∀ i, i ∉ S → ((x : ∀ i, G i) i) ∈ H i) ↔
+    chapter03ExceptionalSet H (x : ∀ i, G i) ⊆ S
+  constructor
+  · intro hx i hi
+    by_contra hnot
+    exact hi (hx i hnot)
+  · intro hx i hi
+    by_contra hnot
+    exact hi (hx (by simpa [chapter03ExceptionalSet] using hnot))
 
 theorem chapter03_stage_contains_restricted_family
     (H : ∀ i, Subgroup (G i)) (S : Set I)
@@ -96,7 +104,56 @@ theorem chapter03_stage_is_coordinate_product
     (H : ∀ i, Subgroup (G i)) {S : Set I} (hS : S.Finite) :
     Nonempty (Chapter03Stage H S ≃
       Chapter03StageCoordinateProduct H S) := by
-  sorry
+  classical
+  have hmem : ∀ i, i ∈ S → chapter03StageCoordinateType H S i = G i := by
+    intro i hi
+    simp [chapter03StageCoordinateType, hi]
+  have hnotmem : ∀ i, i ∉ S → chapter03StageCoordinateType H S i = H i := by
+    intro i hi
+    simp [chapter03StageCoordinateType, hi]
+  let forward : Chapter03Stage H S → Chapter03StageCoordinateProduct H S :=
+    fun x i => by
+      by_cases hi : i ∈ S
+      · have htype := hmem i hi
+        exact htype.symm ▸ ((x : ∀ i, G i) i)
+      · have htype := hnotmem i hi
+        exact htype.symm ▸
+          (⟨((x : ∀ i, G i) i), x.property i hi⟩ : H i)
+  let backward : Chapter03StageCoordinateProduct H S → Chapter03Stage H S :=
+    fun y =>
+      ⟨⟨fun i => by
+          by_cases hi : i ∈ S
+          · have htype := hmem i hi
+            exact htype ▸ y i
+          · have htype := hnotmem i hi
+            exact ((htype ▸ y i : H i) : G i)
+        , by
+          filter_upwards [hS.compl_mem_cofinite] with i hi
+          have hi' : i ∉ S := by simpa using hi
+          have htype := hnotmem i hi'
+          have hprop := (htype ▸ y i).property
+          convert hprop using 1; simp [chapter03StageCoordinateType, hi']⟩,
+        by
+          intro i hi
+          have hi' : i ∉ S := hi
+          have htype := hnotmem i hi'
+          have hprop := (htype ▸ y i).property
+          convert hprop using 1; simp [chapter03StageCoordinateType, hi']⟩
+  refine ⟨{
+    toFun := forward
+    invFun := backward
+    left_inv := ?_
+    right_inv := ?_ }⟩
+  · intro x
+    apply Subtype.ext
+    apply Subtype.ext
+    funext i
+    by_cases hi : i ∈ S <;>
+      simp [forward, backward, eqRec_eq_cast, hi]
+  · intro y
+    funext i
+    by_cases hi : i ∈ S <;>
+      simp [forward, backward, eqRec_eq_cast, hi]
 
 /-- The additive construction uses local integral additive subgroups. -/
 instance chapter03_additive_restrictedProduct_is_add_group
@@ -125,7 +182,8 @@ theorem chapter03_valuationRing_unit_model_mem_iff
     {L : Type*} [Field L] (A : ValuationSubring L) (x : Lˣ) :
     x ∈ chapter03ValuationRingUnitSubgroup A ↔
       ∃ u : Aˣ, Units.map A.subtype.toMonoidHom u = x := by
-  sorry
+  simp only [chapter03ValuationRingUnitSubgroup, Subgroup.mem_map,
+    Subgroup.mem_top, true_and]
 
 end MultiplicativeRestrictedProducts
 

@@ -69,8 +69,8 @@ theorem chapter09RightCosetTransferFactor_spec
 noncomputable def chapter09RightCosetTransferProduct
     {G : Type*} [Group G] {H : Subgroup G} [H.FiniteIndex]
     (T : H.RightTransversal) (g : G) : Abelianization H := by
-  letI : Finite (T : Set G) := T.2.finite_right
-  letI := Fintype.ofFinite (T : Set G)
+  let _ : Finite (T : Set G) := T.2.finite_right
+  let _ : Fintype (T : Set G) := Fintype.ofFinite (T : Set G)
   exact ∏ r : (T : Set G), Abelianization.of (chapter09RightCosetTransferFactor T g r)
 
 /-- The right-coset product computes the abelianized transfer. -/
@@ -79,7 +79,83 @@ theorem chapter09_transfer_eq_rightCoset_product
     (T : H.RightTransversal) (g : G) :
     chapter09Transfer H (Abelianization.of g) =
       chapter09RightCosetTransferProduct T g := by
-  sorry
+  classical
+  let e := QuotientGroup.quotientRightRelEquivQuotientLeftRel H
+  let f : G ⧸ H → G := fun q =>
+    (T.2.rightQuotientEquiv (e.symm q) : G)⁻¹
+  have hf : ∀ q, (f q : G ⧸ H) = q := by
+    intro q
+    refine Quotient.inductionOn' q ?_
+    intro x
+    dsimp [f]
+    have he : e.symm (Quotient.mk'' x) = Quotient.mk'' x⁻¹ := by
+      rfl
+    rw [he]
+    let r : G := T.2.rightQuotientEquiv (Quotient.mk'' x⁻¹)
+    have hr : Quotient.mk'' r = Quotient.mk'' x⁻¹ :=
+      T.2.mk''_rightQuotientEquiv (Quotient.mk'' x⁻¹)
+    have hrel : x⁻¹ * r⁻¹ ∈ H :=
+      QuotientGroup.rightRel_apply.mp (Quotient.exact' hr)
+    apply Quotient.sound'
+    rw [QuotientGroup.leftRel_apply]
+    simpa [r] using H.inv_mem hrel
+  let S : H.LeftTransversal :=
+    ⟨Set.range f, Subgroup.isComplement_range_left hf⟩
+  have hα (q : G ⧸ H) :
+      (S.2.leftQuotientEquiv q : G) = f q :=
+    Subgroup.IsComplement.leftQuotientEquiv_apply hf q
+  have hβf (q : G ⧸ H) :
+      ((g * f (g⁻¹ • q) : G) : G ⧸ H) = q := by
+    change g • (f (g⁻¹ • q) : G ⧸ H) = q
+    rw [hf]
+    simp
+  have hβ (q : G ⧸ H) :
+      (g • S).2.leftQuotientEquiv q =
+        ⟨g * f (g⁻¹ • q), by
+          exact ⟨f (g⁻¹ • q), ⟨g⁻¹ • q, rfl⟩, rfl⟩⟩ := by
+    apply (g • S).2.leftQuotientEquiv.symm.injective
+    have hb :
+        (g • S).2.leftQuotientEquiv.symm
+            ⟨g * f (g⁻¹ • q), by
+              exact ⟨f (g⁻¹ • q), ⟨g⁻¹ • q, rfl⟩, rfl⟩⟩ =
+          ((g * f (g⁻¹ • q) : G) : G ⧸ H) := by
+      rfl
+    simpa only [Equiv.symm_apply_apply, hb] using (hβf q).symm
+  let er : (T : Set G) ≃ G ⧸ H := T.2.rightQuotientEquiv.symm.trans e
+  have hfr (r : (T : Set G)) : f (er r) = (r : G)⁻¹ := by
+    dsimp [f, er]
+    rw [Equiv.symm_apply_apply, Equiv.apply_symm_apply]
+  have hshift (r : (T : Set G)) :
+      f (g⁻¹ • er r) =
+        (T.2.toRightFun ((r : G) * g) : G)⁻¹ := by
+    have hq :
+        e.symm (g⁻¹ • er r) = Quotient.mk'' ((r : G) * g) := by
+      apply e.injective
+      dsimp [er]
+      rw [e.apply_symm_apply]
+      dsimp [e, QuotientGroup.quotientRightRelEquivQuotientLeftRel]
+      have hr :
+          T.2.rightQuotientEquiv.symm r = Quotient.mk'' (r : G) := by
+        simpa using
+          (T.2.mk''_rightQuotientEquiv (T.2.rightQuotientEquiv.symm r)).symm
+      rw [hr]
+      simp
+    dsimp [f]
+    rw [hq]
+    rfl
+  rw [chapter09Transfer_of]
+  rw [MonoidHom.transfer_def (Abelianization.of : H →* Abelianization H) S g]
+  simp only [Subgroup.leftTransversals.diff, chapter09RightCosetTransferProduct]
+  simp only [hα, hβ]
+  let _ : Finite (T : Set G) := T.2.finite_right
+  let _ : Fintype (T : Set G) := Fintype.ofFinite (T : Set G)
+  let _ := H.fintypeQuotientOfFiniteIndex
+  rw [← Fintype.prod_equiv er]
+  intro r
+  simp only [hfr, hshift, chapter09RightCosetTransferFactor, inv_inv]
+  exact congrArg (fun z : H => Abelianization.of z)
+    (Subtype.ext (mul_assoc (r : G) g
+      (T.2.toRightFun ((r : G) * g) : G)⁻¹))
 
 /-- Changing the chosen right-transversal representatives changes the product only by a
 commutator, hence not in the abelianization. -/

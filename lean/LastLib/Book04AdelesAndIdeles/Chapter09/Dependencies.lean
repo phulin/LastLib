@@ -16,6 +16,8 @@ import Mathlib.Topology.Algebra.Group.Basic
 import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
 import Mathlib.Topology.Algebra.RestrictedProduct.Units
+import Mathlib.Topology.Algebra.Valued.LocallyCompact
+import LastLib.Book04AdelesAndIdeles.Chapter01.Section02NumberFieldsAndIntegers
 import LastLib.Book04AdelesAndIdeles.Chapter08.Section81
 import LastLib.Book04AdelesAndIdeles.Chapter08.Section87
 
@@ -24,7 +26,7 @@ namespace LastLib.Book04AdelesAndIdeles.Chapter09
 noncomputable section
 
 open Topology
-open scoped BigOperators NNReal NumberField.AdeleRing RestrictedProduct
+open scoped BigOperators NNReal NumberField.AdeleRing RestrictedProduct WithZero
 
 open NumberField IsDedekindDomain
 
@@ -74,6 +76,121 @@ noncomputable instance chapter09AdicCompletionBorelSpace
     BorelSpace (v.adicCompletion K) :=
   ⟨rfl⟩
 
+private theorem chapter09_adic_completion_residue_field_finite
+    (K : Type*) [Field K] [NumberField K]
+    (v : HeightOneSpectrum (𝓞 K)) :
+    Finite (IsLocalRing.ResidueField (v.adicCompletionIntegers K)) := by
+  let f : 𝓞 K →+* IsLocalRing.ResidueField (v.adicCompletionIntegers K) :=
+    (IsLocalRing.residue (v.adicCompletionIntegers K)).comp
+      (algebraMap (𝓞 K) (v.adicCompletionIntegers K))
+  have hfker : v.asIdeal ≤ RingHom.ker f := by
+    intro r hr
+    rw [RingHom.mem_ker]
+    simp only [f, RingHom.comp_apply, IsLocalRing.residue_eq_zero_iff]
+    have hval :
+        Valued.v
+            ((algebraMap (𝓞 K) (v.adicCompletionIntegers K) r :
+              v.adicCompletionIntegers K) : v.adicCompletion K) < 1 := by
+      rw [IsDedekindDomain.HeightOneSpectrum.algebraMap_adicCompletionIntegers_apply,
+        v.valuedAdicCompletion_eq_valuation']
+      exact (v.valuation_lt_one_iff_mem (K := K) r).2 hr
+    exact (Valuation.mem_maximalIdeal_iff
+      (v := (Valued.v : Valuation (v.adicCompletion K) ℤᵐ⁰))
+      (a := algebraMap (𝓞 K) (v.adicCompletionIntegers K) r)).2 hval
+  let q : (𝓞 K ⧸ v.asIdeal) →+*
+      IsLocalRing.ResidueField (v.adicCompletionIntegers K) :=
+    Ideal.Quotient.lift v.asIdeal f hfker
+  have hqsurj : Function.Surjective q := by
+    intro y
+    obtain ⟨b, rfl⟩ :=
+      (IsLocalRing.residue_surjective
+        (R := v.adicCompletionIntegers K)) y
+    have hball :
+        {z : v.adicCompletion K |
+            Valued.v (z - (b : v.adicCompletion K)) < 1} ∈
+          𝓝 (b : v.adicCompletion K) := by
+      rw [Valued.mem_nhds]
+      refine ⟨1, ?_⟩
+      intro z hz
+      simpa using hz
+    obtain ⟨k, hk⟩ := (v.denseRange_algebraMap K).mem_nhds hball
+    have hk' :
+        Valued.v (algebraMap K (v.adicCompletion K) k -
+          (b : v.adicCompletion K)) < 1 :=
+      hk
+    have hbv : Valued.v (b : v.adicCompletion K) ≤ 1 := by
+      exact b.property
+    have hkval : v.valuation K k ≤ 1 := by
+      rw [← v.valuedAdicCompletion_eq_valuation' k]
+      have hsum := Valued.v.map_add
+        (algebraMap K (v.adicCompletion K) k - (b : v.adicCompletion K))
+        (b : v.adicCompletion K)
+      have hsum' :
+          Valued.v (algebraMap K (v.adicCompletion K) k) ≤
+            max (Valued.v (algebraMap K (v.adicCompletion K) k -
+              (b : v.adicCompletion K)))
+              (Valued.v (b : v.adicCompletion K)) := by
+        simpa [sub_add_cancel] using hsum
+      exact hsum'.trans (max_le (le_of_lt hk') hbv)
+    obtain ⟨r, hr⟩ := v.exists_valuation_sub_lt_of_integer hkval 1
+    have hr' :
+        Valued.v
+            (algebraMap K (v.adicCompletion K)
+              (algebraMap (𝓞 K) K r) -
+              algebraMap K (v.adicCompletion K) k) < 1 := by
+      rw [← map_sub, IsDedekindDomain.HeightOneSpectrum.algebraMap_adicCompletion]
+      change Valued.v ((algebraMap (𝓞 K) K r - k : K) :
+        v.adicCompletion K) < 1
+      rw [v.valuedAdicCompletion_eq_valuation']
+      exact hr
+    have hbr : Valued.v
+        ((b : v.adicCompletion K) -
+          algebraMap K (v.adicCompletion K) (algebraMap (𝓞 K) K r)) < 1 := by
+      have h₁ :
+          Valued.v ((b : v.adicCompletion K) -
+            algebraMap K (v.adicCompletion K) k) < 1 := by
+        rw [Valued.v.map_sub_swap] at hk'
+        exact hk'
+      have h₂ :
+          Valued.v (algebraMap K (v.adicCompletion K) k -
+            algebraMap K (v.adicCompletion K) (algebraMap (𝓞 K) K r)) < 1 := by
+        rw [Valued.v.map_sub_swap] at hr'
+        exact hr'
+      have hsum := Valued.v.map_add
+        ((b : v.adicCompletion K) - algebraMap K (v.adicCompletion K) k)
+        (algebraMap K (v.adicCompletion K) k -
+          algebraMap K (v.adicCompletion K) (algebraMap (𝓞 K) K r))
+      simpa [sub_eq_add_neg, add_comm, add_left_comm, add_assoc] using
+        (hsum.trans_lt (max_lt h₁ h₂))
+    have hdiff :
+        (algebraMap (𝓞 K) (v.adicCompletionIntegers K) r - b) ∈
+          IsLocalRing.maximalIdeal (v.adicCompletionIntegers K) := by
+      have hval :
+          Valued.v
+              (((algebraMap (𝓞 K) (v.adicCompletionIntegers K) r - b :
+                v.adicCompletionIntegers K) : v.adicCompletion K)) < 1 := by
+        have hbr' := hbr
+        rw [Valued.v.map_sub_swap] at hbr'
+        simpa [IsDedekindDomain.HeightOneSpectrum.algebraMap_adicCompletion,
+          IsDedekindDomain.HeightOneSpectrum.algebraMap_adicCompletionIntegers_apply]
+          using hbr'
+      exact (Valuation.mem_maximalIdeal_iff
+        (v := (Valued.v : Valuation (v.adicCompletion K) ℤᵐ⁰))
+        (a := algebraMap (𝓞 K) (v.adicCompletionIntegers K) r - b)).2 hval
+    have hzero :
+        IsLocalRing.residue (v.adicCompletionIntegers K)
+            (algebraMap (𝓞 K) (v.adicCompletionIntegers K) r - b) = 0 :=
+      (IsLocalRing.residue_eq_zero_iff _).2 hdiff
+    refine ⟨Ideal.Quotient.mk v.asIdeal r, ?_⟩
+    apply sub_eq_zero.mp
+    dsimp [q]
+    change f r - IsLocalRing.residue (v.adicCompletionIntegers K) b = 0
+    exact hzero
+  let hfinite : Finite (𝓞 K ⧸ v.asIdeal) :=
+    v.asIdeal.finiteQuotientOfFreeOfNeBot v.ne_bot
+  exact @Finite.of_surjective (𝓞 K ⧸ v.asIdeal)
+    (IsLocalRing.ResidueField (v.adicCompletionIntegers K)) hfinite q hqsurj
+
 /-! ### Locally compact adele interfaces -/
 
 /- The finite-adic restricted product is locally compact once its local
@@ -84,24 +201,72 @@ theorem chapter09_adic_completion_locally_compact
     (K : Type*) [Field K] [NumberField K]
     (v : HeightOneSpectrum (𝓞 K)) :
     LocallyCompactSpace (v.adicCompletion K) := by
-  sorry
+  have hproper : ProperSpace (v.adicCompletion K) :=
+    (Valued.integer.properSpace_iff_compactSpace_integer
+      (K := v.adicCompletion K) (Γ₀ := ℤᵐ⁰)).2
+      (LastLib.Book04AdelesAndIdeles.Chapter01.chapter01_completion_integers_compact K v)
+  exact @locallyCompact_of_proper (v.adicCompletion K) _ hproper
 
 theorem chapter09_adic_completion_integers_compact
     (K : Type*) [Field K] [NumberField K]
     (v : HeightOneSpectrum (𝓞 K)) :
     IsCompact (v.adicCompletionIntegers K : Set (v.adicCompletion K)) := by
-  sorry
+  have hcompact : CompactSpace (v.adicCompletionIntegers K) := by
+    apply (Valued.integer.compactSpace_iff_completeSpace_and_isDiscreteValuationRing_and_finite_residueField
+      (K := v.adicCompletion K) (Γ₀ := ℤᵐ⁰)).2
+    refine ⟨by
+        change CompleteSpace (v.adicCompletionIntegers K)
+        exact ((Valued.isClosed_valuationSubring (v.adicCompletion K)).isComplete).completeSpace_coe,
+      by
+        change IsDiscreteValuationRing (v.adicCompletionIntegers K)
+        exact LastLib.Book04AdelesAndIdeles.Chapter01.chapter01_completion_integers_is_dvr
+          K v,
+      by
+        change Finite (IsLocalRing.ResidueField (v.adicCompletionIntegers K))
+        exact chapter09_adic_completion_residue_field_finite K v⟩
+  have hu : IsCompact (Set.univ : Set (v.adicCompletionIntegers K)) :=
+    isCompact_univ_iff.mpr hcompact
+  convert (Subtype.isCompact_iff.mp hu) using 1
+  ext z
+  constructor
+  · intro hz
+    exact ⟨⟨z, hz⟩, Set.mem_univ _, rfl⟩
+  · rintro ⟨x, _, rfl⟩
+    exact x.property
 
 theorem chapter09_finite_adele_integral_subgroups_compact
     (K : Type*) [Field K] [NumberField K] :
     ∀ᶠ v : HeightOneSpectrum (𝓞 K) in Filter.cofinite,
       IsCompact (v.adicCompletionIntegers K : Set (v.adicCompletion K)) := by
-  sorry
+  exact Filter.Eventually.of_forall fun v =>
+    chapter09_adic_completion_integers_compact K v
 
 theorem chapter09_finite_adele_locally_compact
     (K : Type*) [Field K] [NumberField K] :
     LocallyCompactSpace (Chapter09FiniteAdele K) := by
-  sorry
+  change LocallyCompactSpace
+    (Πʳ v : HeightOneSpectrum (𝓞 K),
+      [v.adicCompletion K, v.adicCompletionIntegers K])
+  let hopen : Fact (∀ v : HeightOneSpectrum (𝓞 K),
+      IsOpen (v.adicCompletionIntegers K : Set (v.adicCompletion K))) :=
+    ⟨fun v => by
+      simpa [IsDedekindDomain.HeightOneSpectrum.adicCompletionIntegers] using
+        (Valued.isOpen_valuationSubring (v.adicCompletion K))⟩
+  let hlocal : ∀ v : HeightOneSpectrum (𝓞 K), LocallyCompactSpace (v.adicCompletion K) :=
+    fun v => chapter09_adic_completion_locally_compact K v
+  exact @RestrictedProduct.locallyCompactSpace_of_addGroup
+    (HeightOneSpectrum (𝓞 K))
+    (fun v : HeightOneSpectrum (𝓞 K) => v.adicCompletion K)
+    (fun v : HeightOneSpectrum (𝓞 K) => ValuationSubring (v.adicCompletion K))
+    _
+    (fun v : HeightOneSpectrum (𝓞 K) => v.adicCompletionIntegers K)
+    _
+    hopen
+    _
+    _
+    _
+    hlocal
+    (chapter09_finite_adele_integral_subgroups_compact K)
 
 noncomputable instance chapter09FiniteAdeleLocallyCompactSpace
     (K : Type*) [Field K] [NumberField K] :
@@ -111,7 +276,9 @@ noncomputable instance chapter09FiniteAdeleLocallyCompactSpace
 theorem chapter09_adele_locally_compact
     (K : Type*) [Field K] [NumberField K] :
     LocallyCompactSpace (Chapter09Adele K) := by
-  sorry
+  change LocallyCompactSpace
+    (Chapter09InfiniteAdele K × Chapter09FiniteAdele K)
+  infer_instance
 
 noncomputable instance chapter09AdeleLocallyCompactSpace
     (K : Type*) [Field K] [NumberField K] :

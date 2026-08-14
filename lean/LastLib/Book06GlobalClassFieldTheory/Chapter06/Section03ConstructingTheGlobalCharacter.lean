@@ -29,6 +29,12 @@ structure Chapter06FiniteOrderCoordinate
   realization : Multiplicative (Chapter06A n) →* ℂˣ
   realizes : χ = realization.comp coordinate
   faithful_realization : Function.Injective realization
+  /- A normalized character of the invariant target.  Keeping this choice in
+     the coordinate package prevents an arbitrary additive equivalence with
+     ZMod n from silently changing the sign/Frobenius normalization. -/
+  invariant_realization :
+    Multiplicative (Chapter06OneOverNModOne n) →* ℂˣ
+  faithful_invariant_realization : Function.Injective invariant_realization
   image_identification :
     Nonempty (MonoidHom.range χ ≃* MonoidHom.range coordinate)
 
@@ -43,11 +49,11 @@ theorem chapter06_finite_order_character_has_coordinate
    book's exponential of 2 pi i times the invariant, expressed through the
    chosen image identification rather than through representatives in Q/Z. -/
 noncomputable def chapter06ExponentialOfInvariant
-    (n : ℕ) (hn : 0 < n)
-    (realization : Multiplicative (Chapter06A n) →* ℂˣ)
+    (n : ℕ)
+    (invariantRealization :
+      Multiplicative (Chapter06OneOverNModOne n) →* ℂˣ)
     (x : Chapter06OneOverNModOne n) : ℂˣ :=
-  realization
-    (Multiplicative.ofAdd ((chapter06_oneOverNModOne_equiv_zmod n hn) x))
+  invariantRealization (Multiplicative.ofAdd x)
 
 /- The local reciprocity package attached to a chosen idele-class
    coordinate.  The two evaluations below expose the equality
@@ -78,9 +84,9 @@ structure Chapter06CharacterLocalReciprocityData
   exponentialEvaluation : ∀ v, HLocal v → HMu v → ℂˣ
   exponential_pairing_formula :
     ∀ v c (a : Chapter06H1Mu K n),
-      exponentialEvaluation v c (D.kummerRestriction v a) =
-        chapter06ExponentialOfInvariant n coordinate.positive
-          coordinate.realization
+        exponentialEvaluation v c (D.kummerRestriction v a) =
+        chapter06ExponentialOfInvariant n
+          coordinate.invariant_realization
           (D.localData.pairing v c (D.kummerRestriction v a))
   exponential_formula :
     ∀ v c a, exponentialEvaluation v c a = localEvaluation v c a
@@ -88,7 +94,16 @@ structure Chapter06CharacterLocalReciprocityData
     ∀ v c, c ∈ D.localData.unramified v → ∀ a,
       D.kummerRestriction v a ∈ D.localData.unramifiedDual v →
       localEvaluation v c (D.kummerRestriction v a) = 1
-  principal_product :
+  /- The local product is identified with the value of χ on the principal
+     idele represented by the global Kummer class.  The separate triviality
+     field is the principal-idèle hypothesis from the source; keeping both
+     fields makes the orthogonality route explicit rather than assuming its
+     additive conclusion. -/
+  principal_idele :
+    Multiplicative (Chapter06H1Mu K n) →* Chapter06C K
+  principal_idele_trivial :
+    χ.hom.comp principal_idele = 1
+  local_product_eq_principal :
     ∀ a : Chapter06H1Mu K n,
       let s : Set ι := {v |
         localCharacter v ∉ D.localData.unramified v ∨
@@ -102,7 +117,8 @@ structure Chapter06CharacterLocalReciprocityData
         intro v hv
         simpa only [s, Set.mem_union, Set.mem_ofPred_eq] using hv
       hs.toFinset.prod (fun v =>
-        localEvaluation v (localCharacter v) (D.kummerRestriction v a)) = 1
+        localEvaluation v (localCharacter v) (D.kummerRestriction v a)) =
+        χ.hom (principal_idele (Multiplicative.ofAdd a))
 
 /- LOCAL_DEPENDENCY_GUESS: The localEvaluation and exponentialEvaluation
    fields package the compatibility of the finite reciprocity map with the
@@ -179,7 +195,9 @@ structure Chapter06CyclicCharacterField
     (n : ℕ)
     [TopologicalSpace (Chapter06A n)]
     [IsTopologicalAddGroup (Chapter06A n)]
+    [DiscreteTopology (Chapter06A n)]
     (c : Chapter06H1A (Chapter06AbsoluteGaloisGroup K Ks) n) where
+  positive : 0 < n
   field : IntermediateField K Ks
   [finite : FiniteDimensional K field]
   [abelian : IsAbelianGalois K field]
@@ -203,9 +221,10 @@ structure Chapter06CyclicCharacterField
 
 theorem chapter06_global_class_fixed_field_is_cyclic
     {K Ks : Type*} [Field K] [Field Ks] [Algebra K Ks]
-    [IsGalois K Ks] [IsSepClosed Ks] (n : ℕ)
+    [IsGalois K Ks] [IsSepClosed Ks] (n : ℕ) (hn : 0 < n)
     [TopologicalSpace (Chapter06A n)]
     [IsTopologicalAddGroup (Chapter06A n)]
+    [DiscreteTopology (Chapter06A n)]
     (c : Chapter06H1A (Chapter06AbsoluteGaloisGroup K Ks) n) :
     Nonempty (Chapter06CyclicCharacterField K Ks n c) := by
   sorry
@@ -284,9 +303,11 @@ def Chapter06KummerRadicalPresentation
 
 structure Chapter06KummerRadicalField
     (K : Type*) [Field K] (n : ℕ) (a : K) where
+  positive : 0 < n
   field : Type
   [fieldField : Field field]
   [fieldAlgebra : Algebra K field]
+  [finite : FiniteDimensional K field]
   presentation : Chapter06KummerRadicalPresentation K field n a
 
 /- The roots-of-unity specialization of the twisted Cartier-dual
@@ -303,18 +324,30 @@ structure Chapter06RootOfUnitySelfDuality
   self_duality :
     Nonempty (Chapter06A n ≃+ Additive (Chapter06CartierDual K n))
   hilbertSymbol : ∀ v, HLocal v → HMu v → ℂˣ
-  unramified_hilbertSymbol_one :
-    ∀ v c, c ∈ U v → ∀ a, hilbertSymbol v c a = 1
+  unramifiedDual : ∀ v, AddSubgroup (HMu v)
   kummerRestriction :
     ∀ v, Chapter06KummerClassGroup K n → HMu v
+  kummer_support_finite :
+    ∀ a, Set.Finite {v | kummerRestriction v a ∉ unramifiedDual v}
+  unramified_hilbertSymbol_one :
+    ∀ v c, c ∈ U v → ∀ a,
+      kummerRestriction v a ∈ unramifiedDual v →
+      hilbertSymbol v c (kummerRestriction v a) = 1
   hilbert_symbol_product :
     ∀ (c : Chapter06RestrictedProduct ι HLocal U)
       (a : Chapter06KummerClassGroup K n),
-      chapter06RestrictedProductProduct c
-        (fun v cv => hilbertSymbol v cv (kummerRestriction v a))
-        (by
-          intro v cv hcv
-          exact unramified_hilbertSymbol_one v cv hcv (kummerRestriction v a)) = 1
+      let s : Set ι := {v |
+        c v ∉ U v ∨ kummerRestriction v a ∉ unramifiedDual v}
+      let hs : s.Finite := by
+        have hu :
+            ({v | c v ∉ U v} ∪
+              {v | kummerRestriction v a ∉ unramifiedDual v}).Finite :=
+          Set.Finite.union c.property (kummer_support_finite a)
+        apply Set.Finite.subset hu
+        intro v hv
+        simpa only [s, Set.mem_union, Set.mem_ofPred_eq] using hv
+      hs.toFinset.prod (fun v =>
+        hilbertSymbol v (c v) (kummerRestriction v a)) = 1
   kummer_field :
     ∀ a : K, Nonempty (Chapter06KummerRadicalField K n a)
 

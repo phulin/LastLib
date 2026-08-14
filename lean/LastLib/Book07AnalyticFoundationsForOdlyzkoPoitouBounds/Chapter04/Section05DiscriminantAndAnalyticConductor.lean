@@ -36,6 +36,17 @@ theorem chapter04_analytic_conductor_eq_displayed
         Real.rpow (|t| + 3) (chapter04Degree K : ℝ) := by
   rfl
 
+theorem chapter04_xi_contour_height_sequence_for_analytic_conductor
+    (K : Type*) [Field K] [NumberField K]
+    {c : ℝ} (hc : 1 < c) :
+    Nonempty (Chapter04ContourHeightSequence
+      (chapter04Xi K) (chapter04NontrivialZero K)
+        (chapter04AnalyticConductor K) c) := by
+  apply chapter04_xi_contour_height_sequence_exists K
+  · intro t
+    exact chapter04_analytic_conductor_eq_displayed K t
+  · exact hc
+
 theorem chapter04_analytic_conductor_pos
     (K : Type*) [Field K] [NumberField K] (t : ℝ) :
     0 < chapter04AnalyticConductor K t := by

@@ -203,7 +203,8 @@ theorem family_effective_of_fpqc (𝒰 : FpqcFamily S) :
 
 noncomputable def singleton_morphisms_descend_uniquely {S T : Scheme.{u}} (p : T ⟶ S)
     (hp : Scheme.IsFpqcMorphism p) :
-    (overPseudofunctor.toDescentData (fun _ : PUnit => p)).FullyFaithful := by sorry
+    (overPseudofunctor.toDescentData (fun _ : PUnit => p)).FullyFaithful := by
+  sorry
 
 noncomputable def family_morphisms_descend_uniquely (𝒰 : FpqcFamily S) :
     (overPseudofunctor.toDescentData (fun i => 𝒰.cover.f i)).FullyFaithful := by

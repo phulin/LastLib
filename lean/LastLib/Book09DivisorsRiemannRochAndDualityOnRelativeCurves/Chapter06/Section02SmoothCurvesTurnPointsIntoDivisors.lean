@@ -1,4 +1,5 @@
 import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter06.Section01TheCorrectRelativeNotion
+import Mathlib.Algebra.DualNumber
 
 namespace LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter06
 
@@ -186,7 +187,83 @@ def chapter06NodePointComplement (k : Type u) [Field k] :
     refine ⟨1, ?_⟩
     rw [Ideal.span_singleton_one]
     exact (Ideal.eq_top_iff_one (chapter10NodeIdeal k)).2 h
-  mul_mem' := by sorry
+  mul_mem' := by
+    let R := MvPolynomial (Fin 2) k
+    let I : Ideal R :=
+      Ideal.span ({MvPolynomial.X (0 : Fin 2), MvPolynomial.X (1 : Fin 2)} : Set R)
+    let J : Ideal R :=
+      Ideal.span ({MvPolynomial.X (0 : Fin 2) * MvPolynomial.X (1 : Fin 2)} : Set R)
+    have hM : I.IsMaximal := by
+      rw [Ideal.isMaximal_iff]
+      constructor
+      · intro h1
+        have hset :
+            ({MvPolynomial.X (0 : Fin 2), MvPolynomial.X (1 : Fin 2)} : Set R) =
+              MvPolynomial.X '' ({0, 1} : Set (Fin 2)) := by
+          ext z
+          constructor
+          · intro hz
+            rcases hz with rfl | rfl <;> simp
+          · intro hz
+            rcases hz with ⟨i, hi, rfl⟩
+            fin_cases i <;> simp_all
+        change 1 ∈ Ideal.span
+          ({MvPolynomial.X (0 : Fin 2), MvPolynomial.X (1 : Fin 2)} : Set R) at h1
+        rw [hset] at h1
+        rw [MvPolynomial.mem_ideal_span_X_image] at h1
+        simp at h1
+      · intro K p hIK hp hI
+        have hdiff : p - MvPolynomial.C (MvPolynomial.constantCoeff p) ∈ I := by
+          have hset :
+              ({MvPolynomial.X (0 : Fin 2), MvPolynomial.X (1 : Fin 2)} : Set R) =
+                MvPolynomial.X '' ({0, 1} : Set (Fin 2)) := by
+            ext z
+            constructor
+            · intro hz
+              rcases hz with rfl | rfl <;> simp
+            · intro hz
+              rcases hz with ⟨i, hi, rfl⟩
+              fin_cases i <;> simp_all
+          change p - MvPolynomial.C (MvPolynomial.constantCoeff p) ∈ Ideal.span
+            ({MvPolynomial.X (0 : Fin 2), MvPolynomial.X (1 : Fin 2)} : Set R)
+          rw [hset]
+          rw [MvPolynomial.mem_ideal_span_X_image]
+          intro m hm
+          have hm0 : m ≠ 0 := by
+            intro hm0
+            subst m
+            have hm' := MvPolynomial.mem_support_iff.mp hm
+            change MvPolynomial.coeff 0
+              (p - MvPolynomial.C (MvPolynomial.constantCoeff p)) ≠ 0 at hm'
+            apply hm'
+            rw [sub_eq_add_neg, MvPolynomial.coeff_add]
+            rw [MvPolynomial.coeff_neg]
+            simp [MvPolynomial.constantCoeff_eq]
+          obtain ⟨i, hi⟩ := Finsupp.support_nonempty_iff.mpr hm0
+          exact ⟨i, by fin_cases i <;> simp, Finsupp.mem_support_iff.mp hi⟩
+        have hc : MvPolynomial.C (MvPolynomial.constantCoeff p) ∈ K := by
+          simpa [sub_sub] using K.sub_mem hI (hIK hdiff)
+        have hcp : MvPolynomial.constantCoeff p ≠ 0 := by
+          intro hcp
+          apply hp
+          simpa [hcp] using hdiff
+        have hunit : IsUnit (MvPolynomial.C (MvPolynomial.constantCoeff p)) :=
+          IsUnit.map (MvPolynomial.C : k →+* MvPolynomial (Fin 2) k) hcp.isUnit
+        rw [K.eq_top_of_isUnit_mem hc hunit]
+        exact Submodule.mem_top
+    let _ : I.IsMaximal := hM
+    have hker : RingHom.ker (Ideal.Quotient.mk J) ≤ I := by
+      rw [Ideal.mk_ker]
+      exact Ideal.span_le.2 (by
+        intro z hz
+        rcases hz with rfl
+        exact I.mul_mem_left _ (Ideal.subset_span (by simp)))
+    have hprime : (Chapter06NodeIdeal k).IsPrime := by
+      change (I.map (Ideal.Quotient.mk J)).IsPrime
+      exact
+        (Ideal.IsMaximal.map_of_surjective_of_ker_le
+          (f := Ideal.Quotient.mk J) Ideal.Quotient.mk_surjective hker).isPrime
+    exact fun a b ha hb hab => (hprime.mem_or_mem hab).elim ha hb
 
 abbrev Chapter06NodePointLocalRing (k : Type u) [Field k] :=
   Localization (chapter06NodePointComplement k)
@@ -203,7 +280,202 @@ def Chapter06NodePointCartierObstruction (k : Type u) [Field k] : Prop :=
 theorem chapter06_node_point_local_ideal_is_not_principal
     (k : Type u) [Field k] :
     Chapter06NodePointCartierObstruction k := by
-  sorry
+  classical
+  let R := MvPolynomial (Fin 2) k
+  let I : Ideal R :=
+    Ideal.span ({MvPolynomial.X (0 : Fin 2), MvPolynomial.X (1 : Fin 2)} : Set R)
+  let J : Ideal R :=
+    Ideal.span ({MvPolynomial.X (0 : Fin 2) * MvPolynomial.X (1 : Fin 2)} : Set R)
+  have hset :
+      ({MvPolynomial.X (0 : Fin 2), MvPolynomial.X (1 : Fin 2)} : Set R) =
+        MvPolynomial.X '' ({0, 1} : Set (Fin 2)) := by
+    ext z
+    constructor
+    · intro hz
+      rcases hz with rfl | rfl <;> simp
+    · intro hz
+      rcases hz with ⟨i, hi, rfl⟩
+      fin_cases i <;> simp_all
+  have hI_iff (z : R) :
+      z ∈ I ↔ MvPolynomial.constantCoeff z = 0 := by
+    change z ∈ Ideal.span
+      ({MvPolynomial.X (0 : Fin 2), MvPolynomial.X (1 : Fin 2)} : Set R) ↔ _
+    rw [hset, MvPolynomial.mem_ideal_span_X_image]
+    constructor
+    · intro hz
+      by_contra hz0
+      have hzero : (0 : Fin 2 →₀ ℕ) ∈ z.support := by
+        rw [MvPolynomial.mem_support_iff]
+        simpa [MvPolynomial.constantCoeff_eq] using hz0
+      obtain ⟨i, hi, hmi⟩ := hz 0 hzero
+      exact hmi (by simp)
+    · intro hz m hm
+      by_cases hm0 : m = 0
+      · subst m
+        exact False.elim <| (MvPolynomial.mem_support_iff.mp hm) <| by
+          simpa [MvPolynomial.constantCoeff_eq] using hz
+      · obtain ⟨i, hi⟩ := Finsupp.support_nonempty_iff.mpr hm0
+        exact ⟨i, by fin_cases i <;> simp, Finsupp.mem_support_iff.mp hi⟩
+  let Q : R →+* Chapter06NodeRing k := Ideal.Quotient.mk J
+  let S := Chapter06NodePointLocalRing k
+  let l : Chapter06NodeRing k →+* S := algebraMap _ _
+  let x : S := l (Q (MvPolynomial.X (0 : Fin 2)))
+  let y : S := l (Q (MvPolynomial.X (1 : Fin 2)))
+  have hlocal : chapter06NodePointLocalIdeal k = Ideal.span ({x, y} : Set S) := by
+    rw [chapter06NodePointLocalIdeal]
+    change Ideal.map l
+      (Ideal.map (Ideal.Quotient.mk J)
+        (Ideal.span ({MvPolynomial.X (0 : Fin 2), MvPolynomial.X (1 : Fin 2)} : Set R))) = _
+    rw [Ideal.map_map, Ideal.map_span, Set.image_pair]
+    rfl
+  let ev (c : k) : R →+* DualNumber k :=
+    MvPolynomial.eval₂Hom (TrivSqZeroExt.inlHom k k)
+      (fun i => if i = (0 : Fin 2) then TrivSqZeroExt.inr 1
+        else if i = (1 : Fin 2) then TrivSqZeroExt.inr c else 0)
+  have hev (c : k) : J ≤ RingHom.ker (ev c) := by
+    change Ideal.span
+        ({MvPolynomial.X (0 : Fin 2) * MvPolynomial.X (1 : Fin 2)} : Set R) ≤
+      RingHom.ker (ev c)
+    exact Ideal.span_le.2 (by
+      intro z hz
+      rcases hz with rfl
+      change ev c (MvPolynomial.X (0 : Fin 2) * MvPolynomial.X (1 : Fin 2)) = 0
+      rw [map_mul]
+      rw [MvPolynomial.eval₂Hom_X', MvPolynomial.eval₂Hom_X']
+      simp)
+  let qev (c : k) : Chapter06NodeRing k →+* DualNumber k :=
+    Ideal.Quotient.lift J (ev c) (fun a ha => hev c ha)
+  have hqev (c : k) : (qev c).comp Q = ev c := by
+    apply RingHom.ext
+    intro z
+    rfl
+  have hfst_ev (c : k) :
+      (TrivSqZeroExt.fstHom k k k).toRingHom.comp (ev c) =
+        MvPolynomial.constantCoeff := by
+    apply MvPolynomial.ringHom_ext
+    · intro a
+      simp [ev]
+    · intro i
+      fin_cases i <;> simp [ev]
+  have hunit (c : k) :
+      ∀ z : chapter06NodePointComplement k,
+        IsUnit (qev c (z : Chapter06NodeRing k)) := by
+    intro z
+    obtain ⟨p, hp⟩ := Ideal.Quotient.mk_surjective (z : Chapter06NodeRing k)
+    have hpnot : p ∉ I := by
+      intro hpi
+      apply z.2
+      rw [← hp]
+      exact Ideal.mem_map_of_mem _ hpi
+    have hcp : MvPolynomial.constantCoeff p ≠ 0 := by
+      intro hcp
+      exact hpnot ((hI_iff p).2 hcp)
+    apply TrivSqZeroExt.isUnit_iff_isUnit_fst.mpr
+    have hqevp : qev c (z : Chapter06NodeRing k) = ev c p := by
+      rw [← hp]
+      rfl
+    rw [hqevp]
+    have hfstp : (ev c p).fst = MvPolynomial.constantCoeff p := by
+      change ((TrivSqZeroExt.fstHom k k k).toRingHom.comp (ev c)) p = _
+      rw [hfst_ev]
+    rw [hfstp]
+    exact hcp.isUnit
+  let rho (c : k) : S →+* DualNumber k :=
+    IsLocalization.lift (R := Chapter06NodeRing k) (S := S) (P := DualNumber k)
+      (M := chapter06NodePointComplement k) (g := qev c) (hunit c)
+  have hrho_comp (c : k) : (rho c).comp l = qev c := by
+    apply RingHom.ext
+    intro z
+    simp [rho, l]
+  have hrho_x (c : k) : rho c x = TrivSqZeroExt.inr 1 := by
+    change rho c (l (Q (MvPolynomial.X (0 : Fin 2)))) = _
+    rw [← RingHom.comp_apply, hrho_comp c]
+    change ev c (MvPolynomial.X (0 : Fin 2)) = _
+    unfold ev
+    rw [MvPolynomial.eval₂Hom_X']
+    simp
+  have hrho_y (c : k) : rho c y = TrivSqZeroExt.inr c := by
+    change rho c (l (Q (MvPolynomial.X (1 : Fin 2)))) = _
+    rw [← RingHom.comp_apply, hrho_comp c]
+    change ev c (MvPolynomial.X (1 : Fin 2)) = _
+    unfold ev
+    rw [MvPolynomial.eval₂Hom_X']
+    simp
+  have hfst_rho (c : k) :
+      (TrivSqZeroExt.fstHom k k k).toRingHom.comp (rho c) =
+        (TrivSqZeroExt.fstHom k k k).toRingHom.comp (rho 0) := by
+    apply IsLocalization.ringHom_ext (R := Chapter06NodeRing k)
+      (M := chapter06NodePointComplement k) (S := S) (P := k)
+    apply RingHom.ext
+    intro z
+    change (rho c (l z)).fst = (rho 0 (l z)).fst
+    rw [← RingHom.comp_apply, hrho_comp c, ← RingHom.comp_apply, hrho_comp 0]
+    obtain ⟨p, hp⟩ := Ideal.Quotient.mk_surjective z
+    rw [← hp]
+    change (ev c p).fst = (ev 0 p).fst
+    have hc := congrArg (fun g : R →+* k => g p) (hfst_ev c)
+    have h0 := congrArg (fun g : R →+* k => g p) (hfst_ev 0)
+    exact hc.trans h0.symm
+  rintro ⟨f, hf⟩
+  have hfspan : Ideal.span ({x, y} : Set S) = Ideal.span ({f} : Set S) :=
+    hlocal.symm.trans hf
+  have hxmem : x ∈ Ideal.span ({f} : Set S) := by
+    rw [← hfspan]
+    exact Ideal.subset_span (by simp)
+  have hymem : y ∈ Ideal.span ({f} : Set S) := by
+    rw [← hfspan]
+    exact Ideal.subset_span (by simp)
+  obtain ⟨a, ha⟩ := Ideal.mem_span_singleton'.mp hxmem
+  obtain ⟨b, hb⟩ := Ideal.mem_span_singleton'.mp hymem
+  have hfmem : f ∈ Ideal.span ({x, y} : Set S) := by
+    rw [hfspan]
+    exact Ideal.subset_span (by simp)
+  have hfstf (c : k) : (rho c f).fst = 0 := by
+    have hle : Ideal.span ({x, y} : Set S) ≤
+        RingHom.ker ((TrivSqZeroExt.fstHom k k k).toRingHom.comp (rho c)) := by
+      refine Ideal.span_le.2 ?_
+      intro z hz
+      rcases Set.mem_insert_iff.mp hz with rfl | hz
+      · change (rho c x).fst = 0
+        rw [hrho_x c]
+        rfl
+      · rcases Set.mem_singleton_iff.mp hz with rfl
+        change (rho c y).fst = 0
+        rw [hrho_y c]
+        rfl
+    have h := RingHom.mem_ker.mp (hle hfmem)
+    change (rho c f).fst = 0 at h
+    exact h
+  have hxeq (c : k) :
+      TrivSqZeroExt.inr 1 = rho c a * rho c f := by
+    have h := congrArg (rho c) ha
+    rw [map_mul, hrho_x c] at h
+    exact h.symm
+  have hyeq (c : k) :
+      TrivSqZeroExt.inr c = rho c b * rho c f := by
+    have h := congrArg (rho c) hb
+    rw [map_mul, hrho_y c] at h
+    exact h.symm
+  have hbeta0 : (rho 0 f).snd ≠ 0 := by
+    intro hzero
+    have h := congrArg TrivSqZeroExt.snd (hxeq 0)
+    have hone : (1 : k) = 0 := by
+      convert h using 1 <;> simp [TrivSqZeroExt.snd_mul, hfstf 0, hzero]
+    exact one_ne_zero hone
+  have hb0 : (rho 0 b).fst = 0 := by
+    have h := congrArg TrivSqZeroExt.snd (hyeq 0)
+    have hprod : (rho 0 b).fst * (rho 0 f).snd = 0 := by
+      simpa [TrivSqZeroExt.snd_mul, hfstf 0] using h.symm
+    exact (mul_eq_zero.mp hprod).resolve_right hbeta0
+  have hb1 : (rho 1 b).fst = 0 := by
+    have h := congrArg (fun g : S →+* k => g b) (hfst_rho 1)
+    change (rho 1 b).fst = (rho 0 b).fst at h
+    rw [hb0] at h
+    exact h
+  have hone : (1 : k) = 0 := by
+    have h := congrArg TrivSqZeroExt.snd (hyeq 1)
+    convert h using 1 <;> simp [TrivSqZeroExt.snd_mul, hfstf 1, hb1]
+  exact one_ne_zero hone
 
 theorem chapter06_node_point_is_length_one_but_not_cartier
     (k : Type u) [Field k] :

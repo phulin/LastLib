@@ -100,13 +100,13 @@ theorem chapter07_stable_ideal_descends_unique
       (Algebra.TensorProduct.includeRight (R := A) (A := B) (B := R)).toRingHom by rfl]
   rw [E.ideal_compatibility, E'.ideal_compatibility]
 
-theorem chapter07_quotient_base_change
+def chapter07_quotient_base_change
     {A B R C : Type u} [CommRing A] [CommRing B] [CommRing R] [CommRing C]
     [Algebra A B] [Algebra A R] [Algebra B C] [Algebra A C] [IsScalarTower A B C]
     (D : Chapter07IdealDescentData A B R C)
     (E : Chapter07IdealDescentResult D) :
-    Nonempty (B ⊗[A] (R ⧸ E.I) ≃ₐ[B] (C ⧸ D.J)) :=
-  ⟨E.quotient_comparison⟩
+    B ⊗[A] (R ⧸ E.I) ≃ₐ[B] (C ⧸ D.J) :=
+  E.quotient_comparison
 
 theorem chapter07_quotient_base_change_commutes
     {A B R C : Type u} [CommRing A] [CommRing B] [CommRing R] [CommRing C]
@@ -172,17 +172,14 @@ theorem chapter07_reducedness_descends_from_base_change
   intro r ⟨n, hr⟩
   exact chapter07_nilpotence_is_reflected_by_faithfully_flat_base_change hbase r n hr
 
-/-- The stronger, all-field-extensions formulation of geometric reducedness used in §7.2. -/
+/-- The canonical algebraic-closure formulation of geometric reducedness used in §7.2. -/
 def Chapter07GeometricallyReduced (k R : Type u) [Field k] [CommRing R] [Algebra k R] : Prop :=
-  ∀ (K : Type u) [Field K] [Algebra k K], IsReduced (K ⊗[k] R)
+  Algebra.IsGeometricallyReduced k R
 
 theorem chapter07_geometricallyReduced_implies_reduced
     {k R : Type u} [Field k] [CommRing R] [Algebra k R]
     (h : Chapter07GeometricallyReduced k R) : IsReduced R := by
-  have hk : IsReduced (k ⊗[k] R) := h k
-  let _ : IsReduced (k ⊗[k] R) := hk
-  exact isReduced_of_injective (Algebra.TensorProduct.lid k R).symm
-    (Algebra.TensorProduct.lid k R).symm.injective
+  exact @Algebra.isReduced_of_isGeometricallyReduced k R _ _ _ h
 
 /-- A compact witness interface for the inseparable counterexamples to ascent. -/
 structure Chapter07InseparableReducednessExample where

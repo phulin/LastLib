@@ -10,6 +10,7 @@ namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter
 noncomputable section
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09
 
 universe u v
@@ -215,6 +216,11 @@ structure Chapter05ExceptionalDivisor {X : Scheme.{u}}
     structure_map ≫ X.fromSpecResidueField P.point = inclusion ≫ B.projection
   projective_line_iso :
     carrier ≅ chapter05ProjectiveLine (X.residueField P.point)
+  projective_line_iso_over_base :
+    projective_line_iso.hom ≫
+        chapter02ProjectiveSpaceProjection
+          (AlgebraicGeometry.Spec (.of (X.residueField P.point))) 1 =
+      structure_map
   canonical_exceptional_iso :
     carrier ≅ B.blowup.canonical_blowup.tautologicalIdeal.ideal.subscheme
   canonical_exceptional_over :
@@ -268,6 +274,19 @@ theorem chapter05_exceptional_divisor_is_projective_line {X : Scheme.{u}}
       ((chapter05ExceptionalDivisor P).carrier ≅
         chapter05ProjectiveLine (X.residueField P.point)) := by
   exact ⟨(chapter05ExceptionalDivisor P).projective_line_iso⟩
+
+theorem chapter05_exceptional_divisor_is_projective_line_over_base {X : Scheme.{u}}
+    [Chapter05RegularNoetherianSurface X]
+    (P : Chapter05RegularPoint X) :
+    Nonempty
+      { e : (chapter05ExceptionalDivisor P).carrier ≅
+          chapter05ProjectiveLine (X.residueField P.point) //
+        e.hom ≫
+            chapter02ProjectiveSpaceProjection
+              (AlgebraicGeometry.Spec (.of (X.residueField P.point))) 1 =
+          (chapter05ExceptionalDivisor P).structure_map } := by
+  exact ⟨⟨(chapter05ExceptionalDivisor P).projective_line_iso,
+    (chapter05ExceptionalDivisor P).projective_line_iso_over_base⟩⟩
 
 /-!
 The regular-point hypotheses are intentionally visible in every construction above.  In

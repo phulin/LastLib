@@ -81,6 +81,25 @@ noncomputable def chapter05_finite_global_reciprocity_abelian
     (C_K ⧸ chapter05InputNormSubgroup X) ≃* Gal(L / K) :=
   chapter05_finite_global_reciprocity_abelian_equiv X
 
+/-! The abelian specialization is also exposed as a map on the idele class
+group itself, with the quotient projection made explicit. -/
+noncomputable def chapter05_finite_global_reciprocity_abelian_artin
+    [IsAbelianGalois K L]
+    (X : Chapter05ClassFormationInput K L I_K I_L C_K C_L) :
+    C_K →* Gal(L / K) :=
+  (chapter05_finite_global_reciprocity_abelian X).toMonoidHom.comp
+    (chapter05InputClassNormQuotientMap X)
+
+theorem chapter05_finite_global_reciprocity_abelian_artin_kernel
+    [IsAbelianGalois K L]
+    (X : Chapter05ClassFormationInput K L I_K I_L C_K C_L) :
+    (chapter05_finite_global_reciprocity_abelian_artin X).ker =
+      chapter05InputNormSubgroup X := by
+  rw [chapter05_finite_global_reciprocity_abelian_artin,
+    MonoidHom.ker_comp_of_injective _ _
+      (chapter05_finite_global_reciprocity_abelian X).injective,
+    chapter05InputClassNormQuotientMap, QuotientGroup.ker_mk']
+
 /-- In the abelian case the norm quotient has the degree of the extension. -/
 theorem chapter05_finite_global_reciprocity_abelian_index
     [IsAbelianGalois K L]

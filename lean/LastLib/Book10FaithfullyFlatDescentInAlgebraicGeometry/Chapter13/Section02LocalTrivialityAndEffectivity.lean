@@ -51,6 +51,12 @@ def chapter13CoverDiagonal {S : Scheme.{u}} {ι : Type v}
     Over.mk (t i) ⟶ Chapter13CoverProduct T t i i :=
   CartesianMonoidalCategory.lift (𝟙 _) (𝟙 _)
 
+/-- The factor swap on an ordered double overlap. -/
+def chapter13CoverSwap {S : Scheme.{u}} {ι : Type v}
+    (T : ι → Scheme.{u}) (t : ∀ i, T i ⟶ S) (i j : ι) :
+    Chapter13CoverProduct T t i j ⟶ Chapter13CoverProduct T t j i :=
+  (β_ (Over.mk (t i)) (Over.mk (t j))).hom
+
 def chapter13GroupSectionOne {S : Scheme.{u}} (G : Chapter13GroupScheme S)
     (A : Over S) : A ⟶ G.X :=
   CartesianMonoidalCategory.toUnit A ≫ MonObj.one (X := G.X)
@@ -208,6 +214,15 @@ theorem chapter13_torsorCocycle_normalized
   change CartesianMonoidalCategory.lift (𝟙 _) (𝟙 _) ≫ D.transition i i =
     CartesianMonoidalCategory.toUnit (Over.mk (t i)) ≫ MonObj.one
   exact hunit
+
+/-- The inverse transition is obtained by swapping the two factors of the overlap. -/
+theorem chapter13_torsorCocycle_inverse
+    {S : Scheme.{u}} {ι : Type v}
+    {G : Chapter13GroupScheme S} {T : ι → Scheme.{u}} {t : ∀ i, T i ⟶ S}
+    (D : Chapter13TorsorCocycle G T t) (i j : ι) :
+    chapter13CoverSwap T t i j ≫ D.transition j i =
+      chapter13GroupSectionInv G (D.transition i j) := by
+  sorry
 
 /-- Left translation by a group-valued function on an overlap. -/
 def chapter13LeftTranslation {S : Scheme.{u}} (G : Chapter13GroupScheme S)

@@ -446,16 +446,70 @@ structure Chapter06ZetaAnalyticPackage
     Chapter06ContourHeightSequence K zeros c
 
 /-!
-Chapter 4 supplies the canonical completed-zeta, zero, and growth data.  The
-remaining contour-height construction is the analytic input proved in this
-chapter, so expose the resulting package as a nonempty interface rather than
-making the book's explicit formula permanently conditional on a caller-built
-duplicate package.
+The generic contour-height theorem is proved in Chapter 4.  This bridge
+transports its height, separation, and logarithmic-derivative data to the
+Chapter 6 aliases while deliberately dropping only the Chapter 4
+`conductorPos` field, which is not part of the local contour package.
+-/
+theorem chapter06_canonical_contour_height_sequence_nonempty
+    (K : Type*) [Field K] [NumberField K]
+    {c : ℝ} (hc : 1 < c) :
+    Nonempty (Chapter06ContourHeightSequence K
+      (chapter06CanonicalZeroSpectrum K) c) := by
+  obtain ⟨H⟩ :=
+    chapter04_xi_contour_height_sequence_for_analytic_conductor K hc
+  refine ⟨{
+    height := H.height
+    tendsToInfinity := H.tendsToInfinity
+    positive := H.positive
+    separationExponent := H.separationExponent
+    separationExponent_ge_two := H.separationExponent_ge_two
+    separationConstant := H.separationConstant
+    separationConstant_pos := H.separationConstant_pos
+    avoids_zero_ordinates := ?_
+    logDerivativeBound := ?_ }⟩
+  · intro j ρ hρ
+    apply H.avoids_zero_ordinates j ρ
+    change chapter04NontrivialZero K ρ
+    exact hρ
+  · obtain ⟨C, hC, hbound⟩ := H.logDerivativeBound
+    refine ⟨C, hC, ?_⟩
+    intro j σ hleft hright
+    change
+      ‖chapter04LogDerivative (chapter04Xi K)
+          (chapter04VerticalLinePoint σ (H.height j))‖ ≤
+        C * (H.height j + 3) ^ H.separationExponent *
+            (Real.log (chapter04AnalyticConductor K (H.height j))) ^ 2 ∧
+      ‖chapter04LogDerivative (chapter04Xi K)
+          (chapter04VerticalLinePoint σ (-H.height j))‖ ≤
+        C * (H.height j + 3) ^ H.separationExponent *
+            (Real.log (chapter04AnalyticConductor K (H.height j))) ^ 2
+    exact hbound j σ hleft hright
+
+/-!
+Chapter 4 supplies the canonical completed-zeta, zero, growth, and generic
+contour-height data.  Expose the resulting package as a nonempty interface
+rather than making the book's explicit formula permanently conditional on a
+caller-built duplicate package.
 -/
 theorem chapter06_zeta_analytic_package_nonempty
     (K : Type*) [Field K] [NumberField K] :
     Nonempty (Chapter06ZetaAnalyticPackage K) := by
-  sorry
+  refine ⟨{
+    xi_entire := by
+      change AnalyticOnNhd ℂ (chapter04Xi K) Set.univ
+      exact chapter04_xi_entire K
+    functional_equation := by
+      intro s
+      exact chapter04_xi_functional_equation K s
+    conjugation_symmetry := by
+      intro s
+      exact chapter04_xi_conjugation_symmetry K s
+    zeros := chapter06CanonicalZeroSpectrum K
+    contour_heights := by
+      intro c hc
+      exact Classical.choice
+        (chapter06_canonical_contour_height_sequence_nonempty K hc) }⟩
 
 noncomputable def chapter06CanonicalZetaAnalyticPackage
     (K : Type*) [Field K] [NumberField K] :
@@ -470,7 +524,10 @@ noncomputable def chapter06CanonicalZetaAnalyticPackage
       intro s
       exact chapter04_xi_conjugation_symmetry K s
     zeros := chapter06CanonicalZeroSpectrum K
-    contour_heights := by sorry }
+    contour_heights := by
+      intro c hc
+      exact Classical.choice
+        (chapter06_canonical_contour_height_sequence_nonempty K hc) }
 
 @[simp] theorem chapter06_canonical_zeta_analytic_package_zeros
     (K : Type*) [Field K] [NumberField K] :

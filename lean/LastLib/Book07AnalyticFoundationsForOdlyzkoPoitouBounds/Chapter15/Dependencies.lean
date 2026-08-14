@@ -88,15 +88,16 @@ theorem chapter15_degree_pos
 
 theorem chapter15_rootDiscriminant_pos
     (K : Type*) [Field K] [NumberField K] : 0 < chapter15RootDiscriminant K := by
-  sorry
+  simpa only [chapter09_root_discriminant_eq_canonical] using
+    (chapter09_root_discriminant_pos K)
 
 theorem chapter15_realProportion_nonneg
     (K : Type*) [Field K] [NumberField K] : 0 ≤ chapter15RealProportion K := by
-  sorry
+  exact (chapter09_real_proportion_mem_Icc K).1
 
 theorem chapter15_realProportion_le_one
     (K : Type*) [Field K] [NumberField K] : chapter15RealProportion K ≤ 1 := by
-  sorry
+  exact (chapter09_real_proportion_mem_Icc K).2
 
 @[simp]
 theorem chapter15_rootDiscriminant_eq_canonical
@@ -155,7 +156,7 @@ is the same canonical number-field quantity used by Chapters 8 and 11. -/
 theorem chapter15_rootDiscriminant_eq_chapter09
     (K : Type*) [Field K] [NumberField K] :
     chapter15RootDiscriminant K = chapter09RootDiscriminant K := by
-  sorry
+  exact (chapter09_root_discriminant_eq_canonical K).symm
 
 end
 

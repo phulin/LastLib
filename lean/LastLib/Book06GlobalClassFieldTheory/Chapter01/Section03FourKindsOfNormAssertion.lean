@@ -97,7 +97,9 @@ def LocalNormPreimageIntegralAt
     (K L : Type*) [Field K] [NumberField K] [Field L] [NumberField L]
     [Algebra K L] [FiniteDimensional K L]
     (v : FinitePlaceIndex K) (y : LocalScalarExtension K L v) : Prop :=
-  y ∈ localIntegralTensorSubalgebra K L v
+  y ∈ localIntegralTensorSubalgebra K L v ∧
+    ∃ z : LocalScalarExtension K L v,
+      z ∈ localIntegralTensorSubalgebra K L v ∧ y * z = 1
 
 def AlmostAllLocalNormPreimagesIntegral
     (K L : Type*) [Field K] [NumberField K] [Field L] [NumberField L]
@@ -105,7 +107,6 @@ def AlmostAllLocalNormPreimagesIntegral
   ∃ S : Finset (FinitePlaceIndex K),
     ∀ v : FinitePlaceIndex K, v ∉ S →
       ∃ y : LocalScalarExtension K L v,
-        IsUnit y ∧
         localElementNorm K L v y =
             algebraMap K (BookPlace.completion (Sum.inl v)) a ∧
           LocalNormPreimageIntegralAt K L v y
@@ -174,23 +175,36 @@ theorem principalIdeleClassOf_isClassNorm
   exact (classNormGroup N).one_mem
 
 /- The local-to-global comparison data records exactly the compatibility
-needed to compare the four notions without identifying their ambient groups. -/
+   needed to compare the four notions without identifying their ambient groups. -/
+/- A field norm remains a norm after scalar extension to every completion.  This
+   implication is canonical; it is not part of the auxiliary comparison data
+   used to identify the idele norm with the local product-algebra condition. -/
+theorem elementNorm_implies_local_elementNorm
+    {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L] {a : K} (ha : a ≠ 0)
+    (h : IsElementNorm K L a) :
+    IsLocalElementNorm K L a := by
+  sorry
+
 structure LocalGlobalNormComparison
     (K L : Type*) [Field K] [NumberField K] [Field L] [NumberField L]
     [Algebra K L] [FiniteDimensional K L] where
   normData : GlobalNormInterface K L
-  element_to_local : ∀ {a : K}, a ≠ 0 →
-    IsElementNorm K L a → IsLocalElementNorm K L a
-  element_to_idele : ∀ {a : K} (ha : a ≠ 0),
-    IsElementNorm K L a → IsIdeleNorm K L normData a ha
   principal_idele_iff_local : ∀ {a : K} (ha : a ≠ 0),
     IsIdeleNorm K L normData a ha ↔ IsLocalElementNorm K L a
   local_preimages_integral_almost_all : ∀ {a : K} (ha : a ≠ 0),
     IsLocalElementNorm K L a →
       AlmostAllLocalNormPreimagesIntegral K L a ha
-  idele_to_class : ∀ {a : K} (ha : a ≠ 0),
-    IsIdeleNorm K L normData a ha →
-      IsClassNorm normData (principalIdeleClassOf a ha)
+
+/- A field norm gives an idele norm through the principal-idele compatibility of
+the canonical norm interface.  This is not an additional comparison datum. -/
+theorem elementNorm_implies_ideleNorm
+    {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L]
+    (N : GlobalNormInterface K L) {a : K} (ha : a ≠ 0)
+    (h : IsElementNorm K L a) :
+    IsIdeleNorm K L N a ha := by
+  sorry
 
 theorem elementNorm_implies_local_idele_class
     {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L]
@@ -200,8 +214,9 @@ theorem elementNorm_implies_local_idele_class
     IsLocalElementNorm K L a ∧
       IsIdeleNorm K L D.normData a ha ∧
       IsClassNorm D.normData (principalIdeleClassOf a ha) := by
-  refine ⟨D.element_to_local ha h, D.element_to_idele ha h, ?_⟩
-  exact D.idele_to_class ha (D.element_to_idele ha h)
+  refine ⟨elementNorm_implies_local_elementNorm ha h,
+    elementNorm_implies_ideleNorm D.normData ha h, ?_⟩
+  exact principalIdeleClassOf_isClassNorm D.normData ha
 
 theorem principal_idele_is_ideleNorm_iff_local_elementNorm
     {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L]

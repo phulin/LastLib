@@ -122,6 +122,8 @@ structure Chapter04LocalAnMuPairingData where
   localUnits : Type u
   [localUnitsGroup : CommGroup localUnits]
   reciprocity : H1Mu → localUnits
+  reciprocity_zero : reciprocity 0 = 1
+  reciprocity_add : ∀ a b, reciprocity (a + b) = reciprocity a * reciprocity b
   character : H1A → (localUnits →* ℂˣ)
   character_add : ∀ c d x,
     character (c + d) x = character c x * character d x

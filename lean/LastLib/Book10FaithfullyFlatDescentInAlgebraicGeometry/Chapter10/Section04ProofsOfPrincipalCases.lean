@@ -236,7 +236,15 @@ theorem chapter10_etale_iff_smooth_relativeDimension_zero {X S : Scheme.{u}} (f 
 /-- The equivalent flat/unramified form of étaleness. -/
 theorem chapter10_etale_iff_flat_and_unramified {X S : Scheme.{u}} (f : X ⟶ S) :
     Etale f ↔ Flat f ∧ chapter10Unramified f ∧ LocallyOfFinitePresentation f := by
-  sorry
+  constructor
+  · intro hf
+    have h := (Etale.iff_flat_and_formallyUnramified (f := f)).1 hf
+    refine ⟨h.1, ?_, h.2.2⟩
+    rw [chapter10_unramified_iff_formallyUnramified]
+    exact ⟨inferInstance, h.2.1⟩
+  · rintro ⟨hflat, hunram, hfp⟩
+    rw [chapter10_unramified_iff_formallyUnramified] at hunram
+    exact (Etale.iff_flat_and_formallyUnramified (f := f)).2 ⟨hflat, hunram.2, hfp⟩
 
 /-- Étaleness descends from an fpqc base change. -/
 theorem chapter10_etale_descends {X S T : Scheme.{u}} (f : X ⟶ S) (p : T ⟶ S)

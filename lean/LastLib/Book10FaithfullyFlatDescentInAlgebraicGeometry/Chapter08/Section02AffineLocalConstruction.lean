@@ -1,4 +1,4 @@
-import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter08.Section01PullbackDataOnACover
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter08.Dependencies
 
 namespace LastLib
 namespace Book10FaithfullyFlatDescentInAlgebraicGeometry
@@ -139,8 +139,19 @@ theorem chapter08_affine_local_gluing
   exact chapter08_affine_local_gluing_with_comparisons (C := C)
     (choices := choices) D
 
+/-- A compatible affine module descent datum produces the ring-level witness
+used in the affine-local construction.  The equality records which datum the
+witness represents; a bare `Nonempty` witness would not connect it to `D`. -/
+theorem chapter08_affine_module_descent_effective
+    {A : CommRingCat.{u}} {ι : Type u} {B : ι → CommRingCat.{u}}
+    (P : Chapter08FaithfullyFlatProductAlgebra A B)
+    (D : Chapter08SingleCoverQuasiCoherentDescentData
+      (Spec.map P.algebraMap)) :
+    ∃ W : Chapter08AffineModuleDescentWitness A B P, W.descent = D := by
+  sorry
+
 /- The two presentations of a double basic-open localization have a
-canonical algebra equivalence; restriction of scalars transports modules to
+   canonical algebra equivalence; restriction of scalars transports modules to
 the canonical localization ring. -/
 noncomputable def chapter08LocalizationAssociativityEquiv
     {R : CommRingCat.{u}} (f g : R) :
