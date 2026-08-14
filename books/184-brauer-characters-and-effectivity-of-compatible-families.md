@@ -35,7 +35,7 @@
    - [Why all intersections, not just the top field, are needed](#62-why-all-intersections-not-just-the-top-field-are-needed)
    - [Norm invariance](#63-norm-invariance)
    - [Evaluation at the distinguished embedding](#64-evaluation-at-the-distinguished-embedding)
-   - [A hostile check on possible circularity](#65-a-hostile-check-on-possible-circularity)
+   - [Logical order and circularity](#65-logical-order-and-circularity)
 7. [Positivity and the effective representation](#7-positivity-and-the-effective-representation)
    - [The integral multiplicity argument](#71-the-integral-multiplicity-argument)
    - [Cancellation as an actual characteristic-zero isomorphism](#72-cancellation-as-an-actual-characteristic-zero-isomorphism)
@@ -75,7 +75,7 @@
 13. [Exact endpoint and conclusion](#13-exact-endpoint-and-conclusion)
     - [The effective package](#131-the-effective-package)
     - [Four invalid shortcuts](#132-four-invalid-shortcuts)
-    - [Dependency and interface audit](#133-dependency-and-interface-audit)
+    - [Dependency and interface ledger](#133-dependency-and-interface-ledger)
     - [The boundary with Book 185](#134-the-boundary-with-book-185)
     - [Conclusion](#135-conclusion)
 
@@ -116,6 +116,14 @@ semisimple representation and promotes the virtual determinant and local records
 that representation. It does not canonically subtract lattices, choose coefficient-field
 models simultaneously at every place, or construct the base-field compatible system. Those
 coherent global tasks belong to Book 185.
+
+There are two different coefficient scopes. The all-coefficient statement includes embeddings
+of residue characteristic two and therefore retains the coefficient-two gate. The
+away-from-two statement does not. In particular, it includes every embedding above three and
+is the only effectivity input used by the fixed-three Fermat route. Thus the fixed-three route
+is conditional on the controlled top datum and its stated upstream hypotheses, but not on
+$(\mathrm{AI}_2)$. Nothing in that route can be used backward to prove the omitted
+coefficient-two member.
 
 **Interface received.** Book 183, Proposition 6.2 and equations (6.4e)--(6.4h), now export the
 exact comparison required here. For every pair of elementary subgroups $H,J$, every
@@ -273,8 +281,8 @@ characteristic-zero hypothesis, not a residual or lattice assertion. It is not s
 Book 183 and is a standing hypothesis below. Proposition 5.1 explains why this single top-field
 hypothesis suffices for every elementary intersection packet.
 
-For one fixed Brauer datum, the logically exact numerical gate for absolutely irreducible
-effectivity is
+For one fixed Brauer datum and one fixed coefficient-two embedding $\tau$, the logically exact
+numerical gate for absolutely irreducible effectivity is
 
 $$
 \|\mathcal R_{\mathfrak B,\tau}\|^2=n^TG_\tau n=1
@@ -285,10 +293,11 @@ $$
 Indeed, the integral multiplicity and virtual-dimension argument of Chapter 7 shows that this
 condition is equivalent to the desired positive absolutely irreducible rank-two class. For
 relation independence the corresponding exact numerical gate is norm zero for the difference
-of the two presentations. The existing entrywise Gram proof uses the following more structured,
-still finite replacement for $(\mathrm{AI}_2)$. For every triple $(i,j,x)$ occurring in its
-Mackey calculation, with $D=D_{ij}(x)$, $L=M^D$, and $\delta=\delta_{ij,x}$ as in
-(3.15)--(3.16), require
+of the two presentations. The dependence of $(\mathrm N_2(\mathfrak B))$ on the fixed
+embedding $\tau$ is suppressed in the notation. The existing entrywise Gram proof uses the
+following more structured, still finite replacement for $(\mathrm{AI}_2)$. For every triple
+$(i,j,x)$ occurring in its Mackey calculation, with $D=D_{ij}(x)$, $L=M^D$, and
+$\delta=\delta_{ij,x}$ as in (3.15)--(3.16), require
 
 $$
 \dim\operatorname{Hom}_{G_L}
@@ -303,10 +312,10 @@ $$
 $$
 
 For relation independence the same condition is required for the finite union of triples from
-the two relations. This finite Hom-dimension condition is exactly what makes the existing
-Mackey Gram matrix proof coefficient independent; individual entry invariance is not logically
-necessary if the signed quadratic value can be proved directly. Hypothesis $(\mathrm{AI}_2)$
-is the clean uniform sufficient hypothesis:
+the two relations. Its dependence on $\tau$ is likewise suppressed. This finite Hom-dimension
+condition is exactly what gives the existing Mackey Gram matrix proof coefficient-independent
+entries; individual entry invariance is not logically necessary if the signed quadratic value
+can be proved directly. Hypothesis $(\mathrm{AI}_2)$ is the clean uniform sufficient hypothesis:
 Proposition 5.1 gives absolute irreducibility of every $r_{D,\tau}$, and Proposition 5.2 then
 gives $(\mathrm G_2(\mathfrak B))$ by Schur's lemma and strong multiplicity one. No converse is
 claimed.
@@ -420,10 +429,18 @@ multiplicity. The appropriate invariant is the norm of the entire generalized ch
 
 ### 1.3 The main theorem
 
-**Theorem 1.1 (effectivity of the signed Brauer array).** Assume $(\mathrm{AI}_2)$. For every
-coefficient embedding $\tau:K\hookrightarrow\Omega$, the virtual class
-$\mathcal R_{\mathfrak B,\tau}$ is represented
-by a continuous absolutely irreducible two-dimensional semisimple representation
+**Theorem 1.1 (effectivity of the signed Brauer array).** Fix an integral Brauer datum
+$\mathfrak B$.
+
+- If $q(\tau)\ne2$, the virtual class $\mathcal R_{\mathfrak B,\tau}$ is represented by a
+  continuous absolutely irreducible two-dimensional semisimple representation.
+- If $q(\tau)=2$, the same absolutely irreducible effectivity conclusion holds if and only if
+  $(\mathrm N_2(\mathfrak B))$ holds at $\tau$. The finite condition
+  $(\mathrm G_2(\mathfrak B))$ implies this norm condition. The uniform hypothesis
+  $(\mathrm{AI}_2)$ implies $(\mathrm G_2(\mathfrak B))$ for every $\mathfrak B$ and every
+  coefficient embedding of residue characteristic two.
+
+Whenever the conclusion holds, write its unique isomorphism class as
 
 $$
 r_{\mathfrak B,\tau}:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(\Omega).
@@ -447,15 +464,21 @@ coefficient residue characteristic, its Weil--Deligne class is the effective mem
 183's local record. In particular, at $2$ and away from coefficient characteristic two it has
 nonzero rank-one monodromy, the invariant line and sign in (1.1b)--(1.1c), and Artin conductor
 exponent one. The representation is independent, after scalar extension, of the
-positive-minus-negative presentation and of the integral Brauer datum.
+positive-minus-negative presentation. It is independent, after scalar extension, of the
+integral Brauer datum throughout the away-from-two range and, in the all-coefficient range,
+under $(\mathrm{AI}_2)$. More generally, at one coefficient-two embedding, two Brauer data
+which each satisfy their norm-one condition give isomorphic effective representations by their
+common dense Frobenius polynomials and Brauer--Nesbitt.
 
 The theorem asserts no preferred stable lattice for a general $\tau$. It also does not yet
 assemble the representations (1.13), their coefficient fields, and their place labels into one
 base-field compatible system. That assembly is the task of Book 185.
 
-Without $(\mathrm{AI}_2)$, the same conclusion and proof apply to every $\tau$ whose residue
-characteristic is different from two. No conclusion at coefficient characteristic two is then
-claimed.
+Thus $(\mathrm{AI}_2)$ is not logically necessary for one fixed relation: the exact gate there
+is norm one. It is the clean uniform condition used for the all-coefficient theorem. Without
+it, the full theorem remains valid away from two, and a coefficient-two conclusion is made
+only when $(\mathrm N_2(\mathfrak B))$, or a stated sufficient condition for it, has actually
+been supplied.
 
 ### 1.4 Proof architecture
 
@@ -468,10 +491,13 @@ The proof has five steps.
 3. Insert Book 183's overlap identities (1.3)--(1.3b), separately for every double coset, to
    turn every summand into the self-twist space of one cuspidal rank-two realization over its
    elementary intersection field.
-4. Prove that these self-twist dimensions do not depend on $\tau$. Hence the entire Gram matrix,
-   and therefore the norm of $\mathcal R_{\mathfrak B,\tau}$, is independent of $\tau$.
+4. Away from residue characteristic two, prove that these self-twist dimensions do not depend
+   on $\tau$. At residue characteristic two, the identical conclusion follows from
+   $(\mathrm G_2(\mathfrak B))$, while $(\mathrm N_2(\mathfrak B))$ bypasses entrywise Gram
+   invariance and states the needed quadratic value directly.
 5. At $\tau_0$ the class is the absolutely irreducible $\rho$, so the common norm is one. Rank
-   two fixes the sign.
+   two fixes the sign. For a coefficient-two embedding under the minimal gate, norm one is
+   already the hypothesis and the same integral sign argument applies.
 
 Clifford theory explains structurally why this calculation is possible: every induced summand
 lies in the same block above the top-field representation. It also identifies the only possible
@@ -949,9 +975,9 @@ from the already preserved nonzero monodromy operator. The independent ambient
 semisimplicity reduction of Book 183, Proposition 6.1 is a permissible prior certificate
 because it does not use this effectivity argument or any SP irreducibility conclusion.
 
-**Proposition 5.1.** Assume $(\mathrm{AI}_2)$. Let $D\leq\Gamma$ be elementary. For every
-coefficient embedding $\tau$, the semisimple representation $r_{D,\tau}$ is absolutely
-irreducible.
+**Proposition 5.1.** Let $D\leq\Gamma$ be elementary. If $q(\tau)\ne2$, the semisimple
+representation $r_{D,\tau}$ is absolutely irreducible. If $q(\tau)=2$, the same conclusion
+holds under $(\mathrm{AI}_2)$.
 
 **Proof.** Suppose first that the residue characteristic of $\tau$ is not two. Since $2$ splits
 completely in $M$, choose a dyadic place of $F_D$. Book 183's algebraic SP record identifies the
@@ -1016,6 +1042,32 @@ the continuous semisimple member but no uniform coefficient-place irreducibility
 that theorem from the current dependency spine. Conversely, $(\mathrm{AI}_2)$ alone would not
 prove semistability, the SP local pair, or any integral statement at a place above two.
 
+The other earlier conclusions do not close the gap in a disguised form. The curve attachment
+gives a continuous semisimple rank-two member, cyclotomic determinant, total oddness, pure good
+polynomials, and some stable lattice. Semisimple does not mean simple, and existence of a stable
+lattice gives no irreducibility statement about its reduction. The ambient semisimplicity
+certificate used to preserve raw local data likewise says that the curve cohomology is a direct
+sum of simple global modules; it does not say that this particular two-dimensional multiplicity
+space is one of them rather than a sum of two characters.
+
+Nor can the prime-to-coefficient SP pair be moved across the coefficient boundary. At a
+two-adic coefficient place the dyadic decomposition group is exactly a coefficient-prime local
+group. Away-from-two compatibility supplies no monodromy operator there, and passing to a
+global semisimplification does not create one. Good Frobenius polynomials and purity determine
+the semisimple member at a fixed coefficient place once it exists, but they do not transport an
+invariant line, an intertwiner, or an endomorphism dimension between completions of different
+residue characteristic. The coefficient-prime statement in $(\mathrm{CP\!\!-SP}_2)$ is
+therefore a genuinely new local assertion.
+
+Finally, determinant and parity alone cannot prove the claim: the semisimple representation
+$1\oplus\chi_2$ has cyclotomic determinant and the required eigenvalues of complex
+conjugation. The dense-Frobenius criterion of Chapter 12 would identify this particular split
+sum only after the trace identity $1+\chi_2$ had been proved on a dense set; no such identity is
+part of the packet data. These observations leave three honest possibilities and no fourth:
+prove $(\mathrm{CP\!\!-SP}_2)$, prove $(\mathrm{AI}_2)$ by another argument, or verify the
+finite relation-specific gate $(\mathrm G_2(\mathfrak B))$ or
+$(\mathrm N_2(\mathfrak B))$ directly.
+
 ### 5.3 Self-twist groups
 
 Fix an elementary $D\leq\Gamma$ and put $F=F_D$ and $\pi_F=\pi_D$.
@@ -1034,8 +1086,8 @@ $$
 Only finitely many $\delta$ occur in this book, namely the ratios (3.16), so no assertion about
 the size of the full group of all finite-order characters is needed.
 
-**Proposition 5.2 (embedding-independent self-twist test).** For every such $\delta$ and every
-coefficient embedding $\tau$,
+**Proposition 5.2 (embedding-independent self-twist test).** Let $\tau$ be a coefficient
+embedding for which $r_{\pi_F,\tau}$ is absolutely irreducible. For every such $\delta$,
 
 $$
 \dim_\Omega\operatorname{Hom}_{G_F}
@@ -1048,10 +1100,12 @@ $$
 \tag{5.5}
 $$
 
-In particular the dimension is independent of $\tau$.
+In particular the dimension has the displayed coefficient-independent value throughout the
+away-from-two range, and throughout the all-coefficient range under $(\mathrm{AI}_2)$.
 
-**Proof.** Proposition 5.1 and Schur's lemma show that the Hom space has dimension one if the
-two representations are isomorphic and zero otherwise.
+**Proof.** Absolute irreducibility and Schur's lemma show that the Hom space has dimension one
+if the two representations are isomorphic and zero otherwise. Proposition 5.1 supplies this
+irreducibility in the ranges asserted after the formula.
 
 If $\pi_F\otimes\delta\simeq\pi_F$, compatibility of twisting with Galois realization gives
 
@@ -1130,7 +1184,7 @@ $$
 \tag{6.1}
 $$
 
-Proposition 5.2 turns (3.17) into the entirely coefficient-free formula
+For $q(\tau)\ne2$, Proposition 5.2 turns (3.17) into the entirely coefficient-free formula
 
 $$
 \boxed{
@@ -1142,20 +1196,31 @@ $$
 The right side depends on the finite subgroup geometry, the selected overlap packets, and their
 finite self-twist groups. It does not depend on $\tau$.
 
+When $q(\tau)=2$, $(\mathrm G_2(\mathfrak B))$ implies equation (6.2) term by term for the
+finite list of triples belonging to this Brauer datum. Hypothesis $(\mathrm{AI}_2)$ proves that
+condition through Propositions 5.1--5.2. Without either input,
+(3.17) remains valid, but a reducible overlap representation can have an endomorphism space of
+dimension greater than one or a rank-one Hom which is not an isomorphism. The automorphic
+self-twist indicator then does not determine the Hom dimension.
+
 The formula also passes a symmetry check. Reversing $(i,j)$ sends a double coset represented by
 $x$ to the one represented by $x^{-1}$, transports the intersection packet, and replaces the
 character ratio by its inverse. A self-twist group is closed under inversion, so the indicator
 is unchanged, as required by the symmetry of the Hom pairing.
 
-**Theorem 6.1 (Gram invariance).** The Mackey Gram matrix $G_\tau$ of (3.2) is the same integral
-matrix for every coefficient embedding $\tau$.
+**Theorem 6.1 (Gram invariance in its exact range).** The Mackey Gram matrix $G_\tau$ of (3.2)
+is the same integral matrix for every coefficient embedding of residue characteristic different
+from two. At a coefficient-two embedding it is that same matrix under
+$(\mathrm G_2(\mathfrak B))$. Consequently $(\mathrm{AI}_2)$ makes the matrix independent of
+$\tau$ over all coefficient embeddings.
 
-**Proof.** Formula (6.2) proves entrywise equality. Book 183's overlap theorem applies to every
-one of the finitely many double cosets and places both Hom arguments over the same
-$r_{D_{ij}(x),\tau}$. Every double-coset set and every algebraic character
-$\delta_{ij,x}=\beta_{ij,x}\alpha_{ij,x}^{-1}$ is fixed before a coefficient embedding is
-chosen. Proposition 5.2 proves that each resulting self-twist indicator is unchanged by that
-choice. $\square$
+**Proof.** Formula (6.2) proves entrywise equality in the away-from-two range. Book 183's
+overlap theorem applies to every one of the finitely many double cosets and places both Hom
+arguments over the same $r_{D_{ij}(x),\tau}$. Every double-coset set and every algebraic
+character $\delta_{ij,x}=\beta_{ij,x}\alpha_{ij,x}^{-1}$ is fixed before a coefficient
+embedding is chosen. Proposition 5.2 proves that each resulting self-twist indicator is
+unchanged in that range. At residue characteristic two, $(\mathrm G_2(\mathfrak B))$ asserts
+the same entrywise formula, and $(\mathrm{AI}_2)$ implies that assertion. $\square$
 
 ### 6.2 Why all intersections, not just the top field, are needed
 
@@ -1181,7 +1246,9 @@ $$
 Theorem 6.1 therefore proves:
 
 **Corollary 6.2.** The nonnegative integer
-$\|\mathcal R_{\mathfrak B,\tau}\|^2$ is independent of $\tau$.
+$\|\mathcal R_{\mathfrak B,\tau}\|^2$ is independent of $\tau$ away from residue
+characteristic two. It has the same value at a coefficient-two embedding under
+$(\mathrm G_2(\mathfrak B))$.
 
 The signs $n_i$ cause no difficulty. They enter only after the positive semidefinite Gram matrix
 has been computed. In particular, there is no claim that each term of the signed quadratic sum
@@ -1208,16 +1275,31 @@ Combining (6.5) with Corollary 6.2 gives the decisive equality
 
 $$
 \boxed{\|\mathcal R_{\mathfrak B,\tau}\|^2=1
-\quad\text{for every }\tau.}
+\quad\text{if }q(\tau)\ne2,
+\text{ or if }q(\tau)=2\text{ and }(\mathrm G_2(\mathfrak B))\text{ holds}.}
 \tag{6.6}
 $$
+
+At a coefficient-two embedding, $(\mathrm N_2(\mathfrak B))$ is precisely equation (6.6)
+without the stronger assertion that every Gram entry agrees with its away-from-two value.
+Thus
+
+$$
+(\mathrm G_2(\mathfrak B))
+\Longrightarrow(\mathrm N_2(\mathfrak B)),
+\tag{6.6a}
+$$
+
+and no converse is required. This proves the complete implication from the finite Hom gate to
+the minimal numerical gate using only the imported overlaps and the distinguished norm-one
+calculation.
 
 This is the only propagation from the distinguished member. We propagate an integer Gram
 matrix whose entries have separately been shown embedding independent. We do not claim that an
 isomorphism or matrix model at $\tau_0$ can simply be transported through an unrelated
 nonarchimedean completion.
 
-### 6.5 A hostile check on possible circularity
+### 6.5 Logical order and circularity
 
 The proof of (6.6) does not assume effectivity at a new embedding. Every $A_{i,\tau}$ is an
 actual induced representation before signs are introduced. Frobenius reciprocity and Mackey
@@ -1234,7 +1316,7 @@ representation of Theorem 7.1. The overlap is characteristic zero, so the Gram c
 does not assume an integral cancellation. Coherent coefficient-family assembly is absent from
 both the overlap input and the norm proof.
 
-The same audit applies to local preservation. The nonzero $N$ used in Proposition 5.1 is an
+The same logical check applies to local preservation. The nonzero $N$ used in Proposition 5.1 is an
 input from Book 183, not an output reconstructed from the effective constituent. Neither the
 Gram norm nor Theorem 7.1 may be run backward to prove that the raw packet pair survived global
 semisimplification.
@@ -1243,7 +1325,9 @@ semisimplification.
 
 ### 7.1 The integral multiplicity argument
 
-Fix $\tau$ and decompose the virtual semisimple class into irreducibles:
+Fix $\tau$ for which (6.6) is known. This includes every away-from-two embedding; at a
+coefficient-two embedding it is exactly the hypothesis $(\mathrm N_2(\mathfrak B))$. Decompose
+the virtual semisimple class into irreducibles:
 
 $$
 \mathcal R_{\mathfrak B,\tau}
@@ -1271,22 +1355,31 @@ $$
 The negative sign would make the right side negative. Hence the unique coefficient is $+1$ and
 the corresponding irreducible has dimension two.
 
-**Theorem 7.1 (positivity and effectivity).** There is a unique isomorphism class of absolutely
-irreducible two-dimensional semisimple representation $r_{\mathfrak B,\tau}$ such that
+**Theorem 7.1 (positivity and the exact norm gate).** If $q(\tau)\ne2$, or if
+$q(\tau)=2$ and $(\mathrm N_2(\mathfrak B))$ holds, there is a unique isomorphism class of
+absolutely irreducible two-dimensional semisimple representation $r_{\mathfrak B,\tau}$ such
+that
 
 $$
 \mathcal R_{\mathfrak B,\tau}=[r_{\mathfrak B,\tau}].
 \tag{7.4}
 $$
 
-**Proof.** The application-specific work is (6.2)--(6.6): every Gram entry is reduced to a
-packet self-twist and shown coefficient independent, and the distinguished norm is one. Book
-180, Theorem 7.2 now applies to (6.6) and (7.3), giving the positive irreducible rank-two
-constituent and the cancellation (7.5). Uniqueness follows from irreducible multiplicities.
-$\square$
+Conversely, if $q(\tau)=2$ and the class is represented by an absolutely irreducible
+rank-two representation, then $(\mathrm N_2(\mathfrak B))$ holds.
+
+**Proof.** In the away-from-two range, the application-specific work is (6.2)--(6.6): every
+Gram entry is reduced to a packet self-twist and shown coefficient independent, and the
+distinguished norm is one. Under $(\mathrm G_2(\mathfrak B))$ the same proof works at residue
+characteristic two. Under the weaker $(\mathrm N_2(\mathfrak B))$, equation (7.2) is the
+hypothesis itself. In every case Book 180, Theorem 7.2 applies to (7.2)--(7.3), giving the
+positive irreducible rank-two constituent and the cancellation (7.5). Uniqueness follows from
+irreducible multiplicities. Conversely, the class of one absolutely irreducible representation
+has character norm one by Schur's lemma. $\square$
 
 This proves positive sign, dimension two, norm one, and irreducibility at every coefficient
-embedding. The four assertions are logically distinct: norm one gives one signed irreducible;
+embedding in the range of Theorem 7.1. The four assertions are logically distinct: norm one
+gives one signed irreducible;
 positive dimension fixes the sign; the rank calculation fixes its dimension. Integrality of the
 Brauer coefficients is what makes the signed irreducible coefficient an integer. Neither the
 cyclotomic determinant, purity, nor the quadratic Frobenius polynomial is used to choose the
@@ -1496,8 +1589,9 @@ packet eigenvalues gives the conjugate datum $\mathfrak B^\sigma$. If $\tau$ is 
 embedding, then the induced summands for $(\mathfrak B^\sigma,\tau)$ have the same algebraic
 local polynomials as those for $(\mathfrak B,\tau\circ\sigma)$.
 
-The self-twist indicators in (6.1) are also transported by $\sigma$, so both virtual classes
-are effective. At every good $p$ their traces are
+The self-twist indicators in (6.1) are also transported by $\sigma$. Whenever the relevant
+away-from-two or coefficient-two gate holds, both virtual classes are therefore effective. At
+every good $p$ their traces are
 
 $$
 \tau(\sigma(a_p)).
@@ -1894,8 +1988,11 @@ Apply the Gram calculation to the union of the two finite lists of induced summa
 coefficient vector $(n_i,-n'_j)$. All cross inner products are again computed on elementary
 intersections. Book 183's Proposition 6.2 applies to every cross pair, including non-Galois
 intersection fields, and retains the corresponding quotient-character ratio. Thus Theorem 6.1
-applies to the enlarged Gram matrix and shows that $\|\mathcal D_\tau\|^2$ is independent of
-$\tau$. At the one common distinguished embedding fixed in the coefficient ledger, both Brauer
+applies to the enlarged Gram matrix away from residue characteristic two. It also applies at a
+coefficient-two embedding if $(\mathrm G_2)$ is supplied for the union of the two lists; in
+particular, $(\mathrm{AI}_2)$ supplies this. It then shows that
+$\|\mathcal D_\tau\|^2$ is independent of $\tau$ in that range. At the one common
+distinguished embedding fixed in the coefficient ledger, both Brauer
 expressions are $[\rho]$, and hence
 
 $$
@@ -1903,9 +2000,9 @@ $$
 \tag{11.4}
 $$
 
-Therefore $\|\mathcal D_\tau\|^2=0$ at every embedding. Positive definiteness of the integral
-character norm gives $\mathcal D_\tau=0$. The two effective irreducibles are consequently
-isomorphic:
+Therefore $\|\mathcal D_\tau\|^2=0$ throughout that range. Positive definiteness of the
+integral character norm gives $\mathcal D_\tau=0$. The two effective irreducibles are
+consequently isomorphic:
 
 $$
 r_{\mathfrak B,\tau}\simeq r_{\mathfrak B',\tau}.
@@ -1913,11 +2010,18 @@ r_{\mathfrak B,\tau}\simeq r_{\mathfrak B',\tau}.
 $$
 
 This proves semisimple relation-independence over an algebraically closed common coefficient
-field and therefore relation-independence of the effective irreducible. Book 183 already proves
-that the good virtual polynomials are relation-independent. The calculation here proves the
-stronger equality of the full virtual classes from the entrywise overlap export and, once
-effectivity is known, identifies the actual irreducibles. No new Frobenius-density theorem is
-needed in this proof.
+field in the asserted range and therefore relation-independence of the effective irreducible.
+If, at a coefficient-two embedding, the two relations separately satisfy their minimal
+norm-one gates but the union Gram condition has not been supplied, Theorem 7.1 first produces
+two actual semisimple representations. Book 183's relation-independent good polynomials give
+equal traces on the dense good Frobenius set, so continuity and Brauer--Nesbitt identify them.
+Thus separate norm-one effectivity is also enough for relation independence, though it does not
+prove norm zero for the virtual difference before the two constituents are constructed.
+
+Book 183 already proves that the good virtual polynomials are relation-independent. The Gram
+calculation gives the stronger equality of the full virtual classes from the entrywise overlap
+export; the last argument identifies the actual irreducibles from the minimal gates. No new
+Frobenius-density theorem is needed in either proof.
 
 ### 11.4 Independence of harmless coefficient enlargement
 
@@ -1941,9 +2045,10 @@ smaller than a field of definition, and the obstruction is not visible in (11.6)
 
 ### 11.5 Coefficient-conjugation covariance
 
-Return to $\sigma\in\operatorname{Gal}(K/\mathbf Q)$. The two effective representations
-constructed from $(\mathfrak B^\sigma,\tau)$ and $(\mathfrak B,\tau\circ\sigma)$ are represented
-term by term by the same scalar images: applying $\sigma$ first and then $\tau$ is applying
+Return to $\sigma\in\operatorname{Gal}(K/\mathbf Q)$. Suppose the away-from-two conclusion or
+the relevant coefficient-two gate applies. The two effective representations constructed from
+$(\mathfrak B^\sigma,\tau)$ and $(\mathfrak B,\tau\circ\sigma)$ are represented term by term by
+the same scalar images: applying $\sigma$ first and then $\tau$ is applying
 $\tau\circ\sigma$. Their virtual classes therefore agree, so effectivity gives
 
 $$
@@ -2077,10 +2182,10 @@ the theorem make the same obstruction available at every embedding.
 We can now state the complete output in the notation of Chapter 1.
 
 **Theorem 13.1 (effective Brauer character package).** Fix the controlled data and the exact
-elementary-intersection interface exported by Book 183, assume $(\mathrm{AI}_2)$, and fix an integral Brauer datum
+elementary-intersection interface exported by Book 183, fix an integral Brauer datum
 $\mathfrak B$, and use a common Galois coefficient field $K$ containing the elementary packets
-and character values. For every coefficient embedding
-$\tau:K\hookrightarrow\Omega$:
+and character values. Let $\tau:K\hookrightarrow\Omega$ be a coefficient embedding. Assume
+either $q(\tau)\ne2$, or $q(\tau)=2$ and $(\mathrm N_2(\mathfrak B))$ holds. Then:
 
 1. the signed class $\mathcal R_{\mathfrak B,\tau}$ has character norm one;
 2. its virtual dimension two forces positive sign, so it is represented by one absolutely
@@ -2095,27 +2200,36 @@ $\tau:K\hookrightarrow\Omega$:
    =X^2-\tau(a_p)X+p;
    $$
 
-5. the member at $\tau_0$ is the chosen $\rho$ after scalar extension;
+5. when $\tau=\tau_0$, the member is the chosen $\rho$ after scalar extension;
 6. local restriction is the effective rank-two member of the Mackey record from Book 183; away
    from coefficient characteristic two its SP pair has nonzero rank-one monodromy, invariant
    line $\ker N=\operatorname{im}N$, sign $\varepsilon_2$, and conductor exponent one, while
    the other local, archimedean, and conductor records become those of the actual
    representation;
 7. the isomorphism class is independent of the positive-minus-negative presentation, of
-   conjugating a Brauer term, of harmless coefficient enlargement, and—after scalar
-   extension—of the integral Brauer relation; and
+   conjugating a Brauer term, and of harmless coefficient enlargement; after scalar extension
+   it is independent of the integral Brauer relation in the away-from-two range, under the
+   union Gram condition at coefficient characteristic two, or when each of the two relations
+   separately satisfies its norm-one gate; and
 8. coefficient conjugation transports the effective isomorphism class in the same way that it
    transports the common polynomials.
 
 **Proof.** Frobenius reciprocity and Mackey give the double-coset Hom sum. Every intersection
 subgroup is elementary, and Book 183, Proposition 6.2 and (6.4e)--(6.4h), identifies the two
 packet restrictions with the one intersection packet, retains the two restricted characters,
-and fixes their ratio as $\beta\alpha^{-1}$. Proposition 5.2 makes each resulting self-twist
-indicator embedding independent. The Gram matrix is consequently embedding independent. Its
-quadratic value at the distinguished embedding is the endomorphism dimension of $\rho$, hence
-one. The integral norm-one sign lemma and virtual dimension two prove positive effectivity and
-absolute irreducibility. Continuity, determinant, Frobenius, local, and independence statements
-are Chapters 7--11. $\square$
+and fixes their ratio as $\beta\alpha^{-1}$. Away from two, Proposition 5.2 makes each
+resulting self-twist indicator embedding independent. The Gram matrix is consequently
+embedding independent there, and its quadratic value at the distinguished embedding is the
+endomorphism dimension of $\rho$, hence one. At a coefficient-two embedding the stated norm
+condition supplies exactly this last quadratic equality; $(\mathrm G_2(\mathfrak B))$ and
+$(\mathrm{AI}_2)$ are sufficient sources by (6.6a) and Proposition 5.1. The integral norm-one
+sign lemma and virtual dimension two prove positive effectivity and absolute irreducibility.
+Continuity, determinant, Frobenius, local, and independence statements are Chapters 7--11.
+$\square$
+
+Under $(\mathrm{AI}_2)$ the theorem applies simultaneously to every coefficient embedding and
+every integral Brauer datum. Without $(\mathrm{AI}_2)$ it still applies simultaneously to all
+embeddings away from two. This latter collection includes every place above three.
 
 ### 13.2 Four invalid shortcuts
 
@@ -2165,7 +2279,7 @@ $$
 The remaining coefficient descent, coherent place indexing, model selection, and system-level
 local compatibility are genuine construction steps.
 
-### 13.3 Dependency and interface audit
+### 13.3 Dependency and interface ledger
 
 The direct dependency row is
 
@@ -2188,8 +2302,10 @@ direct dependency edge is asserted.
 
 The proof does not merely invoke abstract effectivity. Chapters 5--6 identify every overlap Hom
 space with the correctly oriented finite quotient self-twist, prove the indicator is coefficient
-independent, evaluate the complete Gram norm at the distinguished embedding, and obtain norm
-one. Only then is Book 180's positivity theorem applied. Chapters 7--9 promote the application-specific
+independent away from two and under the stated coefficient-two Hom gate, evaluate the complete
+Gram norm at the distinguished embedding, and obtain norm one. The minimal coefficient-two
+gate instead supplies that last norm directly. Only then is Book 180's positivity theorem
+applied. Chapters 7--9 promote the application-specific
 virtual determinant, Frobenius polynomial, purity, and SP local Mackey object to records of the
 actual constituent.
 
@@ -2222,21 +2338,34 @@ $$
 
 their determinant, common good polynomials, actual local Mackey records, and the
 representation-theoretic independence statements of Chapter 11. The local export includes the
-full SP pair and its conductor-one consequence, but no integral model. Under $(\mathrm{AI}_2)$,
-Book 185 must turn those classes into a single compatible-system object. Concretely, it must
-retain that hypothesis (or discharge it), choose and descend finite
-coefficient fields, index members coherently by places of one number field, verify that the
-chosen models realize the common polynomials without dependence on auxiliary embeddings,
+full SP pair and its conductor-one consequence when the coefficient residue characteristic is
+different from two, but no coefficient-prime SP assertion and no integral model. Under
+$(\mathrm{AI}_2)$, or under a replacement proving the necessary coefficient-two norm gates,
+Book 185 can turn the all-coefficient classes into a single compatible-system object.
+Concretely, an all-coefficient assembly must retain that gate or discharge it, choose and
+descend finite coefficient fields, index members coherently by places of one number field,
+verify that the chosen models realize the common polynomials without dependence on auxiliary
+embeddings,
 assemble continuity and local compatibility in that common language, and identify the original
 member inside the completed family. Any integral refinement must then choose lattices and prove
 its own local properties.
+
+There is a strictly smaller assembly which omits coefficient places above two. For it, every
+effectivity input of this book is already unconditional relative to the controlled packet
+datum. In particular, the member at a place above three exists and is effective without
+$(\mathrm{AI}_2)$. The fixed-three Fermat route selects precisely that member, carries the
+rational dyadic SP pair at a prime different from its coefficient characteristic, and never
+uses a coefficient-two representation. Accordingly, $(\mathrm{AI}_2)$ is required only by
+the advertised all-coefficient effectivity and assembly as currently stated; a proved weaker
+coefficient-two norm gate can replace it. It is not an antecedent of the away-from-two or
+fixed-three conclusion.
 
 Thus effectivity and assembly are adjacent but different. Equation (1.3) is now an exported
 theorem of Book 183, so, relative to that exported controlled packet datum and
 $(\mathrm{AI}_2)$, this book proves that each signed Brauer character is one honest irreducible
 representation. Without $(\mathrm{AI}_2)$ the assertion is restricted to coefficient residue
-characteristic different from two. The next book must
-still prove that all those honest
+characteristic different from two, together with any coefficient-two relation for which the
+minimal norm gate is separately proved. The next book must still prove that all those honest
 representations are the members of one honest compatible family.
 
 ### 13.5 Conclusion
@@ -2249,9 +2378,12 @@ ring had to be shown to cancel the same constituents everywhere at once.
 Mackey theory found the correct places to test that cancellation. Frobenius reciprocity changed
 an inner product of large induced representations into Hom spaces over elementary intersection
 fields. The selected packet on each intersection made the two sides twists of one irreducible
-rank-two realization. Strong multiplicity one made the resulting self-twist indicator
-independent of the coefficient embedding. The entire Gram matrix was therefore fixed before a
-coefficient place was chosen.
+rank-two realization away from coefficient residue characteristic two, and under
+$(\mathrm{AI}_2)$ also at coefficient characteristic two. Strong multiplicity one made the
+resulting self-twist indicator independent of the coefficient embedding in that range. For a
+fixed coefficient-two relation, $(\mathrm G_2(\mathfrak B))$ is the finite termwise Hom
+assertion that forces the same Gram entries, while $(\mathrm N_2(\mathfrak B))$ asks only for
+the signed quadratic value needed by positivity.
 
 At the distinguished place, the virtual class was the original irreducible representation, so
 the fixed Gram calculation had norm one. Integrality then left no room for a hidden positive and
@@ -2260,18 +2392,21 @@ the positive sign. The virtual determinant became an actual cyclotomic determina
 quadratic polynomial became an actual Frobenius polynomial, and the local Mackey record became
 the record of an actual rank-two representation. At $2$, Krull--Schmidt cancellation retained
 the nonzero rank-one monodromy, invariant line, Frobenius sign, and conductor one of the SP
-pair.
+pair whenever two is different from the coefficient residue characteristic. No such local
+description was inferred at the coefficient prime.
 
-Book 180's Brauer--Nesbitt theorem then supplied recognition, not existence. It proved the semisimple independence
-statements that properly belong at this stage and gave the sharp rank-two diagnostic: a dense
-trace identity $1+\chi$ forces semisimplification $1\oplus\chi$. Book 183's completed
+Book 180's Brauer--Nesbitt theorem then supplied recognition, not existence. It proved the
+semisimple independence statements that properly belong at this stage and gave the sharp
+rank-two diagnostic: a dense trace identity $1+\chi$ forces semisimplification
+$1\oplus\chi$. Book 183's completed
 intersection-field theorem closes the overlap prerequisite. The remaining uniform
 coefficient-two irreducibility input is $(\mathrm{AI}_2)$; relation by relation its exact use is
 to establish $(\mathrm N_2(\mathfrak B))$, via the stronger entrywise condition
 $(\mathrm G_2(\mathfrak B))$. The current sources do not prove any of these conditions at
 residue characteristic two, and the sufficient coefficient-prime SP theorem in (5.3a) is
 likewise missing. Subject to $(\mathrm{AI}_2)$, characteristic-zero effectivity is
-dependency-closed.
-Coherent coefficient descent,
-compatible-system assembly, and integral local refinement remain separate tasks rather than
-hidden consequences of a signed formula.
+dependency-closed. Without it, the same conclusion is complete at every coefficient place away from two; this
+includes the place above three used by the fixed-three Fermat argument. The coefficient-two
+gate therefore limits the all-coefficient family, not that fixed-three route. Coherent
+coefficient descent, compatible-system assembly, and integral local refinement remain separate
+tasks rather than hidden consequences of a signed formula.
