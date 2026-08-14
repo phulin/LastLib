@@ -233,8 +233,10 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   transgression, or Hecke localization. The exact unresolved application gate is
   $({\rm AC}^{\rm loc}_\ell)_{\mathscr R}$, specialized in Book 181 to the finite family
   $({\rm AIH}_{\mathscr F})$ used by the signed-special seed construction. No accepted source
-  proves this vanishing. The FLT chain does not require a structure theorem for the full
-  congruence kernel or a uniform statement over unused levels and coefficient primes.
+  proves this vanishing. This is a boundary only for the retained geometric/constant-row
+  alternatives; the preferred direct $({\rm CIAV}_P)$ chain does not invoke it. The FLT chain
+  does not require a structure theorem for the full congruence kernel or a uniform statement
+  over unused levels and coefficient primes.
 - **Type and node comparison:** objectwise normalization of the actual principal/ray tower,
   the ray factor, and the finite-wild/procyclic ramified strict-node complex are proved in Books 122,
   22, and 174; the common-normalization lemma makes the lifted principal legs isomorphisms.
@@ -293,12 +295,14 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   typed filtration exists, Book 174 likewise proves the typed generic-residue kernel equality
   from Book 125 and contracts it to equality of the integral faithful image orders; no separate
   generic-support or faithful-order hypothesis remains at that interface.
-- **Raw signed-special carrier:** Book 122 constructs the non-common-norm unitary dyadic
-  parahoric source, but does not identify it integrally with the basic quaternionic packet
-  carrier. Its finite integral comparison (10.5), including the unramified component field and
-  expansion-one branch routing, remains required before that source can serve as the FLT raw
-  signed-special carrier. This is separate from Ihara saturation and from the raw-to-global
-  semisimplification interface.
+- **Closed: raw signed-special carrier:** Book 122 constructs the non-common-norm unitary
+  dyadic parahoric source but does not identify it integrally with the basic quaternionic
+  packet carrier; its comparison (10.5) remains a genuine stronger raw-to-raw theorem.
+  The semisimple FLT chain does not need it. Book 168, Proposition 7.6A handles an
+  all-dyadic-split carrier, while Book 122, Proposition 10.2A and Book 168, Proposition 7.6B
+  construct the even-degree carriers target by target using a different ramified dyadic
+  spectator and two CM inertia kernels. Thus mixed-dyadic carrier existence is closed before
+  the separate raw-to-global step.
 - **One-prime generic rigidity:** for Book 175's scalar-residual line-special problem, after
   the reduced comparison it uses the balanced enhanced obstruction presentation and finiteness
   to prove vertical torsion-freeness of the
@@ -406,9 +410,11 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   before $q$; then $q$ avoids its Frobenius discriminant and Book 178's protected
   anti-cyclotomic correction imposes the compatible auxiliary branch. Book 178 constructs the
   rational-base dihedral residual seed and applies Book 158's split top. Its only lifting
-  handoff is one complete Book 176 certificate for the actual set
-  $P_{\mathrm{aux}}(A_M)$, preferably direct $({\rm IAV}_{P_{\mathrm{aux}}})$; separate
-  one-place statements do not supply it.
+  handoff is the auxiliary instance $({\rm CIAV}_{P_{\mathrm{aux}}})$ of Book 176's
+  componentwise finite-set theorem for the actual set $P_{\mathrm{aux}}(A_M)$. The local
+  pair, synchronized residual systems, common Taylor--Wiles primes, and formal recovery are
+  already constructed; separate one-place statements do not supply the two remaining global
+  clauses.
 
   After auxiliary automorphy, the target-extra set $P_{\mathrm{tar}}$ is formed separately.
   On the preferred Book 178 route it consists of retained multiplicative places above $3$ and
@@ -447,11 +453,11 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   remains a stronger secondary alternative and
   retains all of its edgewise Ihara, component, and branch hypotheses. Dyadic places are absent
   from $P_{\mathrm{tar}}$ because the target keeps its signed-special condition. Thus the live
-  preferred boundary is $({\rm IAV}_{P_{\mathrm{aux}}})$, then
-  $({\rm TIAV}_{P_{\mathrm{tar}}})$—not a singleton moving presentation.  In both instances
-  the exact unresolved part is vertical global component preservation and occurrence on
-  every avoidance component, not construction of the scalar local pair or a nonzero
-  avoidance module.  DLO plus the bottom
+  preferred boundary is one reusable theorem $({\rm CIAV}_P)$, invoked first at
+  $P_{\mathrm{aux}}$ and then at $P_{\mathrm{tar}}$—not a singleton moving presentation.
+  In both instances its exact clauses are vertical global component preservation and
+  occurrence on every avoidance component, not construction of the scalar local pair or a
+  nonzero avoidance module. DLO plus the bottom
   structural ledger is retained only as the stronger minimal-$R=\mathbb T$ alternative.
   Finite class sets, residual monodromy zero, and upper-side Taylor--Wiles
   patching do not formally imply DLO; Book 176 gives an explicit paired countermodel.
@@ -466,16 +472,19 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   For the post-point construction, Book 182 starts from Book 181's chosen lift and a controlled
   chosen-point datum on the split top. It gives parity-complete compact carriers and the common
   auxiliary unramified Galois pairs needed by the elementary fixed-field array. Its unitary
-  bypasses close the raw dyadic carrier issue; the smooth-proper source of
-  $({\rm HT}_1)$ remains the separately named downstream comparison. None reinstates the
-  retired singleton/toroidal route.
+  bypasses close the raw dyadic carrier issue. Smooth-proper $({\rm HT}_1)$ remains only for
+  the optional uniform all-coefficient comparison; Books 54, 129, and 168 close the selected
+  coefficient-three branch used by the final chain. None reinstates the retired
+  singleton/toroidal route.
 
 - **Balanced-lift finiteness:** Book 181's finite-image and commutative-algebra argument needs
   only the restricted-special-fibre certificate $({\rm SF}_{\rm SP})$, not automorphy of every
   restricted characteristic-zero point.  The target broad-IAV certificate supplies the whole
   finite special fibre without a prior minimal point and retains a support theorem which Book
-  182 evaluates after that point exists.  Thus $({\rm TIAV}_{P_{\mathrm{tar}}})$ closes both
-  forward steps without a minimal $R=\mathbb T$ theorem. A proof of
+  182 evaluates after that point exists. Thus the target instance
+  $({\rm CIAV}_{P_{\mathrm{tar}}})$, through the otherwise constructed
+  $({\rm TIAV}_{P_{\mathrm{tar}}})$ interface, closes both forward steps without a minimal
+  $R=\mathbb T$ theorem. A proof of
   $({\rm DMS}_{P_{\mathrm{tar}}})$ would still supply the stronger clean minimal localization
   and full Book 173 seed, but is optional on the preferred pointwise chain.
 - **Raw dyadic carrier and raw-to-global comparison:** Book 182, Proposition 6.1 and Book 183
@@ -547,7 +556,7 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   by subquotients.
 - **Auxiliary Galois comparison and clean support:** Book 61, Proposition 12.3 makes both the
   Artin conductor and the inertia-invariant Frobenius polynomial of an actual Jacobian Hecke
-  multiplicity factor coefficient-independent. Book 182, Proposition 7.2B anchors them at the
+  multiplicity factor coefficient-independent. Book 182, Proposition 8.1 anchors them at the
   distinguished irreducible raw member and treats the old coefficient prime through the split
   unitary good cover; Book 128, Lemma 3.2 passes the unramified pair to the elementary global
   semisimplification.  Algebraic twisting and Weil induction give every local Mackey pair.

@@ -537,7 +537,7 @@ $$
 
 Inducing $f_i^*$ and using (2.5f) embeds the correctly covariantly twisted raw plane into a
 finite power of $V(A_i)$.  A finite further power realizes the regular integral coefficient
-action exactly as in Book 129, Section 1.2.  Proposition 7.2A of Book 182 identifies the
+action exactly as in Book 129, Section 1.2. Proposition 6.1 of Book 182 identifies the
 plane's semisimplification with the elementary representation used by Book 185.  Thus every
 clause of $(\mathrm{AVCar}_{3,\ell}^+)$ holds.  Neither the degree of $f_i$ nor $[E_i:F_i]$
 is required to be a unit: only a rational injection is used, and Book 129 later

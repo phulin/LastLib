@@ -598,11 +598,14 @@ R_F^{\rm uni}(P_{\rm tar})\twoheadrightarrow R_F^{\rm SP}.
 \tag{4.3}
 $$
 
-**Missing certificate $({\rm TIAV}_{P_{\rm tar}})$ (target broad-unipotent IAV).** Construct
-the desired/avoidance local rings for the broad target problem, their common special fibre and
-component-bijective specialization, synchronized automorphic Taylor--Wiles systems, avoidance
-full support, and exact finite-level acting-image recovery, while retaining the common named
-dyadic SP and coefficient-prime finite-flat conditions.
+**Missing theorem $({\rm CIAV}_{P_{\rm tar}})$ (target componentwise IAV).** Book 176
+constructs the desired/avoidance local rings for the broad target problem, their common raw
+special fibre and horizontal component bijection, synchronized residual systems and common
+Taylor--Wiles prime sets, and formal recovery. The remaining theorem has exactly two clauses:
+vertical preservation of those labels by the actual global patched relation ideal and
+occurrence on every avoidance component. Together with the constructed data it completes
+$({\rm TIAV}_{P_{\rm tar}})$ while retaining the common named dyadic SP and
+coefficient-prime finite-flat conditions.
 
 This certificate is point-free.  Proposition 1.1 of Book 176 gives full desired support and
 exact recovery gives a nilpotent kernel.  Since the recovered Hecke action is finite,
@@ -623,9 +626,10 @@ $$
 \tag{4.4}
 $$
 
-The two IAV certificates are instances of one reusable theorem schema, but not one patch:
+The two IAV certificates invoke one reusable $({\rm CIAV}_P)$ theorem, but are not one patch:
 their coefficient characteristics, residual representations, and active local rings differ.
-Neither instance is presently constructed in the corpus.  Upper definite occurrence from
+The local and synchronization parts are constructed in the corpus; the two global
+$({\rm CIAV})$ clauses are not. Upper definite occurrence from
 Proposition 4.1 is useful evidence that the target desired block is nonzero, but it does not
 replace avoidance full support or synchronized broad-ring patching.
 
@@ -726,8 +730,10 @@ exact seed on the Galois top makes the chosen point automorphic by evaluation of
 minimal equality.
 
 The direct-top simplification concerns only upward transfer. It does not prove the earlier
-controlled seed, the later descent of packets to elementary fixed fields, the existence of raw
-signed-special carriers, or the smooth-proper source of $(\mathrm{HT}_1)$.
+controlled seed or the later descent of packets to elementary fixed fields. Raw
+signed-special carriers and the selected-three finite-flat raw-to-global bridge are supplied
+later by Books 118, 122, 129, and 168; smooth-proper $(\mathrm{HT}_1)$ is retained only for
+the optional uniform all-coefficient statement.
 
 ## 6. Elementary fixed fields and basic carriers
 
@@ -1140,20 +1146,19 @@ Proposition 7.6B uses the proved ramified-spectator source (7.7) and its two-ker
 descent. A direct certificate or (7.4) gives the stated alternatives. This proves the fifth
 assertion. $\square$
 
-The theorem has two exact conditional boundaries. The earlier one is the controlled
-chosen-point datum summarized in Chapter 4. On the preferred split route, after the auxiliary
-$({\rm IAV}_{P_{\rm aux}})$ certificate has produced the upper packet, the smallest remaining
-package is the target-characteristic broad-unipotent
-$({\rm TIAV}_{P_{\rm tar}})$ certificate.  Its whole-ring finite recovery gives the special
-fibre used by Book 181 and its same support theorem makes the resulting point automorphic.
-No preceding volume constructs its paired local rings, synchronized patches, avoidance full
-support, and exact recovery.  The older
+The theorem has one conditional boundary on the preferred final chain: the controlled
+chosen-point datum summarized in Chapter 4. Book 176 has constructed the paired local rings,
+synchronized residual systems and common prime sets, and formal recovery. The one reusable
+missing theorem is $({\rm CIAV}_P)$, invoked at the auxiliary active set to produce the upper
+packet and at the target active set to complete $({\rm TIAV}_{P_{\rm tar}})$. Its target
+instance gives the special fibre used by Book 181 and its same support theorem makes the
+resulting point automorphic. The older
 $({\rm DMS}_{P_{\rm tar}})$ route through $({\rm FLO}_v)$ remains a stronger optional route to
-minimal $R=\mathbb T$, not a prerequisite of this pointwise chain. The later boundary is now
-only the already isolated smooth-proper source of
-$(\mathrm{HT}_1)$. Book 168's two unitary bypasses close both the all-dyadic-split and
-targetwise parity cases without (10.5). Proposition 8.1 shows that even this input is not
-needed for the auxiliary unramified pairs.
+minimal $R=\mathbb T$, not a prerequisite of this pointwise chain. Book 168's two unitary
+bypasses close both the all-dyadic-split and targetwise parity cases without (10.5), and its
+fixed-three finite-flat bridge closes the coefficient place consumed by the endgame.
+Smooth-proper $(\mathrm{HT}_1)$ remains only for the optional uniform all-coefficient
+comparison. Proposition 8.1 does not need it for the auxiliary unramified pairs either.
 
 The mathematical progression is therefore linear:
 
@@ -1172,11 +1177,11 @@ $$
 \tag{9.1}
 $$
 
-On a separate final branch, the completely split or ramified-spectator unitary calculation,
+On a separate uniform branch, the completely split or ramified-spectator unitary calculation,
 together with $(\mathrm{HT}_1)$, preserves the nonzero monodromy line and sign across all
-relevant coefficient embeddings. Ambient semisimplicity is a stronger alternative for a
-direct raw carrier. That branch cannot be moved earlier and cannot be replaced by good
-Frobenius traces.
+coefficient embeddings. The final selected-three branch instead uses Book 168, Theorem 7.6C
+and Corollary 7.6D. Ambient semisimplicity is a stronger alternative for a direct raw carrier.
+Neither branch can be replaced by good Frobenius traces.
 
 Thus this volume does not reconstruct the residual seed used before Book 181, and it does not
 claim an unconditional controlled top. It proves the chosen-point potential-automorphy and

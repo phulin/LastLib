@@ -1869,8 +1869,9 @@ Book 176 transfer automorphy to that point. The target residual conclusion is re
 only after the $q$-adic automorphic packet and its rational family exist.
 
 There is no use of Books 177, 181, 182, or later compatible-family volumes. The unresolved input
-is one actual finite-set certificate for $P_{\mathrm{aux}}(A_F)$; it is not hidden in the
-geometric specialization. The rational-base ray compatibility is proved here, while the
+is the one componentwise theorem $({\rm CIAV}_{P_{\mathrm{aux}}(A_F)})$; Book 176 already
+constructs the paired local geometry, synchronized residual systems, common prime sets, and
+formal recovery, and none of these is hidden in the geometric specialization. The rational-base ray compatibility is proved here, while the
 general totally real-base ray datum remains a separate optional extension and is not needed by
 the FLT chain.
 
@@ -1906,8 +1907,9 @@ norm-pulled dihedral packet to $V_{\mathfrak q}(A_F)$; a compact one-split carri
 cross-prime comparison then identify the $\ell$-adic residual member with the prescribed
 target.
 
-The route has one exact unresolved lifting boundary: construction of the finite-set certificate
-for the actual active set. It has no singleton subproblem. The retired one-special-factor
+The route has one exact unresolved lifting boundary: $({\rm CIAV}_{P_{\mathrm{aux}}(A_F)})$,
+namely vertical component preservation for the actual global patched relations and occurrence
+on every avoidance component. It has no singleton subproblem. The retired one-special-factor
 moving presentation, Book 157's conditional toroidal chain, and one-prime scalar augmentation
 are neither hypotheses nor alternative conclusions of the FLT theorem. Book 157 remains a
 direct source only for its reusable interior component, local seed, frame, and openness results.

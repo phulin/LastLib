@@ -1117,14 +1117,14 @@ Neither Book 154 nor this construction makes $F'/F$ Galois, solvable, or cyclic.
 ### 10.4 Why the theorem is conditional
 
 The definition in Section 10.1 is not presently known to be inhabited for the FLT
-applications. On the scope-minimal direct route, the first missing theorem is
-$({\rm IAV}_{P_{\mathrm{act}}})$ itself: no declared source constructs the paired
-desired/avoidance local deformation rings for the actual target and automorphic reference,
-proves their component-bijective patched specializations, or patches their automorphic
-modules compatibly modulo the uniformizer with an avoidance full-support theorem and exact
-acting-image recovery. Book 176, Proposition 1.1 proves desired full-support transfer from
-those data, and Book 109 supplies any later solvable descent once its explicit antecedents
-hold; neither formal consequence is an additional missing theorem. This direct construction
+applications. On the scope-minimal direct route, Book 176 now constructs the paired scalar
+local rings, their horizontal component bijection, the synchronized residual modules and
+Taylor--Wiles prime sets, and formal recovery. The first missing theorem is precisely
+$({\rm CIAV}_{P_{\mathrm{act}}})$: vertical preservation of those component labels by the
+actual global patched relation ideal and occurrence on every avoidance component. Book 176,
+Proposition 1.1 proves desired full-support transfer from those two clauses, and Book 109
+supplies any later solvable descent once its explicit antecedents hold; neither formal
+consequence is an additional missing theorem. This direct construction
 handles every place above $v_0$ at once and does not consume the abelian-Ihara, type-Ihara,
 mixed-cube, product-residue, or pointed-occurrence gates below.
 
@@ -1256,7 +1256,7 @@ The proof uses the following earlier books, with no enlargement of their conclus
 | Book 104 | transfer from the totally definite carrier to the split packet, followed by compact one-split inverse transfer for $\{w_0\}$ | requires even field degree and an eligible selected local factor; it supplies no Galois representation by itself |
 | Book 98 | automorphic induction of an algebraic Hecke character, the determinant formula (3.3), the explicit residual induced lattice, and cuspidality | the quadratic extension must remain a field; the character quotient must remain nontrivial |
 | Book 127 | compact-curve packet decomposition, rank-two extraction, determinant and Frobenius normalization, the weak family, and stable lattices | no surface realization or density theorem; integral finite-flat comparison is obtained from $A$, not from an arbitrary curve lattice |
-| Book 176 | the direct finite-set Ihara-avoidance interface $({\rm IAV}_S)$ and Proposition 1.1's formal paired support transfer, literal conditional Theorem 7.1 for the scalar-twist family, the separately conditional generic and $q_v\equiv-1$ reduced-image argument, all-point finite-set Theorem 9.1, and pointed torsion-free-top Theorem 9.2 | the direct route retains the arithmetic construction of its paired local rings, component-bijective patched specializations, synchronized automorphic systems, avoidance full support, and exact recovery; the all-point route retains every applicable Ihara, type, support, reciprocity, ray, augmentation, mixed-exactness, product-residue, and joint-support hypothesis; the pointed route instead retains one actual final cube, simultaneous branch verification, carrier-specific reciprocity, and occurrence of the component through $x_A$ |
+| Book 176 | the direct finite-set Ihara-avoidance interface $({\rm IAV}_S)$ and Proposition 1.1's formal paired support transfer, literal conditional Theorem 7.1 for the scalar-twist family, the separately conditional generic and $q_v\equiv-1$ reduced-image argument, all-point finite-set Theorem 9.1, and pointed torsion-free-top Theorem 9.2 | the direct route retains exactly $({\rm CIAV}_S)$: vertical preservation by the actual patched relation ideal and avoidance all-component occurrence; the all-point route retains every applicable Ihara, type, support, reciprocity, ray, augmentation, mixed-exactness, product-residue, and joint-support hypothesis; the pointed route instead retains one actual final cube, simultaneous branch verification, carrier-specific reciprocity, and occurrence of the component through $x_A$ |
 | Book 154 | Moret--Bailly specialization with local opens, total reality, splitting, and linear disjointness | no Galois or solvable conclusion |
 | Book 158 | the fine smooth geometrically connected paired-frame moduli space, its admissible point-centered local opens, and the regular symmetric Galois-top refinement of the split specialization | both frames and both pairings must occur on the same object and component; nonsplit exact completion algebras still require Book 154's separate common-presentation hypothesis |
 | Book 142, the globally upstream companion Chebotarev development | finite-quotient prime selection in Section 3.4 and Corollary 11.2 in Sections 8.5 and 9.3 | density recognizes existing data and supplies no carrier, lattice, or local compatibility |
@@ -1307,10 +1307,11 @@ That record supplies residual potential modularity only. A later argument for a 
 
 The conditional bridge is mathematically explicit, but the advertised FLT-range existence
 theorem is **NOT READY**. On the scope-minimal route, its missing theorem is the direct
-finite-set package $({\rm IAV}_{P_{\mathrm{act}}})$: no accepted source supplies its paired
-local-ring geometry, component-bijective patched specialization, synchronized automorphic
-patching, avoidance full support, and exact recovery. Desired special-fiber support transfer
-is now Proposition 1.1 of Book 176 once those inputs exist, and descent is the existing
+finite-set theorem $({\rm CIAV}_{P_{\mathrm{act}}})$: the vertical global component theorem
+and avoidance all-component occurrence. The paired local-ring geometry, horizontal component
+bijection, synchronized residual systems, common Taylor--Wiles primes, and formal recovery
+are proved in Book 176. Desired special-fiber support transfer is Proposition 1.1 of Book 176
+once the two $({\rm CIAV})$ clauses hold, and descent is the existing
 conditional theorem of Book 109 once its selected cyclic-tower antecedents exist. The
 missing arithmetic construction would treat all places above $v_0$ simultaneously without
 the geometric cube.

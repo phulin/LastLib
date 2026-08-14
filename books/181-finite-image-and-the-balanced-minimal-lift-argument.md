@@ -1104,10 +1104,12 @@ pointwise automorphy afterward.
 This does not make the existing auxiliary certificate do double duty.  The auxiliary
 $({\rm IAV}_{P_{\rm aux}})$ and target $({\rm TIAV}_{P_{\rm tar}})$ are two instances of the
 same theorem schema but have different coefficient characteristics, residual representations,
-and active local rings.  The target arithmetic construction is not present in the corpus;
-upper-side patching alone does not provide its broad desired/avoidance geometry, avoidance
-full support, synchronized systems, or exact recovery.  It is nevertheless narrower in
-topic than importing a new target level-lowering theory.
+and active local rings. Book 176 constructs the broad desired/avoidance local geometry,
+synchronized residual systems and prime sets, and formal recovery for either instance. The
+one absent reusable theorem is $({\rm CIAV}_P)$: vertical preservation by the actual global
+patched relations and occurrence on every avoidance component. Upper-side patching alone
+does not provide those two clauses. This is nevertheless narrower in topic than importing a
+new target level-lowering theory.
 
 The former route through
 $({\rm DMS}_{P_{\rm tar}})=({\rm DLO}_{P_{\rm tar}})+({\rm CLN}_{\min})$ remains an optional
@@ -1846,7 +1848,7 @@ The exact use and boundary of each source are as follows.
 | Book 166 | supported mapping fibre, duality, and equality of tangent and supported-obstruction dimensions | it supplies no relation or finiteness theorem |
 | Book 167 | complete supported obstruction and injection of the dual conormal relation space | it gives $r\leq t$, not equality, flatness, or a point |
 | Book 164 | exact Frey residual datum for Section 11.1 | application input only; it does not construct the automorphic seed |
-| Book 176 | nilpotent finite recovery and the target broad-unipotent quotient criterion of Section 1.5A | its formal implication is proved, but the target desired/avoidance arithmetic system $({\rm TIAV}_{P_{\rm tar}})$ is not constructed |
+| Book 176 | nilpotent finite recovery, the target broad-unipotent quotient criterion of Section 1.5A, paired local geometry, synchronized residual systems and common prime sets, and formal recovery | the remaining target input is exactly $({\rm CIAV}_{P_{\rm tar}})$: vertical component preservation and avoidance all-component occurrence |
 
 For the only imported $R=\mathbb T$ step, Book 173 is a synthesis whose proof owners are Books
 171--172, as recorded in the repository dependency table.  Book 171 constructs the represented
@@ -1904,14 +1906,13 @@ $$
 
 The same target IAV support theorem then makes that point automorphic, so the weaker
 special-fibre certificate does close the ultimate pointwise chain when it is produced in this
-specific way.  The first unresolved arithmetic input is the construction of the reusable
-IAV package itself: first its auxiliary-characteristic instance
-$({\rm IAV}_{P_{\rm aux}})$ needed by Book 178 to create the upper packet, and then its
-target-characteristic broad-unipotent instance $({\rm TIAV}_{P_{\rm tar}})$ over the same
-kind of controlled split field.  The second instance requires the paired local-ring geometry,
-component-bijective synchronized automorphic patches, avoidance full support, and exact
-finite-level recovery stated in Book 176, Section 1.5A.  None is constructed by upper-side
-patching alone.
+specific way. The first unresolved arithmetic input is one reusable theorem
+$({\rm CIAV}_P)$, invoked first at the auxiliary active set needed by Book 178 and then at the
+target broad-unipotent active set. Book 176 has already constructed the paired local rings,
+their horizontal component bijection, synchronized residual systems, common Taylor--Wiles
+prime sets, and formal recovery. What remains in either invocation is exactly vertical
+preservation of the component labels by the actual global relation ideal and occurrence on
+every avoidance component. Neither clause follows from upper-side patching alone.
 
 A clean Frey-SP carrier satisfying every Book 173 hypothesis remains a sufficient stronger
 alternative: it gives $(\mathrm{Seed}_{\mathrm{SP}})$ and hence Theorem 1.1.  On the direct

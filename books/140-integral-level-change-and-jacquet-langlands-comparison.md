@@ -2296,7 +2296,7 @@ filtrations, and reduces the normalized spectator/ray compositum to its actual K
 factorization and intersection field. Propositions 9.6--9.7 factor the completed endpoints
 from actual valuations and leading coefficients and give the exact Milnor-tube formalism;
 Proposition 9.8 proves $({\rm RGC}_v)$ on component-routed and contracted terms.  For the
-permutation and quotient/augmentation rows used by Book 174, Proposition 9.9 supplies the
+permutation and quotient/augmentation rows consumed by Book 174, Book 122, Proposition 9.9 supplies the
 strict ray field, vertical unit, endpoint factors, Frobenius orbits, and active/ray
 intersection; Proposition 9.10 computes the completed tubes, actions, and generization maps;
 and Corollary 9.11 proves $({\rm PNS}_v)_{\rm act}$. Book 174, Theorem

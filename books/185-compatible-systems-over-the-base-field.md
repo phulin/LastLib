@@ -162,7 +162,7 @@ r_{H,\tau_0}\simeq\rho|_{G_{F_H}}.
 \tag{1.6}
 $$
 
-The same packet-array theorem retains Book 182, Proposition 7.2B:
+The same packet-array theorem retains Book 182, Proposition 8.1:
 
 $$
 r_{H,\tau}|_{G_{(F_H)_w}}\text{ is unramified}
@@ -1514,7 +1514,7 @@ then shows that inertia is trivial and $N=0$ on $D_q$.
 
 Now let $q=\ell$.  Complete splitting of $\ell$ in $M$ makes every completion
 $(F_{H_i})_w$ above $\ell$ equal to $\mathbf Q_\ell$ and makes every quotient character
-$\theta_i$ locally trivial.  Book 182, Proposition 7.2A makes the elementary packet factors
+$\theta_i$ locally trivial. Book 182, Proposition 8.1 makes the elementary packet factors
 spherical at these hyperspecial places.  Every $D_{i,w}$ is unramified by (1.6b), whose case above
 $\ell$ comes from Book 182's split unitary good cover.  Thus both local Mackey objects in
 (8.1) are unramified.  Equation (8.5) makes $D_\ell$ a direct summand of the positive object,
