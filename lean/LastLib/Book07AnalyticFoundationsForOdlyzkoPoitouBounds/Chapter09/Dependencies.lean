@@ -105,14 +105,16 @@ structure Chapter09NumericalEnclosureInterface : Prop where
     (chapter09GRHEndpointOneLower : ℝ) < chapter09GRHEndpointOne ∧
       chapter09GRHEndpointOne < (chapter09GRHEndpointOneUpper : ℝ)
 
+private theorem strictMul {a b c d : ℝ}
+    (hab : a < b) (hcd : c < d) (hc : 0 < c) (hb : 0 < b) :
+    a * c < b * d :=
+  lt_trans (mul_lt_mul_of_pos_right hab hc) (mul_lt_mul_of_pos_left hcd hb)
+
 set_option maxRecDepth 1000000 in
 set_option maxHeartbeats 100000000 in
-theorem chapter09NumericalEnclosure :
-    Chapter09NumericalEnclosureInterface := by
-  have hpiL : (3141592653589793 / 10 ^ 15 : ℝ) < Real.pi := by
-    exact lt_trans (by norm_num) Real.pi_gt_d20
-  have hpiU : Real.pi < (3141592653589794 / 10 ^ 15 : ℝ) := by
-    exact lt_trans Real.pi_lt_d20 (by norm_num)
+private theorem gammaDirectedBounds :
+    (chapter09GammaLower : ℝ) < chapter09EulerMascheroni ∧
+      chapter09EulerMascheroni < (chapter09GammaUpper : ℝ) := by
   have hloglo (n : ℕ) (hn : 2 ≤ n) :
       (∑ i ∈ Finset.range 11,
           (-(1 / (n : ℝ))) ^ (i + 1) / (i + 1 : ℝ)) * (-1) -
@@ -304,338 +306,347 @@ theorem chapter09NumericalEnclosure :
     have hs := hstepU n hn
     norm_num [Nat.cast_add, Nat.cast_one] at hs ⊢
     linarith [hs]
-  have hFbound (m : ℕ) (hm : 101 ≤ m) : F m ≤ F 101 := by
+  have hFbound (m : ℕ) (hm : 129 ≤ m) : F m ≤ F 129 := by
     induction m, hm using Nat.le_induction with
     | base => exact le_rfl
     | @succ m hm ih =>
       exact (hFstep m (by omega)).le.trans ih
-  have hGbound (m : ℕ) (hm : 101 ≤ m) : G 101 ≤ G m := by
+  have hGbound (m : ℕ) (hm : 129 ≤ m) : G 129 ≤ G m := by
     induction m, hm using Nat.le_induction with
     | base => exact le_rfl
     | @succ m hm ih =>
       exact ih.trans (hGstep m (by omega)).le
-  have hgamma_le_F101 :
-      chapter09EulerMascheroni ≤ F 101 := by
+  have hgamma_le_F129 :
+      chapter09EulerMascheroni ≤ F 129 := by
     apply le_of_tendsto hlimF
-    exact eventually_atTop.2 ⟨101, fun m hm => hFbound m hm⟩
-  have hG101_le_gamma :
-      G 101 ≤ chapter09EulerMascheroni := by
+    exact eventually_atTop.2 ⟨129, fun m hm => hFbound m hm⟩
+  have hG129_le_gamma :
+      G 129 ≤ chapter09EulerMascheroni := by
     apply ge_of_tendsto hlimG
-    exact eventually_atTop.2 ⟨101, fun m hm => hGbound m hm⟩
+    exact eventually_atTop.2 ⟨129, fun m hm => hGbound m hm⟩
   have hgamma_upper_at_N :
-      chapter09EulerMascheroni < F 100 := by
-    have hs := hFstep 100 (by norm_num)
-    exact lt_of_le_of_lt hgamma_le_F101 hs
+      chapter09EulerMascheroni < F 128 := by
+    have hs := hFstep 128 (by norm_num)
+    exact lt_of_le_of_lt hgamma_le_F129 hs
   have hgamma_lower_at_N :
-      G 100 < chapter09EulerMascheroni := by
-    have hs := hGstep 100 (by norm_num)
-    exact lt_of_lt_of_le hs hG101_le_gamma
+      G 128 < chapter09EulerMascheroni := by
+    have hs := hGstep 128 (by norm_num)
+    exact lt_of_lt_of_le hs hG129_le_gamma
   have hlog2 :=
     Real.sum_range_sub_log_div_le (x := (1 / 3 : ℝ)) (by norm_num) 20
   norm_num at hlog2
-  have hlog54 :=
-    Real.sum_range_sub_log_div_le (x := (1 / 9 : ℝ)) (by norm_num) 10
-  norm_num at hlog54
-  have hlogN : Real.log (100 : ℝ) =
-      6 * Real.log 2 + 2 * Real.log (5 / 4 : ℝ) := by
+  have hlogN : Real.log (128 : ℝ) = 7 * Real.log 2 := by
     calc
-      Real.log (100 : ℝ) =
-          Real.log ((2 : ℝ) ^ 6 * (5 / 4 : ℝ) ^ 2) := by norm_num
-      _ = Real.log ((2 : ℝ) ^ 6) + Real.log ((5 / 4 : ℝ) ^ 2) := by
-        rw [Real.log_mul] <;> norm_num
-      _ = 6 * Real.log 2 + 2 * Real.log (5 / 4 : ℝ) := by
-        rw [Real.log_pow, Real.log_pow]
-        norm_num
+      Real.log (128 : ℝ) = Real.log ((2 : ℝ) ^ 7) := by norm_num
+      _ = 7 * Real.log 2 := by rw [Real.log_pow]; norm_num
   have h2u := (abs_le.mp hlog2).2
-  have h54u := (abs_le.mp hlog54).2
   have hgammaLowerNumeric :
       (chapter09GammaLower : ℝ) <
-        (harmonic 100 : ℝ) - Real.log 100 - qU 100 := by
+        (harmonic 128 : ℝ) - Real.log 128 - qU 128 := by
     rw [hlogN]
     set_option maxRecDepth 1000000 in
       norm_num [harmonic, Finset.sum_range_succ, chapter09GammaLower, qU, qL] at ⊢
-    nlinarith [h2u, h54u]
+    nlinarith [h2u]
   have h2l := (abs_le.mp hlog2).1
-  have h54l := (abs_le.mp hlog54).1
   have hgammaUpperNumeric :
-      (harmonic 100 : ℝ) - Real.log 100 - qL 100 <
+      (harmonic 128 : ℝ) - Real.log 128 - qL 128 <
         (chapter09GammaUpper : ℝ) := by
     rw [hlogN]
     set_option maxRecDepth 1000000 in
       norm_num [harmonic, Finset.sum_range_succ, chapter09GammaUpper, qL] at ⊢
-    nlinarith [h2l, h54l]
+    nlinarith [h2l]
   have hgammaLower :
       (chapter09GammaLower : ℝ) < chapter09EulerMascheroni := by
     apply lt_trans hgammaLowerNumeric
-    convert hgamma_lower_at_N using 1 <;> norm_num [G] <;> rfl
+    convert hgamma_lower_at_N using 1
+    all_goals norm_num [G]
+    all_goals rfl
   have hgammaUpper :
       chapter09EulerMascheroni < (chapter09GammaUpper : ℝ) := by
     apply lt_trans (by
       convert hgamma_upper_at_N using 1)
     exact hgammaUpperNumeric
-  have hgammaLowerVal :
-      (577215664901532 / 10 ^ 15 : ℝ) < chapter09EulerMascheroni := by
-    simpa [chapter09GammaLower] using hgammaLower
-  have hgammaUpperVal :
-      chapter09EulerMascheroni < (577215664901533 / 10 ^ 15 : ℝ) := by
-    simpa [chapter09GammaUpper] using hgammaUpper
-  have hgammaPos : 0 < chapter09EulerMascheroni := by
-    exact lt_trans (by norm_num) hgammaLowerVal
-  have hgammaBelowOne : chapter09EulerMascheroni < 1 := by
-    exact lt_trans hgammaUpperVal (by norm_num)
-  have hexpg :
-      |Real.exp chapter09EulerMascheroni -
-          ∑ m ∈ Finset.range 16,
-            chapter09EulerMascheroni ^ m / m.factorial| ≤
-        |chapter09EulerMascheroni| ^ 16 *
-          ((17 : ℝ) / (Nat.factorial 16 * 16)) := by
-    apply Real.exp_bound
-    · rw [abs_of_pos]
-      · linarith [hgammaBelowOne]
-      · exact hgammaPos
-    · norm_num
-  have hgl :
-      (178107241799019 / 10 ^ 14 : ℝ) <
-        Real.exp chapter09EulerMascheroni := by
-    have hPlo :
-        ∑ m ∈ Finset.range 16,
-            (577215664901532 / 10 ^ 15 : ℝ) ^ m / m.factorial ≤
-          ∑ m ∈ Finset.range 16,
-            chapter09EulerMascheroni ^ m / m.factorial := by
-      gcongr
-    have hE :
-        |chapter09EulerMascheroni| ^ 16 *
-            ((17 : ℝ) / (Nat.factorial 16 * 16)) ≤
-          (577215664901533 / 10 ^ 15 : ℝ) ^ 16 *
-            ((17 : ℝ) / (Nat.factorial 16 * 16)) := by
-      rw [abs_of_pos]
-      · gcongr
-      · exact hgammaPos
-    have hh := (abs_le.mp hexpg).1
-    set_option maxRecDepth 1000000 in
-      norm_num [Finset.sum_range_succ] at hh hPlo hE ⊢
-    nlinarith [hh, hPlo, hE]
-  have hgu :
+  exact ⟨hgammaLower, hgammaUpper⟩
+
+private def expPartialQ (x : ℚ) : ℚ :=
+  ∑ m ∈ Finset.range 16, x ^ m / m.factorial
+
+private def expUpperQ (x : ℚ) : ℚ :=
+  expPartialQ x + x ^ 16 * 17 / (Nat.factorial 16 * 16 : ℚ)
+
+private structure RationalCertificates : Prop where
+  endpointZeroLower :
+    chapter09UnconditionalEndpointZeroLower <
+      4 * (3141592653589793 / 10 ^ 15 : ℚ) *
+        (178107241799019 / 10 ^ 14 : ℚ)
+  endpointZeroUpper :
+    4 * (3141592653589794 / 10 ^ 15 : ℚ) *
+        (178107241799021 / 10 ^ 14 : ℚ) <
+      chapter09UnconditionalEndpointZeroUpper
+  endpointOneLower :
+    chapter09UnconditionalEndpointOneLower <
+      4 * (3141592653589793 / 10 ^ 15 : ℚ) *
+        ((271828182845904 / 10 ^ 14 : ℚ) *
+          (178107241799019 / 10 ^ 14 : ℚ))
+  endpointOneUpper :
+    4 * (3141592653589794 / 10 ^ 15 : ℚ) *
+        ((271828182845906 / 10 ^ 14 : ℚ) *
+          (178107241799021 / 10 ^ 14 : ℚ)) <
+      chapter09UnconditionalEndpointOneUpper
+  grhEndpointZeroLower :
+    chapter09GRHEndpointZeroLower <
+      8 * (3141592653589793 / 10 ^ 15 : ℚ) *
+        (178107241799019 / 10 ^ 14 : ℚ)
+  grhEndpointZeroUpper :
+    8 * (3141592653589794 / 10 ^ 15 : ℚ) *
+        (178107241799021 / 10 ^ 14 : ℚ) <
+      chapter09GRHEndpointZeroUpper
+  grhEndpointOneLower :
+    chapter09GRHEndpointOneLower <
+      8 * (3141592653589793 / 10 ^ 15 : ℚ) *
+        ((271828182845904 / 10 ^ 14 : ℚ) *
+          ((178107241799019 / 10 ^ 14 : ℚ) *
+            (17696757306773 / 10 ^ 13 : ℚ)))
+  grhEndpointOneUpper :
+    8 * (3141592653589794 / 10 ^ 15 : ℚ) *
+        ((271828182845906 / 10 ^ 14 : ℚ) *
+          ((178107241799021 / 10 ^ 14 : ℚ) *
+            (17696757306774 / 10 ^ 13 : ℚ))) <
+      chapter09GRHEndpointOneUpper
+  expGammaLower :
+    (178107241799019 / 10 ^ 14 : ℚ) < expPartialQ chapter09GammaLower
+  expGammaUpper :
+    expUpperQ chapter09GammaUpper < (178107241799021 / 10 ^ 14 : ℚ)
+  expDeltaLower :
+    (17696757306773 / 10 ^ 13 : ℚ) <
+      expPartialQ (570796326794896 / 10 ^ 15 : ℚ)
+  expDeltaUpper :
+    expUpperQ (570796326794898 / 10 ^ 15 : ℚ) <
+      (17696757306774 / 10 ^ 13 : ℚ)
+
+private theorem rationalCertificates : RationalCertificates := by
+  constructor <;> native_decide
+
+private theorem expBetweenOfRatBounds {x : ℝ} {l u L U : ℚ}
+    (hl : (l : ℝ) < x) (hu : x < (u : ℝ))
+    (hl0 : 0 ≤ l) (hu0 : 0 ≤ u) (hu1 : u ≤ 1)
+    (hL : L < expPartialQ l) (hU : expUpperQ u < U) :
+    (L : ℝ) < Real.exp x ∧ Real.exp x < (U : ℝ) := by
+  have hsumL :
+      (L : ℝ) < ∑ m ∈ Finset.range 16, (l : ℝ) ^ m / m.factorial := by
+    exact_mod_cast hL
+  have hsumU :
+      (∑ m ∈ Finset.range 16, (u : ℝ) ^ m / m.factorial) +
+          (u : ℝ) ^ 16 * 17 / (Nat.factorial 16 * 16 : ℝ) < (U : ℝ) := by
+    have hU' : ((expUpperQ u : ℚ) : ℝ) < (U : ℝ) := by
+      exact_mod_cast hU
+    simpa [expUpperQ, expPartialQ] using hU'
+  have hexpU :
+      Real.exp (u : ℝ) ≤
+        (∑ m ∈ Finset.range 16, (u : ℝ) ^ m / m.factorial) +
+          (u : ℝ) ^ 16 * 17 / (Nat.factorial 16 * 16 : ℝ) := by
+    convert Real.exp_bound' (x := (u : ℝ))
+      (by exact_mod_cast hu0) (by exact_mod_cast hu1)
+      (by norm_num : 0 < 16) using 1
+    all_goals norm_num
+  constructor
+  · exact hsumL.trans_le
+      ((Real.sum_le_exp_of_nonneg (by exact_mod_cast hl0) 16).trans
+        (Real.exp_lt_exp.mpr hl).le)
+  · exact (Real.exp_lt_exp.mpr hu).trans_le (hexpU.trans hsumU.le)
+
+
+private theorem piDirectedBounds :
+    (3141592653589793 / 10 ^ 15 : ℝ) < Real.pi ∧
+      Real.pi < (3141592653589794 / 10 ^ 15 : ℝ) := by
+  constructor
+  · exact lt_trans (by norm_num) Real.pi_gt_d20
+  · exact lt_trans Real.pi_lt_d20 (by norm_num)
+
+private theorem expGammaDirectedBounds :
+    (178107241799019 / 10 ^ 14 : ℝ) <
+        Real.exp chapter09EulerMascheroni ∧
       Real.exp chapter09EulerMascheroni <
         (178107241799021 / 10 ^ 14 : ℝ) := by
-    have hPhi :
-        ∑ m ∈ Finset.range 16,
-            chapter09EulerMascheroni ^ m / m.factorial ≤
-          ∑ m ∈ Finset.range 16,
-            (577215664901533 / 10 ^ 15 : ℝ) ^ m / m.factorial := by
-      gcongr
-    have hE :
-        |chapter09EulerMascheroni| ^ 16 *
-            ((17 : ℝ) / (Nat.factorial 16 * 16)) ≤
-          (577215664901533 / 10 ^ 15 : ℝ) ^ 16 *
-            ((17 : ℝ) / (Nat.factorial 16 * 16)) := by
-      rw [abs_of_pos]
-      · gcongr
-      · exact hgammaPos
-    have hh := (abs_le.mp hexpg).2
-    set_option maxRecDepth 1000000 in
-      norm_num [Finset.sum_range_succ] at hh hPhi hE ⊢
-    nlinarith [hh, hPhi, hE]
-  have h1L : (271828182845904 / 10 ^ 14 : ℝ) < Real.exp 1 := by
-    have hh := (abs_le.mp Real.exp_one_near_20).1
-    norm_num at hh ⊢
-    linarith
-  have h1U : Real.exp 1 < (271828182845906 / 10 ^ 14 : ℝ) := by
-    have hh := (abs_le.mp Real.exp_one_near_20).2
-    norm_num at hh ⊢
-    linarith
+  obtain ⟨hL, hU⟩ := gammaDirectedBounds
+  convert expBetweenOfRatBounds hL hU (by native_decide) (by native_decide)
+    (by native_decide) rationalCertificates.expGammaLower
+      rationalCertificates.expGammaUpper using 1 <;> norm_num
+
+private theorem expDeltaDirectedBounds :
+    (17696757306773 / 10 ^ 13 : ℝ) < Real.exp (Real.pi / 2 - 1) ∧
+      Real.exp (Real.pi / 2 - 1) < (17696757306774 / 10 ^ 13 : ℝ) := by
+  obtain ⟨hpiL, hpiU⟩ := piDirectedBounds
   have hdL : (570796326794896 / 10 ^ 15 : ℝ) < Real.pi / 2 - 1 := by
-    linarith [hpiL]
+    linarith
   have hdU : Real.pi / 2 - 1 < (570796326794898 / 10 ^ 15 : ℝ) := by
-    linarith [hpiU]
-  have hexpd :
-      |Real.exp (Real.pi / 2 - 1) -
-          ∑ m ∈ Finset.range 16, (Real.pi / 2 - 1) ^ m / m.factorial| ≤
-        |Real.pi / 2 - 1| ^ 16 *
-          ((17 : ℝ) / (Nat.factorial 16 * 16)) := by
-    apply Real.exp_bound
-    · rw [abs_of_pos]
-      · linarith [hpiL]
-      · linarith [hpiL]
-    · norm_num
-  have hexpdlo :
-      (17696757306773 / 10 ^ 13 : ℝ) <
-        Real.exp (Real.pi / 2 - 1) := by
-    have hPdlo :
-        ∑ m ∈ Finset.range 16,
-            (570796326794896 / 10 ^ 15 : ℝ) ^ m / m.factorial ≤
-          ∑ m ∈ Finset.range 16,
-            (Real.pi / 2 - 1) ^ m / m.factorial := by
-      gcongr <;> linarith [hdL]
-    have hE :
-        |Real.pi / 2 - 1| ^ 16 * ((17 : ℝ) / (Nat.factorial 16 * 16)) ≤
-          (570796326794898 / 10 ^ 15 : ℝ) ^ 16 *
-            ((17 : ℝ) / (Nat.factorial 16 * 16)) := by
-      rw [abs_of_pos]
-      · gcongr <;> linarith [hdU]
-      · linarith [hpiL]
-    have hh := (abs_le.mp hexpd).1
-    set_option maxRecDepth 1000000 in
-      norm_num [Finset.sum_range_succ] at hh hPdlo hE ⊢
-    nlinarith [hh, hPdlo, hE]
-  have hexpdhi :
-      Real.exp (Real.pi / 2 - 1) <
-        (17696757306774 / 10 ^ 13 : ℝ) := by
-    have hPdhi :
-        ∑ m ∈ Finset.range 16,
-            (Real.pi / 2 - 1) ^ m / m.factorial ≤
-          ∑ m ∈ Finset.range 16,
-            (570796326794898 / 10 ^ 15 : ℝ) ^ m / m.factorial := by
-      gcongr <;> linarith [hdU]
-    have hE :
-        |Real.pi / 2 - 1| ^ 16 * ((17 : ℝ) / (Nat.factorial 16 * 16)) ≤
-          (570796326794898 / 10 ^ 15 : ℝ) ^ 16 *
-            ((17 : ℝ) / (Nat.factorial 16 * 16)) := by
-      rw [abs_of_pos]
-      · gcongr <;> linarith [hdU]
-      · linarith [hpiL]
-    have hh := (abs_le.mp hexpd).2
-    set_option maxRecDepth 1000000 in
-      norm_num [Finset.sum_range_succ] at hh hPdhi hE ⊢
-    nlinarith [hh, hPdhi, hE]
+    linarith
+  have hdL' : ((570796326794896 / 10 ^ 15 : ℚ) : ℝ) < Real.pi / 2 - 1 := by
+    convert hdL using 1
+    all_goals norm_num
+  have hdU' : Real.pi / 2 - 1 < ((570796326794898 / 10 ^ 15 : ℚ) : ℝ) := by
+    convert hdU using 1
+    all_goals norm_num
+  convert expBetweenOfRatBounds
+    (l := (570796326794896 / 10 ^ 15 : ℚ))
+    (u := (570796326794898 / 10 ^ 15 : ℚ)) hdL' hdU'
+    (by native_decide) (by native_decide) (by native_decide)
+    rationalCertificates.expDeltaLower rationalCertificates.expDeltaUpper using 1 <;> norm_num
+
+private theorem expOneDirectedBounds :
+    (271828182845904 / 10 ^ 14 : ℝ) < Real.exp 1 ∧
+      Real.exp 1 < (271828182845906 / 10 ^ 14 : ℝ) := by
+  have hL := (abs_le.mp Real.exp_one_near_20).1
+  have hU := (abs_le.mp Real.exp_one_near_20).2
+  constructor <;> norm_num at hL hU ⊢ <;> linarith
+
+private theorem strictScaledMul (k : ℝ) {a b c d : ℝ}
+    (hk : 0 < k) (hab : a < b) (hcd : c < d) (hc : 0 < c) (hb : 0 < b) :
+    k * a * c < k * b * d := by
+  simpa only [mul_assoc] using
+    mul_lt_mul_of_pos_left (strictMul hab hcd hc hb) hk
+
+set_option maxRecDepth 1000000 in
+theorem chapter09NumericalEnclosure :
+    Chapter09NumericalEnclosureInterface := by
+  obtain ⟨hgammaL, hgammaU⟩ := gammaDirectedBounds
+  obtain ⟨hpiL, hpiU⟩ := piDirectedBounds
+  obtain ⟨hgl, hgu⟩ := expGammaDirectedBounds
+  obtain ⟨h1L, h1U⟩ := expOneDirectedBounds
+  obtain ⟨hdL, hdU⟩ := expDeltaDirectedBounds
   have hzL :
       (chapter09UnconditionalEndpointZeroLower : ℝ) <
         chapter09UnconditionalEndpointZero := by
     dsimp [chapter09UnconditionalEndpointZero]
-    calc
-      (chapter09UnconditionalEndpointZeroLower : ℝ) <
-          4 * (3141592653589793 / 10 ^ 15 : ℝ) *
-            (178107241799019 / 10 ^ 14 : ℝ) := by
-              norm_num [chapter09UnconditionalEndpointZeroLower]
-      _ < 4 * Real.pi * Real.exp chapter09EulerMascheroni := by
-              gcongr
+    exact ((by
+      simpa [chapter09UnconditionalEndpointZeroLower] using
+        (Rat.cast_lt (K := ℝ)).2 rationalCertificates.endpointZeroLower) :
+          (chapter09UnconditionalEndpointZeroLower : ℝ) <
+            4 * (3141592653589793 / 10 ^ 15 : ℝ) *
+              (178107241799019 / 10 ^ 14 : ℝ)).trans
+      (strictScaledMul 4 (by norm_num) hpiL hgl (by norm_num) Real.pi_pos)
   have hzU :
       chapter09UnconditionalEndpointZero <
         (chapter09UnconditionalEndpointZeroUpper : ℝ) := by
     dsimp [chapter09UnconditionalEndpointZero]
-    calc
-      4 * Real.pi * Real.exp chapter09EulerMascheroni <
-          4 * (3141592653589794 / 10 ^ 15 : ℝ) *
-            (178107241799021 / 10 ^ 14 : ℝ) := by
-              gcongr
-      _ < (chapter09UnconditionalEndpointZeroUpper : ℝ) := by
-              norm_num [chapter09UnconditionalEndpointZeroUpper]
-  have hfactorOne :
-      Real.exp (1 + chapter09EulerMascheroni) =
-        Real.exp 1 * Real.exp chapter09EulerMascheroni := by
-    rw [Real.exp_add]
+    exact (strictScaledMul 4 (by norm_num) hpiU hgu (by positivity) (by norm_num)).trans
+      ((by
+        simpa [chapter09UnconditionalEndpointZeroUpper] using
+          (Rat.cast_lt (K := ℝ)).2 rationalCertificates.endpointZeroUpper) :
+            4 * (3141592653589794 / 10 ^ 15 : ℝ) *
+                (178107241799021 / 10 ^ 14 : ℝ) <
+              (chapter09UnconditionalEndpointZeroUpper : ℝ))
+  have honeProdL :
+      (271828182845904 / 10 ^ 14 : ℝ) *
+          (178107241799019 / 10 ^ 14 : ℝ) <
+        Real.exp 1 * Real.exp chapter09EulerMascheroni :=
+    strictMul h1L hgl (by norm_num) (Real.exp_pos 1)
+  have honeProdU :
+      Real.exp 1 * Real.exp chapter09EulerMascheroni <
+        (271828182845906 / 10 ^ 14 : ℝ) *
+          (178107241799021 / 10 ^ 14 : ℝ) :=
+    strictMul h1U hgu (Real.exp_pos _) (by norm_num)
   have honeL :
       (chapter09UnconditionalEndpointOneLower : ℝ) <
         chapter09UnconditionalEndpointOne := by
-    dsimp [chapter09UnconditionalEndpointOne]
-    rw [hfactorOne]
-    calc
-      (chapter09UnconditionalEndpointOneLower : ℝ) <
-          4 * (3141592653589793 / 10 ^ 15 : ℝ) *
-            ((271828182845904 / 10 ^ 14 : ℝ) *
-              (178107241799019 / 10 ^ 14 : ℝ)) := by
-              norm_num [chapter09UnconditionalEndpointOneLower]
-      _ < 4 * Real.pi *
-          (Real.exp 1 * Real.exp chapter09EulerMascheroni) := by
-              gcongr
+    rw [chapter09UnconditionalEndpointOne, Real.exp_add]
+    exact ((by
+      simpa [chapter09UnconditionalEndpointOneLower] using
+        (Rat.cast_lt (K := ℝ)).2 rationalCertificates.endpointOneLower) :
+          (chapter09UnconditionalEndpointOneLower : ℝ) <
+            4 * (3141592653589793 / 10 ^ 15 : ℝ) *
+              ((271828182845904 / 10 ^ 14 : ℝ) *
+                (178107241799019 / 10 ^ 14 : ℝ))).trans
+      (strictScaledMul 4 (by norm_num) hpiL honeProdL (by norm_num) Real.pi_pos)
   have honeU :
       chapter09UnconditionalEndpointOne <
         (chapter09UnconditionalEndpointOneUpper : ℝ) := by
-    dsimp [chapter09UnconditionalEndpointOne]
-    rw [hfactorOne]
-    calc
-      4 * Real.pi * (Real.exp 1 * Real.exp chapter09EulerMascheroni) <
-          4 * (3141592653589794 / 10 ^ 15 : ℝ) *
-            ((271828182845906 / 10 ^ 14 : ℝ) *
-              (178107241799021 / 10 ^ 14 : ℝ)) := by
-              gcongr
-      _ < (chapter09UnconditionalEndpointOneUpper : ℝ) := by
-              norm_num [chapter09UnconditionalEndpointOneUpper]
+    rw [chapter09UnconditionalEndpointOne, Real.exp_add]
+    exact (strictScaledMul 4 (by norm_num) hpiU honeProdU (by positivity) (by norm_num)).trans
+      ((by
+        simpa [chapter09UnconditionalEndpointOneUpper] using
+          (Rat.cast_lt (K := ℝ)).2 rationalCertificates.endpointOneUpper) :
+            4 * (3141592653589794 / 10 ^ 15 : ℝ) *
+                ((271828182845906 / 10 ^ 14 : ℝ) *
+                  (178107241799021 / 10 ^ 14 : ℝ)) <
+              (chapter09UnconditionalEndpointOneUpper : ℝ))
   have hgrhzL :
       (chapter09GRHEndpointZeroLower : ℝ) < chapter09GRHEndpointZero := by
     dsimp [chapter09GRHEndpointZero]
-    calc
-      (chapter09GRHEndpointZeroLower : ℝ) <
-          8 * (3141592653589793 / 10 ^ 15 : ℝ) *
-            (178107241799019 / 10 ^ 14 : ℝ) := by
-              norm_num [chapter09GRHEndpointZeroLower]
-      _ < 8 * Real.pi * Real.exp chapter09EulerMascheroni := by
-              gcongr
+    exact ((by
+      simpa [chapter09GRHEndpointZeroLower] using
+        (Rat.cast_lt (K := ℝ)).2 rationalCertificates.grhEndpointZeroLower) :
+          (chapter09GRHEndpointZeroLower : ℝ) <
+            8 * (3141592653589793 / 10 ^ 15 : ℝ) *
+              (178107241799019 / 10 ^ 14 : ℝ)).trans
+      (strictScaledMul 8 (by norm_num) hpiL hgl (by norm_num) Real.pi_pos)
   have hgrhzU :
-      chapter09GRHEndpointZero <
-        (chapter09GRHEndpointZeroUpper : ℝ) := by
+      chapter09GRHEndpointZero < (chapter09GRHEndpointZeroUpper : ℝ) := by
     dsimp [chapter09GRHEndpointZero]
-    calc
-      8 * Real.pi * Real.exp chapter09EulerMascheroni <
-          8 * (3141592653589794 / 10 ^ 15 : ℝ) *
-            (178107241799021 / 10 ^ 14 : ℝ) := by
-              gcongr
-      _ < (chapter09GRHEndpointZeroUpper : ℝ) := by
-              norm_num [chapter09GRHEndpointZeroUpper]
-  have hfactorGrh :
-      Real.exp (chapter09EulerMascheroni + Real.pi / 2) =
-        Real.exp 1 *
-          (Real.exp chapter09EulerMascheroni *
-            Real.exp (Real.pi / 2 - 1)) := by
-    calc
-      Real.exp (chapter09EulerMascheroni + Real.pi / 2) =
-          Real.exp (1 + (chapter09EulerMascheroni + (Real.pi / 2 - 1))) := by
-            congr 1; ring
-      _ = Real.exp 1 *
-          (Real.exp chapter09EulerMascheroni *
-            Real.exp (Real.pi / 2 - 1)) := by
-            rw [Real.exp_add, Real.exp_add]
-  have hgrhprodL :
+    exact (strictScaledMul 8 (by norm_num) hpiU hgu (by positivity) (by norm_num)).trans
+      ((by
+        simpa [chapter09GRHEndpointZeroUpper] using
+          (Rat.cast_lt (K := ℝ)).2 rationalCertificates.grhEndpointZeroUpper) :
+            8 * (3141592653589794 / 10 ^ 15 : ℝ) *
+                (178107241799021 / 10 ^ 14 : ℝ) <
+              (chapter09GRHEndpointZeroUpper : ℝ))
+  have hinnerL :
+      (178107241799019 / 10 ^ 14 : ℝ) *
+          (17696757306773 / 10 ^ 13 : ℝ) <
+        Real.exp chapter09EulerMascheroni * Real.exp (Real.pi / 2 - 1) :=
+    strictMul hgl hdL (by norm_num) (Real.exp_pos _)
+  have hinnerU :
+      Real.exp chapter09EulerMascheroni * Real.exp (Real.pi / 2 - 1) <
+        (178107241799021 / 10 ^ 14 : ℝ) *
+          (17696757306774 / 10 ^ 13 : ℝ) :=
+    strictMul hgu hdU (Real.exp_pos _) (by norm_num)
+  have hgrhProdL :
       (271828182845904 / 10 ^ 14 : ℝ) *
           ((178107241799019 / 10 ^ 14 : ℝ) *
             (17696757306773 / 10 ^ 13 : ℝ)) <
         Real.exp 1 *
-          (Real.exp chapter09EulerMascheroni *
-            Real.exp (Real.pi / 2 - 1)) := by
-    gcongr
-  have hgrhprodU :
+          (Real.exp chapter09EulerMascheroni * Real.exp (Real.pi / 2 - 1)) :=
+    strictMul h1L hinnerL (by positivity) (Real.exp_pos _)
+  have hgrhProdU :
       Real.exp 1 *
-          (Real.exp chapter09EulerMascheroni *
-            Real.exp (Real.pi / 2 - 1)) <
+          (Real.exp chapter09EulerMascheroni * Real.exp (Real.pi / 2 - 1)) <
         (271828182845906 / 10 ^ 14 : ℝ) *
           ((178107241799021 / 10 ^ 14 : ℝ) *
-            (17696757306774 / 10 ^ 13 : ℝ)) := by
-    gcongr
+            (17696757306774 / 10 ^ 13 : ℝ)) :=
+    strictMul h1U hinnerU (by positivity) (by norm_num)
+  have hfactorGrh :
+      Real.exp (chapter09EulerMascheroni + Real.pi / 2) =
+        Real.exp 1 *
+          (Real.exp chapter09EulerMascheroni * Real.exp (Real.pi / 2 - 1)) := by
+    rw [show chapter09EulerMascheroni + Real.pi / 2 =
+      1 + (chapter09EulerMascheroni + (Real.pi / 2 - 1)) by ring,
+      Real.exp_add, Real.exp_add]
   have hgrhoneL :
       (chapter09GRHEndpointOneLower : ℝ) < chapter09GRHEndpointOne := by
-    dsimp [chapter09GRHEndpointOne]
-    rw [hfactorGrh]
-    calc
-      (chapter09GRHEndpointOneLower : ℝ) <
-          8 * (3141592653589793 / 10 ^ 15 : ℝ) *
-            ((271828182845904 / 10 ^ 14 : ℝ) *
-              ((178107241799019 / 10 ^ 14 : ℝ) *
-                (17696757306773 / 10 ^ 13 : ℝ))) := by
-              norm_num [chapter09GRHEndpointOneLower]
-      _ < 8 * Real.pi *
-          (Real.exp 1 *
-            (Real.exp chapter09EulerMascheroni *
-              Real.exp (Real.pi / 2 - 1))) := by
-              gcongr
+    rw [chapter09GRHEndpointOne, hfactorGrh]
+    exact ((by
+      simpa [chapter09GRHEndpointOneLower] using
+        (Rat.cast_lt (K := ℝ)).2 rationalCertificates.grhEndpointOneLower) :
+          (chapter09GRHEndpointOneLower : ℝ) <
+            8 * (3141592653589793 / 10 ^ 15 : ℝ) *
+              ((271828182845904 / 10 ^ 14 : ℝ) *
+                ((178107241799019 / 10 ^ 14 : ℝ) *
+                  (17696757306773 / 10 ^ 13 : ℝ)))).trans
+      (strictScaledMul 8 (by norm_num) hpiL hgrhProdL (by positivity) Real.pi_pos)
   have hgrhoneU :
-      chapter09GRHEndpointOne <
-        (chapter09GRHEndpointOneUpper : ℝ) := by
-    dsimp [chapter09GRHEndpointOne]
-    rw [hfactorGrh]
-    calc
-      8 * Real.pi *
-          (Real.exp 1 *
-            (Real.exp chapter09EulerMascheroni *
-              Real.exp (Real.pi / 2 - 1))) <
-          8 * (3141592653589794 / 10 ^ 15 : ℝ) *
-            ((271828182845906 / 10 ^ 14 : ℝ) *
-              ((178107241799021 / 10 ^ 14 : ℝ) *
-                (17696757306774 / 10 ^ 13 : ℝ))) := by
-              gcongr
-      _ < (chapter09GRHEndpointOneUpper : ℝ) := by
-              norm_num [chapter09GRHEndpointOneUpper]
+      chapter09GRHEndpointOne < (chapter09GRHEndpointOneUpper : ℝ) := by
+    rw [chapter09GRHEndpointOne, hfactorGrh]
+    exact (strictScaledMul 8 (by norm_num) hpiU hgrhProdU (by positivity) (by norm_num)).trans
+      ((by
+        simpa [chapter09GRHEndpointOneUpper] using
+          (Rat.cast_lt (K := ℝ)).2 rationalCertificates.grhEndpointOneUpper) :
+            8 * (3141592653589794 / 10 ^ 15 : ℝ) *
+                ((271828182845906 / 10 ^ 14 : ℝ) *
+                  ((178107241799021 / 10 ^ 14 : ℝ) *
+                    (17696757306774 / 10 ^ 13 : ℝ))) <
+              (chapter09GRHEndpointOneUpper : ℝ))
   exact
-    { gamma_directed_bounds := ⟨hgammaLower, hgammaUpper⟩
+    { gamma_directed_bounds := ⟨hgammaL, hgammaU⟩
       unconditional_endpoint_zero_directed_bounds := ⟨hzL, hzU⟩
       unconditional_endpoint_one_directed_bounds := ⟨honeL, honeU⟩
       grh_endpoint_zero_directed_bounds := ⟨hgrhzL, hgrhzU⟩
