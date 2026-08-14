@@ -1087,11 +1087,17 @@ It does not require good reduction: properness and smoothness concern the generi
 $L$. Replacing it by crystalline comparison would therefore lose precisely the bad-reduction
 coefficient places which a uniform packet argument must retain.
 
-There is an equivalent abelian formulation. If $J=\operatorname{Pic}^0_{C/L}$, Abel--Jacobi
-identifies $V_C$ with $H^1_{\mathrm{\acute et}}(J_{\overline L},\mathbf Q_p)$ and identifies the
-two de Rham Hodge terms. Thus (9.7) follows from the Hodge--Tate exact sequence for the
-$p$-divisible group $J[p^\infty]$. This reduction does not prove that exact sequence: passage
-from the integral $p$-divisible group to $\mathbf C_p$-periods is the deep step.
+There is a useful abelian reduction, with one important qualification. If
+$J=\operatorname{Pic}^0_{C/L}$, Abel--Jacobi and the canonical principal polarization identify
+$V_C$ with the corresponding rational Tate realization of $J$ and identify the two de Rham
+Hodge terms.  Thus the Hodge--Tate theorem for abelian varieties implies (9.7).  When $J$ has
+good reduction, that theorem can in turn be expressed as the Hodge--Tate exact sequence for
+the $p$-divisible group of its abelian model over $\mathcal O_L$.  For arbitrary reduction,
+$J[p^\infty]$ over the characteristic-zero field $L$ is not such an integral model: all of its
+finite levels over $L$ are etale, and its Lie terms do not recover the Hodge filtration.
+One must instead use a general proper-smooth theorem or extend the good-reduction exact
+sequence through semistable uniformization.  This distinction matters here because (9.7) is
+required without a good-reduction hypothesis.
 
 The exact consequence needed for curve-carried packet factors is nevertheless formal once
 (9.7) is supplied.
@@ -1128,12 +1134,58 @@ global irreducibility argument is what can then identify a raw packet representa
 semisimplification.
 
 The proof of (9.7) is not contained in the Betti--de Rham--étale arguments of this volume or
-in the crystalline theory of Book 49. A complete proof requires the smooth-proper Hodge--Tate
-comparison theorem, equivalently here the Hodge--Tate exact sequence for abelian varieties,
-and its functoriality. Thus this section isolates one theorem rather than silently deriving
-coefficient-prime arithmetic from (9.6). Once that theorem is available, Proposition 9.1 closes
-every geometric-subquotient step used by the packet applications; the rank-one passage from
-Hodge--Tate to local algebraicity is supplied separately by Book 6, Section 11.5.
+in the crystalline theory of Book 49.  The exact audit is as follows.
+
+- Books 18--20 construct finite and adic etale cohomology, proper/smooth base change, and
+  duality only in their stated coefficient-invertible range.  They produce the vector space
+  $V_C$ but no $\mathbf C_p$ period map at a coefficient-prime decomposition group.
+- Books 35--36 identify curve $H^1$ with the Jacobian Tate realization and transport maps,
+  correspondences, duality, and the principal polarization.  Book 46 constructs the two
+  de Rham Hodge terms.  These results reduce and normalize (9.7); they do not prove it.
+- Books 48--55 develop crystalline, Fontaine--Laffaille, finite-flat, Dieudonne, and
+  $p$-divisible-group deformation theory over their unramified, small-weight, or
+  $p$-nilpotent bases.  They contain no $\mathbf C_p$ period theory and do not prove even the
+  good-reduction Hodge--Tate exact sequence.  Crystalline comparison would in any event not
+  cover a Jacobian of arbitrary reduction without another theorem.
+- Books 59--61 construct rigid/formal curve geometry, Raynaud uniformization, one-motives,
+  and potential semistable reduction.  Their Tate-realization calculations are explicitly
+  prime to the residue characteristic.  They provide the geometric reduction needed by a
+  semistable proof, but no coefficient-prime Hodge--Tate realization of the torus, lattice,
+  and bounded abelian parts.
+
+Thus no theorem in Books 18--20, 35--36, 46--55, or 59--61 is an alias for
+$(\mathrm{HT}_{\mathrm{curve}})$.  A source-closed proof must add at least the following
+reusable package.
+
+1. A $\mathbf C_p$ and Tate--Sen foundation beyond the rank-one calculation of Book 6:
+   completed tensor products and continuous $G_L$-cohomology, Tate twists and labeled
+   embeddings, and the normalized-trace or almost ramification estimates which compute the
+   relevant invariants and make the period maps exact.
+2. The functorial Hodge--Tate map and its dual for $p$-divisible groups over valuation rings,
+   together with the good-reduction exact sequence, dimension calculation, Cartier duality,
+   polarizations, isogenies, and finite base change.  Merely constructing the map by invariant
+   differentials is not enough; injectivity, cokernel, and the $\mathbf C_p$ Galois action are
+   the theorem.
+3. A passage from good reduction to arbitrary abelian reduction.  In the narrow route needed
+   here this means extending Books 60--61's Raynaud one-motive to its coefficient-prime
+   Hodge--Tate realization, proving the torus and period-lattice terms and exactness, and then
+   descending from a finite semistable extension.  The broader alternative is the full
+   smooth-proper Hodge--Tate comparison via an almost-purity or pro-etale primitive comparison
+   theorem.
+4. Functoriality for homomorphisms, duality, finite base change, and algebraic
+   correspondences.  Books 36 and 46 then identify the resulting abelian statement with
+   (9.7), after which Proposition 9.1 supplies every Hecke-stable subquotient consequence.
+
+This package is too large to insert as another proof inside this comparison volume.  The
+restricted abelian/curve route is coherent as one substantial future volume on Hodge--Tate
+theory for $p$-divisible groups and semistable abelian varieties, reusing the Jacobian and
+uniformization books.  Developing general perfectoid spaces, the pro-etale site, and
+smooth-proper comparison would be a broader multi-volume expansion and is unnecessary for
+the FLT dependency chain.  Until the restricted volume or an accepted external theorem is
+supplied, $(\mathrm{HT}_{\mathrm{curve}})$ remains the sole exact gap here.  Once it is
+available, Proposition 9.1 closes every geometric-subquotient step used by the packet
+applications; the rank-one passage from Hodge--Tate to local algebraicity is already supplied
+by Book 6, Section 11.5.
 
 ## 10. Cycle classes, twists, and trace normalizations
 
