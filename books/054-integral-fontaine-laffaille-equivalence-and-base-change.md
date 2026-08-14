@@ -1717,18 +1717,32 @@ $G_{\mathbf Q_p}$, all the $h_\tau$ are equal; on inertia it is therefore, up to
 order, either the trivial or the cyclotomic character.
 
 **Proof.** Theorem 14.1, with the coefficient action retained as in Chapter 13, gives a
-coefficient-linear strongly divisible lattice $L$. After splitting
-$K_0\otimes_{\mathbf Q_p}\overline{\mathbf Q}_p$, its rank-one factors are cyclically
-permuted by Frobenius. On the factor labelled by $\tau$, the first Hodge step is either zero
-or the whole line; call the alternative $h_\tau=0$ or $1$. Strong divisibility says that
-the divided Frobenius around this cycle is a unit.
+coefficient-linear strongly divisible lattice $L$. Enlarge the coefficient field so that
+$R_{\mathcal O}[1/p]$ splits, and write its idempotent factors as $L_\tau$. Each $L_\tau$ is
+a line, Frobenius carries $L_\tau$ to $L_{\varphi\tau}$, and the first Hodge step on that
+line is either zero or the whole line; call the alternative $h_\tau=0$ or $1$. Choose
+generators $e_\tau$. The divided Frobenius equations then have the form
 
-Solve the rank-one syntomic equations of Book 53, Section 4.1 successively around the
-Frobenius cycle. The unit in the divided Frobenius contributes only the unramified value,
-whereas a factor with $h_\tau=1$ contributes the $\tau$-conjugate Lubin--Tate character and
-a factor with $h_\tau=0$ contributes the trivial character on an open subgroup of units.
-This is the same local-reciprocity calculation recorded in Book 6, Section 11.5, before its
-Hodge--Tate reformulation, and gives (14.6a) directly. Thus $\xi$ is locally algebraic.
+$$
+\varphi_{h_\tau}(e_\tau)=a_\tau e_{\varphi\tau},
+\qquad a_\tau\in\mathcal O^\times.                 \tag{14.6b}
+$$
+
+The product of the $a_\tau$ around the Frobenius cycle changes only the value on a
+uniformizer, hence is an unramified character. After dividing by it, (14.6b) is the tensor
+product, over those $\tau$ with $h_\tau=1$, of the cyclic rank-one display having one
+weight-one factor and weight zero at the other embeddings.
+
+The generic points of that one-step display can be calculated at every finite level from the
+two fundamental syntomic equations of Book 53, Sections 4.1--4.2: iterate ordinary Frobenius
+through the weight-zero factors and divided Frobenius at the one weight-one factor. The
+result is the torsion equation of the Lubin--Tate formal $\mathcal O_{K_0}$-module for the
+embedding $\tau$. Consequently its inverse-limit character is the $\tau$-conjugate
+Lubin--Tate character. Under arithmetic local reciprocity this character is
+$u\mapsto\tau(u)$ on a sufficiently small principal-unit group, as calculated in Book 6,
+Section 11.5. Multiplying the factors and restoring the unramified scalar gives (14.6a)
+directly. No Sen operator or $\mathbf C_p$ period decomposition has entered the argument.
+Thus $\xi$ is locally algebraic.
 
 If $\xi$ descends to $G_{\mathbf Q_p}$, conjugation by arithmetic Frobenius fixes its
 inertial character. Frobenius cyclically permutes the embeddings $\tau$ of the unramified
