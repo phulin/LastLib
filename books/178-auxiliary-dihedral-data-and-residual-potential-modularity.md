@@ -41,7 +41,7 @@
    - [Ramification of the dihedral seed](#74-ramification-of-the-dihedral-seed)
    - [The split special places](#75-the-split-special-places)
    - [Good and semistable auxiliary conditions](#76-good-and-semistable-auxiliary-conditions)
-   - [The simultaneous local-neighborhood lemma](#77-the-simultaneous-local-neighborhood-lemma)
+   - [The local seed and openness theorems](#77-the-local-seed-and-openness-theorems)
 8. [Mixed Galois-top specialization](#8-mixed-galois-top-specialization)
    - [The avoidance field](#81-the-avoidance-field)
    - [The mixed moving presentation](#82-the-mixed-moving-presentation)
@@ -238,6 +238,18 @@ $q$-branches at $\ell$ by protected anti-cyclotomic correction. The multiplicati
 curve itself is not the characteristic-zero finite-flat seed, and a branch selected from its
 semisimplification need not occur on any good replacement.
 
+Fix also the CM elliptic curve
+
+$$
+B_*:y^2=x^3-x,
+\tag{1.6}
+$$
+
+with CM by $\mathbf Z[i]$.  It has good reduction away from $2$.  It will be used only at the
+auxiliary coefficient prime: the primes $3$ and $\ell$ are good for $B_*$, and the later
+choice of $q$ avoids $2\ell$ and the discriminant.  This fixed source is independent of the
+real-multiplication field and of the auxiliary level.
+
 ### 1.4 The logical boundary
 
 This book does not assume a potential-modularity theorem. It also does not promote ordinary
@@ -305,10 +317,15 @@ local--local place it does not.
 
 For the main theorem, a **Frey signed-special residual datum** is a weight-two residual datum
 over $\mathbf Q$ which is unramified away from $2\ell$ and carries the named dyadic
-signed-special residual line and sign.  This is the residual problem used in Theorems 11.3 and
-12.2.  In particular, at every later target active or unramifying place away from $2\ell$, its
-local image is unramified and hence cyclic, supplying the residual local hypothesis in target
-preparation.
+signed-special residual line and sign, together with its local Frey elliptic source.  At $2$
+that source is the named split tensor-Tate model; at $3$ it is either good or split
+multiplicative; and at $\ell$ it is either good or multiplicative with finite-flat
+$\ell$-torsion.  In the multiplicative cases the Tate period records the exact Kummer class,
+line, pairing, and sign.  Book 157, Proposition 8.4B and Lemma 8.4B.1 make the required good
+ordinary replacement at $\ell$ unconditional for $\ell\geq7$.  This is the residual problem
+used in Theorems 11.3 and 12.2.  In particular, at every later target active or unramifying
+place away from $2\ell$, its local image is unramified and hence cyclic, supplying the residual
+local hypothesis in target preparation.
 
 ### 2.2 Determinant normalization
 
@@ -458,7 +475,8 @@ upper and lower unipotents modulo $N$, $\mathfrak p$, and $\mathfrak s$ proves s
 the displayed product. Thus both primes are monodromy-admissible, with no exceptional set chosen
 before them.  For the optional elliptic source, Book 157, Proposition 4.1A identifies the same
 geometric congruence subgroup and Lemma 4.1B supplies the asserted simultaneous local matching;
-only the arithmetic descent datum changes. Finally $\mathfrak c^\vee=\mathcal O_E$ identifies each polarization coefficient
+here the matching concerns only the auxiliary level of seeds already constructed, not their
+existence.  Only the arithmetic descent datum changes. Finally $\mathfrak c^\vee=\mathcal O_E$ identifies each polarization coefficient
 line with its residue field; composing with (2.6)--(2.7) gives (2.9). $\square$
 
 We will apply Theorem 2.1 with $p=\ell$, $k_p=k$, $s=q$, and $k_s=k_\psi$ only after the
@@ -542,6 +560,15 @@ chosen order is the good local $q$-branch which Lemma 4.3 must impose. If anothe
 seed, for example at $3$, also participates in the paired frame, add the analogous nonzero
 discriminant to the exclusion list before invoking Chebotarev.
 
+Form, before choosing $q$, the finite Galois compositum of the target residual cutout,
+$\mathbf Q(B_*[\ell])$, the CM field $\mathbf Q(i)$, the cyclotomic and determinant fields,
+and every finite avoidance or level field already fixed at this stage.  In Lemma 3.1 choose
+the identity Frobenius class in this compositum, together with the preceding exclusions and
+the required congruences.  Thus $q$ splits completely in all these fields.  In particular
+$\bar\rho|_{G_{\mathbf Q_q}}$ and $B_*[\ell]|_{G_{\mathbf Q_q}}$ are trivial paired modules,
+$q\equiv1\pmod\ell$, and $q$ is split in the CM field.  We may take such a prime arbitrarily
+large, so (3.1) is imposed simultaneously.
+
 Let $S(\bar\rho)$ be the finite set of rational residue characteristics below places where
 $\bar\rho$ is ramified. We exclude $S(\bar\rho)$, the rational primes ramified in $K$, and
 $2,3,5,\ell$. We also take
@@ -562,8 +589,9 @@ coefficient primes are monodromy-admissible. There is therefore no circular atte
 an exceptional set belonging to a field not yet known.
 
 **Lemma 3.1 (auxiliary-prime selection).** Given finitely many number fields, finite sets of
-primes, and compatible Frobenius requirements in one finite Galois compositum, infinitely many
-rational primes $q\geq7$ meet the requirements.
+primes, compatible Frobenius requirements in one finite Galois compositum, and finitely many
+congruence conditions already represented by cyclotomic subfields of that compositum,
+infinitely many rational primes $q\geq7$ meet the requirements.
 
 **Proof.** Remove the finitely many ramified and forbidden primes. A compatible tuple of class
 requirements is one conjugacy class in the Galois group of the compositum. Primes with that
@@ -615,9 +643,13 @@ same unramified base.
 There is a second, independent condition at the same places: $\bar\rho|_{G_{K_w}}$ must be
 unramified. A good Hilbert--Blumenthal variety has unramified $\mathfrak l$-torsion at residue
 characteristic $q\ne\ell$. If $\bar\rho$ had nontrivial inertia at $w$, no unramified extension
-could make an exact good $\mathfrak l$-frame exist. Since $q\notin S(\bar\rho)$, the target is
-unramified; the rational-base tensor source and chosen ordinary seed must realize its actual
-Frobenius over $\mathbf Q_q$ itself.
+could make an exact good $\mathfrak l$-frame exist.  In the rational application the stronger
+choice in Section 3.1 makes both $\bar\rho$ and $B_*[\ell]$ trivial at $G_{\mathbf Q_q}$.
+Because $q$ is split in $\mathbf Q(i)$, the two CM idempotents split the $q$-divisible group
+of $B_*$ into its connected and etale height-one factors.  Thus $B_*[q]$ is an exact split
+ordinary finite-flat frame over $\mathbf Q_q$, not merely an ordinary semisimplification.
+Section 7.3 tensors this point by $\mathcal O_E$ and Section 4.8 retargets the two dihedral
+branches to that frame.
 
 At $\ell$, the target finite-flat module must be realized over $\mathbf Q_\ell$ by an ordinary
 or local--local Hilbert--Blumenthal seed on the selected component. A seed known only after a
@@ -958,14 +990,16 @@ space.
 **Lemma 4.3 (protected anti-cyclotomic Grunwald correction).**  Fix the embedding
 $\overline{\mathbf Q}\hookrightarrow\overline{\mathbf Q}_q$.  Let $M/K$ be quadratic with
 involution $\sigma$, let $P$ be a finite $\sigma$-stable set of places of $M$, and let $S$ be
-a finite set of finite places of $K$, disjoint from the places below $P$ and from those above
-$q$, which split in $M$.  For each $v\in S$ choose one branch $w\mid v$ and a finite local
-character
+a finite set of finite places of $K$, disjoint from the places below $P$, which split in $M$.
+For each $v\in S$ choose one branch $w\mid v$ and a finite local character
 
 $$
 \bar\delta_v:G_{K_v}\longrightarrow\overline{\mathbf F}_q^\times.
 \tag{4.16}
 $$
+
+If $v\mid q$, require $\bar\delta_v$ to be unramified.  This is the only auxiliary-prime
+case allowed in the lemma.
 
 There is a finite-order Hecke character $\nu$ of $M$, of order prime to $q$, such that
 
@@ -1021,7 +1055,7 @@ $$
 $$
 
 Equality of the two determinants says that the required correction on $w^\sigma$ is exactly
-$\bar\delta_v^{-1}$.  Put in $P$ every auxiliary-prime place, the protected
+$\bar\delta_v^{-1}$.  Put in $P$ every auxiliary-prime place not being retargeted, the protected
 conjugate-ratio witness, and every previously protected local factor away from $S$.  Replacing
 $\psi_0$ by
 
@@ -1032,8 +1066,10 @@ $$
 
 therefore realizes the exact residual branch pairs at all $v\in S$.  Because
 $\nu|_{C_K}=1$, equation (4.4), the infinity type, and the induction determinant are unchanged.
-Because $\nu$ is exactly trivial at $P$, ordinary finite flatness at $q$, the protected
-inertial distinctions, and the cyclotomic-irreducibility witness are unchanged.  Before applying
+Because $\nu$ is exactly trivial at $P$, the protected inertial distinctions and the
+cyclotomic-irreducibility witness are unchanged.  At a retargeted place above $q$ the
+correction is unramified and of prime-to-$q$ order, so it changes only the unramified branch
+eigenvalues and preserves the ordinary finite-flat filtration.  Before applying
 the lemma, put in $P$ every place where the target is ramified and every place required to stay
 on its original completion.  In the initial squareclass choice of Section 4.7 require $M$ to
 split at that finite set, and choose the original CM modulus and the inverse-branch primes away
@@ -1048,9 +1084,9 @@ Let $S_{\mathrm{dih}}$ be the finite set of finite places, away from $q$, at whi
 quadratic induction algebra, $\psi$, or the correction $\nu$ has nontrivial inertia.  The
 preceding choice makes $\bar\rho$ unramified at every member of $S_{\mathrm{dih}}$.  The set is
 defined now, after all ray-class extensions and corrections have been made but before the
-real-multiplication field and auxiliary level are chosen.  At $2$, $3$, $\ell$, and $q$, and
-at any further place whose original completion is genuinely needed, choose $M$ split and all
-finite branch corrections unramified.  These places form the split protected set
+real-multiplication field and auxiliary level are chosen.  At $2$, $3$, $\ell$, and $q$
+choose $M$ split and all finite branch corrections unramified.  These four places form the
+split protected set
 $S_{\mathrm{split}}$ and are disjoint from $S_{\mathrm{dih}}$.
 
 Enlarge $C_\psi$ to contain the values of the corrected character (4.20), retain the place
@@ -1106,11 +1142,13 @@ $S_{\mathrm{dih}}$.
 
 At $2$, choose the Frey Tate neighborhood for the target frame and use Lemma 4.3 to impose the
 determinant-compatible residual dihedral branch on the same split Tate point. At $\ell$, first
-fix the good ordinary replacement when the target residual module came from a multiplicative
-curve, then choose $q\nmid\Delta_\ell$ and impose one of the two ordered roots of its
-Frobenius polynomial as the protected $q$-branch. Treat a fixed good seed at $3$ in the same
-order. At $q$, use the unramified ordinary frame of Section 4.6. Every auxiliary correction is
-chosen after the seed whose Frobenius it must match.
+fix the original good Frey seed, or the good ordinary replacement when the target residual
+module came from a multiplicative curve; then choose $q\nmid\Delta_\ell$ and impose one of the
+two ordered roots of its Frobenius polynomial as the protected $q$-branch. At $3$, use either
+the allowed good seed or the allowed tensor-Tate special seed and impose its exact frame.  At
+$q$, use the fixed CM tensor seed $B_*\otimes\mathcal O_E$ and retarget the dihedral branches
+to its split ordinary $q$-torsion. Every auxiliary correction is chosen after the seed whose
+frame it must match.
 
 These are finitely many split local prescriptions with common determinants, so the protected
 anti-cyclotomic correction of Lemma 4.3 realizes them simultaneously without changing the CM
@@ -1300,11 +1338,11 @@ The ordinary locus is open by nonvanishing of the Hasse invariants. Nonordinarit
 the special fiber, so its openness in the local field is obtained differently: fix the entire
 special point and take its residue tube. Every point in that open tube has the same nonordinary
 reduction. In either case, the generic frame is locally constant because its isomorphism scheme
-is finite étale.
-
-If the proposed finite-flat module is not realized by a Hilbert--Blumenthal seed of the selected polarization
-type, finite flatness alone does not create a point. Existence over the stated completion is an
-explicit hypothesis of the split local package.
+is finite étale.  In the Frey application this point is constructed, not assumed.  If the
+Frey curve has good reduction at $\ell$, tensor its good elliptic model by $\mathcal O_E$;
+ordinary and local--local reduction give the two cases just described, with its exact
+$\ell$-torsion, pairing, and intrinsic line.  If it has multiplicative reduction, use the
+replacement in the next paragraph.
 
 There is a sharper boundary when the target module is the finite-flat residual torsion of a
 Tate curve at $\ell$.  Book 157, Proposition 8.4A shows that its selected model is ordinary,
@@ -1328,12 +1366,29 @@ completion in the FLT range.
 
 ### 7.3 The auxiliary coefficient prime
 
-At $q$, the split local datum must already be defined over $\mathbf Q_q$. The prime-selection
-step makes the target frame unramified there, and the dihedral construction supplies the exact
-ordinary finite-flat auxiliary frame. Choose the rational-base tensor seed permitted by Book
-157, Lemma 4.1B so that both frames, the determinant lines, and the ordinary
-characteristic-zero lift occur on one point over $\mathbf Q_q$. Book 157's local openness then
-gives a nonempty point-centered ordinary tube.
+At $q$, the split local datum is already defined over $\mathbf Q_q$.  Tensor the fixed CM curve
+$B_*$ of (1.6) by $\mathcal O_E$.  Section 3.1 makes its $\ell$-torsion and the target frame
+trivial, so paired bases identify them exactly.  Since $q$ splits in $\mathbf Q(i)$, the two
+CM idempotents give an integral decomposition.  Book 117, Sections 6.5 and 8.3 identify the
+split CM prime with ordinary reduction: one height-one summand is connected and the conjugate
+summand is étale.  Consequently
+
+$$
+B_*[q]=B_*[\mathfrak Q_*]\oplus B_*[\overline{\mathfrak Q}_*]
+\tag{7.2}
+$$
+
+into the connected and étale height-one finite-flat factors.  This is a split ordinary
+finite-flat group scheme with its exact extension class, determinant line, and pairing.  In
+the initial quadratic choice make $M$ split at $q$.  Lemma 4.3 then changes the two residual
+dihedral branch characters to the two characters in (7.2), while remaining exactly trivial
+at every earlier protected place.  Hence the tensor point carries both exact frames and the
+ordinary characteristic-zero lift over $\mathbf Q_q$ itself.
+
+Book 157, Lemma 4.1B is used only after this point exists: it chooses an elliptic auxiliary
+level source matching the finitely many already constructed seed torsion modules.  It is not
+an existence theorem for the point in (7.2).  Book 157's ordinary local openness gives the
+required point-centered tube.
 
 The base is unramified at $q$, as required by the weight-two finite-flat lifting condition. A
 frame obtained only after a nontrivial unramified extension would solve a different exact-local-
@@ -1409,9 +1464,15 @@ prove automorphy of the specialized $q$-adic point; Chapter 10 supplies that con
 
 At the dyadic controlled place, choose the split semistable tensor Tate point used by Book 158.
 Its $q$-adic Tate module has rank-one monodromy and conductor one, whereas its residual
-$q$-torsion is the protected unramified branch fixed in Chapter 5. Choose the Tate parameter to
-be an $\ell qN$th power with positive valuation, so both residual torsion frames and the
-corrected neat level occur on the same point. Pairing fixes the determinant.
+$q$-torsion is the protected branch fixed in Chapter 5.  Book 157, Theorems 8.1 and 8.2
+construct the tensor Tate point from one period whose images in the $\ell$- and $q$-Kummer
+quotients are compatible: retain the exact Frey $\ell$-class and choose the zero $q$-class.
+The coprimality of $\ell$ and $q$ makes these two requirements simultaneous, and Lemma 4.3
+then makes the two dihedral characters equal the resulting split $q$-frame.  The
+$N$th-power map is invertible on both quotients because $(N,\ell q)=1$; choosing
+$q_0=q_N^N$ therefore adds the corrected auxiliary level without changing either exact
+frame.  The construction retains the Frey signed-special line and sign, the dihedral branch
+label, and the common determinant pairing.
 
 The local datum is a point-centered open, not a degree-indexed factorization with one exceptional
 sheet. The mixed specialization keeps $2$ completely split in its Galois top. Hence the same Tate
@@ -1425,13 +1486,20 @@ point prescribed in Chapter 5 and Book 158. Each condition is imposed on every s
 place. Exact valuations and nonsplitness require the stated local model, while good reduction,
 ordinary type, semistability, frames, and components persist on the point-centered open.
 
+At $3$ there are exactly the two local models allowed in the Frey ledger.  In the good case,
+tensor the chosen good elliptic seed and use its exact prime-to-$3$ torsion frames; both local
+parameters are principal.  In the multiplicative case, use the same tensor-Tate construction
+as at $2$, with the prescribed $\ell$-class, zero $q$-class, and $q_0=q_N^N$; its
+characteristic-zero parameter is special and its residual frames, line, and pairing are exact.
+The later mixed top keeps $3$ split, so no descent from an enlarged completion is involved.
 
-### 7.7 The simultaneous local-neighborhood lemma
 
-**Theorem 7.1 (one-component local package).** Let
+### 7.7 The local seed and openness theorems
+
+**Theorem 7.1 (point-centered local openness).** Let
 $Z\subsetneq Y^{\mathrm{ten}}$ be closed. For every controlled place $v$ of the rational
-base, choose either the original completion $\mathbf Q_v$ or one of the exact fields $E_v$
-of (7.1c), and suppose there is a point
+base, let $K_v'$ be either the original completion $\mathbf Q_v$ or one of the exact fields
+$E_v$ of (7.1c), and suppose there is a point
 
 $$
 y_v\in(Y^{\mathrm{ten}}\setminus Z)(K_v')
@@ -1453,6 +1521,25 @@ ordinary or determinant components and have empty intersection. At a member of
 $S_{\mathrm{split}}$ the witness is required over the original completion.  At a member of
 $S_{\mathrm{dih}}$ the extension $E_v$ is part of the datum, and every conjugate packet and
 its multiplicity are carried into the moving presentation of Chapter 8.
+
+**Theorem 7.2 (constructed split local seeds).** For the Frey signed-special datum over
+$\mathbf Q$, choose $q$ as in Section 3.1 and make the protected correction only after the
+elliptic seeds have been fixed.  Then the paired tensor component has points over the original
+completions at every member of $S_{\mathrm{split}}$: the exact Frey/tensor-Tate point at $2$;
+at $3$, either the exact good principal point or the exact tensor-Tate special point; at
+$\ell$, the original good Frey point or the good ordinary replacement of Book 157,
+Proposition 8.4B; and at $q$, the CM ordinary point (7.2).  Each point carries both exact
+residual frames, their determinant pairings, the named line and sign where present, and the
+corrected auxiliary level.  Each admits a nonempty point-centered open with the same data.
+
+**Proof.**  The constructions are respectively Sections 7.5, 7.6, 7.2, and 7.3.  At $\ell$
+Proposition 8.4A forces the multiplicative residual model to be ordinary and Proposition
+8.4B realizes its Kummer class, split sign, intrinsic line, and pairing on a good ordinary
+elliptic model over $\mathbf Q_\ell$; the good-reduction case uses the Frey model itself.
+At $q$, complete splitting in both residual cutouts gives the target frame, and the CM
+idempotents give the exact split finite-flat auxiliary frame before Lemma 4.3 retargets the
+dihedral branches.  Book 157, Lemma 4.1B then supplies one auxiliary level source for these
+already existing local points.  Theorem 7.1 produces the asserted opens. $\square$
 
 
 ## 8. Mixed Galois-top specialization
@@ -1476,6 +1563,15 @@ split proof was obtained.  For $v\in S_{\mathrm{dih}}$ put
 $$
 e_v=[E_v:\mathbf Q_v],\qquad D_v=\operatorname {Gal}(E_v/\mathbf Q_v).
 $$
+
+The inputs used here are precisely the geometrically connected paired-frame component of
+Proposition 6.1, the constructed original-completion opens of Theorem 7.2 at
+$S_{\mathrm{split}}$, the full regular $D_v$-orbits (7.1d) at $S_{\mathrm{dih}}$, the chosen
+real component, the closed locus to avoid, and $D_{\mathrm{av}}$.  Smoothness and positive
+dimension supply disjoint nearby copies; exact field of definition supplies the regular
+$D_v$-action; integral goodness at the helper residue primes permits the good tensor opens;
+and the corrected auxiliary level makes the fine component available.  No place outside
+$S_{\mathrm{split}}$ is required to split.
 
 Book 154, Lemma 5.2A applies because the complete Galois packet (7.1d), not one distinguished
 factor, may be repeated wholesale.  Choose a sufficiently large common degree $d$, divisible
@@ -1555,11 +1651,12 @@ protected conjugate-ratio witness.
 
 ### 8.4 The specialization theorem
 
-**Theorem 8.2 (mixed two-prime specialization).** Retain the rational-base residual datum,
-compatible corrected relative ray datum, simultaneous coefficient realization, paired-frame
-space, the integral-good coefficient and level choice at the residue primes of
-$S_{\mathrm{dih}}$, the original-completion opens at $S_{\mathrm{split}}$, and the exact
-solvable packets at $S_{\mathrm{dih}}$. Then the mixed specialization of Section 8.2 supplies $F$ and $A_F$ with
+**Theorem 8.2 (mixed two-prime specialization).** Retain the rational-base Frey residual
+datum, the corrected dihedral datum and protected branch corrections, the simultaneous
+coefficient realization, the paired-frame component, the constructed opens of Theorem 7.2,
+the integral-good coefficient and level choice at the residue primes of $S_{\mathrm{dih}}$,
+the exact full-orbit solvable packets (7.1d), and $D_{\mathrm{av}}$. Then the mixed
+specialization of Section 8.2 supplies $F$ and $A_F$ with
 
 $$
 A_F[\mathfrak l]\simeq\bar\rho|_{G_F},
@@ -1570,7 +1667,7 @@ $$
 
 preserves both joint residual images, and places every dyadic sheet in the split Tate open.
 The field is totally real, Galois, of positive even degree, and disjoint from
-$D_{\mathrm{av}}$.  Every protected place splits completely.  At every
+$D_{\mathrm{av}}$.  Every member of $S_{\mathrm{split}}$ splits completely.  At every
 $v\in S_{\mathrm{dih}}$, every top completion is the selected $E_v$; there $A_F$ has good
 reduction, both residual frames are trivial, and $r_{\psi,q}|_{G_{F_w}}$ is unramified.
 
@@ -1579,7 +1676,8 @@ that $V_{\mathfrak q}(A_F)$ is automorphic. That assertion begins only after the
 $P_{\mathrm{aux}}(A_F)$ is known; Chapter 10 prepares precisely that set and constructs the
 required common automorphic module.
 
-**Proof.** Book 157 supplies all the point-centered local opens.  Book 154, Lemma 5.2A gives
+**Proof.** Theorems 7.1 and 7.2 supply the original-completion opens, while Section 7.4
+supplies the exact helper packets.  Book 154, Lemma 5.2A gives
 their common repeatable-packet presentation; Theorem 2.1 and Section 4.8 verify its integral
 good-prime hypotheses at every helper.  The simple-branch refinement and Book 155,
 Theorems 7.1 and 8.1 give the totally real Galois top with (8.1c) and closure-level
@@ -1699,13 +1797,14 @@ We next classify the actual local parameters before constructing the tower.  Thi
 every accidental member of $P$, not only the places fixed before specialization.  At a place
 above $2$, the Tate-module parameter has nonzero monodromy and is special, while the protected
 dihedral reference is unramified principal.  Its preparation is unramified, so no ramified
-dyadic quadratic layer occurs.  At a protected place above $3$, the seed is good and both
-parameters are unramified principal.  At a place above $q$, the common ordinary finite-flat
+dyadic quadratic layer occurs.  At a protected place above $3$, the seed is either good, when
+both parameters are principal, or tensor-Tate, when the Tate-module parameter is special and
+the residual dihedral reference is principal.  At a place above $q$, the common ordinary finite-flat
 factor is protected and split.  The helper places considered in the preceding paragraph are
 also unramified principal.
 
-It remains to treat any other controlled place $v$ of residue characteristic at least $5$,
-in particular every accidental member of $P$.  Write
+It remains to treat every other place $v\in P\cup Z$, all of which have residue
+characteristic at least $5$; this includes every accidental member of $P$.  Write
 $(s_{A,v},N_{A,v})$ for the Weil--Deligne parameter of $r_A$.  If $N_{A,v}\ne0$, the parameter
 is special.  If $N_{A,v}=0$ and $s_{A,v}$ is reducible, Frobenius semisimplicity writes it as a
 sum of two characters, so it is principal.  Suppose $N_{A,v}=0$ and $s_{A,v}$ is irreducible.
@@ -1716,14 +1815,33 @@ quotient.  The local ramification filtration makes the projective image solvable
 $A_5$.  Nontrivial projective wild inertia has order divisible by the residue characteristic,
 which excludes $A_4$ and $S_4$ here.  If projective wild inertia is trivial, projective inertia
 is cyclic; neither $A_4$ nor $S_4$ has a nontrivial cyclic normal subgroup with cyclic quotient,
-whereas trivial inertia would make the parameter unramified and reducible.  A cyclic full
-projective image is also impossible: after choosing one lift of its generator, every matrix is
+while trivial projective inertia makes the full projective group cyclic.  A cyclic full
+projective image is impossible: after choosing one lift of its generator, every matrix is
 a scalar times a power of that lift, so the representation is simultaneously diagonalizable.
-The irreducible case is therefore dihedral.  Its quadratic inducing extension is unramified or
-tamely ramified, since the residue characteristic is odd, and hence it lies in the constructed
-tame-dihedral range.  Book 81, Theorem 8.1 shows that every restriction of this parameter
-through a cyclic local layer is again selected.  The dihedral reference has, independently,
-only principal or quadratic-induced local parameters, with the same conclusion.
+The irreducible case is therefore projectively dihedral.  We check selectedness before using
+any restriction theorem.  Let $L/F_v$ be the quadratic extension defined by the rotation
+subgroup.  Clifford theory gives
+
+$$
+s_{A,v}\simeq\operatorname {Ind}_{W_L}^{W_{F_v}}\theta
+\tag{10.2a}
+$$
+
+for a character $\theta$ of the Weil group of the quadratic extension.  A common scalar
+inertial character is Frobenius-invariant and hence extends to a character $\mu$ of
+$W_{F_v}$.  Under local reciprocity, $\mu|_{W_L}$ is the norm pullback of the base character.
+Replacing $\theta$ by $\theta_0=\theta(\mu|_{W_L})^{-1}$ factors off this base twist and
+leaves $\delta=\theta_0/\theta_0^\tau$ unchanged.  Base twists preserve selectedness.
+
+There are three cases.  If $L/F_v$ is unramified, $(L/F_v,\theta_0)$ is an unramified
+admissible pair.  If it is ramified and $\delta|_{U_L^1}$ is nontrivial, it is a ramified
+tame admissible pair.  If it is ramified and $\delta|_{U_L^1}$ is trivial, the projective
+image is the Klein four group; the alternate-presentation argument in Book 81, Theorem 8.1
+rewrites the same projective parameter using an unramified quadratic extension and an
+admissible character.  Thus all three cases, including scalar twists, are selected.  Only now
+does Book 81, Theorem 8.1 show that restriction through every cyclic local layer stays
+selected.  The dihedral reference is checked by the same trichotomy, while its split cases
+are principal.
 
 This classification gives the complete cyclic fibers required by Book 109.  Nonzero
 monodromy remains nonzero and forces every extension to be special.  If an upper restriction
@@ -2263,7 +2381,8 @@ specialization.
 
 **Proof.** Theorem 4.2 and Lemma 4.3 construct the dihedral seed and its protected local
 branches. Theorem 2.1 supplies the simultaneous real-multiplication coefficient datum.
-Books 154--157 and Theorem 8.2 supply $F$, $A_F$, both exact frames, the exact helper
+Theorem 7.2 constructs the split seeds at $2,3,\ell,q$ over the original completions, and
+Section 7.4 constructs the exact helper packets.  Theorem 8.2 then supplies $F$, $A_F$, both exact frames, the exact helper
 completions, and image preservation.
 Automorphic induction gives (10.1). Sections 10.2--10.3 construct the auxiliary preparation,
 the actual avoidance packet, and the nonzero common definite module.  Theorem 10.1 applies
@@ -2314,14 +2433,17 @@ repetitions (8.1a); no arbitrary fixed-multiplicity local algebra is asserted.
 ### 12.1 The actual target active set
 
 The upper packet of Theorem 11.2 is now an arithmetic input already constructed over $F$.
-For every finite $v\nmid\ell$, let
+For every finite $v\nmid\ell$, apply Book 61 to the concrete representation
+$V_{\mathfrak l}(A_F)|_{G_{F_v}}$.  Proposition 11.1 and local--global compatibility identify
+its Frobenius-semisimplified Weil--Deligne parameter with that of the covariant automorphic
+realization.  Write this common parameter as
 
 $$
 \operatorname {WD}_v(\Pi_A)=(s_v,N_v)                       \tag{12.1}
 $$
 
-in the fixed geometric-Frobenius normalization.  Book 61, Theorem 11.1 and Section 11.4
-apply to the Tate module of $A_F$: $s_v(I_v)$ is finite, $N_v^2=0$, and the representation is
+in the fixed geometric-Frobenius normalization.  Book 61, Theorem 11.1 and Section 11.4 give
+$s_v(I_v)$ finite and $N_v^2=0$, and the representation is
 ramified exactly when $s_v(I_v)\ne1$ or $N_v\ne0$.  Consequently the complete finite bad set
 away from $2\ell$ is the disjoint union
 
@@ -2443,15 +2565,26 @@ impossible.  If projective wild inertia is nontrivial,
 its image has order divisible by the residue characteristic, which excludes $A_4$ and $S_4$
 in residue characteristic at least $5$.  If projective wild inertia is trivial, projective
 inertia is cyclic; neither $A_4$ nor $S_4$ has a nontrivial cyclic normal subgroup with cyclic
-quotient, while trivial inertia would make the parameter unramified and reducible.  A cyclic
+quotient, while trivial projective inertia makes the full projective group cyclic.  A cyclic
 full projective image would make every matrix a scalar times a power of one lift and hence make
 the representation reducible.  Thus the irreducible case has dihedral projective image.
-Clifford theory identifies it with induction from a quadratic character, and any ramified
-quadratic extension is tame because the residue characteristic is odd.  The bottom parameter
-is therefore principal or constructed tame-dihedral; Book 81, Theorem 8.1 shows that its
-restriction across each cyclic local layer is again selected.  These are exactly Book 109's
-selected cases, so $Z_{\mathrm{tar}}^{\mathrm{ram}}$ contains no primitive exceptional
-parameter.
+Let $L/F_v$ be the quadratic extension defined by its rotation subgroup.  Clifford theory
+identifies $s_v$ with the induction of a character $\theta$ of $W_L$.  A scalar inertial
+character can be ramified even when projective inertia is trivial.  It is
+Frobenius-invariant, hence extends to a base character $\mu$ of $W_{F_v}$; under reciprocity
+$\mu|_{W_L}$ is its norm pullback.  Put
+$\theta_0=\theta(\mu|_{W_L})^{-1}$ and
+$\delta=\theta_0/\theta_0^\tau$.
+
+If $L/F_v$ is unramified, $(L/F_v,\theta_0)$ is an unramified admissible pair.  If $L/F_v$
+is ramified and $\delta|_{U_L^1}$ is nontrivial, it is a ramified tame admissible pair.  If
+$L/F_v$ is ramified and $\delta|_{U_L^1}$ is trivial, the projective image is Klein four and
+the alternate presentation in Book 81, Theorem 8.1 uses an unramified quadratic extension
+and an admissible character.  Thus the bottom parameter, including its base twist, is
+selected in all three cases.  Only after this trichotomy do we invoke Book 81, Theorem 8.1 to
+conclude that its restriction across each cyclic local layer remains selected.  These are
+exactly Book 109's selected cases, so $Z_{\mathrm{tar}}^{\mathrm{ram}}$ contains no primitive
+exceptional parameter.
 
 This argument also checks the complete extension fibers required for descent.  If the upper
 restriction is irreducible, Schur's lemma makes every extension a quotient-character twist of
