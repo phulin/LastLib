@@ -923,7 +923,7 @@ theorem chapter05_strip_kernel_fourier_closed_form (a t : ℝ)
   rw [show Complex.I ^ 2 = (-1 : ℂ) by norm_num]
   norm_num
   ring
-  
+
 theorem chapter05_strip_kernel_positive_type (a : ℝ)
     (ha : |a| < 1 / 2) :
     Chapter05PositiveType (chapter05StripKernel a) := by

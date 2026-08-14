@@ -367,7 +367,7 @@ private theorem chapter03_leftMul_continuous
           have hWxi := hx i
           simpa [W, hi] using hWxi
         simpa [hiU] using (H i).mul_mem hai hxi
-    
+
   rw [hset]
   exact chapter03_basicProductSet_isOpen H W hW
 

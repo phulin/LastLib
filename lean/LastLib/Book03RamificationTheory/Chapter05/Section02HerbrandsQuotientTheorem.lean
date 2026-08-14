@@ -1125,7 +1125,7 @@ private def chapter05SubgroupRamificationFiltration
       apply D.lower_nat_mem_iff
       intro hσ1
       apply hσ
-      exact Subtype.ext hσ1 } 
+      exact Subtype.ext hσ1 }
 
 private theorem chapter05_herbrand_slope_interval_integrable_for_clock
     {G : Type*} [Group G] [Finite G]
