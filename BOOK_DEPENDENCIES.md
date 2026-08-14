@@ -167,7 +167,7 @@ flowchart LR
 | 136 | Mumford Representations and Exact Genus-Two Jacobian Arithmetic | 37, 135 |
 | 137 | Explicit Two-Descent on Genus-Two Jacobians | 40, 136 |
 | 138 | Integral Local Types and Type Lattices | 17, 21, 22, 51, 53, 54, 73, 74, 75, 76, 122 |
-| 139 | Ihara Theory and Saturated Degeneracy Maps on Shimura Curves | 4, 5, 6, 16, 24, 38, 39, 85, 118, 122, 124 |
+| 139 | Ihara Theory and Saturated Degeneracy Maps on Shimura Curves | 16, 24, 38, 39, 85, 118, 122, 124 |
 | 140 | Integral Level Change and Jacquet--Langlands Comparison | 22, 80, 85, 104, 122, 125, 138, 139 |
 | 141 | Dickson Classification and Adequate Residual Image | 3, 6, 45, 42, 24 |
 | 142 | The Chebotarev Density Theorem | 2, 3, 4, 5, 6, 7, 17, 21, 23, 24 |
@@ -229,16 +229,12 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   continuous odd-primary characters of the full profinite congruence kernels. Book 139 proves
   that this is exactly the noncongruence-character quotient required for saturated two-map
   Ihara, proves spectator-level invariance of the underlying kernel for fixed $(F,B,v)$, and
-  gives the exact compact finite-coefficient transgression quotient. Kernel invariance does not
-  transport centrality from a smaller completion to a larger one. The exact unresolved
-  application gate is $({\rm AC}^{\rm loc}_\ell)_{\mathscr R}$. Book 139 proves neither that
-  vanishing nor the stronger $({\rm R2CM})_{F,B,v}$ package: its first missing assertion is the
-  reference-level rank-two centrality theorem, followed by the perfect adelic
-  pairing, split/division local multiplier classification, and restricted-product/no-cross-factor
-  reduction that could imply it. Routed centrality is not formal from the reference level, but
-  would follow after the full package from the resulting order-at-most-two bound. Book 6 does
-  prove the terminal scalar cokernel is the dual of the global roots of unity; the missing
-  multiplier theorem must construct the injection into that cokernel.
+  shows why kernel invariance does not identify the row-dependent quotient action,
+  transgression, or Hecke localization. The exact unresolved application gate is
+  $({\rm AC}^{\rm loc}_\ell)_{\mathscr R}$, specialized in Book 181 to the finite family
+  $({\rm AIH}_{\mathscr F})$ used by the signed-special seed construction. No accepted source
+  proves this vanishing. The FLT chain does not require a structure theorem for the full
+  congruence kernel or a uniform statement over unused levels and coefficient primes.
 - **Type and node comparison:** objectwise normalization of the actual principal/ray tower,
   the ray factor, and the finite-wild/procyclic ramified strict-node complex are proved in Books 122,
   22, and 174; the common-normalization lemma makes the lifted principal legs isomorphisms.

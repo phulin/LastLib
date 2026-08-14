@@ -3,9 +3,9 @@
 This volume develops Ihara theory through the geometry and cohomology of compact Shimura
 curves.  Its main line runs from the local tree and the cohomology of its stabilizers to
 integral saturation, semistable monodromy, component groups, and the branch Smith correction.
-The deeper rank-two congruence--metaplectic material appears only to state an exact sufficient
-arithmetic boundary for the geometric theorem; it is not assumed in the geometric argument and
-is not asserted unconditionally.
+The only arithmetic input left outside the geometric argument is the exact finite-family
+localized abelian Ihara vanishing stated in Chapters 6 and 14.  No general structure theorem
+for the full congruence kernel is required or developed.
 
 ## Contents
 
@@ -36,7 +36,6 @@ is not asserted unconditionally.
    - [Hecke action on arithmetic characters](#54-hecke-action-on-arithmetic-characters)
    - [The full profinite congruence kernel](#55-the-full-profinite-congruence-kernel)
    - [Spectator-level invariance](#56-spectator-level-invariance)
-   - [The exact arithmetic boundary](#57-the-exact-arithmetic-boundary)
 6. [The geometric Ihara criterion](#6-the-geometric-ihara-criterion)
    - [Complex uniformization and comparison](#61-complex-uniformization-and-comparison)
    - [The degeneracy map as restriction](#62-the-degeneracy-map-as-restriction)
@@ -175,22 +174,17 @@ There is a second, logically independent Smith module. Projecting the old image 
 
 ### 1.4 Dependency boundary
 
-Seven earlier books supply the geometric and profinite core.  Books 4--6 additionally supply
-the restricted-product and norm-residue reciprocity interface used to state the exact
-globalization boundary in Section 5.7, while Book 85 supplies the acting-Hecke-algebra and
-localization conventions used throughout.
+Eight earlier books supply the geometric, profinite, and Hecke-theoretic core.
 
 Book 16 supplies the normalization sequence of a nodal curve, graph homology, weighted monodromy pairings, their discriminant groups, subdivision invariance, and functoriality under finite maps. Book 24 supplies continuous cohomology of profinite groups and the five-term inflation--restriction sequence with transgression. Book 38 supplies Néron models, extension of Jacobian homomorphisms, identity components, component maps, and the Raynaud description of a semistable Jacobian. Book 39 supplies integral pull--norm correspondences, adjunction, specialization, and the intersection- and graph-lattice formulas for their component actions. Book 124 supplies the two Shimura degeneracy maps with the right-double-coset orientation, their adjoints, and the exact old-level Gram formalism; it explicitly does not supply saturation. Book 118 supplies rank-one strong approximation for the simply connected norm-one quaternion group, with the required archimedean noncompactness and arbitrary compact-open conditions at every finite place. Book 122 supplies the parahoric PEL model, the chart $xy=\pi_v$, strict semistability, the graph description of monodromy, and Hecke functoriality away from $v$; it explicitly makes integral conclusions conditional on saturation.
 
 No listed prerequisite computes the prime-to-small-prime abelianization of the norm-one $S$-arithmetic group or the action of its good-place commensurators. Book 24 identifies what inflation--restriction would require but proves no arithmetic vanishing for the kernel in (5.21). In particular Book 118 proves strong approximation, which gives density and the one-edge tree quotient, but not a congruence-subgroup property and not continuity of an abstract finite character for the congruence topology.
 
-The new work here is the specialization of strong approximation to the tree quotient, the exact Bass--Serre and Mayer--Vietoris calculation, the good-place calculation on congruence-continuous norm-one characters with the separate norm and component routing, the full-profinite inflation--restriction identification of the noncongruence obstruction, invariance of the full congruence kernel under every open spectator level for fixed $(F,B,v)$, the exact compact transgression quotient and its possible stem condition, the conditional primitive-image and torsion-free-quotient theorems, and their synthesis with the monodromy, component, and branch-correction sequences. The rank-two centrality theorem, the perfect congruence-kernel--metaplectic-kernel pairing, the split/division local multiplier computation, and the adelic reduction to a scalar Hilbert-symbol annihilator are isolated but not proved. No rational old--new decomposition, later level-change theorem, or later automorphic comparison is used to conceal that unresolved arithmetic input.
+The new work here is the specialization of strong approximation to the tree quotient, the exact Bass--Serre and Mayer--Vietoris calculation, the good-place calculation on congruence-continuous norm-one characters with the separate norm and component routing, the full-profinite inflation--restriction identification of the noncongruence obstruction, invariance of the full congruence kernel under every open spectator level for fixed $(F,B,v)$, the conditional primitive-image and torsion-free-quotient theorems, and their synthesis with the monodromy, component, and branch-correction sequences. No rational old--new decomposition, later level-change theorem, or later automorphic comparison is used to conceal the unresolved localized abelian input.
 
 Accordingly, the principal theorem of the volume is the conditional geometric theorem of
-Chapter 14.  Section 5.7 records the exact stronger arithmetic package that would imply its
-missing abelian input.  Nothing from that package is used to prove the tree calculation,
-saturation, monodromy filtration, component formula, or branch correction after the abelian
-Ihara condition has been stated.
+Chapter 14.  Sections 5.5--5.6 identify the exact profinite obstruction, and Section 14.4
+states only the finite routed family of vanishings required by downstream applications.
 
 ## 2. The clean Shimura-curve datum
 
@@ -972,20 +966,11 @@ same in the two examples; finite centrality alone cannot distinguish the answers
 that the arithmetic extension (5.21) belongs to a more restrictive class would itself require
 an additional arithmetic theorem.
 
-Third, a proposed metaplectic route must supply every comparison it uses.  One would need a
-centrality theorem for the exact $S$-congruence extension (5.21) of the simply connected
-group $H$, with $v$ omitted, at one exact reference compact open; a perfect pairing between the
-continuous Pontryagin dual of its kernel and a correctly normalized adelic metaplectic kernel;
-a split-and-division local classification; and an adelic decomposition/no-cross-factor theorem
-reducing diagonal splitting to the scalar Hilbert-symbol annihilator.  Only after that reduction
-can scalar reciprocity identify the resulting group with a subgroup of the dual of the global
-roots of unity.  Roots of unity, coefficient topologies, local symbol normalizations, and the
-omitted-place set must all be checked.  Section 5.6 proves that the underlying kernels agree
-through finite-index intersections; it does not transport centrality upward, compare quotient
-actions, or manufacture any of these arithmetic inputs.  Only the complete chain could justify a
-conclusion such as ``the relevant character group is $2$-primary.''  Strong approximation
-supplies none of centrality, perfect metaplectic comparison, local multiplier classification,
-or adelic reduction, and no such chain occurs among the declared sources.
+Third, no structure theorem for the whole congruence kernel is needed by the application.
+It is enough to kill the localized transgression kernel for the actual residue field and the
+actual routed row.  Finiteness, centrality, or a bound on the order of $C_c$ would be stronger
+statements and would still be insufficient unless they ruled out the relevant odd-primary
+characters or made their transgression injective.
 
 The exact abelian input at one level is therefore the vanishing of the transgression kernel in
 (5.23), or only of its $\Delta$-invariant non-Eisenstein localization when that is all the
@@ -1087,451 +1072,6 @@ action or localization remains to compare.  Thus a pre-localization theorem abou
 one level automatically covers every compact-open spectator level.  This is stronger
 uniformity than (14.2), and it is proved without turning density into continuity of an
 abstract character.
-
-### 5.7 The exact arithmetic boundary
-
-The geometric argument has now isolated its full cohomological obstruction.  This section does
-not enlarge the geometric theorem: it records, with exact coefficient and spectator-level
-conventions, one stronger arithmetic route that would annihilate that obstruction.  The route
-remains conditional throughout.  Let $A$ be a finite abelian group with the discrete topology
-and trivial action.
-For $\Gamma=\Gamma(K)$ define the **compact finite-coefficient multiplier kernel**
-
-$$
-\mathfrak M_A(K,\Gamma)=
-\ker\!\left[
-H^2_{\rm cont}(K,A)
-\longrightarrow H^2(\Gamma,A)
-\right]. \tag{5.27}
-$$
-
-It consists of continuous $A$-central extension classes of the profinite group $K$, represented
-by continuous cocycles (equivalently, by topological extensions admitting a continuous
-set-theoretic section), whose pullback to the abstract group $\Gamma$ splits as a group
-extension.  This is a compact-level object; it need not itself be a finite group.  It
-must not yet be identified with the Moore metaplectic kernel of the locally compact restricted
-product $H(\mathbf A_F^S)$.
-
-**Proposition 5.6 (the exact compact transgression quotient).**  Let
-
-$$
-1\longrightarrow C\longrightarrow\widehat\Gamma
-\longrightarrow K\longrightarrow1 \tag{5.28}
-$$
-
-be (5.21).  Then transgression induces a canonical isomorphism
-
-$$
-\frac{
-\operatorname{Hom}_{\rm cont}(C,A)^K
-}{
-\operatorname{res}_C\operatorname{Hom}_{\rm cont}(\widehat\Gamma,A)
-}
-\xrightarrow{\ \sim\ }
-\mathfrak M_A(K,\Gamma). \tag{5.29}
-$$
-
-If $C$ is central, the superscript $K$ can be omitted.  In that case transgression gives
-isomorphisms
-
-$$
-\operatorname{Hom}_{\rm cont}(C,A)
-\xrightarrow{\ \sim\ }\mathfrak M_A(K,\Gamma) \tag{5.30}
-$$
-
-for every finite abelian $A$ if and only if
-
-$$
-C\subseteq\overline{[\widehat\Gamma,\widehat\Gamma]}. \tag{5.31}
-$$
-
-Thus centrality alone does not turn **compact transgression** into a
-congruence-kernel--multiplier-kernel duality; the stem condition (5.31), or an equivalent
-injectivity theorem for this transgression map, is indispensable.  This does not rule out a
-separately constructed adelic perfect pairing such as clause 2 below.
-
-**Proof.**  First we show that restriction is injective:
-
-$$
-H^2_{\rm cont}(\widehat\Gamma,A)
-\hookrightarrow H^2(\Gamma,A). \tag{5.32}
-$$
-
-A continuous cocycle gives a profinite extension by the finite group $A$.  If its restriction
-to $\Gamma$ is a coboundary, that extension has an abstract section over $\Gamma$.  A
-homomorphism from $\Gamma$ to a profinite group is continuous for the full profinite topology:
-the inverse image of every open normal subgroup has finite index.  It extends uniquely to
-$\widehat\Gamma$.  The extended map is a section because that identity holds on the dense
-subgroup $\Gamma$.  Hence the original class is zero, proving (5.32).
-
-The five-term sequence of Book 24 for (5.28) contains
-
-$$
-\operatorname{Hom}_{\rm cont}(\widehat\Gamma,A)
-\longrightarrow
-\operatorname{Hom}_{\rm cont}(C,A)^K
-\xrightarrow{\operatorname{tg}}
-H^2_{\rm cont}(K,A)
-\xrightarrow{\operatorname{inf}}
-H^2_{\rm cont}(\widehat\Gamma,A). \tag{5.33}
-$$
-
-By (5.32), a class of $H^2_{\rm cont}(K,A)$ inflates to zero precisely when its
-restriction to $\Gamma$ is zero.  The image of transgression in (5.33) is therefore exactly
-(5.27), and exactness gives (5.29).
-
-If $C$ is central, conjugation by $K$ on $C$ is trivial.  The denominator in (5.29) vanishes
-for every finite $A$ exactly when every continuous finite character of $\widehat\Gamma$ kills
-$C$.  Such characters separate the profinite abelianization
-$\widehat\Gamma/\overline{[\widehat\Gamma,\widehat\Gamma]}$, so this is equivalent to
-(5.31).  This proves (5.30) and the final assertion. $\square$
-
-Proposition 5.6 is the strongest compact multiplier comparison obtainable from Book 24 alone.  It
-also exposes a possible circular argument.  To prove that every finite character of $\Gamma$
-is congruence-continuous is to prove that every character of $\widehat\Gamma$ kills $C$.
-Assuming that vanishing while using (5.29) to establish the stem condition merely assumes the
-desired theorem in a different form.
-
-For character duals put
-
-$$
-\mathbf D=\mathbf Q/\mathbf Z
-$$
-
-with the discrete topology.  The standard adelic route uses a different coefficient topology.
-Put
-
-$$
-\mathbf T=\mathbf R/\mathbf Z
-$$
-
-with its usual compact topology, and introduce
-
-$$
-S=V_\infty(F)\cup\{v\},
-\qquad
-\mathfrak M^S(H)=
-\ker\!\left[
-H^2_{\rm m}\bigl(H(\mathbf A_F^S),\mathbf T\bigr)
-\longrightarrow H^2\bigl(H(F),\mathbf T\bigr)
-\right], \tag{5.34}
-$$
-
-where $H^2_{\rm m}$ is measurable cohomology of locally compact groups, or an equivalent
-precisely specified category of locally split central extensions; the diagonal $H(F)$ in the
-target is given the discrete topology.  Formula (5.34) is not an instance of the profinite
-continuous cohomology developed in Book 24.  Passing between (5.27) and (5.34) requires a
-theorem, not a change of notation.  On the character side there is a safe comparison: a
-continuous homomorphic image of a profinite group in the circle is a profinite closed subgroup,
-hence finite, because the only infinite closed subgroup of the circle is the circle itself.
-Thus, canonically,
-
-$$
-C^\vee:=\operatorname{Hom}_{\rm cont}(C,\mathbf T)
-=\operatorname{Hom}_{\rm cont}(C,\mathbf D)=C^D. \tag{5.34a}
-$$
-
-This equality of character groups does not identify the two degree-two cohomology theories.
-Even a finite group gives a no-go example.  For a prime $p$, ordinary continuous cohomology
-of the finite group $C_p$ gives
-
-$$
-H^2_{\rm cont}(C_p,\mathbf Z/p\mathbf Z)\simeq\mathbf Z/p\mathbf Z,
-\qquad
-H^2_{\rm m}(C_p,\mathbf T)=0.
-$$
-
-Indeed the cyclic calculation with trivial coefficients is $H^2(C_p,M)=M/pM$; the first
-coefficient is killed by $p$, whereas the circle is divisible.  Thus even the coefficient
-embedding $\mathbf Z/p\mathbf Z\hookrightarrow\mathbf T$ kills the nonzero degree-two class.
-There can be no formal coefficient-change identification between (5.27) and (5.34).
-
-The final **scalar** globalization step, once a multiplier theorem has actually reduced to
-it, is available in the declared sources.
-
-**Lemma 5.6A (scalar Hilbert endpoint).**  Put $A_n=\mathbf Z/n\mathbf Z$ with trivial
-Galois action and, using continuous Galois cohomology, the Tate modification at real places,
-and the finite-support direct sum, define
-
-$$
-\mathscr Q_n(F)=
-\operatorname{coker}\!\left[
-H^2(F,A_n)\longrightarrow
-\bigoplus_w H^2(F_w,A_n)
-\right], \tag{5.34b}
-$$
-
-Then there is a canonical isomorphism
-
-$$
-\mathscr Q_n(F)
-\xrightarrow{\ \sim\ }
-\operatorname{Hom}\bigl(\mu_n(F),\mathbf D\bigr). \tag{5.34c}
-$$
-
-If $F$ is totally real, (5.34d) below holds.
-
-**Proof.**  The finite arithmetic-duality theorem of Book 6, Section 4.2, applied with
-$A_n$ and $\mu_n$ interchanged in its pairing (4.1), gives (5.34c).  This is the exact
-roots-of-unity endpoint.  When $\mu_n\subset F$, choosing a primitive
-$n$th root identifies $A_n$ with $\mu_n$; under that choice the local cup-product evaluations
-in Book 6 are the $n$th Hilbert symbols, and (5.34c) is the
-product-formula/annihilator calculation.  Without
-that hypothesis, (5.34c) retains the Galois module $\mu_n$ and no false choice of an
-$F$-valued primitive root is made.  In particular,
-
-$$
-\mathscr Q_n(F)=0\quad(n\text{ odd}),
-\qquad
-|\mathscr Q_n(F)|\leq2\quad(n\text{ arbitrary}) \tag{5.34d}
-$$
-
-when $F$ is totally real. $\square$
-
-What Books 4--6 do **not** supply is an injection from an adelic
-multiplier kernel into (5.34b).  Constructing that arrow requires precisely the local
-multiplier classification, the restricted-product/no-cross-factor theorem, and the reduction
-of diagonal splitting to this scalar Galois-cohomology cokernel.
-
-Here is the exact arithmetic package which would close the argument.
-
-**Required rank-two congruence--metaplectic theorem
-$({\rm R2CM})_{F,B,v}$.**  Let $F$ be a number field, let $B/F$ be a quaternion algebra, let
-$H=\operatorname{SL}_1(B)$, and suppose that $H$ is split at a real place $\tau$ and at the
-finite place $v$.  Thus
-
-$$
-\operatorname{rank}_{F_\tau}H+
-\operatorname{rank}_{F_v}H=2. \tag{5.35}
-$$
-
-There is a compact open $K_\star\subset H(\mathbf A_{F,f}^v)$ for which clause 2 below holds,
-and the following assertions are valid.
-
-1. The reference kernel $C(K_\star)$ is central in
-   $\widehat{\Gamma(K_\star)}$.  Finiteness and the stem condition are not inserted at this
-   stage.  Lemma 5.5 identifies the kernel at every open spectator level, but, as the
-   semidirect-product example following that lemma shows, this reference-level centrality
-   alone proves neither centrality in a larger completion nor triviality of a rational
-   transition action.
-2. There is a canonical perfect congruence--metaplectic pairing, equivalently an isomorphism
-   $$
-   C(K_\star)^\vee\xrightarrow{\sim}\mathfrak M^S(H), \tag{5.36}
-   $$
-   with the stated normalization at the omitted set $S$.  Here ``perfect'' means precisely the
-   displayed isomorphism of abstract character groups (the Pontryagin dual of the compact
-   abelian group $C(K_\star)$ is discrete); no topology on measurable $H^2$ is being silently
-   imported.  This is not obtained from Proposition 5.6 merely by deleting its denominator:
-   if it is to be realized by compact transgression, the additional stem condition (5.31) must
-   first be proved.  A different adelic construction of the perfect pairing must prove its own
-   injectivity and surjectivity.
-3. The group $\mathfrak M^S(H)$ is torsion.  For every $n\geq1$, split and division local
-   multiplier classification, restricted-product decomposition with no cross-factor term,
-   and adelic-to-scalar reduction give a compatible injection
-   $$
-   \operatorname{sc}_n:
-   \mathfrak M^S(H)[n]\hookrightarrow
-   \mathscr Q_n(F)
-   \xrightarrow[\text{\rm (5.34c)}]{\ \sim\ }
-   \operatorname{Hom}\bigl(\mu_n(F),\mathbf D\bigr). \tag{5.37}
-   $$
-   The second arrow is already proved from Book 6; construction and injectivity of
-   $\operatorname{sc}_n$ are the missing multiplier theorem.
-
-The local content of clause 3 must include every nonarchimedean place $w\notin S$ occurring in
-the restricted product; the omitted places in $S$ enter separately through the normalization
-of the global splitting condition.  It must also prove that every relevant local class has
-finite order, or give an equivalent torsion-by-torsion classification.  At such a split place
-$w$, suppose first that $n$ is odd and $\mu_n\subset F_w$.  An order-$n$ multiplier must be
-detected by the commutator of lifts of the diagonal torus.  With the standard $A_1$ coroot
-lift, the commutator normalization is the square of the local Hilbert symbol, evaluated by a
-character $\chi_w:\mu_n\to\mathbf T$ whose orientation is fixed by the displayed formula:
-
-$$
-[\widetilde t(a),\widetilde t(b)]
-=\chi_w\bigl((a,b)_{w,n}^{2}\bigr),
-\qquad
-t(a)=\begin{pmatrix}a&0\\0&a^{-1}\end{pmatrix}. \tag{5.38}
-$$
-
-The exponent two comes from comparing the two orders of the torus lifts; it is harmless for
-odd $n$ but cannot be erased in a theorem that also treats $2$-torsion.  For even $n$, the
-commutator in (5.38) can lose $2$-primary information, so the full local theorem must provide
-whatever additional invariant is needed for detection; Proposition 5.7 uses (5.37) for every
-$n$, not merely the odd-order formula.  When $\mu_n\not\subset F_w$,
-(5.38) must be replaced by the Galois-equivariant norm-residue class and descended, rather
-than written as an $F_w$-valued root of unity.  One must prove both existence and detection:
-the assertion that the correctly typed symbol is trivial must force the local extension class
-to be trivial.  At a place where $B$ is division there is no split diagonal torus over $F_w$.
-Scalar extension to a quadratic splitting field does not make $H(F_w)$ a finite-index subgroup
-of $\operatorname{SL}_2(E_w)$, so the restriction--corestriction formula of Book 24 cannot be
-used to manufacture the division-place classification.  A direct inner-form multiplier
-theorem, with its compatibility under local splitting, is required.
-
-The adelic content must prove that a class has only the permitted restricted-product local
-components, has no cross-factor multiplier, and that its local invariants (represented by
-$\chi_w$ in the split odd-order case (5.38)) glue to the single character in (5.37).  Books
-4--6 supply restricted products, weak approximation, local norm-residue symbols, the global
-Hilbert product formula, and exact orthogonality for the scalar Kummer pairings.  The missing
-adelic multiplier theorem must first reduce diagonal splitting to exactly that scalar
-annihilator problem.  Only after the local detection theorem, the adelic decomposition, and
-this reduction are available does Book 6 apply: the product formula proves the required
-containment and the exact annihilator theorem proves uniqueness.  Neither the product formula
-nor scalar Kummer orthogonality by itself constructs the first arrow in (5.37).
-
-The no-cross-factor clause is substantive even before restricted products enter.  If locally
-compact groups $G_1,G_2$ admit continuous characters
-$\alpha:G_1\to A_n$ and $\beta:G_2\to A_n$, then
-
-$$
-c\bigl((g_1,g_2),(h_1,h_2)\bigr)
-=\frac{\alpha(g_1)\beta(h_2)}{n}\pmod{\mathbf Z} \tag{5.38a}
-$$
-
-is a continuous $\mathbf T$-valued $2$-cocycle on $G_1\times G_2$.  Bilinearity verifies the
-cocycle identity.  Its restriction to either factor is zero, while the commutator of a lift
-of $(g_1,1)$ with a lift of $(1,h_2)$ is
-$\alpha(g_1)\beta(h_2)/n$ and can be nonzero.  Hence restriction to the separate local
-$H^2$ groups does not detect all multiplier classes on a product unless cross bicharacters
-are first ruled out.  For the adelic group this requires, among other things, the correctly
-topologized abelianizations of the split and division local factors; it cannot be deduced
-from the restricted-product definition in Book 4.
-
-This formulation retains the two common normalization hazards.  The omitted set is exactly
-$S=V_\infty(F)\cup\{v\}$, not merely the ramification set of $B$.  Also, a local Hilbert-symbol
-formula at the split places says nothing about an unclassified division-place multiplier.
-In some formulations the presence of the finite split place $v$ in $S$ forces the whole
-metaplectic kernel to vanish.  That stronger conclusion is not used here: it is valid only
-after the omitted-place convention and the local-to-global comparison giving it have been
-proved.  The weaker injection (5.37) is already enough for the odd-primary theorem.
-
-**Proposition 5.7 (conditional consequence of $({\rm R2CM})$).**  Assume
-$({\rm R2CM})_{F,B,v}$.  Then the common kernel $C=C(K_\star)$ is finite, its exponent
-divides the exponent of $\mu(F)$, and
-
-$$
-|C|\leq|\mu(F)|.
-$$
-
-If $F$ is totally real, then
-
-$$
-|C|\leq2. \tag{5.39}
-$$
-
-Consequently, for every finite odd-primary abelian group $A$,
-
-$$
-\operatorname{Hom}_{\rm cont}(C(K),A)=0, \tag{5.40}
-$$
-
-at every compact-open spectator level $K$.  Every finite odd-primary character of
-$\Gamma(K)$ is therefore congruence-continuous.  Moreover the common kernel is central in
-every spectator-level completion and every rational routing transition acts trivially on it.
-
-**Proof.**  Clause 2 gives the isomorphism of character groups
-
-$$
-C^D\simeq\mathfrak M^S(H). \tag{5.41}
-$$
-
-Here (5.34a) has identified $C^D$ with $C^\vee$.  Let $e$ be the exponent of the finite group
-$\mu(F)$.  Clause 3 says first that $\mathfrak M^S(H)$ is torsion.  If $\xi$ has order $n$,
-then (5.37) embeds the cyclic group generated by $\xi$ into
-$\operatorname{Hom}(\mu_n(F),\mathbf D)$, whose exponent divides $e$.  Hence $n$ divides
-$e$.  Thus every element is killed by $e$, and the single injection
-
-$$
-\mathfrak M^S(H)=\mathfrak M^S(H)[e]
-\hookrightarrow
-\operatorname{Hom}(\mu_e(F),\mathbf D)
-=\operatorname{Hom}(\mu(F),\mathbf D)
-$$
-
-makes $\mathfrak M^S(H)$ finite of order at most $|\mu(F)|$ and exponent dividing $e$.
-This is the comparison step which must occur before roots of unity say anything about $C$.
-Since $C$ is central in $\widehat{\Gamma(K_\star)}$, it is a profinite abelian group.
-Continuous finite characters separate points of such a group:
-if $c\ne1$, some finite abelian quotient detects it and a character of that finite quotient
-to $\mathbf D$ is nonzero on its image.  The finiteness of $C^D$ therefore embeds $C$ in
-the finite bidual of $C^D$, so $C$ is finite.  Ordinary finite Pontryagin duality now
-gives
-
-$$
-|C|=|C^D|
-$$
-
-and the same exponent on both sides.  This is the required passage from the metaplectic
-root-of-unity bound to the congruence kernel; no equality of orders has been inferred merely
-from the phrase ``roots of unity.''
-
-If $F$ is totally real, every root of unity in $F$ is real under every embedding, hence is
-$1$ or $-1$.  Thus $|\mu(F)|=2$, and (5.39) follows.  Lemma 5.5 identifies every $C(K)$
-with $C$.  A homomorphism from a group of order at most two to an odd-primary group is zero,
-which proves (5.40) simultaneously at all open spectator levels.  The kernel $C(K)$ is normal
-in $\widehat{\Gamma(K)}$, and a group of order at most two has trivial automorphism group.
-It is therefore central at every level, and every rational transition acts trivially on the
-common kernel.  Finally (5.23) has zero right-hand character group, so
-$H^1_{\rm nc}(\Gamma(K),A)=0$. $\square$
-
-For the odd-primary FLT application, the all-primary part of clause 3 is stronger than
-necessary.  It is enough to retain clauses 1--2 and construct the first arrow in (5.37) for
-odd $n$.  Lemma 5.6A then has zero target over a totally real field, so
-$C(K_\star)^D$ has no odd-order element.  If a nonzero homomorphism
-$C(K_\star)\to A$ to a finite odd-primary abelian group existed, a character of the finite
-image into $\mathbf D$ would detect a nonzero element and produce such an odd-order element of
-$C(K_\star)^D$.  Hence the homomorphism is zero, and Lemma 5.5 gives the same conclusion at
-every spectator level.  Even-order local detection is needed for the sharper order-at-most-two
-and routed-centrality conclusions, not for (5.40) itself.
-
-The first unproved assertion needed to start this chain can be isolated independently of
-finiteness, all roots of unity, and all local-symbol calculations:
-
-$$
-({\rm CEN}_\star)_{F,B,v,K_\star}:\qquad
-C(K_\star)\subset Z\bigl(\widehat{\Gamma(K_\star)}\bigr).
-\tag{5.42}
-$$
-
-The stronger target requested by the routed application is
-
-$$
-({\rm CEN}^{\rm route})_{F,B,v}:\qquad
-\begin{cases}
-C(K)\subset Z\bigl(\widehat{\Gamma(K)}\bigr)
-&\text{for every routed compact open }K,\\
-\text{every rational transition acts trivially on the common }C.
-\end{cases} \tag{5.42a}
-$$
-
-Strong approximation proves the surjection in (5.21), and Lemma 5.5 identifies the kernels
-through intersections, but neither proves (5.42) or (5.42a).  The semidirect-product example
-shows why (5.42a) is not a formal consequence of (5.42).  Conversely Proposition 5.7 proves
-that the **full** rank-two package over a totally real field forces (5.42a), because the common
-kernel then has order at most two.  Thus (5.42) is the first exact reusable missing theorem;
-(5.42a) is either a separate centrality theorem or a later consequence of all remaining
-metaplectic inputs.  Even after (5.42) is granted, clause 2 needs the locally compact extension
-theory and the perfect-pairing theorem absent from Book 24.  Proposition 5.6 shows that compact
-transgression supplies only
-the quotient (5.29) unless the independent stem condition is also proved.  Clause 3 then needs
-the split and division local $H^2$ classifications and the adelic decomposition/no-cross-factor
-theorem reducing diagonal splitting to the scalar Kummer annihilator.  Only then does the
-proved scalar isomorphism (5.34c) apply.  None of
-Books 4--6, 16, 24, 38--39, 85, or 115--126 proves those rank-two group-extension inputs.
-Proposition 5.7 is therefore a reusable exact reduction, not a proof that $({\rm R2CM})$ holds.
-
-The proof-status ledger is therefore:
-
-| Step | Exact output | Status in the declared sources |
-|---|---|---|
-| strong approximation | $\widehat{\Gamma(K)}\twoheadrightarrow K$ and the one-edge quotient | proved in Book 118 and Sections 4--5 |
-| open-level transport | one common $C(K)$ for all actual compact-open spectator levels at fixed $(F,B,v)$ | proved in Lemma 5.5 |
-| profinite cohomology | (5.23) and the finite-coefficient compact quotient (5.29) | proved from Book 24 |
-| rank-two centrality | reference-level (5.42), and routed (5.42a) | (5.42) is the first absent arithmetic theorem; kernel invariance does not prove (5.42a) |
-| congruence--metaplectic duality | the perfect pairing (5.36), with the profinite source and circle-coefficient conventions fixed | absent |
-| local multipliers | all-primary split classification, including (5.38), detection and descent, and the division-place analogue | absent |
-| adelic globalization | the first injection in (5.37) after the preceding local theorem | the scalar cokernel is Lemma 5.6A, proved by Book 6; restricted-product decomposition, no-cross-factor vanishing, and reduction to that cokernel are absent |
-| totally real conclusion | order at most two, (5.40), centrality and trivial routing action at all spectator levels | proved in Proposition 5.7 conditional on $({\rm R2CM})$ |
 
 ## 6. The geometric Ihara criterion
 
@@ -3024,11 +2564,10 @@ Correspondence extension, graph adjunction, and descent preserve each constructi
 
 ### 14.3 Hypothesis and dependency ledger
 
-The logical use of the eleven direct prerequisites is exact.
+The logical use of the eight direct prerequisites is exact.
 
 | Source | Imported result | Hypotheses retained | Work done here |
 |---|---|---|---|
-| Books 4--6 | restricted products, weak approximation, local norm-residue symbols, global Hilbert reciprocity, and exact orthogonality of diagonal Kummer classes | number field; all places and archimedean corrections retained; no assumption that all roots of unity lie in the base field | the exact scalar cokernel of Lemma 5.6A after the missing adelic multiplier theorem has reduced diagonal splitting to it; these books do not supply that reduction or the group-extension classification |
 | Book 85 | finite acting Hecke algebras, localization, support, and old/new congruence conventions | the algebra is the faithful image on the stated finite module; localization is taken only at an occurring maximal ideal | operator-theoretic Eisenstein localization and the integral old/new module conventions |
 | Book 16 | nodal normalization, graph cycles, weighted pairing, discriminant component group, subdivision, finite-map adjunction | semistable curve; geometric graph; thickness and signed descent retained | application to the Iwahori quotient and separation of the graph discriminant from the branch correction |
 | Book 24 | continuous profinite cohomology, inflation, restriction, transgression, and the five-term exact sequence | profinite extension; finite discrete continuous coefficients | application to the full profinite-to-congruence extension and identification (5.23) |
@@ -3039,12 +2578,12 @@ The logical use of the eleven direct prerequisites is exact.
 | Book 122 | rank-two parahoric PEL model, $xy=\pi_v$, strict semistability, graph monodromy, Hecke functoriality | verified flat incidence local model; neat level; prime-to-$v$ coefficients | integral quotient filtration, normalized branch map, and its Smith correction |
 | Abelian Ihara condition | explicit additional hypothesis, not an imported theorem | vanishing of $\bigl(H^1_{\mathrm{nc}}(\Gamma^v,k)^\Delta\bigr)_{\mathfrak m}$, equivalently of the localized $\Delta$-invariant transgression kernel in (6.10) | exact point at which the conditional residual theorem becomes injective |
 
-The tree Mayer--Vietoris sequence, the local-factor calculation on congruence-continuous arithmetic characters, the full-profinite inflation--restriction identification of the exact noncongruence obstruction, spectator-level invariance, the compact transgression quotient, the scalar cokernel of Lemma 5.6A, the conditional saturation criterion, and the branch Smith calculation are proved here. Strong approximation is imported only from Book 118. Books 4--6 enter only after a correctly normalized local multiplier is supplied and the missing adelic theorem has reduced its splitting condition to the scalar Kummer cokernel; they prove that terminal scalar calculation, not the reduction to it. No centrality theorem for the congruence kernel, adelic metaplectic comparison or local multiplier computation, automorphic decomposition, multiplicity-one theorem, local newvector theorem, or modularity argument is invoked as if already proved.
+The tree Mayer--Vietoris sequence, the local-factor calculation on congruence-continuous arithmetic characters, the full-profinite inflation--restriction identification of the exact noncongruence obstruction, spectator-level invariance, the conditional saturation criterion, and the branch Smith calculation are proved here. Strong approximation is imported only from Book 118. No structure theorem for the full congruence kernel, automorphic decomposition, multiplicity-one theorem, local newvector theorem, or modularity argument is invoked as if already proved.
 
 The mathematical direct-dependency row is therefore
 
 $$
-139\mid 4,5,6,16,24,38,39,85,118,122,124. \tag{14.1}
+139\mid 16,24,38,39,85,118,122,124. \tag{14.1}
 $$
 
 The first seven hypotheses of Theorem 14.1 do not currently imply hypothesis 8 from those sources. A proof of (5.18) on the localized noncongruence quotient, an exact computation of (5.19), or a different theorem proving the last vanishing in (6.10) would close the catalog objective. Strong approximation alone cannot do so.
@@ -3158,42 +2697,11 @@ saturated image.  The quotient is finite torsion-free over the coefficient DVR a
 as in Theorem 7.1.  Applying the remaining parts of Theorem 14.1 row by row gives the component,
 monodromy, and branch statements with their stated independent hypotheses. $\square$
 
-**Corollary 14.3 (uniform routed consequence of the rank-two package).**  Fix an odd $\ell$
-and a routed family $\mathscr R$ satisfying hypotheses 1--7 of Theorem 14.1 at every row.
-Suppose that every distinct triple $(F_R,B_R,v_R)$ occurring in $\mathscr R$ satisfies
-$({\rm R2CM})_{F_R,B_R,v_R}$ and that every $F_R$ is totally real.  Then
-$({\rm CK}^{\rm ab}_\ell)_{\mathscr R}$ holds.  Hence (14.2) holds at every actual tame, ray,
-and auxiliary spectator level in $\mathscr R$, and all conclusions of Theorem 14.1 hold at
-every row.  Since $({\rm R2CM})$ is independent of the coefficient prime, the same implication
-applies to each permissible odd $\ell$ and its corresponding routed family.
-
-**Proof.**  Proposition 5.7 makes the common congruence kernel for each triple finite of
-order at most two.  Lemma 5.5 identifies it with the kernel at every open spectator level;
-normality and the trivial automorphism group also give centrality and trivial routing action
-at every such level.
-It has no character to a finite odd-primary module, which is (14.2b).  Proposition 14.2 gives
-the remaining implications. $\square$
-
-None of (14.2), (14.2a), and (14.2b) is proved from the declared arithmetic sources.  The
-formal metaplectic route is now exact: Proposition 5.6 identifies the compact multiplier
-kernel at each finite coefficient group $A$ with a quotient of
-$\operatorname{Hom}_{\rm cont}(C_{R,c},A)$, Lemma 5.5 handles every open spectator level, and
-Proposition 5.7 proves that $({\rm R2CM})_{F_R,B_R,v_R}$ would make the common kernel
-of order at most two when $F_R$ is totally real.  Hence that theorem would imply (14.2b) for every odd
-$\ell$ and every row with the same $(F_R,B_R,v_R)$.
-
-The first missing arithmetic assertion is the centrality theorem (5.42), not finiteness
-inferred from roots of unity.  After it, one still needs the perfect pairing (5.36) with the
-locally compact adelic metaplectic kernel and the split and division local multiplier
-classification used in (5.38), together with the adelic decomposition and reduction of its
-diagonal splitting condition to the scalar Kummer cokernel (5.34b).  Book 6 identifies that
-cokernel with the dual of the global roots of unity in (5.34c), but Books 4--6 do not construct
-the map into it or classify the rank-two
-group extensions.  Finiteness and centrality without the perfect comparison and the
-$2$-primary conclusion still permit odd-primary characters and do not control transgression.
-The minimal unresolved assertion for the geometric application remains (14.2);
-$({\rm R2CM})$ is a stronger uniform arithmetic theorem which would imply it.
-
+None of (14.2), (14.2a), and (14.2b) is proved from the declared arithmetic sources.
+The minimal unresolved assertion for the FLT application is (14.2) itself, specialized to the
+finite family used to construct the signed-special seed.  In the notation of Book 181 this is
+$({\rm AIH}_{\mathscr F})$.  Neither a theorem about the full congruence kernel nor an
+all-level or all-prime uniform statement is part of the dependency chain.
 At an Eisenstein maximal ideal, the congruence arithmetic character module can survive. At a non-Eisenstein ideal, the noncongruence quotient in (6.10) is the separate possible kernel. At a nonneat quotient with $\ell$-divisible stabilizers, group cohomology of the stabilizer can add another kernel. Once (6.11) and tame descent hold, $q_v\equiv1\pmod\ell$ affects only the integral choice of an ordered $U_v$ branch, while $q_v\equiv-1\pmod\ell$ can make both signed Gram factors nonunits.
 
 The theorem concerns constant first cohomology of the compact quaternionic Shimura curves with the verified rank-two local model. It does not cover deeper parahoric chains, primitive wild supercuspidal type projectors, nonflat determinant loci, boundary cohomology of noncompact curves, or coefficient characteristic equal to the residue characteristic at $v$.
@@ -3283,4 +2791,4 @@ $$
 
 Each finite module now has one source and one meaning. Under (6.11), the old quotient has no torsion. The failure of orthogonal splitting is measured by the Gram congruence. The Néron component group is the graph discriminant. The possible failure of the bottom graph copy to be primitive is $\mathcal C_{\mathrm{br},v}$. Before (6.11), the additional module is the localized noncongruence character group in (6.10); non-Eisenstein localization alone has not removed it.
 
-Thus the geometric, linear-algebraic, and component parts of saturated Ihara theory are complete, and their downstream interfaces are exact. The full catalog theorem for the stated range is not source-closed until the routed localized odd-primary vanishing $({\rm AC}^{\rm loc}_\ell)_{\mathscr R}$ in (14.2) is proved by additional arithmetic input. Lemma 5.5 shows that a no-odd-primary-character theorem for one common congruence kernel covers every open spectator level for the same $(F,B,v)$, but its semidirect-product counterexample shows that kernel invariance alone does not transport centrality upward. Proposition 5.7 shows exactly how the stronger rank-two package $({\rm R2CM})$ would make that common kernel have order at most two in the totally real case, hence central with trivial routing action at every level. The perfect congruence--metaplectic pairing must precede that roots-of-unity argument; the multiplier theorem must first construct the injection into the scalar cokernel (5.34b), whose identification with the dual of $\mu_n(F)$ is the part actually proved by Book 6. The componentwise abelian theorem (14.2a), the no-odd-primary-abelian-quotient theorem (14.2b), or the routed abelian commensurator identities (5.18) would each suffice; none is proved by the currently declared arithmetic sources.
+Thus the geometric, linear-algebraic, and component parts of saturated Ihara theory are complete, and their downstream interfaces are exact. The FLT route needs only the routed localized odd-primary vanishing $({\rm AC}^{\rm loc}_\ell)_{\mathscr R}$ in (14.2), for the finite family of levels used to build its signed-special seed.  Lemma 5.5 shows that a no-odd-primary-character theorem for one common congruence kernel would cover every spectator level for the same $(F,B,v)$, but that stronger sufficient statement is not required.  The componentwise abelian theorem (14.2a), the no-odd-primary-abelian-quotient theorem (14.2b), or the routed abelian commensurator identities (5.18) would each suffice; none is proved by the currently declared arithmetic sources.
