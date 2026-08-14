@@ -40,6 +40,7 @@
    - [Residual determinants and ramification](#73-residual-determinants-and-ramification)
    - [Residual systems are a separate layer](#74-residual-systems-are-a-separate-layer)
    - [Two lattices with different reductions](#75-two-lattices-with-different-reductions)
+   - [The exact hardly ramified lattice interface](#76-the-exact-hardly-ramified-lattice-interface)
 8. [Algebraic operations on systems](#8-algebraic-operations-on-systems)
    - [Coefficient extension and coefficient restriction](#81-coefficient-extension-and-coefficient-restriction)
    - [Twists and Tate twists](#82-twists-and-tate-twists)
@@ -175,47 +176,27 @@ All representations are continuous. A characteristic-zero member of a compatible
 
 ### 1.4 The prerequisite boundary
 
-This volume has four direct **book** inputs:
+This volume has three direct **book** inputs:
 
 $$
-\boxed{179\mid 41,\ 168,\ 141,\ 142.} \tag{1.3}
+\boxed{179\mid168,\ 141,\ 142.} \tag{1.3}
 $$
 
-Book 41 supplies the exact Faltings--Tate reduction used by the geometric examples: finite
-isogeny classes imply finitely many stable Tate-lattice types, and Tate's Jacobson-radical
-argument then proves rational semisimplicity. It identifies finite isogeny classes as the exact
-arithmetic input and the unresolved Faltings--Shafarevich moduli-height package as a standard
-uniform source. Book 168 supplies the coefficient-indexed
-systems attached to already constructed
+Book 168 supplies the coefficient-indexed systems attached to already constructed
 parallel-weight-two packets: common algebraic Frobenius polynomials, determinants, purity,
 coefficient conjugation, and the full Frobenius-semisimple Weil--Deligne pair exactly in its
 proved local range. Book 141 supplies the finite-subgroup classification and adequacy criteria
 used by the large-image wrapper in Chapter 16. Book 142 supplies Chebotarev density and the
 dense-Frobenius uniqueness step used throughout the compatibility calculus.
 
-There is also one conditional arithmetic conclusion used only when Chapter 12 keeps the
-original geometric Tate modules rather than replacing them by their global semisimplifications:
-
-$$
-\boxed{(\mathrm{TS})\quad
-V_\ell(A)\text{ is semisimple as a }\mathbf Q_\ell[G_K]\text{-module for every
-abelian variety }A/K\text{ over a number field and every }\ell.}
-\tag{1.4}
-$$
-
-Book 41, Theorem 15.3 proves $(\mathrm{TS})$ from finiteness of the $K$-isogeny class of $A$
-and proves every subsequent curve-cohomology and coefficient-factor implication. Section 13.7
-of that book shows why its standard uniform Faltings--Shafarevich source is incomplete. Its
-uniform route still retains potential semistability, ramified Hodge base change, the arithmetic
-toroidal Siegel compactification, and the integral metrized Hodge--theta comparison, as well as
-the logarithmic-Hilbert and theta upper-slope certificates. Conditional on those certificates,
-Book 41 now proves the formal implication to (13.3r). Book 41 does prove finite polarized
-descent from the level fields back to $K$ and the integral Zarhin direct-factor theorem by
-Jordan--Zassenhaus finiteness for lattices over an endomorphism order.
-Book 168 isolates the finite carrier instance as the exact sufficient input for uniform
-raw-to-global local preservation.
-Thus (1.4) is conditional on the explicit finite-isogeny-class hypothesis, not an unexplained
-external theorem and not a conclusion of the other three books.
+No Faltings-height, Shafarevich-finiteness, or Tate-module semisimplicity theorem is a premise
+of the compatible-system calculus. When Chapter 12 begins with a geometric representation
+whose semisimplicity has not separately been established, it forms the weak system from the
+global semisimplifications and retains the original Tate lattices as extra geometric data. A
+theorem identifying a raw nonsemisimple geometric module with that semisimplification can be
+useful for preserving nonzero local monodromy, but it is an optional producer theorem, not an
+input to the definitions, the automorphic construction, coefficient descent, or the
+hardly-ramified family interface of Section 7.6.
 
 The arithmetic-Frobenius normalization is fixed here. If Book 168 writes geometric Frobenius
 $\Phi_v$ and
@@ -1099,6 +1080,61 @@ a nonsplit self-extension of the trivial character. The reductions of $T_0$ and 
 
 This example is the integral version of the limitation of Chebotarev. Traces and determinants see the diagonal characters. A lattice chooses how congruent characters are glued.
 
+### 7.6 The exact hardly ramified lattice interface
+
+The coefficient-switching argument for the hardly ramified theorem needs more than the stable
+lattice of Section 7.1. Let $q$ be odd and let
+
+$$
+r_q:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(L_q)
+\tag{7.13}
+$$
+
+be a characteristic-zero member, where $L_q/\mathbf Q_q$ is finite. The required integral
+model consists of a finite free local domain $A_q$ over $\mathbf Z_q$, a free rank-two
+$A_q$-module $T_q$, and a continuous action on $T_q$ whose generic fiber becomes (7.13) after
+one faithful scalar extension, satisfying all four conditions
+
+$$
+\begin{aligned}
+\det T_q&=\chi_q,\\
+T_q&\text{ is unramified outside }\{2,q\},\\
+T_q&\text{ is finite flat at }q,\\
+T_q|_{G_{\mathbf Q_2}}&\text{ has a free rank-one quotient with unramified character }
+\delta_q,\quad\delta_q^2=1.
+\end{aligned}
+\tag{7.14}
+$$
+
+Here finite flatness means the compatible integral finite-flat condition on the coefficient
+quotients, not merely that the rational representation is crystalline. The last line is an
+integral quotient statement. A rational special Weil--Deligne pair at $2$ does not by itself
+choose such a quotient or prove that it is primitive in an arbitrary stable lattice.
+
+The four lines of (7.14) have different sources. Once the family has cyclotomic determinant
+and common conductor support, the first two descend from the rational construction through a
+faithful scalar extension. The genuinely new lattice assertions are finite flatness at $q$
+and the tame quadratic quotient at $2$. Compactness proves only that some stable lattice
+exists; it proves neither assertion. Finiteness of an isogeny class and semisimplicity of an
+ambient abelian Tate module also prove neither assertion.
+
+At the original coefficient prime, the given hardly ramified representation already supplies
+one model at the distinguished embedding. At every other odd coefficient prime, and at any
+other embedding over the original prime, the automorphic construction must supply (7.14)
+place by place. Thus the exact arithmetic handoff is
+
+$$
+\boxed{
+\text{rational compatible family}
++\text{ original member}
++\{\text{local integral models (7.14) away from it}\}.}
+\tag{7.15}
+$$
+
+This separation is load bearing. It prevents a rational Brauer cancellation, a choice of a
+compact stable lattice, or a geometric semisimplicity theorem from being misread as the
+integral local theorem needed to move to coefficient characteristic three.
+
 ## 8. Algebraic operations on systems
 
 ### 8.1 Coefficient extension and coefficient restriction
@@ -1611,15 +1647,17 @@ $$
 V_\ell(A)=T_\ell(A)\otimes_{\mathbf Z_\ell}\mathbf Q_\ell. \tag{12.1}
 $$
 
-The conditional theorem $(\mathrm{TS})$ from Section 1.4 supplies the semisimplicity required in
-Section 3.1. Book 41 proves it from finite isogeny classes, but neither those classes nor their
-standard Faltings--Shafarevich moduli-height source is a conclusion of the current
-corpus. Without them,
-the good Frobenius polynomials would still define a compatible collection, but the collection
-would meet our definition only after taking global semisimplifications, and the original
-geometric lattices would have to be retained separately. Applied to Jacobians of the actual
-Shimura-curve carriers, the same theorem is precisely the sufficient input in Book 168,
-Proposition 7.6; Book 41 closes the Tate lattice step but not its finite-isogeny-class input.
+For the weak-system definition of Section 3.1 we use
+
+$$
+\rho_{A,\ell}=V_\ell(A)^{\mathrm{ss}}. \tag{12.1a}
+$$
+
+This requires no prior theorem asserting semisimplicity of the raw Tate module. The original
+$V_\ell(A)$ and its canonical lattice $T_\ell(A)$ remain separate geometric data. Whenever a
+later argument needs a nonzero-monodromy local extension on the raw module, it must either
+prove that the raw module is already semisimple or give a direct raw-to-global preservation
+theorem. The weak good-polynomial system alone cannot do so.
 
 The coefficient field is $\mathbf Q$, so there is one coefficient place for every $\ell$. Let $S_A$ be the finite set of bad-reduction places. At $v\notin S_A$ and $v\nmid\ell$, good reduction gives unramifiedness and
 
@@ -1628,7 +1666,8 @@ P_{A,v}(X)=X^2-a_v(A)X+q_v,\qquad
 a_v(A)=q_v+1-\#A(k_v). \tag{12.2}
 $$
 
-The integer polynomial (12.2) is independent of $\ell$. The Weil pairing gives
+The integer polynomial (12.2) is independent of $\ell$. The Weil pairing gives on the raw
+module, and hence on its semisimplification,
 
 $$
 \det V_\ell(A)=\chi_\ell,\qquad
@@ -1637,9 +1676,21 @@ $$
 
 At a real place, complex conjugation has eigenvalues $1,-1$. The system is pure of weight one by the Weil bounds.
 
-At a place $u\mid\ell$ of good reduction, $V_\ell(A)$ is crystalline with labelled weights $\{0,1\}$, and the canonical lattice $T_\ell(A)$ has finite-flat quotients $A[\ell^n]$. At semistable reduction it is semistable; at multiplicative reduction its monodromy has rank one.
+At a place $u\mid\ell$ of good reduction, the raw module $V_\ell(A)$ is crystalline with
+labelled weights $\{0,1\}$, and the canonical lattice $T_\ell(A)$ has finite-flat quotients
+$A[\ell^n]$. At semistable reduction the raw module is semistable; at multiplicative
+reduction its monodromy has rank one. These integral and extension-level statements remain
+attached to the raw module and its named lattice.
 
-For elliptic curves, the local reduction classification and the Tate-curve description give strong compatibility away from coefficient primes. At good places $N=0$. At multiplicative places the parameter is the split or nonsplit unramified twist of $\operatorname{Sp}_2(1)$. An additive potentially multiplicative place is described by the corresponding ramified quadratic twist of this special parameter. At potentially good additive places the finite inertial representation is determined by the corresponding geometric action, with wild qualifications in residue characteristics $2$ and $3$. One still proves these statements from the curve's local geometry; weak compatibility alone would not suffice.
+For elliptic curves, the local reduction classification and the Tate-curve description compute
+the raw local parameters away from coefficient primes. At good places $N=0$. At
+multiplicative places the parameter is the split or nonsplit unramified twist of
+$\operatorname{Sp}_2(1)$. An additive potentially multiplicative place is described by the
+corresponding ramified quadratic twist of this special parameter. At potentially good additive
+places the finite inertial representation is determined by the corresponding geometric action,
+with wild qualifications in residue characteristics $2$ and $3$. These calculations make the
+semisimplified weak system strong only after a theorem shows that the relevant raw local pair
+survives global semisimplification. Weak compatibility alone does not prove that passage.
 
 ### 12.2 A worked elliptic-curve diagnostic
 

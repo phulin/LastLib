@@ -53,6 +53,7 @@
    - [Monodromy line, sign, and conductor](#85-monodromy-line-sign-and-conductor)
    - [Identification of the chosen SP member](#86-identification-of-the-chosen-sp-member)
    - [The integral boundary](#87-the-integral-boundary)
+   - [The hardly ramified arithmetic handoff](#88-the-hardly-ramified-arithmetic-handoff)
 9. [The complete base-field assembly theorem](#9-the-complete-base-field-assembly-theorem)
    - [Statement](#91-statement)
    - [Proof](#92-proof)
@@ -1716,6 +1717,53 @@ residual conductor is asserted here. The fixed-three integral theory selects its
 lattice after the three-adic member and, on the geometric route, finite-flat positive ambient
 towers have been supplied. Rational nonzero monodromy survives coefficient extension; its
 reduction modulo a chosen lattice is a separate question.
+
+### 8.8 The hardly ramified arithmetic handoff
+
+The exact spreading-out theorem asks for more than Theorem 9.1. For every odd coefficient
+place $\lambda\mid q$, it asks for a finite free local domain $A_\lambda$ over $\mathbf Z_q$,
+a free rank-two stable $A_\lambda$-module $T_\lambda$, and an identification
+
+$$
+T_\lambda\otimes_{A_\lambda}\overline{\mathbf Q}_q
+\simeq r_\lambda\otimes_{E_\lambda}\overline{\mathbf Q}_q
+\tag{8.19}
+$$
+
+for compatible scalar embeddings, such that $T_\lambda$ is finite flat at $q$ and has
+a free rank-one quotient at $2$ on which inertia acts trivially and Frobenius acts through a
+character of order at most two. The rational determinant and conductor assertions of Chapter
+7 then give the other two hardly ramified conditions: cyclotomic determinant and
+unramifiedness outside $\{2,q\}$.
+
+At the distinguished original-prime embedding, the original coefficient order and original
+hardly ramified lattice themselves supply this model; (8.17) supplies its generic-fiber
+identification. This does not handle the other embeddings
+above the original prime. At every other odd coefficient place the new local integral model is
+an arithmetic input. In particular,
+
+$$
+\boxed{
+\text{Theorem 9.1}
+\not\Longrightarrow
+\text{hardly ramified integral models at the new coefficient places}.}
+\tag{8.20}
+$$
+
+There are three tempting but invalid shortcuts. Compactness supplies a stable lattice but not
+finite flatness or a primitive quotient. The rational pair $D_2$ supplies the special line and
+conductor in characteristic zero but not an integral quotient on an arbitrary lattice.
+Semisimplicity of an ambient abelian Tate module identifies rational direct factors but supplies
+neither coefficient-prime finite flatness nor the quotient required at $2$.
+
+Consequently, Faltings heights, Shafarevich finiteness, and Tate-module semisimplicity do not
+fill this handoff. A geometric proof may instead use a named good-reduction abelian carrier and
+finite-flat closure, while an automorphic proof may construct a local integral model directly.
+Whichever route is chosen must establish both integral conditions in (8.19) for every member
+claimed by the spreading-out theorem. Book 187 constructs the selected three-adic model by the
+good-carrier and finite-flat-closure route once the controlled rational family is supplied.
+That is enough for the final contradiction. It does not prove the stronger all-odd-place
+integral-model statement, which must not be declared a consequence of the rational assembly.
 
 ## 9. The complete base-field assembly theorem
 
