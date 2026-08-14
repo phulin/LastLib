@@ -114,41 +114,71 @@ theorem chapter09NumericalEnclosure :
   have hpiU : Real.pi < (3141592653589794 / 10 ^ 15 : ℝ) := by
     exact lt_trans Real.pi_lt_d20 (by norm_num)
   have hloglo (n : ℕ) (hn : 2 ≤ n) :
-      (1 / (n : ℝ) - 1 / (2 * (n : ℝ) ^ 2) + 1 / (3 * (n : ℝ) ^ 3) -
-          1 / (4 * (n : ℝ) ^ 4) + 1 / (5 * (n : ℝ) ^ 5)) -
-          (1 / (n : ℝ) ^ 6) / (1 - 1 / (n : ℝ)) ≤
+      (∑ i ∈ Finset.range 11,
+          (-(1 / (n : ℝ))) ^ (i + 1) / (i + 1 : ℝ)) * (-1) -
+          2 / (n : ℝ) ^ 12 ≤
         Real.log (1 + 1 / (n : ℝ)) := by
     have hlog :
-        |(∑ i ∈ Finset.range 5, (-(1 / (n : ℝ))) ^ (i + 1) / (i + 1 : ℝ))
+        |(∑ i ∈ Finset.range 11, (-(1 / (n : ℝ))) ^ (i + 1) / (i + 1 : ℝ))
             + Real.log (1 - (-(1 / (n : ℝ))))| ≤
-          |-(1 / (n : ℝ))| ^ (5 + 1) / (1 - |-(1 / (n : ℝ))|) := by
+          |-(1 / (n : ℝ))| ^ (11 + 1) / (1 - |-(1 / (n : ℝ))|) := by
       apply Real.abs_log_sub_add_sum_range_le
       rw [abs_neg, abs_of_pos (by positivity)]
       apply (div_lt_one₀ (by positivity)).2
       exact_mod_cast hn
-    norm_num [Finset.sum_range_succ, abs_of_pos, abs_of_nonneg] at hlog
+    norm_num [Finset.sum_range_succ, abs_of_pos, abs_of_nonneg] at hlog ⊢
     have hh := (abs_le.mp hlog).1
-    ring_nf at hh
-    ring_nf
-    linarith [hh]
+    have hx : 1 / (n : ℝ) ≤ 1 / 2 := by
+      apply one_div_le_one_div_of_le (by norm_num)
+      exact_mod_cast hn
+    have hd : 0 < 1 - 1 / (n : ℝ) := by linarith
+    have hi : 1 / (1 - 1 / (n : ℝ)) ≤ (2 : ℝ) := by
+      apply (div_le_iff₀ hd).2
+      linarith
+    have hr :
+        (1 / (n : ℝ) ^ 12) / (1 - 1 / (n : ℝ)) ≤
+          2 / (n : ℝ) ^ 12 := by
+      calc
+        (1 / (n : ℝ) ^ 12) / (1 - 1 / (n : ℝ)) =
+            (1 / (n : ℝ) ^ 12) * (1 / (1 - 1 / (n : ℝ))) := by ring
+        _ ≤ (1 / (n : ℝ) ^ 12) * 2 :=
+          mul_le_mul_of_nonneg_left hi (by positivity)
+        _ = 2 / (n : ℝ) ^ 12 := by ring
+    ring_nf at hr hh ⊢
+    linarith
   have hloghi (n : ℕ) (hn : 2 ≤ n) :
       Real.log (1 + 1 / (n : ℝ)) ≤
-        (1 / (n : ℝ) - 1 / (2 * (n : ℝ) ^ 2) + 1 / (3 * (n : ℝ) ^ 3) -
-          1 / (4 * (n : ℝ) ^ 4) + 1 / (5 * (n : ℝ) ^ 5)) +
-          (1 / (n : ℝ) ^ 6) / (1 - 1 / (n : ℝ)) := by
+        (∑ i ∈ Finset.range 11,
+          (-(1 / (n : ℝ))) ^ (i + 1) / (i + 1 : ℝ)) * (-1) +
+          2 / (n : ℝ) ^ 12 := by
     have hlog :
-        |(∑ i ∈ Finset.range 5, (-(1 / (n : ℝ))) ^ (i + 1) / (i + 1 : ℝ))
+        |(∑ i ∈ Finset.range 11, (-(1 / (n : ℝ))) ^ (i + 1) / (i + 1 : ℝ))
             + Real.log (1 - (-(1 / (n : ℝ))))| ≤
-          |-(1 / (n : ℝ))| ^ (5 + 1) / (1 - |-(1 / (n : ℝ))|) := by
+          |-(1 / (n : ℝ))| ^ (11 + 1) / (1 - |-(1 / (n : ℝ))|) := by
       apply Real.abs_log_sub_add_sum_range_le
       rw [abs_neg, abs_of_pos (by positivity)]
       apply (div_lt_one₀ (by positivity)).2
       exact_mod_cast hn
-    norm_num [Finset.sum_range_succ, abs_of_pos, abs_of_nonneg] at hlog
+    norm_num [Finset.sum_range_succ, abs_of_pos, abs_of_nonneg] at hlog ⊢
     have hh := (abs_le.mp hlog).2
-    ring_nf at hh
-    ring_nf
-    linarith [hh]
+    have hx : 1 / (n : ℝ) ≤ 1 / 2 := by
+      apply one_div_le_one_div_of_le (by norm_num)
+      exact_mod_cast hn
+    have hd : 0 < 1 - 1 / (n : ℝ) := by linarith
+    have hi : 1 / (1 - 1 / (n : ℝ)) ≤ (2 : ℝ) := by
+      apply (div_le_iff₀ hd).2
+      linarith
+    have hr :
+        (1 / (n : ℝ) ^ 12) / (1 - 1 / (n : ℝ)) ≤
+          2 / (n : ℝ) ^ 12 := by
+      calc
+        (1 / (n : ℝ) ^ 12) / (1 - 1 / (n : ℝ)) =
+            (1 / (n : ℝ) ^ 12) * (1 / (1 - 1 / (n : ℝ))) := by ring
+        _ ≤ (1 / (n : ℝ) ^ 12) * 2 :=
+          mul_le_mul_of_nonneg_left hi (by positivity)
+        _ = 2 / (n : ℝ) ^ 12 := by ring
+    ring_nf at hr hh ⊢
+    linarith
   have hstepA (n : ℕ) (hn : 0 < n) :
       ((harmonic n : ℝ) - Real.log (n : ℝ)) -
           ((harmonic (n + 1) : ℝ) - Real.log (n + 1)) =
@@ -168,383 +198,172 @@ theorem chapter09NumericalEnclosure :
             ring
       _ = Real.log (1 + 1 / (n : ℝ)) - 1 / (n + 1 : ℝ) := by
         rw [hlog]
-  have hrat (n : ℕ) (hn : 10000 ≤ n) :
-      (1 / (2 * (n : ℝ)) - 1 / (12 * (n : ℝ) ^ 2)) -
-          (1 / (2 * ((n : ℝ) + 1)) - 1 / (12 * ((n : ℝ) + 1) ^ 2)) +
-          1 / (n + 1 : ℝ) <
-        (1 / (n : ℝ) - 1 / (2 * (n : ℝ) ^ 2) + 1 / (3 * (n : ℝ) ^ 3) -
-            1 / (4 * (n : ℝ) ^ 4) + 1 / (5 * (n : ℝ) ^ 5)) -
-          (1 / (n : ℝ) ^ 6) / (1 - 1 / (n : ℝ)) := by
-    have hn0 : 0 < (n : ℝ) := by
-      exact_mod_cast (show 0 < n by omega)
-    have hnminus : 0 < (n : ℝ) - 1 := by
-      have h : (1 : ℝ) < n := by
-        exact_mod_cast (show 1 < n by omega)
-      linarith
-    have hden :
-        (1 / (n : ℝ) ^ 6) / (1 - 1 / (n : ℝ)) =
-          1 / ((n : ℝ) ^ 5 * ((n : ℝ) - 1)) := by
-      field_simp
-    have hn100 : (100 : ℝ) < n := by
-      exact_mod_cast (show 100 < n by omega)
-    have hprod : 0 < (n : ℝ) ^ 2 * ((n : ℝ) - 100) := by
-      exact mul_pos (sq_pos_of_pos hn0) (sub_pos.mpr hn100)
-    have hsq100 : (100 : ℝ) ^ 2 < (n : ℝ) ^ 2 := by
-      nlinarith [sq_nonneg ((n : ℝ) - 100)]
-    have hsmall :
-        0 < 147 * (n : ℝ) ^ 2 - 117 * (n : ℝ) - 72 := by
-      nlinarith [hsq100, hn100]
-    have hnum :
-        0 < 2 * (n : ℝ) ^ 3 - 53 * (n : ℝ) ^ 2 - 117 * (n : ℝ) - 72 := by
-      nlinarith [hprod, hsmall]
-    have hD :
-        0 < 60 * (n : ℝ) ^ 5 * ((n : ℝ) - 1) * ((n : ℝ) + 1) ^ 2 := by
-      positivity
-    have hident :
-        ((1 / (n : ℝ) - 1 / (2 * (n : ℝ) ^ 2) + 1 / (3 * (n : ℝ) ^ 3) -
-              1 / (4 * (n : ℝ) ^ 4) + 1 / (5 * (n : ℝ) ^ 5)) -
-            1 / ((n : ℝ) ^ 5 * ((n : ℝ) - 1)) -
-          ((1 / (2 * (n : ℝ)) - 1 / (12 * (n : ℝ) ^ 2)) -
-              (1 / (2 * ((n : ℝ) + 1)) -
-                1 / (12 * ((n : ℝ) + 1) ^ 2)) +
-              1 / (n + 1 : ℝ))) *
-            (60 * (n : ℝ) ^ 5 * ((n : ℝ) - 1) * ((n : ℝ) + 1) ^ 2) =
-          2 * (n : ℝ) ^ 3 - 53 * (n : ℝ) ^ 2 - 117 * (n : ℝ) - 72 := by
-      field_simp
-      ring
-    have hmul :
-        0 <
-          ((1 / (n : ℝ) - 1 / (2 * (n : ℝ) ^ 2) + 1 / (3 * (n : ℝ) ^ 3) -
-                1 / (4 * (n : ℝ) ^ 4) + 1 / (5 * (n : ℝ) ^ 5)) -
-              1 / ((n : ℝ) ^ 5 * ((n : ℝ) - 1)) -
-            ((1 / (2 * (n : ℝ)) - 1 / (12 * (n : ℝ) ^ 2)) -
-                (1 / (2 * ((n : ℝ) + 1)) -
-                  1 / (12 * ((n : ℝ) + 1) ^ 2)) +
-                1 / (n + 1 : ℝ))) *
-              (60 * (n : ℝ) ^ 5 * ((n : ℝ) - 1) * ((n : ℝ) + 1) ^ 2) := by
-      rw [hident]
-      exact hnum
-    have hdiff :
-        0 <
-          (1 / (n : ℝ) - 1 / (2 * (n : ℝ) ^ 2) + 1 / (3 * (n : ℝ) ^ 3) -
-              1 / (4 * (n : ℝ) ^ 4) + 1 / (5 * (n : ℝ) ^ 5)) -
-            1 / ((n : ℝ) ^ 5 * ((n : ℝ) - 1)) -
-          ((1 / (2 * (n : ℝ)) - 1 / (12 * (n : ℝ) ^ 2)) -
-              (1 / (2 * ((n : ℝ) + 1)) -
-                1 / (12 * ((n : ℝ) + 1) ^ 2)) +
-              1 / (n + 1 : ℝ)) := by
-      exact lt_of_mul_lt_mul_right (by simpa using hmul) (le_of_lt hD)
-    rw [hden]
-    linarith [hdiff]
-  have hratU (n : ℕ) (hn : 10000 ≤ n) :
-      (1 / (n : ℝ) - 1 / (2 * (n : ℝ) ^ 2) + 1 / (3 * (n : ℝ) ^ 3) -
-          1 / (4 * (n : ℝ) ^ 4) + 1 / (5 * (n : ℝ) ^ 5)) +
-          (1 / (n : ℝ) ^ 6) / (1 - 1 / (n : ℝ)) <
-        ((1 / (2 * (n : ℝ)) - 1 / (12 * (n : ℝ) ^ 2)) +
-            1 / (n : ℝ) ^ 4) -
-          (1 / (2 * ((n : ℝ) + 1)) - 1 / (12 * ((n : ℝ) + 1) ^ 2) +
-            1 / ((n : ℝ) + 1) ^ 4) +
-          1 / (n + 1 : ℝ) := by
-    have hn0 : 0 < (n : ℝ) := by
-      exact_mod_cast (show 0 < n by omega)
-    have hnminus : 0 < (n : ℝ) - 1 := by
-      have h : (1 : ℝ) < n := by
-        exact_mod_cast (show 1 < n by omega)
-      linarith
-    have hden :
-        (1 / (n : ℝ) ^ 6) / (1 - 1 / (n : ℝ)) =
-          1 / ((n : ℝ) ^ 5 * ((n : ℝ) - 1)) := by
-      field_simp
-    rw [hden]
-    field_simp
+  let qL : ℝ → ℝ := fun x =>
+    1 / (2 * x) - 1 / (12 * x ^ 2) + 1 / (120 * x ^ 4) - 1 / (252 * x ^ 6)
+  let qU : ℝ → ℝ := fun x => qL x + 1 / (240 * x ^ 8)
+  have hratFastL (n : ℕ) (hn : 100 ≤ n) :
+      qL n - qL (n + 1) + 1 / (n + 1 : ℝ) <
+        (∑ i ∈ Finset.range 11,
+          (-(1 / (n : ℝ))) ^ (i + 1) / (i + 1 : ℝ)) * (-1) -
+          2 / (n : ℝ) ^ 12 := by
+    have hn0 : (0 : ℝ) < n := by
+      exact_mod_cast (lt_of_lt_of_le (by omega : 0 < 100) hn)
+    let x : ℝ := (n : ℝ) - 100
+    have hnR : (100 : ℝ) ≤ n := by exact_mod_cast hn
+    have hx : 0 ≤ x := by dsimp [x]; linarith
+    have hnrep : (n : ℝ) = x + 100 := by dsimp [x]; ring
+    rw [hnrep]
+    simp only [qL]
+    norm_num [Finset.sum_range_succ]
+    field_simp [ne_of_gt hn0]
     ring_nf
-    have hn100 : (100 : ℝ) < n := by
-      exact_mod_cast (show 100 < n by omega)
-    have hprod : 0 < (n : ℝ) ^ 2 * ((n : ℝ) - 100) := by
-      exact mul_pos (sq_pos_of_pos hn0) (sub_pos.mpr hn100)
-    nlinarith
-  have hstepL (n : ℕ) (hn : 10000 ≤ n) :
-      (1 / (2 * (n : ℝ)) - 1 / (12 * (n : ℝ) ^ 2)) -
-          (1 / (2 * ((n : ℝ) + 1)) - 1 / (12 * ((n : ℝ) + 1) ^ 2)) <
+    apply sub_pos.mp
+    ring_nf
+    positivity
+  have hratFastU (n : ℕ) (hn : 100 ≤ n) :
+      (∑ i ∈ Finset.range 11,
+          (-(1 / (n : ℝ))) ^ (i + 1) / (i + 1 : ℝ)) * (-1) +
+          2 / (n : ℝ) ^ 12 <
+        qU n - qU (n + 1) + 1 / (n + 1 : ℝ) := by
+    have hn0 : (0 : ℝ) < n := by
+      exact_mod_cast (lt_of_lt_of_le (by omega : 0 < 100) hn)
+    let x : ℝ := (n : ℝ) - 100
+    have hnR : (100 : ℝ) ≤ n := by exact_mod_cast hn
+    have hx : 0 ≤ x := by dsimp [x]; linarith
+    have hnrep : (n : ℝ) = x + 100 := by dsimp [x]; ring
+    rw [hnrep]
+    simp only [qU, qL]
+    norm_num [Finset.sum_range_succ]
+    field_simp [ne_of_gt hn0]
+    ring_nf
+    apply sub_pos.mp
+    ring_nf
+    positivity
+  have hstepL (n : ℕ) (hn : 100 ≤ n) :
+      qL n - qL (n + 1) <
         ((harmonic n : ℝ) - Real.log (n : ℝ)) -
           ((harmonic (n + 1) : ℝ) - Real.log (n + 1)) := by
     rw [hstepA n (by omega)]
-    linarith [hloglo n (by omega), hrat n hn]
-  have hstepU (n : ℕ) (hn : 10000 ≤ n) :
+    linarith [hloglo n (by omega), hratFastL n hn]
+  have hstepU (n : ℕ) (hn : 100 ≤ n) :
       ((harmonic n : ℝ) - Real.log (n : ℝ)) -
           ((harmonic (n + 1) : ℝ) - Real.log (n + 1)) <
-        ((1 / (2 * (n : ℝ)) - 1 / (12 * (n : ℝ) ^ 2)) +
-            1 / (n : ℝ) ^ 4) -
-          ((1 / (2 * ((n : ℝ) + 1)) - 1 / (12 * ((n : ℝ) + 1) ^ 2)) +
-            1 / ((n : ℝ) + 1) ^ 4) := by
+        qU n - qU (n + 1) := by
     rw [hstepA n (by omega)]
-    linarith [hloghi n (by omega), hratU n hn]
+    linarith [hloghi n (by omega), hratFastU n hn]
   have hinv : Tendsto (fun n : ℕ => (1 : ℝ) / (n : ℝ)) atTop (nhds 0) := by
     exact tendsto_const_nhds.div_atTop tendsto_natCast_atTop_atTop
   have hqL :
-      Tendsto
-        (fun n : ℕ => 1 / (2 * (n : ℝ)) - 1 / (12 * (n : ℝ) ^ 2))
-        atTop (nhds 0) := by
-    have hsq := hinv.pow 2
-    have hfirst :
-        Tendsto (fun n : ℕ => (1 / 2 : ℝ) * (1 / (n : ℝ)))
-          atTop (nhds 0) := by
-      simpa using
-        (tendsto_const_nhds.mul hinv :
-          Tendsto (fun n : ℕ => (1 / 2 : ℝ) * (1 / (n : ℝ)))
-            atTop (nhds ((1 / 2 : ℝ) * 0)))
-    have hsecond :
-        Tendsto (fun n : ℕ => (1 / 12 : ℝ) * (1 / (n : ℝ)) ^ 2)
-          atTop (nhds 0) := by
-      simpa using
-        (tendsto_const_nhds.mul hsq :
-          Tendsto (fun n : ℕ => (1 / 12 : ℝ) * (1 / (n : ℝ)) ^ 2)
-            atTop (nhds ((1 / 12 : ℝ) * (0 ^ 2))))
-    have hsub := hfirst.sub hsecond
-    convert hsub using 1
+      Tendsto (fun n : ℕ => qL n) atTop (nhds 0) := by
+    have hterm (c : ℝ) (k : ℕ) (hk : 0 < k) :
+        Tendsto (fun n : ℕ => c * (1 / (n : ℝ)) ^ k) atTop (nhds 0) := by
+      simpa [zero_pow (Nat.ne_of_gt hk)] using
+        (tendsto_const_nhds.mul (hinv.pow k) :
+          Tendsto (fun n : ℕ => c * (1 / (n : ℝ)) ^ k)
+            atTop (nhds (c * 0 ^ k)))
+    have h := (((hterm (1 / 2) 1 (by norm_num)).sub
+      (hterm (1 / 12) 2 (by norm_num))).add
+      (hterm (1 / 120) 4 (by norm_num))).sub
+      (hterm (1 / 252) 6 (by norm_num))
+    convert h using 1
     · funext n
+      dsimp [qL]
       ring
     · norm_num
   have hqU :
-      Tendsto
-        (fun n : ℕ =>
-          (1 / (2 * (n : ℝ)) - 1 / (12 * (n : ℝ) ^ 2)) + 1 / (n : ℝ) ^ 4)
-        atTop (nhds 0) := by
-    have hpow4 := hinv.pow 4
-    convert hqL.add hpow4 using 1 <;>
-      try simp [div_eq_mul_inv, mul_comm, mul_left_comm, pow_succ]
+      Tendsto (fun n : ℕ => qU n) atTop (nhds 0) := by
+    have hterm :
+        Tendsto (fun n : ℕ => (1 / 240 : ℝ) * (1 / (n : ℝ)) ^ 8)
+          atTop (nhds 0) := by
+      simpa using
+        (tendsto_const_nhds.mul (hinv.pow 8) :
+          Tendsto (fun n : ℕ => (1 / 240 : ℝ) * (1 / (n : ℝ)) ^ 8)
+            atTop (nhds ((1 / 240 : ℝ) * 0 ^ 8)))
+    convert hqL.add hterm using 1
+    · funext n
+      dsimp [qU]
+      ring
+    · norm_num
   let F : ℕ → ℝ := fun n =>
-    (harmonic n : ℝ) - Real.log (n : ℝ) -
-      (1 / (2 * (n : ℝ)) - 1 / (12 * (n : ℝ) ^ 2))
+    (harmonic n : ℝ) - Real.log (n : ℝ) - qL n
   let G : ℕ → ℝ := fun n =>
-    (harmonic n : ℝ) - Real.log (n : ℝ) -
-      ((1 / (2 * (n : ℝ)) - 1 / (12 * (n : ℝ) ^ 2)) + 1 / (n : ℝ) ^ 4)
+    (harmonic n : ℝ) - Real.log (n : ℝ) - qU n
   have hlimF : Tendsto F atTop (nhds chapter09EulerMascheroni) := by
     simpa [F, chapter09EulerMascheroni] using
       Real.tendsto_harmonic_sub_log.sub hqL
   have hlimG : Tendsto G atTop (nhds chapter09EulerMascheroni) := by
     simpa [G, chapter09EulerMascheroni] using
       Real.tendsto_harmonic_sub_log.sub hqU
-  have hFstep (n : ℕ) (hn : 10000 ≤ n) : F (n + 1) < F n := by
+  have hFstep (n : ℕ) (hn : 100 ≤ n) : F (n + 1) < F n := by
     dsimp [F]
     have hs := hstepL n hn
     norm_num [Nat.cast_add, Nat.cast_one] at hs ⊢
     linarith [hs]
-  have hGstep (n : ℕ) (hn : 10000 ≤ n) : G n < G (n + 1) := by
+  have hGstep (n : ℕ) (hn : 100 ≤ n) : G n < G (n + 1) := by
     dsimp [G]
     have hs := hstepU n hn
     norm_num [Nat.cast_add, Nat.cast_one] at hs ⊢
     linarith [hs]
-  have hFbound (m : ℕ) (hm : 10001 ≤ m) : F m ≤ F 10001 := by
+  have hFbound (m : ℕ) (hm : 101 ≤ m) : F m ≤ F 101 := by
     induction m, hm using Nat.le_induction with
     | base => exact le_rfl
     | @succ m hm ih =>
       exact (hFstep m (by omega)).le.trans ih
-  have hGbound (m : ℕ) (hm : 10001 ≤ m) : G 10001 ≤ G m := by
+  have hGbound (m : ℕ) (hm : 101 ≤ m) : G 101 ≤ G m := by
     induction m, hm using Nat.le_induction with
     | base => exact le_rfl
     | @succ m hm ih =>
       exact ih.trans (hGstep m (by omega)).le
-  have hgamma_le_F10001 :
-      chapter09EulerMascheroni ≤ F 10001 := by
+  have hgamma_le_F101 :
+      chapter09EulerMascheroni ≤ F 101 := by
     apply le_of_tendsto hlimF
-    exact eventually_atTop.2 ⟨10001, fun m hm => hFbound m hm⟩
-  have hG10001_le_gamma :
-      G 10001 ≤ chapter09EulerMascheroni := by
+    exact eventually_atTop.2 ⟨101, fun m hm => hFbound m hm⟩
+  have hG101_le_gamma :
+      G 101 ≤ chapter09EulerMascheroni := by
     apply ge_of_tendsto hlimG
-    exact eventually_atTop.2 ⟨10001, fun m hm => hGbound m hm⟩
+    exact eventually_atTop.2 ⟨101, fun m hm => hGbound m hm⟩
   have hgamma_upper_at_N :
-      chapter09EulerMascheroni < F 10000 := by
-    have hs := hFstep 10000 (by norm_num)
-    exact lt_of_le_of_lt hgamma_le_F10001 hs
+      chapter09EulerMascheroni < F 100 := by
+    have hs := hFstep 100 (by norm_num)
+    exact lt_of_le_of_lt hgamma_le_F101 hs
   have hgamma_lower_at_N :
-      G 10000 < chapter09EulerMascheroni := by
-    have hs := hGstep 10000 (by norm_num)
-    exact lt_of_lt_of_le hs hG10001_le_gamma
+      G 100 < chapter09EulerMascheroni := by
+    have hs := hGstep 100 (by norm_num)
+    exact lt_of_lt_of_le hs hG101_le_gamma
   have hlog2 :=
     Real.sum_range_sub_log_div_le (x := (1 / 3 : ℝ)) (by norm_num) 20
   norm_num at hlog2
   have hlog54 :=
     Real.sum_range_sub_log_div_le (x := (1 / 9 : ℝ)) (by norm_num) 10
   norm_num at hlog54
-  have hlogN : Real.log (10000 : ℝ) =
-      12 * Real.log 2 + 4 * Real.log (5 / 4 : ℝ) := by
+  have hlogN : Real.log (100 : ℝ) =
+      6 * Real.log 2 + 2 * Real.log (5 / 4 : ℝ) := by
     calc
-      Real.log (10000 : ℝ) =
-          Real.log ((2 : ℝ) ^ 12 * (5 / 4 : ℝ) ^ 4) := by norm_num
-      _ = Real.log ((2 : ℝ) ^ 12) + Real.log ((5 / 4 : ℝ) ^ 4) := by
+      Real.log (100 : ℝ) =
+          Real.log ((2 : ℝ) ^ 6 * (5 / 4 : ℝ) ^ 2) := by norm_num
+      _ = Real.log ((2 : ℝ) ^ 6) + Real.log ((5 / 4 : ℝ) ^ 2) := by
         rw [Real.log_mul] <;> norm_num
-      _ = 12 * Real.log 2 + 4 * Real.log (5 / 4 : ℝ) := by
+      _ = 6 * Real.log 2 + 2 * Real.log (5 / 4 : ℝ) := by
         rw [Real.log_pow, Real.log_pow]
         norm_num
   have h2u := (abs_le.mp hlog2).2
   have h54u := (abs_le.mp hlog54).2
   have hgammaLowerNumeric :
       (chapter09GammaLower : ℝ) <
-        (harmonic 10000 : ℝ) - Real.log 10000 -
-          ((1 / (2 * 10000) - 1 / (12 * 10000 ^ 2)) + 1 / (10000 : ℝ) ^ 4) := by
+        (harmonic 100 : ℝ) - Real.log 100 - qU 100 := by
     rw [hlogN]
     set_option maxRecDepth 1000000 in
-      norm_num [harmonic, Finset.sum_range_succ, chapter09GammaLower] at ⊢
+      norm_num [harmonic, Finset.sum_range_succ, chapter09GammaLower, qU, qL] at ⊢
     nlinarith [h2u, h54u]
   have h2l := (abs_le.mp hlog2).1
   have h54l := (abs_le.mp hlog54).1
   have hgammaUpperNumeric :
-      (harmonic 10000 : ℝ) - Real.log 10000 -
-          (1 / (2 * 10000) - 1 / (12 * 10000 ^ 2)) <
+      (harmonic 100 : ℝ) - Real.log 100 - qL 100 <
         (chapter09GammaUpper : ℝ) := by
     rw [hlogN]
-    have hsplit (k : ℕ) :
-        harmonic (k + 1000) =
-          harmonic k +
-            (∑ i ∈ Finset.range 1000, ((↑(k + i + 1) : ℚ))⁻¹) := by
-      rw [harmonic, harmonic, Finset.sum_range_add]
-    have h0 :
-        harmonic 1000 =
-          harmonic 0 +
-            (∑ i ∈ Finset.range 1000, ((↑(0 + i + 1) : ℚ))⁻¹) := by
-      exact hsplit 0
-    have h1 :
-        harmonic 2000 =
-          harmonic 1000 +
-            (∑ i ∈ Finset.range 1000, ((↑(1000 + i + 1) : ℚ))⁻¹) := by
-      exact hsplit 1000
-    have h2 :
-        harmonic 3000 =
-          harmonic 2000 +
-            (∑ i ∈ Finset.range 1000, ((↑(2000 + i + 1) : ℚ))⁻¹) := by
-      exact hsplit 2000
-    have h3 :
-        harmonic 4000 =
-          harmonic 3000 +
-            (∑ i ∈ Finset.range 1000, ((↑(3000 + i + 1) : ℚ))⁻¹) := by
-      exact hsplit 3000
-    have h4 :
-        harmonic 5000 =
-          harmonic 4000 +
-            (∑ i ∈ Finset.range 1000, ((↑(4000 + i + 1) : ℚ))⁻¹) := by
-      exact hsplit 4000
-    have h5 :
-        harmonic 6000 =
-          harmonic 5000 +
-            (∑ i ∈ Finset.range 1000, ((↑(5000 + i + 1) : ℚ))⁻¹) := by
-      exact hsplit 5000
-    have h6 :
-        harmonic 7000 =
-          harmonic 6000 +
-            (∑ i ∈ Finset.range 1000, ((↑(6000 + i + 1) : ℚ))⁻¹) := by
-      exact hsplit 6000
-    have h7 :
-        harmonic 8000 =
-          harmonic 7000 +
-            (∑ i ∈ Finset.range 1000, ((↑(7000 + i + 1) : ℚ))⁻¹) := by
-      exact hsplit 7000
-    have h8 :
-        harmonic 9000 =
-          harmonic 8000 +
-            (∑ i ∈ Finset.range 1000, ((↑(8000 + i + 1) : ℚ))⁻¹) := by
-      exact hsplit 8000
-    have h9 :
-        harmonic 10000 =
-          harmonic 9000 +
-            (∑ i ∈ Finset.range 1000, ((↑(9000 + i + 1) : ℚ))⁻¹) := by
-      exact hsplit 9000
-    have hsum :
-        harmonic 10000 =
-          (∑ i ∈ Finset.range 1000, ((↑(0 + i + 1) : ℚ))⁻¹) +
-          (∑ i ∈ Finset.range 1000, ((↑(1000 + i + 1) : ℚ))⁻¹) +
-          (∑ i ∈ Finset.range 1000, ((↑(2000 + i + 1) : ℚ))⁻¹) +
-          (∑ i ∈ Finset.range 1000, ((↑(3000 + i + 1) : ℚ))⁻¹) +
-          (∑ i ∈ Finset.range 1000, ((↑(4000 + i + 1) : ℚ))⁻¹) +
-          (∑ i ∈ Finset.range 1000, ((↑(5000 + i + 1) : ℚ))⁻¹) +
-          (∑ i ∈ Finset.range 1000, ((↑(6000 + i + 1) : ℚ))⁻¹) +
-          (∑ i ∈ Finset.range 1000, ((↑(7000 + i + 1) : ℚ))⁻¹) +
-          (∑ i ∈ Finset.range 1000, ((↑(8000 + i + 1) : ℚ))⁻¹) +
-          (∑ i ∈ Finset.range 1000, ((↑(9000 + i + 1) : ℚ))⁻¹) := by
-      have hz : harmonic 0 = 0 := by
-        simp [harmonic]
-      rw [h9, h8, h7, h6, h5, h4, h3, h2, h1, h0, hz, zero_add]
-    have hblock0 :
-        (∑ i ∈ Finset.range 1000, ((↑(0 + i + 1) : ℚ))⁻¹) <
-          7485470860550344913 / 10 ^ 18 := by
-      set_option maxRecDepth 1000000 in
-        set_option maxHeartbeats 10000000 in
-          norm_num [Finset.sum_range_succ]
-    have hblock1 :
-        (∑ i ∈ Finset.range 1000, ((↑(1000 + i + 1) : ℚ))⁻¹) <
-          692897243059937497 / 10 ^ 18 := by
-      set_option maxRecDepth 1000000 in
-        set_option maxHeartbeats 10000000 in
-          norm_num [Finset.sum_range_succ]
-    have hblock2 :
-        (∑ i ∈ Finset.range 1000, ((↑(2000 + i + 1) : ℚ))⁻¹) <
-          405381786348904705 / 10 ^ 18 := by
-      set_option maxRecDepth 1000000 in
-        set_option maxHeartbeats 10000000 in
-          norm_num [Finset.sum_range_succ]
-    have hblock3 :
-        (∑ i ∈ Finset.range 1000, ((↑(3000 + i + 1) : ℚ))⁻¹) <
-          287640409836040117 / 10 ^ 18 := by
-      set_option maxRecDepth 1000000 in
-        set_option maxHeartbeats 10000000 in
-          norm_num [Finset.sum_range_succ]
-    have hblock4 :
-        (∑ i ∈ Finset.range 1000, ((↑(4000 + i + 1) : ℚ))⁻¹) <
-          223118553189209737 / 10 ^ 18 := by
-      have hs4 :
-          (∑ i ∈ Finset.range 1000, ((↑(4000 + i + 1) : ℚ))⁻¹) =
-            (∑ i ∈ Finset.range 500, ((↑(4000 + i + 1) : ℚ))⁻¹) +
-              (∑ i ∈ Finset.range 500,
-                ((↑(4000 + (500 + i) + 1) : ℚ))⁻¹) := by
-        rw [show (1000 : ℕ) = 500 + 500 by norm_num, Finset.sum_range_add]
-      rw [hs4]
-      set_option maxRecDepth 1000000 in
-        set_option maxHeartbeats 10000000 in
-          norm_num [Finset.sum_range_succ]
-    have hblock5 :
-        (∑ i ∈ Finset.range 1000, ((↑(5000 + i + 1) : ℚ))⁻¹) <
-          182304891145806472 / 10 ^ 18 := by
-      set_option maxRecDepth 1000000 in
-        set_option maxHeartbeats 10000000 in
-          norm_num [Finset.sum_range_succ]
-    have hblock6 :
-        (∑ i ∈ Finset.range 1000, ((↑(6000 + i + 1) : ℚ))⁻¹) <
-          154138775679488083 / 10 ^ 18 := by
-      set_option maxRecDepth 1000000 in
-        set_option maxHeartbeats 10000000 in
-          norm_num [Finset.sum_range_succ]
-    have hblock7 :
-        (∑ i ∈ Finset.range 1000, ((↑(7000 + i + 1) : ℚ))⁻¹) <
-          133522464451690990 / 10 ^ 18 := by
-      set_option maxRecDepth 1000000 in
-        set_option maxHeartbeats 10000000 in
-          norm_num [Finset.sum_range_succ]
-    have hblock8 :
-        (∑ i ∈ Finset.range 1000, ((↑(8000 + i + 1) : ℚ))⁻¹) <
-          117776091485215759 / 10 ^ 18 := by
-      set_option maxRecDepth 1000000 in
-        set_option maxHeartbeats 10000000 in
-          norm_num [Finset.sum_range_succ]
-    have hblock9 :
-        (∑ i ∈ Finset.range 1000, ((↑(9000 + i + 1) : ℚ))⁻¹) <
-          105354960297743997 / 10 ^ 18 := by
-      set_option maxRecDepth 1000000 in
-        set_option maxHeartbeats 10000000 in
-          norm_num [Finset.sum_range_succ]
-    have hH : harmonic 10000 < 978760603604438227 / 10 ^ 17 := by
-      rw [hsum]
-      linarith [hblock0, hblock1, hblock2, hblock3, hblock4, hblock5, hblock6,
-        hblock7, hblock8, hblock9]
-    have hHreal :
-        (harmonic 10000 : ℝ) < (978760603604438227 / 10 ^ 17 : ℝ) := by
-      have hHreal' :
-          (harmonic 10000 : ℝ) <
-            ((978760603604438227 / 10 ^ 17 : ℚ) : ℝ) := by
-        exact_mod_cast hH
-      convert hHreal' using 1 <;> norm_num
-    norm_num [chapter09GammaUpper] at ⊢
-    set_option maxHeartbeats 10000000 in
-      nlinarith [h2l, h54l]
+    set_option maxRecDepth 1000000 in
+      norm_num [harmonic, Finset.sum_range_succ, chapter09GammaUpper, qL] at ⊢
+    nlinarith [h2l, h54l]
   have hgammaLower :
       (chapter09GammaLower : ℝ) < chapter09EulerMascheroni := by
     apply lt_trans hgammaLowerNumeric
