@@ -642,10 +642,13 @@ the supplied-model antecedent of 157a, Section 17.1: after base change to the co
 $R$ and passage to the selected fine component, one must supply a smooth projective
 finite-type model $\overline{\mathcal Y}/R$ with geometrically connected fibers such that
 
-1. its generic fiber is $Y$ and it contains $\mathcal Y^{\mathrm{good}}$;
-2. the selected semistable point extends to an $R$-section whose completed boundary branch is
-   the prescribed framed Tate--Mumford branch, with no enlargement of the completion field and
-   no change in its valuation, Kummer, theta, polarization, or frame data; and
+1. its projective generic fiber $\overline{\mathcal Y}_K$ contains $Y$ as a dense open,
+   and $\overline{\mathcal Y}$ contains the good-reduction locus
+   $\mathcal Y^{\mathrm{good}}$;
+2. the selected point $y_{\mathrm{sp}}\in Y(K)\subset\overline{\mathcal Y}_K(K)$ extends
+   to an $R$-section whose completed boundary branch is the prescribed framed
+   Tate--Mumford branch, with no enlargement of the completion field and no change in its
+   valuation, Kummer, theta, polarization, or frame data; and
 3. a relatively very ample line and every coefficient and PEL-frame descent isomorphism
    needed for the avoidance and slicing argument extend to the model.
 
