@@ -100,8 +100,10 @@ def chapter09AffineModuleCocycle
           firstTrivialization secondTrivialization overlapIso))).toLinearEquiv.toModuleIso).hom
 
 /-- An affine rank-`r` module descent datum together with chosen frames on both overlap pullbacks.
-The `firstBaseChange` and `secondBaseChange` fields retain the module-theoretic origin of the two
-overlap modules; `moduleCocycle` is the Čech law before it is repackaged as a matrix equation. -/
+The base-change fields retain the module-theoretic origin of the two overlap modules, while
+`overlapOnBaseChange` and `overlapIso_is_baseChange` ensure that the displayed transition is the
+actual overlap identification of the upstairs module. `moduleCocycle` is the Čech law before it
+is repackaged as a matrix equation. -/
 structure Chapter09AffineModuleDescentDatum
     {R T D Q : Type u} [CommRing R] [CommRing T] [CommRing D] [CommRing Q]
     (N : Chapter09AffineCechNerve R T D Q) (r : ℕ) where
@@ -111,9 +113,14 @@ structure Chapter09AffineModuleDescentDatum
   secondModule : ModuleCat D
   firstBaseChange : (ModuleCat.extendScalars N.first).obj upstairs ≅ firstModule
   secondBaseChange : (ModuleCat.extendScalars N.second).obj upstairs ≅ secondModule
+  overlapOnBaseChange :
+    (ModuleCat.extendScalars N.first).obj upstairs ≅
+      (ModuleCat.extendScalars N.second).obj upstairs
   firstTrivialization : ModuleCat.of D (Fin r → D) ≅ firstModule
   secondTrivialization : ModuleCat.of D (Fin r → D) ≅ secondModule
   overlapIso : firstModule ≅ secondModule
+  overlapIso_is_baseChange :
+    firstBaseChange ≪≫ overlapIso = overlapOnBaseChange ≪≫ secondBaseChange
   moduleCocycle :
     chapter09AffineModuleCocycle N r firstModule secondModule
       firstTrivialization secondTrivialization overlapIso

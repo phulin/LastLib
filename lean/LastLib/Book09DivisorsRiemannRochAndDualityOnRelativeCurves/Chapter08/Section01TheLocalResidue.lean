@@ -1,11 +1,13 @@
 import Mathlib.LinearAlgebra.Quotient.Defs
 import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter08.Dependencies
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter03.Section03NormalCurvesAndRegularModels
 
 namespace LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter08
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
 open scoped AlgebraicGeometry
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09
+open LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter03
 
 noncomputable section
 
@@ -25,7 +27,95 @@ theorem chapter08_closed_point_is_effective_cartier
           Scheme.IdealSheafData.vanishingIdeal
             (⟨{x.1}, x.2⟩ : TopologicalSpace.Closeds C.carrier) ∧
         (D.ideal.support : Set C.carrier) = {x.1} := by
-  sorry
+  have hxcoheight' : (↑(Order.coheight x.1) : WithBot ℕ∞) = 1 := by
+    calc
+      (↑(Order.coheight x.1) : WithBot ℕ∞) =
+          ringKrullDim (C.carrier.presheaf.stalk x.1) :=
+        (ringKrullDim_stalk_eq_coheight x.1).symm
+      _ = 1 := C.dimensionOne x
+  have hxcoheight : Order.coheight x.1 = 1 := by
+    exact_mod_cast hxcoheight'
+  let Z : TopologicalSpace.Closeds C.carrier :=
+    ⟨closure ({x.1} : Set C.carrier), isClosed_closure⟩
+  let I : Scheme.IdealSheafData C.carrier :=
+    Scheme.IdealSheafData.vanishingIdeal Z
+  have hIrad : ∀ U : C.carrier.affineOpens, (I.ideal U).IsRadical := by
+    intro U
+    dsimp [I]
+    exact PrimeSpectrum.isRadical_vanishingIdeal _
+  have hred : IsReduced I.subscheme := by
+    let _ : ∀ U : I.subschemeCover.openCover.I₀,
+        IsReduced (I.subschemeCover.openCover.X U) := by
+      intro U
+      let V : C.carrier.affineOpens := U
+      change IsReduced (Spec (CommRingCat.of (Γ(C.carrier, V) ⧸ I.ideal V)))
+      rw [affine_isReduced_iff]
+      exact Ideal.isRadical_iff_quotient_reduced _ |>.mp (hIrad V)
+    exact IsReduced.of_openCover I.subscheme I.subschemeCover.openCover
+  have hirr : IsIrreducible (I.support : Set C.carrier) := by
+    simpa [I, Z] using (isIrreducible_singleton.closure :
+      IsIrreducible (closure ({x.1} : Set C.carrier)))
+  let _ : IrreducibleSpace (I.support : Set C.carrier) :=
+    isIrreducible_iff_irreducibleSpace.mp hirr
+  let e : I.subscheme ≃ₜ I.support :=
+    (Scheme.homeoOfIso I.subschemeIso).trans I.gluedHomeo
+  let _ : IrreducibleSpace I.subscheme :=
+    e.symm.surjective.irreducibleSpace e.symm.continuous
+  let _ : IsReduced I.subscheme := hred
+  have hI : IsIntegral I.subscheme := isIntegral_of_irreducibleSpace_of_isReduced _
+  let P : Chapter03PrimeDivisor C.carrier :=
+    { closedSubscheme := I
+      genericPoint := x.1
+      codim_one := hxcoheight
+      integral := hI
+      support_eq_closure := by simp [I, Z] }
+  have hregular : Chapter03Regular C.carrier :=
+    chapter03_smooth_curve_is_regular C.structureMap
+  have hprincipal : chapter03PrimeDivisorLocallyPrincipal P :=
+    @chapter03_regular_height_one_ideal_is_locallyPrincipal C.carrier C.noetherian
+      hregular P
+  let D : Chapter09EffectiveCartierDivisor C.carrier := {
+    ideal := P.closedSubscheme
+    locallyRegularPrincipal := by
+      intro y
+      rcases hprincipal y with ⟨U, hyU, V, hyV, hVU, a, ha⟩
+      refine ⟨V, hyV, a, ha, ?_⟩
+      have hdomain : IsDomain Γ(C.carrier, V.1) :=
+        @IsIntegral.component_integral C.carrier C.integral V.1 ⟨⟨y, hyV⟩⟩
+      apply @IsRegular.of_ne_zero _ _ hdomain.toIsCancelMulZero a
+      intro hzero
+      have hgenericV : genericPoint C.carrier ∈ V.1 := by
+        apply (genericPoint_spec C.carrier).mem_open_set_iff V.1.2 |>.mpr
+        exact ⟨y, trivial, hyV⟩
+      have hgeneric_support : genericPoint C.carrier ∈ P.closedSubscheme.support := by
+        rw [P.closedSubscheme.mem_support_iff_of_mem hgenericV]
+        rw [ha, hzero]
+        simp
+      change genericPoint C.carrier ∈ P.support at hgeneric_support
+      have hgeneric_support' :
+          genericPoint C.carrier ∈ closure ({P.genericPoint} : Set C.carrier) :=
+        (chapter03_primeDivisor_support_eq_closure P).symm ▸ hgeneric_support
+      rw [show P.genericPoint = x.1 by rfl, x.2.closure_eq] at hgeneric_support'
+      have hEq : genericPoint C.carrier = x.1 := by
+        simpa only [Set.mem_singleton_iff] using hgeneric_support'
+      have hcg : Order.coheight (genericPoint C.carrier) = 1 := by
+        rw [hEq]
+        exact hxcoheight
+      have hcg0 : Order.coheight (genericPoint C.carrier) = 0 := by
+        apply Order.IsMax.coheight_eq_zero
+        change IsMax (⊤ : C.carrier)
+        exact isMax_top
+      exact zero_ne_one (hcg0.symm.trans hcg)
+    closed := by infer_instance }
+  refine ⟨D, ?_, ?_⟩
+  · change I = Scheme.IdealSheafData.vanishingIdeal
+      (⟨{x.1}, x.2⟩ : TopologicalSpace.Closeds C.carrier)
+    have hZ : Z = (⟨{x.1}, x.2⟩ : TopologicalSpace.Closeds C.carrier) := by
+      ext
+      simp [Z, x.2.closure_eq]
+    rw [← hZ]
+  · change (P.closedSubscheme.support : Set C.carrier) = {x.1}
+    rw [P.support_eq_closure, x.2.closure_eq]
 
 /- The image of the Kähler differentials of the local ring is the subspace of
 rational differentials regular at the point.  Multiplying that image by the
@@ -39,7 +129,23 @@ noncomputable def chapter08LocalDifferentialMap
   letI : Algebra k (C.carrier.presheaf.stalk x.1) :=
     chapter08StalkAlgebra C x
   letI : IsScalarTower k (C.carrier.presheaf.stalk x.1) C.carrier.functionField :=
-    by sorry
+    by
+      apply IsScalarTower.of_algebraMap_eq'
+      apply RingHom.ext
+      intro a
+      change algebraMap k C.carrier.functionField a =
+        algebraMap (C.carrier.presheaf.stalk x.1) C.carrier.functionField
+          (algebraMap k (C.carrier.presheaf.stalk x.1) a)
+      change
+        ((((Scheme.ΓSpecIso (.of k)).inv ≫ C.structureMap.appTop ≫
+          C.carrier.germToFunctionField ⊤).hom) a) =
+          (C.carrier.presheaf.stalkSpecializes
+            ((genericPoint_spec C.carrier).specializes trivial)).hom
+            ((((Scheme.ΓSpecIso (.of k)).inv ≫ C.structureMap.appTop ≫
+              C.carrier.presheaf.germ ⊤ x.1 (by simp)).hom) a)
+      rw [← ConcreteCategory.comp_apply]
+      simp only [CategoryTheory.Category.assoc]
+      rw [TopCat.Presheaf.germ_stalkSpecializes]
   KaehlerDifferential.map k k
     (C.carrier.presheaf.stalk x.1) C.carrier.functionField
 

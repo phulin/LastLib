@@ -194,6 +194,19 @@ theorem chapter08_kernelFinite_coherent_of_locallyNoetherian
     Chapter08KernelFiniteCoherent M := by
   sorry
 
+/- The locally noetherian convention can be recovered after descent from the
+   locally finitely presented formulation.  This is the direct bridge used
+   when the cover's source is not assumed locally noetherian. -/
+theorem chapter08_noetherian_coherent_descends_of_pullback_locallyFinitelyPresented
+    {T S : Scheme.{u}} {p : T ⟶ S}
+    (h : Chapter08CoherenceDescentHypotheses p) (M : S.Modules)
+    (hM : M.IsQuasicoherent)
+    (hpull :
+      Chapter08LocallyFinitelyPresented
+        ((Scheme.Modules.pullback p).obj M)) :
+    Chapter08NoetherianCoherent M := by
+  sorry
+
 /-- Kernel-finite coherence descends along the quasi-compact faithfully flat
     cover used in the chapter.  The converse is not asserted: a faithfully
     flat base change can have a noncoherent source even when the base is

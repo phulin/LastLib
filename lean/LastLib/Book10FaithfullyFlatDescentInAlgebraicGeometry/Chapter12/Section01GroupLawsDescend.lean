@@ -22,10 +22,200 @@ the fpqc cover.
 theorem chapter12_group_laws_descend
     {S T : Scheme.{u}} (p : T ⟶ S) (hp : Chapter12FpqcCover p)
     (D : Chapter12GroupSchemeDescentDatum p) :
-    ∃ G : Chapter12GroupScheme S,
+      ∃ G : Chapter12GroupScheme S,
       ∃ e : Chapter12GroupScheme.baseChange p G ≅ D.upstairs,
         chapter12GroupSchemeDescentComparisonCompatible D G e := by
   sorry
+
+private theorem chapter12_commutativity_descends_aux
+    {S T : Scheme.{u}} (p : T ⟶ S) (hp : Chapter12FaithfullyFlat p)
+    (G : Chapter12GroupScheme S) (G_T : Chapter12GroupScheme T)
+    (e : Chapter12GroupScheme.baseChange p G ≅ G_T)
+    (hcomm : IsCommMonObj G_T.X) :
+    IsCommMonObj G.X := by
+  let : IsCommMonObj (Chapter12GroupScheme.baseChange p G).X := by
+    refine { mul_comm := ?_ }
+    apply (cancel_mono e.hom.hom.hom).1
+    simp only [Category.assoc, IsMonHom.mul_hom]
+    rw [← BraidedCategory.braiding_naturality_assoc e.hom.hom.hom e.hom.hom.hom]
+    rw [hcomm.mul_comm]
+  refine { mul_comm := ?_ }
+  apply Over.OverMorphism.ext
+  change (β_ G.X G.X).hom.left ≫ μ[G.X].left = μ[G.X].left
+  let : Flat p := hp.1
+  let : Surjective p := hp.2
+  let : Epi (pullback.fst (G.X ⊗ G.X).hom p) :=
+    AlgebraicGeometry.Flat.epi_of_flat_of_surjective _
+  refine (cancel_epi (pullback.fst (G.X ⊗ G.X).hom p)).1 ?_
+  let c := CartesianMonoidalCategory.prodComparisonIso (Over.pullback p) G.X G.X
+  have hh := congrArg (fun k => c.hom.left ≫ k.left)
+    (IsCommMonObj.mul_comm (Chapter12GroupScheme.baseChange p G).X)
+  change c.hom.left ≫
+      (β_ ((Over.pullback p).obj G.X) ((Over.pullback p).obj G.X)).hom.left ≫
+        (Functor.LaxMonoidal.μ (Over.pullback p) G.X G.X ≫
+          (Over.pullback p).map μ[G.X]).left =
+    c.hom.left ≫
+      (Functor.LaxMonoidal.μ (Over.pullback p) G.X G.X ≫
+        (Over.pullback p).map μ[G.X]).left at hh
+  rw [Functor.Monoidal.μ_of_cartesianMonoidalCategory] at hh
+  have hbraid :
+      c.hom ≫ (β_ ((Over.pullback p).obj G.X) ((Over.pullback p).obj G.X)).hom ≫ c.inv =
+        (Over.pullback p).map (β_ G.X G.X).hom := by
+    simpa only [c, Functor.OplaxMonoidal.δ_of_cartesianMonoidalCategory,
+      Functor.Monoidal.μ_of_cartesianMonoidalCategory,
+      CartesianMonoidalCategory.prodComparisonIso_hom, Category.assoc] using
+      (Functor.map_braiding (Over.pullback p) G.X G.X).symm
+  have hbraid_left := congrArg Over.Hom.left hbraid
+  simp only [Over.comp_left, ← Category.assoc] at hbraid_left
+  simp only [Over.comp_left, ← Category.assoc] at hh
+  change c.hom.left ≫
+      (β_ ((Over.pullback p).obj G.X) ((Over.pullback p).obj G.X)).hom.left ≫
+        c.inv.left ≫ Over.Hom.left ((Over.pullback p).map μ[G.X]) =
+    c.hom.left ≫ c.inv.left ≫ Over.Hom.left ((Over.pullback p).map μ[G.X]) at hh
+  rw [← Category.assoc, ← Category.assoc, ← Category.assoc] at hh
+  rw [hbraid_left] at hh
+  have hh' := congrArg (fun k => k ≫ pullback.fst G.X.hom p) hh
+  simpa [Over.pullback, pullback.lift_fst, pullback.lift_fst_assoc, Category.assoc] using hh'
+
+private theorem chapter12_commutative_group_comparison_underlying
+    {S T U : Scheme.{u}} (p : T ⟶ S) (G : Chapter12GroupScheme S)
+    [IsCommMonObj G.X] (q₁ q₂ : U ⟶ T) (h : q₁ ≫ p = q₂ ≫ p) :
+    Over.Hom.left
+        (chapter12CommutativeGroupSchemeBaseChangeComparison p { X := G.X } q₁ q₂ h).hom.hom.hom.hom =
+      Over.Hom.left (chapter12GroupSchemeBaseChangeComparison p G q₁ q₂ h).hom.hom.hom := by
+  have h₁ :
+      (chapter12CommutativeGroupSchemeBaseChangeCompIso p q₁
+        { X := G.X, grp := G.grp, comm := inferInstance }).hom.hom.hom =
+        (chapter12GroupSchemeBaseChangeCompIso p q₁ G).hom.hom := by
+    apply Mon.Hom.ext
+    apply Over.OverMorphism.ext
+    rfl
+  have h₂ :
+      (chapter12CommutativeGroupSchemeBaseChangeCompIso p q₂
+        { X := G.X, grp := G.grp, comm := inferInstance }).hom.hom.hom =
+        (chapter12GroupSchemeBaseChangeCompIso p q₂ G).hom.hom := by
+    apply Mon.Hom.ext
+    apply Over.OverMorphism.ext
+    rfl
+  have h₂i :
+      (chapter12CommutativeGroupSchemeBaseChangeCompIso p q₂
+        { X := G.X, grp := G.grp, comm := inferInstance }).inv.hom.hom =
+        (chapter12GroupSchemeBaseChangeCompIso p q₂ G).inv.hom := by
+    apply Mon.Hom.ext
+    apply Over.OverMorphism.ext
+    rfl
+  simp only [chapter12CommutativeGroupSchemeBaseChangeComparison,
+    chapter12GroupSchemeBaseChangeComparison, Iso.trans_hom, Iso.symm_hom,
+    h₁, h₂, h₂i, eqToIso.hom, Over.comp_left, Category.assoc]
+  have hcomm {A B : CommGrp (Over U)} (r : A = B) :
+      Over.Hom.left ((eqToHom r : A ⟶ B).hom.hom.hom) ≍ 𝟙 A.X.left := by
+    subst r
+    rfl
+  have hgrp {A B : Grp (Over U)} (r : A = B) :
+      Over.Hom.left ((eqToHom r : A ⟶ B).hom.hom) ≍ 𝟙 A.X.left := by
+    subst r
+    rfl
+  simp [InducedCategory.eqToHom_hom, Over.eqToHom_left,
+    Chapter12CommutativeGroupScheme.baseChange,
+    Chapter12GroupScheme.baseChange, Functor.mapCommGrp, Functor.mapGrp]
+  congr 1
+  congr 1
+  apply eq_of_heq
+  exact
+    (hcomm
+      (A := Chapter12CommutativeGroupScheme.baseChange (q₁ ≫ p) { X := G.X })
+      (B := Chapter12CommutativeGroupScheme.baseChange (q₂ ≫ p) { X := G.X }) _).trans
+      (hgrp (A := Chapter12GroupScheme.baseChange (q₁ ≫ p) G)
+        (B := Chapter12GroupScheme.baseChange (q₂ ≫ p) G) _).symm
+
+private def chapter12_commutative_descentDatum_to_group
+    {S T : Scheme.{u}} {p : T ⟶ S}
+    (D : Chapter12CommutativeGroupSchemeDescentDatum p) :
+    Chapter12GroupSchemeDescentDatum p :=
+  { upstairs := D.upstairs.toGrp
+    compare := fun {U} q₁ q₂ h =>
+      (CommGrp.forget₂Grp (Over U)).mapIso (D.compare q₁ q₂ h)
+    compare_self := by
+      intro U q h
+      rw [D.compare_self q h]
+      rfl
+    compare_comp := by
+      intro U q₁ q₂ q₃ h₁₂ h₂₃ h₁₃
+      change
+        (CommGrp.forget₂Grp (Over U)).map (D.compare q₁ q₂ h₁₂).hom ≫
+            (CommGrp.forget₂Grp (Over U)).map (D.compare q₂ q₃ h₂₃).hom =
+          (CommGrp.forget₂Grp (Over U)).map (D.compare q₁ q₃ h₁₃).hom
+      rw [← Functor.map_comp]
+      exact congrArg (fun k => (CommGrp.forget₂Grp (Over U)).map k)
+        (D.compare_comp q₁ q₂ q₃ h₁₂ h₂₃ h₁₃)
+    compare_pull := by
+      intro U V r q₁ q₂ h h'
+      apply Grp.hom_ext
+      apply Over.OverMorphism.ext
+      have hh := congrArg (fun k => (CommGrp.forget₂Grp (Over V)).map k)
+        (D.compare_pull r q₁ q₂ h h')
+      have hh' := congrArg (fun k => k.hom.hom.left) hh
+      simp [Chapter12GroupScheme.baseChangeIso,
+        Chapter12CommutativeGroupScheme.baseChangeIso,
+        Chapter12GroupScheme.baseChange,
+        Chapter12CommutativeGroupScheme.baseChange,
+        Functor.mapGrp, Functor.mapCommGrp, CommGrp.forget₂Grp] at hh' ⊢
+      exact hh' }
+
+private theorem chapter12_commutative_group_comparison_compatible
+    {S T : Scheme.{u}} (p : T ⟶ S) (hp : Chapter12FpqcCover p)
+    (D : Chapter12CommutativeGroupSchemeDescentDatum p)
+    (G : Chapter12GroupScheme S)
+    (e : Chapter12GroupScheme.baseChange p G ≅ D.upstairs.toGrp)
+    (he : chapter12GroupSchemeDescentComparisonCompatible
+      (chapter12_commutative_descentDatum_to_group D) G e) :
+    ∃ G' : Chapter12CommutativeGroupScheme S,
+      ∃ e' : Chapter12CommutativeGroupScheme.baseChange p G' ≅ D.upstairs,
+        chapter12CommutativeGroupSchemeDescentComparisonCompatible D G' e' := by
+  let D' : Chapter12GroupSchemeDescentDatum p :=
+    chapter12_commutative_descentDatum_to_group D
+  let e' : Chapter12GroupScheme.baseChange p G ≅ D.upstairs.toGrp := e
+  let hG : IsCommMonObj G.X :=
+    chapter12_commutativity_descends_aux p ⟨hp.2.1, hp.2.2⟩ G D.upstairs.toGrp e'
+      (by infer_instance)
+  letI : IsCommMonObj G.X := hG
+  let G' : Chapter12CommutativeGroupScheme S := { X := G.X }
+  let e₀ : (Chapter12CommutativeGroupScheme.baseChange p G').X ≅ D.upstairs.X :=
+    { hom := e'.hom.hom.hom
+      inv := e'.inv.hom.hom
+      hom_inv_id := congrArg (fun k => k.hom.hom) e'.hom_inv_id
+      inv_hom_id := congrArg (fun k => k.hom.hom) e'.inv_hom_id }
+  let e'' : Chapter12CommutativeGroupScheme.baseChange p G' ≅ D.upstairs :=
+    CommGrp.mkIso e₀ (IsMonHom.one_hom e'.hom.hom.hom) (IsMonHom.mul_hom e'.hom.hom.hom)
+  refine ⟨G', e'', ?_⟩
+  intro U q₁ q₂ h
+  apply CommGrp.hom_ext
+  dsimp [G', e₀, e''] at *
+  change
+    ((Chapter12CommutativeGroupScheme.baseChangeIso q₁ e'').hom.hom.hom ≫
+        (D.compare q₁ q₂ h).hom.hom.hom) =
+      ((chapter12CommutativeGroupSchemeBaseChangeComparison p G' q₁ q₂ h).hom.hom.hom ≫
+        (Chapter12CommutativeGroupScheme.baseChangeIso q₂ e'').hom.hom.hom)
+  have hh := congrArg (fun k => k.hom.hom) (he q₁ q₂ h)
+  have hb₁ :
+      (Chapter12CommutativeGroupScheme.baseChangeIso q₁ e'').hom.hom.hom =
+        (Chapter12GroupScheme.baseChangeIso q₁ e').hom.hom.hom := by
+    rfl
+  have hb₂ :
+      (Chapter12CommutativeGroupScheme.baseChangeIso q₂ e'').hom.hom.hom =
+        (Chapter12GroupScheme.baseChangeIso q₂ e').hom.hom.hom := by
+    rfl
+  have hc :
+      (D.compare q₁ q₂ h).hom.hom.hom = (D'.compare q₁ q₂ h).hom.hom := by
+    rfl
+  have hk :
+      (chapter12CommutativeGroupSchemeBaseChangeComparison p G' q₁ q₂ h).hom.hom.hom =
+        (chapter12GroupSchemeBaseChangeComparison p G q₁ q₂ h).hom.hom := by
+    apply Mon.Hom.ext
+    apply Over.OverMorphism.ext
+    exact chapter12_commutative_group_comparison_underlying p G q₁ q₂ h
+  rw [hb₁, hc, hk, hb₂]
+  exact hh
 
 theorem chapter12_commutative_group_laws_descend
     {S T : Scheme.{u}} (p : T ⟶ S) (hp : Chapter12FpqcCover p)
@@ -33,7 +223,10 @@ theorem chapter12_commutative_group_laws_descend
     ∃ G : Chapter12CommutativeGroupScheme S,
       ∃ e : Chapter12CommutativeGroupScheme.baseChange p G ≅ D.upstairs,
         chapter12CommutativeGroupSchemeDescentComparisonCompatible D G e := by
-  sorry
+  let D' : Chapter12GroupSchemeDescentDatum p :=
+    chapter12_commutative_descentDatum_to_group D
+  obtain ⟨G, e, he⟩ := chapter12_group_laws_descend p hp D'
+  exact chapter12_commutative_group_comparison_compatible p hp D G e he
 
 /-- Equality of homomorphisms can be detected after a faithfully flat base change. -/
 theorem chapter12_group_hom_ext_of_faithfullyFlat
@@ -61,7 +254,18 @@ theorem chapter12_commutative_group_hom_ext_of_faithfullyFlat
     (h : Chapter12CommutativeGroupScheme.baseChangeHom p f =
       Chapter12CommutativeGroupScheme.baseChangeHom p g) :
     f = g := by
-  sorry
+  apply Chapter12CommutativeGroupScheme.hom_ext
+  change f.hom.hom.hom.left = g.hom.hom.hom.left
+  let : Flat p := hp.1
+  let : Surjective p := hp.2
+  let : Epi (pullback.fst G.X.hom p) :=
+    AlgebraicGeometry.Flat.epi_of_flat_of_surjective _
+  refine (cancel_epi (pullback.fst G.X.hom p)).1 ?_
+  have hh := (congrArg (fun k => k.hom.hom.hom.left ≫ pullback.fst H.X.hom p) h)
+  simpa [Chapter12CommutativeGroupScheme.baseChangeHom,
+    Chapter12CommutativeGroupScheme.baseChange, Functor.mapCommGrp,
+    Functor.mapGrp, Functor.mapMon, Over.pullback, pullback.lift_fst,
+    Category.assoc] using hh
 
 /-!
 The commutativity equation is the equality of multiplication with its pullback along the
@@ -75,7 +279,49 @@ theorem chapter12_commutativity_descends
     (e : Chapter12GroupScheme.baseChange p G ≅ G_T)
     (hcomm : IsCommMonObj G_T.X) :
     IsCommMonObj G.X := by
-  sorry
+  let : IsCommMonObj (Chapter12GroupScheme.baseChange p G).X := by
+    refine { mul_comm := ?_ }
+    apply (cancel_mono e.hom.hom.hom).1
+    simp only [Category.assoc, IsMonHom.mul_hom]
+    rw [← BraidedCategory.braiding_naturality_assoc e.hom.hom.hom e.hom.hom.hom]
+    rw [hcomm.mul_comm]
+  refine { mul_comm := ?_ }
+  apply Over.OverMorphism.ext
+  change (β_ G.X G.X).hom.left ≫ μ[G.X].left = μ[G.X].left
+  let : Flat p := hp.1
+  let : Surjective p := hp.2
+  let : Epi (pullback.fst (G.X ⊗ G.X).hom p) :=
+    AlgebraicGeometry.Flat.epi_of_flat_of_surjective _
+  refine (cancel_epi (pullback.fst (G.X ⊗ G.X).hom p)).1 ?_
+  let c := CartesianMonoidalCategory.prodComparisonIso (Over.pullback p) G.X G.X
+  have hh := congrArg (fun k => c.hom.left ≫ k.left)
+    (IsCommMonObj.mul_comm (Chapter12GroupScheme.baseChange p G).X)
+  change c.hom.left ≫
+      (β_ ((Over.pullback p).obj G.X) ((Over.pullback p).obj G.X)).hom.left ≫
+        (Functor.LaxMonoidal.μ (Over.pullback p) G.X G.X ≫
+          (Over.pullback p).map μ[G.X]).left =
+    c.hom.left ≫
+      (Functor.LaxMonoidal.μ (Over.pullback p) G.X G.X ≫
+        (Over.pullback p).map μ[G.X]).left at hh
+  rw [Functor.Monoidal.μ_of_cartesianMonoidalCategory] at hh
+  have hbraid :
+      c.hom ≫ (β_ ((Over.pullback p).obj G.X) ((Over.pullback p).obj G.X)).hom ≫ c.inv =
+        (Over.pullback p).map (β_ G.X G.X).hom := by
+    simpa only [c, Functor.OplaxMonoidal.δ_of_cartesianMonoidalCategory,
+      Functor.Monoidal.μ_of_cartesianMonoidalCategory,
+      CartesianMonoidalCategory.prodComparisonIso_hom, Category.assoc] using
+      (Functor.map_braiding (Over.pullback p) G.X G.X).symm
+  have hbraid_left := congrArg Over.Hom.left hbraid
+  simp only [Over.comp_left, ← Category.assoc] at hbraid_left
+  simp only [Over.comp_left, ← Category.assoc] at hh
+  change c.hom.left ≫
+      (β_ ((Over.pullback p).obj G.X) ((Over.pullback p).obj G.X)).hom.left ≫
+        c.inv.left ≫ Over.Hom.left ((Over.pullback p).map μ[G.X]) =
+    c.hom.left ≫ c.inv.left ≫ Over.Hom.left ((Over.pullback p).map μ[G.X]) at hh
+  rw [← Category.assoc, ← Category.assoc, ← Category.assoc] at hh
+  rw [hbraid_left] at hh
+  have hh' := congrArg (fun k => k ≫ pullback.fst G.X.hom p) hh
+  simpa [Over.pullback, pullback.lift_fst, pullback.lift_fst_assoc, Category.assoc] using hh'
 
 theorem chapter12_finite_descends
     {S T : Scheme.{u}} (p : T ⟶ S) (hp : Chapter12FpqcCover p)
@@ -306,7 +552,10 @@ theorem chapter12_finiteFlat_group_objects_effective_fpqc_descent
     ∃ G : Chapter12FiniteFlatGroupScheme S,
       ∃ e : Chapter12GroupScheme.baseChange p G.group ≅ D.upstairs,
         chapter12GroupSchemeDescentComparisonCompatible D G.group e := by
-  sorry
+  obtain ⟨G, e, he⟩ := chapter12_group_laws_descend p hp D
+  refine ⟨{ group := G, finiteFlat := ?_ }, e, he⟩
+  exact ⟨chapter12_finite_descends p hp G D.upstairs e hfiniteFlat.1,
+    chapter12_flat_descends p ⟨hp.2.1, hp.2.2⟩ G D.upstairs e hfiniteFlat.2⟩
 
 theorem chapter12_finiteLocallyFree_group_objects_effective_fpqc_descent
     {S T : Scheme.{u}} (p : T ⟶ S) (hp : Chapter12FpqcCover p)
@@ -315,7 +564,12 @@ theorem chapter12_finiteLocallyFree_group_objects_effective_fpqc_descent
     ∃ G : Chapter12FiniteLocallyFreeGroupScheme S,
       ∃ e : Chapter12GroupScheme.baseChange p G.group ≅ D.upstairs,
         chapter12GroupSchemeDescentComparisonCompatible D G.group e := by
-  sorry
+  obtain ⟨G, e, he⟩ := chapter12_group_laws_descend p hp D
+  refine ⟨{ group := G, finiteLocallyFree := ?_ }, e, he⟩
+  exact ⟨chapter12_finite_descends p hp G D.upstairs e hfiniteLocallyFree.1,
+    chapter12_flat_descends p ⟨hp.2.1, hp.2.2⟩ G D.upstairs e hfiniteLocallyFree.2.1,
+    chapter12_locallyOfFinitePresentation_descends p hp G D.upstairs e
+      hfiniteLocallyFree.2.2⟩
 
 theorem chapter12_finiteLocallyFree_commutative_group_objects_effective_fpqc_descent
     {S T : Scheme.{u}} (p : T ⟶ S) (hp : Chapter12FpqcCover p)
@@ -324,7 +578,16 @@ theorem chapter12_finiteLocallyFree_commutative_group_objects_effective_fpqc_des
     ∃ G : Chapter12FiniteLocallyFreeCommutativeGroupScheme S,
       ∃ e : Chapter12CommutativeGroupScheme.baseChange p G.group ≅ D.upstairs,
         chapter12CommutativeGroupSchemeDescentComparisonCompatible D G.group e := by
-  sorry
+  obtain ⟨G, e, he⟩ := chapter12_commutative_group_laws_descend p hp D
+  let G' : Chapter12GroupScheme S := G.toGrp
+  let e' : Chapter12GroupScheme.baseChange p G' ≅ D.upstairs.toGrp :=
+    (CommGrp.forget₂Grp (Over T)).mapIso e
+  refine ⟨{ group := G, finiteLocallyFree := ?_ }, e, he⟩
+  exact ⟨chapter12_finite_descends p hp G' D.upstairs.toGrp e' hfiniteLocallyFree.1,
+    chapter12_flat_descends p ⟨hp.2.1, hp.2.2⟩ G' D.upstairs.toGrp e'
+      hfiniteLocallyFree.2.1,
+    chapter12_locallyOfFinitePresentation_descends p hp G' D.upstairs.toGrp e'
+      hfiniteLocallyFree.2.2⟩
 
 end
 

@@ -37,7 +37,72 @@ theorem chapter08_local_parameter_exists_of_uniformizers
     (ht : Chapter08UniformizerAt C x t)
     (hu : Chapter08UniformizerAt C x u) :
     Nonempty (Chapter08LocalParameter k C x) := by
-  sorry
+  rcases ht with ⟨st, ht, hst, hstreg⟩
+  rcases hu with ⟨su, hu, hsu, hsureg⟩
+  have hsu_mem : su ∈ Ideal.span ({st} : Set (C.carrier.presheaf.stalk x.1)) := by
+    have hsu_max : su ∈ IsLocalRing.maximalIdeal (C.carrier.presheaf.stalk x.1) := by
+      rw [← hsu]
+      exact Ideal.mem_span_singleton_self _
+    rw [hst]
+    exact hsu_max
+  obtain ⟨q, hq⟩ := Ideal.mem_span_singleton'.mp hsu_mem
+  have hst_mem : st ∈ Ideal.span ({su} : Set (C.carrier.presheaf.stalk x.1)) := by
+    have hst_max : st ∈ IsLocalRing.maximalIdeal (C.carrier.presheaf.stalk x.1) := by
+      rw [← hst]
+      exact Ideal.mem_span_singleton_self _
+    rw [hsu]
+    exact hst_max
+  obtain ⟨r, hr⟩ := Ideal.mem_span_singleton'.mp hst_mem
+  have hqmulr : q * r = 1 := by
+    have h : (r * q) * st = 1 * st := by
+      calc
+        (r * q) * st = r * (q * st) := by ring
+        _ = r * su := by rw [hq]
+        _ = st := hr
+        _ = 1 * st := by simp
+    simpa [mul_comm] using hstreg.right h
+  have hq_unit : IsUnit q := by
+    refine isUnit_iff_exists.mpr ⟨r, hqmulr, ?_⟩
+    simpa [mul_comm] using hqmulr
+  have hq_field : IsUnit (algebraMap (C.carrier.presheaf.stalk x.1)
+      C.carrier.functionField q) :=
+    IsUnit.map (algebraMap (C.carrier.presheaf.stalk x.1) C.carrier.functionField) hq_unit
+  have ht0 : t ≠ 0 := by
+    rw [← ht]
+    intro hzero
+    apply IsRegular.ne_zero hstreg
+    apply (IsFractionRing.injective (C.carrier.presheaf.stalk x.1)
+      C.carrier.functionField)
+    simpa using hzero
+  have hu0 : u ≠ 0 := by
+    rw [← hu]
+    intro hzero
+    apply IsRegular.ne_zero hsureg
+    apply (IsFractionRing.injective (C.carrier.presheaf.stalk x.1)
+      C.carrier.functionField)
+    simpa using hzero
+  refine ⟨{
+    oldParameter := t
+    newParameter := u
+    unitFactor := algebraMap (C.carrier.presheaf.stalk x.1) C.carrier.functionField q
+    parameter_change := ?_
+    oldParameter_is_uniformizer := ⟨st, ht, hst, hstreg⟩
+    newParameter_is_uniformizer := ⟨su, hu, hsu, hsureg⟩
+    oldParameter_ne_zero := ht0
+    newParameter_ne_zero := hu0
+    unitFactor_isUnit := hq_field
+    unitFactor_isUnit_at := ⟨q, hq_unit, rfl⟩
+  }⟩
+  calc
+    u = algebraMap (C.carrier.presheaf.stalk x.1) C.carrier.functionField su := hu.symm
+    _ = algebraMap (C.carrier.presheaf.stalk x.1) C.carrier.functionField (q * st) :=
+      congrArg _ hq.symm
+    _ = algebraMap (C.carrier.presheaf.stalk x.1) C.carrier.functionField q *
+        algebraMap (C.carrier.presheaf.stalk x.1) C.carrier.functionField st := by
+      rw [map_mul]
+    _ = t * algebraMap (C.carrier.presheaf.stalk x.1) C.carrier.functionField q := by
+      rw [ht]
+      ring
 
 theorem chapter08_log_differential_product
     {F : Type v} [Field F] [Algebra k F]

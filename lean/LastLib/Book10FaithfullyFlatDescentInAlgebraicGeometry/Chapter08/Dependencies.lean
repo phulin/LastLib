@@ -330,8 +330,11 @@ structure Chapter08FiniteAffineRefinement
   isOpenImmersion : ∀ i, IsOpenImmersion (map i)
   coordinateRing : index → CommRingCat.{u}
   source_isSpec : ∀ i, Nonempty (source i ≅ Spec (coordinateRing i))
-  jointlySurjective : ∀ x : (pullback U.ι p : Scheme.{u}),
-    ∃ (i : index) (y : source i), map i y = x
+  /-- The selected affine pieces cover the affine base through the projection
+  from the base-changed cover.  They need not cover all of the (possibly
+  non-quasi-compact) base-changed source. -/
+  jointlySurjective : ∀ x : U.toScheme,
+    ∃ (i : index) (y : source i), pullback.fst U.ι p (map i y) = x
 
 /-- The product ring used to combine a finite affine refinement. -/
 def chapter08ProductRing {ι : Type u} (B : ι → CommRingCat.{u}) : CommRingCat.{u} :=

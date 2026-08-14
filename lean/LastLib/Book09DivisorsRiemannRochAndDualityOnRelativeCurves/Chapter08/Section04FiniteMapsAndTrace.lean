@@ -260,7 +260,20 @@ theorem chapter08_purely_inseparable_field_trace_obstruction_of_nontrivial
     (hnontrivial : ∃ x : E, ∀ a : F, algebraMap F E a ≠ x) :
     Chapter08PurelyInseparableFieldTraceObstruction p F E := by
   refine ⟨hpure, ?_⟩
-  sorry
+  have hpure' : IsPurelyInseparable F E := by
+    rw [isPurelyInseparable_iff_pow_mem F p]
+    intro x
+    obtain ⟨n, a, ha⟩ := hpure x
+    exact ⟨n, ⟨a, ha.symm⟩⟩
+  have hnot : ¬ Algebra.IsSeparable F E := by
+    intro hseparable
+    obtain ⟨x, hx⟩ := hnontrivial
+    have hsurj : Function.Surjective (algebraMap F E) :=
+      @IsPurelyInseparable.surjective_algebraMap_of_isSeparable F E _ _ _ hpure'
+        hseparable
+    obtain ⟨a, ha⟩ := hsurj x
+    exact hx a ha
+  exact Algebra.trace_eq_zero_of_not_isSeparable hnot
 
 theorem chapter08_finite_duality_trace_is_evaluation_at_one
     {A B ωA ωB : Type u}
