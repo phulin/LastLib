@@ -139,11 +139,8 @@ $$
 
 the primes $2$ and $\ell$ split completely in $M$, and $\rho|_{G_M}$ is absolutely
 irreducible. The selected top packet over $M$ realizes this restriction at one distinguished
-coefficient embedding. This controlled SP top datum is an explicit hypothesis of the present
-assembly theorem. The current Book 182 does not construct it unconditionally: that book isolates
-a missing controlled exact SP residual seed and the bridge-readiness data needed to carry the
-chosen lift to the controlled top. Thus the arguments below prove the rational assembly once
-the datum has been supplied; they do not close those upstream arithmetic gaps.
+coefficient embedding. Book 182 constructs this controlled SP top datum on the preferred
+selected-three route using Book 176's proved auxiliary and target $({\rm CIAV})$ instances.
 
 For every elementary subgroup $H\leq\Gamma$, put
 
@@ -533,7 +530,7 @@ agreement over $G_M$. Such an inference would lose a quotient character of $D_x$
 Nor do we declare every prime-cyclic subgroup chain to be an admissible automorphic transfer
 chain. Elementary nilpotence supplies a group-theoretic chain, but arithmetic admissibility is
 separate. Book 183's proved tower-independent semisimple overlap theorem is what closes the
-interface, relative throughout to the conditional controlled SP top datum.
+interface, relative throughout to the controlled SP top datum.
 
 ### 2.5 Why no base-field family has been assumed
 
@@ -2038,7 +2035,7 @@ $$
 |---|---|---|
 | Book 168 | coefficient systems and algebraic local objects attached to the already constructed weight-two packets, including determinant, purity, coefficient transport, and cuspidal absolute irreducibility from $(\mathrm{HT}_1)$ | no base-field family, canonical lattice, or moving-prime integral conclusion; $(\mathrm{HT}_1)$ remains an arithmetic input |
 | Book 180 | multiplicity-one coefficient descent, coefficient cocycle effectivity, presentation comparison, induction/Mackey/tensor formulas, and Brauer--Nesbitt recognition | no packet overlap, positivity verification, or SP local object is imported |
-| Book 182 | the conditional controlled SP top datum, the split evaluated packets at $2,3,\ell$, parity-complete basic attachment of candidate elementary descents, the unramified algebraic Galois pairs away from two, and its explicit controlled-seed and bridge-readiness boundaries | it does not construct the raw SP carrier, the stronger automorphic descent/type/return-map geometry, or the $(\mathrm{HT}_1)$ input needed on the preferred uniform nonzero-monodromy preservation route, and this book does not make that datum unconditional |
+| Book 182 | the controlled SP top datum, the split evaluated packets at $2,3,\ell$, parity-complete basic attachment of candidate elementary descents, and the unramified algebraic Galois pairs away from two | it does not construct the stronger optional automorphic type/return-map geometry or uniform $(\mathrm{HT}_1)$ input |
 | Book 183 | selected elementary packets, exact elementary and conjugate-intersection identities, integral Brauer classes, determinant and local Mackey formulas, common virtual polynomials, purity, the unramified elementary pairs away from two, and the algebraic SP pair with its prior local-preservation certificate | no virtual class is called effective, no inadmissible automorphic transfer is inserted, and the later assembly is not a proof of raw packet preservation |
 | Book 184 | under the named hypothesis $(\mathrm{AI}_2)$, supplied by $(\mathrm{HT}_1)$ on the preferred branch, the application-specific coefficient-independent Gram matrix, all-place norm-one positivity, actual characteristic-zero cancellation, coefficient covariance, and scalar relation independence | no completion-valued model or assembled family is imported; without $(\mathrm{AI}_2)$ only coefficient places away from two are available |
 
@@ -2168,7 +2165,7 @@ certificate, and Proposition 8.2 formally yields family-wide support at two; the
 calculation gives an independent support check.  The stronger automorphic-type theorem and
 integral refinement are excluded explicitly.
 
-Every substantial premise is either the conditional controlled SP top datum of Book 182, the
+Every substantial premise is either the controlled SP top datum of Book 182, the
 explicit additional hypothesis $(\mathrm{AI}_2)$, the abstract representation-theoretic toolkit
 of Book 180, or an exact theorem of Books 168, 183, or 184. No conclusion of this book and no
 later consumer is used as a premise. Arithmetic
@@ -2242,8 +2239,7 @@ ramified prescribed type for the same elementary factor is incompatible with (1.
 principal/dihedral descent complexes, type and exchange lines, and normalized return maps do
 not follow from the unramified Galois pair.
 
-The missing upstream construction of the controlled seed and the separate bridge-readiness
-data remain outside this theorem. On the preferred packet branch, $(\mathrm{HT}_1)$ supplies
+On the uniform packet branch, $(\mathrm{HT}_1)$ supplies
 the coefficient-two irreducibility hypothesis through Book 168, Theorem 7.6; on either of the
 other preservation branches $(\mathrm{AI}_2)$ remains separate. Without $(\mathrm{AI}_2)$,
 only the partial assembly away from coefficient

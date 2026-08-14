@@ -1150,9 +1150,8 @@ Book 181 receives:
 
 Book 181 treats the global finite-special-fibre input separately.  An exact
 automorphic seed and Book 173 supply one sufficient source.  On the preferred
-route, Book 176's broad target-IAV comparison supplies the same input without
-minimal $R=\mathbb T$; its sole unresolved arithmetic clause is the reusable
-componentwise theorem $({\rm CIAV}_{P_{\rm tar}})$.  This book exports only the
+route, Book 176, Theorem 1.1H and Corollary 1.1I supply the same input without
+minimal $R=\mathbb T$ by proving $({\rm CIAV}_{P_{\rm tar}})$. This book exports only the
 Galois local conditions and the represented global deformation functor; it
 neither proves nor assumes either source of global finiteness.
 
@@ -1288,8 +1287,7 @@ listed in Chapter 5.
 There is therefore no hidden conditional theorem in the local package.
 The later global conclusion remains external: Book 181 takes either the
 finite-special-fibre consequence of an exact Book 173 seed or, on the preferred
-route, the consequence of Book 176's target-IAV comparison after
-$({\rm CIAV}_{P_{\rm tar}})$ is supplied.  It then uses its balanced-ring
+route, the consequence of Book 176's proved target-IAV comparison. It then uses its balanced-ring
 argument to produce a characteristic-zero point.  No separate
 reduced-finiteness hypothesis is part of that downstream statement.
 
@@ -1316,6 +1314,5 @@ but no global lift by themselves.  That boundary is the correct interface:
 Book 166 performs the supported cohomology calculation, Book 167 converts
 relations into supported obstructions, and Book 181 adds its separately
 stated finite-special-fibre certificate.  That certificate may come from the
-stronger Book 173 seed or from the preferred target-IAV route, whose exact
-remaining input is $({\rm CIAV}_{P_{\rm tar}})$.  The local deformation node
+stronger Book 173 seed or from Book 176's proved target-IAV route. The local deformation node
 is complete without importing any conclusion from those later stages.

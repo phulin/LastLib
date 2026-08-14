@@ -204,7 +204,7 @@ flowchart LR
 | 173 | Minimal Modularity Lifting | 171, 172 |
 | 174 | One-Prime Type Complexes and Component Support | 6, 17, 21, 22, 65, 67, 69, 70, 118, 119, 121, 122, 125, 138, 139, 140, 141, 143, 145, 152, 170, 171, 172 |
 | 175 | One-Prime Nonminimal Patching and R=T | 67, 69, 109, 138, 139, 140, 143, 170, 171, 172, 173, 174 |
-| 176 | Nonminimal Modularity Lifting | 6, 14, 22, 64, 67, 70, 83, 84, 85, 109, 118, 122, 123, 124, 125, 138, 139, 140, 143, 144, 145, 146, 152, 170, 172, 173, 174, 175 |
+| 176 | Finite-Set Ihara Avoidance and Nonminimal Modularity Lifting | 6, 14, 22, 64, 67, 69, 70, 83, 84, 85, 109, 118, 122, 123, 124, 125, 138, 139, 140, 143, 144, 145, 146, 152, 170, 172, 173, 174, 175 |
 | 177 | Potential Modularity of Two-Dimensional Representations | 104, 98, 127, 176, 154, 158, 142 |
 | 178 | Auxiliary Dihedral Data and Residual Potential Modularity | 6, 98, 104, 127, 141, 142, 156, 157, 158, 176 |
 | 179 | Compatible Systems of Galois Representations | 168, 141, 142 |
@@ -327,7 +327,7 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   generic rigidity and then makes that last surjection injective, with the strict ray twist
   additionally retained for the scalar family. No separate one-prime
   acting-order theorem remains in that faithful range.
-- **Direct finite-set lifting:** the scope-minimal FLT route is Book 176's
+- **Direct finite-set lifting:** the scope-minimal FLT route is Book 176's proved
   $({\rm IAV}_S)$ interface. Theorem 1.1C proves the explicit scalar paired framed rings:
   their raw special fibers agree scheme-theoretically, the avoidance ring is flat and
   integral, and the two desired horizontal components specialize bijectively; the reduced
@@ -335,25 +335,25 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   the raw desired ring is itself nonflat/nonreduced. Proposition 1.1D proves common prime
   selection, exact reduction of the principal/Iwahori coefficient lattices, synchronized
   residual definite modules, and formal recovery. Proposition 1.1E shows by sharp
-  countermodels that even faithful balanced patching and maximal Cohen--Macaulay support do
-  not imply the two remaining arithmetic assertions. The first is
+  countermodels why quotient-level support alone does not imply either
   $({\rm VCT}_{R_\infty^{\rm des}})$: the actual global Taylor--Wiles relation ideal must
   preserve vertical specialization of the locally labelled components. The second is
   $({\rm ACT}^{\rm av}_S)$, occurrence on every avoidance component;
   local avoidance integrality and module nonvanishing do not prove it for a global patched
-  quotient. Book 145 gives the desired union-of-components statement once its sharp
-  hypotheses hold; Book 176, Proposition 1.1 then proves component-support transfer formally;
-  the conjunction of these two arithmetic assertions is the single reusable
-  $({\rm CIAV}_P)$ theorem, invoked at the auxiliary and target active sets;
+  quotient. Proposition 1.1G instead constructs the exact relative source patch, with the
+  strict-at-$S$ Selmer count, synchronized Taylor--Wiles primes, augmentation saturation,
+  and minimal-level coinvariant control. Theorem 1.1H proves avoidance all-component
+  occurrence and transfers near faithfulness through the common residual source to prove
+  vertical component preservation and desired support. Corollary 1.1I packages this as the
+  reusable $({\rm CIAV}_P)$ theorem, invoked separately at the auxiliary and target active sets;
   exact acting-image control and marked augmentation give reduced finite recovery;
   Book 176, Lemma 1.1A upgrades a finite recovered action with nilpotent kernel to finiteness
   of the whole noetherian desired ring; and Book 109 supplies descent under its explicit
-  antecedent hypotheses. Thus the missing input is a global patched-component theorem, not
-  construction of the local pair or its residual systems and not the formal transfer,
-  recovery, or descent steps. Once $({\rm VCT})$ and $({\rm ACT}^{\rm av}_S)$ are supplied,
+  antecedent hypotheses. Thus the preferred global patched-component theorem is source-closed.
+  With $({\rm VCT})$ and $({\rm ACT}^{\rm av}_S)$ proved by Theorem 1.1H,
   no several-place old--new cube,
   mixed-Ihara vanishing, product residue, or separate product-component occurrence is required.
-  No current alternative is both smaller and source-closed: the exact-minimal route retains
+  The exact-minimal alternative retains
   $({\rm FLO}_v)$, and the geometric routes retain their joint occurrence or mixed-cube input.
 
 - **Several active places:** once one actual product coefficient system and all component
@@ -410,11 +410,9 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   before $q$; then $q$ avoids its Frobenius discriminant and Book 178's protected
   anti-cyclotomic correction imposes the compatible auxiliary branch. Book 178 constructs the
   rational-base dihedral residual seed and applies Book 158's split top. Its only lifting
-  handoff is the auxiliary instance $({\rm CIAV}_{P_{\mathrm{aux}}})$ of Book 176's
-  componentwise finite-set theorem for the actual set $P_{\mathrm{aux}}(A_M)$. The local
-  pair, synchronized residual systems, common Taylor--Wiles primes, and formal recovery are
-  already constructed; separate one-place statements do not supply the two remaining global
-  clauses.
+  handoff is the auxiliary instance $({\rm CIAV}_{P_{\mathrm{aux}}})$ of Book 176,
+  Corollary 1.1I, for the actual set $P_{\mathrm{aux}}(A_M)$. It is one application of the
+  proved source-patching theorem, not an iteration of separate one-place statements.
 
   After auxiliary automorphy, the target-extra set $P_{\mathrm{tar}}$ is formed separately.
   On the preferred Book 178 route it consists of retained multiplicative places above $3$ and
@@ -435,11 +433,10 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   inertia at $P_{\mathrm{tar}}$ and canonically surjects onto the exact unramified minimal
   ring.  One target-characteristic certificate $({\rm TIAV}_{P_{\mathrm{tar}}})$ supplies the
   paired desired/avoidance geometry, synchronized systems, avoidance full support, and exact
-  finite recovery.  Book 176 now proves its local paired geometry, common residual modules,
-  common Taylor--Wiles prime sets, formal recovery, and the balanced/MCM consequences.  Its
-  one remaining reusable theorem $({\rm CIAV}_{P_{\mathrm{tar}}})$ has the exact clauses
-  $({\rm VCT}_{R_\infty^{\rm des}})$ for the actual global relation ideal and
-  $({\rm ACT}^{\rm av}_{P_{\mathrm{tar}}})$.  Once they hold, Lemma 1.1A makes the whole broad ring finite, so its minimal quotient
+  finite recovery. Book 176, Theorem 1.1H and Corollary 1.1I prove the target instance
+  $({\rm CIAV}_{P_{\mathrm{tar}}})$, including $({\rm VCT}_{R_\infty^{\rm des}})$ and
+  $({\rm ACT}^{\rm av}_{P_{\mathrm{tar}}})$, by a target-characteristic source patch separate
+  from the auxiliary patch. Lemma 1.1A then makes the whole broad ring finite, so its minimal quotient
   has finite special fibre; after Book 181 constructs the point, the same support theorem
   makes it automorphic.  This is a second coefficient-specific instance of the same reusable
   IAV theorem schema, not a reuse of the auxiliary patch.
@@ -453,11 +450,9 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   remains a stronger secondary alternative and
   retains all of its edgewise Ihara, component, and branch hypotheses. Dyadic places are absent
   from $P_{\mathrm{tar}}$ because the target keeps its signed-special condition. Thus the live
-  preferred boundary is one reusable theorem $({\rm CIAV}_P)$, invoked first at
-  $P_{\mathrm{aux}}$ and then at $P_{\mathrm{tar}}$—not a singleton moving presentation.
-  In both instances its exact clauses are vertical global component preservation and
-  occurrence on every avoidance component, not construction of the scalar local pair or a
-  nonzero avoidance module. DLO plus the bottom
+  preferred route invokes Book 176's proved reusable theorem $({\rm CIAV}_P)$ first at
+  $P_{\mathrm{aux}}$ and then, in a separate coefficient-characteristic patch, at
+  $P_{\mathrm{tar}}$—not a singleton moving presentation. DLO plus the bottom
   structural ledger is retained only as the stronger minimal-$R=\mathbb T$ alternative.
   Finite class sets, residual monodromy zero, and upper-side Taylor--Wiles
   patching do not formally imply DLO; Book 176 gives an explicit paired countermodel.
@@ -481,7 +476,7 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   only the restricted-special-fibre certificate $({\rm SF}_{\rm SP})$, not automorphy of every
   restricted characteristic-zero point.  The target broad-IAV certificate supplies the whole
   finite special fibre without a prior minimal point and retains a support theorem which Book
-  182 evaluates after that point exists. Thus the target instance
+  182 evaluates after that point exists. Thus Book 176's proved target instance
   $({\rm CIAV}_{P_{\mathrm{tar}}})$, through the otherwise constructed
   $({\rm TIAV}_{P_{\mathrm{tar}}})$ interface, closes both forward steps without a minimal
   $R=\mathbb T$ theorem. A proof of

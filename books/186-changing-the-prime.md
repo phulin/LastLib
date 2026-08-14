@@ -68,13 +68,11 @@ every base prime outside $\{2,3\}$, because those local conditions glue the towe
 $\mathbf Z[1/2]$. Thus ``one coefficient place'' must not be confused with ``one rational
 base place.''
 
-The existence of the input used below is conditional on the controlled SP top datum of
-Books 182--185. The fixed-three branch, however, does not require the uniform raw-to-global
+Books 182--185 construct the input used below on the preferred fixed-three route, which does
+not require the uniform raw-to-global
 Hodge--Tate source: Books 54, 168, and 183 use the good-reduction finite-flat structure at the
 chosen place above $3$ to obtain packet irreducibility and preserve SP there. The remaining
-conditionality is the controlled residual automorphic seed and its declared ascent/descent
-ledger. The result of this chapter is therefore a bounded implication from the assembled
-rational data, not an unconditional construction of that data.
+ascent/descent ledger is supplied by the proved auxiliary and target applications of Book 176.
 
 Throughout, Frobenius is arithmetic and
 $\chi_q(\operatorname{Frob}_v)=v$ for $v\ne q$.
@@ -834,7 +832,7 @@ index is also one.
 
 Theorem 7.1 imports only:
 
-- the conditional controlled SP top datum through Book 185's away-from-two assembly over its
+- the controlled SP top datum through Book 185's away-from-two assembly over its
   final coefficient field;
 - common certified good polynomials, their purity, and the cyclotomic determinant;
 - full strong local compatibility at $2$; and
@@ -864,7 +862,7 @@ lattice or explicitly marked as a semisimplification. Every claim at the base
 place $3$ is deferred to a coefficient-prime certificate. Every conductor claim
 states whether it is rational or residual. The clean-support assertion is visibly
 derived from Book 185's equivariant Galois-comparison theorem, the prime-three route is independent of $(\mathrm{AI}_2)$, and
-the missing controlled seed remains an upstream hypothesis. Pure weight one is recorded
+the controlled seed is supplied upstream. Pure weight one is recorded
 separately from the Frobenius constant term and determinant.
 The comparison with the blueprint's stronger all-odd spreading statement is explicit: the
 final consumer takes only the selected coefficient-three tower, while clean support is still

@@ -905,14 +905,13 @@ $$
 
 The bounded implication of Theorem 1.1 is complete. Relative to the controlled rational family,
 Book 187 produces its remaining integral antecedent; the positive-carrier and clean-support
-interfaces are closed. The unconditional spine still has the upstream controlled-family gaps
-recorded below.
+interfaces are closed. The preferred selected-three spine is dependency-closed.
 
 1. **Controlled SP top.** Book 185, Theorem 9.1, assumes the controlled SP packet-array datum
    used by Books 183--184.  For the preferred final route, Book 182's split specialization,
    selected ascent and descent, ordinary attachment, and targetwise SP carriers are proved;
-   its remaining conditional input is exactly the auxiliary and target instantiations of
-   Book 176's one componentwise theorem $({\rm CIAV}_P)$.  The uniform all-coefficient
+   Book 176, Theorem 1.1H and Corollary 1.1I prove the auxiliary and target instantiations of
+   $({\rm CIAV}_P)$ separately. The uniform all-coefficient
    raw-to-global route still retains the smooth-proper Hodge--Tate comparison
    $(\mathrm{HT}_{\mathrm{curve}})$ isolated in Book 47, but the selected member at
    $\nu\mid3$ instead uses Book 183, Proposition 6.1A and therefore does not consume that
@@ -1035,7 +1034,5 @@ $$
 \tag{10.2}
 $$
 
-The unconditional FLT dependency spine is not ready because the controlled rational family is
-still upstream-conditional as recorded in Section 10.2; the positive-carrier and AUX items there
-are closed interfaces, not additional blockers. That upstream status does not weaken the proved
-implication from the exact selected tower to the contradiction.
+The preferred selected-three FLT dependency spine is ready. The uniform all-coefficient
+strengthening retains the optional Hodge--Tate input recorded in Section 10.2.

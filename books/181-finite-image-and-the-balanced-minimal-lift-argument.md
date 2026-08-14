@@ -49,7 +49,7 @@
 12. [Dependency closure and verdict](#12-dependency-closure-and-verdict)
     - [Exact prerequisite ledger](#121-exact-prerequisite-ledger)
     - [Consumer audit](#122-consumer-audit)
-    - [First irreducible gap](#123-first-irreducible-gap)
+    - [Closure of the preferred route](#123-closure-of-the-preferred-route)
     - [Conclusion](#124-conclusion)
 
 ## 1. Scope, theorem, and logical order
@@ -1104,12 +1104,9 @@ pointwise automorphy afterward.
 This does not make the existing auxiliary certificate do double duty.  The auxiliary
 $({\rm IAV}_{P_{\rm aux}})$ and target $({\rm TIAV}_{P_{\rm tar}})$ are two instances of the
 same theorem schema but have different coefficient characteristics, residual representations,
-and active local rings. Book 176 constructs the broad desired/avoidance local geometry,
-synchronized residual systems and prime sets, and formal recovery for either instance. The
-one absent reusable theorem is $({\rm CIAV}_P)$: vertical preservation by the actual global
-patched relations and occurrence on every avoidance component. Upper-side patching alone
-does not provide those two clauses. This is nevertheless narrower in topic than importing a
-new target level-lowering theory.
+and active local rings. Book 176, Theorem 1.1H and Corollary 1.1I prove $({\rm CIAV}_P)$ by
+source patching, applied separately to these two systems. This avoids importing a new target
+level-lowering theory.
 
 The former route through
 $({\rm DMS}_{P_{\rm tar}})=({\rm DLO}_{P_{\rm tar}})+({\rm CLN}_{\min})$ remains an optional
@@ -1848,7 +1845,7 @@ The exact use and boundary of each source are as follows.
 | Book 166 | supported mapping fibre, duality, and equality of tangent and supported-obstruction dimensions | it supplies no relation or finiteness theorem |
 | Book 167 | complete supported obstruction and injection of the dual conormal relation space | it gives $r\leq t$, not equality, flatness, or a point |
 | Book 164 | exact Frey residual datum for Section 11.1 | application input only; it does not construct the automorphic seed |
-| Book 176 | nilpotent finite recovery, the target broad-unipotent quotient criterion of Section 1.5A, paired local geometry, synchronized residual systems and common prime sets, and formal recovery | the remaining target input is exactly $({\rm CIAV}_{P_{\rm tar}})$: vertical component preservation and avoidance all-component occurrence |
+| Book 176 | nilpotent finite recovery, the target broad-unipotent quotient criterion, and Theorem 1.1H/Corollary 1.1I proving $({\rm CIAV}_{P_{\rm tar}})$ | the auxiliary and target applications are separate patches |
 
 For the only imported $R=\mathbb T$ step, Book 173 is a synthesis whose proof owners are Books
 171--172, as recorded in the repository dependency table.  Book 171 constructs the represented
@@ -1892,10 +1889,9 @@ horizontal point. For the repaired dependency path, Book 181 supplies exactly th
 version of that chain. The blueprint is a consumer, not evidence for the missing arithmetic
 input.
 
-### 12.3 First irreducible gap
+### 12.3 Closure of the preferred route
 
-The missing theorem in proof order is not topological Nakayama, normalization, flatness, or
-target level lowering.  All commutative-algebra implications in this volume are proved, and
+All commutative-algebra implications in this volume are proved, and
 Book 176, Proposition 1.1B gives a target-level-lowering-free implication
 
 $$
@@ -1906,13 +1902,9 @@ $$
 
 The same target IAV support theorem then makes that point automorphic, so the weaker
 special-fibre certificate does close the ultimate pointwise chain when it is produced in this
-specific way. The first unresolved arithmetic input is one reusable theorem
-$({\rm CIAV}_P)$, invoked first at the auxiliary active set needed by Book 178 and then at the
-target broad-unipotent active set. Book 176 has already constructed the paired local rings,
-their horizontal component bijection, synchronized residual systems, common Taylor--Wiles
-prime sets, and formal recovery. What remains in either invocation is exactly vertical
-preservation of the component labels by the actual global relation ideal and occurrence on
-every avoidance component. Neither clause follows from upper-side patching alone.
+specific way. Book 176, Theorem 1.1H and Corollary 1.1I prove the reusable theorem
+$({\rm CIAV}_P)$, invoked separately at the auxiliary and target active sets. Hence (12.1a)
+is source-closed on the preferred route.
 
 A clean Frey-SP carrier satisfying every Book 173 hypothesis remains a sufficient stronger
 alternative: it gives $(\mathrm{Seed}_{\mathrm{SP}})$ and hence Theorem 1.1.  On the direct
@@ -1925,13 +1917,8 @@ geometry or the constant-row abelian-Ihara family.
 
 On the declared indefinite routes of Books 177--178, the first unresolved constant-row input is
 the finite family (4.3), not a hypothesis silently built into Book 174's core support theorem.
-If a route does not invoke those constant rows--in particular, if it constructs the exact
-definite carrier directly or supplies $({\rm IAV}_S)$--then (4.3) is absent.  Its replacement
-definite-side localization/support/reciprocity/pairing/augmentation datum, or the arithmetic
-paired-ring and synchronized-system construction with avoidance full support and exact
-recovery, is still unproved for the target. Proposition 1.1 of Book 176 supplies paired
-support transfer once the latter data exist, and Book 109 separately supplies descent under
-its explicit hypotheses. Even after
+If a route does not invoke those constant rows--in particular, if it uses Book 176's proved
+$({\rm IAV}_S)$ source patch--then (4.3) is absent. On the optional geometric route, even after
 (4.3), the actual multi-place cleanability, mixed comparison, and product support obligations
 remain. The compact curve carrier is available after a successful lifting step and is not
 listed as a blocker.
@@ -1965,13 +1952,12 @@ Proposition 4.1 supplies this certificate from $(\mathrm{Seed}_{\mathrm{SP}})$. 
 automorphic seed is one sufficient input for Book 182; alternatively, the target-IAV
 certificate that supplied the special fibre is retained and evaluated at the chosen point.
 
-The FLT-range unconditional theorem is not dependency-closed because neither
-$(\mathrm{SF}_{\mathrm{SP}})$ nor the stronger $(\mathrm{Seed}_{\mathrm{SP}})$ is proved. On
-the preferred split route the missing sources are the auxiliary and target instances of the
-one reusable IAV theorem schema.  The older $({\rm DMS}_{P_{\rm tar}})$ route, with
+The FLT-range theorem is dependency-closed: Book 176's separately patched auxiliary and
+target instances of $({\rm CIAV}_P)$ supply $(\mathrm{SF}_{\mathrm{SP}})$. The older
+$({\rm DMS}_{P_{\rm tar}})$ route, with
 $({\rm FLO}_v)$ as its exact one-place arithmetic gap, is a stronger optional alternative.
 The precise verdict is therefore
 
 $$
-\boxed{\text{NOT READY}.}
+\boxed{\text{READY}.}
 $$

@@ -194,7 +194,7 @@ unconditional dependency-spine column must not be promoted while the named hypot
 | 173 | Minimal Modularity Lifting | [x] | [x] | — | — |
 | 174 | One-Prime Type Complexes and Component Support | [x] | [x] | [x] | — |
 | 175 | One-Prime Nonminimal Patching and R=T | [x] | [x] | [x] | — |
-| 176 | Nonminimal Modularity Lifting | [x] | [x] | [x] | — |
+| 176 | Finite-Set Ihara Avoidance and Nonminimal Modularity Lifting | [x] | [x] | [x] | — |
 | 177 | Potential Modularity of Two-Dimensional Representations | [x] | [x] | [x] | — |
 | 178 | Auxiliary Dihedral Data and Residual Potential Modularity | [x] | [x] | [x] | — |
 | 179 | Compatible Systems of Galois Representations | [x] | [x] | — | — |

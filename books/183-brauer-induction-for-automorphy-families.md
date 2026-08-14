@@ -229,16 +229,15 @@ finite-flat rank-one calculation of Book 54; Proposition 6.1A below records the 
 coefficientwise packet certificate.
 
 We call (1.1)--(1.6), complete splitting, and these exact range hypotheses a
-**controlled SP top datum**. Book 182 exports this datum only conditionally on its controlled
-exact residual seed and bridge-readiness package; it explicitly proves no unconditional
-existence theorem for that seed. The theorem here begins only after this conditional input has
-been supplied and the chosen lift is already automorphic over the controlled top.
+**controlled SP top datum**. On the preferred selected-three route, Book 182 exports this
+datum using the two proved applications of Book 176, Corollary 1.1I. The theorem here begins
+after that input and the chosen lift is automorphic over the controlled top.
 
 ### 1.3 The packet-array theorem
 
 The endpoint is a finite algebraic array, not a base-field compatible family.
 
-**Theorem 1.1 (conditional finite elementary-packet array).** Given a controlled SP top datum,
+**Theorem 1.1 (finite elementary-packet array).** Given a controlled SP top datum,
 one can
 construct, for every elementary subgroup $H\leq\Gamma$, a parallel-weight-two cuspidal packet
 $\pi_H$ over $F_H=M^H$ with the following properties.
@@ -1975,7 +1974,7 @@ $$
 | Books 127--129 and 168 | the weight-two packet realizations, covariant arithmetic normalization, coefficient conjugates, algebraic good data, the completely split and ramified-spectator CM-unitary SP bypasses, the uniform cuspidal irreducibility/raw-to-global reduction from $(\mathrm{HT}_1)$, and the selected-three finite-flat reduction; Book 168 uses Book 47, Proposition 9.1 only on the uniform branch and Books 54 and 129 on the selected-three branch | ordinary attachment and the prime-to-two SP carrier are complete; these books do not prove uniform smooth-proper $(\mathrm{HT}_{\mathrm{curve}})$ or compare the SP pair when the dyadic base place is itself the coefficient residue characteristic, while the finite-flat lattice after semisimplification is asserted only at the selected place above three |
 | Book 142 | the Chebotarev density input used to recognize representations from their good Frobenius traces | no assertion that the field-theoretic towers satisfy automorphic selectors |
 | Book 180 | monomiality, the elementary projector and integral Brauer relation, induction/tensor/Mackey/determinant formulas, prime-cyclic refinement, the cyclic Clifford torsor, and Brauer--Nesbitt recognition | no packet construction, overlap identity, Gram positivity, or coefficient family is imported |
-| Book 182 | the exact conditional controlled SP datum: $\rho$, $M$, the distinguished top realization, the SP record, the finite descent-and-attachment ledger, and the common unramified elementary Galois pairs away from two | the missing controlled residual automorphic seed and bridge-readiness theorem are not supplied unconditionally, and no automorphic principal/dihedral type comparison is imported |
+| Book 182 | the controlled SP datum: $\rho$, $M$, the distinguished top realization, the SP record, the finite descent-and-attachment ledger, and the common unramified elementary Galois pairs away from two | no automorphic principal/dihedral type comparison is imported |
 
 The selected descent datum constructs the finite packet array, and Book 182, Proposition 6.1
 then proves ordinary attachment packet by packet; no separate all-elementary occurrence theorem

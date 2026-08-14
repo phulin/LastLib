@@ -414,13 +414,12 @@ alone would not prove (3.3).
 ### 4.1 What is assumed and what is not reconstructed here
 
 The controlled finite-fibre input precedes the finite-image argument logically: it is the
-arithmetic input from which Book 181 constructs a chosen lift.  The retained exact seed or
-target-IAV support theorem then makes that chosen point automorphic. No preceding volume
-presently constructs either arithmetic package for the Frey signed-special datum. Accordingly,
-this volume never treats the controlled chosen-point datum as an unconditional conclusion.
+arithmetic input from which Book 181 constructs a chosen lift. Book 176's proved target-IAV
+support theorem then makes that chosen point automorphic. Thus the preferred controlled
+chosen-point datum is a conclusion, while the stronger exact-minimal seed remains optional.
 
 The boundary is recorded here only to delimit the hypothesis of the post-181 theorem. On the
-preferred split route its proposed construction has three distinct layers:
+preferred split route its construction has three distinct layers:
 
 1. Book 158's simultaneous point-centered opens and split Galois-top specialization;
 2. an auxiliary-$q$ finite-set lifting problem on the actual post-specialization active set;
@@ -598,16 +597,13 @@ R_F^{\rm uni}(P_{\rm tar})\twoheadrightarrow R_F^{\rm SP}.
 \tag{4.3}
 $$
 
-**Missing theorem $({\rm CIAV}_{P_{\rm tar}})$ (target componentwise IAV).** Book 176
-constructs the desired/avoidance local rings for the broad target problem, their common raw
-special fibre and horizontal component bijection, synchronized residual systems and common
-Taylor--Wiles prime sets, and formal recovery. The remaining theorem has exactly two clauses:
-vertical preservation of those labels by the actual global patched relation ideal and
-occurrence on every avoidance component. Together with the constructed data it completes
-$({\rm TIAV}_{P_{\rm tar}})$ while retaining the common named dyadic SP and
-coefficient-prime finite-flat conditions.
+**Proved theorem $({\rm CIAV}_{P_{\rm tar}})$ (target componentwise IAV).** Book 176,
+Theorem 1.1H and Corollary 1.1I prove vertical component preservation and avoidance
+all-component occurrence by the target-characteristic source patch. Together with its local
+and residual data this completes $({\rm TIAV}_{P_{\rm tar}})$ while retaining the common
+named dyadic SP and coefficient-prime finite-flat conditions.
 
-This certificate is point-free.  Proposition 1.1 of Book 176 gives full desired support and
+This certificate is point-free. Book 176, Theorem 1.1H gives full desired support and
 exact recovery gives a nilpotent kernel.  Since the recovered Hecke action is finite,
 Book 176, Lemma 1.1A makes the whole broad ring finite over $\mathcal O$.  The quotient (4.3)
 therefore gives $(\mathrm{SF}_{\mathrm{SP}})$ before a minimal characteristic-zero point is
@@ -628,8 +624,7 @@ $$
 
 The two IAV certificates invoke one reusable $({\rm CIAV}_P)$ theorem, but are not one patch:
 their coefficient characteristics, residual representations, and active local rings differ.
-The local and synchronization parts are constructed in the corpus; the two global
-$({\rm CIAV})$ clauses are not. Upper definite occurrence from
+Book 176 proves both instances separately; they are not inferred from one another. Upper definite occurrence from
 Proposition 4.1 is useful evidence that the target desired block is nonzero, but it does not
 replace avoidance full support or synchronized broad-ring patching.
 
@@ -1146,13 +1141,10 @@ Proposition 7.6B uses the proved ramified-spectator source (7.7) and its two-ker
 descent. A direct certificate or (7.4) gives the stated alternatives. This proves the fifth
 assertion. $\square$
 
-The theorem has one conditional boundary on the preferred final chain: the controlled
-chosen-point datum summarized in Chapter 4. Book 176 has constructed the paired local rings,
-synchronized residual systems and common prime sets, and formal recovery. The one reusable
-missing theorem is $({\rm CIAV}_P)$, invoked at the auxiliary active set to produce the upper
-packet and at the target active set to complete $({\rm TIAV}_{P_{\rm tar}})$. Its target
-instance gives the special fibre used by Book 181 and its same support theorem makes the
-resulting point automorphic. The older
+The controlled chosen-point datum summarized in Chapter 4 is source-closed on the preferred
+final chain. Book 176, Theorem 1.1H and Corollary 1.1I prove $({\rm CIAV}_P)$ in separate
+auxiliary and target patches. The target instance gives the special fibre used by Book 181
+and makes the resulting point automorphic. The older
 $({\rm DMS}_{P_{\rm tar}})$ route through $({\rm FLO}_v)$ remains a stronger optional route to
 minimal $R=\mathbb T$, not a prerequisite of this pointwise chain. Book 168's two unitary
 bypasses close both the all-dyadic-split and targetwise parity cases without (10.5), and its
@@ -1183,8 +1175,8 @@ coefficient embeddings. The final selected-three branch instead uses Book 168, T
 and Corollary 7.6D. Ambient semisimplicity is a stronger alternative for a direct raw carrier.
 Neither branch can be replaced by good Frobenius traces.
 
-Thus this volume does not reconstruct the residual seed used before Book 181, and it does not
-claim an unconditional controlled top. It proves the chosen-point potential-automorphy and
+Thus this volume does not reconstruct the residual seed used before Book 181. It proves the
+chosen-point potential-automorphy and
 Galois-refinement implications from their exact hypotheses, proves the parity-complete basic
 attachment and auxiliary Galois comparisons, and proves the semisimple unitary bypass in both
 the all-dyadic-split and targetwise parity cases. The separate $(\mathrm{HT}_1)$ comparison is

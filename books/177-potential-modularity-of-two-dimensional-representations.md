@@ -55,7 +55,7 @@
     - [Lifting-admissible paired specialization](#101-lifting-admissible-paired-specialization)
     - [Conditional residual potential modularity](#102-conditional-residual-potential-modularity)
     - [Exact field control](#103-exact-field-control)
-    - [Why the theorem is conditional](#104-why-the-theorem-is-conditional)
+    - [Why the geometric alternatives remain conditional](#104-why-the-geometric-alternatives-remain-conditional)
 11. [Failure tests and boundary cases](#11-failure-tests-and-boundary-cases)
     - [Residual automorphy is localization-sensitive](#111-residual-automorphy-is-localization-sensitive)
     - [Smoothness is not component support](#112-smoothness-is-not-component-support)
@@ -800,9 +800,8 @@ Here an **applicable Book 176 one-prime conclusion** means literal Theorem 7.1 o
    This includes the paired desired/avoidance local rings, the proof that their patched
    specializations are component-bijective, synchronized automorphic Taylor--Wiles systems
    with their common mod-$\varpi$ module and proved avoidance full support, exact acting-image
-   recovery, and the permitted stopping field of Section 8.6.  Book 176, Proposition 1.1
-   then supplies support transfer; it is a formal consequence of those data rather than one
-   more arithmetic hypothesis.
+   recovery, and the permitted stopping field of Section 8.6. Book 176, Theorem 1.1H and
+   Corollary 1.1I supply support transfer.
    Alternatively, $P_{\mathrm{act}}$ is a singleton and the applicable one-prime conclusion
    above holds; or an ordered finite chain is given and every applicable one-prime hypothesis
    is verified anew on each intermediate carrier, with all previously changed places retained
@@ -854,7 +853,7 @@ inside the mixed-level module. Equivalently, filtering the two-place total degen
 The direct $({\rm IAV}_{P_{\mathrm{act}}})$ route does not use this incidence module. It
 patches the complete desired local problem and the auxiliary Ihara-avoidance problem in
 parallel. Full support on the irreducible avoidance side passes through their identified
-special fibers and the desired-side component bijection by Book 176, Proposition 1.1. This
+special fibers and the desired-side component bijection by Book 176, Theorem 1.1H. This
 proves that the point (8.5) lies on automorphic support without a separate product-component
 occurrence theorem. The arithmetic input is the whole paired local-ring and synchronized
 patched-module construction, including exact recovery; residual automorphy of $\Pi_0'$ and
@@ -1114,17 +1113,10 @@ for the prescribed finite local set $S$ and finite Galois avoidance field $D/F$ 
 
 Neither Book 154 nor this construction makes $F'/F$ Galois, solvable, or cyclic. Any further field $E$ used in Section 8.6 has only the properties explicitly imposed there. Consequently none of these fields supports automorphic descent merely by how it was constructed.
 
-### 10.4 Why the theorem is conditional
+### 10.4 Why the geometric alternatives remain conditional
 
-The definition in Section 10.1 is not presently known to be inhabited for the FLT
-applications. On the scope-minimal direct route, Book 176 now constructs the paired scalar
-local rings, their horizontal component bijection, the synchronized residual modules and
-Taylor--Wiles prime sets, and formal recovery. The first missing theorem is precisely
-$({\rm CIAV}_{P_{\mathrm{act}}})$: vertical preservation of those component labels by the
-actual global patched relation ideal and occurrence on every avoidance component. Book 176,
-Proposition 1.1 proves desired full-support transfer from those two clauses, and Book 109
-supplies any later solvable descent once its explicit antecedents hold; neither formal
-consequence is an additional missing theorem. This direct construction
+For the FLT application, Book 176, Theorem 1.1H and Corollary 1.1I prove
+$({\rm CIAV}_{P_{\mathrm{act}}})$ by the direct source-patching route. This construction
 handles every place above $v_0$ at once and does not consume the abelian-Ihara, type-Ihara,
 mixed-cube, product-residue, or pointed-occurrence gates below.
 
@@ -1256,7 +1248,7 @@ The proof uses the following earlier books, with no enlargement of their conclus
 | Book 104 | transfer from the totally definite carrier to the split packet, followed by compact one-split inverse transfer for $\{w_0\}$ | requires even field degree and an eligible selected local factor; it supplies no Galois representation by itself |
 | Book 98 | automorphic induction of an algebraic Hecke character, the determinant formula (3.3), the explicit residual induced lattice, and cuspidality | the quadratic extension must remain a field; the character quotient must remain nontrivial |
 | Book 127 | compact-curve packet decomposition, rank-two extraction, determinant and Frobenius normalization, the weak family, and stable lattices | no surface realization or density theorem; integral finite-flat comparison is obtained from $A$, not from an arbitrary curve lattice |
-| Book 176 | the direct finite-set Ihara-avoidance interface $({\rm IAV}_S)$ and Proposition 1.1's formal paired support transfer, literal conditional Theorem 7.1 for the scalar-twist family, the separately conditional generic and $q_v\equiv-1$ reduced-image argument, all-point finite-set Theorem 9.1, and pointed torsion-free-top Theorem 9.2 | the direct route retains exactly $({\rm CIAV}_S)$: vertical preservation by the actual patched relation ideal and avoidance all-component occurrence; the all-point route retains every applicable Ihara, type, support, reciprocity, ray, augmentation, mixed-exactness, product-residue, and joint-support hypothesis; the pointed route instead retains one actual final cube, simultaneous branch verification, carrier-specific reciprocity, and occurrence of the component through $x_A$ |
+| Book 176 | the direct finite-set Ihara-avoidance interface, Theorem 1.1H and Corollary 1.1I proving $({\rm CIAV}_S)$, plus the optional one-prime, all-point, and pointed geometric comparisons | the direct source-patching route is closed; the geometric routes retain their stated Ihara, cube, reciprocity, and occurrence hypotheses |
 | Book 154 | Moret--Bailly specialization with local opens, total reality, splitting, and linear disjointness | no Galois or solvable conclusion |
 | Book 158 | the fine smooth geometrically connected paired-frame moduli space, its admissible point-centered local opens, and the regular symmetric Galois-top refinement of the split specialization | both frames and both pairings must occur on the same object and component; nonsplit exact completion algebras still require Book 154's separate common-presentation hypothesis |
 | Book 142, the globally upstream companion Chebotarev development | finite-quotient prime selection in Section 3.4 and Corollary 11.2 in Sections 8.5 and 9.3 | density recognizes existing data and supplies no carrier, lattice, or local compatibility |
@@ -1305,16 +1297,9 @@ That record supplies residual potential modularity only. A later argument for a 
 
 ### 12.4 Readiness verdict
 
-The conditional bridge is mathematically explicit, but the advertised FLT-range existence
-theorem is **NOT READY**. On the scope-minimal route, its missing theorem is the direct
-finite-set theorem $({\rm CIAV}_{P_{\mathrm{act}}})$: the vertical global component theorem
-and avoidance all-component occurrence. The paired local-ring geometry, horizontal component
-bijection, synchronized residual systems, common Taylor--Wiles primes, and formal recovery
-are proved in Book 176. Desired special-fiber support transfer is Proposition 1.1 of Book 176
-once the two $({\rm CIAV})$ clauses hold, and descent is the existing
-conditional theorem of Book 109 once its selected cyclic-tower antecedents exist. The
-missing arithmetic construction would treat all places above $v_0$ simultaneously without
-the geometric cube.
+The advertised FLT-range lifting-admissible existence theorem is **READY**: Book 176,
+Theorem 1.1H and Corollary 1.1I prove the direct finite-set
+$({\rm CIAV}_{P_{\mathrm{act}}})$ theorem and treat all places above $v_0$ simultaneously.
 
 On the geometric alternatives, the first unresolved constant-row dependency is the localized
 abelian Ihara family (10.4), retained but not proved by Books 139 and 176. Book 122 and Book

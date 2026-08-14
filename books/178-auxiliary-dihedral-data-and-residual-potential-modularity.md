@@ -1868,10 +1868,9 @@ without using automorphy of its Tate module. Only after the actual active set is
 Book 176 transfer automorphy to that point. The target residual conclusion is read at $\ell$
 only after the $q$-adic automorphic packet and its rational family exist.
 
-There is no use of Books 177, 181, 182, or later compatible-family volumes. The unresolved input
-is the one componentwise theorem $({\rm CIAV}_{P_{\mathrm{aux}}(A_F)})$; Book 176 already
-constructs the paired local geometry, synchronized residual systems, common prime sets, and
-formal recovery, and none of these is hidden in the geometric specialization. The rational-base ray compatibility is proved here, while the
+There is no use of Books 177, 181, 182, or later compatible-family volumes. Book 176,
+Theorem 1.1H and Corollary 1.1I prove $({\rm CIAV}_{P_{\mathrm{aux}}(A_F)})$ for the actual
+active set. The rational-base ray compatibility is proved here, while the
 general totally real-base ray datum remains a separate optional extension and is not needed by
 the FLT chain.
 
@@ -1907,15 +1906,13 @@ norm-pulled dihedral packet to $V_{\mathfrak q}(A_F)$; a compact one-split carri
 cross-prime comparison then identify the $\ell$-adic residual member with the prescribed
 target.
 
-The route has one exact unresolved lifting boundary: $({\rm CIAV}_{P_{\mathrm{aux}}(A_F)})$,
-namely vertical component preservation for the actual global patched relations and occurrence
-on every avoidance component. It has no singleton subproblem. The retired one-special-factor
+Book 176, Corollary 1.1I closes the finite-set lifting handoff
+$({\rm CIAV}_{P_{\mathrm{aux}}(A_F)})$. The route has no singleton subproblem. The retired one-special-factor
 moving presentation, Book 157's conditional toroidal chain, and one-prime scalar augmentation
 are neither hypotheses nor alternative conclusions of the FLT theorem. Book 157 remains a
 direct source only for its reusable interior component, local seed, frame, and openness results.
 
-Thus Theorem 11.2 is ready as an implication from the finite-set input and supplies precisely
-the residual potential-modularity ingredient consumed before Book 181. It does not prove that
-input, descend automorphy back to $\mathbf Q$, construct Book 181's entire minimal Hecke
+Thus Theorem 11.2 supplies precisely the residual potential-modularity ingredient consumed
+before Book 181. It does not descend automorphy back to $\mathbf Q$, construct Book 181's entire minimal Hecke
 ledger, or address the later compatible-family descent. Those tasks remain with their natural
 volumes.

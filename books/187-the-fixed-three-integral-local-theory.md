@@ -2004,16 +2004,15 @@ automorphic-type comparisons are not required.
 Therefore the unconditional FLT dependency status of this book is
 
 $$
-\boxed{\textbf{NOT READY}.}
+\boxed{\textbf{READY}.}
 \tag{12.1}
 $$
 
-The verdict remains not ready only because the rational input is conditional on Book 182's
-controlled top.  The split moving specialization, selected ascent and descent, packet
+Book 182 supplies the controlled top on the preferred selected-three route. The split moving
+specialization, selected ascent and descent, packet
 attachment, fixed-three raw-to-global comparison, and clean auxiliary support are now proved.
-On the preferred route the remaining condition is exactly the auxiliary and target
-instantiations of Book 176's one reusable componentwise theorem $({\rm CIAV}_P)$; no separate
-clean minimal-SP seed is required.
+Book 176, Theorem 1.1H and Corollary 1.1I prove the auxiliary and target instantiations of
+$({\rm CIAV}_P)$ separately; no clean minimal-SP seed is required.
 The raw dyadic carriers are supplied targetwise by Books 118, 122, and 168, and the selected
 coefficient-three raw-to-global step is supplied by the finite-flat bridge of Books 54 and
 168; full smooth-proper $(\mathrm{HT}_{\mathrm{curve}})$ remains necessary only for the
