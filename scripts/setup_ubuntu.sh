@@ -89,7 +89,7 @@ else
 fi
 
 log "Installing or updating Codex from OpenAI"
-download_installer codex https://chatgpt.com/codex/install.sh
+download_installer codex https://chatgpt.com/codex/install.sh < <(yes n)
 
 log "Installing the pinned Python and project dependencies"
 PYTHON_VERSION="$(tr -d '[:space:]' < "${REPO_ROOT}/.python-version")"
