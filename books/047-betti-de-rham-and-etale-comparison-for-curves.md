@@ -47,6 +47,7 @@
    - [The integral comparison isomorphism](#92-the-integral-comparison-isomorphism)
    - [Rational coefficients and lattices](#93-rational-coefficients-and-lattices)
    - [What comparison does and does not identify](#94-what-comparison-does-and-does-not-identify)
+   - [The coefficient-prime Hodge--Tate bridge](#95-the-coefficient-prime-hodge--tate-bridge)
 10. [Cycle classes, twists, and trace normalizations](#10-cycle-classes-twists-and-trace-normalizations)
     - [Divisors in the three theories](#101-divisors-in-the-three-theories)
     - [The factor $2\pi i$](#102-the-factor-2pi-i)
@@ -1056,6 +1057,84 @@ after choosing $\bar K\hookrightarrow\mathbf C$ in the second line. Both are sca
 
 What is common is exact algebraic linear data defined over $\mathbf Q$: dimensions, ranks of rational correspondence operators, characteristic polynomials of operators preserving the rational lattice, tensor identities, adjointness, and idempotent decompositions whose denominators are invertible in the chosen coefficient ring. What is not common without further theory is a comparison of the Hodge filtration with an ℓ-adic filtration, or a direct identification of complex periods with ℓ-adic numbers. Keeping this boundary explicit is part of a correct comparison theorem.
 
+### 9.5 The coefficient-prime Hodge--Tate bridge
+
+The preceding comparison is geometric over an algebraic closure. Arithmetic applications also
+restrict the Galois action to a decomposition group at the same prime as the coefficient field.
+This is a different problem. Let $L$ be a finite extension of $\mathbf Q_p$, let $C/L$ be a
+smooth, proper, geometrically connected curve, and put
+
+$$
+V_C=H^1_{\mathrm{\acute et}}(C_{\overline L},\mathbf Q_p).
+$$
+
+Write $\mathbf C_p$ for the completed algebraic closure of $L$. With the convention that
+$\mathbf Q_p(1)$ has Hodge--Tate weight $-1$, the required coefficient-prime comparison is
+
+$$
+\boxed{(\mathrm{HT}_{\mathrm{curve}})\qquad
+V_C\otimes_{\mathbf Q_p}\mathbf C_p
+\simeq
+\bigl(H^1(C,\mathcal O_C)\otimes_L\mathbf C_p\bigr)
+\oplus
+\bigl(H^0(C,\Omega^1_{C/L})\otimes_L\mathbf C_p(-1)\bigr).}
+\tag{9.7}
+$$
+
+The isomorphism is required to be $G_L$-equivariant and functorial for maps and algebraic
+correspondences. Formula (9.7) is the degree-one smooth-proper Hodge--Tate comparison theorem.
+It does not require good reduction: properness and smoothness concern the generic fiber over
+$L$. Replacing it by crystalline comparison would therefore lose precisely the bad-reduction
+coefficient places which a uniform packet argument must retain.
+
+There is an equivalent abelian formulation. If $J=\operatorname{Pic}^0_{C/L}$, Abel--Jacobi
+identifies $V_C$ with $H^1_{\mathrm{\acute et}}(J_{\overline L},\mathbf Q_p)$ and identifies the
+two de Rham Hodge terms. Thus (9.7) follows from the Hodge--Tate exact sequence for the
+$p$-divisible group $J[p^\infty]$. This reduction does not prove that exact sequence: passage
+from the integral $p$-divisible group to $\mathbf C_p$-periods is the deep step.
+
+The exact consequence needed for curve-carried packet factors is nevertheless formal once
+(9.7) is supplied.
+
+**Proposition 9.1 (Hodge--Tate inheritance for curve factors).** Assume
+$(\mathrm{HT}_{\mathrm{curve}})$. Let $E/\mathbf Q_p$ be finite, and let $W$ be an $E$-linear
+subquotient of
+
+$$
+V_C\otimes_{\mathbf Q_p}E
+$$
+
+cut out after coefficient extension by maps commuting with $G_L$; this includes a
+correspondence summand, a Hecke multiplicity factor, and every Jordan--Hölder constituent of
+either. Then $W$ is Hodge--Tate. After any finite extension of $E$, every one-dimensional
+Jordan--Hölder constituent of $W$ is Hodge--Tate, with weights among $0$ and $1$ in the
+normalization of (9.7).
+
+**Proof.** The Hodge--Tate decomposition is equivalently the assertion that the labeled Sen
+operators are semisimple with integral eigenvalues, here $0$ and $1$. A $G_L$-stable subspace
+is stable under every Sen operator. Restricting commuting semisimple operators to an invariant
+subspace, and then passing to the induced operators on a quotient, preserves semisimplicity and
+keeps the eigenvalues among those of the original space. Scalar extension does the same. Hence
+every displayed subquotient is Hodge--Tate with the asserted weights. Functoriality in (9.7)
+ensures that correspondence and Hecke projectors act on both summands, but no integral projector
+is needed for this rational conclusion. $\square$
+
+The Sen-operator formulation is important. The class of arbitrary representations admitting
+some filtration is not automatically closed under subquotients; what makes the argument work
+is the semisimple integral Sen operator furnished by the actual Hodge--Tate decomposition.
+Nor does semisimplifying $V_C$ before applying (9.7) prove a statement about a raw local
+monodromy operator. Proposition 9.1 supplies Hodge--Tate one-dimensional factors; a separate
+global irreducibility argument is what can then identify a raw packet representation with its
+semisimplification.
+
+The proof of (9.7) is not contained in the Betti--de Rham--étale arguments of this volume or
+in the crystalline theory of Book 49. A complete proof requires the smooth-proper Hodge--Tate
+comparison theorem, equivalently here the Hodge--Tate exact sequence for abelian varieties,
+and its functoriality. Thus this section isolates one theorem rather than silently deriving
+coefficient-prime arithmetic from (9.6). Once that theorem is available, Proposition 9.1 closes
+every geometric-subquotient step used by the packet applications; the rank-one passage from
+Hodge--Tate to local algebraicity is supplied separately by Book 6, Section 11.5.
+
 ## 10. Cycle classes, twists, and trace normalizations
 
 Comparison maps become useful only after their normalizations have been tested on geometric generators. On a curve, closed points generate the top cohomology, so one local calculation controls traces, first Chern classes, and all duality pairings. It also explains why $2\pi i$ appears on the de Rham side and a Tate twist appears on the étale side.
@@ -1679,6 +1758,11 @@ The hypotheses have distinct roles.
 - The factor $2\pi i$ belongs to the unnormalized algebraic $d\log$ convention. The Tate twist belongs to the canonical étale trace. Removing either without making a choice changes the theorem.
 
 - Integral direct summands cut out by correspondences require integral projectors. A rational projector with denominator divisible by $\ell$ need not preserve the $\mathbf Z_\ell$ lattice.
+
+- When the coefficient prime equals the residue characteristic of a decomposition group, the
+  Betti--étale comparison does not identify the Hodge filtration. Section 9.5 isolates the
+  additional smooth-proper Hodge--Tate theorem. Its subquotient consequence is formal, but the
+  comparison theorem itself is not proved by the complex or crystalline arguments here.
 
 These are genuine boundaries, not presentational cautions. Dropping them changes examples: a punctured curve has boundary classes, a nodal curve is not a surface at the node, a purely rational idempotent need not act integrally, and an untwisted étale trace is not canonical.
 

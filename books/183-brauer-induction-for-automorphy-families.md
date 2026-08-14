@@ -209,10 +209,11 @@ may be supplied directly. More economically, the datum may supply $(\mathrm{HT}_
 semisimple packet realization is absolutely irreducible, identifies the raw representation
 with it, and preserves the complete dyadic special pair. Finally, the stronger ambient
 $(\mathrm{SS}_{\mathrm{array}})$ hypothesis of Book 168, (7.12), also suffices by its
-Proposition 7.7. The $(\mathrm{HT}_1)$ route is the application-specific one: its exact
-unproved input is smooth-proper Hodge--Tate comparison together with one-dimensional
-Hodge--Tate local algebraicity. It uses no Faltings height, Shafarevich finiteness, or Tate-module
-semisimplicity theorem.
+Proposition 7.7. The $(\mathrm{HT}_1)$ route is the application-specific one. Book 6 proves
+the rank-one Hodge--Tate-to-locally-algebraic theorem and Book 47, Proposition 9.1 proves
+inheritance by curve-cohomology subquotients. Its exact unproved input is therefore only the
+smooth-proper comparison $(\mathrm{HT}_{\mathrm{curve}})$ of Book 47, (9.7). It uses no
+Faltings height, Shafarevich finiteness, or Tate-module semisimplicity theorem.
 
 We call (1.1)--(1.6), complete splitting, and these exact range hypotheses a
 **controlled SP top datum**. Book 182 exports this datum only conditionally on its controlled
@@ -1913,10 +1914,10 @@ $$
 
 | Source | Input used here | Strengthening not made |
 |---|---|---|
-| Book 6 | locally algebraic one-dimensional $\ell$-adic characters are avatars of algebraic Hecke characters | local algebraicity is supplied by $(\mathrm{HT}_1)$, not by class field theory itself |
+| Book 6 | rank-one Hodge--Tate characters are locally algebraic, and locally algebraic one-dimensional $\ell$-adic characters are avatars of algebraic Hecke characters | the geometric Hodge--Tate premise is supplied through $(\mathrm{HT}_1)$, not by class field theory |
 | Book 98 | finite-order Hecke avatars of the Brauer characters, with reciprocity, norm pullback, and conjugation | no higher-rank automorphic induction across $F_H/\mathbf Q$ |
 | Books 108--109 | selected prime-cyclic descent and base change, antecedent-complete saturated fibers, local-parameter restriction, and tower independence in the admissible range | no transfer along an inadmissible tower and no nonsolvable descent |
-| Books 127--128 and 168 | the weight-two packet realizations, covariant arithmetic normalization, coefficient conjugates, algebraic good data, the conditional raw SP comparison, and the cuspidal irreducibility/raw-to-global reduction from $(\mathrm{HT}_1)$ | no construction of a missing carrier, no proof of smooth-proper Hodge--Tate comparison, no comparison at the coefficient residue characteristic, and no packet lattice after semisimplification |
+| Books 127--128 and 168 | the weight-two packet realizations, covariant arithmetic normalization, coefficient conjugates, algebraic good data, the conditional raw SP comparison, and the cuspidal irreducibility/raw-to-global reduction from $(\mathrm{HT}_1)$; Book 168 uses Book 47, Proposition 9.1 for Hodge--Tate inheritance | no construction of a missing carrier, no proof of smooth-proper $(\mathrm{HT}_{\mathrm{curve}})$, no comparison of the SP pair at the coefficient residue characteristic, and no packet lattice after semisimplification |
 | Book 142 | the Chebotarev density input used to recognize representations from their good Frobenius traces | no assertion that the field-theoretic towers satisfy automorphic selectors |
 | Book 180 | monomiality, the elementary projector and integral Brauer relation, induction/tensor/Mackey/determinant formulas, prime-cyclic refinement, the cyclic Clifford torsor, and Brauer--Nesbitt recognition | no packet construction, overlap identity, Gram positivity, or coefficient family is imported |
 | Book 182 | the exact conditional controlled SP datum: $\rho$, $M$, the distinguished top realization, the SP record, the finite descent-and-attachment ledger, and the common unramified elementary Galois pairs away from two | the missing controlled residual automorphic seed and bridge-readiness theorem are not supplied unconditionally, and no automorphic principal/dihedral type comparison is imported |
@@ -1928,8 +1929,9 @@ raw-to-semisimple local-preservation identity must be available for every constr
 every coefficient place away from two. Proposition 6.1 proves the latter from
 $(\mathrm{HT}_1)$ by cuspidal absolute irreducibility and shows that coefficient extension,
 packet projection, and Morita extraction introduce no further obstruction. The exact remaining
-arithmetic theorem is smooth-proper Hodge--Tate comparison plus one-dimensional Hodge--Tate
-local algebraicity for these factors. If either the raw special clause or this preservation
+arithmetic theorem is the smooth-proper comparison $(\mathrm{HT}_{\mathrm{curve}})$ isolated
+in Book 47, (9.7); the rank-one local-algebraicity and subquotient steps are now proved. If
+either the raw special clause or this preservation
 certificate is absent, the distinguished $\ell$-adic SP pair does not determine monodromy or
 its sign at another embedding.
 

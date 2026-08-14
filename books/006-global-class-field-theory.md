@@ -2180,6 +2180,87 @@ Dirichlet's unit theorem translates these equations into linear relations among 
 
 ### 11.5 The ell-adic avatar
 
+Before passing from a global Hecke character to Galois, we need one local fact which is often
+hidden inside the phrase “geometric character.” Let $L/\mathbf Q_\ell$ and
+$E/\mathbf Q_\ell$ be finite extensions, enlarging $E$ so that it contains the images of all
+embeddings $\tau:L\hookrightarrow\overline{\mathbf Q}_\ell$. A continuous character
+
+$$
+\xi:G_L\longrightarrow E^\times
+$$
+
+is **locally algebraic** when, under arithmetic local reciprocity, there are integers $n_\tau$
+and an open subgroup $U\subseteq\mathcal O_L^\times$ on which
+
+$$
+\xi(\operatorname{rec}_L(u))
+=\prod_{\tau:L\hookrightarrow E}\tau(u)^{n_\tau}.
+$$
+
+Changing arithmetic to geometric reciprocity changes every $n_\tau$ by a sign; it does not
+change the condition. A finite-order or unramified factor is invisible on a sufficiently small
+$U$ and is therefore allowed.
+
+The local bridge is exact in rank one.
+
+**Rank-one Hodge--Tate criterion.** A continuous one-dimensional $E$-linear representation
+$\xi$ of $G_L$ is Hodge--Tate if and only if it is locally algebraic. More precisely, the
+integers in the displayed local-algebraicity formula, with the sign dictated by reciprocity
+and twist conventions, are its
+labeled Hodge--Tate weights.
+
+**Proof.** We recall the rank-one Tate--Sen calculation rather than treating the criterion as a
+definition. Pass to a sufficiently deep principal-unit group $U^r$. Both the $\ell$-adic
+logarithm on $U^r$ and the logarithm on the image of the corresponding character converge. The
+map
+
+$$
+x\longmapsto
+\log\bigl(\xi(\operatorname{rec}_L(\exp x))\bigr),
+\qquad x\in\mathfrak m_L^r,
+$$
+
+is continuous and additive, hence $\mathbf Q_\ell$-linear. Separability of
+$L/\mathbf Q_\ell$ gives a unique expansion after enlarging $E$,
+
+$$
+\log\bigl(\xi(\operatorname{rec}_L(\exp x))\bigr)
+=\sum_\tau c_\tau\tau(x),
+\qquad c_\tau\in E.
+$$
+
+The labeled rank-one Sen operator has eigenvalue $c_\tau$ in the $\tau$-direction, up to the
+single reciprocity sign just noted. Here is the calculation behind that assertion. For each
+$\tau$, on principal units local reciprocity carries the character $u\mapsto\tau(u)$ to the
+$\tau$-conjugate of the Lubin--Tate character, up to an unramified factor. The invariant
+differential of the Lubin--Tate formal group and a
+compatible torsion tower give its Hodge--Tate period; Galois acts on that period by the
+Lubin--Tate character, and its cotangent line lies in the $\tau$-summand. Thus this basis
+character has labeled Sen eigenvalue $1$ at $\tau$ and $0$ at every other embedding. The
+normalized-trace definition of the Sen operator turns products of rank-one characters into
+sums of operators. Applying it to this logarithmic expansion therefore gives the asserted
+eigenvalues $c_\tau$.
+A character with all $c_\tau=0$ is trivial on a deep principal-unit group by injectivity of
+the logarithm, so it contributes only a locally constant inertia factor and has weight zero.
+This also shows that no nonlinear continuous unit character has been omitted.
+
+If $\xi$ is Hodge--Tate, its labeled Sen operator is semisimple with integral eigenvalues, so
+$c_\tau=n_\tau\in\mathbf Z$. Subtract the algebraic character in the first display. The
+logarithmic expansion says that the quotient has zero logarithm on a possibly smaller
+principal-unit group; shrinking
+once more puts its values in the logarithm's injectivity domain, so the quotient is trivial.
+This proves local algebraicity. Conversely, each factor $\tau(u)^{n_\tau}$ is a tensor power
+or dual of the corresponding conjugate Lubin--Tate character and is Hodge--Tate of the stated
+labeled weight. The remaining character is locally constant on inertia, hence potentially
+unramified and Hodge--Tate of weight zero. Their product is Hodge--Tate. $\square$
+
+Coefficient extension causes no ambiguity. If $E$ initially omits some embeddings, test the
+criterion after one finite extension containing them. Local algebraicity then descends as a
+statement about the original $\overline{\mathbf Q}_\ell$-valued character, and the multiset of
+labeled weights is independent of the chosen enlargement. In particular, once a
+one-dimensional constituent of a geometric representation is known to be Hodge--Tate, no
+second global theorem is needed to make it locally algebraic.
+
 Choose an isomorphism $\iota:\overline{\mathbf Q}\hookrightarrow\overline{\mathbf Q}_\ell$. An algebraic Hecke character whose finite values are algebraic has an $\ell$-adic avatar. On finite ideles, transport its algebraic values through $\iota$ and correct at the places above $\ell$ by the algebraic infinity type. Explicitly, for $x_f\in\mathbf A_{K,f}^\times$, put
 
 $$
