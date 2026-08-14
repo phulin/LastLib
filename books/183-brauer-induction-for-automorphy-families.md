@@ -200,8 +200,8 @@ elementary fixed field has degree at least two, and Book 182, Proposition 6.1 ap
 104's parity-complete inverse Jacquet--Langlands theorem followed by Books 125--127. This also
 covers coefficient conjugates. What remains in the controlled datum is the narrower dyadic SP
 certificate of Book 182, Section 7.3. It may come from an all-dyadic-split CM-unitary
-auxiliary carrier through Book 168, Proposition 7.6A, or from the mixed-dyadic
-$(\mathrm{MDSP}_2)$ theorem. At every dyadic place the source raw packet monodromy has rank
+auxiliary carrier through Book 168, Proposition 7.6A, or from the proved targetwise
+ramified-spectator construction of Proposition 7.6B. At every dyadic place the source raw packet monodromy has rank
 one, Frobenius on its invariant graph line is the selected special scalar, and all packet,
 component, and correspondence routes occur on that source carrier.
 The raw local pair must agree with the pair of the globally semisimplified realization at every
@@ -1924,7 +1924,7 @@ $$
 | Book 6 | rank-one Hodge--Tate characters are locally algebraic, and locally algebraic one-dimensional $\ell$-adic characters are avatars of algebraic Hecke characters | the geometric Hodge--Tate premise is supplied through $(\mathrm{HT}_1)$, not by class field theory |
 | Book 98 | finite-order Hecke avatars of the Brauer characters, with reciprocity, norm pullback, and conjugation | no higher-rank automorphic induction across $F_H/\mathbf Q$ |
 | Books 108--109 | selected prime-cyclic descent and base change, antecedent-complete saturated fibers, local-parameter restriction, and tower independence in the admissible range | no transfer along an inadmissible tower and no nonsolvable descent |
-| Books 127--128 and 168 | the weight-two packet realizations, covariant arithmetic normalization, coefficient conjugates, algebraic good data, the CM-unitary semisimple SP bypass, and the cuspidal irreducibility/raw-to-global reduction from $(\mathrm{HT}_1)$; Book 168 uses Book 47, Proposition 9.1 for Hodge--Tate inheritance | ordinary attachment and the all-dyadic-split bypass are complete, but these books do not construct $(\mathrm{MDSP}_2)$, prove smooth-proper $(\mathrm{HT}_{\mathrm{curve}})$, compare the SP pair at the coefficient residue characteristic, or produce a packet lattice after semisimplification |
+| Books 127--128 and 168 | the weight-two packet realizations, covariant arithmetic normalization, coefficient conjugates, algebraic good data, the completely split and ramified-spectator CM-unitary SP bypasses, and the cuspidal irreducibility/raw-to-global reduction from $(\mathrm{HT}_1)$; Book 168 uses Book 47, Proposition 9.1 for Hodge--Tate inheritance | ordinary attachment and the prime-to-two SP carrier are complete, but these books do not prove smooth-proper $(\mathrm{HT}_{\mathrm{curve}})$, compare the SP pair at the coefficient residue characteristic, or produce a packet lattice after semisimplification |
 | Book 142 | the Chebotarev density input used to recognize representations from their good Frobenius traces | no assertion that the field-theoretic towers satisfy automorphic selectors |
 | Book 180 | monomiality, the elementary projector and integral Brauer relation, induction/tensor/Mackey/determinant formulas, prime-cyclic refinement, the cyclic Clifford torsor, and Brauer--Nesbitt recognition | no packet construction, overlap identity, Gram positivity, or coefficient family is imported |
 | Book 182 | the exact conditional controlled SP datum: $\rho$, $M$, the distinguished top realization, the SP record, the finite descent-and-attachment ledger, and the common unramified elementary Galois pairs away from two | the missing controlled residual automorphic seed and bridge-readiness theorem are not supplied unconditionally, and no automorphic principal/dihedral type comparison is imported |
@@ -1933,10 +1933,11 @@ The selected descent datum constructs the finite packet array, and Book 182, Pro
 then proves ordinary attachment packet by packet; no separate all-elementary occurrence theorem
 is assumed. Books 127--128 and 168 supply the attachment and local-comparison theorems actually
 applied in Chapters 6 and 10. For an all-dyadic-split carrier, Book 168, Proposition 7.6A
-supplies the needed SP output without Book 122's finite integral comparison (10.5). The
-controlled minimal packet has only the even-degree parity carrier ramified at one dyadic
-factor, so the remaining source is exactly $(\mathrm{MDSP}_2)$ of Book 182, (7.7), or an
-equally strong direct special local--global theorem. In particular, the special scalar equality and
+supplies the needed SP output without Book 122's finite integral comparison (10.5). For the
+controlled even-degree parity carriers, Proposition 7.6B supplies the targetwise
+ramified-spectator output and removes the quadratic inertial ambiguity with two local CM
+classes. Thus the remaining prime-to-two premise is $(\mathrm{HT}_1)$, not
+$(\mathrm{MDSP}_2)$. In particular, the special scalar equality and
 raw-to-semisimple local-preservation identity must be available for every constructed packet and
 every coefficient place away from two. Proposition 6.1 proves the latter from
 $(\mathrm{HT}_1)$ by cuspidal absolute irreducibility and shows that coefficient extension,

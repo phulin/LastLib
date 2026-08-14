@@ -756,9 +756,74 @@ automorphic carrier split at every dyadic factor exists. In odd degree, $W=\varn
 provides one. In even degree an odd nonempty eligible $W$ disjoint from two would provide one,
 but the controlled minimal packet supplies no such away-from-two discrete-series factor.
 Choosing another dyadic special place for $W$ gives an ordinary basic carrier but violates the
-hypothesis on $B$. Thus the first remaining even-degree theorem is a mixed-dyadic carrier or
-an equally strong direct special local--global comparison, not the finite integral comparison
-(10.5).
+hypothesis on $B$.  Proposition 7.6B closes that apparent remaining case by using the parity
+place only as a deformation-rigid spectator and by calculating separately at each other
+dyadic target.
+
+**Proposition 7.6B (targetwise ramified-spectator SP comparison).**  Let $F$ have even degree,
+assume that $2$ splits completely in $F$, and let $\pi$ be a trivial-character cuspidal
+parallel-weight-two packet which is selected special at every $v\mid2$.  Assume
+$(\mathrm{HT}_1)$ for the finitely many basic one-split packet factors below.  Then, at every
+coefficient place of residue characteristic different from two, the semisimple system
+attached to $\pi$ has the full signed special pair at every dyadic place.
+
+**Proof.**  Fix a target $v\mid2$.  Since $[F:\mathbf Q]\ge2$, choose a second dyadic place
+$w\ne v$.  Let $B_w/F$ be ramified at every real place except the active one and at the single
+finite place $w$.  Its ramification set has even cardinality because $[F:\mathbf Q]$ is even.
+The selected special factor $\pi_w$ therefore lets Book 104 transfer $\pi$ to a packet
+$\Pi_{B_w}$ on this compact one-split curve.
+
+Choose two ramified quadratic extensions of $F_w=\mathbf Q_2$ whose quadratic characters have
+distinct restrictions to inertia.  Apply Book 118, Proposition 8.3A to each choice.  This
+gives CM extensions $L_i/F$, unitary PEL data with reflex fields $E_i$, and places
+$u_i\mid v$ such that $E_{i,u_i}/F_v$ is totally ramified of residue degree one.  Book 122,
+Proposition 10.2A constructs the target-Iwahori unitary curves and proves the raw pair
+$\operatorname{St}(\beta_v)$ on their selected packet factors.
+
+We justify that the selected unitary raw factors are the restrictions of the basic
+semisimple system; this is where neither an integral common-adjoint comparison nor a
+non-solvable automorphic base change may be inserted silently.  Use the generic
+common-adjoint construction from the proof of Book 118, Corollary 10.3A, with the oriented
+Iwahori at $v$ protected and all necessary shrinking at auxiliary odd places.  It gives, after
+a finite characteristic-zero field extension, a finite cover which pulls the nonzero
+$\Pi_{B_w}$ block into each unitary curve.  The actual target double coset is the same in the
+common adjoint group, so its unnormalized scalar is $\beta_v$.
+
+By $(\mathrm{HT}_1)$ and Theorem 7.6, the basic raw rank-two factor is absolutely irreducible
+and equals its semisimple realization $r_{\pi,\lambda}$.  Its restriction to every finite
+extension is semisimple by the finite-index Clifford argument.  Pullback identifies that
+restriction with the restriction of the selected two-dimensional unitary raw factor.  The
+latter is therefore semisimple as well: after passing to a normal finite-index subgroup, an
+equivariant splitting can be averaged over the finite quotient in characteristic zero.
+The common good Hecke polynomials and Chebotarev--Brauer--Nesbitt now give, over each reflex
+field,
+
+$$
+W^{\mathrm u}_{i,\lambda}\simeq
+r_{\pi,\lambda}|_{G_{E_i}}.                         \tag{7.11b}
+$$
+
+It remains to descend the local pair through the ramified quadratic completions; one such
+completion would not suffice because a ramified quadratic scalar twist becomes invisible
+after restriction.  Let $(r_v,N_v)$ be the Frobenius-semisimple Weil--Deligne pair of
+$r_{\pi,\lambda}|_{G_{F_v}}$.  From either restriction in (7.11b), $N_v$ has rank one.  On
+inertia, $r_v(\sigma)$ commutes with $N_v$ and has finite order.  The centralizer of a
+rank-one nilpotent in dimension two consists of $aI+bN_v$; a finite-order element there is
+diagonalizable, hence has $b=0$.  Thus inertia acts through one scalar character $\theta$.
+
+For $i=1,2$, the unitary special pair says that $\theta$ is trivial on
+$I_{E_{i,u_i}}$.  The quotient $I_{F_v}/I_{E_{i,u_i}}$ is detected by the restriction of the
+corresponding ramified quadratic character.  Those two inertia characters were chosen
+distinct, so the only scalar character trivial on both kernels is the trivial character.
+Hence $\theta=1$.  Finally the two extensions have residue degree one.  A geometric
+Frobenius in either local Weil subgroup differs from one in $W_{F_v}$ only by inertia, now
+known to act trivially on $\ker N_v$.  Equation (7.11b) therefore gives the original
+eigenvalue $\beta_v$, while ramification merely multiplies $N_v$ by a nonzero scalar.  This
+proves the full pair $\operatorname{St}(\beta_v)$ over $F_v$.
+
+Repeat the construction for every target $v$.  The parity place may be reused whenever it is
+different from the target; when there are exactly two dyadic places, interchange them.  Thus
+the targetwise carriers cover the complete dyadic SP record. $\square$
 
 There is a stronger optional ambient route.  For the finite collection of actual smooth
 projective curve carriers $C_i/E_i$ used to construct the packet family, impose
@@ -1233,15 +1298,16 @@ Propositions 2.3, 2.4, 10.2, 10.3, and Theorem 10.1 prove the coefficient, carri
 Then the prior books construct the following data.
 
 1. Choosing any dyadic singleton as the ramification set gives a compact curve carrier and hence a pure weight-one weakly compatible system with determinant $\chi_\lambda^{-1}$ in the untwisted geometric-Frobenius normalization.
-2. Such a carrier is ramified at one dyadic factor and therefore does **not** satisfy Book 122's dyadically tensor-split ledger. Complete splitting of two and the existence of another dyadic special place do not by themselves construct a raw SP pair.
+2. A single such carrier is ramified at one dyadic factor and therefore does **not** satisfy
+   Book 122's completely split dyadic ledger.  For each target $v$, however, one may choose
+   its parity place $w$ distinct from $v$.
 
-Assume in addition that there is an odd nonempty eligible set $W$ containing no place above
-two, and assume $(\mathrm{HT}_1)$ for the finitely many basic and unitary packet factors used
-below. Away from the dyadic places, retain only the good or separately recognized local rows
-actually available for $\pi$. Then:
+Assume $(\mathrm{HT}_1)$ for the finitely many basic packet factors used below. Away from the
+dyadic places, retain only the good or separately recognized local rows actually available
+for $\pi$. Then:
 
-3. The carrier attached to $W$ is split at every dyadic factor. The CM-unitary auxiliary
-   carrier of Proposition 7.6A constructs, for every target $v\mid2$, the algebraic raw pair
+3. The two ramified-spectator unitary carriers of Proposition 7.6B construct at each target
+   $v\mid2$ the algebraic raw pair
 
    $$
    D_v=\operatorname{St}(\beta_v),
@@ -1249,8 +1315,9 @@ actually available for $\pi$. Then:
    $$
 
    at every coefficient place away from two. The pair is pure of weight one, has conductor one, and has Euler polynomial $1-\beta_vT$.
-4. Theorem 7.6 makes the unitary raw factor globally semisimple, and Proposition 7.6A
-   identifies its semisimple realization with the restriction of the basic packet system.
+4. Theorem 7.6 makes the basic raw factor absolutely irreducible. Proposition 7.6B identifies
+   the two unitary raw factors with its semisimple restrictions and uses their distinct
+   ramified inertia kernels to descend the untwisted pair to $F_v$.
 5. At every coefficient place away from two, the basic semisimple member therefore has the
    full SP pair, sign, nonzero monodromy, and conductor one at every $v\mid2$.
 
@@ -1262,21 +1329,19 @@ $$
 
 It has determinant $\chi_\lambda$ and, at a good place, arithmetic-Frobenius polynomial $X^2-t_vX+q_v$. At a dyadic special place the untwisted geometric eigenvalues are $\beta_v$ on $\ker N$ and $2\beta_v$ on the quotient. Since $\beta_v=\beta_v^{-1}$, arithmetic Frobenius on $\rho^{\mathrm{cov}}_\lambda$ acts by $\beta_v$ on the quotient and by $2\beta_v$ on the monodromy line. This is the SP sign and line convention consumed downstream.
 
-The prior books do not supply the extra eligible set away from two from the dyadic hypotheses
-alone. They also do not construct a mixed-dyadic parahoric carrier for the dyadically ramified
-choice in item 1. The finite integral comparison (10.5) of Book 122 is not a remaining premise
-for the semisimple output: Proposition 7.6A bypasses it. Once an all-dyadic-split automorphic
-carrier exists, Theorem 7.6 reduces uniform prime-to-two preservation to
+Neither an eligible place away from two nor the finite integral comparison (10.5) is a premise
+for this semisimple output. Proposition 7.6B uses the dyadic parity place as a rigid spectator,
+and the second ramified CM choice removes the quadratic inertial ambiguity left by one
+totally ramified comparison. Thus Theorem 7.6 reduces uniform prime-to-two preservation to
 $(\mathrm{HT}_1)$ for the finitely many selected cuspidal packets. Proposition 7.7 records
 ambient semisimplicity as a stronger alternative, but the FLT packet array need not invoke its
 Faltings--Shafarevich source.
 
 **Proof.** A dyadic singleton satisfies Book 104's odd nonempty selected ramification
-condition, so Theorem 12.1 gives item 1. Proposition 7.2 explains why that carrier fails the
-dyadic tensor ledger and proves item 2. The added away-from-two set makes the second quaternion
-algebra split at every dyadic factor. Proposition 7.6A constructs the unitary raw pair and,
-using Theorem 7.6, transfers it to the semisimple basic system at every allowed coefficient
-place. Section 8.2 proves purity from $\beta_v^2=1$. Twisting, then inverting geometric
+condition, so Theorem 12.1 gives item 1. Proposition 7.2 explains why one carrier fails the
+completely split tensor ledger. Proposition 7.6B cycles the parity place and constructs the
+two ramified-spectator comparisons at every target; its local descent proves items 2--5.
+Section 8.2 proves purity from $\beta_v^2=1$. Twisting, then inverting geometric
 Frobenius, gives the final covariant formulas. $\square$
 
 ### 12.3 Variants and edge cases
@@ -1319,11 +1384,11 @@ member has been constructed.
 | weak family, determinant, good-place purity, and lattice boundary | Book 127, Theorem 8.1 | one-split compact curve carrier, full component-routing block, selected center embedding and splitting field; for split packets, a parity-compatible selected set $W$ | in even degree no eligible place gives no carrier; strict bad-place compatibility, a canonical rank-two lattice, and a finite-flat quotient are not supplied |
 | Weil-number calculus and good-place purity of curve $H^1$ | Book 37, *Weights and Weil Bounds for Curves and Abelian Varieties* | smooth proper curve over a finite field; geometric Frobenius; correspondence summand | it supplies no bad-place return-map weights |
 | good-polynomial field, conjugate packets, and saturated eigenlattices | Book 97, *Algebraicity and Integral Structures of Weight-Two Packets* | one absolute $\mathbf Q$-algebraic conjugation-stable finite Hecke module; raw $T_v,S_v$ normalization; isolating data; intersection with a fixed integral module | a relative model gives only embeddings over its base field; the full packet center can exceed the field of good values; good eigenvalues can name only a near-equivalence block |
-| eligible one-split packet | Book 104, *Global Jacquet--Langlands* | $F$ totally real of degree $d\ge2$; $(d-1)+|W|$ even; selected special or selected tame-dihedral factor at every $w\in W$ | in even degree no eligible place gives no carrier; a carrier for split-Iwahori geometry at $v$ must avoid $v$, while the dyadic tensor ledger further forces it to avoid every place above two; in odd degree $W=\varnothing$ clears these automorphic constraints |
+| eligible one-split packet | Book 104, *Global Jacquet--Langlands* | $F$ totally real of degree $d\ge2$; $(d-1)+|W|$ even; selected special or selected tame-dihedral factor at every $w\in W$ | in even degree no eligible place gives no carrier; Proposition 7.6B chooses a dyadic singleton $w\ne v$ separately for each target $v$; in odd degree $W=\varnothing$ clears the constraint |
 | curve realization and multiplicity | Book 125, *Automorphic Decomposition of Shimura-Curve $H^1$* | actual one-split compact curve; full component-routing orbit; full finite Hecke image; separating component idempotent; multiplicity two | no surface or modular-curve substitute is supplied; the raw representation need not be semisimple |
 | raw rank-two representations | Book 126, *Galois Representations from Weight-Two Shimura-Curve Cohomology* | full finite Hecke block, splitting field, common curve carrier, multiplicity two | oldspace dimension is not Galois rank; absolute irreducibility is not supplied |
 | determinant and good polynomial | Book 126 | component-twist covariance, polarization-compatible symmetric finite-module pairing, full good-model ledger, and the actual residue-field comparison | a quadratic relation alone may only annihilate Frobenius; residue degree changes the middle coefficient |
-| constructed raw split-Iwahori special pair | Book 122, *Semistable Models and Monodromy of Quaternionic Shimura Curves*, assembled in Book 128 | split quaternion algebra at $v$; a supplied PEL-exact parahoric realization with the complete odd-split or dyadically tensor-split ledger, including splitting at every dyadic factor in the latter case; component support; multiplicity one; raw unnormalized $U_v$ | the theorem proves $(\mathrm B_v)$ and rank-one $N$ on a supplied raw multiplicity space; Proposition 7.6A uses its unitary source and semisimple comparison to bypass the raw-to-raw integral map (10.5), but only when an automorphic carrier split at every dyadic factor exists |
+| constructed raw split-Iwahori special pair | Book 122, *Semistable Models and Monodromy of Quaternionic Shimura Curves*, assembled in Book 128 | split quaternion algebra at $v$; either the completely split unitary ledger of Proposition 10.2 or the single ramified extreme-CM spectator of Proposition 10.2A; component support; multiplicity one; raw unnormalized $U_v$ | the theorem proves $(\mathrm B_v)$ and rank-one $N$ on a supplied raw multiplicity space; Propositions 7.6A--7.6B use semisimple comparison and avoid the raw-to-raw integral map (10.5) |
 | tame principal, scalar-special, or dihedral parameter | Book 128, *Local--Global Compatibility for Weight-Two Galois Representations* | $v\nmid\ell$; the actual descent complex, type lines, monodromy branch, exchange maps, and every Frobenius return map | these are recognition criteria; they construct none of the missing tame return data for an arbitrary packet and cover no primitive wild row; raw-to-global passage is automatic only in the zero-monodromy principal and dihedral rows |
 | strict bad parameter at one residual-irreducible coefficient place | Book 128, Lemmas 9.1--9.2 and Corollary 9.3 | a stable lattice with absolutely irreducible residual reduction at that $\lambda$ | the argument is coefficient-place by coefficient-place and gives no uniform all-$\lambda$ SP record |
 | uniform nonzero-monodromy raw-to-global passage for selected cuspidal packets | Theorem 7.6, using Book 6, Section 11.5, Book 47, Proposition 9.1, Book 109, Section 9.5, and Book 128, Lemma 9.1 | $(\mathrm{HT}_1)$ for one-dimensional geometric constituents at each coefficient place | the rank-one local-algebraicity theorem and the geometric-subquotient passage are proved; the sole remaining source of $(\mathrm{HT}_1)$ is smooth-proper $(\mathrm{HT}_{\mathrm{curve}})$ of Book 47, (9.7); no Faltings semisimplicity is needed |
@@ -1339,13 +1404,12 @@ object as well as local preservation at every coefficient place away from two. B
 184--185 propagate that datum through characteristic-zero effectivity and base-field assembly
 but do not create it. Proposition 7.6A closes the geometric SP step whenever an automorphic
 carrier split at every dyadic factor is available; no integral comparison of that carrier
-with the basic curve is then needed. In the controlled even-degree minimal case, however,
-quaternionic parity supplies only a carrier ramified at one dyadic factor, and no eligible
-away-from-two discrete-series place is known. The remaining source is therefore a
-mixed-dyadic carrier theorem, or an equally strong direct special local--global comparison.
-After that source is supplied, Theorem 7.6 reduces uniform prime-to-two raw-to-global
-preservation exactly to $(\mathrm{HT}_1)$. The coefficient-prime integral bridge remains a
-separate boundary.
+with the basic curve is then needed. In the controlled even-degree minimal case, Proposition
+7.6B closes the parity boundary target by target: it chooses $w\ne v$, uses the extreme CM
+factor at $w$ as a rigid spectator, and uses two distinct ramified quadratic choices to descend
+the untwisted inertial record. Theorem 7.6 therefore reduces uniform prime-to-two
+raw-to-global preservation exactly to $(\mathrm{HT}_1)$. The coefficient-prime integral
+bridge remains a separate boundary.
 
 The downstream contract is therefore:
 
@@ -1426,21 +1490,19 @@ For the FLT SP carrier problem, another dyadic special place supplies a compact 
 carrier but not the dyadically tensor-split carrier required for the raw SP calculation:
 ramification at that auxiliary dyadic place violates Book 122's complete splitting hypothesis.
 If an odd nonempty eligible ramification set away from two exists, Proposition 7.6A uses Book
-122's unitary source and semisimple carrier comparison; it does **not** require the integral
-finite comparison (10.5). The controlled minimal packet supplies no such away-from-two
-discrete-series factor, so the remaining even-degree source is mixed-dyadic geometry, or an
-equally strong direct special local--global theorem. After that source is supplied, the
-prime-to-two all-embedding SP record assumed by Book 183 remains conditional only on
-$(\mathrm{HT}_1)$, not on ambient semisimplicity of every carrier Jacobian. The theorem also
+122's completely split unitary source. Without such a place, Proposition 7.6B uses the actual
+dyadic singleton carriers target by target. Neither route requires the integral finite
+comparison (10.5). The prime-to-two all-embedding SP record assumed by Book 183 is therefore
+conditional only on $(\mathrm{HT}_1)$, not on ambient semisimplicity of every carrier
+Jacobian. The theorem also
 makes no comparison at the coefficient residue characteristic, constructs no globally
 canonical lattice, proves no integral self-duality at denominator primes, and produces no
 finite-flat quotient.
 
-Thus the good-polynomial, determinant, conjugation, and weight-bound inputs are complete. With
-an all-dyadic-split eligible carrier, Proposition 7.6A and $(\mathrm{HT}_1)$ prove uniform
-strict SP compatibility without a raw-to-raw integral comparison. With only the
-parity-correct dyadically ramified carrier, the mixed-dyadic theorem just isolated is still
-missing. The coefficient-two dyadic comparison is not part of either conclusion.
+Thus the good-polynomial, determinant, conjugation, weight-bound, and prime-to-two SP inputs
+are complete once $(\mathrm{HT}_1)$ is supplied. Proposition 7.6A handles an
+all-dyadic-split eligible carrier and Proposition 7.6B handles the parity-correct dyadically
+ramified carriers. The coefficient-two dyadic comparison is not part of either conclusion.
 
 ### 13.4 Conclusion
 

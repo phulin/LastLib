@@ -972,6 +972,51 @@ must first fix the unique $(1,1)$ pair, hence fix the embedded field $F$, and mu
 the chosen embedding of $K$, since $d>1$ supplies an inactive pair distinguishing $(2,0)$
 from $(0,2)$.  Its fixed field is therefore $FK=L$.  This proves item 4. $\square$
 
+**Proposition 8.3A (one ramified dyadic spectator).**  Assume that $2$ splits completely in
+$F$, that $d=[F:\mathbf Q]>1$, and that $B/F$ is split at exactly one real place and has
+finite ramification set $\{w\}$ for one $w\mid2$.  For every second dyadic place $v\ne w$
+there is a CM quadratic extension $L/F$ with the following properties:
+
+1. $L/F$ is ramified at $w$ and split at every dyadic place different from $w$, in
+   particular at $v$;
+2. $L$ embeds in $B$;
+3. after choosing one CM embedding above every inactive real embedding, the construction
+   (8.3a)--(8.3d), with this $L$ in place of $FK$, is PEL-exact and has the same derived and
+   adjoint groups as the basic quaternionic datum; and
+4. if $E$ is its reflex field and $u$ is the place selected by the target $v$, then
+   $E$ contains the embedded copy of $F$ and $E_u/F_v$ is totally ramified with residue
+   degree one.
+
+Moreover the ramified quadratic class at $w$ may be prescribed.  In particular one may make
+two choices for which the corresponding local quadratic characters have distinct restrictions
+to inertia.
+
+**Proof.**  At $w$, choose a ramified quadratic field extension of $F_w=\mathbf Q_2$.
+Prescribe that local square class, the split square class at every other place above two,
+and the negative square class at every real place.  Each square class is open in the
+corresponding local multiplicative group, so ordinary weak approximation realizes all these
+conditions by one $a\in F^\times$; put $L=F(\sqrt a)$.  The negative real signs make $L$ CM.  Every
+ramified real place of $B$ remains a field in $L$, and the sole finite ramified place $w$ is
+ramified rather than split.  The embedding criterion of Section 8.5 therefore gives
+$L\hookrightarrow B$.
+
+The proofs of items 1--3 of Proposition 8.3 use only that $L/F$ is CM quadratic and embedded
+in $B$.  They apply verbatim after choosing, independently at each inactive real place, one
+of the two embeddings of $L$ above it.  The Hodge multiplicities are $(1,1)$ above the unique
+active real embedding and $(2,0)$, with its conjugate $(0,2)$, above every inactive one.
+Consequently an automorphism preserving the Hodge tuple fixes the unique active embedding of
+$F$.  Thus the reflex field $E$ contains that embedded copy of $F$.
+
+It remains to compute its completion at two.  Fix an isomorphism
+$\overline{\mathbf Q}_2\simeq\mathbf C$ carrying the active real label to the target $v$.
+Because two splits completely in $F$, the local Galois group fixes every $F$-embedding label.
+At all dyadic labels other than $w$, the two $L$-embeddings are already split over
+$\mathbf Q_2$.  At the label $w$, the extreme multiplicities $(2,0)$ distinguish the two
+embeddings of the prescribed ramified quadratic field $L_w/F_w$.  Hence the stabilizer of the
+local Hodge tuple is exactly the subgroup fixing that ramified quadratic field.  The local
+reflex field $E_u$ is therefore a ramified quadratic extension of
+$F_v=\mathbf Q_2$.  In particular its residue degree is one. $\square$
+
 The embedding hypothesis is explicit and easy to arrange in the applications.  By Section
 8.5 it is equivalent to requiring that no ramified place of $B$ split in $L$.  In particular,
 if the only finite ramification is a place above $2$, if $2$ splits completely in $F$, and if

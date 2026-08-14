@@ -3937,6 +3937,107 @@ integral comparison, not another local-model calculation. The proposition also b
 eligible pair $(B,K)$; it does not assert that a prescribed global ramification problem always
 admits such a pair.
 
+There is a second source which is better adapted to the even-degree parity carrier.  It uses
+one ramified dyadic factor only as a deformation-rigid spectator and keeps the chosen target
+factor split.
+
+**Proposition 10.2A (ramified-spectator dyadic target source).**  Retain the hypotheses and
+notation of Book 118, Proposition 8.3A.  Thus $B$ is ramified at the dyadic place $w$, the
+target $v\ne w$ is split in $B$, the CM extension $L/F$ is ramified at $w$ and split at every
+other dyadic place, and the local reflex extension $E_u/F_v$ is totally ramified of residue
+degree one.  Put $R=\mathcal O_{E,u}^{\mathrm h}$.
+
+One may choose the alternating scalar $\xi$, an $\mathcal O_L$-stable lattice in $B$, the
+strict inactive CM-type condition at $w$, a self-dual one-step chain at the target $v$, a
+decomposition-stable component union, and odd neat auxiliary level so that:
+
+1. the good unitary PEL curve is smooth and projective over $R$;
+2. the target-Iwahori curve is projective and flat, with active completed chart
+   $xy=2$; after the chain resolution of Chapter 5 it is strictly semistable;
+3. the two target branches, Hasse conductor, degeneracy maps, graph line, and raw target
+   correspondence are the base changes of the split target objects of Proposition 10.2; and
+4. for a selected special packet occurring on this unitary curve, Theorem 9.1 gives rank-one
+   monodromy and the full raw pair $\operatorname{St}(\beta_v)$ at $u$.  The scalar is the
+   original unnormalized target $U_v$ scalar, not its square.
+
+**Proof.**  Only the factor at $w$ is new.  Write $M=L_w$, so $M/\mathbf Q_2$ is ramified
+quadratic.  Since $M$ embeds in the division quaternion algebra $B_w$, choose a cyclic
+presentation
+
+$$
+B_w=M\oplus Mj,\qquad jz=c(z)j,qquad j^2=a,
+\tag{10.4a}
+$$
+
+where $a\in\mathbf Z_2^\times$ is a nonnorm unit.  Such a unit exists because the norm on
+valuations is onto for a ramified quadratic extension, while its norm subgroup has index two.
+In the displayed basis the reduced-norm Hermitian form is
+$H\simeq\langle1,-a\rangle$.  It is unimodular on
+$\Lambda_w=\mathcal O_M^2$.  Choose an integral generator $\delta$ of the different with
+$c(\delta)=-\delta$ and put $\xi_w=\delta^{-1}$.  The trace-dual formula
+
+$$
+(\mathcal O_M)^{\vee,\,\operatorname{Tr}(\xi_w x c(y))}
+=\xi_w^{-1}\mathfrak D_{M/\mathbf Q_2}^{-1}\mathcal O_M
+=\mathcal O_M
+\tag{10.4b}
+$$
+
+shows that $\operatorname{Tr}_{M/\mathbf Q_2}(\xi_wH)$ is perfect on $\Lambda_w$.
+It is genuinely alternating, including in residue characteristic two, because
+$H(x,x)\in\mathbf Q_2$ and $\operatorname{Tr}_{M/\mathbf Q_2}(\xi_w)=0$.  Weak
+approximation in the anti-invariant line globalizes this local scalar together with the real
+positivity signs; prescribed local lattices globalize as in Proposition 10.2.  At every other
+dyadic factor use the split self-dual lattice.  The resulting polarization has odd degree.
+
+We next calculate the entire new local model rather than appeal to a ramified-unitary slogan.
+The reflex place supplies an embedding $\varphi:\mathcal O_M\to R$.  For an $R$-algebra
+$A$, set
+
+$$
+S_A=\mathcal O_M\otimes_{\mathbf Z_2}A,\qquad
+I_\varphi=\ker(S_A\longrightarrow A),\quad
+z\otimes b\longmapsto\varphi(z)b.
+\tag{10.4c}
+$$
+
+Impose the strict extreme CM-type condition that $\mathcal O_M$ act on the rank-two Hodge
+quotient through $\varphi$.  If $\mathcal F_w\subset S_A^2$ is an $S_A$-stable direct
+summand with that quotient, the quotient map factors through
+$S_A^2/I_\varphi S_A^2=A^2$.  Its induced surjection between rank-two locally free
+$A$-modules is an isomorphism.  Hence necessarily
+
+$$
+\mathcal F_w=I_\varphi S_A^2.                         \tag{10.4d}
+$$
+
+Conversely (10.4d) is a rank-two direct summand, has the required quotient, and is
+self-annihilating for (10.4b): this may be checked after inverting two, where the two CM
+eigenspaces are opposite Lagrangians, and then follows integrally from perfectness and
+torsion-freeness.  Thus the flat inactive local model is exactly $\operatorname{Spec}R$.
+The strict action condition is closed, agrees with the generic $(2,0)$ determinant component,
+and rules out the extra nilpotent points which the naive ramified determinant equation alone
+could admit.  No smooth ramified unitary group scheme is being assumed.
+
+The other inactive dyadic factors are the split point factors of Proposition 10.2.  At the
+target $v$, both $B_v$ and $L_v$ are split, so the only moving good local model is
+$\mathbf P^1_R$ and the only moving chain model is the incidence model (3.1).  Therefore its
+bad chart is $xy=2$.  Since $E_u/F_v$ is totally ramified, this is a thickness-two node over a
+uniformizer of $R$ and its residue field is still $\mathbf F_2$.  Sections 3.3 and 5.1--5.3
+give the equivariant chain resolution; subdivision changes neither the cycle rank nor the
+Frobenius action and multiplies $N$ only by the nonzero ramification index.
+
+Finally repeat the projective-frame and flat-closure construction in the proof of Proposition
+10.2, now including the strict condition (10.4d).  Grothendieck--Messing deformation theory
+has no new tangent direction at $w$ because (10.4d) is the unique lift over every divided-power
+test ring.  The good and target-Iwahori local-model diagrams are therefore respectively
+smooth over $\mathbf P^1_R$ and over the displayed incidence model.  Properness is unchanged:
+$B$ is division, so the rational unitary Hermitian space has no nonzero isotropic $L$-subspace
+and the boundary argument of Book 121 applies.  The active height-two group, universal target
+isogeny, and oriented residue correspondence are literally those used in Chapters 3--9.
+Theorem 9.1 and ramified-base-change formula (5.1) now prove item 4.  Residue degree one is
+what retains $\beta_v$ rather than replacing it by $\beta_v^f$. $\square$
+
 ### 10.4 The exact comparison boundary
 
 Write $G$ for the basic quaternionic group, $G^{\mathrm u}$ for the group of (10.1), and
@@ -4039,9 +4140,11 @@ full SP pair transfers without extending (10.5) integrally.
 
 This later bypass does not weaken the hypotheses of Proposition 10.2.  In particular it still
 requires $B$ to be split at every dyadic factor.  It therefore removes (10.5) from the
-semisimple FLT interface when an all-dyadic-split automorphic carrier exists, but it does not
-construct such a carrier in even degree when quaternionic parity can be corrected only by a
-dyadic special place.
+semisimple FLT interface when an all-dyadic-split automorphic carrier exists.  Proposition
+10.2A supplies the complementary even-degree source: for a fixed split target it permits the
+parity place to remain ramified as an extreme-CM spectator.  Book 168, Proposition 7.6B uses
+two distinct ramified spectator fields to descend through the finite-inertia ambiguity and
+cycles the parity place over all targets.
 
 ### 10.6 Conclusion
 
@@ -4067,6 +4170,7 @@ including its unramified component field and expansion-one branch routing. Propo
 shows that this single boundary is exactly what remains before the mixed one-split packet can
 use the unitary source as its **raw basic-model** signed-special carrier, once an eligible pair
 $(B,K)$ has been supplied.  For the downstream semisimple packet system, Book 168's bypass
-removes this comparison whenever $B$ is already split at every dyadic factor.  The unresolved
-even-degree case is instead the construction of a mixed-dyadic carrier, or a direct special
-local--global theorem with the same output.
+removes this comparison whenever $B$ is already split at every dyadic factor. Proposition
+10.2A and Book 168, Proposition 7.6B also remove it for the targetwise even-degree parity
+carriers. The raw-to-raw comparison (10.5) remains a genuine stronger theorem, but it is no
+longer a premise of the semisimple FLT SP record.

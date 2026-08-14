@@ -957,34 +957,32 @@ comparison identifies it with the restriction of the basic packet system. Since 
 is split at two, the local fields are equal. Thus neither (10.5) nor an integral comparison of
 the two curve models is needed for the SP output consumed later.
 
-The exact remaining obstruction is now parity. In odd degree the Book 104 choice
-$W=\varnothing$ is split at every dyadic factor, so the unitary bypass closes the geometric
-step. In even degree the basic carrier of Proposition 6.1 uses a dyadic singleton to correct
-parity and therefore fails Book 122's complete dyadic-splitting ledger. Another dyadic special
-place does not help. An odd nonempty eligible set away from two would make the unitary bypass
-apply, but the controlled minimal packet supplies no such discrete-series place. Consequently
-the first unsupplied statement for the actual even-degree packets is:
+The parity case also has a source-closed targetwise construction. In odd degree the Book 104
+choice $W=\varnothing$ is split at every dyadic factor, so the preceding unitary bypass closes
+the geometric step. In even degree, fix a target $v$ and choose the singleton parity place
+$w\ne v$; complete splitting of two and degree at least two make this possible, including by
+interchanging the two places in degree two. Book 118, Proposition 8.3A constructs a CM
+quadratic extension ramified at $w$ and split at every other dyadic place. Its reflex
+completion over $v$ is totally ramified of residue degree one. Book 122, Proposition 10.2A
+proves directly that the extreme $(2,0)$ factor at $w$ is a rigid one-point integral local
+model, while the target retains the split incidence chart and raw $U_v$ line. Consequently:
 
 $$
 (\mathrm{MDSP}_{2}):\qquad
-\text{the mixed-dyadic parity carrier has the raw SP output (7.2) at each split target.}
+\text{the mixed-dyadic parity carrier has the raw SP output (7.2) at each split target}
 \tag{7.7}
 $$
 
-Here ``mixed-dyadic'' means that the carrier is ramified at one dyadic place $w$ and the
-comparison is made at a distinct split dyadic target $v$. The theorem must construct a proper
-semistable auxiliary curve whose selected packet plane has the oriented one-step Iwahori
-graph, rank-one monodromy, and raw $U_v$ scalar, or prove the identical special local--global
-comparison directly.
+as a theorem, target by target. One ramified quadratic comparison alone would leave open a
+scalar quadratic inertia twist. Book 168, Proposition 7.6B uses two ramified quadratic classes
+with distinct inertia characters. A rank-one-monodromy Weil--Deligne representation has
+scalar finite inertia, and a scalar character trivial on both distinct quadratic inertia
+kernels is trivial. Since both reflex extensions have residue degree one, the original
+Frobenius sign is retained. Cycling $w$ therefore proves the complete prime-to-two SP record.
 
-This is a local--global geometric theorem, not an automorphic-occurrence theorem. Its natural
-owner is Book 122 if proved by an integral model, with Book 128 consuming the resulting raw
-pair. Books 119--122 contain no Cerednik--Drinfeld uniformization theorem for a quaternion
-algebra ramified at the target place: the Drinfeld calculations in Book 122 concern level
-structures on the split height-two group and do not construct the required division-at-$w$
-curve or compare its split target factor. Thus that otherwise plausible alternate route is
-not already hidden in the corpus. A new volume and a broad principal/dihedral type package
-are both unnecessary.
+Thus (7.6)--(7.7) require no new volume, Cerednik--Drinfeld theorem, broad automorphic-type
+package, or raw-to-raw integral common-adjoint comparison. The only remaining premise for
+uniform passage to the semisimple packet array is $(\mathrm{HT}_1)$.
 
 ## 8. Auxiliary Galois comparisons
 
@@ -1109,11 +1107,9 @@ signed-special lift supplied by Book 181 under its explicit seed hypothesis. Ass
 1. a controlled chosen-lift refinement datum as in Chapter 3;
 2. a selected elementary descent ledger for the finite fixed-field diagram;
 3. the local hypotheses of Proposition 6.1 for every candidate packet;
-4. for every selected packet, either an all-dyadic-split eligible carrier to which Book 168,
-   Proposition 7.6A applies, or $(\mathrm{MDSP}_{2})$ of (7.7); and either
-   $(\mathrm{HT}_1)$ for the selected packet factors and any unitary auxiliary factors, or a
-   direct local-preservation certificate. The stronger $(\mathrm{SS}_{\mathrm{array}})$ may be used instead on a
-   direct raw carrier.
+4. $(\mathrm{HT}_1)$ for the selected packet factors required by Book 168, Propositions
+   7.6A--7.6B, or a direct local-preservation certificate. The stronger
+   $(\mathrm{SS}_{\mathrm{array}})$ may be used instead on a direct raw carrier.
 
 Then:
 
@@ -1130,10 +1126,10 @@ Then:
 **Proof.** The first assertion is Theorem 5.2. Propositions 6.1 and 6.2 give the second and
 third. Proposition 8.1 and the twisting and induction operations of Section 8.2 give the
 fourth. For an all-dyadic-split carrier, Book 168, Proposition 7.6A computes on the unitary
-auxiliary curve and transfers the pair semisimply. In the remaining parity case,
-$(\mathrm{MDSP}_{2})$ places the tuple (7.2) on a raw multiplicity space and (7.5) identifies
-that space with its global semisimplification; a direct certificate or (7.4) gives the stated
-alternatives. This proves the fifth assertion. $\square$
+auxiliary curve and transfers the pair semisimply. For an even-degree parity carrier,
+Proposition 7.6B uses the proved ramified-spectator source (7.7) and its two-kernel inertial
+descent. A direct certificate or (7.4) gives the stated alternatives. This proves the fifth
+assertion. $\square$
 
 The theorem has two exact conditional boundaries. The earlier one is the controlled residual
 seed summarized in Chapter 4. On the preferred split route, after the separate
@@ -1143,12 +1139,10 @@ unproved occurrence theorem $({\rm DLO}_{P_{\rm tar}})$; no preceding volume pro
 target-minimal support theorem and its clean bottom ledger. Book 176, Proposition 1.3 reduces
 DLO to the one-place outside-$\ell$ theorem $({\rm FLO}_v)$ with fixed away level; the present
 corpus contains neither the integral Mazur-principle proof nor the stronger scalar-support
-case. The later one is the
-mixed-dyadic $(\mathrm{MDSP}_{2})$ hypothesis of Chapter 7 for the even-degree parity
-carriers, together with the already isolated smooth-proper source of $(\mathrm{HT}_1)$.
-Book 168's unitary bypass closes the all-dyadic-split cases without (10.5), but basic carrier
-existence does not close the mixed case. Proposition 8.1 shows that neither input is needed for
-the auxiliary unramified pairs.
+case. The later one is now only the already isolated smooth-proper source of
+$(\mathrm{HT}_1)$. Book 168's two unitary bypasses close both the all-dyadic-split and
+targetwise parity cases without (10.5). Proposition 8.1 shows that even this input is not
+needed for the auxiliary unramified pairs.
 
 The mathematical progression is therefore linear:
 
@@ -1167,7 +1161,7 @@ $$
 \tag{9.1}
 $$
 
-On a separate final branch, the unitary auxiliary calculation or mixed-dyadic raw geometry,
+On a separate final branch, the completely split or ramified-spectator unitary calculation,
 together with $(\mathrm{HT}_1)$, preserves the nonzero monodromy line and sign across all
 relevant coefficient embeddings. Ambient semisimplicity is a stronger alternative for a
 direct raw carrier. That branch cannot be moved earlier and cannot be replaced by good
@@ -1176,10 +1170,9 @@ Frobenius traces.
 Thus this volume does not reconstruct the residual seed used before Book 181, and it does not
 claim an unconditional controlled top. It proves the chosen-point potential-automorphy and
 Galois-refinement implications from their exact hypotheses, proves the parity-complete basic
-attachment and auxiliary Galois comparisons, proves the semisimple unitary bypass in the
-all-dyadic-split case, and isolates precisely the mixed-dyadic geometric input and separate
-$(\mathrm{HT}_1)$ comparison needed to retain the signed-special local record in the later
-family.
+attachment and auxiliary Galois comparisons, and proves the semisimple unitary bypass in both
+the all-dyadic-split and targetwise parity cases. The separate $(\mathrm{HT}_1)$ comparison is
+the only remaining input needed to retain the signed-special local record in the later family.
 
 There is a final source-record distinction. The pre-point finite-image record in the FLT
 formalization asks for a module-finite Hecke coefficient model of the scalar-reduced universal
