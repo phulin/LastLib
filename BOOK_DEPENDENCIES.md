@@ -382,10 +382,15 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   requires the separately stated repeatability, flexibility, and realized-normal-closure
   hypotheses.  The literal marked-good-section form additionally retains Book 157's necessary
   finite-residue rational-point condition, but that stronger form is not used.
-  Book 158 imports this as a conditional implication for its singleton moving presentation;
-  its unconditional fine interior and point-centered local opens do not prove
+  Book 158 does not import this singleton chain into the FLT route.  Starting from its fine
+  interior and simultaneous split point-centered local opens, it chooses Book 154's moving
+  pencil simply branched; Book 153's transposition calculation gives a regular $S_d$ normal
+  top, and Book 155 specializes that top with total reality, complete splitting, and
+  closure-level avoidance.  Thus the split potential-modularity handoff needs none of
   $(\mathrm{IIT})$, $(\mathrm{MPE})$, $(\mathrm{ACE})$, $(\mathrm{TCG})_\Sigma$,
-  $(\mathrm{FTJ})_{v_0,Z}$, or $(\mathrm{ICS})_{v_0,Z}$.
+  $(\mathrm{FTJ})_{v_0,Z}$, or $(\mathrm{ICS})_{v_0,Z}$.  A stronger controlled seed with one
+  exceptional factor would still need its own common moving presentation and is not inferred
+  from this split theorem.
   In the multiplicative-$\ell$
   Frey branch, Book 157 constructs the one-prime good ordinary $\mathbf Q_\ell$ seed
   $({\rm Ord}^{\rm base}_\ell)$ carrying the exact selected $\ell$-model.  Its

@@ -783,12 +783,14 @@ available from the current manuscript.
    auxiliary residual representations. Match their determinant lines to one corrected
    Hilbert--Blumenthal tensor component, construct the smooth geometrically connected two-prime
    realization space, and export its simultaneous point-centered local opens without
-   redeveloping the underlying moduli or local geometry. The singleton moving and
-   normal-closure-avoidance presentation is conditional: Required $(\mathrm{IIT})$ must first
-   yield $(\mathrm{MPE})$, the full
-   $(\mathrm{ACE})$ package must be supplied, and then $(\mathrm{TCG})_\Sigma$,
-   $(\mathrm{FTJ})_{v_0,Z}$, and $(\mathrm{ICS})_{v_0,Z}$ remain the stated chain, together
-   with the separate repeatability, flexibility, and normal-sheet hypotheses.
+   redeveloping the underlying moduli or local geometry.  For the split FLT datum, strengthen
+   Book 154's moving pencil to a simply branched presentation.  Book 153's transposition
+   argument makes its generic normal closure a regular $S_d$-cover, and Book 155 then produces
+   a totally real Galois top, completely split at the controlled places and disjoint from the
+   full finite avoidance field.  Pulling back the universal object supplies both residual
+   systems and their named local models on one abelian variety.  This route neither assumes nor
+   proves a singleton mixed-packet theorem or a toroidal compactification; nonsplit exact local
+   algebras still require Book 154's separate common-presentation hypothesis.
 
 159. **Discriminants of Galois Representations** — Develop the general cutout-field, tower,
    compositum, conductor, matrix, lattice, and detailed three-adic exponent calculus. Import the
