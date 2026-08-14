@@ -41,8 +41,8 @@ this does not by itself lower an upper eigensystem to minimal level: injectivity
 old source once that source exists, whereas the application first needs to prove that the
 minimal source is nonzero. Section 1.7 checks the actual Frey target-extra places against
 Mazur principle and full outside-$\ell$ level optimization. It proves the finite-set induction
-from the exact one-place theorem, and identifies the arithmetic-model theorem still absent
-from this source chain.
+from the exact one-place theorem, and identifies the additional arithmetic-model theorem
+required by that optional route.
 
 The discussion of incidence complexes below serves these application theorems. It never
 forms a tensor product of full global one-prime cohomology complexes: the common global
@@ -108,11 +108,10 @@ multiplied.
   - [9.2 The hypotheses for a simultaneous theorem](#92-the-hypotheses-for-a-simultaneous-theorem)
   - [9.3 The potential-modularity consumer](#93-the-potential-modularity-consumer)
   - [9.4 The FLT boundary](#94-the-flt-boundary)
-- [10. Dependencies and conclusion](#10-dependencies-and-conclusion)
-  - [10.1 Mathematical source roles](#101-mathematical-source-roles)
-  - [10.2 Logical order and normalizations](#102-logical-order-and-normalizations)
-  - [10.3 The first unresolved inputs](#103-the-first-unresolved-inputs)
-  - [10.4 Final synthesis](#104-final-synthesis)
+- [10. Scope and conclusion](#10-scope-and-conclusion)
+  - [10.1 The direct finite-set theorem](#101-the-direct-finite-set-theorem)
+  - [10.2 The geometric alternative](#102-the-geometric-alternative)
+  - [10.3 Final synthesis](#103-final-synthesis)
 
 ## 1. The modularity-lifting application
 
@@ -196,17 +195,17 @@ possible proof of the blueprint theorem.
 
 ### 1.4 The application routes and their boundary
 
-The application has five routes, and their hypotheses must not be exchanged. With one active
-place, Theorem 7.1 applies to the scalar line-special family and Theorem 7.1A gives the
-corresponding conditional generic or vexing application on an independently constructed
-carrier. With several active places, a fully verified ordered chain applies those one-place
-results successively. Theorem 9.1 is instead an all-point simultaneous theorem, conditional
-on $({\rm FACE}_P)$, $({\rm CUBE}_P)$, $({\rm MIX}_P)$,
+The application has five routes, and their hypotheses must not be exchanged.  The later
+one-place discussion separates the scalar line-special family from the generic and vexing
+families, whose carriers must be constructed independently.  With several active places, one
+may instead verify an ordered chain of one-place comparisons.  A simultaneous all-point route
+would require $({\rm FACE}_P)$, $({\rm CUBE}_P)$, $({\rm MIX}_P)$,
 $({\rm PROD}_P)$, $({\rm JSUP}_P)$, $({\rm AUG}_P)$, and
 $({\rm REC}_P)$; on the iterated-switch route $({\rm PROD}_P)$ includes the integral
-Beck--Chevalley datum $({\rm IBC}_P)$. Finally, Theorem 9.2 treats one named point by using
-the torsion-free top of the actual final cube and the pointed occurrence of the one global
-component through that point.  The fifth route is the direct paired patching comparison
+Beck--Chevalley datum $({\rm IBC}_P)$.  For one named point, a smaller possible route uses the
+torsion-free top of an actual final cube and occurrence of the one global component through
+that point.  These alternatives motivate the constructions of the later chapters but are not
+used in the direct theorem below.  The fifth route is the direct paired patching comparison
 $({\rm IAV}_S)$ of Section 1.5; it proves the finite-set theorem without first proving any of
 the cubical hypotheses.  Section 1.5A records a second consequence: when its desired ring is
 the broad unipotent ring containing an unramified minimal quotient, exact recovery makes the
@@ -229,13 +228,14 @@ Second, for a finite ordered cube the total complex is reduced formally to succe
 quotient-new cubes. For two places its first homology is identified exactly with a mixed Ihara
 kernel; for three or more places the later kernels live on iterated-new quotients.
 
-The arithmetic inputs are not all presently theorems in the declared source chain. The core
+The geometric routes require arithmetic inputs beyond the local deformation theory.  The core
 finite-level comparison depends on the actual automorphic localization, the separate
 type-incidence and type-Ihara hypotheses, the one-boundary support datum, and the exact
 reciprocity order. The scalar family also uses an effective global ray quotient and strict
-twist identities; Book 174 constructs the strict one-place quotient and Proposition 8.3 below
-constructs the joint quotient, so their existence is no longer an external arithmetic input.
-Using them still enlarges the fixed spectator datum by their actual conductor places. The
+twist identities.  Book 174 constructs the strict one-place quotient.  A several-place
+geometric argument would additionally have to construct a joint quotient and enlarge the
+fixed spectator datum by its actual conductor places; this issue is outside the direct
+source-patching theorem.  The
 richer level-changing and component package additionally depends on a
 finite family of abelian Ihara vanishings, primitive type residue, and typed node
 uniformization when a switched carrier is used. The finite-set package further requires
@@ -406,7 +406,20 @@ $$
 therefore has $\mathcal O$-finite successive quotients.  Hence $A$ is
 $\mathcal O$-finite. $\square$
 
-Thus the nilpotent recovery (1.8), together with Lemma 1.1A, proves finiteness of the
+**Corollary 1.1B (full-support finite recovery).**  Let $R$ be a noetherian
+$\mathcal O$-algebra acting on a finite free $\mathcal O$-module $M$, and let
+$\mathbb T$ be its image in $\operatorname {End}_{\mathcal O}(M)$.  If
+$\operatorname {Supp}_R(M)=\operatorname {Spec}R$, then
+$\ker(R\to\mathbb T)$ is nilpotent.  Consequently $R$ is finite over $\mathcal O$, and every
+map from $R$ to a characteristic-zero field factors through $\mathbb T$.
+
+**Proof.**  Full support puts $\operatorname {Ann}_R(M)$ in the nilradical.  Since $R$ is
+noetherian, this annihilator is nilpotent.  The image $\mathbb T$ is finite over
+$\mathcal O$ because it is an $\mathcal O$-submodule of the finite free module
+$\operatorname {End}_{\mathcal O}(M)$.  Lemma 1.1A makes $R$ finite.  A map to a field kills
+the nilpotent kernel and therefore factors through $\mathbb T$. $\square$
+
+Thus the nilpotent recovery (1.8), together with Corollary 1.1B, proves finiteness of the
 **whole** desired ring, including its nilpotent
 thickening, whenever the finite Hecke action is $\mathcal O$-finite.  This does not make the
 canonical map injective.  It says only that topological full support plus exact recovery is
@@ -424,7 +437,7 @@ relations.  Sections 1.5C--1.5D keep the source action instead.  The balanced Wi
 makes its dimension equal to the diamond-source dimension; the avoidance source is a domain,
 so its finite action quotient cannot have a nonzero kernel.  The common special fiber then
 transfers support, and the horizontal component bijection lifts it to the reduced desired
-source.  This proves $({\rm CIAV}_S)$ in Theorem 1.1H.
+source.  This proves $({\rm CIAV}_P)$ in Theorem 1.1H.
 
 Book 67 supplies the tame equations but stops before the scalar calculation proved here.
 Books 143--145 supply the prime selection, synchronized shadows, source support, and
@@ -836,8 +849,8 @@ source.
 
 ### 1.5C Balanced patching, vertical cross-cotangents, and avoidance support
 
-This subsection records exactly what the strongest patching statements already proved in
-Books 143--146 contribute to the two missing assertions.  First dispose of the raw-versus-
+This subsection explains why patching after taking the global relation quotient does not by
+itself prove component specialization or full support.  First dispose of the raw-versus-
 horizontal distinction from Theorem 1.1C.  The nilradical $N_{\rm des}$ of the raw desired
 local ring vanishes after inverting $\varpi$, because its generic fiber is the reduced union
 of the unramified and special components.  Since the ring is noetherian, every element of
@@ -997,7 +1010,7 @@ $$
 But $\operatorname {Supp}_{C'}M'=V(x)$ and so it misses the component $V(y)$.  Thus residual
 occurrence, balanced freeness, an integral local source, sharp dimension, Cohen--Macaulayness,
 and exact augmentation still do not prove avoidance full support.  Once Book 145 has proved
-that the support is a union of components, the exact missing assertion is simply
+that the support is a union of components, full avoidance occurrence means
 
 $$
 \text{full avoidance occurrence}:\qquad
@@ -1635,8 +1648,8 @@ Book 145, Theorem 17.3 and Corollary 17.4, gives the nilpotent kernel in (1.8at)
 whole broad ring finite.  The map (1.8au) is obtained by imposing trivial inertia at every
 member of $P$, so its special fibre is a quotient of a finite-dimensional $k$-algebra.
 Finally, a characteristic-zero point of $R_L^{\rm SP}$ is also a point of
-$R_L^{\rm uni}(P)$; it kills the nilpotent kernel of (1.8at) and factors through the
-automorphic action.
+$R_L^{\rm uni}(P)$ after precomposition with (1.8au).  This composite kills the nilpotent
+kernel of (1.8at) and factors through $\mathbb T_L^{\rm uni}(P)$.
 
 There is no circularity.  The only characteristic-zero input is the independently supplied
 upper packet on the broad problem.  Finiteness is proved for the entire broad ring before any
@@ -1647,13 +1660,19 @@ already established whole-ring factorization. $\square$
 Theorem 1.1K,
 
 $$
-\dim_k(R_L^{\rm SP}/\varpi)<\infty,
+\dim_k(R_L^{\rm SP}/\varpi)<\infty.
 $$
 
-and every homomorphism from $R_L^{\rm SP}$ to a characteristic-zero field factors through the
-finite automorphic action.  Thus a later construction may use the finite special fibre to
-produce or isolate a minimal point and then invoke the same prepared target comparison to
-prove its automorphy; it does not require a second patch.
+For every homomorphism $x:R_L^{\rm SP}\to E$ to a characteristic-zero field, the composite
+
+$$
+R_L^{\rm uni}(P)\twoheadrightarrow R_L^{\rm SP}\xrightarrow{x}E
+$$
+
+factors through the finite action $\mathbb T_L^{\rm uni}(P)$.  Thus a later construction may
+use the finite special fibre to produce or isolate a minimal point and then invoke the same
+prepared target comparison to prove its automorphy.  This is the precise pointwise
+factorization, and no second patch is required.
 
 Theorems 1.1J and 1.1K are criteria for future arithmetic use.  They assert no auxiliary or
 target packet beyond the actual packet appearing in their hypotheses.  Their content is that,
@@ -1837,15 +1856,12 @@ diamond torsors, and exact module and acting-image augmentation.  Books 83--85, 
 arithmetic hypotheses and a nonzero minimal carrier are present.  Book 172 cannot create the
 carrier: its patched positive rank is inherited from residual occurrence at minimal level.
 
-No theorem in Books 83, 96, 104, 125--129, 139--175, or the FLT blueprint proves (1.17) for
-the specialization-dependent finite set.  Book 104 transfers an already existing packet
-between parity-compatible inner forms; Books 125--129 attach Galois representations to an
-already isolated packet; and Book 140 proves a conditional curve-geometric lowering theorem
-with component and branch-Smith hypotheses.  Consequently total definiteness makes the Ihara
-and carrier parts substantially simpler, but the first exact unresolved arithmetic statement
-on this optional exact-minimal route is $({\rm DLO}_{P_{\rm tar}})$, not saturation and not
-any optional node or toroidal comparison.  The preferred target-IAV route has the separate
-arithmetic boundary stated in Section 1.5A.
+The optional exact-minimal route therefore begins only after the
+specialization-dependent minimal localization has been shown nonzero.  Transfers between
+inner forms, Galois attachment, and conditional curve-geometric lowering all presuppose an
+actual carrier and do not create it.  Total definiteness simplifies the Ihara calculation,
+but $({\rm DLO}_{P_{\rm tar}})$ remains the additional arithmetic input for this route.  The
+preferred target-IAV route instead has the boundary stated in Section 1.5A.
 
 ### 1.7 Outside-$\ell$ level optimization and the actual Frey set
 
@@ -4014,8 +4030,9 @@ occurrence still does not prove its pointed joint-support clause.
 The direct route avoids both assertions.  Theorem 1.1C and Proposition 1.1D construct its
 local pair and synchronized residual systems.  Proposition 1.1E explains why quotient-first
 balanced patching does not suffice.  Proposition 1.1G instead constructs the expanded sharp
-source patch, and Theorem 1.1H proves unique horizontal specialization and full avoidance
-support there.  Its exact downstream conclusion is module augmentation together with a
+source patch.  Theorem 1.1C and Lemma 1.1F supply unique horizontal specialization; Theorem
+1.1H consumes it to prove full desired and avoidance support and faithfulness.  Its exact
+downstream conclusion is module augmentation together with a
 nilpotent finite-level kernel.  Thus the direct route has no remaining component theorem and
 does not require an acting-image saturation statement.
 
@@ -4054,8 +4071,9 @@ proof route. The geometric-cube route needs mixed integral control at finitely m
 semistable places, joint support, and finite-set reciprocity. The direct Ihara-avoidance route
 instead uses the paired finite-set local-ring comparison and synchronized residual
 automorphic shadows proved in Section 1.5B and the sharp source patch of Section 1.5D.
-Theorem 1.1H proves unique horizontal specialization and full avoidance support rather than
-assuming them, then recovers the desired finite-level module with nilpotent ring kernel.
+Theorem 1.1C and Lemma 1.1F supply unique horizontal specialization.  Theorem 1.1H consumes
+that geometry to prove full support and faithfulness, then recovers the desired finite-level
+module with nilpotent ring kernel.
 Finite-level reduced $R=T$ suffices for characteristic-zero modularity; exact equality of the
 acting image is the stronger optional conclusion of Corollary 1.1I and is not needed here.
 
@@ -4067,11 +4085,10 @@ gate is narrower: an actual final joint cube, its torsion-free top carrier, simu
 generic branch verification, finite-set reciprocity on that carrier, and occurrence of the
 single product component through the point.
 
-Neither the ordered nor the pointed alternative is presently unconditional in the declared
-source chain. For an ordered chain, the unresolved arithmetic occurrence is that after each
-completed change the next actual automorphic localization has support on the represented
-component of the named target, with its type and reciprocity hypotheses reverified on that
-new carrier. For the pointed cube, it is the single joint assertion
+The ordered alternative requires that after each completed change the next actual automorphic
+localization have support on the represented component of the named target, with its type and
+reciprocity hypotheses reverified on that new carrier.  The pointed cube instead requires the
+single joint assertion
 
 $$
 \mathfrak p_{\Xi_x}\in\operatorname{Supp}_{R_P}(Q_P^{\rm tf}),
@@ -4085,407 +4102,136 @@ through the common special fiber; Theorem 1.1H proves its exact source-patched c
 theorem under the displayed residual-image, local-factor, definite-module, and control
 hypotheses.
 
-## 10. Dependencies and conclusion
+## 10. Scope and conclusion
 
-### 10.1 Mathematical source roles
+### 10.1 The direct finite-set theorem
 
-The direct mathematical sources used here have the following roles and retained limitations.
+The direct argument has a simple logical order.  The prepared field first places every active
+prime in the scalar tame chart while preserving the selected dyadic, coefficient-prime,
+determinant, and ramification components.  An actual automorphic reference or upper packet
+then supplies a primitive definite eigenvector.  Its nonzero reduction produces the common
+residual localization from which both coefficient systems are built.  No minimal point is
+needed at this stage.
 
-| source | result used | limitation retained here |
-|---|---|---|
-| Book 6 | odd-exponent local--global character theorem and ray-class factorization used in Proposition 8.3 | supplies the joint scalar ray quotient, not mixed geometric exactness or product support |
-| Book 14 | coefficient-change universal-coefficient sequence, derived base-change morphisms, and compatibility under pasted squares | the formalism assembles supplied higher comparison maps; it does not construct the routed integral switching squares or prove their application-specific maps are quasi-isomorphisms |
-| Book 22 | nearby cycles, normalization and graph/component complexes for a semistable curve over one trait | distinct closed arithmetic fibers have empty intersection, so its one-trait functor does not iterate literally across $P$ |
-| Book 64 | flatness over a DVR, minimal primes, dimensions, and completed tensor products | proves the finite-set domain/equidimensional source passage in (1.8ah); it does not control an arbitrary later quotient |
-| Book 67 | framed tame matrix equations and the warning that scalar $Q\equiv1\pmod r$ is the maximally singular regime | the explicit calculation in Theorem 1.1C supplies the exceptional scalar theorem that Book 67 did not assert |
-| Book 69 | the strict-at-$T$ relative tangent space, relaxed dual obstruction group, exact source surjection (10.1), and fixed-determinant formula (10.7) | supplies the application-specific ledger used in (1.8ai0), (1.8ai1), and (1.8ak0); killing only the absolute dual group would not suffice |
-| Book 70 | the depth lemma, finite free resolutions, and Auslander--Buchsbaum used in both local Cohen--Macaulay calculations | the desired horizontal union is Cohen--Macaulay but not a complete intersection |
-| Book 83 | integral scalar definite class-set modules, reduced norm, and the norm-character subspace | finite class sets alone do not move support from an upper level to a minimal level |
-| Book 84 | one integral global $2^{|P|}$-fold degeneracy source at several definite-level primes and factorization of its Gram entries | constructs a common carrier and commuting maps, not primitivity of the sum of upper old images or exactness of the total quotient-new cube |
-| Book 85 | primary Hecke localization and the formal integral Ihara/saturation interface | formal localization does not prove either its arithmetic kernel calculation or lower-level occurrence |
-| Book 109 | Proposition 14.4 and Corollaries 14.5--14.6: recursive cyclic solvable preparation and descent with the local component selected by the lower-field representation | selectedness is required at every controlled place in $P\cup Z$, including the bottom components repeated at split dyadic and coefficient places; Galois invariance alone is not descent |
-| Book 118 | integral norm-quadric approximation for a norm-one quaternion group isotropic at one omitted completion | with the omitted split finite place it proves definite class-set Ihara, not level-lowering support |
-| Book 122 | the one-place Iwahori semistable PEL model, strict ray Kummer factors, completed actual-row tubes and $({\rm PNS}_v)_{\rm act}$, two branches, nodes, and integral component complex | treats one bad-residue trait with every other active level as spectator; supplies no iterated-switching Beck--Chevalley theorem |
-| Book 123 | the global level tower, transitive forgetting maps, and right adelic level translations | constructs commuting generic level maps but no mixed integral exactness or simultaneous residue fiber |
-| Book 124 | commutation of correspondences supported at distinct places, pull--trace adjunction, and common Hecke routing | commuting correspondences do not make their total cohomology cube exact or construct an inner-form-switching Beck--Chevalley comparison |
-| Book 125 | restricted tensor factorization of a packet block with one global two-dimensional multiplicity module | proves the generic concentration (8.14e) and identifies the generic part of Proposition 8.2B's actual joint carrier, not integral mixed saturation or product-component support |
-| Book 173 | neutral minimal modularity lifting and its coefficient-prime range | its equality is not applied to the conductor-one line-special ring with Kummer directions |
-| Book 138 | enhanced special lines, primary and companion lattices, tame twists, and exceptional local charts | local lattices do not prove type incidence, type Ihara, primitive residue, or global support; primitive wild types are excluded |
-| Book 139 | exact tree kernel of Theorem 6.1, and conditional saturation, duality, Gram, component, and branch sequences | after non-Eisenstein localization the exact kernel is the noncongruence quotient; its vanishing depends on $({\rm AIH}_{\mathscr F})$ at every actual constant flag level and is not a type-Ihara theorem |
-| Book 140 | conditional one-prime integral level change, node/definite comparison, equality of faithful orders, signed Gram calculation, and the constant generic-support/common-kernel deduction from Book 125 plus the corrected filtration | gives the coordinate switches and generic packet-label compatibility used in (8.16c), but no integral Beck--Chevalley 2-isomorphism; retains datum-specific node uniformization, routing, abelian Ihara, and the branch Smith correction |
-| Book 143 | Proposition 15.1 and Theorem 15.2: simultaneous Taylor--Wiles selection for residual local functors embedded in the unrestricted functor, with detector and padding fibres and the complete strict/relaxed defect ledger | the short formula for $q_0$ is available only when the detector set is nonempty, contains every old nonzero finite defect, the remaining finite defects vanish, and the stated invariant and real-place terms have the required values |
-| Book 144 | Lemma 18.1 and Theorem 18.2: finite-shadow synchronization, separately lifted diamonds, and paired systems after scalar extension | residual modules compare only after base change to the common nilpotent quotient unless the two kernels annihilate the reductions; uniform integral rank is an input, not a consequence of synchronization |
-| Book 145 | Theorem 17.3 and Corollary 17.4: source support, intermediate desired and avoidance actions, and module augmentation with nilpotent finite-level kernel | finite recovery passes through $R^{\rm des,raw}$, not directly through the presentation source; Corollary 17.5 gives exact acting-image augmentation only under its additional saturation hypothesis |
-| Book 146 | the abstract $R=T$ endgame and its separation of source support from arithmetic component hopping | its warning applies to arbitrary quotients; Theorem 1.1H avoids that architecture |
-| Book 152 | Theorem 20.5 and Propositions 20.6--20.7: fixed-$Q$ definite diamond freeness, cofinal constant-rank shadow retention, and finite-level nilpotent recovery from source support | the arithmetic stabilizer is defined coefficient-independently and must have order prime to $\ell$; varying-$Q$ uniform rank comes from conditional uniform minimal control or from the bounded-rank cofinal shadow argument |
-| Book 170 | order-valued Galois representation, factorization through represented local conditions, and the surjection (3.5) | requires every generic branch, integral coefficient-prime realization, reduced generic order, exact trace generation, and the conditional Book 140 comparison whenever used |
-| Book 172 | Section 7.2 and Proposition 10.1: the sharp absolute source and equal-dimensional source kernel-killing in the regular minimal case | supplies the proof pattern; the reducible desired lifting and scalar avoidance geometry are proved here |
-| Book 174 | enhanced one-prime type complex, typed generic-residue kernel equality from Book 125 after the typed filtration, scalar $q\equiv1$ family, primitive residue, one-prime support, exact fixed-prime augmentation, and auxiliary represented-ring/complex/module/pairing augmentation | $({\rm TIC}_v)$, $({\rm TIH}_{\mathscr F})$, $({\rm PRI}_{\rm type})$, $({\rm NU}_{\rm type})$, Book 125 applicability on the routed common cover, and $({\rm SUP}_v)$ retain their stated roles; support is topological and only one-place; auxiliary acting-order augmentation is only a surjection |
-| Book 175 | in the scalar line-special range, finite-level reduced one-prime comparison, finite flatness from the balanced enhanced presentation, pointwise characteristic-zero modularity, and, under a coherent unpadded $({\rm AUX}_Q)$ tower, equal-variable full patched and finite $R=T$, all enhanced characteristic-zero tangent--Selmer vanishings, and exact auxiliary acting-order augmentation; the ray twist transports these to the scalar family | without a coherent auxiliary tower, full equality is equivalent to the isolated branchwise torsion-cotangent theorem; no theorem for the generic or vexing rows and no simultaneous finite-set theorem is supplied |
+The desired and avoidance local rings have different generic geometry but the same residual
+geometry.  Theorem 1.1C gives their common nilpotent residual quotient, and Lemma 1.1F proves
+that the avoidance source is a Cohen--Macaulay domain while the reduced desired source is
+Cohen--Macaulay with unique horizontal specialization.  This specialization theorem belongs
+to the local geometry; it is an input to the support argument, not a consequence of support.
 
-The exact direct-dependency row is
+The global construction preserves that distinction.  Book 143 selects one ordered family of
+Taylor--Wiles primes from the common embedded residual functor and the complete strict-relative
+defect formula.  Book 152 constructs the desired and avoidance modules at each fixed
+auxiliary set.  Its varying-set theorem either uses uniform minimal control or passes to a
+cofinal constant-rank family while retaining every marked finite shadow.  Book 144 then
+patches the two systems along one path.  Their residual modules are compared only after base
+change to the common nilpotent quotient, while their source actions, pairings, adjoints,
+frames, and module coinvariants remain marked integrally.
 
-$$
-176\mid 6,14,22,64,67,69,70,83,84,85,109,118,122,123,124,125,138,139,140,143,144,145,146,152,170,172,173,174,175.
-\tag{10.0}
-$$
+Theorem 1.1H applies Book 145 to these paired sources.  Equal depth and dimension force the
+avoidance module to be faithful over the avoidance domain.  Full residual support crosses the
+common nilpotent quotient, and Lemma 1.1F's unique-horizontal specialization lifts that support
+to every desired component.  Reducedness then makes the desired source action faithful.  The
+finite-level conclusion passes through the intermediate ring
+$R_\infty^{\rm des,raw}$: exact recovery of that ring and of the module gives a nilpotent
+kernel in the finite Hecke action.  Corollary 1.1B therefore makes the whole desired ring
+finite and makes every characteristic-zero point automorphic.  Exact augmentation of the
+patched acting image is stronger and remains the optional conclusion of Corollary 1.1I.
 
-Books 22 and 122 are used directly only for the one-trait boundary in Section 8.5; neither
-supplies the asserted iterated-switch comparison, and (8.16a) rules out a literal common fiber
-on the original arithmetic base. Book 125 is used directly for
-(8.14c)--(8.14e), Proposition 8.2B, and also enters through Book 140's constant generic-support theorem and Book
-174's typed generic-residue theorem. Book 84 is the owner of the integral common definite
-degeneracy source. Book 152 is used directly both for the several-prime
-regular-refinement/augmentation boundary and for fixed-$Q$ definite diamond freeness,
-cofinal constant-rank retention, and nilpotent recovery in Proposition 1.1G and Theorem
-1.1H; none of these conclusions supplies mixed exactness. Within Books 138--141, 163, and 170--176, Book
-141 enters transitively through the type-support package. Book 69 supplies the strict
-relative source count (1.8ai0), (1.8ai1), and (1.8ak0), while Book 143 kills that relative dual structure
-and Book 144 separately lifts diamonds and scalar-extends the partial frames. Book 172 supplies
-the sharp-source precedent as well as the Section 1.6 minimal-side circularity analysis. Books
-83, 85, and 118 are used
-directly in Theorem 1.2.
-Book 164 is a downstream arithmetic synthesis, not a proof source. The mixed reduction
-(8.3)--(8.10), the exact DVR criterion (8.14g)--(8.14j), the commuting-projector and cubical
-contraction criteria, the torsion-free joint carrier, the parity inner-form cube, and the
-pointed annihilator reduction are proved here. The remaining
-sum-primitivity, integral Beck--Chevalley, and joint-component occurrence theorems are not
-imported from a later consumer.
-
-### 10.2 Logical order and normalizations
-
-The proof order is rigid:
-
-1. the represented local data are fixed without assuming Ihara or support;
-2. the proved $({\rm TPE}_v)$, together with $({\rm TIC}_v)$ and
-   $({\rm TIH}_{\mathscr F})$, gives the actual typed split
-   one-prime quotient and coefficient-base Tor-vanishing;
-3. independently, $({\rm AIH}_{\mathscr F})$ turns each constant tree kernel into residual
-   injectivity and supplies Book 139's corrected filtration;
-4. $({\rm PRI}_{\rm type})$ and, when used, $({\rm NU}_{\rm type})$ give the primitive
-   residue and switched graph comparison, while $({\rm SUP}_v)$ gives full topological
-   component support by its separate boundary-and-depth argument;
-5. finite-level reciprocity gives a surjection to a faithful finite Hecke order, whose
-   reducedness follows from its torsion-free semisimple generic action;
-6. Lemma 6.1 identifies the finite-level kernel with the nilradical and proves reduced
-   $R=T$;
-7. characteristic-zero modularity follows because points over domains kill that nilradical;
-8. for one active scalar line-special place, a coherent unpadded balanced $({\rm AUX}_Q)$
-   tower invokes Book 175's equal-variable argument and upgrades the comparison to full patched
-   and finite $R=T$;
-   without that tower, source reducedness is the exact alternative, while for several active
-   places the separate joint nilpotent problem remains; and
-9. numerical consequences are derived only after the relevant comparison has been proved.
-
-Thus no later ring equality proves an earlier Ihara or support statement, and no determinant
-valuation is used to kill a deformation kernel. At two places, one-place injectivity is used
-only to derive (8.6); it is not applied again to the quotient in (8.4). For a finite set,
-the all-point route assumes joint support only after mixed exactness and product residue have
-constructed and labelled the actual total carrier.  The pointed route has a different rigid
-order: construct the actual final cube; form $Q_P^{\rm tf}$ with its adjoint dual $K_P^-$; verify all generic
-product branches on that one carrier; only then invoke Book 170; and finally apply support on
-the component through the named point.  Neither reciprocity nor support is stated on a
-fictional tensor product of one-place global carriers.
-
-The direct finite-set route has its own independent order.  First the prepared field and an
-actual reference or upper packet fix every selected local component and prove nonzero
-residual occurrence.  Book 143 then chooses one auxiliary-prime family from the embedded
-residual functors and full defect ledger.  Book 152 constructs each fixed-$Q$ pair and passes
-to a cofinal constant-rank family; only then does Book 144 form the paired limit over the
-common nilpotent quotient.  Source support is proved before augmentation.  Finally Book 145
-recovers the intermediate desired ring and module, giving a nilpotent finite-level kernel.
-The broad target ring is therefore finite before its minimal quotient is used to select any
-characteristic-zero point.
-
-The normalization ledger is equally fixed. Frobenius is geometric in (2.1); arithmetic
-Frobenius is used only for the local matrix calculation (2.8)--(2.9) after explicit inversion.
-The good polynomial, adjoint, Gram matrix, and monodromy relation are (2.1)--(2.4). Scalar
-twisting changes the determinant by $\boldsymbol\chi_v^2$. Coefficient extension preserves
-these equations, while uniformizer-normalized lengths scale with ramification.
-
-### 10.3 The first unresolved inputs
-
-The first unresolved input for the constant level-change rows is the finite family of
-vanishings
+The prepared criteria separate the two arithmetic uses of this theorem.  Theorem 1.1J starts
+with an automorphic avoidance reference packet over the auxiliary prepared field and descends
+the desired packet when the selected-safe cyclic hypotheses hold.  Theorem 1.1K starts with an
+upper packet on the broad tame-unipotent problem.  Its primitive transfer proves residual
+nonvanishing, the source theorem makes the broad ring finite, and the quotient to the minimal
+problem has finite special fibre.  For a minimal point
+$x:R_L^{\rm SP}\to E$, it is the composite
 
 $$
-\left(H^1_{\mathrm{nc}}(\Gamma_D^v,k)^{\Delta_D}\right)_{\mathfrak m_D}=0
-\quad(D\in\mathscr F_v(Q)).
-\tag{10.1}
+R_L^{\rm uni}(P)\twoheadrightarrow R_L^{\rm SP}\xrightarrow{x}E
 $$
 
-Until (10.1) is proved in the declared odd-primary Shimura-curve range, the constant
-saturation, corrected component filtration, and raising/lowering conclusions that use them
-remain conditional. For the type rows, $({\rm TPE}_v)$ is proved by Book 174 from Book 122's
-actual-row theorem. Book 174, Proposition 3.0B also proves $({\rm TIC}_v)$ once the clean
-actual-stabilizer and unit-order coarse-descent datum has been verified; it is not an
-additional unresolved theorem after those hypotheses are matched. The first independent
-residual input is $({\rm TIH}_{\mathscr F})$, including the quotient-new injection (5.0d) in
-the nonbanal row. Its split complex does not follow from (10.1). Coefficient-one extreme residues additionally require
-$({\rm PRI}_{\rm type})$, and a switched graph--definite comparison additionally requires
-$({\rm AIH}_{\mathscr F})$, $({\rm PRI}_{\rm type})$,
-$({\rm NU}_{\rm type})$, Book 140's node-uniformization and Book 125 component-routing source
-condition. In the constant clean block, generic support and common-kernel equality are
-conclusions of Book 140, Section 8.3, relative to the separate abelian Ihara input. Under the
-typed parahoric, type-Ihara, primitive-residue, and actual routed-cover hypotheses, the typed
-generic-residue kernel equality is likewise the conclusion of Book 174, Proposition 6.3.
-Neither generic comparison is a further hypothesis once its displayed inputs are granted.
+that factors through the finite automorphic action.  Finiteness is established before such a
+point is chosen, so the construction is noncircular.
 
-For the core finite-level scalar theorem, the exact independent conditional inputs are
-$({\rm AUT}_v)$, $({\rm TIC}_v)$, $({\rm TIH}_{\mathscr F})$,
-$({\rm SUP}_v)$, and $({\rm REC}_v)$, with
-$({\rm AUX}_Q)$ whenever an auxiliary patch is used. Under $({\rm AUX}_Q)$ the represented
-rings, both adjoint complexes, modules, actions, and pairings augment exactly. At an isolated
-auxiliary level the acting-order map is initially only a surjection. If these data form the
-coherent unpadded tower at every depth, Book 175, Proposition 5.2 proves $({\rm GR}_v)$ and
-full base $R=T$ by equal-variable rigidity, after which the acting-order map is injective. The
-finite-level reduced comparison uses the proved $({\rm TPE}_v)$ and the constructed strict
-$({\rm RAY}_v)$ datum, and may instead be applied directly after augmentation without
-requiring that injectivity. Thus Theorem 7.1 remains conditional on the core geometric and
-reciprocity inputs even if (10.1) is proved. Conversely, once this core list is supplied, its
-formal reduced comparison does not require one to smuggle $({\rm AIH}_{\mathscr F})$ or
-$({\rm PRI}_{\rm type})$ into the word “support.” An argument formulated only for separated
-roots does not supply the $q_v\equiv1\pmod\ell$ enhanced-line case.
+The normalizations used in this argument remain fixed throughout.  Frobenius is geometric in
+the deformation polynomials; the local matrix calculation explicitly inverts it when
+arithmetic Frobenius is used.  Scalar twisting changes the determinant by the square of the
+character.  The $h$ diamond variables are distinct from the $4m-1$ partial-frame variables,
+and the strict-relative formula is evaluated before either family is added to the source.
+These conventions give the equality of source dimensions on which the depth argument rests.
 
-Without the coherent auxiliary tower, the additional one-prime hypothesis for full
-finite-level scheme-theoretic $R=T$ is precisely
+### 10.2 The geometric alternative
 
-$$
-R^{\mathrm{sp},1}\text{ is reduced}.
-\tag{10.1a}
-$$
+Geometric level change addresses a different problem.  At one place its incidence complex
+compares the two old maps with the new quotient.  At several places the corresponding object
+is a cube, and edgewise saturation does not control the intersections of old images.  For two
+places the first obstruction is the first homology of the incidence square; over the
+coefficient DVR it is the torsion in the quotient by the sum of the two old images.  Thus
+primitivity of each old image separately does not imply the required primitivity of their
+sum.
 
-Neither local reducedness of the special chart nor minimal $R=T$ proves (10.1a).
-Equivalently one may supply Book 175's branchwise torsion-cotangent theorem. With the coherent
-unpadded balanced tower, however, Proposition 5.2 proves (10.1a), the full patched equality,
-and every
-enhanced characteristic-zero tangent--Selmer vanishing without assuming reducedness of either
-patched ring. The flat dual-number countermodel in Book 175 shows why finite flatness and
-topological support alone would not suffice.
+Higher-dimensional cubes introduce the analogous iterated-new homology and residual
+hyper-Tor terms.  A geometric proof for all points must also compare the integral residue
+descriptions on different faces, retain their higher coherence, construct a joint carrier,
+and prove support on every relevant product component.  A proof for one named point can use
+the torsion-free top of the actual cube and ask only for the component through that point,
+but the carrier, its simultaneous branch labels, reciprocity action, and component occurrence
+still have to be established on that same object.
 
-For the finite-set theorem actually cited by the FLT blueprint, there is a narrower direct
-alternative to all of the level-change inputs just listed. It is $({\rm IAV}_S)$: the paired
-desired/avoidance local deformation rings, their common special fiber and horizontal local
-component bijection, and synchronized Taylor--Wiles systems of Section 1.5.  Theorem 1.1C
-proves the scalar paired local rings, including the nonreduced raw common fiber, and
-Proposition 1.1D proves the common-quotient residual comparison and finite-shadow recovery.
-Proposition 1.1E
-shows why first quotienting the local sources would leave genuine vertical and support gaps.
-The source-patching architecture does not make that quotient.  Proposition 1.1G applies
-Book 143 only after the embedded residual functors, nonempty detector, padding fibre, and full
-defect ledger have been verified.  Book 144 compares the two residual modules after base
-change to their common nilpotent quotient, while Book 152 supplies fixed-$Q$ freeness and the
-cofinal constant-rank tower.  Proposition 1.1G consequently patches over equal-dimensional
-local sources with the full partial-frame extension.  Theorem 1.1H proves full support on the
-integral avoidance source and unique horizontal specialization on the desired source.  It
-then uses Book 145's intermediate $R^{\rm des,raw}$ action to recover the finite-level module
-with nilpotent ring kernel.  These are the conclusions of $({\rm CIAV}_S)$, not additional
-antecedents.  Book 109 gives descent only after selectedness has been checked at every
-controlled component.  This proof forms no old--new cube and consumes none of the geometric
-level-change package.
+These cubical conditions are neither consequences nor hypotheses of the direct source-patching
+theorem.  They become relevant only when modularity is transported by old--new geometry.
+Conversely, the direct theorem does not prove mixed exactness or product residue; it avoids
+them by patching the final desired and avoidance deformation problems from the outset.  The
+two methods therefore have complementary scopes.  The geometric method follows level change
+through an incidence cube, whereas componentwise Ihara avoidance proves whole-source support
+through common residual geometry.
 
-The prepared applications are criteria, not assertions that their arithmetic packets have
-already been constructed.  Theorem 1.1J begins with an actual automorphic reference packet
-over the field prepared by Book 109, Corollary 14.5.  Theorem 1.1K begins with an actual upper
-packet on the broad tame-unipotent problem prepared by Corollary 14.6.  Its fresh primitive
-definite transfer proves the residual module nonzero, after which the paired source patch
-makes the broad ring finite and Corollary 1.1L makes its minimal special fibre finite.  A
-characteristic-zero minimal point is considered only afterward, and full desired support
-makes that point automorphic.  Thus the proof of finiteness neither assumes the point nor its
-automorphy, and the proof of automorphy uses the already constructed upper packet rather than
-the sought minimal packet.  Future arithmetic constructions may supply these packet inputs;
-the criteria themselves make no claim that they are presently available.
+### 10.3 Final synthesis
 
-Theorem 1.2 and Sections 1.6--1.7 retain a stronger optional route.  Definite Ihara does not
-prove that the upper residual block occurs at minimal level.  That route first needs
-$({\rm DLO}_{P_{\rm tar}})$, reduced to the one-place outside-$\ell$ theorem
-$({\rm FLO}_v)$ with spectators.  Its regular case is integral Mazur principle; at a
-repeated-root accidental place the stronger scalar-support assertion $({\rm SLO}_v)$ is
-needed.  After DLO, $({\rm CLN}_{\min})$ supplies the Book 173 ledger, and their conjunction
-is $({\rm DMS}_{P_{\rm tar}})$.  This optional route constructs exact minimal $R=\mathbb T$;
-it is not required for the preferred special-fibre and pointwise-automorphy chain.
+At one changed place, nonminimal modularity lifting is governed by one incidence complex.
+The two degeneracy maps identify the old lattice, the companion system records the integral
+adjoint, nearby cycles supply the graph residue, and the represented local ring names the
+desired component.  Once the actual automorphic carrier, support, and reciprocity action have
+been supplied, the annihilator argument identifies the deformation-to-Hecke kernel with the
+nilradical.  Characteristic-zero points therefore factor through the automorphic action.
+Full scheme-theoretic equality requires the additional reducedness or equal-variable input
+stated in the one-place theorem.
 
-If the geometric level-change route is used instead, then for two or more places the division
-of mathematical roles among the earlier sources separates
-what is already proved from what is not. Book 84, Section 11.9 supplies the common integral several-prime degeneracy
-source and its product Gram formula; Book 152, Proposition 11.1 owns its regular-refinement
-source splitting; Book 14 owns coefficient-derived comparison and pasting; and Book 145 owns
-the formal support implications. None of these proves the three arithmetic assertions below.
-The closest aliases do not close them: Book 96, Section 12.4 explicitly warns that an integral
-sum of old images can be nonsaturated; Book 140, Section 14.2 proves only the conditional
-external-product implication after the common-carrier comparison and cross-Tor vanishing have
-been supplied; and Book 156's two-prime product monodromy concerns a Hilbert--Blumenthal frame
-torsor, not a Hecke incidence cube or a semistable component complex. Books 174--175 state a
-strict one-place boundary. Thus the issue is not a missing cross-reference to an equivalent
-theorem in the preceding source chain.
-The intended geometric route must first verify $({\rm FACE}_P)$ and
-supply one joint coefficient descent and every component route at every spectator tuple and
-auxiliary shadow. The global level tower then constructs $({\rm CUBE}_P)$ formally as in
-Section 8.4. Given that cube,
-the first additional homological obstruction at a pair is
+Several-place geometric level change replaces that incidence complex by a cube.  Mixed
+homology, product residue, higher coherence, and joint component support belong to this
+geometric method because they control intersections among the old images.  They are meaningful
+and useful when one follows automorphic forms through successive level changes, but they are
+not needed for componentwise Ihara avoidance.  A pointed cube can reduce the support demand to
+one global component, though it still requires an actual carrier carrying all local labels at
+once.
+
+The direct finite-set theorem starts from different geometry.  Theorem 1.1C and Lemma 1.1F
+give the paired local sources and prove unique horizontal specialization.  Proposition 1.1G
+constructs synchronized source patches after the full residual, defect, rank, and recovery
+hypotheses have been verified.  Theorem 1.1H consumes the local specialization theorem:
+faithfulness over the avoidance domain transfers residual support to every desired horizontal
+component, and reducedness gives faithfulness on the desired source.  Module coinvariants and
+the intermediate represented ring then produce a nilpotent finite-level kernel.  Exact
+acting-image augmentation is optional.
+
+The prepared auxiliary criterion turns an actual avoidance reference packet into automorphy
+of every desired characteristic-zero point over the prepared field and descends the resulting
+packet under the selected-safe cyclic hypotheses.  The prepared target criterion uses an
+actual upper packet only to seed the common residual module.  It proves the broad unipotent
+ring finite before a minimal point is chosen.  If
+$x:R_L^{\rm SP}\to E$ is later produced, the composite
 
 $$
-\operatorname{Ob}_{v,w}=0
-\tag{10.2}
+R_L^{\rm uni}(P)\twoheadrightarrow R_L^{\rm SP}\xrightarrow{x}E
 $$
 
-for every actual spectator tuple and auxiliary shadow.  At the final coefficient-DVR level,
-Proposition 8.2A proves the exact equivalence
+factors through the finite automorphic action.  Thus the same source patch supplies both the
+finite special fibre used to locate a minimal point and the automorphy of that point.
 
-$$
-(10.2)
-\quad\Longleftrightarrow\quad
-M_{11}/\bigl(\operatorname{im}d_{v\mid1}
-+\operatorname{im}d_{w\mid1}\bigr)
-\text{ is }\mathcal O\text{-torsion-free}.
-\tag{10.2a}
-$$
-
-Thus the first missing two-place homological theorem is the primitivity of this **sum** of
-old images.  It is strictly stronger than primitivity of either summand, as
-(8.14k)--(8.14l) proves.  Over a larger face algebra, the corresponding theorem must also
-kill the maximal-ideal hyper-Tor shadows; coefficient-DVR saturation alone is insufficient.
-The commuting-old-projector criterion after Proposition 8.2A and the cubically compatible
-contraction criterion after Proposition 8.2 are valid sufficient routes, but their transverse
-commutation and product-image hypotheses are exactly extra several-place data. Book 84's
-product Gram entries verify them in the cubically compatible unit-Gram range, but not on the
-selected nonunit level-changing faces; Book 152's source refinement idempotents likewise do
-not verify them on the actual quotient-new cube.
-
-After (10.2), the intended geometric support proof still needs $({\rm IBC}_P)$ and the
-product-residue comparison to identify and transport the component boundary data.  The first
-exact geometric assertion is the construction of the maps (8.16d), their normalized
-two-face comparisons, three-face braid and chain-level fillers, all required higher coherence,
-and vanishing of (8.20). Formula (8.16b) already settles quaternionic parity and
-the final inner form, while (8.16c) settles only generic packet labels.  The torsion class
-(8.20a) proves that those generic facts do not settle the integral theorem.  The resulting
-joint-support assertion $({\rm JSUP}_P)$ must then still be proved. At three or more places,
-pairwise versions of (10.2) do not replace the higher mixed homology and Tor-independence in
-$({\rm MIX}_P)$. Simultaneous character and auxiliary specialization
-$({\rm AUG}_P)$ is needed where those specializations are used. Proposition 8.3 supplies its
-scalar ray quotient when $P_{\rm sc}\ne\varnothing$; (8.26) supplies strict product twisting
-only after the routed joint cube has been constructed. Its
-auxiliary part requires coherent exact augmentation of the total primary--companion cubes,
-which follows from one common equivariant auxiliary package satisfying the full vertexwise
-hypotheses of Book 174, Proposition 9.1 by (8.27a), but not acting-image injectivity for a
-direct finite-level reduced comparison. Finite-set reciprocity
-$({\rm REC}_P)$ is the further joint verification needed to apply Book 170 to the actual
-faithful image; no new trace-descent theorem remains after that verification. Under this entire list, Theorem
-9.1 proves finite-level reduced $R=T$ and pointwise modularity; full
-finite-set $R=T$ additionally requires $R_P$ to be reduced. None of the simultaneous
-mixed exactness, product-residue, or joint-support assertions follows from the present
-one-prime source chain.
-
-For the actual named point used downstream, Theorem 9.2 removes two unnecessarily strong
-demands from this list.  Proposition 8.2B gives a canonical finite free top carrier even when
-(10.2) fails, and the pointed support lemma needs only the global component through that
-point.  The first exact unresolved theorem on this shorter route is therefore:
-
-$$
-\mathfrak p_{\Xi_x}\text{ for the component carrying the full }P_{\rm act}\text{-tuple lies in }
-\operatorname{Supp}_{R_P}(Q_P^{\rm tf}).
-\tag{10.2b}
-$$
-
-Before (10.2b) can be used, all simultaneous generic branch and structural labels on this
-actual carrier must be verified; only then does Book 170 supply $({\rm REC}_{P,x})$.  Product
-residue remains one possible route to (10.2b), but is not a formal premise of the annihilator
-step.  Mixed exactness remains necessary for the stronger family, patching, and all-point
-$R=T$ interface, not for the bare factorization of this one characteristic-zero point.
-
-### 10.4 Final synthesis
-
-Nonminimal modularity lifting at one place is governed by one incidence complex. The two
-degeneracy maps identify the old lattice; the companion records the integral adjoint; nearby
-cycles give a primitive graph residue; the enhanced local deformation ring names the special
-component; and the order-valued Galois representation supplies the canonical surjection from
-deformations to Hecke operators. Constant abelian Ihara, type incidence, type Ihara, primitive
-residue, typed node uniformization, and support have different jobs and remain separately
-named. For the core finite-level comparison, the actual typed complex, one-boundary support,
-strict scalar twist, auxiliary control, and reciprocity hypotheses identify the
-deformation-to-Hecke kernel with the nilradical. This proves reduced one-prime $R=T$ and hence
-characteristic-zero modularity. Constant Ihara, primitive residue, and node uniformization
-enter exactly when their richer level-change and component conclusions are invoked. Global
-finite-level reducedness is the exact extra input for full finite-level $R=T$ if no coherent
-auxiliary tower is available. In the scalar line-special range, when that tower is retained,
-Book 175's equal-variable theorem proves full patched and finite one-prime $R=T$ and all
-enhanced tangent--Selmer vanishings without a reducedness hypothesis.
-
-The generic and vexing one-place application is deliberately separate. Theorem 7.1A proves
-the same reduced-image and characteristic-zero factorization once an actual carrier with full
-support and finite reciprocity has been constructed for the exact represented component. It
-does not manufacture that carrier from the scalar theorem. At a vexing place it retains the
-whole primary--companion block unless an integral signed direct factor and its support are
-independently available.
-
-The local arithmetic has a sharp division. Generic level raising with
-$q_v\not\equiv\pm1\pmod\ell$ produces a conductor-one special packet. A scalar
-$\ell$-power tame twist exists only at $q_v\equiv1\pmod\ell$ and moves a special packet from
-conductor one to conductor two while changing the determinant by the square of the character.
-At $q_v\equiv-1\pmod\ell$, the full primary--companion and Smith blocks must remain visible.
-
-For a geometric level-change proof at several places the new object is a cube. Its first
-two-place defect is the explicit module
-$\operatorname{Ob}_{v,w}$, the first homology of the total incidence square. Edgewise
-saturation does not make it vanish. Over the final coefficient DVR it is exactly the
-$\varpi$-torsion in the top joint-new quotient, so its vanishing is exactly primitivity of the
-sum of the two top old images. The split-edge torsion countermodel proves that generic
-concentration does not force this primitivity. Commuting old projectors or one cubically
-compatible contraction would force the required splitting, but separate unit-Gram projectors
-do not provide either certificate. Book 84 does provide the certificate on its common
-definite cube when every required face remains in the compatible unit-Gram range; the missing
-level-raising faces are precisely outside that conclusion. The global level tower constructs the coherent generic cube
-once the joint coefficient descent and component routes are supplied, and packetwise
-factorization concentrates its generic fiber in top degree. It leaves lower
-$\varpi$-power-torsion homology and, over a larger face base, the corresponding residual
-hyper-Tor problem. Distinct arithmetic fibers have no common closed stratum; product residue
-must therefore be formulated through the parity-correct iterated-switch cube or a genuinely
-new higher-dimensional interpolation. The final inner forms and generic packet labels commute,
-but the integral Beck--Chevalley homotopies, their higher coherence, and joint component support are
-further mixed conclusions, not definitions. Theorem 9.1 proves the all-point finite-set modularity conclusion
-when the actual face package, derived global cube, mixed exactness, product residue, joint
-support, simultaneous augmentation, and finite-set reciprocity are all supplied. Pairwise
-one-prime data do not supply those hypotheses.
-
-The standard direct finite-set proof has a different architecture. Its desired and
-Ihara-avoidance deformation problems agree on the raw special fiber by Theorem 1.1C, and
-their residual automorphic systems synchronize by Proposition 1.1D.  The transfer, reduced
-finite-level recovery, and conditional invocation of Book 109 are no longer separate missing
-theorems.  Proposition 1.1E proves that a quotient-first balanced/MCM patch would not imply
-vertical control or avoidance full support.  Proposition 1.1G instead patches over the
-equal-dimensional expanded local sources.  The avoidance source is a domain, so depth forces
-faithfulness there; the common raw special fiber and unique horizontal specialization then
-lift support to every desired component.  Theorem 1.1H thereby proves
-full avoidance support and unique horizontal specialization as the single reusable theorem
-$({\rm CIAV}_S)$.  Book 145 then recovers the finite-level module through the intermediate
-desired ring, with nilpotent ring kernel.  None of the mixed cube, product-residue,
-constant/type-Ihara, node, or separate joint-occurrence inputs is consumed, and exact
-acting-image augmentation is optional.  Lemma 1.1A further shows that nilpotent-kernel
-recovery to a finite Hecke action makes the whole noetherian desired ring finite.
-
-The prepared target criterion is Theorem 1.1K.  Once an actual upper packet on the broad
-unipotent problem is supplied, its primitive definite transfer proves nonzero residual
-occurrence, the protected dyadic and coefficient components remain selected, and the source
-patch proves the broad ring finite.  Corollary 1.1L then gives finite special fibre for the
-minimal quotient and automorphy of every characteristic-zero minimal point.  Neither target
-minimal occurrence nor exact minimal $R=\mathbb T$ is assumed.  Total definiteness proves the
-stronger optional Theorem 1.2 but is not needed for this special-fibre and pointwise conclusion.
-
-The definite lowering analysis remains a stronger optional route. The countermodel
-(1.15)--(1.16) shows why upper occurrence and residual monodromy zero do not produce minimal
-occurrence.  That route stops at $({\rm DLO}_{P_{\rm tar}})$ and the subsequent clean ledger,
-with Proposition 1.3 reducing DLO to $({\rm FLO}_v)$: Mazur principle in the regular regime
-and full scalar-support lowering at repeated-root accidental places.  These arithmetic
-theorems are not proved by definite Ihara or by the current conditional Book 140 comparison.
-No toroidal joining is involved in either route.
-
-For the actual named point downstream, the canonical torsion-free top quotient and its
-adjoint give a smaller honest carrier with the global module $W_\Pi$ occurring once. Theorem
-9.2 reduces pointwise modularity to simultaneous branch verification on that carrier,
-finite-set reciprocity invoked only afterward, and support on the single global component
-through the point. This bypasses mixed saturation and product residue at the annihilator step,
-but does not prove either missing theorem or allow nonflat augmentation to be ignored. The
-source chain therefore gives a bounded
-conditional but scheme-theoretically full scalar line-special one-prime theorem in the
-coherent auxiliary range, together with an exact conditional finite-set interface, without
-pretending that the unresolved geometric inputs are already available.
+The mathematical conclusion is therefore precise.  One-place level change, several-place
+cubical level change, and direct componentwise Ihara avoidance are distinct proof mechanisms.
+The first studies one incidence complex, the second studies its higher intersections, and the
+third transports whole-source support across common residual geometry.  For the prepared
+finite-set applications of this book, the third mechanism gives the required finiteness and
+pointwise automorphy without any mixed cube, node comparison, type-Ihara input, or augmented
+acting-image equality.
