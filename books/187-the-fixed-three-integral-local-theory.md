@@ -12,8 +12,8 @@
 8. [Gluing over the integers with two inverted](#8-gluing-over-the-integers-with-two-inverted)
 9. [The exact handoff to the Schoof endgame](#9-the-exact-handoff-to-the-schoof-endgame)
 10. [The conditional fixed-three theorem](#10-the-conditional-fixed-three-theorem)
-11. [Dependency and hostile audits](#11-dependency-and-hostile-audits)
-12. [Conclusion and readiness](#12-conclusion-and-readiness)
+11. [Dependencies and scope](#11-dependencies-and-scope)
+12. [Conclusion](#12-conclusion)
 
 ## 1. The rational member and the integral problem
 
@@ -23,23 +23,22 @@ The change from a compatible family to its member of coefficient characteristic 
 not a scalar extension of the original lift. It is the selection of another member of the
 same algebraic family. That distinction is the starting point of this book.
 
-Assume the controlled signed-special, or **SP**, top datum used by Books 183--185. The
-restricted conclusion of Book 185, which does not assume $(\mathrm{AI}_2)$, gives a number
-field $E$ and an away-from-two collection of actual continuous rank-two representations
+Assume the controlled signed-special, or **SP**, top datum used by Books 183--185. The selected
+conclusion of Book 185, Theorem 9.1, which does not assume $(\mathrm{AI}_2)$, gives a number
+field $E$, a place $\nu\mid3$, and an actual continuous rank-two representation
 
 $$
-\mathcal R^{(2)}=
-\left\{r_\lambda:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(E_\lambda)
-\right\}_{\lambda\nmid2}.
+(E,\nu,V),
+\qquad
+V:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(E_\nu).
 \tag{1.1}
 $$
 
-Here and below $\lambda$ ranges only over $\lambda\nmid2$. These members are semisimple and
-absolutely irreducible. They have cyclotomic determinant and one algebraic system of pure
-weight-one good Frobenius polynomials. At the rational prime two they have the same full SP
-Weil--Deligne object. This is not the tame-quadratic branch. Its finite Weil inertia is trivial
-and its monodromy is nonzero of rank one. Book 186, Theorem 7.1, packages the selection made
-below and proves explicitly that it uses only this away-from-two collection.
+This member is semisimple and absolutely irreducible. It has cyclotomic determinant, the
+common pure weight-one good Frobenius polynomials, clean support outside $\{2,3\}$, and the
+full SP Weil--Deligne object at two. This is not the tame-quadratic branch. Its finite Weil
+inertia is trivial and its monodromy is nonzero of rank one. Book 186, Theorem 7.1 packages
+these rational data.
 
 Choose a place $\nu\mid3$ and write
 
@@ -117,22 +116,20 @@ must begin. It does not provide any of the following.
   zero and one.
 - It does not select a globally stable lattice whose coefficient quotients are finite flat.
 - It does not make the characteristic-zero Brauer cancellation integral.
-- It does not certify unramifiedness at every auxiliary prime in its finite exceptional set.
 
 The first two omissions are not cosmetic. Prime-to-coefficient local--global compatibility at
 the rational prime three applies to members whose coefficient characteristic is not three. It
 does not apply to (1.3). An unramified three-local Weil--Deligne companion at another
 coefficient place does not prove that $V$ is crystalline over $\mathbf Q_3$.
 
-The last omission is equally important. Book 185 proves unramifiedness outside a finite set
-and removes an auxiliary prime only when its actual local comparison lies in the proved
-range. Equality of almost all Frobenius polynomials does not force inertia to be trivial at an
-omitted prime. A global group scheme over $\mathbf Z[1/2]$ therefore cannot yet be glued.
+Clean support is no longer an omission: Book 185, Proposition 8.3 proves it from the actual
+unramified algebraic Galois pairs and characteristic-zero direct-sum cancellation. It is not
+inferred from almost-all Frobenius equality.
 
-### 1.3 The two certificates needed here
+### 1.3 The coefficient-prime certificate and clean support
 
-We isolate the missing data rather than hiding them in the phrase “weight-two compatible
-system.”
+We separate the new coefficient-prime input from the clean-support theorem already proved
+upstream.
 
 The **coefficient-prime certificate** $(\mathrm C_3)$ is the assertion
 
@@ -149,17 +146,16 @@ filtered numerical assertions alone, applied to a proper period subspace, would 
 crystallinity of $V$. Section 2 gives two concrete ways an upstream geometric theorem can prove
 this certificate. It is a rational comparison certificate; no lattice is included in it.
 
-The **clean-support certificate** $(\mathrm U)$ is the assertion
+The **clean-support record** $(\mathrm U)$ is the assertion
 
 $$
 V\text{ is unramified at every rational prime }q\ne2,3.
 \tag{U}
 $$
 
-It is enough to verify $(\mathrm U)$ at the finite auxiliary set left by Book 185, since
-unramifiedness outside that set is already proved. A reusable version records at each such
-prime the algebraic unramified local pair and its Frobenius polynomial; this also extends the
-good-prime ledger needed for compatibility arguments.
+Book 185, Proposition 8.3 proves this statement using the algebraic unramified local pairs and
+actual characteristic-zero cancellation. The proof is recalled in Chapter 7 because those
+pairs, rather than weak compatibility, are what justify the global gluing.
 
 The local integral theorem of Chapters 3--6 uses $(\mathrm C_3)$ but not $(\mathrm U)$. The
 global gluing theorem of Chapter 8 uses both. This separation identifies exactly which part of
@@ -366,13 +362,13 @@ that source theorem once the actual positive packet carriers have been construct
 ### 2.5 The fixed-three positive-carrier theorem
 
 There is a direct geometric route to $(\mathrm{IC}_3)$ which is substantially weaker than
-the source-facing compatible-family arithmetic core.  Book 158, Theorem 5.1 and Book 182,
-Section 4.2 construct the exact split evaluated packet over $\mathbf Q_3$ together with the packets
-over $\mathbf Q_2$ and $\mathbf Q_\ell$.  The normal-top construction therefore makes $3$
+the source-facing compatible-family arithmetic core. Book 158, Theorem 5.1 and Book 182,
+Theorem 9.1 retain the exact split evaluated packet over $\mathbf Q_3$ together with the
+packets over $\mathbf Q_2$ and $\mathbf Q_\ell$. The normal-top construction therefore makes $3$
 split completely in $M$ and hence in every elementary fixed field.  After the top and one
 integral Brauer datum
 $\mathfrak B=\{(H_i,\theta_i,n_i)\}$ have been chosen, write
-$n_i=n_i^+-n_i^-$.  Book 182, Proposition 6.1 already supplies every corrected packet with an
+$n_i=n_i^+-n_i^-$. Book 182, Theorem 9.1 already supplies every corrected packet with an
 actual compact division-quaternion one-split basic carrier $X_i$ and its all-coefficient
 attachment, while Proposition 8.1 supplies its common unramified algebraic pair away from two.
 If $d_i=[M^{H_i}:\mathbf Q]$ is even, its finite ramification set can be one
@@ -537,7 +533,7 @@ $$
 
 Inducing $f_i^*$ and using (2.5f) embeds the correctly covariantly twisted raw plane into a
 finite power of $V(A_i)$.  A finite further power realizes the regular integral coefficient
-action exactly as in Book 129, Section 1.2. Proposition 6.1 of Book 182 identifies the
+action exactly as in Book 129, Section 1.2. Proposition 7.1 of Book 182 identifies the
 plane's semisimplification with the elementary representation used by Book 185.  Thus every
 clause of $(\mathrm{AVCar}_{3,\ell}^+)$ holds.  Neither the degree of $f_i$ nor $[E_i:F_i]$
 is required to be a unit: only a rational injection is used, and Book 129 later
@@ -1411,23 +1407,23 @@ has a common unramified algebraic Galois pair away from two.
 Algebraic finite twisting and Weil induction form the local positive and negative Mackey
 pairs, and actual global cancellation plus Krull--Schmidt gives a common rank-two complement.
 The distinguished member makes it unramified at $q\ne\ell$; complete splitting gives the same
-result at $q=\ell$.  Book 185, Proposition 8.3 therefore proves
-$(\mathrm{AUX}_{\mathrm{all}})$ and $(\mathrm{AUX}_\nu)$.  Proposition 8.2 concludes
-$(\mathrm{Cond}_2)$ and
+result at $q=\ell$. Book 185, Proposition 8.3 therefore proves
+$(\mathrm{AUX}_\nu)$. Proposition 8.2 concludes
 
 $$
+(\mathrm{AUX}_\nu)\Longrightarrow(\mathrm U),
+\qquad
 (\mathrm{Cond}_2)\Longrightarrow(\mathrm U).
 \tag{7.4a}
 $$
 
 Book 184's conductor identity gives an independent check: twisting an unramified rank-two
 factor by a finite Brauer character contributes twice the conductor of that character, and
-the local induction discriminants are coefficient-independent.  What remains unproved is not
-an AUX certificate but Book 182's stronger automorphic-type theorem.  At a nonspherical place
-that theorem requires the actual principal or dihedral descent comparison, including the
-prior tameness ledger, type or exchange lines, zero monodromy, and normalized return maps.
-This does not affect $(\mathrm U)$.  In particular the positive and negative Brauer terms may
-both be ramified while their actual rank-two complement is unramified.
+the local induction discriminants are coefficient-independent. Stronger automorphic-type
+comparisons would require principal or dihedral descent data, type or exchange lines, and
+normalized return maps. They are outside the scope of the clean-support theorem and
+unnecessary for $(\mathrm U)$. In particular the positive and negative Brauer terms may both
+be ramified while their actual rank-two complement is unramified.
 
 ### 7.3 Consequences of clean support
 
@@ -1747,6 +1743,9 @@ selected member is absolutely irreducible, that reducibility theorem already end
 preferred FLT chain. A prime in the cofinite certified good set transported by Book 186
 supplies the separate pure Frobenius polynomial only for the optional trace fallback.
 
+For the controlled selected-three input, $(\mathrm U)$ is not an additional hypothesis: it
+is the clean-support conclusion of Book 185, Theorem 9.1 and Proposition 8.3.
+
 **Proof.** Under $(\mathrm U)$, Section 7.3 supplies the unique finite-etale model at every
 odd prime other than three. Lemma 8.1 intersects these orders with the model constructed at
 three and gives $\mathcal G_I$. Section 8.3 glues the coefficient actions, transitions, and
@@ -1766,7 +1765,7 @@ the second choice. Different global lattices can still have different residual e
 classes and different monodromy thickness $s_2(T)$. The downstream category was designed to
 accept exactly this amount of nonuniqueness.
 
-## 11. Dependency and hostile audits
+## 11. Dependencies and scope
 
 ### 11.1 Direct prerequisites
 
@@ -1789,7 +1788,7 @@ The proof uses the following sources directly.
 | Book 128 | the exact good, tame-principal, and tame-dihedral local comparison criteria | the finite auxiliary blocker in Chapter 7 | an automorphic type name is not substituted for the geometric type and return-map package |
 | Book 129 | saturated geometric intersections, exact closure towers, commensurability transfer, coefficient change, and the fixed-three handoff | the geometric route and the proof architecture of Chapters 3--5 | no canonical geometric carrier or integral projector is claimed |
 | Book 161 | the Schoof category, its classification and filtration theorem, and the finite-level coefficient trace identity | Section 9 handoff and Theorem 10.2's Schoof-ready output | it does not select the coefficient place or construct the named tower |
-| Book 182 | the exact evaluated packets at $2,3,\ell$, the normal-top splitting mechanism, minimality away from $\{2,\ell\}$, and parity-complete basic attachment of every elementary candidate | the split-three and basic-carrier inputs to Section 2.5 | it does not construct the separate auxiliary-prime descent complexes audited below |
+| Book 182, Proposition 7.1 and Theorem 9.1 | the selected packet array at $\nu\mid3$, the exact evaluated packets at $2,3,\ell$, the normal-top splitting mechanism, and parity-complete basic attachment | the split-three, selected raw-to-global, and basic-carrier inputs to Section 2.5 | no uniform all-coefficient packet or stronger automorphic types are used |
 | Book 185 | the $(\mathrm{AI}_2)$-independent away-from-two members, actual characteristic-zero Brauer cancellation, all-place algebraic Galois local complements, the AUX certificates, clean support, and the common pure polynomial ledger | the rational input and finite clean-support theorem in Chapter 7 | no coefficient-two member, coefficient-prime comparison, automorphic-type identification, or integral lattice is imported |
 | Book 186 | selection of the actual member at $\nu\mid3$, its determinant, pure good polynomials, clean support from Book 185, and its full signed SP pair at two | the rational starting object, clean support, and dyadic local data | its theorem explicitly uses no $(\mathrm{AI}_2)$ and supplies no coefficient-prime comparison, lattice, or tower |
 
@@ -1842,9 +1841,9 @@ finite-flat existence to the semisimplification. The direct common-norm obstruct
 remains valid; it is bypassed by a CM-unitary common-multiplier group, not repaired by changing
 the direct order or pure quaternion.
 
-There is no remaining local-support obstruction.  Book 185, Proposition 8.3 proves
-$(\mathrm{AUX}_{\mathrm{all}})$ and $(\mathrm{AUX}_\nu)$ by equivariant Galois comparison
-and actual Brauer effectivity.  Proposition 8.2 records
+There is no remaining local-support obstruction. Book 185, Proposition 8.3 proves
+$(\mathrm{AUX}_\nu)$ by equivariant Galois comparison and actual Brauer effectivity.
+Proposition 8.2 records
 
 $$
 (\mathrm{AUX}_\nu)\Longrightarrow(\mathrm U),
@@ -1915,8 +1914,8 @@ place $\nu\mid3$ belongs to the away-from-two collection constructed without
 $(\mathrm{AI}_2)$, and Book 186 transports every rational datum used here. A hypothetical
 member at a coefficient place above two never enters the lattice, local, or gluing arguments.
 
-**Attack: the blueprint's `integralModelsAway` record is a hidden input.** It is not. That
-record proves one integral statement for every odd coefficient place. This book constructs
+**Attack: family-wide integral models are a hidden input.** They are not. Such a theorem
+proves one integral statement for every odd coefficient place. This book constructs
 the only instance consumed downstream, at the chosen $\nu\mid3$. Its use of every odd
 rational prime in Chapter 8 is clean-support gluing for this one tower, not a return to the
 family-wide record.
@@ -1954,7 +1953,7 @@ tower from Books 42, 54, and 129 and verifies membership in Book 161's category.
 supplies the actual classification and finite-level identity; Book 188 consumes both the tower
 and that imported theorem package.
 
-## 12. Conclusion and readiness
+## 12. Conclusion
 
 ### 12.1 The mathematical conclusion
 
@@ -1992,30 +1991,18 @@ finite-flat model at three intersect to one Hopf order over $\mathbf Z[1/2]$. Co
 transition maps, exact sequences, determinant, and duality glue with it. The resulting tower
 is precisely the input to Book 188's conditional Frey--SP reducibility theorem.
 
-### 12.2 Readiness verdict
+### 12.2 The completed handoff
 
-The positive good-abelian carriers and the fixed-three integral construction are complete.
-The direct argument removes $(\mathrm{IC}_3)$ as an independent field of the admitted
-compatible-family arithmetic core. Book 185, Proposition 8.3 removes
-$(\mathrm{Cond}_2)$ as a second independent field and proves clean support at every auxiliary
-prime.  Thus Theorem 10.2 is Schoof-ready from the controlled rational family; the stronger
-automorphic-type comparisons are not required.
+The positive good-abelian carriers and the fixed-three integral construction now meet without
+an extra family-wide integral hypothesis. Book 178, Theorem 12.2 provides the earlier
+restricted signed-special fibre and retained support; Book 182, Proposition 7.1 and Theorem
+9.1 provide the selected packet at $\nu\mid3$; and Book 185, Proposition 8.3 proves clean
+support from the actual auxiliary Galois pairs. The unitary good carrier then supplies the
+coefficient-prime finite-flat input for this same selected member.
 
-Therefore the unconditional FLT dependency status of this book is
-
-$$
-\boxed{\textbf{READY}.}
-\tag{12.1}
-$$
-
-Book 182 supplies the controlled top on the preferred selected-three route. The split moving
-specialization, selected ascent and descent, packet
-attachment, fixed-three raw-to-global comparison, and clean auxiliary support are now proved.
-Book 176, Theorem 1.1H and Corollary 1.1I prove the auxiliary and target instantiations of
-$({\rm CIAV}_P)$ separately; no clean minimal-SP seed is required.
-The raw dyadic carriers are supplied targetwise by Books 118, 122, and 168, and the selected
-coefficient-three raw-to-global step is supplied by the finite-flat bridge of Books 54 and
-168; full smooth-proper $(\mathrm{HT}_{\mathrm{curve}})$ remains necessary only for the
-optional uniform all-coefficient packet statement. The AUX Galois comparisons are proved
-once the controlled top is supplied. Book 182's stronger automorphic-type theorem remains
-open, but it no longer lies on the clean-support path.
+Consequently Theorem 10.2 hands Book 188 one globally stable lattice and one compatible
+all-level finite-flat tower over $\mathbf Z[1/2]$. The tower is finite flat at the selected
+base prime $3$, finite etale at every other odd base prime, and retains the coefficient action,
+determinant, transition maps, and signed-special filtration at $2$. A uniform packet at every
+coefficient place and stronger prescribed automorphic types are outside this construction and
+unnecessary for the final contradiction.

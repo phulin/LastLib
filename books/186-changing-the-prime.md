@@ -34,7 +34,7 @@
    - [Coefficients and compatibility](#92-coefficients-and-compatibility)
    - [Integral and residual boundaries](#93-integral-and-residual-boundaries)
    - [Dependency boundary](#94-dependency-boundary)
-10. [Mechanical audit](#10-mechanical-audit)
+10. [Conclusion](#10-conclusion)
 
 ## 1. Scope
 
@@ -68,11 +68,11 @@ every base prime outside $\{2,3\}$, because those local conditions glue the towe
 $\mathbf Z[1/2]$. Thus ``one coefficient place'' must not be confused with ``one rational
 base place.''
 
-Books 182--185 construct the input used below on the preferred fixed-three route, which does
-not require the uniform raw-to-global
-Hodge--Tate source: Books 54, 168, and 183 use the good-reduction finite-flat structure at the
-chosen place above $3$ to obtain packet irreducibility and preserve SP there. The remaining
-ascent/descent ledger is supplied by the proved auxiliary and target applications of Book 176.
+Book 178, Theorem 12.2 supplies the restricted signed-special finite fibre and retained
+support. Book 182, Proposition 7.1 and Theorem 9.1 then construct the selected packet array and
+its member at the chosen place above $3$. Books 183--185 turn that member into the effective
+base-field representation used below. No uniform all-coefficient raw-to-global theorem is
+part of this route.
 
 Throughout, Frobenius is arithmetic and
 $\chi_q(\operatorname{Frob}_v)=v$ for $v\ne q$.
@@ -84,8 +84,12 @@ input consists of the following supplied data.
 
 ### 2.1 The family and its coefficient field
 
-There is a number field $E$, a place $\lambda_p\mid p$, and an away-from-two
-compatible collection
+The preferred input is the selected conclusion of Book 185, Theorem 9.1: a number field $E$,
+a place $\nu\mid3$, and one actual member $V_\nu$ over $E_\nu$, together with the determinant,
+common pure good polynomials, clean support, restriction recovery, and dyadic SP pair listed
+below. No representation at a second coefficient place is assumed.
+
+Optionally, this member may be displayed inside an away-from-two compatible collection
 
 $$
 \mathcal R^{(2)}=\{r_\lambda:G_{\mathbf Q}\longrightarrow
@@ -93,25 +97,15 @@ $$
 \tag{2.1}
 $$
 
-of continuous absolutely irreducible rank-two representations. The member $r_{\lambda_p}$
-is the distinguished Frey lift after a stated common scalar extension. Every
+of continuous absolutely irreducible rank-two representations. In that display the member
+$r_{\lambda_p}$ is the distinguished Frey lift after a stated common scalar extension. Every
 coefficient enlargement needed to define the family and its local parameters has
 already been made. In particular, $E$ in (2.1) is the final coefficient field,
 not a temporary trace field.
 
-Under Book 185's hypothesis $(\mathrm{AI}_2)$, (2.1) extends to an all-finite-place
-compatible system. Without $(\mathrm{AI}_2)$, Book 185 still constructs exactly the
-away-from-two collection displayed here. Both $\lambda_p$ and every $\nu\mid3$ belong to
-that collection. Thus the coefficient-three route in this chapter does not use
-$(\mathrm{AI}_2)$ and makes no selection at a coefficient place above $2$.
-
-For the fixed-three route, the weaker alternative input is Book 185, Proposition 9.2: one
-place $\nu\mid3$ and its actual member $V_\nu$ over the final completion $E_\nu$, together
-with the determinant, common pure good polynomials, clean support, restriction recovery, and
-dyadic SP pair listed below. In this alternative every occurrence of $r_\nu$ means $V_\nu$;
-no representation at a second coefficient place is assumed. Sections 3--7 inspect only this
-member, so both inputs give the identical conclusion. In this selected-member reading, every
-universal quantifier over $\lambda$ in Sections 2--3 is specialized to $\lambda=\nu$.
+In the preferred reading every occurrence of $r_\nu$ means $V_\nu$. Sections 3--7 inspect only
+this member, so every universal quantifier over $\lambda$ in Sections 2--3 may be specialized
+to $\lambda=\nu$.
 
 There is a finite certified exceptional set $S$, containing $2$, such that for every
 rational prime $v\notin S$ there is a polynomial
@@ -218,9 +212,9 @@ irreducible member; Book 128, Lemma 3.2 passes its unramified pair to the elemen
 semisimplification; and actual Brauer direct-sum cancellation constructs the common rank-two
 local complement.  The distinguished member makes that complement unramified away from $2$
 and the old coefficient prime, and the split unitary good cover treats that old prime.  Thus
-Book 185 proves $(\mathrm{AUX}_{\mathrm{all}})$ and $(\mathrm{AUX}_\nu)$,
-$(\mathrm{Cond}_2)$, and then $(\mathrm U)$
-for every $\nu\mid3$.  The argument also supplies an exceptional-prime Galois Frobenius
+Book 185 proves $(\mathrm{AUX}_\nu)$ and then $(\mathrm U)$ for the selected $\nu\mid3$.
+Under the optional uniform hypotheses it also proves $(\mathrm{AUX}_{\mathrm{all}})$ and
+$(\mathrm{Cond}_2)$. The selected argument also supplies an exceptional-prime Galois Frobenius
 polynomial, but not its weight-one purity or an automorphic-type identification.
 
 ## 3. The special parameter at two
@@ -633,10 +627,10 @@ Then:
 No assertion about residual absolute irreducibility, crystallinity at $3$, or
 finite flatness at $3$ is included unless the corresponding entries in the
 ledger of Section 6.3 have separately been certified. The theorem does not require
-$(\mathrm{AI}_2)$; it uses only the away-from-two collection (2.1).
+$(\mathrm{AI}_2)$; it uses the selected conclusion of Book 185, Theorem 9.1.
 
-**Proof.** Clause 1 and the good-prime part of clause 2 follow from selection of the member in
-(2.1), the common pure polynomials, and the determinant identity. The final support statement
+**Proof.** Clause 1 and the good-prime part of clause 2 follow from the selected input (or its
+optional display in (2.1)), the common pure polynomials, and the determinant identity. The final support statement
 in clause 2 is exactly $(\mathrm U)$. Because the coefficient characteristic of $V$ is $3$, the base place
 $2$ lies in the away-from-coefficient range. Strong local compatibility gives
 (4.6). Equations (3.1)--(3.3) then give the nonzero monodromy, the line, and the
@@ -735,9 +729,8 @@ No result of those later books is used to prove Theorem 7.1.
 
 ### 8.4 The minimal integral scope
 
-The source-facing arithmetic core in the FLT formalization contains a field named
-`integralModelsAway`: it produces integral models at every odd coefficient place. That is
-the natural strong form of the blueprint's spreading theorem, but it is not consumed
+The family-wide spreading theorem produces integral models at every odd coefficient place.
+That is a natural strong form of the argument, but it is not consumed
 term-by-term by the final three-adic argument. After Theorem 7.1 has selected $\nu\mid3$,
 the remaining chain uses exactly:
 
@@ -839,10 +832,8 @@ Theorem 7.1 imports only:
 - identification of the distinguished member's dyadic pair as
   $\operatorname{Sp}_2(\varepsilon)$.
 
-The first bullet includes Book 183's prior raw-to-global preservation certificate at the
-coefficient places it claims. On the narrower branch that certificate is Book 183,
-Proposition 6.1A, proved upstream from the good basic and unitary carriers and their
-finite-flat towers; Book 185, Proposition 9.2 then assembles the selected member. Thus this
+The first bullet includes Book 182, Proposition 7.1 and Theorem 9.1 through Book 183's
+selected packet-array theorem. Book 185, Theorem 9.1 then assembles the selected member. Thus this
 chapter does not reason backward from the member it is trying to construct.
 
 The support assertion imports Book 185, Proposition 8.3 either through the rational family
@@ -853,20 +844,16 @@ member is used. Books 187--188 receive the outputs in that order and do not feed
 assumptions backward into the proof. Book 161 is the actual category/classification input used
 after Book 187 has constructed the named tower; it is not an input to Theorem 7.1 itself.
 
-## 10. Mechanical audit
+## 10. Conclusion
 
-The theorem has one coefficient prime $\nu\mid3$, one distinguished base place
-$2$, and one local shape. All equations use the arithmetic-Frobenius convention.
-Every occurrence of a residual representation is attached either to a named
-lattice or explicitly marked as a semisimplification. Every claim at the base
-place $3$ is deferred to a coefficient-prime certificate. Every conductor claim
-states whether it is rational or residual. The clean-support assertion is visibly
-derived from Book 185's equivariant Galois-comparison theorem, the prime-three route is independent of $(\mathrm{AI}_2)$, and
-the controlled seed is supplied upstream. Pure weight one is recorded
-separately from the Frobenius constant term and determinant.
-The comparison with the blueprint's stronger all-odd spreading statement is explicit: the
-final consumer takes only the selected coefficient-three tower, while clean support is still
-required at all odd base primes for that tower.
+Changing the coefficient prime is therefore a selection, not a scalar extension. The
+selected conclusion of Book 185, Theorem 9.1 supplies one actual place $\nu\mid3$ and one
+absolutely irreducible member $V=r_\nu$. Its common algebraic local object at the different
+base prime $2$ transports the nonzero monodromy, intrinsic line, Frobenius sign, and conductor
+one without crossing coefficient topologies. Book 185's proved Galois local complements also
+give clean support for this same member at every rational prime outside $\{2,3\}$.
+
+The resulting rational object is
 
 The chapter's final certified object is
 
@@ -889,7 +876,8 @@ a_2(V)=1.
 \tag{10.1}
 $$
 
-For a named lattice $T$, the additional certified local integral data are
+Any stable lattice meets the rational monodromy line in a saturated rank-one module. For a
+named lattice $T$, the additional local integral data are
 
 $$
 \boxed{
@@ -906,4 +894,9 @@ a_2(T/\mathfrak mT)=1
 \tag{10.2}
 $$
 
-These are precisely the rational and integral facts that may cross the handoff.
+Book 187 will choose the lattice that carries the all-level finite-flat tower at $3$ and will
+recompute these integral data on that lattice. The final argument needs no member above the
+coefficient prime $2$, no family-wide collection of integral models, no residual
+irreducibility, and no primitive residual monodromy. It uses the characteristic-zero absolute
+irreducibility already present in $V$, the clean support of this one member, and the tower
+constructed for this one place $\nu$.

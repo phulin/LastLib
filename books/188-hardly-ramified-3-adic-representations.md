@@ -49,7 +49,7 @@
    - [Transport to the algebraic coefficient field](#92-transport-to-the-algebraic-coefficient-field)
    - [Purity](#93-purity)
    - [The Frey endpoint](#94-the-frey-endpoint)
-10. [Dependencies, hostile audit, and readiness](#10-dependencies-hostile-audit-and-readiness)
+10. [Dependencies and final scope](#10-dependencies-and-final-scope)
     - [Direct dependencies](#101-direct-dependencies)
     - [Exact upstream status](#102-exact-upstream-status)
     - [Hostile audit](#103-hostile-audit)
@@ -240,11 +240,10 @@ SP local record. It does not need a residual nonzero-monodromy assertion for the
 
 ### 1.4 What is conditional upstream
 
-The restricted conclusion of Book 185, Theorem 9.1, conditionally supplies the actual
-away-from-two collection, the cyclotomic determinant, the pure polynomials outside a finite
-set, and the rational SP pair (1.8)--(1.10). Book 186 selects its member at $\nu\mid3$ and
-records explicitly that this selection does not use $(\mathrm{AI}_2)$. Neither book supplies a
-lattice or coefficient-prime finite flatness.
+The selected conclusion of Book 185, Theorem 9.1 supplies the actual member at $\nu\mid3$,
+the cyclotomic determinant, the pure polynomials outside a finite set, clean support, and the
+rational SP pair (1.8)--(1.10). Book 186 records the prime switch explicitly. Neither book
+supplies a lattice or coefficient-prime finite flatness.
 
 Book 187, Theorem 10.2, is stated from precisely that selected away-from-two member. Its proof
 uses no coefficient place above two. Consequently Book 184's $(\mathrm{AI}_2)$ is not part of
@@ -264,8 +263,7 @@ blocked upstream of its antecedent. The distinction will be recorded again in Se
 
 ### 1.5 The minimal final chain and the blueprint
 
-The final dependency chain is shorter than the strong spreading theorem stated in the FLT
-blueprint and represented in its formal arithmetic core by `integralModelsAway`:
+The final dependency chain is shorter than a family-wide all-odd-coefficient spreading theorem:
 
 $$
 \begin{array}{c}
@@ -871,7 +869,7 @@ independent of a claim that the prime $5$ is good. The first endpoint does not n
 semisimplicity or purity. Both use the actual characteristic-zero line, not merely a reducible
 residual representation.
 
-## 10. Dependencies, hostile audit, and readiness
+## 10. Dependencies and final scope
 
 ### 10.1 Direct dependencies
 
@@ -907,15 +905,12 @@ The bounded implication of Theorem 1.1 is complete. Relative to the controlled r
 Book 187 produces its remaining integral antecedent; the positive-carrier and clean-support
 interfaces are closed. The preferred selected-three spine is dependency-closed.
 
-1. **Controlled SP top.** Book 185, Theorem 9.1, assumes the controlled SP packet-array datum
-   used by Books 183--184.  For the preferred final route, Book 182's split specialization,
-   selected ascent and descent, ordinary attachment, and targetwise SP carriers are proved;
-   Book 176, Theorem 1.1H and Corollary 1.1I prove the auxiliary and target instantiations of
-   $({\rm CIAV}_P)$ separately. The uniform all-coefficient
-   raw-to-global route still retains the smooth-proper Hodge--Tate comparison
-   $(\mathrm{HT}_{\mathrm{curve}})$ isolated in Book 47, but the selected member at
-   $\nu\mid3$ instead uses Book 183, Proposition 6.1A and therefore does not consume that
-   theorem.
+1. **Controlled SP top.** Book 178, Theorem 12.2 proves the restricted signed-special finite
+   fibre and retains support for every later minimal point. Book 182, Proposition 7.1 and
+   Theorem 9.1 then supply the selected packet array, its place $\nu\mid3$, ordinary
+   attachment, the targetwise SP comparison, and the unramified algebraic pairs away from two.
+   Books 183--185 use precisely this selected output. A uniform all-coefficient packet is a
+   stronger statement outside this chain and is unnecessary.
 2. **Closed positive good carriers $(\mathrm{AVCar}_{3,\ell}^+)$.** Book 187 constructs these
    for every positive corrected packet.  Its sufficient $(\mathrm{Car}_3^+)$ uses the exact
    CM-unitary common-multiplier PEL datum, not the obstructed direct trace group.  The basic
@@ -934,13 +929,13 @@ interfaces are closed. The preferred selected-three spine is dependency-closed.
    calculation at $q=\ell$.  The minimal certificate
    $(\mathrm{AVCar}_{3,\ell}^+)$ directly removes $q=\ell$ for the selected member by its
    good positive display; under the sufficient $(\mathrm{Car}_3^+)$ version, Book 187,
-   Proposition 2.2 constructs that display.  Its family-wide form
-   $(\mathrm{AUX}_{\mathrm{all}})$ proves $(\mathrm{Cond}_2)$, which also implies
-   $(\mathrm U)$ by Proposition 8.1.  Weak compatibility does not supply the missing
-   principal or dihedral descent model, type lines, trivial-wild and zero-monodromy
-   calculations, exchange, or return maps.  Once those geometric data prove $N=0$, Book 128,
-   Lemma 3.2 supplies raw-to-global passage formally.  Without $(\mathrm U)$, the local tower
-   at $3$ cannot be glued over $\mathbf Z[1/2]$.
+   Proposition 2.2 constructs that display. Under the optional uniform hypotheses, the
+   family-wide form $(\mathrm{AUX}_{\mathrm{all}})$ also proves $(\mathrm{Cond}_2)$.
+   Weak compatibility alone would not remove auxiliary
+   inertia, but the proved algebraic Galois pairs and actual direct-sum cancellation do.
+   Stronger principal or dihedral automorphic types are outside this support argument and
+   unnecessary. Without $(\mathrm U)$, the local tower at $3$ could not be glued over
+   $\mathbf Z[1/2]$.
 
 The omitted all-place hypothesis $(\mathrm{AI}_2)$ is deliberately not on this list: every
 object used in Books 186--188 has coefficient characteristic three.
@@ -1027,12 +1022,10 @@ the resulting global cyclotomic line with the signed local SP line.
 The resulting characteristic-zero cyclotomic line contradicts the absolute irreducibility of
 the selected coefficient-three member. Optionally, at any prime in the certified pure good set,
 the trace is simultaneously $1+q$ and bounded in absolute value by $2\sqrt q$, a second
-impossibility. Thus the bounded conditional theorem of this book is
+impossibility.
 
-$$
-\boxed{\textbf{READY}.}
-\tag{10.2}
-$$
-
-The preferred selected-three FLT dependency spine is ready. The uniform all-coefficient
-strengthening retains the optional Hodge--Tate input recorded in Section 10.2.
+The preferred conclusion uses exactly one place $\nu\mid3$, one globally stable lattice, its
+compatible all-level finite-flat tower over $\mathbf Z[1/2]$, the clean support of that same
+member away from $2$ and $3$, and its characteristic-zero absolute irreducibility. No
+coefficient-two member, family-wide integral-model theorem, residual irreducibility, primitive
+residual monodromy, or stronger automorphic local type enters the contradiction.

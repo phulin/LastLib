@@ -199,48 +199,37 @@ Once a corrected packet has been obtained, its ordinary curve attachment is no l
 extra hypothesis. Complete dyadic splitting preserves a selected special factor, every
 elementary fixed field has degree at least two, and Book 182, Proposition 6.1 applies Book
 104's parity-complete inverse Jacquet--Langlands theorem followed by Books 125--127. This also
-covers coefficient conjugates. What remains in the controlled datum is the narrower dyadic SP
-certificate of Book 182, Section 7.3. It may come from an all-dyadic-split CM-unitary
-auxiliary carrier through Book 168, Proposition 7.6A, or from the proved targetwise
-ramified-spectator construction of Proposition 7.6B. At every dyadic place the source raw packet monodromy has rank
-one, Frobenius on its invariant graph line is the selected special scalar, and all packet,
-component, and correspondence routes occur on that source carrier.
-The raw local pair must agree with the pair of the globally semisimplified realization at every
-coefficient place away from residue characteristic two. The return scalar and pair are
-required to have one algebraic model before completion. Thus the later SP record is not an
-inference from the distinguished realization or from conductor one, but neither is it a broad
-all-elementary packet-occurrence or automorphic-type hypothesis.
+covers coefficient conjugates.
 
-The preservation clause has three sufficient certificates with the same interface output. It
-may be supplied directly. More economically, the datum may supply $(\mathrm{HT}_1)$ of Book
-168, (7.9), for the finite selected packet array; Book 168, Theorem 7.6 then proves that every
-semisimple packet realization is absolutely irreducible, identifies the raw representation
-with it, and preserves the complete dyadic special pair. Finally, the stronger ambient
-$(\mathrm{SS}_{\mathrm{array}})$ hypothesis of Book 168, (7.12), also suffices by its
-Proposition 7.7. The $(\mathrm{HT}_1)$ route is the application-specific one. Book 6 proves
-the rank-one Hodge--Tate-to-locally-algebraic theorem and Book 47, Proposition 9.1 proves
-inheritance by curve-cohomology subquotients. Its exact unproved input is therefore only the
-smooth-proper comparison $(\mathrm{HT}_{\mathrm{curve}})$ of Book 47, (9.7). It uses no
-Faltings height, Shafarevich finiteness, or Tate-module semisimplicity theorem.
+The local datum used in the main argument is narrower and is already proved upstream. Book
+182, Proposition 7.1 identifies, for one fixed place $\nu\mid3$ of the common packet field,
+every raw elementary packet plane with its absolutely irreducible global realization and
+transfers to it the full dyadic signed-special pair. Book 182, Theorem 9.1 packages those
+selected packets, their attachments, the fixed place $\nu$, and the unramified algebraic
+Galois pairs away from two. The return scalar and special pair have one algebraic model before
+completion. Thus the signed-special record at $\nu$ is neither inferred from conductor one nor
+assumed uniformly at unrelated coefficient places.
 
-That last sentence concerns the uniform all-coefficient certificate. For the selected
-$\nu\mid3$ used by the final chain, Book 168, Theorem 7.6C replaces it with the integral
-finite-flat rank-one calculation of Book 54; Proposition 6.1A below records the resulting
-coefficientwise packet certificate.
+One may separately posit a **uniform packet certificate** asserting the same raw-to-global
+identification and signed-special comparison at every coefficient place away from residue
+characteristic two. Proposition 6.1 records sufficient conditions for that optional
+strengthening. It is outside the scope of the selected-three theorem and is unnecessary for
+the final contradiction.
 
-We call (1.1)--(1.6), complete splitting, and these exact range hypotheses a
-**controlled SP top datum**. On the preferred selected-three route, Book 182 exports this
-datum using the two proved applications of Book 176, Corollary 1.1I. The theorem here begins
-after that input and the chosen lift is automorphic over the controlled top.
+We call (1.1)--(1.6), complete splitting, and the selected-three output of Book 182, Theorem
+9.1 the **controlled SP top datum**. Its construction ultimately rests on Book 178, Theorem
+12.2, which proves the restricted signed-special finite fibre and retains support for every
+later characteristic-zero minimal point. The present theorem begins after that selected datum
+has been constructed.
 
 ### 1.3 The packet-array theorem
 
 The endpoint is a finite algebraic array, not a base-field compatible family.
 
-**Theorem 1.1 (finite elementary-packet array).** Given a controlled SP top datum,
-one can
-construct, for every elementary subgroup $H\leq\Gamma$, a parallel-weight-two cuspidal packet
-$\pi_H$ over $F_H=M^H$ with the following properties.
+**Theorem 1.1 (finite elementary-packet array).** Given the controlled SP top datum exported
+by Book 182, Theorem 9.1, retain its parallel-weight-two cuspidal packet $\pi_H$ over
+$F_H=M^H$ for every elementary subgroup $H\leq\Gamma$. These selected packets organize into
+a finite Brauer--Mackey array with the following properties.
 
 1. At the distinguished embedding,
 
@@ -273,11 +262,11 @@ $\pi_H$ over $F_H=M^H$ with the following properties.
 
    for every $\tau$. This identity is proved even if no admissible automorphic base-change
    tower from $F_H$ to the nonnormal field $F_D$ is available.
-5. There is one algebraic SP pair whose distinguished realization is (1.3)--(1.5). At every
-   dyadic place and every coefficient embedding of residue characteristic different from two,
-   the full local pair is a scalar extension of that algebraic pair. In particular its
-   monodromy is nonzero of rank one, its invariant line and sign are retained, and its Artin
-   conductor exponent is one.  At every finite place $w\nmid2$ there is an unramified
+5. There is one algebraic SP pair whose distinguished realization is (1.3)--(1.5). For the
+   selected place $\nu\mid3$, its realization at every dyadic place is a scalar extension of
+   that algebraic pair. In particular its monodromy is nonzero of rank one, its invariant line
+   and sign are retained, and its Artin conductor exponent is one. At every finite place
+   $w\nmid2$ there is an unramified
    algebraic Frobenius-semisimple pair $D_{H,w}$ whose scalar extension is the local pair of
    $r_{H,\tau}$ whenever the residue characteristic of $\tau$ differs from that of $w$.
    This latter assertion is Book 182, Proposition 8.1; it comes from equivariant conductor
@@ -294,7 +283,10 @@ $\pi_H$ over $F_H=M^H$ with the following properties.
 
 Nothing in the theorem says that the signed class at a general $\tau$ is effective. It does
 not produce a two-dimensional representation over $\mathbf Q$ at that embedding, a coherent
-base-field compatible system, or an integral lattice.
+base-field compatible system, or an integral lattice. If the optional uniform packet
+certificate is added, the signed-special clause in item 5 extends to every coefficient
+embedding of residue characteristic different from two; that stronger extension is not used
+in the selected-three chain.
 
 ### 1.4 Conventions and boundaries
 
@@ -883,7 +875,7 @@ compatible system. Nor have the representations (6.3) been assembled into a syst
 $G_{\mathbf Q}$. They live on different Galois groups and are linked only by the identities
 proved below.
 
-**Proposition 6.1 (independent raw-to-global certificate for the finite packet array).**
+**Proposition 6.1 (optional uniform raw-to-global certificate for the finite packet array).**
 Suppose the controlled datum lists the actual smooth projective curve carrier used for every
 packet $\pi_H$.  Assume either:
 
@@ -917,36 +909,24 @@ Weil--Deligne operator $N$, its line, and its Frobenius scalar. The final restri
 $\tau$ is exactly the prime-to-coefficient range of the geometric local comparison. Neither
 argument uses the signed Brauer class, effectivity, or the later assembled family. $\square$
 
-The first route is the minimal packet theorem. Its only new arithmetic input is
-$(\mathrm{HT}_1)$; Book 168 proves every subsequent reduction. Rational Tate-module
-semisimplicity of all carrier Jacobians remains a sufficient but unnecessarily strong
-alternative and is not part of the recommended FLT dependency chain.
+These hypotheses are sufficient for an optional uniform strengthening. Neither route is an
+antecedent of the selected-three argument below.
 
-For the final argument, even this uniform input is stronger than necessary.
+**Proposition 6.1A (selected-three packet certificate).** Retain the controlled SP top datum
+exported by Book 182, Theorem 9.1, and its chosen place $\nu\mid3$. Then, for every elementary
+$H$ and every coefficient embedding inducing $\nu$, the raw multiplicity representation of
+$\pi_H$ is absolutely irreducible and equals $r_{H,\nu}$. At every dyadic place its full
+signed-special pair, including nonzero rank-one monodromy, its invariant line, sign, and
+conductor one, survives in $r_{H,\nu}$.
 
-**Proposition 6.1A (fixed-three packet certificate).** Suppose that $3$ splits completely
-in the controlled top, every selected packet level is hyperspecial above $3$, and the raw
-basic and unitary carriers are the ones constructed in Books 118--129 and 168. Fix a place
-$\nu\mid3$ of the common coefficient field. Then, for every elementary $H$ and every
-coefficient embedding inducing $\nu$, the raw multiplicity representation of $\pi_H$ is
-absolutely irreducible and equals $r_{H,\nu}$. At every dyadic place its full signed special
-pair, including nonzero rank-one monodromy, its invariant line, sign, and conductor one,
-survives in $r_{H,\nu}$. This conclusion does not assume $(\mathrm{HT}_1)$ for any other
-coefficient place, or $(\mathrm{HT}_{\mathrm{curve}})$ for an arbitrary-reduction carrier.
+**Proof.** This is Book 182, Proposition 7.1, applied to the packets and the common place
+$\nu$ retained in Book 182, Theorem 9.1. Its proof uses the good-reduction finite-flat bridge
+at $3$ and the targetwise dyadic carriers. It is coefficientwise and makes no assertion at a
+second coefficient place. $\square$
 
-**Proof.** Apply Book 168, Theorem 7.6C to the basic compact carrier of each $\pi_H$.
-Complete splitting gives $(F_H)_v=\mathbf Q_3$, while the protected unitary covers are
-hyperspecial and have good reduction over extensions unramified above $3$. The finite-flat
-rank-one theorem of Book 54 then supplies the local-algebraicity input in the usual
-class-field/isobaric contradiction, so the basic raw factor is absolutely irreducible and
-equals its semisimplification. Book 168, Corollary 7.6D applies this identification to the
-split or ramified-spectator unitary comparisons at each dyadic target. Those comparisons are
-away from the coefficient prime $3$, and therefore transfer the complete SP pair. The
-argument is packetwise and uses no assertion at a second coefficient place. $\square$
-
-Thus Proposition 6.1 remains the uniform packet-array interface. Proposition 6.1A is its
-strictly narrower fixed-three replacement: every later character and Mackey construction may
-be evaluated only at $\nu$ when the consumer asks for one three-adic member.
+Thus Proposition 6.1A is the packet-array interface used below. Proposition 6.1 is only the
+optional uniform extension. Every character and Mackey construction needed for the final
+argument is evaluated at the selected $\nu$.
 
 The distinguished member satisfies
 
@@ -1705,8 +1685,8 @@ Because $2$ splits completely in $M$, it splits completely in every $F_H$. Every
 above $2$ is $\mathbf Q_2$, and every finite quotient character used in the packet descent or
 in the Brauer relation is locally trivial.
 
-The uniform special scalar and local-preservation certificates in the controlled datum supply one
-algebraic local object over $K$ in the arithmetic covariant normalization,
+The selected-three certificate in the controlled datum supplies one algebraic local object
+over $K$ in the arithmetic covariant normalization,
 
 $$
 \mathscr D_{2,K}=(r_{2,K},N_{2,K}),
@@ -1731,12 +1711,8 @@ covariant Tate realization and inverting geometric Frobenius gives the ordered a
 $(\varepsilon_2,2\varepsilon_2)$ on quotient and line. This accounts for both the factor two in
 (1.4) and the cyclotomic determinant; no sign is chosen from a square after completion.
 
-For every $H$, every dyadic place $w$ of $F_H$, and every coefficient embedding $\tau$ whose
-residue characteristic is not two, the controlled local-preservation certificates—supplied
-directly, deduced from $(\mathrm{HT}_1)$ by Proposition 6.1, or obtained from its stronger
-ambient alternative—allow the
-special comparison of Book 128, Theorem 12.1, and Book 168, Theorem 12.1 and Corollary 12.2, to
-be applied, giving
+For every $H$, every dyadic place $w$ of $F_H$, and every coefficient embedding $\tau$
+inducing the selected place $\nu\mid3$, Book 182, Proposition 7.1 gives
 
 $$
 \operatorname{WD}_w(r_{H,\tau})^{\mathrm{F\text{-}ss}}
@@ -1744,9 +1720,9 @@ $$
 \tag{10.4}
 $$
 
-This follows from Section 5.4 on the automorphic side and the special local--global comparison
-on the packet side. It is equality of the full pair, not an inference from a conductor or a
-finite inertial polynomial.
+This is equality of the full pair, not an inference from a conductor or a finite inertial
+polynomial. Under the optional uniform certificate of Proposition 6.1, the same formula also
+holds for every $\tau$ of residue characteristic different from two.
 
 ### 10.3 The invariant line, sign, and conductor
 
@@ -1833,8 +1809,9 @@ embedding.
 
 We collect the precise output in a form that can be used by a character-norm theorem.
 
-**Theorem 11.1 (Brauer--Mackey packet-array package).** Let (1.1)--(1.6) be a controlled SP
-top datum. Then there are:
+**Theorem 11.1 (selected-three Brauer--Mackey packet-array package).** Let (1.1)--(1.6) be a
+controlled SP top datum, including the place $\nu\mid3$ exported by Book 182, Theorem 9.1.
+Then there are:
 
 - a selected cuspidal packet $\pi_H$ over $F_H=M^H$ for every elementary $H\leq\Gamma$;
 - one finite Galois coefficient field $K$ and semisimple realizations $r_{H,\tau}$ for every
@@ -1870,8 +1847,8 @@ top datum. Then there are:
   finite place away from $2$, including unramifiedness (6.4i) at every coefficient place of
   different residue characteristic;
 - and, at $2$, the common algebraic SP pair with nonzero rank-one monodromy, invariant line,
-  sign $\varepsilon_2$, and conductor exponent one, as a virtual local record for every
-  coefficient embedding away from residue characteristic two.
+  sign $\varepsilon_2$, and conductor exponent one, as a virtual local record at the selected
+  place $\nu$.
 
 For every $D\leq H$, automatic admissibility gives the actual automorphic identity (7.1) along
 any prime-cyclic tower. Independently, the semisimple identity (6.4a) is proved by algebraic
@@ -1879,13 +1856,10 @@ Frobenius-power comparison and recognition and therefore does not inherit a choi
 
 The theorem asserts neither that $\mathcal R_{\mathfrak B,\tau}$ is effective nor that the
 classes for varying $\tau$ form a base-field compatible family. It asserts no integral
-structure.
-
-If only the fixed-three certificate of Proposition 6.1A is imposed, the same theorem holds
-after restricting every coefficient-indexed SP and simplicity assertion to embeddings
-inducing the chosen $\nu\mid3$. The overlap identities, determinant, algebraic polynomials,
-purity, and Mackey formulas were proved before raw SP preservation and remain available at
-that embedding. This fixed-$\nu$ slice is the exact input used by the final chain.
+structure. If the optional uniform certificate of Proposition 6.1 is imposed, the SP and
+simplicity assertions extend to every coefficient embedding in its stated range. That
+stronger all-coefficient packet is outside the selected-three theorem and is not needed by the
+final chain.
 
 ### 11.2 Proof
 
@@ -1971,35 +1945,18 @@ $$
 | Book 6 | rank-one Hodge--Tate characters are locally algebraic, and locally algebraic one-dimensional $\ell$-adic characters are avatars of algebraic Hecke characters | the geometric Hodge--Tate premise is supplied through $(\mathrm{HT}_1)$, not by class field theory |
 | Book 98 | finite-order Hecke avatars of the Brauer characters, with reciprocity, norm pullback, and conjugation | no higher-rank automorphic induction across $F_H/\mathbf Q$ |
 | Books 108--109 | selected prime-cyclic descent and base change, antecedent-complete saturated fibers, local-parameter restriction, and tower independence in the admissible range | no transfer along an inadmissible tower and no nonsolvable descent |
-| Books 127--129 and 168 | the weight-two packet realizations, covariant arithmetic normalization, coefficient conjugates, algebraic good data, the completely split and ramified-spectator CM-unitary SP bypasses, the uniform cuspidal irreducibility/raw-to-global reduction from $(\mathrm{HT}_1)$, and the selected-three finite-flat reduction; Book 168 uses Book 47, Proposition 9.1 only on the uniform branch and Books 54 and 129 on the selected-three branch | ordinary attachment and the prime-to-two SP carrier are complete; these books do not prove uniform smooth-proper $(\mathrm{HT}_{\mathrm{curve}})$ or compare the SP pair when the dyadic base place is itself the coefficient residue characteristic, while the finite-flat lattice after semisimplification is asserted only at the selected place above three |
+| Books 127--129 and 168 | the weight-two packet realizations, covariant arithmetic normalization, coefficient conjugates, algebraic good data, the completely split and ramified-spectator CM-unitary SP comparisons, and the selected-three finite-flat reduction | ordinary attachment and the selected-three prime-to-two SP carrier are complete; no assertion is made at the dyadic coefficient place |
 | Book 142 | the Chebotarev density input used to recognize representations from their good Frobenius traces | no assertion that the field-theoretic towers satisfy automorphic selectors |
 | Book 180 | monomiality, the elementary projector and integral Brauer relation, induction/tensor/Mackey/determinant formulas, prime-cyclic refinement, the cyclic Clifford torsor, and Brauer--Nesbitt recognition | no packet construction, overlap identity, Gram positivity, or coefficient family is imported |
-| Book 182 | the controlled SP datum: $\rho$, $M$, the distinguished top realization, the SP record, the finite descent-and-attachment ledger, and the common unramified elementary Galois pairs away from two | no automorphic principal/dihedral type comparison is imported |
+| Book 182, Proposition 7.1 and Theorem 9.1 | the controlled SP datum: $\rho$, $M$, the selected elementary packets, the place $\nu\mid3$, the coefficientwise SP record, the descent-and-attachment ledger, and the common unramified elementary Galois pairs away from two | no uniform all-coefficient SP comparison or automorphic principal/dihedral type comparison is imported |
 
-The selected descent datum constructs the finite packet array, and Book 182, Proposition 6.1
-then proves ordinary attachment packet by packet; no separate all-elementary occurrence theorem
-is assumed. Books 127--128 and 168 supply the attachment and local-comparison theorems actually
-applied in Chapters 6 and 10. For an all-dyadic-split carrier, Book 168, Proposition 7.6A
-supplies the needed SP output without Book 122's finite integral comparison (10.5). For the
-controlled even-degree parity carriers, Proposition 7.6B supplies the targetwise
-ramified-spectator output and removes the quadratic inertial ambiguity with two local CM
-classes. Thus the remaining uniform all-coefficient prime-to-two premise is
-$(\mathrm{HT}_1)$, not
-$(\mathrm{MDSP}_2)$. In particular, the special scalar equality and
-raw-to-semisimple local-preservation identity must be available for every constructed packet and
-every coefficient place away from two. Proposition 6.1 proves the latter from
-$(\mathrm{HT}_1)$ by cuspidal absolute irreducibility and shows that coefficient extension,
-packet projection, and Morita extraction introduce no further obstruction. The exact remaining
-arithmetic theorem is the smooth-proper comparison $(\mathrm{HT}_{\mathrm{curve}})$ isolated
-in Book 47, (9.7); the rank-one local-algebraicity and subquotient steps are now proved. If
-either the raw special clause or this preservation
-certificate is absent, the distinguished $\ell$-adic SP pair does not determine monodromy or
-its sign at another embedding. No theorem prescribing principal or dihedral automorphic types
-away from two is needed for this SP step or for the auxiliary Galois comparison.
-
-For the one embedding above three consumed in the final chain, Proposition 6.1A supplies this
-preservation certificate from good-reduction finite-flat geometry. Hence smooth-proper
-$(\mathrm{HT}_{\mathrm{curve}})$ is not a dependency of that selected-member branch.
+Book 182, Theorem 9.1 supplies the selected descent datum and ordinary attachment packet by
+packet; Proposition 7.1 supplies the raw-to-global signed-special comparison at the one place
+above three. Books 127--129 and 168 provide the attachment and local-comparison results used
+in those proofs. This is all the present theorem consumes. A uniform comparison at every
+coefficient place and a theorem prescribing principal or dihedral automorphic types away from
+two are stronger statements outside its scope and unnecessary for the selected-three
+Brauer--Mackey calculation.
 
 The application-specific work retained here is substantial: construction and conjugation of the
 selected elementary packets, the nonnormal overlap theorem, the coefficient ledger, the signed
@@ -2024,10 +1981,9 @@ semisimple overlap directly. The quotient
 character left in a Hom space is consequently the explicit Brauer ratio and no hidden descent
 twist.
 
-The signed induced array now has every invariant it can legitimately possess before
-effectivity: rank two, cyclotomic determinant line, the original chosen member at the
-distinguished embedding, common pure quadratic good-prime series, conjugation covariance, and
-the full dyadic SP record with nonzero rank-one monodromy, invariant line, sign, and conductor
-one. It has no asserted positive constituent, no assembled compatible family over
-$\mathbf Q$, and no integral lattice. Those absences are the precise boundary of the topic,
-not unfinished steps inside it.
+At the chosen place $\nu\mid3$, the signed induced array now has exactly the data needed for
+effectivity: virtual rank two, cyclotomic determinant, common pure quadratic good-prime series,
+conjugation covariance, exact overlap identities, and the full dyadic SP record with nonzero
+rank-one monodromy, invariant line, sign, and conductor one. The next book can therefore test
+positivity at this one coefficient place. A uniform all-coefficient packet, stronger
+automorphic local types, and integral lattices play no role in that passage.
