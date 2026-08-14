@@ -1948,9 +1948,11 @@ the level-one residue-prime Hecke route.  Book 122, Proposition 9.4 promotes rou
 multiplicity and expansion one, and Hecke/transpose compatibility to the actual common factor.
 Proposition 9.5 computes the invariant branch fields, Cartier multiplicities and active group
 filtrations, and reduces the normalized spectator/ray compositum to its actual Kummer
-factorization and intersection field.  The remaining $({\rm HDB}_v)$ must compute those
-Kummer factors and the conductor/generization complexes; $({\rm RGC}_v)$ must construct the
-oriented restriction--Gysin correspondence on component-routed and contracted terms.  Thus
+factorization and intersection field. Propositions 9.6--9.7 factor the completed endpoints
+from actual valuations and leading coefficients, give the exact Milnor-tube formalism, and
+isolate the completed Kummer--tube theorem $({\rm BTK})$; Proposition 9.8 proves
+$({\rm RGC}_v)$ on component-routed and contracted terms. The remaining $({\rm HDB}_v)$ is
+the actual spectator/ray Kummer datum together with $({\rm BTK})$. Thus
 “the type sheaf extends” remains conditional on $({\rm PNS}_v)$, not a consequence merely of
 the generic stable lattice or objectwise finite flatness of the normalization.
 

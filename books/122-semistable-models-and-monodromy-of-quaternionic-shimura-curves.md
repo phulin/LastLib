@@ -165,15 +165,15 @@ All generic curves and all coefficient fields in the packet theorem have charact
 
 ### 1.4 Dependency ledger
 
-Books 10--12 supply effective finite descent, normalization, blowups, and regular models; Book 13 supplies the divisor definition of a bad-characteristic Drinfeld basis; Book 16 supplies graph/component-group algebra. Book 17 supplies the finite-etale common refinement and effective Galois closure on the generic diagram. Book 22 supplies the strict-semistable nearby-cycle and weight complexes, including the tame strict-node complex and exact reduction by a finite wild image. Book 37 supplies the Frobenius--Verschiebung formalism, purity, and duality used to identify global strata. Book 35 supplies quotients by finite locally free subgroups and descended polarizations. Book 58 supplies faithful flatness and exactness of completion and the distinction between completing a known proper model and algebraizing an abstract formal space. Book 70 supplies the maximal-Cohen--Macaulay freeness criterion over a regular local ring and the warning that it fails over a singular target. Book 76 supplies the selected special Weil--Deligne normalization used to compare the Iwahori scalar with geometric Frobenius. Book 118 supplies the exact common-norm Hodge-lift obstruction that makes the direct mixed-signature input conditional. Book 119 supplies the exact direct rational tensors, generic PEL curve, and generic parahoric datum. Book 121 supplies the projective good vertex at odd places, its integral filtration-lifting theorem, universal family, and, at two, the characteristic-independent toric obstruction and flat-closure properness argument once an exact integral functor has been constructed.
+Books 10--12 supply effective finite descent, normalization, blowups, and regular models; Book 13 supplies the divisor definition of a bad-characteristic Drinfeld basis; Book 16 supplies graph/component-group algebra. Book 17 supplies the finite-etale common refinement and effective Galois closure on the generic diagram. Book 20 supplies proper lci orientations, duality counits, deformation-to-the-normal-cone excess classes, and transpose adjunction. Book 22 supplies the strict-semistable nearby-cycle and weight complexes, including the tame strict-node complex and exact reduction by a finite wild image. Book 37 supplies the Frobenius--Verschiebung formalism, purity, and duality used to identify global strata. Book 35 supplies quotients by finite locally free subgroups and descended polarizations. Book 58 supplies faithful flatness and exactness of completion and the distinction between completing a known proper model and algebraizing an abstract formal space. Book 70 supplies the maximal-Cohen--Macaulay freeness criterion over a regular local ring and the warning that it fails over a singular target. Book 76 supplies the selected special Weil--Deligne normalization used to compare the Iwahori scalar with geometric Frobenius. Book 118 supplies the exact common-norm Hodge-lift obstruction that makes the direct mixed-signature input conditional. Book 119 supplies the exact direct rational tensors, generic PEL curve, and generic parahoric datum. Book 121 supplies the projective good vertex at odd places, its integral filtration-lifting theorem, universal family, and, at two, the characteristic-independent toric obstruction and flat-closure properness argument once an exact integral functor has been constructed.
 
 The exact direct dependency row is
 
 $$
-\boxed{122\mid 10,11,12,13,16,17,22,35,37,58,70,76,118,119,121}. \tag{1.6}
+\boxed{122\mid 10,11,12,13,16,17,20,22,35,37,58,70,76,118,119,121}. \tag{1.6}
 $$
 
-There are fifteen direct dependencies. The right-double-coset, transpose, central, and degree conventions are chosen to agree with Book 124 and are rederived in Section 9.3 for the residue-prime span. The packet theorem is a characteristic-zero statement conditional only on the already isolated curve packet described in its hypotheses; it imports no Ihara saturation, level-raising theorem, deformation theorem, or modularity-lifting theorem.
+There are sixteen direct dependencies. The right-double-coset, transpose, central, and degree conventions are chosen to agree with Book 124 and are rederived in Section 9.3 for the residue-prime span. The packet theorem is a characteristic-zero statement conditional only on the already isolated curve packet described in its hypotheses; it imports no Ihara saturation, level-raising theorem, deformation theorem, or modularity-lifting theorem.
 
 The downstream compatibility audit is as follows. Book 124 deliberately leaves a
 level-prime polynomial open; (9.8) uses its incoming right-action convention and proves
@@ -2515,12 +2515,15 @@ The purely inseparable invariant-ring discrepancy is already computed in (9.30)-
 it does not determine the prime-to-$p$ Kummer factors above it.
 
 There is a formal, correctly typed pushforward once $({\rm HDB}_v)$ has supplied those
-complexes.  Let $f=(g\circ h)_{\bar s}:\widetilde Z_{\bar s}\to X_{\bar s}$ be a proper leg of
-an equivariant regular domination, let $C_v$ be a normalized source component, and write
+complexes.  Let $g$ be the finite normalized-cover map and $h$ the chosen proper regular
+domination.  Let $f=(g\circ h)_{\bar s}:\widetilde Z_{\bar s}\to X_{\bar s}$ be one leg, let
+$C_v$ be a normalized source component, and write
 $f_v=f|_{C_v}$.  Put
 
 $$
-\mathcal K_X(W)=R\Psi_X(Rg_{\bar\eta *}\mathcal L_W).
+\mathcal F_W=Rg_{\bar\eta *}\mathcal L_W,
+\qquad
+\mathcal K_X(W)=R\Psi_X\mathcal F_W.
 $$
 
 Book 22, (2.8) and (3.10), give
@@ -2555,9 +2558,10 @@ unlocated complex $R\Gamma(C_v,-)$ is not a component contribution on the target
 
 The direct image (9.38) is not a trace.  Properness gives only the duality counit
 $Rf_*f^!\to\mathrm{id}$, not an untwisted arrow $Rf_*f^*\to\mathrm{id}$.  The exact second
-remaining input is therefore the following.
+statement needed is therefore the following.  Proposition 9.8 below constructs it; its
+orientation comes from the generic lci correspondence and not from properness.
 
-**Required restriction--Gysin/correspondence theorem $({\rm RGC}_v)$.**  For the two proper
+**Restriction--Gysin/correspondence statement $({\rm RGC}_v)$.**  For the two proper
 legs $f_0,f_1$ of a common equivariant regular domination, construct a degree-zero
 cohomological correspondence
 
@@ -2694,9 +2698,461 @@ the compatible pairs over their intersection.  Intersecting with the two inertia
 (9.37b).  Tameness of $K^\dagger/K_{\mathrm{br}}$ makes its wild inertia and the wild inertia of the
 intersection trivial.  This proves part 3 and the proposition. $\square$
 
-Thus Proposition 9.5 preserves the invariant-field, Cartier and group calculations, but it
-reduces rather than solves the arithmetic Kummer, conductor and correspondence problems.
-The principal node theorem consequently remains an input.
+The reduction in Proposition 9.5 can be sharpened after completion at every conductor
+endpoint.  Locally, the arbitrary function-field unit then reduces to its valuation and one
+constant-field Kummer class.  This does not replace the global class in $\kappa_j^\times$.
+
+**Proposition 9.6 (endpoint Kummer factors and the exact arithmetic datum).**  Retain
+$n,H,\lambda$ from Proposition 9.5.  Let $\mathfrak q_{H\lambda}$ be the selected conductor
+endpoint on the normalization of the active $H$-branch.  For the chosen equation
+$\pi=u\tau^m$ in (9.36), put
+
+$$
+d_{H\lambda,\mathfrak q_{H\lambda}}
+ =\operatorname{ord}_{\mathfrak q_{H\lambda}}(\bar u).   \tag{9.42a}
+$$
+
+This valuation is part of the endpoint Kummer datum.  It is not determined by
+$n,H,\lambda$ and the cardinalities in (9.31): changing the chosen vertical equation changes
+it by a multiple of $m$, while leaving the Kummer factor fields below unchanged.
+
+Let $\mathfrak q_j$ be an endpoint of the normalization of the residue-compositum function
+field $\kappa_j$ in (9.36a), above $\mathfrak q_{H\lambda}$.  After choosing
+a coefficient field and branch parameter, its completed valuation ring and field are
+
+$$
+\widehat{\mathcal O}_{\kappa_j,\mathfrak q_j}
+ \simeq k_{j,\mathfrak q_j}[[\xi]],
+\qquad
+F_{j,\mathfrak q_j}\simeq k_{j,\mathfrak q_j}((\xi)),
+$$
+
+where $k_{j,\mathfrak q_j}$ is the actual residue field: finite on the descended arithmetic
+factor and algebraically closed after geometric strict base change.  For the arithmetic trait
+factor of (9.36), let
+
+$$
+a_{j,\mathfrak q_j}=\overline{u/v}\in F_{j,\mathfrak q_j}^\times,\qquad
+c=\gcd(m,r).
+$$
+
+Thus $p\nmid c$, because the spectator ramification index $r$ is tame.
+
+Let $e_{j,\mathfrak q_j}$ be the ramification index at this endpoint of the selected
+residue-compositum factor over the completed active $H$-branch, let
+$h_{j,\mathfrak q_j}=\operatorname{ord}_\xi(\bar v)$, and put
+
+$$
+d_{j,\mathfrak q_j}
+ =e_{j,\mathfrak q_j}d_{H\lambda,\mathfrak q_{H\lambda}}
+       -h_{j,\mathfrak q_j}.                              \tag{9.42b}
+$$
+
+For a deformation-etale spectator sheet and a ray extension pulled back only from the trait,
+$e_{j,\mathfrak q_j}=1$ and $h_{j,\mathfrak q_j}=0$, so
+$d_{j,\mathfrak q_j}=d_{H\lambda,\mathfrak q_{H\lambda}}$.  The more general formula retains
+a spectator residue extension which ramifies at the conductor endpoint.
+
+Then:
+
+1. $\operatorname{ord}_\xi(a_{j,\mathfrak q_j})=d_{j,\mathfrak q_j}$.  There is a uniquely
+   determined leading
+   coefficient
+
+   $$
+   \delta_{H\lambda,j,\mathfrak q_j}
+     =\overline{\xi^{-d_{j,\mathfrak q_j}}a_{j,\mathfrak q_j}}
+       \in k_{j,\mathfrak q_j}^\times,                    \tag{9.42c}
+   $$
+
+   relative to the chosen branch parameter, and
+
+   $$
+   [a_{j,\mathfrak q_j}]
+    =[\delta_{H\lambda,j,\mathfrak q_j}\xi^{d_{j,\mathfrak q_j}}]
+   \quad\hbox{in }F_{j,\mathfrak q_j}^\times/
+                         (F_{j,\mathfrak q_j}^\times)^c. \tag{9.42d}
+   $$
+
+   Changing $\xi$ changes $\delta_{H\lambda,j,\mathfrak q_j}$ so that the product in
+   (9.42d) represents the same element.  Changing either vertical uniformizer multiplies it
+   by an evident $c$th power.  In either case the factor fields are unchanged.
+
+2. Put $g_{j,\mathfrak q_j}=\gcd(c,|d_{j,\mathfrak q_j}|)$,
+   $c=g_{j,\mathfrak q_j}c_{j,\mathfrak q_j}'$, and
+   $d_{j,\mathfrak q_j}=g_{j,\mathfrak q_j}d_{j,\mathfrak q_j}'$.  Factor the
+   **constant-field polynomial**
+
+   $$
+   Z^{g_{j,\mathfrak q_j}}-\delta_{H\lambda,j,\mathfrak q_j}^{-1}
+     =\prod_\beta G_{j,\mathfrak q_j,\beta}(Z)             \tag{9.42e}
+   $$
+
+   over $k_{j,\mathfrak q_j}$.  The irreducible factors of (9.36b) after completion at this
+   endpoint are indexed by the factors $G_{j,\mathfrak q_j,\beta}$.  Put
+   $k_{j,\mathfrak q_j,\beta}=k_{j,\mathfrak q_j}[Z]/
+   (G_{j,\mathfrak q_j,\beta})$ and let $\zeta_\beta$ be the class of $Z$.  The
+   corresponding completed field is
+
+   $$
+   k_{j,\mathfrak q_j,\beta}((\xi))[S]\big/
+      \left(S^{c_{j,\mathfrak q_j}'}
+                   -\zeta_\beta\xi^{-d_{j,\mathfrak q_j}'}\right), \tag{9.42f}
+   $$
+
+   after scaling $T$ by the unique principal-unit $c$th root in (9.42d).  It has constant
+   residue degree $\deg G_{j,\mathfrak q_j,\beta}$ and tame ramification index
+   $c_{j,\mathfrak q_j}'$.  If $k_{j,\mathfrak q_j}$ is finite, its
+   arithmetic residue-Frobenius orbit is exactly the orbit of $\zeta_\beta$ under
+   $z\mapsto z^{|k_{j,\mathfrak q_j}|}$.  Over an algebraically closed constant field there
+   are exactly $g_{j,\mathfrak q_j}$, not necessarily $c$, factors, each of degree
+   $c/g_{j,\mathfrak q_j}$.
+
+3. For a **generic** factor $(j,\alpha)$ of (9.36b), let
+   $\Pi^{\rm t}_{\mathrm{br}}$ be the tame Galois group of the henselian base branch.  In
+   one tame closure let $H_L$ fix
+   $\iota_{j,\alpha}(L_{H\lambda})\cap K_{\mathrm{br}}^{\rm t}$ and let $H_\dagger$ fix
+   $K^\dagger$.  Then the actual intersection in (9.37) is
+
+   $$
+   E_{H\lambda,j,\alpha}
+    =(K_{\mathrm{br}}^{\rm t})^{
+       \overline{\langle H_L,H_\dagger\rangle}}.           \tag{9.42g}
+   $$
+
+   If both fields are Galois, $H_L,H_\dagger$ are normal and
+   $\operatorname{Gal}(E/K_{\mathrm{br}})=
+   \Pi^{\rm t}_{\mathrm{br}}/overline{\langle H_L,H_\dagger\rangle}$; the two maps in
+   (9.37a) are its quotient maps.  Formula (9.42e) determines the arithmetic-Frobenius
+   permutation of the constant factors.  Together, (9.42e)--(9.42f) in a chosen tame closure
+   determine the local action on the endpoint Kummer roots.  For a selected endpoint
+   $(\mathfrak q_j,\beta)$, the corresponding decomposition group is its stabilizer in
+   $D_{H\lambda,j,\alpha}^\dagger$, and its vertical inertia is the intersection of that
+   stabilizer with $I_{H\lambda,j,\alpha}^\dagger$; the residue and tame-endpoint actions are
+   those of (9.42e)--(9.42f).  The two global tame characters are still required to determine
+   $H_L$ and $H_\dagger$; neither is replaced by a cyclic group of order $c$.
+
+4. The same calculation is stable under the chosen regular domination.  At a normal-crossing
+   chart
+
+   $$
+   \pi=\epsilon x^a y^b,\qquad
+   \epsilon\in\widehat{\mathcal O}_{\widetilde Z,e}^{\times}, \tag{9.42h}
+   $$
+
+   and for $\pi=v\varpi^r$, the $x=0$ branch uses
+   $c_x=\gcd(a,r)$ and the polynomial
+
+   $$
+   T^{c_x}-
+    \left(\overline{\epsilon(0,y)/v}\,y^b\right)^{-1}.    \tag{9.42i}
+   $$
+
+   Apply clauses 1--2 with $c=c_x$, and take $d$ and $\delta$ to be the order and
+   leading coefficient of $\overline{\epsilon(0,y)y^b/v}$.  Blowing up $x=y=0$ replaces
+   the ordered multiplicity pair
+   $(a,b)$ by $(a+b,b)$ in the $x$-chart and by $(a,a+b)$ in the $y$-chart.  Iterating this
+   rule computes every exceptional-component and conductor-endpoint factor, including its
+   constant extension, Frobenius orbit, and stabilizer under the retained decomposition action.
+
+**Proof.**  Formula (9.42b) is the restriction formula for normalized valuations: pulling
+$\bar u$ to the selected residue-compositum endpoint multiplies its order by
+$e_{j,\mathfrak q_j}$, and division by $\bar v$ subtracts
+$h_{j,\mathfrak q_j}$.  There is no uniform replacement of (9.42a) by a quotient of the
+group orders in (9.31).  For example, take $n>1$, $H=1$, and the natural branch equation
+$\tau=z_{\lambda,n}$.  Besides $\lambda=R_ne_1$,
+the raw special fiber has the $q^n$ transverse branches $R_n(r,1)$ and the
+$q^{n-1}-1$ further branches $R_n(1,s)$ with $0\ne s\in\pi R_n$.  Every latter branch also
+meets the conductor endpoint, with positive intersection multiplicity.  Thus dividing
+(9.29r) by the $\lambda$-factor has endpoint order strictly larger than $q^nm_n$; the
+omitted same-tangent branches cannot be discarded.  More generally, after pullback to a raw
+branch, the divisor of $\bar u$ records the branches outside the selected $H$-orbit together
+with their actual endpoint intersection multiplicities.  Those multiplicities and the unit
+relating a chosen local branch equation to an orbit equation are endpoint data, not just
+decomposition-group cardinalities.
+
+Since $p\nmid c$, Hensel's lemma makes $x\mapsto x^c$ an automorphism of
+$1+\xi k_{j,\mathfrak q_j}[[\xi]]$.  Removing that principal unit proves
+(9.42c)--(9.42d).  After scaling
+$T$, (9.36b) becomes
+
+$$
+S^c-\delta_{H\lambda,j,\mathfrak q_j}^{-1}
+       \xi^{-d_{j,\mathfrak q_j}}.
+$$
+
+Over a field containing a root $\zeta$ of (9.42e), its factors are
+$S^{c_{j,\mathfrak q_j}'}-\zeta\xi^{-d_{j,\mathfrak q_j}'}$.  The Newton polygon is one
+segment whose relatively prime horizontal and absolute vertical lengths are
+$c_{j,\mathfrak q_j}'$ and $|d_{j,\mathfrak q_j}'|$, so each such binomial is irreducible
+and totally tamely ramified of degree $c_{j,\mathfrak q_j}'$ when
+$d_{j,\mathfrak q_j}\ne0$: a factor of degree $h$ would have integral endpoint height
+$h d_{j,\mathfrak q_j}'/c_{j,\mathfrak q_j}'$, forcing
+$c_{j,\mathfrak q_j}'\mid h$.  If $d_{j,\mathfrak q_j}=0$, then
+$g_{j,\mathfrak q_j}=c$ and only the constant-field factorization remains.  Descent groups
+the roots $\zeta$ into precisely the irreducible factors
+$G_{j,\mathfrak q_j,\beta}$, proving clause 2 and the Frobenius assertion.
+
+Because $K^\dagger/K_{\mathrm{br}}$ is tame,
+$\iota_{j,\alpha}(L_{H\lambda})\cap K^\dagger$ equals
+$(\iota_{j,\alpha}(L_{H\lambda})\cap K_{\mathrm{br}}^{\rm t})\cap K^\dagger$.  For these two
+tame fields in one tame closure, Galois correspondence gives
+$(K_{\mathrm{br}}^{\rm t})^{H_L}\cap
+(K_{\mathrm{br}}^{\rm t})^{H_\dagger}
+=(K_{\mathrm{br}}^{\rm t})^{\overline{\langle H_L,H_\dagger\rangle}}$; this proves
+(9.42g), including the restriction maps.  Finally, along $x=0$ equation (9.42h) reads
+$\pi=(\epsilon y^b)x^a$.  Proposition 9.5 applied to that divisorial valuation gives
+(9.42i).  The two blowup substitutions $y=xy_1$ and $x=x_1y$ give the stated pairs, so
+induction proves clause 4. $\square$
+
+The endpoint constants $\delta_{H\lambda,j,\mathfrak q_j}$ and the tame subgroup
+$H_\dagger$ are genuine arithmetic data.  They cannot be recovered from $m,r$ and the
+input residue fields.  For example, take
+$K_0=\mathbf F_5((\pi))$ and $m=r=c=2$.  Let
+$L=K_0(\sqrt\pi)$.  The spectator $K_0(\sqrt\pi)$ has $v=1$ and gives
+$T^2-1$, two residue factors, intersection field $L$, and diagonal compatible-pair group
+$C_2\times_{C_2}C_2\simeq C_2$.  The equally tame spectator
+$K_0(\sqrt{\pi/2})$ has $v=2$ and gives $T^2-2$, which is irreducible over $\mathbf F_5$;
+its intersection with $L$ is $K_0$ and the compatible-pair group is $C_2\times C_2$.  All
+gcd and ramification-index data in the two examples are identical.  Thus neither a
+branch-count rule based on $\gcd(m,r)$ nor an unspecified ``tame ray factor'' determines the
+answer.
+
+The endpoint field calculation is not yet a conductor calculation.  In particular, replacing
+a smooth branch tube by a punctured special-fiber disc and applying $Rj_*$ would add a
+spurious degree-one tame class even for the constant sheaf; Book 22, (3.10), rules out exactly
+that substitution.  The correct construction is the following, which also isolates the
+remaining local theorem.
+
+**Proposition 9.7 (exact tube construction and the boundary of $({\rm HDB}_v)$).**  Suppose
+the actual normalized finite cover $\mathscr Y$ on the chosen regular domination has been
+given, together with its generic coefficient $\mathcal L_W$, pulled back to the generic fiber
+of that domination.  Let $\mathfrak B_v$ be its
+completed two-dimensional branch model along a normalized special-fiber component $C_v$,
+let $\mathfrak B_{e,v}$ be the strict-local formal germ at a conductor point $e_v$, and let
+$\mathfrak A_e$ be the oriented strict node germ before normalization of its special fiber.
+Normalization is an isomorphism on the generic fiber, so $\mathcal L_W$ restricts to the
+generic Milnor tube of $\mathfrak A_e$.  Here the generic fiber of a displayed formal germ
+means the geometric generic fiber of the corresponding strict localization in Book 22,
+(2.2); it is not a punctured special-fiber scheme.  Define
+
+$$
+\mathcal C_v(W)=R\Psi_{\mathfrak B_v}\mathcal L_W,
+\qquad
+C_{e,v}(W)=R\Gamma((\mathfrak B_{e,v})_{\bar\eta},\mathcal L_W),
+\qquad
+K_e(W)=R\Gamma((\mathfrak A_e)_{\bar\eta},\mathcal L_W). \tag{9.42j}
+$$
+
+The specialization of geometric points from the node tube toward the oriented branch gives
+the canonical generization morphism
+
+$$
+g_{e,v}:K_e(W)\longrightarrow C_{e,v}(W).                 \tag{9.42k}
+$$
+
+Here every generic fiber is the actual geometric Milnor tube, not the punctured special-fiber
+curve.  Formula (9.42k) is the induced morphism of oriented specialization topoi.  With these
+definitions, Book 22, (3.10), gives (9.39) stalkwise and equivariantly.
+
+The global factor $F_{j,\alpha}$ in (9.36b), its decomposition action, and all completed
+factors (9.42e)--(9.42f) determine the normalization and inertia labels of those tubes.  They
+do **not** determine their cohomology from the reduced branch alone.  To calculate (9.42j)--
+(9.42k), one must additionally identify the completed two-dimensional normalization at
+$e_v$, the induced map from its generic Milnor tube to the node tube, and the action on
+$W$.  When the identified tube is a prime-to-$p$ $K(\pi,1)$, as in the disc and annulus cases
+used here, finite wild image is removed exactly by
+
+$$
+R\Gamma(\Pi,W)\simeq R\Gamma(\Pi/P,W^P).                 \tag{9.42l}
+$$
+
+Only an annular tame quotient then gives the strict procyclic complex
+$[M\xrightarrow{T-1}M]$; a geometric disc across which the invariant coefficient extends
+gives $M[0]$.  The chain map (9.42k) is restriction along the actual map of tubes, with the
+conjugation action of Book 22, (3.6).  Thus the construction preserves residue Frobenius,
+wild and tame inertia, and stabilizers without identifying a conductor fiber with a second
+node-annular complex.
+
+**Proof.**  Formula (9.42j) is the strict-local Milnor-tube formula for nearby cycles, and
+generization in the oriented specialization topos gives (9.42k).  The normalization--
+conductor homotopy fiber is then Book 22, (3.10).  For an actual local tube, (9.42l) is Book
+22, (3.12)--(3.13), and Book 22, (3.14), supplies the procyclic resolution precisely in the
+annular case.
+Local acyclicity gives the asserted degree-zero complex in the disc case.  All statements are
+functorial for automorphisms of the finite cover, so the arithmetic actions commute with the
+maps. $\square$
+
+Thus $({\rm KBL}_v)$ and $({\rm HDB}_v)$ have been reduced to two irreducible inputs.  First,
+the standing hypotheses must name the actual spectator/ray factor, hence the global function
+$\overline{u/v}$, its endpoint valuations and leading coefficients, the fields $\kappa_j$,
+and the two tame subgroups in (9.42g); (9.26) currently
+chooses only an existential common finite generic algebra, and the scalar case says only ``if
+a global ray extension is used.''  Proposition 9.6 factors every completed endpoint and
+blowup chart once those data are supplied.  Second, the resulting finite cover must be
+identified on the completed two-dimensional branch tubes, not merely on their reduced residue
+fields.  Proposition 9.7
+turns exactly that local normalization theorem into the conductor complexes and generization
+maps.  Neither missing input can be recovered from $\gcd(m,r)$.
+
+More precisely, after an actual $R^\dagger$, the global Kummer function
+$\overline{u/v}$, its endpoint valuations and leading coefficients, and the two tame
+subgroups have been named, the only remaining local geometric statement is the following
+factorwise theorem.
+
+**Required Kummer--tube theorem
+$({\rm BTK}_{H,\lambda,j,\alpha,\mathfrak q_j,\beta,e})$.**  Let $\widehat A_{0,e}$,
+$\widehat A_{H,e}$ and $\widehat A_e^\dagger$ be the completed two-dimensional local base,
+active $H$-intermediate, and actual spectator/ray algebras at $e$; for a trait-pulled ray
+factor the third is the completed base change of $\widehat A_{0,e}$ along $R^\dagger$.
+Localize
+$\widehat A_{H,e}\widehat\otimes_{\widehat A_{0,e}}\widehat A_e^\dagger$ at the prime
+selected by the global factor $F_{j,\alpha}$ and an endpoint factor
+$G_{j,\mathfrak q_j,\beta}$ occurring in its completion, and normalize it in the
+corresponding generic compositum field.
+This ring is the completed local ring of that factor in the actual common normalization; its
+reduced height-one fields are exactly (9.42f), and its endpoint decomposition group is the
+stabilizer of $(\mathfrak q_j,\beta)$ in the compatible-pair group (9.37a), with vertical
+inertia obtained by intersection with (9.37b), intersection field (9.42g), and endpoint
+residue/tame action given by (9.42e)--(9.42f).  Its generic Milnor tube maps to the oriented
+node tube with the stated decomposition action.  Compute that tube as a disc, annulus, or
+explicit remaining curve tube and identify the induced pullback with (9.42k).
+
+This is a finite, two-dimensional completed-local assertion.  It is stronger than factoring
+the reduced polynomial and weaker than reconstructing the global tower.  Its conclusion plus
+Book 22 and (9.42l) is exactly the unresolved part of $({\rm HDB}_v)$; no further
+étale-cohomological comparison is being hidden.
+
+The correspondence part, by contrast, is formal once those actual complexes exist.
+
+**Proposition 9.8 $({\rm RGC}_v)$ (oriented specialization of the proper
+correspondence).**  Assume the actual generic coefficient and the normalized regular
+domination used in Proposition 9.7 have been supplied, together with the generic
+level-transport isomorphism on $\mathcal F_W$.  Then the correspondence (9.41)
+exists, is independent after proper pushforward of the chosen equivariant regular domination,
+and has all the restrictions, Gysin terms, Frobenius--Hecke compatibilities and transpose
+adjunction required in $({\rm RGC}_v)$.
+
+**Proof.**  Work first with finite $\ell$-power coefficients.  On the generic fiber both legs
+are finite maps of smooth curves.  On the actual common generic algebra, level transport
+induces the coefficient isomorphism
+$\alpha_\eta:f_{0,\eta}^*\mathcal F_W\simeq
+f_{1,\eta}^*\mathcal F_W$.  The oriented lci fundamental class of the second leg gives
+
+$$
+c_\eta:f_{0,\eta}^*\mathcal F_W
+ \xrightarrow{\alpha_\eta}f_{1,\eta}^*\mathcal F_W
+ \longrightarrow f_{1,\eta}^!\mathcal F_W.               \tag{9.42m}
+$$
+
+The total spaces are regular arithmetic surfaces.  Locally each leg factors through a regular
+immersion into an affine space smooth over the regular target, so it is lci of virtual relative
+dimension zero.  The last arrow in (9.42m) is the restriction of that relative orientation.
+
+Its specialization is the standard nearby-cycle cohomological correspondence
+
+$$
+\begin{aligned}
+f_{0,\bar s}^*R\Psi_X\mathcal F_W
+ &\longrightarrow R\Psi_{\widetilde Z}(f_{0,\bar\eta}^*\mathcal F_W)
+ \xrightarrow{R\Psi(c_\eta)}
+ R\Psi_{\widetilde Z}(f_{1,\bar\eta}^!\mathcal F_W)\\
+ &\longrightarrow f_{1,\bar s}^!R\Psi_X\mathcal F_W.
+                                                               \tag{9.42n}
+\end{aligned}
+$$
+
+The first arrow is ordinary exchange.  The last is its extraordinary, Verdier-dual exchange
+map.  Neither exchange map is being declared an isomorphism in a nontransverse square; the excess defect is
+retained below.  The construction is degree zero because (9.42m) has virtual relative dimension zero.
+Thus (9.42n) is precisely (9.41) for $\mathcal K_X(W)$; proper nearby-cycle comparison is
+the identification with the normalization--conductor model in (9.38).  This uses an
+orientation before applying the proper counit; it does not manufacture
+$Rf_*f^*\to\mathrm{id}$ from properness.
+
+Under Proposition 9.7, (9.42n) is a morphism of the recollement diagram (9.39), since all its
+arrows are exchange, restriction, a fundamental class, or a duality counit.  Naturality with
+respect to the two oriented tube generizations makes the two squares with (9.42k) commute;
+proper base change makes the component and conductor squares commute.  Taking the homotopy
+fiber therefore gives one, rather than three unrelated, correspondence maps.  On a component
+$C$ on which $f_1$ is nonconstant, $f_1|_C$ is finite.  Purity reduces (9.42n) there to
+restriction along $f_0|_C$ followed by the oriented finite trace along $f_1|_C$.  The trace
+composite contains the full residue and radicial degrees: for a universal homeomorphism the
+duality counit is the counit of an equivalence, while its finite-flat orientation contributes
+the inseparable degree, as in Book 20, Section 5.2.  Thus it is not counted as one geometric
+sheet.  More explicitly, if
+$c_C$ denotes the refined restriction of (9.42n), the component operator is
+
+$$
+R(f_1|_C)_*(f_0|_C)^*\mathcal K_X(W)
+ \xrightarrow{R(f_1|_C)_*c_C}
+R(f_1|_C)_*(f_1|_C)^!\mathcal K_X(W)
+ \xrightarrow{\operatorname{Tr}_{f_1|_C}}\mathcal K_X(W).
+$$
+
+In the Tor-independent finite case $c_C$ is coefficient restriction followed by the lci
+orientation; otherwise its refined excess factor remains part of $c_C$.
+
+If $f_1(C)=x$, write $f_1|_C=i_xp_C$.  Deformation to the normal cone restricts the virtual
+dimension-zero fundamental class to a morphism
+
+$$
+c_C:(f_0|_C)^*\mathcal K_X(W)
+ \longrightarrow (f_1|_C)^!\mathcal K_X(W)
+ =p_C^!i_x^!\mathcal K_X(W).                              \tag{9.42o}
+$$
+
+Its contribution to the operator is the fully typed composite
+
+$$
+\begin{aligned}
+i_{x*}Rp_{C*}(f_0|_C)^*\mathcal K_X(W)
+ &\xrightarrow{\ i_{x*}Rp_{C*}(c_C)\ }
+ i_{x*}Rp_{C*}p_C^!i_x^!\mathcal K_X(W)\\
+ &\xrightarrow{\operatorname{Tr}_{p_C}}
+ i_{x*}i_x^!\mathcal K_X(W)
+ \xrightarrow{\rm counit}\mathcal K_X(W).               \tag{9.42p}
+\end{aligned}
+$$
+
+Here Book 20's deformation-to-the-normal-cone construction identifies $c_C$ with the refined
+excess specialization of (9.42m).  If $x$ lies on a smooth target stratum on which
+$\mathcal K_X(W)$ is lisse, then
+$i_x^!=i_x^*(-1)[-2]$ and $p_C^!=p_C^*(1)[2]$; these codimension and relative-dimension
+shifts cancel inside (9.42o).  The remaining degree-zero coefficient is the localized excess
+intersection multiplicity, not the set-theoretic number of sheets.  If $x$ is a node or the
+coefficient is not lisse on that stratum, (9.42o) itself is retained and the costalk is
+computed through the normalization--conductor complex; no constant-sheaf purity is inserted.
+Any constant-field
+corestriction belongs to the relevant proper counit, while any scheme length or inseparable
+factor belongs to the coefficient exchange and refined orientation in $c_C$; none is supplied
+by an untwisted proper trace.
+
+Two regular dominations admit a third dominating both.  On that third domination, transitivity
+of lci fundamental classes, proper nearby-cycle comparison, and the projection formula identify
+the two proper pushforwards with the specialization of the same generic correspondence.  Thus
+their induced maps are identical; this is not an inference from equality of generic point sets.
+Every construction in (9.42n) is
+defined over the residue field, so it commutes with residue Frobenius.  A retained
+prime-to-$v$ Hecke route commutes with the generic level transport; proper base change and the
+projection formula carry this equality to (9.42n).  Here the comparison is made on the actual
+common finite generic algebra and its strict transforms, not from equality of generic point
+sets.  The same argument applies to the routed $U_v$ sheets of Proposition 9.4, whose unique
+node sheet has expansion one.
+
+Finally Verdier duality changes $\alpha_\eta$ into its inverse dual, exchanges the two
+ordinary/extraordinary exchange arrows, and makes the lci fundamental class adjoint to its
+trace.  Hence exchanging $f_0,f_1$ gives the adjoint correspondence under the Verdier pairing
+between $\mathcal K_X(W)$ and its dual; when a supplied perfect coefficient pairing identifies
+$W$ with its dual, this is the asserted adjunction on $\mathcal K_X(W)$ itself.  On the node
+complex this is the oriented adjunction in (3.8), including the sign under branch reversal; on contracted
+components it is the adjunction between (9.42o) and the counits in (9.42p).  Passing compatibly through
+finite coefficient quotients and taking the derived inverse limit proves the integral
+$\Lambda_\ell$ statement; tensoring proves the $E_\ell$ statement. $\square$
+
+Consequently the principal node theorem is no longer conditional on a separate
+$({\rm RGC}_v)$ assertion.  Its remaining inputs are the arithmetic cover and completed-tube
+normalization isolated after Proposition 9.7.
 
 **Required local theorem $({\rm PNS}_v)$ (principal node and stabilizer theorem).** Let
 
@@ -2738,19 +3194,24 @@ completion along every point over the vertex image.  The required assertions are
 Proposition 9.4 proves the sheet classification, common-factor routing, multiplicity one and
 expansion one.  Proposition 9.5 proves the raw invariant branch fields, Cartier multiplicities
 and active group filtrations, and reduces each arithmetic normalized compositum to
-(9.36a)--(9.37b).  What is still imported in clause 1 is $({\rm HDB}_v)$, namely the completed
-$({\rm KBL}_v)$ calculation and the full branch complexes and generization maps.  Clause 2
-also imports $({\rm RGC}_v)$ for the component-routed and contracted restriction--Gysin maps,
-their transpose and their compatibility with the typed direct image (9.39).  Neither input is
-proved here.
+(9.36a)--(9.37b).  Proposition 9.6 computes every completed conductor factor, residue
+extension, Frobenius orbit and monomial blowup transform from the actual endpoint valuation
+and $\delta_{H\lambda,j,\mathfrak q_j}$, and computes the true intersection from the two actual
+tame subgroups.  Proposition 9.7 gives the exact tube definition of the branch, conductor and
+generization complexes.  What is still imported in clause 1 is both the selected
+spectator/ray cover and the completed two-dimensional normalization theorem for its branch
+tubes, namely $({\rm BTK}_{H,\lambda,j,\alpha,\mathfrak q_j,\beta,e})$ for every selected factor.  Proposition
+9.8 proves $({\rm RGC}_v)$, including component-routed and contracted
+terms, transpose, and compatibility with (9.39).  Clause 2 has no remaining
+cohomological-correspondence input.
 
-This is an exact finite-level statement.  Its remaining algebraic branch part could be proved
-by constructing the full Drinfeld level structure on the active height-two $\pi$-divisible
-group, taking the Stein factors of the length-one and length-two PEL flag schemes, and
-calculating their complete local rings from the universal display (4.4).  The equality with the
-normalization in (9.26), not mere equality of characteristic-zero points, is part of that
-assertion.  The correspondence part additionally requires the orientation (9.41); complete
-local rings alone do not supply it.
+This is an exact finite-level statement.  Its remaining arithmetic branch datum can be
+supplied only by naming the actual spectator/ray field and evaluating its global unit and tame
+character.  Its remaining geometric datum is the completed two-dimensional normalization and
+map of Milnor tubes required in $({\rm BTK}_{H,\lambda,j,\alpha,\mathfrak q_j,\beta,e})$.  The active Drinfeld
+contribution and every resolution recurrence are already fixed by Propositions 9.5--9.6.  The orientation (9.41) is
+supplied independently by Proposition 9.8; complete local rings alone would not have supplied
+it.
 
 For the displayed finite algebra it is enough to work after completed strict henselization.  All modules
 in question are finite, completion is faithfully flat, and equality of two finite subalgebras
@@ -2783,11 +3244,13 @@ Equations (9.29k)--(9.29l) prove the active normalization and intermediate invar
 every finite depth, while (9.29r)--(9.29x) prove the full-level higher branch, inertia,
 residue-degree, node-annular, and boundary-stabilizer ledger.  Proposition 9.5 adds the exact
 wild invariant-ring residue field, Cartier multiplicity and the normalized-compositum
-factorization rule.  It leaves the actual Kummer factors, their conductor/generization
-complexes and the oriented component correspondence to $({\rm HDB}_v)$ and $({\rm RGC}_v)$.
-Proposition 9.4 supplies the residue-prime routing and unit node coefficients.  In particular,
-the principal cover is genuinely wild even though its selected extreme invariant lines are
-tame.
+factorization rule.  Proposition 9.6 turns the actual endpoint valuations, leading constants,
+and tame subgroups into completed Kummer factors and intersection groups.  Proposition 9.7 gives the exact
+Milnor-tube construction of the conductor/generization complexes and identifies the remaining
+two-dimensional local normalization theorem; Proposition 9.8 supplies the oriented component
+correspondence.  Proposition 9.4 supplies the residue-prime routing and unit node coefficients.
+In particular, the principal cover is genuinely wild even though its selected extreme
+invariant lines are tame.
 
 ## 10. The semistable curve theorem
 
@@ -2848,11 +3311,16 @@ one-step Iwahori chain (2.3). Then:
     multiplicity and expansion one, and residue-prime Hecke/transpose route to the actual
     common factor.  Proposition 9.5 computes the reduced invariant branch fields, Cartier
     multiplicities and group filtrations, and reduces every normalized spectator/ray
-    compositum to the factorization (9.36b) over its actual residue-compositum field.  What
-    remains in $({\rm PNS}_v)$ is $({\rm HDB}_v)$, the exact Kummer ledger
-    $({\rm KBL}_v)$ and the resulting conductor/generization complexes, together with
-    $({\rm RGC}_v)$, the oriented restriction--Gysin correspondence on component-routed and
-    contracted sources.
+    compositum to the factorization (9.36b) over its actual residue-compositum field.
+    Proposition 9.6 computes each completed endpoint and blowup factor from its valuation and
+    one constant-field unit, computes the intersection from the actual tame subgroups, and proves
+    that gcd data alone do not determine them.  Proposition 9.7 gives the exact
+    conductor/generization construction from the actual Milnor tubes, while Proposition 9.8
+    proves the oriented restriction--Gysin correspondence on noncontracted and contracted
+    sources.  What remains in $({\rm PNS}_v)$ is the selected spectator/ray field with its
+    global Kummer class and tame characters, together with the completed two-dimensional
+    normalization and tube map $({\rm BTK}_{H,\lambda,j,\alpha,\mathfrak q_j,\beta,e})$; the standing hypotheses
+    specify neither.
 
 **Proof.** The dyadic vertex construction, Proposition 2.1, Theorem 2.2, and
 Proposition 2.3 prove projective representability and transfer the exact integral local
@@ -2863,7 +3331,7 @@ statement 4. Chapter 5 proves statement 5. The graph nearby-cycle calculation in
 Chapter 6 proves statement 6. Chapter 8 proves statements 7--8. Naturality of
 prime-to-$p$ isogenies and functoriality of nearby cycles prove statement 9.
 Sections 9.3--9.4 prove statement 10, Section 9.2 proves statement 11, and
-Theorem 9.1 proves statement 12.  Propositions 9.2--9.5 prove statement 13 and its stated
+Theorem 9.1 proves statement 12.  Propositions 9.2--9.8 prove statement 13 and its stated
 boundary. $\square$
 
 ### 10.2 Scope and failure modes
@@ -2897,15 +3365,21 @@ moving branch stabilizer and coefficient module without replacing its full compl
 second node complex.  Equations (9.29r)--(9.29x) further compute the raw higher branch,
 inertia, residue-degree, node-annular, and boundary-stabilizer ledger.  Proposition 9.5
 computes the reduced invariant branch fields, Cartier multiplicities and active groups.  Its
-normalized-compositum formula shows exactly what is still missing: the Kummer classes and
-factorizations over the actual residue-compositum fields, their local intersection fields,
-and their conductor/generization complexes.  Those data are $({\rm HDB}_v)$.  Even after they
-are known, the proper direct image (9.39) is not an untwisted trace; $({\rm RGC}_v)$ must
-construct the component restriction--Gysin correspondence and its orientation.  Proposition
-9.4 fixes the actual common-factor strict-transform routing and node multiplicities, but
-$({\rm PNS}_v)$ remains conditional on these two inputs.  The ray projection formula applies
-only to the component/trait-pulled coefficient
-identified by an effective global ray datum.
+normalized-compositum formula is factored at every conductor point by Proposition 9.6 once the
+endpoint valuation and leading coefficient are supplied: the uncomputed arithmetic entries
+are the global Kummer unit and tame subgroups of the actual
+spectator/ray field.  Proposition 9.7 gives the conductor/generization complexes from the
+actual Milnor tubes and isolates their still-unproved completed two-dimensional normalization
+$({\rm BTK}_{H,\lambda,j,\alpha,\mathfrak q_j,\beta,e})$.
+The proper direct image (9.39) is still not an untwisted trace; Proposition 9.8
+uses the generic lci orientation and its excess specialization to construct the component
+restriction--Gysin correspondence.  Proposition 9.4 fixes the actual common-factor
+strict-transform routing and node multiplicities.  Thus $({\rm PNS}_v)$ remains conditional
+because the standing hypotheses neither name the spectator/ray field whose endpoint valuations
+and constants occur in (9.42a)--(9.42c) and tame subgroups occur in (9.42g), nor prove
+$({\rm BTK}_{H,\lambda,j,\alpha,\mathfrak q_j,\beta,e})$ for its completed branch tubes.
+The ray projection formula applies only to the
+component/trait-pulled coefficient identified by such an effective global ray datum.
 
 The equality $\operatorname{rank}N=b_1(\Gamma)$ is rational. Integral cokernels use the thickness matrix and saturation of the chosen lattice. A rational Hecke projector with an $\ell$-denominator does not select a canonical integral lattice. The packet theorem is likewise in characteristic zero and concerns the raw curve carrier; it is not an integral Ihara statement and is not a raw-to-global theorem. The geometric degeneracy complex remains input to any Ihara lemma or level-raising theorem, not a proof of either.
 

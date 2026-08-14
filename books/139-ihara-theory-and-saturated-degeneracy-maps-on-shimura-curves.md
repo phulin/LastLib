@@ -1349,8 +1349,10 @@ not make maximal Cohen--Macaulay modules free.  Book 122, Proposition 9.2 instea
 the entire finite diagram in one common generic algebra; integrality then identifies the
 normalizations along each finite base leg, so the lifted top maps are isomorphisms.  Book 122's
 local theorem $({\rm PNS}_v)$ is still needed for ramified type coefficients.  Proposition 9.5
-computes its invariant-field, Cartier and active-group part, but the Kummer conductor ledger
-$({\rm HDB}_v)$ and oriented restriction--Gysin theorem $({\rm RGC}_v)$ remain inputs.  The
+computes its invariant-field, Cartier and active-group part; Propositions 9.6--9.7 factor the
+completed endpoints from actual Kummer data and isolate the completed Kummer--tube theorem
+$({\rm BTK})$, while Proposition 9.8 proves $({\rm RGC}_v)$. The remaining $({\rm HDB}_v)$
+input is the actual spectator/ray Kummer datum together with $({\rm BTK})$. The
 constant-coefficient Ihara theorem in this book uses neither that principal normalization nor
 $({\rm PNS}_v)$.
 

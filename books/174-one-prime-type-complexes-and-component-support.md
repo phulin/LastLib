@@ -139,11 +139,12 @@ and boundary stabilizers.  Equations (9.29b)--(9.29i),
 extreme lines, node routing, constant-extreme-line generization, multiplicity one,
 and retained level-one Hecke route.  Book 122, Proposition 9.5 now computes the invariant
 residue fields, Cartier multiplicities and active groups and reduces the normalized compositum
-to the actual factorization of $T^c-\bar u^{-1}$ over each residue-compositum factor.  The first
-unproved assertion is $({\rm HDB}_v)$: compute those Kummer factors, residue extensions and
-intersection fields on every routed valuation, then construct the conductor complexes and
-generization maps.  The separate $({\rm RGC}_v)$ input must orient the restriction--Gysin
-correspondence on component-routed and contracted sources.  Book 122, Proposition 9.4 already
+to the actual factorization of $T^c-\bar u^{-1}$ over each residue-compositum factor.
+Proposition 9.6 factors every completed endpoint and blowup chart from its actual valuation,
+leading coefficient, and tame subgroups; Proposition 9.7 gives the exact Milnor-tube formalism
+and isolates $({\rm BTK})$; Proposition 9.8 proves $({\rm RGC}_v)$. The first unproved
+assertion is the remainder of $({\rm HDB}_v)$: supply the actual spectator/ray Kummer datum and
+$({\rm BTK})$. Book 122, Proposition 9.4 already
 proves actual-common-factor node routing, multiplicity and expansion one, and
 Hecke/transpose compatibility.
 The raw principal cover is explicitly wild.
@@ -498,8 +499,9 @@ with no smoothness or tameness assertion, by its actual completed branch source.
 typed component contribution is $Rf_{v*}\mathcal C_v$, or
 $i_{x*}R\Gamma(C_v,\mathcal C_v)$ only when $C_v$ is contracted to $x$.  Finally it constructs
 the oriented restriction--Gysin cohomological correspondence; proper direct image alone is not
-a trace.  These are the unresolved $({\rm HDB}_v)$ and $({\rm RGC}_v)$ inputs, not another
-theorem about abstract nearby cycles.
+a trace. Book 122, Proposition 9.8 now supplies that oriented correspondence. The unresolved
+input is the actual spectator/ray Kummer datum and completed Kummer--tube theorem $({\rm BTK})$
+inside $({\rm HDB}_v)$, not another theorem about abstract nearby cycles.
 
 Book 122, Proposition 9.3 proves $({\rm DLB}_1)$, and (9.29k)--(9.29l) prove all active finite
 Drinfeld normalization rings.  The level-one divisor equation forces a $q+1$-branch crossing with wild
@@ -536,8 +538,9 @@ conclusion does not assert that the principal cover is tame.  Book 122, (9.29s)-
 identifies the wild subgroup, node-annular complex, and boundary stabilizer modules for a
 selected branch of the raw full Drinfeld ring $D_n$.  Proposition 9.5 computes its invariant
 branch field, Cartier multiplicity and group filtration.  Factoring the resulting Kummer
-polynomials on every actual spectator/ray factor and constructing the conductor complexes and
-generization maps belongs to $({\rm HDB}_v)$.
+polynomials on every actual spectator/ray factor requires their actual endpoint data;
+Propositions 9.6--9.7 then reduce construction of the conductor complexes and generization
+maps to $({\rm BTK})$ inside $({\rm HDB}_v)$.
 
 The fixed Bruhat orbit is the identity Iwahori sheet and is node-to-node with multiplicity and
 expansion indices one.  On the moving Bruhat orbit, the sheet $a=0$ in Book 122,
@@ -552,8 +555,9 @@ Frobenius on the level-one Stein factor by Book 122, (9.13)--(9.15), and with ev
 prime-to-$v$ retained Hecke route.  Book 122, Proposition 9.4 promotes this routing,
 multiplicity and expansion one, and Hecke/transpose compatibility to the actual deeper common
 factor.  What remains in $({\rm PNS}_v)$ is the full branch complex on each component-routed
-source after wild descent and the oriented restriction--Gysin map $({\rm RGC}_v)$ on its
-proper direct image.
+source after wild descent, equivalently the actual spectator/ray Kummer datum and
+$({\rm BTK})$ inside $({\rm HDB}_v)$. Book 122, Proposition 9.8 supplies the oriented
+restriction--Gysin map on its proper direct image.
 For the full level-one coefficient module, Book 122, (9.29n)--(9.29p), identifies only the
 node complex, the two boundary stabilizers, and the coefficient inclusion
 $W^{U_L}\hookrightarrow W$.  It expressly does not identify the full conductor complexes or
@@ -588,10 +592,11 @@ identify the resulting active normalization and its intermediate rings.  Equatio
 ledger and exhibit the purely inseparable obstruction to commuting branch normalization with
 wild invariants.  Proposition 9.5 computes the Frobenius-subfield discrepancy, Cartier
 multiplicity and active group filtration and reduces the compositum to its Kummer
-factorization.  The unresolved content of $({\rm PNS}_v)$ begins with $({\rm HDB}_v)$: the
-actual Kummer/residue/intersection ledger and the conductor complexes and generization maps.
-It also includes $({\rm RGC}_v)$, the oriented restriction--Gysin correspondence on the
-properly typed component direct images.  Proposition 9.4 has already identified the
+factorization. Propositions 9.6--9.7 factor the completed endpoints from the actual Kummer
+datum, give the exact Milnor-tube formalism, and isolate $({\rm BTK})$. The unresolved content
+of $({\rm PNS}_v)$ is the actual spectator/ray Kummer datum and $({\rm BTK})$ inside
+$({\rm HDB}_v)$. Proposition 9.8 proves $({\rm RGC}_v)$ on the properly typed component direct
+images. Proposition 9.4 has already identified the
 strict-transform routing and node coefficients.
 
 **Typed conclusion $({\rm TPE}_v)$ (typed parahoric extension and local comparison).** The
@@ -2298,7 +2303,7 @@ an intersection of local conditions.
 | Book 65 | perfect complexes, derived base change, Tor, and determinant conventions | applies only after strict projective models exist |
 | Book 67 | represented enhanced special matrix-and-line condition and exceptional tangent directions | the flag and Kummer directions remain at scalar points |
 | Book 70 | depth, support, annihilator radicals, and Fitting cautions | topological support is not faithfulness |
-| Book 122 | parahoric incidence model, node chart, finite-flat base degeneracy maps, actual objectwise finite-flat common principal/ray normalization, isomorphic lifted top legs, the proved level-one theorem $({\rm DLB}_1)$, all active finite-depth Drinfeld normalization/invariant rings (9.29k)--(9.29l), the explicit level-one divisor/Bruhat/node ledger, the raw higher branch/inertia/residue/node-annular and boundary-stabilizer ledger (9.29r)--(9.29x), Proposition 9.4's actual-common-factor routing and node coefficients, and Proposition 9.5's invariant-field, Cartier, group and normalized-compositum reduction | $({\rm HDB}_v)$ must compute the actual Kummer/residue/intersection ledger and conductor/generization complexes; $({\rm RGC}_v)$ must construct the oriented restriction--Gysin correspondence on component-routed and contracted direct-image terms; hence $({\rm PNS}_v)$ remains conditional |
+| Book 122 | parahoric incidence model, node chart, finite-flat base degeneracy maps, actual objectwise finite-flat common principal/ray normalization, isomorphic lifted top legs, the proved level-one theorem $({\rm DLB}_1)$, all active finite-depth Drinfeld normalization/invariant rings (9.29k)--(9.29l), the explicit level-one divisor/Bruhat/node ledger, the raw higher branch/inertia/residue/node-annular and boundary-stabilizer ledger (9.29r)--(9.29x), Proposition 9.4's actual-common-factor routing and node coefficients, Proposition 9.5's invariant-field, Cartier, group and normalized-compositum reduction, Proposition 9.6's completed endpoint factorization from actual Kummer data, Proposition 9.7's exact Milnor-tube formalism, and Proposition 9.8's $({\rm RGC}_v)$ | $({\rm HDB}_v)$ still requires the actual spectator/ray Kummer datum and completed Kummer--tube theorem $({\rm BTK})$; hence $({\rm PNS}_v)$ remains conditional |
 | Book 138 | quotient primary and augmentation companion lattices, twists, type labels, and the derived parahoric coefficient-complex interface | its representation rows do not prove $({\rm PNS}_v)$; outside the integral-projector range they do not by themselves prove the filtered-cofiber comparison (6.0d) |
 | Book 139 | Theorem 14.1 under localized $({\rm AIH})_{v,\mathfrak m}$ and its corrected branch filtration | this book assumes the finite family $({\rm AIH}_{\mathscr F})$; Book 139 neither proves it nor extends it to type coefficients |
 | Book 125 | characteristic-zero packet decomposition and semisimplicity for the full component-routing algebra on the common principal cover | Proposition 6.3 uses it only after the typed integral filtration has been proved; it supplies no typed extension or residue lattice |
@@ -2326,7 +2331,7 @@ The earlier gaps have the following exact status.
 
 | interface | status in this book |
 |---|---|
-| primary/companion type control on curves | Book 22 proves the strict-node formalism and exact finite-wild reduction, while Book 122 constructs the normalized tower and ray factor, proves $({\rm DLB}_1)$, identifies every active finite-depth normalization ring, and computes the raw higher branch/inertia/residue/node-annular and boundary-stabilizer ledger.  Its explicit divisor, stabilizer, and Bruhat equations prove the wild-invariant extreme lines, unique node sheet, and constant-extreme-line generization; Proposition 9.4 promotes routing, multiplicity and expansion one, and Hecke/transpose compatibility to the actual common factor.  Proposition 9.5 adds the invariant-field, Cartier, group and Kummer-factorization reduction.  $({\rm PNS}_v)$ still requires $({\rm HDB}_v)$ for the actual Kummer and conductor/generization ledger and $({\rm RGC}_v)$ for the oriented component correspondence; it then implies $({\rm TPE}_v)$. Proposition 5.0 proves both type-Ihara endpoints in the integral-projector range and proves the companion endpoint in all ranges; only the nonbanal quotient-new injection in (5.0d) remains |
+| primary/companion type control on curves | Book 22 proves the strict-node formalism and exact finite-wild reduction, while Book 122 constructs the normalized tower and ray factor, proves $({\rm DLB}_1)$, identifies every active finite-depth normalization ring, and computes the raw higher branch/inertia/residue/node-annular and boundary-stabilizer ledger. Its explicit divisor, stabilizer, and Bruhat equations prove the wild-invariant extreme lines, unique node sheet, and constant-extreme-line generization; Proposition 9.4 promotes routing, multiplicity and expansion one, and Hecke/transpose compatibility to the actual common factor. Propositions 9.5--9.7 reduce the remaining branch calculation to the actual spectator/ray Kummer datum and $({\rm BTK})$ inside $({\rm HDB}_v)$, while Proposition 9.8 proves $({\rm RGC}_v)$. Conditional on that remaining input, $({\rm PNS}_v)$ implies $({\rm TPE}_v)$. Proposition 5.0 proves both type-Ihara endpoints in the integral-projector range and proves the companion endpoint in all ranges; only the nonbanal quotient-new injection in (5.0d) remains |
 | primitive type residues | Proposition 6.0 proves them in the integral-projector range.  In the nonbanal range Proposition 3.1 gives nodewise coefficients $\pm1$, but global primitivity is the filtered-cofiber comparison (6.0d), equivalently the obstruction vanishing (6.0c); the switched definite comparison further requires the flagged node classification of Lemma 6.1A |
 | faithful acting-image augmentation | fixed-prime augmentation is proved in Sections 9.1--9.3 by a genuine global twist and coefficient extraction; Proposition 9.1 proves auxiliary represented-ring, primary/companion complex, module, and pairing augmentation, while (9.13) remains only a surjection on auxiliary acting images until the base action is known faithful |
 | cross determinant | unavailable and not claimed: (10.7) is only equality of principal scalar equations in the faithful Hecke order, not a chain map or determinant-line comparison |
@@ -2335,7 +2340,7 @@ The broader failure audit is as follows.
 
 | test | result |
 |---|---|
-| constant étale flag cover is used at the bad integral model | pass: Section 3.4 uses the normalized principal tower and the finite-wild/procyclic node complex $[M\xrightarrow{T-1}M]$; Book 122, Proposition 9.4 proves actual-common-factor node routing and expansion one, while $({\rm HDB}_v)$ retains the Kummer/conductor branch complexes and $({\rm RGC}_v)$ retains the oriented component correspondence; the special fiber is never replaced by $q+1$ copies |
+| constant étale flag cover is used at the bad integral model | pass: Section 3.4 uses the normalized principal tower and the finite-wild/procyclic node complex $[M\xrightarrow{T-1}M]$; Book 122, Proposition 9.4 proves actual-common-factor node routing and expansion one, Propositions 9.6--9.7 isolate the actual spectator/ray datum and $({\rm BTK})$ remaining in $({\rm HDB}_v)$, and Proposition 9.8 proves the oriented component correspondence; the special fiber is never replaced by $q+1$ copies |
 | exactness is obtained by averaging over a group of nonunit order | pass: descent and the integral flag rows use no averaging |
 | perfect cohomology is confused with projective cohomology | pass: Lemma 4.2 uses residual fiber concentration and a minimal complex |
 | Book 139 is treated as unconditional or as a blanket type-Ihara theorem | pass: constant terms use $({\rm AIH}_{\mathscr F})$; Proposition 5.0 passes to type terms only through the integral projector or the nonbanal injectivity in (5.0d) |
@@ -2373,7 +2378,7 @@ source-closed.
 
 | interface | source-closure verdict | first exact obstruction or proof |
 |---|---|---|
-| type-coefficient extension | reduced to $({\rm HDB}_v)$ and $({\rm RGC}_v)$ | the actual common normalized tower is constructed, objectwise finite flat, its lifted top legs are isomorphisms, and the ray and finite-wild/procyclic node factors are proved.  Proposition 9.3 of Book 122 proves $({\rm DLB}_1)$; (9.29k)--(9.29l) prove every active finite-depth normalization and intermediate invariant ring; (9.29r)--(9.29x) compute the raw higher branches, inertia, residue degrees, node-annular complexes, and boundary stabilizers; and (9.29b)--(9.29i), (9.29n)--(9.29q), and Lemma 3.0A give the level-one stabilizers, wild-invariant lines, and constant-extreme-line generization.  Proposition 9.4 promotes node routing and coefficients to the actual common factor.  Proposition 9.5 proves the invariant-field, Cartier and group calculation and reduces each compositum to $T^c-\bar u^{-1}$ over the actual residue factor and intersection field.  $({\rm HDB}_v)$ must complete that Kummer and conductor ledger; $({\rm RGC}_v)$ must orient its restriction--Gysin correspondence |
+| type-coefficient extension | reduced to the actual spectator/ray Kummer datum and $({\rm BTK})$ inside $({\rm HDB}_v)$ | the actual common normalized tower is constructed, objectwise finite flat, its lifted top legs are isomorphisms, and the ray and finite-wild/procyclic node factors are proved. Proposition 9.3 of Book 122 proves $({\rm DLB}_1)$; (9.29k)--(9.29l) prove every active finite-depth normalization and intermediate invariant ring; (9.29r)--(9.29x) compute the raw higher branches, inertia, residue degrees, node-annular complexes, and boundary stabilizers; and (9.29b)--(9.29i), (9.29n)--(9.29q), and Lemma 3.0A give the level-one stabilizers, wild-invariant lines, and constant-extreme-line generization. Proposition 9.4 promotes node routing and coefficients to the actual common factor. Propositions 9.5--9.7 give the invariant-field/Cartier/group reduction, completed endpoint factorization from actual data, and exact Milnor-tube formalism; Proposition 9.8 proves $({\rm RGC}_v)$ |
 | type-Ihara | proved except for one nonbanal endpoint after $({\rm PNS}_v)$ | Proposition 5.0 proves the augmentation companion in every range and both endpoints when $q+1$ is a unit.  For $q\equiv-1\pmod\ell$, the exact remaining theorem is injectivity of $u_D:\mathcal Q_D(k)\to\mathcal Q_D(\overline P)$ in (5.0d) |
 | primitive residue | proved in the integral-projector range; nonbanal filtered cofiber blocked | Proposition 6.0 proves vanishing when $q+1$ is a unit.  For $q\equiv-1\pmod\ell$, the exact remaining theorem is that (6.0d) is a quasi-isomorphism in degrees $1,2$, equivalently $\operatorname{Ob}_{\rm PRI}(v)=0$ |
 | node uniformization | blocked at one geometric classification | Book 140 still requires the superspecial PEL classification. Lemma 6.1A proves that if it is formulated as an equivalence of flagged node groupoids, transport of the quotient/augmentation stabilizer representations and coefficient-one pairing is formal, not a second theorem |
@@ -2382,7 +2387,8 @@ source-closed.
 
 In particular, $({\rm DLB}_1)$, the active higher normalization rings, and Proposition 9.5's
 invariant-field/Cartier/group calculation are proved, not hypotheses.  The first irreducible
-assertions inside $({\rm PNS}_v)$ are $({\rm HDB}_v)$ and $({\rm RGC}_v)$ just isolated.
+assertions inside $({\rm PNS}_v)$ are the actual spectator/ray Kummer datum and $({\rm BTK})$
+inside $({\rm HDB}_v)$ just isolated; Book 122 proves $({\rm RGC}_v)$.
 Supplying both would finish $({\rm PNS}_v)$ and imply $({\rm TPE}_v)$.  In the projector range the algebra above then removes
 type-Ihara and primitive residue as later hypotheses.  In the nonbanal range it does not by
 itself force (5.0d), (6.0d), the flagged superspecial classification, or the later support

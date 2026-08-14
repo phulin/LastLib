@@ -150,7 +150,7 @@ flowchart LR
 | 119 | Quaternionic PEL Functors and Representability | 10, 13, 65, 35, 115, 118 |
 | 120 | Uniformization, Components, and Hecke Descent for Shimura Curves | 58, 39, 118, 119 |
 | 121 | Good Integral Models of Quaternionic Shimura Curves | 15, 58, 19, 35, 36, 61, 55, 118, 119 |
-| 122 | Semistable Models and Monodromy of Quaternionic Shimura Curves | 10, 11, 12, 13, 16, 17, 22, 35, 37, 58, 70, 76, 118, 119, 121 |
+| 122 | Semistable Models and Monodromy of Quaternionic Shimura Curves | 10, 11, 12, 13, 16, 17, 20, 22, 35, 37, 58, 70, 76, 118, 119, 121 |
 | 123 | Modular and Shimura Curves | 110, 111, 112, 114, 115, 116, 118, 119, 121, 122, 120 |
 | 124 | Hecke Correspondences on Curves and Jacobians | 39, 83, 84, 114, 120, 123 |
 | 125 | Automorphic Decomposition of Shimura-Curve $H^1$ | 21, 47, 36, 96, 104, 87, 124, 118, 119, 120 |
@@ -243,10 +243,13 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   one, and Hecke/transpose compatibility to the actual common factor.  Proposition 9.5
   calculates the reduced invariant branch fields, Cartier multiplicities and group filtrations,
   and reduces the normalized spectator/ray compositum to the residue-field factorization of
-  $T^c-\bar u^{-1}$ and the actual local intersection field.  It does not compute those
-  Kummer factors on every routed branch.  The remaining $({\rm HDB}_v)$ input is that Kummer,
-  conductor and generization ledger; the separate $({\rm RGC}_v)$ input is the oriented
-  restriction--Gysin correspondence on noncontracted and contracted component terms.
+  $T^c-\bar u^{-1}$ and the actual local intersection field. Proposition 9.6 factors every
+  completed endpoint and blowup chart once the actual endpoint valuation, leading coefficient,
+  and tame subgroups are supplied. Proposition 9.7 gives the exact Milnor-tube construction and
+  isolates the completed two-dimensional Kummer--tube theorem $({\rm BTK})$; Proposition 9.8
+  proves $({\rm RGC}_v)$ on noncontracted and contracted component terms, with refined excess,
+  Frobenius--Hecke compatibility, and transpose. The remaining $({\rm HDB}_v)$ input is the
+  actual spectator/ray Kummer datum together with $({\rm BTK})$.
   Consequently $({\rm PNS}_v)$, and hence Book 174's $({\rm TPE}_v)$ reduction, remain
   conditional; unit-order coarse descent remains the separate
   $({\rm TIC}_v)$ input. The later
@@ -311,10 +314,14 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
 - **Controlled residual automorphic seed:** Book 157 proves the paired-frame Kummer
   normalization, a simultaneous regular projective equivariant fan, finite-field Bertini with
   imposed jets, and stable DVR slicing.  It does not prove the finite-type framed joining
-  theorem $(\mathrm{FTJ})_{v_0,Z}$.  Its Required Theorem 13.2B.3,
-  $(\mathrm{TCG})_\Sigma$, must still construct the algebraic cusp embeddings and modifications
-  for the chosen fan, glue them to the good interior, identify the completed normalized charts,
-  and descend the twist and an ample bundle.  Conditional on that theorem, the weaker
+  theorem $(\mathrm{FTJ})_{v_0,Z}$.  Its first absent toroidal input is Required Theorem
+  13.2B.3a, $(\mathrm{MPE})$: the relative inverse-to-Mumford PEL equivalence, full
+  faithfulness, and completed deformation comparison.  The subsequent $(\mathrm{ACE})$ ledger
+  separately retains finite-type cusp effectivity, exact overlaps and trait coverage, and
+  compatible theta positivity.  Proposition 13.2B.3b proves normalization, the framed
+  completed charts, smoothness, properness, ample pullback, and effective twist descent
+  conditional on those unframed inputs.  Their combined output is the still-unproved Required
+  Theorem 13.2B.3, $(\mathrm{TCG})_\Sigma$.  Conditional on that theorem, the weaker
   $(\mathrm{ICS})_{v_0,Z}$ needed by Book 154 gives the degree-indexed allowed-good Abel
   condition.  Book 182, Required Moving Theorem 6.3 would then combine it with the repeatable
   and flexible packets to give the common moving presentation; its normal-sheet clause has been
@@ -405,9 +412,14 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   rational algebras, direct-summand finiteness, and hence integral Zarhin cancellation. Its new
   internal sketches do not yet prove potential semistable reduction, persistence and ramified
   semistable Hodge base change, the arithmetic toroidal Siegel compactification, or the integral
-  metrized Hodge--theta comparison from the permitted earlier sources. The arithmetic
-  Hilbert--Samuel determinant-slope/boundary estimate (13.3r) is separately and correctly marked
-  unresolved. The blocker therefore cannot honestly be narrowed to (13.3r) alone or removed.
+  metrized Hodge--theta comparison from the permitted earlier sources. Book 41 proves the
+  Hermitian determinant/saturation identity, a finite Pl\"ucker upper-slope criterion, and the
+  formal deduction of (13.3r). That deduction remains conditional on the separately named
+  $(\mathrm{AHS}_{\log})$ and $(\mathrm{US}_\theta)$ certificates: exact determinant
+  characters, boundary primitivity, positive level-prime divisibility, cusp-normalized norms,
+  and universal integral Pl\"ucker frames. The blocker therefore cannot honestly be narrowed to
+  the abstract slope deduction or removed, and the four geometric/metric gates remain
+  separately required.
   This is separate from constructing the raw dyadic carriers. At $q=2$ the conditional theorem
   proves global semisimplicity but does not extend the prime-to-coefficient Weil--Deligne
   comparison at the dyadic base place; Book 184's $(\mathrm{AI}_2)$ remains a separate

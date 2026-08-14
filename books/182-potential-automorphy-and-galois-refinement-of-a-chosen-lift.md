@@ -1365,14 +1365,21 @@ components, the split certificate packets, and avoidance of $Z$ all retained.
 
 At $v_0$, Book 178 chose the place away from $N\ell q$ and the discriminant of $E$,
 with both prescribed residual systems and their determinant trivializations unramified and with
-the framed Tate parameter already defined over the assigned completion.  Book 157, Lemma
-13.2B.1 therefore computes the required paired-frame Kummer normalization for the actual
-special packet, and Lemma 13.2B.2 constructs a regular projective equivariant fan for those
+the framed Tate parameter already defined over the assigned completion.  At this seed stage,
+include in the recorded unramified splitting extension the compatible constant Kummer roots
+required in Book 157, Lemma 13.2B.1; their orders are prime to the residue characteristic, so
+this is an allowed finite-etale enlargement made before the completion packet is frozen.  That
+lemma then computes the required paired-frame Kummer normalization for the actual special
+packet, and Lemma 13.2B.2 constructs a regular projective equivariant fan for those
 normalized lattices.  Its finite-field Bertini and DVR slicing lemmas also prove the slicing
-part of the integral-open repair.  What remains is Book 157, Required Theorem 13.2B.3: construct
-the algebraic cusp embeddings and modifications for that chosen fan, glue them to the good
-interior, prove the completed-local comparison, and descend the model and an ample bundle.  A
-Hilbert closure is not a substitute for this comparison.
+part of the integral-open repair.  The first missing unframed input is Book 157, Required
+Theorem 13.2B.3a: the inverse-to-Mumford equivalence, full faithfulness, and completed
+deformation comparison.  Its separate $(\mathrm{ACE})$ ledger then requires finite-type cusp
+effectivity, exact overlaps and trait coverage, and compatible theta positivity.  Proposition
+13.2B.3b proves that normalization, the framed completed charts, smoothness, properness, the
+ample pullback, and effective twist descent follow once those unframed inputs exist.  Their
+combined framed output remains Required Theorem 13.2B.3.  A Hilbert closure is not a substitute
+for either input or for the prescribed completed-local comparison.
 
 Conditional on that fan-dependent toroidal theorem, Book 157, Proposition 13.2B.4 and
 Corollary 13.2B.5 give the weaker form of $(\mathrm{ICS})_{v_0,Z}$ required by Book 154.  The
@@ -1439,9 +1446,11 @@ exists.  Books 9--10 begin with an already supplied
 relative curve or projective datum.  Book 156 supplies the smooth quasi-projective interior and
 finite etale frame covers.  A bare projective or Hilbert closure still would not identify Book
 157's completed Mumford chart with its boundary or realize its chosen fan.  Book 157, Lemmas
-13.2B.1--13.2B.2 perform the normalization and regular-projective fan construction; Required
-Theorem 13.2B.3 is the remaining cusp-gluing, completion, ample-algebraization, and twist-descent
-interface.  Only after that theorem do its DVR slicing and Book 154's Moret--Bailly engine apply.
+13.2B.1--13.2B.2 perform the normalization and regular-projective fan construction.  Required
+Theorem 13.2B.3a and $(\mathrm{ACE})$ are the missing unframed cusp-equivalence and
+algebraic-effectivity inputs; Proposition 13.2B.3b then supplies the framed normalization and
+twist descent.  Only after their combined output, Required Theorem 13.2B.3, do the DVR slicing
+and Book 154's Moret--Bailly engine apply.
 
 The nontrivial-stabilizer version of Book 155 would additionally require a special
 $S_5/S_4$ evaluation presentation on the paired-frame moduli space.  Proposition 4.1 replaces
@@ -2174,10 +2183,11 @@ Proposition 9.3 and (9.29k)--(9.29x) prove the active Drinfeld normalization and
 ledger, while Proposition 9.5 computes the invariant residue fields, Cartier multiplicities
 and active groups and reduces every arithmetic compositum to the actual factorization of
 $T^c-\bar u^{-1}$ over its residue-compositum field and true intersection field.  The
-principal node and stabilizer theorem $({\rm PNS}_v)$ nevertheless remains unresolved.  Its
-$({\rm HDB}_v)$ input must complete that Kummer/residue/intersection ledger and construct the
-branch complexes and generization maps; its separate $({\rm RGC}_v)$ input must construct the
-oriented restriction--Gysin correspondence on component-routed and contracted terms.  A
+completed endpoint factorization and exact Milnor-tube formalism are Propositions 9.6--9.7,
+which isolate the actual spectator/ray Kummer datum and completed Kummer--tube theorem
+$({\rm BTK})$ inside $({\rm HDB}_v)$; Proposition 9.8 proves $({\rm RGC}_v)$ on
+component-routed and contracted terms. The principal node and stabilizer theorem
+$({\rm PNS}_v)$ nevertheless remains unresolved at that $({\rm HDB}_v)$ input. A
 genuinely wild sheet must retain its full decomposition action in the normalization-component
 complex.  Only after these inputs does Book 22's tame two-term complex apply, with expansion
 one on the routed node sheet supplied by the common-normalization isomorphism.  Books 128 and
@@ -2240,7 +2250,7 @@ prove the raw SP geometry or ambient semisimplicity hypotheses which that array 
 | Book 104 | rational selected global Jacquet--Langlands; placement of the upper split packet on a path-compatible one-split carrier ramified at a retained dyadic SP place; forward transfer of the final path-carrier packet back to the split group; and, in even degree, inverse transfer of that final minimal split packet to the algebra ramified at every real place and no finite place | an integral comparison between either pair of carrier lattices, or any clean Book 173 structural hypothesis |
 | Book 109 | prime-cyclic ascent on an exhibited extension-complete selected chain, and descent on exhibited antecedent-complete selected chains with the required fiber saturation and attached arithmetic representations | attachment of candidate cyclic descents, or either direction from solvability alone |
 | Books 61 and 124--125 | equivariant coefficient-independence of Artin conductors and inertia-invariant Frobenius polynomials for Hecke multiplicity factors, extension of generic Hecke correspondences to Jacobians and Neron models, and Book 125's rational packet occurrence in curve $H^1$ with its saturated ambient packet lattice | an integral rank-two Morita factor or carrier switch, an identification of an automorphic tame type, an action on nearby-cycle strata, or any type-theoretic normalized return map |
-| Book 122 | the common normalized principal/ray vertex--edge diagram, objectwise finite local freeness, isomorphic lifted top legs, ray factor, active Drinfeld normalization and raw branch ledger, and Proposition 9.5's invariant-field/Cartier/group and normalized-compositum reduction | $({\rm PNS}_v)$ still needs $({\rm HDB}_v)$ for the actual Kummer branch/conductor ledger and $({\rm RGC}_v)$ for the oriented restriction--Gysin correspondence; the proved direct image is not itself an untwisted trace |
+| Book 122 | the common normalized principal/ray vertex--edge diagram, objectwise finite local freeness, isomorphic lifted top legs, ray factor, active Drinfeld normalization and raw branch ledger, Proposition 9.5's invariant-field/Cartier/group and normalized-compositum reduction, Proposition 9.6's endpoint factorization from actual Kummer data, Proposition 9.7's exact Milnor-tube formalism, and Proposition 9.8's $({\rm RGC}_v)$ | $({\rm PNS}_v)$ still needs the actual spectator/ray Kummer datum and completed Kummer--tube theorem $({\rm BTK})$ inside $({\rm HDB}_v)$; the proved direct image remains distinct from the oriented trace constructed in Proposition 9.8 |
 | Book 140 | one-step integral level lowering: a nonzero current new block has nonzero hyperspecial contraction under the displayed abelian-Ihara, saturation, duality, full-monodromy, component, branch, normalization, and nonexceptional hypotheses | construction of any of those hypotheses on an actual specialization, or simultaneous several-place exactness |
 | Books 127--128 and 168 | parity-complete basic one-split attachment in degree at least two; the SP and tame local recognition criteria; automatic zero-monodromy raw-to-global passage; reduction of uniform nonzero-monodromy preservation to $(\mathrm{SS}_{\mathrm{array}})$ for the actual carriers | the non-common-norm PEL-exact parahoric comparison needed for any raw SP carrier, the additional away-from-two ramification set in the even-degree minimal case, construction of auxiliary descent/type/return maps, the ambient semisimplicity input needed for SP, or a comparison at the coefficient residue characteristic |
 | Book 164 | the primitive residual Frey SP tuple, intrinsic line, sign, and conductor-one record used in the FLT specialization | a characteristic-zero chosen lift or automorphic seed |
@@ -2252,7 +2262,7 @@ prove the raw SP geometry or ambient semisimplicity hypotheses which that array 
 | Book 153 | simultaneous connected specialization for the integral top cover and its avoidance-field base change | the local seed, singleton moving presentation, or any automorphic support |
 | Book 154 | construction of a simultaneous moving presentation for flexible split packets and exact packets repeatable wholesale; the exact allowed-good criterion and coset-complete or integral-open sufficient repairs | the framed toroidal joining model, a repair hypothesis for the actual singleton packet, or post-specialization automorphic support |
 | Book 155 | equivariant local constancy and the regular ordered-quintic torsor | the singleton moving presentation or any automorphic lifting and lowering on the specialized top |
-| Book 157 | elliptic-source rigidification, one global neat source matching finitely many local seeds, large-good-place base points, point-centered opens, persistence after permitted extension, the Tate level--tower obstruction and ordinary rigidity, the trace-one CM finite-field seed and resulting Serre--Tate construction of $(\mathrm{Ord}^{\rm base}_\ell)$, paired-frame Kummer normalization, an equivariant regular projective fan, and finite-field/DVR slicing conditional on a joining model | Required Theorem 13.2B.3, which must construct and descend the fan-dependent toroidal cusp embeddings, completed-local comparisons, and ample joining model; the singleton moving presentation; descent of an arbitrary preassigned frame point outside the constructed seed range; or post-specialization automorphic support |
+| Book 157 | elliptic-source rigidification, one global neat source matching finitely many local seeds, large-good-place base points, point-centered opens, persistence after permitted extension, the Tate level--tower obstruction and ordinary rigidity, the trace-one CM finite-field seed and resulting Serre--Tate construction of $(\mathrm{Ord}^{\rm base}_\ell)$, paired-frame Kummer normalization, an equivariant regular projective fan, finite-field/DVR slicing conditional on a joining model, and framed normalization and twist descent conditional on the full unframed cusp package | Required Theorem 13.2B.3a, $(\mathrm{MPE})$, followed by the separate $(\mathrm{ACE})$ effectivity/overlap/trait/positivity ledger; hence the combined fan-dependent toroidal output Required Theorem 13.2B.3 and the singleton moving presentation; descent of an arbitrary preassigned frame point outside the constructed seed range; or post-specialization automorphic support |
 | Book 178 | conditional residual potential modularity on its exact seven-item domain; after an independently certified auxiliary lifting has produced the packet, proof of final compact-carrier eligibility, target-prime stable-lattice comparison, and a nonzero upper target localization on its $w_0$-ramified carrier; its inverse-branch lemma, completed over $\mathbf Q$ by Lemma 6.1 here; and the protected anti-cyclotomic Grunwald correction imposing exact split residual branch values, which retargets the $\ell$-branch in Proposition 6.2C | the Frey auxiliary lifting itself, because Proposition 6.2A forces dyadic active places and rules out item 7's literal singleton; the one-prime good ordinary seed $(\mathrm{Ord}^{\rm base}_\ell)$ in the multiplicative-Frey branch; an integral switch from the original carrier to the path-compatible carrier; over a general base the capitulation part of the corrected relative ray datum; any actual target-lowering edge; or the exact minimal Book 173 SP seed |
 | Book 180 | integral Brauer and Clifford identities for supplied representations, characters, and packet data | construction or attachment of any elementary fixed-field packet, a raw SP carrier, or the ambient semisimplicity theorem needed before the all-embedding SP comparison |
 | Books 165--167 | the SP local deformation problem, supported cohomology, and balanced presentation | a horizontal point or a nonzero exact automorphic module |

@@ -621,10 +621,12 @@ $(\mathrm{SS}_{\mathrm{array}})$. Book 41, Theorem 15.3 and Corollary 16.1 prove
 $(\mathrm{TS})$ for these Jacobians from finiteness of their $K$-isogeny classes, and Section
 16.2 proves the coefficient, idempotent, and multiplicity-space passage used here. Book 41 does
 not prove those finite isogeny classes. Its standard uniform route still retains the
-semistable-reduction, ramified Hodge-base-change, arithmetic toroidal compactification,
-integral metrized Hodge--theta, and determinant-slope interfaces. Book 41 does prove the
-subsequent finite polarized $K$-descent and Zarhin factor-cancellation steps. Semisimplicity of
-the Hecke algebra and semisimplicity of the isogeny category do not replace that gate.
+semistable-reduction, ramified Hodge-base-change, arithmetic toroidal compactification, and
+integral metrized Hodge--theta interfaces, as well as the logarithmic-Hilbert and theta
+upper-slope certificates; conditional on them, it proves the formal implication to (13.3r).
+Book 41 does prove the subsequent finite polarized $K$-descent and Zarhin factor-cancellation
+steps. Semisimplicity of the Hecke algebra and semisimplicity of the isogeny category do not
+replace that gate.
 
 This reduction is uniform over all embeddings above a fixed coefficient characteristic and
 uses no local special-line argument, so it is noncircular. It also makes the raw global

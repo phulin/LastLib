@@ -152,9 +152,10 @@ uniform height bound from prescribed good reduction. Once Faltings--Shafarevich 
 available, Tate's stable-lattice argument gives rational Tate-module semisimplicity. Chapters
 11--16 prove every implication after finite isogeny classes, together with finite polarized
 $K$-descent and integral factor cancellation.  The standard uniform route still requires the
-semistable-reduction, ramified Hodge-base-change, toroidal compactification, metrized
-theta--Hodge, and determinant-slope interfaces isolated in Chapters 12--13; none is disguised
-as an application of ordinary Northcott finiteness.
+semistable-reduction, ramified Hodge-base-change, toroidal compactification, and metrized
+theta--Hodge interfaces, as well as the concrete logarithmic Hilbert and theta upper-slope
+certificates isolated in Chapters 12--13; none is disguised as an application of ordinary
+Northcott finiteness.
 
 ## 2. Absolute values and projective height
 
@@ -1542,7 +1543,8 @@ The last three arrows are algebraic and are proved completely in Chapters 14--16
 arrow, Chapters 12--13 prove polarized descent and the integral factor-cancellation passage
 from the stabilized principally polarized objects back to the original abelian varieties. The
 remaining input is the deep numerical height bound.  Its semistable, compactification, and
-metric interfaces and its exact determinant-slope component are isolated below. This
+metric interfaces and the exact certificates needed by its determinant-slope component are
+isolated below. This
 distinction prevents a
 moduli point that is merely integral outside finitely many primes from being declared to have
 bounded height.
@@ -2669,11 +2671,15 @@ Fix the preceding data with $\Sigma=\Sigma_{8g}$ on $\mathcal M_{8g,1,N}$.  Let 
 be the finite list of level fields supplied by Lemma 13.1, and enlarge the bad
 set in each of them by the places over $N$.  To evaluate the quantities below, pass from a
 field of definition $L_0\in\mathscr L$ to any finite field $L/L_0$ over which the variety is
-semistable.  Assuming $(\mathrm{SHB})$ and $(\mathrm{MC})$, together with the ramification
-scaling in (13.3m), makes the normalized values independent of this auxiliary $L$; Northcott
-will still be applied to the point defined over $L_0$.  The additional numerical assertion is
+semistable.  Assuming $(\mathrm{PSR})$, $(\mathrm{SHB})$, $(\mathrm{SC})$, and $(\mathrm{MC})$,
+their persistence, construction, and base-change clauses, together with the ramification
+scaling in (13.3m)--(13.3n), make the normalized Hodge and boundary values independent of this
+auxiliary $L$ when the cusp charts and period representatives are pulled back compatibly.
+Other allowed reduced representatives change the boundary value by the uniform bounded term
+already noted after (13.3n).  Northcott will still be applied to the point defined over $L_0$.
+The desired numerical conclusion is
 
-**Additional unresolved theorem $(\mathrm{SB})$ (arithmetic determinant slope).**  There is a
+**Statement $(\mathrm{SB})$ (arithmetic determinant slope).**  There is a
 constant $C(K,S,g,N)$ such that, for every dimension-$g$ abelian variety $A/K$ with good
 reduction outside $S$, one can choose the Zarhin principal polarization and full level basis of
 Section 13.2 so that
@@ -2687,15 +2693,15 @@ $$
 }                                                       \tag{13.3p}
 $$
 
-The normalizations in (12.4) and (13.3n) make the assertion independent of the auxiliary
-semistable extension of $L_0\in\mathscr L$.  This displayed paragraph is a statement, not a
-proved theorem of this book.
+Subject to the persistence and base-change hypotheses just stated, the normalizations in
+(12.4) and (13.3n) make the assertion independent of the auxiliary semistable extension of
+$L_0\in\mathscr L$.  We next prove the arithmetic linear-algebra
+implication which produces this statement from a finite Hilbert determinant certificate.  This
+replaces the opaque instruction ``apply a slope lemma'' by the exact finite, level-prime, and
+archimedean assertions which still have to be checked on the Mumford family.
 
-This is the additional numerical theorem not proved in the present dependency range.  Its
-usual proof is an arithmetic slope argument, not another compactification construction.  More
-precisely, on the
-Mumford family one equips a fixed cubical theta power $\mathcal L$ with its translation-invariant
-metric and studies
+Equip a fixed cubical theta power $\mathcal L$ on that family with its translation-invariant
+metric and, in the range where higher cohomology vanishes, put
 
 $$
 E_m=\pi_*\mathcal L^m,
@@ -2703,15 +2709,242 @@ E_m=\pi_*\mathcal L^m,
 $$
 
 For a principal theta line $\chi(\mathcal L)=1$; for the fixed sufficiently divisible theta
-power used above, this constant must be retained.  The theta-group action organizes $E_m$ into
-finitely many fixed representation types.  Multiplication
-of theta functions gives determinant maps between tensor products of the $E_m$; their
-Fourier--Jacobi lowest terms measure the integers $m_{w,\rho}$ in (13.3m), while their
-archimedean operator norms are the Gaussian sums in (13.3j).  The missing arithmetic
-Hilbert--Samuel and upper-slope argument for these determinant maps would have to prove the
-following inequality.  Here $\overline\lambda_x$ is the metrized Néron Hodge lattice: away
-from $N$ it is the pullback of (13.3h), at the places over $N$ it is the lattice of (12.1),
-and at infinity it carries the metric (12.2).
+power used above, this constant must be retained.  Formula (13.3q) is used only for sufficiently
+large $m$.  Book 35 supplies polarization Riemann--Roch and the rank in (13.3q), Book 8
+supplies uniform regularity for a fixed Hilbert locus, and Book 15 then makes the pushforward
+locally free and compatible with base change on the abelian locus.  None of these books asserts
+local freeness on the proposed Mumford boundary.  That extension is part of the certificate
+below and therefore still depends on $(\mathrm{SC})$.
+
+We first give the arithmetic calculation independently of moduli.  A **Hermitian
+$\mathcal O_L$-lattice** $\overline E$ is a finite projective $\mathcal O_L$-module $E$ with
+a Hermitian norm on $E\otimes_\sigma\mathbf C$ for every embedding
+$\sigma:L\hookrightarrow\mathbf C$, compatible with conjugation.  If $E$ has rank $r$, choose
+$0\ne s\in\det E$ for which $\mathcal O_Ls\subseteq\det E$ has finite quotient and define
+
+$$
+\widehat{\deg}\,\overline E
+=\log\#(\det E/\mathcal O_Ls)
+-\sum_\sigma\log\|s\|_{\det,\sigma}.                 \tag{13.3q1}
+$$
+
+The product formula makes this independent of $s$.  For a nonzero saturated submodule
+$F\subseteq E$, use the restricted norms and put
+
+$$
+\widehat\mu_{\max}(\overline E)
+=\sup_F\frac{\widehat{\deg}\,\overline F}{\operatorname{rank}F}.
+                                                               \tag{13.3q2}
+$$
+
+The value is finite by the ordinary Minkowski lattice bound after embedding $E$ in its fixed
+archimedean space.  No Harder--Narasimhan filtration is needed below; only the defining
+inequality for each saturated $F$ is used.
+
+**Lemma 13.3A (determinant and saturation).**  Let
+$u:\overline F\to\overline E$ be a map of Hermitian $\mathcal O_L$-lattices which has generic
+rank $k=\operatorname{rank}F$.  Let $I=E\cap u(F_L)$ be the saturation of $u(F)$ in $E$ and put
+$Q=I/u(F)$.  Then
+
+$$
+\widehat{\deg}\,\overline F+\log\#Q
+=\widehat{\deg}\,\overline I
++\sum_\sigma\log
+\|\det(u_\sigma):\det F_\sigma\to\det I_\sigma\|,
+                                                               \tag{13.3q3}
+$$
+
+and consequently
+
+$$
+\widehat{\deg}\,\overline F+\log\#Q
+\leq k\widehat\mu_{\max}(\overline E)
++\sum_\sigma\log\|\mathop{\bigwedge}\nolimits^ku_\sigma\|.
+                                                               \tag{13.3q4}
+$$
+
+**Proof.**  Over each $\mathcal O_{L,w}$, elementary divisors give
+
+$$
+\operatorname{length}_w(\det I/\det u(F))
+=\operatorname{length}_w(I/u(F)).
+$$
+
+Multiplying the residue-field cardinalities shows that the inclusion $u(F)\subseteq I$
+changes the determinant lattice by the finite index $\#Q$.  At an archimedean embedding,
+transporting the metric from $F$ to $u(F)$ changes the determinant norm by the displayed
+determinant of $u_\sigma$.  Substitution in (13.3q1) proves (13.3q3), including its signs.
+Saturation makes $I$ an admissible submodule in (13.3q2), and the determinant norm is at most
+the exterior-power operator norm.  This proves (13.3q4). $\square$
+
+This formula is where finite lattice defects belong.  They occur on the left with a positive
+sign; discarding them weakens an upper bound.  In particular, a denominator at a level prime
+cannot be hidden in an archimedean $O(1)$.
+
+There is a useful finite criterion for the upper slope in (13.3q4).  A **Pl\"ucker frame** for a
+rank-$r$ Hermitian lattice $T$ consists, for each $1\leq k\leq r$, of finitely many integral
+maps
+
+$$
+q_{k,\nu}:\mathop{\bigwedge}\nolimits^kT\longrightarrow M_{k,\nu} \tag{13.3q5}
+$$
+
+to Hermitian lines such that the corresponding linear Pl\"ucker sections have empty common
+zero scheme on $\operatorname{Gr}(k,T_L)$.  In particular, every $k$-dimensional $L$-subspace
+of $T_L$ has nonzero image under at least one $q_{k,\nu}$.  This is not merely a statement
+about a preferred basis.
+
+**Lemma 13.3B (finite upper-slope criterion).**  Suppose a Pl\"ucker frame satisfies
+
+$$
+\widehat{\deg}\,\overline M_{k,\nu}
++\sum_\sigma\log\|q_{k,\nu,\sigma}\|
+\leq kU[L:\mathbf Q]                                      \tag{13.3q6}
+$$
+
+for every $k,\nu$.  Then
+
+$$
+\widehat\mu_{\max}(\overline T)\leq U[L:\mathbf Q].       \tag{13.3q7}
+$$
+
+**Proof.**  Let $F\subseteq T$ be saturated of rank $k$.  Choose $q_{k,\nu}$ nonzero on
+$\det F$.  Apply (13.3q3) to the resulting map from the line $\det F$ to $M_{k,\nu}$; because
+the map is generically nonzero, its saturation is the whole target line.  Its finite
+saturation index is nonnegative, and its archimedean determinant norm is at most the operator
+norm in (13.3q6).  Hence
+$\widehat{\deg}\,\overline F\leq kU[L:\mathbf Q]$.  Taking the supremum proves (13.3q7).
+$\square$
+
+Here $\overline\lambda_x$ denotes the metrized Néron Hodge lattice: away from $N$ it is the
+pullback of (13.3h), at the places over $N$ it is the lattice of (12.1), and at infinity it
+carries the metric (12.2).  We now put all three kinds of degeneration into one line.  For a
+semistable point $x$ over $L$, set
+
+$$
+\begin{aligned}
+\mathfrak a_\partial(x)
+ &=\prod_{w\nmid N}\mathfrak p_w^{\sum_\rho m_{w,\rho}},\\
+\mathfrak a_N(x)
+ &=\prod_{w\mid N}\mathfrak p_w^{\delta_w(x)},
+\end{aligned}                                             \tag{13.3q8}
+$$
+
+and let $\overline{\mathscr D}_x$ have underlying fractional ideal
+$(\mathfrak a_\partial(x)\mathfrak a_N(x))^{-1}$ and metric
+
+$$
+\|1\|_{\mathscr D,\sigma}
+=(1+\operatorname{tr}Y_\sigma)^{-1}.                     \tag{13.3q9}
+$$
+
+The definition of $\delta_w$ in (13.3n) is a length, so the exponents in (13.3q8) are
+integers.  Directly from (13.3q1),
+
+$$
+\widehat{\deg}\,\overline{\mathscr D}_x
+=\sum_{w\nmid N,\rho}m_{w,\rho}\log Nw
++\sum_{w\mid N}\delta_w(x)\log Nw
++\sum_\sigma\log(1+\operatorname{tr}Y_\sigma).          \tag{13.3q10}
+$$
+
+This identity fixes every sign.  Under a finite extension $L'/L$, boundary orders and
+level-lattice lengths multiply by $e(w'/w)$, while
+
+$$
+\sum_{w'\mid w}e(w'/w)\log Nw'
+=\sum_{w'\mid w}e(w'/w)f(w'/w)\log Nw
+=[L':L]\log Nw.
+$$
+
+With the period representatives pulled back compatibly, archimedean embeddings repeat
+$[L':L]$ times.  Hence both sides of (13.3q10) multiply by the field degree.
+
+Here is the exact remaining application-specific input.  It is deliberately split into an
+arithmetic Hilbert determinant assertion and an upper-slope assertion.
+
+**Required logarithmic Hilbert certificate $(\mathrm{AHS}_{\log})$.**  There are fixed
+integers $a,b_0,b_1>0$ and a fixed finite list of sufficiently large degrees $m$.  Fixed
+tensor, exterior-power, kernel, saturated-image, and determinant constructions applied to the
+multiplication maps among the $E_m$ on the proposed compactification over $R_N$ produce
+generic tensor maps of fixed ranks.  For every relevant semistable $x/L$, pull them back over
+$\mathcal O_L[1/N]$; at $w\mid N$, equip them with the explicitly cleared lattices required
+below.  The result must be Hermitian lattices $T_{0,x},T_{1,x}$ and nonzero integral maps
+
+$$
+\begin{aligned}
+\Phi_{0,x}:&\ \overline{\mathscr D}_x^{\,b_0}
+                 \longrightarrow\overline T_{0,x},\\
+\Phi_{1,x}:&\ \overline\lambda_x^{\,a}
+                 \otimes\overline{\mathscr D}_x^{\,b_1}
+                 \longrightarrow\overline T_{1,x}.       \tag{13.3q11}
+\end{aligned}
+$$
+
+The word **fixed** permits one list on each of the finitely many cusp-cone orbits of $\Sigma$
+and then takes their finite union.  The constructions, including their subspace and quotient
+metrics and their rules at the level primes, are fixed before $x$ is chosen and commute with
+finite base change.  After the boundary monomials and level lattices already inserted in
+$\overline{\mathscr D}_x$ are removed, there are constants $V_j\geq0$, independent of $x$,
+$L$, and the auxiliary semistable extension, such that
+
+$$
+\sum_\sigma\log\|\Phi_{j,x,\sigma}\|
+\leq V_j[L:\mathbf Q].                                   \tag{13.3q12}
+$$
+
+This is required for $j=0,1$.
+
+The word **integral** in (13.3q11) has exact local content.  At $w\nmid N$, the lowest
+Fourier--Jacobi monomial must be the Cartier boundary monomial with the stated order and no
+additional vertical divisor.  At $w\mid N$, after the fixed clearing used to define the target
+lattice, the resulting determinant vector must be divisible by
+$\mathfrak p_w^{b_j\delta_w(x)}$ relative to that lattice.  Indeed, the local source contributed
+by $\overline{\mathscr D}_x^{\,b_j}$ is
+$\mathfrak p_w^{-b_j\delta_w(x)}$; a mere upper bound on a denominator has the opposite sign
+and does not by itself give the integral map in (13.3q11).  At infinity, (13.3q12) must hold
+after the cusp metric in (13.3q9) is inserted.  Finally, the determinant character calculation
+must give the two positive channels in (13.3q11), including $a>0$; generic nonvanishing alone
+does not determine any of these signs or orders.
+
+Equivalently, the required determinant-of-cohomology or arithmetic Hilbert--Samuel
+calculation must produce determinant lines whose finite Cartier and archimedean degree
+contributions are exactly
+$b_0\widehat{\deg}\,\overline{\mathscr D}_x$ and
+$a\widehat{\deg}\,\overline\lambda_x
++b_1\widehat{\deg}\,\overline{\mathscr D}_x$, with no unlisted vertical or metric correction.
+Formula (13.3q) computes only ranks; it does not establish this intersection identity or the
+metric estimate (13.3q12).
+
+**Required theta upper-slope certificate $(\mathrm{US}_\theta)$.**  Each $T_{j,x}$ has a
+Pl\"ucker frame, obtained by pullback from a fixed finite list of the same universal
+multiplication minors and equipped with their induced metrics, for which
+
+$$
+\widehat{\deg}\,\overline M_{j,k,\nu}
++\sum_\sigma\log\|q_{j,k,\nu,\sigma}\|
+\leq kU_j[L:\mathbf Q]                                   \tag{13.3q13}
+$$
+
+for every $j,k,\nu$, with $U_j\geq0$ independent of $x$, $L$, and the auxiliary semistable
+extension.  After specializing the universal expressions to each $x$, the no-common-zero
+condition is required on $\operatorname{Gr}(k,T_{j,x,L})$; nonvanishing only at the generic
+moduli point does not bound the slope at every $x$.  No separate no-common-zero assertion on
+each residue fiber is used in Lemma 13.3B: integrality of the maps and the favorable saturation
+term account for finite-place defects.
+
+These two certificates are finite.  Book 8 explains the boundedness mechanism: on a fixed
+Hilbert locus one regularity bound controls generation and relations in finitely many degrees.
+Exterior powers of the resulting finite multiplication matrices therefore give a finite
+candidate list for (13.3q11)--(13.3q13).  Book 8 proves this algebraic boundedness; it does not
+select universal minors having the required determinant characters and no-common-zero
+property, or prove their primitivity over $\mathcal O_L$, their Fourier--Jacobi boundary
+orders, their required level-prime divisibility, or their Hermitian norm bounds.  In particular,
+the certificates require fixed universal expressions and cannot be manufactured pointwise
+after the degree in (13.3r) is known.
+
+**Proposition 13.3C (logarithmic Hilbert--slope inequality).**  Assuming
+$(\mathrm{AHS}_{\log})+(\mathrm{US}_\theta)$, one has
 
 $$
 \max\{\widehat{\deg}\,\overline\lambda_x,0\}
@@ -2721,19 +2954,70 @@ $$
 \leq C(K,S,g,N)[L:\mathbf Q].                           \tag{13.3r}
 $$
 
-Dividing by $[L:\mathbf Q]$ is exactly (13.3p).  What is absent from Books 1--41 is the
-arithmetic Hilbert--Samuel theorem with logarithmic metrics and the uniform upper-slope
-estimate for the multiplication determinants.  Algebraic Hilbert polynomials do not prove
-(13.3r): they record ranks and degrees on fibers but not the finite lattice indices or the
-archimedean covolumes.  Likewise, the proposed Gaussian estimate in Theorem 13.3 controls a norm
-after a boundary order is given; it does not bound that order.  Thus declaring (13.3r) to be a
-"standard slope lemma" would be precisely to assume the remaining Faltings argument.
-
-Subject to all five interfaces, Theorem 13.3 gives a uniform upper bound for $h_{\mathrm{mod}}$.
-Consequently
+**Proof.**  Put $d=\widehat{\deg}\,\overline\lambda_x$ and
+$B=\widehat{\deg}\,\overline{\mathscr D}_x\geq0$.  Lemma 13.3B and (13.3q13) give
 
 $$
-[(\mathrm{PSR})+(\mathrm{SHB})+(\mathrm{SC})+(\mathrm{MC})+(\mathrm{SB})]
+\widehat\mu_{\max}(\overline T_{j,x})\leq U_j[L:\mathbf Q].
+$$
+
+Formula (13.3q1) is additive on tensor products of Hermitian lines, so the two source degrees
+in (13.3q11) are $b_0B$ and $ad+b_1B$, respectively.  Apply Lemma 13.3A to the two maps in
+(13.3q11), and discard their nonnegative finite
+saturation lengths.  Using (13.3q12) gives
+
+$$
+b_0B\leq(U_0+V_0)[L:\mathbf Q],\qquad
+ad+b_1B\leq(U_1+V_1)[L:\mathbf Q].                       \tag{13.3q14}
+$$
+
+These are the arithmetic Hilbert--Samuel/upper-slope inequalities: their finite correction is
+the saturation length in Lemma 13.3A, while all boundary, level-prime, and cusp contributions
+are the single degree $B$ in (13.3q10).
+
+If $d<0$, the first inequality bounds
+$\max\{d,0\}+B=B$.  If $d\geq0$, the second bounds $d+B$, since
+
+$$
+\min(a,b_1)(d+B)\leq ad+b_1B.
+$$
+
+Together with (13.3q10), this is (13.3r), with for example
+
+$$
+C=\max\left\{
+\frac{U_0+V_0}{b_0},
+\frac{U_1+V_1}{\min(a,b_1)}
+\right\}.
+$$
+
+All discarded finite terms have the favorable sign, so the argument remains valid when a
+determinant map is not saturated. $\square$
+
+For the semistable model over $L$, (12.4) identifies
+$d/[L:\mathbf Q]$ with $h_F(Z(A)_L/L)$, and (13.3q10) identifies
+$B/[L:\mathbf Q]$ with $\beta_\Sigma(x)$.  Proposition 13.3C itself uses only the two
+certificates once these Hermitian lattices and the defect line have been fixed.  Subject also to
+$(\mathrm{PSR})+(\mathrm{SHB})+(\mathrm{SC})+(\mathrm{MC})$, the first value is the stable
+height, the second is the compactified boundary value, and both are independent of the
+auxiliary semistable field.  Dividing (13.3r) then proves (13.3p), while the comparison
+inequality in $(\mathrm{MC})$ converts the bounded values into a bound for
+$h_{\mathrm{mod}}$.  Thus the arithmetic content of $(\mathrm{SB})$ is no longer used as an
+unexplained broad premise: once the semistable Hodge lattice and compactified boundary objects
+are available, it follows from the two exact certificates above.  Those certificates are not
+proved in the present dependency range.  In particular, $(\mathrm{SC})$ only supplies the proposed
+extensions and $(\mathrm{MC})$ only compares their metrized lines; neither proves the positive
+determinant characters, the absence of extra vertical divisors, the required level-prime
+divisibility, or the Pl\"ucker inequalities (13.3q13).  The Gaussian estimate in Theorem 13.3 controls a norm
+after a lowest boundary monomial has been identified; it does not identify that monomial or
+prove that the determinant minors have no common zero integrally.
+
+Subject to the four geometric/metric interfaces and the two arithmetic certificates, Theorem
+13.3 gives a uniform upper bound for $h_{\mathrm{mod}}$.  Consequently
+
+$$
+[(\mathrm{PSR})+(\mathrm{SHB})+(\mathrm{SC})+(\mathrm{MC})
++(\mathrm{AHS}_{\log})+(\mathrm{US}_\theta)]
 \Longrightarrow
 (\mathrm{FH})_{K,S,g}.                                \tag{13.3s}
 $$
@@ -2764,9 +3048,12 @@ finiteness of the stabilized varieties $Z(A)$ imply finiteness of their direct f
 Section 13.6 proves that integral cancellation statement by establishing the required lattice
 theorem over the order $\operatorname{End}_K(Z(A))$.
 
-After the toroidal and metrized interfaces are supplied, the additional implication (13.3p) is
-numerical and exact.  Supplying those interfaces together with the arithmetic Hilbert--Samuel
-and determinant-slope proof of (13.3r) would close (13.4); no further descent, cancellation,
+Once $(\mathrm{PSR})$, $(\mathrm{SHB})$, $(\mathrm{SC})$, and $(\mathrm{MC})$ are supplied,
+Proposition 13.3C makes the deduction of (13.3p) from the application-specific certificates
+$(\mathrm{AHS}_{\log})$ and $(\mathrm{US}_\theta)$ numerical and exact.  Those certificates
+must still provide the integral boundary and level-prime orders, the determinant characters,
+and the cusp-normalized Pl\"ucker estimates.  The comparison inequality in $(\mathrm{MC})$
+then converts (13.3p) into the moduli-height bound (13.4); no further descent, cancellation,
 or Northcott step would remain.
 
 ### 13.4 Why integrality is not a substitute
@@ -3178,18 +3465,22 @@ Fourier--Jacobi lower bounds.  The compactification interface $(\mathrm{SC})$ an
 comparison $(\mathrm{MC})$ therefore remain inputs as well.
 
 Once $(\mathrm{PSR})$, $(\mathrm{SHB})$, $(\mathrm{SC})$, and $(\mathrm{MC})$ are supplied,
-the next missing theorem is the numerical estimate $(\mathrm{SB})$ in (13.3p), equivalently
-the unnormalized slope inequality (13.3r).  Its intended hypotheses and output are explicit:
-the base fields lie in the finite list of Section 13.2, the bad support is fixed, the Hodge
-lattice is the base-change-invariant lattice required by $(\mathrm{SHB})$, and the boundary
-multiplicities are the Fourier--Jacobi orders required by $(\mathrm{SC})$.  The missing
-arithmetic step is Hilbert--Samuel theory for the logarithmically metrized theta powers and the
-uniform upper-slope estimate for their multiplication determinants.
+the remaining arithmetic inputs are the two finite certificates
+$(\mathrm{AHS}_{\log})$ and $(\mathrm{US}_\theta)$ in Section 13.3.  Lemma 13.3A proves the
+determinant-and-saturation identity, Lemma 13.3B proves the finite Pl\"ucker upper-slope
+criterion, and Proposition 13.3C proves from those certificates the numerical estimate
+$(\mathrm{SB})$ in (13.3p), equivalently (13.3r).  Thus the abstract slope deduction is no
+longer a missing theorem.  The unproved application checks are precisely the positive Hodge
+and boundary determinant characters, primitivity and absence of extra vertical divisors away
+from $N$, the required level-prime divisibility, the cusp-normalized operator norms, and
+integral Pl\"ucker maps with generic-fiber no-common-zero at every $x$.
 
 Ordinary Riemann--Roch on a curve, coherent base change, or algebraic Hilbert polynomials do
-not imply (13.3r): none measures both integral covolumes and archimedean operator norms.  Nor
-does $S$-integrality bound the integers $m_{w,\rho}$, as Section 13.4 emphasizes.  Thus this is
-an irreducible theorem rather than an omitted calculation with the objects already available.
+not supply those certificates: none measures both integral covolumes and archimedean operator
+norms.  Nor does $S$-integrality bound the integers $m_{w,\rho}$, as Section 13.4 emphasizes.
+Book 8 reduces the relevant section algebra to finitely many degrees, but it does not prove
+the local primitivity, Fourier--Jacobi, determinant-character, or Hermitian estimates in those
+degrees.
 
 Everything after a bound is proved: level-field reduction, moduli Northcott, finite polarized
 $K$-descent, the full Jordan--Zassenhaus theorem (13.15), and integral factor cancellation
@@ -3200,14 +3491,20 @@ after $(\mathrm{FS})$, and in fact need only $(\mathrm{IF})$.
 For reference, the complete conditional chain proved by the reductions in this chapter is
 
 $$
-[(\mathrm{PSR})+(\mathrm{SHB})+(\mathrm{SC})+(\mathrm{MC})+(\mathrm{SB})]
+[(\mathrm{PSR})+(\mathrm{SHB})+(\mathrm{SC})+(\mathrm{MC})
++(\mathrm{AHS}_{\log})+(\mathrm{US}_\theta)]
 \Longrightarrow(\mathrm{FH})
 \Longrightarrow(\mathrm{FS}). \tag{13.16}
 $$
 
-The first implication is the intended combined output of the five interfaces; the second is
-Corollary 13.8. Thus no descent or direct-factor theorem remains hidden after a valid height
-theorem.
+The first implication is Proposition 13.3C followed by Theorem 13.3; the second, including
+moduli Northcott, is Corollary 13.8.  The six displayed inputs are separate gates in the
+dependency ledger: the two arithmetic certificates are formulated on the objects proposed by
+$(\mathrm{SC})$ and use the same fixed Hodge, theta, and cusp metrics that occur in
+$(\mathrm{MC})$.  Neither geometric/metric interface contains those certificates, and the
+certificates do not prove $(\mathrm{PSR})$ or
+$(\mathrm{SHB})$.  Thus no descent or direct-factor theorem remains hidden after a valid
+height theorem.
 
 ## 14. From Faltings finiteness to finite isogeny classes
 
@@ -3271,9 +3568,9 @@ $$
 $$
 
 The Tate argument below uses exactly (14.3). Thus a future source may close the gap either by
-supplying all five unresolved interfaces isolated in Section 13.7, by proving Faltings--Shafarevich
-finiteness directly, or by proving (14.3) for the particular carrier Jacobians. No stronger theorem
-is silently required.
+supplying all six unresolved inputs isolated in Section 13.7, by proving
+Faltings--Shafarevich finiteness directly, or by proving (14.3) for the particular carrier
+Jacobians. No stronger theorem is silently required.
 
 ## 15. Tate lattices and semisimplicity
 
@@ -3578,7 +3875,7 @@ $$
 Every displayed arrow is proved here. The first is Corollary 13.8; in particular, its descent
 and cancellation components are unconditional. What
 the available prior books do not establish is the premise $(\mathrm{FH})$, which still requires
-the five interfaces listed in Section 13.7. Thus (16.7)
+the six inputs listed in Section 13.7. Thus (16.7)
 remains conditional.
 In particular, it would be incorrect to remove the packet-carrier ambient semisimplicity
 blocker merely on the strength of the Tate lattice argument.
@@ -3626,8 +3923,10 @@ $$
 $$
 
 Every arrow in the last two lines of (17.2) is proved in Chapters 14--16.  In the first line,
-potential semistability, Hodge base change, compactification, metric comparison, and the
-arithmetic determinant-slope inequality (13.3r) remain the interfaces listed in Section 13.7.
+potential semistability, Hodge base change, compactification, and metric comparison remain
+unproved, as do the concrete logarithmic Hilbert and theta upper-slope certificates.  The
+Hermitian determinant/saturation and Pl\"ucker-slope deduction from those certificates to
+(13.3r) is Proposition 13.3C.
 
 ### 17.2 Normalization and dependency ledger
 
@@ -3644,7 +3943,7 @@ The conventions used throughout are:
 | finite isogeny input | $(\mathrm{IF})_{A/K}$ in (14.3) |
 | proved Tate output | $(\mathrm{IF})_{A/K}\Rightarrow(\mathrm{TS})_{A,K,\ell}$ |
 | proved factor theorem | Jordan--Zassenhaus in Theorem 13.7 and $(\mathrm{ZC})_K$ in Corollary 13.8 |
-| unresolved uniform source | $(\mathrm{PSR})+(\mathrm{SHB})+(\mathrm{SC})+(\mathrm{MC})+(\mathrm{SB})$ |
+| unresolved uniform source | $(\mathrm{PSR})+(\mathrm{SHB})+(\mathrm{SC})+(\mathrm{MC})+(\mathrm{AHS}_{\log})+(\mathrm{US}_\theta)$ |
 
 Changing $L$ to $L^r$ multiplies the canonical point height by $r$. Extending a field does
 not change an absolute projective height.  Subject to $(\mathrm{SHB})$, it does not change the
@@ -3666,8 +3965,10 @@ spaces then inherit semisimplicity exactly as required by the packet-carrier arr
 
 The remaining gap is not Hom--Tate linear algebra. The first exact arithmetic input is finite
 isogeny classes. The standard uniform source is the Faltings--Shafarevich package: the arithmetic
-height bound on Siegel moduli.  The semistable Hodge theory, compactification, metrized
-Hodge/theta comparison, and slope and boundary estimate remain the interfaces in Section 13.7.
+height bound on Siegel moduli.  The semistable Hodge theory, compactification, and metrized
+Hodge/theta comparison remain unresolved, as do the two concrete arithmetic certificates in
+Section 13.3.  Proposition 13.3C proves the determinant/saturation and upper-slope implication
+from those certificates to the required slope-and-boundary estimate.
 Proposition 13.5 proves descent of
 the finitely many stabilized polarized objects from the level fields to $K$, while Theorem
 13.7 and Corollary 13.8 prove integral Zarhin factor cancellation. The existing height machine

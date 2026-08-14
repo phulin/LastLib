@@ -611,9 +611,14 @@ special-fiber Zariski open; Book 154, Corollary 5.2E turns either verified repai
 presentation.  Book 157, Lemmas 13.2A.1--13.2A.2 prove the finite-residue relative Bertini,
 complete-intersection, and coefficient-stability steps.  Its Lemmas 13.2B.1--13.2B.2 normalize
 the paired-frame division monomials and construct a regular projective equivariant fan.  They do
-not construct algebraic cusp embeddings for that fan, glue them to the good interior, identify
-the resulting completions, or descend an ample bundle.  Those claims are isolated as Book 157,
-Required Theorem 13.2B.3.  Conditional on that theorem, Proposition 13.2B.4 gives
+not supply the first unframed input, Required Theorem 13.2B.3a: the relative inverse-to-Mumford
+equivalence with full faithfulness and completed deformation comparison.  The subsequent
+$(\mathrm{ACE})$ ledger separately retains finite-type cusp effectivity, exact overlaps and
+trait coverage, and compatible theta positivity.  Proposition 13.2B.3b proves that, once those
+unframed inputs are supplied, finite normalization gives the framed completed charts and
+smooth proper model, while a symmetrized ample pullback gives effective twist descent.  Their
+combined framed output is still the conditional Required Theorem 13.2B.3.  Conditional on that
+theorem, Proposition 13.2B.4 gives
 $(\mathrm{FTJ})_{v_0,Z}$, Corollary 13.2B.5 gives the weaker form of
 $(\mathrm{ICS})_{v_0,Z}$ used by Book 154, and Book 154, Corollary 5.2E proves (2.12a) in every
 sufficiently large compatible degree.  Without it, item 6 remains an input.
