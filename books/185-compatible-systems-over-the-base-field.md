@@ -78,6 +78,12 @@ is represented by one actual absolutely irreducible rank-two representation over
 algebraically closed nonarchimedean field. Without $(\mathrm{AI}_2)$, this effectivity statement
 is available only away from coefficient residue characteristic two.
 
+The recommended packet branch supplies this gate rather than adding it as a new root theorem:
+$(\mathrm{HT}_1)$ and Book 168, Theorem 7.6 prove absolute irreducibility of the selected top
+packet at every coefficient place. The separate notation $(\mathrm{AI}_2)$ is retained because
+the direct prime-to-two and ambient-semisimplicity preservation branches do not by themselves
+prove it.
+
 That conclusion is pointwise effectivity. It is not yet the standard object called a compatible
 system. A compatible system is indexed by the finite places of one number field. Its member at
 a place $\lambda$ must have a model over the completion at that place, and its Frobenius and
@@ -200,8 +206,8 @@ representations. It does not assert that every group-theoretic prime-cyclic towe
 automorphically admissible. Equation (1.7) is an imported proved theorem; this book neither
 reconstructs it nor replaces it by an automatic solvable-descent claim.
 
-Book 184's all-place effectivity theorem has one further hypothesis that is not contained in
-the controlled SP top datum. Write $q(\tau)$ for the residue characteristic of the
+Book 184's all-place effectivity theorem uses one further named hypothesis. Write
+$q(\tau)$ for the residue characteristic of the
 nonarchimedean target of $\tau$. We retain explicitly the hypothesis
 
 $$
@@ -212,12 +218,17 @@ r_{1,\tau}:G_M\longrightarrow\operatorname{GL}_2(\Omega_\tau)
 $$
 
 This is a rational characteristic-zero hypothesis about the coefficient-two realization of the
-top packet. Book 183 does not prove it: its prime-to-coefficient SP pair proves the required
-irreducibility only when $q(\tau)\ne2$. Under $(\mathrm{AI}_2)$, Book 184 proves effectivity at
+top packet. If Book 183's controlled datum is supplied on its preferred $(\mathrm{HT}_1)$
+branch, Book 168, Theorem 7.6 proves it from cuspidality and local algebraicity at the
+coefficient prime. If the controlled datum instead uses only direct prime-to-two preservation
+or ambient semisimplicity, it remains an additional hypothesis. Under $(\mathrm{AI}_2)$, Book
+184 proves effectivity at
 every embedding. Without it, Book 184 and the construction below apply only at places of
 residue characteristic different from two and do not produce an all-finite-place compatible
 system. Thus $(\mathrm{AI}_2)$ is a standing hypothesis whenever this book says ``every
 coefficient place.''
+
+Thus the named gate is not a separate root gap on the $(\mathrm{HT}_1)$ route.
 
 The name “all-place” must not obscure the logical role of this hypothesis. The elementary
 top-packet realization at a place above two already exists and is continuous and semisimple;
@@ -1323,8 +1334,9 @@ Both finite inertia and $N$ are present in (8.3). It is not an equality of condu
 or local Euler factors.
 
 Equation (8.2) is an upstream input, not a consequence of the assembled family. For the SP
-packet terms it is supplied by Book 183's direct local-preservation certificates or by its
-ambient-semisimplicity reduction.  Away from two it is (1.6b), whose raw-to-global step is
+packet terms it is supplied by Book 183's direct certificate, by its preferred
+$(\mathrm{HT}_1)$ raw-to-global certificate, or by its stronger ambient-semisimplicity
+reduction. Away from two it is (1.6b), whose raw-to-global step is
 Book 128, Lemma 3.2.  The cancellation in (8.3) and the Krull--Schmidt argument below can
 transport and cancel already identified Galois pairs; they cannot be used backward to prove
 that a raw packet pair survived global semisimplification or to identify an automorphic type.
@@ -1994,11 +2006,11 @@ $$
 
 | Source | Input used here | Strengthening not made |
 |---|---|---|
-| Book 168 | coefficient systems and algebraic local objects attached to the already constructed weight-two packets, including determinant, purity, and coefficient transport | no base-field family, canonical lattice, or moving-prime integral conclusion |
+| Book 168 | coefficient systems and algebraic local objects attached to the already constructed weight-two packets, including determinant, purity, coefficient transport, and cuspidal absolute irreducibility from $(\mathrm{HT}_1)$ | no base-field family, canonical lattice, or moving-prime integral conclusion; $(\mathrm{HT}_1)$ remains an arithmetic input |
 | Book 180 | multiplicity-one coefficient descent, coefficient cocycle effectivity, presentation comparison, induction/Mackey/tensor formulas, and Brauer--Nesbitt recognition | no packet overlap, positivity verification, or SP local object is imported |
-| Book 182 | the conditional controlled SP top datum, the split evaluated packets at $2,3,\ell$, parity-complete basic attachment of candidate elementary descents, the unramified algebraic Galois pairs away from two, and its explicit controlled-seed and bridge-readiness boundaries | it does not construct the raw SP carrier, the stronger automorphic descent/type/return-map geometry, or the ambient semisimplicity needed only for uniform nonzero-monodromy SP preservation, and this book does not make that datum unconditional |
+| Book 182 | the conditional controlled SP top datum, the split evaluated packets at $2,3,\ell$, parity-complete basic attachment of candidate elementary descents, the unramified algebraic Galois pairs away from two, and its explicit controlled-seed and bridge-readiness boundaries | it does not construct the raw SP carrier, the stronger automorphic descent/type/return-map geometry, or the $(\mathrm{HT}_1)$ input needed on the preferred uniform nonzero-monodromy preservation route, and this book does not make that datum unconditional |
 | Book 183 | selected elementary packets, exact elementary and conjugate-intersection identities, integral Brauer classes, determinant and local Mackey formulas, common virtual polynomials, purity, the unramified elementary pairs away from two, and the algebraic SP pair with its prior local-preservation certificate | no virtual class is called effective, no inadmissible automorphic transfer is inserted, and the later assembly is not a proof of raw packet preservation |
-| Book 184 | under the explicit additional hypothesis $(\mathrm{AI}_2)$, the application-specific coefficient-independent Gram matrix, all-place norm-one positivity, actual characteristic-zero cancellation, coefficient covariance, and scalar relation independence | no completion-valued model or assembled family is imported; without $(\mathrm{AI}_2)$ only coefficient places away from two are available |
+| Book 184 | under the named hypothesis $(\mathrm{AI}_2)$, supplied by $(\mathrm{HT}_1)$ on the preferred branch, the application-specific coefficient-independent Gram matrix, all-place norm-one positivity, actual characteristic-zero cancellation, coefficient covariance, and scalar relation independence | no completion-valued model or assembled family is imported; without $(\mathrm{AI}_2)$ only coefficient places away from two are available |
 
 The work retained here is the assembly itself. Chapter 2 places every finite packet and character
 in one algebraic ledger. Chapters 3--5 instantiate Book 180's coefficient-descent criterion over
@@ -2084,7 +2096,9 @@ is calculated. No zero-monodromy finite-type branch occurs in the theorem.
 **Final-family assembly is not used to prove a packet input.** Local Krull--Schmidt
 cancellation begins with the actual packet pairs in (8.2). The existence, irreducibility, or
 SP record of the resulting base-field member cannot certify those premises retroactively;
-Book 183's independent raw-to-global certificate must already be in force.
+Book 183's independent raw-to-global certificate must already be in force. On its preferred
+branch this means $(\mathrm{HT}_1)$ and Book 168, Theorem 7.6; it is not an appeal to the
+effectivity or assembly proved later.
 
 **Prime-to-coefficient local theory is not applied at the coefficient prime.** Equation (8.11)
 excludes $\lambda\mid2$. The prime-switch interface makes no claim at the new base place $3$
@@ -2199,6 +2213,8 @@ principal/dihedral descent complexes, type and exchange lines, and normalized re
 not follow from the unramified Galois pair.
 
 The missing upstream construction of the controlled seed and the separate bridge-readiness
-data, as well as the separate coefficient-two irreducibility hypothesis, remain outside this
-theorem. Without $(\mathrm{AI}_2)$, only the partial assembly away from coefficient
+data remain outside this theorem. On the preferred packet branch, $(\mathrm{HT}_1)$ supplies
+the coefficient-two irreducibility hypothesis through Book 168, Theorem 7.6; on either of the
+other preservation branches $(\mathrm{AI}_2)$ remains separate. Without $(\mathrm{AI}_2)$,
+only the partial assembly away from coefficient
 characteristic two is proved.

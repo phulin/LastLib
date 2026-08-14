@@ -125,6 +125,14 @@ is conditional on the controlled top datum and its stated upstream hypotheses, b
 $(\mathrm{AI}_2)$. Nothing in that route can be used backward to prove the omitted
 coefficient-two member.
 
+On Book 183's recommended $(\mathrm{HT}_1)$ branch, however, $(\mathrm{AI}_2)$ is not an
+additional arithmetic gap. Book 183, Proposition 6.1, using Book 168, Theorem 7.6, proves
+absolute irreducibility of every coefficient realization of the selected cuspidal top packet, including those of residue
+characteristic two. The gate must still be displayed here because Book 183 also permits a
+direct prime-to-two preservation certificate or the stronger ambient-semisimplicity
+certificate, neither of which by itself proves simplicity of the particular two-dimensional
+coefficient-two member.
+
 **Interface received.** Book 183, Proposition 6.2 and equations (6.4e)--(6.4h), now export the
 exact comparison required here. For every pair of elementary subgroups $H,J$, every
 $x\in\Gamma$, and
@@ -263,7 +271,7 @@ common coefficient field. The rank-two comparisons in (1.3)--(1.3a) remain
 characteristic-zero comparisons at every $\tau$ and produce no integral intertwiner or
 coherent system of intertwiners.
 
-One additional coefficient-two hypothesis is required. Book 183's full SP pair proves the
+One named coefficient-two gate is required. Book 183's full SP pair proves the
 absolute irreducibility needed below when the residue characteristic of $\tau$ is not two, but
 it deliberately exports no coefficient-prime SP, de Rham, or Hodge--Tate statement when that
 residue characteristic is two. Write $q(\tau)$ for the residue characteristic of the
@@ -277,9 +285,14 @@ r_{1,\tau}:G_M\longrightarrow\operatorname{GL}_2(\Omega)
 $$
 
 Here $r_{1,\tau}$ is the realization of the top packet $\pi_M$. This is a rational
-characteristic-zero hypothesis, not a residual or lattice assertion. It is not supplied by
-Book 183 and is a standing hypothesis below. Proposition 5.1 explains why this single top-field
-hypothesis suffices for every elementary intersection packet.
+characteristic-zero hypothesis, not a residual or lattice assertion. It is a standing
+hypothesis below, but it is automatically supplied when the controlled datum uses
+$(\mathrm{HT}_1)$: Book 183, Proposition 6.1 applies Book 168, Theorem 7.6 to the selected
+cuspidal packet $\pi_M$ at every coefficient place. If the controlled datum instead uses only
+direct prime-to-two local preservation or ambient semisimplicity, $(\mathrm{AI}_2)$ remains
+separate. Proposition 5.1
+explains why this single top-field hypothesis suffices for every elementary intersection
+packet.
 
 For one fixed Brauer datum and one fixed coefficient-two embedding $\tau$, the logically exact
 numerical gate for absolutely irreducible effectivity is
@@ -971,9 +984,11 @@ exactly the omitted coefficient-two case.
 The order is load-bearing. Book 183 must establish its raw-to-global preservation certificate
 before this proposition is invoked. It would be circular to use Proposition 5.1's absolute
 irreducibility to justify that preservation: the proof below deduces absolute irreducibility
-from the already preserved nonzero monodromy operator. The independent ambient
-semisimplicity reduction of Book 183, Proposition 6.1 is a permissible prior certificate
-because it does not use this effectivity argument or any SP irreducibility conclusion.
+from the already preserved nonzero monodromy operator. Book 183, Proposition 6.1 supplies two
+permissible prior routes, neither using this effectivity argument: the preferred
+$(\mathrm{HT}_1)$ route proves packet irreducibility directly by the algebraic-Hecke-character
+contradiction, while the stronger ambient route proves semisimplicity of the raw carrier
+factor. The first route also supplies $(\mathrm{AI}_2)$ for the top packet.
 
 **Proposition 5.1.** Let $D\leq\Gamma$ be elementary. If $q(\tau)\ne2$, the semisimple
 representation $r_{D,\tau}$ is absolutely irreducible. If $q(\tau)=2$, the same conclusion
@@ -1036,11 +1051,14 @@ description of that local complement still comes from $(\mathrm{CP\!\!-SP}_2)$ i
 from the norm calculation.
 
 No present source proves $(\mathrm{CP\!\!-SP}_2)$. Book 128, Section 11.3, explicitly limits
-its Weil--Deligne comparison to places away from the coefficient prime, while Book 168 supplies
-the continuous semisimple member but no uniform coefficient-place irreducibility theorem. Thus
-(5.3a) is a reduction to the first natural coefficient-prime comparison theorem, not a proof of
-that theorem from the current dependency spine. Conversely, $(\mathrm{AI}_2)$ alone would not
-prove semistability, the SP local pair, or any integral statement at a place above two.
+its Weil--Deligne comparison to places away from the coefficient prime. But this does not make
+coefficient-prime SP comparison the only route to effectivity: Book 183, Proposition 6.1,
+using Book 168, Theorem 7.6, proves $(\mathrm{AI}_2)$ from $(\mathrm{HT}_1)$ by a global
+cuspidality argument, without asserting
+any two-adic SP pair. Thus (5.3a) remains the natural route that would also supply the missing
+coefficient-prime local record, whereas $(\mathrm{HT}_1)$ supplies exactly the simplicity
+needed by the Gram calculation. Conversely, $(\mathrm{AI}_2)$ alone would not prove
+semistability, the SP local pair, or any integral statement at a place above two.
 
 The other earlier conclusions do not close the gap in a disguised form. The curve attachment
 gives a continuous semisimple rank-two member, cyclotomic determinant, total oddness, pure good
@@ -1063,9 +1081,10 @@ Finally, determinant and parity alone cannot prove the claim: the semisimple rep
 $1\oplus\chi_2$ has cyclotomic determinant and the required eigenvalues of complex
 conjugation. The dense-Frobenius criterion of Chapter 12 would identify this particular split
 sum only after the trace identity $1+\chi_2$ had been proved on a dense set; no such identity is
-part of the packet data. These observations leave three honest possibilities and no fourth:
-prove $(\mathrm{CP\!\!-SP}_2)$, prove $(\mathrm{AI}_2)$ by another argument, or verify the
-finite relation-specific gate $(\mathrm G_2(\mathfrak B))$ or
+part of the packet data. These observations leave the exact alternatives: supply
+$(\mathrm{HT}_1)$ and invoke Book 183, Proposition 6.1; prove
+$(\mathrm{CP\!\!-SP}_2)$; prove $(\mathrm{AI}_2)$ by another argument; or verify the finite
+relation-specific gate $(\mathrm G_2(\mathfrak B))$ or
 $(\mathrm N_2(\mathfrak B))$ directly.
 
 ### 5.3 Self-twist groups
@@ -2292,13 +2311,12 @@ $$
 | Book 24 | open subgroups, finite coset constructions, and continuity for profinite actions | continuity of the induced terms and effective constituent |
 | Book 57 | complete local coefficient rings and the topology of finite modules | the integral-model boundary in Chapter 8; stable-lattice existence is proved here |
 | Book 180 | Hom norm, Frobenius reciprocity, Mackey Gram formula, Clifford blocks, norm-one effectivity, Brauer--Nesbitt recognition, and the abstract coefficient-descent boundary | none of the SP overlap or self-twist indicators is imported |
-| Book 183 | selected elementary SP packets, exact nonnormal intersection identities, finite-order avatars, signed induced terms, rank and determinant, common polynomials, purity, and the full virtual SP pair away from coefficient characteristic two | the pair must already have a direct preservation certificate or Book 183's ambient-semisimplicity certificate; effectivity cannot prove it backward, and $(\mathrm{AI}_2)$ is an additional Book-184 hypothesis |
+| Book 183 | selected elementary SP packets, exact nonnormal intersection identities, finite-order avatars, signed induced terms, rank and determinant, common polynomials, purity, and the full virtual SP pair away from coefficient characteristic two | the pair must already have a direct certificate, the preferred $(\mathrm{HT}_1)$ certificate, or the stronger ambient certificate; effectivity cannot prove it backward, and $(\mathrm{AI}_2)$ remains additional only outside the $(\mathrm{HT}_1)$ branch |
 
-Books 127, 128, and 168 are transitive through Book 183. They are cited above only to locate the
-coefficient-two boundary: they construct the existing semisimple packet member and explicitly
-stop the SP comparison at the coefficient prime. No theorem from them proves
-$(\mathrm N_2(\mathfrak B))$, $(\mathrm G_2(\mathfrak B))$, or $(\mathrm{AI}_2)$, so no new
-direct dependency edge is asserted.
+Books 127, 128, and 168 are transitive through Book 183. Book 168's
+$(\mathrm{HT}_1)$ theorem enters here only through Book 183, Proposition 6.1, which exports
+$(\mathrm{AI}_2)$ for the selected packet array. It does not supply a coefficient-prime SP
+pair. No new direct dependency edge is asserted.
 
 The proof does not merely invoke abstract effectivity. Chapters 5--6 identify every overlap Hom
 space with the correctly oriented finite quotient self-twist, prove the indicator is coefficient
@@ -2319,8 +2337,9 @@ No signed lattice is reduced, no automorphic transfer is asserted over a nonnorm
 and no base-field compatible family is assumed.
 
 The coefficient-two boundary is equally explicit. Without $(\mathrm{AI}_2)$ the same proof gives
-effectivity for every embedding of residue characteristic different from two, but the present
-dependencies do not prove the coefficient-two Gram norm. The exact numerical gate is
+effectivity for every embedding of residue characteristic different from two. On the
+recommended $(\mathrm{HT}_1)$ branch, Book 183, Proposition 6.1 supplies $(\mathrm{AI}_2)$ and
+hence closes the coefficient-two Gram norm. Outside that branch, the exact numerical gate is
 $(\mathrm N_2(\mathfrak B))$; the finite entrywise replacement used by the present proof is
 $(\mathrm G_2(\mathfrak B))$; and the natural stronger arithmetic source theorem is
 $(\mathrm{CP\!\!-SP}_2)$, which implies $(\mathrm{AI}_2)$ by (5.3a). Any downstream assembly
@@ -2399,12 +2418,14 @@ Book 180's Brauer--Nesbitt theorem then supplied recognition, not existence. It 
 semisimple independence statements that properly belong at this stage and gave the sharp
 rank-two diagnostic: a dense trace identity $1+\chi$ forces semisimplification
 $1\oplus\chi$. Book 183's completed
-intersection-field theorem closes the overlap prerequisite. The remaining uniform
-coefficient-two irreducibility input is $(\mathrm{AI}_2)$; relation by relation its exact use is
-to establish $(\mathrm N_2(\mathfrak B))$, via the stronger entrywise condition
-$(\mathrm G_2(\mathfrak B))$. The current sources do not prove any of these conditions at
-residue characteristic two, and the sufficient coefficient-prime SP theorem in (5.3a) is
-likewise missing. Subject to $(\mathrm{AI}_2)$, characteristic-zero effectivity is
+intersection-field theorem closes the overlap prerequisite. The uniform coefficient-two
+irreducibility input is $(\mathrm{AI}_2)$; relation by relation its exact use is to establish
+$(\mathrm N_2(\mathfrak B))$, via the stronger entrywise condition
+$(\mathrm G_2(\mathfrak B))$. Book 183, Proposition 6.1 proves $(\mathrm{AI}_2)$ from
+$(\mathrm{HT}_1)$, using Book 168, Theorem 7.6, so the recommended route has no further
+effectivity gap. The stronger
+coefficient-prime SP theorem in (5.3a) is still missing and would add a local record not needed
+by the Gram argument. Subject to $(\mathrm{AI}_2)$, characteristic-zero effectivity is
 dependency-closed. Without it, the same conclusion is complete at every coefficient place away from two; this
 includes the place above three used by the fixed-three Fermat argument. The coefficient-two
 gate therefore limits the all-coefficient family, not that fixed-three route. Coherent
