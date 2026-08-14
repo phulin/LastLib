@@ -20,6 +20,14 @@ support from the irreducible avoidance ring through their common special fiber. 
 does not form the several-place old--new cube.  Section 1.5 records its exact input and keeps
 separate the fact that the present source chain has not yet constructed it.
 
+There is also a smaller definite-side fact relevant to the later minimal-seed consumer.
+For scalar parallel weight two, the two-map Ihara lemma on a totally definite quaternionic
+class set follows directly from strong approximation away from the changed finite place.
+Section 1.6 proves that result and its integral saturation consequence.  It then isolates why
+this does not by itself lower an upper eigensystem to minimal level: injectivity controls the
+old source once that source exists, whereas the application first needs to prove that the
+minimal source is nonzero.
+
 The discussion of incidence complexes below serves these application theorems. It never
 forms a tensor product of full global one-prime cohomology complexes: the common global
 multiplicity carrier is inserted once, and only genuinely local or relative factors may be
@@ -33,6 +41,7 @@ multiplied.
   - [1.3 The finite-set demand from the FLT argument](#13-the-finite-set-demand-from-the-flt-argument)
   - [1.4 The application routes and their boundary](#14-the-application-routes-and-their-boundary)
   - [1.5 The direct finite-set Ihara-avoidance route](#15-the-direct-finite-set-ihara-avoidance-route)
+  - [1.6 Definite Ihara and the minimal-support boundary](#16-definite-ihara-and-the-minimal-support-boundary)
 - [2. Local conventions and the three congruence regimes](#2-local-conventions-and-the-three-congruence-regimes)
   - [2.1 Frobenius, Hecke operators, and monodromy](#21-frobenius-hecke-operators-and-monodromy)
   - [2.2 Special representations and conductor](#22-special-representations-and-conductor)
@@ -388,6 +397,184 @@ $S=P_{\rm act}$ means the whole actual active set, including every dyadic place 
 distinguished base place; the paired construction must be simultaneous on that entire set.
 It may be invoked only after the further base change has made the residual local
 representations trivial and $q_w\equiv1\pmod\ell$ at every $w\in P_{\rm act}$.
+
+### 1.6 Definite Ihara and the minimal-support boundary
+
+The definite seed problem arising later has a feature absent from the curve-switch route.
+Let $F$ be totally real, let $D/F$ be ramified at every real place and split at a finite place
+$v\nmid\ell$, and write
+
+$$
+U=U^v\operatorname{GL}_2(\mathcal O_{F_v}),
+\qquad
+U_0(v)=U^vK_0(v).
+\tag{1.9}
+$$
+
+Use scalar parallel-weight-two coefficients and a fixed central character, and let
+$(\mathcal O,(\varpi),k)$ be a complete coefficient DVR. For
+$A\in\{\mathcal O,k\}$, let $M_A(U)$ and $M_A(U_0(v))$ be the definite class-set modules of
+Book 83. With Book 84's right-translation convention, the two endpoint maps give
+
+$$
+d_v:M_A(U)^{\oplus2}\longrightarrow M_A(U_0(v)).
+\tag{1.10}
+$$
+
+Let $M_A(U)^{\rm nr}$ denote the span of the functions which factor through reduced norm.
+For a residual maximal ideal $\mathfrak m$ of the common away Hecke algebra, say that
+$\mathfrak m$ is **non-norm** if
+
+$$
+M_k(U)^{\rm nr}_{\mathfrak m}=0.
+\tag{1.11}
+$$
+
+This is the exact definite substitute for the word non-Eisenstein in the following statement.
+In the application it follows from the absolutely irreducible attached residual
+representation: a reduced-norm character has reducible two-dimensional transfer, so it cannot
+have the same good Hecke traces.
+
+**Theorem 1.2 (definite class-set Ihara and saturation).**  In the setting above, if
+$\mathfrak m$ is non-norm, then
+
+$$
+(d_v\otimes_A k)_{\mathfrak m}:
+M_k(U)_{\mathfrak m}^{\oplus2}\longrightarrow
+M_k(U_0(v))_{\mathfrak m}
+\tag{1.12}
+$$
+
+is injective. If the relevant primary class-set summands are finite free over
+$\mathcal O$, then $(d_v)_{\mathfrak m}$ is injective with
+$\mathcal O$-torsion-free cokernel.  Thus its image is saturated.  The same assertion may be
+applied successively at a finite set of changed places, provided the non-norm and finite-free
+hypotheses are retained at every intermediate level.
+
+**Proof.**  Put $H=\operatorname{SL}_1(D)$.  The norm quadric of $D$ is isotropic over
+$F_v$ because $D_v\simeq M_2(F_v)$.  The integral norm-quadric approximation lemma proved in
+Book 118, Section 6.2 is stated with an isotropic completion outside the finite places at
+which approximation is prescribed; its proof does not require that completion to be
+archimedean.  Applied with the omitted completion $v$, it gives
+
+$$
+H(\mathbf A_{F,f})=H(F)H(F_v)U^{1,v},
+\qquad U^{1,v}=U^v\cap H(\mathbf A_{F,f}^v).
+\tag{1.13}
+$$
+
+Indeed, density modulo the open compact $U^{1,v}$ gives the displayed equality.  This is
+strong approximation **away from $v$**; total definiteness does not obstruct it because the
+omitted split finite group $H(F_v)\simeq\operatorname{SL}_2(F_v)$ is noncompact.
+
+Suppose $(f,g)$ lies in the kernel of (1.10) over $k$.  If
+$\omega_v=\operatorname{diag}(\varpi_v,1)$ in the chosen splitting, the endpoint relation is,
+up to the fixed harmless central/right-translation normalization,
+
+$$
+f(x)=-g(x\omega_v).
+\tag{1.14}
+$$
+
+The $U$-invariance of $f$ and $g$ consequently makes $f$ invariant under both $U$ and
+$\omega_vU\omega_v^{-1}$.  Their local norm-one subgroups generate
+$\operatorname{SL}_2(F_v)$: the two adjacent maximal compact stabilizers generate the
+type-preserving group of the Bruhat--Tits tree.  Equation (1.13) and left $D^\times(F)$-
+invariance now make $f$ invariant under $H(\mathbf A_{F,f})$.  Hence $f$ factors through
+reduced norm: placewise reduced norm has exact kernel
+$H(\mathbf A_{F,f})\subset D^\times(\mathbf A_{F,f})$, while the rational and level factors
+give exactly the corresponding idele-class quotient. Equation (1.14) gives the same
+conclusion for $g$. The localized kernel is therefore
+contained in $(M_k(U)^{\rm nr}_{\mathfrak m})^{\oplus2}$, which is zero by (1.11).  This proves
+(1.12).
+
+For the integral assertion, take the finite-free primary summands of source and target.
+Residual injectivity and Smith normal form over the DVR say that every nonzero invariant
+factor of $d_v$ is a unit.  Thus the integral map is injective and its cokernel has no
+$\varpi$-torsion.  A finite torsion module over a DVR has nonzero $\varpi$-torsion, so the
+cokernel is torsion-free.  Successive application proves the last sentence. $\square$
+
+Theorem 1.2 removes a real hypothesis from the direct-definite route: unlike the curve
+cohomology map of Book 139, the scalar definite degeneracy map needs no abelian-Ihara or
+congruence-kernel assumption.  It does **not**, however, prove level lowering.  Its source is
+the already existing lower-level module.  It says that this source embeds primitively in the
+oriented module; it does not say that a residual maximal ideal occurring only in the upper
+module occurs in the source.  Book 152, Theorem 16.1 exposes the same distinction: even when
+the Gram operator splits the old image, the assertion that the selected oriented factor has
+no support in the old quotient is a separate support theorem.
+
+This logical gap survives finite freeness, pairings, and upper-side patching.  Here is a
+minimal countermodel to any formal deduction from those properties.  Let $\mathcal O$ be a
+DVR and take
+
+$$
+M^{\min}=0,
+\qquad M^{\rm up}=\mathcal O,
+\qquad \mathbb T^{\rm up}=\mathcal O,
+\tag{1.15}
+$$
+
+with the faithful scalar action and the perfect multiplication pairing on $M^{\rm up}$.  The
+map $(M^{\min})^{\oplus2}\to M^{\rm up}$ is injective with saturated image, so it satisfies the
+formal conclusion of definite Ihara.  Give the upper order the Weil--Deligne matrices
+
+$$
+N=\begin{pmatrix}0&\varpi\\0&0\end{pmatrix},
+\qquad
+\phi=\begin{pmatrix}q_v&0\\0&1\end{pmatrix};
+\tag{1.16}
+$$
+
+then $\phi N\phi^{-1}=q_vN$ for arithmetic Frobenius, the generic monodromy is nonzero, and its residual monodromy is
+zero.  Thus the upper module is finite free, paired, faithful and nonzero, and the residual
+local parameter is unramified, while the minimal localization is still zero.  This is not an
+arithmetic counterexample to level lowering; it proves that neither finite-module algebra,
+residual monodromy vanishing, definite Ihara, nor patching of the upper system alone can imply
+the missing occurrence.
+
+For a finite target-extra set $P$, write $({\rm DLO}_P)$ for the first genuinely arithmetic
+input:
+
+$$
+\boxed{
+M^{\rm up}_{\mathfrak m}/\varpi\ne0
+\quad\Longrightarrow\quad
+M^{\min}_{\mathfrak m}/\varpi\ne0,}
+\tag{1.17}
+$$
+
+with the same away Hecke system and the exact represented minimal local conditions, proved
+either simultaneously or along an ordered chain whose hypotheses are reverified after every
+removal.  A paired-patching proof may instead construct upper and minimal local rings with a
+common closed fiber and synchronized automorphic Taylor--Wiles modules.  Proposition 1.1 then
+transfers support without a pre-existing characteristic-zero minimal point.  But the
+mod-$\varpi$ module identification on the minimal side, or an equivalent theorem that the
+upper residual block lies in the old support, is precisely the arithmetic content of
+$({\rm DLO}_P)$; it is not supplied by common local-ring equations.
+
+The later seed notation $({\rm DMS}_P)$ should therefore be read as
+
+$$
+({\rm DMS}_P)=({\rm DLO}_P)+({\rm CLN}_{\min}),
+\tag{1.18}
+$$
+
+where $({\rm CLN}_{\min})$ is the verification on the resulting nonzero minimal localization
+of the exact Book 173 ledger: stabilizer cleanliness, primary--companion perfectness,
+generic reducedness of the acting order, branchwise integral Galois attachment, clean
+diamond torsors, and exact module and acting-image augmentation.  Books 83--85, 152, and
+170--173 provide the individual constructions and implications once their displayed
+arithmetic hypotheses and a nonzero minimal carrier are present.  Book 172 cannot create the
+carrier: its patched positive rank is inherited from residual occurrence at minimal level.
+
+No theorem in Books 83, 96, 104, 125--129, 139--175, or the FLT blueprint proves (1.17) for
+the specialization-dependent finite set.  Book 104 transfers an already existing packet
+between parity-compatible inner forms; Books 125--129 attach Galois representations to an
+already isolated packet; and Book 140 proves a conditional curve-geometric lowering theorem
+with component and branch-Smith hypotheses.  Consequently total definiteness makes the Ihara
+and carrier parts substantially simpler, but the first exact unresolved arithmetic statement
+on the preferred route is $({\rm DLO}_{P_{\rm tar}})$, not saturation and not any optional
+node or toroidal comparison.
 
 ## 2. Local conventions and the three congruence regimes
 
@@ -2492,8 +2679,11 @@ The direct mathematical sources used here have the following roles and retained 
 | Book 6 | odd-exponent local--global character theorem and ray-class factorization used in Proposition 8.3 | supplies the joint scalar ray quotient, not mixed geometric exactness or product support |
 | Book 14 | coefficient-change universal-coefficient sequence, derived base-change morphisms, and compatibility under pasted squares | the formalism assembles supplied higher comparison maps; it does not construct the routed integral switching squares or prove their application-specific maps are quasi-isomorphisms |
 | Book 22 | nearby cycles, normalization and graph/component complexes for a semistable curve over one trait | distinct closed arithmetic fibers have empty intersection, so its one-trait functor does not iterate literally across $P$ |
+| Book 83 | integral scalar definite class-set modules, reduced norm, and the norm-character subspace | finite class sets alone do not move support from an upper level to a minimal level |
 | Book 84 | one integral global $2^{|P|}$-fold degeneracy source at several definite-level primes and factorization of its Gram entries | constructs a common carrier and commuting maps, not primitivity of the sum of upper old images or exactness of the total quotient-new cube |
+| Book 85 | primary Hecke localization and the formal integral Ihara/saturation interface | formal localization does not prove either its arithmetic kernel calculation or lower-level occurrence |
 | Book 109 | recursive cyclic solvable descent selected by a representation already defined over the lower field | Galois invariance alone is not descent; irreducibility, image criteria, and full local antecedents are rechecked |
+| Book 118 | integral norm-quadric approximation for a norm-one quaternion group isotropic at one omitted completion | with the omitted split finite place it proves definite class-set Ihara, not level-lowering support |
 | Book 122 | the one-place Iwahori semistable PEL model, strict ray Kummer factors, completed actual-row tubes and $({\rm PNS}_v)_{\rm act}$, two branches, nodes, and integral component complex | treats one bad-residue trait with every other active level as spectator; supplies no iterated-switching Beck--Chevalley theorem |
 | Book 123 | the global level tower, transitive forgetting maps, and right adelic level translations | constructs commuting generic level maps but no mixed integral exactness or simultaneous residue fiber |
 | Book 124 | commutation of correspondences supported at distinct places, pull--trace adjunction, and common Hecke routing | commuting correspondences do not make their total cohomology cube exact or construct an inner-form-switching Beck--Chevalley comparison |
@@ -2506,13 +2696,14 @@ The direct mathematical sources used here have the following roles and retained 
 | Book 145 | exact support as the vanishing locus of the annihilator, union-of-components and near-faithfulness criteria, and exact marked augmentation used in (1.7)--(1.8) | formal patching does not construct the paired local rings, synchronized automorphic systems, or an actual product-component occurrence datum |
 | Book 152 | several-prime regular-refinement idempotents on one global degeneracy source and exact multi-prime diamond augmentation under its hypotheses | splits and augments a supplied source; it expressly does not prove degeneracy injectivity, full oldness, or mixed sum-primitivity |
 | Book 170 | order-valued Galois representation, factorization through represented local conditions, and the surjection (3.5) | requires every generic branch, integral coefficient-prime realization, reduced generic order, exact trace generation, and the conditional Book 140 comparison whenever used |
+| Book 172 | clean minimal patching and positivity inherited from a supplied nonzero minimal residual module | patching a zero minimal module cannot create the missing residual occurrence |
 | Book 174 | enhanced one-prime type complex, typed generic-residue kernel equality from Book 125 after the typed filtration, scalar $q\equiv1$ family, primitive residue, one-prime support, exact fixed-prime augmentation, and auxiliary represented-ring/complex/module/pairing augmentation | $({\rm TIC}_v)$, $({\rm TIH}_{\mathscr F})$, $({\rm PRI}_{\rm type})$, $({\rm NU}_{\rm type})$, Book 125 applicability on the routed common cover, and $({\rm SUP}_v)$ retain their stated roles; support is topological and only one-place; auxiliary acting-order augmentation is only a surjection |
 | Book 175 | in the scalar line-special range, finite-level reduced one-prime comparison, finite flatness from the balanced enhanced presentation, pointwise characteristic-zero modularity, and, under a coherent unpadded $({\rm AUX}_Q)$ tower, equal-variable full patched and finite $R=T$, all enhanced characteristic-zero tangent--Selmer vanishings, and exact auxiliary acting-order augmentation; the ray twist transports these to the scalar family | without a coherent auxiliary tower, full equality is equivalent to the isolated branchwise torsion-cotangent theorem; no theorem for the generic or vexing rows and no simultaneous finite-set theorem is supplied |
 
 The exact direct-dependency row is
 
 $$
-176\mid 6,14,22,84,109,122,123,124,125,138,139,140,143,145,152,170,173,174,175.
+176\mid 6,14,22,83,84,85,109,118,122,123,124,125,138,139,140,143,145,152,170,172,173,174,175.
 \tag{10.0}
 $$
 
@@ -2523,8 +2714,10 @@ on the original arithmetic base. Book 125 is used directly for
 174's typed generic-residue theorem. Book 84 is the owner of the integral common definite
 degeneracy source, while Book 152 is used directly only for the several-prime regular-refinement
 and augmentation boundary; neither supplies mixed exactness. Within Books 138--141,
-163, and 170--176, Books 141 and 171--172 enter transitively through the type-support and
-one-prime patching packages.
+163, and 170--176, Books 141 and 171 enter transitively through the type-support and
+one-prime patching packages. Books 83, 85, and 118 are used directly in Theorem 1.2, while
+Book 172 is used in Section 1.6 to identify the exact circularity boundary for minimal-side
+patching.
 Book 164 is a downstream arithmetic synthesis, not a proof source. The mixed reduction
 (8.3)--(8.10), the exact DVR criterion (8.14g)--(8.14j), the commuting-projector and cubical
 contraction criteria, the torsion-free joint carrier, the parity inner-form cube, and the
@@ -2646,6 +2839,16 @@ construction, including exact acting-image control, is the first missing input o
 standard Ihara-avoidance route. It is not an alias for mixed Ihara: after it is supplied,
 Proposition 1.1 proves the needed finite-set component coverage without forming an old--new
 cube.
+
+The later definite-seed consumer has a different finite-set boundary. Theorem 1.2 proves
+the scalar definite Ihara and saturation statement without any curve abelian-Ihara input.
+It does not prove that the upper residual block occurs at minimal level. In the notation of
+Section 1.6, the first unresolved arithmetic theorem is
+$({\rm DLO}_{P_{\rm tar}})$; after it, $({\rm CLN}_{\min})$ verifies the exact structural
+ledger, and their conjunction is $({\rm DMS}_{P_{\rm tar}})$. Independent upper-side
+Taylor--Wiles patching and common residual local-ring equations do not prove DLO; a paired
+upper/minimal patch must construct the synchronized mod-$\varpi$ automorphic module comparison
+whose existence is exactly at issue.
 
 If the geometric level-change route is used instead, then for two or more places the division
 of mathematical roles among the earlier sources separates
@@ -2799,6 +3002,13 @@ the exact control listed after (1.8). Once that construction is supplied, none o
 cube, product-residue, constant/type-Ihara, or separate joint-occurrence inputs is consumed.
 The present source chain records this as an unresolved alternative rather than treating the
 geometric cube as logically compulsory.
+
+For the later minimal-seed application, total definiteness proves a smaller theorem rather
+than the whole direct comparison. Theorem 1.2 removes the curve-Ihara and saturation inputs
+from scalar weight-two degeneracy maps. The countermodel (1.15)--(1.16) shows why upper
+occurrence and residual monodromy zero still do not produce minimal occurrence. Thus the
+direct definite route stops exactly at $({\rm DLO}_{P_{\rm tar}})$ and the subsequent clean
+minimal ledger, with no need to reintroduce node uniformization or toroidal joining.
 
 For the actual named point downstream, the canonical torsion-free top quotient and its
 adjoint give a smaller honest carrier with the global module $W_\Pi$ occurring once. Theorem

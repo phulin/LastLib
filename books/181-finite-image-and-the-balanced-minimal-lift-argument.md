@@ -1069,6 +1069,13 @@ augmentation hypotheses used by Book 173. A direct proof may use paired upper/mi
 rings, synchronized definite Taylor--Wiles systems, special-fibre support transfer, and
 finite-level recovery. It need not construct an indefinite curve switch.
 
+Book 176, Theorem 1.2 now proves the scalar definite two-map Ihara theorem and integral
+saturation at each non-norm residual localization.  Section 1.6 there proves that this does
+not create lower support: $({\rm DMS}_{P_{\rm tar}})$ splits as the genuinely arithmetic
+finite-set occurrence theorem $({\rm DLO}_{P_{\rm tar}})$ and verification of the clean
+minimal ledger.  Thus saturation is no longer the first unnamed obstacle on this route; the
+first obstacle is the implication from nonzero upper support to nonzero exact minimal support.
+
 Book 176's $({\rm IAV}_{P_{\rm aux}})$ does not itself prove (4.4). It starts with a named
 characteristic-zero desired point and proves that point automorphic. Before Book 181 there is
 no characteristic-zero point of the minimal signed-special deformation problem to feed into a
@@ -1862,7 +1869,8 @@ For the preferred split-top construction, the preceding broad theorem factors mo
 Book 178's conditional $({\rm IAV}_{P_{\rm aux}})$ handoff supplies the upper target packet,
 and direct transfer to the all-real-place definite algebra supplies upper residual occurrence
 without an integral curve switch. The remaining theorem is precisely
-$({\rm DMS}_{P_{\rm tar}})$ of (4.4). Its clean minimal output implies
+$({\rm DMS}_{P_{\rm tar}})$ of (4.4), whose first arithmetic clause is
+$({\rm DLO}_{P_{\rm tar}})$. Its clean minimal output implies
 $(\mathrm{Seed}_{\mathrm{SP}})$ and hence $(\mathrm{SF}_{\mathrm{SP}})$. Neither the optional
 singleton moving geometry nor the constant-row abelian-Ihara family belongs to that direct
 definite route.
@@ -1916,7 +1924,8 @@ automorphic seed, rather than only its special-fibre consequence, is retained by
 The FLT-range unconditional theorem is not dependency-closed because neither
 $(\mathrm{SF}_{\mathrm{SP}})$ nor the stronger $(\mathrm{Seed}_{\mathrm{SP}})$ is proved; on
 the preferred split route the missing source is $({\rm DMS}_{P_{\rm tar}})$ after the separate
-$({\rm IAV}_{P_{\rm aux}})$ certificate. The precise verdict is therefore
+$({\rm IAV}_{P_{\rm aux}})$ certificate, with $({\rm DLO}_{P_{\rm tar}})$ its first unresolved
+arithmetic clause. The precise verdict is therefore
 
 $$
 \boxed{\text{NOT READY}.}

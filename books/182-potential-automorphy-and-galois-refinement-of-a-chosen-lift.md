@@ -1079,8 +1079,9 @@ the fifth assertion. $\square$
 The theorem has two exact conditional boundaries. The earlier one is the controlled residual
 seed summarized in Chapter 4. On the preferred split route, after the separate
 $({\rm IAV}_{P_{\rm aux}})$ certificate, Proposition 4.1 supplies upper definite occurrence
-and the smallest remaining source is $({\rm DMS}_{P_{\rm tar}})$; no preceding volume proves
-that target-minimal support theorem and its clean bottom ledger. The later one is the
+and the smallest remaining package is $({\rm DMS}_{P_{\rm tar}})$, beginning with the
+unproved occurrence theorem $({\rm DLO}_{P_{\rm tar}})$; no preceding volume proves that
+target-minimal support theorem and its clean bottom ledger. The later one is the
 geometric $(\mathrm{RSP}_{2})$ hypothesis of Chapter 7, together with the already isolated
 smooth-proper source of $(\mathrm{HT}_1)$. Basic carrier existence does not close the former,
 while Proposition 8.1 shows that neither input is needed for the auxiliary unramified pairs.

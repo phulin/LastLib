@@ -204,7 +204,7 @@ flowchart LR
 | 173 | Minimal Modularity Lifting | 171, 172 |
 | 174 | One-Prime Type Complexes and Component Support | 6, 17, 21, 22, 65, 67, 69, 70, 118, 119, 121, 122, 125, 138, 139, 140, 141, 143, 145, 152, 170, 171, 172 |
 | 175 | One-Prime Nonminimal Patching and R=T | 67, 69, 109, 138, 139, 140, 143, 170, 171, 172, 173, 174 |
-| 176 | Nonminimal Modularity Lifting | 6, 14, 22, 84, 109, 122, 123, 124, 125, 138, 139, 140, 143, 145, 152, 170, 173, 174, 175 |
+| 176 | Nonminimal Modularity Lifting | 6, 14, 22, 83, 84, 85, 109, 118, 122, 123, 124, 125, 138, 139, 140, 143, 145, 152, 170, 172, 173, 174, 175 |
 | 177 | Potential Modularity of Two-Dimensional Representations | 104, 98, 127, 176, 154, 158, 142 |
 | 178 | Auxiliary Dihedral Data and Residual Potential Modularity | 6, 98, 104, 127, 141, 142, 156, 157, 158, 176 |
 | 179 | Compatible Systems of Galois Representations | 168, 141, 142 |
@@ -396,14 +396,23 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   one-place statements do not supply it.
 
   After auxiliary automorphy, the target-extra set $P_{\mathrm{tar}}$ is formed separately.
-  Every actual Book 140 lowering edge must retain its current component, abelian-Ihara,
-  saturation, duality, monodromy, branch, and normalization hypotheses. Book 182 proves
-  propagation of a primitive upper occurrence down such a certified path and then transfers
-  the final packet to the totally definite carrier; the bottom Book 173 structural ledger
-  remains an input. Dyadic places are absent from $P_{\mathrm{tar}}$ because the target retains
-  its signed-special condition. Thus the live seed boundary is the auxiliary finite-set
-  certificate, the certified target path, and the bottom structural ledger—not a singleton
-  moving presentation.
+  Since the split top has positive even degree, ordinary Jacquet--Langlands and a fresh
+  primitive class-set lattice give a nonzero upper localization directly on the totally
+  definite algebra. Book 176, Theorem 1.2 proves the scalar definite two-map Ihara theorem
+  and its integral saturation consequence by strong approximation away from each changed
+  finite place. It does not create lower-level support. The first remaining arithmetic source
+  is $({\rm DLO}_{P_{\mathrm{tar}}})$, the simultaneous or fully reverified ordered
+  upper-to-minimal occurrence theorem for the actual finite set. Together with
+  $({\rm CLN}_{\min})$, verification of the exact minimal localization's pairing, stabilizer,
+  generic-reducedness, branchwise attachment, diamond-torsor, and augmentation ledger for
+  Book 173, it forms $({\rm DMS}_{P_{\mathrm{tar}}})$. The older ordered Book 140 curve path
+  remains a stronger secondary alternative and
+  retains all of its edgewise Ihara, component, and branch hypotheses. Dyadic places are absent
+  from $P_{\mathrm{tar}}$ because the target keeps its signed-special condition. Thus the live
+  seed boundary is $({\rm IAV}_{P_{\mathrm{aux}}})$, then
+  $({\rm DLO}_{P_{\mathrm{tar}}})$ and the bottom structural ledger—not a singleton moving
+  presentation. Finite class sets, residual monodromy zero, and upper-side Taylor--Wiles
+  patching do not formally imply DLO; Book 176 gives an explicit paired countermodel.
 
   For the post-point construction, Book 182 starts from Book 181's chosen lift and a controlled
   exact datum on the split top. It gives parity-complete compact carriers and the common
@@ -411,52 +420,43 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   signed-special geometry and its later raw-to-global comparison remain the separately named
   downstream issue; none reinstates the retired singleton/toroidal route.
 
-- **Balanced-lift finiteness:** no separate restricted reduced-finiteness hypothesis remains.
-  From the exact automorphic seed, Book 173 makes the whole restricted ring finite free and Book
-  181 derives finite scalar image, whole-ring finiteness, finite flatness, and a horizontal
-  characteristic-zero point.  Its sole unresolved arithmetic input is therefore the seed above.
-- **Packet-carrier ambient semisimplicity $(\mathrm{SS}_{\mathrm{array}})$:** for every actual
-  smooth projective curve carrier used in the finite Brauer packet array and every relevant
-  coefficient characteristic $q$, its rational $H^1_{\mathrm{et}}$ is semisimple as a global
-  Galois module. Books 128, 168, and 183 prove that this input survives finite coefficient
-  extension, packet idempotents, and Morita extraction, so each raw multiplicity representation
-  equals its global semisimplification. It therefore preserves the complete signed special
-  Weil--Deligne pair, including nonzero $N$, its line, and its Frobenius sign, at every
-  coefficient embedding with $q\ne2$. Book 41 now proves, without Hom--Tate surjectivity, the
-  complete chain from finiteness of each carrier Jacobian's $K$-isogeny class to rational
-  Tate-module semisimplicity $(\mathrm{TS})$ and thence to
-  $(\mathrm{SS}_{\mathrm{array}})$. It also proves the Faltings-height isogeny formula and the
-  formal moduli-Northcott reductions. The first exact arithmetic input is finiteness of the
-  carrier Jacobians' $K$-isogeny classes. A standard uniform source is
-  Faltings--Shafarevich finiteness. Book 41 proves finite polarized $K$-descent after
-  Northcott, normalized-lattice compactness, Jordan--Zassenhaus for orders in semisimple
-  rational algebras, direct-summand finiteness, and hence integral Zarhin cancellation. Its new
-  internal sketches do not yet prove potential semistable reduction, persistence and ramified
-  semistable Hodge base change, the arithmetic toroidal Siegel compactification, or the integral
-  metrized Hodge--theta comparison from the permitted earlier sources. Book 41 proves the
-  Hermitian determinant/saturation identity, a finite Pl\"ucker upper-slope criterion, and the
-  formal deduction of (13.3r). That deduction remains conditional on the separately named
-  $(\mathrm{AHS}_{\log})$ and $(\mathrm{US}_\theta)$ certificates: exact determinant
-  characters, boundary primitivity, positive level-prime divisibility, cusp-normalized norms,
-  and universal integral Pl\"ucker frames. The blocker therefore cannot honestly be narrowed to
-  the abstract slope deduction or removed, and the four geometric/metric gates remain
-  separately required.
-  This is separate from constructing the raw dyadic carriers. At $q=2$ the conditional theorem
-  proves global semisimplicity but does not extend the prime-to-coefficient Weil--Deligne
-  comparison at the dyadic base place; Book 184's $(\mathrm{AI}_2)$ remains a separate
-  effectivity gate.
+- **Balanced-lift finiteness:** Book 181's finite-image and commutative-algebra argument needs
+  only the restricted-special-fibre certificate $({\rm SF}_{\rm SP})$, not automorphy of every
+  restricted characteristic-zero point. The full exact seed remains the natural stated input
+  because Book 182 uses the resulting restricted $R=\mathbb T$ theorem to make the chosen point
+  automorphic over the same field. A proof of $({\rm DMS}_{P_{\mathrm{tar}}})$ would supply the
+  clean minimal localization and hence $({\rm SF}_{\rm SP})$; with the full Book 173 ledger it
+  supplies the seed.
+- **Raw dyadic carrier and raw-to-global comparison:** Book 182, Proposition 6.1 and Book 183
+  now prove ordinary elementary packet attachment packet by packet; no all-elementary
+  occurrence hypothesis and no principal/dihedral type parameters are required. The sole raw
+  carrier input is $(\mathrm{RSP}_2)$: Book 122's finite integral comparison (10.5), together
+  in even degree with either a parity-compatible eligible ramification set away from two or a
+  mixed-dyadic replacement geometry. Once that raw SP pair exists, the recommended
+  raw-to-global certificate is $(\mathrm{HT}_1)$. Book 168 proves from it that each cuspidal
+  packet realization is absolutely irreducible and equals its raw multiplicity
+  representation, preserving monodromy, its line, and sign at every coefficient place away
+  from residue characteristic two; Book 183 applies this uniformly to the finite packet
+  array. Book 6 proves the rank-one local-algebraicity step and Book 47, Proposition 9.1
+  proves inheritance by curve-cohomology subquotients. The exact unproved source is therefore
+  the smooth-proper comparison $(\mathrm{HT}_{\mathrm{curve}})$ of Book 47, (9.7).
+  Ambient carrier semisimplicity $(\mathrm{SS}_{\mathrm{array}})$ is a stronger optional
+  alternative, not part of the recommended FLT dependency chain.
 - **Coefficient-two top-packet irreducibility $(\mathrm{AI}_2)$:** absolute irreducibility in
   characteristic zero of the already existing top-packet realization at every coefficient
   place of residue characteristic two. It is a uniform sufficient input for the Mackey Gram
   calculation at residue characteristic two and hence for Book 185's all-place effectivity;
-  it is not a scalar extension or completion of the away-from-two collection. Relation by
+  it is not a scalar extension or completion of the away-from-two collection. On the
+  recommended route it is no longer an independent hypothesis: Book 183, Proposition 6.1
+  derives it packetwise from $(\mathrm{HT}_1)$ by cuspidal absolute irreducibility. If the
+  stronger optional $(\mathrm{SS}_{\mathrm{array}})$ route is used instead, semisimplicity
+  alone does not supply this irreducibility and $(\mathrm{AI}_2)$ must still be checked.
+  Relation by
   relation, the exact numerical input is norm one for the signed class at residue characteristic two
   $(\mathrm N_2(\mathfrak B))$; the existing proof obtains it from coefficient-independence of
-  the finitely many self-twist Hom dimensions $(\mathrm G_2(\mathfrak B))$. A sufficient
-  natural source theorem would be coefficient-prime semistable SP compatibility with nonzero
-  monodromy for the top packet, which implies $(\mathrm{AI}_2)$, but Books 128 and 168 do not
-  prove it. The coefficient-three route through Books 186--188 uses only places away from two
-  and does not use this hypothesis.
+  the finitely many self-twist Hom dimensions $(\mathrm G_2(\mathfrak B))$. The
+  coefficient-three route through Books 186--188 uses only places away from two and does not
+  use this hypothesis.
 - **Closed: positive fixed-three packet carriers $(\mathrm{AVCar}_{3,\ell}^+)$,
   $(\mathrm{Car}_3^+)$, and $(\mathrm{IC}_3)$:** name $3$ among the split sensitive places
   before constructing the controlled top. Book 182 now supplies the corresponding split
