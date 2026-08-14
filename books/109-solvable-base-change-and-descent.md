@@ -89,13 +89,21 @@
     - [A practical solvable modularity descent theorem](#134-a-practical-solvable-modularity-descent-theorem)
     - [Local conditions in ascent and descent](#135-local-conditions-in-ascent-and-descent)
     - [Descent from automorphic data alone](#136-descent-from-automorphic-data-alone)
-14. [The final theorem package](#14-the-final-theorem-package)
-    - [Solvable base change: existence and normalization](#141-solvable-base-change-existence-and-normalization)
-    - [Cuspidality, isobaric failure, and fibers](#142-cuspidality-isobaric-failure-and-fibers)
-    - [Solvable descent: existence and obstruction](#143-solvable-descent-existence-and-obstruction)
-    - [Totally real and inner-form refinements](#144-totally-real-and-inner-form-refinements)
-    - [Failure modes at a glance](#145-failure-modes-at-a-glance)
-15. [Conclusion: one canonical ascent, compatible choices downward](#15-conclusion-one-canonical-ascent-compatible-choices-downward)
+14. [Finite solvable preparation for Ihara avoidance](#14-finite-solvable-preparation-for-ihara-avoidance)
+    - [The two preparation modes](#141-the-two-preparation-modes)
+    - [Killing the actual local representations](#142-killing-the-actual-local-representations)
+    - [Prime-cyclic globalization with protected completions](#143-prime-cyclic-globalization-with-protected-completions)
+    - [The finite solvable preparation theorem](#144-the-finite-solvable-preparation-theorem)
+    - [The cyclic automorphic ledger](#145-the-cyclic-automorphic-ledger)
+    - [Auxiliary and target preparation](#146-auxiliary-and-target-preparation)
+    - [Sharp boundaries](#147-sharp-boundaries)
+15. [The final theorem package](#15-the-final-theorem-package)
+    - [Solvable base change: existence and normalization](#151-solvable-base-change-existence-and-normalization)
+    - [Cuspidality, isobaric failure, and fibers](#152-cuspidality-isobaric-failure-and-fibers)
+    - [Solvable descent: existence and obstruction](#153-solvable-descent-existence-and-obstruction)
+    - [Totally real and inner-form refinements](#154-totally-real-and-inner-form-refinements)
+    - [Failure modes at a glance](#155-failure-modes-at-a-glance)
+16. [Conclusion: one canonical ascent, compatible choices downward](#16-conclusion-one-canonical-ascent-compatible-choices-downward)
 
 ## 1. From cyclic steps to solvable transfer
 
@@ -3044,11 +3052,536 @@ gives a cuspidal automorphic induction. Repeated constituents require their
 multiplicity action. These are the same cases as in cyclic descent, iterated with the
 coherence checks of Chapter 8.
 
-## 14. The final theorem package
+## 14. Finite solvable preparation for Ihara avoidance
 
-### 14.1 Solvable base change: existence and normalization
+### 14.1 The two preparation modes
 
-**Theorem 14.1 (solvable base change for $\mathrm{GL}_2$).** Let $F$ be a number
+Finite-set Ihara avoidance begins with a local demand and ends with a global one. At
+each active place the residual representation must become trivial, and the new
+residue cardinality must be congruent to one in the coefficient characteristic. The
+field realizing these conditions must at the same time be totally real, preserve a
+finite collection of protected completions, and avoid the fields which control the
+residual and cyclotomic images. None of these conditions follows from the others. In
+particular, killing inertia does not kill Frobenius, and killing the whole local
+representation does not control the residue degree.
+
+We formulate the datum precisely. Let $F$ be totally real, let $k$ be a finite field
+of characteristic $p$, and let
+
+$$
+\bar r:G_F\longrightarrow\operatorname{GL}_2(k)
+\tag{14.1}
+$$
+
+be continuous. Let $P$ be a finite set of finite places whose residue
+characteristics are different from $p$. At every $v\in P$ assume one of the following
+two actual local descriptions.
+
+1. The representation $\bar r|_{G_{F_v}}$ is unramified.
+2. After a finite extension of $k$, it is dihedral in the linear sense: it is induced
+   from a character of a quadratic extension, or, equivalently for the argument
+   below, its image is conjugate into a finite monomial group. We allow a scalar
+   enlargement of such an image and call the resulting type **solvable-dihedral**.
+
+The adjective is important. A projectively dihedral image has an abelian scalar
+kernel and a dihedral quotient, so its linear image is solvable. We are not making a
+statement about an arbitrary subgroup of $\operatorname{GL}_2(k)$.
+
+Let $Z$ be a finite protected set, disjoint from $P$. For each $z\in Z$ fix either
+the split prescription $H_z=F_z$ or a finite solvable Galois extension $H_z/F_z$
+which is the exact harmless completion required by the application. Saying that
+$H_z=F_z$ is a split prescription means that the eventual tensor product at $z$ is
+a product of copies of $F_z$, not merely that one chosen place has completion
+$F_z$. We may also specify finitely many two-dimensional characteristic-zero
+representations $r_a$ of $G_F$. At an active place their Weil--Deligne inertia has a
+finite semisimple part; the preparation will kill that part as well. This is what
+makes the resulting prime-to-$p$ inertia action unipotent.
+
+There are two modes.
+
+- In **auxiliary mode**, every place above $p$ is protected and split. Dyadic places
+  all lie in $P\cup Z$: an active one lies in $P$, and every other one carries an
+  explicitly prescribed harmless extension $H_z$.
+  If a dyadic completion changes, an automorphy conclusion over the original field
+  must later be obtained by the cyclic descent ledger of Section 14.5. When $p=2$,
+  coefficient and dyadic places coincide, so this mode necessarily keeps them split.
+- In **target mode**, $P$ is disjoint from the places above $2p$, every such place
+  belongs to $Z$, and $H_z=F_z$ there. Thus both the dyadic local problem and the
+  coefficient-prime local problem remain literally unchanged.
+
+Let $D/F$ be a finite avoidance extension. Enlarge its Galois closure by the field
+cut out by $\bar r$, by $F(\zeta_p)$, and by any other finite residual cutout which
+the application asks to preserve; denote the resulting finite Galois extension by
+$B/F$. Write $\bar\epsilon_p$ for the mod-$p$ cyclotomic character. Linear
+disjointness from $B$ simultaneously implies disjointness from $D$
+and preservation of the joint residual--cyclotomic image. Packaging the fields into
+one $B$ prevents pairwise disjointness from being mistaken for joint disjointness.
+
+### 14.2 Killing the actual local representations
+
+The local construction has two independent stages. First one passes to a field on
+which all finite representation-theoretic data disappear. Then one adds an
+unramified extension whose degree is chosen arithmetically.
+
+**Lemma 14.1 (local annihilation with residue control).** Let $K$ be a nonarchimedean
+local field with residue cardinality $q$, where $p\nmid q$, and let
+
+$$
+\tau:G_K\longrightarrow\operatorname{GL}_2(k)
+$$
+
+be unramified or solvable-dihedral. Let $V_1,\ldots,V_t$ be finitely many
+characteristic-zero Galois representations whose associated Weil--Deligne
+representations have finite semisimple inertial image. There is a finite solvable
+Galois extension $K^{\mathrm{prep}}/K$ such that
+
+$$
+\tau|_{G_{K^{\mathrm{prep}}}}=1,
+\qquad
+V_a|_{I_{K^{\mathrm{prep}}}}\text{ is unipotent for every }a,
+\tag{14.2}
+$$
+
+and
+
+$$
+|k_{K^{\mathrm{prep}}}|\equiv1\pmod p.
+\tag{14.3}
+$$
+
+Moreover $K^{\mathrm{prep}}/K$ admits a tower of cyclic extensions of prime degree.
+
+**Proof strategy.** The fixed field of the kernel of $\tau$ kills Frobenius as well
+as inertia. We take its compositum with fields killing the finite semisimple inertial
+actions of the $V_a$. An unramified extension of a suitably divisible degree is then
+adjoined. Divisibility by the original residue degree makes the residue degree of the
+compositum exact, while divisibility by the order of $q$ modulo $p$ gives (14.3).
+
+**Proof.** If $\tau$ is unramified, its image is generated by the image of
+Frobenius and is cyclic. In the solvable-dihedral case its image has an abelian
+diagonal subgroup of index at most two, with at most an additional scalar subgroup.
+Thus in the two stated cases the actual image of $\tau$ is solvable. The fixed field
+$K_\tau$ of its kernel is consequently a finite solvable Galois extension and
+$\tau|_{G_{K_\tau}}$ is trivial. Passing only to the fixed field of the inertial
+kernel would not suffice: a nontrivial Frobenius matrix could remain.
+
+For each $V_a$, choose an open normal subgroup of $G_K$ whose intersection with
+inertia acts unipotently. The corresponding finite Galois field kills the finite
+semisimple inertial quotient. Its Galois group is solvable by the local ramification
+filtration: wild inertia is a finite group of prime-power order, tame inertia modulo
+wild inertia is cyclic, and the residue quotient is cyclic. The compositum $K_0$ of
+these fields and $K_\tau$ is again solvable Galois.
+
+Let $f_0$ be the residue degree of $K_0/K$, and let $d$ be the multiplicative order
+of $q$ in $\mathbf F_p^\times$. Choose $m$ divisible by $f_0d$, and let $U_m/K$ be
+the unramified extension of degree $m$. Put
+
+$$
+K^{\mathrm{prep}}=K_0U_m.
+$$
+
+The residue degree of a compositum with $U_m$ is
+$\operatorname{lcm}(f_0,m)=m$. Hence its residue field has cardinality $q^m$,
+which is congruent to one modulo $p$. The extension contains $K_\tau$, so it kills
+the whole residual representation, and it contains every chosen inertial-killing
+field. Finally a composition series of its finite solvable Galois group, read through
+fixed fields, gives a prime-cyclic tower. $\square$
+
+The multiple $m$ is not cosmetic. If $K=\mathbf Q_2$, $p=5$, and $\tau$ is already
+trivial, the identity extension kills $\tau$ but leaves residue cardinality $2$.
+Taking unramified degree $4$ changes it to $2^4\equiv1\pmod5$.
+
+### 14.3 Prime-cyclic globalization with protected completions
+
+We next globalize a finite collection of local solvable fields. It is tempting to
+invoke an unspecified local--global principle once. That would lose both the exact
+degree and the disjointness. Instead we expose one prime cyclic layer at a time and
+give every layer its own ramification witness.
+
+**Lemma 14.2 (protected prime-cyclic globalization).** Let $F$ be totally real, let
+$C$ be a finite set of finite places, and for each $v\in C$ let $E_v/F_v$ be a
+finite solvable Galois extension, with $E_v=F_v$ allowed. Let $B/F$ be finite
+Galois. There are a totally real field $L$, a tower
+
+$$
+F=F_0\subset F_1\subset\cdots\subset F_s=L,
+\qquad [F_i:F_{i-1}]=\ell_i
+\tag{14.4}
+$$
+
+with every $\ell_i$ prime, and auxiliary finite places $a_i$ of $F_{i-1}$ lying
+over pairwise distinct rational primes, such that:
+
+1. $F_i/F_{i-1}$ is cyclic and is totally ramified of degree $\ell_i$ at $a_i$;
+2. every real place of $F_{i-1}$ splits in $F_i$;
+3. $F_i$ is linearly disjoint from $B$ over $F$;
+4. for every $v\in C$,
+
+   $$
+   L\otimes_FF_v\cong
+   \prod_{1\leq j\leq [L:F]/[E_v:F_v]}E_v
+   \tag{14.5}
+   $$
+
+   as $F_v$-algebras.
+
+The tower may be chosen with $[L:F]$ even, and the auxiliary places may avoid any
+given finite set.
+
+**Proof strategy.** Refine every $E_v/F_v$ to prime cyclic layers and interleave the
+resulting finite lists. At a global stage only the next scheduled local layer is
+nontrivial; all other controlled completions are required to split. A fresh tame
+ramification place prevents the new cyclic field from entering $BF_{i-1}$. The exact
+Grunwald--Wang alternative of Book 6 globalizes this finite local character tuple.
+Because its exponent is prime, the Wang-special case cannot occur.
+
+**Proof.** For each $v$, choose a tower
+
+$$
+F_v=E_{v,0}\subset E_{v,1}\subset\cdots\subset E_{v,n_v}=E_v
+\tag{14.6}
+$$
+
+whose successive degrees are prime and cyclic. Order all pairs $(v,j)$ with
+$1\leq j\leq n_v$. If the product of the scheduled prime degrees is odd and even
+degree is requested, append one dummy quadratic stage. We construct (14.4) by
+induction through this schedule.
+
+Suppose $F_i$ has been constructed and is linearly disjoint from $B$. Put
+$M_i=BF_i$. Let $\ell$ be the prime degree of the next scheduled local layer, or
+$2$ at the dummy stage. Choose a rational prime $r$ outside all residue
+characteristics used so far, outside the ramification set of $M_i/\mathbf Q$, and
+with $r\equiv1\pmod\ell$. Such primes can be produced without a density theorem.
+Indeed, if $A$ is divisible by a prescribed finite set of primes, any prime divisor
+of $\Phi_\ell(A)$ is new and has order $\ell$ modulo that divisor; for $\ell=2$ use
+$A+1$. Choose a place $a_{i+1}$ of $F_i$ above $r$. Since
+$\ell\mid |k_{a_{i+1}}^\times|$, local class field theory supplies a totally tamely
+ramified cyclic extension of $(F_i)_{a_{i+1}}$ of degree $\ell$.
+
+At every real place prescribe the trivial local character. At every place of $F_i$
+above $C$, prescribe the trivial character except as follows. If the scheduled pair
+is $(v,j)$, then every current completion belonging to $v$ is identified with
+$E_{v,j-1}$; prescribe the character cutting out $E_{v,j}/E_{v,j-1}$ there. Finally
+prescribe at $a_{i+1}$ the tame character just constructed. These are finitely many
+classes in $H^1((F_i)_u,\mathbf Z/\ell\mathbf Z)$.
+
+Apply the exact Grunwald--Wang theorem of Book 6, Section 6.2. For odd $\ell$ there
+is no $2$-primary issue. For $\ell=2$ the exponent has $2$-adic valuation one,
+whereas Wang-specialness requires valuation at least $s(F_i)+1\geq3$. Thus the
+exceptional sign class is absent at every stage. The prescribed tuple is the
+localization of a global class of exact order $\ell$, exactness following also from
+the order-$\ell$ character at $a_{i+1}$. Let $F_{i+1}/F_i$ be its cyclic field.
+
+This use of Grunwald--Wang retains the weak-approximation and global-unit
+orthogonality built into Book 6; raw weak approximation by itself would not produce
+a cyclic field. The trivial real characters make $F_{i+1}$ totally real. The local
+character at $a_{i+1}$ makes $F_{i+1}/F_i$ ramified there, while $M_i/F_i$ is unramified
+there. Since $[F_{i+1}:F_i]=\ell$, an intersection larger than $F_i$ would force
+$F_{i+1}\subset M_i$, contradicting this ramification. Hence
+
+$$
+F_{i+1}\cap M_i=F_i,
+$$
+
+which proves the inductive disjointness from $B$. The separation argument of Book 6,
+Section 4.2 gives the complementary Frobenius formulation: outside any fixed finite
+set, decomposition groups detect every nontrivial finite quotient. The ramification
+witness used here is stronger because it excludes all subfields of $M_i$ at once.
+This is the weak Chebotarev separation needed here; no prescribed conjugacy-class
+theorem enters the construction.
+
+At a controlled place a nontrivial scheduled character produces the next field in
+(14.6), while a trivial character makes the global layer split into $\ell$ copies.
+Induction therefore shows that every endpoint completion above $v$ is $E_v$. Counting
+the factors by local degree gives (14.5). The dummy quadratic stage is split at all
+controlled places and changes none of these conclusions. $\square$
+
+The explicit treatment of the Wang exception is a benefit of prime refinement. If
+one attempted to globalize a single cyclic $2^n$-layer, the sign condition of Book 6
+could fail and doubling the degree would change the proposed tower. Splitting the
+local tower into quadratic layers keeps every exponent below the exceptional range.
+
+### 14.4 The finite solvable preparation theorem
+
+We can now assemble the local and global constructions. The statement records all
+field-theoretic output, including the multiplicity of local factors and the witnesses
+for disjointness.
+
+**Theorem 14.3 (finite solvable IAV preparation).** Adopt the datum of Section 14.1.
+Assume that the ramified places of every specified $r_a$ outside $P$ lie in $Z$.
+For $z\in Z$ keep the prescribed field $H_z$. Then there exist:
+
+- local fields $E_v/F_v$ for $v\in P$;
+- a totally real field $L$ of positive even degree over $F$;
+- an explicit prime-cyclic tower
+
+  $$
+  F=F_0\subset F_1\subset\cdots\subset F_s=L
+  \tag{14.7}
+  $$
+
+- and a fresh auxiliary ramification place for every layer,
+
+such that the following assertions hold.
+
+1. For every $v\in P$, $E_v/F_v$ is finite solvable Galois,
+
+   $$
+   \bar r|_{G_{E_v}}=1,
+   \qquad |k_{E_v}|\equiv1\pmod p,
+   \tag{14.8}
+   $$
+
+   and the semisimple inertial part of each $r_a$ is trivial over $E_v$.
+2. Every endpoint place $w\mid v\in P$ has $L_w\cong E_v$. Consequently
+
+   $$
+   \bar r|_{G_{L_w}}=1,
+   \qquad |k_w|\equiv1\pmod p,
+   \tag{14.9}
+   $$
+
+   and each $r_a|_{I_{L_w}}$ is unipotent.
+3. For every $z\in Z$,
+
+   $$
+   L\otimes_FF_z\cong
+   \prod_{1\leq j\leq [L:F]/[H_z:F_z]}H_z.
+   \tag{14.10}
+   $$
+
+   In particular, a split prescription stays split at every layer and at every
+   endpoint place.
+4. The fields $L$ and $B$ are linearly disjoint over $F$. More strongly, every
+   $F_i$ is linearly disjoint from $B$. Hence restriction to $G_{F_i}$ preserves the
+   image of $\bar r$ and its joint image with $\bar\epsilon_p$.
+5. If $a_i$ is the auxiliary place attached to $F_i/F_{i-1}$, then
+   $F_i/F_{i-1}$ is totally ramified at $a_i$, whereas $BF_{i-1}/F_{i-1}$ is
+   unramified there. These places are disjoint from $P$, $Z$, and every previously
+   named ramification place.
+
+**Proof.** Apply Lemma 14.1 at every active place, including the finite semisimple
+inertial parts of the $r_a$, to obtain $E_v$. Use Lemma 14.2 with
+
+$$
+C=P\cup Z,
+\qquad
+E_z=H_z\quad(z\in Z).
+$$
+
+Its local tensor formula gives (14.9)--(14.10), its optional quadratic stage gives
+positive even degree, and its layerwise ramification argument gives parts 4--5.
+All assertions in part 1 are those of the local lemma. $\square$
+
+In auxiliary mode Theorem 14.3 permits the prescribed change at dyadic places while
+keeping coefficient places split. In target mode, (14.10) says more: because
+$H_z=F_z$ at every $z\mid2p$, all dyadic and coefficient places split completely in
+$L$, not merely in the final layer.
+
+### 14.5 The cyclic automorphic ledger
+
+Theorem 14.3 is a field construction. To use its tower for automorphy one must still
+verify that it lies in the cyclic comparison range. The verification is uniform for
+the applications motivating the construction, but it uses their actual packets and
+must be stated rather than folded into the word “solvable.”
+
+Call the preparatory datum **selected-safe** for a specified $r_a$ and a
+parallel-weight-two packet $\pi_a$ attached to it if the following local condition
+holds. No local layer is a ramified dyadic quadratic extension, and at every
+controlled nonsplit place the restricted Weil--Deligne parameter is principal,
+special, or in the constructed dihedral range of Section 1.4. Unramified dyadic
+quadratic layers are allowed. In particular, an application prescribing a
+nontrivial dyadic harmless field must choose a prime-cyclic refinement which does not
+pass through the excluded ramified dyadic quadratic boundary.
+
+**Proposition 14.4 (verification of the cyclic ledger).** In Theorem 14.3 suppose
+$\bar r$ is absolutely irreducible, the relevant $r_a$ have stable lattices with
+residual representation $\bar r$, and the datum is selected-safe for every packet
+attached with the local--global compatibility used in Section 13.3. Then along
+(14.7):
+
+1. the local restriction fibers are extension-complete for ascent and
+   antecedent-complete for descent in the sense of Section 1.4, and all retained
+   quotient-character twists are selected and trace-comparable;
+2. determinants and central characters correspond under restriction and norm
+   pullback, and the central character of the original packet is a distinguished
+   norm antecedent at every downward step;
+3. every real place is split, so the parallel-weight-two discrete-series component
+   is unchanged and supplies the required strongly cuspidal selector;
+4. every $r_a|_{G_{F_i}}$ is irreducible; hence an attached solvable base change is
+   cuspidal rather than a two-character isobaric sum;
+5. attachment is compatible with every cyclic step: local parameters restrict at
+   all places, and at good places the Frobenius polynomial is the polynomial of the
+   restricted arithmetic representation;
+6. if a selected parallel-weight-two cuspidal representation $\Pi_L$ obtained after
+   the auxiliary argument is attached to $r_a|_{G_L}$, then $\Pi_L$ descends through
+   (14.7) to a packet attached to $r_a$ over $F$.
+
+**Proof strategy.** At a prepared place the top semisimple inertial parameter is
+unramified. At each prime cyclic layer, an irreducible restricted parameter has
+extensions differing only by quotient characters; a reducible one extends by two
+lines or, in the quadratic case, by dihedral induction. Nonzero monodromy forces the
+special case. Selected-safety contains the known extension and is stable under the
+quotient twists, while excluding the ramified dyadic quadratic boundary. Away from
+the controlled set the parameters were unramified before the tower was built.
+Disjointness preserves residual irreducibility, and the arithmetic representation
+over $F$ selects the correct twist at every descent step.
+
+**Proof.** Consider first a nonsplit finite place in one prime cyclic layer. At an
+active place, (14.8) kills the finite semisimple inertia at the top of its scheduled
+local tower. Fix one intermediate prime cyclic layer. If its upper parameter is
+irreducible, Schur's lemma shows that any two extensions to the lower Weil group
+differ by a character of the cyclic quotient. The known lower extension is selected
+by selected-safety, and quotient-character twists remain in the same principal,
+special, or dihedral class. If the upper parameter is reducible and has zero
+monodromy, it is a multiset of two character lines. Across an odd prime cyclic layer
+a two-element multiset cannot have a nontrivial orbit of that prime size, so the
+lines extend separately. Across a quadratic layer they either extend separately or
+are exchanged, in which case the extension is dihedral. If monodromy is nonzero, it
+remains nonzero under restriction and forces the special case. Thus the entire
+fixed-determinant extension fiber and every norm-antecedent slice are selected. At
+odd residue characteristic a ramified quadratic dihedral parameter is tame; at
+residue characteristic two the excluded ramified quadratic case has been removed by
+selected-safety.
+
+The same argument applies at a nontrivial harmless protected completion. At a split
+protected place there is no local extension problem. At an auxiliary ramification
+place the $r_a$ were unramified and the residue characteristic is odd, so restriction
+remains unramified and the preceding fiber calculation applies. Every remaining
+nonsplit place is outside the ramification sets of the $r_a$, again giving the
+unramified calculation. This proves part 1 and the local trace-comparability clause.
+
+Local and global class field theory identify determinant restriction with norm
+pullback of the corresponding character. Hence
+
+$$
+\omega_{\operatorname{BC}_{F_i/F_{i-1}}(\pi)}
+=\omega_\pi\circ N_{F_i/F_{i-1}},
+$$
+
+and the determinant of $r_a|_{G_{F_i}}$ is the same restricted character. This proves
+part 2. The real local characters used in Lemma 14.2 were trivial, so every real
+place splits. The discrete-series factor is repeated unchanged and gives part 3.
+
+Because $F_i$ is disjoint from the field cut out by $\bar r$, restriction to
+$G_{F_i}$ has the same residual image. Absolute residual irreducibility therefore
+persists. A characteristic-zero representation with such a stable residual lattice
+is irreducible. If its attached automorphic base change were a two-character sum,
+its arithmetic representation would be reducible, so the base change is cuspidal.
+This proves part 4.
+
+At an unramified place, geometric Frobenius over the upper local field maps to the
+appropriate residue-degree power of geometric Frobenius below. The cyclic base-change
+polynomial and the polynomial of $r_a|_{G_{F_i}}$ therefore agree. At ramified places
+both compatibilities are restriction of the full Weil--Deligne parameter. Strong
+multiplicity one identifies the resulting packet, proving part 5.
+
+Finally suppose $\Pi_L$ is attached to $r_a|_{G_L}$. The representation $r_a$ is
+already defined over the bottom field. At the top cyclic step its conjugation
+symmetry gives automorphic invariance, while the extension-comparison lemma of
+Section 13.3 identifies the quotient-character correction which makes an arbitrary
+descent attach to $r_a|_{G_{F_{s-1}}}$. Parts 1--3 verify the local fibers, center,
+and selector required for that descent. Repeat down the tower. This is exactly the
+extension-comparison induction used in Theorem 13.3, now applied directly to the
+exhibited cyclic tower, and proves part 6. $\square$
+
+The proposition verifies antecedents; it does not prove an Ihara-avoidance patching
+theorem. Its last assertion begins only after a top-field automorphic packet attached
+to the stated restriction has been produced by some independent argument.
+
+### 14.6 Auxiliary and target preparation
+
+The two uses can now be quoted without exchanging their protected-place behavior.
+
+**Corollary 14.5 (auxiliary-IAV preparation).** In auxiliary mode there is a positive
+even-degree totally real prime-cyclic tower (14.7), disjoint layer by layer from $B$,
+such that every coefficient place splits, every active residual local representation
+is trivial at the top with residue cardinality congruent to one modulo $p$, and every
+specified lift has unipotent active inertia. The prescribed dyadic completions are
+realized exactly, even when they are nontrivial. For selected-safe attached packets,
+Proposition 14.4 verifies ascent to the auxiliary field and descent of any resulting
+packet attached to a representation already defined over $F$. Thus a temporary
+dyadic change is removed by descent rather than ignored.
+
+**Proof.** Apply Theorem 14.3 with the auxiliary protected datum. The field assertions
+are parts 1--5 of that theorem, and the automorphic conditional is Proposition 14.4.
+$\square$
+
+**Corollary 14.6 (target-IAV preparation).** In target mode there is a positive
+even-degree totally real prime-cyclic tower (14.7), disjoint layer by layer from $B$,
+such that
+
+$$
+L\otimes_FF_z\cong\prod_{1\leq j\leq[L:F]}F_z
+\qquad(z\mid2p),
+\tag{14.11}
+$$
+
+while every $w\mid v\in P$ satisfies
+
+$$
+\bar r|_{G_{L_w}}=1,
+\qquad |k_w|\equiv1\pmod p.
+\tag{14.12}
+$$
+
+The same is true at any additional protected split place. Every residual-image
+property present in the bottom datum, including absolute irreducibility before and
+after adjoining $\zeta_p$, is preserved. Under selected-safety, an upper automorphic
+packet may be
+base-changed through the displayed tower with its determinant, weight, attachment,
+and cuspidality ledger intact.
+
+**Proof.** The target prescription puts every $z\mid2p$ in $Z$ with $H_z=F_z$, so
+(14.11) is (14.10). Equation (14.12) is (14.9). Disjointness from the joint
+residual--cyclotomic cutout makes the restriction map onto that joint image, proving
+the irreducibility assertion. Proposition 14.4 gives the last sentence. $\square$
+
+These corollaries construct the field used before the two finite-set comparisons.
+They do not assert that the desired and avoidance deformation problems have common
+special fiber, that a patched module has full support, or that a characteristic-zero
+point is automorphic. Those are separate theorems with separate hypotheses.
+
+### 14.7 Sharp boundaries
+
+Three examples delimit the preparation theorem.
+
+- **A nonsolvable matrix image.** Arbitrary nonsolvable local image data are outside
+  Theorem 14.3: its local construction uses the stated cyclic or monomial image, not
+  an arbitrary subgroup of $\operatorname{GL}_2(k)$. The global obstruction is
+  concrete. For $p\geq5$, a residual representation whose
+  global image contains $\operatorname{SL}_2(\mathbf F_p)$ cannot be made globally
+  trivial by a solvable extension: its cutout has a nonsolvable quotient. Theorem
+  14.3 makes specified local restrictions trivial while remaining disjoint from the
+  global cutout. Its local proof uses only the stated unramified and
+  solvable-dihedral images; it does not promote an arbitrary matrix image to a
+  solvable one.
+- **Triviality without the congruence.** A trivial local representation over
+  $\mathbf Q_2$ is already killed before any extension, but in characteristic $5$
+  its residue cardinality is still $2$. The unramified degree-$4$ factor in Lemma
+  14.1 is what produces $2^4\equiv1\pmod5$. Local trivialization alone does not give
+  the scalar $Q\equiv1\pmod p$ deformation chart.
+- **A field without an automorphic ledger.** A solvable tower records only fields.
+  It neither produces the top automorphic packet nor proves that a cyclic comparison
+  contains every required local antecedent. A quadratic self-twist can destroy
+  cuspidality, a ramified dyadic quadratic fiber can leave the selected range, and an
+  invariant top packet over a noncyclic extension can lack a coherent sequence of
+  descents. The verified local fibers, central character, real selector,
+  irreducibility, attachment, and quotient-character corrections in Proposition
+  14.4 are therefore indispensable.
+
+The constructive consequence is nevertheless strong. Every active residual local
+condition and every residue-degree congruence is achieved simultaneously, protected
+completions are preserved with their exact multiplicities, and each global cyclic
+layer carries a visible ramification certificate for disjointness. The auxiliary and
+target routes now differ only where the mathematics requires them to differ: in the
+treatment of dyadic completions and the corresponding need for descent.
+
+## 15. The final theorem package
+
+### 15.1 Solvable base change: existence and normalization
+
+**Theorem 15.1 (solvable base change for $\mathrm{GL}_2$).** Let $F$ be a number
 field, let $E/F$ admit an ascent-admissible tower of cyclic extensions, and let
 $\pi$ be a selected, trace-comparable cuspidal automorphic representation of
 $\mathrm{GL}_2(\mathbb A_F)$. Use geometric reciprocity, geometric Frobenius,
@@ -3123,9 +3656,9 @@ uniqueness and tower independence. Determinants, tensor products, duals, conduct
 and archimedean exponents commute with restriction, proving parts 3--5. Mackey theory
 and the common local parameter for the split and inner forms prove part 6. $\square$
 
-### 14.2 Cuspidality, isobaric failure, and fibers
+### 15.2 Cuspidality, isobaric failure, and fibers
 
-**Theorem 14.2 (cuspidality and ambiguity).** Assume in addition that $E/F$ is
+**Theorem 15.2 (cuspidality and ambiguity).** Assume in addition that $E/F$ is
 solvable Galois with group $G$, that the displayed composition towers are
 ascent-admissible, and, for assertions about complete fibers, that source fibers are
 saturated. Put
@@ -3194,9 +3727,9 @@ $G^{\mathrm{ab}}$; strong multiplicity one identifies the global twists. Central
 characters change by squares.
 $\square$
 
-### 14.3 Solvable descent: existence and obstruction
+### 15.3 Solvable descent: existence and obstruction
 
-**Theorem 14.3 (solvable cuspidal descent).** Let
+**Theorem 15.3 (solvable cuspidal descent).** Let
 
 $$
 F=F_0\subset F_1\subset\cdots\subset F_r=E
@@ -3263,15 +3796,15 @@ Conversely, a compatible chain composes by transitivity to an $F$-descent. Compa
 two complete chains forces their compatible step twists to assemble into a character
 of the endpoint abelianization. $\square$
 
-### 14.4 Totally real and inner-form refinements
+### 15.4 Totally real and inner-form refinements
 
-**Theorem 14.4 (arithmetic refinements).** Let $E/F$ be solvable Galois and totally
+**Theorem 15.4 (arithmetic refinements).** Let $E/F$ be solvable Galois and totally
 real, and impose the ascent- or descent-admissibility hypotheses of Section 1.4 on
 every cyclic step used below.
 
 1. Regular algebraic cuspidal automorphy ascends to $E$, with pulled-back weights and
    exact local restriction. Its exact cusp criterion is the stepwise condition of
-   Theorem 14.2. A repeated-character endpoint is handled unconditionally by that
+   Theorem 15.2. A repeated-character endpoint is handled unconditionally by that
    criterion and admits the projective interpretation only when a compatible
    parameter is supplied.
 
@@ -3292,9 +3825,9 @@ every cyclic step used below.
    supercuspidal from splitting, choose a fixed central character, or remove the
    noncuspidal automorphic-induction boundary.
 
-**Proof.** Part 1 is Theorems 13.1 and 14.2, with weights and local components
+**Proof.** Part 1 is Theorems 13.1 and 15.2, with weights and local components
 carried by parameter restriction. Part 2 combines Theorem 13.3 with the recursive
-criterion of Theorem 14.3. Part 3 is Proposition 11.1 together with Section 11.4.
+criterion of Theorem 15.3. Part 3 is Proposition 11.1 together with Section 11.4.
 The placewise assertions in part 4 are the calculations of Chapters 3, 4, 10, and
 12. $\square$
 
@@ -3302,7 +3835,7 @@ The theorem is a transfer tool, not a construction of auxiliary extensions or a
 modularity lifting argument. Its hypotheses isolate exactly what later applications
 must verify.
 
-### 14.5 Failure modes at a glance
+### 15.5 Failure modes at a glance
 
 The theory has a short list of precise failure modes.
 
@@ -3345,7 +3878,7 @@ The theory has a short list of precise failure modes.
 Each failure has appeared as the negation of a proved hypothesis. None is an
 unspecified exceptional case.
 
-## 15. Conclusion: one canonical ascent, compatible choices downward
+## 16. Conclusion: one canonical ascent, compatible choices downward
 
 Solvable base change is constructed from cyclic base change, but its final form is not
 an arbitrary composite. At every place it restricts one Weil--Deligne parameter from
@@ -3387,5 +3920,9 @@ representation over the bottom field selects the correct twists and makes solvab
 descent effective over totally real fields. Automorphic induction explains the exact
 cuspidal boundary, while in the selected totally definite parallel-weight-two range
 Jacquet--Langlands commutes wherever that boundary has not been crossed. The resulting
-package moves automorphy upward canonically and downward under explicit, checkable
-coherence conditions, with every ambiguity and failure mode accounted for.
+package also constructs the prime-cyclic preparation fields needed for finite local
+avoidance: residual local actions become trivial, residue degrees acquire the required
+congruence, protected completions remain exact, and fresh ramification certifies
+disjointness at every layer. It moves automorphy upward canonically and downward under
+explicit, checkable coherence conditions, with every ambiguity and failure mode
+accounted for.
