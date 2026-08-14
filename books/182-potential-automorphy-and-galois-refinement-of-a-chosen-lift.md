@@ -356,7 +356,8 @@ F=K_0\subset K_1\subset\cdots\subset K_s=M.
 $$
 
 Solvability of $J$ guarantees the existence of an abstract series of this form. A
-**selected ascent ledger** requires more. At every step:
+cyclic transfer still requires more than this group-theoretic fact. At every step one must
+verify:
 
 1. the cuspidal source packet is selected and trace-comparable;
 2. every finite local component and restricted parameter remains in the proved cyclic
@@ -366,12 +367,19 @@ Solvability of $J$ guarantees the existence of an abstract series of this form. 
 5. a comparison tensor has the required strongly cuspidal factor;
 6. attachment at the distinguished coefficient commutes with base change.
 
-These conditions are exactly what allows Book 109 to move a particular packet along (3.2).
-They are not consequences of the group $J$ being solvable. In the direct-top case the list is
-empty.
+These conditions are exactly what allows Book 109 to move a particular packet along (3.2),
+and they are not consequences of the group $J$ being solvable. They are, however, consequences
+of the *controlled arithmetic datum already imposed here*. Indeed, $2$ and $\ell$ split
+completely in $M$, while the chosen point is unramified at every other finite place. At a
+nonsplit step its local parameter is therefore a split unramified pair. Book 109, Proposition
+13.4 proves that every fixed-determinant extension and norm-antecedent slice is selected, that
+the quotient-twist fiber is saturated, and that a split real discrete-series factor supplies
+the strongly cuspidal selector. The exact attachment in Section 3.2 and Book 109's local
+compatibility give item 6.
 
-A controlled chosen-point datum plus a selected ascent ledger is the **controlled chosen-lift
-refinement datum** used in Chapter 5.
+Thus every series (3.2) is ascent-admissible for the packet constructed at $F$; no separate
+selected ascent ledger or chosen-lift refinement datum is an input. In the direct-top case the
+series is empty.
 
 ### 3.4 Residual image on the fixed-field diagram
 
@@ -634,7 +642,7 @@ geometry or the indefinite constant-row $({\rm AIH}_{\mathscr F})$ family.
 ### 5.1 Automorphy at the point field
 
 **Theorem 5.1 (controlled datum to the chosen point).** Let $\rho$ be the chosen lift of (1.2), and
-assume a controlled chosen-lift refinement datum as in Chapter 3. Then, after one finite
+assume a controlled chosen-point datum as in Chapter 3. Then, after one finite
 coefficient extension, there is a parallel-weight-two cuspidal representation $\pi_F$ with
 
 $$
@@ -675,7 +683,7 @@ fibre used by Book 181, so evaluation at the new point is forward and noncircula
 ### 5.2 Passage to the Galois top
 
 **Theorem 5.2 (controlled potential automorphy of the chosen lift).** Under the hypotheses of
-Theorem 5.1 and the selected ascent ledger of Section 3.3, there is a parallel-weight-two
+Theorem 5.1, there is a parallel-weight-two
 cuspidal representation $\pi_M$ such that
 
 $$
@@ -687,8 +695,9 @@ The representation $\rho|_{G_M}$ remains absolutely irreducible. At every dyadic
 the primitive signed-special tuple (2.6), and at every place above $\ell$ it has the selected
 finite-flat lattice.
 
-**Proof.** Apply Book 109 successively along (3.2), using the selected packet and local fiber
-at each step. The result is an automorphic isobaric endpoint whose attached semisimple Galois
+**Proof.** Section 3.3 and Book 109, Proposition 13.4 verify every admissibility condition
+along (3.2). Apply cyclic base change successively. The result is an automorphic isobaric
+endpoint whose attached semisimple Galois
 representation is $\rho|_{G_M}$ by distinguished-coefficient compatibility.
 
 Lemma 3.1 makes $\bar\rho|_{G_M}$ absolutely irreducible. Hence $\rho|_{G_M}$ is absolutely
@@ -698,9 +707,10 @@ isobaric endpoint has reducible attached representation, so the endpoint is cusp
 splitting and Lemma 2.2 retain the full dyadic record, and the coefficient-prime record is
 literal for the same reason. $\square$
 
-This theorem cannot be obtained by replacing the selected ascent ledger with the word
-“solvable.” The cyclic base-change theorem acts on selected packets satisfying its local and
-global hypotheses, not on an abstract group series.
+The word “solvable” alone would not prove this theorem. What closes the cyclic ledger is the
+additional combination of complete splitting at the dyadic and coefficient primes, the
+unramified extending representation elsewhere, exact attachment, and the surviving real
+discrete-series selector.
 
 ### 5.3 The direct-top case
 
@@ -734,10 +744,13 @@ global semisimplification with $\rho|_{G_{F_H}}$. Proposition 6.1 shows that thi
 is a theorem once the candidate packet has been constructed; it is not an additional
 all-elementary hypothesis.
 
-This selection does not construct the candidate. Book 109 still requires an antecedent-complete
-packet, saturation of the relevant extension fiber, and compatibility of attachment with base
-change and finite-order twisting. These are finite arithmetic conditions, separate from the
-group-theoretic existence of the cyclic series.
+Here those candidates are constructed rather than assumed. Apply Book 109, Proposition 13.4
+to $M/F_H$ with the extending representation $\rho|_{G_{F_H}}$. Complete splitting at $2$
+and $\ell$, unramifiedness elsewhere, and the parallel-weight-two real factors automatically
+give antecedent-completeness, saturation of every quotient-character fiber, and the required
+selector. Theorem 13.3 of that book then constructs a selected cuspidal packet attached to
+$\rho|_{G_{F_H}}$ along any prime-cyclic refinement. Proposition 6.2 below proves the needed
+attachment compatibility. Thus there is no separate elementary descent ledger.
 
 For the carrier statements below, assume the controlled top has a nonsolvable quotient, as in
 the standard normal-top construction with a factor $S_5$. Then no elementary subgroup equals
@@ -1098,10 +1111,9 @@ We can now state the exact post-181 result in the form needed downstream.
 **Theorem 9.1 (chosen-lift Galois refinement).** Let $\rho$ be a chosen primitive
 signed-special lift supplied by Book 181 under its explicit seed hypothesis. Assume:
 
-1. a controlled chosen-lift refinement datum as in Chapter 3;
-2. a selected elementary descent ledger for the finite fixed-field diagram;
-3. the local hypotheses of Proposition 6.1 for every candidate packet;
-4. $(\mathrm{HT}_1)$ for the selected packet factors required by Book 168, Propositions
+1. a controlled chosen-point datum as in Chapter 3;
+2. the local hypotheses of Proposition 6.1 for every elementary packet;
+3. $(\mathrm{HT}_1)$ for the selected packet factors required by Book 168, Propositions
    7.6A--7.6B, or a direct local-preservation certificate. The stronger
    $(\mathrm{SS}_{\mathrm{array}})$ may be used instead on a direct raw carrier.
 
@@ -1117,8 +1129,11 @@ Then:
 5. at coefficient embeddings of residue characteristic different from two, every semisimple
    elementary packet realization has the common signed-special pair.
 
-**Proof.** The first assertion is Theorem 5.2. Propositions 6.1 and 6.2 give the second and
-third. Proposition 8.1 and the twisting and induction operations of Section 8.2 give the
+**Proof.** Section 3.3 and Book 109, Proposition 13.4 close the ascent ledger, so the first
+assertion is Theorem 5.2. Section 6.1 applies the same proposition and Theorem 13.3 of Book 109
+to construct every elementary packet without a separate descent ledger. Propositions 6.1 and
+6.2 then give the second and third assertions. Proposition 8.1 and the twisting and induction
+operations of Section 8.2 give the
 fourth. For an all-dyadic-split carrier, Book 168, Proposition 7.6A computes on the unitary
 auxiliary curve and transfers the pair semisimply. For an even-degree parity carrier,
 Proposition 7.6B uses the proved ramified-spectator source (7.7) and its two-kernel inertial
@@ -1146,11 +1161,11 @@ $$
 \begin{array}{c}
 \text{Book 181 chosen primitive signed-special lift}\\
 \Downarrow\\
-\text{controlled exact datum over }F\text{ and selected ascent to }M\\
+\text{controlled exact datum over }F\text{ and automatic selected ascent to }M\\
 \Downarrow\\
 \rho|_{G_M}\text{ is automorphic}\\
 \Downarrow\\
-\text{elementary candidate packets and parity-complete basic carriers}\\
+\text{elementary packets and parity-complete basic carriers}\\
 \Downarrow\\
 \text{common auxiliary unramified Galois pairs away from two}.
 \end{array}
