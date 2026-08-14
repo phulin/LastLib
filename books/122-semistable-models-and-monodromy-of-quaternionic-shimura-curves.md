@@ -53,7 +53,10 @@
 - [10. The semistable curve theorem](#10-the-semistable-curve-theorem)
   - [10.1 Statement](#101-statement)
   - [10.2 Scope and failure modes](#102-scope-and-failure-modes)
-  - [10.3 Conclusion](#103-conclusion)
+  - [10.3 The non-common-norm dyadic source](#103-the-non-common-norm-dyadic-source)
+  - [10.4 The exact comparison boundary](#104-the-exact-comparison-boundary)
+  - [10.5 Conditional transfer to the raw carrier](#105-conditional-transfer-to-the-raw-carrier)
+  - [10.6 Conclusion](#106-conclusion)
 
 ## 1. Bad reduction as controlled curve geometry
 
@@ -110,16 +113,18 @@ where different intersection points give different summands.
 
 ### 1.3 Exact scope and selected split place
 
-The only rational datum in scope is the direct quaternion-trace realization $D=V=B$ of Book 119, with $B/F$ division and split at exactly one real place. Fix its selected canonical component union and a neat prime-to-$p$ level.
+Chapters 2--9 and Theorem 10.1 concern the direct quaternion-trace realization $D=V=B$ of Book 119, with $B/F$ division and split at exactly one real place. Fix its selected canonical component union and a neat prime-to-$p$ level. Section 10.3 separately constructs the split dyadic parahoric source for the unitary common-multiplier realization of Book 118. The two realizations are not identified.
 
 This is a conditional input, not an existence theorem in the mixed one-split range. Book 119's
 direct trace similitude group is the common-norm group, and Book 118, Proposition 8.2 proves
 that when $[F:\mathbf Q]>1$ the one-split adjoint Hodge map cannot lift to it: its reduced-norm
 exponent is odd at the active real factor and even at every compact factor. Thus the local-model
 and monodromy theorem below remains valid for any supplied datum satisfying its ledger, but it
-does not itself produce the raw SP carrier needed in the FLT application. Using a different
-central modification requires a new comparison of its parahoric PEL model, components, and raw
-packet plane with the basic curve; none is inferred from equality of adjoint groups.
+does not itself produce the raw SP carrier needed in the FLT application. The unitary
+construction of Section 10.3 supplies a different exact PEL parahoric curve, but using it as
+that raw carrier still requires the integral finite comparison isolated in Section 10.4.
+Neither its components nor its raw packet plane are identified with those of the basic curve
+merely because the adjoint groups agree.
 
 Choose a finite Galois extension $L/\mathbf Q$ containing the normal closures of the center and reflex field and splitting every simple factor of the PEL algebra. Away from two, let $\Sigma_{\mathrm{odd}}$ contain all relevant discriminants, the polarization degree, the order index, the primes supporting the fixed level, and the exceptional set of Book 119. There are two allowed local situations.
 
@@ -180,17 +185,19 @@ exactness of completion and the distinction between completing a known proper mo
 algebraizing an abstract formal space. Book 70 supplies the maximal-Cohen--Macaulay freeness
 criterion over a regular local ring and the warning that it fails over a singular target. Book
 76 supplies the selected special Weil--Deligne normalization used to compare the Iwahori
-scalar with geometric Frobenius. Book 118 supplies the exact common-norm Hodge-lift obstruction
-that makes the direct mixed-signature input conditional. Book 119 supplies the exact direct
-rational tensors, generic PEL curve, and generic parahoric datum. Book 120 supplies canonical
+scalar with geometric Frobenius. Book 118 supplies the exact common-norm Hodge-lift obstruction,
+the unitary common-multiplier PEL datum, and its odd-prime finite component cover. Book 119
+supplies representability for the exact direct and unitary PEL functors and their generic
+parahoric data. Book 120 supplies canonical
 reciprocity on the abelianized component label; applied to reduced norm/determinant, it
 identifies the global ray character's automorphic determinant line with the corresponding
 trait-pulled Galois line. Book 121 supplies the
 projective good vertex at odd places, its integral filtration-lifting theorem, universal
-family, and, at two, the characteristic-independent toric obstruction and flat-closure
-properness argument once an exact integral functor has been constructed.
+family, the split odd unitary good model, and, at two, the characteristic-independent toric
+obstruction and flat-closure properness argument once an exact integral functor has been
+constructed.
 
-The exact direct dependency row is
+The exact dependency row is
 
 $$
 \boxed{122\mid 6,10,11,12,13,16,17,20,22,35,37,58,70,76,118,119,120,121}. \tag{1.6}
@@ -198,7 +205,7 @@ $$
 
 There are eighteen direct dependencies. The right-double-coset, transpose, central, and degree conventions are chosen to agree with Book 124 and are rederived in Section 9.3 for the residue-prime span. The packet theorem is a characteristic-zero statement conditional only on the already isolated curve packet described in its hypotheses; it imports no Ihara saturation, level-raising theorem, deformation theorem, or modularity-lifting theorem.
 
-The downstream compatibility audit is as follows. Book 124 deliberately leaves a
+The downstream comparison ledger is as follows. Book 124 deliberately leaves a
 level-prime polynomial open; (9.8) uses its incoming right-action convention and proves
 only the new graph identity, not a spherical polynomial. Book 121's odd theorem is used
 only at odd places, while its characteristic-independent rational toric argument is used
@@ -3818,7 +3825,199 @@ pullback; it is not being applied to a merely local character.
 
 The equality $\operatorname{rank}N=b_1(\Gamma)$ is rational. Integral cokernels use the thickness matrix and saturation of the chosen lattice. A rational Hecke projector with an $\ell$-denominator does not select a canonical integral lattice. The packet theorem is likewise in characteristic zero and concerns the raw curve carrier; it is not an integral Ihara statement and is not a raw-to-global theorem. The geometric degeneracy complex remains input to any Ihara lemma or level-raising theorem, not a proof of either.
 
-### 10.3 Conclusion
+### 10.3 The non-common-norm dyadic source
+
+There is nevertheless an exact dyadic parahoric curve on the unitary side. Let $B/F$ be
+division and split at exactly one real place, assume that $2$ splits completely in $F$ and
+that $B$ is split at every dyadic place, and choose an imaginary quadratic field $K$ split at
+$2$ such that $L=FK$ embeds in $B$. Retain the unitary common-multiplier datum of Book 118,
+Proposition 8.3,
+
+$$
+\mathscr D^{\mathrm u}=(L,c,B,\psi,h^{\mathrm u}),
+\qquad
+\psi(x,y)=\operatorname{Tr}_{L/\mathbf Q}(\xi H(x,y)),
+\qquad
+H(x,x)=\operatorname{Nrd}_B(x).                         \tag{10.1}
+$$
+
+This datum is PEL-exact and its derived group is
+$\operatorname{Res}_{F/\mathbf Q}B^1$; it is not the obstructed common-norm group. Fix a
+dyadic place $u$ of its reflex field and put $R=\mathcal O_{L,u}^{\mathrm h}$. Thus
+$R\simeq\mathbf Z_2^{\mathrm h}$.
+
+**Proposition 10.2 (split dyadic unitary parahoric source).** One may choose $\xi$, an
+$\mathcal O_L$-stable lattice $\Lambda^{\mathrm u}\subset B$, a $c$-dual one-step periodic
+lattice chain at $u$, a prime-to-two polarization, a decomposition-stable full component
+union, and neat prime-to-two fine level so that:
+
+1. the good unitary PEL functor is represented by a smooth projective relative curve
+   $\mathscr Y_0/R$ carrying its universal polarized abelian scheme;
+2. the oriented parahoric functor is represented by a projective flat curve
+   $\mathscr Y_I/R$ carrying the universal isogeny and both chain polarizations;
+3. its framed local model is exactly the incidence scheme (3.1), its completed singular
+   chart is $xy=2$, and its two special-fiber branches are the relative-Frobenius and
+   inverse-twist Verschiebung branches with reduced Hasse conductor; and
+4. the graph, nearby-cycle, monodromy-pairing, component-group, degeneracy-route, and raw
+   residue-prime correspondence calculations of Chapters 3--9 hold for this unitary source,
+   with component and ray characters formed through the actual unitary abelianized quotient.
+
+**Proof.** Complete splitting gives
+
+$$
+\mathcal O_L\otimes\mathbf Z_2
+\simeq
+\prod_{i=1}^{[F:\mathbf Q]}(\mathbf Z_2\times\mathbf Z_2),
+\qquad c(a,b)=(b,a).                                      \tag{10.2}
+$$
+
+At each paired factor, the split algebra $B\otimes_FF_{v_i}\simeq M_2(\mathbf Q_2)$,
+viewed as a right $\mathbf Q_2\times\mathbf Q_2$-module, is a plane and its dual. Scale
+$\xi$ by an element of $F^\times$, using weak approximation with the required real signs,
+so that its dyadic entries are $(1,-1)$ up to units. Choose the two local lattices dually.
+On their direct sum the integral alternating form is
+
+$$
+\langle(x,\lambda),(y,\mu)\rangle=\mu(x)-\lambda(y),       \tag{10.3}
+$$
+
+which is perfect and satisfies $\langle z,z\rangle=0$ over $\mathbf Z_2$. Prescribed local
+lattices at finitely many places globalize to an $\mathcal O_L$-stable lattice in $B$.
+Self-duality at two makes the polarization degree odd.
+
+At the active determinant label, the Hodge datum is one line in the displayed plane; its
+$c$-paired filtration is the annihilator. At every inactive label the determinant
+multiplicity forces zero or the whole summand. Put the pair $U_0,U_1$ of (2.2) in the active
+plane, its oppositely indexed dual pair in the conjugate factor, and leave the inactive
+factors fixed. This gives
+
+$$
+\Lambda^{\mathrm u}_0\subset\Lambda^{\mathrm u}_1
+\subset2^{-1}\Lambda^{\mathrm u}_0,
+\qquad
+(\Lambda^{\mathrm u}_i)^\#=\Lambda^{\mathrm u}_{-i}.       \tag{10.4}
+$$
+
+The local common-multiplier group is a product of groups
+$\operatorname{GL}_2\times\mathbf G_m$ with a common smooth multiplier. Its chain
+stabilizer is smooth, and the split idempotents make the determinant and orientation labels
+finite etale. Consequently the arbitrary-test-ring calculation of Proposition 2.1 applies
+word for word: the only moving equations are
+$\alpha L_0\subset L_1$ and $\beta L_1\subset L_0$. The exact PEL centralizer remains
+$G^{\mathrm u}$ by Book 118, Proposition 8.3; no common-norm group has entered.
+
+Book 119 represents this exact fine PEL functor. The filtration-lifting argument used in
+Proposition 2.3 is characteristic-independent once (10.3) and the arbitrary-test-ring
+incidence calculation are known. It proves the local-model diagram and hence smoothness of
+$\mathscr Y_0$ and flatness, regularity, and the node chart for $\mathscr Y_I$. Properness
+uses the unitary boundary argument of Book 121: a toric subspace would be a nonzero
+$L$-subspace isotropic for $H$, whereas $H(x,x)=\operatorname{Nrd}_B(x)$ is anisotropic
+because $B$ is division. Odd auxiliary full level removes the finite descent action, and
+flat closure then gives projectivity. Quotienting by the universal isotropic subgroup and
+descending the chain polarization are exactly the constructions of Section 2.2.
+
+The remaining arguments use the active height-two group, the incidence chart, the universal
+isogeny, and the exact component character. They therefore give the stated branches and all
+the geometric identities, with the unitary multiplier replacing the direct reduced-norm
+label. In particular, a basic reduced-norm ray character is not silently substituted for the
+unitary component character. $\square$
+
+Proposition 10.2 constructs the needed parahoric geometry but does not yet make it the raw
+carrier of a packet originally placed on the basic quaternionic curve. That step is a finite
+integral comparison, not another local-model calculation. The proposition also begins with an
+eligible pair $(B,K)$; it does not assert that a prescribed global ramification problem always
+admits such a pair.
+
+### 10.4 The exact comparison boundary
+
+Write $G$ for the basic quaternionic group, $G^{\mathrm u}$ for the group of (10.1), and
+$H=G^{\mathrm{ad}}=(G^{\mathrm u})^{\mathrm{ad}}$. Let $K_0$ and $K_I$ be centrally
+saturated basic levels whose dyadic factors are respectively hyperspecial and the oriented
+one-step Iwahori, and let $K_0^{\mathrm u}$ and $K_I^{\mathrm u}$ be the corresponding
+unitary levels of Proposition 10.2.
+
+The missing statement is now exact. One must construct a finite extension $E/L$ unramified
+above $u$, choose $w\mid u$, and construct decomposition-stable full component unions, a
+smooth proper model $\mathscr X_0$ and a strictly semistable proper model $\mathscr X_I$ of
+the selected basic curves over $\mathcal O_{E,w}^{\mathrm h}$, and finite locally free
+surjections fitting into both squares
+
+$$
+\begin{array}{ccc}
+\mathscr Y_I\otimes_R\mathcal O_{E,w}^{\mathrm h}&\xrightarrow{f_I}&\mathscr X_I\\
+\downarrow\scriptstyle{\pi_j^{\mathrm u}}&&\downarrow\scriptstyle{\pi_j}\\
+\mathscr Y_0\otimes_R\mathcal O_{E,w}^{\mathrm h}&\xrightarrow{f_0}&\mathscr X_0,
+\end{array}
+\qquad j=0,1,                                                \tag{10.5}
+$$
+
+with the following properties.
+
+1. On generic fibers, (10.5) is induced by the connected common adjoint fiber product
+   $P=(G^{\mathrm u}\times_HG)^\circ$, not by a rational identification of the two curves.
+   Every selected target component is hit. The map of component labels is the map through
+   the actual abelianized quotients of $P$, $G^{\mathrm u}$, and $G$. The full union and both
+   maps carry effective unramified descent to $R$, including the decomposition action on
+   components and oriented branches.
+2. The unitary source retains its polarization, fine level, universal isogeny, determinant,
+   orientation, and multiplier. Both squares commute with prime-to-two Hecke spans, the
+   dyadic residue correspondence, its transpose and central operator, and the two degeneracy
+   routes.
+3. Above every routed conductor point, the map on completed strict-node rings is, up to
+   exchanging the two branches,
+
+   $$
+   x\longmapsto ax',\qquad y\longmapsto a^{-1}y',
+   \qquad a\in(\mathcal O_{E,w}^{\mathrm h})^\times.        \tag{10.6}
+   $$
+
+   Thus both expansion indices and the conductor multiplicity are one, and the
+   Frobenius/Verschiebung orientation and its sign are retained.
+4. For every selected packet with trivial central character, central saturation changes no
+   vector. Pull and trace select the same characteristic-zero packet plane on the unitary
+   source, with the good-normalization support and multiplicity-one line used in Theorem 9.1.
+
+This is the first missing theorem for the mixed one-split dyadic raw carrier. Book 118,
+Corollary 10.3A proves its generic finite component cover only while the protected set consists
+of odd split hyperspecial primes. Its proof uses that the derived central kernel $\mu_2$ is
+etale and that the connected adjoint fiber product has a split reductive integral model.
+At two, $\mu_2$ is not etale. No cited result constructs the flat integral fiber product,
+proves that its component field is unramified, or proves the expansion-one branch statement
+(10.6). The first unsupported assertion is therefore the integral extension of the common
+adjoint fiber product across the dyadic hyperspecial--Iwahori diagram. Until it is proved,
+neither a characteristic-zero finite cover, equality of adjoint groups, nor a rational
+Jacquet--Langlands transfer supplies (10.5).
+
+### 10.5 Conditional transfer to the raw carrier
+
+**Proposition 10.3 (conditional unitary carrier transfer).** Assume the comparison statement
+of Section 10.4. Let $\Pi$ be a characteristic-zero multiplicity-one packet on the selected
+basic component union, with trivial central character and
+$\Pi_2=\operatorname{St}\otimes\mu_2$. Then its pullback to $\mathscr Y_I$ has a unique
+invariant graph line, $N$ has rank one on its raw two-dimensional plane, and geometric
+Frobenius acts on that line by the raw unnormalized dyadic new-line scalar
+$u_2=\mu_2(\Phi)$. The intrinsic monodromy line, its sign, the two branch labels, the central
+operator, and all retained Hecke and component routes agree with those on the basic packet.
+
+**Proof.** Since $f_I$ is finite locally free in characteristic zero, trace after pullback is
+multiplication by $\deg f_I$. Hence pullback is injective on the selected rational packet
+plane. The Hecke and component clauses in Section 10.4 make its image stable under every
+retained correspondence. Formula (10.6) identifies the oriented edge generator and the two
+generization maps without a ramification factor; functoriality of nearby cycles then commutes
+with $N$ and geometric Frobenius. Effective unramified descent retains the original
+dyadic Frobenius rather than replacing it by a power at $w$. The packet-support clause puts
+this image under the hypotheses used in Theorem 9.1. Its proof, applied to the unitary source
+through Proposition 10.2, gives the rank-one monodromy, raw scalar, and sign. The commuting
+squares (10.5) carry the result through both degeneracy routes and the actual component-label
+maps. $\square$
+
+This proposition adds no unconditional raw carrier: its hypothesis is precisely the theorem
+missing in Section 10.4. It also adds no Ihara statement and no arbitrary-intermediate
+$({\rm BTK}^{\rm gen})$ assertion. The direct results of Propositions 9.2--9.10 and
+Corollary 9.11 remain proved, without an added hypothesis, for the permutation, quotient, and
+augmentation rows and their actual spectator and ray factors.
+
+### 10.6 Conclusion
 
 The direct quaternionic bad-prime problem reduces integrally to one incidence of two
 lines. Under the exact dyadic tensor ledger that incidence is still valid over every
@@ -3833,4 +4032,12 @@ together with finite descent determines the full local type. The residue-prime
 correspondence has degree two but one node-to-node sheet; on the Steinberg packet this is
 the exact identity between geometric Frobenius and the automorphic $U_v$ new-line
 scalar. These are the semistable model, component, monodromy, conductor, type, and
-bad-prime Eichler--Shimura data needed by the quaternionic FLT blueprint.
+bad-prime Eichler--Shimura data for every direct datum satisfying the stated ledger.
+
+The unitary common-multiplier datum also has an exact split dyadic parahoric source with the
+same incidence geometry; Proposition 10.2 constructs it without reviving the impossible
+common-norm Hodge lift. What is not yet supplied is the integral finite comparison (10.5),
+including its unramified component field and expansion-one branch routing. Proposition 10.3
+shows that this single boundary is exactly what remains before the mixed one-split packet can
+use the unitary source as its raw signed-special carrier, once an eligible pair $(B,K)$ has
+been supplied.
