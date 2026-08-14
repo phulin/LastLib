@@ -3243,20 +3243,25 @@ F_v=E_{v,0}\subset E_{v,1}\subset\cdots\subset E_{v,n_v}=E_v
 $$
 
 whose successive degrees are prime and cyclic. Order all pairs $(v,j)$ with
-$1\leq j\leq n_v$. If the product of the scheduled prime degrees is odd and even
-degree is requested, append one dummy quadratic stage. We construct (14.4) by
-induction through this schedule.
+$1\leq j\leq n_v$ so that, for each fixed $v$, the pair $(v,j)$ occurs before
+$(v,j+1)$. Thus the total schedule interleaves the local towers but extends the
+natural order in every one of them. If the product of the scheduled prime degrees is
+odd and even degree is requested, append one dummy quadratic stage. We construct
+(14.4) by induction through this schedule.
 
 Suppose $F_i$ has been constructed and is linearly disjoint from $B$. Put
 $M_i=BF_i$. Let $\ell$ be the prime degree of the next scheduled local layer, or
 $2$ at the dummy stage. Choose a rational prime $r$ outside all residue
 characteristics used so far, outside the ramification set of $M_i/\mathbf Q$, and
 with $r\equiv1\pmod\ell$. Such primes can be produced without a density theorem.
-Indeed, if $A$ is divisible by a prescribed finite set of primes, any prime divisor
-of $\Phi_\ell(A)$ is new and has order $\ell$ modulo that divisor; for $\ell=2$ use
-$A+1$. Choose a place $a_{i+1}$ of $F_i$ above $r$. Since
-$\ell\mid |k_{a_{i+1}}^\times|$, local class field theory supplies a totally tamely
-ramified cyclic extension of $(F_i)_{a_{i+1}}$ of degree $\ell$.
+Indeed, take $A$ divisible by $\ell$ and by every rational prime to be excluded.
+Every prime divisor $r$ of $\Phi_\ell(A)$ is then new, and $r\ne\ell$ because
+$\Phi_\ell(A)\equiv1\pmod\ell$. The order of $A$ modulo $r$ is exactly $\ell$:
+it divides $\ell$, while order one would give
+$0\equiv\Phi_\ell(A)\equiv\ell\pmod r$ and hence $r=\ell$. For $\ell=2$ this is
+the same argument with $\Phi_2(A)=A+1$. Choose a place $a_{i+1}$ of $F_i$ above
+$r$. Since $\ell\mid |k_{a_{i+1}}^\times|$, local class field theory supplies a
+totally tamely ramified cyclic extension of $(F_i)_{a_{i+1}}$ of degree $\ell$.
 
 At every real place prescribe the trivial local character. At every place of $F_i$
 above $C$, prescribe the trivial character except as follows. If the scheduled pair
@@ -3385,14 +3390,18 @@ verify that it lies in the cyclic comparison range. The verification is uniform 
 the applications motivating the construction, but it uses their actual packets and
 must be stated rather than folded into the word “solvable.”
 
-Call the preparatory datum **selected-safe** for a specified $r_a$ and a
-parallel-weight-two packet $\pi_a$ attached to it if the following local condition
-holds. No local layer is a ramified dyadic quadratic extension, and at every
-controlled nonsplit place the restricted Weil--Deligne parameter is principal,
-special, or in the constructed dihedral range of Section 1.4. Unramified dyadic
-quadratic layers are allowed. In particular, an application prescribing a
-nontrivial dyadic harmless field must choose a prime-cyclic refinement which does not
-pass through the excluded ramified dyadic quadratic boundary.
+Put $C=P\cup Z$. Call the preparatory datum **selected-safe** for a specified $r_a$
+and a parallel-weight-two packet $\pi_a$ attached to it if two conditions hold.
+First, every bottom component $\pi_{a,v}$ with $v\in C$ lies in the selected,
+trace-comparable local range of Section 1.4. This requirement includes every
+protected component even when its completion is prescribed to split, and in
+particular includes all protected dyadic and coefficient-prime components. Second,
+along every nontrivial prescribed local tower the known restricted parameters remain
+principal, special, or in the constructed dihedral range of Section 1.4, and no
+local layer is a ramified dyadic quadratic extension. Unramified dyadic quadratic
+layers are allowed. In particular, an application prescribing a nontrivial dyadic
+harmless field must choose a prime-cyclic refinement which does not pass through the
+excluded ramified dyadic quadratic boundary.
 
 **Proposition 14.4 (verification of the cyclic ledger).** In Theorem 14.3 suppose
 $\bar r$ is absolutely irreducible, the relevant $r_a$ have stable lattices with
@@ -3400,9 +3409,11 @@ residual representation $\bar r$, and the datum is selected-safe for every packe
 attached with the local--global compatibility used in Section 13.3. Then along
 (14.7):
 
-1. the local restriction fibers are extension-complete for ascent and
-   antecedent-complete for descent in the sense of Section 1.4, and all retained
-   quotient-character twists are selected and trace-comparable;
+1. every component at every controlled place, including split dyadic and
+   coefficient-prime places, remains selected and trace-comparable throughout the
+   tower; at each nonsplit place the local restriction fibers are extension-complete
+   for ascent and antecedent-complete for descent in the sense of Section 1.4, and
+   all retained quotient-character twists are selected and trace-comparable;
 2. determinants and central characters correspond under restriction and norm
    pullback, and the central character of the original packet is a distinguished
    norm antecedent at every downward step;
@@ -3417,8 +3428,9 @@ attached with the local--global compatibility used in Section 13.3. Then along
    the auxiliary argument is attached to $r_a|_{G_L}$, then $\Pi_L$ descends through
    (14.7) to a packet attached to $r_a$ over $F$.
 
-**Proof strategy.** At a prepared place the top semisimple inertial parameter is
-unramified. At each prime cyclic layer, an irreducible restricted parameter has
+**Proof strategy.** A split controlled place repeats its selected bottom component.
+At a prepared nonsplit place the top semisimple inertial parameter is unramified. At
+each prime cyclic layer, an irreducible restricted parameter has
 extensions differing only by quotient characters; a reducible one extends by two
 lines or, in the quadratic case, by dihedral induction. Nonzero monodromy forces the
 special case. Selected-safety contains the known extension and is stable under the
@@ -3427,9 +3439,17 @@ the controlled set the parameters were unramified before the tower was built.
 Disjointness preserves residual irreducibility, and the arithmetic representation
 over $F$ selects the correct twist at every descent step.
 
-**Proof.** Consider first a nonsplit finite place in one prime cyclic layer. At an
-active place, (14.8) kills the finite semisimple inertia at the top of its scheduled
-local tower. Fix one intermediate prime cyclic layer. If its upper parameter is
+**Proof.** Begin with a controlled place $v\in C$. Its bottom component is selected
+and trace-comparable by selected-safety. Whenever $v$ splits in a global layer, that
+component is merely repeated, so it remains in the same selected range. This
+observation applies in particular to every protected dyadic or coefficient-prime
+place whose completion is prescribed to split.
+
+Now consider a nonsplit controlled place in one prime cyclic layer. Along a
+nontrivial prescribed tower the known restricted parameters remain selected by the
+second selected-safety condition. At an active place, (14.8) kills the finite
+semisimple inertia at the top of its scheduled local tower. Fix one intermediate
+prime cyclic layer. If its upper parameter is
 irreducible, Schur's lemma shows that any two extensions to the lower Weil group
 differ by a character of the cyclic quotient. The known lower extension is selected
 by selected-safety, and quotient-character twists remain in the same principal,
@@ -3444,12 +3464,14 @@ odd residue characteristic a ramified quadratic dihedral parameter is tame; at
 residue characteristic two the excluded ramified quadratic case has been removed by
 selected-safety.
 
-The same argument applies at a nontrivial harmless protected completion. At a split
-protected place there is no local extension problem. At an auxiliary ramification
-place the $r_a$ were unramified and the residue characteristic is odd, so restriction
-remains unramified and the preceding fiber calculation applies. Every remaining
-nonsplit place is outside the ramification sets of the $r_a$, again giving the
-unramified calculation. This proves part 1 and the local trace-comparability clause.
+The same full-fiber argument applies at a nontrivial harmless protected completion.
+At a split protected place there is no extension fiber, but the selected bottom
+component and all its repetitions were accounted for in the first paragraph. At an
+auxiliary ramification place the $r_a$ were unramified and the residue characteristic
+is odd, so restriction remains unramified and the preceding fiber calculation
+applies. Every remaining nonsplit place is outside the ramification sets of the
+$r_a$, again giving the unramified calculation. This proves part 1 and the local
+trace-comparability clause.
 
 Local and global class field theory identify determinant restriction with norm
 pullback of the corresponding character. Hence
@@ -3498,14 +3520,19 @@ even-degree totally real prime-cyclic tower (14.7), disjoint layer by layer from
 such that every coefficient place splits, every active residual local representation
 is trivial at the top with residue cardinality congruent to one modulo $p$, and every
 specified lift has unipotent active inertia. The prescribed dyadic completions are
-realized exactly, even when they are nontrivial. For selected-safe attached packets,
-Proposition 14.4 verifies ascent to the auxiliary field and descent of any resulting
-packet attached to a representation already defined over $F$. Thus a temporary
-dyadic change is removed by descent rather than ignored.
+realized exactly, even when they are nontrivial. If every attached packet is
+selected-safe on the entire controlled set $P\cup Z$, including the bottom
+components at split coefficient and dyadic places, Proposition 14.4 verifies ascent
+to the auxiliary field and descent of any resulting packet attached to a
+representation already defined over $F$. Thus a temporary dyadic change is removed
+by descent rather than ignored.
 
 **Proof.** Apply Theorem 14.3 with the auxiliary protected datum. The field assertions
-are parts 1--5 of that theorem, and the automorphic conditional is Proposition 14.4.
-$\square$
+are parts 1--5 of that theorem. At a split coefficient or dyadic place every cyclic
+layer repeats the selected bottom component supplied by the corollary's hypothesis;
+at a nontrivial dyadic completion Proposition 14.4 supplies the full-fiber check and
+the descent correction. Thus the automorphic conditional is exactly Proposition
+14.4. $\square$
 
 **Corollary 14.6 (target-IAV preparation).** In target mode there is a positive
 even-degree totally real prime-cyclic tower (14.7), disjoint layer by layer from $B$,
@@ -3527,15 +3554,17 @@ $$
 
 The same is true at any additional protected split place. Every residual-image
 property present in the bottom datum, including absolute irreducibility before and
-after adjoining $\zeta_p$, is preserved. Under selected-safety, an upper automorphic
-packet may be
-base-changed through the displayed tower with its determinant, weight, attachment,
-and cuspidality ledger intact.
+after adjoining $\zeta_p$, is preserved. If the automorphic packet over $F$ is
+selected-safe on the entire controlled set $P\cup Z$, including its dyadic and
+coefficient-prime components, it may be base-changed through the displayed tower with
+its determinant, weight, attachment, and cuspidality ledger intact.
 
 **Proof.** The target prescription puts every $z\mid2p$ in $Z$ with $H_z=F_z$, so
 (14.11) is (14.10). Equation (14.12) is (14.9). Disjointness from the joint
 residual--cyclotomic cutout makes the restriction map onto that joint image, proving
-the irreducibility assertion. Proposition 14.4 gives the last sentence. $\square$
+the irreducibility assertion. At the places above $2p$, the local extension is split,
+so the selected bottom components required in the corollary are repeated unchanged.
+Proposition 14.4 gives the last sentence. $\square$
 
 These corollaries construct the field used before the two finite-set comparisons.
 They do not assert that the desired and avoidance deformation problems have common
