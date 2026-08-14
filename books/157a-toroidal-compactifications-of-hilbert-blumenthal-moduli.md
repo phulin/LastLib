@@ -1,4 +1,27 @@
-# Toroidal Compactifications of Hilbert--Blumenthal Moduli
+# Conditional Toroidal Compactifications of Hilbert--Blumenthal Moduli: A Minitextbook
+
+**Status.** This is a conditional minitextbook. The Raynaud and fan theorems, the
+explicit homogenized Mumford construction, finite Kummer normalization, BCP for
+explicit charts, and the displayed chartwise conductor, determinant, and slicing
+calculations are retained in their proved scopes. In degree $d\ge2$, five antecedents
+are not proved: geometric cusp classification (GCC, Hypothesis 3.1), which occurs
+before intrinsic recognition; Raw-DF-IIT (Hypothesis 7.1); coherent frame-root
+descent across conductors (FRCD, Hypothesis 9.1); finite flatness of all Kummer
+normalizations used for fppf descent (KFF, Hypothesis 9.2); and extension,
+quasi-finiteness, and the exact line identity for the structured Hilbert map
+(TDC-Ext, Hypothesis 15.1). Unframed IIT and
+fixed-label MPE depend on Raw-DF-IIT, while their exact framed conductor-root forms
+also use FRCD. Exhaustive AEC and the higher-rank global unframed space additionally
+depend on GCC; subsequent framed fppf arguments also depend on KFF. TDC-Ext enters
+only at projectivity: it is required by TDC and hence by the projective higher-rank
+TCG, FTJ, and ICS chain. Higher-rank ICS also assumes that the residue field of the
+complete DVR is finite, exactly for the finite-field Bertini step. In degree
+$d=1$, the global compactification is imported only in the scope of Book 111,
+Theorem 13.1, and Section 17 separately assumes the rank-one supplied-model
+antecedent R1-FTJ before applying this manuscript's avoidance and slicing argument.
+Thus the two branches of TCG, FTJ, and ICS have the distinct hypotheses displayed
+in Theorems 16.1, 17.1, 17.2, and (17.13). Book 111, Theorem 13.1 is not cited for
+arbitrary-$Z$ joining, avoidance, or ICS.
 
 ## Contents
 
@@ -26,9 +49,9 @@
   - [4.3 Marked rays and finite symmetries](#43-marked-rays-and-finite-symmetries)
   - [4.4 Equivariant regularization](#44-equivariant-regularization)
   - [4.5 Periodic decompositions for the universal family](#45-periodic-decompositions-for-the-universal-family)
-- [5. Complete fine saturated logarithmic test pairs](#5-complete-fine-saturated-logarithmic-test-pairs)
+- [5. Complete bases and fine saturated toroidal charts](#5-complete-bases-and-fine-saturated-toroidal-charts)
   - [5.1 Saturated monoids and their completions](#51-saturated-monoids-and-their-completions)
-  - [5.2 Toroidal test pairs, including nilpotents](#52-toroidal-test-pairs-including-nilpotents)
+  - [5.2 Ambient structured deformations and charted tests](#52-ambient-structured-deformations-and-charted-tests)
   - [5.3 The logarithmic period map](#53-the-logarithmic-period-map)
   - [5.4 Face restriction and base change](#54-face-restriction-and-base-change)
 - [6. The Mumford construction](#6-the-mumford-construction)
@@ -37,23 +60,23 @@
   - [6.3 Flatness, properness, and the group locus](#63-flatness-properness-and-the-group-locus)
   - [6.4 Endomorphisms, polarization, and level](#64-endomorphisms-polarization-and-level)
   - [6.5 The family theta line](#65-the-family-theta-line)
-- [7. Infinitesimal recognition](#7-infinitesimal-recognition)
-  - [7.1 The intrinsic logarithmic structure of a semiabelic model](#71-the-intrinsic-logarithmic-structure-of-a-semiabelic-model)
-  - [7.2 Why the unenhanced assertion is false](#72-why-the-unenhanced-assertion-is-false)
-  - [7.3 Square-zero monomial recognition](#73-square-zero-monomial-recognition)
-  - [7.4 Splitting the unit cocycle](#74-splitting-the-unit-cocycle)
-  - [7.5 Induction through nilpotent thickenings](#75-induction-through-nilpotent-thickenings)
+- [7. The Raw-DF-IIT prerequisite](#7-the-raw-df-iit-prerequisite)
+  - [7.1 The raw non-cancellative defect monoid](#71-the-raw-non-cancellative-defect-monoid)
+  - [7.2 Why the quotient by units does not prove recognition](#72-why-the-quotient-by-units-does-not-prove-recognition)
+  - [7.3 The exact Raw-DF-IIT hypothesis](#73-the-exact-raw-df-iit-hypothesis)
+  - [7.4 Conditional reconstruction of all PEL data](#74-conditional-reconstruction-of-all-pel-data)
+  - [7.5 Consequences for IIT and completion](#75-consequences-for-iit-and-completion)
 - [8. The inverse problem and completed deformation rings](#8-the-inverse-problem-and-completed-deformation-rings)
   - [8.1 Extraction on normal reduced bases](#81-extraction-on-normal-reduced-bases)
   - [8.2 Full faithfulness](#82-full-faithfulness)
-  - [8.3 The scope of essential surjectivity](#83-the-scope-of-essential-surjectivity)
+  - [8.3 Conditional essential surjectivity](#83-conditional-essential-surjectivity)
   - [8.4 Completed local rings](#84-completed-local-rings)
   - [8.5 Traits and boundary-supported Artin rings](#85-traits-and-boundary-supported-artin-rings)
 - [9. Paired frames and Kummer normalization](#9-paired-frames-and-kummer-normalization)
   - [9.1 Torsion of the boundary one-motive](#91-torsion-of-the-boundary-one-motive)
   - [9.2 The refined Fourier lattice](#92-the-refined-fourier-lattice)
   - [9.3 Normalization before completion](#93-normalization-before-completion)
-  - [9.4 Smoothness and descent of framed branches](#94-smoothness-and-descent-of-framed-branches)
+  - [9.4 Unframed-first normalization of paired frames](#94-unframed-first-normalization-of-paired-frames)
 - [10. Bounded normalization and conductor presentations](#10-bounded-normalization-and-conductor-presentations)
   - [10.1 The conductor square](#101-the-conductor-square)
   - [10.2 Uniform theta embeddings](#102-uniform-theta-embeddings)
@@ -61,20 +84,20 @@
   - [10.4 Pushouts and nonnormal fibers](#104-pushouts-and-nonnormal-fibers)
 - [11. A finite-type algebraic Mumford chart](#11-a-finite-type-algebraic-mumford-chart)
   - [11.1 Construction from explicit monoid algebras](#111-construction-from-explicit-monoid-algebras)
-  - [11.2 Algebraizing the conductor pushout](#112-algebraizing-the-conductor-pushout)
-  - [11.3 Proof of the fine saturated charts](#113-proof-of-the-fine-saturated-charts)
+  - [11.2 Algebraizing star gluing and the boundary conductor](#112-algebraizing-star-gluing-and-the-boundary-conductor)
+  - [11.3 Fine saturated charts and conditional AEC](#113-fine-saturated-charts-and-conditional-aec)
   - [11.4 Comparison with the complete Mumford family](#114-comparison-with-the-complete-mumford-family)
   - [11.5 Why Fitting ideals do not suffice](#115-why-fitting-ideals-do-not-suffice)
-- [12. The ramified conductor descent criterion](#12-the-ramified-conductor-descent-criterion)
+- [12. Conditional ramified conductor compatibility](#12-conditional-ramified-conductor-compatibility)
   - [12.1 The tensor square of a ramified trait](#121-the-tensor-square-of-a-ramified-trait)
-  - [12.2 The face map and the missing normalized-star map](#122-the-face-map-and-the-missing-normalized-star-map)
-  - [12.3 Descent through the reduced pushout](#123-descent-through-the-reduced-pushout)
-  - [12.4 Lifting across the nilradical and the cocycle](#124-lifting-across-the-nilradical-and-the-cocycle)
-  - [12.5 fpqc descent of all structures](#125-fpqc-descent-of-all-structures)
-- [13. Candidate overlaps and conditional algebraization](#13-candidate-overlaps-and-conditional-algebraization)
+  - [12.2 Why framed-first descent is circular](#122-why-framed-first-descent-is-circular)
+  - [12.3 The unframed-first normalization route](#123-the-unframed-first-normalization-route)
+  - [12.4 Conditional conductor and nilpotent compatibility](#124-conditional-conductor-and-nilpotent-compatibility)
+  - [12.5 Conditional RCD](#125-conditional-rcd)
+- [13. Conditional algebraic overlaps and the proper toroidal space](#13-conditional-algebraic-overlaps-and-the-proper-toroidal-space)
   - [13.1 Common faces and changes of cusp](#131-common-faces-and-changes-of-cusp)
-  - [13.2 The scope of overlap exhaustion](#132-the-scope-of-overlap-exhaustion)
-  - [13.3 Conditional separated gluing](#133-conditional-separated-gluing)
+  - [13.2 Conditional exhaustion by the structured Isom scheme](#132-conditional-exhaustion-by-the-structured-isom-scheme)
+  - [13.3 Conditional effective separated gluing](#133-conditional-effective-separated-gluing)
   - [13.4 Conditional properness from complete fans](#134-conditional-properness-from-complete-fans)
 - [14. Poincare, theta, and determinant lines](#14-poincare-theta-and-determinant-lines)
   - [14.1 Three different lines](#141-three-different-lines)
@@ -82,12 +105,12 @@
   - [14.3 Determinant of cohomology](#143-determinant-of-cohomology)
   - [14.4 Boundary transition characters](#144-boundary-transition-characters)
   - [14.5 Base change and conductor compatibility](#145-base-change-and-conductor-compatibility)
-- [15. Local positivity and the global projectivity criterion](#15-local-positivity-and-the-global-projectivity-criterion)
-  - [15.1 Horizontal positivity](#151-horizontal-positivity)
-  - [15.2 Vertical fan positivity](#152-vertical-fan-positivity)
-  - [15.3 Mixed curves and the missing domination bound](#153-mixed-curves-and-the-missing-domination-bound)
-  - [15.4 Descent of the ample line](#154-descent-of-the-ample-line)
-- [16. The conditional toroidal compactification theorem](#16-the-conditional-toroidal-compactification-theorem)
+- [15. Conditional projectivity via structured graphs](#15-conditional-projectivity-via-structured-graphs)
+  - [15.1 The interior structured map and TDC-Ext](#151-the-interior-structured-map-and-tdc-ext)
+  - [15.2 Cartier fan data](#152-cartier-fan-data)
+  - [15.3 The conditional proper quasi-finite structured graph route](#153-the-conditional-proper-quasi-finite-structured-graph-route)
+  - [15.4 Conditional TDC](#154-conditional-tdc)
+- [16. The conditional toroidal compactification and gluing theorem](#16-the-conditional-toroidal-compactification-and-gluing-theorem)
   - [16.1 Construction and completed-local comparison](#161-construction-and-completed-local-comparison)
   - [16.2 Smoothness, boundary, and universal objects](#162-smoothness-boundary-and-universal-objects)
   - [16.3 Projectivity and descent](#163-projectivity-and-descent)
@@ -112,14 +135,17 @@ The moduli scheme of polarized abelian varieties with real multiplication is nat
 
 For Hilbert--Blumenthal moduli the correct objects are polarized semiabelic degenerations. Their smooth group loci are semiabelian schemes, their proper fibers are assembled from toric varieties, and their generic fibers are abelian varieties with the prescribed real multiplication. A fan records which positive period valuations are allowed in a chart. A periodic polyhedral decomposition records a projective model of the universal family over that chart. These are related constructions, but they are not the same: the first compactifies the moduli base, while the second compactifies the fibers of the universal semiabelian quotient.
 
-This book develops the two local constructions simultaneously and audits the additional steps
-needed to make them a global compactification. The audit does not close every step. A geometric
-boundary fiber can be reducible and nonnormal. A test ring can contain nilpotents. A paired
-torsion frame can ramify at the boundary even when it is finite etale on the abelian locus. A
-splitting extension of a trait can be ramified, so its self-product is not a disjoint union of
-Galois graphs. Finally, a strictly convex function on a fan produces a line on the toric base,
-not the theta line on the universal semiabelic family. The final chapters state exactly which
-comparisons are proved and which remain conditional.
+This book develops the two local constructions simultaneously and isolates the additional
+steps needed to make them a global compactification. The first unproved step is the
+classification of an arbitrary geometric semiabelic PEL fiber as one of the displayed
+Mumford fibers; this is GCC, Hypothesis 3.1. Raw-DF-IIT, FRCD, and KFF are later,
+separate hypotheses. All results that use them are labelled conditional. A geometric boundary fiber can be reducible and nonnormal. A test ring can
+contain nilpotents. A paired torsion frame can ramify at the boundary even when it is
+finite etale on the abelian locus. A splitting extension of a trait can be ramified,
+so its self-product is not a disjoint union of Galois graphs. Finally, a strictly
+convex function on a fan produces a line on the toric base, not the theta line on the
+universal semiabelic family. The explicit constructions survive this audit; recognition
+of arbitrary higher-rank boundary deformations and the higher-rank global closure remain conditional.
 
 ### 1.2 Standing Hilbert--Blumenthal data
 
@@ -157,38 +183,76 @@ The construction is deliberately linear.
 
 First we extract Raynaud extensions and polarized one-motives from degenerating abelian varieties. We then define cusp and cone data and construct admissible regular projective fans. Next we build Mumford families over complete fine saturated logarithmic toroidal test pairs.
 
-The inverse direction is audited before algebraization. Section 7.2 shows that an external
-strict log chart is not forced by the underlying PEL data, already for $d=1$. The subsequent
-weight argument therefore proves reconstruction only for the toroidal subfunctor in which the
-monomial divisibility is supplied. This gives the correctly dimensioned Mumford-side completed
-ring but not full infinitesimal recognition.
+The inverse direction first requires GCC to put an arbitrary geometric fiber in a
+labelled Mumford chart. For a fixed labelled Mumford fiber it is then reduced before
+algebraization to Raw-DF-IIT. Chapter 7 explains
+why passing multiplication coefficients to $A/A^\times$ neither permits cancellation nor
+produces roots, and why periodic piecewise-linear data can have a secondary-fan kernel.
+Hypothesis 7.1 states the raw, non-cancellative symmetric-monoidal result actually needed.
+Assuming it gives IIT and the correctly dimensioned completed ring; without it, only the
+already charted Mumford deformation functor is represented by that ring.
 
-We then normalize for paired frames, bound every structure graph of the explicit Mumford
-presentation, and algebraize one finite-type cusp chart. The ramified descent chapter isolates
-the additional normalized-star map and nilpotent existence steps rather than deriving existence
-from full faithfulness.
+We next prove finiteness of Kummer normalization, bound every structure graph of an
+explicit Mumford chart, and algebraize that chart. Neither coherent choices of roots
+on paired conductor faces nor flatness of every finite normalization follows from
+that finiteness; FRCD and KFF isolate those two inputs. Exhaustivity for arbitrary
+boundary objects is conditional on GCC and Raw-DF-IIT.
+Paired frames are handled in the noncircular order: construct the unframed compactification
+first and normalize it in the finite generic paired-frame cover. Normalization extends the
+deck action; structured conductor compatibility uses Raw-DF-IIT and FRCD, while fppf
+descent through that finite map uses KFF.
 
-The line-bundle chapters separately construct the family theta determinant and actual Cartier
-fan data. They prove vertical toric positivity. Global comparison with an ample interior line,
-mixed positivity, and proper algebraic gluing remain conditional.
+The line-bundle chapters separately construct the family theta determinant and the
+Cartier fan line. The remaining positivity route would use a proper quasi-finite map
+from the structured theta-graph space to a projective Hilbert/graph parameter space.
+The extension, quasi-finiteness, and exact Plucker-line identity for that map are not
+consequences of the determinant computation; they are isolated as TDC-Ext. No finite
+generation of a global effective cone is asserted.
 
-Finally, assuming a global projective joining model, we prove the avoidance and relative
-slicing statements, including the empty-cut case $d=1$. The argument never treats a formal
-cusp by itself as a global joining model.
+For $d\ge2$, conditionally, the resulting projective compactification supplies the
+global finite-type joining model used for avoidance and relative slicing. The rank-one case is not a new
+closure theorem here: its global cusp compactification is imported in the precise
+scope of Book 111, Theorem 13.1. Joining a selected cusp branch to the required fine
+component still uses the separately stated supplied-model antecedent R1-FTJ, and the
+avoidance of an arbitrary proper $Z$ is then proved by this manuscript's saturation
+argument. Neither assertion is imported from Books 110--111.
 
 ### 1.4 Three distinctions that govern the book
 
-The first distinction is between an underlying degeneration and a logarithmically compatible degeneration. Over $k[\epsilon]/(\epsilon^2)$ the equation $XY=\epsilon$ is a flat smoothing of $XY=0$. It is a genuine underlying deformation. It is not a deformation over a fixed log chart whose smoothing generator maps to zero. A correct infinitesimal theorem must say this, not deny the existence of the smoothing.
+The first distinction is between an intrinsic chart and an unrelated external chart.
+Over $k[\epsilon]/(\epsilon^2)$ the equation $XY=\epsilon$ is a flat smoothing of
+$XY=0$. Its intrinsic smoothing chart sends the generator to $\epsilon$; it is not a
+deformation over a separately fixed chart sending that generator to zero. The
+infinitesimal theorem recovers the first chart and never assumes the second.
 
 The second distinction is between normal charts and nonnormal fibers. The monoid algebra of a saturated cone is normal. A periodic semiabelic fiber obtained by identifying faces of several toric pieces can be reducible and nonnormal. Its normalization and conductor are part of the moduli presentation, and all group and polarization maps must descend through their pushout.
 
 The third distinction is between three line bundles. The fan support function defines a line on a toric chart of the moduli base. The Poincare biextension defines a theta line on the universal semiabelic family. Taking determinant of cohomology produces a line back on the moduli base. Confusing any two of these makes the positivity argument circular.
 
-We fix the meaning of a semiabelic object. It is a tuple $(P,G,\mu,\Theta)$ in which $P$ is proper and flat with geometrically connected fibers, $G$ is a semiabelian scheme, $\mu:G\times P\to P$ is an action with a dense torsor orbit in every geometric fiber, and $\Theta$ is a relatively ample line with a cubical action linearization. The stabilizer of a point is a subtorus determined by the face containing its orbit. The reduction of a geometric fiber is seminormal, but it may be reducible and nonnormal. The PEL endomorphisms, polarization, and level act on the whole tuple, not only on $G$.
+We fix the meaning of a semiabelic object. It is a tuple $(P,G,\mu,\Theta)$ in
+which $P$ is proper and flat with geometrically connected fibers, $G$ is a smooth
+group scheme whose identity component has semiabelian geometric fibers and whose
+component group is finite, $\mu:G\times P\to P$ is an action for which $G\subset P$
+is a dense open torsor, and $\Theta$ is a
+relatively ample line with a cubical action linearization. The stabilizer of a point
+is a subtorus determined by the face containing its orbit. The reduction of a
+geometric fiber is seminormal, but it may be reducible and nonnormal. The PEL
+endomorphisms, polarization, and level act on the whole tuple, not only on $G$.
 
-Over a nonreduced base the special-fiber normalization does not itself lift by taking integral closure. Instead a labelled semiabelic object includes the finite normalized-star cover and its conductor equivalence relation, flatly lifted from the reduction. Chapter 7 proves that, after strict monomial compatibility is supplied, such a lift is determined by a one-motive. It also proves that this compatibility is not forced by an unrelated external log chart.
+Over a nonreduced base the special-fiber normalization does not itself lift by taking
+integral closure. Instead a labelled semiabelic object includes invariant affine star
+neighborhoods lifting the special orbit charts. Normalization and conductor are
+retained after restriction to each fixed boundary stratum. Raw-DF-IIT is exactly the
+missing assertion that multiplication on those neighborhoods intrinsically recovers
+the unframed fixed-label monoid chart, with its leading units and period holonomy,
+through nilpotents. It does not supply GCC, framed conductor roots, or flatness of a
+finite normalization.
 
-Two tempting replacements fail. Keeping only $G$ forgets which proper orbit compactification and which ample line were chosen. Keeping only $P$ forgets the group law and cannot recover the period lattice functorially. The tuple, its normalized stars, and its conductor maps are the minimum data stable under degeneration and descent.
+Two tempting replacements fail. Keeping only $G$ forgets which proper orbit
+compactification and which ample line were chosen. Keeping only $P$ forgets the
+group law and cannot recover the period lattice functorially. The tuple, its star
+neighborhoods, and its boundary normalization-conductor diagrams are the minimum
+data stable under degeneration and descent.
 
 ## 2. Raynaud extensions and polarized one-motives
 
@@ -487,6 +551,46 @@ We therefore impose normality on the base monoid chart and on normalized stars, 
 
 For the one-dimensional Tate model, the normalized special fiber of an $n$-gon is a disjoint union of $n$ copies of $\mathbf P^1$, while the conductor consists of the pairs $0,\infty$ that are glued cyclically. The fiber is seminormal and nonnormal. The same normalization--conductor description persists in every periodic cell quotient.
 
+For a fiber already known to have the Mumford orbit presentation, its data can be
+read back as follows. Let $(P,G,\Theta)$ be a labelled geometric semiabelic PEL
+fiber of the totally toric Hilbert cusp type. The identity component of $G$ is the
+torus $T_X$ by Theorem 2.1. Normalize the closure of each $T_X$-orbit.
+An affine invariant open in that normalization has a coordinate ring decomposed into
+torus weights. The set of occurring weights is closed under addition and saturation:
+if $n x$ occurs, normality makes the corresponding character integral and hence
+forces $x$ to occur. Thus the open is the saturated semigroup algebra of a rational
+cone, and the normalized orbit closure is a toric variety. Intersections of orbit
+closures give common faces. The two conductor arrows record their incidence.
+
+The finite component group of $G$ acts transitively on the repeated cells. Its kernel
+on the character lattice is the period lattice $Y$, so lifting the finite incidence
+complex to the universal cover gives a $Y$-periodic rational polyhedral decomposition
+of $X_\mathbf R$. The weights of the rigidified line $\Theta$ on the toric
+normalizations give integral affine functions on the cells. The cubical identity
+makes their changes under $Y$ the quadratic automorphy factors (5.9c), and ampleness
+makes the resulting support function strictly convex: equality of adjacent slopes
+would contract their invariant wall curve. The $\mathcal O_F$, polarization, and
+level graphs recover exactly the cusp label.
+
+Conversely, Chapter 6 reconstructs the same normalized orbit closures, conductor
+pairings, action, and theta weights from those data. This verifies recovery on the
+explicit Mumford locus. It does not classify an arbitrary geometric semiabelic PEL
+fiber: the definition in Section 1.4 does not itself prove that all normalized orbit
+closures form a finite rational toric complex, that the component action lifts to a
+$Y$-periodic complex, that the theta weights give one coherent integral support
+function, or that the resulting cusp label is unique. We therefore isolate the
+needed classification instead of calling the preceding recovery argument a proof.
+
+**Hypothesis 3.1 (geometric cusp classification, GCC).** Every labelled geometric
+semiabelic PEL fiber at a nonzero Hilbert cusp is a Mumford fiber for a unique cusp
+label, periodic cell complex, and fan face, up to the declared arithmetic change of
+label. Its normalized orbit stars and both conductor arrows are intrinsic, and this
+identification is compatible with the PEL, level, action, and rigidified theta data.
+
+GCC precedes Raw-DF-IIT logically. Raw-DF-IIT begins with a deformation of an
+already labelled Mumford fiber and therefore cannot be used to prove that an
+arbitrary geometric fiber has such a label.
+
 ## 4. Admissible decompositions and projective regular refinement
 
 ### 4.1 Fans and admissibility
@@ -520,7 +624,17 @@ Let $\Delta$ be the finite group generated by coefficient descent and the deck g
 
 There are only finitely many prescribed valuation rays modulo $\Gamma_b\rtimes\Delta$. Star-subdivide along the whole orbit of each ray. On a compact logarithmic fundamental set only finitely many members occur. Adding the transported rational tent functions makes the common refinement projective. Thus all chosen tensor or local valuation rays become one-dimensional cones.
 
-Before resolving singularities, take the barycentric subdivision. A cone of this subdivision is a chain of faces with distinct dimensions. An element stabilizing the cone fixes every member of the chain and hence every ray. Thus the action has no inversions. This fact makes later orbitwise star subdivisions commute.
+Before resolving singularities, take the barycentric subdivision, equivalently the
+successive equivariant stellar subdivisions at relative-interior barycenters in
+decreasing dimension. This is a coherent simplicial refinement. A cone in it is a
+chain of parent faces, with at most one parent face of each dimension. If a face and
+one of its translates are both faces of one refined cone, their chains have the same
+dimension pattern and hence are the same subchain. Thus no refined cone contains two
+distinct translates of one face. In particular, a stabilizer fixes the chain and
+every ray, so the action has no inversions. This regular-action property persists
+after simultaneous stellar subdivision of an orbit whose distinct members lie in no
+common cone: that subdivision is the pullback of one stellar subdivision of the
+quotient conical complex.
 
 ### 4.4 Equivariant regularization
 
@@ -533,7 +647,9 @@ $$
 \tag{4.2}
 $$
 
-If $\mu(\sigma)>1$, choose a nonzero lattice point $w$ in the half-open fundamental parallelepiped and let $\tau$ be the smallest face containing its ray. Write
+If $\mu(\sigma)>1$, choose a nonzero lattice point $v$ in the half-open fundamental
+parallelepiped, let $w$ be the primitive lattice generator of
+$\mathbf R_{\ge0}v$, and let $\tau$ be the smallest face containing that ray. Write
 
 $$
 w=\sum_{i\in I}a_ie_i,
@@ -541,22 +657,49 @@ w=\sum_{i\in I}a_ie_i,
 \tag{4.3}
 $$
 
-Star subdivision at the primitive ray of $w$ replaces $\sigma$ by cones of multiplicity $a_im$, positive integers strictly smaller than $m$. Equivariance needs more than subdividing the orbit in an arbitrary order. Take every translate of the pair $(\tau,w)$, give the orbit one common height below the old support function, and take the lower convex subdivision. On a cone meeting several translates this is the common refinement of their star subdivisions. Its restriction to each translate of $\sigma$ contains only cones obtained by repeated insertion of lattice points from fundamental parallelepipeds.
-
-For completeness, use the lexicographically ordered termination tuple
+Star subdivision at $\mathbf R_{\ge0}w$ replaces every simplicial cone
+$\eta\supset\tau$ by cones whose multiplicities are
 
 $$
-(d,m_d,n_d,m_{d-1},n_{d-1},\ldots,m_2,n_2),
+a_i\mu(\eta),\qquad i\in I.
 \tag{4.4}
 $$
 
-where $m_r$ is the largest multiplicity of an $r$-dimensional cone and $n_r$ is the number of its orbits. Choose $w$ first in the smallest face of a fundamental parallelepiped for which this tuple is maximal. The determinant calculation lowers the multiplicity of every affected maximal cone. New proper faces either already occurred or have smaller dimension, so their entries occur later in (4.4). Taking the common coherent orbit refinement cannot increase an earlier entry because each new cone is contained in one of the determinant-lowered cones. Thus the tuple decreases. It consists of nonnegative integers, and the process terminates with multiplicity one in every dimension.
+These are positive integers strictly smaller than $\mu(\eta)$. To regularize
+equivariantly, let $m>1$ be the largest multiplicity of any cone and choose $\sigma$
+with $\mu(\sigma)=m$. Because the barycentric refinement has no inversions, the
+stabilizer of $\tau$ fixes its rays and therefore fixes $w$. Distinct members of the
+orbit of $(\tau,w)$ lie in no common cone, so the simultaneous stellar subdivisions
+commute and are the pullback of a single stellar subdivision on the quotient conical
+complex. This is the orbit-disjoint step missing from an arbitrary common-refinement
+argument.
 
-The lower-height construction proves projectivity at every stage: add to the old support function a sufficiently small invariant rational convex function whose bend locus is the new orbit of rays. Finitely many inequalities modulo the group allow one common positive size. Clearing denominators at the end restores an integral strictly convex support function.
+For every affected cone $\eta$, (4.4) lowers its multiplicity. Moreover, the
+multiplicity of a face divides the multiplicity of every containing simplicial cone:
+its finite lattice quotient injects into the quotient for the containing cone.
+Consequently no new cone of multiplicity $m$ is created, while the chosen orbit of
+$m$-cones disappears. There are finitely many cone orbits, and each orbit subdivision
+creates only finitely many new orbits. Induction first on the maximal multiplicity and
+then on the number of orbits having that multiplicity therefore terminates with every
+cone regular. The regular-action property persists at each orbit-disjoint step.
+
+Coherence is also preserved. On the finite quotient conical complex, a stellar
+subdivision is induced by a rational tent function at its new ray. Pull it back and
+add a sufficiently small invariant multiple to the old strictly convex support
+function. There are only finitely many inequalities on the quotient, so one positive
+rational size works. Clearing the finitely many denominators after termination gives
+an invariant integral strictly convex support function. Marked rays are never
+removed and, being one-dimensional, are already regular.
 
 If an element of the neat cusp group stabilizes a nonzero regular cone, it fixes a primitive ray. Its infinite part is multiplication by a totally positive unit, and fixing one nonzero element forces that unit to be $1$. Its finite part is killed by neatness. Hence every nonzero cone has trivial stabilizer.
 
 **Theorem 4.2 (simultaneous regular projective refinement).** For the finitely many cusp labels, refined level lattices, finite descent symmetries, and marked valuation rays, there is an equivariant admissible fan collection which is regular, projective, has trivial stabilizers on nonzero cones, and contains every marked ray.
+
+Here simultaneous refers to the equivariant finite collection of fan refinements in
+their respective lattices. The argument does not produce compatible lattice bases
+for every inclusion between unframed, framed, and theta-framed lattices, nor does it
+prove that the induced finite monoid-algebra maps are locally free. That stronger
+statement is isolated as KFF in Hypothesis 9.2.
 
 ### 4.5 Periodic decompositions for the universal family
 
@@ -575,9 +718,25 @@ As the monodromy form varies, a finite set of lattice points becomes coplanar pr
 
 Strict convexity of the perturbed support function is a finite collection of strict rational linear inequalities modulo $I_b$. It therefore persists on a rational neighborhood of the chosen form. Compactness of the logarithmic quotient supplies finitely many such neighborhoods modulo $\Gamma_b$. Refine the base fan by their walls and transport the decompositions under $\Delta$. On common faces take common coherent refinements. Later regular subdivisions only restrict an already chosen decomposition.
 
+We impose one further finite refinement for testing infinitesimal recognition. For every
+primitive generator $p$ of the regular sharp monoid
+$P_{\sigma,\tau}^{\sharp}$, choose a small lattice parallelogram crossing a wall on
+which an integral convex function has primitive bend $p$. Insert its whole
+$Y$-orbit and all its faces. A sufficiently small invariant lower-height
+perturbation retains coherence and does not change the base fan. Repeating this for
+the finitely many primitive generators and face types gives a decomposition in which
+every primitive base monomial occurs as the defect of a displayed elementary
+product. Inserting entire finite descent orbits preserves equivariance.
+
+This refinement controls the groupified bending lattice, not the raw coefficient
+monoid. Crossing walls expresses the *sum* of bends as a sum of primitive bends, but
+does not permit one to solve the corresponding product equality in a ring when a
+factor is zero or nilpotent. Chapter 7 isolates the additional raw assertion needed
+for intrinsic recognition.
+
 Thus each nonzero cone carries a compatible periodic decomposition whose polarization support function remains strictly convex for every monodromy form in that cone. This compatibility is the datum needed to glue the Mumford family across base faces.
 
-## 5. Complete fine saturated logarithmic test pairs
+## 5. Complete bases and fine saturated toroidal charts
 
 ### 5.1 Saturated monoids and their completions
 
@@ -597,7 +756,7 @@ For a coefficient ring $S$, write
 $$
 S[P_\sigma]=\bigoplus_{p\in P_\sigma}S\,q^p,
 \qquad
-J_\sigma=(q^p:p\ne0),
+J_\sigma=(q^p:p\in P_\sigma\setminus P_\sigma^\times),
 \tag{5.2}
 $$
 
@@ -610,7 +769,8 @@ $$
 
 Localization preserves integrality and saturation. Consequently every fan chart, every face overlap, and every completion along a toric stratum carries an fs logarithmic structure. The adjective fs will always mean fine and saturated.
 
-Regularity of $\sigma$ gives more. If its primitive generators extend to a basis of $N$, then, after splitting the units of the face,
+Regularity of $\sigma$ gives more. If its primitive generators extend to a basis of $N$
+and $\tau$ has dimension $r$, then, after splitting the units of the face,
 
 $$
 S[P_{\sigma,\tau}]\simeq
@@ -619,6 +779,11 @@ S[t_1,\ldots,t_r,t_{r+1}^{\pm1},\ldots,t_d^{\pm1}].
 $$
 
 Thus the toroidal boundary is locally a relative normal-crossings divisor whenever the coefficient base is regular. This conclusion comes from the monoid, not from a posterior examination of its boundary ideal.
+
+The convention in (5.4) is used throughout: $r=\dim\tau$, not the codimension of
+$\tau$. Thus there are exactly $r$ boundary parameters and $d-r$ invertible
+Fourier, or period, parameters. The completed monoid has the same decomposition
+$\mathbf N^r\oplus\mathbf Z^{d-r}$.
 
 Two basic charts will recur. For $P=\mathbf N$, the base is the completed disc $S[[q]]$ and the boundary is $q=0$. For $P=\mathbf N^2$, the base is $S[[q_1,q_2]]$ and the codimension-two stratum is $q_1=q_2=0$. A map to $k[\epsilon]/(\epsilon^2)$ may send $q_1$ to $\epsilon$ and $q_2$ to zero. This is a legitimate logarithmic deformation with one first-order smoothing direction; it is different from the strict boundary fiber in which both generators map to zero.
 
@@ -631,16 +796,60 @@ $$
 
 Its characteristic at a geometric point is $P$ modulo the face mapping to units there. Thus face localization is not a change of convention: it is the actual characteristic monoid seen on the corresponding stratum.
 
-### 5.2 Toroidal test pairs, including nilpotents
+### 5.2 Ambient structured deformations and charted tests
 
-A complete toroidal test pair over $S[P_\sigma]$ consists of a complete noetherian $S[P_\sigma]$-algebra $A$, an ideal of definition $I\subset A$, and the pullback logarithmic structure $M_A$, subject to the following conditions.
+There are two categories here, and confusing them makes infinitesimal recognition
+circular. A **complete base test** is a complete noetherian $S$-algebra $A$ with an
+ideal of definition $I$, such that $A\simeq\varprojlim A/I^n$, the reduced ring is
+excellent, and its normalization is finite. It carries no chosen map from
+$P_\sigma$.
 
-1. The image of $J_\sigma$ lies in $I$, and $A\simeq\varprojlim A/I^n$.
-2. The reduced ring $A_{\mathrm{red}}$ is excellent and its normalization is finite.
-3. On every irreducible component not contained in the boundary, the generic point lies in the locus where all nonzero $q^p$ are invertible.
-4. The map $P_\sigma\to A$ is part of the data and all morphisms of test pairs are strict for the associated logarithmic structures.
+Fix a labelled geometric Mumford fiber $P_0$ at the stratum of $\sigma$. An
+**ambient structured cusp deformation** of $P_0$ over $A$ consists of the following
+commuting finite-presentation data.
 
-Nilpotents are permitted. In particular $A$ may be an Artin ring supported entirely on the boundary, in which case there need be no ordinary dense generic fiber. This is essential: a completed moduli problem is determined by its values on nilpotent thickenings, not just on traits whose generic points are abelian.
+1. A flat projective $A$-scheme $P$, its smooth open group locus $G\subset P$ with
+   semiabelian identity component, its identity, multiplication, and inverse, and an action
+   $G\times_A P\to P$, all reducing to the labelled data on $P_0$.
+2. A finite labelled system of invariant affine star neighborhoods lifting the
+   corresponding neighborhoods of $P_0$, with their weight decompositions. On the
+   boundary fiber retain its finite normalization and the two conductor arrows. An
+   affine open lifts uniquely through a nilpotent thickening because the underlying
+   topological spaces agree; the labels choose the lifts on a general complete base.
+   No multiplication coefficient is prescribed.
+3. The $\mathcal O_F$-endomorphism graphs on $G$ and $P$, the relatively ample theta
+   line with its cubical rigidification and polarization isomorphism, and the full
+   finite prime-to-residue-characteristic level graphs.
+4. The action, endomorphism, polarization, level, and theta data on the star
+   neighborhoods, together with their equality on overlaps and after the two
+   boundary conductor arrows.
+
+Every item is actual scheme, morphism, invertible-sheaf, or graph data; in
+particular “PEL-compatible” is not shorthand for a condition imposed only on the
+generic fiber. Morphisms preserve all of it. The labelled star system is an atlas device,
+not extra monomial information: no element of $A$, no logarithmic chart, and no
+divisibility of a multiplication coefficient has been selected.
+
+A **charted toroidal test** is instead a complete base test together with a
+continuous map
+
+$$
+\alpha:P_\sigma\longrightarrow A,
+\qquad \alpha(P_\sigma\setminus P_\sigma^\times)\subset I,
+\tag{5.4b}
+$$
+
+and the associated fs log structure. The Mumford construction is initially a
+functor from charted tests to ambient structured deformations. Conditional IIT would
+give the converse: an ambient deformation would itself determine the DF chart,
+uniquely up to its monoidal unit isomorphism. Strictness is therefore a conditional
+conclusion, not a membership condition in the ambient deformation functor.
+
+Nilpotents are permitted in both categories. In particular $A$ may be an Artin ring
+supported entirely on the boundary, in which case there need be no ordinary dense
+generic fiber. This is essential: a completed moduli problem is determined by its
+values on nilpotent thickenings, not just on traits whose generic points are
+abelian.
 
 When $A$ is reduced and normal, the values of a rational function are detected by height-one valuations:
 
@@ -650,7 +859,9 @@ A=\bigcap_{\operatorname{ht}\mathfrak p=1}A_\mathfrak p
 \tag{5.5}
 $$
 
-componentwise. For a finite normalization the same statement holds after taking the product of the fraction fields. We will use (5.5) to extract periods from traits, but never to infer nilpotent information. Nilpotent information is supplied by the recognition theorem of Chapter 7.
+componentwise. For a finite normalization the same statement holds after taking the product of the fraction fields. We will use (5.5) to compare periods on reduced bases, but never to infer nilpotent information. Nilpotent information is read directly from multiplication in the labelled weight algebra in Chapter 7.
+What remains conditional is the Raw-DF-IIT factorization that turns those raw
+nilpotent multiplication maps into a Fourier DF chart.
 
 The intersection property has a divisor-theoretic proof. Membership in every height-one localization means that the divisor of the rational function has no negative coefficient. On a normal noetherian domain, a rational function with no denominator divisor belongs to the domain because every principal ideal is the intersection of its height-one primary localizations. Applying the statement to the function and its inverse detects units.
 
@@ -748,14 +959,66 @@ The word canonical matters. Later descent needs equality of the induced arrows o
 
 ### 6.1 The periodic polyhedral algebra
 
-Fix a coherent $Y$-periodic polyhedral decomposition $\mathscr P$ of $X_\mathbf R$ and an integral strictly convex support function $\varphi$. After replacing the polarization by a fixed positive power, assume that all vertices and all values of $\varphi$ are integral. Introduce a degree variable $z$. For a cell $C\in\mathscr P$, define the semigroup
+Fix a coherent $Y$-periodic polyhedral decomposition $\mathscr P$ of
+$X_\mathbf R$ and its integral strictly convex universal exponent-valued support
+function $\varphi$; evaluation by a monodromy form recovers the scalar support
+function of Section 4.5. Thus the affine values below lie in
+$P_\sigma^{\mathrm{gp}}$ (or its real scalar extension). After
+replacing the polarization by a fixed positive power, assume that the vertices and
+all affine branches of $\varphi$ are integral. Introduce a degree variable $z$.
+For a cell $C\in\mathscr P$, put
 
 $$
-Q_C=\{(n,x,p):n\ge0, x\in nC\cap X, p-\varphi_C(x)\in P_\sigma\},
+\widehat C_{\mathbf Z}
+=\{(n,x)\in\mathbf Z_{>0}\oplus X:x\in nC\}\cup\{(0,0)\}.
+\tag{6.1a}
+$$
+
+If $\varphi_C(u)=\ell_C(u)+c_C$ is the affine branch on $C$, its homogeneous
+extension to the cone over $C$ is
+
+$$
+\Phi_C(n,x)=\ell_C(x)+nc_C
+=n\varphi_C(x/n)\quad(n>0),
+\qquad \Phi_C(0,0)=0.
+\tag{6.1b}
+$$
+
+Thus $\Phi_C$, unlike $x\mapsto\varphi_C(x)$ on $nC$, is additive in the
+homogeneous variables. Define
+
+$$
+Q_C=\{(n,x,p)\in\widehat C_{\mathbf Z}\oplus P_\sigma^{\mathrm{gp}}:
+p-\Phi_C(n,x)\in P_\sigma\}.
 \tag{6.1}
 $$
 
-where $\varphi_C$ is the affine function agreeing with $\varphi$ on $C$. Its algebra over $A$ is generated by symbols
+This is a semigroup. Indeed, if $(n,x,p)$ and $(m,x',p')$ belong to $Q_C$ and
+$n+m>0$, convexity of $C$ gives
+
+$$
+\frac{x+x'}{n+m}
+=\frac n{n+m}\frac xn+\frac m{n+m}\frac{x'}m\in C
+$$
+
+with the terms of zero degree omitted, while homogeneity gives
+
+$$
+(p+p')-\Phi_C(n+m,x+x')
+=\bigl(p-\Phi_C(n,x)\bigr)
+ +\bigl(p'-\Phi_C(m,x')\bigr)\in P_\sigma.
+\tag{6.1c}
+$$
+
+The zero-degree case is the embedded copy
+$p\mapsto(0,0,p)$ of $P_\sigma$. Moreover, $Q_C$ is the lattice-point monoid of
+the rational polyhedral cone cut out by $(n,x)\in\widehat C$ and
+$p-\Phi_C(n,x)\in\mathbf R_{\ge0}P_\sigma$. Since $P_\sigma$ is saturated and
+$\Phi_C$ is integral, this description proves both saturation and, by Gordan's
+lemma, finite generation. No unproved closure under addition and no subsequent
+ad hoc saturation are being used.
+
+Its monoid algebra is generated by symbols
 
 $$
 z^n\vartheta_xq^p,
@@ -763,9 +1026,13 @@ z^n\vartheta_xq^p,
 \tag{6.2}
 $$
 
-with multiplication obtained by addition of triples. Gordan's argument again proves finite generation. Saturation of $P_\sigma$ and integrality of the cells imply that the saturation of $Q_C$ is the semigroup of lattice points in its rational cone. We use this saturation; it is precisely the normalization of the affine toric chart.
-
-On $C\cap C'$ the localizations of $A[Q_C]$ and $A[Q_{C'}]$ agree. The difference $\varphi_C-\varphi_{C'}$ is an integral affine function vanishing on the common face, so the gluing map is multiplication by an invertible monomial. The resulting graded algebra
+with multiplication obtained by addition of triples. The normalized star over a
+charted base $S[P_\sigma]\to A$ is
+$A\otimes_{S[P_\sigma]}S[Q_C]$. On $C\cap C'$ the corresponding face
+localizations agree. The difference $\Phi_C-\Phi_{C'}$ is now an integral
+homogeneous linear function vanishing on the cone over the common face, so the
+gluing map on the corresponding localization is multiplication by an invertible
+monomial. The resulting graded algebra
 
 $$
 \mathcal R(\mathscr P,\varphi)=
@@ -775,22 +1042,45 @@ $$
 
 is best regarded as a sheaf on the union of the affine toric base charts. Its relative Proj before taking periods is the normalized infinite model $\widetilde P$.
 
-There is a useful basis description. On a fixed normalized star, $\mathcal R_n$ is the completed direct sum of the weights $\vartheta_x$ with $x\in nC\cap X$, and multiplication has the form
+There is a useful basis description. Define the global conical extension
+$\Phi(n,x)=n\varphi(x/n)$ for $n>0$ and $\Phi(0,0)=0$. On a fixed normalized
+star, $\mathcal R_n$ is the completed direct sum of the weights
+$\vartheta_{(n,x)}$ with $x\in nC\cap X$, and multiplication has the form
 
 $$
-\vartheta_x\vartheta_{x'}
-=q^{\varphi(x)+\varphi(x')-\varphi(x+x')}\vartheta_{x+x'}.
+\vartheta_{(n,x)}\vartheta_{(m,x')}
+=q^{\delta((n,x),(m,x'))}\vartheta_{(n+m,x+x')},
+\qquad
+\delta=\Phi(n,x)+\Phi(m,x')-\Phi(n+m,x+x').
 \tag{6.4}
 $$
 
-Convexity makes the exponent lie in $P_\sigma$. Strict convexity makes it nonzero when the two weights do not belong to a common linearity cell. Thus the special fiber remembers exactly the incidence complex of $\mathscr P$.
+Convexity of $\varphi$ makes $\delta$ lie in $P_\sigma$. It vanishes when the
+two normalized weights lie in a common linearity cell; strict convexity makes it
+nonzero across an actual wall. Thus the special fiber remembers exactly the
+incidence complex of $\mathscr P$.
 
-In rank one take $X=Y=\mathbf Z$, cells $[i,i+1]$, and $\varphi(x)=x(x-1)/2$ at integral points. On two adjacent affine charts the degree-one weights give coordinates $X_i,Y_i$ with
+In rank one take $X=Y=\mathbf Z$, cells $[i,i+1]$, and prescribe
+$\varphi(i)=i(i-1)/2$ at integral vertices, extending linearly on every cell. Put
+$u_i=\vartheta_{(1,i)}$. On the vertex star where $u_i$ is inverted, the
+degree-zero coordinates
+
+$$
+X_i=\frac{u_{i+1}}{u_i},\qquad
+Y_i=\frac{u_{i-1}}{u_i}
+$$
+
+satisfy, by the homogeneous product formula,
 
 $$
 X_iY_i=q.
 \tag{6.4a}
 $$
+
+Indeed the exponent is the second difference
+$\varphi(i+1)+\varphi(i-1)-2\varphi(i)=1$; both numerator and denominator
+otherwise have homogeneous weight $(2,2i)$. This calculation would be mistyped if
+$\varphi_C$ were evaluated directly at an element of $nC$.
 
 At $q=0$ this is a node. Translation identifies the right end of one component with the left end of the next; quotienting by a period of valuation $n$ gives the $n$-gon. This example simultaneously displays the monomial base parameter, the normalized branches, and the nonnormal conductor gluing.
 
@@ -841,25 +1131,45 @@ P_A=\widetilde P/Y
 \tag{6.6}
 $$
 
-is proper and of finite presentation once the base is noetherian. Its normalization is the disjoint union, with face gluings, of finitely many normalized stars; $P_A$ itself need not be normal. In fact the conductor identifications between translated outer faces are what create the familiar cycle of projective lines in the rank-one special fiber.
+is proper and of finite presentation once the base is noetherian. On a geometric
+boundary stratum, the normalization of the fiber is the disjoint union, with face
+gluings, of finitely many normalized stars; the fiber itself need not be normal.
+The conductor identifications between translated outer faces create the familiar
+cycle of projective lines in the rank-one special fiber. This is a fiberwise
+statement. The total space can be normal even when its special fiber is not, as
+$XY=q$ already shows.
 
 The quotient can also be described without taking a quotient of an infinite object. Choose a finite fundamental polytope, list its boundary-face pairings, and take the coequalizer of the two finite unions of face schemes. The coordinate ring on an affine patch is the equalizer of the two restriction maps. This finite presentation will be used in Chapter 10.
 
 ### 6.3 Flatness, properness, and the group locus
 
-Every normalized affine star is flat over $A$. Indeed its coordinate algebra is a direct sum of copies of $A$ indexed by a saturated semigroup, and all gluing maps preserve that basis. The conductor face rings have the same property. For a finite face pushout the exact sequence
+Every affine star algebra is flat over $A$: before taking Proj, each graded weight
+piece is a direct sum of copies of $A$, and localization at a homogeneous monomial
+preserves that property. The finitely many standard Proj opens therefore give a flat
+cover of $P_A$. Equivalently, the periodic theta algebra is degreewise $A$-flat and
+its standard degree-zero localizations are $A$-flat. This proves flatness of the
+total family without normalizing it.
+
+After base change to a geometric boundary stratum, the normalization and conductor
+of that fiber do satisfy the exact sequence
 
 $$
-0\longrightarrow\mathcal O_{P_A}
-\longrightarrow\nu_*\mathcal O_{P_A^\nu}\oplus\mathcal O_C
+0\longrightarrow\mathcal O_{P_{\bar s}}
+\longrightarrow\nu_*\mathcal O_{P_{\bar s}^\nu}\oplus\mathcal O_C
 \longrightarrow\nu_*\mathcal O_{C^\nu}
 \longrightarrow0
 \tag{6.7}
 $$
 
-shows flatness: all three terms to the right are $A$-flat and the last arrow is surjective on monomial bases. Tensoring (6.7) with an $A$-module remains exact.
+where $C$ and $C^\nu$ now denote the conductor schemes of that fiber. The last arrow
+is surjective on monomial bases.
 
-The last surjectivity is visible weight by weight. A conductor face ring retains the weights in its face semigroup and sends every other weight to zero. Every retained weight has the same named lift in the adjacent star. The cokernel therefore vanishes in each weight, and the kernel is a direct summand after forgetting multiplication. This proves universal exactness of (6.7), including after a nonflat nilpotent base change.
+The surjectivity is visible weight by weight. A conductor face ring retains the
+weights in its face semigroup and sends every other weight to zero. Every retained
+weight has the same named lift in the adjacent star. The cokernel therefore vanishes
+in each weight. Sequence (6.7) may be pulled back along a map inside the fixed
+boundary stratum; no assertion that normalization commutes with a smoothing base
+change is made.
 
 Properness follows from the valuative criterion. Over a valuation ring, a point of the generic torus has a valuation vector in $X_\mathbf R$. Completeness of the periodic decomposition places it in some cell after translation by $Y$, and the corresponding toric chart gives an extension. Two extensions agree because their valuation vectors lie in a common face after passing to a common refinement. The same argument after finite extension handles nonsplit tori; descent gives the original extension.
 
@@ -867,7 +1177,11 @@ Where every nonzero $q^p$ is invertible, all toric boundary divisors disappear. 
 
 The construction is separated before it is proper. If two star charts contain the same torus point over a valuation ring, their valuation vector belongs to the intersection of the two cells, and the face localization identifies the extensions. Thus the diagonal satisfies the valuative uniqueness criterion. Completeness of the cells supplies existence, so together they prove the full valuative criterion used above.
 
-Connectedness follows from the cell complex. Every normalized star is connected, adjacent stars meet along a nonempty conductor face, and the periodic decomposition of the real vector space is connected. The quotient incidence complex is connected. Sequence (6.7) then shows that the only global idempotents are zero and one, also after geometric base change.
+Connectedness follows from the cell complex. Every star is connected, adjacent stars
+meet along a nonempty face, and the periodic decomposition of the real vector space
+is connected. On a nonnormal boundary fiber, (6.7) then shows that the only global
+idempotents are zero and one. On the abelian locus this is clear, and the same
+weight-basis calculation handles intermediate faces.
 
 ### 6.4 Endomorphisms, polarization, and level
 
@@ -892,204 +1206,232 @@ It is relatively ample: on the normalization this is the standard toric criterio
 
 The line $\Theta_A$ lives on the universal semiabelic family. It is not the support-function line on the toroidal base and not the determinant of its cohomology. Those three lines will be compared only in Chapter 14.
 
-## 7. Infinitesimal recognition
+## 7. The Raw-DF-IIT prerequisite
 
-### 7.1 The intrinsic logarithmic structure of a semiabelic model
+This chapter works after a Mumford label has been fixed. It does not supply GCC and
+cannot be the first missing step for an arbitrary geometric boundary object.
 
-On a reduced normal toric star the divisorial logarithmic structure is intrinsic. If
-$j:T\hookrightarrow P^\nu$ is the open orbit, it is
+### 7.1 The raw non-cancellative defect monoid
+
+Homogenize a theta weight as $a=(n,x)$ and let $W_C$ be the weight semigroup on a
+labelled affine star. Begin with the free commutative monoid on a symbol $[a,b]$
+for every multiplication map whose source and target occur on a common localized
+star. Impose only relations actually supplied by the structure: multiplication
+identity, commutativity and associativity; restriction to a face; period translation;
+the two conductor arrows; $\mathcal O_F$-equivariance; and the polarization and
+cubical-theta identities. In particular impose
 
 $$
-M_{P^\nu}=\mathcal O_{P^\nu}\cap j_*\mathcal O_T^\times
-\quad\text{inside }j_*\mathcal O_T.
+[a,0]=0,\qquad [a,b]=[b,a],\qquad
+[a,b]+[a+b,c]=[b,c]+[a,b+c].
 \tag{7.1}
 $$
 
-The order map along the toric prime divisors identifies its characteristic monoid with
-the saturated dual of the star cone. On the reduced Mumford fiber these sheaves agree on
-paired conductor faces and recover the labelled ghost sheaf and cell complex.
+Do not cancel, group-complete, sharpen, or saturate this presentation. Denote the
+resulting raw, generally non-cancellative monoid with its labelled period loops by
+$D_{\mathscr P}^{\mathrm{raw}}$. This object is genuinely intrinsic to the displayed
+star, face, period, conductor, endomorphism, and polarization diagrams. Passing at
+once to piecewise-linear bends modulo affine functions loses precisely the
+information that is in dispute.
 
-This observation does not recover a prescribed base log map through nilpotents. In a flat
-deformation a relation between adjacent weights has the form
+For an ambient deformation over $A$, the torus grading on a star is
 
 $$
-e_xe_{x'}=a_{x,x'}e_{x+x'},
+R_C=\bigoplus_{a\in W_C}L_a,
 \tag{7.2}
 $$
 
-and its coefficient $a_{x,x'}$ can move in a nilpotent ideal. When all coefficients are
-compatible, they define a new map from the monoid of convexity defects to
-$A/A^\times$. That new map need not equal an independently supplied map
+where each expected $L_a$ is an invertible $A$-module after an affine localization.
+Multiplication gives maps $L_a\otimes L_b\to L_{a+b}$. The invariant way to record
+their defects is not a scalar modulo units. Let $\operatorname{Div}(A)$ be the
+Picard groupoid whose objects are pairs $(L,s)$ consisting of an invertible
+$A$-module and a section, whose arrows are isomorphisms carrying section to section,
+and whose symmetric monoidal product is tensor product. A multiplication map gives
+the object
 
 $$
-\alpha:P_\sigma\longrightarrow A/A^\times.
+\bigl(L_a^{-1}\otimes L_b^{-1}\otimes L_{a+b},\;m_{a,b}\bigr)
+\quad\text{in }\operatorname{Div}(A),
 \tag{7.3}
 $$
 
-A **toroidal PEL deformation** over the chart $(A,M_A)$ will mean a labelled
-semiabelic PEL deformation for which every star multiplication and every conductor
-translation has the prescribed characteristic element, together with the resulting strict
-identification
+with the evident dual convention if multiplication is written in the opposite
+direction. Associativity supplies the coherence arrows. Period loops retain their
+unit automorphisms; these are the leading units and period holonomy that the quotient
+$A/A^\times$ forgets.
+
+For a framed cusp and a face $\tau$ of dimension $r$, the target Deligne--Faltings
+(DF) monoid is
 
 $$
-(A,M_P^{\mathrm{base}})\simeq(A,M_A).
+P_{\sigma,\tau}^{\mathrm{fr}}
+\simeq \mathbf N^r\oplus\mathbf Z^{d-r}.
 \tag{7.4}
 $$
 
-Condition (7.4) selects a subfunctor of the underlying semiabelic PEL deformation
-functor. It is legitimate data for defining that subfunctor, but it cannot be used to
-prove that every underlying PEL deformation is toroidal. That equality is precisely the
-infinitesimal recognition assertion required by Books 157 and 158.
+Thus its sharp part has $r$ boundary generators and its unit group has $d-r$
+period generators. Here and everywhere below $r=\dim\tau$, never the codimension of
+$\tau$.
 
-### 7.2 Why the unenhanced assertion is false
+### 7.2 Why the quotient by units does not prove recognition
 
-Let $A=k[\epsilon]/(\epsilon^2)$ and give the base the external log chart
-$\mathbf N\to A$ sending $1$ to $0$. The nodal algebra
+Choosing bases of the $L_a$ writes multiplication as
+$e_ae_b=c(a,b)e_{a+b}$ and produces classes $[c(a,b)]$ in $A/A^\times$.
+That quotient is useful bookkeeping but is not cancellative. For
 
 $$
-A[X,Y]/(XY)
+A=k[e,h]/(e,h)^2
 \tag{7.5}
 $$
 
-has a deformation
+one has $[e]^2=[h][e]=[0]$ although $[e]\ne[h]$. Thus an associativity equality
+after multiplication by a vanishing defect does not identify the remaining defects.
+The proposed wall-path proof did exactly this implicitly, even when it said that no
+element was divided.
+
+Nor can one pass from an even submonoid and choose roots. For
+$A=k[e]/e^2$, the homomorphism $2\mathbf N\to A/A^\times$ sending
+$2\mapsto[e]$ need not extend to $\mathbf N$: an extension would require a class
+$x$ with $x^2=[e]$, while the square of a unit is a unit and the square of every
+nonunit is $[0]$. Regularity or saturation of the abstract Fourier monoid does not
+supply such a root in $A$.
+
+There is also a potential secondary-fan kernel which the former bending argument did
+not address before using the cubical and PEL relations.
+Take $X=\mathbf Z$ and $Y=2\mathbf Z$. Give the integral vertices the periodic
+piecewise-linear values
 
 $$
-A[X,Y]/(XY-\epsilon).
+f(n)=0\ \text{for even }n,\qquad f(n)=1\ \text{for odd }n,
 \tag{7.6}
 $$
 
-They have the same reduction and the same generic combinatorial type; (7.6) is nevertheless not the base change of (7.5). Its intrinsic logarithmic parameter sends $1$ to $\epsilon$, while that of (7.5) sends $1$ to $0$. No unit can carry $0$ to $\epsilon$. Therefore no strict identification (7.4) exists for (7.6).
+and extend linearly on each unit interval. This is nonconstant and not globally
+affine, but its $Y$-period change is zero. Hence its Fourier bilinear period datum is
+zero although its alternating wall bends are not. This particular $f$ is not claimed
+to satisfy convexity or every cubical PEL relation and is not an ambient deformation.
+It proves only that the forgetful map from periodic PL data to period-change data has
+a kernel before those additional relations are used. Polygon relations and quotienting
+by global affine functions do not show that all the additional relations kill that
+kernel in the raw, non-cancellative object.
 
-This is not only a detached local algebra. Take $d=1$, choose the residue
-characteristic prime to the auxiliary level, and take the standard deformation of a
-generalized elliptic $n$-gon over $k[[q]]$. Base change by $q\mapsto\epsilon$ gives a
-generalized elliptic curve over $A$: its smooth locus acts, all nodes have local equation
-$XY=\epsilon$, the canonical polarization extends, and prime-to-characteristic neat level
-extends after a finite etale extension. Its reduction is the labelled $n$-gon. Equip the
-same base independently with the chart $1\mapsto0$. The underlying Hilbert--Blumenthal
-PEL object (here $\mathcal O_F=\mathbf Z$) does not refer to that external chart and
-therefore still exists, but it does not satisfy (7.4).
+These examples show that the former arguments did not prove
+$D_{\mathscr P}^{\mathrm{sat}}\simeq P_\sigma$ or justify the subsequent lift from
+$P_\sigma\to A/A^\times$ to a chart. They do not disprove Raw-DF-IIT and do not
+invalidate the explicit Mumford construction of Chapter 6, where the DF chart is
+supplied at the outset.
 
-Thus PEL structure cannot force compatibility with an unrelated external log map, even in
-the first Hilbert--Blumenthal case. Requiring (7.4) excludes the example by definition.
-It does not prove $({\rm IIT})$. The strongest statement established below is the
-conditional algebra lemma obtained *after* the missing monomial divisibility is supplied.
+### 7.3 The exact Raw-DF-IIT hypothesis
 
-### 7.3 Square-zero monomial recognition
+**Hypothesis 7.1 (raw Deligne--Faltings intrinsic infinitesimal theorem,
+Raw-DF-IIT).** Let $d\ge2$, fix a framed Hilbert--Blumenthal cusp, a regular cone
+$\sigma$, a face $\tau$, the refined periodic decomposition of Section 4.5, and an
+ambient structured cusp deformation over a complete noetherian ring $A$. Begin with
+$D_{\mathscr P}^{\mathrm{raw}}$, without cancellation or saturation, using all the
+multiplication, face, period-translation, conductor, $\mathcal O_F$, and polarization
+relations. The following assertions are required simultaneously.
 
-Suppose $A'\twoheadrightarrow A$ has square-zero kernel $I$, and let $P'$ be a
-toroidal PEL deformation in the sense of Section 7.1 whose reduction is the Mumford
-object attached to $\iota$. Work first on one supplied normalized star. The torus action
-decomposes its affine coordinate algebra into rank-one weight modules
+1. The intrinsic sharp quotient and the loop/unit group of the raw defect object
+   identify, respectively, with
+   $(P_{\sigma,\tau}^{\mathrm{fr}})^\sharp$ and
+   $(P_{\sigma,\tau}^{\mathrm{fr}})^\times$, compatibly enough to reassemble the
+   framed Fourier monoid $P_{\sigma,\tau}^{\mathrm{fr}}$ itself. No identification
+   is obtained by cancellativizing $A/A^\times$.
+2. The secondary-fan kernel vanishes after all the displayed structural relations
+   are imposed: a periodic PL defect with trivial framed Fourier sharp data and
+   trivial loop holonomy is already trivial in the raw defect object.
+3. The multiplication data define a symmetric monoidal functor
+   $P_{\sigma,\tau}^{\mathrm{fr}}\to\operatorname{Div}(A)$. It retains the actual
+   leading units and period holonomy and yields a framed DF chart, including when
+   sections vanish or are nilpotent.
+4. If a DF chart was already supplied and the object is the corresponding Mumford
+   construction, the recovered functor is canonically isomorphic to that supplied
+   chart. Thus Raw-DF-IIT is a recognition theorem, not a second construction with
+   an unrelated chart.
+5. Recovery commutes with face restriction, both conductor arrows, arbitrary
+   square-zero base change, and changes of cusp. The comparison isomorphisms satisfy
+   the cocycle, and iteration over square-zero thickenings is compatible with adic
+   completion. This compares conductor arrows already present in the labelled
+   object; it does not choose roots after passage to a finite frame lattice. That
+   separate $\mu_r$-coherence problem is FRCD, Hypothesis 9.1.
+
+This hypothesis is exact: dropping the raw monoid, the $\operatorname{Div}(A)$-valued
+functor, loop holonomy, or the secondary-kernel assertion recreates one of the gaps
+in Section 7.2. No proof of the required higher-rank statement is contained in this
+manuscript. Book 111, Theorem 13.1 is used only for its rank-one global
+compactification; we do not attribute this exact arbitrary-ambient recognition
+statement to that theorem or to Book 110.
+
+### 7.4 Conditional reconstruction of all PEL data
+
+Assume Raw-DF-IIT. Trivializing its DF lines on one affine star rewrites the recovered
+symmetric monoidal functor as a monoid chart
 
 $$
-R'=\bigoplus_{x\in Q}L_x,
+\alpha:P_{\sigma,\tau}^{\mathrm{fr}}\longrightarrow A,
 \tag{7.7}
 $$
 
-because the diagonalizable torus is linearly reductive in the elementary grading sense: a comodule over $A'[X]$ is the direct sum of the inverse images of its characters. Flatness and reduction to a free rank-one weight module imply that each $L_x$ is invertible. After choosing generators $e_x$, multiplication is
+but the functor, rather than this choice of scalars, is canonical. A different
+trivialization changes $\alpha$ by a unit character while retaining its loop
+holonomy. Assertion 4 of Raw-DF-IIT makes (7.7) equal to an already supplied Mumford
+chart up to the unique DF isomorphism.
+
+With compatible local generators the multiplication maps take the Mumford form
 
 $$
-e_xe_y=c(x,y)e_{x+y}.
+e_ae_b=\alpha\bigl(\delta(a,b)\bigr)e_{a+b}.
 \tag{7.8}
 $$
 
-The toroidal divisibility condition, now an explicit hypothesis, determines the nonunit
-factor of $c(x,y)$. If
+This is now a consequence of the $\operatorname{Div}(A)$-valued factorization; it is
+not deduced by cancelling scalar coefficients. Face compatibility glues the star
+algebras, and conductor compatibility identifies their restrictions in the pushout
+(6.7). Period holonomy recovers the multiplier
 
 $$
-d(x,y)=\varphi(x)+\varphi(y)-\varphi(x+y)\in P_\sigma,
+y\cdot e_x
+=q^{B(y,x)+nA(y)}e_{x+n\lambda(y)},
 \tag{7.9}
 $$
 
-then
+with $B:Y\times X\to(P_{\sigma,\tau}^{\mathrm{fr}})^{\mathrm{gp}}$,
+$\lambda:Y\to X$, and
 
 $$
-c(x,y)=\alpha_{A'}(d(x,y))v(x,y),
-\qquad v(x,y)\in A'^\times.
+A(y+y')=A(y)+A(y')+B(y,\lambda(y')).
 \tag{7.10}
 $$
 
-No division occurs in (7.10). When $\alpha_{A'}(d)=0$, the equality is part of the
-strict logarithmic datum and says $c(x,y)=0$ with a chosen logarithmic unit factor.
-The deformation (7.6) fails this hypothesis. Consequently (7.10) is useful for the
-toroidal subfunctor but is not a proof of the missing hypothesis.
+The $\mathcal O_F$-graphs give balance of $B$, and the cubical polarization gives
+$B(y,\lambda(y'))=B(y',\lambda(y))$. The identity and action graphs, theta
+rigidification, polarization, and finite level graphs are then recovered weight by
+weight exactly as in the explicit Mumford construction. Neat level removes residual
+automorphisms. These reconstruction steps are formal once Raw-DF-IIT supplies the
+DF functor; they do not prove that hypothesis.
 
-Associativity gives
+### 7.5 Consequences for IIT and completion
 
-$$
-v(x,y)v(x+y,z)=v(y,z)v(x,y+z).
-\tag{7.11}
-$$
+Square-zero compatibility in Raw-DF-IIT permits iteration through
+$A/K\leftarrow A/K^2\leftarrow\cdots\leftarrow A/K^m=A$. Its adic compatibility
+then passes to $A\simeq\varprojlim A/I^n$. Finite presentation of the star algebras
+and finiteness of the graph and line-bundle Hom modules make the inverse limits
+effective. Conductor and cusp-change compatibility make the resulting isomorphisms
+glue and satisfy their cocycles.
 
-Commutativity gives $v(x,y)=v(y,x)$, and the unit gives $v(0,x)=1$. The multiplication is therefore the standard monomial multiplication times a symmetric normalized unit $2$-cocycle.
+**Conditional Theorem 7.2 (intrinsic infinitesimal recognition, IIT).** For $d\ge2$,
+assuming Raw-DF-IIT, the Mumford construction induces an equivalence between unframed
+charted toroidal tests and unframed ambient structured cusp deformations of the
+labelled fiber. Assuming FRCD as well, the equivalence extends to framed tests for
+$P_{\sigma,\tau}^{\mathrm{fr}}$ with their exact conductor-root comparisons. The inverse recovers the DF chart,
+semiabelian group, action, $\mathcal O_F$-endomorphisms, polarization, level, theta
+line, and both conductor arrows. It commutes with faces, square-zero and complete
+base change, conductor restriction, and cusp changes.
 
-The weight calculation also controls possible extra generators. Let $Q^{\mathrm{sat}}$ be the star semigroup. If a weight $x$ not in $Q^{\mathrm{sat}}$ appeared over $A'$, its reduction would vanish, so its weight module would be annihilated by the square-zero ideal and could not be flat. If an expected weight disappeared, flatness would fail after reduction. Thus the support semigroup itself is infinitesimally rigid. Only its multiplication coefficients can move, and (7.10) has classified those movements.
-
-On an intersection of stars, localization in a face weight identifies the two gradings.
-The two choices of $e_x$ differ by units forming a character on the face lattice. Such
-characters are exactly changes of torus trivialization. On a conductor pair, the same
-comparison includes the period translation; its unit is a change of chart splitting, while
-its Fourier coordinate is already part of the map from $P_\sigma$.
-
-### 7.4 Splitting the unit cocycle
-
-We need an explicit splitting, valid over rings with nilpotents. Let $L$ be a free lattice. Choose an ordered basis $b_1,\ldots,b_r$. Set $s(0)=1$, choose $s(b_i)=1$, and extend successively along each coordinate by
-
-$$
-s(x+b_i)=s(x)v(x,b_i)^{-1}.
-\tag{7.12}
-$$
-
-For negative steps use the same formula solved for $s(x)$. Equation (7.11) and symmetry show that moving first in direction $b_i$ and then $b_j$ gives the same answer as the reverse order. Hence $s:L\to A'^\times$ is well defined and
-
-$$
-v(x,y)=s(x)s(y)s(x+y)^{-1}.
-\tag{7.13}
-$$
-
-Replacing $e_x$ by $s(x)^{-1}e_x$ removes $v$. On a semigroup contained in $L$, apply this construction to its group completion; the chosen star generators restrict compatibly to faces.
-
-There remains periodic gluing. Comparing a generator with its $Y$-translate produces
-units $u(y,x)$. Associativity with multiplication makes $u$ bilinear in $x$, while
-comparing two translations gives the quadratic identity (5.9c). These units record the
-chosen splitting of the already fixed logarithmic Fourier characters. Polarization symmetry
-follows from the cubical structure on the theta line; level and $\mathcal O_F$-equivariance
-follow by applying the same comparison to the rigidified torsion sections and endomorphisms.
-
-Changing the star generators changes $s$ by a character. Such a character is an automorphism of the torus and gives the unique corresponding isomorphism of one-motives. Thus the extraction is independent of choices at the groupoid level.
-
-We also recover the action and the line, rather than just the underlying algebra. The coaction map is homogeneous and hence fixed by the weight labels. A lift of the theta line is a graded rank-one module; choosing its degree-one generator changes the preceding splitting by the same character, so the cubical rigidification removes the ambiguity. The $\mathcal O_F$-action permutes weights by $x\mapsto ax$. Compatibility with multiplication forces the extracted period map to be $\mathcal O_F$-balanced. Finally the polarization involution sends weight $x$ to the dual weight prescribed by $\lambda$, and its cubical identity gives symmetry of both the characteristic and unit pairings.
-
-### 7.5 Induction through nilpotent thickenings
-
-Let $A$ be complete with nilpotent ideal $K$. Filter it by square-zero extensions
-
-$$
-A/K\leftarrow A/K^2\leftarrow\cdots\leftarrow A/K^m=A.
-\tag{7.14}
-$$
-
-If every stage is supplied as a toroidal deformation satisfying (7.10), Sections 7.3
-and 7.4 recover a unique lift of the split period presentation and an isomorphism with its
-Mumford model, once the preceding reduction is fixed. Obstructions cannot hide on
-conductor intersections: the normalization-conductor sequence (6.7) is exact after
-tensoring with each square-zero kernel, so compatible star isomorphisms descend.
-Automorphisms reducing to the identity are characters $1+\delta_x$ with
-$\delta_{x+y}=\delta_x+\delta_y$; rigidification of the identity, polarization, and level
-force this character to be zero.
-
-More explicitly, the differences between two local splittings form a Cech $1$-cocycle with values in the split torus $\operatorname{Hom}(X,1+I)$. The dual complex of a normalized star is contractible, so it is a coboundary there. Around a periodic loop its class is the change of splitting of the Fourier character. Once that change is recorded, the cocycle vanishes and the star isomorphisms glue. The identity section prevents a remaining torus translation; neat level prevents a finite residual automorphism.
-
-For an adic, not necessarily nilpotent, complete ring apply the result to $A/I^n$. The isomorphisms are unique and hence compatible. Taking the inverse limit gives the assertion over $A$ because all coordinate algebras and all Hom modules involved are finite over the complete base.
-
-**Proposition 7.1 (conditional monomial reconstruction).** On the toroidal
-subfunctor defined by (7.4) and (7.10), the Mumford construction is fully faithful on
-nilpotent thickenings and every object is induced by a unique split presentation of its
-polarized logarithmic one-motive. The proposition includes Artin rings supported on the
-boundary. It does not prove $({\rm IIT})$: strict monomial divisibility is its hypothesis,
-and the generalized elliptic deformation of Section 7.2 shows that the corresponding
-statement for every underlying PEL deformation is false when the log chart is external.
+For $d\ge2$, IIT is not unconditional here: Conditional Theorem 7.2 is precisely
+the formal consequence of the unproved Hypothesis 7.1. The separate rank-one global
+compactification imported from Book 111, Theorem 13.1 is not asserted here to prove
+this full equivalence of arbitrary ambient deformation groupoids.
 
 ## 8. The inverse problem and completed deformation rings
 
@@ -1114,24 +1456,29 @@ over $A$, not merely over its fraction field. The group law, symmetry, positivit
 
 To justify the word unit, apply (5.5) both to the quotient and to its inverse. Equation (8.1) gives valuation zero at every height-one prime, so both belong to $A$. Positivity can also be checked traitwise: if an interior real functional made the quadratic form nonpositive, a rational functional arbitrarily close to it would define a height-one monomial trait with nonpositive Raynaud pairing, contradicting ampleness of the trait fiber.
 
-If $A$ is reduced but not normal, perform the extraction on its finite normalization. On the conductor the two pullbacks agree because both are read from the same multiplication maps of $P$. The unit factors therefore lie in the equalizer defining $A$. This is the first appearance of conductor descent; Chapter 12 proves the more delicate ramified form needed for coefficient descent.
+If $A$ is reduced but not normal and a DF chart and its conductor compatibility are
+already supplied, perform the extraction on its finite normalization. The two
+pullbacks then agree on the conductor by the supplied arrows, and the unit factors
+lie in the equalizer defining $A$. Without a supplied chart, recognizing those
+arrows is part of Raw-DF-IIT and is not a consequence of the normal calculation.
 
 ### 8.2 Full faithfulness
 
 Let $f:P_1\to P_2$ be an isomorphism of Mumford-presented or toroidal PEL
 objects. On the open group orbit it induces an isomorphism of semiabelian schemes, hence of
 character lattices and Raynaud extensions. The pullback of normalized weight functions
-determines its effect on periods. Since a normalized star is the closure of its torus, that
-effect determines $f$ on the normalized-star cover. Since $P_i$ is the conductor pushout
-of that cover, it determines $f$ everywhere.
+determines its effect on periods. Since a star neighborhood is generated by its
+labelled weight algebra, that effect determines $f$ on the star cover. The
+neighborhoods cover the total family, so they determine $f$ everywhere; on a
+nonnormal boundary fiber the same statement is recorded by its conductor pushout.
 
 Conversely, an isomorphism of polarized logarithmic one-motives transports the weight
 algebra (6.3), the period action (6.5), and every conductor pairing. It therefore induces
-an isomorphism of Mumford objects. Over reduced bases with dense puncture the two
-constructions are inverse by the preceding paragraph; on the toroidal nilpotent subfunctor
-this is Proposition 7.1. No assertion about non-toroidal nilpotent deformations follows.
+an isomorphism of explicitly charted Mumford objects. This proves full faithfulness on
+the Mumford side. Extending the assertion to arbitrary ambient complete deformations is
+conditional on Theorem 7.2, hence on Raw-DF-IIT.
 
-### 8.3 The scope of essential surjectivity
+### 8.3 Conditional essential surjectivity
 
 For a normal reduced base with schematically dense puncture, Section 8.1 extracts a
 one-motive and the construction of Chapter 6 produces a Mumford object $P^{\mathrm M}$.
@@ -1140,19 +1487,23 @@ have the same monomial orders and the same leading units, so they agree over $A$
 (5.5). The conductor face identifications are restrictions of those same period factors;
 hence $P^{\mathrm M}\simeq P$.
 
-For a reduced excellent base for which the normalization-conductor equalizer is supplied,
-the same argument descends the isomorphism from the finite normalization. For a nilpotent
-thickening it applies only when every stage belongs to the toroidal subfunctor of Section
-7.1. Passing to an adic inverse limit then uses finite presentation.
+For a reduced excellent base with a supplied compatible DF chart, the same argument
+descends the isomorphism from the finite normalization through the conductor equalizer
+(10.2). For an arbitrary ambient object, both this conductor comparison and the
+nilpotent step are Raw-DF-IIT assertions. Conditional Theorem 7.2 supplies them, and
+finite presentation then passes the result to an adic inverse limit.
 
-**Proposition 8.1 (scope of the period equivalence).** Polarized logarithmic
-one-motives of the fixed Hilbert--Blumenthal cusp type are equivalent to
-Mumford-presented toroidal PEL objects. On reduced normal tests with dense puncture, every
-labelled degeneration is of this form. Extending essential surjectivity to all labelled
-nilpotent PEL degenerations is exactly $({\rm IIT})$ and is not proved here; with an
-independent external chart it is false by Section 7.2. The established equivalence commutes
-with strict base change, face restriction, theta lines, and all conductor operations that
-are explicitly supplied.
+**Conditional Proposition 8.1 (Mumford period equivalence, MPE).** For $d\ge2$,
+assuming Raw-DF-IIT, polarized logarithmic one-motives of the fixed unframed
+Hilbert--Blumenthal cusp
+type are equivalent to ambient structured cusp deformations. The equivalence commutes
+with arbitrary complete base change, face restriction, theta lines, group and action
+graphs, endomorphism and level graphs, cusp changes, and both conductor arrows.
+For the framed statement with exact conductor roots, assume FRCD as well.
+
+Without Raw-DF-IIT, the proved statement is the same equivalence with “ambient
+structured cusp deformations” replaced by “objects already supplied with a compatible
+DF chart”: that is the explicit Mumford construction and its fully faithful inverse.
 
 ### 8.4 Completed local rings
 
@@ -1164,8 +1515,8 @@ are locally constant (the frame choices are finite etale). The only positive-dim
 deformation datum is the Fourier homomorphism. Its leading units and its orders are the
 same $d$ characters of the rank-$d$ Fourier lattice, as explained after (5.9).
 
-Consequently the completed ring of the *Mumford-presented logarithmic one-motive
-functor* is
+Consequently the completed ring of the framed, already charted Mumford deformation
+functor is
 
 $$
 R_{z,\mathrm M}^{\mathrm{fr}}
@@ -1181,11 +1532,14 @@ power-series ring in $d$ variables. This agrees with Book 156: the interior Hilb
 moduli scheme is smooth of relative dimension $d$. There is no additional rank-$d$
 unit-period factor.
 
-On a nonzero face of codimension $r$, localization makes $d-r$ Fourier characters
-units and leaves $r$ boundary parameters; the total relative dimension remains $d$.
+If $\tau$ is a nonzero face of dimension $r$, its completed monoid is
+$\mathbf N^r\oplus\mathbf Z^{d-r}$: localization leaves $r$ boundary parameters
+and makes $d-r$ Fourier or period parameters units. The total relative dimension is
+$d$. The integer $r$ is the dimension of $\tau$, not its codimension.
 At the zero face one instead has the ordinary $d$-dimensional deformation ring of the
-abelian object. Equation (8.3) is not, without the recognition theorem discussed in
-Chapter 7, the completed ring of every underlying semiabelic PEL deformation.
+abelian object. Conditional Theorem 7.2 identifies (8.3) with the completed ring of
+every labelled ambient structured semiabelic PEL deformation at $z$; without
+Raw-DF-IIT, (8.3) represents only the supplied-DF/Mumford subfunctor.
 
 If a finite stabilizer $H_z$ remains before neat rigidification, the unframed completed local ring is the invariant ring
 
@@ -1195,13 +1549,17 @@ R_{z,\mathrm M}=(R_{z,\mathrm M}^{\mathrm{fr}})^{H_z}.
 $$
 
 In the regular neat charts of Theorem 4.2 the stabilizer of a nonzero cone is trivial.
-Face localization in the monoid identifies the completed Mumford-side rings on overlaps.
+Face localization in the monoid identifies the completed deformation rings on overlaps.
 
 ### 8.5 Traits and boundary-supported Artin rings
 
-For a trait $V$ with uniformizer $\pi$, a map $P_\sigma\to V$ is determined by nonnegative valuations $\ell(p)=v(q^p)$ and unit leading coefficients. The function $\ell$ lies in $\sigma$; after a finite Kummer extension it is integral. The extracted one-motive is the classical Raynaud one-motive, and Proposition 8.1 identifies its Mumford model with the unique extension of the fixed periodic type.
+For a trait $V$ with uniformizer $\pi$, a supplied map $P_\sigma\to V$ is determined by nonnegative valuations $\ell(p)=v(q^p)$ and unit leading coefficients. The function $\ell$ lies in $\sigma$; after a finite Kummer extension it is integral. The extracted one-motive is the classical Raynaud one-motive, and Chapter 6 identifies its explicitly charted Mumford model with the extension of the fixed periodic type.
 
-For $A=k[\epsilon]/(\epsilon^n)$ with all positive monomials mapped to zero, no trait sees the higher nilpotents. Ring (8.3) represents the Mumford-presented toroidal subfunctor on such tests. A relation $XY=\epsilon$ is an underlying PEL deformation outside that subfunctor. Thus traits determine integral orders on reduced normal bases, but they do not prove the missing infinitesimal divisibility on boundary-supported Artin rings.
+For $A=k[\epsilon]/(\epsilon^n)$ no trait sees the higher nilpotents. Ring (8.3)
+unconditionally represents the supplied-DF/Mumford functor on such tests. A relation
+$XY=\epsilon$ is the supplied map $q\mapsto\epsilon$, whereas $XY=0$ is the supplied
+map $q\mapsto0$. The assertion that arbitrary intrinsic multiplication data determine
+these Artin directions is exactly the square-zero clause of Raw-DF-IIT.
 
 ## 9. Paired frames and Kummer normalization
 
@@ -1259,6 +1617,9 @@ is finite. To see finiteness, choose representatives for the finite quotient $M^
 
 The normalization of $S[P_\sigma]$ in the framed torus extension is exactly $S[P_\sigma^{\mathrm{fr}}]$. Indeed a monomial $q^{p'}$ in the latter is integral because a power belongs to the former. Conversely, an integral character has nonnegative valuation on every ray of $\sigma$, so its exponent belongs to $\sigma^\vee\cap M^{\mathrm{fr}}$. This valuation proof also works over an excellent normal coefficient ring.
 
+This proves finiteness, not flatness. Flatness is a separate issue addressed in
+Hypothesis 9.2 below.
+
 The rank-one example is $q=s^N$. The interior map
 
 $$
@@ -1302,17 +1663,83 @@ $$
 
 After a finite etale extension containing the roots of the constant units $\zeta_i$, rescale $s_i$ and apply the lattice argument one coordinate at a time. This proves that (9.6) accounts for all connected Kummer factors; the remaining finite constant factors are etale and lie in $S'$.
 
-### 9.4 Smoothness and descent of framed branches
+### 9.4 Unframed-first normalization of paired frames
 
 Refine the fan in the lattice dual to $M^{\mathrm{fr}}$ and regularize equivariantly as in Chapter 4. Then the framed chart is smooth over the smooth coefficient stratum, with boundary a relative normal-crossings divisor. The finite deck group $\Delta$ acts on paired frames, the refined lattice, the fan, and the Mumford family.
 
-On the interior, forgetting the frame is a finite etale torsor. At the boundary it is finite Kummer and usually ramified. Ordinary etale descent is therefore insufficient. We retain the finite flat cover and descend through the tensor square in Chapter 12. The simultaneous equivariance of the fan ensures that every deck transformation carries a normalized star to a normalized star and preserves its conductor faces.
+Regularity of the framed chart by itself says nothing about flatness of its finite
+map to the unframed chart, and equality after taking a power says nothing about a
+chosen root on a conductor. We isolate both points.
+
+**Hypothesis 9.1 (frame-root and coherent conductor descent, FRCD).** For every
+finite-index frame or theta-frame lattice used in the manuscript and every pair of
+identified conductor faces, the rigidified frame datum includes an actual comparison
+of the corresponding root lines with section. If two local comparisons have equal
+$r$th powers, their possible discrepancy is a $\mu_r$-torsor (and, where a ratio is
+defined, an element of $\mu_r$); the datum chooses the comparison itself, rather
+than declaring that discrepancy to be one. These choices are compatible with face
+restriction, both conductor arrows, period translation, compositions of nested
+frame lattices, deck transformations, triple overlaps, coefficient extension, and
+arbitrary nilpotent base change. They make the resulting conductor descent datum
+effective and satisfy its cocycle.
+
+The existence of the over-lattice $M^{\mathrm{fr}}$ does not prove FRCD. It records
+which exponents are allowed, but it neither selects a point of each $\mu_r$-torsor
+nor proves coherence of those selections.
+
+**Hypothesis 9.2 (Kummer finite flatness, KFF).** After one common equivariant
+refinement, for every inclusion among the unframed, paired-frame, theta-frame, and
+combined frame lattices used below, every induced finite monoid-algebra map
+
+$$
+S_i[\sigma^\vee\cap M_i]\longrightarrow
+S_j[\sigma^\vee\cap M_j]
+\tag{9.8}
+$$
+
+is finite locally free, faithfully flat on the relevant components, and compatible
+with face localization, composition of lattice inclusions, and coefficient base
+change. The corresponding normalization of each global unframed chart in its
+generic framed algebra is represented locally by (9.8), so that the later descent
+maps are genuinely fppf.
+
+Finiteness of normalization does not imply KFF. For example, over a field of
+characteristic different from two,
+
+$$
+k[x^2,xy,y^2]\longrightarrow k[x,y]
+\tag{9.9}
+$$
+
+is the finite integral closure in the indicated degree-two extension of function
+fields, but it is not flat: the generic rank is two, whereas the fiber over the
+vertex has $k$-basis $1,x,y$ and dimension three. A proof of KFF would therefore
+have to establish simultaneous regularity for every nested lattice and deduce a
+local finite-free monomial basis. No such simultaneous argument is given here.
+
+On the interior, forgetting the frame is a finite etale cover. At the boundary it is
+finite Kummer and usually ramified; it is finite flat only under KFF. The valid
+global order is therefore not to build a
+framed compactification and descend it by an IIT argument. One first constructs the
+unframed compactification, conditionally on GCC and Raw-DF-IIT where unframed AEC is
+used, and then takes its
+normalization in the finite generic paired-frame cover. The universal property of
+normalization extends every generic deck transformation to that normalization and
+makes the group law automatic.
+
+The explicit monoid calculation (9.6) identifies the completed branches of this
+normalization. What normalization alone does not prove is compatibility of the
+extended action with the labelled conductor arrows, coherent choice of roots on
+those arrows, its behavior across nilpotent base change, or flatness over the
+unframed chart. These are precisely the Raw-DF-IIT-, FRCD-, and KFF-dependent
+assertions isolated in Chapter 12.
 
 ## 10. Bounded normalization and conductor presentations
 
 ### 10.1 The conductor square
 
-For a reduced semiabelic family $P$ with finite normalization $\nu:P^\nu\to P$, let
+For a reduced semiabelic fiber, or a family restricted to one fixed boundary
+stratum, let $\nu:P^\nu\to P$ be its finite normalization and let
 
 $$
 \mathfrak c
@@ -1339,7 +1766,10 @@ C&\longrightarrow&P
 \tag{10.3}
 $$
 
-is both cartesian and a pushout. In a Mumford fiber, $P^\nu$ is the union of normalized stars and $C^\nu$ is the union of paired toric faces. This remains true when $P$ is nonnormal and reducible.
+is both cartesian and a pushout. In a Mumford boundary fiber, $P^\nu$ is the union
+of normalized stars and $C^\nu$ is the union of paired toric faces. The construction
+is made separately on each of the finitely many monomial strata. We never identify
+it with the normalization of the total smoothing family.
 
 The conductor presentation contains more information than the normalization alone. A chain of normalized projective lines can be glued into a cycle, a chain, or a disconnected union using the same normalization; the two maps $C^\nu\rightrightarrows P^\nu$ distinguish them.
 
@@ -1367,7 +1797,8 @@ Such an $m_0$ exists by taking the least common multiple of the finitely many de
 
 For a lattice simplex with vertices $v_0,\ldots,v_r$, reduce the barycentric coefficients of a lattice point modulo integers. The remainder lies in one of finitely many lattice points of the fundamental parallelepiped. Once the dilation exceeds the largest sum of the remainder coefficients, subtracting that remainder leaves a nonnegative integral sum of vertices. This proves generation in bounded degree. Apply the argument to a triangulation and use agreement on common faces. The same reduction within a face proves surjectivity to that face. Since there are finitely many cell types, one dilation works for all of them.
 
-For every family in the fixed combinatorial collection, $\Theta^{m_0}$ gives a closed immersion
+For every normalized-star family on a fixed boundary stratum in the combinatorial
+collection, $\Theta^{m_0}$ gives a closed immersion
 
 $$
 P^\nu\hookrightarrow\mathbf P^R_A
@@ -1397,25 +1828,40 @@ $$
 \tag{10.6}
 $$
 
-The right side ranges over a finite list because the number of star and face orbits is bounded by the chosen periodic decompositions. Thus the Hilbert polynomials of $P$, $P^\nu$, $C$, and $C^\nu$ belong to finite sets.
+The right side ranges over a finite list because the number of star and face orbits
+is bounded by the chosen periodic decompositions. Thus the Hilbert polynomials of the
+boundary-stratum schemes $P$, $P^\nu$, $C$, and $C^\nu$ belong to finite sets. The
+total smoothing family has its own fixed theta Hilbert polynomial and is parameterized
+separately.
 
 The multiplication tables are bounded as well. Choose the finite theta-weight generators in degrees at most a common $d$. Products are monomials times units, with exponents drawn from the finite set of differences of support-function values on representative cells. Conductor maps discard weights not lying on the relevant face and multiply the surviving ones by period units. Consequently a fixed finite list of generators and relations presents every normalization-conductor diagram.
 
 The structure maps require separate parameter data; they are not recovered from the
-Hilbert point of $P$. Choose once a projective toric compactification $\overline T$ of the
-fixed split cusp torus, refined so that every lattice endomorphism occurring below is
-resolved by a graph. For an explicitly presented Mumford family retain the following finite
-list.
+Hilbert point of $P$. A fixed toric compactification would not suffice, because the
+generic smooth group is an abelian variety rather than the cusp torus. Instead use the
+theta embedding of $P$ itself and retain the following finite list.
 
-1. Retain the closures of the identity, multiplication, and inverse graphs of $T$, and the
-   closure
+1. Retain the identity section and the projective closures
    $$
-   \Gamma_\mu\subset\overline T\times P\times P
+   \overline\Gamma_m\subset P\times P\times P,
+   \quad
+   \overline\Gamma_i\subset P\times P,
+   \quad
+   \overline\Gamma_\mu\subset P\times P\times P
    \tag{10.6a}
    $$
-   of the action graph. On each normalized star its equations are the weight coaction
-   $e_x\mapsto\chi^x\otimes e_x$; hence their degrees and Hilbert polynomials are bounded
-   by the fixed weight list.
+   of multiplication, inverse, and the action on their smooth group domains. The
+   common domain $G\subset P$ is retained as the open locus on which the appropriate
+   graph projections are isomorphisms and the fibers are smooth. This is a locally
+   closed finite-presentation condition: graph projection isomorphism is open in the
+   finite-presentation locus, and smoothness is open. On the abelian locus, the
+   cubical formula expresses the pullback of $\Theta$ under multiplication using the
+   three projections and the Poincare factor, so the graph Hilbert polynomials depend
+   only on the fixed polarization type. On boundary stars the equations are the
+   bounded weight coactions. Hence one finite list controls both loci.
+   Retain separately the local split-torus coaction graph on every labelled affine
+   star; equality with the restriction of the global action is a closed graph
+   identity.
 2. For a fixed integral generating set of $\mathcal O_F$, retain the graph of each
    endomorphism of $P$ and of the smooth group locus. Its weight map is
    $x\mapsto ax$, so again only the fixed finite exponent list occurs. Impose the ring,
@@ -1433,7 +1879,7 @@ list.
    and the theta descent isomorphism between the two pullbacks to $C^\nu$. Include its
    cocycle on $C^\nu\times_C C^\nu\times_C C^\nu$.
 
-Every ambient product here is projective after inserting $\overline T$, and every graph has
+Every ambient product here is projective, and every graph has
 a Hilbert polynomial in a finite list because its defining monomial matrices use the same
 bounded weights. Relative Hilbert schemes parameterize the closed graphs; the condition that
 a graph project isomorphically to its source is locally closed. Relative Isom schemes of the
@@ -1441,25 +1887,52 @@ fixed line bundles parameterize the cubical, polarization, pairing, and conducto
 maps. Thus these data really parameterize the semiabelian group, action, endomorphisms,
 polarization, level, and theta descent rather than merely the underlying pushout.
 
-This finite list gives an explicit parameter space. Take the product of the Hilbert schemes for $P^\nu$, $C^\nu$, and $C$ with all the graph and Isom schemes just listed, using the polynomials just bounded. Incidence, finiteness, face-pairing, and the conductor equalizer are conditions on finitely many universal maps. Associativity and every action, PEL, cubical, level, and descent cocycle are equality loci of morphisms between projective families; flatness and the prescribed Hilbert polynomial are open conditions. Thus the admissible structured diagrams occupy a finite union of locally closed finite-type subschemes.
+This finite list gives an explicit parameter space. Take the product of the Hilbert
+schemes for $P$, $P^\nu$, $C^\nu$, and $C$ with the multiplication, inverse, action,
+endomorphism, level, and conductor graph schemes and the line-bundle Isom schemes just
+listed. Incidence, the common smooth group domain, finiteness, face-pairing, and the
+conductor equalizer are conditions on finitely many universal maps. Associativity and
+every action, PEL, cubical, level, and descent cocycle are equality loci of morphisms
+between projective families; flatness and the prescribed Hilbert polynomial are open
+conditions. Thus the admissible structured diagrams occupy a finite union of locally
+closed finite-type subschemes.
 
-The construction does not assert that every point of this parameter space is a Mumford object. It asserts that every Mumford object maps into it and that the universal monomial equations cut out a finite-type subspace containing all such points. Chapter 11 starts from that explicit subspace and then uses the inverse theorem to identify its completed moduli functor.
+The universal equations define a finite-type scheme $\mathcal B_{\mathrm M}$ of
+structured diagrams arising from the explicit Mumford charts. Conversely, its open
+flatness, smoothness, ampleness, and full-level conditions together with its closed
+group, action, PEL, cubical, and conductor identities describe exactly the explicit
+bounded diagrams just listed. No structure is reconstructed from a Hilbert point.
 
-**Proposition 10.1 (bounded structured Mumford presentations).** For fixed PEL
-data, level, paired frames, and admissible periodic decompositions, every explicit Mumford
-cusp model admits a normalization-conductor presentation embedded in fixed projective spaces.
-The group and action graphs, endomorphism and polarization graphs, level graphs, cubical line
-maps, conductor arrows, and theta descent graphs have Hilbert polynomials and defining degrees
-in finite lists. The explicitly presented diagram, as opposed to an operation of normalizing
-an arbitrary base change, commutes with base change.
+The bounds are unconditional for these explicit Mumford families: their weights,
+cells, conductor faces, and structure matrices were fixed before the parameter space
+was formed. Claiming that every arbitrary ambient boundary deformation belongs to
+the same finite list would first require GCC to classify its geometric fiber and
+then Raw-DF-IIT (with FRCD for exact framed conductor roots) to recognize its
+deformations. None may be used as an input to its own proof. We therefore make no
+such circular claim.
 
-This proves the bounded parameter statement on the Mumford side. Calling it the full
-$({\rm BCP})$ for every labelled PEL degeneration would additionally require
-$({\rm IIT})$ or another theorem putting every such degeneration in this list.
+**Proposition 10.1 (bounded explicit conductor presentations, BCP).** For fixed PEL
+data, level, paired frames, and the finite admissible decompositions, every explicit
+Mumford chart has the finite affine-star presentation above. After restriction to
+each boundary stratum, its normalization-conductor diagram is embedded in the fixed
+projective spaces. The identity, group, action, endomorphism, polarization, level,
+cubical-line, conductor, and theta-descent graphs have polynomials and defining
+degrees in finite lists, and $\mathcal B_{\mathrm M}$ is of finite type. The total
+Mumford family and all its structure graphs commute with arbitrary charted base
+change; the normalization-conductor square commutes with base change inside its fixed
+monomial stratum.
+
+For $d\ge2$, assuming GCC, Raw-DF-IIT, and, for framed conductor roots, FRCD, Conditional Theorem
+7.2 recognizes an arbitrary labelled ambient boundary deformation as one of these
+explicit objects and transports the same bounds to it. This conditional recognition
+is not part of BCP.
 
 ### 10.4 Pushouts and nonnormal fibers
 
-Conversely, begin with a diagram $C^\nu\to P^\nu$ and $C^\nu\to C$ from the bounded list, with the first arrow a closed immersion and the second finite, satisfying the face-pairing equivalence relation. On affine patches form
+Conversely, on one boundary stratum begin with a diagram
+$C^\nu\to P^\nu$ and $C^\nu\to C$ from the bounded list, with the first
+arrow a closed immersion and the second finite, satisfying the face-pairing
+equivalence relation. On affine patches form
 
 $$
 \mathcal O_P
@@ -1467,7 +1940,13 @@ $$
 \tag{10.7}
 $$
 
-Surjectivity of $\mathcal O_{P^\nu}\to\mathcal O_{C^\nu}$ makes these affine pushouts compatible with localization. They glue to a finite type proper scheme $P$. Exactness of (6.7) and the monomial-basis argument prove flatness over the parameter base. The torus action, PEL endomorphisms, and theta line descend when their two restrictions to $C^\nu$ agree.
+Surjectivity of $\mathcal O_{P^\nu}\to\mathcal O_{C^\nu}$ makes these affine
+pushouts compatible with localization. They glue to a finite type proper scheme $P$
+over that stratum. Exactness of (6.7) and the monomial-basis argument prove flatness
+along the stratum. The action, PEL endomorphisms, and theta line descend when their
+two restrictions to $C^\nu$ agree. The smoothing transverse to the stratum is
+constructed from the total monoid algebra in Chapter 11, not from this fiberwise
+pushout.
 
 The fiber may be nonnormal even though every star is normal. That is intended. Normalizing it again loses the periodic face identification and therefore loses the semiabelic object. All subsequent constructions retain the entire square (10.3).
 
@@ -1485,6 +1964,8 @@ U_\sigma=\operatorname{Spec}S[P_\sigma],
 \tag{11.1}
 $$
 
+rather than with a completed deformation functor.
+
 The rigidified constant frame choices form a finite etale scheme $E$ over the standing
 coefficient base. On an affine frame component,
 
@@ -1499,7 +1980,13 @@ mixed case does not occur here by Theorem 2.1. Thus no complete local ring is be
 silently treated as a finite-type coefficient ring and the relative dimension of
 $U_\sigma$ is $d$.
 
-not with a completed deformation functor. Over it, construct the finite collection of normalized star algebras $S[P_\sigma][Q_C]$ from (6.1). The theta algebra is generated in degrees at most a fixed bound by Proposition 10.1, so its relative Proj is of finite presentation. Glue stars along common face localizations and impose the finitely many period face pairings by the equalizer (10.7). This produces a projective finite-type family
+Over it, construct the finite collection of normalized star algebras
+$S[Q_C]$ from (6.1), viewed as $S[P_\sigma]$-algebras through
+$p\mapsto(0,0,p)$. The theta algebra is generated in degrees at most a
+fixed bound by Proposition 10.1, so its relative Proj is of finite presentation. Glue
+stars along common face localizations and impose the finitely many period
+identifications (6.5). On a boundary stratum their restriction is the conductor
+equalizer (10.7). This produces a projective finite-type family
 
 $$
 P_\sigma^{\mathrm{alg}}\longrightarrow U_\sigma.
@@ -1508,17 +1995,41 @@ $$
 
 All coefficients in its equations are either universal units from $S$ or explicit monomials $q^p$. Associativity, polarization symmetry, the $\mathcal O_F$-action, and level compatibility are finite polynomial identities and hold universally because they hold in the defining period algebra.
 
-Varying the finitely many cusp, cone, and cell-orbit types and adjoining the finite paired-frame choices gives a finite disjoint union $U^{\mathrm{fr}}$. It is a finite-type atlas candidate before any moduli quotient is invoked.
+Varying the finitely many cusp, cone, and cell-orbit types and adjoining the finite
+paired-frame choices gives a finite disjoint union $U^{\mathrm{fr}}$ of explicit
+algebraic charts. Section 11.4 identifies their completions with the supplied-DF
+Mumford functor. The stronger assertion that their classifying morphism is etale and
+exhaustive for arbitrary ambient deformations is conditional AEC.
 
-### 11.2 Algebraizing the conductor pushout
+### 11.2 Algebraizing star gluing and the boundary conductor
 
-The normalization $P^{\nu,\mathrm{alg}}_\sigma$ and the face union $C^{\nu,\mathrm{alg}}_\sigma$ are explicit projective toric families. The paired-face quotient $C^{\mathrm{alg}}_\sigma$ is of finite presentation, and the quotient map from $C^{\nu,\mathrm{alg}}_\sigma$ is finite because only finitely many face orbits are identified. On each invariant affine open define the equalizer algebra (10.7). Since the right restriction map is surjective and every algebra is finitely presented over $S[P_\sigma]$, the equalizer is finitely presented: take the generators of the normalization algebra together with lifts of generators of $C$, and impose the finite relations plus equality of their restrictions.
+The total smoothing family is constructed from the finitely presented star algebras,
+not by normalizing its fibers. Glue the affine star charts along the face
+localizations of (5.3), then impose the finitely many period identifications (6.5)
+on the resulting open overlaps. Equivalently, take the relative Proj of the finite
+theta algebra generated in the bounded degrees of Section 10.2. Both descriptions
+use finitely many generators and relations over $S[P_\sigma]$ and commute with
+arbitrary base change. They give (11.2); properness follows from the relative Proj
+or from Section 6.3.
 
-The affine equalizers glue, commute with arbitrary base change, and give (11.2). Properness follows either from its relative theta Proj presentation or from the valuative argument of Section 6.3. This is algebraic cusp effectivity: the complete Mumford object is the completion of a family already constructed over a finite-type base.
+Now restrict to a monomial boundary stratum. The fiber becomes the finite periodic
+union of toric stars. Its normalization, conductor faces, and paired-face quotient
+are explicit finite-presentation schemes, and on each invariant affine open their
+coordinate rings satisfy the equalizer (10.7). Surjectivity to the face ring proves
+that the equalizers glue and agree with the restriction of the total Proj. Thus the
+conductor pushout is algebraized exactly where it exists, while the transverse
+smoothing remains in the total monoid equations.
 
-For the rank-one cusp the construction is visible without parameter schemes. Begin with $U=\operatorname{Spec}S[q]$. Take $n$ copies of the standard projective model covered by $S[q,X_i,Y_i]/(X_iY_i-q)$, normalize the special-fiber stars, and pair $Y_i=0$ with $X_{i+1}=0$ cyclically using the universal unit period. The finite equalizer produces a projective $n$-gon family over $S[q]$. Its completion at $q=0$ is the usual Tate--Mumford family, but its existence over $S[q]$ was proved directly. The higher-dimensional construction is the same finite operation indexed by cells and faces.
+For the rank-one cusp this distinction is visible. Over
+$U=\operatorname{Spec}S[q]$ the total affine equation is
+$S[q,X,Y]/(XY-q)$, which is normal. At $q=0$ its fiber has normalization
+$S[X]\times S[Y]$ and conductor the two origins. Periodically pairing these origins
+produces the $n$-gon special fiber. Normalizing the total space would not produce
+those two branches; restricting first and then using (10.7) does. The
+higher-dimensional construction is the same finite operation indexed by monomial
+strata, cells, and faces.
 
-### 11.3 Proof of the fine saturated charts
+### 11.3 Fine saturated charts and conditional AEC
 
 We now prove the logarithmic chart assertion without using singularity ideals. At a point on the orbit indexed by a face $\tau\preceq\sigma$, the base has an open neighborhood
 
@@ -1527,29 +2038,53 @@ $$
 \tag{11.3}
 $$
 
-Section 5.1 proved directly that $P_{\sigma,\tau}$ is finitely generated, integral, and saturated. Its sharp quotient is the dual monoid of $\sigma/\tau$ and is free because the fan is regular. Therefore the divisorial logarithmic structure is fs, and the map to the coefficient stratum is log smooth.
+Section 5.1 proved directly that $P_{\sigma,\tau}$ is finitely generated, integral,
+and saturated. If $r=\dim\tau$, its sharp quotient is the dual monoid of $\tau$ in
+the quotient by $\tau^\perp$ and is $\mathbf N^r$ because the fan is regular; its
+unit group is $\mathbf Z^{d-r}$. Therefore the divisorial logarithmic structure is
+fs, and the map to the coefficient stratum is log smooth with $r$ boundary and
+$d-r$ invertible period parameters.
 
 For the family, a normalized star at a cell face $D\preceq C$ has chart by the localized saturation
 
 $$
-Q_{C,D}^{\mathrm{sat}}
-=Q_C^{\mathrm{sat}}+(Q_C^{\mathrm{sat}}\cap D^\perp)^{\mathrm{gp}}.
+Q_{C,D}
+=Q_C+(Q_C\cap D^\perp)^{\mathrm{gp}}.
 \tag{11.4}
 $$
 
-It is fs by the same lattice-cone proof. On a conductor face the two characteristic monoids identify with the same face submonoid; the period multiplier is a unit and does not change the characteristic. The pushout log structure is therefore the equalizer of fs face charts. Its stalk is the amalgam prescribed by the cell complex, and saturation can be checked in the common group completion: an element whose positive multiple lies in every adjacent saturated star monoid lies in each of them and hence in their intersection.
+It is fs by the same lattice-cone proof. On a conductor face the two characteristic
+monoids identify with the same face submonoid; the period multiplier is a unit and
+does not change the sharp characteristic. This gives the candidate equalizer of the
+two fs face charts. It does not by itself give coherent descent of roots of its
+monomial sections.
 
-Thus the base and family charts are fs and saturated before any deformation-theoretic comparison. The constructed boundary ideal is the image of the positive elements of $P_\sigma$. It cuts out the expected union of toroidal strata and is compatible with every face map.
+Thus the base and every normalized-star chart are unconditionally fs and saturated
+before any deformation-theoretic comparison. The constructed boundary ideal is the
+image of the positive elements of $P_\sigma$. It cuts out the expected union of
+toroidal strata and is compatible with every face map. Saturation and effectivity
+after the nonnormal conductor pushout additionally require FRCD.
 
-The saturation assertion also survives the conductor quotient. Suppose $r\gamma$ is represented by a descended monomial for some $r>0$. On every normalized star, saturation gives a monomial representative of $\gamma$. On a paired face, the two representatives have equal $r$th powers. Their quotient is an $r$-torsion unit. The paired-frame lattice contains precisely the required roots and the rigidification fixes that torsion unit to one. Hence the representatives descend to the pushout. This rules out a hidden nonsaturated characteristic created solely by nonnormal gluing.
+Indeed, suppose $r\gamma$ is represented by a descended monomial for some $r>0$.
+On every normalized star, saturation gives a monomial representative of $\gamma$.
+On a paired face the two representatives have equal $r$th powers, but this leaves a
+$\mu_r$-ambiguity; over a nonreduced base the corresponding root comparisons must
+be treated as isomorphisms of lines with section, not cancelled as scalar ratios.
+The existence of the paired-frame lattice does not select that isomorphism. Under
+FRCD, the declared rigidification supplies compatible root comparisons on both
+conductor arrows and their triple overlaps, so the representatives descend and the
+candidate equalizer is saturated. Without FRCD, no such conductor-saturation claim
+is made.
 
 ### 11.4 Comparison with the complete Mumford family
 
 Complete (11.1) at the prime $\mathfrak p_z$ of a geometric boundary point. The result is
 $\widehat{(S[P_\sigma])_{\mathfrak p_z}}$; there is no second set of smooth unit-period
-parameters. Completion of the finitely generated star algebras gives exactly (6.3); finite
-conductor equalizers commute with completion because completion is exact on finite modules
-over a noetherian ring. Hence
+parameters. Completion of the finitely generated star algebras gives exactly (6.3),
+and the finite list of face-localization and period gluing maps commutes with
+completion. On a completed boundary stratum its finite conductor equalizer also
+commutes with completion because completion is exact on finite modules over a
+noetherian ring. Hence
 
 $$
 \widehat{P_\sigma^{\mathrm{alg}}}_z
@@ -1558,215 +2093,212 @@ P^{\mathrm M}_{\widehat{(S[P_\sigma])_{\mathfrak p_z}}}.
 \tag{11.5}
 $$
 
-Proposition 8.1 identifies this completion with the Mumford-presented toroidal
-subfunctor. It does not identify it with the full semiabelic PEL deformation functor.
-Consequently the explicit family gives a finite-type morphism to the groupoid of structured
-projective schemes, but formal etaleness and surjectivity onto all labelled PEL degenerations
-would be exactly the missing infinitesimal recognition assertion. A completed isomorphism on
-the subfunctor cannot prove that an omitted infinitesimal point lies in the image.
+Equation (11.5) unconditionally identifies this completion with the complete,
+already charted Mumford functor. Conditional Proposition 8.1 identifies it with the
+full ambient structured deformation functor only under Raw-DF-IIT. The following
+promotion to an algebraic atlas is therefore conditional.
 
-**Proposition 11.1 (single-chart effectivity on the Mumford side).** The explicit
-algebras $S[P_\sigma]$, their finite normalized-star and conductor presentations, and all
-graphs listed in Section 10.3 produce a finite-presentation algebraic cusp family whose
-completion is the Mumford family. Its constructed base and normalized-star logarithmic charts
-are fs and saturated. This is an algebraization of the already-Mumford-presented chart, not a
-proof of the etale atlas assertion $({\rm AEC}_0)$ for the full PEL degeneration groupoid or
-of an overlap with an as-yet unconstructed compactification.
+Let $\mathscr D_{\mathrm M}$ be the groupoid of projective supplied-DF Mumford
+families carrying all the graphs in Section 10.3. Proposition 10.1 presents its
+explicit diagrams by the finite-type Hilbert and Isom schemes
+$\mathcal B_{\mathrm M}$; hence the classifying morphism
+
+$$
+u_\sigma:U_\sigma\longrightarrow\mathscr D
+\tag{11.6}
+$$
+
+is locally of finite presentation on that charted groupoid. It is representable there:
+the identity, polarization, theta rigidification, and full neat level remove the
+explicit Mumford automorphisms. Assuming Raw-DF-IIT, Conditional Theorem 7.2 gives
+more than equality of tangent spaces for the unframed groupoid; FRCD adds the exact
+rooted conductor comparisons in the framed groupoid. For every square-zero extension $A'\to A$, a
+commutative lifting problem for (11.6) has one and only one solution, because the
+DF functor gives the unique lifted map $P_\sigma\to\operatorname{Div}(A')$. Thus,
+conditionally, (11.6) is
+formally etale. A representable locally finitely presented formally etale morphism is
+etale: on affine presentations, the lifting property kills the relative differentials
+and gives flatness by applying it successively to quotients by finitely generated
+ideals; finite presentation then turns infinitesimal flatness into flatness.
+
+It remains to check exhaustivity, not merely infinitesimal agreement at points already
+in the image. Let $P_0$ be any geometric boundary object. GCC supplies
+its torus rank, paired frame, cell incidence, and conductor pairing, giving one of
+the finitely many labels of Chapters 3, 4, and 10. The special monomial coefficients select a face point
+$z\in U_\sigma$ with exactly that labelled fiber. Raw-DF-IIT and Conditional Theorem
+7.2 identify the entire unframed structured object, including all graphs, with this
+fiber; FRCD gives the exact framed conductor-root enhancement.
+Hence, conditionally, every geometric boundary point lies in the image of some
+$u_\sigma$. Because an etale image is open, the finite disjoint union of these maps
+then covers an open neighborhood of the entire boundary.
+
+On the locus where the positive monomials are invertible, Chapter 6 gives an abelian
+scheme with the original $\mathcal O_F$-action, polarization, and level structure.
+The fine moduli property of the interior scheme $H$ therefore gives an algebraic
+classifying map
+
+$$
+U_\sigma[P_\sigma^{-1}]\longrightarrow H.
+\tag{11.7}
+$$
+
+It agrees on faces because the period algebras do. Adding $H$ itself to the cusp
+charts gives an etale cover of the whole degeneration groupoid.
+
+**Proposition 11.1 (explicit algebraic Mumford charts).** The algebras
+$S[P_\sigma]$, their normalized-star and conductor presentations, and every explicit
+graph of Section 10.3 give finite-presentation algebraic cusp families. Their base
+and normalized-star log charts are fs and saturated, their completions represent the
+supplied-DF Mumford deformation functors, and their punctured opens map algebraically
+to $H$.
+
+**Conditional Theorem 11.2 (algebraic etale cusp charts, AEC).** For $d\ge2$,
+assuming GCC and Raw-DF-IIT, the unframed classifying maps of Proposition 11.1 are representable
+etale and jointly cover every labelled ambient boundary degeneration; with $H$ they
+cover the unframed degeneration groupoid. Assuming FRCD as well gives the framed
+version with exact conductor roots. Thus AEC is not an input to IIT and is not
+proved unconditionally: GCC first places every geometric object in the Mumford list,
+Raw-DF-IIT recognizes its deformations, and FRCD separately supplies coherent
+framed conductor roots.
 
 ### 11.5 Why Fitting ideals do not suffice
 
 The zeroth Fitting ideal of $\nu_*\mathcal O_{P^\nu}/\mathcal O_P$ locates the conductor support, and higher Fitting ideals stratify its rank. They do not determine the monoid law, its saturation, the paired-face maps, or the period units. For example, $k[t^2,t^3]$ and a reduced node both have singularity supported at one point, while their characteristic monoids and normalizations are different.
 
-Our construction uses Fitting ideals only after the monomial atlas exists, to express bounded locally closed conditions inside Hilbert and graph schemes. The fs chart assertion comes from (11.3) and (11.4), and the nonnormal gluing comes from the explicit conductor maps. There is therefore no circular passage from an unknown compactification to its singularity strata and back to the charts meant to construct it.
+Our construction uses Fitting ideals only after the monomial atlas exists, to
+express bounded locally closed conditions inside Hilbert and graph schemes. The fs
+assertion for the base and normalized stars comes from (11.3) and (11.4); its
+extension across the conductor uses FRCD. The nonnormal gluing comes from the
+explicit conductor maps. There is therefore no circular passage from an unknown
+compactification to its singularity strata and back to the charts meant to construct
+it.
 
-## 12. The ramified conductor descent criterion
+## 12. Conditional ramified conductor compatibility
 
 ### 12.1 The tensor square of a ramified trait
 
-Let $V\to V'$ be a finite faithfully flat extension used to split a cusp and choose paired frames. It may be ramified. Put
+Let $V\to V'$ be a finite faithfully flat extension used to split a cusp and choose
+paired frames. Put
 
 $$
-W=V'\otimes_VV',
-\qquad
-W_0=W_{\mathrm{red}},
-\qquad
+W=V'\otimes_VV',\qquad W_0=W_{\mathrm{red}},\qquad
 \widetilde W=\operatorname{Nor}(W_0).
 \tag{12.1}
 $$
 
-If the generic extension is Galois with group $\Delta$, then $\widetilde W$ is the product of the trait normalizations indexed by generic embeddings, although several branches can meet over the closed point. Let
+If the generic extension is Galois, $\widetilde W$ is the product of the normalized
+generic graph closures, although their closed points can meet. With conductor
+$\mathfrak d=\operatorname{Ann}_{W_0}(\widetilde W/W_0)$ one has
 
 $$
-\mathfrak d
-=\operatorname{Ann}_{W_0}(\widetilde W/W_0),
-\quad D=\operatorname{Spec}(W_0/\mathfrak d),
-\quad \widetilde D=\operatorname{Spec}(\widetilde W/\mathfrak d).
+W_0=\widetilde W\times_{\widetilde W/\mathfrak d}W_0/\mathfrak d.
 \tag{12.2}
 $$
 
-Then
+For $V'=V[s]/(s^e-\pi)$ the generic graphs $s_2=\zeta s_1$ meet at
+$s_1=s_2=0$; in more general tensor squares nilpotents can occur. Hence generic deck
+maps alone do not give compatible arrows on every affine star, conductor branch, or
+nilpotent thickening.
+
+### 12.2 Why framed-first descent is circular
+
+The rejected argument first built a framed compactification, formed a structured
+Isom scheme over $W$, and invoked IIT on completed local rings to manufacture a
+section through meeting branches and nilpotents. That IIT invocation was then used
+inside AEC and the overlap construction needed to produce the compactification to
+which the descent was supposed to apply. Moreover, full faithfulness gives uniqueness
+of a descent arrow, not its existence, and the invalid $A/A^\times$ argument supplied
+neither the conductor arrow nor the nilpotent lift.
+
+One may still form
 
 $$
-W_0=\widetilde W\times_{\mathcal O_{\widetilde D}}\mathcal O_D.
+\mathcal I=
+\operatorname{Isom}^{\mathrm{str}}_W(p_1^*P,p_2^*P),
 \tag{12.3}
 $$
 
-The ordinary generic descent isomorphism gives, on each normalized component of $\widetilde W$, an isomorphism between the two pullbacks of the framed Mumford family. The issue is to prove that these componentwise isomorphisms factor through $W_0$, and then through the nilpotent thickening $W$.
+retaining every group, action, PEL, theta, affine-star, and conductor graph. BCP
+places the explicit Mumford locus in a finite-type Hilbert/Isom parameter space.
+But asserting that the generic section of $\mathcal I$ extends everywhere is exactly
+the Raw-DF-IIT- and FRCD-dependent existence statement; the Isom scheme proves
+neither intrinsic recognition nor coherent conductor roots.
 
-For the model extension $V'=V[s]/(s^e-\pi)$, the tensor square has coordinates $s_1,s_2$ with $s_1^e=s_2^e$. Generically its components are the graphs $s_2=\zeta s_1$, but they all meet at $s_1=s_2=0$. In wild or nonsimple extensions nilpotents can occur as well. Thus a list of generic deck transformations gives neither a map at the meeting point nor a map through the nilradical. The next three sections supply these two extensions separately.
+### 12.3 The unframed-first normalization route
 
-### 12.2 The face map and the missing normalized-star map
-
-Let $P_1$ and $P_2$ be the two pullbacks to $W_0$, and normalize them after base change to $\widetilde W$. On the component labelled by $g\in\Delta$, the fan-equivariant framed isomorphism sends a weight generator to
+The valid order is the reverse. First construct the unframed toroidal
+compactification $X$ using the unframed cusp charts and overlaps. This construction
+is conditional on GCC and Raw-DF-IIT through unframed AEC, but it does not use
+paired-frame fppf descent.
+Let $Y\to X^\circ$ be the finite generic paired-frame cover of its dense interior and
+define
 
 $$
-\phi_g^\#(e_x)=u_g(x)e_{g x},
-\qquad u_g(x)\in\widetilde W^\times.
+X^{\mathrm{fr}}=\operatorname{Nor}_Y(X),
 \tag{12.4}
 $$
 
-Let $C_i\subset P_i$ and $C_i^\nu\subset P_i^\nu$ be their conductors. On a paired face $E$, the coordinate ring is spanned by precisely the weights $x$ lying in the face semigroup $Q_E$; weights outside $Q_E$ restrict to zero. Fan equivariance gives $gQ_E=Q_{gE}$, and the paired-frame period law gives
+the normalization of $X$ in the finite generic algebra of $Y$. Excellence makes
+(12.4) finite. On each toroidal chart, the valuation calculation of Chapter 9
+identifies it with $S'[P_\sigma^{\mathrm{fr}}]$ before completion, and hence with
+$S'[[P_\sigma^{\mathrm{fr}}]]$ after completion.
 
-$$
-u_g(x+y)=u_g(x)u_g(y)
-\quad\text{on }Q_E,
-\tag{12.5}
-$$
+Every generic deck transformation of $Y$ extends uniquely to $X^{\mathrm{fr}}$ by
+the universal property of normalization. On affine opens it preserves the integral
+closure, and the deck group law holds because the two composites agree on the dense
+generic cover. Thus extension of deck actions requires no infinitesimal recognition
+argument and no descent through the ramified tensor square.
 
-including the prescribed monomial factor when the two representatives differ by a period. Therefore (12.4) restricts to an algebra homomorphism on every conductor face. On an intersection of faces the two restrictions agree, because both are restrictions of the same weight formula.
+### 12.4 Conditional conductor and nilpotent compatibility
 
-We now construct the missing factorization. On a face $E$, write its algebra over $D$ as
+Normalization does not finish the structured problem. It does not by itself say that
+an extended deck action preserves the chosen affine-star labels, restricts to the two
+specified conductor arrows on every nonnormal boundary stratum, or commutes with a
+square-zero change of the unframed base. These are not consequences of equality on a
+dense generic open when nilpotents are present.
 
-$$
-A_{i,E,D}
-=\bigoplus_{x\in Q_E}\mathcal O_D e_x
-\big/\text{the monomial multiplication relations}.
-\tag{12.6}
-$$
+Assuming Raw-DF-IIT and FRCD, the face, conductor, square-zero, and cusp-change clauses recover
+the DF functor on both pullbacks to (12.1) and identify them with the restriction of
+the normalized action. They produce compatible star and conductor arrows and make
+the two cocycle composites equal. In that conditional setting, the generic section
+of (12.3) extends to every completed local ring. The closure argument for a finite
+structured Isom scheme may then algebraize the already established completed
+sections, but it is a consequence of Raw-DF-IIT and FRCD rather than a proof of
+either.
 
-The residues of the branch units $u_g(x)$ define elements $\bar u(x)\in\mathcal O_D^\times$ for $x\in Q_E$. To prove this conductor-face assertion, split $u_g(x)$ into the coefficient unit furnished by the existing generic descent datum and its Kummer constant. The first factor satisfies ordinary descent. A Kummer constant can differ between two normalized branches only by the root of unity attached to a fractional exponent. A weight surviving on their common conductor face has zero order in that fractional normal direction; its exponent is integral there, so the root-of-unity quotient is one. Weights with nonzero fractional normal order restrict to zero. Hence the tuples of coefficients agree over $\widetilde D$ exactly on all surviving face weights and belong to the equalizer (12.3).
+Under KFF, finite faithfully flat descent of a line and its graphs is standard once
+this actual descent datum exists. Finiteness of normalization alone does not permit
+that invocation. Even under KFF, descent cannot create the missing star, conductor,
+root, or nilpotent arrows. The same distinction applies to the theta and cubical
+structures.
 
-We obtain face algebra maps
+### 12.5 Conditional RCD
 
-$$
-\theta_{E,D}^\#:A_{2,E,D}\longrightarrow A_{1,gE,D},
-\qquad e_x\longmapsto\bar u(x)e_{gx}.
-\tag{12.7}
-$$
+**Conditional Theorem 12.1 (ramified conductor compatibility, RCD).** For $d\ge2$,
+assume GCC, Raw-DF-IIT, FRCD, and KFF, and first construct the unframed toroidal space. Its
+normalization in the finite generic paired-frame cover is finite locally free, has
+the monoid charts of Chapter 9, and carries the uniquely extended deck action.
+Raw-DF-IIT and FRCD make that action compatible
+with all affine stars, face maps, boundary normalizations, both conductor arrows,
+square-zero base changes, cusp changes, and the group, action, $\mathcal O_F$,
+polarization, level, theta, and cubical graphs. The resulting structured descent data
+satisfy the cocycle.
 
-Equation (12.5) proves multiplicativity. Restriction to a smaller face discards the same nonface weights on both sides, so the maps (12.7) glue to a map $\theta_{C,D}$ on the conductor quotient.
+Once a suitable unframed excellent compactification is supplied, its finite
+normalization and the extended deck action require none of the four hypotheses.
+Flatness still requires KFF, however, and exact conductor-root compatibility and
+nilpotent descent remain unproved without FRCD and Raw-DF-IIT. This manuscript's
+higher-rank construction of the unframed space is itself conditional on GCC and
+Raw-DF-IIT (and uses FRCD for the framed conductor form of AEC). RCD is therefore
+conditional, and it is not used to construct the unframed compactification on which
+the normalization route begins.
 
-Let $\overline P_i=P_i\times_{W_0}D$, let $\overline P_i^\star$ be its finite
-normalized-star cover, and let $\overline C_i^\star\to\overline C_i$ be its conductor
-diagram. On invariant affine opens the family pushout is the genuine equalizer
+## 13. Conditional algebraic overlaps and the proper toroidal space
 
-$$
-\mathcal O_{\overline P_i}
-=\mathcal O_{\overline P_i^\star}
-\times_{\mathcal O_{\overline C_i^\star}}
-\mathcal O_{\overline C_i}.
-\tag{12.8}
-$$
-
-The data constructed so far do **not** yet give a map of (12.8) over $D$. The maps
-$\phi_g$ live on $\overline P_i^\star\times_D\widetilde D$, whereas (12.7) lives on the
-conductor over $D$. To use the universal property one first needs an actual
-normalized-star arrow
-
-$$
-\theta_D^\star:\overline P_1^\star\longrightarrow\overline P_2^\star
-\quad\text{over }D
-\tag{12.8a}
-$$
-
-whose pullback to every branch of $\widetilde D$ is the corresponding $\phi_g$ and whose
-restriction to $\overline C_1^\star$ is (12.7). Affine locally, (12.8a) exists exactly when,
-for **every** star weight $x$ and not only every conductor-face weight, the tuple of branch
-coefficients $u_g(x)$ belongs to the Amitsur equalizer $\mathcal O_D$. Weights killed on the
-conductor impose no condition on (12.7), but they still occur in the normalized-star algebra
-and therefore cannot be discarded when constructing (12.8a).
-
-If (12.8a) is supplied, its restriction and (12.7) agree on
-$\overline C_i^\star$, and the universal property of (12.8) gives a factorization map
-
-$$
-\psi_D^\#:
-\mathcal O_{\overline P_2}
-\longrightarrow
-\mathcal O_{\overline P_1}.
-\tag{12.9}
-$$
-
-Pulling (12.9) to $\widetilde D$ then recovers the restriction of every $\phi_g$. The
-face calculation proves the necessary conductor compatibility, but it does not construct
-(12.8a). This is the normalized-star existence step demanded by $({\rm RCD})$.
-
-### 12.3 Descent through the reduced pushout
-
-Assume from now through Section 12.5 that (12.8a) has been constructed. Use (12.3) on
-every finite coordinate module in the normalization-conductor presentation. The arrows
-$\phi_g$ over $\widetilde W$ and $\psi_D$ over $D$ agree over $\widetilde D$ by
-construction. Hence they give a unique arrow
-
-$$
-\psi_0:p_1^*P_{V'}|_{W_0}
-\xrightarrow{\sim}
-p_2^*P_{V'}|_{W_0}.
-\tag{12.10}
-$$
-
-Apply the same equalizer to the inverse componentwise arrows to see that $\psi_0$ is an isomorphism. The $\mathcal O_F$-action, polarization, theta line, and level frame commute with (12.10), since their monomial formulas commute on $\widetilde W$ and on $D$.
-
-On the triple tensor product, the two composites agree after normalization: there they are the deck transformations $gh$. They agree on its conductor by the multiplicative identity
-
-$$
-u_{gh}(x)=u_g(hx)u_h(x).
-\tag{12.11}
-$$
-
-The pushout uniqueness then proves the cocycle over the reduced tensor cube.
-
-### 12.4 Lifting across the nilradical and the cocycle
-
-Let $J=\sqrt0\subset W$. Filter $W$ by $W/J^n$. Suppose the descent isomorphism has
-been constructed modulo $J^n$. Full faithfulness can prove uniqueness of a lift, but it
-does not prove existence. Proposition 7.1 supplies existence only if the two pullbacks and
-the desired arrow have already been placed in the same toroidal monomial subfunctor over
-$W/J^{n+1}$. Under that additional lifting hypothesis, induction gives
-
-$$
-\psi:p_1^*P_{V'}\xrightarrow{\sim}p_2^*P_{V'}
-\quad\text{over }W.
-\tag{12.12}
-$$
-
-On the tensor cube, the two cocycle composites have the same reduction. Once both lifts
-exist in the Mumford subfunctor, Proposition 8.1 identifies their quotient with an
-automorphism of the framed one-motive; the paired frame and rigidification make that
-automorphism trivial. Thus full faithfulness proves the cocycle after existence, exactly as
-it should, but it cannot supply the missing lift.
-
-### 12.5 fpqc descent of all structures
-
-Finite faithfully flat descent is effective for schemes that are projective with a chosen ample line: descend the graded algebra
-
-$$
-\bigoplus_{n\ge0}f_*\Theta^{mn}
-\tag{12.13}
-$$
-
-for a common sufficiently large $m$, then take relative Proj. Quasi-coherent algebras and invertible modules satisfy equalizer descent, and multiplication descends because it is a morphism of such modules. The action, $\mathcal O_F$-endomorphisms, polarization, level structure, conductor square, and logarithmic chart are all morphisms of finite presentation and descend with their identities.
-
-The descended line is relatively ample: ampleness is fpqc local on the base for an invertible sheaf on a proper finitely presented morphism. Concretely, after the finite flat pullback some power gives a closed immersion; the norm of its evaluation determinants gives a power whose evaluation is surjective before pullback, hence everywhere.
-
-**Proposition 12.1 (conditional ramified descent criterion).** If the branch arrows
-satisfy the all-star equalizer condition (12.8a), and if their reduced arrow has a toroidal
-lift across every nilpotent layer of $W$, then they form a genuine fpqc descent datum. Book
-10 then descends the projective scheme, all graphs of Section 10.3, the fs chart, and the
-relatively ample theta line. The face maps (12.7) prove conductor compatibility but not the
-two stated existence hypotheses. Therefore $({\rm RCD})$ remains unproved.
-
-## 13. Candidate overlaps and conditional algebraization
+Throughout this higher-rank chapter assume $d\ge2$, GCC, and Raw-DF-IIT, and hence the unframed form of
+Conditional Theorem 11.2. The
+space constructed here is unframed. Only after it exists do we apply the normalization
+route of Chapter 12 to a finite generic paired-frame cover.
 
 ### 13.1 Common faces and changes of cusp
 
@@ -1784,53 +2316,104 @@ $$
 
 The fan collection is equivariant, so a cone is carried to a cone after passing to a common subdivision. Formulae (5.9), (6.4), and (6.5) are invariant under (13.1). They give an algebraic isomorphism of cusp families, including their normalization-conductor diagrams and theta lines.
 
-### 13.2 The scope of overlap exhaustion
+### 13.2 Conditional exhaustion by the structured Isom scheme
 
 We prove that the preceding arrows are all the overlap arrows. Suppose geometric points in two cusp charts give isomorphic logarithmic semiabelic PEL objects. The identity component of the smooth locus recovers the semiabelian scheme. Its maximal torus recovers $X$, the quotient recovers the abelian part, and the group of periods recovers $Y$. The polarization recovers the pairing, while the level orbit recovers the cusp label modulo its declared arithmetic stabilizer.
 
-The intrinsic base log structure recovers the face of the monodromy cone: precisely those $p$ mapping to units form the face orthogonal. The normalized-star incidence complex recovers the periodic decomposition restricted to that face. Therefore the two points are related by a cusp-label isomorphism and lie in the associated common-face overlap.
+Conditional Theorem 7.2 recovers the intrinsic base DF structure and hence the face
+of the monodromy cone: precisely those $p$ mapping to units form the orthogonal face.
+The normalized-star incidence complex recovers the periodic decomposition restricted
+to that face. Therefore, under the standing GCC and Raw-DF-IIT hypotheses, the two
+points are related by a cusp-label
+isomorphism and lie in the associated common-face overlap.
 
-For families over a reduced normal base with dense puncture, the assertion follows from
-period extraction and local constancy of the lattices and face types. For toroidal nilpotent
-thickenings, Proposition 8.1 gives the same conclusion. It does not exhaust arrows involving
-non-toroidal infinitesimal PEL deformations. Thus exhaustive algebraic overlaps for the full
-degeneration groupoid remain conditional on $({\rm IIT})$ and $({\rm AEC}_0)$.
+Let $R^{\mathrm{exp}}_{ij}$ be the finite union of these common-face and
+cusp-change charts for $U_i$ and $U_j$. Finiteness of the union follows from local
+finiteness of the fan and the use of finite fundamental cell sets; an arithmetic
+translate meeting two fixed representatives belongs to one of finitely many bounded
+sets. There is a natural map
 
-On the explicit common-face relation, neatness removes stabilizers on nonzero cones and the
-imposed level leaves only a finite group at the interior chart. This proves quasi-finiteness
-for that candidate relation, not that it contains every algebraic overlap.
+$$
+R^{\mathrm{exp}}_{ij}\longrightarrow
+\operatorname{Isom}^{\mathrm{str}}_{U_i\times U_j}(P_i,P_j).
+\tag{13.2}
+$$
 
-### 13.3 Conditional separated gluing
+The target is separated and locally of finite presentation over $U_i\times U_j$.
+It is unramified because neat level kills fiber automorphisms and Conditional Theorem 7.2 kills
+infinitesimal automorphisms. It need not be proper over the whole product: a generic
+isomorphism extends over a valuation ring exactly when its valuation vector lies in a
+common fan face. This is why the explicit common-face locus, rather than a false
+global finiteness claim, is essential.
 
-Let $U$ be the disjoint union of the interior chart and the explicit Mumford-side cusp
-families. The common-face arrows define a candidate relation $R\rightrightarrows U$ wherever
-the punctured Mumford family has an algebraic classifying map to the interior. Its toric
-common-face arrows are etale. Proposition 11.1 does not prove that the punctured map is
-representable and etale or that this candidate relation is exhaustive and effective.
+The map (13.2) is an isomorphism. It is bijective on geometric points by the
+recovery of $X,Y$, the cusp label, and the face just proved. More importantly, it is
+an isomorphism on every completed local functor: Conditional Theorem 7.2 extracts the DF functor
+and all structure graphs from an arbitrary nilpotent isomorphism, so that isomorphism
+is the unique declared common-face change. Since (13.2) is locally of finite
+presentation, this completed lifting property makes it etale: it is formally etale,
+and the affine infinitesimal criterion gives flatness and vanishing relative
+differentials. It is radicial by uniqueness. An etale radicial morphism is an open
+immersion, as follows by applying the diagonal criterion on an etale affine chart.
+Its image contains every geometric point of the target, so that open immersion is
+surjective and hence an isomorphism. This proves (13.2), including nilpotent overlap
+arrows.
 
-If those missing assertions are supplied, standard etale gluing gives an algebraic space of
-finite type. Turning it into a scheme by invariant affine neighborhoods additionally requires
-a compatible global line; the local fan line alone does not give affine neighborhoods across
-the interior overlap.
+For an interior chart and a cusp chart, the same Isom scheme is supported precisely
+where all positive monomials are invertible. There it is the graph of the algebraic
+map (11.7), by the fine moduli property of $H$; a boundary fiber cannot be isomorphic
+to an abelian scheme because its smooth group has positive torus rank. Thus these are
+also exhaustive algebraic overlaps. Composition is literal composition of label
+changes and localization, so the relation satisfies the cocycle on triple products.
 
-The traitwise uniqueness argument does prove separatedness once the overlap relation exists:
-two generic one-motives have one valuation vector in a smallest fan cone, and the toric chart
-has unique extension. This is a uniqueness result; it does not construct the algebraic
-relation or its nilpotent arrows.
+### 13.3 Conditional effective separated gluing
+
+Let $U$ be the disjoint union of $H$ and the finite cusp charts. The exhaustive
+relation $R\rightrightarrows U$ just constructed is etale: on cusp pieces it is face
+localization followed by a lattice isomorphism, and on interior pieces it is the
+etale classifying map of Conditional Theorem 11.2. It is an equivalence relation by the
+structured Isom interpretation. Gluing the affine etale sheaves gives a finite-type
+algebraic space
+
+$$
+X_\Sigma=U/R.
+\tag{13.3}
+$$
+
+To see effectivity directly, for an etale $T\to U$ take invariant affine opens after
+shrinking $T$ so that the finitely many arrows meeting it are affine; equalize their
+coordinate rings. These equalizers glue because the relation cocycle is exact. This
+constructs the etale sheaf quotient and its diagonal without presupposing a global
+compactification.
+
+The diagonal is proper. Given two extensions over a valuation ring with isomorphic
+generic fibers, their one-motives have the same valuation vector. There is a smallest
+fan face containing it, and the common-face weight formula gives a unique isomorphism
+over the valuation ring. Conditional Theorem 7.2 gives the same conclusion after completion when
+the closed fiber or base is nonreduced. Hence the diagonal satisfies valuative
+existence and uniqueness; being already finite type and separated, it is proper.
+Neatness makes it a monomorphism, so $X_\Sigma$ has no residual inertia.
 
 ### 13.4 Conditional properness from complete fans
 
 Take a map from the fraction field $K$ of a valuation ring $V$ to the interior moduli space. After a finite faithfully flat extension $V'/V$, semi-stable reduction of the polarized abelian variety supplies a Raynaud extension and a polarized one-motive. The valuation pairing is a point of the closed positive cone. Completeness of the fan places it in some cone $\sigma$; if it lies on a wall, either adjacent chart gives the same point on their face overlap.
 
-The Mumford construction produces an extension over $V'$. Descending it over $V$ in the
-ramified case requires the two existence clauses of Proposition 12.1. If $({\rm RCD})$ and
-the algebraic gluing are supplied, uniqueness follows from the preceding trait argument and
-the quotient satisfies the valuative criterion. Without them, a complete fan proves only the
-existence of a chart after the splitting extension, not properness of a global quotient.
+The unframed Raynaud datum and its valuation pairing descend independently of any
+choice of paired frame. Raw-DF-IIT, through its base-change and cusp-change clauses,
+identifies the corresponding unframed Mumford extensions after a splitting cover and
+gives their descent cocycle. This constructs the extension over $V$ without invoking
+RCD or a framed compactification. The common-face calculation makes it independent of
+the cone chosen on a wall, and the trait argument of Section 13.3 gives uniqueness.
+Thus, conditionally, $X_\Sigma$ satisfies the valuative criterion for properness.
 
-Proposition 11.1 algebraizes each explicit Mumford chart. The passage from those charts to a
-global interior gluing remains the exact algebraic cusp-effectivity problem isolated in Books
-157 and 158.
+For completeness, the usual reduction from arbitrary valuation rings to traits does
+not hide an existence assertion here. All data are of finite presentation, so they
+descend to a finitely generated subring of the valuation ring. A chain of prime
+specializations can be treated one height at a time; the fan vector and the finite
+explicit Mumford graph data stabilize because only finitely many cones and Hilbert polynomials occur
+near the chosen point. The trait construction then extends along the chain, and
+uniqueness glues the extensions. Hence $X_\Sigma$ is a proper finite-type algebraic
+space containing $H$ as a dense open subspace.
 
 ## 14. Poincare, theta, and determinant lines
 
@@ -1866,17 +2449,58 @@ On a Raynaud extension, evaluation of the biextension along $Y\times X$ is the f
 logarithmic Fourier character $q^{B(y,x)}$; a chosen splitting writes its leading unit
 separately but does not create another parameter. Together with the quadratic factor
 $q^{A(y)}$ it gives precisely (6.5). Thus the Poincare construction and the polyhedral
-construction yield the same line $\Theta$ on the normalized stars. The cubical identity is
-the cocycle condition for the period action, so $\Theta$ descends through paired conductor
-faces of an explicit Mumford presentation.
+construction yield the same line $\Theta$ on the normalized stars. For an explicit
+unframed Mumford presentation, formula (6.5) supplies actual conductor comparison
+isomorphisms and their cocycle. After a frame lattice introduces roots, the exact
+rooted comparisons and their coherence are supplied only under FRCD.
 
-Normalize $\Theta$ along the identity section of the semiabelian locus. Any two extensions with the same normalization differ by a line pulled back from the base. The rigidification kills that line: its pullback to the identity is trivial with a specified trivialization. Hence the semiabelic theta line is unique and compatible with base change, face restriction, coefficient descent, and normalization-conductor pushout.
+Normalization together with identity rigidification does **not** determine a line
+bundle on a nonnormal fiber. On a split geometric fiber, if $\Gamma$ is the
+conductor incidence graph, fixing the line on the normalization still leaves the
+edge-gluing quotient
 
-On a nonnormal fiber, uniqueness is checked on the conductor square. Two candidate lines agreeing on $P^\nu$ differ by descent scalars on $C^\nu$. The cubical period law makes those scalars characters of the period lattice; evaluation at the rigidified identity makes the character one. Thus the line, not merely its numerical class, descends uniquely.
+$$
+(\mathbf G_m)^{E(\Gamma)}/
+\operatorname{im}\bigl((\mathbf G_m)^{V(\Gamma)}\bigr)
+\simeq(\mathbf G_m)^{b_1(\Gamma)}.
+\tag{14.1b}
+$$
+
+Identity rigidification removes the base-pullback ambiguity and at most fixes a
+vertex gauge; it does not kill the holonomy around a conductor cycle. In particular,
+a nodal cycle retains a $\mathbf G_m$ gluing parameter. Book 16, Section 8.1, and
+Book 25, Section 12.1 are the elementary counterboundary.
+
+The exact statement used here is conditional. Once the **actual conductor descent
+datum** for $\Theta$ is supplied, including its cocycle and cubical PEL
+compatibilities, effective descent through the conductor pushout determines the
+descended line uniquely relative to that datum. Compatibility with base change,
+face restriction, coefficient descent, and framed roots holds only when the supplied
+data have those compatibilities; in the global argument these are part of FRCD and
+RCD. An alternative would be a separately proved theorem that the full cubical PEL
+data annihilate the graph-torus parameter. No such theorem is proved or assumed in
+this manuscript, so normalization plus identity rigidification is never used as a
+substitute for conductor descent data.
 
 ### 14.3 Determinant of cohomology
 
-For $m$ divisible by the integer $m_0$ of Section 10.2, $\Theta^m$ has no higher cohomology on every normalized toric star and on every conductor face. This follows from the lattice-point resolution associated with a regular triangulation. Weight by weight, the Cech complex is the augmented cellular cochain complex of the subcomplex of cells containing a fixed lattice point. That subcomplex is a convex star and is contractible. Hence the complex is exact in positive degree. Apply (6.7), or the full face resolution when more than two stars meet, to obtain the same vanishing on the nonnormal semiabelic fiber. The ranks are the finite lattice-point counts and are constant, so cohomology and base change make $f_*\Theta^m$ locally free.
+For $m$ divisible by the integer $m_0$ of Section 10.2, $\Theta^m$ has no higher cohomology on every normalized toric star and on every conductor face. This follows from the lattice-point resolution associated with a regular triangulation. Weight by weight, the Cech complex is the augmented cellular cochain complex of the subcomplex of cells containing a fixed lattice point. That subcomplex is a convex star and is contractible. Hence the complex is exact in positive degree. Apply (6.7), or the full face resolution when more than two stars meet, to obtain the same vanishing on the nonnormal semiabelic boundary fiber.
+
+For completeness, the abelian fibers have the same vanishing. Choose an integer
+$n$ invertible on the fiber. For a symmetric theta line,
+$[n]^*\Theta^m\simeq\Theta^{mn^2}$. The trace divided by $n^{2d}$ splits
+$\mathcal O_A\to[n]_*\mathcal O_A$, so projection formula injects
+
+$$
+H^i(A,\Theta^m)\hookrightarrow H^i(A,\Theta^{mn^2}).
+$$
+
+The group on the right is zero for $n$ large by the elementary Serre-vanishing
+argument from a projective embedding. Hence the group on the left is zero for
+$i>0$. The Hilbert polynomial is fixed in the flat total family, so the rank of
+$H^0$ is constant on the abelian and boundary fibers. The fiberwise vanishing and
+the finite free resolution of the theta algebra then show directly that
+$f_*\Theta^m$ is locally free and commutes with base change.
 
 Consequently
 
@@ -1899,7 +2523,24 @@ $$
 
 where the alternating product runs over star intersections. This formula proves compatibility with nonnormal fibers rather than assuming normality.
 
-The PEL endomorphisms act on the perfect complex $Rf_*\Theta^m$, and paired-frame symmetries permute its theta-weight basis. Taking determinants gives a genuine character after the fixed power $m_0$ has killed projective multipliers.
+Only theta-preserving automorphisms act on the fixed perfect complex
+$Rf_*\Theta^m$: an automorphism $g$ must be equipped with a compatible
+linearization $g^*\Theta^m\simeq\Theta^m$. This includes the paired-frame deck
+symmetries when their theta linearizations and conductor compatibilities have been
+supplied. An arbitrary PEL endomorphism $\iota(a)$ has no such action. Pullback gives
+instead
+
+$$
+Rf_*\Theta^m\longrightarrow Rf_*\iota(a)^*\Theta^m,
+\tag{14.3a}
+$$
+
+and the line on the right generally represents the $a^2$-twisted polarization rather
+than a fixed tensor power of $\Theta$. For the scalar endomorphism $[n]$, the cubical
+identity gives the correctly powered target
+$[n]^*\Theta^m\simeq\Theta^{mn^2}$, as above. Thus only the theta-preserving
+automorphism group yields a character on $\mathcal D_m$; no action of all of
+$\mathcal O_F$ on one fixed determinant line is asserted.
 
 ### 14.4 Boundary transition characters
 
@@ -1912,7 +2553,12 @@ q^{B(y,x)+mA(y)}
 \tag{14.4}
 $$
 
-Taking the determinant over all representatives gives a unit times a monomial $q^{\kappa_m(y)}$. The exponent $\kappa_m(y)\in M$ is a quadratic polynomial in $m$ whose leading term is positive by the polarization. On a conductor face, weights outside that face vanish and the alternating determinant formula (14.3) cancels the missing weights. Hence the restriction of $\kappa_m$ is exactly the determinant exponent for the face.
+Taking the determinant over all representatives gives a unit times a monomial
+$q^{\kappa_m(y)}$. Here $\kappa_m(y)$ is typed in
+$P_\sigma^{\mathrm{gp}}\subset M$; it is not generally quadratic in $m$. On a
+conductor face, weights outside that face vanish and the alternating determinant
+formula (14.3) cancels the missing weights. Hence the restriction of $\kappa_m$ is
+exactly the determinant exponent for the face.
 
 If $S_m$ is the finite set of degree-$m$ weight representatives, the exponent is explicitly
 
@@ -1923,18 +2569,67 @@ $$
 \tag{14.4a}
 $$
 
+Let $\Delta\subset X_\mathbf R$ be the rational $d$-dimensional fundamental
+polytope used for the theta weights, with a fixed half-open boundary convention and
+lattice-normalized measure $du$. Thus $S_m$ is represented by $m\Delta\cap X$ for
+the admissible values of $m$. Vector-valued weighted Ehrhart summation gives, on
+every admissible congruence class of $m$,
+
+$$
+\kappa_m(y)
+=m^{d+1}\int_\Delta\bigl(B(y,u)+A(y)\bigr)\,du+O(m^d)
+\quad\text{in }M_\mathbf R.
+\tag{14.4b}
+$$
+
+Accordingly $\kappa_m(y)$ is generally a degree-$d+1$ weighted Ehrhart
+quasipolynomial, and a polynomial when the chosen polytope is integral; lower-degree
+collapse can occur only if the displayed moments cancel. The positivity needed here
+is only the positivity of its leading scalar order in an interior monodromy
+direction. Indeed, for $\nu\in\sigma^\circ$ put
+$b_\nu=\langle\nu,B\rangle$ and $a_\nu=\langle\nu,A\rangle$. Center $\Delta$
+and absorb the translation-induced linear character into the local trivialization.
+Then its first moment vanishes, and symmetry of the cubical theta datum gives
+$2a_\nu(y)=b_\nu(y,\lambda(y))$. Hence, for $y\ne0$,
+
+$$
+\left\langle\nu,
+\int_\Delta\bigl(B(y,u)+A(y)\bigr)\,du\right\rangle
+=\frac{\operatorname{vol}(\Delta)}2\,
+b_\nu(y,\lambda(y))>0
+\tag{14.4c}
+$$
+
+by the polarization positivity in (5.10). Thus, for every nonzero period translate,
+large admissible $m$ has positive scalar boundary order along every interior
+monodromy valuation. No coefficientwise positivity in $M$ is asserted. For a
+concrete $d=2$ check, take
+$X=\mathbf Z^2$, a centered square, and odd $m$ with
+$S_m=\{-(m-1)/2,\ldots,(m-1)/2\}^2$. Then
+$\sum_{x\in S_m}x=0$, $|S_m|=m^2$, and
+$\kappa_m(y)=m^3A(y)$: the leading behavior is cubic, not quadratic.
+
 Changing the fundamental polytope permutes $S_m$ and adds a global linear character, which changes the local trivialization but not the line. On a fan wall the two sums restrict to the sum for the common face by the alternating cancellation just described. This proves, rather than presumes, that the exponents form a piecewise linear support datum.
 
-On common faces these exponents give a candidate piecewise-linear function $\chi_m$.
-For the explicit Mumford charts, twisting $\mathcal D_m$ by the base fan line associated
-with $-\chi_m$ removes the displayed boundary monomials. Extending this line through every
-algebraic cusp/interior overlap and comparing it with a fixed ample interior moduli line is
-part of $({\rm TDC})$; the local determinant calculation alone does not supply that global
-extension.
+On common faces these exponents give an integral piecewise-linear function $\chi_m$.
+The Cartier construction (15.3) therefore gives a line $\mathcal B_{-\chi_m}$.
+Twisting $\mathcal D_m$ by it removes the displayed boundary monomials. On a change
+of cusp, (13.1) carries both $\kappa_m$ and the fan character to their counterparts,
+so the corrected transition is a unit. On the punctured chart the fan character is
+invertible and the corrected line is the determinant line of the abelian theta
+family. Consequently the corrected lines agree across every overlap of Chapter 13.
+
+Only the exact, correctly typed sum (14.4a) is used for this determinant correction.
+Neither (14.4b) nor its positive leading coefficient is used to infer ampleness;
+conditional ampleness comes separately from the proper quasi-finite structured-graph
+morphism of Section 15.3 after TDC-Ext is supplied.
 
 ### 14.5 Base change and conductor compatibility
 
-The determinant of a perfect complex commutes with arbitrary base change. In our range this is also visible from the locally free module $f_*\Theta^m$. For a conductor square, the exact triangle associated with (6.7) gives
+The determinant of a perfect complex commutes with arbitrary base change. In our
+range this is also visible from the locally free module $f_*\Theta^m$. After
+restriction to a fixed boundary stratum, the fiberwise conductor square (6.7) gives
+the exact-triangle identity
 
 $$
 \det Rf_*\Theta^m
@@ -1945,131 +2640,212 @@ $$
 \tag{14.5}
 $$
 
-Every isomorphism in (14.5) is functorial. It respects a ramified descent arrow once the
-existence hypotheses of Proposition 12.1 are supplied. The candidate corrected determinant
-line
+Every isomorphism in (14.5) is functorial on explicit Mumford charts. For $d\ge2$,
+under GCC, Raw-DF-IIT, FRCD, and KFF, it also respects the ramified conductor compatibility of
+Conditional Theorem 12.1. The corrected determinant line
 
 $$
 \mathcal H_m=\mathcal D_m\otimes\mathcal B_{-\chi_m}
 \tag{14.6}
 $$
 
-is defined on the explicit common-face system of Mumford charts and has unit boundary
-trivializations. Calling it a globally defined line on a compactification would assume the
-algebraic overlap and descent statements still at issue.
+has unit boundary trivializations. Conditionally, effective descent for invertible
+modules and the exhaustive relation of Chapter 13 produce a global invertible sheaf
+$\mathcal H_m$ on $X_\Sigma$. Its restriction to $H$ is $\det f_*\Theta^m$, and
+formation of $\mathcal H_m$ commutes with coefficient base change. Unconditionally,
+the same statement holds chart by chart for the explicit Mumford construction.
 
-## 15. Local positivity and the global projectivity criterion
+## 15. Conditional projectivity via structured graphs
 
-### 15.1 Horizontal positivity
+Throughout this higher-rank chapter assume $d\ge2$, GCC, Raw-DF-IIT, FRCD, and KFF,
+and hence the conditional proper space $X_\Sigma$ of Chapter 13 and the framed
+descent of Chapter 12. The determinant and Cartier calculations on each explicit
+Mumford chart are unconditional. They do not, even after conditional global gluing,
+control every Plucker coordinate of the structured parameter map. Projectivity will
+therefore use the separate TDC-Ext hypothesis below.
 
-On the interior, a sufficiently high theta power embeds every polarized abelian scheme in a fixed projective space after a finite theta-frame cover. The multiplication maps among theta functions determine the embedded group law and the $\mathcal O_F$-action. Hence the map to the relevant Hilbert-and-graph parameter scheme is quasi-finite on the fine interior: two points with the same embedded equations have the same rigidified polarized PEL object, and neat level removes automorphisms.
+### 15.1 The interior structured map and TDC-Ext
 
-The Plucker line on the Hilbert parameter scheme pulls back to a positive tensor combination of determinant lines $\det f_*\Theta^m$. To verify this, present the degree-$m$ ideal as the kernel of the evaluation map from a fixed vector space to $f_*\Theta^m$; the determinant of the quotient is the Plucker coordinate. The finite theta-frame group is removed by tensoring all conjugates. Therefore a fixed positive tensor product $\mathcal H$ of corrected lines (14.6) has positive degree on every complete curve meeting the interior and not contracted by the PEL moduli map.
-
-No curve in the interior is contracted by this framed Hilbert map. Thus its Plucker line has
+Choose an auxiliary theta level $m$ invertible on $S_0$ and divisible by the integer
+of Section 10.2. A symmetric theta structure identifies the finite Heisenberg group
+of $\Theta^m$ with the standard one and gives its canonical weight basis up to one
+common scalar. Its functor is finite etale on the interior and finite Kummer on the
+boundary, exactly as in Chapter 9. Under KFF, Conditional Theorem 12.1 gives a
+finite faithfully flat theta-framed cover
 
 $$
-\deg_C\mathcal H>0
-\tag{15.1}
+\pi:X_\Sigma^\theta\longrightarrow X_\Sigma.
+\tag{15.1a}
 $$
 
-for every complete curve $C$ contained in the interior. To use this line in a toroidal
-compactification one must still show that a fixed power agrees on every punctured cusp with
-the determinant line of Section 14.4 and extends over the algebraic overlap. That comparison
-is not a consequence of quasi-finiteness.
+Its flatness is precisely the KFF input. Regularity of the source and target charts
+separately does not produce a basis of the larger monoid algebra over the smaller
+one; that would require the simultaneous lattice argument explicitly left open in
+Hypothesis 9.2. This is not the infinite $\operatorname{GL}$-torsor of arbitrary
+vector-space frames.
 
-### 15.2 Vertical fan positivity
+In the canonical theta basis, the evaluation quotients and the group, action,
+$\mathcal O_F$, polarization, level, cubical theta, normalized-star, and both
+conductor graphs define a locally closed subscheme of a fixed product of
+Grassmannians and Hilbert schemes. The normalization and conductor data are retained
+as structured graph factors, not inferred from the underlying Hilbert point. Let $Q^\theta$ be
+the projective closure of the theta-framed interior image in that product. This
+constructs $Q^\theta$ before using the toroidal space.
 
-Let $\psi$ be an integral strictly convex support function. For every cone $\sigma$, write
-$m_\sigma\in M$ for its linear part, so
-$\psi(v)=\langle m_\sigma,v\rangle$ on $\sigma$. On the affine toric chart $U_\sigma$
-take a generator $s_\sigma$. On an overlap put
+Thus the theta-framed interior has a structured morphism
+
+$$
+h_H^\theta:H^\theta\longrightarrow Q^\theta.
+\tag{15.1b}
+$$
+
+Formula (14.4a) computes the transition of the single determinant
+$\det f_*\Theta^m$. A Plucker coordinate of an evaluation, multiplication, action,
+or conductor graph is a maximal minor of a different matrix. Its valuation is not
+the sum (14.4a) in general. Consequently (14.4a) proves neither regularity and
+non-simultaneous vanishing of all boundary Plucker coordinates nor their exact
+determinant-line identity. The following is a separate antecedent.
+
+**Hypothesis 15.1 (structured Hilbert extension, TDC-Ext).** For the conditional
+proper space $X_\Sigma$, its theta-framed cover, and the structured parameter space
+$Q^\theta$ just constructed, the following three assertions hold compatibly with
+coefficient base change, face restriction, cusp change, conductor descent, and the
+finite theta-deck action.
+
+1. The interior morphism $h_H^\theta$ extends to a morphism
+   $$
+   h^\theta:X_\Sigma^\theta\longrightarrow Q^\theta.
+   \tag{15.1}
+   $$
+   Equivalently on each explicit cusp chart, all structured Plucker rational
+   coordinates extend after their actual boundary corrections, have no common zero,
+   satisfy the graph equations, and agree on every declared overlap.
+2. The morphism $h^\theta$ is quasi-finite; equivalently, each of its geometric
+   fibers is finite.
+3. For a fixed ample tensor product $\mathcal O_{Q^\theta}(1)$ of the Plucker
+   factors there are admissible theta powers $m_j$ and positive integers $a_j$ with
+   a canonical isomorphism
+
+   $$
+   (h^\theta)^*\mathcal O_{Q^\theta}(1)
+   \simeq\bigotimes_j\mathcal H_{m_j}^{\otimes a_j}=:\mathcal H^\theta,
+   \qquad a_j>0,
+   \tag{15.2}
+   $$
+
+   whose restriction to the interior is the universal Plucker determinant identity
+   and whose boundary trivializations agree on faces, conductors, and cusp changes.
+
+TDC-Ext is exact: it assumes extension, quasi-finiteness, and the line isomorphism,
+not merely equality of numerical classes. The general Hilbert/Grassmannian
+construction proves representability and boundedness of the listed graph data, but
+does not prove these three assertions. A repository-wide alias check finds only such
+general parameter-space results and downstream statements that retain TDC or
+TDC-Ext as required; no theorem proves these three assertions under another name.
+
+### 15.2 Cartier fan data
+
+Let $\psi$ be the invariant integral strictly convex support function produced in
+Chapter 4. For every cone $\sigma$, write $m_\sigma\in M$ for its linear part. On
+$U_\sigma$ take a generator $s_\sigma$ and on an overlap put
 
 $$
 s_\sigma=q^{m_\sigma-m_\tau}s_\tau.
-\tag{15.2a}
+\tag{15.3}
 $$
 
-The exponent annihilates $\sigma\cap\tau$, so this monomial is a unit on the overlap,
-and the differences telescope on triples. These data define an actual torus-invariant
-Cartier divisor
+The exponent annihilates $\sigma\cap\tau$, so it is a unit on the overlap; the
+differences telescope on triples. These are actual Cartier transition functions and
+give
 
 $$
 D_\psi=-\sum_{\rho\in\Sigma(1)}\psi(v_\rho)D_\rho,
-\qquad \mathcal B_\psi=\mathcal O(D_\psi),
-\tag{15.2b}
+\qquad \mathcal B_\psi=\mathcal O(D_\psi).
+\tag{15.4}
 $$
 
-where $v_\rho$ is the primitive ray generator. Thus the fan line is now given by Cartier
-data, not only by a support-function slogan.
+Equivariance makes this line compatible with explicit cusp changes; conditionally,
+Chapter 13 glues it globally and Conditional Theorem 12.1 gives its paired-frame
+compatibility. It is trivialized on the interior.
 
-For a complete toric fiber, the cone of effective curve classes is generated by invariant
-curves. Indeed, successively take flat limits under one-parameter subgroups; projectivity of
-the toric fiber makes the Chow limits exist and preserves numerical class, and induction on
-orbit dimension ends in an invariant cycle. For an invariant curve corresponding to a
-codimension-one wall, the degree of (15.2b) is the integral jump of the slopes of $\psi$.
-Strict convexity makes every such jump positive. Hence
+Strict convexity computes positive degree on each elementary invariant wall curve of
+an explicit toric normal slice. We record that local calculation but make no
+finite-generation or generation assertion for an effective cone, local or global,
+and do not use such an assertion for projectivity.
+
+### 15.3 The conditional proper quasi-finite structured graph route
+
+Assume TDC-Ext. The morphism $h^\theta$ is proper because
+$X_\Sigma^\theta$ is proper and $Q^\theta$ is separated over $S_0$: its graph is
+closed in $X_\Sigma^\theta\times_{S_0}Q^\theta$, and projection to $Q^\theta$ is
+proper. Its quasi-finiteness is clause 2 of TDC-Ext, not a consequence merely of
+Raw-DF-IIT, overlap exhaustion, or neatness. Those inputs identify the structured
+moduli data already retained by a chart, but they do not show that the chosen finite
+list of Plucker graph coordinates separates every boundary point.
+
+A proper quasi-finite morphism is finite. It follows that
+$\mathcal H^\theta=(h^\theta)^*\mathcal O_{Q^\theta}(1)$ is ample. Choose the theta
+structure so that its generic deck cover is Galois with finite group $\Delta$.
+Chapter 9 takes its finite normalization, and Conditional Theorem 12.1 supplies the
+structured boundary action. The tensor product
 
 $$
-\deg_C\mathcal B_\psi>0
-\tag{15.2}
+\bigotimes_{g\in\Delta}g^*\mathcal H^\theta
+\tag{15.5}
 $$
 
-for every nonzero curve in a complete toric fiber. This proves the vertical toric part of
-$({\rm TDC})$. It does not prove properness of the putative moduli gluing; the Chow argument
-starts only after the relevant toric fiber is known to be projective.
+has the permutation linearization and descends to a line $\mathcal H$ on
+$X_\Sigma$. Its pullback is ample. Under KFF, ampleness descends through the finite
+faithfully flat cover: descend a sufficiently high evaluation quotient giving the framed closed
+immersion. Hence $\mathcal H$ is ample on the proper algebraic space $X_\Sigma$.
+An algebraic space with an ample invertible sheaf is a scheme: sufficiently high
+sections have affine nonvanishing loci, and these loci cover. Thus $X_\Sigma$ is
+already a projective scheme at this point.
 
-### 15.3 Mixed curves and the missing domination bound
+This is the conditional positivity route once TDC-Ext is supplied: the proper quasi-finite
+structured Hilbert/graph map supplies a globally ample line directly. No
+finite-generation, effective-cone, or domination assertion is used.
 
-A mixed curve moves both in a cusp stratum and in toric directions. Neither (15.1) nor (15.2) alone controls it because a chosen extension of a horizontally positive line can have negative boundary degree.
+### 15.4 Conditional TDC
 
-The previous version asserted finite generation of a relative cone of curves from the finite
-list of star types and then asserted compactness of a normalized effective-cone slice. Neither
-statement follows from bounded Hilbert polynomials. It also used a projective global cusp atlas
-and a finite morphism $(h,t)$ before those objects had been constructed.
+**Conditional Theorem 15.2 (theta-determinant compatibility, TDC).** For $d\ge2$,
+assuming GCC, Raw-DF-IIT, FRCD, KFF, and TDC-Ext, the structured Hilbert/graph map
+(15.1) is proper and quasi-finite,
+hence finite. Its Plucker line is ample on the theta-framed normalization, and the
+tensor of its deck translates descends to an ample line on the unframed toroidal
+space. Consequently that proper algebraic space is a projective scheme. The
+determinant and Cartier fan lines retain the base-change and conductor compatibilities
+proved in Chapter 14 and Section 15.2.
 
-A valid domination argument would require an already algebraized proper gluing $X$, a morphism
-$h:X\to H$ extending the interior Hilbert map, a toroidal morphism $t:X\to T_\Sigma$, and a
-proof that $(h,t)$ is finite. Then
-$h^*O_H(c)\otimes t^*O_T(1)$ would be ample for $c\gg0$. Proposition 8.1 proves
-constancy only inside the Mumford subfunctor and does not construct these global maps or prove
-their finiteness on omitted infinitesimal objects. Consequently horizontal--vertical mixed
-positivity, the effective-cone bound, and global properness remain parts of $({\rm TDC})$.
+Without these hypotheses, the local determinant formulas, Cartier transitions, and
+structured projective parameter space remain available, but GCC and Raw-DF-IIT are
+needed for exhaustive global points and overlaps, FRCD for exact conductor-root
+compatibility, and KFF for the fppf descent step. Even under those four hypotheses,
+TDC-Ext is still needed for extension and quasi-finiteness of the structured map and
+for the exact identity (15.2). TDC is therefore not proved.
 
-### 15.4 Descent of the ample line
-
-If a global ample line $\mathcal A$ has first been constructed, then on a framed cover the
-tensor product of all deck transforms has a canonical permutation linearization. The conductor
-determinant formula and the fan transition calculation give its required local compatibility.
-Proposition 12.1 descends it only after the all-star and nilpotent existence hypotheses of
-$({\rm RCD})$ are supplied.
-
-It is ample after descent. Indeed ampleness is fpqc local for a proper finitely presented morphism. Alternatively, choose a power which is very ample after the finite flat cover, take norms of a finite set of separating sections, and obtain a finite morphism to projective space downstairs; positivity on every fiber makes that morphism a closed immersion after another power.
-
-Thus descent of an already compatible ample line is formal, but construction of that line and
-of the proper algebraic quotient is not. The actual Cartier data (15.2a)--(15.2b) close the
-local fan-line defect; they do not close $({\rm TDC})$.
-
-## 16. The conditional toroidal compactification theorem
+## 16. The conditional toroidal compactification and gluing theorem
 
 ### 16.1 Construction and completed-local comparison
 
+Sections 16.1--16.3 first treat the higher-rank branch $d\ge2$. The rank-one branch
+is stated separately in Theorem 16.1 and is not obtained by applying Raw-DF-IIT.
+
 Let $\mathcal M$ be the Hilbert--Blumenthal moduli scheme for the standing PEL datum and
 neat level, and let $\Sigma$ be the equivariant regular projective fan collection of
-Theorem 4.2. The preceding chapters construct explicit algebraic Mumford charts and their
-common-face arrows. They do not prove that these charts are etale and exhaustive for the full
-PEL degeneration functor, that their ramified arrows descend, or that their interior gluing is
-proper and projective. Accordingly the notation
+Theorem 4.2. For $d\ge2$, assume GCC, Raw-DF-IIT, FRCD, KFF, and TDC-Ext. Conditional
+Theorem 11.2 and Chapter 13 construct
+and glue the exhaustive unframed algebraic cusp charts; Conditional Theorem 15.2
+proves projectivity. Only then is a paired-frame compactification formed by
+normalization in its finite generic cover, as in Chapter 12. Write
 
 $$
 \mathcal M\hookrightarrow\mathcal M_\Sigma^{\mathrm{tor}}.
 \tag{16.1}
 $$
 
-will be used in this chapter only under the missing package
-$({\rm IIT})+({\rm AEC}_0)+({\rm RCD})+({\rm TDC})$ and exhaustive algebraic overlaps.
-Under those hypotheses, at a framed geometric point $z$ of the stratum indexed by $\sigma$,
-the required completed local ring is
+for the resulting scheme. At a framed geometric point $z$ of the stratum indexed by
+$\sigma$, its completed local ring is
 
 $$
 \widehat{\mathcal O}_{\mathcal M_\Sigma^{\mathrm{tor}},z}
@@ -2079,18 +2855,19 @@ $$
 $$
 
 with no extra smooth unit-period factor. Before framing, the finite stabilizer invariants are
-taken; at neat nonzero cones that stabilizer is trivial. The corresponding completed universal
-family would be the Mumford family. Formula (16.2) is proved in this book only for the
-Mumford-presented side, not for the full PEL compactification functor.
+taken; at neat nonzero cones that stabilizer is trivial. The completed universal family is
+the Mumford family by Conditional Theorem 7.2 and Proposition 11.1. If the face
+$\tau$ has dimension $r$, (16.2) has $r$ boundary parameters and $d-r$ invertible
+period parameters.
 
 ### 16.2 Smoothness, boundary, and universal objects
 
-The monoid of a regular cone is free after removing its unit face. Thus the explicit framed
-chart (16.2) is a relative formal power-series ring of total relative dimension $d$, with a
-normal-crossings boundary. If the conditional gluing exists and its completed comparison is
-valid on all infinitesimal tests, smoothness follows from these charts.
+The monoid of a regular cone is free after removing its unit face. Thus (16.2) is a
+relative formal power-series ring of total relative dimension $d$, with a
+normal-crossings boundary. The etale charts of Conditional Theorem 11.2 therefore prove
+smoothness and identify the boundary strata.
 
-Under the same hypotheses, the boundary strata and the required universal object would be
+Descent of the chart families supplies the universal object
 
 $$
 f_\Sigma:P_\Sigma\longrightarrow\mathcal M_\Sigma^{\mathrm{tor}}
@@ -2100,26 +2877,39 @@ $$
 equipped with its semiabelian action, $\mathcal O_F$-action, polarization, level orbit,
 intrinsic fs logarithmic structure, relatively ample normalized theta line, and all graphs
 and conductor data of Section 10.3. Its boundary fibers may be nonnormal; their normalized-star
-covers and original conductor pushouts are part of the datum. The explicit Mumford families
-have these compatibilities; their global descent is part of the missing hypotheses.
+covers and original conductor pushouts are part of the datum.
 
 ### 16.3 Projectivity and descent
 
-Chapter 13 gives the conditional valuative argument; Chapter 15 gives actual local Cartier fan
-data and vertical positivity. Neither supplies the missing global proper gluing or mixed
-positivity.
+Conditional properness is Section 13.4. Under TDC-Ext, the descended structured
+Plucker line of Section 15.3 makes the algebraic space a projective scheme. After the unframed scheme
+exists, Chapter 12 normalizes it in the paired-frame cover; Conditional Theorem 12.1
+supplies conductor and nilpotent compatibility for every universal graph.
 
-**Conditional Theorem 16.1 (toroidal compactification and gluing).** If
-$({\rm IIT})$, the full structured $({\rm AEC}_0)$, $({\rm RCD})$, exhaustive algebraic
-overlaps, and $({\rm TDC})$ are supplied, the standard etale gluing and fpqc descent arguments
-of Chapters 10 and 58 produce a smooth projective toroidal compactification with completed
-rings (16.2) and the stated universal structured semiabelic family. This manuscript proves
-the implication, not its antecedents.
+**Theorem 16.1 (two-branch toroidal compactification and gluing, TCG).** The global
+compactification statement has the following separate alternatives.
+
+1. **Higher rank.** If $d\ge2$ and GCC, Raw-DF-IIT, FRCD, KFF, and TDC-Ext hold, then for the
+   standing Hilbert--Blumenthal PEL datum, neat level, and a regular projective
+   admissible fan collection there is a smooth projective toroidal compactification
+   $\mathcal M_\Sigma^{\mathrm{tor}}$. Its boundary is a relative normal-crossings
+   divisor with strata indexed by fan faces. Its completed rings are (16.2), of total
+   relative dimension $d$, and its universal structured semiabelic family is (16.3).
+   The unframed construction commutes with coefficient base change. Paired-frame
+   normalization and its structured compatibility are as in Conditional Theorem
+   12.1.
+2. **Rank one.** If $d=1$, the global compactification is the compactified fine
+   modular curve in the applicable good-level case of Book 111, Theorem 13.1. This
+   alternative imports only the smooth proper/projective compactification and the
+   universal rank-one object in the scope stated there; it does not invoke
+   Raw-DF-IIT and does not import arbitrary-$Z$ joining, avoidance, or ICS. Use of
+   this compactification in Chapter 17 requires the separate supplied-model
+   antecedent R1-FTJ below.
 
 ### 16.4 Independence under refinement
 
-If the compactifications in Conditional Theorem 16.1 exist and $\Sigma'$ refines
-$\Sigma$, every monoid chart for $\Sigma'$ maps to the chart for $\Sigma$ by the identity
+In the higher-rank branch, if $\Sigma'$ refines $\Sigma$, every monoid chart for $\Sigma'$ maps to the chart for
+$\Sigma$ by the identity
 on the common lattice. The normalized family map is the toric modification prescribed by
 subdivision. Its conductor restrictions respect paired faces, so it descends to a proper
 morphism
@@ -2130,7 +2920,11 @@ $$
 \tag{16.4}
 $$
 
-which is the identity on $\mathcal M$. It is projective because the relative support function of the subdivision supplies a relatively ample fan line.
+which is the identity on $\mathcal M$. Chartwise this is the explicit toric
+modification. Its global existence and compatibility with the universal object are
+conditional on GCC, Raw-DF-IIT, and FRCD, and its framed fppf form also uses KFF;
+once it exists, the relative support function supplies
+its relatively ample fan line.
 
 For two fans, take their common projective regular refinement by Chapter 4. The two compactifications are therefore canonically birational through projective toroidal modifications, and their universal semiabelic objects agree on common completed face charts. Boundary constructions that are invariant under such refinement are consequently independent of the chosen fan.
 
@@ -2150,36 +2944,68 @@ $$
 
 be a point with split semistable reduction of a selected cusp type. Its period valuations choose a ray $\rho$ in the positive monodromy cone. Assume only that the torsion frames appearing in $Y$ are defined over the given completion field. Their division monomials then define the paired-frame lattice of (9.3); no additional root is to be adjoined.
 
-Choose the fan of Theorem 4.2 with $\rho$ marked. From this point through Theorem 17.2,
-assume the antecedents of Conditional Theorem 16.1 and assume that its global paired-frame
-compactification is defined over a coefficient ring whose base change to $R$ contains $Y$.
-This is the finite-type global model missing from the unconditional construction. Under that
-assumption its algebraic branch has completion
+There are two distinct ways a global model enters. If $d\ge2$, assume GCC,
+Raw-DF-IIT, FRCD, KFF, and TDC-Ext. Choose the fan of Theorem 4.2 with $\rho$ marked and
+apply the higher-rank alternative of Theorem 16.1 to the fine paired-frame PEL datum
+defining $Y$. Base change that projective compactification to $R$. Its algebraic
+branch has completion
 
 $$
 \operatorname{Spf}S'[[P_{\sigma}^{\mathrm{fr}}]],
 \tag{17.2}
 $$
 
-and the valuation homomorphism of $y_{\mathrm{sp}}$ is a continuous map from this ring to $R$. Because $\rho$ is a ray of the fan, the map meets a single boundary divisor transversely after dividing by the common valuation multiplicity. The Kummer units, enhanced theta rigidification, polarization sign, and exact frames are the universal ones on this branch.
+and the valuation homomorphism of $y_{\mathrm{sp}}$ is a continuous map from this
+ring to $R$. Because $\rho$ is a ray of the fan, the map meets a single boundary
+divisor; its intersection multiplicity is the integral length of the valuation vector
+on the primitive ray. The Kummer units, enhanced theta rigidification, polarization
+sign, and exact frames are the universal ones on this branch. Take the closure of the
+selected geometrically connected component in the paired-frame compactification. For a proper
+smooth morphism the sheaf of geometric connected components is finite etale: locally
+constant idempotents of a fiber lift uniquely through smooth infinitesimal
+neighborhoods and properness extends them. Since $R$ is henselian, the chosen generic
+component therefore extends to an open-and-closed component. Denote it by
+$\overline{\mathcal Y}$. It is smooth and projective over $R$, contains the
+good-reduction locus $\mathcal Y^{\mathrm{good}}$, and carries the restriction of
+the ample structured Plucker line of Section 15.3. A power is relatively very ample. The section (17.1) extends
+by properness, and its completed branch is (17.2) by (16.2).
 
-Let $Z\subsetneq Y$ be a proper closed subset. The issue is not to algebraize (17.2) in
-isolation; Proposition 11.1 already does that on the Mumford side. The issue is to put its
-chosen section in the same finite-type projective model as the good interior and to use a
-power of the same global ample line. Conditional Theorem 16.1 would do this; the local
-algebraization alone does not.
+There is no completion-field enlargement. Normalization is taken in exactly the
+paired-frame function algebra specified by $Y$; Section 9.3 constructs it before
+completion, and Conditional Theorem 12.1 descends it through the recorded ramified splitting
+ring. Hence the completion field, valuation shell, Kummer classes, and framed
+one-motive of $y_{\mathrm{sp}}$ remain unchanged.
 
-Take the closure of the geometrically connected component of $Y$ in the supplied paired-frame toroidal compactification and then its smooth regular fan refinement. Denote the resulting $R$-model by $\overline{\mathcal Y}$. Under the conditional hypotheses it is smooth and projective, contains the good-reduction locus $\mathcal Y^{\mathrm{good}}$ as an open, and carries the global relatively ample line required by $({\rm TDC})$. A common power is relatively very ample and is the base change of the global finite-dimensional section space. The section (17.1) extends by properness, and its completed branch is (17.2) by the conditional comparison (16.2).
+If $d=1$, Raw-DF-IIT is unavailable and is not inserted into this argument. Book
+111, Theorem 13.1 supplies the applicable global rank-one compactification, but that
+theorem alone is not a joining theorem for the selected fine branch. We therefore
+state the extra input actually required.
 
-There is no completion-field enlargement in this conditional operation. Normalization is
-taken in exactly the paired-frame function algebra specified by $Y$. Section 9.3 identifies
-its algebraic normalization before completion; $({\rm RCD})$ is still needed to descend it
-through the recorded ramified splitting ring. Under that hypothesis the completion field,
-valuation shell, Kummer classes, and framed one-motive of $y_{\mathrm{sp}}$ remain unchanged.
+**Rank-one supplied-model FTJ antecedent (R1-FTJ).** After base change to $R$ and
+passage to the selected fine component, a smooth projective finite-type model
+$\overline{\mathcal Y}/R$ with geometrically connected fibers is supplied such that:
+
+1. its generic fiber is $Y$ and it contains the good-reduction locus
+   $\mathcal Y^{\mathrm{good}}$;
+2. $y_{\mathrm{sp}}$ extends to an $R$-section whose completed boundary branch is
+   the prescribed framed Tate--Mumford branch, without enlarging the completion
+   field or changing its valuation, Kummer, theta, polarization, or frame data; and
+3. a relatively very ample line and every coefficient and PEL-frame descent
+   isomorphism needed below extend to the model.
+
+R1-FTJ contains no assertion about a proper closed subset $Z$. The arbitrary-$Z$
+avoidance conclusion is deduced below from this supplied model. Neither Book 111,
+Theorem 13.1 nor Book 110 is cited as a proof of R1-FTJ.
 
 ### 17.2 The conditional finite-type joining theorem
 
-We verify the avoidance clause needed for slicing. Let $\overline Z$ be the schematic closure of $Z$ in $\overline{\mathcal Y}$. The special fiber of the selected component is geometrically integral because $\overline{\mathcal Y}/R$ is smooth with geometrically connected generic fiber; the etale scheme of connected components is constant, and a connected smooth fiber is regular and hence its irreducible components are disjoint, so it is integral.
+Under either the higher-rank construction above or R1-FTJ, let $Z\subsetneq Y$ be
+a proper closed subset. We verify the avoidance clause needed for slicing. Let
+$\overline Z$ be the schematic closure of $Z$ in $\overline{\mathcal Y}$. The
+special fiber of the selected component is geometrically integral because
+$\overline{\mathcal Y}/R$ is smooth with geometrically connected generic fiber; the
+etale scheme of connected components is constant, and a connected smooth fiber is
+regular and hence its irreducible components are disjoint, so it is integral.
 
 At the generic point $\eta_s$ of the special fiber, the local ring is a discrete valuation ring with uniformizer $\pi$. The ideal $I_Z$ of the schematic closure is $\pi$-saturated:
 
@@ -2188,7 +3014,14 @@ $$
 \tag{17.3}
 $$
 
-because $I_Z$ is the contraction of its localization after inverting $\pi$. If $I_Z$ vanished at $\eta_s$, every member would be divisible by $\pi$ there. Saturation would permit repeated division. Krull intersection would then make $I_Z$ zero after inverting $\pi$, contrary to $Z\ne Y$. Thus $\overline Z$ contains no special-fiber component.
+because $I_Z$ is the contraction of its localization after inverting $\pi$. The
+total space is integral: it is regular, and its geometrically connected generic and
+special fibers make its irreducible components disjoint and then unique. Hence
+$I_Z$ contains a nonzero element. If $\overline Z$ contained the special-fiber
+component, then $(I_Z)_{\eta_s}\subset(\pi)$. Choose a nonzero element of this ideal
+of minimal $\pi$-adic order. Saturation permits division by $\pi$ and produces an
+element of smaller order, a contradiction. Thus $\overline Z$ contains no
+special-fiber component.
 
 The boundary also contains no component of the good special fiber. It follows that
 
@@ -2199,19 +3032,29 @@ $$
 
 is a nonempty dense open. It contains a closed point. Over a finite residue field that closed point need not be rational, a distinction retained below.
 
-**Conditional Theorem 17.1 (finite-type joining).** With the data and the global
-compactification hypothesis of Section 17.1, base change of that compactification and closure
-of the selected component give one smooth projective finite-type $R$-model
+**Conditional Theorem 17.1 (two-branch finite-type joining, FTJ).** With the data of
+Section 17.1, assume one of the following separate alternatives:
+
+1. $d\ge2$ and GCC, Raw-DF-IIT, FRCD, KFF, and TDC-Ext hold, so the higher-rank construction
+   above supplies $\overline{\mathcal Y}$; or
+2. $d=1$ and R1-FTJ holds for the supplied rank-one model.
+
+Then there is one smooth projective finite-type $R$-model
 $\overline{\mathcal Y}$ satisfying all of the following.
 
-1. It contains the good interior $\mathcal Y^{\mathrm{good}}$, and a relatively very ample line is a power of the global determinant--fan line.
+1. It contains the good interior $\mathcal Y^{\mathrm{good}}$. In the higher-rank
+   alternative a relatively very ample line is a power of the descended structured
+   Plucker line; in the rank-one alternative the relatively very ample line is part
+   of R1-FTJ.
 2. The selected semistable point extends to an $R$-section. The completion at its boundary branch is the normalized paired-frame Mumford chart, and the section retains its completion field, valuation and Kummer shells, theta rigidification, polarization sign, and exact frames.
 3. The open (17.4) is nonempty and dense for every proper closed $Z\subset Y$.
 4. Every coefficient and descent isomorphism of the PEL frame cover extends to the model and the ample line.
 
-The conclusion follows conditionally from $({\rm TCG})_\Sigma$ and the saturation argument
-(17.3). It is not an algebraization of the formal branch alone: both the global section space
-and the local completed comparison must come from the supplied algebraic projective model.
+In the higher-rank alternative the model is constructed globally by Theorem 16.1,
+not from the formal branch alone, and its completed comparison is (16.2). In the
+rank-one alternative the model and completed branch are precisely the R1-FTJ input.
+For both alternatives, and for every $Z$, the avoidance assertion is the manuscript's
+saturation argument (17.3).
 
 ### 17.3 Relative slicing with a dense good open
 
@@ -2219,12 +3062,18 @@ We recall the slicing argument in enough detail to expose its hypotheses. Let $n
 relative dimension of $\overline{\mathcal Y}/R$ and let $\mathcal L$ be the relatively very
 ample power in Conditional Theorem 17.1.
 
-If $d=1$, take no cutting sections and set $\mathcal C=\overline{\mathcal Y}$. It is
-already a smooth proper relative curve. The selected section, the dense open $U_k$, avoidance
-of $\overline Z$, and congruence stability are exactly the corresponding assertions of
-Conditional Theorem 17.1; there is no Bertini step and no independent first-jet condition.
+If $d=1$, Book 111, Theorem 13.1 supplied only the global compactification used as
+the starting boundary object; R1-FTJ separately supplied the selected finite-type
+model and branch. The saturation argument of Section 17.2 then produced the
+arbitrary-$Z$ dense open $U_k$. Take no cutting sections and set
+$\mathcal C=\overline{\mathcal Y}$. Thus the slicing step is empty in rank one, but
+FTJ and the resulting ICS statement remain conditional on R1-FTJ; no arbitrary-$Z$
+FTJ, avoidance, or ICS theorem is delegated to Books 110--111.
 
-Assume henceforth that $d=n\ge2$. We seek $n-1$ sections whose common zero scheme is a
+Assume henceforth that $d=n\ge2$ and that the residue field $k$ is finite. The
+finiteness of $k$ is used only in the closed-point density estimates (17.6) and the
+high-degree finite-field Bertini argument; it was not needed for FTJ or for the
+rank-one empty-slice case. We seek $n-1$ sections whose common zero scheme is a
 smooth proper relative curve, passes through the selected semistable section with prescribed
 independent first jets, and has special fiber meeting $U_k$.
 
@@ -2291,9 +3140,10 @@ Finally, the construction is stable in a congruence neighborhood of the cutting 
 
 ### 17.4 The conditional stable connecting-slice theorem
 
-**Conditional Theorem 17.2 (stable integral connecting slice).** In the setting of
-Conditional Theorem 17.1 there is a tuple of global cutting sections (the empty tuple when
-$d=1$) whose intersection is a smooth proper geometrically connected relative curve
+**Conditional Theorem 17.2 (stable integral connecting slice, ICS).** Under either
+alternative of Conditional Theorem 17.1, and additionally assuming that $k$ is
+finite in the higher-rank alternative, there is a tuple of global cutting sections
+(the empty tuple when $d=1$) whose intersection is a smooth proper geometrically connected relative curve
 $\mathcal C/R$ such that:
 
 1. its generic open $C^\circ$ lies in $Y\setminus Z$, contains a point in the assigned semistable neighborhood, and maps immersively near every marked point;
@@ -2312,140 +3162,317 @@ Without (17.12), only the nonempty-open version is valid. Indeed, over a finite 
 
 ### 17.5 The exported interface
 
-The audit leaves the interface in the same conditional form as Books 157 and 158, but with
-several local pieces corrected.
-
-- $({\rm IIT})$ is not proved. With an external chart it is false by the generalized
-  elliptic deformation in Section 7.2. Proposition 7.1 proves reconstruction only after
-  monomial divisibility is included in the toroidal subfunctor.
-- $({\rm MPE})$ is proved only for traits, reduced normal dense-puncture tests, and the
-  Mumford-presented toroidal subfunctor. Ring (8.3) is its correctly dimensioned completed
-  ring.
-- Proposition 10.1 proves boundedness of the entire structured graph presentation on the
-  Mumford side, not only of the underlying normalization and conductor.
-- Proposition 11.1 algebraizes one explicit Mumford chart with all those graphs and fs
-  monoids. It does not prove the etale and exhaustive assertion $({\rm AEC}_0)$.
-- Proposition 12.1 isolates the missing all-star conductor map (12.8a) and the nilpotent
-  existence step. Hence $({\rm RCD})$ is not proved.
-- Equations (15.2a)--(15.2b) give actual Cartier fan data and prove vertical toric
-  positivity. The global theta--interior comparison, mixed positivity, effective-cone bound,
-  and properness required by $({\rm TDC})$ are not proved.
-- Conditional Theorems 16.1, 17.1, and 17.2 record what follows if the missing package is
-  supplied. The slicing argument includes $d=1$ by taking the empty cutting tuple.
-
-The implication chain established as a conditional reduction is
+The construction exports the following two-branch conditional chain.
 
 $$
-({\rm IIT})\Longrightarrow({\rm MPE}),
-\qquad
-({\rm MPE})+({\rm ACE})
-\Longrightarrow({\rm TCG})_\Sigma
+\begin{gathered}
+\left.\begin{gathered}
+({\rm Raw\text{-}DF\text{-}IIT})\Longrightarrow({\rm IIT})_{\rm unfr}
+\Longrightarrow({\rm MPE})_{\rm unfr},\\
+({\rm GCC})+({\rm Raw\text{-}DF\text{-}IIT})
+\Longrightarrow({\rm AEC})_{\rm unfr}
+\Longrightarrow(\text{unframed proper space}),\\
+(\text{unframed proper space})+({\rm Raw\text{-}DF\text{-}IIT})
++({\rm FRCD})+({\rm KFF})\Longrightarrow({\rm RCD})_{\rm fppf},\\
+(\text{unframed proper space})+({\rm RCD})_{\rm fppf}+({\rm TDC\text{-}Ext})
+\Longrightarrow({\rm TDC})\Longrightarrow({\rm TCG})_\Sigma
 \Longrightarrow({\rm FTJ})_{v,Z}
-\Longrightarrow({\rm ICS})_{v,Z}.
+\xrightarrow{k\ {\rm finite}}({\rm ICS})_{v,Z}.
+\end{gathered}\right\}\qquad(d\ge2),\\[4pt]
+\bigl(\text{Book 111, Theorem 13.1}\bigr)+({\rm R1\text{-}FTJ})
+\Longrightarrow({\rm FTJ})_{v,Z}
+\xrightarrow[\text{empty slice}]{\text{avoidance }(17.3)}
+({\rm ICS})_{v,Z}\qquad(d=1).
+\end{gathered}
 \tag{17.13}
 $$
 
-Every arrow in (17.13) is established once its displayed antecedent exists. None of the
-antecedents $({\rm IIT})$, full $({\rm ACE})$, or $({\rm TDC})$ is promoted to a theorem in
-this manuscript. The last conditional assertion is deliberately the nonempty-open statement,
-which is valid without an extra rational-point hypothesis.
+BCP, Proposition 10.1, is the unconditional boundedness input for explicit Mumford
+charts; it does not recognize arbitrary ambient objects. IIT is Conditional Theorem
+7.2; its framed conductor-root form also uses FRCD. MPE is Conditional Proposition
+8.1 with the same qualification. GCC is Hypothesis 3.1, FRCD is Hypothesis 9.1,
+KFF is Hypothesis 9.2, and TDC-Ext is Hypothesis 15.1. AEC is Conditional Theorem
+11.2; RCD is Conditional Theorem 12.1 after the unframed space exists; TDC is
+Conditional Theorem 15.2; the
+higher-rank TCG alternative is Theorem 16.1(1); and FTJ and ICS are Conditional
+Theorems 17.1 and 17.2. KFF is required
+wherever the finite normalization is used as an fppf cover; mere finiteness is not
+enough. The higher-rank chain is not promoted to an unconditional theorem in this
+manuscript. TDC-Ext is required by higher-rank TDC, TCG, FTJ, and ICS, while a finite
+residue field is required only for the higher-rank FTJ-to-ICS Bertini arrow. In rank
+one, Book 111, Theorem 13.1 provides the global compactification
+only in its stated scope; R1-FTJ is still required for the selected joining model,
+after which (17.3) proves arbitrary-$Z$ avoidance and the empty-slice argument proves
+ICS. Neither of those latter assertions is imported from Books 110--111. The last
+theorem deliberately asserts a nonempty good open. A rational good section requires
+the additional hypothesis (17.12).
 
 ## 18. Hostile mathematical review
 
 ### 18.1 Infinitesimal and logarithmic attacks
 
-**Attack: strictness assumes the recognition theorem.** Correct. The deformation
-$XY=\epsilon$ has intrinsic parameter $1\mapsto\epsilon$ and is not strict over the external
-chart $1\mapsto0$. The generalized elliptic example of Section 7.2 shows that the underlying
-PEL data do not force the two charts to agree. The repaired text therefore treats strictness as
-the definition of the toroidal subfunctor and does not call Proposition 7.1 $({\rm IIT})$.
+**Attack: the Mumford cell semigroup is not closed under addition.** This attack
+succeeds against the former formula. Section 6.1 now uses
+$\Phi_C(n,x)=n\varphi_C(x/n)$ on the cone over $C$. Formula (6.1c) proves closure,
+and (6.4) uses the corresponding homogeneous convexity defect. The rank-one node is
+recomputed as the second difference of vertex values.
 
-**Attack: the proof divides by a monomial which may be zero.** The conditional argument does
-not divide. Equation (7.10) is now an explicit hypothesis of the toroidal subfunctor. When
-$\alpha(d)=0$, its content is exactly the disputed divisibility statement, so it is not cited
-as a proof of that statement.
+**Attack: the equivariant fan regularization has no decreasing invariant.** This
+attack succeeds against the former common-orbit-refinement argument. Section 4.4 now
+uses the regular-action barycentric refinement from Book 157, Lemma 13.2B.2. Distinct
+translates of the chosen face lie in no common cone, so their coherent stellar
+subdivisions commute. The determinant calculation creates no cone of the old maximal
+multiplicity and removes at least one orbit of such cones; induction on maximal
+multiplicity and then its finite orbit count terminates. Thus Theorem 4.2 needs no
+new antecedent.
 
-**Attack: traits cannot detect nilpotent deformations.** Correct. Height-one traits prove
-extraction only over normal reduced bases with dense puncture. The square-zero weight-algebra
-argument handles Artin thickenings only after toroidal divisibility has been supplied.
+**Attack: arbitrary geometric semiabelic PEL fibers were classified without a
+proof.** This attack succeeds. The orbit-weight discussion in Section 3.5 proves
+recovery only on the explicit Mumford locus. GCC, Hypothesis 3.1, now states the
+classification of an arbitrary geometric fiber. It precedes Raw-DF-IIT, which starts
+with an already labelled Mumford fiber.
 
-**Attack: an intrinsic log structure was simply declared.** The repaired Section 7.1
-distinguishes the intrinsic divisorial log structure on a reduced toric star from a prescribed
-base chart through nilpotents. The former does not manufacture the latter. Section 11.3 proves
-fs charts only for the explicit algebraic Mumford family.
+**Attack: strictness was defined into the object.** Section 5.2 gives the ambient
+object no chart and imposes no monomial divisibility. Chapter 7 now records the
+actual multiplication maps as a symmetric monoidal diagram in
+$\operatorname{Div}(A)$. Strictness would be a conclusion of Raw-DF-IIT, not a
+membership condition.
 
-**Attack: the unit cocycle may carry a genuine obstruction.** Once (7.10) is assumed, the
-free-lattice recursion (7.12) splits its symmetric unit cocycle. This settles the conditional
-algebra step, not the missing divisibility step.
+**Attack: the defect symbols may define a larger monoid.** This attack succeeds.
+The old proof computed only a cancellative bending lattice. It neither proved an
+isomorphism of raw monoids nor killed the periodic secondary-fan kernel illustrated
+by (7.6). Hypothesis 7.1 states both missing assertions explicitly.
+
+**Attack: $A/A^\times$ loses nilpotent information.** This attack also succeeds.
+For $k[e,h]/(e,h)^2$, $[e]^2=[h][e]=[0]$ without $[e]=[h]$; and the map
+$2\mathbf N\to(k[e]/e^2)/(k[e]/e^2)^\times$ with $2\mapsto[e]$ need not extend
+to $\mathbf N$. Thus cancellation and saturation are invalid over Artin rings.
+Replacing scalars by the line-with-section groupoid preserves the information
+but does not prove its factorization through the Fourier monoid. That factorization
+is Raw-DF-IIT.
+
+**Attack: $XY=\epsilon$ disproves intrinsic recognition.** It does not: a valid
+intrinsic theorem would recover $1\mapsto\epsilon$, while $XY=0$ would recover
+$1\mapsto0$. The example disproves compatibility with a separately fixed zero
+chart. The unresolved higher-rank problem is the simultaneous raw factorization
+around periodic wall circuits, not this rank-one node.
+
+**Attack: the deformation ring counts periods twice.** Formula (8.3) has one
+rank-$d$ Fourier monoid. At a face of dimension $r$ it has $r$ sharp parameters and
+$d-r$ invertible Fourier parameters, still total dimension $d$. It represents the
+supplied-DF/Mumford functor unconditionally and the full ambient functor only
+conditionally on Raw-DF-IIT.
 
 ### 18.2 Normalization, conductor, and descent attacks
 
-**Attack: normal toric charts imply normal semiabelic fibers.** They do not. The manuscript always distinguishes the normalized stars from their periodic face pushout. Equations (6.7), (10.3), and (10.7) retain the conductor, and determinant formula (14.5) includes its correction.
+**Attack: normalization was made to commute with a smoothing.** It is not. Section
+6.3 proves total-family flatness from the graded monomial algebra. Only after
+restriction to a fixed boundary stratum are the fiber normalization and conductor
+formed in (6.7), (10.3), and (10.7). The example $XY=q$ is kept explicit: its
+total space is normal while its $q=0$ fiber is not. Formula (14.5) is likewise a
+boundary-stratum restriction of the global determinant line.
 
 **Attack: a formal Kummer root need not be algebraic.** Section 9.2 computes the integral closure as the finite monoid algebra $S'[P_\sigma^{\mathrm{fr}}]$, and Section 9.3 normalizes before completing. Excellence then identifies the completion. No root is introduced beyond the prescribed frame lattice.
 
-**Attack: boundedness of normalization does not bound the structured gluing.** Section 10.3
-now retains the group and action graphs, endomorphism and polarization graphs, level graphs,
-cubical isomorphisms, both conductor arrows, and theta descent graphs. Proposition 10.1 bounds
-this entire presentation for explicit Mumford objects. Extending it to all labelled PEL
-degenerations still depends on recognition.
+**Attack: bounded normalization does not bound the structured gluing.** Section 10.3
+separately retains the identity, group, action, endomorphism, polarization, level,
+cubical, conductor, and theta-descent graphs. Proposition 10.1 proves uniform bounds
+for every explicit Mumford chart. Transporting those bounds to every arbitrary
+ambient degeneration is conditional on Raw-DF-IIT; the manuscript no longer uses
+BCP to prove the recognition statement on which that transport depends.
 
-**Attack: a Fitting stratum cannot prove an fs chart.** Agreed; it is never used for that purpose. The base chart is the explicitly saturated monoid (11.3), the family star chart is (11.4), and conductor saturation is checked in their common group completion. Fitting ideals serve only to impose bounded locally closed conditions after these charts exist.
+**Attack: normalization and identity rigidification uniquely extend the theta
+line.** This attack succeeds. On a conductor graph $\Gamma$, line bundles trivial
+on the normalization retain the graph torus
+$(\mathbf G_m)^{b_1(\Gamma)}$; a nodal cycle already retains one $\mathbf G_m$.
+Identity rigidification fixes a base or vertex gauge, not the cycle holonomy. Book
+16, Section 8.1, and Book 25, Section 12.1 give this counterboundary. Section 14.2 now
+claims uniqueness only relative to an actual conductor descent datum, whose required
+coherence is part of FRCD/RCD. No unproved theorem that cubical PEL data kills the
+graph torus is smuggled into the argument.
 
-**Attack: generic Galois arrows need not descend over a ramified self-product.** Correct.
-Formula (12.7) constructs only the conductor-face map. Equation (12.8a) records the additional
-normalized-star map over the conductor base that the pushout requires. The branch formulas in
-the manuscript do not prove its all-weight equalizer condition, and full faithfulness gives
-uniqueness, not existence, across the nilradical. Thus $({\rm RCD})$ remains open here.
+**Attack: a Fitting stratum cannot prove an fs chart.** Agreed; it is never used for
+that purpose. The base chart is the explicitly saturated monoid (11.3), and each
+normalized family star has the saturated chart (11.4). Equality of powers on the
+conductor does not prove root descent; saturation of the conductor pushout is stated
+only under FRCD. Fitting ideals serve only to impose bounded locally closed
+conditions after these charts exist.
 
-**Attack: the ample line might fail to descend even if the scheme descends.** Once a genuine
-descent datum and compatible line exist, Book 10 descends both and reflects ampleness. The
-formal descent theorem cannot supply the absent ramified arrow or the absent global ample line.
+**Attack: equality of $r$th powers leaves a $\mu_r$-ambiguity.** This attack
+succeeds. A paired-frame over-lattice lists possible root exponents but does not
+choose an isomorphism between roots on paired conductor faces. Hypothesis 9.1
+requires the exact root comparisons and their face, deck, triple-overlap, and
+nilpotent coherence. Section 11.3 no longer cancels the ambiguity.
+
+**Attack: finite normalization was treated as flat.** This attack succeeds.
+Hypothesis 9.2 isolates the finite-local-free statement for every nested frame
+lattice. The finite map $k[x^2,xy,y^2]\to k[x,y]$ has generic rank two and a
+three-dimensional fiber at the vertex, so finiteness of integral closure alone does
+not authorize fppf descent. The former unsupported fundamental-parallelepiped basis
+claim has been removed.
+
+**Attack: generic Galois arrows need not descend over a ramified self-product.** The
+valid route is to construct the unframed space first, conditionally in higher rank,
+and only then take its finite normalization in the generic framed cover. Once the
+unframed space exists, normalization and extension of the deck action are
+unconditional, but they do not prove compatibility with labelled stars, exact
+conductor roots, or nilpotents, and they do not make the normalization flat.
+Conditional Theorem 12.1 uses Raw-DF-IIT, FRCD, and KFF for those further claims.
+Full faithfulness is never presented as existence.
+
+**Attack: the ample line might fail to descend even if the scheme descends.** On the
+conditional global space, the
+determinant formula (14.5) and the Cartier transitions (15.3) provide the line's descent
+datum on every star and conductor face. Under FRCD the rooted conductor comparisons
+are coherent, and under KFF the finite cover is actually fppf. Identifying the
+resulting line with the structured Plucker pullback is separately TDC-Ext. Only with
+that antecedent does tensoring deck transforms give the ample permutation-linearized
+line used in Section 15.3.
+
+**Attack: every PEL endomorphism acts on one fixed theta determinant.** This attack
+succeeds. Section 14.3 restricts the action on $Rf_*\Theta^m$ to automorphisms
+equipped with $g^*\Theta^m\simeq\Theta^m$. A general $\iota(a)$ maps instead to the
+cohomology of $\iota(a)^*\Theta^m$; only $[n]$ has the displayed scalar-power formula
+$[n]^*\Theta^m\simeq\Theta^{mn^2}$. No $\mathcal O_F$-action on a fixed
+$\mathcal D_m$ is claimed.
 
 ### 18.3 Positivity and joining attacks
 
-**Attack: strict convexity of a fan says nothing about the universal theta line.** Correct.
-Equations (15.2a)--(15.2b) now give the fan line by actual Cartier data. The family theta line
-and its determinant are separate. The local boundary-character calculation does not prove
-comparison with a fixed ample interior line.
+**Attack: strict convexity of a fan says nothing about the universal theta line.**
+The manuscript keeps the lines separate. The universal theta line is on the family;
+its determinant is on the base; and (15.3)--(15.4) define the fan line by Cartier data.
+The chartwise calculation gives only the corrected determinant line (14.6). The
+comparison (15.2) with the actual structured Plucker line is now clause 3 of
+TDC-Ext, not a consequence of strict convexity.
 
 **Attack: determinant of cohomology may jump on a nonnormal fiber.** The normalized-star resolution and conductor exact triangle give (14.3) and (14.5). For the chosen uniform theta power, higher cohomology vanishes on stars and all their intersections, so the determinant is a base-compatible line.
 
-**Attack: horizontal and vertical positivity do not imply mixed positivity.** Correct. The
-former effective-cone argument assumed finite generation and an already proper global atlas.
-Section 15.3 now states the valid finite-map criterion and records that its global map and
-finiteness are unproved. This is a remaining part of $({\rm TDC})$.
+**Attack: the determinant exponent $\kappa_m$ is quadratic in $m$.** This attack
+succeeds. Formula (14.4a) is a weighted lattice-point sum over a $d$-dimensional
+polytope, so (14.4b) is generally a degree-$d+1$ Ehrhart quasipolynomial; in $d=2$
+the centered example is $m^3A(y)$. The only retained positivity is the positive
+interior-monodromy leading coefficient (14.4c). Determinant correction uses the
+exact exponent in $P_\sigma^{\mathrm{gp}}\subset M$, while ampleness still comes
+conditionally from the finite structured-graph morphism under TDC-Ext, not from this
+asymptotic.
 
-**Attack: a complete formal cusp still does not meet the good interior.** Correct. Proposition
-11.1 algebraizes the cusp in isolation. Conditional Theorem 17.1 explicitly assumes the one
-global projective model joining it to the interior. It no longer treats that model as an output
-of local formal algebraization.
+**Attack: (14.4a) controls every Plucker minor.** This attack succeeds. Formula
+(14.4a) is the determinant transition for $f_*\Theta^m$; arbitrary evaluation,
+multiplication, action, and conductor minors have different valuations. Hypothesis
+15.1 therefore separately assumes extension without common zeros, quasi-finiteness,
+and the exact line identity. The repository's general Hilbert/graph boundedness
+results and the required TDC packages in Books 157--158 do not prove these assertions
+under an alias.
 
-**Attack: a proper closed subset may occupy the whole special fiber.** Its naive closure could if vertical components were added, but the schematic closure of a generic closed subset has a uniformizer-saturated ideal. Repeated division and Krull intersection prove (17.3), so it contains no special-fiber component.
+**Attack: horizontal and vertical positivity do not imply mixed positivity.** Chapter
+15 does not make that inference. The correct conditional route is the proper
+quasi-finite structured Hilbert/graph map (15.1) to the projective parameter space
+$Q^\theta$. It is finite, so its Plucker pullback is ample; the tensor of deck
+translates descends. Properness uses the conditional global source, extension and
+quasi-finiteness are TDC-Ext, and framed descent uses FRCD and KFF. GCC, Raw-DF-IIT,
+and overlap exhaustion construct the source and its structured charts but do not
+prove that the chosen Plucker coordinates separate all boundary points. No global
+effective-cone finite-generation claim occurs, and Section 15.2 makes no cone-generation
+assertion. The ample structured-graph line handles all curves directly.
 
-**Attack: the slicing argument ignores $d=1$.** Section 17.3 now handles $d=1$ by taking the
-empty cutting tuple and using the supplied smooth projective model itself as the relative curve.
-For $d\ge2$ the Bertini argument is unchanged. A rational good point still requires (17.12).
+**Attack: a complete formal cusp still does not meet the good interior.** The joining
+model is not inferred from a completion. For $d\ge2$, Theorem 16.1(1) first
+constructs the global projective compactification by algebraic overlaps, and
+Conditional Theorem 17.1 then takes the open-and-closed closure of the selected
+generic component in its paired-frame base change. For $d=1$, Book 111, Theorem
+13.1 supplies only the global compactification and R1-FTJ separately supplies the
+selected model and completed branch. In neither branch is the global model inferred
+from the formal chart.
+
+**Attack: a proper closed subset may occupy the whole special fiber.** Its naive
+closure could if vertical components were added, but the schematic closure has a
+uniformizer-saturated ideal. At the special-fiber generic DVR, a nonzero element of
+minimal valuation cannot lie in $(\pi)$, because saturation would divide it by
+$\pi$. Thus (17.3) excludes a special-fiber component.
+
+**Attack: the slicing argument overstates what is known for $d=1$.** This attack
+succeeds. Book 111, Theorem 13.1 is now cited only for its rank-one global
+compactification. It is not cited for joining a selected branch to the good
+component, avoiding an arbitrary proper $Z$, or congruence-stable ICS. R1-FTJ is
+the separate supplied-model antecedent; once it holds, this manuscript proves
+avoidance by (17.3), and the rank-one slicing tuple is empty. For $d\ge2$ the
+higher-rank alternative has $d-1$ cuts. A rational good point still requires
+(17.12).
+
+**Attack: higher-rank Bertini was stated over an arbitrary residue field.** This
+attack succeeds. The estimates (17.6) and the high-degree derivative argument are
+finite-field Bertini. Section 17.3 and Conditional Theorem 17.2 now assume that $k$
+is finite when $d\ge2$. FTJ itself and the rank-one empty-slice ICS argument do not
+use that hypothesis.
 
 ### 18.4 Final theorem chain
 
-The unconditional construction stops at the following precise boundary.
+The hostile checks identify five unproved higher-rank antecedents and a distinct
+rank-one supplied-model antecedent. The exact dependency audit is as follows.
 
-1. Raynaud extraction over complete traits, paired-frame Kummer normalization before
-   completion, equivariant regular projective fans, and the typed Mumford action are proved.
-2. The correctly dimensioned ring (8.3) represents the one-motive and
-   Mumford-presented toroidal subfunctor.
-3. All structure graphs of an explicit Mumford family have bounded finite-type parameter
-   data, and Proposition 11.1 algebraizes that one structured chart with fs monoids.
-4. The conductor-face calculation (12.7), the normalized-star criterion (12.8a), the
-   determinant conductor formula, and the Cartier fan divisor (15.2b) are proved local tools.
-5. Given a global smooth projective joining model, the avoidance and slicing arguments work;
-   for $d=1$ the model itself is the relative curve.
+1. The cell algebra uses the homogeneous extension
+   $\Phi_C(n,x)=n\varphi_C(x/n)$; (6.1c) proves semigroup closure, and (6.4) gives
+   the correctly typed multiplication exponent. The Mumford action is typed by
+   $B:Y\times X\to P^{\mathrm{gp}}$, $\lambda:Y\to X$, and
+   $A:Y\to P^{\mathrm{gp}}$.
+2. The fan regularization first removes inversions by barycentric subdivision and
+   then uses coherent stellar subdivision on an orbit of faces whose distinct
+   members lie in no common cone. Maximal multiplicity and the number of its cone
+   orbits strictly decrease in succession. Theorem 4.2 is therefore proved, not an
+   additional antecedent.
+3. GCC is the first unproved antecedent for arbitrary geometric objects. It places
+   such an object in a unique labelled Mumford fiber. Raw-DF-IIT cannot prove GCC
+   because Raw-DF-IIT begins only after that label is fixed.
+4. The completed Mumford ring (8.3) has exactly $d$ relative Fourier parameters.
+   Its identification with the whole ambient deformation functor for $d\ge2$ is
+   equivalent to the unproved Raw-DF-IIT factorization of actual
+   $\operatorname{Div}(A)$-valued defects.
+5. FRCD is independent of the existence of a frame over-lattice: it selects and
+   coherently composes the $\mu_r$-ambiguous root comparisons on conductor faces.
+   KFF is also independent: it makes every finite Kummer normalization used for
+   descent finite locally free. Example (9.9) shows why finiteness is insufficient.
+6. BCP unconditionally parameterizes every listed graph of the explicit Mumford
+   atlas. Assuming GCC and Raw-DF-IIT, unframed AEC makes that atlas etale and
+   exhaustive; its exact framed conductor-root enhancement also uses FRCD.
+7. Under those hypotheses, AEC and algebraic overlap effectivity first construct the
+   unframed proper space. Normalizing it in the generic paired-frame cover extends
+   deck actions. Raw-DF-IIT and FRCD supply structured conductor and nilpotent
+   compatibility, and KFF supplies the flat cover needed for fppf descent; together
+   they give RCD.
+   Once an unframed space is supplied, normalization and deck extension need no
+   hypothesis, but flatness, root coherence, and nilpotent compatibility still do.
+8. A theta line on the normalization plus identity rigidification does not determine
+   conductor gluing: the residual parameter is the graph torus
+   $(\mathbf G_m)^{b_1}$. Once an actual conductor descent datum is supplied, its
+   effective descent is unique relative to that datum; the global compatibility
+   asserted here is part of FRCD/RCD. No theorem killing this torus by the remaining
+   cubical PEL data is claimed.
+9. The determinant exponent is the exact element of
+   $P_\sigma^{\mathrm{gp}}\subset M$ in (14.4a), generally a degree-$d+1$ weighted
+   Ehrhart quasipolynomial with the positive leading scalar (14.4c), not a quadratic
+   polynomial in $m$. The exact exponent supplies the Cartier correction for
+   $\det f_*\Theta^m$ only; it does not control arbitrary Plucker minors. TDC-Ext is
+   the separate fifth higher-rank antecedent supplying extension, quasi-finiteness,
+   and the exact structured Plucker-line identity. With it, the finite structured
+   Hilbert/graph map supplies a globally ample line directly; no positivity or
+   finite-generation claim about an effective cone is used.
+10. For $d\ge2$, GCC, Raw-DF-IIT, FRCD, KFF, and TDC-Ext feed the projective TCG
+   model and then conditional FTJ. Higher-rank ICS additionally requires finite
+   residue field for Bertini. For $d=1$, Book 111, Theorem 13.1 imports only the
+   global compactification;
+   R1-FTJ separately supplies the selected joining model and branch. The manuscript
+   then proves arbitrary-$Z$ avoidance by (17.3) and ICS with the empty slicing
+   tuple. Books 110--111 supply neither of those latter assertions.
 
-What is not proved is equally exact: $({\rm IIT})$ for the full underlying PEL functor, full
-$({\rm MPE})$, the etale and exhaustive part of $({\rm AEC}_0)$, the all-star and nilpotent
-existence parts of $({\rm RCD})$, algebraic overlap effectivity, and the global comparison,
-mixed positivity, effective-cone bound, and properness in $({\rm TDC})$. Therefore
-Conditional Theorems 16.1, 17.1, and 17.2 cannot be promoted to unconditional existence
-theorems in this volume. This is the same dependency boundary recorded in Books 157 and 158,
-now without the typing error, dimension double count, or circular strict-log claim.
+Therefore the manuscript passes the hostile review only as a conditional
+minitextbook. It is not ready as a proof of the higher-rank global compactification
+or of the joining theorem in either rank branch. The higher-rank primitive gaps are
+GCC (Hypothesis 3.1), Raw-DF-IIT (Hypothesis 7.1), FRCD (Hypothesis 9.1), KFF
+(Hypothesis 9.2), and TDC-Ext (Hypothesis 15.1); higher-rank ICS also has the finite
+residue-field antecedent. The rank-one joining gap is R1-FTJ, with dependencies
+exactly as in (17.13). The explicit supplied-DF Mumford construction, its finite
+normalization,
+and BCP remain outside those recognition and descent gaps in their stated scopes.
+The rank-one global compactification is imported from Book 111, Theorem 13.1, but
+arbitrary-$Z$ rank-one FTJ and ICS are not. No unconditional higher-rank global
+compactification or arbitrary-$Z$ joining theorem is claimed in this manuscript.
