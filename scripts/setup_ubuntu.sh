@@ -97,6 +97,9 @@ else
   log "elan is already installed"
 fi
 
+log "Persisting user-installed tools on the Fish PATH"
+fish -c 'fish_add_path --universal "$HOME/.local/bin" "$HOME/.elan/bin" "$VOLTA_HOME/bin"'
+
 log "Installing or updating Codex from OpenAI"
 download_installer codex https://chatgpt.com/codex/install.sh < <(yes n)
 
@@ -146,9 +149,7 @@ cat <<EOF
 
 Setup complete.
 
-Open a new shell (or run the command below) so user-installed tools are on PATH:
-  export VOLTA_HOME="\${HOME}/.volta"
-  export PATH="\${HOME}/.local/bin:\${HOME}/.elan/bin:\${VOLTA_HOME}/bin:\${PATH}"
+Open a new Fish shell to use the persisted paths for user-installed tools.
 
 Then authenticate Codex interactively once:
   codex
