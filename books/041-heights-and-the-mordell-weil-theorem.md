@@ -1,8 +1,8 @@
-# Heights, Mordell--Weil, and the Faltings--Tate Reduction
+# Weil and Néron--Tate Heights, Descent, and the Mordell--Weil Theorem
 
 ## Contents
 
-1. [Arithmetic size and the missing half of descent](#1-arithmetic-size-and-the-missing-half-of-descent)
+1. [Why height completes descent](#1-why-height-completes-descent)
    - [Why a group quotient is not enough](#11-why-a-group-quotient-is-not-enough)
    - [Standing conventions](#12-standing-conventions)
    - [The architecture of the proof](#13-the-architecture-of-the-proof)
@@ -43,20 +43,20 @@
    - [Applying weak Mordell--Weil](#82-applying-weak-mordell--weil)
    - [The Mordell--Weil theorem](#83-the-mordell--weil-theorem)
    - [Torsion, rank, and lattices](#84-torsion-rank-and-lattices)
-9. [Examples and diagnostic boundaries](#9-examples-and-diagnostic-boundaries)
+9. [Examples and scope](#9-examples-and-scope)
    - [Projective space and rational numbers](#91-projective-space-and-rational-numbers)
    - [Elliptic curves](#92-elliptic-curves)
    - [Products](#93-products)
    - [Why the hypotheses matter](#94-why-the-hypotheses-matter)
-10. [The finite-generation package for quotients](#10-the-finite-generation-package-for-quotients)
+10. [Mordell--Weil under subvarieties and quotients](#10-mordell--weil-under-subvarieties-and-quotients)
     - [Abelian subvarieties and quotients](#101-abelian-subvarieties-and-quotients)
     - [Base change, trace, and restriction](#102-base-change-trace-and-restriction)
     - [The Eisenstein-quotient input](#103-the-eisenstein-quotient-input)
-11. [From point heights to moduli heights](#11-from-point-heights-to-moduli-heights)
-    - [The exact downstream question](#111-the-exact-downstream-question)
+11. [The boundary of the elementary height method](#11-the-boundary-of-the-elementary-height-method)
+    - [The distinct downstream question](#111-the-distinct-downstream-question)
     - [Why Mordell--Weil does not answer it](#112-why-mordell--weil-does-not-answer-it)
-    - [The noncircular proof architecture](#113-the-noncircular-proof-architecture)
-12. [The Faltings height and the moduli comparison](#12-the-faltings-height-and-the-moduli-comparison)
+    - [The exact conditional chain](#113-the-exact-conditional-chain)
+12. [Conditional Faltings height and the moduli comparison](#12-conditional-faltings-height-and-the-moduli-comparison)
     - [The metrized Hodge line](#121-the-metrized-hodge-line)
     - [Potential semistable reduction from curves](#122-potential-semistable-reduction-from-curves)
     - [Ramified semistable Hodge base change](#123-ramified-semistable-hodge-base-change)
@@ -64,34 +64,34 @@
     - [The isogeny formula](#125-the-isogeny-formula)
     - [Theta coordinates and moduli height](#126-theta-coordinates-and-moduli-height)
     - [What the comparison actually proves](#127-what-the-comparison-actually-proves)
-13. [The Faltings finiteness gate](#13-the-faltings-finiteness-gate)
+13. [The conditional Shafarevich finiteness gate](#13-the-conditional-shafarevich-finiteness-gate)
     - [The required Shafarevich statement](#131-the-required-shafarevich-statement)
     - [Level fields and integral moduli points](#132-level-fields-and-integral-moduli-points)
     - [The missing arithmetic height bound](#133-the-missing-arithmetic-height-bound)
     - [Why integrality is not a substitute](#134-why-integrality-is-not-a-substitute)
     - [The descent half after Northcott](#135-the-descent-half-after-northcott)
     - [Zarhin cancellation and Jordan--Zassenhaus](#136-zarhin-cancellation-and-jordan--zassenhaus)
-    - [The first source-closure boundary](#137-the-first-source-closure-boundary)
-14. [From Faltings finiteness to finite isogeny classes](#14-from-faltings-finiteness-to-finite-isogeny-classes)
+    - [The exact conditional boundary](#137-the-exact-conditional-boundary)
+14. [Finite isogeny classes as the exact conditional input](#14-finite-isogeny-classes-as-the-exact-conditional-input)
     - [Good reduction is preserved by isogeny](#141-good-reduction-is-preserved-by-isogeny)
     - [The finite-isogeny-class consequence](#142-the-finite-isogeny-class-consequence)
     - [The precise conditional input](#143-the-precise-conditional-input)
-15. [Tate lattices and semisimplicity](#15-tate-lattices-and-semisimplicity)
+15. [Stable Tate lattices and conditional semisimplicity](#15-stable-tate-lattices-and-conditional-semisimplicity)
     - [Stable lattices are isogeny quotients](#151-stable-lattices-are-isogeny-quotients)
     - [Finite isogeny classes give finite lattice type](#152-finite-isogeny-classes-give-finite-lattice-type)
     - [Tate's lattice lemma](#153-tates-lattice-lemma)
     - [Conditional rational Tate-module semisimplicity](#154-conditional-rational-tate-module-semisimplicity)
-16. [The exact cohomological export](#16-the-exact-cohomological-export)
+16. [Consequences of isogeny-class finiteness](#16-consequences-of-isogeny-class-finiteness)
     - [Curves and Jacobians](#161-curves-and-jacobians)
     - [Coefficient extension, summands, and multiplicity spaces](#162-coefficient-extension-summands-and-multiplicity-spaces)
     - [The Hom--Tate boundary](#163-the-hom--tate-boundary)
     - [The packet-carrier array](#164-the-packet-carrier-array)
-17. [Synthesis](#17-synthesis)
-    - [The two logical chains](#171-the-two-logical-chains)
-    - [Normalization and dependency ledger](#172-normalization-and-dependency-ledger)
+17. [The completed theorem and its boundary](#17-the-completed-theorem-and-its-boundary)
+    - [The completed and conditional chains](#171-the-completed-and-conditional-chains)
+    - [Normalization and hypothesis ledger](#172-normalization-and-hypothesis-ledger)
     - [Conclusion](#173-conclusion)
 
-## 1. Arithmetic size and the missing half of descent
+## 1. Why height completes descent
 
 Descent reduces rational points modulo multiplication to finitely many classes. It does not, by itself, say that the entire group is generated by finitely many points. The missing ingredient is a notion of size which grows quadratically under multiplication and which admits only finitely many rational points below any fixed bound. This chapter explains why these two properties fit together and fixes the hypotheses under which they will be proved.
 
@@ -146,16 +146,20 @@ $$
 
 The first layer is arithmetic and works on projective space. The second transports it to projective varieties. The third uses the special geometry of an abelian variety. The last is a group-theoretic descent whose termination is supplied by the first three. Keeping the layers separate ensures that finite generation is not smuggled into the proof of positivity or finiteness.
 
-The second half of the book asks a different height question. It replaces a point of $A$ by
-the moduli point of $A$, replaces the Néron--Tate metric by the metrized Hodge line, and seeks a
-uniform height bound from prescribed good reduction. Once Faltings--Shafarevich finiteness is
-available, Tate's stable-lattice argument gives rational Tate-module semisimplicity. Chapters
-11--16 prove every implication after finite isogeny classes, together with finite polarized
-$K$-descent and integral factor cancellation.  The standard uniform route still requires the
-semistable-reduction, ramified Hodge-base-change, toroidal compactification, and metrized
-theta--Hodge interfaces, as well as the concrete logarithmic Hilbert and theta upper-slope
-certificates isolated in Chapters 12--13; none is disguised as an application of ordinary
-Northcott finiteness.
+The theorem promised by the title is completed in Chapters 2--10. Chapter 2 constructs
+absolute projective height, Chapter 3 proves Northcott finiteness, Chapters 4--7 pass from Weil
+heights to the exact Néron--Tate quadratic form, and Chapter 8 combines that form with weak
+Mordell--Weil. Chapters 9--10 then record examples and the forms of finite generation that are
+reused for Jacobians and their quotients.
+
+Later applications ask for a separate uniform statement about isogeny classes. Because no
+earlier source in the present sequence proves that statement, Chapters 11--16 retain the exact
+conditional boundary and every reduction already established beyond it. They are not used in
+the proof of Mordell--Weil. Potential semistable reduction, ramified Hodge base change,
+toroidal compactification, the metrized theta--Hodge comparison, and two arithmetic slope
+certificates remain displayed hypotheses. Finite polarized descent, integral factor
+cancellation, and the implication from finite isogeny classes to rational semisimplicity are
+proved without feeding any of those conclusions back into the elementary height argument.
 
 ## 2. Absolute values and projective height
 
@@ -334,7 +338,7 @@ $$
 
 Thus height records both denominators and the sizes of all conjugates. Looking at only one chosen complex embedding would miss both and would not be a finiteness measure.
 
-Several quick checks are useful. A root of unity $\zeta$ is an algebraic integer and every conjugate has modulus $1$, so $h(\zeta)=0$. Conversely, if $\alpha\ne0$ has height zero, (2.14) forces its primitive minimal polynomial to be monic and every conjugate to have modulus at most $1$. The constant term shows every conjugate has modulus exactly $1$. The coefficients of the minimal polynomials of the powers $\alpha^n$ are then uniformly bounded; Theorem 3.1's coefficient argument makes the set of powers finite, so $\alpha$ is a root of unity. Thus
+Several quick checks are useful. A root of unity $\zeta$ is an algebraic integer and every conjugate has modulus $1$, so $h(\zeta)=0$. Conversely, if $\alpha\ne0$ has height zero, (2.14) forces its primitive minimal polynomial to be monic and every conjugate to have modulus at most $1$. The constant term shows every conjugate has modulus exactly $1$. Every power $\alpha^n$ has degree at most $r=[\mathbf Q(\alpha):\mathbf Q]$, and its monic minimal polynomial has coefficients bounded by the binomial coefficients $\binom rj$, because all of its conjugates have modulus $1$. Only finitely many such integer polynomials exist, so only finitely many powers $\alpha^n$ exist. Two powers are equal, and $\alpha$ is a root of unity. Thus
 
 $$
 h(\alpha)=0
@@ -829,7 +833,8 @@ $$
 \leq q^{-2r}B,
 $$
 
-and letting $r\to\infty$ gives equality. A construction using another integer $q'\geq2$ produces a function boundedly close to $h_L$ and satisfying the $q$-functional equation once full quadraticity is proved in the next section; hence it is the same function.
+and letting $r\to\infty$ gives equality. Independence of the auxiliary integer will follow at
+the end of Section 6.3, after the parallelogram identity gives quadraticity for every integer.
 
 Additivity in line bundles survives canonically:
 
@@ -844,21 +849,6 @@ $$
 $$
 
 for a homomorphism $f:B\to A$.
-
-The bounded comparison has a useful uniform consequence. Put
-
-$$
-B_L=\sup_{P\in A(\overline K)}
-|h_L(P)-\widehat h_L(P)|<\infty.
-$$
-
-Then for every integer $n$ and every algebraic point $P$,
-
-$$
-|h_L([n]P)-n^2\widehat h_L(P)|\leq B_L. \tag{6.6a}
-$$
-
-Indeed $\widehat h_L([n]P)=n^2\widehat h_L(P)$ once Section 6.3 is established, and the bounded comparison is applied at the single point $[n]P$. Thus the error in quadratic growth does not increase with $n$. The ordinary height of the multiples of a nontorsion point is a quadratic main term plus one uniformly bounded remainder.
 
 ### 6.3 Quadraticity
 
@@ -886,6 +876,24 @@ $$
 If the formula is known at $n$ and $n-1$, the right recurrence gives $(n+1)^2\widehat h_L(R)$. Evenness handles negative $n$.
 
 This proves at once that the limit is independent of the initially chosen $q$: every such limit is boundedly close to $h_L$ and satisfies (6.8), so Proposition 6.2 applies.
+
+The bounded comparison now has a useful uniform consequence. Put
+
+$$
+B_L=\sup_{P\in A(\overline K)}
+|h_L(P)-\widehat h_L(P)|<\infty.
+$$
+
+Then for every integer $n$ and every algebraic point $P$,
+
+$$
+|h_L([n]P)-n^2\widehat h_L(P)|\leq B_L. \tag{6.8a}
+$$
+
+Indeed (6.8) identifies the quadratic term, and the bounded comparison is applied at the
+single point $[n]P$. Thus the error in quadratic growth does not increase with $n$. The
+ordinary height of the multiples of a nontorsion point is a quadratic main term plus one
+uniformly bounded remainder.
 
 ### 6.4 Nonnegativity and the zero locus
 
@@ -1279,7 +1287,7 @@ $$
 
 Thus $S_R\cup\{R_1,\ldots,R_s\}$ is a generating set. If one has only an ordinary height $h_L$, the uniform comparison (6.2) converts the canonical bound $R^2$ into an explicit ordinary-height bound. The logical theorem needs existence of the comparison constant; an effective computation must actually estimate it.
 
-## 9. Examples and diagnostic boundaries
+## 9. Examples and scope
 
 Examples reveal which parts of the proof are formal and which are genuinely arithmetic. They also expose normalization errors that can be hidden in an abstract statement.
 
@@ -1387,7 +1395,7 @@ Third, symmetry is needed for quadraticity. A general ample $L$ still has Northc
 
 Fourth, weak Mordell--Weil and height finiteness play different roles. Height balls may be finite while there are infinitely many residue classes modulo $m$; a finite quotient may exist while repeated division never terminates. The theorem needs both.
 
-## 10. The finite-generation package for quotients
+## 10. Mordell--Weil under subvarieties and quotients
 
 Later arithmetic arguments often construct an abelian variety indirectly—as a subvariety, a quotient of a Jacobian, or a member of an isogeny class. Mordell--Weil applies to the resulting abelian variety itself, but it is useful to state precisely what passes through these constructions.
 
@@ -1449,18 +1457,19 @@ for some finite $r$, and every subgroup and every quotient of $A(K)$ is finitely
 
 In particular, over $K=\mathbf Q$, any Eisenstein quotient of a modular Jacobian has a finitely generated group of rational points. Further arguments may show that a particular quotient has rank zero or identify its torsion, but those are additional arithmetic inputs. The conclusion established here is exactly the unconditional finite-generation statement: no claim about the rank or torsion order is hidden in it.
 
-## 11. From point heights to moduli heights
+## 11. The boundary of the elementary height method
 
-The preceding chapters control points on one fixed abelian variety. A different arithmetic
+The Mordell--Weil theorem and its quotient package are now complete. A separate arithmetic
 question asks whether only finitely many abelian varieties can occur when dimension and bad
-reduction are fixed. That question is the entrance to the Faltings--Tate theorem. It uses the
-same product formula and Northcott principle, but the point whose height must be bounded is now
-a point of an abelian-moduli space.
+reduction are fixed. It uses the same product formula and Northcott principle, but the point
+whose height must be bounded is now a point of an abelian-moduli space. The remaining chapters
+record this conditional boundary because later applications need its precise input and because
+several reductions after that input are already proved.
 
 This distinction is load-bearing. The Néron--Tate height proves finite generation of
 $A(K)$ after $A$ has been chosen. It does not put a bound on the height of $A$ itself.
 
-### 11.1 The exact downstream question
+### 11.1 The distinct downstream question
 
 Let $A/K$ be an abelian variety and let $\ell$ be a rational prime. Write
 
@@ -1520,7 +1529,7 @@ Thus compactness is enough to produce a stable lattice, not enough to split the 
 representation. Polarization is likewise insufficient by itself: a stable subspace may be
 degenerate for the alternating form, so its orthogonal need not be a complement.
 
-### 11.3 The noncircular proof architecture
+### 11.3 The exact conditional chain
 
 The Faltings--Tate route separates into four implications:
 
@@ -1549,7 +1558,7 @@ distinction prevents a
 moduli point that is merely integral outside finitely many primes from being declared to have
 bounded height.
 
-## 12. The Faltings height and the moduli comparison
+## 12. Conditional Faltings height and the moduli comparison
 
 The height of an abelian variety is the Arakelov degree of its Hodge line. Its finite-place
 lattice measures integral invariant differentials; its archimedean metric measures their
@@ -2005,8 +2014,8 @@ canonically equal.  The equality agrees on the generic fiber with pullback by th
 Néron base-change map; separatedness therefore identifies it with (12.3.3). $\square$
 
 The preceding sketches identify the geometric content of potential semistable reduction and
-the ramified nonproper case of semistable Hodge base change.  Section 13.7 records why they do
-not yet constitute proofs from the permitted dependency range.
+the ramified nonproper case of semistable Hodge base change. Section 13.7 records why they do
+not yet constitute proofs from the results established earlier in this volume.
 
 ### 12.4 Base change and stable height
 
@@ -2191,10 +2200,10 @@ or the archimedean contribution. The theorem that supplies a uniform global boun
 arithmetic slope estimate in the next chapter. It cannot be replaced by the ordinary height
 machine, by (12.9), or by the quasi-projectivity of the moduli scheme.
 
-## 13. The Faltings finiteness gate
+## 13. The conditional Shafarevich finiteness gate
 
-We now state the precise finiteness theorem from which the Tate argument starts and audit the
-proof ingredients that are and are not present in the earlier sequence.
+We now state the precise finiteness theorem from which the Tate argument starts and distinguish
+the ingredients proved earlier from the hypotheses that remain open at this point in the sequence.
 
 ### 13.1 The required Shafarevich statement
 
@@ -2337,8 +2346,8 @@ schemes. It still has not produced a height bound.
 ### 13.3 The missing arithmetic height bound
 
 We first record the desired compactification and metric comparison and the proposed
-constructions.  Their unresolved geometric, integral, and analytic steps are separated from
-the later numerical bound in Section 13.7.  Work over
+constructions. Their unresolved geometric, integral, and analytic steps are kept separate from
+the numerical deduction later in this section and are summarized in Section 13.7. Work over
 
 $$
 R_N=\mathbf Z[1/N,\zeta_N],\qquad N\geq3,                 \tag{13.3a}
@@ -2909,10 +2918,9 @@ does not determine any of these signs or orders.
 
 Equivalently, the required determinant-of-cohomology or arithmetic Hilbert--Samuel
 calculation must produce determinant lines whose finite Cartier and archimedean degree
-contributions are exactly
-$b_0\widehat{\deg}\,\overline{\mathscr D}_x$ and
-$a\widehat{\deg}\,\overline\lambda_x
-+b_1\widehat{\deg}\,\overline{\mathscr D}_x$, with no unlisted vertical or metric correction.
+contributions are exactly $b_0\widehat{\deg}\,\overline{\mathscr D}_x$ and
+$a\widehat{\deg}\,\overline\lambda_x+b_1\widehat{\deg}\,\overline{\mathscr D}_x$, with no
+unlisted vertical or metric correction.
 Formula (13.3q) computes only ranks; it does not establish this intersection identity or the
 metric estimate (13.3q12).
 
@@ -3004,8 +3012,8 @@ auxiliary semistable field.  Dividing (13.3r) then proves (13.3p), while the com
 inequality in $(\mathrm{MC})$ converts the bounded values into a bound for
 $h_{\mathrm{mod}}$.  Thus the arithmetic content of $(\mathrm{SB})$ is no longer used as an
 unexplained broad premise: once the semistable Hodge lattice and compactified boundary objects
-are available, it follows from the two exact certificates above.  Those certificates are not
-proved in the present dependency range.  In particular, $(\mathrm{SC})$ only supplies the proposed
+are available, it follows from the two exact certificates above. Those certificates are not
+proved here. In particular, $(\mathrm{SC})$ only supplies the proposed
 extensions and $(\mathrm{MC})$ only compares their metrized lines; neither proves the positive
 determinant characters, the absence of extra vertical divisors, the required level-prime
 divisibility, or the Pl\"ucker inequalities (13.3q13).  The Gaussian estimate in Theorem 13.3 controls a norm
@@ -3445,17 +3453,18 @@ types. Applied to each one, Theorem 13.7 proves $(\mathrm{DS})_\Gamma$. Its equi
 $(\mathrm{FC})_{B/K}$ proves the first assertion for every $B/K$. Proposition 13.5 and
 Northcott then give the displayed implication through (13.10)--(13.12). $\square$
 
-### 13.7 The first source-closure boundary
+### 13.7 The exact conditional boundary
 
-The added Sections 12.2--13.3 identify the desired constructions, but they do not move the
-dependency boundary as presently written.  Lemma 12.4 checks saturated monomials and generic
+Sections 12.2--13.3 identify the desired constructions, but they do not remove the
+conditional boundary. Lemma 12.4 checks saturated monomials and generic
 component points, but it does not control the full normalization with wild coefficient units or
 prove regularity at every resulting closed point.  Lemma 12.7 then invokes analytic generic
 fibers, a full tropical period lattice, polyhedral algebraization, and the Néron mapping
-property without constructing those rigid-analytic interfaces from the earlier books.  Thus
+property without constructing those rigid-analytic interfaces from the earlier books. Thus
 the combined potential-semistability-and-persistence interface $(\mathrm{PSR})$ and ramified
-semistable Hodge base change $(\mathrm{SHB})$ remain inputs at this dependency level.  There is no direct citation of
-Book 61, but suppressing the later Raynaud machinery is not an internal proof of it.
+semistable Hodge base change $(\mathrm{SHB})$ remain hypotheses here.
+Invoking unsupplied Raynaud machinery under different terminology would not prove these steps
+from the earlier results.
 
 Likewise, the local monoid chart (13.3e) does not by itself construct the global arithmetic
 toroidal quotient, its Mumford family, or its integral Hodge and theta extensions.  The complex
@@ -3498,15 +3507,15 @@ $$
 $$
 
 The first implication is Proposition 13.3C followed by Theorem 13.3; the second, including
-moduli Northcott, is Corollary 13.8.  The six displayed inputs are separate gates in the
-dependency ledger: the two arithmetic certificates are formulated on the objects proposed by
+moduli Northcott, is Corollary 13.8. The six displayed inputs are separate gates in the
+conditional chain: the two arithmetic certificates are formulated on the objects proposed by
 $(\mathrm{SC})$ and use the same fixed Hodge, theta, and cusp metrics that occur in
 $(\mathrm{MC})$.  Neither geometric/metric interface contains those certificates, and the
 certificates do not prove $(\mathrm{PSR})$ or
 $(\mathrm{SHB})$.  Thus no descent or direct-factor theorem remains hidden after a valid
 height theorem.
 
-## 14. From Faltings finiteness to finite isogeny classes
+## 14. Finite isogeny classes as the exact conditional input
 
 This chapter proves the geometric implication needed by Tate's lattice argument. No moduli
 height occurs after this point.
@@ -3567,12 +3576,11 @@ $$
 \tag{14.4}
 $$
 
-The Tate argument below uses exactly (14.3). Thus a future source may close the gap either by
-supplying all six unresolved inputs isolated in Section 13.7, by proving
-Faltings--Shafarevich finiteness directly, or by proving (14.3) for the particular carrier
-Jacobians. No stronger theorem is silently required.
+The Tate argument below uses exactly (14.3). Thus it is enough to supply the six unresolved
+inputs isolated in Section 13.7, to prove Faltings--Shafarevich finiteness directly, or to
+prove (14.3) for the particular carrier Jacobians. No stronger theorem is silently required.
 
-## 15. Tate lattices and semisimplicity
+## 15. Stable Tate lattices and conditional semisimplicity
 
 The hard arithmetic geometry has now been compressed into (14.3). The remaining proof is a
 short but delicate interaction between isogenies and integral representation theory.
@@ -3745,7 +3753,7 @@ No Hom--Tate surjectivity, Frobenius-density theorem, or algebraicity of an arbi
 subspace occurs in this proof. The geometry is used exactly once, to turn a stable lattice into
 an isogenous quotient.
 
-## 16. The exact cohomological export
+## 16. Consequences of isogeny-class finiteness
 
 We now transport Theorem 15.3 through the elementary operations used by the curve-carrier
 books. Every statement in this chapter remains conditional on $(\mathrm{IF})$ or on the
@@ -3880,13 +3888,14 @@ remains conditional.
 In particular, it would be incorrect to remove the packet-carrier ambient semisimplicity
 blocker merely on the strength of the Tate lattice argument.
 
-## 17. Synthesis
+## 17. The completed theorem and its boundary
 
-This volume contains two height arguments with the same Northcott endpoint but different
-inputs. Keeping them side by side makes clear both the completed Mordell--Weil theorem and the
-exact unfinished Faltings gate.
+The main argument of this volume is the completed passage from projective height to
+Mordell--Weil. The retained conditional chain begins only after that theorem and identifies the
+extra uniform input needed for later isogeny-class applications. Keeping the chains separate
+makes clear that the second neither strengthens nor qualifies the first.
 
-### 17.1 The two logical chains
+### 17.1 The completed and conditional chains
 
 For an abelian variety $A/K$, choose a symmetric ample line bundle $L$ and an integer $m\geq2$.
 The unconditional point-height chain is
@@ -3928,7 +3937,7 @@ unproved, as do the concrete logarithmic Hilbert and theta upper-slope certifica
 Hermitian determinant/saturation and Pl\"ucker-slope deduction from those certificates to
 (13.3r) is Proposition 13.3C.
 
-### 17.2 Normalization and dependency ledger
+### 17.2 Normalization and hypothesis ledger
 
 The conventions used throughout are:
 
@@ -3952,12 +3961,16 @@ in Section 2.2.
 
 ### 17.3 Conclusion
 
-Weil height and the Néron--Tate limiting process complete the Mordell--Weil theorem: every
-abelian variety over a number field has a finitely generated group of rational points, and the
-same holds for every abelian quotient of a Jacobian.
+Absolute projective height, Northcott finiteness, the Weil height machine, and the
+Néron--Tate limiting process fit into one terminating descent. Weak Mordell--Weil supplies
+finitely many residue classes modulo multiplication; the canonical height contracts division
+and makes every terminal ball finite. Consequently every abelian variety over a number field
+has a finitely generated group of rational points, as does every abelian quotient of a
+Jacobian. The height pairing identifies torsion as the zero locus and turns the free quotient
+into an arithmetic lattice.
 
-For Tate-module semisimplicity, the reusable algebraic half is also complete. A stable Tate
-lattice is the Tate lattice of an isogenous quotient. If the isogeny class has finitely many
+Beyond that completed theorem, the reusable conditional algebraic half is also complete. A
+stable Tate lattice is the Tate lattice of an isogenous quotient. If the isogeny class has finitely many
 $K$-isomorphism classes, only finitely many integral lattice types occur. Tate's
 Jacobson-radical construction shows that a nonsemisimple rational representation would create
 infinitely many types, a contradiction. Curve cohomology, coefficient factors, and multiplicity
@@ -3976,4 +3989,4 @@ proves what follows from a bound; it does not prove that bound from $S$-integral
 remaining interfaces are supplied or proved here in full,
 Faltings--Shafarevich finiteness remains unproved, while rational Tate-module semisimplicity and
 $(\mathrm{SS}_{\mathrm{array}})$ are available only conditionally on the finite-isogeny-class
-input, not as unconditional conclusions of the present corpus.
+input, not as unconditional conclusions of this volume.
