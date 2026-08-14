@@ -36,7 +36,7 @@
    - [Good and special places](#72-good-and-special-places)
    - [Finite and tame dihedral types](#73-finite-and-tame-dihedral-types)
    - [Strict compatibility theorem](#74-strict-compatibility-theorem)
-   - [Ambient semisimplicity and uniform passage](#75-ambient-semisimplicity-and-uniform-passage)
+   - [Cuspidal irreducibility and uniform passage](#75-cuspidal-irreducibility-and-uniform-passage)
 8. [Purity at bad places](#8-purity-at-bad-places)
    - [The monodromy filtration](#81-the-monodromy-filtration)
    - [Special parameters](#82-special-parameters)
@@ -86,7 +86,9 @@ At a bad place, a characteristic polynomial is not enough. Inertia can be finite
 
 The purpose of this book is to assemble the representations attached to all coefficient conjugates of a weight-two packet into one weakly compatible system. We prove independence from the chosen algebraic embedding, from harmless enlargements of the coefficient field, from the scalar used to normalize a polarization, and, for semisimple members, from the eligible curve carrier. We prove good-place purity of weight one.
 
-At bad places there are two different outputs. In the split one-step Iwahori special range, the preceding semistable-curve theorem actually constructs the graph line, nonzero monodromy, and raw unnormalized $U_v$ return scalar. By contrast, the tame principal, scalar-special after descent, and tame dihedral statements are recognition criteria: they identify a parameter only after the type lines, monodromy branch, and every Frobenius return map have been supplied. For a nonzero-monodromy raw parameter, passage to the globally semisimplified family requires the local-preservation identity below. Book 128 proves it automatically in every zero-monodromy row, since finite inertia and all local traces survive global semisimplification. At nonzero monodromy it follows at a coefficient place whose stable lattice has absolutely irreducible residual reduction, while its uniform version reduces to semisimplicity of the ambient curve cohomology. Book 41 proves the complete Tate stable-lattice reduction of that ambient statement to finite carrier-isogeny classes. Those classes are the exact arithmetic input; its displayed uniform source is the still-unproved Faltings--Shafarevich moduli-height package.
+At bad places there are two different outputs. In the split one-step Iwahori special range, the preceding semistable-curve theorem actually constructs the graph line, nonzero monodromy, and raw unnormalized $U_v$ return scalar. By contrast, the tame principal, scalar-special after descent, and tame dihedral statements are recognition criteria: they identify a parameter only after the type lines, monodromy branch, and every Frobenius return map have been supplied. For a nonzero-monodromy raw parameter, passage to the globally semisimplified family requires the local-preservation identity below. Book 128 proves it automatically in every zero-monodromy row, since finite inertia and all local traces survive global semisimplification. At nonzero monodromy it follows at a coefficient place whose stable lattice has absolutely irreducible residual reduction.
+
+For the uniform packet array there is a narrower route than ambient Tate-module semisimplicity. A cuspidal parallel-weight-two packet cannot have a reducible semisimple Galois realization once its one-dimensional geometric constituents are known to be locally algebraic at the coefficient prime: global class field theory turns such constituents into algebraic Hecke characters, and isobaric multiplicity one contradicts cuspidality. This volume proves that reduction below. The only new input in it is the standard smooth-proper Hodge--Tate/local-algebraicity statement $(\mathrm{HT}_1)$; the present library has not proved that comparison theorem. Thus the uniform raw-to-global gap is sharply isolated without importing Faltings heights, Shafarevich finiteness, or Tate-module semisimplicity. Ambient semisimplicity remains a sufficient alternative, not the recommended FLT route.
 
 ### 1.2 Standing fields and conventions
 
@@ -147,7 +149,7 @@ $$
 \operatorname{WD}_v(\widetilde\rho_\lambda)^{\mathrm{F\!-\!ss}}. \tag{1.6}
 $$
 
-We call (1.6) the **local-preservation condition** at $(v,\lambda)$; it is exactly $(\mathrm R_u)$ in the preceding local-comparison book, after matching the local place. Book 128, Lemma 3.2 proves (1.6) whenever the raw monodromy at $v$ is zero. For nonzero monodromy it follows if the raw global representation is already semisimple. More concretely, if a stable lattice in the two-dimensional member has absolutely irreducible residual reduction, then the characteristic-zero member is absolutely irreducible, the raw representation is already irreducible, and (1.6) holds at every $v\nmid\ell(\lambda)$. This closes the passage for the distinguished residual-irreducible FLT member. It is a place-by-place argument and supplies no uniform assertion for all $\lambda$. Book 128, Proposition 9.4 gives the coefficient-uniform alternative needed in the remaining nonzero-monodromy rows: semisimplicity of the ambient $H^1$ of each actual curve carrier makes every extracted raw multiplicity representation semisimple after every finite coefficient extension.
+We call (1.6) the **local-preservation condition** at $(v,\lambda)$; it is exactly $(\mathrm R_u)$ in the preceding local-comparison book, after matching the local place. Book 128, Lemma 3.2 proves (1.6) whenever the raw monodromy at $v$ is zero. For nonzero monodromy it follows if the raw global representation is already semisimple. More concretely, if a stable lattice in the two-dimensional member has absolutely irreducible residual reduction, then the characteristic-zero member is absolutely irreducible, the raw representation is already irreducible, and (1.6) holds at every $v\nmid\ell(\lambda)$. This closes the passage for the distinguished residual-irreducible FLT member. Section 7.5 gives the coefficient-uniform cuspidal route from $(\mathrm{HT}_1)$; Book 128, Proposition 9.4 gives the stronger optional alternative from semisimplicity of the entire ambient $H^1$.
 
 These inputs do not yet constitute a compatible-system theorem. We must organize coefficient embeddings, show that all local data have a common algebraic model, and separate rational compatibility from integral choices.
 
@@ -585,9 +587,92 @@ If the raw two-dimensional representation were reducible, a nonzero proper stabl
 This corollary is not an independence-of-$\lambda$ theorem. Absolute irreducibility of one residual member does not prove it for the reductions at every other coefficient place.
 No semisimplicity theorem for abelian varieties or for raw curve cohomology is being used here; in particular, the argument does not hide a Faltings input.
 
-### 7.5 Ambient semisimplicity and uniform passage
+### 7.5 Cuspidal irreducibility and uniform passage
 
-The uniform problem has a precise ambient reduction. For the finite collection of actual smooth
+The application needs semisimplicity only for each rank-two multiplicity representation, not
+for the whole Jacobian Tate module.  The following precise local-algebraicity input is enough.
+For every selected packet carrier, every coefficient place $\lambda$, every finite extension of
+$E_\lambda$, and every one-dimensional Jordan--Holder constituent $\xi$ of the raw curve
+multiplicity representation after that extension, impose
+
+$$
+\boxed{(\mathrm{HT}_1)\qquad
+\xi|_{G_{F_w}}\text{ is locally algebraic for every }w\mid\ell(\lambda).}
+\tag{7.9}
+$$
+
+Smooth-proper Hodge--Tate comparison, stability of Hodge--Tate representations under
+subquotients, and the theorem that a one-dimensional Hodge--Tate character is locally
+algebraic imply $(\mathrm{HT}_1)$.  Betti--de Rham comparison alone does not: it compares the
+algebraic realizations but does not identify the restriction of the $\ell$-adic representation
+at a place above $\ell$.  None of Books 47, 49, 126, or 128 proves this p-adic comparison, so
+$(\mathrm{HT}_1)$ is an explicit arithmetic input here.
+
+**Theorem 7.6 (cuspidal packet irreducibility from $(\mathrm{HT}_1)$).** Let $\pi$ be one of
+the selected parallel-weight-two packets in the curve-attachment range whose split
+$\mathrm{GL}_2$ transfer is cuspidal.  If
+$(\mathrm{HT}_1)$ holds for its raw multiplicity representations, then, for every coefficient
+place $\lambda$, the semisimple attached representation $\rho_{\pi,\lambda}$ is absolutely
+irreducible.  Consequently the raw representation is already absolutely irreducible and
+
+$$
+\widetilde\rho_{\pi,\lambda}\simeq\rho_{\pi,\lambda}. \tag{7.10}
+$$
+
+Thus (1.6) holds at every $v\nmid\ell(\lambda)$.  In particular, every constructed dyadic
+special operator, its kernel line, and its Frobenius sign survive global semisimplification at
+every coefficient place of residue characteristic different from two.
+
+**Proof.** Suppose that $\rho_{\pi,\lambda}$ becomes reducible over an algebraic closure of
+$E_\lambda$.  After a finite coefficient extension it is a direct sum
+
+$$
+\rho_{\pi,\lambda}\otimes_{E_\lambda}E'_{\lambda}
+=\xi_1\oplus\xi_2. \tag{7.11}
+$$
+
+The raw representation is a curve-cohomology subquotient and is unramified outside a finite
+set, so the same is true of $\xi_1$ and $\xi_2$.  Hypothesis $(\mathrm{HT}_1)$ makes them
+locally algebraic above $\ell(\lambda)$.  Book 6, Section 11.5 therefore supplies algebraic
+Hecke characters $\psi_1,\psi_2$ whose $\lambda$-adic avatars are $\xi_1,\xi_2$.  Book 6 uses
+arithmetic Artin reciprocity, whereas (1.1) uses geometric Frobenius. Thus at an unramified
+place $v$,
+
+$$
+\psi_i(\varpi_v)=\xi_i(\operatorname{Frob}^{\mathrm{arith}}_v)
+=\xi_i(\Phi_v)^{-1}.
+$$
+
+Consequently the correctly normalized two-character isobaric sum is
+
+$$
+\Psi=\psi_1^{-1}\boxplus\psi_2^{-1}.
+$$
+
+At every common good place it has the same quadratic Hecke polynomial as
+$\rho_{\pi,\lambda}$ and hence, after the chosen
+$\overline{\mathbf Q}_\ell\simeq\mathbf C$ comparison, as $\pi$.  The
+isobaric multiplicity-one theorem of Book 109, Section 9.5 identifies automorphic objects from
+this full Euler tail.  It cannot identify the cuspidal representation $\pi$ with a
+two-character isobaric sum: their isobaric decompositions have respectively one rank-two
+cuspidal constituent and two rank-one constituents.  This contradiction proves absolute
+irreducibility.
+
+If the raw two-dimensional representation had a proper nonzero global subrepresentation, its
+semisimplification would have two nonzero Jordan--Holder factors, contradicting the absolute
+irreducibility just proved.  Hence the raw representation is irreducible and (7.10) follows.
+Book 128, Lemma 9.1 now gives (1.6).  Restriction of the global isomorphism retains the actual
+local representation, so its Weil--Deligne operator, kernel line, and Frobenius action are not
+lost.  No bad-place datum was used to prove irreducibility, so the argument is noncircular.
+$\square$
+
+The proof uses neither residual irreducibility nor semisimplicity of the ambient Jacobian.  It
+also explains the exact counterboundary: cuspidality and good Frobenius polynomials alone do
+not turn arbitrary continuous one-dimensional $\ell$-adic constituents into Hecke characters.
+Local algebraicity is the missing bridge; omitting it would silently assume the conclusion of
+a p-adic Hodge theorem.
+
+There is a stronger optional ambient route.  For the finite collection of actual smooth
 projective curve carriers $C_i/E_i$ used to construct the packet family, impose
 
 $$
@@ -595,10 +680,10 @@ $$
 H^1_{\mathrm{et}}((C_i)_{\overline E_i},\mathbf Q_\ell)
 \text{ is semisimple as a }\mathbf Q_\ell[G_{E_i}]\text{-module}
 \text{ for every relevant }i\text{ and }\ell.}
-\tag{7.9}
+\tag{7.12}
 $$
 
-**Proposition 7.6 (uniform raw-to-global passage).** Under
+**Proposition 7.7 (ambient uniform raw-to-global passage).** Under
 $(\mathrm{SS}_{\mathrm{array}})$, every raw multiplicity representation extracted from these
 carriers is globally semisimple after every displayed coefficient embedding. Hence (1.6)
 holds for every $v\nmid\ell(\lambda)$, and every algebraic raw pair constructed in Theorem 7.4
@@ -613,7 +698,7 @@ Weil--Deligne pair preserves finite inertia and the nilpotent operator $N$ as we
 Frobenius return scalar. This does not make the local restriction semisimple: global
 semisimplicity is compatible with unipotent local inertia and nonzero monodromy. $\square$
 
-For each $C_i$, Book 36, (10.12) identifies the representation in (7.9) with
+For each $C_i$, Book 36, (10.12) identifies the representation in (7.12) with
 $V_\ell(\operatorname{Jac}(C_i))(-1)$ in the covariant convention, equivalently with its dual
 through the principal polarization. Therefore the rational Tate-module
 semisimplicity statement $(\mathrm{TS})$ isolated in Book 128, (9.6), is sufficient for
@@ -628,7 +713,7 @@ Book 41 does prove the subsequent finite polarized $K$-descent and Zarhin factor
 steps. Semisimplicity of the Hecke algebra and semisimplicity of the isogeny category do not
 replace that gate.
 
-This reduction is uniform over all embeddings above a fixed coefficient characteristic and
+This alternative is uniform over all embeddings above a fixed coefficient characteristic and
 uses no local special-line argument, so it is noncircular. It also makes the raw global
 $2$-adic representation semisimple if the ambient theorem is supplied at $\ell=2$. It does
 not extend the prime-to-coefficient Weil--Deligne comparison to $v\mid\ell(\lambda)$; in
@@ -1025,7 +1110,7 @@ $$
 \simeq D_v\otimes_EE_\lambda. \tag{12.5}
 $$
 
-If one of these packages is available at every finite $v$ and (1.6) holds at every nonzero-monodromy bad $v$, the semisimple family is strictly compatible away from the varying coefficient residue characteristic. Corollary 7.5 supplies (1.6) at a coefficient place with absolutely irreducible residual reduction. Proposition 7.6 supplies it uniformly from $(\mathrm{SS}_{\mathrm{array}})$; Book 41 proves its reduction to finite carrier-isogeny classes but not the Faltings--Shafarevich moduli-height route supplying them uniformly. At a bad finite-monodromy place, purity of weight one also needs the separate return-map weight hypothesis of Theorem 8.2; the constructed special pair is already pure by Section 8.2.
+If one of these packages is available at every finite $v$ and (1.6) holds at every nonzero-monodromy bad $v$, the semisimple family is strictly compatible away from the varying coefficient residue characteristic. Corollary 7.5 supplies (1.6) at a coefficient place with absolutely irreducible residual reduction. Theorem 7.6 supplies it uniformly for a cuspidal packet from $(\mathrm{HT}_1)$; Proposition 7.7 supplies the stronger optional route from $(\mathrm{SS}_{\mathrm{array}})$. At a bad finite-monodromy place, purity of weight one also needs the separate return-map weight hypothesis of Theorem 8.2; the constructed special pair is already pure by Section 8.2.
 
 **Local invariants.** In the range of (12.5), the local Euler polynomial, Artin and Swan conductor, and monodromy rank are independent of $\lambda$; normalized epsilon factors are coefficientwise realizations of one algebraic value. The global prime-to-$\lambda$ conductor ideal
 
@@ -1083,7 +1168,7 @@ $$
 
 It has determinant $\chi_\lambda$ and, at a good place, arithmetic-Frobenius polynomial $X^2-t_vX+q_v$. At a dyadic special place the untwisted geometric eigenvalues are $\beta_v$ on $\ker N$ and $2\beta_v$ on the quotient. Since $\beta_v=\beta_v^{-1}$, arithmetic Frobenius on $\rho^{\mathrm{cov}}_\lambda$ acts by $\beta_v$ on the quotient and by $2\beta_v$ on the monodromy line. This is the SP sign and line convention consumed downstream.
 
-The prior books supply neither the extra eligible set away from two from the dyadic hypotheses alone nor the replacement parahoric PEL comparison, and they do not prove item 5 simultaneously for every allowed coefficient place. Once the additional carrier just stated exists, Proposition 7.6 proves all formal reductions for an SP assertion at every coefficient embedding of residue characteristic different from two: it remains to supply $(\mathrm{SS}_{\mathrm{array}})$. Book 41 proves it from finite isogeny classes of the carrier Jacobians. Those classes are the exact arithmetic input; the standard uniform Faltings--Shafarevich source still needs its moduli-height part, while Book 41 proves finite polarized descent and Zarhin cancellation.
+The prior books supply neither the extra eligible set away from two from the dyadic hypotheses alone nor the replacement parahoric PEL comparison, and they do not prove item 5 simultaneously for every allowed coefficient place. Once the additional carrier just stated exists, Theorem 7.6 reduces uniform prime-to-two preservation to $(\mathrm{HT}_1)$ for the finitely many selected cuspidal packets. This is the recommended route. Proposition 7.7 records ambient semisimplicity as a stronger alternative, but the FLT packet array need not invoke its Faltings--Shafarevich source.
 
 **Proof.** A dyadic singleton satisfies Book 104's odd nonempty selected ramification condition, so Theorem 12.1 gives item 1. Proposition 7.2 explains why that carrier fails the dyadic tensor ledger and proves item 2. Under the added away-from-two carrier hypothesis, Proposition 7.1 constructs every raw special pair, and Section 8.2 proves its purity from $\beta_v^2=1$. Proposition 10.3 identifies the semisimple systems obtained from the different eligible carriers. Corollary 7.5 proves the final transfer exactly at the residual-irreducible coefficient places. Twisting, then inverting geometric Frobenius, gives the final covariant formulas. $\square$
 
@@ -1115,9 +1200,9 @@ then trace and determinant record the unordered pair of characters at good place
 
 The proof uses the following prior mathematical packages. Book 127 is the direct source for the
 weak curve-carried family, determinant, good-place purity, and integral boundary; its Books 37,
-97, 104, 125, and 126 inputs are transitive here. Book 41 is the direct source for the
-finite-isogeny-class-to-Tate-semisimplicity reduction used in Proposition 7.6 and for the exact
-boundary of its Faltings--Shafarevich source. Book 118 is the direct source for the
+97, 104, 125, and 126 inputs are transitive here. Book 6 supplies the algebraic-Hecke-character
+avatar theorem and Book 109 supplies isobaric multiplicity one for Theorem 7.6. Book 41 is used
+only for the optional ambient alternative in Proposition 7.7. Book 118 is the direct source for the
 common-norm Hodge-lift obstruction used in Proposition 7.2. Book 129 is only a later interface check and begins after a rational
 member has been constructed.
 
@@ -1133,18 +1218,19 @@ member has been constructed.
 | constructed raw split-Iwahori special pair | Book 122, *Semistable Models and Monodromy of Quaternionic Shimura Curves*, assembled in Book 128 | split quaternion algebra at $v$; a supplied PEL-exact parahoric realization with the complete odd-split or dyadically tensor-split ledger, including splitting at every dyadic factor in the latter case; component support; multiplicity one; raw unnormalized $U_v$ | the theorem proves $(\mathrm B_v)$ and rank-one $N$ on a supplied raw multiplicity space, but the direct common-norm realization is obstructed in mixed signature; a replacement finite comparison and raw-to-global passage are not constructed, and ramifying the carrier at another dyadic place violates the splitting ledger |
 | tame principal, scalar-special, or dihedral parameter | Book 128, *Local--Global Compatibility for Weight-Two Galois Representations* | $v\nmid\ell$; the actual descent complex, type lines, monodromy branch, exchange maps, and every Frobenius return map | these are recognition criteria; they construct none of the missing tame return data for an arbitrary packet and cover no primitive wild row; raw-to-global passage is automatic only in the zero-monodromy principal and dihedral rows |
 | strict bad parameter at one residual-irreducible coefficient place | Book 128, Lemmas 9.1--9.2 and Corollary 9.3 | a stable lattice with absolutely irreducible residual reduction at that $\lambda$ | the argument is coefficient-place by coefficient-place and gives no uniform all-$\lambda$ SP record |
-| uniform nonzero-monodromy raw-to-global passage for the actual carrier array | Book 128, Proposition 9.4; Book 41, Theorem 15.3 and Corollary 16.1; and Proposition 7.6 | $(\mathrm{SS}_{\mathrm{array}})$; Book 41 derives it from finite isogeny classes of the carrier Jacobians | all coefficient extensions and packet factors are handled formally, but those finite isogeny classes remain unproved; Book 41's uniform Faltings--Shafarevich route lacks its moduli-height inputs, while finite polarized descent and Zarhin cancellation are proved; zero-monodromy passage needs none of this, and no comparison at $v\mid\ell$ follows |
+| uniform nonzero-monodromy raw-to-global passage for selected cuspidal packets | Theorem 7.6, using Book 6, Section 11.5, Book 109, Section 9.5, and Book 128, Lemma 9.1 | $(\mathrm{HT}_1)$ for one-dimensional geometric constituents at each coefficient place | the formal automorphic contradiction and raw-to-global passage are proved; the library still lacks smooth-proper Hodge--Tate comparison and the one-dimensional Hodge--Tate-to-locally-algebraic theorem supplying $(\mathrm{HT}_1)$; no Faltings semisimplicity is needed |
+| optional ambient uniform passage | Book 128, Proposition 9.4; Book 41, Theorem 15.3 and Corollary 16.1; and Proposition 7.7 | $(\mathrm{SS}_{\mathrm{array}})$, or finite isogeny classes of all carrier Jacobians through Book 41 | this is stronger than the packet application and is not the recommended FLT dependency |
 | bad-place purity | Section 8 from the identified algebraic pair | special shape plus determinant closes the special row; finite-monodromy rows require the return-map absolute values such as (8.7) | determinant, finite inertia, and algebraicity do not prove finite-type weight one |
 | semisimple carrier independence | Chebotarev density and Brauer--Nesbitt, applied in Proposition 10.3 | two already constructed semisimple representations with the same split-packet good polynomials | no raw extension, canonical intertwiner, or integral lattice is compared |
 
-No theorem about later finite-flat quotients is used. Book 129 can construct a chosen all-level finite-flat tower only after a member has its own good-reduction abelian bridge and low-ramification hypotheses; it neither synchronizes coefficient places nor proves the SP pair. Book 183 therefore correctly retains a **controlled SP top datum** requiring the SP local object as well as local preservation at every coefficient place away from two. Books 184--185 propagate that datum through characteristic-zero effectivity and base-field assembly but do not create it. Book 187 likewise treats its SP family as an input and cannot repair its absence. Even degree and complete dyadic splitting provide several eligible dyadic places for the automorphic curve construction, but they do not close the raw geometric SP carrier problem: the ramification set must avoid two and a non-common-norm PEL-exact parahoric carrier with the full component comparison must be constructed. After such carriers are supplied, Proposition 7.6 reduces uniform prime-to-two raw-to-global preservation exactly to $(\mathrm{SS}_{\mathrm{array}})$; Book 41 reduces its arithmetic source further to finite carrier-isogeny classes, whose standard uniform Faltings--Shafarevich source remains unproved. The coefficient-prime integral bridge remains a separate boundary.
+No theorem about later finite-flat quotients is used. Book 129 can construct a chosen all-level finite-flat tower only after a member has its own good-reduction abelian bridge and low-ramification hypotheses; it neither synchronizes coefficient places nor proves the SP pair. Book 183 therefore correctly retains a **controlled SP top datum** requiring the SP local object as well as local preservation at every coefficient place away from two. Books 184--185 propagate that datum through characteristic-zero effectivity and base-field assembly but do not create it. Book 187 likewise treats its SP family as an input and cannot repair its absence. Even degree and complete dyadic splitting provide several eligible dyadic places for the automorphic curve construction, but they do not close the raw geometric SP carrier problem: the ramification set must avoid two and a non-common-norm PEL-exact parahoric carrier with the full component comparison must be constructed. After such carriers are supplied, Theorem 7.6 reduces uniform prime-to-two raw-to-global preservation exactly to $(\mathrm{HT}_1)$ for the selected cuspidal multiplicity factors. The coefficient-prime integral bridge remains a separate boundary.
 
 The downstream contract is therefore:
 
 | Consumer | May use from this book | Must not infer |
 |---|---|---|
 | Book 129 | a rational raw packet plane, its semisimplification, determinant, and existence of placewise stable lattices | a canonical rank-two cohomological summand, coefficient-prime finite flatness, or one lattice across coefficient places |
-| Book 183 | the constructed weak packet systems, coefficient conjugation, determinant, good purity, the conditional algebraic SP pair, and the reduction of uniform preservation to $(\mathrm{SS}_{\mathrm{array}})$ | the SP pair at every prime-to-two coefficient embedding unless its controlled top datum supplies preservation directly or supplies the missing ambient semisimplicity input |
+| Book 183 | the constructed weak packet systems, coefficient conjugation, determinant, good purity, the conditional algebraic SP pair, and the cuspidal raw-to-global reduction | the SP pair at every prime-to-two coefficient embedding unless its controlled top datum supplies preservation directly, supplies $(\mathrm{HT}_1)$, or uses the stronger optional ambient certificate |
 | Books 184--185 | the packet systems and local objects already present in Book 183's controlled array | effectivity, base-field descent, or a new local comparison merely from good polynomials; those books prove their own characteristic-zero conclusions |
 | Book 187 | a rational SP member only after Books 183--185 have actually produced it | the missing SP family, a three-adic good-reduction bridge, a stable lattice, or an all-level finite-flat tower |
 
@@ -1200,7 +1286,7 @@ The following checks should accompany every use of the theorem.
 4. The determinant is $\chi_\lambda^{-1}\eta_\lambda$, not $\chi_\lambda\eta_\lambda$.
 5. Good-place purity means modulus $q_v^{1/2}$ for every complex conjugate; bad-place purity is the separate monodromy-graded assertion of Theorem 8.2.
 6. A special parameter has Frobenius eigenvalues $\beta_v$ and $q_v\beta_v$, with $N$ mapping the second line to the first.
-7. The local comparison computes the raw pair; strict compatibility of $\rho_\lambda$ also requires (1.6) and is asserted only for $v\nmid\ell(\lambda)$. Absolute residual irreducibility proves (1.6) at one coefficient place; $(\mathrm{SS}_{\mathrm{array}})$ proves it uniformly, and Book 41 proves that statement from finite carrier-isogeny classes, but neither those classes nor the Faltings--Shafarevich moduli-height route to them is supplied.
+7. The local comparison computes the raw pair; strict compatibility of $\rho_\lambda$ also requires (1.6) and is asserted only for $v\nmid\ell(\lambda)$. Absolute residual irreducibility proves (1.6) at one coefficient place. For every selected cuspidal packet, Theorem 7.6 proves it uniformly from $(\mathrm{HT}_1)$, the exact p-adic Hodge/local-algebraicity input not yet supplied by this library. The stronger $(\mathrm{SS}_{\mathrm{array}})$ route is optional.
 8. Inertial type plus conductor does not determine Frobenius return maps or monodromy.
 9. Coefficient conjugation acts on $t_v$, $s_v$, $\eta$, and every local type value together.
 10. A rational compatible system supplies stable lattices but not canonical integral direct summands.
@@ -1212,11 +1298,11 @@ These tests catch the most common sign, twist, and scope errors before they ente
 
 The construction gives one coherent semisimple weakly compatible family. Its good Frobenius polynomials live in the good-polynomial field and survive every coefficient completion. Its determinant is fixed globally, and every complex conjugate of every good root has the expected absolute value. At every place covered by the geometric local comparison, the complete Frobenius-semisimple Weil--Deligne pair of the raw cohomological family is independent of the coefficient place.
 
-Three load-bearing assertions remain logically separate. First, Book 122 does construct $(\mathrm B_v)$ and the raw special pair in its exact split one-step Iwahori range, whereas Book 128's tame principal, scalar-special, and dihedral rows merely recognize data that must already have been supplied. Second, Book 128 identifies the raw and globally semisimplified members formally when $N=0$ and, for nonzero monodromy, at a coefficient place with absolutely irreducible residual reduction. Proposition 7.6 proves every packet-theoretic reduction needed for uniform nonzero-monodromy passage. Book 41 proves the arithmetic implication from finite isogeny classes to $(\mathrm{SS}_{\mathrm{array}})$; those classes are the exact remaining input, and its standard uniform Faltings--Shafarevich source retains the moduli-height gap, although finite polarized descent and Zarhin cancellation are proved. Third, finite-monodromy return maps have not in general been proved to have the complex absolute values required for bad-place purity; the special row has no such gap because its shape and determinant force a finite-order kernel scalar.
+Three load-bearing assertions remain logically separate. First, Book 122 does construct $(\mathrm B_v)$ and the raw special pair in its exact split one-step Iwahori range, whereas Book 128's tame principal, scalar-special, and dihedral rows merely recognize data that must already have been supplied. Second, Book 128 identifies the raw and globally semisimplified members formally when $N=0$ and, for nonzero monodromy, at a coefficient place with absolutely irreducible residual reduction. Theorem 7.6 proves all remaining formal reductions for a selected cuspidal packet: the exact unsupplied premise is $(\mathrm{HT}_1)$, supplied by smooth-proper Hodge--Tate comparison plus the one-dimensional local-algebraicity theorem. No Faltings-height or ambient Tate-semisimplicity theorem belongs to this route. Third, finite-monodromy return maps have not in general been proved to have the complex absolute values required for bad-place purity; the special row has no such gap because its shape and determinant force a finite-order kernel scalar.
 
-For the FLT SP carrier problem, another dyadic special place supplies a compact basic curve carrier but not the dyadically tensor-split carrier required for the raw SP calculation: ramification at that auxiliary dyadic place violates Book 122's complete splitting hypothesis. Even with an odd nonempty eligible ramification set away from two, the raw stage still needs a non-common-norm PEL-exact parahoric realization and its finite component comparison, because Book 118 rules out the direct common-norm Hodge lift. After that geometry is supplied, the prime-to-two all-embedding SP record assumed by Book 183 remains conditional on $(\mathrm{SS}_{\mathrm{array}})$, because the residual-irreducibility argument applies only at the coefficient places where that residual hypothesis is known. This is now an exact arithmetic input rather than an unresolved coefficient-book reduction. The theorem also makes no comparison at the coefficient residue characteristic, constructs no globally canonical lattice, proves no integral self-duality at denominator primes, and produces no finite-flat quotient. It does not identify a quaternionic constituent from good eigenvalues unless the requisite isolating data are already present.
+For the FLT SP carrier problem, another dyadic special place supplies a compact basic curve carrier but not the dyadically tensor-split carrier required for the raw SP calculation: ramification at that auxiliary dyadic place violates Book 122's complete splitting hypothesis. Even with an odd nonempty eligible ramification set away from two, the raw stage still needs a non-common-norm PEL-exact parahoric realization and its finite component comparison, because Book 118 rules out the direct common-norm Hodge lift. After that geometry is supplied, the prime-to-two all-embedding SP record assumed by Book 183 remains conditional only on $(\mathrm{HT}_1)$, not on ambient semisimplicity of every carrier Jacobian. The theorem also makes no comparison at the coefficient residue characteristic, constructs no globally canonical lattice, proves no integral self-duality at denominator primes, and produces no finite-flat quotient. It does not identify a quaternionic constituent from good eigenvalues unless the requisite isolating data are already present.
 
-Thus the good-polynomial, determinant, conjugation, and weight-bound inputs are complete. The distinguished residual-irreducible member has the proved SP comparison only when the away-from-two eligible basic carrier, replacement PEL-exact parahoric comparison, and dyadic tensor ledger are supplied. Uniform strict SP compatibility at every coefficient place away from residue characteristic two follows formally from $(\mathrm{SS}_{\mathrm{array}})$, but that ambient semisimplicity input remains an explicit hypothesis for the later changing-prime assembly. The coefficient-two dyadic comparison is not part of this conclusion.
+Thus the good-polynomial, determinant, conjugation, and weight-bound inputs are complete. The distinguished residual-irreducible member has the proved SP comparison only when the away-from-two eligible basic carrier, replacement PEL-exact parahoric comparison, and dyadic tensor ledger are supplied. Uniform strict SP compatibility at every coefficient place away from residue characteristic two follows formally from $(\mathrm{HT}_1)$ by Theorem 7.6. The coefficient-two dyadic comparison is not part of this conclusion.
 
 ### 13.4 Conclusion
 
@@ -1236,4 +1322,4 @@ $$
 
 Smooth proper geometry gives good-place weight one, including every complex conjugate of every root. Nearby-cycle geometry supplies the finer raw bad-place package: finite inertia, nilpotent monodromy, and Frobenius return maps. These data are algebraic before a coefficient place is chosen.
 
-The boundary is exact. When the eligible carrier and complete split-Iwahori ledger are available, the special pair is geometrically constructed, and absolute residual irreducibility proves its passage to the semisimple member at the coefficient place where that residual condition holds. Proposition 7.6 proves passage at every allowed coefficient embedding from $(\mathrm{SS}_{\mathrm{array}})$. Book 41 proves the Tate lattice theorem needed after finite carrier-isogeny classes are known; those classes, not Hom--Tate or packet linear algebra, are the exact unsupplied input. Its standard uniform source is the still-missing Faltings--Shafarevich moduli-height package; finite polarized descent and Zarhin cancellation are proved. Finite-monodromy bad purity still requires the return-map weight. Rational compatibility does not synchronize integral lattices, and coefficient-residue-characteristic comparisons require separate hypotheses. Subject to these boundaries, coefficient embeddings, polarization scalars, splitting fields, and eligible curve carriers alter presentations but not the semisimple good compatible data.
+The boundary is exact. When the eligible carrier and complete split-Iwahori ledger are available, the special pair is geometrically constructed, and absolute residual irreducibility proves its passage to the semisimple member at the coefficient place where that residual condition holds. Theorem 7.6 proves passage at every allowed coefficient embedding from $(\mathrm{HT}_1)$. Its proof closes the class-field, isobaric-recognition, absolute-irreducibility, and raw-to-global steps; only the stated p-adic Hodge/local-algebraicity input remains. Finite-monodromy bad purity still requires the return-map weight. Rational compatibility does not synchronize integral lattices, and coefficient-residue-characteristic comparisons require separate hypotheses. Subject to these boundaries, coefficient embeddings, polarization scalars, splitting fields, and eligible curve carriers alter presentations but not the semisimple good compatible data.

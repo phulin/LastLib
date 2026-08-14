@@ -196,7 +196,7 @@ flowchart LR
 | 165 | Local Conditions for Hardly-Ramified Minimal Deformations | 30, 31, 32, 44, 63, 66, 67, 68, 164 |
 | 166 | Supported Galois Cohomology and Selmer Calculations | 24, 30, 31, 32, 33, 69, 165 |
 | 167 | Relation Obstructions and Poitou--Tate Corrections | 165, 166 |
-| 168 | Compatible Coefficient Systems and Purity | 41, 97, 118, 122, 127, 128, 142 |
+| 168 | Compatible Coefficient Systems and Purity | 6, 41, 97, 109, 118, 122, 127, 128, 142 |
 | 169 | The Eisenstein Ideal | 85, 113, 114, 131, 132, 133, 134, 147, 148, 149, 142 |
 | 170 | Hecke-Valued Galois Representations and Nonminimal Reciprocity | 68, 69, 85, 127, 128, 138, 140, 62, 142 |
 | 171 | The Minimal Totally-Real Deformation--Hecke Problem | 69, 71, 85, 124, 127, 65, 138, 170, 141 |
@@ -211,7 +211,7 @@ flowchart LR
 | 180 | Brauer Induction and Descent of Automorphy | 24, 75, 98, 109, 168 |
 | 181 | Finite Image and the Balanced Minimal-Lift Argument | 57, 62, 64, 141, 164, 165, 166, 167, 173 |
 | 182 | Potential Automorphy and Galois Refinement of a Chosen Lift | 6, 37, 44, 61, 104, 109, 118, 121, 122, 124, 125, 127, 128, 140, 142, 153, 154, 155, 157, 158, 164, 165, 168, 173, 176, 178, 181 |
-| 183 | Brauer Induction for Automorphy Families | 41, 98, 108, 109, 127, 128, 142, 168, 180, 182 |
+| 183 | Brauer Induction for Automorphy Families | 6, 98, 108, 109, 127, 128, 142, 168, 180, 182 |
 | 184 | Brauer Characters and Effectivity of Compatible Families | 24, 57, 180, 183 |
 | 185 | Compatible Systems over the Base Field | 168, 180, 182, 183, 184 |
 | 186 | Changing the Coefficient Prime while Keeping the Frey Special Place | 185 |

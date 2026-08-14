@@ -203,15 +203,16 @@ required to have one algebraic model before completion. Thus the later SP record
 embedding away from residue characteristic two is an exact attachment hypothesis, not an
 inference from the distinguished realization or from conductor one.
 
-The preservation clause may be certified in either of two ways with the same interface output:
-it may be supplied directly for every packet and coefficient place, or the datum may list all
-actual smooth projective curve carriers and supply $(\mathrm{SS}_{\mathrm{array}})$ of Book
-168, (7.9). In the second form Book 168, Proposition 7.6 proves the preservation clause. The
-present theorem does not itself prove that stronger ambient semisimplicity hypothesis. Book 41
-proves it from finite isogeny classes of the carrier Jacobians. Those classes are the exact
-arithmetic input; its standard uniform source is the unresolved Faltings--Shafarevich
-moduli-height package. Book 41 proves the subsequent finite polarized descent and integral
-factor-cancellation steps.
+The preservation clause has three sufficient certificates with the same interface output. It
+may be supplied directly. More economically, the datum may supply $(\mathrm{HT}_1)$ of Book
+168, (7.9), for the finite selected packet array; Book 168, Theorem 7.6 then proves that every
+semisimple packet realization is absolutely irreducible, identifies the raw representation
+with it, and preserves the complete dyadic special pair. Finally, the stronger ambient
+$(\mathrm{SS}_{\mathrm{array}})$ hypothesis of Book 168, (7.12), also suffices by its
+Proposition 7.7. The $(\mathrm{HT}_1)$ route is the application-specific one: its exact
+unproved input is smooth-proper Hodge--Tate comparison together with one-dimensional
+Hodge--Tate local algebraicity. It uses no Faltings height, Shafarevich finiteness, or Tate-module
+semisimplicity theorem.
 
 We call (1.1)--(1.6), complete splitting, and these exact range hypotheses a
 **controlled SP top datum**. Book 182 exports this datum only conditionally on its controlled
@@ -677,6 +678,10 @@ controlled datum supplies the distinguished extension which chooses its point.
 We now descend the one top packet separately through every elementary subgroup. The extending
 representation $\rho$ supplies coherence which the abstract automorphic descent torsors would
 not possess on their own.
+Book 109, Theorem 13.3 is an exact global alias with $E=M$, $F=F_H$, and
+$r=\rho|_{G_{F_H}}$, under the same descent-admissibility and attachment hypotheses. We retain
+the layer-by-layer specialization because it records the selected twists and packet-array
+compatibilities used later.
 
 ### 5.1 Descent selected by the extending representation
 
@@ -855,31 +860,44 @@ compatible system. Nor have the representations (6.3) been assembled into a syst
 $G_{\mathbf Q}$. They live on different Galois groups and are linked only by the identities
 proved below.
 
-**Proposition 6.1 (ambient certificate for the finite packet array).** Suppose the controlled
-datum lists the actual smooth projective curve carrier used for every packet $\pi_H$ and that
-$(\mathrm{SS}_{\mathrm{array}})$ holds for those carriers. Then, for every coefficient
-embedding $\tau$, the raw multiplicity representation defining $r_{H,\tau}$ is already
-globally semisimple. Consequently, for every dyadic $w$ and every $\tau$ of residue
-characteristic different from two, its full signed special Weil--Deligne pair is the scalar
-realization of the common raw algebraic pair. In particular, nonzero rank-one monodromy, its
-kernel line, and the Frobenius sign all survive global semisimplification.
+**Proposition 6.1 (independent raw-to-global certificate for the finite packet array).**
+Suppose the controlled datum lists the actual smooth projective curve carrier used for every
+packet $\pi_H$.  Assume either:
 
-**Proof.** Book 128, Proposition 9.4 applies to each actual carrier. Semisimplicity survives
+1. $(\mathrm{HT}_1)$ of Book 168, (7.9), holds for every selected raw packet factor; or
+2. the stronger $(\mathrm{SS}_{\mathrm{array}})$ of Book 168, (7.12), holds for the carriers.
+
+Then, for every coefficient embedding $\tau$, the raw multiplicity representation defining
+$r_{H,\tau}$ is already globally semisimple; in the first case it is absolutely irreducible.
+Consequently, for every dyadic $w$ and every $\tau$ of residue characteristic different from
+two, its full signed special Weil--Deligne pair is the scalar realization of the common raw
+algebraic pair. In particular, nonzero rank-one monodromy, its kernel line, and the Frobenius
+sign all survive global semisimplification. The absolute-irreducibility conclusion in the
+$(\mathrm{HT}_1)$ case also applies when the coefficient residue characteristic is two; it is
+exactly the packetwise hypothesis denoted $(\mathrm{AI}_2)$ by Book 184, without asserting a
+coefficient-prime dyadic Weil--Deligne comparison.
+
+**Proof.** Under item 1, every $\pi_H$ is cuspidal by Chapter 5, so Book 168, Theorem 7.6
+applies separately to every packet and coefficient place. It proves absolute irreducibility of
+$r_{H,\tau}$ by the class-field/isobaric contradiction and then identifies its raw
+multiplicity representation with its global semisimplification by Book 128, Lemma 9.1.
+
+Under item 2, Book 128, Proposition 9.4 applies to each actual carrier. Semisimplicity survives
 finite coefficient extension and passage to the Galois-stable Hecke block. The Morita
 evaluation isomorphism writes that block as a finite direct sum of copies of the raw
 multiplicity representation, so the latter is semisimple and equals its global
-semisimplification. This argument applies simultaneously to every embedding above each
-coefficient characteristic and uses no local monodromy claim. Restricting the resulting global
+semisimplification.
+
+Both arguments are independent of local monodromy. Restricting the resulting global
 isomorphism to $G_{(F_H)_w}$ preserves the actual local representation, hence the
 Weil--Deligne operator $N$, its line, and its Frobenius scalar. The final restriction on
-$\tau$ is exactly the prime-to-coefficient range of the geometric local comparison. $\square$
+$\tau$ is exactly the prime-to-coefficient range of the geometric local comparison. Neither
+argument uses the signed Brauer class, effectivity, or the later assembled family. $\square$
 
-Rational Tate-module semisimplicity $(\mathrm{TS})$ for the Jacobians of these carriers is a
-sufficient theorem for the hypothesis. Book 41, Theorem 15.3 and Corollary 16.1 prove it from
-finiteness of their $K$-isogeny classes, and Section 16.2 proves the coefficient and
-multiplicity-space passage. Neither those classes nor Book 41's standard
-Faltings--Shafarevich moduli-height source is proved. This proposition closes the raw-to-global reduction without using
-the signed Brauer class, effectivity, or the later assembled family.
+The first route is the minimal packet theorem. Its only new arithmetic input is
+$(\mathrm{HT}_1)$; Book 168 proves every subsequent reduction. Rational Tate-module
+semisimplicity of all carrier Jacobians remains a sufficient but unnecessarily strong
+alternative and is not part of the recommended FLT dependency chain.
 
 The distinguished member satisfies
 
@@ -1666,7 +1684,8 @@ $(\varepsilon_2,2\varepsilon_2)$ on quotient and line. This accounts for both th
 
 For every $H$, every dyadic place $w$ of $F_H$, and every coefficient embedding $\tau$ whose
 residue characteristic is not two, the controlled local-preservation certificates—supplied
-directly or deduced from $(\mathrm{SS}_{\mathrm{array}})$ by Proposition 6.1—allow the
+directly, deduced from $(\mathrm{HT}_1)$ by Proposition 6.1, or obtained from its stronger
+ambient alternative—allow the
 special comparison of Book 128, Theorem 12.1, and Book 168, Theorem 12.1 and Corollary 12.2, to
 be applied, giving
 
@@ -1889,15 +1908,15 @@ premise.
 The direct dependency row is
 
 $$
-\boxed{183\mid41,\ 98,\ 108,\ 109,\ 127,\ 128,\ 142,\ 168,\ 180,\ 182.} \tag{11.3}
+\boxed{183\mid6,\ 98,\ 108,\ 109,\ 127,\ 128,\ 142,\ 168,\ 180,\ 182.} \tag{11.3}
 $$
 
 | Source | Input used here | Strengthening not made |
 |---|---|---|
-| Book 41 | finite-isogeny-class $\Rightarrow$ Tate semisimplicity $\Rightarrow$ curve-$H^1$ semisimplicity, including finite coefficient extension and multiplicity extraction | finite isogeny classes are the exact input; the standard uniform Faltings--Shafarevich route retains the moduli-height gap, while finite polarized descent and Zarhin cancellation are proved |
+| Book 6 | locally algebraic one-dimensional $\ell$-adic characters are avatars of algebraic Hecke characters | local algebraicity is supplied by $(\mathrm{HT}_1)$, not by class field theory itself |
 | Book 98 | finite-order Hecke avatars of the Brauer characters, with reciprocity, norm pullback, and conjugation | no higher-rank automorphic induction across $F_H/\mathbf Q$ |
 | Books 108--109 | selected prime-cyclic descent and base change, antecedent-complete saturated fibers, local-parameter restriction, and tower independence in the admissible range | no transfer along an inadmissible tower and no nonsolvable descent |
-| Books 127--128 and 168 | the weight-two packet realizations, covariant arithmetic normalization, coefficient conjugates, algebraic good data, the conditional raw SP comparison, and reduction of its uniform raw-to-global passage to $(\mathrm{SS}_{\mathrm{array}})$ | no construction of a missing carrier, no proof of Book 41's finite-isogeny-class input, no comparison at the coefficient residue characteristic, and no packet lattice after semisimplification |
+| Books 127--128 and 168 | the weight-two packet realizations, covariant arithmetic normalization, coefficient conjugates, algebraic good data, the conditional raw SP comparison, and the cuspidal irreducibility/raw-to-global reduction from $(\mathrm{HT}_1)$ | no construction of a missing carrier, no proof of smooth-proper Hodge--Tate comparison, no comparison at the coefficient residue characteristic, and no packet lattice after semisimplification |
 | Book 142 | the Chebotarev density input used to recognize representations from their good Frobenius traces | no assertion that the field-theoretic towers satisfy automorphic selectors |
 | Book 180 | monomiality, the elementary projector and integral Brauer relation, induction/tensor/Mackey/determinant formulas, prime-cyclic refinement, the cyclic Clifford torsor, and Brauer--Nesbitt recognition | no packet construction, overlap identity, Gram positivity, or coefficient family is imported |
 | Book 182 | the exact conditional controlled SP datum: $\rho$, $M$, the distinguished top realization, the SP record, the finite descent-and-attachment ledger, and the common unramified elementary Galois pairs away from two | the missing controlled residual automorphic seed and bridge-readiness theorem are not supplied unconditionally, and no automorphic principal/dihedral type comparison is imported |
@@ -1907,12 +1926,12 @@ attachment results; Books 127--128 and 168 supply the attachment and local-compa
 actually applied in Chapters 6 and 10. In particular, the special scalar equality and
 raw-to-semisimple local-preservation identity must be available for every constructed packet and
 every coefficient place away from two. Proposition 6.1 proves the latter from
-$(\mathrm{SS}_{\mathrm{array}})$ and shows that coefficient extension, packet projection, and
-Morita extraction introduce no further obstruction. Book 41 proves the ambient statement from
-finite isogeny classes of the carrier Jacobians, but those classes and their standard uniform
-Faltings--Shafarevich source are absent. If either the raw special clause or this
-preservation certificate is absent, the distinguished $\ell$-adic SP pair does not
-determine monodromy or its sign at another embedding.
+$(\mathrm{HT}_1)$ by cuspidal absolute irreducibility and shows that coefficient extension,
+packet projection, and Morita extraction introduce no further obstruction. The exact remaining
+arithmetic theorem is smooth-proper Hodge--Tate comparison plus one-dimensional Hodge--Tate
+local algebraicity for these factors. If either the raw special clause or this preservation
+certificate is absent, the distinguished $\ell$-adic SP pair does not determine monodromy or
+its sign at another embedding.
 
 The application-specific work retained here is substantial: construction and conjugation of the
 selected elementary packets, the nonnormal overlap theorem, the coefficient ledger, the signed
