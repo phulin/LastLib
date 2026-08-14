@@ -323,6 +323,15 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   generic rigidity and then makes that last surjection injective, with the strict ray twist
   additionally retained for the scalar family. No separate one-prime
   acting-order theorem remains in that faithful range.
+- **Direct finite-set lifting:** the scope-minimal FLT route is Book 176's
+  $({\rm IAV}_S)$ interface. After the permitted solvable base change, it compares the desired
+  finite-set local deformation problem with a tame Ihara-avoidance problem having the same
+  special fiber. The avoidance ring is irreducible, the desired ring has the required
+  special-fiber component bijection, and synchronized Taylor--Wiles systems transfer full
+  patched support to the desired problem. Books 143--146 supply general patching mechanics and
+  Book 172 supplies the clean minimal theorem, but none constructs this paired nonminimal
+  system. Once $({\rm IAV}_S)$ is supplied, no several-place old--new cube, mixed-Ihara
+  vanishing, product residue, or separate product-component occurrence is required.
 - **Several active places:** once one actual product coefficient system and all component
   routes are supplied, Books 123--124 and 174 formally construct the coherent generic global
   level cube and its adjoint companion. Book 84, Section 11.9 already constructs the integral
