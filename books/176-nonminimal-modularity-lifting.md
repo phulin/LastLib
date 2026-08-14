@@ -5,12 +5,20 @@ the preceding books. Its first output is a pointwise theorem: once an actual one
 automorphic carrier has the represented local condition, support, and reciprocity required
 below, every characteristic-zero point satisfying the asserted open branch conditions is
 automorphic; in particular, a special-conductor conclusion retains nonzero monodromy. Its
-second output is the exact several-place interface needed when one place splits into many: either one verifies
-an ordered chain of one-prime applications, or one supplies a genuinely joint cube. For the
-joint route, mixed exactness, product residue through the integral iterated-switch
+second output is the exact several-place interface for a proof by geometric level change when
+one place splits into many: either one verifies an ordered chain of one-prime applications, or
+one supplies a genuinely joint cube. For the joint route, mixed exactness, product residue
+through the integral iterated-switch
 Beck--Chevalley datum, joint support, augmentation, and reciprocity remain distinct
 hypotheses. For one named point, the torsion-free top of the actual final cube gives a smaller
 carrier, but occurrence of the global component through that point is still required.
+
+Neither interface is logically forced by the statement in the FLT blueprint.  The standard
+Taylor--Wiles--Kisin proof has a third finite-set route: after solvable base change it patches
+the desired local problem and an Ihara-avoidance problem simultaneously, then transfers full
+support from the irreducible avoidance ring through their common special fiber.  That route
+does not form the several-place old--new cube.  Section 1.5 records its exact input and keeps
+separate the fact that the present source chain has not yet constructed it.
 
 The discussion of incidence complexes below serves these application theorems. It never
 forms a tensor product of full global one-prime cohomology complexes: the common global
@@ -24,6 +32,7 @@ multiplied.
   - [1.2 What one changed place must provide](#12-what-one-changed-place-must-provide)
   - [1.3 The finite-set demand from the FLT argument](#13-the-finite-set-demand-from-the-flt-argument)
   - [1.4 The application routes and their boundary](#14-the-application-routes-and-their-boundary)
+  - [1.5 The direct finite-set Ihara-avoidance route](#15-the-direct-finite-set-ihara-avoidance-route)
 - [2. Local conventions and the three congruence regimes](#2-local-conventions-and-the-three-congruence-regimes)
   - [2.1 Frobenius, Hecke operators, and monodromy](#21-frobenius-hecke-operators-and-monodromy)
   - [2.2 Special representations and conductor](#22-special-representations-and-conductor)
@@ -140,7 +149,9 @@ The modularity-lifting theorem used in the FLT blueprint is stated for a finite 
 prime-to-$\ell$ places. A representation is allowed a controlled tame special condition at
 every member of $S$. Thus a one-prime theorem is not by itself the endpoint required there.
 One needs either a simultaneous finite-set theorem or an iteration in which every hypothesis
-is reverified after every change of level.
+is reverified after every change of level.  A simultaneous theorem need not be proved by a
+several-place incidence cube: it can instead come from direct patching at the final finite
+local problem, as in Section 1.5.
 
 For two places the automorphic object is a square, not two unrelated arrows. Its total
 complex measures the intersection of the two old images. Edgewise saturation does not
@@ -149,11 +160,13 @@ conclusion that must be proved; it is not included in any definition of a locall
 place. In the downstream construction, one selected base place is required to split completely
 in a totally real extension $F'/F$ of positive even degree. It already produces $[F':F]$
 active places, with $[F':F]\ge2$, before any specialization-dependent bad places are added.
-The several-place issue is therefore present even when no new bad reduction is discovered.
+Thus a geometric level-change proof has a genuinely several-place issue even when no new bad
+reduction is discovered.  This does not make mixed cubical exactness a hypothesis of every
+possible proof of the blueprint theorem.
 
 ### 1.4 The application routes and their boundary
 
-The application has four routes, and their hypotheses must not be exchanged. With one active
+The application has five routes, and their hypotheses must not be exchanged. With one active
 place, Theorem 7.1 applies to the scalar line-special family and Theorem 7.1A gives the
 corresponding conditional generic or vexing application on an independently constructed
 carrier. With several active places, a fully verified ordered chain applies those one-place
@@ -163,7 +176,9 @@ $({\rm PROD}_P)$, $({\rm JSUP}_P)$, $({\rm AUG}_P)$, and
 $({\rm REC}_P)$; on the iterated-switch route $({\rm PROD}_P)$ includes the integral
 Beck--Chevalley datum $({\rm IBC}_P)$. Finally, Theorem 9.2 treats one named point by using
 the torsion-free top of the actual final cube and the pointed occurrence of the one global
-component through that point.
+component through that point.  The fifth route is the direct paired patching comparison
+$({\rm IAV}_S)$ of Section 1.5; it proves the finite-set theorem without first proving any of
+the cubical hypotheses.
 
 The unconditional algebra used by these routes has two parts. First, once the exact one-prime
 geometric, reciprocity, and support hypotheses are stated separately, a short annihilator
@@ -202,6 +217,44 @@ torsion survives.  Pointwise modularity then needs simultaneous branch verificat
 reciprocity on that carrier, and support on the single global component through the point.
 This does not prove the stronger mixed, Beck--Chevalley, or all-component support theorems and
 does not commute torsion-free quotient formation through nonflat augmentation.
+
+### 1.5 The direct finite-set Ihara-avoidance route
+
+The automorphy-lifting argument cited by the FLT blueprint does not begin by changing the
+level at the members of $S$ one at a time.  Let $\rho$ be the lift to be proved automorphic
+and let $\rho_0$ be an automorphic lift of the same residual representation.  After a solvable
+totally real base change, its direct finite-set input $({\rm IAV}_S)$ has the following four
+parts.
+
+1. The determinants of $\rho$ and $\rho_0$ agree; above $\ell$ the two lifts have the same
+   regular Fontaine--Laffaille weights and the required crystalline or finite-flat condition;
+   and the residual image supplies the Taylor--Wiles prime-selection and descent hypotheses.
+   After the solvable base change, both prime-to-$\ell$ inertia actions are unipotent, and at
+   every place where either lift ramifies the residual local representation is trivial and
+   the residue cardinality is congruent to one modulo $\ell$.
+2. Over the complete tensor product of the local deformation rings, construct the desired
+   problem $R^{\rm loc}$, with tame characteristic polynomial $(X-1)^2$, and the avoidance
+   problem $R^{{\rm loc},\prime}$, with polynomial
+   $(X-\zeta_\ell)(X-\zeta_\ell^{-1})$.  Their special fibers are identified.  The reduced
+   avoidance ring is flat and irreducible; the reduced desired ring is flat and
+   equidimensional, and reduction induces a bijection on irreducible components.
+3. Patch synchronized Taylor--Wiles systems and automorphic modules for the two problems so
+   that the patched objects agree modulo the uniformizer.  Depth gives full support for the
+   avoidance module because its local source is irreducible.  The common special fiber and
+   the component bijection then force the support of the desired patched module, already a
+   union of components, to contain every component.
+4. Descend that support statement to the original finite-level deformation problem, recover
+   automorphy of $\rho$ over the solvable extension, and apply the separately verified
+   solvable automorphic descent.
+
+This is a simultaneous finite-set proof, but it is not the all-component boundary-occurrence
+theorem of Chapter 8: its component coverage comes from the paired deformation-ring special
+fibers and patched depth.  It requires neither the mixed Ihara modules (8.5), product residue,
+nor an iterated-switch Beck--Chevalley cube.  Conversely, the minimal patching theorem of
+Book 172 does not supply $({\rm IAV}_S)$ merely by replacing its minimal local rings with
+nonminimal ones.  The local-ring comparison, synchronized pair of automorphic patching
+systems, support transfer, and final descent are the exact additional source that must be
+constructed if this scope-minimal route is chosen.
 
 ## 2. Local conventions and the three congruence regimes
 
@@ -2208,15 +2261,17 @@ The immediate potential-modularity consumer produces a geometric specialization 
 semistable places are known only after the specialization has been chosen. Its lower residual
 packet must then be moved to the exact local datum of the target Tate module.
 
-The presently justified interface is consequently one of the following forms:
+The required interface is consequently one of the following forms:
 
-1. the specialization has exactly one active place and satisfies every explicit hypothesis of
+1. the direct finite-set package $({\rm IAV}_S)$ of Section 1.5 is constructed for the
+   specialized target and its automorphic residual reference; or
+2. the specialization has exactly one active place and satisfies every explicit hypothesis of
    the applicable one-prime conclusion in Chapter 7; or
-2. an ordered finite chain is exhibited, and every one-prime hypothesis is verified anew at
+3. an ordered finite chain is exhibited, and every one-prime hypothesis is verified anew at
    each intermediate level; or
-3. the all-point simultaneous interface of Theorem 9.1 is used after all of its displayed
+4. the all-point simultaneous interface of Theorem 9.1 is used after all of its displayed
    hypotheses have been independently proved for the actual specialization; or
-4. for the one already named Tate-module point, the pointed interface of Theorem 9.2 is used
+5. for the one already named Tate-module point, the pointed interface of Theorem 9.2 is used
    after constructing one actual final global cube, verifying simultaneous generic branch
    data and finite-set reciprocity on its torsion-free top carrier, and proving support on the
    one global component through that point.
@@ -2226,6 +2281,9 @@ a consumer may not cite Theorem 9.1 as though (8.10), product residue, and joint
 followed from the one-prime sources. Theorem 9.2 does not require mixed saturation or product
 residue unless those are used to construct or support its carrier, but separate one-place
 occurrence still does not prove its pointed joint-support clause.
+The direct route avoids both assertions, but only after its paired local-ring and patched
+support comparison has actually been constructed; the minimal theorem is not that
+construction.
 
 ### 9.4 The FLT boundary
 
@@ -2238,9 +2296,9 @@ package of this book covers the coefficient-prime range $\ell\ge7$ and only thos
 of the tame condition that have first been replaced by an exact represented condition with
 all lines, signs, determinant, scalar character, and monodromy labels retained. This
 finite-set blueprint range is therefore broader than Theorem 7.1 unless $|S|\le1$, an actual
-verified one-prime chain is supplied, every hypothesis of Theorem 9.1 has been proved, or for
-one named lift the pointed carrier, branch, reciprocity, and support hypotheses of Theorem 9.2
-have been proved.
+verified one-prime chain is supplied, $({\rm IAV}_S)$ has been constructed, every hypothesis
+of Theorem 9.1 has been proved, or for one named lift the pointed carrier, branch, reciprocity,
+and support hypotheses of Theorem 9.2 have been proved.
 The blueprint's residual hypothesis is modularity at level $\Gamma_1(S)$ and its conclusion
 is modularity at that level; in the present language the corresponding compact localization,
 transfer, and local antecedents must be supplied by $({\rm AUT}_v)$ in the one-place case or
@@ -2257,11 +2315,13 @@ identity.
 The one-prime theorem is nevertheless the correct local building block. It fixes the
 Frobenius convention, distinguishes conductor-one level raising from conductor-two scalar
 twisting, retains the determinant square, and identifies every hypothesis that must survive
-in a chain. What remains for a simultaneous application of the blueprint is not a new kind
-of arbitrary ramification. It is mixed integral control at finitely many semistable places,
-joint support, and finite-set reciprocity. Finite-level reduced $R=T$ suffices for
-characteristic-zero modularity; finite-level source reducedness is needed only if a full
-scheme-theoretic equality is also demanded.
+in a chain. What remains for a simultaneous application of the blueprint depends on the
+proof route. The geometric-cube route needs mixed integral control at finitely many
+semistable places, joint support, and finite-set reciprocity. The direct Ihara-avoidance route
+instead needs the paired finite-set local-ring comparison and synchronized patched support
+transfer of Section 1.5. Finite-level reduced $R=T$ suffices for characteristic-zero
+modularity; finite-level source reducedness is needed only if a full scheme-theoretic
+equality is also demanded.
 
 For a theorem making **every** lift in the product problem automorphic, the full-support route
 of Theorem 9.1 still requires the mixed and product-residue package used to construct its
@@ -2270,6 +2330,22 @@ potential-modularity consumer, Theorem 9.2 shows that the logically minimal simu
 gate is narrower: an actual final joint cube, its torsion-free top carrier, simultaneous
 generic branch verification, finite-set reciprocity on that carrier, and occurrence of the
 single product component through the point.
+
+Neither the ordered nor the pointed alternative is presently unconditional in the declared
+source chain. For an ordered chain, the unresolved arithmetic occurrence is that after each
+completed change the next actual automorphic localization has support on the represented
+component of the named target, with its type and reciprocity hypotheses reverified on that
+new carrier. For the pointed cube, it is the single joint assertion
+
+$$
+\mathfrak p_{\Xi_x}\in\operatorname{Supp}_{R_P}(Q_P^{\rm tf}),
+\tag{9.3}
+$$
+
+together with simultaneous branch verification before reciprocity. Thus these routes remove
+the all-components demand, but do not by themselves prove the blueprint theorem. The direct
+$({\rm IAV}_S)$ route removes this occurrence problem by proving patched component coverage
+through the common special fiber; its own paired patching package is likewise still absent.
 
 ## 10. Dependencies and conclusion
 
@@ -2423,7 +2499,18 @@ enhanced characteristic-zero tangent--Selmer vanishing without assuming reducedn
 patched ring. The flat dual-number countermodel in Book 175 shows why finite flatness and
 topological support alone would not suffice.
 
-For two or more places, the division of mathematical roles among the earlier sources separates
+For the finite-set theorem actually cited by the FLT blueprint, there is a narrower direct
+alternative to all of the level-change inputs just listed. It is $({\rm IAV}_S)$: the paired
+desired/avoidance local deformation rings, their common special fiber and component
+bijection, synchronized Taylor--Wiles systems, and the patched support transfer of Section
+1.5. Books 143--146 provide general patching mechanics and Book 172 proves the clean minimal
+instance, but no declared source constructs this paired nonminimal system or its support
+comparison. This is the first missing input on the standard Ihara-avoidance route. It is not
+an alias for mixed Ihara: it proves the needed finite-set component coverage without forming
+an old--new cube.
+
+If the geometric level-change route is used instead, then for two or more places the division
+of mathematical roles among the earlier sources separates
 what is already proved from what is not. Book 84, Section 11.9 supplies the common integral several-prime degeneracy
 source and its product Gram formula; Book 152, Proposition 11.1 owns its regular-refinement
 source splitting; Book 14 owns coefficient-derived comparison and pasting; and Book 145 owns
@@ -2541,7 +2628,8 @@ $\ell$-power tame twist exists only at $q_v\equiv1\pmod\ell$ and moves a special
 conductor one to conductor two while changing the determinant by the square of the character.
 At $q_v\equiv-1\pmod\ell$, the full primary--companion and Smith blocks must remain visible.
 
-At several places the new object is a cube. Its first two-place defect is the explicit module
+For a geometric level-change proof at several places the new object is a cube. Its first
+two-place defect is the explicit module
 $\operatorname{Ob}_{v,w}$, the first homology of the total incidence square. Edgewise
 saturation does not make it vanish. Over the final coefficient DVR it is exactly the
 $\varpi$-torsion in the top joint-new quotient, so its vanishing is exactly primitivity of the
@@ -2562,6 +2650,14 @@ further mixed conclusions, not definitions. Theorem 9.1 proves the all-point fin
 when the actual face package, derived global cube, mixed exactness, product residue, joint
 support, simultaneous augmentation, and finite-set reciprocity are all supplied. Pairwise
 one-prime data do not supply those hypotheses.
+
+The standard direct finite-set proof has a different architecture. Its desired and
+Ihara-avoidance deformation problems agree on the special fiber; irreducibility gives full
+patched support for the avoidance problem, and the component-bijection comparison transfers
+that support to the desired problem. Once $({\rm IAV}_S)$ is proved, none of the mixed cube,
+product-residue, or separate joint-occurrence inputs is consumed. The present source chain
+records this as an unresolved alternative rather than treating the geometric cube as
+logically compulsory.
 
 For the actual named point downstream, the canonical torsion-free top quotient and its
 adjoint give a smaller honest carrier with the global module $W_\Pi$ occurring once. Theorem
