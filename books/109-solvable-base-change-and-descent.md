@@ -2916,6 +2916,80 @@ endomorphisms. The one-character correction in Lemma 13.2 may no longer describe
 choices. Such cases require the explicit two-character and automorphic-induction
 analysis of Section 7.4.
 
+**Proposition 13.4 (automatic admissibility for an unramified extending
+system).** Let $E/F$ be a totally real solvable Galois extension, let $S$ be a
+finite set of finite places of $F$ which contains every dyadic and every
+$\ell$-adic place and splits completely in $E$, and let
+
+$$
+r:G_F\longrightarrow\operatorname{GL}_2(\overline{\mathbf Q}_\ell)
+$$
+
+be semisimple and unramified outside $S$. Suppose the packet at one end of a
+prime-cyclic subnormal tower in $E/F$ is parallel-weight-two, is associated at a
+distinguished coefficient embedding with the appropriate restriction of $r$, and
+has selected components above $S$. Then the local-fiber and selector parts of the
+admissibility ledger are automatic at every step of the tower:
+
+1. every finite component and its restriction are selected;
+2. at every nonsplit place, every admissible fixed-determinant extension fiber and
+   every norm-antecedent slice is selected;
+3. the whole quotient-character fiber is selected and trace-comparable; and
+4. a real discrete-series component supplies a matching strongly cuspidal factor.
+
+Consequently any prime-cyclic subnormal tower is ascent-admissible or
+descent-admissible, as appropriate, once the ordinary attachment and invariance
+hypotheses of the cyclic theorem are present. If $r|_{G_E}$ is absolutely
+irreducible, Theorem 13.3 selects a coherent member of every descent fiber.
+
+**Proof.** Consider a prime-cyclic step $L/K$ and a nonsplit finite place $v$ of
+$K$. It cannot lie above $S$, because those places split completely throughout the
+fixed-field diagram. The restriction of $r$ to $G_{K_v}$ is therefore unramified,
+so its Frobenius-semisimple Weil--Deligne parameter is a split pair
+
+$$
+\Phi_v=\alpha\oplus\beta,
+\qquad N=0,
+$$
+
+with unramified character lines. Its restriction to $W_{L_w}$ is again split. We
+must check the *entire* extension fiber, rather than only the extension supplied by
+$r$.
+
+Book 81, Section 12.4 describes that fiber by the action of the prime cyclic group
+on the two-character multiset. If the step has odd prime degree, a two-element
+multiset has no nontrivial orbit of that prime size. Hence both lines extend
+individually. Every semisimple extension is split, including the repeated-line
+case: over algebraically closed characteristic-zero coefficients a representation
+of the cyclic quotient is a sum of characters. Split parameters with arbitrary,
+possibly wildly ramified, character lines are selected.
+
+If the step is quadratic, either the two lines extend and the extension is split,
+or they are exchanged and the extension is induced from $L_w/K_v$. In the latter
+case it is depth-zero dihedral when the quadratic extension is unramified and tame
+dihedral when it is ramified of odd residue characteristic. The only excluded
+possibility is a ramified dyadic quadratic extension. It cannot occur here because
+every dyadic place belongs to $S$ and is split. Thus every
+admissible extension, in every determinant or norm-antecedent slice, lies in the
+selected range. Nonzero monodromy cannot appear because its restriction would
+remain nonzero, whereas the restricted parameter has $N=0$.
+
+At a split place above $S$ there is no local extension problem, and a global
+quotient character is locally trivial. Away from $S$, quotient-character twists
+keep a split parameter split, so the full global twisting fiber remains selected.
+The extension is totally real; at a real place every local step is split, and a
+parallel-weight-two discrete-series factor survives unchanged. Book 108, Section
+14.4 makes this a matching strongly cuspidal selector. It also proves
+trace-comparability for the resulting selected cohomological twists. These facts
+verify every asserted part of the ledger. The final coherence statement is exactly
+Theorem 13.3. $\square$
+
+The proposition makes no assertion that $E/F$ is tamely ramified. In particular,
+a field obtained by specializing a simply branched cover can have vertical wild
+ramification not visible in its geometric branch cycles. The point is that an
+odd-degree wild local step only contributes split parameter extensions here, and
+split parameters already belong to the selected theory.
+
 ### 13.5 Local conditions in ascent and descent
 
 Suppose a modularity argument prescribes behavior at a finite set $S$ of places of

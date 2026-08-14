@@ -185,14 +185,15 @@ r_{\pi_M,\iota_0}\simeq\rho|_{G_M}.
 \tag{1.6}
 $$
 
-The word **selected** has an exact role. For every elementary $H\leq\Gamma$, the datum includes
-at least one prime-cyclic chain from $M$ to $F_H$. Recursively at every downward step, the
-current cusp form is selected and trace-comparable, its local extension fibers are
-antecedent-complete selected, and the reverse comparison has a strongly cuspidal factor. The
-source fiber is saturated under the finite quotient-character twists that can occur, so the
-correction selected by $\rho$ remains selected and trace-comparable. These are precisely the
-descent-admissibility and fiber-saturation conditions of the cyclic and solvable transfer
-theorems; mere invariance of the packet is not being substituted for them.
+The word **selected** has an exact role, but no independent solvable-descent ledger is included
+in the datum. The top packet is selected, including at the completely split sensitive primes.
+For every elementary $H\leq\Gamma$, Book 180 supplies prime-cyclic chains from $M$ to $F_H$.
+Since $\rho$ is unramified away from the completely split set $\{2,\ell\}$, Book 109,
+Proposition 13.4 proves along every such chain that all local extension and norm-antecedent
+fibers are selected, the quotient-character fiber is saturated, and a real discrete-series
+factor supplies the strongly cuspidal selector. Theorem 13.3 then uses the already extending
+$\rho$ to select coherent twists. Thus the full admissibility ledger is a consequence of the
+controlled top, not an extra hypothesis and not an inference from solvability alone.
 
 Once a corrected packet has been obtained, its ordinary curve attachment is no longer an
 extra hypothesis. Complete dyadic splitting preserves a selected special factor, every
@@ -649,22 +650,32 @@ top packet.
 
 ### 4.4 Admissibility is an arithmetic condition
 
-The existence of (4.3) does not put it in the range of an automorphic transfer theorem. We call
-a tower **ascent-admissible** only when every layer has the required selected local range,
-cohomological range, and strongly cuspidal selector. We call it **descent-admissible** only when
-every reverse fiber is antecedent-complete and saturated under quotient characters, with the
-required cuspidal comparison.
+The existence of (4.3) alone does not put it in the range of an automorphic transfer theorem.
+In this controlled diagram, however, the additional arithmetic hypotheses verify the full
+ledger. At a nonsplit finite place the prime is not $2$ or $\ell$, so the appropriate
+restriction of $\rho$ is unramified and its local parameter is a split character pair with
+$N=0$. Book 109, Proposition 13.4 proves that every fixed-determinant extension and every
+norm-antecedent slice of this pair is selected. In odd prime degree every extension remains
+split. In quadratic degree the only additional row is unramified depth-zero or odd-residue
+tame dihedral; the excluded ramified dyadic row cannot occur because $2$ splits completely.
+Quotient twists remain split away from $\{2,\ell\}$ and are locally trivial above that split
+set, so the fiber is saturated. Finally, every archimedean step is split and preserves a
+parallel-weight-two real discrete-series selector.
 
-Accordingly:
+Consequently every prime-cyclic chain used below is both ascent- and descent-admissible once
+its endpoint packet has been constructed. Thus:
 
-- $\pi_H$ is constructed only along a descent-admissible chain supplied by the controlled
-  datum;
-- an automorphic identity between $\pi_H$ and $\pi_D$ is asserted only along an
-  ascent-admissible chain; and
-- the semisimple overlap required for Mackey theory is proved independently in Chapter 7.
+- $\pi_H$ may be constructed along any chain (4.4);
+- for $D\leq H$, every chain (4.3) gives the automorphic identity between $\pi_H$ and $\pi_D$;
+  and
+- the semisimple overlap required for Mackey theory is nevertheless proved independently in
+  Chapter 7, so its proof does not depend on choosing a tower.
 
-Complete splitting of $2$ and $\ell$ makes the local extensions at those primes trivial. It
-does not verify the global selector hypotheses.
+This argument deliberately does not claim that the arithmetic specialization field $M$ is
+ramified only tamely by transpositions. Simple branching controls horizontal geometric branch
+cycles, not vertical bad reduction or discriminant collision after specialization. Such a
+ramification theorem is unnecessary: an odd-degree wild local step contributes only selected
+split extensions of the unramified two-line parameter.
 
 ### 4.5 Comparing two extensions across one cyclic layer
 
@@ -687,13 +698,13 @@ We now descend the one top packet separately through every elementary subgroup. 
 representation $\rho$ supplies coherence which the abstract automorphic descent torsors would
 not possess on their own.
 Book 109, Theorem 13.3 is an exact global alias with $E=M$, $F=F_H$, and
-$r=\rho|_{G_{F_H}}$, under the same descent-admissibility and attachment hypotheses. We retain
-the layer-by-layer specialization because it records the selected twists and packet-array
-compatibilities used later.
+$r=\rho|_{G_{F_H}}$. Proposition 13.4 of that book supplies the admissibility hypotheses from
+the present unramified extending system. We retain the layer-by-layer specialization because
+it records the selected twists and packet-array compatibilities used later.
 
 ### 5.1 Descent selected by the extending representation
 
-Fix an elementary $H\leq\Gamma$ and a descent-admissible chain (4.4). Put
+Fix an elementary $H\leq\Gamma$ and any chain (4.4). Put
 $K_j=F_{H_j}$, so $K_0=M$ and $K_s=F_H$. We construct a cuspidal packet $\pi_j$ over $K_j$
 such that
 
@@ -729,8 +740,8 @@ $$
 
 Compatibility of twisting with Galois realization proves (5.1) at the next layer.
 The character $\eta_j$ is killed by restriction to $G_{K_j}$, so base change of (5.2) is
-still $\pi_j$. Fiber saturation in the controlled datum guarantees that (5.2) remains in the
-selected range. Induction on $j$ constructs $\pi_H=\pi_s$ and proves
+still $\pi_j$. Automatic fiber saturation in Book 109, Proposition 13.4 guarantees that (5.2)
+remains in the selected range. Induction on $j$ constructs $\pi_H=\pi_s$ and proves
 $\operatorname{BC}_{M/F_H}(\pi_H)\simeq\pi_M$.
 
 ### 5.2 Cuspidality and independence of the chain
@@ -1012,8 +1023,8 @@ The second is what the Mackey norm needs and is proved for every elementary inte
 
 ### 7.1 The admissible-tower identity
 
-Let $D\leq H$ be elementary. Suppose the tower (4.3) is ascent-admissible for $\pi_H$. Iterated
-prime-cyclic base change then exists. Its distinguished realization is
+Let $D\leq H$ be elementary. By Section 4.4, any tower (4.3) is ascent-admissible for
+$\pi_H$. Iterated prime-cyclic base change therefore exists. Its distinguished realization is
 
 $$
 r_{H,\iota_0}|_{G_{F_D}}
@@ -1103,7 +1114,7 @@ semisimple representations at almost every $u$.
 The next proposition retains the interface number used by the succeeding character-norm
 theorem. Its proof belongs here, after the coefficient ledger and the Frobenius-power
 calculation; the stable number is not an assertion that the proof occurred earlier. Here
-**tower-independent** means that no ascent-admissible automorphic tower is needed. It does not
+**tower-independent** means that the proof does not use an automorphic tower. It does not
 remove the controlled-top and all-embedding attachment hypotheses of Theorem 1.1.
 
 **Proposition 6.2 (elementary overlap; stable interface label).** For every inclusion
@@ -1115,8 +1126,8 @@ r_{H,\tau}|_{G_{F_D}}^{\mathrm{ss}}\simeq r_{D,\tau}.}
 \tag{6.4a}
 $$
 
-This holds whether or not an ascent-admissible automorphic tower from $F_H$ to $F_D$ has been
-verified.
+Although Section 4.4 now verifies every such automorphic tower, this semisimple statement is
+proved without choosing or iterating one.
 
 **Proof.** Book 180's Clifford restriction in Section 5.1, applied constituentwise after
 passing to the normal core, together with the averaging argument in Section 3.1 shows that the
@@ -1832,10 +1843,9 @@ top datum. Then there are:
   sign $\varepsilon_2$, and conductor exponent one, as a virtual local record for every
   coefficient embedding away from residue characteristic two.
 
-If $D\leq H$ and an ascent-admissible prime-cyclic tower is available, the overlap is the
-actual automorphic identity (7.1). Without that admissibility, no automorphic base change to
-$F_D$ is claimed, but the semisimple identity (6.4a) is still proved by algebraic
-Frobenius-power comparison and recognition.
+For every $D\leq H$, automatic admissibility gives the actual automorphic identity (7.1) along
+any prime-cyclic tower. Independently, the semisimple identity (6.4a) is proved by algebraic
+Frobenius-power comparison and recognition and therefore does not inherit a choice of tower.
 
 The theorem asserts neither that $\mathcal R_{\mathfrak B,\tau}$ is effective nor that the
 classes for varying $\tau$ form a base-field compatible family. It asserts no integral
@@ -1848,9 +1858,10 @@ Frobenius reciprocity, Mackey decomposition, Brauer--Nesbitt recognition, and a 
 subgroup chain for every elementary group and every elementary intersection. Chapters 2--4
 fixed their notation and instantiated them in the controlled field diagram.
 
-Using a descent-admissible chain, Chapter 5 constructs $\pi_H$ one cyclic layer at a time. The
-extension comparison lemma and the fact that $\rho$ is already defined downstairs select the
-unique quotient twist whose distinguished realization is $\rho|_{G_{F_H}}$. Strong
+Using any prime-cyclic chain, Chapter 5 constructs $\pi_H$ one cyclic layer at a time. Book
+109, Proposition 13.4 supplies the full selected local fibers, saturation, and real selector.
+The extension comparison lemma and the fact that $\rho$ is already defined downstairs select
+the unique quotient twist whose distinguished realization is $\rho|_{G_{F_H}}$. Strong
 multiplicity one proves chain independence and conjugation compatibility.
 
 Chapter 6 applies the earlier packet theorem separately to the finitely many $\pi_H$ and forms
@@ -1858,7 +1869,7 @@ one coefficient ledger. The distinguished determinant forces every algebraic cen
 multiplier to be trivial, giving (6.6).  Book 182's equivariant conductor and
 invariant-Frobenius theorem gives the common unramified pair (6.4j) at every place away from
 two. Chapter 7 proves the overlap by two routes. Actual
-base change gives (7.1) on an admissible tower. In every case, equality at $\iota_0$, the
+base change gives (7.1) on every tower. Independently, equality at $\iota_0$, the
 residue-degree recurrence, injectivity of $\iota_0$, density, and Brauer--Nesbitt give (6.4a).
 This yields the Hom-ready conjugate intersection formula.
 
@@ -1964,10 +1975,11 @@ on the chosen descent chain, and conjugation organizes the packets into the same
 symmetry as the Galois top.
 
 Mackey theory then identifies the fields on which two induced terms meet. Elementary
-nilpotence supplies prime-cyclic towers to those fields, but the proof does not confuse their
-existence with automorphic admissibility. Where admissibility holds, the packet identity is an
-actual base-change identity. Everywhere, the distinguished realization and the exact
-Frobenius-power recurrence prove the required semisimple overlap directly. The quotient
+nilpotence supplies prime-cyclic towers to those fields, while the unramified extending system
+and complete splitting at the sensitive primes verify their automorphic admissibility. The
+packet identity is therefore an actual base-change identity on every such tower. Independently,
+the distinguished realization and the exact Frobenius-power recurrence prove the required
+semisimple overlap directly. The quotient
 character left in a Hom space is consequently the explicit Brauer ratio and no hidden descent
 twist.
 
