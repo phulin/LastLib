@@ -26,10 +26,12 @@ automorphic shadows.  Section 1.5C explains why patching first to an arbitrary g
 quotient cannot prove component specialization or avoidance support.  Section 1.5D gives the
 correct source-patching argument: patch over the Cohen--Macaulay local presentation source,
 prove the avoidance action faithful there, transfer support across the common special fiber,
-and only then identify the reduced desired action.  This proves the single reusable
-componentwise Ihara-avoidance theorem $({\rm CIAV}_P)$, with explicit vertical-control and
-avoidance-support clauses.  Its auxiliary and target instances are the same theorem applied
-to two different coefficient characteristics, not two new packages.
+and then recover the finite-level action with nilpotent kernel from module coinvariants.  This
+proves the single reusable componentwise Ihara-avoidance theorem $({\rm CIAV}_P)$.  The same
+section formulates two prepared applications.  They begin with an actual automorphic packet,
+not with a placeholder for a future finite-set argument, and they distinguish the module-level
+conclusion needed for automorphy from the stronger optional equality of augmented acting
+images.
 
 There is also a smaller definite-side fact relevant to the optional exact-minimal consumer.
 For scalar parallel weight two, the two-map Ihara lemma on a totally definite quaternionic
@@ -58,7 +60,7 @@ multiplied.
   - [1.5A The finite-fibre consequence and the target-minimal quotient](#15a-the-finite-fibre-consequence-and-the-target-minimal-quotient)
   - [1.5B The scalar paired rings and the exact patched boundary](#15b-the-scalar-paired-rings-and-the-exact-patched-boundary)
   - [1.5C Balanced patching, vertical cross-cotangents, and avoidance support](#15c-balanced-patching-vertical-cross-cotangents-and-avoidance-support)
-  - [1.5D The source-patching CIAV theorem and its two applications](#15d-the-source-patching-ciav-theorem-and-its-two-applications)
+  - [1.5D The source-patching CIAV theorem and prepared applications](#15d-the-source-patching-ciav-theorem-and-prepared-applications)
   - [1.6 Definite Ihara and the minimal-support boundary](#16-definite-ihara-and-the-minimal-support-boundary)
   - [1.7 Outside-ell level optimization and the actual Frey set](#17-outside-ell-level-optimization-and-the-actual-frey-set)
 - [2. Local conventions and the three congruence regimes](#2-local-conventions-and-the-three-congruence-regimes)
@@ -107,8 +109,8 @@ multiplied.
   - [9.3 The potential-modularity consumer](#93-the-potential-modularity-consumer)
   - [9.4 The FLT boundary](#94-the-flt-boundary)
 - [10. Dependencies and conclusion](#10-dependencies-and-conclusion)
-  - [10.1 Exact source ledger](#101-exact-source-ledger)
-  - [10.2 Logical and normalization checks](#102-logical-and-normalization-checks)
+  - [10.1 Mathematical source roles](#101-mathematical-source-roles)
+  - [10.2 Logical order and normalizations](#102-logical-order-and-normalizations)
   - [10.3 The first unresolved inputs](#103-the-first-unresolved-inputs)
   - [10.4 Final synthesis](#104-final-synthesis)
 
@@ -356,31 +358,36 @@ contrary to omission.  Every component occurs, proving (1.6). $\square$
 This proposition is purely topological: (1.6) says that the desired action is nearly
 faithful, not faithful through nilpotent thickenings.  That is exactly what a
 characteristic-zero automorphy statement needs once exact control has recovered the
-canonical finite action.  Indeed, if the two synchronized patches also retain
+finite-level module.  Indeed, suppose the desired source $B_\infty$ and patched module
+$L_\infty$ retain
 
 $$
-R_\infty^{\rm des}/\mathfrak a_\infty R_\infty^{\rm des}\simeq R^{\rm des},
-\qquad
-A_\infty^{\rm des}/\mathfrak a_\infty A_\infty^{\rm des}\simeq\mathbb T^{\rm des},
+ B_\infty/\mathfrak a_\infty B_\infty\simeq R^{\rm des},
+ \qquad
+ L_\infty/\mathfrak a_\infty L_\infty\simeq M^{\rm des}.
 \tag{1.7}
 $$
 
-compatibly with the canonical map, where $A_\infty^{\rm des}$ is the faithful action image,
-then its kernel is nilpotent by (1.6).  Its image after (1.7) is still nilpotent, so
+Full support descends through these two isomorphisms by Nakayama's lemma.  If
+$\mathbb T^{\rm des}$ denotes the actual image of $R^{\rm des}$ on $M^{\rm des}$, then
 
 $$
-(R^{\rm des})^{\rm red}\simeq(\mathbb T^{\rm des})^{\rm red}.
+R^{\rm des}\twoheadrightarrow\mathbb T^{\rm des},
+\qquad
+\ker(R^{\rm des}\to\mathbb T^{\rm des})^n=0
+\quad\text{for some }n.
 \tag{1.8}
 $$
 
-Every map from $R^{\rm des}$ to a characteristic-zero domain kills that kernel and factors
-through the finite automorphic action.  This is the exact-support and exact-augmentation
-argument of Book 145, Chapters 7, 11, and 16, written here for the paired situation.  Full
-scheme-theoretic $R=\mathbb T$ would require reducedness or another nilpotent-sensitive
-faithfulness criterion and is not needed for this route.
+Indeed, the kernel is the annihilator of a full-support finite module and hence lies in the
+nilradical.  Every map from $R^{\rm des}$ to a characteristic-zero domain kills this kernel
+and factors through the finite automorphic action.  This is Book 145, Corollary 17.4.  No
+quotient of the patched acting image occurs in the argument.  Exact augmented acting-image
+equality is stronger and requires the separate saturation hypothesis of Book 145,
+Corollary 17.5.
 
-There is one stronger finiteness consequence which is needed by Book 181 and which does not
-require scheme-theoretic $R=\mathbb T$.
+There is one stronger finiteness consequence, useful whenever a later construction needs a
+finite special fibre, which does not require scheme-theoretic $R=\mathbb T$.
 
 **Lemma 1.1A (nilpotent recovery preserves finiteness).**  Let $A$ be a noetherian
 $\mathcal O$-algebra and let $A\twoheadrightarrow C$ be a quotient whose kernel $J$ is
@@ -399,8 +406,8 @@ $$
 therefore has $\mathcal O$-finite successive quotients.  Hence $A$ is
 $\mathcal O$-finite. $\square$
 
-Thus the reduced equality (1.8), together with the actual nilpotent kernel furnished by
-(1.6)--(1.7), proves finiteness of the **whole** desired ring, including its nilpotent
+Thus the nilpotent recovery (1.8), together with Lemma 1.1A, proves finiteness of the
+**whole** desired ring, including its nilpotent
 thickening, whenever the finite Hecke action is $\mathcal O$-finite.  This does not make the
 canonical map injective.  It says only that topological full support plus exact recovery is
 strong enough for a finite-special-fibre argument.  A finite collection of generic points,
@@ -419,14 +426,13 @@ so its finite action quotient cannot have a nonzero kernel.  The common special 
 transfers support, and the horizontal component bijection lifts it to the reduced desired
 source.  This proves $({\rm CIAV}_S)$ in Theorem 1.1H.
 
-The repo-wide source audit finds no alias for this theorem.  Book 67 supplies the tame
-equations but stops before the scalar calculation proved here.  Books 143--145 supply the
-prime selection, finite-shadow synchronization, source actions, depth, and exact
-augmentation; Book 146 records why component hopping cannot be inferred on a quotient.
-Book 172 proves the same sharp-source mechanism only for its regular minimal source.  The
-argument in Section 1.5D is the necessary extension to the reducible desired source and the
-integral avoidance source.  The FLT blueprint gives only the proof sketch, so it is not used
-as a source for either clause.
+Book 67 supplies the tame equations but stops before the scalar calculation proved here.
+Books 143--145 supply the prime selection, synchronized shadows, source support, and
+module-level recovery, while Book 152 supplies the actual paired definite modules.  Book 146
+explains why component hopping cannot be inferred after taking an arbitrary quotient, and
+Book 172 proves the sharp-source mechanism for a regular minimal source.  Section 1.5D
+specializes the newer paired source theorems to the reducible desired source and the integral
+avoidance source.
 
 In particular, the preferred route is not the all-component boundary-occurrence theorem of
 Chapter 8.  It requires neither the mixed Ihara modules (8.5), product residue, an
@@ -440,17 +446,13 @@ representations trivial and $q_w\equiv1\pmod\ell$ at every $w\in P_{\rm act}$.
 ### 1.5A The finite-fibre consequence and the target-minimal quotient
 
 There is a second application of the same interface which is logically different from level
-lowering.  Let $F$ be a totally real field on the split Book 178 route and let $P$ be the
-finite set of non-dyadic, non-$\ell$ places at which the upper target packet is special while
-the signed-special minimal problem is unramified.  Require that $2$ and $\ell$ split
-completely in $F$ and that both $\bar\rho|_{G_F}$ and
-$\bar\rho|_{G_{F(\zeta_\ell)}}$ remain absolutely irreducible, exactly as in Book 181's
-restricted-special-fibre certificate.  If the IAV preparation uses a further solvable base
-change, $F$ denotes its output: the places above $2\ell$ must still split completely, the two
-global irreducibility clauses must still hold, the upper packet must have been base changed
-under the explicit Book 109 antecedents, and at every $v\in P$ one has
-$\bar\rho|_{G_{F_v}}$ trivial and $q_v\equiv1\pmod\ell$.  Define the **broad unipotent problem**
-$\mathcal D_F^{\rm uni}(P)$ as follows:
+lowering.  Let $F$ be a totally real field on which the places above $2\ell$ split completely,
+and suppose that both $\bar\rho|_{G_F}$ and
+$\bar\rho|_{G_{F(\zeta_\ell)}}$ are absolutely irreducible.  Let $P$ be a finite set of
+non-dyadic places away from $\ell$ at which an actual upper automorphic packet is special
+while the minimal problem is unramified.  At every $v\in P$ require
+$\bar\rho|_{G_{F_v}}$ to be trivial and $q_v\equiv1\pmod\ell$.  Define the **broad unipotent
+problem** $\mathcal D_F^{\rm uni}(P)$ as follows:
 
 1. at places above $2$ it imposes the same named dyadic signed-special quotient as the
    minimal problem;
@@ -477,45 +479,21 @@ satisfy that incidence equation, so in general there is no map from the exact up
 ring onto $R_F^{\rm SP}$; this is the local functoriality obstruction recorded in Book 170,
 Section 14.2.
 
-Let $({\rm TIAV}_P)$ denote one instance of $({\rm IAV}_P)$ in coefficient characteristic
-$\ell$ whose desired finite-level ring is exactly $R_F^{\rm uni}(P)$, whose common dyadic and
-coefficient-prime conditions are the ones above, and whose synchronized patches satisfy all
-of Theorem 1.1H's source-patching antecedents, together with an $\mathcal O$-finite
-finite-level Hecke action.  Avoidance full support is then a conclusion, not an additional
-hypothesis.  The construction is indexed by the residual representation and these
-represented local problems.  A named desired characteristic-zero point is used only when the
-resulting support theorem is evaluated; it is not an input to Proposition 1.1 or Lemma 1.1A.
+The point of the broad problem is that the upper packet supplies an actual automorphic point
+before any minimal point is known, while the quotient (1.8b) contains every minimal point that
+may later be constructed.  The prepared target theorem in Section 1.5D starts from that upper
+packet, uses its primitive definite transfer to produce the nonzero common residual module,
+and patches the broad desired source against the avoidance source.  Its module-level recovery
+gives the map from $R_F^{\rm uni}(P)$ to the finite Hecke action a nilpotent kernel.  Lemma
+1.1A then makes the whole broad ring finite, and (1.8b) passes the finite-special-fibre and
+pointwise-automorphy conclusions to the minimal quotient.  No minimal point is an antecedent
+of this construction.
 
-**Proposition 1.1B (target IAV gives the restricted special fibre).**  Under
-$({\rm TIAV}_P)$, the ring $R_F^{\rm uni}(P)$ is finite over $\mathcal O$, the quotient
-$R_F^{\rm SP}/\varpi$ is finite-dimensional over $k$, and every characteristic-zero point of
-$R_F^{\rm SP}$ is automorphic after the coefficient extension and solvable descent allowed
-by the $({\rm IAV}_P)$ ledger.
-
-**Proof.**  Theorem 1.1H, Proposition 1.1, and exact recovery give the canonical desired action a nilpotent
-kernel.  Its image is the finite-level Hecke action, hence is $\mathcal O$-finite.  Lemma
-1.1A makes $R_F^{\rm uni}(P)$ $\mathcal O$-finite.  The quotient (1.8b) gives the whole-ring
-special-fibre assertion.  Finally a characteristic-zero point of $R_F^{\rm SP}$ is, by
-(1.8b), a point of the broad desired ring.  It kills the nilpotent kernel and factors through
-the automorphic action, which is exactly the pointwise recovery in item 4 of
-$({\rm IAV}_P)$. $\square$
-
-This proposition is point-free at the finiteness stage.  Once Book 181 uses that finiteness
-to construct a minimal point, the **same** target-coefficient support theorem makes the new
-point automorphic; no second patch and no backward use of the point is required.  The
-auxiliary-characteristic certificate $({\rm IAV}_{P_{\rm aux}})$ used to produce the upper
-packet and the target-characteristic certificate $({\rm TIAV}_{P_{\rm tar}})$ are two
-instances of one reusable theorem schema, not one arithmetic patch: their coefficient
-characteristics, residual representations, and active local rings differ.
-
-Neither the upper automorphic packet nor patching only its exact sign-selected special
-component proves $({\rm TIAV}_P)$: the broad desired and avoidance sources must be patched
-together.  Theorem 1.1H proves that comparison from the local geometry, common residual
-modules, balanced source dimension, and exact recovery established here and in Books
-69, 143--145, and 152.  It therefore bypasses
-$({\rm DLO}_P)+({\rm CLN}_{\min})$ for the lift-existence and pointwise-automorphy chain.
-Those level-lowering inputs remain a valid optional route to the stronger clean minimal
-$R=\mathbb T$ datum.
+Patching only the upper packet's exact sign-selected special component would not suffice:
+the broad desired and avoidance sources must be carried together.  The direct source-patching
+argument is independent of the optional level-lowering route
+$({\rm DLO}_P)+({\rm CLN}_{\min})$, which remains useful only when the stronger clean minimal
+$R=\mathbb T$ datum is wanted.
 
 ### 1.5B The scalar paired rings and the exact patched boundary
 
@@ -767,41 +745,51 @@ invariants with reduction.  Deep Taylor--Wiles levels are disjoint from $P$, so 
 torsor and diamond action occur on both sides.
 
 **Proposition 1.1D (what synchronizes formally).**  Assume the residual image hypotheses of
-Book 143 and the clean definite class-set and local-compatibility hypotheses already required
-by Books 145 and 152.  For the paired problems of Theorem 1.1C:
+Book 143, including its detector and padding conditions, and the clean definite class-set and
+local-compatibility hypotheses required by Books 145 and 152.  Assume also one of the
+varying-$Q_N$ uniform-rank alternatives of Book 152, Proposition 20.6.  For the paired
+problems of Theorem 1.1C:
 
-1. their residual local deformation functors and hence both their absolute and their
-   strict-at-$T$ relative Selmer structures are identical, so the same Taylor--Wiles set
-   $Q_N$ kills both corresponding dual Selmer groups at every depth;
+1. their residual local deformation functors are identically embedded in the same
+   unrestricted matrix deformation functor; hence their strict-at-$T$ relative Selmer
+   structures are identical and one Taylor--Wiles set $Q_N$ kills both relative dual Selmer
+   groups at every depth;
 2. the finite-level desired and avoidance modules have the common reduction (1.8q), with the
    same away Hecke operators and Taylor--Wiles diamonds;
-3. Book 144's finite-shadow diagonalization patches the two systems simultaneously and gives
-   the ring and module identifications modulo $\varpi$; and
-4. Book 152's exact diamond coinvariants and Book 145's marked inverse-limit argument give
-   exact module and represented-ring recovery.  Exact acting-image recovery follows under
-   the same saturated control hypothesis used for either individual system, and Book 109
-   then gives descent under its stated cyclic-tower, invariance, attachment, irreducibility,
-   and local-antecedent hypotheses.
+3. Book 152, Proposition 20.6 passes to a cofinal constant-rank family, and Book 144's
+   finite-shadow diagonalization patches the two systems simultaneously; their patched
+   reductions are identified after base change to the common nilpotent residual quotient,
+   not necessarily before that base change; and
+4. Book 152's exact diamond coinvariants and the marked inverse-limit construction retain
+   exact module and intermediate represented-ring recovery.  The recovered finite action has
+   nilpotent kernel once source support is known; exact acting-image recovery is the stronger
+   optional conclusion under Book 145, Corollary 17.5.  Book 109 then gives descent only under
+   its stated cyclic-tower, selectedness on every controlled component, invariance,
+   attachment, irreducibility, and local-antecedent hypotheses.
 
-**Proof.**  Equation (1.8e) identifies the Artinian $k$-valued local functors, including their
-tangent and Tate-orthogonal subspaces.  Book 143's prime selection depends only on those
-residual Selmer data, so one set $Q_N$ works twice.  Equations (1.8p)--(1.8q) identify the
-finite modules before localization; the common residual Hecke idempotent and Book 152's clean
-torsor theorem preserve the identification after localization and at deep level.  Include
-both finite presentations, bases, actions, and augmentation maps in one finite shadow.  The
-diagonal subsequence in Books 144--145 then preserves their reduction and all marked maps.
-The exact recovery and conditional descent statements are precisely the cited theorems.
-$\square$
+**Proof.**  Equation (1.8e) comes from two conditions on the same residual tame matrices, so
+its identification commutes with the forgetful maps to the unrestricted functor.  Book 143,
+Proposition 15.1 identifies the tangent images and Tate orthogonals inside the same local
+cohomology groups; Theorem 15.2 then chooses one $Q_N$ for the common strict relative
+structure.  Equations (1.8p)--(1.8q) identify the finite modules before localization; the
+common residual Hecke idempotent and the one coefficient-independent projective stabilizer
+group in Book 152 preserve the identification after localization and at deep level.  Theorem
+20.5 gives fixed-$Q_N$ freeness and coinvariants.  Proposition 20.6 supplies the cofinal
+constant rank needed to include both finite presentations, bases, actions, and augmentation
+maps in one finite shadow.  Book 144, Lemma 18.1 and Theorem 18.2 then preserve every marked
+map, including the ring and module augmentation maps, and the residual module comparison
+after base change to the common quotient.  Once Proposition 1.1G supplies the sharp source
+dimensions and Theorem 1.1H proves source support by Book 145, Theorem 17.3, Corollary 17.4
+consumes these retained recovery maps to obtain the finite-level nilpotent kernel.
+Corollary 17.5 is optional. $\square$
 
-This proves more than the existence of two abstract systems.  It also proves nonvanishing of
-the avoidance system in both downstream uses.  For $P_{\rm aux}$, the dihedral automorphic
-reference has a hyperspecial vector whose reduction maps into the common Iwahori-incidence
-lattice.  For $P_{\rm tar}$, the downstream application assumes an upper special packet
-with an Iwahori newvector at each active place whose reduction lies in the same common
-lattice.  Nakayama therefore makes
-the avoidance module nonzero in both coefficient characteristics.  Nonvanishing alone does
-not prove full support on an arbitrary quotient, which is why the choice of patching ambient
-ring matters.
+This proposition does not create the nonzero residual localization required by Theorem 20.5.
+In Theorem 1.1J it comes from a primitive definite vector in the actual avoidance reference
+packet; in Theorem 1.1K it comes from a primitive definite vector in the actual upper desired
+packet.  The marked reduction transports that one nonzero vector to the common residual
+module.  Without one of those actual packets, nonvanishing is not available.  Even when it is
+available, it does not prove full support on an arbitrary quotient, which is why the choice of
+patching ambient ring matters.
 
 If one first forms the global relation quotients in the notation of Book 145, one obtains
 
@@ -883,35 +871,35 @@ $$
 \tag{1.8v}
 $$
 
-The diagonal construction in Proposition 1.1D gives compatible identifications
+The diagonal construction in Proposition 1.1D gives a complete local residual quotient
+$C_\infty$ and surjections with nilpotent kernels
 
 $$
-P_\infty^{\rm des}/\varpi\simeq
-B_P[[\mathbf z,\mathbf x]]\simeq P_\infty^{\rm av}/\varpi,
-\qquad
-{I_\infty^{\rm des}+(\varpi)\over(\varpi)}
-={I_\infty^{\rm av}+(\varpi)\over(\varpi)},
+P_\infty^{\rm des}/\varpi\twoheadrightarrow C_\infty
+\twoheadleftarrow P_\infty^{\rm av}/\varpi,
 \tag{1.8w}
 $$
 
-inside the displayed common source, where
-$B_P=R_{\rm loc}^{\rm des}/\varpi\simeq R_{\rm loc}^{\rm av}/\varpi$, and hence
+together with the base-changed module isomorphism
 
 $$
-R_\infty^{\rm des}/\varpi\simeq R_\infty^{\rm av}/\varpi,
-\qquad
-M_\infty^{\rm des}/\varpi\simeq M_\infty^{\rm av}/\varpi,
+\bigl(M_\infty^{\rm des}/\varpi\bigr)
+ \otimes_{P_\infty^{\rm des}/\varpi}C_\infty
+\xrightarrow{\sim}
+\bigl(M_\infty^{\rm av}/\varpi\bigr)
+ \otimes_{P_\infty^{\rm av}/\varpi}C_\infty,
 \tag{1.8x}
 $$
 
-including the residual Hecke and diamond actions.  It does not identify the two
-characteristic-zero relation ideals.
+including the residual Hecke and diamond actions.  It does not identify either the
+un-base-changed module reductions or the two relation ideals.  The former identification is
+available only if both nilpotent kernels annihilate the corresponding reductions.
 
 **Proposition 1.1E (the exact output of balanced patching).**  Impose the sharp relation
 count, depth, finite-over-diamond, and clean-control hypotheses of Books 144--145 on both
 systems in (1.8v).  Then:
 
-1. the identifications (1.8w)--(1.8x), the finite-shadow maps, and the exact augmentations can be
+1. the common-quotient diagram (1.8w)--(1.8x), the finite-shadow maps, and the exact augmentations can be
    retained simultaneously;
 2. each $M_\infty^\bullet$ is Cohen--Macaulay on its support and, under the sharp dimension
    equality, maximal Cohen--Macaulay over $R_\infty^\bullet$; that support is a union of
@@ -966,7 +954,7 @@ For an excellent, $\mathcal O$-flat, equidimensional ring $C$, the component ass
 here can therefore be written without patching terminology as
 
 $$
-({\rm VCT}_C):\quad
+\text{unique horizontal specialization for }C:\quad
 \begin{cases}
 (C/\mathfrak p)/\varpi\text{ has a unique minimal prime }
    \mathfrak q_{\mathfrak p}/\mathfrak p
@@ -1012,7 +1000,7 @@ and exact augmentation still do not prove avoidance full support.  Once Book 145
 that the support is a union of components, the exact missing assertion is simply
 
 $$
-({\rm ACT}^{\rm av}_P):\qquad
+\text{full avoidance occurrence}:\qquad
 (M_\infty^{\rm av})_{\mathfrak p}\ne0
 \quad\text{for every }
 \mathfrak p\in\operatorname {Min}(R_\infty^{\rm av}).
@@ -1033,367 +1021,645 @@ is asked.  The two countermodels do not contradict this: $C'$ in (1.8ad) is redu
 the avoidance source is a domain; and (1.8y) fails the unique-horizontal-specialization
 property required of the desired source.  We now give that argument.
 
-### 1.5D The source-patching CIAV theorem and its two applications
+### 1.5D The source-patching CIAV theorem and prepared applications
 
-We first isolate the elementary support lemma used in the passage from the common special
-fiber.  It is the component form of the lifting lemma usually used in Ihara avoidance.
+The preceding counterexamples concern patching after the local sources have been divided by
+global relation ideals.  The paired source theorems of Books 143--145 and 152 make that
+detour unnecessary.  They retain the two local presentation sources, the common residual
+module, and the module augmentation in one construction.  The support theorem is then applied
+before finite-level specialization.  This order is decisive: a domain argument proves
+faithfulness on the avoidance source, and the common special fibre transports that support to
+every horizontal desired component.
 
-**Lemma 1.1F (unique-horizontal support lifting).**  Let $P$ be an excellent,
-$\mathcal O$-flat, reduced, equidimensional Cohen--Macaulay complete local ring, and let $M$
-be a finite $P$-module which is $\mathcal O$-torsion-free and maximal Cohen--Macaulay.
-Suppose that
-
-1. $\operatorname {Supp}_{P/\varpi}(M/\varpi M)=\operatorname {Spec}(P/\varpi)$; and
-2. specialization gives a bijection $\operatorname {Min}(P)\to
-   \operatorname {Min}(P/\varpi)$, with each special minimal prime having a unique
-   horizontal generalization.
-
-Then $\operatorname {Supp}_P(M)=\operatorname {Spec}P$.  Consequently $M$ is faithful.
-
-**Proof.**  Maximal Cohen--Macaulayness over the equidimensional Cohen--Macaulay ring makes
-the support of $M$ a union of irreducible components.  Let $\mathfrak p$ be a minimal prime
-of $P$, and let $\mathfrak q$ be its designated specialization.  By clause 1,
-$\mathfrak q$ lies in the support of $M$.  Hence an included minimal prime
-$\mathfrak p'$ lies below $\mathfrak q$.  The coefficient parameter is $M$-regular, so no
-minimal prime of the support contains $\varpi$; clause 2 therefore forces
-$\mathfrak p'=\mathfrak p$.  Every component is included.  Thus the annihilator of $M$ is
-contained in the nilradical of $P$, which is zero. $\square$
-
-For the paired problem, write $R_{\rm loc}^{\rm des,raw}$ for the literal completed local
-product and
+For a finite active set $P$, let $R_{\rm loc}^{\rm des,raw}$ be the literal completed product
+of the desired local rings and put
 
 $$
-R_{\rm loc}^{\rm des,h}
+R_{\rm loc}^{\rm des}
 =(R_{\rm loc}^{\rm des,raw})^{\rm red},
-\qquad R_{\rm loc}^{\rm av}
+\qquad
+R_{\rm loc}^{\rm av}
+=\widehat\bigotimes_{v\in P}A_{{\rm av},v}
+ \widehat\otimes R_{\rm loc}^{\rm fixed}.
 \tag{1.8ag}
 $$
 
-for the horizontal desired and avoidance products.  All active factors are those of Theorem
-1.1C.  Every unchanged factor is fixed on the same named component on both sides.  In the
-applications this means the formally smooth selected coefficient-prime finite-flat factor,
-the rigid dyadic signed-special factor with its frame variables, and the same determinant,
-unramified, and Taylor--Wiles factors.  Thus each unchanged factor is formally smooth or
-geometrically integral and Cohen--Macaulay.  Book 64's completed-product theorem and Theorem
-1.1C give
+Here $R_{\rm loc}^{\rm fixed}$ contains the common determinant, coefficient-prime, dyadic,
+unramified, and frame factors.  Each of its factors is restricted to one named formally
+smooth or geometrically integral Cohen--Macaulay component.  The active desired and avoidance
+factors are those of Theorem 1.1C.
+
+**Lemma 1.1F (geometry of the finite scalar pair).**  The three rings in (1.8ag) have the
+following properties.
+
+1. $R_{\rm loc}^{\rm av}$ is an $\mathcal O$-flat Cohen--Macaulay domain.
+2. $R_{\rm loc}^{\rm des}$ is $\mathcal O$-flat, reduced, equidimensional, and
+   Cohen--Macaulay, of the same dimension as $R_{\rm loc}^{\rm av}$, and specialization
+   induces a bijection
+
+   $$
+   \operatorname {Min}(R_{\rm loc}^{\rm des})
+   \xrightarrow{\sim}
+   \operatorname {Min}(R_{\rm loc}^{\rm des}/\varpi).
+   \tag{1.8ah}
+   $$
+
+3. There is a common complete local residual quotient $C_{\rm loc}$ and surjections
+
+   $$
+   R_{\rm loc}^{\rm av}/\varpi\twoheadrightarrow C_{\rm loc},
+   \qquad
+   R_{\rm loc}^{\rm des}/\varpi\twoheadrightarrow C_{\rm loc}
+   \tag{1.8ah0}
+   $$
+
+   with nilpotent kernels.  The nilradical $\mathcal N$ of
+   $R_{\rm loc}^{\rm des,raw}$ satisfies $\mathcal N[1/\varpi]=0$ and hence
+   $\varpi^a\mathcal N=0$ for some $a$.
+
+**Proof.**  Theorem 1.1C proves each assertion for one active factor, including the literal
+common special fibre and the labelled specialization of the unramified and special
+components.  Completed tensor product with the selected unchanged factors preserves
+flatness, dimension, Cohen--Macaulayness, and the domain or equidimensional reduced property.
+For several active factors, the product labels give the $2^{|P|}$ desired horizontal
+components and the corresponding special-fibre components, so the specialization map is
+bijective.  Passing from the literal common fibre to either horizontal reduction kills only a
+nilpotent ideal and gives (1.8ah0).  Finally, the raw desired generic fibre is already the
+reduced union of its horizontal components.  Noetherianity then makes its nilradical
+coefficient-power torsion, as in Book 145, Lemma 17.2. $\square$
+
+We now place the finite-level arithmetic data into the precise paired framework.  Let $T$ be
+the nonempty set of old framed places, with $m=|T|$, and put $d_F=[F:\mathbf Q]$.  The strict
+relative dual Selmer group is
 
 $$
-\begin{aligned}
-R_{\rm loc}^{\rm av}&\text{ an $\mathcal O$-flat Cohen--Macaulay domain},\\
-R_{\rm loc}^{\rm des,h}&\text{ reduced, $\mathcal O$-flat, equidimensional and
-Cohen--Macaulay},
-\end{aligned}
-\tag{1.8ah}
-$$
-
-of the same dimension.  Specialization on the second ring is component-bijective.  If an
-unchanged factor is not geometrically integral, one must first select one of its named
-components; without that operation the domain assertion, and hence the theorem below, is not
-available.
-
-**Proposition 1.1G (the synchronized sharp source patch).**  Assume the residual-image,
-fixed-determinant, effective local obstruction, clean definite-module, and local--global
-compatibility hypotheses of Books 69, 143--145, and 152.  Assume the local products are
-exactly (1.8ag), all scalar active places satisfy (1.8c), the finite-level modules use the
-lattices (1.8p), and the common residual localized definite module is nonzero.  For the
-acting images, assume in addition Book 145's augmentation-saturation hypothesis and the
-applicable Book 152 minimal-level/diamond-coinvariant control, so that the conditional
-acting-image recovery in Proposition 1.1D is exact.  Put
-
-$$
-d_F=[F:\mathbf Q],\qquad m=|T|,
+V_T^0
+=
+H^1_{(\mathcal L_T^0)^\perp}
+ \left(F,\operatorname {ad}^0\bar\rho(1)\right),
+\qquad
+q_T^0=\dim_kV_T^0.
 \tag{1.8ai0}
 $$
 
-where $T$ contains every finite conditioned place and every local factor is framed in the
-fixed-determinant convention.  Let
+Strictness is imposed on the primal problem at $T$; the dual condition at $T$ is therefore
+relaxed.  This is the obstruction group that must be killed when the complete old local rings
+are retained in the presentation source.
+
+**Proposition 1.1G (the synchronized sharp source patch).**  Suppose the desired and
+avoidance problems have the same absolutely irreducible residual representation and
+determinant, and that at every conditioned place their residual local functors are identified
+by a square commuting with the two embeddings into the unrestricted residual deformation
+functor, as in Book 143, (15.0).  Suppose their local products satisfy Lemma 1.1F.  Assume
+the split-image hypotheses of Book 143, Theorem 15.2, together with the nonempty full detector
+fibres for every nonzero surviving subspace of $V_T^0$ and the separately nonempty padding
+fibre required there.  Assume also that $T$ contains every old finite place with nonzero local
+defect, that all remaining finite defects vanish, that
+$H^0(F,\operatorname {ad}^0\bar\rho(1))=0$, and that oddness contributes $-1$ at every real
+place.  Choose
 
 $$
-q_T^0=\dim_kH^1_{(\mathcal L_T^0)^\perp}
- (F,\operatorname {ad}^0\bar\rho(1))
+h\ge q_T^0,
+\qquad
+q_0=h+m-1-d_F\ge0.
 \tag{1.8ai1}
 $$
 
-be the **relative** dual-Selmer dimension for the structure which is strict at $T$ (and
-therefore relaxed at $T$ on the dual side).  To avoid confusing the Taylor--Wiles
-cardinality with the coefficient characteristic $r$ of Theorem 1.1C, denote it by $h$.
-Choose $h\ge q_T^0$ such that
+Suppose moreover that at every $Q_N$ the two definite coefficient systems satisfy every
+hypothesis of Book 152, Theorem 20.5.  Thus they live on the same clean class groupoid; the
+one projective arithmetic stabilizer group attached to each object before choosing
+coefficients has order prime to $\ell$; their active lattices and central characters have a
+marked common reduction; the Taylor--Wiles levels are disjoint from $P$; the primary and
+companion systems are perfectly paired with the declared adjoints; and the common residual
+Hecke localization satisfies $\bar P_{Q_N,0}\ne0$.  Finally assume one of the two uniformity
+routes in Book 152, Proposition 20.6: either the conditional minimal-control maps identify all
+oriented modules with fixed minimal modules, or the positive ranks $r_N$ are bounded and the
+uniform presentation and finite-shadow hypotheses of Proposition 20.6(3) hold.  Retain the
+source and local--global actions, the intermediate patched deformation rings, and their
+represented-ring augmentation maps in the finite-level data, and assume those marked maps
+recover the represented finite-level rings exactly after specialization.
+
+Then there are single ordered sets $Q_N$ of cardinality $h$ and synchronized patched modules
 
 $$
-q_0:=h+m-1-d_F\ge0.
+M_\infty^{\rm des},
+\qquad
+M_\infty^{\rm av}
 \tag{1.8ai2}
 $$
 
-Apply Book 143's prime-selection theorem to this relative structure, rather than merely to
-the absolute dual Selmer group.  Then the common Taylor--Wiles sets of Proposition 1.1D may
-be chosen with $|Q_N|=h$, relative dual group zero, and source actions
+with the following properties.  Put
 
 $$
 \begin{aligned}
-P_\infty^{\rm des,raw}&=
- R_{\rm loc}^{\rm des,raw}[[y_1,\ldots,y_{q_0}]],&
-P_\infty^{\rm des}&=
- R_{\rm loc}^{\rm des,h}[[y_1,\ldots,y_{q_0}]],\\
-P_\infty^{\rm av}&=
- R_{\rm loc}^{\rm av}[[y_1,\ldots,y_{q_0}]],&
-S_\infty^{\rm fr}&=
- \mathcal O[[z_1,\ldots,z_h,w_1,\ldots,w_{4m-1}]].
+P_\infty^{\rm des,raw}
+ &=R_{\rm loc}^{\rm des,raw}[[y_1,\ldots,y_{q_0}]],&
+P_\infty^{\rm des}
+ &=R_{\rm loc}^{\rm des}[[y_1,\ldots,y_{q_0}]],\\
+P_\infty^{\rm av}
+ &=R_{\rm loc}^{\rm av}[[y_1,\ldots,y_{q_0}]],&
+S_\infty^{\rm fr}
+ &=\mathcal O[[z_1,\ldots,z_h,w_1,\ldots,w_{4m-1}]].
 \end{aligned}
 \tag{1.8ai}
 $$
 
-Here the $h$ variables $z_i$ are the diamond variables.  The $4m-1$ variables $w_i$ are the
-partial $\mathrm {GL}_2$ frame torsor---four matrix directions at every member of $T$,
-modulo the one global scalar---by which the automorphic module is scalar-extended.  Thus
-$S_\infty^{\rm fr}$ is Taylor's expanded frame-and-diamond ring, not the bare diamond
-algebra.  The full adjoint governs these frame directions even though the deformation
-problem has fixed determinant.  There are
-finite nonzero modules $M_\infty^\bullet$, finite faithful action images
-$A_\infty^\bullet\subseteq\operatorname {End}_{S_\infty^{\rm fr}}(M_\infty^\bullet)$, and
-factorizations
+After passage to the cofinal constant-rank subsequence supplied by Book 152, Proposition
+20.6, the modules in (1.8ai2) are finite free of the same positive rank over
+$S_\infty^{\rm fr}$, and their source actions factor through finite images
 
 $$
-P_\infty^{\rm av}\twoheadrightarrow R_\infty^{\rm av}\twoheadrightarrow A_\infty^{\rm av},
-\qquad
-P_\infty^{\rm des,raw}\twoheadrightarrow R_\infty^{\rm des}\twoheadrightarrow
-A_\infty^{\rm des},
+\begin{aligned}
+&S_\infty^{\rm fr}\hookrightarrow A_\infty^{\rm av}
+ \subseteq\operatorname {End}_{S_\infty^{\rm fr}}(M_\infty^{\rm av}),
+&&P_\infty^{\rm av}\twoheadrightarrow R_\infty^{\rm av}
+ \twoheadrightarrow A_\infty^{\rm av},\\
+&S_\infty^{\rm fr}\hookrightarrow A_\infty^{\rm des}
+ \subseteq\operatorname {End}_{S_\infty^{\rm fr}}(M_\infty^{\rm des}),
+&&P_\infty^{\rm des,raw}\twoheadrightarrow R_\infty^{\rm des,raw}
+ \twoheadrightarrow A_\infty^{\rm des}.
+\end{aligned}
 \tag{1.8aj}
 $$
 
-These objects have the following properties:
-
-1. $M_\infty^\bullet$ is finite free of positive rank over the regular local ring
-   $S_\infty^{\rm fr}$, and $S_\infty^{\rm fr}\hookrightarrow A_\infty^\bullet$ is the faithful scalar
-   action;
-2. the balanced Wiles calculation, including every frame variable exactly once, gives
-
-   $$
-   \dim P_\infty^{\rm des}=
-   \dim P_\infty^{\rm av}=\dim S_\infty^{\rm fr}
-   =h+4m=:D;
-   \tag{1.8ak}
-   $$
-3. the desired action factors canonically through
-   $P_\infty^{\rm des,raw}\twoheadrightarrow P_\infty^{\rm des}$;
-4. the desired raw source, the avoidance source, their modules, Hecke actions, and diamonds
-   have the common reduction furnished by (1.8e) and (1.8q); and
-5. the exact represented-ring, module, and acting-image augmentations of (1.7) are retained.
-
-**Proof.**  We first prove the numerical ledger rather than import it from the minimal
-problem.  Every fixed-determinant framed factor away from the coefficient prime has relative
-Krull dimension three.  This includes both the scalar horizontal desired factor and the
-avoidance factor of Theorem 1.1C; their six-dimensional residual tangent spaces are already
-absorbed in the singular local base and are not counted again as global variables.  At
-$v\mid r$ the selected finite-flat framed factor has relative dimension $[F_v:\mathbf
-Q_r]+3$.  Hence completed-product dimension gives
+Writing $C_\infty=C_{\rm loc}[[\bar y_1,\ldots,\bar y_{q_0}]]$, there is a specified
+isomorphism only after base change to this common nilpotent quotient:
 
 $$
-\dim R_{\rm loc}^{\rm des,h}
-=\dim R_{\rm loc}^{\rm av}=1+3m+d_F.
+\bigl(M_\infty^{\rm des}/\varpi\bigr)
+ \otimes_{P_\infty^{\rm des}/\varpi}C_\infty
+\xrightarrow{\sim}
+\bigl(M_\infty^{\rm av}/\varpi\bigr)
+ \otimes_{P_\infty^{\rm av}/\varpi}C_\infty.
+\tag{1.8aj1}
+$$
+
+This isomorphism is compatible with diamonds, frames, Hecke operators, local intertwiners,
+pairings, and adjoints.  No un-base-changed residual module isomorphism is asserted unless the
+two nilpotent kernels separately annihilate the module reductions.
+The raw desired nilradical acts trivially.  If $\mathfrak a$ is the ideal generated by the
+diamond variables and by precisely those added frame variables specialized at base level,
+then the marked module augmentations are exact:
+
+$$
+M_\infty^\bullet/\mathfrak aM_\infty^\bullet
+\xrightarrow{\sim}M_0^\bullet.
+\tag{1.8aj0}
+$$
+
+The intermediate represented deformation rings specialize through the marked ring maps to the
+corresponding finite-level problems; in particular the paired diagonal path retains
+
+$$
+R_\infty^{\rm des,raw}/\mathfrak aR_\infty^{\rm des,raw}
+\xrightarrow{\sim}R_0^{\rm des},
+\qquad
+R_\infty^{\rm av}/\mathfrak aR_\infty^{\rm av}
+\xrightarrow{\sim}R_0^{\rm av}.
+\tag{1.8aj2}
+$$
+
+No equality between
+$A_\infty^\bullet/\mathfrak aA_\infty^\bullet$ and the action on
+$M_0^\bullet$ is asserted.
+
+Finally,
+
+$$
+\dim P_\infty^{\rm des}
+=\dim P_\infty^{\rm av}
+=\dim S_\infty^{\rm fr}
+=h+4m.
+\tag{1.8ak}
+$$
+
+**Proof strategy.**  Prime selection is performed once on the common strict relative Selmer
+group.  The actual definite modules are then constructed at those same levels before taking
+any limit.  Their marked common reduction forces the two positive ranks to agree.  A single
+paired diagonal path retains that identification, all source actions, and module
+augmentation.  Only after these steps do the dimension count and source-support theorem
+enter.
+
+**Proof.**  The commuting residual squares make the two tangent images inside unrestricted
+local cohomology literally equal.  Book 143, Proposition 15.1 therefore identifies the two
+strict-at-$T$ residual Selmer structures and all their localization functionals.  The
+nonempty detector fibres in Book 143, Theorem 15.2 choose the first $q_T^0$ members of one
+ordered $Q_N$ and kill the common obstruction space; its separate padding fibre supplies the
+remaining members without reviving either dual group.  Because $T$ is nonempty, contains the
+full old finite defect, the remaining finite defects vanish, the global $H^0$ term is zero,
+and each real place contributes $-1$, the complete formula of Book 143, (15.8) reduces to
+
+$$
+g_{T,Q_N}
+=h+m-1-d_F=q_0.
 \tag{1.8ak0}
 $$
 
-Use here Book 69's **old-local-base** presentation: $R_{\rm loc}$ contains only the factors
-at $T$, while the complete Taylor--Wiles tangent at $Q_N$ remains in the relative global
-cotangent space.  The diamond algebra is a separate automorphic action; it is not inserted
-into the local base used to compute $g_{T,Q_N}$.  Apply Book 143 to the Selmer structure
-strict at $T$, not to the absolute structure.  Its dual is the relaxed-at-$T$ group in
-(1.8ai1).  The common residual local functor on the two sides gives the same localization
-functionals, so one set $Q_N$ kills both relative dual groups; Book 143, Section 12.4 then
-pads the set to cardinality $h$ without reviving either group.  Thus
+The old local factors already contain their full framed tangent directions.  In particular,
+the six residual tangent directions of a scalar active place are not counted a second time in
+$q_0$.
+
+Book 152, Theorem 20.5 now applies separately to each fixed $Q_N$.  It produces modules free
+of the same positive fixed-$Q_N$ rank
+$r_N=\dim_k\bar P_{Q_N,0}$ over the common diamond algebra, their intrinsic common residual
+module, and the exact orbit-sum coinvariants.  The projective arithmetic stabilizer is defined
+from the class groupoid before either coefficient system is chosen; its prime-to-$\ell$ order
+makes invariant formation commute with reduction on both sides.  Cleanliness makes each
+diamond fibre a torsor, and $\bar P_{Q_N,0}\ne0$ makes $r_N$ positive.
+
+The fixed-$Q_N$ theorem does not compare $r_N$ as $N$ varies.  Under the uniformity
+hypothesis in the proposition, Book 152, Proposition 20.6 either identifies every rank with
+the rank of one fixed minimal module or passes to a cofinal subsequence on which the bounded
+positive ranks are a single integer $r$.  In the latter case it simultaneously retains all
+finite marked shadows.  This is the uniform-rank input required by Book 144.
+
+Include the ordered sources, the common-quotient base-changed residual module, all frame coordinates, pairings,
+operators, the module augmentations, and the assumed represented-ring recovery maps in one
+paired shadow.  Book 144, Theorem 18.2
+produces one cofinal sequence and one diagonal path, giving (1.8ai2), the base-changed
+comparison (1.8aj1), (1.8aj0), and (1.8aj2).  Book 144, Lemma 18.1 ensures that every named
+mark is retained along that path.  The theorem also scalar-extends by all $4m-1$ partial-frame
+coordinates.  These are four
+matrix directions at each old framed place modulo one global scalar, whereas the $h$
+variables $z_i$ are the distinct diamond directions.
+
+Every fixed-determinant framed local factor away from $\ell$ has relative dimension three,
+and a selected factor at $v\mid\ell$ has relative dimension
+$[F_v:\mathbf Q_\ell]+3$.  Consequently
 
 $$
-q_{T,Q_N}=0.
-\tag{1.8ak1}
+\dim R_{\rm loc}^{\rm des}
+=\dim R_{\rm loc}^{\rm av}
+=1+3m+d_F.
 $$
 
-We spell out the relative tangent ledger because absolute dual killing is insufficient.
-Book 69, (10.7), applied after adjoining $Q_N$, gives
+Adding $q_0$ source variables gives
 
 $$
-g_{T,Q_N}-q_{T,Q_N}=(m-1)+h-d_F.
-\tag{1.8ak2}
+(1+3m+d_F)+(h+m-1-d_F)
+=h+4m
+=1+h+(4m-1),
 $$
 
-The term $m-1$ is the exact fixed-determinant full-$\operatorname {ad}$ versus
-$\operatorname {ad}^0$ partial-frame and global-scalar correction.  Each of the $h$
-Taylor--Wiles unramified lines contributes $+1$, the $d_F$ odd real places contribute
-$-d_F$, and the finite local conditions at the old places are strict because their complete
-framed rings already lie in $R_{\rm loc}$.  In particular, the six-dimensional residual
-tangent at a scalar active place is not added to this formula: it is already represented by
-its singular local factor.  Equations (1.8ak1)--(1.8ak2) therefore give
+which proves (1.8ak).  The source action images are finite over
+$S_\infty^{\rm fr}$ because they lie in endomorphism rings of finite free modules.  Finally
+$\mathcal N$ is killed by a power of $\varpi$ by Lemma 1.1F, while
+$M_\infty^{\rm des}$ is $\mathcal O$-torsion-free.  Hence $\mathcal N$ acts trivially and the
+desired source action factors through $P_\infty^{\rm des}$. $\square$
+
+The equality of dimensions is now attached to the correct ambient rings.  It says nothing
+about an arbitrary global quotient and it does not identify an augmented acting image.  Its
+purpose is to put the paired sources and modules exactly in the hypotheses of the following
+support theorem.
+
+**Theorem 1.1H (finite-set componentwise Ihara avoidance, $({\rm CIAV}_P)$).**  Under
+Proposition 1.1G, the avoidance and desired source actions satisfy
 
 $$
-g_{T,Q_N}=h+m-1-d_F=q_0.
-\tag{1.8ak3}
+A_\infty^{\rm av}=P_\infty^{\rm av},
+\qquad
+\operatorname {Supp}_{P_\infty^{\rm av}}M_\infty^{\rm av}
+=\operatorname {Spec}P_\infty^{\rm av},
+\tag{1.8al}
 $$
 
-Book 69, (10.1), now gives the exact source surjections in (1.8ai) by lifting a basis of this
-relative cotangent space; no relation-bound equality is being assumed.  Book 143, Theorem
-12.1 and Sections 12.4 and 13.2 provide the detecting and padded sets.  Book 144's
-finite-shadow construction lifts the separate diamond action compatibly into the source
-diagrams, and its Section 11.3 scalar-extends by the partial frames.  Neither operation
-changes the old-local-base cotangent count.  Consequently
+and
 
 $$
-(1+3m+d_F)+(h+m-1-d_F)=h+4m
-=1+h+(4m-1)=\dim S_\infty^{\rm fr},
-\tag{1.8ak4}
+A_\infty^{\rm des}=P_\infty^{\rm des},
+\qquad
+\operatorname {Supp}_{P_\infty^{\rm des}}M_\infty^{\rm des}
+=\operatorname {Spec}P_\infty^{\rm des}.
+\tag{1.8am}
 $$
 
-which proves (1.8ak).  This calculation uses framed scalar local rings throughout; it never
-subtracts three directions to invent a coarse scalar local functor.  Merely killing the
-absolute dual Selmer group would leave $q_{T,Q_N}$ uncontrolled and would not prove
-(1.8ak).
+The annihilator of $M_\infty^{\rm des}$ in
+$P_\infty^{\rm des,raw}$ is exactly its coefficient-power nilradical.  If the source actions
+factor through intermediate patched deformation rings, then the avoidance intermediate ring
+is the avoidance source and the reduction of the desired intermediate ring is
+$P_\infty^{\rm des}$.  More precisely,
 
-Book 152 makes the finite-level definite modules finite free over their diamond group rings,
-with positive rank supplied by the nonzero residual localized module assumed in the
-statement.  Book 144's
-finite-shadow diagonalization patches both systems and all source actions simultaneously.
-Book 145 then gives finite free $S_\infty^{\rm fr}$-modules, while the action image is finite over
-$S_\infty^{\rm fr}$ because it is a submodule of the endomorphism ring of such a module.  The scalar
-map is injective because the module has positive $S_\infty^{\rm fr}$-rank.  The common reductions are
-the marked identities (1.8e) and (1.8q), not merely equal dimensions.  Section 1.5C shows
-that the desired raw nilradical is killed by a power of $\varpi$; the $S_\infty^{\rm fr}$-free
-desired module is $\mathcal O$-torsion-free, so its action factors through the horizontal
-reduced source.  Finally Book 152's exact module coinvariants and minimal-level control,
-together with Book 145's marked represented-ring/module recovery and the
-augmentation-saturation assumed above, retain the acting-image augmentation as well.
-$\square$
+$$
+\operatorname {Ann}_{R_\infty^{\rm des,raw}}(M_\infty^{\rm des})
+=\sqrt0_{R_\infty^{\rm des,raw}}.
+\tag{1.8am1}
+$$
 
-We can now state the central theorem owned by this volume.  In its statement
-$({\rm ACT}^{\rm av}_P)$ means full support on the avoidance **source**, and
-$({\rm VCT}_P)$ means that the reduced desired patched deformation ring is the horizontal
-source and inherits its unique-horizontal specialization.  These are stronger and more
-precise than the quotient-first desiderata (1.8ac) and (1.8af).
+Let $R^{\rm des}$ and $M^{\rm des}$ be the represented finite-level ring and module recovered
+by the marked ring augmentation and (1.8aj0), and let
 
-**Theorem 1.1H (finite-set componentwise Ihara avoidance, $({\rm CIAV}_P)$).**  Under the
-hypotheses of Proposition 1.1G:
+$$
+R^{\rm des}\longrightarrow\mathbb T^{\rm des}
+\subseteq\operatorname {End}_{\mathcal O}(M^{\rm des})
+\tag{1.8an}
+$$
 
-1. **avoidance full support** holds:
+be the actual finite-level action.  Then the kernel of (1.8an) is nilpotent.  Every
+characteristic-zero point of $R^{\rm des}$ factors through $\mathbb T^{\rm des}$ and hence is
+automorphic with the local conditions represented by the desired problem.  Since
+$\mathbb T^{\rm des}$ is finite over $\mathcal O$, the whole noetherian ring
+$R^{\rm des}$ is finite over $\mathcal O$.
 
-   $$
-   ({\rm ACT}^{\rm av}_P):\qquad
-   A_\infty^{\rm av}=R_\infty^{\rm av}=P_\infty^{\rm av},
-   \qquad
-   \operatorname {Supp}_{P_\infty^{\rm av}}M_\infty^{\rm av}
-   =\operatorname {Spec}P_\infty^{\rm av};
-   \tag{1.8al}
-   $$
-2. **vertical component control** holds:
+No mixed old--new cube, type-Ihara theorem, node comparison, vertical-cotangent condition, or
+acting-image augmentation-saturation hypothesis occurs in this statement.
 
-   $$
-   ({\rm VCT}_P):\qquad
-   (R_\infty^{\rm des})^{\rm red}\simeq P_\infty^{\rm des},
-   \quad
-   \operatorname {Min}(P_\infty^{\rm des})
-   \xrightarrow{\sim}
-   \operatorname {Min}(P_\infty^{\rm des}/\varpi),
-   \tag{1.8am}
-   $$
+**Proof strategy.**  On the avoidance side, maximal depth over an equal-dimensional domain
+kills the source annihilator.  Common residual support then passes to the desired special
+fibre.  The unique-horizontal specialization of Lemma 1.1F lifts it to every desired
+component, and reducedness kills the desired annihilator.  At finite level one repeats only
+the support argument on module coinvariants; this produces a nilpotent kernel without
+identifying the quotient of the patched acting image.
 
-   with the unramified/special labels of Theorem 1.1C at every active place; and
-3. the annihilator of the desired module in $P_\infty^{\rm des,raw}$ is exactly its
-   coefficient-torsion nilradical, $A_\infty^{\rm des}\simeq P_\infty^{\rm des}$, and
+**Proof.**  We specialize Book 145, Theorem 17.3.  In its notation take
 
-   $$
-   \operatorname {Supp}_{P_\infty^{\rm des}}M_\infty^{\rm des}
-   =\operatorname {Spec}P_\infty^{\rm des}.
-   \tag{1.8an}
-   $$
+$$
+S=S_\infty^{\rm fr},
+\quad
+P^{\rm av}=P_\infty^{\rm av},
+\quad
+P^{\rm des,raw}=P_\infty^{\rm des,raw},
+\quad
+P^{\rm des}=P_\infty^{\rm des}.
+$$
 
-Consequently exact augmentation gives the finite-level desired deformation-to-Hecke map a
-nilpotent kernel, every characteristic-zero desired point is automorphic, and if the
-finite-level action is $\mathcal O$-finite then the whole noetherian desired ring is
-$\mathcal O$-finite by Lemma 1.1A.
+Lemma 1.1F supplies the flat Cohen--Macaulay avoidance domain, the flat reduced
+equidimensional Cohen--Macaulay desired source, the bijection of horizontal and special
+minimal primes, and the coefficient-power raw nilradical.  Proposition 1.1G supplies the
+common nilpotent quotient and the base-changed residual module isomorphism (1.8aj1), the
+positive-rank $S$-free patched modules, and the finite source action images.
 
-**Proof.**  Put $A=A_\infty^{\rm av}$.  By Proposition 1.1G,
-$A\subseteq\operatorname {End}_{S_\infty^{\rm fr}}(M_\infty^{\rm av})$ is finite over
-$S_\infty^{\rm fr}$ and contains $S_\infty^{\rm fr}$ faithfully.  The finite local maps
-$S_\infty^{\rm fr}\hookrightarrow A$ and $P_\infty^{\rm av}\twoheadrightarrow A$ compare
-the depth of the same finite module.  Hence the $S_\infty^{\rm fr}$-free regular sequence
-gives
+For completeness, the avoidance faithfulness begins with
 
 $$
 \operatorname {depth}_{P_\infty^{\rm av}}M_\infty^{\rm av}
-=\operatorname {depth}_{S_\infty^{\rm fr}}M_\infty^{\rm av}
-=D=\dim P_\infty^{\rm av}.
-\tag{1.8apa}
-$$
-
-If the annihilator in the domain $P_\infty^{\rm av}$ were nonzero, its support would have
-dimension at most $D-1$, contradicting depth at most dimension of support.  Thus the source
-action is faithful.  The intermediate factorization (1.8aj) also has zero kernel, which
-proves (1.8al).
-
-Faithfulness and Nakayama give full support to
-$M_\infty^{\rm av}/\varpi$ over $P_\infty^{\rm av}/\varpi$.  The exact common residual
-module transfers this support to $M_\infty^{\rm des}/\varpi$ over the raw common fiber.  The
-nilradical of $P_\infty^{\rm des,raw}$ is killed by a power of $\varpi$.  Indeed, Section
-1.5C proves this from the reduced generic fiber and noetherianity; completed products with
-the unchanged flat geometrically integral factors and formal variables preserve it.
-Conversely every coefficient-torsion element lies in every horizontal minimal prime (there
-are no vertical minimal primes), so the coefficient-torsion ideal is exactly this
-nilradical.  Since the patched desired module is $\mathcal O$-torsion-free, the nilradical
-acts by zero.  Thus the action factors through $P_\infty^{\rm des}$.  After reduction, the
-common raw source action therefore factors through
-
-$$
-B_P[[y_1,\ldots,y_{q_0}]]
-\longrightarrow P_\infty^{\rm des}/\varpi.
-\tag{1.8apb}
-$$
-
-Its kernel is nilpotent by (1.8u) at each active factor and the finite completed-product
-calculation of Book 64.  The common avoidance module has full support over the source of
-(1.8apb), and a nilpotent quotient is a homeomorphism on spectra.  Hence the
-desired residual module has full support over $P_\infty^{\rm des}/\varpi$, exactly as
-required in Lemma 1.1F.
-
-Let $A'=A_\infty^{\rm des}$.  The finite maps
-$S_\infty^{\rm fr}\hookrightarrow A'$ and
-$P_\infty^{\rm des}\twoheadrightarrow A'$ identify the depth of the same module over these
-three local rings.  Freeness over $S_\infty^{\rm fr}$ and (1.8ak) therefore give
-
-$$
-\operatorname {depth}_{P_\infty^{\rm des}}M_\infty^{\rm des}
-=D=\dim P_\infty^{\rm des}.
+=
+\operatorname {depth}_{S_\infty^{\rm fr}}M_\infty^{\rm av}
+=h+4m.
 \tag{1.8ao}
 $$
 
-The desired source is Cohen--Macaulay and has component-bijective specialization by (1.8ah).
-Lemma 1.1F now proves (1.8an).  Because the source is reduced, its action is faithful, so
-$A'=P_\infty^{\rm des}$.  The kernel of the raw source map to the intermediate patched ring
-is consequently contained in the nilradical, and the intermediate ring maps onto the
-faithful reduced action.  Taking reductions gives (1.8am).  Proposition 1.1 and Book 145's
-exact augmentation now give the nilpotent finite-level kernel and pointwise factorization;
-Lemma 1.1A gives the final finiteness assertion. $\square$
+A nonzero annihilator in the domain would make the support have dimension at most
+$h+4m-1$, contradicting depth at most dimension of support.  This proves (1.8al).
+Reduction modulo $\varpi$ preserves full support by Nakayama.  Base change to $C_\infty$
+cannot kill a nonzero localization because the quotient kernels are nilpotent.  The isomorphism
+(1.8aj1) then transfers full support to the desired base change, and the second nilpotent
+quotient carries it back to the desired residual source.  The desired module
+is maximal Cohen--Macaulay because its depth is again $h+4m$.  Book 145, Lemma 17.1 lifts full
+special-fibre support through the unique-horizontal bijection, and reducedness makes the
+desired action faithful.  Book 145, Lemma 17.2 makes the raw nilradical act trivially.
+These are exactly the remaining conclusions of Theorem 17.3 and prove (1.8am), including the
+intermediate-ring identity (1.8am1).
 
-**Corollary 1.1I (the two FLT-chain instances).**  Theorem 1.1H applies without changing its
-statement in each of the following cases.
+It remains to explain why finite-level recovery needs no acting-image saturation.  The marked
+ring and module isomorphisms give
 
-1. For $P=P_{\rm aux}$, the solvable preparation makes every active residual tame pair
-   trivial with $Q\equiv1$ modulo the auxiliary coefficient characteristic.  The dihedral
-   reference packet supplies the nonzero residual definite module.  The theorem proves
-   $({\rm IAV}_{P_{\rm aux}})$ and hence automorphy of the auxiliary Tate-module lift, subject
-   only to the separately stated coefficient extension and Book 109 descent antecedents.
-2. For $P=P_{\rm tar}$, assume the downstream split-field preparation and upper special
-   packet provide the same scalar tame charts in target coefficient characteristic and the
-   nonzero residual module.  The dyadic signed-special and coefficient-prime finite-flat
-   factors are unchanged selected smooth factors.  The theorem proves
-   $({\rm TIAV}_{P_{\rm tar}})$ for the broad unipotent ring of Section 1.5A.
+$$
+R_\infty^{\rm des,raw}/\mathfrak aR_\infty^{\rm des,raw}
+\simeq R^{\rm des},
+\qquad
+M_\infty^{\rm des}/\mathfrak aM_\infty^{\rm des}
+\simeq M^{\rm des}.
+\tag{1.8ap}
+$$
 
-These are two patches because their coefficient rings and residual representations differ,
-but they invoke one reusable theorem.  The target use is noncircular: Theorem 1.1H first
-makes the whole broad ring finite, Proposition 1.1B passes finiteness to the minimal quotient,
-Book 181 constructs the minimal point, and the already proved desired full-support statement
-then automorphizes that point.  No desired characteristic-zero point is used to establish
-(1.8al)--(1.8an).
+Equation (1.8am1) gives full topological support over the intermediate ring, and this support
+descends to full support of $M^{\rm des}$ over $R^{\rm des}$ by Nakayama.  Book 145,
+Corollary 17.4 therefore identifies the kernel of (1.8an) with the
+annihilator of a full-support module and proves that it is nilpotent.  At the recovered
+definite level this is also precisely Book 152, Proposition 20.7: source support implies a
+nilpotent kernel in the finite action.  A homomorphism to a characteristic-zero field kills
+nilpotents, so it factors through the actual automorphic action.  Finally, Book 152,
+Theorem 20.5 makes $M^{\rm des}$ finite free over $\mathcal O$; its acting image is therefore
+$\mathcal O$-finite.  The finiteness clause of Book 145, Corollary 17.4, equivalently Lemma
+1.1A, makes $R^{\rm des}$ finite. $\square$
 
-The source audit gives no smaller source-closed substitute.  The definite exact-minimal
-route retains its one-place lowering theorem, while the geometric alternatives retain mixed
-or pointed occurrence inputs.  Those routes remain useful for stronger integral level-change
-statements, but neither is an antecedent of $({\rm CIAV}_P)$.
+**Corollary 1.1I (optional exact acting-image augmentation).**  In Theorem 1.1H, suppose in
+addition that
+
+$$
+A_\infty^{\rm des}\cap
+\mathfrak a\operatorname {End}_{S_\infty^{\rm fr}}(M_\infty^{\rm des})
+=
+\mathfrak aA_\infty^{\rm des}.
+\tag{1.8aq}
+$$
+
+Then Book 145, Corollary 17.5 gives
+
+$$
+A_\infty^{\rm des}/\mathfrak aA_\infty^{\rm des}
+\xrightarrow{\sim}\mathbb T^{\rm des}.
+\tag{1.8ar}
+$$
+
+The analogous statement holds on the avoidance side under its analogous saturation
+condition.  Neither (1.8aq) nor (1.8ar) is used in Theorem 1.1H, in pointwise automorphy, or
+in finite recovery.
+
+The prepared applications differ only in how they obtain the field and the actual nonzero
+residual packet.  Once such a packet is supplied, the antecedents have the following exact
+sources.
+
+| prepared antecedent | theorem which supplies it |
+|---|---|
+| coefficient places split, active residual actions trivial, $q_v\equiv1\pmod\ell$, selected inertial actions unipotent, and protected completions retained | Book 109, Corollary 14.5 in auxiliary mode and Corollary 14.6 in target mode, with selectedness required at every component over the entire controlled set $P\cup Z$, including split dyadic and coefficient-prime places |
+| the paired scalar desired and avoidance rings, common nilpotent residual quotient, avoidance domain, and unique horizontal specialization on the desired source | Theorem 1.1C and Lemma 1.1F, after the prepared field has put every active place in the trivial-residual, $q_v\equiv1\pmod\ell$ chart |
+| one ordered Taylor--Wiles set killing the common strict-at-$T$ relative dual Selmer group and the complete variable count $q_0$ | Book 143, Proposition 15.1 and Theorem 15.2, after the residual local functors are identically embedded in the unrestricted functor, the detector and padding fibres are nonempty, $T$ contains the full old finite defect, and the remaining terms in (15.8) have the stated values |
+| nonzero common residual localization | the actual reference or upper packet supplies a primitive definite eigenvector; Book 152, Proposition 20.1 identifies its marked reduction with the intrinsic common residual module |
+| two positive-rank definite systems at each fixed $Q_N$, with intrinsic common residual module, exact orbit-sum coinvariants, pairings, adjoints, and finite recovered actions | Book 152, Theorem 20.5, once the preceding nonvanishing and coefficient-independent prime-to-$\ell$ stabilizer condition hold |
+| one fixed positive rank on a cofinal family, together with retention of all marked finite shadows | Book 152, Proposition 20.6, from either uniform minimal control or the stated bounded-rank and finite-presentation hypotheses |
+| one paired diagonal path, common-quotient base-changed residual patched module, full frame coordinates, and exact module coinvariants | Book 144, Lemma 18.1 and Theorem 18.2 |
+| exact recovery of the intermediate represented ring after diamond and frame specialization | the represented-ring augmentation is explicit application data in Proposition 1.1G; Book 144, Lemma 18.1 retains the marked map, and Book 145, Corollary 17.4 consumes the resulting isomorphism |
+| equality of the presentation-source and frame-source dimensions | Book 69's strict-relative tangent ledger combined with Book 143's full defect formula, specialized in Proposition 1.1G |
+| faithful avoidance source, full desired support, raw nilradical control, and reduction of intermediate deformation rings | Book 145, Theorem 17.3 |
+| nilpotent recovered finite-level kernel, pointwise factorization, and whole-ring finiteness from recovery of the intermediate desired ring and its module | Book 145, Corollary 17.4; Book 152, Proposition 20.7 gives the corresponding source-support implication on a recovered module |
+| exact augmented acting-image equality, when desired | Book 145, Corollary 17.5, under the additional saturation (1.8aq) |
+| descent of an upper packet attached to a representation already defined over the bottom field | Book 109, Proposition 14.4, under its selected-safe local and cyclic-ledger hypotheses |
+
+This table is intentionally packet-dependent.  The field construction does not create an
+automorphic reference packet, and a packet does not by itself prove clean stabilizers,
+compatible local lattices, or represented local--global actions.  The next two theorems state
+the two ways those data enter.
+
+**Theorem 1.1J (prepared auxiliary application).**  Let
+$F=F_0\subset\cdots\subset F_s=L$ be an auxiliary-mode tower supplied by Book 109,
+Corollary 14.5 for a residual representation $\bar\rho$, a finite active set $P$, and the
+declared protected set $Z$.  Let $\rho$ be a characteristic-zero lift over $F$.  Assume:
+
+1. restriction to $G_L$ preserves absolute residual irreducibility and the required joint
+   residual--cyclotomic image; $\rho|_{G_L}$ has the declared determinant and regular
+   coefficient-prime condition, and has unipotent inertia at every member of $P$; moreover
+   the bottom local parameters of $\rho$ are selected-safe on the entire controlled set
+   $P\cup Z$, including every protected split dyadic and coefficient-prime component;
+2. there is an actual parallel-weight-two cuspidal packet $\pi_0$ over $L$, with attached
+   representation $\rho_0$, such that $\bar\rho_0=\bar\rho|_{G_L}$, the determinants and
+   coefficient-prime conditions agree, and at every $v\in P$ the packet realizes the
+   avoidance type with tame eigencharacters $\zeta_\ell,\zeta_\ell^{-1}$;
+3. $\pi_0$ has a transfer to a totally definite quaternion algebra at clean common levels;
+   the projective arithmetic stabilizer of each class-groupoid object, defined independently
+   of either coefficient system, has order prime to $\ell$; the levels carry the exact desired
+   and avoidance lattices of (1.8p), compatible central characters, primary--companion
+   pairings, named Hecke operators, and local--global source actions; at every selected
+   $Q_N$, an old or regularly refined primitive vector gives
+   $\bar P_{Q_N,0}\ne0$, and the ranks satisfy one of the uniformity alternatives of Book
+   152, Proposition 20.6; and
+4. every unchanged dyadic, coefficient-prime, determinant, and ramification factor is one
+   common named formally smooth or geometrically integral selected component; the residual
+   desired and avoidance functors are identified compatibly with their embeddings into the
+   unrestricted functor; the full strict-relative defect, detector, padding, and finite-shadow
+   hypotheses of Proposition 1.1G hold; and the intermediate represented deformation rings
+   and modules recover under the marked augmentation.
+
+Then Books 143, 144, 145, and 152 construct every antecedent of Theorem 1.1H over $L$.
+Consequently $({\rm CIAV}_P)$ holds over $L$, every characteristic-zero desired point is
+automorphic over $L$, and in particular $\rho|_{G_L}$ is automorphic when it is a point of
+the desired problem.
+
+If the preparation and the resulting packet satisfy the selected-safe cyclic ledger of
+Book 109, Proposition 14.4, then the automorphic packet attached to $\rho|_{G_L}$ descends
+through the displayed tower to a packet attached to $\rho$ over $F$.
+
+**Proof.**  Corollary 14.5 gives the scalar local situation needed in Theorem 1.1C:
+the residual action is trivial and the residue cardinality is one modulo $\ell$ at each
+active place; it also keeps coefficient places split and realizes the protected completions.
+Clauses 1 and 4 place every repeated split component and every nonsplit controlled component
+in the selected trace-comparable range of Book 109, Proposition 14.4.
+The packet $\pi_0$ is an actual avoidance point, not a numerical proxy.  At each $Q_N$,
+transfer its old or regularly refined packet to the declared definite algebra and choose a
+nonzero eigenvector.  After finite coefficient extension, scale that vector so that it is
+primitive in the integral lattice.  Its reduction is nonzero in the residual Hecke
+localization.  The marked lattice isomorphisms (1.8q) place the same residual vector in the
+intrinsic common module, proving $\bar P_{Q_N,0}\ne0$.  Book 152, Proposition 20.6 then
+supplies the cofinal constant-rank family from the uniformity alternative in clause 3.
+
+Theorem 1.1C and Lemma 1.1F give the paired local sources.  Book 143, Theorem 15.2 chooses the
+common prime sets.  Book 152, Theorem 20.5 constructs the paired positive-rank finite-level
+modules and their module coinvariants.  Book 144, Lemma 18.1 and Theorem 18.2 patch their
+common-quotient base changes along one marked path.  Proposition 1.1G records the resulting
+dimensions and actions, and Book 145,
+Theorem 17.3 and Corollary 17.4 give Theorem 1.1H.  Thus the desired point defined by
+$\rho|_{G_L}$ factors through the actual automorphic action.
+
+For descent, the arithmetic representation $\rho$ is already defined over $F$.  Book 109,
+Proposition 14.4 verifies the local extension fibres, determinant and central character,
+real-place selector, irreducibility, attachment, and quotient-character corrections at every
+cyclic step.  Under its selected-safe hypothesis it therefore descends the upper packet and
+attaches the result to $\rho$. $\square$
+
+**Theorem 1.1K (prepared target application).**  Let
+$F=F_0\subset\cdots\subset F_s=L$ be a target-mode tower supplied by Book 109,
+Corollary 14.6 for a controlled set $P\cup Z$.  Thus every place above $2\ell$ and every additional protected split place
+splits completely in $L$, the joint residual--cyclotomic image is preserved, and at the finite
+active set $P$ one has
+
+$$
+\bar\rho|_{G_{L_v}}=1,
+\qquad
+q_v\equiv1\pmod\ell.
+\tag{1.8as}
+$$
+
+Assume there is an actual parallel-weight-two cuspidal upper packet $\Pi^{\rm up}$ over $L$
+which is a point of the broad tame-unipotent problem
+$\mathcal D_L^{\rm uni}(P)$ of Section 1.5A.  Require that:
+
+1. at every $v\in P$, $\Pi_v^{\rm up}$ is special with the declared determinant and has a
+   primitive vector in the desired lattice $L_v^{\rm des}$;
+2. at places above $2$, it has the protected named dyadic signed-special factor, and at
+   places above $\ell$, its stable lattice realizes the protected selected
+   weight-$\{0,1\}$ finite-flat factor;
+3. every component above the entire controlled set $P\cup Z$, including every split dyadic
+   and coefficient-prime component, is selected and trace-comparable; if the upper packet is
+   obtained from a packet over $F$, that bottom packet is selected-safe on $P\cup Z$ in the
+   precise sense of Book 109, Proposition 14.4; away from the controlling set it is
+   unramified, its attached residual representation is $\bar\rho|_{G_L}$, and every generic
+   factor lies in the integral local--global compatibility range; and
+4. its transfer to the totally definite quaternion algebra is taken at clean common levels;
+   the projective arithmetic stabilizer of each class-groupoid object is independent of the
+   coefficient system and has order prime to $\ell$; the levels carry exact desired and
+   avoidance coefficient lattices, compatible central characters, primary--companion
+   pairings, and the represented source actions; at every $Q_N$ a primitive old or regular
+   refinement proves $\bar P_{Q_N,0}\ne0$; one of the uniform-rank alternatives in Book 152,
+   Proposition 20.6 holds; the residual local functors are identically embedded in the
+   unrestricted functor; the complete strict-relative defect, detector, padding, and
+   finite-shadow hypotheses of Proposition 1.1G hold; and the intermediate represented rings
+   and modules recover under augmentation.
+
+Then the common residual definite module is nonzero, the paired systems of
+Proposition 1.1G exist, and Theorem 1.1H applies to the broad desired problem.  In particular,
+
+$$
+R_L^{\rm uni}(P)\longrightarrow\mathbb T_L^{\rm uni}(P)
+\tag{1.8at}
+$$
+
+has nilpotent kernel, $R_L^{\rm uni}(P)$ is finite over $\mathcal O$, and every
+characteristic-zero point of the broad problem is automorphic.  The quotient
+
+$$
+R_L^{\rm uni}(P)\twoheadrightarrow R_L^{\rm SP}
+\tag{1.8au}
+$$
+
+therefore has finite special fibre, and every characteristic-zero point of
+$R_L^{\rm SP}$ is automorphic.
+
+**Proof strategy.**  The upper packet is used once, to create the common residual
+localization.  It is not a minimal point and it is not used to prove finiteness of a ring
+already known to contain such a point.  After this seed is fixed, source patching proves a
+whole-ring statement; only then is the minimal quotient considered.
+
+**Proof.**  Corollary 14.6 makes every completion above $2\ell$ equal to the original
+protected completion.  Hence the named dyadic signed-special quotient and the selected
+finite-flat coefficient-prime quotient are literally unchanged, including their frame and
+determinant factors.  Clause 3 ensures that these repeated components, and every other
+component over $P\cup Z$, lie in the selected trace-comparable range required by Book 109,
+Proposition 14.4.  Its disjointness clause preserves both residual irreducibility
+conditions.
+Equation (1.8as) puts every active place in the scalar chart of Theorem 1.1C.
+
+At each $Q_N$, transfer the old or regularly refined form of $\Pi^{\rm up}$ to the totally
+definite quaternion algebra and choose a nonzero simultaneous eigenvector.  Scale it inside
+its stable integral eigenline until it is primitive.  Its reduction is nonzero, and primary
+localization at its residual Hecke ideal remains nonzero.  The local reductions (1.8q), the
+coefficient-independent prime-to-$\ell$ stabilizer condition, and Book 152, Proposition 20.1
+identify this reduction with the intrinsic common residual module.  Thus
+$\bar P_{Q_N,0}\ne0$ is proved from the actual upper packet rather than assumed.  Book 152,
+Proposition 20.6 then supplies the fixed-rank cofinal family from clause 4.
+
+Theorem 1.1C supplies the local pair, Book 143, Theorem 15.2 supplies one set of
+Taylor--Wiles primes for both sides, Book 152, Theorem 20.5 supplies the paired definite
+modules, and Book 144, Lemma 18.1 and Theorem 18.2 supply the synchronized patch and its
+common-quotient base-changed residual comparison.  Theorem 1.1H, through
+Book 145, Theorem 17.3 and Corollary 17.4, gives the nilpotent kernel in (1.8at) and makes the
+whole broad ring finite.  The map (1.8au) is obtained by imposing trivial inertia at every
+member of $P$, so its special fibre is a quotient of a finite-dimensional $k$-algebra.
+Finally, a characteristic-zero point of $R_L^{\rm SP}$ is also a point of
+$R_L^{\rm uni}(P)$; it kills the nilpotent kernel of (1.8at) and factors through the
+automorphic action.
+
+There is no circularity.  The only characteristic-zero input is the independently supplied
+upper packet on the broad problem.  Finiteness is proved for the entire broad ring before any
+point of the minimal quotient is selected, and automorphy of a later minimal point uses that
+already established whole-ring factorization. $\square$
+
+**Corollary 1.1L (finite special fibre and pointwise minimal automorphy).**  Under
+Theorem 1.1K,
+
+$$
+\dim_k(R_L^{\rm SP}/\varpi)<\infty,
+$$
+
+and every homomorphism from $R_L^{\rm SP}$ to a characteristic-zero field factors through the
+finite automorphic action.  Thus a later construction may use the finite special fibre to
+produce or isolate a minimal point and then invoke the same prepared target comparison to
+prove its automorphy; it does not require a second patch.
+
+Theorems 1.1J and 1.1K are criteria for future arithmetic use.  They assert no auxiliary or
+target packet beyond the actual packet appearing in their hypotheses.  Their content is that,
+once such a packet and its explicit local and definite data are supplied, all remaining
+patching antecedents and all nilpotent finite-level recovery are already furnished by earlier
+books.
 
 ### 1.6 Definite Ihara and the minimal-support boundary
 
@@ -1550,10 +1816,11 @@ upper residual block lies in the old support, is precisely the arithmetic conten
 $({\rm DLO}_P)$; it is not supplied by common local-ring equations.
 
 This statement concerns a comparison whose output is an actual nonzero **minimal
-automorphic module**.  Proposition 1.1B follows a different route: it patches the larger
-unipotent problem, proves that whole ring finite, and passes finiteness through its minimal
-quotient.  It produces a point by Book 181 and automorphizes that point through broad support;
-it does not assert $({\rm DLO}_P)$ or construct the clean minimal module.
+automorphic module**.  Theorem 1.1K and Corollary 1.1L follow a different route: they patch
+the larger unipotent problem, prove that whole ring finite, and pass finiteness through its
+minimal quotient.  A point constructed afterward is automorphic through the already proved
+broad support; this route does not assert $({\rm DLO}_P)$ or construct the clean minimal
+module.
 
 The later seed notation $({\rm DMS}_P)$ should therefore be read as
 
@@ -1582,8 +1849,8 @@ arithmetic boundary stated in Section 1.5A.
 
 ### 1.7 Outside-$\ell$ level optimization and the actual Frey set
 
-The preceding boundary can be made substantially narrower.  Let $F$ be the even-degree
-split top of Book 178, let $\Pi^{\rm up}$ be its upper target packet, and let
+The preceding boundary can be made substantially narrower.  Let $F$ be an even-degree
+prepared totally real field, let $\Pi^{\rm up}$ be an actual upper target packet, and let
 $\bar\rho_F=\bar\rho|_{G_F}$.  The actual target-extra set is
 
 $$
@@ -1608,10 +1875,9 @@ repeated-root matrix.  The congruence $q_v\equiv-1\pmod\ell$ has distinct roots 
 $\ell$: it obstructs a one-sign Gram formula, but it remains in the ordinary unrefined
 Mazur-principle range.
 
-The notation $W_0(M)$ from the earlier selected-place construction of Book 177 does not
-belong to the preferred split construction.  On the Book 178 route, (1.19) consists of any
-retained multiplicative places above $3$ and the accidental semistable places discovered only
-after specialization.  A controlled place above $3$ is completely split, so $q_v=3$ and,
+In a split preparation, (1.19) consists of any retained multiplicative places above $3$ and
+the accidental semistable places discovered only after specialization.  A controlled place
+above $3$ is completely split, so $q_v=3$ and,
 for $\ell\ge7$, it satisfies $q_v\not\equiv1\pmod\ell$.  An accidental place has no such
 congruence restriction.  It may therefore lie in either the regular or scalar regime.  The
 dyadic places are not in (1.19), because the target problem retains their primitive
@@ -3435,8 +3701,8 @@ after all generic branches on that carrier have been checked. Finally, component
 places the relevant carrier annihilator inside the prime of the named point. No one of these
 assertions is a reformulation of another.
 
-No declared prior source proves these missing assertions for the specialization-dependent
-active set of Book 177. In the intended geometric route, only after the common coefficient
+No declared prior source proves these missing assertions for a specialization-dependent
+active set. In the intended geometric route, only after the common coefficient
 cube, its recursive mixed vanishings, the product-residue comparison, and joint support have
 been constructed can one apply the finite-set criterion of Section 9.2. When scalar fibers
 occur, Proposition 8.3 supplies the joint ray quotient and the strict twist is then formed on
@@ -3748,9 +4014,10 @@ occurrence still does not prove its pointed joint-support clause.
 The direct route avoids both assertions.  Theorem 1.1C and Proposition 1.1D construct its
 local pair and synchronized residual systems.  Proposition 1.1E explains why quotient-first
 balanced patching does not suffice.  Proposition 1.1G instead constructs the expanded sharp
-source patch, and Theorem 1.1H proves both vertical control $({\rm VCT}_S)$ and avoidance
-support $({\rm ACT}^{\rm av}_S)$ there.  Proposition 1.1 then supplies finite-level support
-comparison and exact recovery.  Thus the direct route has no remaining component theorem.
+source patch, and Theorem 1.1H proves unique horizontal specialization and full avoidance
+support there.  Its exact downstream conclusion is module augmentation together with a
+nilpotent finite-level kernel.  Thus the direct route has no remaining component theorem and
+does not require an acting-image saturation statement.
 
 ### 9.4 The FLT boundary
 
@@ -3787,10 +4054,10 @@ proof route. The geometric-cube route needs mixed integral control at finitely m
 semistable places, joint support, and finite-set reciprocity. The direct Ihara-avoidance route
 instead uses the paired finite-set local-ring comparison and synchronized residual
 automorphic shadows proved in Section 1.5B and the sharp source patch of Section 1.5D.
-Theorem 1.1H proves $({\rm VCT}_S)$ and $({\rm ACT}^{\rm av}_S)$ rather than assuming them,
-and Proposition 1.1 supplies support transfer. Finite-level reduced
-$R=T$ suffices for characteristic-zero modularity; finite-level source reducedness is needed
-only if a full scheme-theoretic equality is also demanded.
+Theorem 1.1H proves unique horizontal specialization and full avoidance support rather than
+assuming them, then recovers the desired finite-level module with nilpotent ring kernel.
+Finite-level reduced $R=T$ suffices for characteristic-zero modularity; exact equality of the
+acting image is the stronger optional conclusion of Corollary 1.1I and is not needed here.
 
 For a theorem making **every** lift in the product problem automorphic, the full-support route
 of Theorem 9.1 still requires the mixed and product-residue package used to construct its
@@ -3820,7 +4087,7 @@ hypotheses.
 
 ## 10. Dependencies and conclusion
 
-### 10.1 Exact source ledger
+### 10.1 Mathematical source roles
 
 The direct mathematical sources used here have the following roles and retained limitations.
 
@@ -3831,12 +4098,12 @@ The direct mathematical sources used here have the following roles and retained 
 | Book 22 | nearby cycles, normalization and graph/component complexes for a semistable curve over one trait | distinct closed arithmetic fibers have empty intersection, so its one-trait functor does not iterate literally across $P$ |
 | Book 64 | flatness over a DVR, minimal primes, dimensions, and completed tensor products | proves the finite-set domain/equidimensional source passage in (1.8ah); it does not control an arbitrary later quotient |
 | Book 67 | framed tame matrix equations and the warning that scalar $Q\equiv1\pmod r$ is the maximally singular regime | the explicit calculation in Theorem 1.1C supplies the exceptional scalar theorem that Book 67 did not assert |
-| Book 69 | the strict-at-$T$ relative tangent space, relaxed dual obstruction group, exact source surjection (10.1), and fixed-determinant formula (10.7) | supplies the application-specific ledger (1.8ak1)--(1.8ak4); killing only the absolute dual group would not suffice |
+| Book 69 | the strict-at-$T$ relative tangent space, relaxed dual obstruction group, exact source surjection (10.1), and fixed-determinant formula (10.7) | supplies the application-specific ledger used in (1.8ai0), (1.8ai1), and (1.8ak0); killing only the absolute dual group would not suffice |
 | Book 70 | the depth lemma, finite free resolutions, and Auslander--Buchsbaum used in both local Cohen--Macaulay calculations | the desired horizontal union is Cohen--Macaulay but not a complete intersection |
 | Book 83 | integral scalar definite class-set modules, reduced norm, and the norm-character subspace | finite class sets alone do not move support from an upper level to a minimal level |
 | Book 84 | one integral global $2^{|P|}$-fold degeneracy source at several definite-level primes and factorization of its Gram entries | constructs a common carrier and commuting maps, not primitivity of the sum of upper old images or exactness of the total quotient-new cube |
 | Book 85 | primary Hecke localization and the formal integral Ihara/saturation interface | formal localization does not prove either its arithmetic kernel calculation or lower-level occurrence |
-| Book 109 | recursive cyclic solvable descent selected by a representation already defined over the lower field | Galois invariance alone is not descent; irreducibility, image criteria, and full local antecedents are rechecked |
+| Book 109 | Proposition 14.4 and Corollaries 14.5--14.6: recursive cyclic solvable preparation and descent with the local component selected by the lower-field representation | selectedness is required at every controlled place in $P\cup Z$, including the bottom components repeated at split dyadic and coefficient places; Galois invariance alone is not descent |
 | Book 118 | integral norm-quadric approximation for a norm-one quaternion group isotropic at one omitted completion | with the omitted split finite place it proves definite class-set Ihara, not level-lowering support |
 | Book 122 | the one-place Iwahori semistable PEL model, strict ray Kummer factors, completed actual-row tubes and $({\rm PNS}_v)_{\rm act}$, two branches, nodes, and integral component complex | treats one bad-residue trait with every other active level as spectator; supplies no iterated-switching Beck--Chevalley theorem |
 | Book 123 | the global level tower, transitive forgetting maps, and right adelic level translations | constructs commuting generic level maps but no mixed integral exactness or simultaneous residue fiber |
@@ -3846,11 +4113,11 @@ The direct mathematical sources used here have the following roles and retained 
 | Book 138 | enhanced special lines, primary and companion lattices, tame twists, and exceptional local charts | local lattices do not prove type incidence, type Ihara, primitive residue, or global support; primitive wild types are excluded |
 | Book 139 | exact tree kernel of Theorem 6.1, and conditional saturation, duality, Gram, component, and branch sequences | after non-Eisenstein localization the exact kernel is the noncongruence quotient; its vanishing depends on $({\rm AIH}_{\mathscr F})$ at every actual constant flag level and is not a type-Ihara theorem |
 | Book 140 | conditional one-prime integral level change, node/definite comparison, equality of faithful orders, signed Gram calculation, and the constant generic-support/common-kernel deduction from Book 125 plus the corrected filtration | gives the coordinate switches and generic packet-label compatibility used in (8.16c), but no integral Beck--Chevalley 2-isomorphism; retains datum-specific node uniformization, routing, abelian Ihara, and the branch Smith correction |
-| Book 143 | Theorem 12.1, Section 12.4, and Section 13.2: functorial Taylor--Wiles prime selection, exact residual Selmer counts, and represented-ring augmentation | common residual local functors give one detecting prime set; the local source calculation remains application-specific |
-| Book 144 | the separately lifted diamond action, finite-shadow synchronization, and Section 11.3 scalar-extended partial frames | does not supply the old-local-base relative count; quotient relation tuples also need not preserve components, which is why Theorem 1.1H retains the source action |
-| Book 145 | Theorem 16.1 source/action patch, finite-map depth comparison, near-faithfulness, and exact marked augmentation | its general quotient-first theorem does not itself prove component coverage; Lemma 1.1F and the domain source prove it here |
+| Book 143 | Proposition 15.1 and Theorem 15.2: simultaneous Taylor--Wiles selection for residual local functors embedded in the unrestricted functor, with detector and padding fibres and the complete strict/relaxed defect ledger | the short formula for $q_0$ is available only when the detector set is nonempty, contains every old nonzero finite defect, the remaining finite defects vanish, and the stated invariant and real-place terms have the required values |
+| Book 144 | Lemma 18.1 and Theorem 18.2: finite-shadow synchronization, separately lifted diamonds, and paired systems after scalar extension | residual modules compare only after base change to the common nilpotent quotient unless the two kernels annihilate the reductions; uniform integral rank is an input, not a consequence of synchronization |
+| Book 145 | Theorem 17.3 and Corollary 17.4: source support, intermediate desired and avoidance actions, and module augmentation with nilpotent finite-level kernel | finite recovery passes through $R^{\rm des,raw}$, not directly through the presentation source; Corollary 17.5 gives exact acting-image augmentation only under its additional saturation hypothesis |
 | Book 146 | the abstract $R=T$ endgame and its separation of source support from arithmetic component hopping | its warning applies to arbitrary quotients; Theorem 1.1H avoids that architecture |
-| Book 152 | Theorem 15.1 definite diamond freeness, exact multi-prime augmentation, and clean stabilizer control | supplies positive source rank and exact residual module control after the application has supplied residual occurrence |
+| Book 152 | Theorem 20.5 and Propositions 20.6--20.7: fixed-$Q$ definite diamond freeness, cofinal constant-rank shadow retention, and finite-level nilpotent recovery from source support | the arithmetic stabilizer is defined coefficient-independently and must have order prime to $\ell$; varying-$Q$ uniform rank comes from conditional uniform minimal control or from the bounded-rank cofinal shadow argument |
 | Book 170 | order-valued Galois representation, factorization through represented local conditions, and the surjection (3.5) | requires every generic branch, integral coefficient-prime realization, reduced generic order, exact trace generation, and the conditional Book 140 comparison whenever used |
 | Book 172 | Section 7.2 and Proposition 10.1: the sharp absolute source and equal-dimensional source kernel-killing in the regular minimal case | supplies the proof pattern; the reducible desired lifting and scalar avoidance geometry are proved here |
 | Book 174 | enhanced one-prime type complex, typed generic-residue kernel equality from Book 125 after the typed filtration, scalar $q\equiv1$ family, primitive residue, one-prime support, exact fixed-prime augmentation, and auxiliary represented-ring/complex/module/pairing augmentation | $({\rm TIC}_v)$, $({\rm TIH}_{\mathscr F})$, $({\rm PRI}_{\rm type})$, $({\rm NU}_{\rm type})$, Book 125 applicability on the routed common cover, and $({\rm SUP}_v)$ retain their stated roles; support is topological and only one-place; auxiliary acting-order augmentation is only a surjection |
@@ -3869,12 +4136,13 @@ on the original arithmetic base. Book 125 is used directly for
 (8.14c)--(8.14e), Proposition 8.2B, and also enters through Book 140's constant generic-support theorem and Book
 174's typed generic-residue theorem. Book 84 is the owner of the integral common definite
 degeneracy source. Book 152 is used directly both for the several-prime
-regular-refinement/augmentation boundary and for definite diamond freeness in Proposition
-1.1G; neither use supplies mixed exactness. Within Books 138--141, 163, and 170--176, Book
+regular-refinement/augmentation boundary and for fixed-$Q$ definite diamond freeness,
+cofinal constant-rank retention, and nilpotent recovery in Proposition 1.1G and Theorem
+1.1H; none of these conclusions supplies mixed exactness. Within Books 138--141, 163, and 170--176, Book
 141 enters transitively through the type-support package. Book 69 supplies the strict
-relative source count (1.8ak1)--(1.8ak4), while Book 143 kills that relative dual structure
+relative source count (1.8ai0), (1.8ai1), and (1.8ak0), while Book 143 kills that relative dual structure
 and Book 144 separately lifts diamonds and scalar-extends the partial frames. Book 172 supplies
-the sharp-source precedent as well as the Section 1.6 minimal-side circularity audit. Books
+the sharp-source precedent as well as the Section 1.6 minimal-side circularity analysis. Books
 83, 85, and 118 are used
 directly in Theorem 1.2.
 Book 164 is a downstream arithmetic synthesis, not a proof source. The mixed reduction
@@ -3884,7 +4152,7 @@ pointed annihilator reduction are proved here. The remaining
 sum-primitivity, integral Beck--Chevalley, and joint-component occurrence theorems are not
 imported from a later consumer.
 
-### 10.2 Logical and normalization checks
+### 10.2 Logical order and normalizations
 
 The proof order is rigid:
 
@@ -3918,6 +4186,16 @@ order: construct the actual final cube; form $Q_P^{\rm tf}$ with its adjoint dua
 product branches on that one carrier; only then invoke Book 170; and finally apply support on
 the component through the named point.  Neither reciprocity nor support is stated on a
 fictional tensor product of one-place global carriers.
+
+The direct finite-set route has its own independent order.  First the prepared field and an
+actual reference or upper packet fix every selected local component and prove nonzero
+residual occurrence.  Book 143 then chooses one auxiliary-prime family from the embedded
+residual functors and full defect ledger.  Book 152 constructs each fixed-$Q$ pair and passes
+to a cofinal constant-rank family; only then does Book 144 form the paired limit over the
+common nilpotent quotient.  Source support is proved before augmentation.  Finally Book 145
+recovers the intermediate desired ring and module, giving a nilpotent finite-level kernel.
+The broad target ring is therefore finite before its minimal quotient is used to select any
+characteristic-zero point.
 
 The normalization ledger is equally fixed. Frobenius is geometric in (2.1); arithmetic
 Frobenius is used only for the local matrix calculation (2.8)--(2.9) after explicit inversion.
@@ -3990,29 +4268,33 @@ alternative to all of the level-change inputs just listed. It is $({\rm IAV}_S)$
 desired/avoidance local deformation rings, their common special fiber and horizontal local
 component bijection, and synchronized Taylor--Wiles systems of Section 1.5.  Theorem 1.1C
 proves the scalar paired local rings, including the nonreduced raw common fiber, and
-Proposition 1.1D proves common residual systems and exact formal recovery.  Proposition 1.1E
+Proposition 1.1D proves the common-quotient residual comparison and finite-shadow recovery.
+Proposition 1.1E
 shows why first quotienting the local sources would leave genuine vertical and support gaps.
 The source-patching architecture does not make that quotient.  Proposition 1.1G applies
-Book 143 to the relative dual structure strict at the old local-base places, writes the exact
-Book 69 tangent ledger, and patches over equal-dimensional local sources with the full
-partial-frame extension.  Theorem 1.1H then proves both $({\rm ACT}^{\rm av}_S)$ on the
-integral avoidance source and $({\rm VCT}_S)$ on the horizontal reduced desired source.
-Their conjunction is the single reusable $({\rm CIAV}_S)$ theorem, not an additional
-antecedent.  Exact marked augmentation gives (1.8), and Book 109 gives descent under its
-separately verified antecedents.  This is not an alias for mixed Ihara and forms no old--new
-cube.
+Book 143 only after the embedded residual functors, nonempty detector, padding fibre, and full
+defect ledger have been verified.  Book 144 compares the two residual modules after base
+change to their common nilpotent quotient, while Book 152 supplies fixed-$Q$ freeness and the
+cofinal constant-rank tower.  Proposition 1.1G consequently patches over equal-dimensional
+local sources with the full partial-frame extension.  Theorem 1.1H proves full support on the
+integral avoidance source and unique horizontal specialization on the desired source.  It
+then uses Book 145's intermediate $R^{\rm des,raw}$ action to recover the finite-level module
+with nilpotent ring kernel.  These are the conclusions of $({\rm CIAV}_S)$, not additional
+antecedents.  Book 109 gives descent only after selectedness has been checked at every
+controlled component.  This proof forms no old--new cube and consumes none of the geometric
+level-change package.
 
-For the later definite-seed consumer, Section 1.5A supplies the preferred boundary.  One
-target-characteristic instance $({\rm TIAV}_{P_{\rm tar}})$ for the broad unipotent ring makes
-that whole ring finite, hence makes its exact unramified minimal quotient finite, before a
-minimal characteristic-zero point exists.  The same support theorem makes the point
-constructed by Book 181 automorphic afterward.  This does not follow from independent
-upper-side Taylor--Wiles patching.  Rather, the local pair, synchronized residual systems,
-strict relative source ledger, avoidance full support, and desired component lifting are the
-hypotheses and conclusions of the one theorem just proved.  The upper packet verifies the
-explicit nonzero residual-module hypothesis in the target instance.  Thus the finiteness use
-before the point and the automorphy use after the point are noncircular applications of one
-already constructed target patch, not two invocations which assume each other's output.
+The prepared applications are criteria, not assertions that their arithmetic packets have
+already been constructed.  Theorem 1.1J begins with an actual automorphic reference packet
+over the field prepared by Book 109, Corollary 14.5.  Theorem 1.1K begins with an actual upper
+packet on the broad tame-unipotent problem prepared by Corollary 14.6.  Its fresh primitive
+definite transfer proves the residual module nonzero, after which the paired source patch
+makes the broad ring finite and Corollary 1.1L makes its minimal special fibre finite.  A
+characteristic-zero minimal point is considered only afterward, and full desired support
+makes that point automorphic.  Thus the proof of finiteness neither assumes the point nor its
+automorphy, and the proof of automorphy uses the already constructed upper packet rather than
+the sought minimal packet.  Future arithmetic constructions may supply these packet inputs;
+the criteria themselves make no claim that they are presently available.
 
 Theorem 1.2 and Sections 1.6--1.7 retain a stronger optional route.  Definite Ihara does not
 prove that the upper residual block occurs at minimal level.  That route first needs
@@ -4034,8 +4316,8 @@ sum of old images can be nonsaturated; Book 140, Section 14.2 proves only the co
 external-product implication after the common-carrier comparison and cross-Tor vanishing have
 been supplied; and Book 156's two-prime product monodromy concerns a Hilbert--Blumenthal frame
 torsor, not a Hecke incidence cube or a semistable component complex. Books 174--175 state a
-strict one-place boundary, while Books 177 and 182 are downstream consumers. Thus the issue is
-not a missing cross-reference to an equivalent theorem elsewhere in the manuscript.
+strict one-place boundary. Thus the issue is not a missing cross-reference to an equivalent
+theorem in the preceding source chain.
 The intended geometric route must first verify $({\rm FACE}_P)$ and
 supply one joint coefficient descent and every component route at every spectator tuple and
 auxiliary shadow. The global level tower then constructs $({\rm CUBE}_P)$ formally as in
@@ -4174,17 +4456,20 @@ vertical control or avoidance full support.  Proposition 1.1G instead patches ov
 equal-dimensional expanded local sources.  The avoidance source is a domain, so depth forces
 faithfulness there; the common raw special fiber and unique horizontal specialization then
 lift support to every desired component.  Theorem 1.1H thereby proves
-$({\rm ACT}^{\rm av}_S)$ and $({\rm VCT}_S)$ together as the single reusable theorem
-$({\rm CIAV}_S)$.  None of the mixed cube, product-residue, constant/type-Ihara, or separate
-joint-occurrence inputs is consumed.  Lemma 1.1A further shows that nilpotent-kernel recovery
-to a finite Hecke action makes the whole noetherian desired ring finite.  Proposition 1.1B
-applies this to the target broad unipotent ring and its exact minimal quotient.
+full avoidance support and unique horizontal specialization as the single reusable theorem
+$({\rm CIAV}_S)$.  Book 145 then recovers the finite-level module through the intermediate
+desired ring, with nilpotent ring kernel.  None of the mixed cube, product-residue,
+constant/type-Ihara, node, or separate joint-occurrence inputs is consumed, and exact
+acting-image augmentation is optional.  Lemma 1.1A further shows that nilpotent-kernel
+recovery to a finite Hecke action makes the whole noetherian desired ring finite.
 
-For the later minimal-lift application, the preferred input is now one target instance
-$({\rm TIAV}_{P_{\rm tar}})$ of that direct architecture.  It supplies finite special fibre
-before the minimal point and pointwise automorphy afterward; it does not require target
-minimal occurrence or exact minimal $R=\mathbb T$.  Total definiteness proves the smaller
-Theorem 1.2 but is not needed to turn this broad-ring support theorem into Proposition 1.1B.
+The prepared target criterion is Theorem 1.1K.  Once an actual upper packet on the broad
+unipotent problem is supplied, its primitive definite transfer proves nonzero residual
+occurrence, the protected dyadic and coefficient components remain selected, and the source
+patch proves the broad ring finite.  Corollary 1.1L then gives finite special fibre for the
+minimal quotient and automorphy of every characteristic-zero minimal point.  Neither target
+minimal occurrence nor exact minimal $R=\mathbb T$ is assumed.  Total definiteness proves the
+stronger optional Theorem 1.2 but is not needed for this special-fibre and pointwise conclusion.
 
 The definite lowering analysis remains a stronger optional route. The countermodel
 (1.15)--(1.16) shows why upper occurrence and residual monodromy zero do not produce minimal
