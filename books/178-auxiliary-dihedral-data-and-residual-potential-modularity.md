@@ -1092,8 +1092,8 @@ $S_{\mathrm{split}}$ and are disjoint from $S_{\mathrm{dih}}$.
 Enlarge $C_\psi$ to contain the values of the corrected character (4.20), retain the place
 induced by the fixed embedding, and put $k_\psi=\mathcal O_{C_\psi}/\mathfrak Q$. Apply
 Theorem 2.1 to $\bar\rho$ over $k$ and $\bar r$ over $k_\psi$, taking
-$T_{\mathrm{int}}$ to contain every rational residue prime below $S_{\mathrm{dih}}$ and every
-other prime excluded by an integral local model.  Choose the neat level $N$ prime to this set
+$T_{\mathrm{int}}$ to contain $3$, every rational residue prime below $S_{\mathrm{dih}}$,
+and every other prime excluded by an integral local model.  Choose the neat level $N$ prime to this set
 as in that theorem.  Only now fix the resulting field $E$, primes
 $\mathfrak l,\mathfrak q$, Hilbert--Blumenthal tensor datum, level, and determinant-line orientations. Under the
 residue isomorphism $k_{\mathfrak q}\simeq k_\psi$, the second prescribed local system is
@@ -1369,9 +1369,9 @@ completion in the FLT range.
 At $q$, the split local datum is already defined over $\mathbf Q_q$.  Tensor the fixed CM curve
 $B_*$ of (1.6) by $\mathcal O_E$.  Section 3.1 makes its $\ell$-torsion and the target frame
 trivial, so paired bases identify them exactly.  Since $q$ splits in $\mathbf Q(i)$, the two
-CM idempotents give an integral decomposition.  Book 117, Sections 6.5 and 8.3 identify the
-split CM prime with ordinary reduction: one height-one summand is connected and the conjugate
-summand is étale.  Consequently
+CM idempotents give an integral decomposition.  Book 117, Section 10.3 and Corollary 10.2,
+together with the elliptic example in Section 10.4, identify the split CM prime with ordinary
+reduction: one height-one summand is connected and the conjugate summand is étale.  Consequently
 
 $$
 B_*[q]=B_*[\mathfrak Q_*]\oplus B_*[\overline{\mathfrak Q}_*]
