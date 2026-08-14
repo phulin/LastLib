@@ -204,7 +204,7 @@ flowchart LR
 | 173 | Minimal Modularity Lifting | 171, 172 |
 | 174 | One-Prime Type Complexes and Component Support | 6, 17, 21, 22, 65, 67, 69, 70, 118, 119, 121, 122, 125, 138, 139, 140, 141, 143, 145, 152, 170, 171, 172 |
 | 175 | One-Prime Nonminimal Patching and R=T | 67, 69, 109, 138, 139, 140, 143, 170, 171, 172, 173, 174 |
-| 176 | Nonminimal Modularity Lifting | 6, 14, 22, 83, 84, 85, 109, 118, 122, 123, 124, 125, 138, 139, 140, 143, 145, 152, 170, 172, 173, 174, 175 |
+| 176 | Nonminimal Modularity Lifting | 6, 14, 22, 64, 67, 83, 84, 85, 109, 118, 122, 123, 124, 125, 138, 139, 140, 143, 144, 145, 152, 170, 172, 173, 174, 175 |
 | 177 | Potential Modularity of Two-Dimensional Representations | 104, 98, 127, 176, 154, 158, 142 |
 | 178 | Auxiliary Dihedral Data and Residual Potential Modularity | 6, 98, 104, 127, 141, 142, 156, 157, 158, 176 |
 | 179 | Compatible Systems of Galois Representations | 168, 141, 142 |
@@ -324,19 +324,24 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   additionally retained for the scalar family. No separate one-prime
   acting-order theorem remains in that faithful range.
 - **Direct finite-set lifting:** the scope-minimal FLT route is Book 176's
-  $({\rm IAV}_S)$ interface. It compares paired desired and avoidance local rings with a
-  common special fiber and component bijection, together with synchronized automorphic
-  Taylor--Wiles systems. Book 145 gives the desired union-of-components statement once its
-  sharp hypotheses hold; Book 176, Proposition 1.1 then proves component-support transfer
-  formally; exact acting-image control and marked augmentation give reduced finite recovery;
+  $({\rm IAV}_S)$ interface. Theorem 1.1C proves the explicit scalar paired framed rings:
+  their raw special fibers agree scheme-theoretically, the avoidance ring is flat and
+  integral, and the two desired horizontal components specialize bijectively, although the
+  raw desired ring is itself nonflat/nonreduced. Proposition 1.1D proves common prime
+  selection, exact reduction of the principal/Iwahori coefficient lattices, synchronized
+  residual definite modules, and formal recovery. The first missing theorem is
+  $({\rm PGC}_S)$: the actual global Taylor--Wiles relation ideal must preserve the local
+  component specialization. Avoidance full support is the next independent assertion;
+  local avoidance integrality and module nonvanishing do not prove it for a global patched
+  quotient. Book 145 gives the desired union-of-components statement once its sharp
+  hypotheses hold; Book 176, Proposition 1.1 then proves component-support transfer formally;
+  exact acting-image control and marked augmentation give reduced finite recovery;
   Book 176, Lemma 1.1A upgrades a finite recovered action with nilpotent kernel to finiteness
   of the whole noetherian desired ring; and Book 109 supplies descent under its explicit
-  antecedent hypotheses. The first missing
-  input is therefore construction of the paired rings and synchronized arithmetic system,
-  including avoidance full support (or an equivalent patched-source irreducibility/component-
-  coverage theorem), not the formal transfer, recovery, or descent steps. Irreducibility of
-  the local avoidance ring alone does not imply irreducibility of an arbitrary patched
-  quotient. Once this arithmetic package is supplied, no several-place old--new cube,
+  antecedent hypotheses. Thus the missing input is a global patched-component theorem, not
+  construction of the local pair or its residual systems and not the formal transfer,
+  recovery, or descent steps. Once $({\rm PGC}_S)$ and avoidance full support are supplied,
+  no several-place old--new cube,
   mixed-Ihara vanishing, product residue, or separate product-component occurrence is required.
 
 - **Several active places:** once one actual product coefficient system and all component
@@ -416,7 +421,10 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   inertia at $P_{\mathrm{tar}}$ and canonically surjects onto the exact unramified minimal
   ring.  One target-characteristic certificate $({\rm TIAV}_{P_{\mathrm{tar}}})$ supplies the
   paired desired/avoidance geometry, synchronized systems, avoidance full support, and exact
-  finite recovery.  Lemma 1.1A then makes the whole broad ring finite, so its minimal quotient
+  finite recovery.  Book 176 now proves its local paired geometry, common residual modules,
+  common Taylor--Wiles prime sets, and formal recovery.  Its remaining clauses are
+  $({\rm PGC}_{P_{\mathrm{tar}}})$ for the actual global relation ideal and avoidance full
+  support.  Once they hold, Lemma 1.1A makes the whole broad ring finite, so its minimal quotient
   has finite special fibre; after Book 181 constructs the point, the same support theorem
   makes it automorphic.  This is a second coefficient-specific instance of the same reusable
   IAV theorem schema, not a reuse of the auxiliary patch.
@@ -431,7 +439,9 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   retains all of its edgewise Ihara, component, and branch hypotheses. Dyadic places are absent
   from $P_{\mathrm{tar}}$ because the target keeps its signed-special condition. Thus the live
   preferred boundary is $({\rm IAV}_{P_{\mathrm{aux}}})$, then
-  $({\rm TIAV}_{P_{\mathrm{tar}}})$—not a singleton moving presentation.  DLO plus the bottom
+  $({\rm TIAV}_{P_{\mathrm{tar}}})$—not a singleton moving presentation.  In both instances
+  the exact unresolved part is global patched-component preservation and avoidance full
+  support, not construction of the scalar local pair or a nonzero avoidance module.  DLO plus the bottom
   structural ledger is retained only as the stronger minimal-$R=\mathbb T$ alternative.
   Finite class sets, residual monodromy zero, and upper-side Taylor--Wiles
   patching do not formally imply DLO; Book 176 gives an explicit paired countermodel.

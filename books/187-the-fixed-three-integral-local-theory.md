@@ -250,8 +250,8 @@ a fixed abelian carrier.
 
 ### 2.3 A certificate through actual Brauer cancellation
 
-The restricted Book 185 conclusion provides, at each coefficient place away from two and hence
-at the selected $\nu\mid3$, an actual characteristic-zero cancellation
+Book 185, Proposition 9.2 provides at the selected $\nu\mid3$ an actual
+characteristic-zero cancellation
 
 $$
 R_\nu^+\simeq V\oplus R_\nu^-.
@@ -2007,9 +2007,11 @@ $$
 \tag{12.1}
 $$
 
-The verdict remains not ready only because the rational family is conditional on Book 182's
-unproved controlled top: its moving specialization, clean residual SP seed, and raw dyadic SP
-carrier remain upstream; the residual raw-to-global Hodge--Tate source is the smooth-proper
-comparison interface isolated in Books 47 and 183, not ambient Tate semisimplicity. The AUX Galois comparisons are
-proved once that controlled top is supplied.  Book 182's stronger automorphic-type theorem
-remains open, but it no longer lies on the clean-support path.
+The verdict remains not ready only because the rational input is conditional on Book 182's
+unproved controlled top, in particular its moving specialization and clean residual SP seed.
+The raw dyadic carriers are supplied targetwise by Books 118, 122, and 168, and the selected
+coefficient-three raw-to-global step is supplied by the finite-flat bridge of Books 54 and
+168; full smooth-proper $(\mathrm{HT}_{\mathrm{curve}})$ remains necessary only for the
+optional uniform all-coefficient packet statement. The AUX Galois comparisons are proved
+once the controlled top is supplied. Book 182's stronger automorphic-type theorem remains
+open, but it no longer lies on the clean-support path.

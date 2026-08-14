@@ -223,6 +223,11 @@ inheritance by curve-cohomology subquotients. Its exact unproved input is theref
 smooth-proper comparison $(\mathrm{HT}_{\mathrm{curve}})$ of Book 47, (9.7). It uses no
 Faltings height, Shafarevich finiteness, or Tate-module semisimplicity theorem.
 
+That last sentence concerns the uniform all-coefficient certificate. For the selected
+$\nu\mid3$ used by the final chain, Book 168, Theorem 7.6C replaces it with the integral
+finite-flat rank-one calculation of Book 54; Proposition 6.1A below records the resulting
+coefficientwise packet certificate.
+
 We call (1.1)--(1.6), complete splitting, and these exact range hypotheses a
 **controlled SP top datum**. Book 182 exports this datum only conditionally on its controlled
 exact residual seed and bridge-readiness package; it explicitly proves no unconditional
@@ -917,6 +922,32 @@ The first route is the minimal packet theorem. Its only new arithmetic input is
 $(\mathrm{HT}_1)$; Book 168 proves every subsequent reduction. Rational Tate-module
 semisimplicity of all carrier Jacobians remains a sufficient but unnecessarily strong
 alternative and is not part of the recommended FLT dependency chain.
+
+For the final argument, even this uniform input is stronger than necessary.
+
+**Proposition 6.1A (fixed-three packet certificate).** Suppose that $3$ splits completely
+in the controlled top, every selected packet level is hyperspecial above $3$, and the raw
+basic and unitary carriers are the ones constructed in Books 118--129 and 168. Fix a place
+$\nu\mid3$ of the common coefficient field. Then, for every elementary $H$ and every
+coefficient embedding inducing $\nu$, the raw multiplicity representation of $\pi_H$ is
+absolutely irreducible and equals $r_{H,\nu}$. At every dyadic place its full signed special
+pair, including nonzero rank-one monodromy, its invariant line, sign, and conductor one,
+survives in $r_{H,\nu}$. This conclusion does not assume $(\mathrm{HT}_1)$ for any other
+coefficient place, or $(\mathrm{HT}_{\mathrm{curve}})$ for an arbitrary-reduction carrier.
+
+**Proof.** Apply Book 168, Theorem 7.6C to the basic compact carrier of each $\pi_H$.
+Complete splitting gives $(F_H)_v=\mathbf Q_3$, while the protected unitary covers are
+hyperspecial and have good reduction over extensions unramified above $3$. The finite-flat
+rank-one theorem of Book 54 then supplies the local-algebraicity input in the usual
+class-field/isobaric contradiction, so the basic raw factor is absolutely irreducible and
+equals its semisimplification. Book 168, Corollary 7.6D applies this identification to the
+split or ramified-spectator unitary comparisons at each dyadic target. Those comparisons are
+away from the coefficient prime $3$, and therefore transfer the complete SP pair. The
+argument is packetwise and uses no assertion at a second coefficient place. $\square$
+
+Thus Proposition 6.1 remains the uniform packet-array interface. Proposition 6.1A is its
+strictly narrower fixed-three replacement: every later character and Mackey construction may
+be evaluated only at $\nu$ when the consumer asks for one three-adic member.
 
 The distinguished member satisfies
 
@@ -1851,6 +1882,12 @@ The theorem asserts neither that $\mathcal R_{\mathfrak B,\tau}$ is effective no
 classes for varying $\tau$ form a base-field compatible family. It asserts no integral
 structure.
 
+If only the fixed-three certificate of Proposition 6.1A is imposed, the same theorem holds
+after restricting every coefficient-indexed SP and simplicity assertion to embeddings
+inducing the chosen $\nu\mid3$. The overlap identities, determinant, algebraic polynomials,
+purity, and Mackey formulas were proved before raw SP preservation and remain available at
+that embedding. This fixed-$\nu$ slice is the exact input used by the final chain.
+
 ### 11.2 Proof
 
 Book 180 supplies integral Brauer induction, the tensor identity, determinant transfer,
@@ -1947,7 +1984,8 @@ applied in Chapters 6 and 10. For an all-dyadic-split carrier, Book 168, Proposi
 supplies the needed SP output without Book 122's finite integral comparison (10.5). For the
 controlled even-degree parity carriers, Proposition 7.6B supplies the targetwise
 ramified-spectator output and removes the quadratic inertial ambiguity with two local CM
-classes. Thus the remaining prime-to-two premise is $(\mathrm{HT}_1)$, not
+classes. Thus the remaining uniform all-coefficient prime-to-two premise is
+$(\mathrm{HT}_1)$, not
 $(\mathrm{MDSP}_2)$. In particular, the special scalar equality and
 raw-to-semisimple local-preservation identity must be available for every constructed packet and
 every coefficient place away from two. Proposition 6.1 proves the latter from
@@ -1959,6 +1997,10 @@ either the raw special clause or this preservation
 certificate is absent, the distinguished $\ell$-adic SP pair does not determine monodromy or
 its sign at another embedding. No theorem prescribing principal or dihedral automorphic types
 away from two is needed for this SP step or for the auxiliary Galois comparison.
+
+For the one embedding above three consumed in the final chain, Proposition 6.1A supplies this
+preservation certificate from good-reduction finite-flat geometry. Hence smooth-proper
+$(\mathrm{HT}_{\mathrm{curve}})$ is not a dependency of that selected-member branch.
 
 The application-specific work retained here is substantial: construction and conjugation of the
 selected elementary packets, the nonnormal overlap theorem, the coefficient ledger, the signed

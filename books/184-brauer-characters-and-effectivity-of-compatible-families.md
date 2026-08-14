@@ -2246,6 +2246,20 @@ sign lemma and virtual dimension two prove positive effectivity and absolute irr
 Continuity, determinant, Frobenius, local, and independence statements are Chapters 7--11.
 $\square$
 
+**Corollary 13.1A (fixed-three effectivity).** Fix $\nu\mid3$ and assume the fixed-three
+packet certificate of Book 183, Proposition 6.1A. Then every integral Brauer datum has one
+actual absolutely irreducible effective member $r_{\mathfrak B,\nu}$ at $\nu$, with all the
+conclusions of Theorem 13.1 that are indexed by this coefficient place. In particular its
+dyadic SP pair is the common algebraic pair. Neither the uniform hypothesis
+$(\mathrm{HT}_1)$ nor smooth-proper $(\mathrm{HT}_{\mathrm{curve}})$ is required.
+
+**Proof.** Proposition 6.1A makes every elementary-intersection realization absolutely
+irreducible at $\nu$ and supplies its already-preserved SP pair. Proposition 5.2 therefore
+identifies every Mackey Gram entry at this embedding with the same automorphic self-twist
+indicator used at the distinguished embedding. The fixed quadratic Gram value is one, so the
+norm-one sign argument and local Krull--Schmidt cancellation in the
+proof of Theorem 13.1 apply coefficientwise at $\nu$. $\square$
+
 Under $(\mathrm{AI}_2)$ the theorem applies simultaneously to every coefficient embedding and
 every integral Brauer datum. Without $(\mathrm{AI}_2)$ it still applies simultaneously to all
 embeddings away from two. This latter collection includes every place above three.

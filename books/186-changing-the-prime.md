@@ -38,8 +38,8 @@
 
 ## 1. Scope
 
-This chapter performs one operation. Starting with the rank-two compatible collection that
-contains the distinguished Frey lift, it selects a member of coefficient characteristic
+This chapter performs one operation. Starting with either the rank-two compatible collection
+that contains the distinguished Frey lift or its selected-three member, it selects a member of coefficient characteristic
 $3$ and proves that its local representation at $2$ has the same special
 (Steinberg) record as the original member.
 
@@ -68,13 +68,13 @@ every base prime outside $\{2,3\}$, because those local conditions glue the towe
 $\mathbf Z[1/2]$. Thus ``one coefficient place'' must not be confused with ``one rational
 base place.''
 
-The existence of the collection used below is conditional on the controlled SP top datum
-of Books 182--185. In particular, the current dependency spine does not construct the
-required controlled residual automorphic seed or every raw dyadic carrier; the remaining
-raw-to-global Hodge--Tate source is the smooth-proper comparison interface isolated in
-Books 47 and 183, not ambient Tate semisimplicity. The result of this chapter is therefore a
-bounded implication from the assembled rational data, not an unconditional construction of
-that data.
+The existence of the input used below is conditional on the controlled SP top datum of
+Books 182--185. The fixed-three branch, however, does not require the uniform raw-to-global
+Hodge--Tate source: Books 54, 168, and 183 use the good-reduction finite-flat structure at the
+chosen place above $3$ to obtain packet irreducibility and preserve SP there. The remaining
+conditionality is the controlled residual automorphic seed and its declared ascent/descent
+ledger. The result of this chapter is therefore a bounded implication from the assembled
+rational data, not an unconditional construction of that data.
 
 Throughout, Frobenius is arithmetic and
 $\chi_q(\operatorname{Frob}_v)=v$ for $v\ne q$.
@@ -106,6 +106,14 @@ compatible system. Without $(\mathrm{AI}_2)$, Book 185 still constructs exactly 
 away-from-two collection displayed here. Both $\lambda_p$ and every $\nu\mid3$ belong to
 that collection. Thus the coefficient-three route in this chapter does not use
 $(\mathrm{AI}_2)$ and makes no selection at a coefficient place above $2$.
+
+For the fixed-three route, the weaker alternative input is Book 185, Proposition 9.2: one
+place $\nu\mid3$ and its actual member $V_\nu$ over the final completion $E_\nu$, together
+with the determinant, common pure good polynomials, clean support, restriction recovery, and
+dyadic SP pair listed below. In this alternative every occurrence of $r_\nu$ means $V_\nu$;
+no representation at a second coefficient place is assumed. Sections 3--7 inspect only this
+member, so both inputs give the identical conclusion. In this selected-member reading, every
+universal quantifier over $\lambda$ in Sections 2--3 is specialized to $\lambda=\nu$.
 
 There is a finite certified exceptional set $S$, containing $2$, such that for every
 rational prime $v\notin S$ there is a polynomial
@@ -331,7 +339,8 @@ V=r_\nu:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(K).
 \tag{4.3}
 $$
 
-This is selection from (2.1), not scalar extension of
+This is selection from (2.1), or the representation constructed directly by Book 185,
+Proposition 9.2; it is not scalar extension of
 $r_{\lambda_p}$. There is generally no map
 $E_{\lambda_p}\to E_\nu$ over which such a tensor product could be formed.
 
@@ -348,7 +357,7 @@ many actual places in (4.1).
 
 ### 4.2 The rational companion
 
-For every certified good prime $v\notin S$ with $v\ne3$, the family input gives
+For every certified good prime $v\notin S$ with $v\ne3$, the rational input gives
 
 $$
 V\text{ is unramified at }v,
@@ -584,7 +593,7 @@ For each $\nu\mid3$, record the following without conflation:
 | item | required evidence |
 |---|---|
 | $K$ and $k$ | factorization of $3\mathcal O_E$ |
-| existence of $V=r_\nu$ | the actual family (2.1) |
+| existence of $V=r_\nu$ | the actual family (2.1), or Book 185, Proposition 9.2 |
 | good Frobenius polynomials and purity | Book 185's certified set $v\notin S$ |
 | clean support outside $\{2,3\}$ | Book 185, Propositions 8.3 and 8.1 |
 | special record at $2$ | strong compatibility (4.6) |
@@ -780,7 +789,8 @@ two-dimensional finite inertial type.
 above $3$ is selected only in the final $E$, so residue degrees are not changed
 behind the notation.
 
-**No cross-completion tensor product.** The bridge is the algebraic family. The
+**No cross-completion tensor product.** The bridge is the common algebraic packet data and
+its actual completion-valued assembly. The
 only scalar extension at $2$ is $D_2\otimes_EE_\nu$, which is defined.
 
 **Correct compatibility range.** The new coefficient characteristic is $3$ and
@@ -831,11 +841,14 @@ Theorem 7.1 imports only:
 - identification of the distinguished member's dyadic pair as
   $\operatorname{Sp}_2(\varepsilon)$.
 
-The first bullet already includes Book 183's prior raw-to-global preservation certificate. This
-chapter cannot use the selected coefficient-$3$ member, or the final family containing it, to
-prove that upstream certificate.
+The first bullet includes Book 183's prior raw-to-global preservation certificate at the
+coefficient places it claims. On the narrower branch that certificate is Book 183,
+Proposition 6.1A, proved upstream from the good basic and unitary carriers and their
+finite-flat towers; Book 185, Proposition 9.2 then assembles the selected member. Thus this
+chapter does not reason backward from the member it is trying to construct.
 
-The support assertion imports Book 185, Proposition 8.3 through the rational family package.
+The support assertion imports Book 185, Proposition 8.3 either through the rational family
+package or through the selected-member Proposition 9.2.
 The theorem does not import a later finite-flat theorem, residual classification, or final
 FLT contradiction. It also does not import $(\mathrm{AI}_2)$, because no coefficient-two
 member is used. Books 187--188 receive the outputs in that order and do not feed

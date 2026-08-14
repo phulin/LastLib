@@ -1690,6 +1690,51 @@ $T$ with $T_p(L)$.
 
 **Proof.** The constructions above are inverse at every finite level. A morphism of inverse systems is determined levelwise; full faithfulness at each level and completeness of finite free modules lift it uniquely to $L$. Duality and base change commute levelwise and hence after inverse limits. $\square$
 
+The rank-one consequence needed later can be read without introducing a
+$\mathbf C_p$ comparison theorem.
+
+**Proposition 14.2 (finite-flat rank-one characters are locally algebraic).**
+Let $\mathcal O$ be the integers of a finite extension of $\mathbf Q_p$, and let
+
+$$
+T=\mathcal O(\xi)
+$$
+
+be a free rank-one $\mathcal O$-representation of $G_{K_0}$. Suppose that the quotients
+$T/\varpi^nT$ admit one coefficient-linear compatible finite-flat tower over $W$ for all
+$n$. Then $\xi$ is locally algebraic. More precisely, after enlarging the coefficient
+field so that all embeddings $\tau:K_0\hookrightarrow\overline{\mathbf Q}_p$ are visible,
+there are $h_\tau\in\{0,1\}$ such that on an open subgroup of $\mathcal O_{K_0}^{\times}$
+the character corresponding to $\xi$ under arithmetic local reciprocity is
+
+$$
+u\longmapsto\prod_\tau\tau(u)^{h_\tau},                 \tag{14.6a}
+$$
+
+up to the simultaneous sign convention for arithmetic reciprocity. In particular, if
+$K_0/\mathbf Q_p$ is unramified and $\xi$ is the restriction of a character of
+$G_{\mathbf Q_p}$, all the $h_\tau$ are equal; on inertia it is therefore, up to finite
+order, either the trivial or the cyclotomic character.
+
+**Proof.** Theorem 14.1, with the coefficient action retained as in Chapter 13, gives a
+coefficient-linear strongly divisible lattice $L$. After splitting
+$K_0\otimes_{\mathbf Q_p}\overline{\mathbf Q}_p$, its rank-one factors are cyclically
+permuted by Frobenius. On the factor labelled by $\tau$, the first Hodge step is either zero
+or the whole line; call the alternative $h_\tau=0$ or $1$. Strong divisibility says that
+the divided Frobenius around this cycle is a unit.
+
+Solve the rank-one syntomic equations of Book 53, Section 4.1 successively around the
+Frobenius cycle. The unit in the divided Frobenius contributes only the unramified value,
+whereas a factor with $h_\tau=1$ contributes the $\tau$-conjugate Lubin--Tate character and
+a factor with $h_\tau=0$ contributes the trivial character on an open subgroup of units.
+This is the same local-reciprocity calculation recorded in Book 6, Section 11.5, before its
+Hodge--Tate reformulation, and gives (14.6a) directly. Thus $\xi$ is locally algebraic.
+
+If $\xi$ descends to $G_{\mathbf Q_p}$, conjugation by arithmetic Frobenius fixes its
+inertial character. Frobenius cyclically permutes the embeddings $\tau$ of the unramified
+field. Uniqueness of the exponents in the $p$-adic logarithm on principal units therefore
+forces $h_{\varphi\tau}=h_\tau$ for every $\tau$, hence all $h_\tau$ are equal. $\square$
+
 ### 14.3 Arbitrary open ideals
 
 Let $\mathcal O$ be the ring of integers in a finite extension of $\mathbf Q_p$, and let $T$ be finite free over $\mathcal O$ with an integral coefficient action on its associated system. For an open ideal $I\subset\mathcal O$, choose $n$ with $p^n\in I$. Then $T/IT$ is a quotient of $T/p^nT$, hence is finite flat by Book 42's schematic-closure calculus or by Theorem 13.1.

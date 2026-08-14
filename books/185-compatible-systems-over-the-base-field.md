@@ -1994,6 +1994,36 @@ type, finite flatness, and the choice of a globally stable lattice are separate 
 constructions for the fixed-three integral theory. Likewise, rational nonzero $N_2$ does not
 by itself determine the reduction of tame monodromy on a future lattice.
 
+The preceding construction is coefficientwise and has a smaller endpoint which does not
+presuppose the whole away-from-two collection.
+
+**Proposition 9.2 (selected-member assembly at three).** Assume the algebraic packet array,
+overlap, polynomial, purity, and auxiliary local-pair data of Book 183, and fix a place
+$\nu\mid3$. If Book 183, Proposition 6.1A and Book 184, Corollary 13.1A hold at this place,
+then there is an actual representation
+
+$$
+V_\nu:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(E_\nu)
+\tag{9.11}
+$$
+
+which is absolutely irreducible, has determinant $\chi_3$, is unramified outside
+$\{2,3\}$, has the common pure good polynomials, recovers every selected elementary packet
+after restriction, and has at $2$ the common SP pair (9.7), including its line, sign, and
+conductor one. This conclusion requires neither members at the other coefficient places nor
+uniform $(\mathrm{HT}_1)$.
+
+**Proof.** Apply the multiplicity-one completion descent of Chapters 2--5 to the single
+effective class supplied by Book 184 at $\nu$. Its Schur class and scalar descent cocycle
+vanish exactly as in the proof of Theorem 9.1; no second completion occurs in that argument.
+The restriction recovery, determinant, common polynomial, and purity proofs of Chapters
+6--7 are algebraic identities evaluated at this same embedding. Proposition 8.3 constructs
+the unramified local complement at every auxiliary base prime for each individual coefficient
+place, hence gives the stated support. Finally, local Mackey cancellation at $2$ uses the SP
+pair already supplied at $\nu$ by Book 183, Proposition 6.1A. These are precisely the
+coefficient-$\nu$ clauses of Theorem 9.1, proved without first assembling its other members.
+$\square$
+
 ## 10. Dependency, hostile, and final audits
 
 ### 10.1 Dependency audit
