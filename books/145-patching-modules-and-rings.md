@@ -92,6 +92,13 @@
     - [The balanced and derived theorem](#162-the-balanced-and-derived-theorem)
     - [The exact interface for the next argument](#163-the-exact-interface-for-the-next-argument)
     - [Conclusion](#164-conclusion)
+17. [Paired source patching and support transfer](#17-paired-source-patching-and-support-transfer)
+    - [The unique-horizontal support lemma](#171-the-unique-horizontal-support-lemma)
+    - [Coefficient-power nilpotents](#172-coefficient-power-nilpotents)
+    - [The paired source-patching theorem](#173-the-paired-source-patching-theorem)
+    - [Module augmentation and finite-level factorization](#174-module-augmentation-and-finite-level-factorization)
+    - [Exact acting-image augmentation under saturation](#175-exact-acting-image-augmentation-under-saturation)
+    - [Why patching the source changes the argument](#176-why-patching-the-source-changes-the-argument)
 
 ## 1. Why patching is necessary
 
@@ -3045,3 +3052,370 @@ and a free module over it. Its regular sequence gives depth $q+1$. The faithfull
 The resulting strength is exact and deliberately bounded. Dimension equality yields maximal depth, not component coverage. Full support yields a nilpotent annihilator, not faithfulness over a nonreduced ring. Maximal Cohen--Macaulayness yields freeness only with regularity or finite projective dimension. Augmentation recovers the original objects, but Tor vanishing for the ring requires a regular-sequence theorem. Pairings persist when their finite shadows are genuinely compatible, but a dual pair is not a self-dual module without an identification.
 
 The patched pair is therefore powerful because every source of information has a separate job: $S_\infty$ supplies regularity, $P_\infty$ supplies equations, $R_\infty$ retains deformation structure, $A_\infty$ records the actual action, and $M_\infty$ connects them through depth and support. Once these roles are kept distinct, the limiting construction ends with a dependable algebraic interface rather than a collection of numerical coincidences.
+
+## 17. Paired source patching and support transfer
+
+The preceding theorem package patches a quotient deformation ring and then asks which components its module sees. For a paired desired/avoidance argument, that order can lose the decisive geometry. The avoidance local source may be irreducible even when an arbitrary global quotient is not, while the desired source may come with a precise specialization map from its horizontal components to its special-fiber components. The right ambient rings are therefore the expanded local presentation sources themselves.
+
+Throughout this chapter, $\mathcal O$ is a complete discrete valuation ring with uniformizer $\varpi$, and all complete local $\mathcal O$-algebras are Noetherian with finite residue field. Rings arising below are quotients of power-series rings over $\mathcal O$, so the catenary and finiteness properties used in component arguments are available.
+
+### 17.1 The unique-horizontal support lemma
+
+Let $B$ be an $\mathcal O$-flat, reduced, equidimensional Cohen--Macaulay complete local ring of dimension $D$. Flatness makes $\varpi$ a nonzerodivisor, and hence $B/\varpi$ is Cohen--Macaulay and equidimensional of dimension $D-1$. Suppose specialization gives a bijection
+
+$$
+\operatorname{Min}(B)
+\xrightarrow{\sim}
+\operatorname{Min}(B/\varpi).
+\tag{17.1}
+$$
+
+Concretely, (17.1) says that each special-fiber component lies on one and only one horizontal component, and that every horizontal component reaches the special fiber in a minimal component. This is stronger than flatness. A flat domain can have a reducible special fiber.
+
+**Lemma 17.1 (unique-horizontal support).** Let $L$ be a nonzero finite maximal Cohen--Macaulay $B$-module. If
+
+$$
+\operatorname{Supp}_{B/\varpi}(L/\varpi L)
+=\operatorname{Spec}(B/\varpi),
+\tag{17.2}
+$$
+
+then
+
+$$
+\operatorname{Supp}_B L=\operatorname{Spec}B.
+\tag{17.3}
+$$
+
+Since $B$ is reduced, $L$ is faithful.
+
+**Proof.** Maximal Cohen--Macaulayness and equidimensionality imply that every minimal prime of $\operatorname{Supp}_B L$ has dimension $D$. By the catenary argument of Section 11.2, such a prime is a minimal prime of $B$. Thus the support of $L$ is a union of horizontal irreducible components.
+
+Let $\mathfrak q\in\operatorname{Min}(B/\varpi)$. Hypothesis (17.2) places $\mathfrak q$ in the support of $L/\varpi L$, and hence in the support of $L$. Choose a minimal prime $\mathfrak p'$ of $\operatorname{Supp}_B L$ contained in $\mathfrak q$. The preceding paragraph gives $\mathfrak p'\in\operatorname{Min}(B)$. A minimal prime of $B/\varpi$ lying over $\mathfrak p'$ is contained in $\mathfrak q$; minimality forces it to equal $\mathfrak q$. By the injectivity in (17.1), $\mathfrak p'$ is the unique horizontal minimal prime specializing to $\mathfrak q$.
+
+Every $\mathfrak p\in\operatorname{Min}(B)$ specializes, by the surjectivity in (17.1), to some $\mathfrak q$. Applying the preceding argument to that $\mathfrak q$ shows that its unique horizontal antecedent $\mathfrak p$ lies in the support. Hence all minimal primes of $B$ lie in $\operatorname{Supp}_B L$, which proves (17.3). The annihilator of a full-support module is contained in the nilradical. Reducedness makes that nilradical zero. $\square$
+
+The maximal Cohen--Macaulay hypothesis rules out support confined to a positive-codimension subset of a horizontal component. The uniqueness in (17.1) then rules out assigning a special component seen by the module to the wrong horizontal component. Both ingredients are necessary for this proof.
+
+### 17.2 Coefficient-power nilpotents
+
+The desired integral presentation is often first available as a raw source $B^{\mathrm{raw}}$. Let
+
+$$
+\mathcal N=\sqrt{0}_{B^{\mathrm{raw}}},
+\qquad
+B=B^{\mathrm{raw}}/\mathcal N.
+\tag{17.4}
+$$
+
+Suppose that the raw generic fiber is reduced, or equivalently for (17.4) that
+
+$$
+\mathcal N[1/\varpi]=0.
+\tag{17.5}
+$$
+
+The following elementary observation is what permits the raw source to act on an integral patched module without retaining spurious infinitesimal directions.
+
+**Lemma 17.2 (coefficient-power nilradical).** Under (17.5), there is an integer $a\geq0$ such that
+
+$$
+\varpi^a\mathcal N=0.
+\tag{17.6}
+$$
+
+If $L$ is $\mathcal O$-torsion-free, then $\mathcal N L=0$. Thus every $B^{\mathrm{raw}}$-action on $L$ factors through $B$.
+
+**Proof.** The ideal $\mathcal N$ is finite over the Noetherian ring $B^{\mathrm{raw}}$. Choose generators $n_1,\ldots,n_s$. Equation (17.5) says that for each $i$ some power of $\varpi$ kills $n_i$. Taking the maximum of these exponents gives (17.6).
+
+For $n\in\mathcal N$ and $x\in L$, equation (17.6) gives $\varpi^a(nx)=0$. Since $L$ is $\mathcal O$-torsion-free, $nx=0$. Hence $\mathcal N$ annihilates $L$, and the action factors through (17.4). $\square$
+
+The hypothesis (17.5) cannot simply be omitted. The killed thickening in the second example of Section 11.5 survives after inverting $\varpi$ and is therefore not coefficient-power torsion. Horizontal reducedness must include the assertion that the raw and reduced sources have the same generic fiber, not just the formal operation of quotienting by a nilradical.
+
+### 17.3 The paired source-patching theorem
+
+Let
+
+$$
+S=\mathcal O[[z_1,\ldots,z_h,w_1,\ldots,w_c]]
+\tag{17.7}
+$$
+
+be an expanded regular frame-and-diamond ring, where in the rank-two full partial-frame convention $c=4|T|-1$. Put $D=\dim S$. Consider an avoidance source $P^{\mathrm{av}}$, a raw desired source $P^{\mathrm{des,raw}}$, and its horizontal reduction
+
+$$
+P^{\mathrm{des}}
+=P^{\mathrm{des,raw}}/\mathcal N.
+\tag{17.8}
+$$
+
+The phrase “same residual source and module up to nilpotents” will mean the following precise datum. There is a complete local $k$-algebra $C$ and surjections
+
+$$
+P^{\mathrm{av}}/\varpi
+\twoheadrightarrow C,
+\qquad
+P^{\mathrm{des}}/\varpi
+\twoheadrightarrow C
+\tag{17.9}
+$$
+
+with nilpotent kernels. After base change along (17.9), the residual patched modules are identified as $C$-modules, compatibly with every named residual action:
+
+$$
+(M^{\mathrm{av}}/\varpi)\otimes_{P^{\mathrm{av}}/\varpi}C
+\xrightarrow{\sim}
+(M^{\mathrm{des}}/\varpi)\otimes_{P^{\mathrm{des}}/\varpi}C.
+\tag{17.10}
+$$
+
+Nilpotent kernels in (17.9) induce homeomorphisms on spectra. Passing to $C$ therefore forgets no component, while (17.10) remembers the residual module action rather than only a numerical rank.
+
+**Theorem 17.3 (paired source patching and support transfer).** Assume:
+
+1. $P^{\mathrm{av}}$ is an $\mathcal O$-flat Cohen--Macaulay domain of dimension $D$;
+2. $P^{\mathrm{des}}$ is $\mathcal O$-flat, reduced, equidimensional, and Cohen--Macaulay of dimension $D$, and specialization gives a bijection
+
+   $$
+   \operatorname{Min}(P^{\mathrm{des}})
+   \xrightarrow{\sim}
+   \operatorname{Min}(P^{\mathrm{des}}/\varpi);
+   \tag{17.11}
+   $$
+
+3. the raw desired generic fiber is reduced, so $\mathcal N[1/\varpi]=0$;
+4. the common residual source and module datum (17.9)--(17.10) is given;
+5. $M^{\mathrm{av}}$ and $M^{\mathrm{des}}$ are finite free of positive rank over $S$;
+6. the commuting scalar and source actions give local maps
+
+   $$
+   \begin{aligned}
+   &S\hookrightarrow A^{\mathrm{av}}
+   \subseteq\operatorname{End}_S(M^{\mathrm{av}}),
+   &&P^{\mathrm{av}}\twoheadrightarrow A^{\mathrm{av}},\\
+   &S\hookrightarrow A^{\mathrm{des}}
+   \subseteq\operatorname{End}_S(M^{\mathrm{des}}),
+   &&P^{\mathrm{des,raw}}\twoheadrightarrow A^{\mathrm{des}},
+   \end{aligned}
+   \tag{17.12}
+   $$
+
+   where each $A^\bullet$ is the actual source action image. On the special fiber, the desired action factors through $P^{\mathrm{des}}/\varpi$ as part of the residual datum (17.10); integral factorization through $P^{\mathrm{des}}$ is a conclusion.
+
+Then the avoidance source acts faithfully:
+
+$$
+A^{\mathrm{av}}=P^{\mathrm{av}},
+\qquad
+\operatorname{Supp}_{P^{\mathrm{av}}}M^{\mathrm{av}}
+=\operatorname{Spec}P^{\mathrm{av}}.
+\tag{17.13}
+$$
+
+The common residual module has full support over $C$, and the desired residual module has full support over $P^{\mathrm{des}}/\varpi$. Every horizontal desired component consequently occurs in the support, and
+
+$$
+A^{\mathrm{des}}=P^{\mathrm{des}},
+\qquad
+\operatorname{Supp}_{P^{\mathrm{des}}}M^{\mathrm{des}}
+=\operatorname{Spec}P^{\mathrm{des}}.
+\tag{17.14}
+$$
+
+Moreover there is an exponent $a$ for which $\varpi^a\mathcal N=0$, and
+
+$$
+\operatorname{Ann}_{P^{\mathrm{des,raw}}}(M^{\mathrm{des}})
+=\mathcal N.
+\tag{17.15}
+$$
+
+If the source actions factor through intermediate quotient deformation rings
+
+$$
+\begin{aligned}
+P^{\mathrm{av}}&\twoheadrightarrow R^{\mathrm{av}}
+\twoheadrightarrow A^{\mathrm{av}},\\
+P^{\mathrm{des,raw}}&\twoheadrightarrow R^{\mathrm{des,raw}}
+\twoheadrightarrow A^{\mathrm{des}},
+\end{aligned}
+\tag{17.16}
+$$
+
+then $R^{\mathrm{av}}=P^{\mathrm{av}}$, while $(R^{\mathrm{des,raw}})^{\mathrm{red}}=P^{\mathrm{des}}$.
+
+**Proof.** We first use the avoidance domain before taking any global relation quotient. Since $M^{\mathrm{av}}$ is finite free over the regular local ring $S$,
+
+$$
+\operatorname{depth}_S M^{\mathrm{av}}=D.
+\tag{17.17}
+$$
+
+The action image $A^{\mathrm{av}}$ is finite over $S$, because it is an $S$-submodule of the finite free module $\operatorname{End}_S(M^{\mathrm{av}})$. The finite local maps in (17.12) compare the depth of the same module, giving
+
+$$
+\operatorname{depth}_{P^{\mathrm{av}}}M^{\mathrm{av}}
+=\operatorname{depth}_{A^{\mathrm{av}}}M^{\mathrm{av}}
+=\operatorname{depth}_S M^{\mathrm{av}}
+=D.
+\tag{17.18}
+$$
+
+If the annihilator in the domain $P^{\mathrm{av}}$ were nonzero, its quotient would have dimension at most $D-1$. But depth never exceeds the dimension of the support, so (17.18) would give
+
+$$
+D
+\leq\dim\operatorname{Supp}_{P^{\mathrm{av}}}M^{\mathrm{av}}
+\leq D-1,
+$$
+
+a contradiction. The source action is faithful. Since $P^{\mathrm{av}}\twoheadrightarrow A^{\mathrm{av}}$ is its action map, it is an isomorphism, proving (17.13).
+
+Full avoidance support descends to the special fiber. Indeed, for any prime $\mathfrak q$ containing $\varpi$, the localization $M^{\mathrm{av}}_{\mathfrak q}$ is nonzero. Nakayama's lemma makes
+
+$$
+M^{\mathrm{av}}_{\mathfrak q}/\varpi M^{\mathrm{av}}_{\mathfrak q}
+$$
+
+nonzero. Hence
+
+$$
+\operatorname{Supp}_{P^{\mathrm{av}}/\varpi}
+(M^{\mathrm{av}}/\varpi)
+=\operatorname{Spec}(P^{\mathrm{av}}/\varpi).
+\tag{17.19}
+$$
+
+Quotienting a nonzero finite localized module by a nilpotent ideal cannot kill it, again by Nakayama. The first map in (17.9) therefore carries (17.19) to full support over $C$. The isomorphism (17.10) transfers that full support to the desired base change. Since the second map in (17.9) is a homeomorphism on spectra, nonvanishing of every localized base change implies
+
+$$
+\operatorname{Supp}_{P^{\mathrm{des}}/\varpi}
+(M^{\mathrm{des}}/\varpi)
+=\operatorname{Spec}(P^{\mathrm{des}}/\varpi).
+\tag{17.20}
+$$
+
+We next justify the desired action appearing here. Lemma 17.2 applies to $P^{\mathrm{des,raw}}$ by hypothesis 3. It gives $\varpi^a\mathcal N=0$. The desired module is $S$-free, hence $\mathcal O$-torsion-free, so $\mathcal N$ acts trivially. Thus the raw action factors through $P^{\mathrm{des}}$.
+
+The same finite-map depth comparison used in (17.18) gives
+
+$$
+\operatorname{depth}_{P^{\mathrm{des}}}M^{\mathrm{des}}
+=D
+=\dim P^{\mathrm{des}}.
+\tag{17.21}
+$$
+
+Thus $M^{\mathrm{des}}$ is maximal Cohen--Macaulay over the desired horizontal source. Apply Lemma 17.1 to (17.20) and the component bijection (17.11). It follows that every desired horizontal component lies in the support. Reducedness of $P^{\mathrm{des}}$ then makes the action faithful, proving (17.14). The raw annihilator contains $\mathcal N$ because that ideal acts trivially, and its image in the faithful quotient $P^{\mathrm{des}}$ is zero only when it already lies in $\mathcal N$. This proves (17.15).
+
+Finally, in the avoidance factorization (17.16), injectivity of the composite $P^{\mathrm{av}}\to A^{\mathrm{av}}$ forces both quotient maps to be isomorphisms. On the desired side, the kernel of the raw source map to the intermediate ring is contained in $\mathcal N$, while the intermediate ring still maps onto the faithful reduced action $P^{\mathrm{des}}$. Since $\mathcal N$ is nilpotent and $P^{\mathrm{des}}$ is reduced, the nilradical of the intermediate ring is precisely the image of $\mathcal N$. Its reduction is therefore $P^{\mathrm{des}}$. $\square$
+
+The proof assigns one job to each hypothesis. The domain condition turns depth into avoidance faithfulness. The common residual diagram transfers topological support. The component-bijective specialization lifts that support to every desired horizontal component. Reducedness upgrades full desired support to faithfulness. Finally, coefficient-power torsion, not a generic assertion about nilpotents, makes the raw nilradical act trivially on the integral module.
+
+### 17.4 Module augmentation and finite-level factorization
+
+Support transfer has a useful finite-level consequence which does not require exact augmentation of the acting image. Let $B=P^{\mathrm{des,raw}}$, let $L=M^{\mathrm{des}}$, and let $\mathfrak a\subseteq B$ be the ideal induced by the marked diamond and frame specialization. Theorem 17.3 gives
+
+$$
+\operatorname{Supp}_B L=\operatorname{Spec}B
+\tag{17.22}
+$$
+
+as a topological equality, even though the nilradical may annihilate $L$.
+
+**Corollary 17.4 (module-level augmentation and pointwise factorization).** In addition to Theorem 17.3, suppose finite-level recovery gives a ring isomorphism and a compatible module isomorphism
+
+$$
+B/\mathfrak aB\xrightarrow{\sim}R,
+\qquad
+L/\mathfrak aL\xrightarrow{\sim}M.
+\tag{17.23}
+$$
+
+Let
+
+$$
+R\longrightarrow\mathbb T
+\subseteq\operatorname{End}_{\mathcal O}(M)
+\tag{17.24}
+$$
+
+be the finite-level deformation action, with $\mathbb T$ defined as its acting image. Then the kernel $J$ of (17.24) is nilpotent. Every homomorphism from $R$ to a characteristic-zero field factors uniquely through $\mathbb T$.
+
+If $\mathbb T$ is finite over $\mathcal O$, then $R$ is finite over $\mathcal O$ as well.
+
+**Proof.** Let $\mathfrak p$ be any prime of $B$ containing $\mathfrak a$. By (17.22), $L_{\mathfrak p}\ne0$. Since $\mathfrak aB_{\mathfrak p}$ lies in the maximal ideal of the local ring $B_{\mathfrak p}$, Nakayama gives
+
+$$
+L_{\mathfrak p}/\mathfrak aL_{\mathfrak p}\ne0.
+$$
+
+Consequently
+
+$$
+\operatorname{Supp}_{B/\mathfrak aB}(L/\mathfrak aL)
+=\operatorname{Spec}(B/\mathfrak aB).
+\tag{17.25}
+$$
+
+The recovery isomorphisms (17.23) turn (17.25) into $\operatorname{Supp}_R M=\operatorname{Spec}R$. Hence
+
+$$
+J=\operatorname{Ann}_R(M)\subseteq\sqrt{0}_R.
+\tag{17.26}
+$$
+
+The Noetherian ideal $J$ is finitely generated by nilpotent elements, so some power of $J$ is zero.
+
+A homomorphism from $R$ to a field kills every nilpotent element and hence kills $J$. It therefore factors uniquely through $R/J=\mathbb T$. This is the characteristic-zero factorization assertion.
+
+If $J^n=0$ and $\mathbb T=R/J$ is finite over $\mathcal O$, each quotient $J^i/J^{i+1}$ is a finite module over $R/J$ and hence over $\mathcal O$. The finite filtration
+
+$$
+0\subseteq J^{n-1}\subseteq\cdots\subseteq J\subseteq R
+$$
+
+then proves that $R$ is finite over $\mathcal O$. $\square$
+
+This nilpotent kernel is the precise finite-level conclusion needed for a characteristic-zero application. It says that every desired deformation point occurs in the finite action and that finiteness passes from the action to the deformation ring. An isomorphism $R\simeq\mathbb T$ would be stronger, but neither pointwise factorization nor finiteness requires it.
+
+Notice what the proof used from augmentation: the represented-ring recovery and the module coinvariants in (17.23). It did not identify the quotient of the patched acting image. Thus Corollary 17.4 remains valid when acting-image augmentation has an unsaturated nilpotent kernel.
+
+### 17.5 Exact acting-image augmentation under saturation
+
+There is a clean criterion for retaining the stronger conclusion when it is actually available. Let $A\subseteq\operatorname{End}_S(L)$ be the patched acting image, and let the specialization ideal $\mathfrak a\subseteq S$ act through $A$. The module recovery in (17.23) always gives a surjection
+
+$$
+A/\mathfrak aA\twoheadrightarrow\mathbb T.
+\tag{17.27}
+$$
+
+**Corollary 17.5 (exact acting-image augmentation under saturation).** In the setting of Corollary 17.4, suppose in addition that
+
+$$
+A\cap
+\mathfrak a\operatorname{End}_S(L)
+=\mathfrak aA.
+\tag{17.28}
+$$
+
+Then (17.27) is an isomorphism:
+
+$$
+A/\mathfrak aA\xrightarrow{\sim}\mathbb T.
+\tag{17.29}
+$$
+
+**Proof.** An element of $A$ maps to zero on $L/\mathfrak aL$ exactly when its image in $\operatorname{End}_S(L)$ lies in $\mathfrak a\operatorname{End}_S(L)$. By (17.28), such an element lies in $\mathfrak aA$. This proves injectivity of (17.27); surjectivity holds because $\mathbb T$ is the action image on the recovered module. $\square$
+
+Condition (17.28) is an additional integral saturation theorem. It is not a consequence of source faithfulness, $S$-freeness, common residual reduction, perfect pairings, or exact module coinvariants. The exact result (17.29) is therefore a corollary of the paired source theorem plus saturation, not part of the basic paired source-patching conclusion.
+
+### 17.6 Why patching the source changes the argument
+
+The first counterexample of Section 11.5 already shows what goes wrong after quotienting too early. Its module is free over the regular auxiliary ring and maximal Cohen--Macaulay over an equal-dimensional reduced quotient, yet it sees only one of two components. No repetition of the depth calculation can recover the missed component. This is precisely the quotient-first danger: a global relation quotient may acquire several components before there is any irreducible ring on which a nonzero annihilator would force a dimension drop.
+
+Theorem 17.3 avoids that example rather than contradicting it. On the avoidance side, the action is tested on the source domain. Equal-dimensional maximal depth makes a nonzero annihilator impossible there. On the desired side, support is not guessed from maximal depth; it is transferred through the common residual module and then lifted using the unique-horizontal bijection. Thus each desired component is accounted for by a named special-fiber component.
+
+The second example of Section 11.5 explains the remaining nilpotent caution. Full topological support can coexist with a killed thickening. In the paired source theorem, the desired horizontal source is reduced, so full support gives faithfulness there. The raw thickening is handled separately: its nilradical is killed by a power of $\varpi$ and hence acts trivially on the $\mathcal O$-torsion-free patched module. The example's nilpotent survives in the generic fiber, so it fails exactly this coefficient-power hypothesis.
+
+Source patching therefore does not assert that maximal Cohen--Macaulay modules always meet every component. It supplies two extra geometric mechanisms absent from the counterexamples: irreducibility on the avoidance source and component-bijective specialization on the desired source. Those mechanisms, combined with the synchronized residual module, are what turn depth into full support.
