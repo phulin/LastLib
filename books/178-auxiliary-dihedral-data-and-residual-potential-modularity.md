@@ -1358,10 +1358,10 @@ matrix cutouts are used; projective cutouts would not preserve central scalars o
 ### 8.2 The Book 158 specialization
 
 Apply Book 158 to the determinant-compatible paired-frame space and the simultaneous
-point-centered opens of Chapter 7. It chooses a simply branched moving pencil on the fine
-interior. Book 153's transposition calculation makes the generic normal closure a regular
-symmetric cover, and Book 155 specializes it with total reality, complete splitting at every
-controlled place, and disjointness from $D_{\mathrm{av}}$.
+point-centered opens of Chapter 7. Its regular symmetric split-presentation theorem chooses a
+simply branched pencil on the fine interior, and its Galois-refined specialization theorem
+imposes total reality, complete splitting at every controlled place, and disjointness from
+$D_{\mathrm{av}}$.
 
 The output is a totally real Galois extension $F/\mathbf Q$ of positive even degree and a point
 
