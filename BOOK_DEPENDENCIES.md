@@ -196,7 +196,7 @@ flowchart LR
 | 165 | Local Conditions for Hardly-Ramified Minimal Deformations | 30, 31, 32, 44, 63, 66, 67, 68, 164 |
 | 166 | Supported Galois Cohomology and Selmer Calculations | 24, 30, 31, 32, 33, 69, 165 |
 | 167 | Relation Obstructions and Poitou--Tate Corrections | 165, 166 |
-| 168 | Compatible Coefficient Systems and Purity | 6, 41, 97, 109, 118, 122, 127, 128, 142 |
+| 168 | Compatible Coefficient Systems and Purity | 6, 41, 47, 54, 97, 109, 118, 121, 122, 127, 128, 129, 142 |
 | 169 | The Eisenstein Ideal | 85, 113, 114, 131, 132, 133, 134, 147, 148, 149, 142 |
 | 170 | Hecke-Valued Galois Representations and Nonminimal Reciprocity | 68, 69, 85, 127, 128, 138, 140, 62, 142 |
 | 171 | The Minimal Totally-Real Deformation--Hecke Problem | 69, 71, 85, 124, 127, 65, 138, 170, 141 |
@@ -470,17 +470,25 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   and full Book 173 seed, but is optional on the preferred pointwise chain.
 - **Raw dyadic carrier and raw-to-global comparison:** Book 182, Proposition 6.1 and Book 183
   now prove ordinary elementary packet attachment packet by packet; no all-elementary
-  occurrence hypothesis and no principal/dihedral type parameters are required. The sole raw
-  carrier input is $(\mathrm{RSP}_2)$: Book 122's finite integral comparison (10.5), together
-  in even degree with either a parity-compatible eligible ramification set away from two or a
-  mixed-dyadic replacement geometry. Once that raw SP pair exists, the recommended
+  occurrence hypothesis and no principal/dihedral type parameters are required. Books 118,
+  122, and 168 construct the raw SP pair target by target: a different dyadic parity place is
+  used as a ramified spectator, and two ramified CM classes remove the possible quadratic
+  inertial twist. Thus neither an eligible place away from two nor a mixed-dyadic integral
+  comparison remains on this route. Once that raw SP pair exists, the recommended uniform
   raw-to-global certificate is $(\mathrm{HT}_1)$. Book 168 proves from it that each cuspidal
   packet realization is absolutely irreducible and equals its raw multiplicity
   representation, preserving monodromy, its line, and sign at every coefficient place away
   from residue characteristic two; Book 183 applies this uniformly to the finite packet
   array. Book 6 proves the rank-one local-algebraicity step and Book 47, Proposition 9.1
   proves inheritance by curve-cohomology subquotients. The exact unproved source is therefore
-  the smooth-proper comparison $(\mathrm{HT}_{\mathrm{curve}})$ of Book 47, (9.7).
+  the smooth-proper comparison $(\mathrm{HT}_{\mathrm{curve}})$ of Book 47, (9.7), for the
+  uniform all-coefficient statement. At the one selected place $\nu\mid3$, Book 129 supplies
+  an all-level finite-flat tower from the protected good unitary carrier, Book 54 proves that
+  every rank-one finite-flat constituent is locally algebraic, and Book 168, Theorem 7.6C and
+  Corollary 7.6D prove packet irreducibility and SP preservation. Book 183, Proposition 6.1A,
+  Book 184, Corollary 13.1A, and Book 185, Proposition 9.2 carry that coefficientwise result
+  through effectivity and base-field assembly. Hence the final fixed-three chain does not
+  depend on $(\mathrm{HT}_{\mathrm{curve}})$.
   Ambient carrier semisimplicity $(\mathrm{SS}_{\mathrm{array}})$ is a stronger optional
   alternative, not part of the recommended FLT dependency chain.
 - **Coefficient-two top-packet irreducibility $(\mathrm{AI}_2)$:** absolute irreducibility in
