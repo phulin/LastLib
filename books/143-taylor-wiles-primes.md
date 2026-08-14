@@ -2699,14 +2699,27 @@ The final data are therefore fully finite and explicit: a set $Q_N$, a product d
 
 There is a useful situation in which the characteristic-zero local geometry is deliberately allowed to change while the residual deformation problem is held fixed. One global problem is the problem whose horizontal components one ultimately wants to study. A second problem replaces some old local sources by better behaved sources. The second problem is not a new residual deformation problem: it is another integral model of the same one.
 
-Let $\mathcal D^{\mathrm{des}}$ and $\mathcal D^{\mathrm{av}}$ be fixed-determinant global deformation problems for the same absolutely irreducible representation $\bar\rho$, and let $T$ be the finite set of old places placed in the framed local base. Suppose that, at every old place, the two local source functors have canonically isomorphic special fibers. In particular their tangent subspaces inside
+Let $\mathcal D^{\mathrm{des}}$ and $\mathcal D^{\mathrm{av}}$ be fixed-determinant global deformation problems for the same absolutely irreducible representation $\bar\rho$, and let $T$ be the finite set of old places placed in the framed local base. At every old place $v$, write $\mathcal D_v^{\mathrm{all}}$ for the unrestricted residual local deformation functor. Suppose there is an isomorphism $\eta_v$ between the two residual local functors which commutes with their forgetful embeddings into $\mathcal D_v^{\mathrm{all}}$:
+
+$$
+\begin{array}{ccc}
+\mathcal D_{v,k}^{\mathrm{des}}&\xrightarrow{\eta_v}&
+\mathcal D_{v,k}^{\mathrm{av}}\\
+\downarrow&&\downarrow\\
+\mathcal D_{v,k}^{\mathrm{all}}&=&
+\mathcal D_{v,k}^{\mathrm{all}}.
+\end{array}
+\tag{15.0}
+$$
+
+Here the vertical arrows are monomorphisms of functors. This embedded compatibility, rather than an abstract isomorphism of the two special fibers, implies that their tangent images inside
 
 $$
 H^1(K_v,M),
 \qquad M=\operatorname{ad}^0\bar\rho,
 $$
 
-are the same. The integral sources may nevertheless have different generic fibers, different numbers of components, and different reducedness properties.
+are literally the same subspace. The integral sources may nevertheless have different generic fibers, different numbers of components, and different reducedness properties. Without commutativity of (15.0), an abstract automorphism of a residual functor could carry one tangent condition to another subspace of unrestricted cohomology, and the global Selmer structures would not be canonically equal.
 
 For a presentation relative to the old local base, the correct Selmer structure is strict at $T$. Write $\mathcal L_T^0$ for the structure whose primal condition is zero at $v\in T$ and is the common residual local condition away from $T$. Its Tate dual is relaxed at $T$ and is the exact orthogonal of the common condition elsewhere. Put
 
@@ -2730,7 +2743,7 @@ $$
 
 It is the functional whose nonvanishing makes the one-prime comparison sequence lose one dual dimension. Both localization and the projector are residual constructions. They therefore do not see which of the two characteristic-zero local sources was chosen.
 
-**Proposition 15.1 (canonical residual relative Selmer identification).** Under the preceding hypotheses, the strict-at-$T$ residual Selmer structures for $\mathcal D^{\mathrm{des}}$ and $\mathcal D^{\mathrm{av}}$ are equal. Consequently there are canonical identifications
+**Proposition 15.1 (canonical residual relative Selmer identification).** Assume the embedded residual identifications (15.0) at every conditioned place. Then the strict-at-$T$ residual Selmer structures for $\mathcal D^{\mathrm{des}}$ and $\mathcal D^{\mathrm{av}}$ are equal. Consequently there are canonical identifications
 
 $$
 V_T^{0,\mathrm{des}}
@@ -2741,7 +2754,7 @@ $$
 
 and, under these identifications, the localization functionals $\lambda_{v,\bar\alpha}$ agree for every admissible pair $(v,\bar\alpha)$.
 
-**Proof.** Both global cohomology groups in (15.3) are subspaces of the same $H^1(G_{K,S},M')$. At a place of $T$, strictness makes the primal condition zero for both problems, so local duality makes both dual conditions equal to $H^1(K_v,M')$. Away from $T$, equality of the residual local functors gives equality of their tangent subspaces and hence equality of their exact Tate orthogonals. Thus the defining local restriction conditions are identical place by place. This proves (15.3) as equality of subspaces, not merely as an equality of dimensions.
+**Proof.** Both global cohomology groups in (15.3) are subspaces of the same $H^1(G_{K,S},M')$. At a place of $T$, strictness makes the primal condition zero for both problems, so local duality makes both dual conditions equal to $H^1(K_v,M')$. Away from $T$, differentiating the commuting square (15.0) shows that the two tangent functors have the same image in $H^1(K_v,M)$. Their exact Tate orthogonals are therefore the same subspace of $H^1(K_v,M')$. Thus the defining local restriction conditions are identical place by place. This proves (15.3) as equality of subspaces, not merely as an equality of dimensions or as an abstract isomorphism.
 
 At a new prime, the local residual representation, chosen eigenline, restriction map, and diagonal projector are the same for the two problems. Formula (15.2) is consequently the same map on the common space. $\square$
 
@@ -2749,7 +2762,27 @@ The proposition is the conceptual heart of paired selection. A characteristic-ze
 
 ### 15.2 The paired relative selection theorem
 
-Retain the split Taylor–Wiles image hypotheses of Section 14.1. Allow also a finite list of compatible auxiliary prescriptions of the kind considered in Section 6.3: avoidance of finitely many places, splitting in specified finite extensions, a permitted residual regular class, and a permitted choice of residual eigenline. Compatibility means that, after adjoining the residual, cyclotomic, and cocycle extensions, the desired conditions define a nonempty conjugacy-stable subset of the resulting finite Galois group.
+Retain the split Taylor–Wiles image hypotheses of Section 14.1. Allow also a finite list of auxiliary prescriptions of the kind considered in Section 6.3: avoidance of finitely many places, splitting in specified finite extensions, a permitted residual regular class, and a permitted choice of residual eigenline. The finite avoidance list is enforced after Chebotarev; the remaining prescriptions are conditions in a finite Galois quotient.
+
+Compatibility has two clauses. For every nonzero subspace $W\subseteq V_T^0$, and hence for every current surviving subspace in the killing induction, form the finite quotient containing the residual, $\ell^N$th cyclotomic, prescribed splitting, and cohomology extensions for $W$. The **full detector fiber**
+
+$$
+\mathscr C_{N,W}^{\mathrm{det}}
+=\{\sigma:\sigma\text{ satisfies every Galois prescription and }
+\lambda_\sigma|_W\ne0\}
+\tag{15.3a}
+$$
+
+must be a nonempty conjugacy-stable subset. Here $\lambda_\sigma$ is the diagonal-projector functional determined by the residual regular class and its ordered eigenline. Separately, after all cocycle-extension conditions are omitted, the **padding fiber**
+
+$$
+\mathscr C_N^{\mathrm{pad}}
+=\{\sigma:\sigma\text{ satisfies the residual, cyclotomic,
+splitting, and eigenline prescriptions}\}
+\tag{15.3b}
+$$
+
+must be nonempty. The first clause supplies a detecting prime at every killing step. The second supplies primes after the surviving cohomology space has become zero. Neither nonemptiness follows formally from the other.
 
 **Theorem 15.2 (paired relative Taylor–Wiles prime selection).** Let $\mathcal D^{\mathrm{des}}$ and $\mathcal D^{\mathrm{av}}$ satisfy Proposition 15.1. For every $N\geq1$ and every integer $h\geq q_T^0$, there is a single ordered set
 
@@ -2774,19 +2807,19 @@ disjoint from the old controlling set and satisfying all the compatible auxiliar
 
 The first $q_T^0$ primes may be chosen so that the matrix of their localization functionals on $V_T^0$ has full rank. Thus (15.5) kills the relative obstruction space itself, rather than only the absolute dual Selmer group.
 
-**Proof.** If $q_T^0=0$, there is no detecting step. Suppose it is positive and choose a nonzero class $c\in V_T^0$. The cohomology-extension and disjointness arguments of Chapters 4 and 5 apply to this relative class exactly as they apply to an absolute dual Selmer class: relative Selmer conditions select a subspace of global cohomology but do not alter the extension cut out by $c$. The split image hypothesis supplies a regular semisimple residual element whose chosen diagonal projector detects $c$. The finite compositum lemma combines that detector, triviality on the $\ell^N$th cyclotomic layer, and every fixed auxiliary prescription. The resulting conjugacy condition is nonempty, so the prime-selection theorem of Chapter 6 supplies infinitely many suitable primes.
+**Proof.** If $q_T^0=0$, there is no detecting step. Suppose it is positive and let $W=V_T^0$ be the current surviving space. The cohomology-extension and disjointness arguments of Chapters 4 and 5 apply to $W$ exactly as they apply to an absolute dual Selmer space: relative Selmer conditions select a subspace of global cohomology but do not alter the extensions cut out by its classes. By the compatibility hypothesis, the full detector fiber $\mathscr C_{N,W}^{\mathrm{det}}$ is nonempty. The prime-selection theorem of Chapter 6 therefore supplies infinitely many primes satisfying every side prescription for which the resulting localization functional is nonzero on $W$.
 
-Choose one such prime $v_{N,1}$. The comparison sequence for the strict-at-$T$ structure and the Taylor–Wiles local condition has one-dimensional localization target. Since $\lambda_{v_{N,1},\bar\alpha}$ is nonzero, that map is surjective, and the new relative dual group is its kernel. Its dimension is therefore $q_T^0-1$. Repeat inside the surviving kernel, placing the previously selected primes in the avoidance set. After $q_T^0$ steps, the common relative dual group is zero and the localization matrix is triangular with nonzero diagonal after suitable choices of bases.
+Choose one such prime $v_{N,1}$. The comparison sequence for the strict-at-$T$ structure and the Taylor–Wiles local condition has one-dimensional localization target. Since $\lambda_{v_{N,1},\bar\alpha}|_W$ is nonzero, that map is surjective, and the new relative dual group is its kernel. Its dimension is therefore $q_T^0-1$. Replace $W$ by this kernel and repeat, using the separately assumed nonempty fiber $\mathscr C_{N,W}^{\mathrm{det}}$ for that current subspace and placing the previously selected primes in the avoidance set. After $q_T^0$ steps, the common relative dual group is zero and the localization matrix is triangular with nonzero diagonal after suitable choices of bases.
 
 Proposition 15.1 identifies the obstruction spaces and every detecting functional throughout the induction. Indeed, after adding a common Taylor–Wiles condition, the new residual local structures remain identical. Hence each selected prime lowers both dimensions in the same step, and the vanishing obtained after the final detecting prime is precisely the double equality (15.5).
 
-If $h>q_T^0$, choose the remaining primes successively from the same compatible Chebotarev sets, including all earlier choices in the avoidance list. Enlarging the set only tightens the dual local conditions, so both zero groups remain zero. This produces the full ordered set (15.4) with every auxiliary prescription intact. $\square$
+If $h>q_T^0$, choose the remaining primes successively from the non-cocycle padding fiber $\mathscr C_N^{\mathrm{pad}}$, including all earlier choices in the avoidance list. Chebotarev supplies infinitely many such primes. Enlarging the set only tightens the dual local conditions, so both zero groups remain zero. This produces the full ordered set (15.4) with every auxiliary prescription intact. $\square$
 
 There is no union of two separately selected sets in this argument. Such a union would enlarge the diamond rank, obscure the numerical cancellation, and still require a comparison of the two local labelings. The common residual obstruction space removes all three problems at once.
 
 ### 15.3 Padding without reopening the obstruction space
 
-The cardinality needed for later dimension matching can exceed $q_T^0$. Once the detecting subset has been chosen, select $h-q_T^0$ more split regular primes satisfying the same congruence, eigenvalue, splitting, and avoidance requirements. At each stage Chebotarev again gives infinitely many choices, so the primes can be kept distinct and away from every previously named finite set.
+The cardinality needed for later dimension matching can exceed $q_T^0$. Once the detecting subset has been chosen, select $h-q_T^0$ more primes from the separately nonempty padding fiber (15.3b). It imposes the same congruence, residual regularity, eigenline, and splitting requirements, but no condition in a cocycle extension. At each stage discard the fixed avoidance list and all earlier choices. Chebotarev leaves infinitely many primes, so the selections can be kept distinct and away from every previously named finite set.
 
 Let $Q_N^{\mathrm{kill}}\subseteq Q_N$ be the first $q_T^0$ primes. Enlarging the auxiliary set makes the dual local conditions more restrictive. Therefore
 
@@ -2798,7 +2831,7 @@ H^1_{(\mathcal L^0_{T,Q_N^{\mathrm{kill}}})^\perp}(K,M')
 \tag{15.6}
 $$
 
-This proves that padding preserves relative vanishing. Because all side conditions were inserted in the same finite compositum before each Chebotarev application, padding also preserves every avoidance or splitting requirement; it is not an after-the-fact choice of arbitrary primes. The ordered labels identify
+This proves that padding preserves relative vanishing. Every splitting, congruence, residual-class, and eigenline condition occurs in $\mathscr C_N^{\mathrm{pad}}$, while the finite avoidance list is enforced by discarding those finitely many primes from the resulting Chebotarev set. Thus padding preserves every side requirement; it is not an after-the-fact choice of arbitrary primes. A detector fiber cannot be invoked when the current space is zero, which is exactly why the separate padding hypothesis is present. The ordered labels identify
 
 $$
 \Delta_{Q_N}\simeq(\mathbf Z/\ell^N\mathbf Z)^h
@@ -2811,23 +2844,31 @@ An instructive boundary case is $V_T^0=0$ but $h>0$. Every prime is a padding pr
 
 ### 15.4 The totally real variable count
 
-The reason for prescribing $h$ rather than always taking the minimal cardinality is visible in the relative generator formula. Suppose now that $F$ is totally real of degree
+The reason for prescribing $h$ rather than always taking the minimal cardinality is visible in the relative generator formula. Suppose now that $T$ is nonempty and that $F$ is totally real of degree
 
 $$
 d_F=[F:\mathbf Q],
 $$
 
-that $\bar\rho$ is an odd absolutely irreducible rank-two representation with fixed determinant, that there is no residual self-twist contributing $H^0(F,M')$, and that $T$ contains the finite old local factors placed in the local base. Let $g_{T,Q_N}$ and $q_{T,Q_N}$ denote the relative numbers of generators and dual relations after adding $Q_N$.
+that $\bar\rho$ is an odd absolutely irreducible rank-two representation with fixed determinant, and that every old finite place with nonzero local defect has its full local factor absorbed into the base indexed by $T$. Let $g_{T,Q_N}$ and $q_{T,Q_N}$ denote the relative numbers of generators and dual relations after adding $Q_N$. With the sums taken over the controlling set, the exact fixed-determinant relative Euler characteristic is
 
-The fixed-determinant relative Euler characteristic of the global deformation theory gives
+$$
+\begin{aligned}
+g_{T,Q_N}-q_{T,Q_N}
+={}&|T|-1-h^0(F,M')+h\\
+&+\sum_{\substack{v\nmid\infty\\v\notin T\cup Q_N}}
+\bigl(l_v-h_v^0(M)\bigr)
++\sum_{v\mid\infty}\bigl(l_v-h_v^0(M)\bigr).
+\end{aligned}
+\tag{15.8}
+$$
+
+Here $|T|-1$ is the scalar-frame correction: there is one scalar direction at each local frame and one global scalar quotient. Each Taylor–Wiles prime has $l_v-h_v^0(M)=1$, producing the displayed $+h$. Assume now that every remaining finite defect in the first sum is zero, that oddness gives $l_v-h_v^0(M)=-1$ at every real place, and that $h^0(F,M')=0$. The last sum is then $-d_F$, while all nonzero old finite contributions have already been absorbed into the local source. Thus (15.8) becomes
 
 $$
 g_{T,Q_N}-q_{T,Q_N}
 =|T|-1-d_F+h.
-\tag{15.8}
 $$
-
-Here $|T|-1$ is the scalar-frame correction: there is one scalar direction at each local frame and one global scalar quotient. The $-d_F$ term is the sum of the odd real-place contributions. Each Taylor–Wiles prime adds one permitted residual tangent direction outside the old local base, hence the $+h$. The finite old-local tangent dimensions do not appear because they already belong to the local source.
 
 Theorem 15.2 makes $q_{T,Q_N}=0$ for both members of the pair. Consequently their common number of relative source variables is
 
@@ -2839,7 +2880,7 @@ q_0=g_{T,Q_N}
 \tag{15.9}
 $$
 
-This identity is not obtained from the absolute balanced formula. It comes from the strict-at-$T$ relative structure, including its relaxed dual condition and the full scalar-frame correction. When a power-series presentation with $q_0$ variables is required, $h$ is padded further if necessary so that $q_0\geq0$. The inequality $h\geq q_T^0$ guarantees relative vanishing; the inequality $h\geq d_F+1-|T|$ guarantees a nonnegative displayed variable count. They serve different purposes.
+This identity is not obtained from the absolute balanced formula. It comes from the strict-at-$T$ relative structure, including its relaxed dual condition, the full scalar-frame correction, the real-place sum, and the global $H^0$ term. Formula (15.9) is available only after the stated zero-defect and no-self-twist hypotheses reduce (15.8) to the preceding equality. When a power-series presentation with $q_0$ variables is required, $h$ is padded further if necessary so that $q_0\geq0$. The inequality $h\geq q_T^0$ guarantees relative vanishing; the inequality $h\geq d_F+1-|T|$ guarantees a nonnegative displayed variable count. They serve different purposes.
 
 ### 15.5 What the paired theorem contributes
 

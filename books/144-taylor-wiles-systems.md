@@ -3016,7 +3016,7 @@ That compressed package is the endpoint: finite at every level, uniform in all n
 
 ### 18.1 The marked paired datum
 
-Two Taylor–Wiles systems can have different characteristic-zero local sources and still be indistinguishable after residual reduction. To use that fact in a limiting argument, it is not enough to patch the two systems separately and observe afterward that their special fibers ought to agree. The chosen subsequences, bases, coordinates, and reduction isomorphisms could then be unrelated. The comparison itself must be part of every finite shadow.
+Two Taylor–Wiles systems can have different characteristic-zero local sources while sharing an embedded residual tangent condition and a residual comparison after passage to a common spectral quotient. To use those facts in a limiting argument, it is not enough to patch the two systems separately and compare afterward. The chosen subsequences, bases, coordinates, and base-change isomorphisms could then be unrelated. The comparison itself must be part of every finite shadow.
 
 Write the two labels as $\mathrm{des}$ and $\mathrm{av}$. Fix a nonempty old framed set $T$ of cardinality $m$, and suppose Book 143, Theorem 15.2 has supplied one ordered Taylor–Wiles set
 
@@ -3036,7 +3036,11 @@ $$
 
 and common named elements $z_{N,1},\ldots,z_{N,h}$ given by the chosen generators minus one.
 
-Assume that the old local presentation sources are $R_{\mathrm{loc}}^{\mathrm{des}}$ and $R_{\mathrm{loc}}^{\mathrm{av}}$. Their integral geometries may differ. What is required residually is a complete local $k$-algebra $\overline R_{\mathrm{loc}}$ and surjections
+Assume that the old local presentation sources are $R_{\mathrm{loc}}^{\mathrm{des}}$ and $R_{\mathrm{loc}}^{\mathrm{av}}$. Their integral geometries may differ. Three residual comparisons must be kept separate.
+
+First, the two residual local conditions come with forgetful embeddings into the same unrestricted local deformation functor, and their chosen identification commutes with those embeddings. Their tangent images in unrestricted local cohomology are therefore literally equal. This is the residual deformation-theoretic input used by prime selection.
+
+Second, for spectral comparison suppose there is a complete local $k$-algebra $\overline R_{\mathrm{loc}}$ and surjections
 
 $$
 R_{\mathrm{loc}}^{\mathrm{des}}/\varpi
@@ -3047,7 +3051,7 @@ R_{\mathrm{loc}}^{\mathrm{av}}/\varpi
 \tag{18.3}
 $$
 
-with nilpotent kernels. Thus the two residual sources have the same underlying spectrum and the same represented residual functor, even if one has an extra nilpotent thickening.
+with nilpotent kernels. These maps induce homeomorphisms on spectra. They do not identify represented functors: the quotient $k[\epsilon]/(\epsilon^2)\twoheadrightarrow k$ already has a nilpotent kernel while discarding infinitesimal points. The embedded tangent identification in the preceding paragraph and the spectral quotient (18.3) are independent hypotheses with different uses.
 
 Let $q_0$ be the common relative generator count. Choose source generators in the two systems whose reductions correspond under (18.3), and put
 
@@ -3059,7 +3063,7 @@ P^{\bullet}
 \tag{18.4}
 $$
 
-These are local presentation sources, not quotient deformation rings. The $y_i^{\bullet}$ are marked in matching order. Reducing (18.4) and then using (18.3) gives the common residual source
+These are local presentation sources, not quotient deformation rings. The $y_i^{\bullet}$ are marked in matching order. Reducing (18.4) and then using (18.3) gives surjections with nilpotent kernels to the common spectral quotient
 
 $$
 \overline P
@@ -3067,19 +3071,39 @@ $$
 \tag{18.5}
 $$
 
-At finite level let $M_N^{\mathrm{des}}$ and $M_N^{\mathrm{av}}$ be modules for their respective source actions and for the common diamond algebra. The residual comparison must be given, not inferred: there is a marked isomorphism
+Third, at finite level let $M_N^{\mathrm{des}}$ and $M_N^{\mathrm{av}}$ be modules for their respective source actions and for the common diamond algebra. Define their base changes to the common quotient by
+
+$$
+\overline M_N^{\bullet}
+=
+(M_N^{\bullet}/\varpi)
+\otimes_{P^{\bullet}/\varpi}\overline P.
+\tag{18.5a}
+$$
+
+The residual module comparison must be given after this base change, not inferred from (18.3): there is a marked isomorphism
 
 $$
 \iota_N:
-M_N^{\mathrm{des}}/\varpi
+\overline M_N^{\mathrm{des}}
 \xrightarrow{\sim}
-M_N^{\mathrm{av}}/\varpi
+\overline M_N^{\mathrm{av}}
 \tag{18.6}
 $$
 
 which is linear over (18.5), carries every named away operator to its companion, and carries the $i$th diamond operator to the $i$th diamond operator.
 
-In applications, (18.6) often begins with two integral coefficient lattices whose reductions are explicitly isomorphic. That lattice isomorphism must be propagated through the finite class-set or cohomology construction and then marked in (18.6). Equality of coefficient ranks does not imply (18.6), and reduction need not commute with stabilizer invariants without a separate exactness theorem. Thus the phrase “common residual module” includes the local coefficient-lattice reduction, not just the abstract semisimplification of a Hecke module.
+In applications, (18.6) often begins with two integral coefficient lattices whose reductions become explicitly isomorphic after passage to the common coefficient quotient. That lattice isomorphism must be propagated through the finite class-set or cohomology construction and then marked in (18.6). Equality of coefficient ranks does not imply (18.6), and reduction need not commute with stabilizer invariants without a separate exactness theorem.
+
+Let
+
+$$
+K^{\bullet}
+=\ker(P^{\bullet}/\varpi\longrightarrow\overline P).
+\tag{18.6a}
+$$
+
+Only when $K^{\bullet}$ annihilates $M_N^{\bullet}/\varpi$ is the base-change map $M_N^{\bullet}/\varpi\to\overline M_N^{\bullet}$ an isomorphism. In that stronger case (18.6) may be read as a direct un-base-changed residual module isomorphism. Without annihilation, only the base-changed statement is valid.
 
 The partial frames must also be synchronized. For an absolutely irreducible rank-two representation, introduce
 
@@ -3096,7 +3120,7 @@ S^{\mathrm{fr}}
 \tag{18.8}
 $$
 
-Finally, if perfect pairings are used, retain their matrices, companion-module identifications, diamond inversion, and named adjoints, and require their residual reductions to correspond through (18.6) and its companion isomorphism. Retain also the module augmentation maps
+Finally, if perfect pairings are used, retain their matrices, companion-module identifications, diamond inversion, and named adjoints, and require their residual base changes to correspond through (18.6) and its companion isomorphism. Retain also the module augmentation maps
 
 $$
 M_N^{\bullet}/\mathfrak a_NM_N^{\bullet}
@@ -3108,9 +3132,11 @@ Here $\mathfrak a_N$ contains the diamond augmentation and the ordered frame coo
 
 ### 18.2 Synchronized diagonal compactness
 
-Fix a precision $d$. A paired shadow consists of the two truncated source presentations, their two modules with ordered bases, their source and diamond actions, and the truncated common residual diagram (18.3)--(18.6). It also contains the first $d$ named Hecke operators, the ordered source generators, the ordered full frame variables, the pairing matrices and adjoint labels when present, the truncated local coefficient-lattice isomorphism underlying (18.6), and the two module augmentation marks (18.9). Every square expressing compatibility is itself part of the mark.
+Fix a precision $d$. A paired shadow consists of the two truncated source presentations, their two modules with ordered bases, their source and diamond actions, the two nilpotent quotient maps, and the base-changed residual diagram (18.3)--(18.6). The identical embedded tangent condition is marked separately; it is not encoded by the nilpotent quotient. The shadow also contains the first $d$ named Hecke operators, the ordered source generators, the ordered full frame variables, the pairing matrices and adjoint labels when present, the truncated local coefficient-lattice comparison underlying (18.6), and the two module augmentation marks (18.9). Every square expressing compatibility is itself part of the mark.
 
 There are only finitely many such paired shadows at precision $d$. Indeed all coefficient rings are finite after truncation. The modules have one fixed rank over the finite quotient of the diamond algebra, and after full-frame scalar extension they have one fixed rank over the finite quotient of (18.8). Hence action matrices, pairing matrices, module maps, source-generator images, residual identifications, and augmentation marks range over finite sets. Adding the companion half of each datum replaces one finite set by a finite product; it does not disturb finiteness.
+
+The fixed rank used here is part of the marked input: one integer $r>0$ is uniform, and a basis is chosen and marked at every level on both sides. No transition compatibility among the original arithmetic modules is asserted. Neither the nilpotent spectral quotient nor the base-changed module isomorphism proves this integral freeness.
 
 Build the finite tree whose depth-$d$ vertices are paired shadows occurring at infinitely many arithmetic levels and whose edges are literal reduction maps preserving every mark. The same finite-branching argument as in Chapter 10 produces an infinite path. The point of using a paired vertex is that one path simultaneously chooses both sides and their comparison. If the two systems were diagonalized separately, there would be no reason for the resulting residual isomorphisms to commute with the independently chosen transition maps.
 
@@ -3118,7 +3144,7 @@ Build the finite tree whose depth-$d$ vertices are paired shadows occurring at i
 
 1. the common ordering of the paired Taylor–Wiles prime slots and their diamond labels;
 2. the two ordered source presentations and their common residual quotient;
-3. the common residual module isomorphism and its local coefficient-lattice origin;
+3. the common-quotient base-changed module isomorphism and its local coefficient-lattice origin;
 4. all full partial-frame coordinates;
 5. every marked perfect pairing and adjoint relation;
 6. every named source generator and away Hecke operator; and
@@ -3126,7 +3152,7 @@ Build the finite tree whose depth-$d$ vertices are paired shadows occurring at i
 
 **Proof.** At precision $d$, include the first $d$ members of every countable named family and the reductions of every finite family. The vertex set remains finite. An edge is admitted only when reduction commutes with all marks already visible at the lower precision. The infinite path therefore retains a fixed named item once the precision is large enough for that item to appear. Source and frame generators form finite ordered lists and occur from the beginning. Pairings, residual identifications, coefficient-lattice maps, and augmentations are matrices or module homomorphisms over finite rings, so they are retained by the same rule. Passing to inverse limits preserves all commutative squares because equality is checked at every finite quotient. $\square$
 
-This lemma is stronger than a statement that the two limits have isomorphic reductions. It produces a specified isomorphism between those reductions, linear for the specified common residual source and compatible with every retained operator.
+This lemma produces a specified isomorphism after base change to the common residual quotient, linear for that quotient and compatible with every retained operator. It produces an isomorphism of the un-base-changed reductions only under the additional annihilation condition following (18.6a).
 
 ### 18.3 The old-base and expanded-ring ledger
 
@@ -3178,9 +3204,16 @@ We now collect the construction in a form suited to source patching.
 **Theorem 18.2 (synchronized paired-shadow theorem).** Assume the following data.
 
 1. The desired and avoidance global problems satisfy Book 143, Theorem 15.2, and the same ordered sets $Q_N$ of cardinality $h$ kill their common strict-at-$T$ relative dual Selmer group.
-2. Their old local sources have the common residual quotient (18.3), and compatible ordered generators give the common residual source (18.5).
-3. Their finite-level modules are nonzero and finite free of one fixed positive rank over the common exact diamond algebra. After the ordered full-frame scalar extension, the ranks remain fixed.
-4. The explicit local coefficient-lattice reduction induces the source-, diamond-, and Hecke-compatible isomorphism (18.6).
+2. Their residual local conditions are identically embedded in the unrestricted residual functor, while their old local sources separately have the common spectral quotient (18.3); compatible ordered generators give the quotient (18.5).
+3. An application-specific integral theorem supplies one integer $r>0$ and, for every $N$ and both values of $\bullet$, an explicit chosen $\Lambda_N$-basis
+
+   $$
+   M_N^\bullet\simeq\Lambda_N^r.
+   \tag{18.13a}
+   $$
+
+   After the ordered full-frame scalar extension, the resulting modules have the same fixed rank $r$. This uniform rank is input data; it is not inferred from residual comparison, equality of coefficient ranks, or the existence of a nominal diamond action.
+4. The explicit local coefficient-lattice comparison induces the source-, diamond-, and Hecke-compatible base-changed isomorphism (18.6).
 5. All desired pairings, companion modules, source generators, Hecke labels, full partial frames, and module augmentation maps are marked as in Sections 18.1 and 18.2.
 6. Uniform source-presentation and module-size bounds make every fixed-precision paired shadow finite.
 
@@ -3193,16 +3226,25 @@ M_\infty^{\mathrm{av}}
 \tag{18.14}
 $$
 
-with commuting actions of their respective sources $P^{\mathrm{des}}$, $P^{\mathrm{av}}$ and of the common expanded ring $S^{\mathrm{fr}}$. Each module is finite free of positive rank over $S^{\mathrm{fr}}$. There is a specified isomorphism over the common residual source
+with commuting actions of their respective sources $P^{\mathrm{des}}$, $P^{\mathrm{av}}$ and of the common expanded ring $S^{\mathrm{fr}}$. Each module is finite free of rank $r$ over $S^{\mathrm{fr}}$. There is a specified isomorphism after base change to the common residual quotient
+
+$$
+\bigl(M_\infty^{\mathrm{des}}/\varpi\bigr)
+\otimes_{P^{\mathrm{des}}/\varpi}\overline P
+\xrightarrow{\sim}
+\bigl(M_\infty^{\mathrm{av}}/\varpi\bigr)
+\otimes_{P^{\mathrm{av}}/\varpi}\overline P,
+\tag{18.15}
+$$
+
+compatible with diamonds, full frames, named Hecke operators, and every retained pairing. The nilpotent discrepancies in the raw special fibers do not alter their spectra, but they can alter modules before base change. If both kernels in (18.6a) annihilate the corresponding patched reductions, the natural base-change maps are isomorphisms and (18.15) upgrades to
 
 $$
 M_\infty^{\mathrm{des}}/\varpi
 \xrightarrow{\sim}
-M_\infty^{\mathrm{av}}/\varpi,
-\tag{18.15}
+M_\infty^{\mathrm{av}}/\varpi.
+\tag{18.15a}
 $$
-
-compatible with diamonds, full frames, named Hecke operators, and every retained pairing. The two source actions on (18.15) agree after passage to $\overline P$; nilpotent discrepancies in the raw special fibers do not alter their spectra.
 
 Every marked perfect pairing patches to a perfect $S^{\mathrm{fr}}$-valued pairing with the recorded diamond inversion and Hecke adjoints.
 
@@ -3218,9 +3260,11 @@ where $\mathfrak a=(z_1,\ldots,z_h,w_1,\ldots,w_{4m-1})$ when both diamond and a
 
 Under the totally real hypotheses (18.10)--(18.11), the sources and the expanded regular ring all have dimension $h+4m$.
 
-**Proof.** The common prime sets and orderings give the same finite diamond quotients and the same maps from the $z_i$. The strict relative vanishing fixes the common number $q_0$ of source generators; matching their reductions makes (18.5) a fixed residual presentation. Full partial framing adds the fixed ordered list of $4m-1$ variables. Thus all sources needed for the finite-shadow construction are independent of $N$.
+**Proof.** The common prime sets and orderings give the same finite diamond quotients and the same maps from the $z_i$. The strict relative vanishing fixes the common number $q_0$ of source generators; matching their reductions makes (18.5) a fixed spectral quotient of both residual sources. It does not identify their represented functors. Full partial framing adds the fixed ordered list of $4m-1$ variables. Thus all sources needed for the finite-shadow construction are independent of $N$.
 
-At precision $d$, form one paired shadow containing every item in hypothesis 5 and the comparison in hypothesis 4. Hypothesis 6 and the finiteness argument of Section 18.2 give a finite vertex set. Lemma 18.1 supplies a compatible infinite path and a cofinal sequence of arithmetic levels realizing it. Taking inverse limits gives (18.14), all named actions, and (18.15). Finite-level freeness with compatible bases passes to finite freeness over the inverse limit of the expanded group-and-frame rings; nonzero common residual reduction makes the rank positive. Pairing matrices also pass to the limit. Their reductions modulo the maximal ideal are invertible, so their limiting determinants are units; this proves perfectness and retains all marked adjoint identities.
+At precision $d$, form one paired shadow containing every item in hypothesis 5 and the base-changed comparison in hypothesis 4. Hypothesis 6 and the finiteness argument of Section 18.2 give a finite vertex set. Lemma 18.1 supplies a compatible infinite path and a cofinal sequence of arithmetic levels realizing it. The common-quotient base-change diagrams are finite at every precision, so their kernels and cokernels are Mittag--Leffler. Taking inverse limits therefore gives (18.14), all named actions, and the base-changed isomorphism (18.15); for these finite complete modules, ordinary and completed base change agree. If the annihilation condition following (18.6a) is present in every marked shadow, it passes to the limit and makes the natural base-change maps isomorphisms, proving (18.15a).
+
+The explicitly supplied bases in (18.13a), after the ordered frame scalar extension, identify every finite shadow with the same free module of rank $r$. Passing those basis matrices to the inverse limit proves that both patched modules are free of rank $r$ over $S^{\mathrm{fr}}$. Positivity is the input $r>0$, not a consequence of a residual dimension count. Pairing matrices also pass to the limit. Their reductions modulo the maximal ideal are invertible, so their limiting determinants are units; this proves perfectness and retains all marked adjoint identities.
 
 The augmentation maps were marked module homomorphisms. Their finite kernels and cokernels form Mittag--Leffler systems, so inverse limits preserve their exactness and give (18.16). This argument takes place in the category of modules. It does not identify the intersection of an acting algebra with $\mathfrak a\operatorname{End}(M_\infty^{\bullet})$, which is the extra saturation question controlling acting-image augmentation.
 

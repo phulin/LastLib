@@ -3244,6 +3244,24 @@ $$
 
 then $R^{\mathrm{av}}=P^{\mathrm{av}}$, while $(R^{\mathrm{des,raw}})^{\mathrm{red}}=P^{\mathrm{des}}$.
 
+More precisely, if
+
+$$
+I=\ker\bigl(P^{\mathrm{des,raw}}
+\twoheadrightarrow R^{\mathrm{des,raw}}\bigr),
+$$
+
+then
+
+$$
+I\subseteq\mathcal N,
+\qquad
+\operatorname{Ann}_{R^{\mathrm{des,raw}}}(M^{\mathrm{des}})
+=\mathcal N/I
+=\sqrt{0}_{R^{\mathrm{des,raw}}}.
+\tag{17.16a}
+$$
+
 **Proof.** We first use the avoidance domain before taking any global relation quotient. Since $M^{\mathrm{av}}$ is finite free over the regular local ring $S$,
 
 $$
@@ -3308,22 +3326,37 @@ $$
 
 Thus $M^{\mathrm{des}}$ is maximal Cohen--Macaulay over the desired horizontal source. Apply Lemma 17.1 to (17.20) and the component bijection (17.11). It follows that every desired horizontal component lies in the support. Reducedness of $P^{\mathrm{des}}$ then makes the action faithful, proving (17.14). The raw annihilator contains $\mathcal N$ because that ideal acts trivially, and its image in the faithful quotient $P^{\mathrm{des}}$ is zero only when it already lies in $\mathcal N$. This proves (17.15).
 
-Finally, in the avoidance factorization (17.16), injectivity of the composite $P^{\mathrm{av}}\to A^{\mathrm{av}}$ forces both quotient maps to be isomorphisms. On the desired side, the kernel of the raw source map to the intermediate ring is contained in $\mathcal N$, while the intermediate ring still maps onto the faithful reduced action $P^{\mathrm{des}}$. Since $\mathcal N$ is nilpotent and $P^{\mathrm{des}}$ is reduced, the nilradical of the intermediate ring is precisely the image of $\mathcal N$. Its reduction is therefore $P^{\mathrm{des}}$. $\square$
+Finally, in the avoidance factorization (17.16), injectivity of the composite $P^{\mathrm{av}}\to A^{\mathrm{av}}$ forces both quotient maps to be isomorphisms. On the desired side, the composite action of $P^{\mathrm{des,raw}}$ has kernel $\mathcal N$ by (17.15). It factors through $R^{\mathrm{des,raw}}$, so $I\subseteq\mathcal N$. Therefore
+
+$$
+R^{\mathrm{des,raw}}
+=P^{\mathrm{des,raw}}/I
+$$
+
+has nilradical $\mathcal N/I$: if a class is nilpotent, a power of any lift lies in $I\subseteq\mathcal N$, and hence the lift lies in $\mathcal N$. The kernel of the induced action of $R^{\mathrm{des,raw}}$ is also $\mathcal N/I$, because its inverse image in the raw source is $\mathcal N$. This proves (17.16a), and quotienting by that ideal gives $(R^{\mathrm{des,raw}})^{\mathrm{red}}=P^{\mathrm{des}}$. $\square$
 
 The proof assigns one job to each hypothesis. The domain condition turns depth into avoidance faithfulness. The common residual diagram transfers topological support. The component-bijective specialization lifts that support to every desired horizontal component. Reducedness upgrades full desired support to faithfulness. Finally, coefficient-power torsion, not a generic assertion about nilpotents, makes the raw nilradical act trivially on the integral module.
 
 ### 17.4 Module augmentation and finite-level factorization
 
-Support transfer has a useful finite-level consequence which does not require exact augmentation of the acting image. Let $B=P^{\mathrm{des,raw}}$, let $L=M^{\mathrm{des}}$, and let $\mathfrak a\subseteq B$ be the ideal induced by the marked diamond and frame specialization. Theorem 17.3 gives
+Support transfer has a useful finite-level consequence which does not require exact augmentation of the acting image. Assume the desired factorization in (17.16), and put
+
+$$
+B=R^{\mathrm{des,raw}},
+\qquad
+L=M^{\mathrm{des}}.
+$$
+
+Thus $B$ is the intermediate patched deformation ring actually recovered at finite level, not the presentation source. Let $\mathfrak a\subseteq B$ be the ideal induced by the marked diamond and frame specialization. Equation (17.16a) gives
 
 $$
 \operatorname{Supp}_B L=\operatorname{Spec}B
 \tag{17.22}
 $$
 
-as a topological equality, even though the nilradical may annihilate $L$.
+as a topological equality, because $\operatorname{Ann}_B(L)=\sqrt{0}_B=\mathcal N/I$.
 
-**Corollary 17.4 (module-level augmentation and pointwise factorization).** In addition to Theorem 17.3, suppose finite-level recovery gives a ring isomorphism and a compatible module isomorphism
+**Corollary 17.4 (module-level augmentation and pointwise factorization).** In addition to Theorem 17.3 and the desired intermediate factorization (17.16), suppose finite-level recovery gives a ring isomorphism and a compatible module isomorphism
 
 $$
 B/\mathfrak aB\xrightarrow{\sim}R,
@@ -3379,11 +3412,11 @@ then proves that $R$ is finite over $\mathcal O$. $\square$
 
 This nilpotent kernel is the precise finite-level conclusion needed for a characteristic-zero application. It says that every desired deformation point occurs in the finite action and that finiteness passes from the action to the deformation ring. An isomorphism $R\simeq\mathbb T$ would be stronger, but neither pointwise factorization nor finiteness requires it.
 
-Notice what the proof used from augmentation: the represented-ring recovery and the module coinvariants in (17.23). It did not identify the quotient of the patched acting image. Thus Corollary 17.4 remains valid when acting-image augmentation has an unsaturated nilpotent kernel.
+Notice what the proof used from augmentation: recovery of the intermediate represented ring $B=R^{\mathrm{des,raw}}$ and the module coinvariants in (17.23). It neither augments the presentation source as though it were the deformation ring nor identifies the quotient of the patched acting image. Thus Corollary 17.4 remains valid when acting-image augmentation has an unsaturated nilpotent kernel.
 
 ### 17.5 Exact acting-image augmentation under saturation
 
-There is a clean criterion for retaining the stronger conclusion when it is actually available. Let $A\subseteq\operatorname{End}_S(L)$ be the patched acting image, and let the specialization ideal $\mathfrak a\subseteq S$ act through $A$. The module recovery in (17.23) always gives a surjection
+There is a clean criterion for retaining the stronger conclusion when it is actually available. Let $A\subseteq\operatorname{End}_S(L)$ be the patched acting image. The marked structural maps identify the image in $A$ of the specialization ideal $\mathfrak a\subseteq S$ with the image of the ideal denoted $\mathfrak a\subseteq B$ in (17.23). The module recovery in (17.23) always gives a surjection
 
 $$
 A/\mathfrak aA\twoheadrightarrow\mathbb T.
