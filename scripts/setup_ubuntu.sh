@@ -2,7 +2,7 @@
 
 # Provision LastLib and LastLib Swarm on a fresh Ubuntu 26.04 installation.
 # Run this script as your normal user from any directory. It uses sudo only for
-# Ubuntu packages; uv, elan, Lean, and Codex are installed for the current user.
+# Ubuntu packages; uv, Volta, elan, Lean, and Codex are installed for the current user.
 
 set -Eeuo pipefail
 IFS=$'\n\t'
@@ -49,6 +49,7 @@ log "Installing Ubuntu packages"
   fuse-overlayfs \
   git \
   htop \
+  neovim \
   pkg-config \
   ripgrep \
   rsync \
@@ -71,13 +72,21 @@ download_installer() {
   sh "${destination}" "${@:3}"
 }
 
-export PATH="${HOME}/.local/bin:${HOME}/.elan/bin:${PATH}"
+export VOLTA_HOME="${HOME}/.volta"
+export PATH="${HOME}/.local/bin:${HOME}/.elan/bin:${VOLTA_HOME}/bin:${PATH}"
 
 if ! command -v uv >/dev/null 2>&1; then
   log "Installing uv"
   UV_NO_MODIFY_PATH=1 download_installer uv https://astral.sh/uv/install.sh
 else
   log "uv is already installed"
+fi
+
+if ! command -v volta >/dev/null 2>&1; then
+  log "Installing Volta"
+  download_installer volta https://get.volta.sh
+else
+  log "Volta is already installed"
 fi
 
 if ! command -v elan >/dev/null 2>&1; then
@@ -121,6 +130,7 @@ log "Downloading the Mathlib build cache"
 )
 
 log "Checking the installed command-line tools"
+volta --version
 uv run --project "${REPO_ROOT}" lastlib-swarm --help >/dev/null
 (
   cd "${REPO_ROOT}/lean"
@@ -137,7 +147,8 @@ cat <<EOF
 Setup complete.
 
 Open a new shell (or run the command below) so user-installed tools are on PATH:
-  export PATH="\${HOME}/.local/bin:\${HOME}/.elan/bin:\${PATH}"
+  export VOLTA_HOME="\${HOME}/.volta"
+  export PATH="\${HOME}/.local/bin:\${HOME}/.elan/bin:\${VOLTA_HOME}/bin:\${PATH}"
 
 Then authenticate Codex interactively once:
   codex
