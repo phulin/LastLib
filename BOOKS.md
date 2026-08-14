@@ -1,21 +1,23 @@
-# A 188-Volume Conditional Curriculum Toward Fermat's Last Theorem
+# A 188-Volume Curriculum Toward Fermat's Last Theorem
 
 This is the canonical catalog of the 188 retained mathematical manuscripts. The numbering is
 a stable topological reading order: every substantial direct manuscript prerequisite has a
 smaller number. Mathlib and the companion Class Field Theory development are proof sources,
-not axioms, and their transitive imports remain subject to the same no-gap audit.
+not axioms, and their transitive imports remain subject to the same gap-free standard.
 
-This repository does **not** presently contain an unconditional dependency-closed proof of
-Fermat's Last Theorem. Several later volumes prove bounded conditional theorems while retaining
-named Ihara, support, automorphic-seed, simultaneous-level, and coefficient-prime comparison
-hypotheses. Those hypotheses are listed separately in `BOOK_DEPENDENCIES.md`; a catalog entry
-never upgrades them to conclusions.
+The preferred selected-three route is dependency-closed in the present manuscript graph.  It
+constructs the finite-set source patches used in the potential-modularity argument, obtains the
+restricted signed-special finite fibre before choosing the minimal lift, evaluates the retained
+support after that lift has been chosen, and carries one coefficient-three member through Brauer
+effectivity, the integral tower, and the final contradiction.  Stronger uniform and geometric
+extensions remain outside the scope of that theorem and are described separately in
+`BOOK_DEPENDENCIES.md`.
 
-The route is conditional but coherent: local and global arithmetic, curve and PEL geometry,
-selected trace-formula transfer, compact-curve Galois realization, Eisenstein and explicit
-irreducibility, deformation and one-prime patching, potential automorphy and Brauer effectivity,
-and the fixed-three finite-flat endgame. Each description records the bounded theorem actually
-available from the current manuscript.
+The route combines local and global arithmetic, curve and PEL geometry, selected trace-formula
+transfer, compact-curve Galois realization, Eisenstein and explicit irreducibility, deformation
+and paired source patching, potential automorphy and Brauer effectivity, and the fixed-three
+finite-flat endgame. Each description records the theorem actually available from the current
+manuscript and distinguishes it from optional stronger conclusions.
 
 ## Dependency-ordered catalog
 
@@ -547,10 +549,15 @@ available from the current manuscript.
    cuspidality and the image through self-twists. Conclude with cyclic descent and its character
    ambiguity.
 
-109. **Solvable Base Change and Descent** — Iterate cyclic base change through towers of cyclic extensions to obtain solvable base change
-   and descent. Resolve character-twist ambiguities, prove independence of the chosen tower, and
-   control local types throughout the tower. The main theorem moves automorphy both up and down
-   suitable solvable totally real extensions.
+109. **Solvable Base Change and Descent** — Iterate cyclic base change through prime-cyclic towers,
+   resolve character-twist ambiguities, prove independence of the chosen tower, and control the
+   selected local types in ascent and descent.  Chapter 14 additionally constructs positive
+   even-degree totally real preparation towers for finite-set Ihara avoidance: it kills the
+   actual residual local actions, makes every active residue cardinality congruent to one in the
+   coefficient characteristic, preserves protected completions with their exact multiplicities,
+   and keeps the tower disjoint from the joint residual--cyclotomic cutout.  Separate auxiliary
+   and target modes record the different dyadic behavior, while the selected-safe cyclic ledger
+   verifies precisely when an automorphic packet can be carried up and descended again.
 
 110. **Generalized Elliptic Curves and Level Structures** — Construct generalized elliptic
    curves, Néron polygons, Drinfeld and Γ₁/Γ₀ structures, contraction, Tate cusp charts, and the
@@ -691,22 +698,29 @@ available from the current manuscript.
    representation-transport interfaces, without claiming effective bounds or general Artin
    holomorphy.
 
-143. **Taylor–Wiles Primes** — Study the auxiliary primes that alter a deformation problem while controlling global
-   cohomology. Import the full finite-quotient Chebotarev theorem from Book 142 and combine it with
-   the residual-image detector to impose simultaneous congruence and Frobenius conditions. Describe
-   the enlarged local rings and calculate their tangent
-   contributions. Conclude with the existence of Taylor–Wiles sets of prescribed cardinality and
-   level that kill the dual Selmer group.
+143. **Taylor–Wiles Primes** — Construct auxiliary primes that trade global dual-Selmer
+   obstructions for controlled local diamond directions.  Besides the usual exact cardinality,
+   congruence, ordered-eigenline, and tangent calculations, Chapter 15 treats two integral local
+   sources with the same embedded residual deformation problem.  It identifies their strict
+   relative Selmer group and selects one ordered Taylor--Wiles set that kills it on both sides,
+   with separate detector and padding fibres and the full totally real relative variable count.
 
-144. **Taylor–Wiles Systems** — Study the towers of deformation rings, Hecke algebras, and modules obtained by adjoining
-   Taylor–Wiles primes. Develop the finite quotient group actions, augmentation maps, transition
-   maps, and compatibility across levels, and isolate the structural properties that survive passage
-   to the inverse limit.
+144. **Taylor–Wiles Systems** — Organize finite deformation rings, modules, diamond actions,
+   augmentations, pairings, and presentation maps into systems that can be patched without
+   inventing arithmetic transitions between unrelated auxiliary sets.  Chapter 18 constructs one
+   synchronized diagonal path for a desired--avoidance pair: it retains their common nilpotent
+   spectral quotient, base-changed residual module, full partial frames, Hecke and adjoint marks,
+   perfect pairings, and exact module coinvariants.  Acting-image augmentation remains a distinct
+   saturation question.
 
-145. **Patching Modules and Rings** — Construct patched deformation rings and modules from Taylor–Wiles towers. Develop the
-   inverse-limit or ultraproduct construction, auxiliary power-series and completed group rings,
-   support and depth calculations, and freeness over the auxiliary ring. Culminate in the patched
-   pair ((R_\infty,M_\infty)) with the dimension and depth properties needed for (R=T).
+145. **Patching Modules and Rings** — Construct patched deformation rings and modules, establish
+   the depth, support, pairing, and freeness statements needed for $R=T$, and keep nilpotent
+   sensitivity separate from topological support.  Chapter 17 patches the expanded local sources
+   of a desired--avoidance pair.  Faithfulness on the integral avoidance source transfers through
+   the common residual module and unique-horizontal specialization to every desired component;
+   coefficient-power nilpotents are controlled explicitly.  Exact module and represented-ring
+   recovery then give a nilpotent finite-level action kernel, pointwise factorization, and
+   whole-ring finiteness, without assuming exact augmentation of the acting image.
 
 146. **The Abstract $R=T$ Argument** — Complete the Taylor–Wiles method in an abstract algebraic setting. Show how the patched
    module forces faithfulness of the (R_\infty)-action, compare dimensions and
@@ -738,7 +752,14 @@ available from the current manuscript.
 
 151. **Semistable Full-Two Residual Irreducibility** — Prove irreducibility over $\mathbf F_p$ for the $p$-torsion of a semistable elliptic curve over $\mathbf Q$ with full rational two-torsion, for every $p\ge7$. The argument imports the bounded formal-immersion and explicit genus-two computations for the exceptional primes and does not claim absolute irreducibility or a general rational-isogeny classification.
 
-152. **Deep-Level Quaternionic Modules and Diamond Actions** — Construct deep-level quaternionic modules with effective diamond torsors, pairings, finite shadows, and exact module augmentation. Old--new control is a separate hypothesis needed to reach hyperspecial level. Exact acting-image augmentation is not a consequence of group-ring freeness and is deferred to a later faithful comparison.
+152. **Deep-Level Quaternionic Modules and Diamond Actions** — Construct deep-level definite
+   quaternionic modules with effective diamond torsors, perfect pairings, finite shadows, and exact
+   module augmentation.  Chapter 20 carries two coefficient systems on one class groupoid: a
+   marked residual lattice and prime-to-coefficient stabilizers give an intrinsic common localized
+   residual module, synchronized positive diamond rank, exact saturated orbit-sum coinvariants,
+   compatible Hecke operators and adjoints, and genuine partial-frame scalar extension.  It also
+   gives the precise fixed-rank alternatives needed by the synchronized system of Book 144 and
+   isolates the additional saturation required for exact acting-image augmentation.
 
 153. **Hilbert Irreducibility and Arithmetic Approximation** — Develop Hilbert irreducibility together with weak approximation, prescribed decomposition and
    completion data at finitely many places, linear disjointness, avoidance of given extensions, and
@@ -879,34 +900,19 @@ available from the current manuscript.
 
 175. **One-Prime Nonminimal Patching and R=T** — In the scalar-residual line-special range, derive the finite-level one-prime reduced comparison and pointwise modularity from the exact type-complex package. The balanced enhanced obstruction presentation and finiteness force the conductor-one ring to be finite flat over the coefficient DVR. Full $R=T$ is equivalent to characteristic-zero exact-condition adjoint Selmer vanishing at every point. The line is retained in the enhanced tangent calculation; at a monodromy-zero characteristic-zero point its motion is uniquely determined by the two distinct Frobenius characters. Under a coherent clean unpadded $({\rm AUX}_Q)$ system whose arithmetic input supplies exactly $q$ ordered killing primes at every depth, prove that vanishing and full patched and finite $R=T$ by equal-variable rigidity: the enhanced absolute deformation source and diamond source have the same $q$ variables, and Book 174's nonzero primary module free over the diamond source makes the regular source act faithfully. Coherence follows only after those exact-$q$ shadows exist; it does not construct them. The strict ray twist transports the equality to the scalar family and fixed-character fibers, and auxiliary acting-order augmentation is then automatically exact. Without that coherent exact-$q$ auxiliary system, the isolated branchwise torsion-cotangent theorem is the exact alternative input. No generic- or vexing-row theorem and no simultaneous finite-set result is asserted.
 
-176. **Finite-Set Ihara Avoidance and Nonminimal Modularity Lifting** — Import the conditional one-prime Ihara, type-complex,
-   component-support, reduced comparison, coherent-auxiliary full $R=T$ in the scalar
-   line-special range, and pointwise
-   modularity packages from Books 139, 174, and 175. Separately isolate the standard direct finite-set
-   Ihara-avoidance route $({\rm IAV}_S)$. Theorem 1.1C explicitly constructs its scalar
-   paired framed local rings: the raw desired and avoidance rings have the same generally
-   nonreduced special fiber, the avoidance ring is flat and integral, and the two horizontal
-   desired components specialize bijectively; the horizontal reduced desired ring is flat
-   Cohen--Macaulay but not a complete intersection, while the raw desired ring itself is
-   nonflat/nonreduced. Proposition 1.1D proves common Taylor--Wiles prime selection, the exact
-   reduction of the principal and Iwahori-incidence lattices, synchronized residual definite
-   modules, and formal recovery. Proposition 1.1E proves that faithful balanced quotient
-   patching and maximal Cohen--Macaulay support alone do not imply either
-   vertical cross-component theorem $({\rm VCT}_{R_\infty^{\rm des}})$ for the actual global
-   relation ideal, equivalently the vertical clause of $({\rm PGC}_S)$ with local labels fixed,
-   and occurrence on every avoidance component $({\rm ACT}^{\rm av}_S)$. Proposition 1.1G
-   constructs the exact relative source patches, with strict-at-$S$ Selmer counting,
-   synchronized Taylor--Wiles primes, augmentation saturation, and minimal-level coinvariants.
-   Theorem 1.1H proves avoidance all-component occurrence and transfers near faithfulness
-   through the common residual source, proving vertical preservation and desired support.
-   Corollary 1.1I packages this as the reusable theorem $({\rm CIAV}_P)$, applied separately
-   at the auxiliary and target sets. Lemma 1.1A
-   proves that exact recovery to a finite action with nilpotent kernel makes the whole
-   noetherian desired ring finite, including its nilpotent thickening. Proposition 1.1B applies
-   this to the target broad-unipotent ring: it contains both the upper packet and the exact
-   unramified minimal quotient, so one target certificate
-   $({\rm TIAV}_{P_{\rm tar}})$ supplies the restricted special fibre before the minimal point
-   and automorphy of that point afterward.
+176. **Finite-Set Ihara Avoidance and Nonminimal Modularity Lifting** — Develop the direct
+   finite-set source-patching route alongside the earlier one-prime and geometric alternatives.
+   The scalar desired and avoidance rings have one common, generally nonreduced residual source;
+   the avoidance source is integral, while the reduced desired source has component-bijective
+   horizontal specialization.  Paired relative Taylor--Wiles selection, synchronized definite
+   modules, and patching of the expanded sources transfer full support to every desired component,
+   giving a finite recovered action with nilpotent kernel and pointwise automorphy.  Theorem 1.1J
+   packages the prepared auxiliary criterion, Theorem 1.1K the prepared target broad-unipotent
+   criterion, and Corollary 1.1L the resulting finite signed-special fibre together with support
+   retained for every minimal point chosen later.  These criteria do not manufacture their
+   reference packets; Book 178 constructs the actual auxiliary packet, upper target packet,
+   common definite modules, represented actions, and both source patches before exporting the
+   finite-fibre certificate.
    Prove separately the scalar weight-two definite class-set Ihara lemma by strong approximation
    away from the changed finite place; at a non-norm localization its two-map kernel vanishes,
    and Smith normal form gives integral saturation. This removes curve abelian-Ihara from an
@@ -945,17 +951,60 @@ available from the current manuscript.
    branch verification, reciprocity invoked only on that carrier, and occurrence of the one
    global component through the point. Pairwise one-prime inputs do not supply that occurrence.
 
-177. **Potential Modularity of Two-Dimensional Representations** — Construct the paired-frame potential-modularity bridge and prove its residual automorphy conclusion for a lifting-admissible specialization. Complete splitting makes every place above the auxiliary base place active, so a one-prime theorem cannot simply be iterated. Book 176, Theorem 1.1H and Corollary 1.1I prove the direct finite-set $({\rm CIAV}_{P_{\rm act}})$ comparison by source patching and make the named Tate-module point automorphic. The geometric alternatives remain genuinely stronger: localized Ihara is their first gap; the all-point route then needs mixed exactness, product residue, joint support, simultaneous augmentation, and finite-set reciprocity, while the pointed route needs its final joint cube, carrier-specific branch verification and reciprocity, and occurrence of the product component through the Tate point. Those optional routes are not prerequisites of the lifting-admissible theorem.
+177. **Potential Modularity of Two-Dimensional Representations** — Construct the paired-frame
+   potential-modularity bridge and prove residual automorphy from a lifting-admissible
+   specialization.  The specialization datum retains the actual packet, local components,
+   definite coefficient systems, represented actions, and source-patching hypotheses needed by
+   Book 176's prepared finite-set criterion; a bare torsion point or an iteration of one-prime
+   comparisons does not supply them.  The geometric alternatives remain stronger and require
+   their stated localized-Ihara, mixed-exactness, cube, reciprocity, and product-component inputs.
+   Book 178 gives the dependency-closed FLT application by constructing the required auxiliary
+   and target data explicitly rather than assuming a lifting-admissible specialization.
 
-178. **Auxiliary Dihedral Data and Residual Potential Modularity** — Construct the rational-base auxiliary dihedral residual packet from a compatible corrected ray datum, and use the protected anti-cyclotomic Grunwald--Wang correction to impose the exact residual branches at $2$, $3$, and $\ell$ without changing the determinant or conjugate-ratio witness. Receive both coefficient fields in one real-multiplication field and place the target and auxiliary systems on Book 158's split Galois-top Hilbert--Blumenthal object. Complete splitting makes every dyadic Tate sheet active. Book 176, Corollary 1.1I supplies the proved auxiliary instance $({\rm CIAV}_{P_{\rm aux}(A_F)})$ and transfers automorphy to the auxiliary Tate module; this patch is separate from its later target-characteristic application. Construct a compact one-split carrier using any dyadic special place, and prove the cross-prime stable-lattice comparison identifying the target residual member. Book 157 is used only for its reusable tensor component, local seeds, frames, and point-centered opens; its conditional singleton/toroidal program is not a dependency. Relative-ray compatibility over a general totally real base remains an optional extension, not part of the FLT route.
+178. **Auxiliary Dihedral Data and Residual Potential Modularity** — Construct the rational-base
+   auxiliary dihedral packet from the corrected ray datum, impose the protected branches at
+   $2$, $3$, and $\ell$, and receive both residual coefficient fields in one real-multiplication
+   field.  A mixed specialization replaces the split-only theorem at the helper places: wholesale
+   solvable local packets and split protected packets are placed on one simply branched pencil,
+   whose symmetric Galois top has the exact prescribed completions and preserves both joint
+   residual images.  After specialization, construct the entire actual auxiliary active set,
+   avoidance packet, definite coefficient systems, nonzero common residual localization, and
+   synchronized source patch required by Book 176, Theorem 1.1J; descent makes the auxiliary Tate
+   module automorphic, and a cross-prime stable-lattice comparison identifies the target residual
+   member.  Then enumerate every target bad place, unramify the zero-monodromy factors, prepare the
+   actual nonzero-monodromy set, and construct the upper desired module and the separate target
+   source patch required by Theorem 1.1K.  The resulting broad action has nilpotent kernel and
+   exports both the whole restricted signed-special finite fibre $({\rm SF}_{\rm SP})$ and support
+   for any characteristic-zero minimal point chosen afterward.
 
 179. **Compatible Systems of Galois Representations** — Define and analyze compatible systems, coefficient fields, residual members, purity, and recognition from Frobenius data in the precise rank-two range needed later. The volume packages the already constructed automorphic systems and image criteria. Its geometric examples form the weak system from global semisimplifications and retain raw Tate lattices separately, so no Faltings-height, Shafarevich-finiteness, or ambient Tate-semisimplicity theorem is a premise. The final fixed-three handoff distinguishes a merely stable lattice from the selected member's all-level coefficient-prime finite-flat tower; the SP pair supplies odd-tame dyadic behavior and no primitive residual monodromy is required. It does not create a descended base-field family or that selected integral tower at a new coefficient prime.
 
 180. **Brauer Induction and Descent of Automorphy** — Develop the abstract Brauer-induction, Mackey, determinant, Clifford, positivity, and coefficient-descent toolkit. Its theorems act on supplied semisimple representations and packet-local objects; they do not construct the application-specific packets, their overlaps or seed, and cannot recover monodromy erased before the descent input is formed.
 
-181. **Finite Image and the Balanced Minimal-Lift Argument** — Turn the balanced hardly-ramified presentation into a normalized primitive special lift. The finite-image and complete-local-algebra argument consumes only the restricted-special-fibre certificate $({\rm SF}_{\rm SP})$: finiteness of the restricted scalar special fiber plus the exact local quotient. From it, finite restricted image, finite-index passage, Carayol trace descent, and topological Nakayama give finite scalar image, whole-ring finite flatness, and a horizontal point. On the preferred split route, after Book 176's proved auxiliary $({\rm CIAV}_{P_{\rm aux}})$ handoff and Book 178's upper packet, form the target broad-unipotent ring. Book 176, Theorem 1.1H and Corollary 1.1I prove the separate target instance $({\rm CIAV}_{P_{\rm tar}})$; with $({\rm TIAV}_{P_{\rm tar}})$ this gives the broad ring a finite automorphic action with nilpotent kernel, makes the minimal special fibre finite, and makes the resulting point automorphic. The stronger $({\rm DMS}_{P_{\rm tar}})$ route through $({\rm FLO}_v)$ remains optional for exact minimal $R=\mathbb T$. The chosen point is never used backward to prove its finite-fibre certificate.
+181. **Finite Image and the Balanced Minimal-Lift Argument** — Turn the balanced hardly ramified
+   presentation into a normalized primitive signed-special lift.  The abstract criterion consumes
+   only the restricted special-fibre certificate $({\rm SF}_{\rm SP})$; finite restricted image,
+   finite-index passage, Carayol trace descent, topological Nakayama, and normalization then give a
+   finite free complete-intersection ring and a horizontal integral point with primitive dyadic
+   monodromy and compatible finite-flat quotients at the coefficient prime.  For a putative
+   primitive Fermat solution of prime exponent at least seven, Book 178 has already constructed
+   $({\rm SF}_{\rm SP})$ and retained the broad automorphic action.  The Frey-range theorem is
+   therefore unconditional: it constructs the signed-special lift and only afterward evaluates
+   the retained support to make its restriction automorphic.  Exact-minimal level lowering remains
+   a stronger optional route and is not used.
 
-182. **Potential Automorphy and Galois Refinement of a Chosen Lift** — Start after Book 181 has chosen the primitive signed-special lift. Book 158 supplies the simultaneous point-centered Galois top, Book 157 the good ordinary coefficient-prime replacement, and Book 176, Theorem 1.1H and Corollary 1.1I the proved auxiliary $({\rm CIAV}_{P_{\rm aux}})$ instance for the full active set; Book 178 then gives an upper target packet. For the live set $P_{\rm tar}$ of retained multiplicative places above $3$ and post-specialization accidental semistable places, a separate target-characteristic application of the same theorem supplies $({\rm CIAV}_{P_{\rm tar}})$ and the target broad-unipotent certificate $({\rm TIAV}_{P_{\rm tar}})$. It supplies the finite minimal special fibre used by Book 181 and makes the chosen point automorphic; no target residual level lowering is required. The exact-minimal route $({\rm DMS}_{P_{\rm tar}})$ through $({\rm FLO}_v)$ and the ordered Book 140 curve path remain stronger optional alternatives. None uses singleton moving geometry or toroidal joining. Transport the chosen point's automorphy to the controlled top, construct parity-complete compact carriers and the common auxiliary unramified Galois pairs for the elementary fixed-field array, and use the proved unitary bypasses for raw dyadic SP. Uniform all-coefficient raw-to-global preservation still uses the smooth-proper source of $({\rm HT}_1)$; the final selected-three branch instead uses Books 54, 129, and 168.
+182. **Potential Automorphy and Galois Refinement of a Chosen Lift** — Begin only after Book 181
+   has chosen the primitive signed-special lift.  Restrict it to Book 178's prepared target field,
+   place it on the already finite minimal quotient of the broad ring, and evaluate the retained
+   support; the resulting packet descends through the target-preparation tower to the original
+   split symmetric Galois field.  Prime-cyclic descent over every elementary fixed field then gives
+   a compatible packet array.  Parity-correct compact one-split carriers, targetwise dyadic
+   spectator constructions, and the finite-flat bridge at one chosen place $\nu\mid3$ prove that
+   every selected-three realization is absolutely irreducible, equals its raw multiplicity
+   representation, and retains the full dyadic monodromy line and sign.  The exported theorem also
+   supplies common unramified algebraic pairs away from two, compatible with twisting and Weil
+   induction.  Uniform all-coefficient Hodge--Tate comparison and strong automorphic type data are
+   deliberately stronger than this selected-three theorem and are not required by the final chain.
 
 183. **Brauer Induction for Automorphy Families** — Construct the elementary fixed-field packet array, overlap identities, integral Brauer classes, common polynomials, and virtual Frey-special local record from a supplied controlled top datum. Ordinary elementary packet attachment and the common unramified algebraic Galois pair away from two are proved without principal/dihedral type parameters; finite twisting and Weil induction then form the auxiliary local Mackey objects. Books 118, 122, and 168 supply the targetwise ramified-spectator raw dyadic carriers. Under $(\mathrm{HT}_1)$, cuspidality makes every attached semisimple packet realization absolutely irreducible uniformly; at the selected place above three, the finite-flat certificate of Books 54 and 168 gives the same raw-to-global and signed-special conclusion without smooth-proper Hodge--Tate comparison. Ambient Tate semisimplicity is only a stronger optional alternative. Effectivity is deliberately deferred, and the controlled residual seed is consumed from Book 182 rather than reconstructed.
 

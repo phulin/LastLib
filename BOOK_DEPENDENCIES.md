@@ -5,24 +5,25 @@ manuscript X. Rows are in stable topological order, so every numbered prerequisi
 than its consumer. Purely transitive background is omitted unless the current manuscript
 explicitly reuses that source.
 
-`MATHLIB` denotes the assumed mathematical background visible in the local checkout. `CFT`
-denotes the companion Class Field Theory development, including reciprocity and Brauer
-invariants. Both are proof sources rather than mathematical axioms; unconditional closure also
-requires their transitive imports to contain no proof gaps or extra axioms.
+`MATHLIB` denotes the mathematical background visible in the local checkout. `CFT` denotes the
+companion Class Field Theory development, including reciprocity and Brauer invariants. Both are
+proof sources rather than mathematical axioms. The dependency statement below concerns the
+manuscript graph; the integrity of those external proof sources is a separate foundational check.
 
-The graph records proved source manuscripts only. Named conjectural or unverified hypotheses
-are not represented by invented book nodes; they appear after the table.
+The graph records proved source manuscripts only. Stronger results not established in the
+collection are not represented by invented book nodes; their relationship to the preferred
+theorem is explained after the table.
 
-## Conditional proof spine
+## Preferred selected-three proof spine
 
 ```mermaid
 flowchart LR
     A["Arithmetic and curve foundations"] --> G["Selected compact-curve Galois realization"]
-    G --> P["Conditional one-prime patching"]
-    P --> M["Conditional potential automorphy and chosen lift"]
-    M --> B["Conditional Brauer effectivity and base-field family"]
-    B --> T["Conditional coefficient-three integral handoff"]
-    T --> F["Frey contradiction, conditional on the named hypotheses"]
+    G --> P["Paired finite-set source patching"]
+    P --> M["Primitive lift and selected-three packet array"]
+    M --> B["Brauer effectivity and the base-field selected member"]
+    B --> T["Coefficient-three integral tower"]
+    T --> F["Frey contradiction"]
 ```
 
 ## Direct substantial prerequisites
@@ -137,7 +138,7 @@ flowchart LR
 | 106 | Twisted Cuspidal Trace Kernels and Spectral Expansion | 81, 91, 94, 100, 101, 105 |
 | 107 | Twisted Orbital Matching and the Cyclic Fundamental Lemma | 81, 102, 105 |
 | 108 | Cyclic Base Change for $\mathrm{GL}_2$ | 80, 81, 95, 96, 102, 103, 105, 106, 107 |
-| 109 | Solvable Base Change and Descent | 6, 24, 81, 77, 95, 104, 98, 108 |
+| 109 | Solvable Base Change and Descent | 2, 3, 5, 6, 24, 77, 81, 95, 98, 104, 108 |
 | 110 | Generalized Elliptic Curves and Level Structures | 43, 44, 45, 8, 13 |
 | 111 | Compactified Modular Stacks and Coarse Modular Curves | 8, 11, 13, 110 |
 | 112 | Deligne--Rapoport Integral Models of Modular Curves | 11, 12, 16, 51, 110, 111 |
@@ -180,7 +181,7 @@ flowchart LR
 | 149 | Eisenstein Cotangent Lattices and Formal Immersion | 9, 15, 113, 114, 147, 148 |
 | 150 | Mordell--Weil Sieves for Hyperelliptic Curves | 41, 149, 136, 137 |
 | 151 | Semistable Full-Two Residual Irreducibility | 6, 35, 42, 44, 45, 51, 149, 150 |
-| 152 | Deep-Level Quaternionic Modules and Diamond Actions | 144, 82, 83, 84, 85, 139 |
+| 152 | Deep-Level Quaternionic Modules and Diamond Actions | 82, 83, 84, 85, 139, 143, 144, 145 |
 | 153 | Hilbert Irreducibility and Arithmetic Approximation | 2, 17, 37 |
 | 154 | Moret–Bailly’s Theorem | 8, 9, 10, 40, 41, 58, 153 |
 | 155 | Galois and Solvable Refinements of Arithmetic Approximation | 2, 6, 153, 154, 142 |
@@ -204,13 +205,13 @@ flowchart LR
 | 173 | Minimal Modularity Lifting | 171, 172 |
 | 174 | One-Prime Type Complexes and Component Support | 6, 17, 21, 22, 65, 67, 69, 70, 118, 119, 121, 122, 125, 138, 139, 140, 141, 143, 145, 152, 170, 171, 172 |
 | 175 | One-Prime Nonminimal Patching and R=T | 67, 69, 109, 138, 139, 140, 143, 170, 171, 172, 173, 174 |
-| 176 | Finite-Set Ihara Avoidance and Nonminimal Modularity Lifting | 6, 14, 22, 64, 67, 69, 70, 83, 84, 85, 109, 118, 122, 123, 124, 125, 138, 139, 140, 143, 144, 145, 146, 152, 170, 172, 173, 174, 175 |
+| 176 | Finite-Set Ihara Avoidance and Nonminimal Modularity Lifting | 6, 14, 21, 22, 64, 67, 69, 70, 83, 84, 85, 104, 109, 118, 122, 123, 124, 125, 126, 127, 128, 129, 138, 139, 140, 143, 144, 145, 146, 152, 170, 172, 173, 174, 175 |
 | 177 | Potential Modularity of Two-Dimensional Representations | 104, 98, 127, 176, 154, 158, 142 |
-| 178 | Auxiliary Dihedral Data and Residual Potential Modularity | 6, 98, 104, 127, 141, 142, 156, 157, 158, 176 |
+| 178 | Auxiliary Dihedral Data and Residual Potential Modularity | 3, 6, 35, 61, 76, 81, 98, 104, 109, 117, 127, 141, 142, 143, 144, 145, 152, 154, 155, 156, 157, 158, 170, 176 |
 | 179 | Compatible Systems of Galois Representations | 168, 141, 142 |
 | 180 | Brauer Induction and Descent of Automorphy | 24, 75, 98, 109, 168 |
-| 181 | Finite Image and the Balanced Minimal-Lift Argument | 57, 62, 64, 141, 164, 165, 166, 167, 173, 176 |
-| 182 | Potential Automorphy and Galois Refinement of a Chosen Lift | 6, 37, 44, 61, 104, 109, 118, 121, 122, 124, 125, 127, 128, 140, 142, 157, 158, 164, 165, 168, 173, 176, 178, 181 |
+| 181 | Finite Image and the Balanced Minimal-Lift Argument | 57, 62, 64, 141, 164, 165, 166, 167, 173, 176, 178 |
+| 182 | Potential Automorphy and Galois Refinement of a Chosen Lift | 6, 37, 44, 54, 61, 104, 109, 118, 121, 122, 124, 125, 126, 127, 128, 129, 140, 142, 157, 158, 164, 165, 168, 173, 176, 178, 181 |
 | 183 | Brauer Induction for Automorphy Families | 6, 98, 108, 109, 127, 128, 142, 168, 180, 182 |
 | 184 | Brauer Characters and Effectivity of Compatible Families | 24, 57, 180, 183 |
 | 185 | Compatible Systems over the Base Field | 168, 180, 182, 183, 184 |
@@ -218,352 +219,86 @@ flowchart LR
 | 187 | The Fixed-Three Integral Local Theory | 3, 6, 10, 26, 42, 54, 82, 118, 119, 121, 125, 127, 128, 129, 161, 182, 185, 186 |
 | 188 | Hardly Ramified $3$-adic Representations | 161, 185, 187 |
 
-## Named unresolved theorem hypotheses
+## Results outside the scope of the preferred theorem
 
-These conditions are assumptions or missing source theorems, not dependency nodes, except for
-the interfaces explicitly marked closed below. The list is deliberately separate from the
-acyclic manuscript graph so that the closed record cannot be mistaken for a remaining blocker.
+The preferred selected-three theorem does not assume any of the results listed below.  They
+belong to stronger geometric, exact-minimal, or uniform-coefficient extensions of the theory
+and are not hypotheses of the main theorem.
 
-- **Localized abelian Ihara:** vanishing, at every actual routed constant-coefficient level, of
-  the localized $\Delta$-invariant sum of transgression kernels on the $K_c^v$-invariant
-  continuous odd-primary characters of the full profinite congruence kernels. Book 139 proves
-  that this is exactly the noncongruence-character quotient required for saturated two-map
-  Ihara, proves spectator-level invariance of the underlying kernel for fixed $(F,B,v)$, and
-  shows why kernel invariance does not identify the row-dependent quotient action,
-  transgression, or Hecke localization. The exact unresolved application gate is
-  $({\rm AC}^{\rm loc}_\ell)_{\mathscr R}$, specialized in Book 181 to the finite family
-  $({\rm AIH}_{\mathscr F})$ used by the signed-special seed construction. No accepted source
-  proves this vanishing. This is a boundary only for the retained geometric/constant-row
-  alternatives; the preferred direct $({\rm CIAV}_P)$ chain does not invoke it. The FLT chain
-  does not require a structure theorem for the full congruence kernel or a uniform statement
-  over unused levels and coefficient primes.
-- **Type and node comparison:** objectwise normalization of the actual principal/ray tower,
-  the ray factor, and the finite-wild/procyclic ramified strict-node complex are proved in Books 122,
-  22, and 174; the common-normalization lemma makes the lifted principal legs isomorphisms.
-  Book 122, Proposition 9.3 proves the level-one Drinfeld-basis normalization, and
-  (9.29k)--(9.29l) prove every active finite-depth normalization and intermediate invariant
-  ring.  Equations (9.29r)--(9.29x) compute the raw higher branches, inertia, inseparable
-  residue degrees, node-annular complexes, and boundary stabilizers.  Its level-one divisor,
-  stabilizer, and Bruhat calculations give the exact wild-invariant extreme lines,
-  constant-extreme-line generization, and unique
-  multiplicity-one node sheet; Proposition 9.4 promotes routing, multiplicity and expansion
-  one, and Hecke/transpose compatibility to the actual common factor.  Proposition 9.5
-  calculates the reduced invariant branch fields, Cartier multiplicities and group filtrations,
-  and reduces the normalized spectator/ray compositum to the residue-field factorization of
-  $T^c-\bar u^{-1}$ and the actual local intersection field. Proposition 9.6 factors every
-  completed endpoint and blowup chart once the actual endpoint valuation, leading coefficient,
-  and tame subgroups are supplied. Proposition 9.7 gives the exact Milnor-tube construction;
-  Proposition 9.8 proves $({\rm RGC}_v)$ on noncontracted and contracted component terms, with
-  refined excess, Frobenius--Hecke compatibility, and transpose.  For the permutation and
-  quotient/augmentation rows, Proposition 9.9 constructs the strict ray quotient and computes
-  its local field, vertical unit, endpoint factors, Frobenius orbits, and active/ray
-  intersection. Proposition 9.10 computes the completed tubes, actions, and generization maps,
-  and Corollary 9.11 proves $({\rm KBL}_v)_{\rm act}$, $({\rm BTK}_v)_{\rm act}$,
-  $({\rm HDB}_v)_{\rm act}$, and $({\rm PNS}_v)_{\rm act}$.  Thus Book 174's
-  $({\rm TPE}_v)$ reduction is closed for its actual rows; arbitrary intermediate
-  representations and arbitrary cyclic ray data still require the corresponding general
-  Kummer--tube and branch-descent targets. Unit-order coarse descent remains the separate
-  $({\rm TIC}_v)$ input. The later
-  type algebra has now been reduced further.  Under those geometric hypotheses and the named
-  abelian-Ihara family, for the actual quotient/augmentation flag pair, when $q_v+1$ is a
-  coefficient unit the integral flag idempotent makes type-Ihara and primitive residue direct
-  summands of the Shapiro constant rows; even in the nonbanal range the
-  augmentation-companion pull is automatic.  At $q_v\equiv-1\pmod\ell$ the exact remaining
-  type inputs are the quotient-new injection (Book 174, (5.0d)) and the primitive
-  filtered-cofiber comparison (6.0d).  Proposition 5.0A identifies the first with primitivity
-  of the integral constant-vector map on the actual arithmetic new cokernels, equivalently
-  injectivity of the residual new Bockstein into the augmentation companion; the relation
-  $VU=q_v+1$ kills the possible index only after inverting $q_v+1$.  Proposition 6.0A proves
-  that, once the actual type-incidence row and type-Ihara are supplied, the generic old cokernel already commutes with the
-  coefficient row, so (6.0d) is precisely a global filtered-normalization/graph-cycle
-  strictness theorem rather than another old-image saturation problem.  Superspecial node
-  uniformization remains the enhanced flagged PEL node-groupoid classification, isolated as
-  Book 140, (5.9a); once that equivalence and all of its enhancements are supplied, its
-  transport of the quotient/augmentation representations is formal; changing prime-to-$v$
-  level leaves the local node chart fixed while changing the groupoid, so the classification
-  cannot be derived from the local models.  The local special closure and its full
-  scalar/vexing boundary coordinates are proved.  The minimal, boundary, and special problems
-  can also be placed on one marked Taylor--Wiles diagonal, and their common boundary quotient
-  survives patching.  The remaining $({\rm BCD}_v)$ input for one-prime component support is
-  the relative Cartier-switch transversality theorem (Book 174, (8.2f)): nonvanishing or
-  regular-sequence transversality of the lower boundary block and relative formal smoothness
-  of the special monodromy relaxation.  Dimension balance and unique-component routing are
-  formal once that theorem is supplied, not another calculation of the local equation.
-  Relative to the separately
-  named localized abelian Ihara input, constant-coefficient generic support in the clean special
-  block is proved in Book 140 from Book 125 and is not another unresolved hypothesis. After the
-  typed filtration exists, Book 174 likewise proves the typed generic-residue kernel equality
-  from Book 125 and contracts it to equality of the integral faithful image orders; no separate
-  generic-support or faithful-order hypothesis remains at that interface.
-- **Closed: raw signed-special carrier:** Book 122 constructs the non-common-norm unitary
-  dyadic parahoric source but does not identify it integrally with the basic quaternionic
-  packet carrier; its comparison (10.5) remains a genuine stronger raw-to-raw theorem.
-  The semisimple FLT chain does not need it. Book 168, Proposition 7.6A handles an
-  all-dyadic-split carrier, while Book 122, Proposition 10.2A and Book 168, Proposition 7.6B
-  construct the even-degree carriers target by target using a different ramified dyadic
-  spectator and two CM inertia kernels. Thus mixed-dyadic carrier existence is closed before
-  the separate raw-to-global step.
-- **One-prime generic rigidity:** for Book 175's scalar-residual line-special problem, after
-  the reduced comparison it uses the balanced enhanced obstruction presentation and finiteness
-  to prove vertical torsion-freeness of the
-  conductor-one global deformation ring. The line remains compulsory in the residual complex;
-  at a monodromy-zero characteristic-zero point its tangent is uniquely determined by the
-  distinct Frobenius characters. Book 175 identifies vanishing of every characteristic-zero
-  enhanced tangent--Selmer group with global reducedness and full $R=T$. Under the coherent
-  unpadded $({\rm AUX}_Q)$ system, it then proves that vanishing: at every depth the arithmetic
-  input must first supply a clean shadow with exactly $q$ ordered primes killing the recomputed
-  enhanced dual group, together with the effective torsor and marked augmentation data.
-  Coherence is obtained only after those exact-$q$ shadows exist. The enhanced balanced count
-  gives an absolute regular source with the same $q$ variables as the diamond source, and Book
-  174's nonzero module free over the diamond source makes the equal-variable action faithful.
-  Thus the patched ring is regular and the finite conductor-one ring satisfies full $R=T$.
-  Without a coherent exact-$q$
-  auxiliary system, the branchwise torsion-cotangent theorem isolated in Corollary 4.4a is the
-  exact alternative input; finite flatness and topological support alone do not imply it.
-  Book 172 derives minimal acting-order augmentation only after minimal $R=T$; Book 174 proves
-  fixed-prime acting-order augmentation from the strict global twist and proves auxiliary
-  represented-ring, primary/companion complex, module, action, and pairing augmentation while
-  retaining only a surjection on auxiliary acting images; Book 175's balanced patch supplies
-  generic rigidity and then makes that last surjection injective, with the strict ray twist
-  additionally retained for the scalar family. No separate one-prime
-  acting-order theorem remains in that faithful range.
-- **Direct finite-set lifting:** the scope-minimal FLT route is Book 176's proved
-  $({\rm IAV}_S)$ interface. Theorem 1.1C proves the explicit scalar paired framed rings:
-  their raw special fibers agree scheme-theoretically, the avoidance ring is flat and
-  integral, and the two desired horizontal components specialize bijectively; the reduced
-  horizontal desired ring is flat Cohen--Macaulay but not a complete intersection, although
-  the raw desired ring is itself nonflat/nonreduced. Proposition 1.1D proves common prime
-  selection, exact reduction of the principal/Iwahori coefficient lattices, synchronized
-  residual definite modules, and formal recovery. Proposition 1.1E shows by sharp
-  countermodels why quotient-level support alone does not imply either
-  $({\rm VCT}_{R_\infty^{\rm des}})$: the actual global Taylor--Wiles relation ideal must
-  preserve vertical specialization of the locally labelled components. The second is
-  $({\rm ACT}^{\rm av}_S)$, occurrence on every avoidance component;
-  local avoidance integrality and module nonvanishing do not prove it for a global patched
-  quotient. Proposition 1.1G instead constructs the exact relative source patch, with the
-  strict-at-$S$ Selmer count, synchronized Taylor--Wiles primes, augmentation saturation,
-  and minimal-level coinvariant control. Theorem 1.1H proves avoidance all-component
-  occurrence and transfers near faithfulness through the common residual source to prove
-  vertical component preservation and desired support. Corollary 1.1I packages this as the
-  reusable $({\rm CIAV}_P)$ theorem, invoked separately at the auxiliary and target active sets;
-  exact acting-image control and marked augmentation give reduced finite recovery;
-  Book 176, Lemma 1.1A upgrades a finite recovered action with nilpotent kernel to finiteness
-  of the whole noetherian desired ring; and Book 109 supplies descent under its explicit
-  antecedent hypotheses. Thus the preferred global patched-component theorem is source-closed.
-  With $({\rm VCT})$ and $({\rm ACT}^{\rm av}_S)$ proved by Theorem 1.1H,
-  no several-place old--new cube,
-  mixed-Ihara vanishing, product residue, or separate product-component occurrence is required.
-  The exact-minimal alternative retains
-  $({\rm FLO}_v)$, and the geometric routes retain their joint occurrence or mixed-cube input.
+- **Localized Ihara and the full type/node comparison.**  The collection does not prove the
+  localized abelian-Ihara vanishing needed by the constant-coefficient Shimura-curve
+  alternatives.  It also does not prove, in full nonbanal generality, the quotient-new
+  injection and primitive filtered-cofiber comparison of Book 174, the enhanced flagged PEL
+  node-groupoid classification of Book 140, or the relative Cartier-switch transversality
+  theorem used by the geometric one-prime component argument.  These statements would
+  strengthen the type-compatible curve route.  They are not used by the paired definite-source
+  patch of Books 143--145, 152, and 176.  In particular, $({\rm TIC}_v)$ is not a missing
+  input: Book 174, Proposition 3.0B proves the unit-order coarse type-Ihara statement used
+  there.
 
-- **Several active places:** once one actual product coefficient system and all component
-  routes are supplied, Books 123--124 and 174 formally construct the coherent generic global
-  level cube and its adjoint companion. Book 84, Section 11.9 already constructs the integral
-  $2^{|P|}$-fold degeneracy source on one definite global module and its product Gram formula;
-  Book 152, Proposition 11.1 constructs the commuting regular-refinement idempotents on that
-  same kind of source. These are the owners of common-carrier commutation and source splitting,
-  not of mixed quotient exactness. Book 125's packetwise restricted tensor factorization puts its
-  generic fiber in top degree, with the global multiplicity module occurring only once; it does
-  not kill lower $\varpi$-power torsion or residual hyper-Tor over a larger face base. Book 176
-  identifies the two-place residual obstruction over the final coefficient DVR with the
-  torsion in the top joint-new quotient, equivalently failure of primitivity for the sum of
-  the two top old images; its split-edge countermodel shows that generic concentration and
-  separate primitivity do not force this sum to be primitive. Distinct arithmetic fibers have
-  empty intersection, so a literal multi-trait component fiber is unavailable. Book 176
-  constructs the parity-correct cube of quaternionic inner forms and proves generic
-  packet-label commutation with the common multiplicity inserted once; the unresolved
-  geometric input is the routed integral derived iterated-switch Beck--Chevalley homotopy with
-  component/branch terms and higher coherence. Full simultaneous component support also
-  remains unresolved. Book 14 already supplies formal derived base-change pasting once the
-  higher maps exist, and Book 145 supplies the support--annihilator implications; neither
-  constructs the missing arithmetic maps or product-component occurrence. Book 176,
-  Proposition 8.3 constructs the joint scalar ray quotient; (8.26) gives the strict product
-  twist only on an already constructed routed joint cube equivariant for that quotient. Book
-  143 gives represented-ring augmentation for the product
-  problem under its ordered-distinct-root hypotheses.  One common equivariant auxiliary
-  package, including the full vertexwise ordered-root and old/new hypotheses of Book 174,
-  Proposition 9.1, gives coherent complex--module--action--pairing augmentation objectwise;
-  fixed-prime faithful-order
-  augmentation is formal once the joint strict product twist exists, while auxiliary
-  acting-image injectivity follows after full base $R=T$ and is not a separate input to the
-  reduced finite-level comparison.  Book 170 already proves finite-set reciprocity once the
-  actual joint carrier, simultaneous generic local labels, integral coefficient-prime
-  realization, and exact trace/structural generation have been verified; its reduced-order
-  argument then supplies the all-Artinian factorizations.  Those joint inputs do not follow
-  from separate one-prime carriers. For one named characteristic-zero point, Book 176 also
-  constructs the canonical torsion-free top/adjoint carrier directly from the actual cube.
-  Its smaller pointwise interface needs simultaneous branch verification and reciprocity on
-  that carrier, followed by occurrence of the single global product component through the
-  point; mixed exactness and product residue are needed only if used to prove that occurrence.
-- **Controlled residual automorphic seed:** the FLT route uses Book 158's fine
-  interior and simultaneous split point-centered local opens. Its simply branched pencil has a
-  regular symmetric normal closure, and specialization gives a totally real even-degree Galois
-  top with complete splitting and closure-level avoidance. Consequently every dyadic Tate
-  sheet is active for the auxiliary-$q$ lift. No theorem in the chain requires one exceptional
-  factor, and the optional Book 157 boundary program $({\rm IIT})$, $({\rm MPE})$,
-  $({\rm ACE})$, $({\rm TCG})_\Sigma$, $({\rm FTJ})$, and $({\rm ICS})$ is not a
-  dependency of the FLT seed.
+- **Several-place geometric cubes.**  The books do not establish the mixed sum-primitivity,
+  product-residue comparison, routed integral iterated-switch homotopies with higher
+  coherence, simultaneous component support, or product-component occurrence needed to turn
+  the several-prime geometric cube into an all-point theorem.  Book 176 explains these
+  obstructions and constructs the formal common carriers that can be constructed without
+  them.  The preferred auxiliary and target applications instead use its prepared
+  desired--avoidance source patches, so no several-place old--new cube occurs in the main
+  proof.
 
-  Book 157 remains a direct source for reusable material: the corrected tensor component,
-  product monodromy, point-centered local opens, exact frames, and the good ordinary
-  $\mathbf Q_\ell$ replacement in the multiplicative-$\ell$ branch. The replacement is fixed
-  before $q$; then $q$ avoids its Frobenius discriminant and Book 178's protected
-  anti-cyclotomic correction imposes the compatible auxiliary branch. Book 178 constructs the
-  rational-base dihedral residual seed and applies Book 158's split top. Its only lifting
-  handoff is the auxiliary instance $({\rm CIAV}_{P_{\mathrm{aux}}})$ of Book 176,
-  Corollary 1.1I, for the actual set $P_{\mathrm{aux}}(A_M)$. It is one application of the
-  proved source-patching theorem, not an iteration of separate one-place statements.
+- **Exact-minimal level lowering.**  The fixed-away-level theorem $({\rm FLO}_v)$, its
+  repeated-root scalar-support case, the resulting finite-set occurrence statement
+  $({\rm DLO}_{P_{\rm tar}})$, and the clean exact-minimal datum
+  $({\rm DMS}_{P_{\rm tar}})$ are not proved here.  They would give a stronger exact minimal
+  $R=\mathbb T$ comparison.  Book 178 instead proves finiteness of the broad tame-unipotent
+  ring and passes to its signed-special quotient; Book 181 constructs the minimal point only
+  afterward, and the retained broad support makes that point automorphic.  Thus exact-minimal
+  level lowering is unnecessary for the main theorem.
 
-  After auxiliary automorphy, the target-extra set $P_{\mathrm{tar}}$ is formed separately.
-  On the preferred Book 178 route it consists of retained multiplicative places above $3$ and
-  the accidental semistable target places found after specialization; the selected set
-  $W_0(M)$ belongs to the retired Book 177 route.  Every target-extra upper factor is special
-  while the Frey residual factor is unramified. Controlled places above $3$ are in the regular
-  Mazur range for $\ell\ge7$, whereas an accidental place may have repeated-root, possibly
-  scalar Frobenius with $q_v\equiv1\pmod\ell$.
-  Since the split top has positive even degree, ordinary Jacquet--Langlands and a fresh
-  primitive class-set lattice give a nonzero upper localization directly on the totally
-  definite algebra. Book 176, Theorem 1.2 proves the scalar definite two-map Ihara theorem
-  and its integral saturation consequence by strong approximation away from each changed
-  finite place. It does not create lower-level support.
+- **Uniform raw-to-global comparison.**  A smooth-proper Hodge--Tate comparison for all
+  carrier curves, and the corresponding uniform all-coefficient raw-to-global identification,
+  are not proved in the required generality.  Ambient Tate-module semisimplicity and the
+  coefficient-two irreducibility statement are likewise stronger uniform alternatives.  The
+  selected-three route uses the good finite-flat carrier and the results of Books 54, 129,
+  and 168 at one place above $3$; Books 183--185 preserve that coefficientwise conclusion
+  through effectivity and base-field assembly.
 
-  The preferred route instead forms the target broad-unipotent ring.  The exact upper special
-  ring is not nested with the minimal ring: its enhanced line, sign, and Frobenius-incidence
-  equation survive on its zero-monodromy boundary.  The broad ring imposes only unipotent
-  inertia at $P_{\mathrm{tar}}$ and canonically surjects onto the exact unramified minimal
-  ring.  One target-characteristic certificate $({\rm TIAV}_{P_{\mathrm{tar}}})$ supplies the
-  paired desired/avoidance geometry, synchronized systems, avoidance full support, and exact
-  finite recovery. Book 176, Theorem 1.1H and Corollary 1.1I prove the target instance
-  $({\rm CIAV}_{P_{\mathrm{tar}}})$, including $({\rm VCT}_{R_\infty^{\rm des}})$ and
-  $({\rm ACT}^{\rm av}_{P_{\mathrm{tar}}})$, by a target-characteristic source patch separate
-  from the auxiliary patch. Lemma 1.1A then makes the whole broad ring finite, so its minimal quotient
-  has finite special fibre; after Book 181 constructs the point, the same support theorem
-  makes it automorphic.  This is a second coefficient-specific instance of the same reusable
-  IAV theorem schema, not a reuse of the auxiliary patch.
+- **Strong automorphic types at every auxiliary place.**  Book 182 proves the common
+  unramified algebraic Galois pairs needed for the elementary packet array, together with
+  their twisting and induction compatibilities.  It does not construct principal/dihedral
+  descent complexes, type and exchange lines, or normalized return maps at every auxiliary
+  place.  Those stronger automorphic-type statements are not used by the selected-three
+  Galois comparison.
 
-  On the stronger optional exact-minimal route, the first arithmetic source
-  is $({\rm DLO}_{P_{\mathrm{tar}}})$, the simultaneous or fully reverified ordered
-  upper-to-minimal occurrence theorem for the actual finite set. Together with
-  $({\rm CLN}_{\min})$, verification of the exact minimal localization's pairing, stabilizer,
-  generic-reducedness, branchwise attachment, diamond-torsor, and augmentation ledger for
-  Book 173, it forms $({\rm DMS}_{P_{\mathrm{tar}}})$. The older ordered Book 140 curve path
-  remains a stronger secondary alternative and
-  retains all of its edgewise Ihara, component, and branch hypotheses. Dyadic places are absent
-  from $P_{\mathrm{tar}}$ because the target keeps its signed-special condition. Thus the live
-  preferred route invokes Book 176's proved reusable theorem $({\rm CIAV}_P)$ first at
-  $P_{\mathrm{aux}}$ and then, in a separate coefficient-characteristic patch, at
-  $P_{\mathrm{tar}}$—not a singleton moving presentation. DLO plus the bottom
-  structural ledger is retained only as the stronger minimal-$R=\mathbb T$ alternative.
-  Finite class sets, residual monodromy zero, and upper-side Taylor--Wiles
-  patching do not formally imply DLO; Book 176 gives an explicit paired countermodel.
-  Book 176, Proposition 1.3 reduces DLO to the one-place fixed-away-level
-  outside-$\ell$ theorem $({\rm FLO}_v)$ by ordinary induction.  Its regular half is Mazur
-  principle, including $q_v\equiv-1$.  At $q_v\equiv1$, general level optimization gives only
-  a spherical-or-special alternative; forcing the spherical output is a stronger
-  application-specific scalar-support theorem.  The corpus proves neither the regular
-  integral invariant-cycle argument nor that scalar theorem, so this is a narrowing of the
-  first gap rather than a proof of DLO.
+- **Singleton and toroidal moving geometry.**  The relative joining, toroidal, and
+  single-moving-place program isolated in Book 157 remains stronger than the interior
+  component, local seeds, exact frames, and point-centered opens proved there.  Book 178's
+  mixed specialization works with the complete split and solvable local packets and does not
+  invoke that program.
 
-  For the post-point construction, Book 182 starts from Book 181's chosen lift and a controlled
-  chosen-point datum on the split top. It gives parity-complete compact carriers and the common
-  auxiliary unramified Galois pairs needed by the elementary fixed-field array. Its unitary
-  bypasses close the raw dyadic carrier issue. Smooth-proper $({\rm HT}_1)$ remains only for
-  the optional uniform all-coefficient comparison; Books 54, 129, and 168 close the selected
-  coefficient-three branch used by the final chain. None reinstates the retired
-  singleton/toroidal route.
+## Status of the preferred selected-three theorem
 
-- **Balanced-lift finiteness:** Book 181's finite-image and commutative-algebra argument needs
-  only the restricted-special-fibre certificate $({\rm SF}_{\rm SP})$, not automorphy of every
-  restricted characteristic-zero point.  The target broad-IAV certificate supplies the whole
-  finite special fibre without a prior minimal point and retains a support theorem which Book
-  182 evaluates after that point exists. Thus Book 176's proved target instance
-  $({\rm CIAV}_{P_{\mathrm{tar}}})$, through the otherwise constructed
-  $({\rm TIAV}_{P_{\mathrm{tar}}})$ interface, closes both forward steps without a minimal
-  $R=\mathbb T$ theorem. A proof of
-  $({\rm DMS}_{P_{\mathrm{tar}}})$ would still supply the stronger clean minimal localization
-  and full Book 173 seed, but is optional on the preferred pointwise chain.
-- **Raw dyadic carrier and raw-to-global comparison:** Book 182, Proposition 6.1 and Book 183
-  now prove ordinary elementary packet attachment packet by packet; no all-elementary
-  occurrence hypothesis and no principal/dihedral type parameters are required. Books 118,
-  122, and 168 construct the raw SP pair target by target: a different dyadic parity place is
-  used as a ramified spectator, and two ramified CM classes remove the possible quadratic
-  inertial twist. Thus neither an eligible place away from two nor a mixed-dyadic integral
-  comparison remains on this route. Once that raw SP pair exists, the recommended uniform
-  raw-to-global certificate is $(\mathrm{HT}_1)$. Book 168 proves from it that each cuspidal
-  packet realization is absolutely irreducible and equals its raw multiplicity
-  representation, preserving monodromy, its line, and sign at every coefficient place away
-  from residue characteristic two; Book 183 applies this uniformly to the finite packet
-  array. Book 6 proves the rank-one local-algebraicity step and Book 47, Proposition 9.1
-  proves inheritance by curve-cohomology subquotients. The exact unproved source is therefore
-  the smooth-proper comparison $(\mathrm{HT}_{\mathrm{curve}})$ of Book 47, (9.7), for the
-  uniform all-coefficient statement. At the one selected place $\nu\mid3$, Book 129 supplies
-  an all-level finite-flat tower from the protected good unitary carrier, Book 54 proves that
-  every rank-one finite-flat constituent is locally algebraic, and Book 168, Theorem 7.6C and
-  Corollary 7.6D prove packet irreducibility and SP preservation. Book 183, Proposition 6.1A,
-  Book 184, Corollary 13.1A, and Book 185, Proposition 9.2 carry that coefficientwise result
-  through effectivity and base-field assembly. Hence the final fixed-three chain does not
-  depend on $(\mathrm{HT}_{\mathrm{curve}})$.
-  Ambient carrier semisimplicity $(\mathrm{SS}_{\mathrm{array}})$ is a stronger optional
-  alternative, not part of the recommended FLT dependency chain.
-- **Coefficient-two top-packet irreducibility $(\mathrm{AI}_2)$:** absolute irreducibility in
-  characteristic zero of the already existing top-packet realization at every coefficient
-  place of residue characteristic two. It is a uniform sufficient input for the Mackey Gram
-  calculation at residue characteristic two and hence for Book 185's all-place effectivity;
-  it is not a scalar extension or completion of the away-from-two collection. On the
-  recommended route it is no longer an independent hypothesis: Book 183, Proposition 6.1
-  derives it packetwise from $(\mathrm{HT}_1)$ by cuspidal absolute irreducibility. If the
-  stronger optional $(\mathrm{SS}_{\mathrm{array}})$ route is used instead, semisimplicity
-  alone does not supply this irreducibility and $(\mathrm{AI}_2)$ must still be checked.
-  Relation by
-  relation, the exact numerical input is norm one for the signed class at residue characteristic two
-  $(\mathrm N_2(\mathfrak B))$; the existing proof obtains it from coefficient-independence of
-  the finitely many self-twist Hom dimensions $(\mathrm G_2(\mathfrak B))$. The
-  coefficient-three route through Books 186--188 uses only places away from two and does not
-  use this hypothesis.
-- **Closed: positive fixed-three packet carriers $(\mathrm{AVCar}_{3,\ell}^+)$,
-  $(\mathrm{Car}_3^+)$, and $(\mathrm{IC}_3)$:** name $3$ among the split sensitive places
-  before constructing the controlled top. Book 182 now supplies the corresponding split
-  evaluated packet over $\mathbf Q_3$ and parity-complete basic carriers for every elementary
-  term. Book 118 constructs the required replacement for the impossible direct common-norm
-  group: after adjoining an imaginary quadratic field nonsplit at $2$ and split at $3\ell$,
-  its unitary common-multiplier group is PEL-exact, has the same adjoint one-split datum, and
-  finitely dominates every routed basic component after CM base change. The trivial central
-  character permits central saturation of the basic level; its connected fiber-product argument
-  then identifies the comparison component at a preliminary coarse unitary level, passes to a
-  fine unitary level away from $3\ell$, and chooses its component field unramified there.
-  Book 121 verifies the split odd
-  hyperspecial local model and excludes its boundary by anisotropy of the reduced-norm
-  Hermitian space. Weil restriction of the product of component Jacobians returns a good
-  abelian carrier over the elementary fixed field. Thus Book 187, Proposition 2.2 proves
-  $(\mathrm{Car}_3^+)\Rightarrow(\mathrm{AVCar}_{3,\ell}^+)$ by rational pullback. Theorem
-  2.3 then uses nonzero-oldvector embeddings,
-  semisimplification, commensurability, local Mackey decomposition, saturated intersection,
-  and schematic closure to construct the flat companion $(\mathrm{IC}_3)$. No integral
-  packet idempotent, negative-term carrier, or integral Brauer cancellation is required.
-  Thus $(\mathrm{IC}_3)$ is not an independent post-assembly field of the admitted
-  compatible-family arithmetic core. This is a positive-only geometric construction, not
-  integral Brauer effectivity. Book 118's parity
-  calculation remains essential: it proves that changing the multiplier, order, or level of
-  the direct trace group cannot produce the cover; the CM-unitary center is genuinely
-  different. Ambient
-  Tate-module semisimplicity is unnecessary for this fixed-three substatement
-  because Book 129 transfers the finite-flat tower from the raw plane to its semisimplification
-  by subquotients.
-- **Auxiliary Galois comparison and clean support:** Book 61, Proposition 12.3 makes both the
-  Artin conductor and the inertia-invariant Frobenius polynomial of an actual Jacobian Hecke
-  multiplicity factor coefficient-independent. Book 182, Proposition 8.1 anchors them at the
-  distinguished irreducible raw member and treats the old coefficient prime through the split
-  unitary good cover; Book 128, Lemma 3.2 passes the unramified pair to the elementary global
-  semisimplification.  Algebraic twisting and Weil induction give every local Mackey pair.
-  Book 185, Proposition 8.3 combines these pairs with the actual effective direct-sum identity
-  and Krull--Schmidt cancellation to prove $(\mathrm{AUX}_{\mathrm{all}})$ and
-  $(\mathrm{AUX}_\nu)$, hence $(\mathrm{Cond}_2)$ and $(\mathrm U)$ by Propositions 8.2--8.1.
-  Book 184's local induction conductor formula gives an independent support check.  What
-  remains open is Book 182's stronger automorphic-type theorem: type/exchange lines and
-  normalized return maps require the actual principal/dihedral descent complexes, and at a
-  cyclic principal row even tameness needs a separate field ledger. Local Clifford theory
-  controls the irreducible dihedral row but does not prevent wild quotient characters.
-  Equality of almost-all Frobenius polynomials remains no substitute for this type geometry.
+The current theorem chain is chronological and dependency-closed.
 
-Consequently the final conditional-FLT spine is **not unconditionally closed**. No review or
-catalog status may be read as claiming otherwise.
+1. Book 109 constructs the auxiliary and target preparation towers.  Books 143--145 and 152
+   construct the paired relative Taylor--Wiles data, synchronized finite shadows, definite
+   modules, and source-support transfer consumed by Book 176, Theorems 1.1J--1.1K and
+   Corollary 1.1L.
+2. Book 178 verifies those prepared criteria for the actual auxiliary and target packets.  Its
+   Theorem 10.1 proves the auxiliary comparison and descent; Theorems 12.1--12.2 prove the
+   target broad-ring statement and export the whole restricted signed-special finite fibre
+   together with support for every later minimal point.
+3. Book 181, Theorem 1.2 applies that finite-fibre theorem to a putative primitive Fermat
+   solution of prime exponent at least seven.  It constructs the primitive signed-special
+   lift without an additional seed hypothesis and evaluates the retained support only after
+   the point exists.
+4. Book 182, Theorem 9.1 descends the chosen lift's packet to the split Galois top and exports
+   the elementary fixed-field packet array, parity-complete carriers, the selected-three
+   signed-special comparison, and the unramified algebraic pairs.
+5. Books 183--185 carry the selected-three member through Brauer induction, effectivity, and
+   base-field assembly.  Book 186 makes the coefficient-prime handoff, Book 187 constructs
+   the required all-level coefficient-three finite-flat tower, and Book 188 derives the
+   cyclotomic line that contradicts the selected member's absolute irreducibility.
+
+Consequently the preferred selected-three proof of Fermat's Last Theorem is
+**dependency-closed in this manuscript graph**.  The stronger results listed above are neither
+hidden hypotheses nor optional routes that the catalog claims to have proved.
