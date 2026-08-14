@@ -75,7 +75,7 @@
 15. [The complete comparison theorem](#15-the-complete-comparison-theorem)
     - [Statement](#151-statement)
     - [Proof](#152-proof)
-    - [Dependency and normalization audit](#153-dependency-and-normalization-audit)
+    - [Dependency and normalization record](#153-dependency-and-normalization-record)
     - [Exact scope](#154-exact-scope)
 16. [Conclusion](#16-conclusion)
    - [The established package](#161-the-established-package)
@@ -215,10 +215,15 @@ We work in the following clean datum throughout, unless a section explicitly var
     prime-to-$\ell$ component/fine-cover descent group, and
     $H^1_{\mathrm{nc}}$ is the quotient by congruence-continuous characters.
 12. The superspecial node classification for the chosen PEL datum supplies the
-    Hecke- and residue-Galois-equivariant node bijection (5.9), with the stated
-    component routing, stabilizer weights, and coefficient-one normalization.
-    This is the **node-uniformization hypothesis**.  It is automatic only when
-    that moduli classification has been verified for the datum at hand.
+    flagged groupoid equivalence (5.9a).  It retains the polarization and its
+    similitude multiplier, the order action and determinant condition, prime-to-$v$
+    level, automorphisms, the active finite flag, both oriented branches, geometric
+    residue Frobenius, every away-from-$v$ Hecke span, and component routing.  The
+    effective projective stabilizer orders are units in $\mathcal O$. Theorem 5.2
+    then supplies the coefficient-one and weighted-pairing normalization. This is
+    the **node-uniformization hypothesis**.
+    It is automatic only after that datum-specific moduli classification has been
+    proved.
 13. The automorphic decomposition and rational semisimplicity theorem of Book
     125 applies to both curve levels, with the full component-routing algebra
     or a proved separating component projector. Together with the generic
@@ -659,7 +664,13 @@ $$
 \tag{4.7}
 $$
 
-The first arrow is the node-uniformization hypothesis, whose normalization and consequences are audited in Chapters 5 and 6. The second follows from Book 125's curve decomposition, the corrected semistable filtration, and local Iwahori newness in Section 8.3. Only then is global Jacquet--Langlands used to interpret the common packet as the unique split cuspidal representation $\pi$. This order avoids using a totally definite transfer theorem as an unproved indefinite occurrence theorem and avoids using the desired integral comparison to prove itself.
+The first arrow is the node-uniformization hypothesis, whose normalization and consequences
+are developed in Chapters 5 and 6. The second follows from Book 125's curve decomposition, the
+corrected semistable filtration, and local Iwahori newness in Section 8.3. Only then is global
+Jacquet--Langlands used to interpret the common packet as the unique split cuspidal
+representation $\pi$. This order avoids using a totally definite transfer theorem as an
+unproved indefinite occurrence theorem and avoids using the desired integral comparison to
+prove itself.
 
 ### 4.4 Exceptional global characters
 
@@ -769,9 +780,17 @@ where $n_z$ is the thickness of the node on the neat model. In the original regu
 
 ### 5.3 The switched-algebra description of nodes
 
-The nodes have a second description which is not visible in the equation $xy=\varpi_v$. They are superspecial incidence objects. Their prime-to-$v$ quasi-isogenies form the adelic class set of $B^\dagger$.
+The nodes should have a second description which is not visible in the equation
+$xy=\varpi_v$. They are superspecial incidence objects, and the proposed description uses
+their rational PEL quasi-isogenies together with integral lattices at every finite place. The
+local chart explains why the switched algebra is the expected target; it does not classify the
+global objects in that target.
 
-We now formulate the precise datum-specific statement and audit the construction it requires. Let $U^\dagger$ be the level of (4.4), including the same central and prime-to-$v$ data as $U$. Let $W^\dagger$ be the trivial compact weight at $\tau$ in parallel weight two. Put
+Fix the complete PEL datum $\mathscr D$ used to construct $\mathscr C$, including its order,
+determinant condition, polarization convention, center, prime-to-$v$ level, and selected
+component orbit. Let $U^\dagger$ be the level of (4.4), with those same central and
+prime-to-$v$ data. Let $W^\dagger$ be the trivial compact weight at $\tau$ in parallel weight
+two. Put
 
 $$
 \mathcal X^\dagger
@@ -782,41 +801,174 @@ $$
 
 If a fixed central character is imposed, (5.8) is understood with its usual central quotient and transformation law.
 
-**Hypothesis 5.1 (node uniformization for the chosen datum).** The
-node-uniformization hypothesis of Section 1.3 is the assertion that there is a
-canonical bijection, compatible with residue Galois action, component routing,
-stabilizer weights, and all away-from-$v$ Hecke correspondences,
+The correct source is a groupoid, not the orbit set (5.8). Let
+$\mathscr Z_{\mathscr D,v}^{\mathrm{fl}}$ be the groupoid of geometric nodes with all of their
+PEL structure. Schematically an object is written
+
+$$
+z=(A,\iota,\lambda,\eta^v,H_v;\beta_0,\beta_1).
+$$
+
+Here $\lambda$ denotes the chosen polarization datum: the polarization itself in a fine
+problem, or the specified polarization class together with its similitude multiplier in a
+similitude problem. The symbol $\eta^v$ includes the full prime-to-$v$ level and central
+label, $H_v$ is the active finite incidence flag, and $(\beta_0,\beta_1)$ is the ordered pair
+of deformation branches. Morphisms are PEL isomorphisms carrying every displayed datum to the
+corresponding datum; in particular, their action on $H_v$ and their polarization multiplier
+are retained. Thus the automorphism group of $z$ is part of the object being classified.
+
+Let $\mathscr X_{\mathscr D,v}^\dagger$ be the left--right quotient groupoid. Its objects are
+elements $g\in(B^\dagger)^\times(\mathbf A_f)$ and an arrow $g\to g'$ is a pair
+$(\gamma,u)$ with
+
+$$
+g'=\gamma gu,
+\qquad
+\gamma\in(B^\dagger)^\times(F),
+\qquad
+u\in U^\dagger,
+$$
+
+with the stated central quotient when present. The chosen integral lattice datum at $v$
+supplies its active flag functor and its ordered branch functor, including node thickness.
+These decorations are part of
+the target statement; they cannot be reconstructed from the bare orbit set. Both groupoids
+also carry geometric residue Frobenius, the component-routing functor, branch reversal, and
+the spans defining every away-from-$v$ Hecke correspondence.
+
+For an object represented by $g$, write
+
+$$
+\overline I_g=
+\bigl((B^\dagger)^\times(F)\cap gU^\dagger g^{-1}\bigr)/Z_g^{\mathrm{eff}},
+\qquad
+e_g=|\overline I_g|,
+\tag{5.8a}
+$$
+
+where $Z_g^{\mathrm{eff}}$ is the central subgroup already removed by the chosen central
+problem. This is the effective projective automorphism group and its stabilizer order.
+
+**Hypothesis 5.1 (flagged node uniformization for $\mathscr D$).** There is an equivalence
+
+$$
+\Psi_{\mathscr D,v}:
+\mathscr Z_{\mathscr D,v}^{\mathrm{fl}}
+\xrightarrow{\ \sim\ }
+\mathscr X_{\mathscr D,v}^\dagger                       \tag{5.9a}
+$$
+
+which preserves the order action and determinant condition, the polarization datum and
+similitude multiplier, the full prime-to-$v$ level, automorphism groups, the active flag
+functor, and the ordered branch functor with its thickness. It is equivariant for geometric residue Frobenius and
+branch reversal, is natural for every away-from-$v$ Hecke span, and commutes with component
+routing. Under the induced isomorphism of automorphism groups, $e_z=e_{\Psi(z)}$, and these
+orders are units in $\mathcal O$.
+
+Passing to isomorphism classes gives the canonical bijection
 
 $$
 \mathcal Z\xrightarrow{\sim}\mathcal X^\dagger.
 \tag{5.9}
 $$
 
-At nonneat level the statement is required equivariantly on one fixed neat normal
-cover and is descended by exact $\Delta$-invariants when the deck-group order is a
-unit in $\mathcal O$. We do not infer regularity of a coarse quotient with fixed
-points.
+At nonneat level, (5.9a) is required equivariantly on one fixed neat normal cover and is
+descended by exact $\Delta$-invariants when the deck-group order is a unit in $\mathcal O$.
+No regularity assertion for a coarse quotient with fixed points is inferred.
 
-The first irreducible input here is a datum-specific classification theorem. The groupoid of
-superspecial PEL objects occurring as nodes, with polarization multiplier, center,
-prime-to-$v$ level, and automorphisms retained, must be equivalent to the double-coset groupoid
-of $B^\dagger$. Under this equivalence the two deformation branches, residue Frobenius,
-away-from-$v$ correspondences, and stabilizer masses must have the routing stated in
-Hypothesis 5.1. None of the direct prerequisites proves this superspecial PEL
-quasi-isogeny classification. The local equation $xy=\varpi_v$ determines two branches but
-does not classify their global node set, and rational Jacquet--Langlands compares
-representations rather than integral PEL groupoids.
+This hypothesis is the first genuinely missing geometric statement. None of the direct
+prerequisites proves essential surjectivity or full faithfulness of (5.9a). The local equation
+$xy=\varpi_v$ determines two branches but does not classify their global node groupoid, and
+rational Jacquet--Langlands compares representations rather than integral PEL objects.
 
-For a later quotient/augmentation type coefficient, the correct source theorem is the same
-equivalence with one extra item retained: the active finite flag functor and the automorphism
-action on it.  Once that **flagged** groupoid equivalence is known, no additional
-representation-classification theorem is required.  The permutation module is functorially
-the free module on the flag functor; the constant-vector and augmentation natural
-transformations of its free-module linearization, their cokernel and kernel, the flag-basis dot
-product, and coefficient-one basis vectors all transport across the equivalence.  Conversely, a bijection of node sets, or
-even an equivalence of unflagged groupoids, does not determine an isotropy representation.
-Thus the typed refinement sharpens the missing PEL classification but does not create a
-second independent local-representation input.
+There is a simple invariance test showing that the missing assertion cannot be recovered from
+the existing local models.  Replace the prime-to-$v$ neat level by a smaller normal neat level,
+or change the selected central component orbit while leaving the active $v$-adic lattice chain
+fixed.  The semistable local theory gives the same completed incidence chart, the same
+height-two Dieudonne local
+model, and the same two branch germs at every lifted node.  The global node groupoid, its
+automorphism groups after descent, its component routing, and the double quotient (5.8) all
+change with that prime-to-$v$ datum.  Hence completed local rings, even together with the
+oriented branch calculation and the active flag stabilizer, cannot determine essential
+surjectivity or full faithfulness of (5.9a).
+
+The flag-dependent consequences can nevertheless be proved once the global equivalence is
+supplied. The following is the first reusable theorem at this boundary.
+
+**Theorem 5.2 (flagged linearization and stabilizer-weighted transport).** Let $R$ be a commutative
+coefficient ring in which every $e_z$ is a unit, and assume Hypothesis 5.1. For an object $z$,
+let
+
+$$
+P_z=R[\operatorname{Fl}_v(z)],
+\qquad
+u_z(1)=\sum_{L\in\operatorname{Fl}_v(z)}[L],
+\qquad
+\operatorname{aug}_z([L])=1.
+\tag{5.9b}
+$$
+
+Put
+
+$$
+\operatorname{St}_z^+=P_z/Ru_z(1),
+\qquad
+\operatorname{St}_z^-=\ker(\operatorname{aug}_z).
+\tag{5.9c}
+$$
+
+Then $\Psi_{\mathscr D,v}$ has the following consequences.
+
+1. It identifies the constant edge module and the flag-permutation edge module with the
+   corresponding definite function modules, sending every oriented node generator, and every
+   flag-basis vector over it, to the matching characteristic function with coefficient one.
+2. It transports the natural maps $u$, $\operatorname{aug}$, their quotient
+   $\operatorname{St}^+$, their kernel $\operatorname{St}^-$, and the perfect pairing between
+   $\operatorname{St}^+$ and $\operatorname{St}^-$ induced by the flag-basis dot product.
+3. It intertwines both ordered branches, branch reversal, geometric residue Frobenius,
+   component routing, and every away-from-$v$ Hecke correspondence and its transpose.
+4. It preserves the weighted pairing
+   $$
+   \langle s,t\rangle
+   =\sum_{[z]}\frac{n_z}{e_z}\langle s_z,t_z\rangle_z,
+   \tag{5.9d}
+   $$
+   where $n_z=1$ on the clean regular model and records edge thickness after geometric base
+   change. Thus it preserves the unit stabilizer weights and the induced mass pairing.
+
+These conclusions hold after finite flat coefficient change and, on the fixed neat cover,
+after exact prime-to-$\ell$ descent. In particular, the quotient/augmentation stabilizer
+representations required by Book 174 are formal consequences of (5.9a), not a second
+classification theorem.
+
+**Proof.** An equivalence of groupoids induces a bijection on isomorphism classes and an
+isomorphism on every automorphism group. The natural isomorphism of active flag functors sends
+the free basis $[L]$ to the corresponding free basis with coefficient one. Both maps in
+(5.9b) are natural transformations of that free-module functor. Their cokernel and kernel are
+therefore transported, and the flag-basis dot product descends to the perfect pairing between
+$\operatorname{St}^+$ and $\operatorname{St}^-$. Explicitly, the dot product annihilates
+$Ru(1)$ against $\ker(\operatorname{aug})$, and the bases $[L_i]$ modulo $u(1)$ and
+$[L_i]-[L_0]$ give a unimodular matrix.
+
+For a finite groupoid and a coefficient system $V$, its section module is
+
+$$
+\Gamma(\mathscr G,V)=
+\bigoplus_{[z]}V_z^{\operatorname{Aut}(z)}.
+\tag{5.9e}
+$$
+
+Full faithfulness identifies the invariant summands. Since $e_z$ is a unit in $R$, invariants
+are exact and the orbit--stabilizer pairing on (5.9e) is precisely (5.9d). Naturality for the
+two branch functors, Frobenius, routing, and Hecke spans gives the remaining compatibilities;
+reversing a branch reverses the oriented edge on both sides. Finite flat coefficient change
+preserves the displayed constructions, and exact descent on the fixed neat cover preserves
+their kernels, cokernels, and pairings. $\square$
+
+A node-set bijection is insufficient for Theorem 5.2. Even an equivalence of unflagged
+groupoids need not identify the action on the active flag: on a one-object groupoid $BH$, two
+nonisomorphic $H$-actions can have the same object, automorphism group, and stabilizer mass.
+The active flag functor and its natural isomorphism must therefore occur in (5.9a).
 
 **Formal reduction from the superspecial classification.** A node is the point where the two possible rank-$q_v$ directions in the active height-two group cease to be distinct. The endomorphism algebra of this superspecial object changes local invariant at $v$ and at the unique split real place. This produces $B^\dagger$. Prime-to-$v$ level structures turn quasi-isogeny classes into the double quotient (5.8). The following argument records the normalization and inverse constructions that the missing classification theorem would supply; it is not a proof of that classification from the five catalogued prerequisites.
 
@@ -828,42 +980,72 @@ $$
 
 be its quasi-isogeny group. Away from $v$ the superspecial condition changes nothing, so the local endomorphism algebra is identified with $B_w$ and hence with $B_w^\dagger$. At $v$, the connected and étale directions have merged into the unique isoclinic height-two object. Its rational endomorphism algebra is the quaternion division algebra over $F_v$, so the local invariant is changed by $1/2$.
 
-At the distinguished real place, the polarization involution makes the quasi-isogeny group compact modulo center. Thus its quaternion algebra is ramified at $\tau$. At every other real place $B$ was already ramified and remains so. The local invariants of $\operatorname{End}^0(A_z)$ are therefore exactly those of $B^\dagger$. Classification of quaternion algebras gives
+At the distinguished real place, the polarization involution makes the quasi-isogeny group compact modulo center. Thus its quaternion algebra is ramified at $\tau$. At every other real place $B$ was already ramified and remains so. The expected local invariants of the rational PEL quasi-isogeny algebra are therefore those of $B^\dagger$. Classification of quaternion algebras identifies the rational target as
 
 $$
-\operatorname{End}^0(A_z)\simeq B^\dagger.
+I_z\simeq(B^\dagger)^\times,
 \tag{5.10}
 $$
 
-Fix one base node $z_0$ and one identification in (5.10). A prime-to-$v$ quasi-isogeny from $A_{z_0}$ to another node transports the level structure and determines an element of $(B^\dagger)^\times(\mathbf A_f)$. Changing the quasi-isogeny on the left by a rational self-quasi-isogeny and on the right by the chosen level changes the element by $(B^\dagger)^\times(F)$ and $U^\dagger$. Hence a node gives a class in (5.8).
+compatibly with the polarization similitude character and the effective center. This local
+invariant calculation explains (5.8), but it neither proves that (5.10) holds uniformly for
+every node nor fixes its integral lattices and flags.
 
-Conversely, an adelic class modifies the prime-to-$v$ Tate lattices of $A_{z_0}$ and the maximal $v$-adic lattice in its division isocrystal. The usual lattice-isogeny construction produces a PEL object in the same superspecial isogeny class with the transported level. Its two deformation directions give a node of the incidence model. Left and right changes produce an isomorphic object, so the construction descends to (5.8).
+Fix one base node $z_0$ and one identification in (5.10). A rational PEL quasi-isogeny from
+$A_{z_0}$ to another node transports its adelic lattices and prime-to-$v$ level structure and
+therefore determines an element of $(B^\dagger)^\times(\mathbf A_f)$. Changing the
+quasi-isogeny on the left by a rational self-quasi-isogeny and the integral markings on the
+right by the chosen level changes the element by $(B^\dagger)^\times(F)$ and $U^\dagger$.
+Hence the proposed functor sends a node to a class in (5.8).
 
-The two constructions are inverse because a prime-to-$v$ quasi-isogeny is determined by its action on all rational Tate modules together with the polarization multiplier, and the chosen $v$-adic maximal lattice fixes the remaining isogeny ambiguity. Conditional on the stated classification of superspecial objects and their Tate lattices, this proves bijectivity.
+Conversely, an adelic class prescribes prime-to-$v$ Tate lattices and a maximal $v$-adic
+lattice in the division isocrystal of $A_{z_0}$. The missing classification must prove that
+the lattice-isogeny construction realizes these data by a PEL object in the same superspecial
+isogeny class, with the required polarization, order action, determinant condition, level, and
+active flag. It must also prove that its two deformation directions give the ordered branches
+of a node and that left and right changes give an isomorphic flagged object.
+
+The two constructions are inverse only if the global classification proves that a rational
+PEL quasi-isogeny is determined by all of its local realizations together with the
+polarization multiplier and that the chosen integral $v$-adic lattice and active flag remove
+the remaining ambiguity. Conditional on those assertions, the construction gives (5.9a), not
+merely the bijection (5.9).
 
 This last sentence is exactly where a classification theorem, rather than formal
-double-coset algebra, enters.  Computing $\operatorname{End}^0(A_z)\simeq B^\dagger$ for
-each already given node does not prove that all nodes lie in one PEL quasi-isogeny class.
+double-coset algebra, enters. Computing the rational quasi-isogeny group
+$I_z\simeq(B^\dagger)^\times$ for each already given node does not prove that all nodes lie
+in one PEL quasi-isogeny class.
 Nor does it prove that every admissible adelic lattice is realized by an abelian variety with
 the required integral order action, polarization type, determinant condition, and incidence
 flag.  The first missing theorem must simultaneously give:
 
 1. essential surjectivity of the basic PEL quasi-isogeny class onto the node groupoid;
-2. full faithfulness of prime-to-$v$ quasi-isogenies after the polarization multiplier and
-   center are retained;
+2. full faithfulness of admissible PEL quasi-isogenies and their integral stabilizers after
+   the polarization multiplier and center are retained;
 3. classification of the integral maximal $v$-adic Dieudonne modules and their active
    incidence flags; and
 4. compatibility of those integral constructions with automorphisms and the two deformation
    branches.
 
 Only after these four clauses are known do the displayed left and right quotient operations
-prove an equivalence of groupoids.  A rational endomorphism-algebra calculation, Tate modules
+prove an equivalence of groupoids. A rational endomorphism-algebra calculation, Tate modules
 away from $v$, or the local equation $xy=\varpi_v$ proves none of essential surjectivity,
-integral realization, or the flagged stabilizer action.
+integral realization, or the flagged stabilizer action. Theorem 5.2 begins after this exact
+boundary and does not weaken it.
 
-An away-from-$v$ double coset modifies exactly one prime-to-$v$ lattice. The same modification describes both the PEL correspondence on nodes and right multiplication on (5.8), proving Hecke equivariance. Geometric Frobenius acts on the isocrystal and level structure on both sides, proving Galois equivariance.
+An away-from-$v$ double coset modifies exactly one prime-to-$v$ lattice. Once the candidate
+functor has been proved to be an equivalence, this modification must agree with both the PEL
+correspondence on nodes and right multiplication on (5.8). Likewise, geometric Frobenius acts
+on the isocrystal and level structure on both sides. These are the Hecke and Frobenius
+naturality clauses of Hypothesis 5.1; the local invariant calculation alone does not prove
+them.
 
-The reduction uses the moduli interpretation of the already constructed semistable model and the stated superspecial quasi-isogeny classification. It does not assume the integral comparison that (5.9) is meant to establish. Conversely, without that classification the displayed construction is a proof sketch, not a consequence of rational Jacquet--Langlands; this is why (5.9) is an explicit hypothesis of the complete theorem.
+The reduction uses the moduli interpretation of the already constructed semistable model and
+the stated superspecial quasi-isogeny classification. It does not assume the integral lattice
+comparison later deduced from (5.9a). Conversely, without that classification the displayed
+construction is only the definition of a candidate functor; it is not a consequence of
+rational Jacquet--Langlands. This is why (5.9a) remains an explicit hypothesis of the complete
+theorem.
 
 ### 5.4 Hecke equivariance of the node dictionary
 
@@ -979,7 +1161,10 @@ $$
 
 It is compatible with finite flat coefficient extension, adjoint transpose, and reduction modulo every power of $\varpi$.
 
-**Proof.** Hypothesis 5.1 identifies the edge module with the full definite function module and intertwines Hecke and Galois actions. Localization of the incidence sequence gives (6.3). Non-Eisenstein localization removes the norm-character block, so the right side of (6.3) is precisely the right side of (6.4).
+**Proof.** Hypothesis 5.1 and Theorem 5.2 identify the edge module with the full definite
+function module and intertwine Hecke and Galois actions. Localization of the incidence
+sequence gives (6.3). Non-Eisenstein localization removes the norm-character block, so the
+right side of (6.3) is precisely the right side of (6.4).
 
 All modules in (6.1) are finite free. Finite flat coefficient extension preserves exactness and the node bijection. The transpose compatibility is (5.12). Since (6.4) is an integral isomorphism, reduction modulo $\varpi^n$ preserves it for every $n$. $\square$
 
@@ -995,7 +1180,12 @@ $$
 \tag{6.5}
 $$
 
-where $e_z$ is the effective projective stabilizer order. At neat level $e_z=1$. Under tame descent this notation means the pairing obtained on the fixed neat cover and then restricted to exact $\Delta$-invariants; in an orbit basis it has the displayed unit stabilizer weights. The node-uniformization hypothesis includes equality with the definite mass pairing. Merely knowing the underlying sets are in bijection would not determine this normalization.
+where $e_z$ is the effective projective stabilizer order. At neat level $e_z=1$. Under tame
+descent this notation means the pairing obtained on the fixed neat cover and then restricted to
+exact $\Delta$-invariants; in an orbit basis it has the displayed unit stabilizer weights.
+Theorem 5.2 identifies this form with the definite mass pairing from the flagged groupoid
+equivalence. Merely knowing the underlying sets are in bijection would not determine this
+normalization.
 
 Restricting (6.5) to cycles gives the monodromy pairing (5.7). Hence the diagram
 
@@ -1024,7 +1214,7 @@ $$
 
 Thus a nonzero component group is compatible with the lattice isomorphism (6.4). It measures failure of the restricted graph or mass pairing to be unimodular. It does not measure a discrepancy between the curve and definite Hecke orders. It is also not the whole cokernel of monodromy on $Q$: that cokernel has the additional quotient $\mathcal C_{\mathrm{br},v}$ in (2.7b).
 
-There is a useful explicit audit. Suppose one connected special fiber has two vertices joined by $m$ unit edges. With cycle basis
+There is a useful explicit check. Suppose one connected special fiber has two vertices joined by $m$ unit edges. With cycle basis
 
 $$
 c_i=e_i-e_m\qquad(1\le i<m),
@@ -1954,12 +2144,21 @@ Proposition 9.8 proves $({\rm RGC}_v)$ on component-routed and contracted terms.
 permutation and quotient/augmentation rows used by Book 174, Proposition 9.9 supplies the
 strict ray field, vertical unit, endpoint factors, Frobenius orbits, and active/ray
 intersection; Proposition 9.10 computes the completed tubes, actions, and generization maps;
-and Corollary 9.11 proves $({\rm PNS}_v)_{\rm act}$.  Thus the extension is proved for those
-actual rows.  An arbitrary intermediate representation or arbitrary cyclic ray datum still
+and Corollary 9.11 proves $({\rm PNS}_v)_{\rm act}$. Book 174, Theorem
+$({\rm TPE}_v)$, combines those results with its strict global ray choice and proves the typed
+parahoric extension for the actual permutation, quotient, and augmentation rows. Thus the
+extension is proved for those actual rows. An arbitrary intermediate representation or arbitrary cyclic ray datum still
 requires $({\rm HDB}_v)_{\rm gen}$ and $({\rm BTK})_{\rm gen}$; a generic stable lattice or
 objectwise finite flatness alone does not prove that general extension.
 
-Book 174, Proposition 6.3 later proves, from the proved $({\rm PNS}_v)_{\rm act}$ and its other typed inputs and
+Theorem 5.2 supplies a different interface: conditional on the still-missing equivalence
+(5.9a), it transports those actual flag rows from the node groupoid to the switched definite
+groupoid with coefficient one and the correct stabilizer pairing. It neither proves (5.9a)
+from $({\rm PNS}_v)_{\rm act}$ or $({\rm TPE}_v)$ nor uses the flagged classification to
+reprove their completed-tube and generization calculations.
+
+Book 174, Proposition 6.3 later proves, from the proved $({\rm PNS}_v)_{\rm act}$,
+$({\rm TPE}_v)$, its other typed inputs, and
 Book 125's component-routed semisimple decomposition on the common principal cover, that the
 curve-new and graph generic Hecke kernels agree. Thus typed generic support is not a further
 independent hypothesis. Apart from the quotient/augmentation projector deductions in the
@@ -2209,7 +2408,7 @@ Pull--norm composition proves clause 8. For clause 9, use the signed Gram vector
 
 For clause 11, assume the lower localization is zero. The normalization contribution then vanishes. Component cleanliness makes $q_\Gamma$ invertible after reduction, and branch cleanliness keeps $X_v^\vee\to L_0$ injective after reduction. Thus zero monodromy kills the top, and adjoint-stable perfect duality kills the bottom. The whole new block would vanish, a contradiction. Thus the lower block is nonzero. All compatibility assertions have already been checked for the constituent maps and pairings, so they hold for the assembled theorem. $\square$
 
-### 15.3 Dependency and normalization audit
+### 15.3 Dependency and normalization record
 
 The logical sources and retained hypotheses are as follows.
 
@@ -2220,9 +2419,9 @@ The logical sources and retained hypotheses are as follows.
 | Book 104: global Jacquet--Langlands | selected noncharacter packet bijection from the totally definite algebra, multiplicity, and good Hecke data | totally real algebraic weight; norm characters removed; rational comparison only | split interpretation of the graph packets after geometric occurrence is proved |
 | Book 125: automorphic decomposition of Shimura-curve $H^1$ | packet decomposition and rational semisimplicity on the actual one-split-place curve at both levels | full component routing or a separating projector; characteristic zero only | generic old/new support on $Q_E$ |
 | Book 139: conditional saturated Ihara theory | exact tree kernel, conditional primitive old image and free quotient, Gram matrix, graph discriminant, branch Smith correction | proper clean curves; constant coefficients; $v\nmid\ell$; neat or tame descent; non-Eisenstein localization plus the independent abelian Ihara condition (1.5d) | uses its corrected filtration in raising, lowering, and order comparison |
-| node uniformization | superspecial nodes identified with the switched definite class set, including routing, weights, and coefficient-one scale | an explicit external hypothesis for the chosen PEL datum | integral graph--definite lattice map |
+| node uniformization | superspecial nodes identified with the switched definite class set, including routing, weights, and coefficient-one scale | the flagged PEL groupoid equivalence (5.9a), an explicit external hypothesis for the chosen datum; the local node chart does not imply it | integral graph--definite lattice map and formal flag-linearized transport |
 
-The direct-dependency audit adds Book 125's source for the generic-support proof to the local
+The direct-dependency record adds Book 125's source for the generic-support proof to the local
 Jacquet--Langlands, Hecke, global Jacquet--Langlands, and Ihara sources.  The conditional typed
 interface in Chapter 13 also directly uses Book 22's ramified node complex, Book 122's normalized
 tower reduction, and Book 138's primary--companion lattices. The exact current row is
@@ -2240,7 +2439,7 @@ The downstream interface is equally exact.
 |---|---|---|
 | Book 176 | one-prime special raising/lowering and common away-from-$v$ acting order | (1.5d), node uniformization, Book 125's component-routing source condition, both finite modules in (8.3a), and Section 11.4 before using a scalar as an augmented congruence ideal |
 | Book 170 | free $Q$, equality of faithful inner-form trace orders, and geometric lowering criterion | freeness and order equality are conditional on abelian Ihara; lowering requires both $\Phi[\varpi]=0$ and $\mathcal C_{\mathrm{br},v}[\varpi]=0$ |
-| Book 174 | coefficient-one constant graph--definite map $X_v\simeq S^\dagger$ | Book 140 does not give $\operatorname{gr}_0Q=X_v^\vee$; for the actual quotient/augmentation rows Book 122 proves $({\rm PNS}_v)_{\rm act}$, while Book 174 still retains $({\rm AIH}_{\mathscr F})$, unit-order coarse descent, and the flagged node-groupoid form of node uniformization, together, only in the nonbanal range, with the quotient-new and filtered-cofiber assertions (5.0d), (6.0d); arbitrary compact-type rows remain subject to $({\rm PNS}_v)_{\rm gen}$ |
+| Book 174 | coefficient-one constant graph--definite map $X_v\simeq S^\dagger$ and Theorem 5.2's formal flag linearization after (5.9a) | Book 140 does not give $\operatorname{gr}_0Q=X_v^\vee$; for the actual quotient/augmentation rows Book 122 proves $({\rm PNS}_v)_{\rm act}$ and Book 174 proves $({\rm TPE}_v)$, while Book 174 still retains $({\rm AIH}_{\mathscr F})$, unit-order coarse descent, and the flagged node-groupoid form of node uniformization, together, only in the nonbanal range, with the quotient-new and filtered-cofiber assertions (5.0d), (6.0d); arbitrary compact-type rows remain subject to $({\rm PNS}_v)_{\rm gen}$ |
 | Book 175 | no inner-form order index and the signed Gram Smith factor | the factor is an augmented congruence ideal only under Section 11.4; scalar/vexing refinements and all fixed-prime Tor/augmentation statements require the separate Book 174 hypotheses |
 
 In particular, no downstream patching or reciprocity argument can retroactively prove (1.5d), delete $\mathcal C_{\mathrm{br},v}$, or turn the conditional several-prime discussion into a theorem.
@@ -2267,6 +2466,14 @@ Changing a row requires changing every dependent formula. In particular, normali
 ### 15.4 Exact scope
 
 The theorem proves a complete **conditional** one-prime integral level-change statement for the clean compact weight-two Shimura curves and their switched totally definite inner forms. Its unresolved conditions are the abelian Ihara vanishing which Book 139 leaves open and the datum-specific node classification. Under Book 125's stated component-routing source condition, generic support is proved in Section 8.3 from its semisimple decomposition and the corrected filtration. It covers the full two-map Iwahori lattice and its special sign blocks when the roots separate. Type-enhanced variants require the longer hypothesis list of Section 13.1, not merely extension of a type sheaf.
+
+The actual-row $({\rm PNS}_v)_{\rm act}$ and $({\rm TPE}_v)$ theorems retained in Section
+13.1 construct and compare the normalized bad-fiber coefficient rows; they do not imply the
+global equivalence (5.9a). Conversely, Theorem 5.2 transports those rows across the switched
+groupoid only after (5.9a) is supplied and does not reprove their local geometry. The
+constant-coefficient generic-support equality remains the proved result of Section 8.3, while
+the typed generic-support result begins only after the separate typed filtration inputs listed
+in Section 13.1.
 
 It does not cover Eisenstein maximal ideals, failure of (1.5d), coefficient characteristic equal to the residue characteristic at $v$, noncompact boundary cohomology, $\ell$-divisible stabilizers, primitive wild types, or a projector defined only over the fraction field. It does not turn torsion-freeness into an integral old--new direct sum. It does not assert that either the Néron component group or $\mathcal C_{\mathrm{br},v}$ vanishes.
 
