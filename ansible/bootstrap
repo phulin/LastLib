@@ -25,7 +25,16 @@ if [[ ! -r "${pat_file}" ]]; then
   exit 1
 fi
 
-pat_mode="$(stat -c '%a' -- "${pat_file}")"
+if pat_mode="$(stat -c '%a' -- "${pat_file}" 2>/dev/null)"; then
+  : # GNU stat (Linux)
+elif pat_mode="$(stat -f '%Lp' -- "${pat_file}" 2>/dev/null)"; then
+  : # BSD stat (macOS and the BSDs)
+else
+  printf 'error: could not determine permissions for PAT file %s\n' \
+    "${pat_file}" >&2
+  exit 1
+fi
+
 if (( (8#${pat_mode} & 8#077) != 0 )); then
   printf 'error: PAT file %s is accessible by group or others (mode %s)\n' \
     "${pat_file}" "${pat_mode}" >&2
@@ -34,6 +43,7 @@ if (( (8#${pat_mode} & 8#077) != 0 )); then
 fi
 
 export LASTLIB_GITHUB_PAT_FILE="${pat_file}"
+export LASTLIB_ANSIBLE_HOST_PATTERN="${target_host}"
 
 exec ansible-playbook \
   --inventory "${target_host}," \

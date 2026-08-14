@@ -1,6 +1,8 @@
 ---
 - name: Provision a LastLib Ubuntu host
-  hosts: lastlib
+  hosts: >-
+    {{ lookup('ansible.builtin.env', 'LASTLIB_ANSIBLE_HOST_PATTERN')
+       | default('lastlib', true) }}
   become: true
   gather_facts: true
 
