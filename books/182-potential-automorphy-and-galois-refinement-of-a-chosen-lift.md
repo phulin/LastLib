@@ -20,6 +20,7 @@
    - [Split local data and the coefficient-prime correction](#42-split-local-data-and-the-coefficient-prime-correction)
    - [Auxiliary active sets and target paths](#43-auxiliary-active-sets-and-target-paths)
    - [Branch corrections and bottom occurrence](#44-branch-corrections-and-bottom-occurrence)
+   - [The direct definite split-top boundary](#45-the-direct-definite-split-top-boundary)
 5. [Potential automorphy of the chosen lift](#5-potential-automorphy-of-the-chosen-lift)
    - [Automorphy at the point field](#51-automorphy-at-the-point-field)
    - [Passage to the Galois top](#52-passage-to-the-galois-top)
@@ -515,6 +516,75 @@ auxiliary-active finite-set certificate, target path, branch corrections, and bo
 package for the Frey datum. This is the exact conditional boundary inherited by the present
 volume; it contains no singleton moving presentation.
 
+### 4.5 The direct definite split-top boundary
+
+The preferred split-top route permits a sharper audit than an ordered curve-lowering path.
+Assume Book 178's split specialization and its direct
+$({\rm IAV}_{P_{\rm aux}(A)})$ certificate. Its finite-set transfer makes the auxiliary Tate
+module automorphic, and the cross-prime comparison gives a parallel-weight-two upper target
+packet $\Pi^{\rm up}/F$ with residual representation $\bar\rho|_{G_F}$. The upper localization
+is nonzero.
+
+Because $F$ has positive even degree, there is a quaternion algebra $B^{\rm def}/F$ ramified
+at every real place and at no finite place. The weight-two archimedean packet is discrete
+series, so global Jacquet--Langlands transfers $\Pi^{\rm up}$ to $B^{\rm def,\times}$. Choose
+neat finite level containing its finite vector. The resulting definite class-set module is
+finite free. Scale a simultaneous eigenvector to be primitive; its reduction is nonzero and is
+localized at the residual maximal ideal of $\bar\rho|_{G_F}$. Thus:
+
+**Proposition 4.1 (direct upper definite occurrence).** Conditional on the preferred split
+Book 178 handoff, the upper target residual system occurs nontrivially on a totally definite
+quaternionic module. This construction uses rational packet transfer followed by a fresh
+primitive definite lattice. It uses no integral comparison with the compact curve carrier,
+no node uniformization, and no constant-row abelian-Ihara hypothesis.
+
+**Proof.** The parity and local transfer assertions give the definite packet. A function
+module on a finite definite class set is finite free once the stabilizers are made prime to the
+coefficient characteristic. A nonzero eigenline in its generic fiber meets that lattice in a
+rank-one fractional ideal. Scaling its generator to be primitive gives a nonzero reduction.
+The good Hecke character reduces to that of $\bar\rho|_{G_F}$ by Book 178's cross-prime stable-
+lattice comparison; absolute irreducibility and Brauer--Nesbitt identify the residual global
+representation. $\square$
+
+This proposition removes the curve-switch step, but not target minimalization. Let
+$P_{\rm tar}$ be the actual finite set where $\Pi^{\rm up}$ has more level than the exact
+signed-special minimal problem. The required direct theorem is the following finite-set
+interface.
+
+**Missing theorem $({\rm DMS}_{P_{\rm tar}})$ (definite minimal-support transfer).** Starting
+from the upper definite localization of Proposition 4.1 and the represented signed-special
+minimal local problem, construct paired upper and minimal local rings and synchronized definite
+Taylor--Wiles systems whose common residual support transfers to the minimal side. Recover at
+finite level a nonzero minimal localization and verify the precise saturation,
+primary--companion pairing, stabilizer, generic-reducedness, branchwise integral attachment,
+diamond-torsor, and module-augmentation hypotheses of Book 173.
+
+The statement is finite-set and uses the actual $P_{\rm tar}$; no singleton reduction is
+allowed. It is also not a second invocation of Book 176's $({\rm IAV}_S)$. That theorem proves
+automorphy of an already existing named characteristic-zero desired point. Before Book 181,
+the minimal signed-special problem has no known characteristic-zero point. Here the conclusion
+is instead residual occurrence and the exact clean minimal datum from which Book 173 can prove
+the restricted $R=\mathbb T$ theorem.
+
+Consequently the preferred construction has the exact form
+
+$$
+({\rm IAV}_{P_{\rm aux}})
+\Longrightarrow \Pi^{\rm up}
+\Longrightarrow \text{upper definite occurrence}
+\xRightarrow{({\rm DMS}_{P_{\rm tar}})}
+(\mathrm{Seed}_{\mathrm{SP}}^{181}).
+\tag{4.3}
+$$
+
+The first implication is Book 178's conditional finite-set theorem and the middle implication
+is Proposition 4.1. Only the last arrow is missing after those hypotheses. This route uses
+neither the retired one-exceptional-sheet geometry nor the indefinite curve-switch
+$({\rm AIH}_{\mathscr F})$ family. Book 181 further shows that its lift-existence argument
+would need only the weaker restricted-special-fibre certificate
+$(\mathrm{SF}_{\mathrm{SP}})$, but the present volume uses the full seed to make the chosen
+point automorphic over $F$.
+
 ## 5. Potential automorphy of the chosen lift
 
 ### 5.1 Automorphy at the point field
@@ -941,8 +1011,10 @@ space, and $(\mathrm{SS}_{\mathrm{array}})$ identifies that space with its globa
 semisimplification by (7.4), proving the fifth assertion. $\square$
 
 The theorem has two exact conditional boundaries. The earlier one is the controlled residual
-seed summarized in Chapter 4; no preceding volume presently proves its full finite-set
-auxiliary-active, target-path, branch-correction, and bottom-structural package. The later one
+seed summarized in Chapter 4. On the preferred split route, after the separate
+$({\rm IAV}_{P_{\rm aux}})$ certificate, Proposition 4.1 supplies upper definite occurrence
+and the smallest remaining source is $({\rm DMS}_{P_{\rm tar}})$; no preceding volume proves
+that target-minimal support theorem and its clean bottom ledger. The later one
 is the raw-carrier and ambient-semisimplicity hypothesis of Chapter 7. Basic carrier existence
 does not close it, while Proposition 8.1 shows that it is not needed for the auxiliary
 unramified pairs.
