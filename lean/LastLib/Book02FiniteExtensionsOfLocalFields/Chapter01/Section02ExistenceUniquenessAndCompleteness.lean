@@ -55,8 +55,12 @@ theorem chapter01_finite_extension_prime_valuation_correspondence
 /-- The prime/valuation correspondence turns uniqueness of a branch into
 uniqueness of the corresponding maximal ideal, and conversely. -/
 theorem chapter01_unique_prime_iff_unique_valuation_extension
-    {A B K L Γ : Type*} [CommRing A] [IsLocalRing A]
-    [CommRing B] [Algebra A B] [Field K] [Field L] [Algebra K L]
+    {A B K L Γ : Type*} [CommRing A] [IsDomain A] [ValuationRing A]
+    [IsIntegrallyClosed A]
+    [Field K] [Field L] [CommRing B] [Algebra A B] [Algebra B L]
+    [Algebra A L] [IsScalarTower A B L] [IsIntegralClosure B A L]
+    [Algebra A K] [IsFractionRing A K] [Algebra K L] [FiniteDimensional K L]
+    [IsScalarTower A K L]
     [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ)
     (hcor :
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ExtensionPrimeCorrespondence

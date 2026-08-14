@@ -71,6 +71,8 @@ structure Chapter06AdeleData
     IsOpen (Set.range finiteIntegralEmbedding)
   diagonal_injective :
     Function.Injective (fun a : K => (globalToInfinite a, globalToFinite a))
+  finite_diagonal_injective :
+    Function.Injective globalToFinite
   diagonal_closed :
     IsClosed (Set.range (fun a : K => (globalToInfinite a, globalToFinite a)))
   finite_diagonal_dense :
@@ -314,15 +316,13 @@ The finite generation is over the integral coefficient ring `R`, while
 fullness is measured after extending scalars to the ambient field `F`.
 Using `Submodule.span R` here would force an `R`-submodule to be `⊤`, and
 would therefore not describe an integral lattice in an `F`-vector space.
-The fullness witness is required to act by a nonzero scalar in `F`; this
-avoids making the condition vacuous when the coefficient map is not injective. -/
+The second conjunct records fullness after extending scalars to `F` directly. -/
 def Chapter06ModuleLattice
     (R F V : Type*) [CommRing R] [Field F] [AddCommGroup V]
     [Algebra R F] [Module F V] [Module R V] [IsScalarTower R F V]
     (L : Submodule R V) : Prop :=
   Module.Finite R L ∧
-    ∀ v : V, ∃ a : R, (algebraMap R F a) ≠ 0 ∧
-      (algebraMap R F a) • v ∈ L
+    Submodule.span F (L : Set V) = ⊤
 
 /-- The local additive module relation for a Haar measure. -/
 def Chapter06LocalMeasureModule
@@ -406,21 +406,23 @@ variable [Field K] [CommRing O] [AddCommGroup KInf] [AddCommGroup Af]
 variable [MeasurableSpace KInf] [MeasurableSpace Af]
 
 structure Chapter06AdelicMeasureData
-    (P : Chapter06AdeleData K O KInf Af Ohat) (D : Set KInf) where
+    (P : Chapter06AdeleData K O KInf Af Ohat)
+    (D : Chapter06ArchimedeanCell P) where
   infiniteMeasure : Measure KInf
   finiteMeasure : Measure Af
   r₂ : ℕ
   discriminant : ℝ
   finiteIntegral_range_measurable :
     MeasurableSet (Set.range P.finiteIntegralEmbedding)
-  archimedean_cell_measurable : MeasurableSet D
+  archimedean_cell_measurable : MeasurableSet D.carrier
   finiteIntegral_measure_one :
     finiteMeasure (Set.range P.finiteIntegralEmbedding) = 1
   archimedean_cell_volume :
-    infiniteMeasure D =
+    infiniteMeasure D.carrier =
       ENNReal.ofReal (chapter06OrdinaryCovolume r₂ discriminant)
 
-variable {P : Chapter06AdeleData K O KInf Af Ohat} {D : Set KInf}
+variable {P : Chapter06AdeleData K O KInf Af Ohat}
+  {D : Chapter06ArchimedeanCell P}
 
 def chapter06AdelicProductMeasure
     (M : Chapter06AdelicMeasureData P D) :
@@ -433,7 +435,7 @@ def chapter06AdelicProductMeasure
    quantity honest at this layer. -/
 def chapter06AdelicFundamentalSetMass
     (M : Chapter06AdelicMeasureData P D) : ℝ≥0∞ :=
-  chapter06AdelicProductMeasure M (chapter06FundamentalSet P D)
+  chapter06AdelicProductMeasure M (chapter06FundamentalSet P D.carrier)
 
 /- The quotient Haar measure is separate analytic input.  The quotient-volume
    record deliberately does not assume that its value is the prequotient set
@@ -444,7 +446,8 @@ structure Chapter06AdelicQuotientVolumeData
   quotientVolume : ℝ≥0∞
 
 def chapter06AdelicQuotientCovolume
-    {P : Chapter06AdeleData K O KInf Af Ohat} {D : Set KInf}
+    {P : Chapter06AdeleData K O KInf Af Ohat}
+    {D : Chapter06ArchimedeanCell P}
     (M : Chapter06AdelicMeasureData P D)
     (Q : Chapter06AdelicQuotientVolumeData M) : ℝ≥0∞ :=
   Q.quotientVolume

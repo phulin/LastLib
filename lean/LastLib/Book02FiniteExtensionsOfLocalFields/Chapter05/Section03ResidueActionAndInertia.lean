@@ -217,8 +217,6 @@ theorem residue_action_surjective_when_residue_separable
       (IsLocalRing.ResidueField w.valuationSubring)]
     [FiniteDimensional (IsLocalRing.ResidueField v.valuationSubring)
       (IsLocalRing.ResidueField w.valuationSubring)]
-    [Normal (IsLocalRing.ResidueField v.valuationSubring)
-      (IsLocalRing.ResidueField w.valuationSubring)]
     (hbase : ∀ σ : chapter05DecompositionGroup F w.valuationSubring, ∀ x :
       IsLocalRing.ResidueField v.valuationSubring,
       chapter05ResidueAction F w.valuationSubring σ

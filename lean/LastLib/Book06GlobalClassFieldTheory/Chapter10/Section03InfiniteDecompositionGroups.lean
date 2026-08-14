@@ -90,6 +90,8 @@ structure Chapter10FinitePlaceReciprocityData
     valuation uniformizer = Multiplicative.ofAdd 1
   globalInertia : Subgroup (Gal(Kab / K))
   [globalInertia_normal : globalInertia.Normal]
+  globalInertia_le_decompositionGroup :
+    globalInertia ≤ Chapter10LocalGlobalReciprocitySquare.decompositionGroup S
   units_map_to_inertia :
     valuation.ker.map (Chapter10LocalGlobalReciprocitySquare.globalLocalArtin S) ≤ globalInertia
   arithmeticFrobenius : Gal(Kab / K) ⧸ globalInertia

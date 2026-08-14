@@ -92,20 +92,22 @@ theorem chapter06_product_formula_iff_principal_volume_preserving
     exact ⟨S, htail, hproduct, h a ha⟩
 
 theorem chapter06_adelic_product_measure_fundamental_set_mass
-    {P : Chapter06AdeleData K O KInf Af Ohat} {D : Set KInf}
+    {P : Chapter06AdeleData K O KInf Af Ohat}
+    {D : Chapter06ArchimedeanCell P}
     [MeasurableSpace KInf] [MeasurableSpace Af]
     (M : Chapter06AdelicMeasureData P D)
     [SFinite M.finiteMeasure] :
     chapter06AdelicFundamentalSetMass M =
       ENNReal.ofReal (chapter06OrdinaryCovolume M.r₂ M.discriminant) := by
   change (M.infiniteMeasure.prod M.finiteMeasure)
-      (D ×ˢ Set.range P.finiteIntegralEmbedding) = _
+      (D.carrier ×ˢ Set.range P.finiteIntegralEmbedding) = _
   rw [Measure.prod_prod]
   rw [M.archimedean_cell_volume, M.finiteIntegral_measure_one]
   simp
 
 theorem chapter06_adelic_quotient_covolume
-    {P : Chapter06AdeleData K O KInf Af Ohat} {D : Set KInf}
+    {P : Chapter06AdeleData K O KInf Af Ohat}
+    {D : Chapter06ArchimedeanCell P}
     [MeasurableSpace KInf] [MeasurableSpace Af]
     (M : Chapter06AdelicMeasureData P D)
     [SFinite M.finiteMeasure]
@@ -120,7 +122,8 @@ theorem chapter06_adelic_quotient_covolume
 /-- With ordinary Lebesgue measure at real places and ordinary planar measure
     at complex places, the quotient has the displayed covolume. -/
 theorem chapter06_ordinary_adelic_covolume_formula
-    {P : Chapter06AdeleData K O KInf Af Ohat} {D : Set KInf}
+    {P : Chapter06AdeleData K O KInf Af Ohat}
+    {D : Chapter06ArchimedeanCell P}
     [MeasurableSpace KInf] [MeasurableSpace Af]
     (M : Chapter06AdelicMeasureData P D)
     [SFinite M.finiteMeasure]

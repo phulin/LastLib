@@ -1,0 +1,11 @@
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter04.Section01TheExceptionalIdealAndNormalDirections
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter04.Section02TotalAndStrictTransforms
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter04.Section03MultiplicityAtARegularPoint
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter04.Section04TransformingABoundary
+
+namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter04
+
+/-! Aggregator for Book 12, Chapter 4: exceptional divisors, transforms,
+multiplicity, and boundary coefficients. -/
+
+end LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter04

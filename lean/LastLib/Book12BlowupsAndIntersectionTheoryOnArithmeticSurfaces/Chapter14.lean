@@ -1,0 +1,13 @@
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter14.Dependencies
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter14.Section01SolvingTheBalancingEquations
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter14.Section02IntegralDataAndRationalCorrections
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter14.Section03TheCorrectedLocalPairing
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter14.Section04FunctorialityAndBaseChange
+
+/-!
+# Book 12, Chapter 14: vertical corrections and component pairings
+
+The aggregator exposes the shared component-matrix interfaces and the four
+source-order sections: balancing equations, integral and rational data, the
+corrected local pairing, and functoriality/base change.
+-/

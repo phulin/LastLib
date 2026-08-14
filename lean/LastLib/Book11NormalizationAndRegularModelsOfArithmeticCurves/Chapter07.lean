@@ -1,0 +1,17 @@
+import LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter07.Dependencies
+import LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter07.Section01TheUniversalRemedyForAnIdeal
+import LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter07.Section02ChartsAndExceptionalCurves
+import LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter07.Section03NormalizedBlowups
+import LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter07.Section04LocalityAndProjectivity
+
+/-!
+# Chapter 7: Blowups and normalized blowups
+
+This aggregator exposes the chapter in source order: the universal blowup interface, affine charts
+and exceptional curves, normalized Rees algebras, and locality/projectivity of the resulting
+modifications.
+-/
+
+namespace LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter07
+
+end LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter07

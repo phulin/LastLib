@@ -1,0 +1,15 @@
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter13.Dependencies
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter13.Section01TheTorsorIdentity
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter13.Section02LocalTrivialityAndEffectivity
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter13.Section03ContractedProductsAndTwisting
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter13.Section04ExamplesAndBoundaryCases
+
+/-!
+# Chapter 13: Torsors
+
+Aggregator for the source-order API of §§13.1–13.4.
+-/
+
+namespace LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter13
+
+end LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter13

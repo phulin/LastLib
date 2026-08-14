@@ -1,0 +1,12 @@
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter11.Dependencies
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter11.Section01FourFundamentalFormulas
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter11.Section02IntersectionsOfStrictTransforms
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter11.Section03InfinitelyNearPointsAndProximity
+
+namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter11
+
+/-! Aggregator for Chapter 11: the four point-blowup formulas, strict-transform
+intersection and separation identities, tangent-pair example data, iterated
+blowups, and proximity rules for final resolution graphs. -/
+
+end LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter11

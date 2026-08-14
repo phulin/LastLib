@@ -253,6 +253,14 @@ theorem chapter07_idele_to_adele_continuous
     Continuous (chapter07IdeleToAdele R K) := by
   exact Units.continuous_val
 
+theorem chapter07_idele_to_adele_injective
+    (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
+    [Algebra R K] [IsFractionRing R K] :
+    Function.Injective (chapter07IdeleToAdele R K) := by
+  intro x y hxy
+  apply Units.ext
+  exact hxy
+
 theorem chapter07_idele_topology_is_finer_than_additive_induced_topology
     (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
     [Algebra R K] [IsFractionRing R K] :

@@ -176,6 +176,13 @@ theorem chapter02_ratios_generate_relevant_coordinate_algebra_iff
       Algebra.adjoin B (Set.range d.targetRatio) = ⊤ :=
   Iff.rfl
 
+theorem chapter02_ratios_generate_relevant_coordinate_algebra
+    {B I A R : Type u} [CommRing B] [CommRing A] [CommRing R]
+    [Algebra B A] [Algebra B R]
+    (d : Chapter02AffineChartRatioGenerationData B I A R) :
+    Chapter02RatiosGenerateRelevantCoordinateAlgebra d := by
+  sorry
+
 end
 
 end LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02

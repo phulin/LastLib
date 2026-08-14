@@ -1308,14 +1308,23 @@ theorem chapter11_gaussian_sum_e_f_is_two :
         ∀ Q : Ideal chapter11GaussianOrder,
           Q.IsPrime ∧ Q.LiesOver (Ideal.span ({(2 : ℤ)} : Set ℤ)) →
             Q = chapter11GaussianIdealTwo) ∧
-      (chapter11SplitPattern 2 (fun _ : Fin 2 => 1) (fun _ : Fin 2 => 1) ∧
+      ((chapter11SplitPattern 2 (fun _ : Fin 2 => 1) (fun _ : Fin 2 => 1) ∧
         chapter11InertPattern 1 (fun _ : Fin 1 => 1) (fun _ : Fin 1 => 2) ∧
         chapter11TotallyRamifiedPattern 1 (fun _ : Fin 1 => 2) (fun _ : Fin 1 => 1) ∧
-        ((1 : ℕ) * 1 + 1 * 1 = 2 ∧ 1 * 2 = 2 ∧ 2 * 1 = 2)) := by
+        ((1 : ℕ) * 1 + 1 * 1 = 2 ∧ 1 * 2 = 2 ∧ 2 * 1 = 2)) ∧
+        (chapter11GaussianIdealFivePlus.ramificationIdx ℤ = 1 ∧
+          chapter11GaussianIdealFivePlus.inertiaDeg ℤ = 1 ∧
+          chapter11GaussianIdealFiveMinus.ramificationIdx ℤ = 1 ∧
+          chapter11GaussianIdealFiveMinus.inertiaDeg ℤ = 1 ∧
+          chapter11GaussianIdealThree.ramificationIdx ℤ = 1 ∧
+          chapter11GaussianIdealThree.inertiaDeg ℤ = 2 ∧
+          chapter11GaussianIdealTwo.ramificationIdx ℤ = 2 ∧
+          chapter11GaussianIdealTwo.inertiaDeg ℤ = 1)) := by
   refine ⟨chapter11_gaussian_five_prime_data,
     chapter11_gaussian_five_residue_fields,
     chapter11_gaussian_three_is_inert_field,
     chapter11_gaussian_two_is_unique_totally_ramified, ?_⟩
+  refine ⟨?_, chapter11_gaussian_local_invariants⟩
   simp [chapter11SplitPattern, chapter11InertPattern,
     chapter11TotallyRamifiedPattern]
 

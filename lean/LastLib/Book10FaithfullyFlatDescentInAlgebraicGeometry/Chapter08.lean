@@ -1,0 +1,10 @@
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter08.Section01PullbackDataOnACover
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter08.Section02AffineLocalConstruction
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter08.Section03EffectivityAndFullFaithfulness
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter08.Section04CoherenceAndExactness
+
+namespace LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter08
+
+/-! Aggregator for Book 10, Chapter 8: quasi-coherent sheaves. -/
+
+end LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter08

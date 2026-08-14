@@ -1,0 +1,14 @@
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter12.Dependencies
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter12.Section01RelativeCanonicalDivisors
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter12.Section02Adjunction
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter12.Section03ArithmeticGenusAndBlowup
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter12.Section04ExceptionalCurves
+
+namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter12
+
+/-! Aggregator for Chapter 12: relative canonical divisors, vertical and
+relative adjunction, arithmetic genus under point blowup, preservation of the
+whole fiber genus, and the geometric data supplementing the numerical
+exceptional-curve test. -/
+
+end LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter12

@@ -450,10 +450,7 @@ theorem eisenstein_root_is_uniformizer_and_totally_ramified
       chapterResidueDegree vK.valuationSubring v.valuationSubring
           (IsLocalRing.maximalIdeal v.valuationSubring) = 1 ∧
       ∀ a : K,
-        (vK (algebraMap A K π) = (Valuation.IsRankOneDiscrete.generator vK : Γ) ∧
-          (Valuation.IsRankOneDiscrete.generator vK : Γ) =
-            (Valuation.IsRankOneDiscrete.generator v : Γ)) →
-          v (algebraMap K L a) = (vK a) ^ n := by
+        v (algebraMap K L a) = (vK a) ^ n := by
   sorry
 
 /-- The residue field does not change in an Eisenstein extension. -/

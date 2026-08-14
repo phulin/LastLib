@@ -1,0 +1,10 @@
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.Section01DescentOfMaps
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.Section02TheDiagonalMethod
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.Section03TableOfDescendingProperties
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.Section04ProofsOfPrincipalCases
+
+namespace LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10
+
+/-! Aggregator for Book 10, Chapter 10: morphisms and properties local on the base. -/
+
+end LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10

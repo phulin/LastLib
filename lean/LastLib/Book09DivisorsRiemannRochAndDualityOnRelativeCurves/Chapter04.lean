@@ -1,0 +1,10 @@
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter04.Dependencies
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter04.Section01TheBundleAttachedToADivisor
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter04.Section02RationalSectionsRecoverDivisors
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter04.Section03PrincipalDivisorsAndLinearEquivalence
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter04.Section04TheDivisorPicardCorrespondence
+
+/-!
+Aggregator for Book 09, Chapter 04: line bundles, rational sections, and
+Picard groups.
+-/

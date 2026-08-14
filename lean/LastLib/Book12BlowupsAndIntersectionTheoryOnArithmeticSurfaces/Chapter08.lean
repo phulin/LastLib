@@ -1,0 +1,15 @@
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter08.Dependencies
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter08.Section01ZeroCyclesAndFiberwiseNumbers
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter08.Section02DivisorsWithVerticalCurves
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter08.Section03CommonComponentsAndSelfIntersection
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter08.Section04HorizontalSelfIntersectionAndTheBase
+
+namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter08
+
+/-!
+Aggregator for Chapter 8: finite intersection zero-cycles and their fiberwise
+weights, divisor--vertical-curve degrees, the vertical pairing and principal
+invariance, and horizontal normal bundles and base-valued self-intersection.
+-/
+
+end LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter08

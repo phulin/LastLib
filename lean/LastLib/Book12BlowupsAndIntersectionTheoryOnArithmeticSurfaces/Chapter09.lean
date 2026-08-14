@@ -1,0 +1,14 @@
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter09.Dependencies
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter09.Section01TheRegularSurfaceDictionary
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter09.Section02IntersectionWithPrincipalDivisors
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter09.Section03MovingOnlyAsFarAsNecessary
+
+/-!
+# Chapter 9: Cartier divisors, cycles, and rational equivalence
+
+Aggregator for the source-order API of §§9.1–9.3.
+-/
+
+namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter09
+
+end LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter09

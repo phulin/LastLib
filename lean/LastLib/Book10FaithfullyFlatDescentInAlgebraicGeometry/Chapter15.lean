@@ -1,0 +1,14 @@
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter15.Section01PolarizedDescent
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter15.Section02VeryAmplenessAndClosedImmersions
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter15.Section03NormAndRemovingPolarization
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter15.Section04LimitsOfTheStatement
+
+/-!
+# Chapter 15: Quasi-projective and projective descent
+
+Aggregator for the source-order API of §§15.1–15.4.
+-/
+
+namespace LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter15
+
+end LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter15

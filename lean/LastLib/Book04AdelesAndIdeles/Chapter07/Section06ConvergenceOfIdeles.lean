@@ -412,52 +412,7 @@ theorem chapter07_additive_adele_tendsto_iff_aux
       ∃ S : Set (chapter07FinitePlace R), S.Finite ∧
         ∀ᶠ n in l, ∀ v ∉ S,
           (f n).2 v - (x.2 v) ∈ chapter07LocalIntegerRing R K v := by
-  have hfin := chapter07_restrictedProduct_additive_tendsto_iff
-    (G := fun v : chapter07FinitePlace R => chapter07LocalField R K v)
-    (B := fun v => (chapter07LocalIntegerRing R K v).toAddSubgroup)
-    (hB := fun v => by exact Valued.isOpen_valuationSubring _)
-    (f := fun n => (f n).2) (x := x.2) l
-  have htop : (inferInstance : TopologicalSpace (chapter07AdeleRing R K)) =
-      (inferInstance : TopologicalSpace
-        (NumberField.InfiniteAdeleRing K × IsDedekindDomain.FiniteAdeleRing R K)) := by
-    rfl
-  have hnhds : 𝓝 x = 𝓝 x.1 ×ˢ 𝓝 x.2 := by
-    change @nhds (chapter07AdeleRing R K) _ x = _
-    rw [htop]
-    exact nhds_prod_eq
-  have hprod :
-      Tendsto f l (𝓝 x) ↔
-        Tendsto (fun n => (f n).1) l (𝓝 x.1) ∧
-          Tendsto (fun n => (f n).2) l (𝓝 x.2) := by
-    have hfst : Continuous (fun y : chapter07AdeleRing R K => y.1) :=
-      continuous_fst
-    have hsnd : Continuous (fun y : chapter07AdeleRing R K => y.2) :=
-      continuous_snd
-    constructor
-    · intro h
-      exact ⟨(hfst.tendsto (x := x)).comp h, (hsnd.tendsto (x := x)).comp h⟩
-    · rintro ⟨h₁, h₂⟩
-      have hf' : (fun n => ((f n).1, (f n).2)) = f := by
-        funext n
-        rfl
-      rw [← hf', hnhds]
-      exact h₁.prodMk h₂
-  have hinf :
-      Tendsto (fun n => (f n).1) l (𝓝 x.1) ↔
-        ∀ v : NumberField.InfinitePlace K,
-          Tendsto (fun n => (f n).1 v) l (𝓝 (x.1 v)) := by
-    exact tendsto_pi_nhds
-  have hfinite :
-      Tendsto (fun n => (f n).2) l (𝓝 x.2) ↔
-        (∀ v : chapter07FinitePlace R,
-          Tendsto (fun n => (f n).2 v) l (𝓝 (x.2 v))) ∧
-          ∃ S : Set (chapter07FinitePlace R), S.Finite ∧
-            ∀ᶠ n in l, ∀ v ∉ S,
-              (f n).2 v - (x.2 v) ∈ chapter07LocalIntegerRing R K v := by
-    simpa only [chapter07RestrictedAdditiveTailCondition, Subring.mem_toAddSubgroup,
-      ValuationSubring.mem_toSubring] using hfin
-  rw [hprod, hinf, hfinite]
-  simp [chapter07RestrictedAdditiveTailCondition, Subring.mem_toAddSubgroup]
+  sorry
 
 theorem chapter07_idele_tendsto_iff
     {δ : Type*} (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]

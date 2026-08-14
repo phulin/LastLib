@@ -1,0 +1,13 @@
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter06.Dependencies
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter06.Section01TheCorrectRelativeNotion
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter06.Section02SmoothCurvesTurnPointsIntoDivisors
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter06.Section03UniversalDivisorsAndAddition
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter06.Section04NodalFibersAndTheBoundary
+
+namespace LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter06
+
+/-! Aggregator for Book 9, Chapter 6: relative effective Cartier divisors,
+smooth-curve Cartier criteria, universal divisors and symmetric-power
+addition, and the nodal boundary. -/
+
+end LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter06

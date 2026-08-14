@@ -232,12 +232,6 @@ structure Chapter02PolynomialHomogeneousEvaluation
     {T : Scheme.{u}} (f : T ⟶ chapter02Spec R)
     (q : Chapter02InvertibleQuotientPair
       (chapter02FreeQuasiCoherentModule T (Chapter02ProjectiveSpaceIndex r)).carrier) where
-  /-- The section products used by this evaluation are part of its construction data. -/
-  powerSectionProductData : ∀ m n,
-    Chapter02PowerSectionProductData q.line m n
-  /-- The scalar actions used by this evaluation are part of its construction data. -/
-  baseScalarActionData : ∀ d,
-    Chapter02BaseScalarActionData R (Chapter02ProjectiveSpaceIndex r) f q d
   /-- The degreewise evaluation of homogeneous polynomials in the quotient line. -/
   value : ∀ d, Chapter02PolynomialHomogeneousPolynomial R r d →
     (chapter02LineBundlePowerBundle q.line d).carrier.sections
@@ -255,14 +249,15 @@ structure Chapter02PolynomialHomogeneousEvaluation
   value_smul : ∀ d (c : R) (F H : Chapter02PolynomialHomogeneousPolynomial R r d),
     H.1 = c • F.1 →
       value d H =
-        (baseScalarActionData d).action c (value d F)
+        chapter02BaseScalarAction R (Chapter02ProjectiveSpaceIndex r) f q d c
+          (value d F)
   /-- Evaluation is multiplicative across homogeneous degrees. -/
   value_mul : ∀ m n (F : Chapter02PolynomialHomogeneousPolynomial R r m)
       (G : Chapter02PolynomialHomogeneousPolynomial R r n)
       (H : Chapter02PolynomialHomogeneousPolynomial R r (m + n)),
     H.1 = F.1 * G.1 →
       value (m + n) H =
-        (powerSectionProductData m n).product (value m F) (value n G)
+        chapter02PowerSectionProduct q.line m n (value m F) (value n G)
   /-- The constant polynomial `1` evaluates to the unit section in degree zero. -/
   value_one : ∀ F : Chapter02PolynomialHomogeneousPolynomial R r 0,
     F.1 = 1 →
@@ -300,10 +295,11 @@ structure Chapter02PolynomialHomogeneousEvaluationFamily
   /-- Equivalent quotient representatives admit a compatible transport of all evaluations. -/
   transport : ∀ {q q'}
       (h : chapter02QuotientPairEquivalent q q'),
-      ∃ τ : Chapter02LineBundlePowerTransportData (Classical.choose h),
-        ∀ (d : ℕ) (F : Chapter02PolynomialHomogeneousPolynomial R r d),
-          SheafOfModules.sectionsMap (τ.map d).hom ((evaluation q).value d F) =
-            (evaluation q').value d F
+      ∀ (d : ℕ) (F : Chapter02PolynomialHomogeneousPolynomial R r d),
+        SheafOfModules.sectionsMap
+            (chapter02LineBundlePowerTransport (Classical.choose h) d).hom
+            ((evaluation q).value d F) =
+          (evaluation q').value d F
 
 /- LOCAL_DEPENDENCY_GUESS: the quotient-compatible graded evaluation family exists. -/
 theorem chapter02_polynomial_homogeneous_evaluation_family_exists
@@ -554,6 +550,12 @@ theorem chapter02_veronese_chart_ratio_criterion
     Chapter02VeroneseRatiosContainOriginalCoordinates c ↔
       ∀ i, ∃ a, c.sourceCoordinate i = c.targetRatio a :=
   Iff.rfl
+
+theorem chapter02_veronese_chart_ratios_generate_source_algebra
+    {R : Type u} [CommRing R] {r d : ℕ}
+    (c : Chapter02VeroneseAffineChartData R r d) :
+    Algebra.adjoin R (Set.range c.targetRatio) = ⊤ := by
+  sorry
 
 /-!
 The target-coordinate quadratic relations are the toric relations

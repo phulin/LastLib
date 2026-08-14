@@ -329,7 +329,7 @@ theorem complete_extension_unit_ball_is_integral_closure
     (hfinite : Module.Finite vK.valuationSubring w.valuationSubring) :
     (w.valuationSubring : Set L) =
       {x : L | IsIntegral vK.valuationSubring x} := by
-  letI := hfinite
+  let := hfinite
   ext x
   constructor
   · intro hx

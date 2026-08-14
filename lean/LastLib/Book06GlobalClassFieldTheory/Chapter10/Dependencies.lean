@@ -221,10 +221,8 @@ noncomputable def chapter10FiniteRestrictionMap
     [IsGalois K Kab]
     {L₁ L₂ : FiniteGaloisIntermediateField K Kab} (h : L₂ ≤ L₁) :
     Gal(L₁ / K) →* Gal(L₂ / K) := by
-  haveI : Normal K L₂ := IsGalois.to_normal
-  letI : Algebra L₂ L₁ := RingHom.toAlgebra (Subsemiring.inclusion h)
-  letI : IsScalarTower K L₂ L₁ := IsScalarTower.of_algebraMap_eq' rfl
-  exact AlgEquiv.restrictNormalHom L₂
+  exact (finGaloisGroupMap
+    (CategoryTheory.opHomOfLE h)).hom.hom
 
 theorem chapter10FiniteRestrictionMap_comp
     {K : Type u} {Kab : Type v} [Field K] [Field Kab] [Algebra K Kab]

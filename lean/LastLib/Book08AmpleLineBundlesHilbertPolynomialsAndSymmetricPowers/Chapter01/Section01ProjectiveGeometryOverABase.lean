@@ -15,6 +15,7 @@ import Mathlib.RingTheory.GradedAlgebra.FiniteType
 import Mathlib.RingTheory.GradedAlgebra.Homogeneous.Ideal
 import Mathlib.RingTheory.GradedAlgebra.HomogeneousLocalization
 import Mathlib.RingTheory.GradedAlgebra.TensorProduct
+import Mathlib.RingTheory.Noetherian.Basic
 import Mathlib.Algebra.MvPolynomial.Eval
 
 /-!
@@ -704,13 +705,30 @@ def chapter01RelativeFinitePositiveGeneration {S : Scheme.{u}}
     (∀ i, ∃ n, 0 < n ∧ x i ∈ 𝒜.grading ⊤ n) ∧
       Algebra.adjoin (𝒜.grading ⊤ 0) (Set.range x) = ⊤ ∧
         ∀ (U : S.Opens) (i : U ⟶ ⊤),
-          Algebra.adjoin (𝒜.grading U 0)
+            Algebra.adjoin (𝒜.grading U 0)
             (Set.range (fun j => 𝒜.restriction i (x j))) = ⊤
+
+/-! The source statement is local on the base.  The global predicate above is
+useful for a single global generating family; this version records the
+sheaf-local finite-generation hypothesis separately. -/
+def chapter01RelativeLocallyFinitePositiveGeneration {S : Scheme.{u}}
+    (𝒜 : Chapter01RelativeGradedAlgebra S) : Prop :=
+  ∀ (U : S.Opens), IsAffineOpen U →
+    ∃ r : ℕ, ∃ x : Fin r → 𝒜.sections U,
+      (∀ i, ∃ n, 0 < n ∧ x i ∈ 𝒜.grading U n) ∧
+        Algebra.adjoin (𝒜.grading U 0) (Set.range x) = ⊤
 
 theorem chapter01_relative_proj_locally_of_finite_type {S : Scheme.{u}}
     (𝒜 : Chapter01RelativeGradedAlgebra S)
     (h₀ : Chapter01RelativeDegreeZeroIsStructureSheaf 𝒜)
     (h : chapter01RelativeFinitePositiveGeneration 𝒜) :
+    LocallyOfFiniteType (chapter01RelativeProj 𝒜).projection := by
+  sorry
+
+theorem chapter01_relative_proj_locally_of_locally_finite_type {S : Scheme.{u}}
+    (𝒜 : Chapter01RelativeGradedAlgebra S)
+    (h₀ : Chapter01RelativeDegreeZeroIsStructureSheaf 𝒜)
+    (h : chapter01RelativeLocallyFinitePositiveGeneration 𝒜) :
     LocallyOfFiniteType (chapter01RelativeProj 𝒜).projection := by
   sorry
 
@@ -722,6 +740,13 @@ def chapter01RelativeGeneratedInDegreeOneByFiniteType {S : Scheme.{u}}
         ∀ (U : S.Opens) (i : U ⟶ ⊤),
           Algebra.adjoin (𝒜.grading U 0)
             (Set.range (fun j => 𝒜.restriction i (x j))) = ⊤
+
+def chapter01RelativeLocallyGeneratedInDegreeOneByFiniteType {S : Scheme.{u}}
+    (𝒜 : Chapter01RelativeGradedAlgebra S) : Prop :=
+  ∀ (U : S.Opens), IsAffineOpen U →
+    ∃ r : ℕ, ∃ x : Fin (r + 1) → 𝒜.sections U,
+      (∀ i, x i ∈ 𝒜.grading U 1) ∧
+        Algebra.adjoin (𝒜.grading U 0) (Set.range x) = ⊤
 
 /-! An invertible quotient is the object represented by the projective bundle
 functor.  Keeping it as a structure makes the universal property below
@@ -1487,6 +1512,13 @@ structure Chapter01GradedModuleProjSheafification
       ((((Scheme.Modules.toPresheafOfModules (AlgebraicGeometry.«Proj» 𝒜)).obj sheaf).obj
         (Opposite.op (chapter01SchemeStandardOpen 𝒜 f))).carrier)
 
+  /-- The canonical map from a graded component to the global sections of its
+  twisted sheaf is part of the sheafification interface.  Without this field,
+  the later direct-sum map would have no source-side map to use. -/
+  globalSectionsMap :
+    𝓜 n →+
+      (((Scheme.Modules.presheaf sheaf).obj (Opposite.op ⊤)).carrier)
+
 theorem chapter01_graded_module_proj_sheafification_exists
     {A M : Type*} [CommRing A] [AddCommGroup M]
     (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜]
@@ -1494,6 +1526,24 @@ theorem chapter01_graded_module_proj_sheafification_exists
     (G : Chapter01GradedModule 𝒜 𝓜) (n : ℤ) :
     Nonempty (Chapter01GradedModuleProjSheafification 𝒜 𝓜 G n) := by
   sorry
+
+noncomputable def chapter01GradedModuleProjSheaf
+    {A M : Type*} [CommRing A] [AddCommGroup M]
+    (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜]
+    (𝓜 : ℤ → Submodule ℤ M) [Module A M]
+    (G : Chapter01GradedModule 𝒜 𝓜) (n : ℤ) :
+    (AlgebraicGeometry.«Proj» 𝒜).Modules :=
+  (Classical.choice (chapter01_graded_module_proj_sheafification_exists 𝒜 𝓜 G n)).sheaf
+
+noncomputable def chapter01GradedModuleProjGlobalSectionsMap
+    {A M : Type*} [CommRing A] [AddCommGroup M]
+    (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜]
+    (𝓜 : ℤ → Submodule ℤ M) [Module A M]
+    (G : Chapter01GradedModule 𝒜 𝓜) (n : ℤ) :
+    𝓜 n →+
+      (((Scheme.Modules.presheaf (chapter01GradedModuleProjSheaf 𝒜 𝓜 G n)).obj
+        (Opposite.op ⊤)).carrier) :=
+  (Classical.choice (chapter01_graded_module_proj_sheafification_exists 𝒜 𝓜 G n)).globalSectionsMap
 
 abbrev chapter01OrdinaryChartSections {A : Type*} [CommRing A]
     (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜] (n : ℤ)
@@ -1893,6 +1943,19 @@ def chapter01TwistedGlobalSectionsMapFromDecomposition
     (φ : ∀ n, 𝓜 n →+ Γ n) : M →+ (⨁ n, Γ n) :=
   (chapter01TwistedGlobalSectionsMap φ).comp (DirectSum.decomposeAddEquiv 𝓜).toAddHom
 
+noncomputable def chapter01GradedModuleTwistedGlobalSectionsMap
+    {A M : Type*} [CommRing A] [AddCommGroup M]
+    (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜]
+    (𝓜 : ℤ → Submodule ℤ M) [Module A M]
+    (G : Chapter01GradedModule 𝒜 𝓜) :
+    M →+
+      (⨁ n : ℤ,
+        (((Scheme.Modules.presheaf (chapter01GradedModuleProjSheaf 𝒜 𝓜 G n)).obj
+          (Opposite.op ⊤)).carrier)) := by
+  letI := G.decomposition
+  exact chapter01TwistedGlobalSectionsMapFromDecomposition 𝓜
+    (fun n => chapter01GradedModuleProjGlobalSectionsMap 𝒜 𝓜 G n)
+
 /- The source's eventual-isomorphism claim applies after imposing the usual
 noetherian/standard-graded and finite-generation hypotheses.  These predicates
 keep that eventual property separate from the generic componentwise map. -/
@@ -1905,6 +1968,17 @@ def Chapter01SmallDegreeSaturationFailure
   ∃ n₀ : ℤ,
     (∀ n, n₀ ≤ n → Function.Bijective (φ n)) ∧
       ∃ n, n < n₀ ∧ ¬ Function.Bijective (φ n)
+
+theorem chapter01_graded_module_global_sections_eventually_isomorphism
+    {A M : Type*} [CommRing A] [AddCommGroup M]
+    (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜]
+    (𝓜 : ℤ → Submodule ℤ M) [Module A M]
+    (G : Chapter01GradedModule 𝒜 𝓜)
+    [IsNoetherianRing A] [Module.Finite A M]
+    (h : chapter01GeneratedInDegreeOne 𝒜) :
+    Chapter01EventuallyAnIsomorphism
+      (fun n x => chapter01GradedModuleProjGlobalSectionsMap 𝒜 𝓜 G n x) := by
+  sorry
 
 /-! ### 1.6 Veronese algebras and presentations -/
 

@@ -621,6 +621,43 @@ def chapterGlobalIdealExponentVector
     (I : FractionalIdeal (nonZeroDivisors R) K) : HeightOneSpectrum R → ℤ :=
   fun v => chapterGlobalIdealExponent (R := R) (K := K) v I
 
+/-- Extension of a fractional ideal to the localization at a height-one prime.
+The underlying submodule is the localized span inside the common fraction
+field. -/
+noncomputable def chapterLocalizeFractionalIdealAtPrime
+    (v : HeightOneSpectrum R)
+    [Algebra (Localization.AtPrime v.asIdeal) K]
+    (I : FractionalIdeal (nonZeroDivisors R) K) :
+    FractionalIdeal (nonZeroDivisors (Localization.AtPrime v.asIdeal)) K :=
+  ⟨Submodule.span (Localization.AtPrime v.asIdeal) (I : Set K), by
+    sorry⟩
+
+/-- The local fractional-ideal filtration attached to a chosen local
+uniformizer. -/
+def chapterLocalizedFractionalFiltrationAtPrime
+    (v : HeightOneSpectrum R)
+    [Algebra (Localization.AtPrime v.asIdeal) K]
+    (ϖ : Localization.AtPrime v.asIdeal) (_hϖ : Irreducible ϖ) (n : ℤ) :
+    FractionalIdeal (nonZeroDivisors (Localization.AtPrime v.asIdeal)) K :=
+  ⟨Submodule.span (Localization.AtPrime v.asIdeal)
+      ({(algebraMap (Localization.AtPrime v.asIdeal) K ϖ) ^ n} : Set K), by
+    sorry⟩
+
+/-- Book §5.3: for a fractional ideal, localization at a height-one prime
+projects the global exponent vector to that prime's coordinate. -/
+theorem chapter_localization_projects_global_fractional_exponent
+    (v : HeightOneSpectrum R)
+    [Algebra (Localization.AtPrime v.asIdeal) K]
+    [IsFractionRing (Localization.AtPrime v.asIdeal) K]
+    [IsScalarTower R (Localization.AtPrime v.asIdeal) K]
+    [IsDiscreteValuationRing (Localization.AtPrime v.asIdeal)]
+    (I : FractionalIdeal (nonZeroDivisors R) K) (hI : I ≠ 0)
+    (ϖ : Localization.AtPrime v.asIdeal) (hϖ : Irreducible ϖ) :
+    chapterLocalizeFractionalIdealAtPrime (R := R) (K := K) v I =
+      chapterLocalizedFractionalFiltrationAtPrime (R := R) (K := K) v ϖ hϖ
+        (chapterGlobalIdealExponentVector (R := R) (K := K) I v) := by
+  sorry
+
 /-- Localization of an integral ideal at a height-one prime. -/
 def chapterLocalizeIdealAtPrime (v : HeightOneSpectrum R) (I : Ideal R) :
     Ideal (Localization.AtPrime v.asIdeal) :=

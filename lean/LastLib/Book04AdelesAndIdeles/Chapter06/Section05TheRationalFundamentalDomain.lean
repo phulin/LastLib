@@ -102,11 +102,16 @@ theorem chapter06_rational_boundary_representatives_are_in_fundamental_set
     refine ⟨by norm_num, ⟨u + P.integerToFinite 1, ?_⟩⟩
     simp
 
-/- The source's final “not finite and not discrete” sentence is a theorem about
-the concrete rational adele topology.  It is intentionally not stated for the
-generic adapter above: arbitrary `Af` and `Ohat` types do not determine that
-topology, and adding the desired infinitude or nondiscreteness as hypotheses
-would make the declaration vacuous. -/
+/- The source's final “not finite and not discrete” sentence is represented for
+   the rational adapter once the earlier finite-diagonal injectivity is exposed.
+   The proof uses the normalized real coordinate and the quotient topology; it
+   is intentionally kept as a proposition rather than assumed in the data. -/
+theorem chapter06_rational_adelic_quotient_not_finite_or_discrete
+    (P : Chapter06AdeleData ℚ ℤ ℝ Af Ohat)
+    (hone : P.globalToInfinite (1 : ℚ) = (1 : ℝ)) :
+    ¬ Finite (Chapter06AdeleQuotient P) ∧
+      ¬ DiscreteTopology (Chapter06AdeleQuotient P) := by
+  sorry
 
 end
 

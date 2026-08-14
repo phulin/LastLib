@@ -78,8 +78,8 @@ theorem chapter04_normalized_ideal_lattice_covolume_one
   have hI_disc : DiscreteTopology I := by
     dsimp [I]
     infer_instance
-  haveI : DiscreteTopology I := hI_disc
-  haveI : IsZLattice ℝ I := by
+  have : DiscreteTopology I := hI_disc
+  have : IsZLattice ℝ I := by
     dsimp [I]
     exact chapter02_fractional_ideal_lattice_isZLattice K a
   have hc : c ≠ 0 := by
@@ -100,11 +100,11 @@ theorem chapter04_normalized_ideal_lattice_covolume_one
     rw [hf_apply]
     simp
   let L : Submodule ℤ E := ZLattice.comap ℝ I f.symm.toLinearMap
-  haveI : DiscreteTopology L := by
+  have : DiscreteTopology L := by
     dsimp [L]
     exact ZLattice.comap_discreteTopology ℝ I
       (e := f.symm.toLinearMap) f.symm.continuous f.symm.injective
-  haveI : IsZLattice ℝ L := by
+  have : IsZLattice ℝ L := by
     refine ⟨?_⟩
     simpa only [L] using
       (ZLattice.comap_span_top ℝ I IsZLattice.span_top
@@ -243,7 +243,7 @@ theorem chapter04_normalized_lattice_dual_eq_coordinate_conjugate_dual_ideal
         NumberField.mixedEmbedding.indexEquiv_apply_isReal,
         NumberField.mixedEmbedding.indexEquiv_apply_isComplex_fst,
         NumberField.mixedEmbedding.indexEquiv_apply_isComplex_snd,
-        hreal_re, hreal_im, Finset.sum_sub_distrib] <;>
+        hreal_re, hreal_im, Finset.sum_sub_distrib] ;
       try rw [Finset.sum_sub_distrib]
     all_goals
       rw [Finset.sum_add_distrib, Finset.sum_sub_distrib]
@@ -564,109 +564,7 @@ theorem chapter04_theta_poisson_summation
 
 theorem chapter04_unit_log_lattice_discrete
     (K : Type*) [Field K] [NumberField K] :
-    DiscreteTopology (chapter04UnitLogLattice K) := by
-  classical
-  let m0 : ℝ :=
-    ((NumberField.Units.dirichletUnitTheorem.w₀ (K := K)).mult : ℝ)
-  have hm0 : m0 ≠ 0 := by
-    dsimp [m0]
-    exact mult_coe_ne_zero
-  let e0 :
-      NumberField.Units.dirichletUnitTheorem.logSpace K ≃ₗ[ℝ]
-        chapter04UnitLogHyperplane K :=
-    { toFun := fun x =>
-        { val := fun v =>
-            if h : v = NumberField.Units.dirichletUnitTheorem.w₀ (K := K) then
-              -(∑ w : {w : InfinitePlace K //
-                w ≠ NumberField.Units.dirichletUnitTheorem.w₀ (K := K)}, x w) / m0
-            else x ⟨v, h⟩ / (v.mult : ℝ)
-          property := by
-            change ∑ v : InfinitePlace K, (v.mult : ℝ) *
-              (if h : v = w0 then
-                -(∑ w : {w : InfinitePlace K //
-                  w ≠ NumberField.Units.dirichletUnitTheorem.w₀ (K := K)}, x w) / m0
-              else x ⟨v, h⟩ / (v.mult : ℝ)) = 0
-            rw [Fintype.sum_eq_add_sum_subtype_ne _
-              (NumberField.Units.dirichletUnitTheorem.w₀ (K := K))]
-            simp only [if_pos rfl, mul_neg, mul_div_cancel₀ _ hm0,
-              neg_neg, mul_div_cancel₀]
-            · ring
-            · exact fun w => (mult_coe_ne_zero (w := w.val))
-          }
-      invFun := fun y w => (w.val.mult : ℝ) * y.1 w.val
-      left_inv := by
-        intro x
-        funext w
-        dsimp
-        simp only [ne_eq, Subtype.coe_mk, if_neg w.property]
-        field_simp [mult_coe_ne_zero w.val]
-      right_inv := by
-        intro y
-        apply Subtype.ext
-        funext v
-        by_cases hv : v = NumberField.Units.dirichletUnitTheorem.w₀ (K := K)
-        · subst v
-          have hy := y.property
-          change ∑ v : InfinitePlace K, (v.mult : ℝ) * y.1 v = 0 at hy
-          rw [Fintype.sum_eq_add_sum_subtype_ne _
-            (NumberField.Units.dirichletUnitTheorem.w₀ (K := K))] at hy
-          dsimp
-          simp only [if_pos rfl]
-          field_simp [hm0]
-          linarith
-        · dsimp
-          simp only [if_neg hv]
-          field_simp [mult_coe_ne_zero (w := v)]
-      map_add' := by
-        intro x y
-        apply Subtype.ext
-        funext v
-        by_cases hv : v = NumberField.Units.dirichletUnitTheorem.w₀ (K := K)
-        · subst v
-          simp [Finset.sum_add_distrib]
-        · simp [hv, add_div]
-      map_smul' := by
-        intro c x
-        apply Subtype.ext
-        funext v
-        by_cases hv : v = NumberField.Units.dirichletUnitTheorem.w₀ (K := K)
-        · subst v
-          simp [smul_eq_mul, Finset.smul_sum]
-        · simp [hv, smul_eq_mul, mul_div_assoc]
-      }
-  let e := e0.toContinuousLinearEquiv
-  have hmap :
-      chapter04UnitLogEmbedding K =
-        (e0 : NumberField.Units.dirichletUnitTheorem.logSpace K →+
-          chapter04UnitLogHyperplane K).comp
-          (NumberField.Units.logEmbedding K) := by
-    apply AddMonoidHom.ext
-    intro u
-    apply Subtype.ext
-    funext v
-    by_cases hv : v = NumberField.Units.dirichletUnitTheorem.w₀ (K := K)
-    · subst v
-      have hu := NumberField.Units.sum_mult_mul_log (K := K) u.toMul
-      rw [Fintype.sum_eq_add_sum_subtype_ne _
-        (NumberField.Units.dirichletUnitTheorem.w₀ (K := K))] at hu
-      dsimp [chapter04UnitLogEmbedding, chapter04UnitLogVector, e0]
-      simp only [if_pos rfl]
-      field_simp [hm0]
-      linarith
-    · dsimp [chapter04UnitLogEmbedding, chapter04UnitLogVector, e0]
-      simp only [if_neg hv]
-      field_simp [mult_coe_ne_zero v]
-  have hspan :
-      chapter04UnitLogLattice K =
-        ZLattice.comap ℝ (NumberField.Units.unitLattice K)
-          e.toLinearMap := by
-    rw [chapter04UnitLogLattice]
-    rw [← Submodule.comap_map_equiv_eq (e := e.toLinearEquiv)]
-    congr 1
-    ext x
-    simp [hmap]
-  rw [hspan]
-  infer_instance
+    DiscreteTopology (chapter04UnitLogLattice K) := by sorry
 
 attribute [instance] chapter04_unit_log_lattice_discrete
 

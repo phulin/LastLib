@@ -633,6 +633,25 @@ theorem chapter_multiplication_determinant_eq_norm
     Algebra.norm K x = LinearMap.det (Algebra.lmul K E x) := by
   rfl
 
+section LatticeNorm
+
+variable {K E : Type*} [Field K] [Algebra A K] [IsFractionRing A K]
+  [Field E] [Algebra K E] [Module A E] [IsScalarTower A K E]
+  [FiniteDimensional K E]
+
+/-- Book §5.4: multiplication by an element of a finite field extension has
+the field norm as the determinant of its restriction to any full stable
+`A`-lattice. -/
+theorem chapter_lattice_multiplication_determinant_eq_norm
+    (M : Submodule A E) [Module.Free A M] [Module.Finite A M]
+    (hM : chapterFullLattice (A := A) (K := K) M) (x : E)
+    (T : M →ₗ[A] M)
+    (hT : ∀ y : M, (T y : E) = x * (y : E)) :
+    algebraMap A K (LinearMap.det T) = Algebra.norm K x := by
+  sorry
+
+end LatticeNorm
+
 end FilteredModulesAndElementaryDivisors
 
 end

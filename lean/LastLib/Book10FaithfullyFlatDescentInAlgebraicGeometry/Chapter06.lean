@@ -1,0 +1,10 @@
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter06.Section01FiniteGenerationAndPresentation
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter06.Section02FlatModules
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter06.Section03FiniteProjectiveModules
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter06.Section04RankAndRelatedInvariants
+
+namespace LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter06
+
+/-! Aggregator for Chapter 6: finiteness, flatness, and projectivity. -/
+
+end LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter06

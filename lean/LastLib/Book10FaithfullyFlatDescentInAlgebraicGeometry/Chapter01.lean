@@ -1,0 +1,14 @@
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter01.Section01LocalDescriptionsAndGlobalObjects
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter01.Section02FaithfulFlatness
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter01.Section03GeometricMeaning
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter01.Section04WarningAboutHypotheses
+
+/-!
+# Chapter 1: Why descent is possible
+
+Aggregator for the source-order API of §§1.1–1.4.
+-/
+
+namespace LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter01
+
+end LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter01

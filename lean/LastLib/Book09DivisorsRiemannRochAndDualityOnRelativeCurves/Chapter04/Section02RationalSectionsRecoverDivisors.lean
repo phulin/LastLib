@@ -1,0 +1,268 @@
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter04.Section01TheBundleAttachedToADivisor
+
+namespace LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter04
+
+noncomputable section
+
+open AlgebraicGeometry CategoryTheory CategoryTheory.Limits TopologicalSpace
+open scoped AlgebraicGeometry
+
+universe u
+
+/-! ## 4.2. Rational sections recover divisors -/
+
+/-!
+For an integral scheme, the generic stalk of a line bundle is a one-dimensional
+function-field vector space.  The module structure is a canonical sheaf-level
+bridge that is not currently named by Mathlib.
+-/
+theorem chapter04_genericFiberModule_exists {X : Scheme.{u}}
+    [IsIntegral X] (L : Chapter04LineBundle X) :
+    Nonempty (Module X.functionField
+      (L.sheaf.val.presheaf.stalk (genericPoint X))) := by
+  sorry
+
+noncomputable def chapter04GenericFiberModule {X : Scheme.{u}}
+    [IsIntegral X] (L : Chapter04LineBundle X) : Module X.functionField
+      (L.sheaf.val.presheaf.stalk (genericPoint X)) :=
+  Classical.choice (chapter04_genericFiberModule_exists L)
+
+def chapter04IsGenericFiberGenerator {X : Scheme.{u}}
+    [IsIntegral X] (L : Chapter04LineBundle X)
+    (v : L.sheaf.val.presheaf.stalk (genericPoint X)) : Prop :=
+  letI := chapter04GenericFiberModule L
+  v ≠ 0 ∧ ∀ w, ∃ a : X.functionField, a • v = w
+
+structure Chapter04RationalSection {X : Scheme.{u}}
+    [IsIntegral X] (L : Chapter04LineBundle X) where
+  value : L.sheaf.val.presheaf.stalk (genericPoint X)
+  isGenerator : chapter04IsGenericFiberGenerator L value
+
+def chapter04RationalSectionNonzero {X : Scheme.{u}}
+    [IsIntegral X] {L : Chapter04LineBundle X}
+    (s : Chapter04RationalSection L) : Prop :=
+  s.value ≠ 0
+
+theorem chapter04_rationalSection_nonzero {X : Scheme.{u}}
+    [IsIntegral X] {L : Chapter04LineBundle X}
+    (s : Chapter04RationalSection L) : chapter04RationalSectionNonzero s := by
+  exact s.isGenerator.1
+
+/- LOCAL_DEPENDENCY_GUESS: the transition from local generators of a module
+sheaf to their generic-fiber coordinates is not exposed as one Mathlib map.
+This record records the actual local generators, coefficients, and overlap
+identities used by the divisor construction. -/
+structure Chapter04RationalSectionCoordinateData {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
+    [Chapter04RationalFunctionLocalValueAPI X]
+    (L : Chapter04LineBundle X) (s : Chapter04RationalSection L) where
+  cover : X.OpenCover
+  localGenerator : ∀ i : cover.I₀,
+    L.sheaf.val.presheaf.obj (Opposite.op (cover.f i).opensRange)
+  localGenerator_isGenerator :
+    ∀ i : cover.I₀, ∀ y : L.sheaf.val.presheaf.obj
+      (Opposite.op (cover.f i).opensRange),
+      ∃ a : Γ(X, (cover.f i).opensRange),
+        a • localGenerator i = y
+  coefficient : ∀ i : cover.I₀,
+    Chapter04TotalQuotientSection X (cover.f i).opensRange
+  coefficient_isUnit : ∀ i, IsUnit (coefficient i)
+  local_equation :
+    ∀ i : cover.I₀, ∀ hη : genericPoint X ∈ (cover.f i).opensRange,
+      letI := chapter04GenericFiberModule L
+      Chapter04RationalFunctionLocalValueAPI.toFunctionField
+          (cover.f i).opensRange (coefficient i) •
+        L.sheaf.val.presheaf.germ _ _ hη (localGenerator i) = s.value
+  overlap_compatibility :
+    ∀ i j : cover.I₀, ∀ hη : genericPoint X ∈
+      (cover.f i).opensRange ⊓ (cover.f j).opensRange,
+      letI := chapter04GenericFiberModule L
+      Chapter04RationalFunctionLocalValueAPI.toFunctionField
+          ((cover.f i).opensRange ⊓ (cover.f j).opensRange)
+          (chapter04TotalQuotientRestriction inf_le_left (coefficient i)) •
+        L.sheaf.val.presheaf.germ _ _ hη
+          (L.sheaf.val.presheaf.map (homOfLE inf_le_left).op (localGenerator i)) =
+      Chapter04RationalFunctionLocalValueAPI.toFunctionField
+          ((cover.f i).opensRange ⊓ (cover.f j).opensRange)
+          (chapter04TotalQuotientRestriction inf_le_right (coefficient j)) •
+        L.sheaf.val.presheaf.germ _ _ hη
+          (L.sheaf.val.presheaf.map (homOfLE inf_le_right).op (localGenerator j))
+
+theorem chapter04_rationalSection_coordinates_exist {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
+    [Chapter04RationalFunctionLocalValueAPI X]
+    (L : Chapter04LineBundle X) (s : Chapter04RationalSection L) :
+    Nonempty (Chapter04RationalSectionCoordinateData L s) := by
+  sorry
+
+/-! The divisor attached to the coefficients is characterized by its local
+equations, not merely by an abstract existence statement. -/
+structure Chapter04DivisorOfRationalSectionData {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
+    [Chapter04RationalFunctionLocalValueAPI X]
+    (L : Chapter04LineBundle X) (s : Chapter04RationalSection L) where
+  divisor : Chapter04CartierDivisor X
+  coordinates : Chapter04RationalSectionCoordinateData L s
+  coordinate_index : ∀ i : divisor.cover.I₀, coordinates.cover.I₀
+  coordinate_equation :
+    ∀ i : divisor.cover.I₀,
+      divisor.equation i = coordinates.coefficient (coordinate_index i)
+  bundle_iso : Nonempty ((chapter04OofD divisor).sheaf ≅ L.sheaf)
+  canonical_section : Chapter04GlobalSection (chapter04OofD divisor)
+  canonical_section_maps_to_s :
+    ∃ e : (chapter04OofD divisor).sheaf ≅ L.sheaf,
+      (e.hom.app (Opposite.op ⊤)).hom canonical_section = s
+
+theorem chapter04_divisorOfRationalSection_exists {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
+    [Chapter04RationalFunctionLocalValueAPI X]
+    (L : Chapter04LineBundle X) (s : Chapter04RationalSection L) :
+    Nonempty (Chapter04DivisorOfRationalSectionData L s) := by
+  sorry
+
+noncomputable def chapter04DivisorOfRationalSectionData {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
+    [Chapter04RationalFunctionLocalValueAPI X]
+    (L : Chapter04LineBundle X) (s : Chapter04RationalSection L) :
+    Chapter04DivisorOfRationalSectionData L s :=
+  Classical.choice (chapter04_divisorOfRationalSection_exists L s)
+
+noncomputable def chapter04DivisorOfRationalSection {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
+    [Chapter04RationalFunctionLocalValueAPI X]
+    (L : Chapter04LineBundle X) (s : Chapter04RationalSection L) :
+    Chapter04CartierDivisor X :=
+  (chapter04DivisorOfRationalSectionData L s).divisor
+
+theorem chapter04_divisorOfRationalSection_bundle_iso {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
+    [Chapter04RationalFunctionLocalValueAPI X]
+    (L : Chapter04LineBundle X) (s : Chapter04RationalSection L) :
+    chapter04LineBundleIsomorphic
+      (chapter04OofD (chapter04DivisorOfRationalSection L s)) L := by
+  exact ⟨(chapter04DivisorOfRationalSectionData L s).bundle_iso.choose⟩
+
+theorem chapter04_divisorOfRationalSection_canonical_maps_to_section {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X] [IsIntegral X]
+    [Chapter04RationalFunctionLocalValueAPI X]
+    (L : Chapter04LineBundle X) (s : Chapter04RationalSection L) :
+    (chapter04DivisorOfRationalSectionData L s).canonical_section_maps_to_s := by
+  exact (chapter04DivisorOfRationalSectionData L s).canonical_section_maps_to_s
+
+/-! ### Reduced schemes with several generic points -/
+
+structure Chapter04ComponentwiseRationalSection {X : Scheme.{u}}
+    [IsReduced X] (L : Chapter04LineBundle X) where
+  value : ∀ C : irreducibleComponents X,
+    L.sheaf.val.presheaf.stalk C.1.genericPoint
+  isBasisAtGenericPoint : ∀ C : irreducibleComponents X,
+    L.sheaf.val.presheaf.stalk C.1.genericPoint ≠ 0 ∧
+      ∀ w, ∃ a : X.presheaf.stalk C.1.genericPoint,
+        a • value C = w
+
+def chapter04IsBasisAtEveryGenericPoint {X : Scheme.{u}}
+    [IsReduced X] (L : Chapter04LineBundle X)
+    (s : Chapter04ComponentwiseRationalSection L) : Prop :=
+  ∀ C : irreducibleComponents X, s.isBasisAtGenericPoint C
+
+theorem chapter04_rationalSection_coordinates_componentwise {X : Scheme.{u}}
+    [Chapter04TotalQuotientRingAPI X] [IsReduced X]
+    (L : Chapter04LineBundle X)
+    (s : Chapter04ComponentwiseRationalSection L) :
+    chapter04IsBasisAtEveryGenericPoint L s := by
+  sorry
+
+/-!
+The noetherian existence statement is deliberately separated from the
+integral definition: finitely many generic points permit clearing a common
+denominator, whereas an arbitrary infinitely-component scheme need not admit
+a single rational section that is a basis at every component.
+-/
+theorem chapter04_noetherian_lineBundle_has_componentwise_rationalSection
+    {X : Scheme.{u}} [IsReduced X] [IsNoetherian X]
+    (L : Chapter04LineBundle X) :
+    Nonempty (Chapter04ComponentwiseRationalSection L) := by
+  sorry
+
+def chapter04HasFinitelyManyGenericPoints (X : Scheme.{u}) : Prop :=
+  (irreducibleComponents X).Finite
+
+theorem chapter04_noetherian_has_finitely_many_generic_points
+    (X : Scheme.{u}) [IsNoetherian X] :
+    chapter04HasFinitelyManyGenericPoints X := by
+  exact NoetherianSpace.finite_irreducibleComponents
+
+/-! ### Regular sections and their vanishing -/
+
+/- LOCAL_DEPENDENCY_GUESS: the canonical sheaf morphism given by a section of
+an invertible sheaf is not named in the pinned module-sheaf API. -/
+class Chapter04SectionMultiplicationAPI (X : Scheme.{u}) where
+  multiplication : ∀ (L : Chapter04LineBundle X)
+    (s : Chapter04GlobalSection L),
+    (chapter04DualLineBundle L).sheaf ⟶ (chapter04TrivialLineBundle X).sheaf
+
+def chapter04SectionMultiplication {X : Scheme.{u}}
+    [Chapter04SectionMultiplicationAPI X]
+    (L : Chapter04LineBundle X) (s : Chapter04GlobalSection L) :
+    (chapter04DualLineBundle L).sheaf ⟶ (chapter04TrivialLineBundle X).sheaf :=
+  Chapter04SectionMultiplicationAPI.multiplication L s
+
+def chapter04MorphismIsInjective {X : Scheme.{u}}
+    {M N : X.Modules} (φ : M ⟶ N) : Prop :=
+  ∀ (P : X.Modules) (g h : P ⟶ M), g ≫ φ = h ≫ φ → g = h
+
+def chapter04SectionIsRegular {X : Scheme.{u}}
+    [Chapter04SectionMultiplicationAPI X]
+    (L : Chapter04LineBundle X) (s : Chapter04GlobalSection L) : Prop :=
+  chapter04MorphismIsInjective (chapter04SectionMultiplication L s)
+
+def chapter04SectionIsRegularAtPoint {X : Scheme.{u}}
+    [Chapter04SectionMultiplicationAPI X]
+    (L : Chapter04LineBundle X) (s : Chapter04GlobalSection L) (x : X) : Prop :=
+  Function.Injective
+    ((TopCat.Presheaf.stalkFunctor Ab x).map
+      (chapter04SectionMultiplication L s).mapPresheaf)
+
+/- LOCAL_DEPENDENCY_GUESS: associated points of a scheme are not packaged as
+scheme points in the pinned API.  This predicate is kept separate so that the
+criterion below can later be replaced by the canonical associated-point API. -/
+class Chapter04AssociatedPointAPI (X : Scheme.{u}) where
+  isAssociated : X → Prop
+
+def chapter04SectionIsRegularAtAssociatedPoints {X : Scheme.{u}}
+    [Chapter04AssociatedPointAPI X]
+    (L : Chapter04LineBundle X) (s : Chapter04GlobalSection L) : Prop :=
+  ∀ x : X, Chapter04AssociatedPointAPI.isAssociated x →
+    chapter04SectionIsRegularAtPoint L s x
+
+theorem chapter04_section_injective_iff_regular_at_associated_points
+    {X : Scheme.{u}} [Chapter04SectionMultiplicationAPI X]
+    [Chapter04AssociatedPointAPI X]
+    (L : Chapter04LineBundle X) (s : Chapter04GlobalSection L) :
+    chapter04SectionIsRegular L s ↔
+      chapter04SectionIsRegularAtAssociatedPoints L s := by
+  sorry
+
+theorem chapter04_integral_nonzero_section_is_regular
+    {X : Scheme.{u}} [IsIntegral X] [Chapter04SectionMultiplicationAPI X]
+    (L : Chapter04LineBundle X) {s : Chapter04GlobalSection L}
+    (hs : s ≠ 0) : chapter04SectionIsRegular L s := by
+  sorry
+
+def chapter04SectionVanishesIdenticallyOnComponent {X : Scheme.{u}}
+    (L : Chapter04LineBundle X) (s : Chapter04GlobalSection L)
+    (C : irreducibleComponents X) : Prop :=
+  ∀ x : C.1,
+    L.sheaf.val.presheaf.germ ⊤ x.1 (by trivial) s = 0
+
+theorem chapter04_section_vanishing_on_a_component_is_not_regular
+    {X : Scheme.{u}} [IsReduced X] [Chapter04SectionMultiplicationAPI X]
+    [Chapter04AssociatedPointAPI X]
+    (L : Chapter04LineBundle X) (s : Chapter04GlobalSection L)
+    (C : irreducibleComponents X)
+    (hzero : chapter04SectionVanishesIdenticallyOnComponent L s C) :
+    ¬ chapter04SectionIsRegular L s := by
+  sorry
+
+end
+end LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter04

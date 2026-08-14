@@ -1,0 +1,10 @@
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter10.Section01TheLocalNode
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter10.Section02FunctionsUnderNormalization
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter10.Section03RosenlichtDifferentials
+import LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter10.Section04FamiliesOfNodalCurves
+
+namespace LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter10
+
+/-! Aggregator for Chapter 10: nodes, normalization, and opposite residues. -/
+
+end LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter10

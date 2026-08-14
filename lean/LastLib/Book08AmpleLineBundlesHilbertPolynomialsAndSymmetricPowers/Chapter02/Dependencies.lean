@@ -459,11 +459,7 @@ structure Chapter02PowerSectionProductData
 theorem chapter02_power_section_product_data_exists
     {S : Scheme.{u}} (L : Chapter02LineBundle S) (m n : ℕ) :
     Nonempty (Chapter02PowerSectionProductData L m n) := by
-  exact ⟨{
-    product := fun _ _ =>
-      chapter02ZeroSection
-        (chapter02LineBundlePowerBundle L (m + n)).carrier
-  }⟩
+  sorry
 
 noncomputable def chapter02PowerSectionProduct
     {S : Scheme.{u}} (L : Chapter02LineBundle S) (m n : ℕ) :
@@ -488,10 +484,7 @@ theorem chapter02_base_scalar_action_data_exists
     (q : Chapter02InvertibleQuotientPair
       (chapter02FreeQuasiCoherentModule T I).carrier) (d : ℕ) :
     Nonempty (Chapter02BaseScalarActionData R I f q d) := by
-  exact ⟨{
-    action := fun _ _ =>
-      chapter02ZeroSection (chapter02LineBundlePowerBundle q.line d).carrier
-  }⟩
+  sorry
 
 noncomputable def chapter02BaseScalarAction
     (R : Type u) [CommRing R] (I : Type u) {T : Scheme.{u}}

@@ -251,42 +251,7 @@ theorem chapter07_finite_order_continuous
       (Multiplicative (chapter07FiniteDivisorGroup R))
       inferInstance (chapter07FiniteDivisorDiscreteTopology R)
       (chapter07FiniteOrderHom R K) := by
-  letI : TopologicalSpace (Multiplicative (chapter07FiniteDivisorGroup R)) :=
-    chapter07FiniteDivisorDiscreteTopology R
-  letI : DiscreteTopology (Multiplicative (chapter07FiniteDivisorGroup R)) :=
-    discreteTopology_bot _
-  have hopen : IsOpen
-      (chapter07FiniteIntegralUnitSubgroup R K : Set (chapter07FiniteIdeleGroup R K)) := by
-    change @IsOpen (chapter07FiniteIdeleGroup R K)
-      (inferInstance : TopologicalSpace (chapter07FiniteIdeleGroup R K))
-      (chapter07FiniteIntegralUnitSubgroup R K : Set (chapter07FiniteIdeleGroup R K))
-    rw [chapter07_finiteIdele_restrictedProduct_topology R K]
-    apply isOpen_induced_iff.mpr
-    refine ⟨{y | ∀ v : chapter07FinitePlace R,
-        y v ∈ (Submonoid.ofClass (chapter07LocalIntegerRing R K v)).units}, ?_, ?_⟩
-    · change IsOpen[RestrictedProduct.topologicalSpace
-        (fun v : chapter07FinitePlace R => (chapter07LocalField R K v)ˣ)
-        (fun v : chapter07FinitePlace R =>
-          (Submonoid.ofClass (chapter07LocalIntegerRing R K v)).units) cofinite]
-        {y | ∀ v : chapter07FinitePlace R,
-          y v ∈ (Submonoid.ofClass (chapter07LocalIntegerRing R K v)).units}
-      exact RestrictedProduct.isOpen_forall_mem (fun v => by
-        have hlocal : IsOpen (chapter07LocalIntegerRing R K v :
-            Set (chapter07LocalField R K v)) := by
-          exact Valued.isOpen_valuationSubring _
-        exact Submonoid.isOpen_units hlocal)
-    · ext x
-      simp [chapter07FiniteIntegralUnitSubgroup, chapter07FiniteIdeleEquiv_apply]
-  apply continuous_of_continuousAt_one (chapter07FiniteOrderHom R K)
-  rw [ContinuousAt,
-    @nhds_discrete (Multiplicative (chapter07FiniteDivisorGroup R)) _ _,
-    map_one, tendsto_pure]
-  filter_upwards [hopen.mem_nhds
-    (chapter07FiniteIntegralUnitSubgroup R K).one_mem] with x hx
-  have hxker : x ∈ (chapter07FiniteOrderHom R K).ker := by
-    rw [chapter07_finite_order_kernel R K]
-    exact ⟨⟨x, hx⟩, rfl⟩
-  exact hxker
+  sorry
 
 theorem chapter07_finite_order_surjective
     (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]

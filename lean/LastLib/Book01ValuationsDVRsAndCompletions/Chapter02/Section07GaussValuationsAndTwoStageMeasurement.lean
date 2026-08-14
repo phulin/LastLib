@@ -754,6 +754,38 @@ theorem chapter02_gauss_valuation_on_quotients
   rw [hnum, hden]
   exact hmain
 
+theorem chapter02_gauss_valuation_function_is_additive_valuation
+    {K Γ Λ : Type*} [Field K]
+    [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
+    [AddCommGroup Λ] [LinearOrder Λ] [IsOrderedAddMonoid Λ]
+    (v : AddValuation K (WithTop Γ)) (e : Γ →+o Λ) (α : Λ) :
+    ∃ w : AddValuation (Polynomial K) (WithTop Λ),
+      ∀ f : Polynomial K,
+        w f = Chapter02GaussValuationFunction v e α f := by
+  let w : AddValuation (Polynomial K) (WithTop Λ) :=
+    AddValuation.of
+      (Chapter02GaussValuationFunction v e α)
+      (by simp [Chapter02GaussValuationFunction])
+      (by
+        rw [← Polynomial.C_1]
+        have hne : v (1 : K) ≠ (⊤ : WithTop Γ) :=
+          (AddValuation.ne_top_iff v).2 one_ne_zero
+        have hu : ∀ h : (0 : WithTop Γ) ≠ (⊤ : WithTop Γ),
+            (0 : WithTop Γ).untop h = (0 : Γ) := by
+          intro h
+          apply WithTop.coe_injective
+          exact WithTop.coe_untop (0 : WithTop Γ) h
+        rw [Chapter02GaussValuationFunction,
+          Polynomial.support_C one_ne_zero,
+          dif_pos (Finset.singleton_nonempty 0), Finset.inf'_singleton,
+          Chapter02WeightedCoefficientValue, Polynomial.coeff_C_zero,
+          dif_neg hne]
+        simp only [v.map_one, zero_nsmul, add_zero]
+        simp [hu])
+      (chapter02_gauss_valuation_sum_inequality v e α)
+      (chapter02_gauss_valuation_is_multiplicative v e α)
+  exact ⟨w, fun f => rfl⟩
+
 theorem chapter02_gauss_valuation_on_rational_functions_is_additive_valuation
     {K Γ Λ : Type*} [Field K]
     [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]

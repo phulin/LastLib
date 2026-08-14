@@ -1,0 +1,13 @@
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter06.Dependencies
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter06.Section01WhatResolutionMustPreserve
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter06.Section02ThicknessSingularities
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter06.Section03EmbeddedResolutionOfSpecialFibersAndSections
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter06.Section04WhatBlowupsDoNotAccomplish
+
+namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter06
+
+/-! Aggregator for Chapter 6: supported resolution steps, thickness equations,
+embedded boundary resolution, contact-order charts, total-transform fiber
+multiplicities, and the limitations of blowups, normalization, and minimality. -/
+
+end LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter06
