@@ -206,11 +206,11 @@ flowchart LR
 | 175 | One-Prime Nonminimal Patching and R=T | 67, 69, 109, 138, 139, 140, 143, 170, 171, 172, 173, 174 |
 | 176 | Nonminimal Modularity Lifting | 6, 14, 22, 84, 109, 122, 123, 124, 125, 138, 139, 140, 143, 145, 152, 170, 173, 174, 175 |
 | 177 | Potential Modularity of Two-Dimensional Representations | 104, 98, 127, 176, 154, 158, 142 |
-| 178 | Auxiliary Dihedral Data and Residual Potential Modularity | 6, 104, 98, 127, 141, 175, 176, 154, 158, 142, 155, 156, 157 |
+| 178 | Auxiliary Dihedral Data and Residual Potential Modularity | 6, 98, 104, 127, 141, 142, 156, 157, 158, 176 |
 | 179 | Compatible Systems of Galois Representations | 168, 141, 142 |
 | 180 | Brauer Induction and Descent of Automorphy | 24, 75, 98, 109, 168 |
 | 181 | Finite Image and the Balanced Minimal-Lift Argument | 57, 62, 64, 141, 164, 165, 166, 167, 173 |
-| 182 | Potential Automorphy and Galois Refinement of a Chosen Lift | 6, 37, 44, 61, 104, 109, 118, 121, 122, 124, 125, 127, 128, 140, 142, 153, 154, 155, 157, 158, 164, 165, 168, 173, 176, 178, 181 |
+| 182 | Potential Automorphy and Galois Refinement of a Chosen Lift | 6, 37, 44, 61, 104, 109, 118, 121, 122, 124, 125, 127, 128, 140, 142, 157, 158, 164, 165, 168, 173, 176, 178, 181 |
 | 183 | Brauer Induction for Automorphy Families | 6, 98, 108, 109, 127, 128, 142, 168, 180, 182 |
 | 184 | Brauer Characters and Effectivity of Compatible Families | 24, 57, 180, 183 |
 | 185 | Compatible Systems over the Base Field | 168, 180, 182, 183, 184 |
@@ -324,14 +324,19 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   additionally retained for the scalar family. No separate one-prime
   acting-order theorem remains in that faithful range.
 - **Direct finite-set lifting:** the scope-minimal FLT route is Book 176's
-  $({\rm IAV}_S)$ interface. After the permitted solvable base change, it compares the desired
-  finite-set local deformation problem with a tame Ihara-avoidance problem having the same
-  special fiber. The avoidance ring is irreducible, the desired ring has the required
-  special-fiber component bijection, and synchronized Taylor--Wiles systems transfer full
-  patched support to the desired problem. Books 143--146 supply general patching mechanics and
-  Book 172 supplies the clean minimal theorem, but none constructs this paired nonminimal
-  system. Once $({\rm IAV}_S)$ is supplied, no several-place old--new cube, mixed-Ihara
-  vanishing, product residue, or separate product-component occurrence is required.
+  $({\rm IAV}_S)$ interface. It compares paired desired and avoidance local rings with a
+  common special fiber and component bijection, together with synchronized automorphic
+  Taylor--Wiles systems. Book 145 gives the desired union-of-components statement once its
+  sharp hypotheses hold; Book 176, Proposition 1.1 then proves component-support transfer
+  formally; exact acting-image control and marked augmentation give reduced finite recovery;
+  and Book 109 supplies descent under its explicit antecedent hypotheses. The first missing
+  input is therefore construction of the paired rings and synchronized arithmetic system,
+  including avoidance full support (or an equivalent patched-source irreducibility/component-
+  coverage theorem), not the formal transfer, recovery, or descent steps. Irreducibility of
+  the local avoidance ring alone does not imply irreducibility of an arbitrary patched
+  quotient. Once this arithmetic package is supplied, no several-place old--new cube,
+  mixed-Ihara vanishing, product residue, or separate product-component occurrence is required.
+
 - **Several active places:** once one actual product coefficient system and all component
   routes are supplied, Books 123--124 and 174 formally construct the coherent generic global
   level cube and its adjoint companion. Book 84, Section 11.9 already constructs the integral
@@ -371,93 +376,41 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   Its smaller pointwise interface needs simultaneous branch verification and reciprocity on
   that carrier, followed by occurrence of the single global product component through the
   point; mixed exactness and product residue are needed only if used to prove that occurrence.
-- **Controlled residual automorphic seed:** Book 157 proves the paired-frame Kummer
-  normalization, a simultaneous regular projective equivariant fan, finite-field Bertini,
-  stable DVR slicing conditional on a supplied joining model, the complete-trait inverse, the Mumford-side completed ring, and the
-  formal family-theta/base-fan calculation.  Its first missing relative input is Required
-  $(\mathrm{IIT})$: labelled reduced data do not force a square-zero smoothing coefficient to
-  be the fixed logarithmic monomial times a unit.  Required $(\mathrm{MPE})$ follows only
-  conditionally.  Required $(\mathrm{ACE})$ then retains the bounded conductor presentation
-  $(\mathrm{BCP})$ and single-chart effectivity $(\mathrm{AEC}_0)$, ramified conductor descent
-  $(\mathrm{RCD})$, and theta--determinant cusp theorem $(\mathrm{TDC})$.  Proposition
-  13.2B.3b conditionally proves paired-frame normalization and finite-etale twist descent from
-  that complete unframed package.  Thus Required Theorem 13.2B.3,
-  $(\mathrm{TCG})_\Sigma$, Required $(\mathrm{FTJ})_{v_0,Z}$, and Required
-  $(\mathrm{ICS})_{v_0,Z}$ remain conditional.  A singleton common moving presentation also
-  requires the separately stated repeatability, flexibility, and realized-normal-closure
-  hypotheses.  The literal marked-good-section form additionally retains Book 157's necessary
-  finite-residue rational-point condition, but that stronger form is not used.
-  Book 158 does not import this singleton chain into the FLT route.  Starting from its fine
-  interior and simultaneous split point-centered local opens, it chooses Book 154's moving
-  pencil simply branched; Book 153's transposition calculation gives a regular $S_d$ normal
-  top, and Book 155 specializes that top with total reality, complete splitting, and
-  closure-level avoidance.  Thus the split potential-modularity handoff needs none of
-  $(\mathrm{IIT})$, $(\mathrm{MPE})$, $(\mathrm{ACE})$, $(\mathrm{TCG})_\Sigma$,
-  $(\mathrm{FTJ})_{v_0,Z}$, or $(\mathrm{ICS})_{v_0,Z}$.  A stronger controlled seed with one
-  exceptional factor would still need its own common moving presentation and is not inferred
-  from this split theorem.
-  In the multiplicative-$\ell$
-  Frey branch, Book 157 constructs the one-prime good ordinary $\mathbf Q_\ell$ seed
-  $({\rm Ord}^{\rm base}_\ell)$ carrying the exact selected $\ell$-model.  Its
-  Proposition 8.4B constructs it by Serre--Tate theory, and Lemma 8.4B.1 constructs the
-  trace-one finite-field seed from Book 117's ring-class reciprocity and
-  potential-good-reduction package.
-  Book 182, Lemma 6.2B shows that the formerly frozen multiplicative auxiliary branch may be
-  incompatible with every good seed; Proposition 6.2C therefore reselects $q$ and retargets
-  that branch, after which it constructs corrected $({\rm FF}^{\rm base}_\ell)$ with both
-  exact frames, neat level, component, and avoidance.  The Tate seed itself realizes only the
-  residual finite-flat $\ell$-torsion and Book 140 cannot change level at the coefficient
-  prime; after the resulting normal-top
-  specialization, actual auxiliary-prime lifting certificates and an ordered target-prime path
-  whose every current edge satisfies Book 140's
-  abelian-Ihara, saturation, duality, full-monodromy, component, branch, normalization, and
-  nonexceptional hypotheses, together with exact saturated inter-edge localizations and the
-  bottom Book 173 structural ledger.  The auxiliary-$q$ active set and the later target set
-  are separate ledgers even when places, notably the full conjugate distinguished set
-  $W_0(M)$, occur in both.  In the Frey-adapted
-  construction every dyadic place is forced into the auxiliary-$q$ active set but is absent
-  from the target set because the target retains its SP condition; hence Book 178's literal
-  singleton is unavailable and the auxiliary step needs an ordered route-appropriate chain or
-  the genuine Book 176 finite-set datum.  A retained multiplicative place above $3$ belongs to
-  both ledgers, while an unrepaired multiplicative place above $\ell$ prevents the target path
-  altogether.  Once the split target
-  packet and its actual extra set are known, Book 182 formally uses Books 104 and 125 to place it on a
-  path-compatible compact carrier ramified at one retained dyadic SP place and therefore split
-  at every target-extra place; a primitive upper packet lattice gives nonzero occurrence there;
-  Book 182, Proposition 7.1A proves from those data that every lower localization, including
-  the clean bottom minimal SP localization, is nonzero; its final definite occurrence uses
-  Book 104's forward transfer from the path carrier followed by its totally definite inverse
-  transfer and a primitive saturated packet lattice, not an integral
-  Jacquet--Langlands comparison at either carrier switch; and the later controlled raw-local record, including a raw
-  dyadic SP carrier in the
-  remaining even-degree minimal case.  Full principal/dihedral descent complexes, type and
-  exchange lines, tameness, zero monodromy, and Frobenius return maps at retained auxiliary
-  primes remain a separate stronger automorphic-type problem.  Equivariant conductor and
-  invariant-Frobenius independence construct the weaker unramified Galois pairs and remove
-  the type geometry from the clean-support path. Book 128, Lemma 3.2 gives the
-  zero-monodromy raw-to-global comparison formally.
-  Book 182 now constructs parity-complete basic carriers and attachment for
-  the cyclic descent candidates, including odd-degree fixed fields.  The lifting faces also
-  require the separately named one-prime and several-place inputs above. Once actual raw SP
-  carriers exist, Books 128, 168, and 183 close the formal nonzero-monodromy raw-to-global
-  reduction; the remaining arithmetic input for that SP record is the separately named
-  packet-carrier ambient semisimplicity theorem below.  Book 178's protected
-  anti-cyclotomic Grunwald correction lets Book 182 impose the exact unramified auxiliary
-  Frobenius values at $2$, $3$, and $\ell$; it then constructs the exact paired Frey/auxiliary frames
-  over $\mathbf Q_2$, $\mathbf Q_3$, and $\mathbf Q_\ell$ by adapting the local elliptic seeds and neat source.
-  In the multiplicative-$\ell$ branch, Book 157 supplies $({\rm Ord}^{\rm base}_\ell)$ and
-  Book 182, Proposition 6.2C then supplies corrected $({\rm FF}^{\rm base}_\ell)$.  In the
-  good-reduction branch Proposition 6.2A supplies the coefficient-prime point directly.  In
-  both branches Book 182's Required Moving Theorem 6.3 remains conditional on Book 157's
-  Required $(\mathrm{TCG})_\Sigma$ or another genuine moving repair.  Once that presentation is
-  supplied, Book 182 forces constant-field avoidance with split Chebotarev certificate primes
-  and proves the remaining
-  normal-closure control, applies Book 178's corrected relative-ray compatibility in the
-  rational-base Frey case, and takes the top
-  itself as seed field, makes upward transfer vacuous, and reduces the local and group-theoretic
-  descent checks to Book 109. Its parity-complete carrier theorem supplies the distinguished
-  attachment and cyclic compatibility for every candidate descent. Book 178's general totally-real-base ray hypothesis remains
-  separate.
+- **Controlled residual automorphic seed:** the FLT route uses Book 158's fine
+  interior and simultaneous split point-centered local opens. Its simply branched pencil has a
+  regular symmetric normal closure, and specialization gives a totally real even-degree Galois
+  top with complete splitting and closure-level avoidance. Consequently every dyadic Tate
+  sheet is active for the auxiliary-$q$ lift. No theorem in the chain requires one exceptional
+  factor, and the optional Book 157 boundary program $({\rm IIT})$, $({\rm MPE})$,
+  $({\rm ACE})$, $({\rm TCG})_\Sigma$, $({\rm FTJ})$, and $({\rm ICS})$ is not a
+  dependency of the FLT seed.
+
+  Book 157 remains a direct source for reusable material: the corrected tensor component,
+  product monodromy, point-centered local opens, exact frames, and the good ordinary
+  $\mathbf Q_\ell$ replacement in the multiplicative-$\ell$ branch. The replacement is fixed
+  before $q$; then $q$ avoids its Frobenius discriminant and Book 178's protected
+  anti-cyclotomic correction imposes the compatible auxiliary branch. Book 178 constructs the
+  rational-base dihedral residual seed and applies Book 158's split top. Its only lifting
+  handoff is one complete Book 176 certificate for the actual set
+  $P_{\mathrm{aux}}(A_M)$, preferably direct $({\rm IAV}_{P_{\mathrm{aux}}})$; separate
+  one-place statements do not supply it.
+
+  After auxiliary automorphy, the target-extra set $P_{\mathrm{tar}}$ is formed separately.
+  Every actual Book 140 lowering edge must retain its current component, abelian-Ihara,
+  saturation, duality, monodromy, branch, and normalization hypotheses. Book 182 proves
+  propagation of a primitive upper occurrence down such a certified path and then transfers
+  the final packet to the totally definite carrier; the bottom Book 173 structural ledger
+  remains an input. Dyadic places are absent from $P_{\mathrm{tar}}$ because the target retains
+  its signed-special condition. Thus the live seed boundary is the auxiliary finite-set
+  certificate, the certified target path, and the bottom structural ledger—not a singleton
+  moving presentation.
+
+  For the post-point construction, Book 182 starts from Book 181's chosen lift and a controlled
+  exact datum on the split top. It gives parity-complete compact carriers and the common
+  auxiliary unramified Galois pairs needed by the elementary fixed-field array. Raw
+  signed-special geometry and its later raw-to-global comparison remain the separately named
+  downstream issue; none reinstates the retired singleton/toroidal route.
+
 - **Balanced-lift finiteness:** no separate restricted reduced-finiteness hypothesis remains.
   From the exact automorphic seed, Book 173 makes the whole restricted ring finite free and Book
   181 derives finite scalar image, whole-ring finiteness, finite flatness, and a horizontal

@@ -3250,6 +3250,14 @@ realized-normal-closure hypotheses of Proposition 13.2A.4, the singleton moving 
 follows. The literal stronger form with a marked $P$ specializing in $W$ additionally requires
 (13.21).
 
+This conditional singleton program is not a prerequisite of the FLT route. Book 158 uses only
+the fine interior, the tensor component, the local seed constructions, exact frames, and
+point-centered opens proved above; its split Galois top then places every sheet in the same
+local open. Thus $(\mathrm{IIT})$, $(\mathrm{MPE})$, $(\mathrm{ACE})$,
+$(\mathrm{TCG})_\Sigma$, $(\mathrm{FTJ})$, and $(\mathrm{ICS})$ are retained here solely as
+the boundary of a stronger optional nonsplit/singleton problem, not as missing links in the
+ultimate FLT dependency chain.
+
 The other qualifications—an externally fixed nonsquare polarization class, a dyadic
 coefficient prime, an unramified-only frame not realized over an unramified field, or two
 incompatible prescribed Tate Kummer classes—remain explicit changes of scope.

@@ -7,12 +7,11 @@
    - [Standing conventions](#12-standing-conventions)
    - [What must be chosen](#13-what-must-be-chosen)
    - [The logical boundary](#14-the-logical-boundary)
-2. [Residual data and admissibility](#2-residual-data-and-admissibility)
+2. [Residual and coefficient data](#2-residual-and-coefficient-data)
    - [The target representation](#21-the-target-representation)
    - [Determinant normalization](#22-determinant-normalization)
    - [Simultaneous coefficient-field realization](#23-simultaneous-coefficient-field-realization)
-   - [Cleanability at the auxiliary prime](#24-cleanability-at-the-auxiliary-prime)
-   - [The complete input ledger](#25-the-complete-input-ledger)
+   - [The finite-set lifting interface](#24-the-finite-set-lifting-interface)
 3. [Choosing the auxiliary prime](#3-choosing-the-auxiliary-prime)
    - [Why a second residue characteristic is useful](#31-why-a-second-residue-characteristic-is-useful)
    - [Avoiding finitely many bad choices](#32-avoiding-finitely-many-bad-choices)
@@ -27,11 +26,8 @@
    - [Finite flatness at the auxiliary prime](#46-finite-flatness-at-the-auxiliary-prime)
    - [The controlled dihedral-seed theorem](#47-the-controlled-dihedral-seed-theorem)
    - [Protected Frobenius correction](#48-protected-frobenius-correction)
-5. [An auxiliary level-raising place](#5-an-auxiliary-level-raising-place)
-   - [The Frobenius relation](#51-the-frobenius-relation)
-   - [Selecting the prime](#52-selecting-the-prime)
-   - [From an old class to a special residual class](#53-from-an-old-class-to-a-special-residual-class)
-   - [Signs, repeated roots, and exceptional congruences](#54-signs-repeated-roots-and-exceptional-congruences)
+5. [Protected local branches on the split route](#5-protected-local-branches-on-the-split-route)
+   - [Branch data at the controlled places](#51-branch-data-at-the-controlled-places)
 6. [The twisted Hilbert--Blumenthal cover](#6-the-twisted-hilbert--blumenthal-cover)
    - [The moduli datum](#61-the-moduli-datum)
    - [The two prescribed torsion systems](#62-the-two-prescribed-torsion-systems)
@@ -43,25 +39,22 @@
    - [The target coefficient prime](#72-the-target-coefficient-prime)
    - [The auxiliary coefficient prime](#73-the-auxiliary-coefficient-prime)
    - [Ramification of the dihedral seed](#74-ramification-of-the-dihedral-seed)
-   - [The special place](#75-the-special-place)
+   - [The split special places](#75-the-split-special-places)
    - [Good and semistable auxiliary conditions](#76-good-and-semistable-auxiliary-conditions)
    - [The simultaneous local-neighborhood lemma](#77-the-simultaneous-local-neighborhood-lemma)
-8. [Arithmetic approximation with closure control](#8-arithmetic-approximation-with-closure-control)
+8. [Split Galois-top specialization](#8-split-galois-top-specialization)
    - [The avoidance field](#81-the-avoidance-field)
-   - [Ordinary and Galois-refined specialization](#82-ordinary-and-galois-refined-specialization)
-   - [Exact completion data](#83-exact-completion-data)
-   - [Preservation of residual images](#84-preservation-of-residual-images)
-   - [The specialization theorem](#85-the-specialization-theorem)
+   - [The Book 158 specialization](#82-the-book-158-specialization)
+   - [Preservation of residual images](#83-preservation-of-residual-images)
+   - [The specialization theorem](#84-the-specialization-theorem)
 9. [The Hilbert--Blumenthal bridge](#9-the-hilbert--blumenthal-bridge)
    - [The specialized abelian variety](#91-the-specialized-abelian-variety)
    - [What the two torsion identifications say](#92-what-the-two-torsion-identifications-say)
    - [Local properties of the auxiliary-adic representation](#93-local-properties-of-the-auxiliary-adic-representation)
    - [No inference from torsion alone](#94-no-inference-from-torsion-alone)
-10. [The modularity transfer](#10-the-modularity-transfer)
+10. [The finite-set modularity transfer](#10-the-finite-set-modularity-transfer)
     - [Automorphy of the residual dihedral member](#101-automorphy-of-the-residual-dihedral-member)
-    - [The scalar augmentation lemma](#102-the-scalar-augmentation-lemma)
-    - [Applying one-prime modularity lifting](#103-applying-one-prime-modularity-lifting)
-    - [Solvable bridges and descent](#104-solvable-bridges-and-descent)
+    - [The all-active-place handoff](#102-the-all-active-place-handoff)
 11. [Recovering residual automorphy at the original prime](#11-recovering-residual-automorphy-at-the-original-prime)
     - [Weight-two Galois realization](#111-weight-two-galois-realization)
     - [The cross-prime Tate comparison](#112-the-cross-prime-tate-comparison)
@@ -73,14 +66,14 @@
     - [Determinant and pairing failures](#123-determinant-and-pairing-failures)
     - [Component and local-solvability failures](#124-component-and-local-solvability-failures)
     - [Failure of closure-level disjointness](#125-failure-of-closure-level-disjointness)
-    - [Failure of clean modularity lifting](#126-failure-of-clean-modularity-lifting)
+    - [Failure of finite-set modularity lifting](#126-failure-of-finite-set-modularity-lifting)
 13. [Dependency and hypothesis audit](#13-dependency-and-hypothesis-audit)
     - [The prerequisite interfaces](#131-the-prerequisite-interfaces)
     - [The theorem-by-theorem hypothesis ledger](#132-the-theorem-by-theorem-hypothesis-ledger)
     - [Circularity audit](#133-circularity-audit)
     - [Normalization audit](#134-normalization-audit)
 14. [Conclusion](#14-conclusion)
-   - [The two-prime package and its remaining boundary](#141-the-two-prime-package-and-its-remaining-boundary)
+   - [The split two-prime package](#141-the-split-two-prime-package)
 
 ## 1. The two-prime method
 
@@ -144,9 +137,9 @@ a weight-two Galois realization, not merely equality of Hecke eigenvalues at $q$
 
 ### 1.2 Standing conventions
 
-The initial and final totally real fields are $K$ and $K'$. A CM quadratic extension used for
-induction is $M/K$. The target and auxiliary rational primes are $\ell$ and $q$, and the special
-level-raising place is $v_0$. The totally real multiplication field $E$, with primes
+The initial totally real field is $K$; in the FLT application it is $\mathbf Q$, and the final
+field is the split Galois top $F/K$ supplied by Book 158. A CM quadratic extension used for
+induction is $M/K$. The target and auxiliary rational primes are $\ell$ and $q$. The totally real multiplication field $E$, with primes
 $\mathfrak l\mid\ell$ and $\mathfrak q\mid q$, is fixed only after the dihedral coefficient
 field has been constructed. This order is essential: $E$ must receive both residual coefficient
 fields, not only the target field.
@@ -210,9 +203,10 @@ irreducibility, determinant, finite flatness, and an adjoint-twist invariant. Th
 records a CM field, Hecke character, conductor, determinant, residual conjugate ratio, and local
 behavior. The moduli ledger records polarization, neat level, two paired torsion systems,
 components, and product monodromy. The local ledger records real, integral, ordinary,
-nonordinary, and semistable seed points. The field ledger records exact completions, total
-reality, normal closures, disjointness, and any solvable bridge. The lifting ledger records the
-exact residual automorphic localization and every named local component.
+nonordinary, and semistable seed points over the controlled rational completions. The field
+ledger records the regular Galois top, total reality, complete splitting, and closure-level
+disjointness. The lifting ledger records the actual auxiliary active set and one exact
+finite-set certificate for the named point.
 
 The order matters. A global point chosen before its component may have incompatible local
 specializations. A field chosen before the cutout fields are listed may shrink a residual image.
@@ -247,27 +241,21 @@ starts from a corrected relative ray datum whose full compatibility has been ver
 general totally real base.
 
 There is a further boundary at modularity lifting. Absolute irreducibility and matching residual
-torsion do not make a lift automorphic. The available theorem has named local components and
-integral hypotheses. In particular, the special residual localization used at $v_0$ still
-depends first on the abelian-Ihara family isolated in Book 139; that family is not proved by a
-prior source. Its vanishing would still leave the independent typed-Ihara, support,
-reciprocity, ray, augmentation, and faithful-carrier hypotheses of Book 175 to verify at the
-actual localization. Separately, an approximation point may acquire several additional bad
-places. The singleton branch below therefore isolates a **one-prime cleanable** two-prime
-datum. Book 176 now gives exact conditional finite-set alternatives, but does not prove their
-actual cube, ordered intermediate occurrence, simultaneous branches, reciprocity, or joint
-support for a specialization produced here.
+torsion do not make a lift automorphic. In the split FLT construction every dyadic place of the
+Galois top lies in the auxiliary active set: complete splitting gives the same Tate neighborhood
+on every sheet. Consequently no theorem in the FLT chain can use a hypothesis saying that
+exactly one place is nonminimal. The relevant input is instead Book 176's direct
+$({\rm IAV}_S)$ theorem, or one of its explicitly stronger finite-set substitutes, for the
+actual post-specialization set $S=P_{\mathrm{aux}}(A_F)$.
 
-The split FLT branch is necessarily one of those finite-set alternatives. Book 158 splits the
-dyadic Tate neighborhood completely in its Galois top, so every dyadic place is active for the
-auxiliary $q$-adic lift. Its output cannot satisfy the singleton ledger of Section 2.5. The
-split implication is stated separately in Theorem 11.2A and retains one of Book 176's exact
-finite-set certificates as an input. These gaps prevent the unrestricted potential-modularity
-assertion. They do not create a separate curve-carrier gap: after automorphy, even absolute
-degree and one eligible special dyadic place let Book 104 construct a compact one-split packet,
-and Book 127 attaches its rank-two family.
+This book therefore does not retain the retired one-special-factor moving problem, its
+toroidal joining hypotheses, or the one-prime scalar-augmentation branch. Its sole lifting
+boundary is the honest finite-set certificate of Section 2.4. This gap does not create a
+separate curve-carrier gap: after automorphy, even absolute degree and any one special dyadic
+place let Book 104 construct a compact one-split packet, and Book 127 attaches its rank-two
+family.
 
-## 2. Residual data and admissibility
+## 2. Residual and coefficient data
 
 ### 2.1 The target representation
 
@@ -291,7 +279,7 @@ be continuous. It is a **weight-two residual datum** when:
    $$
 5. every restriction at $w\mid\ell$ is finite flat of weights $\{0,1\}$ in the integral
    sense;
-6. the adjoint-twist invariant required by the clean lifting datum vanishes:
+6. the adjoint-twist invariant required by the finite-set lifting datum vanishes:
    $$
    H^0(K,\operatorname{ad}^0\bar\rho(1))=0.
    \tag{2.3}
@@ -450,207 +438,63 @@ dihedral character and its place $\mathfrak Q$ have been fixed. From that point 
 torsion groups $A[\mathfrak l]$ and $A[\mathfrak q]$ are two-dimensional over exactly the
 residue fields of the target and the constructed dihedral representation.
 
-### 2.4 Cleanability at the auxiliary prime
+### 2.4 The finite-set lifting interface
 
-Let $s\geq7$. A lift $r:G_F\to\operatorname{GL}_2(\mathcal O_s)$ is **one-prime clean** when
-it fits the complete one-prime nonminimal datum: $F$ is totally real; the residual cyclotomic
-restriction is absolutely irreducible; the adjoint-twist invariant vanishes; coefficient-prime
-conditions are unramified finite flat of weights $\{0,1\}$; every other condition is a named
-represented minimal component; residual automorphy occurs in the exact non-Eisenstein
-quaternionic localization; the normalized branch Smith correction and component-support
-conditions are recorded; and the exact hypotheses
-$({\rm AUT}_v)$, $({\rm TYPE}_v)$, $({\rm SUP}_v)$, and $({\rm REC}_v)$ of Book 175
-hold, together with $({\rm RAY}_v)$ when the scalar family is used and $({\rm AUX}_Q)$
-when a patched auxiliary level is augmented. In particular, the type-incidence and typed-Ihara
-hypotheses, the five support clauses, faithful-order generation, branchwise local--global
-compatibility, and the Taylor--Wiles hypotheses are not compressed into residual automorphy.
-The reduced faithful-order comparison is sufficient for a characteristic-zero point; global
-reducedness of the conductor-one deformation source is not required unless a full
-scheme-theoretic $R=T$ statement is claimed. The automorphic central character is the one
-corresponding to the fixed determinant; in the cyclotomic-determinant normalization used here
-it is trivial. At the selected prime the abelian Ihara
-conditions of Book 139 and the resulting saturation and perfect-duality statements are part of
-the datum whenever the constant-coefficient level-change package is invoked, not consequences
-of the numerical level-raising congruence. In the notation used by Books 174--175, the first
-missing constant-coefficient input is the finite family of exact vanishings
+After Book 158 specializes the paired-frame space, let $F/K$ be its totally real Galois top,
+let $A_F/F$ be the resulting Hilbert--Blumenthal abelian variety, and put
 
 $$
-({\rm AIH}_{\mathscr F})_{v_0}:\qquad
-\bigl(H^1_{\mathrm{nc}}(\Gamma_D^{v_0},\kappa)^{\Delta_D}\bigr)_{\mathfrak m_D}=0
-\quad\bigl(D\in\mathscr F_{v_0}(Q)\bigr),
+r_A=V_{\mathfrak q}(A_F),\qquad
+\bar r_A=A_F[\mathfrak q]\simeq\bar r|_{G_F}.
 \tag{2.10}
 $$
 
-equivalently injectivity of every localized residual two-degeneracy map in the actual finite
-constant-coefficient flag diagram. Here $Q$ is the auxiliary shadow, $D$ labels a curve in its
-actual flag $\mathscr F_{v_0}(Q)$, $\Delta_D$ and $\mathfrak m_D$ are its stabilizer and
-localized maximal ideal, and $\kappa$ is the residue field of the auxiliary coefficient order.
-Book 139 computes these kernels but does not prove their vanishing. The
-crossed-coefficient typed-Ihara vanishings inside $({\rm TYPE}_{v_0})$ are independent inputs;
-neither (2.10) nor saturation of the constant rows proves them.
-
-At a selected $v_0\nmid s$, the scalar-twist datum requires $q_{v_0}\equiv1\pmod s$ and retains
-scalar residual Frobenius, an enhanced invariant line, a sign, a determinant, and the special
-relation. It also includes an actual nontrivial global ray character through the tame
-$s$-power quotient; divisibility of $q_{v_0}-1$ does not create that character. Its
-augmentation specialization has conductor one. A nontrivial tame-character specialization has
-conductor two.
-
-For a specialized lift, let $P_{\mathrm{nm}}$ be the actual set of fixed places at which its
-local condition is nonminimal relative to the residual conductor and hence needs a fixed-prime
-type complex. This set is defined only after every bad place of the lift is known and after a
-lower residual automorphic carrier has been chosen. The phrase **one-prime clean** includes the
-equality
+The **auxiliary active set** is the finite set
 
 $$
-P_{\mathrm{nm}}=\{v_0\}.
+P_{\mathrm{aux}}(A_F)=
+\{w:r_A\text{ has more level than the selected residual automorphic reference at }w\}.
 \tag{2.11}
 $$
 
-At every other bad place, the lift and the lower carrier must lie on the same named represented
-minimal component permitted as a spectator by Book 175. If the original dihedral packet has
-superfluous characteristic-zero level at such a place, a proved saturated integral
-level-lowering comparison must first place its residual eigensystem in that minimal carrier.
-If the lift itself acquires an extra special component relative to the residual conductor, that
-place belongs to $P_{\mathrm{nm}}$; lowering the residual carrier does not remove the lift's
-monodromy. Such an output is not one-prime clean. A numerical conductor congruence proves
-neither the required spectator comparison nor a theorem handling that extra active place.
-
-A list of individually clean places is not a clean global datum. After the first nonminimal
-change, the next application has to retain an already changed local condition. The one-prime
-theorem does not assert this. Book 176 gives four finite-set alternatives relevant here: a
-direct $({\rm IAV}_S)$ comparison, a fully reverified ordered chain, its conditional all-point
-Theorem 9.1, and its pointed Theorem 9.2 for one named lift. None follows from individual
-cleanliness. The all-point route retains mixed and product-residue hypotheses; the pointed
-route instead retains one actual final cube, simultaneous branch verification, reciprocity on
-its torsion-free top carrier, and occurrence of the one global component through the point.
-
-### 2.5 The complete input ledger
-
-A weight-two residual datum together with its auxiliary choices is a
-**pre-specialization singleton package** if it satisfies items 1--6 below. It is
-**singleton-admissible** only when at least one output $(K',A)$ of Theorem 8.2 for that
-package has also been fixed and satisfies the post-specialization item 7. Thus this
-admissibility has an existentially witnessed one-prime-clean output; it is not a promise that
-every point furnished by approximation is clean. The split-top finite-set package is different
-and is stated after Theorem 11.2; it does not assume items 6--7 below.
-
-1. a distinct $q\geq7$ has been selected with all exclusions of Chapter 3, including
-   unramifiedness of $\bar\rho$ at every place above $q$; in the multiplicative-Frey
-   coefficient-prime case, the ordinary replacement and polynomial (1.5) were fixed first and
-   $q\nmid\Delta_\ell$;
-2. a corrected relative ray datum satisfying the compatibility hypothesis of Theorem 4.2 has
-   been supplied, and the resulting dihedral seed has cyclotomic determinant, cyclotomic
-   absolute irreducibility, and clean finite-flat local behavior at $q$ over its actual residue
-   field $k_\psi$; when $K=\mathbf Q$, Lemma 4.1A supplies the relative-compatibility part from
-   determinant-compatible local branch factors; any finitely many exact residual branch pairs
-   at additional split places, with the same determinant, may then be imposed by Lemma 4.3;
-3. Theorem 2.1 has then produced $E$, $\mathfrak l$, $\mathfrak q$, the tensor polarization,
-   self-dual lattice, a corrected cyclotomic-split or elliptic source, both determinant-line
-   identifications, and simultaneous monodromy admissibility;
-4. the determinant-compatible two-prime twist over the $\mathbf Q$-defined tensor component
-   has a smooth geometrically connected twist $Y^{\mathrm{ten}}$ over $K$;
-5. every required real, coefficient-prime, ramified, good, and semistable seed lies on that same
-   component after the recorded local extension;
-6. in the ordinary specialization form, all local completion algebras have the common-degree
-   moving-family presentations required by Book 154, and their common degree $d$ is chosen so
-   that $d[K:\mathbf Q]$ is even; in the closure-controlled form, a full Galois approximation
-   datum is supplied as in Book 155 and $[G:J][K:\mathbf Q]$ is even. In either form the
-   completion algebra at $v_0$ has exactly one distinguished degree-one factor carrying the
-   special seed, while every other factor carries a good minimal seed;
-7. after specialization, the actual bad set of $A$, the local conditions of
-   $T_{\mathfrak q}A$, and a lower residual automorphic carrier have been listed. After every
-   required saturated integral level lowering at superfluous dihedral conductor primes through
-   a verified chain whose intermediate carriers and retained local components are recorded, the
-   final carrier lies in the exact signed special localization at the distinguished place
-   $w_0\mid v_0$ and in the same named minimal spectator components as the Tate module
-   everywhere else. The equality $P_{\mathrm{nm}}=\{w_0\}$ holds, and at $w_0$ all hypotheses
-   of Book 175 are verified: $({\rm AUT}_{w_0})$, $({\rm TYPE}_{w_0})$ including its typed
-   parahoric-extension, incidence, and typed-Ihara rows, all five clauses of $({\rm SUP}_{w_0})$,
-   $({\rm REC}_{w_0})$, and the effective global $({\rm RAY}_{w_0})$ datum. The entire
-   applicable family $({\rm AIH}_{\mathscr F})$, the line and sign, primitive primary and
-   companion lattices, normalized branch correction, component support, finite-flat quotients,
-   faithful trace/structural Hecke order, and exact fixed-prime augmentation are retained;
-   $({\rm AUX}_Q)$ is added if the comparison descends from patched auxiliary level, and the
-   applicable $({\rm PRI}_{\rm type})$, $({\rm NU}_{\rm type})$, and Book 140
-   node-uniformization hypothesis are added whenever their level-change consequences are used.
-   Generic support and common-kernel equality are then conclusions of Books 140 and 174 under
-   the preceding inputs, not further hypotheses. The specialized Tate-module point has nonzero rank-one
-   conductor-one monodromy and the fixed determinant corresponding to trivial automorphic
-   central character.
-
-Items 1--6 are pre-specialization construction clauses. Item 7 is a post-specialization
-verification clause and is not an input to the approximation theorem. Book 157 places the
-corrected tensor seeds on one arithmetic component, and product monodromy proves the twist over
-that component geometrically connected. The local geometry verifies item 5 in its stated good,
-ordinary, local--local, and split-semistable ranges. Item 7 is the exact boundary of the lifting
-theorem; calling the entire package admissible does not prove that a point supplied by
-approximation satisfies it. The compact curve carrier is not another item: even absolute
-degree and the retained special factor let Books 104 and 127 construct the carrier for the
-final lifted packet in Chapter 11. The exact compact residual localization required by
-$({\rm AUT}_{w_0})$ is already part of item 7; it is not inferred from torsion or from the
-eventual carrier.
-
-Book 154, Lemma 5.2A makes item 6 automatic for every nonsplit packet which the application
-permits to be repeated wholesale.  It does not make the one-special-factor clause automatic.
-On the local curve used by its pencil construction, let $V_{\mathrm{sp}}$ be the assigned
-degree-one special neighborhood containing $S$, let $P$ be a good point, and let $\mathcal A$
-have degree $e$.  Book 154, Lemma 5.2B gives the exact fixed-slice condition
+It is defined only after specialization and after the reference packet and all actual bad
+places have been recorded. In the Frey split Tate construction,
 
 $$
-n([\mathcal A]-e[P])
-\in\{[T-P]:T\in V_{\mathrm{sp}}\}
-+\mathscr R^{\mathrm{good}}_{v_0,ne-1},
-\tag{2.12a}
-$$
-
-where the right side consists of the Abel classes of all reduced degree-$(ne-1)$ divisors whose
-residue-field factors carry good minimal seeds, added to the class of the unique varying special
-factor.  Thus (2.12a) already allows compensating good factors of arbitrary permitted finite
-etale type.  Freezing the special representative at $S$ gives the sufficient condition
-
-$$
-n([\mathcal A]-e[P])-[S-P]
-\in\mathscr R^{\mathrm{good}}_{v_0,ne-1}.
-$$
-
-If every added factor is instead obtained by repeating one degree-one good neighborhood of
-$P$, and $G_{v_0}$ is the open subgroup of the local Jacobian generated by its differences,
-shrink $V_{\mathrm{sp}}$ so that $[T-S]\in G_{v_0}$ for every $T\in V_{\mathrm{sp}}$.
-For sufficiently large degree, the bounded-generation and collision-removal argument of Book
-154, Step 2 identifies the degree-indexed one-tube Abel image with $G_{v_0}$.  Then (2.12a)
-reduces to
-
-$$
-n([\mathcal A]-e[P])-[S-P]\in G_{v_0}
+\{w:w\mid2\}\subseteq P_{\mathrm{aux}}(A_F).
 \tag{2.12}
 $$
 
-for one common allowed exponent $n$.  Divisibility kills the first term in the finite quotient
-but not the fixed second term.  A finite coset-complete collection of compensating good divisors
-would make (2.12a) automatic in high degree, but no prior result constructs such a collection on
-the actual slice.  Book 154, Lemma 5.2D would also make (2.12a) automatic if that slice had a
-smooth proper integral model whose allowed good factors contained every tube above a nonempty
-special-fiber Zariski open; Book 154, Corollary 5.2E turns either verified repair into the common
-presentation.  Book 157, Lemmas 13.2A.1--13.2A.2 prove the finite-residue relative Bertini,
-complete-intersection, and coefficient-stability steps.  Its Lemmas 13.2B.1--13.2B.2 normalize
-the paired-frame division monomials and construct a regular projective equivariant fan, while
-Propositions 13.2B.2a--13.2B.2c prove the complete-trait inverse, the Mumford-side completed
-ring, and the formal family-theta/base-fan calculation.  They do not prove Book 157's Required
-$(\mathrm{IIT})$, $(\mathrm{MPE})$, bounded conductor presentation $(\mathrm{BCP})$ and
-single-chart effectivity $(\mathrm{AEC}_0)$, ramified conductor descent $(\mathrm{RCD})$, or
-theta--determinant cusp theorem $(\mathrm{TDC})$.  Those inputs form its still-Required
-$(\mathrm{ACE})$ package and Required Theorem 13.2B.3.  Conditional on that theorem,
-Proposition 13.2B.4 gives $(\mathrm{FTJ})_{v_0,Z}$ and Corollary 13.2B.5 gives the weaker
-$(\mathrm{ICS})_{v_0,Z}$ used by Book 154.  Only then, and under the separately stated
-repeatability, flexibility, and realized normal-closure hypotheses, does Book 154, Corollary
-5.2E prove (2.12a) in sufficiently large compatible degrees.  Without those geometric and
-packet hypotheses, item 6 remains an input.
-The literal stronger clause requiring a good $k$-point to reduce inside the allowed
-special-fiber open still needs Book 157, (13.21), but it is not used here.  Equal ranks, Hensel
-lifting, local realizability, and arbitrary norm
-factors in one residue tube do not by themselves supply it; Book 154, Counterexample 5.2C gives a local
-counterexample.
+Because $2$ splits completely in $F$ and $[F:\mathbf Q]\ge2$, this set is never a singleton.
+Accidental semistable places and retained places above $3$ may enlarge it.
+
+A **finite-set lifting certificate** for $(A_F,\bar r)$ means one of the exact interfaces of
+Book 176, applied to the full set $S=P_{\mathrm{aux}}(A_F)$:
+
+1. the direct $({\rm IAV}_S)$ comparison, with paired desired and avoidance local rings,
+   common special fibers and component bijections, synchronized Taylor--Wiles systems,
+   support transfer, and descent;
+2. a fully reverified ordered chain which retains every previously changed local condition;
+3. the all-point finite-set theorem with its mixed exactness, product-residue, joint-support,
+   augmentation, and reciprocity hypotheses; or
+4. the pointed theorem for this named lift, including its actual joint cube, simultaneous
+   branch verification, reciprocity on the torsion-free top carrier, and occurrence of the
+   one global product component through the point.
+
+Separate one-place statements do not assemble into this certificate. Nor does complete
+splitting reduce the problem: it is precisely what creates all of the active dyadic places.
+The direct $({\rm IAV}_S)$ interface is the scope-minimal handoff used below. The other three
+are retained only as logically stronger substitutes.
+
+The construction ledger needed before this handoff consists of: the residual datum of Section
+2.1; the auxiliary prime and compatible corrected relative ray datum of Chapters 3--4; the
+simultaneous coefficient realization of Theorem 2.1; the determinant-compatible paired-frame
+space and point-centered local opens of Books 156--158; and Book 158's split Galois-top
+specialization with closure-level disjointness. None of these clauses asks for one exceptional
+factor, a common moving presentation for mixed local algebras, or any of Book 157's Required
+$({\rm IIT})$, $({\rm MPE})$, $({\rm ACE})$, $({\rm TCG})_\Sigma$,
+$({\rm FTJ})$, or $({\rm ICS})$ statements.
+
 
 ## 3. Choosing the auxiliary prime
 
@@ -698,7 +542,7 @@ intersection need not lift to the compositum. We always form the compositum firs
 
 ### 3.2 Avoiding finitely many bad choices
 
-Several later conditions also eliminate finitely many $q$. The one-prime theorem requires
+Several later conditions also eliminate finitely many $q$. The finite-set lifting theorem requires
 characteristic at least seven, the local bases must be unramified at $q$, and every finite field
 used in a compatible Frobenius prescription contributes its ramified primes to the exclusion
 list. Most importantly, $q\notin S(\bar\rho)$ is imposed before any local $q$-adic frame is
@@ -731,22 +575,21 @@ characteristics are retained throughout.
 
 ### 3.4 Local coefficient-prime requirements
 
-The lifting theorem at $q$ requires unramified local bases. We choose $q$ unramified in $K$ and
-later prescribe split or unramified completion algebras at every $w\mid q$. An arbitrary
-specialization can ramify at $q$ even if $K$ does not; this must be prevented in the local
-algebra.
+The lifting theorem at $q$ requires an unramified local base. We choose $q$ unramified in $K$
+and, in the rational split application, require the simultaneous seed already over
+$\mathbf Q_q$. Book 158 then makes $q$ split completely, so every top completion remains the
+same unramified base.
 
 There is a second, independent condition at the same places: $\bar\rho|_{G_{K_w}}$ must be
 unramified. A good Hilbert--Blumenthal variety has unramified $\mathfrak l$-torsion at residue
 characteristic $q\ne\ell$. If $\bar\rho$ had nontrivial inertia at $w$, no unramified extension
 could make an exact good $\mathfrak l$-frame exist. Since $q\notin S(\bar\rho)$, the target is
-unramified; after a finite unramified extension its finite Frobenius action becomes trivial and
-the prime-to-$q$ frame can be solved on the ordinary seed.
+unramified; the rational-base tensor source and chosen ordinary seed must realize its actual
+Frobenius over $\mathbf Q_q$ itself.
 
-At $\ell$, the target finite-flat module must be realized by an ordinary or local--local Hilbert--Blumenthal
-seed on the selected component. If a local extension is required, it is recorded in the global
-completion datum. Finite flatness persists upward, but finite flatness acquired after ramified
-extension need not descend.
+At $\ell$, the target finite-flat module must be realized over $\mathbf Q_\ell$ by an ordinary
+or local--local Hilbert--Blumenthal seed on the selected component. A seed known only after a
+nontrivial local extension belongs to the nonsplit problem and is not an input to Theorem 8.2.
 
 ## 4. The dihedral seed
 
@@ -770,8 +613,8 @@ $$
 
 At a good split prime its Frobenius roots are the two branch values. At a good inert prime its
 trace is zero. At a regular nonsplit place its automorphic component is dihedral supercuspidal.
-The monodromy operator is always zero, so the dihedral form supplies an old residual class at
-the later special place, not a characteristic-zero Steinberg component.
+The monodromy operator is always zero, so the dihedral form supplies the residual avoidance
+side at every place where the Tate-module point has special monodromy.
 
 ### 4.2 The determinant equation
 
@@ -1202,149 +1045,29 @@ All full and projective cutout fields, the cyclotomic field, and the ray fields 
 finite. We record their compositum in the later avoidance field. The theorem does not assert
 that these fields are mutually disjoint.
 
-## 5. An auxiliary level-raising place
+## 5. Protected local branches on the split route
 
-### 5.1 The Frobenius relation
+### 5.1 Branch data at the controlled places
 
-The dihedral automorphic representation is not special anywhere: induced character parameters
-have zero monodromy. The lifting datum nevertheless needs a special automorphic residual
-localization. We create it by level raising at one good prime $v_0\nmid q$.
+The split construction needs no auxiliary level-raising prime. The dihedral member is already
+automorphic by induction, and Book 176 compares it with the actual Tate-module point at the
+whole active set. What must be fixed before specialization is instead the local paired-frame
+datum at each controlled rational place.
 
-Let the unramified arithmetic-Frobenius roots of $\bar r$ at $v_0$ be $\alpha$ and $\beta$.
-For a conductor-one covariant special lift, the exact sequence is an unramified scalar twist of
+At $2$, choose the Frey Tate neighborhood for the target frame and use Lemma 4.3 to impose the
+determinant-compatible residual dihedral branch on the same split Tate point. At $\ell$, first
+fix the good ordinary replacement when the target residual module came from a multiplicative
+curve, then choose $q\nmid\Delta_\ell$ and impose one of the two ordered roots of its
+Frobenius polynomial as the protected $q$-branch. Treat a fixed good seed at $3$ in the same
+order. At $q$, use the unramified ordinary frame of Section 4.6. Every auxiliary correction is
+chosen after the seed whose Frobenius it must match.
 
-$$
-0\longrightarrow\mathcal O_q(1)
-\longrightarrow T
-\longrightarrow\mathcal O_q
-\longrightarrow0.
-\tag{5.0}
-$$
+These are finitely many split local prescriptions with common determinants, so the protected
+anti-cyclotomic correction of Lemma 4.3 realizes them simultaneously without changing the CM
+determinant or conjugate-ratio witness. They are input to Book 158's simultaneous point-centered
+opens. No scalar repeated-root congruence, enhanced one-prime line, unique exceptional sheet,
+or toroidal connecting slice is used.
 
-Thus the monodromy-invariant subline has the cyclotomic-multiple root. If $\alpha$ labels that
-line and $\beta$ labels the quotient, reduction can be unramified only if
-
-$$
-\alpha=q_{v_0}\beta
-\quad\text{or}\quad
-\beta=q_{v_0}\alpha.
-\tag{5.1}
-$$
-
-Equivalently,
-
-$$
-(\operatorname{tr}\bar r(\Phi_{v_0}))^2
-=(q_{v_0}+1)^2q_{v_0}^{-1}\det\bar r(\Phi_{v_0}).
-\tag{5.2}
-$$
-
-When the two roots are distinct, their ordering fixes the special line. The branch used below
-is scalar, so a line must instead be included in the enhanced residual datum. The signed
-primary localization fixes the sign; Equation (5.2) alone fixes neither label.
-
-### 5.2 Selecting the prime
-
-The prior one-prime theorem treats the scalar-twist branch
-
-$$
-q_{v_0}\equiv1\pmod q,
-\tag{5.3}
-$$
-
-not the distinct-root branch. Prescribe the identity class in the finite Galois compositum cut
-out jointly by $(\bar r,\bar\epsilon_q)$, $(\bar\rho,\bar\epsilon_\ell)$, the normal closure
-of $M/K$, and the prime-to-$q$ auxiliary-level, determinant-line, and protected-character
-fields. Chebotarev gives a good prime $v_0\nmid\ell q$, outside both conductors and every moduli
-exclusion, which splits completely in that compositum. For arithmetic Frobenius this gives
-
-$$
-\bar r(\Phi_{v_0})=1,
-\qquad
-\bar\epsilon_q(\Phi_{v_0})=1,
-\qquad
-\bar\rho(\Phi_{v_0})=1,
-\qquad
-\bar\epsilon_\ell(\Phi_{v_0})=1.
-\tag{5.4}
-$$
-
-Thus (5.1)--(5.3) hold with $\alpha=\beta=1$. The residual representation is scalar, so its
-matrix does not select a line. Choose a line as part of the enhanced local datum and later
-identify it with the multiplicative line of the Tate model. The normalized trace is $2$, so
-the primary sign is selected; the companion signed factor is $4$, a unit because $q\geq7$.
-
-### 5.3 From an old class to a special residual class
-
-At level prime to $v_0$, the dihedral packet contributes an old eigensystem. The two degeneracy
-maps at $v_0$ have a Gram matrix whose determinant, after localizing at the residual maximal
-ideal, vanishes precisely under the level-raising relation. Hence its cokernel has nonzero
-residual support. Saturation of the degeneracy image ensures that this residual cokernel is not
-created by torsion in the ambient lattice. The free new quotient and the monodromy--component
-sequence then place the same residual eigensystem in the selected special localization.
-
-Under the exact integral hypotheses, this argument gives more than a conductor congruence. The
-scalar line enhancement chooses the invariant line; the primary localization chooses the sign;
-the determinant remains cyclotomic; and the new quotient has rank-one monodromy in
-characteristic zero. The scalar Frobenius matrix and numerical congruence by themselves give
-none of the line, saturation, or component-support conclusions.
-
-**Proposition 5.1 (conditional scalar residual level raising).** Assume (5.1), (5.3)--(5.4),
-the chosen scalar line and primary sign, non-Eisenstein localization, the full applicable
-$({\rm AIH}_{\mathscr F})$ family of Book 139, saturated degeneracy maps, the type-incidence
-and typed-Ihara hypotheses needed for the actual coefficient flag, primitive primary and
-companion type lattices, the normalized branch Smith correction and its component support, and
-the branchwise local--global compatibility hypotheses of the one-prime datum. Then
-the residual eigensystem of $\pi(\psi)$ occurs in the named minimal-special localization at
-$v_0$, with the chosen line, sign, and determinant.
-
-**Proof.** The determinant of the old Gram matrix vanishes modulo the residual maximal ideal by
-(5.1). The primary null direction is nonzero because its companion factor is the unit $4$. If
-its localized cokernel vanished, the determinant would be a unit, a contradiction.
-The assumed abelian Ihara family supplies every constant-row residual injectivity needed by
-Book 139, while the separately assumed typed rows control the crossed coefficients;
-saturation then identifies reduction of the cokernel with the cokernel of reduction. The free
-new quotient identifies the nonzero cokernel with a new special class. The normalized branch
-Smith correction ensures that this class survives on the asserted component rather than only
-in the ambient graph quotient. Primary--companion adjunction transports the enhanced line to
-the line and sign labels. Full local--global compatibility identifies the characteristic-zero
-branches as the asserted special packets. $\square$
-
-Proposition 5.1 is conditional because its abelian Ihara hypothesis is conditional in the
-prior source. Nothing in the displayed Gram determinant proves that hypothesis.
-
-Here is the local algebra behind the determinant statement. After scaling by the central
-character, the two degeneracy maps have Gram matrix
-
-$$
-G_{v_0}=
-\begin{pmatrix}
-q_{v_0}+1&T_{v_0}\\
-T_{v_0}&q_{v_0}+1
-\end{pmatrix}
-\tag{5.5}
-$$
-
-on the old summand. On an eigensystem with trace $a_{v_0}$, its determinant is
-$(q_{v_0}+1)^2-a_{v_0}^2$ in trivial central normalization; restoring the determinant character
-gives (5.2). In the scalar branch, a null vector records the primary relation between the two
-degeneracy branches, while the separately chosen residual line records the special invariant
-line. The new quotient is therefore not obtained from a dimension count: it is the saturated
-cokernel detected by this explicit null direction and the enhanced line datum.
-
-### 5.4 Signs, repeated roots, and exceptional congruences
-
-The congruence $q_{v_0}\equiv1\pmod q$ is deliberate: it is exactly the scalar-twist range of
-Book 175. Because the roots collide, an integral root idempotent cannot select the line; the
-enhanced scalar line is indispensable. If $q_{v_0}\equiv-1\pmod q$, no nontrivial scalar
-$q$-power tame character exists and the two-sign Smith problem remains. If
-$q_{v_0}\not\equiv1\pmod q$, a distinct-root special chart may exist, but it is not the
-one-prime theorem supplied by Book 175.
-
-Changing from arithmetic to geometric Frobenius would invert the cyclotomic ratio in (5.1); we
-use arithmetic Frobenius throughout this construction. Finally, a nonzero new quotient proves
-residual occurrence, not that the original dihedral characteristic-zero packet has become
-special. The new special packet is a congruent packet.
 
 ## 6. The twisted Hilbert--Blumenthal cover
 
@@ -1504,13 +1227,13 @@ followed by the uniquely normalized isomorphism between the $-1$ lines, gives ea
 Thus oddness is exactly the real frame criterion. It is not enough to construct a point at one
 real place: every real place of the base enters the local ledger. Small neighborhoods preserve
 the real component and the signs. Later a split real completion algebra will force every
-embedding of $K'$ to remain real.
+embedding of the split top $F$ to remain real.
 
 ### 7.2 The target coefficient prime
 
 Let $w\mid\ell$. The target module is finite flat of weights $\{0,1\}$. If it is ordinary, use
-an ordinary Hilbert--Blumenthal seed whose connected--étale torsion has the same paired generic representation,
-after the explicitly allowed finite local extension. If it is nonordinary, use a local--local
+an ordinary Hilbert--Blumenthal seed over the stated completion whose connected--étale torsion
+has the same paired generic representation. If it is nonordinary, use a local--local
 Hilbert--Blumenthal seed, such as a supersingular tensor seed on a tensor-admissible component.
 
 The ordinary locus is open by nonvanishing of the Hasse invariants. Nonordinarity is closed in
@@ -1520,14 +1243,14 @@ reduction. In either case, the generic frame is locally constant because its iso
 is finite étale.
 
 If the proposed finite-flat module is not realized by a Hilbert--Blumenthal seed of the selected polarization
-type, finite flatness alone does not create a point. This is one of the explicit admissibility
-checks.
+type, finite flatness alone does not create a point. Existence over the stated completion is an
+explicit hypothesis of the split local package.
 
 There is a sharper boundary when the target module is the finite-flat residual torsion of a
 Tate curve at $\ell$.  Book 157, Proposition 8.4A shows that its selected model is ordinary,
 so a local--local seed cannot realize it, and that the multiplicative Tate curve does not give
-a finite-flat characteristic-zero tower.  If the application forbids a local extension, it
-must first construct a good ordinary seed over the stated base completion.  The auxiliary
+a finite-flat characteristic-zero tower.  The split application must first construct a good
+ordinary seed over the stated base completion.  The auxiliary
 branch at that same place should then be prescribed to equal the prime-to-$\ell$ torsion of
 this seed.  Lemma 4.3 permits exactly that determinant-compatible correction at a split place.
 A branch pair fixed earlier from the multiplicative Tate semisimplification need not have the
@@ -1540,635 +1263,297 @@ q\nmid\Delta_\ell\quad\longrightarrow\quad
 \text{two-frame point}                                      \tag{7.1a}
 $$
 
-is load-bearing.  This section's extension-valued admissibility statement proves neither the
-first arrow over the original completion nor descent of the resulting point.
+is load-bearing. Book 157, Proposition 8.4B supplies the first arrow over the rational
+completion in the FLT range.
 
 ### 7.3 The auxiliary coefficient prime
 
-At a place above $q$, use the ordinary unramified-twist model (4.13). After the recorded finite
-unramified extension kills $\bar\theta_w$, choose an ordinary Hilbert--Blumenthal seed with
-$\mathfrak q$-torsion paired-isomorphic to $1\oplus\bar\epsilon_q$ and solve the
-$\mathfrak l$-frame simultaneously. This last phrase now has a proof: Chapter 3 excluded every
-rational prime below the ramification set of $\bar\rho$, so
-$\bar\rho|_{G_{K_w}}$ is unramified. A finite unramified extension kills its finite Frobenius
-action. The ordinary seed's prime-to-$q$ torsion and its determinant line also become constant
-after a finite unramified extension, and paired bases then give the exact $\mathfrak l$-frame on
-the same seed. The ordinary deformation tube gives a nonempty open set on which good ordinary
-reduction and both frames persist.
+At $q$, the split local datum must already be defined over $\mathbf Q_q$. The prime-selection
+step makes the target frame unramified there, and the dihedral construction supplies the exact
+ordinary finite-flat auxiliary frame. Choose the rational-base tensor seed permitted by Book
+157, Lemma 4.1B so that both frames, the determinant lines, and the ordinary
+characteristic-zero lift occur on one point over $\mathbf Q_q$. Book 157's local openness then
+gives a nonempty point-centered ordinary tube.
 
-The completion field is chosen unramified over $\mathbf Q_q$. This retains the exact range of
-the finite-flat lifting theorem. Allowing an arbitrary ramified splitting field for the frames
-would solve the moduli point problem but could invalidate modularity lifting.
+The base is unramified at $q$, as required by the weight-two finite-flat lifting condition. A
+frame obtained only after a nontrivial unramified extension would solve a different exact-local-
+algebra problem and would not be compatible with Book 158's complete splitting at $q$.
 
-Had $\bar\rho$ been ramified at $w$, good reduction would force $A[\mathfrak l]$ to be
-unramified while the requested frame forced it to have the same nontrivial inertia as
-$\bar\rho$. No choice of an unramified frame field could reconcile those conditions. The
-prime-selection exclusion is therefore necessary, not a convenience.
 
 ### 7.4 Ramification of the dihedral seed
 
-At a finite place where $M/K$ or $\psi$ is ramified, $\bar r$ may be ramified. A good abelian
-variety over the original local field has unramified prime-to-residue-characteristic torsion, so
-it cannot realize an arbitrary ramified $\bar r$ there. The correct repair is to prescribe a
-finite local extension on which the residual module becomes compatible with a Hilbert--Blumenthal seed.
+At a finite place where the CM field or Hecke character is ramified, the split local package
+must contain a good or semistable Hilbert--Blumenthal seed over the original rational
+completion whose $\mathfrak q$-torsion realizes that exact residual inertia and whose
+$\mathfrak l$-torsion realizes the target frame. The conductor of the dihedral character is
+chosen with these seeds in view, and Lemma 4.3 adjusts only the protected split branches.
 
-Because $\bar r$ has finite image, a finite extension trivializes it. One rarely needs so much:
-it is enough to kill the local quadratic permutation character and the finite character values
-appearing in its inertia. Over that extension one chooses a good Hilbert--Blumenthal point and paired frames.
-The exact extension is put into the completion algebra used globally.
+A seed available only after a nontrivial local extension does not suffice: Book 158 later makes
+the controlled place split completely. If no simultaneous seed exists over the base
+completion, the split theorem is inapplicable rather than repaired by inserting a nonsplit
+completion algebra.
 
-This procedure restricts the residual representation; it does not assert that ramification has
-disappeared over the original field. Nor does it identify the full $q$-adic local type of an
-arbitrary lift. That type is fixed separately in the clean lifting ledger.
+The local seed records the desired component but does not prove automorphy of the specialized
+$q$-adic point. That is the role of the finite-set certificate.
 
-### 7.5 The special place
 
-At $v_0$, choose a split semistable tensor Tate point. Its $q$-adic Tate module has rank-one
-monodromy, a canonical invariant line, and conductor one at the augmentation specialization.
-Equation (5.4) is what makes both frames possible on this same point. Both residual systems and
-both cyclotomic characters are trivial on the local decomposition group: they are unramified
-and their arithmetic Frobenius values are trivial. Choose a Tate parameter in
+### 7.5 The split special places
 
-$$
-(K_{v_0}^\times)^{\ell qN}
-$$
+At the dyadic controlled place, choose the split semistable tensor Tate point used by Book 158.
+Its $q$-adic Tate module has rank-one monodromy and conductor one, whereas its residual
+$q$-torsion is the protected unramified branch fixed in Chapter 5. Choose the Tate parameter to
+be an $\ell qN$th power with positive valuation, so both residual torsion frames and the
+corrected neat level occur on the same point. Pairing fixes the determinant.
 
-with positive valuation. Write the parameter as $q_0=q_N^N$; its Kummer classes vanish modulo
-both coefficient primes and $q_N$ supplies the corrected auxiliary level. The split Tate torsion is therefore
-$1\oplus\bar\epsilon_\ell$ at $\mathfrak l$ and
-$1\oplus\bar\epsilon_q$ at $\mathfrak q$; (5.4) identifies both with the required trivial
-restrictions. Map the enhanced scalar line chosen in Section 5.2 to the multiplicative line of
-the $\mathfrak q$-torsion. The finite constant
-fields included in the Chebotarev compositum are split at $v_0$, so paired bases give both exact
-frames over $K_{v_0}$ itself. Pairing fixes the determinant; the primary special localization
-of Proposition 5.1 fixes the sign.
-
-Semistability and toric rank persist in a boundary neighborhood. A Kummer class is locally
-constant after shrinking because $K_{v_0}^\times/(K_{v_0}^\times)^q$ is discrete. If finite
-flatness of Tate $q$-torsion is required at a residue-characteristic place, the valuation must
-be divisible by $q$; here $v_0\nmid q$, so the generic torsion is finite étale and that
-coefficient-prime issue does not arise.
+The local datum is a point-centered open, not a degree-indexed factorization with one exceptional
+sheet. Book 158 specializes with $2$ completely split in its Galois top. Hence the same Tate
+open occurs at every $w\mid2$, and every such $w$ belongs to the post-specialization active set.
+Semistability, toric rank, the frames, and the Kummer shell persist after shrinking.
 
 ### 7.6 Good and semistable auxiliary conditions
 
-At a controlled place away from $\ell qv_0$, a smooth special-fiber point gives a good integral
-point after the recorded unramified extension. Its residue tube is open and preserves good
-reduction and both frames. At a place where a clean special component is required, use a
-semiabelian seed with the exact toric rank, splitness, and Kummer class.
+At any other controlled place, use the good, ordinary, nonordinary finite-flat, or semistable
+point prescribed in Chapter 5 and Book 158. Each condition is imposed on every sheet above the
+place. Exact valuations and nonsplitness require the stated local model, while good reduction,
+ordinary type, semistability, frames, and components persist on the point-centered open.
 
-The completion algebra at $v_0$ deliberately uses two kinds of factors. Its one distinguished
-degree-one factor uses the special seed of Section 7.5. Every other factor uses a good tensor
-seed with the same trivial residual frames supplied by (5.4). Consequently the specialization
-has exactly one prescribed nonminimal place above $v_0$, rather than one such place for every
-degree of $K'/K$.
-
-Good reduction, ordinary or local--local type, semistability, toric rank, and finite flatness
-persist after finite extension. Exact valuations multiply by ramification index; nonsplit
-multiplicative reduction may become split; a Kummer class may become trivial. Therefore exact
-valuation and nonsplitness assertions require the completion algebra, not just persistence.
 
 ### 7.7 The simultaneous local-neighborhood lemma
 
-**Theorem 7.1 (one-component local package).** Let $Z\subsetneq Y^{\mathrm{ten}}$ be closed.
-For each controlled place $v$, write the recorded completion algebra as
-$B_v=\prod_iK_{v,i}$. Suppose that on every factor there is a point of
-$(Y^{\mathrm{ten}}\setminus Z)(K_{v,i})$ carrying the assigned real, good, ordinary,
-nonordinary finite-flat, or split-semistable model above. Then there are nonempty opens
+**Theorem 7.1 (one-component split local package).** Let
+$Z\subsetneq Y^{\mathrm{ten}}$ be closed. For every controlled place $v$ of the rational
+base, suppose there is a point
 
 $$
-\Omega_v=\prod_i\Omega_{v,i}
-\subset(Y^{\mathrm{ten}}\setminus Z)(B_v)
-\tag{7.1}
+y_v\in(Y^{\mathrm{ten}}\setminus Z)(\mathbf Q_v)
 $$
 
-on which the factorwise selected local conditions, both exact paired frames, ordered
-polarization, auxiliary level, and component all persist.
+carrying the assigned real, good, ordinary, nonordinary finite-flat, or split-semistable model
+and both exact frames. Then there is a nonempty point-centered open
+$\Omega_v\subset(Y^{\mathrm{ten}}\setminus Z)(\mathbf Q_v)$ on which the selected local
+condition, frames, ordered polarization, auxiliary level, and tensor component all persist.
 
-**Proof.** At real places use the odd-involution criterion and a real component. At good places
-use a smooth residue tube. At ordinary places intersect the tube with the Hasse-invariant open.
-At nonordinary places fix the local--local special point. At semistable places use the boundary
-chart and fixed valuation and Kummer shells. The two frame isomorphism schemes are finite étale,
-so they admit local sections after shrinking. The complement of $Z$ is open and contains the
-seed. Every intersection is made around one point already satisfying all conditions, hence is
-nonempty. $\square$
+**Proof.** Use a real component at infinity, a smooth residue tube at good places, the
+Hasse-invariant open in the ordinary case, a fixed special-fiber tube in the nonordinary case,
+and fixed valuation and Kummer shells in the semistable case. The two frame isomorphism schemes
+are finite etale, so local sections exist after shrinking around the common point. Intersect
+these neighborhoods with the complement of $Z$. $\square$
 
-For completeness, consider why the frame condition is open. If $\mathcal A[\mathfrak p]$ is the
-finite étale torsion family on a characteristic-zero analytic neighborhood $U$, then
+The point-centered hypothesis is load-bearing: separately nonempty opens can lie on different
+ordinary or determinant components and have empty intersection. In the split application the
+witness must already exist over $\mathbf Q_v$; a point obtained only after a nontrivial local
+extension is not enough because Book 158 later makes $v$ split completely.
 
-$$
-\mathcal I_{\mathfrak p}
-=\operatorname{Isom}^{\mathrm{pair}}
-(V_{\mathfrak p},\mathcal A[\mathfrak p])\longrightarrow U
-$$
 
-is finite étale. At a point carrying a frame, the local inverse theorem gives neighborhoods on
-which one sheet of $\mathcal I_{\mathfrak p}$ maps homeomorphically to $U$. Intersect these
-neighborhoods for $\mathfrak l$ and $\mathfrak q$. Thus simultaneous framing is not deduced from
-local constancy of two abstract isomorphism classes; it is represented by a common finite étale
-section.
-
-The point-centered hypothesis prevents a common error: separately nonempty opens can have empty
-intersection, particularly when they lie on ordinary and supersingular tubes or on different
-determinant components.
-
-## 8. Arithmetic approximation with closure control
+## 8. Split Galois-top specialization
 
 ### 8.1 The avoidance field
 
-Let $D_{\mathrm{av}}/K$ be a finite Galois compositum containing:
+Let $D_{\mathrm{av}}/\mathbf Q$ be a finite Galois compositum containing the full joint
+cutout fields of $(\bar\rho,\bar\epsilon_\ell)$ and $(\bar r,\bar\epsilon_q)$, the normal
+closure of the CM induction field, the determinant and component fields, every protected
+character witness, and every other finite extension named by the later descent ledger. Full
+matrix cutouts are used; projective cutouts would not preserve central scalars or determinants.
 
-- the full joint cutout fields of $(\bar\rho,\bar\epsilon_\ell)$ and
-  $(\bar r,\bar\epsilon_q)$;
-- the normal closure of $M/K$;
-- the fields cut out by determinant, component, and prescribed frame torsors;
-- every ray or auxiliary field whose intersection could erase a local character witness;
-- any finite field already forbidden by a later clean lifting or descent step.
+### 8.2 The Book 158 specialization
 
-Using the full residual fields preserves matrix images. The projective fields alone would not
-preserve determinants or central scalars. The compositum is taken before specialization so that
-all compatibility conditions can be imposed at once.
+Apply Book 158 to the determinant-compatible paired-frame space and the simultaneous
+point-centered opens of Chapter 7. It chooses a simply branched moving pencil on the fine
+interior. Book 153's transposition calculation makes the generic normal closure a regular
+symmetric cover, and Book 155 specializes it with total reality, complete splitting at every
+controlled place, and disjointness from $D_{\mathrm{av}}$.
 
-### 8.2 Ordinary and Galois-refined specialization
-
-If only a finite totally real point field, local opens, exact finite étale completion algebras,
-and disjointness of the point field from $D_{\mathrm{av}}$ are needed, simultaneous
-Moret--Bailly approximation applies to $Y^{\mathrm{ten}}\setminus Z$ when the local algebras
-have the common-degree moving-family presentations required in Book 154. It produces $K'$ and
-a point, but does not assert that $K'/K$ is Galois or that its normal closure is disjoint from
-$D_{\mathrm{av}}$.
-
-If later arguments require image preservation throughout a normal-closure diagram or a
-solvable bridge from the point field, ordinary approximation is insufficient. One supplies a
-Galois approximation datum
+The output is a totally real Galois extension $F/\mathbf Q$ of positive even degree and a point
 
 $$
-(H,\widetilde T,G,J,T,e)
+y_F\in Y^{\mathrm{ten}}(F)
 \tag{8.1}
 $$
 
-with $J$ core-free, and solvable when an upper bridge is required. Full monodromy of
-$\widetilde T\to H$, local realizability of every top torsor, and the evaluation map
-$T\to Y^{\mathrm{ten}}$ are hypotheses verified before specialization. The resulting top field
-$\widetilde L$ is Galois with group $G$, the point field is $K'=\widetilde L^J$, and
-$\widetilde L$ is the normal closure of $K'$.
+whose associated abelian variety $A_F/F$ has both exact residual frames and every named local
+model. At each controlled rational place every sheet lies in the same chosen open. In
+particular all $w\mid2$ are split Tate places. This is an interior construction: it asks for
+neither a mixed exact local algebra nor a toroidal compactification.
 
-### 8.3 Exact completion data
+### 8.3 Preservation of residual images
 
-At a controlled place $v$, a local homomorphism
-
-$$
-\phi_v:G_{K_v}\longrightarrow G
-$$
-
-has image $D_v$ and inertia image $I_v$. The point-field algebra is
-
-$$
-K'\otimes_K K_v
-\simeq
-\prod_{D_vgJ\in D_v\backslash G/J}
-\widetilde L_w^{D_v\cap gJg^{-1}}.
-\tag{8.2}
-$$
-
-Thus one top local torsor controls every factor and every intermediate field. At real places a
-trivial top homomorphism gives a product of copies of $\mathbf R$, proving total reality of the
-top field and all subfields. At a place required to split, a trivial finite local homomorphism
-gives complete splitting everywhere in the diagram.
-
-The local point must be specified on every factor in (8.2). One acceptable completion does not
-control the other double cosets.
-
-At $v_0$, the required algebra has one distinguished factor equal to $K_{v_0}$ and all other
-factors assigned to good minimal neighborhoods. In the ordinary form this is one
-common-degree moving-family datum. In the Galois form the action of $D_{v_0}$ on $G/J$ must
-have exactly one fixed coset designated by the special seed, and the remaining orbits must
-realize the stated good factors. Taking the local homomorphism trivial would instead split
-$v_0$ completely and create several fixed nonminimal places.
-
-### 8.4 Preservation of residual images
-
-**Lemma 8.1 (image preservation).** Let $V$ be a finite representation of $G_K$ and let
-$L/K$ be finite. If $L$ is linearly disjoint from $K(V)$,
-then
+**Lemma 8.1 (image preservation).** Let $V$ be a finite representation of $G_K$ and let $L/K$
+be finite. If $L$ is linearly disjoint from $K(V)$, then
 
 $$
 V(G_L)=V(G_K).
-\tag{8.3}
+\tag{8.2}
 $$
 
-If $L$ is also disjoint from the joint cutout of $(V,\bar\epsilon_s)$, then the image of
+If $L$ is disjoint from the joint cutout of $(V,\bar\epsilon_s)$, then the image on
 $G_{L(\zeta_s)}$ equals the original cyclotomic-restriction image.
 
 **Proof.** The image of $G_L$ is the Galois group of $K(V)L/L$. Disjointness makes restriction
-$\operatorname{Gal}(K(V)L/L)\to\operatorname{Gal}(K(V)/K)$ an isomorphism. For the second
-claim apply this to the joint representation and then take the kernel of its cyclotomic
-factor. $\square$
+to $K(V)$ an isomorphism. Apply the same argument to the joint representation and then take the
+kernel of its cyclotomic factor. $\square$
 
-Consequently absolute irreducibility, cyclotomic absolute irreducibility, adequacy, determinant
-image, the adjoint-twist invariant, and any conjugate-ratio witness are preserved. For the
-adjoint assertion one must retain the joint image with $\bar\epsilon_s$; preserving the matrix
-image and cyclotomic image separately would not suffice. Solvability of $L/K$ by itself would
-preserve none of them.
+Thus Book 158's closure-level avoidance preserves the full and cyclotomic residual images,
+absolute irreducibility, adequacy, determinant image, adjoint-twist invariants, and the
+protected conjugate-ratio witness.
 
-### 8.5 The specialization theorem
+### 8.4 The specialization theorem
 
-**Theorem 8.2 (controlled two-prime specialization).** Assume items 1--6 of the two-prime
-ledger and the local package of Theorem 7.1. In the ordinary form, assume a common degree and a
-simultaneous moving-family presentation for every exact local algebra as required by Book 154.
-In the closure-controlled form, assume the Galois datum (8.1), including a split top torsor at
-every real place and a realized evaluated point on every factor of each prescribed quotient
-algebra. Then there are a finite totally real extension $K'/K$ of even absolute degree and a
-point
+**Theorem 8.2 (split two-prime specialization).** Retain the rational-base residual datum,
+compatible corrected relative ray datum, simultaneous coefficient realization, paired-frame
+space, and point-centered local opens above. Then Book 158 supplies $F$ and $A_F$ with
 
 $$
-y\in(Y^{\mathrm{ten}}\setminus Z)(K')
-\tag{8.4}
+A_F[\mathfrak l]\simeq\bar\rho|_{G_F},
+\qquad
+A_F[\mathfrak q]\simeq\bar r|_{G_F},
+\tag{8.3}
 $$
 
-such that every localized conjugate of $y$ lies in its prescribed neighborhood, all exact
-completion data hold, in particular there is exactly one distinguished degree-one special
-place $w_0\mid v_0$ and all other places above $v_0$ are on the prescribed good neighborhoods,
-$K'$ is linearly disjoint from $D_{\mathrm{av}}$, and, in the Galois
-form, the normal closure is disjoint from $D_{\mathrm{av}}$ and has the prescribed group and
-core-free stabilizer $J$. If the supplied datum is a solvable bridge datum, then $J$ is
-solvable and the upper extension comes with the prime-cyclic tower of Book 155; solvability is
-not a conclusion for an arbitrary Galois approximation datum.
+preserves both joint residual images, and places every dyadic sheet in the split Tate open.
+The field is totally real, Galois, of positive even degree, and disjoint from
+$D_{\mathrm{av}}$.
 
-**Proof.** In the ordinary form, apply simultaneous Moret--Bailly approximation to the smooth
-geometrically connected variety $Y^{\mathrm{ten}}\setminus Z$, using split real cycles, the local
-algebras underlying (7.1), the even common degree fixed in item 6, and connectedness after base
-change to $D_{\mathrm{av}}$. In the Galois form, apply Galois-refined approximation to (8.1),
-with split top fibers at all real and
-split finite places and the realized top homomorphisms elsewhere. Full top monodromy gives the
-normal closure and base-changed connectedness gives closure-level disjointness; the fixed-field
-index in item 6 gives even absolute degree. Evaluation gives $y$. The double-coset formula proves
-every completion assertion. $\square$
+The theorem proves the geometric specialization and exact local frames. It does not prove that
+$V_{\mathfrak q}(A_F)$ is automorphic. That assertion begins only after the actual set
+$P_{\mathrm{aux}}(A_F)$ is known and a finite-set lifting certificate of Section 2.4 is
+supplied.
 
-In the ordinary form, the proof first replaces each local point by a reduced effective cycle of
-one common degree. These cycles lie in the reduced symmetric locus. The universal incidence
-family is finite étale; imposing connectedness of its specialization turns the resulting étale
-algebra into one field rather than a product. At real places the local cycle is a collection of
-real points, so the specialized algebra is a product of copies of $\mathbf R$. At a finite
-place with prescribed algebra $B_v$, its entire conjugacy orbit is placed in the chosen open.
-Connectedness after scalar extension to $D_{\mathrm{av}}$ makes
-$K'\otimes_K D_{\mathrm{av}}$ a field and proves linear disjointness.
+**Proof.** This is Book 158, Theorem 5.1 and Corollary 6.1, applied to the protected local
+branches of Chapter 5. Lemma 8.1 gives the image assertions. $\square$
 
-In the Galois form, connectedness of the quotient incidence fiber would not suffice. The top
-fiber of $\widetilde T$ is forced to have full group $G$ by maximal-subgroup resolvents. Its
-base change to $D_{\mathrm{av}}$ is forced to remain connected. Core-freeness of $J$ then makes
-the top field the actual normal closure of the quotient field. These are three separate Hilbert
-conditions, compatible because they are imposed on one affine parameter space before
-specialization.
-
-The theorem does not replace the geometric verification of (8.1). A connected two-prime frame
-cover is not automatically a presentation with a prescribed Galois group, nor does it make the
-sheet stabilizer solvable.
 
 ## 9. The Hilbert--Blumenthal bridge
 
 ### 9.1 The specialized abelian variety
 
-The point (8.4) corresponds to a Hilbert--Blumenthal abelian variety
-
-$$
-A/K'
-$$
-
-with $\mathcal O_E$-action, ordered $\mathfrak c$-polarization, auxiliary level, and the two
-paired frames. Its dimension is $[E:\mathbf Q]$. The determinant condition makes its Lie algebra
-rank one at every embedding, so every prime-adic Tate factor has weight-two Hodge type.
-
-Because $y$ avoids $Z$, all deliberately removed degeneracies are absent. Typical choices of
-$Z$ exclude extra endomorphisms, reducible geometric monodromy, or a locus where a desired local
-parameter ceases to be regular. Avoidance works only when each seed already lies outside $Z$.
+The point (8.1) gives a Hilbert--Blumenthal abelian variety $A_F/F$ with $\mathcal O_E$-action,
+ordered polarization, auxiliary level, and the two paired frames. Every prime-adic Tate factor
+has weight-two Hodge type.
 
 ### 9.2 What the two torsion identifications say
 
 The universal property gives exact equivariant paired isomorphisms
 
 $$
-A[\mathfrak l]\simeq\bar\rho|_{G_{K'}},
+A_F[\mathfrak l]\simeq\bar\rho|_{G_F},
 \qquad
-A[\mathfrak q]\simeq\bar r|_{G_{K'}}.
+A_F[\mathfrak q]\simeq\bar r|_{G_F}.
 \tag{9.1}
 $$
 
 These are not merely equalities of traces or semisimplifications. Pairing compatibility gives
-
-$$
-\det A[\mathfrak l]=\bar\epsilon_\ell,
-\qquad
-\det A[\mathfrak q]=\bar\epsilon_q
-\tag{9.2}
-$$
-
-in the fixed coefficient lines. By Lemma 8.1 the two residual images and their cyclotomic
-restrictions have not shrunk.
+the two cyclotomic determinant lines, and Lemma 8.1 shows that the full residual and
+cyclotomic-restriction images have not shrunk.
 
 ### 9.3 Local properties of the auxiliary-adic representation
 
-Let
+Put
 
 $$
-r_A=V_{\mathfrak q}(A):G_{K'}\longrightarrow
+r_A=V_{\mathfrak q}(A_F):G_F\longrightarrow
 \operatorname{GL}_2(E_{\mathfrak q}).
-\tag{9.3}
+\tag{9.2}
 $$
 
-At places above $q$, the ordinary good model supplies compatible finite-flat quotients and
-weights $\{0,1\}$ over an unramified base. At the distinguished $w_0\mid v_0$, the Tate model supplies the enhanced
-special augmentation component with rank-one monodromy, invariant line, sign, and cyclotomic
-determinant. At the remaining controlled places, the local neighborhoods put $r_A$ on the named
-good, finite-descent, tame-dihedral, or special component used in the clean ledger.
+At $w\mid q$ it has the selected finite-flat weight-two model over an unramified base. At every
+$w\mid2$ it has rank-one Tate monodromy while its residual representation is the protected
+unramified dihedral branch. At all other controlled places it lies on the point-centered local
+component selected before specialization.
 
-The representation is unramified outside finitely many places because it comes from an abelian
-variety. After listing this actual bad set, item 7 chooses a lower residual automorphic carrier
-and computes $P_{\mathrm{nm}}$. It requires $P_{\mathrm{nm}}=\{w_0\}$. At every other bad
-place, $r_A$ and the carrier must lie on the same named represented minimal spectator
-component. This includes primes introduced by the dihedral character: any superfluous
-characteristic-zero conductor of $\pi'$ must already have been removed by a proved saturated
-integral level-lowering chain with every intermediate carrier recorded. If an additional bad
-place of $A$ is nonminimal, the one-prime datum fails; a list of further places is not silently
-promoted to a finite-set theorem.
-
-There is no pre-specialization proof of that last sentence. The extra bad places are known only
-after $A$ has been produced. If an extra place is semistable and its residual representation is
-unramified, the special congruence relation is visible, but that numerical fact does not by
-itself construct a saturated lower-face automorphic class, an ordered integral flag, or a
-compatible vanishing-cycle nullhomotopy. Those are exactly the data a finite-set theorem would
-need in order to handle several such places while retaining the condition at $v_0$. Such a
-theorem would define a different admissibility route; current item 7 instead excludes that
-output by requiring $P_{\mathrm{nm}}=\{w_0\}$.
+List every actual bad place of $r_A$ and compare it with the norm-pulled dihedral reference.
+This determines $P_{\mathrm{aux}}(A_F)$. No place is removed from that set merely because it
+was not predicted before specialization.
 
 ### 9.4 No inference from torsion alone
 
-The congruence $A[\mathfrak q]\simeq\bar r$ does not determine the local component of $r_A$.
-An unramified residual representation can have crystalline, special, or ramified lifts. Nor does
-it prove that $r_A$ is automorphic. The local Hilbert--Blumenthal models identify the lift's component, and the
-one-prime theorem supplies automorphy.
+The congruence $A_F[\mathfrak q]\simeq\bar r|_{G_F}$ does not determine the local components
+of $r_A$ and does not prove its automorphy. The local models record the desired components; the
+finite-set certificate of Section 2.4 is what transfers residual automorphy to this particular
+characteristic-zero point. Separate one-place level changes are not a substitute.
 
-Likewise, good reduction at a place above $q$ does not make the $q$-adic representation
-unramified. It makes its finite quotients finite flat and its generic representation crystalline.
-Unramifiedness at a good place is asserted only away from the coefficient characteristic.
 
-## 10. The modularity transfer
+## 10. The finite-set modularity transfer
 
 ### 10.1 Automorphy of the residual dihedral member
 
-The Hecke character base-changes to $M K'$ by composition with the norm. Since $D_{\mathrm{av}}$
-contains $M$ and the point field $K'$ is disjoint from $D_{\mathrm{av}}$, the extension
-$M K'/K'$ remains CM quadratic. No normal-closure assertion is needed for this ordinary-form
-claim. Quadratic induction gives a cuspidal parallel-weight-two representation
+Base-change the Hecke character to the CM compositum over $F$ by the norm. Book 158's
+closure-level disjointness keeps that compositum quadratic over $F$ and preserves the protected
+conjugate-ratio witness. Quadratic induction therefore gives a cuspidal parallel-weight-two
+packet $\pi'_F/F$ with
 
 $$
-\pi'=\operatorname{AI}_{M K'/K'}(\psi\circ N_{M K'/M}).
+\bar r^T_{\pi'_F,\mathfrak Q}
+\simeq\bar r|_{G_F}
+\simeq A_F[\mathfrak q].
 \tag{10.1}
 $$
 
-Its residual Galois representation is
+This is a direct reconstruction of the automorphic induction over $F$, not an appeal to
+nonsolvable base change. The protected local branch data identify its residual local conditions
+with the lower faces in the finite-set comparison.
+
+### 10.2 The all-active-place handoff
+
+**Theorem 10.1 (finite-set transfer to the Tate-module point).** Let $S$ be the actual set
+$P_{\mathrm{aux}}(A_F)$, and assume a finite-set lifting certificate of Section 2.4 for the
+residual automorphic reference (10.1) and the point $r_A$. Then, after a finite coefficient
+extension, there is a cuspidal parallel-weight-two packet $\Pi_A/F$ such that
 
 $$
-\operatorname{Ind}_{G_{M K'}}^{G_{K'}}
-\bar\chi_{\psi}|_{G_{M K'}}
-\simeq\bar r|_{G_{K'}}.
+V_{\mathfrak q}(A_F)\simeq\rho^T_{\Pi_A,\mathfrak Q}
 \tag{10.2}
 $$
 
-The isomorphism is Mackey induction under the quadratic disjointness. Cuspidality follows
-because the conjugate-ratio witness survives on $G_{M K'}$. Thus no nonsolvable base-change
-theorem for a general rank-two automorphic representation is being used: automorphy over $K'$
-is reconstructed directly from the norm-pulled character.
+integrally.
 
-Because the distinguished completion satisfies $K'_{w_0}=K_{v_0}$, the local scalar
-Frobenius, enhanced line, and primary sign of Sections 5.2 and 7.5 are unchanged at $w_0$.
-Every other place above $v_0$ was assigned a good minimal seed. This numerical and local
-identification does not transport an integral new quotient from $K$ to $K'$. Item 7 requires
-Proposition 5.1 to be verified anew for the dihedral packet (10.1) over $K'$, including the
-abelian Ihara and branch-correction hypotheses. At every other controlled place, item 7 requires
-the character construction together with the proved integral level changes to put the residual
-eigensystem in the same named minimal component as $r_A$. In particular, reduction of a
-ramified character to an unramified residual character does not by itself lower automorphic
-level. Under item 7 these comparisons verify residual automorphy in the sense required by the
-deformation problem, which is stronger than saying only that (10.2) comes from some automorphic
-form.
+**Proof.** Apply the selected Book 176 interface to the entire set $S$. In the preferred direct
+route, $({\rm IAV}_S)$ supplies paired desired and avoidance local rings with common special
+fibers, synchronized patching systems, componentwise support transfer, and descent; evaluating
+the resulting comparison at the named characteristic-zero point gives automorphy of $r_A$.
+The other three interfaces give the same conclusion under their stronger stated hypotheses.
 
-### 10.2 The scalar augmentation lemma
+The residual representation remains absolutely irreducible after cyclotomic restriction by
+Lemma 8.1, so the automorphic endpoint is cuspidal. At good places the attached representation
+and $r_A$ have the same Frobenius polynomials. Absolute residual irreducibility makes every
+stable lattice homothetic to $T_{\mathfrak q}A_F$, which upgrades the generic comparison to
+(10.2). $\square$
 
-The scalar family has nontrivial tame-character fibers of conductor two, whereas the
-semistable Tate module in (9.3) lies on its conductor-one augmentation face. Full equality of
-the global deformation ring with the Hecke algebra is not known, but the prior reduced
-comparison is enough for a characteristic-zero point.
+The theorem changes all active places at once. It neither assumes nor proves that $S$ has one
+element. In the split Frey application $\{w:w\mid2\}\subseteq S$, so a singleton reduction
+would contradict the local geometry already fixed by Book 158.
 
-**Lemma 10.1 (scalar augmentation modularity lifting).** Let a one-prime clean datum in residue
-characteristic $s\geq7$ be given at a place with $q_v\equiv1\pmod s$, including the enhanced
-scalar line, sign, and all hypotheses required for Book 175's conductor-one reduced comparison.
-If this face is reached by specializing the scalar family, assume $({\rm RAY}_v)$ as well. Let
-
-$$
-r:G_F\longrightarrow\operatorname{GL}_2(\mathcal O')
-$$
-
-be a lift satisfying the fixed determinant, finite-flat coefficient-prime conditions, named
-minimal conditions away from the selected place, and the named conductor-one enhanced special
-condition at the selected place, with nonzero rank-one monodromy. Then $r$ is attached to a
-cuspidal parallel-weight-two automorphic representation.
-
-**Proof strategy.** Factor the characteristic-zero point through the reduced conductor-one
-deformation ring, identify that reduction with the faithful Hecke order, and then compare the
-two stable lattices.
-
-**Proof.** The local conditions give a point
-
-$$
-x_r:R^{\mathrm{sp},1}\longrightarrow\mathcal O'.
-$$
-
-Since $\mathcal O'$ is a domain, $x_r$ kills the nilradical. Book 175 gives the reduced
-comparison
-
-$$
-\bigl(R^{\mathrm{sp},1}\bigr)_{\mathrm{red}}
-\xrightarrow{\sim}\mathbb T^{\mathrm{sp},1}.
-\tag{10.3}
-$$
-
-Thus $x_r$ occurs in the faithful automorphic carrier at the conductor-one line-special type.
-No full scheme-theoretic $R=T$ statement or acting-order augmentation is used: (10.3) is the
-direct conductor-one reduced comparison. The projective-complex hypotheses construct its
-carrier with no coefficient-algebra Tor, while $({\rm RAY}_v)$ supplies strict specialization
-only when the conductor-one face is reached from the scalar family. None of these facts is
-inferred from the displayed reduced equality.
-
-Type occurrence identifies the selected line, sign, and determinant; the hypothesis that the
-given point has nonzero rank-one monodromy supplies its conductor-one assertion. At good
-places the attached automorphic Galois representation and $r$ have the same Frobenius
-polynomials. Both are irreducible because their residual representation is absolutely
-irreducible. Density and semisimplicity identify their generic fibers. The universal deformation
-point identifies the integral strict-equivalence classes; equivalently, two stable lattices with
-the same absolutely irreducible reduction are homothetic. Hence the integral representations
-are isomorphic. $\square$
-
-The lemma would be false if one merely specialized a nonflat module. It also does not apply in
-the distinct-root branch or at $q_v\equiv-1\pmod s$; those are outside Book 175's theorem.
-
-### 10.3 Applying one-prime modularity lifting
-
-Assume item 7 of Section 2.5 has been independently verified for the specialized $A$. Apply
-Lemma 10.1 directly to $r_A$. The remaining hypotheses are checked as follows.
-
-- The base $K'$ is totally real.
-- The residual representation is (10.2), absolutely irreducible after cyclotomic restriction
-  by the joint-cutout disjointness of Lemma 8.1: point-field disjointness suffices in the
-  ordinary form, while the stronger top-field disjointness supplies the same conclusion on
-  every intermediate field in the Galois form.
-- In characteristic $q\geq7$, its cyclotomic image is adequate.
-- The adjoint-twist invariant is part of the dihedral and clean ledgers and survives restriction
-  because the joint $(\bar r,\bar\epsilon_q)$ image is preserved.
-- At $w\mid q$, the representation has compatible finite-flat quotients of weights $\{0,1\}$
-  over an unramified base.
-- At $w_0$, it lies on the selected augmentation special component; every other place above
-  $v_0$ is minimal.
-- Every other local condition, determinant, type label, and automorphic localization is the one
-  recorded in the clean datum.
-
-Therefore there is a cuspidal parallel-weight-two automorphic representation $\Pi_A$ over $K'$
-such that
-
-$$
-r_A\simeq\rho^T_{\Pi_A,\mathfrak Q}
-\tag{10.4}
-$$
-
-integrally after a finite coefficient extension.
-
-Let us spell out the last identification. The point of the common deformation--Hecke ring gives
-an automorphic packet whose attached representation $r_{\Pi_A}$ has, at every good $v$, the same
-trace and determinant as $r_A$. Hence their semisimplifications agree. If $r_A$ had a stable
-line over the fraction field, intersecting and saturating it in a stable lattice would give a
-proper stable line in $A[\mathfrak q]$, contradicting absolute irreducibility of $\bar r$.
-Thus $r_A$ is irreducible, and the generic isomorphism is an actual isomorphism.
-
-Write $\varpi$ for a uniformizer of the common coefficient DVR after this extension. For
-lattices, scale an automorphic stable lattice $L'$ so that $L'\subseteq L=T_{\mathfrak q}A$
-but $L'\nsubseteq\varpi L$. Its image in $L/\varpi L$ is a nonzero stable subspace and therefore
-the whole space. Nakayama's lemma gives $L'=L$. The finite-flat quotient models at $q$ then
-agree by full faithfulness in the clean unramified weight range. This is why (10.4) is integral,
-not merely an isomorphism after inverting the coefficient uniformizer.
-
-There is no successive finite-chain argument here. After one change, a second application would
-have to retain the first nonminimal condition, contrary to the one-prime boundary of Book 175.
-
-### 10.4 Solvable bridges and descent
-
-Sometimes the clean datum is verified only after a finite solvable totally real extension
-$L/K'$. A solvable sheet stabilizer in the Galois approximation datum gives a prime-cyclic tower
-
-$$
-K'=L_0\subset L_1\subset\cdots\subset L_m=L.
-\tag{10.5}
-$$
-
-If $w_0$ remains the selected one-prime place, require it to have a single place in $L$ and
-verify the restricted enhanced datum there. Complete splitting would create several fixed
-nonminimal places and leave the one-prime theorem. At all places, local parameters are
-restricted and checked anew; solvability alone does not preserve conductors, dihedral
-irreducibility, or special signs.
-
-Assume in addition that every downward cyclic step is **descent-admissible** in the exact
-solvable-descent interface exported by Book 175: the top and intermediate packets are selected
-and trace-comparable, every reverse comparison has a strongly cuspidal factor, and all nonsplit
-local parameters are
-antecedent-complete selected for every fixed-determinant norm antecedent. Whenever an entire
-quotient-character fiber is used, require fiber saturation. Also require Galois attachment to
-commute with the cyclic comparisons and finite-order twists, and require equality of good
-polynomials to identify semisimplifications. These conditions are arithmetic certificates;
-they do not follow from the solvability of the sheet stabilizer.
-
-Under that ledger, if modularity lifting over $L$ makes $r_A|_{G_L}$ automorphic, the
-representation $r_A$ already extends to $G_{K'}$. Strong multiplicity one identifies Galois
-conjugates at each cyclic step, and the extension-comparison lemma selects the unique
-quotient-character correction whose attached representation is the next lower restriction.
-Iteration gives $\Pi_A$ over $K'$.
-
-Irreducibility at every step, cuspidality, compatible central characters and full local
-parameters, and any inner-form discreteness conditions are retained in the same ledger.
-Endpoint invariance by itself does not supply coherent descent.
-
-This optional descent route is not used in Theorem 11.2 as stated: its admissibility witness
-already verifies item 7 over $K'$. Invoking the route would require replacing that witness by
-the entire stepwise ledger above, not merely choosing a solvable stabilizer.
 
 ## 11. Recovering residual automorphy at the original prime
 
 ### 11.1 Weight-two Galois realization
 
-Two carrier assertions must be kept separate. Before Lemma 10.1 is applied,
-$({\rm AUT}_{w_0})$ in item 7 requires an exact compact automorphic localization for the
-congruent residual special seed. Even degree and that seed's selected special factor make the
-Book 104 one-split carrier available, but all type, saturation, faithful-order, and bad-place
-local--global certificates remain part of item 7. The present chapter constructs the carrier
-for the different, final characteristic-zero packet $\Pi_A$ after lifting; that later carrier
-cannot be used backwards to prove $({\rm AUT}_{w_0})$.
+The packet $\Pi_A/F$ is noncharacter, cuspidal, parallel weight two, and has trivial central
+character in the fixed-determinant normalization. The field $F$ has positive even degree, and
+every dyadic place is special for $V_{\mathfrak q}(A_F)$. Choose one $w_*\mid2$. Book 104
+constructs the quaternion algebra ramified at every real place except one and at $w_*$, together
+with the compact one-split packet corresponding to $\Pi_A$. The ramification count is even,
+and the finite ramified place makes the algebra a division algebra.
 
-The packet $\Pi_A$ is noncharacter, cuspidal, parallel weight two, and has trivial central
-character in the fixed-determinant normalization. Item 6 made $[K':\mathbf Q]$ even, while item
-7 retained nonzero conductor-one special monodromy at $w_0$. Thus $(\Pi_A)_{w_0}$ is an
-eligible selected Steinberg factor in the sense of Book 104. If the lifting theorem first
-produces a totally definite packet, Book 104, Theorem 9.1 first transfers it to this split packet
-with the same good polynomials and selected local factor.
-
-Fix a real place $\tau_0$ of $K'$ and take $W=\{w_0\}$. The set $W$ is odd and nonempty.
-Book 104, Theorem 9.2 constructs the quaternion algebra $B/K'$ ramified at every real place
-except $\tau_0$ and at $w_0$, together with the unique one-split packet
-
-$$
-\Pi_B=\operatorname{JL}_B^{-1}(\Pi_A).
-\tag{11.0}
-$$
-
-The ramification count is
-$[K':\mathbf Q]-1+1=[K':\mathbf Q]$, which is even, and the finite ramified place makes $B$
-a division algebra. Its Shimura curve is therefore compact. Book 127, Theorem 8.1, applied to
-the full component-routing orbit of $\Pi_B$, now supplies the rational rank-two family. This
-application retains the component descent, the basic-group determinant datum, an embedding of
-the full Hecke-block center, and a number field splitting the selected Schur factor. The carrier
-is consequently a theorem, not a further admissibility hypothesis.
-
-Let $E_\Pi$ be a coefficient field containing the Hecke data and all required splitting values.
-For every finite place $\lambda$ of $E_\Pi$, the weight-two realization first attaches a
-continuous semisimple cohomological representation
-
-$$
-\rho^{\mathrm{coh}}_{\Pi_A,\lambda}:G_{K'}\longrightarrow
-\operatorname{GL}_2(E_{\Pi,\lambda})
-\tag{11.1}
-$$
-
-with common good geometric-Frobenius polynomials, inverse-cyclotomic determinant in the trivial
-component-character case, total oddness, and good-place compatibility in the proved curve
-range. Put
+Book 127, applied to the full component-routing orbit, supplies a rational rank-two family. Let
+$E_\Pi$ contain the Hecke data and all splitting values. For every finite place $\lambda$ of
+$E_\Pi$ it attaches a semisimple cohomological representation
+$\rho^{\mathrm{coh}}_{\Pi_A,\lambda}$ with common good Frobenius polynomials. Put
 
 $$
 \rho^T_{\Pi_A,\lambda}
 =\rho^{\mathrm{coh}}_{\Pi_A,\lambda}(1)
 \simeq\left(\rho^{\mathrm{coh}}_{\Pi_A,\lambda}\right)^\vee.
-\tag{11.1a}
+\tag{11.1}
 $$
 
-The displayed isomorphism uses essential self-duality in the present trivial
-component-character case. With a nontrivial component character the twist and dual differ by
-that character and must not be identified. Here
-$\det\rho^T_{\Pi_A,\lambda}=\epsilon_\lambda$.
+The isomorphism uses essential self-duality in the trivial component-character case, and
+$\det\rho^T_{\Pi_A,\lambda}=\epsilon_\lambda$. The attachment gives a rational weakly
+compatible family and stable lattices. Identification of its $\ell$-adic lattice with the
+target frame is the cross-prime comparison below.
 
-At this stage the attachment theorem supplies a rational weakly compatible family and stable lattices.
-We do not assume that its canonical cohomological lattice has already been identified with a
-Tate lattice of $A$. That identification is the cross-prime problem, and it follows from the
-$q$-adic isomorphism and common Frobenius polynomials.
+The $\mathbf Q$-definition of the Hilbert tensor component selects the arithmetic component;
+it does not descend $A_F$, $\Pi_A$, or this family from $F$ to $\mathbf Q$.
 
-The fact that $H^{\mathrm{ten}}$ is defined over $\mathbf Q$ only selects the arithmetic
-component of the Hilbert moduli space. It does not descend $A$, $\Pi_A$, $\Pi_B$, or any member
-of (11.1) to $\mathbf Q$. The Galois representations in this chapter are representations of
-$G_{K'}$, and the residual conclusion remains over $K'$.
 
 ### 11.2 The cross-prime Tate comparison
 
@@ -2250,17 +1635,17 @@ persists after residue-field extension, so the same argument makes every stable 
 $\mathcal O_{C_{\widetilde\lambda}}$ homothetic to this scalar extension. $\square$
 
 For the specialized variety, Lemma 8.1 preserves absolute irreducibility of
-$A[\mathfrak l]\simeq\bar\rho|_{G_{K'}}$. Proposition 11.1 and the first frame in (9.1) give
+$A_F[\mathfrak l]\simeq\bar\rho|_{G_F}$. Proposition 11.1 and the first frame in (9.1) give
 
 $$
 \bar\rho^T_{\Pi_A,\widetilde\lambda}
-\simeq A[\mathfrak l]\otimes_{k_{\mathfrak l}}k_{\widetilde\lambda}
-\simeq\bar\rho|_{G_{K'}}\otimes_k k_{\widetilde\lambda}.
+\simeq A_F[\mathfrak l]\otimes_{k_{\mathfrak l}}k_{\widetilde\lambda}
+\simeq\bar\rho|_{G_F}\otimes_k k_{\widetilde\lambda}.
 \tag{11.6}
 $$
 
 The descended $E_{\mathfrak l}$-form has residual representation exactly
-$\bar\rho|_{G_{K'}}$ under the fixed isomorphism $k_{\mathfrak l}\simeq k$.
+$\bar\rho|_{G_F}$ under the fixed isomorphism $k_{\mathfrak l}\simeq k$.
 
 **Corollary 11.1A (the nonzero upper target localization).** Retain the common coefficient DVR
 and its uniformizer $\varpi$. Let
@@ -2285,144 +1670,60 @@ character to be primitive in it. Its reduction
 injects into the ambient cohomology reduction, is nonzero, and is supported at
 $\mathfrak m_{\ell,A}$, which proves (11.6a). Proposition 11.1
 identifies the reduction of every stable lattice in the packet representation with
-$A[\mathfrak l]$ after the displayed scalar extension, so the residual rank-two factor is
+$A_F[\mathfrak l]$ after the displayed scalar extension, so the residual rank-two factor is
 (11.6).  This stable lattice is attached to the rational factor; it need not be an integral
 direct factor of $L_{\Pi_A}$. $\square$
 
-This corollary is deliberately at the **actual upper level** of $\Pi_A$. It neither lowers an
-extra specialization-dependent special place nor places the eigensystem on the bottom minimal
-SP face. A type projector defined only after inverting $\varpi$ also cannot be inserted into
-$L_{\Pi_A}$ without a separate integral saturation theorem. Thus the corollary supplies the
-nonzero upper occurrence from which a later certified lowering construction starts, not the
-endpoint or, when $w_0$ must be lowered, the actual first path carrier.
-The particular compact carrier of Section 11.1 is ramified at $w_0$.  Since Book 140 requires
-its changing place to be split in the current quaternion algebra, this carrier cannot itself
-be used to lower $w_0$.  A later application whose target minimal problem is unramified at
-$w_0$ must first construct a path-compatible carrier, with a new primitive packet lattice;
-Corollary 11.1A does not provide an integral switch between the two carriers.
+This corollary is deliberately at the actual upper target level. The target signed-special
+problem retains its dyadic special condition, so the chosen carrier place $w_*\mid2$ is not an
+edge in the later target-lowering set. Any genuinely extra target place still requires the
+separate certified path described in Book 182; the corollary does not provide that path.
 
 ### 11.3 The residual potential-modularity theorem
 
-**Theorem 11.2 (conditional residual potential modularity).** Let $K$ be totally real, let
-$\ell\geq7$, and let
-
-$$
-\bar\rho:G_K\longrightarrow\operatorname{GL}_2(k)
-$$
-
-be a singleton-admissible weight-two residual datum of Chapter 2. Then there exist a finite
-totally real extension $K'/K$ of even absolute degree and a cuspidal parallel-weight-two
-automorphic representation $\Pi$ of $\operatorname{GL}_2(\mathbf A_{K'})$ such that, after
-enlarging the coefficient field of $\Pi$ to contain $E$, for a place
-$\lambda\mid\mathfrak l$,
+**Theorem 11.2 (conditional split-top residual potential modularity).** Let $K=\mathbf Q$,
+let $\ell\ge7$, and let $\bar\rho$ be the Frey signed-special residual datum of Section 2.1.
+Construct the auxiliary dihedral representation at $q$ from the rational-base compatible ray
+datum of Chapter 4, impose the protected local branches of Chapter 5, and let $F$ and $A_F$ be
+the split Galois-top output of Theorem 8.2. Assume a finite-set lifting certificate of Section
+2.4 for the actual set $P_{\mathrm{aux}}(A_F)$. Then there is a cuspidal
+parallel-weight-two packet $\Pi_A/F$ and, for a place
+$\widetilde\lambda\mid\mathfrak l$,
 
 $$
 \boxed{
-\bar\rho|_{G_{K'}}\otimes_k k_\lambda
-\simeq\bar\rho^T_{\Pi,\lambda}.}
+\bar\rho|_{G_F}\otimes_k k_{\widetilde\lambda}
+\simeq\bar\rho^T_{\Pi_A,\widetilde\lambda}.}
 \tag{11.7}
 $$
 
-The weakly compatible family also has the descended $E_{\mathfrak l}$-form whose distinguished
-stable lattice reduces exactly to $\bar\rho|_{G_{K'}}$ over $k$.
+The packet family has a descended $E_{\mathfrak l}$-form whose distinguished stable lattice
+reduces exactly to $\bar\rho|_{G_F}$ over $k$. The field $F/\mathbf Q$ is totally real,
+Galois, of positive even degree, completely split at every controlled place, and disjoint from
+the full avoidance field fixed before specialization.
 
-The field is linearly disjoint from every finite extension included in the avoidance ledger of
-the admissibility witness. Thus an additional prescribed field may be avoided only after it is
-inserted before specialization and item 7 is verified for an output of that enlarged package.
-In the Galois-refined form, the normal closure has the prescribed finite group, is disjoint from
-that ledger, and has the prescribed core-free point stabilizer; that stabilizer is solvable only
-when the admissibility witness contains a solvable bridge datum. All real places and controlled
-finite completions have the exact local behavior specified before specialization. No
-automorphic packet or Galois family is asserted to descend from $K'$ to
-$K$; in particular, when $K=\mathbf Q$, nothing here descends automorphy back to
-$\mathbf Q$.
+**Proof.** Theorem 4.2 and Lemma 4.3 construct the dihedral seed and its protected local
+branches. Theorem 2.1 supplies the simultaneous real-multiplication coefficient datum.
+Books 156--158 and Theorem 8.2 supply $F$, $A_F$, both exact frames, and image preservation.
+Automorphic induction gives (10.1). The selected Book 176 certificate and Theorem 10.1 make
+$V_{\mathfrak q}(A_F)$ automorphic. Book 104 supplies a compact one-split carrier using any
+one dyadic special place, Book 127 attaches its rank-two family, and Proposition 11.1 identifies
+the $\ell$-adic residual member with the first frame in (9.1). $\square$
 
-**Proof strategy.** Construct a weight-two dihedral seed at $q$, put it and the target on a
-connected determinant-compatible two-prime Hilbert cover, globalize one point with closure-level
-control, transfer automorphy to the specialized abelian variety at $q$, and read the same packet
-at $\ell$.
-
-**Proof.** Item 2 supplies $M$ and the compatible corrected relative ray datum; Theorem 4.2
-then supplies $\psi$, $C_\psi$, and $\bar r$, and Lemma 4.3 supplies any exact protected split
-branch pairs included in that item. Theorem 2.1 supplies the simultaneous
-real-multiplication coefficient datum. Proposition 5.1 states the exact
-conditional special residual localization. Chapters 6 and 7 construct the smooth geometrically
-connected twist and nonempty local neighborhoods on one arithmetic component. By the definition
-in Section 2.5, admissibility fixes an output $(K',A)$ of Theorem 8.2 which has all image and
-completion controls and for which item 7 has actually been verified. The point gives the exact
-frames (9.1).
-
-Automorphic induction over $M K'/K'$ makes $\bar r|_{G_{K'}}$ residually automorphic. Item 7
-supplies its exact conditional localization over $K'$. The scalar augmentation lemma makes
-$V_{\mathfrak q}(A)$ automorphic and produces $\Pi_A$. Weight-two realization at $\ell$ and the
-derived cross-prime comparison give (11.6). Take $\Pi=\Pi_A$. Every field-control
-assertion is a conclusion of Theorem 8.2. $\square$
-
-The word “conditional” records two stages of the lifting boundary. The first occurs already at
-the selected place. Book 139 does not prove the family $({\rm AIH}_{\mathscr F})$, so
-Proposition 5.1 and item 7 are not unconditional; even after those constant rows are granted,
-the independent $({\rm TYPE}_{w_0})$, $({\rm SUP}_{w_0})$, $({\rm REC}_{w_0})$,
-$({\rm RAY}_{w_0})$, and any required $({\rm AUX}_Q)$ and switched-carrier hypotheses still
-have to be verified for the actual localization. The second stage concerns uncontrolled extra
-bad primes of $A$, which are known only after specialization. The prior one-prime theorem
-neither constructs their exact lower-face classes, flags, and branch corrections nor retains
-several fixed nonminimal conditions. Treating both stages as part of “singleton-admissible”
-proves the implication in Theorem 11.2 but does not prove that every target is admissible. Once
-lifting succeeds, even absolute degree and the retained special place prove final carrier
-eligibility in Section 11.1. The catalog objective therefore remains open first in the exact
-one-prime localization package and then at actual post-specialization one-prime cleanability.
-
-No uniqueness of $K'$ or $A$ is asserted. Different ray characters, determinant components,
-local cycles, or Hilbert specializations generally give different fields and abelian varieties.
-What is canonical is the logical transfer: once a specialized point and clean lifting datum are
-fixed, the two frames determine which residual members occur at $q$ and $\ell$.
-
-**Theorem 11.2A (conditional split-top finite-set variant).** Let $K=\mathbf Q$, retain the
-Frey signed-special residual datum at $\ell\geq7$, and construct the auxiliary dihedral
-representation at $q$ from the compatible ray datum of Chapter 4. Prescribe its protected
-local branch pairs so that it and the target occur on the simultaneous split local points of
-Book 158. Let $M/\mathbf Q$ and $A_M/M$ be the Galois-top output of Book 158, Theorem 5.1 and
-Corollary 6.1, and let $P_{\mathrm{aux}}(A_M)$ be the actual finite set at which
-$V_{\mathfrak q}(A_M)$ has more level than the dihedral residual automorphic reference.
-
-Assume that this actual pair satisfies one of Book 176's finite-set interfaces: the direct
-$({\rm IAV}_S)$ comparison; a fully reverified ordered chain; every hypothesis of its
-all-point Theorem 9.1; or every actual-cube, simultaneous-branch, reciprocity, and pointed
-occurrence hypothesis of its Theorem 9.2. Then $V_{\mathfrak q}(A_M)$ is attached to a
-cuspidal parallel-weight-two packet $\Pi_A/M$, and for a place $\lambda\mid\mathfrak l$,
+The conditional boundary is exactly the finite-set certificate for the actual active set. The
+theorem neither asserts that this certificate follows from separate one-place results nor
+reduces the active set to a distinguished place. Indeed,
 
 $$
-\bar\rho|_{G_M}\otimes_k k_\lambda
-\simeq \bar\rho^T_{\Pi_A,\lambda}.                           \tag{11.7a}
-$$
-
-The compatible packet family has a distinguished stable lattice whose reduction is the exact
-target frame after the coefficient extension appearing in Proposition 11.1.
-
-**Proof.** The protected conjugate-ratio witness and Book 158's closure-level disjointness keep
-the norm-pulled dihedral induction over $M$ cuspidal and identify its residual representation
-with $A_M[\mathfrak q]$. The selected Book 176 interface applies to the actual set
-$P_{\mathrm{aux}}(A_M)$ and makes the named point $V_{\mathfrak q}(A_M)$ automorphic. No
-place is discarded or collapsed to a single auxiliary prime.
-
-In the Frey split Tate datum, every $w\mid2$ is special for this point. Since $M/\mathbf Q$
-has positive even degree, choose one such $w$ in the parity-correct finite ramification set of
-Book 104's compact one-split carrier. Book 127 attaches the rational rank-two family. The
-common Frobenius polynomials of the Tate factors and Proposition 11.1 then identify its
-$\ell$-adic residual member with the paired frame
-$A_M[\mathfrak l]\simeq\bar\rho|_{G_M}$, proving (11.7a). $\square$
-
-Complete splitting is precisely why the singleton theorem is unavailable here:
-
-$$
-\{w:w\mid2\}\subseteq P_{\mathrm{aux}}(A_M),
+\{w:w\mid2\}\subseteq P_{\mathrm{aux}}(A_F),
 \qquad
-\#\{w:w\mid2\}=[M:\mathbf Q]\ge2.                          \tag{11.7b}
+\#\{w:w\mid2\}=[F:\mathbf Q]\ge2.
+\tag{11.8}
 $$
 
-Thus Theorem 11.2A is a conditional implication, not a proof of the required finite-set
-certificate. Separate one-place level raising or support at the dyadic places does not supply
-any of the four alternatives in its hypothesis.
+The earlier one-special-factor theorem has been retired because its hypotheses cannot be met by
+this split top and no later step of the FLT proof consumes it.
+
 
 ### 11.4 A stronger controlled form
 
@@ -2431,30 +1732,29 @@ $D_{\mathrm{av}}$ contains the full target and dihedral cutout fields and both c
 extensions. Then
 
 $$
-\bar\rho(G_{K'})=\bar\rho(G_K),
+\bar\rho(G_F)=\bar\rho(G_{\mathbf Q}),
 \qquad
-\bar r(G_{K'})=\bar r(G_K),
-\tag{11.8}
+\bar r(G_F)=\bar r(G_{\mathbf Q}),
+\tag{11.9}
 $$
 
 and the same equalities hold for the cyclotomic restrictions. Thus absolute irreducibility,
-adequacy, projective type, trace field, and determinant image are unchanged. If selected places
-split completely, their local fields, lines, signs, and component labels are literally
-unchanged. At general places the double-coset formula records every restriction.
+adequacy, projective type, trace field, and determinant image are unchanged. The controlled
+places split completely, so their local fields, lines, signs, and component labels are
+literally unchanged on every sheet.
 
-The theorem permits finitely many further closed loci to be avoided, and finitely many locally
-realizable completion algebras to be imposed. It does not promise arbitrary degree, a Galois
-point field without a Galois presentation, or a solvable normal closure. Those are separate and
-often incompatible demands.
+The theorem permits finitely many further closed loci and finite avoidance fields to be named
+before Book 158 chooses its pencil. It does not promise arbitrary degree or nonsplit exact
+completion algebras; those belong to a different approximation problem and are not needed here.
 
 ## 12. Exceptional cases and failure tests
 
 ### 12.1 Coefficient characteristics below seven
 
-The theorem assumes both coefficient characteristics used in uniform lifting are at least
+The theorem assumes both coefficient characteristics used in finite-set lifting are at least
 seven. Characteristic five has a genuine icosahedral exception: the natural two-dimensional
 representation of the special-linear cover of $A_5$ has surviving adjoint cohomology. Absolute
-irreducibility therefore does not imply the adequacy input of the one-prime theorem. In
+irreducibility therefore does not imply the adequacy input of the lifting theorem. In
 characteristics two and three, additional failures occur in projective classification,
 semisimple spanning, signs, finite-flat theory, and stabilizer orders.
 
@@ -2501,330 +1801,119 @@ completion algebra.
 
 ### 12.5 Failure of closure-level disjointness
 
-Point-field disjointness $K'\cap D=K$ does not imply that the normal closure of $K'$ is
-disjoint from $D$. The normal closure can acquire an intersection invisible in the root field.
-If later arguments use all conjugates, elementary fixed fields, or a solvable upper bridge, the
-top field must be controlled by a Galois approximation datum.
+Disjointness of an arbitrary point field from $D$ would not control its normal closure. Book
+158 avoids this problem by imposing connectedness after base change to $D$ on the regular
+symmetric top before specialization. The resulting Galois field $F$ is disjoint from $D$.
 
 Nor is disjointness from a projective cutout field enough to preserve the full image. Scalars
 and determinants may shrink. The avoidance ledger therefore uses full matrix cutout fields.
 
-### 12.6 Failure of clean modularity lifting
+### 12.6 Failure of finite-set modularity lifting
 
-Residual automorphy in an unspecified packet does not verify the exact quaternionic
-localization. A conductor number does not identify an irreducible component. Scalar inertia at
-$v_0$ does not identify the invariant line, sign, or monodromy. Rational crystallinity at $q$
-does not give compatible finite-flat quotients.
+Residual automorphy in an unspecified packet does not verify the local components of the named
+Tate-module point. Separate one-place Ihara, support, or component statements do not imply a
+joint finite-set comparison, and an ordered list is not a proof that earlier conditions survive
+later changes.
 
-In the chosen branch, repeated roots $q_{v_0}\equiv1\pmod q$ destroy the integral root
-idempotent, so the scalar line enhancement and primary sign cannot be omitted. At
-$q_{v_0}\equiv-1\pmod q$ there is no nontrivial scalar $q$-power tame character, while the
-distinct-root branch $q_{v_0}\not\equiv1\pmod q$ is not covered by the prior one-prime theorem.
-Wild primitive types, residue characteristic equal to $v_0$, $q$-divisible stabilizers, or a
-failure of $({\rm AUT}_{v_0})$, $({\rm TYPE}_{v_0})$, $({\rm SUP}_{v_0})$,
-$({\rm REC}_{v_0})$, $({\rm RAY}_{v_0})$, the applicable Ihara and augmentation families,
-or the branch-correction and component-support conditions lie outside the theorem. A
-nonreduced global conductor-one deformation source is not by itself an obstruction to
-pointwise modularity: a characteristic-zero point kills its nilradical. It obstructs only an
-unqualified full scheme-theoretic $R=T$ assertion.
+For the preferred direct route, failure of any paired local-ring comparison, component
+bijection, synchronization of the Taylor--Wiles systems, support transfer, or descent clause of
+$({\rm IAV}_S)$ stops Theorem 10.1. The all-point and pointed alternatives have their own
+strictly stronger hypotheses and cannot be invoked by name alone. An accidental semistable
+place of $A_F$ belongs to the actual set $S$ whenever it is nonminimal relative to the residual
+reference; omitting it invalidates the application.
 
-In any of these cases, the Hilbert--Blumenthal variety and frames may still exist. What fails is
-the transfer of automorphy from $A[\mathfrak q]$ to $V_{\mathfrak q}(A)$.
+The compact carrier needs only even degree and one special dyadic factor, both supplied by
+Book 158. It does not reduce the lifting set and cannot be used backward to prove the finite-set
+certificate.
 
-Even after that transfer, an abstract $\operatorname{GL}_2$ packet need not have a compact
-one-split carrier. The present construction records the two facts that make the carrier
-available: $[K':\mathbf Q]$ is even and $w_0$ is an eligible selected Steinberg place with
-nonzero monodromy. Deleting either fact would stop Chapter 11. With both facts retained, Books 104 and 127 prove the carrier, so it is not an additional failure of the stated theorem.
-
-An extra semistable prime of the specialized $A$ is not automatically a clean local change.
-Residual unramifiedness supplies a congruence relation, but exact lowering also needs a
-saturated lower-face class, primary--companion flags and pairings, and coherent integral
-vanishing-cycle data. Since those primes are not known before specialization, a theorem used to
-handle them must construct these data for the actual $A$ rather than include them in an input
-ledger. The present one-prime theorem does not contain such a route.
 
 ## 13. Dependency and hypothesis audit
 
 ### 13.1 The prerequisite interfaces
 
-The declared direct prerequisites are Books 6, 98, 104, 127, 141, 142, 154--158, and
-175--176. Book 175 exposes the load-bearing one-place interfaces from Books 139--140 and 174;
-they are not treated as stronger than their stated hypotheses, and its descent clause exposes
-Book 109's admissible cyclic interface. Book 176 supplies the exact conditional finite-set
-interfaces used only in Theorem 11.2A; it does not prove that the split specialization
-satisfies any of them. Book 6 supplies the exact Grunwald--Wang alternative used in
-Lemma 4.3, while Book 98 supplies the Hecke-character interface and Book 156
-imports Book 35's reduced characteristic polynomial for endomorphisms of abelian schemes. The
-proof uses these prerequisites in distinct roles.
+The direct prerequisites are Books 6, 98, 104, 127, 141--142, 156--158, and 176. Book 6
+supplies the exact Grunwald--Wang alternative used in Lemma 4.3; Book 98 supplies algebraic
+Hecke characters and quadratic automorphic induction; Books 141--142 supply the image and
+Chebotarev inputs. Books 156--157 supply the fine paired-frame moduli, the corrected tensor
+component, product monodromy, and the local interior points. Book 158 owns the simply branched
+pencil and split Galois-top specialization. Book 176 owns the finite-set lifting interfaces.
+Books 104 and 127 supply the compact carrier and its rational rank-two family.
 
-**Hecke characters and automorphic induction.** The character-extension theorem, quadratic
-induction matrices, determinant with the quadratic sign, cuspidality criterion, conductor
-formulas, local compatibility, coefficient fields, residual irreducibility, and controlled ray
-data are used in Chapters 4, 5, and 10. The ray-unit, determinant, and full relative
-ray-subgroup compatibility hypotheses are retained.
-
-**CM anti-unit correction.** Lemma 4.1 is proved here in precisely the CM range in which it is
-used. Kronecker's theorem makes every ratio $u/u^\sigma$ a root of unity; reduction at one
-split prime detects the resulting finite group, and elementary character extension produces
-the inverse branch. This proves the unit correction. Lemma 4.1A separately proves the
-capitulation-intersection compatibility over $\mathbf Q$; Theorem 4.2 retains it over a general
-base.  Lemma 4.3 separately uses Book 6 to globalize full local characters and forms
-$\theta/\theta^\sigma$; the Wang exception only doubles a prime-to-$q$ exponent, so it neither
-changes the determinant nor erases protected residual values. Chebotarev is taken from its
-actual source, Book 142; Book
-155 supplies the Galois and solvable approximation refinements. No Kummer congruence
-theorem or later congruence-subgroup result is an undeclared input.
-
-**Compact carrier and weight-two Galois realization.** Book 104 first transfers a totally
-definite output to the split packet when necessary. In the singleton route, even absolute
-degree and the eligible special factor at $w_0$ satisfy its compact one-split inverse theorem
-with $W=\{w_0\}$. In the split route, any one of the special dyadic places supplies the same
-parity correction. The semistable geometry, packet decomposition, and rational extraction of Books 122 and 125--126 feed Book 127, which supplies component descent, the full Hecke block, rank-two
-extraction, determinant, oddness, common good Frobenius polynomials, and stable lattices. The
-stronger local, compatibility, and integral statements of Books 128--129 and 168 are not silently used:
-the comparison here needs only the good rational family, and Proposition 11.1 derives its
-relevant integral lattice from $T_{\mathfrak l}A$ and absolute residual irreducibility.
-
-**Dickson classification and adequacy.** Cyclotomic absolute irreducibility in characteristic at
-least seven implies adequacy. Image preservation under disjoint base change uses the full
-cutout field. Adequacy is not used to infer the separate adjoint-twist vanishing.
-
-**One-prime nonminimal patching.** Book 175's reduced conductor-one comparison, scalar line and
-sign, and its exact $({\rm AUT})$, $({\rm TYPE})$,
-$({\rm SUP})$, $({\rm REC})$, and $({\rm RAY})$ ledger give Lemma 10.1 and the transfer in
-Chapter 10; $({\rm AUX}_Q)$ is retained when patched auxiliary level is removed. The selected
-prime satisfies $q_{v_0}\equiv1\pmod q$, and the point has nonzero rank-one monodromy. A
-characteristic-zero point kills the possible nilradical, so no full scheme-theoretic ring
-equality is asserted. Book 175 still assumes the applicable Book 139 abelian-Ihara family and
-does not derive its typed-Ihara or support hypotheses from that family.
-
-**Finite-set nonminimal lifting.** Book 158 constructs the split Galois top and places every
-dyadic sheet in the Frey Tate neighborhood. Book 176 shows exactly what can make the resulting
-several-place point automorphic: direct paired patching, a fully checked ordered chain, its
-conditional all-point carrier, or its smaller pointed carrier for this one lift. Theorem 11.2A
-retains the chosen interface verbatim. Complete splitting, individual Ihara statements, and
-separate component support do not prove it.
-
-**Moret--Bailly approximation.** Smooth geometrically connected point spaces, nonempty local
-opens, exact local algebras, total reality, finite disjointness, and closed-locus avoidance give
-the ordinary form of Theorem 8.2. No Galois conclusion is attributed to it.
-
-**Galois and solvable refinements.** A supplied full-monodromy Galois presentation gives the
-normal closure, exact top local torsors, closure-level disjointness, compatible fixed fields, and
-a prime-cyclic upper tower when the stabilizer is solvable. Automorphic descent down that tower
-additionally requires the stepwise selected, trace-comparable, strongly cuspidal,
-antecedent-complete, and where applicable fiber-saturated certificates. The presentation is
-verified geometrically rather than inferred from ordinary approximation, and group solvability
-does not supply those arithmetic certificates.
-
-**Two-prime Hilbert--Blumenthal moduli.** Books 156--157 supply the determinant-condition fine
-scheme, ordered polarization, inverse-different pairing line, corrected Tate-twisted auxiliary
-source, two special-linear frame torsors, the $\mathbf Q$-defined tensor component, and full
-product monodromy. The constant oriented level rejected by Book 157 is not used. All bad-prime
-and neatness exclusions are retained.
-
-**Local Hilbert--Blumenthal geometry.** Real, good, ordinary, nonordinary finite-flat, and
-semistable seed points; residue tubes; exact frames; openness; component bookkeeping; and
-persistence give Chapter 7. A seed after local extension is always recorded in the global
-completion algebra.
+Book 157 is used only for reusable interior and local results: corrected auxiliary level,
+tensor component, product monodromy, ordinary and semistable seeds, exact frames, and
+point-centered openness. None of its conditional singleton boundary program
+$({\rm IIT})$--$({\rm ICS})$ is a prerequisite.
 
 ### 13.2 The theorem-by-theorem hypothesis ledger
 
 | Step | Hypotheses retained | Conclusion used |
 |---|---|---|
-| simultaneous coefficients | both actual residual fields; distinct odd primes; weak approximation; Hilbert--Blumenthal tensor choice | one totally real $E$ receiving both fields, unramified and monodromy-admissible at both primes, with determinant lines |
-| dihedral construction | CM quadratic field; full relative ray-subgroup compatibility, including ray units and diagonal $K$-ideal intersections; determinant (4.4); type $(1,0)$; prime-to-$q$ witnesses | cuspidal weight-two induction with controlled residual representation |
-| inverse-branch correction | CM quadratic extension; prime-to-$q$ ray-unit obstruction; triviality on diagonal $K$-units; protected witness | the finite anti-unit group is detected at one split prime, and inverse auxiliary characters cancel the obstruction |
-| protected Frobenius correction | finitely many split places away from $q$; determinant-compatible residual branch pairs; a $\sigma$-stable protected set; exact Grunwald--Wang, including its possible exponent doubling | an anti-cyclotomic finite-order twist, trivial on $C_K$ and the protected places, imposing the full residual local characters |
-| residual irreducibility | conjugate ratio nontrivial after reduction | absolute irreducibility of $\bar r$ |
-| cyclotomic adequacy | $q\geq7$; absolute irreducibility on $G_{K(\zeta_q)}$ | adequate cyclotomic image |
-| level raising | relation (5.1); $q_{v_0}\equiv1\pmod q$; scalar line; primary sign; full applicable $({\rm AIH}_{\mathscr F})$ family and independent typed rows; saturated maps; normalized branch correction; non-Eisenstein localization | conditional exact line-special residual occurrence |
-| two-prime cover | good primes; corrected source $\mathscr L_N^\natural$; self-dual tensor lattice; determinant-compatible local systems | smooth fine moduli and finite étale paired frame cover |
-| connected twist | $\mathbf Q$-defined tensor component; full product monodromy; characteristic zero | geometrically connected twisted cover over $K$ |
-| local package | one seed satisfying all conditions on the chosen component; odd coefficient primes; $\bar\rho$ unramified above $q$; required integral model | nonempty open neighborhoods with exact frames over the permitted completions |
-| ordinary approximation | smooth geometric connectedness; common-degree moving-family presentations of all exact local algebras; even absolute output degree; real opens; finite disjointness | finite totally real point field of even absolute degree with the asserted completions |
-| Galois refinement | geometrically connected Galois cover; core-free stabilizer; even fixed-field index; realized top torsors; base-changed connectedness; solvability of $J$ only when a bridge is requested | controlled normal closure and exact fixed-field completions with an even-degree point field; a prime-cyclic upper bridge only in the solvable-$J$ case |
-| image preservation | disjointness from full cutout and cyclotomic compositum | unchanged full and cyclotomic images |
-| singleton post-specialization level control | actual bad set; lower residual carrier after proved saturated level lowering; $P_{\mathrm{nm}}=\{w_0\}$; every other place on the same named minimal spectator component | the legacy one-fixed-nonminimal-place branch of Theorem 11.2 |
-| one-prime lifting | scalar branch $q_{v_0}\equiv1$; global tame ray character; $({\rm AUT})$, $({\rm TYPE})$, $({\rm SUP})$, $({\rm REC})$, $({\rm RAY})$, and any required $({\rm AUX}_Q)$; reduced conductor-one comparison; finite-flat quotients; named components; nonzero rank-one monodromy of the point | automorphy of the characteristic-zero point $V_{\mathfrak q}(A)$ with conductor-one special monodromy and trivial central character |
-| split-top specialization | Book 158's simultaneous split local points, regular symmetric top, closure-level avoidance, and exact frames | a totally real even-degree Galois top on which every dyadic Frey Tate sheet is special |
-| finite-set lifting | the actual set $P_{\mathrm{aux}}(A_M)$ and one complete Book 176 direct, ordered, all-point, or pointed certificate | conditional automorphy of the named $V_{\mathfrak q}(A_M)$ without a singleton reduction |
-| compact curve carrier | even absolute degree; in the singleton route the selected Steinberg factor $w_0$, and in the split route any one special dyadic factor; full component-routing and Schur-splitting data | Book 104 one-split packet and Book 127 rational rank-two family over the potential-modularity field |
-| cross-prime comparison | noncharacter cuspidal packet; rational rank-two realization; $q$-adic equality after scalar extension; common abelian Frobenius polynomials; absolutely irreducible target torsion | equality after the necessary coefficient extension, an $E_{\mathfrak l}$-form, and exact residual equality over $k_{\mathfrak l}$ for its distinguished lattice |
+| simultaneous coefficients | both actual residue fields; distinct odd primes; corrected tensor choice | one real-multiplication field receiving both primes with determinant lines and product monodromy |
+| dihedral seed | rational-base compatible ray datum; determinant; type $(1,0)$; protected conjugate-ratio witness | cuspidal weight-two induction with cyclotomic determinant and adequate residual image |
+| protected correction | finitely many split determinant-compatible branch pairs; protected witnesses; exact Grunwald--Wang alternative | simultaneous local residual branches without changing determinant or irreducibility |
+| local paired-frame space | exact ordinary, finite-flat, good, and split Tate seeds on one tensor component | simultaneous point-centered opens carrying both frames |
+| split top | Book 158's simply branched interior pencil, regular symmetric closure, complete splitting, and avoidance | totally real even-degree Galois field $F$ and $A_F$ with every controlled sheet in its chosen open |
+| finite-set lifting | actual $P_{\mathrm{aux}}(A_F)$ and one complete Book 176 certificate | automorphy of the named point $V_{\mathfrak q}(A_F)$ |
+| compact realization | even degree and any one dyadic special place | compact one-split carrier and rational rank-two compatible family |
+| cross-prime comparison | $q$-adic equality; common abelian Frobenius polynomials; absolute irreducibility of target torsion | exact target residual member at $\ell$ |
 
-Every row is used in the indicated direction. In particular, local openness does not prove
-global connectedness, and residual image preservation does not prove automorphy.
+Every row is used in the displayed direction. In particular, local openness does not prove the
+split top, and separate one-place comparisons do not prove the finite-set lifting row.
 
 ### 13.3 Circularity audit
 
-The dihedral packet is constructed before the Hilbert--Blumenthal point and independently of
-the desired target. Its residual automorphy is therefore a genuine starting point. The
-specialized abelian variety is not assumed automorphic. Its $q$-adic automorphy follows from the
-one-prime theorem in Theorem 11.2 and from the explicitly selected Book 176 finite-set
-interface in Theorem 11.2A. Only afterward is the weight-two system at $\ell$ attached.
+The dihedral packet is constructed before $A_F$ and independently of the target. Its residual
+automorphy is the starting point. Book 158 then constructs the paired-frame abelian variety
+without using automorphy of its Tate module. Only after the actual active set is known does
+Book 176 transfer automorphy to that point. The target residual conclusion is read at $\ell$
+only after the $q$-adic automorphic packet and its rational family exist.
 
-The target conclusion (11.7) is never used to choose $K'$, prove connectedness, or select an
-auxiliary prime. Adequacy is proved from cyclotomic irreducibility and not from the existence of
-Taylor--Wiles primes. The arithmetic distribution theorem selects Frobenius classes only after
-the finite-image detector has been constructed. Normal-closure disjointness is imposed on the
-generic Galois family before specialization.
-
-There is no appeal to Book 177's potential-modularity theorem, Book 181's later balanced
-minimal-lift argument, Book 182's potential-automorphy refinement, or any later
-compatible-system, Brauer-descent, or changing-prime theorem. The weakly compatible family used
-in Chapter 11 is the weight-two family attached directly to the already automorphic packet
-$\Pi_A$.
-
-No later-numbered source is used. The split variant deliberately uses the earlier Book 158
-geometry and Book 176 finite-set interfaces, so there is no dependency cycle. Outside the
-rational-base case of Lemma 4.1A, a future repair must still construct the compatible relative
-ray datum of Theorem 4.2. In the singleton branch it must place the abelian-Ihara family and
-the remaining exact one-prime type, support, reciprocity, ray, and augmentation certificates
-in an acyclic prior source. In the split branch it must instead establish one actual Book 176
-certificate for the full specialization-dependent active set. The existence of that
-certificate, not the formal implication of Theorem 11.2A, is the unresolved step.
+There is no use of Books 177, 181, 182, or later compatible-family volumes. The unresolved input
+is one actual finite-set certificate for $P_{\mathrm{aux}}(A_F)$; it is not hidden in the
+geometric specialization. The rational-base ray compatibility is proved here, while the
+general totally real-base ray datum remains a separate optional extension and is not needed by
+the FLT chain.
 
 ### 13.4 Normalization audit
 
-Arithmetic Frobenius is used in every character value and every covariant Tate-module
-polynomial. The cohomological weight-two factor uses geometric Frobenius and is dualized before
-comparison with torsion. The determinant of
-quadratic induction includes $\eta_{M/K}$. Type $(1,0)$ gives parallel weight two and
-cyclotomic determinant through $|\cdot|^{-1}$. The Hilbert torsion pairing takes values in
+Arithmetic Frobenius is used in the character values and covariant Tate-module polynomials.
+Quadratic induction includes the quadratic determinant character. The corrected auxiliary
+level is Tate-twisted, and both frame groups are special linear because their determinant lines
+are fixed. Covariant Tate modules have cyclotomic determinant; the cohomological automorphic
+member is twisted as in (11.1) before comparison.
 
-$$
-(\mathfrak d_E^{-1}\mathfrak c^{-1}\otimes k_{\mathfrak p})(1).
-$$
+Coefficient enlargement preserves rank two by scalar extension. Proposition 11.1 first
+identifies the rational members and then uses absolute residual irreducibility to identify the
+stable lattice. Thus the exact target residual representation is not inferred from an arbitrary
+lattice over an enlarged coefficient field.
 
-The frame groups are special linear because the determinant line is fixed. Covariant Tate
-modules have cyclotomic determinant, while the untwisted cohomological factor has
-inverse-cyclotomic determinant. At $v_0$, the augmentation
-face has conductor one; nontrivial tame characters have conductor two. The two are never
-identified. In arithmetic-Frobenius normalization, the invariant line in (5.0) has the
-cyclotomic-multiple root. The scalar residual matrix does not choose this line; the enhanced
-line does. The primary type chooses the sign, not the polarization pairing.
-
-The auxiliary level source is Tate-twisted as in (1.4); it is not a constant orientation.
-Coefficient enlargements preserve rank two by scalar extension. At $\ell$, the packet residual
-member is compared with $A[\mathfrak l]$ only after extending both to the enlarged residue
-field, while the descended $E_{\mathfrak l}$-form retains the exact original residue field.
-The $\mathbf Q$-definition of the tensor component supplies no descent of the specialized
-abelian variety or automorphic packet; every attached representation remains a representation
-of $G_{K'}$.
-
-Finite flatness is used at the coefficient residue characteristic and unramifiedness only away
-from it. Without absolute residual irreducibility, an arbitrary stable lattice would determine
-only a residual semisimplification. Here absolute irreducibility and Proposition 11.1 force all
-stable lattices to be homothetic to $T_{\mathfrak l}A$, so the exact residual representation is
-a conclusion. All normalizations in the proof follow these conventions.
 
 ## 14. Conclusion
 
-### 14.1 The two-prime package and its remaining boundary
+### 14.1 The split two-prime package
 
-The two-prime method succeeds because it assigns one task to each prime. At $q$, a rank-one
-Hecke character constructed from a supplied compatible corrected relative ray datum over a CM
-field gives an explicit dihedral rank-two representation. Its infinity type gives parallel
-weight two; its diagonal restriction fixes the determinant; ray data control conductor and local
-inertia; a conjugate-ratio witness survives both reduction and cyclotomic restriction; and the
-protected anti-cyclotomic Grunwald correction can impose exact residual split branch characters
-without changing those data. A
-carefully selected scalar prime gives the numerical, enhanced-line, and sign data for the
-special localization. The exact integral localization remains conditional
-first on the abelian-Ihara family and then on the independent typed-Ihara, support,
-reciprocity, ray, augmentation, and faithful-carrier inputs of the one-prime theorem.
+The two-prime method assigns the explicit residual starting point to $q$ and the target residual
+member to $\ell$. A corrected CM ray datum and protected anti-cyclotomic correction construct
+the dihedral member with the exact local branches. The determinant-compatible Hilbert--Blumenthal
+space places both torsion systems on one arithmetic tensor component. Book 158 specializes its
+fine interior to a totally real even-degree Galois top, completely split at every controlled
+place and disjoint from the full avoidance field.
 
-At $\ell$, the original residual representation is placed on the same polarized abelian variety.
-The determinant-compatible two-prime cover remembers both torsion systems exactly. The
-corrected cyclotomic-split or elliptic-source auxiliary level and tensor choice give one
-$\mathbf Q$-defined arithmetic
-component, and product monodromy makes its twist geometrically connected. Real, ordinary,
-local--local, good, and semistable tensor seeds produce genuine open neighborhoods on that one
-piece.
+Complete splitting forces all dyadic Tate sheets to be active for the auxiliary Tate-module
+lift. Therefore the relevant arithmetic handoff is Book 176's finite-set comparison for the
+actual set $P_{\mathrm{aux}}(A_F)$. With that certificate, automorphy transfers from the
+norm-pulled dihedral packet to $V_{\mathfrak q}(A_F)$; a compact one-split carrier and the
+cross-prime comparison then identify the $\ell$-adic residual member with the prescribed
+target.
 
-Arithmetic approximation then chooses the field rather than demanding a rational point over
-the original base. In its Galois-refined form it controls the normal closure, every completion in
-the fixed-field diagram, and disjointness from full residual cutout fields. These controls keep
-oddness, absolute irreducibility, cyclotomic adequacy, determinants, and local witnesses intact.
-The legacy singleton branch asks for an exact algebra at $v_0$ with one distinguished special
-factor and minimal complementary factors. The split Book 158 branch makes every controlled
-dyadic sheet special instead; complete splitting gives at least two such places and therefore
-cannot realize the singleton ledger.
+The route has one exact unresolved lifting boundary: construction of the finite-set certificate
+for the actual active set. It has no singleton subproblem. The retired one-special-factor
+moving presentation, Book 157's conditional toroidal chain, and one-prime scalar augmentation
+are neither hypotheses nor alternative conclusions of the FLT theorem. Book 157 remains a
+direct source only for its reusable interior component, local seed, frame, and openness results.
 
-The specialized abelian variety carries the bridge in either branch, but only after the
-appropriate post-specialization lifting certificate is supplied. Theorem 11.2 uses the exact
-one-prime clean datum. Theorem 11.2A instead uses one of Book 176's direct, fully reverified
-ordered, all-point, or pointed finite-set interfaces for the actual set
-$P_{\mathrm{aux}}(A_M)$. Only then does the residual $q$-member's dihedral automorphy transfer
-to its $q$-adic Tate module. Weight-two Galois realization and the derived cross-prime Tate
-comparison read the same packet at $\ell$, and the paired $\ell$-frame identifies that residual
-member with the prescribed target.
-
-An eligible special factor also supplies the compact carrier. In the singleton branch it is
-$w_0$; in the split branch any one dyadic special place may be used for the parity-correct
-one-split inverse Jacquet--Langlands datum. Together with even absolute degree, Book 127 then
-constructs the rational rank-two family. The $\mathbf Q$-defined Hilbert component does not
-descend this packet or family to $\mathbf Q$; the conclusion stays over the
-potential-modularity field.
-
-The proved conclusions are therefore conditional transfer theorems with exact and distinct
-boundaries. For $\ell\geq7$, Theorem 11.2 treats singleton-admissible data. Theorem 11.2A treats
-the split Frey datum only after an exact Book 176 certificate for every actual active place is
-given. Simultaneous coefficient realization, the correction of the ray-unit part of a supplied
-compatible relative datum, determinant lines, components, normal closures, protected exact
-split Frobenius branches, the unramified auxiliary frame, and cross-prime integrality are proved
-on those respective domains. No reduction from the split active set to one place is proved or
-claimed.
-
-These are the seed outputs which this book itself owns. The field lists in the two FLT source
-records are lower-bound interfaces, not exhaustive proof instructions. For the finite-image
-source, residual occurrence from this book can contribute
-to constructing the exact clean automorphic datum, but it is not itself the required
-module-finite coefficient factorization of the scalar-reduced universal representation. That
-source still needs one finite totally real restriction, a local Hecke coefficient algebra and
-its map to the scalar coefficient ring, a continuous representation over that algebra, a
-level supported above $2$ with the tame rank-one quotient, finite flatness above the
-coefficient prime, the cyclotomic-degree inequality, a rigidified totally definite quaternion
-algebra, a surjective Hecke eigenvalue map, the exact Frobenius determinant-and-trace
-comparison, and the universal factorization up to a recorded conjugating matrix. Those are
-the pre-point arithmetic fields isolated in Book 181; no aggregate “controlled seed” may
-replace them.
-
-Constructing those fields by the two-prime route retains hidden arithmetic obligations which
-are not displayed as structure fields: the good ordinary coefficient-prime replacement must
-precede $q$; the two torsion frames must lie on one connected arithmetic component; arithmetic
-approximation must preserve the full residual images and the exact local models; the dihedral
-class must survive every actual auxiliary active place; target lowering must be certified on
-the current component at every edge; and the final definite localization must carry the full
-finite-free, paired, saturated, branchwise-attached, and augmentation-compatible Book 173
-ledger. Books 157, 154--155, 139--140, 174--176, and 171--173 are the natural owners of these
-successive obligations. This book leaves their stated conditional gates in force.
-
-For the compatible-family source after a chosen lift exists, none of its four fields—independent
-Brauer summands with a genuine rank-two realization, original-prime Frobenius-coefficient
-comparison, conductor support at $2$, and integral models away from the original member—is a
-conclusion of residual potential modularity. They belong to the chosen-lift and Brauer-family
-chain of Books 182--185 and its later integral-model handoff. Consequently the local moving,
-level-change, and bottom-structure ledgers above are invoked only when they are actually used
-to manufacture the clean Book 181 datum; they are not additional fields of the compatible-
-family arithmetic core.
-
-The catalog objective is stronger: every weight-two residual datum in the stated range must be
-shown to admit the complete package. Before lifting over a general totally real base, one must
-construct the compatible corrected relative ray datum retained by Theorem 4.2; Lemma 4.1 proves
-only its unit relation, while Lemma 4.1A closes the rational-base case. At the lifting boundary,
-the singleton route first needs the abelian Ihara family used by Proposition 5.1. Granting it
-does not discharge the independent $({\rm TYPE})$, $({\rm SUP})$, $({\rm REC})$,
-$({\rm RAY})$, augmentation, and switched-carrier clauses at the selected prime, nor prove that
-all other post-specialization places are minimal spectators. The split Book 158 route has a
-different boundary: every dyadic place is already active, so it must establish one actual
-Book 176 finite-set certificate, including the simultaneous branch, component-occurrence,
-reciprocity, and augmentation data required by the selected interface. Separate one-place
-occurrence theorems cannot be assembled into that certificate without rechecking their joint
-hypotheses. Every superfluous dihedral level at a claimed minimal spectator still requires a
-proved saturated integral lowering comparison. Until these inputs are available as genuine
-prior results, Book 178 has not completed the full catalog objective. The source-closed
-conditional transfer of Theorem 11.2 is **READY** on its exact singleton-admissible domain, and
-Theorem 11.2A is **READY AS AN IMPLICATION** from its exact Book 176 finite-set hypothesis. The
-unrestricted assertion that every target in the catalog range admits either package is
-**NOT READY**.
+Thus Theorem 11.2 is ready as an implication from the finite-set input and supplies precisely
+the residual potential-modularity ingredient consumed before Book 181. It does not prove that
+input, descend automorphy back to $\mathbf Q$, construct Book 181's entire minimal Hecke
+ledger, or address the later compatible-family descent. Those tasks remain with their natural
+volumes.
