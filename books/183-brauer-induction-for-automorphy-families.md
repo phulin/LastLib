@@ -137,7 +137,9 @@ This one rational hypothesis implies the absolute irreducibility of
 $\rho|_{G_{F'}}$ for every intermediate field $F'\subseteq M$, because an invariant line for
 the larger group would also be invariant under $G_M$.
 
-The extension $M/\mathbf Q$ is assumed totally real and Galois. The primes $2$ and $\ell$
+The extension $M/\mathbf Q$ is assumed totally real and Galois, with
+$\Gamma=\operatorname{Gal}(M/\mathbf Q)$ nonsolvable. Thus every elementary subgroup is
+proper and every elementary fixed field has degree at least two. The primes $2$ and $\ell$
 split completely in $M$. More generally, any finite collection of sensitive places may be
 required to split completely; the complete-splitting preservation statements below then apply
 to it in the same way.
@@ -192,16 +194,19 @@ correction selected by $\rho$ remains selected and trace-comparable. These are p
 descent-admissibility and fiber-saturation conditions of the cyclic and solvable transfer
 theorems; mere invariance of the packet is not being substituted for them.
 
-Every corrected packet thereby obtained is also required to lie in the established
-parallel-weight-two curve-attachment range, including its coefficient conjugates. At every
-dyadic place its special comparison package is assumed uniformly: the raw packet monodromy has
-rank one; Frobenius on the raw invariant graph line is the selected special scalar; and the raw
-local pair agrees with the pair of the globally semisimplified realization at every coefficient
-place away from residue characteristic two. These are respectively the special scalar and
-local-preservation hypotheses built into the controlled datum. The return scalar and pair are
-required to have one algebraic model before completion. Thus the later SP record at every
-embedding away from residue characteristic two is an exact attachment hypothesis, not an
-inference from the distinguished realization or from conductor one.
+Once a corrected packet has been obtained, its ordinary curve attachment is no longer an
+extra hypothesis. Complete dyadic splitting preserves a selected special factor, every
+elementary fixed field has degree at least two, and Book 182, Proposition 6.1 applies Book
+104's parity-complete inverse Jacquet--Langlands theorem followed by Books 125--127. This also
+covers coefficient conjugates. What remains in the controlled datum is the narrower raw
+dyadic geometry $(\mathrm{RSP}_2)$ of Book 182, (7.6): at every dyadic place the raw packet
+monodromy has rank one, Frobenius on the raw invariant graph line is the selected special
+scalar, and all packet, component, and correspondence routes occur on that same raw carrier.
+The raw local pair must agree with the pair of the globally semisimplified realization at every
+coefficient place away from residue characteristic two. The return scalar and pair are
+required to have one algebraic model before completion. Thus the later SP record is not an
+inference from the distinguished realization or from conductor one, but neither is it a broad
+all-elementary packet-occurrence or automorphic-type hypothesis.
 
 The preservation clause has three sufficient certificates with the same interface output. It
 may be supplied directly. More economically, the datum may supply $(\mathrm{HT}_1)$ of Book
@@ -268,7 +273,7 @@ $\pi_H$ over $F_H=M^H$ with the following properties.
    conductor exponent is one.  At every finite place $w\nmid2$ there is an unramified
    algebraic Frobenius-semisimple pair $D_{H,w}$ whose scalar extension is the local pair of
    $r_{H,\tau}$ whenever the residue characteristic of $\tau$ differs from that of $w$.
-   This latter assertion is Book 182, Proposition 7.2B; it comes from equivariant conductor
+   This latter assertion is Book 182, Proposition 8.1; it comes from equivariant conductor
    and invariant-Frobenius independence and does not identify an automorphic type at $w$.
    Any proposed ramified type would have to be reconciled with this unramified Galois pair.
 6. For any integral Brauer relation for $1_\Gamma$, the twisted packet realizations give a
@@ -833,7 +838,7 @@ minimal trace field.
 ### 6.2 Constructing, rather than assuming, the coefficient systems
 
 Apply Book 127, Theorem 8.1, and Book 168, Theorem 12.1, separately to each automorphic packet
-$\pi_H$, in the exact attachment range certified by the controlled datum. In the arithmetic
+$\pi_H$, using the parity-complete attachment proved by Book 182, Proposition 6.1. In the arithmetic
 covariant normalization, these results construct for every finite place of a suitable
 realization field a rank-two semisimple Galois representation. After the common enlargement to
 $K$, an embedding
@@ -909,7 +914,7 @@ $$
 
 after one finite scalar extension. We suppress that harmless common extension in the notation.
 
-Book 182, Proposition 7.2B applies to the same actual carrier and rational Hecke block used in
+Book 182, Proposition 8.1 applies to the same actual carrier and rational Hecke block used in
 this construction.  It therefore gives
 
 $$
@@ -1917,14 +1922,19 @@ $$
 | Book 6 | rank-one Hodge--Tate characters are locally algebraic, and locally algebraic one-dimensional $\ell$-adic characters are avatars of algebraic Hecke characters | the geometric Hodge--Tate premise is supplied through $(\mathrm{HT}_1)$, not by class field theory |
 | Book 98 | finite-order Hecke avatars of the Brauer characters, with reciprocity, norm pullback, and conjugation | no higher-rank automorphic induction across $F_H/\mathbf Q$ |
 | Books 108--109 | selected prime-cyclic descent and base change, antecedent-complete saturated fibers, local-parameter restriction, and tower independence in the admissible range | no transfer along an inadmissible tower and no nonsolvable descent |
-| Books 127--128 and 168 | the weight-two packet realizations, covariant arithmetic normalization, coefficient conjugates, algebraic good data, the conditional raw SP comparison, and the cuspidal irreducibility/raw-to-global reduction from $(\mathrm{HT}_1)$; Book 168 uses Book 47, Proposition 9.1 for Hodge--Tate inheritance | no construction of a missing carrier, no proof of smooth-proper $(\mathrm{HT}_{\mathrm{curve}})$, no comparison of the SP pair at the coefficient residue characteristic, and no packet lattice after semisimplification |
+| Books 127--128 and 168 | the weight-two packet realizations, covariant arithmetic normalization, coefficient conjugates, algebraic good data, the conditional raw SP comparison, and the cuspidal irreducibility/raw-to-global reduction from $(\mathrm{HT}_1)$; Book 168 uses Book 47, Proposition 9.1 for Hodge--Tate inheritance | ordinary attachment is already complete, but these books do not construct $(\mathrm{RSP}_2)$, prove smooth-proper $(\mathrm{HT}_{\mathrm{curve}})$, compare the SP pair at the coefficient residue characteristic, or produce a packet lattice after semisimplification |
 | Book 142 | the Chebotarev density input used to recognize representations from their good Frobenius traces | no assertion that the field-theoretic towers satisfy automorphic selectors |
 | Book 180 | monomiality, the elementary projector and integral Brauer relation, induction/tensor/Mackey/determinant formulas, prime-cyclic refinement, the cyclic Clifford torsor, and Brauer--Nesbitt recognition | no packet construction, overlap identity, Gram positivity, or coefficient family is imported |
 | Book 182 | the exact conditional controlled SP datum: $\rho$, $M$, the distinguished top realization, the SP record, the finite descent-and-attachment ledger, and the common unramified elementary Galois pairs away from two | the missing controlled residual automorphic seed and bridge-readiness theorem are not supplied unconditionally, and no automorphic principal/dihedral type comparison is imported |
 
-The controlled datum supplies the hypotheses and certificates needed to apply the finite packet
-attachment results; Books 127--128 and 168 supply the attachment and local-comparison theorems
-actually applied in Chapters 6 and 10. In particular, the special scalar equality and
+The selected descent datum constructs the finite packet array, and Book 182, Proposition 6.1
+then proves ordinary attachment packet by packet; no separate all-elementary occurrence theorem
+is assumed. Books 127--128 and 168 supply the attachment and local-comparison theorems actually
+applied in Chapters 6 and 10. The controlled datum still must supply the raw geometric
+$(\mathrm{RSP}_2)$ output for every constructed packet. Book 182, Section 7.3 identifies its
+first unsupplied source on the existing route as Book 122's finite integral comparison (10.5),
+together in even degree with either a parity-compatible eligible ramification set away from two
+or a mixed-dyadic replacement geometry. In particular, the special scalar equality and
 raw-to-semisimple local-preservation identity must be available for every constructed packet and
 every coefficient place away from two. Proposition 6.1 proves the latter from
 $(\mathrm{HT}_1)$ by cuspidal absolute irreducibility and shows that coefficient extension,
@@ -1933,7 +1943,8 @@ arithmetic theorem is the smooth-proper comparison $(\mathrm{HT}_{\mathrm{curve}
 in Book 47, (9.7); the rank-one local-algebraicity and subquotient steps are now proved. If
 either the raw special clause or this preservation
 certificate is absent, the distinguished $\ell$-adic SP pair does not determine monodromy or
-its sign at another embedding.
+its sign at another embedding. No theorem prescribing principal or dihedral automorphic types
+away from two is needed for this SP step or for the auxiliary Galois comparison.
 
 The application-specific work retained here is substantial: construction and conjugation of the
 selected elementary packets, the nonnormal overlap theorem, the coefficient ledger, the signed

@@ -149,9 +149,11 @@ move automorphy along that series.
 
 The main result of Chapter 5 is consequently conditional on a controlled refinement datum.
 Chapters 6--8 then separate three later issues: existence of basic compact carriers, existence
-of raw signed-special carriers, and semisimplicity of their ambient cohomology. Only the last
-two control preservation of nonzero monodromy through global semisimplification. Auxiliary
-unramified comparisons require less and are proved independently in Chapter 8.
+of raw signed-special carriers, and passage from a raw carrier to its globally semisimplified
+packet representation. The first and third are already formal in the selected array: Book 104
+gives a parity-complete compact carrier, and Book 168 reduces the third uniformly to
+$(\mathrm{HT}_1)$. The genuinely new carrier input is the second, geometric one. Auxiliary
+unramified comparisons require still less and are proved independently in Chapter 8.
 
 ## 2. The signed-special local record
 
@@ -566,6 +568,14 @@ the minimal signed-special problem has no known characteristic-zero point. Here 
 is instead residual occurrence and the exact clean minimal datum from which Book 173 can prove
 the restricted $R=\mathbb T$ theorem.
 
+Book 176, Theorem 1.2 proves the definite two-map Ihara and saturation statement needed at
+each scalar weight-two changed place.  Its Section 1.6 also isolates the remaining content:
+$({\rm DMS}_{P_{\rm tar}})=({\rm DLO}_{P_{\rm tar}})+({\rm CLN}_{\min})$.  The first term is
+the simultaneous or fully reverified ordered implication from upper residual occurrence to
+nonzero exact minimal occurrence; the second is the Book 173 structural ledger on that
+minimal carrier.  Finite class sets remove the curve-switch Ihara hypothesis, but neither
+their finiteness nor upper-side Taylor--Wiles patching proves $({\rm DLO}_{P_{\rm tar}})$.
+
 Consequently the preferred construction has the exact form
 
 $$
@@ -669,7 +679,7 @@ minimal equality.
 
 The direct-top simplification concerns only upward transfer. It does not prove the earlier
 controlled seed, the later descent of packets to elementary fixed fields, the existence of raw
-signed-special carriers, or ambient semisimplicity.
+signed-special carriers, or the smooth-proper source of $(\mathrm{HT}_1)$.
 
 ## 6. Elementary fixed fields and basic carriers
 
@@ -681,8 +691,10 @@ step, an arbitrary descent is determined only up to a quotient character. The gl
 representation $\rho$ supplies a coherent extension across every step and therefore selects
 the quotient-character correction once an attached candidate descent exists.
 
-For every selected candidate below, distinguished-coefficient attachment is required to
-identify its global semisimplification with $\rho|_{G_{F_H}}$.
+For every selected candidate below, distinguished-coefficient attachment identifies its
+global semisimplification with $\rho|_{G_{F_H}}$. Proposition 6.1 shows that this attachment
+is a theorem once the candidate packet has been constructed; it is not an additional
+all-elementary hypothesis.
 
 This selection does not construct the candidate. Book 109 still requires an antecedent-complete
 packet, saturation of the relevant extension fiber, and compatibility of attachment with base
@@ -704,10 +716,11 @@ The same is true for every subgroup occurring in a prime-cyclic refinement insid
 
 **Proposition 6.1 (basic carrier for every elementary candidate).** Let $H'\leq\Gamma$ be an
 elementary subgroup or a subgroup in a prime-cyclic refinement inside one. Suppose a selected
-candidate packet $\Pi_{H'}$ over $F_{H'}=M^{H'}$ is special at every dyadic place, spherical
-at the retained split places above $3$ and $\ell$, and lies in the selected range at every
-other nonspherical place. Then $\Pi_{H'}$ has a compact one-split quaternionic carrier. Its
-semisimple compatible family is attached at every coefficient place.
+parallel-weight-two candidate packet $\Pi_{H'}$ over $F_{H'}=M^{H'}$ is selected special at
+every dyadic place. Then $\Pi_{H'}$ has a compact one-split quaternionic carrier, and its
+semisimple compatible family is attached at every coefficient place. If the packet is
+spherical at the retained places above $3$ and $\ell$, the carrier may be chosen hyperspecial
+there.
 
 **Proof.** Put $d=[F_{H'}:\mathbf Q]$, so $d\geq2$ by (6.1). If $d$ is even, choose one
 dyadic special place and set $W=\{w_2\}$. If $d$ is odd, set $W=\varnothing$. In either case
@@ -720,8 +733,13 @@ $$
 The proposed ramification set has at least two places. For $d=2$, it consists of the inactive
 real place and $w_2$; for $d\geq3$, there are already at least two inactive real places when
 $W$ is empty. Book 104 therefore gives a compact quaternionic inner form split at one real
-place and carrying the packet. It is split at every place above $3\ell$, where hyperspecial
-level may be chosen. Books 127 and 168 attach the semisimple coefficient family. $\square$
+place and carrying the packet. Its inverse theorem imposes a selected-type hypothesis only at
+the finite places in $W$; it requires no principal/dihedral classification at the other finite
+places, where the inner form is split and the packet is unchanged. In particular the algebra
+is split at every place above $3\ell$, and spherical packet factors there admit hyperspecial
+level. Book 125 realizes the packet in the full component-routed curve block; Books 126--127
+extract and attach its rank-two family, and Book 168 organizes the coefficient system.
+$\square$
 
 The parity choice is important. In odd degree one must not insist on adding a dyadic finite
 ramification place: the inactive real places already have even cardinality. In even degree the
@@ -812,7 +830,7 @@ carry a nonzero local monodromy operator even though its global semisimplificati
 sum on which that operator disappears. Thus good Frobenius polynomials and equality of global
 semisimplifications do not preserve the signed-special extension.
 
-The sufficient uniform hypothesis is
+One sufficient uniform hypothesis is
 
 $$
 (\mathrm{SS}_{\mathrm{array}}):qquad
@@ -832,14 +850,28 @@ $$
 
 and the complete signed-special pair survives, including nonzero $N$, its line, and its
 Frobenius sign, whenever the local comparison is prime to the coefficient residue
-characteristic.
+characteristic. This is stronger than is needed here.
 
 Book 41 reduces (7.3) to finiteness of the relevant carrier Jacobians' isogeny classes. Its
 uniform route to those finite isogeny classes retains explicit geometric and metric
-hypotheses. Therefore ambient semisimplicity remains conditional in the present dependency
-chain. It must not be replaced by purity, by semisimplicity of the Hecke algebra, or by
-semisimplicity of the already extracted global representation; none of those assertions says
-that the raw multiplicity space equals its global semisimplification.
+hypotheses. It must not be replaced by purity or by semisimplicity of the Hecke algebra.
+However, it is also unnecessary for the selected cuspidal packet array. If
+$(\mathrm{HT}_1)$ holds for its raw rank-two factors, Book 168, Theorem 7.6 proves that every
+semisimple packet realization is absolutely irreducible. Book 128, Lemma 9.1 then identifies
+the raw multiplicity representation with that semisimplification. Thus
+
+$$
+(\mathrm{HT}_1)\quad\Longrightarrow\quad
+W^{\mathrm{raw}}_{H,\tau}\simeq r_{H,\tau}
+\tag{7.5}
+$$
+
+for every selected packet and coefficient place. Books 6 and 47 close the rank-one
+local-algebraicity and subquotient reductions; the only unsupplied source of
+$(\mathrm{HT}_1)$ is the smooth-proper comparison
+$(\mathrm{HT}_{\mathrm{curve}})$ of Book 47, (9.7). Consequently ambient
+$(\mathrm{SS}_{\mathrm{array}})$ is only an optional stronger certificate, not a second
+clause of the preferred raw-carrier theorem.
 
 At coefficient residue characteristic $2$, even global semisimplicity does not create a
 prime-to-coefficient Weil--Deligne comparison at the dyadic base place. That is a separate
@@ -847,23 +879,55 @@ boundary and is not repaired by (7.3).
 
 ### 7.3 The exact raw-carrier boundary
 
-The missing raw-carrier theorem has two independent clauses:
+The remaining carrier theorem has only the following geometric output:
 
-1. construct the raw dyadic signed-special carrier for every elementary packet which needs it;
-2. prove $(\mathrm{SS}_{\mathrm{array}})$ for the actual finite set of carriers, or prove
-   directly that each raw multiplicity space is globally semisimple.
+$$
+(\mathrm{RSP}_{2}):\qquad
+\text{each selected elementary packet and dyadic target has a raw carrier satisfying (7.2),}
+\tag{7.6}
+$$
 
-The first clause is geometric. The direct common-norm group does not provide the required
-mixed one-split PEL realization. A non-common-norm parahoric comparison with the correct
-component ledger is needed. In the even-degree minimal case, the parity-correct basic carrier
-of Proposition 6.1 is ramified at a dyadic place; it is therefore not automatically a
-dyadically tensor-split raw carrier. An eligible finite ramification set away from two or a
-different geometric construction is still required.
+with the packet projector, component orbit, oriented dyadic branches, raw unnormalized
+$U_2$ correspondence, and the rank-two multiplicity extraction all defined on that same
+carrier. The output must be algebraic before completion;
+it need not prescribe principal, dihedral, or other automorphic types away from two. Once
+(7.6) is supplied, (7.5) transports its special pair uniformly from
+$(\mathrm{HT}_1)$; no ambient Tate-semisimplicity theorem belongs to this interface.
 
-The second clause is arithmetic. It cannot be deduced from the existence of the raw carrier.
-Conversely, abstract ambient semisimplicity cannot construct the raw parahoric geometry. The
-two clauses must be supplied together before the signed-special pair can be transported
-uniformly through the elementary packet array.
+The searched attachment books already prove everything before (7.6). Book 104, Theorem 9.2
+puts each selected split packet on the parity-correct one-split inner form, Book 125 realizes
+that packet in curve cohomology, and Books 126--127 extract and attach its raw and semisimple
+rank-two representations. Books 80--84 and 92--109 supply the local and global automorphic
+transfers used in that argument, but none constructs a parahoric integral model or a graph
+monodromy line. Thus a stronger theorem asserting automorphic occurrence or every elementary
+automorphic type would duplicate proved work without supplying (7.6).
+
+For a carrier already split at every dyadic factor, the first missing geometry on the existing
+route is recorded exactly in Book 122, Sections 10.3--10.5. Its Proposition 10.2 constructs a
+non-common-norm unitary dyadic parahoric source. To make that source the raw carrier of the
+basic packet one still needs the finite
+integral common-adjoint comparison (10.5): an extension unramified at two, finite locally
+free maps at the good and Iwahori vertices, effective component descent, Hecke and degeneracy
+compatibility, expansion-one strict-node maps, and equality of the selected packet planes.
+Generic equality of adjoint groups and rational Jacquet--Langlands do not imply this integral
+statement.
+
+There is an additional parity boundary before that comparison can be applied. Book 122's
+unitary source assumes that the quaternion algebra is split at every dyadic factor. In odd
+degree the Book 104 choice $W=\varnothing$ clears this automorphic condition. In even degree
+the basic carrier of Proposition 6.1 uses a dyadic singleton to correct parity, so it fails the
+complete dyadic-splitting ledger. Another dyadic special place does not help. The present
+corpus supplies neither an odd eligible ramification set away from two nor a mixed-dyadic
+parahoric theorem for that carrier. Hence an honest proof of (7.6) must supply, packet by
+packet, either
+
+1. a parity-compatible eligible carrier ramified only away from two together with Book 122's
+   finite integral comparison (10.5); or
+2. a new mixed-dyadic geometric comparison which applies directly to the parity carrier of
+   Proposition 6.1.
+
+This is the smallest remaining raw SP hypothesis. Abstract ambient semisimplicity cannot
+construct it, and a broad principal/dihedral type package is irrelevant to it.
 
 ## 8. Auxiliary Galois comparisons
 
@@ -943,11 +1007,11 @@ identity. After effectivity is known, Krull--Schmidt cancellation compares the a
 summands and yields the auxiliary comparison and clean support. Neither a principal type
 projector nor a dihedral nearby-cycle calculation is required for this Galois conclusion.
 
-This is why ambient semisimplicity has two different roles. It is still needed for the
-nonzero-monodromy signed-special record at two, but it is unnecessary in Proposition 8.1: the
-distinguished irreducible raw member anchors conductor zero, coefficient independence carries
-that fact to all coefficients, and the zero-monodromy comparison passes it to the global
-semisimplification.
+This is why the raw-to-global input has a role only at nonzero monodromy. The preferred
+certificate there is $(\mathrm{HT}_1)$, with ambient semisimplicity only a stronger
+alternative. Neither is needed in Proposition 8.1: the distinguished irreducible raw member
+anchors conductor zero, coefficient independence carries that fact to all coefficients, and
+the zero-monodromy comparison passes it to the global semisimplification.
 
 ### 8.3 Why automorphic type is a stronger question
 
@@ -988,8 +1052,9 @@ signed-special lift supplied by Book 181 under its explicit seed hypothesis. Ass
 1. a controlled chosen-lift refinement datum as in Chapter 3;
 2. a selected elementary descent ledger for the finite fixed-field diagram;
 3. the local hypotheses of Proposition 6.1 for every candidate packet;
-4. raw signed-special carriers and $(\mathrm{SS}_{\mathrm{array}})$ whenever preservation of
-   the nonzero-monodromy pair is required.
+4. $(\mathrm{RSP}_{2})$ of (7.6), and either $(\mathrm{HT}_1)$ for the selected packet
+   factors or a direct local-preservation certificate; the stronger
+   $(\mathrm{SS}_{\mathrm{array}})$ may be used instead.
 
 Then:
 
@@ -1006,18 +1071,19 @@ Then:
 
 **Proof.** The first assertion is Theorem 5.2. Propositions 6.1 and 6.2 give the second and
 third. Proposition 8.1 and the twisting and induction operations of Section 8.2 give the
-fourth. Finally, raw-carrier existence places the tuple (7.2) on the geometric multiplicity
-space, and $(\mathrm{SS}_{\mathrm{array}})$ identifies that space with its global
-semisimplification by (7.4), proving the fifth assertion. $\square$
+fourth. Finally, $(\mathrm{RSP}_{2})$ places the tuple (7.2) on the geometric multiplicity
+space. Under the preferred hypothesis, (7.5) identifies that space with its global
+semisimplification; a direct certificate or (7.4) gives the stated alternatives. This proves
+the fifth assertion. $\square$
 
 The theorem has two exact conditional boundaries. The earlier one is the controlled residual
 seed summarized in Chapter 4. On the preferred split route, after the separate
 $({\rm IAV}_{P_{\rm aux}})$ certificate, Proposition 4.1 supplies upper definite occurrence
 and the smallest remaining source is $({\rm DMS}_{P_{\rm tar}})$; no preceding volume proves
-that target-minimal support theorem and its clean bottom ledger. The later one
-is the raw-carrier and ambient-semisimplicity hypothesis of Chapter 7. Basic carrier existence
-does not close it, while Proposition 8.1 shows that it is not needed for the auxiliary
-unramified pairs.
+that target-minimal support theorem and its clean bottom ledger. The later one is the
+geometric $(\mathrm{RSP}_{2})$ hypothesis of Chapter 7, together with the already isolated
+smooth-proper source of $(\mathrm{HT}_1)$. Basic carrier existence does not close the former,
+while Proposition 8.1 shows that neither input is needed for the auxiliary unramified pairs.
 
 The mathematical progression is therefore linear:
 
@@ -1036,15 +1102,17 @@ $$
 \tag{9.1}
 $$
 
-On a separate final branch, raw signed-special geometry together with ambient semisimplicity
-preserves the nonzero monodromy line and sign across all relevant coefficient embeddings. That
-branch cannot be moved earlier and cannot be replaced by good Frobenius traces.
+On a separate final branch, raw signed-special geometry together with $(\mathrm{HT}_1)$
+preserves the nonzero monodromy line and sign across all relevant coefficient embeddings.
+Ambient semisimplicity is a stronger alternative. That branch cannot be moved earlier and
+cannot be replaced by good Frobenius traces.
 
 Thus this volume does not reconstruct the residual seed used before Book 181, and it does not
 claim an unconditional controlled top. It proves the chosen-point potential-automorphy and
 Galois-refinement implications from their exact hypotheses, proves the parity-complete basic
-carrier and auxiliary Galois comparisons, and isolates precisely the additional raw-carrier
-and semisimplicity input needed to retain the signed-special local record in the later family.
+attachment and auxiliary Galois comparisons, and isolates precisely the additional geometric
+raw-carrier input and the separate $(\mathrm{HT}_1)$ comparison needed to retain the
+signed-special local record in the later family.
 
 There is a final source-record distinction. The pre-point finite-image record in the FLT
 formalization asks for a module-finite Hecke coefficient model of the scalar-reduced universal
